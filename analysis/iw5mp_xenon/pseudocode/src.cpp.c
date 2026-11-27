@@ -96,21 +96,95 @@ void XAUDIO__SRC__DoubleVector__Process<float,1>(uint *param_1)
 
 // 828EC290  XAUDIO::SRC::DoubleVector::Process<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.vector.decl.inl:76)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__DoubleVector__Process<short,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs63 [16];
+  
+  puVar2 = (uint *)__savegprlr_29();
+  uVar3 = puVar2[6] - puVar2[7];
+  uVar5 = puVar2[1] - puVar2[2];
+  uVar3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  lVar6 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x7fffffffU) * 2 + (ulonglong)*puVar2;
+  if ((int)uVar5 < (int)uVar3) {
+    uVar3 = uVar5;
+  }
+  if (((uVar3 & 7 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Double__Process<short,1>();
+    __restgprlr_29();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar3 * 2 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs63);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828EC500  XAUDIO::SRC::DoubleVector::Process<unsigned_char,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.vector.decl.inl:76)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__DoubleVector__Process<unsigned_char,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  ulonglong uVar7;
+  
+  puVar2 = (uint *)__savegprlr_26();
+  uVar3 = puVar2[6] - puVar2[7];
+  uVar5 = puVar2[1] - puVar2[2];
+  uVar3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  lVar6 = (longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] +
+          (ulonglong)*puVar2;
+  if ((int)uVar5 < (int)uVar3) {
+    uVar3 = uVar5;
+  }
+  if (((uVar3 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Double__Process<unsigned_char,1>();
+    __restgprlr_26();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar3 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  vectorSplatImmediateSignedByte(7);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -171,6 +245,135 @@ void XAUDIO__SRC__Native__Process<float,0>(uint *param_1)
   param_1[9] = (uint)fVar2;
   param_1[2] = uVar9;
   uVar9 = iVar4 - param_1[5] >> 2;
+  if (uVar9 < param_1[6]) {
+    param_1[7] = uVar9;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
+// 828E5900  XAUDIO::SRC::Native::Process<float,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void XAUDIO__SRC__Native__Process<float,1>(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  ulonglong uVar4;
+  int iVar5;
+  float *pfVar6;
+  longlong lVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  
+  fVar1 = (float)param_1[9];
+  uVar9 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar4 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar7 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+          0x3fffffffU) * 4 + (ulonglong)*param_1;
+  pfVar6 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar5 = (int)uVar4;
+  if (iVar5 <= (int)uVar9) {
+    uVar9 = uVar4;
+  }
+  uVar10 = 0;
+  uVar4 = ((uVar9 & 0x3fffffff) * 4 + 0x7f & 0xffffffff) >> 7;
+  if (uVar4 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar7);
+      uVar10 = uVar10 + 1;
+      uVar2 = (uVar10 & 0xffffffff) << 7;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    uVar9 = uVar9 - 1;
+    *pfVar6 = *(float *)lVar7 * fVar1;
+    lVar7 = lVar7 + 4;
+    fVar1 = fVar3 / (float)(longlong)iVar5 + fVar1;
+    pfVar6 = pfVar6 + 1;
+  } while (uVar9 != 0);
+  uVar9 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 2;
+  trapWord(6,uVar9,0);
+  uVar9 = (lVar7 - (ulonglong)*param_1 & 0xffffffff) / uVar9;
+  uVar8 = (uint)uVar9;
+  if (param_1[1] <= uVar9) {
+    uVar8 = param_1[1];
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar8;
+  uVar8 = (int)pfVar6 - param_1[5] >> 2;
+  if (uVar8 < param_1[6]) {
+    param_1[7] = uVar8;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
+// 828E5A20  XAUDIO::SRC::Native::Process<float,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void XAUDIO__SRC__Native__Process<float,2>(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  ulonglong uVar4;
+  int iVar5;
+  float *pfVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  longlong lVar10;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar4 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar10 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+           0x3fffffffU) * 4 + (ulonglong)*param_1;
+  pfVar6 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar5 = (int)uVar4;
+  if (iVar5 <= (int)uVar7) {
+    uVar7 = uVar4;
+  }
+  uVar8 = 0;
+  uVar4 = ((uVar7 & 0x1fffffff) * 8 + 0x7f & 0xffffffff) >> 7;
+  if (uVar4 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar10);
+      uVar8 = uVar8 + 1;
+      uVar2 = (uVar8 & 0xffffffff) << 7;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    uVar7 = uVar7 - 1;
+    pfVar6[0x100] = ((float *)lVar10)[1] * fVar1;
+    *pfVar6 = *(float *)lVar10 * fVar1;
+    lVar10 = lVar10 + 8;
+    fVar1 = fVar3 / (float)(longlong)iVar5 + fVar1;
+    pfVar6 = pfVar6 + 1;
+  } while (uVar7 != 0);
+  uVar7 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 2;
+  trapWord(6,uVar7,0);
+  uVar7 = (lVar10 - (ulonglong)*param_1 & 0xffffffff) / uVar7;
+  uVar9 = param_1[1];
+  if (uVar7 < param_1[1]) {
+    uVar9 = (uint)uVar7;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar9;
+  uVar9 = (int)pfVar6 - param_1[5] >> 2;
   if (uVar9 < param_1[6]) {
     param_1[7] = uVar9;
     return;
@@ -249,6 +452,77 @@ void XAUDIO__SRC__Native__Process<float,4>(uint *param_1)
 }
 
 
+// 828E5C98  XAUDIO::SRC::Native::Process<float,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void XAUDIO__SRC__Native__Process<float,6>(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  float *pfVar4;
+  ulonglong uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  float *pfVar10;
+  longlong lVar11;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar5 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar11 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+           0x3fffffffU) * 4 + (ulonglong)*param_1;
+  pfVar10 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar6 = (int)uVar5;
+  if (iVar6 <= (int)uVar7) {
+    uVar7 = uVar5;
+  }
+  uVar8 = 0;
+  uVar5 = ((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + 0x7f & 0xffffffff) >> 7;
+  if (uVar5 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar11);
+      uVar8 = uVar8 + 1;
+      uVar2 = (uVar8 & 0xffffffff) << 7;
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    pfVar4 = (float *)lVar11;
+    uVar7 = uVar7 - 1;
+    pfVar10[0x500] = pfVar4[5] * fVar1;
+    pfVar10[0x400] = pfVar4[4] * fVar1;
+    pfVar10[0x300] = pfVar4[3] * fVar1;
+    pfVar10[0x200] = pfVar4[2] * fVar1;
+    pfVar10[0x100] = pfVar4[1] * fVar1;
+    *pfVar10 = *pfVar4 * fVar1;
+    lVar11 = lVar11 + 0x18;
+    pfVar10 = pfVar10 + 1;
+    fVar1 = fVar3 / (float)(longlong)iVar6 + fVar1;
+  } while (uVar7 != 0);
+  uVar7 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 2;
+  trapWord(6,uVar7,0);
+  uVar7 = (lVar11 - (ulonglong)*param_1 & 0xffffffff) / uVar7;
+  uVar9 = param_1[1];
+  if (uVar7 < param_1[1]) {
+    uVar9 = (uint)uVar7;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar9;
+  uVar9 = (int)pfVar10 - param_1[5] >> 2;
+  if (uVar9 < param_1[6]) {
+    param_1[7] = uVar9;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
 // 828E5DF8  XAUDIO::SRC::Native::Process<short,0>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
 
 void XAUDIO__SRC__Native__Process<short,0>(uint *param_1)
@@ -308,6 +582,139 @@ void XAUDIO__SRC__Native__Process<short,0>(uint *param_1)
   uVar9 = iVar4 - param_1[5] >> 2;
   if (uVar9 < param_1[6]) {
     param_1[7] = uVar9;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
+// 828E5F28  XAUDIO::SRC::Native::Process<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void XAUDIO__SRC__Native__Process<short,1>(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  ulonglong uVar4;
+  int iVar5;
+  float *pfVar6;
+  longlong lVar7;
+  short *psVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  
+  fVar1 = (float)param_1[9];
+  uVar10 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar4 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar7 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+          0x7fffffffU) * 2 + (ulonglong)*param_1;
+  pfVar6 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar5 = (int)uVar4;
+  if (iVar5 <= (int)uVar10) {
+    uVar10 = uVar4;
+  }
+  uVar11 = 0;
+  uVar4 = ((uVar10 & 0x7fffffff) * 2 + 0x7f & 0xffffffff) >> 7;
+  if (uVar4 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar7);
+      uVar11 = uVar11 + 1;
+      uVar2 = (uVar11 & 0xffffffff) << 7;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    psVar8 = (short *)lVar7;
+    uVar10 = uVar10 - 1;
+    lVar7 = lVar7 + 2;
+    *pfVar6 = (float)(longlong)*psVar8 * 3.0517578e-05 * fVar1;
+    pfVar6 = pfVar6 + 1;
+    fVar1 = fVar3 / (float)(longlong)iVar5 + fVar1;
+  } while (uVar10 != 0);
+  uVar10 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 1;
+  trapWord(6,uVar10,0);
+  uVar10 = (lVar7 - (ulonglong)*param_1 & 0xffffffff) / uVar10;
+  uVar9 = (uint)uVar10;
+  if (param_1[1] <= uVar10) {
+    uVar9 = param_1[1];
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar9;
+  uVar9 = (int)pfVar6 - param_1[5] >> 2;
+  if (uVar9 < param_1[6]) {
+    param_1[7] = uVar9;
+    return;
+  }
+  param_1[7] = param_1[6];
+  return;
+}
+
+
+// 828E6068  XAUDIO::SRC::Native::Process<short,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.inl:127)
+
+void XAUDIO__SRC__Native__Process<short,2>(uint *param_1)
+
+{
+  float fVar1;
+  ulonglong uVar2;
+  float fVar3;
+  short *psVar4;
+  ulonglong uVar5;
+  int iVar6;
+  float *pfVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  longlong lVar11;
+  
+  fVar1 = (float)param_1[9];
+  uVar8 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar5 = (ulonglong)param_1[6] - (ulonglong)param_1[7];
+  lVar11 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+           0x7fffffffU) * 2 + (ulonglong)*param_1;
+  pfVar7 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar6 = (int)uVar5;
+  if (iVar6 <= (int)uVar8) {
+    uVar8 = uVar5;
+  }
+  uVar9 = 0;
+  uVar5 = ((uVar8 & 0x3fffffff) * 4 + 0x7f & 0xffffffff) >> 7;
+  if (uVar5 != 0) {
+    uVar2 = 0;
+    do {
+      dataCacheBlockTouch((uVar2 & 0xffffff80) + lVar11);
+      uVar9 = uVar9 + 1;
+      uVar2 = (uVar9 & 0xffffffff) << 7;
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
+  }
+  fVar3 = (float)param_1[10] - fVar1;
+  do {
+    psVar4 = (short *)lVar11;
+    uVar8 = uVar8 - 1;
+    pfVar7[0x100] = (float)(longlong)psVar4[1] * 3.0517578e-05 * fVar1;
+    lVar11 = lVar11 + 4;
+    *pfVar7 = (float)(longlong)*psVar4 * 3.0517578e-05 * fVar1;
+    pfVar7 = pfVar7 + 1;
+    fVar1 = fVar3 / (float)(longlong)iVar6 + fVar1;
+  } while (uVar8 != 0);
+  uVar8 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 1;
+  trapWord(6,uVar8,0);
+  uVar8 = (lVar11 - (ulonglong)*param_1 & 0xffffffff) / uVar8;
+  uVar10 = param_1[1];
+  if (uVar8 < param_1[1]) {
+    uVar10 = (uint)uVar8;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[2] = uVar10;
+  uVar10 = (int)pfVar7 - param_1[5] >> 2;
+  if (uVar10 < param_1[6]) {
+    param_1[7] = uVar10;
     return;
   }
   param_1[7] = param_1[6];
@@ -1708,6 +2115,93 @@ void XAUDIO__SRC__Double__Process<short,0>(uint *param_1)
 }
 
 
+// 828E7F40  XAUDIO::SRC::Double::Process<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+
+void XAUDIO__SRC__Double__Process<short,1>(uint *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int iVar12;
+  ulonglong uVar11;
+  longlong lVar13;
+  short *psVar14;
+  uint uVar15;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = param_1[6] - param_1[7];
+  uVar9 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  uVar10 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  lVar13 = ((longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] &
+           0x7fffffffU) * 2 + (ulonglong)*param_1;
+  pfVar8 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar12 = (int)uVar10;
+  if (iVar12 <= (int)uVar9) {
+    uVar9 = uVar10;
+  }
+  uVar11 = 0;
+  uVar10 = ((uVar9 & 0x7fffffff) * 2 + 0x7f & 0xffffffff) >> 7;
+  fVar5 = ((float)param_1[10] - fVar1) / (float)(longlong)iVar12;
+  if (uVar10 != 0) {
+    uVar3 = 0;
+    do {
+      dataCacheBlockTouch((uVar3 & 0xffffff80) + lVar13);
+      uVar11 = uVar11 + 1;
+      uVar3 = (uVar11 & 0xffffffff) << 7;
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
+  }
+  param_1[0xd] = (uint)((float)(longlong)*(short *)(param_1 + 0xd) * 3.0517578e-05);
+  do {
+    psVar14 = (short *)lVar13;
+    fVar2 = (float)param_1[0xd];
+    fVar4 = fVar5 + fVar1;
+    uVar9 = uVar9 - 1;
+    lVar13 = lVar13 + 2;
+    fVar6 = (float)(longlong)*psVar14 * 3.0517578e-05;
+    param_1[0xd] = (uint)fVar6;
+    fVar2 = (fVar6 + fVar2) * fVar1;
+    fVar1 = fVar5 * 2.0 + fVar1;
+    *pfVar8 = fVar2 * 0.5;
+    pfVar8[1] = fVar4 * fVar6;
+    pfVar8 = pfVar8 + 2;
+  } while (uVar9 != 0);
+  uVar9 = (ulonglong)*(byte *)((int)param_1 + 0xd) << 1;
+  trapWord(6,uVar9,0);
+  uVar9 = (lVar13 - (ulonglong)*param_1 & 0xffffffff) / uVar9;
+  uVar7 = param_1[1];
+  if (uVar9 < param_1[1]) {
+    uVar7 = (uint)uVar9;
+  }
+  param_1[2] = uVar7;
+  uVar7 = (int)pfVar8 - param_1[5] >> 2;
+  uVar15 = param_1[6];
+  if (uVar7 < param_1[6]) {
+    uVar15 = uVar7;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[7] = uVar15;
+  iVar12 = (int)((float)param_1[0xd] * 32768.0);
+  if (0x7ffe < iVar12) {
+    *(undefined2 *)(param_1 + 0xd) = 0x7fff;
+    return;
+  }
+  if (iVar12 < -0x7fff) {
+    iVar12 = -0x7fe2;
+  }
+  *(short *)(param_1 + 0xd) = (short)iVar12;
+  return;
+}
+
+
 // 828E8108  XAUDIO::SRC::Double::Process<short,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
 
 void XAUDIO__SRC__Double__Process<short,2>(uint *param_1)
@@ -2182,6 +2676,93 @@ void XAUDIO__SRC__Double__Process<unsigned_char,0>(uint *param_1)
 }
 
 
+// 828E8B28  XAUDIO::SRC::Double::Process<unsigned_char,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
+
+void XAUDIO__SRC__Double__Process<unsigned_char,1>(uint *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  float *pfVar8;
+  longlong lVar9;
+  longlong lVar10;
+  int iVar12;
+  ulonglong uVar11;
+  longlong lVar13;
+  byte *pbVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  
+  fVar1 = (float)param_1[9];
+  uVar7 = param_1[6] - param_1[7];
+  lVar9 = (ulonglong)param_1[1] - (ulonglong)param_1[2];
+  lVar10 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  lVar13 = (longlong)(int)(uint)*(byte *)((int)param_1 + 0xd) * (longlong)(int)param_1[2] +
+           (ulonglong)*param_1;
+  pfVar8 = (float *)(param_1[7] * 4 + param_1[5]);
+  iVar12 = (int)lVar10;
+  if (iVar12 <= (int)lVar9) {
+    lVar9 = lVar10;
+  }
+  uVar16 = (lVar9 + 0x7fU & 0xffffffff) >> 7;
+  uVar11 = 0;
+  fVar5 = ((float)param_1[10] - fVar1) / (float)(longlong)iVar12;
+  if (uVar16 != 0) {
+    uVar3 = 0;
+    do {
+      dataCacheBlockTouch((uVar3 & 0xffffff80) + lVar13);
+      uVar11 = uVar11 + 1;
+      uVar3 = (uVar11 & 0xffffffff) << 7;
+      uVar16 = uVar16 - 1;
+    } while (uVar16 != 0);
+  }
+  param_1[0xd] = (uint)(((float)*(byte *)(param_1 + 0xd) - 128.0) * 0.0078125);
+  do {
+    pbVar14 = (byte *)lVar13;
+    fVar2 = (float)param_1[0xd];
+    fVar4 = fVar5 + fVar1;
+    lVar9 = lVar9 + -1;
+    lVar13 = lVar13 + 1;
+    fVar6 = ((float)*pbVar14 - 128.0) * 0.0078125;
+    param_1[0xd] = (uint)fVar6;
+    fVar2 = (fVar6 + fVar2) * fVar1;
+    fVar1 = fVar5 * 2.0 + fVar1;
+    *pfVar8 = fVar2 * 0.5;
+    pfVar8[1] = fVar4 * fVar6;
+    pfVar8 = pfVar8 + 2;
+  } while (lVar9 != 0);
+  trapWord(6,(ulonglong)*(byte *)((int)param_1 + 0xd),0);
+  uVar16 = (lVar13 - (ulonglong)*param_1 & 0xffffffff) / (ulonglong)*(byte *)((int)param_1 + 0xd);
+  uVar7 = (uint)uVar16;
+  if (param_1[1] <= uVar16) {
+    uVar7 = param_1[1];
+  }
+  param_1[2] = uVar7;
+  uVar7 = (int)pfVar8 - param_1[5] >> 2;
+  uVar15 = param_1[6];
+  if (uVar7 < param_1[6]) {
+    uVar15 = uVar7;
+  }
+  param_1[9] = (uint)fVar1;
+  param_1[7] = uVar15;
+  iVar12 = 0x80 - (int)((float)param_1[0xd] * -128.0);
+  if (0xfe < iVar12) {
+    *(undefined1 *)(param_1 + 0xd) = 0xff;
+    return;
+  }
+  if (iVar12 < 1) {
+    iVar12 = 0;
+  }
+  *(char *)(param_1 + 0xd) = (char)iVar12;
+  return;
+}
+
+
 // 828E8CF0  XAUDIO::SRC::Double::Process<unsigned_char,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/doublesrc.inl:153)
 
 void XAUDIO__SRC__Double__Process<unsigned_char,2>(uint *param_1)
@@ -2550,8 +3131,113 @@ void XAUDIO__SRC__Double__Process<unsigned_char,6>(uint *param_1)
 void XAUDIO__SRC__Double__Process<SHORTLE,0>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  int iVar9;
+  longlong lVar10;
+  float *pfVar12;
+  ulonglong uVar11;
+  uint uVar14;
+  longlong lVar13;
+  int iVar15;
+  float *pfVar16;
+  uint uVar17;
+  float *pfVar18;
+  ulonglong uVar19;
+  
+  puVar6 = (uint *)__savegprlr_29();
+  fVar2 = (float)puVar6[9];
+  pfVar18 = (float *)(puVar6 + 0xd);
+  bVar1 = *(byte *)((int)puVar6 + 0xd);
+  uVar7 = (ulonglong)bVar1;
+  uVar14 = puVar6[6] - puVar6[7];
+  lVar10 = (ulonglong)puVar6[1] - (ulonglong)puVar6[2];
+  lVar13 = (longlong)((int)uVar14 >> 1) + (ulonglong)((int)uVar14 < 0 && (uVar14 & 1) != 0);
+  iVar9 = puVar6[7] * 4 + puVar6[5];
+  lVar8 = ((longlong)(int)(uint)bVar1 * (longlong)(int)puVar6[2] & 0x7fffffffU) * 2 +
+          (ulonglong)*puVar6;
+  iVar15 = (int)lVar13;
+  if (iVar15 <= (int)lVar10) {
+    lVar10 = lVar13;
+  }
+  fVar4 = ((float)puVar6[10] - fVar2) / (float)(longlong)iVar15;
+  if (bVar1 != 0) {
+    pfVar16 = (float *)(puVar6 + 0xc);
+    uVar19 = uVar7;
+    do {
+      pfVar12 = pfVar16 + 1;
+      pfVar16 = pfVar16 + 1;
+      *pfVar16 = (float)(longlong)(short)(*(ushort *)pfVar12 << 8 | *(ushort *)pfVar12 >> 8) *
+                 3.0517578e-05;
+      uVar19 = uVar19 - 1;
+    } while (uVar19 != 0);
+  }
+  do {
+    if (uVar7 != 0) {
+      pfVar12 = (float *)(iVar9 + -0x3fc);
+      pfVar16 = (float *)(puVar6 + 0xc);
+      lVar13 = lVar8 + -2;
+      uVar19 = uVar7;
+      do {
+        lVar13 = lVar13 + 2;
+        fVar3 = pfVar16[1];
+        fVar5 = (float)(longlong)(short)(*(ushort *)lVar13 << 8 | *(ushort *)lVar13 >> 8) *
+                3.0517578e-05;
+        pfVar16 = pfVar16 + 1;
+        *pfVar16 = fVar5;
+        pfVar12[0xff] = (fVar5 + fVar3) * fVar2 * 0.5;
+        pfVar12 = pfVar12 + 0x100;
+        *pfVar12 = (fVar4 + fVar2) * fVar5;
+        uVar19 = uVar19 - 1;
+      } while (uVar19 != 0);
+    }
+    lVar10 = lVar10 + -1;
+    fVar2 = fVar4 * 2.0 + fVar2;
+    lVar8 = uVar7 * 2 + lVar8;
+    iVar9 = iVar9 + 8;
+  } while (lVar10 != 0);
+  uVar19 = (ulonglong)*(byte *)((int)puVar6 + 0xd) << 1;
+  uVar11 = (lVar8 - (ulonglong)*puVar6 & 0xffffffff) / uVar19;
+  trapWord(6,uVar19,0);
+  uVar14 = (uint)uVar11;
+  if (puVar6[1] <= uVar11) {
+    uVar14 = puVar6[1];
+  }
+  puVar6[2] = uVar14;
+  uVar14 = iVar9 - puVar6[5] >> 2;
+  uVar17 = puVar6[6];
+  if (uVar14 < puVar6[6]) {
+    uVar17 = uVar14;
+  }
+  puVar6[9] = (uint)fVar2;
+  puVar6[7] = uVar17;
+  if (bVar1 != 0) {
+    do {
+      uVar14 = (uint)(*pfVar18 * 32768.0);
+      if ((int)uVar14 < 0x7fff) {
+        if ((int)uVar14 < -0x7fff) {
+          *(undefined2 *)pfVar18 = 0x80;
+        }
+        else {
+          *(ushort *)pfVar18 =
+               (ushort)(((ulonglong)uVar14 & 0xff) << 8) | (ushort)(uVar14 >> 8) & 0xff;
+        }
+      }
+      else {
+        *(undefined2 *)pfVar18 = 0xff7f;
+      }
+      pfVar18 = pfVar18 + 1;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -3024,191 +3710,418 @@ void XAUDIO__SRC__Double__Process<SHORTLE,6>(uint *param_1)
 
 // 828E0380  XAUDIO::SRC::Linear::Process<float,0>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<float,0>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)puVar1[2] * (longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd)
+                      & 0x3fffffffU) * 4 + (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs40);
+  altv300_21(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E06E0  XAUDIO::SRC::Linear::Process<float,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<float,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x3fffffffU) * 4 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E09C0  XAUDIO::SRC::Linear::Process<float,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<float,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x3fffffffU) * 4 + (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs37);
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E0CE8  XAUDIO::SRC::Linear::Process<float,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<float,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_16();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x3fffffffU) * 4 + (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs41);
+  altv300_21(in_vs32,in_vs40);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E10E0  XAUDIO::SRC::Linear::Process<float,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<float,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs40 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x3fffffffU) * 4 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs38);
+  altv300_21(in_vs35,in_vs40);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E15E8  XAUDIO::SRC::Linear::Process<short,0>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<short,0>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs40);
+  altv300_21(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E1980  XAUDIO::SRC::Linear::Process<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<short,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E1C98  XAUDIO::SRC::Linear::Process<short,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<short,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E2030  XAUDIO::SRC::Linear::Process<short,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<short,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_17();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E24F8  XAUDIO::SRC::Linear::Process<short,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<short,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs40 [16];
+  
+  puVar1 = (uint *)__savegprlr_16();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs40);
+  altv300_21(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E2B28  XAUDIO::SRC::Linear::Process<unsigned_char,0>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<unsigned_char,0>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_19();
+  dataCacheBlockTouch((ulonglong)*puVar1 +
+                      (longlong)(int)puVar1[2] * (longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd));
+  altv300_21(in_vs32,in_vs41);
+  altv300_21(in_vs35,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E2EC8  XAUDIO::SRC::Linear::Process<unsigned_char,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<unsigned_char,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs43 [16];
+  
+  puVar1 = (uint *)__savegprlr_19();
+  dataCacheBlockTouch((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2] +
+                      (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs43);
+  altv300_21(in_vs32,in_vs37);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E3200  XAUDIO::SRC::Linear::Process<unsigned_char,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<unsigned_char,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs43 [16];
+  
+  puVar1 = (uint *)__savegprlr_18();
+  dataCacheBlockTouch((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2] +
+                      (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs43);
+  altv300_21(in_vs32,in_vs37);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E35D8  XAUDIO::SRC::Linear::Process<unsigned_char,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<unsigned_char,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_19();
+  dataCacheBlockTouch((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2] +
+                      (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs40);
+  altv300_21(in_vs32,in_vs41);
+  altv300_21(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E3AF8  XAUDIO::SRC::Linear::Process<unsigned_char,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<unsigned_char,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs39 [16];
+  
+  puVar1 = (uint *)__savegprlr_19();
+  dataCacheBlockTouch((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2] +
+                      (ulonglong)*puVar1);
+  altv300_21(in_vs35,in_vs38);
+  altv300_21(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E4190  XAUDIO::SRC::Linear::Process<SHORTLE,0>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<SHORTLE,0>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_17();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs41);
+  altv300_21(in_vs35,in_vs38);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E4548  XAUDIO::SRC::Linear::Process<SHORTLE,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<SHORTLE,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar1 = (uint *)__savegprlr_17();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E4878  XAUDIO::SRC::Linear::Process<SHORTLE,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<SHORTLE,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs41 [16];
+  
+  puVar1 = (uint *)__savegprlr_17();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828E4C38  XAUDIO::SRC::Linear::Process<SHORTLE,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.128.decl.inl:205)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__Linear__Process<SHORTLE,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint *puVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs40 [16];
+  
+  puVar1 = (uint *)__savegprlr_17();
+  dataCacheBlockTouch(((longlong)(int)(uint)*(byte *)((int)puVar1 + 0xd) * (longlong)(int)puVar1[2]
+                      & 0x7fffffffU) * 2 + (ulonglong)*puVar1);
+  altv300_21(in_vs32,in_vs40);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -3234,51 +4147,236 @@ void XAUDIO__SRC__Linear__Process<SHORTLE,6>(void)
 
 // 828EAF28  XAUDIO::SRC::NativeVector::Process<float,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.vector.inl:418)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__NativeVector__Process<float,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs60 [16];
+  
+  puVar2 = (uint *)__savegprlr_28();
+  uVar3 = puVar2[6] - puVar2[7];
+  uVar5 = puVar2[1] - puVar2[2];
+  lVar6 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x3fffffffU) * 4 + (ulonglong)*puVar2;
+  if ((int)uVar3 <= (int)uVar5) {
+    uVar5 = uVar3;
+  }
+  if (((uVar5 & 7 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Native__Process<float,1>();
+    __restgprlr_28();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar5 * 4 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs60);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828EB0E8  XAUDIO::SRC::NativeVector::Process<float,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.vector.inl:418)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__NativeVector__Process<float,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs38 [16];
+  
+  puVar2 = (uint *)__savegprlr_27();
+  uVar5 = puVar2[1] - puVar2[2];
+  uVar3 = puVar2[6] - puVar2[7];
+  lVar6 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x3fffffffU) * 4 + (ulonglong)*puVar2;
+  if ((int)uVar3 <= (int)uVar5) {
+    uVar5 = uVar3;
+  }
+  if (((uVar5 & 7 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Native__Process<float,2>();
+    __restgprlr_27();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar5 * 8 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs38);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828EB2F8  XAUDIO::SRC::NativeVector::Process<float,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.vector.inl:418)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__NativeVector__Process<float,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  uint uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  puVar2 = (uint *)__savegprlr_17();
+  uVar4 = puVar2[1] - puVar2[2];
+  uVar3 = puVar2[6] - puVar2[7];
+  lVar5 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x3fffffffU) * 4 + (ulonglong)*puVar2;
+  if ((int)uVar3 <= (int)uVar4) {
+    uVar4 = uVar3;
+  }
+  if (((uVar4 & 7 | puVar2[7] * 4 + puVar2[5] | (uint)lVar5) & 0xf) != 0) {
+    XAUDIO__SRC__Native__Process<float,6>();
+    __restgprlr_17();
+    return;
+  }
+  uVar6 = 0;
+  uVar7 = (ulonglong)(uVar4 * 0x18 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar5);
+      uVar6 = uVar6 + 1;
+      uVar1 = (uVar6 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828EB640  XAUDIO::SRC::NativeVector::Process<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.vector.inl:418)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__NativeVector__Process<short,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs59 [16];
+  
+  puVar2 = (uint *)__savegprlr_26();
+  uVar5 = puVar2[1] - puVar2[2];
+  uVar3 = puVar2[6] - puVar2[7];
+  lVar6 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x7fffffffU) * 2 + (ulonglong)*puVar2;
+  if ((int)uVar3 <= (int)uVar5) {
+    uVar5 = uVar3;
+  }
+  if (((uVar5 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Native__Process<short,1>();
+    __restgprlr_26();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar5 * 2 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs59);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828EB848  XAUDIO::SRC::NativeVector::Process<short,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/nativesrc.vector.inl:418)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__NativeVector__Process<short,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  uint *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs60 [16];
+  
+  puVar2 = (uint *)__savegprlr_27();
+  uVar5 = puVar2[1] - puVar2[2];
+  uVar3 = puVar2[6] - puVar2[7];
+  lVar6 = ((longlong)(int)(uint)*(byte *)((int)puVar2 + 0xd) * (longlong)(int)puVar2[2] &
+          0x7fffffffU) * 2 + (ulonglong)*puVar2;
+  if ((int)uVar3 <= (int)uVar5) {
+    uVar5 = uVar3;
+  }
+  if (((uVar5 & 7 | puVar2[7] * 4 + puVar2[5] | (uint)lVar6) & 0xf) != 0) {
+    XAUDIO__SRC__Native__Process<short,2>();
+    __restgprlr_27();
+    return;
+  }
+  uVar4 = 0;
+  uVar7 = (ulonglong)(uVar5 * 4 + 0x7f >> 7);
+  if (uVar7 != 0) {
+    uVar1 = 0;
+    do {
+      dataCacheBlockTouch((uVar1 & 0xffffff80) + lVar6);
+      uVar4 = uVar4 + 1;
+      uVar1 = (uVar4 & 0xffffffff) << 7;
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
+  }
+  altv300_21(in_vs32,in_vs60);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -3378,161 +4476,292 @@ void XAUDIO__SRC__NativeVector__Process<unsigned_char,1>(void)
 
 // 828DC5E8  XAUDIO::SRC::LinearVector::ProcessBlock<short,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<short,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int in_r7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs41 [16];
+  
+  uVar1 = __savegprlr_28();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+  altv300_21(in_vs32,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DC850  XAUDIO::SRC::LinearVector::ProcessBlock<short,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<short,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_27();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DCB20  XAUDIO::SRC::LinearVector::ProcessBlock<short,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<short,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_19();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DCEC0  XAUDIO::SRC::LinearVector::ProcessBlock<short,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<short,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr();
+  dataCacheBlockTouch(uVar1);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DD508  XAUDIO::SRC::LinearVector::ProcessBlock<float,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<float,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int in_r7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  
+  uVar1 = __savegprlr_29();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+  altv300_21(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DD708  XAUDIO::SRC::LinearVector::ProcessBlock<float,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<float,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_28();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DD938  XAUDIO::SRC::LinearVector::ProcessBlock<float,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<float,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_23();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DDBD0  XAUDIO::SRC::LinearVector::ProcessBlock<float,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<float,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_16();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DDEE0  XAUDIO::SRC::LinearVector::ProcessBlock<unsigned_char,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<unsigned_char,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_28();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+  vectorSplatImmediateSignedByte(7);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DE1F8  XAUDIO::SRC::LinearVector::ProcessBlock<unsigned_char,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<unsigned_char,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_23();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DE5E8  XAUDIO::SRC::LinearVector::ProcessBlock<unsigned_char,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<unsigned_char,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DEC98  XAUDIO::SRC::LinearVector::ProcessBlock<unsigned_char,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<unsigned_char,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DF590  XAUDIO::SRC::LinearVector::ProcessBlock<SHORTLE,1>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<SHORTLE,1>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_27();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DF818  XAUDIO::SRC::LinearVector::ProcessBlock<SHORTLE,2>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<SHORTLE,2>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_27();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DFB00  XAUDIO::SRC::LinearVector::ProcessBlock<SHORTLE,4>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<SHORTLE,4>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int in_r7;
+  
+  uVar1 = __savegprlr_19();
+  dataCacheBlockTouch(uVar1);
+  *(undefined4 *)(in_r7 + 0x24) = *(undefined4 *)(in_r7 + 0x28);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828DFEC0  XAUDIO::SRC::LinearVector::ProcessBlock<SHORTLE,6>  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/linearsrc.vector.inl:427)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAUDIO__SRC__LinearVector__ProcessBlock<SHORTLE,6>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr();
+  dataCacheBlockTouch(uVar1);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 

@@ -2,11 +2,68 @@
 
 // 82731B70  R_CullDynModelInCell  (gfx_d3d/r_dpvs_dynmodel.cpp:33)
 
-void R_CullDynModelInCell(void)
+void R_CullDynModelInCell
+               (undefined8 param_1,ulonglong param_2,int param_3,longlong param_4,int param_5,
+               int param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  uint *puVar5;
+  int iVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  double dVar11;
+  
+  puVar5 = (uint *)__savegprlr();
+  uVar8 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    dVar11 = 0.0;
+    do {
+      uVar9 = *puVar5;
+      uVar10 = LZCOUNT(uVar9);
+      if (uVar10 < 0x20) {
+        do {
+          iVar2 = (int)uVar8 * 0x20 + (int)uVar10;
+          if (0x20 < uVar10) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar10,0x21);
+          }
+          uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
+          if ((uVar1 & uVar9) == 0) {
+            MyAssertHandler(0xffffffff821bd468,0x36,0,0xffffffff82000f98,0xffffffff8205cd08);
+          }
+          uVar9 = uVar9 & ~uVar1;
+          if (*(char *)(iVar2 + param_6) == '\0') {
+            iVar6 = 0;
+            iVar3 = iVar2 * 0x20 + param_3;
+            if (0 < param_5) {
+              lVar7 = param_4 + 8;
+              do {
+                pfVar4 = (float *)lVar7;
+                if ((double)(*pfVar4 * *(float *)(iVar3 + 0x18) +
+                             pfVar4[-2] * *(float *)(iVar3 + 0x10) +
+                             pfVar4[-1] * *(float *)(iVar3 + 0x14) + pfVar4[1] +
+                            *(float *)(iVar3 + 0x1c)) <= dVar11) goto LAB_82731cc0;
+                iVar6 = iVar6 + 1;
+                lVar7 = lVar7 + 0x10;
+              } while (iVar6 < param_5);
+            }
+            *(undefined1 *)(iVar2 + param_6) = 1;
+          }
+LAB_82731cc0:
+          uVar10 = LZCOUNT(uVar9);
+        } while (uVar10 < 0x20);
+      }
+      uVar8 = uVar8 + 1;
+      puVar5 = puVar5 + 1;
+    } while ((uVar8 & 0xffffffff) < (param_2 & 0xffffffff));
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -15,7 +72,35 @@ void R_CullDynModelInCell(void)
 void R_AddCellDynModelSurfacesInFrustumCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  int iVar6;
+  undefined4 *puVar8;
+  undefined8 uVar7;
+  int *piVar9;
+  
+  puVar8 = (undefined4 *)__savegprlr_27();
+  iVar6 = DAT_8461658c;
+  if (*(char *)(DAT_845aa5dc + 0xc) != '\0') {
+    piVar9 = (int *)(DAT_8461658c + 0x294);
+    if (*(uint *)(DAT_8461658c + 0x34) <= (uint)puVar8[1]) {
+      MyAssertHandler(0xffffffff821bd468,0x88,0,0xffffffff821bd4b0);
+    }
+    iVar2 = puVar8[1];
+    iVar3 = *piVar9;
+    uVar4 = *(uint *)(iVar6 + 0x2a4);
+    uVar1 = *(undefined1 *)(puVar8 + 2);
+    uVar5 = *puVar8;
+    iVar6 = piVar9[*(ushort *)((int)puVar8 + 10) + 6];
+    uVar7 = DynEnt_GetClientModelPoseList();
+    R_CullDynModelInCell
+              (((longlong)iVar2 * (longlong)iVar3 & 0x3fffffffU) * 4 + (ulonglong)uVar4,iVar3,uVar7,
+               uVar5,uVar1,iVar6);
+  }
+  __restgprlr_27();
+  return;
 }
 

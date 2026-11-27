@@ -50,6 +50,37 @@
 ; 8242FD08  Glass_Fall_GetLastPassedTraceTime  (EffectsCore/fx_glass_update.cpp:53)
   8242FD08  7D8802A6             mfspr r12,LR
   8242FD0C  484E69B1             bl 0x829166bc
+  8242FD10  9421FF90             stwu r1,-0x70(r1)
+  8242FD14  3FA08333             lis r29,-0x7ccd
+  8242FD18  7C9E2378             or r30,r4,r4
+  8242FD1C  817DCBF0             lwz r11,-0x3410(r29)
+  8242FD20  814B000C             lwz r10,0xc(r11)
+  8242FD24  7D445050             subf r10,r4,r10
+  8242FD28  7FEA1A15             add. r31,r10,r3
+  8242FD2C  4080002C             bge 0x8242fd58
+  8242FD30  3D608206             lis r11,-0x7dfa
+  8242FD34  3D408206             lis r10,-0x7dfa
+  8242FD38  38CB4FDC             addi r6,r11,0x4fdc
+  8242FD3C  386A4F90             addi r3,r10,0x4f90
+  8242FD40  39000000             li r8,0x0
+  8242FD44  7FE7FB78             or r7,r31,r31
+  8242FD48  38A00000             li r5,0x0
+  8242FD4C  3880003A             li r4,0x3a
+  8242FD50  481A47B1             bl 0x825d4500
+  8242FD54  817DCBF0             lwz r11,-0x3410(r29)
+LAB_8242fd58:
+  8242FD58  812B000C             lwz r9,0xc(r11)
+  8242FD5C  57EA083E             rlwinm r10,r31,0x1,0x0,0x1f
+  8242FD60  7D7F4BD6             divw r11,r31,r9
+  8242FD64  390AFFFF             subi r8,r10,0x1
+  8242FD68  38EBFFFF             subi r7,r11,0x1
+  8242FD6C  7D264078             andc r6,r9,r8
+  8242FD70  7D6749D6             mullw r11,r7,r9
+  8242FD74  0CC90000             twllei r9,0x0
+  8242FD78  0CA6FFFF             twlgei r6,-0x1
+  8242FD7C  7C6BF214             add r3,r11,r30
+  8242FD80  38210070             addi r1,r1,0x70
+  8242FD84  484E6988             b 0x8291670c
 
 ; 8242FD88  Glass_UpdateFall  (EffectsCore/fx_glass_update.cpp:65)
   8242FD88  7D8802A6             mfspr r12,LR
@@ -181,6 +212,7 @@ LAB_8242ff50:
   8242FF6C  38A00000             li r5,0x0
   8242FF70  38800075             li r4,0x75
   8242FF74  481A458D             bl 0x825d4500
+  8242FF78  8178CBF0             lwz r11,-0x3410(r24)
 LAB_8242ff7c:
   8242FF7C  814B000C             lwz r10,0xc(r11)
   8242FF80  3D008217             lis r8,-0x7de9
@@ -393,6 +425,72 @@ LAB_824301c8:
 ; 82430298  Glass_UpdatePhysics  (EffectsCore/fx_glass_update.cpp:169)
   82430298  7D8802A6             mfspr r12,LR
   8243029C  484E6415             bl 0x829166b0
+  824302A0  9421FF70             stwu r1,-0x90(r1)
+  824302A4  548A1838             rlwinm r10,r4,0x3,0x0,0x1c
+  824302A8  81030038             lwz r8,0x38(r3)
+  824302AC  548B2834             rlwinm r11,r4,0x5,0x0,0x1a
+  824302B0  8123003C             lwz r9,0x3c(r3)
+  824302B4  7CE45214             add r7,r4,r10
+  824302B8  81430034             lwz r10,0x34(r3)
+  824302BC  7FA85A14             add r29,r8,r11
+  824302C0  54E8103A             rlwinm r8,r7,0x2,0x0,0x1d
+  824302C4  7C9E2378             or r30,r4,r4
+  824302C8  7F894214             add r28,r9,r8
+  824302CC  7CCA5A14             add r6,r10,r11
+  824302D0  A09D001A             lhz r4,0x1a(r29)
+  824302D4  7C7F1B78             or r31,r3,r3
+  824302D8  38600001             li r3,0x1
+  824302DC  609B0008             ori r27,r4,0x8
+  824302E0  835C0004             lwz r26,0x4(r28)
+  824302E4  38A60010             addi r5,r6,0x10
+  824302E8  B37D001A             sth r27,0x1a(r29)
+  824302EC  7F44D378             or r4,r26,r26
+  824302F0  48243939             bl 0x82673c28
+  824302F4  7F43D378             or r3,r26,r26
+  824302F8  48243D31             bl 0x82674028
+  824302FC  5463063E             rlwinm r3,r3,0x0,0x18,0x1f
+  82430300  2B030000             cmplwi cr6,r3,0x0
+  82430304  419A0040             beq cr6,0x82430344
+  82430308  576B043E             rlwinm r11,r27,0x0,0x10,0x1f
+  8243030C  7F83E378             or r3,r28,r28
+  82430310  616A0020             ori r10,r11,0x20
+  82430314  B15D001A             sth r10,0x1a(r29)
+  82430318  4BFED511             bl 0x8241d828
+  8243031C  3D207FFF             lis r9,0x7fff
+  82430320  80FC0000             lwz r7,0x0(r28)
+  82430324  7FC4F378             or r4,r30,r30
+  82430328  6128FFFF             ori r8,r9,0xffff
+  8243032C  7FE3FB78             or r3,r31,r31
+  82430330  7F074000             cmpw cr6,r7,r8
+  82430334  409A0050             bne cr6,0x82430384
+  82430338  4BFFACA1             bl 0x8242afd8
+  8243033C  38210090             addi r1,r1,0x90
+  82430340  484E63C0             b 0x82916700
+LAB_82430344:
+  82430344  817C0008             lwz r11,0x8(r28)
+  82430348  2F0B0000             cmpwi cr6,r11,0x0
+  8243034C  419A003C             beq cr6,0x82430388
+  82430350  817F0000             lwz r11,0x0(r31)
+  82430354  815C0000             lwz r10,0x0(r28)
+  82430358  7D69FE70             srawi r9,r11,0x1f
+  8243035C  55480FFE             rlwinm r8,r10,0x1,0x1f,0x1f
+  82430360  7CEA5810             subfc r7,r10,r11
+  82430364  7D684914             adde r11,r8,r9
+  82430368  5566063E             rlwinm r6,r11,0x0,0x18,0x1f
+  8243036C  2B060000             cmplwi cr6,r6,0x0
+  82430370  419A0018             beq cr6,0x82430388
+  82430374  7F83E378             or r3,r28,r28
+  82430378  4BFECDB1             bl 0x8241d128
+  8243037C  7FC4F378             or r4,r30,r30
+  82430380  7FE3FB78             or r3,r31,r31
+LAB_82430384:
+  82430384  4BFF2165             bl 0x824224e8
+LAB_82430388:
+  82430388  7FC4F378             or r4,r30,r30
+  8243038C  7FE3FB78             or r3,r31,r31
+  82430390  4BFFAD79             bl 0x8242b108
+  82430394  38210090             addi r1,r1,0x90
+  82430398  484E6368             b 0x82916700
 
 ; 824303A0  Glass_UpdatePiece  (EffectsCore/fx_glass_update.cpp:209)
   824303A0  54AA1838             rlwinm r10,r5,0x3,0x0,0x1c

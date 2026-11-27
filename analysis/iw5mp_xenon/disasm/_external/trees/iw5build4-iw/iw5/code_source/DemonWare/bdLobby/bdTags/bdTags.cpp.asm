@@ -4,6 +4,11 @@
   82903960  90830000             stw r4,0x0(r3)
   82903964  4E800020             blr
 
+; 82903968  bdTags::~bdTags  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:31)
+  82903968  39600000             li r11,0x0
+  8290396C  91630000             stw r11,0x0(r3)
+  82903970  4E800020             blr
+
 ; 829039D8  bdTags::setTagsForEntityID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:67)
   829039D8  7D8802A6             mfspr r12,LR
   829039DC  48012CC5             bl 0x829166a0
@@ -215,3 +220,26 @@ LAB_82903d30:
 ; 82903978  bdTags::countValidTags  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:186)
   82903978  7D8802A6             mfspr r12,LR
   8290397C  48012D41             bl 0x829166bc
+  82903980  9421FF90             stwu r1,-0x70(r1)
+  82903984  3BA00000             li r29,0x0
+  82903988  2B040000             cmplwi cr6,r4,0x0
+  8290398C  419A0038             beq cr6,0x829039c4
+  82903990  7CBF2B78             or r31,r5,r5
+  82903994  7C9E2378             or r30,r4,r4
+LAB_82903998:
+  82903998  817F0000             lwz r11,0x0(r31)
+  8290399C  7FE3FB78             or r3,r31,r31
+  829039A0  816B0010             lwz r11,0x10(r11)
+  829039A4  7D6903A6             mtspr CTR,r11
+  829039A8  4E800421             bctrl
+  829039AC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829039B0  41820008             beq 0x829039b8
+  829039B4  3BBD0001             addi r29,r29,0x1
+LAB_829039b8:
+  829039B8  37DEFFFF             subic. r30,r30,0x1
+  829039BC  3BFF0018             addi r31,r31,0x18
+  829039C0  4082FFD8             bne 0x82903998
+LAB_829039c4:
+  829039C4  7FA3EB78             or r3,r29,r29
+  829039C8  38210070             addi r1,r1,0x70
+  829039CC  48012D40             b 0x8291670c

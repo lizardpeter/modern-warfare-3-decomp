@@ -24,6 +24,18 @@ void jpeg_free_small(int param_1,undefined8 param_2,undefined8 param_3)
 }
 
 
+// 827C9608  jpeg_get_large  (jpeg-6/jmemnobs.c:56)
+
+void jpeg_get_large(int param_1,undefined8 param_2)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x827c9614. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(param_1 + 0x18))(param_2);
+  return;
+}
+
+
 // 827C9618  jpeg_free_large  (jpeg-6/jmemnobs.c:62)
 
 void jpeg_free_large(int param_1,undefined8 param_2,undefined8 param_3)
@@ -33,6 +45,37 @@ void jpeg_free_large(int param_1,undefined8 param_2,undefined8 param_3)
                     /* WARNING: Treating indirect jump as call */
   (**(code **)(param_1 + 0x1c))(param_2,param_3);
   return;
+}
+
+
+// 827C9630  jpeg_mem_available  (jpeg-6/jmemnobs.c:75)
+
+undefined8 jpeg_mem_available(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  return param_3;
+}
+
+
+// 827C9638  jpeg_open_backing_store  (jpeg-6/jmemnobs.c:89)
+
+void jpeg_open_backing_store(int *param_1)
+
+{
+  *(undefined4 *)(*param_1 + 0x14) = 0x31;
+                    /* WARNING: Could not recover jumptable at 0x827c9650. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)*param_1)();
+  return;
+}
+
+
+// 827C9658  jpeg_mem_init  (jpeg-6/jmemnobs.c:101)
+
+undefined8 jpeg_mem_init(void)
+
+{
+  return 0;
 }
 
 

@@ -70,3 +70,158 @@ LAB_828c9224:
 ; 828C9238  FindMaxValueFlt  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/libvect.c:334)
   828C9238  7D8802A6             mfspr r12,LR
   828C923C  4804D481             bl 0x829166bc
+  828C9240  81630000             lwz r11,0x0(r3)
+  828C9244  3BA00000             li r29,0x0
+  828C9248  3BE00000             li r31,0x0
+  828C924C  7D7E5B78             or r30,r11,r11
+  828C9250  39400001             li r10,0x1
+  828C9254  2F0B0000             cmpwi cr6,r11,0x0
+  828C9258  40980108             bge cr6,0x828c9360
+  828C925C  39000002             li r8,0x2
+  828C9260  38E3000C             addi r7,r3,0xc
+LAB_828c9264:
+  828C9264  39280003             addi r9,r8,0x3
+  828C9268  7F092000             cmpw cr6,r9,r4
+  828C926C  419900A8             bgt cr6,0x828c9314
+  828C9270  8127FFF8             lwz r9,-0x8(r7)
+  828C9274  7F095800             cmpw cr6,r9,r11
+  828C9278  4099000C             ble cr6,0x828c9284
+  828C927C  7D2B4B78             or r11,r9,r9
+  828C9280  7D5F5378             or r31,r10,r10
+LAB_828c9284:
+  828C9284  7F09F000             cmpw cr6,r9,r30
+  828C9288  4098000C             bge cr6,0x828c9294
+  828C928C  7D3E4B78             or r30,r9,r9
+  828C9290  7D5D5378             or r29,r10,r10
+LAB_828c9294:
+  828C9294  8127FFFC             lwz r9,-0x4(r7)
+  828C9298  7F095800             cmpw cr6,r9,r11
+  828C929C  4099000C             ble cr6,0x828c92a8
+  828C92A0  7D2B4B78             or r11,r9,r9
+  828C92A4  7D1F4378             or r31,r8,r8
+LAB_828c92a8:
+  828C92A8  7F09F000             cmpw cr6,r9,r30
+  828C92AC  4098000C             bge cr6,0x828c92b8
+  828C92B0  7D3E4B78             or r30,r9,r9
+  828C92B4  7D1D4378             or r29,r8,r8
+LAB_828c92b8:
+  828C92B8  81270000             lwz r9,0x0(r7)
+  828C92BC  7F095800             cmpw cr6,r9,r11
+  828C92C0  4099000C             ble cr6,0x828c92cc
+  828C92C4  7D2B4B78             or r11,r9,r9
+  828C92C8  3BE80001             addi r31,r8,0x1
+LAB_828c92cc:
+  828C92CC  7F09F000             cmpw cr6,r9,r30
+  828C92D0  4098000C             bge cr6,0x828c92dc
+  828C92D4  7D3E4B78             or r30,r9,r9
+  828C92D8  3BA80001             addi r29,r8,0x1
+LAB_828c92dc:
+  828C92DC  81270004             lwz r9,0x4(r7)
+  828C92E0  7F095800             cmpw cr6,r9,r11
+  828C92E4  4099000C             ble cr6,0x828c92f0
+  828C92E8  7D2B4B78             or r11,r9,r9
+  828C92EC  3BE80002             addi r31,r8,0x2
+LAB_828c92f0:
+  828C92F0  7F09F000             cmpw cr6,r9,r30
+  828C92F4  4098000C             bge cr6,0x828c9300
+  828C92F8  7D3E4B78             or r30,r9,r9
+  828C92FC  3BA80002             addi r29,r8,0x2
+LAB_828c9300:
+  828C9300  394A0004             addi r10,r10,0x4
+  828C9304  38E70010             addi r7,r7,0x10
+  828C9308  39080004             addi r8,r8,0x4
+  828C930C  2F0B0000             cmpwi cr6,r11,0x0
+  828C9310  4198FF54             blt cr6,0x828c9264
+LAB_828c9314:
+  828C9314  2F0B0000             cmpwi cr6,r11,0x0
+  828C9318  40980048             bge cr6,0x828c9360
+  828C931C  5549103A             rlwinm r9,r10,0x2,0x0,0x1d
+  828C9320  7D091A14             add r8,r9,r3
+LAB_828c9324:
+  828C9324  7F0A2000             cmpw cr6,r10,r4
+  828C9328  40980038             bge cr6,0x828c9360
+  828C932C  81280000             lwz r9,0x0(r8)
+  828C9330  7F095800             cmpw cr6,r9,r11
+  828C9334  4099000C             ble cr6,0x828c9340
+  828C9338  7D2B4B78             or r11,r9,r9
+  828C933C  7D5F5378             or r31,r10,r10
+LAB_828c9340:
+  828C9340  7F09F000             cmpw cr6,r9,r30
+  828C9344  4098000C             bge cr6,0x828c9350
+  828C9348  7D3E4B78             or r30,r9,r9
+  828C934C  7D5D5378             or r29,r10,r10
+LAB_828c9350:
+  828C9350  394A0001             addi r10,r10,0x1
+  828C9354  39080004             addi r8,r8,0x4
+  828C9358  2F0B0000             cmpwi cr6,r11,0x0
+  828C935C  4198FFC8             blt cr6,0x828c9324
+LAB_828c9360:
+  828C9360  38EA0004             addi r7,r10,0x4
+  828C9364  7F072000             cmpw cr6,r7,r4
+  828C9368  41990074             bgt cr6,0x828c93dc
+  828C936C  392A0002             addi r9,r10,0x2
+  828C9370  5529103A             rlwinm r9,r9,0x2,0x0,0x1d
+  828C9374  7D091A14             add r8,r9,r3
+LAB_828c9378:
+  828C9378  8128FFF8             lwz r9,-0x8(r8)
+  828C937C  7F095800             cmpw cr6,r9,r11
+  828C9380  4099000C             ble cr6,0x828c938c
+  828C9384  7D2B4B78             or r11,r9,r9
+  828C9388  7D5F5378             or r31,r10,r10
+LAB_828c938c:
+  828C938C  8128FFFC             lwz r9,-0x4(r8)
+  828C9390  7F095800             cmpw cr6,r9,r11
+  828C9394  4099000C             ble cr6,0x828c93a0
+  828C9398  7D2B4B78             or r11,r9,r9
+  828C939C  3BEA0001             addi r31,r10,0x1
+LAB_828c93a0:
+  828C93A0  81280000             lwz r9,0x0(r8)
+  828C93A4  7F095800             cmpw cr6,r9,r11
+  828C93A8  4099000C             ble cr6,0x828c93b4
+  828C93AC  7D2B4B78             or r11,r9,r9
+  828C93B0  3BEA0002             addi r31,r10,0x2
+LAB_828c93b4:
+  828C93B4  81280004             lwz r9,0x4(r8)
+  828C93B8  7F095800             cmpw cr6,r9,r11
+  828C93BC  4099000C             ble cr6,0x828c93c8
+  828C93C0  7D2B4B78             or r11,r9,r9
+  828C93C4  3BEA0003             addi r31,r10,0x3
+LAB_828c93c8:
+  828C93C8  7CEA3B78             or r10,r7,r7
+  828C93CC  38E70004             addi r7,r7,0x4
+  828C93D0  39080010             addi r8,r8,0x10
+  828C93D4  7F072000             cmpw cr6,r7,r4
+  828C93D8  4099FFA0             ble cr6,0x828c9378
+LAB_828c93dc:
+  828C93DC  7F0A2000             cmpw cr6,r10,r4
+  828C93E0  40980034             bge cr6,0x828c9414
+  828C93E4  7CEA2050             subf r7,r10,r4
+  828C93E8  5549103A             rlwinm r9,r10,0x2,0x0,0x1d
+  828C93EC  7D091A14             add r8,r9,r3
+  828C93F0  7CE903A6             mtspr CTR,r7
+LAB_828c93f4:
+  828C93F4  81280000             lwz r9,0x0(r8)
+  828C93F8  7F095800             cmpw cr6,r9,r11
+  828C93FC  4099000C             ble cr6,0x828c9408
+  828C9400  7D2B4B78             or r11,r9,r9
+  828C9404  7D5F5378             or r31,r10,r10
+LAB_828c9408:
+  828C9408  394A0001             addi r10,r10,0x1
+  828C940C  39080004             addi r8,r8,0x4
+  828C9410  4200FFE4             bdnz 0x828c93f4
+LAB_828c9414:
+  828C9414  2F0B0000             cmpwi cr6,r11,0x0
+  828C9418  9161FFD0             stw r11,-0x30(r1)
+  828C941C  4098000C             bge cr6,0x828c9428
+  828C9420  93C1FFD0             stw r30,-0x30(r1)
+  828C9424  4198000C             blt cr6,0x828c9430
+LAB_828c9428:
+  828C9428  7FEBFB78             or r11,r31,r31
+  828C942C  48000008             b 0x828c9434
+LAB_828c9430:
+  828C9430  7FABEB78             or r11,r29,r29
+LAB_828c9434:
+  828C9434  C001FFD0             lfs f0,-0x30(r1)
+  828C9438  91650000             stw r11,0x0(r5)
+  828C943C  D0060000             stfs f0,0x0(r6)
+  828C9440  4804D2CC             b 0x8291670c

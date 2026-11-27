@@ -5,8 +5,22 @@
 void RB_HW_AllocOcclusionQuery(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  
   __savegprlr_28();
+  do {
+    lVar1 = D3DDevice_CreateQueryTiled(DAT_84616688,9,1);
+    uVar3 = -(ulonglong)(lVar1 == 0) & 0xffffffff8007000e;
+  } while (DAT_84013128 != 0);
+  if ((int)uVar3 < 0) {
+    uVar2 = DXGetErrorDescription9A(uVar3);
+    Com_Printf(8,0xffffffff821c6178,uVar2,uVar3);
+    lVar1 = 0;
+  }
+  __restgprlr_28(lVar1);
+  return;
 }
 
 
@@ -61,6 +75,33 @@ void R_FatalLockError(undefined8 param_1)
 }
 
 
+// 82748608  R_SetupAntiAliasing  (gfx_d3d/r_init.cpp:334)
+
+void R_SetupAntiAliasing(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x155,0,0xffffffff82000f98,0xffffffff821c5a6c);
+  }
+  iVar1 = *(int *)(param_1 + 0x18);
+  if ((iVar1 < 1) || (4 < iVar1)) {
+    MyAssertHandler(0xffffffff821c5a78,0x158,0,0xffffffff821c5a34,iVar1,1,4);
+  }
+  DAT_84617818 = 0;
+  uVar2 = *(uint *)(param_1 + 0x18);
+  if (uVar2 == 4) {
+    DAT_84617814 = 2;
+  }
+  else {
+    DAT_84617814 = ((int)uVar2 >> 0x1f) + (uint)(1 < uVar2);
+  }
+  return;
+}
+
+
 // 827486D8  R_CreateRingBuffers  (gfx_d3d/r_init.cpp:421)
 
 void R_CreateRingBuffers(void)
@@ -83,11 +124,58 @@ void R_CreateRingBuffers(void)
 
 // 82748780  R_SetD3DPresentParameters  (gfx_d3d/r_init.cpp:439)
 
-void R_SetD3DPresentParameters(void)
+void R_SetD3DPresentParameters(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  undefined4 *_Dst;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  
+  _Dst = (undefined4 *)__savegprlr_28();
+  if (_Dst == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821c5a78,0x1b8,0,0xffffffff82000f98,0xffffffff821c5ae4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x1b9,0,0xffffffff82000f98,0xffffffff821c5a6c);
+  }
+  R_SetupAntiAliasing(param_2);
+  memset(_Dst,0,0x7c);
+  lVar6 = 6;
+  puVar5 = &DAT_84617854;
+  puVar4 = _Dst + 0x11;
+  pcVar3 = (char *)param_2;
+  *_Dst = *(undefined4 *)(pcVar3 + 0x10);
+  uVar2 = *(undefined4 *)(pcVar3 + 0x14);
+  _Dst[2] = 0x18280186;
+  _Dst[1] = uVar2;
+  _Dst[3] = 1;
+  _Dst[4] = DAT_84617814;
+  _Dst[5] = DAT_84617818;
+  _Dst[6] = 1;
+  _Dst[9] = 0;
+  uVar2 = DAT_84616690;
+  _Dst[0xd] = 1;
+  _Dst[7] = 0;
+  _Dst[10] = uVar2;
+  cVar1 = *pcVar3;
+  _Dst[8] = 0;
+  _Dst[0xc] = 0;
+  _Dst[0xb] = (uint)(cVar1 == '\0');
+  _Dst[0xe] = 1;
+  _Dst[0xf] = 1;
+  _Dst[0x10] = 0x28280106;
+  do {
+    puVar5 = puVar5 + 1;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *puVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -96,8 +184,33 @@ void R_SetD3DPresentParameters(void)
 void R_StoreWindowSettings(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char *pcVar1;
+  double dVar2;
+  double dVar3;
+  
+  pcVar1 = (char *)__savegprlr_29();
+  DAT_84613720 = *(uint *)(pcVar1 + 8);
+  DAT_84613724 = *(uint *)(pcVar1 + 0xc);
+  dVar3 = 1.3333333730697632;
+  DAT_84613728 = *(uint *)(pcVar1 + 0x10);
+  DAT_8461372c = *(uint *)(pcVar1 + 0x14);
+  DAT_84613734 = (uint)(byte)pcVar1[1];
+  dVar2 = dVar3;
+  if (*pcVar1 != '\0') {
+    dVar2 = 1.7777777910232544;
+  }
+  DAT_84613740 = (float)dVar2;
+  if (DAT_836673a4 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x24a,0,0xffffffff82000f98,0xffffffff821c5aec);
+    dVar2 = (double)DAT_84613740;
+  }
+  Dvar_SetBool(DAT_836673a4,dVar2 != dVar3);
+  DAT_8461373c = 1;
+  DAT_84613730 = *(undefined4 *)(pcVar1 + 4);
+  DAT_84613748 = ((float)DAT_8461372c * DAT_84613740) / (float)DAT_84613728;
+  DAT_84613744 = ((float)DAT_84613724 * DAT_84613740) / (float)DAT_84613720;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -180,8 +293,83 @@ void R_InitGamma(void)
 void R_CalcGammaRamp(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  short sVar3;
+  uint uVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double _Y;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  
   __savegprlr_27();
+  iVar2 = __savefpr_23();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x36a,0,0xffffffff82000f98,0xffffffff821c5bf0);
+  }
+  dVar13 = 0.0;
+  if ((double)*(float *)(DAT_845aa5e0 + 0xc) <= 0.0) {
+    MyAssertHandler(0xffffffff821c5a78,0x36b,0,0xffffffff821c5bac,0xffffffff821c5bd0,
+                    (double)*(float *)(DAT_845aa5e0 + 0xc));
+  }
+  dVar14 = 1.0;
+  if ((double)*(float *)(DAT_845aa6fc + 0xc) == 1.0) {
+    MyAssertHandler(0xffffffff821c5a78,0x36c,0,0xffffffff821c5b5c,0xffffffff821c5b84,
+                    (double)*(float *)(DAT_845aa6fc + 0xc));
+  }
+  dVar12 = (double)*(float *)(DAT_845aa6fc + 0xc);
+  dVar9 = 0.5;
+  uVar4 = 0;
+  dVar10 = 65535.0;
+  _Y = (double)(float)(dVar14 / (double)*(float *)(DAT_845aa5e0 + 0xc));
+  dVar8 = 1.0000076293945312;
+  dVar11 = 0.003921568859368563;
+  do {
+    if ((_Y == dVar14) && (dVar12 == dVar13)) {
+      sVar3 = (short)uVar4 * 0x101;
+    }
+    else {
+      dVar7 = (double)((float)((double)(longlong)(int)uVar4 * dVar11 - dVar12) /
+                      (float)(dVar14 - dVar12));
+      dVar5 = dVar14;
+      if ((float)(dVar7 - dVar14) < 0.0) {
+        dVar5 = dVar7;
+      }
+      dVar6 = dVar13;
+      if (-dVar7 < 0.0) {
+        dVar6 = dVar5;
+      }
+      dVar5 = dVar14;
+      if ((float)(dVar6 - dVar14) < 0.0) {
+        dVar5 = dVar6;
+      }
+      dVar7 = dVar13;
+      if (-dVar6 < 0.0) {
+        dVar7 = dVar5;
+      }
+      dVar5 = pow(dVar7,_Y);
+      dVar5 = (double)(float)dVar5;
+      if ((dVar5 < dVar13) || (dVar8 <= dVar5)) {
+        MyAssertHandler(dVar5,0xffffffff821c5a78,0x37e,0,0xffffffff821c5b3c,0xffffffff821c5b00,dVar5
+                       );
+      }
+      dVar5 = floor((double)(float)(dVar5 * dVar10 + dVar9));
+      sVar3 = (short)(int)dVar5;
+    }
+    iVar1 = uVar4 * 2;
+    uVar4 = uVar4 + 1 & 0xffff;
+    *(short *)(iVar1 + iVar2) = sVar3;
+  } while (uVar4 < 0x100);
+  __restfpr_23();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -202,8 +390,8 @@ void R_SetColorMappings(void)
 
 // 82748D30  R_GammaCorrect  (gfx_d3d/r_init.cpp:918)
 
-/* WARNING: Removing unreachable block (ram,0x82748e08) */
 /* WARNING: Removing unreachable block (ram,0x82748de4) */
+/* WARNING: Removing unreachable block (ram,0x82748e08) */
 
 void R_GammaCorrect(undefined8 param_1,undefined8 param_2)
 
@@ -217,12 +405,10 @@ void R_GammaCorrect(undefined8 param_1,undefined8 param_2)
   
   iVar2 = __savegprlr_22();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0x39c,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   iVar3 = (int)param_2;
   if (iVar3 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0x39d,0,0xffffffff821c5c34,0xffffffff821c5c48,param_2);
   }
   R_CalcGammaRamp(auStack_260);
@@ -253,30 +439,27 @@ void SetGfxConfig(int param_1)
   longlong lVar5;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0x3b3,0,0xffffffff82000f98,0xffffffff820313c0);
   }
   uVar1 = *(uint *)(param_1 + 4);
-  if ((uVar1 != 0) && (uVar1 < 5)) {
-    if (*(int *)(param_1 + 0x1c) != 0x2e) {
-      uVar2 = va(0xffffffff821c5c80,*(int *)(param_1 + 0x1c),0x2e);
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821c5a78,0x3b6,0,0xffffffff820011f4,0xffffffff821c5c58,uVar2);
-    }
-    puVar4 = (undefined4 *)(param_1 + -4);
-    puVar3 = &DAT_84613754;
-    lVar5 = 10;
-    do {
-      puVar4 = puVar4 + 1;
-      puVar3 = puVar3 + 1;
-      *puVar3 = *puVar4;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    DAT_84613758 = 1;
-    return;
+  if ((uVar1 == 0) || (4 < uVar1)) {
+    MyAssertHandler(0xffffffff821c5a78,0x3b4,0,0xffffffff821c5c90,uVar1,1,4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821c5a78,0x3b4,0,0xffffffff821c5c90,uVar1,1,4);
+  if (*(int *)(param_1 + 0x1c) != 0x2e) {
+    uVar2 = va(0xffffffff821c5c80,*(int *)(param_1 + 0x1c),0x2e);
+    MyAssertHandler(0xffffffff821c5a78,0x3b6,0,0xffffffff820011f4,0xffffffff821c5c58,uVar2);
+  }
+  puVar4 = (undefined4 *)(param_1 + -4);
+  puVar3 = &DAT_84613754;
+  lVar5 = 10;
+  do {
+    puVar4 = puVar4 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *puVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  DAT_84613758 = 1;
+  return;
 }
 
 
@@ -334,11 +517,18 @@ undefined8 R_GetDeviceType(void)
 
 // 82748F98  R_CreateDeviceInternal  (gfx_d3d/r_init.cpp:1554)
 
-void R_CreateDeviceInternal(void)
+void R_CreateDeviceInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  Com_Printf(8,0xffffffff821c5cdc);
+  do {
+    Direct3D_CreateDevice(DAT_8461668c,1,uVar1,param_2,param_3,0xffffffff84616688);
+  } while (DAT_84013128 != 0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -378,7 +568,7 @@ BOOL R_SwapCallback(int param_1)
   *(uint *)(param_1 + 0x14) =
        (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1)) + *(int *)(param_1 + 8);
   *(undefined4 *)(&DAT_84617910 + (DAT_84613704 & 7) * 4) = *(undefined4 *)(param_1 + 0x10);
-  BVar2 = QueryPerformanceCounter((LARGE_INTEGER *)((DAT_84613704 & 7) * 8 + -0x7b9e8730));
+  BVar2 = QueryPerformanceCounter((LARGE_INTEGER *)(&DAT_846178d0 + (DAT_84613704 & 7) * 8));
   sync(1);
   DAT_84613704 = DAT_84613704 + 1;
   return BVar2;
@@ -399,8 +589,95 @@ bool CompareFrameCounts(double param_1,double param_2)
 void R_AdjustFrametimeForGpu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  undefined8 uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  LARGE_INTEGER local_78;
+  undefined4 local_70;
+  float local_6c;
+  undefined4 local_68;
+  undefined1 auStack_64 [100];
+  
   __savegprlr_28();
+  uVar6 = __savefpr_26();
+  if (*(char *)(DAT_845aa638 + 0xc) != '\0') {
+    iVar2 = CL_GetLocalClientActiveCount();
+    if (iVar2 == 1) {
+      dVar11 = (double)DAT_84613730;
+      uVar4 = (ulonglong)DAT_84613704;
+      if (dVar11 == 0.0) {
+        MyAssertHandler(0xffffffff821c5a78,0x7db,0,0xffffffff82000f98,0xffffffff821c62f0);
+      }
+      uVar1 = uVar4 - 1 & 7;
+      dVar13 = 1.0;
+      dVar10 = (double)(float)(1.0 / dVar11);
+      dVar9 = (double)((float)*(uint *)(&DAT_84617910 + (int)(uVar1 << 2)) * 0.01);
+      QueryPerformanceFrequency(&local_78);
+      dVar7 = (double)((float)(*(longlong *)(&DAT_846178d0 + (int)(uVar1 << 3)) -
+                              *(longlong *)
+                               (&DAT_846178d0 + ((uint)((uVar4 - 2 & 0xffffffff) << 3) & 0x38))) /
+                      (float)(longlong)local_78);
+      dVar8 = 0.10000000149011612;
+      if ((float)(dVar7 - 0.10000000149011612) < 0.0) {
+        dVar8 = dVar7;
+      }
+      dVar12 = dVar10;
+      if ((float)(dVar10 - dVar7) < 0.0) {
+        dVar12 = dVar8;
+      }
+      dVar7 = (double)(float)(dVar12 * dVar11);
+      dVar11 = ceil(dVar9);
+      dVar8 = (double)(float)dVar11;
+      dVar11 = ceil((double)(float)(dVar9 - dVar7));
+      lVar5 = DAT_8461370c - uVar4;
+      uVar3 = DAT_84617874 % 3;
+      DAT_84617874 = DAT_84617874 + 1;
+      (&DAT_84618190)[uVar3] = (float)(dVar8 - (double)(float)dVar11);
+      if ((lVar5 < 0) || (1 < (int)lVar5)) {
+        MyAssertHandler(0xffffffff821c5a78,0x7ef,0,0xffffffff821c6298,0xffffffff821c62b8,lVar5);
+      }
+      dVar8 = (double)(float)((double)(longlong)(int)lVar5 * dVar7 + dVar9);
+      dVar7 = (double)(float)(dVar7 + dVar8);
+      dVar11 = ceil(dVar8);
+      dVar12 = 0.6669999957084656;
+      dVar9 = 0.3330000042915344;
+      dVar8 = (double)((float)dVar11 * 0.333 + (float)(dVar8 * 0.6669999957084656));
+      dVar11 = ceil(dVar7);
+      local_6c = DAT_84618194;
+      local_68 = DAT_84618198;
+      local_70 = DAT_84618190;
+      dVar7 = (double)(float)((double)(float)dVar11 * dVar9 + (double)(float)(dVar7 * dVar12));
+      std___Sort<float_*,int,bool_(__cdecl*)(float,float)>
+                (&local_70,auStack_64,3,0xffffffff827490f8);
+      dVar11 = (double)local_6c;
+      if ((float)((double)local_6c - 2.0) < 0.0) {
+        dVar11 = 2.0;
+      }
+      dVar9 = (double)(float)(dVar7 - dVar8);
+      if ((float)(dVar11 - (double)(float)(dVar7 - dVar8)) < 0.0) {
+        dVar9 = dVar11;
+      }
+      if ((float)(dVar9 - dVar13) < 0.0) {
+        dVar9 = dVar13;
+      }
+      __restfpr_26((double)(float)(dVar9 * dVar10));
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restfpr_26(uVar6);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -409,8 +686,27 @@ void R_AdjustFrametimeForGpu(void)
 void R_FlushSwap(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_27();
+  D3DDevice_InsertFence(DAT_84616688);
+  D3DDevice_BlockUntilIdle(DAT_84616688);
+  Sys_Sleep(0x32);
+  sync(1);
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x81a,0,0xffffffff82000f98,0xffffffff821c5dbc);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    Sys_Error(0xffffffff821c5d88);
+  }
+  DAT_84613704 = DAT_8461370c;
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x823,0,0xffffffff82000f98,0xffffffff821c5d58);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    Sys_Error(0xffffffff821c5d20);
+  }
+  DAT_84617880 = DAT_8461370c;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -419,8 +715,53 @@ void R_FlushSwap(void)
 void R_CreateDevice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  undefined1 auStack_b0 [176];
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x838,0,0xffffffff82000f98,0xffffffff821c5a6c);
+  }
+  if (DAT_84616688 != 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x843,0,0xffffffff82000f98,0xffffffff821c5ec8);
+  }
+  DAT_84616690 = R_GetDepthStencilFormat(0x18280186);
+  R_SetD3DPresentParameters(auStack_b0,uVar1);
+  uVar2 = R_CreateDeviceInternal(0,0x105,auStack_b0);
+  UpdateMemStats();
+  DAT_84617884 = 1;
+  if ((int)uVar2 < 0) {
+    uVar2 = DXGetErrorDescription9A(uVar2);
+    Com_Printf(8,0xffffffff821c5ea0,uVar2);
+    __restgprlr_27(0);
+    return;
+  }
+  if (DAT_84616688 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x866,1,0xffffffff82000f98,0xffffffff821c5e94);
+  }
+  do {
+    D3DDevice_SetSwapCallback(DAT_84616688,0xffffffff82749070);
+  } while (DAT_84013128 != 0);
+  lVar4 = -0x7b9e996c;
+LAB_82749340:
+  do {
+    uVar2 = Direct3D_CreateDevice(0,2,0,0,0,lVar4);
+    if ((int)uVar2 < 0) {
+      do {
+        uVar3 = DXGetErrorDescription9A(uVar2);
+        Sys_Error(0xffffffff821c5de8,0x86f,uVar3);
+      } while (DAT_84013128 != 0);
+    }
+    else if (DAT_84013128 != 0) goto LAB_82749340;
+    lVar4 = lVar4 + 4;
+    if (-0x7b9e98d1 < (int)lVar4) {
+      __restgprlr_27(1);
+      return;
+    }
+  } while( true );
 }
 
 
@@ -429,8 +770,39 @@ void R_CreateDevice(void)
 void R_InitHardware(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  int *piVar2;
+  
   __savegprlr_27();
+  RB_InitSceneViewport();
+  RB_InitCodeConstants();
+  R_Cinematic_Init();
+  Com_Printf(8,0xffffffff821c5f00);
+  RB_SetInitialState();
+  Dvar_SetModified(DAT_845aa5e0);
+  R_InitScene();
+  R_InitImages();
+  Material_Init();
+  R_InitLightDefs();
+  R_ClearFogs();
+  R_InitDebug();
+  RB_ProfileInit();
+  R_GPU_InitTimers();
+  piVar2 = &DAT_845aa648;
+  uVar1 = 0;
+  do {
+    if (*piVar2 == 0) {
+      MyAssertHandler(0xffffffff821c5a78,0x8de,0,0xffffffff82000f98,0xffffffff821c5edc);
+    }
+    Dvar_ClearModified(*piVar2);
+    if (*(char *)(*piVar2 + 0xc) != '\0') {
+      Sys_ResumeThread(uVar1 + 2);
+    }
+    uVar1 = uVar1 + 1;
+    piVar2 = piVar2 + 1;
+  } while ((uVar1 & 0xffffffff) < 3);
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -537,6 +909,31 @@ void R_SetWndParms(char *param_1)
   param_1[0x19] = '\0';
   param_1[0x1a] = '\0';
   param_1[0x1b] = '\x02';
+  return;
+}
+
+
+// 827495A0  R_GetDisplayResolution  (gfx_d3d/r_init.cpp:2492)
+
+void R_GetDisplayResolution(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 *puVar1;
+  undefined1 auStack_50 [16];
+  undefined4 local_40;
+  undefined4 local_3c;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821c5a78,0x9bf,0,0xffffffff82000f98,0xffffffff8202c288);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0x9c0,0,0xffffffff82000f98,0xffffffff8202c280);
+  }
+  R_SetWndParms(auStack_50);
+  *puVar1 = local_40;
+  *(undefined4 *)param_2 = local_3c;
+  __restgprlr_28();
   return;
 }
 
@@ -695,6 +1092,35 @@ void R_InitDevice(void)
 }
 
 
+// 8274B288  std::_Sort_heap<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+
+void std___Sort_heap<float_*,bool_(__cdecl*)(float,float)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  undefined4 local_30 [12];
+  
+  lVar3 = __savegprlr_28();
+  param_2 = param_2 - lVar3;
+  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
+    puVar2 = (undefined4 *)lVar3;
+    do {
+      iVar1 = (int)param_2;
+      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
+      param_2 = param_2 + -4;
+      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
+      std___Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
+                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+  }
+  __restgprlr_28();
+  return;
+}
+
+
 // 82749630  R_InitGraphicsApi  (gfx_d3d/r_init.cpp:2736)
 
 void R_InitGraphicsApi(void)
@@ -702,11 +1128,10 @@ void R_InitGraphicsApi(void)
 {
   char cVar1;
   
-  cVar1 = DAT_8461787c;
   if ((DAT_84616688 != 0) != (DAT_84616684 != 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0xab5,0,0xffffffff82000f98,0xffffffff821c5f1c);
   }
+  cVar1 = DAT_8461787c;
   DAT_8461787c = 1;
   if (cVar1 != '\0') {
     R_InitImages();
@@ -740,8 +1165,27 @@ void R_AllocateMinimalResources(void)
 void R_PersistFrontBuffer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_28();
+  if (DAT_84616688 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xbe1,0,0xffffffff82000f98,0xffffffff821c5e94);
+  }
+  D3DDevice_SetSwapMode(DAT_84616688,0);
+  if ((&DAT_84617820)[DAT_84617828] == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xbe6,0,0xffffffff82000f98,0xffffffff821c5f74);
+  }
+  if (DAT_84616688 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xbe7,0,0xffffffff82000f98,0xffffffff821c5e94);
+  }
+  uVar1 = D3DDevice_PersistDisplay(DAT_84616688,(&DAT_84617820)[DAT_84617828],0);
+  if ((int)uVar1 < 0) {
+    uVar2 = DXGetErrorDescription9A();
+    Com_PrintError(1,0xffffffff821c5f48,uVar2,uVar1);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -750,8 +1194,24 @@ void R_PersistFrontBuffer(void)
 void R_ShutdownDirect3D(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_29();
+  if (DAT_84616688 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xbf2,0,0xffffffff82000f98,0xffffffff821c5e94);
+  }
+  R_SyncRenderThread();
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xbfd,0,0xffffffff82000f98,0xffffffff8217d420);
+  }
+  do {
+    D3DDevice_SetShaderGPRAllocation(DAT_84616688,0,0,0);
+  } while (DAT_84013128 != 0);
+  R_PersistFrontBuffer();
+  DAT_84617828 = DAT_84617828 ^ 1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -771,8 +1231,47 @@ void R_Register(void)
 void R_DrawBlankScreenOnStartup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  char cVar2;
+  char in_RESERVE;
+  byte in_cr0;
+  undefined8 uVar3;
+  
   __savegprlr_29();
+  if ((DAT_84617885 == '\0') && (iVar1 = PIXGetCaptureState(), iVar1 == 0)) {
+    cVar2 = Sys_IsMainThread();
+    if (cVar2 == '\0') {
+      MyAssertHandler(0xffffffff821c5a78,0xc26,0,0xffffffff82000f98,0xffffffff82010b48);
+    }
+    if (DAT_84617884 == '\0') {
+      MyAssertHandler(0xffffffff821c5a78,0xc27,0,0xffffffff82000f98,0xffffffff821c5fc8);
+    }
+    R_SyncGpu(0);
+    R_RegistedRenderFrame();
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_84617880 = storeWordConditionalIndexed((ulonglong)DAT_84617880 + 1,0,0xffffffff84617880)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    do {
+      D3DDevice_SetRenderTarget_External(DAT_84616688,0,DAT_84762098);
+    } while (DAT_84013128 != 0);
+    uVar3 = 0;
+    do {
+      D3DDevice_Clear(uVar3,DAT_84616688,0,0,0xf,0);
+    } while (DAT_84013128 != 0);
+    do {
+      D3DDevice_Resolve(uVar3,DAT_84616688,0,0,DAT_84617820,0,0,0,0);
+    } while (DAT_84013128 != 0);
+    do {
+      D3DDevice_Swap(DAT_84616688,DAT_84617820,0);
+    } while (DAT_84013128 != 0);
+    Sys_DidSwap();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -799,11 +1298,24 @@ void R_InitGlobalStructs(void)
   MatrixIdentity44(0xffffffff84617990);
   MatrixIdentity44(0xffffffff846179d0);
   MatrixIdentity44(0xffffffff84617a10);
-  DAT_84618020 = 0x3c;
-  DAT_84618021 = 0x5c;
-  DAT_84618022 = 0x99;
-  DAT_84618023 = 0xff;
+  DAT_84618020._0_1_ = 0x3c;
+  DAT_84618020._1_1_ = 0x5c;
+  DAT_84618020._2_1_ = 0x99;
+  DAT_84618020._3_1_ = 0xff;
   R_WarnInit();
+  return;
+}
+
+
+// 827499D0  R_InitOnce  (gfx_d3d/r_init.cpp:3170)
+
+void R_InitOnce(void)
+
+{
+  if (DAT_84617898 != '\0') {
+    MyAssertHandler(0xffffffff821c5a78,0xc65,0,0xffffffff82000f98,0xffffffff821c5fa8);
+  }
+  R_InitRenderThread();
   return;
 }
 
@@ -815,7 +1327,6 @@ void R_Init(void)
 {
   Com_Printf(8,0xffffffff821c5fe8);
   if (DAT_84617884 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0xc72,0,0xffffffff82000f98,0xffffffff821c5fc8);
   }
   Swap_Init();
@@ -853,7 +1364,6 @@ void R_Shutdown(int param_1)
   
   R_SyncRenderThread();
   if (DAT_84617884 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c5a78,0xcc1,0,0xffffffff82000f98,0xffffffff821c5fc8);
   }
   DAT_84617885 = 0;
@@ -904,8 +1414,25 @@ void R_UnloadWorld(void)
 void R_BeginRegistration(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  void *pvVar1;
+  
+  pvVar1 = (void *)__savegprlr_29();
+  R_Init();
+  if ((DAT_84616684 == 0) || (DAT_84616688 == 0)) {
+    MyAssertHandler(0xffffffff821c5a78,0xd2b,0,0xffffffff82000f98,0xffffffff821c6050);
+  }
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler(0xffffffff821c5a78,0xd37,0,0xffffffff82000f98,0xffffffff821c6040);
+  }
+  pvVar1 = memcpy(pvVar1,&DAT_84613720,0x34);
+  if (DAT_84617885 != '\0') {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff821c5a78,0xd3b,0,0xffffffff82000f98,
+                                     0xffffffff821c6024);
+  }
+  DAT_84617885 = 1;
+  R_ReleaseThreadOwnership(pvVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -985,18 +1512,244 @@ undefined8 R_FinishGpuSync(void)
 void R_SyncGpu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  char cVar4;
+  int iVar2;
+  int iVar3;
+  uint uVar5;
+  uint uVar6;
+  
+  iVar1 = __savegprlr_23();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff821c5a78,0xdb1,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xdb3,0,0xffffffff82000f98,0xffffffff821c6100);
+  }
+  if (3 < (int)(DAT_8461370c - DAT_84613704)) {
+    MyAssertHandler(0xffffffff821c5a78,0xdb5,0,0xffffffff82000f98,0xffffffff821c60d4);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xdb6,0,0xffffffff82000f98,0xffffffff821c5dbc);
+  }
+  if (3 < (int)(DAT_8461370c - DAT_84613704)) {
+    Sys_Error(0xffffffff821c60a0);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    Sys_Error(0xffffffff821c5d88);
+  }
+  iVar1 = Sys_Milliseconds();
+  if ((DAT_847ee920 != 0) &&
+     ((iVar2 = Sys_IsRendererReady2(), iVar2 == 0 || (1 < (int)(DAT_8461370c - DAT_84613704))))) {
+    DAT_847ee920 = 0;
+    cVar4 = SND_ExistsPendingRestore();
+    if (cVar4 != '\0') {
+      MyAssertHandler(0xffffffff821c5a78,0xdcf,0,0xffffffff82000f98,0xffffffff821c6084);
+    }
+    CL_UpdateSound();
+  }
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821c6078);
+  R_ProcessWorkerCmdsWithTimeout(0xffffffff82749e08,1);
+  PIXEndNamedEvent();
+  iVar3 = Sys_Milliseconds();
+  iVar2 = DAT_84613718;
+  DAT_84613718 = 0;
+  uVar6 = (iVar2 - iVar3) + iVar1;
+  uVar6 = 0xffffffffU - ((int)uVar6 >> 0x1f) & uVar6;
+  if (DAT_8461370c != DAT_84613704) {
+    iVar2 = DAT_84617930;
+    if (DAT_84613710 != 0) {
+      iVar2 = DAT_8461371c;
+    }
+    iVar1 = iVar1 - iVar2;
+    if (0xc < iVar1) {
+      iVar1 = 0xc;
+    }
+    uVar5 = iVar1 - (iVar3 - DAT_84613708);
+    if ((int)uVar6 < (int)uVar5) {
+      uVar6 = uVar5;
+    }
+  }
+  if ((DAT_847ee920 != 0) && (0 < (int)uVar6)) {
+    DAT_847ee920 = 0;
+    cVar4 = SND_ExistsPendingRestore();
+    if (cVar4 != '\0') {
+      MyAssertHandler(0xffffffff821c5a78,0xdf9,0,0xffffffff82000f98,0xffffffff821c6084);
+    }
+    CL_UpdateSound();
+  }
+  DAT_84618188 = uVar6 + iVar3;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821c6068);
+  R_ProcessWorkerCmdsWithTimeout(0xffffffff82749dd0,1);
+  PIXEndNamedEvent();
+  __restgprlr_23();
+  return;
+}
+
+
+// 8274A138  R_RegistedRenderFrame  (gfx_d3d/r_init.cpp:3620)
+
+void R_RegistedRenderFrame(void)
+
+{
+  int iVar1;
+  char in_RESERVE;
+  byte bVar2;
+  
   __savegprlr_23();
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xe26,0,0xffffffff82000f98,0xffffffff821c5d58);
+  }
+  if (1 < (int)(DAT_8461370c - DAT_84617880)) {
+    MyAssertHandler(0xffffffff821c5a78,0xe27,0,0xffffffff82000f98,0xffffffff821c6148);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xe28,0,0xffffffff82000f98,0xffffffff821c5dbc);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    Sys_Error(0xffffffff821c5d20);
+  }
+  if (1 < (int)(DAT_8461370c - DAT_84617880)) {
+    Sys_Error(0xffffffff821c6110);
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84613704) < 0) {
+    Sys_Error(0xffffffff821c5d88);
+  }
+  iVar1 = DAT_8461370c - DAT_84613704;
+  while (2 < iVar1) {
+    Sys_Sleep(1);
+    iVar1 = DAT_8461370c - DAT_84613704;
+  }
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    MyAssertHandler(0xffffffff821c5a78,0xe3e,0,0xffffffff82000f98,0xffffffff821c5d58);
+  }
+  if (1 < (int)(DAT_8461370c - DAT_84617880)) {
+    MyAssertHandler(0xffffffff821c5a78,0xe3f,0,0xffffffff82000f98,0xffffffff821c6148);
+  }
+  bVar2 = ((ulonglong)DAT_8461370c == (ulonglong)DAT_84617880) << 1;
+  if ((longlong)((ulonglong)DAT_8461370c - (ulonglong)DAT_84617880) < 0) {
+    Sys_Error(0xffffffff821c5d20);
+  }
+  if (1 < (int)(DAT_8461370c - DAT_84617880)) {
+    Sys_Error(0xffffffff821c6110);
+  }
+  do {
+    if (in_RESERVE != '\0') {
+      DAT_8461370c = storeWordConditionalIndexed((ulonglong)DAT_8461370c + 1,0,0xffffffff8461370c);
+      bVar2 = 2;
+    }
+  } while (!(bool)(bVar2 >> 1 & 1));
+  if (DAT_84628b00 != 0) {
+    *(uint *)(DAT_84628b00 + 0x1bfc) = DAT_8461370c;
+  }
+  __restgprlr_23();
+  return;
+}
+
+
+// 8274ADE0  std::_Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+
+void std___Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>
+               (undefined8 param_1,ulonglong param_2,code *param_3)
+
+{
+  int iVar1;
+  float *_Src;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  char cVar7;
+  void *pvVar6;
+  ulonglong uVar8;
+  float *pfVar9;
+  double dVar10;
+  
+  uVar5 = __savegprlr_25();
+  if (((uVar5 & 0xffffffff) != (param_2 & 0xffffffff)) &&
+     (uVar8 = uVar5 + 4, (uVar8 & 0xffffffff) != (param_2 & 0xffffffff))) {
+    _Src = (float *)uVar5;
+    do {
+      pfVar9 = (float *)uVar8;
+      dVar10 = (double)*pfVar9;
+      cVar7 = (*param_3)(dVar10,(double)*_Src,uVar5);
+      if (cVar7 == '\0') {
+        uVar5 = (*param_3)(dVar10,(double)pfVar9[-1]);
+        uVar4 = uVar8 - 4;
+        uVar3 = uVar8;
+        while (uVar2 = uVar4, (uVar5 & 0xff) != 0) {
+          pfVar9 = (float *)uVar2;
+          *(float *)uVar3 = *pfVar9;
+          uVar5 = (*param_3)(dVar10,(double)*(float *)(uVar2 - 4));
+          uVar4 = uVar2 - 4;
+          uVar3 = uVar2;
+        }
+        *pfVar9 = (float)dVar10;
+      }
+      else {
+        iVar1 = (int)pfVar9 - (int)_Src >> 2;
+        pvVar6 = memmove(pfVar9 + (1 - iVar1),_Src,iVar1 * 4);
+        uVar5 = (ulonglong)(int)pvVar6;
+        *_Src = (float)dVar10;
+      }
+      uVar8 = uVar8 + 4;
+    } while ((uVar8 & 0xffffffff) != (param_2 & 0xffffffff));
+  }
+  __restgprlr_25();
+  return;
 }
 
 
 // 8274A350  R_UpdateTeamColors  (gfx_d3d/r_init.cpp:3674)
 
-void R_UpdateTeamColors(void)
+void R_UpdateTeamColors(undefined8 param_1,float *param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined7 extraout_var;
+  undefined1 extraout_r3;
+  undefined1 extraout_r3_00;
+  undefined1 extraout_r3_01;
+  undefined1 extraout_r3_02;
+  undefined1 extraout_r3_03;
+  undefined1 extraout_r3_04;
+  undefined1 extraout_r3_05;
+  undefined1 extraout_r3_06;
+  undefined1 extraout_r3_07;
+  undefined1 extraout_r3_08;
+  undefined1 extraout_r3_09;
+  undefined1 extraout_r3_10;
+  undefined1 extraout_r3_11;
+  
   __savegprlr_28();
+  ByteFromFloatColor((double)*(float *)CONCAT71(extraout_var,extraout_r3));
+  iVar1 = (int)CONCAT71(extraout_var,extraout_r3);
+  DAT_84618014._0_1_ = extraout_r3_00;
+  ByteFromFloatColor((double)*(float *)(iVar1 + 4));
+  DAT_84618014._1_1_ = extraout_r3_01;
+  ByteFromFloatColor((double)*(float *)(iVar1 + 8));
+  DAT_84618014._2_1_ = extraout_r3_02;
+  ByteFromFloatColor((double)*(float *)(iVar1 + 0xc));
+  DAT_84618014._3_1_ = extraout_r3_03;
+  ByteFromFloatColor((double)*param_2);
+  DAT_84618018._0_1_ = extraout_r3_04;
+  ByteFromFloatColor((double)param_2[1]);
+  DAT_84618018._1_1_ = extraout_r3_05;
+  ByteFromFloatColor((double)param_2[2]);
+  DAT_84618018._2_1_ = extraout_r3_06;
+  ByteFromFloatColor((double)param_2[3]);
+  DAT_84618018._3_1_ = extraout_r3_07;
+  ByteFromFloatColor((double)*param_3);
+  DAT_8461801c._0_1_ = extraout_r3_08;
+  ByteFromFloatColor((double)param_3[1]);
+  DAT_8461801c._1_1_ = extraout_r3_09;
+  ByteFromFloatColor((double)param_3[2]);
+  DAT_8461801c._2_1_ = extraout_r3_10;
+  ByteFromFloatColor((double)param_3[3]);
+  DAT_8461801c._3_1_ = extraout_r3_11;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1014,31 +1767,270 @@ void R_ConfigureRenderer(void)
 
 // 8274AEC8  std::_Med3<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<float_*,bool_(__cdecl*)(float,float)>(void)
+void std___Med3<float_*,bool_(__cdecl*)(float,float)>
+               (undefined8 param_1,float *param_2,float *param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float *pfVar2;
+  char cVar3;
+  
+  pfVar2 = (float *)__savegprlr_28();
+  cVar3 = (*param_4)((double)*param_2,(double)*pfVar2);
+  if (cVar3 != '\0') {
+    fVar1 = *param_2;
+    *param_2 = *pfVar2;
+    *pfVar2 = fVar1;
+  }
+  cVar3 = (*param_4)((double)*param_3,(double)*param_2);
+  if (cVar3 != '\0') {
+    fVar1 = *param_3;
+    *param_3 = *param_2;
+    *param_2 = fVar1;
+  }
+  cVar3 = (*param_4)((double)*param_2,(double)*pfVar2);
+  if (cVar3 != '\0') {
+    fVar1 = *param_2;
+    *param_2 = *pfVar2;
+    *pfVar2 = fVar1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8274AF70  std::_Median<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<float_*,bool_(__cdecl*)(float,float)>(void)
+void std___Median<float_*,bool_(__cdecl*)(float,float)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x3fffffff;
+    uVar4 = uVar4 & 0x1fffffff;
+    lVar6 = uVar2 * 4 + lVar3;
+    std___Med3<float_*,bool_(__cdecl*)(float,float)>(lVar3,lVar6,uVar4 * 8 + lVar3);
+    std___Med3<float_*,bool_(__cdecl*)(float,float)>
+              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -4;
+    std___Med3<float_*,bool_(__cdecl*)(float,float)>(param_3 + uVar4 * -8,lVar3,param_3,param_4);
+    std___Med3<float_*,bool_(__cdecl*)(float,float)>(lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<float_*,bool_(__cdecl*)(float,float)>(lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8274B018  std::_Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>(void)
+void std___Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  float fVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  undefined4 *puVar5;
+  char cVar6;
+  int iVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  ulonglong uVar10;
+  undefined4 *puVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  float *pfVar15;
+  undefined4 *puVar16;
+  
+  puVar5 = (undefined4 *)__savegprlr_23();
+  iVar7 = (int)param_3 - (int)param_2;
+  uVar4 = iVar7 >> 2;
+  uVar14 = ((longlong)(iVar7 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) & 0x3fffffff) *
+           4 + param_2;
+  std___Median<float_*,bool_(__cdecl*)(float,float)>(param_2,uVar14,param_3 - 4);
+  uVar8 = uVar14 + 4;
+  if ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+    do {
+      pfVar15 = (float *)uVar14;
+      uVar12 = uVar14 - 4;
+      cVar6 = (*param_4)((double)pfVar15[-1],(double)*pfVar15);
+      if ((cVar6 != '\0') ||
+         (cVar6 = (*param_4)((double)*pfVar15,(double)*(float *)uVar12), cVar6 != '\0')) break;
+      uVar14 = uVar12;
+    } while ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff));
+  }
+  uVar10 = uVar8;
+  uVar12 = uVar14;
+  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar6 = (*param_4)((double)*(float *)uVar8,(double)*(float *)uVar14);
+      uVar10 = uVar8;
+      if ((cVar6 != '\0') ||
+         (cVar6 = (*param_4)((double)*(float *)uVar14,(double)*(float *)uVar8), cVar6 != '\0'))
+      break;
+      uVar8 = uVar8 + 4;
+      uVar10 = uVar8;
+    } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar13 = uVar8;
+    if ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        pfVar15 = (float *)uVar10;
+        cVar6 = (*param_4)((double)*(float *)uVar12,(double)*pfVar15);
+        uVar8 = uVar13;
+        if (cVar6 == '\0') {
+          cVar6 = (*param_4)((double)*pfVar15,(double)*(float *)uVar12);
+          if (cVar6 != '\0') break;
+          uVar8 = uVar13 + 4;
+          fVar2 = *(float *)uVar13;
+          *(float *)uVar13 = *pfVar15;
+          *pfVar15 = fVar2;
+        }
+        uVar10 = uVar10 + 4;
+        uVar13 = uVar8;
+      } while ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    if ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+      do {
+        uVar13 = uVar14 - 4;
+        cVar6 = (*param_4)((double)*(float *)((int)uVar14 + -4),(double)*(float *)uVar12);
+        pfVar15 = (float *)uVar13;
+        if (cVar6 == '\0') {
+          cVar6 = (*param_4)((double)*(float *)uVar12,(double)*pfVar15);
+          if (cVar6 != '\0') break;
+          uVar12 = uVar12 - 4;
+          fVar2 = *(float *)uVar12;
+          *(float *)uVar12 = *pfVar15;
+          *pfVar15 = fVar2;
+        }
+        uVar14 = uVar13;
+      } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
+      bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar11 = (undefined4 *)uVar10;
+    if (bVar1) {
+      puVar16 = (undefined4 *)uVar12;
+      puVar9 = (undefined4 *)uVar8;
+      if ((uVar10 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar5 = puVar16;
+        puVar5[1] = puVar9;
+        __restgprlr_23(puVar5);
+        return;
+      }
+      if ((uVar8 & 0xffffffff) != (uVar10 & 0xffffffff)) {
+        uVar3 = *puVar16;
+        *puVar16 = *puVar9;
+        *puVar9 = uVar3;
+      }
+      uVar8 = uVar8 + 4;
+      uVar3 = *puVar16;
+      *puVar16 = *puVar11;
+      *puVar11 = uVar3;
+      uVar10 = uVar10 + 4;
+      uVar12 = uVar12 + 4;
+    }
+    else {
+      uVar14 = uVar14 - 4;
+      puVar9 = (undefined4 *)uVar14;
+      if ((uVar10 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar12 = uVar12 - 4;
+        puVar11 = (undefined4 *)uVar12;
+        if ((uVar14 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+          uVar3 = *puVar9;
+          *puVar9 = *puVar11;
+          *puVar11 = uVar3;
+        }
+        uVar3 = *puVar11;
+        uVar8 = uVar8 - 4;
+        *puVar11 = *(undefined4 *)uVar8;
+        *(undefined4 *)uVar8 = uVar3;
+      }
+      else {
+        uVar3 = *puVar11;
+        *puVar11 = *puVar9;
+        *puVar9 = uVar3;
+        uVar10 = uVar10 + 4;
+      }
+    }
+  } while( true );
+}
+
+
+// 8274B2F8  std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+
+void std___Sort<float_*,int,bool_(__cdecl*)(float,float)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
+LAB_8274b3b0:
+      if (1 < iVar2) {
+        std___Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>(uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>(uVar1,param_2,param_4,0,0)
+          ;
+        }
+        std___Sort_heap<float_*,bool_(__cdecl*)(float,float)>(uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_8274b3b0;
+    }
+    std___Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>(&local_40,uVar1,param_2,param_4)
+    ;
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
+      std___Sort<float_*,int,bool_(__cdecl*)(float,float)>(uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<float_*,int,bool_(__cdecl*)(float,float)>(uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 
 
@@ -1047,7 +2039,24 @@ void std___Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>(void)
 void R_ComErrorCleanup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821c5a78,0xf5a,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((iVar1 != 0) || ((DAT_84628b00 != 0 && (*(int *)(DAT_84628b00 + 0x1bf8) != 0)))) {
+    R_AbortRenderCommands();
+    R_SyncRenderThread();
+    cVar2 = Sys_IsMainThread();
+    if (cVar2 == '\0') {
+      MyAssertHandler(0xffffffff821c5a78,0xf71,0,0xffffffff82000f98,0xffffffff82010b48);
+    }
+    R_FlushSwap();
+  }
+  __restgprlr_28();
+  return;
 }
 

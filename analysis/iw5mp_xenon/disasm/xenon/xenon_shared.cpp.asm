@@ -90,6 +90,39 @@ LAB_82656670:
   826566C4  386B5AF0             addi r3,r11,0x5af0
   826566C8  4E800020             blr
 
+; 826566D0  Sys_SnapVector  (xenon/xenon_shared.cpp:82)
+  826566D0  C0030000             lfs f0,0x0(r3)
+  826566D4  FDA0001E             fctiwz f13,f0
+  826566D8  D9A1FFF0             stfd f13,-0x10(r1)
+  826566DC  8161FFF4             lwz r11,-0xc(r1)
+  826566E0  7D6A07B4             extsw r10,r11
+  826566E4  F941FFF0             std r10,-0x10(r1)
+  826566E8  C981FFF0             lfd f12,-0x10(r1)
+  826566EC  FD60669C             fcfid f11,f12
+  826566F0  FD405818             frsp f10,f11
+  826566F4  D1430000             stfs f10,0x0(r3)
+  826566F8  C5230004             lfsu f9,0x4(r3)
+  826566FC  FD00481E             fctiwz f8,f9
+  82656700  D901FFF0             stfd f8,-0x10(r1)
+  82656704  8121FFF4             lwz r9,-0xc(r1)
+  82656708  7D2807B4             extsw r8,r9
+  8265670C  F901FFF0             std r8,-0x10(r1)
+  82656710  C8E1FFF0             lfd f7,-0x10(r1)
+  82656714  FCC03E9C             fcfid f6,f7
+  82656718  FCA03018             frsp f5,f6
+  8265671C  D0A30000             stfs f5,0x0(r3)
+  82656720  C4830004             lfsu f4,0x4(r3)
+  82656724  FC60201E             fctiwz f3,f4
+  82656728  D861FFF0             stfd f3,-0x10(r1)
+  8265672C  80E1FFF4             lwz r7,-0xc(r1)
+  82656730  7CE607B4             extsw r6,r7
+  82656734  F8C1FFF0             std r6,-0x10(r1)
+  82656738  C841FFF0             lfd f2,-0x10(r1)
+  8265673C  FC20169C             fcfid f1,f2
+  82656740  FC000818             frsp f0,f1
+  82656744  D0030000             stfs f0,0x0(r3)
+  82656748  4E800020             blr
+
 ; 82656750  Sys_GetTimeAsSeconds  (xenon/xenon_shared.cpp:114)
   82656750  7D8802A6             mfspr r12,LR
   82656754  9181FFF8             stw r12,-0x8(r1)

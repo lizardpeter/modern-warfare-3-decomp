@@ -59,6 +59,18 @@ void FUN_82919b44(void)
 }
 
 
+// 82919B64  FUN_82919b64  (line unknown)
+
+void FUN_82919b64(void)
+
+{
+  FILE *unaff_r30;
+  
+  _unlock_file(unaff_r30);
+  return;
+}
+
+
 // 82919CAC  FUN_82919cac  (line unknown)
 
 void FUN_82919cac(void)
@@ -67,6 +79,18 @@ void FUN_82919cac(void)
   int in_r12;
   
   _unlock_file(*(FILE **)(in_r12 + -0x4c));
+  return;
+}
+
+
+// 82919CCC  FUN_82919ccc  (line unknown)
+
+void FUN_82919ccc(void)
+
+{
+  FILE *unaff_r28;
+  
+  _unlock_file(unaff_r28);
   return;
 }
 
@@ -99,6 +123,18 @@ void FUN_8291ac7c(void)
 }
 
 
+// 8291AEB8  FUN_8291aeb8  (line unknown)
+
+void FUN_8291aeb8(void)
+
+{
+  int in_r12;
+  
+  _unlock_file(*(FILE **)(in_r12 + -0x28));
+  return;
+}
+
+
 // 8291B6BC  FUN_8291b6bc  (line unknown)
 
 void FUN_8291b6bc(void)
@@ -117,6 +153,19 @@ void FUN_8291b6e0(void)
   int in_r12;
   
   _unlock_file2(*(int *)(in_r12 + -0x40),*(void **)(*(int *)(in_r12 + -0x40) * 4 + DAT_84897ec0));
+  return;
+}
+
+
+// 8291B70C  FUN_8291b70c  (line unknown)
+
+void FUN_8291b70c(void)
+
+{
+  int unaff_r28;
+  int *unaff_r29;
+  
+  _unlock_file2(unaff_r28,*(void **)(unaff_r28 * 4 + *unaff_r29));
   return;
 }
 
@@ -157,6 +206,18 @@ void FUN_8291bbc4(void)
 }
 
 
+// 8291BBE4  FUN_8291bbe4  (line unknown)
+
+void FUN_8291bbe4(void)
+
+{
+  FILE *unaff_r30;
+  
+  _unlock_file(unaff_r30);
+  return;
+}
+
+
 // 8291BD9C  FUN_8291bd9c  (line unknown)
 
 void FUN_8291bd9c(void)
@@ -165,6 +226,18 @@ void FUN_8291bd9c(void)
   int in_r12;
   
   _unlock_file(*(FILE **)(in_r12 + 0x14));
+  return;
+}
+
+
+// 8291BDBC  FUN_8291bdbc  (line unknown)
+
+void FUN_8291bdbc(void)
+
+{
+  FILE *unaff_r30;
+  
+  _unlock_file(unaff_r30);
   return;
 }
 
@@ -264,6 +337,24 @@ void FUN_8291dac4(void)
 }
 
 
+// 8291DAFC  FUN_8291dafc  (line unknown)
+
+void FUN_8291dafc(void)
+
+{
+  int in_r12;
+  undefined8 unaff_r27;
+  undefined8 unaff_r28;
+  undefined8 unaff_r29;
+  undefined8 unaff_r30;
+  
+  if (*(int *)(in_r12 + -0x40) == 0) {
+    __ArrayUnwind(unaff_r29,unaff_r30,unaff_r28,unaff_r27);
+  }
+  return;
+}
+
+
 // 8291DBF0  FUN_8291dbf0  (line unknown)
 
 void FUN_8291dbf0(void)
@@ -274,6 +365,23 @@ void FUN_8291dbf0(void)
   if (*(int *)(in_r12 + -0x3c) == 0) {
     __ArrayUnwind(*(undefined4 *)(in_r12 + 0x14),*(undefined4 *)(in_r12 + 0x1c),
                   *(undefined4 *)(in_r12 + -0x40),*(undefined4 *)(in_r12 + 0x34));
+  }
+  return;
+}
+
+
+// 8291DC20  FUN_8291dc20  (line unknown)
+
+void FUN_8291dc20(void)
+
+{
+  int in_r12;
+  undefined8 unaff_r28;
+  undefined8 unaff_r29;
+  undefined8 unaff_r30;
+  
+  if (*(int *)(in_r12 + -0x3c) == 0) {
+    __ArrayUnwind(unaff_r30,unaff_r29,unaff_r28,*(undefined4 *)(in_r12 + 0x34));
   }
   return;
 }

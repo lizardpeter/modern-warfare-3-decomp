@@ -2,20 +2,48 @@
 
 // 828C9EA8  NellyLogEnvelopeToAs  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:106)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void NellyLogEnvelopeToAs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs43 [16];
+  
+  uVar1 = __savegprlr_27();
+  NellyWarpSC36(uVar1,uVar1);
+  altv300_21(in_vs43,in_vs41);
+  altv300_21(in_vs32,in_vs43);
+  altv300_21(in_vs43,in_vs40);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 828C9E68  K2ASK  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:549)
 
-void K2ASK(void)
+void K2ASK(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  double dVar2;
+  
+  lVar1 = __savegprlr_29();
+  if ((int)lVar1 != 0) {
+    param_2 = param_2 + -4;
+    param_3 = param_3 + -4;
+    do {
+      param_2 = param_2 + 4;
+      dVar2 = asin((double)*(float *)param_2);
+      param_3 = param_3 + 4;
+      *(float *)param_3 = (float)dVar2;
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 

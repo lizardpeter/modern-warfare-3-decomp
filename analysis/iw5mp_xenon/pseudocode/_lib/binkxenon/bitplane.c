@@ -2,11 +2,14 @@
 
 // 82951AB8  ReadBPLossless  (line unknown)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void ReadBPLossless(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_18();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -349,10 +352,13 @@ LAB_8295297c:
 
 // 82952990  ReadBPLossyWithMotion  (line unknown)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void ReadBPLossyWithMotion(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_17();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 

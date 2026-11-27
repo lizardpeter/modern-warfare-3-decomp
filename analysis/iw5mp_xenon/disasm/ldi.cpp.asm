@@ -130,3 +130,239 @@ LAB_828b54f0:
 ; 828B5510  XCOMPRESS::DecompressStreamLzx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/ldi.cpp:491)
   828B5510  7D8802A6             mfspr r12,LR
   828B5514  4806116D             bl 0x82916680
+  828B5518  9421FF10             stwu r1,-0xf0(r1)
+  828B551C  89633010             lbz r11,0x3010(r3)
+  828B5520  3A200000             li r17,0x0
+  828B5524  82050000             lwz r16,0x0(r5)
+  828B5528  7C922378             or r18,r4,r4
+  828B552C  7CAF2B78             or r15,r5,r5
+  828B5530  7CD33378             or r19,r6,r6
+  828B5534  7CEE3B78             or r14,r7,r7
+  828B5538  3BC30014             addi r30,r3,0x14
+  828B553C  7E388B78             or r24,r17,r17
+  828B5540  7E348B78             or r20,r17,r17
+  828B5544  280B0000             cmplwi r11,0x0
+  828B5548  7E358B78             or r21,r17,r17
+  828B554C  40820008             bne 0x828b5554
+  828B5550  82A70000             lwz r21,0x0(r7)
+LAB_828b5554:
+  828B5554  839E2FF0             lwz r28,0x2ff0(r30)
+  828B5558  2B1C0000             cmplwi cr6,r28,0x0
+  828B555C  419A0040             beq cr6,0x828b559c
+  828B5560  7F1C8040             cmplw cr6,r28,r16
+  828B5564  7F9FE378             or r31,r28,r28
+  828B5568  41980008             blt cr6,0x828b5570
+  828B556C  7E1F8378             or r31,r16,r16
+LAB_828b5570:
+  828B5570  817E2FE8             lwz r11,0x2fe8(r30)
+  828B5574  7FE5FB78             or r5,r31,r31
+  828B5578  83BE2FEC             lwz r29,0x2fec(r30)
+  828B557C  7E439378             or r3,r18,r18
+  828B5580  7C8BEA14             add r4,r11,r29
+  828B5584  480613DD             bl 0x82916960
+  828B5588  7D7FE050             subf r11,r31,r28
+  828B558C  7D5DFA14             add r10,r29,r31
+  828B5590  917E2FF0             stw r11,0x2ff0(r30)
+  828B5594  7FF4FB78             or r20,r31,r31
+  828B5598  915E2FEC             stw r10,0x2fec(r30)
+LAB_828b559c:
+  828B559C  2B150000             cmplwi cr6,r21,0x0
+  828B55A0  409A0010             bne cr6,0x828b55b0
+  828B55A4  817E2FF8             lwz r11,0x2ff8(r30)
+  828B55A8  2B0B0001             cmplwi cr6,r11,0x1
+  828B55AC  4099029C             ble cr6,0x828b5848
+LAB_828b55b0:
+  828B55B0  835E2FF8             lwz r26,0x2ff8(r30)
+  828B55B4  7EBFAB78             or r31,r21,r21
+  828B55B8  2B1A0000             cmplwi cr6,r26,0x0
+  828B55BC  419A00D0             beq cr6,0x828b568c
+  828B55C0  837E2FF4             lwz r27,0x2ff4(r30)
+  828B55C4  897B0000             lbz r11,0x0(r27)
+  828B55C8  2B0B00FF             cmplwi cr6,r11,0xff
+  828B55CC  409A0014             bne cr6,0x828b55e0
+  828B55D0  3B800005             li r28,0x5
+  828B55D4  3B200005             li r25,0x5
+  828B55D8  3BBB0003             addi r29,r27,0x3
+  828B55DC  48000010             b 0x828b55ec
+LAB_828b55e0:
+  828B55E0  3B800002             li r28,0x2
+  828B55E4  7E398B78             or r25,r17,r17
+  828B55E8  7F7DDB78             or r29,r27,r27
+LAB_828b55ec:
+  828B55EC  7F1AE040             cmplw cr6,r26,r28
+  828B55F0  40980034             bge cr6,0x828b5624
+  828B55F4  7FFAE050             subf r31,r26,r28
+  828B55F8  7F1FA840             cmplw cr6,r31,r21
+  828B55FC  41980008             blt cr6,0x828b5604
+  828B5600  7EBFAB78             or r31,r21,r21
+LAB_828b5604:
+  828B5604  7FE5FB78             or r5,r31,r31
+  828B5608  7E649B78             or r4,r19,r19
+  828B560C  7C7ADA14             add r3,r26,r27
+  828B5610  48061351             bl 0x82916960
+  828B5614  7D7AFA14             add r11,r26,r31
+  828B5618  7FF8FB78             or r24,r31,r31
+  828B561C  917E2FF8             stw r11,0x2ff8(r30)
+  828B5620  7FFFA850             subf r31,r31,r21
+LAB_828b5624:
+  828B5624  2B1F0000             cmplwi cr6,r31,0x0
+  828B5628  419A0068             beq cr6,0x828b5690
+  828B562C  895D0000             lbz r10,0x0(r29)
+  828B5630  7D78A850             subf r11,r24,r21
+  828B5634  893D0001             lbz r9,0x1(r29)
+  828B5638  554A403E             rlwinm r10,r10,0x8,0x0,0x1f
+  828B563C  83BE2FF8             lwz r29,0x2ff8(r30)
+  828B5640  7D4A4B78             or r10,r10,r9
+  828B5644  7D4ACA14             add r10,r10,r25
+  828B5648  7FEAE214             add r31,r10,r28
+  828B564C  7F9DF850             subf r28,r29,r31
+  828B5650  7F1C5840             cmplw cr6,r28,r11
+  828B5654  41980008             blt cr6,0x828b565c
+  828B5658  7D7C5B78             or r28,r11,r11
+LAB_828b565c:
+  828B565C  7F85E378             or r5,r28,r28
+  828B5660  7C989A14             add r4,r24,r19
+  828B5664  7C7DDA14             add r3,r29,r27
+  828B5668  480612F9             bl 0x82916960
+  828B566C  7D7DE214             add r11,r29,r28
+  828B5670  7F1CC214             add r24,r28,r24
+  828B5674  7D5F5810             subfc r10,r31,r11
+  828B5678  917E2FF8             stw r11,0x2ff8(r30)
+  828B567C  7D7F0194             addze r11,r31
+  828B5680  7D6BF850             subf r11,r11,r31
+  828B5684  7D7FF838             and r31,r11,r31
+  828B5688  48000008             b 0x828b5690
+LAB_828b568c:
+  828B568C  7E7B9B78             or r27,r19,r19
+LAB_828b5690:
+  828B5690  817E2FF0             lwz r11,0x2ff0(r30)
+  828B5694  2B0B0000             cmplwi cr6,r11,0x0
+  828B5698  409A01B0             bne cr6,0x828b5848
+  828B569C  82E10050             lwz r23,0x50(r1)
+LAB_828b56a0:
+  828B56A0  2B1F0000             cmplwi cr6,r31,0x0
+  828B56A4  419A01A4             beq cr6,0x828b5848
+  828B56A8  92210050             stw r17,0x50(r1)
+  828B56AC  8ADB0000             lbz r22,0x0(r27)
+  828B56B0  2B1600FF             cmplwi cr6,r22,0xff
+  828B56B4  409A0044             bne cr6,0x828b56f8
+  828B56B8  3B400005             li r26,0x5
+  828B56BC  3B200005             li r25,0x5
+  828B56C0  2B1F0005             cmplwi cr6,r31,0x5
+  828B56C4  4198002C             blt cr6,0x828b56f0
+  828B56C8  897B0003             lbz r11,0x3(r27)
+  828B56CC  895B0001             lbz r10,0x1(r27)
+  828B56D0  893B0004             lbz r9,0x4(r27)
+  828B56D4  556B403E             rlwinm r11,r11,0x8,0x0,0x1f
+  828B56D8  891B0002             lbz r8,0x2(r27)
+  828B56DC  554A403E             rlwinm r10,r10,0x8,0x0,0x1f
+  828B56E0  7D6B4B78             or r11,r11,r9
+  828B56E4  7D574378             or r23,r10,r8
+  828B56E8  3BAB000A             addi r29,r11,0xa
+  828B56EC  4800003C             b 0x828b5728
+LAB_828b56f0:
+  828B56F0  3BA00005             li r29,0x5
+  828B56F4  48000034             b 0x828b5728
+LAB_828b56f8:
+  828B56F8  3B400002             li r26,0x2
+  828B56FC  7E398B78             or r25,r17,r17
+  828B5700  2B1F0002             cmplwi cr6,r31,0x2
+  828B5704  41980020             blt cr6,0x828b5724
+  828B5708  897B0001             lbz r11,0x1(r27)
+  828B570C  56CA402E             rlwinm r10,r22,0x8,0x0,0x17
+  828B5710  3EE00000             lis r23,0x0
+  828B5714  7D6B5378             or r11,r11,r10
+  828B5718  62F78000             ori r23,r23,0x8000
+  828B571C  3BAB0002             addi r29,r11,0x2
+  828B5720  48000008             b 0x828b5728
+LAB_828b5724:
+  828B5724  3BA00002             li r29,0x2
+LAB_828b5728:
+  828B5728  7F1FE840             cmplw cr6,r31,r29
+  828B572C  40980024             bge cr6,0x828b5750
+  828B5730  7FE5FB78             or r5,r31,r31
+  828B5734  807E2FF4             lwz r3,0x2ff4(r30)
+  828B5738  7F64DB78             or r4,r27,r27
+  828B573C  48061225             bl 0x82916960
+  828B5740  93FE2FF8             stw r31,0x2ff8(r30)
+  828B5744  7F1FC214             add r24,r31,r24
+  828B5748  7E3F8B78             or r31,r17,r17
+  828B574C  480000F0             b 0x828b583c
+LAB_828b5750:
+  828B5750  397D0005             addi r11,r29,0x5
+  828B5754  7F1F5840             cmplw cr6,r31,r11
+  828B5758  40980034             bge cr6,0x828b578c
+  828B575C  83FE2FF4             lwz r31,0x2ff4(r30)
+  828B5760  7F1BF840             cmplw cr6,r27,r31
+  828B5764  419A0028             beq cr6,0x828b578c
+  828B5768  2B190000             cmplwi cr6,r25,0x0
+  828B576C  409A0020             bne cr6,0x828b578c
+  828B5770  7FA5EB78             or r5,r29,r29
+  828B5774  7F64DB78             or r4,r27,r27
+  828B5778  7FE3FB78             or r3,r31,r31
+  828B577C  480611E5             bl 0x82916960
+  828B5780  7F1DC214             add r24,r29,r24
+  828B5784  7FFBFB78             or r27,r31,r31
+  828B5788  93BE2FF8             stw r29,0x2ff8(r30)
+LAB_828b578c:
+  828B578C  7F948050             subf r28,r20,r16
+  828B5790  7F1CB840             cmplw cr6,r28,r23
+  828B5794  4098000C             bge cr6,0x828b57a0
+  828B5798  83FE2FE8             lwz r31,0x2fe8(r30)
+  828B579C  48000008             b 0x828b57a4
+LAB_828b57a0:
+  828B57A0  7FF49214             add r31,r20,r18
+LAB_828b57a4:
+  828B57A4  7D79E850             subf r11,r25,r29
+  828B57A8  39210050             addi r9,r1,0x50
+  828B57AC  7EE8BB78             or r8,r23,r23
+  828B57B0  7FE7FB78             or r7,r31,r31
+  828B57B4  7CDA5850             subf r6,r26,r11
+  828B57B8  7CBADA14             add r5,r26,r27
+  828B57BC  7EE4BB78             or r4,r23,r23
+  828B57C0  7FC3F378             or r3,r30,r30
+  828B57C4  4800041D             bl 0x828b5be0
+  828B57C8  817E2FE8             lwz r11,0x2fe8(r30)
+  828B57CC  7F1F5840             cmplw cr6,r31,r11
+  828B57D0  409A002C             bne cr6,0x828b57fc
+  828B57D4  7F85E378             or r5,r28,r28
+  828B57D8  7FE4FB78             or r4,r31,r31
+  828B57DC  7C749214             add r3,r20,r18
+  828B57E0  48061181             bl 0x82916960
+  828B57E4  81610050             lwz r11,0x50(r1)
+  828B57E8  939E2FEC             stw r28,0x2fec(r30)
+  828B57EC  7E9CA214             add r20,r28,r20
+  828B57F0  7D7C5850             subf r11,r28,r11
+  828B57F4  917E2FF0             stw r11,0x2ff0(r30)
+  828B57F8  4800000C             b 0x828b5804
+LAB_828b57fc:
+  828B57FC  81610050             lwz r11,0x50(r1)
+  828B5800  7E8BA214             add r20,r11,r20
+LAB_828b5804:
+  828B5804  817E2FF4             lwz r11,0x2ff4(r30)
+  828B5808  7F1B5840             cmplw cr6,r27,r11
+  828B580C  409A0010             bne cr6,0x828b581c
+  828B5810  7F789A14             add r27,r24,r19
+  828B5814  923E2FF8             stw r17,0x2ff8(r30)
+  828B5818  4800000C             b 0x828b5824
+LAB_828b581c:
+  828B581C  7F7DDA14             add r27,r29,r27
+  828B5820  7F1DC214             add r24,r29,r24
+LAB_828b5824:
+  828B5824  2B1600FF             cmplwi cr6,r22,0xff
+  828B5828  409A0010             bne cr6,0x828b5838
+  828B582C  39600001             li r11,0x1
+  828B5830  7F15C378             or r21,r24,r24
+  828B5834  997E2FFC             stb r11,0x2ffc(r30)
+LAB_828b5838:
+  828B5838  7FF8A850             subf r31,r24,r21
+LAB_828b583c:
+  828B583C  817E2FF0             lwz r11,0x2ff0(r30)
+  828B5840  2B0B0000             cmplwi cr6,r11,0x0
+  828B5844  419AFE5C             beq cr6,0x828b56a0
+LAB_828b5848:
+  828B5848  928F0000             stw r20,0x0(r15)
+  828B584C  38600000             li r3,0x0
+  828B5850  930E0000             stw r24,0x0(r14)
+  828B5854  382100F0             addi r1,r1,0xf0
+  828B5858  48060E78             b 0x829166d0

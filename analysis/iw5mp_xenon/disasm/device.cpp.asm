@@ -54,10 +54,102 @@ LAB_82859f1c:
 ; 8285A098  D3D::CBlocker::CBlocker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:188)
   8285A098  7D8802A6             mfspr r12,LR
   8285A09C  480BC621             bl 0x829166bc
+  8285A0A0  9421FF90             stwu r1,-0x70(r1)
+  8285A0A4  7C7F1B78             or r31,r3,r3
+  8285A0A8  7C9D2378             or r29,r4,r4
+  8285A0AC  7CBE2B78             or r30,r5,r5
+  8285A0B0  7DAD6B78             or r13,r13,r13
+  8285A0B4  93BF0000             stw r29,0x0(r31)
+  8285A0B8  93DF0004             stw r30,0x4(r31)
+  8285A0BC  816D0100             lwz r11,0x100(r13)
+  8285A0C0  815D2B10             lwz r10,0x2b10(r29)
+  8285A0C4  816B0058             lwz r11,0x58(r11)
+  8285A0C8  814A0000             lwz r10,0x0(r10)
+  8285A0CC  915F0008             stw r10,0x8(r31)
+  8285A0D0  917F000C             stw r11,0xc(r31)
+  8285A0D4  917F0010             stw r11,0x10(r31)
+  8285A0D8  7D6C42E6             mftb r11,TBLr
+  8285A0DC  2F1E0000             cmpwi cr6,r30,0x0
+  8285A0E0  917F0014             stw r11,0x14(r31)
+  8285A0E4  419A0024             beq cr6,0x8285a108
+  8285A0E8  3D60821F             lis r11,-0x7de1
+  8285A0EC  57CA103A             rlwinm r10,r30,0x2,0x0,0x1d
+  8285A0F0  396B2FC0             addi r11,r11,0x2fc0
+  8285A0F4  38A00000             li r5,0x0
+  8285A0F8  38800000             li r4,0x0
+  8285A0FC  7D6A582E             lwzx r11,r10,r11
+  8285A100  65630080             oris r3,r11,0x80
+  8285A104  48046CAD             bl 0x828a0db0
+LAB_8285a108:
+  8285A108  7DCE7378             or r14,r14,r14
+  8285A10C  7FE3FB78             or r3,r31,r31
+  8285A110  38210070             addi r1,r1,0x70
+  8285A114  480BC5F8             b 0x8291670c
 
 ; 8285A118  D3D::CBlocker::~CBlocker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:221)
   8285A118  7D8802A6             mfspr r12,LR
   8285A11C  480BC5A1             bl 0x829166bc
+  8285A120  9421FF80             stwu r1,-0x80(r1)
+  8285A124  7C7F1B78             or r31,r3,r3
+  8285A128  7DAD6B78             or r13,r13,r13
+  8285A12C  817F0004             lwz r11,0x4(r31)
+  8285A130  2F0B0000             cmpwi cr6,r11,0x0
+  8285A134  419A00C8             beq cr6,0x8285a1fc
+  8285A138  7D6C42E6             mftb r11,TBLr
+  8285A13C  814D0100             lwz r10,0x100(r13)
+  8285A140  813F0014             lwz r9,0x14(r31)
+  8285A144  556B003E             rlwinm r11,r11,0x0,0x0,0x1f
+  8285A148  811F0010             lwz r8,0x10(r31)
+  8285A14C  7FC95850             subf r30,r9,r11
+  8285A150  80FF0004             lwz r7,0x4(r31)
+  8285A154  816A0058             lwz r11,0x58(r10)
+  8285A158  2F070003             cmpwi cr6,r7,0x3
+  8285A15C  7FA85850             subf r29,r8,r11
+  8285A160  817F0000             lwz r11,0x0(r31)
+  8285A164  409A0018             bne cr6,0x8285a17c
+  8285A168  E94B5590             ld r10,0x5590(r11)
+  8285A16C  7BC90020             rldicl r9,r30,0x0,0x20
+  8285A170  7D495214             add r10,r9,r10
+  8285A174  F94B5590             std r10,0x5590(r11)
+  8285A178  48000014             b 0x8285a18c
+LAB_8285a17c:
+  8285A17C  E92B5588             ld r9,0x5588(r11)
+  8285A180  7BCA0020             rldicl r10,r30,0x0,0x20
+  8285A184  7D4A4A14             add r10,r10,r9
+  8285A188  F94B5588             std r10,0x5588(r11)
+LAB_8285a18c:
+  8285A18C  817F0004             lwz r11,0x4(r31)
+  8285A190  3D40821F             lis r10,-0x7de1
+  8285A194  38A00000             li r5,0x0
+  8285A198  394A2FC0             addi r10,r10,0x2fc0
+  8285A19C  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  8285A1A0  38800000             li r4,0x0
+  8285A1A4  7D6B502E             lwzx r11,r11,r10
+  8285A1A8  65630040             oris r3,r11,0x40
+  8285A1AC  48046C05             bl 0x828a0db0
+  8285A1B0  817F0000             lwz r11,0x0(r31)
+  8285A1B4  814B358C             lwz r10,0x358c(r11)
+  8285A1B8  2B0A0000             cmplwi cr6,r10,0x0
+  8285A1BC  419A0040             beq cr6,0x8285a1fc
+  8285A1C0  7BC90020             rldicl r9,r30,0x0,0x20
+  8285A1C4  C1AB5584             lfs f13,0x5584(r11)
+  8285A1C8  3D608200             lis r11,-0x7e00
+  8285A1CC  809F0004             lwz r4,0x4(r31)
+  8285A1D0  F9210050             std r9,0x50(r1)
+  8285A1D4  C8010050             lfd f0,0x50(r1)
+  8285A1D8  FC00069C             fcfid f0,f0
+  8285A1DC  7FA6EB78             or r6,r29,r29
+  8285A1E0  FD800018             frsp f12,f0
+  8285A1E4  C00B4214             lfs f0,0x4214(r11)
+  8285A1E8  38600000             li r3,0x0
+  8285A1EC  7D4903A6             mtspr CTR,r10
+  8285A1F0  EDAD0332             fmuls f13,f13,f12
+  8285A1F4  EC2D0032             fmuls f1,f13,f0
+  8285A1F8  4E800421             bctrl
+LAB_8285a1fc:
+  8285A1FC  7DCE7378             or r14,r14,r14
+  8285A200  38210080             addi r1,r1,0x80
+  8285A204  480BC508             b 0x8291670c
 
 ; 82859F58  D3D::MemAllocNoZero  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/memory.hpp:253)
   82859F58  7D8802A6             mfspr r12,LR
@@ -98,6 +190,71 @@ LAB_82859f1c:
 ; 8285A208  D3D::CBlocker::Check  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:270)
   8285A208  7D8802A6             mfspr r12,LR
   8285A20C  480BC4B1             bl 0x829166bc
+  8285A210  9421FF90             stwu r1,-0x70(r1)
+  8285A214  7C7F1B78             or r31,r3,r3
+  8285A218  7DAD6B78             or r13,r13,r13
+  8285A21C  83BF0000             lwz r29,0x0(r31)
+  8285A220  4BFFFCE1             bl 0x82859f00
+  8285A224  897D2B3D             lbz r11,0x2b3d(r29)
+  8285A228  556B07BD             rlwinm. r11,r11,0x0,0x1e,0x1e
+  8285A22C  408200BC             bne 0x8285a2e8
+  8285A230  817D2B10             lwz r11,0x2b10(r29)
+  8285A234  814D0100             lwz r10,0x100(r13)
+  8285A238  813F0008             lwz r9,0x8(r31)
+  8285A23C  810B0000             lwz r8,0x0(r11)
+  8285A240  83CA0058             lwz r30,0x58(r10)
+  8285A244  7F094040             cmplw cr6,r9,r8
+  8285A248  419A0010             beq cr6,0x8285a258
+  8285A24C  816B0000             lwz r11,0x0(r11)
+  8285A250  93DF000C             stw r30,0xc(r31)
+  8285A254  917F0008             stw r11,0x8(r31)
+LAB_8285a258:
+  8285A258  4804EF81             bl 0x828a91d8
+  8285A25C  817D2B08             lwz r11,0x2b08(r29)
+  8285A260  7F0B1840             cmplw cr6,r11,r3
+  8285A264  409A0014             bne cr6,0x8285a278
+  8285A268  817D2B80             lwz r11,0x2b80(r29)
+  8285A26C  2F0B0000             cmpwi cr6,r11,0x0
+  8285A270  419A0008             beq cr6,0x8285a278
+  8285A274  93DF000C             stw r30,0xc(r31)
+LAB_8285a278:
+  8285A278  817F000C             lwz r11,0xc(r31)
+  8285A27C  7D6BF050             subf r11,r11,r30
+  8285A280  2B0B1388             cmplwi cr6,r11,0x1388
+  8285A284  40980010             bge cr6,0x8285a294
+LAB_8285a288:
+  8285A288  7DCE7378             or r14,r14,r14
+  8285A28C  38600001             li r3,0x1
+  8285A290  48000060             b 0x8285a2f0
+LAB_8285a294:
+  8285A294  817F0004             lwz r11,0x4(r31)
+  8285A298  2F0B0013             cmpwi cr6,r11,0x13
+  8285A29C  409A0034             bne cr6,0x8285a2d0
+  8285A2A0  3D60821F             lis r11,-0x7de1
+  8285A2A4  386B3198             addi r3,r11,0x3198
+  8285A2A8  480E76CD             bl 0x82941974
+  8285A2AC  3D60821F             lis r11,-0x7de1
+  8285A2B0  386B3118             addi r3,r11,0x3118
+  8285A2B4  480E76C1             bl 0x82941974
+  8285A2B8  3D60821F             lis r11,-0x7de1
+  8285A2BC  386B3098             addi r3,r11,0x3098
+  8285A2C0  480E76B5             bl 0x82941974
+  8285A2C4  3D60821F             lis r11,-0x7de1
+  8285A2C8  386B3030             addi r3,r11,0x3030
+  8285A2CC  480E76A9             bl 0x82941974
+LAB_8285a2d0:
+  8285A2D0  7FA3EB78             or r3,r29,r29
+  8285A2D4  48022E8D             bl 0x8287d160
+  8285A2D8  2C030000             cmpwi r3,0x0
+  8285A2DC  4082000C             bne 0x8285a2e8
+  8285A2E0  93DF000C             stw r30,0xc(r31)
+  8285A2E4  4BFFFFA4             b 0x8285a288
+LAB_8285a2e8:
+  8285A2E8  7DCE7378             or r14,r14,r14
+  8285A2EC  38600000             li r3,0x0
+LAB_8285a2f0:
+  8285A2F0  38210070             addi r1,r1,0x70
+  8285A2F4  480BC418             b 0x8291670c
 
 ; 8285A960  D3D::InitializeAsyncResources  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:343)
   8285A960  7D8802A6             mfspr r12,LR
@@ -401,6 +558,34 @@ LAB_8285a8dc:
   8285A4EC  EBE1FFF0             ld r31,-0x10(r1)
   8285A4F0  4E800020             blr
 
+; 8285A8F8  D3D::MemAllocAligned  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/memory.hpp:550)
+  8285A8F8  7D8802A6             mfspr r12,LR
+  8285A8FC  9181FFF8             stw r12,-0x8(r1)
+  8285A900  FBC1FFE8             std r30,-0x18(r1)
+  8285A904  FBE1FFF0             std r31,-0x10(r1)
+  8285A908  9421FF90             stwu r1,-0x70(r1)
+  8285A90C  7C7E1B78             or r30,r3,r3
+  8285A910  7C9F2378             or r31,r4,r4
+  8285A914  7DAD6B78             or r13,r13,r13
+  8285A918  7FE4FB78             or r4,r31,r31
+  8285A91C  7FC3F378             or r3,r30,r30
+  8285A920  4BFFFF61             bl 0x8285a880
+  8285A924  7C7F1B79             or. r31,r3,r3
+  8285A928  41820014             beq 0x8285a93c
+  8285A92C  7FC5F378             or r5,r30,r30
+  8285A930  38800000             li r4,0x0
+  8285A934  7FE3FB78             or r3,r31,r31
+  8285A938  480BBEC9             bl 0x82916800
+LAB_8285a93c:
+  8285A93C  7DCE7378             or r14,r14,r14
+  8285A940  7FE3FB78             or r3,r31,r31
+  8285A944  38210070             addi r1,r1,0x70
+  8285A948  8181FFF8             lwz r12,-0x8(r1)
+  8285A94C  7D8803A6             mtspr LR,r12
+  8285A950  EBC1FFE8             ld r30,-0x18(r1)
+  8285A954  EBE1FFF0             ld r31,-0x10(r1)
+  8285A958  4E800020             blr
+
 ; 8285A4F8  D3D::WaitUntilIdleOrFlushCaches  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:566)
   8285A4F8  7D8802A6             mfspr r12,LR
   8285A4FC  9181FFF8             stw r12,-0x8(r1)
@@ -455,6 +640,101 @@ LAB_8285a570:
 ; 8285AAF0  Direct3D_CreateDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:618)
   8285AAF0  7D8802A6             mfspr r12,LR
   8285AAF4  480BBBC1             bl 0x829166b4
+  8285AAF8  9421FF70             stwu r1,-0x90(r1)
+  8285AAFC  7C9E2378             or r30,r4,r4
+  8285AB00  7CDD3378             or r29,r6,r6
+  8285AB04  7CFC3B78             or r28,r7,r7
+  8285AB08  7D1B4378             or r27,r8,r8
+  8285AB0C  7DAD6B78             or r13,r13,r13
+  8285AB10  39600000             li r11,0x0
+  8285AB14  38800080             li r4,0x80
+  8285AB18  917B0000             stw r11,0x0(r27)
+  8285AB1C  38605F80             li r3,0x5f80
+  8285AB20  4BFFFDD9             bl 0x8285a8f8
+  8285AB24  7C7F1B79             or. r31,r3,r3
+  8285AB28  40820014             bne 0x8285ab3c
+LAB_8285ab2c:
+  8285AB2C  7DCE7378             or r14,r14,r14
+  8285AB30  3C608007             lis r3,-0x7ff9
+  8285AB34  6063000E             ori r3,r3,0xe
+  8285AB38  48000110             b 0x8285ac48
+LAB_8285ab3c:
+  8285AB3C  7FE3FB78             or r3,r31,r31
+  8285AB40  48023089             bl 0x8287dbc8
+  8285AB44  2C030000             cmpwi r3,0x0
+  8285AB48  40820014             bne 0x8285ab5c
+  8285AB4C  3C802480             lis r4,0x2480
+  8285AB50  807FFFFC             lwz r3,-0x4(r31)
+  8285AB54  4BDAC925             bl 0x82607478
+  8285AB58  4BFFFFD4             b 0x8285ab2c
+LAB_8285ab5c:
+  8285AB5C  2F1E0002             cmpwi cr6,r30,0x2
+  8285AB60  409A0034             bne cr6,0x8285ab94
+  8285AB64  897F2B3C             lbz r11,0x2b3c(r31)
+  8285AB68  7FE3FB78             or r3,r31,r31
+  8285AB6C  616B0080             ori r11,r11,0x80
+  8285AB70  997F2B3C             stb r11,0x2b3c(r31)
+  8285AB74  4800C195             bl 0x82866d08
+  8285AB78  7FE3FB78             or r3,r31,r31
+  8285AB7C  48023395             bl 0x8287df10
+  8285AB80  2C030000             cmpwi r3,0x0
+  8285AB84  408200B8             bne 0x8285ac3c
+  8285AB88  7FE3FB78             or r3,r31,r31
+  8285AB8C  4BFFFA25             bl 0x8285a5b0
+  8285AB90  4BFFFF9C             b 0x8285ab2c
+LAB_8285ab94:
+  8285AB94  3D60829A             lis r11,-0x7d66
+  8285AB98  38610050             addi r3,r1,0x50
+  8285AB9C  3BCB6F80             addi r30,r11,0x6f80
+  8285ABA0  389E0114             addi r4,r30,0x114
+  8285ABA4  4BFFF43D             bl 0x82859fe0
+  8285ABA8  817E013C             lwz r11,0x13c(r30)
+  8285ABAC  2F0B0000             cmpwi cr6,r11,0x0
+  8285ABB0  419A000C             beq cr6,0x8285abbc
+  8285ABB4  7FE3FB78             or r3,r31,r31
+  8285ABB8  48024089             bl 0x8287ec40
+LAB_8285abbc:
+  8285ABBC  817E0000             lwz r11,0x0(r30)
+  8285ABC0  57AA05EF             rlwinm. r10,r29,0x0,0x17,0x17
+  8285ABC4  312BFFFF             subic r9,r11,0x1
+  8285ABC8  7D695910             subfe r11,r9,r11
+  8285ABCC  997F35E0             stb r11,0x35e0(r31)
+  8285ABD0  817E0004             lwz r11,0x4(r30)
+  8285ABD4  314BFFFF             subic r10,r11,0x1
+  8285ABD8  7D6A5910             subfe r11,r10,r11
+  8285ABDC  997F35E1             stb r11,0x35e1(r31)
+  8285ABE0  40820010             bne 0x8285abf0
+  8285ABE4  57AB008F             rlwinm. r11,r29,0x0,0x2,0x7
+  8285ABE8  40820008             bne 0x8285abf0
+  8285ABEC  67BD0C00             oris r29,r29,0xc00
+LAB_8285abf0:
+  8285ABF0  93BF5F20             stw r29,0x5f20(r31)
+  8285ABF4  7F84E378             or r4,r28,r28
+  8285ABF8  7FE3FB78             or r3,r31,r31
+  8285ABFC  48023095             bl 0x8287dc90
+  8285AC00  2C030000             cmpwi r3,0x0
+  8285AC04  40820024             bne 0x8285ac28
+  8285AC08  7FE3FB78             or r3,r31,r31
+  8285AC0C  4BFFF9A5             bl 0x8285a5b0
+  8285AC10  89610054             lbz r11,0x54(r1)
+  8285AC14  280B0000             cmplwi r11,0x0
+  8285AC18  4182FF14             beq 0x8285ab2c
+  8285AC1C  80610050             lwz r3,0x50(r1)
+  8285AC20  480E65E5             bl 0x82941204
+  8285AC24  4BFFFF08             b 0x8285ab2c
+LAB_8285ac28:
+  8285AC28  89610054             lbz r11,0x54(r1)
+  8285AC2C  280B0000             cmplwi r11,0x0
+  8285AC30  4182000C             beq 0x8285ac3c
+  8285AC34  80610050             lwz r3,0x50(r1)
+  8285AC38  480E65CD             bl 0x82941204
+LAB_8285ac3c:
+  8285AC3C  93FB0000             stw r31,0x0(r27)
+  8285AC40  7DCE7378             or r14,r14,r14
+  8285AC44  38600000             li r3,0x0
+LAB_8285ac48:
+  8285AC48  38210090             addi r1,r1,0x90
+  8285AC4C  480BBAB8             b 0x82916704
 
 ; 8285A5B0  D3DDevice_Release  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:798)
   8285A5B0  7D8802A6             mfspr r12,LR
@@ -580,3 +860,76 @@ LAB_8285a73c:
 ; 8285A768  D3DDevice_UnsetAll  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:1147)
   8285A768  7D8802A6             mfspr r12,LR
   8285A76C  480BBF51             bl 0x829166bc
+  8285A770  9421FF90             stwu r1,-0x70(r1)
+  8285A774  7C7F1B78             or r31,r3,r3
+  8285A778  7DAD6B78             or r13,r13,r13
+  8285A77C  3BC00000             li r30,0x0
+  8285A780  3BBF3190             addi r29,r31,0x3190
+LAB_8285a784:
+  8285A784  817D0000             lwz r11,0x0(r29)
+  8285A788  815F3B18             lwz r10,0x3b18(r31)
+  8285A78C  7F0B5040             cmplw cr6,r11,r10
+  8285A790  419A0014             beq cr6,0x8285a7a4
+  8285A794  38A00000             li r5,0x0
+  8285A798  7FC4F378             or r4,r30,r30
+  8285A79C  7FE3FB78             or r3,r31,r31
+  8285A7A0  48009111             bl 0x828638b0
+LAB_8285a7a4:
+  8285A7A4  3BDE0001             addi r30,r30,0x1
+  8285A7A8  3BBD0004             addi r29,r29,0x4
+  8285A7AC  2B1E0004             cmplwi cr6,r30,0x4
+  8285A7B0  4198FFD4             blt cr6,0x8285a784
+  8285A7B4  817F31A0             lwz r11,0x31a0(r31)
+  8285A7B8  815F3B10             lwz r10,0x3b10(r31)
+  8285A7BC  7F0B5040             cmplw cr6,r11,r10
+  8285A7C0  419A0010             beq cr6,0x8285a7d0
+  8285A7C4  38800000             li r4,0x0
+  8285A7C8  7FE3FB78             or r3,r31,r31
+  8285A7CC  48009605             bl 0x82863dd0
+LAB_8285a7d0:
+  8285A7D0  38800000             li r4,0x0
+  8285A7D4  7FE3FB78             or r3,r31,r31
+  8285A7D8  4800FEB9             bl 0x8286a690
+  8285A7DC  38800000             li r4,0x0
+  8285A7E0  7FE3FB78             or r3,r31,r31
+  8285A7E4  4800FC8D             bl 0x8286a470
+  8285A7E8  38800000             li r4,0x0
+  8285A7EC  7FE3FB78             or r3,r31,r31
+  8285A7F0  480100D1             bl 0x8286a8c0
+  8285A7F4  38800000             li r4,0x0
+  8285A7F8  7FE3FB78             or r3,r31,r31
+  8285A7FC  4800879D             bl 0x82862f98
+  8285A800  39600001             li r11,0x1
+  8285A804  3BC00000             li r30,0x0
+  8285A808  797DFFE6             rldicr r29,r11,0x3f,0x3f
+LAB_8285a80c:
+  8285A80C  217E005F             subfic r11,r30,0x5f
+  8285A810  38E00004             li r7,0x4
+  8285A814  1D6B5556             mulli r11,r11,0x5556
+  8285A818  556B843E             rlwinm r11,r11,0x10,0x10,0x1f
+  8285A81C  38C00000             li r6,0x0
+  8285A820  396B0020             addi r11,r11,0x20
+  8285A824  38A00000             li r5,0x0
+  8285A828  796B0020             rldicl r11,r11,0x0,0x20
+  8285A82C  7FC4F378             or r4,r30,r30
+  8285A830  7FA85C36             srd r8,r29,r11
+  8285A834  7FE3FB78             or r3,r31,r31
+  8285A838  480085A1             bl 0x82862dd8
+  8285A83C  3BDE0001             addi r30,r30,0x1
+  8285A840  2B1E0010             cmplwi cr6,r30,0x10
+  8285A844  4198FFC8             blt cr6,0x8285a80c
+  8285A848  3BC00000             li r30,0x0
+LAB_8285a84c:
+  8285A84C  397E0020             addi r11,r30,0x20
+  8285A850  38A00000             li r5,0x0
+  8285A854  796B0020             rldicl r11,r11,0x0,0x20
+  8285A858  7FC4F378             or r4,r30,r30
+  8285A85C  7FA65C36             srd r6,r29,r11
+  8285A860  7FE3FB78             or r3,r31,r31
+  8285A864  4800BC3D             bl 0x828664a0
+  8285A868  3BDE0001             addi r30,r30,0x1
+  8285A86C  2B1E001A             cmplwi cr6,r30,0x1a
+  8285A870  4198FFDC             blt cr6,0x8285a84c
+  8285A874  7DCE7378             or r14,r14,r14
+  8285A878  38210070             addi r1,r1,0x70
+  8285A87C  480BBE90             b 0x8291670c

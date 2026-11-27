@@ -3,3 +3,88 @@
 ; 82256E58  der_length_object_identifier  (line unknown)
   82256E58  7D8802A6             mfspr r12,LR
   82256E5C  486BF859             bl 0x829166b4
+  82256E60  2B040002             cmplwi cr6,r4,0x2
+  82256E64  41980124             blt cr6,0x82256f88
+  82256E68  81630000             lwz r11,0x0(r3)
+  82256E6C  2B0B0003             cmplwi cr6,r11,0x3
+  82256E70  41990118             bgt cr6,0x82256f88
+  82256E74  2B0B0002             cmplwi cr6,r11,0x2
+  82256E78  40980010             bge cr6,0x82256e88
+  82256E7C  81430004             lwz r10,0x4(r3)
+  82256E80  2B0A0027             cmplwi cr6,r10,0x27
+  82256E84  41990104             bgt cr6,0x82256f88
+LAB_82256e88:
+  82256E88  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82256E8C  81230004             lwz r9,0x4(r3)
+  82256E90  38E00000             li r7,0x0
+  82256E94  7D6B5214             add r11,r11,r10
+  82256E98  3BE00001             li r31,0x1
+  82256E9C  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  82256EA0  2B040001             cmplwi cr6,r4,0x1
+  82256EA4  7CCB4A14             add r6,r11,r9
+  82256EA8  4099009C             ble cr6,0x82256f44
+  82256EAC  3D602492             lis r11,0x2492
+  82256EB0  3B830008             addi r28,r3,0x8
+  82256EB4  3BC4FFFF             subi r30,r4,0x1
+  82256EB8  3BA00007             li r29,0x7
+  82256EBC  61634925             ori r3,r11,0x4925
+LAB_82256ec0:
+  82256EC0  7CCA3378             or r10,r6,r6
+  82256EC4  39600000             li r11,0x0
+  82256EC8  2B060000             cmplwi cr6,r6,0x0
+  82256ECC  419A0014             beq cr6,0x82256ee0
+LAB_82256ed0:
+  82256ED0  554AF87E             rlwinm r10,r10,0x1f,0x1,0x1f
+  82256ED4  396B0001             addi r11,r11,0x1
+  82256ED8  2B0A0000             cmplwi cr6,r10,0x0
+  82256EDC  409AFFF4             bne cr6,0x82256ed0
+LAB_82256ee0:
+  82256EE0  7D4B1816             mulhwu r10,r11,r3
+  82256EE4  7D2A5850             subf r9,r10,r11
+  82256EE8  7CDB0034             cntlzw r27,r6
+  82256EEC  5528F87E             rlwinm r8,r9,0x1f,0x1,0x1f
+  82256EF0  5769DFFE             rlwinm r9,r27,0x1b,0x1f,0x1f
+  82256EF4  7D085214             add r8,r8,r10
+  82256EF8  7D4BEB96             divwu r10,r11,r29
+  82256EFC  5508F0BE             rlwinm r8,r8,0x1e,0x2,0x1f
+  82256F00  7F1FF040             cmplw cr6,r31,r30
+  82256F04  551B1838             rlwinm r27,r8,0x3,0x0,0x1c
+  82256F08  7D08D850             subf r8,r8,r27
+  82256F0C  7D685850             subf r11,r8,r11
+  82256F10  310BFFFF             subic r8,r11,0x1
+  82256F14  7D685910             subfe r11,r8,r11
+  82256F18  7D6B4A14             add r11,r11,r9
+  82256F1C  7D6B5214             add r11,r11,r10
+  82256F20  7CEB3A14             add r7,r11,r7
+  82256F24  40980008             bge cr6,0x82256f2c
+  82256F28  80DC0000             lwz r6,0x0(r28)
+LAB_82256f2c:
+  82256F2C  3BFF0001             addi r31,r31,0x1
+  82256F30  3B9C0004             addi r28,r28,0x4
+  82256F34  7F1F2040             cmplw cr6,r31,r4
+  82256F38  4198FF88             blt cr6,0x82256ec0
+  82256F3C  2B070080             cmplwi cr6,r7,0x80
+  82256F40  40980014             bge cr6,0x82256f54
+LAB_82256f44:
+  82256F44  39670002             addi r11,r7,0x2
+  82256F48  38600000             li r3,0x0
+  82256F4C  91650000             stw r11,0x0(r5)
+  82256F50  486BF7B4             b 0x82916704
+LAB_82256f54:
+  82256F54  2B070100             cmplwi cr6,r7,0x100
+  82256F58  40980014             bge cr6,0x82256f6c
+  82256F5C  39670003             addi r11,r7,0x3
+  82256F60  38600000             li r3,0x0
+  82256F64  91650000             stw r11,0x0(r5)
+  82256F68  486BF79C             b 0x82916704
+LAB_82256f6c:
+  82256F6C  3D600001             lis r11,0x1
+  82256F70  7F075840             cmplw cr6,r7,r11
+  82256F74  40980014             bge cr6,0x82256f88
+  82256F78  39670004             addi r11,r7,0x4
+  82256F7C  38600000             li r3,0x0
+  82256F80  91650000             stw r11,0x0(r5)
+  82256F84  486BF780             b 0x82916704
+LAB_82256f88:
+  82256F88  38600010             li r3,0x10
+  82256F8C  486BF778             b 0x82916704

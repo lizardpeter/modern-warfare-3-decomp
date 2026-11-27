@@ -125,3 +125,59 @@ undefined8 CM_TraceBox_NoFloat4(double param_1,int param_2,float *param_3)
   return 1;
 }
 
+
+// 824CFE08  CM_TraceSphere  (qcommon/cm_tracebox.cpp:154)
+
+void CM_TraceSphere(undefined8 param_1,double param_2,undefined8 param_3,float *param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
+  iVar4 = __savefpr_22();
+  dVar13 = (double)(*(float *)(iVar4 + 0x54) - *(float *)(iVar4 + 0x44));
+  dVar12 = (double)(*(float *)(iVar4 + 0x58) - *(float *)(iVar4 + 0x48));
+  dVar11 = (double)(*(float *)(iVar4 + 0x50) - *(float *)(iVar4 + 0x40));
+  dVar9 = (double)(*param_4 - *(float *)(iVar4 + 0x40));
+  dVar8 = (double)(param_4[1] - *(float *)(iVar4 + 0x44));
+  dVar10 = 0.0;
+  dVar7 = (double)(param_4[2] - *(float *)(iVar4 + 0x48));
+  dVar5 = (double)(float)(dVar11 * dVar11 +
+                         (double)(float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13)));
+  dVar6 = 1.0;
+  if (-dVar5 < 0.0) {
+    dVar6 = dVar5;
+  }
+  dVar5 = extraout_f1;
+  if (dVar6 == 0.0) {
+    MyAssertHandler(0xffffffff82082df0,0xa6,0,0xffffffff82000f98,0xffffffff82082e34);
+  }
+  dVar6 = (double)(float)((double)(float)(dVar12 * dVar7 +
+                                         (double)(float)(dVar11 * dVar9 +
+                                                        (double)(float)(dVar13 * dVar8))) / dVar6);
+  if ((float)(dVar6 - param_2) < 0.0) {
+    param_2 = dVar6;
+  }
+  if (-dVar6 < 0.0) {
+    dVar10 = param_2;
+  }
+  dVar10 = -dVar10;
+  fVar1 = (float)(dVar13 * dVar10 + dVar8);
+  fVar2 = (float)(dVar12 * dVar10 + dVar7);
+  fVar3 = (float)(dVar10 * dVar11 + dVar9);
+  __restfpr_22((float)(dVar5 * dVar5) <= fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  return;
+}
+

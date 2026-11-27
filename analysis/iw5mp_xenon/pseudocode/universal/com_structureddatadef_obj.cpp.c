@@ -38,7 +38,6 @@ void LoadBuffer_StructuredDataValidationTypeStream(char param_1,longlong param_2
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,0x214,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -92,7 +91,6 @@ void LoadBuffer_EnumIndexTypeStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,0x247,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -162,31 +160,79 @@ void SaveBuffer_StructuredDataValidationTypeArray(undefined8 param_1,ulonglong p
 
 // 825F78C8  LoadBuffer_StructuredDataEnumEntryArray  (universal/com_structureddatadef_load_buf.h:619)
 
-void LoadBuffer_StructuredDataEnumEntryArray(void)
+void LoadBuffer_StructuredDataEnumEntryArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f540,(param_2 & 0x1fffffff) << 3);
+  uVar2 = (ulonglong)DAT_8404f540;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f540 = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,8);
+      DAT_8404f538 = DAT_8404f540;
+      LoadBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 8;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F7930  LoadBuffer_StructuredDataEnumEntryStream  (universal/com_structureddatadef_load_buf.h:641)
 
-void LoadBuffer_StructuredDataEnumEntryStream(void)
+void LoadBuffer_StructuredDataEnumEntryStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  ulonglong uVar2;
+  
+  cVar1 = __savegprlr_29();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x284,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f540;
+    do {
+      LoadBuffer_Stream(1,uVar2,8);
+      DAT_8404f538 = DAT_8404f540;
+      LoadBuffer_XString(0);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f540 = (uint)uVar2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 825F5550  SaveBuffer_StructuredDataValidationTypeStream  (universal/com_structureddatadef_save_buf.h:649)
 
-void SaveBuffer_StructuredDataValidationTypeStream(void)
+void SaveBuffer_StructuredDataValidationTypeStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x28c,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2e8,4,0xffffffff8404f4d0);
+      DAT_8404f2e8 = AssetBuf_GetSourcePos();
+      DAT_8404f2a4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -250,31 +296,86 @@ void SaveBuffer_EnumIndexTypeArray(undefined8 param_1,ulonglong param_2)
 
 // 825F7A40  LoadBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_load_buf.h:687)
 
-void LoadBuffer_StructuredDataEnumArray(void)
+void LoadBuffer_StructuredDataEnumArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f368,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  puVar3 = DAT_8404f368;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f368 = puVar3;
+      LoadBuffer_Stream(0,puVar3,0xc);
+      if (DAT_8404f368[2] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f368[2] = uVar2;
+        DAT_8404f540 = DAT_8404f368[2];
+        LoadBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
+      }
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 3;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F5618  SaveBuffer_EnumIndexTypeStream  (universal/com_structureddatadef_save_buf.h:709)
 
-void SaveBuffer_EnumIndexTypeStream(void)
+void SaveBuffer_EnumIndexTypeStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x2c8,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f410,2,0xffffffff8404f474);
+      DAT_8404f410 = AssetBuf_GetSourcePos();
+      DAT_8404f3c4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F7AE0  LoadBuffer_StructuredDataEnumStream  (universal/com_structureddatadef_load_buf.h:709)
 
-void LoadBuffer_StructuredDataEnumStream(void)
+void LoadBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  undefined4 uVar1;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x2c8,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f368,0xc);
+      if (DAT_8404f368[2] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f368[2] = uVar1;
+        DAT_8404f540 = DAT_8404f368[2];
+        LoadBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
+      }
+      DAT_8404f368 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -376,7 +477,6 @@ void LoadBuffer_StructuredDataTypeCategoryStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,0x2fb,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -452,24 +552,23 @@ void SaveBuffer_StructuredDataEnumEntryStream(undefined8 param_1,longlong param_
   char cVar1;
   
   cVar1 = __savegprlr_25();
-  if (cVar1 != '\0') {
-    if (0 < (int)param_2) {
-      do {
-        SaveBuffer_Stream(1,DAT_8404f540,8,0xffffffff8404f520);
-        DAT_8404f538 = DAT_8404f540;
-        DAT_8404f47c = DAT_8404f55c;
-        DAT_8404f28c = DAT_8404f520;
-        SaveBuffer_XString(0);
-        DAT_8404f540 = AssetBuf_GetSourcePos();
-        DAT_8404f55c = AssetBuf_GetStreamPos();
-        param_2 = param_2 + -1;
-      } while (param_2 != 0);
-    }
-    __restgprlr_25();
-    return;
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x312,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82179c20,0x312,0,0xffffffff82000f98,0xffffffff82059b28);
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f540,8,0xffffffff8404f520);
+      DAT_8404f538 = DAT_8404f540;
+      DAT_8404f47c = DAT_8404f55c;
+      DAT_8404f28c = DAT_8404f520;
+      SaveBuffer_XString(0);
+      DAT_8404f540 = AssetBuf_GetSourcePos();
+      DAT_8404f55c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -485,7 +584,6 @@ void SaveBuffer_StructuredDataEnum(undefined8 param_1)
   if (DAT_8404f368[2] != 0) {
     iVar1 = AssetBuf_FindStreamData(DAT_8404f368[2]);
     if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
     }
     uVar2 = AssetBuf_AllocStreamPos(3);
@@ -512,11 +610,49 @@ void AllocSaveBuffer_StructuredDataEnum(void)
 
 // 825F5980  SaveBuffer_StructuredDataEnumArray  (universal/com_structureddatadef_save_buf.h:838)
 
-void SaveBuffer_StructuredDataEnumArray(void)
+void SaveBuffer_StructuredDataEnumArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f368,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f484);
+  iVar4 = DAT_8404f484;
+  iVar5 = DAT_8404f438;
+  puVar6 = DAT_8404f368;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f368 = puVar6;
+      DAT_8404f438 = iVar5;
+      DAT_8404f484 = iVar4;
+      SaveBuffer_Stream(0,puVar6,0xc,0xffffffff8404f484);
+      if (DAT_8404f368[2] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f368[2]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f484 + 8) = uVar3;
+        DAT_8404f540 = DAT_8404f368[2];
+        DAT_8404f55c = *(undefined4 *)(DAT_8404f484 + 8);
+        AssetBuf_SetStreamData(DAT_8404f368[2],*(undefined4 *)(DAT_8404f484 + 8));
+        *(undefined4 *)(DAT_8404f484 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumEntryArray(1,*DAT_8404f368);
+      }
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0xc;
+      iVar5 = iVar5 + 0xc;
+      puVar6 = puVar6 + 3;
+    } while (param_2 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -551,7 +687,6 @@ void SaveBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
   
   cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179c20,0x367,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -560,7 +695,6 @@ void SaveBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
       if (DAT_8404f368[2] != 0) {
         iVar1 = AssetBuf_FindStreamData(DAT_8404f368[2]);
         if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179c20,0x331,0,0xffffffff82000f98,0xffffffff82179c84);
         }
         uVar2 = AssetBuf_AllocStreamPos(3);
@@ -583,11 +717,38 @@ void SaveBuffer_StructuredDataEnumStream(undefined8 param_1,longlong param_2)
 
 // 825F7D60  LoadBuffer_StructuredDataTypeUnionStream  (universal/com_structureddatadef_load_buf.h:869)
 
-void LoadBuffer_StructuredDataTypeUnionStream(void)
+void LoadBuffer_StructuredDataTypeUnionStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 uVar2;
+  char cVar3;
+  ulonglong uVar4;
+  undefined4 uVar5;
+  
+  cVar3 = __savegprlr_27();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x368,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    uVar4 = (ulonglong)DAT_8404f3e8;
+    do {
+      iVar1 = *DAT_8404f2cc;
+      uVar5 = (undefined4)uVar4;
+      uVar2 = DAT_8404f2d0;
+      if ((((iVar1 == 3) || (uVar2 = uVar5, uVar5 = DAT_8404f3b4, iVar1 == 4)) || (iVar1 == 5)) ||
+         ((iVar1 == 6 || (iVar1 == 7)))) {
+        DAT_8404f3b4 = uVar5;
+        DAT_8404f2d0 = uVar2;
+        LoadBuffer_Stream(1,uVar4,4);
+      }
+      uVar4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f3e8 = (uint)uVar4;
+    } while (param_2 != 0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -653,11 +814,25 @@ void LoadBuffer_StructuredDataTypeArray(undefined8 param_1,ulonglong param_2)
 
 // 825F5C18  SaveBuffer_StructuredDataTypeCategoryStream  (universal/com_structureddatadef_save_buf.h:928)
 
-void SaveBuffer_StructuredDataTypeCategoryStream(void)
+void SaveBuffer_StructuredDataTypeCategoryStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x3a3,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4d8,4,0xffffffff8404f3fc);
+      DAT_8404f4d8 = AssetBuf_GetSourcePos();
+      DAT_8404f3a8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -669,7 +844,6 @@ void LoadBuffer_StructuredDataTypeStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,0x3a5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -758,7 +932,6 @@ void LoadBuffer_StructuredDataIndexedArrayStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,999,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -862,7 +1035,6 @@ void LoadBuffer_voidStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x41a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -889,7 +1061,6 @@ void SaveBuffer_StructuredDataTypeUnionStream(undefined8 param_1,longlong param_
   
   cVar2 = __savegprlr_21();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179c20,0x423,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -938,7 +1109,6 @@ void LoadBuffer_StructuredDataEnumedArrayStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179e90,0x429,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1014,7 +1184,6 @@ void LoadBuffer_byteStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x44d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1052,11 +1221,27 @@ void AllocLoadBuffer_StructuredDataStructProperty(void)
 
 // 825F8098  LoadBuffer_StructuredDataStructPropertyArray  (universal/com_structureddatadef_load_buf.h:1111)
 
-void LoadBuffer_StructuredDataStructPropertyArray(void)
+void LoadBuffer_StructuredDataStructPropertyArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f2dc,(param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  uVar2 = (ulonglong)DAT_8404f2dc;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f2dc = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,0x14);
+      DAT_8404f538 = DAT_8404f2dc;
+      LoadBuffer_XString(0);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 0x14;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1092,21 +1277,53 @@ void LoadBuffer_BYTEArray(undefined8 param_1,undefined8 param_2)
 
 // 825F5EF8  SaveBuffer_StructuredDataTypeStream  (universal/com_structureddatadef_save_buf.h:1130)
 
-void SaveBuffer_StructuredDataTypeStream(void)
+void SaveBuffer_StructuredDataTypeStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x46d,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2cc,8,0xffffffff8404f408);
+      DAT_8404f2cc = AssetBuf_GetSourcePos();
+      DAT_8404f44c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F8108  LoadBuffer_StructuredDataStructPropertyStream  (universal/com_structureddatadef_load_buf.h:1133)
 
-void LoadBuffer_StructuredDataStructPropertyStream(void)
+void LoadBuffer_StructuredDataStructPropertyStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  ulonglong uVar2;
+  
+  cVar1 = __savegprlr_29();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x470,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f2dc;
+    do {
+      LoadBuffer_Stream(1,uVar2,0x14);
+      DAT_8404f538 = DAT_8404f2dc;
+      LoadBuffer_XString(0);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f2dc = (uint)uVar2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1119,7 +1336,6 @@ ulonglong StructuredDataDef_LoadDef_FastFile(undefined8 param_1)
   
   uVar1 = DB_FindXAssetHeader(0x28,param_1,1);
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179ef8,0x477,0,0xffffffff82000f98,0xffffffff82087f1c);
   }
   return uVar1;
@@ -1182,7 +1398,6 @@ void LoadBuffer_BYTEStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x480,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1207,7 +1422,6 @@ ulonglong StructuredDataDef_LoadDef(undefined8 param_1)
   
   uVar1 = DB_FindXAssetHeader(0x28,param_1,1);
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179ef8,0x477,0,0xffffffff82000f98,0xffffffff82087f1c);
   }
   return uVar1;
@@ -1216,11 +1430,81 @@ ulonglong StructuredDataDef_LoadDef(undefined8 param_1)
 
 // 825F8D68  StructuredData_GetTypeSize  (universal/com_structureddatadef_obj.cpp:1156)
 
-void StructuredData_GetTypeSize(void)
+void StructuredData_GetTypeSize(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 *puVar2;
+  int *piVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x488,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x489,0,0xffffffff82000f98,0xffffffff820928bc);
+  }
+  puVar2 = (undefined4 *)param_2;
+  switch(*puVar2) {
+  case 0:
+  case 8:
+    __restgprlr_28(4);
+    return;
+  case 1:
+  case 2:
+    __restgprlr_28(1);
+    return;
+  case 3:
+    __restgprlr_28(puVar2[1]);
+    return;
+  case 4:
+  case 9:
+    __restgprlr_28(2);
+    return;
+  case 5:
+    if (*(uint *)(iVar1 + 0x10) <= (uint)puVar2[1]) {
+      MyAssertHandler(0xffffffff82179ef8,0x4a0,0,0xffffffff82086aa0);
+    }
+    __restgprlr_28(*(undefined4 *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x14) + 8));
+    return;
+  case 6:
+    break;
+  case 7:
+    if (*(uint *)(iVar1 + 0x20) <= (uint)puVar2[1]) {
+      MyAssertHandler(0xffffffff82179ef8,0x4ae,0,0xffffffff820869f8);
+    }
+    piVar3 = (int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x24));
+    if (*(uint *)(iVar1 + 8) <= *(uint *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x24))) {
+      MyAssertHandler(0xffffffff82179ef8,0x4b1,0,0xffffffff82179f60);
+    }
+    iVar1 = *(int *)(*piVar3 * 0xc + *(int *)(iVar1 + 0xc) + 4);
+    if (piVar3[1] != 2) {
+      __restgprlr_28((longlong)iVar1 * (longlong)piVar3[3]);
+      return;
+    }
+    __restgprlr_28(((longlong)iVar1 * (longlong)piVar3[3] + 7U & 0xffffffff) >> 3);
+    return;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82179ef8,0x4be,0,0xffffffff82179f4c);
+    }
+    __restgprlr_28(0);
+    return;
+  }
+  if (*(uint *)(iVar1 + 0x18) <= (uint)puVar2[1]) {
+    MyAssertHandler(0xffffffff82179ef8,0x4a4,0,0xffffffff82086a48);
+  }
+  piVar3 = (int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x1c));
+  iVar1 = *(int *)(puVar2[1] * 0x10 + *(int *)(iVar1 + 0x1c));
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff82179ef8,0x4a7,0,0xffffffff82179fa8,iVar1,0);
+  }
+  if (piVar3[1] != 2) {
+    __restgprlr_28((longlong)piVar3[3] * (longlong)*piVar3);
+    return;
+  }
+  __restgprlr_28(((longlong)piVar3[3] * (longlong)*piVar3 + 7U & 0xffffffff) >> 3);
+  return;
 }
 
 
@@ -1296,21 +1580,56 @@ void SaveBuffer_StructuredDataIndexedArrayArray(undefined8 param_1,ulonglong par
 
 // 825F8218  LoadBuffer_StructuredDataStructArray  (universal/com_structureddatadef_load_buf.h:1184)
 
-void LoadBuffer_StructuredDataStructArray(void)
+void LoadBuffer_StructuredDataStructArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f2c8,(param_2 & 0xfffffff) << 4);
+  puVar3 = DAT_8404f2c8;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f2c8 = puVar3;
+      LoadBuffer_Stream(0,puVar3,0x10);
+      if (DAT_8404f2c8[1] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f2c8[1] = uVar2;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        LoadBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
+      }
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 4;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825EF030  SaveBuffer_voidStream  (database/db_primtypes_save_buf.h:1188)
 
-void SaveBuffer_voidStream(void)
+void SaveBuffer_voidStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x4a7,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2ac,1,0xffffffff8404f524);
+      DAT_8404f2ac = AssetBuf_GetSourcePos();
+      DAT_8404f3ec = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1322,7 +1641,6 @@ void LoadBuffer_charStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x4b3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1350,11 +1668,31 @@ void SaveBuffer_byte(undefined8 param_1)
 
 // 825F82B0  LoadBuffer_StructuredDataStructStream  (universal/com_structureddatadef_load_buf.h:1206)
 
-void LoadBuffer_StructuredDataStructStream(void)
+void LoadBuffer_StructuredDataStructStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  undefined4 uVar1;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x4b9,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f2c8,0x10);
+      if (DAT_8404f2c8[1] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f2c8[1] = uVar1;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        LoadBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
+      }
+      DAT_8404f2c8 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1370,11 +1708,25 @@ void AllocSaveBuffer_byte(void)
 
 // 825F5FC0  SaveBuffer_StructuredDataIndexedArrayStream  (universal/com_structureddatadef_save_buf.h:1211)
 
-void SaveBuffer_StructuredDataIndexedArrayStream(void)
+void SaveBuffer_StructuredDataIndexedArrayStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x4be,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f508,0x10,0xffffffff8404f268);
+      DAT_8404f508 = AssetBuf_GetSourcePos();
+      DAT_8404f52c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1466,11 +1818,25 @@ void LoadBuffer_uint8_tArray(undefined8 param_1,undefined8 param_2)
 
 // 825EF0F8  SaveBuffer_byteStream  (database/db_primtypes_save_buf.h:1248)
 
-void SaveBuffer_byteStream(void)
+void SaveBuffer_byteStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x4e3,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f284,1,0xffffffff8404f514);
+      DAT_8404f284 = AssetBuf_GetSourcePos();
+      DAT_8404f2c4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1482,7 +1848,6 @@ void LoadBuffer_uint8_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x4e6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1580,11 +1945,25 @@ void LoadBuffer_int8_tArray(undefined8 param_1,undefined8 param_2)
 
 // 825F6088  SaveBuffer_StructuredDataEnumedArrayStream  (universal/com_structureddatadef_save_buf.h:1292)
 
-void SaveBuffer_StructuredDataEnumedArrayStream(void)
+void SaveBuffer_StructuredDataEnumedArrayStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x50f,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4c0,0x10,0xffffffff8404f2f0);
+      DAT_8404f4c0 = AssetBuf_GetSourcePos();
+      DAT_8404f4dc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1606,7 +1985,6 @@ void LoadBuffer_int8_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x519,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1687,11 +2065,25 @@ void SaveBuffer_StructuredDataStructProperty(undefined8 param_1)
 
 // 825EF1C0  SaveBuffer_BYTEStream  (database/db_primtypes_save_buf.h:1308)
 
-void SaveBuffer_BYTEStream(void)
+void SaveBuffer_BYTEStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x51f,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2e0,1,0xffffffff8404f3e4);
+      DAT_8404f2e0 = AssetBuf_GetSourcePos();
+      DAT_8404f37c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1727,11 +2119,49 @@ void SaveBuffer_char(undefined8 param_1)
 
 // 825F8618  LoadBuffer_StructuredDataDefStream  (universal/com_structureddatadef_load_buf.h:1325)
 
-void LoadBuffer_StructuredDataDefStream(void)
+void LoadBuffer_StructuredDataDefStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar2;
+  undefined4 uVar1;
+  
+  cVar2 = __savegprlr_26();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x530,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f34c,0x34);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0xc) = uVar1;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        LoadBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
+      }
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x14) = uVar1;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        LoadBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
+      }
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x1c) = uVar1;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        LoadBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4);
+      }
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f34c + 0x24) = uVar1;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        LoadBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4);
+      }
+      DAT_8404f34c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1842,7 +2272,6 @@ void LoadBuffer_boolStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x54c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -1880,21 +2309,60 @@ void LoadBuffer_qboolean(undefined8 param_1)
 
 // 825EF288  SaveBuffer_charStream  (database/db_primtypes_save_buf.h:1368)
 
-void SaveBuffer_charStream(void)
+void SaveBuffer_charStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x55b,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f454,1,0xffffffff8404f334);
+      DAT_8404f454 = AssetBuf_GetSourcePos();
+      DAT_8404f4a0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F8840  LoadBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_load_buf.h:1375)
 
-void LoadBuffer_StructuredDataDefSetArray(void)
+void LoadBuffer_StructuredDataDefSetArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_27();
+  LoadBuffer_Stream(uVar1,DAT_8404f3d0,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  iVar3 = DAT_8404f3d0;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f3d0 = iVar3;
+      LoadBuffer_Stream(0,iVar3,0xc);
+      AssetBuf_PushStreamPos(3);
+      DAT_8404f538 = DAT_8404f3d0;
+      LoadBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3d0 + 8) = uVar2;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        LoadBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
+      }
+      AssetBuf_PopStreamPos();
+      param_2 = param_2 - 1;
+      iVar3 = iVar3 + 0xc;
+    } while (param_2 != 0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1916,24 +2384,23 @@ void SaveBuffer_StructuredDataStructPropertyStream(undefined8 param_1,longlong p
   char cVar1;
   
   cVar1 = __savegprlr_25();
-  if (cVar1 != '\0') {
-    if (0 < (int)param_2) {
-      do {
-        SaveBuffer_Stream(1,DAT_8404f2dc,0x14,0xffffffff8404f25c);
-        DAT_8404f538 = DAT_8404f2dc;
-        DAT_8404f47c = DAT_8404f270;
-        DAT_8404f28c = DAT_8404f25c;
-        SaveBuffer_XString(0);
-        DAT_8404f2dc = AssetBuf_GetSourcePos();
-        DAT_8404f270 = AssetBuf_GetStreamPos();
-        param_2 = param_2 + -1;
-      } while (param_2 != 0);
-    }
-    __restgprlr_25();
-    return;
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x567,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82179c20,0x567,0,0xffffffff82000f98,0xffffffff82059b28);
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2dc,0x14,0xffffffff8404f25c);
+      DAT_8404f538 = DAT_8404f2dc;
+      DAT_8404f47c = DAT_8404f270;
+      DAT_8404f28c = DAT_8404f25c;
+      SaveBuffer_XString(0);
+      DAT_8404f2dc = AssetBuf_GetSourcePos();
+      DAT_8404f270 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -1979,7 +2446,6 @@ void SaveBuffer_StructuredDataStruct(undefined8 param_1)
   if (DAT_8404f2c8[1] != 0) {
     iVar1 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
     if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
     }
     uVar2 = AssetBuf_AllocStreamPos(3);
@@ -1996,11 +2462,35 @@ void SaveBuffer_StructuredDataStruct(undefined8 param_1)
 
 // 825F8900  LoadBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_load_buf.h:1397)
 
-void LoadBuffer_StructuredDataDefSetStream(void)
+void LoadBuffer_StructuredDataDefSetStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar2;
+  undefined4 uVar1;
+  
+  cVar2 = __savegprlr_28();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x578,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f3d0,0xc);
+      AssetBuf_PushStreamPos(3);
+      DAT_8404f538 = DAT_8404f3d0;
+      LoadBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3d0 + 8) = uVar1;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        LoadBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
+      }
+      AssetBuf_PopStreamPos();
+      DAT_8404f3d0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2022,7 +2512,6 @@ void LoadBuffer_qbooleanStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x584,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2087,11 +2576,25 @@ void LoadBuffer_int(undefined8 param_1)
 
 // 825EF350  SaveBuffer_uint8_tStream  (database/db_primtypes_save_buf.h:1428)
 
-void SaveBuffer_uint8_tStream(void)
+void SaveBuffer_uint8_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x597,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f560,1,0xffffffff8404f3dc);
+      DAT_8404f560 = AssetBuf_GetSourcePos();
+      DAT_8404f40c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2137,11 +2640,48 @@ void AllocLoadBuffer_StructuredDataDefSetPtr(void)
 
 // 825F63F8  SaveBuffer_StructuredDataStructArray  (universal/com_structureddatadef_save_buf.h:1442)
 
-void SaveBuffer_StructuredDataStructArray(void)
+void SaveBuffer_StructuredDataStructArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f2c8,(param_2 & 0xfffffff) << 4,0xffffffff8404f3a4);
+  iVar4 = DAT_8404f3a4;
+  iVar5 = DAT_8404f480;
+  puVar6 = DAT_8404f2c8;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f2c8 = puVar6;
+      DAT_8404f3a4 = iVar4;
+      DAT_8404f480 = iVar5;
+      SaveBuffer_Stream(0,puVar6,0x10,0xffffffff8404f3a4);
+      if (DAT_8404f2c8[1] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f3a4 + 4) = uVar3;
+        DAT_8404f2dc = DAT_8404f2c8[1];
+        DAT_8404f270 = *(undefined4 *)(DAT_8404f3a4 + 4);
+        AssetBuf_SetStreamData(DAT_8404f2c8[1],*(undefined4 *)(DAT_8404f3a4 + 4));
+        *(undefined4 *)(DAT_8404f3a4 + 4) = 0xffffffff;
+        SaveBuffer_StructuredDataStructPropertyArray(1,*DAT_8404f2c8);
+      }
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0x10;
+      iVar5 = iVar5 + 0x10;
+      puVar6 = puVar6 + 4;
+    } while (param_2 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -2167,11 +2707,51 @@ void AllocSaveBuffer_int8_t(void)
 
 // 825F8AB0  LoadBuffer_StructuredDataDefSetPtrArray  (universal/com_structureddatadef_load_buf.h:1449)
 
-void LoadBuffer_StructuredDataDefSetPtrArray(void)
+void LoadBuffer_StructuredDataDefSetPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int *piVar4;
+  int *piVar5;
+  
+  uVar2 = __savegprlr_27();
+  LoadBuffer_Stream(uVar2,DAT_8404f358,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f358;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f358 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
+      AssetBuf_PushStreamPos(0);
+      iVar1 = *DAT_8404f358;
+      if (iVar1 != 0) {
+        if ((iVar1 == -1) || (iVar1 == -2)) {
+          iVar3 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f358 = iVar3;
+          DAT_8404f3d0 = *DAT_8404f358;
+          if (iVar1 == -2) {
+            piVar4 = (int *)AssetBuf_InsertPointer();
+          }
+          else {
+            piVar4 = (int *)0x0;
+          }
+          LoadBuffer_StructuredDataDefSet(1);
+          if (piVar4 != (int *)0x0) {
+            *piVar4 = *DAT_8404f358;
+          }
+        }
+        else {
+          AssetBuf_ConvertOffsetToAlias();
+        }
+      }
+      AssetBuf_PopStreamPos();
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2193,7 +2773,6 @@ void LoadBuffer_intStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x5b7,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2211,11 +2790,50 @@ void LoadBuffer_intStream(char param_1,longlong param_2)
 
 // 825F8B90  LoadBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_load_buf.h:1471)
 
-void LoadBuffer_StructuredDataDefSetPtrStream(void)
+void LoadBuffer_StructuredDataDefSetPtrStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar4;
+  int iVar2;
+  int *piVar3;
+  
+  cVar4 = __savegprlr_28();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82179e90,0x5c2,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f358,4);
+      AssetBuf_PushStreamPos(0);
+      iVar1 = *DAT_8404f358;
+      if (iVar1 != 0) {
+        if ((iVar1 == -1) || (iVar1 == -2)) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f358 = iVar2;
+          DAT_8404f3d0 = *DAT_8404f358;
+          if (iVar1 == -2) {
+            piVar3 = (int *)AssetBuf_InsertPointer();
+          }
+          else {
+            piVar3 = (int *)0x0;
+          }
+          LoadBuffer_StructuredDataDefSet(1);
+          if (piVar3 != (int *)0x0) {
+            *piVar3 = *DAT_8404f358;
+          }
+        }
+        else {
+          AssetBuf_ConvertOffsetToAlias();
+        }
+      }
+      AssetBuf_PopStreamPos();
+      DAT_8404f358 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2230,7 +2848,6 @@ void SaveBuffer_StructuredDataStructStream(undefined8 param_1,longlong param_2)
   
   cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179c20,0x5c3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2239,7 +2856,6 @@ void SaveBuffer_StructuredDataStructStream(undefined8 param_1,longlong param_2)
       if (DAT_8404f2c8[1] != 0) {
         iVar1 = AssetBuf_FindStreamData(DAT_8404f2c8[1]);
         if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179c20,0x57f,0,0xffffffff82000f98,0xffffffff82179cc0);
         }
         uVar2 = AssetBuf_AllocStreamPos(3);
@@ -2285,18 +2901,93 @@ void AllocLoadBuffer_byte4096(void)
 void SaveBuffer_StructuredDataDef(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  uVar1 = __savegprlr_26();
+  SaveBuffer_Stream(uVar1,DAT_8404f34c,0x34,0xffffffff8404f518);
+  if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x5e9,0,0xffffffff82000f98,0xffffffff82179dbc);
+    }
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0xc) = uVar3;
+    DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+    DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
+    AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+    *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+    SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
+  }
+  if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x5fb,0,0xffffffff82000f98,0xffffffff82179d80);
+    }
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x14) = uVar3;
+    DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+    DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
+    AssetBuf_SetStreamData
+              (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+    *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+    SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
+  }
+  if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x60d,0,0xffffffff82000f98,0xffffffff82179d40);
+    }
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar3;
+    DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+    DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+    AssetBuf_SetStreamData
+              (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+    *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+    SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+  }
+  if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+    iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+    if (iVar2 != 0) {
+      MyAssertHandler(0xffffffff82179c20,0x61f,0,0xffffffff82000f98,0xffffffff82179d00);
+    }
+    uVar3 = AssetBuf_AllocStreamPos(3);
+    *(undefined4 *)(DAT_8404f518 + 0x24) = uVar3;
+    DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+    DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+    AssetBuf_SetStreamData
+              (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+    *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+    SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 825EF418  SaveBuffer_int8_tStream  (database/db_primtypes_save_buf.h:1488)
 
-void SaveBuffer_int8_tStream(void)
+void SaveBuffer_int8_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x5d3,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f510,1,0xffffffff8404f36c);
+      DAT_8404f510 = AssetBuf_GetSourcePos();
+      DAT_8404f430 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2338,7 +3029,6 @@ void LoadBuffer_byte4096Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x5ea,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2396,11 +3086,25 @@ void LoadBuffer_byte128Array(undefined8 param_1,undefined8 param_2)
 
 // 825EF4E0  SaveBuffer_boolStream  (database/db_primtypes_save_buf.h:1548)
 
-void SaveBuffer_boolStream(void)
+void SaveBuffer_boolStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x60f,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f340,1,0xffffffff8404f434);
+      DAT_8404f340 = AssetBuf_GetSourcePos();
+      DAT_8404f29c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2412,7 +3116,6 @@ void LoadBuffer_byte128Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x61d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2500,11 +3203,99 @@ void AllocSaveBuffer_StructuredDataDef(void)
 
 // 825F6900  SaveBuffer_StructuredDataDefArray  (universal/com_structureddatadef_save_buf.h:1602)
 
-void SaveBuffer_StructuredDataDefArray(void)
+void SaveBuffer_StructuredDataDefArray(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  uint local_b0;
+  
+  uVar1 = __savegprlr();
+  SaveBuffer_Stream(uVar1,DAT_8404f34c,param_2 * 0x34,0xffffffff8404f518);
+  local_b0 = (uint)param_2;
+  iVar5 = DAT_8404f518;
+  iVar6 = DAT_8404f380;
+  iVar7 = DAT_8404f34c;
+  if (0 < (int)local_b0) {
+    do {
+      DAT_8404f34c = iVar7;
+      DAT_8404f380 = iVar6;
+      DAT_8404f518 = iVar5;
+      SaveBuffer_Stream(0,iVar7,0x34,0xffffffff8404f518);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x5e9,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->enums )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0xc) = uVar3;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+        *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
+      }
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x5fb,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->structs )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x14) = uVar3;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+        *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+        SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
+      }
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x60d,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->indexedArrays )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar3;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+      }
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x61f,0,0xffffffff82000f98,
+                          "!AssetBuf_FindStreamData( bufStructuredDataDef->enumedArrays )");
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x24) = uVar3;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+        *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
+      }
+      uVar4 = (ulonglong)local_b0;
+      local_b0 = (uint)(uVar4 - 1);
+      iVar5 = iVar5 + 0x34;
+      iVar6 = iVar6 + 0x34;
+      iVar7 = iVar7 + 0x34;
+    } while (uVar4 - 1 != 0);
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -2516,7 +3307,6 @@ void LoadBuffer_byte64Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x650,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2534,11 +3324,25 @@ void LoadBuffer_byte64Stream(char param_1,longlong param_2)
 
 // 825EF5A8  SaveBuffer_qbooleanStream  (database/db_primtypes_save_buf.h:1615)
 
-void SaveBuffer_qbooleanStream(void)
+void SaveBuffer_qbooleanStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x652,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f250,4,0xffffffff8404f490);
+      DAT_8404f250 = AssetBuf_GetSourcePos();
+      DAT_8404f3cc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2564,11 +3368,91 @@ void SaveBuffer_int(undefined8 param_1)
 
 // 825F6C30  SaveBuffer_StructuredDataDefStream  (universal/com_structureddatadef_save_buf.h:1632)
 
-void SaveBuffer_StructuredDataDefStream(void)
+void SaveBuffer_StructuredDataDefStream(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar3;
+  int iVar1;
+  undefined4 uVar2;
+  ulonglong uVar4;
+  uint local_a8;
+  
+  local_a8 = param_2;
+  cVar3 = __savegprlr();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x663,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)local_a8) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f34c,0x34,0xffffffff8404f518);
+      if (*(int *)(DAT_8404f34c + 0xc) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0xc));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x5e9,0,&DAT_82000f98,0xffffffff82179dbc);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0xc) = uVar2;
+        DAT_8404f368 = *(undefined4 *)(DAT_8404f34c + 0xc);
+        DAT_8404f438 = *(undefined4 *)(DAT_8404f518 + 0xc);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0xc),*(undefined4 *)(DAT_8404f518 + 0xc));
+        *(undefined4 *)(DAT_8404f518 + 0xc) = 0xffffffff;
+        SaveBuffer_StructuredDataEnumArray(1,*(undefined4 *)(DAT_8404f34c + 8));
+      }
+      if (*(int *)(DAT_8404f34c + 0x14) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x14));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x5fb,0,&DAT_82000f98,0xffffffff82179d80);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x14) = uVar2;
+        DAT_8404f2c8 = *(undefined4 *)(DAT_8404f34c + 0x14);
+        DAT_8404f480 = *(undefined4 *)(DAT_8404f518 + 0x14);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x14),*(undefined4 *)(DAT_8404f518 + 0x14));
+        *(undefined4 *)(DAT_8404f518 + 0x14) = 0xffffffff;
+        SaveBuffer_StructuredDataStructArray(1,*(undefined4 *)(DAT_8404f34c + 0x10));
+      }
+      if (*(int *)(DAT_8404f34c + 0x1c) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x1c));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x60d,0,&DAT_82000f98,0xffffffff82179d40);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = uVar2;
+        DAT_8404f508 = *(undefined4 *)(DAT_8404f34c + 0x1c);
+        DAT_8404f52c = *(undefined4 *)(DAT_8404f518 + 0x1c);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x1c),*(undefined4 *)(DAT_8404f518 + 0x1c));
+        *(undefined4 *)(DAT_8404f518 + 0x1c) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f508,*(int *)(DAT_8404f34c + 0x18) << 4,0xffffffff8404f268);
+      }
+      if (*(int *)(DAT_8404f34c + 0x24) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f34c + 0x24));
+        if (iVar1 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef_save_buf.h"
+                          ,0x61f,0,&DAT_82000f98,0xffffffff82179d00);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f518 + 0x24) = uVar2;
+        DAT_8404f4c0 = *(undefined4 *)(DAT_8404f34c + 0x24);
+        DAT_8404f4dc = *(undefined4 *)(DAT_8404f518 + 0x24);
+        AssetBuf_SetStreamData
+                  (*(undefined4 *)(DAT_8404f34c + 0x24),*(undefined4 *)(DAT_8404f518 + 0x24));
+        *(undefined4 *)(DAT_8404f518 + 0x24) = 0xffffffff;
+        SaveBuffer_Stream(1,DAT_8404f4c0,*(int *)(DAT_8404f34c + 0x20) << 4,0xffffffff8404f2f0);
+      }
+      DAT_8404f34c = AssetBuf_GetSourcePos();
+      DAT_8404f380 = AssetBuf_GetStreamPos();
+      uVar4 = (ulonglong)local_a8;
+      local_a8 = (uint)(uVar4 - 1);
+    } while (uVar4 - 1 != 0);
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -2629,7 +3513,6 @@ void SaveBuffer_StructuredDataDefSet(undefined8 param_1)
   if (*(int *)(DAT_8404f3d0 + 8) != 0) {
     iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
     if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
     }
     uVar2 = AssetBuf_AllocStreamPos(3);
@@ -2653,7 +3536,6 @@ void LoadBuffer_byte32Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x683,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2671,11 +3553,25 @@ void LoadBuffer_byte32Stream(char param_1,longlong param_2)
 
 // 825EF670  SaveBuffer_intStream  (database/db_primtypes_save_buf.h:1675)
 
-void SaveBuffer_intStream(void)
+void SaveBuffer_intStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x68e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2d0,4,0xffffffff8404f400);
+      DAT_8404f2d0 = AssetBuf_GetSourcePos();
+      DAT_8404f38c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2721,11 +3617,55 @@ void SaveBuffer_byte4096(undefined8 param_1)
 
 // 825F7078  SaveBuffer_StructuredDataDefSetArray  (universal/com_structureddatadef_save_buf.h:1691)
 
-void SaveBuffer_StructuredDataDefSetArray(void)
+void SaveBuffer_StructuredDataDefSetArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_16();
+  SaveBuffer_Stream(uVar1,DAT_8404f3d0,(param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) << 2,
+                    0xffffffff8404f498);
+  iVar4 = DAT_8404f498;
+  iVar5 = DAT_8404f2f4;
+  iVar6 = DAT_8404f3d0;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f2f4 = iVar5;
+      DAT_8404f3d0 = iVar6;
+      DAT_8404f498 = iVar4;
+      SaveBuffer_Stream(0,iVar6,0xc,0xffffffff8404f498);
+      AssetBuf_PushStreamPos(3);
+      DAT_8404f538 = DAT_8404f3d0;
+      DAT_8404f47c = DAT_8404f2f4;
+      DAT_8404f28c = DAT_8404f498;
+      SaveBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        iVar2 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f498 + 8) = uVar3;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        DAT_8404f380 = *(undefined4 *)(DAT_8404f498 + 8);
+        AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f3d0 + 8),*(undefined4 *)(DAT_8404f498 + 8));
+        *(undefined4 *)(DAT_8404f498 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
+      }
+      AssetBuf_PopStreamPos();
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 0xc;
+      iVar5 = iVar5 + 0xc;
+      iVar6 = iVar6 + 0xc;
+    } while (param_2 != 0);
+  }
+  __restgprlr_16();
+  return;
 }
 
 
@@ -2767,7 +3707,6 @@ void LoadBuffer_unsignedStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x6b6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2785,11 +3724,46 @@ void LoadBuffer_unsignedStream(char param_1,longlong param_2)
 
 // 825F71E0  SaveBuffer_StructuredDataDefSetStream  (universal/com_structureddatadef_save_buf.h:1721)
 
-void SaveBuffer_StructuredDataDefSetStream(void)
+void SaveBuffer_StructuredDataDefSetStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  char cVar3;
+  int iVar1;
+  undefined4 uVar2;
+  
+  cVar3 = __savegprlr_19();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x6bc,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f3d0,0xc,0xffffffff8404f498);
+      AssetBuf_PushStreamPos(3);
+      DAT_8404f538 = DAT_8404f3d0;
+      DAT_8404f47c = DAT_8404f2f4;
+      DAT_8404f28c = DAT_8404f498;
+      SaveBuffer_XString(0);
+      if (*(int *)(DAT_8404f3d0 + 8) != 0) {
+        iVar1 = AssetBuf_FindStreamData(*(int *)(DAT_8404f3d0 + 8));
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff82179c20,0x684,0,0xffffffff82000f98,0xffffffff82179df4);
+        }
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f498 + 8) = uVar2;
+        DAT_8404f34c = *(undefined4 *)(DAT_8404f3d0 + 8);
+        DAT_8404f380 = *(undefined4 *)(DAT_8404f498 + 8);
+        AssetBuf_SetStreamData(*(undefined4 *)(DAT_8404f3d0 + 8),*(undefined4 *)(DAT_8404f498 + 8));
+        *(undefined4 *)(DAT_8404f498 + 8) = 0xffffffff;
+        SaveBuffer_StructuredDataDefArray(1,*(undefined4 *)(DAT_8404f3d0 + 4));
+      }
+      AssetBuf_PopStreamPos();
+      DAT_8404f3d0 = AssetBuf_GetSourcePos();
+      DAT_8404f2f4 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -2805,11 +3779,25 @@ void LoadBuffer_DWORD(undefined8 param_1)
 
 // 825EF738  SaveBuffer_byte4096Stream  (database/db_primtypes_save_buf.h:1735)
 
-void SaveBuffer_byte4096Stream(void)
+void SaveBuffer_byte4096Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x6ca,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f568,1,0xffffffff8404f258);
+      DAT_8404f568 = AssetBuf_GetSourcePos();
+      DAT_8404f53c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2837,7 +3825,6 @@ void SaveBuffer_StructuredDataDefSetPtr(undefined8 param_1)
     iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
     *DAT_8404f458 = iVar2;
     if (*DAT_8404f458 == -1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
     }
     if (*DAT_8404f458 == 0) {
@@ -2913,7 +3900,6 @@ void LoadBuffer_DWORDStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x6e9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -2956,7 +3942,6 @@ void SaveBuffer_StructuredDataDefSetPtrArray(undefined8 param_1,ulonglong param_
         iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
         *DAT_8404f458 = iVar2;
         if (*DAT_8404f458 == -1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
         }
         if (*DAT_8404f458 == 0) {
@@ -3003,11 +3988,25 @@ void AllocLoadBuffer_int32_t(void)
 
 // 825EF800  SaveBuffer_byte128Stream  (database/db_primtypes_save_buf.h:1795)
 
-void SaveBuffer_byte128Stream(void)
+void SaveBuffer_byte128Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x706,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2e4,1,0xffffffff8404f3f4);
+      DAT_8404f2e4 = AssetBuf_GetSourcePos();
+      DAT_8404f554 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3023,11 +4022,45 @@ void LoadBuffer_int32_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F75B0  SaveBuffer_StructuredDataDefSetPtrStream  (universal/com_structureddatadef_save_buf.h:1797)
 
-void SaveBuffer_StructuredDataDefSetPtrStream(void)
+void SaveBuffer_StructuredDataDefSetPtrStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  char cVar3;
+  int iVar2;
+  undefined8 uVar1;
+  
+  cVar3 = __savegprlr_23();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82179c20,0x708,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f358,4,0xffffffff8404f458);
+      AssetBuf_PushStreamPos(0);
+      if (*DAT_8404f358 != 0) {
+        iVar2 = AssetBuf_FindStreamData(*DAT_8404f358);
+        *DAT_8404f458 = iVar2;
+        if (*DAT_8404f458 == -1) {
+          MyAssertHandler(0xffffffff82179c20,0x6cf,0,0xffffffff82000f98,0xffffffff82179e30);
+        }
+        if (*DAT_8404f458 == 0) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f458 = iVar2;
+          DAT_8404f3d0 = *DAT_8404f358;
+          DAT_8404f2f4 = *DAT_8404f458;
+          uVar1 = AssetBuf_ConvertAliasToOffset(DAT_8404f4e0);
+          AssetBuf_SetStreamDataRaw(*DAT_8404f358,uVar1);
+          SaveBuffer_StructuredDataDefSet(1);
+        }
+      }
+      AssetBuf_PopStreamPos();
+      DAT_8404f358 = (int *)AssetBuf_GetSourcePos();
+      DAT_8404f4e0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -3059,7 +4092,6 @@ void LoadBuffer_int32_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x71c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3117,11 +4149,25 @@ void LoadBuffer_uint32_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825EF8C8  SaveBuffer_byte64Stream  (database/db_primtypes_save_buf.h:1855)
 
-void SaveBuffer_byte64Stream(void)
+void SaveBuffer_byte64Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x742,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f32c,1,0xffffffff8404f264);
+      DAT_8404f32c = AssetBuf_GetSourcePos();
+      DAT_8404f314 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3133,7 +4179,6 @@ void LoadBuffer_uint32_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x74f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3211,11 +4256,25 @@ void LoadBuffer_uintArray(undefined8 param_1,ulonglong param_2)
 
 // 825EF990  SaveBuffer_byte32Stream  (database/db_primtypes_save_buf.h:1915)
 
-void SaveBuffer_byte32Stream(void)
+void SaveBuffer_byte32Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x77e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2b4,1,0xffffffff8404f288);
+      DAT_8404f2b4 = AssetBuf_GetSourcePos();
+      DAT_8404f360 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3227,7 +4286,6 @@ void LoadBuffer_uintStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x782,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3311,7 +4369,6 @@ void LoadBuffer_uint64_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x7b5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3329,11 +4386,25 @@ void LoadBuffer_uint64_tStream(char param_1,longlong param_2)
 
 // 825EFA58  SaveBuffer_unsignedStream  (database/db_primtypes_save_buf.h:1975)
 
-void SaveBuffer_unsignedStream(void)
+void SaveBuffer_unsignedStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x7ba,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f530,4,0xffffffff8404f364);
+      DAT_8404f530 = AssetBuf_GetSourcePos();
+      DAT_8404f49c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3405,7 +4476,6 @@ void LoadBuffer_raw_DWORDStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x7e8,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3423,11 +4493,25 @@ void LoadBuffer_raw_DWORDStream(char param_1,longlong param_2)
 
 // 825EFB20  SaveBuffer_DWORDStream  (database/db_primtypes_save_buf.h:2035)
 
-void SaveBuffer_DWORDStream(void)
+void SaveBuffer_DWORDStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x7f6,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f42c,4,0xffffffff8404f374);
+      DAT_8404f42c = AssetBuf_GetSourcePos();
+      DAT_8404f414 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3499,7 +4583,6 @@ void LoadBuffer_floatStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x81b,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3537,11 +4620,25 @@ void AllocLoadBuffer_float16(void)
 
 // 825EFBE8  SaveBuffer_int32_tStream  (database/db_primtypes_save_buf.h:2095)
 
-void SaveBuffer_int32_tStream(void)
+void SaveBuffer_int32_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x832,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f450,4,0xffffffff8404f390);
+      DAT_8404f450 = AssetBuf_GetSourcePos();
+      DAT_8404f344 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3583,7 +4680,6 @@ void LoadBuffer_float16Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x84e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3641,11 +4737,25 @@ void LoadBuffer_raw_floatArray(undefined8 param_1,ulonglong param_2)
 
 // 825EFCB0  SaveBuffer_uint32_tStream  (database/db_primtypes_save_buf.h:2155)
 
-void SaveBuffer_uint32_tStream(void)
+void SaveBuffer_uint32_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x86e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2f8,4,0xffffffff8404f494);
+      DAT_8404f2f8 = AssetBuf_GetSourcePos();
+      DAT_8404f3d8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3667,7 +4777,6 @@ void LoadBuffer_raw_floatStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x881,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3735,11 +4844,25 @@ void LoadBuffer_raw_float16Array(undefined8 param_1,ulonglong param_2)
 
 // 825EFD78  SaveBuffer_uintStream  (database/db_primtypes_save_buf.h:2215)
 
-void SaveBuffer_uintStream(void)
+void SaveBuffer_uintStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x8aa,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f3b4,4,0xffffffff8404f260);
+      DAT_8404f3b4 = AssetBuf_GetSourcePos();
+      DAT_8404f3c8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3751,7 +4874,6 @@ void LoadBuffer_raw_float16Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x8b4,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3829,11 +4951,25 @@ void LoadBuffer_raw_vec3_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825EFE40  SaveBuffer_uint64_tStream  (database/db_primtypes_save_buf.h:2275)
 
-void SaveBuffer_uint64_tStream(void)
+void SaveBuffer_uint64_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x8e6,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2d4,8,0xffffffff8404f384);
+      DAT_8404f2d4 = AssetBuf_GetSourcePos();
+      DAT_8404f564 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3845,7 +4981,6 @@ void LoadBuffer_raw_vec3_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x8e7,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3929,7 +5064,6 @@ void LoadBuffer_raw_ushortStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x91a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -3947,11 +5081,25 @@ void LoadBuffer_raw_ushortStream(char param_1,longlong param_2)
 
 // 825EFF08  SaveBuffer_raw_DWORDStream  (database/db_primtypes_save_buf.h:2335)
 
-void SaveBuffer_raw_DWORDStream(void)
+void SaveBuffer_raw_DWORDStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x922,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4b0,4,0xffffffff8404f56c);
+      DAT_8404f4b0 = AssetBuf_GetSourcePos();
+      DAT_8404f54c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4023,7 +5171,6 @@ void LoadBuffer_raw_uintStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x94d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4051,11 +5198,25 @@ void LoadBuffer_raw_uint128(undefined8 param_1)
 
 // 825EFFD0  SaveBuffer_floatStream  (database/db_primtypes_save_buf.h:2395)
 
-void SaveBuffer_floatStream(void)
+void SaveBuffer_floatStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x95e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f3d4,4,0xffffffff8404f298);
+      DAT_8404f3d4 = AssetBuf_GetSourcePos();
+      DAT_8404f464 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4117,7 +5278,6 @@ void LoadBuffer_raw_uint128Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x980,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4155,11 +5315,25 @@ void AllocLoadBuffer_raw_byte(void)
 
 // 825F0098  SaveBuffer_float16Stream  (database/db_primtypes_save_buf.h:2455)
 
-void SaveBuffer_float16Stream(void)
+void SaveBuffer_float16Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x99a,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f550,4,0xffffffff8404f24c);
+      DAT_8404f550 = AssetBuf_GetSourcePos();
+      DAT_8404f460 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4201,7 +5375,6 @@ void LoadBuffer_raw_byteStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x9b3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4259,11 +5432,25 @@ void LoadBuffer_raw_byte16Array(undefined8 param_1,undefined8 param_2)
 
 // 825F0160  SaveBuffer_raw_floatStream  (database/db_primtypes_save_buf.h:2515)
 
-void SaveBuffer_raw_floatStream(void)
+void SaveBuffer_raw_floatStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x9d6,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2a0,4,0xffffffff8404f478);
+      DAT_8404f2a0 = AssetBuf_GetSourcePos();
+      DAT_8404f324 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4285,7 +5472,6 @@ void LoadBuffer_raw_byte16Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0x9e6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4353,11 +5539,25 @@ void LoadBuffer_raw_byte4096Array(undefined8 param_1,undefined8 param_2)
 
 // 825F0228  SaveBuffer_raw_float16Stream  (database/db_primtypes_save_buf.h:2575)
 
-void SaveBuffer_raw_float16Stream(void)
+void SaveBuffer_raw_float16Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xa12,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f3f0,4,0xffffffff8404f398);
+      DAT_8404f3f0 = AssetBuf_GetSourcePos();
+      DAT_8404f4f0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4369,7 +5569,6 @@ void LoadBuffer_raw_byte4096Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xa19,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4448,11 +5647,25 @@ void LoadBuffer_vec_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F02F8  SaveBuffer_raw_vec3_tStream  (database/db_primtypes_save_buf.h:2635)
 
-void SaveBuffer_raw_vec3_tStream(void)
+void SaveBuffer_raw_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xa4e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4c8,0xc,0xffffffff8404f41c);
+      DAT_8404f4c8 = AssetBuf_GetSourcePos();
+      DAT_8404f428 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4464,7 +5677,6 @@ void LoadBuffer_vec_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xa51,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4548,7 +5760,6 @@ void LoadBuffer_vec2_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xa89,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4566,11 +5777,25 @@ void LoadBuffer_vec2_tStream(char param_1,longlong param_2)
 
 // 825F03C0  SaveBuffer_raw_ushortStream  (database/db_primtypes_save_buf.h:2695)
 
-void SaveBuffer_raw_ushortStream(void)
+void SaveBuffer_raw_ushortStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xa8a,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f43c,2,0xffffffff8404f3b8);
+      DAT_8404f43c = AssetBuf_GetSourcePos();
+      DAT_8404f26c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4642,7 +5867,6 @@ void LoadBuffer_vec3_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xac1,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4660,11 +5884,25 @@ void LoadBuffer_vec3_tStream(char param_1,longlong param_2)
 
 // 825F0488  SaveBuffer_raw_uintStream  (database/db_primtypes_save_buf.h:2755)
 
-void SaveBuffer_raw_uintStream(void)
+void SaveBuffer_raw_uintStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xac6,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f278,4,0xffffffff8404f548);
+      DAT_8404f278 = AssetBuf_GetSourcePos();
+      DAT_8404f388 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4736,7 +5974,6 @@ void LoadBuffer_vec4_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xaf9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4754,11 +5991,25 @@ void LoadBuffer_vec4_tStream(char param_1,longlong param_2)
 
 // 825F0550  SaveBuffer_raw_uint128Stream  (database/db_primtypes_save_buf.h:2815)
 
-void SaveBuffer_raw_uint128Stream(void)
+void SaveBuffer_raw_uint128Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xb02,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f318,4,0xffffffff8404f2b0);
+      DAT_8404f318 = AssetBuf_GetSourcePos();
+      DAT_8404f50c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4830,7 +6081,6 @@ void LoadBuffer_BoundsStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xb36,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4848,11 +6098,25 @@ void LoadBuffer_BoundsStream(char param_1,longlong param_2)
 
 // 825F0618  SaveBuffer_raw_byteStream  (database/db_primtypes_save_buf.h:2875)
 
-void SaveBuffer_raw_byteStream(void)
+void SaveBuffer_raw_byteStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xb3e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f39c,1,0xffffffff8404f304);
+      DAT_8404f39c = AssetBuf_GetSourcePos();
+      DAT_8404f4f8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -4924,7 +6188,6 @@ void LoadBuffer_raw_vec4_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xb6e,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -4942,11 +6205,25 @@ void LoadBuffer_raw_vec4_tStream(char param_1,longlong param_2)
 
 // 825F06E0  SaveBuffer_raw_byte16Stream  (database/db_primtypes_save_buf.h:2935)
 
-void SaveBuffer_raw_byte16Stream(void)
+void SaveBuffer_raw_byte16Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xb7a,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f30c,1,0xffffffff8404f328);
+      DAT_8404f30c = AssetBuf_GetSourcePos();
+      DAT_8404f500 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5018,7 +6295,6 @@ void LoadBuffer_shared_vec3_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xba6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5046,11 +6322,25 @@ void LoadBuffer_short(undefined8 param_1)
 
 // 825F07A8  SaveBuffer_raw_byte4096Stream  (database/db_primtypes_save_buf.h:2995)
 
-void SaveBuffer_raw_byte4096Stream(void)
+void SaveBuffer_raw_byte4096Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xbb6,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f274,1,0xffffffff8404f4bc);
+      DAT_8404f274 = AssetBuf_GetSourcePos();
+      DAT_8404f51c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5102,7 +6392,6 @@ void LoadBuffer_shortStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xbd9,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5160,11 +6449,25 @@ void LoadBuffer_int16_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F0870  SaveBuffer_vec_tStream  (database/db_primtypes_save_buf.h:3062)
 
-void SaveBuffer_vec_tStream(void)
+void SaveBuffer_vec_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xbf9,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f338,4,0xffffffff8404f528);
+      DAT_8404f338 = AssetBuf_GetSourcePos();
+      DAT_8404f3f8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5186,7 +6489,6 @@ void LoadBuffer_int16_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xc0c,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5254,11 +6556,25 @@ void LoadBuffer_uint16_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F0938  SaveBuffer_vec2_tStream  (database/db_primtypes_save_buf.h:3129)
 
-void SaveBuffer_vec2_tStream(void)
+void SaveBuffer_vec2_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xc3c,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f3b0,8,0xffffffff8404f300);
+      DAT_8404f3b0 = AssetBuf_GetSourcePos();
+      DAT_8404f2b8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5270,7 +6586,6 @@ void LoadBuffer_uint16_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xc3f,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5355,7 +6670,6 @@ void LoadBuffer_ushortStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xc72,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5373,11 +6687,25 @@ void LoadBuffer_ushortStream(char param_1,longlong param_2)
 
 // 825F0A08  SaveBuffer_vec3_tStream  (database/db_primtypes_save_buf.h:3196)
 
-void SaveBuffer_vec3_tStream(void)
+void SaveBuffer_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xc7f,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f348,0xc,0xffffffff8404f4ec);
+      DAT_8404f348 = AssetBuf_GetSourcePos();
+      DAT_8404f2bc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5449,7 +6777,6 @@ void LoadBuffer_XQuatStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xcaa,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5477,11 +6804,25 @@ void LoadBuffer_XQuat2(undefined8 param_1)
 
 // 825F0AD0  SaveBuffer_vec4_tStream  (database/db_primtypes_save_buf.h:3263)
 
-void SaveBuffer_vec4_tStream(void)
+void SaveBuffer_vec4_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xcc2,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f330,0x10,0xffffffff8404f378);
+      DAT_8404f330 = AssetBuf_GetSourcePos();
+      DAT_8404f4e8 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5523,7 +6864,6 @@ void LoadBuffer_XQuat2Stream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xce2,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5592,11 +6932,25 @@ void LoadBuffer_UnsignedShortArray(undefined8 param_1,ulonglong param_2)
 
 // 825F0BA0  SaveBuffer_BoundsStream  (database/db_primtypes_save_buf.h:3337)
 
-void SaveBuffer_BoundsStream(void)
+void SaveBuffer_BoundsStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xd0c,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f424,0x18,0xffffffff8404f4fc);
+      DAT_8404f424 = AssetBuf_GetSourcePos();
+      DAT_8404f488 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5608,7 +6962,6 @@ void LoadBuffer_UnsignedShortStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xd15,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5677,11 +7030,26 @@ void SaveBuffer_raw_vec4_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F48D8  LoadBuffer_ScriptStringArray  (database/db_primtypes_load_buf.h:3377)
 
-void LoadBuffer_ScriptStringArray(void)
+void LoadBuffer_ScriptStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_29();
+  LoadBuffer_Stream(uVar1,DAT_8404f31c,(param_2 & 0x7fffffff) << 1);
+  uVar2 = (ulonglong)DAT_8404f31c;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f31c = (uint)uVar2;
+      LoadBuffer_Stream(0,uVar2,2);
+      LoadBuffer_ScriptStringCustom(DAT_8404f31c);
+      param_2 = param_2 - 1;
+      uVar2 = uVar2 + 2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -5693,7 +7061,6 @@ void LoadBuffer_ScriptStringStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xd4a,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5712,11 +7079,25 @@ void LoadBuffer_ScriptStringStream(char param_1,longlong param_2)
 
 // 825F0C68  SaveBuffer_raw_vec4_tStream  (database/db_primtypes_save_buf.h:3404)
 
-void SaveBuffer_raw_vec4_tStream(void)
+void SaveBuffer_raw_vec4_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xd4f,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f418,0x10,0xffffffff8404f444);
+      DAT_8404f418 = AssetBuf_GetSourcePos();
+      DAT_8404f254 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5823,7 +7204,6 @@ void LoadBuffer_ConstCharStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xd7d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -5870,11 +7250,29 @@ void LoadBuffer_TempString(undefined8 param_1)
 
 // 825F0E28  SaveBuffer_shared_vec3_tStream  (database/db_primtypes_save_buf.h:3475)
 
-void SaveBuffer_shared_vec3_tStream(void)
+void SaveBuffer_shared_vec3_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  ulonglong uVar2;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xd96,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f320;
+    do {
+      AssetBuf_SetStreamData(DAT_8404f45c,uVar2);
+      SaveBuffer_Stream(1,DAT_8404f45c,0xc,0xffffffff8404f4ac);
+      DAT_8404f45c = AssetBuf_GetSourcePos();
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f320 = (uint)uVar2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5900,11 +7298,44 @@ void SaveBuffer_short(undefined8 param_1)
 
 // 825F4B48  LoadBuffer_TempStringArray  (database/db_primtypes_load_buf.h:3493)
 
-void LoadBuffer_TempStringArray(void)
+void LoadBuffer_TempStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  
+  uVar2 = __savegprlr_28();
+  LoadBuffer_Stream(uVar2,DAT_8404f394,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f394;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f394 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
+      if (*DAT_8404f394 != 0) {
+        if (*DAT_8404f394 == -1) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f394 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f394;
+          pcVar4 = (char *)*DAT_8404f394;
+          do {
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
+          } while (cVar1 != '\0');
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -5930,11 +7361,42 @@ void SaveBuffer_shortArray(undefined8 param_1,ulonglong param_2)
 
 // 825F4C10  LoadBuffer_TempStringStream  (database/db_primtypes_load_buf.h:3515)
 
-void LoadBuffer_TempStringStream(void)
+void LoadBuffer_TempStringStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  int iVar1;
+  char *pcVar3;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xdbe,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f394,4);
+      if (*DAT_8404f394 != 0) {
+        if (*DAT_8404f394 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f394 = iVar1;
+          DAT_8404f2d8 = *DAT_8404f394;
+          pcVar3 = (char *)*DAT_8404f394;
+          do {
+            cVar2 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
+          } while (cVar2 != '\0');
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f394);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      DAT_8404f394 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -5969,11 +7431,25 @@ void LoadBuffer_XString(undefined8 param_1)
 
 // 825F0F00  SaveBuffer_shortStream  (database/db_primtypes_save_buf.h:3535)
 
-void SaveBuffer_shortStream(void)
+void SaveBuffer_shortStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xdd2,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f448,2,0xffffffff8404f4f4);
+      DAT_8404f448 = AssetBuf_GetSourcePos();
+      DAT_8404f404 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6009,11 +7485,44 @@ void AllocSaveBuffer_int16_t(void)
 
 // 825F4DC0  LoadBuffer_XStringArray  (database/db_primtypes_load_buf.h:3558)
 
-void LoadBuffer_XStringArray(void)
+void LoadBuffer_XStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  
+  uVar2 = __savegprlr_28();
+  LoadBuffer_Stream(uVar2,DAT_8404f538,(param_2 & 0x3fffffff) << 2);
+  piVar5 = DAT_8404f538;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f538 = piVar5;
+      LoadBuffer_Stream(0,piVar5,4);
+      if (*DAT_8404f538 != 0) {
+        if (*DAT_8404f538 == -1) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f538 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f538;
+          pcVar4 = (char *)*DAT_8404f538;
+          do {
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
+          } while (cVar1 != '\0');
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6029,11 +7538,42 @@ void SaveBuffer_int16_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F4E88  LoadBuffer_XStringStream  (database/db_primtypes_load_buf.h:3580)
 
-void LoadBuffer_XStringStream(void)
+void LoadBuffer_XStringStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  int iVar1;
+  char *pcVar3;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xdff,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f538,4);
+      if (*DAT_8404f538 != 0) {
+        if (*DAT_8404f538 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f538 = iVar1;
+          DAT_8404f2d8 = *DAT_8404f538;
+          pcVar3 = (char *)*DAT_8404f538;
+          do {
+            cVar2 = *pcVar3;
+            pcVar3 = pcVar3 + 1;
+          } while (cVar2 != '\0');
+          LoadBuffer_Stream(1,DAT_8404f2d8,(int)pcVar3 - *DAT_8404f538);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      DAT_8404f538 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -6061,11 +7601,25 @@ void LoadBuffer_XStringPtr(undefined8 param_1)
 
 // 825F0FC8  SaveBuffer_int16_tStream  (database/db_primtypes_save_buf.h:3595)
 
-void SaveBuffer_int16_tStream(void)
+void SaveBuffer_int16_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xe0e,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f354,2,0xffffffff8404f558);
+      DAT_8404f354 = AssetBuf_GetSourcePos();
+      DAT_8404f504 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6101,11 +7655,37 @@ void AllocSaveBuffer_uint16_t(void)
 
 // 825F5010  LoadBuffer_XStringPtrArray  (database/db_primtypes_load_buf.h:3623)
 
-void LoadBuffer_XStringPtrArray(void)
+void LoadBuffer_XStringPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f4b4,(param_2 & 0x3fffffff) << 2);
+  piVar3 = DAT_8404f4b4;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f4b4 = piVar3;
+      LoadBuffer_Stream(0,piVar3,4);
+      if (*DAT_8404f4b4 != 0) {
+        if (*DAT_8404f4b4 == -1) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f4b4 = iVar2;
+          DAT_8404f538 = *DAT_8404f4b4;
+          LoadBuffer_XString(1);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar3 = piVar3 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6121,21 +7701,60 @@ void SaveBuffer_uint16_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F50B0  LoadBuffer_XStringPtrStream  (database/db_primtypes_load_buf.h:3645)
 
-void LoadBuffer_XStringPtrStream(void)
+void LoadBuffer_XStringPtrStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  int iVar1;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xe40,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f4b4,4);
+      if (*DAT_8404f4b4 != 0) {
+        if (*DAT_8404f4b4 == -1) {
+          iVar1 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f4b4 = iVar1;
+          DAT_8404f538 = *DAT_8404f4b4;
+          LoadBuffer_XString(1);
+        }
+        else {
+          AssetBuf_ConvertOffsetToPointer();
+        }
+      }
+      DAT_8404f4b4 = (int *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 825F1090  SaveBuffer_uint16_tStream  (database/db_primtypes_save_buf.h:3655)
 
-void SaveBuffer_uint16_tStream(void)
+void SaveBuffer_uint16_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xe4a,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4e4,2,0xffffffff8404f544);
+      DAT_8404f4e4 = AssetBuf_GetSourcePos();
+      DAT_8404f2ec = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6201,31 +7820,90 @@ void SaveBuffer_ushortArray(undefined8 param_1,ulonglong param_2)
 
 // 825F5200  LoadBuffer_ScriptStringListArray  (database/db_primtypes_load_buf.h:3690)
 
-void LoadBuffer_ScriptStringListArray(void)
+void LoadBuffer_ScriptStringListArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined4 uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  LoadBuffer_Stream(uVar1,DAT_8404f4c4,(param_2 & 0x1fffffff) << 3);
+  puVar3 = DAT_8404f4c4;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f4c4 = puVar3;
+      LoadBuffer_Stream(0,puVar3,8);
+      AssetBuf_PushStreamPos(3);
+      if (DAT_8404f4c4[1] != 0) {
+        uVar2 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f4c4[1] = uVar2;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        LoadBuffer_TempStringArray(1,*DAT_8404f4c4);
+      }
+      AssetBuf_PopStreamPos();
+      param_2 = param_2 - 1;
+      puVar3 = puVar3 + 2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 825F52A0  LoadBuffer_ScriptStringListStream  (database/db_primtypes_load_buf.h:3712)
 
-void LoadBuffer_ScriptStringListStream(void)
+void LoadBuffer_ScriptStringListStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar2;
+  undefined4 uVar1;
+  
+  cVar2 = __savegprlr_29();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xe83,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      LoadBuffer_Stream(1,DAT_8404f4c4,8);
+      AssetBuf_PushStreamPos(3);
+      if (DAT_8404f4c4[1] != 0) {
+        uVar1 = AssetBuf_AllocStreamPos(3);
+        DAT_8404f4c4[1] = uVar1;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        LoadBuffer_TempStringArray(1,*DAT_8404f4c4);
+      }
+      AssetBuf_PopStreamPos();
+      DAT_8404f4c4 = (undefined4 *)AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 825F1158  SaveBuffer_ushortStream  (database/db_primtypes_save_buf.h:3715)
 
-void SaveBuffer_ushortStream(void)
+void SaveBuffer_ushortStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xe86,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f440,2,0xffffffff8404f48c);
+      DAT_8404f440 = AssetBuf_GetSourcePos();
+      DAT_8404f308 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6293,11 +7971,29 @@ void SaveBuffer_XQuatArray(undefined8 param_1,ulonglong param_2)
 
 // 825F53D0  LoadBuffer_XZoneHandleStream  (database/db_primtypes_load_buf.h:3766)
 
-void LoadBuffer_XZoneHandleStream(void)
+void LoadBuffer_XZoneHandleStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  ulonglong uVar2;
+  
+  cVar1 = __savegprlr_29();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179bc8,0xeb9,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    uVar2 = (ulonglong)DAT_8404f370;
+    do {
+      LoadBuffer_Stream(1,uVar2,1);
+      DAT_8404f284 = DAT_8404f370;
+      LoadBuffer_Stream(0,DAT_8404f370,1);
+      uVar2 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+      DAT_8404f370 = (uint)uVar2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -6313,11 +8009,25 @@ void LoadBuffer_complex_t(undefined8 param_1)
 
 // 825F1220  SaveBuffer_XQuatStream  (database/db_primtypes_save_buf.h:3782)
 
-void SaveBuffer_XQuatStream(void)
+void SaveBuffer_XQuatStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xec9,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f4cc,8,0xffffffff8404f350);
+      DAT_8404f4cc = AssetBuf_GetSourcePos();
+      DAT_8404f3c0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6379,7 +8089,6 @@ void LoadBuffer_complex_tStream(char param_1,longlong param_2)
   ulonglong uVar1;
   
   if (param_1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179bc8,0xef6,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -6397,11 +8106,25 @@ void LoadBuffer_complex_tStream(char param_1,longlong param_2)
 
 // 825F12E8  SaveBuffer_XQuat2Stream  (database/db_primtypes_save_buf.h:3849)
 
-void SaveBuffer_XQuat2Stream(void)
+void SaveBuffer_XQuat2Stream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xf0c,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f470,4,0xffffffff8404f2a8);
+      DAT_8404f470 = AssetBuf_GetSourcePos();
+      DAT_8404f33c = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6437,11 +8160,25 @@ void SaveBuffer_UnsignedShortArray(undefined8 param_1,ulonglong param_2)
 
 // 825F13B0  SaveBuffer_UnsignedShortStream  (database/db_primtypes_save_buf.h:3909)
 
-void SaveBuffer_UnsignedShortStream(void)
+void SaveBuffer_UnsignedShortStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xf48,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f46c,2,0xffffffff8404f4d4);
+      DAT_8404f46c = AssetBuf_GetSourcePos();
+      DAT_8404f3a0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6501,11 +8238,26 @@ void SaveBuffer_ScriptStringArray(undefined8 param_1,ulonglong param_2)
 
 // 825F1528  SaveBuffer_ScriptStringStream  (database/db_primtypes_save_buf.h:3971)
 
-void SaveBuffer_ScriptStringStream(void)
+void SaveBuffer_ScriptStringStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xf86,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f31c,2,0xffffffff8404f3e0);
+      SaveBuffer_ScriptStringCustom(DAT_8404f31c,DAT_8404f3e0);
+      DAT_8404f31c = AssetBuf_GetSourcePos();
+      DAT_8404f2c0 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6541,11 +8293,25 @@ void SaveBuffer_ConstCharArray(undefined8 param_1,undefined8 param_2)
 
 // 825F15F8  SaveBuffer_ConstCharStream  (database/db_primtypes_save_buf.h:4031)
 
-void SaveBuffer_ConstCharStream(void)
+void SaveBuffer_ConstCharStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0xfc2,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f2d8,1,0xffffffff8404f534);
+      DAT_8404f2d8 = AssetBuf_GetSourcePos();
+      DAT_8404f310 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -6554,8 +8320,36 @@ void SaveBuffer_ConstCharStream(void)
 void SaveBuffer_TempString(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  
+  uVar2 = __savegprlr_29();
+  SaveBuffer_Stream(uVar2,DAT_8404f394,4,0xffffffff8404f4a8);
+  if (*DAT_8404f394 != 0) {
+    iVar3 = AssetBuf_FindStreamData(*DAT_8404f394);
+    *DAT_8404f4a8 = iVar3;
+    if (*DAT_8404f4a8 == -1) {
+      MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
+    }
+    if (*DAT_8404f4a8 == 0) {
+      iVar3 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f4a8 = iVar3;
+      DAT_8404f2d8 = *DAT_8404f394;
+      DAT_8404f310 = *DAT_8404f4a8;
+      AssetBuf_SetStreamData(*DAT_8404f394,*DAT_8404f4a8);
+      *DAT_8404f4a8 = -1;
+      pcVar4 = (char *)*DAT_8404f394;
+      do {
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 != '\0');
+      SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394,0xffffffff8404f534);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -6571,11 +8365,57 @@ void AllocSaveBuffer_TempString(void)
 
 // 825F17B0  SaveBuffer_TempStringArray  (database/db_primtypes_save_buf.h:4076)
 
-void SaveBuffer_TempStringArray(void)
+void SaveBuffer_TempStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_18();
+  SaveBuffer_Stream(uVar2,DAT_8404f394,(param_2 & 0x3fffffff) << 2,0xffffffff8404f4a8);
+  piVar5 = DAT_8404f4a8;
+  iVar6 = DAT_8404f290;
+  piVar7 = DAT_8404f394;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f290 = iVar6;
+      DAT_8404f394 = piVar7;
+      DAT_8404f4a8 = piVar5;
+      SaveBuffer_Stream(0,piVar7,4,0xffffffff8404f4a8);
+      if (*DAT_8404f394 != 0) {
+        iVar3 = AssetBuf_FindStreamData(*DAT_8404f394);
+        *DAT_8404f4a8 = iVar3;
+        if (*DAT_8404f4a8 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
+        }
+        if (*DAT_8404f4a8 == 0) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f4a8 = iVar3;
+          DAT_8404f2d8 = *DAT_8404f394;
+          DAT_8404f310 = *DAT_8404f4a8;
+          AssetBuf_SetStreamData(*DAT_8404f394,*DAT_8404f4a8);
+          *DAT_8404f4a8 = -1;
+          pcVar4 = (char *)*DAT_8404f394;
+          do {
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
+          } while (cVar1 != '\0');
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f394,0xffffffff8404f534);
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+      iVar6 = iVar6 + 4;
+      piVar7 = piVar7 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -6590,7 +8430,6 @@ void SaveBuffer_TempStringStream(undefined8 param_1,longlong param_2)
   
   cVar2 = __savegprlr_21();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179a68,0x100d,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -6600,7 +8439,6 @@ void SaveBuffer_TempStringStream(undefined8 param_1,longlong param_2)
         iVar1 = AssetBuf_FindStreamData(*DAT_8404f394);
         *DAT_8404f4a8 = iVar1;
         if (*DAT_8404f4a8 == -1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179a68,0xfd4,0,0xffffffff82000f98,0xffffffff82179ac0);
         }
         if (*DAT_8404f4a8 == 0) {
@@ -6633,8 +8471,36 @@ void SaveBuffer_TempStringStream(undefined8 param_1,longlong param_2)
 void SaveBuffer_XString(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  
+  uVar2 = __savegprlr_29();
+  SaveBuffer_Stream(uVar2,DAT_8404f538,4,0xffffffff8404f28c);
+  if (*DAT_8404f538 != 0) {
+    iVar3 = AssetBuf_FindStreamData(*DAT_8404f538);
+    *DAT_8404f28c = iVar3;
+    if (*DAT_8404f28c == -1) {
+      MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
+    }
+    if (*DAT_8404f28c == 0) {
+      iVar3 = AssetBuf_AllocStreamPos(0);
+      *DAT_8404f28c = iVar3;
+      DAT_8404f2d8 = *DAT_8404f538;
+      DAT_8404f310 = *DAT_8404f28c;
+      AssetBuf_SetStreamData(*DAT_8404f538,*DAT_8404f28c);
+      *DAT_8404f28c = -1;
+      pcVar4 = (char *)*DAT_8404f538;
+      do {
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 != '\0');
+      SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538,0xffffffff8404f534);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -6650,11 +8516,57 @@ void AllocSaveBuffer_XString(void)
 
 // 825F1BE0  SaveBuffer_XStringArray  (database/db_primtypes_save_buf.h:4151)
 
-void SaveBuffer_XStringArray(void)
+void SaveBuffer_XStringArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_18();
+  SaveBuffer_Stream(uVar2,DAT_8404f538,(param_2 & 0x3fffffff) << 2,0xffffffff8404f28c);
+  piVar5 = DAT_8404f28c;
+  iVar6 = DAT_8404f47c;
+  piVar7 = DAT_8404f538;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f28c = piVar5;
+      DAT_8404f47c = iVar6;
+      DAT_8404f538 = piVar7;
+      SaveBuffer_Stream(0,piVar7,4,0xffffffff8404f28c);
+      if (*DAT_8404f538 != 0) {
+        iVar3 = AssetBuf_FindStreamData(*DAT_8404f538);
+        *DAT_8404f28c = iVar3;
+        if (*DAT_8404f28c == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
+        }
+        if (*DAT_8404f28c == 0) {
+          iVar3 = AssetBuf_AllocStreamPos(0);
+          *DAT_8404f28c = iVar3;
+          DAT_8404f2d8 = *DAT_8404f538;
+          DAT_8404f310 = *DAT_8404f28c;
+          AssetBuf_SetStreamData(*DAT_8404f538,*DAT_8404f28c);
+          *DAT_8404f28c = -1;
+          pcVar4 = (char *)*DAT_8404f538;
+          do {
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
+          } while (cVar1 != '\0');
+          SaveBuffer_Stream(1,DAT_8404f2d8,(int)pcVar4 - *DAT_8404f538,0xffffffff8404f534);
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar5 = piVar5 + 1;
+      iVar6 = iVar6 + 4;
+      piVar7 = piVar7 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -6669,7 +8581,6 @@ void SaveBuffer_XStringStream(undefined8 param_1,longlong param_2)
   
   cVar2 = __savegprlr_21();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179a68,0x1058,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -6679,7 +8590,6 @@ void SaveBuffer_XStringStream(undefined8 param_1,longlong param_2)
         iVar1 = AssetBuf_FindStreamData(*DAT_8404f538);
         *DAT_8404f28c = iVar1;
         if (*DAT_8404f28c == -1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179a68,0x101f,0,0xffffffff82000f98,0xffffffff82179b08);
         }
         if (*DAT_8404f28c == 0) {
@@ -6719,7 +8629,6 @@ void SaveBuffer_XStringPtr(undefined8 param_1)
     iVar1 = AssetBuf_FindStreamData(*DAT_8404f4b4);
     *DAT_8404f468 = iVar1;
     if (*DAT_8404f468 == -1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
     }
     if (*DAT_8404f468 == 0) {
@@ -6748,11 +8657,50 @@ void AllocSaveBuffer_XStringPtr(void)
 
 // 825F1FF0  SaveBuffer_XStringPtrArray  (database/db_primtypes_save_buf.h:4226)
 
-void SaveBuffer_XStringPtrArray(void)
+void SaveBuffer_XStringPtrArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
+  
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f4b4,(param_2 & 0x3fffffff) << 2,0xffffffff8404f468);
+  piVar3 = DAT_8404f468;
+  iVar4 = DAT_8404f420;
+  piVar5 = DAT_8404f4b4;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f420 = iVar4;
+      DAT_8404f468 = piVar3;
+      DAT_8404f4b4 = piVar5;
+      SaveBuffer_Stream(0,piVar5,4,0xffffffff8404f468);
+      if (*DAT_8404f4b4 != 0) {
+        iVar2 = AssetBuf_FindStreamData(*DAT_8404f4b4);
+        *DAT_8404f468 = iVar2;
+        if (*DAT_8404f468 == -1) {
+          MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
+        }
+        if (*DAT_8404f468 == 0) {
+          iVar2 = AssetBuf_AllocStreamPos(3);
+          *DAT_8404f468 = iVar2;
+          DAT_8404f538 = *DAT_8404f4b4;
+          DAT_8404f47c = *DAT_8404f468;
+          AssetBuf_SetStreamData(*DAT_8404f4b4,*DAT_8404f468);
+          *DAT_8404f468 = -1;
+          SaveBuffer_XString(1);
+        }
+      }
+      param_2 = param_2 - 1;
+      piVar3 = piVar3 + 1;
+      iVar4 = iVar4 + 4;
+      piVar5 = piVar5 + 1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -6766,7 +8714,6 @@ void SaveBuffer_XStringPtrStream(undefined8 param_1,longlong param_2)
   
   cVar2 = __savegprlr_22();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179a68,0x10a3,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -6776,7 +8723,6 @@ void SaveBuffer_XStringPtrStream(undefined8 param_1,longlong param_2)
         iVar1 = AssetBuf_FindStreamData(*DAT_8404f4b4);
         *DAT_8404f468 = iVar1;
         if (*DAT_8404f468 == -1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179a68,0x106a,0,0xffffffff82000f98,0xffffffff82179b48);
         }
         if (*DAT_8404f468 == 0) {
@@ -6812,7 +8758,6 @@ void SaveBuffer_ScriptStringList(undefined8 param_1)
   if (DAT_8404f4c4[1] != 0) {
     iVar1 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
     if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
     }
     uVar2 = AssetBuf_AllocStreamPos(3);
@@ -6840,11 +8785,50 @@ void AllocSaveBuffer_ScriptStringList(void)
 
 // 825F2370  SaveBuffer_ScriptStringListArray  (database/db_primtypes_save_buf.h:4308)
 
-void SaveBuffer_ScriptStringListArray(void)
+void SaveBuffer_ScriptStringListArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  
+  uVar1 = __savegprlr_19();
+  SaveBuffer_Stream(uVar1,DAT_8404f4c4,(param_2 & 0x1fffffff) << 3,0xffffffff8404f2fc);
+  iVar4 = DAT_8404f2fc;
+  iVar5 = DAT_8404f27c;
+  puVar6 = DAT_8404f4c4;
+  if (0 < (int)param_2) {
+    do {
+      DAT_8404f27c = iVar5;
+      DAT_8404f2fc = iVar4;
+      DAT_8404f4c4 = puVar6;
+      SaveBuffer_Stream(0,puVar6,8,0xffffffff8404f2fc);
+      AssetBuf_PushStreamPos(3);
+      if (DAT_8404f4c4[1] != 0) {
+        iVar2 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
+        if (iVar2 != 0) {
+          MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
+        }
+        uVar3 = AssetBuf_AllocStreamPos(3);
+        *(undefined4 *)(DAT_8404f2fc + 4) = uVar3;
+        DAT_8404f394 = DAT_8404f4c4[1];
+        DAT_8404f290 = *(undefined4 *)(DAT_8404f2fc + 4);
+        AssetBuf_SetStreamData(DAT_8404f4c4[1],*(undefined4 *)(DAT_8404f2fc + 4));
+        *(undefined4 *)(DAT_8404f2fc + 4) = 0xffffffff;
+        SaveBuffer_TempStringArray(1,*DAT_8404f4c4);
+      }
+      AssetBuf_PopStreamPos();
+      param_2 = param_2 - 1;
+      iVar4 = iVar4 + 8;
+      iVar5 = iVar5 + 8;
+      puVar6 = puVar6 + 2;
+    } while (param_2 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -6859,7 +8843,6 @@ void SaveBuffer_ScriptStringListStream(undefined8 param_1,longlong param_2)
   
   cVar3 = __savegprlr_22();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82179a68,0x10f5,0,0xffffffff82000f98,0xffffffff82059b28);
   }
   if (0 < (int)param_2) {
@@ -6869,7 +8852,6 @@ void SaveBuffer_ScriptStringListStream(undefined8 param_1,longlong param_2)
       if (DAT_8404f4c4[1] != 0) {
         iVar1 = AssetBuf_FindStreamData(DAT_8404f4c4[1]);
         if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82179a68,0x10bd,0,0xffffffff82000f98,0xffffffff82179b8c);
         }
         uVar2 = AssetBuf_AllocStreamPos(3);
@@ -6933,24 +8915,23 @@ void SaveBuffer_XZoneHandleStream(undefined8 param_1,longlong param_2)
   char cVar1;
   
   cVar1 = __savegprlr_25();
-  if (cVar1 != '\0') {
-    if (0 < (int)param_2) {
-      do {
-        SaveBuffer_Stream(1,DAT_8404f370,1,0xffffffff8404f4a4);
-        DAT_8404f284 = DAT_8404f370;
-        DAT_8404f2c4 = DAT_8404f3bc;
-        DAT_8404f514 = DAT_8404f4a4;
-        SaveBuffer_Stream(0,DAT_8404f370,1,0xffffffff8404f514);
-        DAT_8404f370 = AssetBuf_GetSourcePos();
-        DAT_8404f3bc = AssetBuf_GetStreamPos();
-        param_2 = param_2 + -1;
-      } while (param_2 != 0);
-    }
-    __restgprlr_25();
-    return;
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x1136,0,0xffffffff82000f98,0xffffffff82059b28);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82179a68,0x1136,0,0xffffffff82000f98,0xffffffff82059b28);
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f370,1,0xffffffff8404f4a4);
+      DAT_8404f284 = DAT_8404f370;
+      DAT_8404f2c4 = DAT_8404f3bc;
+      DAT_8404f514 = DAT_8404f4a4;
+      SaveBuffer_Stream(0,DAT_8404f370,1,0xffffffff8404f514);
+      DAT_8404f370 = AssetBuf_GetSourcePos();
+      DAT_8404f3bc = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -6986,10 +8967,24 @@ void SaveBuffer_complex_tArray(undefined8 param_1,ulonglong param_2)
 
 // 825F2788  SaveBuffer_complex_tStream  (database/db_primtypes_save_buf.h:4477)
 
-void SaveBuffer_complex_tStream(void)
+void SaveBuffer_complex_tStream(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82179a68,0x1180,0,0xffffffff82000f98,0xffffffff82059b28);
+  }
+  if (0 < (int)param_2) {
+    do {
+      SaveBuffer_Stream(1,DAT_8404f280,8,0xffffffff8404f3ac);
+      DAT_8404f280 = AssetBuf_GetSourcePos();
+      DAT_8404f294 = AssetBuf_GetStreamPos();
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 

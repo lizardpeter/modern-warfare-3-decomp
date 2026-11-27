@@ -31,11 +31,77 @@ void bdFileInfo___bdFileInfo(undefined4 *param_1)
 
 // 828F91A0  bdFileInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfileinfo.cpp:27)
 
-void bdFileInfo__deserialize(void)
+/* WARNING: Removing unreachable block (ram,0x828f927c) */
+
+void bdFileInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  undefined1 local_30 [48];
+  
+  iVar2 = __savegprlr_28();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt32(*puVar4,iVar2 + 0xa8);
+  if (cVar3 == '\0') {
+LAB_828f91f8:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readUInt64(*puVar4,iVar2 + 8);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f91f8;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt32(*puVar4,iVar2 + 0x10);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f921c;
+  }
+  else {
+LAB_828f921c:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt32(*puVar4,iVar2 + 0x14);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f9240;
+  }
+  else {
+LAB_828f9240:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBool(*puVar4,local_30);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f9268;
+  }
+  else {
+LAB_828f9268:
+    bVar1 = false;
+  }
+  *(undefined4 *)(iVar2 + 0x18) = 0;
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt64(*puVar4,iVar2 + 0x20);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f92ac;
+  }
+  else {
+LAB_828f92ac:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readString(*puVar4,iVar2 + 0x28,0x80);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_828f92d8;
+  }
+  uVar5 = 0;
+LAB_828f92d8:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_28(uVar5);
+  return;
 }
 
 

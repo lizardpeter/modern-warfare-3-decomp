@@ -3,10 +3,118 @@
 ; 8294BC90  BinkFileReadHeader  (line unknown)
   8294BC90  7D8802A6             mfspr r12,LR
   8294BC94  4BFCAA25             bl 0x829166b8
+  8294BC98  9421FF80             stwu r1,-0x80(r1)
+  8294BC9C  7C7F1B78             or r31,r3,r3
+  8294BCA0  7C9E2378             or r30,r4,r4
+  8294BCA4  7CBC2B78             or r28,r5,r5
+  8294BCA8  7CDD3378             or r29,r6,r6
+  8294BCAC  817F00F4             lwz r11,0xf4(r31)
+  8294BCB0  2B0B0000             cmplwi cr6,r11,0x0
+  8294BCB4  419A000C             beq cr6,0x8294bcc0
+  8294BCB8  7D6903A6             mtspr CTR,r11
+  8294BCBC  4E800421             bctrl
+LAB_8294bcc0:
+  8294BCC0  2F1EFFFF             cmpwi cr6,r30,-0x1
+  8294BCC4  419A002C             beq cr6,0x8294bcf0
+  8294BCC8  817F0058             lwz r11,0x58(r31)
+  8294BCCC  7F0BF040             cmplw cr6,r11,r30
+  8294BCD0  419A0020             beq cr6,0x8294bcf0
+  8294BCD4  817F007C             lwz r11,0x7c(r31)
+  8294BCD8  38C00000             li r6,0x0
+  8294BCDC  38A00000             li r5,0x0
+  8294BCE0  807F0054             lwz r3,0x54(r31)
+  8294BCE4  7C8BF214             add r4,r11,r30
+  8294BCE8  4BF5EE49             bl 0x828aab30
+  8294BCEC  93DF0058             stw r30,0x58(r31)
+LAB_8294bcf0:
+  8294BCF0  38E00000             li r7,0x0
+  8294BCF4  807F0054             lwz r3,0x54(r31)
+  8294BCF8  38C10050             addi r6,r1,0x50
+  8294BCFC  7FA5EB78             or r5,r29,r29
+  8294BD00  7F84E378             or r4,r28,r28
+  8294BD04  4BF57415             bl 0x828a3118
+  8294BD08  80610050             lwz r3,0x50(r1)
+  8294BD0C  7F03E840             cmplw cr6,r3,r29
+  8294BD10  419A000C             beq cr6,0x8294bd1c
+  8294BD14  39600001             li r11,0x1
+  8294BD18  917F0020             stw r11,0x20(r31)
+LAB_8294bd1c:
+  8294BD1C  817F0058             lwz r11,0x58(r31)
+  8294BD20  7D6B1A14             add r11,r11,r3
+  8294BD24  917F0058             stw r11,0x58(r31)
+  8294BD28  817F0058             lwz r11,0x58(r31)
+  8294BD2C  917F005C             stw r11,0x5c(r31)
+  8294BD30  817F0080             lwz r11,0x80(r31)
+  8294BD34  815F005C             lwz r10,0x5c(r31)
+  8294BD38  813F0040             lwz r9,0x40(r31)
+  8294BD3C  7D6A5850             subf r11,r10,r11
+  8294BD40  7F0B4840             cmplw cr6,r11,r9
+  8294BD44  41980008             blt cr6,0x8294bd4c
+  8294BD48  817F0040             lwz r11,0x40(r31)
+LAB_8294bd4c:
+  8294BD4C  815F00FC             lwz r10,0xfc(r31)
+  8294BD50  917F0048             stw r11,0x48(r31)
+  8294BD54  2B0A0000             cmplwi cr6,r10,0x0
+  8294BD58  419A0014             beq cr6,0x8294bd6c
+  8294BD5C  7FE3FB78             or r3,r31,r31
+  8294BD60  7D4903A6             mtspr CTR,r10
+  8294BD64  4E800421             bctrl
+  8294BD68  80610050             lwz r3,0x50(r1)
+LAB_8294bd6c:
+  8294BD6C  39630003             addi r11,r3,0x3
+  8294BD70  7F8AE378             or r10,r28,r28
+  8294BD74  556BF0BE             rlwinm r11,r11,0x1e,0x2,0x1f
+  8294BD78  2B0B0000             cmplwi cr6,r11,0x0
+  8294BD7C  419A001C             beq cr6,0x8294bd98
+LAB_8294bd80:
+  8294BD80  7D20542C             lwbrx r9,0,r10
+  8294BD84  396BFFFF             subi r11,r11,0x1
+  8294BD88  2B0B0000             cmplwi cr6,r11,0x0
+  8294BD8C  912A0000             stw r9,0x0(r10)
+  8294BD90  394A0004             addi r10,r10,0x4
+  8294BD94  409AFFEC             bne cr6,0x8294bd80
+LAB_8294bd98:
+  8294BD98  38210080             addi r1,r1,0x80
+  8294BD9C  4BFCA96C             b 0x82916708
 
 ; 8294BDA0  dosimulate  (line unknown)
   8294BDA0  7D8802A6             mfspr r12,LR
   8294BDA4  4BFCA915             bl 0x829166b8
+  8294BDA8  9421FF80             stwu r1,-0x80(r1)
+  8294BDAC  7C7F1B78             or r31,r3,r3
+  8294BDB0  788B0020             rldicl r11,r4,0x0,0x20
+  8294BDB4  7CBD2B78             or r29,r5,r5
+  8294BDB8  1D6B03E8             mulli r11,r11,0x3e8
+  8294BDBC  815F0084             lwz r10,0x84(r31)
+  8294BDC0  7D6B5392             divdu r11,r11,r10
+  8294BDC4  557C003E             rlwinm r28,r11,0x0,0x0,0x1f
+  8294BDC8  4BFFB019             bl 0x82946de0
+  8294BDCC  7C7E1B78             or r30,r3,r3
+  8294BDD0  815F0088             lwz r10,0x88(r31)
+  8294BDD4  7D7EE050             subf r11,r30,r28
+  8294BDD8  7D6B5214             add r11,r11,r10
+  8294BDDC  7D6BEA14             add r11,r11,r29
+  8294BDE0  917F0088             stw r11,0x88(r31)
+  8294BDE4  817F0088             lwz r11,0x88(r31)
+  8294BDE8  2F0B0000             cmpwi cr6,r11,0x0
+  8294BDEC  40990038             ble cr6,0x8294be24
+LAB_8294bdf0:
+  8294BDF0  4BFFAFF1             bl 0x82946de0
+  8294BDF4  817F0088             lwz r11,0x88(r31)
+  8294BDF8  7D5E1850             subf r10,r30,r3
+  8294BDFC  7F0A5800             cmpw cr6,r10,r11
+  8294BE00  4198FFF0             blt cr6,0x8294bdf0
+  8294BE04  815F0088             lwz r10,0x88(r31)
+  8294BE08  7D63F050             subf r11,r3,r30
+  8294BE0C  7C7E1B78             or r30,r3,r3
+  8294BE10  7D6B5214             add r11,r11,r10
+  8294BE14  917F0088             stw r11,0x88(r31)
+  8294BE18  817F0088             lwz r11,0x88(r31)
+  8294BE1C  2F0B0000             cmpwi cr6,r11,0x0
+  8294BE20  4199FFD0             bgt cr6,0x8294bdf0
+LAB_8294be24:
+  8294BE24  38210080             addi r1,r1,0x80
+  8294BE28  4BFCA8E0             b 0x82916708
 
 ; 8294BE30  BinkFileReadFrame  (line unknown)
   8294BE30  7D8802A6             mfspr r12,LR
@@ -277,6 +385,41 @@ LAB_8294c1bc:
 ; 8294C1F0  BinkFileSetInfo  (line unknown)
   8294C1F0  7D8802A6             mfspr r12,LR
   8294C1F4  4BFCA4C1             bl 0x829166b4
+  8294C1F8  9421FF80             stwu r1,-0x80(r1)
+  8294C1FC  7C7F1B78             or r31,r3,r3
+  8294C200  7C9E2378             or r30,r4,r4
+  8294C204  7CBD2B78             or r29,r5,r5
+  8294C208  7CDC3378             or r28,r6,r6
+  8294C20C  7CFB3B78             or r27,r7,r7
+  8294C210  817F00F4             lwz r11,0xf4(r31)
+  8294C214  2B0B0000             cmplwi cr6,r11,0x0
+  8294C218  419A000C             beq cr6,0x8294c224
+  8294C21C  7D6903A6             mtspr CTR,r11
+  8294C220  4E800421             bctrl
+LAB_8294c224:
+  8294C224  397E0FFF             addi r11,r30,0xfff
+  8294C228  813F00FC             lwz r9,0xfc(r31)
+  8294C22C  57AA001C             rlwinm r10,r29,0x0,0x0,0xe
+  8294C230  556B0026             rlwinm r11,r11,0x0,0x0,0x13
+  8294C234  39000000             li r8,0x0
+  8294C238  7CEB5214             add r7,r11,r10
+  8294C23C  2B090000             cmplwi cr6,r9,0x0
+  8294C240  917F006C             stw r11,0x6c(r31)
+  8294C244  917F0060             stw r11,0x60(r31)
+  8294C248  917F0074             stw r11,0x74(r31)
+  8294C24C  90FF0070             stw r7,0x70(r31)
+  8294C250  915F0040             stw r10,0x40(r31)
+  8294C254  915F0064             stw r10,0x64(r31)
+  8294C258  911F004C             stw r8,0x4c(r31)
+  8294C25C  939F0080             stw r28,0x80(r31)
+  8294C260  937F0084             stw r27,0x84(r31)
+  8294C264  419A0010             beq cr6,0x8294c274
+  8294C268  7FE3FB78             or r3,r31,r31
+  8294C26C  7D2903A6             mtspr CTR,r9
+  8294C270  4E800421             bctrl
+LAB_8294c274:
+  8294C274  38210080             addi r1,r1,0x80
+  8294C278  4BFCA48C             b 0x82916704
 
 ; 8294C280  BinkFileClose  (line unknown)
   8294C280  7D8802A6             mfspr r12,LR
@@ -542,3 +685,63 @@ LAB_8294c5f8:
 ; 8294C610  BinkFileOpen  (line unknown)
   8294C610  7D8802A6             mfspr r12,LR
   8294C614  4BFCA0A9             bl 0x829166bc
+  8294C618  9421FF90             stwu r1,-0x70(r1)
+  8294C61C  7C9E2378             or r30,r4,r4
+  8294C620  7CBD2B78             or r29,r5,r5
+  8294C624  38A00144             li r5,0x144
+  8294C628  38800000             li r4,0x0
+  8294C62C  7C7F1B78             or r31,r3,r3
+  8294C630  4BFCA1D1             bl 0x82916800
+  8294C634  57AB0210             rlwinm r11,r29,0x0,0x8,0x8
+  8294C638  7FC3F378             or r3,r30,r30
+  8294C63C  2B0B0000             cmplwi cr6,r11,0x0
+  8294C640  419A0084             beq cr6,0x8294c6c4
+  8294C644  39600001             li r11,0x1
+  8294C648  93DF0054             stw r30,0x54(r31)
+  8294C64C  38C00001             li r6,0x1
+  8294C650  38A00000             li r5,0x0
+  8294C654  38800000             li r4,0x0
+  8294C658  917F0078             stw r11,0x78(r31)
+  8294C65C  4BF5E4D5             bl 0x828aab30
+  8294C660  907F007C             stw r3,0x7c(r31)
+LAB_8294c664:
+  8294C664  3CA08295             lis r5,-0x7d6b
+  8294C668  3CC08295             lis r6,-0x7d6b
+  8294C66C  3CE08295             lis r7,-0x7d6b
+  8294C670  3D008295             lis r8,-0x7d6b
+  8294C674  3D208295             lis r9,-0x7d6b
+  8294C678  3D408295             lis r10,-0x7d6b
+  8294C67C  3D608295             lis r11,-0x7d6b
+  8294C680  38A5BC90             subi r5,r5,0x4370
+  8294C684  38C6BE30             subi r6,r6,0x41d0
+  8294C688  38E7C1C8             subi r7,r7,0x3e38
+  8294C68C  3908C1F0             subi r8,r8,0x3e10
+  8294C690  3929C2E8             subi r9,r9,0x3d18
+  8294C694  394AC280             subi r10,r10,0x3d80
+  8294C698  90BF0000             stw r5,0x0(r31)
+  8294C69C  396BC550             subi r11,r11,0x3ab0
+  8294C6A0  90DF0004             stw r6,0x4(r31)
+  8294C6A4  90FF0008             stw r7,0x8(r31)
+  8294C6A8  38600001             li r3,0x1
+  8294C6AC  911F000C             stw r8,0xc(r31)
+  8294C6B0  913F0010             stw r9,0x10(r31)
+  8294C6B4  915F0014             stw r10,0x14(r31)
+  8294C6B8  917F0018             stw r11,0x18(r31)
+  8294C6BC  38210070             addi r1,r1,0x70
+  8294C6C0  4BFCA04C             b 0x8291670c
+LAB_8294c6c4:
+  8294C6C4  3D000800             lis r8,0x800
+  8294C6C8  39200000             li r9,0x0
+  8294C6CC  61080080             ori r8,r8,0x80
+  8294C6D0  38E00003             li r7,0x3
+  8294C6D4  38C00000             li r6,0x0
+  8294C6D8  38A00001             li r5,0x1
+  8294C6DC  3C808000             lis r4,-0x8000
+  8294C6E0  4BF56839             bl 0x828a2f18
+  8294C6E4  907F0054             stw r3,0x54(r31)
+  8294C6E8  817F0054             lwz r11,0x54(r31)
+  8294C6EC  2F0BFFFF             cmpwi cr6,r11,-0x1
+  8294C6F0  409AFF74             bne cr6,0x8294c664
+  8294C6F4  38600000             li r3,0x0
+  8294C6F8  38210070             addi r1,r1,0x70
+  8294C6FC  4BFCA010             b 0x8291670c

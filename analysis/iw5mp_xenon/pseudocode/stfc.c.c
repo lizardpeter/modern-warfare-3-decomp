@@ -155,51 +155,306 @@ void * StfcBuildVolumeDescriptorFn(int param_1,undefined1 *param_2)
 
 // 828AF778  StfcFsdClose  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/close.c:41)
 
-void StfcFsdClose(void)
+void StfcFsdClose(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  undefined8 uVar4;
+  
+  uVar4 = __savegprlr_29();
+  iVar1 = *(int *)(*(int *)((int)param_2 + 0x50) + 0x18);
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    ExFreePool();
+  }
+  RtlEnterCriticalSection(uVar4);
+  if (*(int *)(iVar1 + 8) != 0) {
+    StfcDereferenceFcb();
+  }
+  iVar2 = *(int *)(iVar1 + 0x50);
+  piVar3 = *(int **)(iVar1 + 0x54);
+  *piVar3 = iVar2;
+  *(int **)(iVar2 + 4) = piVar3;
+  RtlLeaveCriticalSection(uVar4);
+  *(undefined4 *)((int)param_2 + 0x10) = 0;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 828AFB48  StfcFsdFlushBuffers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/flush.c:41)
 
-void StfcFsdFlushBuffers(void)
+void StfcFsdFlushBuffers(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(iVar1);
+  iVar2 = *(int *)(iVar1 + 0x88);
+  if (iVar2 == 0) {
+    iVar2 = StfcFlushBlockCache(iVar1,0,0xffffffffffffffff);
+  }
+  RtlLeaveCriticalSection(iVar1);
+  *(int *)((int)param_2 + 0x10) = iVar2;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 828B2268  StfcFsdWrite  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/write.c:41)
 
-void StfcFsdWrite(void)
+void StfcFsdWrite(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  undefined4 uVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  int local_90;
+  undefined4 local_8c;
+  undefined4 local_88 [2];
+  undefined8 local_80 [16];
+  
+  iVar8 = __savegprlr_18();
+  iVar7 = (int)param_2;
+  iVar1 = *(int *)(iVar7 + 0x50);
+  iVar2 = *(int *)(iVar1 + 0x18);
+  uVar3 = *(uint *)(iVar1 + 4);
+  uVar9 = (ulonglong)uVar3;
+  iVar4 = *(int *)(iVar2 + 8);
+  RtlEnterCriticalSection(iVar8);
+  uVar13 = (ulonglong)*(uint *)(iVar8 + 0x88);
+  if (*(uint *)(iVar8 + 0x88) == 0) {
+    if ((*(byte *)(iVar2 + 2) & 0x10) == 0) {
+      if ((*(byte *)(iVar4 + 0x35) & 2) == 0) {
+        if (*(char *)(iVar8 + 0xce) == '\0') {
+          uVar13 = 0xffffffffc0000022;
+        }
+        else if (uVar9 == 0) {
+          uVar13 = 0;
+          *(undefined4 *)(iVar7 + 0x14) = 0;
+        }
+        else {
+          uVar13 = StfcEnsureWriteableDirectoryEntry(iVar8,iVar4);
+          if (-1 < (longlong)uVar13) {
+            if ((*(int *)(iVar1 + 0x10) == -1) && (*(int *)(iVar1 + 0xc) == -1)) {
+              uVar5 = *(undefined4 *)(iVar4 + 0x18);
+              *(undefined4 *)(iVar1 + 0xc) = 0;
+              *(undefined4 *)(iVar1 + 0x10) = uVar5;
+            }
+            uVar6 = *(uint *)(iVar1 + 0x10);
+            uVar12 = (ulonglong)uVar6;
+            uVar10 = uVar12 + uVar9;
+            uVar11 = uVar10 + 0xfff & 0xfffff000;
+            if ((*(int *)(iVar1 + 0xc) == 0) && (uVar12 < uVar11)) {
+              uVar13 = StfcEnsureWriteableBlocksAvailable(iVar8,iVar4,uVar9,uVar12);
+              if (-1 < (longlong)uVar13) {
+                if ((ulonglong)*(uint *)(iVar4 + 0x14) < (uVar10 & 0xffffffff)) {
+                  uVar13 = StfcSetAllocationSize(iVar8,iVar4,uVar11,0);
+                  if ((longlong)uVar13 < 0) goto LAB_828b24f4;
+                }
+                while (*(uint *)(iVar4 + 0x1c) < (uVar6 & 0xfffff000)) {
+                  uVar13 = StfcBeginDataBlockUpdate
+                                     (iVar8,iVar4,*(undefined4 *)(iVar4 + 0x1c),1,local_88,&local_90
+                                      ,&local_8c);
+                  if ((longlong)uVar13 < 0) goto LAB_828b24f4;
+                  StfcEndDataBlockUpdate(iVar8,local_88[0],local_90,local_8c);
+                  *(int *)(iVar4 + 0x1c) = *(int *)(iVar4 + 0x1c) + 0x1000;
+                }
+                uVar11 = (ulonglong)*(uint *)(iVar7 + 0x1c);
+                do {
+                  uVar14 = 0x1000 - (uVar12 & 0xfff);
+                  if ((uVar9 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+                    uVar14 = uVar9;
+                  }
+                  uVar13 = StfcBeginDataBlockUpdate
+                                     (iVar8,iVar4,uVar12,(size_t)uVar14 == 0x1000,local_88,&local_90
+                                      ,&local_8c);
+                  iVar1 = local_90;
+                  if ((longlong)uVar13 < 0) goto LAB_828b24f4;
+                  memcpy((void *)((int)(uVar12 & 0xfff) + local_90),(void *)uVar11,(size_t)uVar14);
+                  StfcEndDataBlockUpdate(iVar8,local_88[0],iVar1,local_8c);
+                  if ((ulonglong)*(uint *)(iVar4 + 0x1c) == (uVar12 & 0xfffff000)) {
+                    *(uint *)(iVar4 + 0x1c) = *(uint *)(iVar4 + 0x1c) + 0x1000;
+                  }
+                  uVar9 = uVar9 - uVar14;
+                  uVar11 = uVar14 + uVar11;
+                  uVar12 = uVar14 + uVar12;
+                } while (uVar9 != 0);
+                if ((ulonglong)*(uint *)(iVar4 + 0x18) < (uVar10 & 0xffffffff)) {
+                  *(int *)(iVar4 + 0x18) = (int)uVar10;
+                }
+                KeQuerySystemTime(local_80);
+                StfcTimeToTimeStamp(local_80[0],iVar4 + 0x44);
+                *(byte *)(iVar4 + 0x35) = *(byte *)(iVar4 + 0x35) | 0x10;
+                if ((*(byte *)(iVar2 + 2) & 1) != 0) {
+                  *(int *)(iVar2 + 0x18) = (int)uVar10;
+                  *(undefined4 *)(iVar2 + 0x14) = 0;
+                }
+                *(uint *)(iVar7 + 0x14) = uVar3;
+              }
+            }
+            else {
+              uVar13 = 0xffffffffc000007f;
+            }
+          }
+        }
+      }
+      else {
+        uVar13 = 0xffffffffc0000010;
+      }
+    }
+    else {
+      uVar13 = 0xffffffffc0000128;
+    }
+  }
+LAB_828b24f4:
+  RtlLeaveCriticalSection(iVar8);
+  *(int *)(iVar7 + 0x10) = (int)uVar13;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_18();
+  return;
 }
 
 
 // 828B2518  StfcFsdCleanup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/cleanup.c:41)
 
-void StfcFsdCleanup(void)
+void StfcFsdCleanup(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar4 = __savegprlr_27();
+  iVar1 = *(int *)(*(int *)((int)param_2 + 0x50) + 0x18);
+  iVar2 = *(int *)(iVar1 + 8);
+  RtlEnterCriticalSection(iVar4);
+  IoRemoveShareAccess(iVar1,iVar2 + 0x38);
+  if ((*(int *)(iVar4 + 0x88) == 0) && (*(int *)(iVar2 + 0x10) == 1)) {
+    if ((*(byte *)(iVar2 + 0x35) & 8) == 0) {
+      if ((*(byte *)(iVar2 + 0x35) & 0x10) != 0) {
+        StfcUpdateDirectoryEntry(iVar4,iVar2,0);
+      }
+    }
+    else {
+      iVar5 = StfcUpdateDirectoryEntry(iVar4,iVar2,1);
+      if (-1 < iVar5) {
+        if (((*(byte *)(iVar2 + 0x35) & 2) == 0) && (*(int *)(iVar2 + 0x14) != 0)) {
+          StfcFreeBlocks(iVar4,*(undefined4 *)(iVar2 + 0x20),0,0);
+        }
+        iVar5 = *(int *)(iVar2 + 0x48);
+        piVar3 = *(int **)(iVar2 + 0x4c);
+        *piVar3 = iVar5;
+        *(int **)(iVar5 + 4) = piVar3;
+        StfcDereferenceFcb(*(undefined4 *)(iVar2 + 8));
+        *(undefined4 *)(iVar2 + 8) = 0;
+      }
+    }
+  }
+  *(byte *)(iVar1 + 2) = *(byte *)(iVar1 + 2) | 0x10;
+  RtlLeaveCriticalSection(iVar4);
+  *(undefined4 *)((int)param_2 + 0x10) = 0;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_27();
+  return;
 }
 
 
 // 828ADF28  StfcFsdQueryVolumeInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/volinfo.c:42)
 
-void StfcFsdQueryVolumeInformation(void)
+void StfcFsdQueryVolumeInformation(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  ulonglong *puVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 uVar7;
+  uint uVar8;
+  int iVar9;
+  
+  iVar6 = __savegprlr_28();
+  iVar5 = (int)param_2;
+  iVar1 = *(int *)(iVar5 + 0x50);
+  RtlEnterCriticalSection(iVar6);
+  iVar9 = *(int *)(iVar6 + 0x88);
+  if (iVar9 == 0) {
+    memset(*(void **)(iVar5 + 0x1c),0,*(size_t *)(iVar1 + 4));
+    iVar2 = *(int *)(iVar1 + 8);
+    uVar7 = 0;
+    iVar9 = 0;
+    if (iVar2 == 1) {
+      uVar7 = 0x11;
+    }
+    else if (iVar2 == 3) {
+      puVar4 = *(ulonglong **)(iVar5 + 0x1c);
+      uVar8 = *(uint *)(iVar6 + 0xa0);
+      if ((*(char *)(iVar6 + 0xcd) == '\0') || (*(uint *)(iVar6 + 0x98) < *(uint *)(iVar6 + 0x9c)))
+      {
+        *puVar4 = (ulonglong)*(uint *)(iVar6 + 0x9c);
+      }
+      else {
+        *puVar4 = (ulonglong)*(uint *)(iVar6 + 0x98);
+        uVar8 = (uVar8 - *(int *)(iVar6 + 0x9c)) + *(int *)(iVar6 + 0x98);
+      }
+      if (*(uint *)(iVar6 + 0xa8) <= uVar8) {
+        uVar8 = uVar8 - *(uint *)(iVar6 + 0xa8);
+      }
+      *(undefined4 *)(puVar4 + 2) = 8;
+      puVar4[1] = (ulonglong)uVar8;
+      uVar7 = 0x18;
+      *(undefined4 *)((int)puVar4 + 0x14) = 0x200;
+    }
+    else if (iVar2 == 4) {
+      puVar3 = *(undefined4 **)(iVar5 + 0x1c);
+      uVar7 = 8;
+      *puVar3 = 0x3d;
+      puVar3[1] = (uint)*(byte *)(iVar6 + 0xcf);
+    }
+    else if (iVar2 == 5) {
+      puVar3 = *(undefined4 **)(iVar5 + 0x1c);
+      *puVar3 = 0;
+      puVar3[1] = 0x28;
+      puVar3[2] = 4;
+      if (*(uint *)(iVar1 + 4) < 0x10) {
+        uVar7 = 0xc;
+        iVar9 = -0x7ffffffb;
+      }
+      else {
+        uVar7 = 0x10;
+        puVar3[3] = 0x53544643;
+      }
+    }
+    else {
+      iVar9 = -0x3ffffff3;
+    }
+    *(undefined4 *)(iVar5 + 0x14) = uVar7;
+  }
+  RtlLeaveCriticalSection(iVar6);
+  *(int *)(iVar5 + 0x10) = iVar9;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -335,6 +590,42 @@ bool StfcIsLevel0HashBlockResident(int param_1,undefined8 param_2)
 }
 
 
+// 828AF9B8  StfcQueryNetworkOpenInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:43)
+
+void StfcQueryNetworkOpenInformation(undefined8 param_1,undefined8 *param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if ((*(byte *)(iVar2 + 0x35) & 4) == 0) {
+    uVar1 = StfcTimeStampToTime(*(undefined4 *)(iVar2 + 0x40));
+    *param_2 = uVar1;
+    uVar1 = StfcTimeStampToTime(*(undefined4 *)(iVar2 + 0x44));
+  }
+  else {
+    uVar1 = 0;
+    *param_2 = 0;
+  }
+  param_2[1] = uVar1;
+  param_2[2] = uVar1;
+  param_2[3] = uVar1;
+  if ((*(byte *)(iVar2 + 0x35) & 2) == 0) {
+    *(undefined4 *)(param_2 + 6) = 0x80;
+    param_2[4] = (ulonglong)*(uint *)(iVar2 + 0x14);
+    param_2[5] = (ulonglong)*(uint *)(iVar2 + 0x18);
+  }
+  else {
+    param_2[4] = 0;
+    param_2[5] = 0;
+    *(undefined4 *)(param_2 + 6) = 0x10;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
 // 828AD960  StfcIsValidFileName  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:46)
 
 undefined8 StfcIsValidFileName(ushort *param_1)
@@ -365,11 +656,88 @@ undefined8 StfcIsValidFileName(ushort *param_1)
 
 // 828AF7F8  StfcOpenTargetDirectory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:48)
 
-void StfcOpenTargetDirectory(void)
+void StfcOpenTargetDirectory(undefined8 param_1,int param_2,longlong param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar5;
+  longlong lVar4;
+  
+  iVar5 = __savegprlr_26();
+  iVar1 = *(int *)(param_2 + 0x50);
+  iVar2 = *(int *)(iVar1 + 0x18);
+  if (*(char *)(iVar5 + 0xce) == '\0') {
+    lVar4 = -0x3fffffde;
+  }
+  else {
+    iVar3 = (int)param_3;
+    if (*(char *)(iVar3 + 0x38) == '\0') {
+      IoSetShareAccess();
+    }
+    else {
+      lVar4 = IoCheckShareAccess(*(undefined4 *)(iVar1 + 4),*(undefined2 *)(iVar1 + 0xe),iVar2,
+                                 param_3 + 0x38,1);
+      if (lVar4 < 0) goto LAB_828af8b8;
+    }
+    StfcReferenceFcb(param_3,*(byte *)(iVar3 + 0x35) & 1);
+    lVar4 = 0;
+    *(int *)(iVar2 + 8) = iVar3;
+    *(undefined4 *)(iVar2 + 0xc) = 0;
+    iVar1 = *(int *)(iVar5 + 0x80);
+    *(int *)(iVar2 + 0x54) = iVar5 + 0x80;
+    *(int *)(iVar2 + 0x50) = iVar1;
+    *(int *)(iVar1 + 4) = iVar2 + 0x50;
+    *(int *)(iVar5 + 0x80) = iVar2 + 0x50;
+    *(undefined4 *)(param_2 + 0x14) = param_4;
+  }
+LAB_828af8b8:
+  __restgprlr_26(lVar4);
+  return;
+}
+
+
+// 828AE5F8  ObDissectName  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-obx.c:55)
+
+void ObDissectName(undefined8 param_1,short *param_2,short *param_3)
+
+{
+  bool bVar1;
+  short sVar2;
+  uint uVar3;
+  uint uVar4;
+  ushort uStack00000010;
+  char *pcStack00000014;
+  
+  uStack00000010 = (ushort)((ulonglong)param_1 >> 0x30);
+  uVar3 = (uint)uStack00000010;
+  *param_2 = 0;
+  param_2[1] = 0;
+  param_2[2] = 0;
+  param_2[3] = 0;
+  *param_3 = 0;
+  param_3[1] = 0;
+  param_3[2] = 0;
+  param_3[3] = 0;
+  if (uVar3 != 0) {
+    pcStack00000014 = (char *)param_1;
+    bVar1 = *pcStack00000014 == '\\';
+    for (uVar4 = (uint)bVar1; (uVar4 < uVar3 && (pcStack00000014[uVar4] != '\\')); uVar4 = uVar4 + 1
+        ) {
+    }
+    sVar2 = (short)uVar4 - (ushort)bVar1;
+    *(char **)(param_2 + 2) = pcStack00000014 + bVar1;
+    *param_2 = sVar2;
+    param_2[1] = sVar2;
+    if (uVar4 < uVar3) {
+      sVar2 = (uStack00000010 - (short)uVar4) + -1;
+      *(char **)(param_3 + 2) = pcStack00000014 + uVar4 + 1;
+      *param_3 = sVar2;
+      param_3[1] = sVar2;
+    }
+  }
+  return;
 }
 
 
@@ -476,41 +844,185 @@ LAB_828b0404:
 
 // 828AE0B0  StfcSynchronousReadFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:81)
 
-void StfcSynchronousReadFile(void)
+void StfcSynchronousReadFile
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  uint local_40;
+  uint local_3c;
+  undefined8 local_38 [7];
+  
+  iVar3 = __savegprlr_27();
+  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  DAT_848957b8 = DAT_848957b8 + 1;
+  local_38[0] = param_4;
+  uVar2 = NtReadFile(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,param_2,param_3,local_38);
+  if ((int)uVar2 == 0x103) {
+    NtWaitForSingleObjectEx(uVar1,0,0,0);
+    uVar2 = (ulonglong)local_40;
+  }
+  if ((-1 < (int)uVar2) && ((param_3 & 0xffffffff) != (ulonglong)local_3c)) {
+    uVar2 = 0xffffffffc0000185;
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 828B0FE8  StfcPreloadLevel0Hashblocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:87)
 
-void StfcPreloadLevel0Hashblocks(void)
+void StfcPreloadLevel0Hashblocks(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = 0;
+  if ((param_3 & 0xffffffff) != 0) {
+    do {
+      param_2 = StfcFindExitingBlock(uVar1,param_2,1,0);
+      if (((int)param_2 == -1) || ((param_2 & 0xffffffff) == 0xffffff)) break;
+      uVar2 = uVar2 + 1;
+    } while ((uVar2 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 828AFA50  StfcFsdQueryInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:105)
 
-void StfcFsdQueryInformation(void)
+void StfcFsdQueryInformation(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 uVar7;
+  int iVar8;
+  
+  iVar6 = __savegprlr_26();
+  iVar5 = (int)param_2;
+  iVar1 = *(int *)(iVar5 + 0x50);
+  iVar2 = *(int *)(iVar1 + 0x18);
+  iVar3 = *(int *)(iVar2 + 8);
+  RtlEnterCriticalSection(iVar6);
+  iVar8 = *(int *)(iVar6 + 0x88);
+  if (iVar8 != 0) goto LAB_828afb20;
+  if ((*(byte *)(iVar2 + 2) & 0x10) != 0) {
+    iVar8 = -0x3ffffed8;
+    goto LAB_828afb20;
+  }
+  memset(*(void **)(iVar5 + 0x1c),0,*(size_t *)(iVar1 + 4));
+  iVar1 = *(int *)(iVar1 + 8);
+  iVar8 = 0;
+  if (iVar1 == 6) {
+    piVar4 = *(int **)(iVar5 + 0x1c);
+    *piVar4 = iVar6;
+    piVar4[1] = iVar3;
+LAB_828afb18:
+    uVar7 = 8;
+  }
+  else {
+    if (iVar1 == 0xe) {
+      **(undefined8 **)(iVar5 + 0x1c) = *(undefined8 *)(iVar2 + 0x14);
+      goto LAB_828afb18;
+    }
+    if (iVar1 == 0x22) {
+      StfcQueryNetworkOpenInformation(iVar3,*(undefined4 *)(iVar5 + 0x1c));
+      uVar7 = 0x38;
+    }
+    else {
+      uVar7 = 0;
+      iVar8 = -0x3ffffff3;
+    }
+  }
+  *(undefined4 *)(iVar5 + 0x14) = uVar7;
+LAB_828afb20:
+  RtlLeaveCriticalSection(iVar6);
+  *(int *)(iVar5 + 0x10) = iVar8;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_26();
+  return;
 }
 
 
 // 828AD378  StfcCreateFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:120)
 
-void StfcCreateFcb(void)
+void StfcCreateFcb(undefined8 param_1,int *param_2,ulonglong param_3,void *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  uint uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int *piVar12;
+  
+  iVar8 = __savegprlr_26();
+  iVar9 = StfcAllocateFcb(param_3);
+  if (iVar9 != 0) {
+    bVar1 = *(byte *)((int)param_4 + 0x28);
+    uVar5 = *(uint *)((int)param_4 + 0x40);
+    *(char *)(iVar9 + 0x34) = (char)(bVar1 & 0x3f);
+    *(short *)(iVar9 + 0x36) = (short)(uVar5 >> 6);
+    memcpy((void *)(iVar9 + 0x50),param_4,bVar1 & 0x3f);
+    if ((bVar1 & 0x80) != 0) {
+      *(byte *)(iVar9 + 0x35) = *(byte *)(iVar9 + 0x35) | 2;
+    }
+    bVar2 = *(byte *)((int)param_4 + 0x2b);
+    bVar3 = *(byte *)((int)param_4 + 0x2a);
+    bVar4 = *(byte *)((int)param_4 + 0x29);
+    iVar11 = ((uint)*(byte *)((int)param_4 + 0x2e) * 0x100 + (uint)*(byte *)((int)param_4 + 0x2d)) *
+             0x100 + (uint)*(byte *)((int)param_4 + 0x2c);
+    uVar6 = *(undefined4 *)((int)param_4 + 0x38);
+    uVar7 = *(undefined4 *)((int)param_4 + 0x3c);
+    iVar10 = ((uint)*(byte *)((int)param_4 + 0x31) * 0x100 + (uint)*(byte *)((int)param_4 + 0x30)) *
+             0x100 + (uint)*(byte *)((int)param_4 + 0x2f);
+    *(undefined4 *)(iVar9 + 0x18) = *(undefined4 *)((int)param_4 + 0x34);
+    *(int *)(iVar9 + 0x20) = iVar10;
+    *(int *)(iVar9 + 0x14) = iVar11 * 0x1000;
+    *(uint *)(iVar9 + 0x1c) = (((uint)bVar2 * 0x100 + (uint)bVar3) * 0x100 + (uint)bVar4) * 0x1000;
+    *(undefined4 *)(iVar9 + 0x40) = uVar6;
+    *(undefined4 *)(iVar9 + 0x44) = uVar7;
+    if (((bVar1 & 0x40) == 0) || (iVar11 == 0)) {
+      iVar11 = -1;
+      *(undefined4 *)(iVar9 + 0x28) = 0xffffffff;
+    }
+    else {
+      *(int *)(iVar9 + 0x2c) = iVar11 * 0x1000;
+      *(int *)(iVar9 + 0x30) = iVar10;
+      iVar11 = iVar10 + iVar11 + -1;
+      *(undefined4 *)(iVar9 + 0x28) = 0;
+    }
+    *(int *)(iVar9 + 0x24) = iVar11;
+    *(int **)(iVar9 + 8) = param_2;
+    param_2[4] = param_2[4] + 1;
+    if (((param_3 & 0xffffffff) != 0) ||
+       (piVar12 = (int *)(iVar8 + 0x78), (*(byte *)((int)param_2 + 0x35) & 4) == 0)) {
+      piVar12 = param_2;
+    }
+    iVar8 = *piVar12;
+    *(int **)(iVar9 + 0x4c) = piVar12;
+    *(int *)(iVar9 + 0x48) = iVar8;
+    *(int *)(iVar8 + 4) = iVar9 + 0x48;
+    *piVar12 = iVar9 + 0x48;
+  }
+  __restgprlr_26(iVar9);
+  return;
 }
 
 
@@ -543,33 +1055,200 @@ ulonglong StfcTimeStampToTime(ulonglong param_1)
 }
 
 
-// 828B1058  StfcNonCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:138)
+// 828B2DF0  StfcFlushUpdateDirectoryEntries  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:130)
 
-void StfcNonCachedRead(void)
+void StfcFlushUpdateDirectoryEntries(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int *piVar1;
+  int iVar3;
+  longlong lVar2;
+  undefined4 *puVar4;
+  
+  iVar3 = __savegprlr_28();
+  puVar4 = *(undefined4 **)(iVar3 + 0x80);
+  do {
+    if (puVar4 == (undefined4 *)(iVar3 + 0x80)) {
+      lVar2 = 0;
+      break;
+    }
+    piVar1 = puVar4 + -0x12;
+    puVar4 = (undefined4 *)*puVar4;
+  } while (((*(byte *)(*piVar1 + 0x35) & 0x10) == 0) ||
+          (lVar2 = StfcUpdateDirectoryEntry(iVar3,*piVar1,0), -1 < lVar2));
+  __restgprlr_28(lVar2);
+  return;
+}
+
+
+// 828B1058  StfcNonCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:138)
+
+void StfcNonCachedRead(undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,
+                      longlong param_5)
+
+{
+  int iVar2;
+  longlong lVar1;
+  int iVar3;
+  longlong lVar4;
+  byte *pbVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  uint local_80;
+  uint local_7c;
+  int local_78;
+  uint local_74;
+  byte local_70 [112];
+  
+  iVar2 = __savegprlr_23();
+  do {
+    lVar1 = StfcByteOffsetToBlockNumber(iVar2,param_2,param_5,&local_74,&local_80,&local_78);
+    if (lVar1 < 0) goto LAB_828b1248;
+    uVar9 = (ulonglong)local_74;
+    if ((local_78 != 0) || (iVar3 = StfcIsLevel0HashBlockResident(iVar2,uVar9), iVar3 == 0)) {
+      StfcPreloadLevel0Hashblocks(iVar2,uVar9,*(undefined4 *)(iVar2 + 0x8c));
+    }
+    uVar6 = (0xaa - uVar9 % 0xaa & 0xfffff) << 0xc;
+    uVar10 = (ulonglong)local_80;
+    if (uVar6 < local_80) {
+      uVar10 = uVar6;
+    }
+    if ((param_4 & 0xffffffff) < uVar10) {
+      uVar10 = param_4;
+    }
+    if (0x10000 < (uVar10 & 0xffffffff)) {
+      uVar10 = 0x10000;
+    }
+    if (((*(char *)(iVar2 + 0xce) != '\0') &&
+        (lVar1 = StfcFlushBlockCache(iVar2,uVar9,((uVar10 & 0xffffffff) >> 0xc) + uVar9 + -1),
+        lVar1 < 0)) || (lVar1 = StfcMapReadableHashBlock(iVar2,uVar9,0,&local_7c), lVar1 < 0))
+    goto LAB_828b1248;
+    lVar1 = StfcSynchronousReadFile
+                      (iVar2,param_3,uVar10,
+                       ((*(uint *)(iVar2 + 0xac) + uVar9) * 0x1000 & 0xffffffff000) +
+                       *(longlong *)(iVar2 + 0x20));
+    uVar8 = local_7c;
+    if (lVar1 < 0) {
+      local_7c = local_7c - *(int *)(iVar2 + 0x34);
+      iVar2 = (((int)local_7c >> 0xc) + (uint)((int)local_7c < 0 && (local_7c & 0xfff) != 0)) * 8 +
+              *(int *)(iVar2 + 0x30);
+      *(char *)(iVar2 + 4) = *(char *)(iVar2 + 4) + -1;
+      goto LAB_828b1248;
+    }
+    param_4 = param_4 - uVar10;
+    param_5 = uVar10 + param_5;
+    lVar1 = (uVar9 % 0xaa) * 0x18 + (ulonglong)local_7c;
+    do {
+      XeCryptSha(param_3,0x1000,0,0,0,0,local_70,0x14);
+      pbVar5 = local_70;
+      lVar7 = lVar1;
+      do {
+        lVar4 = (ulonglong)*(byte *)lVar7 - (ulonglong)*pbVar5;
+        if (lVar4 != 0) break;
+        lVar7 = lVar7 + 1;
+        pbVar5 = pbVar5 + 1;
+      } while ((int)lVar7 != (int)lVar1 + 0x14);
+      if ((int)lVar4 != 0) {
+        uVar8 = uVar8 - *(int *)(iVar2 + 0x34);
+        iVar3 = (((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0)) * 8 +
+                *(int *)(iVar2 + 0x30);
+        *(char *)(iVar3 + 4) = *(char *)(iVar3 + 4) + -1;
+        StfcSetPersistentStatus(iVar2,0xffffffffc0000032);
+        lVar1 = -0x3fffffce;
+        goto LAB_828b1248;
+      }
+      uVar10 = uVar10 - 0x1000;
+      lVar1 = lVar1 + 0x18;
+      local_80 = (uint)uVar10;
+      param_3 = param_3 + 0x1000;
+    } while (uVar10 != 0);
+    uVar8 = uVar8 - *(int *)(iVar2 + 0x34);
+    iVar3 = (((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0)) * 8 +
+            *(int *)(iVar2 + 0x30);
+    *(char *)(iVar3 + 4) = *(char *)(iVar3 + 4) + -1;
+  } while ((param_4 & 0xffffffff) != 0);
+  lVar1 = 0;
+LAB_828b1248:
+  __restgprlr_23(lVar1);
+  return;
 }
 
 
 // 828AE160  StfcSynchronousWriteFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:143)
 
-void StfcSynchronousWriteFile(void)
+void StfcSynchronousWriteFile
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  uint local_40;
+  uint local_3c;
+  undefined8 local_38 [7];
+  
+  iVar3 = __savegprlr_27();
+  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  DAT_848957bc = DAT_848957bc + 1;
+  local_38[0] = param_4;
+  uVar2 = NtWriteFile(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,param_2,param_3,local_38);
+  if ((int)uVar2 == 0x103) {
+    NtWaitForSingleObjectEx(uVar1,0,0,0);
+    uVar2 = (ulonglong)local_40;
+  }
+  if ((-1 < (int)uVar2) && ((param_3 & 0xffffffff) != (ulonglong)local_3c)) {
+    uVar2 = 0xffffffffc0000185;
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 828AC6A0  StfcMoveBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:157)
 
-void StfcMoveBlockCacheEntry(void)
+void StfcMoveBlockCacheEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined1 uVar8;
+  
+  iVar7 = __savegprlr_29();
+  bVar1 = *(byte *)(iVar7 + 0xc9);
+  iVar4 = *(int *)(iVar7 + 0x30);
+  iVar5 = (uint)bVar1 * 8 + iVar4;
+  if ((param_2 & 0xffffffff) == (ulonglong)bVar1) {
+    if ((param_3 & 0xffffffff) == 0) {
+      *(undefined1 *)(iVar7 + 0xc9) = *(undefined1 *)(iVar5 + 5);
+    }
+  }
+  else {
+    uVar8 = (undefined1)param_2;
+    if ((param_2 & 0xffffffff) != (ulonglong)*(byte *)(iVar5 + 6)) {
+      iVar6 = (int)param_2 * 8 + iVar4;
+      bVar2 = *(byte *)(iVar6 + 6);
+      bVar3 = *(byte *)(iVar6 + 5);
+      *(byte *)((uint)bVar2 * 8 + iVar4 + 5) = bVar3;
+      *(byte *)((uint)bVar3 * 8 + iVar4 + 6) = bVar2;
+      *(byte *)(iVar6 + 5) = bVar1;
+      *(undefined1 *)(iVar6 + 6) = *(undefined1 *)(iVar5 + 6);
+      *(undefined1 *)((uint)*(byte *)(iVar5 + 6) * 8 + iVar4 + 5) = uVar8;
+      *(undefined1 *)(iVar5 + 6) = uVar8;
+    }
+    if ((param_3 & 0xffffffff) != 0) {
+      *(undefined1 *)(iVar7 + 0xc9) = uVar8;
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -598,6 +1277,70 @@ undefined8 StfcTimeToTimeStamp(undefined8 param_1,uint *param_2)
 }
 
 
+// 828B2628  StfcCreateNewFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:166)
+
+void StfcCreateNewFile(undefined8 param_1,undefined8 param_2,ushort *param_3,ulonglong param_4,
+                      undefined8 param_5,undefined8 param_6,undefined8 param_7,int *param_8)
+
+{
+  void *_Dst;
+  int iVar2;
+  longlong lVar1;
+  int iVar3;
+  uint uVar4;
+  undefined4 local_70 [2];
+  undefined8 local_68 [13];
+  
+  iVar2 = __savegprlr_22();
+  if (*(char *)(iVar2 + 0xce) == '\0') {
+LAB_828b2664:
+    lVar1 = -0x3ffffd16;
+  }
+  else {
+    _Dst = (void *)param_6;
+    uVar4 = *(uint *)((int)_Dst + 0x44);
+    if (uVar4 == 0xffffffff) {
+      uVar4 = *(uint *)(iVar2 + 0x54);
+      lVar1 = StfcSetAllocationSize(iVar2,iVar2 + 0x38,(ulonglong)uVar4 + 0x1000,0);
+      if (lVar1 < 0) goto LAB_828b27a8;
+    }
+    else if (0x3fff80 < uVar4) goto LAB_828b2664;
+    *(uint *)((int)_Dst + 0x40) = uVar4;
+    memset(_Dst,0,0x40);
+    memcpy(_Dst,*(void **)(param_3 + 2),(uint)*param_3);
+    *(byte *)((int)_Dst + 0x28) =
+         (byte)((param_4 & 0xffffffff) << 7) |
+         *(byte *)((int)_Dst + 0x28) & 0x40 | (byte)*param_3 & 0x3f;
+    KeQuerySystemTime(local_68);
+    StfcTimeToTimeStamp(local_68[0],local_70);
+    *(undefined4 *)((int)_Dst + 0x38) = local_70[0];
+    *(undefined4 *)((int)_Dst + 0x3c) = local_70[0];
+    iVar3 = StfcCreateFcb(iVar2,param_2,param_7,param_6);
+    if (iVar3 == 0) {
+      lVar1 = -0x3fffff66;
+    }
+    else {
+      if ((*(byte *)(iVar3 + 0x35) & 2) == 0) {
+        lVar1 = StfcSetAllocationSize(iVar2,iVar3,param_5,0);
+      }
+      else {
+        lVar1 = 0;
+      }
+      if (((int)lVar1 < 0) || (lVar1 = StfcUpdateDirectoryEntry(iVar2,iVar3,0), lVar1 < 0)) {
+        StfcDereferenceFcb(iVar3);
+      }
+      else {
+        *param_8 = iVar3;
+        lVar1 = 0;
+      }
+    }
+  }
+LAB_828b27a8:
+  __restgprlr_22(lVar1);
+  return;
+}
+
+
 // 828ACD20  StfcResetWriteableDirectoryEntries  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:193)
 
 void StfcResetWriteableDirectoryEntries(int param_1)
@@ -618,41 +1361,316 @@ void StfcResetWriteableDirectoryEntries(int param_1)
 
 // 828AE818  IoCreateDirectoryEnumContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-io.c:198)
 
-void IoCreateDirectoryEnumContext(void)
+void IoCreateDirectoryEnumContext
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+LAB_828ae870:
+    lVar5 = 0;
+  }
+  else {
+    uVar4 = (ulonglong)*(ushort *)param_2;
+    if ((uVar4 == 0) || ((uVar4 == 1 && (**(char **)((ushort *)param_2 + 2) == '*'))))
+    goto LAB_828ae870;
+    lVar5 = uVar4 << 1;
+  }
+  iVar2 = ObIsTitleObject(uVar1);
+  puVar3 = (undefined4 *)ExAllocatePoolTypeWithTag(lVar5 + 0xc,0x65446f49,(iVar2 == 0) + '\x01');
+  if (puVar3 == (undefined4 *)0x0) {
+    uVar1 = 0xffffffffc000009a;
+  }
+  else {
+    *puVar3 = 0;
+    puVar3[1] = 0;
+    puVar3[2] = 0;
+    if (lVar5 != 0) {
+      *(short *)((int)puVar3 + 6) = (short)lVar5;
+      puVar3[2] = puVar3 + 3;
+      iVar2 = IopCopyTemplateFileName(puVar3 + 1,param_3,param_2);
+      if (iVar2 == 0) {
+        ExFreePool(puVar3);
+        uVar1 = 0xffffffffc000000d;
+        goto LAB_828ae90c;
+      }
+    }
+    *param_4 = puVar3;
+    uVar1 = 0;
+  }
+LAB_828ae90c:
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
 // 828AE210  StfcSynchronousWriteFileGather  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:205)
 
-void StfcSynchronousWriteFileGather(void)
+void StfcSynchronousWriteFileGather
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  uint local_40;
+  uint local_3c;
+  undefined8 local_38 [7];
+  
+  iVar3 = __savegprlr_27();
+  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  DAT_848957bc = DAT_848957bc + 1;
+  local_38[0] = param_4;
+  uVar2 = NtWriteFileGather(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,param_2,param_3,
+                            local_38);
+  if ((int)uVar2 == 0x103) {
+    NtWaitForSingleObjectEx(uVar1,0,0,0);
+    uVar2 = (ulonglong)local_40;
+  }
+  if ((-1 < (int)uVar2) && ((param_3 & 0xffffffff) != (ulonglong)local_3c)) {
+    uVar2 = 0xffffffffc0000185;
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 828ADB68  StfcComputeLevelNBackingHashBlockNumber  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:214)
 
-void StfcComputeLevelNBackingHashBlockNumber(void)
+void StfcComputeLevelNBackingHashBlockNumber(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  
+  iVar1 = __savegprlr_29();
+  uVar2 = (uint)*(byte *)(iVar1 + 0xce);
+  if ((param_3 & 0xffffffff) == 0) {
+    iVar1 = (int)((param_2 & 0xffffffff) / 0xaa);
+    uVar3 = (ulonglong)(uint)(iVar1 << (uVar2 & 0x3f));
+    if ((iVar1 == 0) ||
+       (iVar1 = (int)((param_2 & 0xffffffff) / 0x70e4),
+       uVar3 = (uint)(iVar1 + 1 << (uVar2 & 0x3f)) + uVar3, iVar1 == 0)) goto LAB_828adc0c;
+  }
+  else {
+    if ((param_3 & 0xffffffff) != 1) {
+      uVar3 = (ulonglong)(uint)(0xaa << (uVar2 & 0x3f)) + (ulonglong)(uint)(1 << (uVar2 & 0x3f));
+      goto LAB_828adc0c;
+    }
+    uVar3 = (ulonglong)(uint)((int)((param_2 & 0xffffffff) / 0x70e4) * 0xab + 1 << (uVar2 & 0x3f));
+    if ((param_2 & 0xffffffff) < 0x4af768) goto LAB_828adc0c;
+  }
+  uVar3 = (uint)(1 << (uVar2 & 0x3f)) + uVar3;
+LAB_828adc0c:
+  __restgprlr_29(uVar3);
+  return;
+}
+
+
+// 828B2FE0  StfcSetBasicInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:236)
+
+void StfcSetBasicInformation(undefined8 param_1,undefined8 param_2,longlong *param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  int local_40 [16];
+  
+  uVar4 = __savegprlr_26();
+  lVar7 = *param_3;
+  bVar3 = false;
+  iVar2 = (int)param_2;
+  if ((lVar7 != -1) && (lVar7 != 0)) {
+    iVar5 = StfcTimeToTimeStamp(lVar7,local_40);
+    if (iVar5 != 0) {
+      iVar5 = local_40[0];
+      if (local_40[0] != *(int *)(iVar2 + 0x40)) {
+        bVar3 = true;
+      }
+      goto LAB_828b3054;
+    }
+    goto LAB_828b3028;
+  }
+  iVar5 = *(int *)(iVar2 + 0x40);
+LAB_828b3054:
+  lVar7 = param_3[2];
+  if ((lVar7 == -1) || (lVar7 == 0)) {
+    iVar6 = *(int *)(iVar2 + 0x44);
+  }
+  else {
+    iVar6 = StfcTimeToTimeStamp(lVar7,local_40);
+    if (iVar6 == 0) goto LAB_828b3028;
+    iVar6 = local_40[0];
+    if (local_40[0] != *(int *)(iVar2 + 0x44)) {
+      bVar3 = true;
+    }
+  }
+  uVar1 = *(uint *)(param_3 + 4);
+  if (uVar1 == 0) {
+LAB_828b30c8:
+    if (bVar3) {
+      lVar7 = StfcEnsureWriteableDirectoryEntry(uVar4,param_2);
+      if (lVar7 < 0) goto LAB_828b310c;
+      *(int *)(iVar2 + 0x40) = iVar5;
+      *(int *)(iVar2 + 0x44) = iVar6;
+      *(byte *)(iVar2 + 0x35) = *(byte *)(iVar2 + 0x35) | 0x10;
+    }
+    lVar7 = 0;
+  }
+  else {
+    if ((*(byte *)(iVar2 + 0x35) & 2) == 0) {
+      if ((uVar1 & 0x10) == 0) goto LAB_828b30c8;
+    }
+    else if ((uVar1 & 0x10) != 0) goto LAB_828b30c8;
+LAB_828b3028:
+    lVar7 = -0x3ffffff3;
+  }
+LAB_828b310c:
+  __restgprlr_26(lVar7);
+  return;
 }
 
 
 // 828B2E60  StfcControlDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:249)
 
-void StfcControlDevice(void)
+void StfcControlDevice(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar2;
+  undefined4 *_Dst;
+  ulonglong uVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_28();
+  iVar2 = *(int *)(iVar2 + 0x18);
+  iVar4 = (int)param_2;
+  if (((iVar4 == 0) || (iVar4 == 1)) ||
+     (uVar3 = (ulonglong)*(uint *)(iVar2 + 0x88), *(uint *)(iVar2 + 0x88) == 0)) {
+    uVar3 = 0;
+    if ((param_2 & 0xffffffff) < 9) {
+      bVar1 = iVar4 != 0;
+      if (param_2 == 1 && bVar1) {
+        RtlLeaveCriticalSection(iVar2);
+      }
+      else if (param_2 == 2 && bVar1) {
+        uVar3 = (ulonglong)*(uint *)(iVar2 + 0x88);
+        if ((*(uint *)(iVar2 + 0x88) == 0) &&
+           (uVar3 = StfcFlushUpdateDirectoryEntries(iVar2), -1 < (longlong)uVar3)) {
+          uVar3 = StfcFlushBlockCache(iVar2,0,0xffffffffffffffff);
+        }
+      }
+      else if (param_2 == 3 && bVar1) {
+        uVar3 = (ulonglong)*(uint *)(iVar2 + 0x88);
+        StfcBuildVolumeDescriptorFn(iVar2,param_3);
+      }
+      else if (param_2 == 4 && bVar1) {
+        uVar3 = (ulonglong)*(uint *)(iVar2 + 0x88);
+        if (*(uint *)(iVar2 + 0x88) == 0) {
+          iVar4 = *(int *)(iVar2 + 0xa4);
+          *(undefined4 *)(iVar2 + 0xa4) = 0;
+          *(int *)(iVar2 + 0xa0) = *(int *)(iVar2 + 0xa0) + iVar4;
+          *(uint *)(iVar2 + 0xc4) = *(uint *)(iVar2 + 0xc4) & 0x7fffffff;
+          *(uint *)(iVar2 + 0xa8) = *(uint *)(iVar2 + 0x4c) >> 0xc;
+          StfcResetWriteableDirectoryEntries(iVar2);
+          StfcResetWriteableBlockCache(iVar2);
+        }
+      }
+      else {
+        _Dst = (undefined4 *)param_3;
+        if (param_2 == 5 && bVar1) {
+          *_Dst = *(undefined4 *)(iVar2 + 0x8c);
+        }
+        else if (param_2 == 6 && bVar1) {
+          *(undefined4 *)(iVar2 + 0x8c) = *_Dst;
+        }
+        else if (param_2 == 7 && bVar1) {
+          memcpy(_Dst,&DAT_848957b4,0x28);
+        }
+        else if (bVar1) {
+          *(undefined4 *)(iVar2 + 0xd0) = *_Dst;
+          *(undefined4 *)(iVar2 + 0xd4) = _Dst[1];
+        }
+        else {
+          RtlEnterCriticalSection(iVar2);
+        }
+      }
+    }
+    else {
+      uVar3 = 0xffffffffc0000010;
+    }
+  }
+  __restgprlr_28(uVar3);
+  return;
+}
+
+
+// 828AD4F0  StfcCreateCloneFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:251)
+
+void StfcCreateCloneFcb(undefined8 param_1,undefined8 param_2)
+
+{
+  byte bVar1;
+  undefined2 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  undefined4 uVar8;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  undefined4 uVar11;
+  int iVar12;
+  int iVar13;
+  
+  iVar12 = __savegprlr_29();
+  iVar13 = StfcAllocateFcb(param_2);
+  if (iVar13 != 0) {
+    bVar1 = *(byte *)(iVar12 + 0x34);
+    uVar2 = *(undefined2 *)(iVar12 + 0x36);
+    *(byte *)(iVar13 + 0x34) = bVar1;
+    *(undefined2 *)(iVar13 + 0x36) = uVar2;
+    memcpy((void *)(iVar13 + 0x50),(void *)(iVar12 + 0x50),(uint)bVar1);
+    if ((*(byte *)(iVar12 + 0x35) & 2) != 0) {
+      *(byte *)(iVar13 + 0x35) = *(byte *)(iVar13 + 0x35) | 2;
+    }
+    uVar3 = *(undefined4 *)(iVar12 + 0x14);
+    uVar4 = *(undefined4 *)(iVar12 + 0x18);
+    uVar5 = *(undefined4 *)(iVar12 + 0x1c);
+    uVar6 = *(undefined4 *)(iVar12 + 0x40);
+    uVar7 = *(undefined4 *)(iVar12 + 0x44);
+    uVar8 = *(undefined4 *)(iVar12 + 0x24);
+    uVar9 = *(undefined4 *)(iVar12 + 0x28);
+    uVar10 = *(undefined4 *)(iVar12 + 0x2c);
+    uVar11 = *(undefined4 *)(iVar12 + 0x30);
+    *(undefined4 *)(iVar13 + 0x20) = *(undefined4 *)(iVar12 + 0x20);
+    *(undefined4 *)(iVar13 + 0x14) = uVar3;
+    *(undefined4 *)(iVar13 + 0x18) = uVar4;
+    *(undefined4 *)(iVar13 + 0x1c) = uVar5;
+    *(undefined4 *)(iVar13 + 0x40) = uVar6;
+    *(undefined4 *)(iVar13 + 0x44) = uVar7;
+    *(undefined4 *)(iVar13 + 0x24) = uVar8;
+    *(undefined4 *)(iVar13 + 0x28) = uVar9;
+    *(undefined4 *)(iVar13 + 0x2c) = uVar10;
+    *(undefined4 *)(iVar13 + 0x30) = uVar11;
+    *(int *)(iVar13 + 0xc) = iVar12;
+    *(int *)(iVar12 + 0xc) = iVar13;
+  }
+  __restgprlr_29(iVar13);
+  return;
 }
 
 
@@ -709,41 +1727,221 @@ void StfcWorkerThread(void)
 
 // 828B0410  StfcAllocateBlocksFromLevel0HashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:257)
 
-void StfcAllocateBlocksFromLevel0HashBlock(void)
+void StfcAllocateBlocksFromLevel0HashBlock
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,uint *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  ulonglong uVar4;
+  int iVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  uint uVar13;
+  uint local_30 [12];
+  uint uVar12;
+  
+  iVar3 = __savegprlr_28();
+  lVar2 = StfcMapWriteableHashBlock(iVar3,param_2,0,param_3,local_30);
+  if (-1 < lVar2) {
+    uVar9 = *(uint *)(iVar3 + 0x9c) - param_2;
+    if (0xaa < (uVar9 & 0xffffffff)) {
+      uVar9 = 0xaa;
+    }
+    uVar9 = uVar9 + param_2;
+    uVar7 = (ulonglong)*param_4;
+    uVar11 = 0xffffffffffffffff;
+    uVar12 = 0xffffffff;
+    puVar10 = (uint *)param_4[3];
+    uVar8 = param_4[4];
+    uVar4 = 0xffffffffffffffff;
+    iVar5 = *(int *)(iVar3 + 0xa0);
+    if ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+      puVar6 = (uint *)(local_30[0] + 0x14);
+      do {
+        uVar12 = (uint)param_2;
+        if ((*puVar6 & 0xc0000000) == 0) {
+          if ((puVar10 != (uint *)0x0) &&
+             (puVar10[5] = puVar10[5] & 0xff000000 | uVar12 & 0xffffff, uVar8 != 0)) {
+            uVar13 = uVar8 - *(int *)(iVar3 + 0x34);
+            uVar8 = 0;
+            iVar1 = (((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0)) * 8 +
+                    *(int *)(iVar3 + 0x30);
+            *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+            param_4[4] = 0;
+          }
+          *puVar6 = *puVar6 | 0xc0000000;
+          if ((param_2 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+            uVar4 = param_2;
+          }
+          uVar7 = uVar7 - 1;
+          puVar10 = puVar6 + -5;
+          iVar5 = iVar5 + -1;
+          uVar11 = param_2;
+          if (uVar7 == 0) break;
+        }
+        uVar12 = (uint)uVar11;
+        param_2 = param_2 + 1;
+        puVar6 = puVar6 + 6;
+      } while ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff));
+    }
+    *param_4 = (uint)uVar7;
+    *(int *)(iVar3 + 0xa0) = iVar5;
+    if ((uVar4 & 0xffffffff) < (ulonglong)param_4[1]) {
+      param_4[1] = (uint)uVar4;
+    }
+    param_4[2] = uVar12;
+    param_4[3] = (uint)puVar10;
+    param_4[4] = local_30[0];
+    lVar2 = 0;
+  }
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
 // 828AC760  StfcLookupBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:263)
 
-void StfcLookupBlockCacheEntry(void)
+void StfcLookupBlockCacheEntry
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,uint *param_4,
+               undefined4 *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  uint uVar4;
+  uint uVar5;
+  uint *puVar6;
+  
+  iVar3 = __savegprlr_27();
+  uVar4 = (uint)*(byte *)(iVar3 + 0xc9);
+  uVar5 = uVar4;
+  if (((param_3 & 0xffffffff) != 0) && ((param_3 & 0xffffffff) < 4)) {
+    uVar1 = *(uint *)(&DAT_82202650 + (int)((param_3 & 0xffffffff) << 2));
+    trapWord(6,(ulonglong)uVar1,0);
+    param_2 = (longlong)(int)((param_2 & 0xffffffff) / (ulonglong)uVar1) * (longlong)(int)uVar1;
+  }
+  do {
+    puVar6 = (uint *)(uVar5 * 8 + *(int *)(iVar3 + 0x30));
+    if ((*(byte *)((int)puVar6 + 7) & 0x80) == 0) break;
+    if (((ulonglong)*puVar6 == (param_2 & 0xffffffff)) &&
+       (((ulonglong)*(byte *)((int)puVar6 + 7) & 3) == (param_3 & 0xffffffff))) {
+      *param_4 = uVar5;
+      *param_5 = puVar6;
+      uVar2 = 1;
+      goto LAB_828ac810;
+    }
+    uVar5 = (uint)*(byte *)((int)puVar6 + 5);
+  } while (uVar5 != uVar4);
+  uVar2 = 0;
+LAB_828ac810:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 828AE918  IoIsNameInExpression  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-io.c:294)
 
-void IoIsNameInExpression(void)
+void IoIsNameInExpression(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ushort *puVar1;
+  uint uVar2;
+  bool bVar3;
+  ushort *puVar4;
+  uint uVar5;
+  ushort *puVar6;
+  short *psVar7;
+  char *pcVar8;
+  ushort *puVar9;
+  
+  puVar1 = (ushort *)__savegprlr_26();
+  if ((param_3 & 0xffffffff) != 0) {
+    param_3 = param_2 + param_3;
+    puVar4 = (ushort *)((uint)*puVar1 + (int)*(ushort **)(puVar1 + 2));
+    puVar1 = *(ushort **)(puVar1 + 2);
+LAB_828ae9fc:
+    do {
+      puVar9 = (ushort *)param_2;
+      if (puVar4 <= puVar1) {
+        bVar3 = (ushort *)param_3 == puVar9;
+        goto LAB_828aea14;
+      }
+      uVar5 = (uint)*puVar1;
+      puVar6 = puVar1 + 1;
+      if (uVar5 == 0x2a) {
+        if (puVar6 == puVar4) {
+          bVar3 = true;
+          goto LAB_828aea14;
+        }
+        puVar1 = puVar1 + 2;
+        if ((param_4 & 0xffffffff) == 0) {
+          do {
+            if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) break;
+            pcVar8 = (char *)param_2;
+            param_2 = param_2 + 1;
+          } while (*pcVar8 != '.');
+        }
+        else {
+          do {
+            if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) break;
+            psVar7 = (short *)param_2;
+            param_2 = param_2 + 2;
+          } while (*psVar7 != 0x2e);
+        }
+        goto LAB_828ae9fc;
+      }
+      if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) break;
+      if ((param_4 & 0xffffffff) == 0) {
+        uVar2 = (uint)*(byte *)puVar9;
+        param_2 = param_2 + 1;
+      }
+      else {
+        uVar2 = (uint)*puVar9;
+        param_2 = param_2 + 2;
+      }
+      puVar1 = puVar6;
+    } while (((uVar5 == 0x3f) || (uVar2 == uVar5)) ||
+            (uVar2 = RtlUpcaseUnicodeChar(), uVar2 == uVar5));
+  }
+  bVar3 = false;
+LAB_828aea14:
+  __restgprlr_26(bVar3);
+  return;
 }
 
 
 // 828B27B0  StfcOverwriteExistingFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:323)
 
-void StfcOverwriteExistingFile(void)
+void StfcOverwriteExistingFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined4 local_30 [2];
+  undefined8 local_28 [5];
+  
+  uVar2 = __savegprlr_29();
+  iVar1 = (int)param_2;
+  *(undefined4 *)(iVar1 + 0x18) = 0;
+  *(undefined4 *)(iVar1 + 0x1c) = 0;
+  KeQuerySystemTime(local_28);
+  StfcTimeToTimeStamp(local_28[0],local_30);
+  *(undefined4 *)(iVar1 + 0x40) = local_30[0];
+  *(undefined4 *)(iVar1 + 0x44) = local_30[0];
+  lVar3 = StfcSetAllocationSize(uVar2,param_2,param_3,0);
+  if (-1 < lVar3) {
+    lVar3 = StfcUpdateDirectoryEntry(uVar2,param_2,0);
+  }
+  __restgprlr_29(lVar3);
+  return;
 }
 
 
@@ -828,21 +2026,344 @@ LAB_828b13d0:
 
 // 828AE3F0  StfcFsdQueueWorkerThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:354)
 
-void StfcFsdQueueWorkerThread(void)
+void StfcFsdQueueWorkerThread(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int in_r13;
+  
+  iVar4 = __savegprlr_29();
+  iVar1 = *(int *)(in_r13 + 0x100);
+  if (DAT_848957b0 == 0) {
+    iVar2 = (int)param_2;
+    *(byte *)(*(int *)(iVar2 + 0x50) + 3) = *(byte *)(*(int *)(iVar2 + 0x50) + 3) | 1;
+    if (iVar1 == DAT_84895790) {
+      (*(code *)(&PTR_StfcFsdCreate_829a85bc)[**(byte **)(iVar2 + 0x50)])
+                (*(undefined4 *)(iVar4 + 0x18),param_2);
+    }
+    else {
+      uVar3 = KfAcquireSpinLock(0xffffffff84895794);
+      *(undefined **)(iVar2 + 0x30) = &DAT_84895798;
+      *(int **)(iVar2 + 0x34) = DAT_8489579c;
+      *DAT_8489579c = iVar2 + 0x30;
+      DAT_8489579c = (int *)(iVar2 + 0x30);
+      KfReleaseSpinLock(0xffffffff84895794,uVar3);
+      KeSetEvent(0xffffffff848957a0,1,0);
+    }
+    uVar3 = 0x103;
+  }
+  else {
+    uVar3 = 0xffffffffc000026e;
+  }
+  __restgprlr_29(uVar3);
+  return;
+}
+
+
+// 828AC830  StfcCleanBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:364)
+
+void StfcCleanBlockCacheEntry(undefined8 param_1,ulonglong param_2,uint *param_3)
+
+{
+  uint uVar1;
+  void *pvVar2;
+  void *pvVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  int iVar6;
+  int local_50;
+  undefined1 auStack_4c [12];
+  undefined1 auStack_40 [64];
+  
+  pvVar2 = (void *)__savegprlr_28();
+  uVar5 = *(byte *)((int)param_3 + 7) & 3;
+  pvVar3 = pvVar2;
+  if ((*(byte *)((int)param_3 + 7) & 0x10) != 0) {
+    XeCryptSha((param_2 & 0xfffff) * 0x1000 + (ulonglong)*(uint *)((int)pvVar2 + 0x34),0x1000,0,0,0,
+               0,auStack_40,0x14);
+    if (uVar5 == *(byte *)((int)pvVar2 + 0xca) + 1) {
+      pvVar3 = memcpy((void *)((int)pvVar2 + 0xb0),auStack_40,0x14);
+    }
+    else {
+      uVar1 = *param_3;
+      StfcLookupBlockCacheEntry(pvVar2,(ulonglong)uVar1,uVar5 + 1,&local_50,auStack_4c);
+      uVar4 = (ulonglong)uVar1 / (ulonglong)*(uint *)(&DAT_82202650 + uVar5 * 4);
+      trapWord(6,(ulonglong)*(uint *)(&DAT_82202650 + uVar5 * 4),0);
+      iVar6 = local_50 * 0x1000 + *(int *)((int)pvVar2 + 0x34);
+      pvVar3 = memcpy((void *)(((int)uVar4 + (int)(uVar4 / 0xaa) * -0xaa) * 0x18 + iVar6),auStack_40
+                      ,0x14);
+      uVar5 = iVar6 - *(int *)((int)pvVar2 + 0x34);
+      iVar6 = (((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0)) * 8 +
+              *(int *)((int)pvVar2 + 0x30);
+      *(char *)(iVar6 + 4) = *(char *)(iVar6 + 4) + -1;
+    }
+    *(byte *)((int)param_3 + 7) = *(byte *)((int)param_3 + 7) & 0xef;
+  }
+  *(byte *)((int)param_3 + 7) = *(byte *)((int)param_3 + 7) & 0xbf;
+  __restgprlr_28(pvVar3);
+  return;
 }
 
 
 // 828B2838  StfcFsdCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:385)
 
-void StfcFsdCreate(void)
+void StfcFsdCreate(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined2 uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  bool bVar6;
+  uint uVar7;
+  int iVar10;
+  undefined8 uVar8;
+  uint uVar11;
+  ulonglong uVar9;
+  int iVar12;
+  uint uVar13;
+  undefined4 uVar14;
+  short sVar15;
+  int iVar17;
+  uint uVar18;
+  longlong lVar16;
+  uint local_e0 [2];
+  undefined8 local_d8;
+  undefined1 auStack_d0 [16];
+  undefined1 auStack_c0 [40];
+  byte local_98;
+  
+  iVar10 = __savegprlr_18();
+  iVar5 = (int)param_2;
+  iVar2 = *(int *)(iVar5 + 0x50);
+  iVar3 = *(int *)(iVar2 + 0x18);
+  uVar13 = *(uint *)(iVar2 + 8);
+  uVar4 = *(uint *)(iVar2 + 4);
+  uVar1 = *(undefined2 *)(iVar2 + 0xe);
+  uVar7 = uVar13 >> 0x18;
+  uVar8 = ObIsTitleObject(iVar3);
+  iVar12 = *(int *)(iVar3 + 0x1c);
+  local_d8 = **(undefined8 **)(iVar2 + 0x10);
+  RtlEnterCriticalSection(iVar10);
+  iVar17 = *(int *)(iVar10 + 0x88);
+  if (iVar17 != 0) goto LAB_828b2a68;
+  if ((*(char *)(iVar10 + 0xce) == '\0') &&
+     ((((uVar7 == 2 || (uVar7 == 0)) || (uVar7 == 4)) || (uVar7 == 5)))) {
+LAB_828b28c4:
+    iVar17 = -0x3fffffde;
+    goto LAB_828b2a68;
+  }
+  if (*(int *)(iVar5 + 0x28) != 0) {
+LAB_828b28dc:
+    iVar17 = -0x3ffffff3;
+    goto LAB_828b2a68;
+  }
+  if (iVar12 == 0) {
+    uVar18 = (uint)local_d8._0_2_;
+    if (uVar18 == 0) goto LAB_828b28c4;
+    uVar11 = iVar10 + 0x38;
+    StfcReferenceFcb(uVar11,uVar8);
+    if (*local_d8._4_4_ == '\\') {
+      if (uVar18 == 1) {
+        if ((*(byte *)(iVar2 + 2) & 4) == 0) goto LAB_828b2944;
+        lVar16 = -0x3ffffff3;
+      }
+      else {
+LAB_828b29b4:
+        if (local_d8._4_4_[uVar18 - 1] == '\\') {
+          bVar6 = true;
+          local_d8 = CONCAT26((short)uVar18 + -1,local_d8._2_6_);
+        }
+        else {
+          bVar6 = false;
+        }
+        do {
+          ObDissectName(local_d8,auStack_d0,&local_d8);
+          sVar15 = local_d8._0_2_;
+          if ((local_d8._0_2_ != 0) && (*local_d8._4_4_ == '\\')) goto LAB_828b295c;
+          uVar9 = StfcFindOpenChildFcb(uVar11,auStack_d0);
+          local_e0[0] = (uint)uVar9;
+          if ((uVar9 & 0xffffffff) == 0) goto LAB_828b2b20;
+          uVar18 = StfcReferenceFcb(uVar9,uVar8);
+          if (uVar18 == 0) goto LAB_828b2c04;
+          StfcDereferenceFcb(uVar11);
+          uVar11 = uVar18;
+          if (sVar15 == 0) {
+            iVar12 = *(int *)(uVar18 + 0xc);
+            if (iVar12 != 0) {
+              if (((uVar13 & 0x1000) != 0) || ((*(byte *)(iVar12 + 0x35) & 8) != 0))
+              goto LAB_828b2c8c;
+              if (((*(byte *)(uVar18 + 0x35) & 2) == 0) &&
+                 ((((uVar4 & 0x10106) != 0 || (*(char *)(iVar12 + 0x3a) != '\0')) ||
+                  (*(char *)(iVar12 + 0x3b) != '\0')))) goto LAB_828b2938;
+            }
+            if ((*(byte *)(iVar2 + 2) & 4) != 0) goto LAB_828b2c70;
+            lVar16 = 0;
+            goto LAB_828b2c9c;
+          }
+        } while ((*(byte *)(uVar18 + 0x35) & 2) != 0);
+LAB_828b2a50:
+        lVar16 = -0x3fffffc6;
+      }
+    }
+    else {
+LAB_828b295c:
+      lVar16 = -0x3fffffcd;
+    }
+  }
+  else {
+    iVar12 = *(int *)(iVar12 + 8);
+    if ((*(byte *)(iVar12 + 0x35) & 2) == 0) goto LAB_828b28dc;
+    uVar11 = StfcReferenceFcb(iVar12,uVar8);
+    if (uVar11 == 0) {
+      iVar17 = -0x3fffff66;
+      goto LAB_828b2a68;
+    }
+    uVar18 = (uint)local_d8._0_2_;
+    if (uVar18 != 0) {
+      if (*local_d8._4_4_ != '\\') goto LAB_828b29b4;
+      goto LAB_828b295c;
+    }
+    if ((*(byte *)(iVar2 + 2) & 4) == 0) {
+LAB_828b2944:
+      lVar16 = 0;
+      uVar18 = uVar11;
+      goto LAB_828b2ca8;
+    }
+LAB_828b2938:
+    lVar16 = -0x3fffffde;
+  }
+  goto LAB_828b2a58;
+LAB_828b2c04:
+  lVar16 = -0x3fffff66;
+  goto LAB_828b2a58;
+LAB_828b2c8c:
+  lVar16 = -0x3fffffaa;
+  goto LAB_828b2a58;
+LAB_828b2c70:
+  uVar8 = 4;
+  uVar13 = *(uint *)(uVar18 + 8);
+  uVar11 = uVar18;
+LAB_828b2c78:
+  lVar16 = StfcOpenTargetDirectory(iVar10,param_2,uVar13,uVar8);
+  goto LAB_828b2a58;
+LAB_828b2b20:
+  iVar12 = StfcIsValidFileName(auStack_d0);
+  if (iVar12 == 0) goto LAB_828b295c;
+  lVar16 = StfcLookupElementNameInDirectory(iVar10,uVar11,auStack_d0,0,auStack_c0);
+  if (lVar16 < 0) {
+    if ((int)lVar16 != -0x3fffffcc) goto LAB_828b2a58;
+    if (sVar15 != 0) goto LAB_828b2a50;
+    if ((*(byte *)(uVar11 + 0x35) & 8) != 0) goto LAB_828b2c8c;
+    if ((*(byte *)(iVar2 + 2) & 4) != 0) {
+      uVar8 = 5;
+      uVar13 = uVar11;
+      goto LAB_828b2c78;
+    }
+    if ((uVar7 == 1) || (uVar7 == 4)) goto LAB_828b2a58;
+    if ((!bVar6) || ((uVar13 & 0x40) == 0)) {
+      lVar16 = StfcCreateNewFile(iVar10,uVar11,auStack_d0,uVar13,*(undefined4 *)(iVar5 + 0x2c),
+                                 auStack_c0,uVar8,local_e0);
+      if (lVar16 < 0) goto LAB_828b2a58;
+      StfcDereferenceFcb(uVar11);
+      uVar13 = local_e0[0];
+      IoSetShareAccess(uVar4,uVar1,iVar3,(ulonglong)local_e0[0] + 0x38);
+      *(uint *)(iVar3 + 8) = uVar13;
+      *(undefined4 *)(iVar3 + 0xc) = 0;
+      *(undefined4 *)(iVar5 + 0x14) = 2;
+      goto LAB_828b2dc8;
+    }
+    goto LAB_828b295c;
+  }
+  if ((sVar15 != 0) && ((local_98 & 0x80) == 0)) goto LAB_828b2a50;
+  uVar18 = StfcCreateFcb(iVar10,uVar11,uVar8,auStack_c0);
+  local_e0[0] = uVar18;
+  if (uVar18 == 0) goto LAB_828b2c04;
+  StfcDereferenceFcb(uVar11);
+  if (sVar15 != 0) {
+    ObDissectName(local_d8,auStack_d0,&local_d8);
+    sVar15 = local_d8._0_2_;
+    uVar11 = uVar18;
+    if ((local_d8._0_2_ == 0) || (*local_d8._4_4_ != '\\')) goto LAB_828b2b20;
+    goto LAB_828b295c;
+  }
+  if ((*(byte *)(iVar2 + 2) & 4) != 0) goto LAB_828b2c70;
+LAB_828b2c9c:
+  if ((*(byte *)(uVar18 + 0x35) & 2) == 0) {
+    uVar11 = uVar18;
+    if (uVar7 != 2) {
+      if ((bVar6) || ((uVar13 & 1) != 0)) {
+        lVar16 = -0x3ffffefd;
+      }
+      goto LAB_828b2cf8;
+    }
+  }
+  else {
+LAB_828b2ca8:
+    uVar11 = uVar18;
+    if ((uVar7 == 1) || (uVar7 == 3)) {
+      if ((uVar13 & 0x40) != 0) {
+        lVar16 = -0x3fffff46;
+      }
+LAB_828b2cf8:
+      if (-1 < (int)lVar16) {
+        if (*(char *)(uVar11 + 0x38) == '\0') {
+          IoSetShareAccess();
+        }
+        else {
+          lVar16 = IoCheckShareAccess(uVar4,uVar1,iVar3,uVar11 + 0x38,1);
+        }
+        if (-1 < (int)lVar16) {
+          if (((uVar7 == 0) || (uVar7 == 4)) || (uVar7 == 5)) {
+            lVar16 = StfcOverwriteExistingFile(iVar10,uVar11,*(undefined4 *)(iVar5 + 0x2c));
+            if (-1 < lVar16) {
+              uVar14 = 3;
+              goto LAB_828b2d78;
+            }
+            IoRemoveShareAccess(iVar3,uVar11 + 0x38);
+          }
+          else {
+            uVar14 = 1;
+LAB_828b2d78:
+            *(undefined4 *)(iVar5 + 0x14) = uVar14;
+          }
+          if (-1 < (int)lVar16) {
+            *(uint *)(iVar3 + 8) = uVar11;
+            *(undefined4 *)(iVar3 + 0xc) = 0;
+            if (((*(char *)(iVar10 + 0xce) != '\0') && ((uVar13 & 0x1000) != 0)) &&
+               ((*(byte *)(uVar11 + 0x35) & 2) == 0)) {
+              *(byte *)(uVar11 + 0x35) = *(byte *)(uVar11 + 0x35) | 8;
+            }
+LAB_828b2dc8:
+            iVar2 = *(int *)(iVar10 + 0x80);
+            *(int *)(iVar3 + 0x54) = iVar10 + 0x80;
+            iVar17 = 0;
+            *(int *)(iVar3 + 0x50) = iVar2;
+            *(int *)(iVar2 + 4) = iVar3 + 0x50;
+            *(int *)(iVar10 + 0x80) = iVar3 + 0x50;
+            goto LAB_828b2a68;
+          }
+        }
+      }
+      goto LAB_828b2a58;
+    }
+  }
+  lVar16 = -0x3fffffcb;
+LAB_828b2a58:
+  iVar17 = (int)lVar16;
+  if (uVar11 != 0) {
+    StfcDereferenceFcb(uVar11);
+  }
+LAB_828b2a68:
+  RtlLeaveCriticalSection(iVar10);
+  *(int *)(iVar5 + 0x10) = iVar17;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_18();
+  return;
 }
 
 
@@ -886,13 +2407,206 @@ longlong StfcComputeNumberOfDataBlocks(ulonglong param_1)
 }
 
 
-// 828AD648  StfcReferenceFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:422)
+// 828B3118  StfcSetRenameInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:394)
 
-void StfcReferenceFcb(void)
+void StfcSetRenameInformation(undefined8 param_1,int param_2,ulonglong param_3,char *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  uint uVar2;
+  uint *puVar3;
+  undefined2 uVar4;
+  int iVar6;
+  longlong lVar5;
+  int iVar7;
+  int iVar8;
+  char *pcVar9;
+  uint *puVar10;
+  char *_Src;
+  uint *puVar11;
+  uint *puVar12;
+  int local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8 [2];
+  undefined4 local_a0;
+  char *local_9c;
+  undefined1 auStack_90 [40];
+  byte local_68;
+  byte local_64;
+  byte local_63;
+  byte local_62;
+  byte local_61;
+  byte local_60;
+  byte local_5f;
+  undefined4 local_50;
+  
+  iVar6 = __savegprlr_25();
+  iVar8 = *(int *)(param_2 + 0x50);
+  if (*(ushort *)(param_4 + 8) == 0) {
+    lVar5 = -0x3ffffff3;
+    goto LAB_828b33c4;
+  }
+  pcVar9 = *(char **)(param_4 + 0xc) + *(ushort *)(param_4 + 8);
+  _Src = pcVar9;
+  if (pcVar9[-1] == '\\') {
+    _Src = pcVar9 + -1;
+    pcVar9 = pcVar9 + -1;
+  }
+  for (; *(char **)(param_4 + 0xc) < _Src; _Src = _Src + -1) {
+    if (*_Src == '\\') {
+      _Src = _Src + 1;
+      break;
+    }
+  }
+  uVar4 = (undefined2)((int)pcVar9 - (int)_Src);
+  uVar2 = (int)pcVar9 - (int)_Src & 0xffff;
+  local_a0 = CONCAT22(uVar4,uVar4);
+  local_9c = _Src;
+  iVar7 = StfcIsValidFileName(&local_a0);
+  if (iVar7 == 0) {
+    lVar5 = -0x3fffffcd;
+    goto LAB_828b33c4;
+  }
+  iVar8 = *(int *)(iVar8 + 0xc);
+  puVar3 = (uint *)param_3;
+  if (iVar8 == 0) {
+    puVar11 = (uint *)puVar3[2];
+LAB_828b3214:
+    if ((ulonglong)*puVar3 == (param_3 & 0xffffffff)) {
+      lVar5 = StfcLookupElementNameInDirectory(iVar6,puVar11,&local_a0,0,auStack_90);
+      if (lVar5 < 0) {
+        if ((int)lVar5 != -0x3fffffcc) goto LAB_828b33c4;
+      }
+      else {
+        if ((*param_4 == '\0') || ((local_68 & 0x80) != 0)) {
+          lVar5 = -0x3fffffcb;
+          goto LAB_828b33c4;
+        }
+        iVar8 = StfcFindOpenChildFcb(puVar11,&local_a0);
+        if (iVar8 != 0) goto LAB_828b3200;
+        lVar5 = StfcBeginDirectoryEntryUpdate(iVar6,local_50,&local_b0,&local_a0,local_a8,&local_ac)
+        ;
+        if (lVar5 < 0) goto LAB_828b33c4;
+        *(byte *)(local_b0 + 0x28) = *(byte *)(local_b0 + 0x28) & 0xc0;
+        StfcEndDataBlockUpdate(iVar6,local_a0,local_a8[0],local_ac);
+        if (((ulonglong)local_62 * 0x100 + (ulonglong)local_63) * 0x100 + (ulonglong)local_64 != 0)
+        {
+          StfcFreeBlocks(iVar6,((ulonglong)local_5f * 0x100 + (ulonglong)local_60) * 0x100 +
+                               (ulonglong)local_61,0,0);
+        }
+      }
+      memcpy(puVar3 + 0x14,_Src,uVar2);
+      *(char *)(puVar3 + 0xd) = (char)uVar2;
+      if ((uint *)puVar3[2] != puVar11) {
+        uVar2 = puVar3[0x12];
+        puVar12 = puVar3 + 0x12;
+        puVar10 = (uint *)puVar3[0x13];
+        *puVar10 = uVar2;
+        *(uint **)(uVar2 + 4) = puVar10;
+        StfcDereferenceFcb(puVar3[2]);
+        bVar1 = *(byte *)((int)puVar11 + 0x35);
+        puVar3[2] = (uint)puVar11;
+        StfcReferenceFcb(puVar11,bVar1 & 1);
+        if (((bVar1 & 1) != 0) ||
+           (puVar10 = (uint *)(iVar6 + 0x78), (*(byte *)((int)puVar11 + 0x35) & 4) == 0)) {
+          puVar10 = puVar11;
+        }
+        uVar2 = *puVar10;
+        puVar3[0x13] = (uint)puVar10;
+        *puVar12 = uVar2;
+        *(uint **)(uVar2 + 4) = puVar12;
+        *puVar10 = (uint)puVar12;
+      }
+      lVar5 = StfcUpdateDirectoryEntry(iVar6,param_3,0);
+      goto LAB_828b33c4;
+    }
+  }
+  else {
+    puVar11 = *(uint **)(iVar8 + 8);
+    if (((*(byte *)((int)puVar11 + 0x35) & 4) != 0) ||
+       (((*(byte *)((int)puVar3 + 0x35) ^ *(byte *)((int)puVar11 + 0x35)) & 1) == 0))
+    goto LAB_828b3214;
+  }
+LAB_828b3200:
+  lVar5 = -0x3fffffde;
+LAB_828b33c4:
+  __restgprlr_25(lVar5);
+  return;
+}
+
+
+// 828AD648  StfcReferenceFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:422)
+
+void StfcReferenceFcb(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  int *piVar6;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (((*(byte *)((int)piVar2 + 0x35) & 4) == 0) &&
+     ((bool)(*(byte *)((int)piVar2 + 0x35) & 1) != (param_2 != 0))) {
+    piVar6 = (int *)piVar2[3];
+    if (piVar6 == (int *)0x0) {
+      piVar3 = (int *)StfcCreateCloneFcb(piVar2,param_2);
+      piVar6 = piVar2;
+      piVar5 = (int *)0x0;
+      if (piVar3 != (int *)0x0) {
+        do {
+          piVar4 = piVar3;
+          if (piVar5 != (int *)0x0) {
+            piVar5[2] = (int)piVar4;
+            iVar1 = *piVar4;
+            piVar5[0x13] = (int)piVar4;
+            piVar5[0x12] = iVar1;
+            *(int **)(iVar1 + 4) = piVar5 + 0x12;
+            *piVar4 = (int)(piVar5 + 0x12);
+          }
+          piVar6 = (int *)piVar6[2];
+          if ((*(byte *)((int)piVar6 + 0x35) & 4) != 0) {
+            piVar3 = piVar6;
+            piVar5 = piVar6;
+            if ((param_2 & 0xffffffff) == 0) {
+              piVar5 = piVar6 + 0x10;
+            }
+LAB_828ad750:
+            piVar4[2] = (int)piVar3;
+            piVar3[4] = piVar3[4] + 1;
+            iVar1 = *piVar5;
+            piVar4[0x13] = (int)piVar5;
+            piVar4[0x12] = iVar1;
+            *(int **)(iVar1 + 4) = piVar4 + 0x12;
+            *piVar5 = (int)(piVar4 + 0x12);
+            piVar2 = (int *)piVar2[3];
+            goto LAB_828ad798;
+          }
+          piVar3 = (int *)piVar6[3];
+          piVar5 = piVar3;
+          if (piVar3 != (int *)0x0) goto LAB_828ad750;
+          piVar3 = (int *)StfcCreateCloneFcb(piVar6,param_2);
+          piVar5 = piVar4;
+        } while (piVar3 != (int *)0x0);
+        if (piVar6 != piVar2) {
+          StfcDereferenceFcb(piVar2[3]);
+        }
+      }
+      piVar2 = (int *)0x0;
+    }
+    else {
+      piVar6[4] = piVar6[4] + 1;
+      piVar2 = piVar6;
+    }
+  }
+  else {
+    piVar2[4] = piVar2[4] + 1;
+  }
+LAB_828ad798:
+  __restgprlr_28(piVar2);
+  return;
 }
 
 
@@ -1258,11 +2972,70 @@ LAB_828b1568:
 
 // 828AEA28  StfcFlushBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:482)
 
-void StfcFlushBlockCacheEntry(void)
+void StfcFlushBlockCacheEntry(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  uint uVar2;
+  uint *puVar3;
+  uint *puVar4;
+  int iVar6;
+  undefined8 uVar5;
+  longlong lVar7;
+  ulonglong uVar8;
+  int *piVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  int local_d0 [52];
+  
+  iVar6 = __savegprlr_23();
+  puVar3 = (uint *)param_3;
+  bVar1 = *(byte *)((int)puVar3 + 7);
+  local_d0[0] = (int)((param_2 & 0xffffffff) << 0xc) + *(int *)(iVar6 + 0x34);
+  uVar8 = (ulonglong)*puVar3;
+  StfcCleanBlockCacheEntry(iVar6,param_2,param_3);
+  if ((bVar1 & 3) == 0) {
+    uVar12 = 1;
+    uVar11 = (ulonglong)*(byte *)((int)puVar3 + 6);
+    lVar7 = *(uint *)(iVar6 + 0xac) + uVar8;
+    uVar2 = *(uint *)(iVar6 + 0x30);
+    if (uVar11 != *(byte *)(iVar6 + 0xc9)) {
+      piVar9 = local_d0;
+      do {
+        lVar10 = uVar11 * 8 + (ulonglong)uVar2;
+        puVar4 = (uint *)lVar10;
+        if ((((*(char *)(puVar4 + 1) == '\0') && ((*(byte *)((int)puVar4 + 7) & 0x40) != 0)) &&
+            ((ulonglong)*puVar4 == (uVar12 + uVar8 & 0xffffffff))) &&
+           ((*(byte *)((int)puVar4 + 7) & 3) == 0)) {
+          StfcCleanBlockCacheEntry(iVar6,uVar11,lVar10);
+          uVar12 = uVar12 + 1;
+          piVar9 = piVar9 + 1;
+          *piVar9 = (int)(uVar11 << 0xc) + *(int *)(iVar6 + 0x34);
+          if ((uVar12 & 0xffffffff) == 0x20) break;
+        }
+        uVar11 = (ulonglong)*(byte *)((int)puVar4 + 6);
+      } while (uVar11 != *(byte *)(iVar6 + 0xc9));
+    }
+  }
+  else {
+    lVar7 = StfcComputeLevelNBackingHashBlockNumber(iVar6,uVar8,((ulonglong)bVar1 & 3) - 1);
+    uVar12 = 1;
+  }
+  if ((uVar12 & 0xffffffff) == 1) {
+    uVar5 = StfcSynchronousWriteFile(iVar6,local_d0[0],0x1000);
+  }
+  else {
+    uVar5 = StfcSynchronousWriteFileGather
+                      (iVar6,local_d0,(uVar12 & 0xfffff) << 0xc,
+                       ((((ulonglong)(*(byte *)((int)puVar3 + 7) >> 5) & 1) + lVar7) * 0x1000 &
+                       0xffffffff000) + *(longlong *)(iVar6 + 0x20));
+  }
+  if ((int)uVar5 < 0) {
+    StfcSetPersistentStatus(iVar6,uVar5);
+  }
+  __restgprlr_23(uVar5);
+  return;
 }
 
 
@@ -1282,31 +3055,275 @@ void StfcSetPersistentStatus(int param_1,undefined8 param_2)
 
 // 828ACE60  StfcCreateDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:551)
 
-void StfcCreateDevice(void)
+void StfcCreateDevice(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  byte bVar5;
+  byte bVar6;
+  byte bVar7;
+  int iVar8;
+  uint uVar9;
+  int iVar11;
+  longlong lVar10;
+  int iVar12;
+  undefined4 *puVar13;
+  undefined4 uVar14;
+  int iVar15;
+  undefined4 *puVar16;
+  undefined8 uVar17;
+  undefined1 uVar19;
+  ulonglong uVar18;
+  undefined4 local_90;
+  int local_8c;
+  uint local_88 [2];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [20];
+  uint local_5c;
+  
+  iVar11 = __savegprlr_23();
+  if ((((param_2 & 0xffffffff) == 0x58) && (4 < *(byte *)(iVar11 + 0x50))) &&
+     ((*(uint *)(iVar11 + 0x40) & 0xfff) == 0)) {
+    uVar14 = *(undefined4 *)(iVar11 + 0x18);
+    lVar10 = NtQueryVolumeInformationFile(uVar14,auStack_80,auStack_70,0x18,3);
+    if (-1 < lVar10) {
+      if (local_5c < 0x1001) {
+        lVar10 = NtQueryInformationFile(uVar14,auStack_80,local_88,4,0x11);
+        if ((-1 < lVar10) && (lVar10 = NtCreateEvent(&local_90,0,1,0), -1 < lVar10)) {
+          bVar1 = *(byte *)(iVar11 + 0x50);
+          lVar10 = IoCreateDevice(0xffffffff829a8584,
+                                  (ulonglong)*(uint *)(iVar11 + 0x44) + (ulonglong)bVar1 * 8 + 0xd8,
+                                  iVar11,0x3d,
+                                  (-(ulonglong)(*(char *)(iVar11 + 0x51) != '\0') & 0xfffff000) +
+                                  0x2000,&local_8c);
+          if (lVar10 < 0) {
+            NtClose(local_90);
+          }
+          else {
+            *(int *)(local_8c + 0xc) = local_8c;
+            if (*(uint *)(local_8c + 0x24) < local_88[0]) {
+              *(uint *)(local_8c + 0x24) = local_88[0];
+            }
+            iVar8 = *(int *)(local_8c + 0x18);
+            *(uint *)(local_8c + 0x20) = local_5c & 0xffff;
+            uVar17 = *(undefined8 *)(iVar11 + 8);
+            *(undefined4 *)(iVar8 + 0x28) = uVar14;
+            *(undefined8 *)(iVar8 + 0x20) = uVar17;
+            *(undefined4 *)(iVar8 + 0x2c) = local_90;
+            *(undefined1 *)(iVar8 + 0xcf) = *(undefined1 *)(iVar11 + 0x53);
+            uVar9 = *(uint *)(iVar11 + 0x38);
+            bVar2 = *(byte *)(iVar11 + 0x1e);
+            *(uint *)(iVar8 + 0x9c) = uVar9;
+            *(undefined4 *)(iVar8 + 0xa0) = *(undefined4 *)(iVar11 + 0x3c);
+            if (uVar9 < 0x70e5) {
+              if (uVar9 < 0xab) {
+                *(undefined1 *)(iVar8 + 0xca) = 0;
+              }
+              else {
+                *(undefined1 *)(iVar8 + 0xca) = 1;
+              }
+            }
+            else {
+              *(undefined1 *)(iVar8 + 0xca) = 2;
+            }
+            if ((bVar2 & 1) == 0) {
+              uVar19 = 0xac;
+              *(undefined1 *)(iVar8 + 0xce) = 1;
+              uVar14 = 0x723a;
+            }
+            else {
+              *(undefined1 *)(iVar8 + 0xce) = 0;
+              uVar19 = 0xab;
+              uVar14 = 0x718f;
+            }
+            *(undefined4 *)(iVar8 + 0x94) = uVar14;
+            *(undefined1 *)(iVar8 + 0x91) = uVar19;
+            if ((bVar2 & 1) == 0) {
+              uVar18 = *(ulonglong *)(iVar11 + 0x10) >> 0xc;
+              if (0xffffffff < uVar18) {
+                uVar18 = 0xffffffff;
+              }
+              iVar12 = StfcComputeNumberOfDataBlocks(uVar18 & 0xffffffff);
+              *(int *)(iVar8 + 0x98) = iVar12;
+              *(undefined1 *)(iVar8 + 0xcd) = *(undefined1 *)(iVar11 + 0x52);
+              *(int *)(iVar8 + 0xac) = (int)uVar18 - iVar12;
+            }
+            *(undefined4 *)(iVar8 + 0x8c) = 0x14;
+            *(int *)(iVar8 + 0x38) = iVar8 + 0x38;
+            *(undefined4 *)(iVar8 + 0x48) = 1;
+            *(undefined1 *)(iVar8 + 0x6d) = 6;
+            *(int *)(iVar8 + 0x3c) = iVar8 + 0x38;
+            *(int *)(iVar8 + 0x78) = iVar8 + 0x78;
+            *(int *)(iVar8 + 0x7c) = iVar8 + 0x78;
+            *(undefined2 *)(iVar8 + 0x6e) = 0xffff;
+            bVar3 = *(byte *)(iVar11 + 0x1f);
+            bVar4 = *(byte *)(iVar11 + 0x22);
+            bVar5 = *(byte *)(iVar11 + 0x21);
+            bVar6 = *(byte *)(iVar11 + 0x23);
+            bVar7 = *(byte *)(iVar11 + 0x20);
+            *(undefined4 *)(iVar8 + 0x5c) = 0xffffffff;
+            iVar15 = (uint)bVar7 * 0x100 + (uint)bVar3;
+            *(undefined4 *)(iVar8 + 0x60) = 0xffffffff;
+            *(undefined2 *)(iVar8 + 0x52) = 0xfffe;
+            iVar12 = iVar15 * 0x1000;
+            *(int *)(iVar8 + 0x4c) = iVar12;
+            *(uint *)(iVar8 + 0x58) = ((uint)bVar6 * 0x100 + (uint)bVar4) * 0x100 + (uint)bVar5;
+            *(int *)(iVar8 + 0x54) = iVar12;
+            *(int *)(iVar8 + 0xa8) = iVar15;
+            if ((*(byte *)(iVar11 + 0x1e) & 4) != 0) {
+              *(int *)(iVar8 + 0x54) = *(int *)(iVar8 + 0x54) + -0x1000;
+            }
+            puVar13 = (undefined4 *)(iVar11 + 0x20);
+            puVar16 = (undefined4 *)(iVar8 + 0xac);
+            lVar10 = 5;
+            do {
+              puVar13 = puVar13 + 1;
+              puVar16 = puVar16 + 1;
+              *puVar16 = *puVar13;
+              lVar10 = lVar10 + -1;
+            } while (lVar10 != 0);
+            *(uint *)(iVar8 + 0xc4) =
+                 (*(byte *)(iVar11 + 0x1e) & 2) << 0x1d | *(uint *)(iVar8 + 0xc4) & 0xbfffffff;
+            if ((bVar2 & 1) != 0) {
+              *(byte *)(iVar8 + 0x90) = *(byte *)(iVar11 + 0x1e) >> 3 & 1;
+            }
+            RtlInitializeCriticalSection(iVar8,0xffffffffffffffff);
+            *(int *)(iVar8 + 0x80) = iVar8 + 0x80;
+            *(int *)(iVar8 + 0x84) = iVar8 + 0x80;
+            *(byte *)(iVar8 + 200) = bVar1;
+            *(int *)(iVar8 + 0x30) = iVar8 + 0xd8;
+            *(undefined4 *)(iVar8 + 0x34) = *(undefined4 *)(iVar11 + 0x40);
+            StfcResetBlockCache(iVar8);
+            ObReferenceObject(local_8c);
+            *(int *)(iVar11 + 0x48) = local_8c;
+            *(uint *)(iVar11 + 0x4c) = iVar8 + (uint)bVar1 * 8 + 0xd8;
+            *(uint *)(local_8c + 0x14) = *(uint *)(local_8c + 0x14) & 0xffffffef;
+            lVar10 = 0;
+          }
+        }
+      }
+      else {
+        lVar10 = -0x3ffffff0;
+      }
+    }
+  }
+  else {
+    lVar10 = -0x3ffffff3;
+  }
+  __restgprlr_23(lVar10);
+  return;
 }
 
 
 // 828AD7A0  StfcFindOpenChildFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:574)
 
-void StfcFindOpenChildFcb(void)
+void StfcFindOpenChildFcb(undefined8 param_1,undefined2 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  bool bVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined4 *puVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  bVar2 = false;
+  puVar6 = puVar3;
+  do {
+    for (puVar1 = (undefined4 *)*puVar6; puVar1 != puVar6; puVar1 = (undefined4 *)*puVar1) {
+      puVar5 = puVar1 + -0x12;
+      iVar4 = RtlCompareStringN(*(undefined4 *)(param_2 + 2),*param_2,puVar1 + 2,
+                                *(undefined1 *)(puVar1 + -5),1);
+      if (iVar4 == 0) goto LAB_828ad83c;
+    }
+    if (bVar2) goto LAB_828ad834;
+    if ((*(byte *)((int)puVar3 + 0x35) & 4) == 0) {
+      puVar6 = (undefined4 *)puVar3[3];
+      if (puVar6 == (undefined4 *)0x0) {
+LAB_828ad834:
+        puVar5 = (undefined4 *)0x0;
+LAB_828ad83c:
+        __restgprlr_27(puVar5);
+        return;
+      }
+    }
+    else {
+      puVar6 = puVar3 + 0x10;
+    }
+    bVar2 = true;
+  } while( true );
 }
 
 
 // 828AD8E0  StfcTestForFullyCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:626)
 
-void StfcTestForFullyCachedRead(void)
+void StfcTestForFullyCachedRead
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if ((*(uint *)(iVar3 + 0x24) & param_4) == 0) {
+    if (((*(uint *)(iVar3 + 0x24) & param_2 & 0xfff) == 0) && (0xfff < (param_3 & 0xffffffff))) {
+      if ((((param_3 + param_4 ^ param_4 + 0xfff) & 0xfffff000) != 0) &&
+         (uVar1 = MmQueryAddressProtect(param_2), (uVar1 & 0x600) == 0)) {
+        uVar2 = 0;
+        goto LAB_828ad958;
+      }
+    }
+  }
+  uVar2 = 1;
+LAB_828ad958:
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 828B33D0  StfcSetDispositionInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:652)
+
+void StfcSetDispositionInformation(undefined8 param_1,undefined8 param_2,char *param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  byte bVar4;
+  undefined8 local_80;
+  undefined4 local_78;
+  undefined1 auStack_70 [112];
+  
+  uVar2 = __savegprlr_29();
+  iVar1 = (int)param_2;
+  if (*param_3 == '\0') {
+    bVar4 = *(byte *)(iVar1 + 0x35) & 0xf7;
+  }
+  else {
+    if ((*(byte *)(iVar1 + 0x35) & 2) != 0) {
+      local_80 = 0;
+      local_78 = 0;
+      lVar3 = StfcLookupElementNameInDirectory(uVar2,param_2,0,&local_80,auStack_70);
+      if (-1 < lVar3) {
+        lVar3 = -0x3ffffeff;
+        goto LAB_828b3490;
+      }
+      if ((int)lVar3 != -0x3fffffcc) goto LAB_828b3490;
+    }
+    lVar3 = StfcEnsureWriteableDirectoryEntry(uVar2,param_2);
+    if (lVar3 < 0) goto LAB_828b3490;
+    bVar4 = *(byte *)(iVar1 + 0x35) | 8;
+  }
+  *(byte *)(iVar1 + 0x35) = bVar4;
+  lVar3 = 0;
+LAB_828b3490:
+  __restgprlr_29(lVar3);
+  return;
 }
 
 
@@ -1315,8 +3332,30 @@ void StfcTestForFullyCachedRead(void)
 void StfcFlushInAllocationSupportBlocks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  int iVar2;
+  int iVar4;
+  longlong lVar3;
+  int iVar5;
+  int iVar6;
+  
+  iVar4 = __savegprlr_27();
+  iVar2 = *(int *)(iVar4 + 0x30);
+  iVar5 = (uint)*(byte *)(iVar4 + 0xc9) * 8 + iVar2;
+  bVar1 = *(byte *)(iVar5 + 6);
+  while( true ) {
+    iVar6 = (uint)bVar1 * 8 + iVar2;
+    if (*(char *)(iVar6 + 4) == '\0') {
+      if ((((*(byte *)(iVar6 + 7) & 0x40) != 0) && ((*(byte *)(iVar6 + 7) & 8) != 0)) &&
+         (lVar3 = StfcFlushBlockCacheEntry(iVar4,(uint)bVar1,iVar6), lVar3 < 0)) goto LAB_828aec10;
+    }
+    if (iVar6 == iVar5) break;
+    bVar1 = *(byte *)(iVar6 + 6);
+  }
+  lVar3 = 0;
+LAB_828aec10:
+  __restgprlr_27(lVar3);
+  return;
 }
 
 
@@ -1518,41 +3557,302 @@ LAB_828b0988:
 
 // 828B3498  StfcSetEndOfFileInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:743)
 
-void StfcSetEndOfFileInformation(void)
+void StfcSetEndOfFileInformation(undefined8 param_1,undefined8 param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  
+  uVar4 = __savegprlr_27();
+  if (*param_3 == 0) {
+    uVar1 = param_3[1];
+    iVar3 = (int)param_2;
+    uVar2 = *(uint *)(iVar3 + 0x18);
+    if (uVar1 != uVar2) {
+      lVar5 = StfcEnsureWriteableDirectoryEntry(uVar4,param_2);
+      if ((lVar5 < 0) ||
+         ((uVar2 < uVar1 && (lVar5 = StfcSetAllocationSize(uVar4,param_2,uVar1,1), lVar5 < 0))))
+      goto LAB_828b353c;
+      *(uint *)(iVar3 + 0x18) = uVar1;
+      *(byte *)(iVar3 + 0x35) = *(byte *)(iVar3 + 0x35) | 0x10;
+    }
+    lVar5 = 0;
+  }
+  else {
+    lVar5 = -0x3fffff81;
+  }
+LAB_828b353c:
+  __restgprlr_27(lVar5);
+  return;
 }
 
 
 // 828AEC20  StfcAllocateBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:744)
 
-void StfcAllocateBlockCacheEntry(void)
+void StfcAllocateBlockCacheEntry(undefined8 param_1,uint *param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_26();
+  iVar4 = (uint)*(byte *)(iVar3 + 0xc9) * 8 + *(int *)(iVar3 + 0x30);
+  bVar1 = *(byte *)(iVar4 + 6);
+  while( true ) {
+    uVar5 = (uint)bVar1;
+    iVar6 = uVar5 * 8 + *(int *)(iVar3 + 0x30);
+    if (*(char *)(iVar6 + 4) == '\0') break;
+    if (iVar6 == iVar4) {
+      StfcSetPersistentStatus(iVar3,0xffffffffc00000e5);
+      uVar2 = 0xffffffffc00000e5;
+      goto LAB_828aed00;
+    }
+    bVar1 = *(byte *)(iVar6 + 6);
+  }
+  if ((*(byte *)(iVar6 + 7) & 0x40) != 0) {
+    if ((*(byte *)(iVar6 + 7) & 8) == 0) {
+      uVar2 = StfcFlushBlockCacheEntry(iVar3,uVar5,iVar6);
+    }
+    else {
+      uVar2 = StfcFlushInAllocationSupportBlocks(iVar3);
+    }
+    if ((int)uVar2 < 0) goto LAB_828aed00;
+  }
+  *(undefined1 *)(iVar6 + 7) = 0;
+  StfcMoveBlockCacheEntry(iVar3,uVar5,0);
+  *param_2 = (uint)bVar1;
+  *param_3 = iVar6;
+  uVar2 = 0;
+LAB_828aed00:
+  __restgprlr_26(uVar2);
+  return;
+}
+
+
+// 828B1708  StfcEnsureWriteableBlocksAvailable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:784)
+
+void StfcEnsureWriteableBlocksAvailable
+               (undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  undefined4 uVar10;
+  undefined4 uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  uint local_70;
+  int local_6c;
+  undefined1 auStack_68 [104];
+  
+  iVar3 = __savegprlr_21();
+  iVar1 = (int)param_2;
+  uVar6 = (ulonglong)*(uint *)(iVar1 + 0x14);
+  uVar9 = 0;
+  uVar12 = param_3 + param_4 + 0xfff & 0xfffff000;
+  if (uVar6 < uVar12) {
+    uVar9 = (uVar12 - uVar6 & 0xffffffff) >> 0xc;
+    uVar12 = uVar6;
+  }
+  if (*(uint *)(iVar1 + 0x1c) < uVar12) {
+    uVar12 = (ulonglong)*(uint *)(iVar1 + 0x1c);
+  }
+  uVar6 = param_4 & 0xfffff000;
+  if (uVar12 < (param_4 & 0xfffff000)) {
+    uVar6 = uVar12;
+  }
+  if (((uVar9 == 0) && ((uVar12 - uVar6 & 0xffffffff) == 0x1000)) ||
+     ((((uVar12 - uVar6 & 0xffffffff) >> 0xc) + uVar9 + (ulonglong)*(uint *)(iVar3 + 0xa8) &
+      0xffffffff) <= (ulonglong)*(uint *)(iVar3 + 0xa0))) {
+    lVar2 = 0;
+  }
+  else {
+    uVar8 = *(uint *)(iVar1 + 0x28);
+    uVar11 = *(undefined4 *)(iVar1 + 0x2c);
+    uVar10 = *(undefined4 *)(iVar1 + 0x30);
+    for (uVar13 = uVar6; (uVar13 & 0xffffffff) < uVar12; uVar13 = uVar13 + 0x1000) {
+      lVar2 = StfcByteOffsetToBlockNumber(iVar3,param_2,uVar13,&local_70,auStack_68,0);
+      uVar7 = local_70;
+      if ((lVar2 < 0) || (lVar2 = StfcMapReadableHashBlock(iVar3,local_70,0,&local_6c), lVar2 < 0))
+      goto LAB_828b1910;
+      uVar4 = local_6c - *(int *)(iVar3 + 0x34);
+      iVar5 = (((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0)) * 8 +
+              *(int *)(iVar3 + 0x30);
+      uVar7 = *(uint *)((uVar7 % 0xaa) * 0x18 + local_6c + 0x14) >> 0x1e;
+      if (((*(byte *)(iVar5 + 7) & 4) == 0) && (uVar7 == 3)) {
+        uVar7 = 2;
+      }
+      if (uVar7 == 2) {
+        uVar9 = uVar9 + 1;
+        if (((uVar13 & 0xffffffff) == uVar6) && (uVar6 < uVar8)) {
+LAB_828b1890:
+          uVar10 = *(undefined4 *)(iVar1 + 0x30);
+          uVar11 = *(undefined4 *)(iVar1 + 0x2c);
+          uVar8 = *(uint *)(iVar1 + 0x28);
+        }
+      }
+      else {
+        if (uVar7 != 3) {
+          StfcSetPersistentStatus(iVar3,0xffffffffc0000032);
+          uVar8 = local_6c - *(int *)(iVar3 + 0x34);
+          iVar1 = (((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0)) * 8 +
+                  *(int *)(iVar3 + 0x30);
+          *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+          lVar2 = -0x3fffffce;
+          goto LAB_828b1910;
+        }
+        if ((uVar13 & 0xffffffff) == uVar6) goto LAB_828b1890;
+      }
+      *(char *)(iVar5 + 4) = *(char *)(iVar5 + 4) + -1;
+    }
+    if (uVar8 != *(uint *)(iVar1 + 0x28)) {
+      *(uint *)(iVar1 + 0x28) = uVar8;
+      *(undefined4 *)(iVar1 + 0x2c) = uVar11;
+      *(undefined4 *)(iVar1 + 0x30) = uVar10;
+    }
+    if ((uVar9 & 0xffffffff) != 0) {
+      uVar9 = uVar9 + *(uint *)(iVar3 + 0xa8);
+      if (((ulonglong)*(uint *)(iVar3 + 0xa0) < (uVar9 & 0xffffffff)) &&
+         (lVar2 = StfcExtendBackingFileSize(iVar3,uVar9 - *(uint *)(iVar3 + 0xa0)), (int)lVar2 < 0))
+      goto LAB_828b1910;
+    }
+    lVar2 = 0;
+  }
+LAB_828b1910:
+  __restgprlr_21(lVar2);
+  return;
 }
 
 
 // 828B3548  StfcFsdSetInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:839)
 
-void StfcFsdSetInformation(void)
+void StfcFsdSetInformation(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  
+  iVar5 = __savegprlr_26();
+  iVar4 = (int)param_2;
+  iVar1 = *(int *)(iVar4 + 0x50);
+  iVar2 = *(int *)(iVar1 + 0x18);
+  iVar3 = *(int *)(iVar2 + 8);
+  RtlEnterCriticalSection(iVar5);
+  iVar6 = *(int *)(iVar5 + 0x88);
+  if (iVar6 != 0) goto LAB_828b3710;
+  if ((*(byte *)(iVar2 + 2) & 0x10) != 0) {
+    iVar6 = -0x3ffffed8;
+    goto LAB_828b3710;
+  }
+  if ((*(char *)(iVar5 + 0xce) != '\0') || (*(int *)(iVar1 + 8) == 0xe)) {
+    iVar1 = *(int *)(iVar1 + 8);
+    iVar6 = 0;
+    if (iVar1 == 4) {
+      if ((*(byte *)(iVar3 + 0x35) & 4) != 0) goto LAB_828b36e4;
+      if (*(int *)(iVar3 + 0xc) == 0) {
+        iVar6 = StfcSetBasicInformation(iVar5,iVar3,*(undefined4 *)(iVar4 + 0x1c));
+        goto LAB_828b3710;
+      }
+    }
+    else if (iVar1 == 10) {
+      if ((*(byte *)(iVar3 + 0x35) & 4) != 0) goto LAB_828b36e4;
+      if (*(int *)(iVar3 + 0xc) == 0) {
+        iVar6 = StfcSetRenameInformation(iVar5,param_2,iVar3,*(undefined4 *)(iVar4 + 0x1c));
+        goto LAB_828b3710;
+      }
+    }
+    else if (iVar1 == 0xd) {
+      if ((*(byte *)(iVar3 + 0x35) & 4) != 0) goto LAB_828b36e4;
+      if (*(int *)(iVar3 + 0xc) == 0) {
+        iVar6 = StfcSetDispositionInformation(iVar5,iVar3,*(undefined4 *)(iVar4 + 0x1c));
+        goto LAB_828b3710;
+      }
+    }
+    else {
+      if (iVar1 == 0xe) {
+        *(undefined8 *)(iVar2 + 0x14) = **(undefined8 **)(iVar4 + 0x1c);
+        goto LAB_828b3710;
+      }
+      if (iVar1 == 0x13) {
+        if ((*(byte *)(iVar3 + 0x35) & 2) != 0) goto LAB_828b36e4;
+        if (*(int *)(iVar3 + 0xc) == 0) {
+          if (**(int **)(iVar4 + 0x1c) == 0) {
+            iVar6 = StfcSetAllocationSize(iVar5,iVar3,(*(int **)(iVar4 + 0x1c))[1],0);
+          }
+          else {
+            iVar6 = -0x3fffff81;
+          }
+          goto LAB_828b3710;
+        }
+      }
+      else {
+        if ((iVar1 != 0x14) || ((*(byte *)(iVar3 + 0x35) & 2) != 0)) {
+LAB_828b36e4:
+          iVar6 = -0x3ffffff3;
+          goto LAB_828b3710;
+        }
+        if (*(int *)(iVar3 + 0xc) == 0) {
+          iVar6 = StfcSetEndOfFileInformation(iVar5,iVar3,*(undefined4 *)(iVar4 + 0x1c));
+          goto LAB_828b3710;
+        }
+      }
+    }
+  }
+  iVar6 = -0x3fffffde;
+LAB_828b3710:
+  RtlLeaveCriticalSection(iVar5);
+  *(int *)(iVar4 + 0x10) = iVar6;
+  IoCompleteRequest(param_2,1);
+  __restgprlr_26();
+  return;
 }
 
 
 // 828AC968  StfcDiscardBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:878)
 
-void StfcDiscardBlock(void)
+void StfcDiscardBlock(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint local_40;
+  undefined4 local_3c;
+  undefined1 auStack_38 [56];
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = StfcLookupBlockCacheEntry(iVar2,param_2,param_3,&local_3c,&local_40);
+  uVar1 = local_40;
+  if (iVar3 != 0) {
+    if (((*(byte *)(local_40 + 7) & 0x10) != 0) &&
+       ((param_3 & 0xffffffff) != (ulonglong)*(byte *)(iVar2 + 0xca) + 1)) {
+      StfcLookupBlockCacheEntry(iVar2,param_2,param_3 + 1,&local_40,auStack_38);
+      iVar3 = ((int)(local_40 << 0xc | local_40 >> 0x14) >> 0xc) * 8 + *(int *)(iVar2 + 0x30);
+      *(char *)(iVar3 + 4) = *(char *)(iVar3 + 4) + -1;
+    }
+    *(undefined1 *)(uVar1 + 7) = 0;
+    StfcMoveBlockCacheEntry(iVar2,local_3c,0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1561,8 +3861,32 @@ void StfcDiscardBlock(void)
 void StfcDismountVolume(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0x18);
+  KeEnterCriticalRegion();
+  RtlEnterCriticalSection(iVar1);
+  if (*(char *)(iVar1 + 0xcb) == '\0') {
+    *(undefined1 *)(iVar1 + 0xcb) = 1;
+    *(undefined4 *)(iVar1 + 0x88) = 0xc000026e;
+    NtClose(*(undefined4 *)(iVar1 + 0x2c));
+    uVar3 = 0;
+    *(undefined4 *)(iVar1 + 0x2c) = 0;
+    *(undefined4 *)(iVar1 + 0x34) = 0;
+  }
+  else {
+    uVar3 = 0xffffffffc000026e;
+  }
+  RtlLeaveCriticalSection(iVar1);
+  if (-1 < (int)uVar3) {
+    IoDeleteDevice(iVar2);
+  }
+  KeLeaveCriticalRegion();
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -1580,21 +3904,104 @@ undefined8 StfcDriverEntry(void)
 
 // 828B0990  StfcFreeBlocksFromLevel0HashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:979)
 
-void StfcFreeBlocksFromLevel0HashBlock(void)
+void StfcFreeBlocksFromLevel0HashBlock
+               (undefined8 param_1,ulonglong param_2,int *param_3,int *param_4,undefined4 *param_5,
+               int *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  ulonglong uVar1;
+  void *_Src;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  int iVar5;
+  int iVar6;
+  int local_80 [32];
+  
+  iVar2 = __savegprlr_19();
+  if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar2 + 0x9c)) {
+    lVar4 = StfcMapWriteableHashBlock(iVar2,param_2,0,0,local_80);
+    if (-1 < lVar4) {
+      iVar5 = 0;
+      uVar1 = param_2 & 0xffffffff;
+      iVar6 = 0;
+LAB_828b0a14:
+      _Src = (void *)(((int)param_2 + (int)((param_2 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 +
+                     local_80[0]);
+      uVar3 = *(uint *)((int)_Src + 0x14);
+      param_2 = (ulonglong)uVar3 & 0xffffff;
+      if (*param_6 == 0) {
+        if (uVar3 >> 0x1e == 2) {
+          iVar5 = iVar5 + 1;
+          uVar3 = uVar3 & 0x3fffffff | 0x40000000;
+        }
+        else {
+          if (uVar3 >> 0x1e != 3) goto LAB_828b0a5c;
+          uVar3 = uVar3 & 0x3fffffff;
+          iVar6 = iVar6 + 1;
+        }
+        *(uint *)((int)_Src + 0x14) = uVar3;
+      }
+      else {
+        *param_6 = 0;
+        uVar3 = *(uint *)((int)_Src + 0x14) >> 0x1e;
+        if ((uVar3 != 2) && (uVar3 != 3)) {
+LAB_828b0a5c:
+          lVar4 = -0x3fffffce;
+          StfcSetPersistentStatus(iVar2,0xffffffffc0000032);
+LAB_828b0a70:
+          uVar3 = local_80[0] - *(int *)(iVar2 + 0x34);
+          iVar2 = (((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0)) * 8 +
+                  *(int *)(iVar2 + 0x30);
+          *(char *)(iVar2 + 4) = *(char *)(iVar2 + 4) + -1;
+          *param_3 = iVar5;
+          *param_4 = iVar6;
+          *param_5 = (int)param_2;
+          goto LAB_828b0aa4;
+        }
+      }
+      *(uint *)((int)_Src + 0x14) = *(uint *)((int)_Src + 0x14) | 0xffffff;
+      if ((void *)param_6[1] != (void *)0x0) {
+        memcpy((void *)param_6[1],_Src,0x18);
+        param_2 = 0xffffff;
+      }
+      if ((param_2 == 0xffffff) || (param_2 / 0xaa != uVar1 / 0xaa)) goto LAB_828b0a70;
+      goto LAB_828b0a14;
+    }
+  }
+  else {
+    lVar4 = -0x3fffffce;
+    StfcSetPersistentStatus(iVar2,0xffffffffc0000032);
+  }
+LAB_828b0aa4:
+  __restgprlr_19(lVar4);
+  return;
 }
 
 
 // 828ACA28  StfcMapExistingBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:980)
 
-void StfcMapExistingBlock(void)
+void StfcMapExistingBlock
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int *param_4,int *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  int local_40;
+  int local_3c [15];
+  
+  iVar3 = __savegprlr_27();
+  lVar2 = StfcLookupBlockCacheEntry(iVar3,param_2,param_3,&local_40,local_3c);
+  if (lVar2 != 0) {
+    iVar1 = *(int *)(iVar3 + 0x34);
+    StfcMoveBlockCacheEntry(iVar3,local_40,1);
+    *(char *)(local_3c[0] + 4) = *(char *)(local_3c[0] + 4) + '\x01';
+    *param_4 = local_40 * 0x1000 + iVar1;
+    *param_5 = local_3c[0];
+  }
+  __restgprlr_27(lVar2);
+  return;
 }
 
 
@@ -1608,6 +4015,55 @@ undefined8 StfcDriverShutdown(void)
   KeWaitForSingleObject(DAT_84895790,3,1,0,0);
   ObDereferenceObject(DAT_84895790);
   return 0;
+}
+
+
+// 828ADC20  StfcResetWriteableDirectoryBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1058)
+
+void StfcResetWriteableDirectoryBlock(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  byte *pbVar3;
+  uint uVar4;
+  int iVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  longlong lVar8;
+  
+  iVar5 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) < (param_3 + 0x1000 & 0xffffffff)) {
+    lVar8 = param_3 + 0x29;
+    lVar6 = ((((param_3 + 0x1000) - param_3) - 1 & 0xffffffff) >> 6) + 1;
+    do {
+      pbVar3 = (byte *)lVar8;
+      if ((pbVar3[-1] & 0x80) == 0) {
+        uVar2 = ((ulonglong)*(uint *)(pbVar3 + 0xb) + 0xfff & 0xffffffff) >> 0xc;
+        if (uVar2 < ((ulonglong)pbVar3[2] * 0x100 + (ulonglong)pbVar3[1]) * 0x100 +
+                    (ulonglong)*pbVar3) {
+          *pbVar3 = (byte)uVar2;
+          pbVar3[1] = (byte)(uVar2 >> 8);
+          pbVar3[2] = (byte)(uVar2 >> 0x10);
+        }
+      }
+      lVar8 = lVar8 + 0x40;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  uVar2 = (param_2 & 0xffffffff) >> 6;
+  puVar7 = *(undefined4 **)(iVar5 + 0x80);
+  while (puVar7 != (undefined4 *)(iVar5 + 0x80)) {
+    iVar1 = puVar7[-0x12];
+    puVar7 = (undefined4 *)*puVar7;
+    if (((((*(byte *)(iVar1 + 0x35) & 2) == 0) && (uVar2 <= *(ushort *)(iVar1 + 0x36))) &&
+        ((ulonglong)*(ushort *)(iVar1 + 0x36) < uVar2 + 0x40)) &&
+       (uVar4 = *(int *)(iVar1 + 0x18) + 0xfffU & 0xfffff000, uVar4 < *(uint *)(iVar1 + 0x1c))) {
+      *(uint *)(iVar1 + 0x1c) = uVar4;
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1688,11 +4144,247 @@ LAB_828aeedc:
 
 // 828B0B20  StfcFreeBlocksFromLevelNHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:1175)
 
-void StfcFreeBlocksFromLevelNHashBlock(void)
+void StfcFreeBlocksFromLevelNHashBlock
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int *param_4,int *param_5,
+               uint *param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ulonglong uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  int iVar6;
+  longlong lVar5;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  int iVar12;
+  int iVar13;
+  ulonglong uVar14;
+  uint local_90;
+  uint local_8c;
+  uint local_88;
+  int local_84 [33];
+  
+  iVar6 = __savegprlr_17();
+  iVar12 = (int)((param_3 & 0xffffffff) << 2);
+  uVar11 = (ulonglong)*(uint *)(&DAT_82202654 + iVar12);
+  uVar10 = *(uint *)(&DAT_82202650 + iVar12);
+  uVar14 = (ulonglong)uVar10;
+  if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar6 + 0x9c)) {
+    lVar5 = StfcMapWriteableHashBlock(iVar6,param_2,param_3,0,local_84);
+    if (-1 < lVar5) {
+      uVar1 = param_2 & 0xffffffff;
+      trapWord(6,uVar11,0);
+      iVar13 = 0;
+      iVar12 = 0;
+      while( true ) {
+        trapWord(6,uVar14,0);
+        iVar4 = (int)(((param_2 & 0xffffffff) / uVar14) % 0xaa) * 0x18 + local_84[0];
+        if ((param_3 & 0xffffffff) == 1) {
+          lVar5 = StfcFreeBlocksFromLevel0HashBlock
+                            (iVar6,param_2,&local_90,&local_8c,&local_88,param_7);
+        }
+        else {
+          lVar5 = StfcFreeBlocksFromLevelNHashBlock
+                            (iVar6,param_2,param_3 - 1,&local_90,&local_8c,&local_88,param_7);
+        }
+        if ((int)lVar5 < 0) break;
+        uVar2 = *(uint *)(iVar4 + 0x14);
+        trapWord(6,uVar14,0);
+        lVar7 = (longlong)(int)((param_2 & 0xffffffff) / uVar14) * (longlong)(int)uVar10;
+        uVar3 = ((ulonglong)uVar2 & 0xffff8000) + ((ulonglong)local_90 & 0x1ffff) * 0x8000 &
+                0x3fff8000;
+        uVar8 = CONCAT44(uVar2,uVar2) & 0xffffffffc0007fff | uVar3;
+        *(int *)(iVar4 + 0x14) = (int)uVar8;
+        uVar8 = uVar8 + local_8c;
+        *(uint *)(iVar4 + 0x14) = uVar2 & 0xc0000000 | (uint)uVar3 | (uint)uVar8 & 0x7fff;
+        uVar9 = (ulonglong)*(uint *)(iVar6 + 0x9c) - lVar7;
+        if ((ulonglong)uVar10 < (uVar9 & 0xffffffff)) {
+          uVar9 = uVar14;
+        }
+        if ((((uVar9 & 0xffffffff) == uVar3 >> 0xf) && ((uVar9 & 0xffffffff) == uVar14)) ||
+           ((uVar9 & 0xffffffff) == (uVar8 & 0x7fff))) {
+          StfcDiscardBlock(iVar6,lVar7,param_3);
+        }
+        param_2 = (ulonglong)local_88;
+        iVar13 = local_90 + iVar13;
+        iVar12 = local_8c + iVar12;
+        if ((param_2 == 0xffffff) || (trapWord(6,uVar11,0), param_2 / uVar11 != uVar1 / uVar11))
+        break;
+      }
+      uVar10 = local_84[0] - *(int *)(iVar6 + 0x34);
+      iVar6 = (((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0)) * 8 +
+              *(int *)(iVar6 + 0x30);
+      *(char *)(iVar6 + 4) = *(char *)(iVar6 + 4) + -1;
+      *param_4 = iVar13;
+      *param_5 = iVar12;
+      *param_6 = local_88;
+    }
+  }
+  else {
+    StfcSetPersistentStatus(iVar6,0xffffffffc0000032);
+    lVar5 = -0x3fffffce;
+  }
+  __restgprlr_17(lVar5);
+  return;
+}
+
+
+// 828B1970  StfcBeginDataBlockUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1192)
+
+void StfcBeginDataBlockUpdate
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               uint *param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar8;
+  longlong lVar7;
+  ulonglong uVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar12;
+  ulonglong uVar13;
+  int iVar14;
+  uint local_a0;
+  uint local_9c [3];
+  undefined1 auStack_90 [144];
+  
+  iVar8 = __savegprlr_19();
+  param_3 = param_3 & 0xfffff000;
+  iVar4 = (int)param_2;
+  uVar10 = *(uint *)(iVar4 + 0x28);
+  uVar13 = (ulonglong)uVar10;
+  uVar1 = *(uint *)(iVar4 + 0x2c);
+  uVar2 = *(uint *)(iVar4 + 0x30);
+  lVar7 = StfcByteOffsetToBlockNumber(iVar8,param_2,param_3,&local_a0,local_9c,0);
+  uVar6 = local_a0;
+  if ((lVar7 < 0) || (lVar7 = StfcMapWriteableHashBlock(iVar8,local_a0,0,0,param_7), lVar7 < 0))
+  goto LAB_828b1d58;
+  iVar12 = *(int *)param_7;
+  iVar14 = (uVar6 % 0xaa) * 0x18 + iVar12;
+  uVar3 = *(uint *)(iVar14 + 0x14);
+  uVar5 = uVar3 >> 0x1e;
+  if (param_3 == *(uint *)(iVar4 + 0x1c)) {
+    if ((uVar5 == 2) || (uVar5 == 3)) {
+      lVar7 = StfcMapNewEmptyBlock(iVar8,uVar6,0,param_6,local_9c);
+      if (-1 < lVar7) {
+        *(uint *)(iVar14 + 0x14) = *(uint *)(iVar14 + 0x14) | 0xc0000000;
+LAB_828b1adc:
+        *param_5 = uVar6;
+        lVar7 = 0;
+        goto LAB_828b1d58;
+      }
+LAB_828b1a9c:
+      uVar10 = iVar12 - *(int *)(iVar8 + 0x34);
+      iVar4 = (((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0)) * 8 +
+              *(int *)(iVar8 + 0x30);
+      *(char *)(iVar4 + 4) = *(char *)(iVar4 + 4) + -1;
+      goto LAB_828b1d58;
+    }
+    StfcSetPersistentStatus(iVar8,0xffffffffc0000032);
+    uVar10 = iVar12 - *(int *)(iVar8 + 0x34);
+    iVar4 = (((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0)) * 8 +
+            *(int *)(iVar8 + 0x30);
+    *(char *)(iVar4 + 4) = *(char *)(iVar4 + 4) + -1;
+  }
+  else {
+    if (uVar5 == 3) {
+      if ((param_4 & 0xffffffff) == 0) {
+        lVar7 = StfcMapWriteableDataBlock(iVar8,uVar6,iVar14,param_6);
+      }
+      else {
+        lVar7 = StfcMapNewEmptyBlock(iVar8,uVar6,0,param_6,local_9c);
+      }
+      if (-1 < (int)lVar7) goto LAB_828b1adc;
+      goto LAB_828b1a9c;
+    }
+    uVar11 = iVar12 - *(int *)(iVar8 + 0x34);
+    iVar12 = (((int)uVar11 >> 0xc) + (uint)((int)uVar11 < 0 && (uVar11 & 0xfff) != 0)) * 8 +
+             *(int *)(iVar8 + 0x30);
+    *(char *)(iVar12 + 4) = *(char *)(iVar12 + 4) + -1;
+    if (uVar5 == 2) {
+      uVar9 = 0xffffffffffffffff;
+      local_a0 = 0xffffffff;
+      if (param_3 != 0) {
+        uVar9 = param_3 - 0x1000;
+        if (((uVar9 & 0xffffffff) < uVar13) ||
+           ((uVar1 + uVar13 & 0xffffffff) <= (uVar9 & 0xffffffff))) {
+          lVar7 = StfcByteOffsetToBlockNumber(iVar8,param_2,uVar9,&local_a0,local_9c,0);
+          if (lVar7 < 0) goto LAB_828b1d58;
+          uVar9 = (ulonglong)local_a0;
+        }
+        else {
+          uVar9 = ((uVar9 - uVar13 & 0xffffffff) >> 0xc) + (ulonglong)uVar2;
+        }
+      }
+      lVar7 = StfcAllocateBlocks(iVar8,1,*(byte *)(iVar4 + 0x35) >> 1 & 2,uVar9,uVar3 & 0xffffff,
+                                 local_9c,0);
+      if (-1 < lVar7) {
+        uVar9 = (ulonglong)local_9c[0];
+        if (*(uint *)(iVar4 + 0x20) == uVar6) {
+          *(uint *)(iVar4 + 0x20) = local_9c[0];
+        }
+        if (*(uint *)(iVar4 + 0x24) == uVar6) {
+          *(uint *)(iVar4 + 0x24) = local_9c[0];
+        }
+        if (((uVar1 + uVar13 & 0xffffffff) == param_3) &&
+           (((ulonglong)(uVar1 >> 0xc) + (ulonglong)uVar2 & 0xffffffff) == uVar9)) {
+          iVar12 = uVar1 + 0x1000;
+          *(uint *)(iVar4 + 0x28) = uVar10;
+          *(uint *)(iVar4 + 0x30) = uVar2;
+        }
+        else {
+          iVar12 = 0x1000;
+          *(int *)(iVar4 + 0x28) = (int)param_3;
+          *(uint *)(iVar4 + 0x30) = local_9c[0];
+        }
+        *(int *)(iVar4 + 0x2c) = iVar12;
+        if ((*(byte *)(iVar4 + 0x35) & 4) == 0) {
+          *(byte *)(iVar4 + 0x35) = *(byte *)(iVar4 + 0x35) | 0x10;
+        }
+        else {
+          *(int *)(iVar8 + 0xa8) = *(int *)(iVar8 + 0xa8) + -1;
+        }
+        lVar7 = StfcFreeBlocks(iVar8,uVar6,0,auStack_90);
+        if (-1 < lVar7) {
+          if ((param_4 & 0xffffffff) == 0) {
+            lVar7 = StfcMapWriteableCopyOfDataBlock(iVar8,uVar9,uVar6,auStack_90,param_6);
+          }
+          else {
+            lVar7 = StfcMapNewEmptyBlock(iVar8,uVar9,0,param_6,local_9c);
+          }
+          if (-1 < (int)lVar7) {
+            if (((param_4 & 0xffffffff) == 0) && ((*(byte *)(iVar4 + 0x35) & 4) != 0)) {
+              StfcResetWriteableDirectoryBlock(iVar8,param_3,*(int *)param_6);
+            }
+            lVar7 = StfcMapWriteableHashBlock(iVar8,uVar9,0,0,param_7);
+            if (lVar7 < 0) {
+              uVar10 = *(int *)param_6 - *(int *)(iVar8 + 0x34);
+              iVar4 = (((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0)) * 8
+                      + *(int *)(iVar8 + 0x30);
+              *(char *)(iVar4 + 4) = *(char *)(iVar4 + 4) + -1;
+            }
+          }
+          *param_5 = local_9c[0];
+        }
+      }
+      goto LAB_828b1d58;
+    }
+    StfcSetPersistentStatus(iVar8,0xffffffffc0000032);
+  }
+  lVar7 = -0x3fffffce;
+LAB_828b1d58:
+  __restgprlr_19(lVar7);
+  return;
 }
 
 
@@ -1737,31 +4429,133 @@ void StfcMapNewEmptyBlock
 
 // 828AEFF8  StfcMapReadableHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1365)
 
-void StfcMapReadableHashBlock(void)
+void StfcMapReadableHashBlock(undefined8 param_1,ulonglong param_2,ulonglong param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  int iVar3;
+  int iVar4;
+  longlong lVar2;
+  ulonglong uVar5;
+  uint uVar6;
+  undefined1 *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int local_80;
+  int local_7c [3];
+  undefined1 auStack_70 [20];
+  uint local_5c;
+  
+  iVar3 = __savegprlr_23();
+  bVar1 = *(byte *)(iVar3 + 0xca);
+  DAT_848957cc = DAT_848957cc + 1;
+  iVar4 = StfcMapExistingBlock
+                    (iVar3,param_2,param_3 + 1,&stack0x00000000 + -0x80,&stack0x00000000 + -0x7c);
+  uVar5 = param_3 + 1;
+  uVar9 = param_3;
+  if (iVar4 == 0) {
+    do {
+      uVar8 = uVar5;
+      if ((uVar9 & 0xffffffff) == (ulonglong)bVar1) {
+        puVar7 = (undefined1 *)(iVar3 + 0xb0);
+        DAT_848957d4 = DAT_848957d4 + 1;
+        goto LAB_828af0c0;
+      }
+      iVar4 = StfcMapExistingBlock
+                        (iVar3,param_2,uVar8 + 1,&stack0x00000000 + -0x80,&stack0x00000000 + -0x7c);
+      uVar5 = uVar8 + 1;
+      uVar9 = uVar8;
+    } while (iVar4 == 0);
+    if ((uVar8 & 0xffffffff) != (param_3 & 0xffffffff)) {
+      do {
+        trapWord(6,(ulonglong)*(uint *)(&DAT_82202650 + (int)((uVar8 & 0xffffffff) << 2)),0);
+        uVar5 = (param_2 & 0xffffffff) /
+                (ulonglong)*(uint *)(&DAT_82202650 + (int)((uVar8 & 0xffffffff) << 2));
+        memcpy(auStack_70,(void *)(((int)uVar5 + (int)(uVar5 / 0xaa) * -0xaa) * 0x18 + local_80),
+               0x18);
+        puVar7 = &stack0x00000000 + -0x70;
+        if ((*(byte *)(local_7c[0] + 7) & 4) == 0) {
+          local_5c = local_5c & 0x7fffffff;
+        }
+        uVar9 = uVar8 - 1;
+        uVar6 = local_80 - *(int *)(iVar3 + 0x34);
+        iVar4 = (((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0)) * 8 +
+                *(int *)(iVar3 + 0x30);
+        *(char *)(iVar4 + 4) = *(char *)(iVar4 + 4) + -1;
+LAB_828af0c0:
+        lVar2 = StfcMapNewBlock(iVar3,param_2,uVar9 + 1,puVar7,&stack0x00000000 + -0x80,
+                                &stack0x00000000 + -0x7c);
+        if (lVar2 < 0) goto LAB_828af118;
+        if ((*(uint *)(puVar7 + 0x14) & 0x80000000) != 0) {
+          *(byte *)(local_7c[0] + 7) = *(byte *)(local_7c[0] + 7) | 4;
+        }
+        uVar8 = uVar9;
+      } while ((uVar9 & 0xffffffff) != (param_3 & 0xffffffff));
+      *param_4 = local_80;
+      goto LAB_828af110;
+    }
+  }
+  DAT_848957d0 = DAT_848957d0 + 1;
+  *param_4 = local_80;
+LAB_828af110:
+  lVar2 = 0;
+LAB_828af118:
+  __restgprlr_23(lVar2);
+  return;
 }
 
 
 // 828B0D38  StfcFreeBlocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:1387)
 
-void StfcFreeBlocks(void)
+void StfcFreeBlocks(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  int local_40;
+  int local_3c;
+  undefined1 auStack_38 [8];
+  undefined1 local_30 [48];
+  
+  iVar2 = __savegprlr_28();
+  StfcSetInAllocationSupport(iVar2,1);
+  if (*(char *)(iVar2 + 0xca) == '\0') {
+    uVar1 = StfcFreeBlocksFromLevel0HashBlock(iVar2,param_2,&local_40,&local_3c,auStack_38,local_30)
+    ;
+  }
+  else {
+    uVar1 = StfcFreeBlocksFromLevelNHashBlock
+                      (iVar2,param_2,*(char *)(iVar2 + 0xca),&local_40,&local_3c,auStack_38,local_30
+                      );
+  }
+  StfcSetInAllocationSupport(iVar2,0);
+  *(int *)(iVar2 + 0xa4) = *(int *)(iVar2 + 0xa4) + local_40;
+  *(int *)(iVar2 + 0xa0) = *(int *)(iVar2 + 0xa0) + local_3c;
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 828B1D60  StfcBeginDirectoryEntryUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1569)
 
-void StfcBeginDirectoryEntryUpdate(void)
+void StfcBeginDirectoryEntryUpdate
+               (undefined8 param_1,ulonglong param_2,int *param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  longlong lVar1;
+  
+  iVar2 = __savegprlr_26();
+  lVar1 = StfcBeginDataBlockUpdate(iVar2,iVar2 + 0x38,param_2,0,param_4,param_5,param_6);
+  if (-1 < lVar1) {
+    *param_3 = ((uint)param_2 & 0xfff) + *(int *)param_5;
+    if ((param_2 & 0xffffffff) == (ulonglong)*(uint *)(iVar2 + 0x54)) {
+      *(uint *)(iVar2 + 0x54) = *(uint *)(iVar2 + 0x54) + 0x1000;
+    }
+  }
+  __restgprlr_26(lVar1);
+  return;
 }
 
 
@@ -1895,11 +4689,27 @@ LAB_828af45c:
 
 // 828ADD28  StfcEndDataBlockUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1641)
 
-void StfcEndDataBlockUpdate(void)
+void StfcEndDataBlockUpdate
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  
+  iVar2 = __savegprlr_28();
+  XeCryptSha(param_3,0x1000,0,0,0,0,
+             (param_2 + ((param_2 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 + param_4,0x14);
+  uVar3 = (int)param_3 - *(int *)(iVar2 + 0x34);
+  iVar1 = (((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0)) * 8 +
+          *(int *)(iVar2 + 0x30);
+  *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+  uVar3 = (int)param_4 - *(int *)(iVar2 + 0x34);
+  iVar1 = (((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0)) * 8 +
+          *(int *)(iVar2 + 0x30);
+  *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1982,31 +4792,96 @@ LAB_828ade64:
 
 // 828B1DE8  StfcUpdateDirectoryEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1789)
 
-void StfcUpdateDirectoryEntry(void)
+void StfcUpdateDirectoryEntry(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34 [13];
+  
+  uVar2 = __savegprlr_28();
+  iVar1 = (int)param_2;
+  lVar3 = StfcBeginDirectoryEntryUpdate
+                    (uVar2,(ulonglong)*(ushort *)(iVar1 + 0x36) << 6,&local_40,local_34,&local_38,
+                     &local_3c);
+  if (-1 < lVar3) {
+    StfcFillDirectoryEntryFromFcb(param_2,param_3,local_40);
+    *(byte *)(iVar1 + 0x35) = *(byte *)(iVar1 + 0x35) & 0xcf | 0x20;
+    StfcEndDataBlockUpdate(uVar2,local_34[0],local_38,local_3c);
+  }
+  __restgprlr_28(lVar3);
+  return;
 }
 
 
 // 828AF468  StfcMapReadableDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1827)
 
-void StfcMapReadableDataBlock(void)
+void StfcMapReadableDataBlock(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  int local_50 [4];
+  undefined1 auStack_40 [20];
+  uint local_2c;
+  
+  iVar1 = __savegprlr_28();
+  lVar4 = 0;
+  iVar2 = StfcMapExistingBlock(iVar1,param_2,0,param_3,local_50);
+  if ((iVar2 == 0) && (lVar4 = StfcMapReadableHashBlock(iVar1,param_2,0,local_50), -1 < lVar4)) {
+    memcpy(auStack_40,
+           (void *)(((int)param_2 + (int)((param_2 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 +
+                   local_50[0]),0x18);
+    uVar3 = local_50[0] - *(int *)(iVar1 + 0x34);
+    iVar2 = (((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0)) * 8 +
+            *(int *)(iVar1 + 0x30);
+    *(char *)(iVar2 + 4) = *(char *)(iVar2 + 4) + -1;
+    if ((local_2c >> 0x1e == 2) || (local_2c >> 0x1e == 3)) {
+      lVar4 = StfcMapNewBlock(iVar1,param_2,0,auStack_40,param_3,local_50);
+    }
+    else {
+      StfcSetPersistentStatus(iVar1,0xffffffffc0000032);
+      lVar4 = -0x3fffffce;
+    }
+  }
+  __restgprlr_28(lVar4);
+  return;
 }
 
 
 // 828B1E70  StfcEnsureWriteableDirectoryEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1873)
 
-void StfcEnsureWriteableDirectoryEntry(void)
+void StfcEnsureWriteableDirectoryEntry(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  longlong lVar2;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined1 auStack_24 [36];
+  
+  uVar1 = __savegprlr_29();
+  if ((*(byte *)(param_2 + 0x35) & 0x20) == 0) {
+    lVar2 = StfcBeginDirectoryEntryUpdate
+                      (uVar1,(ulonglong)*(ushort *)(param_2 + 0x36) << 6,auStack_24,&local_28,
+                       &local_2c,&local_30);
+    if (-1 < lVar2) {
+      *(byte *)(param_2 + 0x35) = *(byte *)(param_2 + 0x35) | 0x20;
+      StfcEndDataBlockUpdate(uVar1,local_28,local_2c,local_30);
+    }
+  }
+  else {
+    lVar2 = 0;
+  }
+  __restgprlr_29(lVar2);
+  return;
 }
 
 
@@ -2032,13 +4907,86 @@ longlong StfcDeleteFileAllocation(undefined8 param_1,int param_2)
 }
 
 
-// 828AF608  StfcMapWriteableCopyOfDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2031)
+// 828AF580  StfcMapWriteableDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1959)
 
-void StfcMapWriteableCopyOfDataBlock(void)
+void StfcMapWriteableDataBlock
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  lVar3 = 0;
+  iVar2 = StfcMapExistingBlock(uVar1,param_2,0,param_4,local_40);
+  if ((iVar2 != 0) ||
+     (lVar3 = StfcMapNewBlock(uVar1,param_2,0,param_3,param_4,local_40), -1 < lVar3)) {
+    *(byte *)(local_40[0] + 7) = *(byte *)(local_40[0] + 7) | 0x40;
+  }
+  __restgprlr_27(lVar3);
+  return;
+}
+
+
+// 828B1F90  StfcTruncateFileAllocation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2016)
+
+void StfcTruncateFileAllocation(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined4 uVar4;
+  undefined4 local_30;
+  undefined1 auStack_2c [44];
+  
+  uVar2 = __savegprlr_28();
+  lVar3 = StfcByteOffsetToBlockNumber(uVar2,param_2,param_3 - 1,&local_30,auStack_2c,0);
+  if ((-1 < lVar3) && (lVar3 = StfcFreeBlocks(uVar2,local_30,1,0), -1 < lVar3)) {
+    iVar1 = (int)param_2;
+    *(undefined4 *)(iVar1 + 0x24) = local_30;
+    uVar4 = (undefined4)param_3;
+    *(undefined4 *)(iVar1 + 0x14) = uVar4;
+    *(undefined4 *)(iVar1 + 0x28) = 0xffffffff;
+    if ((param_3 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x18)) {
+      *(undefined4 *)(iVar1 + 0x18) = uVar4;
+    }
+    if ((param_3 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x1c)) {
+      *(undefined4 *)(iVar1 + 0x1c) = uVar4;
+    }
+    *(byte *)(iVar1 + 0x35) = *(byte *)(iVar1 + 0x35) | 0x10;
+    lVar3 = 0;
+  }
+  __restgprlr_28(lVar3);
+  return;
+}
+
+
+// 828AF608  StfcMapWriteableCopyOfDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2031)
+
+void StfcMapWriteableCopyOfDataBlock
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined4 *local_40 [16];
+  
+  uVar1 = __savegprlr_26();
+  StfcDiscardBlock(uVar1,param_2,0);
+  lVar3 = 0;
+  iVar2 = StfcMapExistingBlock(uVar1,param_3,0,param_5,local_40);
+  if ((iVar2 != 0) ||
+     (lVar3 = StfcMapNewBlock(uVar1,param_3,0,param_4,param_5,local_40), -1 < lVar3)) {
+    *local_40[0] = (int)param_2;
+    *(byte *)((int)local_40[0] + 7) = *(byte *)((int)local_40[0] + 7) | 0x40;
+  }
+  __restgprlr_26(lVar3);
+  return;
 }
 
 
@@ -2047,28 +4995,196 @@ void StfcMapWriteableCopyOfDataBlock(void)
 void StfcResetBlockCache(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  void *_Dst;
+  int iVar2;
+  int iVar3;
+  void *pvVar4;
+  char *pcVar5;
+  char cVar6;
+  uint uVar7;
+  
+  iVar3 = __savegprlr_28();
+  bVar1 = *(byte *)(iVar3 + 200);
+  uVar7 = (uint)bVar1;
+  _Dst = *(void **)(iVar3 + 0x30);
+  iVar2 = uVar7 * 8;
+  pvVar4 = memset(_Dst,0,(uint)bVar1 << 3);
+  if (uVar7 != 0) {
+    pcVar5 = (char *)((int)_Dst + -3);
+    cVar6 = '\x01';
+    do {
+      pcVar5[9] = cVar6 + -2;
+      pcVar5 = pcVar5 + 8;
+      *pcVar5 = cVar6;
+      uVar7 = uVar7 - 1;
+      cVar6 = cVar6 + '\x01';
+    } while (uVar7 != 0);
+  }
+  *(byte *)((int)_Dst + 6) = bVar1 - 1;
+  *(undefined1 *)((int)_Dst + iVar2 + -3) = 0;
+  *(undefined1 *)(iVar3 + 0xc9) = 0;
+  __restgprlr_28(pvVar4);
+  return;
+}
+
+
+// 828B2058  StfcExtendFileAllocation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2113)
+
+void StfcExtendFileAllocation(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  int iVar4;
+  longlong lVar3;
+  ulonglong uVar5;
+  uint local_40;
+  uint local_3c [15];
+  
+  iVar4 = __savegprlr_26();
+  iVar2 = (int)param_2;
+  local_40 = *(uint *)(iVar2 + 0x24);
+  uVar5 = (ulonglong)*(uint *)(iVar2 + 0x14);
+  if ((uVar5 != 0) && (local_40 == 0xffffffff)) {
+    lVar3 = StfcByteOffsetToBlockNumber(iVar4,param_2,uVar5 - 1,&local_40,local_3c,0);
+    if (lVar3 < 0) goto LAB_828b216c;
+    *(uint *)(iVar2 + 0x24) = local_40;
+  }
+  uVar1 = (param_3 - uVar5 & 0xffffffff) >> 0xc;
+  lVar3 = StfcAllocateBlocks(iVar4,uVar1,*(byte *)(iVar2 + 0x35) >> 2 & 1,local_40,
+                             0xffffffffffffffff,local_3c,&local_40);
+  if (-1 < lVar3) {
+    *(int *)(iVar2 + 0x14) = (int)param_3;
+    *(uint *)(iVar2 + 0x24) = local_40;
+    if ((uVar5 == 0) &&
+       (*(uint *)(iVar2 + 0x20) = local_3c[0],
+       (((ulonglong)local_40 - (ulonglong)local_3c[0]) + 1 & 0xffffffff) == uVar1)) {
+      *(int *)(iVar2 + 0x2c) = (int)param_3;
+      *(uint *)(iVar2 + 0x30) = local_3c[0];
+      *(undefined4 *)(iVar2 + 0x28) = 0;
+    }
+    if ((*(byte *)(iVar2 + 0x35) & 4) == 0) {
+      *(byte *)(iVar2 + 0x35) = *(byte *)(iVar2 + 0x35) | 0x10;
+    }
+    else {
+      *(int *)(iVar4 + 0xa8) = *(int *)(iVar4 + 0xa8) + 1;
+    }
+    lVar3 = 0;
+  }
+LAB_828b216c:
+  __restgprlr_26(lVar3);
+  return;
 }
 
 
 // 828AF6A8  StfcFlushBlockCache  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2162)
 
-void StfcFlushBlockCache(void)
+void StfcFlushBlockCache(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  int iVar2;
+  int iVar4;
+  longlong lVar3;
+  uint uVar5;
+  uint *puVar6;
+  uint uVar7;
+  uint *puVar8;
+  
+  iVar4 = __savegprlr_23();
+  iVar2 = *(int *)(iVar4 + 0x30);
+  puVar6 = (uint *)((uint)*(byte *)(iVar4 + 0xc9) * 8 + iVar2);
+  if ((int)param_3 == -1) {
+    uVar5 = *(byte *)(iVar4 + 0xca) + 1;
+  }
+  else {
+    uVar5 = 0;
+  }
+  uVar7 = 0;
+  do {
+    bVar1 = *(byte *)((int)puVar6 + 6);
+    while( true ) {
+      puVar8 = (uint *)((uint)bVar1 * 8 + iVar2);
+      if (((((*(byte *)((int)puVar8 + 7) & 3) == uVar7) &&
+           ((*(byte *)((int)puVar8 + 7) & 0x40) != 0)) &&
+          ((param_2 & 0xffffffff) <= (ulonglong)*puVar8)) &&
+         (((ulonglong)*puVar8 <= (param_3 & 0xffffffff) &&
+          (lVar3 = StfcFlushBlockCacheEntry(iVar4,(uint)bVar1,puVar8), lVar3 < 0))))
+      goto LAB_828af760;
+      if (puVar8 == puVar6) break;
+      bVar1 = *(byte *)((int)puVar8 + 6);
+    }
+    uVar7 = uVar7 + 1;
+  } while (uVar7 <= uVar5);
+  lVar3 = 0;
+LAB_828af760:
+  __restgprlr_23(lVar3);
+  return;
 }
 
 
 // 828B2178  StfcSetAllocationSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2265)
 
-void StfcSetAllocationSize(void)
+void StfcSetAllocationSize
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  
+  uVar3 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) < 0xfffff001) {
+    iVar1 = (int)param_2;
+    lVar4 = 0;
+    uVar2 = param_3 + 0xfff & 0xfffff000;
+    if ((*(uint *)(iVar1 + 0x14) != uVar2) &&
+       ((((*(byte *)(iVar1 + 0x35) & 4) != 0 || ((*(byte *)(iVar1 + 0x35) & 0x20) != 0)) ||
+        (lVar4 = StfcEnsureWriteableDirectoryEntry(uVar3,param_2), -1 < lVar4)))) {
+      if (uVar2 == 0) {
+        lVar4 = StfcDeleteFileAllocation(uVar3,param_2);
+      }
+      else if (*(uint *)(iVar1 + 0x14) < uVar2) {
+        lVar4 = StfcExtendFileAllocation(uVar3,param_2,uVar2);
+      }
+      else if (((param_4 & 0xffffffff) == 0) && (uVar2 < *(uint *)(iVar1 + 0x14))) {
+        lVar4 = StfcTruncateFileAllocation(uVar3,param_2,uVar2);
+      }
+      else {
+        lVar4 = 0;
+      }
+    }
+  }
+  else {
+    lVar4 = -0x3fffff81;
+  }
+  __restgprlr_27(lVar4);
+  return;
+}
+
+
+// 828ACB38  StfcResetWriteableBlockCache  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2291)
+
+void StfcResetWriteableBlockCache(int param_1)
+
+{
+  byte *pbVar1;
+  byte *pbVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)*(byte *)(param_1 + 200);
+  if (uVar3 != 0) {
+    pbVar2 = (byte *)(*(int *)(param_1 + 0x30) + -1);
+    do {
+      pbVar1 = pbVar2 + 8;
+      pbVar2 = pbVar2 + 8;
+      *pbVar2 = *pbVar1 & 0xfb;
+      uVar3 = uVar3 - 1;
+    } while (uVar3 != 0);
+  }
+  return;
 }
 
 
@@ -2200,10 +5316,40 @@ LAB_828b0050:
 
 // 828B00D0  StfcFindExitingBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2592)
 
-void StfcFindExitingBlock(void)
+void StfcFindExitingBlock(undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int local_30;
+  undefined1 auStack_2c [44];
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = StfcMapExistingBlock(iVar2,param_2,1,&local_30,auStack_2c);
+  if ((iVar3 == 0) &&
+     ((param_3 == 0 || (iVar3 = StfcMapReadableHashBlock(iVar2,param_2,0,&local_30), iVar3 < 0)))) {
+    param_2 = 0xffffffffffffffff;
+  }
+  else {
+    uVar1 = param_2 & 0xffffffff;
+    iVar3 = 0;
+    while ((param_2 = (ulonglong)
+                      *(uint *)(((int)param_2 + (int)((param_2 & 0xffffffff) / 0xaa) * -0xaa) * 0x18
+                                + local_30 + 0x14) & 0xffffff, param_2 != 0xffffff &&
+           (param_2 / 0xaa == uVar1 / 0xaa))) {
+      iVar3 = iVar3 + 1;
+    }
+    uVar4 = local_30 - *(int *)(iVar2 + 0x34);
+    iVar2 = (((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0)) * 8 +
+            *(int *)(iVar2 + 0x30);
+    *(char *)(iVar2 + 4) = *(char *)(iVar2 + 4) + -1;
+    if ((param_4 & 0xffffffff) != 0) {
+      *(int *)param_4 = iVar3;
+    }
+  }
+  __restgprlr_28(param_2);
+  return;
 }
 

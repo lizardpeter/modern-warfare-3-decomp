@@ -25,21 +25,161 @@ undefined8 Scr_GetWeaponHandIndex(ulonglong param_1)
 
 // 8245C260  BG_SetPerk  (bgame/bg_perks.h:91)
 
-void BG_SetPerk(void)
+void BG_SetPerk(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82000fa8,0x5f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  if (0x31 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82000fa8,0x60,0,0xffffffff82000f60,param_2,0x32);
+  }
+  uVar1 = (param_2 & 0xffffffff) >> 5;
+  if (1 < uVar1) {
+    MyAssertHandler(0xffffffff82000fa8,99,0,0xffffffff82000f20,uVar1,2);
+  }
+  iVar2 = (int)(uVar1 << 2);
+  *(uint *)(iVar2 + iVar3) = 1 << ((uint)param_2 & 0x1f) | *(uint *)(iVar2 + iVar3);
+  __restgprlr_28();
+  return;
+}
+
+
+// 8245C468  G_GetNeededStartAmmo  (game/g_client_script_cmd.cpp:91)
+
+void G_GetNeededStartAmmo(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar5;
+  char cVar8;
+  ulonglong uVar1;
+  int iVar6;
+  int iVar7;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  
+  iVar5 = __savegprlr_21();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x61,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if (*(int *)(iVar5 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x62,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  if (((param_3 & 0xff) != 0) && (cVar8 = BG_HasUnderbarrelAmmo(param_2), cVar8 == '\0')) {
+    __restgprlr_21(0);
+    return;
+  }
+  iVar5 = *(int *)(iVar5 + 0x158);
+  uVar1 = BG_GetAmmoNotInClip(iVar5,param_2,param_3);
+  iVar6 = BG_AmmoForWeapon(param_2,param_3);
+  puVar10 = (uint *)(iVar5 + 0x274);
+  lVar9 = 0xf;
+  do {
+    uVar11 = (ulonglong)*puVar10;
+    if (((((*puVar10 & 0xff) != 0) && (uVar11 != (param_2 & 0xffffffff))) &&
+        (((param_3 & 0xff) == 0 || (cVar8 = BG_HasUnderbarrelAmmo(uVar11), cVar8 != '\0')))) &&
+       (iVar7 = BG_AmmoForWeapon(uVar11,param_3), iVar7 == iVar6)) {
+      lVar2 = BG_StartAmmo(uVar11,param_3);
+      lVar3 = BG_GetAmmoInClipForWeapon(iVar5,uVar11,param_3,0);
+      lVar3 = lVar2 - lVar3;
+      iVar7 = BG_PlayerDualWieldingWeapon(iVar5,uVar11);
+      if (iVar7 != 0) {
+        lVar4 = BG_GetAmmoInClipForWeapon(iVar5,uVar11,param_3,1);
+        lVar3 = (lVar3 + lVar2) - lVar4;
+      }
+      uVar1 = uVar1 - lVar3;
+    }
+    lVar9 = lVar9 + -1;
+    puVar10 = puVar10 + 1;
+  } while (lVar9 != 0);
+  lVar9 = BG_GetAmmoInClipForWeapon(iVar5,param_2,param_3,0);
+  lVar9 = lVar9 + (((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1);
+  iVar6 = BG_PlayerDualWieldingWeapon(iVar5,param_2);
+  if (iVar6 != 0) {
+    lVar2 = BG_GetAmmoInClipForWeapon(iVar5,param_2,param_3,1);
+    lVar9 = lVar2 + lVar9;
+  }
+  lVar2 = BG_StartAmmo(param_2,param_3);
+  __restgprlr_21(lVar2 - lVar9);
+  return;
+}
+
+
+// 8245C320  BG_UnsetPerk  (bgame/bg_perks.h:107)
+
+void BG_UnsetPerk(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82000fa8,0x6f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  if (0x31 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82000fa8,0x70,0,0xffffffff82000f60,param_2,0x32);
+  }
+  uVar1 = (param_2 & 0xffffffff) >> 5;
+  if (1 < uVar1) {
+    MyAssertHandler(0xffffffff82000fa8,0x73,0,0xffffffff82000f20,uVar1,2);
+  }
+  iVar2 = (int)(uVar1 << 2);
+  *(uint *)(iVar2 + iVar3) = *(uint *)(iVar2 + iVar3) & ~(1 << ((uint)param_2 & 0x1f));
+  __restgprlr_28();
+  return;
 }
 
 
 // 8245C650  InitializeAmmo  (game/g_client_script_cmd.cpp:144)
 
-void InitializeAmmo(void)
+void InitializeAmmo(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  char cVar3;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x93,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if (*(int *)(iVar2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x94,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  uVar1 = G_GetNeededStartAmmo(iVar2,param_2,0);
+  if ((int)uVar1 < 1) {
+    if (param_3 == 0) {
+      Fill_Clip(*(undefined4 *)(iVar2 + 0x158),param_2,0,uVar1);
+    }
+  }
+  else {
+    Add_Ammo(iVar2,param_2,0,uVar1,param_3 == 0);
+  }
+  cVar3 = BG_HasUnderbarrelAmmo(param_2);
+  if (cVar3 != '\0') {
+    uVar1 = G_GetNeededStartAmmo(iVar2,param_2,1);
+    if (0 < (int)uVar1) {
+      Add_Ammo(iVar2,param_2,1,uVar1,param_3 == 0);
+      __restgprlr_27();
+      return;
+    }
+    if (param_3 == 0) {
+      Fill_Clip(*(undefined4 *)(iVar2 + 0x158),param_2,1,uVar1);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -68,8 +208,7 @@ void PlayerCmd_giveWeapon(void)
   if (sStack00000016 == 0) {
     uVar6 = uVar6 >> 0x10;
     if (0x7ff < uVar6) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8206d1d0,0xc6,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler(0xffffffff8206d1d0,0xc6,0,0xffffffff82000f98);
     }
     puVar10 = &DAT_83373680 + uVar6 * 0xa0;
     if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
@@ -85,8 +224,7 @@ void PlayerCmd_giveWeapon(void)
   uVar3 = G_GetWeaponForName();
   Scr_VerifyWeapon(uVar3,uVar2);
   if (puVar10[0x56] == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8206d1d0,0xcf,0,0xffffffff82000f98,0xffffffff8206d1bc);
+    MyAssertHandler(0xffffffff8206d1d0,0xcf,0,0xffffffff82000f98);
   }
   uVar1 = puVar10[0x56];
   uVar6 = BG_GetAlternateWeapon(uVar3,0);
@@ -151,8 +289,35 @@ LAB_8245c940:
 void PlayerCmd_takeWeapon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x117,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = G_GetWeaponForName();
+  Scr_VerifyWeapon(uVar2,uVar1);
+  G_TakePlayerWeapon(puVar4[0x56],uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -172,7 +337,6 @@ void PlayerCmd_takeAllWeapons(void)
   if (sStack00000016 == 0) {
     uVar2 = uVar2 >> 0x10;
     if (0x7ff < uVar2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x130,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + uVar2 * 0xa0;
@@ -192,7 +356,6 @@ void PlayerCmd_takeAllWeapons(void)
     if ((uVar1 & 0xff) != 0) {
       uVar3 = BG_GetAlternateWeapon(uVar1,0);
       if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38) == 3) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206d1d0,0x13b,0,0xffffffff82000f98,0xffffffff8200ec38);
       }
       G_TakePlayerWeapon(puVar4[0x56],uVar1);
@@ -222,7 +385,6 @@ void PlayerCmd_getCurrentWeapon(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x152,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar5 = &DAT_83373680 + param_1 * 0xa0;
@@ -261,8 +423,48 @@ LAB_8245cd6c:
 void PlayerCmd_getCurrentPrimaryWeapon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  short sStack00000016;
+  undefined1 auStack_430 [1072];
+  
+  uVar1 = __savegprlr_28();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0x198,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  iVar2 = ClientPlaying(puVar4);
+  if (iVar2 != 0) {
+    iVar2 = puVar4[0x56];
+    uVar1 = *(uint *)(iVar2 + 0x370);
+    if ((uVar1 & 0xff) != 0) {
+      uVar3 = BG_GetAlternateWeapon(uVar1,0);
+      if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38) == 3) {
+        MyAssertHandler(0xffffffff8206d1d0,0x1a6,0,0xffffffff82000f98,0xffffffff8200ec38);
+      }
+      BG_GetWeaponNameComplete(uVar1,*(uint *)(iVar2 + 0x374) >> 0xf & 1,auStack_430,0x400);
+      Scr_AddString();
+      __restgprlr_28();
+      return;
+    }
+  }
+  Scr_AddString(0xffffffff82003484);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -281,7 +483,6 @@ void PlayerCmd_getCurrentWeaponClipAmmo(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1c7,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -321,7 +522,6 @@ void PlayerCmd_getCurrentOffhand(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1e5,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -365,7 +565,6 @@ void PlayerCmd_setOffhandPrimaryClass(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x216,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar5 = &DAT_83373680 + param_1 * 0xa0;
@@ -403,8 +602,34 @@ void PlayerCmd_setOffhandPrimaryClass(uint param_1)
 void PlayerCmd_getOffhandPrimaryClass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 *puVar2;
+  short sStack00000016;
+  
+  uVar1 = __savegprlr_29();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0x235,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar2 = (undefined4 *)0x0;
+  }
+  if (5 < *(uint *)(puVar2[0x56] + 0x368)) {
+    MyAssertHandler(0xffffffff8206d1d0,0x237,0,0xffffffff8206d438,*(uint *)(puVar2[0x56] + 0x368),6)
+    ;
+  }
+  Scr_AddConstString(*(undefined2 *)(&PTR_DAT_82969180)[*(int *)(puVar2[0x56] + 0x368)]);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -425,7 +650,6 @@ void PlayerCmd_setOffhandSecondaryClass(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x24c,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar5 = &DAT_83373680 + param_1 * 0xa0;
@@ -463,8 +687,34 @@ void PlayerCmd_setOffhandSecondaryClass(uint param_1)
 void PlayerCmd_getOffhandSecondaryClass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 *puVar2;
+  short sStack00000016;
+  
+  uVar1 = __savegprlr_29();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0x26b,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar2 = (undefined4 *)0x0;
+  }
+  if (5 < *(uint *)(puVar2[0x56] + 0x36c)) {
+    MyAssertHandler(0xffffffff8206d1d0,0x26d,0,0xffffffff8206d518,*(uint *)(puVar2[0x56] + 0x36c),6)
+    ;
+  }
+  Scr_AddConstString(*(undefined2 *)(&PTR_DAT_82969180)[*(int *)(puVar2[0x56] + 0x36c)]);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -473,18 +723,102 @@ void PlayerCmd_getOffhandSecondaryClass(void)
 void PlayerCmd_hasWeapon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  uint uVar4;
+  char *pcVar5;
+  ulonglong uVar2;
+  int iVar6;
+  undefined8 uVar3;
+  undefined4 *puVar7;
+  short sStack00000016;
+  
+  uVar4 = __savegprlr_29();
+  sStack00000016 = (short)uVar4;
+  if (sStack00000016 == 0) {
+    uVar4 = uVar4 >> 0x10;
+    if (0x7ff < uVar4) {
+      MyAssertHandler(0xffffffff8206d1d0,0x283,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar7 = &DAT_83373680 + uVar4 * 0xa0;
+    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar4);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar7 = (undefined4 *)0x0;
+  }
+  pcVar5 = (char *)Scr_GetString(0);
+  if ((((*pcVar5 != 'a') || (pcVar5[1] != 'l')) || (pcVar5[2] != 't')) ||
+     (bVar1 = true, pcVar5[3] != '_')) {
+    bVar1 = false;
+  }
+  if (bVar1) {
+    pcVar5 = pcVar5 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar5);
+  Scr_VerifyWeapon(uVar2,pcVar5);
+  if ((uVar2 & 0xff) != 0) {
+    iVar6 = BG_PlayerHasWeapon(puVar7[0x56],uVar2);
+    uVar3 = 1;
+    if (iVar6 != 0) goto LAB_8245d5f8;
+  }
+  uVar3 = 0;
+LAB_8245d5f8:
+  Scr_AddBool(uVar3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8245D608  Player_SwitchToWeapon  (game/g_client_script_cmd.cpp:661)
 
-void Player_SwitchToWeapon(void)
+void Player_SwitchToWeapon(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  undefined4 *puVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  int iVar5;
+  int iVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x29b,0,0xffffffff82000f98,0xffffffff8206bbec);
+  }
+  pcVar4 = (char *)Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (bVar1 = true, pcVar4[3] != '_')) {
+    bVar1 = false;
+  }
+  if (bVar1) {
+    pcVar4 = pcVar4 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(uVar2,pcVar4);
+  iVar5 = BG_PlayerHasWeapon(puVar3[0x56],uVar2);
+  if (iVar5 != 0) {
+    if ((param_2 & 0xff) != 0) {
+      *(undefined4 *)(puVar3[0x56] + 0x370) = 0;
+    }
+    G_SelectWeapon(*puVar3,uVar2);
+    iVar5 = puVar3[0x56];
+    iVar6 = BG_GetEquippedWeaponIndex(iVar5,uVar2);
+    if (-1 < iVar6) {
+      iVar5 = iVar6 * 0xc + iVar5;
+      if (iVar5 != -0x2b0) {
+        *(bool *)(iVar5 + 0x2b2) = bVar1;
+      }
+    }
+    Scr_AddBool(1);
+    __restgprlr_27();
+    return;
+  }
+  Scr_AddBool(0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -501,7 +835,6 @@ void PlayerCmd_switchToWeapon(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x2cd,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -532,7 +865,6 @@ void PlayerCmd_switchToWeaponImmediate(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x2e0,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -555,8 +887,51 @@ void PlayerCmd_switchToWeaponImmediate(uint param_1)
 void PlayerCmd_switchToOffhand(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar5;
+  int iVar4;
+  undefined4 *puVar6;
+  short sStack00000016;
+  undefined1 auStack_430 [1072];
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  uVar3 = uVar3 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x2f8,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = G_GetWeaponForName();
+  Scr_VerifyWeapon(uVar2,uVar1);
+  cVar5 = BG_ValidateWeaponNumberOffhand(uVar2);
+  if (cVar5 == '\0') {
+    uVar1 = BG_GetWeaponName(uVar2,auStack_430,0x400);
+    va(0xffffffff8206d590,uVar1);
+    Scr_Error();
+  }
+  iVar4 = BG_PlayerHasWeapon(puVar6[0x56],uVar2);
+  if (iVar4 != 0) {
+    G_SetEquippedOffHand(uVar3,uVar2);
+    Scr_AddBool(1);
+    __restgprlr_28();
+    return;
+  }
+  Scr_AddBool(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -565,8 +940,39 @@ void PlayerCmd_switchToOffhand(void)
 void PlayerCmd_giveStartAmmo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined4 *puVar5;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x31c,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar5 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar5 = (undefined4 *)0x0;
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = G_GetWeaponForName();
+  Scr_VerifyWeapon(uVar2,uVar1);
+  iVar4 = BG_PlayerHasWeapon(puVar5[0x56],uVar2);
+  if (iVar4 != 0) {
+    InitializeAmmo(puVar5,uVar2,0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -575,8 +981,55 @@ void PlayerCmd_giveStartAmmo(void)
 void PlayerCmd_giveMaxAmmo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  uint uVar5;
+  char *pcVar6;
+  undefined8 uVar2;
+  int iVar7;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar8;
+  undefined4 *puVar9;
+  short sStack00000016;
+  
+  uVar5 = __savegprlr_26();
+  sStack00000016 = (short)uVar5;
+  if (sStack00000016 == 0) {
+    uVar5 = uVar5 >> 0x10;
+    if (0x7ff < uVar5) {
+      MyAssertHandler(0xffffffff8206d1d0,0x33f,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar9 = &DAT_83373680 + uVar5 * 0xa0;
+    if ((&DAT_833737d8)[uVar5 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar5);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar9 = (undefined4 *)0x0;
+  }
+  uVar1 = puVar9[0x56];
+  pcVar6 = (char *)Scr_GetString(0);
+  if ((((*pcVar6 != 'a') || (pcVar6[1] != 'l')) || (pcVar6[2] != 't')) ||
+     (lVar8 = 1, pcVar6[3] != '_')) {
+    lVar8 = 0;
+  }
+  if (lVar8 != 0) {
+    pcVar6 = pcVar6 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar6);
+  Scr_VerifyWeapon(uVar2,pcVar6);
+  iVar7 = BG_PlayerHasWeapon(uVar1,uVar2);
+  if (iVar7 != 0) {
+    lVar3 = BG_GetAmmoPlayerMax(uVar1,uVar2,lVar8,0);
+    lVar4 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar8);
+    if (0 < lVar3 - lVar4) {
+      Add_Ammo(puVar9,uVar2,lVar8,lVar3 - lVar4,0);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -585,8 +1038,62 @@ void PlayerCmd_giveMaxAmmo(void)
 void PlayerCmd_getFractionStartAmmo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  uint uVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  undefined4 *puVar8;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x368,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar8 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar8 = (undefined4 *)0x0;
+  }
+  uVar1 = puVar8[0x56];
+  pcVar4 = (char *)Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (lVar7 = 1, pcVar4[3] != '_')) {
+    lVar7 = 0;
+  }
+  if (lVar7 != 0) {
+    pcVar4 = pcVar4 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(uVar2,pcVar4);
+  iVar5 = BG_PlayerHasWeapon(uVar1,uVar2);
+  if (iVar5 != 0) {
+    iVar5 = BG_StartAmmo(uVar2,lVar7);
+    iVar6 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar7);
+    if (0 < iVar5) {
+      if (iVar6 < 1) {
+        Scr_AddFloat(0);
+        __restgprlr_28();
+        return;
+      }
+      Scr_AddFloat((double)(float)((double)(longlong)iVar6 / (double)(longlong)iVar5));
+      __restgprlr_28();
+      return;
+    }
+  }
+  Scr_AddFloat(0x3ff0000000000000);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -595,8 +1102,79 @@ void PlayerCmd_getFractionStartAmmo(void)
 void PlayerCmd_getFractionMaxAmmo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  uint uVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  undefined4 *puVar8;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_26();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x39f,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar8 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar8 = (undefined4 *)0x0;
+  }
+  pcVar4 = (char *)Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (lVar7 = 1, pcVar4[3] != '_')) {
+    lVar7 = 0;
+  }
+  if (lVar7 != 0) {
+    pcVar4 = pcVar4 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(uVar2,pcVar4);
+  if (puVar8[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x3a8,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  uVar1 = puVar8[0x56];
+  iVar5 = BG_PlayerHasWeapon(uVar1,uVar2);
+  if (iVar5 != 0) {
+    uVar3 = BG_GetAlternateWeapon(uVar2,lVar7);
+    if (*(char *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x77a) == '\0') {
+      iVar5 = BG_MaxAmmo(uVar2,lVar7);
+      iVar6 = BG_GetAmmoNotInClip(uVar1,uVar2,lVar7);
+      if (iVar5 < 1) goto LAB_8245e05c;
+      if (0 < iVar6) {
+        Scr_AddFloat((double)(float)((double)(longlong)iVar6 / (double)(longlong)iVar5));
+        __restgprlr_26();
+        return;
+      }
+    }
+    else {
+      iVar5 = BG_GetAmmoInClipForWeapon(uVar1,uVar2,lVar7,0);
+      iVar6 = BG_GetClipSize(uVar1,uVar2,lVar7);
+      if (iVar6 < 1) goto LAB_8245e05c;
+      if (0 < iVar5) {
+        iVar6 = BG_GetClipSize(uVar1,uVar2,lVar7);
+        Scr_AddFloat((double)(float)((double)(longlong)iVar5 / (double)(longlong)iVar6));
+        __restgprlr_26();
+        return;
+      }
+    }
+    Scr_AddFloat(0);
+    __restgprlr_26();
+    return;
+  }
+LAB_8245e05c:
+  Scr_AddFloat(0x3ff0000000000000);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -613,7 +1191,6 @@ void PlayerCmd_isDualWielding(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x3df,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -636,8 +1213,41 @@ void PlayerCmd_isDualWielding(uint param_1)
 void PlayerCmd_isReloading(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x3f6,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  if (puVar4[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x3f8,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  iVar1 = *(int *)(puVar4[0x56] + 0x24c);
+  if ((((((iVar1 == 8) || (iVar1 == 10)) || (iVar1 == 0xc)) || ((iVar1 == 0xb || (iVar1 == 9)))) ||
+      ((iVar1 = *(int *)(puVar4[0x56] + 0x268), iVar1 == 8 || ((iVar1 == 10 || (iVar1 == 0xc))))))
+     || ((iVar1 == 0xb || (uVar2 = 0, iVar1 == 9)))) {
+    uVar2 = 1;
+  }
+  Scr_AddInt(uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -646,8 +1256,41 @@ void PlayerCmd_isReloading(void)
 void PlayerCmd_isSwitchingWeapon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x411,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  if (puVar4[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x413,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  iVar1 = *(int *)(puVar4[0x56] + 0x24c);
+  if ((((((iVar1 == 1) || (iVar1 == 2)) || (iVar1 == 3)) || ((iVar1 == 4 || (iVar1 == 5)))) ||
+      ((iVar1 = *(int *)(puVar4[0x56] + 0x268), iVar1 == 1 || ((iVar1 == 2 || (iVar1 == 3)))))) ||
+     ((iVar1 == 4 || (uVar2 = 0, iVar1 == 5)))) {
+    uVar2 = 1;
+  }
+  Scr_AddInt(uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -665,7 +1308,6 @@ void PlayerCmd_setOrigin(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x42d,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -702,7 +1344,6 @@ void PlayerCmd_SetVelocity(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x447,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -738,7 +1379,6 @@ void PlayerCmd_GetVelocity(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x45b,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -776,7 +1416,6 @@ void PlayerCmd_setAngles(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x473,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -811,7 +1450,6 @@ void PlayerCmd_getAngles(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x48b,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -842,7 +1480,6 @@ void PlayerCmd_getViewHeight(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x49d,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -886,7 +1523,6 @@ void PlayerCmd_getNormalizedMovement(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x4d6,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -921,7 +1557,6 @@ void PlayerCmd_getNormalizedCameraMovement(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x4f3,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     if ((&DAT_833737d8)[param_1 * 0xa0] != 0) goto LAB_8245ea84;
@@ -951,7 +1586,6 @@ void PlayerCmd_useButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x50d,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -982,7 +1616,6 @@ void PlayerCmd_attackButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x522,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1013,7 +1646,6 @@ void PlayerCmd_adsButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x55b,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1044,7 +1676,6 @@ void PlayerCmd_meleeButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x570,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1075,7 +1706,6 @@ void PlayerCmd_fragButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x585,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1106,7 +1736,6 @@ void PlayerCmd_secondaryOffhandButtonPressed(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x59a,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1152,7 +1781,6 @@ void PlayerCmd_playerADS(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x5b8,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1184,7 +1812,6 @@ void PlayerCmd_isOnGround(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x5ca,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -1221,7 +1848,6 @@ void PlayerCmd_isUsingTurret(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x5e5,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -1248,8 +1874,42 @@ void PlayerCmd_isUsingTurret(uint param_1)
 void PlayerCmd_SetViewmodel(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  char *pcVar2;
+  undefined4 *puVar3;
+  short sStack00000016;
+  
+  uVar1 = __savegprlr_28();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0x607,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  pcVar2 = (char *)Scr_GetString(0);
+  if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
+    Scr_ParamError(0,0xffffffff8206d638);
+  }
+  uVar1 = G_ModelIndex(pcVar2);
+  if (uVar1 != (uVar1 & 0xffff)) {
+    MyAssertHandler(0xffffffff8206d1d0,0x614,0,0xffffffff82000f98,0xffffffff8206d60c);
+    *(uint *)(puVar3[0x56] + 0x33c4) = uVar1;
+    __restgprlr_28();
+    return;
+  }
+  *(uint *)(puVar3[0x56] + 0x33c4) = uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1268,7 +1928,6 @@ void PlayerCmd_SetSpreadOverride(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x62d,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -1317,7 +1976,6 @@ void PlayerCmd_ResetSpreadOverride(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x653,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -1355,7 +2013,6 @@ void PlayerCmd_SetAimSpreadMovementScale(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x66c,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -1397,7 +2054,6 @@ void PlayerCmd_GetViewmodel(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x68b,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1421,8 +2077,45 @@ void PlayerCmd_GetViewmodel(uint param_1)
 void PlayerCmd_OpenPopupMenu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  short sStack00000016;
+  char acStack_70 [63];
+  undefined1 local_31;
+  
+  uVar2 = __savegprlr_27();
+  sStack00000016 = (short)uVar2;
+  uVar2 = uVar2 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x6a8,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  uVar1 = 0;
+  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
+    Scr_GetString(0);
+    uVar1 = GScr_GetScriptMenuIndex();
+    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
+      MyAssertHandler(0xffffffff8206d1d0,0x6b2,0,0xffffffff82000f98,0xffffffff8206d798);
+    }
+    _snprintf(acStack_70,0x40,"%c %i",0x6f,uVar1);
+    local_31 = 0;
+    SV_GameSendServerCommand(uVar2,1,acStack_70);
+    uVar1 = 1;
+  }
+  Scr_AddInt(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1431,8 +2124,45 @@ void PlayerCmd_OpenPopupMenu(void)
 void PlayerCmd_OpenPopupMenuNoMouse(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  short sStack00000016;
+  char acStack_70 [63];
+  undefined1 local_31;
+  
+  uVar2 = __savegprlr_27();
+  sStack00000016 = (short)uVar2;
+  uVar2 = uVar2 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x6d5,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  uVar1 = 0;
+  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
+    Scr_GetString(0);
+    uVar1 = GScr_GetScriptMenuIndex();
+    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
+      MyAssertHandler(0xffffffff8206d1d0,0x6df,0,0xffffffff82000f98,0xffffffff8206d798);
+    }
+    _snprintf(acStack_70,0x40,"%c %i 1",0x6f,uVar1);
+    local_31 = 0;
+    SV_GameSendServerCommand(uVar2,1,acStack_70);
+    uVar1 = 1;
+  }
+  Scr_AddInt(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1452,7 +2182,6 @@ void PlayerCmd_ClosePopupMenu(uint param_1)
   uStack00000014 = param_1;
   if (uStack00000014._2_2_ == 0) {
     if (0x7ff < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x700,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_8245fb44;
@@ -1475,8 +2204,45 @@ LAB_8245fb44:
 void PlayerCmd_OpenMenu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  short sStack00000016;
+  char acStack_70 [63];
+  undefined1 local_31;
+  
+  uVar2 = __savegprlr_27();
+  sStack00000016 = (short)uVar2;
+  uVar2 = uVar2 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x71f,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  uVar1 = 0;
+  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
+    Scr_GetString(0);
+    uVar1 = GScr_GetScriptMenuIndex();
+    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
+      MyAssertHandler(0xffffffff8206d1d0,0x729,0,0xffffffff82000f98,0xffffffff8206d798);
+    }
+    _snprintf(acStack_70,0x40,"%c %i",0x73,uVar1);
+    local_31 = 0;
+    SV_GameSendServerCommand(uVar2,1,acStack_70);
+    uVar1 = 1;
+  }
+  Scr_AddInt(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1485,8 +2251,45 @@ void PlayerCmd_OpenMenu(void)
 void PlayerCmd_CloseMenu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  short sStack00000016;
+  char acStack_70 [63];
+  undefined1 local_31;
+  
+  uVar2 = __savegprlr_27();
+  sStack00000016 = (short)uVar2;
+  uVar2 = uVar2 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x74c,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  uVar1 = 0;
+  if (*(int *)(puVar3[0x56] + 0x332c) == 2) {
+    Scr_GetString(0);
+    uVar1 = GScr_GetScriptMenuIndex();
+    if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
+      MyAssertHandler(0xffffffff8206d1d0,0x755,0,0xffffffff82000f98,0xffffffff8206d798);
+    }
+    _snprintf(acStack_70,0x40,"%c %i",0x74,uVar1);
+    local_31 = 0;
+    SV_GameSendServerCommand(uVar2,1,acStack_70);
+    uVar1 = 1;
+  }
+  Scr_AddInt(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1495,8 +2298,51 @@ void PlayerCmd_CloseMenu(void)
 void PlayerCmd_ShowHudSplash(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar5;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined4 *puVar6;
+  short sStack00000016;
+  undefined4 local_40 [16];
+  
+  uVar5 = __savegprlr_27();
+  sStack00000016 = (short)uVar5;
+  if (sStack00000016 == 0) {
+    uVar5 = uVar5 >> 0x10;
+    if (0x7ff < uVar5) {
+      MyAssertHandler(0xffffffff8206d1d0,0x77c,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar5 * 0xa0;
+    if ((&DAT_833737d8)[uVar5 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar5);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = Scr_GetInt(1);
+  if (4 < (uVar2 & 0xffffffff)) {
+    Scr_Error(0xffffffff8206d820);
+  }
+  uVar5 = Scr_GetNumParam();
+  if (uVar5 < 3) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = Scr_GetInt(2);
+  }
+  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
+  uVar4 = StringTable_LookupRowNumForValue(local_40[0],0,uVar1);
+  Com_Printf(0x19,0xffffffff8206d7e0,uVar1,*puVar6,uVar2);
+  uVar1 = va(0xffffffff8206d7d4,0x75,uVar2,uVar4,uVar3);
+  SV_GameSendServerCommand(*puVar6,0,uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1516,7 +2362,6 @@ void PlayerCmd_FreezeControls(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7a3,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -1553,7 +2398,6 @@ void PlayerCmd_DisableUsability(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7b8,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1584,7 +2428,6 @@ void PlayerCmd_EnableUsability(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7c9,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1615,7 +2458,6 @@ void PlayerCmd_DisableWeapons(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7da,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1646,7 +2488,6 @@ void PlayerCmd_EnableWeapons(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7eb,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1677,7 +2518,6 @@ void PlayerCmd_DisableOffhandWeapons(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x7fd,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1708,7 +2548,6 @@ void PlayerCmd_EnableOffhandWeapons(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x80e,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1739,7 +2578,6 @@ void PlayerCmd_DisableWeaponSwitch(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x820,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1770,7 +2608,6 @@ void PlayerCmd_EnableWeaponSwitch(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x831,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -1810,7 +2647,6 @@ void PlayerCmd_SetWeaponAmmoClip(void)
   if (sStack00000016 == 0) {
     uVar6 = uVar6 >> 0x10;
     if (0x7ff < uVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x84e,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar10 = &DAT_83373680 + uVar6 * 0xa0;
@@ -1835,12 +2671,10 @@ void PlayerCmd_SetWeaponAmmoClip(void)
   uVar3 = G_GetWeaponForName(pcVar7);
   Scr_VerifyWeapon(uVar3,pcVar7);
   if (puVar10[0x56] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206d1d0,0x857,0,0xffffffff82000f98,0xffffffff8206d1bc);
   }
   iVar1 = puVar10[0x56];
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206d1d0,0x859,0,0xffffffff82000f98,0xffffffff82001fdc);
   }
   uVar4 = BG_ClipForWeapon(uVar3,lVar9);
@@ -1880,8 +2714,82 @@ LAB_824608b4:
 void PlayerCmd_SetWeaponAmmoStock(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  uint uVar6;
+  char *pcVar7;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar8;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  longlong lVar9;
+  undefined4 *puVar10;
+  short sStack00000016;
+  
+  uVar6 = __savegprlr_26();
+  sStack00000016 = (short)uVar6;
+  if (sStack00000016 == 0) {
+    uVar6 = uVar6 >> 0x10;
+    if (0x7ff < uVar6) {
+      MyAssertHandler(0xffffffff8206d1d0,0x88e,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar10 = &DAT_83373680 + uVar6 * 0xa0;
+    if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar6);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar10 = (undefined4 *)0x0;
+  }
+  uVar6 = Scr_GetNumParam();
+  if (2 < uVar6) {
+    Scr_Error(0xffffffff8206d850);
+  }
+  pcVar7 = (char *)Scr_GetString(0);
+  if ((((*pcVar7 != 'a') || (pcVar7[1] != 'l')) || (pcVar7[2] != 't')) ||
+     (lVar9 = 1, pcVar7[3] != '_')) {
+    lVar9 = 0;
+  }
+  if (lVar9 != 0) {
+    pcVar7 = pcVar7 + 4;
+  }
+  uVar2 = Scr_GetInt(1);
+  uVar3 = G_GetWeaponForName(pcVar7);
+  uVar1 = puVar10[0x56];
+  Scr_VerifyWeapon(uVar3,pcVar7);
+  iVar8 = BG_WeaponIsClipOnly(uVar3,lVar9);
+  if (iVar8 == 0) {
+    iVar8 = BG_AmmoForWeapon(uVar3,lVar9);
+    if (iVar8 != 0) {
+      uVar5 = BG_GetAmmoPlayerMax(uVar1,uVar3,lVar9,0);
+      if ((int)uVar2 < (int)uVar5) {
+        uVar5 = uVar2;
+      }
+      BG_SetGlobalAmmo(uVar1,uVar3,lVar9,
+                       ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5,0,-uVar5);
+    }
+  }
+  else {
+    uVar4 = BG_ClipForWeapon();
+    if ((int)uVar4 != 0) {
+      uVar5 = BG_GetClipSize(uVar1,uVar3,lVar9);
+      if ((int)uVar2 < (int)uVar5) {
+        uVar5 = uVar2;
+      }
+      uVar2 = ((uVar5 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar5 != 0) & uVar5;
+      BG_SetClipAmmo(uVar1,uVar4,0,uVar2,0,-uVar5);
+      iVar8 = BG_PlayerDualWieldingWeapon(uVar1,uVar3);
+      if (iVar8 != 0) {
+        BG_SetClipAmmo(uVar1,uVar4,1,uVar2);
+        __restgprlr_26();
+        return;
+      }
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1890,8 +2798,46 @@ void PlayerCmd_SetWeaponAmmoStock(void)
 void PlayerCmd_GetWeaponAmmoClip(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar3;
+  char *pcVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar5;
+  undefined4 *puVar6;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x8cd,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  pcVar4 = (char *)Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (lVar5 = 1, pcVar4[3] != '_')) {
+    lVar5 = 0;
+  }
+  if (lVar5 != 0) {
+    pcVar4 = pcVar4 + 4;
+  }
+  uVar1 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(uVar1,pcVar4);
+  uVar2 = Scr_GetWeaponHandIndex(1);
+  BG_GetAmmoInClipForWeapon(puVar6[0x56],uVar1,lVar5,uVar2);
+  Scr_AddInt();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1900,8 +2846,56 @@ void PlayerCmd_GetWeaponAmmoClip(void)
 void PlayerCmd_GetWeaponAmmoStock(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar2;
+  char *pcVar3;
+  undefined8 uVar1;
+  int iVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  short sStack00000016;
+  
+  uVar2 = __savegprlr_28();
+  sStack00000016 = (short)uVar2;
+  if (sStack00000016 == 0) {
+    uVar2 = uVar2 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x8ed,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  uVar2 = Scr_GetNumParam();
+  if (1 < uVar2) {
+    Scr_Error(0xffffffff8206d850);
+  }
+  pcVar3 = (char *)Scr_GetString(0);
+  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
+     (lVar5 = 1, pcVar3[3] != '_')) {
+    lVar5 = 0;
+  }
+  if (lVar5 != 0) {
+    pcVar3 = pcVar3 + 4;
+  }
+  uVar1 = G_GetWeaponForName(pcVar3);
+  Scr_VerifyWeapon(uVar1,pcVar3);
+  iVar4 = BG_WeaponIsClipOnly(uVar1,lVar5);
+  if (iVar4 != 0) {
+    BG_GetAmmoInClipBothHandsForWeapon();
+    Scr_AddInt();
+    __restgprlr_28();
+    return;
+  }
+  BG_GetAmmoNotInClip(puVar6[0x56],uVar1,lVar5);
+  Scr_AddInt();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1910,8 +2904,49 @@ void PlayerCmd_GetWeaponAmmoStock(void)
 void PlayerCmd_AnyAmmoForWeaponModes(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  uint uVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  int iVar5;
+  char cVar6;
+  undefined4 *puVar7;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x912,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar7 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar7 = (undefined4 *)0x0;
+  }
+  pcVar4 = (char *)Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (bVar1 = true, pcVar4[3] != '_')) {
+    bVar1 = false;
+  }
+  if (bVar1) {
+    pcVar4 = pcVar4 + 4;
+  }
+  uVar2 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(uVar2,pcVar4);
+  iVar5 = BG_WeaponAmmo(puVar7[0x56],uVar2,0);
+  if ((bVar1) && (cVar6 = BG_GetAltWeapon(uVar2), cVar6 != '\0')) {
+    iVar5 = BG_WeaponAmmo(puVar7[0x56],uVar2,1);
+  }
+  Scr_AddInt(iVar5 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1920,8 +2955,70 @@ void PlayerCmd_AnyAmmoForWeaponModes(void)
 void PlayerCmd_SetClientDvar(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char *pcVar1;
+  uint uVar4;
+  undefined8 uVar2;
+  int iVar5;
+  longlong lVar3;
+  undefined1 *puVar6;
+  char cVar7;
+  short sStack00000016;
+  char local_840 [1024];
+  undefined1 auStack_440 [1088];
+  
+  uVar4 = __savegprlr_26();
+  sStack00000016 = (short)uVar4;
+  uVar4 = uVar4 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar4) {
+      MyAssertHandler(0xffffffff8206d1d0,0x941,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar4 * 0xa0] != 0) goto LAB_82460f7c;
+    uVar2 = va(0xffffffff8206d370,uVar4);
+  }
+  else {
+    uVar2 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar2);
+LAB_82460f7c:
+  uVar2 = Scr_GetString(0);
+  iVar5 = Scr_GetType(1);
+  if (iVar5 == 3) {
+    lVar3 = Scr_GetNumParam();
+    Scr_ConstructMessageString(1,lVar3 + -1,0xffffffff8206d8e4,auStack_440,0x400);
+    puVar6 = auStack_440;
+  }
+  else {
+    puVar6 = (undefined1 *)Scr_GetString(1);
+  }
+  cVar7 = Dvar_IsValidName(uVar2);
+  if (cVar7 == '\0') {
+    va(0xffffffff8206d8c8,uVar2);
+    Scr_Error();
+    __restgprlr_26();
+    return;
+  }
+  iVar5 = Dvar_FindVar(uVar2);
+  if ((iVar5 != 0) && ((*(ushort *)(iVar5 + 8) & 0x1018) != 0)) {
+    va(0xffffffff8206d898,uVar2);
+    Scr_Error();
+  }
+  memset(local_840,0,0x400);
+  iVar5 = 0;
+  do {
+    pcVar1 = local_840 + iVar5;
+    if (pcVar1[(int)puVar6 - (int)local_840] == '\0') break;
+    cVar7 = I_CleanChar();
+    *pcVar1 = cVar7;
+    if (cVar7 == '\"') {
+      *pcVar1 = '\'';
+    }
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 0x3ff);
+  uVar2 = va(0xffffffff8206d88c,0x71,uVar2,local_840);
+  SV_GameSendServerCommand(uVar4,1,uVar2);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1930,8 +3027,82 @@ void PlayerCmd_SetClientDvar(void)
 void PlayerCmd_SetClientDvars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar5;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar6;
+  undefined8 uVar3;
+  char cVar7;
+  ulonglong uVar4;
+  char *pcVar8;
+  short sStack00000016;
+  undefined1 local_850;
+  undefined1 local_84f;
+  char local_450 [1104];
+  
+  uVar5 = __savegprlr_23();
+  sStack00000016 = (short)uVar5;
+  uVar5 = uVar5 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar5) {
+      MyAssertHandler(0xffffffff8206d1d0,0x983,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar5 * 0xa0] != 0) goto LAB_82461154;
+    uVar1 = va(0xffffffff8206d370,uVar5);
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar1);
+LAB_82461154:
+  uVar2 = Scr_GetNumParam();
+  if ((uVar2 & 1) != 0) {
+    Scr_Error(0xffffffff8206d920);
+  }
+  uVar2 = 0;
+  local_850 = 0x71;
+  local_84f = 0;
+  iVar6 = Scr_GetNumParam();
+  if (iVar6 != 0) {
+    do {
+      uVar1 = Scr_GetString(uVar2);
+      uVar3 = Scr_GetString(uVar2 + 1);
+      cVar7 = Dvar_IsValidName(uVar1);
+      if (cVar7 == '\0') {
+        va(0xffffffff8206d8f8,uVar1);
+        Scr_Error();
+        __restgprlr_23();
+        return;
+      }
+      iVar6 = Dvar_FindVar(uVar1);
+      if ((iVar6 != 0) && ((*(ushort *)(iVar6 + 8) & 0x1018) != 0)) {
+        va(0xffffffff8206d898,uVar1);
+        Scr_Error();
+      }
+      I_strncpyz(local_450,uVar3,0x400);
+      pcVar8 = local_450;
+      cVar7 = local_450[0];
+      while (cVar7 != '\0') {
+        cVar7 = I_CleanChar(*pcVar8);
+        *pcVar8 = cVar7;
+        if (cVar7 == '\"') {
+          *pcVar8 = '\'';
+        }
+        pcVar8 = pcVar8 + 1;
+        cVar7 = *pcVar8;
+      }
+      I_strncat(&local_850,0x400,0xffffffff820034a0);
+      I_strncat(&local_850,0x400,uVar1);
+      I_strncat(&local_850,0x400,0xffffffff8206d91c);
+      I_strncat(&local_850,0x400,local_450);
+      I_strncat(&local_850,0x400,0xffffffff8202f54c);
+      uVar2 = uVar2 + 2;
+      uVar4 = Scr_GetNumParam();
+    } while ((uVar2 & 0xffffffff) < (uVar4 & 0xffffffff));
+  }
+  SV_GameSendServerCommand(uVar5,1,&local_850);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1954,7 +3125,6 @@ void PlayerCmd_SetWhizbySpreads(uint param_1)
   uStack00000014 = param_1;
   if (uStack00000014._2_2_ == 0) {
     if (0x7ff < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xa07,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461394;
@@ -2050,8 +3220,64 @@ void PlayerCmd_DeactivateReverb(void)
 void PlayerCmd_SetVolMod(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  uVar3 = uVar3 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0xac8,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_824615d4;
+    uVar1 = va(0xffffffff8206d370,uVar3);
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar1);
+LAB_824615d4:
+  dVar8 = 0.0;
+  dVar7 = dVar8;
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 2) {
+    if (iVar4 != 3) {
+      Scr_Error(0xffffffff8206da30);
+      __restgprlr_29();
+      return;
+    }
+    dVar5 = (double)Scr_GetFloat(2);
+    dVar8 = dVar7;
+    if (-dVar5 < 0.0) {
+      dVar8 = dVar5;
+    }
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = SND_GetVolModIndexFromName();
+  if ((int)uVar2 == -1) {
+    uVar1 = va(0xffffffff8206da04,uVar1);
+    Scr_ParamError(0,uVar1);
+  }
+  dVar6 = (double)Scr_GetFloat(1);
+  dVar5 = 1.0;
+  if ((float)(dVar6 - 1.0) < 0.0) {
+    dVar5 = dVar6;
+  }
+  if (-dVar6 < 0.0) {
+    dVar7 = dVar5;
+  }
+  uVar1 = va(dVar7,dVar8,0xffffffff8206d9f8,0x57,uVar2,dVar7,dVar8);
+  SV_GameSendServerCommand(uVar3,1,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2060,8 +3286,60 @@ void PlayerCmd_SetVolMod(void)
 void PlayerCmd_SetChannelVolume(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  uVar3 = uVar3 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0xafc,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461760;
+    uVar1 = va(0xffffffff8206d370,uVar3);
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar1);
+LAB_82461760:
+  dVar6 = 0.0;
+  dVar7 = dVar6;
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 2) {
+    if (iVar4 != 3) {
+      Scr_Error(0xffffffff8206db18);
+      __restgprlr_29();
+      return;
+    }
+    dVar6 = (double)Scr_GetFloat(2);
+    if (dVar6 < dVar7) {
+      uVar1 = va(0xffffffff8206dae0,dVar6);
+      Scr_ParamError(2,uVar1);
+    }
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = SND_GetEntChannelFromName();
+  if ((int)uVar2 == -1) {
+    uVar1 = va(0xffffffff8206daac,uVar1);
+    Scr_ParamError(0,uVar1);
+  }
+  dVar5 = (double)Scr_GetFloat(1);
+  if (dVar5 < dVar7) {
+    uVar1 = va(0xffffffff8206da7c,dVar5);
+    Scr_ParamError(1,uVar1);
+  }
+  uVar1 = va(dVar5,dVar6,0xffffffff8206d9f8,0x45,uVar2,dVar5,dVar6);
+  SV_GameSendServerCommand(uVar3,1,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2070,8 +3348,58 @@ void PlayerCmd_SetChannelVolume(void)
 void PlayerCmd_SetChannelVolumes(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  undefined8 uVar6;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  uVar3 = uVar3 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0xb36,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461928;
+    uVar1 = va(0xffffffff8206d370,uVar3);
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar1);
+LAB_82461928:
+  uVar1 = 0;
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 2) {
+    if (iVar4 != 3) {
+      Scr_Error(0xffffffff8206dbf8);
+      __restgprlr_29();
+      return;
+    }
+    uVar1 = Scr_GetFloat(2);
+  }
+  uVar2 = Scr_GetString(1);
+  uVar2 = G_FindConfigstringIndex(uVar2,0xba4,0x10,0,0);
+  uVar5 = Scr_GetConstString(0);
+  uVar6 = 1;
+  if (uVar5 != DAT_835a0c2a) {
+    if (uVar5 == DAT_835a0c2c) {
+      uVar6 = 2;
+    }
+    else if (uVar5 == DAT_835a0c2e) {
+      uVar6 = 3;
+    }
+    else {
+      Scr_Error(0xffffffff8206db80);
+    }
+  }
+  uVar1 = va(uVar1,0xffffffff8206db70,0x79,uVar6,uVar2,uVar1);
+  SV_GameSendServerCommand(uVar3,1,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2092,7 +3420,6 @@ void PlayerCmd_DeactivateChannelVolumes(uint param_1)
   uStack00000014 = param_1;
   if (uStack00000014._2_2_ == 0) {
     if (0x7ff < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xb6c,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461ac0;
@@ -2136,8 +3463,39 @@ LAB_82461ac0:
 void ScrCmd_PlayLocalSound(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  short sStack00000016;
+  char acStack_60 [63];
+  undefined1 local_21;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  uVar3 = uVar3 >> 0x10;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0xba6,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82461c2c;
+    uVar1 = va(0xffffffff8206d370,uVar3);
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+  }
+  Scr_ObjectError(uVar1);
+LAB_82461c2c:
+  uVar1 = Scr_GetString(0);
+  uVar2 = G_SoundAliasIndex();
+  if ((uVar2 & 0xffff) == 0) {
+    uVar1 = va(0xffffffff8206ddf8,uVar1);
+    Scr_ParamError(0,uVar1);
+  }
+  _snprintf(acStack_60,0x40,"%c %i",0x6e,uVar2 & 0xffff);
+  local_21 = 0;
+  SV_GameSendServerCommand(uVar3,0,acStack_60);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2158,7 +3516,6 @@ void ScrCmd_StopLocalSound(uint param_1)
   uStack00000014 = param_1;
   if (uStack00000014._2_2_ == 0) {
     if (0x7ff < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xbe4,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82461d3c;
@@ -2183,8 +3540,74 @@ LAB_82461d3c:
 void PlayerCmd_BeginLocationSelection(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  uint uVar4;
+  undefined4 *puVar5;
+  double dVar6;
+  double dVar7;
+  short sStack00000016;
+  
+  uVar2 = __savegprlr_27();
+  sStack00000016 = (short)uVar2;
+  if (sStack00000016 == 0) {
+    uVar2 = uVar2 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0xc14,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar5 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar5 = (undefined4 *)0x0;
+  }
+  if (puVar5[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc16,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  if (*(int *)(puVar5[0x56] + 0x332c) == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc18,0,0xffffffff82000f98,0xffffffff8206dedc);
+  }
+  Scr_GetString(0);
+  uVar1 = GScr_GetLocSelIndex();
+  uVar2 = (uint)uVar1;
+  if (((int)uVar2 < 1) || (4 < (int)uVar2)) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc1d,0,0xffffffff8206de98,uVar1,1,4);
+  }
+  uVar3 = Scr_GetInt(1);
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 < 3) {
+    dVar6 = 0.15000000596046448;
+  }
+  else {
+    dVar6 = (double)Scr_GetFloat(2);
+    dVar7 = 0.0;
+    if (dVar6 <= 0.0) {
+      Scr_ParamError(2,0xffffffff8206de60);
+    }
+    if ((double)DAT_8358335c <= dVar7) {
+      dVar6 = (double)ClampFloat((double)(float)(dVar6 * 0.0010000000474974513),dVar7,
+                                 0x3ff0000000000000);
+    }
+    else {
+      dVar6 = (double)ClampFloat((double)(float)(dVar6 / (double)DAT_8358335c),dVar7,
+                                 0x3ff0000000000000);
+    }
+  }
+  dVar6 = floor((double)(float)(dVar6 * 31.0 + 0.5));
+  uVar4 = (uint)dVar6;
+  if (0x1f < uVar4) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc37,0,0xffffffff8206de18,uVar4,0x20);
+  }
+  *(uint *)(puVar5[0x56] + 0x208) = uVar2 & 3;
+  *(uint *)(puVar5[0x56] + 0x208) = (uVar4 & 0x1f) << 2 | *(uint *)(puVar5[0x56] + 0x208);
+  *(uint *)(puVar5[0x56] + 0x208) = (uVar3 & 1) << 7 | *(uint *)(puVar5[0x56] + 0x208);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2193,8 +3616,36 @@ void PlayerCmd_BeginLocationSelection(void)
 void PlayerCmd_EndLocationSelection(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined4 *puVar2;
+  short sStack00000016;
+  
+  uVar1 = __savegprlr_28();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0xc4b,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar2 = (undefined4 *)0x0;
+  }
+  if (puVar2[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc4d,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  if (*(int *)(puVar2[0x56] + 0x332c) == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0xc4f,0,0xffffffff82000f98,0xffffffff8206dedc);
+  }
+  *(undefined4 *)(puVar2[0x56] + 0x208) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2213,7 +3664,6 @@ void PlayerCmd_AllowADS(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xc64,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -2261,7 +3711,6 @@ void PlayerCmd_AllowJump(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xc85,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -2301,7 +3750,6 @@ void PlayerCmd_AllowSprint(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xc9b,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -2330,8 +3778,79 @@ void PlayerCmd_AllowSprint(uint param_1)
 void PlayerCmd_SetActionSlot(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar4;
+  longlong lVar1;
+  int iVar5;
+  undefined8 uVar2;
+  int iVar6;
+  undefined8 uVar3;
+  undefined4 uVar7;
+  undefined4 *puVar8;
+  short sStack00000016;
+  
+  uVar4 = __savegprlr_28();
+  sStack00000016 = (short)uVar4;
+  if (sStack00000016 == 0) {
+    uVar4 = uVar4 >> 0x10;
+    if (0x7ff < uVar4) {
+      MyAssertHandler(0xffffffff8206d1d0,0xcba,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar8 = &DAT_83373680 + uVar4 * 0xa0;
+    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar4);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar8 = (undefined4 *)0x0;
+  }
+  lVar1 = Scr_GetInt(0);
+  iVar5 = (int)lVar1;
+  if ((iVar5 < 1) || (4 < iVar5)) {
+    va(0xffffffff8206df38,lVar1,4);
+    Scr_Error();
+  }
+  else {
+    uVar2 = Scr_GetString(1);
+    iVar6 = I_stricmp(uVar2,0xffffffff820267a8);
+    if (iVar6 == 0) {
+      uVar2 = Scr_GetString(2);
+      uVar3 = BG_FindWeaponForName();
+      Scr_VerifyWeapon(uVar3,uVar2);
+      *(undefined4 *)((int)((lVar1 + 0x145U & 0xffffffff) << 2) + puVar8[0x56]) = 1;
+      *(int *)((int)((lVar1 + 0x149U & 0xffffffff) << 2) + puVar8[0x56]) = (int)uVar3;
+    }
+    else {
+      iVar6 = I_stricmp(uVar2,0xffffffff8200e038);
+      if (iVar6 == 0) {
+        uVar7 = 2;
+      }
+      else {
+        iVar6 = I_stricmp(uVar2,0xffffffff8206dffc);
+        if (iVar6 == 0) {
+          uVar7 = 3;
+        }
+        else {
+          iVar6 = I_stricmp(uVar2,0xffffffff820068af);
+          if (iVar6 != 0) {
+            Scr_Error(0xffffffff8206df68);
+            __restgprlr_28();
+            return;
+          }
+          uVar7 = 0;
+        }
+      }
+      *(undefined4 *)((int)((lVar1 + 0x145U & 0xffffffff) << 2) + puVar8[0x56]) = uVar7;
+    }
+    if ((iVar5 == 3) && (*(int *)(puVar8[0x56] + 0x520) != 2)) {
+      Scr_Error(0xffffffff8206dfb0);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2357,7 +3876,6 @@ void PlayerCmd_GetWeaponsListAll(void)
   if (sStack00000016 == 0) {
     uVar1 = uVar1 >> 0x10;
     if (0x7ff < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xcff,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar5 = &DAT_83373680 + uVar1 * 0xa0;
@@ -2400,11 +3918,70 @@ void PlayerCmd_GetWeaponsListAll(void)
 
 // 82462700  BuildWeaponsListForType  (game/g_client_script_cmd.cpp:3358)
 
-void BuildWeaponsListForType(void)
+void BuildWeaponsListForType(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  uint uVar2;
+  char cVar3;
+  longlong lVar4;
+  uint *puVar5;
+  undefined4 *puVar6;
+  short sStack00000016;
+  undefined1 local_450;
+  undefined1 local_44f;
+  undefined1 local_44e;
+  undefined1 local_44d;
+  undefined1 auStack_44c [1100];
+  
+  uVar1 = __savegprlr_23();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0xd26,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  Scr_MakeArray();
+  lVar4 = 0xf;
+  puVar5 = (uint *)(puVar6[0x56] + 0x274);
+  do {
+    uVar1 = *puVar5;
+    if ((uVar1 & 0xff) != 0) {
+      uVar2 = BG_GetAlternateWeapon(uVar1,0);
+      if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x38) == param_2) {
+        BG_GetWeaponNameComplete(uVar1,0,&local_450,0x400);
+        Scr_AddString();
+        Scr_AddArray();
+      }
+      cVar3 = BG_GetAltWeapon(uVar1);
+      if (cVar3 != '\0') {
+        uVar2 = BG_GetAlternateWeapon(uVar1,1);
+        if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x38) == param_2) {
+          local_450 = 0x61;
+          local_44f = 0x6c;
+          local_44e = 0x74;
+          local_44d = 0x5f;
+          BG_GetWeaponNameComplete(uVar1,0,auStack_44c,0x3fc);
+          Scr_AddString(&local_450);
+          Scr_AddArray();
+        }
+      }
+    }
+    lVar4 = lVar4 + -1;
+    puVar5 = puVar5 + 1;
+  } while (lVar4 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -2478,7 +4055,6 @@ void PlayerCmd_GetWeaponsList(void)
   if (sStack00000016 == 0) {
     uVar3 = uVar3 >> 0x10;
     if (0x7ff < uVar3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xdac,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar12 = &DAT_83373680 + uVar3 * 0xa0;
@@ -2555,18 +4131,104 @@ void PlayerCmd_GetWeaponsList(void)
 void Scr_VisionSyncWithPlayer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  undefined8 uVar2;
+  longlong lVar6;
+  longlong lVar7;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_27();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0xdfb,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  uVar3 = puVar4[0x56];
+  puVar4 = (undefined4 *)Scr_GetEntity(0);
+  uVar1 = puVar4[0x56];
+  lVar7 = (ulonglong)uVar3 + 0x37b8;
+  lVar6 = 1;
+  do {
+    iVar5 = I_strncmp(lVar7,((ulonglong)uVar1 - (ulonglong)uVar3) + lVar7,0x40);
+    if (iVar5 != 0) {
+      uVar2 = va(0xffffffff8206e084,lVar6 + 0x4a,lVar7);
+      SV_GameSendServerCommand(*puVar4,1,uVar2);
+    }
+    lVar6 = lVar6 + 1;
+    lVar7 = lVar7 + 0x40;
+  } while ((int)lVar6 < 6);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82462BE0  VisionSetForPlayer  (game/g_client_script_cmd.cpp:3595)
 
-void VisionSetForPlayer(void)
+void VisionSetForPlayer(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int iVar4;
+  undefined4 *puVar5;
+  double dVar6;
+  short sStack00000016;
+  
+  uVar2 = __savegprlr_28();
+  if ((int)param_2 == 5) {
+    MyAssertHandler(0xffffffff8206d1d0,0xe13,0,0xffffffff82000f98,0xffffffff8202376c);
+  }
+  sStack00000016 = (short)uVar2;
+  if (sStack00000016 == 0) {
+    uVar2 = uVar2 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0xe1b,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar5 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar5 = (undefined4 *)0x0;
+  }
+  iVar4 = 1000;
+  iVar3 = Scr_GetNumParam();
+  if (iVar3 != 1) {
+    if (iVar3 != 2) {
+      Scr_Error(0xffffffff8206e0a8);
+      __restgprlr_28();
+      return;
+    }
+    dVar6 = (double)Scr_GetFloat(1);
+    dVar6 = floor((double)((float)(dVar6 * 1000.0) + 0.5));
+    iVar4 = (int)dVar6;
+  }
+  uVar1 = Scr_GetString(0);
+  uVar2 = puVar5[0x56];
+  *(int *)((int)((param_2 + 0xdd8 & 0xffffffff) << 2) + uVar2) = iVar4;
+  I_strncpyz((param_2 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 + 0x3778,uVar1,0x40);
+  uVar1 = va(0xffffffff8206e090,"JKLMN"[(int)param_2],uVar1,iVar4);
+  SV_GameSendServerCommand(*puVar5,1,uVar1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2637,7 +4299,6 @@ void Scr_SetBlurForPlayer(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0xebd,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -2699,8 +4360,43 @@ void Scr_UpdatePlayerModelWithWeapons(void)
 void PlayerCmd_CanPlayerPlaceSentry(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  short sStack00000016;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  uVar2 = __savegprlr_28();
+  sStack00000016 = (short)uVar2;
+  if (sStack00000016 == 0) {
+    uVar2 = uVar2 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x108d,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  if (puVar3[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x108f,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  uVar1 = Turret_PlaceSentry_Server(puVar3[0x56],auStack_50,auStack_40);
+  Scr_MakeArray();
+  Scr_AddBool(uVar1);
+  Scr_AddArrayStringIndexed(DAT_835a0c14);
+  Scr_AddVector(auStack_50);
+  Scr_AddArrayStringIndexed(DAT_835a0bfe);
+  Scr_AddVector(auStack_40);
+  Scr_AddArrayStringIndexed(DAT_835a0b8e);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2709,8 +4405,64 @@ void PlayerCmd_CanPlayerPlaceSentry(void)
 void PlayerCmd_CanPlayerPlaceTank(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  short sStack00000016;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [96];
+  
   __savegprlr_28();
+  uVar1 = __savefpr_27();
+  sStack00000016 = (short)uVar1;
+  if (sStack00000016 == 0) {
+    uVar1 = uVar1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler(0xffffffff8206d1d0,0x10b5,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar3 = &DAT_83373680 + uVar1 * 0xa0;
+    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar1);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar3 = (undefined4 *)0x0;
+  }
+  if (puVar3[0x56] == 0) {
+    Scr_Error(0xffffffff8206e1b4);
+  }
+  iVar2 = Scr_GetNumParam();
+  if (iVar2 != 6) {
+    Scr_Error(0xffffffff8206e140);
+  }
+  if (puVar3[0x56] == 0) {
+    MyAssertHandler(0xffffffff8206d1d0,0x10be,0,0xffffffff82000f98,0xffffffff8206d1bc);
+  }
+  uVar4 = Scr_GetFloat(5);
+  uVar5 = Scr_GetFloat(4);
+  uVar6 = Scr_GetFloat(3);
+  uVar7 = Scr_GetFloat(2);
+  uVar8 = Scr_GetFloat(1);
+  uVar9 = Scr_GetFloat(0);
+  uVar4 = G_CanPlayerPlaceTank(uVar9,uVar8,uVar7,uVar6,uVar5,uVar4,puVar3);
+  Scr_MakeArray();
+  Scr_AddBool(uVar4);
+  Scr_AddArrayStringIndexed(DAT_835a0c14);
+  Scr_AddVector(auStack_70);
+  Scr_AddArrayStringIndexed(DAT_835a0bfe);
+  Scr_AddVector(auStack_60);
+  Scr_AddArrayStringIndexed(DAT_835a0b8e);
+  __restfpr_27();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2748,13 +4500,95 @@ undefined4 PlayerCmd_GetPerkIndex(undefined8 param_1)
 }
 
 
+// 824632D0  PlayerCmd_GetPerkInfo  (game/g_client_script_cmd.cpp:4337)
+
+void PlayerCmd_GetPerkInfo(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  char *pcVar2;
+  undefined4 uVar3;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  cVar4 = Perk_GetIndex(uVar1,local_30);
+  if (cVar4 == '\0') {
+    va(0xffffffff8206e228,uVar1);
+    Scr_Error();
+  }
+  *param_2 = local_30[0];
+  pcVar2 = (char *)Perk_GetSlotIndexName(uVar1);
+  if (*pcVar2 == '\0') {
+    va(0xffffffff8206e1f0,uVar1);
+    Scr_Error();
+  }
+  uVar3 = Perk_GetSlotIndex(pcVar2);
+  *param_3 = uVar3;
+  __restgprlr_29();
+  return;
+}
+
+
 // 82463358  PlayerCmd_SetPerk  (game/g_client_script_cmd.cpp:4357)
 
 void PlayerCmd_SetPerk(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar3;
+  int iVar4;
+  undefined8 uVar1;
+  int iVar5;
+  ulonglong uVar2;
+  undefined4 *puVar6;
+  short sStack00000016;
+  uint local_40;
+  undefined4 local_3c [15];
+  
+  uVar3 = __savegprlr_26();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x110d,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 3) {
+    Scr_Error(0xffffffff8206e2d8);
+  }
+  uVar1 = Scr_GetString(0);
+  iVar4 = Scr_GetInt(1);
+  iVar5 = Scr_GetInt(2);
+  PlayerCmd_GetPerkInfo(uVar1,local_3c,&local_40);
+  if (iVar5 != 0) {
+    if (8 < local_40) {
+      va(0xffffffff8206e290,uVar1);
+      Scr_Error();
+      MyAssertHandler(0xffffffff8206d1d0,0x111f,0,0xffffffff82000f98,0xffffffff8206e26c);
+    }
+    *(undefined4 *)((local_40 + 0x13d) * 4 + puVar6[0x56]) = local_3c[0];
+  }
+  if (iVar4 != 0) {
+    uVar2 = BG_GetPerkCodeIndexForName(uVar1);
+    if ((uVar2 & 0xffffffff) == 0x32) {
+      va(0xffffffff8206e258,uVar1);
+      Scr_Error();
+    }
+    BG_SetPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar2);
+    BG_SetPerk((ulonglong)(uint)puVar6[0x56] + 0x3440,uVar2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -2763,8 +4597,58 @@ void PlayerCmd_SetPerk(void)
 void PlayerCmd_HasPerk(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  int iVar4;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined1 uVar5;
+  undefined4 *puVar6;
+  short sStack00000016;
+  uint local_30;
+  int local_2c [11];
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 == 0) {
+    uVar3 = uVar3 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler(0xffffffff8206d1d0,0x1146,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar3 * 0xa0;
+    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar3);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 2) {
+    Scr_Error(0xffffffff8206e314);
+  }
+  uVar1 = Scr_GetString(0);
+  iVar4 = Scr_GetInt(1);
+  if (iVar4 != 0) {
+    uVar2 = BG_GetPerkCodeIndexForName();
+    if ((uVar2 & 0xffffffff) == 0x32) {
+      va(0xffffffff8206e258,uVar1);
+      Scr_Error();
+    }
+    uVar5 = BG_HasPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar2);
+    Scr_AddBool(uVar5);
+    __restgprlr_29();
+    return;
+  }
+  PlayerCmd_GetPerkInfo(uVar1,local_2c,&local_30);
+  if ((8 < local_30) || (uVar1 = 1, *(int *)((local_30 + 0x13d) * 4 + puVar6[0x56]) != local_2c[0]))
+  {
+    uVar1 = 0;
+  }
+  Scr_AddBool(uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2773,8 +4657,57 @@ void PlayerCmd_HasPerk(void)
 void PlayerCmd_UnsetPerk(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar4;
+  int iVar5;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar6;
+  short sStack00000016;
+  uint local_30;
+  int local_2c [11];
+  
+  uVar4 = __savegprlr_29();
+  sStack00000016 = (short)uVar4;
+  if (sStack00000016 == 0) {
+    uVar4 = uVar4 >> 0x10;
+    if (0x7ff < uVar4) {
+      MyAssertHandler(0xffffffff8206d1d0,0x1173,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar6 = &DAT_83373680 + uVar4 * 0xa0;
+    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar4);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar6 = (undefined4 *)0x0;
+  }
+  iVar5 = Scr_GetNumParam();
+  if (iVar5 != 2) {
+    Scr_Error(0xffffffff8206e344);
+  }
+  uVar2 = Scr_GetString(0);
+  iVar5 = Scr_GetInt(1);
+  PlayerCmd_GetPerkInfo(uVar2,local_2c,&local_30);
+  if (local_30 < 9) {
+    iVar1 = (local_30 + 0x13d) * 4;
+    if (*(int *)(iVar1 + puVar6[0x56]) == local_2c[0]) {
+      *(undefined4 *)(iVar1 + puVar6[0x56]) = 0;
+    }
+  }
+  if (iVar5 != 0) {
+    uVar3 = BG_GetPerkCodeIndexForName(uVar2);
+    if ((uVar3 & 0xffffffff) == 0x32) {
+      va(0xffffffff8206e258,uVar2);
+      Scr_Error();
+    }
+    BG_UnsetPerk((ulonglong)(uint)puVar6[0x56] + 0x4ec,uVar3);
+    BG_UnsetPerk((ulonglong)(uint)puVar6[0x56] + 0x3440,uVar3);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2783,8 +4716,53 @@ void PlayerCmd_UnsetPerk(void)
 void PlayerCmd_ClearPerks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  short sStack00000016;
+  
+  uVar2 = __savegprlr_26();
+  sStack00000016 = (short)uVar2;
+  if (sStack00000016 == 0) {
+    uVar2 = uVar2 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff8206d1d0,0x119b,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    puVar4 = &DAT_83373680 + uVar2 * 0xa0;
+    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
+      va(0xffffffff8206d370,uVar2);
+      Scr_ObjectError();
+    }
+  }
+  else {
+    Scr_ObjectError(0xffffffff8206d360);
+    puVar4 = (undefined4 *)0x0;
+  }
+  lVar5 = 9;
+  puVar3 = (undefined4 *)(puVar4[0x56] + 0x4f0);
+  do {
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar1 = puVar4[0x56];
+  puVar3 = (undefined4 *)(iVar1 + 0x4ec);
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82000fa8,0x7c,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  *puVar3 = 0;
+  *(undefined4 *)(iVar1 + 0x4f0) = 0;
+  iVar1 = puVar4[0x56];
+  puVar4 = (undefined4 *)(iVar1 + 0x3440);
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82000fa8,0x7c,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  *puVar4 = 0;
+  *(undefined4 *)(iVar1 + 0x3444) = 0;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -2801,7 +4779,6 @@ void PlayerCmd_Noclip(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x11b6,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -2832,7 +4809,6 @@ void PlayerCmd_UFO(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x11cc,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -2892,7 +4868,6 @@ void PlayerCmd_CanMantle(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1209,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -2924,7 +4899,6 @@ void PlayerCmd_ForceMantle(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x121e,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -2955,7 +4929,6 @@ void PlayerCmd_IsMantling(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x122f,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -2978,8 +4951,67 @@ void PlayerCmd_IsMantling(uint param_1)
 void PlayerCmd_PlayFX(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined1 *puVar5;
+  undefined1 *puVar6;
+  uint uVar7;
+  ushort uStack00000014;
+  short sStack00000016;
+  undefined1 auStack_60 [16];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  uVar3 = __savegprlr_28();
+  sStack00000016 = (short)uVar3;
+  uStack00000014 = (ushort)((uint)uVar3 >> 0x10);
+  uVar7 = (uint)uStack00000014;
+  if (sStack00000016 == 0) {
+    if (0x7ff < uVar7) {
+      MyAssertHandler(0xffffffff8206d1d0,0x124c,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    if ((&DAT_833737d8)[uVar7 * 0xa0] == 0) {
+      uVar1 = va(0xffffffff8206d370,uVar7);
+      goto LAB_82463e04;
+    }
+  }
+  else {
+    uVar1 = 0xffffffff8206d360;
+LAB_82463e04:
+    Scr_ObjectError(uVar1);
+  }
+  uVar1 = Scr_GetNumParam();
+  iVar4 = (int)uVar1;
+  if ((iVar4 < 2) || (4 < iVar4)) {
+    Scr_Error(0xffffffff8206e424);
+  }
+  uVar2 = Scr_GetInt(0);
+  Scr_GetVector(1,auStack_60);
+  if (iVar4 < 3) {
+    puVar5 = (undefined1 *)0x0;
+  }
+  else {
+    if ((iVar4 != 3) && (iVar4 != 4)) {
+      MyAssertHandler(0xffffffff8206d1d0,0x1259,1,0xffffffff8206e3e8,0xffffffff8206e400,uVar1);
+    }
+    Scr_GetVector(2,auStack_50);
+    if (3 < iVar4) {
+      Scr_GetVector(3,auStack_40);
+      puVar6 = auStack_40;
+      puVar5 = auStack_50;
+      goto LAB_82463ebc;
+    }
+    puVar5 = auStack_50;
+  }
+  puVar6 = (undefined1 *)0x0;
+LAB_82463ebc:
+  iVar4 = Scr_PlayFXInternal(uVar2,auStack_60,puVar5,puVar6);
+  *(int *)(iVar4 + 0xfc) = ~(1 << (uStack00000014 & 0x1f));
+  Scr_AddEntity();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2998,7 +5030,6 @@ void PlayerCmd_PlayerRecoilScaleOn(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1288,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -3036,7 +5067,6 @@ void PlayerCmd_PlayerRecoilScaleOff(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x12a0,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -3069,7 +5099,6 @@ void PlayerCmd_WeaponLockStart(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x12b4,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar3 = &DAT_83373680 + param_1 * 0xa0;
@@ -3128,7 +5157,6 @@ void PlayerCmd_WeaponLockFinalize(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x12e7,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -3200,7 +5228,6 @@ void PlayerCmd_WeaponLockFree(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1327,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -3238,7 +5265,6 @@ void PlayerCmd_WeaponLockTargetTooClose(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x133e,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -3278,7 +5304,6 @@ void PlayerCmd_WeaponLockNoClearance(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1354,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar4 = &DAT_83373680 + param_1 * 0xa0;
@@ -3318,7 +5343,6 @@ void PlayerCmd_SetViewKickScale(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1369,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar2 = &DAT_83373680 + param_1 * 0xa0;
@@ -3358,7 +5382,6 @@ void PlayerCmd_GetViewKickScale(uint param_1)
   if (uStack00000014._2_2_ == 0) {
     param_1 = param_1 >> 0x10;
     if (0x7ff < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206d1d0,0x1381,0,0xffffffff82000f98,0xffffffff8206d38c);
     }
     puVar1 = &DAT_83373680 + param_1 * 0xa0;
@@ -3378,10 +5401,60 @@ void PlayerCmd_GetViewKickScale(uint param_1)
 
 // 824648C8  PlayerCommon_GetMethod  (game/g_client_script_cmd.cpp:5208)
 
-void PlayerCommon_GetMethod(void)
+void PlayerCommon_GetMethod(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  char cVar2;
+  char *pcVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  int *piVar6;
+  char *pcVar7;
+  longlong lVar8;
+  uint uVar9;
+  char *pcVar10;
+  
+  puVar4 = (undefined4 *)__savegprlr_28();
+  if (puVar4 == (undefined4 *)0x0) {
+    lVar8 = 0x79;
+    pcVar10 = ", %i)";
+    do {
+      pcVar7 = pcVar10 + 0x10;
+      pcVar3 = pcVar10 + 0x14;
+      pcVar10 = pcVar10 + 0xc;
+      Scr_RegisterFunction(*(undefined4 *)pcVar7,*(undefined4 *)pcVar3,*(undefined4 *)pcVar10);
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    __restgprlr_28(0);
+    return;
+  }
+  piVar6 = &DAT_8206cbe8;
+  iVar5 = 0;
+  uVar9 = 0;
+  do {
+    pcVar10 = (&PTR_s_attach_8298e238)[*piVar6 + -0x8000];
+    pcVar7 = (char *)*puVar4;
+    do {
+      cVar1 = *pcVar7;
+      cVar2 = *pcVar10;
+      if (cVar1 == '\0') break;
+      pcVar7 = pcVar7 + 1;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      *puVar4 = (&PTR_s_attach_8298e238)[(&DAT_8206cbe8)[iVar5 * 3] + -0x8000];
+      *param_2 = (&DAT_8206cbf0)[iVar5 * 3];
+      __restgprlr_28((&DAT_8206cbe8)[iVar5 * 3]);
+      return;
+    }
+    uVar9 = uVar9 + 0xc;
+    iVar5 = iVar5 + 1;
+    piVar6 = piVar6 + 3;
+    if (0x5ab < uVar9) {
+      __restgprlr_28(0);
+      return;
+    }
+  } while( true );
 }
 

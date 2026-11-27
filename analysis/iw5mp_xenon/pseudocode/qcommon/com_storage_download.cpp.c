@@ -43,7 +43,6 @@ LAB_824f3204:
     Com_DPrintf(0x10,0xffffffff8208ac18,uVar2);
     piVar6 = &DAT_8363fb04 + (int)uVar2 * 0x248e;
     if (*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208abb0,0x84,0,0xffffffff82000f98,0xffffffff8208abfc);
     }
     *(char **)*piVar6 = "mpdata";
@@ -63,7 +62,150 @@ LAB_824f32d4:
 void LiveStorage_StatsReadComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  int iVar2;
+  int iVar6;
+  char cVar9;
+  undefined8 uVar3;
+  int iVar7;
+  int iVar8;
+  longlong lVar4;
+  longlong lVar5;
+  undefined8 local_60;
+  undefined8 local_58;
+  
+  iVar6 = __savegprlr_23();
+  iVar8 = iVar6 * 0xa0;
+  if ((&DAT_8365bcd4)[iVar8] == '\0') {
+    MyAssertHandler(0xffffffff8208abb0,0xdd,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar6 * 0x28] != 6) {
+    MyAssertHandler(0xffffffff8208abb0,0xde,0,0xffffffff82000f98,0xffffffff8208aee8);
+  }
+  iVar6 = dwGetLobbyService((&DAT_8365bcd5)[iVar8]);
+  if (iVar6 != 0) {
+    dwGetLobbyService((&DAT_8365bcd5)[iVar8]);
+    iVar6 = bdLobbyService__getStatus();
+    if (iVar6 != 2) goto LAB_824f338c;
+  }
+  bVar1 = (&DAT_8365bcd5)[iVar8];
+  iVar6 = (uint)bVar1 * 0x9238;
+  cVar9 = LiveStorage_DoWeHaveStatsForSource(bVar1,0);
+  if (cVar9 != '\0') {
+    MyAssertHandler(0xffffffff8208abb0,0xe8,0,0xffffffff82000f98,0xffffffff8208aea0);
+  }
+  iVar2 = (&DAT_8363fb04)[(uint)bVar1 * 0x248e];
+  uVar3 = dwFetchFileComplete(&DAT_8365bc40 + iVar8,iVar2);
+  iVar7 = (int)uVar3;
+  if (iVar7 != 0) {
+    if (iVar7 == 1) {
+      DAT_8365de1c = 0;
+    }
+    ClosePopupGettingData(0);
+    TaskManager_ClearTask(&DAT_8365bc40 + iVar8);
+    cVar9 = LiveStorage_MaySetPersistentData_ControllerIndex(bVar1);
+    if (cVar9 == '\0') {
+      Com_PrintWarning(0x10,0xffffffff8208ae40,bVar1);
+      __restgprlr_23(2);
+      return;
+    }
+    iVar8 = LiveStorage_GetActiveStatsSource(bVar1);
+    if (iVar8 != 0) {
+      Com_PrintWarning(0x10,0xffffffff8208add8,bVar1);
+      __restgprlr_23(2);
+      return;
+    }
+    if (iVar7 == 2) {
+      if (*(int *)(iVar2 + 4) == 1000) {
+        (&DAT_836398d0)[iVar6] = 1;
+        (&DAT_836398d3)[iVar6] = 1;
+        (&DAT_8363fb00)[iVar6] = 1;
+        Com_Printf(0x10,0xffffffff8208ad9c);
+        LiveStorage_ResetStats(bVar1,0);
+        __restgprlr_23(1);
+        return;
+      }
+      Com_PrintError(0x10,0xffffffff8208ad68,bVar1);
+      LiveStorage_DownloadStats(bVar1);
+      __restgprlr_23(2);
+      return;
+    }
+    if (iVar7 != 1) {
+      MyAssertHandler(0xffffffff8208abb0,0x115,0,0xffffffff82058ff0,0xffffffff8208ad4c,uVar3);
+    }
+    if (*(uint *)(iVar2 + 0xd4) < *(uint *)(iVar2 + 0x10)) {
+      (&DAT_836398d0)[iVar6] = 1;
+      (&DAT_836398d3)[iVar6] = 1;
+      (&DAT_8363fb00)[iVar6] = 1;
+      LiveStorage_ResetStatsWithConfirmation(bVar1,0,1);
+      __restgprlr_23(2);
+      return;
+    }
+    (&DAT_836398d3)[iVar6] = 0;
+    (&DAT_836398d0)[iVar6] = 1;
+    (&DAT_8363fb00)[iVar6] = 0;
+    Com_Printf(0x10,0xffffffff8208ad1c,*(undefined4 *)(iVar2 + 0x10),bVar1);
+    LiveStorage_FinalizeStatsRead(bVar1,0,0);
+    local_60 = 0;
+    dwGetConnectionID(bVar1,&local_60);
+    local_58 = LiveAntiCheat_GetConsoleID();
+    if ((&DAT_836398d0)[iVar6] != '\0') {
+      LiveStorage_PlayerDataSetIntByName(bVar1,0xffffffff8208ad04,local_60._0_4_);
+      LiveStorage_PlayerDataSetIntByName(bVar1,0xffffffff8208acec,local_60._4_4_);
+      LiveStorage_PlayerDataSetIntByName(bVar1,0xffffffff8208acd8,local_58._0_4_);
+      LiveStorage_PlayerDataSetIntByName(bVar1,0xffffffff8208acc4,local_58._4_4_);
+      cVar9 = Live_IsUserSignedInToLive(bVar1);
+      if (cVar9 != '\0') {
+        lVar4 = Live_GetXuid(bVar1);
+        lVar5 = LiveStorage_ReadXuidFromStats(bVar1);
+        if (lVar4 != lVar5) {
+          Com_PrintError(0x10,0xffffffff8208ac70,lVar5,lVar4);
+          LiveAntiCheat_ReportPlayer(bVar1,2,lVar4);
+          if (lVar5 != 0) {
+            LiveAntiCheat_ReportPlayer(bVar1,3,lVar5);
+          }
+          LiveStorage_WriteXuidToStats(bVar1,lVar4);
+        }
+      }
+    }
+    __restgprlr_23(1);
+    return;
+  }
+LAB_824f338c:
+  __restgprlr_23(0);
+  return;
+}
+
+
+// 824F36C8  LiveStorage_FinishDownloadingStats  (qcommon/com_storage_download.cpp:446)
+
+void LiveStorage_FinishDownloadingStats(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  char *pcVar4;
+  
+  uVar1 = __savegprlr_27();
+  lVar3 = 0;
+  pcVar4 = &DAT_8365bcd4;
+  do {
+    if (((*pcVar4 != '\0') && ((byte)pcVar4[1] == uVar1)) && (*(int *)(pcVar4 + -4) == 6)) {
+      do {
+        iVar2 = LiveStorage_StatsReadComplete(lVar3);
+        if (iVar2 == 2) {
+          Com_PrintError(0x10,0xffffffff82089414);
+        }
+        else if (iVar2 == 1) break;
+      } while (*pcVar4 != '\0');
+    }
+    pcVar4 = pcVar4 + 0xa0;
+    lVar3 = lVar3 + 1;
+    if (-0x7c9a2f2d < (int)pcVar4) {
+      __restgprlr_27();
+      return;
+    }
+  } while( true );
 }
 

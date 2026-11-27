@@ -2,11 +2,151 @@
 
 // 8283E770  img_alloc_helper  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:28)
 
-void img_alloc_helper(void)
+void img_alloc_helper(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                     ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  bool bVar1;
+  int *_Dst;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  
+  _Dst = (int *)__savegprlr_19();
+  if ((param_5 & 0xffffffff) == 0) {
+    param_5 = 1;
+  }
+  if ((param_5 - 1 & param_5 & 0xffffffff) == 0) {
+    iVar4 = (int)param_2;
+    if (iVar4 < 0x103) {
+      if (iVar4 == 0x102) {
+LAB_8283e844:
+        iVar5 = 0xc;
+      }
+      else {
+        switch(iVar4 + -1) {
+        case 0:
+        case 7:
+          iVar5 = 0x18;
+          break;
+        case 1:
+        case 8:
+        case 9:
+        case 10:
+          iVar5 = 0x20;
+          break;
+        default:
+          goto switchD_8283e7dc_caseD_2;
+        }
+      }
+    }
+    else {
+      if (((iVar4 == 0x104) || (iVar4 == 0x301)) || (iVar4 == 0x303)) goto LAB_8283e844;
+switchD_8283e7dc_caseD_2:
+      iVar5 = 0x10;
+    }
+    if (iVar4 < 0x302) {
+      if ((iVar4 != 0x301) && (iVar4 != 0x102)) {
+        bVar1 = iVar4 == 0x104;
+        goto LAB_8283e868;
+      }
+LAB_8283e870:
+      iVar7 = 1;
+    }
+    else {
+      bVar1 = iVar4 == 0x303;
+LAB_8283e868:
+      iVar7 = 0;
+      if (bVar1) goto LAB_8283e870;
+    }
+    if (iVar4 < 0x302) {
+      if ((iVar4 != 0x301) && (iVar4 != 0x102)) {
+        bVar1 = iVar4 == 0x104;
+        goto LAB_8283e894;
+      }
+LAB_8283e89c:
+      iVar6 = 1;
+    }
+    else {
+      bVar1 = iVar4 == 0x303;
+LAB_8283e894:
+      iVar6 = 0;
+      if (bVar1) goto LAB_8283e89c;
+    }
+    uVar10 = (1 << iVar7) - 1;
+    uVar9 = uVar10 + (int)param_3 & ~uVar10;
+    uVar10 = (1 << iVar6) - 1;
+    uVar8 = uVar10 + (int)param_4 & ~uVar10;
+    uVar10 = uVar9;
+    if ((param_2 & 0x100) == 0) {
+      uVar10 = uVar9 * iVar5 >> 3;
+    }
+    uVar10 = (uVar10 + (int)param_5) - 1 & ~(uint)(param_5 - 1);
+    if (_Dst == (int *)0x0) {
+      _Dst = (int *)vpx_calloc(1,0x50);
+      if (_Dst == (int *)0x0) goto LAB_8283e9f0;
+      _Dst[0x13] = 1;
+    }
+    else {
+      memset(_Dst,0,0x50);
+    }
+    _Dst[0x11] = (int)param_6;
+    if ((param_6 & 0xffffffff) == 0) {
+      if ((param_2 & 0x100) == 0) {
+        uVar2 = (longlong)(int)uVar10 * (longlong)(int)uVar8;
+      }
+      else {
+        uVar2 = ((longlong)(int)(uVar8 * uVar9) * (longlong)iVar5 & 0xffffffffU) >> 3;
+      }
+      iVar3 = vpx_malloc(uVar2);
+      _Dst[0x11] = iVar3;
+      _Dst[0x12] = 1;
+    }
+    if (_Dst[0x11] != 0) {
+      *_Dst = iVar4;
+      _Dst[1] = uVar9;
+      _Dst[2] = uVar8;
+      _Dst[5] = iVar7;
+      _Dst[6] = iVar6;
+      _Dst[0xf] = iVar5;
+      _Dst[0xe] = uVar10;
+      _Dst[0xb] = uVar10;
+      _Dst[0xd] = uVar10 >> iVar7;
+      _Dst[0xc] = uVar10 >> iVar7;
+      iVar4 = vpx_img_set_rect(_Dst,0,0,param_3,param_4);
+      if (iVar4 == 0) {
+        __restgprlr_19(_Dst);
+        return;
+      }
+    }
+  }
+  if (_Dst != (int *)0x0) {
+    if ((_Dst[0x11] != 0) && (_Dst[0x12] != 0)) {
+      vpx_free();
+    }
+    if (_Dst[0x13] != 0) {
+      vpx_free(_Dst);
+    }
+  }
+LAB_8283e9f0:
+  __restgprlr_19(0);
+  return;
+}
+
+
+// 8283EA00  vpx_img_alloc  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:160)
+
+void vpx_img_alloc(void)
+
+{
+  img_alloc_helper();
+  return;
 }
 
 
@@ -58,8 +198,23 @@ undefined8 vpx_img_set_rect(uint *param_1,uint param_2,uint param_3,uint param_4
 void vpx_img_flip(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = __savegprlr_28();
+  iVar3 = *(uint *)(iVar1 + 0x10) - 1;
+  iVar2 = (*(uint *)(iVar1 + 0x10) >> (*(uint *)(iVar1 + 0x18) & 0x3f)) - 1;
+  *(int *)(iVar1 + 0x1c) = *(int *)(iVar1 + 0x2c) * iVar3 + *(int *)(iVar1 + 0x1c);
+  *(int *)(iVar1 + 0x20) = *(int *)(iVar1 + 0x30) * iVar2 + *(int *)(iVar1 + 0x20);
+  *(int *)(iVar1 + 0x24) = *(int *)(iVar1 + 0x34) * iVar2 + *(int *)(iVar1 + 0x24);
+  *(int *)(iVar1 + 0x2c) = -*(int *)(iVar1 + 0x2c);
+  *(int *)(iVar1 + 0x30) = -*(int *)(iVar1 + 0x30);
+  *(int *)(iVar1 + 0x34) = -*(int *)(iVar1 + 0x34);
+  *(int *)(iVar1 + 0x28) = *(int *)(iVar1 + 0x38) * iVar3 + *(int *)(iVar1 + 0x28);
+  *(int *)(iVar1 + 0x38) = -*(int *)(iVar1 + 0x38);
+  __restgprlr_28();
+  return;
 }
 
 

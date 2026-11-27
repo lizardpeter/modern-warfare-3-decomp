@@ -5,7 +5,87 @@
 int _chsize_nolock(int _FileHandle,longlong _Size)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(_FileHandle);
+  int _FileHandle_00;
+  longlong lVar1;
+  longlong lVar2;
+  HANDLE pvVar4;
+  longlong lVar3;
+  int *piVar5;
+  int iVar6;
+  int _Mode;
+  int iVar7;
+  ulong *puVar8;
+  BOOL BVar9;
+  DWORD DVar10;
+  uint _MaxCharCount;
+  
+  _FileHandle_00 = __savegprlr_26(_FileHandle);
+  iVar6 = 0;
+  lVar1 = _lseeki64_nolock(_FileHandle_00,0,1);
+  if ((lVar1 != -1) && (lVar2 = _lseeki64_nolock(_FileHandle_00,0,2), lVar2 != -1)) {
+    lVar2 = _Size - lVar2;
+    if (lVar2 < 1) {
+      if (lVar2 < 0) {
+        lVar2 = _lseeki64_nolock(_FileHandle_00,_Size,0);
+        if (lVar2 == -1) goto LAB_8292b418;
+        pvVar4 = (HANDLE)_get_osfhandle(_FileHandle_00);
+        BVar9 = SetEndOfFile(pvVar4);
+        if (BVar9 == 0) {
+          piVar5 = _errno();
+          *piVar5 = 0xd;
+          puVar8 = __doserrno();
+          DVar10 = GetLastError();
+          *puVar8 = DVar10;
+          iVar6 = -1;
+          goto LAB_8292b50c;
+        }
+      }
+LAB_8292b514:
+      lVar1 = _lseeki64_nolock(_FileHandle_00,lVar1,0);
+      if (lVar1 != -1) {
+        iVar6 = 0;
+        goto LAB_8292b420;
+      }
+    }
+    else {
+      pvVar4 = GetProcessHeap();
+      lVar3 = RtlAllocateHeap(pvVar4,8,0x1000);
+      if (lVar3 == 0) {
+        piVar5 = _errno();
+        *piVar5 = 0xc;
+      }
+      else {
+        _Mode = _setmode_nolock(_FileHandle_00,0x8000);
+        do {
+          _MaxCharCount = 0x1000;
+          if (lVar2 < 0x1000) {
+            _MaxCharCount = (uint)lVar2;
+          }
+          iVar7 = _write_nolock(_FileHandle_00,(void *)lVar3,_MaxCharCount);
+          if (iVar7 == -1) {
+            puVar8 = __doserrno();
+            if (*puVar8 == 5) {
+              piVar5 = _errno();
+              *piVar5 = 0xd;
+            }
+            iVar6 = -1;
+            break;
+          }
+          lVar2 = lVar2 - iVar7;
+        } while (0 < lVar2);
+        _setmode_nolock(_FileHandle_00,_Mode);
+        pvVar4 = GetProcessHeap();
+        RtlFreeHeap(pvVar4,0,lVar3);
+LAB_8292b50c:
+        if (iVar6 != -1) goto LAB_8292b514;
+      }
+    }
+  }
+LAB_8292b418:
+  piVar5 = _errno();
+  iVar6 = *piVar5;
+LAB_8292b420:
+  iVar6 = __restgprlr_26(iVar6);
+  return iVar6;
 }
 

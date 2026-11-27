@@ -23,13 +23,44 @@ void VehicleCl_RegisterDvars(void)
 }
 
 
+// 826BA1A0  VehicleCl_InitGlobals  (vehicle/vehicle_client.cpp:82)
+
+void VehicleCl_InitGlobals(void)
+
+{
+  char *pcVar1;
+  undefined4 uVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
+  
+  __savegprlr_29();
+  Com_Memset(0xffffffff84451090,0,0x80);
+  lVar3 = 1;
+  puVar4 = &DAT_84451094;
+  do {
+    pcVar1 = (char *)CL_GetConfigString(lVar3 + 0x804);
+    if (*pcVar1 == '\0') {
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = Vehicle_Register();
+    }
+    *puVar4 = uVar2;
+    puVar4 = puVar4 + 1;
+    lVar3 = lVar3 + 1;
+  } while ((int)puVar4 < -0x7bbaeef0);
+  VehicleCam_InitGlobals();
+  __restgprlr_29();
+  return;
+}
+
+
 // 826BA210  VehicleCl_InitLocalClient  (vehicle/vehicle_client.cpp:99)
 
 void VehicleCl_InitLocalClient(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x69,0,0xffffffff820011a8,param_1,4);
   }
   Com_Memset(param_1 * 0x420 + -0x7bbafff8,0,0x420);
@@ -43,21 +74,32 @@ void VehicleCl_InitLocalClient(ulonglong param_1)
 ulonglong CompressUnit(double param_1)
 
 {
-  if ((0.0 <= param_1) && (param_1 <= 1.0)) {
-    return (longlong)(param_1 * 65535.0 + 0.5) & 0xffff;
+  if ((param_1 < 0.0) || (1.0 < param_1)) {
+    MyAssertHandler(param_1,0xffffffff8219fa28,0x73,0,0xffffffff8219fa74,0xffffffff8219fa84,param_1)
+    ;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(param_1,0xffffffff8219fa28,0x73,0,0xffffffff8219fa74,0xffffffff8219fa84,param_1);
+  return (longlong)(param_1 * 65535.0 + 0.5) & 0xffff;
 }
 
 
 // 826BA288  VehicleCl_Archive  (vehicle/vehicle_client.cpp:161)
 
-void VehicleCl_Archive(void)
+void VehicleCl_Archive(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0xa2,0,0xffffffff82000f98,0xffffffff82001348);
+  }
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0xa5,0,0xffffffff820011a8,uVar1,4);
+  }
+  MemFile_ArchiveData(param_2,0x420,uVar1 * 0x420 + -0x7bbafff8);
+  VehicleCam_Archive(param_2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -75,17 +117,14 @@ void VehicleCl_Delete(undefined8 param_1,int param_2)
   uVar3 = 0;
   while( true ) {
     if (7 < uVar3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8219fb18,0x119,0,0xffffffff8219e5f4,uVar3,8);
     }
     if (3 < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8219fb18,0x11c,0,0xffffffff820011a8,uVar1,4);
     }
     iVar2 = (uVar1 * 8 + uVar3) * 0x84;
     puVar4 = (undefined4 *)(&DAT_84450008 + iVar2);
     if (puVar4 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8219fb18,0xb7,0,0xffffffff82000f98,0xffffffff82026d30);
     }
     if (*(int *)(&DAT_84450010 + iVar2) == param_2) break;
@@ -111,13 +150,11 @@ undefined8 VehicleCl_IsCorpse(int param_1)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0xc5,0,0xffffffff82000f98,0xffffffff82002118);
   }
   if (((*(int *)(param_1 + 200) != 0xe) && (*(int *)(param_1 + 200) != 0xc)) && (DAT_84013128 == 0))
   {
     uVar1 = va(0xffffffff8219fb60);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0xd2,0,uVar1);
   }
   return 0;
@@ -129,8 +166,50 @@ undefined8 VehicleCl_IsCorpse(int param_1)
 void VehicleCl_GetClientDefIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char cVar2;
+  uint uVar3;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0xdc,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar2 = VehicleCl_IsCorpse(iVar1);
+  if (cVar2 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0xdd,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  uVar3 = *(uint *)(iVar1 + 0x118) >> 3 & 0x1f;
+  if (0x1f < uVar3) {
+    MyAssertHandler(0xffffffff8219fb18,0xe0,0,0xffffffff8219fbb4,uVar3,0x20);
+  }
+  if (*(int *)(&DAT_84451090 + uVar3 * 4) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0xe1,0,0xffffffff82000f98,0xffffffff8219fb98);
+  }
+  __restgprlr_29(uVar3);
+  return;
+}
+
+
+// 826BA4B0  VehicleCl_GetFlags  (vehicle/vehicle_client.cpp:232)
+
+void VehicleCl_GetFlags(void)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0xeb,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar2 = VehicleCl_IsCorpse(iVar1);
+  if (cVar2 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0xec,0,0xffffffff82000f98,0xffffffff8219f708);
+    __restgprlr_29(*(uint *)(iVar1 + 0x11c) & 0x7ff);
+    return;
+  }
+  __restgprlr_29(*(uint *)(iVar1 + 0x11c) & 0x7ff);
+  return;
 }
 
 
@@ -139,28 +218,77 @@ void VehicleCl_GetClientDefIndex(void)
 void VehicleCl_GetClientIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  char cVar3;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0xf8,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar3 = VehicleCl_IsCorpse(iVar2);
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0xf9,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  uVar1 = *(uint *)(iVar2 + 0x118) & 7;
+  if (7 < uVar1) {
+    MyAssertHandler(0xffffffff8219fb18,0xfc,0,0xffffffff8219e5f4,uVar1,8);
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 826BB900  VehicleCl_GetClient  (vehicle/vehicle_client.cpp:259)
 
-void VehicleCl_GetClient(void)
+void VehicleCl_GetClient(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar4;
+  ulonglong uVar2;
+  int *piVar3;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x107,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar4 = VehicleCl_IsCorpse(param_2);
+  if (cVar4 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x108,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  uVar2 = VehicleCl_GetClientIndex(param_2);
+  if (7 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0x10c,0,0xffffffff8219e5f4,uVar2,8);
+  }
+  piVar3 = (int *)VehicleCl_GetClientFromIndex(uVar1,uVar2);
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8219fb18,0x10e,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((int)uVar2 != *piVar3) {
+    MyAssertHandler(0xffffffff8219fb18,0x110,0,0xffffffff82000f98,0xffffffff8219fd80);
+  }
+  __restgprlr_27(piVar3);
+  return;
 }
 
 
 // 826BA5F8  VehicleCl_GetClientFromIndex  (vehicle/vehicle_client.cpp:278)
 
-void VehicleCl_GetClientFromIndex(void)
+void VehicleCl_GetClientFromIndex(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (7 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0x119,0,0xffffffff8219e5f4,param_2,8);
+  }
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0x11c,0,0xffffffff820011a8,uVar1,4);
+  }
+  __restgprlr_29(((uVar1 & 0x1fffffff) * 8 + param_2) * 0x84 + -0x7bbafff8);
+  return;
 }
 
 
@@ -173,7 +301,6 @@ undefined8 VehicleCl_IsClientValid(undefined8 param_1,int param_2)
   undefined8 uVar1;
   
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x12a,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   iVar2 = CG_GetEntity(param_1,*(undefined4 *)(param_2 + 8));
@@ -189,11 +316,23 @@ undefined8 VehicleCl_IsClientValid(undefined8 param_1,int param_2)
 
 // 826BA728  VehicleCl_RegisterClientDef  (vehicle/vehicle_client.cpp:318)
 
-void VehicleCl_RegisterClientDef(void)
+void VehicleCl_RegisterClientDef(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x13f,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  if (0x1f < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0x140,0,0xffffffff8219c774,param_2,0x20);
+  }
+  uVar2 = Vehicle_Register(uVar1);
+  *(undefined4 *)(&DAT_84451090 + (int)((param_2 & 0xffffffff) << 2)) = uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -202,8 +341,20 @@ void VehicleCl_RegisterClientDef(void)
 void VehicleCl_GetClientDef(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x148,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if (0x1f < *(uint *)(iVar1 + 4)) {
+    MyAssertHandler(0xffffffff8219fb18,0x14a,0,0xffffffff8219fc18,*(uint *)(iVar1 + 4),0x20);
+  }
+  if (*(int *)(&DAT_84451090 + *(int *)(iVar1 + 4) * 4) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x14b,0,0xffffffff82000f98,0xffffffff8219fbf0);
+  }
+  __restgprlr_28(*(undefined4 *)(&DAT_84451090 + *(int *)(iVar1 + 4) * 4));
+  return;
 }
 
 
@@ -222,23 +373,19 @@ void VehicleCl_ResetEntity(undefined8 param_1,ulonglong param_2)
   
   uVar2 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x157,0,0xffffffff82000f98,0xffffffff82002118);
   }
   cVar7 = VehicleCl_IsCorpse(param_2);
   if (cVar7 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x158,0,0xffffffff82000f98,0xffffffff8219f708);
   }
   iVar4 = CG_GetLocalClientGlobals(uVar2);
   uVar3 = VehicleCl_GetClientIndex(param_2);
   if (7 < (uVar3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x15d,0,0xffffffff8219fe2c,uVar3,8);
   }
   puVar5 = (undefined4 *)VehicleCl_GetClientFromIndex(uVar2,uVar3);
   if (puVar5 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x160,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   Com_Memset(puVar5,0,0x84);
@@ -251,7 +398,6 @@ void VehicleCl_ResetEntity(undefined8 param_1,ulonglong param_2)
   uVar1 = *(uint *)((int)param_2 + 0x134);
   puVar5[0xe] = uVar1;
   if (0x11 < uVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x16c,0,0xffffffff8219fdec,uVar1,0x12);
   }
   Com_Printf(6,0xffffffff8219fd98,*puVar5,puVar5[1],puVar5[2],uVar2);
@@ -264,11 +410,158 @@ void VehicleCl_ResetEntity(undefined8 param_1,ulonglong param_2)
 
 // 826BA870  VehicleCl_CalcLocalSpeed  (vehicle/vehicle_client.cpp:375)
 
-void VehicleCl_CalcLocalSpeed(void)
+void VehicleCl_CalcLocalSpeed(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  undefined8 uVar7;
+  char cVar9;
+  int iVar8;
+  undefined4 *puVar10;
+  float *pfVar11;
+  longlong lVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_a8;
+  float local_a4;
+  float local_a0;
+  float local_98;
+  float local_94;
+  float local_90;
+  undefined1 local_80 [8];
+  float local_78 [30];
+  
   __savegprlr_27();
+  uVar7 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x181,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar9 = VehicleCl_IsCorpse(param_2);
+  if (cVar9 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x182,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x183,0,0xffffffff82000f98,0xffffffff8219fc58);
+  }
+  iVar8 = CG_GetLocalClientGlobals(uVar7);
+  iVar4 = *(int *)(iVar8 + 0x335c);
+  iVar5 = *(int *)(*(int *)(iVar8 + 0x3358) + 0x3308);
+  dVar13 = 0.0;
+  iVar6 = *(int *)((int)param_2 + 0xc4);
+  dVar15 = (double)((float)(longlong)(*(int *)(iVar4 + 0x3308) - iVar5) * 0.001);
+  if (0.0 < dVar15) {
+    if (*(int *)(iVar8 + 0xac) == iVar6) {
+      fVar1 = *(float *)(iVar8 + 0xcc);
+      fVar2 = *(float *)(iVar8 + 0xd0);
+      fVar3 = *(float *)(iVar8 + 0xd4);
+    }
+    else {
+      BG_EvaluateTrajectory(param_2 + 0x60,iVar5,&local_a8);
+      BG_EvaluateTrajectory(param_2 + 0xd0,*(undefined4 *)(iVar4 + 0x3308),&local_98);
+      fVar3 = (float)(1.0 / dVar15);
+      fVar1 = fVar3 * (local_98 - local_a8);
+      fVar2 = (local_94 - local_a4) * fVar3;
+      fVar3 = (local_90 - local_a0) * fVar3;
+    }
+    dVar16 = (double)fVar1;
+    dVar14 = (double)fVar2;
+    dVar15 = (double)fVar3;
+    AnglesToAxis(param_2 + 0x100,local_80);
+    pfVar11 = local_78;
+    lVar12 = 3;
+    do {
+      fVar3 = (float)((double)*pfVar11 * dVar15 +
+                     (double)(float)((double)pfVar11[-1] * dVar14 +
+                                    (double)(float)((double)pfVar11[-2] * dVar16)));
+      *(float *)param_3 = fVar3;
+      if (ABS(fVar3) < 1.76) {
+        *(float *)param_3 = (float)dVar13;
+      }
+      pfVar11 = pfVar11 + 3;
+      param_3 = param_3 + 4;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    __restfpr_28();
+    __restgprlr_27();
+    return;
+  }
+  if (*(int *)(iVar8 + 0xac) != iVar6) {
+    puVar10 = (undefined4 *)param_3;
+    *puVar10 = 0;
+    puVar10[1] = 0;
+    puVar10[2] = 0;
+  }
+  __restfpr_28();
+  __restgprlr_27();
+  return;
+}
+
+
+// 826BAA70  VehicleCl_CalcRotationalSpeed  (vehicle/vehicle_client.cpp:434)
+
+void VehicleCl_CalcRotationalSpeed(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  char cVar6;
+  int iVar5;
+  float *pfVar7;
+  double dVar8;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  uVar4 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x1ba,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar6 = VehicleCl_IsCorpse(param_2);
+  if (cVar6 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x1bb,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x1bc,0,0xffffffff82000f98,0xffffffff8219fc64);
+  }
+  iVar5 = CG_GetLocalClientGlobals(uVar4);
+  iVar2 = *(int *)(iVar5 + 0x335c);
+  iVar3 = *(int *)(*(int *)(iVar5 + 0x3358) + 0x3308);
+  dVar8 = (double)((float)(longlong)(*(int *)(iVar2 + 0x3308) - iVar3) * 0.001);
+  pfVar7 = (float *)param_3;
+  if (0.0 < dVar8) {
+    if (*(int *)(iVar5 + 0xac) == *(int *)((int)param_2 + 0xc4)) {
+      *pfVar7 = *(float *)(iVar5 + 0xd8);
+      pfVar7[1] = *(float *)(iVar5 + 0xdc);
+      pfVar7[2] = *(float *)(iVar5 + 0xe0);
+      __restgprlr_27();
+      return;
+    }
+    BG_EvaluateTrajectory(param_2 + 0x84,iVar3,&local_58);
+    BG_EvaluateTrajectory(param_2 + 0xf4,*(undefined4 *)(iVar2 + 0x3308),&local_48);
+    fVar1 = (float)(1.0 / dVar8);
+    *pfVar7 = (local_48 - local_58) * fVar1;
+    pfVar7[1] = (local_44 - local_54) * fVar1;
+    pfVar7[2] = (local_40 - local_50) * fVar1;
+    __restgprlr_27();
+    return;
+  }
+  *pfVar7 = 0.0;
+  pfVar7[1] = 0.0;
+  pfVar7[2] = 0.0;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -280,11 +573,101 @@ bool VehicleCL_ShouldApplyMaterialTime(ulonglong param_1)
   int iVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x1e0,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   iVar1 = VehicleCl_GetClientDef(param_1);
   return 0.0 < *(float *)(iVar1 + 0x14);
+}
+
+
+// 826BACA0  VehicleCl_UpdateMaterialTime  (vehicle/vehicle_client.cpp:489)
+
+void VehicleCl_UpdateMaterialTime(void)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x1ee,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar4 = VehicleCl_GetClientDef(iVar3);
+  cVar5 = VehicleCL_ShouldApplyMaterialTime(iVar3);
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x1f1,0,0xffffffff82000f98,0xffffffff8219fc74);
+  }
+  fVar1 = (float)(longlong)*(int *)(iVar3 + 0x10) * 0.001;
+  fVar2 = *(float *)(iVar3 + 0x1c) * 0.0056818184 * *(float *)(iVar4 + 0x14) * fVar1;
+  if (*(int *)(iVar4 + 4) == 1) {
+    fVar1 = *(float *)(iVar3 + 0x2c) * 0.0056818184 * *(float *)(iVar4 + 0x14) * fVar1;
+    if (ABS(fVar2) < ABS(fVar1)) {
+      fVar2 = fVar1;
+    }
+  }
+  *(float *)(iVar3 + 0x34) = *(float *)(iVar3 + 0x34) + fVar2;
+  __restgprlr_28();
+  return;
+}
+
+
+// 826BBBA8  VehicleCl_UpdateEntity  (vehicle/vehicle_client.cpp:514)
+
+void VehicleCl_UpdateEntity(undefined8 param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  char cVar7;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x206,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar7 = VehicleCl_IsCorpse(param_2);
+  if (cVar7 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x207,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  iVar4 = CG_GetLocalClientGlobals(uVar2);
+  piVar5 = (int *)VehicleCl_GetClient(uVar2,param_2);
+  if (piVar5 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8219fb18,0x20c,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar6 = VehicleCl_GetClientIndex(param_2);
+  if (*piVar5 != iVar6) {
+    uVar3 = VehicleCl_GetClientIndex(param_2);
+    MyAssertHandler(0xffffffff8219fb18,0x20d,0,0xffffffff8219fed0,*piVar5,uVar3);
+  }
+  iVar6 = VehicleCl_GetClientDefIndex(param_2);
+  if (piVar5[1] != iVar6) {
+    uVar3 = VehicleCl_GetClientDefIndex(param_2);
+    MyAssertHandler(0xffffffff8219fb18,0x20e,0,0xffffffff8219fe90,piVar5[1],uVar3);
+  }
+  if (piVar5[2] != *(int *)((int)param_2 + 0xc4)) {
+    MyAssertHandler(0xffffffff8219fb18,0x20f,0,0xffffffff8219fe60);
+  }
+  piVar5[3] = (int)uVar2;
+  piVar5[4] = *(int *)(iVar4 + 0x6b98c) - piVar5[5];
+  piVar5[5] = *(int *)(iVar4 + 0x6b98c);
+  iVar4 = VehicleCl_GetFlags(param_2);
+  piVar5[6] = iVar4;
+  uVar1 = *(uint *)((int)param_2 + 0x134);
+  piVar5[0xe] = uVar1;
+  if (0x11 < uVar1) {
+    MyAssertHandler(0xffffffff8219fb18,0x218,0,0xffffffff8219fdec,uVar1,0x12);
+  }
+  VehicleCl_CalcLocalSpeed(uVar2,param_2,piVar5 + 7);
+  VehicleCl_CalcRotationalSpeed(uVar2,param_2,piVar5 + 10);
+  VehicleAudio_UpdateSounds(uVar2,param_2,piVar5);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -293,8 +676,29 @@ bool VehicleCL_ShouldApplyMaterialTime(ulonglong param_1)
 void VehicleCl_ClearBoneControllers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x226,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((*(int *)(iVar1 + 200) != 0xe) && (*(int *)(iVar1 + 200) != 0xc)) {
+    MyAssertHandler(0xffffffff8219fb18,0x228,0,0xffffffff82000f98,0xffffffff8219fca0);
+  }
+  iVar2 = 0;
+  *(undefined1 *)(iVar1 + 0x58) = 0xfe;
+  *(undefined1 *)(iVar1 + 0x59) = 0xfe;
+  *(undefined1 *)(iVar1 + 0x5a) = 0xfe;
+  lVar3 = 6;
+  do {
+    *(undefined1 *)(iVar1 + 0x4c + iVar2) = 0xfe;
+    iVar2 = iVar2 + 1;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -347,17 +751,14 @@ void VehicleCl_UpdateBoneControllers(undefined8 param_1,ulonglong param_2,ulongl
   __savegprlr_21();
   uVar5 = __savefpr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x24b,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x24c,0,0xffffffff82000f98,0xffffffff82002118);
   }
   Profile_Begin(0x3a);
   iVar4 = (int)param_3;
   if ((*(int *)(iVar4 + 200) != 0xe) && (*(int *)(iVar4 + 200) != 0xc)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219fb18,0x251,0,0xffffffff82000f98,0xffffffff8219fca0);
   }
   iVar6 = CG_GetLocalClientGlobals(uVar5);
@@ -489,41 +890,178 @@ LAB_826bb2f8:
 
 // 826BB310  VehicleCl_GetEntDObj  (vehicle/vehicle_client.cpp:709)
 
-void VehicleCl_GetEntDObj(void)
+void VehicleCl_GetEntDObj(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x2c9,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  iVar1 = (int)param_2;
+  if ((*(uint *)(iVar1 + 0x1c4) & 1) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x2ca,0,0xffffffff82000f98,0xffffffff82012adc);
+  }
+  iVar3 = CG_GetLocalClientStaticGlobals(uVar2);
+  CG_PreProcess_GetDObj
+            (uVar2,*(undefined4 *)(iVar1 + 0xc4),*(undefined4 *)(iVar1 + 200),
+             *(undefined4 *)((*(ushort *)(iVar1 + 0x1a0) + 0x66) * 4 + iVar3),0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826BBD98  VehicleCl_ProcessEntity  (vehicle/vehicle_client.cpp:734)
 
-void VehicleCl_ProcessEntity(void)
+void VehicleCl_ProcessEntity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  char cVar6;
+  int iVar5;
+  double dVar7;
+  undefined4 local_48;
+  undefined4 local_44;
+  float local_40;
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x2e5,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  iVar1 = (int)param_2;
+  if ((*(int *)(iVar1 + 200) != 0xe) && (*(int *)(iVar1 + 200) != 0xc)) {
+    MyAssertHandler(0xffffffff8219fb18,0x2e8,0,0xffffffff82000f98,0xffffffff8219fca0);
+  }
+  if ((*(uint *)(iVar1 + 0x1c4) & 1) != 0) {
+    uVar3 = VehicleCl_GetEntDObj(uVar2,param_2);
+    if ((uVar3 & 0xffffffff) != 0) {
+      iVar4 = CG_GetLocalClientGlobals(uVar2);
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8219ff08);
+      VehicleCl_UpdateBoneControllers(uVar2,uVar3,param_2);
+      PIXEndNamedEvent();
+      dVar7 = 0.0;
+      cVar6 = VehicleCl_IsCorpse(param_2);
+      if (cVar6 == '\0') {
+        VehicleCl_UpdateEntity(uVar2,param_2);
+        iVar5 = VehicleCl_GetClient(uVar2,param_2);
+        cVar6 = VehicleCL_ShouldApplyMaterialTime();
+        if (cVar6 != '\0') {
+          VehicleCl_UpdateMaterialTime(iVar5);
+          dVar7 = (double)((float)(longlong)*(int *)(iVar4 + 0x6b98c) * 0.001 -
+                          *(float *)(iVar5 + 0x34));
+        }
+      }
+      VehicleFXTest(uVar2,uVar3,param_2);
+      local_48 = *(undefined4 *)(iVar1 + 0x14);
+      local_44 = *(undefined4 *)(iVar1 + 0x18);
+      local_40 = *(float *)(iVar1 + 0x1c) + 32.0;
+      R_AddDObjToScene(dVar7,uVar3,param_2,*(undefined4 *)(iVar1 + 0xc4),
+                       (ulonglong)*(uint *)(iVar1 + 0xcc) & 0x400 | 0x400000004,&local_48);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 826BB3C0  VehicleCl_PredictEntityPushing  (vehicle/vehicle_client.cpp:798)
 
-void VehicleCl_PredictEntityPushing(void)
+void VehicleCl_PredictEntityPushing
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  undefined1 auStack_110 [16];
+  undefined1 auStack_100 [16];
+  undefined1 auStack_f0 [48];
+  undefined1 auStack_c0 [48];
+  undefined1 auStack_90 [48];
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_27();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x32a,0,0xffffffff82000f98,0xffffffff8219fcf4);
+  }
+  if (((0 < (int)param_2) && ((int)param_2 < 0x7fe)) &&
+     (iVar2 = CG_GetEntity(uVar1,param_2), *(int *)(iVar2 + 200) == 0xe)) {
+    BG_EvaluateTrajectory(iVar2 + 0x84,param_3,auStack_110);
+    BG_EvaluateTrajectory(iVar2 + 0x84,param_4,auStack_100);
+    BG_EvaluateTrajectory(iVar2 + 0x60,param_3,&local_130);
+    BG_EvaluateTrajectory(iVar2 + 0x60,param_4,&local_120);
+    AnglesToAxis(auStack_100,auStack_f0);
+    AnglesToAxis(auStack_110,auStack_90);
+    MatrixTranspose(auStack_90,auStack_c0);
+    MatrixMultiply(auStack_c0,auStack_f0,auStack_60);
+    pfVar3 = (float *)param_5;
+    local_140 = *pfVar3 - local_130;
+    local_13c = pfVar3[1] - local_12c;
+    local_138 = pfVar3[2] - local_128;
+    MatrixTransformVector(&local_140,auStack_60,param_5);
+    *pfVar3 = *pfVar3 + local_120;
+    pfVar3[1] = local_11c + pfVar3[1];
+    pfVar3[2] = local_118 + pfVar3[2];
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 826BB530  VehicleCl_EntityEvent  (vehicle/vehicle_client.cpp:839)
 
-void VehicleCl_EntityEvent(void)
+void VehicleCl_EntityEvent
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x34a,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar2 = VehicleCl_IsCorpse(param_2);
+  if (cVar2 != '\0') {
+    MyAssertHandler(0xffffffff8219fb18,0x34b,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  iVar3 = (int)param_3;
+  if (iVar3 == 0x72) {
+    VehicleAudio_CollisionEvent((double)((float)(param_4 & 0xffffffff) * 0.003921569),uVar1,param_2)
+    ;
+  }
+  else {
+    if ((0x72 < iVar3) && (iVar3 < 0x75)) {
+      VehicleAudio_SuspensionEvent(uVar1,param_2,param_3);
+      __restgprlr_26();
+      return;
+    }
+    if (DAT_84013128 == 0) {
+      uVar1 = va(0xffffffff8219fd00,param_3);
+      MyAssertHandler(0xffffffff8219fb18,0x35a,0,uVar1);
+      __restgprlr_26();
+      return;
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -541,20 +1079,63 @@ uint VehicleCl_UsingVehicle(void)
 
 // 826BB678  VehicleCl_GetWheelBone  (vehicle/vehicle_client.cpp:880)
 
-void VehicleCl_GetWheelBone(void)
+void VehicleCl_GetWheelBone(undefined8 param_1,undefined8 param_2,ulonglong param_3,uint *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  byte local_30 [48];
+  
+  uVar1 = __savegprlr_28();
+  if (5 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219fb18,0x375,0,0xffffffff8219f3a8,param_3,6);
+  }
+  uVar2 = VehicleCl_GetEntDObj(uVar1,param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    local_30[0] = *(byte *)((int)param_2 + (int)param_3 + 0x4c);
+    DObjGetBoneIndex(uVar2,**(undefined2 **)
+                             ((int)&PTR_DAT_82997b80 + (int)((param_3 & 0xffffffff) << 2)),local_30)
+    ;
+    *param_4 = (uint)local_30[0];
+    __restgprlr_28();
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 826BB718  VehicleCl_GetBoneOrigin  (vehicle/vehicle_client.cpp:904)
 
-void VehicleCl_GetBoneOrigin(void)
+void VehicleCl_GetBoneOrigin(undefined8 param_1,ulonglong param_2,int param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219fb18,0x38d,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if (param_3 == 0xfe) {
+    MyAssertHandler(0xffffffff8219fb18,0x38e,0,0xffffffff82000f98,0xffffffff82081884);
+  }
+  uVar2 = VehicleCl_GetEntDObj(uVar1,param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    DObjGetModel(uVar2,0);
+    iVar3 = XModelGetBasePose();
+    iVar3 = iVar3 + param_3 * 0x20;
+    *param_4 = *(undefined4 *)(iVar3 + 0x10);
+    param_4[1] = *(undefined4 *)(iVar3 + 0x14);
+    param_4[2] = *(undefined4 *)(iVar3 + 0x18);
+    __restgprlr_26();
+    return;
+  }
+  *param_4 = 0;
+  param_4[1] = 0;
+  param_4[2] = 0;
+  __restgprlr_26();
+  return;
 }
 

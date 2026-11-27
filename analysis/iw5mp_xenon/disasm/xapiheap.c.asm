@@ -3,6 +3,42 @@
 ; 828A89D8  HeapCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiheap.c:62)
   828A89D8  7D8802A6             mfspr r12,LR
   828A89DC  4806DCE1             bl 0x829166bc
+  828A89E0  9421FF90             stwu r1,-0x70(r1)
+  828A89E4  7C7D1B78             or r29,r3,r3
+  828A89E8  7C9E2378             or r30,r4,r4
+  828A89EC  7CBF2B78             or r31,r5,r5
+  828A89F0  7DAD6B78             or r13,r13,r13
+  828A89F4  73AB0005             andi. r11,r29,0x5
+  828A89F8  3D400001             lis r10,0x1
+  828A89FC  61631000             ori r3,r11,0x1000
+  828A8A00  7F1F5040             cmplw cr6,r31,r10
+  828A8A04  40980018             bge cr6,0x828a8a1c
+  828A8A08  2B1F0000             cmplwi cr6,r31,0x0
+  828A8A0C  409A000C             bne cr6,0x828a8a18
+  828A8A10  60630002             ori r3,r3,0x2
+  828A8A14  48000014             b 0x828a8a28
+LAB_828a8a18:
+  828A8A18  3FE00001             lis r31,0x1
+LAB_828a8a1c:
+  828A8A1C  7F1EF840             cmplw cr6,r30,r31
+  828A8A20  40990008             ble cr6,0x828a8a28
+  828A8A24  7FDFF378             or r31,r30,r30
+LAB_828a8a28:
+  828A8A28  39000000             li r8,0x0
+  828A8A2C  38E00000             li r7,0x0
+  828A8A30  7FC6F378             or r6,r30,r30
+  828A8A34  7FE5FB78             or r5,r31,r31
+  828A8A38  38800000             li r4,0x0
+  828A8A3C  4BFFE525             bl 0x828a6f60
+  828A8A40  7C7F1B79             or. r31,r3,r3
+  828A8A44  4082000C             bne 0x828a8a50
+  828A8A48  38600008             li r3,0x8
+  828A8A4C  480033E5             bl 0x828abe30
+LAB_828a8a50:
+  828A8A50  7DCE7378             or r14,r14,r14
+  828A8A54  7FE3FB78             or r3,r31,r31
+  828A8A58  38210070             addi r1,r1,0x70
+  828A8A5C  4806DCB0             b 0x8291670c
 
 ; 828A8A60  HeapDestroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiheap.c:110)
   828A8A60  7D8802A6             mfspr r12,LR

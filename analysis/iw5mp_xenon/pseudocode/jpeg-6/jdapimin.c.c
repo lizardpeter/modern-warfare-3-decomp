@@ -2,11 +2,59 @@
 
 // 827BB0F8  jpeg_CreateDecompress  (jpeg-6/jdapimin.c:31)
 
-void jpeg_CreateDecompress(void)
+void jpeg_CreateDecompress(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int *_Dst;
+  int *piVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  
+  _Dst = (int *)__savegprlr_27();
+  _Dst[1] = 0;
+  if (param_2 != 0x3e) {
+    *(undefined4 *)(*_Dst + 0x14) = 0xc;
+    *(undefined4 *)(*_Dst + 0x18) = 0x3e;
+    *(int *)(*_Dst + 0x1c) = param_2;
+    (**(code **)*_Dst)();
+  }
+  if ((param_3 & 0xffffffff) != 0x1b8) {
+    *(undefined4 *)(*_Dst + 0x14) = 0x15;
+    *(undefined4 *)(*_Dst + 0x18) = 0x1b8;
+    *(int *)(*_Dst + 0x1c) = (int)param_3;
+    (**(code **)*_Dst)(_Dst);
+  }
+  iVar1 = *_Dst;
+  iVar2 = _Dst[3];
+  uVar4 = *(undefined8 *)(_Dst + 6);
+  memset(_Dst,0,0x1b8);
+  *_Dst = iVar1;
+  _Dst[3] = iVar2;
+  *(undefined8 *)(_Dst + 6) = uVar4;
+  *(undefined1 *)(_Dst + 4) = 1;
+  jinit_memory_mgr(_Dst);
+  _Dst[2] = 0;
+  _Dst[8] = 0;
+  piVar3 = _Dst + 0x2d;
+  _Dst[0x26] = 0;
+  _Dst[0x27] = 0;
+  _Dst[0x28] = 0;
+  lVar5 = 4;
+  _Dst[0x29] = 0;
+  do {
+    piVar3[-3] = 0;
+    piVar3 = piVar3 + 1;
+    *piVar3 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  _Dst[0x45] = 0;
+  jinit_marker_reader(_Dst);
+  jinit_input_controller(_Dst);
+  _Dst[5] = 200;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -15,8 +63,102 @@ void jpeg_CreateDecompress(void)
 void default_decompress_parms(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  
+  piVar6 = (int *)__savegprlr_27();
+  iVar1 = piVar6[0xb];
+  if (iVar1 == 1) {
+    piVar6[0xc] = 1;
+    piVar6[0xd] = 1;
+    goto LAB_827bb3fc;
+  }
+  if (iVar1 != 3) {
+    if (iVar1 == 4) {
+      if ((*(char *)(piVar6 + 0x44) == '\0') || (*(char *)((int)piVar6 + 0x111) == '\0')) {
+        piVar6[0xc] = 4;
+        piVar6[0xd] = 4;
+      }
+      else if (*(char *)((int)piVar6 + 0x111) == '\x02') {
+        piVar6[0xd] = 4;
+        piVar6[0xc] = 5;
+      }
+      else {
+        *(undefined4 *)(*piVar6 + 0x14) = 0x72;
+        *(uint *)(*piVar6 + 0x18) = (uint)*(byte *)((int)piVar6 + 0x111);
+        (**(code **)(*piVar6 + 4))(piVar6,0xffffffffffffffff);
+        piVar6[0xd] = 4;
+        piVar6[0xc] = 5;
+      }
+    }
+    else {
+      piVar6[0xc] = 0;
+      piVar6[0xd] = 0;
+    }
+    goto LAB_827bb3fc;
+  }
+  if (*(char *)(piVar6 + 0x42) == '\0') {
+    if (*(char *)(piVar6 + 0x44) == '\0') {
+      piVar2 = (int *)piVar6[0x33];
+      iVar1 = *piVar2;
+      iVar3 = piVar2[0x15];
+      iVar4 = piVar2[0x2a];
+      if (iVar1 == 1) {
+        if ((iVar3 == 2) && (iVar4 == 3)) goto LAB_827bb37c;
+      }
+      else if (((iVar1 == 0x52) && (iVar3 == 0x47)) && (iVar4 == 0x42)) goto LAB_827bb3a4;
+      iVar5 = *piVar6;
+      *(int *)(iVar5 + 0x1c) = iVar3;
+      *(int *)(iVar5 + 0x18) = iVar1;
+      *(int *)(iVar5 + 0x20) = iVar4;
+      *(undefined4 *)(*piVar6 + 0x14) = 0x6f;
+      (**(code **)(*piVar6 + 4))(piVar6,1);
+      piVar6[0xd] = 2;
+      piVar6[0xc] = 3;
+      goto LAB_827bb3fc;
+    }
+    if (*(char *)((int)piVar6 + 0x111) == '\0') {
+LAB_827bb3a4:
+      piVar6[0xc] = 2;
+      piVar6[0xd] = 2;
+      goto LAB_827bb3fc;
+    }
+    if (*(char *)((int)piVar6 + 0x111) != '\x01') {
+      *(undefined4 *)(*piVar6 + 0x14) = 0x72;
+      *(uint *)(*piVar6 + 0x18) = (uint)*(byte *)((int)piVar6 + 0x111);
+      (**(code **)(*piVar6 + 4))(piVar6,0xffffffffffffffff);
+      piVar6[0xd] = 2;
+      piVar6[0xc] = 3;
+      goto LAB_827bb3fc;
+    }
+  }
+LAB_827bb37c:
+  piVar6[0xd] = 2;
+  piVar6[0xc] = 3;
+LAB_827bb3fc:
+  piVar6[0xe] = 1;
+  piVar6[0xf] = 1;
+  *(undefined1 *)(piVar6 + 0x12) = 0;
+  *(undefined1 *)((int)piVar6 + 0x49) = 0;
+  piVar6[0x13] = 0;
+  *(undefined1 *)(piVar6 + 0x14) = 1;
+  piVar6[0x10] = 0x3ff00000;
+  piVar6[0x11] = 0;
+  *(undefined1 *)((int)piVar6 + 0x51) = 1;
+  *(undefined1 *)((int)piVar6 + 0x52) = 0;
+  piVar6[0x15] = 2;
+  *(undefined1 *)(piVar6 + 0x16) = 1;
+  piVar6[0x17] = 0x100;
+  piVar6[0x1f] = 0;
+  *(undefined1 *)(piVar6 + 0x18) = 0;
+  *(undefined1 *)((int)piVar6 + 0x61) = 0;
+  *(undefined1 *)((int)piVar6 + 0x62) = 0;
+  __restgprlr_27();
+  return;
 }
 
 

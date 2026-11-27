@@ -84,13 +84,117 @@ int _dynamic_initializer_for__s_serverCounters__(void)
 }
 
 
+// 826E7578  dwCounterTaskComplete  (DW/dwCounter.cpp:55)
+
+undefined8 dwCounterTaskComplete(int param_1)
+
+{
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [72];
+  
+  if (((param_1 == 0) || (*(int *)(param_1 + 8) == 0)) ||
+     (iVar3 = dwGetCounter(*(undefined1 *)(param_1 + 0x95)), iVar3 == 0)) {
+    Com_Printf(0x10,0xffffffff821a9eb0);
+    uVar1 = 2;
+  }
+  else {
+    dwLobbyPump(*(undefined1 *)(param_1 + 0x95));
+    uVar1 = (**(code **)(**(int **)(param_1 + 8) + 4))();
+    uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(param_1 + 8));
+    if ((int)uVar2 != 0) {
+      dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+      Com_PrintError(0x19,0xffffffff821a9ed8,uVar2,auStack_60);
+    }
+    uVar1 = dwTaskStatusConvert(uVar1,uVar2);
+  }
+  return uVar1;
+}
+
+
 // 826E7650  LiveCounter_IncrementCounters  (DW/dwCounter.cpp:85)
 
 void LiveCounter_IncrementCounters(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  char cVar7;
+  int iVar5;
+  int *piVar6;
+  ulonglong uVar8;
+  longlong *plVar9;
+  longlong lVar10;
+  longlong *plVar11;
+  undefined8 *puVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  undefined1 auStack_40 [64];
+  
+  uVar3 = __savegprlr_27();
+  lVar13 = 0;
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a9d3c,0x5b,0,0xffffffff82031880,uVar3,4);
+  }
+  uVar4 = dwGetCounter(uVar3);
+  if ((uVar4 & 0xffffffff) == 0) {
+LAB_826e77bc:
+    __restgprlr_27(0);
+    return;
+  }
+  uVar8 = (ulonglong)DAT_82998b30;
+  if (0 < (int)DAT_82998b30) {
+    plVar11 = &DAT_844f1de8;
+    plVar9 = &DAT_844f19e8;
+    uVar14 = uVar8;
+    do {
+      lVar10 = *plVar9;
+      if (lVar10 != 0) {
+        uVar1 = *(undefined4 *)((int)plVar9 + -4);
+        *plVar11 = lVar10;
+        *(undefined4 *)((int)plVar11 + -4) = uVar1;
+        if (50000 < lVar10) {
+          *plVar11 = 50000;
+        }
+        lVar13 = lVar13 + 1;
+        plVar11 = plVar11 + 2;
+      }
+      plVar9 = plVar9 + 2;
+      uVar14 = uVar14 - 1;
+    } while (uVar14 != 0);
+    if ((int)lVar13 != 0) {
+      puVar12 = (undefined8 *)0x844f19d8;
+      do {
+        puVar12 = puVar12 + 2;
+        *puVar12 = 0;
+        uVar8 = uVar8 - 1;
+      } while (uVar8 != 0);
+      cVar7 = TaskManager_TaskIsInProgressForController(0xffffffff844f01d8,0,uVar3);
+      if (cVar7 == '\0') {
+        iVar5 = TaskManager_GetOpenTaskSlot(0xffffffff844f01d8,uVar3,0);
+        if (iVar5 != 0) {
+          piVar6 = (int *)bdCounter__incrementCounters(auStack_40,uVar4,0xffffffff844f1de0,lVar13);
+          iVar2 = *piVar6;
+          bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_40);
+          if (iVar2 != 0) {
+            bdReference<bdRemoteTask>__operator_(iVar5 + 8,iVar2);
+            DAT_844f01c8 = (int)lVar13;
+            *(int **)(iVar5 + 0x98) = &DAT_844f01c8;
+            __restgprlr_27(1);
+            return;
+          }
+          dwHandleTaskError(iVar5,5);
+        }
+        Com_PrintWarning(0x10,0xffffffff821a9ef8);
+        goto LAB_826e77bc;
+      }
+    }
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -99,8 +203,144 @@ void LiveCounter_IncrementCounters(void)
 void LiveCounter_IncrementCountersComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar3;
+  undefined8 uVar2;
+  int iVar4;
+  longlong *plVar5;
+  int *piVar6;
+  ulonglong uVar7;
+  undefined *puVar8;
+  
+  uVar3 = __savegprlr_29();
+  iVar4 = uVar3 * 0xa0;
+  puVar8 = &DAT_844f01e0 + iVar4;
+  if (0x1f < uVar3) {
+    MyAssertHandler(0xffffffff821a9d3c,0x9b,0,0xffffffff82092698,uVar3,0x20);
+  }
+  if ((&DAT_844f0274)[iVar4] == '\0') {
+    MyAssertHandler(0xffffffff821a9d3c,0x9c,0,0xffffffff82000f98,0xffffffff821a9f8c);
+  }
+  if ((&DAT_844f0270)[uVar3 * 0x28] != 0) {
+    MyAssertHandler(0xffffffff821a9d3c,0x9d,0,0xffffffff82000f98,0xffffffff821a9f68);
+  }
+  uVar2 = dwCounterTaskComplete(puVar8);
+  iVar1 = DAT_82998b30;
+  if ((int)uVar2 != 0) {
+    if ((int)uVar2 == 1) {
+      Com_Printf(0x10,0xffffffff821a9f4c);
+      TaskManager_ClearTask(puVar8);
+      __restgprlr_29(uVar2);
+      return;
+    }
+    uVar7 = (ulonglong)**(uint **)(&DAT_844f0278 + iVar4);
+    if (0 < (int)**(uint **)(&DAT_844f0278 + iVar4)) {
+      plVar5 = &DAT_844f1de8;
+      do {
+        iVar4 = 0;
+        if (0 < iVar1) {
+          piVar6 = &DAT_844f19e4;
+          do {
+            if (*piVar6 == *(int *)((int)plVar5 + -4)) {
+              (&DAT_844f19e8)[iVar4 * 2] = *plVar5 + (&DAT_844f19e8)[iVar4 * 2];
+              break;
+            }
+            iVar4 = iVar4 + 1;
+            piVar6 = piVar6 + 4;
+          } while (iVar4 < iVar1);
+        }
+        plVar5 = plVar5 + 2;
+        uVar7 = uVar7 - 1;
+      } while (uVar7 != 0);
+    }
+    DAT_844f01ce = 1;
+    iVar4 = Sys_Milliseconds();
+    DAT_844f01d0 = iVar4 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
+    Com_PrintError(0x10,0xffffffff821a9f28);
+    TaskManager_ClearTask(puVar8);
+  }
+  __restgprlr_29(uVar2);
+  return;
+}
+
+
+// 826E79C0  LiveCounter_GetCounterTotals  (DW/dwCounter.cpp:199)
+
+void LiveCounter_GetCounterTotals(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  char cVar5;
+  int *piVar4;
+  undefined1 auStack_30 [48];
+  
+  uVar2 = __savegprlr_29();
+  uVar3 = dwGetCounter();
+  if ((uVar3 & 0xffffffff) == 0) {
+LAB_826e7a5c:
+    __restgprlr_29(0);
+    return;
+  }
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a9d3c,0xcf,0,0xffffffff82031880,uVar2,4);
+  }
+  cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff844f01d8,1,uVar2);
+  if (cVar5 == '\0') {
+    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff844f01d8,uVar2,1);
+    if ((uVar2 & 0xffffffff) == 0) {
+      Com_PrintWarning(0x10,0xffffffff821a9f98);
+      goto LAB_826e7a5c;
+    }
+    piVar4 = (int *)bdCounter__getCounterTotals(auStack_30,uVar3,0xffffffff844f15e0,DAT_82998b30);
+    iVar1 = *piVar4;
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+    if (iVar1 == 0) {
+      dwHandleTaskError(uVar2,5);
+      __restgprlr_29(0);
+      return;
+    }
+    bdReference<bdRemoteTask>__operator_(uVar2 + 8,iVar1);
+  }
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 826E7AD0  LiveCounter_GetCounterTotalsComplete  (DW/dwCounter.cpp:236)
+
+void LiveCounter_GetCounterTotalsComplete(void)
+
+{
+  uint uVar2;
+  undefined8 uVar1;
+  undefined *puVar3;
+  
+  uVar2 = __savegprlr_29();
+  puVar3 = &DAT_844f01e0 + uVar2 * 0xa0;
+  if (0x1f < uVar2) {
+    MyAssertHandler(0xffffffff821a9d3c,0xf0,0,0xffffffff82092698,uVar2,0x20);
+  }
+  if ((&DAT_844f0274)[uVar2 * 0xa0] == '\0') {
+    MyAssertHandler(0xffffffff821a9d3c,0xf1,0,0xffffffff82000f98,0xffffffff821a9f8c);
+  }
+  if ((&DAT_844f0270)[uVar2 * 0x28] != 1) {
+    MyAssertHandler(0xffffffff821a9d3c,0xf2,0,0xffffffff82000f98,0xffffffff821aa01c);
+  }
+  uVar1 = dwCounterTaskComplete(puVar3);
+  if ((int)uVar1 != 0) {
+    if ((int)uVar1 == 1) {
+      Com_Printf(0x10,0xffffffff821a9ff8);
+      TaskManager_ClearTask(puVar3);
+      __restgprlr_29(uVar1);
+      return;
+    }
+    Com_PrintError(0x10,0xffffffff821a9fcc);
+    TaskManager_ClearTask(puVar3);
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -142,8 +382,8 @@ void LiveCounter_IncrementCounterValueByName(int param_1,undefined8 param_2)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9d3c,0x122,0,0xffffffff82000f98,0xffffffff821a9df0);
+    return;
   }
   uVar1 = LiveCounter_CounterStringToID();
   if ((int)uVar1 != -1) {
@@ -155,11 +395,41 @@ void LiveCounter_IncrementCounterValueByName(int param_1,undefined8 param_2)
 
 // 826E7050  LiveCounter_IncrementCounterValue  (DW/dwCounter.cpp:305)
 
-void LiveCounter_IncrementCounterValue(void)
+void LiveCounter_IncrementCounterValue(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  if ((DAT_844f01cd != '\0') && (param_2 != 0)) {
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff821a9d3c,0x138,0,0xffffffff82000f98,0xffffffff821a9d78);
+    }
+    iVar4 = 0;
+    if (0 < DAT_82998b30) {
+      piVar3 = &DAT_844f19e4;
+      while (*piVar3 != iVar2) {
+        iVar4 = iVar4 + 1;
+        piVar3 = piVar3 + 4;
+        if (DAT_82998b30 <= iVar4) {
+          __restgprlr_29();
+          return;
+        }
+      }
+      bVar1 = DAT_844f01ce == '\0';
+      (&DAT_844f19e8)[iVar4 * 2] = param_2 + (&DAT_844f19e8)[iVar4 * 2];
+      if (bVar1) {
+        DAT_844f01ce = '\x01';
+        iVar2 = Sys_Milliseconds();
+        DAT_844f01d0 = iVar2 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -188,23 +458,24 @@ int LiveCounter_CounterStringToID(ulonglong param_1)
   int local_20 [2];
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9d3c,0x157,0,0xffffffff82000f98,0xffffffff821a9df0);
   }
-  StringTable_GetAsset(0xffffffff821a9dd8,local_20);
-  if (local_20[0] == 0) {
-    Com_PrintError(0x10,0xffffffff821a9d88,0xffffffff821a9dd8);
-  }
   else {
-    _Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0);
-    pcVar3 = _Str;
-    do {
-      cVar1 = *pcVar3;
-      pcVar3 = pcVar3 + 1;
-    } while (cVar1 != '\0');
-    if ((int)pcVar3 - (int)_Str != 1) {
-      iVar2 = atoi(_Str);
-      return iVar2;
+    StringTable_GetAsset(0xffffffff821a9dd8,local_20);
+    if (local_20[0] == 0) {
+      Com_PrintError(0x10,0xffffffff821a9d88,0xffffffff821a9dd8);
+    }
+    else {
+      _Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0);
+      pcVar3 = _Str;
+      do {
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
+      } while (cVar1 != '\0');
+      if ((int)pcVar3 - (int)_Str != 1) {
+        iVar2 = atoi(_Str);
+        return iVar2;
+      }
     }
   }
   return -1;
@@ -216,8 +487,34 @@ int LiveCounter_CounterStringToID(ulonglong param_1)
 void LiveCounter_DumpLive_f(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 *puVar4;
+  int local_40 [16];
+  
   __savegprlr_27();
+  StringTable_GetAsset(0xffffffff821a9dd8,local_40);
+  Com_Printf(0,0xffffffff821a9e14);
+  iVar3 = 0;
+  if (0 < DAT_82998b30) {
+    puVar4 = (undefined8 *)0x844f15d8;
+    do {
+      if (local_40[0] == 0) {
+        uVar2 = 0;
+      }
+      else {
+        uVar2 = va(0xffffffff82013b64,*(undefined4 *)((int)puVar4 + 0xc));
+        uVar2 = StringTable_Lookup(local_40[0],0,uVar2,1);
+      }
+      puVar1 = (undefined4 *)((int)puVar4 + 0xc);
+      puVar4 = puVar4 + 2;
+      Com_Printf(0,0xffffffff821a9e04,*puVar1,*puVar4,uVar2);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < DAT_82998b30);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -310,13 +607,92 @@ void LiveCounter_SetupCounters(void)
 }
 
 
+// 826E7CF8  LiveCounter_CheckOngoingTasks  (DW/dwCounter.cpp:459)
+
+void LiveCounter_CheckOngoingTasks(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  int *piVar4;
+  
+  __savegprlr_25();
+  lVar3 = 0;
+  piVar4 = &DAT_844f0270;
+  do {
+    if (*(char *)(piVar4 + 1) != '\0') {
+      if (*piVar4 == 0) {
+        iVar2 = LiveCounter_IncrementCountersComplete(lVar3);
+      }
+      else {
+        if (*piVar4 != 1) {
+          if (DAT_84013128 == 0) {
+            uVar1 = va(0xffffffff821a28a0);
+            MyAssertHandler(0xffffffff821a9d3c,0x1ef,0,uVar1);
+          }
+          goto LAB_826e7db0;
+        }
+        iVar2 = LiveCounter_GetCounterTotalsComplete(lVar3);
+      }
+      if ((iVar2 != 0) && (iVar2 != 1)) {
+        Com_Printf(0x10,0xffffffff821a2754);
+      }
+    }
+LAB_826e7db0:
+    piVar4 = piVar4 + 0x28;
+    lVar3 = lVar3 + 1;
+    if (-0x7bb0e991 < (int)piVar4) {
+      __restgprlr_25();
+      return;
+    }
+  } while( true );
+}
+
+
 // 826E7DD0  LiveCounter_Update  (DW/dwCounter.cpp:502)
 
 void LiveCounter_Update(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = dwGetLogOnStatus();
+  if (iVar2 == 2) {
+    if (DAT_844f01cc == '\0') {
+      DAT_844f01cc = '\x01';
+      LiveCounter_SetupCounters();
+    }
+    if (DAT_844f01cd != '\0') {
+      CL_LocalClientNumFromControllerIndex(uVar1);
+      iVar2 = CL_IsCgameInitialized();
+      if (iVar2 != 1) {
+        LiveCounter_CheckOngoingTasks();
+        iVar2 = Sys_Milliseconds();
+        if ((DAT_844f01d4 < iVar2) && (DAT_844f01cf == '\x01')) {
+          DAT_844f01cf = '\0';
+          LiveCounter_GetCounterTotals(uVar1);
+          iVar2 = Sys_Milliseconds();
+          DAT_844f01d4 = iVar2 + *(int *)(DAT_844f01c0 + 0xc) * 60000;
+        }
+        if ((DAT_844f01ce == '\x01') && (iVar2 = Sys_Milliseconds(), DAT_844f01d0 < iVar2)) {
+          cVar3 = LiveCounter_IncrementCounters(uVar1);
+          if (cVar3 != '\0') {
+            DAT_844f01ce = 0;
+            __restgprlr_29();
+            return;
+          }
+          iVar2 = Sys_Milliseconds();
+          DAT_844f01d0 = iVar2 + *(int *)(DAT_844f01c4 + 0xc) * 60000;
+        }
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 

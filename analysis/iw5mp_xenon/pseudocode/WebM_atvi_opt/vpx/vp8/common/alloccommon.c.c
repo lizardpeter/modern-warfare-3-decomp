@@ -2,11 +2,25 @@
 
 // 82811008  vp8_update_mode_info_border  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:29)
 
-void vp8_update_mode_info_border(void)
+void vp8_update_mode_info_border(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  void *pvVar2;
+  
+  lVar1 = __savegprlr_29();
+  pvVar2 = vpx_memset((void *)((int)lVar1 + ((int)param_3 + 2) * -0x98),0,
+                      (int)(param_3 * 0x98) + 0x98);
+  if (0 < (int)param_2) {
+    lVar1 = lVar1 + -0x98;
+    do {
+      pvVar2 = vpx_memset((void *)lVar1,0,0x98);
+      param_2 = param_2 + -1;
+      lVar1 = lVar1 + param_3 * 0x98;
+    } while (param_2 != 0);
+  }
+  __restgprlr_29(pvVar2);
+  return;
 }
 
 
@@ -15,8 +29,26 @@ void vp8_update_mode_info_border(void)
 void vp8_de_alloc_frame_buffers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = iVar1 + 0x35bc;
+  lVar3 = 4;
+  do {
+    vp8_yv12_de_alloc_frame_buffer(iVar2);
+    lVar3 = lVar3 + -1;
+    iVar2 = iVar2 + 0x34;
+  } while (lVar3 != 0);
+  vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36e0);
+  vp8_yv12_de_alloc_frame_buffer(iVar1 + 0x36ac);
+  vpx_free(*(undefined4 *)(iVar1 + 0x5fc4));
+  vpx_free(*(undefined4 *)(iVar1 + 0x376c));
+  *(undefined4 *)(iVar1 + 0x5fc4) = 0;
+  *(undefined4 *)(iVar1 + 0x376c) = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -153,6 +185,44 @@ void vp8_setup_version(int param_1)
   *(undefined4 *)(param_1 + 0x373c) = 0;
   *(undefined4 *)(param_1 + 0x3740) = 1;
   *(undefined4 *)(param_1 + 0x3744) = 0;
+  return;
+}
+
+
+// 82811388  vp8_create_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:169)
+
+void * vp8_create_common(int param_1)
+
+{
+  void *pvVar1;
+  
+  vp8_machine_specific_config();
+  vp8_default_coef_probs(param_1);
+  vp8_init_mbmode_probs(param_1);
+  vp8_default_bmode_probs(param_1 + 0x67db);
+  *(undefined4 *)(param_1 + 0x3738) = 0;
+  *(undefined4 *)(param_1 + 0x3734) = 1;
+  *(undefined4 *)(param_1 + 0x373c) = 0;
+  *(undefined4 *)(param_1 + 0x3740) = 0;
+  *(undefined4 *)(param_1 + 0x3744) = 0;
+  *(undefined4 *)(param_1 + 0x6c70) = 0;
+  *(undefined4 *)(param_1 + 0x35b0) = 0;
+  *(undefined4 *)(param_1 + 0x35b4) = 0;
+  pvVar1 = vpx_memset((void *)(param_1 + 0x5fb4),0,0x10);
+  *(undefined4 *)(param_1 + 0x5fa8) = 0;
+  *(undefined4 *)(param_1 + 0x5fac) = 0;
+  return pvVar1;
+}
+
+
+// 82811420  vp8_initialize_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:198)
+
+void vp8_initialize_common(void)
+
+{
+  vp8_coef_tree_initialize();
+  vp8_entropy_mode_init();
+  vp8_init_scan_order_mask();
   return;
 }
 

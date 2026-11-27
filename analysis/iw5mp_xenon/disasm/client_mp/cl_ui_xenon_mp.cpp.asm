@@ -3,6 +3,59 @@
 ; 82355298  LAN_GetServerAddressString  (client_mp/cl_ui_xenon_mp.cpp:29)
   82355298  7D8802A6             mfspr r12,LR
   8235529C  485C141D             bl 0x829166b8
+  823552A0  9421FEC0             stwu r1,-0x140(r1)
+  823552A4  7CBD2B78             or r29,r5,r5
+  823552A8  7CDC3378             or r28,r6,r6
+  823552AC  2F030000             cmpwi cr6,r3,0x0
+  823552B0  409A00A4             bne cr6,0x82355354
+  823552B4  2F040000             cmpwi cr6,r4,0x0
+  823552B8  4198009C             blt cr6,0x82355354
+  823552BC  2F040010             cmpwi cr6,r4,0x10
+  823552C0  40980094             bge cr6,0x82355354
+  823552C4  3D6082AA             lis r11,-0x7d56
+  823552C8  1FC400D0             mulli r30,r4,0xd0
+  823552CC  3BEB1B00             addi r31,r11,0x1b00
+  823552D0  38810090             addi r4,r1,0x90
+  823552D4  397F017C             addi r11,r31,0x17c
+  823552D8  7C7E5A14             add r3,r30,r11
+  823552DC  481B765D             bl 0x8250c938
+  823552E0  395F018C             addi r10,r31,0x18c
+  823552E4  38810050             addi r4,r1,0x50
+  823552E8  7C7E502A             ldx r3,r30,r10
+  823552EC  481B75D5             bl 0x8250c8c0
+  823552F0  397F0158             addi r11,r31,0x158
+  823552F4  388100C0             addi r4,r1,0xc0
+  823552F8  7C7E5A14             add r3,r30,r11
+  823552FC  481B7ADD             bl 0x8250cdd8
+  82355300  393F01A8             addi r9,r31,0x1a8
+  82355304  38810070             addi r4,r1,0x70
+  82355308  7C7E482A             ldx r3,r30,r9
+  8235530C  481B75B5             bl 0x8250c8c0
+  82355310  3CC08203             lis r6,-0x7dfd
+  82355314  391F019C             addi r8,r31,0x19c
+  82355318  38FF0194             addi r7,r31,0x194
+  8235531C  38666904             addi r3,r6,0x6904
+  82355320  39210070             addi r9,r1,0x70
+  82355324  38C10050             addi r6,r1,0x50
+  82355328  38A10090             addi r5,r1,0x90
+  8235532C  388100C0             addi r4,r1,0xc0
+  82355330  7D1E402E             lwzx r8,r30,r8
+  82355334  7CFE382E             lwzx r7,r30,r7
+  82355338  482B7341             bl 0x8260c678
+  8235533C  7C641B78             or r4,r3,r3
+  82355340  7FA3EB78             or r3,r29,r29
+  82355344  7F85E378             or r5,r28,r28
+  82355348  482B69B9             bl 0x8260bd00
+  8235534C  38210140             addi r1,r1,0x140
+  82355350  485C13B8             b 0x82916708
+LAB_82355354:
+  82355354  39600000             li r11,0x0
+  82355358  997D0000             stb r11,0x0(r29)
+  8235535C  38210140             addi r1,r1,0x140
+  82355360  485C13A8             b 0x82916708
+
+; 82355368  LAN_LoadCachedServers  (client_mp/cl_ui_xenon_mp.cpp:102)
+  82355368  4E800020             blr
 
 ; 82355370  LAN_SaveServersToCache  (client_mp/cl_ui_xenon_mp.cpp:115)
   82355370  4E800020             blr
@@ -10,3 +63,70 @@
 ; 82355378  CL_XenonHudIsOffscreen  (client_mp/cl_ui_xenon_mp.cpp:123)
   82355378  7D8802A6             mfspr r12,LR
   8235537C  485C1341             bl 0x829166bc
+  82355380  9421FE90             stwu r1,-0x170(r1)
+  82355384  3FC08425             lis r30,-0x7bdb
+  82355388  7C7F1B78             or r31,r3,r3
+  8235538C  897E46D0             lbz r11,0x46d0(r30)
+  82355390  2B0B0000             cmplwi cr6,r11,0x0
+  82355394  419A00E0             beq cr6,0x82355474
+  82355398  3D608425             lis r11,-0x7bdb
+  8235539C  394B3CAC             addi r10,r11,0x3cac
+  823553A0  816A0018             lwz r11,0x18(r10)
+  823553A4  2B0B0000             cmplwi cr6,r11,0x0
+  823553A8  409A00B4             bne cr6,0x8235545c
+  823553AC  3D608425             lis r11,-0x7bdb
+  823553B0  39400000             li r10,0x0
+  823553B4  3BAB36F8             addi r29,r11,0x36f8
+  823553B8  39200000             li r9,0x0
+  823553BC  7FA5EB78             or r5,r29,r29
+  823553C0  39000100             li r8,0x100
+  823553C4  38E10050             addi r7,r1,0x50
+  823553C8  38C0FFFF             li r6,-0x1
+  823553CC  38800000             li r4,0x0
+  823553D0  38600000             li r3,0x0
+  823553D4  4854D34D             bl 0x828a2720
+  823553D8  39400000             li r10,0x0
+  823553DC  3D208200             lis r9,-0x7e00
+  823553E0  9941014F             stb r10,0x14f(r1)
+  823553E4  38A10050             addi r5,r1,0x50
+  823553E8  38894D30             addi r4,r9,0x4d30
+  823553EC  38600010             li r3,0x10
+  823553F0  481A1391             bl 0x824f6780
+  823553F4  7FA4EB78             or r4,r29,r29
+  823553F8  38610050             addi r3,r1,0x50
+  823553FC  48272A75             bl 0x825c7e70
+  82355400  5468063E             rlwinm r8,r3,0x0,0x18,0x1f
+  82355404  2B080000             cmplwi cr6,r8,0x0
+  82355408  409A0038             bne cr6,0x82355440
+  8235540C  3D608203             lis r11,-0x7dfd
+  82355410  386B692C             addi r3,r11,0x692c
+  82355414  481A1B35             bl 0x824f6f48
+  82355418  3D408203             lis r10,-0x7dfd
+  8235541C  7FE3FB78             or r3,r31,r31
+  82355420  388A6918             addi r4,r10,0x6918
+  82355424  482574B5             bl 0x825ac8d8
+  82355428  39600000             li r11,0x0
+  8235542C  7FE3FB78             or r3,r31,r31
+  82355430  997E46D0             stb r11,0x46d0(r30)
+  82355434  48273595             bl 0x825c89c8
+  82355438  38210170             addi r1,r1,0x170
+  8235543C  485C12D0             b 0x8291670c
+LAB_82355440:
+  82355440  38810050             addi r4,r1,0x50
+  82355444  7FE3FB78             or r3,r31,r31
+  82355448  48273511             bl 0x825c8958
+  8235544C  39600000             li r11,0x0
+  82355450  997E46D0             stb r11,0x46d0(r30)
+  82355454  38210170             addi r1,r1,0x170
+  82355458  485C12B4             b 0x8291670c
+LAB_8235545c:
+  8235545C  2B0B04C7             cmplwi cr6,r11,0x4c7
+  82355460  409A000C             bne cr6,0x8235546c
+  82355464  7FE3FB78             or r3,r31,r31
+  82355468  48273561             bl 0x825c89c8
+LAB_8235546c:
+  8235546C  39600000             li r11,0x0
+  82355470  997E46D0             stb r11,0x46d0(r30)
+LAB_82355474:
+  82355474  38210170             addi r1,r1,0x170
+  82355478  485C1294             b 0x8291670c

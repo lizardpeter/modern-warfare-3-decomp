@@ -2,11 +2,46 @@
 
 // 823F6B20  Load_Stream  (database/db_stream_load.cpp:17)
 
-void Load_Stream(void)
+void Load_Stream(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar2;
+  void *pvVar1;
+  longlong lVar3;
+  undefined1 auStack_b0 [176];
+  
+  cVar2 = __savegprlr_27();
+  pvVar1 = (void *)DB_GetStreamPos();
+  if ((bool)cVar2 != (pvVar1 == (void *)param_2)) {
+    MyAssertHandler(0xffffffff8205c9d0,0x17,0,0xffffffff82000f98,0xffffffff8205c9a4);
+  }
+  if ((cVar2 != '\0') && ((size_t)param_3 != 0)) {
+    if (DAT_83231c1c == 2) {
+      memset((void *)param_2,0,(size_t)param_3);
+      DB_IncStreamPos(param_3);
+      __restgprlr_27();
+      return;
+    }
+    if (DAT_83231c1c == 6) {
+      if ((param_2 & 0xffffffff) != 0) {
+        MyAssertHandler(0xffffffff8205c9d0,0x27,0,0xffffffff82000f98,0xffffffff8205c99c);
+      }
+      do {
+        lVar3 = param_3;
+        if (0x80 < (int)param_3) {
+          lVar3 = 0x80;
+        }
+        DB_ReadXFile(auStack_b0,lVar3,0);
+        param_3 = param_3 - lVar3;
+      } while (param_3 != 0);
+      __restgprlr_27();
+      return;
+    }
+    DB_ReadXFile(param_2,param_3,0);
+    DB_IncStreamPos(param_3);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -15,8 +50,22 @@ void Load_Stream(void)
 void DB_ConvertOffsetToAlias(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_28();
+  iVar1 = *piVar3;
+  if (((iVar1 == 0) || (iVar1 == -1)) || (iVar1 == -2)) {
+    MyAssertHandler(0xffffffff8205c9d0,0x41,0,0xffffffff8205ca6c,0xffffffff8205ca80,iVar1);
+  }
+  uVar2 = iVar1 - 1U >> 0x1c;
+  if (6 < uVar2) {
+    MyAssertHandler(0xffffffff8205c9d0,0x45,0,0xffffffff8205ca18,uVar2,7);
+  }
+  *piVar3 = *(int *)(*(int *)(uVar2 * 8 + DAT_83231bf4) + (iVar1 - 1U & 0xfffffff));
+  __restgprlr_28();
+  return;
 }
 
 
@@ -25,8 +74,19 @@ void DB_ConvertOffsetToAlias(void)
 void DB_ConvertOffsetToPointer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_29();
+  iVar1 = *piVar3;
+  uVar2 = iVar1 - 1U >> 0x1c;
+  if (6 < uVar2) {
+    MyAssertHandler(0xffffffff8205c9d0,0x52,0,0xffffffff8205ca18,uVar2,7);
+  }
+  *piVar3 = *(int *)(uVar2 * 8 + DAT_83231bf4) + (iVar1 - 1U & 0xfffffff);
+  __restgprlr_29();
+  return;
 }
 
 

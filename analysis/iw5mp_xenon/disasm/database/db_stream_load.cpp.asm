@@ -3,14 +3,158 @@
 ; 823F6B20  Load_Stream  (database/db_stream_load.cpp:17)
   823F6B20  7D8802A6             mfspr r12,LR
   823F6B24  4851FB91             bl 0x829166b4
+  823F6B28  9421FF00             stwu r1,-0x100(r1)
+  823F6B2C  7C9E2378             or r30,r4,r4
+  823F6B30  7CBF2B78             or r31,r5,r5
+  823F6B34  547D063E             rlwinm r29,r3,0x0,0x18,0x1f
+  823F6B38  4BFFFEC1             bl 0x823f69f8
+  823F6B3C  7D5E1850             subf r10,r30,r3
+  823F6B40  3D608206             lis r11,-0x7dfa
+  823F6B44  7D490034             cntlzw r9,r10
+  823F6B48  3D408200             lis r10,-0x7e00
+  823F6B4C  5528DFFE             rlwinm r8,r9,0x1b,0x1f,0x1f
+  823F6B50  3B8BC9D0             subi r28,r11,0x3630
+  823F6B54  7F1D4000             cmpw cr6,r29,r8
+  823F6B58  3B6A0F98             addi r27,r10,0xf98
+  823F6B5C  419A0020             beq cr6,0x823f6b7c
+  823F6B60  3D608206             lis r11,-0x7dfa
+  823F6B64  7F66DB78             or r6,r27,r27
+  823F6B68  38EBC9A4             subi r7,r11,0x365c
+  823F6B6C  7F83E378             or r3,r28,r28
+  823F6B70  38A00000             li r5,0x0
+  823F6B74  38800017             li r4,0x17
+  823F6B78  481DD989             bl 0x825d4500
+LAB_823f6b7c:
+  823F6B7C  2B1D0000             cmplwi cr6,r29,0x0
+  823F6B80  419A00B0             beq cr6,0x823f6c30
+  823F6B84  2F1F0000             cmpwi cr6,r31,0x0
+  823F6B88  419A00A8             beq cr6,0x823f6c30
+  823F6B8C  3D608323             lis r11,-0x7cdd
+  823F6B90  816B1C1C             lwz r11,0x1c1c(r11)
+  823F6B94  2B0B0002             cmplwi cr6,r11,0x2
+  823F6B98  409A0024             bne cr6,0x823f6bbc
+  823F6B9C  7FE5FB78             or r5,r31,r31
+  823F6BA0  38800000             li r4,0x0
+  823F6BA4  7FC3F378             or r3,r30,r30
+  823F6BA8  4851FC59             bl 0x82916800
+  823F6BAC  7FE3FB78             or r3,r31,r31
+  823F6BB0  4BFFFE71             bl 0x823f6a20
+  823F6BB4  38210100             addi r1,r1,0x100
+  823F6BB8  4851FB4C             b 0x82916704
+LAB_823f6bbc:
+  823F6BBC  2B0B0006             cmplwi cr6,r11,0x6
+  823F6BC0  409A0058             bne cr6,0x823f6c18
+  823F6BC4  2B1E0000             cmplwi cr6,r30,0x0
+  823F6BC8  419A0020             beq cr6,0x823f6be8
+  823F6BCC  3D608206             lis r11,-0x7dfa
+  823F6BD0  7F66DB78             or r6,r27,r27
+  823F6BD4  38EBC99C             subi r7,r11,0x3664
+  823F6BD8  7F83E378             or r3,r28,r28
+  823F6BDC  38A00000             li r5,0x0
+  823F6BE0  38800027             li r4,0x27
+  823F6BE4  481DD91D             bl 0x825d4500
+LAB_823f6be8:
+  823F6BE8  2F1F0080             cmpwi cr6,r31,0x80
+  823F6BEC  7FFEFB78             or r30,r31,r31
+  823F6BF0  40990008             ble cr6,0x823f6bf8
+  823F6BF4  3BC00080             li r30,0x80
+LAB_823f6bf8:
+  823F6BF8  38A00000             li r5,0x0
+  823F6BFC  7FC4F378             or r4,r30,r30
+  823F6C00  38610050             addi r3,r1,0x50
+  823F6C04  4BFAE03D             bl 0x823a4c40
+  823F6C08  7FFEF851             subf. r31,r30,r31
+  823F6C0C  4082FFDC             bne 0x823f6be8
+  823F6C10  38210100             addi r1,r1,0x100
+  823F6C14  4851FAF0             b 0x82916704
+LAB_823f6c18:
+  823F6C18  38A00000             li r5,0x0
+  823F6C1C  7FE4FB78             or r4,r31,r31
+  823F6C20  7FC3F378             or r3,r30,r30
+  823F6C24  4BFAE01D             bl 0x823a4c40
+  823F6C28  7FE3FB78             or r3,r31,r31
+  823F6C2C  4BFFFDF5             bl 0x823f6a20
+LAB_823f6c30:
+  823F6C30  38210100             addi r1,r1,0x100
+  823F6C34  4851FAD0             b 0x82916704
 
 ; 823F6C38  DB_ConvertOffsetToAlias  (database/db_stream_load.cpp:60)
   823F6C38  7D8802A6             mfspr r12,LR
   823F6C3C  4851FA7D             bl 0x829166b8
+  823F6C40  9421FF80             stwu r1,-0x80(r1)
+  823F6C44  83E30000             lwz r31,0x0(r3)
+  823F6C48  3D608206             lis r11,-0x7dfa
+  823F6C4C  7C7D1B78             or r29,r3,r3
+  823F6C50  2B1F0000             cmplwi cr6,r31,0x0
+  823F6C54  3B8BC9D0             subi r28,r11,0x3630
+  823F6C58  419A0014             beq cr6,0x823f6c6c
+  823F6C5C  2F1FFFFF             cmpwi cr6,r31,-0x1
+  823F6C60  419A000C             beq cr6,0x823f6c6c
+  823F6C64  2F1FFFFE             cmpwi cr6,r31,-0x2
+  823F6C68  409A0028             bne cr6,0x823f6c90
+LAB_823f6c6c:
+  823F6C6C  3D608206             lis r11,-0x7dfa
+  823F6C70  3D408206             lis r10,-0x7dfa
+  823F6C74  38EBCA80             subi r7,r11,0x3580
+  823F6C78  38CACA6C             subi r6,r10,0x3594
+  823F6C7C  7F83E378             or r3,r28,r28
+  823F6C80  7FE8FB78             or r8,r31,r31
+  823F6C84  38A00000             li r5,0x0
+  823F6C88  38800041             li r4,0x41
+  823F6C8C  481DD875             bl 0x825d4500
+LAB_823f6c90:
+  823F6C90  397FFFFF             subi r11,r31,0x1
+  823F6C94  557F273E             rlwinm r31,r11,0x4,0x1c,0x1f
+  823F6C98  557E013E             rlwinm r30,r11,0x0,0x4,0x1f
+  823F6C9C  2B1F0007             cmplwi cr6,r31,0x7
+  823F6CA0  41980024             blt cr6,0x823f6cc4
+  823F6CA4  3D608206             lis r11,-0x7dfa
+  823F6CA8  7F83E378             or r3,r28,r28
+  823F6CAC  38CBCA18             subi r6,r11,0x35e8
+  823F6CB0  39000007             li r8,0x7
+  823F6CB4  7FE7FB78             or r7,r31,r31
+  823F6CB8  38A00000             li r5,0x0
+  823F6CBC  38800045             li r4,0x45
+  823F6CC0  481DD841             bl 0x825d4500
+LAB_823f6cc4:
+  823F6CC4  3D608323             lis r11,-0x7cdd
+  823F6CC8  57EA1838             rlwinm r10,r31,0x3,0x0,0x1c
+  823F6CCC  816B1BF4             lwz r11,0x1bf4(r11)
+  823F6CD0  7D2A582E             lwzx r9,r10,r11
+  823F6CD4  7D09F02E             lwzx r8,r9,r30
+  823F6CD8  911D0000             stw r8,0x0(r29)
+  823F6CDC  38210080             addi r1,r1,0x80
+  823F6CE0  4851FA28             b 0x82916708
 
 ; 823F6CE8  DB_ConvertOffsetToPointer  (database/db_stream_load.cpp:75)
   823F6CE8  7D8802A6             mfspr r12,LR
   823F6CEC  4851F9D1             bl 0x829166bc
+  823F6CF0  9421FF90             stwu r1,-0x70(r1)
+  823F6CF4  81630000             lwz r11,0x0(r3)
+  823F6CF8  7C7E1B78             or r30,r3,r3
+  823F6CFC  396BFFFF             subi r11,r11,0x1
+  823F6D00  557F273E             rlwinm r31,r11,0x4,0x1c,0x1f
+  823F6D04  557D013E             rlwinm r29,r11,0x0,0x4,0x1f
+  823F6D08  2B1F0007             cmplwi cr6,r31,0x7
+  823F6D0C  41980028             blt cr6,0x823f6d34
+  823F6D10  3D608206             lis r11,-0x7dfa
+  823F6D14  3D408206             lis r10,-0x7dfa
+  823F6D18  38CBCA18             subi r6,r11,0x35e8
+  823F6D1C  386AC9D0             subi r3,r10,0x3630
+  823F6D20  39000007             li r8,0x7
+  823F6D24  7FE7FB78             or r7,r31,r31
+  823F6D28  38A00000             li r5,0x0
+  823F6D2C  38800052             li r4,0x52
+  823F6D30  481DD7D1             bl 0x825d4500
+LAB_823f6d34:
+  823F6D34  3D608323             lis r11,-0x7cdd
+  823F6D38  57EA1838             rlwinm r10,r31,0x3,0x0,0x1c
+  823F6D3C  816B1BF4             lwz r11,0x1bf4(r11)
+  823F6D40  7D6A582E             lwzx r11,r10,r11
+  823F6D44  7D2BEA14             add r9,r11,r29
+  823F6D48  913E0000             stw r9,0x0(r30)
+  823F6D4C  38210070             addi r1,r1,0x70
+  823F6D50  4851F9BC             b 0x8291670c
 
 ; 823F6D58  Load_XStringCustom  (database/db_stream_load.cpp:88)
   823F6D58  7D8802A6             mfspr r12,LR

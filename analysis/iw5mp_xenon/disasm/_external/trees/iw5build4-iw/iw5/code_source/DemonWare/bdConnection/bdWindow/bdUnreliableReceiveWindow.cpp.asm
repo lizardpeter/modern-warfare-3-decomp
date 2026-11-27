@@ -34,6 +34,94 @@
 ; 82938538  bdUnreliableReceiveWindow::add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:24)
   82938538  7D8802A6             mfspr r12,LR
   8293853C  4BFDE17D             bl 0x829166b8
+  82938540  3BE1FF80             subi r31,r1,0x80
+  82938544  9421FF80             stwu r1,-0x80(r1)
+  82938548  7C7E1B78             or r30,r3,r3
+  8293854C  909F009C             stw r4,0x9c(r31)
+  82938550  7C9C2378             or r28,r4,r4
+  82938554  80640000             lwz r3,0x0(r4)
+  82938558  3BBE0004             addi r29,r30,0x4
+  8293855C  4BFFEE65             bl 0x829373c0
+  82938560  5465043E             rlwinm r5,r3,0x0,0x10,0x1f
+  82938564  7FA4EB78             or r4,r29,r29
+  82938568  387F0050             addi r3,r31,0x50
+  8293856C  38C00010             li r6,0x10
+  82938570  48004D31             bl 0x8293d2a0
+  82938574  7FA4EB78             or r4,r29,r29
+  82938578  387F0050             addi r3,r31,0x50
+  8293857C  48004C95             bl 0x8293d210
+  82938580  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82938584  4182001C             beq 0x829385a0
+  82938588  387E0008             addi r3,r30,0x8
+  8293858C  809E000C             lwz r4,0xc(r30)
+  82938590  7F85E378             or r5,r28,r28
+  82938594  4BFFE99D             bl 0x82936f30
+  82938598  817F0050             lwz r11,0x50(r31)
+  8293859C  917D0000             stw r11,0x0(r29)
+LAB_829385a0:
+  829385A0  7F83E378             or r3,r28,r28
+  829385A4  4BFF8515             bl 0x82930ab8
+  829385A8  38600001             li r3,0x1
+  829385AC  383F0080             addi r1,r31,0x80
+  829385B0  4BFDE158             b 0x82916708
+
+; 82938368  bdUnreliableReceiveWindow::getNextToRead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:38)
+  82938368  7D8802A6             mfspr r12,LR
+  8293836C  4BFDE351             bl 0x829166bc
+  82938370  3BE1FF80             subi r31,r1,0x80
+  82938374  9421FF80             stwu r1,-0x80(r1)
+  82938378  7C7E1B78             or r30,r3,r3
+  8293837C  907F0094             stw r3,0x94(r31)
+  82938380  39600000             li r11,0x0
+  82938384  917F0050             stw r11,0x50(r31)
+  82938388  91630000             stw r11,0x0(r3)
+  8293838C  81440010             lwz r10,0x10(r4)
+  82938390  39600001             li r11,0x1
+  82938394  2B0A0000             cmplwi cr6,r10,0x0
+  82938398  917F0050             stw r11,0x50(r31)
+  8293839C  419A0024             beq cr6,0x829383c0
+  829383A0  3BA40008             addi r29,r4,0x8
+  829383A4  7FA3EB78             or r3,r29,r29
+  829383A8  4BFFEAC9             bl 0x82936e70
+  829383AC  7C641B78             or r4,r3,r3
+  829383B0  7FC3F378             or r3,r30,r30
+  829383B4  4BFFCB5D             bl 0x82934f10
+  829383B8  7FA3EB78             or r3,r29,r29
+  829383BC  4BFFEC8D             bl 0x82937048
+LAB_829383c0:
+  829383C0  7FC3F378             or r3,r30,r30
+  829383C4  383F0080             addi r1,r31,0x80
+  829383C8  4BFDE344             b 0x8291670c
+
+; 82938410  bdUnreliableReceiveWindow::reset  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:52)
+  82938410  7D8802A6             mfspr r12,LR
+  82938414  9181FFF8             stw r12,-0x8(r1)
+  82938418  FBC1FFE8             std r30,-0x18(r1)
+  8293841C  FBE1FFF0             std r31,-0x10(r1)
+  82938420  9421FF90             stwu r1,-0x70(r1)
+  82938424  7C7F1B78             or r31,r3,r3
+  82938428  3880FFFF             li r4,-0x1
+  8293842C  38610050             addi r3,r1,0x50
+  82938430  48004BA9             bl 0x8293cfd8
+  82938434  81610050             lwz r11,0x50(r1)
+  82938438  815F0010             lwz r10,0x10(r31)
+  8293843C  2B0A0000             cmplwi cr6,r10,0x0
+  82938440  917F0004             stw r11,0x4(r31)
+  82938444  419A001C             beq cr6,0x82938460
+  82938448  3BDF0008             addi r30,r31,0x8
+LAB_8293844c:
+  8293844C  7FC3F378             or r3,r30,r30
+  82938450  4BFFEBF9             bl 0x82937048
+  82938454  817F0010             lwz r11,0x10(r31)
+  82938458  2B0B0000             cmplwi cr6,r11,0x0
+  8293845C  409AFFF0             bne cr6,0x8293844c
+LAB_82938460:
+  82938460  38210070             addi r1,r1,0x70
+  82938464  8181FFF8             lwz r12,-0x8(r1)
+  82938468  7D8803A6             mtspr LR,r12
+  8293846C  EBC1FFE8             ld r30,-0x18(r1)
+  82938470  EBE1FFF0             ld r31,-0x10(r1)
+  82938474  4E800020             blr
 
 ; 829384D0  bdUnreliableReceiveWindow::`scalar_deleting_destructor'  (line unknown)
   829384D0  7D8802A6             mfspr r12,LR

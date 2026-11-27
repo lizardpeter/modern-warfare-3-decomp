@@ -3,6 +3,69 @@
 ; 82725AF0  R_DebugAlloc  (gfx_d3d/r_debug_alloc.cpp:7)
   82725AF0  7D8802A6             mfspr r12,LR
   82725AF4  481F0BC1             bl 0x829166b4
+  82725AF8  9421FF80             stwu r1,-0x80(r1)
+  82725AFC  3D60821C             lis r11,-0x7de4
+  82725B00  3D408200             lis r10,-0x7e00
+  82725B04  7C7D1B78             or r29,r3,r3
+  82725B08  7C9C2378             or r28,r4,r4
+  82725B0C  7CBB2B78             or r27,r5,r5
+  82725B10  2B030000             cmplwi cr6,r3,0x0
+  82725B14  3BEBBEE0             subi r31,r11,0x4120
+  82725B18  3BCA0F98             addi r30,r10,0xf98
+  82725B1C  409A0020             bne cr6,0x82725b3c
+  82725B20  3D60821C             lis r11,-0x7de4
+  82725B24  7FC6F378             or r6,r30,r30
+  82725B28  38EBBED4             subi r7,r11,0x412c
+  82725B2C  7FE3FB78             or r3,r31,r31
+  82725B30  38A00000             li r5,0x0
+  82725B34  38800008             li r4,0x8
+  82725B38  4BEAE9C9             bl 0x825d4500
+LAB_82725b3c:
+  82725B3C  817D0000             lwz r11,0x0(r29)
+  82725B40  2B0B0000             cmplwi cr6,r11,0x0
+  82725B44  419A0020             beq cr6,0x82725b64
+  82725B48  3D60821C             lis r11,-0x7de4
+  82725B4C  7FC6F378             or r6,r30,r30
+  82725B50  38EBBEC8             subi r7,r11,0x4138
+  82725B54  7FE3FB78             or r3,r31,r31
+  82725B58  38A00000             li r5,0x0
+  82725B5C  38800009             li r4,0x9
+  82725B60  4BEAE9A1             bl 0x825d4500
+LAB_82725b64:
+  82725B64  2F1C0000             cmpwi cr6,r28,0x0
+  82725B68  41990020             bgt cr6,0x82725b88
+  82725B6C  3D608206             lis r11,-0x7dfa
+  82725B70  7FC6F378             or r6,r30,r30
+  82725B74  38EB89CC             subi r7,r11,0x7634
+  82725B78  7FE3FB78             or r3,r31,r31
+  82725B7C  38A00000             li r5,0x0
+  82725B80  3880000A             li r4,0xa
+  82725B84  4BEAE97D             bl 0x825d4500
+LAB_82725b88:
+  82725B88  578B07BE             rlwinm r11,r28,0x0,0x1e,0x1f
+  82725B8C  2F0B0000             cmpwi cr6,r11,0x0
+  82725B90  419A0020             beq cr6,0x82725bb0
+  82725B94  3D60821C             lis r11,-0x7de4
+  82725B98  7FC6F378             or r6,r30,r30
+  82725B9C  38EBBEB4             subi r7,r11,0x414c
+  82725BA0  7FE3FB78             or r3,r31,r31
+  82725BA4  38A00000             li r5,0x0
+  82725BA8  3880000B             li r4,0xb
+  82725BAC  4BEAE955             bl 0x825d4500
+LAB_82725bb0:
+  82725BB0  38A00000             li r5,0x0
+  82725BB4  7F64DB78             or r4,r27,r27
+  82725BB8  7F83E378             or r3,r28,r28
+  82725BBC  4BEBE3B5             bl 0x825e3f70
+  82725BC0  907D0000             stw r3,0x0(r29)
+  82725BC4  2B030000             cmplwi cr6,r3,0x0
+  82725BC8  409A0010             bne cr6,0x82725bd8
+  82725BCC  7F64DB78             or r4,r27,r27
+  82725BD0  38600032             li r3,0x32
+  82725BD4  48063435             bl 0x82789008
+LAB_82725bd8:
+  82725BD8  38210080             addi r1,r1,0x80
+  82725BDC  481F0B28             b 0x82916704
 
 ; 82725BE0  R_DebugFree  (gfx_d3d/r_debug_alloc.cpp:21)
   82725BE0  7D8802A6             mfspr r12,LR

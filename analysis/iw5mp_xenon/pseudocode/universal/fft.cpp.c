@@ -2,11 +2,63 @@
 
 // 82602D88  FFT_Init  (universal/fft.cpp:7)
 
-void FFT_Init(void)
+void FFT_Init(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  longlong lVar2;
+  uint uVar3;
+  double dVar4;
+  double _X;
+  double dVar5;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (puVar1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8217c4fc,0xb,0,0xffffffff82000f98,0xffffffff8217c4f0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8217c4fc,0xc,0,0xffffffff82000f98,0xffffffff8217c4e0);
+  }
+  lVar2 = param_2 - 8;
+  uVar3 = 0;
+  dVar5 = 0.02454369328916073;
+  do {
+    *puVar1 = 0;
+    if ((uVar3 & 1) != 0) {
+      *puVar1 = 0x80;
+    }
+    if ((uVar3 & 2) != 0) {
+      *puVar1 = *puVar1 | 0x40;
+    }
+    if ((uVar3 & 4) != 0) {
+      *puVar1 = *puVar1 | 0x20;
+    }
+    if ((uVar3 & 8) != 0) {
+      *puVar1 = *puVar1 | 0x10;
+    }
+    if ((uVar3 & 0x10) != 0) {
+      *puVar1 = *puVar1 | 8;
+    }
+    if ((uVar3 & 0x20) != 0) {
+      *puVar1 = *puVar1 | 4;
+    }
+    if ((uVar3 & 0x40) != 0) {
+      *puVar1 = *puVar1 | 2;
+    }
+    if ((uVar3 & 0x80) != 0) {
+      *puVar1 = *puVar1 | 1;
+    }
+    _X = (double)(float)((double)(longlong)(int)uVar3 * dVar5);
+    dVar4 = sin(_X);
+    *(float *)((int)lVar2 + 0xc) = (float)dVar4;
+    dVar4 = cos(_X);
+    uVar3 = uVar3 + 1;
+    lVar2 = lVar2 + 8;
+    *(float *)lVar2 = (float)dVar4;
+    puVar1 = puVar1 + 1;
+  } while ((int)uVar3 < 0x100);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -36,10 +88,153 @@ void __stvx(void)
 
 // 82602F30  FFT  (universal/fft.cpp:276)
 
-void FFT(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void FFT(undefined8 param_1,ulonglong param_2,uint param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  uint uVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int *piVar12;
+  float *pfVar13;
+  float fVar14;
+  float *pfVar15;
+  float *pfVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  uint uVar19;
+  longlong lVar20;
+  longlong lVar21;
+  int iVar22;
+  longlong lVar23;
+  int iVar24;
+  longlong lVar25;
+  uint uVar26;
+  uint uVar27;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs59 [16];
+  float local_850 [256];
+  float local_450 [276];
+  
+  uVar17 = __savegprlr_23();
+  uVar18 = uVar17;
+  if ((uVar17 & 0xf) != 0) {
+    uVar18 = MyAssertHandler(0xffffffff8217c4fc,0x128,0,0xffffffff82000f98,0xffffffff8217c564);
+  }
+  if ((param_2 & 0xf) != 0) {
+    uVar18 = MyAssertHandler(0xffffffff8217c4fc,0x129,0,0xffffffff82000f98,0xffffffff8217c548);
+  }
+  uVar8 = 1 << (param_3 & 0x3f);
+  if ((uVar8 & 3) != 0) {
+    uVar18 = MyAssertHandler(0xffffffff8217c4fc,0x12d,0,0xffffffff8216c964,0xffffffff8217c538,uVar8)
+    ;
+  }
+  param_3 = 8 - param_3;
+  if (uVar8 != 0) {
+    iVar22 = (int)uVar17;
+    uVar18 = param_2 - param_4;
+    lVar20 = (ulonglong)(uVar8 - 1 >> 2) + 1;
+    lVar25 = param_4 + 8;
+    lVar21 = param_2 - 0xc;
+    lVar23 = uVar17 + 0xc;
+    do {
+      piVar12 = (int *)lVar25;
+      pfVar13 = (float *)lVar23;
+      iVar9 = piVar12[-2] >> (param_3 & 0x3f);
+      iVar24 = piVar12[1];
+      iVar10 = piVar12[-1] >> (param_3 & 0x3f);
+      fVar1 = *(float *)((int)lVar21 + 0xc);
+      iVar11 = *piVar12 >> (param_3 & 0x3f);
+      local_450[iVar9] = pfVar13[-3];
+      iVar24 = iVar24 >> (param_3 & 0x3f);
+      fVar2 = pfVar13[-2];
+      lVar21 = lVar21 + 0x10;
+      fVar4 = *(float *)lVar21;
+      fVar5 = *(float *)((iVar22 - (int)param_4) + (int)piVar12);
+      fVar6 = *(float *)((int)uVar18 + (int)piVar12);
+      fVar3 = *pfVar13;
+      fVar7 = *(float *)(((int)param_2 - iVar22) + (int)pfVar13);
+      local_850[iVar9] = fVar1;
+      local_450[iVar10] = fVar2;
+      local_850[iVar10] = fVar4;
+      local_450[iVar11] = fVar5;
+      lVar25 = lVar25 + 0x10;
+      local_850[iVar11] = fVar6;
+      lVar23 = lVar23 + 0x10;
+      local_450[iVar24] = fVar3;
+      local_850[iVar24] = fVar7;
+      lVar20 = lVar20 + -1;
+    } while (lVar20 != 0);
+    if (uVar8 != 0) {
+      lVar20 = (ulonglong)(uVar8 - 1 >> 2) + 1;
+      lVar21 = param_2 - 4;
+      lVar23 = uVar17 + 8;
+      uVar18 = (ZEXT48(&stack0x00000000) - 0x84c) - uVar17;
+      iVar24 = 0;
+      do {
+        pfVar13 = (float *)lVar23;
+        fVar1 = *(float *)((int)local_450 + (4 - iVar22) + (int)pfVar13);
+        fVar2 = *(float *)(((int)local_450 - iVar22) + (int)pfVar13);
+        fVar3 = *(float *)((int)uVar18 + (int)pfVar13);
+        fVar4 = *(float *)(((int)local_850 - iVar22) + (int)pfVar13);
+        fVar6 = fVar1 + fVar2;
+        fVar2 = fVar2 - fVar1;
+        fVar5 = *(float *)((int)local_850 + iVar24 + 4);
+        fVar7 = fVar4 - fVar3;
+        fVar1 = *(float *)((int)local_450 + iVar24 + 4);
+        fVar3 = fVar3 + fVar4;
+        pfVar15 = (float *)((int)local_450 + iVar24);
+        pfVar16 = (float *)((int)local_850 + iVar24);
+        fVar14 = *pfVar15 - fVar1;
+        fVar4 = *pfVar16 + fVar5;
+        iVar24 = iVar24 + 0x10;
+        fVar1 = *pfVar15 + fVar1;
+        fVar5 = *pfVar16 - fVar5;
+        pfVar13[-1] = fVar14 - fVar7;
+        *(float *)((int)lVar21 + 4) = fVar3 + fVar4;
+        *(float *)((int)pfVar13 + ((int)param_2 - iVar22)) = fVar4 - fVar3;
+        pfVar13[-2] = fVar6 + fVar1;
+        *pfVar13 = fVar1 - fVar6;
+        pfVar13[1] = fVar7 + fVar14;
+        *(float *)((int)lVar21 + 8) = fVar5 + fVar2;
+        lVar21 = lVar21 + 0x10;
+        *(float *)lVar21 = fVar5 - fVar2;
+        lVar23 = lVar23 + 0x10;
+        lVar20 = lVar20 + -1;
+      } while (lVar20 != 0);
+    }
+  }
+  uVar27 = 4;
+  if (4 < uVar8) {
+    do {
+      uVar19 = uVar27 << 1;
+      if (uVar27 != 0) {
+        uVar18 = param_2;
+        iVar22 = 2;
+        do {
+          if (iVar22 - 2U < uVar8) {
+            altv207_13(in_vs32,in_vs59);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+            halt_baddata();
+          }
+          uVar18 = uVar18 + 0x10;
+          uVar26 = iVar22 + 2;
+          iVar22 = iVar22 + 4;
+        } while (uVar26 < uVar27);
+      }
+      uVar27 = uVar19;
+    } while (uVar19 < uVar8);
+  }
+  __restgprlr_23(uVar18);
+  return;
 }
 

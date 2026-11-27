@@ -42,8 +42,28 @@ undefined8 empty_output_buffer(int *param_1)
 void term_destination(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  size_t sVar2;
+  int iVar3;
+  size_t _Count;
+  
+  piVar1 = (int *)__savegprlr_28();
+  iVar3 = piVar1[8];
+  _Count = 0x1000 - *(int *)(iVar3 + 4);
+  if ((_Count != 0) &&
+     (sVar2 = fwrite(*(void **)(iVar3 + 0x18),1,_Count,*(FILE **)(iVar3 + 0x14)), sVar2 != _Count))
+  {
+    *(undefined4 *)(*piVar1 + 0x14) = 0x25;
+    (**(code **)*piVar1)(piVar1);
+  }
+  fflush(*(FILE **)(iVar3 + 0x14));
+  iVar3 = ferror(*(FILE **)(iVar3 + 0x14));
+  if (iVar3 != 0) {
+    *(undefined4 *)(*piVar1 + 0x14) = 0x25;
+    (**(code **)*piVar1)(piVar1);
+  }
+  __restgprlr_28();
+  return;
 }
 
 

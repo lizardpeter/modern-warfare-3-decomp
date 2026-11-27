@@ -3,3 +3,43 @@
 ; 828A92C0  CreateEventA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createevent.c:80)
   828A92C0  7D8802A6             mfspr r12,LR
   828A92C4  4806D3F9             bl 0x829166bc
+  828A92C8  9421FF70             stwu r1,-0x90(r1)
+  828A92CC  7C9E2378             or r30,r4,r4
+  828A92D0  7CBD2B78             or r29,r5,r5
+  828A92D4  7CDF3378             or r31,r6,r6
+  828A92D8  7DAD6B78             or r13,r13,r13
+  828A92DC  2B1F0000             cmplwi cr6,r31,0x0
+  828A92E0  419A001C             beq cr6,0x828a92fc
+  828A92E4  7FE5FB78             or r5,r31,r31
+  828A92E8  38810058             addi r4,r1,0x58
+  828A92EC  38610060             addi r3,r1,0x60
+  828A92F0  4800BC11             bl 0x828b4f00
+  828A92F4  7C641B78             or r4,r3,r3
+  828A92F8  48000008             b 0x828a9300
+LAB_828a92fc:
+  828A92FC  38800000             li r4,0x0
+LAB_828a9300:
+  828A9300  7FCB0034             cntlzw r11,r30
+  828A9304  57A6063E             rlwinm r6,r29,0x0,0x18,0x1f
+  828A9308  5565DFFE             rlwinm r5,r11,0x1b,0x1f,0x1f
+  828A930C  38610050             addi r3,r1,0x50
+  828A9310  48098BE5             bl 0x82941ef4
+  828A9314  2C030000             cmpwi r3,0x0
+  828A9318  41800028             blt 0x828a9340
+  828A931C  3D604000             lis r11,0x4000
+  828A9320  7F035800             cmpw cr6,r3,r11
+  828A9324  386000B7             li r3,0xb7
+  828A9328  419A0008             beq cr6,0x828a9330
+  828A932C  38600000             li r3,0x0
+LAB_828a9330:
+  828A9330  480029A1             bl 0x828abcd0
+  828A9334  7DCE7378             or r14,r14,r14
+  828A9338  80610050             lwz r3,0x50(r1)
+  828A933C  48000010             b 0x828a934c
+LAB_828a9340:
+  828A9340  480029D9             bl 0x828abd18
+  828A9344  7DCE7378             or r14,r14,r14
+  828A9348  38600000             li r3,0x0
+LAB_828a934c:
+  828A934C  38210090             addi r1,r1,0x90
+  828A9350  4806D3BC             b 0x8291670c

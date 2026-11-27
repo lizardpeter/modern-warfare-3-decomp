@@ -10,6 +10,16 @@ void bdKeyArchive__bdKeyArchive(undefined4 *param_1,undefined4 param_2)
 }
 
 
+// 8290A288  bdKeyArchive::~bdKeyArchive  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyarchive.cpp:23)
+
+void bdKeyArchive___bdKeyArchive(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  return;
+}
+
+
 // 8290A2A0  bdKeyArchive::write  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyarchive.cpp:31)
 
 int bdKeyArchive__write(int _Filehandle,void *_Buf,uint _MaxCharCount)

@@ -2,10 +2,108 @@
 
 // 828CC678  NellyRefineC0  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/refinec0.c:50)
 
-void NellyRefineC0(void)
+void NellyRefineC0(undefined8 param_1,longlong param_2,int param_3,longlong param_4,float *param_5,
+                  float *param_6,float *param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  ulonglong uVar5;
+  float *pfVar6;
+  int *piVar8;
+  ulonglong uVar7;
+  longlong lVar9;
+  ulonglong uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float *local_1f8;
+  uint local_1f4;
+  int local_1f0 [124];
+  
   __savegprlr_27();
+  dVar11 = (double)__savefpr_27();
+  dVar13 = 0.5;
+  if (0 < (int)param_4) {
+    piVar8 = local_1f0;
+    lVar9 = param_4;
+    do {
+      *piVar8 = (int)(*(float *)((param_3 - (int)local_1f0) + (int)piVar8) * 2048.0 + 0.001 + 0.5);
+      piVar8 = piVar8 + 1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+  }
+  GetPitchTable(&local_1f8,&local_1f4);
+  fVar2 = (float)dVar11;
+  uVar7 = 0;
+  uVar5 = 1;
+  fVar1 = (float)(dVar11 - (double)*local_1f8) * (float)(dVar11 - (double)*local_1f8);
+  if (1 < (int)local_1f4) {
+    uVar10 = (ulonglong)local_1f4 - 1;
+    pfVar6 = local_1f8;
+    do {
+      pfVar6 = pfVar6 + 1;
+      fVar3 = (float)(dVar11 - (double)*pfVar6) * (float)(dVar11 - (double)*pfVar6);
+      if (fVar3 < fVar1) {
+        uVar7 = uVar5;
+        fVar1 = fVar3;
+      }
+      uVar5 = uVar5 + 1;
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
+    if ((uVar7 & 0xffffffff) != 0) {
+      iVar4 = (int)((uVar7 & 0x3fffffff) << 2);
+      fVar1 = *(float *)((int)local_1f8 + iVar4 + -4);
+      dVar17 = (double)(*(float *)(iVar4 + (int)local_1f8) - fVar1);
+      if ((uVar7 & 0xffffffff) < ((ulonglong)local_1f4 - 1 & 0xffffffff)) {
+        dVar17 = (double)(float)((double)(*(float *)((int)local_1f8 + iVar4 + 4) - fVar1) * dVar13);
+      }
+      goto LAB_828cc7a0;
+    }
+  }
+  local_1f8 = (float *)((int)((uVar7 & 0xffffffff) << 2) + (int)local_1f8);
+  dVar17 = (double)(local_1f8[1] - *local_1f8);
+LAB_828cc7a0:
+  dVar15 = 1.000000013351432e-10;
+  if (0 < (int)param_4) {
+    param_2 = param_2 + -4;
+    do {
+      param_2 = param_2 + 4;
+      dVar15 = (double)(float)((double)*(float *)param_2 + dVar15);
+      param_4 = param_4 + -1;
+    } while (param_4 != 0);
+  }
+  dVar16 = 8.0;
+  dVar12 = (double)(float)(dVar11 - (double)(float)(dVar17 * 0.75));
+  if (dVar12 < 8.0) {
+    dVar12 = dVar16;
+  }
+  dVar11 = (double)(float)((double)(float)(dVar17 * 0.75) + dVar11);
+  dVar14 = 160.0;
+  if (160.0 < dVar11) {
+    dVar11 = dVar14;
+  }
+  corrfunc((double)(float)(dVar17 * 0.375),dVar12,dVar11,dVar15);
+  dVar11 = (double)(fVar2 - (float)(dVar17 * 0.25));
+  if (dVar11 < dVar16) {
+    dVar11 = dVar16;
+  }
+  dVar12 = (double)((float)(dVar17 * 0.25) + fVar2);
+  if (dVar14 < dVar12) {
+    dVar12 = dVar14;
+  }
+  corrfunc((double)(float)(dVar17 * 0.125),dVar11,dVar12,dVar15);
+  *param_5 = (float)dVar15;
+  *param_7 = (float)((double)(float)(dVar13 * 0.0) / dVar15);
+  *param_6 = fVar2;
+  __restfpr_27(0);
+  __restgprlr_27();
+  return;
 }
 

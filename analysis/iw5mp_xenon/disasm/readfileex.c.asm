@@ -3,3 +3,43 @@
 ; 828A2D70  ReadFileEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/readfileex.c:103)
   828A2D70  7D8802A6             mfspr r12,LR
   828A2D74  48073941             bl 0x829166b4
+  828A2D78  9421FF70             stwu r1,-0x90(r1)
+  828A2D7C  7C7F1B78             or r31,r3,r3
+  828A2D80  7C9E2378             or r30,r4,r4
+  828A2D84  7CBD2B78             or r29,r5,r5
+  828A2D88  7CDC3378             or r28,r6,r6
+  828A2D8C  7CFB3B78             or r27,r7,r7
+  828A2D90  7DAD6B78             or r13,r13,r13
+  828A2D94  817C0008             lwz r11,0x8(r28)
+  828A2D98  3CE0829B             lis r7,-0x7d65
+  828A2D9C  811C000C             lwz r8,0xc(r28)
+  828A2DA0  3D20828B             lis r9,-0x7d75
+  828A2DA4  39410050             addi r10,r1,0x50
+  828A2DA8  38A9C328             subi r5,r9,0x3cd8
+  828A2DAC  7FA9EB78             or r9,r29,r29
+  828A2DB0  91610054             stw r11,0x54(r1)
+  828A2DB4  7F66DB78             or r6,r27,r27
+  828A2DB8  91010050             stw r8,0x50(r1)
+  828A2DBC  7FC8F378             or r8,r30,r30
+  828A2DC0  81678580             lwz r11,-0x7a80(r7)
+  828A2DC4  7F87E378             or r7,r28,r28
+  828A2DC8  60A50001             ori r5,r5,0x1
+  828A2DCC  38800000             li r4,0x0
+  828A2DD0  7FE3FB78             or r3,r31,r31
+  828A2DD4  816B0010             lwz r11,0x10(r11)
+  828A2DD8  7D6903A6             mtspr CTR,r11
+  828A2DDC  4E800421             bctrl
+  828A2DE0  3D60C000             lis r11,-0x4000
+  828A2DE4  546A0002             rlwinm r10,r3,0x0,0x0,0x1
+  828A2DE8  7F0A5840             cmplw cr6,r10,r11
+  828A2DEC  409A0014             bne cr6,0x828a2e00
+  828A2DF0  480094F9             bl 0x828ac2e8
+  828A2DF4  7DCE7378             or r14,r14,r14
+  828A2DF8  38600000             li r3,0x0
+  828A2DFC  4800000C             b 0x828a2e08
+LAB_828a2e00:
+  828A2E00  7DCE7378             or r14,r14,r14
+  828A2E04  38600001             li r3,0x1
+LAB_828a2e08:
+  828A2E08  38210090             addi r1,r1,0x90
+  828A2E0C  480738F8             b 0x82916704

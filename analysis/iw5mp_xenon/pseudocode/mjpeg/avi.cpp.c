@@ -118,11 +118,106 @@ void avi_s__write_thread(void)
 
 // 827E3B10  avi::idx1_s::Out  (mjpeg/avi.h:65)
 
-void avi__idx1_s__Out(void)
+void avi__idx1_s__Out(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  int *piVar5;
+  int *piVar6;
+  int iVar7;
+  undefined1 *puVar8;
+  undefined1 *puVar9;
+  
+  piVar5 = (int *)__savegprlr_23();
+  *(undefined1 *)*param_2 = 0x69;
+  iVar7 = 0;
+  *(undefined1 *)(*param_2 + 1) = 100;
+  *(undefined1 *)(*param_2 + 2) = 0x78;
+  *(undefined1 *)(*param_2 + 3) = 0x31;
+  iVar1 = *param_2;
+  puVar8 = (undefined1 *)(iVar1 + 4);
+  *param_2 = (int)puVar8;
+  *puVar8 = 0;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = 0;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = 0;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = 0;
+  puVar9 = (undefined1 *)(*param_2 + 1);
+  *param_2 = (int)puVar9;
+  if (0 < *piVar5) {
+    piVar6 = piVar5 + 0x2000;
+    do {
+      uVar3 = piVar6[1];
+      *puVar9 = 0x30;
+      if ((uVar3 & 0x80000000) == 0) {
+        *(undefined1 *)(*param_2 + 1) = 0x31;
+        *(undefined1 *)(*param_2 + 2) = 0x77;
+        *(undefined1 *)(*param_2 + 3) = 0x62;
+      }
+      else {
+        *(undefined1 *)(*param_2 + 1) = 0x30;
+        *(undefined1 *)(*param_2 + 2) = 100;
+        *(undefined1 *)(*param_2 + 3) = 99;
+      }
+      iVar2 = *param_2;
+      iVar7 = iVar7 + 1;
+      *param_2 = iVar2 + 4;
+      *(undefined1 *)(iVar2 + 4) = 0x10;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(undefined1 *)(iVar2 + 1) = 0;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(undefined1 *)(iVar2 + 1) = 0;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(undefined1 *)(iVar2 + 1) = 0;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      iVar4 = piVar6[-0x1fff];
+      *(char *)(iVar2 + 1) = (char)iVar4;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(char *)(iVar2 + 1) = (char)((uint)iVar4 >> 8);
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(char *)(iVar2 + 1) = (char)((uint)iVar4 >> 0x10);
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(char *)(iVar2 + 1) = (char)((uint)iVar4 >> 0x18);
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      piVar6 = piVar6 + 1;
+      iVar4 = *piVar6;
+      *(char *)(iVar2 + 1) = (char)iVar4;
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(char *)(iVar2 + 1) = (char)((uint)iVar4 >> 8);
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(char *)(iVar2 + 1) = (char)((uint)iVar4 >> 0x10);
+      iVar2 = *param_2;
+      *param_2 = iVar2 + 1;
+      *(byte *)(iVar2 + 1) = (byte)((uint)iVar4 >> 0x18) & 0x7f;
+      puVar9 = (undefined1 *)(*param_2 + 1);
+      *param_2 = (int)puVar9;
+    } while (iVar7 < *piVar5);
+  }
+  puVar9 = puVar9 + (-4 - (int)puVar8);
+  *puVar8 = (char)puVar9;
+  *(char *)(iVar1 + 5) = (char)((uint)puVar9 >> 8);
+  *(char *)(iVar1 + 6) = (char)((uint)puVar9 >> 0x10);
+  *(char *)(iVar1 + 7) = (char)((uint)puVar9 >> 0x18);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -255,13 +350,105 @@ void avi__RIFF_s__Out(undefined1 *param_1,int *param_2)
 }
 
 
-// 827E5F90  avi::RIFF_s::LIST_hdrl_s::Out  (mjpeg/avi.h:108)
+// 827E5EA8  avi::RIFF_s::LIST_hdrl_s::LIST_hdrl_s  (mjpeg/avi.h:104)
 
-void avi__RIFF_s__LIST_hdrl_s__Out(void)
+undefined1 * avi__RIFF_s__LIST_hdrl_s__LIST_hdrl_s(undefined1 *param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  *(undefined4 *)(param_1 + 0x14) = 0;
+  param_1[0xc] = 0x61;
+  param_1[0xd] = 0x76;
+  param_1[0xe] = 0x69;
+  param_1[0xf] = 0x68;
+  *(undefined4 *)(param_1 + 0x18) = 0;
+  *(undefined4 *)(param_1 + 0x1c) = 0;
+  *(undefined4 *)(param_1 + 0x20) = 0x110;
+  *(undefined4 *)(param_1 + 0x24) = 0;
+  *(undefined4 *)(param_1 + 0x28) = 0;
+  *(undefined4 *)(param_1 + 0x2c) = 2;
+  *(undefined4 *)(param_1 + 0x30) = 0;
+  *(undefined4 *)(param_1 + 0x34) = 0;
+  *(undefined4 *)(param_1 + 0x38) = 0;
+  *(undefined4 *)(param_1 + 0x48) = 0;
+  *(undefined4 *)(param_1 + 0x44) = 0;
+  *(undefined4 *)(param_1 + 0x40) = 0;
+  *(undefined4 *)(param_1 + 0x3c) = 0;
+  avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__LIST_vid_strl_s(param_1 + 0x4c);
+  avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__LIST_aud_strl_s(param_1 + 200);
+  param_1[8] = 0x68;
+  param_1[2] = 0x53;
+  *param_1 = 0x4c;
+  param_1[1] = 0x49;
+  param_1[3] = 0x54;
+  param_1[9] = 100;
+  param_1[10] = 0x72;
+  param_1[0xb] = 0x6c;
+  return param_1;
+}
+
+
+// 827E5F90  avi::RIFF_s::LIST_hdrl_s::Out  (mjpeg/avi.h:108)
+
+void avi__RIFF_s__LIST_hdrl_s__Out(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  undefined1 *puVar4;
+  uint *puVar5;
+  undefined1 *puVar6;
+  longlong lVar7;
+  
+  puVar4 = (undefined1 *)__savegprlr_29();
+  puVar5 = (uint *)param_2;
+  *(undefined1 *)*puVar5 = *puVar4;
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[1];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[2];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[3];
+  uVar1 = *puVar5;
+  puVar6 = (undefined1 *)(uVar1 + 1);
+  *puVar5 = (uint)puVar6;
+  uVar2 = *(undefined4 *)(puVar4 + 4);
+  *puVar6 = (char)uVar2;
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 8);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x10);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x18);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[8];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[9];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[10];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[0xb];
+  *puVar5 = *puVar5 + 1;
+  avi__RIFF_s__LIST_hdrl_s__avih_s__Out(puVar4 + 0xc);
+  avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__Out(puVar4 + 0x4c,param_2);
+  avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__Out(puVar4 + 200,param_2);
+  lVar7 = ((ulonglong)*puVar5 - ZEXT48(puVar6)) + -4;
+  *puVar6 = (char)lVar7;
+  *(char *)(uVar1 + 2) = (char)((ulonglong)lVar7 >> 8);
+  *(char *)(uVar1 + 3) = (char)((ulonglong)lVar7 >> 0x10);
+  *(char *)(uVar1 + 4) = (char)((ulonglong)lVar7 >> 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -326,6 +513,202 @@ void avi_s__create(undefined8 param_1,undefined8 param_2,int param_3,int param_4
 }
 
 
+// 827E3D30  avi::RIFF_s::LIST_hdrl_s::avih_s::Out  (mjpeg/avi.h:140)
+
+void avi__RIFF_s__LIST_hdrl_s__avih_s__Out(undefined1 *param_1,int *param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 *puVar5;
+  int iVar6;
+  longlong lVar7;
+  
+  *(undefined1 *)*param_2 = *param_1;
+  iVar1 = *param_2;
+  *param_2 = iVar1 + 1;
+  *(undefined1 *)(iVar1 + 1) = param_1[1];
+  iVar1 = *param_2;
+  *param_2 = iVar1 + 1;
+  *(undefined1 *)(iVar1 + 1) = param_1[2];
+  iVar1 = *param_2;
+  *param_2 = iVar1 + 1;
+  *(undefined1 *)(iVar1 + 1) = param_1[3];
+  iVar1 = *param_2;
+  puVar5 = (undefined1 *)(iVar1 + 1);
+  *param_2 = (int)puVar5;
+  uVar2 = *(undefined4 *)(param_1 + 4);
+  *puVar5 = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 8);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0xc);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x10);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x14);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x18);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x1c);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x20);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x24);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x28);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  uVar2 = *(undefined4 *)(param_1 + 0x2c);
+  *(char *)(iVar6 + 1) = (char)uVar2;
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 8);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x10);
+  iVar6 = *param_2;
+  *param_2 = iVar6 + 1;
+  *(char *)(iVar6 + 1) = (char)((uint)uVar2 >> 0x18);
+  lVar7 = 4;
+  iVar6 = 0;
+  *param_2 = *param_2 + 1;
+  do {
+    *(undefined1 *)*param_2 = param_1[iVar6 + 0x30];
+    iVar3 = *param_2;
+    *param_2 = iVar3 + 1;
+    *(undefined1 *)(iVar3 + 1) = param_1[iVar6 + 0x31];
+    iVar3 = *param_2;
+    *param_2 = iVar3 + 1;
+    *(undefined1 *)(iVar3 + 1) = param_1[iVar6 + 0x32];
+    iVar3 = *param_2;
+    *param_2 = iVar3 + 1;
+    iVar4 = iVar6 + 0x33;
+    iVar6 = iVar6 + 4;
+    *(undefined1 *)(iVar3 + 1) = param_1[iVar4];
+    iVar3 = *param_2;
+    *param_2 = iVar3 + 1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  iVar6 = (iVar3 - (iVar1 + 1)) + -3;
+  *puVar5 = (char)iVar6;
+  *(char *)(iVar1 + 2) = (char)((uint)iVar6 >> 8);
+  *(char *)(iVar1 + 3) = (char)((uint)iVar6 >> 0x10);
+  *(char *)(iVar1 + 4) = (char)((uint)iVar6 >> 0x18);
+  return;
+}
+
+
 // 827E5828  avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::LIST_vid_strl_s  (mjpeg/avi.h:173)
 
 undefined1 * avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__LIST_vid_strl_s(undefined1 *param_1)
@@ -363,11 +746,65 @@ undefined1 * avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__LIST_vid_strl_s(undefine
 
 // 827E5900  avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::Out  (mjpeg/avi.h:177)
 
-void avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__Out(void)
+void avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__Out(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  undefined1 *puVar4;
+  uint *puVar5;
+  undefined1 *puVar6;
+  longlong lVar7;
+  
+  puVar4 = (undefined1 *)__savegprlr_29();
+  puVar5 = (uint *)param_2;
+  *(undefined1 *)*puVar5 = *puVar4;
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[1];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[2];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[3];
+  uVar1 = *puVar5;
+  puVar6 = (undefined1 *)(uVar1 + 1);
+  *puVar5 = (uint)puVar6;
+  uVar2 = *(undefined4 *)(puVar4 + 4);
+  *puVar6 = (char)uVar2;
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 8);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x10);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x18);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[8];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[9];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[10];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[0xb];
+  *puVar5 = *puVar5 + 1;
+  avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__strh_s__Out(puVar4 + 0xc);
+  avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__strf_s__Out(puVar4 + 0x4c,param_2);
+  lVar7 = ((ulonglong)*puVar5 - ZEXT48(puVar6)) + -4;
+  *puVar6 = (char)lVar7;
+  *(char *)(uVar1 + 2) = (char)((ulonglong)lVar7 >> 8);
+  *(char *)(uVar1 + 3) = (char)((ulonglong)lVar7 >> 0x10);
+  *(char *)(uVar1 + 4) = (char)((ulonglong)lVar7 >> 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -490,6 +927,235 @@ void avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__strh_s__strh_s(undefined1 *param
 }
 
 
+// 827E4248  avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::strh_s::Out  (mjpeg/avi.h:208)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__strh_s__Out(undefined1 *param_1,int *param_2)
+
+{
+  undefined2 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  
+  *(undefined1 *)*param_2 = *param_1;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[1];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[2];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[3];
+  iVar2 = *param_2;
+  puVar4 = (undefined1 *)(iVar2 + 1);
+  *param_2 = (int)puVar4;
+  uVar3 = *(undefined4 *)(param_1 + 4);
+  *puVar4 = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[8];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[9];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[10];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xb];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xc];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xd];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xe];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xf];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x10);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x14);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x16);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x18);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x1c);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x20);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x24);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x28);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x2c);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x30);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x34);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x38);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3a);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3c);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3e);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  iVar5 = ((iVar5 + 1) - (iVar2 + 1)) + -4;
+  *puVar4 = (char)iVar5;
+  *(char *)(iVar2 + 2) = (char)((uint)iVar5 >> 8);
+  *(char *)(iVar2 + 3) = (char)((uint)iVar5 >> 0x10);
+  *(char *)(iVar2 + 4) = (char)((uint)iVar5 >> 0x18);
+  return;
+}
+
+
 // 827E6418  avi_s::close  (mjpeg/avi.cpp:221)
 
 int avi_s__close(int _FileHandle)
@@ -604,13 +1270,324 @@ int avi_s__close(int _FileHandle)
 }
 
 
+// 827E4788  avi::RIFF_s::LIST_hdrl_s::LIST_vid_strl_s::strf_s::Out  (mjpeg/avi.h:263)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_vid_strl_s__strf_s__Out(undefined1 *param_1,uint *param_2)
+
+{
+  undefined2 uVar1;
+  uint uVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  undefined1 *puVar5;
+  longlong lVar6;
+  
+  *(undefined1 *)*param_2 = *param_1;
+  uVar2 = *param_2;
+  *param_2 = uVar2 + 1;
+  *(undefined1 *)(uVar2 + 1) = param_1[1];
+  uVar2 = *param_2;
+  *param_2 = uVar2 + 1;
+  *(undefined1 *)(uVar2 + 1) = param_1[2];
+  uVar2 = *param_2;
+  *param_2 = uVar2 + 1;
+  *(undefined1 *)(uVar2 + 1) = param_1[3];
+  uVar2 = *param_2;
+  puVar5 = (undefined1 *)(uVar2 + 1);
+  *param_2 = (uint)puVar5;
+  uVar3 = *(undefined4 *)(param_1 + 4);
+  *puVar5 = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 8);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0xc);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x10);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x14);
+  *(char *)(uVar4 + 1) = (char)uVar1;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((ushort)uVar1 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x16);
+  *(char *)(uVar4 + 1) = (char)uVar1;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((ushort)uVar1 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(undefined1 *)(uVar4 + 1) = param_1[0x18];
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(undefined1 *)(uVar4 + 1) = param_1[0x19];
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(undefined1 *)(uVar4 + 1) = param_1[0x1a];
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(undefined1 *)(uVar4 + 1) = param_1[0x1b];
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x1c);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x20);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x24);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x28);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x2c);
+  *(char *)(uVar4 + 1) = (char)uVar3;
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 8);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x10);
+  uVar4 = *param_2;
+  *param_2 = uVar4 + 1;
+  *(char *)(uVar4 + 1) = (char)((uint)uVar3 >> 0x18);
+  uVar4 = *param_2;
+  *param_2 = (uint)((ulonglong)uVar4 + 1);
+  lVar6 = (((ulonglong)uVar4 + 1) - ZEXT48(puVar5)) + -4;
+  *(int *)(param_1 + 4) = (int)lVar6;
+  *puVar5 = (char)lVar6;
+  *(char *)(uVar2 + 2) = (char)((ulonglong)lVar6 >> 8);
+  *(char *)(uVar2 + 3) = (char)((ulonglong)lVar6 >> 0x10);
+  *(char *)(uVar2 + 4) = (char)((ulonglong)lVar6 >> 0x18);
+  uVar3 = *(undefined4 *)(param_1 + 4);
+  *(char *)(uVar2 + 5) = (char)uVar3;
+  *(char *)(uVar2 + 6) = (char)((uint)uVar3 >> 8);
+  *(char *)(uVar2 + 7) = (char)((uint)uVar3 >> 0x10);
+  *(char *)(uVar2 + 8) = (char)((uint)uVar3 >> 0x18);
+  return;
+}
+
+
 // 827E5A58  avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::LIST_aud_strl_s  (mjpeg/avi.h:305)
 
 void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__LIST_aud_strl_s(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 *puVar2;
+  
+  puVar2 = (undefined1 *)__savegprlr_28();
+  avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strh_s__strh_s(puVar2 + 0xc);
+  *(undefined2 *)(puVar2 + 0x54) = 1;
+  *(undefined2 *)(puVar2 + 0x56) = 1;
+  puVar2[0x4c] = 0x73;
+  puVar2[0x4d] = 0x74;
+  puVar2[0x4f] = 0x66;
+  puVar2[0x4e] = 0x72;
+  *(int *)(puVar2 + 0x58) = DAT_829a4a64;
+  iVar1 = DAT_829a4a64 << 1;
+  *(undefined2 *)(puVar2 + 0x60) = 2;
+  *(undefined2 *)(puVar2 + 0x62) = 0x10;
+  *(int *)(puVar2 + 0x5c) = iVar1;
+  *puVar2 = 0x4c;
+  puVar2[1] = 0x49;
+  puVar2[2] = 0x53;
+  puVar2[3] = 0x54;
+  puVar2[8] = 0x73;
+  puVar2[9] = 0x74;
+  puVar2[10] = 0x72;
+  puVar2[0xb] = 0x6c;
+  __restgprlr_28(puVar2);
+  return;
+}
+
+
+// 827E5B08  avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::Out  (mjpeg/avi.h:309)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__Out(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  undefined1 *puVar4;
+  uint *puVar5;
+  undefined1 *puVar6;
+  longlong lVar7;
+  
+  puVar4 = (undefined1 *)__savegprlr_29();
+  puVar5 = (uint *)param_2;
+  *(undefined1 *)*puVar5 = *puVar4;
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[1];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[2];
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
+  *(undefined1 *)(uVar1 + 1) = puVar4[3];
+  uVar1 = *puVar5;
+  puVar6 = (undefined1 *)(uVar1 + 1);
+  *puVar5 = (uint)puVar6;
+  uVar2 = *(undefined4 *)(puVar4 + 4);
+  *puVar6 = (char)uVar2;
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 8);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x10);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(char *)(uVar3 + 1) = (char)((uint)uVar2 >> 0x18);
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[8];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[9];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[10];
+  uVar3 = *puVar5;
+  *puVar5 = uVar3 + 1;
+  *(undefined1 *)(uVar3 + 1) = puVar4[0xb];
+  *puVar5 = *puVar5 + 1;
+  avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strh_s__Out(puVar4 + 0xc);
+  avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strf_s__Out(puVar4 + 0x4c,param_2);
+  lVar7 = ((ulonglong)*puVar5 - ZEXT48(puVar6)) + -4;
+  *puVar6 = (char)lVar7;
+  *(char *)(uVar1 + 2) = (char)((ulonglong)lVar7 >> 8);
+  *(char *)(uVar1 + 3) = (char)((ulonglong)lVar7 >> 0x10);
+  *(char *)(uVar1 + 4) = (char)((ulonglong)lVar7 >> 0x18);
+  __restgprlr_29();
+  return;
+}
+
+
+// 827E4BA8  avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::strh_s::strh_s  (mjpeg/avi.h:320)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strh_s__strh_s(undefined1 *param_1)
+
+{
+  int iVar1;
+  
+  *param_1 = 0x73;
+  param_1[0xb] = 0x73;
+  param_1[1] = 0x74;
+  param_1[0xc] = 0;
+  param_1[0xd] = 0;
+  param_1[2] = 0x72;
+  param_1[3] = 0x68;
+  param_1[9] = 0x75;
+  param_1[8] = 0x61;
+  param_1[10] = 100;
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  *(undefined4 *)(param_1 + 0x10) = 0;
+  *(undefined2 *)(param_1 + 0x14) = 0;
+  *(undefined2 *)(param_1 + 0x16) = 0;
+  *(undefined4 *)(param_1 + 0x18) = 0;
+  *(undefined4 *)(param_1 + 0x1c) = 2;
+  iVar1 = DAT_829a4a64 << 1;
+  *(undefined4 *)(param_1 + 0x24) = 0;
+  *(undefined4 *)(param_1 + 0x28) = 0;
+  *(int *)(param_1 + 0x20) = iVar1;
+  iVar1 = DAT_829a4a64;
+  *(undefined4 *)(param_1 + 0x30) = 0xffffffff;
+  *(undefined4 *)(param_1 + 0x34) = 2;
+  *(undefined2 *)(param_1 + 0x38) = 0;
+  *(undefined2 *)(param_1 + 0x3a) = 0;
+  *(int *)(param_1 + 0x2c) = iVar1;
+  *(undefined2 *)(param_1 + 0x3e) = 0;
+  *(undefined2 *)(param_1 + 0x3c) = 0;
+  return;
 }
 
 
@@ -619,18 +1596,293 @@ void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__LIST_aud_strl_s(void)
 void avi_s__flush_samples(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  
+  iVar2 = __savegprlr_29();
+  puVar5 = (uint *)(iVar2 + 0x167844);
+  *(undefined1 *)(iVar2 + 0x15013c) = 0x30;
+  *(undefined1 *)(iVar2 + 0x15013d) = 0x31;
+  *(undefined1 *)(iVar2 + 0x15013e) = 0x77;
+  *(undefined1 *)(iVar2 + 0x15013f) = 0x62;
+  lVar4 = ((ulonglong)*puVar5 & 0x7fffffff) << 1;
+  *(char *)(iVar2 + 0x150140) = (char)lVar4;
+  *(char *)(iVar2 + 0x150141) = (char)((ulonglong)lVar4 >> 8);
+  *(char *)(iVar2 + 0x150142) = (char)((ulonglong)lVar4 >> 0x10);
+  *(char *)(iVar2 + 0x150143) = (char)((ulonglong)lVar4 >> 0x18);
+  uVar1 = *puVar5;
+  *(uint *)(iVar2 + 0x108) = *(int *)(iVar2 + 0x108) + uVar1;
+  uVar3 = avi_s__output_data(iVar2,(undefined1 *)(iVar2 + 0x15013c),
+                             ((ulonglong)uVar1 + 4 & 0x7fffffff) << 1);
+  *(undefined4 *)((*(int *)(iVar2 + 0x138) + 1) * 4 + iVar2 + 0x138) = uVar3;
+  *(uint *)((*(int *)(iVar2 + 0x138) + 0x2001) * 4 + iVar2 + 0x138) = uVar1 << 1;
+  *(int *)(iVar2 + 0x138) = *(int *)(iVar2 + 0x138) + 1;
+  *puVar5 = 0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 827E4C50  avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::strh_s::Out  (mjpeg/avi.h:340)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strh_s__Out(undefined1 *param_1,int *param_2)
+
+{
+  undefined2 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  
+  *(undefined1 *)*param_2 = *param_1;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[1];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[2];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[3];
+  iVar2 = *param_2;
+  puVar4 = (undefined1 *)(iVar2 + 1);
+  *param_2 = (int)puVar4;
+  uVar3 = *(undefined4 *)(param_1 + 4);
+  *puVar4 = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[8];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[9];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[10];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xb];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xc];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xd];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xe];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(undefined1 *)(iVar5 + 1) = param_1[0xf];
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x10);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x14);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x16);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x18);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x1c);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x20);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x24);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x28);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x2c);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x30);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x34);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x38);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3a);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3c);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x3e);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  iVar5 = ((iVar5 + 1) - (iVar2 + 1)) + -4;
+  *puVar4 = (char)iVar5;
+  *(char *)(iVar2 + 2) = (char)((uint)iVar5 >> 8);
+  *(char *)(iVar2 + 3) = (char)((uint)iVar5 >> 0x10);
+  *(char *)(iVar2 + 4) = (char)((uint)iVar5 >> 0x18);
+  return;
 }
 
 
 // 827E57A8  avi_s::queue_samples  (mjpeg/avi.cpp:368)
 
-void avi_s__queue_samples(void)
+void avi_s__queue_samples(undefined8 param_1,void *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  void *pvVar2;
+  uint *puVar3;
+  
+  iVar1 = __savegprlr_28();
+  if ((int)param_3 != 0x100) {
+    MyAssertHandler(0xffffffff821df230,0x172,0,0xffffffff82000f98,0xffffffff821df268);
+  }
+  puVar3 = (uint *)(iVar1 + 0x169848);
+  pvVar2 = memcpy((void *)((*puVar3 & 0xf) * 0x200 + iVar1 + 0x167848),param_2,
+                  (size_t)((param_3 & 0xffffffff) << 1));
+  *puVar3 = *puVar3 + 1;
+  __restgprlr_28(pvVar2);
+  return;
+}
+
+
+// 827E3928  mjpeg_get_avi_struct_size  (mjpeg/avi.cpp:380)
+
+undefined8 mjpeg_get_avi_struct_size(void)
+
+{
+  return 0x169874;
 }
 
 
@@ -643,13 +1895,135 @@ bool mjpeg_is_avi_memory_allocated(void)
 }
 
 
+// 827E3A78  mjpeg_allocate_avi_memory  (mjpeg/avi.cpp:390)
+
+void * mjpeg_allocate_avi_memory(ulonglong param_1)
+
+{
+  void *pvVar1;
+  
+  if (DAT_84872a38 != (void *)0x0) {
+    MyAssertHandler(0xffffffff821df230,0x187,0,0xffffffff82000f98,0xffffffff821df2c8);
+  }
+  pvVar1 = memset((void *)param_1,0,0x169874);
+  if ((param_1 & 0xffffffff) == 0) {
+    DAT_84872a38 = (void *)0x0;
+  }
+  else {
+    DAT_84872a38 = (void *)avi_s__avi_s(param_1);
+    pvVar1 = DAT_84872a38;
+  }
+  return pvVar1;
+}
+
+
+// 827E5190  avi::RIFF_s::LIST_hdrl_s::LIST_aud_strl_s::strf_s::Out  (mjpeg/avi.h:391)
+
+void avi__RIFF_s__LIST_hdrl_s__LIST_aud_strl_s__strf_s__Out(undefined1 *param_1,int *param_2)
+
+{
+  undefined2 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  
+  *(undefined1 *)*param_2 = *param_1;
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[1];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[2];
+  iVar2 = *param_2;
+  *param_2 = iVar2 + 1;
+  *(undefined1 *)(iVar2 + 1) = param_1[3];
+  iVar2 = *param_2;
+  puVar4 = (undefined1 *)(iVar2 + 1);
+  *param_2 = (int)puVar4;
+  uVar3 = *(undefined4 *)(param_1 + 4);
+  *puVar4 = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 8);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 10);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0xc);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar3 = *(undefined4 *)(param_1 + 0x10);
+  *(char *)(iVar5 + 1) = (char)uVar3;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x10);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((uint)uVar3 >> 0x18);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x14);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  uVar1 = *(undefined2 *)(param_1 + 0x16);
+  *(char *)(iVar5 + 1) = (char)uVar1;
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  *(char *)(iVar5 + 1) = (char)((ushort)uVar1 >> 8);
+  iVar5 = *param_2;
+  *param_2 = iVar5 + 1;
+  iVar5 = ((iVar5 + 1) - (iVar2 + 1)) + -4;
+  *(int *)(param_1 + 4) = iVar5;
+  *puVar4 = (char)iVar5;
+  *(char *)(iVar2 + 2) = (char)((uint)iVar5 >> 8);
+  *(char *)(iVar2 + 3) = (char)((uint)iVar5 >> 0x10);
+  *(char *)(iVar2 + 4) = (char)((uint)iVar5 >> 0x18);
+  return;
+}
+
+
 // 827E3950  mjpeg_deallocate_avi_memory  (mjpeg/avi.cpp:398)
 
 void mjpeg_deallocate_avi_memory(void)
 
 {
   if (DAT_84872a38 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821df230,399,0,0xffffffff82000f98,0xffffffff821df278);
   }
   DAT_84872a38 = 0;
@@ -710,5 +2084,23 @@ void mjpeg_add_samples(undefined8 param_1,undefined8 param_2)
   }
   avi_s__queue_samples(DAT_84872a38,param_1,param_2);
   return;
+}
+
+
+// 827E6750  avi_s::avi_s  (line unknown)
+
+undefined1 * avi_s__avi_s(undefined1 *param_1)
+
+{
+  avi__RIFF_s__LIST_hdrl_s__LIST_hdrl_s(param_1 + 0xc);
+  param_1[1] = 0x49;
+  param_1[2] = 0x46;
+  *param_1 = 0x52;
+  param_1[3] = 0x46;
+  param_1[8] = 0x41;
+  param_1[9] = 0x56;
+  param_1[10] = 0x49;
+  param_1[0xb] = 0x20;
+  return param_1;
 }
 

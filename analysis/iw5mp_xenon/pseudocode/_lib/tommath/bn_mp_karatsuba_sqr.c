@@ -2,10 +2,97 @@
 
 // 8225B048  mp_karatsuba_sqr  (line unknown)
 
-void mp_karatsuba_sqr(void)
+void mp_karatsuba_sqr(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  uint uVar2;
+  uint *puVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  undefined4 *puVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  undefined1 auStack_90 [16];
+  int local_80 [3];
+  int local_74;
+  undefined1 auStack_70 [16];
+  int local_60 [3];
+  int local_54;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  puVar3 = (uint *)__savegprlr_27();
+  iVar5 = (int)*puVar3 >> 1;
+  lVar9 = (longlong)iVar5;
+  uVar8 = 0xfffffffffffffffe;
+  iVar4 = mp_init_size(local_80,lVar9);
+  if (iVar4 == 0) {
+    iVar4 = mp_init_size(local_60,(ulonglong)*puVar3 - lVar9);
+    if (iVar4 == 0) {
+      iVar4 = mp_init_size(auStack_90,*puVar3 << 1);
+      if (iVar4 == 0) {
+        iVar4 = mp_init_size(auStack_40,*puVar3 << 1);
+        if (iVar4 == 0) {
+          iVar4 = mp_init_size(auStack_50,iVar5 << 1);
+          if (iVar4 == 0) {
+            iVar4 = mp_init_size(auStack_70,((ulonglong)*puVar3 - lVar9 & 0x7fffffff) << 1);
+            if (iVar4 == 0) {
+              puVar6 = (undefined4 *)puVar3[3];
+              if (0 < iVar5) {
+                puVar7 = (undefined4 *)(local_74 + -4);
+                lVar10 = lVar9;
+                do {
+                  uVar1 = *puVar6;
+                  puVar6 = puVar6 + 1;
+                  puVar7 = puVar7 + 1;
+                  *puVar7 = uVar1;
+                  lVar10 = lVar10 + -1;
+                } while (lVar10 != 0);
+              }
+              uVar2 = *puVar3;
+              if (iVar5 < (int)uVar2) {
+                puVar7 = (undefined4 *)(local_54 + -4);
+                puVar6 = puVar6 + -1;
+                lVar10 = lVar9;
+                do {
+                  puVar6 = puVar6 + 1;
+                  lVar10 = lVar10 + 1;
+                  puVar7 = puVar7 + 1;
+                  *puVar7 = *puVar6;
+                  uVar2 = *puVar3;
+                } while ((int)lVar10 < (int)uVar2);
+              }
+              local_60[0] = uVar2 - iVar5;
+              local_80[0] = iVar5;
+              mp_clamp(local_80);
+              iVar4 = mp_sqr(local_80,auStack_50);
+              if ((((((iVar4 == 0) && (iVar4 = mp_sqr(local_60,auStack_70), iVar4 == 0)) &&
+                    (iVar4 = s_mp_add(local_60,local_80,auStack_90), iVar4 == 0)) &&
+                   ((iVar4 = mp_sqr(auStack_90,auStack_90), iVar4 == 0 &&
+                    (iVar4 = s_mp_add(auStack_50,auStack_70,auStack_40), iVar4 == 0)))) &&
+                  ((iVar4 = s_mp_sub(auStack_90,auStack_40,auStack_90), iVar4 == 0 &&
+                   ((iVar4 = mp_lshd(auStack_90,lVar9), iVar4 == 0 &&
+                    (iVar5 = mp_lshd(auStack_70,iVar5 << 1), iVar5 == 0)))))) &&
+                 (iVar5 = mp_add(auStack_50,auStack_90,auStack_90), iVar5 == 0)) {
+                lVar9 = mp_add(auStack_90,auStack_70,param_2);
+                uVar8 = -(ulonglong)(lVar9 != 0) & 0xfffffffffffffffe;
+              }
+              mp_clear(auStack_70);
+            }
+            mp_clear(auStack_50);
+          }
+          mp_clear(auStack_40);
+        }
+        mp_clear(auStack_90);
+      }
+      mp_clear(local_60);
+    }
+    mp_clear(local_80);
+  }
+  __restgprlr_27(uVar8);
+  return;
 }
 

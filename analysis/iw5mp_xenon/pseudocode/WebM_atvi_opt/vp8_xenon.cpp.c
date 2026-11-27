@@ -42,11 +42,15 @@ void vec16b__uh(void)
 
 // 8280E8C8  vp8_fast_quantize_b_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:200)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void vp8_fast_quantize_b_xenon_c(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  vectorSplatImmediateSignedHalfWord(0xf);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -291,6 +295,89 @@ void vp8_variance16x16_xenon_c(void)
   
   __savegprlr_22();
   __savevmx_122();
+  altv300_21(in_vs32,in_vs35);
+  altv300_21(in_vs32,in_vs37);
+  altv300_21(in_vs35,in_vs36);
+  altv300_21(in_vs37,in_vs38);
+  altv300_23(in_vs43,in_vs35);
+  altv300_23(in_vs43,in_vs42);
+  altv300_23(in_vs43,in_vs41);
+  altv300_23(in_vs43,in_vs37);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82806A30  vp8_variance8x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:696)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void vp8_variance8x8_xenon_c(void)
+
+{
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs43 [16];
+  
+  altv300_21(in_vs32,in_vs37);
+  altv300_21(in_vs32,in_vs35);
+  altv300_21(in_vs37,in_vs38);
+  altv300_21(in_vs35,in_vs36);
+  altv300_23(in_vs43,in_vs37);
+  altv300_23(in_vs43,in_vs35);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82806CE0  vp8_variance8x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:733)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void vp8_variance8x16_xenon_c(void)
+
+{
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  
+  altv300_21(in_vs32,in_vs37);
+  altv300_21(in_vs32,in_vs35);
+  altv300_21(in_vs37,in_vs38);
+  altv300_21(in_vs35,in_vs36);
+  altv300_23(in_vs43,in_vs37);
+  altv300_23(in_vs43,in_vs42);
+  altv300_23(in_vs43,in_vs41);
+  altv300_23(in_vs43,in_vs35);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 828071F8  vp8_variance16x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:778)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void vp8_variance16x8_xenon_c(void)
+
+{
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  
   altv300_21(in_vs32,in_vs35);
   altv300_21(in_vs32,in_vs37);
   altv300_21(in_vs35,in_vs36);
@@ -1010,41 +1097,110 @@ void vp8BilinearHorizontal16x8_7(void)
 
 // 8280E5F8  vp8_sub_pixel_variance16x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1568)
 
-void vp8_sub_pixel_variance16x16_xenon_c(void)
+void vp8_sub_pixel_variance16x16_xenon_c
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined1 auStack_390 [320];
+  undefined1 auStack_250 [592];
+  
+  uVar1 = __savegprlr_27();
+  if ((int)param_3 == 0) {
+    (**(code **)((int)&PTR_vp8Copy16x16_829a5a20 + (int)((param_4 & 0xffffffff) << 2)))
+              (uVar1,auStack_390,param_2);
+  }
+  else if ((int)param_4 == 0) {
+    (**(code **)((int)&PTR_vp8Copy16x16_829a5a40 + (int)((param_3 & 0xffffffff) << 2)))
+              (uVar1,auStack_390,param_2);
+  }
+  else {
+    vp8e_filter_block2d_bil_first_pass
+              (uVar1,auStack_250,param_2,1,0x11,0x10,(param_3 & 0x1fffffff) * 8 + -0x7de19b00);
+    vp8e_filter_block2d_bil_second_pass
+              (auStack_250,auStack_390,0x10,0x10,0x10,0x10,(param_4 & 0x1fffffff) * 8 + -0x7de19b00)
+    ;
+  }
+  vp8_variance16x16_xenon_c(auStack_390,0x10,param_5,param_6,param_7);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8280E6D8  vp8_sub_pixel_variance8x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1597)
 
-void vp8_sub_pixel_variance8x8_xenon_c(void)
+void vp8_sub_pixel_variance8x8_xenon_c
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined1 auStack_200 [144];
+  undefined1 auStack_170 [368];
+  
+  uVar1 = __savegprlr_27();
+  vp8e_filter_block2d_bil_first_pass
+            (uVar1,auStack_200,param_2,1,9,8,(param_3 & 0x1fffffff) * 8 + -0x7de19b00);
+  vp8e_filter_block2d_bil_second_pass
+            (auStack_200,auStack_170,8,8,8,8,(param_4 & 0x1fffffff) * 8 + -0x7de19b00);
+  vp8_variance8x8_xenon_c(auStack_170,8,param_5,param_6,param_7);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8280E760  vp8_sub_pixel_variance16x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1621)
 
-void vp8_sub_pixel_variance16x8_xenon_c(void)
+void vp8_sub_pixel_variance16x8_xenon_c
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined1 auStack_290 [320];
+  undefined1 auStack_150 [336];
+  
+  uVar1 = __savegprlr_27();
+  if ((int)param_3 == 0) {
+    (**(code **)((int)&PTR_vp8Copy16x8_829a5a60 + (int)((param_4 & 0xffffffff) << 2)))
+              (uVar1,auStack_290,param_2);
+  }
+  else if ((int)param_4 == 0) {
+    (**(code **)((int)&PTR_vp8Copy16x8_829a5a80 + (int)((param_3 & 0xffffffff) << 2)))
+              (uVar1,auStack_290,param_2);
+  }
+  else {
+    vp8e_filter_block2d_bil_first_pass
+              (uVar1,auStack_150,param_2,1,9,0x10,(param_3 & 0x1fffffff) * 8 + -0x7de19b00);
+    vp8e_filter_block2d_bil_second_pass
+              (auStack_150,auStack_290,0x10,0x10,8,0x10,(param_4 & 0x1fffffff) * 8 + -0x7de19b00);
+  }
+  vp8_variance16x8_xenon_c(auStack_290,0x10,param_5,param_6,param_7);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8280E840  vp8_sub_pixel_variance8x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1652)
 
-void vp8_sub_pixel_variance8x16_xenon_c(void)
+void vp8_sub_pixel_variance8x16_xenon_c
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined1 auStack_290 [288];
+  undefined1 auStack_170 [368];
+  
+  uVar1 = __savegprlr_27();
+  vp8e_filter_block2d_bil_first_pass
+            (uVar1,auStack_290,param_2,1,0x11,8,(param_3 & 0x1fffffff) * 8 + -0x7de19b00);
+  vp8e_filter_block2d_bil_second_pass
+            (auStack_290,auStack_170,8,8,0x10,8,(param_4 & 0x1fffffff) * 8 + -0x7de19b00);
+  vp8_variance8x16_xenon_c(auStack_170,8,param_5,param_6,param_7);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1053,7 +1209,25 @@ void vp8_sub_pixel_variance8x16_xenon_c(void)
 void vp8_arch_xenon_encoder_init(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  
+  iVar1 = __savegprlr();
+  *(code **)(iVar1 + 0x304d8) = vp8_sad16x8_xenon_c;
+  *(code **)(iVar1 + 0x304d4) = vp8_sad8x16_xenon_c;
+  *(code **)(iVar1 + 0x304dc) = vp8_sad16x16_xenon_c;
+  *(code **)(iVar1 + 0x30504) = vp8_sub_pixel_variance16x16_xenon_c;
+  *(code **)(iVar1 + 0x304fc) = vp8_sub_pixel_variance8x16_xenon_c;
+  *(code **)(iVar1 + 0x304f8) = vp8_sub_pixel_variance8x8_xenon_c;
+  *(code **)(iVar1 + 0x304d0) = vp8_sad8x8_xenon_c;
+  *(code **)(iVar1 + 0x30524) = vp8_get8x8var_xenon_c;
+  *(code **)(iVar1 + 0x30528) = vp8_get16x16var_xenon_c;
+  *(code **)(iVar1 + 0x30500) = vp8_sub_pixel_variance16x8_xenon_c;
+  *(code **)(iVar1 + 0x304f0) = vp8_variance16x16_xenon_c;
+  *(code **)(iVar1 + 0x304ec) = vp8_variance16x8_xenon_c;
+  *(code **)(iVar1 + 0x304e8) = vp8_variance8x16_xenon_c;
+  *(code **)(iVar1 + 0x304e4) = vp8_variance8x8_xenon_c;
+  *(code **)(iVar1 + 0x3059c) = vp8_fast_quantize_b_xenon_c;
+  __restgprlr();
+  return;
 }
 

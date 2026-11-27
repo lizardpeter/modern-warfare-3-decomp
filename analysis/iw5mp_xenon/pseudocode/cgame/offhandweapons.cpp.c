@@ -16,6 +16,21 @@ void CG_OffhandRegisterDvars(void)
 }
 
 
+// 82328BA8  GetBestOffhand  (cgame/offhandweapons.cpp:50)
+
+void GetBestOffhand(undefined8 param_1,undefined8 param_2)
+
+{
+  char cVar1;
+  
+  cVar1 = BG_GetFirstAvailableOffhand();
+  if (cVar1 == '\0') {
+    BG_GetFirstEquippedOffhand(param_1,param_2);
+  }
+  return;
+}
+
+
 // 82328BF8  IsOffHandDisplayVisible  (cgame/offhandweapons.cpp:65)
 
 ulonglong IsOffHandDisplayVisible(int param_1)
@@ -30,21 +45,131 @@ ulonglong IsOffHandDisplayVisible(int param_1)
 
 // 82328C30  CG_DrawOffHandIcon  (cgame/offhandweapons.cpp:96)
 
-void CG_DrawOffHandIcon(void)
+void CG_DrawOffHandIcon(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
+                       undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float *pfVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar5;
+  uint uVar4;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
   __savegprlr_23();
+  uVar2 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202c000,0x68,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202c000,0x69,0,0xffffffff82000f98,0xffffffff8200240c);
+  }
+  uVar7 = 0;
+  iVar3 = CG_GetLocalClientGlobals(uVar2);
+  if (*(int *)(iVar3 + 4) < 8) {
+    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
+      uVar6 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+    }
+    else {
+      uVar6 = 0;
+    }
+  }
+  else {
+    uVar6 = 0;
+  }
+  if ((uVar6 == 0) || (*(float *)((int)param_4 + 0xc) == 0.0)) goto LAB_82328e80;
+  if ((int)param_7 == 0) {
+    iVar8 = (int)param_6;
+    if (iVar8 == 0) goto LAB_82328e80;
+    if (iVar8 < 1) {
+      MyAssertHandler(0xffffffff8202c000,0x83,0,0xffffffff82000f98,0xffffffff8202bfdc);
+    }
+    if (5 < iVar8) {
+      MyAssertHandler(0xffffffff8202c000,0x84,0,0xffffffff82000f98,0xffffffff8202bfb8);
+    }
+    cVar5 = GetBestOffhand(iVar3,param_6);
+    if (cVar5 == '\0') goto LAB_82328e80;
+    uVar4 = *(uint *)(iVar3 + 0x79420);
+    if (((uVar4 & 0xff) != 0) &&
+       (uVar4 = BG_GetAlternateWeapon(uVar4,0),
+       *(int *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x40) == iVar8)) {
+      uVar7 = (ulonglong)*(uint *)(iVar3 + 0x79420);
+    }
+    if ((uVar7 & 0xff) == 0) {
+      uVar7 = GetBestOffhand(iVar3,param_6);
+    }
+    if ((uVar7 & 0xff) == 0) goto LAB_82328e80;
+    BG_GetAlternateWeapon(uVar7,0);
+  }
+  else {
+    iVar3 = CG_MaterialHandleForIndex(uVar2,param_7);
+    if (iVar3 == 0) goto LAB_82328e80;
+  }
+  pfVar1 = (float *)param_2;
+  dVar12 = (double)pfVar1[3];
+  dVar11 = (double)pfVar1[2];
+  dVar10 = (double)pfVar1[1];
+  dVar9 = (double)*pfVar1;
+  ScrPlace_GetActivePlacement(uVar2);
+  UI_DrawHandlePic(dVar9,dVar10,dVar11,dVar12);
+LAB_82328e80:
+  __restfpr_28();
+  __restgprlr_23();
+  return;
 }
 
 
 // 82328E90  OffHandFlash  (cgame/offhandweapons.cpp:163)
 
-void OffHandFlash(void)
+void OffHandFlash(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  double dVar6;
+  
+  iVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202c000,0xa8,0,0xffffffff82000f98,0xffffffff8202c080);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202c000,0xa9,0,0xffffffff82000f98,0xffffffff8202c074);
+  }
+  if (DAT_82a77208 == 0) {
+    MyAssertHandler(0xffffffff8202c000,0xaa,0,0xffffffff82000f98,0xffffffff8202bfa0);
+  }
+  if (DAT_82a77200 == 0) {
+    MyAssertHandler(0xffffffff8202c000,0xab,0,0xffffffff82000f98,0xffffffff8202bf20);
+  }
+  iVar5 = DAT_82a77200;
+  puVar3 = (undefined4 *)param_2;
+  puVar4 = (undefined4 *)param_3;
+  *puVar4 = *puVar3;
+  puVar4[1] = puVar3[1];
+  iVar1 = DAT_82a77208;
+  puVar4[2] = puVar3[2];
+  puVar4[3] = puVar3[3];
+  dVar6 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x7981c)) * 0.001)
+  ;
+  if (dVar6 < (double)*(float *)(iVar1 + 0xc)) {
+    if (*(float *)(iVar5 + 0xc) <= 0.0) {
+      MyAssertHandler(0xffffffff8202c000,0xb2,0,0xffffffff82000f98,0xffffffff8202c044);
+      iVar5 = DAT_82a77200;
+    }
+    dVar6 = cos((double)((float)(dVar6 / (double)*(float *)(iVar5 + 0xc)) * 6.2831855));
+    puVar4[3] = (float)puVar3[3] * ((float)dVar6 + 1.0) * 0.5;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -53,59 +178,60 @@ void OffHandFlash(void)
 void CalcOffHandAmmo(undefined8 param_1,int param_2)
 
 {
-  int iVar4;
-  ulonglong uVar1;
-  uint uVar5;
-  longlong lVar2;
+  int iVar1;
+  int iVar5;
+  ulonglong uVar2;
   uint uVar6;
   longlong lVar3;
-  longlong lVar7;
-  uint *puVar8;
-  ulonglong uVar9;
+  uint uVar7;
+  longlong lVar4;
+  longlong lVar8;
+  uint *puVar9;
+  ulonglong uVar10;
   
-  iVar4 = __savegprlr_21();
-  lVar7 = 0;
+  iVar5 = __savegprlr_21();
+  lVar8 = 0;
   if ((DAT_8337367c == 0) || (*(char *)(DAT_8337367c + 0xc) == '\0')) {
-    puVar8 = (uint *)(iVar4 + 0x274);
-    lVar2 = 0xf;
+    puVar9 = (uint *)(iVar5 + 0x274);
+    lVar3 = 0xf;
     do {
-      uVar5 = *puVar8;
-      if ((uVar5 & 0xff) != 0) {
-        uVar6 = BG_GetAlternateWeapon(uVar5,0);
-        if ((&DAT_829d84a0)[uVar6 & 0xff] == 0) {
-                    /* WARNING: Subroutine does not return */
+      uVar6 = *puVar9;
+      if ((uVar6 & 0xff) != 0) {
+        uVar7 = BG_GetAlternateWeapon(uVar6,0);
+        iVar1 = (&DAT_829d84a0)[uVar7 & 0xff];
+        if (iVar1 == 0) {
           MyAssertHandler(0xffffffff8202c000,0xe3,0,0xffffffff82000f98,0xffffffff8200a88c);
         }
-        if (*(int *)((&DAT_829d84a0)[uVar6 & 0xff] + 0x40) == param_2) {
-          lVar3 = BG_GetAmmoInClipForWeapon(iVar4,uVar5,0,0);
-          lVar7 = lVar3 + lVar7;
+        if (*(int *)(iVar1 + 0x40) == param_2) {
+          lVar4 = BG_GetAmmoInClipForWeapon(iVar5,uVar6,0,0);
+          lVar8 = lVar4 + lVar8;
         }
       }
-      lVar2 = lVar2 + -1;
-      puVar8 = puVar8 + 1;
-    } while (lVar2 != 0);
+      lVar3 = lVar3 + -1;
+      puVar9 = puVar9 + 1;
+    } while (lVar3 != 0);
   }
   else {
-    uVar1 = BG_GetNumWeapons();
-    uVar9 = 1;
-    if (1 < (uVar1 & 0xffffffff)) {
+    uVar2 = BG_GetNumWeapons();
+    uVar10 = 1;
+    if (1 < (uVar2 & 0xffffffff)) {
       do {
-        uVar5 = BG_GetAlternateWeapon(uVar9 & 0xffffffff000000ff,0);
-        if ((&DAT_829d84a0)[uVar5 & 0xff] == 0) {
-                    /* WARNING: Subroutine does not return */
+        uVar6 = BG_GetAlternateWeapon(uVar10 & 0xffffffff000000ff,0);
+        iVar1 = (&DAT_829d84a0)[uVar6 & 0xff];
+        if (iVar1 == 0) {
           MyAssertHandler(0xffffffff8202c000,0xd3,0,0xffffffff82000f98,0xffffffff8200a88c);
         }
-        if (*(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x40) == param_2) {
-          lVar2 = BG_GetAmmoInClipForWeapon(iVar4,uVar9 & 0xffffffff000000ff,0,0);
-          lVar7 = lVar2 + lVar7;
+        if (*(int *)(iVar1 + 0x40) == param_2) {
+          lVar3 = BG_GetAmmoInClipForWeapon(iVar5,uVar10 & 0xffffffff000000ff,0,0);
+          lVar8 = lVar3 + lVar8;
         }
-        uVar9 = uVar9 + 1;
-      } while ((uVar9 & 0xffffffff) < (uVar1 & 0xffffffff));
-      __restgprlr_21(lVar7);
+        uVar10 = uVar10 + 1;
+      } while ((uVar10 & 0xffffffff) < (uVar2 & 0xffffffff));
+      __restgprlr_21(lVar8);
       return;
     }
   }
-  __restgprlr_21(lVar7);
+  __restgprlr_21(lVar8);
   return;
 }
 
@@ -161,12 +287,11 @@ undefined8 CG_GetOffHandPrimaryAmmo(void)
     uVar4 = 0;
   }
   if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x368), iVar1 != 0)) {
-    if (iVar1 < 6) {
-      uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-      return uVar2;
+    if (5 < iVar1) {
+      MyAssertHandler(0xffffffff8202c000,0x114,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
     }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8202c000,0x114,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
+    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
+    return uVar2;
   }
   return 0;
 }
@@ -195,12 +320,11 @@ undefined8 CG_GetOffHandSecondaryAmmo(void)
     uVar4 = 0;
   }
   if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x36c), iVar1 != 0)) {
-    if (iVar1 < 6) {
-      uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-      return uVar2;
+    if (5 < iVar1) {
+      MyAssertHandler(0xffffffff8202c000,0x130,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
     }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8202c000,0x130,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
+    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
+    return uVar2;
   }
   return 0;
 }
@@ -234,21 +358,17 @@ void CG_DrawOffHandHighlight
   __savegprlr_25();
   uVar3 = __savefpr_28();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x140,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x141,0,0xffffffff82000f98,0xffffffff8200240c);
   }
   iVar6 = (int)param_6;
   if (iVar6 != 0) {
     if (iVar6 < 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8202c000,0x146,0,0xffffffff82000f98,0xffffffff8202bfdc);
     }
     if (5 < iVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8202c000,0x147,0,0xffffffff82000f98,0xffffffff8202bfb8);
     }
     iVar4 = CG_GetLocalClientGlobals(uVar3);
@@ -323,25 +443,21 @@ void CG_DrawOffHandAmmo(undefined8 param_1,ulonglong param_2,undefined8 param_3,
   undefined8 uVar8;
   
   uVar1 = __savegprlr_24();
+  uVar8 = extraout_f1;
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x171,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x172,0,0xffffffff82000f98,0xffffffff8200240c);
   }
   iVar3 = (int)param_7;
   if (iVar3 != 0) {
     if (iVar3 < 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8202c000,0x177,0,0xffffffff82000f98,0xffffffff8202bfdc);
     }
     if (5 < iVar3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8202c000,0x178,0,0xffffffff82000f98,0xffffffff8202bfb8);
     }
-    uVar8 = extraout_f1;
     iVar3 = CG_GetLocalClientGlobals(uVar1);
     if (*(int *)(iVar3 + 4) < 8) {
       if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
@@ -391,15 +507,13 @@ void CG_DrawOffHandName(undefined8 param_1,ulonglong param_2,undefined8 param_3,
   undefined8 uVar8;
   
   uVar1 = __savegprlr_24();
+  uVar8 = extraout_f1;
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x19b,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x19c,0,0xffffffff82000f98,0xffffffff8200240c);
   }
-  uVar8 = extraout_f1;
   iVar3 = CG_GetLocalClientGlobals(uVar1);
   if (*(int *)(iVar3 + 4) < 8) {
     if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
@@ -437,18 +551,60 @@ void CG_DrawOffHandName(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 void CG_SwitchOffHandCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar3;
+  
+  uVar2 = __savegprlr_29();
+  iVar4 = CG_GetLocalClientGlobals();
+  if ((*(uint *)(iVar4 + 0x79420) & 0xff) != 0) {
+    uVar5 = BG_GetAlternateWeapon(*(uint *)(iVar4 + 0x79420),0);
+    iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
+    if (*(int *)(iVar1 + 0x40) == 0) {
+      MyAssertHandler(0xffffffff8202c000,0x1c0,0,0xffffffff82000f98,0xffffffff8202c12c);
+    }
+    uVar3 = BG_GetFirstAvailableOffhand(iVar4,*(undefined4 *)(iVar1 + 0x40));
+    if ((uVar3 & 0xff) != 0) {
+      CG_SetEquippedOffHand(uVar2,uVar3);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82329A58  CG_PrepOffHand  (cgame/offhandweapons.cpp:461)
 
-void CG_PrepOffHand(void)
+void CG_PrepOffHand(undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  
+  uVar3 = __savegprlr_27();
+  if (param_2[1] == 1) {
+    uVar2 = param_3 & 0xff;
+    if ((uVar2 == 0) || (uVar4 = BG_GetNumWeapons(), (uVar4 & 0xffffffff) <= uVar2)) {
+      MyAssertHandler(0xffffffff8202c000,0x1d7,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar2);
+    }
+    uVar5 = BG_GetAlternateWeapon(param_3,0);
+    if ((param_4 & 0xff) == 0) {
+      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 100);
+    }
+    else {
+      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x68);
+    }
+    if (iVar1 != 0) {
+      CG_PlayEntitySoundAlias(uVar3,*param_2);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -478,7 +634,6 @@ LAB_82329c80:
   }
   uVar5 = param_3 & 0xff;
   if ((uVar5 == 0) || (uVar3 = BG_GetNumWeapons(), (uVar3 & 0xffffffff) <= uVar5)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c000,0x1f6,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar5);
   }
   if ((param_5 & 0xff) == 0) {
@@ -531,7 +686,6 @@ void CG_SetEquippedOffHand(undefined8 param_1,ulonglong param_2)
     if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x40) == 0) {
       uVar1 = BG_GetWeaponName(param_2,auStack_420,0x400);
       uVar1 = va(0xffffffff8200dc8c,uVar1);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8202c000,0x231,0,0xffffffff820011f4,0xffffffff8200dc28,uVar1);
     }
   }

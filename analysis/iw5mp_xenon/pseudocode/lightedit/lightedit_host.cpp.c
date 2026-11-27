@@ -34,13 +34,30 @@ void LightEdit_Free(undefined8 param_1)
 }
 
 
+// 826DF1C8  LightEdit_Connect  (lightedit/lightedit_host.cpp:112)
+
+void LightEdit_Connect(undefined4 param_1)
+
+{
+  if (DAT_844cc0d0 != 0) {
+    LightEdit_Disconnect();
+  }
+  DAT_844cc0d0 = param_1;
+  DAT_844cc0d4 = 1;
+  DAT_844cc0d8 = 0;
+  DAT_844cc0dc = 0;
+  DAT_844cc0e0 = 0;
+  DAT_844cd0e4 = 0;
+  return;
+}
+
+
 // 826DD5A0  LightEdit_Disconnect  (lightedit/lightedit_host.cpp:122)
 
 void LightEdit_Disconnect(int param_1)
 
 {
   if (DAT_844cc0d0 != param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a72a0,0x7b,0,0xffffffff82000f98,0xffffffff821a72e8);
   }
   DAT_844cc0d4 = 0;
@@ -63,7 +80,6 @@ void LightEdit_SendStageIndex(void)
   if (DAT_82a383cc == 0) {
     uVar1 = CL_GetLocalClientConnectionState(0);
     uVar1 = va(0xffffffff82001208,uVar1,0);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
   }
   local_50 = *(undefined4 *)(DAT_82a383cc + 0x6b9c8);
@@ -82,8 +98,85 @@ void LightEdit_SendStageIndex(void)
 void LightEdit_ProcessUpdateStageMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  undefined1 auStack_40 [64];
+  
+  piVar3 = (int *)__savegprlr_28();
+  uVar2 = MSG_ReadByte();
+  MSG_ReadVec3(piVar3,&local_60);
+  MSG_ReadVec3(piVar3,auStack_40);
+  MSG_ReadVec3(piVar3,&local_50);
+  MSG_ReadFloat(piVar3);
+  if (*piVar3 != 0) {
+    MyAssertHandler(0xffffffff821a72a0,0xa8,0,0xffffffff82000f98,0xffffffff8208f29c);
+  }
+  puVar4 = (undefined4 *)R_GetStageByIndex(uVar2);
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821a72a0,0xab,0,0xffffffff82000f98,0xffffffff820df2a8);
+  }
+  if (0 < *(int *)(DAT_844cc0c8 + 0xc)) {
+    Com_Printf(0xe,0xffffffff821a7310,uVar2,*puVar4);
+  }
+  if (DAT_82a383cc == 0) {
+    uVar2 = CL_GetLocalClientConnectionState(0);
+    uVar2 = va(0xffffffff82001208,uVar2,0);
+    MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar2);
+  }
+  dVar11 = 1.0;
+  iVar5 = (uint)*(byte *)((int)puVar4 + 0x12) * 0x4c + DAT_82a383cc;
+  *(undefined4 *)(iVar5 + 0x6bb24) = local_60;
+  *(undefined4 *)(iVar5 + 0x6bb28) = local_5c;
+  *(undefined4 *)(iVar5 + 0x6bb2c) = local_58;
+  *(float *)(iVar5 + 0x6bb30) = local_50;
+  *(float *)(iVar5 + 0x6bb34) = local_4c;
+  *(float *)(iVar5 + 0x6bb38) = local_48;
+  dVar6 = (double)SQRT(local_48 * local_48 + local_50 * local_50 + local_4c * local_4c);
+  dVar9 = dVar11;
+  if (-dVar6 < 0.0) {
+    dVar9 = dVar6;
+  }
+  fVar1 = (float)(1.0 / dVar9);
+  *(float *)(iVar5 + 0x6bb30) = local_50 * fVar1;
+  *(float *)(iVar5 + 0x6bb34) = local_4c * fVar1;
+  *(float *)(iVar5 + 0x6bb38) = local_48 * fVar1;
+  iVar5 = Com_GetPrimaryLight(*(undefined1 *)((int)puVar4 + 0x12));
+  *(undefined4 *)(iVar5 + 4) = local_60;
+  *(undefined4 *)(iVar5 + 8) = local_5c;
+  *(undefined4 *)(iVar5 + 0xc) = local_58;
+  dVar8 = (double)local_50;
+  *(float *)(iVar5 + 0x10) = local_50;
+  dVar7 = (double)local_4c;
+  *(float *)(iVar5 + 0x14) = local_4c;
+  dVar6 = (double)local_48;
+  *(float *)(iVar5 + 0x18) = local_48;
+  dVar10 = (double)SQRT((float)(dVar6 * dVar6 +
+                               (double)(float)(dVar8 * dVar8 + (double)(float)(dVar7 * dVar7))));
+  dVar9 = dVar11;
+  if (-dVar10 < 0.0) {
+    dVar9 = dVar10;
+  }
+  dVar9 = (double)(float)(dVar11 / dVar9);
+  *(float *)(iVar5 + 0x10) = (float)(dVar8 * dVar9);
+  *(float *)(iVar5 + 0x14) = (float)(dVar7 * dVar9);
+  *(float *)(iVar5 + 0x18) = (float)(dVar6 * dVar9);
+  __restgprlr_28(dVar7,dVar6,dVar8);
+  return;
 }
 
 
@@ -149,11 +242,33 @@ void LightEdit_WriteFloat(double param_1,undefined8 param_2)
 
 // 826DD9F8  LightEdit_WriteVector  (lightedit/lightedit_host.cpp:240)
 
-void LightEdit_WriteVector(void)
+void LightEdit_WriteVector(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined8 uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar4 = (int)param_3;
+  uVar3 = (undefined4)((ulonglong)param_3 >> 0x20);
+  uVar2 = __savegprlr_29();
+  if (iVar4 != 0) {
+    param_2 = param_2 + -4;
+    lVar5 = CONCAT44(uVar3,iVar4);
+    do {
+      param_2 = param_2 + 4;
+      uVar1 = *(uint *)param_2;
+      MSG_WriteLong(uVar2,((ulonglong)(uVar1 >> 0x10) | (ulonglong)uVar1 & 0xffffffffffff0000) >> 8
+                          & 0xffff |
+                          ((((ulonglong)uVar1 & 0xffff) << 0x10 |
+                           (ulonglong)uVar1 & 0xffffffff0000ffff) & 0xffff00) << 8);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -172,11 +287,32 @@ double LightEdit_ReadFloat(void)
 
 // 826DDAA0  LightEdit_ReadVector  (lightedit/lightedit_host.cpp:255)
 
-void LightEdit_ReadVector(void)
+void LightEdit_ReadVector(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar4 = (int)param_3;
+  uVar3 = (undefined4)((ulonglong)param_3 >> 0x20);
+  uVar1 = __savegprlr_29();
+  if (iVar4 != 0) {
+    param_2 = param_2 + -4;
+    lVar5 = CONCAT44(uVar3,iVar4);
+    do {
+      uVar2 = MSG_ReadLong(uVar1);
+      lVar5 = lVar5 + -1;
+      param_2 = param_2 + 4;
+      *(uint *)param_2 =
+           ((uint)(uVar2 >> 0x10) & 0xffff | (uint)uVar2 & 0xffff0000) >> 8 & 0xffff |
+           (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
+    } while (lVar5 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -241,50 +377,46 @@ void LightEdit_PatchLightmap
   
   uVar8 = __savegprlr_24();
   if (DAT_84613714 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a72a0,0x15e,0,0xffffffff82000f98,0xffffffff821a7440);
   }
   uVar6 = uVar8 & 0x7f;
   if (*(uint *)(DAT_84613714 + 0x1c) <= uVar6) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a72a0,0x163,0,0xffffffff821a73f8,uVar6);
   }
   uVar4 = (uint)param_3;
   uVar7 = (uint)param_2;
-  if (((uVar8 & 0xffffffff) >> 7 & 1) == 0) {
-    iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3) + 4);
-    uVar3 = (((uint)((param_3 & 0xffffffff) << 2) & 0x18) + (uVar7 & 7)) * 4;
-    uVar8 = (ulonglong)
-            (((*(ushort *)(iVar1 + 0x40) + 0x1f >> 5) * (uVar4 >> 5) + (uVar7 >> 5)) * 0x200) +
-            ((param_3 & 1) * 8 + ((ulonglong)uVar3 & 0xfffffff0)) * 2 +
-            (ulonglong)((uVar4 & 8) << 5) + ((ulonglong)uVar3 & 0xf);
-    uVar8 = (((((param_3 & 0x10) * 0x10 + (uVar8 & 0xfffffe00)) * 2 & 0xfffffffe) + (uVar8 & 0x1c0))
-             * 4 & 0xfffffffc) + ((param_3 & 0x7ffffff8) * 2 + param_2 & 0x18) * 8 + (uVar8 & 0x3f);
-    if (((longlong)(int)(uint)*(ushort *)(iVar1 + 0x42) *
-         (longlong)(int)(uint)*(ushort *)(iVar1 + 0x40) * 4 & 0xfffffffcU) <= uVar8) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821a72a0,0x17b,0,0xffffffff82000f98,0xffffffff821a7384);
+  if (((uVar8 & 0xffffffff) >> 7 & 1) != 0) {
+    iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3));
+    uVar3 = ((uVar4 & 0x18) + (uVar7 >> 2 & 7)) * 8;
+    uVar7 = (((*(ushort *)(iVar1 + 0x40) >> 2) + 0x1f >> 5) * (uVar4 >> 7) + (uVar7 >> 7)) * 0x400 +
+            ((uVar4 & 4) * 2 + (uVar3 & 0xfffffff0)) * 2 + (uVar4 >> 2 & 8) * 0x40 + (uVar3 & 0xf);
+    uVar4 = (((uVar4 & 0x40) * 4 + (uVar7 & 0xfffffe00)) * 2 + (uVar7 & 0x1c0)) * 4 +
+            ((((uint)((param_3 & 0xffffffff) >> 1) & 0x7ffffff0) +
+             (int)((param_2 & 0xffffffff) >> 2)) * 8 & 0xc0) + (uVar7 & 0x3f) >> 3;
+    if ((int)((uint)*(ushort *)(iVar1 + 0x42) * (uint)*(ushort *)(iVar1 + 0x40)) <= (int)uVar4) {
+      MyAssertHandler(0xffffffff821a72a0,0x16b,0,0xffffffff82000f98,0xffffffff821a73c4);
     }
-    *(int *)(*(int *)(iVar1 + 0x48) + (int)uVar8) = (int)param_4;
+    iVar5 = uVar4 * 8;
+    lVar2 = ((~param_3 & 3) * 4 + (param_2 & 3)) * 4;
+    *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) =
+         (param_4 >> 4 & 0xf) << lVar2 |
+         *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) & ~(0xfL << lVar2);
     __restgprlr_24();
     return;
   }
-  iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3));
-  uVar3 = ((uVar4 & 0x18) + (uVar7 >> 2 & 7)) * 8;
-  uVar7 = (((*(ushort *)(iVar1 + 0x40) >> 2) + 0x1f >> 5) * (uVar4 >> 7) + (uVar7 >> 7)) * 0x400 +
-          ((uVar4 & 4) * 2 + (uVar3 & 0xfffffff0)) * 2 + (uVar4 >> 2 & 8) * 0x40 + (uVar3 & 0xf);
-  uVar4 = (((uVar4 & 0x40) * 4 + (uVar7 & 0xfffffe00)) * 2 + (uVar7 & 0x1c0)) * 4 +
-          ((((uint)((param_3 & 0xffffffff) >> 1) & 0x7ffffff0) + (int)((param_2 & 0xffffffff) >> 2))
-           * 8 & 0xc0) + (uVar7 & 0x3f) >> 3;
-  if ((int)((uint)*(ushort *)(iVar1 + 0x42) * (uint)*(ushort *)(iVar1 + 0x40)) <= (int)uVar4) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821a72a0,0x16b,0,0xffffffff82000f98,0xffffffff821a73c4);
+  iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3) + 4);
+  uVar3 = (((uint)((param_3 & 0xffffffff) << 2) & 0x18) + (uVar7 & 7)) * 4;
+  uVar8 = (ulonglong)
+          (((*(ushort *)(iVar1 + 0x40) + 0x1f >> 5) * (uVar4 >> 5) + (uVar7 >> 5)) * 0x200) +
+          ((param_3 & 1) * 8 + ((ulonglong)uVar3 & 0xfffffff0)) * 2 + (ulonglong)((uVar4 & 8) << 5)
+          + ((ulonglong)uVar3 & 0xf);
+  uVar8 = (((((param_3 & 0x10) * 0x10 + (uVar8 & 0xfffffe00)) * 2 & 0xfffffffe) + (uVar8 & 0x1c0)) *
+           4 & 0xfffffffc) + ((param_3 & 0x7ffffff8) * 2 + param_2 & 0x18) * 8 + (uVar8 & 0x3f);
+  if (((longlong)(int)(uint)*(ushort *)(iVar1 + 0x42) *
+       (longlong)(int)(uint)*(ushort *)(iVar1 + 0x40) * 4 & 0xfffffffcU) <= uVar8) {
+    MyAssertHandler(0xffffffff821a72a0,0x17b,0,0xffffffff82000f98,0xffffffff821a7384);
   }
-  iVar5 = uVar4 * 8;
-  lVar2 = ((~param_3 & 3) * 4 + (param_2 & 3)) * 4;
-  *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) =
-       (param_4 >> 4 & 0xf) << lVar2 |
-       *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) & ~(0xfL << lVar2);
+  *(int *)(*(int *)(iVar1 + 0x48) + (int)uVar8) = (int)param_4;
   __restgprlr_24();
   return;
 }
@@ -295,8 +427,44 @@ void LightEdit_PatchLightmap
 void LightEdit_ProcessUpdateLightmapMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  byte local_40 [2];
+  ushort local_3e;
+  ushort local_3c [2];
+  uint local_38 [14];
+  
+  piVar1 = (int *)__savegprlr_27();
+  DAT_844cd1e8 = DAT_844cd1e8 + 1;
+  if (piVar1[7] < piVar1[4]) {
+    do {
+      DAT_844cd1e4 = DAT_844cd1e4 + 1;
+      MSG_ReadData(piVar1,local_40,1);
+      MSG_ReadData(piVar1,local_3c,2);
+      MSG_ReadData(piVar1,&local_3e,2);
+      if (*piVar1 != 0) {
+        MyAssertHandler(0xffffffff821a72a0,0x193,0,0xffffffff82000f98,0xffffffff8208f29c);
+      }
+      local_3c[0] = local_3c[0] << 8 | local_3c[0] >> 8;
+      local_3e = local_3e << 8 | local_3e >> 8;
+      if ((local_40[0] & 0x80) == 0) {
+        MSG_ReadData(piVar1,local_38,4);
+        if (*piVar1 != 0) {
+          MyAssertHandler(0xffffffff821a72a0,0x1a2,0,0xffffffff82000f98,0xffffffff8208f29c);
+        }
+        local_38[0] = (local_38[0] >> 0x10 | local_38[0] & 0xffff0000) >> 8 & 0xffff |
+                      ((local_38[0] << 0x10 | local_38[0] & 0xffff) & 0xffff00) << 8;
+      }
+      else {
+        local_38[0] = MSG_ReadByte();
+        if (*piVar1 != 0) {
+          MyAssertHandler(0xffffffff821a72a0,0x19d,0,0xffffffff82000f98,0xffffffff8208f29c);
+        }
+      }
+      LightEdit_PatchLightmap(local_40[0],local_3c[0],local_3e,local_38[0]);
+    } while (piVar1[7] < piVar1[4]);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -376,7 +544,6 @@ void LightEdit_ProcessUpdateLightGridBeginPhaseMsg(int *param_1)
     }
     iVar1 = MSG_ReadByte(param_1);
     if (*param_1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821a72a0,0x1ef,0,0xffffffff82000f98,0xffffffff8208f29c);
     }
     DAT_844cc0dc = 0;
@@ -425,8 +592,43 @@ void LightEdit_FixNetGridHeader(void)
 void LightEdit_FixNetRowData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  uint uVar4;
+  ushort *puVar5;
+  
   __savegprlr_28();
+  iVar1 = DAT_8461658c;
+  lVar3 = ((ulonglong)
+           *(ushort *)
+            ((int)(((ulonglong)*(uint *)(DAT_8461658c + 0x110) + 7 & 0xffffffff) << 1) +
+            DAT_8461658c + 0xfc) -
+          (ulonglong)
+          *(ushort *)
+           ((int)(((ulonglong)*(uint *)(DAT_8461658c + 0x110) + 4 & 0xffffffff) << 1) +
+           DAT_8461658c + 0xfc)) + 1;
+  if (lVar3 != 0) {
+    iVar2 = 0;
+    do {
+      uVar4 = (uint)*(ushort *)(iVar2 + *(int *)(iVar1 + 0x118));
+      if (uVar4 != 0xffff) {
+        puVar5 = (ushort *)(uVar4 * 4 + *(int *)(iVar1 + 0x120));
+        uVar4 = *(uint *)(puVar5 + 4);
+        puVar5[2] = puVar5[2] << 8 | puVar5[2] >> 8;
+        puVar5[3] = puVar5[3] << 8 | puVar5[3] >> 8;
+        *puVar5 = *puVar5 << 8 | *puVar5 >> 8;
+        puVar5[1] = puVar5[1] << 8 | puVar5[1] >> 8;
+        *(uint *)(puVar5 + 4) =
+             uVar4 >> 0x18 | uVar4 >> 8 & 0xff00 |
+             ((uVar4 << 0x10 | uVar4 & 0xffff) & 0xffff00) << 8;
+      }
+      iVar2 = iVar2 + 2;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -460,8 +662,35 @@ void LightEdit_ProcessUpdateLightGridEndPhaseMsg(void)
 void LightEdit_ProcessUpdateGridHeaderMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  
+  piVar2 = (int *)__savegprlr_26();
+  iVar1 = DAT_8461658c;
+  uVar4 = (ulonglong)DAT_844cc0dc;
+  uVar3 = (((ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 7) * 2 + DAT_8461658c + 0xfc) -
+           (ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 4) * 2 + DAT_8461658c + 0xfc)) +
+           1 & 0x7fffffff) * 2;
+  if (uVar4 < uVar3) {
+    lVar5 = (ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[7];
+    if ((int)(uVar3 - uVar4) < (int)((ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[7])) {
+      lVar5 = uVar3 - uVar4;
+    }
+    if (uVar3 < (uVar4 + lVar5 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff821a72a0,0x24c,0,0xffffffff82000f98,0xffffffff821a7688);
+      uVar4 = (ulonglong)DAT_844cc0dc;
+    }
+    MSG_ReadData(piVar2,*(uint *)(iVar1 + 0x118) + uVar4,lVar5);
+    if (*piVar2 != 0) {
+      MyAssertHandler(0xffffffff821a72a0,0x24e,0,0xffffffff82000f98,0xffffffff8208f29c);
+    }
+    DAT_844cc0dc = DAT_844cc0dc + (int)lVar5;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -470,8 +699,71 @@ void LightEdit_ProcessUpdateGridHeaderMsg(void)
 void LightEdit_ProcessUpdateGridColorsMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int *piVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  uint local_f0;
+  uint local_ec [3];
+  undefined1 auStack_e0 [224];
+  
+  piVar2 = (int *)__savegprlr_26();
+  iVar1 = DAT_8461658c;
+  if (DAT_844cc0dc != 0) {
+    uVar5 = piVar2[4] - piVar2[7];
+    piVar4 = piVar2;
+    while (0xa7 < uVar5) {
+      MSG_ReadData(piVar2,local_ec,4);
+      local_ec[0] = local_ec[0] >> 0x18 | local_ec[0] >> 8 & 0xff00 |
+                    ((local_ec[0] << 0x10 | local_ec[0] & 0xffff) & 0xffff00) << 8;
+      if (*piVar2 != 0) {
+        MyAssertHandler(0xffffffff821a72a0,0x284,0,0xffffffff82000f98,0xffffffff8208f29c);
+      }
+      DAT_844cc0dc = DAT_844cc0dc + 4;
+      piVar4 = (int *)MSG_ReadData(piVar2,auStack_e0,0xa8);
+      if (*piVar2 != 0) {
+        piVar4 = (int *)MyAssertHandler(0xffffffff821a72a0,0x288,0,0xffffffff82000f98,
+                                        0xffffffff8208f29c);
+      }
+      DAT_844cc0dc = DAT_844cc0dc + 0xa8;
+      if (local_ec[0] < *(uint *)(iVar1 + 300)) {
+        piVar4 = memcpy((void *)(local_ec[0] * 0xa8 + *(int *)(iVar1 + 0x130)),auStack_e0,0xa8);
+      }
+      uVar5 = piVar2[4] - piVar2[7];
+    }
+    __restgprlr_26(piVar4);
+    return;
+  }
+  MSG_ReadData(piVar2,&local_f0,4);
+  uVar6 = ((ulonglong)(local_f0 >> 0x10) | (ulonglong)local_f0 & 0xffffffffffff0000) >> 8 & 0xffff |
+          ((((ulonglong)local_f0 & 0xffff) << 0x10 | (ulonglong)local_f0 & 0xffffffff0000ffff) &
+          0xffff00) << 8;
+  local_f0 = (uint)uVar6;
+  if (DAT_844cd1f8 < uVar6) {
+    if (DAT_844cd1f4 != '\0') {
+      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x130),0);
+      uVar6 = (ulonglong)local_f0;
+    }
+    iVar3 = Z_TryVirtualAlloc(uVar6 * 0xa8,0xffffffff821a7290,0);
+    if (iVar3 != 0) {
+      *(int *)(iVar1 + 0x130) = iVar3;
+      *(uint *)(iVar1 + 300) = local_f0;
+      DAT_844cd1f8 = local_f0;
+      DAT_844cd1f4 = 1;
+      DAT_844cc0dc = DAT_844cc0dc + 4;
+      __restgprlr_26();
+      return;
+    }
+    *(undefined4 *)(iVar1 + 0x130) = DAT_844cd1ec;
+    *(uint *)(iVar1 + 300) = DAT_844cd1f0;
+    DAT_844cd1f4 = '\0';
+    DAT_844cd1f8 = DAT_844cd1f0;
+  }
+  DAT_844cc0dc = DAT_844cc0dc + 4;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -480,8 +772,65 @@ void LightEdit_ProcessUpdateGridColorsMsg(void)
 void LightEdit_ProcessUpdateGridRowsMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  int iVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  uint local_40 [16];
+  
+  piVar3 = (int *)__savegprlr_26();
+  iVar1 = DAT_8461658c;
+  if (DAT_844cc0e0 != 0) {
+    uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x11c);
+    uVar5 = (ulonglong)DAT_844cc0dc;
+    if (uVar5 < uVar2) {
+      lVar6 = (ulonglong)(uint)piVar3[4] - (ulonglong)(uint)piVar3[7];
+      if ((int)(uVar2 - uVar5) < (int)((ulonglong)(uint)piVar3[4] - (ulonglong)(uint)piVar3[7])) {
+        lVar6 = uVar2 - uVar5;
+      }
+      if (uVar2 < (uVar5 + lVar6 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821a72a0,0x2c2,0,0xffffffff82000f98,0xffffffff821a76c8);
+        uVar5 = (ulonglong)DAT_844cc0dc;
+      }
+      MSG_ReadData(piVar3,*(uint *)(iVar1 + 0x120) + uVar5,lVar6);
+      if (*piVar3 != 0) {
+        MyAssertHandler(0xffffffff821a72a0,0x2c6,0,0xffffffff82000f98,0xffffffff8208f29c);
+      }
+      DAT_844cc0dc = DAT_844cc0dc + (int)lVar6;
+    }
+    __restgprlr_26();
+    return;
+  }
+  MSG_ReadData(piVar3,local_40,4);
+  uVar2 = ((ulonglong)(local_40[0] >> 0x10) | (ulonglong)local_40[0] & 0xffffffffffff0000) >> 8 &
+          0xffff | ((((ulonglong)local_40[0] & 0xffff) << 0x10 |
+                    (ulonglong)local_40[0] & 0xffffffff0000ffff) & 0xffff00) << 8;
+  local_40[0] = (uint)uVar2;
+  if (DAT_844cd208 < uVar2) {
+    if (DAT_844cd204 != '\0') {
+      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x120),0);
+      uVar2 = (ulonglong)local_40[0];
+    }
+    iVar4 = Z_TryVirtualAlloc(uVar2,0xffffffff821a7290,0);
+    if (iVar4 != 0) {
+      *(int *)(iVar1 + 0x120) = iVar4;
+      *(uint *)(iVar1 + 0x11c) = local_40[0];
+      DAT_844cc0e0 = local_40[0];
+      DAT_844cd204 = 1;
+      DAT_844cd208 = DAT_844cc0e0;
+      __restgprlr_26();
+      return;
+    }
+    *(undefined4 *)(iVar1 + 0x120) = DAT_844cd1fc;
+    *(uint *)(iVar1 + 0x11c) = DAT_844cd200;
+    DAT_844cd204 = '\0';
+    DAT_844cd208 = DAT_844cd200;
+  }
+  DAT_844cc0e0 = local_40[0];
+  __restgprlr_26();
+  return;
 }
 
 
@@ -499,7 +848,6 @@ void LightEdit_FixNetGridEntry(ushort *param_1)
   if ((ulonglong)*(uint *)(DAT_8461658c + 300) <= (uVar2 | uVar1)) {
     uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 300) - 1;
     if ((int)uVar2 != (int)(uVar2 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar2,uVar2 & 0xffff);
     }
     *param_1 = (ushort)uVar2;
@@ -513,8 +861,71 @@ void LightEdit_FixNetGridEntry(ushort *param_1)
 void LightEdit_ProcessUpdateGridEntriesMsg(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  uint local_50;
+  uint local_4c;
+  undefined4 local_48 [18];
+  
+  piVar2 = (int *)__savegprlr_26();
+  iVar1 = DAT_8461658c;
+  if (DAT_844cc0dc != 0) {
+    uVar4 = piVar2[4] - piVar2[7];
+    while (3 < uVar4) {
+      MSG_ReadData(piVar2,&local_4c,4);
+      local_4c = local_4c >> 0x18 | local_4c >> 8 & 0xff00 |
+                 ((local_4c << 0x10 | local_4c & 0xffff) & 0xffff00) << 8;
+      if (*piVar2 != 0) {
+        MyAssertHandler(0xffffffff821a72a0,0x307,0,0xffffffff82000f98,0xffffffff8208f29c);
+      }
+      if (local_4c < *(uint *)(iVar1 + 0x124)) {
+        MSG_ReadData(piVar2,local_48,4);
+        if (*piVar2 != 0) {
+          MyAssertHandler(0xffffffff821a72a0,0x30c,0,0xffffffff82000f98,0xffffffff8208f29c);
+        }
+        LightEdit_FixNetGridEntry(local_48);
+        *(undefined4 *)(local_4c * 4 + *(int *)(iVar1 + 0x128)) = local_48[0];
+      }
+      DAT_844cc0dc = DAT_844cc0dc + 4;
+      uVar4 = piVar2[4] - piVar2[7];
+    }
+    __restgprlr_26();
+    return;
+  }
+  MSG_ReadData(piVar2,&local_50,4);
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821a72a0,0x2e3,0,0xffffffff82000f98,0xffffffff8208f29c);
+  }
+  uVar5 = ((ulonglong)(local_50 >> 0x10) | (ulonglong)local_50 & 0xffffffffffff0000) >> 8 & 0xffff |
+          ((((ulonglong)local_50 & 0xffff) << 0x10 | (ulonglong)local_50 & 0xffffffff0000ffff) &
+          0xffff00) << 8;
+  local_50 = (uint)uVar5;
+  if (DAT_844cd218 < uVar5) {
+    if (DAT_844cd214 != '\0') {
+      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x128),0);
+      uVar5 = (ulonglong)local_50;
+    }
+    iVar3 = Z_TryVirtualAlloc((uVar5 & 0x3fffffff) << 2,0xffffffff821a7290,0);
+    if (iVar3 != 0) {
+      *(int *)(iVar1 + 0x128) = iVar3;
+      *(uint *)(iVar1 + 0x124) = local_50;
+      DAT_844cd218 = local_50;
+      DAT_844cd214 = 1;
+      DAT_844cc0dc = DAT_844cc0dc + 4;
+      __restgprlr_26();
+      return;
+    }
+    *(undefined4 *)(iVar1 + 0x128) = DAT_844cd20c;
+    *(uint *)(iVar1 + 0x124) = DAT_844cd210;
+    DAT_844cd214 = '\0';
+    DAT_844cd218 = DAT_844cd210;
+  }
+  DAT_844cc0dc = DAT_844cc0dc + 4;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -584,7 +995,6 @@ void LightEdit_SendCrosshairPixel(void)
   if (DAT_82a383cc == 0) {
     uVar3 = CL_GetLocalClientConnectionState(0);
     uVar3 = va(0xffffffff82001208,uVar3,0);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar3);
   }
   local_98 = *(float *)(DAT_82a383cc + 0x6b9c8);
@@ -600,7 +1010,6 @@ void LightEdit_SendCrosshairPixel(void)
   }
   else {
     if (*(char *)(local_60 + 0x14) == '\x1f') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821a72a0,0x351,0,0xffffffff82000f98,0xffffffff821a770c);
     }
     local_78 = local_88 * local_5c[0] + local_98;
@@ -652,8 +1061,149 @@ void LightEdit_ProcessClearDebugLines(void)
 void LightEdit_ProcessAddDebugLine(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  uint *puVar5;
+  longlong lVar6;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_844cd21c != 0x100) {
+    iVar4 = DAT_844cd21c * 0x1c;
+    lVar6 = 3;
+    puVar5 = (uint *)(&DAT_844cd21c + DAT_844cd21c * 7);
+    DAT_844cd21c = DAT_844cd21c + 1;
+    do {
+      uVar2 = MSG_ReadLong(uVar1);
+      lVar6 = lVar6 + -1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = (uint)(uVar2 >> 0x18) & 0xff | (uint)(uVar2 >> 8) & 0xff00 |
+                (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
+    } while (lVar6 != 0);
+    puVar5 = (uint *)(iVar4 + -0x7bb32dd8);
+    lVar6 = 3;
+    do {
+      uVar2 = MSG_ReadLong(uVar1);
+      lVar6 = lVar6 + -1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = (uint)(uVar2 >> 0x18) & 0xff | (uint)(uVar2 >> 8) & 0xff00 |
+                (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
+    } while (lVar6 != 0);
+    uVar3 = MSG_ReadLong(uVar1);
+    *(undefined4 *)(&DAT_844cd238 + iVar4) = uVar3;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826DF590  LightEdit_ProcessMessage  (lightedit/lightedit_host.cpp:886)
+
+void LightEdit_ProcessMessage(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  int local_70 [28];
+  
+  iVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a72a0,0x37b,0,0xffffffff82000f98,0xffffffff8201805c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a72a0,0x37c,0,0xffffffff82000f98,0xffffffff821a78f4);
+  }
+  if ((iVar2 == 0) || (DAT_844cc0d0 != iVar2)) {
+    MyAssertHandler(0xffffffff821a72a0,0x37d,0,0xffffffff82000f98,0xffffffff821a78c0);
+  }
+  MSG_InitReadOnly(local_70,param_2,param_3);
+  MSG_BeginReading(local_70);
+  uVar3 = MSG_ReadByte(local_70);
+  uVar1 = uVar3 & 0xff;
+  if (uVar3 != uVar1) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar1);
+  }
+  if (local_70[0] != 0) {
+    MyAssertHandler(0xffffffff821a72a0,0x382,0,0xffffffff82000f98,0xffffffff82034958);
+  }
+  if (0 < *(int *)(DAT_844cc0c8 + 0xc)) {
+    Com_Printf(0x10,0xffffffff821a7894,uVar1,param_3 - 1);
+  }
+  switch(uVar1) {
+  case 0:
+    MSG_ReadString(local_70,0xffffffff844cee38,0x400);
+    Com_Printf(0x10,0xffffffff844cee38);
+    __restgprlr_26(1);
+    return;
+  case 2:
+    LightEdit_SendStageIndex();
+    __restgprlr_26(1);
+    return;
+  case 3:
+    LightEdit_ProcessUpdateStageMsg(local_70);
+    __restgprlr_26(1);
+    return;
+  case 5:
+    break;
+  case 6:
+    LightEdit_ProcessUpdateLightmapMsg(local_70);
+    __restgprlr_26(1);
+    return;
+  case 7:
+    if (DAT_844cc0d4 != 3) {
+      Com_PrintWarning(0x10,0xffffffff821a7480);
+      __restgprlr_26(1);
+      return;
+    }
+    Com_Printf(0x10,0xffffffff821a744c,DAT_844cd1e8,DAT_844cd1e4);
+    __restgprlr_26(1);
+    return;
+  case 8:
+    LightEdit_ProcessUpdateLightGridBeginMsg();
+    __restgprlr_26(1);
+    return;
+  case 9:
+    LightEdit_ProcessUpdateLightGridBeginPhaseMsg(local_70);
+    __restgprlr_26(1);
+    return;
+  case 10:
+    LightEdit_ProcessUpdateLightGridMsg(local_70);
+    __restgprlr_26(1);
+    return;
+  case 0xb:
+    LightEdit_ProcessUpdateLightGridEndMsg();
+    __restgprlr_26(1);
+    return;
+  case 0xc:
+    LightEdit_ProcessUpdateLightGridEndPhaseMsg();
+    __restgprlr_26(1);
+    return;
+  case 0xd:
+    LightEdit_SendCrosshairPixel();
+    __restgprlr_26(1);
+    return;
+  case 0xe:
+    DAT_844cd21c = 0;
+    __restgprlr_26(1);
+    return;
+  case 0xf:
+    LightEdit_ProcessAddDebugLine(local_70);
+  default:
+    __restgprlr_26(1);
+    return;
+  }
+  if (DAT_844cc0d4 < 2) {
+    Com_PrintWarning(0x10,0xffffffff821a7340);
+    __restgprlr_26(1);
+    return;
+  }
+  DAT_844cc0d4 = 3;
+  DAT_844cd1e4 = 0;
+  DAT_844cd1e8 = 0;
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -662,8 +1212,62 @@ void LightEdit_ProcessAddDebugLine(void)
 void LightEdit_SendMapName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  undefined1 auStack_50 [80];
+  
   __savegprlr_29();
+  if (DAT_844cc0d0 == 0) {
+    MyAssertHandler(0xffffffff821a72a0,0x3c1,0,0xffffffff82000f98,0xffffffff821a7768);
+  }
+  if (DAT_844cc0d4 != 1) {
+    MyAssertHandler(0xffffffff821a72a0,0x3c2,0,0xffffffff82000f98,0xffffffff821a7748);
+  }
+  if ((DAT_8461658c != 0) && (DAT_844cd0e4 != '\0')) {
+    LightEdit_InitMsg(auStack_50,1);
+    MSG_WriteString(auStack_50,0xffffffff844cd0e4);
+    uVar1 = *(uint *)(DAT_8461658c + 0x2c4);
+    MSG_WriteLong(auStack_50,
+                  ((ulonglong)(uVar1 >> 0x10) | (ulonglong)uVar1 & 0xffffffffffff0000) >> 8 & 0xffff
+                  | ((((ulonglong)uVar1 & 0xffff) << 0x10 | (ulonglong)uVar1 & 0xffffffff0000ffff) &
+                    0xffff00) << 8);
+    LightEdit_SendMsg(DAT_844cc0d0,auStack_50);
+    DAT_844cc0d4 = 2;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 826DEDA8  LightEdit_DrawDebugLines  (lightedit/lightedit_host.cpp:977)
+
+void LightEdit_DrawDebugLines(void)
+
+{
+  undefined8 uVar1;
+  uint uVar2;
+  byte *pbVar3;
+  double dVar4;
+  float local_40;
+  float local_3c;
+  float local_38;
+  float local_34;
+  
+  uVar1 = __savegprlr_28();
+  if (((DAT_844cc0d0 != 0) && (1 < DAT_844cc0d4)) && (uVar2 = 0, DAT_844cd21c != 0)) {
+    pbVar3 = &DAT_844cd23a;
+    dVar4 = 0.003921568859368563;
+    do {
+      local_3c = (float)((double)pbVar3[-1] * dVar4);
+      local_40 = (float)((double)pbVar3[-2] * dVar4);
+      local_34 = (float)((double)pbVar3[1] * dVar4);
+      local_38 = (float)((double)*pbVar3 * dVar4);
+      R_AddDebugLine(uVar1,pbVar3 + -0x1a,pbVar3 + -0xe,&local_40);
+      uVar2 = uVar2 + 1;
+      pbVar3 = pbVar3 + 0x1c;
+    } while (uVar2 < DAT_844cd21c);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -750,6 +1354,27 @@ void LightEdit_MapUnload(void)
   DAT_844cc0dc = 0;
   DAT_844cc0e0 = 0;
   DAT_844cd0e4 = 0;
+  return;
+}
+
+
+// 826DF038  LightEdit_MapLoad  (lightedit/lightedit_host.cpp:1055)
+
+void LightEdit_MapLoad(void)
+
+{
+  DAT_844cd1ec = *(undefined4 *)(DAT_8461658c + 0x130);
+  DAT_844cd1f0 = *(undefined4 *)(DAT_8461658c + 300);
+  DAT_844cd1f4 = 0;
+  DAT_844cd1f8 = *(undefined4 *)(DAT_8461658c + 300);
+  DAT_844cd1fc = *(undefined4 *)(DAT_8461658c + 0x120);
+  DAT_844cd200 = *(undefined4 *)(DAT_8461658c + 0x11c);
+  DAT_844cd204 = 0;
+  DAT_844cd208 = *(undefined4 *)(DAT_8461658c + 0x11c);
+  DAT_844cd20c = *(undefined4 *)(DAT_8461658c + 0x128);
+  DAT_844cd210 = *(undefined4 *)(DAT_8461658c + 0x124);
+  DAT_844cd214 = 0;
+  DAT_844cd218 = *(undefined4 *)(DAT_8461658c + 0x124);
   return;
 }
 

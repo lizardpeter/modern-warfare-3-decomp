@@ -14,6 +14,15 @@ int _dynamic_initializer_for__g_fetchMessageOfTheDayFileTask__(void)
 }
 
 
+// 824DCD38  LiveStorage_InitMotd  (qcommon/com_motd.cpp:57)
+
+void LiveStorage_InitMotd(void)
+
+{
+  return;
+}
+
+
 // 824DCD40  LiveStorage_DoWeHaveMotd  (qcommon/com_motd.cpp:68)
 
 byte LiveStorage_DoWeHaveMotd(void)
@@ -28,8 +37,46 @@ byte LiveStorage_DoWeHaveMotd(void)
 void LiveStorage_FetchMotd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  
+  uVar2 = __savegprlr_26();
+  cVar4 = Live_IsUserSignedInToLive();
+  if ((((cVar4 == '\0') || (DAT_83605ee8 != '\0')) ||
+      (cVar4 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,1), cVar4 != '\0')) ||
+     ((cVar4 = Live_IsUserSignedInToDemonware(uVar2), cVar4 == '\0' ||
+      (iVar3 = dwGetLogOnStatus(uVar2), iVar3 != 2)))) goto LAB_824dcedc;
+  iVar3 = Sys_Milliseconds();
+  bVar1 = false;
+  if (DAT_83605eec == 0) {
+LAB_824dce24:
+    bVar1 = true;
+  }
+  else {
+    cVar4 = Live_GetShouldDemonwareRetry((iVar3 - DAT_83605ef0) / 1000,DAT_83605eec,0x3c);
+    if (cVar4 != '\0') goto LAB_824dce24;
+  }
+  if (bVar1) {
+    DAT_83605eec = DAT_83605eec + 1;
+    DAT_83605ef0 = iVar3;
+    iVar3 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar2,1);
+    if (iVar3 != 0) {
+      uVar2 = SEH_GetLanguageName(*(undefined4 *)(DAT_83f5de10 + 0xc));
+      uVar2 = va(0xffffffff8208530c,uVar2);
+      I_strncpyz(0xffffffff83605fd8,uVar2,0x40);
+      DAT_83605ef8 = &DAT_83605fd8;
+      memset(&DAT_83605de8,0,0x100);
+      DAT_83605fd0 = &DAT_83605de8;
+      DAT_83605fcc = 0x100;
+      *(undefined ***)(iVar3 + 0x98) = &DAT_83605ef8;
+      dwFetchPublisherFile(iVar3,0xffffffff83605ef8);
+    }
+  }
+LAB_824dcedc:
+  __restgprlr_26();
+  return;
 }
 
 
@@ -48,11 +95,9 @@ void LiveStorage_MotdFetchComplete(void)
   iVar2 = __savegprlr_25();
   iVar6 = iVar2 * 0xa0;
   if ((&DAT_8365bcd4)[iVar6] == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820853c4,0xa0,0,0xffffffff82000f98,0xffffffff82084c8c);
   }
-  if (*(int *)(&DAT_8365bcd0 + iVar6) != 1) {
-                    /* WARNING: Subroutine does not return */
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 1) {
     MyAssertHandler(0xffffffff820853c4,0xa1,0,0xffffffff82000f98,0xffffffff82085390);
   }
   iVar3 = dwGetLobbyService((&DAT_8365bcd5)[iVar6]);

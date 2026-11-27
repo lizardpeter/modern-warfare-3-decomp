@@ -20,22 +20,18 @@ void AssertValidVertexDeclOffsets(void)
     uVar1 = *puVar4;
     if (uVar1 != 0xff) {
       if (1 < uVar1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821d1a60,0x34a,0,0xffffffff821d1a48,0xffffffff821d19c0,uVar1);
       }
       if ((-1 < local_60[uVar1]) && (puVar4[1] < puVar2[local_60[uVar1] * 4 + 1])) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821d1a60,0x34c,0,0xffffffff82000f98,0xffffffff821d1aa8);
       }
       local_60[uVar1] = iVar3;
     }
     iVar3 = iVar3 + 1;
     puVar4 = puVar4 + 4;
-    if (8 < iVar3) {
-      __restgprlr_22();
-      return;
-    }
-  } while( true );
+  } while (iVar3 < 9);
+  __restgprlr_22();
+  return;
 }
 
 
@@ -69,7 +65,6 @@ void Material_BuildVertexDecl(undefined8 param_1,longlong param_2,int param_3)
     puVar10 = local_c7c;
     do {
       if (8 < *pbVar6) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821d1a60,0x366,0,0xffffffff821d1b88,*pbVar6,9);
       }
       puVar7 = (ushort *)((uint)*pbVar6 * 8 + param_3);
@@ -115,12 +110,11 @@ void Material_BuildVertexDecl(undefined8 param_1,longlong param_2,int param_3)
     if ((int)uVar9 < 0) goto LAB_82782d30;
   } while (DAT_84013128 != 0);
 LAB_82782d54:
-  if ((uVar11 & 0xffffffff) != 0) {
-    __restgprlr_20(uVar11);
-    return;
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d1a60,0x37e,0,0xffffffff82000f98,0xffffffff821d1af0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821d1a60,0x37e,0,0xffffffff82000f98,0xffffffff821d1af0);
+  __restgprlr_20(uVar11);
+  return;
 LAB_82782d30:
   do {
     uVar5 = R_ErrorDescription(uVar9);
@@ -175,7 +169,6 @@ LAB_82782e00:
     do {
       uVar16 = (uint)*pbVar15;
       if (8 < uVar16) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821d1a60,0x366,0,0xffffffff821d1b88,uVar16,9);
       }
       iVar11 = (iVar12 + uVar16) * 8;
@@ -231,7 +224,6 @@ LAB_82782f90:
   } while (DAT_84013128 != 0);
 LAB_82782fb4:
   if ((uVar14 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d1a60,0x37e,0,&DAT_82000f98,&DAT_821d1af0);
   }
 LAB_82782fd8:

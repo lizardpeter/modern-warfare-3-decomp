@@ -3,10 +3,216 @@
 ; 823038E8  DevSoundMixer_GetGroupNameForAlias  (cgame/cg_soundmixergui.cpp:68)
   823038E8  7D8802A6             mfspr r12,LR
   823038EC  48612DD1             bl 0x829166bc
+  823038F0  9421FF90             stwu r1,-0x70(r1)
+  823038F4  3D608202             lis r11,-0x7dfe
+  823038F8  3D408200             lis r10,-0x7e00
+  823038FC  7C7F1B78             or r31,r3,r3
+  82303900  2B030000             cmplwi cr6,r3,0x0
+  82303904  3BCB5518             addi r30,r11,0x5518
+  82303908  3BAA0F98             addi r29,r10,0xf98
+  8230390C  409A0020             bne cr6,0x8230392c
+  82303910  3D608202             lis r11,-0x7dfe
+  82303914  7FA6EB78             or r6,r29,r29
+  82303918  38EB550C             addi r7,r11,0x550c
+  8230391C  7FC3F378             or r3,r30,r30
+  82303920  38A00000             li r5,0x0
+  82303924  38800047             li r4,0x47
+  82303928  482D0BD9             bl 0x825d4500
+LAB_8230392c:
+  8230392C  817F0010             lwz r11,0x10(r31)
+  82303930  2B0B0000             cmplwi cr6,r11,0x0
+  82303934  419A0038             beq cr6,0x8230396c
+  82303938  896B0000             lbz r11,0x0(r11)
+  8230393C  2B0B0000             cmplwi cr6,r11,0x0
+  82303940  409A0020             bne cr6,0x82303960
+  82303944  3D608202             lis r11,-0x7dfe
+  82303948  7FA6EB78             or r6,r29,r29
+  8230394C  38EB54EC             addi r7,r11,0x54ec
+  82303950  7FC3F378             or r3,r30,r30
+  82303954  38A00000             li r5,0x0
+  82303958  3880004B             li r4,0x4b
+  8230395C  482D0BA5             bl 0x825d4500
+LAB_82303960:
+  82303960  807F0010             lwz r3,0x10(r31)
+  82303964  38210070             addi r1,r1,0x70
+  82303968  48612DA4             b 0x8291670c
+LAB_8230396c:
+  8230396C  817F003C             lwz r11,0x3c(r31)
+  82303970  7D6A4E70             srawi r10,r11,0x9
+  82303974  554306BE             rlwinm r3,r10,0x0,0x1a,0x1f
+  82303978  48543C59             bl 0x828475d0
+  8230397C  38210070             addi r1,r1,0x70
+  82303980  48612D8C             b 0x8291670c
+
+; 82303988  DevSoundMixer_GetGroupTypeForAlias  (cgame/cg_soundmixergui.cpp:85)
+  82303988  7D8802A6             mfspr r12,LR
+  8230398C  9181FFF8             stw r12,-0x8(r1)
+  82303990  FBE1FFF0             std r31,-0x10(r1)
+  82303994  9421FFA0             stwu r1,-0x60(r1)
+  82303998  7C7F1B78             or r31,r3,r3
+  8230399C  2B030000             cmplwi cr6,r3,0x0
+  823039A0  409A0028             bne cr6,0x823039c8
+  823039A4  3D608202             lis r11,-0x7dfe
+  823039A8  3D408200             lis r10,-0x7e00
+  823039AC  3D208202             lis r9,-0x7dfe
+  823039B0  38EB550C             addi r7,r11,0x550c
+  823039B4  38CA0F98             addi r6,r10,0xf98
+  823039B8  38695518             addi r3,r9,0x5518
+  823039BC  38A00000             li r5,0x0
+  823039C0  38800056             li r4,0x56
+  823039C4  482D0B3D             bl 0x825d4500
+LAB_823039c8:
+  823039C8  817F0010             lwz r11,0x10(r31)
+  823039CC  314BFFFF             subic r10,r11,0x1
+  823039D0  7C6A5910             subfe r3,r10,r11
+  823039D4  38210060             addi r1,r1,0x60
+  823039D8  8181FFF8             lwz r12,-0x8(r1)
+  823039DC  7D8803A6             mtspr LR,r12
+  823039E0  EBE1FFF0             ld r31,-0x10(r1)
+  823039E4  4E800020             blr
 
 ; 823039E8  DevSoundMixer_GetGroupIndexByName  (cgame/cg_soundmixergui.cpp:96)
   823039E8  7D8802A6             mfspr r12,LR
   823039EC  48612CC5             bl 0x829166b0
+  823039F0  9421FF70             stwu r1,-0x90(r1)
+  823039F4  3D608202             lis r11,-0x7dfe
+  823039F8  3D408200             lis r10,-0x7e00
+  823039FC  7C7A1B78             or r26,r3,r3
+  82303A00  2B030000             cmplwi cr6,r3,0x0
+  82303A04  3B8B5518             addi r28,r11,0x5518
+  82303A08  3BEA0F98             addi r31,r10,0xf98
+  82303A0C  409A0020             bne cr6,0x82303a2c
+  82303A10  3D608202             lis r11,-0x7dfe
+  82303A14  7FE6FB78             or r6,r31,r31
+  82303A18  38EB55F4             addi r7,r11,0x55f4
+  82303A1C  7F83E378             or r3,r28,r28
+  82303A20  38A00000             li r5,0x0
+  82303A24  38800064             li r4,0x64
+  82303A28  482D0AD9             bl 0x825d4500
+LAB_82303a2c:
+  82303A2C  897A0000             lbz r11,0x0(r26)
+  82303A30  2B0B0000             cmplwi cr6,r11,0x0
+  82303A34  409A0020             bne cr6,0x82303a54
+  82303A38  3D608202             lis r11,-0x7dfe
+  82303A3C  7FE6FB78             or r6,r31,r31
+  82303A40  38EB55DC             addi r7,r11,0x55dc
+  82303A44  7F83E378             or r3,r28,r28
+  82303A48  38A00000             li r5,0x0
+  82303A4C  38800065             li r4,0x65
+  82303A50  482D0AB1             bl 0x825d4500
+LAB_82303a54:
+  82303A54  3D6082A6             lis r11,-0x7d5a
+  82303A58  3BAB2720             addi r29,r11,0x2720
+  82303A5C  816B2720             lwz r11,0x2720(r11)
+  82303A60  2B0B0060             cmplwi cr6,r11,0x60
+  82303A64  40990024             ble cr6,0x82303a88
+  82303A68  3D608202             lis r11,-0x7dfe
+  82303A6C  7FE6FB78             or r6,r31,r31
+  82303A70  38EB55A0             addi r7,r11,0x55a0
+  82303A74  7F83E378             or r3,r28,r28
+  82303A78  38A00000             li r5,0x0
+  82303A7C  38800067             li r4,0x67
+  82303A80  482D0A81             bl 0x825d4500
+  82303A84  817D0000             lwz r11,0x0(r29)
+LAB_82303a88:
+  82303A88  3BE00000             li r31,0x0
+  82303A8C  2B0B0000             cmplwi cr6,r11,0x0
+  82303A90  419A005C             beq cr6,0x82303aec
+  82303A94  3D608202             lis r11,-0x7dfe
+  82303A98  3BDD0008             addi r30,r29,0x8
+  82303A9C  3B6B5560             addi r27,r11,0x5560
+LAB_82303aa0:
+  82303AA0  2B1F0060             cmplwi cr6,r31,0x60
+  82303AA4  41980020             blt cr6,0x82303ac4
+  82303AA8  7F66DB78             or r6,r27,r27
+  82303AAC  7F83E378             or r3,r28,r28
+  82303AB0  39000060             li r8,0x60
+  82303AB4  7FE7FB78             or r7,r31,r31
+  82303AB8  38A00000             li r5,0x0
+  82303ABC  3880006A             li r4,0x6a
+  82303AC0  482D0A41             bl 0x825d4500
+LAB_82303ac4:
+  82303AC4  7F44D378             or r4,r26,r26
+  82303AC8  7FC3F378             or r3,r30,r30
+  82303ACC  483084C5             bl 0x8260bf90
+  82303AD0  2F030000             cmpwi cr6,r3,0x0
+  82303AD4  419A0024             beq cr6,0x82303af8
+  82303AD8  817D0000             lwz r11,0x0(r29)
+  82303ADC  3BFF0001             addi r31,r31,0x1
+  82303AE0  3BDE0114             addi r30,r30,0x114
+  82303AE4  7F1F5840             cmplw cr6,r31,r11
+  82303AE8  4198FFB8             blt cr6,0x82303aa0
+LAB_82303aec:
+  82303AEC  38600060             li r3,0x60
+  82303AF0  38210090             addi r1,r1,0x90
+  82303AF4  48612C0C             b 0x82916700
+LAB_82303af8:
+  82303AF8  7FE3FB78             or r3,r31,r31
+  82303AFC  38210090             addi r1,r1,0x90
+  82303B00  48612C00             b 0x82916700
+
+; 82303B08  DevSoundMixer_GetGroupData  (cgame/cg_soundmixergui.cpp:119)
+  82303B08  7D8802A6             mfspr r12,LR
+  82303B0C  48612BB1             bl 0x829166bc
+  82303B10  9421FF90             stwu r1,-0x70(r1)
+  82303B14  3D608202             lis r11,-0x7dfe
+  82303B18  3D408200             lis r10,-0x7e00
+  82303B1C  7C7F1B78             or r31,r3,r3
+  82303B20  2B030000             cmplwi cr6,r3,0x0
+  82303B24  3BAB5518             addi r29,r11,0x5518
+  82303B28  3BCA0F98             addi r30,r10,0xf98
+  82303B2C  409A0020             bne cr6,0x82303b4c
+  82303B30  3D608202             lis r11,-0x7dfe
+  82303B34  7FC6F378             or r6,r30,r30
+  82303B38  38EB550C             addi r7,r11,0x550c
+  82303B3C  7FA3EB78             or r3,r29,r29
+  82303B40  38A00000             li r5,0x0
+  82303B44  3880007B             li r4,0x7b
+  82303B48  482D09B9             bl 0x825d4500
+LAB_82303b4c:
+  82303B4C  7FE3FB78             or r3,r31,r31
+  82303B50  4BFFFD99             bl 0x823038e8
+  82303B54  7C7F1B78             or r31,r3,r3
+  82303B58  2B030000             cmplwi cr6,r3,0x0
+  82303B5C  409A0010             bne cr6,0x82303b6c
+LAB_82303b60:
+  82303B60  38600000             li r3,0x0
+  82303B64  38210070             addi r1,r1,0x70
+  82303B68  48612BA4             b 0x8291670c
+LAB_82303b6c:
+  82303B6C  897F0000             lbz r11,0x0(r31)
+  82303B70  2B0B0000             cmplwi cr6,r11,0x0
+  82303B74  409A0020             bne cr6,0x82303b94
+  82303B78  3D608202             lis r11,-0x7dfe
+  82303B7C  7FC6F378             or r6,r30,r30
+  82303B80  38EB55DC             addi r7,r11,0x55dc
+  82303B84  7FA3EB78             or r3,r29,r29
+  82303B88  38A00000             li r5,0x0
+  82303B8C  38800081             li r4,0x81
+  82303B90  482D0971             bl 0x825d4500
+LAB_82303b94:
+  82303B94  7FE3FB78             or r3,r31,r31
+  82303B98  4BFFFE51             bl 0x823039e8
+  82303B9C  7C7F1B78             or r31,r3,r3
+  82303BA0  2B030060             cmplwi cr6,r3,0x60
+  82303BA4  419AFFBC             beq cr6,0x82303b60
+  82303BA8  41980024             blt cr6,0x82303bcc
+  82303BAC  3D608202             lis r11,-0x7dfe
+  82303BB0  7FA3EB78             or r3,r29,r29
+  82303BB4  38CB5600             addi r6,r11,0x5600
+  82303BB8  39000060             li r8,0x60
+  82303BBC  7FE7FB78             or r7,r31,r31
+  82303BC0  38A00000             li r5,0x0
+  82303BC4  38800086             li r4,0x86
+  82303BC8  482D0939             bl 0x825d4500
+LAB_82303bcc:
+  82303BCC  3D4082A6             lis r10,-0x7d5a
+  82303BD0  1D7F0114             mulli r11,r31,0x114
+  82303BD4  394A2720             addi r10,r10,0x2720
+  82303BD8  394A0004             addi r10,r10,0x4
+  82303BDC  7C6B5214             add r3,r11,r10
+  82303BE0  38210070             addi r1,r1,0x70
+  82303BE4  48612B28             b 0x8291670c
 
 ; 82303BE8  DevSoundMixer_IsActive  (cgame/cg_soundmixergui.cpp:140)
   82303BE8  3D6082A6             lis r11,-0x7d5a
@@ -24,26 +230,557 @@ LAB_82303c08:
 ; 82303C10  DevSoundMixer_ApplyMasterPriorityOffset  (cgame/cg_soundmixergui.cpp:146)
   82303C10  7D8802A6             mfspr r12,LR
   82303C14  48612AA5             bl 0x829166b8
+  82303C18  9421FF80             stwu r1,-0x80(r1)
+  82303C1C  3D608202             lis r11,-0x7dfe
+  82303C20  3D408200             lis r10,-0x7e00
+  82303C24  7C7F1B78             or r31,r3,r3
+  82303C28  7C9C2378             or r28,r4,r4
+  82303C2C  2B040000             cmplwi cr6,r4,0x0
+  82303C30  3BCB5518             addi r30,r11,0x5518
+  82303C34  3BAA0F98             addi r29,r10,0xf98
+  82303C38  409A0020             bne cr6,0x82303c58
+  82303C3C  3D608202             lis r11,-0x7dfe
+  82303C40  7FA6EB78             or r6,r29,r29
+  82303C44  38EB5664             addi r7,r11,0x5664
+  82303C48  7FC3F378             or r3,r30,r30
+  82303C4C  38A00000             li r5,0x0
+  82303C50  38800096             li r4,0x96
+  82303C54  482D08AD             bl 0x825d4500
+LAB_82303c58:
+  82303C58  3D6082A6             lis r11,-0x7d5a
+  82303C5C  816B2718             lwz r11,0x2718(r11)
+  82303C60  2B0B0000             cmplwi cr6,r11,0x0
+  82303C64  419A0084             beq cr6,0x82303ce8
+  82303C68  896B000C             lbz r11,0xc(r11)
+  82303C6C  2B0B0000             cmplwi cr6,r11,0x0
+  82303C70  419A0078             beq cr6,0x82303ce8
+  82303C74  7FE3FB78             or r3,r31,r31
+  82303C78  4BFFFE91             bl 0x82303b08
+  82303C7C  7C7F1B78             or r31,r3,r3
+  82303C80  2B030000             cmplwi cr6,r3,0x0
+  82303C84  419A0064             beq cr6,0x82303ce8
+  82303C88  81630110             lwz r11,0x110(r3)
+  82303C8C  2B0B0000             cmplwi cr6,r11,0x0
+  82303C90  409A0020             bne cr6,0x82303cb0
+  82303C94  3D608202             lis r11,-0x7dfe
+  82303C98  7FA6EB78             or r6,r29,r29
+  82303C9C  38EB5648             addi r7,r11,0x5648
+  82303CA0  7FC3F378             or r3,r30,r30
+  82303CA4  38A00000             li r5,0x0
+  82303CA8  3880009E             li r4,0x9e
+  82303CAC  482D0855             bl 0x825d4500
+LAB_82303cb0:
+  82303CB0  817F0110             lwz r11,0x110(r31)
+  82303CB4  895C0000             lbz r10,0x0(r28)
+  82303CB8  816B000C             lwz r11,0xc(r11)
+  82303CBC  7D6B5214             add r11,r11,r10
+  82303CC0  2F0B00FF             cmpwi cr6,r11,0xff
+  82303CC4  41980014             blt cr6,0x82303cd8
+  82303CC8  396000FF             li r11,0xff
+  82303CCC  997C0000             stb r11,0x0(r28)
+  82303CD0  38210080             addi r1,r1,0x80
+  82303CD4  48612A34             b 0x82916708
+LAB_82303cd8:
+  82303CD8  2F0B0000             cmpwi cr6,r11,0x0
+  82303CDC  41990008             bgt cr6,0x82303ce4
+  82303CE0  39600000             li r11,0x0
+LAB_82303ce4:
+  82303CE4  997C0000             stb r11,0x0(r28)
+LAB_82303ce8:
+  82303CE8  38210080             addi r1,r1,0x80
+  82303CEC  48612A1C             b 0x82916708
 
 ; 82303CF0  DevSoundMixer_ApplyGroupVolumeModifier  (cgame/cg_soundmixergui.cpp:166)
   82303CF0  7D8802A6             mfspr r12,LR
   82303CF4  486129C5             bl 0x829166b8
+  82303CF8  9421FF80             stwu r1,-0x80(r1)
+  82303CFC  3D608202             lis r11,-0x7dfe
+  82303D00  3D408200             lis r10,-0x7e00
+  82303D04  7C7E1B78             or r30,r3,r3
+  82303D08  7C9F2378             or r31,r4,r4
+  82303D0C  2B040000             cmplwi cr6,r4,0x0
+  82303D10  3BAB5518             addi r29,r11,0x5518
+  82303D14  3B8A0F98             addi r28,r10,0xf98
+  82303D18  409A0020             bne cr6,0x82303d38
+  82303D1C  3D608202             lis r11,-0x7dfe
+  82303D20  7F86E378             or r6,r28,r28
+  82303D24  38EB5684             addi r7,r11,0x5684
+  82303D28  7FA3EB78             or r3,r29,r29
+  82303D2C  38A00000             li r5,0x0
+  82303D30  388000A9             li r4,0xa9
+  82303D34  482D07CD             bl 0x825d4500
+LAB_82303d38:
+  82303D38  3D6082A6             lis r11,-0x7d5a
+  82303D3C  816B2718             lwz r11,0x2718(r11)
+  82303D40  2B0B0000             cmplwi cr6,r11,0x0
+  82303D44  419A0080             beq cr6,0x82303dc4
+  82303D48  896B000C             lbz r11,0xc(r11)
+  82303D4C  2B0B0000             cmplwi cr6,r11,0x0
+  82303D50  419A0074             beq cr6,0x82303dc4
+  82303D54  7FC3F378             or r3,r30,r30
+  82303D58  4BFFFDB1             bl 0x82303b08
+  82303D5C  7C7E1B78             or r30,r3,r3
+  82303D60  2B030000             cmplwi cr6,r3,0x0
+  82303D64  419A0060             beq cr6,0x82303dc4
+  82303D68  81630104             lwz r11,0x104(r3)
+  82303D6C  2B0B0000             cmplwi cr6,r11,0x0
+  82303D70  409A0020             bne cr6,0x82303d90
+  82303D74  3D608202             lis r11,-0x7dfe
+  82303D78  7F86E378             or r6,r28,r28
+  82303D7C  38EB5674             addi r7,r11,0x5674
+  82303D80  7FA3EB78             or r3,r29,r29
+  82303D84  38A00000             li r5,0x0
+  82303D88  388000B1             li r4,0xb1
+  82303D8C  482D0775             bl 0x825d4500
+LAB_82303d90:
+  82303D90  817E0104             lwz r11,0x104(r30)
+  82303D94  C01F0000             lfs f0,0x0(r31)
+  82303D98  3D408200             lis r10,-0x7e00
+  82303D9C  3D208200             lis r9,-0x7e00
+  82303DA0  C1AB000C             lfs f13,0xc(r11)
+  82303DA4  ED8D0032             fmuls f12,f13,f0
+  82303DA8  C00A0F10             lfs f0,0xf10(r10)
+  82303DAC  C1A913F8             lfs f13,0x13f8(r9)
+  82303DB0  ED6C0028             fsubs f11,f12,f0
+  82303DB4  FD406050             fneg f10,f12
+  82303DB8  FD2B602E             fsel f9,f11,f0,f12
+  82303DBC  FD0A4B6E             fsel f8,f10,f13,f9
+  82303DC0  D11F0000             stfs f8,0x0(r31)
+LAB_82303dc4:
+  82303DC4  38210080             addi r1,r1,0x80
+  82303DC8  48612940             b 0x82916708
 
 ; 82303DD0  DevSoundMixer_ApplyGroupMasterPercentModifier  (cgame/cg_soundmixergui.cpp:184)
   82303DD0  7D8802A6             mfspr r12,LR
   82303DD4  486128E5             bl 0x829166b8
+  82303DD8  9421FF80             stwu r1,-0x80(r1)
+  82303DDC  3D608202             lis r11,-0x7dfe
+  82303DE0  3D408200             lis r10,-0x7e00
+  82303DE4  7C7E1B78             or r30,r3,r3
+  82303DE8  7C9F2378             or r31,r4,r4
+  82303DEC  2B040000             cmplwi cr6,r4,0x0
+  82303DF0  3BAB5518             addi r29,r11,0x5518
+  82303DF4  3B8A0F98             addi r28,r10,0xf98
+  82303DF8  409A0020             bne cr6,0x82303e18
+  82303DFC  3D608202             lis r11,-0x7dfe
+  82303E00  7F86E378             or r6,r28,r28
+  82303E04  38EB56A0             addi r7,r11,0x56a0
+  82303E08  7FA3EB78             or r3,r29,r29
+  82303E0C  38A00000             li r5,0x0
+  82303E10  388000BB             li r4,0xbb
+  82303E14  482D06ED             bl 0x825d4500
+LAB_82303e18:
+  82303E18  3D6082A6             lis r11,-0x7d5a
+  82303E1C  816B2718             lwz r11,0x2718(r11)
+  82303E20  2B0B0000             cmplwi cr6,r11,0x0
+  82303E24  419A0080             beq cr6,0x82303ea4
+  82303E28  896B000C             lbz r11,0xc(r11)
+  82303E2C  2B0B0000             cmplwi cr6,r11,0x0
+  82303E30  419A0074             beq cr6,0x82303ea4
+  82303E34  7FC3F378             or r3,r30,r30
+  82303E38  4BFFFCD1             bl 0x82303b08
+  82303E3C  7C7E1B78             or r30,r3,r3
+  82303E40  2B030000             cmplwi cr6,r3,0x0
+  82303E44  419A0060             beq cr6,0x82303ea4
+  82303E48  81630108             lwz r11,0x108(r3)
+  82303E4C  2B0B0000             cmplwi cr6,r11,0x0
+  82303E50  409A0020             bne cr6,0x82303e70
+  82303E54  3D608202             lis r11,-0x7dfe
+  82303E58  7F86E378             or r6,r28,r28
+  82303E5C  38EB568C             addi r7,r11,0x568c
+  82303E60  7FA3EB78             or r3,r29,r29
+  82303E64  38A00000             li r5,0x0
+  82303E68  388000C3             li r4,0xc3
+  82303E6C  482D0695             bl 0x825d4500
+LAB_82303e70:
+  82303E70  817E0108             lwz r11,0x108(r30)
+  82303E74  C01F0000             lfs f0,0x0(r31)
+  82303E78  3D408200             lis r10,-0x7e00
+  82303E7C  3D208200             lis r9,-0x7e00
+  82303E80  C1AB000C             lfs f13,0xc(r11)
+  82303E84  ED8D002A             fadds f12,f13,f0
+  82303E88  C00A0F10             lfs f0,0xf10(r10)
+  82303E8C  C1A913F8             lfs f13,0x13f8(r9)
+  82303E90  ED6C0028             fsubs f11,f12,f0
+  82303E94  FD406050             fneg f10,f12
+  82303E98  FD2B602E             fsel f9,f11,f0,f12
+  82303E9C  FD0A4B6E             fsel f8,f10,f13,f9
+  82303EA0  D11F0000             stfs f8,0x0(r31)
+LAB_82303ea4:
+  82303EA4  38210080             addi r1,r1,0x80
+  82303EA8  48612860             b 0x82916708
+
+; 82303EB0  DevSoundMixer_ApplyGroupSlavePercentModifier  (cgame/cg_soundmixergui.cpp:202)
+  82303EB0  7D8802A6             mfspr r12,LR
+  82303EB4  48612805             bl 0x829166b8
+  82303EB8  9421FF80             stwu r1,-0x80(r1)
+  82303EBC  3D608202             lis r11,-0x7dfe
+  82303EC0  3D408200             lis r10,-0x7e00
+  82303EC4  7C7E1B78             or r30,r3,r3
+  82303EC8  7C9F2378             or r31,r4,r4
+  82303ECC  2B040000             cmplwi cr6,r4,0x0
+  82303ED0  3BAB5518             addi r29,r11,0x5518
+  82303ED4  3B8A0F98             addi r28,r10,0xf98
+  82303ED8  409A0020             bne cr6,0x82303ef8
+  82303EDC  3D608202             lis r11,-0x7dfe
+  82303EE0  7F86E378             or r6,r28,r28
+  82303EE4  38EB56BC             addi r7,r11,0x56bc
+  82303EE8  7FA3EB78             or r3,r29,r29
+  82303EEC  38A00000             li r5,0x0
+  82303EF0  388000CD             li r4,0xcd
+  82303EF4  482D060D             bl 0x825d4500
+LAB_82303ef8:
+  82303EF8  3D6082A6             lis r11,-0x7d5a
+  82303EFC  816B2718             lwz r11,0x2718(r11)
+  82303F00  2B0B0000             cmplwi cr6,r11,0x0
+  82303F04  419A0080             beq cr6,0x82303f84
+  82303F08  896B000C             lbz r11,0xc(r11)
+  82303F0C  2B0B0000             cmplwi cr6,r11,0x0
+  82303F10  419A0074             beq cr6,0x82303f84
+  82303F14  7FC3F378             or r3,r30,r30
+  82303F18  4BFFFBF1             bl 0x82303b08
+  82303F1C  7C7E1B78             or r30,r3,r3
+  82303F20  2B030000             cmplwi cr6,r3,0x0
+  82303F24  419A0060             beq cr6,0x82303f84
+  82303F28  8163010C             lwz r11,0x10c(r3)
+  82303F2C  2B0B0000             cmplwi cr6,r11,0x0
+  82303F30  409A0020             bne cr6,0x82303f50
+  82303F34  3D608202             lis r11,-0x7dfe
+  82303F38  7F86E378             or r6,r28,r28
+  82303F3C  38EB56AC             addi r7,r11,0x56ac
+  82303F40  7FA3EB78             or r3,r29,r29
+  82303F44  38A00000             li r5,0x0
+  82303F48  388000D5             li r4,0xd5
+  82303F4C  482D05B5             bl 0x825d4500
+LAB_82303f50:
+  82303F50  817E010C             lwz r11,0x10c(r30)
+  82303F54  C01F0000             lfs f0,0x0(r31)
+  82303F58  3D408200             lis r10,-0x7e00
+  82303F5C  3D208200             lis r9,-0x7e00
+  82303F60  C1AB000C             lfs f13,0xc(r11)
+  82303F64  ED8D002A             fadds f12,f13,f0
+  82303F68  C00A0F10             lfs f0,0xf10(r10)
+  82303F6C  C1A913F8             lfs f13,0x13f8(r9)
+  82303F70  ED6C0028             fsubs f11,f12,f0
+  82303F74  FD406050             fneg f10,f12
+  82303F78  FD2B602E             fsel f9,f11,f0,f12
+  82303F7C  FD0A4B6E             fsel f8,f10,f13,f9
+  82303F80  D11F0000             stfs f8,0x0(r31)
+LAB_82303f84:
+  82303F84  38210080             addi r1,r1,0x80
+  82303F88  48612780             b 0x82916708
 
 ; 82303F90  DevSoundMixer_SaveCommand  (cgame/cg_soundmixergui.cpp:220)
   82303F90  7D8802A6             mfspr r12,LR
   82303F94  48612721             bl 0x829166b4
+  82303F98  9421FF80             stwu r1,-0x80(r1)
+  82303F9C  3D608202             lis r11,-0x7dfe
+  82303FA0  38600009             li r3,0x9
+  82303FA4  388B5774             addi r4,r11,0x5774
+  82303FA8  481F27D9             bl 0x824f6780
+  82303FAC  3D4082A6             lis r10,-0x7d5a
+  82303FB0  816A2718             lwz r11,0x2718(r10)
+  82303FB4  2B0B0000             cmplwi cr6,r11,0x0
+  82303FB8  419A001C             beq cr6,0x82303fd4
+  82303FBC  896B000C             lbz r11,0xc(r11)
+  82303FC0  2B0B0000             cmplwi cr6,r11,0x0
+  82303FC4  419A0010             beq cr6,0x82303fd4
+  82303FC8  3D608202             lis r11,-0x7dfe
+  82303FCC  38AB576C             addi r5,r11,0x576c
+  82303FD0  4800000C             b 0x82303fdc
+LAB_82303fd4:
+  82303FD4  3D608202             lis r11,-0x7dfe
+  82303FD8  38AB5760             addi r5,r11,0x5760
+LAB_82303fdc:
+  82303FDC  3D608202             lis r11,-0x7dfe
+  82303FE0  38600009             li r3,0x9
+  82303FE4  388B5754             addi r4,r11,0x5754
+  82303FE8  481F2799             bl 0x824f6780
+  82303FEC  3D408202             lis r10,-0x7dfe
+  82303FF0  3D208202             lis r9,-0x7dfe
+  82303FF4  38AA574C             addi r5,r10,0x574c
+  82303FF8  38895714             addi r4,r9,0x5714
+  82303FFC  38600009             li r3,0x9
+  82304000  481F2781             bl 0x824f6780
+  82304004  3D6082A6             lis r11,-0x7d5a
+  82304008  3BC00000             li r30,0x0
+  8230400C  3BAB2720             addi r29,r11,0x2720
+  82304010  816B2720             lwz r11,0x2720(r11)
+  82304014  2B0B0000             cmplwi cr6,r11,0x0
+  82304018  419A0070             beq cr6,0x82304088
+  8230401C  3D608202             lis r11,-0x7dfe
+  82304020  3BFD0110             addi r31,r29,0x110
+  82304024  3B8B56F4             addi r28,r11,0x56f4
+LAB_82304028:
+  82304028  815FFFFC             lwz r10,-0x4(r31)
+  8230402C  7F84E378             or r4,r28,r28
+  82304030  813FFFF8             lwz r9,-0x8(r31)
+  82304034  38DFFEF8             subi r6,r31,0x108
+  82304038  817F0000             lwz r11,0x0(r31)
+  8230403C  7FC5F378             or r5,r30,r30
+  82304040  837F0004             lwz r27,0x4(r31)
+  82304044  38600009             li r3,0x9
+  82304048  C04A000C             lfs f2,0xc(r10)
+  8230404C  C029000C             lfs f1,0xc(r9)
+  82304050  C06B000C             lfs f3,0xc(r11)
+  82304054  D8610040             stfd f3,0x40(r1)
+  82304058  E9210040             ld r9,0x40(r1)
+  8230405C  D8410038             stfd f2,0x38(r1)
+  82304060  E9010038             ld r8,0x38(r1)
+  82304064  D8210030             stfd f1,0x30(r1)
+  82304068  E8E10030             ld r7,0x30(r1)
+  8230406C  815B000C             lwz r10,0xc(r27)
+  82304070  481F2711             bl 0x824f6780
+  82304074  817D0000             lwz r11,0x0(r29)
+  82304078  3BDE0001             addi r30,r30,0x1
+  8230407C  3BFF0114             addi r31,r31,0x114
+  82304080  7F1E5840             cmplw cr6,r30,r11
+  82304084  4198FFA4             blt cr6,0x82304028
+LAB_82304088:
+  82304088  3D608202             lis r11,-0x7dfe
+  8230408C  38600009             li r3,0x9
+  82304090  388B56C8             addi r4,r11,0x56c8
+  82304094  481F26ED             bl 0x824f6780
+  82304098  38210080             addi r1,r1,0x80
+  8230409C  48612668             b 0x82916704
 
 ; 823040A0  DevSoundMixer_MuteCommand  (cgame/cg_soundmixergui.cpp:238)
   823040A0  7D8802A6             mfspr r12,LR
   823040A4  48612619             bl 0x829166bc
+  823040A8  DBE1FFD8             stfd f31,-0x28(r1)
+  823040AC  9421FF80             stwu r1,-0x80(r1)
+  823040B0  3D608202             lis r11,-0x7dfe
+  823040B4  38600009             li r3,0x9
+  823040B8  388B57EC             addi r4,r11,0x57ec
+  823040BC  481F26C5             bl 0x824f6780
+  823040C0  3D4082A6             lis r10,-0x7d5a
+  823040C4  38800001             li r4,0x1
+  823040C8  806A2718             lwz r3,0x2718(r10)
+  823040CC  482FCA65             bl 0x82600b30
+  823040D0  3D6082A6             lis r11,-0x7d5a
+  823040D4  3BE00000             li r31,0x0
+  823040D8  3BAB2720             addi r29,r11,0x2720
+  823040DC  80AB2720             lwz r5,0x2720(r11)
+  823040E0  2B050000             cmplwi cr6,r5,0x0
+  823040E4  419A002C             beq cr6,0x82304110
+  823040E8  3D608200             lis r11,-0x7e00
+  823040EC  3BDDFFF4             subi r30,r29,0xc
+  823040F0  C3EB13F8             lfs f31,0x13f8(r11)
+LAB_823040f4:
+  823040F4  847E0114             lwzu r3,0x114(r30)
+  823040F8  FC20F890             fmr f1,f31
+  823040FC  482FCA45             bl 0x82600b40
+  82304100  80BD0000             lwz r5,0x0(r29)
+  82304104  3BFF0001             addi r31,r31,0x1
+  82304108  7F1F2840             cmplw cr6,r31,r5
+  8230410C  4198FFE8             blt cr6,0x823040f4
+LAB_82304110:
+  82304110  3D608202             lis r11,-0x7dfe
+  82304114  38600009             li r3,0x9
+  82304118  388B57A8             addi r4,r11,0x57a8
+  8230411C  481F2665             bl 0x824f6780
+  82304120  38210080             addi r1,r1,0x80
+  82304124  CBE1FFD8             lfd f31,-0x28(r1)
+  82304128  486125E4             b 0x8291670c
+
+; 82304130  DevSoundMixer_EnumerateGroupIte_CreateGroupData  (cgame/cg_soundmixergui.cpp:257)
+  82304130  7D8802A6             mfspr r12,LR
+  82304134  48612585             bl 0x829166b8
+  82304138  DBA1FFC0             stfd f29,-0x40(r1)
+  8230413C  DBC1FFC8             stfd f30,-0x38(r1)
+  82304140  DBE1FFD0             stfd f31,-0x30(r1)
+  82304144  9421FE70             stwu r1,-0x190(r1)
+  82304148  3D608202             lis r11,-0x7dfe
+  8230414C  7C7C1B78             or r28,r3,r3
+  82304150  7C9D2378             or r29,r4,r4
+  82304154  2B030000             cmplwi cr6,r3,0x0
+  82304158  3BCB5518             addi r30,r11,0x5518
+  8230415C  409A0024             bne cr6,0x82304180
+  82304160  3D608202             lis r11,-0x7dfe
+  82304164  3D408200             lis r10,-0x7e00
+  82304168  38EB55F4             addi r7,r11,0x55f4
+  8230416C  38CA0F98             addi r6,r10,0xf98
+  82304170  7FC3F378             or r3,r30,r30
+  82304174  38A00000             li r5,0x0
+  82304178  38800105             li r4,0x105
+  8230417C  482D0385             bl 0x825d4500
+LAB_82304180:
+  82304180  2B1D0002             cmplwi cr6,r29,0x2
+  82304184  41980024             blt cr6,0x823041a8
+  82304188  3D608202             lis r11,-0x7dfe
+  8230418C  7FC3F378             or r3,r30,r30
+  82304190  38CB58C4             addi r6,r11,0x58c4
+  82304194  39000002             li r8,0x2
+  82304198  7FA7EB78             or r7,r29,r29
+  8230419C  38A00000             li r5,0x0
+  823041A0  38800106             li r4,0x106
+  823041A4  482D035D             bl 0x825d4500
+LAB_823041a8:
+  823041A8  3D6082A6             lis r11,-0x7d5a
+  823041AC  3BEB2720             addi r31,r11,0x2720
+  823041B0  80EB2720             lwz r7,0x2720(r11)
+  823041B4  2B070060             cmplwi cr6,r7,0x60
+  823041B8  41980024             blt cr6,0x823041dc
+  823041BC  3D608202             lis r11,-0x7dfe
+  823041C0  7FC3F378             or r3,r30,r30
+  823041C4  38CB5868             addi r6,r11,0x5868
+  823041C8  39000060             li r8,0x60
+  823041CC  38A00000             li r5,0x0
+  823041D0  38800107             li r4,0x107
+  823041D4  482D032D             bl 0x825d4500
+  823041D8  80FF0000             lwz r7,0x0(r31)
+LAB_823041dc:
+  823041DC  1D470114             mulli r10,r7,0x114
+  823041E0  397F0004             addi r11,r31,0x4
+  823041E4  38A00100             li r5,0x100
+  823041E8  7FCA5A14             add r30,r10,r11
+  823041EC  7F84E378             or r4,r28,r28
+  823041F0  387E0004             addi r3,r30,0x4
+  823041F4  48307B0D             bl 0x8260bd00
+  823041F8  93BE0000             stw r29,0x0(r30)
+  823041FC  3D608202             lis r11,-0x7dfe
+  82304200  80DF0000             lwz r6,0x0(r31)
+  82304204  38800100             li r4,0x100
+  82304208  38AB5858             addi r5,r11,0x5858
+  8230420C  38610050             addi r3,r1,0x50
+  82304210  483082D1             bl 0x8260c4e0
+  82304214  3D208200             lis r9,-0x7e00
+  82304218  3CC08200             lis r6,-0x7e00
+  8230421C  C3E913F8             lfs f31,0x13f8(r9)
+  82304220  3D408201             lis r10,-0x7dff
+  82304224  FC40F890             fmr f2,f31
+  82304228  3CA08202             lis r5,-0x7dfe
+  8230422C  38E00100             li r7,0x100
+  82304230  39055850             addi r8,r5,0x5850
+  82304234  C3C60F10             lfs f30,0xf10(r6)
+  82304238  38610050             addi r3,r1,0x50
+  8230423C  C06AA7A4             lfs f3,-0x585c(r10)
+  82304240  FC20F090             fmr f1,f30
+  82304244  482FB54D             bl 0x825ff790
+  82304248  907E0104             stw r3,0x104(r30)
+  8230424C  3C608202             lis r3,-0x7dfe
+  82304250  80DF0000             lwz r6,0x0(r31)
+  82304254  38800100             li r4,0x100
+  82304258  38A35844             addi r5,r3,0x5844
+  8230425C  38610050             addi r3,r1,0x50
+  82304260  48308281             bl 0x8260c4e0
+  82304264  3D608200             lis r11,-0x7e00
+  82304268  3D408202             lis r10,-0x7dfe
+  8230426C  C3AB139C             lfs f29,0x139c(r11)
+  82304270  38E00100             li r7,0x100
+  82304274  FC60F090             fmr f3,f30
+  82304278  390A583C             addi r8,r10,0x583c
+  8230427C  FC20F890             fmr f1,f31
+  82304280  38610050             addi r3,r1,0x50
+  82304284  FC40E890             fmr f2,f29
+  82304288  482FB509             bl 0x825ff790
+  8230428C  907E0108             stw r3,0x108(r30)
+  82304290  3D208202             lis r9,-0x7dfe
+  82304294  80DF0000             lwz r6,0x0(r31)
+  82304298  38800100             li r4,0x100
+  8230429C  38A95830             addi r5,r9,0x5830
+  823042A0  38610050             addi r3,r1,0x50
+  823042A4  4830823D             bl 0x8260c4e0
+  823042A8  3D008202             lis r8,-0x7dfe
+  823042AC  38E00100             li r7,0x100
+  823042B0  FC60F090             fmr f3,f30
+  823042B4  39085828             addi r8,r8,0x5828
+  823042B8  FC40E890             fmr f2,f29
+  823042BC  38610050             addi r3,r1,0x50
+  823042C0  FC20F890             fmr f1,f31
+  823042C4  482FB4CD             bl 0x825ff790
+  823042C8  907E010C             stw r3,0x10c(r30)
+  823042CC  3CE08202             lis r7,-0x7dfe
+  823042D0  80DF0000             lwz r6,0x0(r31)
+  823042D4  38800100             li r4,0x100
+  823042D8  38A7581C             addi r5,r7,0x581c
+  823042DC  38610050             addi r3,r1,0x50
+  823042E0  48308201             bl 0x8260c4e0
+  823042E4  3CC08202             lis r6,-0x7dfe
+  823042E8  3906580C             addi r8,r6,0x580c
+  823042EC  38E00100             li r7,0x100
+  823042F0  38C000FF             li r6,0xff
+  823042F4  38A0FF01             li r5,-0xff
+  823042F8  38800000             li r4,0x0
+  823042FC  38610050             addi r3,r1,0x50
+  82304300  482FB401             bl 0x825ff700
+  82304304  907E0110             stw r3,0x110(r30)
+  82304308  817F0000             lwz r11,0x0(r31)
+  8230430C  396B0001             addi r11,r11,0x1
+  82304310  917F0000             stw r11,0x0(r31)
+  82304314  38210190             addi r1,r1,0x190
+  82304318  CBA1FFC0             lfd f29,-0x40(r1)
+  8230431C  CBC1FFC8             lfd f30,-0x38(r1)
+  82304320  CBE1FFD0             lfd f31,-0x30(r1)
+  82304324  486123E4             b 0x82916708
 
 ; 82304328  DevSoundMixer_EnumerateGroupsItem  (cgame/cg_soundmixergui.cpp:287)
   82304328  7D8802A6             mfspr r12,LR
   8230432C  48612391             bl 0x829166bc
+  82304330  9421FF90             stwu r1,-0x70(r1)
+  82304334  3D608202             lis r11,-0x7dfe
+  82304338  3D408200             lis r10,-0x7e00
+  8230433C  7C7F1B78             or r31,r3,r3
+  82304340  2B030000             cmplwi cr6,r3,0x0
+  82304344  3BCB5518             addi r30,r11,0x5518
+  82304348  3BAA0F98             addi r29,r10,0xf98
+  8230434C  409A0020             bne cr6,0x8230436c
+  82304350  3D608202             lis r11,-0x7dfe
+  82304354  7FA6EB78             or r6,r29,r29
+  82304358  38EB5980             addi r7,r11,0x5980
+  8230435C  7FC3F378             or r3,r30,r30
+  82304360  38A00000             li r5,0x0
+  82304364  38800126             li r4,0x126
+  82304368  482D0199             bl 0x825d4500
+LAB_8230436c:
+  8230436C  817F0008             lwz r11,0x8(r31)
+  82304370  2F0B0000             cmpwi cr6,r11,0x0
+  82304374  419A00A4             beq cr6,0x82304418
+  82304378  817F0004             lwz r11,0x4(r31)
+  8230437C  2B0B0000             cmplwi cr6,r11,0x0
+  82304380  409A0020             bne cr6,0x823043a0
+  82304384  3D608202             lis r11,-0x7dfe
+  82304388  7FA6EB78             or r6,r29,r29
+  8230438C  38EB596C             addi r7,r11,0x596c
+  82304390  7FC3F378             or r3,r30,r30
+  82304394  38A00000             li r5,0x0
+  82304398  3880012B             li r4,0x12b
+  8230439C  482D0165             bl 0x825d4500
+LAB_823043a0:
+  823043A0  83DF0004             lwz r30,0x4(r31)
+  823043A4  7FC3F378             or r3,r30,r30
+  823043A8  4BFFF541             bl 0x823038e8
+  823043AC  7C7F1B78             or r31,r3,r3
+  823043B0  2B030000             cmplwi cr6,r3,0x0
+  823043B4  419A0064             beq cr6,0x82304418
+  823043B8  89630000             lbz r11,0x0(r3)
+  823043BC  2B0B0000             cmplwi cr6,r11,0x0
+  823043C0  419A0058             beq cr6,0x82304418
+  823043C4  4BFFF625             bl 0x823039e8
+  823043C8  2B030060             cmplwi cr6,r3,0x60
+  823043CC  409A004C             bne cr6,0x82304418
+  823043D0  3D6082A6             lis r11,-0x7d5a
+  823043D4  816B2720             lwz r11,0x2720(r11)
+  823043D8  2B0B0060             cmplwi cr6,r11,0x60
+  823043DC  409A0028             bne cr6,0x82304404
+  823043E0  3D608202             lis r11,-0x7dfe
+  823043E4  80FE0000             lwz r7,0x0(r30)
+  823043E8  7FE6FB78             or r6,r31,r31
+  823043EC  388B5900             addi r4,r11,0x5900
+  823043F0  38A00060             li r5,0x60
+  823043F4  3860000E             li r3,0xe
+  823043F8  481F2889             bl 0x824f6c80
+  823043FC  38210070             addi r1,r1,0x70
+  82304400  4861230C             b 0x8291670c
+LAB_82304404:
+  82304404  7FC3F378             or r3,r30,r30
+  82304408  4BFFF581             bl 0x82303988
+  8230440C  7C641B78             or r4,r3,r3
+  82304410  7FE3FB78             or r3,r31,r31
+  82304414  4BFFFD1D             bl 0x82304130
+LAB_82304418:
+  82304418  38210070             addi r1,r1,0x70
+  8230441C  486122F0             b 0x8291670c
 
 ; 82304420  DevSoundMixer_BuildGroupDevGui  (cgame/cg_soundmixergui.cpp:321)
   82304420  7D8802A6             mfspr r12,LR
@@ -163,6 +900,151 @@ LAB_823045d4:
   823045D4  38210190             addi r1,r1,0x190
   823045D8  48612124             b 0x829166fc
 
+; 823045E0  DevSoundMixer_BuildGlobal  (cgame/cg_soundmixergui.cpp:349)
+  823045E0  7D8802A6             mfspr r12,LR
+  823045E4  486120D9             bl 0x829166bc
+  823045E8  9421FF90             stwu r1,-0x70(r1)
+  823045EC  3D608202             lis r11,-0x7dfe
+  823045F0  3D408202             lis r10,-0x7dfe
+  823045F4  38CB5B10             addi r6,r11,0x5b10
+  823045F8  386A5AF8             addi r3,r10,0x5af8
+  823045FC  38A00000             li r5,0x0
+  82304600  38800000             li r4,0x0
+  82304604  482FB0B5             bl 0x825ff6b8
+  82304608  3FC082A6             lis r30,-0x7d5a
+  8230460C  3D608202             lis r11,-0x7dfe
+  82304610  3BEB5AE4             addi r31,r11,0x5ae4
+  82304614  907E2718             stw r3,0x2718(r30)
+  82304618  7FE3FB78             or r3,r31,r31
+  8230461C  48100BED             bl 0x82405208
+  82304620  5469063E             rlwinm r9,r3,0x0,0x18,0x1f
+  82304624  2B090000             cmplwi cr6,r9,0x0
+  82304628  409A00E8             bne cr6,0x82304710
+  8230462C  7FE3FB78             or r3,r31,r31
+  82304630  809E2718             lwz r4,0x2718(r30)
+  82304634  481007C5             bl 0x82404df8
+  82304638  3D608202             lis r11,-0x7dfe
+  8230463C  3BEB5AC4             addi r31,r11,0x5ac4
+  82304640  7FE3FB78             or r3,r31,r31
+  82304644  48100BC5             bl 0x82405208
+  82304648  5469063E             rlwinm r9,r3,0x0,0x18,0x1f
+  8230464C  3D608202             lis r11,-0x7dfe
+  82304650  3D408200             lis r10,-0x7e00
+  82304654  2B090000             cmplwi cr6,r9,0x0
+  82304658  3BCB5518             addi r30,r11,0x5518
+  8230465C  3BAA0F98             addi r29,r10,0xf98
+  82304660  419A0020             beq cr6,0x82304680
+  82304664  3D608202             lis r11,-0x7dfe
+  82304668  7FA6EB78             or r6,r29,r29
+  8230466C  38EB5A90             addi r7,r11,0x5a90
+  82304670  7FC3F378             or r3,r30,r30
+  82304674  38A00000             li r5,0x0
+  82304678  38800164             li r4,0x164
+  8230467C  482CFE85             bl 0x825d4500
+LAB_82304680:
+  82304680  3D608202             lis r11,-0x7dfe
+  82304684  7FE3FB78             or r3,r31,r31
+  82304688  3BEB5A7C             addi r31,r11,0x5a7c
+  8230468C  7FE4FB78             or r4,r31,r31
+  82304690  48100881             bl 0x82404f10
+  82304694  3D4082A7             lis r10,-0x7d59
+  82304698  3D208230             lis r9,-0x7dd0
+  8230469C  38AA8EB8             subi r5,r10,0x7148
+  823046A0  7FE3FB78             or r3,r31,r31
+  823046A4  388940A0             addi r4,r9,0x40a0
+  823046A8  481D11C1             bl 0x824d5868
+  823046AC  3D608202             lis r11,-0x7dfe
+  823046B0  3BEB5A60             addi r31,r11,0x5a60
+  823046B4  7FE3FB78             or r3,r31,r31
+  823046B8  48100B51             bl 0x82405208
+  823046BC  5468063E             rlwinm r8,r3,0x0,0x18,0x1f
+  823046C0  2B080000             cmplwi cr6,r8,0x0
+  823046C4  419A0020             beq cr6,0x823046e4
+  823046C8  3D608202             lis r11,-0x7dfe
+  823046CC  7FA6EB78             or r6,r29,r29
+  823046D0  38EB5A2C             addi r7,r11,0x5a2c
+  823046D4  7FC3F378             or r3,r30,r30
+  823046D8  38A00000             li r5,0x0
+  823046DC  38800168             li r4,0x168
+  823046E0  482CFE21             bl 0x825d4500
+LAB_823046e4:
+  823046E4  3D608202             lis r11,-0x7dfe
+  823046E8  7FE3FB78             or r3,r31,r31
+  823046EC  3BEB5A18             addi r31,r11,0x5a18
+  823046F0  7FE4FB78             or r4,r31,r31
+  823046F4  4810081D             bl 0x82404f10
+  823046F8  3D4082A7             lis r10,-0x7d59
+  823046FC  3D208230             lis r9,-0x7dd0
+  82304700  38AA8EA4             subi r5,r10,0x715c
+  82304704  7FE3FB78             or r3,r31,r31
+  82304708  38893F90             addi r4,r9,0x3f90
+  8230470C  481D115D             bl 0x824d5868
+LAB_82304710:
+  82304710  38210070             addi r1,r1,0x70
+  82304714  48611FF8             b 0x8291670c
+
 ; 82304718  DevSoundMixer_BuildGroups  (cgame/cg_soundmixergui.cpp:368)
   82304718  7D8802A6             mfspr r12,LR
   8230471C  48611F99             bl 0x829166b4
+  82304720  9421FF80             stwu r1,-0x80(r1)
+  82304724  3D608230             lis r11,-0x7dd0
+  82304728  38C00000             li r6,0x0
+  8230472C  38A00000             li r5,0x0
+  82304730  388B4328             addi r4,r11,0x4328
+  82304734  38600009             li r3,0x9
+  82304738  482DCE69             bl 0x825e15a0
+  8230473C  3D6082A6             lis r11,-0x7d5a
+  82304740  3D408202             lis r10,-0x7dfe
+  82304744  3BAB2720             addi r29,r11,0x2720
+  82304748  3B6A5518             addi r27,r10,0x5518
+  8230474C  816B2720             lwz r11,0x2720(r11)
+  82304750  2B0B0060             cmplwi cr6,r11,0x60
+  82304754  40990028             ble cr6,0x8230477c
+  82304758  3D608202             lis r11,-0x7dfe
+  8230475C  3D408200             lis r10,-0x7e00
+  82304760  38EB55A0             addi r7,r11,0x55a0
+  82304764  38CA0F98             addi r6,r10,0xf98
+  82304768  7F63DB78             or r3,r27,r27
+  8230476C  38A00000             li r5,0x0
+  82304770  38800178             li r4,0x178
+  82304774  482CFD8D             bl 0x825d4500
+  82304778  817D0000             lwz r11,0x0(r29)
+LAB_8230477c:
+  8230477C  3BE00000             li r31,0x0
+  82304780  2B0B0000             cmplwi cr6,r11,0x0
+  82304784  419A0050             beq cr6,0x823047d4
+  82304788  3D608202             lis r11,-0x7dfe
+  8230478C  3BDD0004             addi r30,r29,0x4
+  82304790  3B8B5560             addi r28,r11,0x5560
+LAB_82304794:
+  82304794  2B1F0060             cmplwi cr6,r31,0x60
+  82304798  41980020             blt cr6,0x823047b8
+  8230479C  7F86E378             or r6,r28,r28
+  823047A0  7F63DB78             or r3,r27,r27
+  823047A4  39000060             li r8,0x60
+  823047A8  7FE7FB78             or r7,r31,r31
+  823047AC  38A00000             li r5,0x0
+  823047B0  3880017B             li r4,0x17b
+  823047B4  482CFD4D             bl 0x825d4500
+LAB_823047b8:
+  823047B8  7FC3F378             or r3,r30,r30
+  823047BC  4BFFFC65             bl 0x82304420
+  823047C0  817D0000             lwz r11,0x0(r29)
+  823047C4  3BFF0001             addi r31,r31,0x1
+  823047C8  3BDE0114             addi r30,r30,0x114
+  823047CC  7F1F5840             cmplw cr6,r31,r11
+  823047D0  4198FFC4             blt cr6,0x82304794
+LAB_823047d4:
+  823047D4  38210080             addi r1,r1,0x80
+  823047D8  48611F2C             b 0x82916704
+
+; 823047E0  DevSoundMixer_CreateDevGUI  (cgame/cg_soundmixergui.cpp:387)
+  823047E0  7D8802A6             mfspr r12,LR
+  823047E4  9181FFF8             stw r12,-0x8(r1)
+  823047E8  9421FFA0             stwu r1,-0x60(r1)
+  823047EC  4BFFFDF5             bl 0x823045e0
+  823047F0  4BFFFF29             bl 0x82304718
+  823047F4  38210060             addi r1,r1,0x60
+  823047F8  8181FFF8             lwz r12,-0x8(r1)
+  823047FC  7D8803A6             mtspr LR,r12
+  82304800  4E800020             blr

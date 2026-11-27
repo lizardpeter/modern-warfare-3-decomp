@@ -57,10 +57,18 @@ HMODULE LoadLibraryA(LPCSTR lpLibFileName)
 
 // 828AB008  XGetModuleSection  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:144)
 
-void XGetModuleSection(void)
+void XGetModuleSection(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = XexGetModuleSection(uVar1,param_2,param_3,param_4);
+  if (-1 >= iVar2) {
+    XapiSetLastNTError();
+  }
+  __restgprlr_28(-1 < iVar2);
+  return;
 }
 

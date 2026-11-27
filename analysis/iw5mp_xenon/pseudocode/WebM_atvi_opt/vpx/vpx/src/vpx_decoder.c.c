@@ -241,10 +241,40 @@ void vpx_codec_get_mem_map(int param_1,int param_2,int param_3)
 
 // 8283DB78  vpx_codec_set_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder.c:216)
 
-void vpx_codec_set_mem_map(void)
+void vpx_codec_set_mem_map(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = 2;
+  if (((iVar2 == 0) || ((param_2 & 0xffffffff) == 0)) || (*(int *)(iVar2 + 4) == 0)) {
+    iVar3 = 8;
+  }
+  else if ((*(uint *)(*(int *)(iVar2 + 4) + 8) & 4) == 0) {
+    iVar3 = 1;
+  }
+  else {
+    uVar4 = 0;
+    iVar1 = 2;
+    if ((param_3 & 0xffffffff) != 0) {
+      do {
+        iVar3 = iVar1;
+        if ((*(int *)((int)param_2 + 0x10) == 0) ||
+           (iVar3 = (**(code **)(*(int *)(iVar2 + 4) + 0x1c))(iVar2,param_2), iVar3 != 0)) break;
+        uVar4 = uVar4 + 1;
+        param_2 = param_2 + 0x1c;
+        iVar1 = iVar3;
+      } while ((uVar4 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+  }
+  if (iVar2 != 0) {
+    *(int *)(iVar2 + 8) = iVar3;
+  }
+  __restgprlr_28();
+  return;
 }
 

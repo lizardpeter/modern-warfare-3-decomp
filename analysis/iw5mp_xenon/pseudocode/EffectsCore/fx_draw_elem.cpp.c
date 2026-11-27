@@ -2,21 +2,105 @@
 
 // 82419878  FXIR_DrawElem_BillboardSprite  (EffectsCore/fx_draw_elem.cpp:73)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void FXIR_DrawElem_BillboardSprite(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  char cVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  iVar4 = FX_DrawElement_Setup_Time(puVar3,*(undefined4 *)(puVar3[2] + 4),0);
+  FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                    iVar4 + 0x14);
+  FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)(uint)puVar3[2] + 0x14,puVar3 + 0x16);
+  FX_SetupVisualState((double)(float)puVar3[0x15],puVar3[3],puVar3[1],puVar3[0x12]);
+  FX_EvaluateSize(puVar3 + 0x22,puVar3 + 0x1c);
+  cVar5 = FX_CullElementForDraw_Sprite(puVar3);
+  if (cVar5 == '\0') {
+    uVar2 = *(uint *)(DAT_8332cbb8 + 0xc);
+    FX_EvaluateDistanceFade(puVar3);
+    if (uVar2 <= *(ushort *)(puVar3 + 0x28)) {
+      if (((*(uint *)puVar3[3] & 0x10000) == 0) ||
+         (FX_EvaluateVisStateOcclusionFadeAndScale(puVar3), uVar2 <= *(ushort *)((int)puVar3 + 0xa2)
+         )) {
+        FX_EvaluateVisualState((double)(float)puVar3[0x13],puVar3 + 0x22);
+        bVar1 = *(byte *)(puVar3 + 0x1c);
+        if (uVar2 <= bVar1) {
+          if ((*(uint *)puVar3[3] & 0x1000) != 0) {
+            FX_AddVisBlocker((double)(float)puVar3[0x1f],(double)((float)bVar1 * 0.003921569),
+                             *puVar3,puVar3 + 0x16);
+          }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+          halt_baddata();
+        }
+      }
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 824199E0  FXIR_DrawElem_OrientedSprite  (EffectsCore/fx_draw_elem.cpp:129)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void FXIR_DrawElem_OrientedSprite(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  char cVar5;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  iVar4 = FX_DrawElement_Setup_Time(puVar3,*(undefined4 *)(puVar3[2] + 4),0);
+  FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                    iVar4 + 0x14);
+  FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)(uint)puVar3[2] + 0x14,puVar3 + 0x16);
+  FX_SetupVisualState((double)(float)puVar3[0x15],puVar3[3],puVar3[1],puVar3[0x12]);
+  FX_EvaluateSize(puVar3 + 0x22,puVar3 + 0x1c);
+  cVar5 = FX_CullElementForDraw_Sprite(puVar3);
+  if (cVar5 == '\0') {
+    uVar2 = *(uint *)(DAT_8332cbb8 + 0xc);
+    FX_EvaluateDistanceFade(puVar3);
+    if (uVar2 <= *(ushort *)(puVar3 + 0x28)) {
+      if (((*(uint *)puVar3[3] & 0x10000) == 0) ||
+         (FX_EvaluateVisStateOcclusionFadeAndScale(puVar3), uVar2 <= *(ushort *)((int)puVar3 + 0xa2)
+         )) {
+        FX_EvaluateVisualState((double)(float)puVar3[0x13],puVar3 + 0x22);
+        bVar1 = *(byte *)(puVar3 + 0x1c);
+        if (uVar2 <= bVar1) {
+          if ((*(uint *)puVar3[3] & 0x1000) != 0) {
+            FX_AddVisBlocker((double)(float)puVar3[0x1f],(double)((float)bVar1 * 0.003921569),
+                             *puVar3,puVar3 + 0x16);
+          }
+          altv300_21(in_vs32,in_vs43);
+          altv300_21(in_vs32,in_vs42);
+          altv300_21(in_vs32,in_vs41);
+          altv300_23(in_vs40,in_vs43);
+          altv300_23(in_vs40,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+          halt_baddata();
+        }
+      }
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -25,8 +109,88 @@ void FXIR_DrawElem_OrientedSprite(void)
 void FXIR_DrawElem_Tail(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  char cVar8;
+  float *pfVar9;
+  float *pfVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  undefined1 auStack_40 [64];
+  
+  iVar6 = __savegprlr_28();
+  iVar7 = FX_DrawElement_Setup_Time(iVar6,*(undefined4 *)(*(int *)(iVar6 + 8) + 4),0);
+  uVar5 = *(uint *)(iVar7 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar7 + 0xc),(ulonglong)*(uint *)(iVar7 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar7 + 4) + 0x50,*(undefined4 *)(iVar7 + 0x48),
+                    iVar7 + 0x14);
+  pfVar9 = (float *)(iVar6 + 0x58);
+  FX_OrientationPosToWorldPos(iVar7 + 0x14,(ulonglong)uVar5 + 0x14,pfVar9);
+  FX_DrawElement_Setup_VisualState(iVar6);
+  pfVar10 = (float *)(iVar6 + 100);
+  FX_GetVelocityAtTime
+            ((double)*(float *)(iVar6 + 0x4c),(double)*(float *)(iVar6 + 0x50),
+             *(undefined4 *)(iVar6 + 0xc),*(undefined4 *)(iVar6 + 0x48));
+  fVar2 = *(float *)(iVar6 + 0x68);
+  fVar3 = *(float *)(iVar6 + 100);
+  fVar4 = *(float *)(iVar6 + 0x6c);
+  dVar13 = 1.0;
+  dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar11 = dVar13;
+  if (-dVar12 < 0.0) {
+    dVar11 = dVar12;
+  }
+  fVar1 = (float)(1.0 / dVar11);
+  *(float *)(iVar6 + 100) = fVar3 * fVar1;
+  *(float *)(iVar6 + 0x68) = fVar2 * fVar1;
+  *(float *)(iVar6 + 0x6c) = fVar4 * fVar1;
+  cVar8 = FX_CullElementForDraw_Tail(iVar6);
+  if (cVar8 == '\0') {
+    fVar2 = -*(float *)(iVar6 + 0x80);
+    local_50 = fVar2 * *pfVar10 + *pfVar9;
+    *pfVar9 = local_50;
+    fVar3 = fVar2 * *(float *)(iVar6 + 0x68) + *(float *)(iVar6 + 0x5c);
+    dVar12 = (double)fVar3;
+    *(float *)(iVar6 + 0x5c) = fVar3;
+    fVar2 = *(float *)(iVar6 + 0x6c) * fVar2 + *(float *)(iVar6 + 0x60);
+    dVar11 = (double)fVar2;
+    *(float *)(iVar6 + 0x60) = fVar2;
+    pfVar9 = *(float **)(iVar6 + 0x44);
+    local_50 = *pfVar9 - local_50;
+    local_48 = (float)((double)pfVar9[2] - dVar11);
+    local_4c = (float)((double)pfVar9[1] - dVar12);
+    Vec3Cross(dVar11,dVar12,pfVar10,&local_50,&local_60);
+    dVar12 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar11 = dVar13;
+    if (-dVar12 < 0.0) {
+      dVar11 = dVar12;
+    }
+    fVar2 = (float)(dVar13 / dVar11);
+    local_60 = local_60 * fVar2;
+    local_5c = local_5c * fVar2;
+    local_58 = local_58 * fVar2;
+    Vec3Cross(&local_60,pfVar10,auStack_40);
+    FX_EvaluateVisualState((double)*(float *)(iVar6 + 0x4c),iVar6 + 0x88);
+    if ((ulonglong)*(uint *)(DAT_8332cbb8 + 0xc) <= (ulonglong)*(byte *)(iVar6 + 0x70)) {
+      FX_GenSpriteVerts(iVar6,&local_60,pfVar10,auStack_40,
+                        (ulonglong)*(byte *)(iVar6 + 0x70) -
+                        (ulonglong)*(uint *)(DAT_8332cbb8 + 0xc));
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -35,8 +199,63 @@ void FXIR_DrawElem_Tail(void)
 void FXIR_DrawElem_Model(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint *puVar2;
+  bool bVar3;
+  int *piVar5;
+  int iVar6;
+  ulonglong uVar4;
+  undefined8 uVar7;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  piVar5 = (int *)__savegprlr_27();
+  iVar6 = FX_DrawElement_Setup_Time(piVar5,*(undefined4 *)(piVar5[2] + 4),0);
+  uVar1 = *(uint *)(iVar6 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar6 + 0xc),(ulonglong)*(uint *)(iVar6 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar6 + 4) + 0x50,*(undefined4 *)(iVar6 + 0x48),
+                    iVar6 + 0x14);
+  FX_OrientationPosToWorldPos(iVar6 + 0x14,(ulonglong)uVar1 + 0x14,piVar5 + 0x16);
+  FX_DrawElement_Setup_VisualState(piVar5);
+  FX_EvaluateScale(piVar5 + 0x22,piVar5 + 0x1c);
+  if ((float)piVar5[0x21] != 0.0) {
+    FX_SetPlacement(piVar5,auStack_50);
+    if (*(char *)(piVar5[3] + 0xb0) != '\a') {
+      MyAssertHandler(0xffffffff82061940,0xeb,0,0xffffffff82061a64,0xffffffff82061a88);
+    }
+    if ((*(uint *)piVar5[3] & 0x8000000) != 0) {
+      Phys_ObjGetInterpolatedState(1,*(undefined4 *)(piVar5[2] + 0x14),auStack_40,auStack_50);
+    }
+    uVar4 = FX_GetElemVisuals(piVar5[3],piVar5[0x12]);
+    if ((uVar4 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82061940,0xf2,0,0xffffffff82000f98,0xffffffff82061a54);
+    }
+    puVar2 = (uint *)piVar5[3];
+    uVar7 = 0xe00;
+    if ((*puVar2 & 0x800) != 0) {
+      uVar7 = 0xe02;
+    }
+    if (((*puVar2 & 0x80000000) == 0) || (bVar3 = true, puVar2[0x38] == 0)) {
+      bVar3 = false;
+    }
+    if (bVar3) {
+      MyAssertHandler(0xffffffff82061940,0xf6,0,0xffffffff82000f98,0xffffffff820613d4);
+    }
+    iVar6 = FX_ElemFromHandle(*piVar5,*(undefined2 *)(piVar5 + 0x2b));
+    if (iVar6 != piVar5[2]) {
+      MyAssertHandler(0xffffffff82061940,0xf7,0,0xffffffff82000f98,0xffffffff820619f8);
+    }
+    if (0x7ff < *(ushort *)(piVar5 + 0x2b) >> 3) {
+      MyAssertHandler(0xffffffff82061940,0xf8,0,0xffffffff82061988,*(ushort *)(piVar5 + 0x2b) >> 3,
+                      0x800);
+    }
+    R_FilterXModelIntoScene
+              (uVar4,auStack_50,uVar7,
+               ((ulonglong)(*(ushort *)(piVar5 + 0x2b) >> 2) & 0x3ffffffe) +
+               (ulonglong)*(uint *)(*piVar5 + 0x40));
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -45,8 +264,34 @@ void FXIR_DrawElem_Model(void)
 void FXIR_DrawElem_Light(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  float fVar2;
+  int *piVar3;
+  int iVar4;
+  char cVar5;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if ((*(uint *)(*piVar3 + 0xb4) & 0x82) == 0) {
+    iVar4 = FX_DrawElement_Setup_Time(piVar3,*(undefined4 *)(piVar3[2] + 4),0);
+    uVar1 = *(uint *)(iVar4 + 8);
+    FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                      (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                      iVar4 + 0x14);
+    FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)uVar1 + 0x14,piVar3 + 0x16);
+    FX_DrawElement_Setup_VisualState(piVar3);
+    cVar5 = FX_CullElementForDraw_Light(piVar3);
+    if (cVar5 == '\0') {
+      FX_EvaluateVisualState((double)(float)piVar3[0x13],piVar3 + 0x22);
+      FX_EvaluateScale(piVar3 + 0x22,piVar3 + 0x1c);
+      fVar2 = (float)piVar3[0x21] * 0.003921569;
+      R_AddOmniLightToScene
+                ((double)(float)piVar3[0x1f],(double)((float)*(byte *)((int)piVar3 + 0x71) * fVar2),
+                 (double)((float)*(byte *)((int)piVar3 + 0x72) * fVar2),
+                 (double)((float)*(byte *)((int)piVar3 + 0x73) * fVar2),piVar3 + 0x16);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -55,8 +300,41 @@ void FXIR_DrawElem_Light(void)
 void FXIR_DrawElem_SpotLight(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar3 = __savegprlr_28();
+  iVar4 = FX_DrawElement_Setup_Time(iVar3,*(undefined4 *)(*(int *)(iVar3 + 8) + 4),0);
+  uVar1 = *(uint *)(iVar4 + 8);
+  FX_GetOrientation(*(undefined4 *)(iVar4 + 0xc),(ulonglong)*(uint *)(iVar4 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar4 + 4) + 0x50,*(undefined4 *)(iVar4 + 0x48),
+                    iVar4 + 0x14);
+  FX_OrientationPosToWorldPos(iVar4 + 0x14,(ulonglong)uVar1 + 0x14,iVar3 + 0x58);
+  FX_DrawElement_Setup_VisualState(iVar3);
+  cVar5 = FX_CullElementForDraw_Light(iVar3);
+  if (cVar5 == '\0') {
+    FX_EvaluateVisualState((double)*(float *)(iVar3 + 0x4c),iVar3 + 0x88);
+    FX_EvaluateScale(iVar3 + 0x88,iVar3 + 0x70);
+    if (*(int *)(*(int *)(iVar3 + 0xc) + 0xf4) == 0) {
+      MyAssertHandler(0xffffffff82061940,0x12d,0,0xffffffff82000f98,0xffffffff82061ab8);
+    }
+    fVar2 = *(float *)(iVar3 + 0x84) * 0.003921569;
+    dVar8 = (double)((float)*(byte *)(iVar3 + 0x73) * fVar2);
+    dVar7 = (double)((float)*(byte *)(iVar3 + 0x72) * fVar2);
+    dVar6 = (double)((float)*(byte *)(iVar3 + 0x71) * fVar2);
+    FX_GetElemVisuals(*(undefined4 *)(iVar3 + 0xc),*(undefined4 *)(iVar3 + 0x48));
+    R_AddSpotLightToScene
+              ((double)*(float *)(iVar3 + 0x7c),dVar6,dVar7,dVar8,iVar3 + 0x58,iVar3 + 0x20,
+               iVar3 + 0x38);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -94,11 +372,18 @@ void FX_DrawElement_Setup_Time(int param_1,int param_2,float *param_3)
 
 // 82419568  FX_DrawElement_Setup_Position  (EffectsCore/fx_draw_elem.cpp:341)
 
-void FX_DrawElement_Setup_Position(void)
+void FX_DrawElement_Setup_Position(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  FX_GetOrientation(*(undefined4 *)(iVar1 + 0xc),(ulonglong)*(uint *)(iVar1 + 4) + 0x34,
+                    (ulonglong)*(uint *)(iVar1 + 4) + 0x50,*(undefined4 *)(iVar1 + 0x48),
+                    iVar1 + 0x14);
+  FX_OrientationPosToWorldPos(iVar1 + 0x14,param_2,iVar1 + 0x58);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -107,8 +392,27 @@ void FX_DrawElement_Setup_Position(void)
 void FX_DrawElement_Setup_VisualState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  byte *pbVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  FX_SetupVisualState((double)(float)puVar1[0x15],puVar1[3],puVar1[1],puVar1[0x12]);
+  pbVar2 = (byte *)(puVar1 + 0x1c);
+  FX_EvaluateSize(puVar1 + 0x22,pbVar2);
+  if ((*(uint *)puVar1[3] & 0x1000) != 0) {
+    FX_EvaluateVisAlpha(puVar1 + 0x22,pbVar2);
+  }
+  FX_EvaluateDistanceFade(puVar1);
+  if ((*(uint *)puVar1[3] & 0x10000) != 0) {
+    FX_EvaluateVisStateOcclusionFadeAndScale(puVar1);
+  }
+  if ((*(uint *)puVar1[3] & 0x1000) != 0) {
+    FX_AddVisBlocker((double)(float)puVar1[0x1f],
+                     (double)((float)(uint)((int)((uint)*(ushort *)(puVar1 + 0x28) * (uint)*pbVar2)
+                                           >> 8) * 0.003921569),*puVar1,puVar1 + 0x16);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -134,10 +438,36 @@ void FX_DrawElement_Setup_Camera(int *param_1,int param_2)
 
 // 82419758  FXIR_DrawElement  (EffectsCore/fx_draw_elem.cpp:388)
 
-void FXIR_DrawElement(void)
+void FXIR_DrawElement(undefined8 param_1,int param_2,int param_3,undefined2 param_4,
+                     undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
   __savegprlr_27();
+  if (9 < *(byte *)(param_2 + 0xb0)) {
+    MyAssertHandler(0xffffffff82061940,0x189,0,0xffffffff820618f0,*(byte *)(param_2 + 0xb0),10);
+  }
+  if ((*(char *)(param_2 + 0xb1) != '\0') &&
+     (iVar1 = (int)param_5, *(int *)(param_3 + 4) <= *(int *)(iVar1 + 0xa8))) {
+    *(undefined2 *)(iVar1 + 0xac) = param_4;
+    *(int *)(iVar1 + 8) = param_3;
+    *(int *)(iVar1 + 0xc) = param_2;
+    uVar3 = (ulonglong)*(byte *)(param_3 + 1) * 0x128 +
+            (ulonglong)*(ushort *)(*(int *)(iVar1 + 4) + 0x16) +
+            (ulonglong)*(uint *)(param_2 + 0xfc) + (ulonglong)*(uint *)(param_3 + 4);
+    uVar2 = (uVar3 & 0xffffffff) * 0x11a3019b >> 0x20;
+    *(uint *)(iVar1 + 0x48) =
+         (int)uVar3 + (int)(((uVar3 - uVar2 & 0xffffffff) >> 1) + uVar2 >> 8) * -0x1df & 0xffff;
+    if ((&PTR_FXIR_DrawElem_BillboardSprite_8206189c)[*(byte *)(param_2 + 0xb0)] == (undefined *)0x0
+       ) {
+      MyAssertHandler(0xffffffff82061940,0x19c,0,0xffffffff82000f98,0xffffffff820618c4);
+    }
+    (*(code *)(&PTR_FXIR_DrawElem_BillboardSprite_8206189c)[*(byte *)(param_2 + 0xb0)])(param_5);
+  }
+  __restgprlr_27();
+  return;
 }
 

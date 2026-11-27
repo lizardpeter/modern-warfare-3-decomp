@@ -2,10 +2,55 @@
 
 // 828BAF20  XSessionMigrateHost  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessionsplit.cpp:36)
 
-void XSessionMigrateHost(void)
+void XSessionMigrateHost(undefined8 param_1,undefined4 param_2,undefined4 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  uint uVar2;
+  int iVar3;
+  uint local_60;
+  int local_5c;
+  int local_58 [2];
+  int local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  
+  uVar1 = __savegprlr_27();
+  local_60 = 0;
+  local_5c = 0;
+  uVar2 = XamGetSystemVersion();
+  if (uVar2 < 0x200ce900) {
+    SetExtendedError(0x65b,&local_60,local_58,param_4);
+  }
+  else {
+    local_60 = XamSessionRefObjByHandle(uVar1,&local_5c);
+    if (local_60 == 0) {
+      local_44 = 0;
+      local_40 = 0;
+      local_50 = local_5c;
+      local_3c = 0;
+      local_4c = param_3;
+      local_48 = param_2;
+      local_58[0] = XMsgStartIORequest(0xfb,0xb001e,param_4,&local_50,0x18);
+      if (local_58[0] < 0) {
+        local_60 = 0x65b;
+      }
+      else if ((param_4 & 0xffffffff) == 0) {
+        iVar3 = RtlGetLastError();
+        local_60 = iVar3 >> 0x1f & 0x65b;
+      }
+      else {
+        local_60 = 0x3e5;
+      }
+    }
+  }
+  if (local_5c != 0) {
+    ObDereferenceObject();
+  }
+  __restgprlr_27(local_60);
+  return;
 }
 

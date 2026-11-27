@@ -57,7 +57,133 @@ LAB_828c8d70:
 ; 828C8D88  PutFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:180)
   828C8D88  7D8802A6             mfspr r12,LR
   828C8D8C  4804D919             bl 0x829166a4
+  828C8D90  9421FF60             stwu r1,-0xa0(r1)
+  828C8D94  83E30000             lwz r31,0x0(r3)
+  828C8D98  548B083E             rlwinm r11,r4,0x1,0x0,0x1f
+  828C8D9C  83030004             lwz r24,0x4(r3)
+  828C8DA0  3B430008             addi r26,r3,0x8
+  828C8DA4  7D44FBD6             divw r10,r4,r31
+  828C8DA8  392BFFFF             subi r9,r11,0x1
+  828C8DAC  7D6AF9D6             mullw r11,r10,r31
+  828C8DB0  7D6B2050             subf r11,r11,r4
+  828C8DB4  7FEA4878             andc r10,r31,r9
+  828C8DB8  7D6BC214             add r11,r11,r24
+  828C8DBC  0CAAFFFF             twlgei r10,-0x1
+  828C8DC0  7D4BFA14             add r10,r11,r31
+  828C8DC4  7C7D1B78             or r29,r3,r3
+  828C8DC8  7D2AFBD6             divw r9,r10,r31
+  828C8DCC  554B083E             rlwinm r11,r10,0x1,0x0,0x1f
+  828C8DD0  7D29F9D6             mullw r9,r9,r31
+  828C8DD4  390BFFFF             subi r8,r11,0x1
+  828C8DD8  7D695050             subf r11,r9,r10
+  828C8DDC  7FEA4078             andc r10,r31,r8
+  828C8DE0  7F8BF850             subf r28,r11,r31
+  828C8DE4  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  828C8DE8  7CBE2B78             or r30,r5,r5
+  828C8DEC  7CDB3378             or r27,r6,r6
+  828C8DF0  0CDF0000             twllei r31,0x0
+  828C8DF4  0CDF0000             twllei r31,0x0
+  828C8DF8  0CAAFFFF             twlgei r10,-0x1
+  828C8DFC  7F1C2800             cmpw cr6,r28,r5
+  828C8E00  7CC43378             or r4,r6,r6
+  828C8E04  7C6BD214             add r3,r11,r26
+  828C8E08  41980014             blt cr6,0x828c8e1c
+  828C8E0C  3D408489             lis r10,-0x7b77
+  828C8E10  54A5103A             rlwinm r5,r5,0x2,0x0,0x1d
+  828C8E14  816A58CC             lwz r11,0x58cc(r10)
+  828C8E18  48000030             b 0x828c8e48
+LAB_828c8e1c:
+  828C8E1C  3EE08489             lis r23,-0x7b77
+  828C8E20  5799103A             rlwinm r25,r28,0x2,0x0,0x1d
+  828C8E24  7F25CB78             or r5,r25,r25
+  828C8E28  815758CC             lwz r10,0x58cc(r23)
+  828C8E2C  7D4903A6             mtspr CTR,r10
+  828C8E30  4E800421             bctrl
+  828C8E34  7D7CF050             subf r11,r28,r30
+  828C8E38  7C99DA14             add r4,r25,r27
+  828C8E3C  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  828C8E40  7F43D378             or r3,r26,r26
+  828C8E44  817758CC             lwz r11,0x58cc(r23)
+LAB_828c8e48:
+  828C8E48  7D6903A6             mtspr CTR,r11
+  828C8E4C  4E800421             bctrl
+  828C8E50  7D7EFBD6             divw r11,r30,r31
+  828C8E54  57CA083E             rlwinm r10,r30,0x1,0x0,0x1f
+  828C8E58  7D6BF9D6             mullw r11,r11,r31
+  828C8E5C  7D6BF050             subf r11,r11,r30
+  828C8E60  394AFFFF             subi r10,r10,0x1
+  828C8E64  7D6BC214             add r11,r11,r24
+  828C8E68  7FEA5078             andc r10,r31,r10
+  828C8E6C  7D2BFA14             add r9,r11,r31
+  828C8E70  0CAAFFFF             twlgei r10,-0x1
+  828C8E74  7D49FBD6             divw r10,r9,r31
+  828C8E78  552B083E             rlwinm r11,r9,0x1,0x0,0x1f
+  828C8E7C  7D4AF9D6             mullw r10,r10,r31
+  828C8E80  396BFFFF             subi r11,r11,0x1
+  828C8E84  7D4A4850             subf r10,r10,r9
+  828C8E88  7FEB5878             andc r11,r31,r11
+  828C8E8C  0CDF0000             twllei r31,0x0
+  828C8E90  915D0004             stw r10,0x4(r29)
+  828C8E94  0CDF0000             twllei r31,0x0
+  828C8E98  0CABFFFF             twlgei r11,-0x1
+  828C8E9C  382100A0             addi r1,r1,0xa0
+  828C8EA0  4804D854             b 0x829166f4
 
 ; 828C8EA8  GetFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:266)
   828C8EA8  7D8802A6             mfspr r12,LR
   828C8EAC  4804D805             bl 0x829166b0
+  828C8EB0  9421FF70             stwu r1,-0x90(r1)
+  828C8EB4  39650001             addi r11,r5,0x1
+  828C8EB8  81230004             lwz r9,0x4(r3)
+  828C8EBC  3B830008             addi r28,r3,0x8
+  828C8EC0  7D6A0E70             srawi r10,r11,0x1
+  828C8EC4  81630000             lwz r11,0x0(r3)
+  828C8EC8  7CBF2B78             or r31,r5,r5
+  828C8ECC  7D4A2214             add r10,r10,r4
+  828C8ED0  0CCB0000             twllei r11,0x0
+  828C8ED4  7D0A00D0             neg r8,r10
+  828C8ED8  0CCB0000             twllei r11,0x0
+  828C8EDC  7CE85BD6             divw r7,r8,r11
+  828C8EE0  550A083E             rlwinm r10,r8,0x1,0x0,0x1f
+  828C8EE4  7CE759D6             mullw r7,r7,r11
+  828C8EE8  7D074050             subf r8,r7,r8
+  828C8EEC  38EAFFFF             subi r7,r10,0x1
+  828C8EF0  7D484A14             add r10,r8,r9
+  828C8EF4  7D693878             andc r9,r11,r7
+  828C8EF8  7D0A5A14             add r8,r10,r11
+  828C8EFC  0CA9FFFF             twlgei r9,-0x1
+  828C8F00  7D285BD6             divw r9,r8,r11
+  828C8F04  550A083E             rlwinm r10,r8,0x1,0x0,0x1f
+  828C8F08  7D2959D6             mullw r9,r9,r11
+  828C8F0C  38EAFFFF             subi r7,r10,0x1
+  828C8F10  7D494050             subf r10,r9,r8
+  828C8F14  7D693878             andc r9,r11,r7
+  828C8F18  7FCA5850             subf r30,r10,r11
+  828C8F1C  554B103A             rlwinm r11,r10,0x2,0x0,0x1d
+  828C8F20  7CDD3378             or r29,r6,r6
+  828C8F24  0CA9FFFF             twlgei r9,-0x1
+  828C8F28  7F1E2800             cmpw cr6,r30,r5
+  828C8F2C  7CC33378             or r3,r6,r6
+  828C8F30  7C8BE214             add r4,r11,r28
+  828C8F34  41980014             blt cr6,0x828c8f48
+  828C8F38  3D208489             lis r9,-0x7b77
+  828C8F3C  54A5103A             rlwinm r5,r5,0x2,0x0,0x1d
+  828C8F40  816958CC             lwz r11,0x58cc(r9)
+  828C8F44  48000030             b 0x828c8f74
+LAB_828c8f48:
+  828C8F48  3F408489             lis r26,-0x7b77
+  828C8F4C  57DB103A             rlwinm r27,r30,0x2,0x0,0x1d
+  828C8F50  7F65DB78             or r5,r27,r27
+  828C8F54  817A58CC             lwz r11,0x58cc(r26)
+  828C8F58  7D6903A6             mtspr CTR,r11
+  828C8F5C  4E800421             bctrl
+  828C8F60  7D7EF850             subf r11,r30,r31
+  828C8F64  7F84E378             or r4,r28,r28
+  828C8F68  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  828C8F6C  7C7BEA14             add r3,r27,r29
+  828C8F70  817A58CC             lwz r11,0x58cc(r26)
+LAB_828c8f74:
+  828C8F74  7D6903A6             mtspr CTR,r11
+  828C8F78  4E800421             bctrl
+  828C8F7C  38210090             addi r1,r1,0x90
+  828C8F80  4804D780             b 0x82916700

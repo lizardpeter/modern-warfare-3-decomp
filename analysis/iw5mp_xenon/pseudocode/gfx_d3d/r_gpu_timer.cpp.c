@@ -9,7 +9,6 @@ void R_HW_InsertCallback(undefined8 param_1,undefined8 param_2)
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c3970,7,0,0xffffffff82000f98,0xffffffff8217d420);
   }
   D3DDevice_InsertCallback(DAT_84616688,0,param_1,param_2);
@@ -25,7 +24,6 @@ void * R_Perf_InitTimerFrameHistory(void *param_1,undefined4 param_2)
   void *pvVar1;
   
   if (param_1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c39b8,0x68,0,0xffffffff82000f98,0xffffffff821c39fc);
   }
   pvVar1 = memset(param_1,0,21000);
@@ -42,7 +40,7 @@ void R_GPU_BeginTimerCallback(int param_1)
   undefined8 uVar1;
   
   uVar1 = TBLr;
-  *(int *)(DAT_829a2824 * 0x240 + param_1 * 0x14 + -0x7ba556e8) = (int)uVar1;
+  (&DAT_845aa918)[param_1 * 5 + DAT_829a2824 * 0x90] = (int)uVar1;
   return;
 }
 
@@ -53,12 +51,11 @@ void R_GPU_EndTimerCallback(int param_1)
 
 {
   undefined8 uVar1;
-  int iVar2;
   
   uVar1 = TBLr;
-  iVar2 = DAT_829a2824 * 0x240 + param_1 * 0x14;
-  *(int *)(iVar2 + -0x7ba556e4) =
-       (*(int *)(iVar2 + -0x7ba556e4) - *(int *)(iVar2 + -0x7ba556e8)) + (int)uVar1;
+  (&DAT_845aa91c)[param_1 * 5 + DAT_829a2824 * 0x90] =
+       ((&DAT_845aa91c)[param_1 * 5 + DAT_829a2824 * 0x90] -
+       (&DAT_845aa918)[param_1 * 5 + DAT_829a2824 * 0x90]) + (int)uVar1;
   return;
 }
 
@@ -69,6 +66,78 @@ double R_GPU_ConvertTimeToMsec(uint param_1)
 
 {
   return (double)(float)((double)param_1 * DAT_841db430);
+}
+
+
+// 827407E8  R_GPU_CalcDerivedTimers  (gfx_d3d/r_gpu_timer.cpp:454)
+
+void R_GPU_CalcDerivedTimers(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  longlong lVar5;
+  
+  iVar2 = __savegprlr_29();
+  if (*(char *)(DAT_845b8b64 + 0xc) == '\0') {
+    *(int *)(iVar2 + 0x118) = *(int *)(iVar2 + 0x118) + *(int *)(iVar2 + 0xdc);
+    *(undefined4 *)(iVar2 + 0xdc) = 0;
+    *(undefined1 *)(iVar2 + 0xea) = 1;
+    *(int *)(iVar2 + 300) = *(int *)(iVar2 + 300) + *(int *)(iVar2 + 0xf0);
+    *(undefined4 *)(iVar2 + 0xf0) = 0;
+    *(undefined1 *)(iVar2 + 0xfe) = 1;
+    *(int *)(iVar2 + 0x140) = *(int *)(iVar2 + 0x140) + *(int *)(iVar2 + 0x104);
+    *(undefined4 *)(iVar2 + 0x104) = 0;
+    *(undefined1 *)(iVar2 + 0x112) = 1;
+  }
+  piVar4 = &DAT_829a2828;
+  lVar5 = 0x17;
+  do {
+    iVar3 = *piVar4;
+    piVar4 = piVar4 + 1;
+    iVar3 = iVar3 * 0x14 + iVar2;
+    *(int *)(*piVar4 * 0x14 + iVar2 + 0x10) = *(int *)(iVar3 + 0x14) + *(int *)(iVar3 + 0x10);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  piVar4 = &DAT_829a2824;
+  lVar5 = 4;
+  uVar1 = *(undefined4 *)(DAT_829a2828 * 0x14 + iVar2 + 0x10);
+  *(undefined4 *)(iVar2 + 8) = 0;
+  *(undefined4 *)(iVar2 + 4) = uVar1;
+  do {
+    iVar3 = *(int *)((piVar4[1] + 1) * 0x14 + iVar2) + *(int *)(iVar2 + 8);
+    *(int *)(iVar2 + 8) = iVar3;
+    iVar3 = *(int *)((piVar4[2] + 1) * 0x14 + iVar2) + iVar3;
+    *(int *)(iVar2 + 8) = iVar3;
+    iVar3 = *(int *)((piVar4[3] + 1) * 0x14 + iVar2) + iVar3;
+    *(int *)(iVar2 + 8) = iVar3;
+    iVar3 = *(int *)((piVar4[4] + 1) * 0x14 + iVar2) + iVar3;
+    *(int *)(iVar2 + 8) = iVar3;
+    iVar3 = *(int *)((piVar4[5] + 1) * 0x14 + iVar2) + iVar3;
+    *(int *)(iVar2 + 8) = iVar3;
+    piVar4 = piVar4 + 6;
+    *(int *)(iVar2 + 8) = *(int *)((*piVar4 + 1) * 0x14 + iVar2) + iVar3;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  DAT_845b8b60 = *(undefined4 *)(iVar2 + 8);
+  *(undefined4 *)(iVar2 + 0x10) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(iVar2 + 0x9c) = *(undefined4 *)(iVar2 + 0xb0);
+  *(undefined4 *)(iVar2 + 0x150) = *(undefined4 *)(iVar2 + 0x164);
+  *(int *)(iVar2 + 0x14) =
+       *(int *)(iVar2 + 0x8c) + *(int *)(iVar2 + 0x78) + *(int *)(iVar2 + 100) +
+       *(int *)(iVar2 + 0x50) + *(int *)(iVar2 + 0x3c) + *(int *)(iVar2 + 0x28);
+  *(int *)(iVar2 + 0xa0) =
+       *(int *)(iVar2 + 0x140) + *(int *)(iVar2 + 300) + *(int *)(iVar2 + 0x118) +
+       *(int *)(iVar2 + 0x104) + *(int *)(iVar2 + 0xf0) + *(int *)(iVar2 + 0xdc) +
+       *(int *)(iVar2 + 200) + *(int *)(iVar2 + 0xb4);
+  *(int *)(iVar2 + 0x154) =
+       *(int *)(iVar2 + 0x1e0) + *(int *)(iVar2 + 0x1cc) + *(int *)(iVar2 + 0x1b8) +
+       *(int *)(iVar2 + 0x1a4) + *(int *)(iVar2 + 400) + *(int *)(iVar2 + 0x17c) +
+       *(int *)(iVar2 + 0x168);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -93,7 +162,7 @@ void R_GPU_EndFrameCallback(void)
   iVar3 = iVar2;
   do {
     iVar4 = iVar4 + 0x14;
-    *(undefined4 *)(iVar3 + -0x7ba556e4) = 0;
+    *(undefined4 *)((int)&DAT_845aa91c + iVar3) = 0;
     iVar3 = iVar4 + iVar2;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
@@ -115,8 +184,68 @@ void R_GPU_AddPaddingCallback(void)
 void R_GPU_InitTimers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  undefined4 *puVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  longlong lVar9;
+  
   __savegprlr_28();
+  R_Perf_InitTimerFrameHistory(0xffffffff845b3958,0x40);
+  iVar2 = 0;
+  lVar4 = 0x40;
+  puVar5 = &DAT_845aa920;
+  do {
+    *(undefined1 *)(puVar5 + -3) = 0;
+    iVar7 = 0;
+    lVar9 = 0x1c;
+    puVar8 = puVar5;
+    do {
+      iVar3 = iVar2 + iVar7;
+      puVar8[-2] = 0;
+      puVar8[-1] = 0;
+      *puVar8 = 0;
+      *(undefined1 *)(puVar8 + 2) = 0;
+      puVar6 = puVar8 + -2;
+      *(undefined1 *)((int)puVar8 + 9) = 0;
+      puVar8[1] = 0;
+      iVar7 = iVar7 + 1;
+      puVar8 = puVar8 + 5;
+      (&DAT_845b3968)[iVar3] = puVar6;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    lVar4 = lVar4 + -1;
+    puVar5 = puVar5 + 0x90;
+    iVar2 = iVar2 + 0x52;
+  } while (lVar4 != 0);
+  if (DAT_845b8b74 == '\0') {
+    R_UTIL_SwizzleColorArrayXBOXfromPS3(0xffffffff829a2610,0x1c);
+    DAT_845b8b74 = '\x01';
+  }
+  uVar1 = R_RegisterFont(0xffffffff82031290,3);
+  DAT_845b390c = (undefined4)uVar1;
+  iVar2 = R_TextWidth(0xffffffff821c3a6c,1,uVar1);
+  DAT_845b3910 = (float)(longlong)iVar2;
+  iVar2 = R_TextHeight(DAT_845b390c);
+  DAT_845b3930 = &DAT_829a2610;
+  DAT_845b3914 = (float)(longlong)iVar2;
+  DAT_845b3938 = 0x41855555;
+  DAT_845b3944 = 0;
+  DAT_845b392c = &PTR_s_ShadowTotal_829a2680;
+  DAT_845b3934 = 0x41f00000;
+  DAT_845b3920 = R_GPU_ConvertTimeToMsec;
+  DAT_845b3940 = 1;
+  DAT_845b393c = 0x44200000;
+  DAT_845b3924 = 0x1c;
+  DAT_845b3928 = 0x10;
+  DAT_845b394c = Dvar_RegisterEnum(0xffffffff821c3a44,0xffffffff829a26f0,0,0,0xffffffff821c3a50);
+  DAT_845b8b64 = Dvar_RegisterBool(0xffffffff821c3a10,0,0,0xffffffff821c3a28);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -135,10 +264,46 @@ undefined4 R_GPU_GetTimerIdForDrawListType(uint param_1)
 
 {
   if (0x26 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c3a70,0x2b8,0,0xffffffff821c3ab8,param_1,0x27);
   }
   return *(undefined4 *)(&DAT_829a2788 + param_1 * 4);
+}
+
+
+// 82740D30  R_GPU_BeginFrame  (gfx_d3d/r_gpu_timer.cpp:702)
+
+void R_GPU_BeginFrame(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  longlong lVar4;
+  
+  iVar1 = DAT_845b8b68;
+  DAT_845b3948 = *(int *)(DAT_845b394c + 0xc);
+  if (DAT_845b3948 == 0) {
+    DAT_845b8b68 = 0;
+  }
+  else {
+    iVar2 = DAT_829a2784 * 0x240;
+    *(int *)(&DAT_845aa908 + iVar2) = DAT_845b8b68;
+    if ((&DAT_845aa914)[iVar2] != '\0') {
+      MyAssertHandler(0xffffffff821c3a70,0x2c7,0,0xffffffff82000f98,0xffffffff821c3b14);
+      iVar1 = DAT_845b8b68;
+    }
+    DAT_845b8b68 = iVar1 + 1;
+    puVar3 = (undefined1 *)(iVar2 + -0x7ba556ea);
+    (&DAT_845aa914)[iVar2] = 1;
+    lVar4 = 0x1c;
+    do {
+      puVar3[0x13] = 0;
+      puVar3 = puVar3 + 0x14;
+      *puVar3 = 0;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  return;
 }
 
 
@@ -147,8 +312,26 @@ undefined4 R_GPU_GetTimerIdForDrawListType(uint param_1)
 void R_GPU_EndFrame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  uint uVar2;
+  
   __savegprlr_28();
+  if (DAT_845b3948 != 0) {
+    if (DAT_845b8b70 != 0) {
+      MyAssertHandler(0xffffffff821c3a70,0x2e2,0,0xffffffff82000f98,0xffffffff821c3b44);
+    }
+    iVar1 = DAT_829a2784 * 0x240;
+    if ((&DAT_845aa914)[iVar1] == '\0') {
+      MyAssertHandler(0xffffffff821c3a70,0x2e4,0,0xffffffff82000f98,0xffffffff821c3b2c);
+    }
+    uVar2 = DAT_829a2784 + 1;
+    (&DAT_845aa914)[iVar1] = 0;
+    DAT_829a2784 = uVar2 + (((int)uVar2 >> 6) + (uint)((int)uVar2 < 0 && (uVar2 & 0x3f) != 0)) *
+                           -0x40;
+    R_HW_InsertCallback(0xffffffff82740a68,0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -157,8 +340,36 @@ void R_GPU_EndFrame(void)
 void R_GPU_BeginTimer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  undefined *puVar3;
+  
+  uVar1 = __savegprlr_26();
+  if (DAT_845b3948 != 0) {
+    iVar2 = DAT_829a2784 * 0x240;
+    if ((&DAT_845aa914)[iVar2] == '\0') {
+      MyAssertHandler(0xffffffff821c3a70,0x2fd,0,0xffffffff82000f98,0xffffffff821c3b2c);
+    }
+    if (((int)uVar1 < 0) || (0x1b < uVar1)) {
+      MyAssertHandler(0xffffffff821c3a70,0x2fe,0,0xffffffff82000f98,0xffffffff821c3b70);
+    }
+    iVar2 = uVar1 * 0x14 + iVar2;
+    puVar3 = &DAT_845aa908 + iVar2 + 0x10;
+    if (DAT_845b8b70 != (undefined *)0x0) {
+      if (DAT_845b8b70 == puVar3) {
+        MyAssertHandler(0xffffffff821c3a70,0x303,0,0xffffffff82000f98,0xffffffff821c3b54);
+      }
+      DAT_845b8b70[0x10] = 1;
+    }
+    *(undefined **)(&DAT_845aa908 + iVar2 + 0x18) = DAT_845b8b70;
+    (&DAT_845aa908)[iVar2 + 0x21] = 1;
+    (&DAT_845aa908)[iVar2 + 0x20] = 0;
+    (&DAT_845aa908)[iVar2 + 0x23] = 0;
+    DAT_845b8b70 = puVar3;
+    R_HW_InsertCallback(0xffffffff82740728,uVar1);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -167,8 +378,23 @@ void R_GPU_BeginTimer(void)
 void R_GPU_EndTimer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_28();
+  if (DAT_845b3948 != 0) {
+    if (DAT_845b8b70 == 0) {
+      MyAssertHandler(0xffffffff821c3a70,0x325,0,0xffffffff82000f98,0xffffffff821c3bb4);
+    }
+    iVar1 = DAT_829a2784 * 0x240;
+    if ((&DAT_845aa914)[iVar1] == '\0') {
+      MyAssertHandler(0xffffffff821c3a70,0x328,0,0xffffffff82000f98,0xffffffff821c3b2c);
+    }
+    R_HW_InsertCallback(0xffffffff82740768,
+                        ((DAT_845b8b70 - (int)(&DAT_845aa908 + iVar1)) + -0x10) / 0x14);
+    DAT_845b8b70 = *(int *)(DAT_845b8b70 + 8);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -177,8 +403,26 @@ void R_GPU_EndTimer(void)
 void R_GPU_AddPaddingCount(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_27();
+  if (DAT_845b3948 != 0) {
+    uVar1 = uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xfffffff;
+    uVar3 = uVar1 << 4;
+    while (uVar1 != 0) {
+      iVar2 = R_HasDeviceOwnership();
+      if (iVar2 == 0) {
+        MyAssertHandler(0xffffffff821c3970,7,0,0xffffffff82000f98,0xffffffff8217d420);
+      }
+      D3DDevice_InsertCallback(DAT_84616688,0,0xffffffff82740ad0,0);
+      uVar3 = uVar3 - 1;
+      uVar1 = uVar3;
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -187,8 +431,23 @@ void R_GPU_AddPaddingCount(void)
 void R_GPU_DrawTimers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  
   __savegprlr_29();
+  iVar1 = DAT_845b8b6c;
+  if (DAT_845b3948 != 0) {
+    iVar2 = DAT_845b8b6c * 0x240;
+    R_GPU_CalcDerivedTimers(&DAT_845aa908 + iVar2);
+    DAT_845b3958 = iVar1;
+    *(undefined4 *)(&DAT_845b3960 + iVar1 * 0x148) = *(undefined4 *)(&DAT_845aa90c + iVar2);
+    DAT_845b3918 = *(undefined4 *)(&DAT_829a2724 + DAT_845b3948 * 4);
+    DAT_845b391c = *(undefined4 *)(&DAT_829a2754 + DAT_845b3948 * 4);
+    *(undefined4 *)(&DAT_845b3964 + DAT_845b3958 * 0x148) = *(undefined4 *)(&DAT_845aa910 + iVar2);
+    R_Perf_DrawTimers(0xffffffff845b3958,0xffffffff845b390c);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -222,10 +481,106 @@ longlong R_GPU_GetMicroseconds(void)
 
 // 827412B0  R_GPU_GetLastFrameTimesUSec  (gfx_d3d/r_gpu_timer.cpp:900)
 
-void R_GPU_GetLastFrameTimesUSec(void)
+void R_GPU_GetLastFrameTimesUSec(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined4 uStack_44;
+  undefined4 uStack_34;
+  
+  uVar2 = __savegprlr_29();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c3a70,0x389,0,0xffffffff82000f98,0xffffffff820134d4);
+  }
+  if (0x40 < (param_2 + 1 & 0xffffffff)) {
+    param_2 = 0x3f;
+  }
+  uVar6 = (ulonglong)DAT_845b8b68;
+  if ((uVar6 < (param_2 + 1 & 0xffffffff)) && (param_2 = uVar6 - 1, uVar6 == 0)) {
+    param_2 = 0;
+  }
+  uVar3 = (ulonglong)DAT_845b8b6c;
+  uVar6 = 0;
+  if (3 < (int)param_2) {
+    lVar7 = uVar2 - 4;
+    uVar9 = uVar3 + 0x3e;
+    do {
+      uVar4 = uVar9 - 0x3e;
+      if ((longlong)uVar4 < 0) {
+        uVar4 = uVar9 + 2;
+      }
+      uVar5 = uVar9 - 0x3f;
+      uStack_44 = (undefined4)
+                  (longlong)
+                  ((double)*(uint *)(&DAT_845aa910 +
+                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
+                  DAT_841db438);
+      iVar1 = (int)lVar7;
+      *(undefined4 *)(iVar1 + 4) = uStack_44;
+      if ((longlong)uVar5 < 0) {
+        uVar5 = uVar9 + 1;
+      }
+      uStack_44 = (undefined4)
+                  (longlong)
+                  ((double)*(uint *)(&DAT_845aa910 +
+                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
+                  DAT_841db438);
+      *(undefined4 *)(iVar1 + 8) = uStack_44;
+      uVar4 = uVar9 - 0x40;
+      if ((longlong)(uVar9 - 0x40) < 0) {
+        uVar4 = uVar9;
+      }
+      uVar5 = uVar9 - 0x41;
+      uStack_44 = (undefined4)
+                  (longlong)
+                  ((double)*(uint *)(&DAT_845aa910 +
+                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
+                  DAT_841db438);
+      *(undefined4 *)(iVar1 + 0xc) = uStack_44;
+      if ((longlong)uVar5 < 0) {
+        uVar5 = uVar9 - 1;
+      }
+      uVar6 = uVar6 + 4;
+      uVar9 = uVar9 - 4;
+      uStack_44 = (undefined4)
+                  (longlong)
+                  ((double)*(uint *)(&DAT_845aa910 +
+                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
+                  DAT_841db438);
+      lVar7 = lVar7 + 0x10;
+      *(undefined4 *)lVar7 = uStack_44;
+    } while ((uVar6 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
+  }
+  if ((uVar6 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    lVar8 = param_2 - uVar6;
+    uVar3 = uVar3 - uVar6;
+    lVar7 = (uVar6 & 0x3fffffff) * 4 + uVar2 + -4;
+    uVar6 = lVar8 + uVar6;
+    do {
+      uVar2 = uVar3;
+      if ((int)uVar3 < 0) {
+        uVar2 = uVar3 + 0x40;
+      }
+      uVar3 = uVar3 - 1;
+      uStack_34 = (undefined4)
+                  (longlong)
+                  ((double)*(uint *)(&DAT_845aa910 +
+                                    (int)((uVar2 + (uVar2 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
+                  DAT_841db438);
+      lVar7 = lVar7 + 4;
+      *(undefined4 *)lVar7 = uStack_34;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  __restgprlr_29(uVar6);
+  return;
 }
 

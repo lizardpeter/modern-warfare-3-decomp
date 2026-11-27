@@ -118,6 +118,131 @@ LAB_828cdf5c:
 ; 828CDF70  XAudioLock  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/globals.cpp:294)
   828CDF70  7D8802A6             mfspr r12,LR
   828CDF74  48048749             bl 0x829166bc
+  828CDF78  9421FF90             stwu r1,-0x70(r1)
+  828CDF7C  3D600002             lis r11,0x2
+  828CDF80  616B0001             ori r11,r11,0x1
+  828CDF84  7F035840             cmplw cr6,r3,r11
+  828CDF88  41990148             bgt cr6,0x828ce0d0
+  828CDF8C  419A0128             beq cr6,0x828ce0b4
+  828CDF90  3D63FFFF             subis r11,r3,0x1
+  828CDF94  356BFFFF             subic. r11,r11,0x1
+  828CDF98  418200C8             beq 0x828ce060
+  828CDF9C  2B0B0001             cmplwi cr6,r11,0x1
+  828CDFA0  419A0068             beq cr6,0x828ce008
+  828CDFA4  2B0B0002             cmplwi cr6,r11,0x2
+  828CDFA8  409A013C             bne cr6,0x828ce0e4
+  828CDFAC  3D608489             lis r11,-0x7b77
+  828CDFB0  7DAA6B78             or r10,r13,r13
+  828CDFB4  386B58D8             addi r3,r11,0x58d8
+  828CDFB8  81630004             lwz r11,0x4(r3)
+  828CDFBC  2F0B0000             cmpwi cr6,r11,0x0
+  828CDFC0  419A003C             beq cr6,0x828cdffc
+  828CDFC4  81230008             lwz r9,0x8(r3)
+  828CDFC8  7F0D4840             cmplw cr6,r13,r9
+  828CDFCC  409A0030             bne cr6,0x828cdffc
+  828CDFD0  356BFFFF             subic. r11,r11,0x1
+  828CDFD4  91630004             stw r11,0x4(r3)
+  828CDFD8  40820024             bne 0x828cdffc
+  828CDFDC  39400000             li r10,0x0
+  828CDFE0  8BE3000C             lbz r31,0xc(r3)
+  828CDFE4  39600000             li r11,0x0
+  828CDFE8  91430008             stw r10,0x8(r3)
+  828CDFEC  9963000C             stb r11,0xc(r3)
+  828CDFF0  480739B5             bl 0x829419a4
+  828CDFF4  7FE3FB78             or r3,r31,r31
+  828CDFF8  480741FD             bl 0x829421f4
+LAB_828cdffc:
+  828CDFFC  38600000             li r3,0x0
+  828CE000  38210070             addi r1,r1,0x70
+  828CE004  48048708             b 0x8291670c
+LAB_828ce008:
+  828CE008  480741DD             bl 0x829421e4
+  828CE00C  3D608489             lis r11,-0x7b77
+  828CE010  7C7D1B78             or r29,r3,r3
+  828CE014  3BEB58D8             addi r31,r11,0x58d8
+  828CE018  7DBE6B78             or r30,r13,r13
+  828CE01C  817F0004             lwz r11,0x4(r31)
+  828CE020  2F0B0000             cmpwi cr6,r11,0x0
+  828CE024  419A0010             beq cr6,0x828ce034
+  828CE028  815F0008             lwz r10,0x8(r31)
+  828CE02C  7F0D5040             cmplw cr6,r13,r10
+  828CE030  419A0070             beq cr6,0x828ce0a0
+LAB_828ce034:
+  828CE034  7FE3FB78             or r3,r31,r31
+  828CE038  480741CD             bl 0x82942204
+  828CE03C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828CE040  2B0B0000             cmplwi cr6,r11,0x0
+  828CE044  409A0050             bne cr6,0x828ce094
+  828CE048  7FA3EB78             or r3,r29,r29
+  828CE04C  480741A9             bl 0x829421f4
+  828CE050  3C608000             lis r3,-0x8000
+  828CE054  60634004             ori r3,r3,0x4004
+  828CE058  38210070             addi r1,r1,0x70
+  828CE05C  480486B0             b 0x8291670c
+LAB_828ce060:
+  828CE060  48074185             bl 0x829421e4
+  828CE064  3D608489             lis r11,-0x7b77
+  828CE068  7C7D1B78             or r29,r3,r3
+  828CE06C  3BEB58D8             addi r31,r11,0x58d8
+  828CE070  7DBE6B78             or r30,r13,r13
+  828CE074  817F0004             lwz r11,0x4(r31)
+  828CE078  2F0B0000             cmpwi cr6,r11,0x0
+  828CE07C  419A0010             beq cr6,0x828ce08c
+  828CE080  815F0008             lwz r10,0x8(r31)
+  828CE084  7F0D5040             cmplw cr6,r13,r10
+  828CE088  419A0018             beq cr6,0x828ce0a0
+LAB_828ce08c:
+  828CE08C  7FE3FB78             or r3,r31,r31
+  828CE090  48073925             bl 0x829419b4
+LAB_828ce094:
+  828CE094  817F0004             lwz r11,0x4(r31)
+  828CE098  93DF0008             stw r30,0x8(r31)
+  828CE09C  9BBF000C             stb r29,0xc(r31)
+LAB_828ce0a0:
+  828CE0A0  396B0001             addi r11,r11,0x1
+  828CE0A4  38600000             li r3,0x0
+  828CE0A8  917F0004             stw r11,0x4(r31)
+  828CE0AC  38210070             addi r1,r1,0x70
+  828CE0B0  4804865C             b 0x8291670c
+LAB_828ce0b4:
+  828CE0B4  3D60829B             lis r11,-0x7d65
+  828CE0B8  396BFEB0             subi r11,r11,0x150
+  828CE0BC  386B0004             addi r3,r11,0x4
+  828CE0C0  48073155             bl 0x82941214
+  828CE0C4  38600000             li r3,0x0
+  828CE0C8  38210070             addi r1,r1,0x70
+  828CE0CC  48048640             b 0x8291670c
+LAB_828ce0d0:
+  828CE0D0  3D63FFFE             subis r11,r3,0x2
+  828CE0D4  356BFFFE             subic. r11,r11,0x2
+  828CE0D8  41820038             beq 0x828ce110
+  828CE0DC  2B0B0001             cmplwi cr6,r11,0x1
+  828CE0E0  419A0014             beq cr6,0x828ce0f4
+LAB_828ce0e4:
+  828CE0E4  3C608007             lis r3,-0x7ff9
+  828CE0E8  60630057             ori r3,r3,0x57
+  828CE0EC  38210070             addi r1,r1,0x70
+  828CE0F0  4804861C             b 0x8291670c
+LAB_828ce0f4:
+  828CE0F4  3D60829B             lis r11,-0x7d65
+  828CE0F8  396BFEB0             subi r11,r11,0x150
+  828CE0FC  386B0004             addi r3,r11,0x4
+  828CE100  48073105             bl 0x82941204
+  828CE104  38600000             li r3,0x0
+  828CE108  38210070             addi r1,r1,0x70
+  828CE10C  48048600             b 0x8291670c
+LAB_828ce110:
+  828CE110  3D60829B             lis r11,-0x7d65
+  828CE114  396BFEB0             subi r11,r11,0x150
+  828CE118  386B0004             addi r3,r11,0x4
+  828CE11C  48073A79             bl 0x82941b94
+  828CE120  3143FFFF             subic r10,r3,0x1
+  828CE124  3D008000             lis r8,-0x8000
+  828CE128  7CE94910             subfe r7,r9,r9
+  828CE12C  61064004             ori r6,r8,0x4004
+  828CE130  7CE33038             and r3,r7,r6
+  828CE134  38210070             addi r1,r1,0x70
+  828CE138  480485D4             b 0x8291670c
 
 ; 828CE140  XAUDIO::CCriticalSection::`scalar_deleting_destructor'  (line unknown)
   828CE140  7D8802A6             mfspr r12,LR

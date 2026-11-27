@@ -2,11 +2,28 @@
 
 // 823A21B8  DBX_AuthBoth_GenerateHash  (database/db_auth.cpp:179)
 
-void DBX_AuthBoth_GenerateHash(void)
+void DBX_AuthBoth_GenerateHash(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_b0 [176];
+  
+  uVar1 = __savegprlr_26();
+  uVar2 = sha256_init(auStack_b0);
+  if ((int)uVar2 != 0) {
+    MyAssertHandler(0xffffffff82059004,0xb9,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar2);
+  }
+  uVar1 = sha256_process(auStack_b0,uVar1,param_2);
+  if ((int)uVar1 != 0) {
+    MyAssertHandler(0xffffffff82059004,0xbb,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
+  }
+  uVar1 = sha256_done(auStack_b0,param_3);
+  if ((int)uVar1 != 0) {
+    MyAssertHandler(0xffffffff82059004,0xbd,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -37,11 +54,38 @@ bool DBX_AuthLoad_ValidateHash(undefined8 param_1,undefined8 param_2,byte *param
 
 // 823A22E8  DBX_AuthLoad_ValidateSignature_Try  (database/db_auth.cpp:209)
 
-void DBX_AuthLoad_ValidateSignature_Try(void)
+void DBX_AuthLoad_ValidateSignature_Try(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int local_60 [4];
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = find_hash(0xffffffff8221ad8c);
+  if ((int)uVar2 == -1) {
+    MyAssertHandler(0xffffffff82059004,0xd8,0,0xffffffff82000f98,0xffffffff82059044);
+    __restgprlr_29(0);
+    return;
+  }
+  uVar3 = rsa_import(0xffffffff82058ec8,0x10e,auStack_50);
+  if ((int)uVar3 != 0) {
+    MyAssertHandler(0xffffffff82059004,0xde,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar3);
+    __restgprlr_29(0);
+    return;
+  }
+  local_60[0] = 0;
+  uVar1 = rsa_verify_hash_ex(param_2,0x100,uVar1,0x20,3,uVar2,8,local_60);
+  rsa_free(auStack_50);
+  if ((int)uVar1 != 0) {
+    MyAssertHandler(0xffffffff82059004,0xe8,0,0xffffffff82058ff0,0xffffffff82058fd8,uVar1);
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(local_60[0] == 1);
+  return;
 }
 
 
@@ -68,8 +112,74 @@ undefined8 DBX_AuthLoad_ValidateSignature(undefined8 param_1,undefined8 param_2)
 void DBX_AuthLoad_ProcessHeader(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  byte bVar2;
+  byte *_Src;
+  char cVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  
+  _Src = (byte *)__savegprlr_29();
+  pbVar5 = &DAT_8205914c;
+  pbVar4 = _Src;
+  do {
+    bVar1 = *pbVar5;
+    bVar2 = *pbVar4;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    pbVar5 = pbVar5 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while (pbVar5 != &DAT_82059154);
+  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x10c,0,0xffffffff82059100);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  if (_Src[0x14b] != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x113,0,0xffffffff820590d8);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  pbVar4 = _Src + 300;
+  cVar3 = DBX_AuthLoad_ValidateHash(pbVar4,0x1ea4,_Src + 0xc);
+  if (cVar3 == '\0') {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x119,0,0xffffffff820590ac);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = DBX_AuthLoad_ValidateSignature(_Src + 0xc,_Src + 0x2c);
+  if (cVar3 == '\0') {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x11f,0,0xffffffff82059078);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  pbVar5 = &DAT_82b6cd84;
+  do {
+    bVar1 = *pbVar5;
+    bVar2 = *pbVar4;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    pbVar5 = pbVar5 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while (pbVar5 != &DAT_82b6cda4);
+  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x126,0,0xffffffff82059054);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  memcpy(&DAT_82b6cda4,_Src,0x1fd0);
+  DAT_82b70d84 = 0;
+  DAT_82b70d80 = 1;
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -78,8 +188,43 @@ void DBX_AuthLoad_ProcessHeader(void)
 void DBX_AuthLoad_ProcessMasterBlock(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  undefined8 uVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  byte local_50 [80];
+  
+  uVar4 = __savegprlr_27();
+  if (DAT_82b70d80 == 0) {
+    MyAssertHandler(0xffffffff82059004,0x2c9,0,0xffffffff82000f98,0xffffffff820591b0);
+  }
+  iVar3 = DAT_82b70d80 * 0x20;
+  pbVar6 = &DAT_82b6ced4 + iVar3;
+  DBX_AuthBoth_GenerateHash(uVar4,0x2000,local_50);
+  pbVar5 = local_50;
+  do {
+    bVar1 = *pbVar6;
+    bVar2 = *pbVar5;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    pbVar6 = pbVar6 + 1;
+    pbVar5 = pbVar5 + 1;
+  } while (pbVar6 != (byte *)(iVar3 + -0x7d49310c));
+  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x2ce,0,0xffffffff82059180);
+    }
+    __restgprlr_27(0);
+    return;
+  }
+  memcpy(&DAT_82b6ed80,(void *)uVar4,0x2000);
+  if (DAT_82b70d84 != 0) {
+    MyAssertHandler(0xffffffff82059004,0x2d5,0,0xffffffff82000f98,0xffffffff82059158);
+  }
+  DAT_82b70d84 = 1;
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -88,8 +233,43 @@ void DBX_AuthLoad_ProcessMasterBlock(void)
 void DBX_AuthLoad_ProcessDataBlock(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  byte bVar2;
+  undefined8 uVar3;
+  int iVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  byte local_40 [64];
+  
+  uVar3 = __savegprlr_29();
+  if ((DAT_82b70d84 == 0) || (0xff < DAT_82b70d84 - 1U)) {
+    MyAssertHandler(0xffffffff82059004,0x2e0,0,0xffffffff82059200,0xffffffff82059230);
+  }
+  iVar4 = DAT_82b70d84 * 0x20;
+  pbVar6 = &DAT_82b6ed60 + iVar4;
+  DBX_AuthBoth_GenerateHash(uVar3,0x2000,local_40);
+  pbVar5 = local_40;
+  do {
+    bVar1 = *pbVar6;
+    bVar2 = *pbVar5;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    pbVar6 = pbVar6 + 1;
+    pbVar5 = pbVar5 + 1;
+  } while (pbVar6 != &DAT_82b6ed80 + iVar4);
+  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82059004,0x2e5,0,0xffffffff820591d0);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  DAT_82b70d84 = DAT_82b70d84 + 1;
+  if (DAT_82b70d84 == 0x101) {
+    DAT_82b70d80 = DAT_82b70d80 + 1;
+    DAT_82b70d84 = 0;
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -129,7 +309,6 @@ void DB_AuthInitLZX(void)
   local_18 = 0;
   iVar1 = XMemGetDecompressionContextSize(1,&local_20,1);
   if (iVar1 != 0x94933) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059004,0x310,0,0xffffffff82000f98,0xffffffff820592a8);
   }
   DAT_82c07734 = XMemInitializeDecompressionContext(1,&local_20,1,0xffffffff82b72e00,0x94933);
@@ -142,8 +321,53 @@ void DB_AuthInitLZX(void)
 void DB_AuthLoad_InflateLZX(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint local_30;
+  int local_2c [11];
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3[3] == 0) {
+    if (piVar3[4] != 0) {
+      do {
+        local_30 = piVar3[4];
+        local_2c[0] = piVar3[1];
+        if (0x10000 < local_30) {
+          local_30 = 0x10000;
+        }
+        iVar4 = XMemDecompressStream(DAT_82c07734,0xffffffff82b5cd80,&local_30,*piVar3,local_2c);
+        if ((local_2c[0] == 0) && (local_30 == 0)) break;
+        iVar1 = piVar3[4];
+        piVar3[4] = iVar1 - local_30;
+        piVar3[3] = local_30 + piVar3[3];
+        piVar3[1] = piVar3[1] - local_2c[0];
+        piVar3[5] = piVar3[5] + local_30;
+        *piVar3 = *piVar3 + local_2c[0];
+        piVar3[2] = local_2c[0] + piVar3[2];
+      } while (iVar1 - local_30 != 0);
+      goto LAB_823a2b18;
+    }
+  }
+  else {
+    local_2c[0] = piVar3[1];
+    local_30 = piVar3[4];
+    iVar4 = XMemDecompressStream(DAT_82c07734,piVar3[3],&local_30,*piVar3,local_2c);
+    piVar3[4] = piVar3[4] - local_30;
+    piVar3[3] = local_30 + piVar3[3];
+    piVar3[5] = piVar3[5] + local_30;
+    piVar3[1] = piVar3[1] - local_2c[0];
+    *piVar3 = *piVar3 + local_2c[0];
+    piVar3[2] = local_2c[0] + piVar3[2];
+LAB_823a2b18:
+    uVar2 = 0xfffffffffffffffd;
+    if (iVar4 != 0) goto LAB_823a2b28;
+  }
+  uVar2 = 0;
+LAB_823a2b28:
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -172,13 +396,13 @@ LAB_823a2b88:
       piVar2[1] = piVar2[1] - _Size;
       DAT_82b70db8 = DAT_82b70db8 + _Size;
       if (0x2000 < DAT_82b70db8) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82059004,0x35f,0,0xffffffff82000f98,0xffffffff82059330);
       }
       if (DAT_82b70db8 < 0x2000) {
         if (piVar2[1] != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82059004,0x363,0,0xffffffff82000f98,0xffffffff8205931c);
+          __restgprlr_20(0);
+          return;
         }
         goto LAB_823a2d90;
       }
@@ -207,11 +431,9 @@ LAB_823a2b88:
       DAT_82b70d88 = &DAT_82b70dc4;
     }
     if (DAT_82b70db8 != 0x2000) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82059004,0x379,0,0xffffffff82000f98,0xffffffff82059360);
     }
     if (DAT_82b70d8c == (undefined *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82059004,0x37b,0,0xffffffff82000f98,0xffffffff82059390);
     }
     DAT_82b70d9c = piVar2[5];
@@ -227,7 +449,6 @@ LAB_823a2b88:
       uVar4 = 0xfffffffffffffffd;
     }
     if ((DAT_82b70d98 != 0) && (DAT_82b70d8c != (undefined *)0x0)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82059004,0x391,0,0xffffffff82000f98,0xffffffff820593ac);
     }
     piVar2[5] = DAT_82b70d9c;
@@ -252,11 +473,55 @@ LAB_823a2d90:
 
 // 823A2DF0  DB_AuthLoad_InflateInit  (database/db_auth.cpp:936)
 
-void DB_AuthLoad_InflateInit(void)
+void DB_AuthLoad_InflateInit(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *_Src;
+  int iVar1;
+  
+  _Src = (undefined4 *)__savegprlr_27();
+  memset(&DAT_82b6cd80,0,0x6044);
+  memcpy(&DAT_82b70d88,_Src,0x30);
+  DAT_82b70d90 = 0;
+  DAT_82b70d8c = 0;
+  DAT_82b70d88 = 0;
+  DAT_82b6cd80 = param_2;
+  I_strncpyz(0xffffffff82b6cd84,param_3,0x20);
+  if (DAT_82b6cd80 == 0) {
+    if (DAT_82967310 == 0) {
+      DB_Zip_InitThreadMemory(_Src,0xffffffff82b5cd80,0x10000);
+LAB_823a2f78:
+      db_inflateInit_(_Src,0xffffffff820593e8,0x30);
+      __restgprlr_27();
+      return;
+    }
+    if ((DAT_82967310 == 1) && (iVar1 = XMemResetDecompressionContext(DAT_82c07734), iVar1 == 0)) {
+      _Src[2] = 0;
+      _Src[5] = 0;
+      __restgprlr_27(0);
+      return;
+    }
+  }
+  else {
+    memcpy(&DAT_84897ee0,&PTR_s_LibTomMath_8221d840,0xc4);
+    iVar1 = register_hash(0xffffffff8221d908);
+    if (iVar1 == -1) {
+      MyAssertHandler(0xffffffff82059004,0x3cd,0,0xffffffff82000f98,0xffffffff82059044);
+    }
+    if (DAT_82967310 == 0) {
+      DB_Zip_InitThreadMemory(0xffffffff82b70d88,0xffffffff82b5cd80,0x10000);
+      _Src = &DAT_82b70d88;
+      goto LAB_823a2f78;
+    }
+    if ((DAT_82967310 == 1) && (iVar1 = XMemResetDecompressionContext(DAT_82c07734), iVar1 == 0)) {
+      DAT_82b70d90 = 0;
+      DAT_82b70d9c = 0;
+      __restgprlr_27();
+      return;
+    }
+  }
+  __restgprlr_27(0xfffffffffffffffd);
+  return;
 }
 
 
@@ -294,7 +559,6 @@ undefined8 DB_AuthLoad_Inflate(int param_1,undefined8 param_2)
   undefined8 uVar1;
   
   if (*(int *)(param_1 + 0x10) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059004,0x412,0,0xffffffff82000f98,0xffffffff820593f0);
   }
   if (DAT_82b6cd80 == 0) {

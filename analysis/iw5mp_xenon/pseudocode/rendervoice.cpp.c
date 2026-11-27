@@ -2,11 +2,42 @@
 
 // 828EE138  XAUDIO::CMasteringVoice::CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/rendervoice.cpp:40)
 
-void XAUDIO__CMasteringVoice__CreateObject(void)
+void XAUDIO__CMasteringVoice__CreateObject(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int *piVar3;
+  int *local_30;
+  uint local_2c [11];
+  
+  uVar1 = __savegprlr_28();
+  local_30 = (int *)0x0;
+  uVar2 = XAUDIO__CMasteringVoice__GetObjectAdditionalSize(uVar1,local_2c);
+  if ((-1 < (int)uVar2) &&
+     (uVar2 = XAudioPrepareBatchAllocator(0x61820006,(ulonglong)local_2c[0] + 0x48,&local_30),
+     -1 < (int)uVar2)) {
+    piVar3 = (int *)(**(code **)(*local_30 + 0x14))(local_30,0x48);
+    if (piVar3 == (int *)0x0) {
+      uVar2 = 0xffffffff8007000e;
+    }
+    else {
+      XAUDIO__CVoice__CVoice(piVar3,local_30,2);
+      *piVar3 = (int)&PTR_XAUDIO__CMasteringVoice___scalar_deleting_destructor__82207ef0;
+      uVar2 = XAUDIO__CMasteringVoice__Initialize(piVar3,uVar1);
+      if ((int)uVar2 < 0) {
+        (**(code **)(*piVar3 + 0xc))(piVar3);
+      }
+      else {
+        *param_2 = piVar3;
+      }
+    }
+  }
+  if (local_30 != (int *)0x0) {
+    (**(code **)(*local_30 + 4))();
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -227,8 +258,45 @@ undefined8 XAUDIO__CMasteringVoice__Start(int param_1)
 void XAUDIO__CVoice__OnStartVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined1 uVar3;
+  int *piVar5;
+  ulonglong uVar4;
+  int in_r13;
+  int iVar6;
+  
+  iVar1 = __savegprlr_27();
+  iVar2 = XAUDIO__CEngine__GetVoiceList(DAT_84895944,iVar1);
+  if (iVar2 != 0) {
+    uVar3 = KeRaiseIrqlToDpcLevel();
+    iVar6 = in_r13;
+    if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+      KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+      DAT_848958e0 = in_r13;
+      DAT_848958e4 = uVar3;
+    }
+    DAT_848958dc = DAT_848958dc + 1;
+    iVar2 = *(int *)(iVar2 + 0x28);
+    piVar5 = (int *)(*(int *)(iVar2 + 8) + iVar1);
+    *piVar5 = iVar2;
+    piVar5[1] = *(int *)(iVar2 + 4);
+    *(int **)(iVar2 + 4) = piVar5;
+    *(int **)piVar5[1] = piVar5;
+    uVar3 = DAT_848958e4;
+    uVar4 = (ulonglong)DAT_848958dc;
+    if ((DAT_848958dc != 0) && (iVar6 == DAT_848958e0)) {
+      DAT_848958dc = (uint)(uVar4 - 1);
+      if (uVar4 - 1 == 0) {
+        DAT_848958e0 = 0;
+        DAT_848958e4 = 0;
+        KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+        KfLowerIrql(uVar3);
+      }
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -237,8 +305,43 @@ void XAUDIO__CVoice__OnStartVoice(void)
 void XAUDIO__CVoice__OnStopVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
+  int in_r13;
+  int iVar5;
+  
+  iVar1 = __savegprlr_28();
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar5 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar2;
+  }
+  uVar3 = (ulonglong)DAT_848958dc + 1;
+  puVar4 = (undefined4 *)(iVar1 + 0x18);
+  DAT_848958dc = (uint)uVar3;
+  if (*(undefined4 **)(iVar1 + 0x18) != puVar4) {
+    (*(undefined4 **)(iVar1 + 0x18))[1] = *(undefined4 *)(iVar1 + 0x1c);
+    **(undefined4 **)(iVar1 + 0x1c) = *puVar4;
+    *(undefined4 **)(iVar1 + 0x1c) = puVar4;
+    *puVar4 = puVar4;
+    uVar3 = (ulonglong)DAT_848958dc;
+  }
+  uVar2 = DAT_848958e4;
+  if (((int)uVar3 != 0) && (iVar5 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 

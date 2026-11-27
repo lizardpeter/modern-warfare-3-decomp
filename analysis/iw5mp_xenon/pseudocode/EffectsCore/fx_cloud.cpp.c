@@ -58,15 +58,14 @@ bool FX_DrawElem_Cloud_ShouldBeDrawn(int param_1)
 undefined4 FX_CullElementForDraw_FrustumPlaneCount(int param_1)
 
 {
-  if (((param_1 != 0) && (*(int *)(param_1 + 0x44) != 0)) &&
-     (4 < *(uint *)(*(int *)(param_1 + 0x44) + 0x94))) {
-    if ((**(uint **)(param_1 + 0xc) & 0x400) != 0) {
-      return 5;
-    }
-    return *(undefined4 *)(*(int *)(param_1 + 0x44) + 0x94);
+  if (((param_1 == 0) || (*(int *)(param_1 + 0x44) == 0)) ||
+     (*(uint *)(*(int *)(param_1 + 0x44) + 0x94) < 5)) {
+    MyAssertHandler(0xffffffff82061228,0x36,0,0xffffffff82000f98,0xffffffff82061270);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82061228,0x36,0,0xffffffff82000f98,0xffffffff82061270);
+  if ((**(uint **)(param_1 + 0xc) & 0x400) != 0) {
+    return 5;
+  }
+  return *(undefined4 *)(*(int *)(param_1 + 0x44) + 0x94);
 }
 
 
@@ -100,11 +99,63 @@ bool FX_DrawElem_Cloud_IsCulled(int param_1)
 
 // 82416FA8  FX_DrawElem_Cloud_PopulateGfxParticleCloud  (EffectsCore/fx_cloud.cpp:82)
 
-void FX_DrawElem_Cloud_PopulateGfxParticleCloud(void)
+void FX_DrawElem_Cloud_PopulateGfxParticleCloud
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  int iVar7;
+  undefined4 uVar8;
+  
+  iVar7 = __savegprlr_28();
+  if ((param_2 & 0xff) == 4) {
+    FX_GetVelocityAtTime
+              ((double)*(float *)(iVar7 + 0x4c),(double)*(float *)(iVar7 + 0x50),
+               *(undefined4 *)(iVar7 + 0xc),*(undefined4 *)(iVar7 + 0x48));
+    fVar1 = *(float *)(iVar7 + 0x68);
+    fVar2 = *(float *)(iVar7 + 100);
+    fVar3 = *(float *)(iVar7 + 0x6c);
+    fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+    fVar4 = 1.0;
+    if (-fVar5 < 0.0) {
+      fVar4 = fVar5;
+    }
+    fVar4 = 1.0 / fVar4;
+    *(float *)(iVar7 + 100) = fVar2 * fVar4;
+    *(float *)(iVar7 + 0x68) = fVar1 * fVar4;
+    *(float *)(iVar7 + 0x6c) = fVar3 * fVar4;
+  }
+  Profile_Begin(0xb9);
+  FX_EvaluateVisualState((double)*(float *)(iVar7 + 0x4c),iVar7 + 0x88);
+  Profile_EndInternal(0);
+  FX_SetPlacement(iVar7,param_3);
+  iVar6 = (int)param_3;
+  *(undefined4 *)(iVar6 + 0x2c) = *(undefined4 *)(iVar7 + 0x70);
+  *(undefined4 *)(iVar6 + 0x30) = *(undefined4 *)(iVar7 + 0x7c);
+  if ((param_2 & 0xff) == 4) {
+    uVar8 = 0;
+    *(undefined4 *)(iVar6 + 0x34) = *(undefined4 *)(iVar7 + 0x80);
+    *(float *)(iVar6 + 0x20) = *(float *)(iVar7 + 0x58) - *(float *)(iVar7 + 100);
+    *(float *)(iVar6 + 0x24) = *(float *)(iVar7 + 0x5c) - *(float *)(iVar7 + 0x68);
+    *(float *)(iVar6 + 0x28) = *(float *)(iVar7 + 0x60) - *(float *)(iVar7 + 0x6c);
+  }
+  else {
+    uVar8 = 4;
+    *(undefined4 *)(iVar6 + 0x34) = *(undefined4 *)(iVar7 + 0x7c);
+    *(undefined4 *)(iVar6 + 0x20) = *(undefined4 *)(iVar7 + 0x58);
+    *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(iVar7 + 0x5c);
+    *(undefined4 *)(iVar6 + 0x28) = *(undefined4 *)(iVar7 + 0x60);
+  }
+  *(undefined4 *)(iVar6 + 0x38) = uVar8;
+  *(uint *)(iVar6 + 0x38) = **(int **)(iVar7 + 0xc) >> 0x1d & 3U | *(uint *)(iVar6 + 0x38);
+  *(undefined4 *)(iVar6 + 0x3c) = *(undefined4 *)(iVar7 + 0x50);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -118,13 +169,95 @@ longlong FX_PoolFromHandle_Generic<FxSparkCloud>(longlong param_1,ulonglong para
   
   uVar1 = param_2 & 0xffff;
   if (uVar1 < 0x1020) {
-    if (uVar1 == (uVar1 / 0x81) * 0x81) {
-      return (param_2 & 0xffff) * 0x10 + param_1;
-    }
+    if (uVar1 == (uVar1 / 0x81) * 0x81) goto LAB_82417834;
   }
   uVar2 = va(0xffffffff82060820,param_1,uVar1);
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar2);
+LAB_82417834:
+  return (param_2 & 0xffff) * 0x10 + param_1;
+}
+
+
+// 82416C00  Byte4Lerp  (universal/com_color.h:91)
+
+void Byte4Lerp(undefined8 param_1,byte *param_2,undefined8 param_3,undefined1 *param_4)
+
+{
+  int iVar1;
+  byte *pbVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  
+  pbVar2 = (byte *)__savegprlr_29();
+  dVar4 = floor((double)(float)(extraout_f1 * 256.0 + 0.5));
+  iVar1 = (int)dVar4;
+  iVar3 = 0x100 - iVar1;
+  *param_4 = (char)((uint)*pbVar2 * iVar3 + (uint)*param_2 * iVar1 >> 8);
+  param_4[1] = (char)((uint)pbVar2[1] * iVar3 + (uint)param_2[1] * iVar1 >> 8);
+  param_4[2] = (char)((ulonglong)
+                      ((longlong)(int)(uint)pbVar2[2] * (longlong)iVar3 +
+                      (longlong)(int)(uint)param_2[2] * (longlong)iVar1) >> 8);
+  param_4[3] = (char)((ulonglong)
+                      ((longlong)(int)(uint)pbVar2[3] * (longlong)iVar3 +
+                      (longlong)(int)(uint)param_2[3] * (longlong)iVar1) >> 8);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82417110  FX_DrawElem_Cloud_PopulateGfxParticleSparkCloudFromUpdate  (EffectsCore/fx_cloud.cpp:123)
+
+void FX_DrawElem_Cloud_PopulateGfxParticleSparkCloudFromUpdate
+               (undefined8 param_1,int param_2,undefined4 param_3,undefined2 param_4,
+               undefined8 param_5)
+
+{
+  undefined4 local_110;
+  int *local_10c;
+  undefined4 local_108;
+  int local_104;
+  undefined1 auStack_fc [48];
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 local_c4;
+  float local_c0;
+  float local_bc;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined4 local_a4;
+  undefined1 auStack_a0 [24];
+  undefined1 auStack_88 [32];
+  undefined4 local_68;
+  undefined2 local_64;
+  
+  local_110 = __savegprlr_29();
+  local_10c = *(int **)(param_2 + 4);
+  local_104 = *(int *)(param_2 + 8) * 0x100 + *(int *)(*local_10c + 0x30);
+  local_108 = param_3;
+  memcpy(auStack_fc,(void *)(param_2 + 0x10),0x30);
+  local_c8 = *(undefined4 *)(param_2 + 0x40);
+  local_c0 = *(float *)(param_2 + 0x5c);
+  local_c4 = *(undefined4 *)(param_2 + 0x48);
+  local_bc = *(float *)(param_2 + 0x60) * local_c0;
+  local_b8 = *(undefined4 *)(param_2 + 0x6c);
+  local_cc = 0;
+  local_b4 = *(undefined4 *)(param_2 + 0x70);
+  local_68 = 0;
+  local_b0 = *(undefined4 *)(param_2 + 0x74);
+  local_ac = 0;
+  local_a8 = 0;
+  local_a4 = 0;
+  local_64 = param_4;
+  FX_SetupVisualState(local_104,local_10c);
+  FX_EvaluateSize(auStack_88,auStack_a0);
+  FX_EvaluateScale(auStack_88,auStack_a0);
+  FX_DrawElem_Cloud_PopulateGfxParticleCloud(&local_110,5,param_5);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -152,7 +285,6 @@ void FX_DrawElem_Cloud_AddGfxParticleCloud(uint *param_1)
   } while (!(bool)(in_cr0 >> 1 & 1));
   uVar3 = FX_GetElemVisuals(param_1[3],param_1[0x12]);
   if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820612b0,0xa4,0,0xffffffff82000f98,0xffffffff820612f4);
   }
   uVar3 = R_AddParticleCloudToScene(uVar3);
@@ -160,6 +292,19 @@ void FX_DrawElem_Cloud_AddGfxParticleCloud(uint *param_1)
     FX_DrawElem_Cloud_PopulateGfxParticleCloud(param_1,4,uVar3);
   }
   PIXEndNamedEvent();
+  return;
+}
+
+
+// 82417858  FX_SparkCloudFromHandle_Const  (EffectsCore/fx_system_handle.h:174)
+
+void FX_SparkCloudFromHandle_Const(int param_1,undefined8 param_2)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82060828,0xaf,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  FX_PoolFromHandle_Generic<FxSparkCloud>(*(undefined4 *)(param_1 + 0x34),param_2);
   return;
 }
 
@@ -184,21 +329,182 @@ void FX_DrawElem_Cloud(int param_1)
 
 // 82417348  FX_Cloud_LerpSparkGfxParticleCloud  (EffectsCore/fx_cloud.cpp:195)
 
-void FX_Cloud_LerpSparkGfxParticleCloud(void)
+void FX_Cloud_LerpSparkGfxParticleCloud
+               (undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  
+  iVar3 = __savegprlr_29();
+  iVar1 = (int)param_2;
+  iVar2 = (int)param_4;
+  *(float *)(iVar2 + 0x10) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x10) - (double)*(float *)(iVar3 + 0x10))
+               * extraout_f1 + (double)*(float *)(iVar3 + 0x10));
+  *(float *)(iVar2 + 0x14) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x14) - (double)*(float *)(iVar3 + 0x14))
+               * extraout_f1 + (double)*(float *)(iVar3 + 0x14));
+  *(float *)(iVar2 + 0x18) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x18) - (double)*(float *)(iVar3 + 0x18))
+               * extraout_f1 + (double)*(float *)(iVar3 + 0x18));
+  dVar4 = extraout_f1;
+  QuatNlerp();
+  *(float *)(iVar2 + 0x1c) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x1c) - (double)*(float *)(iVar3 + 0x1c))
+               * dVar4 + (double)*(float *)(iVar3 + 0x1c));
+  *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(iVar2 + 0x10);
+  *(undefined4 *)(iVar2 + 0x24) = *(undefined4 *)(iVar2 + 0x14);
+  *(undefined4 *)(iVar2 + 0x28) = *(undefined4 *)(iVar2 + 0x18);
+  Byte4Lerp(dVar4,iVar3 + 0x2c,param_2 + 0x2c,param_3,param_4 + 0x2c);
+  *(float *)(iVar2 + 0x30) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x30) - (double)*(float *)(iVar3 + 0x30))
+               * dVar4 + (double)*(float *)(iVar3 + 0x30));
+  *(float *)(iVar2 + 0x34) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x34) - (double)*(float *)(iVar3 + 0x34))
+               * dVar4 + (double)*(float *)(iVar3 + 0x34));
+  *(undefined4 *)(iVar2 + 0x38) = *(undefined4 *)(iVar3 + 0x38);
+  *(float *)(iVar2 + 0x3c) =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x3c) - (double)*(float *)(iVar3 + 0x3c))
+               * dVar4 + (double)*(float *)(iVar3 + 0x3c));
+  __restgprlr_29();
+  return;
+}
+
+
+// 82417440  FX_DrawElem_SparkCloud_GetClouds  (EffectsCore/fx_cloud.cpp:209)
+
+void FX_DrawElem_SparkCloud_GetClouds(undefined8 param_1,longlong param_2,longlong param_3)
+
+{
+  uint *puVar1;
+  ulonglong uVar2;
+  int iVar3;
+  void *pvVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  uint uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  undefined1 auStack_b0 [176];
+  
+  uVar2 = ZEXT48(&stack0x00000000);
+  iVar3 = __savegprlr_20();
+  FX_DrawElem_Cloud_PopulateGfxParticleCloud(iVar3,5,uVar2 - 0xb0);
+  memcpy((void *)param_3,auStack_b0,0x40);
+  puVar1 = (uint *)param_2;
+  uVar10 = puVar1[1] - 1;
+  lVar8 = ((ulonglong)uVar10 & 0x1f) * 0x40 + param_2 + 0x10;
+  lVar7 = uVar2 - 0xb0;
+  lVar6 = uVar2 - 0xc0;
+  lVar5 = 2;
+  do {
+    param_3 = param_3 + 0x40;
+    if (puVar1[1] == 0) {
+      MyAssertHandler(0xffffffff820612b0,0xee,0,0xffffffff82000f98,0xffffffff82061378);
+    }
+    dVar13 = (double)(*(float *)(iVar3 + 0x50) - *(float *)lVar6);
+    dVar11 = (double)*(float *)((int)lVar8 + 0x3c);
+    if (dVar13 < dVar11) {
+      lVar9 = lVar8;
+      do {
+        lVar8 = lVar9;
+        if (uVar10 == *puVar1) break;
+        uVar10 = uVar10 - 1;
+        lVar7 = ((ulonglong)uVar10 & 0x1f) * 0x40 + param_2;
+        lVar8 = lVar7 + 0x10;
+        dVar11 = (double)*(float *)((int)lVar7 + 0x4c);
+        lVar7 = lVar9;
+        lVar9 = lVar8;
+      } while (dVar13 < dVar11);
+    }
+    if ((uVar10 == *puVar1) || (dVar12 = (double)*(float *)((int)lVar7 + 0x3c), dVar11 == dVar12)) {
+      memcpy(auStack_b0,(void *)lVar8,0x40);
+    }
+    else {
+      if ((dVar13 < dVar11) || (dVar12 <= dVar13)) {
+        MyAssertHandler(0xffffffff820612b0,0xfe,0,0xffffffff82000f98,0xffffffff82061330);
+      }
+      dVar11 = (double)*(float *)((int)(void *)lVar8 + 0x3c);
+      FX_Cloud_LerpSparkGfxParticleCloud
+                ((double)((float)(dVar13 - dVar11) /
+                         (float)((double)*(float *)((int)lVar7 + 0x3c) - dVar11)),lVar8,lVar7);
+    }
+    pvVar4 = memcpy((void *)param_3,auStack_b0,0x40);
+    lVar5 = lVar5 + -1;
+    lVar6 = lVar6 + 4;
+    if (lVar5 == 0) {
+      __restgprlr_20(pvVar4);
+      return;
+    }
+  } while( true );
+}
+
+
+// 824175F0  FX_DrawElem_SparkCloud_DoDraw  (EffectsCore/fx_cloud.cpp:274)
+
+void FX_DrawElem_SparkCloud_DoDraw(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar4 = (uint *)__savegprlr_29();
+  uVar1 = *puVar4;
+  do {
+    puVar5 = (uint *)((ulonglong)uVar1 + 0x58);
+    if (in_RESERVE != '\0') {
+      uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 3,0,(ulonglong)uVar1 + 0x58);
+      *puVar5 = uVar2;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  uVar3 = FX_GetElemVisuals(puVar4[3],puVar4[0x12]);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820612b0,0x11b,0,0xffffffff82000f98,0xffffffff820612f4);
+  }
+  uVar3 = R_AddParticleSparkCloudToScene(uVar3);
+  if ((uVar3 & 0xffffffff) != 0) {
+    FX_DrawElem_SparkCloud_GetClouds(puVar4,param_2,uVar3);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82416CC0  FX_GetElemChild  (EffectsCore/fx_system.h:293)
 
-void FX_GetElemChild(void)
+void FX_GetElemChild(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  ulonglong uVar2;
+  
+  iVar1 = __savegprlr_28();
+  uVar2 = (param_2 & 0xffffffff) >> 3 & 0x1fff;
+  if (0x7ff < uVar2) {
+    MyAssertHandler(0xffffffff82060900,0x126,0,0xffffffff82060898,uVar2,0x800);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82060900,0x127,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  if (*(int *)(iVar1 + 0x40) == 0) {
+    MyAssertHandler(0xffffffff82060900,0x128,0,0xffffffff82000f98,0xffffffff82061210);
+  }
+  __restgprlr_28(*(undefined2 *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x40)));
+  return;
 }
 
 
@@ -207,7 +513,36 @@ void FX_GetElemChild(void)
 void FX_DrawElem_SparkCloud(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  short sVar4;
+  char cVar5;
+  undefined8 uVar1;
+  int iVar3;
+  bool bVar6;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  if (((*(uint *)puVar2[3] & 0x80000000) == 0) || (bVar6 = true, ((uint *)puVar2[3])[0x38] == 0)) {
+    bVar6 = false;
+  }
+  if (bVar6) {
+    MyAssertHandler(0xffffffff820612b0,0x12e,0,0xffffffff82000f98,0xffffffff820613d4);
+  }
+  sVar4 = FX_GetElemChild(*puVar2,*(undefined2 *)(puVar2 + 0x2b));
+  if (sVar4 == -1) {
+    MyAssertHandler(0xffffffff820612b0,0x12f,0,0xffffffff82000f98,0xffffffff82061390);
+  }
+  FX_DrawElement_Setup_Time(puVar2,*(undefined4 *)(puVar2[2] + 4),0);
+  FX_DrawElement_Setup_Position(puVar2,(ulonglong)(uint)puVar2[2] + 0x14);
+  FX_DrawElement_Setup_VisualState(puVar2);
+  cVar5 = FX_DrawElem_Cloud_ShouldBeDrawn(puVar2);
+  if (cVar5 != '\0') {
+    uVar1 = FX_GetElemChild(*puVar2,*(undefined2 *)(puVar2 + 0x2b));
+    iVar3 = FX_SparkCloudFromHandle_Const(*puVar2,uVar1);
+    if (*(int *)(iVar3 + 4) != 0) {
+      FX_DrawElem_SparkCloud_DoDraw(puVar2,iVar3);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 

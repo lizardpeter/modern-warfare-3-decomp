@@ -30,6 +30,57 @@
 ; 82909558  bdTeamMember::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:26)
   82909558  7D8802A6             mfspr r12,LR
   8290955C  4800D161             bl 0x829166bc
+  82909560  3BE1FF90             subi r31,r1,0x70
+  82909564  9421FF90             stwu r1,-0x70(r1)
+  82909568  7C7E1B78             or r30,r3,r3
+  8290956C  909F008C             stw r4,0x8c(r31)
+  82909570  7C9D2378             or r29,r4,r4
+  82909574  38830008             addi r4,r3,0x8
+  82909578  807D0000             lwz r3,0x0(r29)
+  8290957C  4BFEC825             bl 0x828f5da0
+  82909580  389E0010             addi r4,r30,0x10
+  82909584  807D0000             lwz r3,0x0(r29)
+  82909588  4BFEC819             bl 0x828f5da0
+  8290958C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82909590  41820020             beq 0x829095b0
+  82909594  38A00040             li r5,0x40
+  82909598  807D0000             lwz r3,0x0(r29)
+  8290959C  389E0018             addi r4,r30,0x18
+  829095A0  4BFEC8D1             bl 0x828f5e70
+  829095A4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829095A8  39600001             li r11,0x1
+  829095AC  40820008             bne 0x829095b4
+LAB_829095b0:
+  829095B0  39600000             li r11,0x0
+LAB_829095b4:
+  829095B4  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  829095B8  4182001C             beq 0x829095d4
+  829095BC  389E0058             addi r4,r30,0x58
+  829095C0  807D0000             lwz r3,0x0(r29)
+  829095C4  4BFEC55D             bl 0x828f5b20
+  829095C8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829095CC  39600001             li r11,0x1
+  829095D0  40820008             bne 0x829095d8
+LAB_829095d4:
+  829095D4  39600000             li r11,0x0
+LAB_829095d8:
+  829095D8  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  829095DC  4182001C             beq 0x829095f8
+  829095E0  389E0059             addi r4,r30,0x59
+  829095E4  807D0000             lwz r3,0x0(r29)
+  829095E8  4BFECF49             bl 0x828f6530
+  829095EC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829095F0  39600001             li r11,0x1
+  829095F4  40820008             bne 0x829095fc
+LAB_829095f8:
+  829095F8  39600000             li r11,0x0
+LAB_829095fc:
+  829095FC  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  82909600  7FA3EB78             or r3,r29,r29
+  82909604  4BA5ADFD             bl 0x82364400
+  82909608  7FC3F378             or r3,r30,r30
+  8290960C  383F0070             addi r1,r31,0x70
+  82909610  4800D0FC             b 0x8291670c
 
 ; 829094F0  bdTeamMember::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:38)
   829094F0  38600060             li r3,0x60

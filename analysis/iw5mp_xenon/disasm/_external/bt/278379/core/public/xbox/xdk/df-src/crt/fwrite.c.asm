@@ -3,6 +3,44 @@
 ; 82919AB0  fwrite  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fwrite.c:69)
   82919AB0  7D8802A6             mfspr r12,LR
   82919AB4  4BFFCC01             bl 0x829166b4
+  82919AB8  3BE1FF70             subi r31,r1,0x90
+  82919ABC  9421FF70             stwu r1,-0x90(r1)
+  82919AC0  7C7B1B78             or r27,r3,r3
+  82919AC4  7C9D2378             or r29,r4,r4
+  82919AC8  7CBC2B78             or r28,r5,r5
+  82919ACC  7CDE3378             or r30,r6,r6
+  82919AD0  90DF00BC             stw r6,0xbc(r31)
+  82919AD4  2B040000             cmplwi cr6,r4,0x0
+  82919AD8  419A0028             beq cr6,0x82919b00
+  82919ADC  2B050000             cmplwi cr6,r5,0x0
+  82919AE0  419A0020             beq cr6,0x82919b00
+  82919AE4  3166FFFF             subic r11,r6,0x1
+  82919AE8  7D6B3111             subfe. r11,r11,r6
+  82919AEC  40820020             bne 0x82919b0c
+  82919AF0  48006291             bl 0x8291fd80
+  82919AF4  39600016             li r11,0x16
+  82919AF8  91630000             stw r11,0x0(r3)
+  82919AFC  48006115             bl 0x8291fc10
+LAB_82919b00:
+  82919B00  38600000             li r3,0x0
+LAB_82919b04:
+  82919B04  383F0090             addi r1,r31,0x90
+  82919B08  4BFFCBFC             b 0x82916704
+LAB_82919b0c:
+  82919B0C  7FC3F378             or r3,r30,r30
+  82919B10  48001551             bl 0x8291b060
+  82919B14  7D084378             or r8,r8,r8
+  82919B18  7FC6F378             or r6,r30,r30
+  82919B1C  7F85E378             or r5,r28,r28
+  82919B20  7FA4EB78             or r4,r29,r29
+  82919B24  7F63DB78             or r3,r27,r27
+  82919B28  4BFFFD19             bl 0x82919840
+  82919B2C  907F0050             stw r3,0x50(r31)
+  82919B30  7D084378             or r8,r8,r8
+  82919B34  399F0090             addi r12,r31,0x90
+  82919B38  4800002D             bl 0x82919b64
+  82919B3C  807F0050             lwz r3,0x50(r31)
+  82919B40  4BFFFFC4             b 0x82919b04
 
 ; 82919840  _fwrite_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fwrite.c:99)
   82919840  7D8802A6             mfspr r12,LR

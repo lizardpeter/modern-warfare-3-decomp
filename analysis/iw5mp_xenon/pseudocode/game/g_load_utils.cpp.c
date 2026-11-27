@@ -30,23 +30,86 @@ undefined4 G_GetEntityParsePoint(void)
 }
 
 
-// 82478320  G_GetEntityToken  (game/g_load_utils.cpp:121)
+// 824782C0  G_EntityParseToken  (game/g_load_utils.cpp:100)
 
-void G_GetEntityToken(void)
+void G_EntityParseToken(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = Com_Parse(0xffffffff833735a8);
+  I_strncpyz(uVar1,uVar2,param_2);
+  if (DAT_833735a8 != 0) {
+    DAT_833735ac = DAT_833735a8;
+    __restgprlr_29(1);
+    return;
+  }
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 82478320  G_GetEntityToken  (game/g_load_utils.cpp:121)
+
+void G_GetEntityToken(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = Com_Parse(0xffffffff833735a8);
+  I_strncpyz(uVar1,uVar2,param_2);
+  if (DAT_833735a8 != 0) {
+    DAT_833735ac = DAT_833735a8;
+    __restgprlr_29(1);
+    return;
+  }
+  if (((DAT_835a2980 != 0) && (*(int *)(DAT_835a2980 + 4) != 0)) && (DAT_833735b0 == 0)) {
+    DAT_833735a8 = *(int *)(DAT_835a2980 + 4);
+    DAT_833735b0 = 1;
+    iVar3 = G_EntityParseToken(uVar1,param_2);
+    uVar1 = 1;
+    if (iVar3 != 0) goto LAB_824783c4;
+  }
+  uVar1 = 0;
+LAB_824783c4:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824783D0  G_AddSpawnVarToken  (game/g_load_utils.cpp:146)
 
-void G_AddSpawnVarToken(void)
+void G_AddSpawnVarToken(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  int iVar2;
+  int iVar3;
+  char *_Src;
+  char *pcVar4;
+  longlong lVar5;
+  
+  _Src = (char *)__savegprlr_29();
+  pcVar4 = _Src;
+  do {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  iVar3 = ((int)pcVar4 - (int)_Src) - 1;
+  iVar2 = (int)param_2;
+  if (0x800 < iVar3 + *(int *)(iVar2 + 0x208) + 1) {
+    Com_Error(1,0xffffffff8207169c);
+  }
+  lVar5 = param_2 + (ulonglong)*(uint *)(iVar2 + 0x208) + 0x20c;
+  memcpy((void *)lVar5,_Src,(int)pcVar4 - (int)_Src);
+  *(int *)(iVar2 + 0x208) = iVar3 + *(int *)(iVar2 + 0x208) + 1;
+  __restgprlr_29(lVar5);
+  return;
 }
 
 
@@ -55,8 +118,91 @@ void G_AddSpawnVarToken(void)
 void G_ParseSpawnVars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  char cVar1;
+  undefined1 *puVar2;
+  int iVar3;
+  int iVar4;
+  size_t sVar5;
+  char *pcVar6;
+  char *pcVar7;
+  char local_850 [1024];
+  char local_450 [1104];
+  
+  puVar2 = (undefined1 *)__savegprlr_23();
+  *puVar2 = 0;
+  *(undefined4 *)(puVar2 + 4) = 0;
+  *(undefined4 *)(puVar2 + 0x208) = 0;
+  iVar3 = G_GetEntityToken(local_850,0x400);
+  if (iVar3 != 0) {
+    if (local_850[0] != '{') {
+      Com_Error(1,0xffffffff82071744,local_850);
+    }
+    while( true ) {
+      iVar3 = G_GetEntityToken(local_450,0x400);
+      if (iVar3 == 0) {
+        Com_Error(1,0xffffffff820716c0);
+      }
+      if (local_450[0] == '}') break;
+      pcVar6 = local_450;
+      do {
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+      } while (cVar1 != '\0');
+      iVar3 = 0;
+      if (pcVar6 != local_450) {
+        do {
+          pcVar7 = local_450 + iVar3;
+          iVar4 = tolower((int)local_450[iVar3]);
+          iVar3 = iVar3 + 1;
+          *pcVar7 = (char)iVar4;
+        } while (iVar3 < (int)pcVar6 - (int)local_450);
+      }
+      iVar3 = G_GetEntityToken(local_850,0x400);
+      if (iVar3 == 0) {
+        Com_Error(1,0xffffffff820716c0);
+      }
+      if (local_850[0] == '}') {
+        Com_Error(1,0xffffffff820716f0);
+      }
+      if (*(int *)(puVar2 + 4) == 0x40) {
+        Com_Error(1,0xffffffff82071720);
+      }
+      pcVar6 = local_450;
+      do {
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+      } while (cVar1 != '\0');
+      sVar5 = (int)pcVar6 - (int)local_450;
+      iVar3 = sVar5 - 1;
+      if (0x800 < *(int *)(puVar2 + 0x208) + iVar3 + 1) {
+        Com_Error(1,0xffffffff8207169c);
+      }
+      iVar4 = *(int *)(puVar2 + 0x208);
+      memcpy(puVar2 + iVar4 + 0x20c,local_450,sVar5);
+      *(int *)(puVar2 + 0x208) = *(int *)(puVar2 + 0x208) + iVar3 + 1;
+      *(undefined1 **)(puVar2 + (*(int *)(puVar2 + 4) + 1) * 8) = puVar2 + iVar4 + 0x20c;
+      pcVar6 = local_850;
+      do {
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+      } while (cVar1 != '\0');
+      sVar5 = (int)pcVar6 - (int)local_850;
+      iVar3 = sVar5 - 1;
+      if (0x800 < *(int *)(puVar2 + 0x208) + iVar3 + 1) {
+        Com_Error(1,0xffffffff8207169c);
+      }
+      iVar4 = *(int *)(puVar2 + 0x208);
+      memcpy(puVar2 + iVar4 + 0x20c,local_850,sVar5);
+      *(int *)(puVar2 + 0x208) = *(int *)(puVar2 + 0x208) + iVar3 + 1;
+      *(undefined1 **)(puVar2 + *(int *)(puVar2 + 4) * 8 + 0xc) = puVar2 + iVar4 + 0x20c;
+      *(int *)(puVar2 + 4) = *(int *)(puVar2 + 4) + 1;
+    }
+    *puVar2 = 1;
+    __restgprlr_23(1);
+    return;
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -152,11 +298,37 @@ void G_ParseSpawnVars2(void)
 
 // 82478940  G_SpawnString  (game/g_load_utils.cpp:309)
 
-void G_SpawnString(void)
+void G_SpawnString(undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char *pcVar1;
+  char *pcVar3;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  
+  pcVar3 = (char *)__savegprlr_26();
+  if (*pcVar3 == '\0') {
+    MyAssertHandler(0xffffffff82071778,0x139,0,0xffffffff82000f98,0xffffffff820717b8);
+  }
+  uVar2 = Scr_GetCanonicalStringAtIndex(param_2);
+  iVar5 = 0;
+  pcVar1 = pcVar3;
+  if (0 < *(int *)(pcVar3 + 4)) {
+    do {
+      iVar4 = I_stricmp(uVar2,*(undefined4 *)(pcVar1 + 8));
+      if (iVar4 == 0) {
+        *param_4 = *(undefined4 *)(pcVar3 + iVar5 * 8 + 0xc);
+        __restgprlr_26(1);
+        return;
+      }
+      iVar5 = iVar5 + 1;
+      pcVar1 = pcVar1 + 8;
+    } while (iVar5 < *(int *)(pcVar3 + 4));
+  }
+  *param_4 = param_3;
+  __restgprlr_26(0);
+  return;
 }
 
 

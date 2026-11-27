@@ -2,11 +2,123 @@
 
 // 826BFF28  VehicleHud_DrawCompass  (vehicle/vehicle_hud.cpp:19)
 
-void VehicleHud_DrawCompass(void)
+void VehicleHud_DrawCompass
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined4 *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  char cVar8;
+  int iVar6;
+  int iVar7;
+  double dVar9;
+  undefined8 uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  int local_140;
+  float local_138;
+  float local_134;
+  undefined1 auStack_130 [8];
+  longlong local_128;
+  longlong local_120;
+  undefined4 local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  float local_104;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  float local_f4 [61];
+  
   __savegprlr();
+  uVar3 = __savefpr_23();
+  iVar4 = CG_GetLocalClientGlobals();
+  if (((*(int *)(iVar4 + 0x335c) != 0) &&
+      (dVar9 = (double)Compass_GetIconFadeAlpha(uVar3,*(undefined4 *)(iVar4 + 0x79808),param_2),
+      dVar9 != 0.0)) && ((DAT_82a15ebc == 0 || (*(char *)(DAT_82a15ebc + 0xc) == '\0')))) {
+    CG_CompassCalcDimensions(param_2,iVar4,param_3,param_4,&local_100,&local_fc,&local_f8,local_f4);
+    local_110 = *param_5;
+    local_10c = param_5[1];
+    local_108 = param_5[2];
+    local_104 = (float)param_5[3];
+    dVar15 = 0.5;
+    dVar14 = (double)(local_f8 * 0.5 + local_100);
+    dVar13 = (double)(local_f4[0] * 0.5 + local_fc);
+    CG_CompassUpYawVector(iVar4,auStack_130);
+    local_140 = 0;
+    do {
+      iVar5 = VehicleCl_GetClientFromIndex(uVar3,local_140);
+      cVar8 = VehicleCl_IsClientValid(uVar3,iVar5);
+      if (cVar8 != '\0') {
+        iVar6 = VehicleCl_GetClientDef(iVar5);
+        iVar7 = CG_GetEntity(uVar3,*(undefined4 *)(iVar5 + 8));
+        if ((*(uint *)(iVar7 + 0x1c4) & 1) == 0) {
+          MyAssertHandler(0xffffffff821a0430,0x40,0,0xffffffff82000f98,0xffffffff82012adc);
+        }
+        if (0x11 < *(uint *)(iVar4 + 0x3334)) {
+          MyAssertHandler(0xffffffff821a0430,0x43,0,0xffffffff82012648,*(uint *)(iVar4 + 0x3334),
+                          0x12);
+        }
+        if (0x11 < *(uint *)(iVar5 + 0x38)) {
+          MyAssertHandler(0xffffffff821a0430,0x44,0,0xffffffff8219fdec,*(uint *)(iVar5 + 0x38),0x12)
+          ;
+        }
+        iVar1 = *(int *)(*(int *)(iVar4 + 0x3334) * 0x590 + iVar4 + 0x100bb4);
+        iVar2 = *(int *)(*(int *)(iVar5 + 0x38) * 0x590 + iVar4 + 0x100bb4);
+        CL_ControllerIndexFromClientNum(uVar3);
+        cVar8 = GamerProfile_IsColorBlind();
+        if (((iVar1 == 0) && (*(int *)(iVar4 + 0x3334) != *(int *)(iVar5 + 0x38))) ||
+           (iVar1 != iVar2)) {
+          if ((cVar8 == '\0') || (iVar5 = *(int *)(iVar6 + 0x2e4), iVar5 == 0)) {
+            iVar5 = *(int *)(iVar6 + 0x2dc);
+          }
+        }
+        else if ((cVar8 == '\0') || (iVar5 = *(int *)(iVar6 + 0x2e0), iVar5 == 0)) {
+          iVar5 = *(int *)(iVar6 + 0x2d8);
+        }
+        if ((iVar5 != 0) &&
+           ((cVar8 = CG_WorldPosToCompass
+                               (param_2,iVar4,&local_100,auStack_130,iVar4 + 0x6b9c8,iVar7 + 0x14,0,
+                                &local_138), cVar8 == '\0' ||
+            (*(char *)(DAT_82a15e5c + 0xc) != '\0')))) {
+          local_120 = (longlong)*(int *)(iVar6 + 0x2e8);
+          local_128 = (longlong)*(int *)(iVar6 + 0x2ec);
+          dVar16 = (double)((float)local_128 * *(float *)(DAT_82a15e24 + 0xc));
+          dVar17 = (double)((float)local_120 * *(float *)(DAT_82a15e24 + 0xc));
+          local_134 = -(float)(dVar16 * dVar15 - dVar13) + local_134;
+          local_138 = -(float)(dVar17 * dVar15 - dVar14) + local_138;
+          if (((int)param_2 == 0) && (*(char *)(DAT_82a15e6c + 0xc) != '\0')) {
+            iVar5 = 460000;
+          }
+          else {
+            iVar5 = 0x797e8;
+          }
+          uVar10 = AngleNormalize360((double)(*(float *)(iVar4 + iVar5) - *(float *)(iVar7 + 0x24)))
+          ;
+          if (dVar9 < (double)local_104) {
+            local_104 = (float)dVar9;
+          }
+          dVar12 = (double)local_134;
+          dVar11 = (double)local_138;
+          ScrPlace_GetActivePlacement(uVar3);
+          CG_DrawRotatedPic(dVar11,dVar12,dVar17,dVar16,uVar10);
+        }
+      }
+      local_140 = local_140 + 1;
+    } while (local_140 < 8);
+  }
+  __restfpr_23();
+  __restgprlr();
+  return;
 }
 
 
@@ -46,7 +158,6 @@ LAB_826c03cc:
           if (!bVar2) {
             iVar6 = CG_GetEntity(uVar3,*(undefined4 *)(iVar6 + 8));
             if ((*(uint *)(iVar6 + 0x1c4) & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821a0430,0x95,0,0xffffffff82000f98,0xffffffff82012adc);
             }
             if (((*(uint *)(iVar6 + 0xcc) & 0x20) == 0) &&

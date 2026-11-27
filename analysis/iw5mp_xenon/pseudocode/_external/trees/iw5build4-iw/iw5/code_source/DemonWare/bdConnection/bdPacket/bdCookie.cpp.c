@@ -17,11 +17,27 @@ void bdCookie__bdCookie(undefined4 *param_1)
 
 // 82939628  bdCookie::bdCookie  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookie.cpp:33)
 
-void bdCookie__bdCookie(void)
+void bdCookie__bdCookie(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                       undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  puVar2[1] = 0;
+  puVar2[2] = param_2;
+  puVar2[3] = param_3;
+  puVar2[4] = param_4;
+  puVar2[5] = param_5;
+  *puVar2 = &PTR_bdCookie___scalar_deleting_destructor__82219960;
+  if (DAT_848960c4 == '\0') {
+    uVar1 = bdSingleton<bdTrulyRandomImpl>__getInstance();
+    bdTrulyRandomImpl__getRandomUByte8(uVar1,0xffffffff848960b0,0x14);
+    DAT_848960c4 = '\x01';
+  }
+  __restgprlr_29(puVar2);
+  return;
 }
 
 
@@ -63,11 +79,118 @@ undefined4 bdCookie__getPeerTieTag(int param_1)
 
 // 829391A8  bdCookie::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookie.cpp:68)
 
-void bdCookie__serialize(void)
+void bdCookie__serialize(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 *puVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  undefined4 *puVar6;
+  undefined1 *puVar7;
+  int iVar8;
+  longlong lVar9;
+  undefined1 local_150 [4];
+  undefined4 local_14c;
+  undefined1 auStack_148 [4];
+  undefined1 auStack_144 [4];
+  undefined1 auStack_140 [4];
+  undefined4 local_13c;
+  undefined1 auStack_138 [4];
+  undefined1 auStack_134 [4];
+  undefined1 auStack_130 [304];
+  
+  iVar4 = __savegprlr_27();
+  local_14c = 0;
+  lVar9 = 4;
+  iVar8 = 0;
+  puVar6 = &local_13c;
+  do {
+    iVar3 = iVar8 + -4;
+    iVar8 = iVar8 + 1;
+    puVar6 = (undefined4 *)((int)puVar6 + -1);
+    *(undefined1 *)puVar6 = auStack_148[iVar3];
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  cVar5 = bdBytePacker__appendBuffer(param_2,param_3,0x14,local_150,auStack_140,4);
+  if (cVar5 == '\0') {
+LAB_82939274:
+    bVar2 = false;
+  }
+  else {
+    iVar8 = 0;
+    puVar7 = auStack_148;
+    lVar9 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar8 + iVar4 + 8);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    cVar5 = bdBytePacker__appendBuffer(param_2,param_3,0x14,local_150,&local_14c,4);
+    bVar2 = true;
+    if (cVar5 == '\0') goto LAB_82939274;
+  }
+  if (bVar2) {
+    iVar8 = 0;
+    puVar7 = auStack_144;
+    lVar9 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar8 + iVar4 + 0xc);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    cVar5 = bdBytePacker__appendBuffer(param_2,param_3,0x14,local_150,auStack_148,4);
+    bVar2 = true;
+    if (cVar5 == '\0') goto LAB_829392cc;
+  }
+  else {
+LAB_829392cc:
+    bVar2 = false;
+  }
+  if (bVar2) {
+    iVar8 = 0;
+    puVar7 = auStack_134;
+    lVar9 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar8 + iVar4 + 0x14);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    cVar5 = bdBytePacker__appendBuffer(param_2,param_3,0x14,local_150,auStack_138,4);
+    bVar2 = true;
+    if (cVar5 != '\0') goto LAB_82939328;
+  }
+  bVar2 = false;
+LAB_82939328:
+  if (bVar2) {
+    iVar8 = 0;
+    puVar7 = auStack_140;
+    lVar9 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar8 + iVar4 + 0x10);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    bdBytePacker__appendBuffer(param_2,param_3,0x14,local_150,auStack_144,4);
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    bdHMacSHA1__bdHMacSHA1(auStack_130,0xffffffff848960b0,0x14);
+    bdHMacSHA1__process(auStack_130,param_2 + 0x14,0);
+    local_13c = 0x14;
+    bdHMacSHA1__getData(auStack_130,param_2,&local_13c);
+    bdHMacSHA1___bdHMacSHA1(auStack_130);
+  }
+  __restgprlr_27(0x14);
+  return;
 }
 
 

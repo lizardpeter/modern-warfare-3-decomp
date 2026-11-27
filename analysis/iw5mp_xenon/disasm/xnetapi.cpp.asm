@@ -78,6 +78,25 @@ LAB_828b83d4:
   828B8434  38600001             li r3,0x1
   828B8438  4808922C             b 0x82941664
 
+; 828B8440  XNetInAddrToXnAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B8440  7CA62B78             or r6,r5,r5
+  828B8444  7C852378             or r5,r4,r4
+  828B8448  7C641B78             or r4,r3,r3
+  828B844C  38600001             li r3,0x1
+  828B8450  48089224             b 0x82941674
+
+; 828B8458  XNetInAddrToString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B8458  7CA62B78             or r6,r5,r5
+  828B845C  7C852378             or r5,r4,r4
+  828B8460  7C641B78             or r4,r3,r3
+  828B8464  38600001             li r3,0x1
+  828B8468  4808921C             b 0x82941684
+
+; 828B8470  XNetUnregisterInAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B8470  7C641B78             or r4,r3,r3
+  828B8474  38600001             li r3,0x1
+  828B8478  4808921C             b 0x82941694
+
 ; 828B8480  XNetXnAddrToMachineId  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
   828B8480  7C852378             or r5,r4,r4
   828B8484  7C641B78             or r4,r3,r3
@@ -94,6 +113,18 @@ LAB_828b83d4:
   828B84A4  38600001             li r3,0x1
   828B84A8  4808921C             b 0x829416c4
 
+; 828B84B0  XNetDnsLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B84B0  7CA62B78             or r6,r5,r5
+  828B84B4  7C852378             or r5,r4,r4
+  828B84B8  7C641B78             or r4,r3,r3
+  828B84BC  38600001             li r3,0x1
+  828B84C0  48089214             b 0x829416d4
+
+; 828B84C8  XNetDnsRelease  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B84C8  7C641B78             or r4,r3,r3
+  828B84CC  38600001             li r3,0x1
+  828B84D0  48089214             b 0x829416e4
+
 ; 828B84D8  XNetQosListen  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
   828B84D8  7CE83B78             or r8,r7,r7
   828B84DC  7CC73378             or r7,r6,r6
@@ -102,6 +133,39 @@ LAB_828b83d4:
   828B84E8  7C641B78             or r4,r3,r3
   828B84EC  38600001             li r3,0x1
   828B84F0  48089204             b 0x829416f4
+
+; 828B84F8  XNetQosLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B84F8  7D8802A6             mfspr r12,LR
+  828B84FC  4805E1BD             bl 0x829166b8
+  828B8500  9421FF60             stwu r1,-0xa0(r1)
+  828B8504  7D4B5378             or r11,r10,r10
+  828B8508  83E1010C             lwz r31,0x10c(r1)
+  828B850C  7D2A4B78             or r10,r9,r9
+  828B8510  83C10104             lwz r30,0x104(r1)
+  828B8514  7D094378             or r9,r8,r8
+  828B8518  83A100FC             lwz r29,0xfc(r1)
+  828B851C  7CE83B78             or r8,r7,r7
+  828B8520  838100F4             lwz r28,0xf4(r1)
+  828B8524  7CC73378             or r7,r6,r6
+  828B8528  91610054             stw r11,0x54(r1)
+  828B852C  7CA62B78             or r6,r5,r5
+  828B8530  93E10074             stw r31,0x74(r1)
+  828B8534  7C852378             or r5,r4,r4
+  828B8538  93C1006C             stw r30,0x6c(r1)
+  828B853C  7C641B78             or r4,r3,r3
+  828B8540  93A10064             stw r29,0x64(r1)
+  828B8544  38600001             li r3,0x1
+  828B8548  9381005C             stw r28,0x5c(r1)
+  828B854C  480891B9             bl 0x82941704
+  828B8550  382100A0             addi r1,r1,0xa0
+  828B8554  4805E1B4             b 0x82916708
+
+; 828B8558  XNetQosServiceLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+  828B8558  7CA62B78             or r6,r5,r5
+  828B855C  7C852378             or r5,r4,r4
+  828B8560  7C641B78             or r4,r3,r3
+  828B8564  38600001             li r3,0x1
+  828B8568  480891AC             b 0x82941714
 
 ; 828B8570  XNetQosRelease  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
   828B8570  7C641B78             or r4,r3,r3

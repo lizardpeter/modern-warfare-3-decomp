@@ -11,11 +11,22 @@ undefined8 IWNet_IsLoggedIn(void)
 
 // 826E2808  IWNet_WriteTicket  (iwnet/iwnet_auth.cpp:149)
 
-void IWNet_WriteTicket(void)
+void IWNet_WriteTicket(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a84dc,0x96,0,0xffffffff82000f98,0xffffffff82004d74);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a84dc,0x97,0,0xffffffff82000f98,0xffffffff821a84d4);
+  }
+  MSG_WriteData(uVar1,param_2,0x10);
+  MSG_WriteInt64(uVar1,*(undefined8 *)((int)param_2 + 0x10));
+  __restgprlr_28();
+  return;
 }
 
 

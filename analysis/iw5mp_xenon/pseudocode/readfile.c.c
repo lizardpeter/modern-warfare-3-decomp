@@ -6,7 +6,77 @@ BOOL ReadFile(HANDLE hFile,LPVOID lpBuffer,DWORD nNumberOfBytesToRead,LPDWORD lp
              LPOVERLAPPED lpOverlapped)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(hFile,lpBuffer,nNumberOfBytesToRead,lpNumberOfBytesRead,lpOverlapped);
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  BOOL BVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  uint local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  uVar3 = (ulonglong)(int)lpOverlapped;
+  uVar8 = (ulonglong)(int)lpNumberOfBytesRead;
+  lVar7 = (longlong)(int)nNumberOfBytesToRead;
+  lVar6 = (longlong)(int)lpBuffer;
+  uVar2 = __savegprlr_26(hFile,lVar6,lVar7);
+  puVar9 = (undefined4 *)uVar8;
+  if ((uVar8 & 0xffffffff) != 0) {
+    *puVar9 = 0;
+  }
+  if ((uVar3 & 0xffffffff) == 0) {
+    uVar3 = (**(code **)(PTR_DAT_829a8580 + 0x10))(uVar2,0,0,0,&local_50,lVar6,lVar7,0);
+    if ((int)uVar3 == 0x103) {
+      uVar3 = NtWaitForSingleObjectEx(uVar2,1,0,0);
+      if (-1 < (int)uVar3) {
+        uVar3 = (ulonglong)local_50;
+        goto LAB_828a324c;
+      }
+    }
+    else {
+LAB_828a324c:
+      if (-1 < (int)uVar3) goto LAB_828a31c8;
+    }
+    if ((int)uVar3 != -0x3fffffef) {
+      if ((uVar3 & 0xc0000000) == 0x80000000) {
+        *puVar9 = local_4c;
+      }
+      goto LAB_828a328c;
+    }
+    *puVar9 = 0;
+  }
+  else {
+    puVar1 = (undefined4 *)uVar3;
+    local_44 = puVar1[2];
+    local_48 = puVar1[3];
+    *puVar1 = 0x103;
+    uVar3 = (**(code **)(PTR_DAT_829a8580 + 0x10))
+                      (uVar2,puVar1[4],0,-(ulonglong)((puVar1[4] & 1) == 0) & uVar3,uVar3,lVar6,
+                       lVar7,&local_48);
+    iVar4 = (int)uVar3;
+    if ((iVar4 < 0) || (iVar4 == 0x103)) {
+      if ((iVar4 == -0x3fffffef) && (uVar3 = 0xffffffffc0000011, (uVar8 & 0xffffffff) != 0)) {
+        *puVar9 = 0;
+      }
+LAB_828a328c:
+      RtlSetLastNTError(uVar3);
+      uVar2 = 0;
+      goto LAB_828a3298;
+    }
+    if ((uVar8 & 0xffffffff) != 0) {
+      local_4c = puVar1[1];
+LAB_828a31c8:
+      *puVar9 = local_4c;
+    }
+  }
+  uVar2 = 1;
+LAB_828a3298:
+  BVar5 = __restgprlr_26(uVar2);
+  return BVar5;
 }
 

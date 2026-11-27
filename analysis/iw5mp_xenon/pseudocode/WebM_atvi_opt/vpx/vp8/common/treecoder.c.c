@@ -2,11 +2,34 @@
 
 // 8281BAB0  tree2tok  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:30)
 
-void tree2tok(void)
+void tree2tok(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
+             longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  
+  iVar2 = __savegprlr_27();
+  uVar5 = (param_4 & 0x7fffffff) << 1;
+  lVar4 = param_2 + param_3 + -1;
+  do {
+    lVar4 = lVar4 + 1;
+    cVar1 = *(char *)lVar4;
+    if (cVar1 < '\x01') {
+      puVar3 = (undefined4 *)(iVar2 - (int)(((longlong)cVar1 & 0xffffffffU) << 3));
+      *puVar3 = (int)uVar5;
+      puVar3[1] = (int)(param_5 + 1);
+    }
+    else {
+      tree2tok(iVar2,param_2,(longlong)cVar1,uVar5,param_5 + 1);
+    }
+    uVar5 = uVar5 + 1;
+  } while ((uVar5 & 1) != 0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -20,13 +43,62 @@ void vp8_tokens_from_tree(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 8281BB50  branch_counts  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:67)
+// 8281BB38  vp8_tokens_from_tree_offset  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:56)
 
-void branch_counts(void)
+void vp8_tokens_from_tree_offset(longlong param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  tree2tok(param_1 + (param_3 & 0x1fffffff) * -8,param_2,0,0,0);
+  return;
+}
+
+
+// 8281BB50  branch_counts  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:67)
+
+void branch_counts(undefined8 param_1,longlong param_2,int param_3,longlong param_4,longlong param_5
+                  )
+
+{
+  char cVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  uint uVar8;
+  int iVar9;
+  int iVar10;
+  
+  iVar6 = __savegprlr_27();
+  iVar9 = 0;
+  lVar7 = param_4 + -8;
+  do {
+    iVar9 = iVar9 + 1;
+    *(undefined4 *)((int)lVar7 + 0xc) = 0;
+    lVar7 = lVar7 + 8;
+    *(undefined4 *)lVar7 = 0;
+  } while (iVar9 < iVar6 + -1);
+  iVar9 = 0;
+  do {
+    uVar8 = ((int *)param_2)[1];
+    iVar10 = 0;
+    iVar2 = *(int *)param_2;
+    iVar3 = *(int *)param_5;
+    do {
+      uVar8 = uVar8 - 1;
+      uVar4 = iVar2 >> (uVar8 & 0x3f) & 1;
+      iVar5 = ((iVar10 >> 1) * 2 + uVar4) * 4;
+      *(int *)(iVar5 + (int)param_4) = *(int *)(iVar5 + (int)param_4) + iVar3;
+      cVar1 = *(char *)(iVar10 + uVar4 + param_3);
+      iVar10 = (int)cVar1;
+    } while ('\0' < cVar1);
+    iVar9 = iVar9 + 1;
+    param_2 = param_2 + 8;
+    param_5 = param_5 + 4;
+  } while (iVar9 < iVar6);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -35,7 +107,50 @@ void branch_counts(void)
 void vp8_tree_probs_from_distribution(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar2;
+  int in_r6;
+  longlong in_r7;
+  int in_r9;
+  ulonglong uVar3;
+  int in_r10;
+  ulonglong uVar4;
+  int iVar5;
+  
+  iVar2 = __savegprlr_27();
+  iVar5 = 0;
+  branch_counts();
+  do {
+    uVar1 = *(uint *)in_r7;
+    uVar4 = (ulonglong)((uint *)in_r7)[1] + (ulonglong)uVar1;
+    if (uVar4 == 0) {
+      *(undefined1 *)(iVar5 + in_r6) = 0x80;
+    }
+    else {
+      uVar3 = (uVar4 & 0xffffffff) >> 1;
+      if (in_r10 == 0) {
+        uVar3 = 0;
+      }
+      trapWord(6,uVar4,0);
+      uVar4 = ((longlong)(int)uVar1 * (longlong)in_r9 + uVar3 & 0xffffffff) / (uVar4 & 0xffffffff);
+      if (uVar4 < 0x100) {
+        if (uVar4 == 0) {
+          *(undefined1 *)(iVar5 + in_r6) = 1;
+          goto LAB_8281bc84;
+        }
+      }
+      else {
+        uVar4 = 0xff;
+      }
+      *(char *)(iVar5 + in_r6) = (char)uVar4;
+    }
+LAB_8281bc84:
+    iVar5 = iVar5 + 1;
+    in_r7 = in_r7 + 8;
+    if (iVar2 + -1 <= iVar5) {
+      __restgprlr_27();
+      return;
+    }
+  } while( true );
 }
 

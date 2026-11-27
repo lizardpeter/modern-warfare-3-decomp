@@ -96,31 +96,79 @@ undefined4 * MemoryHashInfo__RequestHash(void)
 
 // 82715248  MemoryHashInfo::OpenAsCRC32  (online/memory_hash.cpp:240)
 
-void MemoryHashInfo__OpenAsCRC32(void)
+void MemoryHashInfo__OpenAsCRC32(undefined8 param_1,int param_2,int param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821b8a88,0xf2,0,0xffffffff82000f98,0xffffffff821b8acc);
+  }
+  uVar1 = TBLr;
+  piVar2[1] = param_2;
+  piVar2[7] = 0;
+  piVar2[6] = (int)uVar1;
+  *piVar2 = 1;
+  piVar2[3] = 0;
+  piVar2[2] = param_3;
+  piVar2[4] = 0x2000;
+  *(undefined8 *)(piVar2 + 8) = param_4;
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 827152D0  MemoryHashInfo::OpenAsCRC32Split  (online/memory_hash.cpp:265)
 
-void MemoryHashInfo__OpenAsCRC32Split(void)
+void MemoryHashInfo__OpenAsCRC32Split(undefined8 param_1,int param_2,int param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821b8a88,0x10b,0,0xffffffff82000f98,0xffffffff821b8acc);
+  }
+  uVar1 = TBLr;
+  piVar2[1] = param_2;
+  piVar2[7] = 0;
+  piVar2[6] = (int)uVar1;
+  *piVar2 = 5;
+  piVar2[3] = 0;
+  piVar2[2] = param_3;
+  piVar2[4] = 0x2000;
+  *(undefined8 *)(piVar2 + 8) = param_4;
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 82715358  MemoryHashInfo::OpenAsMD4  (online/memory_hash.cpp:290)
 
-void MemoryHashInfo__OpenAsMD4(void)
+void MemoryHashInfo__OpenAsMD4(undefined8 param_1,int param_2,int param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821b8a88,0x124,0,0xffffffff82000f98,0xffffffff821b8acc);
+  }
+  uVar1 = TBLr;
+  piVar2[1] = param_2;
+  piVar2[7] = 0;
+  piVar2[6] = (int)uVar1;
+  *piVar2 = 2;
+  piVar2[3] = 0;
+  piVar2[2] = param_3;
+  piVar2[4] = 0x800;
+  *(undefined8 *)(piVar2 + 8) = param_4;
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -140,15 +188,13 @@ void MemoryHashInfo__OpenAsSHATomCrypt
   if (DAT_82999b58 < 0) {
     DAT_82999b58 = register_hash(0xffffffff8221d7c0);
     if (DAT_82999b58 < 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b8a88,0x142,0,0xffffffff82000f98,0xffffffff821b8b00);
     }
   }
-  iVar3 = DAT_82999b58;
   if (*piVar2 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b8a88,0x146,0,0xffffffff82000f98,0xffffffff821b8acc);
   }
+  iVar3 = DAT_82999b58;
   uVar1 = TBLr;
   piVar2[1] = param_2;
   piVar2[2] = param_3;
@@ -165,18 +211,41 @@ void MemoryHashInfo__OpenAsSHATomCrypt
     __restgprlr_25(1);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff821b8a88,0x15b,0,0xffffffff82000f98,0xffffffff821b8aec);
+  *piVar2 = 0;
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 82715548  MemoryHashInfo::OpenAs8WayProbe  (online/memory_hash.cpp:362)
 
-void MemoryHashInfo__OpenAs8WayProbe(void)
+void MemoryHashInfo__OpenAs8WayProbe
+               (undefined8 param_1,int param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821b8a88,0x16c,0,0xffffffff82000f98,0xffffffff821b8acc);
+  }
+  uVar1 = TBLr;
+  piVar2[1] = param_2;
+  piVar2[7] = 0;
+  piVar2[6] = (int)uVar1;
+  *piVar2 = 4;
+  piVar2[3] = 0;
+  piVar2[2] = (int)((param_3 & 0xffffffff) >> 3);
+  piVar2[4] = 0x2000;
+  *(undefined8 *)(piVar2 + 8) = param_4;
+  *(undefined8 *)(piVar2 + 10) = param_4;
+  piVar2[0xc] = 0;
+  piVar2[0xd] = 0;
+  piVar2[5] = 0;
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -187,10 +256,10 @@ void MemoryHashInfo__Continue(void)
 {
   int iVar1;
   uint uVar2;
-  int *piVar5;
   undefined8 uVar3;
-  int iVar6;
+  int *piVar5;
   undefined8 uVar4;
+  int iVar6;
   byte *pbVar7;
   ulonglong uVar8;
   int iVar9;
@@ -198,11 +267,11 @@ void MemoryHashInfo__Continue(void)
   
   piVar5 = (int *)__savegprlr_25();
   if (*piVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b8a88,0x18e,0,0xffffffff82000f98,0xffffffff821b8b70);
   }
-  uVar4 = TBLr;
+  uVar3 = TBLr;
   if ((uint)piVar5[2] <= (uint)piVar5[3]) {
+LAB_827157d4:
     __restgprlr_25(1);
     return;
   }
@@ -211,7 +280,6 @@ void MemoryHashInfo__Continue(void)
     iVar10 = piVar5[4];
   }
   if (iVar10 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b8a88,0x198,0,0xffffffff82000f98,0xffffffff821b8b68);
   }
   iVar6 = *piVar5;
@@ -225,13 +293,12 @@ void MemoryHashInfo__Continue(void)
     }
     else if (iVar6 == 3) {
       if (DAT_82999b58 < 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b8a88,0x1b2,0,0xffffffff82000f98,0xffffffff821b8b00);
       }
       iVar6 = (**(code **)(&DAT_848961a0 + DAT_82999b58 * 0x68))(piVar5 + 10,iVar9,iVar10);
       if (iVar6 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b8a88,0x1b7,0,0xffffffff82000f98,0xffffffff821b8b30);
+        goto LAB_827157d4;
       }
       piVar5[3] = iVar10 + piVar5[3];
     }
@@ -251,7 +318,6 @@ void MemoryHashInfo__Continue(void)
       piVar5[3] = iVar1 + iVar10;
       *(ulonglong *)(piVar5 + 8) = uVar8;
       if ((uint)piVar5[2] < (uint)(iVar1 + iVar10)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b8a88,0x1c3,0,0xffffffff82000f98,0xffffffff821b8b48);
       }
       if (piVar5[3] == piVar5[2]) {
@@ -285,20 +351,18 @@ void MemoryHashInfo__Continue(void)
       piVar5[3] = iVar1 + iVar10;
     }
     else {
-      uVar3 = MemoryHash_GenerateCRC32ChecksumSplitDual(iVar9,iVar10,*(undefined8 *)(piVar5 + 8));
-      *(undefined8 *)(piVar5 + 8) = uVar3;
+      uVar4 = MemoryHash_GenerateCRC32ChecksumSplitDual(iVar9,iVar10,*(undefined8 *)(piVar5 + 8));
+      *(undefined8 *)(piVar5 + 8) = uVar4;
       piVar5[3] = iVar1 + iVar10;
     }
   }
   else if (DAT_84013128 == 0) {
     uVar4 = va(0xffffffff821b8b1c);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b8a88,0x1d7,0,uVar4);
   }
-  uVar3 = TBLr;
-  piVar5[7] = (piVar5[7] - (int)uVar4) + (int)uVar3;
+  uVar4 = TBLr;
+  piVar5[7] = (piVar5[7] - (int)uVar3) + (int)uVar4;
   if ((uint)piVar5[2] < (uint)piVar5[3]) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b8a88,0x1de,0,0xffffffff82000f98,0xffffffff821b8b48);
   }
   __restgprlr_25(-((ulonglong)((uint)piVar5[3] < (uint)piVar5[2]) - 1));
@@ -319,10 +383,51 @@ undefined8 MemoryHashInfo__Cancel(undefined4 *param_1)
 
 // 82715998  MemoryHashInfo::Complete  (online/memory_hash.cpp:503)
 
-void MemoryHashInfo__Complete(void)
+void MemoryHashInfo__Complete(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int *piVar3;
+  int iVar4;
+  undefined1 auStack_50 [80];
+  
+  piVar3 = (int *)__savegprlr_26();
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff821b8a88,0x1fd,0,0xffffffff82000f98,0xffffffff821b8b70);
+  }
+  uVar1 = TBLr;
+  iVar4 = *piVar3;
+  if (4 < iVar4 - 1U) goto LAB_82715afc;
+  if (iVar4 != 2) {
+    if (iVar4 == 3) {
+      if (*(int *)(&DAT_84896150 + DAT_82999b58 * 0x68) != 0x14) {
+        MyAssertHandler(0xffffffff821b8a88,0x20f,0,0xffffffff82000f98,0xffffffff821b8b90);
+      }
+      Com_Memset(auStack_50,0,0x14);
+      if (DAT_82999b58 < 0) {
+        MyAssertHandler(0xffffffff821b8a88,0x213,0,0xffffffff82000f98,0xffffffff821b8b00);
+      }
+      iVar4 = (**(code **)(&DAT_848961a4 + DAT_82999b58 * 0x68))(piVar3 + 10,auStack_50);
+      if (iVar4 == 0) {
+        Com_Memcpy(param_2,auStack_50,8);
+      }
+      else {
+        MyAssertHandler(0xffffffff821b8a88,0x21b,0,0xffffffff82000f98,0xffffffff821b8b30);
+      }
+      goto LAB_82715afc;
+    }
+    if (iVar4 == 4) {
+      *(undefined8 *)param_2 = *(undefined8 *)(piVar3 + 0xc);
+      goto LAB_82715afc;
+    }
+  }
+  *(undefined8 *)param_2 = *(undefined8 *)(piVar3 + 8);
+LAB_82715afc:
+  uVar2 = TBLr;
+  *piVar3 = 0;
+  piVar3[7] = (piVar3[7] - (int)uVar1) + (int)uVar2;
+  __restgprlr_26();
+  return;
 }
 

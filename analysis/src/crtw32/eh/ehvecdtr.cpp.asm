@@ -3,7 +3,65 @@
 ; 8291D968  __ArrayUnwind  (<external>/bt/278379/vctools/crt/src/crtw32/eh/ehvecdtr.cpp:131)
   8291D968  7D8802A6             mfspr r12,LR
   8291D96C  4BFF8D49             bl 0x829166b4
+  8291D970  3BE1FF70             subi r31,r1,0x90
+  8291D974  9421FF70             stwu r1,-0x90(r1)
+  8291D978  7C7E1B78             or r30,r3,r3
+  8291D97C  7C9D2378             or r29,r4,r4
+  8291D980  7CBB2B78             or r27,r5,r5
+  8291D984  7CDC3378             or r28,r6,r6
+  8291D988  7D084378             or r8,r8,r8
+  8291D98C  7D084378             or r8,r8,r8
+LAB_8291d990:
+  8291D990  377BFFFF             subic. r27,r27,0x1
+  8291D994  937F00B4             stw r27,0xb4(r31)
+  8291D998  41800020             blt 0x8291d9b8
+  8291D99C  7FDDF050             subf r30,r29,r30
+  8291D9A0  7F8903A6             mtspr CTR,r28
+  8291D9A4  93DF00A4             stw r30,0xa4(r31)
+  8291D9A8  7FC3F378             or r3,r30,r30
+  8291D9AC  4E800421             bctrl
+  8291D9B0  7D084378             or r8,r8,r8
+  8291D9B4  4BFFFFDC             b 0x8291d990
+LAB_8291d9b8:
+  8291D9B8  7D084378             or r8,r8,r8
+  8291D9BC  7D084378             or r8,r8,r8
+  8291D9C0  7D084378             or r8,r8,r8
+  8291D9C4  383F0090             addi r1,r31,0x90
+  8291D9C8  4BFF8D3C             b 0x82916704
 
 ; 8291DA40  `eh_vector_destructor_iterator'  (line unknown)
   8291DA40  7D8802A6             mfspr r12,LR
   8291DA44  4BFF8C71             bl 0x829166b4
+  8291DA48  3BE1FF70             subi r31,r1,0x90
+  8291DA4C  9421FF70             stwu r1,-0x90(r1)
+  8291DA50  7C9E2378             or r30,r4,r4
+  8291DA54  909F00AC             stw r4,0xac(r31)
+  8291DA58  7CBC2B78             or r28,r5,r5
+  8291DA5C  90BF00B4             stw r5,0xb4(r31)
+  8291DA60  7D6429D6             mullw r11,r4,r5
+  8291DA64  39400000             li r10,0x0
+  8291DA68  7CDB3378             or r27,r6,r6
+  8291DA6C  7FAB1A14             add r29,r11,r3
+  8291DA70  915F0050             stw r10,0x50(r31)
+  8291DA74  90DF00BC             stw r6,0xbc(r31)
+  8291DA78  93BF00A4             stw r29,0xa4(r31)
+  8291DA7C  7D084378             or r8,r8,r8
+LAB_8291da80:
+  8291DA80  379CFFFF             subic. r28,r28,0x1
+  8291DA84  939F00B4             stw r28,0xb4(r31)
+  8291DA88  41800020             blt 0x8291daa8
+  8291DA8C  7FBEE850             subf r29,r30,r29
+  8291DA90  7F6903A6             mtspr CTR,r27
+  8291DA94  93BF00A4             stw r29,0xa4(r31)
+  8291DA98  7FA3EB78             or r3,r29,r29
+  8291DA9C  4E800421             bctrl
+  8291DAA0  7D084378             or r8,r8,r8
+  8291DAA4  4BFFFFDC             b 0x8291da80
+LAB_8291daa8:
+  8291DAA8  39600001             li r11,0x1
+  8291DAAC  917F0050             stw r11,0x50(r31)
+  8291DAB0  7D084378             or r8,r8,r8
+  8291DAB4  399F0090             addi r12,r31,0x90
+  8291DAB8  48000045             bl 0x8291dafc
+  8291DABC  383F0090             addi r1,r31,0x90
+  8291DAC0  4BFF8C44             b 0x82916704

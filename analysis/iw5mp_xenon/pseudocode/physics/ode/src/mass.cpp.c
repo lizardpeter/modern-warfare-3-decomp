@@ -5,8 +5,59 @@
 void checkMass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_70;
+  float local_6c;
+  float local_68;
+  undefined1 auStack_60 [4];
+  float local_5c;
+  float local_58;
+  float local_50;
+  float local_48;
+  float local_40;
+  float local_3c;
+  
+  pfVar2 = (float *)__savegprlr_28();
+  if (*pfVar2 <= 0.0) {
+    MyAssertHandler(0xffffffff821999a0,0x2a,0,0xffffffff82000f98,0xffffffff82199a60);
+  }
+  iVar3 = dIsPositiveDefinite3(pfVar2 + 5);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821999a0,0x2b,0,0xffffffff82000f98,0xffffffff82199a40);
+  }
+  dSetZero(auStack_60,0xc);
+  local_50 = pfVar2[3];
+  local_58 = pfVar2[2];
+  local_5c = -local_50;
+  local_3c = pfVar2[1];
+  local_40 = -local_58;
+  local_48 = -local_3c;
+  dMULTIPLY0_333<float,float,float>(&local_90,auStack_60,auStack_60);
+  fVar1 = *pfVar2;
+  local_90 = fVar1 * local_90 + pfVar2[5];
+  local_8c = fVar1 * local_8c + pfVar2[6];
+  local_88 = fVar1 * local_88 + pfVar2[7];
+  local_80 = fVar1 * local_80 + pfVar2[9];
+  local_7c = fVar1 * local_7c + pfVar2[10];
+  local_78 = fVar1 * local_78 + pfVar2[0xb];
+  local_70 = fVar1 * local_70 + pfVar2[0xd];
+  local_6c = fVar1 * local_6c + pfVar2[0xe];
+  local_68 = fVar1 * local_68 + pfVar2[0xf];
+  iVar3 = dIsPositiveDefinite3(&local_90);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821999a0,0x40,0,0xffffffff820011f4,0xffffffff821999f0,
+                    0xffffffff82199a0c);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -16,7 +67,6 @@ void dMassSetZero(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0x47,0,0xffffffff82000f98,0xffffffff821999e4);
   }
   *param_1 = 0;
@@ -38,11 +88,10 @@ void dMassSetParameters(undefined8 param_1,double param_2,double param_3,double 
   double dVar2;
   
   pfVar1 = (float *)__savefpr_22();
+  dVar2 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0x53,0,0xffffffff82000f98,0xffffffff821999e4);
   }
-  dVar2 = extraout_f1;
   dMassSetZero(pfVar1);
   *pfVar1 = (float)dVar2;
   pfVar1[1] = (float)param_2;
@@ -112,7 +161,6 @@ void dMassSetSphereTotal(double param_1,double param_2,float *param_3)
   float fVar1;
   
   if (param_3 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0x85,0,0xffffffff82000f98,0xffffffff821999e4);
   }
   dMassSetZero(param_3);
@@ -128,11 +176,43 @@ void dMassSetSphereTotal(double param_1,double param_2,float *param_3)
 
 // 82695F10  dMassSetCappedCylinder  (physics/ode/src/mass.cpp:149)
 
-void dMassSetCappedCylinder(void)
+void dMassSetCappedCylinder
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  double extraout_f1;
+  double dVar5;
+  
+  pfVar4 = (float *)__savegprlr_29();
+  dVar5 = extraout_f1;
+  if (pfVar4 == (float *)0x0) {
+    MyAssertHandler(0xffffffff821999a0,0x97,0,0xffffffff82000f98,0xffffffff821999e4);
+  }
+  if (((int)param_6 < 1) || (3 < (int)param_6)) {
+    MyAssertHandler(0xffffffff821999a0,0x98,0,0xffffffff820011f4,0xffffffff82199a74,
+                    0xffffffff82199a98);
+  }
+  dMassSetZero(pfVar4);
+  dVar5 = (double)(float)((double)(float)(dVar5 * param_2) * param_2);
+  fVar1 = (float)(dVar5 * param_3) * 3.1415927;
+  fVar2 = (float)(dVar5 * param_2) * 4.1887903;
+  *pfVar4 = fVar2 + fVar1;
+  fVar3 = (float)((double)(float)(param_2 * 0.4000000059604645 + (double)(float)(param_3 * 0.375)) *
+                  param_2 + (double)((float)(param_3 * param_3) * 0.25)) * fVar2 +
+          ((float)(param_2 * param_2) * 0.25 + (float)(param_3 * param_3) * 0.083333336) * fVar1;
+  pfVar4[5] = fVar3;
+  pfVar4[10] = fVar3;
+  pfVar4[0xf] = fVar3;
+  *(float *)((int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 2) + (int)pfVar4) =
+       (float)((double)(float)((double)(fVar2 * 0.4 + fVar1 * 0.5) * param_2) * param_2);
+  checkMass(pfVar4);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -159,6 +239,24 @@ void dMassSetCylinder(double param_1,double param_2,double param_3)
 }
 
 
+// 82696B10  dMULTIPLY2_333<float,float,float>  (physics/ode/odemath.h:185)
+
+void dMULTIPLY2_333<float,float,float>(float *param_1,float *param_2,float *param_3)
+
+{
+  *param_1 = param_3[2] * param_2[2] + param_2[1] * param_3[1] + *param_2 * *param_3;
+  param_1[1] = param_3[4] * *param_2 + param_3[6] * param_2[2] + param_2[1] * param_3[5];
+  param_1[2] = *param_2 * param_3[8] + param_3[10] * param_2[2] + param_2[1] * param_3[9];
+  param_1[4] = param_2[5] * param_3[1] + param_2[4] * *param_3 + param_2[6] * param_3[2];
+  param_1[5] = param_2[5] * param_3[5] + param_2[6] * param_3[6] + param_3[4] * param_2[4];
+  param_1[6] = param_2[5] * param_3[9] + param_2[6] * param_3[10] + param_2[4] * param_3[8];
+  param_1[8] = param_2[9] * param_3[1] + param_2[10] * param_3[2] + param_2[8] * *param_3;
+  param_1[9] = param_3[6] * param_2[10] + param_3[4] * param_2[8] + param_2[9] * param_3[5];
+  param_1[10] = param_3[10] * param_2[10] + param_2[9] * param_3[9] + param_2[8] * param_3[8];
+  return;
+}
+
+
 // 82696078  dMassSetCylinderTotal  (physics/ode/src/mass.cpp:188)
 
 void dMassSetCylinderTotal
@@ -169,7 +267,6 @@ void dMassSetCylinderTotal
   float fVar1;
   
   if (param_4 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0xbe,0,0xffffffff82000f98,0xffffffff821999e4);
   }
   dMassSetZero(param_4);
@@ -206,11 +303,10 @@ void dMassSetBoxTotal(undefined8 param_1,double param_2,double param_3,double pa
   double dVar2;
   
   pfVar1 = (float *)__savefpr_28();
+  dVar2 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0xd8,0,0xffffffff82000f98,0xffffffff821999e4);
   }
-  dVar2 = extraout_f1;
   dMassSetZero(pfVar1);
   *pfVar1 = (float)dVar2;
   pfVar1[5] = (float)((double)((float)(param_4 * param_4) + (float)(param_3 * param_3)) * dVar2) *
@@ -230,8 +326,85 @@ void dMassSetBoxTotal(undefined8 param_1,double param_2,double param_3,double pa
 void dMassAdjust(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80;
+  float local_7c;
+  float local_78;
+  undefined1 auStack_70 [4];
+  float local_6c;
+  float local_68;
+  float local_60;
+  float local_58;
+  float local_50;
+  float local_4c;
+  
+  pfVar2 = (float *)__savegprlr_28();
+  dVar4 = extraout_f1;
+  if (pfVar2 == (float *)0x0) {
+    MyAssertHandler(0xffffffff821999a0,0xe7,0,0xffffffff82000f98,0xffffffff821999e4);
+  }
+  dVar5 = 0.0;
+  if (*pfVar2 == 0.0) {
+    MyAssertHandler(0xffffffff821999a0,0xe8,0,0xffffffff82000f98,0xffffffff82199ac0);
+  }
+  if (dVar4 == dVar5) {
+    MyAssertHandler(0xffffffff821999a0,0xe9,0,0xffffffff82000f98,0xffffffff82199ab0);
+  }
+  fVar1 = *pfVar2;
+  *pfVar2 = (float)dVar4;
+  fVar1 = (float)(dVar4 / (double)fVar1);
+  pfVar2[5] = pfVar2[5] * fVar1;
+  pfVar2[7] = pfVar2[7] * fVar1;
+  pfVar2[6] = fVar1 * pfVar2[6];
+  pfVar2[9] = fVar1 * pfVar2[9];
+  pfVar2[10] = pfVar2[10] * fVar1;
+  pfVar2[0xb] = fVar1 * pfVar2[0xb];
+  pfVar2[0xd] = pfVar2[0xd] * fVar1;
+  pfVar2[0xe] = fVar1 * pfVar2[0xe];
+  pfVar2[0xf] = pfVar2[0xf] * fVar1;
+  if ((double)*pfVar2 <= dVar5) {
+    MyAssertHandler(0xffffffff821999a0,0x2a,0,0xffffffff82000f98,0xffffffff82199a60);
+  }
+  iVar3 = dIsPositiveDefinite3(pfVar2 + 5);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821999a0,0x2b,0,0xffffffff82000f98,0xffffffff82199a40);
+  }
+  dSetZero(auStack_70,0xc);
+  local_60 = pfVar2[3];
+  local_68 = pfVar2[2];
+  local_6c = -local_60;
+  local_4c = pfVar2[1];
+  local_50 = -local_68;
+  local_58 = -local_4c;
+  dMULTIPLY0_333<float,float,float>(&local_a0,auStack_70,auStack_70);
+  fVar1 = *pfVar2;
+  local_a0 = fVar1 * local_a0 + pfVar2[5];
+  local_9c = fVar1 * local_9c + pfVar2[6];
+  local_98 = fVar1 * local_98 + pfVar2[7];
+  local_90 = fVar1 * local_90 + pfVar2[9];
+  local_8c = fVar1 * local_8c + pfVar2[10];
+  local_88 = fVar1 * local_88 + pfVar2[0xb];
+  local_80 = fVar1 * local_80 + pfVar2[0xd];
+  local_7c = fVar1 * local_7c + pfVar2[0xe];
+  local_78 = fVar1 * local_78 + pfVar2[0xf];
+  iVar3 = dIsPositiveDefinite3(&local_a0);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821999a0,0x40,0,0xffffffff820011f4,0xffffffff821999f0,
+                    0xffffffff82199a0c);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -280,11 +453,10 @@ void dMassTranslate(undefined8 param_1,double param_2,double param_3)
   float local_4c;
   
   pfVar1 = (float *)__savefpr_26();
+  dVar5 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821999a0,0x104,0,0xffffffff82000f98,0xffffffff821999e4);
   }
-  dVar5 = extraout_f1;
   dSetZero(auStack_70,0xc);
   local_60 = pfVar1[3];
   local_68 = pfVar1[2];
@@ -327,11 +499,47 @@ void dMassTranslate(undefined8 param_1,double param_2,double param_3)
 
 // 82696720  dMassRotate  (physics/ode/src/mass.cpp:292)
 
-void dMassRotate(void)
+void dMassRotate(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float *pfVar10;
+  int iVar11;
+  undefined1 auStack_50 [80];
+  
+  iVar11 = __savegprlr_29();
+  if (iVar11 == 0) {
+    MyAssertHandler(0xffffffff821999a0,0x12f,0,0xffffffff82000f98,0xffffffff821999e4);
+  }
+  dMULTIPLY2_333<float,float,float>(auStack_50,iVar11 + 0x14,param_2);
+  dMULTIPLY0_333<float,float,float>(iVar11 + 0x14,param_2,auStack_50);
+  *(undefined4 *)(iVar11 + 0x24) = *(undefined4 *)(iVar11 + 0x18);
+  *(undefined4 *)(iVar11 + 0x34) = *(undefined4 *)(iVar11 + 0x1c);
+  *(undefined4 *)(iVar11 + 0x38) = *(undefined4 *)(iVar11 + 0x2c);
+  pfVar10 = (float *)param_2;
+  fVar1 = pfVar10[2];
+  fVar2 = *(float *)(iVar11 + 8);
+  fVar3 = pfVar10[1];
+  fVar4 = pfVar10[5];
+  fVar5 = *(float *)(iVar11 + 4);
+  fVar6 = *pfVar10;
+  fVar7 = pfVar10[4];
+  fVar8 = *(float *)(iVar11 + 0xc);
+  fVar9 = pfVar10[6];
+  *(float *)(iVar11 + 0xc) = pfVar10[8] * fVar5 + pfVar10[9] * fVar2 + pfVar10[10] * fVar8;
+  *(float *)(iVar11 + 8) = fVar7 * fVar5 + fVar4 * fVar2 + fVar9 * fVar8;
+  *(float *)(iVar11 + 4) = fVar5 * fVar6 + fVar3 * fVar2 + fVar1 * fVar8;
+  checkMass(iVar11);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -345,30 +553,29 @@ void dMassAdd(float *param_1,float *param_2)
   float *pfVar3;
   longlong lVar4;
   
-  if ((param_1 != (float *)0x0) && (param_2 != (float *)0x0)) {
-    pfVar2 = param_2 + 4;
-    pfVar3 = param_1 + 5;
-    lVar4 = 2;
-    fVar1 = 1.0 / (*param_2 + *param_1);
-    param_1[1] = (param_2[1] * *param_2 + param_1[1] * *param_1) * fVar1;
-    param_1[2] = (param_2[2] * *param_2 + param_1[2] * *param_1) * fVar1;
-    param_1[3] = (param_2[3] * *param_2 + param_1[3] * *param_1) * fVar1;
-    *param_1 = *param_1 + *param_2;
-    do {
-      *pfVar3 = *(float *)((int)pfVar3 + ((int)param_2 - (int)param_1)) + *pfVar3;
-      pfVar3[1] = pfVar3[1] + pfVar2[2];
-      pfVar3[2] = pfVar3[2] + pfVar2[3];
-      pfVar3[3] = pfVar3[3] + pfVar2[4];
-      pfVar3[4] = pfVar3[4] + pfVar2[5];
-      pfVar2 = pfVar2 + 6;
-      pfVar3[5] = pfVar3[5] + *pfVar2;
-      pfVar3 = pfVar3 + 6;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    return;
+  if ((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) {
+    MyAssertHandler(0xffffffff821999a0,0x149,0,0xffffffff82000f98,0xffffffff821999e8);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821999a0,0x149,0,0xffffffff82000f98,0xffffffff821999e8);
+  pfVar2 = param_2 + 4;
+  pfVar3 = param_1 + 5;
+  lVar4 = 2;
+  fVar1 = 1.0 / (*param_2 + *param_1);
+  param_1[1] = (param_2[1] * *param_2 + param_1[1] * *param_1) * fVar1;
+  param_1[2] = (param_2[2] * *param_2 + param_1[2] * *param_1) * fVar1;
+  param_1[3] = (param_2[3] * *param_2 + param_1[3] * *param_1) * fVar1;
+  *param_1 = *param_1 + *param_2;
+  do {
+    *pfVar3 = *(float *)((int)pfVar3 + ((int)param_2 - (int)param_1)) + *pfVar3;
+    pfVar3[1] = pfVar3[1] + pfVar2[2];
+    pfVar3[2] = pfVar3[2] + pfVar2[3];
+    pfVar3[3] = pfVar3[3] + pfVar2[4];
+    pfVar3[4] = pfVar3[4] + pfVar2[5];
+    pfVar2 = pfVar2 + 6;
+    pfVar3[5] = pfVar3[5] + *pfVar2;
+    pfVar3 = pfVar3 + 6;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  return;
 }
 
 

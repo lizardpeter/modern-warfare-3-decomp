@@ -94,10 +94,48 @@
 ; 828A1DA8  XShowMarketplaceUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:196)
   828A1DA8  7D8802A6             mfspr r12,LR
   828A1DAC  4807490D             bl 0x829166b8
+  828A1DB0  9421FF80             stwu r1,-0x80(r1)
+  828A1DB4  7C7F1B78             or r31,r3,r3
+  828A1DB8  7C9E2378             or r30,r4,r4
+  828A1DBC  7CBD2B78             or r29,r5,r5
+  828A1DC0  7CDC3378             or r28,r6,r6
+  828A1DC4  7DAD6B78             or r13,r13,r13
+  828A1DC8  39000000             li r8,0x0
+  828A1DCC  7F87E378             or r7,r28,r28
+  828A1DD0  38C0FFFF             li r6,-0x1
+  828A1DD4  7FA5EB78             or r5,r29,r29
+  828A1DD8  7FC4F378             or r4,r30,r30
+  828A1DDC  7FE3FB78             or r3,r31,r31
+  828A1DE0  4809F4F5             bl 0x829412d4
+  828A1DE4  7C7F1B78             or r31,r3,r3
+  828A1DE8  7DCE7378             or r14,r14,r14
+  828A1DEC  7FE3FB78             or r3,r31,r31
+  828A1DF0  38210080             addi r1,r1,0x80
+  828A1DF4  48074914             b 0x82916708
 
 ; 828A1DF8  XShowDeviceSelectorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:246)
   828A1DF8  7D8802A6             mfspr r12,LR
   828A1DFC  480748B5             bl 0x829166b0
+  828A1E00  9421FF70             stwu r1,-0x90(r1)
+  828A1E04  7C7F1B78             or r31,r3,r3
+  828A1E08  7C9E2378             or r30,r4,r4
+  828A1E0C  7CBD2B78             or r29,r5,r5
+  828A1E10  7CDC3378             or r28,r6,r6
+  828A1E14  7CFB3B78             or r27,r7,r7
+  828A1E18  7D1A4378             or r26,r8,r8
+  828A1E1C  7DAD6B78             or r13,r13,r13
+  828A1E20  7F48D378             or r8,r26,r26
+  828A1E24  7F67DB78             or r7,r27,r27
+  828A1E28  7F86E378             or r6,r28,r28
+  828A1E2C  7FA5EB78             or r5,r29,r29
+  828A1E30  7FC4F378             or r4,r30,r30
+  828A1E34  7FE3FB78             or r3,r31,r31
+  828A1E38  4809F4AD             bl 0x829412e4
+  828A1E3C  7C7F1B78             or r31,r3,r3
+  828A1E40  7DCE7378             or r14,r14,r14
+  828A1E44  7FE3FB78             or r3,r31,r31
+  828A1E48  38210090             addi r1,r1,0x90
+  828A1E4C  480748B4             b 0x82916700
 
 ; 828A1E50  XShowMessageBoxUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:271)
   828A1E50  7D8802A6             mfspr r12,LR

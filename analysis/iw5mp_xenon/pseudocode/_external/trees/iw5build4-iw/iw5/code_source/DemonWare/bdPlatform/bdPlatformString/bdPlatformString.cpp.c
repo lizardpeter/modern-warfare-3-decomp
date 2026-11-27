@@ -34,10 +34,50 @@ void bdStrGetToken(undefined8 param_1,char *param_2,undefined8 param_3,ulonglong
 
 // 828F4F18  bdDelimSubstr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:45)
 
-void bdDelimSubstr(void)
+void bdDelimSubstr(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 *puVar4;
+  bool bVar5;
+  longlong lVar6;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  undefined8 uStack_a8;
+  char local_a0 [56];
+  undefined8 uStack_68;
+  char local_60 [96];
+  
+  in_stack_00000014 = __savegprlr_29();
+  bVar5 = true;
+  in_stack_0000001c = param_2;
+  do {
+    puVar4 = &uStack_68;
+    lVar6 = 8;
+    do {
+      puVar4 = puVar4 + 1;
+      *puVar4 = 0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar1 = bdStrGetToken(in_stack_0000001c,param_3,local_60,0x40,&stack0x0000001c);
+    if (((uVar1 & 0xffffffff) < 0x40) && (uVar1 != 0)) {
+      puVar4 = &uStack_a8;
+      lVar6 = 8;
+      do {
+        puVar4 = puVar4 + 1;
+        *puVar4 = 0;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      uVar2 = bdStrGetToken(in_stack_00000014,param_3,local_a0,0x40,&stack0x00000014);
+      if (uVar2 < 0x40) {
+        iVar3 = _stricmp(local_60,local_a0);
+        bVar5 = iVar3 == 0;
+      }
+    }
+  } while ((bVar5 != false) && (uVar1 != 0));
+  __restgprlr_29(bVar5);
+  return;
 }
 

@@ -19,8 +19,38 @@ void G_RegisterGlassDvars(void)
 void G_InitGlass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined *puVar2;
+  void *pvVar3;
+  uint uVar4;
+  int iVar5;
+  undefined1 auStack_b0 [176];
+  
   __savegprlr_28();
+  if (DAT_83f1e098 == 0) {
+    MyAssertHandler(0xffffffff8206fd4c,0x46,0,0xffffffff82000f98,0xffffffff8206fd40);
+  }
+  Com_GetBspFilename(auStack_b0,0x80,*(undefined4 *)(DAT_83f1e098 + 0xc));
+  puVar2 = (undefined *)DB_FindXAssetHeader(0xe,auStack_b0,1);
+  if (puVar2 != &DAT_83345bf8) {
+    MyAssertHandler(0xffffffff8206fd4c,0x54,0,0xffffffff82000f98,0xffffffff8206fd20);
+  }
+  DAT_833464e0 = DAT_83345bfc;
+  pvVar3 = memset((void *)*DAT_83345bfc,0,DAT_83345bfc[1] * 0xc);
+  uVar4 = 0;
+  if (DAT_833464e0[3] != 0) {
+    iVar5 = 0;
+    do {
+      iVar1 = DAT_833464e0[4];
+      Scr_SetString(iVar1 + iVar5 + 4,0);
+      pvVar3 = (void *)G_NewString(*(undefined4 *)(DAT_833464e0[4] + iVar5));
+      uVar4 = uVar4 + 1;
+      *(short *)(iVar1 + iVar5 + 4) = (short)pvVar3;
+      iVar5 = iVar5 + 0xc;
+    } while (uVar4 < (uint)DAT_833464e0[3]);
+  }
+  __restgprlr_28(pvVar3);
+  return;
 }
 
 
@@ -29,8 +59,27 @@ void G_InitGlass(void)
 void G_ShutdownGlass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  longlong lVar2;
+  
   __savegprlr_29();
+  if (DAT_833464e0 != 0) {
+    if ((*(int *)(DAT_833464e0 + 0xc) != 0) && (*(int *)(DAT_833464e0 + 0x10) == 0)) {
+      MyAssertHandler(0xffffffff8206fd4c,0x79,0,0xffffffff82000f98,0xffffffff8206fd88);
+    }
+    uVar1 = 0;
+    if (*(int *)(DAT_833464e0 + 0xc) != 0) {
+      lVar2 = 0;
+      do {
+        Scr_SetString((ulonglong)*(uint *)(DAT_833464e0 + 0x10) + lVar2 + 4,0);
+        uVar1 = uVar1 + 1;
+        lVar2 = lVar2 + 0xc;
+      } while (uVar1 < *(uint *)(DAT_833464e0 + 0xc));
+    }
+    DAT_833464e0 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -45,7 +94,6 @@ undefined4 G_Glass_GetIndicesFromName(uint param_1,uint *param_2)
   uint uVar4;
   
   if (param_2 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206fd4c,0x8c,0,0xffffffff82000f98,0xffffffff82031d80);
   }
   uVar4 = 0;
@@ -83,7 +131,6 @@ longlong G_GlassPieceFromIndex(ulonglong param_1)
 
 {
   if ((ulonglong)DAT_833464e0[1] <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,param_1);
   }
   return (param_1 + (param_1 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + (ulonglong)*DAT_833464e0;
@@ -142,31 +189,122 @@ ulonglong PackFloat(double param_1)
 
 // 8246F8E0  G_Glass_PieceStateChanged  (game/g_glass.cpp:271)
 
-void G_Glass_PieceStateChanged(void)
+void G_Glass_PieceStateChanged(undefined8 param_1,int param_2,float *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float *pfVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 uVar5;
+  double dVar6;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  
+  uVar2 = __savegprlr_26();
+  iVar3 = G_GlassPieceFromIndex();
+  *(undefined4 *)(iVar3 + 4) = DAT_83580fac;
+  iVar4 = G_Glass_GetPieceState(uVar2);
+  if (iVar4 == 1) {
+    dVar6 = (double)G_random();
+    if (0.30000001192092896 <= dVar6) {
+      if (0.699999988079071 <= dVar6) {
+        *(undefined2 *)(iVar3 + 2) = 0;
+      }
+      else {
+        dVar6 = (double)G_random();
+        *(short *)(iVar3 + 2) = (short)((60000 - (int)(dVar6 * -540000.0)) / 100);
+      }
+    }
+    else {
+      dVar6 = (double)G_random();
+      *(short *)(iVar3 + 2) = (short)((3000 - (int)(dVar6 * -57000.0)) / 100);
+    }
+  }
+  else if (iVar4 == 2) {
+    pfVar1 = (float *)param_4;
+    if (pfVar1[2] * pfVar1[2] + *pfVar1 * *pfVar1 + pfVar1[1] * pfVar1[1] <= 0.0) {
+      *(undefined1 *)(iVar3 + 9) = 0;
+      *(undefined1 *)(iVar3 + 8) = 0xff;
+      *(undefined1 *)(iVar3 + 10) = 0;
+    }
+    else {
+      uVar5 = DirToByte(param_4);
+      *(undefined1 *)(iVar3 + 8) = uVar5;
+      Glass_GetInitialPieceCenter(uVar2,&local_88);
+      Glass_GetInitialPieceAxis(uVar2,&local_70);
+      dVar6 = (double)(local_5c * (param_3[2] - local_80) +
+                      local_60 * (param_3[1] - local_84) + local_64 * (*param_3 - local_88));
+      uVar5 = PackFloat((double)(local_68 * (param_3[2] - local_80) +
+                                local_6c * (param_3[1] - local_84) +
+                                (*param_3 - local_88) * local_70));
+      *(undefined1 *)(iVar3 + 9) = uVar5;
+      uVar5 = PackFloat(dVar6);
+      *(undefined1 *)(iVar3 + 10) = uVar5;
+    }
+  }
+  if ((param_2 < 2) && (1 < iVar4)) {
+    Scr_AddInt(uVar2);
+    Scr_NotifyLevel(DAT_835a0bde,1);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 8246FAD0  G_Glass_DamagePiece  (game/g_glass.cpp:329)
 
-void G_Glass_DamagePiece(void)
+void G_Glass_DamagePiece(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  ushort *puVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  uVar1 = __savegprlr_27();
+  uVar2 = G_Glass_GetPieceState();
+  puVar3 = (ushort *)G_GlassPieceFromIndex(uVar1);
+  uVar5 = (ulonglong)*puVar3 + param_2;
+  if (0xfffe < (uVar5 & 0xffffffff)) {
+    uVar5 = 0xfffffffffffffffe;
+  }
+  *puVar3 = (ushort)uVar5;
+  iVar4 = G_Glass_GetPieceState(uVar1);
+  if (iVar4 != (int)uVar2) {
+    G_Glass_PieceStateChanged(uVar1,uVar2,param_3,param_4);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 8246FB40  G_Glass_DestroyPiece  (game/g_glass.cpp:348)
 
-void G_Glass_DestroyPiece(void)
+void G_Glass_DestroyPiece(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined2 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = G_Glass_GetPieceState();
+  if ((int)uVar2 < 2) {
+    puVar3 = (undefined2 *)G_GlassPieceFromIndex(uVar1);
+    *puVar3 = (short)*(undefined4 *)(DAT_833464e8 + 0xc);
+    G_Glass_PieceStateChanged(uVar1,uVar2,param_2,param_3);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -175,18 +313,123 @@ void G_Glass_DestroyPiece(void)
 void G_Glass_DeletePiece(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  short *psVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = G_Glass_GetPieceState();
+  if ((int)uVar2 < 3) {
+    psVar3 = (short *)G_GlassPieceFromIndex(uVar1);
+    if (*psVar3 == -1) {
+      MyAssertHandler(0xffffffff8206fd4c,0x174,0,0xffffffff82000f98,0xffffffff8206fe10);
+    }
+    *psVar3 = -1;
+    G_Glass_PieceStateChanged(uVar1,uVar2,0xffffffff82179fd8,0xffffffff82179fd8);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8246FC28  G_Glass_RadiusDamage  (game/g_glass.cpp:380)
 
-void G_Glass_RadiusDamage(void)
+void G_Glass_RadiusDamage(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  ulonglong in_r6;
+  float *pfVar4;
+  ulonglong uVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_78;
+  float local_74;
+  float local_70;
+  
   __savegprlr_27();
+  pfVar2 = (float *)__savefpr_25();
+  dVar7 = extraout_f1;
+  if (256.0 < extraout_f1) {
+    dVar7 = 256.0;
+  }
+  dVar6 = (double)(float)(dVar7 * dVar7);
+  uVar5 = 0;
+  if (*(int *)(DAT_833464e0 + 4) != 0) {
+    dVar8 = 1.0;
+    do {
+      Glass_GetInitialPieceCenter(uVar5,&local_78);
+      local_88 = local_78 - *pfVar2;
+      local_80 = local_70 - pfVar2[2];
+      local_84 = local_74 - pfVar2[1];
+      dVar9 = (double)(local_84 * local_84 + local_80 * local_80 + local_88 * local_88);
+      if ((dVar9 < dVar6) && (iVar3 = G_Glass_GetPieceState(uVar5), iVar3 < 2)) {
+        fVar1 = (float)(dVar8 / (double)(float)SQRT(dVar9));
+        local_88 = local_88 * fVar1;
+        local_84 = local_84 * fVar1;
+        local_80 = local_80 * fVar1;
+        if (((in_r6 & 0xffffffff) == 0) ||
+           (pfVar4 = (float *)in_r6,
+           param_2 <= (double)(pfVar4[2] * local_80 + pfVar4[1] * local_84 + *pfVar4 * local_88))) {
+          iVar3 = (int)((float)((double)(float)((double)(float)(param_4 - param_3) / dVar7) *
+                                (double)(float)SQRT(dVar9) + param_3) *
+                       *(float *)(DAT_833464dc + 0xc));
+          if (iVar3 != 0) {
+            G_Glass_DamagePiece(uVar5,iVar3,&local_78,&local_88);
+          }
+        }
+      }
+      uVar5 = uVar5 + 1;
+    } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(DAT_833464e0 + 4));
+  }
+  __restfpr_25();
+  __restgprlr_27();
+  return;
+}
+
+
+// 8246FDA8  G_Glass_Update  (game/g_glass.cpp:454)
+
+void G_Glass_Update(void)
+
+{
+  undefined8 uVar1;
+  undefined2 *puVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  __savegprlr_23();
+  uVar5 = 0;
+  if (DAT_833464e0[1] != 0) {
+    iVar4 = 0;
+    if (DAT_833464e0[1] == 0) {
+      MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,0);
+    }
+    do {
+      uVar3 = (uint)*(ushort *)(iVar4 + *DAT_833464e0 + 2);
+      if (uVar3 != 0) {
+        if (((int)(uVar3 * 100 + *(int *)(iVar4 + *DAT_833464e0 + 4)) < DAT_83580fac) &&
+           (uVar1 = G_Glass_GetPieceState(uVar5), (int)uVar1 < 2)) {
+          puVar2 = (undefined2 *)G_GlassPieceFromIndex(uVar5);
+          *puVar2 = (short)*(undefined4 *)(DAT_833464e8 + 0xc);
+          G_Glass_PieceStateChanged(uVar5,uVar1,0xffffffff82179fd8,0xffffffff82179fd8);
+        }
+      }
+      uVar5 = uVar5 + 1;
+      iVar4 = iVar4 + 0xc;
+    } while ((uVar5 & 0xffffffff) < (ulonglong)(uint)DAT_833464e0[1]);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -239,6 +482,135 @@ void G_Glass_WriteImpactInfo(undefined8 param_1,int param_2,int param_3)
 }
 
 
+// 8246FFA8  G_Glass_WriteChanges  (game/g_glass.cpp:522)
+
+void G_Glass_WriteChanges(undefined8 param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  uint uVar5;
+  int *piVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  
+  uVar2 = __savegprlr_18();
+  uVar3 = MSG_GetUsedBitCount();
+  uVar1 = DAT_83580fac;
+  uVar8 = 0;
+  uVar7 = 0;
+  uVar11 = 0;
+  if (DAT_833464e0[1] != 0) {
+    iVar9 = 0;
+    if (DAT_833464e0[1] == 0) {
+      MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,0);
+    }
+    do {
+      if ((param_2 <= *(int *)(iVar9 + *DAT_833464e0 + 4)) &&
+         (iVar4 = G_Glass_GetPieceState(uVar11), iVar4 != 0)) {
+        uVar8 = uVar8 + 1;
+        uVar7 = uVar11 + 1;
+      }
+      uVar11 = uVar11 + 1;
+      iVar9 = iVar9 + 0xc;
+    } while ((uVar11 & 0xffffffff) < (ulonglong)(uint)DAT_833464e0[1]);
+    if ((uVar8 & 0xffffffff) != 0) {
+      MSG_WriteBit1(uVar2);
+      if (((uVar8 + 1) * 0xd & 0xffffffff) < ((uVar7 & 0x7fffffff) * 2 + 0xb & 0xffffffff)) {
+        MSG_WriteBit1();
+        uVar7 = 0;
+        if (DAT_833464e0[1] != 0) {
+          iVar9 = 0;
+          piVar6 = DAT_833464e0;
+          if (DAT_833464e0[1] == 0) {
+            MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,0);
+            piVar6 = DAT_833464e0;
+          }
+          do {
+            iVar4 = *piVar6;
+            if (param_2 <= *(int *)(iVar9 + iVar4 + 4)) {
+              if ((ulonglong)(uint)piVar6[1] <= (uVar7 & 0xffffffff)) {
+                MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,uVar7);
+                piVar6 = DAT_833464e0;
+              }
+              uVar5 = (uint)*(ushort *)(iVar9 + *piVar6);
+              if (uVar5 == 0xffff) {
+                iVar10 = 3;
+              }
+              else if (uVar5 < (*(uint *)(DAT_833464e8 + 0xc) & 0xffff)) {
+                if (uVar5 < (*(uint *)(DAT_833464d8 + 0xc) & 0xffff)) goto LAB_824701e0;
+                iVar10 = 1;
+              }
+              else {
+                iVar10 = 2;
+              }
+              if (0x3ff < (uVar7 & 0xffffffff)) {
+                MyAssertHandler(0xffffffff8206fd4c,0x254,0,0xffffffff82066090,uVar7,0x400);
+              }
+              MSG_WriteBits(uVar2,uVar7,0xb);
+              MSG_WriteBits(uVar2,iVar10,2);
+              piVar6 = DAT_833464e0;
+              if (iVar10 == 2) {
+                G_Glass_WriteImpactInfo(uVar2,iVar9 + iVar4,uVar1);
+                piVar6 = DAT_833464e0;
+              }
+            }
+LAB_824701e0:
+            uVar7 = uVar7 + 1;
+            iVar9 = iVar9 + 0xc;
+          } while ((uVar7 & 0xffffffff) < (ulonglong)(uint)piVar6[1]);
+        }
+        MSG_WriteBits(uVar2,0x400,0xb);
+      }
+      else {
+        MSG_WriteBit0(uVar2);
+        MSG_WriteBits(uVar2,uVar7,0xb);
+        uVar8 = 0;
+        if ((uVar7 & 0xffffffff) != 0) {
+          iVar9 = 0;
+          do {
+            if ((ulonglong)(uint)DAT_833464e0[1] <= (uVar8 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,uVar8);
+            }
+            uVar5 = (uint)*(ushort *)(iVar9 + *DAT_833464e0);
+            if (uVar5 == 0xffff) {
+              lVar12 = 3;
+            }
+            else if (uVar5 < (*(uint *)(DAT_833464e8 + 0xc) & 0xffff)) {
+              lVar12 = -((ulonglong)(uVar5 < (*(uint *)(DAT_833464d8 + 0xc) & 0xffff)) - 1);
+            }
+            else {
+              lVar12 = 2;
+            }
+            MSG_WriteBits(uVar2,lVar12,2);
+            if ((int)lVar12 == 2) {
+              if ((ulonglong)(uint)DAT_833464e0[1] <= (uVar8 & 0xffffffff)) {
+                MyAssertHandler(0xffffffff8206fd4c,0xa7,0,0xffffffff8206fdc0,uVar8);
+              }
+              G_Glass_WriteImpactInfo(uVar2,iVar9 + *DAT_833464e0,uVar1);
+            }
+            uVar8 = uVar8 + 1;
+            iVar9 = iVar9 + 0xc;
+          } while ((uVar8 & 0xffffffff) < (uVar7 & 0xffffffff));
+        }
+      }
+      SV_TrackPacketData(0,0xd,0,0,uVar3,uVar2);
+      __restgprlr_18();
+      return;
+    }
+  }
+  MSG_WriteBit0(uVar2);
+  __restgprlr_18();
+  return;
+}
+
+
 // 82470338  G_SaveGlass  (game/g_glass.cpp:631)
 
 void G_SaveGlass(undefined8 param_1)
@@ -247,13 +619,31 @@ void G_SaveGlass(undefined8 param_1)
   uint uVar1;
   
   if (DAT_833464e0 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206fd4c,0x278,0,0xffffffff82000f98,0xffffffff8206fe30);
   }
   uVar1 = DAT_833464e0[1];
   if ((ulonglong)uVar1 != 0) {
     MemFile_WriteData(param_1,((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x3fffffff)
                               << 2,*DAT_833464e0);
+  }
+  return;
+}
+
+
+// 824703C8  G_LoadGlass  (game/g_glass.cpp:639)
+
+void G_LoadGlass(undefined8 param_1)
+
+{
+  uint uVar1;
+  
+  if (DAT_833464e0 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8206fd4c,0x280,0,0xffffffff82000f98,0xffffffff8206fe30);
+  }
+  uVar1 = DAT_833464e0[1];
+  if ((ulonglong)uVar1 != 0) {
+    MemFile_ReadData(param_1,((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x3fffffff)
+                             << 2,*DAT_833464e0);
   }
   return;
 }

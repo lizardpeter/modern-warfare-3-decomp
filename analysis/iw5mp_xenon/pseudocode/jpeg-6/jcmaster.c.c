@@ -5,8 +5,83 @@
 void initial_setup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  undefined1 *puVar6;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if ((((piVar1[10] == 0) || (piVar1[9] == 0)) || (piVar1[0x11] < 1)) || (piVar1[0xb] < 1)) {
+    *(undefined4 *)(*piVar1 + 0x14) = 0x20;
+    (**(code **)*piVar1)(piVar1);
+  }
+  if ((0xffdc < piVar1[10]) || (0xffdc < piVar1[9])) {
+    *(undefined4 *)(*piVar1 + 0x14) = 0x29;
+    *(undefined4 *)(*piVar1 + 0x18) = 0xffdc;
+    (**(code **)*piVar1)(piVar1);
+  }
+  if (piVar1[0x10] != 8) {
+    *(undefined4 *)(*piVar1 + 0x14) = 0xf;
+    *(int *)(*piVar1 + 0x18) = piVar1[0x10];
+    (**(code **)*piVar1)(piVar1);
+  }
+  if (10 < piVar1[0x11]) {
+    *(undefined4 *)(*piVar1 + 0x14) = 0x1a;
+    *(int *)(*piVar1 + 0x18) = piVar1[0x11];
+    *(undefined4 *)(*piVar1 + 0x1c) = 10;
+    (**(code **)*piVar1)(piVar1);
+  }
+  iVar3 = 0;
+  piVar1[0x38] = 1;
+  piVar1[0x39] = 1;
+  if (0 < piVar1[0x11]) {
+    piVar5 = (int *)(piVar1[0x13] + 0xc);
+    do {
+      if (((piVar5[-1] < 1) || (4 < piVar5[-1])) || ((*piVar5 < 1 || (4 < *piVar5)))) {
+        *(undefined4 *)(*piVar1 + 0x14) = 0x12;
+        (**(code **)*piVar1)(piVar1);
+      }
+      iVar4 = piVar1[0x38];
+      if (piVar1[0x38] <= piVar5[-1]) {
+        iVar4 = piVar5[-1];
+      }
+      piVar1[0x38] = iVar4;
+      iVar4 = piVar1[0x39];
+      if (piVar1[0x39] <= *piVar5) {
+        iVar4 = *piVar5;
+      }
+      iVar3 = iVar3 + 1;
+      piVar1[0x39] = iVar4;
+      piVar5 = piVar5 + 0x15;
+    } while (iVar3 < piVar1[0x11]);
+  }
+  iVar3 = 0;
+  if (0 < piVar1[0x11]) {
+    puVar6 = (undefined1 *)(piVar1[0x13] + -0x24);
+    do {
+      *(int *)(puVar6 + 0x28) = iVar3;
+      *(undefined4 *)(puVar6 + 0x48) = 8;
+      uVar2 = jdiv_round_up((longlong)*(int *)(puVar6 + 0x2c) * (longlong)piVar1[9],
+                            piVar1[0x38] << 3);
+      *(undefined4 *)(puVar6 + 0x40) = uVar2;
+      uVar2 = jdiv_round_up((longlong)*(int *)(puVar6 + 0x30) * (longlong)piVar1[10],
+                            piVar1[0x39] << 3);
+      *(undefined4 *)(puVar6 + 0x44) = uVar2;
+      uVar2 = jdiv_round_up((longlong)*(int *)(puVar6 + 0x2c) * (longlong)piVar1[9],piVar1[0x38]);
+      *(undefined4 *)(puVar6 + 0x4c) = uVar2;
+      uVar2 = jdiv_round_up((longlong)*(int *)(puVar6 + 0x30) * (longlong)piVar1[10],piVar1[0x39]);
+      *(undefined4 *)(puVar6 + 0x50) = uVar2;
+      iVar3 = iVar3 + 1;
+      puVar6 = puVar6 + 0x54;
+      *puVar6 = 1;
+    } while (iVar3 < piVar1[0x11]);
+  }
+  iVar3 = jdiv_round_up(piVar1[10],piVar1[0x39] << 3);
+  piVar1[0x3a] = iVar3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -280,8 +355,102 @@ void select_scan_parameters(int *param_1)
 void per_scan_setup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int *piVar6;
+  int iVar7;
+  longlong lVar8;
+  int iVar9;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iVar5 = piVar3[0x3b];
+  if (iVar5 == 1) {
+    iVar5 = piVar3[0x3c];
+    piVar3[0x40] = *(int *)(iVar5 + 0x1c);
+    piVar3[0x41] = *(int *)(iVar5 + 0x20);
+    uVar1 = *(uint *)(iVar5 + 0xc);
+    trapWord(6,(ulonglong)uVar1,0);
+    *(undefined4 *)(iVar5 + 0x40) = 8;
+    *(undefined4 *)(iVar5 + 0x34) = 1;
+    *(undefined4 *)(iVar5 + 0x38) = 1;
+    *(undefined4 *)(iVar5 + 0x3c) = 1;
+    *(undefined4 *)(iVar5 + 0x44) = 1;
+    uVar4 = (ulonglong)*(uint *)(iVar5 + 0x20) -
+            (longlong)(int)(*(uint *)(iVar5 + 0x20) / uVar1) * (longlong)(int)uVar1;
+    if (uVar4 == 0) {
+      uVar4 = (ulonglong)uVar1;
+    }
+    *(int *)(iVar5 + 0x48) = (int)uVar4;
+    piVar3[0x42] = 1;
+    piVar3[0x43] = 0;
+  }
+  else {
+    if ((iVar5 < 1) || (4 < iVar5)) {
+      *(undefined4 *)(*piVar3 + 0x14) = 0x1a;
+      *(int *)(*piVar3 + 0x18) = piVar3[0x3b];
+      *(undefined4 *)(*piVar3 + 0x1c) = 4;
+      (**(code **)*piVar3)(piVar3);
+    }
+    iVar5 = jdiv_round_up(piVar3[9],piVar3[0x38] << 3);
+    piVar3[0x40] = iVar5;
+    iVar5 = jdiv_round_up(piVar3[10],piVar3[0x39] << 3);
+    iVar7 = 0;
+    piVar3[0x41] = iVar5;
+    piVar3[0x42] = 0;
+    if (0 < piVar3[0x3b]) {
+      piVar6 = piVar3 + 0x3c;
+      do {
+        iVar5 = *piVar6;
+        uVar1 = *(uint *)(iVar5 + 8);
+        uVar2 = *(uint *)(iVar5 + 0xc);
+        lVar8 = (longlong)(int)uVar2 * (longlong)(int)uVar1;
+        *(uint *)(iVar5 + 0x40) = uVar1 << 3;
+        *(uint *)(iVar5 + 0x34) = uVar1;
+        iVar9 = (int)lVar8;
+        *(int *)(iVar5 + 0x3c) = iVar9;
+        *(uint *)(iVar5 + 0x38) = uVar2;
+        trapWord(6,(ulonglong)uVar1,0);
+        uVar4 = (ulonglong)*(uint *)(iVar5 + 0x1c) -
+                (longlong)(int)(*(uint *)(iVar5 + 0x1c) / uVar1) * (longlong)(int)uVar1;
+        if (uVar4 == 0) {
+          uVar4 = (ulonglong)uVar1;
+        }
+        trapWord(6,(ulonglong)uVar2,0);
+        *(int *)(iVar5 + 0x44) = (int)uVar4;
+        uVar4 = (ulonglong)*(uint *)(iVar5 + 0x20) -
+                (longlong)(int)(*(uint *)(iVar5 + 0x20) / uVar2) * (longlong)(int)uVar2;
+        if (uVar4 == 0) {
+          uVar4 = (ulonglong)uVar2;
+        }
+        *(int *)(iVar5 + 0x48) = (int)uVar4;
+        if (10 < piVar3[0x42] + iVar9) {
+          *(undefined4 *)(*piVar3 + 0x14) = 0xd;
+          (**(code **)*piVar3)(piVar3);
+        }
+        if (0 < iVar9) {
+          do {
+            piVar3[piVar3[0x42] + 0x43] = iVar7;
+            piVar3[0x42] = piVar3[0x42] + 1;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
+        }
+        iVar7 = iVar7 + 1;
+        piVar6 = piVar6 + 1;
+      } while (iVar7 < piVar3[0x3b]);
+    }
+  }
+  if (0 < piVar3[0x32]) {
+    iVar5 = piVar3[0x32] * piVar3[0x40];
+    if (0xfffe < iVar5) {
+      iVar5 = 0xffff;
+    }
+    piVar3[0x31] = iVar5;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -398,10 +567,48 @@ LAB_827b6f98:
 
 // 827B6FC0  jinit_c_master_control  (jpeg-6/jcmaster.c:544)
 
-void jinit_c_master_control(void)
+void jinit_c_master_control(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 *puVar2;
+  
+  iVar1 = __savegprlr_27();
+  puVar2 = (undefined4 *)(*(code *)**(undefined4 **)(iVar1 + 4))(iVar1,1,0x20);
+  *(undefined4 **)(iVar1 + 0x144) = puVar2;
+  *puVar2 = prepare_for_pass;
+  puVar2[1] = pass_startup;
+  puVar2[2] = finish_pass_master;
+  *(undefined1 *)((int)puVar2 + 0xd) = 0;
+  initial_setup(iVar1);
+  if (*(int *)(iVar1 + 0xb4) == 0) {
+    *(undefined1 *)(iVar1 + 0xdc) = 0;
+    *(undefined4 *)(iVar1 + 0xb0) = 1;
+  }
+  else {
+    validate_script(iVar1);
+  }
+  if (*(char *)(iVar1 + 0xdc) != '\0') {
+    *(undefined1 *)(iVar1 + 0xba) = 1;
+  }
+  if ((param_2 & 0xff) == 0) {
+    puVar2[4] = 0;
+  }
+  else if (*(char *)(iVar1 + 0xba) == '\0') {
+    puVar2[4] = 2;
+  }
+  else {
+    puVar2[4] = 1;
+  }
+  puVar2[7] = 0;
+  puVar2[5] = 0;
+  if (*(char *)(iVar1 + 0xba) != '\0') {
+    puVar2[6] = *(int *)(iVar1 + 0xb0) << 1;
+    __restgprlr_27();
+    return;
+  }
+  puVar2[6] = *(int *)(iVar1 + 0xb0);
+  __restgprlr_27();
+  return;
 }
 

@@ -40,11 +40,41 @@ void RedBlackTree_MakeNodeBlack(int param_1)
 
 // 8260F410  RedBlackTree_AssertValid_r  (universal/redblacktree.cpp:42)
 
-void RedBlackTree_AssertValid_r(void)
+void RedBlackTree_AssertValid_r(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == (uVar2 & 0xffffffff)) {
+    __restgprlr_27(1);
+    return;
+  }
+  iVar1 = (int)param_2;
+  if ((*(int *)(iVar1 + 8) == 0) &&
+     ((*(int *)(*(int *)(iVar1 + 0x10) + 8) == 0 || (*(int *)(*(int *)(iVar1 + 0x14) + 8) == 0)))) {
+    MyAssertHandler(0xffffffff82182628,0x31,0,0xffffffff82000f98,0xffffffff821825a0);
+  }
+  if (((ulonglong)*(uint *)(iVar1 + 0x10) != (uVar2 & 0xffffffff)) &&
+     ((ulonglong)*(uint *)(*(uint *)(iVar1 + 0x10) + 0xc) != (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82182628,0x32,0,0xffffffff82000f98,0xffffffff82182558);
+  }
+  if (((ulonglong)*(uint *)(iVar1 + 0x14) != (uVar2 & 0xffffffff)) &&
+     ((ulonglong)*(uint *)(*(uint *)(iVar1 + 0x14) + 0xc) != (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82182628,0x33,0,0xffffffff82000f98,0xffffffff82182510);
+  }
+  uVar3 = RedBlackTree_AssertValid_r(uVar2,*(undefined4 *)(iVar1 + 0x10));
+  uVar2 = RedBlackTree_AssertValid_r(uVar2,*(undefined4 *)(iVar1 + 0x14));
+  if ((uVar3 & 0xffffffff) != (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82182628,0x37,0,0xffffffff82000f98,0xffffffff821824d8);
+  }
+  if (*(int *)(iVar1 + 8) != 0) {
+    uVar3 = uVar3 + 1;
+  }
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
@@ -53,18 +83,48 @@ void RedBlackTree_AssertValid_r(void)
 void RedBlackTree_AssertValid(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82182628,0x47,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*(int *)(iVar1 + 0x28) == 0) {
+    MyAssertHandler(0xffffffff82182628,0x48,0,0xffffffff82000f98,0xffffffff82182670);
+  }
+  RedBlackTree_AssertValid_r(iVar1,*(undefined4 *)(iVar1 + 0x28));
+  __restgprlr_29();
+  return;
 }
 
 
 // 8260F5D8  RedBlackTree_Rotate  (universal/redblacktree.cpp:80)
 
-void RedBlackTree_Rotate(void)
+void RedBlackTree_Rotate(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint *puVar5;
+  
+  puVar5 = (uint *)__savegprlr_29();
+  if ((ulonglong)*puVar5 != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82182628,0x54,0,0xffffffff82000f98,0xffffffff82182688);
+  }
+  iVar4 = (int)((5U - param_3 & 0xffffffff) << 2);
+  iVar2 = (int)param_2;
+  uVar1 = *(uint *)(iVar4 + iVar2);
+  iVar3 = (int)((param_3 + 4U & 0x3fffffff) << 2);
+  *(undefined4 *)(iVar4 + iVar2) = *(undefined4 *)(iVar3 + uVar1);
+  *(int *)(*(int *)(iVar3 + uVar1) + 0xc) = iVar2;
+  *(undefined4 *)(uVar1 + 0xc) = *(undefined4 *)(iVar2 + 0xc);
+  *puVar5 = uVar1;
+  *(int *)(iVar3 + uVar1) = iVar2;
+  *(uint *)(iVar2 + 0xc) = uVar1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -77,7 +137,6 @@ int RedBlackTree_GetParentsPointer(int param_1)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if ((*(int *)(iVar1 + 0x10) != param_1) && (*(int *)(iVar1 + 0x14) != param_1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182628,0x67,0,0xffffffff82000f98,0xffffffff821826ac);
   }
   return (5 - (uint)(param_1 == *(int *)(iVar1 + 0x10))) * 4 + iVar1;
@@ -86,11 +145,49 @@ int RedBlackTree_GetParentsPointer(int param_1)
 
 // 8260F6F8  RedBlackTree_SwapNodes  (universal/redblacktree.cpp:109)
 
-void RedBlackTree_SwapNodes(void)
+void RedBlackTree_SwapNodes(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  uVar6 = __savegprlr_28();
+  iVar4 = (int)uVar6;
+  iVar5 = (int)param_2;
+  uVar1 = *(undefined4 *)(iVar4 + 8);
+  uVar2 = *(uint *)(*(int *)(iVar4 + 0xc) + 0x10);
+  uVar3 = *(uint *)(*(int *)(iVar5 + 0xc) + 0x10);
+  *(undefined4 *)(iVar4 + 8) = *(undefined4 *)(iVar5 + 8);
+  *(undefined4 *)(iVar5 + 8) = uVar1;
+  uVar1 = *(undefined4 *)(iVar4 + 0x10);
+  *(undefined4 *)(iVar4 + 0x10) = *(undefined4 *)(iVar5 + 0x10);
+  *(undefined4 *)(iVar5 + 0x10) = uVar1;
+  uVar1 = *(undefined4 *)(iVar4 + 0x14);
+  *(undefined4 *)(iVar4 + 0x14) = *(undefined4 *)(iVar5 + 0x14);
+  *(undefined4 *)(iVar5 + 0x14) = uVar1;
+  if ((ulonglong)*(uint *)(iVar4 + 0xc) == (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82182628,0x82,0,0xffffffff82000f98,0xffffffff821826e8);
+  }
+  uVar1 = *(undefined4 *)(iVar4 + 0xc);
+  uVar7 = (ulonglong)*(uint *)(iVar5 + 0xc);
+  if ((ulonglong)*(uint *)(iVar5 + 0xc) == (uVar6 & 0xffffffff)) {
+    uVar7 = param_2;
+  }
+  *(int *)(iVar4 + 0xc) = (int)uVar7;
+  *(undefined4 *)(iVar5 + 0xc) = uVar1;
+  *(int *)((5 - (uint)(param_2 == uVar3)) * 4 + *(int *)(iVar4 + 0xc)) = iVar4;
+  *(int *)(*(int *)(iVar4 + 0x10) + 0xc) = iVar4;
+  *(int *)(*(int *)(iVar4 + 0x14) + 0xc) = iVar4;
+  *(int *)((5 - (uint)(uVar6 == uVar2)) * 4 + *(int *)(iVar5 + 0xc)) = iVar5;
+  *(int *)(*(int *)(iVar5 + 0x10) + 0xc) = iVar5;
+  *(int *)(*(int *)(iVar5 + 0x14) + 0xc) = iVar5;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -135,7 +232,6 @@ void RedBlackTree_DeleteNode(undefined8 param_1,ulonglong param_2)
   uVar1 = *(uint *)(iVar13 + 0xc);
   uVar6 = (ulonglong)uVar1;
   if (uVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182628,0xab,0,0xffffffff82000f98,0xffffffff8200114c);
   }
   lVar7 = -(ulonglong)(param_2 == *(uint *)(uVar1 + 0x10));
@@ -155,7 +251,6 @@ LAB_8260fb48:
     lVar8 = lVar7 + uVar6;
     RedBlackTree_AssertValid_r(uVar4,*(undefined4 *)((int)lVar7 + uVar1));
     if ((ulonglong)uVar1 == (uVar4 + 0x18 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82182628,0xbf,0,0xffffffff82000f98,0xffffffff8218277c);
     }
     do {
@@ -175,15 +270,12 @@ LAB_8260fb48:
       if ((*(int *)(iVar13 + 8) == 0) || (*(int *)(*(int *)(iVar3 + iVar13) + 8) == 0)) {
 LAB_8260fa34:
         if (*(int *)((int)uVar10 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82182628,0xf0,0,0xffffffff82000f98,0xffffffff82182758);
         }
         if (*(int *)(iVar13 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82182628,0xf1,0,0xffffffff82000f98,0xffffffff82182734);
         }
         if (*(int *)(*(int *)(iVar3 + iVar13) + 8) != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82182628,0xf2,0,0xffffffff82000f98,0xffffffff821826fc);
         }
         *(undefined4 *)(iVar13 + 8) = *(undefined4 *)(iVar11 + 8);
@@ -192,17 +284,15 @@ LAB_8260fa34:
         uVar5 = RedBlackTree_GetParentsPointer(uVar6);
         RedBlackTree_Rotate(uVar5,uVar6,uVar12);
         RedBlackTree_AssertValid_r(uVar4,uVar6);
-        if ((uVar4 & 0xffffffff) != 0) {
-          if (*(int *)((int)uVar4 + 0x28) != 0) {
-            RedBlackTree_AssertValid_r(uVar4,*(undefined4 *)((int)uVar4 + 0x28));
-            __restgprlr_20();
-            return;
-          }
-                    /* WARNING: Subroutine does not return */
+        if ((uVar4 & 0xffffffff) == 0) {
+          MyAssertHandler(0xffffffff82182628,0x47,0,0xffffffff82000f98,0xffffffff821813e0);
+        }
+        if (*(int *)((int)uVar4 + 0x28) == 0) {
           MyAssertHandler(0xffffffff82182628,0x48,0,0xffffffff82000f98,0xffffffff82182670);
         }
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82182628,0x47,0,0xffffffff82000f98,0xffffffff821813e0);
+        RedBlackTree_AssertValid_r(uVar4,*(undefined4 *)((int)uVar4 + 0x28));
+        __restgprlr_20();
+        return;
       }
       *(undefined4 *)(iVar13 + 8) = 0;
       iVar2 = *(int *)((int)((uVar12 + 4 & 0xffffffff) << 2) + iVar13);
@@ -240,11 +330,106 @@ LAB_8260f8d0:
 
 // 8260FB58  RedBlackTree_FindOrInsertKey  (universal/redblacktree.cpp:256)
 
-void RedBlackTree_FindOrInsertKey(void)
+void RedBlackTree_FindOrInsertKey(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong *puVar1;
+  int iVar2;
+  ulonglong *puVar4;
+  ulonglong *puVar5;
+  undefined8 uVar3;
+  undefined8 uVar6;
+  ulonglong *puVar7;
+  ulonglong *puVar8;
+  ulonglong *puVar9;
+  ulonglong *puVar10;
+  
+  puVar4 = (ulonglong *)__savegprlr_23();
+  puVar7 = puVar4 + 5;
+  puVar8 = puVar4 + 3;
+  puVar5 = *(ulonglong **)(puVar4 + 5);
+  puVar9 = puVar7;
+  puVar10 = puVar8;
+  while (puVar1 = puVar5, puVar1 != puVar4) {
+    if (param_2 == *puVar1) {
+      __restgprlr_23(puVar1);
+      return;
+    }
+    iVar2 = ((*puVar1 <= param_2) + 4) * 4;
+    puVar9 = (ulonglong *)(iVar2 + (int)puVar1);
+    puVar10 = puVar1;
+    puVar5 = *(ulonglong **)(iVar2 + (int)puVar1);
+  }
+  puVar5 = (ulonglong *)(**(code **)(puVar4 + 6))();
+  if (puVar5 == (ulonglong *)0x0) {
+    __restgprlr_23();
+    return;
+  }
+  if ((puVar5 == puVar4) || (puVar5 == puVar8)) {
+    MyAssertHandler(0xffffffff82182628,0x117,0,0xffffffff82000f98,0xffffffff82182794);
+  }
+  if (puVar5 == puVar10) {
+    puVar9 = puVar7;
+    puVar10 = puVar8;
+  }
+  puVar1 = *(ulonglong **)puVar9;
+  while (puVar1 != puVar4) {
+    puVar10 = *(ulonglong **)puVar9;
+    iVar2 = ((*puVar10 <= param_2) + 4) * 4;
+    puVar9 = (ulonglong *)(iVar2 + (int)puVar10);
+    puVar1 = *(ulonglong **)(iVar2 + (int)puVar10);
+  }
+  *puVar5 = param_2;
+  *(ulonglong **)((int)puVar5 + 0xc) = puVar10;
+  *(undefined4 *)(puVar5 + 1) = 0;
+  *(ulonglong **)(puVar5 + 2) = puVar4;
+  *(ulonglong **)((int)puVar5 + 0x14) = puVar4;
+  *(ulonglong **)puVar9 = puVar5;
+  puVar9 = puVar5;
+  while( true ) {
+    if (puVar10 == puVar8) {
+      *(ulonglong **)puVar7 = puVar9;
+      *(undefined4 *)(puVar9 + 1) = 1;
+      RedBlackTree_AssertValid(puVar4);
+      __restgprlr_23(puVar5);
+      return;
+    }
+    if (*(int *)(puVar10 + 1) != 0) break;
+    puVar1 = *(ulonglong **)((int)puVar10 + 0xc);
+    iVar2 = *(int *)(((*(ulonglong **)(puVar1 + 2) == puVar10) + 4) * 4 + (int)puVar1);
+    if (*(int *)(iVar2 + 8) != 0) {
+      if ((*(ulonglong **)(puVar1 + 2) == puVar10) == 1) {
+        if (puVar9 == *(ulonglong **)((int)puVar10 + 0x14)) {
+          RedBlackTree_Rotate(puVar1 + 2,puVar10,0);
+          puVar10 = puVar9;
+        }
+        *(undefined4 *)(puVar10 + 1) = 1;
+        *(undefined4 *)(puVar1 + 1) = 0;
+        uVar3 = RedBlackTree_GetParentsPointer(puVar1);
+        uVar6 = 1;
+      }
+      else {
+        if (puVar9 == *(ulonglong **)(puVar10 + 2)) {
+          RedBlackTree_Rotate((int)puVar1 + 0x14,puVar10,1);
+          puVar10 = puVar9;
+        }
+        *(undefined4 *)(puVar10 + 1) = 1;
+        *(undefined4 *)(puVar1 + 1) = 0;
+        uVar3 = RedBlackTree_GetParentsPointer(puVar1);
+        uVar6 = 0;
+      }
+      RedBlackTree_Rotate(uVar3,puVar1,uVar6);
+      break;
+    }
+    *(undefined4 *)(puVar10 + 1) = 1;
+    *(undefined4 *)(iVar2 + 8) = 1;
+    puVar10 = *(ulonglong **)((int)puVar1 + 0xc);
+    *(undefined4 *)(puVar1 + 1) = 0;
+    puVar9 = puVar1;
+  }
+  RedBlackTree_AssertValid(puVar4);
+  __restgprlr_23(puVar5);
+  return;
 }
 
 
@@ -268,7 +453,6 @@ void RedBlackTree_Init(int param_1,undefined4 param_2)
   longlong lVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182628,0x174,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   puVar1 = (undefined8 *)(param_1 + -8);

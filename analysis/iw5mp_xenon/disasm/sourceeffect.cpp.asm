@@ -82,6 +82,46 @@ LAB_828d3534:
   828D3604  EBE1FFF0             ld r31,-0x10(r1)
   828D3608  4E800020             blr
 
+; 828D32D0  XAUDIO::CSourceEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
+  828D32D0  81240048             lwz r9,0x48(r4)
+  828D32D4  7C6A1B78             or r10,r3,r3
+  828D32D8  7C8B2378             or r11,r4,r4
+  828D32DC  7CA72B78             or r7,r5,r5
+  828D32E0  38840008             addi r4,r4,0x8
+  828D32E4  3863000C             addi r3,r3,0xc
+  828D32E8  912A00AC             stw r9,0xac(r10)
+  828D32EC  810B004C             lwz r8,0x4c(r11)
+  828D32F0  910A00B0             stw r8,0xb0(r10)
+  828D32F4  88CB0045             lbz r6,0x45(r11)
+  828D32F8  88AB0044             lbz r5,0x44(r11)
+  828D32FC  4800866C             b 0x828db968
+
+; 828D3698  XAUDIO::CSourceEffect::CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
+  828D3698  7D8802A6             mfspr r12,LR
+  828D369C  48043021             bl 0x829166bc
+  828D36A0  9421FF80             stwu r1,-0x80(r1)
+  828D36A4  7C7E1B78             or r30,r3,r3
+  828D36A8  7CBD2B78             or r29,r5,r5
+  828D36AC  48008D75             bl 0x828dc420
+  828D36B0  7C7F1B78             or r31,r3,r3
+  828D36B4  2B030000             cmplwi cr6,r3,0x0
+  828D36B8  419A0030             beq cr6,0x828d36e8
+  828D36BC  817E00A0             lwz r11,0xa0(r30)
+  828D36C0  2B0B0000             cmplwi cr6,r11,0x0
+  828D36C4  419A0024             beq cr6,0x828d36e8
+  828D36C8  815EFFFC             lwz r10,-0x4(r30)
+  828D36CC  38610050             addi r3,r1,0x50
+  828D36D0  813F0024             lwz r9,0x24(r31)
+  828D36D4  7D6903A6             mtspr CTR,r11
+  828D36D8  93A10058             stw r29,0x58(r1)
+  828D36DC  91410050             stw r10,0x50(r1)
+  828D36E0  91210054             stw r9,0x54(r1)
+  828D36E4  4E800421             bctrl
+LAB_828d36e8:
+  828D36E8  7FE3FB78             or r3,r31,r31
+  828D36EC  38210080             addi r1,r1,0x80
+  828D36F0  4804301C             b 0x8291670c
+
 ; 828D3300  XAUDIO::CSourceEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
   828D3300  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
   828D3304  2B0B0002             cmplwi cr6,r11,0x2

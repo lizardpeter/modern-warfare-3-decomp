@@ -41,11 +41,49 @@ void Jump_ClearState(int param_1)
 
 // 8226D388  Jump_GetStepHeight  (bgame/bg_jump.cpp:142)
 
-void Jump_GetStepHeight(void)
+void Jump_GetStepHeight(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar4 = __savegprlr_27();
+  if ((*(uint *)(iVar4 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x8f,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x90,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x91,0,0xffffffff82000f98,0xffffffff82004848);
+  }
+  iVar3 = DAT_829c4004;
+  if (*(float *)((int)param_2 + 8) < *(float *)(DAT_829c4004 + 0xc) + *(float *)(iVar4 + 0x80)) {
+    fVar1 = *(float *)(DAT_829c4000 + 0xc);
+    *(float *)param_3 = fVar1;
+    fVar2 = *(float *)((int)param_2 + 8);
+    if (*(float *)(iVar4 + 0x80) + *(float *)(iVar3 + 0xc) < fVar1 + fVar2) {
+      *(float *)param_3 = (*(float *)(iVar4 + 0x80) + *(float *)(iVar3 + 0xc)) - fVar2;
+    }
+    __restgprlr_27(1);
+    return;
+  }
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 8226D498  Jump_IsPlayerAboveMax  (bgame/bg_jump.cpp:166)
+
+bool Jump_IsPlayerAboveMax(int param_1)
+
+{
+  if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xa7,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  return *(float *)(DAT_829c4004 + 0xc) + *(float *)(param_1 + 0x80) <= *(float *)(param_1 + 0x24);
 }
 
 
@@ -72,7 +110,6 @@ void Jump_ApplySlowdown(int param_1)
   undefined4 uVar2;
   
   if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004878,0xc1,0,0xffffffff82000f98,0xffffffff8200485c);
   }
   fVar1 = 1.0;
@@ -108,18 +145,77 @@ void Jump_ApplySlowdown(int param_1)
 void Jump_GetSlowdownFriction(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xe5,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  if (0x708 < *(int *)(iVar1 + 8)) {
+    MyAssertHandler(0xffffffff82004878,0xe6,0,0xffffffff82000f98,0xffffffff820048bc);
+  }
+  if ((*(char *)(DAT_829c3ffc + 0xc) != '\0') && ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
+    if (0x6a3 < *(int *)(iVar1 + 8)) {
+      __restgprlr_29(0x4004000000000000);
+      return;
+    }
+    __restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 + 1.0));
+    return;
+  }
+  __restgprlr_29(0x3ff0000000000000);
+  return;
+}
+
+
+// 8226D768  Jump_ReduceFriction  (bgame/bg_jump.cpp:251)
+
+undefined8 Jump_ReduceFriction(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if ((*(uint *)(param_1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0xfe,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  if (*(int *)(param_1 + 8) < 0x709) {
+    uVar1 = Jump_GetSlowdownFriction(param_1);
+    return uVar1;
+  }
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffbfdfff;
+  *(undefined4 *)(param_1 + 0x80) = 0;
+  return 0x3ff0000000000000;
 }
 
 
 // 8226D810  Jump_ClampVelocity  (bgame/bg_jump.cpp:274)
 
-void Jump_ClampVelocity(void)
+void Jump_ClampVelocity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if ((*(uint *)(iVar2 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x116,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x117,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  if (0.0 < *(float *)(iVar2 + 0x24) - *(float *)((int)param_2 + 8)) {
+    fVar1 = (*(float *)(DAT_829c4004 + 0xc) + *(float *)(iVar2 + 0x80)) - *(float *)(iVar2 + 0x24);
+    if (fVar1 < 0.1) {
+      *(undefined4 *)(iVar2 + 0x30) = 0;
+      __restgprlr_28();
+      return;
+    }
+    fVar1 = SQRT((float)(longlong)*(int *)(iVar2 + 0x58) * fVar1 * 2.0);
+    if (fVar1 < *(float *)(iVar2 + 0x30)) {
+      *(float *)(iVar2 + 0x30) = fVar1;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -128,8 +224,25 @@ void Jump_ClampVelocity(void)
 void Jump_GetLandFactor(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x131,0,0xffffffff82000f98,0xffffffff8200485c);
+  }
+  if (0x708 < *(int *)(iVar1 + 8)) {
+    MyAssertHandler(0xffffffff82004878,0x132,0,0xffffffff82000f98,0xffffffff820048bc);
+  }
+  if ((*(char *)(DAT_829c3ffc + 0xc) != '\0') && ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
+    if (0x6a3 < *(int *)(iVar1 + 8)) {
+      __restgprlr_29(0x4004000000000000);
+      return;
+    }
+    __restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 + 1.0));
+    return;
+  }
+  __restgprlr_29(0x3ff0000000000000);
+  return;
 }
 
 
@@ -190,13 +303,228 @@ longlong BG_GetPlayerDiveState(int param_1)
 }
 
 
-// 8226DE48  Jump_Start  (bgame/bg_jump.cpp:429)
+// 8226DAF0  BG_GetMoveDirection  (bgame/bg_jump.cpp:354)
 
-void Jump_Start(void)
+longlong BG_GetMoveDirection(double param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  double dVar2;
+  
+  if (((double)*param_2 == 0.0) && (param_2[1] == 0.0)) {
+    return 0x2d;
+  }
+  dVar2 = atan2((double)param_2[1],(double)*param_2);
+  dVar2 = (double)AngleNormalize360((double)(float)((double)((float)dVar2 * 57.295776) - param_1));
+  uVar1 = (uint)((float)(dVar2 + 22.5) * 0.022222223);
+  return (ulonglong)uVar1 +
+         ((longlong)((int)uVar1 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 7) != 0) & 0x1fffffff
+         ) * -8;
+}
+
+
+// 8226DBA8  Jump_CheckDive  (bgame/bg_jump.cpp:372)
+
+void Jump_CheckDive(undefined8 param_1,float *param_2,longlong param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c0;
+  float local_bc;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  float local_a0 [40];
+  
   __savegprlr_26();
+  iVar3 = __savefpr_27();
+  if (param_3 == -0x4ec) {
+    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  iVar2 = (int)param_3;
+  if (((*(uint *)(iVar2 + 0x4f0) & 2) != 0) &&
+     (((*(uint *)(iVar2 + 0xc) & 0x2000) == 0 || (*(int *)(iVar2 + 8) < 800)))) {
+    dVar5 = 0.0;
+    dVar7 = (double)((float)(longlong)*(char *)(iVar3 + 0x21) * 0.007874016);
+    dVar8 = (double)((float)(longlong)*(char *)(iVar3 + 0x20) * 0.007874016);
+    if (dVar8 < 0.0) {
+      dVar8 = (double)(float)(dVar8 * 0.30000001192092896);
+    }
+    dVar6 = 1.0;
+    dVar4 = 0.0020000000949949026;
+    if (0.002 <= ABS((param_2[2] * param_2[2] + *param_2 * *param_2 + param_2[1] * param_2[1]) - 1.0
+                    )) {
+      MyAssertHandler(0xffffffff82004878,0x18b,0,0xffffffff82000f98,0xffffffff82004918);
+    }
+    if (dVar4 <= ABS((double)(float)((double)(param_2[5] * param_2[5] +
+                                             param_2[3] * param_2[3] + param_2[4] * param_2[4]) -
+                                    dVar6))) {
+      MyAssertHandler(0xffffffff82004878,0x18c,0,0xffffffff82000f98,0xffffffff820048f8);
+    }
+    dVar9 = (double)(float)((double)param_2[3] * dVar7 + (double)(float)((double)*param_2 * dVar8));
+    dVar4 = (double)(float)(dVar7 * (double)param_2[4] + (double)(float)(dVar8 * (double)param_2[1])
+                           );
+    dVar8 = (double)SQRT((float)(dVar4 * dVar4 + (double)(float)(dVar9 * dVar9)));
+    dVar7 = dVar6;
+    if (-dVar8 < 0.0) {
+      dVar7 = dVar8;
+    }
+    dVar7 = (double)(float)(dVar6 / dVar7);
+    if (0.10000000149011612 <= dVar8) {
+      local_c0 = (float)dVar5;
+      local_bc = (float)dVar5;
+      local_b8 = 0x42300000;
+      local_b4 = 0x41700000;
+      local_b0 = 0x41700000;
+      local_ac = 0x41d00000;
+      fVar1 = *(float *)(DAT_829d7edc + 0xc);
+      local_d8 = fVar1 * (float)(dVar7 * dVar9) + *(float *)(iVar2 + 0x1c);
+      local_d4 = (float)(dVar4 * dVar7) * fVar1 + *(float *)(iVar2 + 0x20);
+      local_d0 = (float)(dVar7 * dVar5) * fVar1 + *(float *)(iVar2 + 0x24);
+      PM_trace(iVar3,local_a0,param_3 + 0x1c,&local_d8,&local_c0,*(undefined4 *)(iVar2 + 0x150),
+               *(undefined4 *)(iVar3 + 0x5c));
+      if (dVar6 <= (double)local_a0[0]) {
+        fVar1 = *(float *)(DAT_829d7eec + 0xc);
+        *(float *)(iVar2 + 0x28) = (float)(dVar9 * (double)fVar1);
+        *(float *)(iVar2 + 0x2c) = (float)(dVar4 * (double)fVar1);
+        __restfpr_27(1);
+        __restgprlr_26();
+        return;
+      }
+    }
+  }
+  __restfpr_27(0);
+  __restgprlr_26();
+  return;
+}
+
+
+// 8226DE48  Jump_Start  (bgame/bg_jump.cpp:429)
+
+void Jump_Start(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  float fVar4;
+  uint uVar5;
+  int iVar6;
+  int *piVar7;
+  char cVar9;
+  undefined4 uVar8;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  
+  piVar7 = (int *)__savegprlr_26();
+  iVar1 = *piVar7;
+  dVar11 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004878,0x1b4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  dVar11 = (double)((float)(longlong)*(int *)(iVar1 + 0x58) * (float)(dVar11 * 2.0));
+  cVar9 = Jump_CheckDive(piVar7,param_2,iVar1);
+  if ((((*(uint *)(iVar1 + 0xc) & 0x2000) != 0) && (*(int *)(iVar1 + 8) < 0x709)) && (cVar9 == '\0')
+     ) {
+    dVar10 = (double)Jump_GetLandFactor(iVar1);
+    if (dVar10 == 0.0) {
+      MyAssertHandler(0xffffffff82004878,0x1bf,0,0xffffffff82000f98,0xffffffff82004940);
+    }
+    dVar11 = (double)(float)(dVar11 / dVar10);
+  }
+  iVar3 = (int)param_2;
+  *(undefined4 *)(iVar3 + 0x30) = 0;
+  *(undefined4 *)(iVar3 + 0x34) = 0;
+  *(undefined4 *)(iVar3 + 0x2c) = 0;
+  *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
+  iVar6 = DAT_829c3ff8;
+  uVar2 = *(uint *)(iVar1 + 0xc);
+  iVar3 = piVar7[1];
+  *(undefined4 *)(iVar1 + 0x80) = *(undefined4 *)(iVar1 + 0x24);
+  uVar5 = uVar2 & 0xfffffe7f;
+  *(float *)(iVar1 + 0x30) = (float)SQRT(dVar11);
+  *(undefined4 *)(iVar1 + 8) = 0;
+  *(undefined4 *)(iVar1 + 0x20c) = 0;
+  *(int *)(iVar1 + 0x7c) = iVar3;
+  *(uint *)(iVar1 + 0xc) = uVar5 | 0x2000;
+  fVar4 = *(float *)(iVar6 + 0xc) + *(float *)(iVar1 + 0x37c);
+  if (255.0 - fVar4 < 0.0) {
+    fVar4 = 255.0;
+  }
+  *(float *)(iVar1 + 0x37c) = fVar4;
+  if (cVar9 != '\0') {
+    *(uint *)(iVar1 + 0xc) = uVar5 | 0x402000;
+    uVar8 = BG_GetMoveDirection((double)*(float *)(iVar1 + 0x15c),iVar1 + 0x28);
+    *(undefined4 *)(iVar1 + 0x32e0) = uVar8;
+    __restgprlr_26();
+    return;
+  }
+  *(uint *)(iVar1 + 0xc) = uVar2 & 0xffbffe7f | 0x2000;
+  __restgprlr_26();
+  return;
+}
+
+
+// 8226E000  Jump_PushOffLadder  (bgame/bg_jump.cpp:491)
+
+void Jump_PushOffLadder(int param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  
+  if ((*(uint *)(param_1 + 0xc) & 8) == 0) {
+    MyAssertHandler(0xffffffff82004878,0x1f0,0,0xffffffff82000f98,0xffffffff8200494c);
+  }
+  *(float *)(param_1 + 0x30) = *(float *)(param_1 + 0x30) * 0.75;
+  fVar1 = param_2[1];
+  fVar2 = *param_2;
+  fVar3 = *(float *)(param_1 + 0x70);
+  fVar4 = SQRT(fVar1 * fVar1 + fVar2 * fVar2);
+  fVar6 = 1.0;
+  if (-fVar4 < 0.0) {
+    fVar6 = fVar4;
+  }
+  fVar6 = 1.0 / fVar6;
+  fVar5 = fVar6 * fVar2;
+  fVar4 = fVar1 * fVar6;
+  if (param_2[2] * *(float *)(param_1 + 0x78) + fVar3 * fVar2 + *(float *)(param_1 + 0x74) * fVar1 <
+      0.0) {
+    fVar2 = (*(float *)(param_1 + 0x78) * fVar6 * 0.0 +
+            fVar3 * fVar5 + *(float *)(param_1 + 0x74) * fVar4) * -2.0;
+    fVar4 = *(float *)(param_1 + 0x74) * fVar2 + fVar4;
+    fVar1 = *(float *)(param_1 + 0x78) * fVar2 + fVar6 * 0.0;
+    fVar5 = fVar3 * fVar2 + fVar5;
+    fVar2 = SQRT(fVar5 * fVar5 + fVar1 * fVar1 + fVar4 * fVar4);
+    fVar1 = 1.0;
+    if (-fVar2 < 0.0) {
+      fVar1 = fVar2;
+    }
+    fVar5 = (1.0 / fVar1) * fVar5;
+    fVar4 = fVar4 * (1.0 / fVar1);
+  }
+  fVar1 = *(float *)(DAT_829c3ff4 + 0xc);
+  *(float *)(param_1 + 0x28) = fVar5 * fVar1;
+  *(float *)(param_1 + 0x2c) = fVar4 * fVar1;
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xfffffff7;
+  return;
 }
 
 
@@ -223,10 +551,58 @@ void Jump_AddSurfaceEvent(int param_1,undefined8 param_2)
 
 // 8226E1C0  Jump_Check  (bgame/bg_jump.cpp:552)
 
-void Jump_Check(void)
+void Jump_Check(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  piVar3 = (int *)__savegprlr_26();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82004878,0x22e,0,0xffffffff82000f98,0xffffffff82004978);
+  }
+  iVar1 = *piVar3;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004878,0x231,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  uVar2 = *(uint *)(iVar1 + 0xc);
+  if ((uVar2 & 0x40000) == 0) {
+    if (((((499 < piVar3[1] - *(int *)(iVar1 + 0x7c)) && ((uVar2 & 0x400) == 0)) &&
+         ((uVar2 & 4) == 0)) &&
+        ((*(int *)(iVar1 + 4) < 8 && (iVar4 = PM_GetEffectiveStance(iVar1), iVar4 == 0)))) &&
+       ((piVar3[2] & 0x400U) != 0)) {
+      if ((piVar3[0xd] & 0x400U) != 0) {
+        piVar3[2] = piVar3[2] & 0xfffffbff;
+        __restgprlr_26();
+        return;
+      }
+      if (*(short *)((int)param_2 + 0x58) != 0x7ff) {
+        iVar4 = BG_GetEntityState(*(undefined1 *)(piVar3 + 0x4d));
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff82004878,599,0,0xffffffff82000f98,0xffffffff82004968);
+        }
+        if ((*(int *)(iVar4 + 4) == 0xc) || (*(int *)(iVar4 + 4) == 0xe)) goto LAB_8226e240;
+      }
+      Jump_Start((double)*(float *)(DAT_829c4004 + 0xc),piVar3,param_2);
+      Jump_AddSurfaceEvent(iVar1,param_2);
+      if ((*(uint *)(iVar1 + 0xc) & 8) != 0) {
+        Jump_PushOffLadder(iVar1,param_2);
+      }
+      BG_AnimUpdatePlayerStateConditions(piVar3);
+      uVar5 = 3;
+      if (0x7f < *(byte *)(piVar3 + 8)) {
+        uVar5 = 4;
+      }
+      BG_AnimScriptEvent(iVar1,uVar5,0,1,param_2 + 0x88);
+      __restgprlr_26(1);
+      return;
+    }
+  }
+LAB_8226e240:
+  __restgprlr_26(0);
+  return;
 }
 

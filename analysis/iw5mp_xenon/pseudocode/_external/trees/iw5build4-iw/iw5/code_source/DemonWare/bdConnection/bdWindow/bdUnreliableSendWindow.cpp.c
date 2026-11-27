@@ -22,7 +22,6 @@ void bdQueue<bdReference<bdDataChunk>_>__dequeue(undefined4 *param_1)
   undefined4 local_20 [4];
   
   if (param_1[2] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff822121a8,0x14,0,0xffffffff820011f4,0xffffffff82212168,
                     0xffffffff822123a0);
   }
@@ -43,13 +42,32 @@ void bdUnreliableSendWindow___bdUnreliableSendWindow(undefined4 *param_1)
 }
 
 
+// 82937310  bdUnreliableSendWindow::add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablesendwindow.cpp:24)
+
+void bdUnreliableSendWindow__add(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82219218,0x19,0,0xffffffff820011f4,0xffffffff82218ddc,
+                    0xffffffff822191fc);
+  }
+  bdLinkedList<bdReference<bdDataChunk>_>__insertAfter
+            (iVar1 + 8,*(undefined4 *)(iVar1 + 0xc),param_2);
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(param_2);
+  __restgprlr_29();
+  return;
+}
+
+
 // 82936E70  bdQueue<bdReference<bdDataChunk>_>::peek  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdqueue.inl:26)
 
 void bdQueue<bdReference<bdDataChunk>_>__peek(int param_1)
 
 {
   if (*(int *)(param_1 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff822121a8,0x1b,0,0xffffffff820011f4,0xffffffff82212168,
                     0xffffffff82212178);
   }
@@ -60,11 +78,41 @@ void bdQueue<bdReference<bdDataChunk>_>__peek(int param_1)
 
 // 829370E0  bdUnreliableSendWindow::getDataToSend  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablesendwindow.cpp:30)
 
-void bdUnreliableSendWindow__getDataToSend(void)
+/* WARNING: Removing unreachable block (ram,0x82937190) */
+/* WARNING: Removing unreachable block (ram,0x82937194) */
+/* WARNING: Removing unreachable block (ram,0x829371a4) */
+/* WARNING: Removing unreachable block (ram,0x829371a8) */
+/* WARNING: Removing unreachable block (ram,0x829371b0) */
+
+void bdUnreliableSendWindow__getDataToSend(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  undefined8 uVar1;
+  char cVar3;
+  undefined1 local_60 [4];
+  undefined1 local_5c [92];
+  
+  iVar2 = __savegprlr_23();
+  if (*(int *)(iVar2 + 0x10) != 0) {
+    cVar3 = '\x01';
+    do {
+      if (cVar3 == '\0') break;
+      uVar1 = bdQueue<bdReference<bdDataChunk>_>__peek(iVar2 + 8);
+      bdReference<bdDataChunk>__operator_(local_60,uVar1);
+      MyAssertHandler(0xffffffff82219218,0x25,0,0xffffffff820011f4,0xffffffff82218ddc,
+                      0xffffffff822191fc);
+      bdDataChunk__setSequenceNumber(0,*(undefined2 *)(iVar2 + 4));
+      cVar3 = bdPacket__addChunk(param_2,local_5c);
+      if (cVar3 != '\0') {
+        *(short *)(iVar2 + 4) = *(short *)(iVar2 + 4) + 1;
+        bdQueue<bdReference<bdDataChunk>_>__dequeue(iVar2 + 8);
+      }
+    } while (*(int *)(iVar2 + 0x10) != 0);
+  }
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(local_60);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -73,8 +121,25 @@ void bdUnreliableSendWindow__getDataToSend(void)
 void bdLinkedList<bdReference<bdDataChunk>_>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_29();
+  while( true ) {
+    if (*piVar3 == 0) break;
+    iVar1 = *piVar3;
+    iVar2 = *(int *)(iVar1 + 4);
+    if (iVar1 != 0) {
+      bdReference<bdDataChunk>___bdReference<bdDataChunk>(iVar1);
+      bdMemory__deallocate(iVar1);
+    }
+    *piVar3 = iVar2;
+  }
+  piVar3[1] = 0;
+  piVar3[2] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -99,7 +164,6 @@ int bdLinkedList<bdReference<bdDataChunk>_>__getHead(int *param_1)
 
 {
   if (*param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220d4a8,0x37,0,0xffffffff820011f4,0xffffffff8220d460,
                     0xffffffff8220d470);
   }
@@ -139,11 +203,71 @@ void bdLinkedList<bdReference<bdDataChunk>_>__removeAt(int *param_1,int *param_2
 
 // 82936F30  bdLinkedList<bdReference<bdDataChunk>_>::insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
-void bdLinkedList<bdReference<bdDataChunk>_>__insertAfter(void)
+void bdLinkedList<bdReference<bdDataChunk>_>__insertAfter
+               (undefined8 param_1,ulonglong param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  undefined4 *puVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  puVar5 = (uint *)bdMemory__allocate(0xc);
+  if (puVar5 == (uint *)0x0) {
+    puVar5 = (uint *)0x0;
+  }
+  else {
+    uVar1 = *param_3;
+    *puVar5 = uVar1;
+    if ((ulonglong)uVar1 != 0) {
+      lVar6 = (ulonglong)uVar1 + 4;
+      bVar3 = false;
+      do {
+        puVar7 = (uint *)lVar6;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar1;
+          bVar3 = true;
+        }
+      } while (!bVar3);
+    }
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    puVar5[1] = 0;
+    puVar5[2] = puVar4[1];
+    if (puVar4[1] == 0) {
+      *puVar4 = puVar5;
+    }
+    else {
+      *(uint **)(puVar4[1] + 4) = puVar5;
+    }
+    puVar4[1] = puVar5;
+  }
+  else {
+    uVar2 = (uint)param_2;
+    uVar1 = *(uint *)(uVar2 + 4);
+    puVar5[2] = uVar2;
+    puVar5[1] = uVar1;
+    if (*(int *)(uVar2 + 4) == 0) {
+      if ((param_2 & 0xffffffff) != (ulonglong)(uint)puVar4[1]) {
+        MyAssertHandler(0xffffffff8220d4a8,0x16b,0,0xffffffff820011f4,0xffffffff8220d61c,
+                        0xffffffff8220d630);
+      }
+      puVar4[1] = puVar5;
+    }
+    else {
+      *(uint **)(*(int *)(uVar2 + 4) + 8) = puVar5;
+    }
+    *(uint **)(uVar2 + 4) = puVar5;
+  }
+  puVar4[2] = puVar4[2] + 1;
+  __restgprlr_29();
+  return;
 }
 
 

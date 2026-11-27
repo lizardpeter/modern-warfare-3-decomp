@@ -31,6 +31,58 @@
 ; 829138E8  bdURL::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:24)
   829138E8  7D8802A6             mfspr r12,LR
   829138EC  48002DD1             bl 0x829166bc
+  829138F0  3BE1FF90             subi r31,r1,0x70
+  829138F4  9421FF90             stwu r1,-0x70(r1)
+  829138F8  7C7E1B78             or r30,r3,r3
+  829138FC  909F008C             stw r4,0x8c(r31)
+  82913900  7C9D2378             or r29,r4,r4
+  82913904  80640000             lwz r3,0x0(r4)
+  82913908  38A00180             li r5,0x180
+  8291390C  389E0004             addi r4,r30,0x4
+  82913910  4BFE2561             bl 0x828f5e70
+  82913914  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82913918  314BFFFF             subic r10,r11,0x1
+  8291391C  7D6A5910             subfe r11,r10,r11
+  82913920  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82913924  4182001C             beq 0x82913940
+  82913928  389E0184             addi r4,r30,0x184
+  8291392C  807D0000             lwz r3,0x0(r29)
+  82913930  4BFE22D1             bl 0x828f5c00
+  82913934  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82913938  39600001             li r11,0x1
+  8291393C  40820008             bne 0x82913944
+LAB_82913940:
+  82913940  39600000             li r11,0x0
+LAB_82913944:
+  82913944  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82913948  41820020             beq 0x82913968
+  8291394C  38A00080             li r5,0x80
+  82913950  807D0000             lwz r3,0x0(r29)
+  82913954  389E0186             addi r4,r30,0x186
+  82913958  4BFE2519             bl 0x828f5e70
+  8291395C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82913960  39600001             li r11,0x1
+  82913964  40820008             bne 0x8291396c
+LAB_82913968:
+  82913968  39600000             li r11,0x0
+LAB_8291396c:
+  8291396C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82913970  4182001C             beq 0x8291398c
+  82913974  389E0208             addi r4,r30,0x208
+  82913978  807D0000             lwz r3,0x0(r29)
+  8291397C  4BFE2425             bl 0x828f5da0
+  82913980  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82913984  39600001             li r11,0x1
+  82913988  40820008             bne 0x82913990
+LAB_8291398c:
+  8291398C  39600000             li r11,0x0
+LAB_82913990:
+  82913990  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  82913994  7FA3EB78             or r3,r29,r29
+  82913998  4BA50A69             bl 0x82364400
+  8291399C  7FC3F378             or r3,r30,r30
+  829139A0  383F0070             addi r1,r31,0x70
+  829139A4  48002D68             b 0x8291670c
 
 ; 82913880  bdURL::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:35)
   82913880  38600210             li r3,0x210

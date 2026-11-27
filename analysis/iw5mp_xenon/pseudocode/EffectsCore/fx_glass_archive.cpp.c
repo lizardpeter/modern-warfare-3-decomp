@@ -2,11 +2,28 @@
 
 // 8241F6C0  Glass_WriteActivePiece  (EffectsCore/fx_glass_archive.cpp:19)
 
-void Glass_WriteActivePiece(void)
+void Glass_WriteActivePiece(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_29();
+  lVar3 = (param_3 & 0x7ffffff) * 0x20;
+  uVar1 = *(uint *)(iVar2 + 0x38);
+  lVar4 = (ulonglong)*(uint *)(iVar2 + 0x3c) +
+          (param_3 + (param_3 & 0x1fffffff) * 8 & 0x3fffffff) * 4;
+  MemFile_WriteData(param_2,0x20,(ulonglong)*(uint *)(iVar2 + 0x34) + lVar3);
+  MemFile_WriteData(param_2,0x20,(ulonglong)uVar1 + lVar3);
+  MemFile_WriteData(param_2,0x24,lVar4);
+  iVar2 = *(int *)((int)lVar4 + 4);
+  if (iVar2 != 0) {
+    Phys_ObjSave(iVar2,param_2);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -21,7 +38,6 @@ void Glass_Save(undefined8 param_1)
   
   iVar1 = DB_AssetCount(0x12);
   if (iVar1 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82063290,0x2b,0,0xffffffff82000f98,0xffffffff8202b60c);
   }
   local_20[0] = 0x67;
@@ -70,7 +86,6 @@ void Glass_Restore(void)
   uVar2 = __savegprlr_20();
   iVar3 = DB_AssetCount(0x12);
   if (iVar3 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82063290,0x4d,0,0xffffffff82000f98,0xffffffff8202b60c);
   }
   MemFile_ReadData(uVar2,1,&local_70);
@@ -82,7 +97,6 @@ void Glass_Restore(void)
   if (DAT_8333cad8 != 0) {
     Glass_FreeAllPieces();
     if (DAT_8333cae0 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82063290,0x5d,0,0xffffffff82000f98,0xffffffff820631f8);
     }
     *DAT_8333cb00 = 0xcfcfcfcf;
@@ -97,8 +111,8 @@ void Glass_Restore(void)
     uVar5 = (ulonglong)DAT_8333cad0;
     uVar7 = (ulonglong)local_6c[0];
     if (uVar5 < uVar7) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82063290,0x6b,0,0xffffffff820631cc,uVar7);
+      uVar5 = (ulonglong)DAT_8333cad0;
     }
     uVar12 = 0;
     if (uVar7 != 0) {
@@ -185,7 +199,6 @@ void Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,
         do {
           uVar5 = LZCOUNT(uVar6);
           if (0x20 < uVar5) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar5,0x21);
           }
           uVar6 = uVar6 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar5 << 2));

@@ -25,3 +25,53 @@ LAB_8292a570:
   8292A580  EBE10058             ld r31,0x58(r1)
   8292A584  38210060             addi r1,r1,0x60
   8292A588  4E800020             blr
+
+; 8292A58C  _JumpToContinuation  (<external>/bt/278379/vctools/crt/xb/xbox/handlers.asm:71)
+  8292A58C  C9C40198             lfd f14,0x198(r4)
+  8292A590  C9E401A0             lfd f15,0x1a0(r4)
+  8292A594  CA0401A8             lfd f16,0x1a8(r4)
+  8292A598  CA2401B0             lfd f17,0x1b0(r4)
+  8292A59C  CA4401B8             lfd f18,0x1b8(r4)
+  8292A5A0  CA6401C0             lfd f19,0x1c0(r4)
+  8292A5A4  CA8401C8             lfd f20,0x1c8(r4)
+  8292A5A8  CAA401D0             lfd f21,0x1d0(r4)
+  8292A5AC  CAC401D8             lfd f22,0x1d8(r4)
+  8292A5B0  CAE401E0             lfd f23,0x1e0(r4)
+  8292A5B4  CB0401E8             lfd f24,0x1e8(r4)
+  8292A5B8  CB2401F0             lfd f25,0x1f0(r4)
+  8292A5BC  CB4401F8             lfd f26,0x1f8(r4)
+  8292A5C0  CB640200             lfd f27,0x200(r4)
+  8292A5C4  CB840208             lfd f28,0x208(r4)
+  8292A5C8  CBA40210             lfd f29,0x210(r4)
+  8292A5CC  CBC40218             lfd f30,0x218(r4)
+  8292A5D0  CBE40220             lfd f31,0x220(r4)
+  8292A5D4  E9C40088             ld r14,0x88(r4)
+  8292A5D8  E9E40090             ld r15,0x90(r4)
+  8292A5DC  EA040098             ld r16,0x98(r4)
+  8292A5E0  EA2400A0             ld r17,0xa0(r4)
+  8292A5E4  EA4400A8             ld r18,0xa8(r4)
+  8292A5E8  EA6400B0             ld r19,0xb0(r4)
+  8292A5EC  EA8400B8             ld r20,0xb8(r4)
+  8292A5F0  EAA400C0             ld r21,0xc0(r4)
+  8292A5F4  EAC400C8             ld r22,0xc8(r4)
+  8292A5F8  EAE400D0             ld r23,0xd0(r4)
+  8292A5FC  EB0400D8             ld r24,0xd8(r4)
+  8292A600  EB2400E0             ld r25,0xe0(r4)
+  8292A604  EB4400E8             ld r26,0xe8(r4)
+  8292A608  EB6400F0             ld r27,0xf0(r4)
+  8292A60C  EB8400F8             ld r28,0xf8(r4)
+  8292A610  EBA40100             ld r29,0x100(r4)
+  8292A614  EBC40108             ld r30,0x108(r4)
+  8292A618  EBE40110             ld r31,0x110(r4)
+  8292A61C  C8040120             lfd f0,0x120(r4)
+  8292A620  80A40118             lwz r5,0x118(r4)
+  8292A624  80C4011C             lwz r6,0x11c(r4)
+  8292A628  E8E40010             ld r7,0x10(r4)
+  8292A62C  FDFE058E             mtfsf 0xff,f0
+  8292A630  7C6803A6             mtspr LR,r3
+  8292A634  7CAFF120             mtcrf 0xff,r5
+  8292A638  7CC103A6             mtspr XER,r6
+  8292A63C  7CE903A6             mtspr CTR,r7
+  8292A640  E8440028             ld r2,0x28(r4)
+  8292A644  E8240020             ld r1,0x20(r4)
+  8292A648  4E800020             blr

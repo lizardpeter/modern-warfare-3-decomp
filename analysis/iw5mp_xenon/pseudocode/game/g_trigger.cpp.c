@@ -2,11 +2,41 @@
 
 // 824AD1C0  G_Trigger  (game/g_trigger.cpp:88)
 
-void G_Trigger(void)
+void G_Trigger(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (*(char *)((int)puVar2 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207de60,0x5b,0,0xffffffff82000f98,0xffffffff8207de50);
+  }
+  puVar1 = (undefined4 *)param_2;
+  if (*(char *)((int)puVar1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207de60,0x5c,0,0xffffffff82000f98,0xffffffff82073a30);
+  }
+  iVar3 = Scr_IsSystemActive(1);
+  if (iVar3 != 0) {
+    if (DAT_835832d4 == 0x100) {
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff8207de60,0x61,0,0xffffffff8207de30);
+      }
+      Scr_AddEntity(param_2);
+      Scr_Notify(puVar2,DAT_835a0c92,1);
+      __restgprlr_28();
+      return;
+    }
+    iVar3 = DAT_835832d4 * 0xc;
+    DAT_835832d4 = DAT_835832d4 + 1;
+    *(short *)(&DAT_83581ad4 + iVar3) = (short)*puVar2;
+    *(short *)(&DAT_83581ad6 + iVar3) = (short)*puVar1;
+    *(undefined4 *)(&DAT_83581ad8 + iVar3) = puVar2[0x9a];
+    *(undefined4 *)(&DAT_83581adc + iVar3) = puVar1[0x9a];
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -61,7 +91,6 @@ void InitSentientTrigger(int param_1)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207de60,0x9c,0,0xffffffff82000f98,0xffffffff8206c550);
   }
   uVar1 = *(uint *)(param_1 + 0x180);
@@ -170,7 +199,6 @@ void SP_trigger_radius(int param_1)
   *(float *)(param_1 + 0x114) = local_1c;
   *(float *)(param_1 + 0x118) = local_20 * 0.5;
   if (*(char *)(param_1 + 0x100) != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207de60,0xf9,0,0xffffffff82000f98,0xffffffff8207dee4);
   }
   *(undefined1 *)(param_1 + 0x102) = 1;
@@ -205,7 +233,6 @@ void SP_trigger_disk(int param_1)
   *(float *)(param_1 + 0x110) = local_20[0];
   *(float *)(param_1 + 0x114) = local_20[0];
   if (*(char *)(param_1 + 0x100) != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207de60,0x11c,0,0xffffffff82000f98,0xffffffff8207dee4);
   }
   *(undefined1 *)(param_1 + 0x102) = 1;
@@ -218,11 +245,37 @@ void SP_trigger_disk(int param_1)
 
 // 824AD8A0  hurt_touch  (game/g_trigger.cpp:350)
 
-void hurt_touch(void)
+void hurt_touch(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = (int)param_2;
+  if ((*(char *)(iVar3 + 0x16b) != '\0') && (*(int *)(iVar2 + 0x1b4) <= DAT_83580fac)) {
+    G_Trigger();
+    iVar1 = *(int *)(iVar3 + 0x19c);
+    G_Damage(param_2,iVar2,iVar2,0,0,*(undefined4 *)(iVar2 + 0x1a4),0,0xd);
+    if (iVar1 != *(int *)(iVar3 + 0x19c)) {
+      if ((*(uint *)(iVar2 + 0x180) & 0x10) == 0) {
+        iVar3 = DAT_83580fac + 0x32;
+      }
+      else {
+        iVar3 = DAT_83580fac + 1000;
+      }
+      *(int *)(iVar2 + 0x1b4) = iVar3;
+    }
+    if ((*(uint *)(iVar2 + 0x180) & 0x20) != 0) {
+      if (*(char *)(iVar2 + 0x16d) != '\x03') {
+        MyAssertHandler(0xffffffff8207de60,0x18c,0,0xffffffff82000f98,0xffffffff8207dfb8);
+      }
+      *(undefined1 *)(iVar2 + 0x16d) = 2;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -238,7 +291,6 @@ void hurt_use(int param_1)
   }
   else {
     if (*(char *)(param_1 + 0x16d) != '\x02') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207de60,0x19a,0,0xffffffff82000f98,0xffffffff8207dfe8);
     }
     uVar1 = 3;
@@ -290,13 +342,58 @@ void SP_trigger_once(int param_1)
 }
 
 
-// 824ADC18  Activate_trigger_damage  (game/g_trigger.cpp:582)
+// 824ADAE8  Respond_trigger_damage  (game/g_trigger.cpp:506)
 
-void Activate_trigger_damage(void)
+undefined8 Respond_trigger_damage(int param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined8 uVar2;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8207de60,0x1fb,0,0xffffffff82000f98,0xffffffff8207e014);
+  }
+  uVar1 = *(uint *)(param_1 + 0x180);
+  if (((((((((uVar1 & 1) == 0) || (param_2 != 1)) && (((uVar1 & 2) == 0 || (param_2 != 2)))) &&
+         ((((uVar1 & 4) == 0 || (param_2 < 4)) || (7 < param_2)))) &&
+        ((((uVar1 & 8) == 0 || (param_2 < 3)) || ((7 < param_2 && (param_2 != 0xe)))))) &&
+       (((uVar1 & 0x10) == 0 || ((param_2 != 5 && (param_2 != 7)))))) &&
+      (((uVar1 & 0x20) == 0 || (param_2 != 8)))) &&
+     (((uVar1 & 0x100) == 0 || ((param_2 != 0 && ((param_2 < 10 || (0xd < param_2)))))))) {
+    uVar2 = 1;
+  }
+  else {
+    uVar2 = 0;
+  }
+  return uVar2;
+}
+
+
+// 824ADC18  Activate_trigger_damage  (game/g_trigger.cpp:582)
+
+void Activate_trigger_damage(undefined8 param_1,undefined8 param_2,int param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (((*(int *)(iVar1 + 0x1ac) < 1) || (*(int *)(iVar1 + 0x1ac) <= param_3)) &&
+     (cVar2 = Respond_trigger_damage(iVar1,param_4), cVar2 != '\0')) {
+    param_3 = *(int *)(iVar1 + 0x19c) - param_3;
+    *(int *)(iVar1 + 0x19c) = param_3;
+    if ((*(int *)(iVar1 + 0x1b0) == 0) || (*(int *)(iVar1 + 0x1b0) <= 32000 - param_3)) {
+      if ((int)param_4 != -1) {
+        G_Trigger(iVar1,param_2);
+      }
+      *(undefined4 *)(iVar1 + 0x19c) = 32000;
+      if ((*(uint *)(iVar1 + 0x180) & 0x200) != 0) {
+        *(uint *)(iVar1 + 0x184) = *(uint *)(iVar1 + 0x184) | 0x2000000;
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -376,11 +473,200 @@ void SP_trigger_damage(int param_1)
 
 // 824ADE60  G_CheckHitTriggerDamage  (game/g_trigger.cpp:684)
 
-void G_CheckHitTriggerDamage(void)
+void G_CheckHitTriggerDamage
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  int iVar7;
+  undefined8 uVar8;
+  longlong lVar9;
+  int iVar10;
+  int *piVar11;
+  undefined4 *puVar12;
+  double dVar13;
+  float local_20e0;
+  float local_20dc;
+  float local_20d8;
+  float local_20d0;
+  float local_20cc;
+  float local_20c8;
+  float local_20c4;
+  float local_20c0;
+  float local_20bc;
+  float local_20b0;
+  float local_20ac;
+  float local_20a8;
+  float local_20a4;
+  float local_20a0;
+  float local_209c;
+  int local_2090 [2084];
+  
+  uVar8 = __savegprlr_17();
+  if (0xf < (param_6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8207de60,0x2b5,0,0xffffffff8207e03c,param_6,0x10);
+  }
+  iVar7 = (int)((param_6 & 0xffffffff) << 2);
+  if (**(short **)((int)&PTR_DAT_82969440 + iVar7) == 0) {
+    MyAssertHandler(0xffffffff8207de60,0x2b6,0,0xffffffff82000f98,0xffffffff8207e02c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207de60,0x2b7,0,0xffffffff82000f98,0xffffffff8207e024);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207de60,0x2b8,0,0xffffffff82000f98,0xffffffff8207e01c);
+  }
+  pfVar5 = (float *)param_3;
+  fVar1 = pfVar5[1];
+  pfVar6 = (float *)param_4;
+  local_20dc = pfVar6[1] - fVar1;
+  fVar2 = pfVar5[2];
+  fVar3 = *pfVar5;
+  local_20d8 = pfVar6[2] - fVar2;
+  local_20e0 = *pfVar6 - fVar3;
+  local_20cc = (pfVar6[1] + fVar1) * 0.5;
+  local_20d0 = (*pfVar6 + fVar3) * 0.5;
+  local_20c8 = (pfVar6[2] + fVar2) * 0.5;
+  local_20c0 = ABS(fVar1 - local_20cc);
+  local_20c4 = ABS(fVar3 - local_20d0);
+  local_20bc = ABS(fVar2 - local_20c8);
+  fVar2 = SQRT(local_20e0 * local_20e0 + local_20d8 * local_20d8 + local_20dc * local_20dc);
+  fVar1 = 1.0;
+  if (-fVar2 < 0.0) {
+    fVar1 = fVar2;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_20e0 = fVar1 * local_20e0;
+  local_20dc = local_20dc * fVar1;
+  local_20d8 = local_20d8 * fVar1;
+  lVar9 = CM_AreaEntities(&local_20d0,local_2090,0x800,0x400000);
+  if (0 < (int)lVar9) {
+    piVar11 = local_2090;
+    dVar13 = 0.0;
+    do {
+      iVar4 = *piVar11;
+      puVar12 = &DAT_83373680 + iVar4 * 0xa0;
+      if (((&DAT_833737f2)[iVar4 * 0x140] == DAT_835a0c98) &&
+         (iVar10 = SV_SightTraceToEntity(param_3,param_4,*puVar12,0xffffffffffffffff), iVar10 != 0))
+      {
+        iVar10 = Vec3Compare(param_3,param_2);
+        if (iVar10 == 0) {
+          local_20b0 = *pfVar5;
+          local_20ac = pfVar5[1];
+          local_20a8 = pfVar5[2];
+          local_20a4 = (float)dVar13;
+          local_20a0 = (float)dVar13;
+          local_209c = (float)dVar13;
+          iVar10 = SV_EntityContactBounds(&local_20b0,puVar12);
+          if (iVar10 != 0) goto LAB_824ae12c;
+        }
+        Scr_AddConstString(**(undefined2 **)((int)&PTR_DAT_82969440 + iVar7));
+        Scr_AddVector(0xffffffff82179fd8);
+        Scr_AddVector(&local_20e0);
+        Scr_AddEntity(uVar8);
+        Scr_AddInt(param_5);
+        Scr_Notify(puVar12,DAT_835a0baa,5);
+        Activate_trigger_damage(puVar12,uVar8,param_5,param_6);
+        if (*(int *)(&DAT_83373830 + iVar4 * 0x280) == 0) {
+          (&DAT_8337381c)[iVar4 * 0xa0] = 32000;
+        }
+      }
+LAB_824ae12c:
+      lVar9 = lVar9 + -1;
+      piVar11 = piVar11 + 1;
+    } while (lVar9 != 0);
+  }
+  __restgprlr_17();
+  return;
+}
+
+
+// 824AE148  G_GrenadeTouchTriggerDamage  (game/g_trigger.cpp:756)
+
+void G_GrenadeTouchTriggerDamage
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  undefined8 uVar7;
+  longlong lVar8;
+  int iVar9;
+  int *piVar10;
+  undefined4 *puVar11;
+  float local_20a0;
+  float local_209c;
+  float local_2098;
+  float local_2090;
+  float local_208c;
+  float local_2088;
+  float local_2084;
+  float local_2080;
+  float local_207c;
+  int local_2070 [2076];
+  
+  uVar7 = __savegprlr_19();
+  pfVar5 = (float *)param_2;
+  fVar1 = pfVar5[1];
+  pfVar6 = (float *)param_3;
+  local_209c = pfVar6[1] - fVar1;
+  fVar2 = pfVar5[2];
+  fVar3 = *pfVar5;
+  local_2098 = pfVar6[2] - fVar2;
+  local_20a0 = *pfVar6 - fVar3;
+  local_208c = (pfVar6[1] + fVar1) * 0.5;
+  local_2088 = (pfVar6[2] + fVar2) * 0.5;
+  local_2090 = (*pfVar6 + fVar3) * 0.5;
+  local_2080 = ABS(fVar1 - local_208c);
+  local_207c = ABS(fVar2 - local_2088);
+  local_2084 = ABS(fVar3 - local_2090);
+  fVar2 = SQRT(local_20a0 * local_20a0 + local_2098 * local_2098 + local_209c * local_209c);
+  fVar1 = 1.0;
+  if (-fVar2 < 0.0) {
+    fVar1 = fVar2;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_20a0 = fVar1 * local_20a0;
+  local_209c = local_209c * fVar1;
+  local_2098 = local_2098 * fVar1;
+  lVar8 = CM_AreaEntities(&local_2090,local_2070,0x800,0x400000);
+  if (0 < (int)lVar8) {
+    piVar10 = local_2070;
+    do {
+      iVar4 = *piVar10;
+      puVar11 = &DAT_83373680 + iVar4 * 0xa0;
+      if ((((&DAT_833737f2)[iVar4 * 0x140] == DAT_835a0c98) &&
+          ((*(uint *)(&DAT_83373804 + iVar4 * 0x280) & 0x4000) != 0)) &&
+         (iVar9 = SV_SightTraceToEntity(param_2,param_3,*puVar11,0xffffffffffffffff), iVar9 != 0)) {
+        Scr_AddConstString(**(undefined2 **)
+                             ((int)&PTR_DAT_82969440 + (int)((param_5 & 0xffffffff) << 2)));
+        Scr_AddVector(0xffffffff82179fd8);
+        Scr_AddVector(&local_20a0);
+        Scr_AddEntity(uVar7);
+        Scr_AddInt(param_4);
+        Scr_Notify(puVar11,DAT_835a0baa,5);
+        Activate_trigger_damage(puVar11,uVar7,param_4,param_5);
+        if (*(int *)(&DAT_83373830 + iVar4 * 0x280) == 0) {
+          (&DAT_8337381c)[iVar4 * 0xa0] = 32000;
+        }
+      }
+      lVar8 = lVar8 + -1;
+      piVar10 = piVar10 + 1;
+    } while (lVar8 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -389,7 +675,92 @@ void G_CheckHitTriggerDamage(void)
 void trigger_use_shared(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  undefined **ppuVar6;
+  ulonglong uVar5;
+  uint uVar8;
+  longlong lVar7;
+  undefined4 local_450 [4];
+  char local_440 [1088];
+  
+  iVar2 = __savegprlr_26();
+  if (*(int *)(iVar2 + 4) == 4) {
+    MyAssertHandler(0xffffffff8207de60,0x350,0,0xffffffff82000f98,0xffffffff8207e128);
+  }
+  cVar4 = SV_SetTriggerModel(iVar2);
+  if (cVar4 == '\0') {
+    Com_PrintError(1,0xffffffff8207e0d8,(double)*(float *)(iVar2 + 0x18),
+                   (double)*(float *)(iVar2 + 0x1c),(double)*(float *)(iVar2 + 0x20));
+    G_FreeEntity(iVar2);
+    __restgprlr_26();
+    return;
+  }
+  *(undefined4 *)(iVar2 + 0x11c) = 0x200000;
+  SV_LinkEntity(iVar2);
+  *(undefined4 *)(iVar2 + 0xc) = 0;
+  uVar8 = 1;
+  *(undefined4 *)(iVar2 + 0x1b8) = 0x7ff;
+  *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(iVar2 + 0x138);
+  *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)(iVar2 + 0x13c);
+  *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(iVar2 + 0x140);
+  *(undefined1 *)(iVar2 + 0x102) = 1;
+  uVar1 = *(uint *)(iVar2 + 8);
+  *(uint *)(iVar2 + 8) = uVar1 | 1;
+  if (*(short *)(iVar2 + 0x168) == 0) {
+    *(uint *)(iVar2 + 8) = uVar1 | 0x21;
+  }
+  *(undefined1 *)(iVar2 + 0x16d) = 0;
+  *(undefined4 *)(iVar2 + 0xdc) = 1;
+  iVar3 = G_LevelSpawnString(0x313,0xffffffff820068af,local_450);
+  if (iVar3 != 0) {
+    iVar3 = I_stricmp(local_450[0],0xffffffff82078448);
+    if (iVar3 == 0) {
+      *(undefined4 *)(iVar2 + 0xdc) = 0xffffffff;
+    }
+    else {
+      ppuVar6 = &PTR_s_HINT_NOICON_8296b304;
+      do {
+        iVar3 = I_stricmp(local_450[0],*ppuVar6);
+        if (iVar3 == 0) {
+          *(uint *)(iVar2 + 0xdc) = uVar8;
+          break;
+        }
+        uVar8 = uVar8 + 1;
+        ppuVar6 = ppuVar6 + 1;
+      } while (uVar8 < 5);
+    }
+  }
+  *(undefined4 *)(iVar2 + 0xd8) = 0xff;
+  iVar3 = G_LevelSpawnString(0x314,0xffffffff820068af,local_450);
+  if (iVar3 != 0) {
+    uVar5 = 0;
+    do {
+      if (0x5f < (int)(uint)uVar5) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      lVar7 = uVar5 + 0xe8b;
+      SV_GetConfigstring(lVar7,local_440,0x400);
+      if (local_440[0] == '\0') {
+        if (0xeea < (int)lVar7) {
+          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        }
+        SV_SetConfigstring(lVar7,local_450[0]);
+LAB_824ae574:
+        *(uint *)(iVar2 + 0xd8) = (uint)uVar5 & 0xff;
+        break;
+      }
+      iVar3 = I_stricmp(local_450[0],local_440);
+      if (iVar3 == 0) goto LAB_824ae574;
+      uVar5 = uVar5 + 1;
+    } while ((uVar5 & 0xffffffff) < 0x60);
+    if ((uVar5 & 0xffffffff) == 0x60) {
+      Com_Error(1,0xffffffff8207e070,0x60);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 

@@ -2,11 +2,32 @@
 
 // 828BB7E8  CSchemaAccess::BindToSchema  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:29)
 
-void CSchemaAccess__BindToSchema(void)
+void CSchemaAccess__BindToSchema
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  longlong lVar1;
+  undefined2 local_40;
+  undefined2 local_3e;
+  uint local_3c;
+  uint local_38;
+  
+  iVar2 = __savegprlr_28();
+  *(int *)(iVar2 + 0x14) = (int)param_2;
+  lVar1 = CSchemaData__GetSchemaEntry(param_2,param_3,&local_40);
+  if (-1 < lVar1) {
+    if (param_4 != 0) {
+      local_3e = local_40;
+      local_38 = local_3c;
+    }
+    lVar1 = 0;
+    CBaseEndianBuffer__Bind
+              (iVar2,(ulonglong)*(uint *)((int)param_2 + 0x34) + (ulonglong)local_38,local_3e,
+               local_3e,1);
+  }
+  __restgprlr_28(lVar1);
+  return;
 }
 
 
@@ -36,6 +57,23 @@ void CSchemaAccess__GetArgumentInfo(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 828BB270  CSchemaAccess::GetConformanceInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:68)
+
+void CSchemaAccess__GetConformanceInfo(undefined8 param_1,longlong param_2)
+
+{
+  int iVar1;
+  undefined4 local_20 [2];
+  
+  local_20[0] = 2;
+  iVar1 = CBaseEndianBuffer__GetData(param_1,param_2,local_20);
+  if (-1 < iVar1) {
+    CBaseEndianBuffer__GetWord(param_1,param_2 + 2);
+  }
+  return;
+}
+
+
 // 828BB2C8  CSchemaAccess::GetConformingInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:77)
 
 void CSchemaAccess__GetConformingInfo(undefined8 param_1,undefined8 param_2)
@@ -49,13 +87,162 @@ void CSchemaAccess__GetConformingInfo(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 828BB348  CSchemaAccess::SkipScope  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:93)
+// 828BB2F8  CSchemaAccess::GetUnionInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:84)
 
-void CSchemaAccess__SkipScope(void)
+void CSchemaAccess__GetUnionInfo(undefined8 param_1,byte *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CBaseEndianBuffer__GetData();
+  if ((-1 < iVar2) && ((*param_2 & 0x40) != 0)) {
+    CBaseEndianBuffer__GetWord(uVar1,param_3);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 828BB348  CSchemaAccess::SkipScope  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:93)
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CSchemaAccess__SkipScope(undefined8 param_1,ulonglong param_2)
+
+{
+  bool bVar1;
+  undefined4 uVar2;
+  byte bVar3;
+  byte bVar4;
+  int iVar6;
+  undefined8 uVar5;
+  ushort uVar7;
+  uint uVar8;
+  byte local_60;
+  byte local_5f;
+  byte local_5e;
+  undefined1 uStack_5d;
+  ushort local_5c;
+  byte local_5a [2];
+  undefined1 local_58;
+  byte bStack_57;
+  undefined4 local_54;
+  uint local_50;
+  byte *local_4c;
+  undefined1 auStack_48 [72];
+  
+  iVar6 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) < 0x10) {
+    local_54 = 1;
+    uVar5 = CBaseEndianBuffer__GetData(iVar6,&local_5f,&local_54);
+    if ((int)uVar5 < 0) goto LAB_828bb4d4;
+    bVar3 = local_5f >> 2 & 3;
+    if ((bVar3 != 0) && ((bVar3 == 1 || (bVar3 < 3)))) {
+      uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c);
+      if (-1 < (int)uVar5) {
+        if ((local_5f & 0x80) != 0) {
+          local_54 = 1;
+          uVar5 = CBaseEndianBuffer__GetData(iVar6,&uStack_5d,&local_54);
+          if ((int)uVar5 < 0) goto LAB_828bb4d4;
+        }
+        if (((local_5f & 0x40) == 0) ||
+           (uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c), -1 < (int)uVar5)) {
+          if ((local_5f & 0x20) != 0) {
+            local_54 = 2;
+            uVar5 = CBaseEndianBuffer__GetData(iVar6,local_5a,&local_54);
+            if (((int)uVar5 < 0) ||
+               (((local_5a[0] & 0x80) != 0 &&
+                (uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c), (int)uVar5 < 0))))
+            goto LAB_828bb4d4;
+          }
+          if ((local_5f & 0xc) == 8) {
+            uVar5 = CSchemaAccess__GetUnionInfo(iVar6,&local_58,&local_5c);
+            bVar3 = bStack_57;
+            if ((int)uVar5 < 0) goto LAB_828bb4d4;
+          }
+          else {
+            bVar3 = 0;
+          }
+          uVar7 = 0;
+          do {
+            if ((local_5f & 0xc) == 8) {
+              if (uVar7 < bVar3) {
+                uVar5 = CBaseEndianBuffer__GetByte(iVar6,&local_5e);
+                if ((int)uVar5 < 0) break;
+                uVar8 = 0;
+                if (local_5e != 0) {
+                  do {
+                    uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c);
+                    if ((int)uVar5 < 0) goto LAB_828bb4d4;
+                    uVar8 = uVar8 + 1;
+                  } while (uVar8 < local_5e);
+                }
+                uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c);
+                if ((int)uVar5 < 0) break;
+                local_50 = (uint)local_5c;
+                uVar5 = CBaseEndianBuffer__GetDataPointer(iVar6,&local_4c,&local_50);
+                if ((int)uVar5 < 0) break;
+                local_60 = *local_4c;
+              }
+              else {
+                local_54 = 1;
+                uVar5 = CBaseEndianBuffer__GetData(iVar6,&local_60,&local_54);
+                if ((int)uVar5 < 0) break;
+                bVar1 = (local_60 & 0xc) == 0xc;
+LAB_828bb4c8:
+                if (!bVar1) goto LAB_828bb4cc;
+              }
+            }
+            else {
+              local_54 = 1;
+              uVar2 = *(undefined4 *)(iVar6 + 0xc);
+              uVar5 = CBaseEndianBuffer__GetData(iVar6,&local_60,&local_54);
+              if ((int)uVar5 < 0) break;
+              bVar4 = local_60 >> 2 & 3;
+              if (bVar4 == 0) {
+                if ((local_60 & 0x80) != 0) {
+                  local_54 = 1;
+                  uVar5 = CBaseEndianBuffer__GetData(iVar6,&uStack_5d,&local_54);
+                  if ((int)uVar5 < 0) break;
+                }
+                if (((local_60 & 0x40) != 0) &&
+                   (uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c), (int)uVar5 < 0)) break;
+                if ((local_60 & 0x20) != 0) {
+                  local_54 = 2;
+                  uVar5 = CBaseEndianBuffer__GetData(iVar6,local_5a,&local_54);
+                  if (((int)uVar5 < 0) ||
+                     (((local_5a[0] & 0x80) != 0 &&
+                      (uVar5 = CBaseEndianBuffer__GetWord(iVar6,&local_5c), (int)uVar5 < 0))))
+                  break;
+                }
+                if ((local_60 & 0x10) == 0) goto LAB_828bb5b8;
+                uVar5 = CSchemaAccess__GetConformanceInfo(iVar6,auStack_48);
+              }
+              else {
+                bVar1 = bVar4 == 3;
+                if (2 < bVar4) goto LAB_828bb4c8;
+                CBaseEndianBuffer__SeekTo(iVar6,uVar2);
+                uVar5 = CSchemaAccess__SkipScope(iVar6,param_2 + 1);
+              }
+              if ((int)uVar5 < 0) break;
+            }
+LAB_828bb5b8:
+            if ((local_5f & 0xc) == 8) {
+              uVar7 = uVar7 + 1;
+            }
+          } while ((local_60 & 0xc) != 0xc);
+        }
+      }
+      goto LAB_828bb4d4;
+    }
+  }
+LAB_828bb4cc:
+  uVar5 = 0xffffffff80004005;
+LAB_828bb4d4:
+  __restgprlr_26(uVar5);
+  return;
 }
 
 
@@ -92,10 +279,45 @@ undefined8 CSchemaData__LookupConstantFromTable(int param_1,uint param_2,undefin
 
 // 828BB720  CSchemaInMemory::Bind  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:465)
 
-void CSchemaInMemory__Bind(void)
+void CSchemaInMemory__Bind(undefined8 param_1,void *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ushort uVar1;
+  ushort uVar2;
+  void *_Dst;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  _Dst = (void *)__savegprlr_29();
+  uVar5 = 0;
+  memcpy(_Dst,param_2,0x2c);
+  iVar3 = (int)param_2 + 0x2c;
+  if ((*(uint *)((int)_Dst + 8) & 1) == 0) {
+    uVar1 = *(ushort *)((int)_Dst + 0x26);
+    if (uVar1 != 0) {
+      *(int *)((int)_Dst + 0x3c) = iVar3;
+      iVar3 = (uint)uVar1 + iVar3;
+    }
+    uVar2 = *(ushort *)((int)_Dst + 0x28);
+    *(int *)((int)_Dst + 0x2c) = iVar3;
+    iVar4 = (uint)*(ushort *)((int)_Dst + 0x2a) * (uint)uVar2;
+    iVar3 = (uint)uVar2 * 4 + iVar3;
+    *(int *)((int)_Dst + 0x30) = iVar3;
+    iVar3 = iVar4 + iVar3;
+    iVar4 = (((*(int *)((int)_Dst + 0x14) + (uint)uVar2 * -4) - (uint)uVar1) - iVar4) + -0x2c;
+    *(int *)((int)_Dst + 0x34) = iVar3;
+    *(int *)((int)_Dst + 0x38) = iVar4;
+    iVar4 = iVar4 + iVar3;
+    *(int *)((int)_Dst + 0x40) = iVar4;
+    iVar4 = (uint)*(ushort *)((int)_Dst + 0x1a) * (uint)*(ushort *)((int)_Dst + 0x18) + iVar4;
+    *(int *)((int)_Dst + 0x44) = iVar4;
+    *(uint *)((int)_Dst + 0x48) = (uint)*(ushort *)((int)_Dst + 0x20) * 2 + iVar4;
+  }
+  else {
+    uVar5 = 0xffffffff80004005;
+  }
+  __restgprlr_29(uVar5);
+  return;
 }
 

@@ -86,11 +86,85 @@ void NellyEncodeSC(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 // 828C6550  NellyInitEncodeSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:406)
 
-void NellyInitEncodeSC3(void)
+void NellyInitEncodeSC3(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar2;
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  short sVar5;
+  double dVar6;
+  
+  piVar2 = (int *)__savegprlr_26();
+  if (piVar2 != (int *)0x0) {
+    *piVar2 = 0;
+    iVar3 = (*DAT_848958c0)(1,0x58);
+    if (iVar3 != 0) {
+      *piVar2 = iVar3;
+      *(undefined4 *)(iVar3 + 0x40) = param_2;
+      *(undefined4 *)(iVar3 + 0x44) = 1;
+      iVar4 = (*DAT_848958c0)(1,0x28);
+      *(int *)(iVar3 + 0x48) = iVar4;
+      if (iVar4 != 0) {
+        *(undefined2 *)(iVar4 + 0x1c) = 0;
+        *(undefined2 *)(iVar4 + 0x24) = 0;
+        dVar6 = 0.0;
+        *(undefined4 *)(iVar4 + 0xc) = 0x3f800000;
+        *(undefined4 *)(iVar4 + 0x10) = 0x3f800000;
+        *(undefined4 *)(iVar4 + 0x14) = 0x3f800000;
+        *(undefined4 *)(iVar4 + 0x18) = 0;
+        *(undefined4 *)(iVar4 + 0x20) = 0x3f800000;
+        iVar4 = InitSpCBM(0x173,iVar3);
+        if (iVar4 == 0) {
+          *(float *)(iVar3 + 8) = (float)dVar6;
+          sVar5 = NellyInitLDPDA(iVar3 + 0x10);
+          if (sVar5 == 0) {
+            sVar5 = NellyInitVocalFry(iVar3 + 0x14);
+            if ((sVar5 == 0) && (sVar5 = NellyInitEstOnset(iVar3 + 0x18), sVar5 == 0)) {
+              *(float *)(iVar3 + 0x1c) = (float)dVar6;
+              *(float *)(iVar3 + 0x30) = (float)dVar6;
+              *(undefined4 *)(iVar3 + 0x20) = 1;
+              *(float *)(iVar3 + 0x38) = (float)dVar6;
+              *(undefined4 *)(iVar3 + 0x28) = 1;
+              uVar1 = 0;
+              *(undefined4 *)(iVar3 + 0x4c) = 0;
+              *(undefined4 *)(iVar3 + 0x34) = 0x42c80000;
+              *(undefined4 *)(iVar3 + 0x3c) = 0x42c80000;
+              goto LAB_828c6670;
+            }
+          }
+        }
+      }
+    }
+  }
+  uVar1 = 1;
+LAB_828c6670:
+  __restgprlr_26(uVar1);
+  return;
+}
+
+
+// 828C6680  NellyFreeEncodeSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:544)
+
+undefined8 NellyFreeEncodeSC3(int *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *param_1;
+  if (iVar1 != 0) {
+    FreeSpCBM(iVar1);
+    NellyFreeLDPDA(iVar1 + 0x10);
+    NellyFreeVocalFry(iVar1 + 0x14);
+    NellyFreeEstOnset(iVar1 + 0x18);
+    if (*(int *)(iVar1 + 0x48) != 0) {
+      (*DAT_848958c4)();
+      *(undefined4 *)(iVar1 + 0x48) = 0;
+    }
+    (*DAT_848958c4)(iVar1);
+  }
+  return 0;
 }
 
 
@@ -140,12 +214,203 @@ void CoarsePitchAndFrameEnergy(undefined8 param_1,undefined8 param_2,float *para
 }
 
 
-// 828C69C0  OuterFrameParam  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:922)
+// 828C67F8  NellyLinearInterpolate  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:834)
 
-void OuterFrameParam(void)
+void NellyLinearInterpolate(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  double dVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  uint uVar6;
+  uint *puVar7;
+  longlong lVar8;
+  float *pfVar10;
+  longlong lVar9;
+  int iVar11;
+  uint *puVar12;
+  int iVar13;
+  float *pfVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  float afStack_5a0 [8];
+  uint auStack_580 [352];
+  
+  __savegprlr_21();
+  dVar15 = (double)__savefpr_28();
+  dVar17 = (double)(longlong)(int)((uint)param_3 - 1);
+  iVar13 = (int)(dVar17 / dVar15) + 1;
+  if (0x50 < iVar13) {
+    iVar13 = 0x50;
+  }
+  fVar2 = 0.0;
+  pfVar14 = afStack_5a0 + iVar13 + 4;
+  puVar7 = auStack_580 + iVar13 * 2;
+  if (0 < iVar13) {
+    dVar18 = 0.5;
+    puVar12 = puVar7;
+    iVar11 = iVar13;
+    do {
+      dVar19 = (double)fVar2;
+      dVar1 = dVar19 + dVar18;
+      dVar16 = (double)NellyLog2((double)*(float *)((int)dVar1 * 4 + (int)param_2));
+      *(float *)(((int)afStack_5a0 - (int)puVar7) + (int)puVar12) = (float)dVar16;
+      *puVar12 = (int)dVar1;
+      *(float *)(((int)pfVar14 - (int)puVar7) + (int)puVar12) = (float)dVar19;
+      iVar11 = iVar11 + -1;
+      fVar2 = (float)(dVar19 + dVar15);
+      puVar12 = puVar12 + 1;
+    } while (iVar11 != 0);
+  }
+  dVar15 = (double)NellyLog2((double)*(float *)((int)((param_3 & 0xffffffff) << 2) + (int)param_2 +
+                                               -4));
+  afStack_5a0[iVar13] = (float)dVar15;
+  puVar7[iVar13] = (uint)param_3;
+  pfVar14[iVar13] = (float)dVar17;
+  if (1 < iVar13 + 1) {
+    iVar11 = (int)puVar7 - (int)pfVar14;
+    pfVar10 = pfVar14;
+    do {
+      puVar7 = puVar7 + 1;
+      uVar6 = *(uint *)(iVar11 + (int)pfVar10);
+      fVar2 = pfVar10[1];
+      fVar3 = *pfVar10;
+      dVar15 = (double)(longlong)(int)uVar6;
+      if ((int)uVar6 < (int)*puVar7) {
+        fVar4 = *(float *)(((int)afStack_5a0 - (int)pfVar14) + (int)pfVar10);
+        lVar8 = (ulonglong)*puVar7 - (ulonglong)uVar6;
+        fVar5 = *(float *)((int)afStack_5a0 + (4 - (int)pfVar14) + (int)pfVar10);
+        lVar9 = ((ulonglong)uVar6 & 0x3fffffff) * 4 + param_2 + -4;
+        do {
+          dVar17 = dVar15 - (double)fVar3;
+          dVar15 = (double)(float)(dVar15 + 1.0);
+          lVar9 = lVar9 + 4;
+          *(float *)lVar9 =
+               (float)dVar17 * (fVar5 - fVar4) * (1.0 / (float)((double)fVar2 - (double)fVar3)) +
+               fVar4;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
+      }
+      iVar13 = iVar13 + -1;
+      pfVar10 = pfVar10 + 1;
+    } while (iVar13 != 0);
+  }
+  __restfpr_28();
+  __restgprlr_21();
+  return;
+}
+
+
+// 828C69C0  OuterFrameParam  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:922)
+
+void OuterFrameParam(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+                    longlong param_5,undefined8 param_6,longlong param_7,float *param_8)
+
+{
+  int iVar1;
+  float fVar2;
+  short sVar3;
+  short sVar4;
+  int iVar5;
+  float fVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  int iVar9;
+  int iVar10;
+  float *pfVar11;
+  float *pfVar12;
+  longlong lVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  undefined4 local_c30 [2];
+  longlong local_c28;
+  undefined8 local_c20;
+  undefined1 auStack_c10 [400];
+  float local_a80 [255];
+  float local_684;
+  undefined1 auStack_680 [396];
+  float fStack_4f4;
+  float local_4f0 [316];
+  
+  uVar7 = __savegprlr_23();
+  iVar5 = (int)param_5;
+  iVar9 = *(int *)(iVar5 + 0x48);
+  NellySTFTpeaks(param_2,param_3,local_a80,auStack_680,auStack_c10,local_c30,100);
+  dVar16 = (double)(512.0 / *(float *)((int)param_4 + 8));
+  NellySeevocFlattop(dVar16,local_a80,auStack_680,auStack_c10,local_c30[0],local_a80);
+  uVar8 = NellySTCVoicing(param_5 + 8,local_a80,param_4 + 8,param_4 + 0xc,auStack_680,auStack_c10,
+                          local_c30[0],100);
+  NellyLinearInterpolate(dVar16,uVar8,local_a80,0x100);
+  fVar2 = *(float *)(iVar9 + 0x20);
+  sVar4 = *(short *)(iVar9 + 0x1c);
+  dVar16 = 0.0;
+  if ((fVar2 != 1.0) || (sVar4 != 0)) {
+    sVar3 = *(short *)(iVar9 + 0x24);
+    iVar9 = 0;
+    iVar10 = 0;
+    lVar13 = 0x100;
+    dVar14 = dVar16;
+    dVar15 = dVar16;
+    do {
+      local_c28 = (longlong)iVar9;
+      iVar1 = (int)((float)local_c28 * fVar2);
+      local_c20._6_2_ = (short)iVar1;
+      local_c20._6_2_ = local_c20._6_2_ + sVar4;
+      if (iVar9 < sVar3) {
+LAB_828c6b24:
+        fVar6 = *(float *)((int)local_a80 + iVar10);
+LAB_828c6b2c:
+        pfVar11 = (float *)((int)local_4f0 + iVar10);
+        *pfVar11 = fVar6;
+      }
+      else {
+        fVar6 = local_684;
+        if ((longlong)local_c20._6_2_ < 0) {
+          if (local_c20._6_2_ < 0x100) goto LAB_828c6b24;
+          goto LAB_828c6b2c;
+        }
+        if (local_c20._6_2_ >= 0x100) goto LAB_828c6b2c;
+        pfVar11 = (float *)((int)local_4f0 + iVar10);
+        *(undefined4 *)((int)local_4f0 + iVar10) =
+             *(undefined4 *)((int)local_a80 + (int)(((longlong)local_c20._6_2_ & 0xffffffffU) << 2))
+        ;
+      }
+      dVar14 = (double)(float)((double)*pfVar11 + dVar14);
+      iVar9 = iVar9 + 1;
+      pfVar11 = (float *)((int)local_a80 + iVar10);
+      iVar10 = iVar10 + 4;
+      dVar15 = (double)(float)((double)*pfVar11 + dVar15);
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    pfVar11 = &fStack_4f4;
+    lVar13 = 0x100;
+    do {
+      pfVar12 = pfVar11 + 1;
+      pfVar11 = pfVar11 + 1;
+      *pfVar11 = *pfVar12 + (float)(dVar15 - dVar14) * 0.00390625;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    local_c20 = (longlong)iVar1;
+    (*DAT_848958cc)(local_a80,local_4f0,0x100);
+  }
+  NellyLogEnvelopeToAs(local_a80,0xc,param_4 + 0x10,auStack_680,auStack_c10);
+  K2ASK(0xc,auStack_c10,param_4 + 0x14);
+  GetFrameSpCBM(uVar7,param_7 + 0x91,param_6,local_4f0);
+  ScaleVector(0x4000000000000000,local_4f0,param_6);
+  HammingWindowNormSC(local_4f0,param_6);
+  pfVar12 = (float *)(param_4 + 8);
+  TDPitchRefine((double)*pfVar12,dVar16,local_4f0,param_6);
+  pfVar11 = (float *)(param_4 + 0xc);
+  dVar16 = (double)ModifyPv((double)*param_8,(double)*pfVar11,(double)*(float *)(iVar5 + 0x30),
+                            (double)*pfVar12,(double)*(float *)(iVar5 + 0x34));
+  *pfVar11 = (float)dVar16;
+  __restgprlr_23();
+  return;
 }
 

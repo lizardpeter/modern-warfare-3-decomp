@@ -5,10 +5,49 @@
 /* WARNING: Unknown calling convention: __cdecl */
 /* calloc_impl */
 
-void __cdecl calloc_impl(void)
+void __cdecl calloc_impl(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  HANDLE pvVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_28();
+  if (((uVar1 & 0xffffffff) == 0) ||
+     (trapWord(6,uVar1,0), (param_2 & 0xffffffff) <= 0xfffff000 / (uVar1 & 0xffffffff))) {
+    uVar1 = (longlong)(int)uVar1 * (longlong)(int)param_2;
+    if (uVar1 == 0) {
+      uVar1 = 1;
+    }
+    do {
+      uVar2 = 0;
+      if ((uVar1 & 0xffffffff) < 0xfffff001) {
+        pvVar4 = GetProcessHeap();
+        uVar2 = RtlAllocateHeap(pvVar4,8,uVar1);
+        if ((uVar2 & 0xffffffff) != 0) goto LAB_82929804;
+      }
+      if (DAT_84896064 == 0) {
+        if ((param_3 & 0xffffffff) != 0) {
+          *(undefined4 *)param_3 = 0xc;
+        }
+        goto LAB_82929804;
+      }
+      iVar5 = _callnewh((size_t)uVar1);
+    } while (iVar5 != 0);
+    if ((param_3 & 0xffffffff) != 0) {
+      *(undefined4 *)param_3 = 0xc;
+    }
+    uVar2 = 0;
+  }
+  else {
+    piVar3 = _errno();
+    uVar2 = 0;
+    *piVar3 = 0xc;
+  }
+LAB_82929804:
+  __restgprlr_28(uVar2);
+  return;
 }
 

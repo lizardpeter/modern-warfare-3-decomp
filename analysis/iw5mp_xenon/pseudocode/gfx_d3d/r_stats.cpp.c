@@ -5,7 +5,51 @@
 void R_Stats_PrintBspTess(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined **ppuVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar2 = __savegprlr_27();
+  Com_Printf(8,0xffffffff821d1d34);
+  Com_Printf(8,0xffffffff821d1d00);
+  Com_Printf(8,0xffffffff821d1ccc);
+  Com_Printf(8,0xffffffff821d1d00);
+  puVar3 = (undefined4 *)(iVar2 + -4);
+  ppuVar4 = &PTR_s_lighting_829a2ed4;
+  dVar6 = 100.0;
+  dVar5 = (double)(uint)(*(int *)(iVar2 + 0x24) + *(int *)(iVar2 + 0x20) + *(int *)(iVar2 + 0x1c) +
+                         *(int *)(iVar2 + 0x18) + *(int *)(iVar2 + 0x14));
+  do {
+    puVar1 = puVar3 + 6;
+    puVar3 = puVar3 + 1;
+    Com_Printf(8,0xffffffff821d1cac,*ppuVar4,*puVar1,
+               (double)(float)((double)(float)((double)*puVar1 / dVar5) * dVar6),*puVar3);
+    ppuVar4 = ppuVar4 + 1;
+  } while ((int)ppuVar4 < -0x7d65d118);
+  Com_Printf(8,0xffffffff821d1d00);
+  __restgprlr_27();
+  return;
+}
+
+
+// 82783208  R_ResetStatTracking  (gfx_d3d/r_stats.cpp:55)
+
+void R_ResetStatTracking(void)
+
+{
+  undefined4 *puVar1;
+  longlong lVar2;
+  
+  puVar1 = (undefined4 *)0x847eebe0;
+  lVar2 = 10;
+  do {
+    puVar1 = puVar1 + 1;
+    *puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  return;
 }
 

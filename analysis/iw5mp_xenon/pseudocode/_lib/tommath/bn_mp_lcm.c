@@ -2,10 +2,38 @@
 
 // 82257B08  mp_lcm  (line unknown)
 
-void mp_lcm(void)
+void mp_lcm(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = mp_init_multi(auStack_40,auStack_50,0);
+  if ((int)uVar2 == 0) {
+    uVar2 = mp_gcd(uVar1,param_2,auStack_40);
+    if ((int)uVar2 == 0) {
+      iVar3 = mp_cmp_mag(uVar1,param_2);
+      if (iVar3 == -1) {
+        uVar2 = mp_div(uVar1,auStack_40,auStack_50,0);
+        iVar3 = (int)uVar2;
+      }
+      else {
+        uVar2 = mp_div(param_2,auStack_40,auStack_50,0);
+        iVar3 = (int)uVar2;
+        param_2 = uVar1;
+      }
+      if (iVar3 == 0) {
+        uVar2 = mp_mul(param_2,auStack_50,param_3);
+        *(undefined4 *)((int)param_3 + 8) = 0;
+      }
+    }
+    mp_clear_multi(auStack_40,auStack_50,0);
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 

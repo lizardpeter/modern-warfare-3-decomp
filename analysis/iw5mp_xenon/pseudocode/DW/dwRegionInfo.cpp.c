@@ -62,8 +62,91 @@ void LiveRegionInfo_Init(void)
 void LiveRegionInfo_Pump(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  bool bVar2;
+  int iVar5;
+  longlong lVar3;
+  uint uVar6;
+  undefined8 uVar4;
+  char *pcVar7;
+  char local_70 [112];
+  
   __savegprlr_29();
+  iVar5 = CL_GetLocalClientActiveCount();
+  if (iVar5 != 0) {
+    CL_GetFirstActiveControllerIndex();
+  }
+  if (((DAT_82998bbc == -1) && (*(char *)(DAT_844f65d4 + 0xc) != '\0')) && (DAT_844f65e8 == 3)) {
+    DAT_844f65e8 = 0;
+  }
+  else if (4 < DAT_844f65e8) goto LAB_826ed94c;
+  if (DAT_844f65e8 == 1) {
+    iVar5 = dwReportIPComplete(0xffffffff844f6700);
+    if (iVar5 == 1) {
+      lVar3 = dwRetrieveRegion(0xffffffff844f6700);
+      DAT_844f65e8 = (-(uint)(lVar3 != 0) & 0xfffffffe) + 4;
+      __restgprlr_29();
+      return;
+    }
+  }
+  else {
+    if (DAT_844f65e8 != 2) {
+      if (DAT_844f65e8 != 3) {
+        if (DAT_844f65e8 == 0) {
+          iVar5 = dwGetLogOnStatus();
+          if (((iVar5 != 2) || (iVar5 = Sys_Milliseconds(), iVar5 <= DAT_844f65dc)) ||
+             (bVar2 = true, 60000 < DAT_82998bb8)) {
+            bVar2 = false;
+          }
+          if (bVar2) {
+            lVar3 = dwReportIP(0xffffffff844f6700);
+            DAT_844f65e8 = (-(uint)(lVar3 != 0) & 0xfffffffd) + 4;
+            __restgprlr_29();
+            return;
+          }
+          goto LAB_826ed94c;
+        }
+        DAT_82998bb8 = DAT_82998bb8 << 1;
+        uVar6 = DAT_82998bb8;
+        if (59999 < DAT_82998bb8) {
+          uVar6 = 60000;
+        }
+        iVar5 = Sys_Milliseconds();
+        DAT_844f65dc = iVar5 + uVar6;
+        DAT_844f65e8 = 0;
+      }
+      dwClearTask(0xffffffff844f6700);
+      DAT_844f6794 = 0;
+      goto LAB_826ed94c;
+    }
+    iVar5 = dwRetrieveRegionComplete(0xffffffff844f6700);
+    if (iVar5 == 1) {
+      Com_sprintf(local_70,0x43,0xffffffff82013790,0xffffffff844f65f0,0xffffffff844f6634);
+      pcVar7 = local_70;
+      do {
+        cVar1 = *pcVar7;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar1 != '\0');
+      uVar6 = Com_BlockChecksumKey32(local_70,pcVar7 + (-1 - (int)local_70),0);
+      DAT_844f65d8 = uVar6 & 0x7fffffff;
+      LiveRegionInfo_SetHilbert();
+      Com_Printf(0x19,0xffffffff821ac8e0,0xffffffff844f65f0,0xffffffff844f65f3,0xffffffff844f6634,
+                 uVar6 & 0x7fffffff);
+      uVar4 = va(0xffffffff821ac8a8,0xffffffff844f6634,0xffffffff844f65f0,0xffffffff844f65f3);
+      LSP_LogStringToDW(0,uVar4,2);
+      DAT_844f65e8 = 3;
+      __restgprlr_29();
+      return;
+    }
+  }
+  if (iVar5 == 2) {
+    DAT_844f65e8 = 4;
+    __restgprlr_29();
+    return;
+  }
+LAB_826ed94c:
+  __restgprlr_29();
+  return;
 }
 
 
@@ -85,7 +168,6 @@ void dwReportIP(void)
   
   iVar3 = __savegprlr_25();
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac734,0x125,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   uVar6 = 0;
@@ -101,49 +183,48 @@ void dwReportIP(void)
      (DAT_82998bb8 < 0xea61)) {
     uVar2 = dwGetDML(uVar7);
     local_4c[0] = 0;
-    if ((uVar2 & 0xffffffff) != 0) {
-      if ((iVar3 != 0) && ((uVar2 & 0xffffffff) != 0)) {
-        iVar4 = Xenon_GetXNAddrForLive();
-        *(char *)(iVar3 + 0x95) = (char)uVar7;
-        if (iVar4 != 0) {
-          uVar8 = *(undefined4 *)(iVar4 + 4);
-          uVar1 = DAT_844f65d0;
-          local_50 = uVar8;
-          if (*(char *)(DAT_844f65d4 + 0xc) != '\0') {
-            iVar5 = rand();
-            iVar4 = iVar5 / 10 + (iVar5 >> 0x1f);
-            DAT_82998bbc = iVar5 + ((iVar4 - (iVar4 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
-            uVar1 = uVar8;
-            if (-1 < DAT_82998bbc) {
-              local_50 = inet_addr((&PTR_s_31_44_64_0_82998bec)[DAT_82998bbc]);
-              iVar4 = rand();
-              local_50 = CONCAT31(local_50._0_3_,
-                                  (char)iVar4 +
-                                  (((char)(iVar4 / 0xff) + (char)(iVar4 >> 0x1f)) -
-                                  (char)((longlong)iVar4 * 0x80808081 >> 0x3f)));
-              uVar1 = local_50;
-              uVar8 = local_50;
-            }
-          }
-          DAT_844f65d0 = uVar1;
-          Com_Printf(0x19,0xffffffff821ac858,local_50._0_1_,local_50._1_1_,local_50._2_1_,
-                     (undefined1)local_50);
-          uVar7 = bdDML__recordIP(&local_50,uVar2,uVar8);
-          bdReference<bdRemoteTask>__operator_(local_4c,uVar7);
-          bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_50);
-          if (local_4c[0] != 0) {
-            bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_4c);
-            uVar6 = 1;
-            *(undefined1 *)(iVar3 + 0x94) = 1;
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821ac734,0x145,0,0xffffffff82000f98,0xffffffff821ac88c);
+    }
+    if ((iVar3 != 0) && ((uVar2 & 0xffffffff) != 0)) {
+      iVar4 = Xenon_GetXNAddrForLive();
+      *(char *)(iVar3 + 0x95) = (char)uVar7;
+      if (iVar4 != 0) {
+        uVar8 = *(undefined4 *)(iVar4 + 4);
+        uVar1 = DAT_844f65d0;
+        local_50 = uVar8;
+        if (*(char *)(DAT_844f65d4 + 0xc) != '\0') {
+          iVar5 = rand();
+          iVar4 = iVar5 / 10 + (iVar5 >> 0x1f);
+          DAT_82998bbc = iVar5 + ((iVar4 - (iVar4 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
+          uVar1 = uVar8;
+          if (-1 < DAT_82998bbc) {
+            local_50 = inet_addr((&PTR_s_31_44_64_0_82998bec)[DAT_82998bbc]);
+            iVar4 = rand();
+            local_50 = CONCAT31(local_50._0_3_,
+                                (char)iVar4 +
+                                (((char)(iVar4 / 0xff) + (char)(iVar4 >> 0x1f)) -
+                                (char)((longlong)iVar4 * 0x80808081 >> 0x3f)));
+            uVar1 = local_50;
+            uVar8 = local_50;
           }
         }
+        DAT_844f65d0 = uVar1;
+        Com_Printf(0x19,0xffffffff821ac858,local_50._0_1_,local_50._1_1_,local_50._2_1_,
+                   (undefined1)local_50);
+        uVar7 = bdDML__recordIP(&local_50,uVar2,uVar8);
+        bdReference<bdRemoteTask>__operator_(local_4c,uVar7);
+        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_50);
+        if (local_4c[0] != 0) {
+          bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_4c);
+          uVar6 = 1;
+          *(undefined1 *)(iVar3 + 0x94) = 1;
+        }
       }
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_4c);
-      __restgprlr_25(uVar6);
-      return;
     }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821ac734,0x145,0,0xffffffff82000f98,0xffffffff821ac88c);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_4c);
+    __restgprlr_25(uVar6);
+    return;
   }
   __restgprlr_25(0);
   return;
@@ -155,8 +236,49 @@ void dwReportIP(void)
 void dwRetrieveRegion(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int local_40;
+  undefined1 auStack_3c [60];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ac734,0x179,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  uVar5 = 0;
+  uVar4 = 0;
+  local_40 = 0;
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 != 0) {
+    uVar5 = CL_GetFirstActiveControllerIndex();
+  }
+  iVar3 = dwGetLogOnStatus(uVar5);
+  if (((iVar3 == 2) && (iVar3 = Sys_Milliseconds(), DAT_844f65dc <= iVar3)) &&
+     (DAT_82998bb8 < 0xea61)) {
+    uVar1 = dwGetDML(uVar5);
+    if ((uVar1 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821ac734,0x19a,0,0xffffffff82000f98,0xffffffff821ac88c);
+    }
+    if ((iVar2 != 0) && ((uVar1 & 0xffffffff) != 0)) {
+      *(char *)(iVar2 + 0x95) = (char)uVar5;
+      uVar5 = bdDML__getUserData(auStack_3c,uVar1,0xffffffff844f65ec);
+      bdReference<bdRemoteTask>__operator_(&local_40,uVar5);
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_3c);
+      if (local_40 != 0) {
+        bdReference<bdRemoteTask>__operator_(iVar2 + 8,&local_40);
+        uVar4 = 1;
+      }
+    }
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_40);
+    __restgprlr_26(uVar4);
+    return;
+  }
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_40);
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -165,8 +287,33 @@ void dwRetrieveRegion(void)
 void dwReportIPComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ac734,0x1af,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  iVar4 = dwGetLogOnStatus(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 2) {
+    if ((*(int *)(iVar3 + 8) != 0) && (iVar4 = dwGetDML(*(undefined1 *)(iVar3 + 0x95)), iVar4 != 0))
+    {
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if (((int)uVar1 == 2) && ((int)uVar2 != 0)) {
+        dwRegionHandleTaskError(iVar3,uVar2);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+    Com_Printf(0x10,0xffffffff821ac890);
+    dwRegionHandleTaskError(iVar3,4);
+  }
+  __restgprlr_29(2);
+  return;
 }
 
 
@@ -175,8 +322,33 @@ void dwReportIPComplete(void)
 void dwRetrieveRegionComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ac734,0x1cc,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  iVar4 = dwGetLogOnStatus(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 2) {
+    if ((*(int *)(iVar3 + 8) != 0) && (iVar4 = dwGetDML(*(undefined1 *)(iVar3 + 0x95)), iVar4 != 0))
+    {
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if (((int)uVar1 == 2) && ((int)uVar2 != 0)) {
+        dwRegionHandleTaskError(iVar3,uVar2);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+    Com_Printf(0x10,0xffffffff821ac890);
+    dwRegionHandleTaskError(iVar3,4);
+  }
+  __restgprlr_29(2);
+  return;
 }
 
 
@@ -185,8 +357,27 @@ void dwRetrieveRegionComplete(void)
 void LiveRegionInfo_GetCountryCode(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  int iVar2;
+  uint uVar3;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (puVar1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821ac734,0x1e9,0,0xffffffff82000f98,0xffffffff821ac728);
+  }
+  *puVar1 = 0;
+  iVar2 = I_strcmp(0xffffffff8202f544,0xffffffff844f65f0);
+  if (iVar2 == 0) {
+    __restgprlr_28();
+    return;
+  }
+  uVar3 = DAT_844f65f1 * 0x100 + (int)DAT_844f65f0;
+  *puVar1 = uVar3;
+  if (0xffff < uVar3) {
+    MyAssertHandler(0xffffffff821ac734,500,1,0xffffffff82000f98,0xffffffff821ac70c);
+  }
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -195,18 +386,56 @@ void LiveRegionInfo_GetCountryCode(void)
 void LiveRegionInfo_GetCountryCodeAndRegion(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
+  
+  puVar2 = (uint *)__savegprlr_27();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821ac734,0x1fb,0,0xffffffff82000f98,0xffffffff821ac7ec);
+  }
+  *puVar2 = 0;
+  iVar3 = I_strcmp(0xffffffff8202f544,0xffffffff844f65f0);
+  if ((iVar3 != 0) && (iVar3 = I_strcmp(0xffffffff8202f544,0xffffffff844f6634), iVar3 != 0)) {
+    if ((int)DAT_844f65d8 < 0) {
+      MyAssertHandler(0xffffffff821ac734,0x202,0,0xffffffff820011f4,0xffffffff821ac798,
+                      0xffffffff821ac7b4);
+    }
+    uVar1 = DAT_844f65d8;
+    *puVar2 = DAT_844f65d8;
+    if (0x7fffffff < uVar1) {
+      MyAssertHandler(0xffffffff821ac734,0x205,1,0xffffffff82000f98,0xffffffff821ac774);
+    }
+    __restgprlr_27(1);
+    return;
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 826ECDC8  dwRegionHandleTaskError  (DW/dwRegionInfo.cpp:523)
 
-void dwRegionHandleTaskError(void)
+void dwRegionHandleTaskError(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 auStack_70 [112];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ac734,0x20c,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ac838);
+  dwLobbyErrorCodeToString(param_2,auStack_70,0x40);
+  Com_PrintError(0x10,0xffffffff821ac804,*(undefined4 *)(iVar1 + 0x90),param_2,auStack_70);
+  dwClearTask(iVar1);
+  *(undefined1 *)(iVar1 + 0x94) = 0;
+  if ((int)param_2 == 1) {
+    MyAssertHandler(0xffffffff821ac734,0x21b,0,0xffffffff82000f98,0xffffffff821ac060);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -242,8 +471,70 @@ undefined4 LiveRegionInfo_GetMaxHilbert(void)
 void LiveRegionInfo_SetHilbert(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  uint local_c0 [48];
+  
   __savegprlr_26();
+  local_c0[0x11] = 0;
+  local_c0[0x13] = 0;
+  local_c0[0x16] = 0;
+  local_c0[0x17] = 2;
+  local_c0[0x18] = 2;
+  local_c0[0x1a] = 2;
+  local_c0[0x1c] = 0;
+  local_c0[0x1d] = 2;
+  local_c0[0x10] = 3;
+  local_c0[0x12] = 1;
+  local_c0[0x14] = 1;
+  local_c0[0x15] = 1;
+  local_c0[0x19] = 3;
+  local_c0[0x1b] = 1;
+  local_c0[0x1e] = 3;
+  local_c0[0x1f] = 3;
+  uVar1 = (uint)((DAT_844f66fc + 180.0) * 2.8444445 + 0.5);
+  uVar2 = (uint)((DAT_844f66f8 + 90.0) * 5.688889 + 0.5);
+  local_c0[3] = 2;
+  local_c0[4] = 2;
+  uVar11 = uVar2 >> 8 & 2 | uVar1 >> 9 & 1;
+  local_c0[0xf] = 2;
+  local_c0[8] = 2;
+  local_c0[0] = 0;
+  local_c0[7] = 0;
+  local_c0[0xb] = 0;
+  local_c0[0xc] = 0;
+  local_c0[1] = 1;
+  local_c0[2] = 3;
+  local_c0[5] = 1;
+  local_c0[6] = 3;
+  iVar3 = local_c0[uVar11 + 0x10] * 4 + (uVar2 >> 7 & 2 | uVar1 >> 8 & 1);
+  local_c0[9] = 3;
+  local_c0[10] = 1;
+  iVar4 = local_c0[iVar3 + 0x10] * 4 + (uVar2 >> 6 & 2 | uVar1 >> 7 & 1);
+  local_c0[0xe] = 1;
+  local_c0[0xd] = 3;
+  iVar5 = local_c0[iVar4 + 0x10] * 4 + (uVar2 >> 5 & 2 | uVar1 >> 6 & 1);
+  iVar6 = local_c0[iVar5 + 0x10] * 4 + (uVar2 >> 4 & 2 | uVar1 >> 5 & 1);
+  DAT_844f65e4 = 0x100000;
+  iVar7 = local_c0[iVar6 + 0x10] * 4 + (uVar2 >> 3 & 2 | uVar1 >> 4 & 1);
+  iVar8 = local_c0[iVar7 + 0x10] * 4 + (uVar2 >> 2 & 2 | uVar1 >> 3 & 1);
+  iVar9 = local_c0[iVar8 + 0x10] * 4 + (uVar2 >> 1 & 2 | uVar1 >> 2 & 1);
+  iVar10 = local_c0[iVar9 + 0x10] * 4 + (uVar1 >> 1 & 1 | uVar2 & 2);
+  DAT_844f65e0 = local_c0[((uVar2 & 1) << 1 | uVar1 & 1) + local_c0[iVar10 + 0x10] * 4] |
+                 ((((((((local_c0[uVar11] << 2 | local_c0[iVar3]) << 2 | local_c0[iVar4]) << 2 |
+                      local_c0[iVar5]) << 2 | local_c0[iVar6]) << 2 | local_c0[iVar7]) << 2 |
+                   local_c0[iVar8]) << 2 | local_c0[iVar9]) << 2 | local_c0[iVar10]) << 2;
+  __restgprlr_26();
+  return;
 }
 
 

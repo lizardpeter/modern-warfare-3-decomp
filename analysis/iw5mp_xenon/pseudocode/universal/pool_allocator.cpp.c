@@ -15,31 +15,24 @@ void Pool_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong 
   
   puVar1 = (undefined4 *)__savegprlr_24();
   if (puVar1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,9,0,0xffffffff82000f98,0xffffffff8217d710);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,10,0,0xffffffff82000f98,0xffffffff8217d7b0);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0xb,0,0xffffffff82000f98,0xffffffff8217d7a4);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0xc,0,0xffffffff82000f98,0xffffffff8217d794);
   }
   if ((param_5 & 0xffffffff) < 2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0xd,0,0xffffffff82000f98,0xffffffff8217d784);
   }
   if (0x7ffe < (param_5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0xe,0,0xffffffff82000f98,0xffffffff8217d76c);
   }
   if ((param_3 & 3) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0x10,0,0xffffffff82000f98,0xffffffff8217d74c);
   }
   _Size = (int)param_4 * (int)param_5;
@@ -64,7 +57,6 @@ void Pool_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong 
   *(undefined2 *)((int)((param_5 & 0xffffffff) << 1) + (int)param_2 + -2) = 0x7fff;
   iVar2 = Pool_FreeCount(puVar1);
   if (iVar2 != (int)param_5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0x21,0,0xffffffff82000f98,0xffffffff8217d71c);
   }
   __restgprlr_24();
@@ -77,8 +69,72 @@ void Pool_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong 
 void Pool_Alloc(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  short sVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint *puVar5;
+  int iVar6;
+  ulonglong uVar7;
+  
+  puVar5 = (uint *)__savegprlr_28();
+  if (puVar5 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8217d6c8,0x29,0,0xffffffff82000f98,0xffffffff8217d710);
+  }
+  uVar2 = puVar5[4];
+  if (uVar2 == 0x7fff) {
+    uVar2 = puVar5[2];
+    uVar3 = puVar5[1];
+    trapWord(6,(ulonglong)uVar3,0);
+    trapWord(5,(ulonglong)uVar3 &
+               ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    if (puVar5[5] != (int)uVar2 / (int)uVar3) {
+      MyAssertHandler(0xffffffff8217d6c8,0x2e,0,0xffffffff82000f98,0xffffffff8217d948);
+    }
+    __restgprlr_28(0);
+    return;
+  }
+  sVar1 = *(short *)(uVar2 * 2 + puVar5[3]);
+  puVar5[4] = (int)sVar1;
+  *(undefined2 *)(uVar2 * 2 + puVar5[3]) = 0x7fff;
+  uVar3 = puVar5[1];
+  uVar4 = puVar5[2];
+  uVar7 = (ulonglong)uVar3 &
+          ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1);
+  puVar5[5] = puVar5[5] + 1;
+  trapWord(6,(ulonglong)uVar3,0);
+  trapWord(5,uVar7,0xffff);
+  if ((int)uVar4 / (int)uVar3 <= (int)uVar2) {
+    MyAssertHandler(0xffffffff8217d6c8,0x36,0,0xffffffff82000f98,0xffffffff8217d90c,sVar1,0x7fff,
+                    uVar7);
+  }
+  if (puVar5[4] == 0x7fff) {
+    uVar3 = puVar5[2];
+    uVar4 = puVar5[1];
+    trapWord(6,(ulonglong)uVar4,0);
+    trapWord(5,(ulonglong)uVar4 &
+               ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
+    if (puVar5[5] != (int)uVar3 / (int)uVar4) {
+      MyAssertHandler(0xffffffff8217d6c8,0x37,0,0xffffffff82000f98,0xffffffff8217d8a0);
+    }
+  }
+  if (puVar5[4] == uVar2) {
+    MyAssertHandler(0xffffffff8217d6c8,0x38,0,0xffffffff82000f98,0xffffffff8217d87c);
+  }
+  iVar6 = Pool_FreeCount(puVar5);
+  uVar3 = puVar5[2];
+  uVar4 = puVar5[1];
+  trapWord(6,(ulonglong)uVar4,0);
+  trapWord(5,(ulonglong)uVar4 &
+             ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
+  if (iVar6 != (int)uVar3 / (int)uVar4 - puVar5[5]) {
+    MyAssertHandler(0xffffffff8217d6c8,0x39,0,0xffffffff82000f98,0xffffffff8217d818);
+  }
+  if ((puVar5[1] * uVar2 + *puVar5 & 3) != 0) {
+    MyAssertHandler(0xffffffff8217d6c8,0x3a,0,0xffffffff82000f98,0xffffffff8217d7c0);
+  }
+  __restgprlr_28((longlong)(int)puVar5[1] * (longlong)(int)uVar2 + (ulonglong)*puVar5);
+  return;
 }
 
 
@@ -91,17 +147,15 @@ void Pool_Free(undefined8 param_1,ulonglong param_2)
   uint uVar2;
   uint *puVar3;
   ulonglong uVar4;
-  undefined8 uVar5;
+  int iVar5;
   ulonglong uVar6;
   uint uVar7;
   
   uVar4 = __savegprlr_25();
   if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0x48,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0x49,0,0xffffffff82000f98,0xffffffff8217d710);
   }
   puVar3 = (uint *)param_2;
@@ -119,40 +173,32 @@ void Pool_Free(undefined8 param_1,ulonglong param_2)
     uVar4 = (ulonglong)((int)uVar2 / (int)uVar7);
     trapWord(5,uVar6 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
              0xffff);
-    if ((int)uVar1 < (int)uVar2 / (int)uVar7) {
-      uVar5 = Pool_FreeCount(param_2);
-      uVar7 = puVar3[2];
-      uVar2 = puVar3[1];
-      uVar4 = (ulonglong)uVar2 &
-              ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1);
-      trapWord(6,(ulonglong)uVar2,0);
-      trapWord(5,uVar4,0xffff);
-      if ((int)uVar5 != (int)uVar7 / (int)uVar2 - puVar3[5]) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8217d6c8,0x53,0,0xffffffff82000f98,0xffffffff8217d818);
-      }
-      if (*(short *)(puVar3[3] + uVar1 * 2) != 0x7fff) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8217d6c8,0x54,0,0xffffffff82000f98,0xffffffff8217d9a4);
-      }
-      uVar7 = puVar3[4];
-      while( true ) {
-        if (uVar7 == 0x7fff) {
-          *(short *)(puVar3[3] + uVar1 * 2) = (short)puVar3[4];
-          puVar3[4] = uVar1;
-          puVar3[5] = puVar3[5] - 1;
-          __restgprlr_25(uVar5,uVar4);
-          return;
-        }
-        if (uVar7 == uVar1) break;
-        uVar7 = (uint)*(short *)(uVar7 * 2 + puVar3[3]);
-      }
-                    /* WARNING: Subroutine does not return */
+    if ((int)uVar1 < (int)uVar2 / (int)uVar7) goto LAB_82607c9c;
+  }
+  MyAssertHandler(0xffffffff8217d6c8,0x52,0,0xffffffff82000f98,0xffffffff8217d9d0,uVar4);
+LAB_82607c9c:
+  iVar5 = Pool_FreeCount(param_2);
+  uVar7 = puVar3[2];
+  uVar2 = puVar3[1];
+  trapWord(6,(ulonglong)uVar2,0);
+  trapWord(5,(ulonglong)uVar2 &
+             ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1),0xffff);
+  if (iVar5 != (int)uVar7 / (int)uVar2 - puVar3[5]) {
+    MyAssertHandler(0xffffffff8217d6c8,0x53,0,0xffffffff82000f98,0xffffffff8217d818);
+  }
+  if (*(short *)(puVar3[3] + uVar1 * 2) != 0x7fff) {
+    MyAssertHandler(0xffffffff8217d6c8,0x54,0,0xffffffff82000f98,0xffffffff8217d9a4);
+  }
+  for (uVar7 = puVar3[4]; uVar7 != 0x7fff; uVar7 = (uint)*(short *)(uVar7 * 2 + puVar3[3])) {
+    if (uVar7 == uVar1) {
       MyAssertHandler(0xffffffff8217d6c8,0x5d,0,0xffffffff82000f98,0xffffffff8217d990);
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8217d6c8,0x52,0,0xffffffff82000f98,0xffffffff8217d9d0,uVar4);
+  *(short *)(puVar3[3] + uVar1 * 2) = (short)puVar3[4];
+  puVar3[4] = uVar1;
+  puVar3[5] = puVar3[5] - 1;
+  __restgprlr_25();
+  return;
 }
 
 
@@ -166,7 +212,6 @@ longlong Pool_FreeCount(int param_1)
   int iVar3;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217d6c8,0x6b,0,0xffffffff82000f98,0xffffffff8217d710);
   }
   iVar3 = *(int *)(param_1 + 0x10);

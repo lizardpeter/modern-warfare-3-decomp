@@ -123,6 +123,124 @@ LAB_82902554:
 ; 82902600  bdMessaging::getMails  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:64)
   82902600  7D8802A6             mfspr r12,LR
   82902604  480140A1             bl 0x829166a4
+  82902608  3BE1FF50             subi r31,r1,0xb0
+  8290260C  9421FF50             stwu r1,-0xb0(r1)
+  82902610  7C7A1B78             or r26,r3,r3
+  82902614  907F00C4             stw r3,0xc4(r31)
+  82902618  7C982378             or r24,r4,r4
+  8290261C  7CBC2B78             or r28,r5,r5
+  82902620  7CDD3378             or r29,r6,r6
+  82902624  7CF73B78             or r23,r7,r7
+  82902628  7D1B4378             or r27,r8,r8
+  8290262C  3B200000             li r25,0x0
+  82902630  933F0054             stw r25,0x54(r31)
+  82902634  93230000             stw r25,0x0(r3)
+  82902638  39400001             li r10,0x1
+  8290263C  1D660009             mulli r11,r6,0x9
+  82902640  915F0054             stw r10,0x54(r31)
+  82902644  3860002C             li r3,0x2c
+  82902648  3BCB0042             addi r30,r11,0x42
+  8290264C  4BFF29FD             bl 0x828f5048
+  82902650  907F0058             stw r3,0x58(r31)
+  82902654  28030000             cmplwi r3,0x0
+  82902658  41820014             beq 0x8290266c
+  8290265C  38A00001             li r5,0x1
+  82902660  7FC4F378             or r4,r30,r30
+  82902664  48010575             bl 0x82912bd8
+  82902668  48000008             b 0x82902670
+LAB_8290266c:
+  8290266C  7F23CB78             or r3,r25,r25
+LAB_82902670:
+  82902670  907F0050             stw r3,0x50(r31)
+  82902674  2B030000             cmplwi cr6,r3,0x0
+  82902678  419A0028             beq cr6,0x829026a0
+  8290267C  39630004             addi r11,r3,0x4
+LAB_82902680:
+  82902680  7D2000A6             mfmsr r9
+  82902684  7DA10164             mtmsrd r13,1
+  82902688  7D405828             lwarx r10,0,r11
+  8290268C  394A0001             addi r10,r10,0x1
+  82902690  7D40592D             stwcx. r10,0,r11
+  82902694  7D210164             mtmsrd r9,1
+  82902698  4082FFE8             bne 0x82902680
+  8290269C  81630004             lwz r11,0x4(r3)
+LAB_829026a0:
+  829026A0  38A00009             li r5,0x9
+  829026A4  38800006             li r4,0x6
+  829026A8  387F0050             addi r3,r31,0x50
+  829026AC  4BFFD43D             bl 0x828ffae8
+  829026B0  7F64DB78             or r4,r27,r27
+  829026B4  807F0050             lwz r3,0x50(r31)
+  829026B8  4BFF3A21             bl 0x828f60d8
+  829026BC  2B1D0000             cmplwi cr6,r29,0x0
+  829026C0  419A003C             beq cr6,0x829026fc
+  829026C4  7FBEEB78             or r30,r29,r29
+LAB_829026c8:
+  829026C8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829026CC  4182001C             beq 0x829026e8
+  829026D0  E89C0000             ld r4,0x0(r28)
+  829026D4  807F0050             lwz r3,0x50(r31)
+  829026D8  4BFF3391             bl 0x828f5a68
+  829026DC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829026E0  39600001             li r11,0x1
+  829026E4  40820008             bne 0x829026ec
+LAB_829026e8:
+  829026E8  7F2BCB78             or r11,r25,r25
+LAB_829026ec:
+  829026EC  37DEFFFF             subic. r30,r30,0x1
+  829026F0  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  829026F4  3B9C0008             addi r28,r28,0x8
+  829026F8  4082FFD0             bne 0x829026c8
+LAB_829026fc:
+  829026FC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82902700  2B0B0001             cmplwi cr6,r11,0x1
+  82902704  409A0068             bne cr6,0x8290276c
+  82902708  38BF0050             addi r5,r31,0x50
+  8290270C  80780000             lwz r3,0x0(r24)
+  82902710  7F44D378             or r4,r26,r26
+  82902714  4BFFEA25             bl 0x82901138
+  82902718  7C6A1B79             or. r10,r3,r3
+  8290271C  4182003C             beq 0x82902758
+  82902720  3D008221             lis r8,-0x7ddf
+  82902724  3D608221             lis r11,-0x7ddf
+  82902728  3CC08221             lis r6,-0x7ddf
+  8290272C  3CA08221             lis r5,-0x7ddf
+  82902730  3C808221             lis r4,-0x7ddf
+  82902734  38E8E2E0             subi r7,r8,0x1d20
+  82902738  392BC90C             subi r9,r11,0x36f4
+  8290273C  38C6E200             subi r6,r6,0x1e00
+  82902740  38A5E1F0             subi r5,r5,0x1e10
+  82902744  3884A424             subi r4,r4,0x5bdc
+  82902748  39000052             li r8,0x52
+  8290274C  38600001             li r3,0x1
+  82902750  4BFF23C1             bl 0x828f4b10
+  82902754  4800004C             b 0x829027a0
+LAB_82902758:
+  82902758  7FA5EB78             or r5,r29,r29
+  8290275C  807A0000             lwz r3,0x0(r26)
+  82902760  7EE4BB78             or r4,r23,r23
+  82902764  4BFF6BED             bl 0x828f9350
+  82902768  48000038             b 0x829027a0
+LAB_8290276c:
+  8290276C  3D008221             lis r8,-0x7ddf
+  82902770  3D608221             lis r11,-0x7ddf
+  82902774  3D408221             lis r10,-0x7ddf
+  82902778  3CA08221             lis r5,-0x7ddf
+  8290277C  3C808221             lis r4,-0x7ddf
+  82902780  38C8E200             subi r6,r8,0x1e00
+  82902784  392BC89C             subi r9,r11,0x3764
+  82902788  38EAE2E0             subi r7,r10,0x1d20
+  8290278C  38A5E1F0             subi r5,r5,0x1e10
+  82902790  3884A424             subi r4,r4,0x5bdc
+  82902794  3900005B             li r8,0x5b
+  82902798  38600001             li r3,0x1
+  8290279C  4BFF2375             bl 0x828f4b10
+LAB_829027a0:
+  829027A0  387F0050             addi r3,r31,0x50
+  829027A4  4BFFA865             bl 0x828fd008
+  829027A8  7F43D378             or r3,r26,r26
+  829027AC  383F00B0             addi r1,r31,0xb0
+  829027B0  48013F44             b 0x829166f4
 
 ; 82902850  bdMessaging::deleteMail  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:99)
   82902850  7D8802A6             mfspr r12,LR
@@ -375,3 +493,6 @@ LAB_82902c4c:
 ; 829023A0  bdMessaging::bdMessaging  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:721)
   829023A0  90830000             stw r4,0x0(r3)
   829023A4  4E800020             blr
+
+; 829023A8  bdMessaging::~bdMessaging  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:726)
+  829023A8  4E800020             blr

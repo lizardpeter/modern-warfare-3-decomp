@@ -9,6 +9,43 @@
   828BC2C4  90E30010             stw r7,0x10(r3)
   828BC2C8  4E800020             blr
 
+; 828BC2D0  CBaseEndianBuffer::SeekTo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:122)
+  828BC2D0  81630008             lwz r11,0x8(r3)
+  828BC2D4  7F045840             cmplw cr6,r4,r11
+  828BC2D8  40990010             ble cr6,0x828bc2e8
+  828BC2DC  3C608018             lis r3,-0x7fe8
+  828BC2E0  60632001             ori r3,r3,0x2001
+  828BC2E4  4E800020             blr
+LAB_828bc2e8:
+  828BC2E8  9083000C             stw r4,0xc(r3)
+  828BC2EC  38600000             li r3,0x0
+  828BC2F0  4E800020             blr
+
+; 828BC688  CBaseEndianBuffer::GetByte  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:174)
+  828BC688  7D8802A6             mfspr r12,LR
+  828BC68C  9181FFF8             stw r12,-0x8(r1)
+  828BC690  FBE1FFF0             std r31,-0x10(r1)
+  828BC694  9421FF90             stwu r1,-0x70(r1)
+  828BC698  39600001             li r11,0x1
+  828BC69C  7C872378             or r7,r4,r4
+  828BC6A0  91610050             stw r11,0x50(r1)
+  828BC6A4  38A10050             addi r5,r1,0x50
+  828BC6A8  38810054             addi r4,r1,0x54
+  828BC6AC  4BFFFC4D             bl 0x828bc2f8
+  828BC6B0  7C7F1B79             or. r31,r3,r3
+  828BC6B4  41800014             blt 0x828bc6c8
+  828BC6B8  7CE33B78             or r3,r7,r7
+  828BC6BC  80A10050             lwz r5,0x50(r1)
+  828BC6C0  80810054             lwz r4,0x54(r1)
+  828BC6C4  4805A29D             bl 0x82916960
+LAB_828bc6c8:
+  828BC6C8  7FE3FB78             or r3,r31,r31
+  828BC6CC  38210070             addi r1,r1,0x70
+  828BC6D0  8181FFF8             lwz r12,-0x8(r1)
+  828BC6D4  7D8803A6             mtspr LR,r12
+  828BC6D8  EBE1FFF0             ld r31,-0x10(r1)
+  828BC6DC  4E800020             blr
+
 ; 828BC6E0  CBaseEndianBuffer::GetWord  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:180)
   828BC6E0  7D8802A6             mfspr r12,LR
   828BC6E4  9181FFF8             stw r12,-0x8(r1)
@@ -44,6 +81,9 @@ LAB_828bc744:
   828BC750  7D8803A6             mtspr LR,r12
   828BC754  EBE1FFF0             ld r31,-0x10(r1)
   828BC758  4E800020             blr
+
+; 828BC760  CBaseEndianBuffer::GetDataPointer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:235)
+  828BC760  4BFFFB98             b 0x828bc2f8
 
 ; 828BC2F8  CBaseEndianBuffer::GetPointerAndAdvance  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:240)
   828BC2F8  81230008             lwz r9,0x8(r3)
@@ -162,3 +202,149 @@ LAB_828bc47c:
   828BC488  EBC1FFE8             ld r30,-0x18(r1)
   828BC48C  EBE1FFF0             ld r31,-0x10(r1)
   828BC490  4E800020             blr
+
+; 828BC498  CBaseEndianBuffer::WriteWords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:385)
+  828BC498  81430008             lwz r10,0x8(r3)
+  828BC49C  54A9083C             rlwinm r9,r5,0x1,0x0,0x1e
+  828BC4A0  8163000C             lwz r11,0xc(r3)
+  828BC4A4  7D4B5050             subf r10,r11,r10
+  828BC4A8  7F0A4840             cmplw cr6,r10,r9
+  828BC4AC  40980010             bge cr6,0x828bc4bc
+  828BC4B0  3C608007             lis r3,-0x7ff9
+  828BC4B4  6063007A             ori r3,r3,0x7a
+  828BC4B8  4E800020             blr
+LAB_828bc4bc:
+  828BC4BC  81430000             lwz r10,0x0(r3)
+  828BC4C0  2B050000             cmplwi cr6,r5,0x0
+  828BC4C4  7D6B5214             add r11,r11,r10
+  828BC4C8  419A0048             beq cr6,0x828bc510
+  828BC4CC  7CA903A6             mtspr CTR,r5
+  828BC4D0  392BFFFE             subi r9,r11,0x2
+  828BC4D4  3944FFFE             subi r10,r4,0x2
+LAB_828bc4d8:
+  828BC4D8  81630010             lwz r11,0x10(r3)
+  828BC4DC  2F0B0000             cmpwi cr6,r11,0x0
+  828BC4E0  419A0018             beq cr6,0x828bc4f8
+  828BC4E4  A10A0002             lhz r8,0x2(r10)
+  828BC4E8  394A0002             addi r10,r10,0x2
+  828BC4EC  550BC63E             rlwinm r11,r8,0x18,0x18,0x1f
+  828BC4F0  510B442E             rlwimi r11,r8,0x8,0x10,0x17
+  828BC4F4  48000008             b 0x828bc4fc
+LAB_828bc4f8:
+  828BC4F8  A56A0002             lhzu r11,0x2(r10)
+LAB_828bc4fc:
+  828BC4FC  B5690002             sthu r11,0x2(r9)
+  828BC500  8163000C             lwz r11,0xc(r3)
+  828BC504  396B0002             addi r11,r11,0x2
+  828BC508  9163000C             stw r11,0xc(r3)
+  828BC50C  4200FFCC             bdnz 0x828bc4d8
+LAB_828bc510:
+  828BC510  38600000             li r3,0x0
+  828BC514  4E800020             blr
+
+; 828BC518  CBaseEndianBuffer::WriteDwords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:410)
+  828BC518  81430008             lwz r10,0x8(r3)
+  828BC51C  54A9103A             rlwinm r9,r5,0x2,0x0,0x1d
+  828BC520  8163000C             lwz r11,0xc(r3)
+  828BC524  7D4B5050             subf r10,r11,r10
+  828BC528  7F0A4840             cmplw cr6,r10,r9
+  828BC52C  40980010             bge cr6,0x828bc53c
+  828BC530  3C608007             lis r3,-0x7ff9
+  828BC534  6063007A             ori r3,r3,0x7a
+  828BC538  4E800020             blr
+LAB_828bc53c:
+  828BC53C  81430000             lwz r10,0x0(r3)
+  828BC540  2B050000             cmplwi cr6,r5,0x0
+  828BC544  7D6B5214             add r11,r11,r10
+  828BC548  419A0050             beq cr6,0x828bc598
+  828BC54C  7CA903A6             mtspr CTR,r5
+  828BC550  392BFFFC             subi r9,r11,0x4
+  828BC554  3944FFFC             subi r10,r4,0x4
+LAB_828bc558:
+  828BC558  81630010             lwz r11,0x10(r3)
+  828BC55C  2F0B0000             cmpwi cr6,r11,0x0
+  828BC560  419A0020             beq cr6,0x828bc580
+  828BC564  810A0004             lwz r8,0x4(r10)
+  828BC568  394A0004             addi r10,r10,0x4
+  828BC56C  550B463E             rlwinm r11,r8,0x8,0x18,0x1f
+  828BC570  510BC42E             rlwimi r11,r8,0x18,0x10,0x17
+  828BC574  510B421E             rlwimi r11,r8,0x8,0x8,0xf
+  828BC578  510BC00E             rlwimi r11,r8,0x18,0x0,0x7
+  828BC57C  48000008             b 0x828bc584
+LAB_828bc580:
+  828BC580  856A0004             lwzu r11,0x4(r10)
+LAB_828bc584:
+  828BC584  95690004             stwu r11,0x4(r9)
+  828BC588  8163000C             lwz r11,0xc(r3)
+  828BC58C  396B0004             addi r11,r11,0x4
+  828BC590  9163000C             stw r11,0xc(r3)
+  828BC594  4200FFC4             bdnz 0x828bc558
+LAB_828bc598:
+  828BC598  38600000             li r3,0x0
+  828BC59C  4E800020             blr
+
+; 828BC5A0  CBaseEndianBuffer::WriteQwords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:435)
+  828BC5A0  81430008             lwz r10,0x8(r3)
+  828BC5A4  54A91838             rlwinm r9,r5,0x3,0x0,0x1c
+  828BC5A8  8163000C             lwz r11,0xc(r3)
+  828BC5AC  7D4B5050             subf r10,r11,r10
+  828BC5B0  7F0A4840             cmplw cr6,r10,r9
+  828BC5B4  40980010             bge cr6,0x828bc5c4
+  828BC5B8  3C608007             lis r3,-0x7ff9
+  828BC5BC  6063007A             ori r3,r3,0x7a
+  828BC5C0  4E800020             blr
+LAB_828bc5c4:
+  828BC5C4  81430000             lwz r10,0x0(r3)
+  828BC5C8  2B050000             cmplwi cr6,r5,0x0
+  828BC5CC  7D6B5214             add r11,r11,r10
+  828BC5D0  419A0074             beq cr6,0x828bc644
+  828BC5D4  390BFFF8             subi r8,r11,0x8
+  828BC5D8  7CA903A6             mtspr CTR,r5
+  828BC5DC  3964FFF8             subi r11,r4,0x8
+LAB_828bc5e0:
+  828BC5E0  81430010             lwz r10,0x10(r3)
+  828BC5E4  2F0A0000             cmpwi cr6,r10,0x0
+  828BC5E8  419A0044             beq cr6,0x828bc62c
+  828BC5EC  E94B0008             ld r10,0x8(r11)
+  828BC5F0  396B0008             addi r11,r11,0x8
+  828BC5F4  F941FFF0             std r10,-0x10(r1)
+  828BC5F8  8121FFF4             lwz r9,-0xc(r1)
+  828BC5FC  8141FFF0             lwz r10,-0x10(r1)
+  828BC600  5547463E             rlwinm r7,r10,0x8,0x18,0x1f
+  828BC604  5147C42E             rlwimi r7,r10,0x18,0x10,0x17
+  828BC608  5526463E             rlwinm r6,r9,0x8,0x18,0x1f
+  828BC60C  5147421E             rlwimi r7,r10,0x8,0x8,0xf
+  828BC610  5126C42E             rlwimi r6,r9,0x18,0x10,0x17
+  828BC614  5147C00E             rlwimi r7,r10,0x18,0x0,0x7
+  828BC618  5126421E             rlwimi r6,r9,0x8,0x8,0xf
+  828BC61C  78EA0020             rldicl r10,r7,0x0,0x20
+  828BC620  5126C00E             rlwimi r6,r9,0x18,0x0,0x7
+  828BC624  78CA000E             rldimi r10,r6,0x20,0x0
+  828BC628  48000008             b 0x828bc630
+LAB_828bc62c:
+  828BC62C  E94B0009             ldu r10,0x8(r11)
+LAB_828bc630:
+  828BC630  F9480009             stdu r10,0x8(r8)
+  828BC634  8143000C             lwz r10,0xc(r3)
+  828BC638  394A0008             addi r10,r10,0x8
+  828BC63C  9143000C             stw r10,0xc(r3)
+  828BC640  4200FFA0             bdnz 0x828bc5e0
+LAB_828bc644:
+  828BC644  38600000             li r3,0x0
+  828BC648  4E800020             blr
+
+; 828BC650  CBaseEndianBuffer::AppendBytes  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:460)
+  828BC650  81230008             lwz r9,0x8(r3)
+  828BC654  7C6B1B78             or r11,r3,r3
+  828BC658  8143000C             lwz r10,0xc(r3)
+  828BC65C  7D2A4850             subf r9,r10,r9
+  828BC660  7F092040             cmplw cr6,r9,r4
+  828BC664  40980010             bge cr6,0x828bc674
+  828BC668  3C608007             lis r3,-0x7ff9
+  828BC66C  6063007A             ori r3,r3,0x7a
+  828BC670  4E800020             blr
+LAB_828bc674:
+  828BC674  7D4A2214             add r10,r10,r4
+  828BC678  38600000             li r3,0x0
+  828BC67C  914B000C             stw r10,0xc(r11)
+  828BC680  4E800020             blr

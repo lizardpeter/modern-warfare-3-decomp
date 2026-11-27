@@ -73,21 +73,42 @@ void Ebml_WriteLen(undefined8 param_1,ulonglong param_2)
 
 // 8280ED78  Ebml_WriteString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:61)
 
-void Ebml_WriteString(void)
+void Ebml_WriteString(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_29();
+  lVar3 = param_2;
+  do {
+    pcVar4 = (char *)lVar3;
+    lVar3 = lVar3 + 1;
+  } while (*pcVar4 != '\0');
+  uVar1 = (lVar3 - param_2) - 1U & 0xffffffff;
+  Ebml_WriteLen(uVar2,uVar1);
+  Ebml_Write(uVar2,param_2,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8280EDD0  Ebml_WriteUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:71)
 
-void Ebml_WriteUTF8(void)
+void Ebml_WriteUTF8(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  size_t sVar2;
+  
+  uVar1 = __savegprlr_29();
+  sVar2 = wcslen((wchar_t *)param_2);
+  Ebml_WriteLen(uVar1,sVar2);
+  Ebml_Write(uVar1,param_2,sVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -190,11 +211,76 @@ void Ebml_SerializeUnsigned(undefined8 param_1,undefined8 param_2,uint param_3)
 
 // 8280F000  Ebml_SerializeBinary  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:133)
 
-void Ebml_SerializeBinary(void)
+void Ebml_SerializeBinary(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined1 uStack0000001c;
+  undefined1 uStack0000001d;
+  undefined1 uStack0000001e;
+  undefined1 uStack0000001f;
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  undefined1 uStack00000027;
+  undefined4 local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  iVar4 = 4;
+  lVar3 = 0x18;
+  do {
+    if (((uint)(0xff << ((uint)lVar3 & 0x3f)) & param_3) != 0) break;
+    lVar3 = lVar3 + -8;
+    iVar4 = iVar4 + -1;
+  } while (0 < lVar3);
+  if ((param_2 & 0xffffffff) < 0x1000000) {
+    if ((param_2 & 0xffffffff) < 0x10000) {
+      uVar2 = 2;
+      if ((param_2 & 0xffffffff) < 0x100) {
+        uVar2 = 1;
+      }
+    }
+    else {
+      uVar2 = 3;
+    }
+  }
+  else {
+    uVar2 = 4;
+  }
+  uStack0000001f = (undefined1)param_2;
+  uStack0000001e = (undefined1)(param_2 >> 8);
+  uStack0000001d = (undefined1)(param_2 >> 0x10);
+  uStack0000001c = (undefined1)(param_2 >> 0x18);
+  local_40[0] = CONCAT31(CONCAT21(CONCAT11(uStack0000001f,uStack0000001e),uStack0000001d),
+                         uStack0000001c);
+  Ebml_Serialize(uVar1,local_40,uVar2);
+  Ebml_WriteLen(uVar1,iVar4);
+  if ((param_3 & 0xffffffff) < 0x1000000) {
+    if ((param_3 & 0xffffffff) < 0x10000) {
+      uVar2 = 2;
+      if ((param_3 & 0xffffffff) < 0x100) {
+        uVar2 = 1;
+      }
+    }
+    else {
+      uVar2 = 3;
+    }
+  }
+  else {
+    uVar2 = 4;
+  }
+  uStack00000027 = (undefined1)param_3;
+  uStack00000026 = (undefined1)(param_3 >> 8);
+  uStack00000025 = (undefined1)(param_3 >> 0x10);
+  uStack00000024 = (undefined1)(param_3 >> 0x18);
+  local_40[0] = CONCAT31(CONCAT21(CONCAT11(uStack00000027,uStack00000026),uStack00000025),
+                         uStack00000024);
+  Ebml_Serialize(uVar1,local_40,uVar2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -248,31 +334,60 @@ void Ebml_WriteSigned16(undefined8 param_1,short param_2)
 
 // 8280F220  Ebml_SerializeString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:164)
 
-void Ebml_SerializeString(void)
+void Ebml_SerializeString(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *pcVar4;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_29();
+  Ebml_WriteID();
+  lVar3 = param_3;
+  do {
+    pcVar4 = (char *)lVar3;
+    lVar3 = lVar3 + 1;
+  } while (*pcVar4 != '\0');
+  uVar1 = (lVar3 - param_3) - 1U & 0xffffffff;
+  Ebml_WriteLen(uVar2,uVar1);
+  Ebml_Write(uVar2,param_3,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8280F280  Ebml_SerializeUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:170)
 
-void Ebml_SerializeUTF8(void)
+void Ebml_SerializeUTF8(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  size_t sVar2;
+  
+  uVar1 = __savegprlr_29();
+  Ebml_WriteID();
+  sVar2 = wcslen((wchar_t *)param_3);
+  Ebml_WriteLen(uVar1,sVar2);
+  Ebml_Write(uVar1,param_3,sVar2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8280F2C8  Ebml_SerializeData  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:176)
 
-void Ebml_SerializeData(void)
+void Ebml_SerializeData(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  Ebml_WriteID();
+  Ebml_WriteLen(uVar1,param_4 & 0xffffffff);
+  Ebml_Write(uVar1,param_3,param_4);
+  __restgprlr_29();
+  return;
 }
 
 

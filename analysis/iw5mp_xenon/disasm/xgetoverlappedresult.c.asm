@@ -3,3 +3,46 @@
 ; 828A4A68  XGetOverlappedResult  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xgetoverlappedresult.c:50)
   828A4A68  7D8802A6             mfspr r12,LR
   828A4A6C  48071C51             bl 0x829166bc
+  828A4A70  9421FF90             stwu r1,-0x70(r1)
+  828A4A74  7C7E1B78             or r30,r3,r3
+  828A4A78  7C9D2378             or r29,r4,r4
+  828A4A7C  7CBF2B78             or r31,r5,r5
+  828A4A80  7DAD6B78             or r13,r13,r13
+  828A4A84  817E0000             lwz r11,0x0(r30)
+  828A4A88  2B0B03E5             cmplwi cr6,r11,0x3e5
+  828A4A8C  409A0058             bne cr6,0x828a4ae4
+  828A4A90  2F1F0000             cmpwi cr6,r31,0x0
+  828A4A94  419A001C             beq cr6,0x828a4ab0
+  828A4A98  807E000C             lwz r3,0xc(r30)
+  828A4A9C  2B030000             cmplwi cr6,r3,0x0
+  828A4AA0  419A0010             beq cr6,0x828a4ab0
+  828A4AA4  3880FFFF             li r4,-0x1
+  828A4AA8  480048B1             bl 0x828a9358
+  828A4AAC  48000008             b 0x828a4ab4
+LAB_828a4ab0:
+  828A4AB0  38600102             li r3,0x102
+LAB_828a4ab4:
+  828A4AB4  2B030102             cmplwi cr6,r3,0x102
+  828A4AB8  409A0010             bne cr6,0x828a4ac8
+  828A4ABC  7DCE7378             or r14,r14,r14
+  828A4AC0  386003E4             li r3,0x3e4
+  828A4AC4  48000038             b 0x828a4afc
+LAB_828a4ac8:
+  828A4AC8  2B030000             cmplwi cr6,r3,0x0
+  828A4ACC  419A0018             beq cr6,0x828a4ae4
+  828A4AD0  4BFFE269             bl 0x828a2d38
+  828A4AD4  7C7F1B78             or r31,r3,r3
+  828A4AD8  7DCE7378             or r14,r14,r14
+  828A4ADC  7FE3FB78             or r3,r31,r31
+  828A4AE0  4800001C             b 0x828a4afc
+LAB_828a4ae4:
+  828A4AE4  2B1D0000             cmplwi cr6,r29,0x0
+  828A4AE8  419A000C             beq cr6,0x828a4af4
+  828A4AEC  817E0004             lwz r11,0x4(r30)
+  828A4AF0  917D0000             stw r11,0x0(r29)
+LAB_828a4af4:
+  828A4AF4  7DCE7378             or r14,r14,r14
+  828A4AF8  807E0000             lwz r3,0x0(r30)
+LAB_828a4afc:
+  828A4AFC  38210070             addi r1,r1,0x70
+  828A4B00  48071C0C             b 0x8291670c

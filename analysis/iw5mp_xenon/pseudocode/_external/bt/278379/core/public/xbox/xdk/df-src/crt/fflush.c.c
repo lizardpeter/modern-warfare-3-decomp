@@ -61,8 +61,43 @@ int _fflush_nolock(FILE *_File)
 int _flush(FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(_File);
+  char *_Buf;
+  FILE *_File_00;
+  int iVar1;
+  uint uVar2;
+  uint _MaxCharCount;
+  uint uVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  
+  _File_00 = (FILE *)__savegprlr_28(_File);
+  uVar4 = 0;
+  if ((_File_00->_flag & 3U) == 2) {
+    if ((_File_00->_flag & 0x108U) != 0) {
+      _Buf = _File_00->_base;
+      lVar5 = ZEXT48(_File_00->_ptr) - ZEXT48(_Buf);
+      if (0 < lVar5) {
+        iVar1 = _fileno(_File_00);
+        _MaxCharCount = (uint)lVar5;
+        uVar2 = _write(iVar1,_Buf,_MaxCharCount);
+        uVar3 = _File_00->_flag;
+        if (uVar2 == _MaxCharCount) {
+          if ((uVar3 & 0x80) == 0) goto LAB_8291b4f8;
+          uVar3 = uVar3 & 0xfffffffd;
+        }
+        else {
+          uVar4 = 0xffffffffffffffff;
+          uVar3 = uVar3 | 0x20;
+        }
+        _File_00->_flag = uVar3;
+      }
+    }
+  }
+LAB_8291b4f8:
+  _File_00->_cnt = 0;
+  _File_00->_ptr = _File_00->_base;
+  iVar1 = __restgprlr_28(uVar4);
+  return iVar1;
 }
 
 
@@ -85,7 +120,48 @@ int _flushall(void)
 void flsall(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  void *_File;
+  FILE *_File_00;
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int _Index;
+  int local_3c;
+  int local_38;
+  
+  iVar1 = __savegprlr_27();
+  local_3c = 0;
+  local_38 = 0;
+  _lock(1);
+  uVar3 = 0xffffffff84897ec4;
+  for (_Index = 0; _Index < *(int *)uVar3; _Index = _Index + 1) {
+    _File = *(void **)(_Index * 4 + DAT_84897ec0);
+    if ((_File != (void *)0x0) && ((*(uint *)((int)_File + 0xc) & 0x83) != 0)) {
+      _lock_file2(_Index,_File);
+      _File_00 = *(FILE **)(_Index * 4 + DAT_84897ec0);
+      uVar3 = (ulonglong)(uint)_File_00->_flag & 0x83;
+      if ((int)uVar3 != 0) {
+        if (iVar1 == 1) {
+          iVar2 = _fflush_nolock(_File_00);
+          if (iVar2 != -1) {
+            local_3c = local_3c + 1;
+          }
+        }
+        else if ((iVar1 == 0) && ((_File_00->_flag & 2U) != 0)) {
+          iVar2 = _fflush_nolock(_File_00);
+          if (iVar2 == -1) {
+            local_38 = -1;
+          }
+        }
+      }
+      FUN_8291b70c();
+    }
+  }
+  FUN_8291b6bc();
+  if (iVar1 != 1) {
+    local_3c = local_38;
+  }
+  __restgprlr_27(local_3c);
+  return;
 }
 

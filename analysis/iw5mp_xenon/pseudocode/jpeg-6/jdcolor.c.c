@@ -5,18 +5,115 @@
 void build_ycc_rgb_table(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  longlong lVar10;
+  
+  iVar4 = __savegprlr_29();
+  iVar1 = *(int *)(iVar4 + 0x1ac);
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 8) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0xc) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x10) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x14) = uVar5;
+  lVar10 = 0x100;
+  iVar9 = 0;
+  iVar6 = 0x5b6900;
+  iVar7 = -0xe25100;
+  iVar8 = -0xb2f480;
+  iVar4 = 0x2c8d00;
+  do {
+    iVar2 = iVar8 >> 0x10;
+    iVar3 = iVar7 >> 0x10;
+    iVar8 = iVar8 + 0x166e9;
+    iVar7 = iVar7 + 0x1c5a2;
+    *(int *)(iVar9 + *(int *)(iVar1 + 8)) = iVar2;
+    *(int *)(*(int *)(iVar1 + 0xc) + iVar9) = iVar3;
+    *(int *)(iVar9 + *(int *)(iVar1 + 0x10)) = iVar6;
+    iVar6 = iVar6 + -0xb6d2;
+    *(int *)(*(int *)(iVar1 + 0x14) + iVar9) = iVar4;
+    iVar4 = iVar4 + -0x581a;
+    iVar9 = iVar9 + 4;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 827BD630  ycc_rgb_convert  (jpeg-6/jdcolor.c:123)
 
-void ycc_rgb_convert(void)
+void ycc_rgb_convert(undefined8 param_1,int *param_2,ulonglong param_3,longlong param_4,
+                    longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  undefined1 *puVar12;
+  byte *pbVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  
+  iVar10 = __savegprlr_23();
+  iVar4 = *(int *)(iVar10 + 0x1ac);
+  param_5 = param_5 + -1;
+  uVar5 = *(uint *)(iVar10 + 100);
+  iVar10 = *(int *)(iVar10 + 0x128);
+  iVar6 = *(int *)(iVar4 + 8);
+  iVar7 = *(int *)(iVar4 + 0xc);
+  iVar8 = *(int *)(iVar4 + 0x10);
+  iVar4 = *(int *)(iVar4 + 0x14);
+  if (-1 < param_5) {
+    lVar14 = (param_3 & 0x3fffffff) << 2;
+    param_4 = param_4 + -4;
+    do {
+      param_4 = param_4 + 4;
+      iVar11 = (int)lVar14;
+      pbVar13 = *(byte **)(iVar11 + param_2[1]);
+      lVar14 = lVar14 + 4;
+      if ((ulonglong)uVar5 != 0) {
+        puVar12 = (undefined1 *)(*(int *)param_4 + -3);
+        iVar9 = *(int *)(*param_2 + iVar11) - (int)pbVar13;
+        iVar11 = *(int *)(param_2[2] + iVar11) - (int)pbVar13;
+        uVar15 = (ulonglong)uVar5;
+        do {
+          bVar2 = pbVar13[iVar11];
+          bVar3 = pbVar13[iVar9];
+          bVar1 = *pbVar13;
+          pbVar13 = pbVar13 + 1;
+          puVar12[5] = *(undefined1 *)(*(int *)((uint)bVar2 * 4 + iVar6) + (uint)bVar3 + iVar10);
+          puVar12[4] = *(undefined1 *)
+                        ((*(int *)((uint)bVar1 * 4 + iVar4) + *(int *)((uint)bVar2 * 4 + iVar8) >>
+                         0x10) + (uint)bVar3 + iVar10);
+          puVar12 = puVar12 + 3;
+          *puVar12 = *(undefined1 *)(*(int *)((uint)bVar1 * 4 + iVar7) + (uint)bVar3 + iVar10);
+          uVar15 = uVar15 - 1;
+        } while (uVar15 != 0);
+      }
+      param_5 = param_5 + -1;
+    } while (-1 < param_5);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -199,6 +296,102 @@ void ycck_cmyk_convert(undefined8 param_1,int *param_2,ulonglong param_3,longlon
 void start_pass_dcolor(void)
 
 {
+  return;
+}
+
+
+// 827BD908  jinit_color_deconverter  (jpeg-6/jdcolor.c:305)
+
+void jinit_color_deconverter(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
+  
+  piVar2 = (int *)__savegprlr_29();
+  puVar3 = (undefined4 *)(**(code **)piVar2[1])(piVar2,1,0x18);
+  piVar2[0x6b] = (int)puVar3;
+  *puVar3 = start_pass_dcolor;
+  iVar5 = piVar2[0xc];
+  if (iVar5 - 1U < 5) {
+    if ((iVar5 == 2) || (iVar5 == 3)) {
+      if (piVar2[0xb] != 3) goto LAB_827bd9a8;
+    }
+    else if ((iVar5 == 4) || (iVar5 != 1)) {
+      if (piVar2[0xb] != 4) goto LAB_827bd9a8;
+    }
+    else if (piVar2[0xb] != 1) {
+LAB_827bd9a8:
+      *(undefined4 *)(*piVar2 + 0x14) = 10;
+      (**(code **)*piVar2)(piVar2);
+    }
+  }
+  else if (piVar2[0xb] < 1) goto LAB_827bd9a8;
+  iVar5 = piVar2[0xd];
+  if (iVar5 == 1) {
+    piVar2[0x1b] = 1;
+    if ((piVar2[0xc] == 1) || (piVar2[0xc] == 3)) {
+      iVar5 = 1;
+      puVar3[1] = grayscale_convert;
+      if (1 < piVar2[0xb]) {
+        iVar4 = 0x54;
+        do {
+          iVar5 = iVar5 + 1;
+          iVar1 = iVar4 + piVar2[0x33];
+          iVar4 = iVar4 + 0x54;
+          *(undefined1 *)(iVar1 + 0x30) = 0;
+        } while (iVar5 < piVar2[0xb]);
+      }
+      goto LAB_827bdb2c;
+    }
+  }
+  else if (iVar5 == 2) {
+    iVar5 = piVar2[0xc];
+    piVar2[0x1b] = 3;
+    if (iVar5 == 3) {
+      puVar3[1] = ycc_rgb_convert;
+      build_ycc_rgb_table(piVar2);
+      goto LAB_827bdb2c;
+    }
+    if (iVar5 == 1) {
+      puVar3[1] = gray_rgb_convert;
+      goto LAB_827bdb2c;
+    }
+    if (iVar5 == 2) {
+      puVar3[1] = null_convert;
+      goto LAB_827bdb2c;
+    }
+  }
+  else if (iVar5 == 4) {
+    piVar2[0x1b] = 4;
+    if (piVar2[0xc] == 5) {
+      puVar3[1] = ycck_cmyk_convert;
+      build_ycc_rgb_table(piVar2);
+      goto LAB_827bdb2c;
+    }
+    if (piVar2[0xc] == 4) {
+      puVar3[1] = null_convert;
+      goto LAB_827bdb2c;
+    }
+  }
+  else if (iVar5 == piVar2[0xc]) {
+    piVar2[0x1b] = piVar2[0xb];
+    puVar3[1] = null_convert;
+    goto LAB_827bdb2c;
+  }
+  *(undefined4 *)(*piVar2 + 0x14) = 0x1b;
+  (**(code **)*piVar2)(piVar2);
+LAB_827bdb2c:
+  if (*(char *)((int)piVar2 + 0x52) == '\0') {
+    piVar2[0x1c] = piVar2[0x1b];
+    __restgprlr_29();
+    return;
+  }
+  piVar2[0x1c] = 1;
+  __restgprlr_29();
   return;
 }
 

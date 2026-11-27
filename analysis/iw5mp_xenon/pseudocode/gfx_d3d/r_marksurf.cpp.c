@@ -26,7 +26,6 @@ undefined8 R_BeginMarkMeshVerts(void)
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (uVar1 == 0) {
     if (DAT_84628b00 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821c7540,0x44,0,0xffffffff82000f98,0xffffffff821bb4cc);
     }
     uVar2 = 1;
@@ -39,7 +38,6 @@ undefined8 R_BeginMarkMeshVerts(void)
   }
   else {
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821c7540,0x3c,0,0xffffffff821c7588,1,0,in_MSR);
     }
     uVar2 = 0;
@@ -63,7 +61,6 @@ void R_EndMarkMeshVerts(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (DAT_84628b00 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c7540,0x6a,0,0xffffffff82000f98,0xffffffff821bb4cc);
   }
   DAT_847b968c = DAT_84618240;
@@ -74,13 +71,118 @@ void R_EndMarkMeshVerts(void)
 }
 
 
-// 827538F0  R_ReserveMarkMeshIndices  (gfx_d3d/r_marksurf.cpp:129)
+// 82753B58  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
-void R_ReserveMarkMeshIndices(void)
+void R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+               (undefined8 param_1,ulonglong param_2,uint param_3,uint param_4,longlong param_5,
+               ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  ulonglong uVar8;
+  uint *puVar10;
+  longlong lVar9;
+  longlong lVar11;
+  
+  puVar7 = (uint *)__savegprlr_26();
+  if ((param_2 & 0xffffffff) != 0) {
+    lVar11 = (param_6 & 0xfffffff) * 0x10 + param_5 + -0x10;
+    do {
+      uVar1 = *puVar7 >> 0x12;
+      if ((param_3 <= uVar1) && (uVar1 < param_4)) {
+        uVar8 = param_6;
+        uVar6 = param_6 & 0xffffffff;
+        for (lVar9 = lVar11; (uVar6 != 0 && (puVar10 = (uint *)lVar9, uVar1 < *puVar10 >> 0x12));
+            lVar9 = lVar9 + -0x10) {
+          uVar8 = uVar8 - 1;
+          puVar10[4] = *puVar10;
+          puVar10[5] = puVar10[1];
+          puVar10[6] = puVar10[2];
+          puVar10[7] = puVar10[3];
+          uVar6 = uVar8;
+        }
+        iVar5 = (int)uVar8 * 0x10;
+        uVar1 = puVar7[1];
+        param_6 = param_6 + 1;
+        uVar2 = puVar7[2];
+        iVar4 = iVar5 + (int)param_5;
+        uVar3 = puVar7[3];
+        lVar11 = lVar11 + 0x10;
+        *(uint *)(iVar5 + (int)param_5) = *puVar7;
+        *(uint *)(iVar4 + 4) = uVar1;
+        *(uint *)(iVar4 + 8) = uVar2;
+        *(uint *)(iVar4 + 0xc) = uVar3;
+      }
+      param_2 = param_2 - 1;
+      puVar7 = puVar7 + 4;
+    } while (param_2 != 0);
+  }
+  __restgprlr_26(param_6);
+  return;
+}
+
+
+// 82753C28  R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:128)
+
+int R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+              (uint *param_1,ulonglong param_2,uint param_3,uint param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *puVar4;
+  
+  if ((param_2 & 0xffffffff) != 0) {
+    puVar4 = (uint *)(param_6 * 0x10 + param_5);
+    do {
+      if ((param_3 <= *param_1 >> 0x12) && (*param_1 >> 0x12 < param_4)) {
+        param_6 = param_6 + 1;
+        uVar1 = param_1[1];
+        uVar2 = param_1[2];
+        uVar3 = param_1[3];
+        *puVar4 = *param_1;
+        puVar4[1] = uVar1;
+        puVar4[2] = uVar2;
+        puVar4[3] = uVar3;
+        puVar4 = puVar4 + 4;
+      }
+      param_2 = param_2 - 1;
+      param_1 = param_1 + 4;
+    } while (param_2 != 0);
+  }
+  return param_6;
+}
+
+
+// 827538F0  R_ReserveMarkMeshIndices  (gfx_d3d/r_marksurf.cpp:129)
+
+void R_ReserveMarkMeshIndices(undefined8 param_1,int *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (DAT_84618254 == '\0') {
+    MyAssertHandler(0xffffffff821c7540,0x82,0,0xffffffff82000f98,0xffffffff821c75cc);
+  }
+  if (0x2400 < DAT_84618248 + iVar2) {
+    R_WarnOncePerFrame(0x2c);
+    __restgprlr_29(0);
+    return;
+  }
+  iVar1 = DAT_84618248 * 2;
+  DAT_84618248 = DAT_84618248 + iVar2;
+  *param_2 = iVar1 + DAT_84618250;
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -90,7 +192,6 @@ longlong R_MarkMeshVertIter_Begin(ulonglong param_1)
 
 {
   if (DAT_84618254 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c7540,0x94,0,0xffffffff82000f98,0xffffffff821c75cc);
   }
   return (param_1 & 0xffff) * 0x2c + (ulonglong)DAT_8461824c;
@@ -99,21 +200,104 @@ longlong R_MarkMeshVertIter_Begin(ulonglong param_1)
 
 // 82753F38  R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
-void R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>(void)
+void R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined2 uVar1;
+  undefined2 uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  
+  uVar4 = __savegprlr_27();
+  iVar3 = (int)((param_3 & 0xffffffff) << 1);
+  uVar1 = *(undefined2 *)((int)&DAT_84616480 + iVar3);
+  uVar2 = *(undefined2 *)((int)&DAT_84616482 + iVar3);
+  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>();
+  uVar5 = R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>(uVar4,param_2,uVar1,uVar2);
+  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+            (uVar4,param_2,uVar2,0x1660,param_4,uVar5);
+  __restgprlr_27();
+  return;
+}
+
+
+// 827539F8  R_MarkMeshVertIter_Next  (gfx_d3d/r_marksurf.cpp:156)
+
+longlong R_MarkMeshVertIter_Next(longlong param_1)
+
+{
+  return param_1 + 0x2c;
+}
+
+
+// 82753A00  R_MarkMeshVertIter_End  (gfx_d3d/r_marksurf.cpp:165)
+
+void R_MarkMeshVertIter_End(void)
+
+{
+  return;
 }
 
 
 // 82753A08  R_ReserveMarkMeshVerts  (gfx_d3d/r_marksurf.cpp:174)
 
-void R_ReserveMarkMeshVerts(void)
+void R_ReserveMarkMeshVerts(undefined8 param_1,undefined2 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined2 uVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (DAT_84618254 == '\0') {
+    MyAssertHandler(0xffffffff821c7540,0xaf,0,0xffffffff82000f98,0xffffffff821c75cc);
+  }
+  if (0x1800 < DAT_84618244 + iVar1) {
+    R_WarnOncePerFrame(0x2d);
+    __restgprlr_29(0);
+    return;
+  }
+  uVar2 = (undefined2)DAT_84618244;
+  DAT_84618244 = DAT_84618244 + iVar1;
+  *param_2 = uVar2;
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 82753A90  R_ReserveMarkMeshVertsAndIndices  (gfx_d3d/r_marksurf.cpp:194)
+
+void R_ReserveMarkMeshVertsAndIndices
+               (undefined8 param_1,undefined2 *param_2,longlong param_3,int *param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined2 uVar3;
+  
+  iVar1 = __savegprlr_27();
+  if (DAT_84618254 == '\0') {
+    MyAssertHandler(0xffffffff821c7540,0xc3,0,0xffffffff82000f98,0xffffffff821c75cc);
+  }
+  if (0x1800 < DAT_84618244 + iVar1) {
+    R_WarnOncePerFrame(0x2d);
+    __restgprlr_27(0);
+    return;
+  }
+  if (0x2400 < ((ulonglong)DAT_84618248 + param_3 & 0xffffffff)) {
+    R_WarnOncePerFrame(0x2c);
+    __restgprlr_27(0);
+    return;
+  }
+  iVar2 = DAT_84618248 * 2 + DAT_84618250;
+  uVar3 = (undefined2)DAT_84618244;
+  DAT_84618244 = DAT_84618244 + iVar1;
+  *param_2 = uVar3;
+  DAT_84618248 = (uint)((ulonglong)DAT_84618248 + param_3);
+  *param_4 = iVar2;
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -129,18 +313,15 @@ void R_AddMarkSurf(undefined8 param_1,undefined1 *param_2,undefined4 param_3,ulo
   
   iVar1 = __savegprlr_24();
   if (DAT_84618254 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c7540,0xe6,0,0xffffffff82000f98,0xffffffff821c75cc);
   }
   iVar2 = R_GetSortedMaterial(*(ulonglong *)(iVar1 + 8) >> 0x1d & 0xfff);
   if (iVar2 != iVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c7540,0xe9,0,0xffffffff82000f98,0xffffffff821bb8a8);
   }
   uVar4 = (uint)DAT_845aa55c;
   iVar2 = Material_GetTechniqueSet(iVar1);
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
   }
   if (*(int *)((uVar4 + 3) * 4 + iVar2) == 0) {
@@ -161,7 +342,6 @@ void R_AddMarkSurf(undefined8 param_1,undefined1 *param_2,undefined4 param_3,ulo
   *(undefined4 *)(&DAT_8476ca04 + iVar2) = param_3;
   *(uint *)(&DAT_8476ca00 + iVar2) = *(uint *)(&DAT_8476ca00 + iVar2) & 0xfffcff00 | 0x12;
   if ((int)uVar3 != (int)(uVar3 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar3 & 0xffff);
   }
   *(short *)(&DAT_8476ca08 + iVar2) = (short)uVar3;
@@ -171,6 +351,35 @@ void R_AddMarkSurf(undefined8 param_1,undefined1 *param_2,undefined4 param_3,ulo
   (&DAT_8476ca0d)[iVar2] = param_2[6];
   *(undefined2 *)(&DAT_8476ca0e + iVar2) = *(undefined2 *)(param_2 + 2);
   __restgprlr_24();
+  return;
+}
+
+
+// 82753E68  R_EmitMarkSurfs  (gfx_d3d/r_marksurf.cpp:291)
+
+void R_EmitMarkSurfs(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1[1] != 0) {
+    MyAssertHandler(0xffffffff821c7540,0x126,0,0xffffffff82000f98,0xffffffff821c7604);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff821c7540,0x127,0,0xffffffff82000f98,0xffffffff821c75e8);
+  }
+  uVar3 = (ulonglong)DAT_847b968c;
+  if ((int)param_2 < (int)DAT_847b968c) {
+    uVar3 = param_2;
+  }
+  iVar2 = R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (0xffffffff8476ca00,uVar3,*(undefined4 *)(DAT_8461658c + 0x28),*piVar1);
+  piVar1[1] = iVar2;
+  DAT_847b968c = 0;
+  __restgprlr_28();
   return;
 }
 

@@ -21,11 +21,72 @@ void D3D__ConfigureForZPass(int param_1)
 
 // 8287FAD8  D3D::ConfigureForOnePassZPass  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/tile.cpp:62)
 
-void D3D__ConfigureForOnePassZPass(void)
+void D3D__ConfigureForOnePassZPass
+               (undefined8 param_1,int param_2,ulonglong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  uint *puVar2;
+  int iVar4;
+  ulonglong uVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int *piVar7;
+  uint *puVar8;
+  ulonglong uVar9;
+  
+  iVar4 = __savegprlr_28();
+  bVar1 = *(byte *)(iVar4 + 0x2b3f);
+  *(byte *)(iVar4 + 0x2b3f) = bVar1 | 0x20;
+  if (param_2 != 0) {
+    *(byte *)(iVar4 + 0x2b3f) = bVar1 | 0x30;
+  }
+  if ((*(ushort *)(iVar4 + 0x2880) & 3) == 0) {
+    uVar5 = 0x10;
+  }
+  else {
+    uVar5 = 8;
+    if ((*(ushort *)(iVar4 + 0x2880) & 3) != 1) {
+      uVar9 = 0x10;
+      uVar3 = 0x28;
+      goto LAB_8287fb48;
+    }
+  }
+  uVar9 = 0x20;
+  uVar3 = 0x50;
+LAB_8287fb48:
+  uVar6 = (uVar9 + param_4) - 1 & ~(uVar9 - 1);
+  trapWord(6,uVar9,0);
+  if ((param_3 & 0xffffffff) != 0) {
+    piVar7 = (int *)(iVar4 + 0x342c);
+    puVar8 = (uint *)(iVar4 + 0x33b4);
+    do {
+      puVar2 = puVar8 + 1;
+      trapWord(6,uVar9,0);
+      puVar8 = puVar8 + 2;
+      trapWord(6,uVar5,0);
+      piVar7 = piVar7 + 1;
+      *piVar7 = (int)(*puVar8 / uVar5) * (int)((uVar6 & 0xffffffff) / uVar9) +
+                (int)(*puVar2 / uVar9);
+      param_3 = param_3 - 1;
+    } while (param_3 != 0);
+  }
+  *(int *)(iVar4 + 0x346c) = (int)uVar6;
+  trapWord(6,uVar3,0);
+  *(uint *)(iVar4 + 0x2880) =
+       (uint)((uVar6 & 0xffffffff) << 0x12) | *(uint *)(iVar4 + 0x2880) & 0x3ffff;
+  *(ulonglong *)(iVar4 + 0x10) = *(ulonglong *)(iVar4 + 0x10) | 0x100;
+  *(int *)(iVar4 + 0x3470) = (int)(((uVar3 + param_4) - 1 & 0xffffffff) / uVar3) * (int)uVar3;
+  if (((*(byte *)(iVar4 + 0x2b3f) & 0x20) == 0) &&
+     ((*(uint *)(iVar4 + 0x2f7c) & 0xe0000) == 0x40000)) {
+    uVar5 = *(ulonglong *)(iVar4 + 0x28) & 0xfffffffffffffeff;
+  }
+  else {
+    uVar5 = *(ulonglong *)(iVar4 + 0x28) | 0x100;
+  }
+  *(ulonglong *)(iVar4 + 0x28) = uVar5;
+  __restgprlr_28();
+  return;
 }
 
 

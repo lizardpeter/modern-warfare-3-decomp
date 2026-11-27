@@ -36,28 +36,190 @@ int _dynamic_initializer_for__s_renderedMovieInformation__(void)
 void CL_Demo_GetIndexForMapName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  lVar4 = 0;
+  if (0 < DAT_83f7df64) {
+    lVar3 = -0x7c082078;
+    do {
+      iVar2 = I_stricmp(lVar3,uVar1);
+      if (iVar2 == 0) {
+        __restgprlr_28(lVar4);
+        return;
+      }
+      lVar4 = lVar4 + 1;
+      lVar3 = lVar3 + 0xa78;
+    } while ((int)lVar4 < DAT_83f7df64);
+  }
+  __restgprlr_28(0xffffffffffffffff);
+  return;
+}
+
+
+// 827CE660  CL_Demo_GetIndexForGameType  (client_demo/cl_demo_contentserver.cpp:108)
+
+void CL_Demo_GetIndexForGameType(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  lVar4 = 0;
+  if (0 < DAT_83f7aed4) {
+    lVar3 = -0x7c085128;
+    do {
+      iVar2 = I_stricmp(lVar3,uVar1);
+      if (iVar2 == 0) {
+        __restgprlr_28(lVar4);
+        return;
+      }
+      lVar4 = lVar4 + 1;
+      lVar3 = lVar3 + 0x6c;
+    } while ((int)lVar4 < DAT_83f7aed4);
+  }
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
 // 827CFAC8  CL_Demo_SetMetaData  (client_demo/cl_demo_contentserver.cpp:130)
 
-void CL_Demo_SetMetaData(void)
+void CL_Demo_SetMetaData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined *local_40;
+  undefined4 local_3c;
+  
+  iVar1 = __savegprlr_27();
+  iVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  memset(&DAT_8487ce50,0,0xff);
+  local_40 = &DAT_8487ce50;
+  local_3c = 0xff;
+  StructuredData_SetDataVersion(iVar2,&local_40);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,param_2,0xffffffff821dc418);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,iVar1 + 0x200,0xffffffff82021a74);
+  StructuredData_SetData<bool>(iVar2,&local_40,*(undefined1 *)(iVar1 + 0x22c),0xffffffff821dc408);
+  StructuredData_SetData<char_const_*>(iVar2,&local_40,iVar1 + 0x216,0xffffffff82132868);
+  StructuredData_SetData<bool>(iVar2,&local_40,*(undefined1 *)(iVar1 + 0x22d),0xffffffff821dc3f8);
+  StructuredData_SetData<int>(iVar2,&local_40,*(undefined4 *)(iVar1 + 0x230),0xffffffff821dc3ec);
+  StructuredData_SetData<int>(iVar2,&local_40,param_3,0xffffffff82003578);
+  __restgprlr_27(*(undefined4 *)(iVar2 + 0x30));
+  return;
 }
 
 
 // 827CE6D0  CL_Demo_SetTags  (client_demo/cl_demo_contentserver.cpp:156)
 
-void CL_Demo_SetTags(void)
+void CL_Demo_SetTags(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+                    ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  uint uVar5;
+  longlong lVar6;
+  
+  uVar2 = __savegprlr_18();
+  uVar1 = param_5 & 0xffff;
+  if ((((uVar1 != 3) && (uVar1 != 2)) && (uVar1 != 4)) && (uVar1 != 7)) {
+    MyAssertHandler(0xffffffff821dbcc8,0xa1,0,0xffffffff82000f98,0xffffffff821dbd18);
+  }
+  *(undefined4 *)param_2 = 0;
+  LiveStorage_CS_AddTag(2,param_5 & 0xffff,param_2,param_3,0x21);
+  uVar3 = Live_GetXuid(uVar2);
+  LiveStorage_CS_AddTag(3,uVar3,param_2,param_3,0x21);
+  iVar4 = CL_Demo_GetIndexForMapName(param_4 + 0x100);
+  if (iVar4 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc9c);
+  }
+  else {
+    LiveStorage_CS_AddTag(1,iVar4,param_2,param_3,0x21);
+  }
+  iVar4 = CL_Demo_GetIndexForGameType(param_4);
+  if (iVar4 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc68);
+  }
+  else {
+    LiveStorage_CS_AddTag(0,iVar4,param_2,param_3,0x21);
+  }
+  iVar4 = 0;
+  if (0 < *(int *)((int)param_4 + 0x234)) {
+    lVar6 = param_4 + 0x234;
+    do {
+      uVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
+      if (DAT_82aa1a9c == 0) {
+        MyAssertHandler(0xffffffff821dbc18,0x49a,0,0xffffffff82000f98,0xffffffff82022ca8);
+      }
+      if (DAT_82aa1ae8 <= uVar5) {
+        MyAssertHandler(0xffffffff821dbc18,0x49c,0,0xffffffff8200d150,uVar5);
+      }
+      lVar6 = lVar6 + 4;
+      LiveStorage_CS_AddTag
+                (4,*(undefined8 *)((uVar5 * 0x439a + *(int *)lVar6) * 0x18 + DAT_82aa1a9c + 0x434d8)
+                 ,param_2,param_3,0x21);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < *(int *)((int)param_4 + 0x234));
+  }
+  __restgprlr_18();
+  return;
+}
+
+
+// 827CE8D8  CL_Demo_SetTags  (client_demo/cl_demo_contentserver.cpp:203)
+
+void CL_Demo_SetTags(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4,
+                    undefined8 param_5,undefined8 param_6,ulonglong param_7)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  puVar1 = (undefined4 *)__savegprlr_25();
+  if ((param_7 & 0xffff) != 1) {
+    MyAssertHandler(0xffffffff821dbcc8,0xcf,0,0xffffffff82000f98,0xffffffff821dbda4);
+  }
+  *puVar1 = 0;
+  LiveStorage_CS_AddTag(2,param_7 & 0xffff,puVar1,param_2,0x21);
+  LiveStorage_CS_AddTag(3,param_4,puVar1,param_2,0x21);
+  iVar2 = CL_Demo_GetIndexForMapName(param_5);
+  if (iVar2 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc9c);
+  }
+  else {
+    LiveStorage_CS_AddTag(1,iVar2,puVar1,param_2,0x21);
+  }
+  iVar2 = CL_Demo_GetIndexForGameType(param_6);
+  if (iVar2 < 0) {
+    Com_PrintError(0xe,0xffffffff821dbc68);
+  }
+  else {
+    LiveStorage_CS_AddTag(0,iVar2,puVar1,param_2,0x21);
+  }
+  iVar2 = (int)param_3;
+  LiveStorage_CS_AddTag(7,*(undefined4 *)(iVar2 + 0x61c),puVar1,param_2,0x21);
+  iVar3 = 0;
+  if (0 < *(int *)(iVar2 + 0x618)) {
+    param_3 = param_3 + 0x248;
+    do {
+      param_3 = param_3 + 0x18;
+      LiveStorage_CS_AddTag(4,*(undefined8 *)param_3,puVar1,param_2,0x21);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < *(int *)(iVar2 + 0x618));
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -66,6 +228,60 @@ void CL_Demo_SetTags(void)
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void StructuredData_SetData<char_const_*>
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined4 uStack00000024;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack00000024 = param_3;
+  StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000024,&stack0x00000028);
+  return;
+}
+
+
+// 827D0650  StructuredData_SetData<bool>  (universal/com_structureddatadef.h:226)
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void StructuredData_SetData<bool>
+               (undefined8 param_1,undefined8 param_2,undefined1 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  undefined1 uStack00000027;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  uStack00000027 = param_3;
+  StructuredData_VardicSetLookupByVaList(param_1,param_2,&stack0x00000027,&stack0x00000028);
+  return;
+}
+
+
+// 827D06A0  StructuredData_SetData<int>  (universal/com_structureddatadef.h:226)
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void StructuredData_SetData<int>
                (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
                undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
@@ -179,11 +395,118 @@ void CL_Demo_SaveScreenshotFailure(void)
 
 // 827CFBD8  CL_Demo_SaveScreenshot  (client_demo/cl_demo_contentserver.cpp:350)
 
-void CL_Demo_SaveScreenshot(void)
+void CL_Demo_SaveScreenshot(undefined8 param_1,undefined2 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 *puVar1;
+  undefined8 uVar2;
+  char cVar6;
+  undefined8 uVar3;
+  int iVar5;
+  undefined8 uVar4;
+  undefined8 *puVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  longlong lVar10;
+  undefined4 local_4a0 [2];
+  undefined8 uStack_498;
+  undefined2 local_490 [2];
+  int iStack_48c;
+  undefined4 local_488;
+  undefined1 *local_484;
+  undefined2 local_480;
+  undefined *local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  undefined1 *local_470;
+  code *local_464;
+  code *local_460;
+  undefined1 auStack_450 [256];
+  undefined1 auStack_350 [792];
+  undefined1 auStack_38 [56];
+  
+  uVar2 = __savegprlr_27();
+  puVar9 = auStack_350;
+  lVar8 = 0x20;
+  do {
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  cVar6 = LiveStorage_CS_IsInited(uVar2);
+  if (cVar6 == '\0') {
+    LiveStorage_CS_Init(uVar2);
+  }
+  cVar6 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar6 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc498);
+    puVar9 = auStack_38;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_27();
+    return;
+  }
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar6 = CL_Demo_IsPlaying();
+  if ((cVar6 != '\0') && (cVar6 = CL_Demo_IsPlaybackMemoryAllocated(), cVar6 != '\0')) {
+    lVar8 = CL_GetLocalClientConnection(uVar3);
+    iVar5 = CL_Demo_GetPlaybackData();
+    lVar10 = 6;
+    puVar1 = &uStack_498;
+    do {
+      puVar7 = puVar1;
+      puVar1 = puVar7 + 1;
+      *puVar1 = 0;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    *(undefined4 *)(puVar7 + 2) = 0;
+    Com_sprintf(auStack_450,0x100,0xffffffff821dc490,lVar8 + 0x40148);
+    local_484 = auStack_450;
+    iStack_48c = iVar5 + 0x205f38;
+    local_480 = 3;
+    local_488 = *(undefined4 *)(iVar5 + 0x205f34);
+    local_490[0] = param_2;
+    uVar4 = CL_GetUsernameForLocalClient(uVar2);
+    local_478 = CL_Demo_SetMetaData(iVar5 + 0x31df3c,uVar4,0);
+    local_4a0[0] = 0;
+    local_47c = &DAT_8487ce50;
+    CL_Demo_SetTags(uVar2,local_4a0,auStack_350,iVar5 + 0x31df3c,local_480);
+    local_470 = auStack_350;
+    local_460 = CL_Demo_SaveScreenshotFailure;
+    local_464 = CL_Demo_SaveScreenshotSuccessful;
+    local_474 = local_4a0[0];
+    iVar5 = LiveStorage_CS_WriteFile(uVar2,local_490);
+    if (iVar5 == 0) {
+      CL_Demo_Error(uVar3,0xffffffff8208bd88,0xffffffff821dbe7c);
+    }
+    else {
+      CL_LocalClientNumFromControllerIndex(uVar2);
+      OnlineVault_OpenProgressIndicatorMenu();
+    }
+    puVar9 = auStack_38;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_27();
+    return;
+  }
+  Com_PrintError(0x10,0xffffffff821dc440);
+  puVar9 = auStack_38;
+  lVar8 = 0x20;
+  do {
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -243,7 +566,6 @@ void CL_Demo_SaveClipSuccessful(undefined8 param_1,undefined8 param_2)
   local_58 = 0;
   local_50 = 0;
   if (*piVar4 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821dbcc8,0x1d1,0,0xffffffff82000f98,0xffffffff821dc084);
   }
   if (*piVar4 + 4U < 0x10000) {
@@ -303,6 +625,37 @@ void CL_Demo_PopulateClipFooterFromFilmFooter(void *param_1,void *param_2)
 }
 
 
+// 827CEFA8  CL_Demo_MoveToNextPhaseForClip  (client_demo/cl_demo_contentserver.cpp:545)
+
+void CL_Demo_MoveToNextPhaseForClip(void)
+
+{
+  int iVar1;
+  
+  if (DAT_8484f260 < 5) {
+    if (DAT_8484f260 == 1) {
+      iVar1 = CL_Demo_GetSegmentCount();
+      DAT_8484f260 = ((uint)LZCOUNT((iVar1 + -1) - DAT_8484f264) >> 5) + 2;
+    }
+    else if (DAT_8484f260 == 2) {
+      DAT_8484f264 = DAT_8484f264 + 1;
+      DAT_8484f260 = 1;
+    }
+    else if (DAT_8484f260 == 3) {
+      DAT_8484f260 = 4;
+    }
+    else if (DAT_8484f260 == 0) {
+      DAT_8484f260 = 1;
+    }
+    else {
+      DAT_8484f260 = 5;
+    }
+  }
+  DAT_8484f26c = 1;
+  return;
+}
+
+
 // 827CF050  CL_Demo_SetupClipStreamingState  (client_demo/cl_demo_contentserver.cpp:588)
 
 void CL_Demo_SetupClipStreamingState(void)
@@ -318,61 +671,89 @@ void CL_Demo_SetupClipStreamingState(void)
   
   __savegprlr_25();
   cVar5 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar5 != '\0') {
-    uVar2 = CL_LocalClientNumFromControllerIndex(DAT_8484f250);
-    iVar3 = CL_Demo_GetPlaybackData();
-    iVar4 = CL_GetLocalClientConnection(uVar2);
-    if (DAT_8484f260 < 5) {
-      if (DAT_8484f260 == 1) {
-        iVar4 = DAT_8484f264 * 0x100a8 + iVar3;
-        DAT_8484f258 = *(int *)(iVar4 + 0x51e8d4);
-        DAT_8484f268 = *(int *)(iVar4 + 0x51e8dc) + DAT_8484f268;
-        DAT_8484f254 = *(int *)(iVar4 + 0x51e8d0) + iVar3 + 0x31e1f8;
-      }
-      else if (DAT_8484f260 == 2) {
-        DAT_8484f258 = CL_Demo_WriteTransitionClipCommandBlockToBuffer
-                                 (*(undefined4 *)(DAT_8484f264 * 0x100a8 + iVar3 + 0x51e8d8),
-                                  iVar3 + 0x51e4ac,0x10);
-        DAT_8484f254 = iVar3 + 0x51e4ac;
-      }
-      else if (DAT_8484f260 == 3) {
-        iVar4 = *(int *)(iVar3 + 0x51e1f8);
-        local_fe0[0] = 0;
-        CL_Demo_WriteToClipRecordMemory(local_fe0,1,uVar2);
-        DAT_8484f254 = iVar4 + iVar3 + 0x31e1f8;
-        DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar4;
-      }
-      else if (DAT_8484f260 == 0) {
-        DAT_8484f258 = *(int *)(iVar3 + 0x51e4bc);
-        DAT_8484f254 = iVar3 + 0x31e1f8;
-      }
-      else {
-        iVar1 = *(int *)(iVar3 + 0x51e1f8);
-        CL_Demo_PopulateClipFooterFromFilmFooter(iVar4 + 0x43278,auStack_fd0);
-        *(undefined4 *)(iVar4 + 0x54228) = CL_Demo_WriteToClipRecordMemory;
-        CL_Demo_WriteFooter(uVar2,auStack_fd0);
-        *(undefined4 *)(iVar4 + 0x54228) = 0;
-        DAT_8484f254 = iVar1 + iVar3 + 0x31e1f8;
-        DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar1;
-      }
-    }
-    DAT_8484f25c = 0;
-    DAT_8484f26c = 0;
-    __restgprlr_25();
-    return;
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff821dbcc8,0x254,0,0xffffffff82000f98,0xffffffff821dc0d8);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821dbcc8,0x254,0,0xffffffff82000f98,0xffffffff821dc0d8);
+  uVar2 = CL_LocalClientNumFromControllerIndex(DAT_8484f250);
+  iVar3 = CL_Demo_GetPlaybackData();
+  iVar4 = CL_GetLocalClientConnection(uVar2);
+  if (DAT_8484f260 < 5) {
+    if (DAT_8484f260 == 1) {
+      iVar4 = DAT_8484f264 * 0x100a8 + iVar3;
+      DAT_8484f258 = *(int *)(iVar4 + 0x51e8d4);
+      DAT_8484f268 = *(int *)(iVar4 + 0x51e8dc) + DAT_8484f268;
+      DAT_8484f254 = *(int *)(iVar4 + 0x51e8d0) + iVar3 + 0x31e1f8;
+    }
+    else if (DAT_8484f260 == 2) {
+      DAT_8484f258 = CL_Demo_WriteTransitionClipCommandBlockToBuffer
+                               (*(undefined4 *)(DAT_8484f264 * 0x100a8 + iVar3 + 0x51e8d8),
+                                iVar3 + 0x51e4ac,0x10);
+      DAT_8484f254 = iVar3 + 0x51e4ac;
+    }
+    else if (DAT_8484f260 == 3) {
+      iVar4 = *(int *)(iVar3 + 0x51e1f8);
+      local_fe0[0] = 0;
+      CL_Demo_WriteToClipRecordMemory(local_fe0,1,uVar2);
+      DAT_8484f254 = iVar4 + iVar3 + 0x31e1f8;
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar4;
+    }
+    else if (DAT_8484f260 == 0) {
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e4bc);
+      DAT_8484f254 = iVar3 + 0x31e1f8;
+    }
+    else {
+      iVar1 = *(int *)(iVar3 + 0x51e1f8);
+      CL_Demo_PopulateClipFooterFromFilmFooter(iVar4 + 0x43278,auStack_fd0);
+      *(undefined4 *)(iVar4 + 0x54228) = CL_Demo_WriteToClipRecordMemory;
+      CL_Demo_WriteFooter(uVar2,auStack_fd0);
+      *(undefined4 *)(iVar4 + 0x54228) = 0;
+      DAT_8484f254 = iVar1 + iVar3 + 0x31e1f8;
+      DAT_8484f258 = *(int *)(iVar3 + 0x51e1f8) - iVar1;
+    }
+  }
+  DAT_8484f25c = 0;
+  DAT_8484f26c = 0;
+  __restgprlr_25();
+  return;
 }
 
 
 // 827CF250  CL_Demo_SendClipToStreamingBuffer  (client_demo/cl_demo_contentserver.cpp:650)
 
-void CL_Demo_SendClipToStreamingBuffer(void)
+void CL_Demo_SendClipToStreamingBuffer(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  void *pvVar2;
+  ulonglong uVar3;
+  size_t _Size;
+  size_t _Size_00;
+  ulonglong uVar4;
+  
+  pvVar2 = (void *)__savegprlr_27();
+  if ((DAT_8484f260 == 5) && (DAT_8484f25c == DAT_8484f258)) {
+    __restgprlr_27(0);
+    return;
+  }
+  if (DAT_8484f26c != '\0') {
+    CL_Demo_SetupClipStreamingState();
+  }
+  uVar1 = DAT_8484f25c;
+  uVar4 = (ulonglong)DAT_8484f25c;
+  uVar3 = (ulonglong)DAT_8484f258;
+  _Size = (size_t)param_2;
+  _Size_00 = (size_t)(uVar3 - uVar4);
+  if ((int)_Size < (int)_Size_00) {
+    memcpy(pvVar2,(void *)(DAT_8484f254 + DAT_8484f25c),_Size);
+    DAT_8484f25c = uVar1 + _Size;
+    __restgprlr_27(param_2);
+    return;
+  }
+  pvVar2 = memcpy(pvVar2,(void *)(DAT_8484f254 + DAT_8484f25c),_Size_00);
+  DAT_8484f25c = uVar1 + _Size_00;
+  CL_Demo_MoveToNextPhaseForClip(pvVar2);
+  __restgprlr_27(uVar3 - uVar4);
+  return;
 }
 
 
@@ -578,11 +959,21 @@ void CL_Demo_SaveClip(undefined8 param_1,undefined2 param_2)
 
 // 827CF3D8  CL_Demo_SaveFilmSuccessful  (client_demo/cl_demo_contentserver.cpp:814)
 
-void CL_Demo_SaveFilmSuccessful(void)
+void CL_Demo_SaveFilmSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  CL_Demo_Error(uVar2,0xffffffff8208bd7c,0xffffffff821dc138);
+  CL_Demo_CloseFileInternal(DAT_8484f270);
+  OnlineVault_CloseFeederMenu(uVar2,0);
+  OnlineVault_Refresh(uVar1);
+  Com_Printf(0x10,0xffffffff821dc0fc,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -605,11 +996,218 @@ void CL_Demo_SaveFilmFailure(undefined8 param_1)
 
 // 827CF4C8  CL_Demo_SendFilmToStreamingBuffer  (client_demo/cl_demo_contentserver.cpp:854)
 
-void CL_Demo_SendFilmToStreamingBuffer(void)
+void CL_Demo_SendFilmToStreamingBuffer(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  void *_Dst;
+  size_t sVar1;
+  longlong lVar2;
+  int iVar3;
+  size_t _Size;
+  undefined1 auStack_1020 [4128];
+  
+  _Dst = (void *)__savegprlr_29();
+  if (DAT_8484f25c != DAT_8484f258) {
+    lVar2 = (ulonglong)DAT_8484f258 - (ulonglong)DAT_8484f25c;
+    iVar3 = (int)lVar2;
+    if ((int)param_2 < iVar3) {
+      lVar2 = param_2;
+      iVar3 = (int)param_2;
+    }
+    if (0x1000 < iVar3) {
+      lVar2 = 0x1000;
+    }
+    sVar1 = CL_Demo_ReadInternal(DAT_8484f270,auStack_1020,lVar2);
+    _Size = (size_t)lVar2;
+    if (sVar1 == _Size) {
+      memcpy(_Dst,auStack_1020,_Size);
+      DAT_8484f25c = DAT_8484f25c + _Size;
+      __restgprlr_29(lVar2);
+      return;
+    }
+    dwCSAbortOperation(DAT_8484f250);
+  }
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 827D0130  CL_Demo_SaveFilm  (client_demo/cl_demo_contentserver.cpp:892)
+
+void CL_Demo_SaveFilm(undefined8 param_1,undefined2 param_2)
+
+{
+  uint *puVar1;
+  undefined8 uVar2;
+  char cVar6;
+  int iVar4;
+  ulonglong uVar3;
+  int iVar5;
+  uint *puVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  undefined4 local_17e0;
+  undefined4 local_17dc;
+  uint local_17d8 [2];
+  undefined2 local_17d0 [2];
+  undefined4 uStack_17cc;
+  undefined4 local_17c8;
+  undefined1 *local_17c4;
+  undefined2 local_17c0;
+  undefined *local_17bc;
+  undefined4 local_17b8;
+  undefined4 local_17b4;
+  undefined1 *local_17b0;
+  code *local_17a8;
+  code *local_17a4;
+  code *local_17a0;
+  undefined1 auStack_1790 [792];
+  undefined1 auStack_1478 [8];
+  undefined1 auStack_1470 [256];
+  undefined1 auStack_1370 [256];
+  undefined1 auStack_1270 [688];
+  undefined1 auStack_fc0 [4032];
+  
+  uVar2 = __savegprlr_26();
+  puVar9 = auStack_1790;
+  lVar8 = 0x20;
+  do {
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  cVar6 = LiveStorage_CS_IsInited(uVar2);
+  if (cVar6 == '\0') {
+    LiveStorage_CS_Init(uVar2);
+  }
+  cVar6 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar6 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc290);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_26();
+    return;
+  }
+  CL_LocalClientNumFromControllerIndex(uVar2);
+  iVar4 = CL_GetLocalClientConnectionState();
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff821dbcc8,0x395,0,0xffffffff82000f98,0xffffffff821dc5b0);
+  }
+  iVar4 = CL_Demo_GetDeviceEnumInfo(uVar2);
+  Com_sprintf(auStack_1470,0x100,0xffffffff821db7f8,*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x228);
+  uVar3 = CL_Demo_OpenFileForRead(uVar2,auStack_1470,0xffffffff821db7e4);
+  if ((uVar3 & 0xffffffff) == 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_26();
+    return;
+  }
+  DAT_8484f270 = (undefined4)uVar3;
+  iVar5 = CL_Demo_SeekFile(uVar3,0xfffffffffffffff8,1);
+  if (iVar5 != 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_26();
+    return;
+  }
+  CL_Demo_ReadInternal(uVar3,local_17d8,4);
+  CL_Demo_ReadInternal(uVar3,&local_17dc,4);
+  iVar5 = CL_Demo_SeekFile(uVar3,-8 - (ulonglong)local_17d8[0],1);
+  if (iVar5 != 0) {
+    CL_Demo_SaveFilmFailure(uVar2,0);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_26();
+    return;
+  }
+  iVar5 = CL_Demo_ReadFooterInternalUI(uVar3,auStack_fc0,local_17dc);
+  if (iVar5 == 0) {
+    CL_Demo_SaveFilmFailure(uVar2);
+    puVar9 = auStack_1478;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_26();
+    return;
+  }
+  CL_Demo_SeekFile(uVar3,0,2);
+  lVar8 = 6;
+  puVar1 = local_17d8;
+  do {
+    puVar7 = puVar1;
+    puVar1 = puVar7 + 2;
+    puVar1[0] = 0;
+    puVar1[1] = 0;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  puVar7[4] = 0;
+  Com_sprintf(auStack_1370,0x100,0xffffffff821db7f8,*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x228);
+  local_17c4 = auStack_1370;
+  uStack_17cc = 0;
+  local_17c0 = 1;
+  local_17c8 = *(undefined4 *)(*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x2e4);
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  local_17d0[0] = param_2;
+  CL_Demo_PopulateDefaultMetaInformation(auStack_1270,iVar5 + 0x128,iVar5 + 0x28);
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  local_17b8 = CL_Demo_SetMetaData(auStack_1270,iVar5 + 0x2a8,*(undefined4 *)(iVar5 + 0x24));
+  local_17e0 = 0;
+  local_17bc = &DAT_8487ce50;
+  iVar5 = *(int *)(iVar4 + 0x14) * 0x2d0 + iVar4;
+  CL_Demo_SetTags(&local_17e0,auStack_1790,auStack_fc0,*(undefined8 *)(iVar5 + 0x2c8),iVar5 + 0x128,
+                  iVar5 + 0x28,local_17c0);
+  local_17b0 = auStack_1790;
+  DAT_8484f250 = (undefined4)uVar2;
+  DAT_8484f254 = 0;
+  DAT_8484f25c = 0;
+  local_17b4 = local_17e0;
+  DAT_8484f258 = *(undefined4 *)(*(int *)(iVar4 + 0x14) * 0x2d0 + iVar4 + 0x2e4);
+  local_17a8 = CL_Demo_SendFilmToStreamingBuffer;
+  local_17a4 = CL_Demo_SaveFilmSuccessful;
+  local_17a0 = CL_Demo_SaveFilmFailure;
+  iVar4 = LiveStorage_CS_WriteFile(uVar2,local_17d0);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    CL_Demo_Error(uVar2,0xffffffff8208bd88,0xffffffff821dc184);
+  }
+  else {
+    CL_LocalClientNumFromControllerIndex(uVar2);
+    OnlineVault_OpenProgressIndicatorMenu();
+  }
+  puVar9 = auStack_1478;
+  lVar8 = 0x20;
+  do {
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -618,18 +1216,57 @@ void CL_Demo_SendFilmToStreamingBuffer(void)
 void CL_Demo_PopulateRenderedMovieInformationForUpload(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  undefined1 auStack_2d0 [720];
+  
+  uVar3 = __savegprlr_29();
+  memset(&DAT_8484f278,0,0x328);
+  uVar4 = CL_ControllerIndexFromClientNum(uVar3);
+  iVar5 = CL_GetLocalClientConnection(uVar3);
+  CL_Demo_PopulateDefaultMetaInformation(auStack_2d0,iVar5 + 0x43384,iVar5 + 0x43284);
+  uVar1 = *(uint *)(iVar5 + 0x43280);
+  uVar2 = *(uint *)(iVar5 + 0x4327c);
+  uVar3 = CL_GetUsernameForLocalClient(uVar4);
+  DAT_8484f278 = CL_Demo_SetMetaData(auStack_2d0,uVar3,(ulonglong)uVar1 - (ulonglong)uVar2);
+  uVar3 = 7;
+  if (*(char *)(DAT_8484f0cc + 0xc) == '\0') {
+    uVar3 = 4;
+  }
+  CL_Demo_SetTags(uVar4,0xffffffff8484f598,0xffffffff8484f280,auStack_2d0,uVar3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 827CF570  CL_Demo_SaveRenderedMovieSuccessful  (client_demo/cl_demo_contentserver.cpp:1051)
 
-void CL_Demo_SaveRenderedMovieSuccessful(void)
+void CL_Demo_SaveRenderedMovieSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined *puVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_29();
+  uVar3 = CL_LocalClientNumFromControllerIndex();
+  Com_Printf(0x10,0xffffffff821dc1c8,param_2);
+  DCache_ClearStreaming();
+  puVar1 = PTR_s_theater_avi_upload_829a34d0;
+  if (*(char *)(DAT_8484f0cc + 0xc) != '\0') {
+    Facebook_PostVideo(uVar2,param_2);
+    __restgprlr_29();
+    return;
+  }
+  uVar3 = UI_GetClientDC(uVar3);
+  Menus_CloseByName(uVar3,puVar1);
+  uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+  CL_Demo_Error(uVar2,0xffffffff8208bd7c,0xffffffff821dc1a4);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -780,11 +1417,83 @@ void CL_Demo_DownloadFileFailure(void)
 
 // 827CF940  CL_Demo_DownloadFile  (client_demo/cl_demo_contentserver.cpp:1254)
 
-void CL_Demo_DownloadFile(void)
+void CL_Demo_DownloadFile
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  undefined8 *puVar4;
+  longlong lVar5;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined1 local_48;
+  code *local_3c;
+  code *local_38;
+  
+  uVar1 = __savegprlr_28();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff821dbcc8,0x4e9,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  cVar3 = LiveStorage_CS_IsInited(uVar1);
+  if (cVar3 == '\0') {
+    LiveStorage_CS_Init(uVar1);
+  }
+  cVar3 = LiveStorage_CS_IsAvailable(uVar1);
+  if (cVar3 == '\0') {
+    Com_PrintError(0x10,0xffffffff821dc3a0);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = Sys_IsDatabaseReady();
+  if (iVar2 == 0) {
+    CL_Demo_DownloadFileFailure(uVar1,0);
+    __restgprlr_28();
+    return;
+  }
+  cVar3 = CL_Demo_IsDemoDownloadMemoryAllocated();
+  if (cVar3 != '\0') {
+    CL_Demo_DeallocateDemoDownloadMemory();
+  }
+  CL_Demo_AllocateDemoDownloadMemory(param_4);
+  puVar4 = &uStack_68;
+  lVar5 = 6;
+  do {
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  local_60 = param_3;
+  local_58 = (int)param_4;
+  local_54 = CL_Demo_GetAllocatedDemoDownloadBuffer();
+  if ((param_5 & 0xff) == 0) {
+    local_3c = CL_Demo_DownloadFileSuccessfulPlayIt;
+  }
+  else {
+    local_3c = CL_Demo_DownloadFileSuccessfulRenderIt;
+  }
+  local_48 = 0;
+  local_38 = CL_Demo_DownloadFileFailure;
+  local_50 = (int)param_4;
+  local_4c = CL_Demo_GetAllocatedDemoDownloadBuffer();
+  iVar2 = LiveStorage_CS_ReadFile(uVar1,&local_60);
+  if (iVar2 != 0) {
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    OnlineVault_OpenProgressIndicatorMenu();
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+  CL_Demo_Error(uVar1,0xffffffff8208bd88,0xffffffff821dc37c);
+  __restgprlr_28();
+  return;
 }
 
 

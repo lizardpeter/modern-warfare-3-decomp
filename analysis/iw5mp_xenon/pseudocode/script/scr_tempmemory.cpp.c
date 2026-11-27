@@ -40,6 +40,16 @@ void TempMallocAlign32(void)
 }
 
 
+// 82545A28  TempMallocAlignStrict  (script/scr_tempmemory.cpp:53)
+
+void TempMallocAlignStrict(undefined8 param_1)
+
+{
+  Hunk_UserAllocAlignStrict(DAT_838fba14,param_1);
+  return;
+}
+
+
 // 82545A38  TempMemorySetPos  (script/scr_tempmemory.cpp:75)
 
 void TempMemorySetPos(undefined8 param_1)

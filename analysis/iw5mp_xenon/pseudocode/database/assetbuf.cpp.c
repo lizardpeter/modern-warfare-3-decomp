@@ -12,7 +12,6 @@ void AssetBuf_Begin(undefined8 param_1,undefined4 param_2,longlong param_3,longl
   
   uVar2 = __savegprlr_25();
   if ((uVar2 & 3) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x27,0,0xffffffff82000f98,0xffffffff82058858);
   }
   uVar1 = param_3 + 3U & 0xfffffffc;
@@ -28,8 +27,11 @@ void AssetBuf_Begin(undefined8 param_1,undefined4 param_2,longlong param_3,longl
     __restgprlr_25();
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82058888,0x36,0,0xffffffff820587f8);
+  DAT_82b5cd14 = 0;
+  DAT_82b5cd18 = DAT_82b5cd10;
+  __restgprlr_25();
+  return;
 }
 
 
@@ -40,7 +42,6 @@ void AssetBuf_BeginSave(undefined8 param_1,int param_2)
 {
   AssetBuf_Begin();
   if (param_2 < 4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x40,0,0xffffffff82000f98,0xffffffff820588c8);
   }
   *DAT_82b5cd08 = 0x70;
@@ -58,7 +59,6 @@ undefined8 AssetBuf_BeginLoad(undefined8 param_1,undefined8 param_2)
   
   AssetBuf_Begin(param_1,param_2,0,0);
   if ((int)param_2 < 4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x4d,0,0xffffffff82000f98,0xffffffff820588c8);
   }
   iVar1 = *DAT_82b5cd08;
@@ -106,8 +106,9 @@ void AssetBuf_IncStreamPos(int param_1)
 
 {
   if (param_1 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x71,0,0xffffffff82000f98,0xffffffff82058928);
+    DAT_82b5cd08 = DAT_82b5cd08 + param_1;
+    return;
   }
   DAT_82b5cd08 = DAT_82b5cd08 + param_1;
   return;
@@ -132,7 +133,6 @@ void AssetBuf_AllocStreamPos(undefined8 param_1)
   
   uVar1 = (uint)param_1;
   if (3 < (int)uVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x7e,0,0xffffffff82058934,0xffffffff8205894c,param_1);
   }
   DAT_82b5cd08 = DAT_82b5cd08 + uVar1 & ~uVar1;
@@ -160,8 +160,8 @@ void AssetBuf_PushStreamPos(ulonglong param_1)
   if ((param_1 & 0xffffffff) == 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82058888,0x8c,0,0xffffffff8200aef4,0xffffffff8205895c,param_1);
+  return;
 }
 
 
@@ -176,11 +176,32 @@ void AssetBuf_PopStreamPos(void)
 
 // 823A0B60  SaveBuffer_Stream  (database/assetbuf.cpp:149)
 
-void SaveBuffer_Stream(void)
+void SaveBuffer_Stream(undefined8 param_1,void *param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  void *_Dst;
+  char cVar1;
+  size_t _Size;
+  
+  cVar1 = __savegprlr_27();
+  _Dst = DAT_82b5cd08;
+  if (cVar1 != '\0') {
+    _Size = (size_t)param_3;
+    if (_Size != 0) {
+      if ((int)_Size < 1) {
+        MyAssertHandler(0xffffffff82058888,0x9e,0,0xffffffff82000f98,0xffffffff820589cc);
+      }
+      if (DAT_82b5cd04 < (int)((int)_Dst + (_Size - DAT_82b5cd00))) {
+        Com_Error(0,0xffffffff82058998,param_3);
+      }
+      memcpy(_Dst,param_2,_Size);
+      *param_4 = _Dst;
+      AssetBuf_IncStreamPos(param_3);
+    }
+    DAT_82b5cd0c = (int)param_2 + _Size;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -191,7 +212,6 @@ void LoadBuffer_Stream(char param_1,undefined8 param_2,undefined8 param_3)
 {
   if (param_1 != '\0') {
     if ((int)param_3 < 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82058888,0xb3,0,0xffffffff82000f98,0xffffffff82058928);
     }
     if (DAT_82b5cd04 < (DAT_82b5cd08 - DAT_82b5cd00) + (int)param_3) {
@@ -209,7 +229,6 @@ longlong GetPointerMapChildLeft(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xc0,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if ((ulonglong)*(ushort *)(param_1 + 8) == 0xffff) {
@@ -225,7 +244,6 @@ undefined2 GetPointerMapChildLeftHeight(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,200,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if (*(ushort *)(param_1 + 8) == 0xffff) {
@@ -241,7 +259,6 @@ void SetPointerMapChildLeft(int param_1,int param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xd0,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if (param_2 == 0) {
@@ -260,7 +277,6 @@ longlong GetPointerMapChildRight(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xd9,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if ((ulonglong)*(ushort *)(param_1 + 10) == 0xffff) {
@@ -276,7 +292,6 @@ undefined2 GetPointerMapChildRightHeight(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xe1,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if (*(ushort *)(param_1 + 10) == 0xffff) {
@@ -292,7 +307,6 @@ void SetPointerMapChildRight(int param_1,int param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xe9,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   if (param_2 == 0) {
@@ -307,11 +321,34 @@ void SetPointerMapChildRight(int param_1,int param_2)
 
 // 823A0CB8  SwapPointerMapChild  (database/assetbuf.cpp:242)
 
-void SwapPointerMapChild(void)
+void SwapPointerMapChild(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    if ((ulonglong)DAT_82b5cd14 != (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82058888,0x101,0,0xffffffff82000f98,0xffffffff820589e0);
+    }
+    DAT_82b5cd14 = (uint)param_3;
+    __restgprlr_29();
+    return;
+  }
+  uVar2 = GetPointerMapChildLeft();
+  if ((uVar2 & 0xffffffff) == (param_2 & 0xffffffff)) {
+    SetPointerMapChildLeft(uVar1,param_3);
+    __restgprlr_29();
+    return;
+  }
+  uVar2 = GetPointerMapChildRight(uVar1);
+  if ((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82058888,0xfb,0,0xffffffff82000f98,0xffffffff82058a08);
+  }
+  SetPointerMapChildRight(uVar1,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -338,7 +375,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
   
   uVar2 = __savegprlr_15();
   if (DAT_82b5cd10 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x116,0,0xffffffff82000f98,0xffffffff82058b80);
   }
   puVar9 = DAT_82b5cd18;
@@ -359,7 +395,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
       puVar13 = puVar14;
       puVar11 = puVar11 + 1;
       if (0x3f < uVar2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,299,0,0xffffffff82058ae0,uVar2,0x40);
       }
       uVar5 = *puVar13;
@@ -375,7 +410,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
       }
       else {
         if (uVar10 <= uVar5) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82058888,0x135,0,0xffffffff82000f98,0xffffffff82058b28);
         }
         if (*(ushort *)((int)puVar13 + 10) == 0xffff) {
@@ -390,7 +424,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
     if (*puVar9 < *puVar13) {
       iVar3 = GetPointerMapChildLeft();
       if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,0x140,0,0xffffffff82000f98,0xffffffff82058aac);
       }
       SetPointerMapChildLeft(puVar13,puVar9);
@@ -399,7 +432,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
     else {
       iVar3 = GetPointerMapChildRight(puVar13);
       if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,0x145,0,0xffffffff82000f98,0xffffffff82058a7c);
       }
       SetPointerMapChildRight(puVar13,puVar9);
@@ -408,7 +440,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
   }
   DAT_82b5cd14 = puVar14;
   if (puVar9 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0xd0,0,0xffffffff82000f98,0xffffffff820589d8);
   }
   *(undefined2 *)(puVar9 + 3) = 1;
@@ -419,7 +450,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
     do {
       iVar3 = puVar11[1];
       if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,200,0,0xffffffff82000f98,0xffffffff820589d8);
       }
       if (*(ushort *)(iVar3 + 8) == 0xffff) {
@@ -436,11 +466,9 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
       }
       sVar1 = *(short *)(iVar3 + 0xc);
       if (0xfffe < uVar5) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,0x15c,0,0xffffffff82000f98,0xffffffff82058a38);
       }
       if (0xfffe < uVar10) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82058888,0x15d,0,0xffffffff82000f98,0xffffffff82058a4c);
       }
       uVar6 = uVar5;
@@ -453,7 +481,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
         if (iVar12 < -1) {
           iVar4 = GetPointerMapChildRight(iVar3);
           if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82058888,0x179,0,0xffffffff82000f98,0xffffffff82058a70);
           }
           uVar6 = GetPointerMapChildLeftHeight(iVar4);
@@ -473,7 +500,6 @@ void InsertPointerMapEntry(undefined8 param_1,uint param_2)
       else {
         iVar4 = GetPointerMapChildLeft(iVar3);
         if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82058888,0x165,0,0xffffffff82000f98,0xffffffff82058a64);
         }
         uVar5 = GetPointerMapChildRightHeight(iVar4);
@@ -519,63 +545,62 @@ void AssetBuf_FindStreamData(void)
   uint uVar2;
   undefined8 uVar3;
   bool bVar4;
-  uint *puVar5;
-  uint uVar6;
-  undefined8 uVar7;
+  uint uVar5;
+  undefined8 uVar6;
+  uint *puVar7;
   
   uVar2 = __savegprlr_24();
-  uVar6 = 0;
+  uVar5 = 0;
   if (DAT_82b5cd10 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x197,0,0xffffffff82000f98,0xffffffff82058b80);
   }
-  puVar5 = DAT_82b5cd14;
+  puVar7 = DAT_82b5cd14;
   if (DAT_82b5cd14 != (uint *)0x0) {
     do {
-      if (uVar2 < *puVar5) {
-        uVar1 = *(ushort *)(puVar5 + 2);
+      if (uVar2 < *puVar7) {
+        uVar1 = *(ushort *)(puVar7 + 2);
       }
       else {
-        if (uVar2 <= *puVar5) {
-          uVar6 = puVar5[1];
+        if (uVar2 <= *puVar7) {
+          uVar5 = puVar7[1];
           break;
         }
-        uVar1 = *(ushort *)((int)puVar5 + 10);
+        uVar1 = *(ushort *)((int)puVar7 + 10);
       }
-      if ((uVar1 == 0xffff) || (puVar5 = DAT_82b5cd10 + (uint)uVar1 * 4, puVar5 == (uint *)0x0))
+      if ((uVar1 == 0xffff) || (puVar7 = DAT_82b5cd10 + (uint)uVar1 * 4, puVar7 == (uint *)0x0))
       break;
     } while( true );
   }
   bVar4 = false;
-  uVar7 = 0xffffffff82058bbc;
-  for (puVar5 = DAT_82b5cd10; puVar5 != DAT_82b5cd18; puVar5 = puVar5 + 4) {
-    if (*puVar5 == uVar2) {
-      if (bVar4) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82058888,0x1b3,0,0xffffffff82000f98,0xffffffff82058bbc);
+  uVar6 = 0xffffffff82058bbc;
+  puVar7 = DAT_82b5cd10;
+  if (DAT_82b5cd10 != DAT_82b5cd18) {
+    do {
+      if (*puVar7 == uVar2) {
+        if (bVar4) {
+          MyAssertHandler(0xffffffff82058888,0x1b3,0,0xffffffff82000f98,0xffffffff82058bbc);
+        }
+        if (puVar7[1] != uVar5) {
+          MyAssertHandler(0xffffffff82058888,0x1b4,0,0xffffffff82000f98,0xffffffff82058ba0);
+        }
+        bVar4 = true;
       }
-      if (puVar5[1] != uVar6) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82058888,0x1b4,0,0xffffffff82000f98,0xffffffff82058ba0);
-      }
-      bVar4 = true;
-    }
+      puVar7 = puVar7 + 4;
+    } while (puVar7 != DAT_82b5cd18);
   }
-  if (uVar6 == 0) {
-    if (!bVar4) {
-LAB_823a13d0:
-      __restgprlr_24(uVar6);
-      return;
-    }
+  if (uVar5 == 0) {
+    if (!bVar4) goto LAB_823a13d0;
     uVar3 = 0x1b9;
   }
   else {
     if (bVar4) goto LAB_823a13d0;
     uVar3 = 0x1bb;
-    uVar7 = 0xffffffff82058b98;
+    uVar6 = 0xffffffff82058b98;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82058888,uVar3,0,0xffffffff82000f98,uVar7);
+  MyAssertHandler(0xffffffff82058888,uVar3,0,0xffffffff82000f98,uVar6);
+LAB_823a13d0:
+  __restgprlr_24(uVar5);
+  return;
 }
 
 
@@ -591,7 +616,6 @@ void AssetBuf_SetStreamDataRaw(undefined8 param_1,ulonglong param_2)
     InsertPointerMapEntry(param_1,param_2);
   }
   else if ((uVar1 & 0xffffffff) != (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x1c9,0,0xffffffff82000f98,0xffffffff82058bc4);
   }
   return;
@@ -655,8 +679,8 @@ void SaveBuffer_ScriptStringCustom(void)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82058888,0x1ff,0,0xffffffff82058bd8);
+  return;
 }
 
 
@@ -668,8 +692,8 @@ void LoadBuffer_ScriptStringCustom(void)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82058888,0x205,0,0xffffffff82058bd8);
+  return;
 }
 
 
@@ -679,7 +703,6 @@ undefined8 AssetBuf_InsertPointer(void)
 
 {
   if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058888,0x20b,0,0xffffffff82058bdc);
   }
   return 0;

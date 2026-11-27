@@ -56,6 +56,66 @@ LAB_822ff160:
 ; 822FF1C8  CG_PrintPerturbationPoints  (cgame/cg_shellshock.cpp:198)
   822FF1C8  7D8802A6             mfspr r12,LR
   822FF1CC  486174F1             bl 0x829166bc
+  822FF1D0  3981FFE0             subi r12,r1,0x20
+  822FF1D4  486175C5             bl 0x82916798
+  822FF1D8  9421FB70             stwu r1,-0x490(r1)
+  822FF1DC  3D608200             lis r11,-0x7e00
+  822FF1E0  3D408218             lis r10,-0x7de8
+  822FF1E4  38810050             addi r4,r1,0x50
+  822FF1E8  386A9FD8             subi r3,r10,0x6028
+  822FF1EC  C02B0F18             lfs f1,0xf18(r11)
+  822FF1F0  4BFFFF41             bl 0x822ff130
+  822FF1F4  3D608200             lis r11,-0x7e00
+  822FF1F8  3D408200             lis r10,-0x7e00
+  822FF1FC  3BE10050             addi r31,r1,0x50
+  822FF200  3BA0007F             li r29,0x7f
+  822FF204  C3CB244C             lfs f30,0x244c(r11)
+  822FF208  C3EA2408             lfs f31,0x2408(r10)
+LAB_822ff20c:
+  822FF20C  3BDF0008             addi r30,r31,0x8
+LAB_822ff210:
+  822FF210  482D8881             bl 0x825d7a90
+  822FF214  EFA107F2             fmuls f29,f1,f31
+  822FF218  FC20E890             fmr f1,f29
+  822FF21C  48617CED             bl 0x82916f08
+  822FF220  FF800818             frsp f28,f1
+  822FF224  FC20E890             fmr f1,f29
+  822FF228  48617DC1             bl 0x82916fe8
+  822FF22C  FFA00818             frsp f29,f1
+  822FF230  482D8821             bl 0x825d7a50
+  822FF234  EC010772             fmuls f0,f1,f29
+  822FF238  D01E0000             stfs f0,0x0(r30)
+  822FF23C  EDA10732             fmuls f13,f1,f28
+  822FF240  D1BF000C             stfs f13,0xc(r31)
+  822FF244  7FC4F378             or r4,r30,r30
+  822FF248  7FE3FB78             or r3,r31,r31
+  822FF24C  482D961D             bl 0x825d8868
+  822FF250  FF01F000             fcmpu cr6,f1,f30
+  822FF254  4198FFBC             blt cr6,0x822ff210
+  822FF258  37BDFFFF             subic. r29,r29,0x1
+  822FF25C  7FDFF378             or r31,r30,r30
+  822FF260  4082FFAC             bne 0x822ff20c
+  822FF264  39610050             addi r11,r1,0x50
+  822FF268  3BC00080             li r30,0x80
+  822FF26C  3BEBFFFC             subi r31,r11,0x4
+  822FF270  3D608202             lis r11,-0x7dfe
+  822FF274  3BAB48F0             addi r29,r11,0x48f0
+LAB_822ff278:
+  822FF278  C03F0004             lfs f1,0x4(r31)
+  822FF27C  7FA4EB78             or r4,r29,r29
+  822FF280  C45F0008             lfsu f2,0x8(r31)
+  822FF284  38600011             li r3,0x11
+  822FF288  D8410028             stfd f2,0x28(r1)
+  822FF28C  E8C10028             ld r6,0x28(r1)
+  822FF290  D8210020             stfd f1,0x20(r1)
+  822FF294  E8A10020             ld r5,0x20(r1)
+  822FF298  481F74E9             bl 0x824f6780
+  822FF29C  37DEFFFF             subic. r30,r30,0x1
+  822FF2A0  4082FFD8             bne 0x822ff278
+  822FF2A4  38210490             addi r1,r1,0x490
+  822FF2A8  3981FFE0             subi r12,r1,0x20
+  822FF2AC  48617539             bl 0x829167e4
+  822FF2B0  4861745C             b 0x8291670c
 
 ; 822FF2B8  CG_PerturbCamera  (cgame/cg_shellshock.cpp:211)
   822FF2B8  7D8802A6             mfspr r12,LR
@@ -99,6 +159,35 @@ LAB_822ff300:
   822FF34C  EC650332             fmuls f3,f5,f12
   822FF350  D0610058             stfs f3,0x58(r1)
   822FF354  4BF78995             bl 0x82277ce8
+  822FF358  C0010060             lfs f0,0x60(r1)
+  822FF35C  EC400032             fmuls f2,f0,f0
+  822FF360  C1A1005C             lfs f13,0x5c(r1)
+  822FF364  C1810064             lfs f12,0x64(r1)
+  822FF368  38A10068             addi r5,r1,0x68
+  822FF36C  3881005C             addi r4,r1,0x5c
+  822FF370  38610050             addi r3,r1,0x50
+  822FF374  EC2D137A             fmadds f1,f13,f13,f2
+  822FF378  ED6C0B3A             fmadds f11,f12,f12,f1
+  822FF37C  ED40582C             fsqrts f10,f11
+  822FF380  FD205050             fneg f9,f10
+  822FF384  FD0957EE             fsel f8,f9,f31,f10
+  822FF388  ECFF4024             fdivs f7,f31,f8
+  822FF38C  ECCD01F2             fmuls f6,f13,f7
+  822FF390  D0C1005C             stfs f6,0x5c(r1)
+  822FF394  ECA001F2             fmuls f5,f0,f7
+  822FF398  D0A10060             stfs f5,0x60(r1)
+  822FF39C  EC8C01F2             fmuls f4,f12,f7
+  822FF3A0  D0810064             stfs f4,0x64(r1)
+  822FF3A4  4BF78945             bl 0x82277ce8
+  822FF3A8  3FFF0007             addis r31,r31,0x7
+  822FF3AC  38810080             addi r4,r1,0x80
+  822FF3B0  3BFFB9D4             subi r31,r31,0x462c
+  822FF3B4  7FE3FB78             or r3,r31,r31
+  822FF3B8  482DD7E9             bl 0x825dcba0
+  822FF3BC  7FE5FB78             or r5,r31,r31
+  822FF3C0  38810080             addi r4,r1,0x80
+  822FF3C4  38610050             addi r3,r1,0x50
+  822FF3C8  482DAEF1             bl 0x825da2b8
 LAB_822ff3cc:
   822FF3CC  382100C0             addi r1,r1,0xc0
   822FF3D0  8181FFF8             lwz r12,-0x8(r1)
@@ -106,6 +195,36 @@ LAB_822ff3cc:
   822FF3D8  CBE1FFE8             lfd f31,-0x18(r1)
   822FF3DC  EBE1FFF0             ld r31,-0x10(r1)
   822FF3E0  4E800020             blr
+
+; 822FF3E8  SaveScreenToBuffer  (cgame/cg_shellshock.cpp:236)
+  822FF3E8  7D8802A6             mfspr r12,LR
+  822FF3EC  9181FFF8             stw r12,-0x8(r1)
+  822FF3F0  FBE1FFF0             std r31,-0x10(r1)
+  822FF3F4  9421FFA0             stwu r1,-0x60(r1)
+  822FF3F8  7C7F1B78             or r31,r3,r3
+  822FF3FC  4809BE65             bl 0x8239b260
+  822FF400  2F030001             cmpwi cr6,r3,0x1
+  822FF404  7FE3FB78             or r3,r31,r31
+  822FF408  4199001C             bgt cr6,0x822ff424
+  822FF40C  4846A9B5             bl 0x82769dc0
+  822FF410  38210060             addi r1,r1,0x60
+  822FF414  8181FFF8             lwz r12,-0x8(r1)
+  822FF418  7D8803A6             mtspr LR,r12
+  822FF41C  EBE1FFF0             ld r31,-0x10(r1)
+  822FF420  4E800020             blr
+LAB_822ff424:
+  822FF424  48011AC5             bl 0x82310ee8
+  822FF428  7FE7FB78             or r7,r31,r31
+  822FF42C  C083000C             lfs f4,0xc(r3)
+  822FF430  C0630008             lfs f3,0x8(r3)
+  822FF434  C0430004             lfs f2,0x4(r3)
+  822FF438  C0230000             lfs f1,0x0(r3)
+  822FF43C  4846AA15             bl 0x82769e50
+  822FF440  38210060             addi r1,r1,0x60
+  822FF444  8181FFF8             lwz r12,-0x8(r1)
+  822FF448  7D8803A6             mtspr LR,r12
+  822FF44C  EBE1FFF0             ld r31,-0x10(r1)
+  822FF450  4E800020             blr
 
 ; 822FF458  CG_GetShellShockBlendTime  (cgame/cg_shellshock.cpp:253)
   822FF458  7D8802A6             mfspr r12,LR
@@ -175,6 +294,57 @@ LAB_822ff53c:
 ; 822FF550  CG_DrawShellShockSavedScreenBlendBlurred  (cgame/cg_shellshock.cpp:284)
   822FF550  7D8802A6             mfspr r12,LR
   822FF554  48617165             bl 0x829166b8
+  822FF558  9421FF80             stwu r1,-0x80(r1)
+  822FF55C  7C7F1B78             or r31,r3,r3
+  822FF560  7C9D2378             or r29,r4,r4
+  822FF564  4BF61B9D             bl 0x82261100
+  822FF568  7C7E1B78             or r30,r3,r3
+  822FF56C  2F1D0000             cmpwi cr6,r29,0x0
+  822FF570  41990028             bgt cr6,0x822ff598
+  822FF574  3D600007             lis r11,0x7
+  822FF578  3D400007             lis r10,0x7
+  822FF57C  6169983C             ori r9,r11,0x983c
+  822FF580  61489838             ori r8,r10,0x9838
+  822FF584  39600000             li r11,0x0
+  822FF588  7D63492E             stwx r11,r3,r9
+  822FF58C  7D63412E             stwx r11,r3,r8
+  822FF590  38210080             addi r1,r1,0x80
+  822FF594  48617174             b 0x82916708
+LAB_822ff598:
+  822FF598  3F9E0008             addis r28,r30,0x8
+  822FF59C  3B9C983C             subi r28,r28,0x67c4
+  822FF5A0  817C0000             lwz r11,0x0(r28)
+  822FF5A4  2F0B0000             cmpwi cr6,r11,0x0
+  822FF5A8  419A002C             beq cr6,0x822ff5d4
+  822FF5AC  7FE3FB78             or r3,r31,r31
+  822FF5B0  48011939             bl 0x82310ee8
+  822FF5B4  7C6B1B78             or r11,r3,r3
+  822FF5B8  7FE8FB78             or r8,r31,r31
+  822FF5BC  7FA3EB78             or r3,r29,r29
+  822FF5C0  C08B000C             lfs f4,0xc(r11)
+  822FF5C4  C06B0008             lfs f3,0x8(r11)
+  822FF5C8  C04B0004             lfs f2,0x4(r11)
+  822FF5CC  C02B0000             lfs f1,0x0(r11)
+  822FF5D0  4846A941             bl 0x82769f10
+LAB_822ff5d4:
+  822FF5D4  3D600007             lis r11,0x7
+  822FF5D8  616A9840             ori r10,r11,0x9840
+  822FF5DC  7D3E502E             lwzx r9,r30,r10
+  822FF5E0  2F090000             cmpwi cr6,r9,0x0
+  822FF5E4  419A001C             beq cr6,0x822ff600
+  822FF5E8  3D600007             lis r11,0x7
+  822FF5EC  39400001             li r10,0x1
+  822FF5F0  61699838             ori r9,r11,0x9838
+  822FF5F4  7D5E492E             stwx r10,r30,r9
+  822FF5F8  38210080             addi r1,r1,0x80
+  822FF5FC  4861710C             b 0x82916708
+LAB_822ff600:
+  822FF600  7FE3FB78             or r3,r31,r31
+  822FF604  4BFFFDE5             bl 0x822ff3e8
+  822FF608  39600001             li r11,0x1
+  822FF60C  917C0000             stw r11,0x0(r28)
+  822FF610  38210080             addi r1,r1,0x80
+  822FF614  486170F4             b 0x82916708
 
 ; 822FF618  BlendSmooth  (cgame/cg_shellshock.cpp:314)
   822FF618  7D8802A6             mfspr r12,LR
@@ -209,6 +379,120 @@ LAB_822ff53c:
 ; 822FF688  CG_DrawShellShockSavedScreenBlendFlashed  (cgame/cg_shellshock.cpp:324)
   822FF688  7D8802A6             mfspr r12,LR
   822FF68C  48617031             bl 0x829166bc
+  822FF690  DBC1FFD0             stfd f30,-0x30(r1)
+  822FF694  DBE1FFD8             stfd f31,-0x28(r1)
+  822FF698  9421FF70             stwu r1,-0x90(r1)
+  822FF69C  7C7D1B78             or r29,r3,r3
+  822FF6A0  4BF61A61             bl 0x82261100
+  822FF6A4  3D600007             lis r11,0x7
+  822FF6A8  3D200007             lis r9,0x7
+  822FF6AC  616A9824             ori r10,r11,0x9824
+  822FF6B0  3D000007             lis r8,0x7
+  822FF6B4  61279820             ori r7,r9,0x9820
+  822FF6B8  61069828             ori r6,r8,0x9828
+  822FF6BC  7C7F1B78             or r31,r3,r3
+  822FF6C0  7D63502E             lwzx r11,r3,r10
+  822FF6C4  7D23382E             lwzx r9,r3,r7
+  822FF6C8  2F0B0000             cmpwi cr6,r11,0x0
+  822FF6CC  7D43302E             lwzx r10,r3,r6
+  822FF6D0  419A0144             beq cr6,0x822ff814
+  822FF6D4  2F0A0000             cmpwi cr6,r10,0x0
+  822FF6D8  4099013C             ble cr6,0x822ff814
+  822FF6DC  3D000006             lis r8,0x6
+  822FF6E0  6107B98C             ori r7,r8,0xb98c
+  822FF6E4  7CC3382E             lwzx r6,r3,r7
+  822FF6E8  7D465050             subf r10,r6,r10
+  822FF6EC  7D6A5A15             add. r11,r10,r11
+  822FF6F0  40810124             ble 0x822ff814
+  822FF6F4  81490008             lwz r10,0x8(r9)
+  822FF6F8  7D6807B4             extsw r8,r11
+  822FF6FC  80E9000C             lwz r7,0xc(r9)
+  822FF700  3CC08200             lis r6,-0x7e00
+  822FF704  7D4507B4             extsw r5,r10
+  822FF708  F9010050             std r8,0x50(r1)
+  822FF70C  C8010050             lfd f0,0x50(r1)
+  822FF710  7CE407B4             extsw r4,r7
+  822FF714  F8A10050             std r5,0x50(r1)
+  822FF718  C9A10050             lfd f13,0x50(r1)
+  822FF71C  F8810050             std r4,0x50(r1)
+  822FF720  C9810050             lfd f12,0x50(r1)
+  822FF724  FD60069C             fcfid f11,f0
+  822FF728  C3E60F10             lfs f31,0xf10(r6)
+  822FF72C  FD406E9C             fcfid f10,f13
+  822FF730  FD20669C             fcfid f9,f12
+  822FF734  FC005818             frsp f0,f11
+  822FF738  FDA05018             frsp f13,f10
+  822FF73C  FD804818             frsp f12,f9
+  822FF740  FF006800             fcmpu cr6,f0,f13
+  822FF744  4098000C             bge cr6,0x822ff750
+  822FF748  EC206824             fdivs f1,f0,f13
+  822FF74C  48000008             b 0x822ff754
+LAB_822ff750:
+  822FF750  FC20F890             fmr f1,f31
+LAB_822ff754:
+  822FF754  FF006000             fcmpu cr6,f0,f12
+  822FF758  40980008             bge cr6,0x822ff760
+  822FF75C  EFE06024             fdivs f31,f0,f12
+LAB_822ff760:
+  822FF760  4BFFFEB9             bl 0x822ff618
+  822FF764  FFC00890             fmr f30,f1
+  822FF768  FC20F890             fmr f1,f31
+  822FF76C  4BFFFEAD             bl 0x822ff618
+  822FF770  3FDF0008             addis r30,r31,0x8
+  822FF774  FFE00890             fmr f31,f1
+  822FF778  3BDE983C             subi r30,r30,0x67c4
+  822FF77C  817E0000             lwz r11,0x0(r30)
+  822FF780  2F0B0000             cmpwi cr6,r11,0x0
+  822FF784  419A003C             beq cr6,0x822ff7c0
+  822FF788  4BFBDF81             bl 0x822bd708
+  822FF78C  7FA3EB78             or r3,r29,r29
+  822FF790  48011759             bl 0x82310ee8
+  822FF794  C0C3000C             lfs f6,0xc(r3)
+  822FF798  C0A30008             lfs f5,0x8(r3)
+  822FF79C  FC40F890             fmr f2,f31
+  822FF7A0  C0830004             lfs f4,0x4(r3)
+  822FF7A4  FC20F090             fmr f1,f30
+  822FF7A8  C0630000             lfs f3,0x0(r3)
+  822FF7AC  4846A825             bl 0x82769fd0
+  822FF7B0  38210090             addi r1,r1,0x90
+  822FF7B4  CBC1FFD0             lfd f30,-0x30(r1)
+  822FF7B8  CBE1FFD8             lfd f31,-0x28(r1)
+  822FF7BC  48616F50             b 0x8291670c
+LAB_822ff7c0:
+  822FF7C0  3D600007             lis r11,0x7
+  822FF7C4  616A9840             ori r10,r11,0x9840
+  822FF7C8  7D3F502E             lwzx r9,r31,r10
+  822FF7CC  2F090000             cmpwi cr6,r9,0x0
+  822FF7D0  419A0024             beq cr6,0x822ff7f4
+  822FF7D4  3D600007             lis r11,0x7
+  822FF7D8  39400001             li r10,0x1
+  822FF7DC  61699838             ori r9,r11,0x9838
+  822FF7E0  7D5F492E             stwx r10,r31,r9
+  822FF7E4  38210090             addi r1,r1,0x90
+  822FF7E8  CBC1FFD0             lfd f30,-0x30(r1)
+  822FF7EC  CBE1FFD8             lfd f31,-0x28(r1)
+  822FF7F0  48616F1C             b 0x8291670c
+LAB_822ff7f4:
+  822FF7F4  7FA3EB78             or r3,r29,r29
+  822FF7F8  4BFFFBF1             bl 0x822ff3e8
+  822FF7FC  39600001             li r11,0x1
+  822FF800  917E0000             stw r11,0x0(r30)
+  822FF804  38210090             addi r1,r1,0x90
+  822FF808  CBC1FFD0             lfd f30,-0x30(r1)
+  822FF80C  CBE1FFD8             lfd f31,-0x28(r1)
+  822FF810  48616EFC             b 0x8291670c
+LAB_822ff814:
+  822FF814  3D600007             lis r11,0x7
+  822FF818  3D400007             lis r10,0x7
+  822FF81C  6169983C             ori r9,r11,0x983c
+  822FF820  61489838             ori r8,r10,0x9838
+  822FF824  39600000             li r11,0x0
+  822FF828  7D7F492E             stwx r11,r31,r9
+  822FF82C  7D7F412E             stwx r11,r31,r8
+  822FF830  38210090             addi r1,r1,0x90
+  822FF834  CBC1FFD0             lfd f30,-0x30(r1)
+  822FF838  CBE1FFD8             lfd f31,-0x28(r1)
+  822FF83C  48616ED0             b 0x8291670c
 
 ; 822FF840  EndShellShockSound  (cgame/cg_shellshock.cpp:396)
   822FF840  7D8802A6             mfspr r12,LR
@@ -573,10 +857,338 @@ LAB_822ffd6c:
 ; 822FFD80  UpdateShellShockLookControl  (cgame/cg_shellshock.cpp:558)
   822FFD80  7D8802A6             mfspr r12,LR
   822FFD84  4861692D             bl 0x829166b0
+  822FFD88  DBC1FFB8             stfd f30,-0x48(r1)
+  822FFD8C  DBE1FFC0             stfd f31,-0x40(r1)
+  822FFD90  9421FF60             stwu r1,-0xa0(r1)
+  822FFD94  3D608202             lis r11,-0x7dfe
+  822FFD98  3D408200             lis r10,-0x7e00
+  822FFD9C  7C7A1B78             or r26,r3,r3
+  822FFDA0  7C9F2378             or r31,r4,r4
+  822FFDA4  7CBC2B78             or r28,r5,r5
+  822FFDA8  7CDB3378             or r27,r6,r6
+  822FFDAC  2B040000             cmplwi cr6,r4,0x0
+  822FFDB0  3BCB4910             addi r30,r11,0x4910
+  822FFDB4  3BAA0F98             addi r29,r10,0xf98
+  822FFDB8  409A0020             bne cr6,0x822ffdd8
+  822FFDBC  3D608201             lis r11,-0x7dff
+  822FFDC0  7FA6EB78             or r6,r29,r29
+  822FFDC4  38EBAEEC             subi r7,r11,0x5114
+  822FFDC8  7FC3F378             or r3,r30,r30
+  822FFDCC  38A00000             li r5,0x0
+  822FFDD0  38800232             li r4,0x232
+  822FFDD4  482D472D             bl 0x825d4500
+LAB_822ffdd8:
+  822FFDD8  2F1C0000             cmpwi cr6,r28,0x0
+  822FFDDC  40980020             bge cr6,0x822ffdfc
+  822FFDE0  3D608201             lis r11,-0x7dff
+  822FFDE4  7FA6EB78             or r6,r29,r29
+  822FFDE8  38EB01C4             addi r7,r11,0x1c4
+  822FFDEC  7FC3F378             or r3,r30,r30
+  822FFDF0  38A00000             li r5,0x0
+  822FFDF4  38800233             li r4,0x233
+  822FFDF8  482D4709             bl 0x825d4500
+LAB_822ffdfc:
+  822FFDFC  2F1B0000             cmpwi cr6,r27,0x0
+  822FFE00  40980020             bge cr6,0x822ffe20
+  822FFE04  3D608202             lis r11,-0x7dfe
+  822FFE08  7FA6EB78             or r6,r29,r29
+  822FFE0C  38EB48FC             addi r7,r11,0x48fc
+  822FFE10  7FC3F378             or r3,r30,r30
+  822FFE14  38A00000             li r5,0x0
+  822FFE18  38800234             li r4,0x234
+  822FFE1C  482D46E5             bl 0x825d4500
+LAB_822ffe20:
+  822FFE20  897F0250             lbz r11,0x250(r31)
+  822FFE24  2B0B0000             cmplwi cr6,r11,0x0
+  822FFE28  409A0044             bne cr6,0x822ffe6c
+  822FFE2C  7F43D378             or r3,r26,r26
+  822FFE30  4BF612D1             bl 0x82261100
+  822FFE34  3D600007             lis r11,0x7
+  822FFE38  3D408200             lis r10,-0x7e00
+  822FFE3C  6169982C             ori r9,r11,0x982c
+  822FFE40  3D008200             lis r8,-0x7e00
+  822FFE44  C00A0F10             lfs f0,0xf10(r10)
+  822FFE48  7C034D2E             stfsx f0,r3,r9
+  822FFE4C  7F43D378             or r3,r26,r26
+  822FFE50  C04813F8             lfs f2,0x13f8(r8)
+  822FFE54  FC201090             fmr f1,f2
+  822FFE58  4802B469             bl 0x8232b2c0
+  822FFE5C  382100A0             addi r1,r1,0xa0
+  822FFE60  CBC1FFB8             lfd f30,-0x48(r1)
+  822FFE64  CBE1FFC0             lfd f31,-0x40(r1)
+  822FFE68  48616898             b 0x82916700
+LAB_822ffe6c:
+  822FFE6C  3D208200             lis r9,-0x7e00
+  822FFE70  815F0254             lwz r10,0x254(r31)
+  822FFE74  7D7CD850             subf r11,r28,r27
+  822FFE78  7F0B5000             cmpw cr6,r11,r10
+  822FFE7C  C3E90F10             lfs f31,0xf10(r9)
+  822FFE80  4198000C             blt cr6,0x822ffe8c
+  822FFE84  FFC0F890             fmr f30,f31
+  822FFE88  48000038             b 0x822ffec0
+LAB_822ffe8c:
+  822FFE8C  2F0B0000             cmpwi cr6,r11,0x0
+  822FFE90  409900A8             ble cr6,0x822fff38
+  822FFE94  7D4A07B4             extsw r10,r10
+  822FFE98  7D6907B4             extsw r9,r11
+  822FFE9C  F9410050             std r10,0x50(r1)
+  822FFEA0  C8010050             lfd f0,0x50(r1)
+  822FFEA4  F9210050             std r9,0x50(r1)
+  822FFEA8  C9A10050             lfd f13,0x50(r1)
+  822FFEAC  FD60069C             fcfid f11,f0
+  822FFEB0  FD806E9C             fcfid f12,f13
+  822FFEB4  FD205818             frsp f9,f11
+  822FFEB8  FD406018             frsp f10,f12
+  822FFEBC  EFCA4824             fdivs f30,f10,f9
+LAB_822ffec0:
+  822FFEC0  7F43D378             or r3,r26,r26
+  822FFEC4  4BF6123D             bl 0x82261100
+  822FFEC8  3D400007             lis r10,0x7
+  822FFECC  7C6B1B78             or r11,r3,r3
+  822FFED0  C01F0258             lfs f0,0x258(r31)
+  822FFED4  FF1EF800             fcmpu cr6,f30,f31
+  822FFED8  7F43D378             or r3,r26,r26
+  822FFEDC  6149982C             ori r9,r10,0x982c
+  822FFEE0  409A0024             bne cr6,0x822fff04
+  822FFEE4  7C0B4D2E             stfsx f0,r11,r9
+  822FFEE8  C03F025C             lfs f1,0x25c(r31)
+  822FFEEC  C05F0260             lfs f2,0x260(r31)
+  822FFEF0  4802B3D1             bl 0x8232b2c0
+  822FFEF4  382100A0             addi r1,r1,0xa0
+  822FFEF8  CBC1FFB8             lfd f30,-0x48(r1)
+  822FFEFC  CBE1FFC0             lfd f31,-0x40(r1)
+  822FFF00  48616800             b 0x82916700
+LAB_822fff04:
+  822FFF04  EDA0F828             fsubs f13,f0,f31
+  822FFF08  ED9FF024             fdivs f12,f31,f30
+  822FFF0C  ED6DFFBA             fmadds f11,f13,f30,f31
+  822FFF10  7D6B4D2E             stfsx f11,r11,r9
+  822FFF14  C15F025C             lfs f10,0x25c(r31)
+  822FFF18  EC2A0332             fmuls f1,f10,f12
+  822FFF1C  C13F0260             lfs f9,0x260(r31)
+  822FFF20  EC490332             fmuls f2,f9,f12
+  822FFF24  4802B39D             bl 0x8232b2c0
+  822FFF28  382100A0             addi r1,r1,0xa0
+  822FFF2C  CBC1FFB8             lfd f30,-0x48(r1)
+  822FFF30  CBE1FFC0             lfd f31,-0x40(r1)
+  822FFF34  486167CC             b 0x82916700
+LAB_822fff38:
+  822FFF38  7F43D378             or r3,r26,r26
+  822FFF3C  4BFFF9AD             bl 0x822ff8e8
+  822FFF40  382100A0             addi r1,r1,0xa0
+  822FFF44  CBC1FFB8             lfd f30,-0x48(r1)
+  822FFF48  CBE1FFC0             lfd f31,-0x40(r1)
+  822FFF4C  486167B4             b 0x82916700
 
 ; 822FFF50  UpdateShellShockCamera  (cgame/cg_shellshock.cpp:601)
   822FFF50  7D8802A6             mfspr r12,LR
   822FFF54  48616761             bl 0x829166b4
+  822FFF58  DBC1FFC0             stfd f30,-0x40(r1)
+  822FFF5C  DBE1FFC8             stfd f31,-0x38(r1)
+  822FFF60  9421FF60             stwu r1,-0xa0(r1)
+  822FFF64  7C7B1B78             or r27,r3,r3
+  822FFF68  7C9F2378             or r31,r4,r4
+  822FFF6C  7CBD2B78             or r29,r5,r5
+  822FFF70  7CDC3378             or r28,r6,r6
+  822FFF74  7FC53051             subf. r30,r5,r6
+  822FFF78  41810038             bgt 0x822fffb0
+  822FFF7C  4BF61185             bl 0x82261100
+  822FFF80  3D600007             lis r11,0x7
+  822FFF84  3D400007             lis r10,0x7
+  822FFF88  3D208200             lis r9,-0x7e00
+  822FFF8C  61689830             ori r8,r11,0x9830
+  822FFF90  61479834             ori r7,r10,0x9834
+  822FFF94  C00913F8             lfs f0,0x13f8(r9)
+  822FFF98  7C03452E             stfsx f0,r3,r8
+  822FFF9C  7C033D2E             stfsx f0,r3,r7
+  822FFFA0  382100A0             addi r1,r1,0xa0
+  822FFFA4  CBC1FFC0             lfd f30,-0x40(r1)
+  822FFFA8  CBE1FFC8             lfd f31,-0x38(r1)
+  822FFFAC  48616758             b 0x82916704
+LAB_822fffb0:
+  822FFFB0  2B1F0000             cmplwi cr6,r31,0x0
+  822FFFB4  409A0028             bne cr6,0x822fffdc
+  822FFFB8  3D608201             lis r11,-0x7dff
+  822FFFBC  3D408200             lis r10,-0x7e00
+  822FFFC0  3D208202             lis r9,-0x7dfe
+  822FFFC4  38EBAEEC             subi r7,r11,0x5114
+  822FFFC8  38CA0F98             addi r6,r10,0xf98
+  822FFFCC  38694910             addi r3,r9,0x4910
+  822FFFD0  38A00000             li r5,0x0
+  822FFFD4  38800272             li r4,0x272
+  822FFFD8  482D4529             bl 0x825d4500
+LAB_822fffdc:
+  822FFFDC  3D408200             lis r10,-0x7e00
+  822FFFE0  817F0014             lwz r11,0x14(r31)
+  822FFFE4  7F1E5800             cmpw cr6,r30,r11
+  822FFFE8  C00A0F10             lfs f0,0xf10(r10)
+  822FFFEC  40980030             bge cr6,0x8230001c
+  822FFFF0  7D6B07B4             extsw r11,r11
+  822FFFF4  7FCA07B4             extsw r10,r30
+  822FFFF8  F9610050             std r11,0x50(r1)
+  822FFFFC  C8010050             lfd f0,0x50(r1)
+  82300000  F9410050             std r10,0x50(r1)
+  82300004  C9A10050             lfd f13,0x50(r1)
+  82300008  FD60069C             fcfid f11,f0
+  8230000C  FD806E9C             fcfid f12,f13
+  82300010  FD205818             frsp f9,f11
+  82300014  FD406018             frsp f10,f12
+  82300018  EC0A4824             fdivs f0,f10,f9
+LAB_8230001c:
+  8230001C  3D408200             lis r10,-0x7e00
+  82300020  C17F0018             lfs f11,0x18(r31)
+  82300024  3D208200             lis r9,-0x7e00
+  82300028  C15F001C             lfs f10,0x1c(r31)
+  8230002C  7FAB07B4             extsw r11,r29
+  82300030  F9610050             std r11,0x50(r1)
+  82300034  C8E10050             lfd f7,0x50(r1)
+  82300038  C1AA3F2C             lfs f13,0x3f2c(r10)
+  8230003C  FCC03E9C             fcfid f6,f7
+  82300040  C1893F20             lfs f12,0x3f20(r9)
+  82300044  FC803018             frsp f4,f6
+  82300048  ED20637C             fnmsubs f9,f0,f13,f12
+  8230004C  EFCB0132             fmuls f30,f11,f4
+  82300050  ED090032             fmuls f8,f9,f0
+  82300054  FC20F090             fmr f1,f30
+  82300058  ECA80032             fmuls f5,f8,f0
+  8230005C  EFE502B2             fmuls f31,f5,f10
+  82300060  48616501             bl 0x82916560
+  82300064  FC600818             frsp f3,f1
+  82300068  1D5C003D             mulli r10,r28,0x3d
+  8230006C  3D008202             lis r8,-0x7dfe
+  82300070  7F63DB78             or r3,r27,r27
+  82300074  FC40181E             fctiwz f2,f3
+  82300078  D8410050             stfd f2,0x50(r1)
+  8230007C  81610054             lwz r11,0x54(r1)
+  82300080  7D6707B4             extsw r7,r11
+  82300084  F8E10050             std r7,0x50(r1)
+  82300088  C8210050             lfd f1,0x50(r1)
+  8230008C  FC000E9C             fcfid f0,f1
+  82300090  7CCA5A14             add r6,r10,r11
+  82300094  FDA00018             frsp f13,f0
+  82300098  392844D8             addi r9,r8,0x44d8
+  8230009C  54CB1DB8             rlwinm r11,r6,0x3,0x16,0x1c
+  823000A0  7FEB4A14             add r31,r11,r9
+  823000A4  EFDE6828             fsubs f30,f30,f13
+  823000A8  4BF61059             bl 0x82261100
+  823000AC  C19F0010             lfs f12,0x10(r31)
+  823000B0  3CA00007             lis r5,0x7
+  823000B4  C17F0018             lfs f11,0x18(r31)
+  823000B8  3D600007             lis r11,0x7
+  823000BC  ED4B6028             fsubs f10,f11,f12
+  823000C0  C13F0008             lfs f9,0x8(r31)
+  823000C4  C11F0000             lfs f8,0x0(r31)
+  823000C8  60A49830             ori r4,r5,0x9830
+  823000CC  ECE84828             fsubs f7,f8,f9
+  823000D0  616A9834             ori r10,r11,0x9834
+  823000D4  ECCC4028             fsubs f6,f12,f8
+  823000D8  ECAA482A             fadds f5,f10,f9
+  823000DC  EC854028             fsubs f4,f5,f8
+  823000E0  EC672028             fsubs f3,f7,f4
+  823000E4  EC441FBA             fmadds f2,f4,f30,f3
+  823000E8  EC2237BA             fmadds f1,f2,f30,f6
+  823000EC  EC014FBA             fmadds f0,f1,f30,f9
+  823000F0  EDA007F2             fmuls f13,f0,f31
+  823000F4  7DA3252E             stfsx f13,r3,r4
+  823000F8  C19F000C             lfs f12,0xc(r31)
+  823000FC  C17F0004             lfs f11,0x4(r31)
+  82300100  C15F0014             lfs f10,0x14(r31)
+  82300104  C13F001C             lfs f9,0x1c(r31)
+  82300108  ED095028             fsubs f8,f9,f10
+  8230010C  ECE8602A             fadds f7,f8,f12
+  82300110  ECCB6028             fsubs f6,f11,f12
+  82300114  ECAA5828             fsubs f5,f10,f11
+  82300118  EC875828             fsubs f4,f7,f11
+  8230011C  EC662028             fsubs f3,f6,f4
+  82300120  EC441FBA             fmadds f2,f4,f30,f3
+  82300124  EC222FBA             fmadds f1,f2,f30,f5
+  82300128  EC0167BA             fmadds f0,f1,f30,f12
+  8230012C  EDA007F2             fmuls f13,f0,f31
+  82300130  7DA3552E             stfsx f13,r3,r10
+  82300134  382100A0             addi r1,r1,0xa0
+  82300138  CBC1FFC0             lfd f30,-0x40(r1)
+  8230013C  CBE1FFC8             lfd f31,-0x38(r1)
+  82300140  486165C4             b 0x82916704
+
+; 82300148  CG_UpdateShellShock  (cgame/cg_shellshock.cpp:647)
+  82300148  7D8802A6             mfspr r12,LR
+  8230014C  4861656D             bl 0x829166b8
+  82300150  9421FF80             stwu r1,-0x80(r1)
+  82300154  7C7F1B78             or r31,r3,r3
+  82300158  7C9D2378             or r29,r4,r4
+  8230015C  7CBE2B78             or r30,r5,r5
+  82300160  7CDC3378             or r28,r6,r6
+  82300164  4BF60F9D             bl 0x82261100
+  82300168  3D600006             lis r11,0x6
+  8230016C  2F1E0000             cmpwi cr6,r30,0x0
+  82300170  616AB98C             ori r10,r11,0xb98c
+  82300174  7D23502E             lwzx r9,r3,r10
+  82300178  7FDE4850             subf r30,r30,r9
+  8230017C  419A00BC             beq cr6,0x82300238
+  82300180  2F1E0000             cmpwi cr6,r30,0x0
+  82300184  419800B4             blt cr6,0x82300238
+  82300188  7FE3FB78             or r3,r31,r31
+  8230018C  484D3275             bl 0x827d3400
+  82300190  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82300194  2B0B0000             cmplwi cr6,r11,0x0
+  82300198  409A005C             bne cr6,0x823001f4
+  8230019C  7FE3FB78             or r3,r31,r31
+  823001A0  484D3301             bl 0x827d34a0
+  823001A4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  823001A8  2B0B0000             cmplwi cr6,r11,0x0
+  823001AC  409A0048             bne cr6,0x823001f4
+  823001B0  7F86E378             or r6,r28,r28
+  823001B4  7FC5F378             or r5,r30,r30
+  823001B8  7FA4EB78             or r4,r29,r29
+  823001BC  7FE3FB78             or r3,r31,r31
+  823001C0  4BFFF8D9             bl 0x822ffa98
+  823001C4  7F86E378             or r6,r28,r28
+  823001C8  7FC5F378             or r5,r30,r30
+  823001CC  7FA4EB78             or r4,r29,r29
+  823001D0  7FE3FB78             or r3,r31,r31
+  823001D4  4BFFFBAD             bl 0x822ffd80
+  823001D8  7F86E378             or r6,r28,r28
+  823001DC  7FC5F378             or r5,r30,r30
+  823001E0  7FA4EB78             or r4,r29,r29
+  823001E4  7FE3FB78             or r3,r31,r31
+  823001E8  4BFFFD69             bl 0x822fff50
+  823001EC  38210080             addi r1,r1,0x80
+  823001F0  48616518             b 0x82916708
+LAB_823001f4:
+  823001F4  7FE3FB78             or r3,r31,r31
+  823001F8  4BFFF6F1             bl 0x822ff8e8
+  823001FC  7FE3FB78             or r3,r31,r31
+  82300200  4BF60F01             bl 0x82261100
+  82300204  3D600007             lis r11,0x7
+  82300208  3D400007             lis r10,0x7
+  8230020C  3D208200             lis r9,-0x7e00
+  82300210  7C681B78             or r8,r3,r3
+  82300214  61679830             ori r7,r11,0x9830
+  82300218  61469834             ori r6,r10,0x9834
+  8230021C  7FE3FB78             or r3,r31,r31
+  82300220  C00913F8             lfs f0,0x13f8(r9)
+  82300224  7C083D2E             stfsx f0,r8,r7
+  82300228  7C08352E             stfsx f0,r8,r6
+  8230022C  4BFFF755             bl 0x822ff980
+  82300230  38210080             addi r1,r1,0x80
+  82300234  486164D4             b 0x82916708
+LAB_82300238:
+  82300238  7FE3FB78             or r3,r31,r31
+  8230023C  4BFFF795             bl 0x822ff9d0
+  82300240  38210080             addi r1,r1,0x80
+  82300244  486164C4             b 0x82916708
+
+; 82300248  CG_StartShellShock  (cgame/cg_shellshock.cpp:674)
+  82300248  3D600007             lis r11,0x7
+  8230024C  3D400007             lis r10,0x7
+  82300250  3D200007             lis r9,0x7
+  82300254  616B9820             ori r11,r11,0x9820
+  82300258  614A9824             ori r10,r10,0x9824
+  8230025C  61299828             ori r9,r9,0x9828
+  82300260  7C83592E             stwx r4,r3,r11
+  82300264  7CA3512E             stwx r5,r3,r10
+  82300268  7CC3492E             stwx r6,r3,r9
+  8230026C  4E800020             blr
 
 ; 82300270  CG_GetFlashbangedRemainingTime  (cgame/cg_shellshock.cpp:682)
   82300270  7D8802A6             mfspr r12,LR
@@ -613,3 +1225,37 @@ LAB_823002c4:
   823002E8  8181FFF8             lwz r12,-0x8(r1)
   823002EC  7D8803A6             mtspr LR,r12
   823002F0  4E800020             blr
+
+; 823002F8  CG_ArchiveShellShock  (cgame/cg_shellshock.cpp:700)
+  823002F8  7D8802A6             mfspr r12,LR
+  823002FC  9181FFF8             stw r12,-0x8(r1)
+  82300300  FBC1FFE8             std r30,-0x18(r1)
+  82300304  FBE1FFF0             std r31,-0x10(r1)
+  82300308  9421FF90             stwu r1,-0x70(r1)
+  8230030C  7C7E1B78             or r30,r3,r3
+  82300310  7C9F2378             or r31,r4,r4
+  82300314  2B040000             cmplwi cr6,r4,0x0
+  82300318  409A0028             bne cr6,0x82300340
+  8230031C  3D608200             lis r11,-0x7e00
+  82300320  3D408200             lis r10,-0x7e00
+  82300324  3D208202             lis r9,-0x7dfe
+  82300328  38EB1348             addi r7,r11,0x1348
+  8230032C  38CA0F98             addi r6,r10,0xf98
+  82300330  38694910             addi r3,r9,0x4910
+  82300334  38A00000             li r5,0x0
+  82300338  388002BF             li r4,0x2bf
+  8230033C  482D41C5             bl 0x825d4500
+LAB_82300340:
+  82300340  7FC3F378             or r3,r30,r30
+  82300344  4BF60DBD             bl 0x82261100
+  82300348  3CA30008             addis r5,r3,0x8
+  8230034C  38800004             li r4,0x4
+  82300350  38A59844             subi r5,r5,0x67bc
+  82300354  7FE3FB78             or r3,r31,r31
+  82300358  4BF60EE1             bl 0x82261238
+  8230035C  38210070             addi r1,r1,0x70
+  82300360  8181FFF8             lwz r12,-0x8(r1)
+  82300364  7D8803A6             mtspr LR,r12
+  82300368  EBC1FFE8             ld r30,-0x18(r1)
+  8230036C  EBE1FFF0             ld r31,-0x10(r1)
+  82300370  4E800020             blr

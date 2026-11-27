@@ -83,18 +83,156 @@ int bdPlatformStreamSocket__connect(SOCKET s,sockaddr *name,int namelen)
 int bdPlatformStreamSocket__send(SOCKET s,char *buf,int len,int flags)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(s,buf,len,flags);
+  undefined8 uVar1;
+  longlong lVar2;
+  char cVar4;
+  int iVar3;
+  longlong lVar5;
+  int local_30 [12];
+  
+  lVar5 = (longlong)len;
+  lVar2 = (longlong)(int)buf;
+  uVar1 = __savegprlr_29(s,lVar2,lVar5,flags);
+  if ((SOCKET)uVar1 == 0xffffffff) {
+    lVar2 = -10;
+    goto LAB_8293cdc0;
+  }
+  cVar4 = bdPlatformStreamSocket__isWritable(uVar1,local_30);
+  if ((cVar4 == '\0') &&
+     (cVar4 = bdPlatformStreamSocket__checkSocketException(uVar1), cVar4 != '\0')) {
+    if (local_30[0] == -2) {
+LAB_8293ccb8:
+      lVar2 = -2;
+      goto LAB_8293cdc0;
+    }
+    goto LAB_8293ccc0;
+  }
+  iVar3 = send((SOCKET)uVar1,(char *)lVar2,(int)lVar5,0);
+  lVar2 = (longlong)iVar3;
+  if (-1 < iVar3) {
+    DAT_84896110 = iVar3 + DAT_84896110;
+    goto LAB_8293cdc0;
+  }
+  iVar3 = WSAGetLastError();
+  if (iVar3 < 0x2742) {
+    if (iVar3 != 0x2741) {
+      if (iVar3 == 0x2714) {
+        lVar2 = -8;
+        goto LAB_8293cdc0;
+      }
+      if (iVar3 != 0x2726) {
+        if (iVar3 == 0x2733) goto LAB_8293ccb8;
+        if (iVar3 != 0x2737) {
+          if (iVar3 == 0x2738) {
+            lVar2 = -6;
+            goto LAB_8293cdc0;
+          }
+          if (iVar3 != 0x273f) goto LAB_8293cda4;
+        }
+      }
+    }
+    lVar2 = -7;
+    goto LAB_8293cdc0;
+  }
+  if (iVar3 < 0x274a) {
+    if (iVar3 == 0x2749) {
+      cVar4 = bdPlatformStreamSocket__checkSocketException(uVar1);
+      lVar2 = (-(ulonglong)(cVar4 != '\0') & 6) - 0xb;
+      goto LAB_8293cdc0;
+    }
+    if ((0x2741 < iVar3) && ((iVar3 < 0x2744 || ((0x2744 < iVar3 && (iVar3 < 0x2747))))))
+    goto LAB_8293ccc0;
+  }
+  else if ((0x274b < iVar3) && ((iVar3 < 0x274e || (iVar3 == 0x2751)))) {
+LAB_8293ccc0:
+    lVar2 = -5;
+    goto LAB_8293cdc0;
+  }
+LAB_8293cda4:
+  lVar2 = -1;
+LAB_8293cdc0:
+  iVar3 = __restgprlr_29(lVar2);
+  return iVar3;
 }
 
 
 // 8293CDC8  bdPlatformStreamSocket::receive  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:259)
 
-void bdPlatformStreamSocket__receive(void)
+void bdPlatformStreamSocket__receive(undefined8 param_1,char *param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  longlong lVar2;
+  char cVar4;
+  int iVar3;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  if ((SOCKET)uVar1 == 0xffffffff) {
+    lVar2 = -10;
+    goto LAB_8293cf84;
+  }
+  cVar4 = bdPlatformStreamSocket__isWritable(uVar1,local_30);
+  if ((cVar4 == '\0') &&
+     (cVar4 = bdPlatformStreamSocket__checkSocketException(uVar1), cVar4 != '\0')) {
+    if (local_30[0] == -2) {
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8221a9e4,0xffffffff8221aa18,0xffffffff8221ac28,
+                   0x115,0xffffffff8221ac00);
+LAB_8293ce54:
+      lVar2 = -2;
+      goto LAB_8293cf84;
+    }
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8221a9e4,0xffffffff8221aa18,0xffffffff8221ac28,0x11a
+                 ,0xffffffff8221abd4);
+    goto LAB_8293ce6c;
+  }
+  iVar3 = recv((SOCKET)uVar1,param_2,param_3,0);
+  lVar2 = (longlong)iVar3;
+  if (-1 < iVar3) {
+    DAT_84896118 = iVar3 + DAT_84896118;
+    goto LAB_8293cf84;
+  }
+  iVar3 = WSAGetLastError();
+  if (iVar3 != 0x2733) {
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8221a9e4,0xffffffff8221aa18,0xffffffff8221ac28,0x138
+                 ,0xffffffff8221abc0,iVar3);
+  }
+  if (iVar3 < 0x2744) {
+    if (iVar3 < 0x2742) {
+      if (iVar3 == 0x2714) {
+        lVar2 = -8;
+        goto LAB_8293cf84;
+      }
+      if (iVar3 == 0x2726) {
+        lVar2 = -9;
+        goto LAB_8293cf84;
+      }
+      if (iVar3 == 0x2733) goto LAB_8293ce54;
+      if (iVar3 == 0x2738) {
+        lVar2 = -6;
+        goto LAB_8293cf84;
+      }
+LAB_8293cf48:
+      lVar2 = -1;
+      goto LAB_8293cf84;
+    }
+  }
+  else {
+    if (iVar3 < 0x2745) goto LAB_8293cf48;
+    if (0x2746 < iVar3) {
+      if (iVar3 == 0x2749) {
+        cVar4 = bdPlatformStreamSocket__checkSocketException(uVar1);
+        lVar2 = (-(ulonglong)(cVar4 != '\0') & 6) - 0xb;
+        goto LAB_8293cf84;
+      }
+      if ((iVar3 != 0x274c) && (iVar3 != 0x2751)) goto LAB_8293cf48;
+    }
+  }
+LAB_8293ce6c:
+  lVar2 = -5;
+LAB_8293cf84:
+  __restgprlr_29(lVar2);
+  return;
 }
 
 
@@ -134,17 +272,17 @@ int bdPlatformStreamSocket__close(int _FileHandle)
 
 // 8293CA38  bdPlatformStreamSocket::checkSocketException  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:387)
 
-undefined8 bdPlatformStreamSocket__checkSocketException(undefined8 param_1)
+undefined8 bdPlatformStreamSocket__checkSocketException(SOCKET param_1)
 
 {
   int iVar1;
   timeval local_130 [2];
   fd_set local_120;
   
-  local_120.fd_array[0] = (SOCKET)param_1;
   local_130[0].tv_sec = 0;
   local_130[0].tv_usec = 0;
   local_120.fd_count = 1;
+  local_120.fd_array[0] = param_1;
   iVar1 = select(0,(fd_set *)0x0,(fd_set *)0x0,&local_120,local_130);
   if ((iVar1 != -1) && (iVar1 = __WSAFDIsSet(param_1,&local_120), iVar1 == 0)) {
     return 0;
@@ -155,10 +293,84 @@ undefined8 bdPlatformStreamSocket__checkSocketException(undefined8 param_1)
 
 // 8293CAC0  bdPlatformStreamSocket::isWritable  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:415)
 
-void bdPlatformStreamSocket__isWritable(void)
+void bdPlatformStreamSocket__isWritable(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  SOCKET SVar2;
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined4 uVar5;
+  timeval local_260 [2];
+  fd_set local_250;
+  fd_set local_140;
+  
+  SVar2 = __savegprlr_27();
+  if (SVar2 == 0xffffffff) {
+    uVar1 = 0;
+    goto LAB_8293cbcc;
+  }
+  uVar1 = 1;
+  *param_2 = 1;
+  local_260[0].tv_sec = 0;
+  local_260[0].tv_usec = 0;
+  local_250.fd_count = 1;
+  local_140.fd_count = 1;
+  local_250.fd_array[0] = SVar2;
+  local_140.fd_array[0] = SVar2;
+  iVar3 = select(0,(fd_set *)0x0,&local_250,&local_140,local_260);
+  iVar4 = __WSAFDIsSet(SVar2,&local_250);
+  if ((iVar4 == 0) || (iVar3 == -1)) {
+    uVar1 = 0;
+  }
+  iVar3 = __WSAFDIsSet(SVar2,&local_140);
+  if (iVar3 == 0) goto LAB_8293cbcc;
+  iVar3 = WSAGetLastError();
+  if (iVar3 < 0x2744) {
+    if (iVar3 == 0x2743) {
+LAB_8293cc48:
+      uVar5 = 0xfffffff3;
+    }
+    else if (iVar3 == 0x2714) {
+      uVar5 = 0xfffffff8;
+    }
+    else if (iVar3 == 0x2726) {
+      uVar5 = 0xfffffff6;
+    }
+    else {
+      if (iVar3 != 0x2733) {
+        if (iVar3 == 0x2742) goto LAB_8293cc58;
+        goto LAB_8293cb8c;
+      }
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8221a9e4,0xffffffff8221aa18,0xffffffff8221ab9c,
+                   0x1d1,0xffffffff8221ab20);
+      uVar5 = 0xfffffffe;
+    }
+  }
+  else if (iVar3 < 0x2745) {
+LAB_8293cb8c:
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8221a9e4,0xffffffff8221aa18,0xffffffff8221ab9c,0x1d5
+                 ,0xffffffff8221ab64);
+    uVar5 = 0xffffffff;
+  }
+  else {
+    if (0x2746 < iVar3) {
+      if (iVar3 == 0x2749) {
+        uVar5 = 0xfffffff5;
+        goto LAB_8293cbc4;
+      }
+      if (iVar3 != 0x274c) {
+        if (iVar3 == 0x2751) goto LAB_8293cc48;
+        goto LAB_8293cb8c;
+      }
+    }
+LAB_8293cc58:
+    uVar5 = 0xfffffffb;
+  }
+LAB_8293cbc4:
+  *param_2 = uVar5;
+LAB_8293cbcc:
+  __restgprlr_27(uVar1);
+  return;
 }
 

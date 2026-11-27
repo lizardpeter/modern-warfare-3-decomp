@@ -5,8 +5,34 @@
 void DevSoundMixer_GetGroupNameForAlias(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82025518,0x47,0,0xffffffff82000f98,0xffffffff8202550c);
+  }
+  if (*(char **)(iVar1 + 0x10) != (char *)0x0) {
+    if (**(char **)(iVar1 + 0x10) == '\0') {
+      MyAssertHandler(0xffffffff82025518,0x4b,0,0xffffffff82000f98,0xffffffff820254ec);
+    }
+    __restgprlr_29(*(undefined4 *)(iVar1 + 0x10));
+    return;
+  }
+  SND_GetEntChannelName(*(int *)(iVar1 + 0x3c) >> 9 & 0x3f);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82303988  DevSoundMixer_GetGroupTypeForAlias  (cgame/cg_soundmixergui.cpp:85)
+
+bool DevSoundMixer_GetGroupTypeForAlias(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82025518,0x56,0,0xffffffff82000f98,0xffffffff8202550c);
+  }
+  return *(int *)(param_1 + 0x10) != 0;
 }
 
 
@@ -15,8 +41,70 @@ void DevSoundMixer_GetGroupNameForAlias(void)
 void DevSoundMixer_GetGroupIndexByName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  
+  pcVar1 = (char *)__savegprlr_26();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82025518,100,0,0xffffffff82000f98,0xffffffff820255f4);
+  }
+  if (*pcVar1 == '\0') {
+    MyAssertHandler(0xffffffff82025518,0x65,0,0xffffffff82000f98,0xffffffff820255dc);
+  }
+  if (0x60 < DAT_82a62720) {
+    MyAssertHandler(0xffffffff82025518,0x67,0,0xffffffff82000f98,0xffffffff820255a0);
+  }
+  uVar4 = 0;
+  if (DAT_82a62720 != 0) {
+    lVar3 = -0x7d59d8d8;
+    do {
+      if (0x5f < (uVar4 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff82025518,0x6a,0,0xffffffff82025560,uVar4,0x60);
+      }
+      iVar2 = I_stricmp(lVar3,pcVar1);
+      if (iVar2 == 0) {
+        __restgprlr_26(uVar4);
+        return;
+      }
+      uVar4 = uVar4 + 1;
+      lVar3 = lVar3 + 0x114;
+    } while ((uVar4 & 0xffffffff) < (ulonglong)DAT_82a62720);
+  }
+  __restgprlr_26(0x60);
+  return;
+}
+
+
+// 82303B08  DevSoundMixer_GetGroupData  (cgame/cg_soundmixergui.cpp:119)
+
+void DevSoundMixer_GetGroupData(void)
+
+{
+  ulonglong uVar1;
+  char *pcVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0x7b,0,0xffffffff82000f98,0xffffffff8202550c);
+  }
+  pcVar2 = (char *)DevSoundMixer_GetGroupNameForAlias(uVar1);
+  if (pcVar2 != (char *)0x0) {
+    if (*pcVar2 == '\0') {
+      MyAssertHandler(0xffffffff82025518,0x81,0,0xffffffff82000f98,0xffffffff820255dc);
+    }
+    uVar1 = DevSoundMixer_GetGroupIndexByName(pcVar2);
+    if ((uVar1 & 0xffffffff) != 0x60) {
+      if (0x5f < (uVar1 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff82025518,0x86,0,0xffffffff82025600,uVar1,0x60);
+      }
+      __restgprlr_29(uVar1 * 0x114 + -0x7d59d8dc);
+      return;
+    }
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -34,31 +122,144 @@ undefined8 DevSoundMixer_IsActive(void)
 
 // 82303C10  DevSoundMixer_ApplyMasterPriorityOffset  (cgame/cg_soundmixergui.cpp:146)
 
-void DevSoundMixer_ApplyMasterPriorityOffset(void)
+void DevSoundMixer_ApplyMasterPriorityOffset(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  byte *pbVar3;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0x96,0,0xffffffff82000f98,0xffffffff82025664);
+  }
+  if (((DAT_82a62718 != 0) && (*(char *)(DAT_82a62718 + 0xc) != '\0')) &&
+     (iVar2 = DevSoundMixer_GetGroupData(uVar1), iVar2 != 0)) {
+    if (*(int *)(iVar2 + 0x110) == 0) {
+      MyAssertHandler(0xffffffff82025518,0x9e,0,0xffffffff82000f98,0xffffffff82025648);
+    }
+    pbVar3 = (byte *)param_2;
+    iVar2 = *(int *)(*(int *)(iVar2 + 0x110) + 0xc) + (uint)*pbVar3;
+    if (0xfe < iVar2) {
+      *pbVar3 = 0xff;
+      __restgprlr_28();
+      return;
+    }
+    if (iVar2 < 1) {
+      iVar2 = 0;
+    }
+    *pbVar3 = (byte)iVar2;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82303CF0  DevSoundMixer_ApplyGroupVolumeModifier  (cgame/cg_soundmixergui.cpp:166)
 
-void DevSoundMixer_ApplyGroupVolumeModifier(void)
+void DevSoundMixer_ApplyGroupVolumeModifier(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  int iVar5;
+  
+  uVar4 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0xa9,0,0xffffffff82000f98,0xffffffff82025684);
+  }
+  if (((DAT_82a62718 != 0) && (*(char *)(DAT_82a62718 + 0xc) != '\0')) &&
+     (iVar5 = DevSoundMixer_GetGroupData(uVar4), iVar5 != 0)) {
+    if (*(int *)(iVar5 + 0x104) == 0) {
+      MyAssertHandler(0xffffffff82025518,0xb1,0,0xffffffff82000f98,0xffffffff82025674);
+    }
+    fVar1 = *(float *)(*(int *)(iVar5 + 0x104) + 0xc) * *(float *)param_2;
+    fVar2 = 1.0;
+    if (fVar1 - 1.0 < 0.0) {
+      fVar2 = fVar1;
+    }
+    fVar3 = 0.0;
+    if (-fVar1 < 0.0) {
+      fVar3 = fVar2;
+    }
+    *(float *)param_2 = fVar3;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82303DD0  DevSoundMixer_ApplyGroupMasterPercentModifier  (cgame/cg_soundmixergui.cpp:184)
 
-void DevSoundMixer_ApplyGroupMasterPercentModifier(void)
+void DevSoundMixer_ApplyGroupMasterPercentModifier(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  int iVar5;
+  
+  uVar4 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0xbb,0,0xffffffff82000f98,0xffffffff820256a0);
+  }
+  if (((DAT_82a62718 != 0) && (*(char *)(DAT_82a62718 + 0xc) != '\0')) &&
+     (iVar5 = DevSoundMixer_GetGroupData(uVar4), iVar5 != 0)) {
+    if (*(int *)(iVar5 + 0x108) == 0) {
+      MyAssertHandler(0xffffffff82025518,0xc3,0,0xffffffff82000f98,0xffffffff8202568c);
+    }
+    fVar1 = *(float *)(*(int *)(iVar5 + 0x108) + 0xc) + *(float *)param_2;
+    fVar2 = 1.0;
+    if (fVar1 - 1.0 < 0.0) {
+      fVar2 = fVar1;
+    }
+    fVar3 = 0.0;
+    if (-fVar1 < 0.0) {
+      fVar3 = fVar2;
+    }
+    *(float *)param_2 = fVar3;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82303EB0  DevSoundMixer_ApplyGroupSlavePercentModifier  (cgame/cg_soundmixergui.cpp:202)
+
+void DevSoundMixer_ApplyGroupSlavePercentModifier(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  int iVar5;
+  
+  uVar4 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0xcd,0,0xffffffff82000f98,0xffffffff820256bc);
+  }
+  if (((DAT_82a62718 != 0) && (*(char *)(DAT_82a62718 + 0xc) != '\0')) &&
+     (iVar5 = DevSoundMixer_GetGroupData(uVar4), iVar5 != 0)) {
+    if (*(int *)(iVar5 + 0x10c) == 0) {
+      MyAssertHandler(0xffffffff82025518,0xd5,0,0xffffffff82000f98,0xffffffff820256ac);
+    }
+    fVar1 = *(float *)(*(int *)(iVar5 + 0x10c) + 0xc) + *(float *)param_2;
+    fVar2 = 1.0;
+    if (fVar1 - 1.0 < 0.0) {
+      fVar2 = fVar1;
+    }
+    fVar3 = 0.0;
+    if (-fVar1 < 0.0) {
+      fVar3 = fVar2;
+    }
+    *(float *)param_2 = fVar3;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -67,8 +268,34 @@ void DevSoundMixer_ApplyGroupMasterPercentModifier(void)
 void DevSoundMixer_SaveCommand(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  
   __savegprlr_27();
+  Com_Printf(9,0xffffffff82025774);
+  if ((DAT_82a62718 == 0) || (*(char *)(DAT_82a62718 + 0xc) == '\0')) {
+    uVar1 = 0xffffffff82025760;
+  }
+  else {
+    uVar1 = 0xffffffff8202576c;
+  }
+  Com_Printf(9,0xffffffff82025754,uVar1);
+  Com_Printf(9,0xffffffff82025714,0xffffffff8202574c);
+  uVar2 = 0;
+  if (DAT_82a62720 != 0) {
+    piVar3 = &DAT_82a62830;
+    do {
+      Com_Printf(9,0xffffffff820256f4,uVar2,piVar3 + -0x42,(double)*(float *)(piVar3[-2] + 0xc),
+                 (double)*(float *)(piVar3[-1] + 0xc),(double)*(float *)(*piVar3 + 0xc),
+                 *(undefined4 *)(piVar3[1] + 0xc));
+      uVar2 = uVar2 + 1;
+      piVar3 = piVar3 + 0x45;
+    } while ((uVar2 & 0xffffffff) < (ulonglong)DAT_82a62720);
+  }
+  Com_Printf(9,0xffffffff820256c8);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -77,8 +304,75 @@ void DevSoundMixer_SaveCommand(void)
 void DevSoundMixer_MuteCommand(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  
   __savegprlr_29();
+  Com_Printf(9,0xffffffff820257ec);
+  Dvar_SetBool(DAT_82a62718,1);
+  uVar2 = 0;
+  if (DAT_82a62720 != 0) {
+    puVar1 = (undefined4 *)0x82a62714;
+    uVar3 = 0;
+    do {
+      puVar1 = puVar1 + 0x45;
+      Dvar_SetFloat(uVar3,*puVar1);
+      uVar2 = uVar2 + 1;
+    } while (uVar2 < DAT_82a62720);
+  }
+  Com_Printf(9,0xffffffff820257a8);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82304130  DevSoundMixer_EnumerateGroupIte_CreateGroupData  (cgame/cg_soundmixergui.cpp:257)
+
+void DevSoundMixer_EnumerateGroupIte_CreateGroupData(undefined8 param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  undefined1 auStack_140 [320];
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025518,0x105,0,0xffffffff82000f98,0xffffffff820255f4);
+  }
+  if (1 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82025518,0x106,0,0xffffffff820258c4,param_2,2);
+  }
+  if (0x5f < DAT_82a62720) {
+    MyAssertHandler(0xffffffff82025518,0x107,0,0xffffffff82025868,DAT_82a62720,0x60);
+  }
+  uVar1 = DAT_82a62720;
+  iVar4 = DAT_82a62720 * 0x114;
+  I_strncpyz(&DAT_82a62728 + iVar4,uVar2,0x100);
+  *(int *)(&DAT_82a62724 + iVar4) = (int)param_2;
+  Com_sprintf(auStack_140,0x100,0xffffffff82025858,DAT_82a62720);
+  uVar7 = 0;
+  uVar6 = 0x3ff0000000000000;
+  uVar3 = Dvar_RegisterFloat(0x3ff0000000000000,0,0x4014000000000000,auStack_140);
+  (&DAT_82a62828)[uVar1 * 0x45] = uVar3;
+  Com_sprintf(auStack_140,0x100,0xffffffff82025844,DAT_82a62720);
+  uVar5 = 0xbff0000000000000;
+  uVar3 = Dvar_RegisterFloat(uVar7,0xbff0000000000000,uVar6,auStack_140);
+  (&DAT_82a6282c)[uVar1 * 0x45] = uVar3;
+  Com_sprintf(auStack_140,0x100,0xffffffff82025830,DAT_82a62720);
+  uVar3 = Dvar_RegisterFloat(uVar7,uVar5,uVar6,auStack_140);
+  (&DAT_82a62830)[uVar1 * 0x45] = uVar3;
+  Com_sprintf(auStack_140,0x100,0xffffffff8202581c,DAT_82a62720);
+  uVar3 = Dvar_RegisterInt(auStack_140,0,0xffffffffffffff01,0xff,0x100,0xffffffff8202580c);
+  (&DAT_82a62834)[uVar1 * 0x45] = uVar3;
+  DAT_82a62720 = DAT_82a62720 + 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -87,8 +381,34 @@ void DevSoundMixer_MuteCommand(void)
 void DevSoundMixer_EnumerateGroupsItem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82025518,0x126,0,0xffffffff82000f98,0xffffffff82025980);
+  }
+  if (*(int *)(iVar3 + 8) != 0) {
+    if (*(int *)(iVar3 + 4) == 0) {
+      MyAssertHandler(0xffffffff82025518,299,0,0xffffffff82000f98,0xffffffff8202596c);
+    }
+    puVar1 = *(undefined4 **)(iVar3 + 4);
+    pcVar4 = (char *)DevSoundMixer_GetGroupNameForAlias(puVar1);
+    if (((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) &&
+       (iVar3 = DevSoundMixer_GetGroupIndexByName(), iVar3 == 0x60)) {
+      if (DAT_82a62720 == 0x60) {
+        Com_PrintWarning(0xe,0xffffffff82025900,0x60,pcVar4,*puVar1);
+        __restgprlr_29();
+        return;
+      }
+      uVar2 = DevSoundMixer_GetGroupTypeForAlias(puVar1);
+      DevSoundMixer_EnumerateGroupIte_CreateGroupData(pcVar4,uVar2);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -105,7 +425,6 @@ void DevSoundMixer_BuildGroupDevGui(void)
   
   piVar2 = (int *)__savegprlr_25();
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82025518,0x145,0,0xffffffff82000f98,0xffffffff82025a10);
   }
   piVar4 = piVar2 + 1;
@@ -117,21 +436,18 @@ void DevSoundMixer_BuildGroupDevGui(void)
     Com_sprintf(auStack_140,0x100,0xffffffff82025a04,puVar1,piVar4,0xffffffff820259e0);
     cVar3 = DevGui_DoesMenuExist(auStack_140);
     if (cVar3 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82025518,0x14f,0,0xffffffff82000f98,0xffffffff820259bc);
     }
     DevGui_AddDvar(auStack_140,piVar2[0x42]);
     Com_sprintf(auStack_140,0x100,0xffffffff82025a04,puVar1,piVar4,0xffffffff820259a8);
     cVar3 = DevGui_DoesMenuExist(auStack_140);
     if (cVar3 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82025518,0x153,0,0xffffffff82000f98,0xffffffff820259bc);
     }
     DevGui_AddDvar(auStack_140,piVar2[0x43]);
     Com_sprintf(auStack_140,0x100,0xffffffff82025a04,puVar1,piVar4,0xffffffff82025990);
     cVar3 = DevGui_DoesMenuExist(auStack_140);
     if (cVar3 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82025518,0x157,0,0xffffffff82000f98,0xffffffff820259bc);
     }
     DevGui_AddDvar(auStack_140,piVar2[0x44]);
@@ -141,12 +457,73 @@ void DevSoundMixer_BuildGroupDevGui(void)
 }
 
 
+// 823045E0  DevSoundMixer_BuildGlobal  (cgame/cg_soundmixergui.cpp:349)
+
+void DevSoundMixer_BuildGlobal(void)
+
+{
+  char cVar1;
+  
+  __savegprlr_29();
+  DAT_82a62718 = Dvar_RegisterBool(0xffffffff82025af8,0,0,0xffffffff82025b10);
+  cVar1 = DevGui_DoesMenuExist(0xffffffff82025ae4);
+  if (cVar1 == '\0') {
+    DevGui_AddDvar(0xffffffff82025ae4,DAT_82a62718);
+    cVar1 = DevGui_DoesMenuExist(0xffffffff82025ac4);
+    if (cVar1 != '\0') {
+      MyAssertHandler(0xffffffff82025518,0x164,0,0xffffffff82000f98,0xffffffff82025a90);
+    }
+    DevGui_AddCommand(0xffffffff82025ac4,0xffffffff82025a7c);
+    Cmd_AddCommandInternal(0xffffffff82025a7c,0xffffffff823040a0,0xffffffff82a68eb8);
+    cVar1 = DevGui_DoesMenuExist(0xffffffff82025a60);
+    if (cVar1 != '\0') {
+      MyAssertHandler(0xffffffff82025518,0x168,0,0xffffffff82000f98,0xffffffff82025a2c);
+    }
+    DevGui_AddCommand(0xffffffff82025a60,0xffffffff82025a18);
+    Cmd_AddCommandInternal(0xffffffff82025a18,0xffffffff82303f90,0xffffffff82a68ea4);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
 // 82304718  DevSoundMixer_BuildGroups  (cgame/cg_soundmixergui.cpp:368)
 
 void DevSoundMixer_BuildGroups(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  ulonglong uVar2;
+  
   __savegprlr_27();
+  DB_EnumXAssets(9,0xffffffff82304328,0,0);
+  if (0x60 < DAT_82a62720) {
+    MyAssertHandler(0xffffffff82025518,0x178,0,0xffffffff82000f98,0xffffffff820255a0);
+  }
+  uVar2 = 0;
+  if (DAT_82a62720 != 0) {
+    lVar1 = -0x7d59d8dc;
+    do {
+      if (0x5f < (uVar2 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff82025518,0x17b,0,0xffffffff82025560,uVar2,0x60);
+      }
+      DevSoundMixer_BuildGroupDevGui(lVar1);
+      uVar2 = uVar2 + 1;
+      lVar1 = lVar1 + 0x114;
+    } while ((uVar2 & 0xffffffff) < (ulonglong)DAT_82a62720);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 823047E0  DevSoundMixer_CreateDevGUI  (cgame/cg_soundmixergui.cpp:387)
+
+void DevSoundMixer_CreateDevGUI(void)
+
+{
+  DevSoundMixer_BuildGlobal();
+  DevSoundMixer_BuildGroups();
+  return;
 }
 

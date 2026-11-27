@@ -32,11 +32,64 @@ void bdDMLInfo___bdDMLInfo(undefined4 *param_1)
 
 // 82904290  bdDMLInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddmlinfo.cpp:28)
 
-void bdDMLInfo__deserialize(void)
+void bdDMLInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 4,3);
+  if (cVar3 == '\0') {
+LAB_829042e0:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 7,0x41);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_829042e0;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 0x48,0x41);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82904308;
+  }
+  else {
+LAB_82904308:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 0x89,0x81);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82904330;
+  }
+  else {
+LAB_82904330:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readFloat32(*puVar4,lVar2 + 0x10c);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82904354;
+  }
+  else {
+LAB_82904354:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readFloat32(*puVar4,lVar2 + 0x110);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_8290437c;
+  }
+  uVar5 = 0;
+LAB_8290437c:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

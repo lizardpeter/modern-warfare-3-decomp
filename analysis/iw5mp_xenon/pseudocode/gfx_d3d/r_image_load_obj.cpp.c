@@ -2,10 +2,25 @@
 
 // 827481F8  Image_GetSize  (gfx_d3d/r_image_load_obj.cpp:1902)
 
-void Image_GetSize(void)
+void Image_GetSize(undefined8 param_1,uint *param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (*(char *)(iVar1 + 0x47) != '\0') {
+    if (*(char *)(iVar1 + 0x39) != '\0') {
+      MyAssertHandler(0xffffffff821c5740,0x77f,0,0xffffffff8205cfc0,0xffffffff821c5720,
+                      *(undefined4 *)(iVar1 + 0x6c));
+    }
+    if (*(char *)(iVar1 + 0x46) != '\x01') {
+      MyAssertHandler(0xffffffff821c5740,0x780,0,0xffffffff8205cfc0,0xffffffff821c5704,
+                      *(undefined4 *)(iVar1 + 0x6c));
+    }
+  }
+  *param_2 = (uint)*(ushort *)(iVar1 + 0x40);
+  *param_3 = (uint)*(ushort *)(iVar1 + 0x42);
+  __restgprlr_27(1);
+  return;
 }
 

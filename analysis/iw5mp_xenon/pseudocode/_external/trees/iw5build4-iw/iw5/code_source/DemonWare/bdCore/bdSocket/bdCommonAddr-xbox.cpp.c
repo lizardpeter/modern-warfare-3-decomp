@@ -2,11 +2,56 @@
 
 // 8292D818  bdCommonAddr::bdCommonAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:39)
 
-void bdCommonAddr__bdCommonAddr(void)
+void bdCommonAddr__bdCommonAddr
+               (undefined8 param_1,undefined8 param_2,void *param_3,undefined2 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  puVar1[1] = 0;
+  *puVar1 = &PTR_bdCommonAddr___scalar_deleting_destructor__82216a24;
+  memcpy(puVar1 + 2,param_3,0x24);
+  *(undefined2 *)(puVar1 + 0xb) = param_4;
+  iVar3 = 0;
+  puVar1[0xc] = 0;
+  *(undefined1 *)(puVar1 + 0xe) = 0;
+  puVar1[0xd] = 0;
+  lVar4 = 6;
+  do {
+    iVar2 = iVar3 + 0x12;
+    iVar3 = iVar3 + 1;
+    iVar2 = (uint)*(byte *)((int)puVar1 + iVar2) + puVar1[0xd] * 0x1f;
+    puVar1[0xd] = iVar2;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  if (*(int *)(*(int *)param_2 + 0x34) == iVar2) {
+    *(undefined1 *)(puVar1 + 0xe) = 1;
+  }
+  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>(param_2);
+  __restgprlr_28(puVar1);
+  return;
+}
+
+
+// 8292D7B0  bdCommonAddr::getHash  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:75)
+
+undefined4 bdCommonAddr__getHash(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x34);
+}
+
+
+// 8292D7B8  bdCommonAddr::isLoopback  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:80)
+
+undefined1 bdCommonAddr__isLoopback(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0x38);
 }
 
 

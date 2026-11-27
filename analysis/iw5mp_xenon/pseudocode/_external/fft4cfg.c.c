@@ -2,10 +2,123 @@
 
 // 828CC158  fftCore4CFGVector  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fft4cfg.c:195)
 
-void fftCore4CFGVector(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void fftCore4CFGVector(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 uVar1;
+  float fVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  int iVar5;
+  uint uVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float *pfVar11;
+  float fVar12;
+  float fVar13;
+  float fVar14;
+  undefined4 *puVar15;
+  int iVar16;
+  int iVar17;
+  longlong lVar18;
+  int iVar19;
+  int iVar20;
+  ulonglong uVar21;
+  longlong lVar22;
+  ulonglong uVar23;
+  longlong lVar24;
+  ulonglong uVar25;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs43 [16];
+  undefined1 in_vs62 [16];
+  undefined1 in_vs63 [16];
+  
+  lVar18 = __savegprlr_23();
+  uVar21 = 1;
+  do {
+    iVar5 = (int)param_3 >> 2;
+    if ((int)uVar21 != 0) {
+      uVar25 = uVar21;
+      do {
+        if (-1 < iVar5 + -4) {
+          altv207_13(in_vs63,in_vs43);
+          altv207_13(in_vs62,in_vs43);
+          altv207_13(in_vs32,in_vs43);
+          altv207_13(in_vs38,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+          halt_baddata();
+        }
+        uVar25 = uVar25 - 1;
+      } while (uVar25 != 0);
+    }
+    uVar21 = (uVar21 & 0x3fffffff) << 2;
+    param_3 = (longlong)iVar5 + (ulonglong)((int)param_3 < 0 && (param_3 & 3) != 0);
+  } while (4 < (int)param_3);
+  lVar24 = (uVar21 & 0xfffffff) * 0x10 + lVar18;
+  iVar5 = (int)lVar18;
+  iVar17 = (int)param_2;
+  if ((int)uVar21 != 0) {
+    lVar22 = lVar24 + 0xc;
+    lVar18 = (lVar24 - lVar18) + param_2 + -0xc;
+    uVar25 = uVar21;
+    do {
+      iVar19 = (int)lVar22;
+      fVar7 = *(float *)(iVar19 + -0x14) + *(float *)(iVar19 + -0x1c);
+      pfVar11 = (float *)lVar18;
+      fVar8 = *(float *)(iVar19 + -0x1c) - *(float *)(iVar19 + -0x14);
+      fVar2 = *(float *)((iVar5 - iVar17) + (int)pfVar11);
+      fVar9 = pfVar11[1] + pfVar11[-1];
+      fVar10 = pfVar11[-1] - pfVar11[1];
+      fVar12 = *(float *)(iVar19 + -0x10) + fVar2;
+      fVar2 = fVar2 - *(float *)(iVar19 + -0x10);
+      fVar13 = pfVar11[2] + *pfVar11;
+      fVar14 = *pfVar11 - pfVar11[2];
+      *(float *)(iVar19 + -0x1c) = fVar12 + fVar7;
+      pfVar11[1] = fVar10 - fVar2;
+      pfVar11[-1] = fVar13 + fVar9;
+      *(float *)((iVar5 - iVar17) + (int)pfVar11) = fVar7 - fVar12;
+      *(float *)(iVar19 + -0x14) = fVar14 + fVar8;
+      *pfVar11 = fVar9 - fVar13;
+      pfVar11[2] = fVar2 + fVar10;
+      lVar22 = lVar22 + -0x10;
+      *(float *)lVar22 = fVar8 - fVar14;
+      lVar18 = lVar18 + -0x10;
+      uVar25 = uVar25 - 1;
+    } while (uVar25 != 0);
+  }
+  uVar21 = (uVar21 & 0x3fffffff) << 2;
+  iVar20 = 1;
+  iVar19 = (int)uVar21 + -1;
+  uVar25 = (ulonglong)((int)uVar21 >> 1);
+  if (1 < iVar19) {
+    do {
+      param_2 = param_2 + 4;
+      uVar23 = uVar21;
+      if ((int)uVar25 < iVar20) {
+        puVar15 = (undefined4 *)param_2;
+        uVar3 = *(undefined4 *)((int)puVar15 + (iVar5 - iVar17));
+        uVar1 = *puVar15;
+        iVar16 = (int)(uVar25 << 2);
+        uVar4 = *(undefined4 *)(iVar16 + iVar17);
+        *(undefined4 *)((int)puVar15 + (iVar5 - iVar17)) = *(undefined4 *)(iVar16 + iVar5);
+        *puVar15 = uVar4;
+        *(undefined4 *)(iVar16 + iVar5) = uVar3;
+        *(undefined4 *)(iVar16 + iVar17) = uVar1;
+      }
+      do {
+        uVar6 = (int)uVar23 >> 1;
+        uVar25 = (longlong)(int)uVar6 ^ uVar25;
+        uVar23 = (longlong)(int)uVar6;
+      } while ((uint)uVar25 < uVar6);
+      iVar20 = iVar20 + 1;
+    } while (iVar20 < iVar19);
+  }
+  __restgprlr_23();
+  return;
 }
 

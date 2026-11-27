@@ -13,7 +13,6 @@ void dNormalize3(float *param_1)
   float fVar6;
   
   if (param_1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219a2f0,0x27,0,0xffffffff82000f98,0xffffffff8207c288);
   }
   fVar1 = *param_1;
@@ -88,7 +87,6 @@ void dNormalize4(float *param_1)
   double dVar6;
   
   if (param_1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219a2f0,0x71,0,0xffffffff82000f98,0xffffffff8207c288);
   }
   fVar1 = param_1[1];
@@ -117,10 +115,56 @@ void dNormalize4(float *param_1)
 
 // 8269CE70  dPlaneSpace  (physics/ode/src/odemath.cpp:138)
 
-void dPlaneSpace(void)
+void dPlaneSpace(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float *pfVar2;
+  float *pfVar3;
+  float fVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  pfVar5 = (float *)__savegprlr_27();
+  if (((pfVar5 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219a2f0,0x8b,0,0xffffffff82000f98,0xffffffff8219a378);
+  }
+  dVar6 = (double)pfVar5[2];
+  fVar1 = pfVar5[1];
+  pfVar2 = (float *)param_2;
+  pfVar3 = (float *)param_3;
+  if (0.7071067690849304 < ABS(dVar6)) {
+    *pfVar2 = 0.0;
+    fVar1 = fVar1 * fVar1 + (float)(dVar6 * dVar6);
+    fVar4 = 1.0 / SQRT(fVar1);
+    pfVar2[1] = -(pfVar5[2] * fVar4);
+    pfVar2[2] = pfVar5[1] * fVar4;
+    *pfVar3 = fVar4 * fVar1;
+    pfVar3[1] = -(pfVar2[2] * *pfVar5);
+    pfVar3[2] = *pfVar5 * pfVar2[1];
+    __restgprlr_27();
+    return;
+  }
+  dVar7 = 0.0;
+  dVar8 = (double)(fVar1 * fVar1 + *pfVar5 * *pfVar5);
+  if (dVar8 <= 0.0) {
+    MyAssertHandler(0xffffffff8219a2f0,0x9b,0,0xffffffff8219a360,0xffffffff8219a370,dVar6);
+  }
+  dVar6 = (double)(1.0 / (float)SQRT(dVar8));
+  if (((uint)(1.0 / (float)SQRT(dVar8)) & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8219a2f0,0x9d,0,0xffffffff82000f98,0xffffffff8219a354);
+  }
+  *pfVar2 = -(float)((double)pfVar5[1] * dVar6);
+  fVar1 = *pfVar5;
+  pfVar2[1] = (float)((double)fVar1 * dVar6);
+  pfVar2[2] = (float)dVar7;
+  *pfVar3 = -(pfVar5[2] * (float)((double)fVar1 * dVar6));
+  pfVar3[1] = pfVar5[2] * *pfVar2;
+  pfVar3[2] = (float)(dVar6 * dVar8);
+  __restgprlr_27();
+  return;
 }
 

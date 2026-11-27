@@ -24,9 +24,61 @@ LAB_828d7e78:
   828D7E94  38600000             li r3,0x0
   828D7E98  4E800020             blr
 
+; 828D7EB0  XAudPixAudioBeginFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:120)
+  828D7EB0  38600000             li r3,0x0
+  828D7EB4  4E800020             blr
+
 ; 828D7EB8  XAudPixAudioEndFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:140)
   828D7EB8  7D8802A6             mfspr r12,LR
   828D7EBC  4803E7F5             bl 0x829166b0
+  828D7EC0  9421FF50             stwu r1,-0xb0(r1)
+  828D7EC4  7D4C42E6             mftb r10,TBLr
+  828D7EC8  3D608489             lis r11,-0x7b77
+  828D7ECC  3B810050             addi r28,r1,0x50
+  828D7ED0  3BEB5950             addi r31,r11,0x5950
+  828D7ED4  3BC00000             li r30,0x0
+  828D7ED8  7D5A0676             sradi r26,r10,0x20
+  828D7EDC  7D5B5378             or r27,r10,r10
+  828D7EE0  816B5950             lwz r11,0x5950(r11)
+  828D7EE4  FBDC0000             std r30,0x0(r28)
+  828D7EE8  3C605841             lis r3,0x5841
+  828D7EEC  815F0004             lwz r10,0x4(r31)
+  828D7EF0  38A00028             li r5,0x28
+  828D7EF4  813F0008             lwz r9,0x8(r31)
+  828D7EF8  38810050             addi r4,r1,0x50
+  828D7EFC  811F000C             lwz r8,0xc(r31)
+  828D7F00  60637564             ori r3,r3,0x7564
+  828D7F04  80FF0010             lwz r7,0x10(r31)
+  828D7F08  80DF0014             lwz r6,0x14(r31)
+  828D7F0C  83BF0018             lwz r29,0x18(r31)
+  828D7F10  FBDC0008             std r30,0x8(r28)
+  828D7F14  FBDC0010             std r30,0x10(r28)
+  828D7F18  FBDC0018             std r30,0x18(r28)
+  828D7F1C  FBDC0020             std r30,0x20(r28)
+  828D7F20  93410054             stw r26,0x54(r1)
+  828D7F24  93610058             stw r27,0x58(r1)
+  828D7F28  9161005C             stw r11,0x5c(r1)
+  828D7F2C  91410060             stw r10,0x60(r1)
+  828D7F30  91210064             stw r9,0x64(r1)
+  828D7F34  91010068             stw r8,0x68(r1)
+  828D7F38  90E1006C             stw r7,0x6c(r1)
+  828D7F3C  90C10070             stw r6,0x70(r1)
+  828D7F40  93A10074             stw r29,0x74(r1)
+  828D7F44  4BFC9AED             bl 0x828a1a30
+  828D7F48  39400007             li r10,0x7
+  828D7F4C  7FCBF378             or r11,r30,r30
+  828D7F50  7D4903A6             mtspr CTR,r10
+LAB_828d7f54:
+  828D7F54  7D2BF82E             lwzx r9,r11,r31
+  828D7F58  391F001C             addi r8,r31,0x1c
+  828D7F5C  7D4BFA14             add r10,r11,r31
+  828D7F60  7FCBF92E             stwx r30,r11,r31
+  828D7F64  7D2B412E             stwx r9,r11,r8
+  828D7F68  396B0004             addi r11,r11,0x4
+  828D7F6C  4200FFE8             bdnz 0x828d7f54
+  828D7F70  38600000             li r3,0x0
+  828D7F74  382100B0             addi r1,r1,0xb0
+  828D7F78  4803E788             b 0x82916700
 
 ; 828D7EA0  XAudPixBeginEvent  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:185)
   828D7EA0  38600000             li r3,0x0

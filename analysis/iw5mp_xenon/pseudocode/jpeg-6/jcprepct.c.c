@@ -24,11 +24,22 @@ void start_pass_prep(int *param_1,int param_2)
 
 // 827B9640  expand_bottom_edge  (jpeg-6/jcprepct.c:108)
 
-void expand_bottom_edge(void)
+void expand_bottom_edge(undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((int)param_3 < param_4) {
+    lVar2 = param_3 + -1;
+    do {
+      jcopy_sample_rows(uVar1,lVar2,uVar1,param_3,1,param_2);
+      param_3 = param_3 + 1;
+    } while ((int)param_3 < param_4);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -122,20 +133,230 @@ void pre_process_data(undefined8 param_1,longlong param_2,uint *param_3,ulonglon
 
 // 827B9898  pre_process_context  (jpeg-6/jcprepct.c:200)
 
-void pre_process_context(void)
+void pre_process_context(undefined8 param_1,longlong param_2,uint *param_3,ulonglong param_4,
+                        undefined8 param_5,uint *param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar8;
+  int iVar9;
+  undefined4 *puVar10;
+  longlong lVar11;
+  
+  iVar4 = __savegprlr_17();
+  iVar1 = *(int *)(iVar4 + 0x14c);
+  iVar3 = *(int *)(iVar4 + 0xe4) * 3;
+  if ((ulonglong)*param_6 < (param_7 & 0xffffffff)) {
+    do {
+      uVar2 = *param_3;
+      if ((ulonglong)uVar2 < (param_4 & 0xffffffff)) {
+        uVar5 = param_4 - uVar2;
+        uVar8 = (ulonglong)*(uint *)(iVar1 + 0x3c) - (ulonglong)*(uint *)(iVar1 + 0x34);
+        if ((uVar5 & 0xffffffff) <= (uVar8 & 0xffffffff)) {
+          uVar8 = uVar5;
+        }
+        puVar10 = (undefined4 *)(iVar1 + 8);
+        (**(code **)(*(int *)(iVar4 + 0x158) + 4))
+                  (iVar4,((ulonglong)uVar2 & 0x3fffffff) * 4 + param_2,puVar10,
+                   (ulonglong)*(uint *)(iVar1 + 0x34),uVar8);
+        if ((*(int *)(iVar1 + 0x30) == *(int *)(iVar4 + 0x28)) &&
+           (iVar7 = 0, 0 < *(int *)(iVar4 + 0x44))) {
+          iVar6 = *(int *)(iVar4 + 0xe4);
+          do {
+            iVar9 = 1;
+            if (0 < iVar6) {
+              lVar11 = -1;
+              do {
+                jcopy_sample_rows(*puVar10,0,*puVar10,lVar11,1,*(undefined4 *)(iVar4 + 0x24));
+                iVar6 = *(int *)(iVar4 + 0xe4);
+                iVar9 = iVar9 + 1;
+                lVar11 = lVar11 + -1;
+              } while (iVar9 <= iVar6);
+            }
+            iVar7 = iVar7 + 1;
+            puVar10 = puVar10 + 1;
+          } while (iVar7 < *(int *)(iVar4 + 0x44));
+        }
+        iVar7 = (int)uVar8;
+        *param_3 = *param_3 + iVar7;
+        *(int *)(iVar1 + 0x30) = *(int *)(iVar1 + 0x30) - iVar7;
+        *(int *)(iVar1 + 0x34) = *(int *)(iVar1 + 0x34) + iVar7;
+      }
+      else {
+        if (*(int *)(iVar1 + 0x30) != 0) break;
+        if (*(int *)(iVar1 + 0x34) < *(int *)(iVar1 + 0x3c)) {
+          iVar7 = 0;
+          if (0 < *(int *)(iVar4 + 0x44)) {
+            puVar10 = (undefined4 *)(iVar1 + 4);
+            do {
+              puVar10 = puVar10 + 1;
+              expand_bottom_edge(*puVar10,*(undefined4 *)(iVar4 + 0x24),
+                                 *(undefined4 *)(iVar1 + 0x34),*(undefined4 *)(iVar1 + 0x3c));
+              iVar7 = iVar7 + 1;
+            } while (iVar7 < *(int *)(iVar4 + 0x44));
+          }
+          *(undefined4 *)(iVar1 + 0x34) = *(undefined4 *)(iVar1 + 0x3c);
+        }
+      }
+      if (*(int *)(iVar1 + 0x34) == *(int *)(iVar1 + 0x3c)) {
+        (**(code **)(*(int *)(iVar4 + 0x15c) + 4))
+                  (iVar4,iVar1 + 8,*(undefined4 *)(iVar1 + 0x38),param_5,*param_6);
+        *param_6 = *param_6 + 1;
+        iVar7 = *(int *)(iVar4 + 0xe4) + *(int *)(iVar1 + 0x38);
+        *(int *)(iVar1 + 0x38) = iVar7;
+        if (iVar3 <= iVar7) {
+          *(undefined4 *)(iVar1 + 0x38) = 0;
+        }
+        if (iVar3 <= *(int *)(iVar1 + 0x34)) {
+          *(undefined4 *)(iVar1 + 0x34) = 0;
+        }
+        *(int *)(iVar1 + 0x3c) = *(int *)(iVar4 + 0xe4) + *(int *)(iVar1 + 0x34);
+      }
+    } while ((ulonglong)*param_6 < (param_7 & 0xffffffff));
+  }
+  __restgprlr_17();
+  return;
+}
+
+
+// 827B9AC0  create_context_buffer  (jpeg-6/jcprepct.c:268)
+
+void create_context_buffer(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  int iVar5;
+  undefined4 *_Src;
+  void *_Dst;
+  void *pvVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  int iVar12;
+  undefined4 *puVar13;
+  longlong lVar14;
+  uint *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  
+  iVar5 = __savegprlr_20();
+  uVar1 = *(uint *)(iVar5 + 0xe4);
+  uVar17 = (ulonglong)uVar1;
+  iVar2 = *(int *)(iVar5 + 0x14c);
+  uVar10 = (longlong)*(int *)(iVar5 + 0x44) * (longlong)(int)uVar1;
+  uVar10 = (*(code *)**(undefined4 **)(iVar5 + 4))
+                     (iVar5,1,(uVar10 + (uVar10 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  iVar12 = 0;
+  if (0 < *(int *)(iVar5 + 0x44)) {
+    lVar14 = ((ulonglong)uVar1 & 0x3fffffff) * 4;
+    puVar15 = (uint *)(*(int *)(iVar5 + 0x4c) + 8);
+    puVar13 = (undefined4 *)(iVar2 + 4);
+    uVar16 = uVar10;
+    do {
+      uVar7 = (longlong)*(int *)(iVar5 + 0xe0) * (longlong)(int)puVar15[5];
+      uVar10 = (ulonglong)*puVar15;
+      uVar8 = (uVar7 & 0x1fffffff) << 3;
+      trapWord(6,uVar10,0);
+      uVar7 = uVar10 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar7 & 0x1fffffff) >> 0x1c) - 1);
+      trapWord(5,uVar7,0xffff);
+      _Src = (undefined4 *)
+             (**(code **)(*(int *)(iVar5 + 4) + 8))
+                       (iVar5,1,(int)uVar8 / (int)*puVar15,
+                        uVar17 + ((ulonglong)uVar1 & 0x7fffffff) * 2,uVar10,uVar7);
+      iVar2 = (int)uVar16;
+      _Dst = (void *)((int)lVar14 + iVar2);
+      pvVar6 = memcpy(_Dst,_Src,
+                      (size_t)((uVar17 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+      uVar10 = (ulonglong)(int)pvVar6;
+      lVar11 = 0;
+      if (0 < (int)uVar1) {
+        uVar7 = uVar17;
+        puVar9 = _Src;
+        do {
+          uVar10 = ((ulonglong)uVar1 & 0x7fffffff) * 2 + lVar11;
+          uVar8 = lVar14 + lVar11;
+          lVar11 = lVar11 + 1;
+          uVar4 = *(uint *)((int)((uVar10 & 0xffffffff) << 2) + (int)_Src);
+          uVar10 = (ulonglong)uVar4;
+          *(uint *)((iVar2 - (int)_Src) + (int)puVar9) = uVar4;
+          uVar3 = *puVar9;
+          puVar9 = puVar9 + 1;
+          *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar2) = uVar3;
+          uVar7 = uVar7 - 1;
+        } while (uVar7 != 0);
+      }
+      iVar12 = iVar12 + 1;
+      puVar13 = puVar13 + 1;
+      *puVar13 = _Dst;
+      uVar16 = (uVar17 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar16;
+      puVar15 = puVar15 + 0x15;
+    } while (iVar12 < *(int *)(iVar5 + 0x44));
+  }
+  __restgprlr_20(uVar10);
+  return;
 }
 
 
 // 827B9C10  jinit_c_prep_controller  (jpeg-6/jcprepct.c:316)
 
-void jinit_c_prep_controller(void)
+void jinit_c_prep_controller(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  undefined4 uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  int *piVar8;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if ((param_2 & 0xff) != 0) {
+    *(undefined4 *)(*piVar2 + 0x14) = 4;
+    (**(code **)*piVar2)();
+  }
+  puVar3 = (undefined4 *)(**(code **)piVar2[1])(piVar2,1,0x40);
+  piVar2[0x53] = (int)puVar3;
+  *puVar3 = start_pass_prep;
+  if (*(char *)(piVar2[0x57] + 8) != '\0') {
+    puVar3[1] = pre_process_context;
+    create_context_buffer(piVar2);
+    __restgprlr_28();
+    return;
+  }
+  iVar7 = 0;
+  puVar3[1] = pre_process_data;
+  if (0 < piVar2[0x11]) {
+    piVar8 = (int *)(piVar2[0x13] + -0x38);
+    puVar3 = puVar3 + 1;
+    do {
+      uVar1 = piVar8[0x10];
+      piVar8 = piVar8 + 0x15;
+      trapWord(6,(ulonglong)uVar1,0);
+      uVar6 = ((longlong)piVar2[0x38] * (longlong)*piVar8 & 0x1fffffffU) << 3;
+      uVar5 = (ulonglong)uVar1 &
+              ~(((uVar6 & 0x7fffffff) << 1 |
+                ((longlong)piVar2[0x38] * (longlong)*piVar8 & 0x1fffffffU) >> 0x1c) - 1);
+      trapWord(5,uVar5,0xffff);
+      uVar4 = (**(code **)(piVar2[1] + 8))(piVar2,1,(int)uVar6 / (int)uVar1,piVar2[0x39],uVar5);
+      iVar7 = iVar7 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = uVar4;
+    } while (iVar7 < piVar2[0x11]);
+  }
+  __restgprlr_28();
+  return;
 }
 

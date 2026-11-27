@@ -3,6 +3,31 @@
 ; 8290C2B0  bdRichPresenceInfo::bdRichPresenceInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:13)
   8290C2B0  7D8802A6             mfspr r12,LR
   8290C2B4  4800A409             bl 0x829166bc
+  8290C2B8  9421FF90             stwu r1,-0x70(r1)
+  8290C2BC  7C7F1B78             or r31,r3,r3
+  8290C2C0  7C9D2378             or r29,r4,r4
+  8290C2C4  7CBE2B78             or r30,r5,r5
+  8290C2C8  4BFF0CC1             bl 0x828fcf88
+  8290C2CC  3D608221             lis r11,-0x7ddf
+  8290C2D0  39400000             li r10,0x0
+  8290C2D4  396B0CE0             addi r11,r11,0xce0
+  8290C2D8  995F0004             stb r10,0x4(r31)
+  8290C2DC  2B1E0020             cmplwi cr6,r30,0x20
+  8290C2E0  917F0000             stw r11,0x0(r31)
+  8290C2E4  7FC5F378             or r5,r30,r30
+  8290C2E8  41980008             blt cr6,0x8290c2f0
+  8290C2EC  38A00020             li r5,0x20
+LAB_8290c2f0:
+  8290C2F0  90BF0028             stw r5,0x28(r31)
+  8290C2F4  2B1D0000             cmplwi cr6,r29,0x0
+  8290C2F8  419A0010             beq cr6,0x8290c308
+  8290C2FC  7FA4EB78             or r4,r29,r29
+  8290C300  387F0005             addi r3,r31,0x5
+  8290C304  4800A65D             bl 0x82916960
+LAB_8290c308:
+  8290C308  7FE3FB78             or r3,r31,r31
+  8290C30C  38210070             addi r1,r1,0x70
+  8290C310  4800A3FC             b 0x8291670c
 
 ; 8290C318  bdRichPresenceInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:20)
   8290C318  3860002C             li r3,0x2c
@@ -18,6 +43,38 @@
 ; 8290C390  bdRichPresenceInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:30)
   8290C390  7D8802A6             mfspr r12,LR
   8290C394  4800A325             bl 0x829166b8
+  8290C398  3BE1FF80             subi r31,r1,0x80
+  8290C39C  9421FF80             stwu r1,-0x80(r1)
+  8290C3A0  7C7E1B78             or r30,r3,r3
+  8290C3A4  909F009C             stw r4,0x9c(r31)
+  8290C3A8  7C9D2378             or r29,r4,r4
+  8290C3AC  39600020             li r11,0x20
+  8290C3B0  38830004             addi r4,r3,0x4
+  8290C3B4  91630028             stw r11,0x28(r3)
+  8290C3B8  3B830028             addi r28,r3,0x28
+  8290C3BC  807D0000             lwz r3,0x0(r29)
+  8290C3C0  4BFE9761             bl 0x828f5b20
+  8290C3C4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8290C3C8  314BFFFF             subic r10,r11,0x1
+  8290C3CC  7D6A5910             subfe r11,r10,r11
+  8290C3D0  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290C3D4  41820020             beq 0x8290c3f4
+  8290C3D8  7F85E378             or r5,r28,r28
+  8290C3DC  807D0000             lwz r3,0x0(r29)
+  8290C3E0  389E0005             addi r4,r30,0x5
+  8290C3E4  4BFE9B25             bl 0x828f5f08
+  8290C3E8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290C3EC  39600001             li r11,0x1
+  8290C3F0  40820008             bne 0x8290c3f8
+LAB_8290c3f4:
+  8290C3F4  39600000             li r11,0x0
+LAB_8290c3f8:
+  8290C3F8  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  8290C3FC  7FA3EB78             or r3,r29,r29
+  8290C400  4BA58001             bl 0x82364400
+  8290C404  7FC3F378             or r3,r30,r30
+  8290C408  383F0080             addi r1,r31,0x80
+  8290C40C  4800A2FC             b 0x82916708
 
 ; 8290C338  bdRichPresenceInfo::`scalar_deleting_destructor'  (line unknown)
   8290C338  7D8802A6             mfspr r12,LR

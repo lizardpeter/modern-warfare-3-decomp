@@ -16,13 +16,57 @@ LoopbackCreateWrapper(undefined8 param_1,undefined8 param_2,char param_3,undefin
 }
 
 
+// 828BCE60  LBpSubmitCodecPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:140)
+
+void LBpSubmitCodecPacket(int param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  
+  XMemSet(param_2[2],0,param_2[1]);
+  iVar1 = CodecSubmit(*(undefined4 *)(param_1 + 8),*(undefined4 *)(param_1 + 0xc),param_2);
+  if (iVar1 < 0) {
+    *param_2 = 0;
+    param_2[1] = param_2[3];
+  }
+  return;
+}
+
+
 // 828BCF38  LoopbackStart  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:182)
 
 void LoopbackStart(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  code *local_30 [2];
+  ulonglong local_28 [5];
+  
+  iVar2 = __savegprlr_29();
+  local_30[0] = VoiceChatCreateWrapper;
+  iVar3 = ProcModeStart();
+  if (-1 < iVar3) {
+    XMemSet(local_28,0,8);
+    local_28[0] = (ulonglong)**(uint **)(iVar2 + 4) | 0xfbdf00ddeadbeef0;
+    iVar3 = RemoteTalkerRegister(*(undefined4 *)(iVar2 + 0x2c),local_28[0],0,0,0,0);
+    if (-1 < iVar3) {
+      uVar4 = 0;
+      uVar1 = **(uint **)(iVar2 + 4);
+      do {
+        iVar3 = RemoteTalkerSetPlaybackPriority
+                          (*(undefined4 *)(iVar2 + 0x2c),uVar4,-(ulonglong)(uVar1 != uVar4));
+        if (iVar3 < 0) goto LAB_828bd004;
+        uVar4 = uVar4 + 1;
+      } while ((uVar4 & 0xffffffff) < 4);
+      RemoteTalkerStartModes(*(undefined4 *)(iVar2 + 0x2c),local_30,1);
+    }
+  }
+LAB_828bd004:
+  __restgprlr_29();
+  return;
 }
 
 
@@ -48,8 +92,59 @@ void LoopbackStop(int param_1)
 void LoopbackProcess(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  ushort uVar2;
+  uint uVar3;
+  ushort uVar4;
+  int iVar5;
+  ushort *puVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  int iVar11;
+  int local_30 [12];
+  
+  iVar5 = __savegprlr_29();
+  uVar10 = 0;
+  iVar9 = *(int *)(*(int *)(iVar5 + 0x10) + 4);
+  iVar8 = *(int *)(*(int *)(iVar5 + 0x10) + 8) * *(int *)(iVar5 + 0x24);
+  iVar11 = iVar8 + iVar9;
+  iVar9 = *(int *)(iVar8 + iVar9);
+  while ((iVar9 != 0x103 && (uVar10 < *(uint *)(iVar5 + 0x14)))) {
+    if (iVar9 == 0) {
+      iVar9 = *(int *)(iVar5 + 4);
+      puVar6 = (ushort *)(*(int *)(iVar11 + 8) + -2);
+      cVar1 = *(char *)(*(int *)(iVar9 + 4) + 0x8c);
+      if (*(char *)(iVar5 + 0x28) != cVar1) {
+        *(char *)(iVar5 + 0x28) = cVar1;
+      }
+      if (0x7ff < *(ushort *)(iVar5 + 0x2a)) {
+        *(undefined2 *)(iVar5 + 0x2a) = 0;
+      }
+      uVar2 = *puVar6;
+      uVar4 = (ushort)*(byte *)(iVar5 + 0x28) << 0xc;
+      *puVar6 = uVar4 | uVar2 & 0xfff;
+      *puVar6 = (*(ushort *)(iVar5 + 0x2a) & 0x7ff) << 1 | uVar4 | uVar2 & 1;
+      *(short *)(iVar5 + 0x2a) = *(short *)(iVar5 + 0x2a) + 1;
+      *puVar6 = (ushort)((*(uint *)(iVar9 + 0xc4) & 0xf0000) == 0x10000) | *puVar6 & 0xfffe;
+      local_30[0] = *(int *)(iVar11 + 0xc) + 2;
+      RemoteTalkerSubmitChatData(*(undefined4 *)(iVar5 + 0x2c),puVar6,local_30);
+    }
+    LBpSubmitCodecPacket(iVar5,iVar11);
+    uVar3 = *(uint *)(iVar5 + 0x14);
+    uVar10 = uVar10 + 1;
+    uVar7 = *(int *)(iVar5 + 0x24) + 1;
+    trapWord(6,(ulonglong)uVar3,0);
+    iVar8 = uVar7 - (uVar7 / uVar3) * uVar3;
+    *(int *)(iVar5 + 0x24) = iVar8;
+    iVar8 = *(int *)(*(int *)(iVar5 + 0x10) + 8) * iVar8;
+    iVar9 = *(int *)(*(int *)(iVar5 + 0x10) + 4);
+    iVar11 = iVar8 + iVar9;
+    iVar9 = *(int *)(iVar8 + iVar9);
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -75,21 +170,88 @@ undefined8 LoopbackGetCreationWrapper(void)
 
 // 828BD320  LoopbackCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:454)
 
-void LoopbackCreate(void)
+void LoopbackCreate(undefined8 param_1,undefined4 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  undefined8 uVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar3 = 0;
+  puVar2 = (undefined4 *)XMemAlloc(0x30,0x618a800e);
+  if (puVar2 == (undefined4 *)0x0) {
+    uVar3 = 0xffffffff8007000e;
+    LoopbackDestroy();
+    puVar2 = (undefined4 *)0x0;
+  }
+  else {
+    puVar2[1] = param_2;
+    puVar2[7] = 1;
+    puVar2[8] = uVar1;
+    puVar2[5] = 10;
+    *puVar2 = &PTR_LoopbackInitialize_829af8e4;
+    *(undefined1 *)(puVar2 + 10) = 0xff;
+  }
+  *param_3 = puVar2;
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 828BD158  LoopbackInitialize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:506)
 
-void LoopbackInitialize(void)
+void LoopbackInitialize(undefined8 param_1,undefined8 param_2,int param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  uint uVar6;
+  code *local_50 [2];
+  ulonglong local_48 [9];
+  
+  iVar3 = __savegprlr_26();
+  *(int *)(iVar3 + 8) = param_3;
+  *(undefined4 *)(iVar3 + 0xc) = param_4;
+  local_50[0] = VoiceChatCreateWrapper;
+  lVar2 = PacketBufferCreate((ulonglong)*(uint *)(*(int *)(param_3 + 0x18) + 0x1c) + 2,0x18,
+                             *(undefined4 *)(iVar3 + 0x14),2,(int *)(iVar3 + 0x10));
+  if (-1 < lVar2) {
+    puVar5 = (undefined4 *)(iVar3 + 0x2c);
+    lVar2 = RemoteTalkerCreate(param_2,local_50,1,0,0,puVar5);
+    if (-1 < lVar2) {
+      XMemSet(local_48,0,8);
+      local_48[0] = (ulonglong)**(uint **)(iVar3 + 4) | 0xfbdf00ddeadbeef0;
+      lVar2 = RemoteTalkerRegister(*puVar5,local_48[0],0,0,0,0);
+      if (-1 < lVar2) {
+        uVar4 = 0;
+        do {
+          lVar2 = RemoteTalkerSetPlaybackPriority(*puVar5,uVar4,0xffffffffffffffff);
+          if (lVar2 < 0) goto LAB_828bd2b4;
+          uVar4 = uVar4 + 1;
+        } while ((uVar4 & 0xffffffff) < 4);
+        XHVEngineAddRemoteTalker(param_2,*puVar5);
+        uVar6 = 0;
+        if (*(int *)(iVar3 + 0x14) != 0) {
+          do {
+            iVar1 = *(int *)(iVar3 + 0x10);
+            lVar2 = CodecSubmit(*(undefined4 *)(iVar3 + 8),*(undefined4 *)(iVar3 + 0xc),
+                                (longlong)*(int *)(iVar1 + 8) * (longlong)(int)uVar6 +
+                                (ulonglong)*(uint *)(iVar1 + 4));
+            if (lVar2 < 0) break;
+            uVar6 = uVar6 + 1;
+          } while (uVar6 < *(uint *)(iVar3 + 0x14));
+        }
+        *(undefined4 *)(iVar3 + 0x24) = 0;
+      }
+    }
+  }
+LAB_828bd2b4:
+  __restgprlr_26(lVar2);
+  return;
 }
 
 

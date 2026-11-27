@@ -2,11 +2,95 @@
 
 // 8277B808  R_SetViewParmsForLight  (gfx_d3d/r_spotshadow.cpp:18)
 
-void R_SetViewParmsForLight(void)
+void R_SetViewParmsForLight(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar7;
+  longlong lVar6;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
+  iVar7 = __savegprlr_28();
+  iVar5 = (int)param_2;
+  *(float *)(iVar5 + 0x10c) = -*(float *)(iVar7 + 0x10);
+  *(float *)(iVar5 + 0x110) = -*(float *)(iVar7 + 0x14);
+  *(float *)(iVar5 + 0x114) = -*(float *)(iVar7 + 0x18);
+  lVar10 = param_2 + 0x10c;
+  dVar15 = 1.0;
+  dVar13 = extraout_f1;
+  if (ABS(*(float *)(iVar7 + 0x24) * *(float *)(iVar7 + 0x18) +
+          *(float *)(iVar7 + 0x20) * *(float *)(iVar7 + 0x14) +
+          *(float *)(iVar7 + 0x1c) * *(float *)(iVar7 + 0x10)) <= 0.99) {
+    lVar9 = param_2 + 0x118;
+    Vec3Cross(iVar7 + 0x1c,lVar10,lVar9);
+    fVar2 = *(float *)(iVar5 + 0x11c);
+    fVar3 = *(float *)(iVar5 + 0x118);
+    fVar4 = *(float *)(iVar5 + 0x120);
+    lVar8 = param_2 + 0x124;
+    dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar14 = dVar15;
+    if (-dVar11 < 0.0) {
+      dVar14 = dVar11;
+    }
+    fVar1 = (float)(dVar15 / dVar14);
+    *(float *)(iVar5 + 0x118) = fVar3 * fVar1;
+    *(float *)(iVar5 + 0x11c) = fVar2 * fVar1;
+    *(float *)(iVar5 + 0x120) = fVar4 * fVar1;
+    lVar6 = lVar10;
+  }
+  else {
+    PerpendicularVector(lVar10,param_2 + 0x124);
+    lVar8 = param_2 + 0x118;
+    lVar6 = param_2 + 0x124;
+    lVar9 = lVar10;
+  }
+  Vec3Cross(lVar6,lVar9,lVar8);
+  *(undefined4 *)(iVar5 + 0x100) = *(undefined4 *)(iVar7 + 0x28);
+  *(undefined4 *)(iVar5 + 0x104) = *(undefined4 *)(iVar7 + 0x2c);
+  *(undefined4 *)(iVar5 + 0x108) = *(undefined4 *)(iVar7 + 0x30);
+  MatrixForViewerNoOrigin(lVar10,param_2);
+  dVar14 = 0.0;
+  *(undefined4 *)(iVar5 + 0x130) = 0;
+  *(undefined4 *)(iVar5 + 0x134) = 0;
+  *(float *)(iVar5 + 0x13c) = (float)dVar15;
+  *(float *)(iVar5 + 0x138) = (float)dVar15;
+  if (*(char *)(iVar7 + 1) == '\0') {
+    MyAssertHandler(0xffffffff821cf900,0x2f,0,0xffffffff82000f98,0xffffffff821cf8e4);
+  }
+  dVar11 = (double)*(float *)(iVar7 + 0x38);
+  if ((dVar11 <= dVar14) || (dVar15 <= dVar11)) {
+    MyAssertHandler(0xffffffff821cf900,0x30,0,0xffffffff821cf87c,0xffffffff821cf8a0,dVar11);
+  }
+  dVar11 = (double)*(float *)(iVar7 + 0x38);
+  dVar14 = 0.9990000128746033;
+  if ((float)(dVar11 - 0.9990000128746033) < 0.0) {
+    dVar14 = dVar11;
+  }
+  dVar12 = 0.0010000000474974513;
+  if ((float)(0.0010000000474974513 - dVar11) < 0.0) {
+    dVar12 = dVar14;
+  }
+  dVar14 = (double)(float)((double)SQRT(-(float)(dVar12 * dVar12 - dVar15)) / dVar12);
+  FinitePerspectiveMatrix
+            (dVar14,dVar14,(double)(float)(dVar13 + dVar15),(double)*(float *)(iVar7 + 0x34));
+  R_SetupViewProjectionMatrices(param_2);
+  *(float *)(iVar5 + 0x140) = (float)dVar14;
+  *(float *)(iVar5 + 0x144) = (float)dVar14;
+  *(undefined4 *)(iVar5 + 0x14c) = *(undefined4 *)(iVar5 + 0x78);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -21,11 +105,106 @@ double R_CalcSpotShadowTexcoordVBase(uint param_1,uint param_2)
 
 // 8277BA80  R_GetSpotShadowLookupMatrix  (gfx_d3d/r_spotshadow.cpp:66)
 
-void R_GetSpotShadowLookupMatrix(void)
+void R_GetSpotShadowLookupMatrix(undefined8 param_1,ulonglong param_2,uint param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float fVar14;
+  float fVar15;
+  float fVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float fVar21;
+  int iVar22;
+  undefined8 *puVar23;
+  undefined8 *puVar24;
+  longlong lVar25;
+  undefined8 uStack_e8;
+  float local_e0;
+  float fStack_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  
   __savegprlr_28();
+  iVar22 = __savefpr_18();
+  if (param_3 == 0) {
+    MyAssertHandler(0xffffffff821cf900,0x4e);
+  }
+  puVar23 = &uStack_e8;
+  puVar24 = (undefined8 *)(iVar22 + 0x78);
+  lVar25 = 8;
+  fVar17 = (float)(param_2 & 0xffffffff) * (1.0 / (float)param_3);
+  fVar1 = 1.0 / (float)param_3 + fVar17;
+  fVar21 = (fVar17 - fVar1) * 0.5;
+  fVar17 = (fVar1 + fVar17) * 0.5;
+  do {
+    puVar24 = puVar24 + 1;
+    puVar23 = puVar23 + 1;
+    *puVar23 = *puVar24;
+    lVar25 = lVar25 + -1;
+  } while (lVar25 != 0);
+  fVar18 = -*(float *)(iVar22 + 0x104);
+  fVar1 = *(float *)(iVar22 + 0x94);
+  fVar19 = -*(float *)(iVar22 + 0x108);
+  fVar2 = *(float *)(iVar22 + 0x90);
+  fVar3 = *(float *)(iVar22 + 0x9c);
+  fVar4 = *(float *)(iVar22 + 0x98);
+  fVar5 = *(float *)(iVar22 + 0xa4);
+  fVar20 = -*(float *)(iVar22 + 0x100);
+  fVar6 = *(float *)(iVar22 + 0xa0);
+  fVar7 = *(float *)(iVar22 + 0xac);
+  fVar8 = *(float *)(iVar22 + 0xa8);
+  fVar9 = *(float *)(iVar22 + 0x84);
+  fVar10 = *(float *)(iVar22 + 0x80);
+  fVar11 = *(float *)(iVar22 + 0x8c);
+  fVar12 = *(float *)(iVar22 + 0x88);
+  fVar13 = *(float *)(iVar22 + 0xb4);
+  fVar14 = *(float *)(iVar22 + 0xb0);
+  fVar15 = *(float *)(iVar22 + 0xbc);
+  fVar16 = *(float *)(iVar22 + 0xb8);
+  param_4[3] = local_d4;
+  param_4[7] = local_c4;
+  param_4[0xb] = local_b4;
+  param_4[1] = fStack_dc * fVar21 + local_d4 * fVar17;
+  param_4[5] = local_cc * fVar21 + local_c4 * fVar17;
+  param_4[4] = (local_c4 + local_d0) * 0.5;
+  *param_4 = (local_d4 + local_e0) * 0.5;
+  param_4[9] = local_bc * fVar21 + local_b4 * fVar17;
+  param_4[8] = (local_b4 + local_c0) * 0.5;
+  param_4[2] = local_d8;
+  param_4[6] = local_c8;
+  param_4[10] = local_b8;
+  fVar15 = fVar11 * fVar20 + fVar7 * fVar19 + fVar3 * fVar18 + fVar15;
+  param_4[0xf] = fVar15;
+  param_4[0xe] = fVar12 * fVar20 + fVar8 * fVar19 + fVar4 * fVar18 + fVar16;
+  param_4[0xd] = fVar15 * fVar17 +
+                 (fVar9 * fVar20 + fVar5 * fVar19 + fVar1 * fVar18 + fVar13) * fVar21;
+  param_4[0xc] = (fVar15 + fVar10 * fVar20 + fVar6 * fVar19 + fVar2 * fVar18 + fVar14) * 0.5;
+  __restfpr_18();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -34,8 +213,51 @@ void R_GetSpotShadowLookupMatrix(void)
 void R_AddSpotShadowEntCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  undefined4 uVar5;
+  char cVar6;
+  int local_40;
+  undefined4 local_3c [15];
+  
+  puVar4 = (undefined4 *)__savegprlr_27();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821cf900,0x89,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  uVar1 = *puVar4;
+  uVar3 = R_UpdateSceneEntBounds(uVar1,&local_40,local_3c,1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    if (local_40 == 0) {
+LAB_8277bdc8:
+      __restgprlr_27();
+      return;
+    }
+    uVar5 = *(undefined4 *)(local_40 + 0x70);
+  }
+  else {
+    if (local_40 == 0) {
+      MyAssertHandler(0xffffffff821cf900,0x95,0,0xffffffff82000f98,0xffffffff821bc334);
+    }
+    iVar2 = puVar4[1];
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff821cf900,0x98,0,0xffffffff82000f98,0xffffffff821cf950);
+    }
+    sync(1);
+    cVar6 = CullBoxFromCone((double)*(float *)(iVar2 + 0x38),iVar2 + 0x28,iVar2 + 0x10);
+    uVar5 = *(undefined4 *)(local_40 + 0x70);
+    if (cVar6 == '\0') {
+      CG_CullIn(uVar5);
+      R_SkinSceneDObj(uVar1,local_40,local_3c[0],uVar3);
+      R_AddSceneDObj(*(uint *)(local_40 + 0x68) >> 0xd & 0xfff,
+                     (ulonglong)*(uint *)(iVar2 + 0x44) + 3);
+      goto LAB_8277bdc8;
+    }
+  }
+  CG_UsedDObjCalcPose(uVar5);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -62,7 +284,6 @@ void R_AddSpotShadowModelEntities(undefined8 param_1,undefined8 param_2,int para
       if ((*puVar4 & 0x41) == 0) {
         uVar1 = *puVar4 >> 0xd & 0xfff;
         if (uVar1 == DAT_84613768) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821cf900,0xc0,0,0xffffffff82000f98,0xffffffff821bc89c);
         }
         iVar3 = R_IsEntityVisibleToPrimaryLight(uVar2,uVar1,param_2);
@@ -75,7 +296,6 @@ void R_AddSpotShadowModelEntities(undefined8 param_1,undefined8 param_2,int para
     } while (iVar5 < DAT_847c44f0);
   }
   if (DAT_847ee938 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf900,0xc6,0,0xffffffff82000f98,0xffffffff821bc850);
   }
   iVar5 = 0;
@@ -85,12 +305,11 @@ void R_AddSpotShadowModelEntities(undefined8 param_1,undefined8 param_2,int para
       if ((*puVar4 & 0x41) == 0) {
         uVar1 = *puVar4 >> 0xd & 0xfff;
         if (uVar1 == DAT_84613768) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821cf900,0xd1,0,0xffffffff82000f98,0xffffffff821bc89c);
         }
         iVar3 = R_IsEntityVisibleToPrimaryLight(uVar2,uVar1,param_2);
         if (iVar3 != 0) {
-          *(undefined1 *)(*(int *)(&DAT_847ee8f8 + *(int *)(param_3 + 0x44) * 4) + uVar1) = 1;
+          *(undefined1 *)((&DAT_847ee8f8)[*(int *)(param_3 + 0x44)] + uVar1) = 1;
         }
       }
       iVar5 = iVar5 + 1;
@@ -119,86 +338,79 @@ void R_AddSpotShadowsForLight(undefined8 param_1,ulonglong param_2,ulonglong par
   double dVar9;
   
   iVar3 = __savegprlr_22();
+  dVar9 = extraout_f1;
   if (DAT_84628b00 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf900,0xe2,0,0xffffffff82000f98,0xffffffff821b90d8);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf900,0xe4,0,0xffffffff82000f98,0xffffffff8207d5a0);
   }
   pcVar6 = (char *)param_2;
   if ((*pcVar6 != '\x02') && (*pcVar6 != '\x03')) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf900,0xe5,0,0xffffffff82083930,0xffffffff82083948);
   }
   uVar2 = *(uint *)(DAT_84628b00 + 0x2800);
   if (3 < uVar2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf900,0xe8,0,0xffffffff821cfa48,uVar2,4);
   }
   *(int *)(DAT_84628b00 + 0x2800) = *(int *)(DAT_84628b00 + 0x2800) + 1;
   *(uint *)(pcVar6 + 0x44) = uVar2;
   iVar5 = uVar2 * 0x1d0 + DAT_84628b00;
-  if ((int)param_3 == (int)(param_3 & 0xff)) {
-    *(float *)(iVar5 + 0x2850) = (float)extraout_f1;
-    *(char *)(iVar5 + 0x29c0) = (char)param_3;
-    *(char **)(iVar5 + 0x29c4) = pcVar6;
-    if ((DAT_84618158 == 0) || (1 < uVar2)) {
-      uVar7 = 0x200;
-      iVar4 = 0xd;
-      uVar8 = 4;
-    }
-    else {
-      uVar7 = 0x400;
-      iVar4 = 0xc;
-      uVar8 = 2;
-    }
-    *(uint *)(iVar5 + 0x2868) = uVar7;
-    *(uint *)(iVar5 + 0x286c) = uVar7;
-    *(undefined4 *)(iVar5 + 0x2860) = 0;
-    *(uint *)(iVar5 + 0x2864) = uVar7 * uVar2;
-    *(undefined4 *)(iVar5 + 0x285c) = (&DAT_84762080)[iVar4 * 5];
-    *(int *)(iVar5 + 0x29c8) = iVar4;
-    dVar9 = 0.0;
-    if (*(char *)(DAT_845aa770 + 0xc) == '\0') {
-      fVar1 = *(float *)(DAT_845aa894 + 0xc);
-      *(float *)(iVar5 + 0x29cc) = fVar1 / (float)uVar7;
-      *(float *)(iVar5 + 0x29d4) = (fVar1 * 2.0) / (float)uVar7;
-      *(float *)(iVar5 + 0x29d8) =
-           (fVar1 * -1.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
-      *(float *)(iVar5 + 0x29d0) =
-           (fVar1 * 2.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
-    }
-    else {
-      *(undefined4 *)(iVar5 + 0x29cc) = 0;
-      *(undefined4 *)(iVar5 + 0x29d0) = 0;
-      *(undefined4 *)(iVar5 + 0x29d4) = 0;
-      *(undefined4 *)(iVar5 + 0x29d8) = 0;
-    }
-    iVar4 = R_IsPrimaryLight(param_3);
-    if (iVar4 == 0) {
-      dVar9 = (double)DAT_847b9714;
-    }
-    R_SetViewParmsForLight(dVar9,param_2,iVar5 + 0x2870);
-    R_GetSpotShadowLookupMatrix(iVar5 + 0x2870,uVar2,uVar8,iVar5 + 0x2810);
-    *(uint *)(iVar5 + 0x2858) = uVar8;
-    iVar4 = uVar2 * 0x1f8 + iVar3 + 0x30b8;
-    *(float *)(iVar5 + 0x2854) = (1.0 / (float)uVar8) * (float)uVar2;
-    R_InitDrawList(iVar4,0,0xffffffff821cfa38);
-    iVar5 = R_IsPrimaryLight(param_3);
-    if (iVar5 != 0) {
-      R_AddSpotShadowModelEntities(*(undefined4 *)(iVar3 + 0x930),param_3,param_2);
-      __restgprlr_22();
-      return;
-    }
+  if ((int)param_3 != (int)(param_3 & 0xff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_3,param_3 & 0xff);
+  }
+  *(float *)(iVar5 + 0x2850) = (float)dVar9;
+  *(char *)(iVar5 + 0x29c0) = (char)param_3;
+  *(char **)(iVar5 + 0x29c4) = pcVar6;
+  if ((DAT_84618158 == 0) || (1 < uVar2)) {
+    uVar7 = 0x200;
+    iVar4 = 0xd;
+    uVar8 = 4;
+  }
+  else {
+    uVar7 = 0x400;
+    iVar4 = 0xc;
+    uVar8 = 2;
+  }
+  *(uint *)(iVar5 + 0x2868) = uVar7;
+  *(uint *)(iVar5 + 0x286c) = uVar7;
+  *(undefined4 *)(iVar5 + 0x2860) = 0;
+  *(uint *)(iVar5 + 0x2864) = uVar7 * uVar2;
+  *(undefined4 *)(iVar5 + 0x285c) = (&DAT_84762080)[iVar4 * 5];
+  *(int *)(iVar5 + 0x29c8) = iVar4;
+  dVar9 = 0.0;
+  if (*(char *)(DAT_845aa770 + 0xc) == '\0') {
+    fVar1 = *(float *)(DAT_845aa894 + 0xc);
+    *(float *)(iVar5 + 0x29cc) = fVar1 / (float)uVar7;
+    *(float *)(iVar5 + 0x29d4) = (fVar1 * 2.0) / (float)uVar7;
+    *(float *)(iVar5 + 0x29d8) =
+         (fVar1 * -1.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
+    *(float *)(iVar5 + 0x29d0) =
+         (fVar1 * 2.0) / (float)((longlong)(int)uVar8 * (longlong)(int)uVar7);
+  }
+  else {
+    *(undefined4 *)(iVar5 + 0x29cc) = 0;
+    *(undefined4 *)(iVar5 + 0x29d0) = 0;
+    *(undefined4 *)(iVar5 + 0x29d4) = 0;
+    *(undefined4 *)(iVar5 + 0x29d8) = 0;
+  }
+  iVar4 = R_IsPrimaryLight(param_3);
+  if (iVar4 == 0) {
+    dVar9 = (double)DAT_847b9714;
+  }
+  R_SetViewParmsForLight(dVar9,param_2,iVar5 + 0x2870);
+  R_GetSpotShadowLookupMatrix(iVar5 + 0x2870,uVar2,uVar8,iVar5 + 0x2810);
+  *(uint *)(iVar5 + 0x2858) = uVar8;
+  iVar4 = uVar2 * 0x1f8 + iVar3 + 0x30b8;
+  *(float *)(iVar5 + 0x2854) = (1.0 / (float)uVar8) * (float)uVar2;
+  R_InitDrawList(iVar4,0,0xffffffff821cfa38);
+  iVar5 = R_IsPrimaryLight(param_3);
+  if (iVar5 == 0) {
     if (*(int *)(DAT_84628b00 + 0x23e8) != 0) {
       if (*(int *)(DAT_84628b00 + 0x23e8) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821cf900,0x152,0,0xffffffff82000f98,0xffffffff821c6938);
       }
       if (*(int *)(DAT_84628b00 + 0x23e4) != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821cf900,0x155,0,0xffffffff82000f98,0xffffffff821cf9fc);
       }
       *(int *)(DAT_84628b00 + 0x23e4) = iVar4;
@@ -206,7 +418,126 @@ void R_AddSpotShadowsForLight(undefined8 param_1,ulonglong param_2,ulonglong par
     __restgprlr_22();
     return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_3,param_3 & 0xff);
+  R_AddSpotShadowModelEntities(*(undefined4 *)(iVar3 + 0x930),param_3,param_2);
+  __restgprlr_22();
+  return;
+}
+
+
+// 8277BFA0  R_GenerateSortedPrimarySpotShadowDrawSurfs  (gfx_d3d/r_spotshadow.cpp:349)
+
+void R_GenerateSortedPrimarySpotShadowDrawSurfs
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((ulonglong)*(uint *)(DAT_8461658c + 0x20) <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821cf900,0x15e,0,0xffffffff821cf978,param_3);
+  }
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cdaac);
+  R_AddAllBspDrawSurfacesSpotShadow(uVar1,param_2,param_3);
+  PIXEndNamedEvent();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cf95c);
+  R_AddAllStaticModelSurfacesSpotShadow(uVar1,param_2,param_3);
+  PIXEndNamedEvent();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cdb94);
+  R_AddAllSceneEntSurfacesSpotShadow(param_2,param_3);
+  PIXEndNamedEvent();
+  __restgprlr_28();
+  return;
+}
+
+
+// 8277C068  R_EmitSpotShadowMapSurfs  (gfx_d3d/r_spotshadow.cpp:367)
+
+void R_EmitSpotShadowMapSurfs(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined4 *puVar5;
+  ulonglong uVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  
+  iVar4 = __savegprlr_21();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cf9e0);
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821cf900,0x178,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  uVar6 = 0;
+  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
+    iVar7 = 0;
+    puVar8 = (undefined4 *)(iVar4 + 0x3118);
+    puVar5 = &DAT_847b963c;
+    do {
+      Profile_Begin(0x45);
+      iVar3 = DAT_84628b00;
+      puVar8[-4] = 2;
+      puVar8[-3] = iVar4;
+      iVar1 = *(int *)(iVar7 + iVar3 + 0x29c4);
+      puVar8[-2] = *(undefined4 *)(iVar1 + 0x28);
+      puVar8[-1] = *(undefined4 *)(iVar1 + 0x2c);
+      *puVar8 = *(undefined4 *)(iVar1 + 0x30);
+      if (puVar8[2] != 0) {
+        MyAssertHandler(0xffffffff821cf900,0x18d,0,0xffffffff82000f98,0xffffffff821cf9c8,in_r8,in_r9
+                        ,iVar7 + iVar3 + 0x2810);
+      }
+      puVar2 = puVar5 + 0xb;
+      puVar5 = puVar5 + 1;
+      R_EmitDrawSurfListAndAddDrawCommands(*puVar2,*puVar5,puVar8 + -0x18,0);
+      R_DrawSurfs_SetupIteratorList_PrimarySortKey(puVar8 + -0x18,puVar8 + 6);
+      R_AddDrawCall(iVar4,uVar6 + 0x14,0x20);
+      Profile_EndInternal(0);
+      uVar6 = uVar6 + 1;
+      iVar7 = iVar7 + 0x1d0;
+      puVar8 = puVar8 + 0x7e;
+    } while ((uVar6 & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800));
+  }
+  PIXEndNamedEvent();
+  __restgprlr_21();
+  return;
+}
+
+
+// 8277C1C0  R_GenerateAllSortedSpotShadowDrawSurfs  (gfx_d3d/r_spotshadow.cpp:428)
+
+void R_GenerateAllSortedSpotShadowDrawSurfs(void)
+
+{
+  undefined1 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  uVar2 = __savegprlr_27();
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821cf900,0x1b0,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  uVar5 = 0;
+  if (*(int *)(DAT_84628b00 + 0x2800) != 0) {
+    iVar4 = 0;
+    iVar3 = DAT_84628b00;
+    do {
+      uVar1 = *(undefined1 *)(iVar3 + 0x29c0);
+      iVar3 = R_IsPrimaryLight(uVar1);
+      if (iVar3 != 0) {
+        R_GenerateSortedPrimarySpotShadowDrawSurfs(uVar2,uVar5,uVar1);
+      }
+      iVar4 = iVar4 + 0x1d0;
+      uVar5 = uVar5 + 1;
+      iVar3 = iVar4 + DAT_84628b00;
+    } while ((uVar5 & 0xffffffff) < (ulonglong)*(uint *)(DAT_84628b00 + 0x2800));
+  }
+  R_EmitSpotShadowMapSurfs(uVar2);
+  __restgprlr_27();
+  return;
 }
 

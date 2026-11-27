@@ -2,10 +2,103 @@
 
 // 8292BC38  XapipQueryTimeZoneInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapipquerytimezoneinformation.c:29)
 
-void XapipQueryTimeZoneInformation(void)
+void XapipQueryTimeZoneInformation(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  ushort *puVar4;
+  byte *pbVar5;
+  longlong lVar6;
+  undefined2 local_50 [2];
+  byte local_4c;
+  byte local_4b;
+  byte local_4a;
+  byte local_49;
+  byte local_48;
+  byte local_47;
+  byte local_46;
+  byte local_45;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined1 local_34 [3];
+  byte bStack_31;
+  undefined1 local_30 [48];
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  local_50[0] = 0;
+  local_44 = 0;
+  local_40 = 0;
+  local_3c = 0;
+  local_38 = 0;
+  iVar3 = ExGetXConfigSetting(3,1,&local_44,4,local_50);
+  if (-1 < iVar3) {
+    *puVar2 = local_44;
+    iVar3 = ExGetXConfigSetting(3,2,local_34,4,local_50);
+    if (-1 < iVar3) {
+      pbVar5 = (byte *)((int)&local_38 + 3);
+      puVar4 = (ushort *)((int)puVar2 + 2);
+      lVar6 = 4;
+      do {
+        pbVar5 = pbVar5 + 1;
+        puVar4 = puVar4 + 1;
+        *puVar4 = (ushort)*pbVar5;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      *(undefined2 *)(puVar2 + 3) = 0;
+      iVar3 = ExGetXConfigSetting(3,3,local_30,4,local_50);
+      if (-1 < iVar3) {
+        pbVar5 = &bStack_31;
+        puVar4 = (ushort *)((int)puVar2 + 0x56);
+        lVar6 = 4;
+        do {
+          pbVar5 = pbVar5 + 1;
+          puVar4 = puVar4 + 1;
+          *puVar4 = (ushort)*pbVar5;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
+        *(undefined2 *)(puVar2 + 0x18) = 0;
+        iVar3 = ExGetXConfigSetting(3,4,&local_4c,4,local_50);
+        if (-1 < iVar3) {
+          memset(puVar2 + 0x11,0,0x10);
+          *(ushort *)((int)puVar2 + 0x46) = (ushort)local_4c;
+          *(ushort *)(puVar2 + 0x13) = (ushort)local_49;
+          *(ushort *)((int)puVar2 + 0x4a) = (ushort)local_4b;
+          *(ushort *)(puVar2 + 0x12) = (ushort)local_4a;
+          iVar3 = ExGetXConfigSetting(3,5,&local_48,4,local_50);
+          if (-1 < iVar3) {
+            memset(puVar2 + 0x26,0,0x10);
+            *(ushort *)((int)puVar2 + 0x9a) = (ushort)local_48;
+            *(ushort *)(puVar2 + 0x28) = (ushort)local_45;
+            *(ushort *)((int)puVar2 + 0x9e) = (ushort)local_47;
+            *(ushort *)(puVar2 + 0x27) = (ushort)local_46;
+            iVar3 = ExGetXConfigSetting(3,6,&local_40,4,local_50);
+            if (-1 < iVar3) {
+              puVar2[0x15] = local_40;
+              iVar3 = ExGetXConfigSetting(3,7,&local_3c,4,local_50);
+              if (-1 < iVar3) {
+                puVar2[0x2a] = local_3c;
+                if ((param_2 & 0xffffffff) != 0) {
+                  iVar3 = ExGetXConfigSetting(3,0xc,&local_38,4,local_50);
+                  if (iVar3 < 0) goto LAB_8292bc84;
+                  *(uint *)param_2 = ~local_38 >> 1 & 1;
+                }
+                uVar1 = 0;
+                goto LAB_8292be50;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+LAB_8292bc84:
+  uVar1 = RtlNtStatusToDosError();
+LAB_8292be50:
+  __restgprlr_29(uVar1);
+  return;
 }
 

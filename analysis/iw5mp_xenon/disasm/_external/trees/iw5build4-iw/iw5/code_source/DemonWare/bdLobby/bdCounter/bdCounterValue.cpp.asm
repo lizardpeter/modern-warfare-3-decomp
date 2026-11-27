@@ -44,6 +44,34 @@
 ; 82901CE0  bdCounterValue::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcountervalue.cpp:24)
   82901CE0  7D8802A6             mfspr r12,LR
   82901CE4  480149D9             bl 0x829166bc
+  82901CE8  3BE1FF90             subi r31,r1,0x70
+  82901CEC  9421FF90             stwu r1,-0x70(r1)
+  82901CF0  7C7E1B78             or r30,r3,r3
+  82901CF4  909F008C             stw r4,0x8c(r31)
+  82901CF8  7C9D2378             or r29,r4,r4
+  82901CFC  38830004             addi r4,r3,0x4
+  82901D00  807D0000             lwz r3,0x0(r29)
+  82901D04  4BFF3FCD             bl 0x828f5cd0
+  82901D08  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82901D0C  314BFFFF             subic r10,r11,0x1
+  82901D10  7D6A5910             subfe r11,r10,r11
+  82901D14  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82901D18  4182001C             beq 0x82901d34
+  82901D1C  389E0008             addi r4,r30,0x8
+  82901D20  807D0000             lwz r3,0x0(r29)
+  82901D24  4BFF4015             bl 0x828f5d38
+  82901D28  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82901D2C  39600001             li r11,0x1
+  82901D30  40820008             bne 0x82901d38
+LAB_82901d34:
+  82901D34  39600000             li r11,0x0
+LAB_82901d38:
+  82901D38  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  82901D3C  7FA3EB78             or r3,r29,r29
+  82901D40  4BA626C1             bl 0x82364400
+  82901D44  7FC3F378             or r3,r30,r30
+  82901D48  383F0070             addi r1,r31,0x70
+  82901D4C  480149C0             b 0x8291670c
 
 ; 82901C80  bdCounterValue::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcountervalue.cpp:32)
   82901C80  38600010             li r3,0x10

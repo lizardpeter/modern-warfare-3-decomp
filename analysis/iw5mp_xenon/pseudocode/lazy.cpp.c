@@ -2,11 +2,51 @@
 
 // 82875CB0  D3D::SetPending_Split  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:52)
 
-void D3D__SetPending_Split(void)
+void D3D__SetPending_Split
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  
+  iVar3 = __savegprlr_26();
+  while( true ) {
+    trapWord(6,param_6,0);
+    uVar5 = (*(int *)(iVar3 + 0x34) - (int)param_2 >> 2) - 1;
+    iVar1 = (int)uVar5 / (int)param_6;
+    trapWord(5,param_6 & ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1),
+             0xffff);
+    if (0 < iVar1) {
+      uVar4 = (longlong)iVar1 * (longlong)(int)param_6;
+      if ((param_5 & 0xffffffff) <= (uVar4 & 0xffffffff)) {
+        uVar4 = param_5;
+      }
+      param_5 = param_5 - uVar4;
+      param_2 = param_2 + 4;
+      *(uint *)param_2 = (uint)((uVar4 - 1 & 0xffffffff) << 0x10) | (uint)param_3;
+      uVar6 = uVar4;
+      uVar2 = uVar4 & 0xffffffff;
+      while (uVar2 != 0) {
+        param_4 = param_4 + 4;
+        param_2 = param_2 + 4;
+        *(undefined4 *)param_2 = *(undefined4 *)param_4;
+        uVar6 = uVar6 - 1;
+        uVar2 = uVar6;
+      }
+      param_3 = uVar4 + param_3;
+    }
+    if ((param_5 & 0xffffffff) == 0) break;
+    *(int *)(iVar3 + 0x30) = (int)param_2;
+    D3D__CDevice__KickOff(iVar3);
+    param_2 = (ulonglong)*(uint *)(iVar3 + 0x30);
+  }
+  __restgprlr_26(param_2);
+  return;
 }
 
 
@@ -270,11 +310,47 @@ LAB_828761f4:
 
 // 82876318  D3D::SetPending_RenderStates  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:416)
 
-void D3D__SetPending_RenderStates(void)
+void D3D__SetPending_RenderStates
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  iVar1 = __savegprlr_26();
+  uVar2 = (ulonglong)*(uint *)(iVar1 + 0x30);
+  param_4 = param_4 + -4;
+  do {
+    lVar3 = LZCOUNT(param_2);
+    param_2 = param_2 << lVar3;
+    param_4 = lVar3 * 4 + param_4;
+    lVar5 = LZCOUNT(~param_2);
+    lVar3 = lVar3 + param_3;
+    if ((lVar5 * 4 + uVar2 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x34)) {
+      uVar2 = uVar2 + 4;
+      *(uint *)uVar2 = (uint)((lVar5 - 1U & 0xffffffff) << 0x10) | (uint)lVar3;
+      lVar4 = lVar5;
+      do {
+        param_4 = param_4 + 4;
+        lVar4 = lVar4 + -1;
+        param_2 = param_2 << 1;
+        uVar2 = uVar2 + 4;
+        *(undefined4 *)uVar2 = *(undefined4 *)param_4;
+      } while (lVar4 != 0);
+    }
+    else {
+      uVar2 = D3D__SetPending_Split(iVar1,uVar2,lVar3,param_4,lVar5,1);
+      param_4 = lVar5 * 4 + param_4;
+      param_2 = param_2 << lVar5;
+    }
+    param_3 = lVar5 + lVar3;
+  } while (param_2 != 0);
+  *(int *)(iVar1 + 0x30) = (int)uVar2;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -354,11 +430,79 @@ void D3D__SetPending_ClipPlanes(undefined8 param_1,ulonglong param_2)
 
 // 82876570  D3D::SetPending_FetchConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:612)
 
-void D3D__SetPending_FetchConstants(void)
+void D3D__SetPending_FetchConstants(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
+  
+  lVar4 = __savegprlr_26();
+  iVar1 = (int)lVar4;
+  uVar5 = (ulonglong)*(uint *)(iVar1 + 0x30);
+  lVar9 = 0x4800;
+  lVar13 = lVar4 + 0x47c;
+  do {
+    while( true ) {
+      lVar8 = LZCOUNT(param_2);
+      param_2 = param_2 << lVar8;
+      lVar11 = lVar8 * 6 + lVar9;
+      lVar10 = LZCOUNT(~param_2);
+      lVar12 = lVar10 * 6;
+      lVar13 = lVar8 * 0x18 + lVar13;
+      if (((lVar12 + 5) * 4 + uVar5 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x34)) break;
+      uVar5 = D3D__SetPending_Split(lVar4,uVar5,lVar11,lVar13,lVar12,6);
+      param_2 = param_2 << lVar10;
+      lVar13 = lVar10 * 0x18 + lVar13;
+      lVar9 = lVar12 + lVar11;
+      if (param_2 == 0) {
+        *(int *)(iVar1 + 0x30) = (int)uVar5;
+        if ((ulonglong)*(uint *)(iVar1 + 0x38) < (uVar5 & 0xffffffff)) {
+          uVar5 = D3D__CDevice__KickOff(lVar4);
+        }
+        iVar2 = (int)uVar5;
+        *(undefined4 *)(iVar2 + 4) = 0x25000;
+        *(undefined4 *)(iVar2 + 8) = 0;
+        *(undefined4 *)(iVar2 + 0xc) = 0;
+        *(undefined4 *)(iVar2 + 0x10) = 0;
+        *(undefined4 **)(iVar1 + 0x30) = (undefined4 *)(iVar2 + 0x10);
+        goto LAB_828766c4;
+      }
+    }
+    *(undefined4 *)((int)uVar5 + 4) = 0x80000000;
+    lVar9 = lVar12 + lVar11;
+    uVar5 = (uVar5 & 7) + uVar5 + 4;
+    *(uint *)uVar5 = (uint)((lVar12 - 1U & 0xffffffff) << 0x10) | (uint)lVar11;
+    do {
+      iVar2 = (int)lVar13;
+      lVar10 = lVar10 + -1;
+      uVar7 = *(undefined8 *)(iVar2 + 0xc);
+      param_2 = param_2 << 1;
+      uVar6 = *(undefined8 *)(iVar2 + 0x14);
+      lVar13 = lVar13 + 0x18;
+      iVar3 = (int)uVar5;
+      *(undefined8 *)(iVar3 + 4) = *(undefined8 *)(iVar2 + 4);
+      *(undefined8 *)(iVar3 + 0xc) = uVar7;
+      *(undefined8 *)(iVar3 + 0x14) = uVar6;
+      uVar5 = uVar5 + 0x18;
+    } while (lVar10 != 0);
+  } while (param_2 != 0);
+  *(int *)(iVar1 + 0x30) = iVar3 + 0x28;
+  *(undefined8 *)(iVar3 + 0x1c) = 0x2500000000000;
+  *(undefined8 *)(iVar3 + 0x24) = 0x2500000000000;
+LAB_828766c4:
+  __restgprlr_26();
+  return;
 }
 
 
@@ -431,33 +575,325 @@ void D3D__SetPending_AluConstants
 }
 
 
-// 82876830  D3D::PatchVertexShaderToMatchVertexDeclaration  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1057)
+// 828759A8  D3D::CombineSwizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1041)
 
-void D3D__PatchVertexShaderToMatchVertexDeclaration(void)
+ulonglong D3D__CombineSwizzle(ulonglong param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ulonglong uVar1;
+  
+  uVar1 = param_1 & 0xffff & (ulonglong)*(ushort *)(&DAT_821f44d0 + param_2 * 2);
+  return ((((uVar1 >> 3 | uVar1) >> 3 | uVar1) >> 3 | uVar1) & 0xe | uVar1 >> 0xc) >> 1;
+}
+
+
+// 82876830  D3D::PatchVertexShaderToMatchVertexDeclaration  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1057)
+
+void D3D__PatchVertexShaderToMatchVertexDeclaration
+               (undefined8 param_1,longlong param_2,longlong param_3,byte *param_4,longlong param_5)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  void *pvVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint uVar12;
+  uint uVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  uint *puVar17;
+  uint *puVar18;
+  ulonglong uVar16;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  uint uVar22;
+  ulonglong uVar23;
+  uint uVar24;
+  ulonglong uVar25;
+  ulonglong uVar26;
+  ulonglong uVar27;
+  ushort local_210;
+  uint local_200 [128];
+  ushort *puVar11;
+  
+  uVar27 = ZEXT48(&stack0x00000000);
+  uVar3 = __savegprlr_18();
+  lVar14 = *(uint *)((int)((param_5 + 0x70U & 0xffffffff) << 3) + (int)uVar3) + uVar3;
+  iVar2 = (int)lVar14;
+  uVar24 = *(uint *)(iVar2 + 900);
+  uVar21 = (ulonglong)uVar24;
+  if (uVar21 != 0) {
+    uVar12 = *(uint *)((int)param_3 + 0x18);
+    uVar19 = ((ulonglong)*(uint *)(iVar2 + 0x380) + 9 & 0x3fffffff) * 4 + lVar14 + 0x368;
+    if (uVar21 != 0) {
+      uVar23 = (ulonglong)local_210;
+      lVar14 = uVar27 - 0x200;
+      iVar2 = ((int)param_5 * 0x1a0 + (int)uVar3 + 0x44) - (int)local_200;
+      uVar20 = uVar19;
+      do {
+        puVar17 = (uint *)lVar14;
+        uVar13 = 0;
+        uVar3 = (ulonglong)*(uint *)((int)puVar17 + iVar2 + 4);
+        uVar22 = *(uint *)((int)puVar17 + iVar2 + 8);
+        if (uVar12 == 0) {
+LAB_82876914:
+          uVar13 = *(uint *)(iVar2 + (int)puVar17) & 0xc00fffff | 0x5f00000;
+          uVar15 = uVar23 & 0xf | 0x9250;
+          uVar25 = uVar3 & 0xffffffffbfc6cfff | 0x60000;
+          uVar22 = uVar22 & 0x80000000 | (uint)*param_4;
+        }
+        else {
+          lVar10 = param_3 + 0x34;
+          do {
+            puVar11 = (ushort *)lVar10;
+            if (((uint)*(byte *)((int)puVar11 + 9) == (*(uint *)uVar20 >> 0xc & 0xf)) &&
+               ((uint)*(byte *)(puVar11 + 5) == (*(uint *)uVar20 >> 0x10 & 0xf))) break;
+            uVar13 = uVar13 + 1;
+            lVar10 = lVar10 + 0xc;
+            puVar11 = (ushort *)lVar10;
+          } while (uVar13 < uVar12);
+          if (uVar12 <= uVar13) goto LAB_82876914;
+          uVar4 = *(uint *)(puVar11 + 2);
+          uVar25 = (ulonglong)uVar4;
+          uVar16 = ((ulonglong)(uVar4 >> 10) & 0x38 | (ulonglong)(uVar4 >> 0x10) & 7) << 3 |
+                   (ulonglong)(uVar4 >> 0x13) & 7;
+          uVar15 = (uVar16 << 1 | uVar25 & 0x1c00) << 3 | uVar23 & 0xf;
+          if ((uVar4 & 0xc0) == 0x40) {
+            if ((uVar25 & 0x1c00) << 3 < 0x6001) {
+              uVar15 = (uVar25 & 0x1c00) << 3 ^ 0x2000 | uVar16 << 4 | uVar23 & 0xf;
+            }
+            if ((uVar15 & 0x1c00) < 0xc01) {
+              uVar15 = uVar15 & 0x1c00 ^ 0x400 | uVar15 & 0xe3ff;
+            }
+            if ((uVar15 & 0x380) < 0x181) {
+              uVar15 = uVar15 & 0x380 ^ 0x80 | uVar15 & 0xfc7f;
+            }
+            if ((uVar15 & 0x70) < 0x31) {
+              uVar15 = uVar15 & 0x70 ^ 0x10 | uVar15 & 0xff8f;
+            }
+          }
+          uVar13 = (0x5f - (uint)*puVar11) * 0x1560056;
+          uVar13 = ((uVar13 & 0x1f00) << 0xb | uVar13 & 0x3000000) << 1 |
+                   *(uint *)(iVar2 + (int)puVar17) & 0xc00fffff;
+          uVar25 = (((ulonglong)uVar4 & 0x3f) << 0xc | (ulonglong)uVar4 & 0x300) << 4 |
+                   uVar3 & 0xffffffffbfc0cfff;
+          uVar22 = (puVar11[1] & 0x1fffffc) << 6 | (uint)param_4[*puVar11] | uVar22 & 0x80000000;
+        }
+        uVar23 = uVar15 | 0xe;
+        uVar4 = D3D__CombineSwizzle(uVar23,uVar25 & 7);
+        uVar5 = D3D__CombineSwizzle(uVar23,uVar25 >> 3 & 7);
+        uVar6 = D3D__CombineSwizzle(uVar23,uVar25 >> 6 & 7);
+        uVar3 = D3D__CombineSwizzle(uVar23,uVar25 >> 9 & 7);
+        *puVar17 = uVar13;
+        uVar21 = uVar21 - 1;
+        puVar17[2] = uVar22;
+        uVar20 = uVar20 + 4;
+        puVar17[1] = (uint)((uVar3 & 0xffffffff) << 9) & 0xe00 |
+                     (uVar6 & 7) << 6 | (uVar5 & 7) << 3 | (uint)uVar25 & 0xfffff000 | uVar4 & 7;
+        lVar14 = lVar14 + 0xc;
+      } while (uVar21 != 0);
+    }
+    uVar20 = ((ulonglong)uVar24 & 0x3fffffff) * 4 + uVar19;
+    uVar21 = uVar19;
+    if ((uVar19 & 0xffffffff) < (uVar20 & 0xffffffff)) {
+      while ((uVar21 & 0xffffffff) < (uVar20 & 0xffffffff)) {
+        do {
+          if ((*(uint *)uVar21 & 0x300000) != 0) break;
+          uVar21 = uVar21 + 4;
+        } while ((uVar21 & 0xffffffff) < (uVar20 & 0xffffffff));
+        if (((uVar20 & 0xffffffff) <= (uVar21 & 0xffffffff)) ||
+           (uVar23 = uVar21 + 4, (uVar20 & 0xffffffff) <= (uVar23 & 0xffffffff))) break;
+        do {
+          if ((*(uint *)uVar23 & 0x300000) != 0) break;
+          uVar23 = uVar23 + 4;
+        } while ((uVar23 & 0xffffffff) < (uVar20 & 0xffffffff));
+        if ((uVar20 & 0xffffffff) <= (uVar23 & 0xffffffff)) break;
+        puVar17 = (uint *)uVar23;
+        uVar25 = (ulonglong)((int)puVar17 - (int)uVar21 >> 2);
+        uVar3 = (longlong)((int)uVar21 - (int)uVar19 >> 2) * 0xc + (uVar27 - 0x200);
+        uVar21 = uVar23 + 4;
+        uVar24 = 0xffffffff;
+        uVar23 = uVar25 + 1;
+        uVar15 = uVar25;
+        if ((*puVar17 & 0x300000) == 0x300000) {
+          uVar15 = uVar25 - 1;
+          uVar24 = local_200[((int)puVar17 - (int)uVar19 >> 2) * 3] >> 0x12 & 0x7c |
+                   local_200[((int)puVar17 - (int)uVar19 >> 2) * 3] >> 0x19 & 3;
+          uVar23 = uVar25;
+        }
+        if ((uVar15 & 0xffffffff) != 0) {
+          uVar26 = 1;
+          uVar16 = uVar3;
+          do {
+            if ((uVar26 & 0xffffffff) < (uVar23 & 0xffffffff)) {
+              lVar14 = uVar23 - uVar26;
+              uVar1 = uVar16;
+              do {
+                puVar18 = (uint *)uVar16;
+                puVar17 = (uint *)(uVar1 + 0xc);
+                uVar9 = (ulonglong)(*puVar18 >> 0x12) & 0x7c | (ulonglong)(*puVar18 >> 0x19) & 3;
+                uVar8 = (ulonglong)(*puVar17 >> 0x12) & 0x7c | (ulonglong)(*puVar17 >> 0x19) & 3;
+                lVar10 = uVar8 - uVar9;
+                iVar2 = (int)uVar1;
+                if (lVar10 == 0) {
+                  lVar10 = (longlong)((int)(puVar18[2] << 1 | puVar18[2] >> 0x1f) >> 9) -
+                           (longlong)
+                           ((int)(*(uint *)(iVar2 + 0x14) << 1 | *(uint *)(iVar2 + 0x14) >> 0x1f) >>
+                           9);
+                  if (lVar10 == 0) {
+                    lVar10 = (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(puVar18 + 1) & 0x3f] -
+                             (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(iVar2 + 0x10) & 0x3f];
+                  }
+LAB_82876c5c:
+                  if (0 < (int)lVar10) goto LAB_82876c64;
+                }
+                else {
+                  if (uVar24 != (uint)uVar9) {
+                    if (uVar24 == (uint)uVar8) {
+                      lVar10 = -1;
+                    }
+                    goto LAB_82876c5c;
+                  }
+LAB_82876c64:
+                  uVar12 = *puVar18;
+                  uVar22 = puVar18[1];
+                  uVar13 = puVar18[2];
+                  *puVar18 = *puVar17;
+                  puVar18[1] = *(uint *)(iVar2 + 0x10);
+                  puVar18[2] = *(uint *)(iVar2 + 0x14);
+                  *puVar17 = uVar12;
+                  *(uint *)(iVar2 + 0x10) = uVar22;
+                  *(uint *)(iVar2 + 0x14) = uVar13;
+                }
+                lVar14 = lVar14 + -1;
+                uVar1 = uVar1 + 0xc;
+              } while (lVar14 != 0);
+            }
+            uVar15 = uVar15 - 1;
+            uVar16 = uVar16 + 0xc;
+            uVar26 = uVar26 + 1;
+          } while (uVar15 != 0);
+        }
+        uVar23 = (uVar25 + 1) * 0xc + uVar3;
+        uVar15 = uVar3 + 0xc;
+        if ((uVar15 & 0xffffffff) < (uVar23 & 0xffffffff)) {
+          lVar14 = ((uVar23 - uVar15) - 1 & 0xffffffff) / 0xc + 1;
+          uVar23 = uVar3;
+          do {
+            puVar18 = (uint *)uVar15;
+            puVar17 = (uint *)uVar23;
+            uVar24 = *puVar17;
+            uVar25 = uVar15;
+            if ((uVar24 >> 7 & 0xc0000 | uVar24 & 0x1f00000) ==
+                (*puVar18 >> 7 & 0xc0000 | *puVar18 & 0x1f00000)) {
+              uVar12 = (int)(puVar17[2] << 1 | puVar17[2] >> 0x1f) >> 9;
+              uVar22 = (int)(puVar18[2] << 1 | puVar18[2] >> 0x1f) >> 9;
+              if ((uVar12 <= uVar22) &&
+                 (uVar22 = ((byte)(&DAT_821f44e0)[*(ushort *)(puVar18 + 1) & 0x3f] - uVar12) +
+                           uVar22, uVar22 < 9)) {
+                uVar12 = uVar24 >> 0x1b & 7;
+                uVar22 = uVar22 - 1;
+                if (uVar22 < uVar12) {
+                  uVar22 = uVar12;
+                }
+                *puVar17 = (uVar22 & 7) << 0x1b | uVar24 & 0xc7ffffff;
+                puVar18[1] = puVar18[1] | 0x40000000;
+                uVar25 = uVar23;
+              }
+            }
+            uVar15 = uVar15 + 0xc;
+            lVar14 = lVar14 + -1;
+            uVar23 = uVar25;
+          } while (lVar14 != 0);
+        }
+      }
+    }
+    uVar27 = uVar27 - 0x200;
+    if ((uVar19 & 0xffffffff) < (uVar20 & 0xffffffff)) {
+      do {
+        uVar3 = ((ulonglong)*(uint *)uVar19 & 0xfff) * 0xc + param_2;
+        if ((uVar3 & 0xffffffff) != (uVar27 & 0xffffffff)) {
+          pvVar7 = memcpy((void *)uVar3,(void *)uVar27,0xc);
+          uVar3 = (ulonglong)(int)pvVar7;
+        }
+        uVar19 = uVar19 + 4;
+        uVar27 = uVar27 + 0xc;
+      } while ((uVar19 & 0xffffffff) < (uVar20 & 0xffffffff));
+    }
+  }
+  __restgprlr_18(uVar3);
+  return;
 }
 
 
 // 82876DD0  D3D::VertexShaderStubOutput  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1334)
 
-void D3D__VertexShaderStubOutput(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void D3D__VertexShaderStubOutput(undefined8 param_1,longlong param_2,ushort *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  ulonglong uVar1;
+  void *pvVar3;
+  uint *puVar4;
+  undefined1 local_30 [8];
+  undefined4 local_28;
+  
+  iVar2 = __savegprlr_29();
+  puVar4 = (uint *)(((*(uint *)(iVar2 + 0x14) >> 5 & 0x1f) + (*param_3 & 0xfff) +
+                     *(int *)(iVar2 + 0x1c) + *(int *)(iVar2 + 0x18) + 9) * 4 + iVar2);
+  local_28 = 0x2000000;
+  while( true ) {
+    uVar1 = ((ulonglong)*puVar4 & 0xfff) * 0xc + param_2;
+    if ((uVar1 & 0xffffffff) != (ZEXT48(&stack0x00000000) - 0x30 & 0xffffffff)) {
+      pvVar3 = memcpy((void *)uVar1,local_30,0xc);
+      uVar1 = (ulonglong)(int)pvVar3;
+    }
+    if ((*puVar4 & 0x1000) != 0) break;
+    puVar4 = puVar4 + 1;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 82876E98  D3D::VertexShaderRedirectOutput  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1368)
 
-void D3D__VertexShaderRedirectOutput(void)
+void D3D__VertexShaderRedirectOutput
+               (undefined8 param_1,longlong param_2,ushort *param_3,uint *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  void *pvVar1;
+  uint *puVar2;
+  ulonglong uVar3;
+  uint local_40 [16];
+  
+  pvVar1 = (void *)__savegprlr_28();
+  puVar2 = (uint *)(((*(uint *)((int)pvVar1 + 0x14) >> 5 & 0x1f) + (*param_3 & 0xfff) +
+                     *(int *)((int)pvVar1 + 0x1c) + *(int *)((int)pvVar1 + 0x18) + 9) * 4 +
+                   (int)pvVar1);
+  while( true ) {
+    uVar3 = ((ulonglong)*puVar2 & 0xfff) * 0xc + param_2;
+    if ((ZEXT48(&stack0x00000000) - 0x40 & 0xffffffff) != (uVar3 & 0xffffffff)) {
+      pvVar1 = memcpy(local_40,(void *)uVar3,0xc);
+    }
+    local_40[0] = *param_4 >> 8 & 0xf | local_40[0] & 0xfffffff0;
+    if ((uVar3 & 0xffffffff) != (ZEXT48(&stack0x00000000) - 0x40 & 0xffffffff)) {
+      pvVar1 = memcpy((void *)uVar3,local_40,0xc);
+    }
+    if ((*puVar2 & 0x1000) != 0) break;
+    puVar2 = puVar2 + 1;
+  }
+  __restgprlr_28(pvVar1);
+  return;
 }
 
 
@@ -667,21 +1103,85 @@ void D3D__PatchBoundInterpolatorHeadersToMatch(int param_1,int param_2)
 
 // 82877118  D3D::PIXMetaLoadVertexShaderImp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1883)
 
-void D3D__PIXMetaLoadVertexShaderImp(void)
+void D3D__PIXMetaLoadVertexShaderImp(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  uint local_350 [4];
+  undefined4 local_340;
+  undefined4 local_33c;
+  size_t local_338;
+  undefined1 auStack_334 [820];
+  
+  iVar2 = __savegprlr_28();
+  local_350[0] = D3D__CDevice__BeginRingBig(iVar2,0x340);
+  if (local_350[0] != 0) {
+    iVar1 = (int)param_2;
+    lVar4 = CONCAT44(*(undefined4 *)(iVar2 + 0x35dc),*(undefined4 *)(iVar2 + 0x41dc));
+    if (*(longlong *)(iVar1 + 0x18) == lVar4) {
+      D3D__CDevice__PutPix(iVar2,local_350,0x10013,param_2 + 0x24,4);
+    }
+    else {
+      puVar3 = (undefined4 *)D3D__CVertexShader__GetDebuggerHint(param_2);
+      memset(&local_340,0,0x318);
+      local_340 = *(undefined4 *)(iVar1 + 0x24);
+      if (puVar3 != (undefined4 *)0x0) {
+        local_338 = puVar3[1];
+        local_33c = *puVar3;
+        memcpy(auStack_334,puVar3 + 2,local_338);
+      }
+      D3D__CDevice__PutPix(iVar2,local_350,0x10011,&local_340,local_338 + 0xf & 0xfffffffc);
+      *(longlong *)(iVar1 + 0x18) = lVar4;
+    }
+    *(uint *)(iVar2 + 0x30) = local_350[0];
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82877208  D3D::PIXMetaLoadPixelShaderImp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1921)
 
-void D3D__PIXMetaLoadPixelShaderImp(void)
+void D3D__PIXMetaLoadPixelShaderImp(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  uint local_350 [4];
+  undefined4 local_340;
+  undefined4 local_33c;
+  size_t local_338;
+  undefined1 auStack_334 [820];
+  
+  iVar2 = __savegprlr_28();
+  local_350[0] = D3D__CDevice__BeginRingBig(iVar2,0x340);
+  if (local_350[0] != 0) {
+    iVar1 = (int)param_2;
+    lVar4 = CONCAT44(*(undefined4 *)(iVar2 + 0x35dc),*(undefined4 *)(iVar2 + 0x41dc));
+    if (*(longlong *)(iVar1 + 0x20) == lVar4) {
+      D3D__CDevice__PutPix(iVar2,local_350,0x10014,param_2 + 0x1c,4);
+    }
+    else {
+      puVar3 = (undefined4 *)D3D__CPixelShader__GetDebuggerHint(param_2);
+      memset(&local_340,0,0x318);
+      local_340 = *(undefined4 *)(iVar1 + 0x1c);
+      if (puVar3 != (undefined4 *)0x0) {
+        local_338 = puVar3[1];
+        local_33c = *puVar3;
+        memcpy(auStack_334,puVar3 + 2,local_338);
+      }
+      D3D__CDevice__PutPix(iVar2,local_350,0x10012,&local_340,local_338 + 0xf & 0xfffffffc);
+      *(longlong *)(iVar1 + 0x20) = lVar4;
+    }
+    *(uint *)(iVar2 + 0x30) = local_350[0];
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -770,22 +1270,552 @@ void D3D__IncrementalShaderPatchAndLoad
 }
 
 
-// 82877690  D3D::DirectShaderPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2281)
+// 82877540  D3D::SetLiteralShaderConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2163)
 
-void D3D__DirectShaderPatch(void)
+void D3D__SetLiteralShaderConstants(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ushort uVar1;
+  ushort uVar2;
+  ushort *puVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  size_t _Size;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  
+  iVar4 = __savegprlr_24();
+  uVar7 = (ulonglong)*(uint *)((int)param_2 + 0x14);
+  if (uVar7 != 0) {
+    param_2 = uVar7 + param_2;
+    uVar8 = param_2 + 0x14;
+    uVar7 = *(uint *)((int)param_2 + 0x10) + uVar8;
+    while ((uVar8 & 0xffffffff) < (uVar7 & 0xffffffff)) {
+      puVar3 = (ushort *)uVar8;
+      uVar1 = puVar3[1];
+      uVar9 = (ulonglong)uVar1;
+      uVar2 = *puVar3;
+      if (uVar9 == 0) break;
+      uVar8 = uVar8 + 8;
+      uVar11 = (ulonglong)*(uint *)(puVar3 + 2) + param_3;
+      if (((*(byte *)(iVar4 + 0x2b3c) & 0x80) == 0) ||
+         (iVar5 = KeGetCurrentProcessType(), iVar5 != 2)) {
+        uVar6 = *(uint *)(iVar4 + 0x30);
+        if (*(uint *)(iVar4 + 0x38) < uVar6) {
+          uVar6 = D3D__CDevice__KickOff(iVar4);
+        }
+        *(undefined4 *)(uVar6 + 4) = 0xc0022f00;
+        *(uint *)(uVar6 + 8) =
+             ((int)((uVar11 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar11 & 0x1fffffff);
+        *(uint *)(uVar6 + 0xc) = (uint)uVar2 << 2;
+        *(uint *)(uVar6 + 0x10) = (uint)uVar1;
+        *(uint **)(iVar4 + 0x30) = (uint *)(uVar6 + 0x10);
+      }
+      else {
+        iVar5 = D3D__CDevice__BeginRingBig(iVar4,uVar9 + 1);
+        if (iVar5 != 0) {
+          sync(0);
+          *(uint *)(iVar5 + 4) = (uVar2 + 0x1000) * 4 | (uint)((uVar9 - 1 & 0xffffffff) << 0x10);
+          lVar10 = (((uVar11 & 0xffffffff) >> 0x14) + 0x200 & 0x1000) + (uVar11 & 0x1fffffff) +
+                   -0x40000000;
+          _Size = (size_t)(uVar9 * 4);
+          memcpy((void *)(iVar5 + 8),(void *)lVar10,_Size);
+          D3D__FlushCachedMemory(lVar10,uVar9 * 4 + lVar10,0);
+          *(size_t *)(iVar4 + 0x30) = _Size + iVar5 + 4;
+        }
+      }
+    }
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 82877690  D3D::DirectShaderPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2281)
+
+void D3D__DirectShaderPatch
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar5;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  longlong lVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar5 = __savegprlr_26();
+  iVar1 = (int)param_3;
+  iVar3 = (int)param_2;
+  iVar2 = (int)param_4 * 0x1a0 + iVar3;
+  if ((*(int *)(iVar2 + 0x28) != *(int *)(iVar1 + 0x30)) ||
+     (((*(ulonglong *)(iVar2 + 0x30) ^ *(ulonglong *)(iVar5 + 0x31e8)) &
+      *(ulonglong *)(iVar1 + 0x20)) != 0 ||
+      ((*(ulonglong *)(iVar2 + 0x38) ^ *(ulonglong *)(iVar5 + 0x31f0)) &
+      *(ulonglong *)(iVar1 + 0x28)) != 0)) {
+    if ((*(int *)(iVar2 + 0x40) != 0) &&
+       ((uint)(*(int *)(iVar5 + 0x2b1c) - *(int *)(iVar2 + 0x40)) <
+        (uint)(*(int *)(iVar5 + 0x2b1c) - **(int **)(iVar5 + 0x2b10)))) {
+      uVar4 = 0;
+      goto LAB_828777dc;
+    }
+    D3D__PatchVertexShaderToMatchVertexDeclaration
+              (param_2,(ulonglong)
+                       *(uint *)(*(int *)((int)((param_4 + 0x70U & 0xffffffff) << 3) + iVar3) +
+                                 iVar3 + 0x368) + (ulonglong)*(uint *)(iVar3 + 0x20),param_3,
+               (undefined8 *)(iVar5 + 0x31e8),param_4);
+    if (*(int *)(iVar1 + 0x30) == 0) {
+      do {
+        uVar6 = (ulonglong)DAT_8488fed4;
+        lVar7 = uVar6 + 1;
+        if (in_RESERVE != '\0') {
+          DAT_8488fed4 = storeWordConditionalIndexed(lVar7,0,0xffffffff8488fed4);
+          in_cr0 = 2;
+        }
+      } while ((!(bool)(in_cr0 >> 1 & 1)) || ((uVar6 + 2 & 0xffffffff) < 2));
+      *(int *)(iVar1 + 0x30) = (int)lVar7;
+    }
+    *(undefined4 *)(iVar2 + 0x28) = *(undefined4 *)(iVar1 + 0x30);
+    *(undefined8 *)(iVar2 + 0x30) = *(undefined8 *)(iVar5 + 0x31e8);
+    *(undefined8 *)(iVar2 + 0x38) = *(undefined8 *)(iVar5 + 0x31f0);
+  }
+  *(undefined8 *)(iVar5 + 0x2f68) = *(undefined8 *)(iVar5 + 0x31e8);
+  *(undefined8 *)(iVar5 + 0x2f70) = *(undefined8 *)(iVar5 + 0x31f0);
+  uVar4 = 1;
+LAB_828777dc:
+  __restgprlr_26(uVar4);
+  return;
 }
 
 
 // 828777E8  D3D::SetPending_Shaders  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2375)
 
-void D3D__SetPending_Shaders(void)
+void D3D__SetPending_Shaders(undefined8 param_1,ulonglong param_2)
 
 {
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  byte bVar13;
+  uint *puVar12;
+  ulonglong uVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  int iVar17;
+  int iVar18;
+  uint *puVar19;
+  uint uVar20;
+  bool bVar21;
+  int local_c0;
+  uint local_bc;
+  uint local_b8;
+  uint local_b4;
+  uint local_b0;
+  uint local_ac;
+  uint local_a8;
+  
+  iVar3 = __savegprlr();
+  uVar8 = 0;
+  local_b8 = 0xffffffff;
+  local_b4 = 0xffffffff;
+  local_ac = 0xffffffff;
+  uVar14 = 0xffffffffffffffff;
+  local_a8 = 0xffffffff;
+  local_c0 = -1;
+  local_b0 = 0;
+  if ((param_2 & 0x20000) != 0) {
+    param_2 = D3D__SetPending_HiZEnable(iVar3,param_2);
+  }
+  iVar1 = *(int *)(iVar3 + 0x3290);
+  iVar7 = *(int *)(iVar3 + 0x2f58);
+  iVar6 = *(int *)(iVar3 + 0x328c);
+  if (iVar1 == 0) goto LAB_828781d4;
+  uVar16 = 0;
+  iVar9 = *(int *)(iVar1 + 0x380) + iVar1;
+  iVar17 = iVar9 + 0x368;
+  if (iVar6 == 0) {
+    if ((*(byte *)(iVar3 + 0x2b3f) & 2) != 0) {
+      uVar4 = *(uint *)(iVar3 + 0x30);
+      if (*(uint *)(iVar3 + 0x38) < uVar4) {
+        uVar4 = D3D__CDevice__KickOff(iVar3);
+      }
+      *(undefined4 *)(uVar4 + 4) = 0x5c8;
+      *(undefined4 *)(uVar4 + 8) = 0x20000;
+      *(undefined4 **)(iVar3 + 0x30) = (undefined4 *)(uVar4 + 8);
+      *(byte *)(iVar3 + 0x2b3f) = *(byte *)(iVar3 + 0x2b3f) & 0xfc;
+    }
+    iVar18 = 0;
+    bVar21 = (*(uint *)(iVar1 + 0x368) & 0x20) != 0;
+    uVar4 = 0;
+    if (bVar21) {
+      iVar17 = *(int *)(iVar1 + 0x388) + iVar1 + 0x368;
+    }
+    uVar16 = (ulonglong)bVar21;
+    if ((*(byte *)(iVar3 + 0x2b3f) & 8) != 0) {
+      param_2 = param_2 | 0x100000000000000;
+      *(uint *)(iVar3 + 0x2884) = *(uint *)(iVar3 + 0x2884) & 0xfff0ffff;
+    }
+    if ((*(uint *)(iVar3 + 0x2954) & 7) != 5) {
+      *(uint *)(iVar3 + 0x2954) = *(uint *)(iVar3 + 0x2954) & 0xfffffff8 | 5;
+      param_2 = param_2 | 0x80008;
+    }
+    bVar21 = (*(uint *)(iVar17 + 0x14) & 0x1f) != 0;
+  }
+  else {
+    iVar10 = *(int *)(iVar6 + 0x40) + iVar6;
+    iVar18 = iVar10 + 0x28;
+    uVar4 = *(uint *)(iVar10 + 0x30);
+    uVar8 = *(uint *)(iVar10 + 0x34);
+    uVar2 = -(ulonglong)(0x10000000 < (uVar4 & 0x70000000));
+    *(byte *)(iVar3 + 0x2b3e) =
+         (byte)((uVar2 & 1) << 3) | *(byte *)(iVar3 + 0x2b3e) & 8 | *(byte *)(iVar3 + 0x2b3e) & 0xf7
+    ;
+    *(byte *)(iVar3 + 0x2b3f) =
+         (byte)((uVar2 & 1) << 1) | *(byte *)(iVar3 + 0x2b3f) & 2 | *(byte *)(iVar3 + 0x2b3f) & 0xfd
+    ;
+    if ((param_2 & 0x100000) != 0) {
+      if ((*(int *)(iVar3 + 0x5548) != 0) || ((*(byte *)(iVar3 + 0x2b3c) & 0x80) != 0)) {
+        D3D__PIXMetaLoadPixelShaderImp(iVar3,iVar6);
+      }
+      D3D__SetLiteralShaderConstants(iVar3,iVar6 + 0x28,*(undefined4 *)(iVar6 + 0x18));
+      uVar5 = *(uint *)(iVar3 + 0x30);
+      if (*(uint *)(iVar3 + 0x38) < uVar5) {
+        uVar5 = D3D__CDevice__KickOff(iVar3);
+      }
+      *(undefined4 *)(uVar5 + 4) = 0xc0012700;
+      uVar11 = *(int *)(*(int *)(iVar6 + 0x40) + iVar6 + 0x28) + *(int *)(iVar6 + 0x18);
+      *(uint *)(uVar5 + 8) = ((uVar11 >> 0x14) + 0x200 & 0x1000) + (uVar11 & 0x1ffffffe) | 1;
+      *(uint *)(uVar5 + 0xc) = *(uint *)(*(int *)(iVar6 + 0x40) + iVar6 + 0x2c) >> 2;
+      *(uint **)(iVar3 + 0x30) = (uint *)(uVar5 + 0xc);
+      *(undefined4 *)(iVar3 + 0x2928) = *(undefined4 *)(iVar10 + 0x40);
+      uVar2 = param_2 | 0x4000;
+      if ((*(byte *)(iVar3 + 0x2b3f) & 8) != 0) {
+        *(undefined4 *)(iVar3 + 0x2884) = *(undefined4 *)(*(int *)(iVar3 + 0x3190) + 0x1c);
+        uVar2 = param_2 | 0x100000000004000;
+      }
+      param_2 = uVar2;
+      if ((*(uint *)(iVar3 + 0x2954) & 7) != 4) {
+        param_2 = param_2 | 0x80008;
+        *(uint *)(iVar3 + 0x2954) = *(uint *)(iVar3 + 0x2954) & 0xfffffff8 | 4;
+      }
+    }
+    if ((DAT_8488ff18 & 1) == 0) {
+      DAT_8488ff18 = DAT_8488ff18 | 1;
+      DAT_8488ff14 = 0x603ff;
+    }
+    bVar21 = (*(uint *)(iVar10 + 0x3c) & DAT_8488ff14) != (*(uint *)(iVar9 + 0x37c) & DAT_8488ff14);
+    if ((*(int *)(iVar3 + 0x35d0) == 0) && ((*(uint *)(iVar6 + 0x28) & 0x10) != 0)) {
                     /* WARNING: Subroutine does not return */
-  __savegprlr();
+      KeBugCheck(0xf5);
+    }
+  }
+  if ((*(int *)(iVar3 + 0x35d0) == 0) && ((*(uint *)(iVar1 + 0x368) & 0x10) != 0)) {
+                    /* WARNING: Subroutine does not return */
+    KeBugCheck(0xf5);
+  }
+  local_bc = *(uint *)(iVar17 + 8);
+  uVar5 = *(uint *)(iVar3 + 0x2954);
+  uVar11 = *(uint *)(iVar17 + 0xc);
+  uVar15 = uVar4;
+  uVar20 = uVar5;
+  if ((*(byte *)(iVar3 + 0x2b3c) & 0x40) != 0) {
+    if (iVar18 == 0) {
+LAB_82877b78:
+      uVar20 = uVar5 & 0xfffffff8 | 5;
+    }
+    else if ((((*(uint *)(iVar3 + 0x293c) & 8) == 0) && ((*(uint *)(iVar18 + 0x1c) & 0x10) == 0)) &&
+            ((*(uint *)(iVar18 + 0x1c) & 0x20) == 0)) {
+      uVar15 = 0;
+      local_b0 = *(byte *)(iVar3 + 0x2b3f) & 1;
+      *(byte *)(iVar3 + 0x2b3f) = *(byte *)(iVar3 + 0x2b3f) & 0xfe;
+      goto LAB_82877b78;
+    }
+    if ((param_2 & 0x40000) != 0) {
+      local_b8 = local_bc | uVar15;
+      local_b4 = uVar11 | uVar8;
+    }
+    if (((*(byte *)(iVar3 + 0x2b3f) & 8) != 0) &&
+       (local_a8 = *(uint *)(iVar3 + 0x2884), (uVar20 & 7) == 5)) {
+      local_a8 = local_a8 & 0xfff0ffff;
+    }
+    if ((uVar20 != *(uint *)(iVar3 + 0x3294)) || ((param_2 & 8) != 0)) {
+      *(uint *)(iVar3 + 0x3294) = uVar20;
+      param_2 = param_2 | 8;
+      local_ac = uVar20;
+    }
+  }
+  *(byte *)(iVar3 + 0x2b3f) =
+       *(byte *)(iVar3 + 0x2b3f) & 0xfe |
+       -(0x10000000 < (uVar15 & 0x70000000)) & 1U | *(byte *)(iVar3 + 0x2b3f) & 1;
+  if (((*(byte *)(iVar3 + 0x2b3e) & 0x80) == 0) && (bVar21 == false)) {
+    if ((param_2 & 0x80000) != 0) {
+      puVar19 = (uint *)(iVar1 + 0x368);
+      D3D__SetLiteralShaderConstants(iVar3,puVar19,*(undefined4 *)(iVar1 + 0x20));
+      bVar13 = *(byte *)(iVar3 + 0x2b3e) & 0xbf;
+      *(byte *)(iVar3 + 0x2b3e) = bVar13;
+      if ((iVar7 == 0) || ((*puVar19 & 0x40) != 0)) {
+        iVar7 = (int)uVar16 * 0x1a0 + iVar1;
+        *(undefined8 *)(iVar3 + 0x2f68) = *(undefined8 *)(iVar7 + 0x30);
+        *(undefined8 *)(iVar3 + 0x2f70) = *(undefined8 *)(iVar7 + 0x38);
+        uVar14 = uVar16;
+        if ((((uVar20 ^ uVar5) & 7) != 0) && ((*puVar19 & 0x20) != 0)) {
+LAB_82877cec:
+          local_c0 = 1;
+          *(byte *)(iVar3 + 0x2b3e) = bVar13 | 0x40;
+          uVar14 = uVar16;
+        }
+      }
+      else {
+        if ((*(byte *)(iVar3 + 0x2b3c) & 0x80) != 0) {
+          bVar21 = false;
+          goto LAB_82877d68;
+        }
+        iVar6 = D3D__DirectShaderPatch(iVar3,iVar1,iVar7,uVar16);
+        if (iVar6 == 0) {
+          D3D__IncrementalShaderPatchAndLoad(iVar3,0,iVar1,&local_bc,iVar7,iVar17,iVar18,uVar16);
+          uVar16 = uVar14;
+        }
+        uVar14 = uVar16;
+        if (((((uVar20 ^ uVar5) & 7) != 0) && ((*puVar19 & 0x20) != 0)) &&
+           (iVar7 = D3D__DirectShaderPatch(iVar3,iVar1,iVar7,1), iVar7 != 0)) {
+          bVar13 = *(byte *)(iVar3 + 0x2b3e);
+          goto LAB_82877cec;
+        }
+      }
+    }
+  }
+  else if ((param_2 & 0x180000) != 0) {
+    *(byte *)(iVar3 + 0x2b3e) = *(byte *)(iVar3 + 0x2b3e) & 0xbf;
+    D3D__SetLiteralShaderConstants(iVar3,iVar1 + 0x368,*(undefined4 *)(iVar1 + 0x20));
+LAB_82877d68:
+    D3D__IncrementalShaderPatchAndLoad(iVar3,bVar21,iVar1,&local_bc,iVar7,iVar17,iVar18,uVar16);
+  }
+  if ((param_2 & 0x180000) != 0) {
+    *(uint *)(iVar3 + 0x2924) = uVar11 | uVar8;
+    param_2 = param_2 | 0x18000;
+    *(uint *)(iVar3 + 0x2920) = local_bc | uVar4;
+    if ((*(byte *)(iVar3 + 0x2b3e) & 0x40) == 0) {
+      if ((uVar15 == 0) && (uVar4 != 0)) {
+        local_b8 = local_bc;
+        local_b4 = uVar11;
+      }
+    }
+    else {
+      iVar7 = *(int *)(iVar1 + 0x388) + iVar1;
+      local_b8 = *(uint *)(iVar7 + 0x370) | uVar15;
+      local_b4 = *(uint *)(iVar7 + 0x374) | uVar8;
+    }
+  }
+  iVar7 = (int)uVar14;
+  if (((local_c0 != -1) || (iVar7 != -1)) &&
+     ((*(int *)(iVar3 + 0x5548) != 0 || ((*(byte *)(iVar3 + 0x2b3c) & 0x80) != 0)))) {
+    D3D__PIXMetaLoadVertexShaderImp(iVar3,iVar1);
+  }
+  if ((*(byte *)(iVar3 + 0x2b3c) & 0x40) == 0) {
+    if (iVar7 != -1) {
+      uVar8 = *(uint *)(iVar3 + 0x30);
+      if (*(uint *)(iVar3 + 0x38) < uVar8) {
+        uVar8 = D3D__CDevice__KickOff(iVar3);
+      }
+      *(undefined4 *)(uVar8 + 4) = 0xc0012700;
+      iVar6 = (int)((uVar14 + 0x70 & 0xffffffff) << 3);
+      uVar4 = *(int *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x368) + *(int *)(iVar1 + 0x20);
+      *(uint *)(uVar8 + 8) = ((uVar4 >> 0x14) + 0x200 & 0x1000) + (uVar4 & 0x1fffffff);
+      *(uint *)(uVar8 + 0xc) = *(uint *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x36c) >> 2;
+      *(undefined4 *)(iVar7 * 0x1a0 + iVar1 + 0x40) = *(undefined4 *)(iVar3 + 0x2b1c);
+      *(uint **)(iVar3 + 0x30) = (uint *)(uVar8 + 0xc);
+    }
+  }
+  else {
+    uVar8 = *(uint *)(iVar3 + 0x30);
+    if (*(uint *)(iVar3 + 0x38) < uVar8) {
+      uVar8 = D3D__CDevice__KickOff(iVar3);
+    }
+    *(undefined4 *)(uVar8 + 4) = 0xc0006000;
+    *(undefined4 *)(uVar8 + 8) = 0x15555555;
+    *(undefined4 *)(uVar8 + 0xc) = 0xc0006100;
+    puVar19 = (uint *)(uVar8 + 0x10);
+    *puVar19 = 0;
+    if ((param_2 & 8) != 0) {
+      *(undefined4 *)(uVar8 + 0x14) = 0x2208;
+      param_2 = param_2 & 0xfffffffffffffff7;
+      puVar19 = (uint *)(uVar8 + 0x18);
+      *puVar19 = *(uint *)(iVar3 + 0x2954);
+    }
+    if (local_b0 != 0) {
+      puVar19[1] = 0xc0002601;
+      puVar19 = puVar19 + 2;
+      *puVar19 = 0;
+    }
+    if (local_ac != 0xffffffff) {
+      puVar19[1] = 0xc0012d01;
+      puVar19[2] = 0x40208;
+      puVar19 = puVar19 + 3;
+      *puVar19 = local_ac;
+    }
+    if ((param_2 & 0x100000000000000) != 0) {
+      puVar19[1] = 0x2001;
+      param_2 = param_2 & 0xfeffffffffffffff;
+      puVar19 = puVar19 + 2;
+      *puVar19 = *(uint *)(iVar3 + 0x2884);
+    }
+    if (local_a8 != 0xffffffff) {
+      puVar19[1] = 0xc0012d01;
+      puVar19[2] = 0x40001;
+      puVar19 = puVar19 + 3;
+      *puVar19 = local_a8;
+    }
+    if ((param_2 & 0x10000) != 0) {
+      puVar19[1] = 0x12180;
+      param_2 = param_2 & 0xfffffffffffe7fff;
+      puVar19[2] = *(uint *)(iVar3 + 0x2920);
+      puVar19 = puVar19 + 3;
+      *puVar19 = *(uint *)(iVar3 + 0x2924);
+    }
+    if (local_b8 != 0xffffffff) {
+      puVar19[1] = 0xc0022d01;
+      puVar19[2] = 0x40180;
+      puVar19[3] = local_b8;
+      puVar19 = puVar19 + 4;
+      *puVar19 = local_b4;
+    }
+    if (local_c0 == -1) {
+      puVar12 = puVar19;
+      if (iVar7 != -1) {
+        iVar6 = (int)((uVar14 + 0x70 & 0xffffffff) << 3);
+        puVar19[1] = 0xc0012700;
+        uVar8 = *(int *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x368) + *(int *)(iVar1 + 0x20);
+        puVar19[2] = ((uVar8 >> 0x14) + 0x200 & 0x1000) + (uVar8 & 0x1fffffff);
+        puVar12 = puVar19 + 3;
+        *puVar12 = *(uint *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x36c) >> 2;
+        *(undefined4 *)(iVar7 * 0x1a0 + iVar1 + 0x40) = *(undefined4 *)(iVar3 + 0x2b1c);
+      }
+    }
+    else {
+      iVar6 = (local_c0 + 0x70) * 8;
+      puVar19[1] = 0xc0012701;
+      uVar8 = *(int *)(iVar1 + *(int *)(iVar6 + iVar1) + 0x368) + *(int *)(iVar1 + 0x20);
+      puVar19[2] = ((uVar8 >> 0x14) + 0x200 & 0x1000) + (uVar8 & 0x1fffffff);
+      puVar19[3] = *(uint *)(iVar1 + *(int *)(iVar6 + iVar1) + 0x36c) >> 2;
+      *(undefined4 *)(local_c0 * 0x1a0 + iVar1 + 0x40) = *(undefined4 *)(iVar3 + 0x2b1c);
+      puVar12 = puVar19 + 3;
+      if (iVar7 != -1) {
+        puVar19[4] = 0xc0006000;
+        iVar6 = (int)((uVar14 + 0x70 & 0xffffffff) << 3);
+        puVar19[5] = 0x2aaaaaaa;
+        puVar19[6] = 0xc0012701;
+        uVar8 = *(int *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x368) + *(int *)(iVar1 + 0x20);
+        puVar19[7] = ((uVar8 >> 0x14) + 0x200 & 0x1000) + (uVar8 & 0x1fffffff);
+        puVar12 = puVar19 + 8;
+        *puVar12 = *(uint *)(*(int *)(iVar6 + iVar1) + iVar1 + 0x36c) >> 2;
+        *(undefined4 *)(iVar7 * 0x1a0 + iVar1 + 0x40) = *(undefined4 *)(iVar3 + 0x2b1c);
+      }
+    }
+    puVar12[1] = 0xc0006000;
+    puVar12[2] = *(uint *)(iVar3 + 0x329c);
+    puVar12[3] = 0xc0006100;
+    puVar12[4] = *(uint *)(iVar3 + 0x32a0);
+    *(uint **)(iVar3 + 0x30) = puVar12 + 4;
+  }
+LAB_828781d4:
+  __restgprlr(param_2);
+  return;
+}
+
+
+// 828781E8  D3DVertexShader_Bind  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:3674)
+
+void D3DVertexShader_Bind
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+               ulonglong param_5)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  void *pvVar4;
+  void *pvVar5;
+  uint uVar8;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int *piVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  uint *puVar12;
+  undefined4 *puVar13;
+  char in_RESERVE;
+  byte bVar14;
+  undefined1 local_70 [16];
+  undefined1 auStack_60 [96];
+  
+  pvVar4 = (void *)__savegprlr_25();
+  iVar3 = (int)param_3;
+  uVar1 = *(uint *)(iVar3 + 0x1c);
+  uVar8 = 0;
+  param_4 = param_4 + -4;
+  do {
+    param_4 = param_4 + 4;
+    local_70[uVar8] = (char)(*(uint *)param_4 >> 2);
+    uVar8 = uVar8 + 1;
+  } while (uVar8 <= uVar1);
+  pvVar5 = pvVar4;
+  if ((param_5 & 0xffffffff) != 0) {
+    iVar2 = *(int *)((int)pvVar4 + 0x380);
+    lVar10 = *(uint *)((int)param_5 + 0x40) + param_5 + 0x28;
+    puVar12 = (uint *)((int)pvVar4 + iVar2 + 0x368);
+    pvVar5 = (void *)D3D__CompareInterpolatorHeaders(puVar12,lVar10);
+    if ((pvVar5 != (void *)0x0) && (pvVar5 == (void *)0x1)) {
+      D3D__PatchVertexShaderToMatchPixelShader
+                (auStack_60,puVar12,(ulonglong)*(uint *)((int)pvVar4 + 0x20) + (ulonglong)*puVar12,
+                 (int)pvVar4 + iVar2 + 0x370,lVar10);
+      pvVar5 = (void *)D3D__PatchBoundInterpolatorHeadersToMatch(puVar12,lVar10);
+    }
+  }
+  uVar11 = 0;
+  uVar6 = (ulonglong)((*(uint *)((int)pvVar4 + 0x368) & 0x20) == 0) ^ 1;
+  bVar14 = (uVar6 == 0xffffffffffffffff) << 1;
+  if (uVar6 != 0xffffffffffffffff) {
+    puVar13 = (undefined4 *)((int)pvVar4 + 0x28);
+    piVar9 = (int *)((int)pvVar4 + 0x380);
+    do {
+      D3D__PatchVertexShaderToMatchVertexDeclaration
+                (pvVar4,(ulonglong)*(uint *)((int)pvVar4 + *piVar9 + 0x368) +
+                        (ulonglong)*(uint *)((int)pvVar4 + 0x20),param_3,local_70,uVar11);
+      pvVar5 = memcpy(puVar13 + 2,local_70,0x10);
+      if (*(int *)(iVar3 + 0x30) == 0) {
+        do {
+          uVar7 = (ulonglong)DAT_8488fed4;
+          lVar10 = uVar7 + 1;
+          if (in_RESERVE != '\0') {
+            DAT_8488fed4 = storeWordConditionalIndexed(lVar10,0,0xffffffff8488fed4);
+            bVar14 = 2;
+          }
+        } while ((!(bool)(bVar14 >> 1 & 1)) || ((uVar7 + 2 & 0xffffffff) < 2));
+        *(int *)(iVar3 + 0x30) = (int)lVar10;
+      }
+      uVar11 = uVar11 + 1;
+      piVar9 = piVar9 + 2;
+      *puVar13 = *(undefined4 *)(iVar3 + 0x30);
+      puVar13 = puVar13 + 0x68;
+    } while ((uVar11 & 0xffffffff) < uVar6 + 1);
+  }
+  *(uint *)((int)pvVar4 + 0x368) = *(uint *)((int)pvVar4 + 0x368) | 0x40;
+  __restgprlr_25(pvVar5);
+  return;
 }
 

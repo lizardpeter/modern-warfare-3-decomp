@@ -27,11 +27,61 @@ void bdPreCopyResult___bdPreCopyResult(undefined4 *param_1)
 
 // 82913700  bdPreCopyResult::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:22)
 
-void bdPreCopyResult__deserialize(void)
+void bdPreCopyResult__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar8;
+  undefined8 uVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  undefined1 local_40 [64];
+  
+  iVar3 = __savegprlr_27();
+  puVar5 = (uint *)param_2;
+  *(undefined1 *)(iVar3 + 8) = 0;
+  *(undefined4 *)(iVar3 + 0x188) = 0;
+  if (*(int *)(iVar3 + 4) == 0) {
+    cVar4 = '\0';
+  }
+  else {
+    if ((ulonglong)*puVar5 != 0) {
+      lVar6 = (ulonglong)*puVar5 + 4;
+      do {
+        puVar8 = (uint *)lVar6;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar6);
+          *puVar8 = uVar1;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+    }
+    cVar4 = (**(code **)(**(int **)(iVar3 + 4) + 4))(*(int **)(iVar3 + 4),local_40);
+  }
+  if (cVar4 == '\0') {
+LAB_829137b4:
+    bVar2 = false;
+  }
+  else {
+    cVar4 = bdByteBuffer__readString(*puVar5,iVar3 + 8,0x180);
+    bVar2 = true;
+    if (cVar4 == '\0') goto LAB_829137b4;
+  }
+  if (bVar2) {
+    cVar4 = bdByteBuffer__readUInt32(*puVar5,iVar3 + 0x188);
+    uVar7 = 1;
+    if (cVar4 != '\0') goto LAB_829137dc;
+  }
+  uVar7 = 0;
+LAB_829137dc:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_27(uVar7);
+  return;
 }
 
 

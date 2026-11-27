@@ -2,10 +2,82 @@
 
 // 8265C7C8  inflate_flush  (zlib/infutil.c:29)
 
-void inflate_flush(void)
+void inflate_flush(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  void *pvVar1;
+  uint uVar2;
+  size_t sVar3;
+  int iVar4;
+  undefined4 uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  void *pvVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  
+  iVar4 = __savegprlr_26();
+  pvVar9 = *(void **)(iVar4 + 0x30);
+  uVar10 = ZEXT48(pvVar9);
+  uVar6 = (ulonglong)*(uint *)(iVar4 + 0x34);
+  pvVar1 = *(void **)(param_2 + 0xc);
+  uVar8 = ZEXT48(pvVar1);
+  if (uVar6 < uVar10) {
+    uVar6 = (ulonglong)*(uint *)(iVar4 + 0x2c);
+  }
+  uVar2 = *(uint *)(param_2 + 0x10);
+  uVar11 = uVar6 - uVar10;
+  if ((ulonglong)uVar2 < (uVar6 - uVar10 & 0xffffffff)) {
+    uVar11 = (ulonglong)uVar2;
+  }
+  if ((uVar11 & 0xffffffff) != 0) {
+    param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+  }
+  sVar3 = (size_t)uVar11;
+  *(uint *)(param_2 + 0x10) = uVar2 - sVar3;
+  *(size_t *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + sVar3;
+  if (*(code **)(iVar4 + 0x38) != (code *)0x0) {
+    uVar5 = (**(code **)(iVar4 + 0x38))(*(undefined4 *)(iVar4 + 0x3c),uVar10,uVar11);
+    *(undefined4 *)(iVar4 + 0x3c) = uVar5;
+    *(undefined4 *)(param_2 + 0x30) = uVar5;
+  }
+  if (uVar8 != 0) {
+    memcpy(pvVar1,pvVar9,sVar3);
+    uVar8 = uVar11 + uVar8;
+  }
+  pvVar9 = (void *)uVar8;
+  iVar7 = (int)(uVar11 + uVar10);
+  if ((uVar11 + uVar10 & 0xffffffff) == (ulonglong)*(uint *)(iVar4 + 0x2c)) {
+    pvVar1 = *(void **)(iVar4 + 0x28);
+    if (*(uint *)(iVar4 + 0x34) == *(uint *)(iVar4 + 0x2c)) {
+      *(void **)(iVar4 + 0x34) = pvVar1;
+    }
+    uVar2 = *(uint *)(param_2 + 0x10);
+    uVar6 = (ulonglong)*(uint *)(iVar4 + 0x34) - ZEXT48(pvVar1);
+    if ((ulonglong)uVar2 < (uVar6 & 0xffffffff)) {
+      uVar6 = (ulonglong)uVar2;
+    }
+    if ((uVar6 & 0xffffffff) != 0) {
+      param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+    }
+    sVar3 = (size_t)uVar6;
+    *(uint *)(param_2 + 0x10) = uVar2 - sVar3;
+    *(size_t *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + sVar3;
+    if (*(code **)(iVar4 + 0x38) != (code *)0x0) {
+      uVar5 = (**(code **)(iVar4 + 0x38))(*(undefined4 *)(iVar4 + 0x3c),ZEXT48(pvVar1),uVar6);
+      *(undefined4 *)(iVar4 + 0x3c) = uVar5;
+      *(undefined4 *)(param_2 + 0x30) = uVar5;
+    }
+    if ((uVar8 & 0xffffffff) != 0) {
+      memcpy(pvVar9,pvVar1,sVar3);
+      pvVar9 = (void *)(sVar3 + (int)pvVar9);
+    }
+    iVar7 = sVar3 + (int)pvVar1;
+  }
+  *(void **)(param_2 + 0xc) = pvVar9;
+  *(int *)(iVar4 + 0x30) = iVar7;
+  __restgprlr_26(param_3);
+  return;
 }
 

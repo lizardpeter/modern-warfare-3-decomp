@@ -16,11 +16,34 @@ void bdString__bdString(int *param_1,int *param_2)
 
 // 8292D388  bdString::bdString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:46)
 
-void bdString__bdString(void)
+void bdString__bdString(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 *puVar2;
+  char *pcVar5;
+  longlong lVar3;
+  ulonglong uVar4;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  lVar3 = param_2;
+  do {
+    pcVar5 = (char *)lVar3;
+    lVar3 = lVar3 + 1;
+  } while (*pcVar5 != '\0');
+  uVar4 = (lVar3 - param_2) - 1;
+  uVar1 = uVar4 & 0xffffffff;
+  if (uVar1 == 0) {
+    *PTR_DAT_829b1220 = 0;
+    *puVar2 = &DAT_829b121c;
+    DAT_829b1210 = DAT_829b1210 + 1;
+  }
+  else {
+    bdString__allocateBuffer(puVar2,uVar1);
+    memcpy((void *)*puVar2,(void *)param_2,(int)uVar4 + 1);
+  }
+  __restgprlr_29(puVar2);
+  return;
 }
 
 
@@ -87,11 +110,46 @@ bool bdString__operator__(undefined4 *param_1,undefined4 *param_2)
 }
 
 
+// 8292D320  bdString::getLength  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:276)
+
+undefined4 bdString__getLength(int *param_1)
+
+{
+  return *(undefined4 *)(*param_1 + -8);
+}
+
+
 // 8292D300  bdString::getBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:281)
 
 undefined4 bdString__getBuffer(undefined4 *param_1)
 
 {
   return *param_1;
+}
+
+
+// 8292D330  bdString::allocateBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:311)
+
+void bdString__allocateBuffer(undefined8 param_1,longlong param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  uVar3 = (param_2 + 1U & 0xffffffff) >> 6;
+  if ((param_2 + 1U & 0x3f) != 0) {
+    uVar3 = uVar3 + 1;
+  }
+  lVar4 = (uVar3 & 0x3ffffff) * 0x40;
+  puVar2 = (undefined4 *)bdMemory__allocate(lVar4 + 0xc);
+  puVar2[2] = (int)lVar4;
+  *puVar2 = 1;
+  puVar2[1] = (int)param_2;
+  *puVar1 = puVar2 + 3;
+  __restgprlr_29();
+  return;
 }
 

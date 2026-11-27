@@ -5,8 +5,49 @@
 _onexit_t _onexit(_onexit_t _Func)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23(_Func);
+  undefined4 *_Memory;
+  size_t sVar1;
+  undefined4 *puVar2;
+  _onexit_t p_Var3;
+  size_t sVar4;
+  int iVar5;
+  uint uVar6;
+  undefined4 *puVar7;
+  undefined4 local_60;
+  
+  local_60 = __savegprlr_23(_Func);
+  _lockexit();
+  _Memory = DAT_84897ecc;
+  puVar7 = DAT_84897ec8;
+  if (DAT_84897ecc <= DAT_84897ec8) {
+    iVar5 = (int)DAT_84897ec8 - (int)DAT_84897ecc;
+    uVar6 = iVar5 + 4;
+    if (3 < uVar6) {
+      sVar1 = _msize(DAT_84897ecc);
+      if (sVar1 < uVar6) {
+        sVar4 = sVar1;
+        if (0x7ff < sVar1) {
+          sVar4 = 0x800;
+        }
+        if (((sVar4 + sVar1 < sVar1) ||
+            (puVar2 = realloc(_Memory,sVar4 + sVar1), puVar2 == (undefined4 *)0x0)) &&
+           ((sVar1 + 0x10 < sVar1 ||
+            (puVar2 = realloc(_Memory,sVar1 + 0x10), puVar2 == (undefined4 *)0x0))))
+        goto LAB_829187d4;
+        puVar7 = puVar2 + (iVar5 >> 2);
+        DAT_84897ecc = puVar2;
+      }
+      DAT_84897ec8 = puVar7 + 1;
+      *puVar7 = local_60;
+      goto LAB_829187dc;
+    }
+  }
+LAB_829187d4:
+  local_60 = 0;
+LAB_829187dc:
+  FUN_829187f4();
+  p_Var3 = (_onexit_t)__restgprlr_23(local_60);
+  return p_Var3;
 }
 
 

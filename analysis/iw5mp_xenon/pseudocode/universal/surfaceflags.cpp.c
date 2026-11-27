@@ -5,8 +5,30 @@
 void Com_SurfaceTypeFromName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined **ppuVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = I_stricmp(uVar1,0xffffffff8200352c);
+  if (iVar2 == 0) {
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = 0;
+  ppuVar4 = &PTR_DAT_82994070;
+  do {
+    iVar3 = I_stricmp(uVar1,*ppuVar4);
+    if (iVar3 == 0) {
+      __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
+      return;
+    }
+    ppuVar4 = ppuVar4 + 5;
+    iVar2 = iVar2 + 1;
+  } while ((int)ppuVar4 < -0x7d66bd38);
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
@@ -21,8 +43,7 @@ ulonglong Com_SurfaceTypeToName(uint param_1)
     uVar1 = 0xffffffff8200352c;
   }
   else {
-    if (((int)(&PTR_caseD_33_82994064)[param_1 * 5] >> 0x14 & 0x1fU) != param_1) {
-                    /* WARNING: Subroutine does not return */
+    if (((int)(&PTR_caseD_b_82994064)[param_1 * 5] >> 0x14 & 0x1fU) != param_1) {
       MyAssertHandler(0xffffffff821840c8,0x90,0,0xffffffff82000f98,0xffffffff8202c4e8);
     }
     uVar1 = ZEXT48((&PTR_DAT_8299405c)[param_1 * 5]);

@@ -24,6 +24,22 @@ dxGeomTransform__dxGeomTransform(undefined4 *param_1,undefined8 param_2,undefine
 }
 
 
+// 82687CB8  dxGeomTransform::Destruct  (physics/ode/src/collision_transform.cpp:62)
+
+void dxGeomTransform__Destruct(int param_1)
+
+{
+  if (*(int *)(param_1 + 0x4c) == 0) {
+    return;
+  }
+  if (*(int *)(param_1 + 0x50) == 0) {
+    return;
+  }
+  ODE_GeomDestruct();
+  return;
+}
+
+
 // 82687CE0  dxGeomTransform::~dxGeomTransform  (physics/ode/src/collision_transform.cpp:69)
 
 void dxGeomTransform___dxGeomTransform(undefined4 *param_1)
@@ -43,18 +59,68 @@ void dxGeomTransform___dxGeomTransform(undefined4 *param_1)
 void dxGeomTransform__computeAABB(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  
+  iVar3 = __savegprlr_29();
+  if (*(int *)(iVar3 + 0x4c) == 0) {
+    dSetZero(iVar3 + 0x2c,6);
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = *(undefined4 *)(*(int *)(iVar3 + 0x4c) + 0x18);
+  uVar2 = *(undefined4 *)(*(int *)(iVar3 + 0x4c) + 0x1c);
+  dxGeomTransform__computeFinalTx(iVar3);
+  *(int *)(*(int *)(iVar3 + 0x4c) + 0x18) = iVar3 + 0xc4;
+  *(int *)(*(int *)(iVar3 + 0x4c) + 0x1c) = iVar3 + 0x94;
+  (**(code **)(**(int **)(iVar3 + 0x4c) + 4))();
+  puVar4 = (undefined4 *)(iVar3 + 0x28);
+  lVar6 = 6;
+  puVar5 = (undefined4 *)(*(int *)(iVar3 + 0x4c) + 0x28);
+  do {
+    puVar5 = puVar5 + 1;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *puVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  *(undefined4 *)(*(int *)(iVar3 + 0x4c) + 0x18) = uVar1;
+  *(undefined4 *)(*(int *)(iVar3 + 0x4c) + 0x1c) = uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82688708  ODE_GeomTransformGetAAContainedBox  (physics/ode/src/collision_transform.cpp:103)
 
-void ODE_GeomTransformGetAAContainedBox(void)
+void ODE_GeomTransformGetAAContainedBox(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float *pfVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (*(int *)(iVar2 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x6a,0,0xffffffff82000f98,0xffffffff821982e0);
+  }
+  if (*(int *)(iVar2 + 0x4c) == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x6e,0,0xffffffff82000f98,0xffffffff821982d8);
+  }
+  if ((*(uint *)(iVar2 + 8) & 2) != 0) {
+    dxGeomTransform__computeFinalTx(iVar2);
+  }
+  *(int *)(*(int *)(iVar2 + 0x4c) + 0x18) = iVar2 + 0xc4;
+  *(int *)(*(int *)(iVar2 + 0x4c) + 0x1c) = iVar2 + 0x94;
+  pfVar1 = (float *)param_2;
+  *pfVar1 = *(float *)(iVar2 + 0x88) + *pfVar1;
+  pfVar1[1] = *(float *)(iVar2 + 0x8c) + pfVar1[1];
+  pfVar1[2] = *(float *)(iVar2 + 0x90) + pfVar1[2];
+  ODE_GeomGetAAContainedBoxInternal(*(undefined4 *)(iVar2 + 0x4c),param_2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -99,11 +165,9 @@ void dCollideTransform(undefined8 param_1,undefined8 param_2,undefined8 param_3,
   
   iVar5 = __savegprlr_24();
   if ((int)param_5 < 0x20) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821981c8,0x8f,0,0xffffffff82000f98,0xffffffff821982b4);
   }
   if (*(int *)(iVar5 + 4) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821981c8,0x90,0,0xffffffff82000f98,0xffffffff82198294);
   }
   if (*(int *)(iVar5 + 0x4c) == 0) {
@@ -111,7 +175,6 @@ void dCollideTransform(undefined8 param_1,undefined8 param_2,undefined8 param_3,
     return;
   }
   if (*(int *)(*(int *)(iVar5 + 0x4c) + 0x28) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821981c8,0x95,0,0xffffffff820011f4,0xffffffff8219823c,
                     0xffffffff82198258);
   }
@@ -136,11 +199,35 @@ void dCollideTransform(undefined8 param_1,undefined8 param_2,undefined8 param_3,
 
 // 82687D40  ODE_GeomTransformInit  (physics/ode/src/collision_transform.cpp:181)
 
-void ODE_GeomTransformInit(void)
+void ODE_GeomTransformInit(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_27();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xb8,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  Sys_EnterCriticalSection(0x15);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xbf,0,0xffffffff82000f98,0xffffffff821974d0);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 100) != 0) {
+    MyAssertHandler(0xffffffff821981c8,0xc0,0,0xffffffff82000f98,0xffffffff82197964);
+  }
+  *(undefined4 *)(iVar1 + 100) = 1;
+  if ((uVar2 & 0xffffffff) != 0) {
+    dxGeomTransform__dxGeomTransform(uVar2,param_2,param_3);
+  }
+  if (*(int *)(iVar1 + 100) == 0) {
+    MyAssertHandler(0xffffffff821981c8,199,0,0xffffffff82000f98,0xffffffff8219794c);
+  }
+  *(undefined4 *)(iVar1 + 100) = 0;
+  Sys_LeaveCriticalSection(0x15);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -164,11 +251,31 @@ void dMULTIPLY0_333<float,float,float>(float *param_1,float *param_2,float *para
 
 // 82687E40  dGeomTransformSetGeom  (physics/ode/src/collision_transform.cpp:210)
 
-void dGeomTransformSetGeom(void)
+void dGeomTransformSetGeom(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xd3,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar2 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0xd4,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xd5,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  puVar1 = *(undefined4 **)(iVar2 + 0x4c);
+  if ((puVar1 != (undefined4 *)0x0) && (*(int *)(iVar2 + 0x50) != 0)) {
+    (**(code **)*puVar1)(puVar1,1);
+  }
+  dSpaceRemove(*(undefined4 *)((int)param_2 + 0x28),param_2);
+  dxGeom__bodyRemove(param_2);
+  *(int *)(iVar2 + 0x4c) = (int)param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -177,18 +284,37 @@ void dGeomTransformSetGeom(void)
 void dGeomTransformGetGeom(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xe3,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0xe4,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x4c));
+  return;
 }
 
 
 // 82687F98  dGeomTransformSetCleanup  (physics/ode/src/collision_transform.cpp:236)
 
-void dGeomTransformSetCleanup(void)
+void dGeomTransformSetCleanup(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xed,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0xee,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  *(undefined4 *)(iVar1 + 0x50) = param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -197,18 +323,37 @@ void dGeomTransformSetCleanup(void)
 void dGeomTransformGetCleanup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0xf7,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0xf8,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x50));
+  return;
 }
 
 
 // 82688090  dGeomTransformSetInfo  (physics/ode/src/collision_transform.cpp:256)
 
-void dGeomTransformSetInfo(void)
+void dGeomTransformSetInfo(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x101,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x102,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  *(undefined4 *)(iVar1 + 0x54) = param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -217,38 +362,84 @@ void dGeomTransformSetInfo(void)
 void dGeomTransformGetInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x10b,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x10c,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x54));
+  return;
 }
 
 
 // 82688188  ODE_GeomTransformSetRotation  (physics/ode/src/collision_transform.cpp:276)
 
-void ODE_GeomTransformSetRotation(void)
+void ODE_GeomTransformSetRotation(undefined8 param_1,undefined4 *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x117,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x118,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  Phys_AxisToOdeMatrix3(param_3,iVar1 + 0x58);
+  *(undefined4 *)(iVar1 + 0x88) = *param_2;
+  *(undefined4 *)(iVar1 + 0x8c) = param_2[1];
+  *(undefined4 *)(iVar1 + 0x90) = param_2[2];
+  __restgprlr_27();
+  return;
 }
 
 
 // 82688228  ODE_GeomTransformSetOffset  (physics/ode/src/collision_transform.cpp:289)
 
-void ODE_GeomTransformSetOffset(void)
+void ODE_GeomTransformSetOffset(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x124,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x125,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  *(undefined4 *)(iVar1 + 0x88) = *param_2;
+  *(undefined4 *)(iVar1 + 0x8c) = param_2[1];
+  *(undefined4 *)(iVar1 + 0x90) = param_2[2];
+  __restgprlr_28();
+  return;
 }
 
 
 // 826882B8  ODE_GeomTransformGetOffset  (physics/ode/src/collision_transform.cpp:301)
 
-void ODE_GeomTransformGetOffset(void)
+void ODE_GeomTransformGetOffset(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x130,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x131,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  *param_2 = *(undefined4 *)(iVar1 + 0x88);
+  param_2[1] = *(undefined4 *)(iVar1 + 0x8c);
+  param_2[2] = *(undefined4 *)(iVar1 + 0x90);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -257,8 +448,25 @@ void ODE_GeomTransformGetOffset(void)
 void ODE_GeomTransformUpdateGeomOrientation(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x13c,0,0xffffffff82000f98,0xffffffff8210cbb0);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821981c8,0x13d,0,0xffffffff82000f98,0xffffffff8219821c);
+  }
+  if (*(int *)(iVar1 + 0x4c) == 0) {
+    MyAssertHandler(0xffffffff821981c8,0x141,0,0xffffffff82000f98,0xffffffff821982d8);
+  }
+  if ((*(uint *)(iVar1 + 8) & 2) != 0) {
+    dxGeomTransform__computeFinalTx(iVar1);
+  }
+  *(int *)(*(int *)(iVar1 + 0x4c) + 0x18) = iVar1 + 0xc4;
+  *(int *)(*(int *)(iVar1 + 0x4c) + 0x1c) = iVar1 + 0x94;
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x4c));
+  return;
 }
 
 
@@ -273,7 +481,6 @@ undefined4 * dxGeomTransform___scalar_deleting_destructor_(undefined4 *param_1,u
   }
   *param_1 = &PTR_dxGeom___scalar_deleting_destructor__821974d8;
   if (((param_2 & 1) != 0) && (DAT_84013128 == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821974e8,0x40,0,0xffffffff8219752c);
   }
   return param_1;

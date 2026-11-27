@@ -36,11 +36,24 @@ void Glass_GetFallPosAtTime
 
 // 8242FD08  Glass_Fall_GetLastPassedTraceTime  (EffectsCore/fx_glass_update.cpp:53)
 
-void Glass_Fall_GetLastPassedTraceTime(void)
+void Glass_Fall_GetLastPassedTraceTime(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  
+  lVar2 = __savegprlr_29();
+  uVar3 = ((ulonglong)*(uint *)(DAT_8332cbf0 + 0xc) - param_2) + lVar2;
+  if ((longlong)uVar3 < 0) {
+    MyAssertHandler(0xffffffff82064f90,0x3a,0,0xffffffff82064fdc,uVar3,0);
+  }
+  uVar1 = *(uint *)(DAT_8332cbf0 + 0xc);
+  trapWord(6,(ulonglong)uVar1,0);
+  trapWord(5,(ulonglong)uVar1 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),
+           0xffff);
+  __restgprlr_29((longlong)((int)uVar3 / (int)uVar1 + -1) * (longlong)(int)uVar1 + param_2);
+  return;
 }
 
 
@@ -112,7 +125,6 @@ void Glass_UpdateFall(undefined8 param_1,ulonglong param_2)
   lVar15 = (ulonglong)(uint)piVar9[0xd] + lVar15;
   piVar18 = (int *)(piVar9[0xf] + (int)param_2 * 0x24);
   if (*(int *)(iVar6 + 8) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82064f90,0x57,0,0xffffffff82065060,*(int *)(iVar6 + 8),0);
   }
   iVar11 = *piVar9;
@@ -144,7 +156,6 @@ void Glass_UpdateFall(undefined8 param_1,ulonglong param_2)
                                             (double)*(float *)(DAT_8332cbf4 + 0xc) - dVar31) *
                            dVar19 + dVar26);
   if (iVar11 < iVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82064f90,0x61,0,0xffffffff82065028,iVar11,iVar5);
   }
   iVar11 = piVar9[1];
@@ -195,7 +206,6 @@ LAB_824301c8:
     iVar17 = ((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0) + iVar10;
   }
   if (iVar11 < iVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82064f90,0x75,0,0xffffffff82064ff4,uVar8,iVar5);
   }
   uVar14 = *(uint *)(DAT_8332cbf0 + 0xc);
@@ -264,11 +274,50 @@ LAB_824301ac:
 
 // 82430298  Glass_UpdatePhysics  (EffectsCore/fx_glass_update.cpp:169)
 
-void Glass_UpdatePhysics(void)
+void Glass_UpdatePhysics(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ushort uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  uint *puVar5;
+  uint *puVar6;
+  char cVar7;
+  longlong lVar8;
+  longlong lVar9;
+  
+  puVar6 = (uint *)__savegprlr_26();
+  lVar8 = (param_2 & 0x7ffffff) * 0x20;
+  uVar2 = puVar6[0xd];
+  iVar4 = puVar6[0xe] + (int)lVar8;
+  lVar9 = (ulonglong)puVar6[0xf] + (param_2 + (param_2 & 0x1fffffff) * 8 & 0x3fffffff) * 4;
+  uVar1 = *(ushort *)(iVar4 + 0x1a);
+  puVar5 = (uint *)lVar9;
+  uVar3 = puVar5[1];
+  *(ushort *)(iVar4 + 0x1a) = uVar1 | 8;
+  Phys_ObjGetInterpolatedState(1,uVar3,(ulonglong)uVar2 + lVar8 + 0x10);
+  cVar7 = Phys_ObjIsAsleep(uVar3);
+  if (cVar7 == '\0') {
+    if (puVar5[2] == 0) goto LAB_82430388;
+    if (((((int)*puVar6 >> 0x1f) - ((int)*puVar5 >> 0x1f)) + (uint)(*puVar5 <= *puVar6) & 0xff) == 0
+       ) goto LAB_82430388;
+    Glass_FreePiecePhysicsJoint(lVar9);
+  }
+  else {
+    *(ushort *)(iVar4 + 0x1a) = uVar1 | 0x28;
+    Glass_FreePiecePhysicsObject(lVar9);
+    if (*puVar5 == 0x7fffffff) {
+      Glass_LinkPiece_Static();
+      __restgprlr_26();
+      return;
+    }
+  }
+  Glass_StartDelayedFall(puVar6,param_2);
+LAB_82430388:
+  Glass_LinkPiece_Dynamic(puVar6,param_2);
+  __restgprlr_26();
+  return;
 }
 
 

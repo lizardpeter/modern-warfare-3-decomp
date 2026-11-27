@@ -99,7 +99,6 @@ void Voice_CheckXHVSync(void)
       if (piVar1 != (int *)0x0) {
         iVar5 = (**(code **)(*piVar1 + 0x30))(piVar1,local_100,local_f0);
         if (iVar5 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82057fbc,0xc4,0,0xffffffff82000f98,0xffffffff82057fb0);
         }
         uVar8 = (ulonglong)local_100[0];
@@ -124,7 +123,6 @@ LAB_8239e78c:
             if (!bVar2) {
               sync(1);
               if (DAT_82b5c8f4 == 0) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82057fbc,0xcc,0,0xffffffff82000f98,0xffffffff82057f20);
               }
               DAT_82b5c8f4 = 0;
@@ -151,7 +149,6 @@ LAB_8239e78c:
             } while (iVar5 < 0x12);
             sync(1);
             if (DAT_82b5c8f4 == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82057fbc,0xd7,0,0xffffffff82000f98,0xffffffff82057f20);
             }
             DAT_82b5c8f4 = 0;
@@ -169,7 +166,6 @@ LAB_8239e8bc:
         }
         sync(1);
         if (DAT_82b5c8f4 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82057fbc,0xde,0,0xffffffff82000f98,0xffffffff82057f20);
         }
         DAT_82b5c8f4 = 0;
@@ -232,31 +228,113 @@ bool Voice_Init(longlong param_1)
 undefined1 Voice_IsMicEnabled(int param_1,uint param_2)
 
 {
-  if (3 < param_2) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82057fbc,0x13d,0,0xffffffff82031880,param_2,4);
+  undefined1 uVar1;
+  
+  if (param_2 < 4) {
+    uVar1 = *(undefined1 *)(param_1 + param_2 + 0x4f0);
   }
-  return *(undefined1 *)(param_1 + param_2 + 0x4f0);
+  else {
+    MyAssertHandler(0xffffffff82057fbc,0x13d,0,0xffffffff82031880,param_2,4);
+    uVar1 = *(undefined1 *)(param_1 + param_2 + 0x4f0);
+  }
+  return uVar1;
+}
+
+
+// 8239EA50  Voice_IsMicEnabledInAnySession  (client_mp/voice.cpp:323)
+
+undefined8 Voice_IsMicEnabledInAnySession(undefined8 param_1)
+
+{
+  char cVar2;
+  undefined8 uVar1;
+  
+  cVar2 = Voice_IsMicEnabled(0xffffffff844c6c08,param_1);
+  if (cVar2 == '\0') {
+    cVar2 = Voice_IsMicEnabled(0xffffffff844ac9b0,param_1);
+    if (cVar2 == '\0') {
+      cVar2 = Voice_IsMicEnabled(0xffffffff844c7e88,param_1);
+      if (cVar2 == '\0') {
+        cVar2 = Voice_IsMicEnabled(0xffffffff844ac380,param_1);
+        if (cVar2 == '\0') {
+          uVar1 = Voice_IsMicEnabled(0xffffffff844c7860,param_1);
+          return uVar1;
+        }
+      }
+    }
+  }
+  return 1;
 }
 
 
 // 8239EB10  Voice_EnableMic  (client_mp/voice.cpp:346)
 
-void Voice_EnableMic(void)
+void Voice_EnableMic(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  char cVar3;
+  int iVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  if (puVar1[2] == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x163,0,0xffffffff82000f98,0xffffffff82058074);
+  }
+  if (*(char *)((int)puVar1 + (int)param_2 + 0x4f0) == '\0') {
+    cVar3 = Voice_IsMicEnabledInAnySession(param_2);
+    if (cVar3 != '\0') {
+      MyAssertHandler(0xffffffff82057fbc,0x168,0,0xffffffff82000f98,0xffffffff8205804c);
+    }
+    Voice_CheckXHVSync(puVar1);
+    iVar2 = (**(code **)(*(int *)puVar1[2] + 0x20))((int *)puVar1[2],param_2);
+    if (-1 < iVar2) {
+      iVar2 = (**(code **)(*(int *)puVar1[2] + 0xc))((int *)puVar1[2],param_2,0xffffffff822026b8,1);
+      if (-1 < iVar2) {
+        *(undefined1 *)((int)puVar1 + (int)param_2 + 0x4f0) = 1;
+        Com_Printf(0x10,0xffffffff8205801c,param_2,*puVar1);
+        Voice_CheckXHVSync(puVar1);
+        goto LAB_8239ec44;
+      }
+      (**(code **)(*(int *)puVar1[2] + 0x24))((int *)puVar1[2],param_2);
+    }
+    Voice_CheckXHVSync(puVar1);
+    __restgprlr_27(0);
+    return;
+  }
+LAB_8239ec44:
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 8239EC50  Voice_DisableMic  (client_mp/voice.cpp:410)
 
-void Voice_DisableMic(void)
+void Voice_DisableMic(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  int iVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  if (*(char *)((int)puVar2 + (int)param_2 + 0x4f0) != '\0') {
+    Com_Printf(0xe,0xffffffff820580f0,param_2,*puVar2);
+    *(undefined1 *)((int)puVar2 + (int)param_2 + 0x4f0) = 0;
+    Voice_CheckXHVSync(puVar2);
+    uVar1 = (**(code **)(*(int *)puVar2[2] + 0x10))((int *)puVar2[2],param_2,0xffffffff822026b8,1);
+    if ((int)uVar1 < 0) {
+      Com_PrintError(0x10,0xffffffff820580c0,uVar1);
+    }
+    iVar3 = (**(code **)(*(int *)puVar2[2] + 0x24))((int *)puVar2[2],param_2);
+    if (-1 < iVar3) {
+      Voice_CheckXHVSync(puVar2);
+      __restgprlr_29(1);
+      return;
+    }
+    Com_PrintError(0x10,0xffffffff82058094);
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -281,11 +359,40 @@ void Voice_DisableLocalMics(int param_1)
 
 // 8239ED90  Voice_SetFriendFlag  (client_mp/voice.cpp:479)
 
-void Voice_SetFriendFlag(void)
+void Voice_SetFriendFlag(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  char cVar4;
+  int iVar3;
+  longlong lVar5;
+  ulonglong uVar6;
+  int local_30 [12];
+  
+  uVar2 = __savegprlr_29();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x1e4,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82057fbc,0x1e5,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  uVar6 = 0;
+  lVar5 = (param_2 & 0x3ffffff) * 0x40 + uVar2;
+  iVar1 = (int)lVar5;
+  *(undefined1 *)(iVar1 + 0xa8) = 0;
+  while (((cVar4 = Live_IsSignedIn(uVar6), cVar4 == '\0' ||
+          (iVar3 = XUserAreUsersFriends(uVar6,lVar5 + 0x78,1,local_30,0), iVar3 != 0)) ||
+         (local_30[0] == 0))) {
+    uVar6 = uVar6 + 1;
+    if (3 < (uVar6 & 0xffffffff)) {
+      __restgprlr_29();
+      return;
+    }
+  }
+  *(undefined1 *)(iVar1 + 0xa8) = 1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -308,11 +415,9 @@ void Voice_SetAllFriendFlags(void)
   do {
     if (puVar5[-0x37] != '\0') {
       if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82057fbc,0x1e4,0,0xffffffff82000f98,0xffffffff82036a08);
       }
       if (0x11 < (uVar4 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82057fbc,0x1e5,0,0xffffffff82014c1c,uVar4,0x12);
       }
       uVar6 = 0;
@@ -346,29 +451,37 @@ undefined1 Live_IsClientAFriend(int param_1,int param_2)
   char cVar1;
   undefined1 uVar2;
   
-  if ((-1 < param_2) && (param_2 < 0x12)) {
-    Session_GetXuidEvenIfInactive(param_1,param_2);
-    cVar1 = Live_XUIDIsLocalPlayer();
-    if (cVar1 == '\0') {
-      uVar2 = *(undefined1 *)(param_2 * 0x40 + param_1 + 0xa8);
-    }
-    else {
-      uVar2 = 1;
-    }
-    return uVar2;
+  if ((param_2 < 0) || (0x11 < param_2)) {
+    MyAssertHandler(0xffffffff82057fbc,0x20c,0,0xffffffff82037188,0xffffffff82037164,param_2);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82057fbc,0x20c,0,0xffffffff82037188,0xffffffff82037164,param_2);
+  Session_GetXuidEvenIfInactive(param_1,param_2);
+  cVar1 = Live_XUIDIsLocalPlayer();
+  if (cVar1 == '\0') {
+    uVar2 = *(undefined1 *)(param_2 * 0x40 + param_1 + 0xa8);
+  }
+  else {
+    uVar2 = 1;
+  }
+  return uVar2;
 }
 
 
 // 8239F018  Voice_EnableMicIfAllowed  (client_mp/voice.cpp:537)
 
-void Voice_EnableMicIfAllowed(void)
+void Voice_EnableMicIfAllowed(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = Live_GetOurVoiceCommunicationSetting(param_2);
+  Voice_DisableMic(uVar1,param_2);
+  if (iVar2 != 2) {
+    Voice_EnableMic(uVar1,param_2);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -393,7 +506,6 @@ void Voice_RegisterRemotePlayer(undefined8 param_1,ulonglong param_2,undefined8 
   lVar3 = Session_GetXuid(param_2,param_3);
   if (lVar3 == 0) {
     uVar4 = va(0xffffffff820582f0,0);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82057fbc,0x242,0,0xffffffff820011f4,0xffffffff820582e4,uVar4);
   }
   Voice_CheckXHVSync(param_2);
@@ -475,15 +587,13 @@ LAB_8239f1c8:
             Voice_EnableMic(param_2,uVar4);
           }
         }
-        iVar5 = (**(code **)(*(int *)puVar1[2] + 0x28))((int *)puVar1[2],lVar3,0,0,0);
-        if (iVar5 < 0) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff82057fbc,0x26d,0,0xffffffff820581d4,0xffffffff820581bc);
+        uVar4 = (**(code **)(*(int *)puVar1[2] + 0x28))((int *)puVar1[2],lVar3,0,0,0);
+        if ((int)uVar4 < 0) {
+          MyAssertHandler(0xffffffff82057fbc,0x26d,0,0xffffffff820581d4,0xffffffff820581bc,uVar4);
         }
         uVar4 = (**(code **)(*(int *)puVar1[2] + 0x14))((int *)puVar1[2],lVar3,0xffffffff822026b8,1)
         ;
         if ((int)uVar4 < 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82057fbc,0x270,0,0xffffffff820581d4,0xffffffff820581bc,uVar4);
         }
         iVar5 = 0;
@@ -497,7 +607,6 @@ LAB_8239f1c8:
       if (*(char *)((int)puVar1 + iVar9 * 0x40 + 0x71) != '\0') {
         uVar4 = va(0xffffffff82058158,lVar3,param_3,*(undefined8 *)(puVar1 + iVar9 * 0x10 + 0x1e),
                    *(undefined8 *)(puVar1 + iVar9 * 0x10 + 0x1e));
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82057fbc,0x28c,0,0xffffffff820011f4,0xffffffff82058124,uVar4);
       }
       uVar4 = Session_HostNum(param_2);
@@ -514,7 +623,6 @@ LAB_8239f1c8:
       *(undefined1 *)((int)puVar1 + iVar9 * 0x40 + 0x71) = 1;
       sync(1);
       if (DAT_82b5c8f4 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82057fbc,0x2a2,0,0xffffffff82000f98,0xffffffff82057f20);
       }
       DAT_82b5c8f4 = 0;
@@ -551,11 +659,110 @@ LAB_8239f1c8:
 
 // 8239F500  Voice_UnregisterRemotePlayer  (client_mp/voice.cpp:700)
 
-void Voice_UnregisterRemotePlayer(void)
+void Voice_UnregisterRemotePlayer(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 *puVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  undefined8 uVar3;
+  char cVar6;
+  int iVar5;
+  longlong *plVar7;
+  longlong lVar8;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar4 = (undefined4 *)__savegprlr_23();
+  Voice_CheckXHVSync();
+  puVar1 = puVar4 + (uint)param_2 * 0x10;
+  if (*(char *)((int)puVar1 + 0x71) == '\0') {
+    __restgprlr_23(0);
+    return;
+  }
+  do {
+    uVar2 = DAT_82b5c8f4;
+    if (DAT_82b5c8f4 != 0) {
+      if (in_RESERVE != '\0') {
+        DAT_82b5c8f4 = storeWordConditionalIndexed((ulonglong)DAT_82b5c8f4,0,0xffffffff82b5c8f4);
+        in_cr0 = 2;
+      }
+      break;
+    }
+    if (in_RESERVE != '\0') {
+      DAT_82b5c8f4 = storeWordConditionalIndexed(1,0,0xffffffff82b5c8f4);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+joined_r0x8239f580:
+  if (uVar2 != 0) {
+    Sys_Sleep(1);
+    do {
+      uVar2 = DAT_82b5c8f4;
+      if (DAT_82b5c8f4 != 0) {
+        if (in_RESERVE != '\0') {
+          DAT_82b5c8f4 = storeWordConditionalIndexed((ulonglong)DAT_82b5c8f4,0,0xffffffff82b5c8f4);
+          in_cr0 = 2;
+        }
+        break;
+      }
+      if (in_RESERVE != '\0') {
+        DAT_82b5c8f4 = storeWordConditionalIndexed(1,0,0xffffffff82b5c8f4);
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    goto joined_r0x8239f580;
+  }
+  sync(1);
+  if (puVar4[4] == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x2d0,0,0xffffffff82000f98,0xffffffff820583e8);
+  }
+  lVar8 = *(longlong *)(puVar1 + 0x1e);
+  Com_Printf(0x10,0xffffffff820583b4,param_2,lVar8,*puVar4,puVar4[4]);
+  *(undefined1 *)((int)puVar1 + 0x71) = 0;
+  sync(1);
+  if (*(char *)(puVar4 + 1) != '\0') {
+    iVar5 = 0;
+    plVar7 = (longlong *)(puVar4 + 0x1e);
+    do {
+      if ((*(char *)((int)plVar7 + -7) != '\0') && (*plVar7 == lVar8)) {
+        if (-1 < iVar5) goto LAB_8239f75c;
+        break;
+      }
+      iVar5 = iVar5 + 1;
+      plVar7 = plVar7 + 8;
+    } while (iVar5 < 0x12);
+    uVar3 = (**(code **)(*(int *)puVar4[2] + 0x18))((int *)puVar4[2],lVar8,0xffffffff822026b8,1);
+    if ((int)uVar3 != 0) {
+      Com_PrintError(0x10,0xffffffff82058380,uVar3);
+    }
+    uVar3 = (**(code **)(*(int *)puVar4[2] + 0x2c))((int *)puVar4[2],lVar8);
+    if ((int)uVar3 != 0) {
+      Com_PrintError(0x10,0xffffffff8205834c,uVar3);
+    }
+    cVar6 = Live_IsSignedIn(puVar4[0x13e]);
+    if (cVar6 != '\0') {
+      iVar5 = Live_GetOurClientNum(puVar4[0x13e],puVar4);
+      if (iVar5 < 0) {
+        Com_Printf(0xe,0xffffffff82058300);
+      }
+      else {
+        iVar5 = Session_AreWeHost(puVar4);
+        if ((iVar5 == 0) && (cVar6 = Session_IsHost(puVar4,param_2), cVar6 == '\0')) {
+          Session_RemoveLocalVoiceConnectivity(puVar4,1 << ((uint)param_2 & 0x3f));
+        }
+      }
+    }
+  }
+LAB_8239f75c:
+  sync(1);
+  if (DAT_82b5c8f4 == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x2fc,0,0xffffffff82000f98,0xffffffff82057f20);
+  }
+  DAT_82b5c8f4 = 0;
+  Voice_CheckXHVSync(puVar4);
+  __restgprlr_23(1);
+  return;
 }
 
 
@@ -564,8 +771,86 @@ void Voice_UnregisterRemotePlayer(void)
 void Voice_ClearRemoteTalkers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  char *pcVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_26();
+  Session_SetLocalVoiceConnectivity(iVar1,0);
+  lVar3 = 0;
+  pcVar2 = (char *)(iVar1 + 0x71);
+  do {
+    if (*pcVar2 != '\0') {
+      Voice_UnregisterRemotePlayer(iVar1,lVar3);
+    }
+    if (*pcVar2 != '\0') {
+      MyAssertHandler(0xffffffff82057fbc,0x30f,0,0xffffffff82000f98,0xffffffff82058404);
+    }
+    lVar3 = lVar3 + 1;
+    pcVar2 = pcVar2 + 0x40;
+  } while ((int)lVar3 < 0x12);
+  Voice_CheckXHVSync(iVar1);
+  if (*(int *)(iVar1 + 8) != 0) {
+    lVar3 = 0;
+    do {
+      Voice_DisableMic(iVar1,lVar3);
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < 4);
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 8239F860  Voice_GetRegisteredPlayerList  (client_mp/voice.cpp:791)
+
+longlong Voice_GetRegisteredPlayerList(int param_1,int param_2)
+
+{
+  undefined8 *puVar1;
+  longlong lVar2;
+  undefined8 *puVar3;
+  longlong lVar4;
+  
+  lVar2 = 0;
+  puVar3 = (undefined8 *)(param_2 + -8);
+  puVar1 = (undefined8 *)(param_1 + 0x78);
+  lVar4 = 3;
+  do {
+    if (*(char *)((int)puVar1 + -7) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3[1] = *puVar1;
+      puVar3 = puVar3 + 1;
+    }
+    if (*(char *)((int)puVar1 + 0x39) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3[1] = puVar1[8];
+      puVar3 = puVar3 + 1;
+    }
+    if (*(char *)((int)puVar1 + 0x79) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3[1] = puVar1[0x10];
+      puVar3 = puVar3 + 1;
+    }
+    if (*(char *)((int)puVar1 + 0xb9) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3[1] = puVar1[0x18];
+      puVar3 = puVar3 + 1;
+    }
+    if (*(char *)((int)puVar1 + 0xf9) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3[1] = puVar1[0x20];
+      puVar3 = puVar3 + 1;
+    }
+    if (*(char *)((int)puVar1 + 0x139) != '\0') {
+      lVar2 = lVar2 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = puVar1[0x28];
+    }
+    puVar1 = puVar1 + 0x30;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  return lVar2;
 }
 
 
@@ -609,31 +894,151 @@ longlong Voice_GetRegisteredPlayerCount(int param_1)
 
 // 8239F9A8  Voice_IncomingVoiceData  (client_mp/voice.cpp:824)
 
-void Voice_IncomingVoiceData(void)
+void Voice_IncomingVoiceData
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  ulonglong uVar1;
+  int iVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint local_40 [16];
+  
+  iVar2 = __savegprlr_26();
+  iVar3 = (int)param_2;
+  if (iVar3 < 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x342,0,0xffffffff82000f98,0xffffffff82058560);
+  }
+  if (0x11 < iVar3) {
+    MyAssertHandler(0xffffffff82057fbc,0x343,0,0xffffffff82000f98,0xffffffff82058548);
+  }
+  uVar5 = (uint)param_4;
+  iVar3 = iVar3 * 0x40 + iVar2;
+  local_40[0] = uVar5;
+  if (*(char *)(iVar3 + 0x71) == '\0') {
+    Com_Printf(0x10,0xffffffff820584f8,param_2);
+    __restgprlr_26(0);
+    return;
+  }
+  if (*(longlong *)(iVar3 + 0x78) == 0) {
+    Com_Printf(0x10,0xffffffff820584bc);
+    __restgprlr_26(0);
+    return;
+  }
+  if (*(char *)(DAT_84253bbc + 0xc) != '\0') {
+    Com_Printf(0x10,0xffffffff82058480,param_4,param_2,*(longlong *)(iVar3 + 0x78),
+               *(undefined2 *)param_3);
+  }
+  Profile_Begin(0x161);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 0x54))
+                    (*(int **)(iVar2 + 8),*(undefined8 *)(iVar3 + 0x78),param_3,local_40);
+  Profile_EndInternal(0);
+  uVar4 = (ulonglong)local_40[0];
+  if ((*(char *)(DAT_84253bbc + 0xc) != '\0') && (uVar5 != local_40[0])) {
+    Com_Printf(0x10,0xffffffff82058454,param_4 - uVar4);
+    uVar4 = (ulonglong)local_40[0];
+  }
+  if ((int)((uVar1 & 0xffffffff) >> 0x1f) != 1) {
+    __restgprlr_26(uVar4);
+    return;
+  }
+  Com_PrintError(0x10,0xffffffff8205842c);
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 8239FB50  Voice_GetLocalVoiceData  (client_mp/voice.cpp:889)
 
-void Voice_GetLocalVoiceData(void)
+void Voice_GetLocalVoiceData(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  undefined4 local_40 [16];
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82057fbc,899,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82057fbc,900,0,0xffffffff82000f98,0xffffffff82058570);
+  }
+  Voice_CheckXHVSync(iVar1);
+  iVar2 = CL_ControllerIndexFromClientNum(param_2);
+  if (*(char *)(iVar2 + iVar1 + 0x4f0) != '\0') {
+    if (DAT_82966e98 == 0) {
+      if (DAT_82b5c820 != iVar2) {
+        __restgprlr_27(0);
+        return;
+      }
+    }
+    else {
+      cVar4 = CL_IsLocalClientActive(param_2);
+      if (cVar4 == '\0') goto LAB_8239fc98;
+    }
+    iVar3 = (**(code **)(**(int **)(iVar1 + 8) + 0x38))(*(int **)(iVar1 + 8),iVar2);
+    if (iVar3 != 0) {
+      Profile_Begin(0x162);
+      local_40[0] = 10;
+      iVar1 = (**(code **)(**(int **)(iVar1 + 8) + 0x4c))
+                        (*(int **)(iVar1 + 8),iVar2,param_3,local_40,0);
+      if (-1 < iVar1) {
+        Profile_EndInternal(0);
+        __restgprlr_27(local_40[0]);
+        return;
+      }
+      Profile_EndInternal(0);
+    }
+  }
+LAB_8239fc98:
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 8239FCA8  Voice_IsXuidTalking  (client_mp/voice.cpp:956)
 
-void Voice_IsXuidTalking(void)
+void Voice_IsXuidTalking(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  char cVar3;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = Live_GetPortForLocalXUID(param_2);
+  if ((int)uVar1 < 0) {
+    iVar2 = (**(code **)(**(int **)(iVar2 + 8) + 0x3c))(*(int **)(iVar2 + 8),param_2);
+    __restgprlr_29(iVar2 == 1);
+    return;
+  }
+  cVar3 = Live_IsSignedIn();
+  if (cVar3 == '\0') {
+    __restgprlr_29(0);
+    return;
+  }
+  iVar2 = (**(code **)(**(int **)(iVar2 + 8) + 0x38))(*(int **)(iVar2 + 8),uVar1);
+  __restgprlr_29(iVar2 == 1);
+  return;
+}
+
+
+// 8239FD48  Voice_IsLocalClientTalking  (client_mp/voice.cpp:995)
+
+bool Voice_IsLocalClientTalking(int param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  iVar2 = **(int **)(param_1 + 8);
+  uVar1 = CL_ControllerIndexFromClientNum(param_2);
+  iVar2 = (**(code **)(iVar2 + 0x38))(*(undefined4 *)(param_1 + 8),uVar1);
+  return iVar2 == 1;
 }
 
 
@@ -642,18 +1047,49 @@ void Voice_IsXuidTalking(void)
 void Voice_GetTalkingCount(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  char cVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong *plVar5;
+  
+  iVar1 = __savegprlr_27();
+  plVar5 = (longlong *)(iVar1 + 0x78);
+  lVar3 = 0;
+  lVar4 = 0x12;
+  do {
+    if (*(char *)(plVar5 + -1) == '\0') {
+      *plVar5 = 0;
+    }
+    else if ((*plVar5 != 0) && (cVar2 = Voice_IsXuidTalking(iVar1), cVar2 != '\0')) {
+      lVar3 = lVar3 + 1;
+    }
+    lVar4 = lVar4 + -1;
+    plVar5 = plVar5 + 8;
+  } while (lVar4 != 0);
+  __restgprlr_27(lVar3);
+  return;
 }
 
 
 // 8239FE18  Voice_IsHeadsetPresent  (client_mp/voice.cpp:1034)
 
-void Voice_IsHeadsetPresent(void)
+void Voice_IsHeadsetPresent(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x40b,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff82057fbc,0x40d,0,0xffffffff82000f98,0xffffffff82058074);
+  }
+  uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 0x34))(*(int **)(iVar2 + 8),param_2);
+  __restgprlr_28((-uVar1 & ~uVar1 & 0xffffffff) >> 0x1f);
+  return;
 }
 
 
@@ -679,14 +1115,14 @@ undefined8 Voice_IsPlayerGloballyMuted(undefined8 param_1,undefined8 param_2)
   int local_20 [4];
   
   iVar1 = XUserMuteListQuery(param_1,param_2,local_20);
-  if (iVar1 == 0) {
-    if (local_20[0] != 0) {
-      return 1;
+  if (iVar1 != 0) {
+    if (iVar1 == 0x4dd) {
+      return 0;
     }
-  }
-  else if (iVar1 != 0x4dd) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82057fbc,0x434,0,0xffffffff82000f98,0xffffffff8205857c);
+  }
+  if ((iVar1 != 0x4dd) && (local_20[0] != 0)) {
+    return 1;
   }
   return 0;
 }
@@ -694,11 +1130,39 @@ undefined8 Voice_IsPlayerGloballyMuted(undefined8 param_1,undefined8 param_2)
 
 // 8239FF88  Voice_IsMemberMuted  (client_mp/voice.cpp:1090)
 
-void Voice_IsMemberMuted(void)
+void Voice_IsMemberMuted(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char cVar2;
+  longlong *plVar4;
+  undefined8 uVar3;
+  int iVar5;
+  
+  iVar1 = __savegprlr_29();
+  cVar2 = Voice_IsPlayerGloballyMuted(param_2,param_3);
+  if (cVar2 != '\0') {
+    __restgprlr_29(1);
+    return;
+  }
+  iVar5 = 0;
+  plVar4 = (longlong *)(iVar1 + 0x78);
+  while ((*(char *)((int)plVar4 + -7) == '\0' || (*plVar4 != param_3))) {
+    iVar5 = iVar5 + 1;
+    plVar4 = plVar4 + 8;
+    if (0x11 < iVar5) {
+      __restgprlr_29(0);
+      return;
+    }
+  }
+  if (0x11 < iVar5) {
+    MyAssertHandler(0xffffffff82057fbc,0x449,0,0xffffffff82037188,0xffffffff820585b0,iVar5);
+  }
+  if ((iVar5 < 0) || (uVar3 = 1, *(char *)(iVar5 * 0x40 + iVar1 + 0xa9) == '\0')) {
+    uVar3 = 0;
+  }
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -719,26 +1183,48 @@ bool Voice_IsMemberUnmutable(undefined8 param_1,undefined8 param_2,undefined8 pa
 void Voice_MuteMember(int param_1,int param_2)
 
 {
+  longlong lVar1;
+  
   param_1 = param_2 * 0x40 + param_1;
   if (*(char *)(param_1 + 0x70) == '\0') {
+    lVar1 = 0;
     *(undefined8 *)(param_1 + 0x78) = 0;
   }
-  else if (*(longlong *)(param_1 + 0x78) != 0) {
-    *(undefined1 *)(param_1 + 0xa9) = 1;
-    VoiceMute_AddUser(*(longlong *)(param_1 + 0x78));
-    return;
+  else {
+    lVar1 = *(longlong *)(param_1 + 0x78);
+    if (lVar1 != 0) goto LAB_823a00fc;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82057fbc,0x45b,0,0xffffffff82000f98,0xffffffff820585c4);
+LAB_823a00fc:
+  *(undefined1 *)(param_1 + 0xa9) = 1;
+  VoiceMute_AddUser(lVar1);
+  return;
 }
 
 
 // 823A0128  Voice_UnmuteMember  (client_mp/voice.cpp:1129)
 
-void Voice_UnmuteMember(void)
+void Voice_UnmuteMember(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  longlong lVar2;
+  
+  iVar1 = __savegprlr_29();
+  iVar1 = param_2 * 0x40 + iVar1;
+  if (*(char *)(iVar1 + 0x70) == '\0') {
+    lVar2 = 0;
+    *(undefined8 *)(iVar1 + 0x78) = 0;
+  }
+  else {
+    lVar2 = *(longlong *)(iVar1 + 0x78);
+    if (lVar2 != 0) goto LAB_823a0188;
+  }
+  MyAssertHandler(0xffffffff82057fbc,0x46e,0,0xffffffff82000f98,0xffffffff820585c4);
+LAB_823a0188:
+  *(undefined1 *)(iVar1 + 0xa9) = 0;
+  VoiceMute_RemoveUser(lVar2);
+  __restgprlr_29();
+  return;
 }
 

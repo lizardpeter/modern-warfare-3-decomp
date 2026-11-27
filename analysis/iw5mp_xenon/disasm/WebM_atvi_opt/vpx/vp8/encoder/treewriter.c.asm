@@ -43,3 +43,11 @@ LAB_8283c6a8:
   8283C6B4  409AFFA8             bne cr6,0x8283c65c
   8283C6B8  38210090             addi r1,r1,0x90
   8283C6BC  480DA040             b 0x829166fc
+
+; 8283C6C0  vp8_cost_tokens  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.c:41)
+  8283C6C0  7CAB2B78             or r11,r5,r5
+  8283C6C4  7C852378             or r5,r4,r4
+  8283C6C8  38E00000             li r7,0x0
+  8283C6CC  38C00000             li r6,0x0
+  8283C6D0  7D645B78             or r4,r11,r11
+  8283C6D4  4BFFFF54             b 0x8283c628

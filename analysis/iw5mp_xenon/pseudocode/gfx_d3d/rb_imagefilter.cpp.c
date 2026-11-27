@@ -2,11 +2,43 @@
 
 // 827A0D78  RB_VirtualToSceneRadius  (gfx_d3d/rb_imagefilter.cpp:54)
 
-void RB_VirtualToSceneRadius(void)
+void RB_VirtualToSceneRadius(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  double dVar2;
+  
+  dVar2 = (double)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d66a8,0x37,0,0xffffffff82000f98,0xffffffff821d66a0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d66a8,0x38,0,0xffffffff82000f98,0xffffffff821d6698);
+  }
+  fVar1 = (float)((double)DAT_84613724 * dVar2) * 0.0020833334;
+  *(float *)param_3 = fVar1;
+  *(float *)param_2 = fVar1 * DAT_84613744;
+  __restgprlr_28();
+  return;
+}
+
+
+// 827A0E38  RB_PickSymmetricFilterMaterial  (gfx_d3d/rb_imagefilter.cpp:64)
+
+void RB_PickSymmetricFilterMaterial(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+
+{
+  longlong lVar1;
+  
+  lVar1 = __savegprlr_29();
+  if (((int)lVar1 < 1) || (8 < (int)lVar1)) {
+    MyAssertHandler(0xffffffff821d66a8,0x4a,0,0xffffffff821d66f0,0xffffffff821d6708,lVar1);
+  }
+  *param_3 = *(undefined4 *)
+              (&DAT_846165d0 +
+              (int)((param_2 + (param_2 & 0x1fffffff) * 8 + lVar1 & 0xffffffff) << 2));
+  __restgprlr_29(lVar1);
+  return;
 }
 
 
@@ -46,17 +78,14 @@ void RB_GaussianFilterPoints1D
   dVar15 = (double)__savefpr_23();
   dVar19 = 0.0;
   if (dVar15 <= 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d66a8,0x5c,0,0xffffffff821d67d8,0xffffffff821d67ec,dVar15);
   }
   iVar11 = (int)param_3;
   if (iVar11 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d66a8,0x5d,0,0xffffffff821d67b4,0xffffffff821d67c8,param_3);
   }
   iVar10 = (int)param_2;
   if (iVar10 < iVar11) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d66a8,0x5e,0,0xffffffff821d6798,param_2,param_3);
   }
   dVar18 = 0.5;
@@ -65,129 +94,240 @@ void RB_GaussianFilterPoints1D
   uVar2 = (uint)dVar16;
   uVar7 = iVar10 - uVar2 * iVar11;
   uVar4 = (int)uVar7 >> 0x1f;
-  if ((int)((uVar7 ^ uVar4) - uVar4) < (int)uVar2) {
-    dVar16 = dVar18;
-    if ((uVar2 & 1) != 0) {
-      dVar16 = dVar19;
-    }
-    iVar10 = (int)param_4;
-    dVar21 = (double)(-0.5 / (float)(dVar15 * dVar15));
-    pfVar5 = (float *)param_6;
-    dVar15 = dVar19;
-    iVar11 = 0;
-    if (0 < iVar10) {
-      do {
-        dVar24 = (double)(float)((double)(longlong)(iVar11 * 2) + dVar16);
-        dVar23 = (double)(float)((double)(longlong)(iVar11 * 2 + 1) + dVar16);
-        dVar17 = exp((double)(float)((double)(float)(dVar24 * dVar24) * dVar21));
-        dVar22 = (double)(float)dVar17;
-        dVar17 = exp((double)(float)((double)(float)(dVar23 * dVar23) * dVar21));
-        if ((iVar11 == 0) && (dVar16 == dVar15)) {
-          dVar22 = (double)(float)(dVar22 * dVar18);
-        }
-        fVar1 = (float)((double)(float)dVar17 + dVar22);
-        dVar14 = (double)fVar1;
-        pfVar5[iVar11] = fVar1;
-        if (dVar14 == dVar15) {
-          *(float *)(iVar11 * 4 + param_5) =
-               (float)((double)(float)((double)(float)(dVar23 + dVar24) * dVar18) / dVar20);
-        }
-        else {
-          *(float *)(iVar11 * 4 + param_5) =
-               (float)((double)(float)dVar17 * dVar23 + (double)(float)(dVar22 * dVar24)) /
-               (float)(dVar14 * dVar20);
-        }
-        iVar12 = iVar11 + 1;
-        dVar19 = (double)(float)((double)pfVar5[iVar11] + dVar19);
-        iVar11 = iVar12;
-      } while (iVar12 < iVar10);
-      if (0.0010000000474974513 < dVar19) {
-        if (dVar15 < dVar19) {
-          uVar9 = param_4 - 1;
-          fVar1 = (float)(dVar18 / dVar19);
-          if (-1 < (int)uVar9) {
-            if (3 < iVar10) {
-              uVar13 = (param_4 & 0xffffffff) >> 2;
-              lVar8 = (param_4 - 3 & 0x3fffffff) * 4 + param_6;
-              do {
-                pfVar5 = (float *)lVar8;
-                fVar3 = pfVar5[2];
-                pfVar5[2] = fVar3 * fVar1;
-                if (fVar3 * fVar1 < 0.01) {
-                  param_4 = uVar9 + 1;
-                }
-                fVar3 = pfVar5[1];
-                pfVar5[1] = fVar3 * fVar1;
-                if (fVar3 * fVar1 < 0.01) {
-                  param_4 = uVar9;
-                }
-                fVar3 = *pfVar5;
-                *pfVar5 = fVar3 * fVar1;
-                if (fVar3 * fVar1 < 0.01) {
-                  param_4 = uVar9 - 1;
-                }
-                fVar3 = pfVar5[-1];
-                pfVar5[-1] = fVar3 * fVar1;
-                if (fVar3 * fVar1 < 0.01) {
-                  param_4 = uVar9 - 2;
-                }
-                uVar9 = uVar9 - 4;
-                lVar8 = lVar8 + -0x10;
-                uVar13 = uVar13 - 1;
-              } while (uVar13 != 0);
-            }
-            if (-1 < (int)uVar9) {
-              lVar8 = uVar9 + 1;
-              param_6 = (uVar9 & 0x3fffffff) * 4 + param_6;
-              do {
-                fVar3 = *(float *)param_6 * fVar1;
-                *(float *)param_6 = fVar3;
-                if (fVar3 < 0.01) {
-                  param_4 = uVar9 + 1;
-                }
-                uVar9 = uVar9 - 1;
-                param_6 = param_6 + -4;
-                lVar8 = lVar8 + -1;
-              } while (lVar8 != 0);
-            }
-          }
-          __restfpr_23(param_4);
-          __restgprlr_25();
-          return;
-        }
-                    /* WARNING: Subroutine does not return */
+  if ((int)uVar2 <= (int)((uVar7 ^ uVar4) - uVar4)) {
+    uVar6 = va(0xffffffff82065950,param_2,param_3);
+    MyAssertHandler(0xffffffff821d66a8,0x61,0,0xffffffff820011f4,0xffffffff821d675c,uVar6);
+  }
+  dVar16 = dVar18;
+  if ((uVar2 & 1) != 0) {
+    dVar16 = dVar19;
+  }
+  iVar10 = (int)param_4;
+  dVar21 = (double)(-0.5 / (float)(dVar15 * dVar15));
+  pfVar5 = (float *)param_6;
+  dVar15 = dVar19;
+  iVar11 = 0;
+  if (0 < iVar10) {
+    do {
+      dVar24 = (double)(float)((double)(longlong)(iVar11 * 2) + dVar16);
+      dVar23 = (double)(float)((double)(longlong)(iVar11 * 2 + 1) + dVar16);
+      dVar17 = exp((double)(float)((double)(float)(dVar24 * dVar24) * dVar21));
+      dVar22 = (double)(float)dVar17;
+      dVar17 = exp((double)(float)((double)(float)(dVar23 * dVar23) * dVar21));
+      if ((iVar11 == 0) && (dVar16 == dVar15)) {
+        dVar22 = (double)(float)(dVar22 * dVar18);
+      }
+      fVar1 = (float)((double)(float)dVar17 + dVar22);
+      dVar14 = (double)fVar1;
+      pfVar5[iVar11] = fVar1;
+      if (dVar14 == dVar15) {
+        *(float *)(iVar11 * 4 + param_5) =
+             (float)((double)(float)((double)(float)(dVar23 + dVar24) * dVar18) / dVar20);
+      }
+      else {
+        *(float *)(iVar11 * 4 + param_5) =
+             (float)((double)(float)dVar17 * dVar23 + (double)(float)(dVar22 * dVar24)) /
+             (float)(dVar14 * dVar20);
+      }
+      iVar12 = iVar11 + 1;
+      dVar19 = (double)(float)((double)pfVar5[iVar11] + dVar19);
+      iVar11 = iVar12;
+    } while (iVar12 < iVar10);
+    if (0.0010000000474974513 < dVar19) {
+      if (dVar19 <= dVar15) {
         MyAssertHandler(dVar19,0xffffffff821d66a8,0x81,0,0xffffffff821d6730,0xffffffff821d6748,
                         dVar19);
       }
+      uVar9 = param_4 - 1;
+      fVar1 = (float)(dVar18 / dVar19);
+      if (-1 < (int)uVar9) {
+        if (3 < iVar10) {
+          uVar13 = (param_4 & 0xffffffff) >> 2;
+          lVar8 = (param_4 - 3 & 0x3fffffff) * 4 + param_6;
+          do {
+            pfVar5 = (float *)lVar8;
+            fVar3 = pfVar5[2];
+            pfVar5[2] = fVar3 * fVar1;
+            if (fVar3 * fVar1 < 0.01) {
+              param_4 = uVar9 + 1;
+            }
+            fVar3 = pfVar5[1];
+            pfVar5[1] = fVar3 * fVar1;
+            if (fVar3 * fVar1 < 0.01) {
+              param_4 = uVar9;
+            }
+            fVar3 = *pfVar5;
+            *pfVar5 = fVar3 * fVar1;
+            if (fVar3 * fVar1 < 0.01) {
+              param_4 = uVar9 - 1;
+            }
+            fVar3 = pfVar5[-1];
+            pfVar5[-1] = fVar3 * fVar1;
+            if (fVar3 * fVar1 < 0.01) {
+              param_4 = uVar9 - 2;
+            }
+            uVar9 = uVar9 - 4;
+            lVar8 = lVar8 + -0x10;
+            uVar13 = uVar13 - 1;
+          } while (uVar13 != 0);
+        }
+        if (-1 < (int)uVar9) {
+          lVar8 = uVar9 + 1;
+          param_6 = (uVar9 & 0x3fffffff) * 4 + param_6;
+          do {
+            fVar3 = *(float *)param_6 * fVar1;
+            *(float *)param_6 = fVar3;
+            if (fVar3 < 0.01) {
+              param_4 = uVar9 + 1;
+            }
+            uVar9 = uVar9 - 1;
+            param_6 = param_6 + -4;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
+        }
+      }
+      __restfpr_23(param_4);
+      __restgprlr_25();
+      return;
     }
-    *pfVar5 = (float)dVar18;
-    __restfpr_23(1);
-    __restgprlr_25();
-    return;
   }
-  uVar6 = va(0xffffffff82065950,param_2,param_3);
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821d66a8,0x61,0,0xffffffff820011f4,0xffffffff821d675c,uVar6);
+  *pfVar5 = (float)dVar18;
+  __restfpr_23(1);
+  __restgprlr_25();
+  return;
 }
 
 
 // 827A1260  RB_GenerateGaussianFilter1D  (gfx_d3d/rb_imagefilter.cpp:144)
 
-void RB_GenerateGaussianFilter1D(void)
+void RB_GenerateGaussianFilter1D
+               (undefined8 param_1,int param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  undefined4 uVar3;
+  longlong lVar4;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  
+  uVar2 = __savegprlr_29();
+  uVar3 = *(undefined4 *)((int)((param_3 & 0xffffffff) << 2) + param_2);
+  uVar2 = RB_GaussianFilterPoints1D(uVar2,uVar3,uVar3,8,&local_60,&local_40);
+  uVar3 = RB_PickSymmetricFilterMaterial(uVar2,param_4,param_5);
+  lVar4 = -param_3;
+  iVar1 = (int)param_5;
+  *(undefined4 *)(iVar1 + 4) = uVar3;
+  *(undefined4 *)((int)((param_3 + 2 & 0xffffffff) << 2) + iVar1) = local_60;
+  *(undefined4 *)((int)((lVar4 + 3U & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x10) = 0;
+  *(undefined4 *)(iVar1 + 0x14) = local_40;
+  *(undefined4 *)((int)((param_3 + 6 & 0xffffffff) << 2) + iVar1) = local_5c;
+  *(undefined4 *)((int)((lVar4 + 7U & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x20) = 0;
+  *(undefined4 *)(iVar1 + 0x24) = local_3c;
+  *(undefined4 *)((int)((param_3 + 10 & 0xffffffff) << 2) + iVar1) = local_58;
+  *(undefined4 *)((int)((lVar4 + 0xbU & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x30) = 0;
+  *(undefined4 *)(iVar1 + 0x34) = local_38;
+  *(undefined4 *)((int)((param_3 + 0xe & 0xffffffff) << 2) + iVar1) = local_54;
+  *(undefined4 *)((int)((lVar4 + 0xfU & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x40) = 0;
+  *(undefined4 *)(iVar1 + 0x44) = local_34;
+  *(undefined4 *)((int)((param_3 + 0x12 & 0xffffffff) << 2) + iVar1) = local_50;
+  *(undefined4 *)((int)((lVar4 + 0x13U & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x50) = 0;
+  *(undefined4 *)(iVar1 + 0x54) = local_30;
+  *(undefined4 *)((int)((param_3 + 0x16 & 0xffffffff) << 2) + iVar1) = local_4c;
+  *(undefined4 *)((int)((lVar4 + 0x17U & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x60) = 0;
+  *(undefined4 *)(iVar1 + 100) = local_2c;
+  *(undefined4 *)((int)((param_3 + 0x1a & 0xffffffff) << 2) + iVar1) = local_48;
+  *(undefined4 *)((int)((lVar4 + 0x1bU & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x70) = 0;
+  *(undefined4 *)(iVar1 + 0x74) = local_28;
+  *(undefined4 *)((int)((param_3 + 0x1e & 0xffffffff) << 2) + iVar1) = local_44;
+  *(undefined4 *)((int)((lVar4 + 0x1fU & 0xffffffff) << 2) + iVar1) = 0;
+  *(undefined4 *)(iVar1 + 0x80) = 0;
+  *(undefined4 *)(iVar1 + 0x84) = local_24;
+  __restgprlr_29();
+  return;
 }
 
 
 // 827A13F8  RB_GenerateGaussianFilter2D  (gfx_d3d/rb_imagefilter.cpp:167)
 
-void RB_GenerateGaussianFilter2D(void)
+void RB_GenerateGaussianFilter2D
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6,undefined4 *param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  float local_38;
+  float local_34;
+  
+  uVar2 = __savegprlr_28();
+  uVar1 = RB_GaussianFilterPoints1D();
+  RB_GaussianFilterPoints1D(uVar2,uVar1,param_3,param_5,2,&local_40,&local_38);
+  param_7[2] = -local_50;
+  param_7[6] = local_50;
+  param_7[10] = -local_4c;
+  param_7[0xe] = local_4c;
+  param_7[4] = 0;
+  param_7[8] = 0;
+  param_7[0xc] = 0;
+  param_7[0x10] = 0;
+  param_7[3] = local_40;
+  param_7[5] = local_38 * local_48;
+  param_7[7] = local_40;
+  param_7[9] = local_38 * local_48;
+  param_7[0xb] = local_40;
+  param_7[0xd] = local_44 * local_38;
+  param_7[0xf] = local_40;
+  param_7[0x11] = local_44 * local_38;
+  param_7[0x12] = -local_50;
+  param_7[0x13] = local_3c;
+  param_7[0x14] = 0;
+  param_7[0x15] = local_34 * local_48;
+  param_7[0x16] = local_50;
+  param_7[0x17] = local_3c;
+  param_7[0x18] = 0;
+  param_7[0x19] = local_34 * local_48;
+  param_7[0x1a] = -local_4c;
+  param_7[0x1b] = local_3c;
+  param_7[0x1c] = 0;
+  param_7[0x1d] = local_34 * local_44;
+  param_7[0x1e] = local_4c;
+  param_7[0x1f] = local_3c;
+  param_7[0x20] = 0;
+  param_7[0x21] = local_34 * local_44;
+  *param_7 = *(undefined4 *)
+              (&DAT_846165f0 + (int)((param_6 + (param_6 & 0x1fffffff) * 8 & 0xffffffff) << 2));
+  param_7[1] = 8;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -201,7 +341,6 @@ undefined8 R_GetGammaRenderTargetId(undefined8 param_1,char param_2)
   iVar1 = (int)param_1;
   if ((((iVar1 != 5) && (iVar1 != 8)) && (iVar1 != 9)) &&
      (((iVar1 != 6 && (iVar1 != 10)) && (iVar1 != 0xb)))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d6510,0xb6,0,0xffffffff82000f98,0xffffffff821d6558);
   }
   if (param_2 == '\0') {
@@ -278,8 +417,7 @@ void RB_GenerateGaussianFilterChain
     param_2 = (double)((SQRT((float)(param_2 * param_2 - (double)(float)(dVar7 * dVar7))) *
                        (float)(longlong)local_9c) / (float)local_98);
     if (param_9 < 1) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821d66a8,0xe9,0,0xffffffff82000f98,0xffffffff821d6808);
+      uVar1 = MyAssertHandler(0xffffffff821d66a8,0xe9,0,0xffffffff82000f98,0xffffffff821d6808);
     }
     uVar1 = RB_GenerateGaussianFilter2D(dVar7,uVar1,param_5,param_6,param_7,param_8,param_10,uVar3);
     lVar5 = 1;
@@ -335,6 +473,70 @@ void RB_GenerateGaussianFilterChain
 }
 
 
+// 827A17A0  RB_SetupFilterPass  (gfx_d3d/rb_imagefilter.cpp:289)
+
+void RB_SetupFilterPass(void)
+
+{
+  undefined4 *puVar1;
+  short *psVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  short *psVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
+  
+  puVar4 = (undefined4 *)__savegprlr_21();
+  if (8 < (uint)puVar4[1]) {
+    MyAssertHandler(0xffffffff821d66a8,0x124,0,0xffffffff821d6828,puVar4[1],9);
+  }
+  if (0 < (int)puVar4[1]) {
+    psVar5 = (short *)0x8484dd8a;
+    uVar6 = 0xe;
+    puVar1 = puVar4;
+    do {
+      puVar7 = puVar1 + 4;
+      if (0x51 < (uVar6 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821bda94,0x2ae,0,0xffffffff821bde90,uVar6,0x52);
+      }
+      *(undefined4 *)((-0x7b7b2950 - (int)puVar4) + (int)puVar7) = puVar1[2];
+      *(undefined4 *)((-0x7b7b294c - (int)puVar4) + (int)puVar7) = puVar1[3];
+      *(undefined4 *)((-0x7b7b2948 - (int)puVar4) + (int)puVar7) = *puVar7;
+      *(undefined4 *)((-0x7b7b2944 - (int)puVar4) + (int)puVar7) = puVar1[5];
+      if (0x89 < (uVar6 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821bda94,0x250,0,0xffffffff821bde40,uVar6,0x8a);
+      }
+      psVar2 = psVar5 + 1;
+      iVar3 = (int)uVar6;
+      psVar5 = psVar5 + 1;
+      *psVar5 = *psVar2 + 1;
+      uVar6 = uVar6 + 1;
+      puVar1 = puVar7;
+    } while (iVar3 + -0xd < (int)puVar4[1]);
+  }
+  __restgprlr_21();
+  return;
+}
+
+
+// 827A18D0  RB_FilterPingPong  (gfx_d3d/rb_imagefilter.cpp:323)
+
+void RB_FilterPingPong(int param_1,int param_2)
+
+{
+  if (param_2 == 0) {
+    R_SetRenderTargetSize(0xffffffff8484c7e0,*(undefined4 *)(param_1 + 0x890));
+    R_SetRenderTarget(0x8484c7e08484df40,*(undefined4 *)(param_1 + 0x890));
+    DAT_8484db20 = *(undefined4 *)(param_1 + 0x884);
+  }
+  else {
+    R_Resolve(0x8484c7e08484df40,(&DAT_84762080)[*(int *)(param_1 + 0x890) * 5]);
+    DAT_8484db20 = (&DAT_84762080)[*(int *)(param_1 + 0x890) * 5];
+  }
+  return;
+}
+
+
 // 827A1980  RB_FilterPingPongEnd  (gfx_d3d/rb_imagefilter.cpp:370)
 
 void RB_FilterPingPongEnd(int param_1)
@@ -364,11 +566,57 @@ void RB_SetSrgbTextureReadsForFilteringImage(int *param_1,undefined8 param_2)
 
 // 827A1A58  RB_FilterImage  (gfx_d3d/rb_imagefilter.cpp:400)
 
-void RB_FilterImage(void)
+void RB_FilterImage(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar1;
+  char cVar3;
+  int iVar2;
+  longlong lVar4;
+  int *piVar5;
+  
+  piVar1 = (int *)__savegprlr_26();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821d66a8,0x195,0,0xffffffff82000f98,0xffffffff8208855c);
+  }
+  if (*piVar1 < 1) {
+    MyAssertHandler(0xffffffff821d66a8,0x196,0,0xffffffff821d68ac,0xffffffff821d68cc);
+  }
+  if (piVar1[0x221] == 0) {
+    MyAssertHandler(0xffffffff821d66a8,0x197,0,0xffffffff82000f98,0xffffffff821d6898);
+  }
+  RB_EndSurfaceIfNeeded();
+  cVar3 = RB_IsViewFullScreen(param_2);
+  if (cVar3 == '\0') {
+    R_SetRenderTargetSize(0xffffffff8484c7e0,piVar1[0x222]);
+    R_SetRenderTarget(0x8484c7e08484df40,piVar1[0x222]);
+    R_ClearScreen(0,DAT_8484e000,0xf,0xffffffff821817d8);
+  }
+  if ((1 < *piVar1) && (piVar1[0x223] != 0)) {
+    RB_UnbindAllImages();
+    iVar2 = R_GetGammaRenderTargetId(piVar1[0x224],1);
+    piVar1[0x224] = iVar2;
+  }
+  lVar4 = 0;
+  if (0 < *piVar1) {
+    piVar5 = piVar1 + 1;
+    do {
+      RB_FilterPingPong(piVar1,lVar4);
+      RB_SetupFilterPass(piVar5);
+      RB_Filter(*piVar5,param_2);
+      lVar4 = lVar4 + 1;
+      piVar5 = piVar5 + 0x22;
+    } while ((int)lVar4 < *piVar1);
+  }
+  R_Resolve(0x8484c7e08484df40,(&DAT_84762080)[piVar1[0x224] * 5]);
+  DAT_8484db20 = (&DAT_84762080)[piVar1[0x224] * 5];
+  if ((1 < *piVar1) && (piVar1[0x223] != 0)) {
+    RB_UnbindAllImages();
+    iVar2 = R_GetGammaRenderTargetId(piVar1[0x224],0);
+    piVar1[0x224] = iVar2;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -427,6 +675,8 @@ void RB_ApplyGlowFilter(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
   undefined8 uVar3;
   int iVar4;
   double extraout_f1;
+  double dVar5;
+  double dVar6;
   float local_900;
   float local_8fc [3];
   int local_8f0;
@@ -438,35 +688,32 @@ void RB_ApplyGlowFilter(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
   int local_60;
   
   uVar3 = __savegprlr_24();
+  dVar6 = extraout_f1;
   if (((int)param_2 < 0) || (0xe < (int)param_2)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821d66a8,0x1f5,0,0xffffffff821d6a10,param_2,0,0xe);
+    uVar3 = MyAssertHandler(0xffffffff821d66a8,0x1f5,0,0xffffffff821d6a10,param_2,0,0xe);
   }
   iVar4 = (int)param_3;
   if ((iVar4 < 0) || (0xe < iVar4)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821d66a8,0x1f6,0,0xffffffff821d69c0,param_3,0,0xe);
+    uVar3 = MyAssertHandler(0xffffffff821d66a8,0x1f6,0,0xffffffff821d69c0,param_3,0,0xe);
   }
-  if (extraout_f1 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(extraout_f1,0xffffffff821d66a8,0x1f7,0,0xffffffff820663d8,0xffffffff821d69b0,
-                    extraout_f1);
+  dVar5 = 0.0;
+  if (dVar6 < 0.0) {
+    uVar3 = MyAssertHandler(dVar6,0xffffffff821d66a8,0x1f7,0,0xffffffff820663d8,0xffffffff821d69b0,
+                            dVar6);
   }
-  if (extraout_f1 == 0.0) {
+  if (dVar6 == dVar5) {
     __restgprlr_24(param_2);
     return;
   }
   iVar2 = (int)((param_3 + (param_3 & 0x3fffffff) * 4 & 0xffffffff) << 2);
   iVar1 = (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
   if (*(uint *)(&DAT_8476208c + iVar2) != *(uint *)(&DAT_8476208c + iVar1) >> 2) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821d66a8,0x1fb,0,0xffffffff821d6950);
+    uVar3 = MyAssertHandler(0xffffffff821d66a8,0x1fb,0,0xffffffff821d6950);
   }
   if (*(uint *)(&DAT_84762090 + iVar2) != *(uint *)(&DAT_84762090 + iVar1) >> 2) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821d66a8,0x1fc,0,0xffffffff821d68e8);
+    uVar3 = MyAssertHandler(0xffffffff821d66a8,0x1fc,0,0xffffffff821d68e8);
   }
-  RB_VirtualToSceneRadius((double)(float)(extraout_f1 * 0.25),uVar3,&local_900,local_8fc);
+  RB_VirtualToSceneRadius((double)(float)(dVar6 * 0.25),uVar3,&local_900,local_8fc);
   local_8f0 = 1;
   local_64 = 1;
   local_8e8 = 0;
@@ -487,7 +734,25 @@ void RB_ApplyGlowFilter(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
 void RB_GlowFilterImage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = iVar1;
+  if (DAT_84821008 != 0) {
+    iVar2 = MyAssertHandler(0xffffffff821d66a8,0x21d,0,0xffffffff821d6a98,0xffffffff821d6ab8);
+  }
+  dVar3 = (double)*(float *)(iVar1 + 0x268);
+  if (dVar3 != 0.0) {
+    if (*(int *)(iVar1 + 0x950) == 0x10) {
+      iVar2 = MyAssertHandler(0xffffffff821d66a8,0x223,0,0xffffffff82000f98,0xffffffff821d6a5c);
+    }
+    iVar2 = RB_ApplyGlowFilter(dVar3,iVar2,*(undefined4 *)(iVar1 + 0x950),8,iVar1);
+    DAT_84821008 = 1;
+    DAT_8482100c = (&DAT_84762080)[iVar2 * 5];
+  }
+  __restgprlr_29();
+  return;
 }
 

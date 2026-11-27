@@ -5,8 +5,36 @@
 size_t fwrite(void *_Str,size_t _Size,size_t _Count,FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(_Str,_Size,_Count,_File);
+  void *_DstBuf;
+  int *piVar1;
+  size_t sVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  FILE *_File_00;
+  FILE *pFStack0000002c;
+  
+  lVar5 = (longlong)(int)_File;
+  uVar4 = (ulonglong)(int)_Count;
+  uVar3 = (ulonglong)(int)_Size;
+  _DstBuf = (void *)__savegprlr_27(_Str);
+  _File_00 = (FILE *)lVar5;
+  pFStack0000002c = _File_00;
+  if (((uVar3 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 0)) {
+    if (lVar5 != 0) {
+      _lock_file(_File_00);
+      sVar2 = _fwrite_nolock(_DstBuf,(size_t)uVar3,(size_t)uVar4,_File_00);
+      FUN_82919b64();
+      goto LAB_82919b04;
+    }
+    piVar1 = _errno();
+    *piVar1 = 0x16;
+    _invalid_parameter_noinfo();
+  }
+  sVar2 = 0;
+LAB_82919b04:
+  sVar2 = __restgprlr_27(sVar2);
+  return sVar2;
 }
 
 

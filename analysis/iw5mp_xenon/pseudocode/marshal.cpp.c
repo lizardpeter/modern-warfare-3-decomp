@@ -61,20 +61,405 @@ void CMarshaller__Marshal(undefined8 param_1)
 
 // 828BBA00  CMarshaller::GetArgumentFromSchema  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshal.cpp:106)
 
-void CMarshaller__GetArgumentFromSchema(void)
+void CMarshaller__GetArgumentFromSchema
+               (undefined8 param_1,ulonglong param_2,uint *param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  byte local_30 [48];
+  
+  iVar2 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) < 2) {
+    uVar1 = CSchemaAccess__GetArgumentInfo(iVar2 + 0x1c,local_30);
+    if ((int)uVar1 < 0) goto LAB_828bba78;
+    if ((param_4 & 0xffffffff) != 0) {
+      *(uint *)param_4 = local_30[0] >> 5 & 1;
+    }
+    uVar3 = -(uint)((local_30[0] & 0x1f) < *(uint *)(*(int *)(iVar2 + 4) + 0x200)) &
+            (local_30[0] & 0x1f) * 0x10 + *(int *)(iVar2 + 4);
+    *param_3 = uVar3;
+    if (uVar3 != 0) goto LAB_828bba78;
+  }
+  uVar1 = 0xffffffff80004005;
+LAB_828bba78:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828BBA80  CMarshaller::RecursiveMarshal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshal.cpp:149)
 
-void CMarshaller__RecursiveMarshal(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CMarshaller__RecursiveMarshal(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined4 uVar1;
+  undefined4 uVar2;
+  byte bVar3;
+  bool bVar4;
+  bool bVar5;
+  bool bVar6;
+  int iVar8;
+  longlong lVar7;
+  size_t sVar9;
+  int iVar10;
+  ushort *puVar12;
+  ulonglong uVar11;
+  uint *puVar13;
+  LPCWSTR lpWideCharStr;
+  uint uVar14;
+  ushort uVar15;
+  uint uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  wchar_t *_Str;
+  int iVar19;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  uint uVar22;
+  byte local_e0;
+  byte local_df;
+  byte local_de [2];
+  ushort local_dc;
+  ushort local_da;
+  ushort local_d8;
+  ushort local_d6;
+  byte local_d4 [4];
+  int local_d0;
+  undefined1 auStack_cc [2];
+  undefined1 auStack_ca [2];
+  wchar_t *local_c8;
+  uint local_c4;
+  int local_c0;
+  uint local_bc;
+  undefined4 *local_b8;
+  byte local_b4 [2];
+  undefined2 local_b2;
+  int local_b0;
+  undefined4 local_ac;
+  undefined1 auStack_a8 [168];
+  
+  iVar8 = __savegprlr();
+  puVar13 = (uint *)param_3;
+  local_d6 = 0;
+  local_b8 = (undefined4 *)0x0;
+  if (0xf < (param_2 & 0xffffffff)) {
+    lVar7 = -0x7fffbffb;
+    goto LAB_828bbd14;
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    uVar18 = 0;
+  }
+  else {
+    uVar18 = (ulonglong)*puVar13;
+  }
+  local_ac = *(undefined4 *)(iVar8 + 0x28);
+  iVar19 = iVar8 + 0x1c;
+  lVar7 = CSchemaAccess__GetDescriptor(iVar19,&local_df);
+  if (lVar7 < 0) goto LAB_828bbd14;
+  bVar3 = local_df >> 2 & 3;
+  if (bVar3 == 0) {
+LAB_828bbd08:
+    lVar7 = -0x7fffbffb;
+  }
+  else {
+    if (bVar3 == 1) {
+      puVar12 = &local_da;
+    }
+    else {
+      if (2 < bVar3) goto LAB_828bbd08;
+      puVar12 = &local_d6;
+    }
+    lVar7 = CBaseEndianBuffer__GetWord(iVar19,puVar12);
+    if (-1 < lVar7) {
+      if ((local_df & 0x80) != 0) {
+        lVar7 = CMarshaller__GetArgumentFromSchema(iVar8,param_2,&local_b8,0);
+        if (lVar7 < 0) goto LAB_828bbd14;
+        uVar22 = *(uint *)(iVar8 + 0x14);
+        uVar16 = *(uint *)(iVar8 + 8);
+        *local_b8 = 4;
+        uVar18 = *(ulonglong *)(local_b8 + 2) & 0xffffffff;
+        *(ulonglong *)(local_b8 + 2) = (ulonglong)uVar22 + (ulonglong)uVar16 & 0xffffffff;
+      }
+      uVar22 = (uint)uVar18;
+      if (((local_df & 0x40) == 0) ||
+         (lVar7 = CBaseEndianBuffer__GetWord(iVar19,auStack_cc), -1 < lVar7)) {
+        if ((local_df & 0x20) == 0) {
+          local_bc = 1;
+          local_d4[0] = 0;
+        }
+        else {
+          local_bc = *(uint *)(iVar8 + 0x438);
+          lVar7 = CConformanceList__GetConformingScopeAndValue
+                            (iVar8 + 0x38,local_df,iVar19,local_d4,&local_bc);
+          if (lVar7 < 0) goto LAB_828bbd14;
+        }
+        uVar16 = 0;
+        if ((local_df & 0xc) == 8) {
+          lVar7 = CSchemaAccess__GetUnionInfo(iVar19,&local_dc,&local_d0);
+          if (lVar7 < 0) goto LAB_828bbd14;
+          lVar7 = CConformanceList__AcquireConformanceInfo
+                            (iVar8 + 0x38,local_dc._0_1_ & 0x3f,&local_b0);
+          if (lVar7 < 0) goto LAB_828bbd14;
+          uVar17 = *(ulonglong *)(local_b0 + 8) & 0xffffffff;
+          if ((local_dc & 0x4000) != 0) {
+            lVar7 = CSchemaData__LookupConstantFromTable
+                              (*(undefined4 *)(iVar8 + 0x30),local_d0._0_2_,&local_c4);
+            if (lVar7 < 0) goto LAB_828bbd14;
+            uVar17 = uVar17 & local_c4;
+          }
+          lVar7 = CConformanceList__ReleaseConformanceInfo(iVar8 + 0x38,local_dc._0_1_ & 0x3f);
+          if (lVar7 < 0) goto LAB_828bbd14;
+        }
+        else {
+          uVar17 = 0;
+          local_dc = 0;
+        }
+        uVar1 = *(undefined4 *)(iVar8 + 0x28);
+        uVar20 = param_3;
+        if (local_bc != 0) {
+          do {
+            uVar15 = 0;
+            bVar4 = false;
+            local_e0 = local_e0 & 0xf3;
+            do {
+              if ((local_df & 0xc) == 8) {
+                bVar5 = false;
+                if (uVar15 < (local_dc & 0xff)) {
+                  lVar7 = CBaseEndianBuffer__GetByte(iVar19,local_de);
+                  if (lVar7 < 0) goto LAB_828bbd14;
+                  uVar22 = 0;
+                  local_c4 = 0;
+                  bVar6 = false;
+                  if (local_de[0] != 0) {
+                    do {
+                      bVar5 = bVar6;
+                      lVar7 = CBaseEndianBuffer__GetWord(iVar19,&local_da);
+                      if ((lVar7 < 0) ||
+                         (lVar7 = CSchemaData__LookupConstantFromTable
+                                            (*(undefined4 *)(iVar8 + 0x30),local_da,&local_c4),
+                         lVar7 < 0)) goto LAB_828bbd14;
+                      if (uVar17 == local_c4) {
+                        bVar5 = true;
+                        bVar4 = true;
+                      }
+                      uVar22 = uVar22 + 1;
+                      bVar6 = bVar5;
+                    } while (uVar22 < local_de[0]);
+                  }
+                  lVar7 = CBaseEndianBuffer__GetWord(iVar19,&local_da);
+                  if (lVar7 < 0) goto LAB_828bbd14;
+                  if (bVar5) goto LAB_828bbdd4;
+                  local_c4 = (uint)local_da;
+                  lVar7 = CBaseEndianBuffer__GetDataPointer(iVar19,auStack_a8,&local_c4);
+                  if (lVar7 < 0) goto LAB_828bbd14;
+                  uVar14 = (uint)local_e0;
+                }
+                else {
+                  lVar7 = CSchemaAccess__GetDescriptor(iVar19,&local_e0);
+                  if (lVar7 < 0) goto LAB_828bbd14;
+                  uVar14 = (uint)local_e0;
+                  if (((uVar14 & 0xc) != 0xc) || ((!bVar4 && ((local_dc & 0x8000) != 0))))
+                  goto LAB_828bbd08;
+                }
+              }
+              else {
+LAB_828bbdd4:
+                uVar2 = *(undefined4 *)(iVar8 + 0x28);
+                lVar7 = CSchemaAccess__GetDescriptor(iVar19,&local_e0);
+                if (lVar7 < 0) goto LAB_828bbd14;
+                uVar14 = (uint)local_e0;
+                bVar3 = local_e0 >> 2 & 3;
+                if (bVar3 == 0) {
+                  local_d0 = 0;
+                  bVar5 = false;
+                  if ((local_e0 & 0x80) != 0) {
+                    lVar7 = CMarshaller__GetArgumentFromSchema(iVar8,param_2,&local_b8,&local_d0);
+                    if (lVar7 < 0) goto LAB_828bbd14;
+                    uVar22 = *(uint *)(iVar8 + 0x14);
+                    uVar14 = *(uint *)(iVar8 + 8);
+                    uVar18 = *(ulonglong *)(local_b8 + 2);
+                    *local_b8 = 4;
+                    *(ulonglong *)(local_b8 + 2) =
+                         (ulonglong)uVar22 + (ulonglong)uVar14 & 0xffffffff;
+                    uVar18 = uVar18 & 0xffffffff;
+                    uVar14 = (uint)local_e0;
+                  }
+                  iVar10 = local_d0;
+                  if ((uVar14 & 0x40) != 0) {
+                    lVar7 = CBaseEndianBuffer__GetWord(iVar19,auStack_ca);
+                    if (lVar7 < 0) goto LAB_828bbd14;
+                    uVar14 = (uint)local_e0;
+                  }
+                  uVar22 = 1 << (uVar14 & 3);
+                  uVar20 = (ulonglong)uVar22;
+                  _Str = (wchar_t *)uVar18;
+                  if ((uVar14 & 0x20) == 0) {
+                    local_c0 = 1;
+                    local_d8 = 0;
+                    uVar11 = uVar18;
+                    local_c8 = _Str;
+                  }
+                  else {
+                    local_c0 = *(int *)(iVar8 + 0x438);
+                    lVar7 = CConformanceList__GetConformingScopeAndValue
+                                      (iVar8 + 0x38,uVar14,iVar19,&local_d8,&local_c0);
+                    if (lVar7 < 0) goto LAB_828bbd14;
+                    if (((local_d8 & 0x8000) == 0) && ((local_e0 & 0x80) == 0)) {
+                      bVar6 = true;
+                      if ((uVar18 & 0xffffffff) == 0) {
+                        _Str = (wchar_t *)0x0;
+                      }
+                      else {
+                        _Str = *(wchar_t **)_Str;
+                      }
+                    }
+                    else {
+                      bVar6 = false;
+                    }
+                    bVar5 = false;
+                    local_c8 = _Str;
+                    if (((local_d8 & 0x4000) != 0) && (bVar5 = true, local_c0 == 0)) {
+                      sVar9 = wcslen(_Str);
+                      local_c0 = sVar9 + 1;
+                    }
+                    lVar7 = CConformanceList__ReleaseConformanceInfo
+                                      (iVar8 + 0x38,local_d8._0_1_ & 0x3f);
+                    if (lVar7 < 0) goto LAB_828bbd14;
+                    uVar14 = (uint)local_e0;
+                    uVar11 = ZEXT48(local_c8);
+                    if (bVar6) {
+                      uVar20 = 4;
+                    }
+                    else {
+                      uVar20 = (longlong)local_c0 * (longlong)(int)uVar22;
+                    }
+                  }
+                  uVar21 = 0;
+                  lpWideCharStr = (LPCWSTR)uVar11;
+                  if (bVar5) {
+                    iVar10 = WideCharToMultiByte(0xfde9,0,lpWideCharStr,local_c0,
+                                                 (LPSTR)(*(int *)(iVar8 + 8) +
+                                                        *(int *)(iVar8 + 0x14)),
+                                                 *(int *)(iVar8 + 0x10) - *(int *)(iVar8 + 0x14),
+                                                 (LPCSTR)0x0,(LPBOOL)0x0);
+                    lVar7 = CBaseEndianBuffer__AppendBytes(iVar8 + 8,iVar10);
+                    if (-1 < lVar7) {
+                      lVar7 = CConformanceList__UpdateConformance
+                                        (iVar8 + 0x38,local_d8._0_1_ & 0x3f,iVar10,1);
+                      goto LAB_828bc0f0;
+                    }
+                    goto LAB_828bbd14;
+                  }
+                  lVar7 = 0;
+                  if ((uVar11 & 0xffffffff) != 0) {
+                    uVar22 = uVar14 & 3;
+                    if (uVar22 == 0) {
+                      uVar21 = (ulonglong)*(byte *)lpWideCharStr;
+                      if (iVar10 == 0) {
+                        lVar7 = CBaseEndianBuffer__WriteBytes(iVar8 + 8);
+                        goto LAB_828bc0f0;
+                      }
+                    }
+                    else if (uVar22 == 1) {
+                      uVar21 = (ulonglong)(ushort)*lpWideCharStr;
+                      if (iVar10 == 0) {
+                        lVar7 = CBaseEndianBuffer__WriteWords(iVar8 + 8);
+                        goto LAB_828bc0f0;
+                      }
+                    }
+                    else if (uVar22 < 3) {
+                      uVar21 = (ulonglong)*(uint *)lpWideCharStr;
+                      if (iVar10 == 0) {
+                        lVar7 = CBaseEndianBuffer__WriteDwords(iVar8 + 8);
+                        goto LAB_828bc0f0;
+                      }
+                    }
+                    else if ((uVar22 == 3) && (uVar21 = *(ulonglong *)lpWideCharStr, iVar10 == 0)) {
+                      lVar7 = CBaseEndianBuffer__WriteQwords(iVar8 + 8);
+LAB_828bc0f0:
+                      if ((int)lVar7 < 0) goto LAB_828bbd14;
+                      uVar14 = (uint)local_e0;
+                      uVar11 = ZEXT48(local_c8);
+                    }
+                  }
+                  if ((local_df & 0xc) == 8) {
+                    uVar20 = (ulonglong)local_d6;
+                  }
+                  if ((uVar11 & 0xffffffff) != 0) {
+                    uVar18 = uVar20 + uVar18;
+                  }
+                  if ((uVar14 & 0x10) != 0) {
+                    lVar7 = CSchemaAccess__GetConformanceInfo(iVar19,local_b4);
+                    if (((lVar7 < 0) ||
+                        (lVar7 = CSchemaData__LookupConstantFromTable
+                                           (*(undefined4 *)(iVar8 + 0x30),local_b2,&local_c4),
+                        lVar7 < 0)) ||
+                       (lVar7 = CConformanceList__EstablishConformanceInfo
+                                          (iVar8 + 0x38,local_b4[0] & 0x3f,local_b4[0] >> 6,uVar21,
+                                           local_c4,local_b4,
+                                           ((ulonglong)*(uint *)(iVar8 + 0x14) +
+                                           (ulonglong)*(uint *)(iVar8 + 8)) -
+                                           (ulonglong)(uint)(1 << (local_b4[0] >> 6))), lVar7 < 0))
+                    goto LAB_828bbd14;
+                    uVar14 = (uint)local_e0;
+                  }
+                  uVar20 = param_3 & 0xffffffff;
+                }
+                else if (bVar3 < 3) {
+                  CBaseEndianBuffer__SeekTo(iVar19,uVar2);
+                  local_c8 = (wchar_t *)uVar18;
+                  if (((local_e0 & 0x20) != 0) && ((local_e0 & 0x80) == 0)) {
+                    if ((uVar18 & 0xffffffff) == 0) {
+                      local_c8 = (wchar_t *)0x0;
+                    }
+                    else {
+                      local_c8 = *(wchar_t **)local_c8;
+                    }
+                  }
+                  lVar7 = CMarshaller__RecursiveMarshal(iVar8,param_2 + 1,&local_c8);
+                  if (lVar7 < 0) goto LAB_828bbd14;
+                  uVar14 = (uint)local_e0;
+                  if ((local_e0 & 0x20) == 0) {
+                    if ((local_df & 0xc) == 8) {
+                      uVar18 = local_d6 + uVar18;
+                    }
+                    else {
+                      uVar18 = ZEXT48(local_c8);
+                    }
+                  }
+                  else {
+                    uVar18 = uVar18 + 4;
+                  }
+                }
+                else if (bVar3 != 3) goto LAB_828bbd08;
+              }
+              puVar13 = (uint *)uVar20;
+              uVar22 = (uint)uVar18;
+              if ((local_df & 0xc) == 8) {
+                uVar15 = uVar15 + 1;
+              }
+            } while ((uVar14 & 0xc) != 0xc);
+            uVar16 = uVar16 + 1;
+          } while ((uVar16 < local_bc) &&
+                  (CBaseEndianBuffer__SeekTo(iVar19,uVar1), uVar16 < local_bc));
+        }
+        if ((((local_df & 0x20) == 0) ||
+            (lVar7 = CConformanceList__ReleaseConformanceInfo(iVar8 + 0x38,local_d4[0] & 0x3f),
+            -1 < lVar7)) &&
+           ((local_bc != 0 ||
+            ((lVar7 = CBaseEndianBuffer__SeekTo(iVar19,local_ac), -1 < lVar7 &&
+             (lVar7 = CSchemaAccess__SkipScope(iVar19,0), -1 < lVar7)))))) {
+          *puVar13 = uVar22;
+        }
+      }
+    }
+  }
+LAB_828bbd14:
+  __restgprlr(lVar7);
+  return;
 }
 

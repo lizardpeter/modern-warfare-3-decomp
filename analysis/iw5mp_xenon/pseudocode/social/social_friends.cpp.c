@@ -8,7 +8,6 @@ void FriendsMenu_ShowErrorMessage(ulonglong param_1)
   char cVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x31,0,0xffffffff82000f98,0xffffffff8201805c);
   }
   Com_SetErrorMessage(param_1);
@@ -36,7 +35,6 @@ undefined8 FriendsMenu_GetFriendId(int param_1,int param_2)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x40,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   return *(undefined8 *)(&DAT_84546e68 + (param_1 * 0xce + param_2) * 8);
@@ -69,6 +67,15 @@ void Friends_Reset(void)
 }
 
 
+// 82702DC0  Friends_GetNumFriends  (social/social_friends.cpp:99)
+
+undefined4 Friends_GetNumFriends(int param_1)
+
+{
+  return *(undefined4 *)(&DAT_84546e60 + param_1 * 0x670);
+}
+
+
 // 82702DE0  Friends_MarkForUpdate  (social/social_friends.cpp:111)
 
 void Friends_MarkForUpdate(int param_1)
@@ -80,7 +87,6 @@ void Friends_MarkForUpdate(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x70,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   (&DAT_845474a8)[param_1 * 0x670] = 1;
@@ -99,20 +105,19 @@ int Friends_FindIndex(int param_1,longlong param_2)
   if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
     bVar1 = false;
   }
-  if (bVar1) {
-    iVar2 = 0;
-    if (0 < *(int *)(&DAT_84546e60 + param_1 * 0x670)) {
-      do {
-        if (*(longlong *)(&DAT_84546e68 + (param_1 * 0xce + iVar2) * 8) == param_2) {
-          return iVar2;
-        }
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < *(int *)(&DAT_84546e60 + param_1 * 0x670));
-    }
-    return -1;
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x7a,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821b2e60,0x7a,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  iVar2 = 0;
+  if (0 < *(int *)(&DAT_84546e60 + param_1 * 0x670)) {
+    do {
+      if (*(longlong *)(&DAT_84546e68 + (param_1 * 0xce + iVar2) * 8) == param_2) {
+        return iVar2;
+      }
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < *(int *)(&DAT_84546e60 + param_1 * 0x670));
+  }
+  return -1;
 }
 
 
@@ -129,24 +134,23 @@ longlong Friends_FindSortedIndex(longlong param_1,longlong param_2)
   if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
     bVar1 = false;
   }
-  if (bVar1) {
-    lVar2 = 0;
-    if (0 < *(int *)(&DAT_84546e60 + iVar3 * 0x670)) {
-      do {
-        if (*(longlong *)
-             (&DAT_84546e68 +
-             (int)(((ulonglong)
-                    *(uint *)(&DAT_84547318 + (int)((param_1 * 0x19c + lVar2 & 0xffffffffU) << 2)) +
-                    param_1 * 0xce & 0xffffffff) << 3)) == param_2) {
-          return lVar2;
-        }
-        lVar2 = lVar2 + 1;
-      } while ((int)lVar2 < *(int *)(&DAT_84546e60 + iVar3 * 0x670));
-    }
-    return -1;
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x8d,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821b2e60,0x8d,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  lVar2 = 0;
+  if (0 < *(int *)(&DAT_84546e60 + iVar3 * 0x670)) {
+    do {
+      if (*(longlong *)
+           (&DAT_84546e68 +
+           (int)(((ulonglong)
+                  *(uint *)(&DAT_84547318 + (int)((param_1 * 0x19c + lVar2 & 0xffffffffU) << 2)) +
+                  param_1 * 0xce & 0xffffffff) << 3)) == param_2) {
+        return lVar2;
+      }
+      lVar2 = lVar2 + 1;
+    } while ((int)lVar2 < *(int *)(&DAT_84546e60 + iVar3 * 0x670));
+  }
+  return -1;
 }
 
 
@@ -185,7 +189,6 @@ undefined8 Friends_PickRandomOnline(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0xb5,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   param_1 = param_1 * 0x670;
@@ -216,13 +219,133 @@ undefined8 Friends_PickRandomOnline(int param_1)
 }
 
 
-// 82704198  FriendsMenu_JoinOnPresence  (social/social_friends.cpp:227)
+// 82703120  Live_Friends_GetUserId  (social/social_friends.cpp:206)
 
-void FriendsMenu_JoinOnPresence(void)
+undefined8 Live_Friends_GetUserId(int param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  if (*(uint *)(&DAT_84546e60 + param_1 * 0x670) <= param_2) {
+    MyAssertHandler(0xffffffff821b2e60,0xd2,0,0xffffffff821b2ee0,param_2);
+  }
+  return *(undefined8 *)(&DAT_84546e40 + (param_2 + 5) * 8 + param_1 * 0x670);
+}
+
+
+// 82704198  FriendsMenu_JoinOnPresence  (social/social_friends.cpp:227)
+
+void FriendsMenu_JoinOnPresence(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  int *piVar4;
+  bool bVar5;
+  
+  uVar1 = __savegprlr_26();
+  if (((int)uVar1 < 0) || (bVar5 = true, 3 < (int)uVar1)) {
+    bVar5 = false;
+  }
+  if (!bVar5) {
+    MyAssertHandler(0xffffffff821b2e60,0xe7,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  uVar2 = Friends_FindIndex(uVar1,param_2);
+  piVar4 = (int *)param_3;
+  if ((int)uVar2 == -1) {
+    Com_PrintWarning(0x10,0xffffffff821b3148);
+    *piVar4 = (int)"MENU_JOIN_SYSTEM_ERROR";
+    __restgprlr_26(0);
+    return;
+  }
+  cVar3 = FriendsMenu_IsUserJoinable(uVar1,uVar2,0,param_3);
+  if (cVar3 == '\0') {
+    if (*piVar4 == 0) {
+      MyAssertHandler(0xffffffff821b2e60,0xfb,0,0xffffffff82000f98,0xffffffff8218ea18);
+    }
+    Com_PrintWarning(0x10,0xffffffff821b30d8,*piVar4);
+    __restgprlr_26(0);
+    return;
+  }
+  uVar2 = Friends_GetSessionInfo_Platform(uVar1,uVar2);
+  cVar3 = Friends_IsSessionInfoValid_Platform();
+  if (cVar3 == '\0') {
+    Com_PrintWarning(0x10,0xffffffff821b3090);
+    *piVar4 = (int)"MENU_JOIN_SESSION_INVALID";
+    __restgprlr_26(0);
+    return;
+  }
+  Friends_StartJoiningFriend_Platform(uVar1,param_2,uVar2,0);
+  __restgprlr_26(1);
+  return;
+}
+
+
+// 827031A8  FriendsMenu_FeederItemText  (social/social_friends.cpp:271)
+
+void FriendsMenu_FeederItemText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_27();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x113,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  if (2 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b2e60,0x114,0,0xffffffff821b2f50,param_3,3);
+  }
+  iVar3 = iVar3 * 0x670;
+  if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar3) <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b2e60,0x118,0,0xffffffff821b2f18,param_2);
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    if (((param_3 & 0xffffffff) != 1) && (2 < (param_3 & 0xffffffff))) {
+      __restgprlr_27(0xffffffff84548800);
+      return;
+    }
+    DAT_84548800 = 0;
+    __restgprlr_27(0xffffffff84548800);
+    return;
+  }
+  Friends_Gamertag_Platform
+            (uVar2,*(undefined8 *)
+                    (&DAT_84546e40 +
+                    (*(int *)(&DAT_84546e40 + (int)((param_2 + 0x136 & 0xffffffff) << 2) + iVar3) +
+                    5) * 8 + iVar3),0xffffffff84548800,0x80);
+  __restgprlr_27(0xffffffff84548800);
+  return;
+}
+
+
+// 827032E8  FriendsMenu_FeederSelection  (social/social_friends.cpp:302)
+
+void FriendsMenu_FeederSelection(int param_1,uint param_2)
+
+{
+  bool bVar1;
+  uint *puVar2;
+  
+  if ((param_1 < 0) || (bVar1 = true, 3 < param_1)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x131,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  param_1 = param_1 * 0x670;
+  puVar2 = (uint *)(&DAT_84546e40 + param_1);
+  if ((-1 < (int)param_2) && (param_2 < *(uint *)(&DAT_84546e60 + param_1))) {
+    *puVar2 = param_2;
+    *(uint *)(&DAT_84546e44 + param_1) = puVar2[param_2 + 0x136];
+    *(undefined8 *)(&DAT_84546e50 + param_1) =
+         *(undefined8 *)(puVar2 + (puVar2[param_2 + 0x136] + 5) * 2);
+  }
+  return;
 }
 
 
@@ -231,8 +354,36 @@ void FriendsMenu_JoinOnPresence(void)
 void FriendsMenu_FeederStoreXUID(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  bool bVar2;
+  undefined8 uVar3;
+  int iVar4;
+  char cVar6;
+  uint uVar5;
+  
+  uVar3 = __savegprlr_28();
+  iVar4 = (int)uVar3;
+  if ((iVar4 < 0) || (bVar2 = true, 3 < iVar4)) {
+    bVar2 = false;
+  }
+  if (!bVar2) {
+    MyAssertHandler(0xffffffff821b2e60,0x142,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  cVar6 = Friends_IsConnected_Platform(uVar3);
+  if (cVar6 != '\0') {
+    iVar4 = iVar4 * 0x670;
+    uVar1 = *(uint *)(&DAT_84546e60 + iVar4);
+    if (uVar1 != 0) {
+      uVar5 = Friends_FindIndex(uVar3,*(undefined8 *)(&DAT_84546e50 + iVar4));
+      if (uVar1 <= uVar5) {
+        uVar3 = Friends_FindIndex(uVar3,*(undefined8 *)(&DAT_84546e50 + iVar4));
+        MyAssertHandler(0xffffffff821b2e60,0x14c,0,0xffffffff821b2f98,uVar3,uVar1);
+      }
+      *(undefined8 *)(&DAT_84546e58 + iVar4) = *(undefined8 *)(&DAT_84546e50 + iVar4);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -247,7 +398,6 @@ void FriendsMenu_FeederClearXUID(int param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x156,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   *(undefined8 *)(&DAT_84546e58 + param_1 * 0x670) = 0;
@@ -269,7 +419,6 @@ undefined8 FriendsMenu_FeederGamerTag(undefined8 param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x161,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   if (*(longlong *)(&DAT_84546e58 + iVar3 * 0x670) == 0) {
@@ -298,7 +447,6 @@ void FriendsMenu_FeederOnShowCard(undefined8 param_1)
     bVar1 = false;
   }
   if (!bVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x171,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   cVar3 = Friends_IsConnected_Platform(param_1);
@@ -317,18 +465,86 @@ void FriendsMenu_FeederOnShowCard(undefined8 param_1)
 void FriendsMenu_FeederOnInviteRequest(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar5;
+  ulonglong uVar3;
+  undefined4 local_30 [12];
+  
+  uVar2 = __savegprlr_28();
+  iVar4 = (int)uVar2;
+  if ((iVar4 < 0) || (bVar1 = true, 3 < iVar4)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x186,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  cVar5 = Friends_IsConnected_Platform(uVar2);
+  if (cVar5 != '\0') {
+    iVar4 = iVar4 * 0x670;
+    cVar5 = FriendsMenu_IsAllowedToInvite(uVar2,local_30);
+    if (cVar5 == '\0') {
+      Com_PrintError(0x10,0xffffffff821b32e0);
+      FriendsMenu_ShowErrorMessage(local_30[0]);
+      __restgprlr_28();
+      return;
+    }
+    uVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4));
+    if ((int)uVar3 == -1) {
+      Com_PrintError(0x10,0xffffffff821b3278);
+      FriendsMenu_ShowErrorMessage(0xffffffff821b325c);
+      __restgprlr_28();
+      return;
+    }
+    if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar4) <= (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff821b2e60,0x19c,0,0xffffffff821b2ee0,uVar3);
+    }
+    cVar5 = FriendsMenu_IsUserInvitable(uVar2,uVar3,local_30);
+    if (cVar5 == '\0') {
+      Com_PrintError(0x10,0xffffffff821b3200);
+      FriendsMenu_ShowErrorMessage(local_30[0]);
+      __restgprlr_28();
+      return;
+    }
+    uVar2 = Friends_SendInviteMessage_Platform(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4));
+    if ((int)uVar2 < 0) {
+      Com_PrintError(0x10,0xffffffff821b3198,uVar2);
+      FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82703DB8  FriendsMenu_GetSelectedFeederXuid  (social/social_friends.cpp:431)
 
-void FriendsMenu_GetSelectedFeederXuid(void)
+void FriendsMenu_GetSelectedFeederXuid(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar4;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar5;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b2e60,0x1b0,0,0xffffffff82000f98,0xffffffff82032494);
+  }
+  cVar4 = Friends_IsConnected_Platform(uVar1);
+  if (cVar4 != '\0') {
+    uVar5 = *(undefined8 *)(&DAT_84546e50 + (int)uVar1 * 0x670);
+    uVar2 = Friends_FindIndex(uVar1,uVar5);
+    if (((int)uVar2 != -1) && (iVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < iVar3)) {
+      *(undefined8 *)param_2 = uVar5;
+      __restgprlr_29(1);
+      return;
+    }
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -337,18 +553,68 @@ void FriendsMenu_GetSelectedFeederXuid(void)
 void FriendsMenu_FeederOnJoinRequest(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  char *local_30 [12];
+  
+  uVar2 = __savegprlr_29();
+  cVar4 = Friends_IsConnected_Platform();
+  if (cVar4 != '\0') {
+    iVar1 = (int)uVar2 * 0x670;
+    iVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar1));
+    if ((iVar3 != -1) &&
+       (cVar4 = FriendsMenu_JoinOnPresence(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar1),local_30),
+       cVar4 == '\0')) {
+      if (*local_30[0] == '\0') {
+        MyAssertHandler(0xffffffff821b2e60,0x1d1,0,0xffffffff82000f98,0xffffffff8218ea18);
+      }
+      FriendsMenu_ShowErrorMessage(local_30[0]);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82703E68  FriendsMenu_FeederOnReportRequest  (social/social_friends.cpp:473)
 
-void FriendsMenu_FeederOnReportRequest(void)
+void FriendsMenu_FeederOnReportRequest(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar5;
+  int iVar4;
+  undefined1 auStack_30 [48];
+  
+  uVar2 = __savegprlr_29();
+  iVar3 = (int)uVar2;
+  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x1dd,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  cVar5 = Friends_IsConnected_Platform(uVar2);
+  if (cVar5 != '\0') {
+    iVar3 = iVar3 * 0x670;
+    if (*(int *)(&DAT_84546e60 + iVar3) != 0) {
+      iVar4 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar3));
+      if (-1 < iVar4) {
+        LiveAntiCheat_ReportPlayer(uVar2,param_2,*(undefined8 *)(&DAT_84546e58 + iVar3));
+        cVar5 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,auStack_30);
+        if (cVar5 != '\0') {
+          FriendsMenu_GetReportSubmitString(param_2);
+          FriendsMenu_ShowErrorMessage();
+        }
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -397,25 +663,20 @@ void FriendsMenu_FeederOverrideCursorPos
     bVar9 = false;
   }
   if (!bVar9) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x210,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x212,0,0xffffffff82000f98,0xffffffff8218eadc);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x213,0,0xffffffff82000f98,0xffffffff82182238);
   }
   puVar4 = (uint *)param_3;
   if ((int)*puVar4 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x216,0,0xffffffff82000f98,0xffffffff8218eacc);
   }
   puVar5 = (uint *)param_4;
   if ((int)*puVar5 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x217,0,0xffffffff82000f98,0xffffffff8218eabc);
   }
   iVar2 = iVar2 * 0x670;
@@ -452,15 +713,12 @@ void FriendsMenu_FeederOverrideCursorPos
   *puVar5 = uVar3;
 LAB_827038fc:
   if ((int)*puVar4 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x239,1,0xffffffff82000f98,0xffffffff8218eacc);
   }
   if ((int)*puVar5 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x23a,1,0xffffffff82000f98,0xffffffff8218eabc);
   }
   if ((param_2 & 0xffffffff) <= ((ulonglong)*puVar4 - (ulonglong)*puVar5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b2e60,0x23b,1,0xffffffff8218ea78,
                     (ulonglong)*puVar4 - (ulonglong)*puVar5,param_2);
   }
@@ -475,8 +733,37 @@ LAB_827038fc:
 void FriendsMenu_FeederFriendInvitable(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar5;
+  ulonglong uVar3;
+  undefined1 auStack_30 [48];
+  
+  uVar2 = __savegprlr_28();
+  iVar4 = (int)uVar2;
+  if ((iVar4 < 0) || (bVar1 = true, 3 < iVar4)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x247,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  cVar5 = Friends_IsConnected_Platform(uVar2);
+  if (cVar5 != '\0') {
+    cVar5 = FriendsMenu_IsAllowedToInvite(uVar2,auStack_30);
+    if ((cVar5 != '\0') &&
+       (uVar3 = Friends_FindIndex(uVar2,*(undefined8 *)(&DAT_84546e58 + iVar4 * 0x670)),
+       (int)uVar3 != -1)) {
+      if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar4 * 0x670) <= (uVar3 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821b2e60,0x255,0,0xffffffff821b2ee0,uVar3);
+      }
+      cVar5 = FriendsMenu_IsUserInvitable(uVar2,uVar3,auStack_30);
+      __restgprlr_28(cVar5 != '\0');
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -495,53 +782,140 @@ undefined8 FriendsMenu_FeederFriendJoinable(undefined8 param_1)
   if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
     bVar1 = false;
   }
-  if (bVar1) {
-    cVar4 = Friends_IsConnected_Platform(param_1);
-    if (((cVar4 != '\0') &&
-        (uVar2 = Friends_FindIndex(param_1,*(undefined8 *)(&DAT_84546e58 + iVar3 * 0x670)),
-        (int)uVar2 != -1)) &&
-       (cVar4 = FriendsMenu_IsUserJoinable(param_1,uVar2,0,auStack_20), cVar4 != '\0')) {
-      Friends_GetSessionInfo_Platform(param_1,uVar2);
-      cVar4 = Friends_IsSessionInfoValid_Platform();
-      if (cVar4 != '\0') {
-        uVar2 = FriendsMenu_IsAllowedToJoin_Platform(param_1,auStack_20);
-        return uVar2;
-      }
-    }
-    return 0;
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x264,0,0xffffffff82000f98,0xffffffff821b2ea4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821b2e60,0x264,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  cVar4 = Friends_IsConnected_Platform(param_1);
+  if (((cVar4 != '\0') &&
+      (uVar2 = Friends_FindIndex(param_1,*(undefined8 *)(&DAT_84546e58 + iVar3 * 0x670)),
+      (int)uVar2 != -1)) &&
+     (cVar4 = FriendsMenu_IsUserJoinable(param_1,uVar2,0,auStack_20), cVar4 != '\0')) {
+    Friends_GetSessionInfo_Platform(param_1,uVar2);
+    cVar4 = Friends_IsSessionInfoValid_Platform();
+    if (cVar4 != '\0') {
+      uVar2 = FriendsMenu_IsAllowedToJoin_Platform(param_1,auStack_20);
+      return uVar2;
+    }
+  }
+  return 0;
 }
 
 
 // 82703988  FriendsMenu_GetStatus  (social/social_friends.cpp:638)
 
-void FriendsMenu_GetStatus(void)
+void FriendsMenu_GetStatus(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  longlong lVar2;
+  int iVar3;
+  
+  lVar2 = __savegprlr_28();
+  iVar3 = (int)lVar2;
+  if ((iVar3 < 0) || (bVar1 = true, 3 < iVar3)) {
+    bVar1 = false;
+  }
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821b2e60,0x27f,0,0xffffffff82000f98,0xffffffff821b2ea4);
+  }
+  if ((ulonglong)*(uint *)(&DAT_84546e60 + iVar3 * 0x670) <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b2e60,0x280,0,0xffffffff8218ae68,param_2);
+  }
+  __restgprlr_28(*(undefined4 *)(&DAT_84547188 + (int)((lVar2 * 0x19c + param_2 & 0xffffffff) << 2))
+                );
+  return;
 }
 
 
 // 82703A40  FriendsMenu_IsAllowedToInvite  (social/social_friends.cpp:647)
 
-void FriendsMenu_IsAllowedToInvite(void)
+void FriendsMenu_IsAllowedToInvite(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b2e60,0x288,0,0xffffffff82000f98,0xffffffff8207965c);
+  }
+  cVar3 = Friends_IsConnected_Platform(uVar1);
+  puVar4 = (undefined4 *)param_2;
+  if (cVar3 == '\0') {
+    *puVar4 = "PLATFORM_INVITE_NOT_CONNECTED";
+    __restgprlr_29(0);
+    return;
+  }
+  uVar2 = Live_GetSharableSession();
+  cVar3 = Session_IsValid();
+  if (cVar3 == '\0') {
+    *puVar4 = "MENU_INVITE_SESSION_INVALID";
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = Session_IsFull(uVar2);
+  if (cVar3 != '\0') {
+    *puVar4 = "MENU_INVITE_SESSION_FULL";
+    __restgprlr_29(0);
+    return;
+  }
+  FriendsMenu_IsAllowedToInvite_Platform(uVar1,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82703F48  FriendsMenu_IsUserJoinable_Internal  (social/social_friends.cpp:676)
 
-void FriendsMenu_IsUserJoinable_Internal(void)
+void FriendsMenu_IsUserJoinable_Internal(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  
+  uVar1 = __savegprlr_29();
+  if (param_3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b2e60,0x2a7);
+  }
+  iVar2 = FriendsMenu_GetStatus(uVar1,param_2);
+  if (iVar2 == 0) {
+    *param_3 = "MENU_FRIEND_STILL_PENDING";
+    __restgprlr_29();
+    return;
+  }
+  if (iVar2 == 1) {
+    *param_3 = "MENU_FRIEND_NOT_CONFIRMED";
+    __restgprlr_29(0);
+    return;
+  }
+  if (iVar2 == 2) {
+    *param_3 = "MENU_FRIEND_NOT_IN_GAME";
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = FriendsMenu_IsAlreadyConnected(uVar1,param_2);
+  if (cVar3 != '\0') {
+    *param_3 = "MENU_FRIEND_ALREADY_CONNECTED";
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = FriendsMenu_GetIsSessionValid_Platform(uVar1,param_2);
+  if (cVar3 == '\0') {
+    *param_3 = "MENU_JOIN_SESSION_INVALID";
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = FriendsMenu_GetIsSessionFull_Platform(uVar1,param_2);
+  if (cVar3 != '\0') {
+    *param_3 = "XBOXLIVE_JOIN_FULL_GAME";
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -568,11 +942,90 @@ FriendsMenu_IsUserJoinable
 
 // 827040F0  FriendsMenu_IsUserInvitable  (social/social_friends.cpp:758)
 
-void FriendsMenu_IsUserInvitable(void)
+void FriendsMenu_IsUserInvitable(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  
+  uVar1 = __savegprlr_29();
+  if (param_3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b2e60,0x2f9);
+  }
+  iVar2 = FriendsMenu_GetStatus(uVar1,param_2);
+  if (iVar2 == 2) {
+    *param_3 = "MENU_FRIEND_OFFLINE";
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = FriendsMenu_IsAlreadyConnected(uVar1,param_2);
+  if (cVar3 != '\0') {
+    *param_3 = "MENU_FRIEND_ALREADY_CONNECTED";
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 82703B20  FriendsMenu_IsAlreadyConnected  (social/social_friends.cpp:782)
+
+ulonglong FriendsMenu_IsAlreadyConnected(void)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  
+  uVar1 = FriendsMenu_GetFriendId();
+  iVar3 = Party_InParty(0xffffffff82b55118);
+  if (iVar3 != 0) {
+    if (DAT_82b55118 == 0) {
+      MyAssertHandler(0xffffffff821b2e60,0x31b,0,0xffffffff82000f98,0xffffffff821b3000);
+    }
+    iVar3 = Session_FindRegisteredUser(DAT_82b55118,uVar1);
+    if (-1 < iVar3) {
+      return 1;
+    }
+  }
+  uVar2 = Session_FindRegisteredUser(0xffffffff844c7860,uVar1);
+  return (uVar2 & 0xffffffff) >> 0x1f ^ 1;
+}
+
+
+// 82703BD0  FriendsMenu_IsSlotSelected  (social/social_friends.cpp:810)
+
+bool FriendsMenu_IsSlotSelected(int param_1,int param_2)
+
+{
+  param_1 = param_1 * 0x670;
+  if (*(int *)(&DAT_84546e60 + param_1) == 0) {
+    return false;
+  }
+  return param_2 == *(int *)(&DAT_84546e40 + param_1) - *(int *)(&DAT_84546e48 + param_1);
+}
+
+
+// 82703C18  FriendsMenu_GetPresenceForSlot  (social/social_friends.cpp:822)
+
+undefined8 FriendsMenu_GetPresenceForSlot(int param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = param_1 * 0x670;
+  if ((uint)(*(int *)(&DAT_84546e48 + iVar1) + param_2) < *(uint *)(&DAT_84546e60 + iVar1)) {
+    Friends_GetPresence_Platform
+              (param_1,*(undefined8 *)
+                        (&DAT_84546e40 +
+                        (*(int *)(&DAT_84546e40 +
+                                 (*(int *)(&DAT_84546e48 + iVar1) + param_2 + 0x136U) * 4 + iVar1) +
+                        5) * 8 + iVar1),0xffffffff84546dc0,0x80);
+    return 0xffffffff84546dc0;
+  }
+  return 0xffffffff820068af;
 }
 
 
@@ -591,5 +1044,18 @@ undefined8 FriendsMenu_GetCurrentIndexName(int param_1)
                                (*(int *)(&DAT_84546e44 + iVar1) + 0x136) * 4 + iVar1) + 5) * 8 +
                       iVar1),0xffffffff84548880,0x20);
   return 0xffffffff84548880;
+}
+
+
+// 82703D18  FriendsMenu_GetCurrentIndexXUID  (social/social_friends.cpp:856)
+
+undefined8 FriendsMenu_GetCurrentIndexXUID(int param_1)
+
+{
+  param_1 = param_1 * 0x670;
+  return *(undefined8 *)
+          (&DAT_84546e40 +
+          (*(int *)(&DAT_84546e40 + (*(int *)(&DAT_84546e44 + param_1) + 0x136) * 4 + param_1) + 5)
+          * 8 + param_1);
 }
 

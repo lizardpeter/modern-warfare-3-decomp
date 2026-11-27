@@ -176,8 +176,26 @@ void set_rate_volume_and_pan(BINKSND *param_1)
 void DS_clear(SNDCHANNEL *param_1,uint param_2,uint param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(param_1,param_2,param_3);
+  int iVar1;
+  void *pvVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  uVar4 = (ulonglong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  uVar5 = uVar4;
+  if ((ulonglong)*(uint *)(iVar1 + 0x60) < (lVar3 + uVar4 & 0xffffffff)) {
+    uVar5 = (ulonglong)*(uint *)(iVar1 + 0x60) - lVar3;
+  }
+  pvVar2 = memset((void *)(*(int *)(iVar1 + 0x5c) + (int)lVar3),*(int *)(iVar1 + 0x98),(size_t)uVar5
+                 );
+  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+    pvVar2 = memset(*(void **)(iVar1 + 0x5c),*(int *)(iVar1 + 0x98),(int)uVar4 - (size_t)uVar5);
+  }
+  __restgprlr_29(pvVar2);
+  return;
 }
 
 
@@ -188,8 +206,81 @@ void DS_clear(SNDCHANNEL *param_1,uint param_2,uint param_3)
 int Ready(BINKSND *param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(param_1);
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  uint local_a0 [12];
+  int local_70 [28];
+  
+  iVar2 = __savegprlr_26(param_1);
+  if ((*(int *)(iVar2 + 0xf4) == 0) && (*(int *)(iVar2 + 100) != 0)) {
+    if (*(int *)(iVar2 + 0xf0) == 0) {
+      iVar2 = __restgprlr_26(1);
+      return iVar2;
+    }
+    uVar6 = *(uint *)(iVar2 + 0x104);
+    iVar3 = RADTimerRead();
+    if (0xc < (uint)(iVar3 - *(int *)(iVar2 + 0x10c))) goto LAB_8294585c;
+    while( true ) {
+      uVar5 = *(uint *)(iVar2 + 0xf8);
+      if (uVar6 < uVar5) {
+        iVar3 = *(int *)(iVar2 + 0xdc) - uVar5;
+      }
+      else {
+        iVar3 = -uVar5;
+      }
+      if (iVar3 + uVar6 < 0x400) {
+        uVar6 = 0;
+      }
+      else {
+        uVar6 = (iVar3 + uVar6) - 0x400 & 0xfffffffc;
+      }
+      if ((uVar6 < *(uint *)(iVar2 + 0xe0)) && ((*(int *)(iVar2 + 0xfc) == 0 || (uVar6 == 0))))
+      break;
+      if (uVar6 < *(uint *)(iVar2 + 0x108)) {
+        *(uint *)(iVar2 + 0xfc) = uVar6;
+        iVar2 = __restgprlr_26(1);
+        return iVar2;
+      }
+      do {
+        iVar3 = *(int *)(iVar2 + 0xf8);
+        uVar6 = *(int *)(iVar2 + 0xe0) * 2;
+        *(undefined4 *)(iVar2 + 0x5c) = 1;
+        uVar5 = uVar6;
+        if (*(uint *)(iVar2 + 0xdc) < iVar3 + uVar6) {
+          uVar5 = *(uint *)(iVar2 + 0xdc) - iVar3;
+        }
+        memset((void *)(*(int *)(iVar2 + 0xd8) + iVar3),*(int *)(iVar2 + 0x114),uVar5);
+        if (uVar5 < uVar6) {
+          memset(*(void **)(iVar2 + 0xd8),*(int *)(iVar2 + 0x114),uVar6 - uVar5);
+        }
+        uVar6 = *(int *)(iVar2 + 0xe0) * 2 + *(int *)(iVar2 + 0xf8);
+        *(uint *)(iVar2 + 0xf8) = uVar6;
+        if (*(uint *)(iVar2 + 0xdc) <= uVar6) {
+          *(uint *)(iVar2 + 0xf8) = uVar6 - *(uint *)(iVar2 + 0xdc);
+        }
+LAB_8294585c:
+        uVar1 = *(undefined4 *)(iVar2 + 0x7c);
+        do {
+          local_a0[0] = 0;
+          local_70[0] = 0;
+          XAudioSourceVoice_GetPacketPosition(uVar1,local_70);
+          XAudioSourceVoice_GetPacketPosition(uVar1,local_a0);
+          XAudioSourceVoice_GetPacketPosition(uVar1,local_a0);
+          uVar6 = local_a0[0];
+        } while (0x3ff < local_a0[0] - local_70[0]);
+        iVar4 = RADTimerRead();
+        iVar3 = *(int *)(iVar2 + 0x10c);
+        *(uint *)(iVar2 + 0x104) = uVar6;
+        *(int *)(iVar2 + 0x10c) = iVar4;
+      } while (*(uint *)(iVar2 + 0x110) <= (uint)(iVar4 - iVar3));
+    }
+  }
+  iVar2 = __restgprlr_26(0);
+  return iVar2;
 }
 
 
@@ -221,8 +312,55 @@ int Lock(BINKSND *param_1,uchar **param_2,uint *param_3)
 void start_streaming(SNDCHANNEL *param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(param_1);
+  bool bVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 uVar5;
+  int iVar6;
+  int local_60 [24];
+  
+  puVar2 = (undefined4 *)__savegprlr_27(param_1);
+  puVar2[0x1d] = 1;
+  local_60[0] = 0;
+  XAudioSourceVoice_FlushPackets(*puVar2);
+  puVar2[4] = 0;
+  puVar2[3] = 0xffffffff;
+  puVar2[1] = puVar2[0x17];
+  puVar2[2] = puVar2[0x18];
+  puVar2[5] = puVar2[0x18];
+  XAudioSourceVoice_SubmitPacket(*puVar2,puVar2 + 1,1);
+  XAudioSourceVoice_SetPacketLoopCount(*puVar2,0xffffffffffffffff);
+  XAudioSourceVoice_SetPacketPosition(*puVar2,local_60);
+  XAudioSourceVoice_Start(*puVar2,0);
+  puVar2[0x1e] = 0;
+  iVar3 = RADTimerRead();
+  XAudioSourceVoice_GetPacketPosition(*puVar2,local_60);
+  bVar1 = false;
+  iVar6 = local_60[0];
+  do {
+    local_60[0] = 0;
+    XAudioSourceVoice_GetPacketPosition(*puVar2,local_60);
+    puVar2[0x22] = local_60[0];
+    if (local_60[0] == iVar6) {
+      if ((!bVar1) && (iVar4 = RADTimerRead(), 0x32 < (uint)(iVar4 - iVar3))) {
+        XAudioSourceVoice_Start(*puVar2,0);
+        puVar2[0x1e] = 0;
+        iVar3 = RADTimerRead();
+        local_60[0] = 0;
+        XAudioSourceVoice_GetPacketPosition(*puVar2,local_60);
+        bVar1 = false;
+        iVar6 = local_60[0];
+      }
+    }
+    else {
+      bVar1 = true;
+    }
+  } while ((uint)puVar2[0x19] < (uint)puVar2[0x22]);
+  uVar5 = RADTimerRead();
+  puVar2[0x24] = uVar5;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -308,8 +446,80 @@ void MixBins(BINKSND *param_1,uint *param_2,uint param_3)
 void MixBinVolumes(BINKSND *param_1,uint *param_2,int *param_3,uint param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(param_1,param_2,param_3,param_4);
+  BINKSND *pBVar1;
+  int *piVar2;
+  float *pfVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  
+  uVar11 = (ulonglong)(int)param_4;
+  lVar9 = (longlong)(int)param_3;
+  lVar4 = __savegprlr_29(param_1);
+  if (0xc < (uVar11 & 0xffffffff)) {
+    uVar11 = 0xc;
+  }
+  pBVar1 = (BINKSND *)lVar4;
+  *(int *)(pBVar1 + 0x124) = (int)uVar11;
+  *(undefined4 *)(pBVar1 + 0x11c) = 1;
+  memcpy(pBVar1 + 0x158,param_2,(size_t)((uVar11 & 0xffffffff) << 2));
+  uVar5 = 0;
+  if (3 < (int)uVar11) {
+    lVar10 = lVar9 + 8;
+    lVar8 = lVar4 + 0x18c;
+    uVar6 = ((uVar11 - 4 & 0xffffffff) >> 2) + 1;
+    uVar5 = uVar6 * 4 & 0xfffffffc;
+    do {
+      piVar2 = (int *)lVar10;
+      iVar7 = piVar2[-2];
+      if (0x7fff < iVar7) {
+        iVar7 = 0x7fff;
+      }
+      pfVar3 = (float *)lVar8;
+      pfVar3[-1] = (float)(longlong)iVar7 * 3.051851e-05;
+      iVar7 = piVar2[-1];
+      if (0x7fff < iVar7) {
+        iVar7 = 0x7fff;
+      }
+      *pfVar3 = (float)(longlong)iVar7 * 3.051851e-05;
+      iVar7 = *piVar2;
+      if (0x7fff < iVar7) {
+        iVar7 = 0x7fff;
+      }
+      pfVar3[1] = (float)(longlong)iVar7 * 3.051851e-05;
+      iVar7 = piVar2[1];
+      if (0x7fff < iVar7) {
+        iVar7 = 0x7fff;
+      }
+      uVar6 = uVar6 - 1;
+      lVar10 = lVar10 + 0x10;
+      pfVar3[2] = (float)(longlong)iVar7 * 3.051851e-05;
+      lVar8 = lVar8 + 0x10;
+    } while ((uVar6 & 0xffffffff) != 0);
+  }
+  if (uVar5 < (uVar11 & 0xffffffff)) {
+    lVar9 = (uVar5 & 0x3fffffff) * 4 + lVar9;
+    lVar4 = (uVar5 + 0x62 & 0x3fffffff) * 4 + lVar4;
+    uVar11 = uVar11 - uVar5;
+    do {
+      iVar7 = *(int *)lVar9;
+      if (0x7fff < iVar7) {
+        iVar7 = 0x7fff;
+      }
+      uVar11 = uVar11 - 1;
+      lVar9 = lVar9 + 4;
+      *(float *)lVar4 = (float)(longlong)iVar7 * 3.051851e-05;
+      lVar4 = lVar4 + 4;
+    } while ((uVar11 & 0xffffffff) != 0);
+  }
+  set_rate_volume_and_pan(pBVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -320,8 +530,39 @@ void MixBinVolumes(BINKSND *param_1,uint *param_2,int *param_3,uint param_4)
 int SetOnOff(BINKSND *param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(param_1,param_2);
+  int iVar1;
+  int iVar2;
+  SNDCHANNEL *pSVar3;
+  char local_60 [16];
+  undefined4 local_50 [20];
+  
+  iVar1 = __savegprlr_29(param_1);
+  if (param_2 == 0) {
+    if (*(int *)(iVar1 + 100) != 0) {
+      pSVar3 = (SNDCHANNEL *)(iVar1 + 0x7c);
+      local_50[0] = 0;
+      iVar2 = XAudioSourceVoice_Stop(*(undefined4 *)(iVar1 + 0x7c),1);
+      if (-1 < iVar2) {
+        do {
+          local_60[0] = '\0';
+          XAudioVoice_GetVoiceState(*(undefined4 *)pSVar3,local_60);
+        } while (local_60[0] == '\x01');
+      }
+      XAudioSourceVoice_SetPacketPosition(*(undefined4 *)pSVar3,local_50);
+      DS_clear(pSVar3,0,*(uint *)(iVar1 + 0xdc));
+      *(undefined4 *)(iVar1 + 100) = 0;
+    }
+  }
+  else if (*(int *)(iVar1 + 100) == 0) {
+    *(undefined4 *)(iVar1 + 100) = 1;
+    *(undefined4 *)(iVar1 + 0xf0) = 0;
+    *(undefined4 *)(iVar1 + 0xf8) = 0;
+    *(undefined4 *)(iVar1 + 0xfc) = *(undefined4 *)(iVar1 + 0x100);
+    iVar1 = __restgprlr_29(1);
+    return iVar1;
+  }
+  iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 100));
+  return iVar1;
 }
 
 

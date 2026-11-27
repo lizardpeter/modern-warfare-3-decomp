@@ -17,8 +17,19 @@ void bdAntiCheatChallenges__bdAntiCheatChallenges(undefined4 *param_1)
 void bdAntiCheatChallenges___bdAntiCheatChallenges(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  *puVar2 = &PTR_bdAntiCheatChallenges___scalar_deleting_destructor__822110c0;
+  iVar1 = puVar2[2];
+  if (iVar1 != 0) {
+    bdArray<bdAntiCheatChallenge>__clear(iVar1);
+    bdMemory__deallocate(iVar1);
+  }
+  bdReferencable___bdReferencable(puVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -33,11 +44,72 @@ void bdAntiCheatChallenge__operator_delete(void)
 
 // 8290CF40  bdAntiCheatChallenges::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:27)
 
-void bdAntiCheatChallenges__deserialize(void)
+/* WARNING: Removing unreachable block (ram,0x8290cfe0) */
+/* WARNING: Removing unreachable block (ram,0x8290cfe8) */
+/* WARNING: Removing unreachable block (ram,0x8290d008) */
+/* WARNING: Removing unreachable block (ram,0x8290d00c) */
+/* WARNING: Removing unreachable block (ram,0x8290d01c) */
+/* WARNING: Removing unreachable block (ram,0x8290d020) */
+/* WARNING: Removing unreachable block (ram,0x8290d028) */
+/* WARNING: Removing unreachable block (ram,0x8290d02c) */
+
+void bdAntiCheatChallenges__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar3;
+  char cVar5;
+  ulonglong uVar2;
+  undefined4 uVar4;
+  char cVar6;
+  undefined1 local_60 [16];
+  undefined1 auStack_50 [80];
+  
+  iVar3 = __savegprlr_28();
+  iVar1 = *(int *)(iVar3 + 8);
+  bdAntiCheatChallenge__bdAntiCheatChallenge(auStack_50);
+  if (iVar1 == 0) {
+    cVar5 = bdByteBuffer__readUInt16(*(undefined4 *)param_2,local_60);
+    cVar6 = '\x01';
+    if (cVar5 != '\0') goto LAB_8290cf9c;
+  }
+  cVar6 = '\0';
+LAB_8290cf9c:
+  if (cVar6 != '\0') {
+    uVar2 = bdMemory__allocate(0xc);
+    if ((uVar2 & 0xffffffff) == 0) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = bdArray<bdAntiCheatChallenge>__bdArray<bdAntiCheatChallenge>(uVar2,0,auStack_50);
+    }
+    *(undefined4 *)(iVar3 + 8) = uVar4;
+  }
+  bdAntiCheatChallenge___bdAntiCheatChallenge(auStack_50);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_28(cVar6);
+  return;
+}
+
+
+// 8290CE00  bdArray<bdAntiCheatChallenge>::bdArray<bdAntiCheatChallenge>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:30)
+
+undefined4 *
+bdArray<bdAntiCheatChallenge>__bdArray<bdAntiCheatChallenge>
+          (undefined4 *param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  
+  param_1[2] = (int)param_2;
+  param_1[1] = (int)param_2;
+  *param_1 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    uVar1 = bdMemory__allocate(param_2 * 0x28);
+    *param_1 = (int)uVar1;
+    bdArray<bdAntiCheatChallenge>__copyConstructArrayObject(param_1,uVar1,param_3,param_1[1]);
+  }
+  return param_1;
 }
 
 
@@ -66,7 +138,6 @@ longlong bdArray<bdAntiCheatChallenge>__operator__(uint *param_1,ulonglong param
 
 {
   if ((ulonglong)param_1[2] <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82211100,0x68,0,0xffffffff820011f4,0xffffffff821b6d14,
                     0xffffffff821b6d24);
   }
@@ -84,6 +155,31 @@ void bdArray<bdAntiCheatChallenge>__clear(undefined4 *param_1)
   *param_1 = 0;
   param_1[2] = 0;
   param_1[1] = 0;
+  return;
+}
+
+
+// 8290CCF8  bdArray<bdAntiCheatChallenge>::copyConstructArrayObject  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:479)
+
+void bdArray<bdAntiCheatChallenge>__copyConstructArrayObject
+               (undefined8 param_1,longlong param_2,undefined8 param_3,uint param_4)
+
+{
+  longlong lVar1;
+  ulonglong uVar2;
+  
+  __savegprlr_27();
+  uVar2 = 0;
+  if (param_4 != 0) {
+    do {
+      lVar1 = uVar2 * 0x28 + param_2;
+      if (lVar1 != 0) {
+        bdAntiCheatChallenge__bdAntiCheatChallenge(lVar1,param_3);
+      }
+      uVar2 = uVar2 + 1;
+    } while ((uVar2 & 0xffffffff) < (ulonglong)param_4);
+  }
+  __restgprlr_27();
   return;
 }
 

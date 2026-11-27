@@ -23,10 +23,111 @@
 ; 82939EC8  bdCookieAckChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieackchunk.cpp:29)
   82939EC8  7D8802A6             mfspr r12,LR
   82939ECC  4BFDC7ED             bl 0x829166b8
+  82939ED0  9421FF70             stwu r1,-0x90(r1)
+  82939ED4  3BA00000             li r29,0x0
+  82939ED8  7C7C1B78             or r28,r3,r3
+  82939EDC  93A10058             stw r29,0x58(r1)
+  82939EE0  7C9F2378             or r31,r4,r4
+  82939EE4  7CBE2B78             or r30,r5,r5
+  82939EE8  48001DC9             bl 0x8293bcb0
+  82939EEC  817C0010             lwz r11,0x10(r28)
+  82939EF0  90610058             stw r3,0x58(r1)
+  82939EF4  7C651B78             or r5,r3,r3
+  82939EF8  39000001             li r8,0x1
+  82939EFC  38E10050             addi r7,r1,0x50
+  82939F00  38C10058             addi r6,r1,0x58
+  82939F04  99610050             stb r11,0x50(r1)
+  82939F08  7FC4F378             or r4,r30,r30
+  82939F0C  7FE3FB78             or r3,r31,r31
+  82939F10  4BFBD3A9             bl 0x828f72b8
+  82939F14  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82939F18  B3A10052             sth r29,0x52(r1)
+  82939F1C  314BFFFF             subic r10,r11,0x1
+  82939F20  7D6A5910             subfe r11,r10,r11
+  82939F24  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82939F28  41820044             beq 0x82939f6c
+  82939F2C  39200002             li r9,0x2
+  82939F30  7FABEB78             or r11,r29,r29
+  82939F34  39410056             addi r10,r1,0x56
+  82939F38  7D2903A6             mtspr CTR,r9
+LAB_82939f3c:
+  82939F3C  39210052             addi r9,r1,0x52
+  82939F40  7D2B48AE             lbzx r9,r11,r9
+  82939F44  396B0001             addi r11,r11,0x1
+  82939F48  9D2AFFFF             stbu r9,-0x1(r10)
+  82939F4C  4200FFF0             bdnz 0x82939f3c
+  82939F50  39000002             li r8,0x2
+  82939F54  80A10058             lwz r5,0x58(r1)
+  82939F58  38E10054             addi r7,r1,0x54
+  82939F5C  38C10058             addi r6,r1,0x58
+  82939F60  7FC4F378             or r4,r30,r30
+  82939F64  7FE3FB78             or r3,r31,r31
+  82939F68  4BFBD351             bl 0x828f72b8
+LAB_82939f6c:
+  82939F6C  80610058             lwz r3,0x58(r1)
+  82939F70  38210090             addi r1,r1,0x90
+  82939F74  4BFDC794             b 0x82916708
 
 ; 82939F78  bdCookieAckChunk::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieackchunk.cpp:51)
   82939F78  7D8802A6             mfspr r12,LR
   82939F7C  4BFDC739             bl 0x829166b4
+  82939F80  9421FF70             stwu r1,-0x90(r1)
+  82939F84  81660000             lwz r11,0x0(r6)
+  82939F88  7CDB3378             or r27,r6,r6
+  82939F8C  38C10054             addi r6,r1,0x54
+  82939F90  7C7F1B78             or r31,r3,r3
+  82939F94  7C9E2378             or r30,r4,r4
+  82939F98  7CBD2B78             or r29,r5,r5
+  82939F9C  91610054             stw r11,0x54(r1)
+  82939FA0  48001D61             bl 0x8293bd00
+  82939FA4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82939FA8  3B800000             li r28,0x0
+  82939FAC  314BFFFF             subic r10,r11,0x1
+  82939FB0  7D6A5910             subfe r11,r10,r11
+  82939FB4  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82939FB8  41820038             beq 0x82939ff0
+  82939FBC  39000001             li r8,0x1
+  82939FC0  80A10054             lwz r5,0x54(r1)
+  82939FC4  38E10050             addi r7,r1,0x50
+  82939FC8  38C10054             addi r6,r1,0x54
+  82939FCC  7FA4EB78             or r4,r29,r29
+  82939FD0  7FC3F378             or r3,r30,r30
+  82939FD4  4BFBD3ED             bl 0x828f73c0
+  82939FD8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82939FDC  41820008             beq 0x82939fe4
+  82939FE0  8B810050             lbz r28,0x50(r1)
+LAB_82939fe4:
+  82939FE4  2B0B0000             cmplwi cr6,r11,0x0
+  82939FE8  39600001             li r11,0x1
+  82939FEC  409A0008             bne cr6,0x82939ff4
+LAB_82939ff0:
+  82939FF0  39600000             li r11,0x0
+LAB_82939ff4:
+  82939FF4  578A063E             rlwinm r10,r28,0x0,0x18,0x1f
+  82939FF8  39200000             li r9,0x0
+  82939FFC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8293A000  915F0010             stw r10,0x10(r31)
+  8293A004  B1210052             sth r9,0x52(r1)
+  8293A008  41820028             beq 0x8293a030
+  8293A00C  38E10052             addi r7,r1,0x52
+  8293A010  80A10054             lwz r5,0x54(r1)
+  8293A014  38C10054             addi r6,r1,0x54
+  8293A018  7FA4EB78             or r4,r29,r29
+  8293A01C  7FC3F378             or r3,r30,r30
+  8293A020  4BFBCFC9             bl 0x828f6fe8
+  8293A024  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A028  39600001             li r11,0x1
+  8293A02C  40820008             bne 0x8293a034
+LAB_8293a030:
+  8293A030  39600000             li r11,0x0
+LAB_8293a034:
+  8293A034  5563063F             rlwinm. r3,r11,0x0,0x18,0x1f
+  8293A038  4182000C             beq 0x8293a044
+  8293A03C  81610054             lwz r11,0x54(r1)
+  8293A040  917B0000             stw r11,0x0(r27)
+LAB_8293a044:
+  8293A044  38210090             addi r1,r1,0x90
+  8293A048  4BFDC6BC             b 0x82916704
 
 ; 82939E70  bdCookieAckChunk::`scalar_deleting_destructor'  (line unknown)
   82939E70  7D8802A6             mfspr r12,LR

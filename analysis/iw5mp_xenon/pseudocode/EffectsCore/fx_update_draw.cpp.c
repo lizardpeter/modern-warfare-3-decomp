@@ -22,11 +22,32 @@ double FX_IntegrateRotationFromZero
 
 // 82449940  FX_SetupVisualState  (EffectsCore/fx_update_draw.cpp:58)
 
-void FX_SetupVisualState(void)
+void FX_SetupVisualState(undefined8 param_1,float param_2,float param_3,undefined8 param_4,
+                        float *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  double extraout_f1;
+  double dVar4;
+  double _X;
+  
+  fVar3 = (float)__savegprlr_28();
+  _X = (double)(float)((double)*(byte *)((int)fVar3 + 0xb3) * extraout_f1);
+  dVar4 = floor(_X);
+  param_5[2] = fVar3;
+  param_5[3] = param_2;
+  fVar1 = (float)(_X - (double)(longlong)(int)dVar4);
+  *param_5 = fVar1;
+  param_5[1] = 1.0 - fVar1;
+  iVar2 = *(int *)((int)fVar3 + 0xb8);
+  param_5[5] = param_3;
+  *(undefined2 *)(param_5 + 6) = 0xff;
+  *(undefined2 *)((int)param_5 + 0x1a) = 0xff;
+  param_5[4] = (float)(iVar2 + (int)dVar4 * 0x30);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -88,6 +109,117 @@ void FX_EvaluateScale(float *param_1,int param_2)
 }
 
 
+// 82449B28  FX_EvaluateVisualState_DoLighting  (EffectsCore/fx_update_draw.cpp:111)
+
+void FX_EvaluateVisualState_DoLighting(undefined8 param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  int iVar5;
+  longlong lVar6;
+  
+  iVar2 = __savegprlr_21();
+  if (*(int *)(iVar2 + 0xc) == 0) {
+    MyAssertHandler(0xffffffff82069a20,0x77,0,0xffffffff82000f98,0xffffffff82069a08);
+  }
+  iVar2 = *(int *)(iVar2 + 0xc);
+  iVar5 = 0;
+  piVar4 = &DAT_820699fc;
+  do {
+    iVar1 = *piVar4;
+    lVar6 = (longlong)
+            ((int)(((uint)*(byte *)(iVar5 + iVar2 + 0x1a) * 2 + -0xff) *
+                  (uint)*(byte *)(param_3 + 0xf9)) / 0xff) + 0xff;
+    if ((lVar6 < 0) || (0x1fe < (int)lVar6)) {
+      MyAssertHandler(0xffffffff82069a20,0x7f,0,0xffffffff820699e4,0xffffffff820699b8,lVar6);
+    }
+    iVar3 = (int)((uint)*(byte *)(iVar1 + param_2) * (int)lVar6) / 0xff;
+    if (iVar3 < 0xff) {
+      if (iVar3 < 1) {
+        iVar3 = 0;
+      }
+    }
+    else {
+      iVar3 = 0xff;
+    }
+    iVar5 = iVar5 + 1;
+    *(char *)(iVar1 + param_2) = (char)iVar3;
+    piVar4 = piVar4 + 1;
+  } while (iVar5 != 3);
+  __restgprlr_21();
+  return;
+}
+
+
+// 82449C30  FX_EvaluateVisualState  (EffectsCore/fx_update_draw.cpp:135)
+
+void FX_EvaluateVisualState(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float fVar4;
+  float *pfVar5;
+  byte bVar6;
+  byte *pbVar7;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
+  __savegprlr_26();
+  pfVar5 = (float *)__savefpr_27();
+  fVar1 = pfVar5[2];
+  dVar11 = extraout_f1;
+  if (fVar1 == 0.0) {
+    MyAssertHandler(0xffffffff82069a20,0x93,0,0xffffffff82000f98,0xffffffff82061c6c);
+  }
+  fVar2 = pfVar5[4];
+  dVar12 = (double)*pfVar5;
+  iVar3 = (int)pfVar5[5] * 4;
+  dVar10 = (double)pfVar5[1];
+  dVar9 = (double)*(float *)(&DAT_82066b24 + iVar3);
+  dVar8 = (double)(float)(1.0 - dVar9);
+  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
+  pbVar7 = (byte *)param_3;
+  *pbVar7 = bVar6;
+  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
+  pbVar7[1] = bVar6;
+  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
+  pbVar7[2] = bVar6;
+  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
+  pbVar7[3] = bVar6;
+  if (*(char *)((int)fVar1 + 0xf9) != '\0') {
+    FX_EvaluateVisualState_DoLighting(pfVar5,param_3,fVar1);
+  }
+  fVar4 = *(float *)(&DAT_82066b28 + iVar3) * *(float *)((int)fVar1 + 0x94) +
+          *(float *)((int)fVar1 + 0x90);
+  *(float *)(pbVar7 + 8) = fVar4;
+  dVar8 = (double)((float)(dVar12 * dVar12) * 0.5);
+  fVar1 = *(float *)(&DAT_82066b2c + iVar3);
+  *(float *)(pbVar7 + 8) =
+       (float)((double)(float)((double)(*(float *)((int)fVar2 + 0x4c) * fVar1 +
+                                       *(float *)((int)fVar2 + 0x34)) * dVar8 +
+                              (double)((*(float *)((int)fVar2 + 0x1c) * fVar1 +
+                                       *(float *)((int)fVar2 + 4)) * (float)(dVar12 - dVar8) +
+                                      *(float *)((int)fVar2 + 0x20) * fVar1 +
+                                      *(float *)((int)fVar2 + 8))) * dVar11 + (double)fVar4);
+  *pbVar7 = (byte)((ulonglong)
+                   ((longlong)
+                    (int)((uint)*(ushort *)((int)pfVar5 + 0x1a) * (uint)*(ushort *)(pfVar5 + 6)) *
+                   (longlong)(int)(uint)*pbVar7) >> 0x10);
+  __restfpr_27();
+  __restgprlr_26();
+  return;
+}
+
+
 // 82449DE0  FX_GetMsecForSamplingAxis  (EffectsCore/fx_update_draw.cpp:174)
 
 double FX_GetMsecForSamplingAxis
@@ -109,6 +241,78 @@ double FX_GetMsecForSamplingAxis
 }
 
 
+// 82449E50  FX_SetPlacement  (EffectsCore/fx_update_draw.cpp:189)
+
+void FX_SetPlacement(int param_1,int param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  float fVar1;
+  double dVar2;
+  double dVar3;
+  undefined1 auStack_40 [40];
+  
+  dVar3 = (double)*(float *)(param_1 + 0x50);
+  dVar2 = (double)((float)*(byte *)(*(int *)(param_1 + 8) + 2) * *(float *)(param_1 + 0x4c) *
+                  0.003921569);
+  fVar1 = (float)(dVar3 - dVar2);
+  if (0.0 < fVar1) {
+    if (fVar1 < 300.0) {
+      dVar3 = -(double)(float)((double)(fVar1 * fVar1) * 0.0016666667070239782 - dVar3);
+    }
+    else {
+      dVar3 = (double)(float)(dVar2 + 150.0);
+    }
+  }
+  FX_GetElemAxis(dVar3,*(undefined4 *)(param_1 + 0xc),*(undefined4 *)(param_1 + 0x48),param_1 + 0x14
+                 ,param_4,auStack_40);
+  AxisToQuat(auStack_40,param_2);
+  *(undefined4 *)(param_2 + 0x10) = *(undefined4 *)(param_1 + 0x58);
+  *(undefined4 *)(param_2 + 0x14) = *(undefined4 *)(param_1 + 0x5c);
+  *(undefined4 *)(param_2 + 0x18) = *(undefined4 *)(param_1 + 0x60);
+  *(undefined4 *)(param_2 + 0x1c) = *(undefined4 *)(param_1 + 0x84);
+  return;
+}
+
+
+// 82449F40  FX_FillGenerateVertsCmd  (EffectsCore/fx_update_draw.cpp:222)
+
+void FX_FillGenerateVertsCmd(undefined8 param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  uint *puVar2;
+  undefined4 uVar3;
+  undefined4 *puVar4;
+  
+  puVar2 = (uint *)__savegprlr_28();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82069a20,0xdf,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069a20,0xe0,0,0xffffffff82000f98,0xffffffff82069a6c);
+  }
+  uVar3 = FX_GetSystem(puVar2[1]);
+  puVar4 = (undefined4 *)param_2;
+  *puVar4 = uVar3;
+  uVar3 = FX_Beam_GetInfo();
+  puVar4[1] = uVar3;
+  uVar3 = FX_PostLight_GetInfo();
+  puVar4[2] = uVar3;
+  uVar3 = FX_SpriteGetInfo();
+  puVar4[3] = uVar3;
+  uVar3 = FX_GetMarksSystem(puVar2[1]);
+  puVar4[4] = uVar3;
+  puVar4[5] = puVar2[1];
+  uVar1 = *puVar2;
+  puVar4[6] = *(undefined4 *)(uVar1 + 0xd4);
+  puVar4[7] = *(undefined4 *)(uVar1 + 0xd8);
+  puVar4[8] = *(undefined4 *)(uVar1 + 0xdc);
+  AxisCopy((ulonglong)*puVar2 + 0x144,param_2 + 0x24);
+  __restgprlr_28();
+  return;
+}
+
+
 // 8244A018  FX_FillGenerateGlassVertsCmd  (EffectsCore/fx_update_draw.cpp:237)
 
 void FX_FillGenerateGlassVertsCmd(int param_1)
@@ -117,7 +321,6 @@ void FX_FillGenerateGlassVertsCmd(int param_1)
   undefined4 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82069a20,0xee,0,0xffffffff82000f98,0xffffffff82069a78);
   }
   *(undefined4 **)(param_1 + 0x28) = &DAT_8333cac4;

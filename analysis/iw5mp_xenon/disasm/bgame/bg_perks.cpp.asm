@@ -3,6 +3,31 @@
 ; 82277238  BG_GetPerkCodeIndexForName  (bgame/bg_perks.cpp:110)
   82277238  7D8802A6             mfspr r12,LR
   8227723C  4869F481             bl 0x829166bc
+  82277240  9421FF90             stwu r1,-0x70(r1)
+  82277244  7C7D1B78             or r29,r3,r3
+  82277248  2B030000             cmplwi cr6,r3,0x0
+  8227724C  409A0010             bne cr6,0x8227725c
+  82277250  38600032             li r3,0x32
+  82277254  38210070             addi r1,r1,0x70
+  82277258  4869F4B4             b 0x8291670c
+LAB_8227725c:
+  8227725C  3D608296             lis r11,-0x7d6a
+  82277260  3BC00000             li r30,0x0
+  82277264  3BEB12F0             addi r31,r11,0x12f0
+LAB_82277268:
+  82277268  7FA3EB78             or r3,r29,r29
+  8227726C  809F0000             lwz r4,0x0(r31)
+  82277270  48394D21             bl 0x8260bf90
+  82277274  2F030000             cmpwi cr6,r3,0x0
+  82277278  419A0014             beq cr6,0x8227728c
+  8227727C  3BDE0001             addi r30,r30,0x1
+  82277280  3BFF0004             addi r31,r31,0x4
+  82277284  2B1E0032             cmplwi cr6,r30,0x32
+  82277288  4198FFE0             blt cr6,0x82277268
+LAB_8227728c:
+  8227728C  7FC3F378             or r3,r30,r30
+  82277290  38210070             addi r1,r1,0x70
+  82277294  4869F478             b 0x8291670c
 
 ; 82277298  BG_GetPerkNameForCodeIndex  (bgame/bg_perks.cpp:125)
   82277298  7D8802A6             mfspr r12,LR
@@ -518,6 +543,30 @@ LAB_822772d8:
 ; 82277A80  Perk_GetSlotIndex  (bgame/bg_perks.cpp:189)
   82277A80  7D8802A6             mfspr r12,LR
   82277A84  4869EC35             bl 0x829166b8
+  82277A88  9421FF80             stwu r1,-0x80(r1)
+  82277A8C  3D608296             lis r11,-0x7d6a
+  82277A90  7C7C1B78             or r28,r3,r3
+  82277A94  3BAB13B8             addi r29,r11,0x13b8
+  82277A98  3BC00000             li r30,0x0
+  82277A9C  7FBFEB78             or r31,r29,r29
+LAB_82277aa0:
+  82277AA0  7F83E378             or r3,r28,r28
+  82277AA4  809F0000             lwz r4,0x0(r31)
+  82277AA8  483944E9             bl 0x8260bf90
+  82277AAC  2F030000             cmpwi cr6,r3,0x0
+  82277AB0  419A0024             beq cr6,0x82277ad4
+  82277AB4  3BFF0004             addi r31,r31,0x4
+  82277AB8  397D0024             addi r11,r29,0x24
+  82277ABC  3BDE0001             addi r30,r30,0x1
+  82277AC0  7F1F5800             cmpw cr6,r31,r11
+  82277AC4  4198FFDC             blt cr6,0x82277aa0
+  82277AC8  38600009             li r3,0x9
+  82277ACC  38210080             addi r1,r1,0x80
+  82277AD0  4869EC38             b 0x82916708
+LAB_82277ad4:
+  82277AD4  7FC3F378             or r3,r30,r30
+  82277AD8  38210080             addi r1,r1,0x80
+  82277ADC  4869EC2C             b 0x82916708
 
 ; 82277AE0  Perk_GetIndex  (bgame/bg_perks.cpp:215)
   82277AE0  7D8802A6             mfspr r12,LR

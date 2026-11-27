@@ -36,6 +36,42 @@ longlong XAUDIO__CBatchAllocator__GetFreeHeapSize(int param_1)
 }
 
 
+// 828EE818  XAudioPrepareBatchAllocator  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:91)
+
+void XAudioPrepareBatchAllocator(undefined8 param_1,ulonglong param_2,int *param_3)
+
+{
+  int *piVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int local_30 [12];
+  
+  uVar2 = __savegprlr_28();
+  piVar1 = (int *)*param_3;
+  if (piVar1 == (int *)0x0) {
+    local_30[0] = 0;
+    if ((param_2 & 0xffffffff) == 0) {
+      iVar3 = XAUDIO__CDynamicBatchAllocator__CreateObject(local_30);
+    }
+    else {
+      iVar3 = XAUDIO__CStaticBatchAllocator__CreateObject();
+    }
+    if (-1 < iVar3) {
+      *param_3 = local_30[0];
+      __restgprlr_28();
+      return;
+    }
+  }
+  else {
+    (**(code **)*piVar1)(piVar1);
+    (**(code **)(*piVar1 + 8))(piVar1,param_2);
+    (**(code **)(*piVar1 + 0xc))(piVar1,uVar2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
 // 828EE430  XAUDIO::CBatchAllocator::~CBatchAllocator  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:152)
 
 void XAUDIO__CBatchAllocator___CBatchAllocator(undefined4 *param_1)
@@ -127,11 +163,31 @@ undefined8 XAUDIO__CDynamicBatchAllocator__CreateObject(undefined4 *param_1)
 
 // 828EE778  XAUDIO::CStaticBatchAllocator::CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:374)
 
-void XAUDIO__CStaticBatchAllocator__CreateObject(void)
+void XAUDIO__CStaticBatchAllocator__CreateObject
+               (undefined8 param_1,longlong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined4 *)
+           XAUDIO__CXMemMemoryManager__XMemAlloc(0xffffffff8489594c,param_2 + 0x1c,uVar1);
+  if (puVar2 == (undefined4 *)0x0) {
+    __restgprlr_29(0xffffffff8007000e);
+    return;
+  }
+  puVar2[1] = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
+  puVar2[2] = 1;
+  puVar2[5] = 0;
+  *puVar2 = &PTR_XAUDIO__CBatchAllocator__AddRef_82207fb4;
+  puVar2[1] = &PTR__thunk__XAUDIO__CStaticBatchAllocator___vector_deleting_destructor__82207fa0;
+  puVar2[3] = (int)uVar1;
+  puVar2[4] = (int)param_2;
+  puVar2[6] = puVar2 + 7;
+  *param_3 = puVar2;
+  __restgprlr_29();
+  return;
 }
 
 

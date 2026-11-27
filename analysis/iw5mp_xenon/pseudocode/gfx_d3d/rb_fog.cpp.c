@@ -32,10 +32,10 @@ void R_DecodeFogColor(byte *param_1,float *param_2,float *param_3)
 /* WARNING: Removing unreachable block (ram,0x827a0bfc) */
 /* WARNING: Removing unreachable block (ram,0x827a0b7c) */
 /* WARNING: Removing unreachable block (ram,0x827a09dc) */
+/* WARNING: Removing unreachable block (ram,0x827a0994) */
 /* WARNING: Removing unreachable block (ram,0x827a0aa0) */
 /* WARNING: Removing unreachable block (ram,0x827a0bb4) */
 /* WARNING: Removing unreachable block (ram,0x827a0c44) */
-/* WARNING: Removing unreachable block (ram,0x827a0994) */
 /* WARNING: Removing unreachable block (ram,0x827a08c8) */
 
 void R_SetFrameFog(void)
@@ -76,7 +76,6 @@ void R_SetFrameFog(void)
   }
   iVar5 = *(int *)(iVar6 + 0x5ec);
   if (iVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d642c,0x2c,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
   R_DecodeFogColor(iVar5 + 0x1588,&local_a0,&local_90);
@@ -91,63 +90,62 @@ void R_SetFrameFog(void)
   *(undefined4 *)(iVar6 + 0x2b0) = local_90;
   dVar7 = (double)*(float *)(iVar5 + 0x1594);
   dVar13 = 1.0;
-  if ((0.0 <= dVar7) && (dVar7 <= 1.0)) {
-    fVar2 = *(float *)(iVar5 + 0x1590);
-    fVar3 = *(float *)(iVar5 + 0x1594);
-    dVar7 = -(double)fVar2;
-    fVar4 = *(float *)(iVar5 + 0x158c);
-    *(undefined4 *)(iVar6 + 0x290) = 0;
-    *(float *)(iVar6 + 0x294) = 1.0 - fVar3;
-    *(float *)(iVar6 + 0x298) = (float)dVar7;
-    *(float *)(iVar6 + 0x29c) = (float)((double)fVar4 * (double)fVar2);
-    if (DAT_84618059 != '\0') {
-      dVar11 = 0.01745329238474369;
-      dVar8 = cos((double)(*(float *)(iVar5 + 0x15ac) * 0.017453292));
-      dVar12 = (double)(float)dVar8;
-      dVar8 = cos((double)(float)((double)*(float *)(iVar5 + 0x15b0) * dVar11));
-      dVar8 = (double)(float)dVar8;
-      if (dVar12 <= dVar8) {
-        fVar2 = 100.0;
-      }
-      else {
-        fVar2 = (float)(dVar13 / (double)(float)(dVar12 - dVar8));
-      }
-      dVar10 = (double)fVar2;
-      fVar2 = *(float *)(iVar5 + 0x15a4);
-      fVar3 = *(float *)(iVar5 + 0x15a0);
-      fVar4 = *(float *)(iVar5 + 0x15a8);
-      dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-      dVar11 = dVar13;
-      if (-dVar12 < 0.0) {
-        dVar11 = dVar12;
-      }
-      fVar1 = (float)(dVar13 / dVar11);
-      dVar12 = (double)(fVar1 * fVar3);
-      dVar11 = (double)(fVar1 * fVar2);
-      dVar13 = (double)(fVar1 * fVar4);
-      R_DecodeFogColor(iVar5 + 0x159c,&local_a0,&local_90);
-      *(float *)(iVar6 + 0x2c0) = (float)((double)*(float *)(iVar5 + 0x15b4) * dVar7);
-      *(float *)(iVar6 + 0x2c4) = (float)dVar8;
-      *(float *)(iVar6 + 0x2c8) = (float)dVar10;
-      *(float *)(iVar6 + 0x2cc) = (float)dVar7;
-      *(undefined4 *)(iVar6 + 0x2d4) = local_9c;
-      *(undefined4 *)(iVar6 + 0x2d8) = local_98;
-      *(undefined4 *)(iVar6 + 0x2dc) = local_94;
-      *(undefined4 *)(iVar6 + 0x2d0) = local_a0;
-      *(undefined4 *)(iVar6 + 0x2e0) = local_90;
-      *(undefined4 *)(iVar6 + 0x2e8) = local_88;
-      *(undefined4 *)(iVar6 + 0x2ec) = local_84;
-      *(undefined4 *)(iVar6 + 0x2e4) = local_8c;
-      *(float *)(iVar6 + 0x2f0) = (float)dVar12;
-      *(float *)(iVar6 + 0x2f4) = (float)dVar11;
-      *(float *)(iVar6 + 0x2f8) = (float)dVar13;
-      *(float *)(iVar6 + 0x2fc) = (float)dVar9;
-    }
-    __restfpr_24();
-    __restgprlr_25();
-    return;
+  if ((dVar7 < 0.0) || (1.0 < dVar7)) {
+    MyAssertHandler(0xffffffff821d642c,0x33,0,0xffffffff821d63f0,dVar7,0,0x3ff0000000000000);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821d642c,0x33,0,0xffffffff821d63f0,dVar7,0,0x3ff0000000000000);
+  fVar2 = *(float *)(iVar5 + 0x1590);
+  fVar3 = *(float *)(iVar5 + 0x1594);
+  dVar7 = -(double)fVar2;
+  fVar4 = *(float *)(iVar5 + 0x158c);
+  *(float *)(iVar6 + 0x290) = (float)dVar9;
+  *(float *)(iVar6 + 0x294) = (float)(dVar13 - (double)fVar3);
+  *(float *)(iVar6 + 0x298) = (float)dVar7;
+  *(float *)(iVar6 + 0x29c) = (float)((double)fVar4 * (double)fVar2);
+  if (DAT_84618059 != '\0') {
+    dVar11 = 0.01745329238474369;
+    dVar8 = cos((double)(*(float *)(iVar5 + 0x15ac) * 0.017453292));
+    dVar12 = (double)(float)dVar8;
+    dVar8 = cos((double)(float)((double)*(float *)(iVar5 + 0x15b0) * dVar11));
+    dVar8 = (double)(float)dVar8;
+    if (dVar12 <= dVar8) {
+      fVar2 = 100.0;
+    }
+    else {
+      fVar2 = (float)(dVar13 / (double)(float)(dVar12 - dVar8));
+    }
+    dVar10 = (double)fVar2;
+    fVar2 = *(float *)(iVar5 + 0x15a4);
+    fVar3 = *(float *)(iVar5 + 0x15a0);
+    fVar4 = *(float *)(iVar5 + 0x15a8);
+    dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar11 = dVar13;
+    if (-dVar12 < 0.0) {
+      dVar11 = dVar12;
+    }
+    fVar1 = (float)(dVar13 / dVar11);
+    dVar12 = (double)(fVar1 * fVar3);
+    dVar11 = (double)(fVar1 * fVar2);
+    dVar13 = (double)(fVar1 * fVar4);
+    R_DecodeFogColor(iVar5 + 0x159c,&local_a0,&local_90);
+    *(float *)(iVar6 + 0x2c0) = (float)((double)*(float *)(iVar5 + 0x15b4) * dVar7);
+    *(float *)(iVar6 + 0x2c4) = (float)dVar8;
+    *(float *)(iVar6 + 0x2c8) = (float)dVar10;
+    *(float *)(iVar6 + 0x2cc) = (float)dVar7;
+    *(undefined4 *)(iVar6 + 0x2d4) = local_9c;
+    *(undefined4 *)(iVar6 + 0x2d8) = local_98;
+    *(undefined4 *)(iVar6 + 0x2dc) = local_94;
+    *(undefined4 *)(iVar6 + 0x2d0) = local_a0;
+    *(undefined4 *)(iVar6 + 0x2e0) = local_90;
+    *(undefined4 *)(iVar6 + 0x2e8) = local_88;
+    *(undefined4 *)(iVar6 + 0x2ec) = local_84;
+    *(undefined4 *)(iVar6 + 0x2e4) = local_8c;
+    *(float *)(iVar6 + 0x2f0) = (float)dVar12;
+    *(float *)(iVar6 + 0x2f4) = (float)dVar11;
+    *(float *)(iVar6 + 0x2f8) = (float)dVar13;
+    *(float *)(iVar6 + 0x2fc) = (float)dVar9;
+  }
+  __restfpr_24();
+  __restgprlr_25();
+  return;
 }
 

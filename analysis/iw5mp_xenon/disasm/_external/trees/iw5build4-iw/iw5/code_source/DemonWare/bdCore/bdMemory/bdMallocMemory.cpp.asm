@@ -71,6 +71,31 @@ LAB_828f6b1c:
 ; 828F6B30  bdMallocMemory::reallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:63)
   828F6B30  7D8802A6             mfspr r12,LR
   828F6B34  4801FB89             bl 0x829166bc
+  828F6B38  9421FF90             stwu r1,-0x70(r1)
+  828F6B3C  7C9E2378             or r30,r4,r4
+  828F6B40  2B030000             cmplwi cr6,r3,0x0
+  828F6B44  419A0040             beq cr6,0x828f6b84
+  828F6B48  3BE3FFEC             subi r31,r3,0x14
+  828F6B4C  8163FFF0             lwz r11,-0x10(r3)
+  828F6B50  7FE3FB78             or r3,r31,r31
+  828F6B54  3BAB0014             addi r29,r11,0x14
+  828F6B58  4BFFFDE9             bl 0x828f6940
+  828F6B5C  7FE3FB78             or r3,r31,r31
+  828F6B60  38E00014             li r7,0x14
+  828F6B64  38C00008             li r6,0x8
+  828F6B68  38BE0014             addi r5,r30,0x14
+  828F6B6C  7FA4EB78             or r4,r29,r29
+  828F6B70  48001809             bl 0x828f8378
+  828F6B74  38A00000             li r5,0x0
+  828F6B78  7FC4F378             or r4,r30,r30
+  828F6B7C  4BFFFCFD             bl 0x828f6878
+  828F6B80  4800000C             b 0x828f6b8c
+LAB_828f6b84:
+  828F6B84  7FC3F378             or r3,r30,r30
+  828F6B88  4BFFFEE9             bl 0x828f6a70
+LAB_828f6b8c:
+  828F6B8C  38210070             addi r1,r1,0x70
+  828F6B90  4801FB7C             b 0x8291670c
 
 ; 828F6B98  bdMallocMemory::alignedAllocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:85)
   828F6B98  7D8802A6             mfspr r12,LR
@@ -127,6 +152,34 @@ LAB_828f6c3c:
 ; 828F6C50  bdMallocMemory::alignedReallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:114)
   828F6C50  7D8802A6             mfspr r12,LR
   828F6C54  4801FA65             bl 0x829166b8
+  828F6C58  9421FF80             stwu r1,-0x80(r1)
+  828F6C5C  7C9F2378             or r31,r4,r4
+  828F6C60  7CBC2B78             or r28,r5,r5
+  828F6C64  2B030000             cmplwi cr6,r3,0x0
+  828F6C68  419A0034             beq cr6,0x828f6c9c
+  828F6C6C  3BC3FFEC             subi r30,r3,0x14
+  828F6C70  8163FFF0             lwz r11,-0x10(r3)
+  828F6C74  7FC3F378             or r3,r30,r30
+  828F6C78  3BAB0014             addi r29,r11,0x14
+  828F6C7C  4BFFFCC5             bl 0x828f6940
+  828F6C80  7FC3F378             or r3,r30,r30
+  828F6C84  38E00014             li r7,0x14
+  828F6C88  7F86E378             or r6,r28,r28
+  828F6C8C  38BF0014             addi r5,r31,0x14
+  828F6C90  7FA4EB78             or r4,r29,r29
+  828F6C94  480016E5             bl 0x828f8378
+  828F6C98  48000014             b 0x828f6cac
+LAB_828f6c9c:
+  828F6C9C  38A00014             li r5,0x14
+  828F6CA0  7F84E378             or r4,r28,r28
+  828F6CA4  387F0014             addi r3,r31,0x14
+  828F6CA8  480015E9             bl 0x828f8290
+LAB_828f6cac:
+  828F6CAC  38A00001             li r5,0x1
+  828F6CB0  7FE4FB78             or r4,r31,r31
+  828F6CB4  4BFFFBC5             bl 0x828f6878
+  828F6CB8  38210080             addi r1,r1,0x80
+  828F6CBC  4801FA4C             b 0x82916708
 
 ; 828F6CC0  bdMallocMemory::leakCheck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:134)
   828F6CC0  7D8802A6             mfspr r12,LR
@@ -187,6 +240,44 @@ LAB_828f6d7c:
 ; 828F67E0  bdMallocMemory::printRecords  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:187)
   828F67E0  7D8802A6             mfspr r12,LR
   828F67E4  4801FED1             bl 0x829166b4
+  828F67E8  9421FF80             stwu r1,-0x80(r1)
+  828F67EC  3D608489             lis r11,-0x7b77
+  828F67F0  3B6B5D98             addi r27,r11,0x5d98
+  828F67F4  7F63DB78             or r3,r27,r27
+  828F67F8  48001A89             bl 0x828f8280
+  828F67FC  3D608489             lis r11,-0x7b77
+  828F6800  83EB5D84             lwz r31,0x5d84(r11)
+  828F6804  281F0000             cmplwi r31,0x0
+  828F6808  41820060             beq 0x828f6868
+  828F680C  3D208221             lis r9,-0x7ddf
+  828F6810  3D408221             lis r10,-0x7ddf
+  828F6814  3D608221             lis r11,-0x7ddf
+  828F6818  3BC9A8B8             subi r30,r9,0x5748
+  828F681C  3BAAA89C             subi r29,r10,0x5764
+  828F6820  3B8BA868             subi r28,r11,0x5798
+LAB_828f6824:
+  828F6824  480246C5             bl 0x8291aee8
+  828F6828  7F84E378             or r4,r28,r28
+  828F682C  38630040             addi r3,r3,0x40
+  828F6830  4BFFFF61             bl 0x828f6790
+  828F6834  480246B5             bl 0x8291aee8
+  828F6838  38630040             addi r3,r3,0x40
+  828F683C  7FA4EB78             or r4,r29,r29
+  828F6840  80DF0004             lwz r6,0x4(r31)
+  828F6844  38BF0014             addi r5,r31,0x14
+  828F6848  4BFFFF49             bl 0x828f6790
+  828F684C  4802469D             bl 0x8291aee8
+  828F6850  7FC4F378             or r4,r30,r30
+  828F6854  38630040             addi r3,r3,0x40
+  828F6858  4BFFFF39             bl 0x828f6790
+  828F685C  83FF0010             lwz r31,0x10(r31)
+  828F6860  2B1F0000             cmplwi cr6,r31,0x0
+  828F6864  409AFFC0             bne cr6,0x828f6824
+LAB_828f6868:
+  828F6868  7F63DB78             or r3,r27,r27
+  828F686C  48001A1D             bl 0x828f8288
+  828F6870  38210080             addi r1,r1,0x80
+  828F6874  4801FE90             b 0x82916704
 
 ; 828F6790  bdFprintf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:203)
   828F6790  7D8802A6             mfspr r12,LR
@@ -212,10 +303,141 @@ LAB_828f6d7c:
 ; 828F6878  bdMallocMemory::recordMemory  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:214)
   828F6878  7D8802A6             mfspr r12,LR
   828F687C  4801FE3D             bl 0x829166b8
+  828F6880  9421FF80             stwu r1,-0x80(r1)
+  828F6884  7C7F1B78             or r31,r3,r3
+  828F6888  7C9E2378             or r30,r4,r4
+  828F688C  7CBD2B78             or r29,r5,r5
+  828F6890  38600000             li r3,0x0
+  828F6894  2B1F0000             cmplwi cr6,r31,0x0
+  828F6898  419A00A0             beq cr6,0x828f6938
+  828F689C  3D608489             lis r11,-0x7b77
+  828F68A0  3B8B5D98             addi r28,r11,0x5d98
+  828F68A4  7F83E378             or r3,r28,r28
+  828F68A8  480019D9             bl 0x828f8280
+  828F68AC  3D608489             lis r11,-0x7b77
+  828F68B0  3940BDBD             li r10,-0x4243
+  828F68B4  93DF0004             stw r30,0x4(r31)
+  828F68B8  9BBF0008             stb r29,0x8(r31)
+  828F68BC  39200000             li r9,0x0
+  828F68C0  B15F0000             sth r10,0x0(r31)
+  828F68C4  814B5D84             lwz r10,0x5d84(r11)
+  828F68C8  913F000C             stw r9,0xc(r31)
+  828F68CC  915F0010             stw r10,0x10(r31)
+  828F68D0  814B5D84             lwz r10,0x5d84(r11)
+  828F68D4  2B0A0000             cmplwi cr6,r10,0x0
+  828F68D8  419A0008             beq cr6,0x828f68e0
+  828F68DC  93EA000C             stw r31,0xc(r10)
+LAB_828f68e0:
+  828F68E0  3CE08489             lis r7,-0x7b77
+  828F68E4  93EB5D84             stw r31,0x5d84(r11)
+  828F68E8  3CC08489             lis r6,-0x7b77
+  828F68EC  3D208489             lis r9,-0x7b77
+  828F68F0  81075D8C             lwz r8,0x5d8c(r7)
+  828F68F4  81465D88             lwz r10,0x5d88(r6)
+  828F68F8  39680001             addi r11,r8,0x1
+  828F68FC  81095D90             lwz r8,0x5d90(r9)
+  828F6900  7D4AF214             add r10,r10,r30
+  828F6904  91675D8C             stw r11,0x5d8c(r7)
+  828F6908  7F08F040             cmplw cr6,r8,r30
+  828F690C  91465D88             stw r10,0x5d88(r6)
+  828F6910  41990008             bgt cr6,0x828f6918
+  828F6914  93C95D90             stw r30,0x5d90(r9)
+LAB_828f6918:
+  828F6918  3D608489             lis r11,-0x7b77
+  828F691C  812B5D94             lwz r9,0x5d94(r11)
+  828F6920  7F095040             cmplw cr6,r9,r10
+  828F6924  41990008             bgt cr6,0x828f692c
+  828F6928  914B5D94             stw r10,0x5d94(r11)
+LAB_828f692c:
+  828F692C  7F83E378             or r3,r28,r28
+  828F6930  48001959             bl 0x828f8288
+  828F6934  387F0014             addi r3,r31,0x14
+LAB_828f6938:
+  828F6938  38210080             addi r1,r1,0x80
+  828F693C  4801FDCC             b 0x82916708
 
 ; 828F6940  bdMallocMemory::eraseMemory  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:246)
   828F6940  7D8802A6             mfspr r12,LR
   828F6944  4801FD75             bl 0x829166b8
+  828F6948  9421FE70             stwu r1,-0x190(r1)
+  828F694C  3D608489             lis r11,-0x7b77
+  828F6950  7C7F1B78             or r31,r3,r3
+  828F6954  3B8B5D98             addi r28,r11,0x5d98
+  828F6958  7F83E378             or r3,r28,r28
+  828F695C  48001925             bl 0x828f8280
+  828F6960  A17F0000             lhz r11,0x0(r31)
+  828F6964  2B0BBDBD             cmplwi cr6,r11,0xbdbd
+  828F6968  419A009C             beq cr6,0x828f6a04
+  828F696C  7F83E378             or r3,r28,r28
+  828F6970  48001919             bl 0x828f8288
+  828F6974  3D608221             lis r11,-0x7ddf
+  828F6978  3D200000             lis r9,0x0
+  828F697C  A15F0000             lhz r10,0x0(r31)
+  828F6980  3BABA980             subi r29,r11,0x5680
+  828F6984  3D008221             lis r8,-0x7ddf
+  828F6988  3D608221             lis r11,-0x7ddf
+  828F698C  3CA08221             lis r5,-0x7ddf
+  828F6990  3C808221             lis r4,-0x7ddf
+  828F6994  613EBDBD             ori r30,r9,0xbdbd
+  828F6998  38E8A964             subi r7,r8,0x569c
+  828F699C  392BA930             subi r9,r11,0x56d0
+  828F69A0  93C10054             stw r30,0x54(r1)
+  828F69A4  7FA6EB78             or r6,r29,r29
+  828F69A8  38A5A920             subi r5,r5,0x56e0
+  828F69AC  3884A58C             subi r4,r4,0x5a74
+  828F69B0  390000FC             li r8,0xfc
+  828F69B4  38600002             li r3,0x2
+  828F69B8  4BFFE159             bl 0x828f4b10
+  828F69BC  3D608221             lis r11,-0x7ddf
+  828F69C0  7FC7F378             or r7,r30,r30
+  828F69C4  A0DF0000             lhz r6,0x0(r31)
+  828F69C8  38ABA8EC             subi r5,r11,0x5714
+  828F69CC  38800100             li r4,0x100
+  828F69D0  38610060             addi r3,r1,0x60
+  828F69D4  4BD15B0D             bl 0x8260c4e0
+  828F69D8  3D608401             lis r11,-0x7bff
+  828F69DC  816B3128             lwz r11,0x3128(r11)
+  828F69E0  2F0B0000             cmpwi cr6,r11,0x0
+  828F69E4  409A0018             bne cr6,0x828f69fc
+  828F69E8  7FA3EB78             or r3,r29,r29
+  828F69EC  38C10060             addi r6,r1,0x60
+  828F69F0  38A00000             li r5,0x0
+  828F69F4  38800101             li r4,0x101
+  828F69F8  4BCDDB09             bl 0x825d4500
+LAB_828f69fc:
+  828F69FC  7F83E378             or r3,r28,r28
+  828F6A00  48001881             bl 0x828f8280
+LAB_828f6a04:
+  828F6A04  817F000C             lwz r11,0xc(r31)
+  828F6A08  2B0B0000             cmplwi cr6,r11,0x0
+  828F6A0C  419A0010             beq cr6,0x828f6a1c
+  828F6A10  815F0010             lwz r10,0x10(r31)
+  828F6A14  914B0010             stw r10,0x10(r11)
+  828F6A18  48000010             b 0x828f6a28
+LAB_828f6a1c:
+  828F6A1C  817F0010             lwz r11,0x10(r31)
+  828F6A20  3D408489             lis r10,-0x7b77
+  828F6A24  916A5D84             stw r11,0x5d84(r10)
+LAB_828f6a28:
+  828F6A28  817F0010             lwz r11,0x10(r31)
+  828F6A2C  2B0B0000             cmplwi cr6,r11,0x0
+  828F6A30  419A000C             beq cr6,0x828f6a3c
+  828F6A34  815F000C             lwz r10,0xc(r31)
+  828F6A38  914B000C             stw r10,0xc(r11)
+LAB_828f6a3c:
+  828F6A3C  3D208489             lis r9,-0x7b77
+  828F6A40  811F0004             lwz r8,0x4(r31)
+  828F6A44  3CE08489             lis r7,-0x7b77
+  828F6A48  7F83E378             or r3,r28,r28
+  828F6A4C  81695D8C             lwz r11,0x5d8c(r9)
+  828F6A50  81475D88             lwz r10,0x5d88(r7)
+  828F6A54  396BFFFF             subi r11,r11,0x1
+  828F6A58  7D485050             subf r10,r8,r10
+  828F6A5C  91695D8C             stw r11,0x5d8c(r9)
+  828F6A60  91475D88             stw r10,0x5d88(r7)
+  828F6A64  48001825             bl 0x828f8288
+  828F6A68  38210190             addi r1,r1,0x190
+  828F6A6C  4801FC9C             b 0x82916708
 
 ; 829411F8  `dynamic_atexit_destructor_for_'bdMallocMemory::m_mutex''  (line unknown)
   829411F8  3D608489             lis r11,-0x7b77

@@ -3,6 +3,75 @@
 ; 82919BA8  _fsopen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fopen.c:50)
   82919BA8  7D8802A6             mfspr r12,LR
   82919BAC  4BFFCB05             bl 0x829166b0
+  82919BB0  3BE1FF60             subi r31,r1,0xa0
+  82919BB4  9421FF60             stwu r1,-0xa0(r1)
+  82919BB8  7C7E1B78             or r30,r3,r3
+  82919BBC  7C9D2378             or r29,r4,r4
+  82919BC0  7CBB2B78             or r27,r5,r5
+  82919BC4  3163FFFF             subic r11,r3,0x1
+  82919BC8  3B400000             li r26,0x0
+  82919BCC  7D6B1911             subfe. r11,r11,r3
+  82919BD0  935F0050             stw r26,0x50(r31)
+  82919BD4  4082001C             bne 0x82919bf0
+LAB_82919bd8:
+  82919BD8  480061A9             bl 0x8291fd80
+  82919BDC  39600016             li r11,0x16
+  82919BE0  91630000             stw r11,0x0(r3)
+  82919BE4  4800602D             bl 0x8291fc10
+  82919BE8  38600000             li r3,0x0
+  82919BEC  480000B8             b 0x82919ca4
+LAB_82919bf0:
+  82919BF0  317DFFFF             subic r11,r29,0x1
+  82919BF4  7D6BE911             subfe. r11,r11,r29
+  82919BF8  4182FFE0             beq 0x82919bd8
+  82919BFC  897D0000             lbz r11,0x0(r29)
+  82919C00  314BFFFF             subic r10,r11,0x1
+  82919C04  7D6A5911             subfe. r11,r10,r11
+  82919C08  4182FFD0             beq 0x82919bd8
+  82919C0C  48008DF5             bl 0x82922a00
+  82919C10  7C7C1B79             or. r28,r3,r3
+  82919C14  939F0054             stw r28,0x54(r31)
+  82919C18  4082001C             bne 0x82919c34
+  82919C1C  48006165             bl 0x8291fd80
+  82919C20  7C6B1B78             or r11,r3,r3
+  82919C24  39400018             li r10,0x18
+  82919C28  38600000             li r3,0x0
+  82919C2C  914B0000             stw r10,0x0(r11)
+  82919C30  48000074             b 0x82919ca4
+LAB_82919c34:
+  82919C34  60000000             ori r0,r0,0x0
+  82919C38  7D084378             or r8,r8,r8
+  82919C3C  897E0000             lbz r11,0x0(r30)
+  82919C40  280B0000             cmplwi r11,0x0
+  82919C44  40820030             bne 0x82919c74
+  82919C48  48006139             bl 0x8291fd80
+  82919C4C  7C6B1B78             or r11,r3,r3
+  82919C50  3D408292             lis r10,-0x7d6e
+  82919C54  39200016             li r9,0x16
+  82919C58  387F00A0             addi r3,r31,0xa0
+  82919C5C  388A9CA0             subi r4,r10,0x6360
+  82919C60  912B0000             stw r9,0x0(r11)
+  82919C64  935F0058             stw r26,0x58(r31)
+  82919C68  48002D39             bl 0x8291c9a0
+  82919C6C  7D084378             or r8,r8,r8
+  82919C70  48000030             b 0x82919ca0
+LAB_82919c74:
+  82919C74  7F86E378             or r6,r28,r28
+  82919C78  7F65DB78             or r5,r27,r27
+  82919C7C  7FA4EB78             or r4,r29,r29
+  82919C80  7FC3F378             or r3,r30,r30
+  82919C84  48008B35             bl 0x829227b8
+  82919C88  907F0050             stw r3,0x50(r31)
+  82919C8C  7D084378             or r8,r8,r8
+  82919C90  399F00A0             addi r12,r31,0xa0
+  82919C94  48000039             bl 0x82919ccc
+  82919C98  807F0050             lwz r3,0x50(r31)
+  82919C9C  48000008             b 0x82919ca4
+LAB_82919ca0:
+  82919CA0  807F0058             lwz r3,0x58(r31)
+LAB_82919ca4:
+  82919CA4  383F00A0             addi r1,r31,0xa0
+  82919CA8  4BFFCA58             b 0x82916700
 
 ; 82919D08  fopen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fopen.c:124)
   82919D08  38A00040             li r5,0x40

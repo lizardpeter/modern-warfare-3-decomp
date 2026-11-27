@@ -36,3 +36,42 @@ LAB_8291fc3c:
 ; 8291FC48  _call_reportfault  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/invarg.c:139)
   8291FC48  7D8802A6             mfspr r12,LR
   8291FC4C  4BFF6A71             bl 0x829166bc
+  8291FC50  9421F4F0             stwu r1,-0xb10(r1)
+  8291FC54  7C7F1B78             or r31,r3,r3
+  8291FC58  7C9E2378             or r30,r4,r4
+  8291FC5C  7CBD2B78             or r29,r5,r5
+  8291FC60  2F03FFFF             cmpwi cr6,r3,-0x1
+  8291FC64  419A0008             beq cr6,0x8291fc6c
+  8291FC68  48008751             bl 0x829283b8
+LAB_8291fc6c:
+  8291FC6C  39600000             li r11,0x0
+  8291FC70  38A0004C             li r5,0x4c
+  8291FC74  38800000             li r4,0x0
+  8291FC78  91610060             stw r11,0x60(r1)
+  8291FC7C  38610064             addi r3,r1,0x64
+  8291FC80  4BFF6B81             bl 0x82916800
+  8291FC84  39610060             addi r11,r1,0x60
+  8291FC88  394100B0             addi r10,r1,0xb0
+  8291FC8C  38A00A40             li r5,0xa40
+  8291FC90  91610050             stw r11,0x50(r1)
+  8291FC94  38800000             li r4,0x0
+  8291FC98  91410054             stw r10,0x54(r1)
+  8291FC9C  386100B0             addi r3,r1,0xb0
+  8291FCA0  4BFF6B61             bl 0x82916800
+  8291FCA4  81610B08             lwz r11,0xb08(r1)
+  8291FCA8  93C10060             stw r30,0x60(r1)
+  8291FCAC  38600000             li r3,0x0
+  8291FCB0  93A10064             stw r29,0x64(r1)
+  8291FCB4  9161006C             stw r11,0x6c(r1)
+  8291FCB8  4BF89849             bl 0x828a9500
+  8291FCBC  38610050             addi r3,r1,0x50
+  8291FCC0  4BF89989             bl 0x828a9648
+  8291FCC4  28030000             cmplwi r3,0x0
+  8291FCC8  40820014             bne 0x8291fcdc
+  8291FCCC  2F1FFFFF             cmpwi cr6,r31,-0x1
+  8291FCD0  419A000C             beq cr6,0x8291fcdc
+  8291FCD4  7FE3FB78             or r3,r31,r31
+  8291FCD8  480086E1             bl 0x829283b8
+LAB_8291fcdc:
+  8291FCDC  38210B10             addi r1,r1,0xb10
+  8291FCE0  4BFF6A2C             b 0x8291670c

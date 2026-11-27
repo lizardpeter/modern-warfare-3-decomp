@@ -10,7 +10,6 @@ uint LB_LoadDef_FastFile(undefined8 param_1)
   
   puVar2 = (undefined4 *)DB_FindXAssetHeader(0x27,param_1,1);
   if (puVar2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a2f00,0x138,0,0xffffffff82000f98,0xffffffff821a21c8);
   }
   lVar1 = DB_IsXAssetDefault(0x27,*puVar2);

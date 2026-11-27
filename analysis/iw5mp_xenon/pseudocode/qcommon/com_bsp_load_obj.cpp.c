@@ -5,7 +5,18 @@
 void Com_LoadWorld_FastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined *puVar2;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined *)DB_FindXAssetHeader(0xd,uVar1,1);
+  if (puVar2 != &DAT_835f15d8) {
+    MyAssertHandler(0xffffffff82083a00,0x343,0,0xffffffff82000f98,0xffffffff820839e8);
+  }
+  if (DAT_835f15dc == 0) {
+    MyAssertHandler(0xffffffff82083a00,0x344,0,0xffffffff82000f98,0xffffffff82015af4);
+  }
+  __restgprlr_29();
+  return;
 }
 

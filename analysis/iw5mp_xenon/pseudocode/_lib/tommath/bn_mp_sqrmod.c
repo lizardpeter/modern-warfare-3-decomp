@@ -2,10 +2,23 @@
 
 // 822575B0  mp_sqrmod  (line unknown)
 
-void mp_sqrmod(void)
+void mp_sqrmod(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_30 [48];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = mp_init(auStack_30);
+  if ((int)uVar2 == 0) {
+    uVar2 = mp_sqr(uVar1,auStack_30);
+    if ((int)uVar2 == 0) {
+      uVar2 = mp_mod(auStack_30,param_2,param_3);
+    }
+    mp_clear(auStack_30);
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 

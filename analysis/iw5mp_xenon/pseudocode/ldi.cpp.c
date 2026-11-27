@@ -88,10 +88,180 @@ undefined8 XCOMPRESS__ResetDecompressionContextLzx(int param_1)
 
 // 828B5510  XCOMPRESS::DecompressStreamLzx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/ldi.cpp:491)
 
-void XCOMPRESS__DecompressStreamLzx(void)
+void XCOMPRESS__DecompressStreamLzx
+               (undefined8 param_1,longlong param_2,uint *param_3,ulonglong param_4,uint *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar1;
+  uint uVar2;
+  int iVar3;
+  ushort *puVar4;
+  void *_Dst;
+  int iVar5;
+  size_t sVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  char *_Src;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ushort *puVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  uint local_a0 [40];
+  
+  iVar5 = __savegprlr();
+  uVar7 = (ulonglong)*param_3;
+  uVar10 = 0;
+  uVar8 = 0;
+  uVar9 = 0;
+  if (*(char *)(iVar5 + 0x3010) == '\0') {
+    uVar9 = (ulonglong)*param_5;
+  }
+  uVar2 = *(uint *)(iVar5 + 0x3004);
+  uVar14 = (ulonglong)uVar2;
+  if (uVar14 != 0) {
+    uVar8 = uVar14;
+    if (uVar7 <= uVar14) {
+      uVar8 = uVar7;
+    }
+    iVar3 = *(int *)(iVar5 + 0x3000);
+    sVar6 = (size_t)uVar8;
+    memcpy((void *)param_2,(void *)(*(int *)(iVar5 + 0x2ffc) + iVar3),sVar6);
+    *(uint *)(iVar5 + 0x3004) = uVar2 - sVar6;
+    *(size_t *)(iVar5 + 0x3000) = iVar3 + sVar6;
+  }
+  if ((uVar9 != 0) || (1 < *(uint *)(iVar5 + 0x300c))) {
+    uVar2 = *(uint *)(iVar5 + 0x300c);
+    uVar12 = (ulonglong)uVar2;
+    uVar14 = param_4;
+    uVar17 = uVar9;
+    if (uVar12 != 0) {
+      puVar4 = *(ushort **)(iVar5 + 0x3008);
+      if (*(char *)puVar4 == -1) {
+        uVar15 = 5;
+        lVar11 = 5;
+        puVar16 = (ushort *)((int)puVar4 + 3);
+      }
+      else {
+        uVar15 = 2;
+        lVar11 = 0;
+        puVar16 = puVar4;
+      }
+      if (uVar12 < uVar15) {
+        uVar10 = uVar15 - uVar12;
+        if (uVar9 <= (uVar15 - uVar12 & 0xffffffff)) {
+          uVar10 = uVar9;
+        }
+        memcpy((char *)(uVar2 + (int)puVar4),(void *)param_4,(size_t)uVar10);
+        *(uint *)(iVar5 + 0x300c) = uVar2 + (size_t)uVar10;
+        uVar17 = uVar9 - uVar10;
+      }
+      uVar14 = ZEXT48(puVar4);
+      if ((uVar17 & 0xffffffff) != 0) {
+        uVar2 = *(uint *)(iVar5 + 0x300c);
+        uVar15 = (ulonglong)*puVar16 + lVar11 + uVar15;
+        uVar17 = uVar15 - uVar2;
+        if ((uVar9 - uVar10 & 0xffffffff) <= (uVar17 & 0xffffffff)) {
+          uVar17 = uVar9 - uVar10;
+        }
+        memcpy((char *)(uVar2 + (int)puVar4),(void *)((int)uVar10 + (int)(void *)param_4),
+               (size_t)uVar17);
+        uVar12 = uVar2 + uVar17;
+        uVar10 = uVar17 + uVar10;
+        *(int *)(iVar5 + 0x300c) = (int)uVar12;
+        uVar17 = -(ulonglong)(uVar15 <= uVar12) & uVar15;
+      }
+    }
+    if (*(int *)(iVar5 + 0x3004) == 0) {
+      uVar12 = (ulonglong)local_a0[0];
+      do {
+        if ((uVar17 & 0xffffffff) == 0) break;
+        local_a0[0] = 0;
+        _Src = (char *)uVar14;
+        cVar1 = *_Src;
+        if (cVar1 == -1) {
+          lVar13 = 5;
+          lVar11 = 5;
+          if ((uVar17 & 0xffffffff) < 5) {
+            uVar15 = 5;
+          }
+          else {
+            uVar12 = (ulonglong)*(ushort *)(_Src + 1);
+            uVar15 = (ulonglong)*(ushort *)(_Src + 3) + 10;
+          }
+        }
+        else {
+          lVar13 = 2;
+          lVar11 = 0;
+          if ((uVar17 & 0xffffffff) < 2) {
+            uVar15 = 2;
+          }
+          else {
+            uVar12 = 0x8000;
+            uVar15 = (ulonglong)CONCAT11(cVar1,_Src[1]) + 2;
+          }
+        }
+        if ((uVar17 & 0xffffffff) < uVar15) {
+          memcpy(*(void **)(iVar5 + 0x3008),_Src,(size_t)uVar17);
+          *(size_t *)(iVar5 + 0x300c) = (size_t)uVar17;
+          uVar10 = uVar17 + uVar10;
+          uVar17 = 0;
+        }
+        else {
+          if ((uVar17 & 0xffffffff) < uVar15 + 5) {
+            _Dst = *(void **)(iVar5 + 0x3008);
+            if (((uVar14 & 0xffffffff) != ZEXT48(_Dst)) && (lVar11 == 0)) {
+              memcpy(_Dst,_Src,(size_t)uVar15);
+              uVar10 = uVar15 + uVar10;
+              *(size_t *)(iVar5 + 0x300c) = (size_t)uVar15;
+              uVar14 = ZEXT48(_Dst);
+            }
+          }
+          uVar17 = uVar7 - uVar8;
+          if ((uVar17 & 0xffffffff) < uVar12) {
+            uVar18 = (ulonglong)*(uint *)(iVar5 + 0x2ffc);
+          }
+          else {
+            uVar18 = uVar8 + param_2;
+          }
+          XCOMPRESS__LZX_Decode
+                    (iVar5 + 0x14,uVar12,lVar13 + uVar14,(uVar15 - lVar11) - lVar13,uVar18,uVar12,
+                     local_a0);
+          if ((uVar18 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + 0x2ffc)) {
+            sVar6 = (size_t)uVar17;
+            memcpy((void *)((int)uVar8 + (int)(void *)param_2),(void *)uVar18,sVar6);
+            *(size_t *)(iVar5 + 0x3000) = sVar6;
+            *(uint *)(iVar5 + 0x3004) = local_a0[0] - sVar6;
+          }
+          else {
+            uVar17 = (ulonglong)local_a0[0];
+          }
+          uVar8 = uVar17 + uVar8;
+          if ((uVar14 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + 0x3008)) {
+            uVar14 = uVar10 + param_4;
+            *(undefined4 *)(iVar5 + 0x300c) = 0;
+          }
+          else {
+            uVar14 = uVar15 + uVar14;
+            uVar10 = uVar15 + uVar10;
+          }
+          if (cVar1 == -1) {
+            *(undefined1 *)(iVar5 + 0x3010) = 1;
+            uVar9 = uVar10;
+          }
+          uVar17 = uVar9 - uVar10;
+        }
+      } while (*(int *)(iVar5 + 0x3004) == 0);
+    }
+  }
+  *param_3 = (uint)uVar8;
+  *param_5 = (uint)uVar10;
+  __restgprlr(0);
+  return;
 }
 

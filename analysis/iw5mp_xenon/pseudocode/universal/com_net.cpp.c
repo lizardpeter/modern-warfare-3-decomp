@@ -33,6 +33,21 @@ void NetadrToSockadr(int *param_1,undefined2 *param_2)
 }
 
 
+// 825E4F28  SockadrToNetadr  (universal/com_net.cpp:55)
+
+void SockadrToNetadr(short *param_1,undefined4 *param_2)
+
+{
+  if (*param_1 != 2) {
+    return;
+  }
+  *param_2 = 4;
+  param_2[1] = *(undefined4 *)(param_1 + 2);
+  *(short *)(param_2 + 2) = param_1[1];
+  return;
+}
+
+
 // 825E4F50  NET_ErrorString  (universal/com_net.cpp:81)
 
 undefined8 NET_ErrorString(void)

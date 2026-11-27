@@ -37,29 +37,28 @@ void ContentServer_Thread(ulonglong param_1)
   undefined4 uStack00000014;
   
   uStack00000014 = (undefined4)param_1;
-  if ((param_1 & 0xffffffff) == 0xc) {
+  if ((param_1 & 0xffffffff) != 0xc) {
+    MyAssertHandler(0xffffffff82089ba8,0xa5,0,0xffffffff82089bf8,param_1,0xc);
+  }
+  Sys_GetValue(2);
+  iVar3 = setjmp();
+  while (iVar3 != 0) {
+    Profile_Recover(1);
     Sys_GetValue(2);
     iVar3 = setjmp();
-    while (iVar3 != 0) {
-      Profile_Recover(1);
-      Sys_GetValue(2);
-      iVar3 = setjmp();
-    }
-    Profile_Guard(1);
-    uVar1 = uStack00000014;
-    do {
-      do {
-        uVar2 = Sys_WaitForHTTPOperation(uVar1);
-        cVar4 = Live_IsSignedIn();
-      } while (cVar4 == '\0');
-      cVar4 = Live_IsUserSignedInToLive(uVar2);
-      if ((cVar4 != '\0') && (iVar3 = dwGetContentStreaming(uVar2), iVar3 != 0)) {
-        (**(code **)(*(int *)(iVar3 + 0x1a68) + 4))(iVar3 + 0x1a68,0);
-      }
-    } while( true );
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82089ba8,0xa5,0,0xffffffff82089bf8,param_1,0xc);
+  Profile_Guard(1);
+  uVar1 = uStack00000014;
+  do {
+    do {
+      uVar2 = Sys_WaitForHTTPOperation(uVar1);
+      cVar4 = Live_IsSignedIn();
+    } while (cVar4 == '\0');
+    cVar4 = Live_IsUserSignedInToLive(uVar2);
+    if ((cVar4 != '\0') && (iVar3 = dwGetContentStreaming(uVar2), iVar3 != 0)) {
+      (**(code **)(*(int *)(iVar3 + 0x1a68) + 4))(iVar3 + 0x1a68,0);
+    }
+  } while( true );
 }
 
 
@@ -287,23 +286,125 @@ undefined8 AllocContentServerArray<dwCSDownloadSummaryTask>(int *param_1,int par
 }
 
 
-// 824F2FD0  AllocContentServerArray<dwCSReadFileTask>  (qcommon/com_storage_contentserver.h:211)
+// 824F2F10  AllocContentServerArray<contentServerPrivateData>  (qcommon/com_storage_contentserver.h:211)
 
-void AllocContentServerArray<dwCSReadFileTask>(void)
+void AllocContentServerArray<contentServerPrivateData>(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  uint uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  
+  puVar1 = (uint *)__savegprlr_26();
+  if (*puVar1 != 0) {
+    __restgprlr_26(1);
+    return;
+  }
+  lVar3 = param_2 * 0x4bb8;
+  uVar2 = PMem_AllocFromSource_NoDebug(lVar3,8,4,1);
+  if (uVar2 != 0) {
+    *puVar1 = uVar2;
+    if (0 < (int)param_2) {
+      lVar4 = 0;
+      do {
+        if ((ulonglong)*puVar1 + lVar4 != 0) {
+          lVar5 = (ulonglong)*puVar1 + lVar4 + 0x10;
+          lVar6 = 9;
+          do {
+            bdFileMetaData__bdFileMetaData(lVar5);
+            lVar6 = lVar6 + -1;
+            lVar5 = lVar5 + 0x790;
+          } while (-1 < lVar6);
+        }
+        param_2 = param_2 + -1;
+        lVar4 = lVar4 + 0x4bb8;
+      } while (param_2 != 0);
+    }
+    DAT_8365dd24 = DAT_8365dd24 + (int)lVar3;
+    __restgprlr_26(1);
+    return;
+  }
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 824F2FD0  AllocContentServerArray<dwCSReadFileTask>  (qcommon/com_storage_contentserver.h:211)
+
+void AllocContentServerArray<dwCSReadFileTask>(undefined8 param_1,longlong param_2)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (*puVar1 != 0) {
+    __restgprlr_28(1);
+    return;
+  }
+  lVar3 = param_2 * 0x7c8;
+  uVar2 = PMem_AllocFromSource_NoDebug(lVar3,8,4,1);
+  if (uVar2 != 0) {
+    *puVar1 = uVar2;
+    if (0 < (int)param_2) {
+      lVar4 = 0;
+      do {
+        if ((ulonglong)*puVar1 + lVar4 != 0) {
+          bdFileMetaData__bdFileMetaData((ulonglong)*puVar1 + lVar4 + 8);
+        }
+        param_2 = param_2 + -1;
+        lVar4 = lVar4 + 0x7c8;
+      } while (param_2 != 0);
+    }
+    DAT_8365dd24 = DAT_8365dd24 + (int)lVar3;
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824F3078  AllocContentServerArray<dwCSWriteFileTask>  (qcommon/com_storage_contentserver.h:211)
 
-void AllocContentServerArray<dwCSWriteFileTask>(void)
+void AllocContentServerArray<dwCSWriteFileTask>(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  uint uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (*puVar1 != 0) {
+    __restgprlr_28(1);
+    return;
+  }
+  lVar3 = (param_2 + (param_2 & 0x3fffffff) * 4 & 0xfffffff) << 4;
+  uVar2 = PMem_AllocFromSource_NoDebug(lVar3,8,4,1);
+  if (uVar2 != 0) {
+    *puVar1 = uVar2;
+    if (0 < (int)param_2) {
+      lVar4 = 0;
+      do {
+        if ((ulonglong)*puVar1 + lVar4 != 0) {
+          bdFileID__bdFileID((ulonglong)*puVar1 + lVar4 + 8);
+        }
+        param_2 = param_2 - 1;
+        lVar4 = lVar4 + 0x50;
+      } while (param_2 != 0);
+    }
+    DAT_8365dd24 = DAT_8365dd24 + (int)lVar3;
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -332,8 +433,33 @@ undefined8 LiveStorage_CS_AllocatedAllMemory(void)
 void LiveStorage_CS_AllocPrivateDataMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  uint uVar2;
+  
   __savegprlr_27();
+  uVar2 = DAT_8296c088;
+  if (((DAT_8296c088 & 2) == 0) &&
+     (cVar1 = AllocContentServerArray<contentServerPrivateData>
+                        (0xffffffff8365dd28,4,0xffffffff8208a708), uVar2 = DAT_8296c088,
+     cVar1 != '\0')) {
+    *DAT_8365dd28 = 0;
+    uVar2 = DAT_8296c088 | 2;
+    DAT_8365dd28[0x4bb8] = 0;
+    DAT_8365dd28[0x9770] = 0;
+    DAT_8296c088 = uVar2;
+    DAT_8365dd28[0xe328] = 0;
+  }
+  if (((uVar2 & 4) == 0) &&
+     (cVar1 = AllocContentServerArray<contentServerPrivateData>
+                        (0xffffffff8365dd2c,4,0xffffffff8208a6d4), cVar1 != '\0')) {
+    *DAT_8365dd2c = 0;
+    DAT_8296c088 = DAT_8296c088 | 4;
+    DAT_8365dd2c[0x4bb8] = 0;
+    DAT_8365dd2c[0x9770] = 0;
+    DAT_8365dd2c[0xe328] = 0;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -523,6 +649,25 @@ void LiveStorage_CS_PlatformShutdown(void)
 }
 
 
+// 824EF3F0  LiveStorage_CS_CancelTasks  (qcommon/com_storage_contentserver.cpp:752)
+
+void LiveStorage_CS_CancelTasks(undefined8 param_1)
+
+{
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x13,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x14,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x15,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x16,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x17,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x18,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x19,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x1a,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x1b,param_1);
+  TaskManager_CancelTasksForController(0xffffffff8365bc38,0x1c,param_1);
+  return;
+}
+
+
 // 824EF4C8  LiveStorage_CS_CancelTask  (qcommon/com_storage_contentserver.cpp:772)
 
 void LiveStorage_CS_CancelTask(undefined8 param_1,undefined8 param_2)
@@ -538,8 +683,30 @@ void LiveStorage_CS_CancelTask(undefined8 param_1,undefined8 param_2)
 void LiveStorage_CS_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  ulonglong uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (*(int *)(&DAT_8296c08c + iVar2 * 4) != 1) {
+    cVar4 = Sys_IsMainThread();
+    if ((cVar4 == '\0') && (iVar3 = Sys_AreThreadsSuspended(), iVar3 == 0)) {
+      MyAssertHandler(0xffffffff82089ba8,0x30e,0,0xffffffff820011f4,0xffffffff82089c58,
+                      0xffffffff82089c88);
+    }
+    uVar1 = dwGetContentStreaming(iVar2);
+    if ((uVar1 & 0xffffffff) != 0) {
+      bdContentStreamingBase__abortHTTPOperation();
+      bdContentStreamingBase__pump(uVar1);
+    }
+    LiveStorage_CheckOngoingSessionTasks();
+    LiveStorage_CS_CancelTasks(iVar2);
+    dwLobbyPump(iVar2);
+    *(undefined4 *)(&DAT_8296c08c + iVar2 * 4) = 1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -585,8 +752,36 @@ undefined8 LiveStorage_CS_IsAvailable(void)
 void LiveStorage_CS_Init(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  char cVar4;
+  int iVar3;
+  int iVar5;
+  
+  iVar2 = __savegprlr_28();
+  iVar5 = iVar2 * 4;
+  if (((((*(uint *)(&DAT_8296c08c + iVar5) & 4) == 0) &&
+       (uVar1 = dwGetLobbyService(), (uVar1 & 0xffffffff) != 0)) &&
+      (cVar4 = Live_IsUserSignedInToDemonware(iVar2), cVar4 != '\0')) &&
+     ((cVar4 = bdLobbyService__isConnected(uVar1), cVar4 != '\0' &&
+      (cVar4 = LiveStorage_CS_AllocatedAllMemory(), cVar4 != '\0')))) {
+    if ((*(uint *)(&DAT_8296c08c + iVar5) & 2) == 0) {
+      iVar3 = LiveStorage_CS_InitDemonware(iVar2);
+      if (iVar3 != 2) {
+        Sys_Error(0xffffffff8208a90c);
+        LiveStorage_CS_Shutdown(iVar2);
+        __restgprlr_28();
+        return;
+      }
+      *(uint *)(&DAT_8296c08c + iVar5) = *(uint *)(&DAT_8296c08c + iVar5) | 2;
+    }
+    if ((*(uint *)(&DAT_8296c08c + iVar5) & 2) != 0) {
+      *(uint *)(&DAT_8296c08c + iVar5) = *(uint *)(&DAT_8296c08c + iVar5) | 4;
+    }
+    LiveStorage_CS_RefreshPrivateData(iVar2);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -715,21 +910,169 @@ void LiveStorage_CS_GetFriendPrivateData_Success(undefined8 param_1)
 
 // 824F1FC0  LiveStorage_CS_GetFriendPrivateData  (qcommon/com_storage_contentserver.cpp:1020)
 
-void LiveStorage_CS_GetFriendPrivateData(void)
+void LiveStorage_CS_GetFriendPrivateData(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar2;
+  int iVar6;
+  longlong local_40;
+  undefined2 local_38;
+  undefined4 local_34;
+  undefined2 local_30;
+  undefined4 local_2c;
+  code *local_28;
+  undefined4 local_24;
+  
+  iVar3 = __savegprlr_29();
+  iVar6 = iVar3 * 0x4bb8;
+  if (*(longlong *)((undefined1 *)(iVar6 + DAT_8365dd2c) + 8) != param_2) {
+    *(undefined1 *)(iVar6 + DAT_8365dd2c) = 0;
+  }
+  iVar4 = iVar6 + DAT_8365dd2c;
+  if (*(char *)(iVar6 + DAT_8365dd2c) != '\0') goto LAB_824f20fc;
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) == 0) {
+LAB_824f203c:
+    bVar1 = false;
+  }
+  else {
+    cVar5 = LiveStorage_CS_AllocatedAllMemory(iVar4);
+    bVar1 = true;
+    if (cVar5 == '\0') goto LAB_824f203c;
+  }
+  if (!bVar1) {
+    LiveStorage_CS_Init(iVar3);
+  }
+  cVar5 = LiveStorage_CS_IsAvailable(iVar3);
+  if (cVar5 != '\0') {
+    cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x13,iVar3);
+    if (cVar5 == '\0') {
+      lVar2 = Live_GetXuid(iVar3);
+      if (param_2 == lVar2) {
+        MyAssertHandler(0xffffffff82089ba8,0x40d,0,0xffffffff82000f98,0xffffffff8208a93c);
+      }
+      local_30 = 0;
+      local_2c = 0;
+      local_38 = 0;
+      local_34 = 0;
+      local_28 = LiveStorage_CS_GetFriendPrivateData_Success;
+      local_24 = 0;
+      local_40 = param_2;
+      LiveStorage_CS_GetListing(iVar3,&local_40);
+      Commerce_GetSubscriptionStatusFromDW(iVar3,param_2);
+    }
+  }
+  iVar4 = 0;
+LAB_824f20fc:
+  __restgprlr_29(iVar4);
+  return;
 }
 
 
 // 824EF708  LiveStorage_CS_GetListing  (qcommon/com_storage_contentserver.cpp:1067)
 
-void LiveStorage_CS_GetListing(void)
+void LiveStorage_CS_GetListing(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  uint uVar2;
+  int iVar4;
+  char cVar7;
+  int iVar5;
+  longlong lVar3;
+  int iVar6;
+  longlong *plVar8;
+  ulonglong uVar9;
+  char *pcVar10;
+  
+  iVar4 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x42c,0,0xffffffff82000f98,0xffffffff82089ef0);
+  }
+  plVar8 = (longlong *)param_2;
+  if (*plVar8 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x42d,0,0xffffffff82000f98,0xffffffff82089ed4);
+  }
+  if ((iVar4 < 0) || (3 < iVar4)) {
+    MyAssertHandler(0xffffffff82089ba8,0x42e,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  uVar9 = (ulonglong)DAT_8365dd30;
+  if (uVar9 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x42f,0,0xffffffff82000f98,0xffffffff82089e88);
+    uVar9 = (ulonglong)DAT_8365dd30;
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar4 * 4) & 4) != 0) {
+    cVar7 = LiveStorage_CS_AllocatedAllMemory();
+    bVar1 = true;
+    if (cVar7 != '\0') goto LAB_824ef808;
+  }
+  bVar1 = false;
+LAB_824ef808:
+  if ((((bVar1) && ((uVar9 & 0xffffffff) != 0)) && (*plVar8 != 0)) && ((-1 < iVar4 && (iVar4 < 4))))
+  {
+    cVar7 = LiveStorage_CheckConnection(iVar4);
+    if (cVar7 != '\0') {
+      cVar7 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x13,iVar4);
+      if (cVar7 != '\0') {
+        Com_Printf(0xe,0xffffffff82089e18,iVar4);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar5 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar4,0x13);
+      if (iVar5 != 0) {
+        lVar3 = Live_GetXuid(iVar4);
+        iVar6 = DAT_8365dd2c;
+        if (*plVar8 == lVar3) {
+          iVar6 = DAT_8365dd28;
+        }
+        pcVar10 = (char *)(iVar4 * 0x4bb8 + iVar6);
+        if (((*pcVar10 != '\0') &&
+            (iVar6 = Sys_Milliseconds(), iVar6 - *(int *)(pcVar10 + 4) < 60000)) &&
+           (*(longlong *)(pcVar10 + 8) == *plVar8)) {
+          TaskManager_ClearTask(iVar5);
+          Com_Printf(0xe,0xffffffff82089da8,iVar4);
+          __restgprlr_27(0);
+          return;
+        }
+        uVar2 = DAT_8365dd30;
+        *pcVar10 = '\0';
+        iVar6 = iVar4 * 0x30 + uVar2;
+        *(undefined2 *)(iVar6 + 0x1a) = 10;
+        *(longlong *)(iVar6 + 8) = *plVar8;
+        *(undefined2 *)(iVar6 + 0x18) = *(undefined2 *)(plVar8 + 2);
+        *(undefined4 *)(iVar6 + 0x20) = *(undefined4 *)((int)plVar8 + 0x14);
+        *(undefined4 *)(iVar6 + 0x10) = *(undefined4 *)((int)plVar8 + 0xc);
+        *(undefined2 *)(iVar6 + 0x1c) = *(undefined2 *)(plVar8 + 1);
+        *(char **)(iVar4 * 0x30 + uVar2) = pcVar10 + 0x10;
+        lVar3 = Live_GetXuid(iVar4);
+        if (*plVar8 != lVar3) {
+          iVar4 = iVar4 + 4;
+        }
+        *(int *)(iVar6 + 0x14) = iVar4;
+        *(undefined4 *)(iVar6 + 0x28) = *(undefined4 *)(plVar8 + 3);
+        *(undefined4 *)(iVar6 + 0x2c) = *(undefined4 *)((int)plVar8 + 0x1c);
+        *(int *)(iVar5 + 0x98) = iVar6;
+        iVar4 = dwCSGetListing(iVar5,iVar6);
+        if (iVar4 != 0) {
+          __restgprlr_27(1);
+          return;
+        }
+        TaskManager_ClearTask(iVar5);
+        Com_Printf(0xe,0xffffffff82089d74);
+        __restgprlr_27(0);
+        return;
+      }
+      Com_Printf(0xe,0xffffffff82089de4);
+      __restgprlr_27(0);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -738,8 +1081,57 @@ void LiveStorage_CS_GetListing(void)
 void LiveStorage_CS_GetListingComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  undefined4 uVar5;
+  int iVar6;
+  int iVar7;
+  undefined *puVar8;
+  undefined1 *puVar9;
+  
+  iVar4 = __savegprlr_28();
+  iVar7 = iVar4 * 0xa0;
+  puVar8 = &DAT_8365bc40 + iVar7;
+  if ((&DAT_8365bcd4)[iVar7] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x47f,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar4 * 0x28] != 0x13) {
+    MyAssertHandler(0xffffffff82089ba8,0x480,0,0xffffffff82000f98,0xffffffff8208a604);
+  }
+  iVar1 = *(int *)(&DAT_8365bcd8 + iVar7);
+  uVar3 = dwCSGetListingComplete(puVar8,iVar1);
+  if ((int)uVar3 != 1) {
+    if ((int)uVar3 == 2) {
+      if (*(code **)(iVar1 + 0x2c) != (code *)0x0) {
+        (**(code **)(iVar1 + 0x2c))((&DAT_8365bcd5)[iVar7],*(undefined4 *)(iVar1 + 0x24));
+      }
+      TaskManager_ClearTask(puVar8);
+      Com_Printf(0xe,0xffffffff8208a5e4);
+    }
+    __restgprlr_28(uVar3);
+    return;
+  }
+  iVar6 = *(int *)(iVar1 + 0x14);
+  iVar2 = DAT_8365dd28;
+  if (3 < iVar6) {
+    iVar6 = iVar6 + -4;
+    iVar2 = DAT_8365dd2c;
+  }
+  puVar9 = (undefined1 *)(iVar6 * 0x4bb8 + iVar2);
+  *(undefined8 *)(puVar9 + 8) = *(undefined8 *)(iVar1 + 8);
+  uVar5 = bdRemoteTask__getNumResults((&DAT_8365bc48)[iVar4 * 0x28]);
+  *(undefined4 *)(puVar9 + 0x4bb0) = uVar5;
+  uVar5 = Sys_Milliseconds();
+  *(undefined4 *)(puVar9 + 4) = uVar5;
+  *puVar9 = 1;
+  if (*(code **)(iVar1 + 0x28) != (code *)0x0) {
+    (**(code **)(iVar1 + 0x28))((&DAT_8365bcd5)[iVar7],puVar9);
+  }
+  TaskManager_ClearTask(puVar8);
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
@@ -765,15 +1157,12 @@ void LiveStorage_CS_GetDescriptors(undefined8 param_1,ulonglong param_2)
   
   iVar4 = __savegprlr_20();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82089ba8,0x4a1,0,0xffffffff82000f98,0xffffffff8208aa1c);
   }
   if (DAT_8365dd38 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82089ba8,0x4a2,0,0xffffffff82000f98,0xffffffff8208aa08);
   }
   if ((iVar4 < 0) || (3 < iVar4)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82089ba8,0x4a3,0,0xffffffff82000f98,0xffffffff82089e98);
   }
   if ((*(uint *)(&DAT_8296c08c + iVar4 * 4) & 4) != 0) {
@@ -884,18 +1273,149 @@ LAB_824f21e0:
 void LiveStorage_CS_GetDescriptorsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined *puVar6;
+  int iVar7;
+  
+  iVar3 = __savegprlr_27();
+  iVar5 = iVar3 * 0xa0;
+  puVar6 = &DAT_8365bc40 + iVar5;
+  if ((&DAT_8365bcd4)[iVar5] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x503,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x14) {
+    MyAssertHandler(0xffffffff82089ba8,0x504,0,0xffffffff82000f98,0xffffffff8208a648);
+  }
+  piVar1 = *(int **)(&DAT_8365bcd8 + iVar5);
+  uVar2 = dwCSGetDescriptorsComplete(puVar6,piVar1);
+  if ((int)uVar2 == 1) {
+    iVar4 = bdRemoteTask__getNumResults((&DAT_8365bc48)[iVar3 * 0x28]);
+    iVar3 = piVar1[3];
+    iVar7 = iVar3 * 0x790;
+    *piVar1 = *piVar1 + iVar3 * -0x790;
+    if ((int *)piVar1[4] != (int *)0x0) {
+      *(int *)piVar1[4] = iVar3 + iVar4;
+    }
+    if (iVar3 < iVar3 + iVar4) {
+      iVar3 = (iVar3 + iVar4) - iVar3;
+      do {
+        LiveStorage_CSCache_AddDescriptor(*(undefined8 *)(*piVar1 + iVar7 + 8));
+        iVar3 = iVar3 + -1;
+        iVar7 = iVar7 + 0x790;
+      } while (iVar3 != 0);
+    }
+    if ((code *)piVar1[6] != (code *)0x0) {
+      (*(code *)piVar1[6])((&DAT_8365bcd5)[iVar5]);
+      TaskManager_ClearTask(puVar6);
+      __restgprlr_27(uVar2);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar2 != 2) goto LAB_824f16a4;
+    if (piVar1[5] == 2000) {
+      iVar3 = piVar1[3];
+      if (0 < iVar3) {
+        *piVar1 = *piVar1 + iVar3 * -0x790;
+        if ((int *)piVar1[4] != (int *)0x0) {
+          *(int *)piVar1[4] = iVar3;
+        }
+        if ((code *)piVar1[6] != (code *)0x0) {
+          (*(code *)piVar1[6])((&DAT_8365bcd5)[iVar5]);
+        }
+        TaskManager_ClearTask(puVar6);
+        __restgprlr_27(2);
+        return;
+      }
+    }
+    Com_Printf(0xe,0xffffffff8208a628);
+    if ((code *)piVar1[7] != (code *)0x0) {
+      (*(code *)piVar1[7])((&DAT_8365bcd5)[iVar5],piVar1[5]);
+    }
+  }
+  TaskManager_ClearTask(puVar6);
+LAB_824f16a4:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 824EFA40  LiveStorage_CS_Search  (qcommon/com_storage_contentserver.cpp:1336)
 
-void LiveStorage_CS_Search(void)
+void LiveStorage_CS_Search(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar5;
+  int iVar4;
+  undefined4 *puVar6;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x539,0,0xffffffff82000f98,0xffffffff82089f90);
+  }
+  if (DAT_8365dd34 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x53a,0,0xffffffff82000f98,0xffffffff82089f80);
+  }
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82089ba8,0x53b,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) != 0) {
+    cVar5 = LiveStorage_CS_AllocatedAllMemory();
+    bVar2 = true;
+    if (cVar5 != '\0') goto LAB_824efb14;
+  }
+  bVar2 = false;
+LAB_824efb14:
+  if ((bVar2) && (DAT_8365dd34 != 0)) {
+    cVar5 = LiveStorage_CheckConnection(iVar3);
+    if (cVar5 != '\0') {
+      cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x15,iVar3);
+      if (cVar5 != '\0') {
+        Com_Printf(0xe,0xffffffff82089f44,iVar3);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x15);
+      iVar1 = DAT_8365dd34;
+      if (iVar4 == 0) {
+        Com_Printf(0xe,0xffffffff82089f1c);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar6 = (undefined4 *)param_2;
+      *(undefined4 *)(iVar3 * 0x2c + DAT_8365dd34) = *puVar6;
+      iVar1 = iVar3 * 0x2c + iVar1;
+      *(undefined4 *)(iVar1 + 0x10) = puVar6[1];
+      *(undefined4 *)(iVar1 + 8) = puVar6[2];
+      *(undefined4 *)(iVar1 + 0xc) = puVar6[3];
+      *(undefined4 *)(iVar1 + 4) = puVar6[4];
+      *(undefined4 *)(iVar1 + 0x14) = puVar6[5];
+      *(undefined4 *)(iVar1 + 0x18) = puVar6[6];
+      *(undefined1 *)(iVar1 + 0x1c) = *(undefined1 *)(puVar6 + 7);
+      *(undefined4 *)(iVar1 + 0x24) = puVar6[8];
+      *(undefined4 *)(iVar1 + 0x28) = puVar6[9];
+      *(int *)(iVar4 + 0x98) = iVar1;
+      iVar3 = dwCSSearch(iVar4);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(iVar4);
+        Com_Printf(0xe,0xffffffff82089efc);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -904,8 +1424,50 @@ void LiveStorage_CS_Search(void)
 void LiveStorage_CS_SearchComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 uVar4;
+  int iVar5;
+  undefined *puVar6;
+  
+  iVar3 = __savegprlr_29();
+  iVar5 = iVar3 * 0xa0;
+  puVar6 = &DAT_8365bc40 + iVar5;
+  if ((&DAT_8365bcd4)[iVar5] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x577,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x15) {
+    MyAssertHandler(0xffffffff82089ba8,0x578,0,0xffffffff82000f98,0xffffffff8208a670);
+  }
+  iVar1 = *(int *)(&DAT_8365bcd8 + iVar5);
+  uVar2 = dwCSSearchComplete(puVar6,iVar1);
+  if ((int)uVar2 == 1) {
+    if (*(int *)(iVar1 + 0x14) != 0) {
+      uVar4 = bdRemoteTask__getNumResults((&DAT_8365bc48)[iVar3 * 0x28]);
+      **(undefined4 **)(iVar1 + 0x14) = uVar4;
+    }
+    if (*(int *)(iVar1 + 0x18) != 0) {
+      uVar4 = bdRemoteTask__getTotalNumResults((&DAT_8365bc48)[iVar3 * 0x28]);
+      **(undefined4 **)(iVar1 + 0x18) = uVar4;
+    }
+    if (*(code **)(iVar1 + 0x24) != (code *)0x0) {
+      (**(code **)(iVar1 + 0x24))((&DAT_8365bcd5)[iVar5]);
+      TaskManager_ClearTask(puVar6);
+      __restgprlr_29(uVar2);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar2 != 2) goto LAB_824f17e4;
+    if (*(code **)(iVar1 + 0x28) != (code *)0x0) {
+      (**(code **)(iVar1 + 0x28))((&DAT_8365bcd5)[iVar5],*(undefined4 *)(iVar1 + 0x20));
+    }
+  }
+  TaskManager_ClearTask(puVar6);
+LAB_824f17e4:
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -934,19 +1496,16 @@ void LiveStorage_CS_ReadFile(undefined8 param_1,ulonglong param_2)
   undefined8 *puVar6;
   
   iVar2 = __savegprlr_25();
+  iVar3 = iVar2;
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82089ba8,0x59e,0,0xffffffff82000f98,0xffffffff8208aadc);
+    iVar3 = MyAssertHandler(0xffffffff82089ba8,0x59e,0,0xffffffff82000f98,0xffffffff8208aadc);
   }
   if (DAT_8365dd3c == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82089ba8,0x59f,0,0xffffffff82000f98,0xffffffff8208aac8);
+    iVar3 = MyAssertHandler(0xffffffff82089ba8,0x59f,0,0xffffffff82000f98,0xffffffff8208aac8);
   }
   if ((iVar2 < 0) || (3 < iVar2)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82089ba8,0x5a0,0,0xffffffff82000f98,0xffffffff82089e98);
+    iVar3 = MyAssertHandler(0xffffffff82089ba8,0x5a0,0,0xffffffff82000f98,0xffffffff82089e98);
   }
-  iVar3 = iVar2;
   if ((DAT_8365de08 & 1) == 0) {
     DAT_8365de08 = DAT_8365de08 | 1;
     bdDownloadInterceptor__bdDownloadInterceptor(0xffffffff8365ddfc);
@@ -1004,8 +1563,8 @@ LAB_824f254c:
          (cVar5 = DCache_ReadFromCache
                             (*puVar6,*(undefined4 *)(puVar6 + 1),1,
                              *(undefined4 *)((int)puVar6 + 0x14)), cVar5 == '\0')) {
-        iVar2 = dwCSReadFile(iVar4,iVar3);
-        if (iVar2 == 0) {
+        iVar3 = dwCSReadFile(iVar4,iVar3);
+        if (iVar3 == 0) {
           TaskManager_ClearTask(iVar4);
           Com_Printf(0xe,0xffffffff8208aa28);
           __restgprlr_25(0);
@@ -1031,18 +1590,134 @@ LAB_824f254c:
 void LiveStorage_CS_ReadFileComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  bool bVar2;
+  bool bVar3;
+  int iVar5;
+  undefined8 uVar4;
+  int iVar6;
+  undefined *puVar7;
+  
+  iVar5 = __savegprlr_28();
+  iVar6 = iVar5 * 0xa0;
+  puVar7 = &DAT_8365bc40 + iVar6;
+  bVar3 = false;
+  if ((&DAT_8365bcd4)[iVar6] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x5f2,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar5 * 0x28] != 0x16) {
+    MyAssertHandler(0xffffffff82089ba8,0x5f3,0,0xffffffff82000f98,0xffffffff82089fcc);
+  }
+  puVar1 = *(undefined8 **)(&DAT_8365bcd8 + iVar6);
+  if (*(char *)((int)puVar1 + 0x7ac) != '\0') {
+    if (*(code **)((int)puVar1 + 0x7bc) != (code *)0x0) {
+      (**(code **)((int)puVar1 + 0x7bc))((&DAT_8365bcd5)[iVar6],puVar1);
+    }
+    TaskManager_ClearTask(puVar7);
+    __restgprlr_28(1);
+    return;
+  }
+  uVar4 = dwCSReadFileComplete(puVar7,puVar1);
+  if ((int)uVar4 == 1) {
+    iVar5 = dwCSGetLastHTTPError((&DAT_8365bcd5)[iVar6]);
+    if ((iVar5 == 0) || ((199 < iVar5 && (iVar5 < 300)))) {
+      bVar2 = true;
+    }
+    else {
+      bVar2 = false;
+    }
+    if (bVar2) {
+      if (*(int *)(puVar1 + 0xf4) != 0) {
+        DCache_WriteToCache(*puVar1,*(undefined4 *)(puVar1 + 0xf3),1);
+      }
+      if (*(code **)((int)puVar1 + 0x7bc) != (code *)0x0) {
+        (**(code **)((int)puVar1 + 0x7bc))((&DAT_8365bcd5)[iVar6],puVar1);
+      }
+      TaskManager_ClearTask(puVar7);
+      goto LAB_824efe3c;
+    }
+  }
+  else if ((int)uVar4 != 2) goto LAB_824efe3c;
+  bVar3 = true;
+LAB_824efe3c:
+  if (bVar3) {
+    if (*(code **)(puVar1 + 0xf8) != (code *)0x0) {
+      (**(code **)(puVar1 + 0xf8))((&DAT_8365bcd5)[iVar6],*(undefined4 *)(puVar1 + 0xf6));
+    }
+    TaskManager_ClearTask(puVar7);
+    Com_Printf(0xe,0xffffffff82089fa4,*(undefined4 *)(puVar1 + 0xf6));
+  }
+  __restgprlr_28(uVar4);
+  return;
 }
 
 
 // 824EFE90  LiveStorage_CS_RemoveFile  (qcommon/com_storage_contentserver.cpp:1580)
 
-void LiveStorage_CS_RemoveFile(void)
+void LiveStorage_CS_RemoveFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char cVar6;
+  int iVar4;
+  int iVar5;
+  undefined2 *puVar7;
+  
+  uVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x62d,0,0xffffffff82000f98,0xffffffff8208a070);
+  }
+  if (DAT_8365dd48 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x62e,0,0xffffffff82000f98,0xffffffff8208a05c);
+  }
+  if (((int)uVar3 < 0) || (3 < (int)uVar3)) {
+    MyAssertHandler(0xffffffff82089ba8,0x62f,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + (int)((uVar3 & 0xffffffff) << 2)) & 4) != 0) {
+    cVar6 = LiveStorage_CS_AllocatedAllMemory();
+    bVar1 = true;
+    if (cVar6 != '\0') goto LAB_824eff64;
+  }
+  bVar1 = false;
+LAB_824eff64:
+  if ((bVar1) && (DAT_8365dd48 != 0)) {
+    cVar6 = LiveStorage_CheckConnection(uVar3);
+    if (cVar6 != '\0') {
+      cVar6 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x17,uVar3);
+      if (cVar6 != '\0') {
+        Com_Printf(0xe,0xffffffff8208a01c,uVar3);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar3,0x17);
+      if (iVar4 == 0) {
+        Com_Printf(0xe,0xffffffff82089de4);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar7 = (undefined2 *)param_2;
+      iVar2 = (int)((uVar3 & 0xfffffff) << 4);
+      iVar5 = iVar2 + DAT_8365dd48;
+      *(undefined2 *)(iVar2 + DAT_8365dd48) = *puVar7;
+      *(undefined4 *)(iVar5 + 8) = *(undefined4 *)(puVar7 + 2);
+      *(undefined4 *)(iVar5 + 0xc) = *(undefined4 *)(puVar7 + 4);
+      *(int *)(iVar4 + 0x98) = iVar5;
+      iVar5 = dwCSRemoveFile(iVar4);
+      if (iVar5 == 0) {
+        TaskManager_ClearTask(iVar4);
+        Com_Printf(0xe,0xffffffff82089fec);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1051,28 +1726,158 @@ void LiveStorage_CS_RemoveFile(void)
 void LiveStorage_CS_RemoveFileComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = iVar2 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar3;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x665,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x17) {
+    MyAssertHandler(0xffffffff82089ba8,0x666,0,0xffffffff82000f98,0xffffffff8208a690);
+  }
+  iVar2 = *(int *)(&DAT_8365bcd8 + iVar3);
+  uVar1 = dwCSRemoveFileComplete(puVar4,iVar2);
+  if ((int)uVar1 == 1) {
+    LiveStorage_CS_RefreshPrivateData((&DAT_8365bcd5)[iVar3]);
+    if (*(code **)(iVar2 + 8) != (code *)0x0) {
+      (**(code **)(iVar2 + 8))((&DAT_8365bcd5)[iVar3]);
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_29(uVar1);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar1 != 2) goto LAB_824f18f4;
+    if (*(code **)(iVar2 + 0xc) != (code *)0x0) {
+      (**(code **)(iVar2 + 0xc))((&DAT_8365bcd5)[iVar3],*(undefined4 *)(iVar2 + 4));
+    }
+  }
+  TaskManager_ClearTask(puVar4);
+LAB_824f18f4:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824F0090  LiveStorage_CS_WriteFileData  (qcommon/com_storage_contentserver.cpp:1664)
 
-void LiveStorage_CS_WriteFileData(void)
+void LiveStorage_CS_WriteFileData
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x681,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  if (*(int *)((int)param_4 + 0x40) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x682,0,0xffffffff82000f98,0xffffffff8208a07c);
+  }
+  (**(code **)((int)param_4 + 0x40))(uVar1,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 824F2720  LiveStorage_CS_WriteFile  (qcommon/com_storage_contentserver.cpp:1672)
 
-void LiveStorage_CS_WriteFile(void)
+void LiveStorage_CS_WriteFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  char cVar6;
+  int iVar5;
+  undefined2 *puVar7;
+  
+  iVar3 = __savegprlr_26();
+  iVar4 = iVar3;
+  if ((param_2 & 0xffffffff) == 0) {
+    iVar4 = MyAssertHandler(0xffffffff82089ba8,0x689,0,0xffffffff82000f98,0xffffffff8208ab9c);
+  }
+  if (DAT_8365dd40 == 0) {
+    iVar4 = MyAssertHandler(0xffffffff82089ba8,0x68a,0,0xffffffff82000f98,0xffffffff8208ab88);
+  }
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    iVar4 = MyAssertHandler(0xffffffff82089ba8,0x68b,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((DAT_8365de18 & 1) == 0) {
+    DAT_8365de18 = DAT_8365de18 | 1;
+    bdUploadInterceptor__bdUploadInterceptor(0xffffffff8365de0c);
+    DAT_8365de0c = &PTR_csUploadInterceptor___scalar_deleting_destructor__8208a0a4;
+    iVar4 = atexit(
+                  _LiveStorage_CS_WriteFile____11____dynamic_atexit_destructor_for__uploadInterceptor__
+                  );
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) != 0) {
+    cVar6 = LiveStorage_CS_AllocatedAllMemory(iVar4);
+    bVar2 = true;
+    if (cVar6 != '\0') goto LAB_824f283c;
+  }
+  bVar2 = false;
+LAB_824f283c:
+  if ((bVar2) && (DAT_8365dd40 != 0)) {
+    cVar6 = LiveStorage_CheckConnection(iVar3);
+    if (cVar6 != '\0') {
+      cVar6 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x18,iVar3);
+      if (cVar6 != '\0') {
+        Com_Printf(0xe,0xffffffff8208ab48,iVar3);
+        __restgprlr_26(0);
+        return;
+      }
+      iVar5 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x18);
+      iVar4 = DAT_8365dd40;
+      if (iVar5 == 0) {
+        Com_Printf(0xe,0xffffffff8208ab14);
+        __restgprlr_26(0);
+        return;
+      }
+      puVar7 = (undefined2 *)param_2;
+      iVar1 = iVar3 * 0x50 + DAT_8365dd40;
+      *(undefined2 *)(iVar1 + 0x18) = *puVar7;
+      *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(puVar7 + 2);
+      *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(puVar7 + 4);
+      *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(puVar7 + 6);
+      *(undefined2 *)(iVar1 + 0x28) = puVar7[8];
+      *(undefined4 *)(iVar1 + 0x2c) = *(undefined4 *)(puVar7 + 10);
+      *(undefined4 *)(iVar1 + 0x30) = *(undefined4 *)(puVar7 + 0xc);
+      *(undefined4 *)(iVar1 + 0x34) = *(undefined4 *)(puVar7 + 0xe);
+      *(undefined4 *)(iVar3 * 0x50 + iVar4) = *(undefined4 *)(puVar7 + 0x10);
+      *(undefined4 *)(iVar1 + 0x44) = *(undefined4 *)(puVar7 + 0x16);
+      *(undefined4 *)(iVar1 + 0x48) = *(undefined4 *)(puVar7 + 0x18);
+      DAT_8365de14 = LiveStorage_CS_WriteFileData;
+      DAT_8365de10 = iVar1;
+      if (*(int *)(puVar7 + 0x14) == 0) {
+        *(undefined4 *)(iVar1 + 0x40) = 0;
+        *(undefined4 *)(iVar1 + 0x3c) = 0;
+      }
+      else {
+        *(int *)(iVar1 + 0x40) = *(int *)(puVar7 + 0x14);
+        *(undefined ****)(iVar1 + 0x3c) = &DAT_8365de0c;
+      }
+      *(int *)(iVar5 + 0x98) = iVar1;
+      iVar4 = dwCSWriteFile(iVar5);
+      if (iVar4 == 0) {
+        TaskManager_ClearTask(iVar5);
+        Com_Printf(0xe,0xffffffff8208aae8);
+        __restgprlr_26(0);
+        return;
+      }
+      __restgprlr_26(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -1081,18 +1886,123 @@ void LiveStorage_CS_WriteFile(void)
 void LiveStorage_CS_WriteFileComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  bool bVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  int iVar6;
+  undefined *puVar7;
+  
+  iVar4 = __savegprlr_28();
+  iVar6 = iVar4 * 0xa0;
+  puVar7 = &DAT_8365bc40 + iVar6;
+  bVar2 = false;
+  if ((&DAT_8365bcd4)[iVar6] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x6d9,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar4 * 0x28] != 0x18) {
+    MyAssertHandler(0xffffffff82089ba8,0x6da,0,0xffffffff82000f98,0xffffffff8208a0c8);
+  }
+  iVar4 = *(int *)(&DAT_8365bcd8 + iVar6);
+  uVar3 = dwCSWriteFileComplete(puVar7,iVar4);
+  if ((int)uVar3 == 1) {
+    iVar5 = dwCSGetLastHTTPError((&DAT_8365bcd5)[iVar6]);
+    if ((iVar5 == 0) || ((199 < iVar5 && (iVar5 < 300)))) {
+      bVar1 = true;
+    }
+    else {
+      bVar1 = false;
+    }
+    if (bVar1) {
+      if (*(code **)(iVar4 + 0x44) != (code *)0x0) {
+        (**(code **)(iVar4 + 0x44))((&DAT_8365bcd5)[iVar6],*(undefined8 *)(iVar4 + 0x10));
+      }
+      TaskManager_ClearTask(puVar7);
+      goto LAB_824f023c;
+    }
+  }
+  else if ((int)uVar3 != 2) goto LAB_824f023c;
+  bVar2 = true;
+LAB_824f023c:
+  if (bVar2) {
+    if (*(code **)(iVar4 + 0x48) != (code *)0x0) {
+      (**(code **)(iVar4 + 0x48))((&DAT_8365bcd5)[iVar6],*(undefined4 *)(iVar4 + 0x38));
+    }
+    TaskManager_ClearTask(puVar7);
+    Com_Printf(0xe,0xffffffff8208a0ac);
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 824F0288  LiveStorage_CS_SetTags  (qcommon/com_storage_contentserver.cpp:1794)
 
-void LiveStorage_CS_SetTags(void)
+void LiveStorage_CS_SetTags(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar5;
+  int iVar4;
+  undefined8 *puVar6;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x703,0,0xffffffff82000f98,0xffffffff8208a18c);
+  }
+  if (DAT_8365dd44 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x704,0,0xffffffff82000f98,0xffffffff8208a17c);
+  }
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82089ba8,0x705,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) != 0) {
+    cVar5 = LiveStorage_CS_AllocatedAllMemory();
+    bVar2 = true;
+    if (cVar5 != '\0') goto LAB_824f035c;
+  }
+  bVar2 = false;
+LAB_824f035c:
+  if ((bVar2) && (DAT_8365dd44 != 0)) {
+    cVar5 = LiveStorage_CheckConnection(iVar3);
+    if (cVar5 != '\0') {
+      cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x19,iVar3);
+      if (cVar5 != '\0') {
+        Com_Printf(0xe,0xffffffff8208a140,iVar3);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x19);
+      if (iVar4 == 0) {
+        Com_Printf(0xe,0xffffffff8208a114);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar6 = (undefined8 *)param_2;
+      iVar1 = iVar3 * 0x20 + DAT_8365dd44;
+      *(undefined8 *)(iVar3 * 0x20 + DAT_8365dd44) = *puVar6;
+      *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)((int)puVar6 + 0xc);
+      *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(puVar6 + 1);
+      *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(puVar6 + 2);
+      *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)((int)puVar6 + 0x14);
+      *(int *)(iVar4 + 0x98) = iVar1;
+      iVar3 = dwCSSetTags(iVar4);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(iVar4);
+        Com_Printf(0xe,0xffffffff8208a0e8);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1101,18 +2011,118 @@ void LiveStorage_CS_SetTags(void)
 void LiveStorage_CS_SetTagsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = iVar2 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar3;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x73d,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x19) {
+    MyAssertHandler(0xffffffff82089ba8,0x73e,0,0xffffffff82000f98,0xffffffff8208a6b4);
+  }
+  iVar2 = *(int *)(&DAT_8365bcd8 + iVar3);
+  uVar1 = dwCSSetTagsComplete(puVar4,iVar2);
+  if ((int)uVar1 == 1) {
+    LiveStorage_CS_RefreshPrivateData((&DAT_8365bcd5)[iVar3]);
+    if (*(code **)(iVar2 + 0x14) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x14))((&DAT_8365bcd5)[iVar3]);
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_29(uVar1);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar1 != 2) goto LAB_824f1a04;
+    if (*(code **)(iVar2 + 0x18) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x18))((&DAT_8365bcd5)[iVar3],*(undefined4 *)(iVar2 + 0x10));
+    }
+  }
+  TaskManager_ClearTask(puVar4);
+LAB_824f1a04:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824F0498  LiveStorage_CS_CopyFromOtherUser  (qcommon/com_storage_contentserver.cpp:1880)
 
-void LiveStorage_CS_CopyFromOtherUser(void)
+void LiveStorage_CS_CopyFromOtherUser(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 *puVar1;
+  int iVar2;
+  bool bVar3;
+  int iVar4;
+  int iVar5;
+  char cVar7;
+  int iVar6;
+  
+  iVar5 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x759,0,0xffffffff82000f98,0xffffffff8208a22c);
+  }
+  if (DAT_8365dd4c == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x75a,0,0xffffffff82000f98,0xffffffff8208a218);
+  }
+  if ((iVar5 < 0) || (3 < iVar5)) {
+    MyAssertHandler(0xffffffff82089ba8,0x75b,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar5 * 4) & 4) != 0) {
+    cVar7 = LiveStorage_CS_AllocatedAllMemory();
+    bVar3 = true;
+    if (cVar7 != '\0') goto LAB_824f056c;
+  }
+  bVar3 = false;
+LAB_824f056c:
+  if ((bVar3) && (DAT_8365dd4c != 0)) {
+    cVar7 = LiveStorage_CheckConnection(iVar5);
+    if (cVar7 != '\0') {
+      cVar7 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x1a,iVar5);
+      if (cVar7 != '\0') {
+        Com_Printf(0xe,0xffffffff8208a1d0,iVar5);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar6 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar5,0x1a);
+      iVar4 = DAT_8365dd4c;
+      if (iVar6 == 0) {
+        Com_Printf(0xe,0xffffffff8208a114);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar1 = (undefined8 *)param_2;
+      iVar2 = iVar5 * 0x38 + DAT_8365dd4c;
+      *(undefined2 *)(iVar2 + 0x10) = *(undefined2 *)(puVar1 + 2);
+      *(undefined8 *)(iVar5 * 0x38 + iVar4) = *puVar1;
+      *(undefined4 *)(iVar2 + 0xc) = *(undefined4 *)((int)puVar1 + 0xc);
+      *(undefined2 *)(iVar2 + 8) = *(undefined2 *)(puVar1 + 1);
+      *(undefined4 *)(iVar2 + 0x14) = *(undefined4 *)((int)puVar1 + 0x14);
+      *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(puVar1 + 3);
+      *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)((int)puVar1 + 0x1c);
+      *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(puVar1 + 4);
+      *(undefined4 *)(iVar2 + 0x24) = *(undefined4 *)((int)puVar1 + 0x24);
+      *(undefined4 *)(iVar2 + 0x2c) = *(undefined4 *)(puVar1 + 5);
+      *(undefined4 *)(iVar2 + 0x30) = *(undefined4 *)((int)puVar1 + 0x2c);
+      *(int *)(iVar6 + 0x98) = iVar2;
+      iVar5 = dwCSCopyFromUserStorage(iVar6);
+      if (iVar5 == 0) {
+        TaskManager_ClearTask(iVar6);
+        Com_Printf(0xe,0xffffffff8208a198);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1121,18 +2131,113 @@ void LiveStorage_CS_CopyFromOtherUser(void)
 void LiveStorage_CS_CopyFromOtherUserComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = iVar2 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar3;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x799,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x1a) {
+    MyAssertHandler(0xffffffff82089ba8,0x79a,0,0xffffffff82000f98,0xffffffff8208a238);
+  }
+  iVar2 = *(int *)(&DAT_8365bcd8 + iVar3);
+  uVar1 = dwCSCopyFromUserStorageComplete(puVar4,iVar2);
+  if ((int)uVar1 == 1) {
+    if (*(code **)(iVar2 + 0x2c) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x2c))((&DAT_8365bcd5)[iVar3]);
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_29(uVar1);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar1 != 2) goto LAB_824f07d4;
+    if (*(code **)(iVar2 + 0x30) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x30))((&DAT_8365bcd5)[iVar3],*(undefined4 *)(iVar2 + 0x28));
+    }
+  }
+  TaskManager_ClearTask(puVar4);
+LAB_824f07d4:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824F07E0  LiveStorage_CS_UploadSummaryMetadata  (qcommon/com_storage_contentserver.cpp:1971)
 
-void LiveStorage_CS_UploadSummaryMetadata(void)
+void LiveStorage_CS_UploadSummaryMetadata(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar5;
+  int iVar4;
+  undefined8 *puVar6;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x7b4,0,0xffffffff82000f98,0xffffffff8208a2b0);
+  }
+  if (DAT_8365dd50 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x7b5,0,0xffffffff82000f98,0xffffffff8208a298);
+  }
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82089ba8,0x7b6,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) != 0) {
+    cVar5 = LiveStorage_CS_AllocatedAllMemory();
+    bVar2 = true;
+    if (cVar5 != '\0') goto LAB_824f08b4;
+  }
+  bVar2 = false;
+LAB_824f08b4:
+  if ((bVar2) && (DAT_8365dd50 != 0)) {
+    cVar5 = LiveStorage_CheckConnection(iVar3);
+    if (cVar5 != '\0') {
+      cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x1b,iVar3);
+      if (cVar5 != '\0') {
+        Com_Printf(0xe,0xffffffff8208a140,iVar3);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x1b);
+      if (iVar4 == 0) {
+        Com_Printf(0xe,0xffffffff8208a114);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar6 = (undefined8 *)param_2;
+      iVar1 = iVar3 * 0x30 + DAT_8365dd50;
+      *(undefined8 *)(iVar3 * 0x30 + DAT_8365dd50) = *puVar6;
+      *(undefined4 *)(iVar1 + 0x10) = *(undefined4 *)(puVar6 + 2);
+      *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)((int)puVar6 + 0x14);
+      *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)(puVar6 + 3);
+      *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)((int)puVar6 + 0x1c);
+      *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(puVar6 + 1);
+      *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)((int)puVar6 + 0xc);
+      *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(puVar6 + 4);
+      *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)((int)puVar6 + 0x24);
+      *(int *)(iVar4 + 0x98) = iVar1;
+      iVar3 = dwCSUploadSummaryMetaData(iVar4);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(iVar4);
+        Com_Printf(0xe,0xffffffff8208a260);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1141,18 +2246,109 @@ void LiveStorage_CS_UploadSummaryMetadata(void)
 void LiveStorage_CS_UploadSummaryMetadataComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = iVar2 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar3;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x7f3,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x1b) {
+    MyAssertHandler(0xffffffff82089ba8,0x7f4,0,0xffffffff82000f98,0xffffffff8208a2bc);
+  }
+  iVar2 = *(int *)(&DAT_8365bcd8 + iVar3);
+  uVar1 = dwCSUploadSummaryMetaDataComplete(puVar4,iVar2);
+  if ((int)uVar1 == 1) {
+    if (*(code **)(iVar2 + 0x24) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x24))((&DAT_8365bcd5)[iVar3]);
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_29(uVar1);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar1 != 2) goto LAB_824f0b14;
+    if (*(code **)(iVar2 + 0x28) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x28))((&DAT_8365bcd5)[iVar3],*(undefined4 *)(iVar2 + 0x20));
+    }
+  }
+  TaskManager_ClearTask(puVar4);
+LAB_824f0b14:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 824F0B20  LiveStorage_CS_DownloadSummaryData  (qcommon/com_storage_contentserver.cpp:2060)
 
-void LiveStorage_CS_DownloadSummaryData(void)
+void LiveStorage_CS_DownloadSummaryData(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar5;
+  int iVar4;
+  undefined8 *puVar6;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x80d,0,0xffffffff82000f98,0xffffffff8208a2b0);
+  }
+  if (DAT_8365dd54 == 0) {
+    MyAssertHandler(0xffffffff82089ba8,0x80e,0,0xffffffff82000f98,0xffffffff8208a318);
+  }
+  if ((iVar3 < 0) || (3 < iVar3)) {
+    MyAssertHandler(0xffffffff82089ba8,0x80f,0,0xffffffff82000f98,0xffffffff82089e98);
+  }
+  if ((*(uint *)(&DAT_8296c08c + iVar3 * 4) & 4) != 0) {
+    cVar5 = LiveStorage_CS_AllocatedAllMemory();
+    bVar2 = true;
+    if (cVar5 != '\0') goto LAB_824f0bf4;
+  }
+  bVar2 = false;
+LAB_824f0bf4:
+  if ((bVar2) && (DAT_8365dd54 != 0)) {
+    cVar5 = LiveStorage_CheckConnection(iVar3);
+    if (cVar5 != '\0') {
+      cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x1c,iVar3);
+      if (cVar5 != '\0') {
+        Com_Printf(0xe,0xffffffff8208a140,iVar3);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x1c);
+      if (iVar4 == 0) {
+        Com_Printf(0xe,0xffffffff8208a114);
+        __restgprlr_27(0);
+        return;
+      }
+      puVar6 = (undefined8 *)param_2;
+      iVar1 = iVar3 * 0x20 + DAT_8365dd54;
+      *(undefined8 *)(iVar3 * 0x20 + DAT_8365dd54) = *puVar6;
+      *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(puVar6 + 1);
+      *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)((int)puVar6 + 0xc);
+      *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(puVar6 + 2);
+      *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)((int)puVar6 + 0x14);
+      *(int *)(iVar4 + 0x98) = iVar1;
+      iVar3 = dwCSDownloadSummaryData(iVar4);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(iVar4);
+        Com_Printf(0xe,0xffffffff8208a2e0);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0xe,0xffffffff82089e58);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1161,8 +2357,57 @@ void LiveStorage_CS_DownloadSummaryData(void)
 void LiveStorage_CS_DownloadSummaryDataComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined *puVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar3 = iVar2 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar3;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82089ba8,0x848,0,0xffffffff82000f98,0xffffffff820851b0);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x1c) {
+    MyAssertHandler(0xffffffff82089ba8,0x849,0,0xffffffff82000f98,0xffffffff8208a330);
+  }
+  iVar2 = *(int *)(&DAT_8365bcd8 + iVar3);
+  uVar1 = dwCSDownloadSummaryComplete(puVar4,iVar2);
+  if ((int)uVar1 == 1) {
+    if (*(code **)(iVar2 + 0x14) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x14))((&DAT_8365bcd5)[iVar3]);
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_29(uVar1);
+      return;
+    }
+  }
+  else {
+    if ((int)uVar1 != 2) goto LAB_824f0e2c;
+    if (*(code **)(iVar2 + 0x18) != (code *)0x0) {
+      (**(code **)(iVar2 + 0x18))((&DAT_8365bcd5)[iVar3],*(undefined4 *)(iVar2 + 0x10));
+    }
+  }
+  TaskManager_ClearTask(puVar4);
+LAB_824f0e2c:
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 824F0E40  LiveStorage_CS_AddTag  (qcommon/com_storage_contentserver.cpp:2941)
+
+void LiveStorage_CS_AddTag
+               (undefined8 param_1,undefined8 param_2,int *param_3,int param_4,int param_5)
+
+{
+  if (*param_3 + 1 <= param_5) {
+    *(undefined8 *)(*param_3 * 0x18 + param_4 + 8) = param_1;
+    *(undefined8 *)(*param_3 * 0x18 + param_4 + 0x10) = param_2;
+    *param_3 = *param_3 + 1;
+    return;
+  }
+  Com_PrintError(0x10,0xffffffff8208a358);
+  return;
 }
 
 
@@ -1263,11 +2508,35 @@ undefined4 LiveStorage_CS_GetUploadingFileTotalSize(int param_1)
 
 // 824F10D8  LiveStorage_CS_GetUploadProgress  (qcommon/com_storage_contentserver.cpp:3025)
 
-void LiveStorage_CS_GetUploadProgress(void)
+void LiveStorage_CS_GetUploadProgress(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  cVar3 = LiveStorage_CS_IsAvailable();
+  if (cVar3 == '\0') {
+    Com_PrintError(0x10,0xffffffff8208a4c8);
+    *(undefined4 *)param_2 = 0;
+    *(undefined4 *)param_3 = 0;
+    __restgprlr_29();
+    return;
+  }
+  iVar2 = dwGetLogOnStatus(uVar1);
+  if (iVar2 == 2) {
+    cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x18,uVar1);
+    if (cVar3 != '\0') {
+      dwCSGetProgress(uVar1,param_2,param_3);
+      __restgprlr_29();
+      return;
+    }
+  }
+  *(undefined4 *)param_2 = 0;
+  *(undefined4 *)param_3 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1297,11 +2566,35 @@ undefined4 LiveStorage_CS_GetDownloadingFileTotalSize(undefined8 param_1)
 
 // 824F1238  LiveStorage_CS_GetDownloadProgress  (qcommon/com_storage_contentserver.cpp:3076)
 
-void LiveStorage_CS_GetDownloadProgress(void)
+void LiveStorage_CS_GetDownloadProgress(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  cVar3 = LiveStorage_CS_IsAvailable();
+  if (cVar3 == '\0') {
+    Com_PrintError(0x10,0xffffffff8208a588);
+    *(undefined4 *)param_2 = 0;
+    *(undefined4 *)param_3 = 0;
+    __restgprlr_29();
+    return;
+  }
+  iVar2 = dwGetLogOnStatus(uVar1);
+  if (iVar2 == 2) {
+    cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x16,uVar1);
+    if (cVar3 != '\0') {
+      dwCSGetProgress(uVar1,param_2,param_3);
+      __restgprlr_29();
+      return;
+    }
+  }
+  *(undefined4 *)param_2 = 0;
+  *(undefined4 *)param_3 = 0;
+  __restgprlr_29();
+  return;
 }
 
 

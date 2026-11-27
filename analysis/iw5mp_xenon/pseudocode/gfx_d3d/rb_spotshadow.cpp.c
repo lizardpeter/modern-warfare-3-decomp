@@ -2,11 +2,60 @@
 
 // 827AC100  R_DrawSpotShadowMapCallback  (gfx_d3d/rb_spotshadow.cpp:39)
 
-void R_DrawSpotShadowMapCallback(void)
+void R_DrawSpotShadowMapCallback(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int *piVar6;
+  ulonglong uVar7;
+  int iStack00000018;
+  int iStack0000001c;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  
+  piVar6 = (int *)__savegprlr_23();
+  iVar1 = *piVar6;
+  uVar2 = piVar6[1];
+  iVar3 = piVar6[2];
+  uVar4 = piVar6[3];
+  uVar7 = (ulonglong)uVar4;
+  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x1b8));
+  iStack0000001c = (int)param_2;
+  local_60 = 0;
+  local_5c = 0;
+  local_58 = *(undefined4 *)(iVar1 + 0x58);
+  iVar5 = *(int *)(iStack0000001c + 0xc0);
+  local_54 = *(undefined4 *)(iVar1 + 0x5c);
+  if (iVar5 == DAT_84616688) {
+    R_GPU_BeginTimer(uVar7 + 3);
+    if (iVar5 != DAT_84616688) {
+      MyAssertHandler(0xffffffff821d83d0,0x52,0,0xffffffff82000f98,0xffffffff821befd8);
+    }
+    R_ClearScreen(0,iVar5,0xb0,0xffffffff821cfd24);
+    R_GPU_EndTimer();
+    R_RunCommandBuffer(iVar3,uVar7 + 0x14,(ulonglong)uVar2 + 0x80,&local_60,0xffffffff821d83bc);
+  }
+  iStack00000018 = (int)((ulonglong)param_2 >> 0x20);
+  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
+    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  }
+  *(uint *)(iStack00000018 + 0x174c) = uVar4 + 0x14;
+  R_DrawSurfs_Unsorted(param_2,(ulonglong)uVar2);
+  R_EndDrawList(param_2);
+  if (iVar5 == DAT_84616688) {
+    R_GPU_BeginTimer(uVar7 + 3);
+    R_ResolveShadowmap(iStack0000001c,&local_60,*(undefined4 *)(iVar1 + 0x50),
+                       *(undefined4 *)(iVar1 + 0x54));
+    R_GPU_EndTimer();
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -60,11 +109,30 @@ void RB_SpotShadowMap(undefined8 param_1,longlong param_2,longlong param_3)
 
 // 827AC378  RB_SpotShadowMaps  (gfx_d3d/rb_spotshadow.cpp:237)
 
-void RB_SpotShadowMaps(void)
+void RB_SpotShadowMaps(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  undefined1 auStack_40 [64];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821d83d0,0xf5,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  uVar3 = 0;
+  if (*(int *)(iVar1 + 0x2800) != 0) {
+    lVar2 = param_2 + 0x30b8;
+    do {
+      R_InitDrawCallOutput(iVar1,auStack_40);
+      R_DrawSpotShadowMap(param_2,lVar2,uVar3,auStack_40);
+      uVar3 = uVar3 + 1;
+      lVar2 = lVar2 + 0x1f8;
+    } while ((uVar3 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0x2800));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -91,6 +159,71 @@ void RB_SetSpotShadowOverlayScaleAndBias(int param_1)
     DAT_8484d6cc = fVar1;
     R_DirtyCodeConstant(0xffffffff8484c7e0,0xe);
   }
+  return;
+}
+
+
+// 827AC4C8  RB_DrawSpotShadowOverlay  (gfx_d3d/rb_spotshadow.cpp:342)
+
+void RB_DrawSpotShadowOverlay(void)
+
+{
+  float fVar1;
+  uint uVar2;
+  uint uVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
+  __savegprlr_23();
+  __savefpr_23();
+  if (*(int *)(DAT_84821000 + 0x2800) != 0) {
+    DAT_8484db80 = 0x61;
+    dVar6 = 32.0;
+    dVar5 = 0.25;
+    uVar2 = (uint)LZCOUNT(*(int *)(DAT_84821000 + 0x29c8) + -0xc) >> 5;
+    if (uVar2 == 0) {
+      fVar1 = (float)((double)DAT_8461372c * 0.25);
+      dVar11 = dVar5;
+      DAT_8484db20 = DAT_84762184;
+    }
+    else {
+      fVar1 = (float)DAT_8461372c * 0.375;
+      dVar11 = 0.5;
+      DAT_8484db20 = DAT_84762170;
+    }
+    dVar12 = (double)fVar1;
+    uVar3 = 0;
+    if (*(int *)(DAT_84821000 + 0x2800) != 0) {
+      dVar7 = 2.0;
+      uVar8 = 0x3ff0000000000000;
+      uVar9 = 0;
+      dVar10 = dVar6;
+      do {
+        if ((uVar2 != 0) && (uVar3 == 2)) {
+          DAT_8484db20 = DAT_84762184;
+          dVar12 = (double)(float)((double)DAT_8461372c * dVar5);
+          dVar11 = dVar5;
+        }
+        dVar4 = (double)(float)((double)uVar3 * dVar11);
+        RB_SetSpotShadowOverlayScaleAndBias(uVar3 * 0x1d0 + DAT_84821000 + 0x2810);
+        RB_DrawStretchPic(dVar10,dVar6,dVar12,dVar12,uVar9,dVar4,uVar8,
+                          (double)(float)(dVar4 + dVar11),DAT_8461654c);
+        RB_EndTessSurface();
+        uVar3 = uVar3 + 1;
+        dVar10 = (double)(float)((double)(float)(dVar12 + dVar10) + dVar7);
+      } while (uVar3 < *(uint *)(DAT_84821000 + 0x2800));
+    }
+    DAT_8484db80 = 0x62;
+  }
+  __restfpr_23();
+  __restgprlr_23();
   return;
 }
 

@@ -68,8 +68,19 @@ ulonglong R_DpvsCellStaticPending(void)
 void R_EndFencePending(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_29();
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821d40c0,0x147,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  iVar1 = DAT_84628b00;
+  if (*(int *)(DAT_84628b00 + 0x1574) == 0) {
+    MyAssertHandler(0xffffffff821c4078,0xf,0,0xffffffff82000f98,0xffffffff821c40bc);
+  }
+  D3DDevice_IsFencePending(*(undefined4 *)(iVar1 + 0x1574));
+  __restgprlr_29();
+  return;
 }
 
 
@@ -132,7 +143,6 @@ ulonglong R_RunPhysicsNeedsToWait(uint *param_1)
   }
   else {
     if (uVar1 != 4) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d40c0,0x17b,0,0xffffffff821d4104,0xffffffff821d411c);
     }
     uVar2 = (ulonglong)DAT_8480868c;
@@ -149,7 +159,6 @@ bool R_DrawCmdPending(int *param_1)
   int iVar1;
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x189,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
   if (*param_1 == DAT_846178a8) {
@@ -166,7 +175,6 @@ void R_ExecWaterFailed(void)
 
 {
   if (DAT_847eed80 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x199,0,0xffffffff821d3e84,0xffffffff821d3e9c,DAT_847eed80);
   }
   DAT_847eed80 = 0;
@@ -253,8 +261,48 @@ undefined8 R_GenerateGlassVertsNeedsToWait(void)
 void DB_StreamTabulatePending(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar2;
+  uint uVar3;
+  int iVar4;
+  DWORD DVar5;
+  char cVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar4 = __savegprlr_29();
+  DVar5 = GetCurrentProcessorNumber();
+  if (DVar5 == 4) {
+    MyAssertHandler(0xffffffff821d40c0,0x1dc,0,0xffffffff82000f98,0xffffffff821d4148);
+  }
+  cVar6 = Sys_IsMainThread();
+  if ((((cVar6 == '\0') || (*(char *)(DAT_845aa6d0 + 0xc) == '\0')) &&
+      (cVar6 = Sys_IsRenderThread(), cVar6 == '\0')) && (DAT_84808510 < 1)) {
+    if (*(int *)(iVar4 + 4) == 0) {
+      MyAssertHandler(0xffffffff821d40c0,0x1e6,0,0xffffffff82000f98,0xffffffff821d4138);
+    }
+    puVar2 = *(uint **)(iVar4 + 4);
+    do {
+      uVar1 = *puVar2;
+      if (uVar1 != 0) {
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)uVar1,0,ZEXT48(puVar2));
+          *puVar2 = uVar3;
+        }
+        __restgprlr_29((ulonglong)uVar1 != 0);
+        return;
+      }
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed(1,0,ZEXT48(puVar2));
+        *puVar2 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -322,11 +370,10 @@ ulonglong R_GenerateDrawSurfsPending(uint *param_1)
     iVar4 = DAT_8480830c;
     iVar5 = DAT_8480828c;
     if (2 < uVar1) {
-      if (uVar1 == 3) {
-        return (-(ulonglong)DAT_8480850c & ~(ulonglong)DAT_8480850c & 0xffffffff) >> 0x1f;
+      if (uVar1 != 3) {
+        MyAssertHandler(0xffffffff821d40c0,0x21c,0,0xffffffff821cdc78,0xffffffff821cdc98);
       }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821d40c0,0x21c,0,0xffffffff821cdc78,0xffffffff821cdc98);
+      return (-(ulonglong)DAT_8480850c & ~(ulonglong)DAT_8480850c & 0xffffffff) >> 0x1f;
     }
   }
   if ((((iVar5 < 1) && (iVar4 < 1)) && (iVar3 < 1)) && ((iVar2 < 1 && (iVar6 < 1)))) {
@@ -386,28 +433,180 @@ void R_InitWorkerCmdsPos(void)
   
   __savegprlr_24();
   puVar2 = &DAT_84807788;
-  while( true ) {
+  do {
     puVar2[-2] = 0;
     puVar2[-1] = puVar2[5];
     *puVar2 = 0;
     puVar2[1] = 0;
     puVar2[2] = 0;
     if (puVar2[3] == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d40c0,0x2f4,0,0xffffffff82000f98,0xffffffff821d41e8);
     }
     uVar1 = puVar2[3];
     trapWord(6,(ulonglong)uVar1,0);
     puVar2[6] = (uint)puVar2[5] / uVar1;
-    if (0x140 < (ulonglong)uVar1) break;
-    puVar2 = puVar2 + 0x20;
-    if (-0x7b7f7779 < (int)puVar2) {
-      __restgprlr_24();
-      return;
+    if (0x140 < (ulonglong)uVar1) {
+      MyAssertHandler(0xffffffff821d40c0,0x2f6,0,0xffffffff821d4220,0xffffffff821d4200);
     }
+    puVar2 = puVar2 + 0x20;
+  } while ((int)puVar2 < -0x7b7f7778);
+  __restgprlr_24();
+  return;
+}
+
+
+// 8278A910  R_InitWorkerCmds  (gfx_d3d/r_workercmds.cpp:764)
+
+void R_InitWorkerCmds(void)
+
+{
+  __savegprlr_24();
+  DAT_84808798 = &DAT_8480a888;
+  DAT_84807998 = &DAT_847fcec0;
+  DAT_84808818 = &DAT_847fc280;
+  DAT_84807a18 = &DAT_84817bd8;
+  DAT_84807e98 = &DAT_847fc2c0;
+  DAT_84807898 = &DAT_8481f610;
+  DAT_8480879c = 0x3a8;
+  DAT_84807818 = &DAT_84814b80;
+  DAT_84808794 = 0xc;
+  DAT_84808814 = 4;
+  DAT_8480881c = 0x40;
+  DAT_8480871c = 0x54;
+  DAT_84807a1c = 0x400;
+  DAT_84808714 = 0x54;
+  DAT_84807a14 = 4;
+  DAT_84807e94 = 0xc;
+  DAT_84808718 = &DAT_84817b80;
+  DAT_84807e9c = 0xc00;
+  DAT_8480791c = 0x1800;
+  DAT_8480789c = 0x1800;
+  DAT_84807918 = &DAT_84816380;
+  DAT_84807914 = 0xc;
+  DAT_84807894 = 0xc;
+  DAT_84807814 = 0xc;
+  DAT_84808298 = &DAT_84809080;
+  DAT_8480781c = 0x1800;
+  DAT_84807c18 = &DAT_84820e50;
+  DAT_8480829c = 0x1800;
+  DAT_84808294 = 0x18;
+  DAT_84807c98 = &DAT_84820f38;
+  DAT_8480799c = 0x8000;
+  DAT_84807d98 = &DAT_84820e10;
+  DAT_84807994 = 0x10;
+  DAT_84807c1c = 0x24;
+  DAT_84807c9c = 0x40;
+  DAT_84807c14 = 0x24;
+  DAT_84807c94 = 0x40;
+  DAT_84807d94 = 0x40;
+  DAT_84807d9c = 0x40;
+  DAT_84807e1c = 0xc0;
+  DAT_84807d1c = 4;
+  DAT_84807e14 = 0x20;
+  DAT_8480779c = 0x100;
+  DAT_84808514 = 0x48;
+  DAT_84807e18 = &DAT_84820e78;
+  DAT_84807794 = 0x10;
+  DAT_8480839c = 0x40;
+  DAT_84808098 = &DAT_8480ac7c;
+  DAT_84807d14 = 4;
+  DAT_84807d18 = &DAT_8480ac78;
+  DAT_84807798 = &DAT_84814a80;
+  DAT_8480851c = 0x90;
+  DAT_84808394 = 0x40;
+  DAT_84808198 = &DAT_8480ac34;
+  DAT_8480819c = 0x30;
+  DAT_8480841c = 0x90;
+  DAT_84808518 = &DAT_8481a880;
+  DAT_84808414 = 0x48;
+  DAT_84808398 = &DAT_84807738;
+  DAT_84808418 = &DAT_8481f580;
+  DAT_84807f98 = &DAT_8480ac30;
+  DAT_84807f9c = 4;
+  DAT_84807f94 = 4;
+  DAT_84808194 = 0x30;
+  DAT_8480821c = 0x80;
+  DAT_84808214 = 0x20;
+  DAT_8480809c = 4;
+  DAT_84808094 = 4;
+  DAT_84808218 = &DAT_8481a800;
+  DAT_84807f14 = 4;
+  DAT_84807f1c = 4;
+  DAT_84808018 = &DAT_8480a884;
+  DAT_8480801c = 4;
+  DAT_84808014 = 4;
+  DAT_84807a98 = &DAT_84808880;
+  DAT_84807a9c = 0x800;
+  DAT_84807f18 = &DAT_8480ac74;
+  DAT_84807a94 = 8;
+  DAT_8480811c = 0x9000;
+  DAT_84808114 = 0x24;
+  DAT_84807b18 = &DAT_847f9a80;
+  DAT_84807b1c = 0x2800;
+  DAT_84807b14 = 0x140;
+  DAT_84807b9c = 0x2800;
+  DAT_84807b94 = 0x140;
+  DAT_84808118 = &DAT_8480ba80;
+  DAT_84807b98 = &DAT_84804ec0;
+  DAT_84808618 = &DAT_84818000;
+  DAT_8480861c = 0x2800;
+  DAT_84808614 = 0x14;
+  DAT_84808598 = &DAT_8481a980;
+  DAT_8480859c = 0x4c00;
+  DAT_84808594 = 0x4c;
+  DAT_84808698 = &DAT_8480ac80;
+  DAT_8480869c = 0xe00;
+  DAT_84808694 = 0x38;
+  DAT_84808498 = &DAT_848076c0;
+  DAT_8480849c = 0x78;
+  DAT_84808494 = 0x3c;
+  DAT_84808318 = &DAT_8480ac64;
+  DAT_8480831c = 0x10;
+  DAT_84808314 = 0x10;
+  R_InitWorkerCmdsPos();
+  __restgprlr_24();
+  return;
+}
+
+
+// 8278AC80  R_NotifyWorkerCmdType  (gfx_d3d/r_workercmds.cpp:937)
+
+void R_NotifyWorkerCmdType(undefined8 param_1)
+
+{
+  uint uVar1;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar1 = DAT_84807778;
+  if ((int)param_1 < (int)DAT_84807778) {
+    do {
+      if (DAT_84807778 != uVar1) {
+        if (in_RESERVE != '\0') {
+          DAT_84807778 = storeWordConditionalIndexed((ulonglong)DAT_84807778,0,0xffffffff84807778);
+        }
+        break;
+      }
+      if (in_RESERVE != '\0') {
+        DAT_84807778 = storeWordConditionalIndexed(param_1,0,0xffffffff84807778);
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821d40c0,0x2f6,0,0xffffffff821d4220,0xffffffff821d4200);
+  if (DAT_8480a880 != 0) {
+    Sys_SetWorkerCmdEvent();
+    return;
+  }
+  return;
+}
+
+
+// 8278ACD8  R_ShouldGenerateFxVerts  (gfx_d3d/r_workercmds.cpp:952)
+
+undefined8 R_ShouldGenerateFxVerts(void)
+
+{
+  return 1;
 }
 
 
@@ -541,7 +740,6 @@ void R_ProcessWorkerCmdInternal(undefined8 param_1,undefined4 *param_2)
     break;
   default:
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d40c0,0x47e,0,0xffffffff8202e374);
     }
   }
@@ -551,11 +749,228 @@ void R_ProcessWorkerCmdInternal(undefined8 param_1,undefined4 *param_2)
 
 // 8278AFC8  R_ProcessWorkerCmd  (gfx_d3d/r_workercmds.cpp:1162)
 
-void R_ProcessWorkerCmd(void)
+void R_ProcessWorkerCmd(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  bool bVar1;
+  uint uVar2;
+  uint _Size;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  int iVar8;
+  void *pvVar9;
+  uint *puVar10;
+  longlong lVar11;
+  longlong lVar12;
+  uint *puVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  char in_RESERVE;
+  byte bVar20;
+  undefined1 auStack_d10 [3344];
+  
+  uVar7 = __savegprlr_16();
+  lVar11 = (uVar7 & 0x1ffffff) * 0x80;
+  lVar19 = lVar11 + -0x7b7f8880;
+  puVar10 = (uint *)lVar19;
+  uVar2 = puVar10[7];
+  _Size = puVar10[5];
+  uVar17 = (ulonglong)_Size;
+  uVar3 = puVar10[8];
+  trapWord(6,uVar17,0);
+  bVar1 = (ulonglong)uVar2 == (longlong)((int)uVar2 / (int)_Size) * (longlong)(int)_Size;
+  bVar20 = bVar1 << 1;
+  trapWord(5,uVar17 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+           0xffff);
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821d40c0,0x49e,0,0xffffffff82000f98,0xffffffff821d4284);
+  }
+  lVar12 = lVar11 + -0x7b7f8870;
+  uVar14 = 1;
+  while( true ) {
+    do {
+      puVar13 = (uint *)lVar12;
+      uVar2 = *puVar13;
+      if (in_RESERVE != '\0') {
+        uVar4 = storeWordConditionalIndexed((ulonglong)uVar2 - 1,0,lVar12);
+        *puVar13 = uVar4;
+        bVar20 = 2;
+      }
+    } while (!(bool)(bVar20 >> 1 & 1));
+    if (0 < (int)uVar2) break;
+    do {
+      uVar2 = *puVar13;
+      if (in_RESERVE != '\0') {
+        uVar4 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar12);
+        *puVar13 = uVar4;
+        bVar20 = 2;
+      }
+    } while (!(bool)(bVar20 >> 1 & 1));
+    if ((int)uVar2 < 0) {
+      __restgprlr_16(0);
+      return;
+    }
+  }
+  iVar6 = (int)((uVar7 & 0x3fffffff) << 2);
+  if (*(int *)((int)&PTR_R_RunPhysicsNeedsToWait_829a3140 + iVar6) == 0) {
+    if (*(int *)(&DAT_829a31c8 + iVar6) != 0) {
+      MyAssertHandler(0xffffffff821d40c0,0x4d7,0,0xffffffff82000f98,0xffffffff821d4248);
+    }
+    if ((param_2 != 0) && (8 < (int)*puVar13)) {
+      do {
+        uVar2 = *puVar13;
+        if (in_RESERVE != '\0') {
+          uVar4 = storeWordConditionalIndexed((ulonglong)uVar2 - 9,0,lVar12);
+          *puVar13 = uVar4;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+      if ((int)uVar2 < 9) {
+        uVar18 = (ulonglong)(uVar2 >> 0x1f) - 1 & (ulonglong)uVar2;
+        uVar14 = uVar18 + 1;
+        do {
+          if (in_RESERVE != '\0') {
+            uVar2 = storeWordConditionalIndexed((9 - uVar18) + (ulonglong)*puVar13,0,lVar12);
+            *puVar13 = uVar2;
+            bVar20 = 2;
+          }
+        } while (!(bool)(bVar20 >> 1 & 1));
+      }
+      else {
+        uVar14 = 10;
+      }
+    }
+    sync(1);
+    do {
+      uVar2 = *puVar10;
+      uVar16 = (ulonglong)uVar2;
+      uVar18 = uVar3 - uVar16;
+      if ((uVar14 & 0xffffffff) < (uVar18 & 0xffffffff)) {
+        lVar12 = uVar14 + uVar16;
+        uVar18 = uVar14;
+      }
+      else {
+        lVar12 = uVar14 - uVar18;
+        memcpy(auStack_d10 + (int)uVar18 * _Size,(void *)puVar10[6],(int)lVar12 * _Size);
+      }
+      memcpy(auStack_d10,(void *)(uVar2 * _Size + puVar10[6]),(int)uVar18 * _Size);
+      sync(1);
+      do {
+        uVar4 = *puVar10;
+        if (uVar4 != uVar2) {
+          if (in_RESERVE != '\0') {
+            uVar2 = storeWordConditionalIndexed((ulonglong)uVar4,0,lVar19);
+            *puVar10 = uVar2;
+            bVar20 = 2;
+          }
+          break;
+        }
+        if (in_RESERVE != '\0') {
+          uVar5 = storeWordConditionalIndexed(lVar12,0,lVar19);
+          *puVar10 = uVar5;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+    } while (uVar4 != uVar16);
+    PIXBeginNamedEvent_Copy_VarArgs
+              (0xffffffffffffffff,0xffffffff821d4240,
+               *(undefined4 *)((int)&PTR_s_physics_829a3090 + iVar6),uVar14);
+    if ((uVar14 & 0xffffffff) != 0) {
+      lVar19 = ZEXT48(&stack0x00000000) - 0xd10;
+      uVar18 = uVar14;
+      do {
+        R_ProcessWorkerCmdInternal(uVar7,lVar19);
+        uVar18 = uVar18 - 1;
+        bVar20 = (uVar18 == 0) << 1;
+        lVar19 = lVar19 + uVar17;
+      } while (uVar18 != 0);
+    }
+    sync(1);
+    do {
+      puVar10 = (uint *)(lVar11 + -0x7b7f8874);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed(*puVar10 - uVar14,0,lVar11 + -0x7b7f8874);
+        *puVar10 = uVar2;
+        bVar20 = 2;
+      }
+    } while (!(bool)(bVar20 >> 1 & 1));
+LAB_8278b3e4:
+    if (DAT_8480a880 != 0) {
+      Sys_SetWorkerCmdEvent();
+    }
+    PIXEndNamedEvent();
+    __restgprlr_16(1);
+    return;
+  }
+  sync(1);
+  uVar2 = *puVar10;
+  lVar15 = (longlong)(int)uVar2 * (longlong)(int)_Size + (ulonglong)puVar10[6];
+  iVar8 = (**(code **)((int)&PTR_R_RunPhysicsNeedsToWait_829a3140 + iVar6))(lVar15);
+  do {
+    if (iVar8 != 0) {
+      do {
+        if (in_RESERVE != '\0') {
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar12);
+          *puVar13 = uVar2;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+      __restgprlr_16(0);
+      return;
+    }
+    pvVar9 = memcpy(auStack_d10,(void *)lVar15,_Size);
+    sync(1);
+    uVar17 = (ulonglong)uVar2 + 1;
+    do {
+      uVar4 = *puVar10;
+      if (uVar4 != uVar2) {
+        if (in_RESERVE != '\0') {
+          uVar5 = storeWordConditionalIndexed((ulonglong)uVar4,0,lVar19);
+          *puVar10 = uVar5;
+          bVar20 = 2;
+        }
+        break;
+      }
+      if (in_RESERVE != '\0') {
+        uVar5 = storeWordConditionalIndexed(-(ulonglong)(uVar3 != uVar17) & uVar17,0,lVar19);
+        *puVar10 = uVar5;
+        bVar20 = 2;
+      }
+    } while (!(bool)(bVar20 >> 1 & 1));
+    if ((ulonglong)uVar4 == (ulonglong)uVar2) {
+      PIXBeginNamedEvent_Copy_VarArgs
+                (0xffffffffffffffff,0xffffffff82000f98,
+                 *(undefined4 *)((int)&PTR_s_physics_829a3090 + iVar6));
+      R_ProcessWorkerCmdInternal(uVar7,ZEXT48(&stack0x00000000) - 0xd10);
+      sync(1);
+      do {
+        puVar10 = (uint *)(lVar11 + -0x7b7f8874);
+        if (in_RESERVE != '\0') {
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 - 1,0,lVar11 + -0x7b7f8874);
+          *puVar10 = uVar2;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+      goto LAB_8278b3e4;
+    }
+    if ((int)uVar7 == 0x1f) {
+      pvVar9 = (void *)MyAssertHandler(0xffffffff821d40c0,0x4c2,0,0xffffffff82000f98,
+                                       0xffffffff821d4260);
+    }
+    if (*(code **)(&DAT_829a31c8 + iVar6) != (code *)0x0) {
+      (**(code **)(&DAT_829a31c8 + iVar6))(pvVar9);
+    }
+    uVar2 = *puVar10;
+    lVar15 = (longlong)(int)uVar2 * (longlong)(int)_Size + (ulonglong)puVar10[6];
+    iVar8 = (**(code **)((int)&PTR_R_RunPhysicsNeedsToWait_829a3140 + iVar6))(lVar15);
+  } while( true );
 }
 
 
@@ -580,11 +995,10 @@ void R_WaitWorkerCmdsOfType(ulonglong param_1)
   byte in_cr0;
   
   cVar2 = Sys_IsMainThread();
-  uVar1 = DAT_84807778;
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x51b,0,0xffffffff82000f98,0xffffffff82010b48);
   }
+  uVar1 = DAT_84807778;
   if (*(int *)((int)&DAT_8480778c + (int)((param_1 & 0xffffffff) << 7)) < 1) {
     sync(1);
   }
@@ -632,12 +1046,11 @@ void R_WaitWorkerCmdsOnlyOfType(void)
   byte in_cr0;
   
   uVar3 = __savegprlr_25();
-  uVar2 = DAT_84807778;
   iVar4 = (int)((uVar3 & 0xffffffff) << 2);
   if (*(int *)((int)&PTR_R_RunPhysicsNeedsToWait_829a3140 + iVar4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x535,0,0xffffffff82000f98,0xffffffff821d42c8);
   }
+  uVar2 = DAT_84807778;
   iVar1 = (int)((uVar3 & 0x1ffffff) << 7);
   if (0 < *(int *)((int)&DAT_8480778c + iVar1)) {
     if ((int)uVar3 < (int)DAT_84807778) {
@@ -729,11 +1142,10 @@ void RB_WaitWorkerCmdsOfType(ulonglong param_1)
   byte in_cr0;
   
   cVar2 = Sys_IsRenderThread();
-  uVar1 = DAT_84807778;
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x568,0,0xffffffff82000f98,0xffffffff82181f3c);
   }
+  uVar1 = DAT_84807778;
   DAT_829a308c = (int)param_1;
   if (*(int *)((int)&DAT_8480778c + (int)((param_1 & 0xffffffff) << 7)) < 1) {
     sync(1);
@@ -789,6 +1201,111 @@ void R_WaitDrawWorkerCmdsOfType(int param_1,int param_2)
   *(int *)(*in_r13 + 0x114) = param_2 * 0x10 + param_1 + 0x1688;
   R_ProcessWorkerCmdsWithTimeout(0xffffffff8278b618,1);
   return;
+}
+
+
+// 8278B638  R_ProcessWorkerCmds  (gfx_d3d/r_workercmds.cpp:1428)
+
+void R_ProcessWorkerCmds(void)
+
+{
+  bool bVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  int *piVar6;
+  uint uVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar3 = __savegprlr_24();
+  bVar2 = true;
+LAB_8278b65c:
+  do {
+    uVar5 = DAT_829a3088;
+    bVar1 = false;
+    if ((-1 < (int)DAT_829a3088) && (0 < (int)(&DAT_84807790)[DAT_829a3088 * 0x20])) {
+      while( true ) {
+        if (iVar3 == 2) {
+          Sys_CheckPauseWorkerCmd();
+        }
+        iVar4 = R_ProcessWorkerCmd(uVar5,1);
+        if (iVar4 == 0) break;
+        bVar1 = true;
+      }
+      if (bVar1) {
+        do {
+          if (DAT_84807778 != uVar5) goto LAB_8278b7bc;
+          if (in_RESERVE != '\0') {
+            DAT_84807778 = storeWordConditionalIndexed(0x7fffffff,0,0xffffffff84807778);
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        goto LAB_8278b65c;
+      }
+    }
+    bVar1 = false;
+    uVar5 = -(uint)(DAT_84807778 != 0x7fffffff) & DAT_84807778;
+    if ((int)uVar5 < 0x22) {
+      piVar6 = &DAT_84807790 + uVar5 * 0x20;
+      uVar7 = uVar5;
+      do {
+        if (0 < *piVar6) {
+          while( true ) {
+            if (iVar3 == 2) {
+              Sys_CheckPauseWorkerCmd();
+            }
+            iVar4 = R_ProcessWorkerCmd(uVar7,1);
+            if (iVar4 == 0) break;
+            if ((int)DAT_84807778 < (int)uVar7) goto LAB_8278b65c;
+            bVar1 = true;
+          }
+          if (bVar1) goto LAB_8278b7cc;
+        }
+        do {
+          if (DAT_84807778 != uVar7) {
+            if (in_RESERVE != '\0') {
+              DAT_84807778 = storeWordConditionalIndexed
+                                       ((ulonglong)DAT_84807778,0,0xffffffff84807778);
+              in_cr0 = 2;
+            }
+            break;
+          }
+          if (in_RESERVE != '\0') {
+            DAT_84807778 = storeWordConditionalIndexed(0x7fffffff,0,0xffffffff84807778);
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        piVar6 = piVar6 + 0x20;
+        uVar7 = uVar7 + 1;
+      } while ((int)piVar6 < -0x7b7f7770);
+    }
+    if (uVar5 == 0) {
+      if (!bVar2) {
+        __restgprlr_24();
+        return;
+      }
+      Sys_ResetWorkerCmdEvent();
+      bVar2 = false;
+    }
+  } while( true );
+  while( true ) {
+    if (in_RESERVE != '\0') {
+      DAT_84807778 = storeWordConditionalIndexed(0x7fffffff,0,0xffffffff84807778);
+      in_cr0 = 2;
+    }
+    if ((bool)(in_cr0 >> 1 & 1)) break;
+LAB_8278b7cc:
+    if (DAT_84807778 != uVar7) goto LAB_8278b7bc;
+  }
+  goto LAB_8278b65c;
+LAB_8278b7bc:
+  if (in_RESERVE != '\0') {
+    DAT_84807778 = storeWordConditionalIndexed((ulonglong)DAT_84807778,0,0xffffffff84807778);
+    in_cr0 = 2;
+  }
+  goto LAB_8278b65c;
 }
 
 
@@ -1117,8 +1634,47 @@ LAB_8278bdc0:
 void R_WorkerThread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar1 = __savegprlr_28();
+  Sys_GetValue(2);
+  iVar2 = setjmp();
+  if (iVar2 != 0) {
+    Com_ErrorAbort();
+  }
+  Profile_Guard(1);
+  do {
+    if (iVar1 == 2) {
+      Sys_UnblockDatabaseThread();
+    }
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_8480a880 = storeWordConditionalIndexed((ulonglong)DAT_8480a880 + 1,0,0xffffffff8480a880)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d42e0);
+    iVar2 = Sys_WaitForWorkerCmd();
+    if (iVar2 != 0) {
+      Sys_Sleep(0);
+    }
+    PIXEndNamedEvent();
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_8480a880 = storeWordConditionalIndexed((ulonglong)DAT_8480a880 - 1,0,0xffffffff8480a880)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (iVar1 == 2) {
+      Sys_BlockDatabaseThread();
+    }
+    R_ProcessWorkerCmds(iVar1);
+  } while( true );
 }
 
 
@@ -1127,18 +1683,211 @@ void R_WorkerThread(void)
 void R_LightWeightWorkerThread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  DWORD DVar1;
+  int iVar2;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  DVar1 = GetCurrentProcessorNumber();
+  if (DVar1 != 4) {
+    MyAssertHandler(0xffffffff821d40c0,0x6c6,0,0xffffffff82000f98,0xffffffff821d42ec);
+  }
+  Sys_GetValue(2);
+  iVar2 = setjmp();
+  if (iVar2 != 0) {
+    Com_ErrorAbort();
+  }
+  Profile_Guard(1);
+  do {
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_8480a880 = storeWordConditionalIndexed((ulonglong)DAT_8480a880 + 1,0,0xffffffff8480a880)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d42e0);
+    Sys_WaitForWorkerCmd();
+    PIXEndNamedEvent();
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_8480a880 = storeWordConditionalIndexed((ulonglong)DAT_8480a880 - 1,0,0xffffffff8480a880)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    R_ProcessLightWeightWorkerCmds();
+  } while( true );
+}
+
+
+// 8278C020  R_InitWorkerThreads  (gfx_d3d/r_workercmds.cpp:1759)
+
+void R_InitWorkerThreads(void)
+
+{
+  char cVar2;
+  undefined8 uVar1;
+  ulonglong uVar3;
+  
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821d40c0,0x6e3,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  R_InitWorkerCmds();
+  uVar3 = 0;
+  do {
+    if ((uVar3 & 0xffffffff) == 2) {
+      uVar1 = 0xffffffff8278bf50;
+    }
+    else {
+      uVar1 = 0xffffffff8278be80;
+    }
+    cVar2 = Sys_SpawnWorkerThread(uVar1,uVar3);
+    if (cVar2 == '\0') {
+      Com_Error(0,0xffffffff821d4324);
+    }
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 0xffffffff) < 3);
+  return;
 }
 
 
 // 8278C0D8  R_AddWorkerCmd  (gfx_d3d/r_workercmds.cpp:1791)
 
-void R_AddWorkerCmd(void)
+void R_AddWorkerCmd(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  code *pcVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  int iVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  uint *puVar18;
+  longlong lVar17;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte bVar19;
+  
+  uVar10 = __savegprlr_17();
+  lVar13 = (uVar10 & 0x1ffffff) * 0x80;
+  iVar9 = (int)lVar13;
+  uVar3 = *(uint *)((int)&DAT_84807794 + iVar9);
+  uVar14 = (ulonglong)uVar3;
+  if (uVar3 == 0) {
+    MyAssertHandler(0xffffffff821d40c0,0x70b,0,0xffffffff82000f98,0xffffffff821d4398);
+  }
+  uVar4 = *(uint *)((int)&DAT_8480779c + iVar9);
+  uVar15 = (ulonglong)uVar4;
+  trapWord(6,uVar14,0);
+  iVar5 = *(int *)((int)&DAT_848077a0 + iVar9);
+  bVar1 = uVar15 == (longlong)((int)uVar4 / (int)uVar3) * (longlong)(int)uVar3;
+  bVar19 = bVar1 << 1;
+  trapWord(5,uVar14 & ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1),
+           0xffff);
+  if (!bVar1) {
+    MyAssertHandler(0xffffffff821d40c0,0x70f,0,0xffffffff82000f98,0xffffffff821d4380);
+  }
+  lVar16 = lVar13 + -0x7b7f8874;
+  do {
+    puVar18 = (uint *)lVar16;
+    uVar2 = *puVar18;
+    if (in_RESERVE != '\0') {
+      uVar7 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar16);
+      *puVar18 = uVar7;
+      bVar19 = 2;
+    }
+  } while (!(bool)(bVar19 >> 1 & 1));
+  if (iVar5 <= (int)uVar2) {
+    iVar8 = (int)((uVar10 & 0xffffffff) << 2);
+    do {
+      R_WarnOncePerFrame(0x36,*(undefined4 *)((int)&PTR_s_physics_829a3090 + iVar8));
+      do {
+        if (in_RESERVE != '\0') {
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar18 - 1,0,lVar16);
+          *puVar18 = uVar2;
+          bVar19 = 2;
+        }
+      } while (!(bool)(bVar19 >> 1 & 1));
+      if ((int)uVar10 == 0x20) {
+        MyAssertHandler(0xffffffff821d40c0,0x72f,0,0xffffffff82000f98,0xffffffff821d4360);
+      }
+      pcVar6 = *(code **)((int)&PTR_R_RunPhysicsNeedsToWait_829a3140 + iVar8);
+      if ((pcVar6 == (code *)0x0) || (iVar11 = (*pcVar6)(param_2), iVar11 == 0)) {
+        R_ProcessWorkerCmdInternal(uVar10,param_2);
+        __restgprlr_17();
+        return;
+      }
+      Sys_Sleep(1);
+      do {
+        uVar2 = *puVar18;
+        if (in_RESERVE != '\0') {
+          uVar7 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar16);
+          *puVar18 = uVar7;
+          bVar19 = 2;
+        }
+      } while (!(bool)(bVar19 >> 1 & 1));
+    } while (iVar5 <= (int)uVar2);
+  }
+  lVar16 = lVar13 + -0x7b7f887c;
+  do {
+    puVar18 = (uint *)lVar16;
+    uVar2 = *puVar18;
+    if (in_RESERVE != '\0') {
+      uVar7 = storeWordConditionalIndexed(uVar14 + uVar2,0,lVar16);
+      *puVar18 = uVar7;
+      bVar19 = 2;
+    }
+  } while (!(bool)(bVar19 >> 1 & 1));
+  trapWord(6,uVar15,0);
+  lVar17 = (ulonglong)uVar2 - (longlong)((int)uVar2 / (int)uVar4) * (longlong)(int)uVar4;
+  bVar19 = (lVar17 == 0) << 1;
+  trapWord(5,uVar15 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+           0xffff);
+  if (lVar17 < 0) {
+    MyAssertHandler(0xffffffff821d40c0,0x717,0,0xffffffff821d433c,0xffffffff821d4350,lVar17,in_MSR);
+  }
+  if ((int)lVar17 == 0) {
+    do {
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed(*puVar18 - uVar15,0,lVar16);
+        *puVar18 = uVar2;
+        bVar19 = 2;
+      }
+    } while (!(bool)(bVar19 >> 1 & 1));
+  }
+  memcpy((void *)(*(int *)((int)&DAT_84807798 + iVar9) + (int)lVar17),(void *)param_2,uVar3);
+  sync(1);
+  uVar14 = lVar17 + uVar14;
+  uVar12 = uVar15 & ~(((uVar14 & 0x7fffffff) << 1 | (uVar14 & 0xffffffff) >> 0x1f) - 1);
+  trapWord(6,uVar15,0);
+  trapWord(5,uVar12,0xffff);
+  Sys_WaitInterlockedCompareExchange
+            (lVar13 + -0x7b7f8878,
+             uVar14 - (longlong)((int)uVar14 / (int)uVar4) * (longlong)(int)uVar4,lVar17,uVar12);
+  do {
+    puVar18 = (uint *)(lVar13 + -0x7b7f8870);
+    if (in_RESERVE != '\0') {
+      uVar3 = storeWordConditionalIndexed((ulonglong)*puVar18 + 1,0,lVar13 + -0x7b7f8870);
+      *puVar18 = uVar3;
+      bVar19 = 2;
+    }
+  } while (!(bool)(bVar19 >> 1 & 1));
+  R_NotifyWorkerCmdType(uVar10);
+  __restgprlr_17();
+  return;
 }
 
 
@@ -1155,11 +1904,10 @@ undefined8 R_FinishedFrontendWorkerCmds(void)
   byte in_cr0;
   
   cVar2 = Sys_IsMainThread();
-  uVar1 = DAT_84807778;
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x754,0,0xffffffff82000f98,0xffffffff82010b48);
   }
+  uVar1 = DAT_84807778;
   lVar3 = 1;
   piVar4 = &DAT_8480780c;
   while (*piVar4 < 1) {
@@ -1204,11 +1952,10 @@ undefined8 R_FinishedWorkerCmds(void)
   byte in_cr0;
   
   cVar2 = Sys_IsMainThread();
-  uVar1 = DAT_84807778;
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x76a,0,0xffffffff82000f98,0xffffffff82010b48);
   }
+  uVar1 = DAT_84807778;
   lVar3 = 0;
   piVar4 = &DAT_8480778c;
   while (*piVar4 < 1) {
@@ -1266,8 +2013,54 @@ undefined8 R_ActiveWorkerThreadsModified(void)
 void R_UpdateActiveWorkerThreads(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  char cVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  int *piVar7;
+  
   __savegprlr_29();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821d40c0,0x793,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  uVar4 = 0;
+  piVar7 = &DAT_845aa648;
+  piVar3 = piVar7;
+  do {
+    if (*(char *)(*piVar3 + 0xb) != '\0') {
+      bVar1 = true;
+      goto LAB_8278c62c;
+    }
+    uVar4 = uVar4 + 4;
+    piVar3 = piVar3 + 1;
+  } while ((uVar4 & 0xffffffff) < 0xc);
+  bVar1 = false;
+LAB_8278c62c:
+  if (bVar1) {
+    Com_SyncThreads();
+    lVar6 = 2;
+    lVar5 = 3;
+    do {
+      if (*(char *)(*piVar7 + 0xb) != '\0') {
+        Dvar_ClearModified();
+        if (*(char *)(*piVar7 + 0xc) == '\0') {
+          Sys_SuspendThread(lVar6);
+        }
+        else {
+          Sys_ResumeThread();
+        }
+      }
+      lVar5 = lVar5 + -1;
+      piVar7 = piVar7 + 1;
+      lVar6 = lVar6 + 1;
+    } while (lVar5 != 0);
+    R_ReleaseThreadOwnership();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1280,7 +2073,6 @@ void R_WaitFrontendWorkerCmds(void)
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x7ae,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d43a4);
@@ -1300,7 +2092,6 @@ void R_WaitWorkerCmds(void)
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d40c0,0x7bc,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d43a4);

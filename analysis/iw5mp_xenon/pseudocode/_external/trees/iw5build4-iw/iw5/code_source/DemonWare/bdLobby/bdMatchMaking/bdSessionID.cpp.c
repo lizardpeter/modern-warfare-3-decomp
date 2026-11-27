@@ -27,11 +27,18 @@ undefined4 * bdSessionID__bdSessionID(undefined4 *param_1,int param_2)
 
 // 82912700  bdSessionID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessionid.cpp:23)
 
-void bdSessionID__deserialize(void)
+void bdSessionID__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined1 local_30 [48];
+  
+  lVar1 = __savegprlr_29();
+  uVar2 = bdByteBuffer__readBlob(*(undefined4 *)param_2,lVar1 + 4,local_30);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

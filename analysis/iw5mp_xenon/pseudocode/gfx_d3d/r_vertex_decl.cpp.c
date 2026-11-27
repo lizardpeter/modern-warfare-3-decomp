@@ -6,7 +6,6 @@ undefined * VertexDecl_GetName(uint param_1)
 
 {
   if (0x14 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d2998,0x37,0,0xffffffff821d29dc,param_1,0x15);
   }
   return (&PTR_s_generic_829a2ef8)[param_1];
@@ -26,7 +25,6 @@ longlong VertexDecl_GetType(char *param_1)
   char *pcVar6;
   
   if (param_1 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d2998,0x3f,0,0xffffffff82000f98,0xffffffff821d2a18);
   }
   lVar3 = 0;

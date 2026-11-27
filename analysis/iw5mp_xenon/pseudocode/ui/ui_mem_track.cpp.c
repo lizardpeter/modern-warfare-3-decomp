@@ -9,3 +9,21 @@ void TRACK_ui_memtrack(void)
   return;
 }
 
+
+// 825B3848  UI_track_init  (ui/ui_mem_track.cpp:43)
+
+void UI_track_init(void)
+
+{
+  DAT_8367aa78 = "ui_main";
+  TRACK_ui_main();
+  DAT_8367aa78 = "ui_shared";
+  TRACK_ui_shared();
+  DAT_8367aa78 = "ui_utils";
+  TRACK_ui_utils();
+  DAT_8367aa78 = "ui_atoms";
+  TRACK_ui_atoms();
+  DAT_8367aa78 = &DAT_820068af;
+  return;
+}
+

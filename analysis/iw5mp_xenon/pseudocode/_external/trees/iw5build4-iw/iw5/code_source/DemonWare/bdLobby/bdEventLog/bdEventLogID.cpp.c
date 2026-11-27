@@ -12,6 +12,17 @@ undefined4 * bdEventLogID__bdEventLogID(undefined4 *param_1)
 }
 
 
+// 828FD900  bdEventLogID::~bdEventLogID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:17)
+
+void bdEventLogID___bdEventLogID(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_bdEventLogID___scalar_deleting_destructor__8220caf0;
+  bdTaskResult___bdTaskResult();
+  return;
+}
+
+
 // 828FD910  bdEventLogID::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:22)
 
 void bdEventLogID__serialize(int param_1,undefined8 param_2)
@@ -24,11 +35,17 @@ void bdEventLogID__serialize(int param_1,undefined8 param_2)
 
 // 828FD988  bdEventLogID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:27)
 
-void bdEventLogID__deserialize(void)
+void bdEventLogID__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(cVar2 != '\0');
+  return;
 }
 
 

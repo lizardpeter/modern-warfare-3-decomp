@@ -58,8 +58,61 @@ int _dynamic_initializer_for__s_DWSubscriptionUploadTask__(void)
 void Commerce_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  uint *puVar4;
+  int iVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_28();
+  iVar5 = 0;
+  do {
+    uVar1 = *(uint *)((int)&DAT_844f9f40 + iVar5);
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
+        do {
+          puVar4 = (uint *)((ulonglong)uVar1 + 4);
+          if (in_RESERVE != '\0') {
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar4 = uVar3;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = *(undefined4 **)((int)&DAT_844f9f40 + iVar5);
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
+          }
+        }
+      }
+      *(undefined4 *)((int)&DAT_844f9f40 + iVar5) = 0;
+    }
+    uVar1 = *(uint *)((int)&DAT_844f6d2c + iVar5);
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
+        do {
+          puVar4 = (uint *)((ulonglong)uVar1 + 4);
+          if (in_RESERVE != '\0') {
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar4 = uVar3;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = *(undefined4 **)((int)&DAT_844f6d2c + iVar5);
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
+          }
+        }
+      }
+      *(undefined4 *)((int)&DAT_844f6d2c + iVar5) = 0;
+    }
+    iVar5 = iVar5 + 4;
+  } while (iVar5 < 0x10);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -68,8 +121,69 @@ void Commerce_Shutdown(void)
 void Commerce_UserSignedOut(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar4 = __savegprlr_28();
+  if (((int *)(&DAT_844f9f40)[iVar4] != (int *)0x0) &&
+     (iVar5 = (**(code **)(*(int *)(&DAT_844f9f40)[iVar4] + 4))(), iVar5 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_844f9f40)[iVar4]);
+  }
+  uVar1 = (&DAT_844f9f40)[iVar4];
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
+    do {
+      puVar7 = (uint *)lVar6;
+      if (in_RESERVE != '\0') {
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
+        *puVar7 = uVar3;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)(&DAT_844f9f40)[iVar4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
+      }
+    }
+  }
+  (&DAT_844f9f40)[iVar4] = 0;
+  if (((int *)(&DAT_844f6d2c)[iVar4] != (int *)0x0) &&
+     (iVar5 = (**(code **)(*(int *)(&DAT_844f6d2c)[iVar4] + 4))(), iVar5 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_844f6d2c)[iVar4]);
+  }
+  uVar1 = (&DAT_844f6d2c)[iVar4];
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
+    do {
+      puVar7 = (uint *)lVar6;
+      if (in_RESERVE != '\0') {
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
+        *puVar7 = uVar3;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)(&DAT_844f6d2c)[iVar4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
+      }
+    }
+  }
+  (&DAT_844f6d2c)[iVar4] = 0;
+  *(undefined4 *)(&DAT_844f6cfc + iVar4 * 4) = 0;
+  (&DAT_844f6d1c)[iVar4] = 2;
+  (&DAT_844f6d0c)[iVar4] = 0;
+  *(undefined4 *)(&DAT_844f6cec + iVar4 * 4) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -144,8 +258,159 @@ ulonglong Commerce_XUIDEliteSubscription(int param_1,longlong param_2)
 void Commerce_FillIDsFromFriendPage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  ulonglong uVar2;
+  char cVar3;
+  bool bVar6;
+  ulonglong uVar4;
+  longlong lVar5;
+  int iVar7;
+  undefined8 *puVar8;
+  longlong *plVar9;
+  longlong lVar10;
+  longlong lVar11;
+  longlong *plVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  undefined4 local_60 [24];
+  
+  uVar2 = __savegprlr_23();
+  if (*(int *)(DAT_844f6ce8 + 0xc) < 3) {
+    DAT_844f6988 = *(undefined8 *)(&DAT_844f6cb8 + (int)((uVar2 & 0xffffffff) << 3));
+    __restgprlr_23(1);
+    return;
+  }
+  cVar3 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,local_60);
+  if (cVar3 != '\0') {
+    uVar13 = 0;
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168568);
+    plVar12 = &DAT_844f6988;
+    if (cVar3 != '\0') {
+      uVar1 = *(uint *)(&DAT_84546e60 + (int)uVar2 * 0x670);
+      uVar13 = (ulonglong)uVar1;
+      if (99 < (int)uVar1) {
+        MyAssertHandler(0xffffffff821aea48,0xc0,0,0xffffffff82000f98,0xffffffff821aea28);
+      }
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) != 0) goto LAB_826f4aa8;
+      bVar6 = false;
+      lVar10 = 0;
+      if (0 < (int)uVar1) {
+        plVar9 = plVar12;
+        do {
+          if (*plVar9 !=
+              *(longlong *)(&DAT_84546e68 + (int)((uVar2 * 0xce + lVar10 & 0xffffffff) << 3))) {
+            bVar6 = true;
+            break;
+          }
+          lVar10 = lVar10 + 1;
+          plVar9 = plVar9 + 1;
+        } while ((int)lVar10 < (int)uVar1);
+      }
+      if (!bVar6) goto LAB_826f47ac;
+      lVar10 = 0;
+      if (0 < (int)uVar1) {
+        puVar8 = (undefined8 *)0x844f6980;
+        uVar14 = uVar13;
+        do {
+          uVar4 = uVar2 * 0xce + lVar10;
+          lVar10 = lVar10 + 1;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined8 *)(&DAT_84546e68 + (int)((uVar4 & 0xffffffff) << 3));
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+    }
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168540);
+    if (cVar3 != '\0') {
+      lVar10 = uVar2 * 0x70a0;
+      uVar1 = *(uint *)(&DAT_84525120 + (int)lVar10);
+      uVar13 = (ulonglong)uVar1;
+      if (99 < (int)uVar1) {
+        MyAssertHandler(0xffffffff821aea48,0xdd,0,0xffffffff82000f98,0xffffffff821aea28);
+      }
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) != 0) goto LAB_826f4aa8;
+      bVar6 = false;
+      iVar7 = 0;
+      if (0 < (int)uVar1) {
+        lVar11 = 0;
+        lVar5 = lVar10;
+        plVar9 = plVar12;
+        do {
+          if (*plVar9 != *(longlong *)(&DAT_8451e130 + (int)lVar5)) {
+            bVar6 = true;
+            break;
+          }
+          iVar7 = iVar7 + 1;
+          lVar11 = lVar11 + 0x120;
+          plVar9 = plVar9 + 1;
+          lVar5 = lVar11 + lVar10;
+        } while (iVar7 < (int)uVar1);
+      }
+      if (!bVar6) goto LAB_826f47ac;
+      if (0 < (int)uVar1) {
+        lVar11 = 0;
+        puVar8 = (undefined8 *)0x844f6980;
+        lVar5 = lVar10;
+        uVar14 = uVar13;
+        do {
+          lVar11 = lVar11 + 0x120;
+          iVar7 = (int)lVar5;
+          lVar5 = lVar11 + lVar10;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined8 *)(&DAT_8451e130 + iVar7);
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+    }
+    cVar3 = Menu_IsMenuOpenAndVisible(local_60[0],0xffffffff82168530);
+    if (cVar3 != '\0') {
+      lVar10 = uVar2 * 0x66b8;
+      uVar1 = *(uint *)(&DAT_84500688 + (int)lVar10);
+      uVar13 = (ulonglong)uVar1;
+      if (99 < (int)uVar1) {
+        MyAssertHandler(0xffffffff821aea48,0xfa,0,0xffffffff82000f98,0xffffffff821aea28);
+      }
+      if (*(int *)(&DAT_844f6cfc + (int)((uVar2 & 0xffffffff) << 2)) == 0) {
+        bVar6 = false;
+        iVar7 = 0;
+        if (0 < (int)uVar1) {
+          lVar11 = 0;
+          lVar5 = lVar10;
+          do {
+            if (*plVar12 != *(longlong *)(&DAT_844fa060 + (int)lVar5)) {
+              bVar6 = true;
+              break;
+            }
+            iVar7 = iVar7 + 1;
+            lVar11 = lVar11 + 0x60;
+            plVar12 = plVar12 + 1;
+            lVar5 = lVar11 + lVar10;
+          } while (iVar7 < (int)uVar1);
+        }
+        if (!bVar6) goto LAB_826f47ac;
+        if (0 < (int)uVar1) {
+          lVar11 = 0;
+          puVar8 = (undefined8 *)0x844f6980;
+          lVar5 = lVar10;
+          uVar2 = uVar13;
+          do {
+            lVar11 = lVar11 + 0x60;
+            iVar7 = (int)lVar5;
+            lVar5 = lVar11 + lVar10;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined8 *)(&DAT_844fa060 + iVar7);
+            uVar2 = uVar2 - 1;
+          } while (uVar2 != 0);
+        }
+      }
+    }
+LAB_826f4aa8:
+    __restgprlr_23(uVar13);
+    return;
+  }
+LAB_826f47ac:
+  __restgprlr_23(0xffffffffffffffff);
+  return;
 }
 
 
@@ -172,8 +437,26 @@ void Commerce_Init(void)
 void Commerce_RetryUploading(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d6c;
+  iVar4 = DAT_84545cb0;
+  iVar5 = iVar2 * 4;
+  iVar3 = *(int *)(&DAT_844f6cec + iVar5);
+  *(int *)(&DAT_844f6cec + iVar5) = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar1 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar4 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f6d0c)[iVar2] = 0;
+  *(int *)(&DAT_844f6cd8 + iVar5) = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -303,11 +586,38 @@ LAB_826f51b8:
 
 // 826F4BB8  Commerce_GetSubscriptionStatusFromDW  (social/commerce_xbox.cpp:451)
 
-void Commerce_GetSubscriptionStatusFromDW(void)
+void Commerce_GetSubscriptionStatusFromDW(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  
+  uVar3 = __savegprlr_26();
+  iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
+  if (*(int *)((int)&DAT_844f6d1c + iVar1) != 2) {
+    MyAssertHandler(0xffffffff821aea48,0x1c4,0,0xffffffff82000f98,0xffffffff821aeb00);
+  }
+  iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+  if (*(longlong *)(&DAT_844f6cb8 + iVar2) != param_2) {
+    lVar4 = Dvar_GetInt(0xffffffff821aeae0);
+    Dvar_SetInt(DAT_844f6ce8,lVar4 + 1);
+    *(longlong *)(&DAT_844f6cb8 + iVar2) = param_2;
+    *(undefined4 *)((int)&DAT_844f6d1c + iVar1) = 0;
+    *(undefined4 *)(&DAT_844f6cfc + iVar1) = 0;
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 826F4C58  Commerce_SubscriptionAcquired  (social/commerce_xbox.cpp:469)
+
+bool Commerce_SubscriptionAcquired(int param_1)
+
+{
+  return (&DAT_844f6d1c)[param_1] == 2;
 }
 
 
@@ -335,8 +645,45 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionInfo__(void)
 void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  lVar6 = 3;
+  puVar7 = &DAT_844f9f50;
+  do {
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
+        }
+        *puVar7 = 0;
+      }
+    }
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -345,7 +692,44 @@ void _dynamic_atexit_destructor_for__s_DWSubscriptionTask__(void)
 void _dynamic_atexit_destructor_for__s_DWSubscriptionUploadTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  lVar6 = 3;
+  puVar7 = (uint *)0x844f6d3c;
+  do {
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
+        }
+        *puVar7 = 0;
+      }
+    }
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
+  __restgprlr_29();
+  return;
 }
 

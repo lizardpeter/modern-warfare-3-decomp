@@ -3,7 +3,45 @@
 ; 828C9EA8  NellyLogEnvelopeToAs  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:106)
   828C9EA8  7D8802A6             mfspr r12,LR
   828C9EAC  4804C809             bl 0x829166b4
+  828C9EB0  9421FD10             stwu r1,-0x2f0(r1)
+  828C9EB4  7C9E2378             or r30,r4,r4
+  828C9EB8  7C641B78             or r4,r3,r3
+  828C9EBC  7C7F1B78             or r31,r3,r3
+  828C9EC0  7CBD2B78             or r29,r5,r5
+  828C9EC4  7CDC3378             or r28,r6,r6
+  828C9EC8  7CFB3B78             or r27,r7,r7
+  828C9ECC  480029FD             bl 0x828cc8c8
+  828C9ED0  39200008             li r9,0x8
+  828C9ED4  394100B0             addi r10,r1,0xb0
+  828C9ED8  397F0020             addi r11,r31,0x20
+  828C9EDC  7D2903A6             mtspr CTR,r9
+  828C9EE0  3920FFF0             li r9,-0x10
+  828C9EE4  3900FFE0             li r8,-0x20
+  828C9EE8  13EB4C07             vcmpneb. v31,v11,v9
+  828C9EEC  38E00030             li r7,0x30
+  828C9EF0  13C05C07             vcmpneb. v30,v0,v11
+  828C9EF4  38C00020             li r6,0x20
+  828C9EF8  38A00040             li r5,0x40
+  828C9EFC  38800010             li r4,0x10
+  828C9F00  13AB4407             vcmpneb. v29,v11,v8
+  828C9F04  39000050             li r8,0x50
 
 ; 828C9E68  K2ASK  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libtran.c:549)
   828C9E68  7D8802A6             mfspr r12,LR
   828C9E6C  4804C851             bl 0x829166bc
+  828C9E70  9421FF90             stwu r1,-0x70(r1)
+  828C9E74  7C7F1B78             or r31,r3,r3
+  828C9E78  2F030000             cmpwi cr6,r3,0x0
+  828C9E7C  419A0024             beq cr6,0x828c9ea0
+  828C9E80  3BC4FFFC             subi r30,r4,0x4
+  828C9E84  3BA5FFFC             subi r29,r5,0x4
+LAB_828c9e88:
+  828C9E88  C43E0004             lfsu f1,0x4(r30)
+  828C9E8C  4804D68D             bl 0x82917518
+  828C9E90  FC000818             frsp f0,f1
+  828C9E94  D41D0004             stfsu f0,0x4(r29)
+  828C9E98  37FFFFFF             subic. r31,r31,0x1
+  828C9E9C  4082FFEC             bne 0x828c9e88
+LAB_828c9ea0:
+  828C9EA0  38210070             addi r1,r1,0x70
+  828C9EA4  4804C868             b 0x8291670c

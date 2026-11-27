@@ -6,86 +6,216 @@ void FX_PostLight_GenerateVerts(undefined8 param_1,longlong param_2,int param_3)
 
 {
   float fVar1;
-  undefined8 uVar2;
-  char cVar4;
-  float *pfVar3;
-  int iVar5;
-  longlong lVar6;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  undefined8 uVar5;
+  char cVar8;
+  float *pfVar6;
   float *pfVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  undefined1 auStack_18c [4];
-  undefined1 auStack_188 [4];
+  uint uVar9;
+  short sVar10;
+  uint uVar11;
+  short sVar12;
+  float *pfVar13;
+  undefined4 *puVar14;
+  int iVar15;
+  longlong lVar16;
+  float *pfVar17;
+  int iVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  undefined4 local_190;
+  short local_18c [2];
+  undefined4 *local_188;
   undefined4 local_184;
   float local_180;
   float local_17c;
   float local_178;
-  undefined1 auStack_170 [16];
-  undefined1 auStack_160 [352];
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_160;
+  float local_15c;
+  float local_158;
+  longlong local_150;
+  float afStack_144 [81];
   
   __savegprlr_20();
-  uVar2 = __savefpr_17();
-  dVar10 = (double)*(float *)(param_3 + 0xd4);
-  dVar9 = (double)*(float *)(param_3 + 0xd8);
-  dVar8 = (double)*(float *)(param_3 + 0xdc);
-  iVar5 = 0;
+  uVar5 = __savefpr_17();
+  dVar27 = (double)*(float *)(param_3 + 0xd4);
+  dVar26 = (double)*(float *)(param_3 + 0xd8);
+  dVar25 = (double)*(float *)(param_3 + 0xdc);
+  iVar15 = 0;
   if (*(int *)((int)param_2 + 0xd80) != 0) {
-    dVar11 = 1.0;
-    lVar6 = param_2 + 0x18;
+    dVar29 = 1.4142135381698608;
+    dVar28 = 0.7853981852531433;
+    dVar30 = 1.0;
+    dVar24 = 9.999999747378752e-05;
+    dVar23 = 0.0010000000474974513;
+    lVar16 = param_2 + 0x18;
     do {
-      pfVar7 = (float *)lVar6;
-      if ((double)*pfVar7 < 0.0010000000474974513) {
-                    /* WARNING: Subroutine does not return */
+      pfVar17 = (float *)lVar16;
+      if ((double)*pfVar17 < dVar23) {
         MyAssertHandler(0xffffffff82066440,0x5f,0,0xffffffff8206641c,0xffffffff820663fc,
-                        (double)*pfVar7);
+                        (double)*pfVar17);
       }
-      dVar14 = (double)(pfVar7[-2] - pfVar7[-5]);
-      dVar13 = (double)(pfVar7[-3] - pfVar7[-6]);
-      dVar12 = (double)(pfVar7[-1] - pfVar7[-4]);
-      dVar15 = (double)(float)(dVar12 * dVar12 +
-                              (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14)));
-      if (9.999999747378752e-05 <= dVar15) {
-        cVar4 = R_ReserveCodeSurfBuffers(uVar2,0x10,0x54,2,auStack_18c,auStack_188,&local_184);
-        if (cVar4 != '\0') {
-          dVar10 = (double)(float)((double)pfVar7[-6] - dVar10);
-          dVar9 = (double)(float)((double)pfVar7[-5] - dVar9);
-          dVar8 = (double)(float)((double)pfVar7[-4] - dVar8);
-          pfVar3 = (float *)R_CodeSurfArgsIter_Begin(uVar2,local_184);
-          fVar1 = *pfVar7;
-          *pfVar3 = (float)dVar10;
-          pfVar3[1] = (float)dVar9;
-          pfVar3[2] = (float)dVar8;
-          pfVar3[3] = (float)(dVar11 / (double)fVar1);
-          pfVar3[4] = (float)dVar13;
-          pfVar3[5] = (float)dVar14;
-          pfVar3[6] = (float)dVar12;
-          pfVar3[7] = (float)(dVar11 / dVar15);
-          dVar8 = dVar11;
-          if (-(double)(float)SQRT(dVar15) < 0.0) {
-            dVar8 = (double)(float)SQRT(dVar15);
-          }
-          dVar8 = (double)(float)(dVar11 / dVar8);
-          local_180 = (float)(dVar8 * dVar13);
-          local_17c = (float)(dVar8 * dVar14);
-          local_178 = (float)(dVar8 * dVar12);
-          PerpendicularVector(&local_180,auStack_170);
-                    /* WARNING: Subroutine does not return */
-          Vec3Cross(&local_180,auStack_170,auStack_160);
+      dVar33 = (double)(pfVar17[-2] - pfVar17[-5]);
+      dVar32 = (double)(pfVar17[-3] - pfVar17[-6]);
+      dVar31 = (double)(pfVar17[-1] - pfVar17[-4]);
+      dVar34 = (double)(float)(dVar31 * dVar31 +
+                              (double)(float)(dVar32 * dVar32 + (double)(float)(dVar33 * dVar33)));
+      if (dVar24 <= dVar34) {
+        cVar8 = R_ReserveCodeSurfBuffers(uVar5,0x10,0x54,2,local_18c,&local_188,&local_184);
+        if (cVar8 == '\0') break;
+        dVar22 = (double)(float)((double)pfVar17[-6] - dVar27);
+        dVar21 = (double)(float)((double)pfVar17[-5] - dVar26);
+        dVar20 = (double)(float)((double)pfVar17[-4] - dVar25);
+        pfVar6 = (float *)R_CodeSurfArgsIter_Begin(uVar5,local_184);
+        fVar3 = *pfVar17;
+        *pfVar6 = (float)dVar22;
+        pfVar6[1] = (float)dVar21;
+        pfVar6[2] = (float)dVar20;
+        pfVar6[3] = (float)(dVar30 / (double)fVar3);
+        pfVar6[4] = (float)dVar32;
+        pfVar6[5] = (float)dVar33;
+        pfVar6[6] = (float)dVar31;
+        pfVar6[7] = (float)(dVar30 / dVar34);
+        dVar21 = (double)*pfVar17;
+        dVar20 = dVar30;
+        if (-(double)(float)SQRT(dVar34) < 0.0) {
+          dVar20 = (double)(float)SQRT(dVar34);
         }
-        break;
+        dVar34 = (double)(float)(dVar30 / dVar20);
+        local_180 = (float)(dVar34 * dVar32);
+        local_17c = (float)(dVar34 * dVar33);
+        local_178 = (float)(dVar34 * dVar31);
+        PerpendicularVector(&local_180,&local_170);
+        Vec3Cross(&local_180,&local_170,&local_160);
+        pfVar7 = (float *)R_CodeSurfVertIter_Begin(uVar5,local_18c[0]);
+        dVar33 = (double)local_158;
+        dVar32 = (double)local_15c;
+        iVar18 = 0;
+        dVar31 = (double)local_160;
+        pfVar6 = afStack_144;
+        do {
+          pfVar13 = pfVar7;
+          local_150 = (longlong)iVar18;
+          dVar20 = (double)(float)((double)local_150 * dVar28);
+          dVar34 = sin(dVar20);
+          dVar22 = (double)(float)((double)(float)((double)(float)dVar34 * dVar21) * dVar29);
+          dVar34 = cos(dVar20);
+          fVar4 = pfVar17[-6];
+          iVar18 = iVar18 + 1;
+          dVar34 = (double)(float)((double)(float)((double)(float)dVar34 * dVar21) * dVar29);
+          fVar3 = (float)(dVar31 * dVar34 + (double)(float)((double)local_170 * dVar22));
+          fVar1 = (float)(dVar32 * dVar34 + (double)(float)((double)local_16c * dVar22));
+          fVar2 = (float)(dVar33 * dVar34 + (double)(float)((double)local_168 * dVar22));
+          pfVar6[2] = (float)((double)local_17c * dVar21) + fVar1;
+          pfVar6[1] = (float)((double)local_180 * dVar21) + fVar3;
+          pfVar6 = pfVar6 + 3;
+          *pfVar6 = (float)((double)local_178 * dVar21) + fVar2;
+          *pfVar13 = fVar4 + (fVar3 - (float)((double)local_180 * dVar21));
+          pfVar13[1] = pfVar17[-5] + (fVar1 - (float)((double)local_17c * dVar21));
+          pfVar13[2] = pfVar17[-4] + (fVar2 - (float)((double)local_178 * dVar21));
+          pfVar13[5] = 0.0;
+          pfVar13[4] = pfVar17[1];
+          pfVar7 = pfVar13 + 8;
+        } while (iVar18 != 8);
+        pfVar6 = afStack_144;
+        pfVar13 = pfVar13 + 4;
+        lVar19 = 8;
+        do {
+          fVar3 = pfVar6[2];
+          pfVar13[4] = pfVar6[1] + pfVar17[-6];
+          pfVar6 = pfVar6 + 3;
+          fVar1 = *pfVar6;
+          pfVar13[5] = pfVar17[-5] + fVar3;
+          pfVar13[6] = pfVar17[-4] + fVar1;
+          pfVar13[9] = 0.0;
+          pfVar13 = pfVar13 + 8;
+          *pfVar13 = pfVar17[1];
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        lVar19 = 8;
+        puVar14 = local_188;
+        uVar11 = 0;
+        do {
+          uVar9 = uVar11 + 1;
+          sVar12 = (short)uVar9 +
+                   ((short)((int)uVar9 >> 3) + (ushort)((int)uVar9 < 0 && (uVar9 & 7) != 0)) * -8;
+          local_190 = CONCAT22(local_18c[0] + (short)uVar11,local_18c[0] + sVar12);
+          *puVar14 = local_190;
+          sVar10 = local_18c[0] + (short)uVar11 + 8;
+          local_190 = CONCAT22(sVar10,sVar10);
+          puVar14[1] = local_190;
+          sVar12 = local_18c[0] + sVar12;
+          local_190 = CONCAT22(sVar12,sVar12 + 8);
+          puVar14[2] = local_190;
+          puVar14 = puVar14 + 3;
+          lVar19 = lVar19 + -1;
+          uVar11 = uVar9;
+        } while (lVar19 != 0);
+        sVar12 = 0;
+        lVar19 = 3;
+        do {
+          local_190 = CONCAT22(local_18c[0] + sVar12 + 2,local_18c[0] + sVar12 + 1);
+          *puVar14 = local_190;
+          local_190 = CONCAT22(local_18c[0],local_18c[0] + sVar12 + 3);
+          puVar14[1] = local_190;
+          sVar10 = local_18c[0] + sVar12;
+          sVar12 = sVar12 + 2;
+          local_190 = CONCAT22(sVar10 + 2,local_18c[0]);
+          puVar14[2] = local_190;
+          puVar14 = puVar14 + 3;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        sVar12 = 0;
+        lVar19 = 3;
+        do {
+          local_190 = CONCAT22(local_18c[0] + 8,local_18c[0] + sVar12 + 9);
+          *puVar14 = local_190;
+          local_190 = CONCAT22(local_18c[0] + sVar12 + 10,local_18c[0] + 8);
+          puVar14[1] = local_190;
+          sVar10 = local_18c[0] + sVar12;
+          sVar12 = sVar12 + 2;
+          local_190 = CONCAT22(sVar10 + 10,sVar10 + 0xb);
+          puVar14[2] = local_190;
+          puVar14 = puVar14 + 3;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        R_AddCodeSurf(uVar5,pfVar17[2],local_188,0x54,local_184,2,0xffffffff82066488);
       }
-      iVar5 = iVar5 + 1;
-      lVar6 = lVar6 + 0x24;
-    } while (iVar5 != *(int *)((int)param_2 + 0xd80));
+      iVar15 = iVar15 + 1;
+      lVar16 = lVar16 + 0x24;
+    } while (iVar15 != *(int *)((int)param_2 + 0xd80));
   }
   __restfpr_17();
   __restgprlr_20();
+  return;
+}
+
+
+// 82438B00  FX_PostLight_Begin  (EffectsCore/fx_postlight.cpp:220)
+
+void FX_PostLight_Begin(void)
+
+{
+  DAT_83333a00 = 0;
   return;
 }
 
@@ -113,5 +243,14 @@ void FX_PostLight_Add(int param_1)
   } while (lVar3 != 0);
   DAT_83333a00 = DAT_83333a00 + 1;
   return;
+}
+
+
+// 82438B68  FX_PostLight_GetInfo  (EffectsCore/fx_postlight.cpp:236)
+
+undefined8 FX_PostLight_GetInfo(void)
+
+{
+  return 0xffffffff83332c80;
 }
 

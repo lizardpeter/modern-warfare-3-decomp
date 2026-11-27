@@ -3,3 +3,39 @@
 ; 828B4FD0  XapipCreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapipcreatethread.c:49)
   828B4FD0  7D8802A6             mfspr r12,LR
   828B4FD4  480616DD             bl 0x829166b0
+  828B4FD8  9421FF70             stwu r1,-0x90(r1)
+  828B4FDC  7C9E2378             or r30,r4,r4
+  828B4FE0  7CBD2B78             or r29,r5,r5
+  828B4FE4  7CDC3378             or r28,r6,r6
+  828B4FE8  7CFA3B78             or r26,r7,r7
+  828B4FEC  7D1F4378             or r31,r8,r8
+  828B4FF0  7D3B4B78             or r27,r9,r9
+  828B4FF4  7DAD6B78             or r13,r13,r13
+  828B4FF8  5749F7FE             rlwinm r9,r26,0x1e,0x1f,0x1f
+  828B4FFC  2F1FFFFF             cmpwi cr6,r31,-0x1
+  828B5000  419A0014             beq cr6,0x828b5014
+  828B5004  39600001             li r11,0x1
+  828B5008  7D6BF830             slw r11,r11,r31
+  828B500C  556BC00E             rlwinm r11,r11,0x18,0x0,0x7
+  828B5010  7D694B78             or r9,r11,r9
+LAB_828b5014:
+  828B5014  3D60828B             lis r11,-0x7d75
+  828B5018  7F88E378             or r8,r28,r28
+  828B501C  7FA7EB78             or r7,r29,r29
+  828B5020  38CB5A50             addi r6,r11,0x5a50
+  828B5024  7F65DB78             or r5,r27,r27
+  828B5028  7FC4F378             or r4,r30,r30
+  828B502C  38610050             addi r3,r1,0x50
+  828B5030  4808D125             bl 0x82942154
+  828B5034  2C030000             cmpwi r3,0x0
+  828B5038  40800014             bge 0x828b504c
+  828B503C  4BFF6CDD             bl 0x828abd18
+  828B5040  7DCE7378             or r14,r14,r14
+  828B5044  38600000             li r3,0x0
+  828B5048  4800000C             b 0x828b5054
+LAB_828b504c:
+  828B504C  7DCE7378             or r14,r14,r14
+  828B5050  80610050             lwz r3,0x50(r1)
+LAB_828b5054:
+  828B5054  38210090             addi r1,r1,0x90
+  828B5058  480616A8             b 0x82916700

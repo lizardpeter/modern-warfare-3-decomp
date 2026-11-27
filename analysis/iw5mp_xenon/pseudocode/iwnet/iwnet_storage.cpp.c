@@ -20,7 +20,6 @@ void IWNet_Storage_UtilStateComplete(int param_1,undefined4 param_2)
 
 {
   if (*(int *)(param_1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(param_1 + 0x60) = param_2;
@@ -38,7 +37,6 @@ void IWNet_Storage_UtilComplete(int param_1,undefined4 param_2)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(int *)(iVar1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(iVar1 + 0x60) = param_2;
@@ -58,7 +56,6 @@ longlong IWNet_Storage_UtilWriteSpaceLeft(int param_1)
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(uint *)(iVar1 + 0x48) < *(uint *)(iVar1 + 0x58)) {
     uVar2 = va(0xffffffff821a8830,*(undefined4 *)(iVar1 + 0x48),*(undefined4 *)(iVar1 + 0x58));
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x3e,0,0xffffffff820011f4,0xffffffff821a87e8,uVar2);
   }
   return (ulonglong)*(uint *)(*(int *)(param_1 + 0xc) + 0x48) -
@@ -77,7 +74,6 @@ longlong IWNet_Storage_UtilReadSpaceLeft(int param_1)
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(uint *)(iVar1 + 0x44) < *(uint *)(iVar1 + 0x48)) {
     uVar2 = va(0xffffffff821a8830,*(undefined4 *)(iVar1 + 0x44),*(undefined4 *)(iVar1 + 0x48));
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x45,0,0xffffffff820011f4,0xffffffff821a8840,uVar2);
   }
   return (ulonglong)*(uint *)(*(int *)(param_1 + 0xc) + 0x44) -
@@ -97,11 +93,25 @@ void IWNet_WriteStorageUtil_FileId(int param_1,undefined8 param_2)
 
 // 826E2FA8  IWNet_WriteStorageUtil_FileName  (iwnet/iwnet_storage.cpp:82)
 
-void IWNet_WriteStorageUtil_FileName(void)
+void IWNet_WriteStorageUtil_FileName(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
+  
+  iVar3 = __savegprlr_29();
+  pcVar2 = *(char **)(iVar3 + 0xc);
+  pcVar4 = pcVar2;
+  do {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  MSG_WriteByte(param_2,pcVar4 + (-1 - (int)pcVar2));
+  MSG_WriteData(param_2,pcVar2,pcVar4 + (-1 - (int)pcVar2));
+  __restgprlr_29();
+  return;
 }
 
 
@@ -117,41 +127,108 @@ void IWNet_WriteStorage_BeginWrite(void)
 
 // 826E3008  IWNet_WriteStorage_Write  (iwnet/iwnet_storage.cpp:101)
 
-void IWNet_WriteStorage_Write(void)
+void IWNet_WriteStorage_Write(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
   __savegprlr_28();
+  uVar2 = IWNet_Storage_UtilWriteSpaceLeft(param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a8760,0x71,0,0xffffffff82000f98,0xffffffff821a8888);
+  }
+  uVar3 = 0x400;
+  if ((uVar2 & 0xffffffff) < 0x400) {
+    uVar3 = uVar2;
+  }
+  iVar1 = (int)param_2;
+  uVar2 = (ulonglong)*(uint *)(*(int *)(iVar1 + 0xc) + 0x58);
+  IWNet_WriteCommandHeader(0xc,param_2,param_3);
+  MSG_WriteInt64(param_3,*(undefined8 *)(*(int *)(iVar1 + 0xc) + 0x50));
+  MSG_WriteLong(param_3,uVar2);
+  MSG_WriteLong(param_3,uVar3);
+  MSG_WriteData(param_3,*(uint *)(*(int *)(iVar1 + 0xc) + 0x40) + uVar2,uVar3);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826E30C8  IWNet_WriteStorage_EndWrite  (iwnet/iwnet_storage.cpp:140)
 
-void IWNet_WriteStorage_EndWrite(void)
+void IWNet_WriteStorage_EndWrite(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
+  
   __savegprlr_29();
+  IWNet_WriteCommandHeader(0xd);
+  MSG_WriteInt64(param_3,*(undefined8 *)(*(int *)(param_2 + 0xc) + 0x50));
+  pcVar2 = *(char **)(param_2 + 0xc);
+  pcVar3 = pcVar2;
+  do {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  MSG_WriteByte(param_3,pcVar3 + (-1 - (int)pcVar2));
+  MSG_WriteData(param_3,pcVar2,pcVar3 + (-1 - (int)pcVar2));
+  __restgprlr_29();
+  return;
 }
 
 
 // 826E3140  IWNet_WriteStorage_BeginRead  (iwnet/iwnet_storage.cpp:150)
 
-void IWNet_WriteStorage_BeginRead(void)
+void IWNet_WriteStorage_BeginRead(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
+  
   __savegprlr_29();
+  IWNet_WriteCommandHeader(0xe);
+  pcVar2 = *(char **)(param_2 + 0xc);
+  pcVar3 = pcVar2;
+  do {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  MSG_WriteByte(param_3,pcVar3 + (-1 - (int)pcVar2));
+  MSG_WriteData(param_3,pcVar2,pcVar3 + (-1 - (int)pcVar2));
+  __restgprlr_29();
+  return;
 }
 
 
 // 826E31A8  IWNet_WriteStorage_Read  (iwnet/iwnet_storage.cpp:159)
 
-void IWNet_WriteStorage_Read(void)
+void IWNet_WriteStorage_Read(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
   __savegprlr_28();
+  uVar2 = IWNet_Storage_UtilReadSpaceLeft(param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a8760,0xa7,0,0xffffffff82000f98,0xffffffff821a8894);
+  }
+  uVar3 = 0x400;
+  if ((uVar2 & 0xffffffff) < 0x400) {
+    uVar3 = uVar2;
+  }
+  uVar1 = *(undefined4 *)(*(int *)((int)param_2 + 0xc) + 0x48);
+  IWNet_WriteCommandHeader(0xf,param_2,param_3);
+  MSG_WriteInt64(param_3,*(undefined8 *)(*(int *)((int)param_2 + 0xc) + 0x50));
+  MSG_WriteLong(param_3,uVar1);
+  MSG_WriteLong(param_3,uVar3);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -160,15 +237,38 @@ void IWNet_WriteStorage_Read(void)
 void IWNet_WriteStorage_EndRead(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   
-  iVar1 = IWNet_Storage_UtilReadSpaceLeft(param_2);
-  if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821a8760,0xc3,0,0xffffffff821a88a0,0xffffffff821a88b4);
+  uVar1 = IWNet_Storage_UtilReadSpaceLeft(param_2);
+  if ((uVar1 & 0xffffffff) != 0) {
+    MyAssertHandler(0xffffffff821a8760,0xc3,0,0xffffffff821a88a0,0xffffffff821a88b4,uVar1);
   }
   IWNet_WriteCommandHeader(0x10,param_2,param_3);
   MSG_WriteInt64(param_3,*(undefined8 *)(*(int *)(param_2 + 0xc) + 0x50));
+  return;
+}
+
+
+// 826E32E0  IWNet_Storage_WriteCommand  (iwnet/iwnet_storage.cpp:216)
+
+void IWNet_Storage_WriteCommand(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  code *pcVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  pcVar3 = (code *)IWNet_UtilFindWriter(0xffffffff821a8678,*(undefined4 *)((int)param_2 + 4));
+  if (pcVar3 == (code *)0x0) {
+    MyAssertHandler(0xffffffff821a8760,0xdd,0,0xffffffff821a88c0,0xffffffff821a88d8,
+                    *(undefined4 *)((int)param_2 + 4));
+  }
+  MSG_WriteByte(param_3,2);
+  uVar2 = Live_GetXuid(uVar1);
+  MSG_WriteInt64(param_3,uVar2);
+  (*pcVar3)(uVar1,param_2,param_3);
+  __restgprlr_28();
   return;
 }
 
@@ -250,7 +350,6 @@ void IWNet_Storage_HandleReplyFileEndWrite(int param_1)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(int *)(iVar1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(iVar1 + 0x5c) = 2;
@@ -283,11 +382,55 @@ void IWNet_Storage_HandleReplyFileBeginRead(int param_1,int *param_2)
 
 // 826E3630  IWNet_Storage_HandleReplyFileRead  (iwnet/iwnet_storage.cpp:318)
 
-void IWNet_Storage_HandleReplyFileRead(void)
+void IWNet_Storage_HandleReplyFileRead(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar5;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  int *piVar7;
+  
+  iVar5 = __savegprlr_27();
+  piVar7 = (int *)(iVar5 + 0xc);
+  uVar1 = *(uint *)(*(int *)(iVar5 + 0xc) + 0x48);
+  uVar2 = MSG_ReadLong(param_2);
+  if (*(int *)param_2 != 0) {
+    Com_PrintError(0x19,0xffffffff821a8a2c);
+    IWNet_Storage_UtilComplete(iVar5,3);
+    __restgprlr_27();
+    return;
+  }
+  uVar3 = IWNet_Storage_UtilReadSpaceLeft(iVar5);
+  if ((uVar3 & 0xffffffff) < (uVar2 & 0xffffffff)) {
+    uVar4 = IWNet_Storage_UtilReadSpaceLeft(iVar5);
+    Com_PrintError(0x19,0xffffffff821a89e0,uVar2,uVar4);
+    IWNet_Storage_UtilComplete(iVar5,3);
+    __restgprlr_27();
+    return;
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_PrintError(0x19,0xffffffff821a89a8,uVar3);
+    IWNet_Storage_UtilComplete(iVar5,3);
+    __restgprlr_27();
+    return;
+  }
+  MSG_ReadData(param_2,(ulonglong)*(uint *)(*piVar7 + 0x40) + (ulonglong)uVar1,uVar2);
+  if (*(int *)param_2 != 0) {
+    Com_PrintError(0x19,0xffffffff821a8960);
+    IWNet_Storage_UtilComplete(iVar5,3);
+    __restgprlr_27();
+    return;
+  }
+  if (*(char *)(DAT_844cf540 + 0xc) == '\0') {
+    *(int *)(*piVar7 + 0x48) = *(int *)(*piVar7 + 0x48) + (int)uVar2;
+  }
+  iVar6 = IWNet_Storage_UtilReadSpaceLeft(iVar5);
+  IWNet_AddCommand(*(undefined4 *)(iVar5 + 0x10),(iVar6 == 0) + '\x05',piVar7);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -300,7 +443,6 @@ void IWNet_Storage_HandleReplyFileEndRead(int param_1)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(int *)(iVar1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(iVar1 + 0x5c) = 2;
@@ -318,7 +460,6 @@ void IWNet_Storage_HandleError<3>(int param_1)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(int *)(iVar1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(iVar1 + 0x5c) = 2;
@@ -336,7 +477,6 @@ void IWNet_Storage_HandleError<1>(int param_1)
   
   iVar1 = *(int *)(param_1 + 0xc);
   if (*(int *)(iVar1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(iVar1 + 0x5c) = 2;
@@ -350,28 +490,135 @@ void IWNet_Storage_HandleError<1>(int param_1)
 void IWNet_Storage_ParsePacket(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int *piVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  short sVar6;
+  char *pcVar5;
+  char cVar7;
+  int *piVar8;
+  
+  piVar4 = (int *)__savegprlr_27();
+  uVar2 = MSG_ReadByte();
+  uVar3 = MSG_ReadByte(piVar4);
+  MSG_ReadByte(piVar4);
+  sVar6 = MSG_ReadShort(piVar4);
+  if (*piVar4 != 0) {
+    Com_PrintError(0x19,0xffffffff821a8e1c);
+    __restgprlr_27();
+    return;
+  }
+  pcVar5 = (char *)IWNet_GetCommandSlotByIndex(uVar3);
+  if (pcVar5 == (char *)0x0) {
+    Com_PrintError(0x19,0xffffffff821a8de0,uVar3);
+    __restgprlr_27();
+    return;
+  }
+  if (*pcVar5 != '\0') {
+    if (*(short *)(pcVar5 + 2) != sVar6) {
+      Com_PrintError(0x19,0xffffffff821a8d80);
+      __restgprlr_27();
+      return;
+    }
+    cVar7 = IWNet_Storage_IsComplete(*(undefined4 *)(pcVar5 + 0xc));
+    if (cVar7 != '\0') {
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff821a8760,0x1fa,0,0xffffffff821a8d4c);
+      }
+      Com_PrintError(0x19,0xffffffff821a8d08);
+      __restgprlr_27();
+      return;
+    }
+    piVar8 = &DAT_821a86b0;
+    do {
+      if ((*piVar8 == (int)uVar2) &&
+         ((*(char *)(piVar8 + 1) != '\0' || (piVar8[2] == *(int *)(pcVar5 + 8))))) {
+        (*(code *)piVar8[3])(pcVar5,piVar4);
+        IWNet_CloseTask(pcVar5);
+        __restgprlr_27();
+        return;
+      }
+      piVar1 = piVar8 + 7;
+      piVar8 = piVar8 + 4;
+    } while (*piVar1 != 0);
+    Com_PrintError(0x19,0xffffffff821a8c80,uVar3,uVar3,uVar2,*(undefined4 *)(pcVar5 + 4));
+    IWNet_CloseTask(pcVar5);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 826E3800  IWNet_Storage_Write  (iwnet/iwnet_storage.cpp:527)
 
-void IWNet_Storage_Write(void)
+void IWNet_Storage_Write(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4
+                        ,undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  void *_Dst;
+  void *local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  _Dst = (void *)param_2;
+  local_40[0] = _Dst;
+  memset(_Dst,0,0x68);
+  *(undefined4 *)((int)_Dst + 0x5c) = 1;
+  I_strncpyz(param_2,param_3,0x40);
+  *(undefined4 *)((int)_Dst + 0x40) = param_4;
+  *(undefined4 *)((int)_Dst + 0x48) = param_5;
+  if (*(int *)((int)_Dst + 0x44) != 0) {
+    MyAssertHandler(0xffffffff821a8760,0x21a,0,0xffffffff82000f98,0xffffffff821a8a7c);
+  }
+  if (*(int *)((int)_Dst + 0x58) != 0) {
+    MyAssertHandler(0xffffffff821a8760,0x21b,0,0xffffffff82000f98,0xffffffff821a8a64);
+  }
+  IWNet_AddCommand(uVar1,1,local_40);
+  __restgprlr_27();
+  return;
 }
 
 
 // 826E38D0  IWNet_Storage_Read  (iwnet/iwnet_storage.cpp:546)
 
-void IWNet_Storage_Read(void)
+void IWNet_Storage_Read(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4,
+                       undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  void *_Dst;
+  void *local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  _Dst = (void *)param_2;
+  local_40[0] = _Dst;
+  memset(_Dst,0,0x68);
+  *(undefined4 *)((int)_Dst + 0x5c) = 1;
+  I_strncpyz(param_2,param_3,0x40);
+  *(undefined4 *)((int)_Dst + 0x40) = param_4;
+  if (*(int *)((int)_Dst + 0x48) != 0) {
+    MyAssertHandler(0xffffffff821a8760,0x22d,0,0xffffffff82000f98,0xffffffff821a8a94);
+  }
+  *(undefined4 *)((int)_Dst + 0x44) = param_5;
+  if (*(int *)((int)_Dst + 0x58) != 0) {
+    MyAssertHandler(0xffffffff821a8760,0x22f,0,0xffffffff82000f98,0xffffffff821a8a64);
+  }
+  IWNet_AddCommand(uVar1,4,local_40);
+  __restgprlr_27();
+  return;
+}
+
+
+// 826E39A0  IWNet_Storage_IsComplete  (iwnet/iwnet_storage.cpp:566)
+
+bool IWNet_Storage_IsComplete(int param_1)
+
+{
+  if ((*(int *)(param_1 + 0x5c) != 1) && (*(int *)(param_1 + 0x5c) != 2)) {
+    MyAssertHandler(0xffffffff821a8760,0x237,0,0xffffffff82000f98,0xffffffff821a8aa8);
+  }
+  return *(int *)(param_1 + 0x5c) == 2;
 }
 
 
@@ -381,7 +628,6 @@ void IWNet_Storage_Cancel(int param_1)
 
 {
   if (*(int *)(param_1 + 0x5c) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x30,0,0xffffffff821a87a4,0xffffffff821a87bc);
   }
   *(undefined4 *)(param_1 + 0x5c) = 2;
@@ -396,8 +642,9 @@ void IWNet_Storage_Clear(int param_1)
 
 {
   if ((*(int *)(param_1 + 0x5c) != 0) && (*(int *)(param_1 + 0x5c) != 2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a8760,0x247,0,0xffffffff82000f98,0xffffffff821a8b00);
+    *(undefined4 *)(param_1 + 0x5c) = 0;
+    return;
   }
   *(undefined4 *)(param_1 + 0x5c) = 0;
   return;
@@ -409,11 +656,13 @@ void IWNet_Storage_Clear(int param_1)
 void IWNet_Storage_GetErrorCode(int param_1,undefined4 *param_2)
 
 {
-  if (*(int *)(param_1 + 0x5c) != 2) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821a8760,0x24e,0,0xffffffff821a8b58,0xffffffff821a8b74);
+  if (*(int *)(param_1 + 0x5c) == 2) {
+    *param_2 = *(undefined4 *)(param_1 + 0x60);
   }
-  *param_2 = *(undefined4 *)(param_1 + 0x60);
+  else {
+    MyAssertHandler(0xffffffff821a8760,0x24e,0,0xffffffff821a8b58,0xffffffff821a8b74);
+    *param_2 = *(undefined4 *)(param_1 + 0x60);
+  }
   return;
 }
 
@@ -427,7 +676,6 @@ undefined8 IWNet_Storage_ErrorCodeToString(ulonglong param_1)
   
   if (4 < (param_1 & 0xffffffff)) {
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821a8760,0x264,0,0xffffffff821a8bc0);
     }
     return 0xffffffff821a8ba0;

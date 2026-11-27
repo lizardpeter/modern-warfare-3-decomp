@@ -6,6 +6,38 @@
 ; 8253EC00  node_pos  (script/scr_parsetree.cpp:58)
   8253EC00  4E800020             blr
 
+; 8253EC08  Scr_InitAllocNodeUser  (script/scr_parsetree.cpp:67)
+  8253EC08  7D8802A6             mfspr r12,LR
+  8253EC0C  9181FFF8             stw r12,-0x8(r1)
+  8253EC10  FBE1FFF0             std r31,-0x10(r1)
+  8253EC14  9421FFA0             stwu r1,-0x60(r1)
+  8253EC18  3FE08388             lis r31,-0x7c78
+  8253EC1C  817FB8E8             lwz r11,-0x4718(r31)
+  8253EC20  2B0B0000             cmplwi cr6,r11,0x0
+  8253EC24  419A0028             beq cr6,0x8253ec4c
+  8253EC28  3D608215             lis r11,-0x7deb
+  8253EC2C  3D408200             lis r10,-0x7e00
+  8253EC30  3D208215             lis r9,-0x7deb
+  8253EC34  38EB1DBC             addi r7,r11,0x1dbc
+  8253EC38  38CA0F98             addi r6,r10,0xf98
+  8253EC3C  38691D78             addi r3,r9,0x1d78
+  8253EC40  38A00000             li r5,0x0
+  8253EC44  38800044             li r4,0x44
+  8253EC48  480958B9             bl 0x825d4500
+LAB_8253ec4c:
+  8253EC4C  3D608215             lis r11,-0x7deb
+  8253EC50  38C00007             li r6,0x7
+  8253EC54  388B1D64             addi r4,r11,0x1d64
+  8253EC58  38A00000             li r5,0x0
+  8253EC5C  3C600001             lis r3,0x1
+  8253EC60  480A3F79             bl 0x825e2bd8
+  8253EC64  907FB8E8             stw r3,-0x4718(r31)
+  8253EC68  38210060             addi r1,r1,0x60
+  8253EC6C  8181FFF8             lwz r12,-0x8(r1)
+  8253EC70  7D8803A6             mtspr LR,r12
+  8253EC74  EBE1FFF0             ld r31,-0x10(r1)
+  8253EC78  4E800020             blr
+
 ; 8253EC80  Scr_ShutdownAllocNodeUser  (script/scr_parsetree.cpp:79)
   8253EC80  7D8802A6             mfspr r12,LR
   8253EC84  9181FFF8             stw r12,-0x8(r1)
@@ -24,6 +56,7 @@
   8253ECB8  38A00000             li r5,0x0
   8253ECBC  38800050             li r4,0x50
   8253ECC0  48095841             bl 0x825d4500
+  8253ECC4  807FB8E8             lwz r3,-0x4718(r31)
 LAB_8253ecc8:
   8253ECC8  480A47C9             bl 0x825e3490
   8253ECCC  39600000             li r11,0x0
@@ -67,6 +100,7 @@ LAB_8253ecc8:
   8253ED58  38A00000             li r5,0x0
   8253ED5C  38800063             li r4,0x63
   8253ED60  480957A1             bl 0x825d4500
+  8253ED64  807FB8E8             lwz r3,-0x4718(r31)
 LAB_8253ed68:
   8253ED68  480A5EB1             bl 0x825e4c18
   8253ED6C  38210060             addi r1,r1,0x60
@@ -95,6 +129,7 @@ LAB_8253ed68:
   8253EDC0  38A00000             li r5,0x0
   8253EDC4  3880006B             li r4,0x6b
   8253EDC8  48095739             bl 0x825d4500
+  8253EDCC  807FB8E8             lwz r3,-0x4718(r31)
 LAB_8253edd0:
   8253EDD0  480A4901             bl 0x825e36d0
   8253EDD4  3D600010             lis r11,0x10
@@ -133,6 +168,7 @@ LAB_8253edf4:
   8253EE50  38A00000             li r5,0x0
   8253EE54  38800075             li r4,0x75
   8253EE58  480956A9             bl 0x825d4500
+  8253EE5C  807FB8E8             lwz r3,-0x4718(r31)
 LAB_8253ee60:
   8253EE60  38A00004             li r5,0x4
   8253EE64  57C4103A             rlwinm r4,r30,0x2,0x0,0x1d
@@ -181,6 +217,17 @@ LAB_8253ee60:
 ; 8253EF08  node2  (script/scr_parsetree.cpp:144)
   8253EF08  7D8802A6             mfspr r12,LR
   8253EF0C  483D77B1             bl 0x829166bc
+  8253EF10  9421FF90             stwu r1,-0x70(r1)
+  8253EF14  7C7F1B78             or r31,r3,r3
+  8253EF18  38600003             li r3,0x3
+  8253EF1C  7C9E2378             or r30,r4,r4
+  8253EF20  7CBD2B78             or r29,r5,r5
+  8253EF24  4BFFFEED             bl 0x8253ee10
+  8253EF28  93E30000             stw r31,0x0(r3)
+  8253EF2C  93C30004             stw r30,0x4(r3)
+  8253EF30  93A30008             stw r29,0x8(r3)
+  8253EF34  38210070             addi r1,r1,0x70
+  8253EF38  483D77D4             b 0x8291670c
 
 ; 8253EF40  node2_  (script/scr_parsetree.cpp:156)
   8253EF40  7D8802A6             mfspr r12,LR
@@ -204,22 +251,91 @@ LAB_8253ee60:
 ; 8253EF88  node3  (script/scr_parsetree.cpp:167)
   8253EF88  7D8802A6             mfspr r12,LR
   8253EF8C  483D772D             bl 0x829166b8
+  8253EF90  9421FF80             stwu r1,-0x80(r1)
+  8253EF94  7C7F1B78             or r31,r3,r3
+  8253EF98  38600004             li r3,0x4
+  8253EF9C  7C9E2378             or r30,r4,r4
+  8253EFA0  7CBD2B78             or r29,r5,r5
+  8253EFA4  7CDC3378             or r28,r6,r6
+  8253EFA8  4BFFFE69             bl 0x8253ee10
+  8253EFAC  93E30000             stw r31,0x0(r3)
+  8253EFB0  93C30004             stw r30,0x4(r3)
+  8253EFB4  93A30008             stw r29,0x8(r3)
+  8253EFB8  9383000C             stw r28,0xc(r3)
+  8253EFBC  38210080             addi r1,r1,0x80
+  8253EFC0  483D7748             b 0x82916708
 
 ; 8253EFC8  node3_  (script/scr_parsetree.cpp:180)
   8253EFC8  7D8802A6             mfspr r12,LR
   8253EFCC  483D76F1             bl 0x829166bc
+  8253EFD0  9421FF90             stwu r1,-0x70(r1)
+  8253EFD4  7C7F1B78             or r31,r3,r3
+  8253EFD8  38600003             li r3,0x3
+  8253EFDC  7C9E2378             or r30,r4,r4
+  8253EFE0  7CBD2B78             or r29,r5,r5
+  8253EFE4  4BFFFE2D             bl 0x8253ee10
+  8253EFE8  93E30000             stw r31,0x0(r3)
+  8253EFEC  93C30004             stw r30,0x4(r3)
+  8253EFF0  93A30008             stw r29,0x8(r3)
+  8253EFF4  38210070             addi r1,r1,0x70
+  8253EFF8  483D7714             b 0x8291670c
 
 ; 8253F000  node4  (script/scr_parsetree.cpp:192)
   8253F000  7D8802A6             mfspr r12,LR
   8253F004  483D76B1             bl 0x829166b4
+  8253F008  9421FF80             stwu r1,-0x80(r1)
+  8253F00C  7C7F1B78             or r31,r3,r3
+  8253F010  38600005             li r3,0x5
+  8253F014  7C9E2378             or r30,r4,r4
+  8253F018  7CBD2B78             or r29,r5,r5
+  8253F01C  7CDC3378             or r28,r6,r6
+  8253F020  7CFB3B78             or r27,r7,r7
+  8253F024  4BFFFDED             bl 0x8253ee10
+  8253F028  93E30000             stw r31,0x0(r3)
+  8253F02C  93C30004             stw r30,0x4(r3)
+  8253F030  93A30008             stw r29,0x8(r3)
+  8253F034  9383000C             stw r28,0xc(r3)
+  8253F038  93630010             stw r27,0x10(r3)
+  8253F03C  38210080             addi r1,r1,0x80
+  8253F040  483D76C4             b 0x82916704
 
 ; 8253F048  node4_  (script/scr_parsetree.cpp:206)
   8253F048  7D8802A6             mfspr r12,LR
   8253F04C  483D766D             bl 0x829166b8
+  8253F050  9421FF80             stwu r1,-0x80(r1)
+  8253F054  7C7F1B78             or r31,r3,r3
+  8253F058  38600004             li r3,0x4
+  8253F05C  7C9E2378             or r30,r4,r4
+  8253F060  7CBD2B78             or r29,r5,r5
+  8253F064  7CDC3378             or r28,r6,r6
+  8253F068  4BFFFDA9             bl 0x8253ee10
+  8253F06C  93E30000             stw r31,0x0(r3)
+  8253F070  93C30004             stw r30,0x4(r3)
+  8253F074  93A30008             stw r29,0x8(r3)
+  8253F078  9383000C             stw r28,0xc(r3)
+  8253F07C  38210080             addi r1,r1,0x80
+  8253F080  483D7688             b 0x82916708
 
 ; 8253F088  node5  (script/scr_parsetree.cpp:219)
   8253F088  7D8802A6             mfspr r12,LR
   8253F08C  483D7625             bl 0x829166b0
+  8253F090  9421FF70             stwu r1,-0x90(r1)
+  8253F094  7C7F1B78             or r31,r3,r3
+  8253F098  38600006             li r3,0x6
+  8253F09C  7C9E2378             or r30,r4,r4
+  8253F0A0  7CBD2B78             or r29,r5,r5
+  8253F0A4  7CDC3378             or r28,r6,r6
+  8253F0A8  7CFB3B78             or r27,r7,r7
+  8253F0AC  7D1A4378             or r26,r8,r8
+  8253F0B0  4BFFFD61             bl 0x8253ee10
+  8253F0B4  93E30000             stw r31,0x0(r3)
+  8253F0B8  93C30004             stw r30,0x4(r3)
+  8253F0BC  93A30008             stw r29,0x8(r3)
+  8253F0C0  9383000C             stw r28,0xc(r3)
+  8253F0C4  93630010             stw r27,0x10(r3)
+  8253F0C8  93430014             stw r26,0x14(r3)
+  8253F0CC  38210090             addi r1,r1,0x90
+  8253F0D0  483D7630             b 0x82916700
 
 ; 8253F0D8  node6  (script/scr_parsetree.cpp:234)
   8253F0D8  7D8802A6             mfspr r12,LR
@@ -420,6 +536,25 @@ LAB_8253f384:
   8253F3A4  EBE1FFF0             ld r31,-0x10(r1)
   8253F3A8  4E800020             blr
 
+; 8253F3B0  Scr_ShutdownParseTreeMemory  (script/scr_parsetree.cpp:377)
+  8253F3B0  7D8802A6             mfspr r12,LR
+  8253F3B4  9181FFF8             stw r12,-0x8(r1)
+  8253F3B8  FBE1FFF0             std r31,-0x10(r1)
+  8253F3BC  9421FFA0             stwu r1,-0x60(r1)
+  8253F3C0  3FE08388             lis r31,-0x7c78
+  8253F3C4  807FB8DC             lwz r3,-0x4724(r31)
+  8253F3C8  2B030000             cmplwi cr6,r3,0x0
+  8253F3CC  419A0010             beq cr6,0x8253f3dc
+  8253F3D0  48369691             bl 0x828a8a60
+  8253F3D4  39600000             li r11,0x0
+  8253F3D8  917FB8DC             stw r11,-0x4724(r31)
+LAB_8253f3dc:
+  8253F3DC  38210060             addi r1,r1,0x60
+  8253F3E0  8181FFF8             lwz r12,-0x8(r1)
+  8253F3E4  7D8803A6             mtspr LR,r12
+  8253F3E8  EBE1FFF0             ld r31,-0x10(r1)
+  8253F3EC  4E800020             blr
+
 ; 8253F3F0  Scr_ClearDebugExpr  (script/scr_parsetree.cpp:394)
   8253F3F0  7D8802A6             mfspr r12,LR
   8253F3F4  9181FFF8             stw r12,-0x8(r1)
@@ -444,10 +579,132 @@ LAB_8253f420:
 ; 8253F438  Scr_AllocDebugExpr  (script/scr_parsetree.cpp:413)
   8253F438  7D8802A6             mfspr r12,LR
   8253F43C  483D7279             bl 0x829166b4
+  8253F440  9421FF80             stwu r1,-0x80(r1)
+  8253F444  3FE08388             lis r31,-0x7c78
+  8253F448  7C7B1B78             or r27,r3,r3
+  8253F44C  3D608215             lis r11,-0x7deb
+  8253F450  3D408200             lis r10,-0x7e00
+  8253F454  7C9C2378             or r28,r4,r4
+  8253F458  807FB8DC             lwz r3,-0x4724(r31)
+  8253F45C  3BCB1D78             addi r30,r11,0x1d78
+  8253F460  3BAA0F98             addi r29,r10,0xf98
+  8253F464  2B030000             cmplwi cr6,r3,0x0
+  8253F468  409A0024             bne cr6,0x8253f48c
+  8253F46C  3D608215             lis r11,-0x7deb
+  8253F470  7FA6EB78             or r6,r29,r29
+  8253F474  38EB1E30             addi r7,r11,0x1e30
+  8253F478  7FC3F378             or r3,r30,r30
+  8253F47C  38A00000             li r5,0x0
+  8253F480  388001A2             li r4,0x1a2
+  8253F484  4809507D             bl 0x825d4500
+  8253F488  807FB8DC             lwz r3,-0x4724(r31)
+LAB_8253f48c:
+  8253F48C  38BC0004             addi r5,r28,0x4
+  8253F490  38800000             li r4,0x0
+  8253F494  483680B5             bl 0x828a7548
+  8253F498  7C7F1B78             or r31,r3,r3
+  8253F49C  2B030000             cmplwi cr6,r3,0x0
+  8253F4A0  409A0020             bne cr6,0x8253f4c0
+  8253F4A4  3D608215             lis r11,-0x7deb
+  8253F4A8  7FA6EB78             or r6,r29,r29
+  8253F4AC  38EB1E20             addi r7,r11,0x1e20
+  8253F4B0  7FC3F378             or r3,r30,r30
+  8253F4B4  38A00000             li r5,0x0
+  8253F4B8  388001A4             li r4,0x1a4
+  8253F4BC  48095045             bl 0x825d4500
+LAB_8253f4c0:
+  8253F4C0  3D408388             lis r10,-0x7c78
+  8253F4C4  387F0004             addi r3,r31,0x4
+  8253F4C8  816AB8E4             lwz r11,-0x471c(r10)
+  8253F4CC  917F0000             stw r11,0x0(r31)
+  8253F4D0  93EAB8E4             stw r31,-0x471c(r10)
+  8253F4D4  937F0004             stw r27,0x4(r31)
+  8253F4D8  38210080             addi r1,r1,0x80
+  8253F4DC  483D7228             b 0x82916704
 
 ; 8253F4E0  Scr_FreeDebugExpr  (script/scr_parsetree.cpp:441)
   8253F4E0  7D8802A6             mfspr r12,LR
   8253F4E4  483D71CD             bl 0x829166b0
+  8253F4E8  9421FF70             stwu r1,-0x90(r1)
+  8253F4EC  81630004             lwz r11,0x4(r3)
+  8253F4F0  2F0B0000             cmpwi cr6,r11,0x0
+  8253F4F4  419A0018             beq cr6,0x8253f50c
+  8253F4F8  3D6083C7             lis r11,-0x7c39
+  8253F4FC  394BFB48             subi r10,r11,0x4b8
+  8253F500  816A39B4             lwz r11,0x39b4(r10)
+  8253F504  396BFFFF             subi r11,r11,0x1
+  8253F508  916A39B4             stw r11,0x39b4(r10)
+LAB_8253f50c:
+  8253F50C  83C30008             lwz r30,0x8(r3)
+  8253F510  2B1E0000             cmplwi cr6,r30,0x0
+  8253F514  409A0030             bne cr6,0x8253f544
+  8253F518  3D608215             lis r11,-0x7deb
+  8253F51C  3D408200             lis r10,-0x7e00
+  8253F520  3D208215             lis r9,-0x7deb
+  8253F524  38EB1E20             addi r7,r11,0x1e20
+  8253F528  38CA0F98             addi r6,r10,0xf98
+  8253F52C  38691D78             addi r3,r9,0x1d78
+  8253F530  38A00000             li r5,0x0
+  8253F534  388001C2             li r4,0x1c2
+  8253F538  48094FC9             bl 0x825d4500
+  8253F53C  38210090             addi r1,r1,0x90
+  8253F540  483D71C0             b 0x82916700
+LAB_8253f544:
+  8253F544  3D608215             lis r11,-0x7deb
+  8253F548  3D408215             lis r10,-0x7deb
+  8253F54C  3D208200             lis r9,-0x7e00
+  8253F550  3FE08388             lis r31,-0x7c78
+  8253F554  3B8B1E30             addi r28,r11,0x1e30
+  8253F558  3B6A1D78             addi r27,r10,0x1d78
+  8253F55C  3B490F98             addi r26,r9,0xf98
+LAB_8253f560:
+  8253F560  387E0004             addi r3,r30,0x4
+  8253F564  4BFF5C15             bl 0x82535178
+  8253F568  807FB8DC             lwz r3,-0x4724(r31)
+  8253F56C  2B030000             cmplwi cr6,r3,0x0
+  8253F570  83BE0000             lwz r29,0x0(r30)
+  8253F574  409A0020             bne cr6,0x8253f594
+  8253F578  7F87E378             or r7,r28,r28
+  8253F57C  7F46D378             or r6,r26,r26
+  8253F580  7F63DB78             or r3,r27,r27
+  8253F584  38A00000             li r5,0x0
+  8253F588  388001CB             li r4,0x1cb
+  8253F58C  48094F75             bl 0x825d4500
+  8253F590  807FB8DC             lwz r3,-0x4724(r31)
+LAB_8253f594:
+  8253F594  7FC5F378             or r5,r30,r30
+  8253F598  38800000             li r4,0x0
+  8253F59C  483688AD             bl 0x828a7e48
+  8253F5A0  7FBEEB78             or r30,r29,r29
+  8253F5A4  2B1D0000             cmplwi cr6,r29,0x0
+  8253F5A8  409AFFB8             bne cr6,0x8253f560
+  8253F5AC  38210090             addi r1,r1,0x90
+  8253F5B0  483D7150             b 0x82916700
+
+; 8253F5B8  Scr_AddDebugExprRefCount  (script/scr_parsetree.cpp:479)
+  8253F5B8  7D8802A6             mfspr r12,LR
+  8253F5BC  9181FFF8             stw r12,-0x8(r1)
+  8253F5C0  FBC1FFE8             std r30,-0x18(r1)
+  8253F5C4  FBE1FFF0             std r31,-0x10(r1)
+  8253F5C8  9421FF90             stwu r1,-0x70(r1)
+  8253F5CC  7C7E1B78             or r30,r3,r3
+  8253F5D0  7C9F2378             or r31,r4,r4
+  8253F5D4  2B040000             cmplwi cr6,r4,0x0
+  8253F5D8  419A001C             beq cr6,0x8253f5f4
+LAB_8253f5dc:
+  8253F5DC  389F0004             addi r4,r31,0x4
+  8253F5E0  7FC3F378             or r3,r30,r30
+  8253F5E4  4BFF5CA5             bl 0x82535288
+  8253F5E8  83FF0000             lwz r31,0x0(r31)
+  8253F5EC  2B1F0000             cmplwi cr6,r31,0x0
+  8253F5F0  409AFFEC             bne cr6,0x8253f5dc
+LAB_8253f5f4:
+  8253F5F4  38210070             addi r1,r1,0x70
+  8253F5F8  8181FFF8             lwz r12,-0x8(r1)
+  8253F5FC  7D8803A6             mtspr LR,r12
+  8253F600  EBC1FFE8             ld r30,-0x18(r1)
+  8253F604  EBE1FFF0             ld r31,-0x10(r1)
+  8253F608  4E800020             blr
 
 ; 8253F610  debugger_node0  (script/scr_parsetree.cpp:501)
   8253F610  3D608215             lis r11,-0x7deb
@@ -496,19 +753,169 @@ LAB_8253f420:
 ; 8253F6B0  debugger_node3  (script/scr_parsetree.cpp:546)
   8253F6B0  7D8802A6             mfspr r12,LR
   8253F6B4  483D7009             bl 0x829166bc
+  8253F6B8  9421FF90             stwu r1,-0x70(r1)
+  8253F6BC  3D608215             lis r11,-0x7deb
+  8253F6C0  7C9F2378             or r31,r4,r4
+  8253F6C4  7CBE2B78             or r30,r5,r5
+  8253F6C8  38800010             li r4,0x10
+  8253F6CC  38AB1E70             addi r5,r11,0x1e70
+  8253F6D0  7CDD3378             or r29,r6,r6
+  8253F6D4  4BFFFD65             bl 0x8253f438
+  8253F6D8  93E30004             stw r31,0x4(r3)
+  8253F6DC  93C30008             stw r30,0x8(r3)
+  8253F6E0  93A3000C             stw r29,0xc(r3)
+  8253F6E4  38210070             addi r1,r1,0x70
+  8253F6E8  483D7024             b 0x8291670c
+
+; 8253F6F0  debugger_node4  (script/scr_parsetree.cpp:564)
+  8253F6F0  7D8802A6             mfspr r12,LR
+  8253F6F4  483D6FC5             bl 0x829166b8
+  8253F6F8  9421FF80             stwu r1,-0x80(r1)
+  8253F6FC  3D608215             lis r11,-0x7deb
+  8253F700  7C9F2378             or r31,r4,r4
+  8253F704  7CBE2B78             or r30,r5,r5
+  8253F708  38800014             li r4,0x14
+  8253F70C  38AB1E80             addi r5,r11,0x1e80
+  8253F710  7CDD3378             or r29,r6,r6
+  8253F714  7CFC3B78             or r28,r7,r7
+  8253F718  4BFFFD21             bl 0x8253f438
+  8253F71C  93E30004             stw r31,0x4(r3)
+  8253F720  93C30008             stw r30,0x8(r3)
+  8253F724  93A3000C             stw r29,0xc(r3)
+  8253F728  93830010             stw r28,0x10(r3)
+  8253F72C  38210080             addi r1,r1,0x80
+  8253F730  483D6FD8             b 0x82916708
 
 ; 8253F738  debugger_node5  (script/scr_parsetree.cpp:583)
   8253F738  7D8802A6             mfspr r12,LR
   8253F73C  483D6F79             bl 0x829166b4
+  8253F740  9421FF80             stwu r1,-0x80(r1)
+  8253F744  3D608215             lis r11,-0x7deb
+  8253F748  7C9F2378             or r31,r4,r4
+  8253F74C  7CBE2B78             or r30,r5,r5
+  8253F750  38800018             li r4,0x18
+  8253F754  38AB1E90             addi r5,r11,0x1e90
+  8253F758  7CDD3378             or r29,r6,r6
+  8253F75C  7CFC3B78             or r28,r7,r7
+  8253F760  7D1B4378             or r27,r8,r8
+  8253F764  4BFFFCD5             bl 0x8253f438
+  8253F768  93E30004             stw r31,0x4(r3)
+  8253F76C  93C30008             stw r30,0x8(r3)
+  8253F770  93A3000C             stw r29,0xc(r3)
+  8253F774  93830010             stw r28,0x10(r3)
+  8253F778  93630014             stw r27,0x14(r3)
+  8253F77C  38210080             addi r1,r1,0x80
+  8253F780  483D6F84             b 0x82916704
 
 ; 8253F788  debugger_node6  (script/scr_parsetree.cpp:603)
   8253F788  7D8802A6             mfspr r12,LR
   8253F78C  483D6F25             bl 0x829166b0
+  8253F790  9421FF70             stwu r1,-0x90(r1)
+  8253F794  3D608215             lis r11,-0x7deb
+  8253F798  7C9F2378             or r31,r4,r4
+  8253F79C  7CBE2B78             or r30,r5,r5
+  8253F7A0  3880001C             li r4,0x1c
+  8253F7A4  38AB1E90             addi r5,r11,0x1e90
+  8253F7A8  7CDD3378             or r29,r6,r6
+  8253F7AC  7CFC3B78             or r28,r7,r7
+  8253F7B0  7D1B4378             or r27,r8,r8
+  8253F7B4  7D3A4B78             or r26,r9,r9
+  8253F7B8  4BFFFC81             bl 0x8253f438
+  8253F7BC  93E30004             stw r31,0x4(r3)
+  8253F7C0  93C30008             stw r30,0x8(r3)
+  8253F7C4  93A3000C             stw r29,0xc(r3)
+  8253F7C8  93830010             stw r28,0x10(r3)
+  8253F7CC  93630014             stw r27,0x14(r3)
+  8253F7D0  93430018             stw r26,0x18(r3)
+  8253F7D4  38210090             addi r1,r1,0x90
+  8253F7D8  483D6F28             b 0x82916700
+
+; 8253F7E0  debugger_prepend_node  (script/scr_parsetree.cpp:624)
+  8253F7E0  7D8802A6             mfspr r12,LR
+  8253F7E4  483D6ED9             bl 0x829166bc
+  8253F7E8  9421FF90             stwu r1,-0x70(r1)
+  8253F7EC  3D608215             lis r11,-0x7deb
+  8253F7F0  83A40000             lwz r29,0x0(r4)
+  8253F7F4  7C7F1B78             or r31,r3,r3
+  8253F7F8  7C9E2378             or r30,r4,r4
+  8253F7FC  3880000C             li r4,0xc
+  8253F800  38AB1E60             addi r5,r11,0x1e60
+  8253F804  38600000             li r3,0x0
+  8253F808  4BFFFC31             bl 0x8253f438
+  8253F80C  39630004             addi r11,r3,0x4
+  8253F810  93E30004             stw r31,0x4(r3)
+  8253F814  93A30008             stw r29,0x8(r3)
+  8253F818  7FC3F378             or r3,r30,r30
+  8253F81C  917E0000             stw r11,0x0(r30)
+  8253F820  38210070             addi r1,r1,0x70
+  8253F824  483D6EE8             b 0x8291670c
 
 ; 8253F828  debugger_buffer  (script/scr_parsetree.cpp:645)
   8253F828  7D8802A6             mfspr r12,LR
   8253F82C  483D6E8D             bl 0x829166b8
+  8253F830  9421FF80             stwu r1,-0x80(r1)
+  8253F834  3BE6FFFF             subi r31,r6,0x1
+  8253F838  7C7E1B78             or r30,r3,r3
+  8253F83C  7FEB3038             and r11,r31,r6
+  8253F840  7C9C2378             or r28,r4,r4
+  8253F844  7CBD2B78             or r29,r5,r5
+  8253F848  2F0B0000             cmpwi cr6,r11,0x0
+  8253F84C  419A0028             beq cr6,0x8253f874
+  8253F850  3D608215             lis r11,-0x7deb
+  8253F854  3D408200             lis r10,-0x7e00
+  8253F858  3D208215             lis r9,-0x7deb
+  8253F85C  38EB1EB0             addi r7,r11,0x1eb0
+  8253F860  38CA0F98             addi r6,r10,0xf98
+  8253F864  38691D78             addi r3,r9,0x1d78
+  8253F868  38A00000             li r5,0x0
+  8253F86C  38800289             li r4,0x289
+  8253F870  48094C91             bl 0x825d4500
+LAB_8253f874:
+  8253F874  7D7DFA14             add r11,r29,r31
+  8253F878  3D408215             lis r10,-0x7deb
+  8253F87C  388B0008             addi r4,r11,0x8
+  8253F880  38AA1EA0             addi r5,r10,0x1ea0
+  8253F884  7FC3F378             or r3,r30,r30
+  8253F888  4BFFFBB1             bl 0x8253f438
+  8253F88C  7D63FA14             add r11,r3,r31
+  8253F890  7C7E1B78             or r30,r3,r3
+  8253F894  392B0008             addi r9,r11,0x8
+  8253F898  7FA5EB78             or r5,r29,r29
+  8253F89C  7D3FF878             andc r31,r9,r31
+  8253F8A0  7F84E378             or r4,r28,r28
+  8253F8A4  7FE3FB78             or r3,r31,r31
+  8253F8A8  483D70B9             bl 0x82916960
+  8253F8AC  93FE0004             stw r31,0x4(r30)
+  8253F8B0  7FC3F378             or r3,r30,r30
+  8253F8B4  38210080             addi r1,r1,0x80
+  8253F8B8  483D6E50             b 0x82916708
 
 ; 8253F8C0  debugger_string  (script/scr_parsetree.cpp:666)
   8253F8C0  7D8802A6             mfspr r12,LR
   8253F8C4  483D6DF9             bl 0x829166bc
+  8253F8C8  9421FF90             stwu r1,-0x70(r1)
+  8253F8CC  7C9D2378             or r29,r4,r4
+  8253F8D0  7C8B2378             or r11,r4,r4
+LAB_8253f8d4:
+  8253F8D4  894B0000             lbz r10,0x0(r11)
+  8253F8D8  396B0001             addi r11,r11,0x1
+  8253F8DC  2B0A0000             cmplwi cr6,r10,0x0
+  8253F8E0  409AFFF4             bne cr6,0x8253f8d4
+  8253F8E4  7D7D5850             subf r11,r29,r11
+  8253F8E8  3D408215             lis r10,-0x7deb
+  8253F8EC  392BFFFF             subi r9,r11,0x1
+  8253F8F0  38AA1EA0             addi r5,r10,0x1ea0
+  8253F8F4  552B003E             rlwinm r11,r9,0x0,0x0,0x1f
+  8253F8F8  3BCB0001             addi r30,r11,0x1
+  8253F8FC  389E0008             addi r4,r30,0x8
+  8253F900  4BFFFB39             bl 0x8253f438
+  8253F904  7FC5F378             or r5,r30,r30
+  8253F908  3BC30008             addi r30,r3,0x8
+  8253F90C  7C7F1B78             or r31,r3,r3
+  8253F910  7FA4EB78             or r4,r29,r29
+  8253F914  7FC3F378             or r3,r30,r30
+  8253F918  483D7049             bl 0x82916960
+  8253F91C  93DF0004             stw r30,0x4(r31)
+  8253F920  7FE3FB78             or r3,r31,r31
+  8253F924  38210070             addi r1,r1,0x70
+  8253F928  483D6DE4             b 0x8291670c

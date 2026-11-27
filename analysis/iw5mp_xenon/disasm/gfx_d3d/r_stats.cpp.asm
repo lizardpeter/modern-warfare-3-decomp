@@ -3,6 +3,88 @@
 ; 827830E0  R_Stats_PrintBspTess  (gfx_d3d/r_stats.cpp:28)
   827830E0  7D8802A6             mfspr r12,LR
   827830E4  481935D1             bl 0x829166b4
+  827830E8  DBC1FFC0             stfd f30,-0x40(r1)
+  827830EC  DBE1FFC8             stfd f31,-0x38(r1)
+  827830F0  9421FF60             stwu r1,-0xa0(r1)
+  827830F4  3D60821D             lis r11,-0x7de3
+  827830F8  7C7F1B78             or r31,r3,r3
+  827830FC  38600008             li r3,0x8
+  82783100  388B1D34             addi r4,r11,0x1d34
+  82783104  4BD7367D             bl 0x824f6780
+  82783108  3D60821D             lis r11,-0x7de3
+  8278310C  38600008             li r3,0x8
+  82783110  3B6B1D00             addi r27,r11,0x1d00
+  82783114  7F64DB78             or r4,r27,r27
+  82783118  4BD73669             bl 0x824f6780
+  8278311C  3D40821D             lis r10,-0x7de3
+  82783120  38600008             li r3,0x8
+  82783124  388A1CCC             addi r4,r10,0x1ccc
+  82783128  4BD73659             bl 0x824f6780
+  8278312C  7F64DB78             or r4,r27,r27
+  82783130  38600008             li r3,0x8
+  82783134  4BD7364D             bl 0x824f6780
+  82783138  397F0014             addi r11,r31,0x14
+  8278313C  3D40829A             lis r10,-0x7d66
+  82783140  811F001C             lwz r8,0x1c(r31)
+  82783144  3BABFFE8             subi r29,r11,0x18
+  82783148  813F0018             lwz r9,0x18(r31)
+  8278314C  3B8A2ED4             addi r28,r10,0x2ed4
+  82783150  7F9EE378             or r30,r28,r28
+  82783154  815F0024             lwz r10,0x24(r31)
+  82783158  817F0020             lwz r11,0x20(r31)
+  8278315C  7D6A5A14             add r11,r10,r11
+  82783160  815F0014             lwz r10,0x14(r31)
+  82783164  7D6B4214             add r11,r11,r8
+  82783168  7D6B4A14             add r11,r11,r9
+  8278316C  7D6B5214             add r11,r11,r10
+  82783170  3D408200             lis r10,-0x7e00
+  82783174  79690020             rldicl r9,r11,0x0,0x20
+  82783178  3D60821D             lis r11,-0x7de3
+  8278317C  F9210050             std r9,0x50(r1)
+  82783180  C8010050             lfd f0,0x50(r1)
+  82783184  FDA0069C             fcfid f13,f0
+  82783188  3BEB1CAC             addi r31,r11,0x1cac
+  8278318C  C3EA1898             lfs f31,0x1898(r10)
+  82783190  FFC06818             frsp f30,f13
+LAB_82783194:
+  82783194  80DD0018             lwz r6,0x18(r29)
+  82783198  7FE4FB78             or r4,r31,r31
+  8278319C  38600008             li r3,0x8
+  827831A0  851D0004             lwzu r8,0x4(r29)
+  827831A4  80BE0000             lwz r5,0x0(r30)
+  827831A8  7CCB3378             or r11,r6,r6
+  827831AC  F8C10050             std r6,0x50(r1)
+  827831B0  C8010050             lfd f0,0x50(r1)
+  827831B4  FDA0069C             fcfid f13,f0
+  827831B8  FD806818             frsp f12,f13
+  827831BC  ED6CF024             fdivs f11,f12,f30
+  827831C0  EC2B07F2             fmuls f1,f11,f31
+  827831C4  D8210030             stfd f1,0x30(r1)
+  827831C8  E8E10030             ld r7,0x30(r1)
+  827831CC  4BD735B5             bl 0x824f6780
+  827831D0  3BDE0004             addi r30,r30,0x4
+  827831D4  395C0014             addi r10,r28,0x14
+  827831D8  7F1E5000             cmpw cr6,r30,r10
+  827831DC  4198FFB8             blt cr6,0x82783194
+  827831E0  7F64DB78             or r4,r27,r27
+  827831E4  38600008             li r3,0x8
+  827831E8  4BD73599             bl 0x824f6780
+  827831EC  382100A0             addi r1,r1,0xa0
+  827831F0  CBC1FFC0             lfd f30,-0x40(r1)
+  827831F4  CBE1FFC8             lfd f31,-0x38(r1)
+  827831F8  4819350C             b 0x82916704
 
 ; 82783200  R_Stats_Display  (gfx_d3d/r_stats.cpp:49)
   82783200  4BFFFEE0             b 0x827830e0
+
+; 82783208  R_ResetStatTracking  (gfx_d3d/r_stats.cpp:55)
+  82783208  3D60847F             lis r11,-0x7b81
+  8278320C  3940000A             li r10,0xa
+  82783210  396BEBE4             subi r11,r11,0x141c
+  82783214  39200000             li r9,0x0
+  82783218  396BFFFC             subi r11,r11,0x4
+  8278321C  7D4903A6             mtspr CTR,r10
+LAB_82783220:
+  82783220  952B0004             stwu r9,0x4(r11)
+  82783224  4200FFFC             bdnz 0x82783220
+  82783228  4E800020             blr

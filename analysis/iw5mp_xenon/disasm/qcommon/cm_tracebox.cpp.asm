@@ -157,3 +157,75 @@ LAB_824cfd44:
 
 ; 824CFE00  CM_TraceBox  (qcommon/cm_tracebox.cpp:129)
   824CFE00  4BFFFE28             b 0x824cfc28
+
+; 824CFE08  CM_TraceSphere  (qcommon/cm_tracebox.cpp:154)
+  824CFE08  7D8802A6             mfspr r12,LR
+  824CFE0C  9181FFF8             stw r12,-0x8(r1)
+  824CFE10  3981FFF8             subi r12,r1,0x8
+  824CFE14  4844696D             bl 0x82916780
+  824CFE18  9421FF50             stwu r1,-0xb0(r1)
+  824CFE1C  C1A30044             lfs f13,0x44(r3)
+  824CFE20  FF201090             fmr f25,f2
+  824CFE24  C1830054             lfs f12,0x54(r3)
+  824CFE28  FF400890             fmr f26,f1
+  824CFE2C  EFEC6828             fsubs f31,f12,f13
+  824CFE30  C1630048             lfs f11,0x48(r3)
+  824CFE34  C1430058             lfs f10,0x58(r3)
+  824CFE38  3D608200             lis r11,-0x7e00
+  824CFE3C  EFCA5828             fsubs f30,f10,f11
+  824CFE40  C1230040             lfs f9,0x40(r3)
+  824CFE44  C1030050             lfs f8,0x50(r3)
+  824CFE48  3D408200             lis r10,-0x7e00
+  824CFE4C  EFA84828             fsubs f29,f8,f9
+  824CFE50  C0E40000             lfs f7,0x0(r4)
+  824CFE54  C0C40004             lfs f6,0x4(r4)
+  824CFE58  EF074828             fsubs f24,f7,f9
+  824CFE5C  C00B0F10             lfs f0,0xf10(r11)
+  824CFE60  EEE66828             fsubs f23,f6,f13
+  824CFE64  C0A40008             lfs f5,0x8(r4)
+  824CFE68  C36A13F8             lfs f27,0x13f8(r10)
+  824CFE6C  EEC55828             fsubs f22,f5,f11
+  824CFE70  EC9F07F2             fmuls f4,f31,f31
+  824CFE74  EC7E27BA             fmadds f3,f30,f30,f4
+  824CFE78  EC5D1F7A             fmadds f2,f29,f29,f3
+  824CFE7C  FC201050             fneg f1,f2
+  824CFE80  FF81102E             fsel f28,f1,f0,f2
+  824CFE84  FF1CD800             fcmpu cr6,f28,f27
+  824CFE88  409A0028             bne cr6,0x824cfeb0
+  824CFE8C  3D608208             lis r11,-0x7df8
+  824CFE90  3D408200             lis r10,-0x7e00
+  824CFE94  3D208208             lis r9,-0x7df8
+  824CFE98  38EB2E34             addi r7,r11,0x2e34
+  824CFE9C  38CA0F98             addi r6,r10,0xf98
+  824CFEA0  38692DF0             addi r3,r9,0x2df0
+  824CFEA4  38A00000             li r5,0x0
+  824CFEA8  388000A6             li r4,0xa6
+  824CFEAC  48104655             bl 0x825d4500
+LAB_824cfeb0:
+  824CFEB0  EC1F05F2             fmuls f0,f31,f23
+  824CFEB4  38600001             li r3,0x1
+  824CFEB8  EDBA06B2             fmuls f13,f26,f26
+  824CFEBC  ED9D063A             fmadds f12,f29,f24,f0
+  824CFEC0  ED7E65BA             fmadds f11,f30,f22,f12
+  824CFEC4  ED4BE024             fdivs f10,f11,f28
+  824CFEC8  ED2AC828             fsubs f9,f10,f25
+  824CFECC  FD005050             fneg f8,f10
+  824CFED0  FCE9566E             fsel f7,f9,f25,f10
+  824CFED4  FCC83EEE             fsel f6,f8,f27,f7
+  824CFED8  FCA03050             fneg f5,f6
+  824CFEDC  EC9FB97A             fmadds f4,f31,f5,f23
+  824CFEE0  EC7EB17A             fmadds f3,f30,f5,f22
+  824CFEE4  EC45C77A             fmadds f2,f5,f29,f24
+  824CFEE8  EC240132             fmuls f1,f4,f4
+  824CFEEC  EC0308FA             fmadds f0,f3,f3,f1
+  824CFEF0  ED8200BA             fmadds f12,f2,f2,f0
+  824CFEF4  FF0D6000             fcmpu cr6,f13,f12
+  824CFEF8  40990008             ble cr6,0x824cff00
+  824CFEFC  38600000             li r3,0x0
+LAB_824cff00:
+  824CFF00  382100B0             addi r1,r1,0xb0
+  824CFF04  3981FFF8             subi r12,r1,0x8
+  824CFF08  484468C5             bl 0x829167cc
+  824CFF0C  8181FFF8             lwz r12,-0x8(r1)
+  824CFF10  7D8803A6             mtspr LR,r12
+  824CFF14  4E800020             blr

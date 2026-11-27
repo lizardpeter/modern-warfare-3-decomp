@@ -42,21 +42,167 @@ void G_DebugStarWithText(void)
 
 // 8246D318  G_DebugBox  (game/g_debug.cpp:51)
 
-void G_DebugBox(void)
+void G_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int *piVar2;
+  float *pfVar3;
+  longlong lVar4;
+  int *piVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_f0 [4];
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  
   __savegprlr_27();
+  pfVar3 = (float *)__savefpr_21();
+  dVar11 = (double)(float)(extraout_f1 * 0.01745329238474369);
+  dVar6 = sin(dVar11);
+  dVar10 = (double)(float)dVar6;
+  dVar6 = cos(dVar11);
+  dVar8 = (double)(float)dVar6;
+  dVar7 = (double)(param_2[1] - param_2[4]);
+  dVar6 = (double)(param_2[1] + param_2[4]);
+  dVar11 = (double)(*param_2 - param_2[3]);
+  dVar9 = (double)(*param_2 + param_2[3]);
+  local_c4 = param_2[2] - param_2[5];
+  local_94 = pfVar3[2];
+  fVar1 = param_2[2] + param_2[5];
+  local_9c = *pfVar3;
+  local_98 = pfVar3[1];
+  local_f0[2] = local_94 + local_c4;
+  local_dc = local_94 + local_c4;
+  local_d0 = local_94 + local_c4;
+  local_c4 = local_94 + local_c4;
+  local_b8 = local_94 + fVar1;
+  local_f0[0] = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_f0[3] = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_cc = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_f0[1] = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_e0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_d8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_d4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
+  lVar4 = 0xc;
+  piVar5 = (int *)&UNK_8206f724;
+  local_ac = local_94 + fVar1;
+  local_c8 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
+  local_c0 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_bc = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_a0 = local_94 + fVar1;
+  local_94 = local_94 + fVar1;
+  local_b4 = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_b0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_a4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
+  local_a8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_9c = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_98 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
+  do {
+    piVar2 = piVar5 + 1;
+    piVar5 = piVar5 + 2;
+    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar5 * 3,param_4,param_5,param_6,1);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  __restfpr_21();
+  __restgprlr_27();
+  return;
 }
 
 
 // 8246D580  G_DebugBoxOriented  (game/g_debug.cpp:93)
 
-void G_DebugBoxOriented(void)
+void G_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+                       undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  int *piVar3;
+  float *pfVar4;
+  float *pfVar5;
+  uint uVar7;
+  longlong lVar6;
+  float *pfVar8;
+  int *piVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  undefined1 local_c0 [8];
+  float local_b8 [46];
+  
+  pfVar4 = (float *)__savegprlr_23();
+  dVar11 = -1.0;
+  dVar12 = 1.0;
+  uVar7 = 0;
+  pfVar8 = local_b8;
+  do {
+    dVar10 = dVar11;
+    if ((uVar7 & 1) != 0) {
+      dVar10 = dVar12;
+    }
+    pfVar5 = pfVar8 + -2;
+    pfVar8[-2] = (float)((double)param_2[3] * dVar10 + (double)*param_2);
+    dVar10 = dVar11;
+    if ((uVar7 & 2) != 0) {
+      dVar10 = dVar12;
+    }
+    pfVar8[-1] = (float)((double)param_2[4] * dVar10 + (double)param_2[1]);
+    dVar10 = dVar11;
+    if ((uVar7 & 4) != 0) {
+      dVar10 = dVar12;
+    }
+    *pfVar8 = (float)((double)param_2[5] * dVar10 + (double)param_2[2]);
+    MatrixTransformVector(pfVar5,param_3,&local_d0);
+    fVar1 = *pfVar4;
+    uVar7 = uVar7 + 1;
+    pfVar8[-1] = local_cc;
+    *pfVar8 = local_c8;
+    *pfVar5 = local_d0;
+    fVar2 = pfVar4[1];
+    *pfVar5 = local_d0 + fVar1;
+    fVar1 = pfVar4[2];
+    pfVar8[-1] = pfVar8[-1] + fVar2;
+    *pfVar8 = *pfVar8 + fVar1;
+    pfVar8 = pfVar8 + 3;
+  } while (uVar7 < 8);
+  lVar6 = 0xc;
+  piVar9 = (int *)&UNK_8206f784;
+  do {
+    piVar3 = piVar9 + 1;
+    piVar9 = piVar9 + 2;
+    CL_AddDebugLine(local_c0 + *piVar3 * 0xc,local_c0 + *piVar9 * 0xc,param_4,param_5,param_6,1);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -87,51 +233,290 @@ void G_DebugCircle(float *param_1,undefined8 param_2,undefined8 param_3,undefine
 
 // 8246D718  G_DebugCircleEx  (game/g_debug.cpp:151)
 
-void G_DebugCircleEx(void)
+void G_DebugCircleEx(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,
+                    undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float *pfVar5;
+  uint uVar6;
+  undefined1 *puVar7;
+  float *pfVar8;
+  double extraout_f1;
+  double dVar9;
+  double _X;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  undefined8 local_160;
+  float local_158;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float fStack_134;
+  undefined1 local_130 [304];
+  
   __savegprlr_26();
+  pfVar5 = (float *)__savefpr_26();
+  local_14c = param_3[1];
+  local_150 = *param_3;
+  fVar1 = param_3[2];
+  fVar2 = SQRT(fVar1 * fVar1 + local_150 * local_150 + local_14c * local_14c);
+  local_148 = 1.0;
+  if (-fVar2 < 0.0) {
+    local_148 = fVar2;
+  }
+  local_148 = 1.0 / local_148;
+  local_150 = local_150 * local_148;
+  local_14c = local_148 * local_14c;
+  local_148 = local_148 * fVar1;
+  dVar15 = extraout_f1;
+  PerpendicularVector(&local_150,&local_140);
+  Vec3Cross(&local_150,&local_140,&local_160);
+  uVar6 = 0;
+  pfVar8 = &fStack_134;
+  dVar14 = 0.39269909262657166;
+  dVar13 = (double)local_158;
+  dVar12 = (double)local_160._4_4_;
+  dVar11 = (double)local_160._0_4_;
+  do {
+    local_160 = (ulonglong)uVar6;
+    _X = (double)(float)((double)local_160 * dVar14);
+    dVar9 = sin(_X);
+    dVar10 = (double)(float)((double)(float)dVar9 * dVar15);
+    dVar9 = cos(_X);
+    fVar1 = (float)(dVar11 * dVar10 + (double)*pfVar5);
+    fVar2 = pfVar5[1];
+    fVar3 = pfVar5[2];
+    pfVar8[1] = fVar1;
+    uVar6 = uVar6 + 1;
+    pfVar8[2] = (float)(dVar12 * dVar10 + (double)fVar2);
+    pfVar8[3] = (float)(dVar13 * dVar10 + (double)fVar3);
+    fVar2 = (float)((double)(float)dVar9 * dVar15);
+    pfVar8[1] = local_140 * fVar2 + fVar1;
+    pfVar8[2] = local_13c * fVar2 + pfVar8[2];
+    pfVar4 = pfVar8 + 3;
+    pfVar8 = pfVar8 + 3;
+    *pfVar8 = local_138 * fVar2 + *pfVar4;
+  } while (uVar6 < 0x10);
+  uVar6 = 0;
+  puVar7 = local_130;
+  do {
+    uVar6 = uVar6 + 1;
+    CL_AddDebugLine(puVar7,local_130 + ((uVar6 & 0xf) + (uVar6 & 0xf) * 2) * 4,param_4,param_5,
+                    param_6,1);
+    puVar7 = puVar7 + 0xc;
+  } while (uVar6 < 0x10);
+  __restfpr_26();
+  __restgprlr_26();
+  return;
 }
 
 
 // 8246D8C0  G_DebugArc  (game/g_debug.cpp:185)
 
-void G_DebugArc(void)
+void G_DebugArc(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  undefined1 *puVar4;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  float *pfVar5;
+  uint uVar7;
+  longlong lVar6;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  double _X;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fStack_134;
+  undefined1 local_130 [304];
+  
   __savegprlr_26();
+  pfVar3 = (float *)__savefpr_26();
+  dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+  if (dVar12 < 0.0) {
+    param_2 = (double)(float)(param_2 - 360.0);
+    dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+  }
+  uVar7 = 0;
+  pfVar5 = &fStack_134;
+  dVar10 = 0.01745329238474369;
+  dVar11 = extraout_f1;
+  do {
+    _X = (double)(float)((double)(float)((double)uVar7 * dVar12 + param_2) * dVar10);
+    dVar8 = sin(_X);
+    dVar9 = (double)(float)dVar8;
+    dVar8 = cos(_X);
+    fVar1 = *pfVar3;
+    uVar7 = uVar7 + 1;
+    fVar2 = pfVar3[2];
+    pfVar5[2] = (float)(dVar9 * dVar11 + (double)pfVar3[1]);
+    pfVar5[1] = (float)((double)(float)dVar8 * dVar11 + (double)fVar1);
+    pfVar5 = pfVar5 + 3;
+    *pfVar5 = fVar2;
+  } while (uVar7 < 0x10);
+  lVar6 = 0xf;
+  puVar4 = local_130;
+  do {
+    CL_AddDebugLine(puVar4,puVar4 + 0xc,in_r7,in_r8,in_r9,1);
+    lVar6 = lVar6 + -1;
+    puVar4 = puVar4 + 0xc;
+  } while (lVar6 != 0);
+  __restfpr_26();
+  __restgprlr_26();
+  return;
 }
 
 
 // 8246D9D8  G_DebugPlane  (game/g_debug.cpp:217)
 
-void G_DebugPlane(void)
+void G_DebugPlane(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                 float *param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                 undefined8 param_9)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float *pfVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_48;
+  float local_44;
+  float local_40;
+  
+  pfVar2 = (float *)__savegprlr_28();
+  local_7c = pfVar2[1];
+  local_80 = *pfVar2;
+  dVar4 = (double)(float)(extraout_f1 - (double)(*param_5 * local_80 + param_5[1] * local_7c));
+  dVar3 = (double)Vec2Normalize(&local_80);
+  fVar1 = (float)(dVar4 / dVar3);
+  dVar3 = (double)(float)(param_2 * 0.5);
+  local_48 = local_80 * fVar1 + *param_5;
+  local_44 = local_7c * fVar1 + param_5[1];
+  local_70 = (float)(dVar3 + (double)param_5[2]);
+  local_78 = -fVar1 * local_80 + local_48;
+  local_74 = -fVar1 * local_7c + local_44;
+  local_40 = local_70;
+  CL_AddDebugLine(&local_48,&local_78,param_6,param_8,param_9,1);
+  local_70 = param_5[2];
+  local_68 = (float)(dVar3 * -(double)local_7c + (double)local_48);
+  local_78 = (float)((double)(float)(param_2 * -0.5) * -(double)local_7c + (double)local_48);
+  local_64 = (float)(dVar3 * (double)local_80 + (double)local_44);
+  local_74 = (float)((double)(float)(param_2 * -0.5) * (double)local_80 + (double)local_44);
+  local_60 = local_70;
+  CL_AddDebugLine(&local_68,&local_78,param_6,param_8,param_9,1);
+  local_60 = (float)((double)local_60 + param_2);
+  local_70 = (float)((double)local_70 + param_2);
+  CL_AddDebugLine(&local_68,&local_78,param_6,param_8,param_9,1);
+  local_50 = (float)((double)local_60 - param_2);
+  local_58 = local_68;
+  local_54 = local_64;
+  CL_AddDebugLine(&local_68,&local_58,param_6,param_8,param_9,1);
+  local_50 = (float)((double)local_70 - param_2);
+  local_58 = local_78;
+  local_54 = local_74;
+  CL_AddDebugLine(&local_78,&local_58,param_6,param_8,param_9,1);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8246DBC0  DrawBrushPoly  (game/g_debug.cpp:285)
 
-void DrawBrushPoly(void)
+void DrawBrushPoly(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  longlong lVar2;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  
+  lVar2 = __savegprlr_27();
+  MatrixTransformVector43(param_2,0xffffffff833461a8,&local_40);
+  lVar2 = lVar2 + -1;
+  lVar1 = param_2;
+  if (0 < lVar2) {
+    do {
+      MatrixTransformVector43(lVar1 + 0xc,0xffffffff833461a8,&local_50);
+      CL_AddDebugLine(&local_40,&local_50,param_3,DAT_833461a0,DAT_833461a4,1);
+      lVar2 = lVar2 + -1;
+      local_40 = local_50;
+      local_3c = local_4c;
+      local_38 = local_48;
+      lVar1 = lVar1 + 0xc;
+    } while (lVar2 != 0);
+  }
+  MatrixTransformVector43(param_2,0xffffffff833461a8,&local_50);
+  CL_AddDebugLine(&local_40,&local_50,param_3,DAT_833461a0,DAT_833461a4,1);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8246DC80  G_DebugDrawBrush_r  (game/g_debug.cpp:305)
 
-void G_DebugDrawBrush_r(void)
+void G_DebugDrawBrush_r(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  ushort *puVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_26();
+  while( true ) {
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8206f7f0,0x136,0,0xffffffff82000f98,0xffffffff8206f7e8);
+    }
+    iVar1 = (int)param_2;
+    if (0 < *(short *)(iVar1 + 2)) break;
+    param_2 = param_2 + 0x14;
+  }
+  iVar4 = 0;
+  if (0 < *(short *)(iVar1 + 2)) {
+    puVar3 = (ushort *)(*(int *)(iVar1 + 8) + -2);
+    do {
+      puVar3 = puVar3 + 1;
+      CM_ShowSingleBrushCollision
+                ((ulonglong)*puVar3 * 0x18 + (ulonglong)*(uint *)(iVar2 + 0x38),
+                 (ulonglong)*puVar3 * 0x24 + (ulonglong)*(uint *)(iVar2 + 0x34),param_3,
+                 0xffffffff8246dbc0);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < *(short *)(iVar1 + 2));
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -146,11 +531,9 @@ void G_DebugDrawBrushModel
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206f7f0,0x14c,0,0xffffffff82000f98,0xffffffff8206f868);
   }
   if (*(char *)(iVar2 + 0x101) != '\x04') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206f7f0,0x14d,0,0xffffffff82000f98,0xffffffff8206f840);
   }
   iVar1 = *(int *)(iVar2 + 0x8c);
@@ -163,11 +546,9 @@ void G_DebugDrawBrushModel
     DAT_833461d4 = *(undefined4 *)(iVar2 + 0x140);
     iVar2 = CM_GetBrushModel(iVar1);
     if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206f7f0,0x15a,0,0xffffffff82000f98,0xffffffff8206f838);
     }
     if (*(int *)(iVar2 + 0x1c) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206f7f0,0x15b,0,0xffffffff82000f98,0xffffffff8206f82c);
     }
     G_DebugDrawBrush_r(*(int *)(iVar2 + 0x1c),
@@ -193,13 +574,14 @@ void G_DebugDrawTriggerModel(undefined8 param_1,undefined8 param_2,undefined4 pa
   int iVar6;
   int iVar7;
   ulonglong uVar8;
-  float *pfVar9;
-  undefined4 *puVar10;
-  float *pfVar11;
-  double dVar12;
+  ulonglong uVar9;
+  float *pfVar10;
+  undefined4 *puVar11;
+  float *pfVar12;
+  double dVar13;
   short local_2c0 [2];
-  undefined4 *local_2bc;
-  undefined4 auStack_290 [34];
+  undefined1 *local_2bc;
+  undefined1 auStack_290 [136];
   float afStack_208 [2];
   undefined4 local_200 [128];
   
@@ -212,11 +594,10 @@ void G_DebugDrawTriggerModel(undefined8 param_1,undefined8 param_2,undefined4 pa
   DAT_833461d4 = *(undefined4 *)(iVar1 + 0x140);
   DAT_833461a0 = param_3;
   if (*(short *)(iVar3 + 4) != 0) {
-    dVar12 = -1.0;
+    dVar13 = -1.0;
     uVar5 = 0;
     do {
       if (*(uint *)(iVar2 + 8) <= *(ushort *)(iVar3 + 6) + uVar5) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206f7f0,0x177,0,0xffffffff82000f98,0xffffffff8206f870);
       }
       local_2bc = auStack_290;
@@ -226,37 +607,37 @@ void G_DebugDrawTriggerModel(undefined8 param_1,undefined8 param_2,undefined4 pa
       local_2c0[0] = *(short *)(iVar1 + 0x1c) << 1;
       if (*(short *)(iVar1 + 0x1c) != 0) {
         iVar6 = 0;
-        puVar10 = local_200;
-        pfVar9 = afStack_208;
+        puVar11 = local_200;
+        pfVar10 = afStack_208;
         do {
           if (*(uint *)(iVar2 + 0x10) <= (uint)*(ushort *)(iVar1 + 0x1e) + iVar7) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8206f7f0,0x17f,0,0xffffffff82000f98,0xffffffff8206f8c0);
           }
           if (0x11 < (uVar8 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8206f7f0,0x180,0,0xffffffff8206f908,uVar8,0x12);
+            MyAssertHandler(0xffffffff8206f7f0,0x181,0,0xffffffff8206f948,uVar8,0x12);
           }
+          uVar9 = uVar8 + 1;
           iVar4 = ((uint)*(ushort *)(iVar1 + 0x1e) + iVar7) * 0x14;
-          pfVar11 = (float *)(iVar4 + *(int *)(iVar2 + 0x14));
-          *puVar10 = *(undefined4 *)(iVar4 + *(int *)(iVar2 + 0x14));
-          puVar10[1] = pfVar11[1];
-          puVar10[2] = pfVar11[2];
-          pfVar9[5] = pfVar11[4] + pfVar11[3];
-          *(undefined4 **)((int)local_2bc + iVar6) = puVar10;
-          if (0x11 < (uVar8 + 1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff8206f7f0,0x187,0,0xffffffff8206f908,uVar8 + 1,0x12);
+          pfVar12 = (float *)(iVar4 + *(int *)(iVar2 + 0x14));
+          *puVar11 = *(undefined4 *)(iVar4 + *(int *)(iVar2 + 0x14));
+          puVar11[1] = pfVar12[1];
+          puVar11[2] = pfVar12[2];
+          pfVar10[5] = pfVar12[4] + pfVar12[3];
+          *(undefined4 **)(local_2bc + iVar6) = puVar11;
+          if (0x11 < (uVar9 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8206f7f0,0x187,0,0xffffffff8206f908,uVar9,0x12);
+            MyAssertHandler(0xffffffff8206f7f0,0x188,0,0xffffffff8206f948,uVar9,0x12);
           }
-          puVar10[5] = (float)((double)*pfVar11 * dVar12);
-          puVar10[6] = (float)((double)pfVar11[1] * dVar12);
+          puVar11[5] = (float)((double)*pfVar12 * dVar13);
+          puVar11[6] = (float)((double)pfVar12[1] * dVar13);
           iVar7 = iVar7 + 1;
-          puVar10[7] = (float)((double)pfVar11[2] * dVar12);
+          puVar11[7] = (float)((double)pfVar12[2] * dVar13);
           uVar8 = uVar8 + 2;
-          pfVar9 = pfVar9 + 10;
-          *pfVar9 = pfVar11[4] - pfVar11[3];
-          *(undefined4 **)((int)local_2bc + iVar6 + 8) = puVar10 + 5;
-          puVar10 = puVar10 + 10;
+          pfVar10 = pfVar10 + 10;
+          *pfVar10 = pfVar12[4] - pfVar12[3];
+          *(undefined4 **)(local_2bc + iVar6 + 8) = puVar11 + 5;
+          puVar11 = puVar11 + 10;
           iVar6 = iVar6 + 0x10;
         } while (iVar7 < (int)(uint)*(ushort *)(iVar1 + 0x1c));
       }
@@ -271,11 +652,185 @@ void G_DebugDrawTriggerModel(undefined8 param_1,undefined8 param_2,undefined4 pa
 
 // 8246E158  G_DrawTriggerGeometry  (game/g_debug.cpp:404)
 
-void G_DrawTriggerGeometry(void)
+void G_DrawTriggerGeometry(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 uVar1;
+  int iVar2;
+  char *_Str2;
+  int iVar3;
+  double dVar4;
+  undefined4 local_50;
+  undefined4 local_4c;
+  float local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  float local_38;
+  
+  iVar2 = __savegprlr_28();
+  uVar1 = *(undefined1 *)(DAT_8353feec + 0xc);
+  _Str2 = (char *)SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
+  iVar3 = strncmp("trigger_radius",_Str2,0xe);
+  if (iVar3 == 0) {
+    local_38 = *(float *)(iVar2 + 0x140);
+    local_50 = *(undefined4 *)(iVar2 + 0x138);
+    local_4c = *(undefined4 *)(iVar2 + 0x13c);
+    local_48 = *(float *)(iVar2 + 0x118) * 2.0 + local_38;
+    dVar4 = (double)*(float *)(iVar2 + 0x110);
+    local_40 = local_50;
+    local_3c = local_4c;
+    G_DebugCircleEx(dVar4,&local_40);
+    G_DebugCircleEx(dVar4,&local_50);
+    CL_AddDebugLine(&local_40,&local_50,param_3,uVar1,0,1);
+    __restgprlr_28();
+    return;
+  }
+  iVar3 = strncmp("trigger_disk",_Str2,0xc);
+  if (iVar3 == 0) {
+    G_DebugCircleEx((double)*(float *)(iVar2 + 0x110),iVar2 + 0x138);
+    __restgprlr_28();
+    return;
+  }
+  G_DebugDrawTriggerModel(iVar2,param_3,uVar1);
+  __restgprlr_28();
+  return;
+}
+
+
+// 8246E2D8  G_DrawTriggers  (game/g_debug.cpp:442)
+
+void G_DrawTriggers(void)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar6;
+  ulonglong uVar5;
+  int iVar7;
+  float *pfVar8;
+  int iVar9;
+  float *pfVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  char local_a0 [12];
+  float local_94;
+  undefined4 local_90;
+  undefined4 local_8c;
+  undefined4 local_88;
+  undefined4 local_84;
+  
+  __savegprlr_25();
+  iVar6 = __savefpr_25();
+  dVar16 = 1.0;
+  dVar11 = 0.0;
+  iVar7 = -1;
+  local_a0[0] = '?';
+  local_a0[1] = -0x80;
+  local_a0[2] = '\0';
+  local_a0[3] = '\0';
+  pfVar8 = (float *)0x0;
+  local_a0[4] = '\0';
+  local_a0[5] = '\0';
+  local_a0[6] = '\0';
+  local_a0[7] = '\0';
+  local_a0[8] = '\0';
+  local_a0[9] = '\0';
+  local_a0[10] = '\0';
+  local_a0[0xb] = '\0';
+  local_94 = 0.75;
+  local_90 = 0x3f800000;
+  local_8c = 0x3f800000;
+  local_88 = 0x3f800000;
+  local_84 = 0x3f400000;
+  dVar13 = 0.8191519975662231;
+  dVar17 = dVar11;
+  uVar5 = CG_GetLocalClientGlobals(*(undefined4 *)(DAT_833737d8 + 0x150));
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206f7f0,0x1d8,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  G_GetPlayerViewOrigin(uVar5,&local_c8);
+  BG_GetPlayerViewDirection(uVar5,&local_d8,0,0);
+  iVar9 = 1;
+  dVar12 = (double)SQRT(local_d8 * local_d8 + local_d0 * local_d0 + local_d4 * local_d4);
+  dVar14 = dVar16;
+  if (-dVar12 < 0.0) {
+    dVar14 = dVar12;
+  }
+  fVar1 = (float)(dVar16 / dVar14);
+  local_d8 = local_d8 * fVar1;
+  local_d4 = local_d4 * fVar1;
+  local_d0 = local_d0 * fVar1;
+  if (1 < DAT_83580b08) {
+    pfVar10 = (float *)&DAT_83373a40;
+    do {
+      if (((*(char *)((int)pfVar10 + -0x3d) != '\0') && (((uint)pfVar10[-9] & 0x405c0008) != 0)) &&
+         (pfVar10[-0x4f] != 4.2039e-45)) {
+        fVar1 = pfVar10[-1] - local_c4;
+        fVar3 = *pfVar10 - local_c0;
+        fVar4 = pfVar10[-2] - local_c8;
+        dVar17 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar1 * fVar1);
+        dVar14 = dVar16;
+        if (-dVar17 < 0.0) {
+          dVar14 = dVar17;
+        }
+        fVar2 = (float)(dVar16 / dVar14);
+        dVar15 = (double)(fVar2 * fVar4);
+        dVar12 = (double)(fVar1 * fVar2);
+        dVar14 = (double)(fVar3 * fVar2);
+        if (dVar17 <= (double)(longlong)*(int *)(DAT_8353febc + 0xc)) {
+          CL_AddDebugStar(pfVar10 + -2,local_a0,0x14,1);
+          dVar14 = (double)(float)(dVar14 * (double)local_d0 +
+                                  (double)(float)(dVar12 * (double)local_d4 +
+                                                 (double)(float)(dVar15 * (double)local_d8)));
+          if (dVar13 < dVar14) {
+            pfVar8 = pfVar10 + -0x50;
+            dVar11 = dVar17;
+            dVar13 = dVar14;
+            iVar7 = iVar9;
+          }
+          if (iVar6 == 2) {
+            G_DrawTriggerGeometry(dVar17,pfVar10 + -0x50);
+          }
+        }
+      }
+      iVar9 = iVar9 + 1;
+      pfVar10 = pfVar10 + 0xa0;
+    } while (iVar9 < DAT_83580b08);
+    if (iVar7 != -1) {
+      local_94 = (float)dVar16;
+      builtin_strncpy(local_a0,"?fff?fff?fff",0xc);
+      G_DrawTriggerGeometry(dVar11,pfVar8);
+      local_b4 = pfVar8[0x4f];
+      local_b0 = pfVar8[0x50];
+      local_b8 = pfVar8[0x4e];
+      if (10.0 <= dVar17) {
+        fVar1 = (float)(dVar11 * 0.0017500000540167093);
+      }
+      else {
+        fVar1 = 0.0175;
+      }
+      Scr_DrawDebugVariablesForEntity((double)fVar1,*pfVar8,&local_b8,&local_90);
+    }
+  }
+  __restfpr_25();
+  __restgprlr_25();
+  return;
 }
 
 
@@ -292,8 +847,8 @@ void G_DebugDrawVolumeModel(int param_1)
     if (DAT_84013128 != 0) {
       return;
     }
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206f7f0,0x215,0,0xffffffff8206f9b0);
+    return;
   }
   G_DebugDrawBrushModel();
   return;
@@ -314,68 +869,65 @@ void EntInfoLine(void)
   undefined8 uVar5;
   undefined8 uVar6;
   undefined8 uVar7;
-  int iVar10;
-  ulonglong uVar11;
-  double dVar12;
+  ulonglong uVar10;
+  double dVar11;
   undefined1 local_80 [128];
   
   iVar8 = __savegprlr_20();
-  iVar10 = iVar8 * 0x280;
-  if (*(short *)(&DAT_833737e8 + iVar10) == 0) {
+  if ((&DAT_833737e8)[iVar8 * 0x140] == 0) {
     puVar9 = (uint *)0x0;
   }
   else {
     puVar9 = (uint *)G_GetModel();
   }
-  uVar11 = 0xffffffff820068af;
+  uVar10 = 0xffffffff820068af;
   fVar1 = (float)(&DAT_833737c0)[iVar8 * 0xa0] - *(float *)(DAT_82a76fac + 0x14);
   fVar2 = (float)(&DAT_833737b8)[iVar8 * 0xa0] - *(float *)(DAT_82a76fac + 0xc);
   fVar3 = (float)(&DAT_833737bc)[iVar8 * 0xa0] - *(float *)(DAT_82a76fac + 0x10);
-  dVar12 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  dVar11 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
   if ((&DAT_833737d8)[iVar8 * 0xa0] != 0) {
     CG_GetTeamName(*(undefined4 *)((&DAT_833737d8)[iVar8 * 0xa0] + 0x33d4));
   }
-  if (*(undefined4 **)(&DAT_83373894 + iVar10) == (undefined4 *)0x0) {
+  if ((undefined4 *)(&DAT_83373894)[iVar8 * 0xa0] == (undefined4 *)0x0) {
     local_80[0] = 0;
   }
   else {
-    Com_sprintf(local_80,5,0xffffffff8200c28c,
-                *(undefined4 *)**(undefined4 **)(&DAT_83373894 + iVar10));
+    Com_sprintf(local_80,5,0xffffffff8200c28c,**(undefined4 **)(&DAT_83373894)[iVar8 * 0xa0]);
   }
-  if (*(short *)(&DAT_833737f6 + iVar10) != 0) {
+  if ((&DAT_833737f6)[iVar8 * 0x140] != 0) {
     SL_ConvertToString();
   }
-  if (*(short *)(&DAT_833737f8 + iVar10) != 0) {
+  if ((&DAT_833737f8)[iVar8 * 0x140] != 0) {
     SL_ConvertToString();
   }
-  if (*(short *)(&DAT_833737fa + iVar10) == 0) {
+  if ((&DAT_833737fa)[iVar8 * 0x140] == 0) {
     uVar4 = 0xffffffff820068af;
   }
   else {
     uVar4 = SL_ConvertToString();
   }
   if (puVar9 != (uint *)0x0) {
-    uVar11 = (ulonglong)*puVar9;
+    uVar10 = (ulonglong)*puVar9;
   }
-  if (*(short *)(&DAT_833737f4 + iVar10) == 0) {
+  if ((&DAT_833737f4)[iVar8 * 0x140] == 0) {
     uVar5 = 0xffffffff820068af;
   }
   else {
     uVar5 = SL_ConvertToString();
   }
-  if (*(short *)(&DAT_833737f2 + iVar10) == 0) {
+  if ((&DAT_833737f2)[iVar8 * 0x140] == 0) {
     uVar6 = 0xffffffff820068af;
   }
   else {
     uVar6 = SL_ConvertToString();
   }
-  if (*(int *)(&DAT_83373684 + iVar10) < 0x12) {
+  if ((int)(&DAT_83373684)[iVar8 * 0xa0] < 0x12) {
     uVar7 = G_GetEntityTypeName(&DAT_83373680 + iVar8 * 0xa0);
   }
   else {
     uVar7 = 0xffffffff8206fa28;
   }
-  va(dVar12,0xffffffff8206f9e0,iVar8,uVar7,dVar12,uVar6,uVar5,uVar11,uVar4);
+  va(dVar11,0xffffffff8206f9e0,iVar8,uVar7,dVar11,uVar6,uVar5,uVar10,uVar4);
   __restgprlr_20();
   return;
 }
@@ -404,41 +956,37 @@ void G_DumpEntityDebugInfoToCSV(void)
   uVar5 = va(0xffffffff8206fa9c,0xffffffff8206faa8,uVar5,pcVar3,0xffffffff8206fab0);
   Com_Printf(0xf,0xffffffff8206fa7c,uVar5);
   uVar2 = FS_FOpenTextFileWrite(uVar5);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintError(0xf,0xffffffff8206fa54,uVar5);
+  if ((uVar2 & 0xffffffff) != 0) {
+    FS_Write(0xffffffff8206f690,0x93,uVar2);
+    lVar7 = 0;
+    pcVar3 = &DAT_83373783;
+    do {
+      if (*pcVar3 != '\0') {
+        pcVar4 = (char *)EntInfoLine(lVar7);
+        pcVar6 = pcVar4;
+        if (pcVar4 == (char *)0x0) {
+          MyAssertHandler(0xffffffff8206f7f0,0x279,0,0xffffffff82000f98,0xffffffff8206fa44);
+        }
+        do {
+          cVar1 = *pcVar6;
+          pcVar6 = pcVar6 + 1;
+        } while (cVar1 != '\0');
+        if (pcVar6 + (-1 - (int)pcVar4) == (char *)0x0) {
+          MyAssertHandler(0xffffffff8206f7f0,0x27b,0,0xffffffff82000f98,0xffffffff8206fa4c);
+        }
+        FS_Write(pcVar4,pcVar6 + (-1 - (int)pcVar4),uVar2);
+      }
+      pcVar3 = pcVar3 + 0x280;
+      lVar7 = lVar7 + 1;
+    } while ((int)pcVar3 < -0x7cb4c87d);
+    FS_FCloseFile(uVar2);
+    Com_Printf(0xf,0xffffffff8206fa30,uVar5);
     __restgprlr_21();
     return;
   }
-  FS_Write(0xffffffff8206f690,0x93,uVar2);
-  lVar7 = 0;
-  pcVar3 = &DAT_83373783;
-  do {
-    if (*pcVar3 != '\0') {
-      pcVar4 = (char *)EntInfoLine(lVar7);
-      pcVar6 = pcVar4;
-      if (pcVar4 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8206f7f0,0x279,0,0xffffffff82000f98,0xffffffff8206fa44);
-      }
-      do {
-        cVar1 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
-      } while (cVar1 != '\0');
-      if (pcVar6 + (-1 - (int)pcVar4) == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8206f7f0,0x27b,0,0xffffffff82000f98,0xffffffff8206fa4c);
-      }
-      FS_Write(pcVar4,pcVar6 + (-1 - (int)pcVar4),uVar2);
-    }
-    pcVar3 = pcVar3 + 0x280;
-    lVar7 = lVar7 + 1;
-    if (-0x7cb4c87e < (int)pcVar3) {
-      FS_FCloseFile(uVar2);
-      Com_Printf(0xf,0xffffffff8206fa30,uVar5);
-      __restgprlr_21();
-      return;
-    }
-  } while( true );
+  Com_PrintError(0xf,0xffffffff8206fa54,uVar5);
+  __restgprlr_21();
+  return;
 }
 
 
@@ -447,8 +995,99 @@ void G_DumpEntityDebugInfoToCSV(void)
 void G_DumpEntityDebugInfoToConsole(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  char cVar10;
+  uint *puVar9;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  ulonglong uVar8;
+  longlong lVar11;
+  longlong lVar12;
+  short *psVar13;
+  double dVar14;
+  undefined1 local_b0 [176];
+  
+  cVar10 = __savegprlr();
+  lVar11 = (-(ulonglong)(cVar10 != '\0') << 0x20 | -(ulonglong)(cVar10 != '\0') & 0xfffffff7) + 0xf;
+  Com_Printf(lVar11);
+  Com_Printf(lVar11,0xffffffff8206fad8);
+  Com_Printf(lVar11,0xffffffff8206f690);
+  lVar12 = 0;
+  psVar13 = &DAT_833737e8;
+  do {
+    if (*(char *)((int)psVar13 + -0x65) != '\0') {
+      if (*psVar13 == 0) {
+        puVar9 = (uint *)0x0;
+      }
+      else {
+        puVar9 = (uint *)G_GetModel();
+      }
+      fVar1 = *(float *)(psVar13 + -0x14) - *(float *)(DAT_82a76fac + 0x14);
+      fVar2 = *(float *)(psVar13 + -0x18) - *(float *)(DAT_82a76fac + 0xc);
+      fVar3 = *(float *)(psVar13 + -0x16) - *(float *)(DAT_82a76fac + 0x10);
+      dVar14 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+      if (*(int *)(psVar13 + -8) != 0) {
+        CG_GetTeamName(*(undefined4 *)(*(int *)(psVar13 + -8) + 0x33d4));
+      }
+      if (*(undefined4 **)(psVar13 + 0x56) == (undefined4 *)0x0) {
+        local_b0[0] = 0;
+      }
+      else {
+        Com_sprintf(local_b0,5,&DAT_8200c28c,*(undefined4 *)**(undefined4 **)(psVar13 + 0x56));
+      }
+      if (psVar13[7] != 0) {
+        SL_ConvertToString();
+      }
+      if (psVar13[8] != 0) {
+        SL_ConvertToString();
+      }
+      if (psVar13[9] == 0) {
+        uVar4 = 0xffffffff820068af;
+      }
+      else {
+        uVar4 = SL_ConvertToString();
+      }
+      uVar8 = 0xffffffff820068af;
+      if (puVar9 != (uint *)0x0) {
+        uVar8 = (ulonglong)*puVar9;
+      }
+      if (psVar13[6] == 0) {
+        uVar5 = 0xffffffff820068af;
+      }
+      else {
+        uVar5 = SL_ConvertToString();
+      }
+      if (psVar13[5] == 0) {
+        uVar6 = 0xffffffff820068af;
+      }
+      else {
+        uVar6 = SL_ConvertToString();
+      }
+      if (*(int *)(psVar13 + -0xb2) < 0x12) {
+        uVar7 = G_GetEntityTypeName(psVar13 + -0xb4);
+      }
+      else {
+        uVar7 = 0xffffffff8206fa28;
+      }
+      uVar8 = va(dVar14,0xffffffff8206f9e0,lVar12,uVar7,dVar14,uVar6,uVar5,uVar8,uVar4);
+      if ((uVar8 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8206f7f0,0x296,0,0xffffffff82000f98,0xffffffff8206fa44);
+      }
+      Com_Printf(lVar11,uVar8);
+    }
+    psVar13 = psVar13 + 0x140;
+    lVar12 = lVar12 + 1;
+  } while ((int)psVar13 < -0x7cb4c818);
+  Com_Printf(lVar11,0xffffffff8206fab8);
+  Com_Printf(lVar11,
+             "=====================================================================================\n"
+            );
+  __restgprlr();
+  return;
 }
 
 
@@ -489,6 +1128,28 @@ bool CanStartCounting(void)
 }
 
 
+// 8246EDB8  G_LogDebugEntInfoStart  (game/g_debug.cpp:723)
+
+void G_LogDebugEntInfoStart(void)
+
+{
+  bool bVar1;
+  
+  bVar1 = false;
+  if (DAT_82a9a00c != 0) {
+    bVar1 = *(int *)(DAT_82a9a00c + 0xc) == 3;
+  }
+  if (bVar1) {
+    if (DAT_83346144 == 0) {
+      MyAssertHandler(0xffffffff8206f7f0,0x2d7,0,0xffffffff82000f98,0xffffffff8206fb58);
+    }
+    Com_Memset(DAT_83346144,0,0x54);
+    DAT_833464d4 = 1;
+  }
+  return;
+}
+
+
 // 8246EE58  G_LogDebugEntInfoEnd  (game/g_debug.cpp:735)
 
 void G_LogDebugEntInfoEnd(void)
@@ -501,12 +1162,11 @@ void G_LogDebugEntInfoEnd(void)
   int *piVar5;
   longlong lVar6;
   
-  puVar2 = DAT_83346144;
   if (DAT_833464d4 != '\0') {
     if (DAT_83346144 == (undefined *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206f7f0,0x2e5,0,0xffffffff82000f98,0xffffffff8206fb58);
     }
+    puVar2 = DAT_83346144;
     piVar3 = (int *)(DAT_83346144 + 8);
     piVar5 = (int *)(DAT_83346144 + -4);
     *(undefined4 *)(DAT_83346144 + 0x50) = 0;
@@ -549,9 +1209,28 @@ void G_LogDebugEntInfoEnd(void)
     if (DAT_83346144 != &DAT_83346480) {
       iVar4 = 0x390;
     }
-    DAT_83346144 = &DAT_833460f0 + iVar4;
+    DAT_83346144 = (undefined *)((int)&DAT_833460f0 + iVar4);
     DAT_833464d4 = '\0';
   }
+  return;
+}
+
+
+// 8246EFC8  G_LogDebugEntInfo  (game/g_debug.cpp:768)
+
+void G_LogDebugEntInfo(int param_1)
+
+{
+  int iVar1;
+  
+  if (DAT_833464d4 == '\0') {
+    return;
+  }
+  iVar1 = *(int *)(param_1 + 4);
+  if (0x11 < iVar1) {
+    iVar1 = 0x12;
+  }
+  *(int *)(iVar1 * 4 + DAT_83346144) = *(int *)(iVar1 * 4 + DAT_83346144) + 1;
   return;
 }
 
@@ -574,6 +1253,68 @@ ulonglong GetName(int param_1)
     return 0xffffffff8206fb78;
   }
   return 0xffffffff8206fb70;
+}
+
+
+// 8246F070  G_LogDebugEntInfoResults  (game/g_debug.cpp:797)
+
+void G_LogDebugEntInfoResults(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  char *pcVar8;
+  
+  __savegprlr_27();
+  iVar6 = DAT_8334622c;
+  if (DAT_8334622c != 0) {
+    uVar7 = 0;
+    do {
+      iVar5 = (int)uVar7;
+      if (iVar5 < 0x12) {
+        pcVar8 = *(char **)((int)&PTR_s_ET_GENERAL_8296b398 + (int)((uVar7 & 0xffffffff) << 2));
+      }
+      else if (iVar5 == 0x12) {
+        pcVar8 = "ET_EVENTS";
+      }
+      else if (iVar5 == 0x13) {
+        pcVar8 = "Total Standard Ents";
+      }
+      else {
+        pcVar8 = "FX-Entities";
+        if (iVar5 != 0x14) {
+          pcVar8 = "UNKNOWN";
+        }
+      }
+      (&DAT_83346288)[iVar5 * 6] = pcVar8;
+      iVar3 = (int)((uVar7 & 0x3fffffff) << 2);
+      iVar1 = *(int *)((int)&DAT_833460f0 + iVar3);
+      iVar2 = *(int *)((int)&DAT_833461d8 + iVar3);
+      (&DAT_8334628c)[iVar5 * 6] = *(undefined4 *)(iVar3 + iVar6);
+      (&DAT_83346290)[iVar5 * 6] = iVar1;
+      (&DAT_83346294)[iVar5 * 6] = iVar2;
+      fVar4 = 0.0;
+      if (iVar2 != 0) {
+        fVar4 = (float)(longlong)*(int *)(iVar3 + iVar6) / (float)(longlong)iVar2;
+      }
+      (&DAT_83346298)[iVar5 * 6] = fVar4;
+      fVar4 = 0.0;
+      if (iVar2 != 0) {
+        fVar4 = (float)(longlong)iVar1 / (float)(longlong)iVar2;
+      }
+      uVar7 = uVar7 + 1;
+      (&DAT_8334629c)[iVar5 * 6] = fVar4;
+    } while ((int)uVar7 < 0x15);
+    __restgprlr_27(1);
+    return;
+  }
+  __restgprlr_27();
+  return;
 }
 
 

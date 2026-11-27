@@ -12,31 +12,84 @@ void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 // 824D7AF0  DCache_IO_CreateFile  (qcommon/com_dcache_io.cpp:54)
 
-void DCache_IO_CreateFile(void)
+void DCache_IO_CreateFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  LPCSTR pCVar3;
+  HANDLE pvVar4;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x39,0,0xffffffff82000f98,0xffffffff820363b8);
+  }
+  pCVar3 = (LPCSTR)va(0xffffffff82083ecc,uVar1);
+  pvVar4 = CreateFileA(pCVar3,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,1,0,(HANDLE)0x0);
+  uVar2 = 2;
+  *(undefined4 *)param_2 = pvVar4;
+  if ((pvVar4 == (HANDLE)0x0) || (pvVar4 == (HANDLE)0xffffffff)) {
+    pCVar3 = (LPCSTR)va(0xffffffff82083ecc,uVar1);
+    pvVar4 = CreateFileA(pCVar3,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
+    uVar2 = 1;
+    *(undefined4 *)param_2 = pvVar4;
+    if ((pvVar4 == (HANDLE)0x0) || (pvVar4 == (HANDLE)0xffffffff)) {
+      Com_PrintError(0x10,0xffffffff82083ea4);
+      uVar2 = 0;
+    }
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 824D7BE0  DCache_IO_ReadBytes  (qcommon/com_dcache_io.cpp:128)
 
-void DCache_IO_ReadBytes(void)
+void DCache_IO_ReadBytes(undefined8 param_1,int param_2,DWORD param_3,LPVOID param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  HANDLE hFile;
+  BOOL BVar1;
+  DWORD local_30 [12];
+  
+  hFile = (HANDLE)__savegprlr_28();
+  local_30[0] = 0;
+  if (hFile == (HANDLE)0x0) {
+    Com_PrintError(0x10,0xffffffff82083f54);
+  }
+  else {
+    BVar1 = SetFilePointerEx(hFile,(LARGE_INTEGER)(longlong)param_2,(PLARGE_INTEGER)0x0,0);
+    if (BVar1 == 0) {
+      Com_PrintError(0x10,0xffffffff82083f70,(longlong)param_2);
+    }
+    else {
+      ReadFile(hFile,param_4,param_3,local_30,(LPOVERLAPPED)0x0);
+    }
+  }
+  if (local_30[0] == 0) {
+    Com_PrintError(0x10,0xffffffff82083f1c);
+  }
+  __restgprlr_28(local_30[0]);
+  return;
 }
 
 
 // 824D7C90  DCache_IO_WriteBytes  (qcommon/com_dcache_io.cpp:183)
 
-void DCache_IO_WriteBytes(void)
+void DCache_IO_WriteBytes(undefined8 param_1,int param_2,DWORD param_3,LPCVOID param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  HANDLE hFile;
+  DWORD local_30 [12];
+  
+  hFile = (HANDLE)__savegprlr_29();
+  local_30[0] = 0;
+  if (hFile != (HANDLE)0x0) {
+    SetFilePointerEx(hFile,(LARGE_INTEGER)(longlong)param_2,(PLARGE_INTEGER)0x0,0);
+    WriteFile(hFile,param_4,param_3,local_30,(LPOVERLAPPED)0x0);
+  }
+  __restgprlr_29(local_30[0]);
+  return;
 }
 
 
@@ -51,11 +104,88 @@ longlong DCache_IO_GetFileOffsetFromBlockIndex(ulonglong param_1)
 
 // 824D7CF8  DCache_IO_WriteBlock  (qcommon/com_dcache_io.cpp:230)
 
-void DCache_IO_WriteBlock(void)
+void DCache_IO_WriteBlock(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  HANDLE hFile;
+  ulonglong uVar1;
+  int iVar2;
+  char cVar4;
+  undefined4 uVar3;
+  DWORD local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = DCache_TOC_GetTOC();
+  cVar4 = DCache_TOC_IsBlockReserved(uVar1);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82083ed8,0xed,0,0xffffffff82000f98,0xffffffff82083f90);
+  }
+  uVar3 = Com_BlockChecksumKey32(param_2,param_3,0);
+  local_30[0] = 0;
+  *(undefined4 *)((int)((uVar1 + 0x2302 & 0xffffffff) << 2) + iVar2) = uVar3;
+  hFile = DAT_835f161c;
+  if (DAT_835f161c != (HANDLE)0x0) {
+    SetFilePointerEx(DAT_835f161c,(LARGE_INTEGER)(longlong)(int)((uVar1 & 0xffffffff) << 0x11),
+                     (PLARGE_INTEGER)0x0,0);
+    WriteFile(hFile,(LPCVOID)param_2,(DWORD)param_3,local_30,(LPOVERLAPPED)0x0);
+    __restgprlr_28(local_30[0]);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 824D7DD0  DCache_IO_WriteBlockWithOffset  (qcommon/com_dcache_io.cpp:250)
+
+void DCache_IO_WriteBlockWithOffset(undefined8 param_1,int param_2,LPCVOID param_3,DWORD param_4)
+
+{
+  HANDLE hFile;
+  int iVar1;
+  char cVar2;
+  DWORD local_40 [16];
+  
+  iVar1 = __savegprlr_26();
+  cVar2 = DCache_TOC_IsBlockReserved();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083ed8,0xff,0,0xffffffff82000f98,0xffffffff82083f90);
+  }
+  if (0x20000 - param_2 < (int)param_4) {
+    MyAssertHandler(0xffffffff82083ed8,0x100,0,0xffffffff82000f98,0xffffffff82083fbc);
+  }
+  hFile = DAT_835f161c;
+  local_40[0] = 0;
+  if (DAT_835f161c != (HANDLE)0x0) {
+    SetFilePointerEx(DAT_835f161c,(LARGE_INTEGER)(longlong)(iVar1 * 0x20000 + param_2),
+                     (PLARGE_INTEGER)0x0,0);
+    WriteFile(hFile,param_3,param_4,local_40,(LPOVERLAPPED)0x0);
+  }
+  __restgprlr_26(local_40[0]);
+  return;
+}
+
+
+// 824D7EB0  DCache_IO_ReadBlockWithOffset  (qcommon/com_dcache_io.cpp:263)
+
+void DCache_IO_ReadBlockWithOffset
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  char cVar2;
+  
+  uVar1 = __savegprlr_26();
+  cVar2 = DCache_TOC_IsBlockReserved();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083ed8,0x10c,0,0xffffffff82000f98,0xffffffff82083f90);
+  }
+  if (0x20000 - (int)param_2 < (int)param_4) {
+    MyAssertHandler(0xffffffff82083ed8,0x10d,0,0xffffffff82000f98,0xffffffff82083fbc);
+  }
+  DCache_IO_ReadBytes(DAT_835f161c,(uVar1 & 0x7fff) * 0x20000 + param_2,param_4,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -75,7 +205,6 @@ void DCache_IO_ReadBlock(undefined8 param_1,undefined8 param_2,longlong param_3,
   iVar3 = DCache_TOC_GetTOC();
   cVar5 = DCache_TOC_IsBlockReserved(uVar1);
   if (cVar5 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083ed8,0x11b,0,0xffffffff82000f98,0xffffffff82083f90);
   }
   lVar6 = (uVar1 & 0x7fff) * 0x20000;
@@ -100,21 +229,102 @@ LAB_824d803c:
 
 // 824D8058  DCache_IO_GetBlockIndexForOffset  (qcommon/com_dcache_io.cpp:310)
 
-void DCache_IO_GetBlockIndexForOffset(void)
+void DCache_IO_GetBlockIndexForOffset(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = 0;
+  lVar4 = 0;
+  do {
+    cVar2 = DCache_TOC_IsBitSet(uVar1,lVar4);
+    if (cVar2 != '\0') {
+      if (iVar3 == ((int)param_2 >> 0x11) + (uint)((int)param_2 < 0 && (param_2 & 0x1ffff) != 0)) {
+        __restgprlr_28(lVar4);
+        return;
+      }
+      iVar3 = iVar3 + 1;
+    }
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 < 0x800);
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x145,0,0xffffffff8208405c);
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824D80F0  DCache_IO_StreamFileData  (qcommon/com_dcache_io.cpp:334)
 
-void DCache_IO_StreamFileData(void)
+void DCache_IO_StreamFileData
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  int iVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  longlong lVar10;
+  
+  uVar1 = __savegprlr_18();
+  lVar10 = param_2 + ((longlong)((int)param_2 >> 0x11) +
+                      (ulonglong)((int)param_2 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) * -0x20000
+  ;
+  uVar2 = DCache_IO_GetBlockIndexForOffset();
+  lVar5 = 0x20000 - lVar10;
+  if ((int)param_3 <= (int)lVar5) {
+    lVar5 = param_3;
+  }
+  lVar5 = DCache_IO_WriteBlockWithOffset(uVar2,lVar10,param_4,lVar5);
+  if ((int)lVar5 < 1) {
+    MyAssertHandler(0xffffffff82083ed8,0x15a,0,0xffffffff82000f98,0xffffffff820840a4);
+  }
+  uVar8 = param_3 - lVar5;
+  if (0 < (longlong)uVar8) {
+    iVar9 = (int)uVar8;
+    iVar6 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0);
+    if (uVar8 != ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0) &
+                 0x7fff) << 0x11) {
+      iVar6 = iVar6 + 1;
+    }
+    lVar7 = 0;
+    lVar10 = lVar5;
+    if (0 < iVar6) {
+      do {
+        if ((int)uVar8 < 1) {
+          MyAssertHandler(0xffffffff82083ed8,0x16c,0,0xffffffff82000f98,0xffffffff820589cc);
+        }
+        lVar3 = DCache_IO_GetBlockIndexForOffset(uVar1,param_2);
+        uVar4 = uVar8;
+        if (0x20000 < (int)uVar8) {
+          uVar4 = 0x20000;
+        }
+        lVar3 = DCache_IO_WriteBlock(lVar3 + lVar7 + 1,lVar10 + param_4,uVar4);
+        if ((int)lVar3 < 1) {
+          MyAssertHandler(0xffffffff82083ed8,0x175,0,0xffffffff82000f98,0xffffffff820840a4);
+        }
+        lVar7 = lVar7 + 1;
+        uVar8 = uVar8 - lVar3;
+        lVar5 = lVar3 + lVar5;
+        lVar10 = lVar3 + lVar10;
+      } while ((int)lVar7 < iVar6);
+    }
+  }
+  if ((int)uVar8 != 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x17d,0,0xffffffff82000f98,0xffffffff82084098);
+  }
+  __restgprlr_18(lVar5);
+  return;
 }
 
 
@@ -138,18 +348,16 @@ void DCache_IO_WriteFileData(undefined8 param_1,ulonglong param_2,longlong param
   iVar9 = (int)param_2;
   iVar7 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (param_2 & 0x1ffff) != 0);
   if (param_2 !=
-      ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) *
-      0x20000) {
+      ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) <<
+      0x11) {
     iVar7 = iVar7 + 1;
   }
   iVar4 = (int)uVar1 * 0x118 + iVar4;
   if (*(int *)(iVar4 + 0x14) != iVar9) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083ed8,0x18c,0,0xffffffff82000f98,0xffffffff82084130);
   }
   iVar5 = DCache_TOC_GetBlocksUsed(uVar1);
   if (iVar5 != iVar7) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083ed8,0x18d,0,0xffffffff82000f98,0xffffffff820840f4);
   }
   if ((*(int *)(iVar4 + 0x14) == iVar9) && (iVar4 = DCache_TOC_GetBlocksUsed(uVar1), iVar4 == iVar7)
@@ -159,7 +367,6 @@ void DCache_IO_WriteFileData(undefined8 param_1,ulonglong param_2,longlong param
     if (0 < iVar7) {
       do {
         if ((int)param_2 < 1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82083ed8,0x197,0,0xffffffff82000f98,0xffffffff820589cc);
         }
         uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,lVar8);
@@ -187,6 +394,60 @@ LAB_824d83e0:
 }
 
 
+// 824D83F0  DCache_IO_ReadFileData  (qcommon/com_dcache_io.cpp:437)
+
+void DCache_IO_ReadFileData(undefined8 param_1,ulonglong param_2,longlong param_3)
+
+{
+  undefined8 uVar1;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar2;
+  longlong lVar3;
+  ulonglong uVar6;
+  int iVar7;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_25();
+  iVar5 = (int)param_2;
+  iVar7 = (iVar5 >> 0x11) + (uint)(iVar5 < 0 && (param_2 & 0x1ffff) != 0);
+  if (param_2 !=
+      ((longlong)(iVar5 >> 0x11) + (ulonglong)(iVar5 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) *
+      0x20000) {
+    iVar7 = iVar7 + 1;
+  }
+  iVar4 = DCache_TOC_GetTOC();
+  if (*(int *)(iVar4 + (int)uVar1 * 0x118 + 0x14) != iVar5) {
+    MyAssertHandler(0xffffffff82083ed8,0x1bd,0,0xffffffff82000f98,0xffffffff8208415c);
+  }
+  iVar5 = DCache_TOC_GetBlocksUsed(uVar1);
+  if (iVar5 != iVar7) {
+    MyAssertHandler(0xffffffff82083ed8,0x1be,0,0xffffffff82000f98,0xffffffff820840f4);
+  }
+  lVar8 = 0;
+  iVar5 = 0;
+  if (0 < iVar7) {
+    do {
+      uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,lVar8);
+      uVar6 = param_2;
+      if (0x20000 < (int)param_2) {
+        uVar6 = 0x20000;
+      }
+      lVar3 = DCache_IO_ReadBlock(uVar2,lVar8 + param_3,uVar6,1);
+      if ((int)lVar3 == 0) {
+        __restgprlr_25(0);
+        return;
+      }
+      iVar5 = iVar5 + 1;
+      lVar8 = lVar3 + lVar8;
+      param_2 = param_2 - lVar3;
+    } while (iVar5 < iVar7);
+  }
+  __restgprlr_25(1);
+  return;
+}
+
+
 // 824D8508  DCache_IO_WriteToCache  (qcommon/com_dcache_io.cpp:475)
 
 undefined8
@@ -207,23 +468,159 @@ DCache_IO_WriteToCache(undefined8 param_1,undefined8 param_2,undefined8 param_3,
 }
 
 
-// 824D8C38  DCache_IO_StreamToCacheComplete  (qcommon/com_dcache_io.cpp:502)
+// 824D8570  DCache_IO_StreamToCache  (qcommon/com_dcache_io.cpp:489)
 
-void DCache_IO_StreamToCacheComplete(void)
+void DCache_IO_StreamToCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  
   __savegprlr_29();
+  uVar1 = DCache_GetFileIndex();
+  if ((int)uVar1 == -1) {
+    Com_PrintError(0x10,0xffffffff820841d4);
+    __restgprlr_29(0);
+    return;
+  }
+  DCache_IO_StreamFileData(uVar1,param_3,param_4,param_5);
+  __restgprlr_29();
+  return;
+}
+
+
+// 824D8C38  DCache_IO_StreamToCacheComplete  (qcommon/com_dcache_io.cpp:502)
+
+void DCache_IO_StreamToCacheComplete(undefined8 param_1,undefined8 param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  __savegprlr_29();
+  iVar1 = DCache_GetFileIndex();
+  if (iVar1 == -1) {
+    Com_PrintError(0x10,0xffffffff82084428);
+    __restgprlr_29(0);
+    return;
+  }
+  iVar2 = DCache_TOC_GetTOC();
+  *(undefined4 *)(iVar1 * 0x118 + iVar2 + 0x14) = param_3;
+  if (*(char *)(iVar2 + 4) != '\x02') {
+    MyAssertHandler(0xffffffff82083ed8,0x202,0,0xffffffff82000f98,0xffffffff82084400);
+  }
+  DCache_IO_SerializeTOC(iVar2);
+  XFlushUtilityDrive();
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824D85C8  DCache_IO_ReadFromCacheByOffset  (qcommon/com_dcache_io.cpp:525)
 
-void DCache_IO_ReadFromCacheByOffset(void)
+void DCache_IO_ReadFromCacheByOffset
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,
+               ulonglong param_5,undefined4 *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
   __savegprlr_18();
+  uVar1 = DCache_GetFileIndex();
+  if ((int)uVar1 == -1) {
+    Com_PrintError(0x10,0xffffffff8208420c);
+    __restgprlr_18(0);
+    return;
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x216,0,0xffffffff82000f98,0xffffffff8200e484);
+    __restgprlr_18(0);
+    return;
+  }
+  param_4 = param_4 - param_3;
+  lVar7 = param_3 + ((longlong)((int)param_3 >> 0x11) +
+                     (ulonglong)((int)param_3 < 0 && (param_3 & 0x1ffff) != 0) & 0x7fff) * -0x20000;
+  if (param_4 < 1) {
+    MyAssertHandler(0xffffffff82083ed8,0x221,0,0xffffffff82000f98,0xffffffff820589cc);
+  }
+  uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,param_3);
+  lVar5 = 0x20000 - lVar7;
+  if ((int)param_4 <= (int)lVar5) {
+    lVar5 = param_4;
+  }
+  lVar7 = DCache_IO_ReadBlockWithOffset(uVar2,lVar7,param_5,lVar5);
+  if ((int)lVar7 < 1) {
+    MyAssertHandler(0xffffffff82083ed8,0x22a,0,0xffffffff82000f98,0xffffffff82083da0);
+  }
+  param_4 = param_4 - lVar7;
+  if (0 < param_4) {
+    lVar6 = 0;
+    lVar5 = lVar7;
+    do {
+      if ((int)param_4 < 1) {
+        MyAssertHandler(0xffffffff82083ed8,0x235,0,0xffffffff82000f98,0xffffffff820589cc);
+      }
+      lVar3 = DCache_IO_GetBlockIndexForOffset(uVar1,param_3);
+      lVar4 = param_4;
+      if (0x20000 < (int)param_4) {
+        lVar4 = 0x20000;
+      }
+      lVar4 = DCache_IO_ReadBlock(lVar3 + lVar6 + 1,lVar5 + param_5,lVar4,0);
+      if ((int)lVar4 < 1) {
+        MyAssertHandler(0xffffffff82083ed8,0x23e,0,0xffffffff82000f98,0xffffffff82083da0);
+      }
+      param_4 = param_4 - lVar4;
+      lVar5 = lVar4 + lVar5;
+      lVar7 = lVar4 + lVar7;
+      lVar6 = lVar6 + 1;
+    } while (0 < param_4);
+  }
+  if ((int)param_4 != 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x246,0,0xffffffff82000f98,0xffffffff82084098);
+  }
+  *param_6 = (int)lVar7;
+  __restgprlr_18(1);
+  return;
+}
+
+
+// 824D87C0  DCache_IO_ReadFromCache  (qcommon/com_dcache_io.cpp:589)
+
+bool DCache_IO_ReadFromCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  bool bVar3;
+  
+  uVar1 = DCache_GetFileIndex();
+  if ((int)uVar1 == -1) {
+    Com_PrintError(0x10,0xffffffff8208420c);
+    bVar3 = false;
+  }
+  else if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083ed8,0x256,0,0xffffffff82000f98,0xffffffff8200e484);
+    Com_PrintError(0x10,0xffffffff8208427c);
+    bVar3 = false;
+  }
+  else if ((int)param_3 < 1) {
+    MyAssertHandler(0xffffffff82083ed8,0x25d,0,0xffffffff82000f98,0xffffffff82084270);
+    Com_PrintError(0x10,0xffffffff82084244,param_3);
+    bVar3 = false;
+  }
+  else {
+    cVar2 = DCache_IO_ReadFileData(uVar1,param_3,param_4);
+    bVar3 = cVar2 != '\0';
+  }
+  return bVar3;
 }
 
 
@@ -301,7 +698,6 @@ undefined8 DCache_IO_Init(void)
   
   iVar2 = DCache_TOC_GetTOC();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083ed8,0x29f,0,0xffffffff82000f98,0xffffffff82083e4c);
   }
   iVar2 = DCache_TOC_GetTOC();

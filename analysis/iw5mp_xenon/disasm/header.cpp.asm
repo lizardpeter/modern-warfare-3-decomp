@@ -149,26 +149,194 @@ LAB_8289ecd4:
 ; 8289ECE0  XGSetTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:607)
   8289ECE0  7D8802A6             mfspr r12,LR
   8289ECE4  480779D1             bl 0x829166b4
+  8289ECE8  9421FF40             stwu r1,-0xc0(r1)
+  8289ECEC  7D2B4B78             or r11,r9,r9
+  8289ECF0  8121012C             lwz r9,0x12c(r1)
+  8289ECF4  83E10124             lwz r31,0x124(r1)
+  8289ECF8  7CE83B78             or r8,r7,r7
+  8289ECFC  83C1011C             lwz r30,0x11c(r1)
+  8289ED00  7CC73378             or r7,r6,r6
+  8289ED04  83A10114             lwz r29,0x114(r1)
+  8289ED08  7CA62B78             or r6,r5,r5
+  8289ED0C  91410064             stw r10,0x64(r1)
+  8289ED10  3B800003             li r28,0x3
+  8289ED14  9121008C             stw r9,0x8c(r1)
+  8289ED18  3B600000             li r27,0x0
+  8289ED1C  39400000             li r10,0x0
+  8289ED20  93E10084             stw r31,0x84(r1)
+  8289ED24  39200002             li r9,0x2
+  8289ED28  93C1007C             stw r30,0x7c(r1)
+  8289ED2C  38A00001             li r5,0x1
+  8289ED30  93810074             stw r28,0x74(r1)
+  8289ED34  93A1006C             stw r29,0x6c(r1)
+  8289ED38  9161005C             stw r11,0x5c(r1)
+  8289ED3C  93610054             stw r27,0x54(r1)
+  8289ED40  4BFFFD99             bl 0x8289ead8
+  8289ED44  382100C0             addi r1,r1,0xc0
+  8289ED48  480779BC             b 0x82916704
 
 ; 8289ED50  XGSetLineTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:681)
   8289ED50  7D8802A6             mfspr r12,LR
   8289ED54  48077969             bl 0x829166bc
+  8289ED58  9421FF50             stwu r1,-0xb0(r1)
+  8289ED5C  7D1F4378             or r31,r8,r8
+  8289ED60  83C1010C             lwz r30,0x10c(r1)
+  8289ED64  7CC83378             or r8,r6,r6
+  8289ED68  83A10104             lwz r29,0x104(r1)
+  8289ED6C  7C862378             or r6,r4,r4
+  8289ED70  9141007C             stw r10,0x7c(r1)
+  8289ED74  38800014             li r4,0x14
+  8289ED78  91210064             stw r9,0x64(r1)
+  8289ED7C  39600000             li r11,0x0
+  8289ED80  93E1005C             stw r31,0x5c(r1)
+  8289ED84  7CA72B78             or r7,r5,r5
+  8289ED88  90810074             stw r4,0x74(r1)
+  8289ED8C  39400000             li r10,0x0
+  8289ED90  93C1008C             stw r30,0x8c(r1)
+  8289ED94  39200000             li r9,0x0
+  8289ED98  93A10084             stw r29,0x84(r1)
+  8289ED9C  38A00001             li r5,0x1
+  8289EDA0  9161006C             stw r11,0x6c(r1)
+  8289EDA4  38800001             li r4,0x1
+  8289EDA8  91610054             stw r11,0x54(r1)
+  8289EDAC  4BFFFD2D             bl 0x8289ead8
+  8289EDB0  382100B0             addi r1,r1,0xb0
+  8289EDB4  48077958             b 0x8291670c
 
 ; 8289EDB8  XGSetCubeTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:731)
   8289EDB8  7D8802A6             mfspr r12,LR
   8289EDBC  480778FD             bl 0x829166b8
+  8289EDC0  9421FF40             stwu r1,-0xc0(r1)
+  8289EDC4  7CA72B78             or r7,r5,r5
+  8289EDC8  83A1011C             lwz r29,0x11c(r1)
+  8289EDCC  83810114             lwz r28,0x114(r1)
+  8289EDD0  38A00012             li r5,0x12
+  8289EDD4  7C9F2378             or r31,r4,r4
+  8289EDD8  9141007C             stw r10,0x7c(r1)
+  8289EDDC  7D1E4378             or r30,r8,r8
+  8289EDE0  91210064             stw r9,0x64(r1)
+  8289EDE4  39600000             li r11,0x0
+  8289EDE8  90A10074             stw r5,0x74(r1)
+  8289EDEC  7CC83378             or r8,r6,r6
+  8289EDF0  93C1005C             stw r30,0x5c(r1)
+  8289EDF4  7C641B78             or r4,r3,r3
+  8289EDF8  93A1008C             stw r29,0x8c(r1)
+  8289EDFC  39400000             li r10,0x0
+  8289EE00  93810084             stw r28,0x84(r1)
+  8289EE04  39200002             li r9,0x2
+  8289EE08  9161006C             stw r11,0x6c(r1)
+  8289EE0C  7FE6FB78             or r6,r31,r31
+  8289EE10  91610054             stw r11,0x54(r1)
+  8289EE14  38A00006             li r5,0x6
+  8289EE18  4BFFFCC1             bl 0x8289ead8
+  8289EE1C  382100C0             addi r1,r1,0xc0
+  8289EE20  480778E8             b 0x82916708
 
 ; 8289EE28  XGSetVolumeTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:881)
   8289EE28  7D8802A6             mfspr r12,LR
   8289EE2C  48077885             bl 0x829166b0
+  8289EE30  9421FF30             stwu r1,-0xd0(r1)
+  8289EE34  83C1013C             lwz r30,0x13c(r1)
+  8289EE38  7D5F5378             or r31,r10,r10
+  8289EE3C  83A10134             lwz r29,0x134(r1)
+  8289EE40  39600000             li r11,0x0
+  8289EE44  8361012C             lwz r27,0x12c(r1)
+  8289EE48  3B800011             li r28,0x11
+  8289EE4C  83410124             lwz r26,0x124(r1)
+  8289EE50  39400000             li r10,0x0
+  8289EE54  39200002             li r9,0x2
+  8289EE58  93810074             stw r28,0x74(r1)
+  8289EE5C  93C1008C             stw r30,0x8c(r1)
+  8289EE60  93A10084             stw r29,0x84(r1)
+  8289EE64  9361007C             stw r27,0x7c(r1)
+  8289EE68  9161006C             stw r11,0x6c(r1)
+  8289EE6C  93410064             stw r26,0x64(r1)
+  8289EE70  93E1005C             stw r31,0x5c(r1)
+  8289EE74  91610054             stw r11,0x54(r1)
+  8289EE78  4BFFFC61             bl 0x8289ead8
+  8289EE7C  382100D0             addi r1,r1,0xd0
+  8289EE80  48077880             b 0x82916700
 
 ; 8289E9B0  XGSetVertexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:918)
   8289E9B0  7D8802A6             mfspr r12,LR
   8289E9B4  48077D05             bl 0x829166b8
+  8289E9B8  9421FF80             stwu r1,-0x80(r1)
+  8289E9BC  7C7D1B78             or r29,r3,r3
+  8289E9C0  7C9E2378             or r30,r4,r4
+  8289E9C4  38A00020             li r5,0x20
+  8289E9C8  38800000             li r4,0x0
+  8289E9CC  7CE33B78             or r3,r7,r7
+  8289E9D0  7CDC3378             or r28,r6,r6
+  8289E9D4  7CFF3B78             or r31,r7,r7
+  8289E9D8  48077E29             bl 0x82916800
+  8289E9DC  39600001             li r11,0x1
+  8289E9E0  57CA077B             rlwinm. r10,r30,0x0,0x1d,0x1d
+  8289E9E4  917F0000             stw r11,0x0(r31)
+  8289E9E8  41820010             beq 0x8289e9f8
+  8289E9EC  3D400020             lis r10,0x20
+  8289E9F0  614A0001             ori r10,r10,0x1
+  8289E9F4  915F0000             stw r10,0x0(r31)
+LAB_8289e9f8:
+  8289E9F8  57CA05AD             rlwinm. r10,r30,0x0,0x16,0x16
+  8289E9FC  41820010             beq 0x8289ea0c
+  8289EA00  815F0000             lwz r10,0x0(r31)
+  8289EA04  654A0040             oris r10,r10,0x40
+  8289EA08  915F0000             stw r10,0x0(r31)
+LAB_8289ea0c:
+  8289EA0C  815F001C             lwz r10,0x1c(r31)
+  8289EA10  57A901BA             rlwinm r9,r29,0x0,0x6,0x1d
+  8289EA14  917F0004             stw r11,0x4(r31)
+  8289EA18  3D00FFFF             lis r8,-0x1
+  8289EA1C  554B0108             rlwinm r11,r10,0x0,0x4,0x4
+  8289EA20  638A0003             ori r10,r28,0x3
+  8289EA24  911F0014             stw r8,0x14(r31)
+  8289EA28  7D2B5B78             or r11,r9,r11
+  8289EA2C  915F0018             stw r10,0x18(r31)
+  8289EA30  656B1000             oris r11,r11,0x1000
+  8289EA34  616B0002             ori r11,r11,0x2
+  8289EA38  917F001C             stw r11,0x1c(r31)
+  8289EA3C  38210080             addi r1,r1,0x80
+  8289EA40  48077CC8             b 0x82916708
 
 ; 8289EA48  XGSetIndexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:968)
   8289EA48  7D8802A6             mfspr r12,LR
   8289EA4C  48077C69             bl 0x829166b4
+  8289EA50  9421FF80             stwu r1,-0x80(r1)
+  8289EA54  7C7B1B78             or r27,r3,r3
+  8289EA58  7C9E2378             or r30,r4,r4
+  8289EA5C  7CBD2B78             or r29,r5,r5
+  8289EA60  38A00020             li r5,0x20
+  8289EA64  38800000             li r4,0x0
+  8289EA68  7D034378             or r3,r8,r8
+  8289EA6C  7CFC3B78             or r28,r7,r7
+  8289EA70  7D1F4378             or r31,r8,r8
+  8289EA74  48077D8D             bl 0x82916800
+  8289EA78  39600001             li r11,0x1
+  8289EA7C  937F001C             stw r27,0x1c(r31)
+  8289EA80  39400002             li r10,0x2
+  8289EA84  57C9077B             rlwinm. r9,r30,0x0,0x1d,0x1d
+  8289EA88  917F0004             stw r11,0x4(r31)
+  8289EA8C  915F0000             stw r10,0x0(r31)
+  8289EA90  41820010             beq 0x8289eaa0
+  8289EA94  3D600020             lis r11,0x20
+  8289EA98  616B0002             ori r11,r11,0x2
+  8289EA9C  917F0000             stw r11,0x0(r31)
+LAB_8289eaa0:
+  8289EAA0  57CB05AD             rlwinm. r11,r30,0x0,0x16,0x16
+  8289EAA4  41820010             beq 0x8289eab4
+  8289EAA8  817F0000             lwz r11,0x0(r31)
+  8289EAAC  656B0040             oris r11,r11,0x40
+  8289EAB0  917F0000             stw r11,0x0(r31)
+LAB_8289eab4:
+  8289EAB4  817F0000             lwz r11,0x0(r31)
+  8289EAB8  57AAE804             rlwinm r10,r29,0x1d,0x0,0x2
+  8289EABC  3D20FFFF             lis r9,-0x1
+  8289EAC0  939F0018             stw r28,0x18(r31)
+  8289EAC4  7D4B5B78             or r11,r10,r11
+  8289EAC8  913F0014             stw r9,0x14(r31)
+  8289EACC  917F0000             stw r11,0x0(r31)
+  8289EAD0  38210080             addi r1,r1,0x80
+  8289EAD4  48077C30             b 0x82916704
 
 ; 8289EEF0  XGOffsetResourceAddress  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:1188)
   8289EEF0  7D8802A6             mfspr r12,LR

@@ -37,11 +37,25 @@ void bdTag__serialize(int param_1,undefined8 param_2)
 
 // 828FD820  bdTag::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:34)
 
-void bdTag__deserialize(void)
+void bdTag__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 0x10);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_828fd878;
+  }
+  uVar3 = 0;
+LAB_828fd878:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -51,6 +65,17 @@ undefined8 bdTag__sizeOf(void)
 
 {
   return 0x18;
+}
+
+
+// 828FD788  bdTag::set  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:47)
+
+void bdTag__set(int param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  *(undefined8 *)(param_1 + 8) = param_2;
+  *(undefined8 *)(param_1 + 0x10) = param_3;
+  return;
 }
 
 

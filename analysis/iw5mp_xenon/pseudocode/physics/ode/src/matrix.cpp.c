@@ -8,21 +8,36 @@ void dSetZero(int param_1,ulonglong param_2)
   ulonglong uVar1;
   undefined4 *puVar2;
   
-  if ((param_1 != 0) && (-1 < (int)param_2)) {
-    if (0 < (int)param_2) {
-      puVar2 = (undefined4 *)(param_1 + -4);
-      uVar1 = param_2 & 0xffffffff;
-      while (uVar1 != 0) {
-        puVar2 = puVar2 + 1;
-        *puVar2 = 0;
-        param_2 = param_2 - 1;
-        uVar1 = param_2;
-      }
-    }
-    return;
+  if ((param_1 == 0) || ((int)param_2 < 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x1f,0,0xffffffff82000f98,0xffffffff82199b18);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82199ad0,0x1f,0,0xffffffff82000f98,0xffffffff82199b18);
+  if (0 < (int)param_2) {
+    puVar2 = (undefined4 *)(param_1 + -4);
+    uVar1 = param_2 & 0xffffffff;
+    while (uVar1 != 0) {
+      puVar2 = puVar2 + 1;
+      *puVar2 = 0;
+      param_2 = param_2 - 1;
+      uVar1 = param_2;
+    }
+  }
+  return;
+}
+
+
+// 82696D20  dSetValue  (physics/ode/src/matrix.cpp:40)
+
+void dSetValue(double param_1,float *param_2,int param_3)
+
+{
+  if ((param_2 == (float *)0x0) || (param_3 < 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x29,0,0xffffffff82000f98,0xffffffff82199b18);
+  }
+  if (0 < param_3) {
+    *param_2 = (float)param_1;
+    blkmov(param_2 + 1,param_2,param_3 * 4 + -4);
+  }
+  return;
 }
 
 
@@ -31,18 +46,262 @@ void dSetZero(int param_1,ulonglong param_2)
 void dFactorCholesky3(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float *pfVar2;
+  float *pfVar3;
+  int iVar4;
+  longlong lVar5;
+  float *pfVar6;
+  float *pfVar7;
+  int iVar8;
+  float *pfVar9;
+  longlong lVar10;
+  int iVar11;
+  float *pfVar12;
+  longlong lVar13;
+  double dVar14;
+  undefined8 in_f30;
+  double dVar15;
+  undefined8 in_f31;
+  double dVar16;
+  float fStack_74;
+  float local_70 [4];
+  undefined8 local_60;
+  undefined8 local_58;
+  
+  pfVar2 = (float *)__savegprlr_23();
+  local_60 = in_f30;
+  local_58 = in_f31;
+  if (pfVar2 == (float *)0x0) {
+    MyAssertHandler(0xffffffff82199ad0,0x3f,0,0xffffffff82000f98,0xffffffff820755b8);
+  }
+  pfVar7 = &fStack_74;
+  dVar15 = 1.0;
+  lVar10 = 0;
+  dVar16 = 0.0;
+  iVar8 = 0;
+  pfVar9 = pfVar2;
+  while( true ) {
+    lVar5 = 0;
+    iVar11 = (int)lVar10;
+    pfVar12 = pfVar2;
+    if (0 < iVar11) {
+      pfVar3 = &fStack_74;
+      iVar4 = iVar8;
+      do {
+        fVar1 = *pfVar12;
+        lVar13 = lVar5;
+        pfVar6 = pfVar9;
+        if ((int)lVar5 != 0) {
+          do {
+            fVar1 = -(*(float *)(iVar4 + (int)pfVar6) * *pfVar6 - fVar1);
+            lVar13 = lVar13 + -1;
+            pfVar6 = pfVar6 + 1;
+          } while (lVar13 != 0);
+        }
+        pfVar3 = pfVar3 + 1;
+        lVar5 = lVar5 + 1;
+        *pfVar12 = *pfVar3 * fVar1;
+        iVar4 = iVar4 + 0x10;
+        pfVar12 = pfVar12 + 1;
+      } while ((int)lVar5 < iVar11);
+    }
+    dVar14 = (double)*pfVar12;
+    if (iVar11 != 0) {
+      pfVar3 = pfVar9 + -1;
+      lVar5 = lVar10;
+      do {
+        pfVar3 = pfVar3 + 1;
+        dVar14 = -(double)(float)((double)*pfVar3 * (double)*pfVar3 - dVar14);
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    if (dVar14 <= dVar16) break;
+    *pfVar12 = (float)SQRT(dVar14);
+    if ((double)(float)SQRT(dVar14) <= dVar16) {
+      MyAssertHandler(0xffffffff82199ad0,0x59,0,0xffffffff82000f98,0xffffffff82199b24);
+    }
+    lVar10 = lVar10 + 1;
+    pfVar7 = pfVar7 + 1;
+    *pfVar7 = (float)(dVar15 / (double)*pfVar12);
+    pfVar9 = pfVar9 + 4;
+    iVar8 = iVar8 + -0x10;
+    pfVar2 = pfVar2 + 4;
+    if (2 < (int)lVar10) {
+      __restgprlr_23(1);
+      return;
+    }
+  }
+  __restgprlr_23(0);
+  return;
+}
+
+
+// 82696F38  dSolveCholesky3  (physics/ode/src/matrix.cpp:102)
+
+/* WARNING: Type propagation algorithm not settling */
+
+void dSolveCholesky3(undefined8 param_1,ulonglong param_2)
+
+{
+  float *pfVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  float *pfVar9;
+  longlong lVar8;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  int iVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  float fStack_84;
+  float local_80 [32];
+  
+  uVar4 = __savegprlr_21();
+  if (((uVar4 & 0xffffffff) == 0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x6d,0,0xffffffff82000f98,0xffffffff82199b5c);
+  }
+  iVar2 = (int)param_2;
+  iVar13 = 0;
+  lVar14 = 0;
+  dVar18 = 0.0;
+  lVar12 = uVar4 - 0x14;
+  do {
+    uVar10 = 0;
+    iVar3 = (int)uVar4;
+    dVar15 = dVar18;
+    dVar17 = dVar18;
+    if (1 < iVar13) {
+      pfVar9 = &fStack_84;
+      do {
+        uVar6 = lVar14 + uVar10;
+        pfVar1 = pfVar9 + 1;
+        uVar10 = uVar10 + 2;
+        pfVar9 = pfVar9 + 2;
+        pfVar7 = (float *)((int)((uVar6 & 0xffffffff) << 2) + iVar3);
+        dVar15 = (double)(float)((double)*pfVar1 * (double)*pfVar7 + dVar15);
+        dVar17 = (double)(float)((double)pfVar7[1] * (double)*pfVar9 + dVar17);
+      } while ((int)uVar10 < iVar13 + -1);
+    }
+    dVar16 = dVar18;
+    if ((int)uVar10 < iVar13) {
+      dVar16 = (double)(*(float *)((int)((lVar14 + uVar10 & 0xffffffff) << 2) + iVar3) *
+                       *(float *)((int)local_80 + (int)((uVar10 & 0xffffffff) << 2)));
+    }
+    dVar15 = (double)(float)((double)(float)(dVar17 + dVar15) + dVar16);
+    if ((double)*(float *)((int)lVar12 + 0x14) == dVar18) {
+      MyAssertHandler(0xffffffff82199ad0,0x75,0,0xffffffff82000f98,0xffffffff82199b48);
+    }
+    lVar12 = lVar12 + 0x14;
+    iVar13 = iVar13 + 1;
+    pfVar9 = (float *)((int)local_80 + (int)lVar14);
+    lVar14 = lVar14 + 4;
+    *pfVar9 = (float)((double)*(float *)((iVar2 - (int)local_80) + (int)pfVar9) - dVar15) /
+              *(float *)lVar12;
+  } while ((int)lVar14 < 0xc);
+  lVar12 = uVar4 + 0x3c;
+  lVar14 = 0xc;
+  iVar13 = 0;
+  uVar10 = 3;
+  do {
+    dVar15 = dVar18;
+    if ((int)uVar10 < 3) {
+      uVar6 = uVar10;
+      dVar17 = dVar18;
+      if (1 < iVar13) {
+        lVar11 = ((1 - uVar10 & 0xffffffff) >> 1) + 1;
+        lVar5 = lVar14 + param_2 + -4;
+        lVar8 = ((uVar10 + lVar14) - 5 & 0x3fffffff) * 4 + uVar4;
+        uVar6 = (lVar11 * 2 & 0xfffffffeU) + uVar10;
+        do {
+          dVar15 = (double)(float)((double)*(float *)((int)lVar8 + 0x10) *
+                                   (double)*(float *)((int)lVar5 + 4) + dVar15);
+          lVar8 = lVar8 + 0x20;
+          lVar5 = lVar5 + 8;
+          dVar17 = (double)(float)((double)*(float *)lVar8 * (double)*(float *)lVar5 + dVar17);
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
+      }
+      dVar16 = dVar18;
+      if ((int)uVar6 < 3) {
+        lVar8 = (uVar6 & 0x3fffffff) * 4;
+        dVar16 = (double)(*(float *)((int)((uVar10 + lVar8 & 0xffffffff) << 2) + iVar3 + -4) *
+                         *(float *)((int)lVar8 + iVar2));
+      }
+      dVar15 = (double)(float)((double)(float)(dVar17 + dVar15) + dVar16);
+    }
+    if ((double)*(float *)((int)lVar12 + -0x14) == dVar18) {
+      MyAssertHandler(0xffffffff82199ad0,0x7d,0,0xffffffff82000f98,0xffffffff82199b34);
+    }
+    lVar12 = lVar12 + -0x14;
+    lVar8 = uVar10 - 2;
+    iVar13 = iVar13 + 1;
+    *(float *)(iVar2 + -4 + (int)lVar14) =
+         (float)((double)*(float *)((int)&fStack_84 + (int)lVar14) - dVar15) / *(float *)lVar12;
+    lVar14 = lVar14 + -4;
+    uVar10 = uVar10 - 1;
+  } while (-1 < lVar8);
+  __restgprlr_21();
+  return;
 }
 
 
 // 82697198  dInvertPDMatrix3  (physics/ode/src/matrix.cpp:132)
 
-void dInvertPDMatrix3(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void dInvertPDMatrix3(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  void *_Src;
+  int iVar1;
+  float *pfVar2;
+  longlong lVar3;
+  longlong lVar4;
+  double dVar5;
+  float fStack_74;
+  undefined1 local_70 [4];
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined1 auStack_60 [96];
+  
+  _Src = (void *)__savegprlr_28();
+  if ((_Src == (void *)0x0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff82199ad0,0x8c,0,0xffffffff82000f98,0xffffffff82199b64);
+  }
+  memcpy(auStack_60,_Src,0x30);
+  iVar1 = dFactorCholesky3(auStack_60);
+  if (iVar1 == 0) {
+    __restgprlr_28();
+    return;
+  }
+  dSetZero(param_2,0xc);
+  lVar4 = param_2 + 0x1c;
+  pfVar2 = &fStack_74;
+  lVar3 = 3;
+  dVar5 = 1.0;
+  do {
+    local_6c = 0;
+    local_68 = 0;
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = (float)dVar5;
+    dSolveCholesky3(auStack_60,local_70);
+    lVar3 = lVar3 + -1;
+    *(undefined4 *)((int)lVar4 + -0x1c) = 0;
+    *(undefined4 *)((int)lVar4 + -0xc) = local_6c;
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = local_68;
+  } while (lVar3 != 0);
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -54,7 +313,6 @@ void dIsPositiveDefinite3(void *param_1)
   undefined1 auStack_40 [48];
   
   if (param_1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199ad0,0xa6,0,0xffffffff82000f98,0xffffffff820755b8);
   }
   memcpy(auStack_40,param_1,0x30);

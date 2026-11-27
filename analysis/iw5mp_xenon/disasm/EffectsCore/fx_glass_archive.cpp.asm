@@ -3,6 +3,37 @@
 ; 8241F6C0  Glass_WriteActivePiece  (EffectsCore/fx_glass_archive.cpp:19)
   8241F6C0  7D8802A6             mfspr r12,LR
   8241F6C4  484F6FF9             bl 0x829166bc
+  8241F6C8  9421FF90             stwu r1,-0x70(r1)
+  8241F6CC  54AA1838             rlwinm r10,r5,0x3,0x0,0x1c
+  8241F6D0  81230034             lwz r9,0x34(r3)
+  8241F6D4  54AB2834             rlwinm r11,r5,0x5,0x0,0x1a
+  8241F6D8  81030038             lwz r8,0x38(r3)
+  8241F6DC  7CE55214             add r7,r5,r10
+  8241F6E0  8143003C             lwz r10,0x3c(r3)
+  8241F6E4  7CA95A14             add r5,r9,r11
+  8241F6E8  7C9F2378             or r31,r4,r4
+  8241F6EC  54E9103A             rlwinm r9,r7,0x2,0x0,0x1d
+  8241F6F0  7C832378             or r3,r4,r4
+  8241F6F4  38800020             li r4,0x20
+  8241F6F8  7FA85A14             add r29,r8,r11
+  8241F6FC  7FCA4A14             add r30,r10,r9
+  8241F700  481E50C1             bl 0x826047c0
+  8241F704  7FE3FB78             or r3,r31,r31
+  8241F708  7FA5EB78             or r5,r29,r29
+  8241F70C  38800020             li r4,0x20
+  8241F710  481E50B1             bl 0x826047c0
+  8241F714  7FC5F378             or r5,r30,r30
+  8241F718  38800024             li r4,0x24
+  8241F71C  7FE3FB78             or r3,r31,r31
+  8241F720  481E50A1             bl 0x826047c0
+  8241F724  807E0004             lwz r3,0x4(r30)
+  8241F728  2F030000             cmpwi cr6,r3,0x0
+  8241F72C  419A000C             beq cr6,0x8241f738
+  8241F730  7FE4FB78             or r4,r31,r31
+  8241F734  48254925             bl 0x82674058
+LAB_8241f738:
+  8241F738  38210070             addi r1,r1,0x70
+  8241F73C  484F6FD0             b 0x8291670c
 
 ; 8241FA58  Glass_Save  (EffectsCore/fx_glass_archive.cpp:38)
   8241FA58  7D8802A6             mfspr r12,LR
@@ -179,6 +210,7 @@ LAB_8241f888:
   8241F8B8  38A00000             li r5,0x0
   8241F8BC  3880006B             li r4,0x6b
   8241F8C0  481B4C41             bl 0x825d4500
+  8241F8C4  811F0010             lwz r8,0x10(r31)
 LAB_8241f8c8:
   8241F8C8  3AA00000             li r21,0x0
   8241F8CC  2B140000             cmplwi cr6,r20,0x0

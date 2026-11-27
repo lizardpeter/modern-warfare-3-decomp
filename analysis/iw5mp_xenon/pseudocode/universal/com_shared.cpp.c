@@ -393,10 +393,23 @@ undefined4 Com_RealTime(int param_1,int *param_2)
 
 // 825E6B68  Com_Memcpy128  (universal/com_shared.cpp:230)
 
-void Com_Memcpy128(void)
+void Com_Memcpy128(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_3 & 0x7f) != 0) {
+    MyAssertHandler(0xffffffff82176cd0,0xe7,0,0xffffffff82000f98,0xffffffff82176cb4);
+  }
+  if ((param_2 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff82176cd0,0xe8,0,0xffffffff82000f98,0xffffffff82176c94);
+  }
+  if ((uVar1 & 0x7f) != 0) {
+    MyAssertHandler(0xffffffff82176cd0,0xe9,0,0xffffffff82000f98,0xffffffff82176c70);
+  }
+  XMemCpy128(uVar1,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 

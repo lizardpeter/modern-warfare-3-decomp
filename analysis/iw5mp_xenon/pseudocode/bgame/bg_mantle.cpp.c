@@ -29,7 +29,6 @@ void Mantle_DebugPrint(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0xf2,0,0xffffffff82000f98,0xffffffff82004d74);
   }
   if (*(char *)(DAT_829c4028 + 0xc) != '\0') {
@@ -41,12 +40,14 @@ void Mantle_DebugPrint(ulonglong param_1)
 
 // 8226E598  Mantle_IsFastMantle  (bgame/bg_mantle.cpp:256)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 uint Mantle_IsFastMantle(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x101,0,0xffffffff82000f98,0xffffffff82004d78);
+    return _DAT_0000000c >> 6 & 1;
   }
   return *(uint *)(param_1 + 0xc) >> 6 & 1;
 }
@@ -60,7 +61,6 @@ bool Mantle_GetAnimStateIndex(ulonglong param_1)
   longlong lVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x109,0,0xffffffff82000f98,0xffffffff82004d78);
   }
   lVar1 = Mantle_IsFastMantle(param_1);
@@ -73,8 +73,17 @@ bool Mantle_GetAnimStateIndex(ulonglong param_1)
 void Mantle_GetActiveXAnimGroup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x118,0,0xffffffff82000f98,0xffffffff82004d78);
+    MyAssertHandler(0xffffffff82004d34,0x109,0,0xffffffff82000f98,0xffffffff82004d78);
+  }
+  lVar2 = Mantle_IsFastMantle(uVar1);
+  __restgprlr_28((&DAT_829c4008)[lVar2 != 0]);
+  return;
 }
 
 
@@ -86,7 +95,7 @@ void Mantle_GetUpLength(int param_1)
   undefined4 uVar1;
   undefined8 uVar2;
   
-  uVar1 = *(undefined4 *)(&DAT_82960d18 + *(int *)(param_1 + 8) * 0xc);
+  uVar1 = (&DAT_82960d18)[*(int *)(param_1 + 8) * 3];
   uVar2 = Mantle_GetActiveXAnimGroup();
   XAnimGetLengthMsec(uVar2,uVar1);
   return;
@@ -104,7 +113,7 @@ undefined8 Mantle_GetOverLength(int param_1)
   if ((*(uint *)(param_1 + 0xc) & 1) == 0) {
     return 0;
   }
-  uVar1 = *(undefined4 *)(&DAT_82960d1c + *(int *)(param_1 + 8) * 0xc);
+  uVar1 = (&DAT_82960d1c)[*(int *)(param_1 + 8) * 3];
   uVar2 = Mantle_GetActiveXAnimGroup();
   uVar2 = XAnimGetLengthMsec(uVar2,uVar1);
   return uVar2;
@@ -116,8 +125,32 @@ undefined8 Mantle_GetOverLength(int param_1)
 void Mantle_GetAnim(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  
+  iVar4 = __savegprlr_29();
+  uVar2 = (&DAT_82960d18)[*(int *)(iVar4 + 8) * 3];
+  uVar3 = Mantle_GetActiveXAnimGroup();
+  iVar5 = XAnimGetLengthMsec(uVar3,uVar2);
+  iVar6 = Mantle_GetOverLength(iVar4);
+  if ((*(int *)(iVar4 + 4) < 0) || (iVar6 + iVar5 < *(int *)(iVar4 + 4))) {
+    MyAssertHandler(0xffffffff82004d34,0x148,0,0xffffffff82000f98,0xffffffff82004d80);
+  }
+  uVar1 = *(uint *)(iVar4 + 8);
+  lVar7 = ((ulonglong)uVar1 & 0x7fffffff) * 2;
+  if (*(int *)(iVar4 + 4) <= iVar5) {
+    __restgprlr_29(*(undefined4 *)
+                    ((int)&DAT_82960d18 + (int)(((ulonglong)uVar1 + lVar7 & 0xffffffff) << 2)));
+    return;
+  }
+  __restgprlr_29(*(undefined4 *)
+                  ((int)&DAT_82960d1c + (int)(((ulonglong)uVar1 + lVar7 & 0xffffffff) << 2)));
+  return;
 }
 
 
@@ -141,43 +174,43 @@ void Mantle_GetAnimDelta(undefined8 param_1,undefined8 param_2,undefined8 param_
   undefined1 auStack_50 [80];
   
   pfVar6 = (float *)__savegprlr_25();
-  uVar2 = *(undefined4 *)(&DAT_82960d18 + (int)pfVar6[2] * 0xc);
+  uVar2 = (&DAT_82960d18)[(int)pfVar6[2] * 3];
   uVar4 = Mantle_GetActiveXAnimGroup();
   uVar4 = XAnimGetLengthMsec(uVar4,uVar2);
   uVar5 = Mantle_GetOverLength(pfVar6);
   iVar9 = (int)param_2;
-  if ((-1 < iVar9) && (iVar3 = (int)uVar4, iVar9 <= (int)uVar5 + iVar3)) {
-    fVar1 = pfVar6[2];
-    lVar8 = ((ulonglong)(uint)fVar1 & 0x7fffffff) * 2;
-    if (iVar9 <= iVar3) {
-      uVar2 = *(undefined4 *)
-               (&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
-      uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-      XAnimGetAbsDelta((double)(float)((double)(longlong)iVar9 / (double)(longlong)iVar3),uVar4,
-                       uVar2,auStack_50,param_3);
-      VectorAngleMultiply((double)*pfVar6,param_3);
-      __restgprlr_25();
-      return;
-    }
+  iVar3 = (int)uVar4;
+  if ((iVar9 < 0) || ((int)uVar5 + iVar3 < iVar9)) {
+    uVar4 = va(0xffffffff82004df0,param_2,uVar4,uVar5);
+    MyAssertHandler(0xffffffff82004d34,0x163,0,0xffffffff820011f4,0xffffffff82004dc0,uVar4);
+  }
+  fVar1 = pfVar6[2];
+  lVar8 = ((ulonglong)(uint)fVar1 & 0x7fffffff) * 2;
+  if (iVar9 <= iVar3) {
     uVar2 = *(undefined4 *)
-             (&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
+             ((int)&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
     uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-    XAnimGetAbsDelta(0x3ff0000000000000,uVar4,uVar2,auStack_50,&local_60);
-    uVar2 = *(undefined4 *)(&DAT_82960d1c + (int)pfVar6[2] * 0xc);
-    uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
-    XAnimGetAbsDelta((double)(float)((double)(longlong)(iVar9 - iVar3) /
-                                    (double)(longlong)(int)uVar5),uVar4,uVar2,auStack_50,param_3);
-    pfVar7 = (float *)param_3;
-    *pfVar7 = *pfVar7 + local_60;
-    pfVar7[1] = local_5c + pfVar7[1];
-    pfVar7[2] = local_58 + pfVar7[2];
+    XAnimGetAbsDelta((double)(float)((double)(longlong)iVar9 / (double)(longlong)iVar3),uVar4,uVar2,
+                     auStack_50,param_3);
     VectorAngleMultiply((double)*pfVar6,param_3);
     __restgprlr_25();
     return;
   }
-  uVar4 = va(0xffffffff82004df0,param_2,uVar4,uVar5);
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82004d34,0x163,0,0xffffffff820011f4,0xffffffff82004dc0,uVar4);
+  uVar2 = *(undefined4 *)
+           ((int)&DAT_82960d18 + (int)(((ulonglong)(uint)fVar1 + lVar8 & 0xffffffff) << 2));
+  uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
+  XAnimGetAbsDelta(0x3ff0000000000000,uVar4,uVar2,auStack_50,&local_60);
+  uVar2 = (&DAT_82960d1c)[(int)pfVar6[2] * 3];
+  uVar4 = Mantle_GetActiveXAnimGroup(pfVar6);
+  XAnimGetAbsDelta((double)(float)((double)(longlong)(iVar9 - iVar3) / (double)(longlong)(int)uVar5)
+                   ,uVar4,uVar2,auStack_50,param_3);
+  pfVar7 = (float *)param_3;
+  *pfVar7 = *pfVar7 + local_60;
+  pfVar7[1] = local_5c + pfVar7[1];
+  pfVar7[2] = local_58 + pfVar7[2];
+  VectorAngleMultiply((double)*pfVar6,param_3);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -186,8 +219,117 @@ void Mantle_GetAnimDelta(undefined8 param_1,undefined8 param_2,undefined8 param_
 void Mantle_CreateAnims(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  undefined **ppuVar4;
+  undefined4 *puVar5;
+  float *pfVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  double dVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  undefined8 uVar17;
+  double dVar18;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  undefined1 auStack_e0 [224];
+  
   __savegprlr_16();
+  uVar1 = __savefpr_24();
+  puVar5 = &DAT_829c4008;
+  if (DAT_829c4008 == 0) {
+    uVar11 = 0xc032000000000000;
+    dVar14 = -18.0;
+    uVar12 = 0x403f000000000000;
+    dVar15 = 31.0;
+    uVar17 = 0;
+    uVar13 = 0x4030000000000000;
+    dVar16 = 16.0;
+    dVar18 = 1.0;
+    lVar7 = 0;
+    ppuVar4 = &PTR_s_mp_mantle_root_82960d70;
+    lVar3 = 2;
+    do {
+      uVar2 = XAnimCreateAnims(0xffffffff82004e14,0xb,uVar1);
+      if ((uVar2 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82004d34,0x18d,0,0xffffffff82000f98,0xffffffff82004e24);
+      }
+      *puVar5 = (int)uVar2;
+      XAnimBlend(uVar2,0,*ppuVar4,1,10,0,1);
+      lVar8 = 1;
+      do {
+        BG_CreateXAnim(uVar2,lVar8,
+                       *(undefined4 *)
+                        ((int)&PTR_s_mp_mantle_root_82960d70 +
+                        (int)((lVar7 + lVar8 & 0xffffffffU) << 2)),1);
+        lVar8 = lVar8 + 1;
+      } while ((int)lVar8 < 0xb);
+      pfVar6 = (float *)&DAT_82960d20;
+      do {
+        uVar9 = (ulonglong)(uint)pfVar6[-2];
+        XAnimGetAbsDelta(dVar18,uVar2,uVar9,auStack_e0,&local_f0);
+        dVar10 = (double)local_f0;
+        if (dVar18 < ABS((double)(float)(dVar10 - dVar16))) {
+          Com_Error(dVar10,uVar13,1,0xffffffff82004e38,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),dVar10,uVar13);
+        }
+        dVar10 = (double)local_ec;
+        if (dVar18 < ABS(dVar10)) {
+          Com_Error(dVar10,uVar17,1,0xffffffff82004e70,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),dVar10,uVar17);
+        }
+        if (dVar18 < ABS((double)(float)((double)local_e8 - (double)*pfVar6))) {
+          Com_Error(1,0xffffffff82004ea8,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),(double)local_e8,(double)*pfVar6);
+        }
+        uVar9 = (ulonglong)(uint)pfVar6[-1];
+        XAnimGetAbsDelta(dVar18,uVar2,uVar9,auStack_e0,&local_f0);
+        dVar10 = (double)local_f0;
+        if (dVar18 < ABS((double)(float)(dVar10 - dVar15))) {
+          Com_Error(dVar10,uVar12,1,0xffffffff82004e38,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),dVar10,uVar12);
+        }
+        dVar10 = (double)local_ec;
+        if (dVar18 < ABS(dVar10)) {
+          Com_Error(dVar10,uVar17,1,0xffffffff82004e70,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),dVar10,uVar17);
+        }
+        dVar10 = (double)local_e8;
+        if (dVar18 < ABS((double)(float)(dVar10 - dVar14))) {
+          Com_Error(dVar10,uVar11,1,0xffffffff82004ea8,
+                    *(undefined4 *)
+                     ((int)&PTR_s_mp_mantle_root_82960d70 + (int)((lVar7 + uVar9 & 0xffffffff) << 2)
+                     ),dVar10,uVar11);
+        }
+        pfVar6 = pfVar6 + 3;
+      } while ((int)pfVar6 < -0x7d69f28c);
+      lVar3 = lVar3 + -1;
+      puVar5 = puVar5 + 1;
+      ppuVar4 = ppuVar4 + 0xb;
+      lVar7 = lVar7 + 0xb;
+    } while (lVar3 != 0);
+  }
+  __restfpr_24();
+  __restgprlr_16();
+  return;
 }
 
 
@@ -213,7 +355,6 @@ undefined1 Mantle_FindTransition(double param_1,double param_2)
   
   dVar3 = (double)(float)(param_2 - param_1);
   if (dVar3 <= 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(dVar3,0xffffffff82004d34,0x1cc,0,0xffffffff82004f10,0xffffffff82004f24,dVar3);
   }
   uVar2 = ABS((float)((double)DAT_82960d2c - dVar3)) < ABS((float)((double)DAT_82960d20 - dVar3));
@@ -244,13 +385,240 @@ undefined1 Mantle_FindTransition(double param_1,double param_2)
 }
 
 
-// 8226F290  Mantle_CheckLedge  (bgame/bg_mantle.cpp:574)
+// 8226EEF8  Mantle_CalcEndPos  (bgame/bg_mantle.cpp:480)
 
-void Mantle_CheckLedge(void)
+void Mantle_CalcEndPos(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  char *pcVar4;
+  longlong lVar5;
+  double dVar6;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  undefined4 uStack_94;
+  undefined1 local_90 [8];
+  undefined4 local_88;
+  undefined4 local_7c;
+  float local_70 [11];
+  char local_41;
+  
+  piVar2 = (int *)__savegprlr_28();
+  iVar1 = *piVar2;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x1e8,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  if (((uint)param_2[0xc] & 1) == 0) {
+    param_2[9] = param_2[6];
+    param_2[10] = param_2[7];
+    param_2[0xb] = param_2[8];
+    __restgprlr_28();
+    return;
+  }
+  puVar3 = &uStack_94;
+  pcVar4 = "k]";
+  lVar5 = 6;
+  do {
+    pcVar4 = pcVar4 + 4;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *(undefined4 *)pcVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  local_a0 = param_2[6];
+  local_9c = param_2[7];
+  local_98 = param_2[8];
+  local_b0 = *param_2 * 31.0 + local_a0;
+  local_ac = param_2[1] * 31.0 + local_9c;
+  local_a8 = param_2[2] * 31.0 + local_98;
+  local_88 = 0x41c80000;
+  local_7c = 0x41c80000;
+  PM_trace(piVar2,local_70,&local_a0,&local_b0,local_90,*(undefined4 *)(iVar1 + 0x150),piVar2[0x17])
+  ;
+  if ((local_41 == '\0') && (dVar6 = 1.0, 1.0 <= local_70[0])) {
+    local_a0 = local_b0;
+    local_98 = local_a8;
+    local_a8 = local_a8 - 18.0;
+    local_9c = local_ac;
+    PM_trace(piVar2,local_70,&local_a0,&local_b0,local_90,*(undefined4 *)(iVar1 + 0x150),
+             piVar2[0x17]);
+    if ((local_41 == '\0') && (dVar6 <= (double)local_70[0])) {
+      param_2[9] = local_b0;
+      param_2[10] = local_ac;
+      param_2[0xb] = local_a8;
+      param_2[0xb] = (float)((double)(float)((double)local_a8 - (double)local_98) *
+                             (double)local_70[0] + (double)local_98);
+      __restgprlr_28();
+      return;
+    }
+  }
+  param_2[0xc] = (float)((uint)param_2[0xc] & 0xfffffffe);
+  param_2[9] = param_2[6];
+  param_2[10] = param_2[7];
+  param_2[0xb] = param_2[8];
+  __restgprlr_28();
+  return;
+}
+
+
+// 8226F0F8  Mantle_Start  (bgame/bg_mantle.cpp:532)
+
+void Mantle_Start(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar6;
+  undefined4 uVar7;
+  undefined8 uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar8;
+  double dVar9;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar6 = __savegprlr_26();
+  lVar8 = param_2 + 0x22c;
+  dVar9 = (double)vectoyaw(param_3);
+  iVar1 = (int)param_2;
+  *(float *)(iVar1 + 0x22c) = (float)dVar9;
+  *(undefined4 *)(iVar1 + 0x230) = 0;
+  iVar2 = (int)param_3;
+  uVar7 = Mantle_FindTransition((double)*(float *)(iVar2 + 0x14),(double)*(float *)(iVar2 + 0x20));
+  *(undefined4 *)(iVar1 + 0x234) = uVar7;
+  *(uint *)(iVar1 + 0x238) = *(uint *)(iVar2 + 0x30) & 0xffffffdf;
+  if (param_2 == -0x4ec) {
+    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  }
+  if ((*(uint *)(iVar1 + 0x4f0) & 1) != 0) {
+    *(uint *)(iVar1 + 0x238) = *(uint *)(iVar1 + 0x238) | 0x40;
+  }
+  uVar7 = (&DAT_82960d18)[*(int *)(iVar1 + 0x234) * 3];
+  uVar3 = Mantle_GetActiveXAnimGroup(lVar8);
+  lVar4 = XAnimGetLengthMsec(uVar3,uVar7);
+  lVar5 = Mantle_GetOverLength(lVar8);
+  Mantle_GetAnimDelta(lVar8,lVar5 + lVar4,&local_50);
+  *(float *)(iVar1 + 0x1c) = *(float *)(iVar2 + 0x24) - local_50;
+  *(float *)(iVar1 + 0x20) = *(float *)(iVar2 + 0x28) - local_4c;
+  *(float *)(iVar1 + 0x24) = *(float *)(iVar2 + 0x2c) - local_48;
+  if ((*(uint *)(iVar1 + 0xc) & 4) != 0) {
+    MyAssertHandler(0xffffffff82004d34,0x22d,0,0xffffffff82000f98,0xffffffff82004f38);
+  }
+  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 4;
+  PM_AddEvent(param_2,0xb8);
+  *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) | 0x20000;
+  *(undefined4 *)(iVar6 + 0x10c) = *(undefined4 *)(iVar2 + 0x24);
+  *(undefined4 *)(iVar6 + 0x110) = *(undefined4 *)(iVar2 + 0x28);
+  *(undefined4 *)(iVar6 + 0x114) = *(undefined4 *)(iVar2 + 0x2c);
+  *(int *)(iVar6 + 0x118) = (int)(lVar5 + lVar4);
+  *(undefined1 *)(iVar6 + 0x108) = 1;
+  __restgprlr_26();
+  return;
+}
+
+
+// 8226F290  Mantle_CheckLedge  (bgame/bg_mantle.cpp:574)
+
+void Mantle_CheckLedge(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar4;
+  undefined8 uVar3;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  undefined4 local_94;
+  undefined4 local_90;
+  undefined4 local_8c;
+  float local_80 [11];
+  char local_51;
+  char local_50;
+  
+  iVar4 = __savegprlr_26();
+  dVar6 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x245,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  va(dVar6,0xffffffff82005088,dVar6);
+  Mantle_DebugPrint();
+  local_98 = 0x41700000;
+  local_94 = 0x41700000;
+  local_90 = 0x41700000;
+  local_8c = 0x41700000;
+  pfVar2 = (float *)param_4;
+  local_a8 = (float)((double)pfVar2[5] + dVar6);
+  local_ac = pfVar2[4];
+  local_b0 = pfVar2[3];
+  local_c0 = *pfVar2 * 16.0 + local_b0;
+  local_bc = pfVar2[1] * 16.0 + local_ac;
+  dVar6 = 0.0;
+  local_a0 = 0;
+  local_9c = 0;
+  local_b8 = pfVar2[2] * 16.0 + local_a8;
+  PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(undefined4 *)(iVar4 + 0x150),
+                  param_3);
+  if ((local_51 != '\0') || (dVar5 = 1.0, local_80[0] < 1.0)) {
+    uVar3 = 0xffffffff82004f58;
+  }
+  else {
+    local_a8 = local_b8;
+    local_b8 = pfVar2[5] + 18.0;
+    local_b0 = local_c0;
+    local_ac = local_bc;
+    PM_traceHandler(param_2,local_80,&local_b0,&local_c0,&local_a0,*(undefined4 *)(iVar4 + 0x150),
+                    param_3);
+    if ((local_51 == '\0') && ((double)local_80[0] != dVar5)) {
+      if (local_50 == '\0') {
+        uVar3 = 0xffffffff82005064;
+      }
+      else {
+        pfVar2[6] = local_c0;
+        pfVar2[7] = local_bc;
+        pfVar2[8] = local_b8;
+        fVar1 = (float)((double)(float)((double)local_b8 - (double)local_a8) * (double)local_80[0] +
+                       (double)local_a8);
+        pfVar2[8] = fVar1;
+        dVar5 = (double)(fVar1 - pfVar2[5]);
+        if (dVar5 <= dVar6) {
+          MyAssertHandler(0xffffffff82004d34,0x271,0,0xffffffff82004fec,0xffffffff82005028,dVar5);
+        }
+        local_98 = 0x41c80000;
+        local_8c = 0x41c80000;
+        PM_traceHandler(param_2,local_80,param_4 + 0x18,param_4 + 0x18,&local_a0,
+                        *(undefined4 *)(iVar4 + 0x150),param_3);
+        if (local_51 == '\0') {
+          Mantle_DebugPrint(0xffffffff82004fa4);
+          __restgprlr_26(1);
+          return;
+        }
+        uVar3 = 0xffffffff82004fb8;
+      }
+    }
+    else {
+      uVar3 = 0xffffffff82004f84;
+    }
+  }
+  Mantle_DebugPrint(uVar3);
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -289,7 +657,6 @@ void Mantle_FindMantleSurface
   
   iVar3 = __savegprlr_24();
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x28f,0,0xffffffff82000f98,0xffffffff82001fdc);
   }
   dVar9 = 0.0;
@@ -300,8 +667,10 @@ void Mantle_FindMantleSurface
   local_6c = 0x420c0000;
   local_70 = local_74;
   if (35.0 < local_74) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x296,0,0xffffffff82000f98,0xffffffff820051dc);
+    if (35.0 < local_70) {
+      MyAssertHandler(0xffffffff82004d34,0x297,0,0xffffffff82000f98,0xffffffff820051b0);
+    }
   }
   dVar10 = (double)(15.0 - *(float *)(DAT_829c4024 + 0xc));
   dVar8 = (double)(float)((double)*(float *)(DAT_829c4020 + 0xc) + dVar10);
@@ -376,11 +745,72 @@ void Mantle_FindMantleSurface
 
 // 8226F830  Mantle_CanMantle  (bgame/bg_mantle.cpp:720)
 
-void Mantle_CanMantle(void)
+void Mantle_CanMantle(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  undefined4 local_80;
+  undefined4 local_7c;
+  undefined4 local_78;
+  undefined1 auStack_70 [16];
+  uint local_60;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x2d4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x2d5,0,0xffffffff82000f98,0xffffffff820052b0);
+  }
+  Mantle_DebugPrint(0xffffffff82005294);
+  if (*(char *)(DAT_829c401c + 0xc) == '\0') {
+    Mantle_DebugPrint(0xffffffff82005278);
+  }
+  else {
+    if (7 < *(int *)(iVar1 + 4)) {
+      Mantle_DebugPrint(0xffffffff82005258);
+      __restgprlr_26(0);
+      return;
+    }
+    if ((*(uint *)(iVar1 + 0xc) & 4) != 0) {
+      Mantle_DebugPrint(0xffffffff82005230);
+      __restgprlr_26(0);
+      return;
+    }
+    if ((*(uint *)(iVar1 + 0xf8) & 0xc) != 0) {
+      Mantle_DebugPrint(0xffffffff8200520c);
+      __restgprlr_26(0);
+      return;
+    }
+    cVar2 = Mantle_FindMantleSurface(iVar1,param_2,auStack_70,&local_80);
+    if (cVar2 != '\0') {
+      puVar3 = (undefined4 *)param_4;
+      *puVar3 = local_80;
+      puVar3[1] = local_7c;
+      puVar3[2] = local_78;
+      puVar3[3] = *(undefined4 *)(iVar1 + 0x1c);
+      puVar3[4] = *(undefined4 *)(iVar1 + 0x20);
+      puVar3[5] = *(undefined4 *)(iVar1 + 0x24);
+      if ((local_60 & 0x4000000) != 0) {
+        puVar3[0xc] = puVar3[0xc] | 1;
+      }
+      cVar2 = Mantle_CheckLedge(0x404e000000000000,iVar1,param_2,param_3,param_4);
+      if (cVar2 == '\0') {
+        cVar2 = Mantle_CheckLedge(0x4044000000000000,iVar1,param_2,param_3,param_4);
+        if (cVar2 == '\0') {
+          cVar2 = Mantle_CheckLedge(0x4034000000000000,iVar1,param_2,param_3,param_4);
+          __restgprlr_26(cVar2 != '\0');
+          return;
+        }
+      }
+      __restgprlr_26(1);
+      return;
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -390,7 +820,6 @@ void Mantle_ForceMantle(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x313,0,0xffffffff82000f98,0xffffffff82001fdc);
   }
   *(uint *)(param_1 + 0x238) = *(uint *)(param_1 + 0x238) | 0x20;
@@ -400,11 +829,63 @@ void Mantle_ForceMantle(int param_1)
 
 // 8226FAA8  Mantle_Activate  (bgame/bg_mantle.cpp:794)
 
-void Mantle_Activate(void)
+void Mantle_Activate(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  float *pfVar2;
+  float fVar3;
+  bool bVar4;
+  uint *puVar5;
+  ulonglong uVar6;
+  undefined1 auStack_70 [47];
+  char local_41;
+  
+  puVar5 = (uint *)__savegprlr_26();
+  if (puVar5 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82004d34,799,0,0xffffffff82000f98,0xffffffff82004978);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82004d34,800,0,0xffffffff82000f98,0xffffffff820052b0);
+  }
+  uVar1 = *puVar5;
+  uVar6 = (ulonglong)uVar1;
+  if (uVar6 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x323,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  bVar4 = false;
+  *(uint *)(uVar1 + 0x238) = *(uint *)(uVar1 + 0x238) | 8;
+  pfVar2 = (float *)param_2;
+  pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 8);
+  if (((puVar5[2] & 0x400) == 0) && ((*(uint *)(uVar1 + 0x238) & 0x20) == 0)) {
+    if (uVar6 == 0xfffffffffffffb14) {
+      MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+    }
+    if ((*(uint *)(uVar1 + 0x4f0) & 0x400) == 0) goto LAB_8226fc00;
+    fVar3 = *(float *)(uVar1 + 0x30) * pfVar2[2] +
+            *(float *)(uVar1 + 0x2c) * pfVar2[1] + *(float *)(uVar1 + 0x28) * *pfVar2;
+    if ((fVar3 <= 0.0) && ((fVar3 != 0.0 || (*(char *)(puVar5 + 8) < '\x01')))) goto LAB_8226fc00;
+  }
+  bVar4 = true;
+LAB_8226fc00:
+  if (bVar4) {
+    Mantle_CalcEndPos(puVar5,param_2);
+    if ((*(uint *)(uVar1 + 0xf8) & 4) == 0) {
+      PM_trace(puVar5,auStack_70,param_2 + 0x18,param_2 + 0x18,0xffffffff8200c2a0,
+               *(undefined4 *)(uVar1 + 0x150),puVar5[0x17]);
+      if (local_41 != '\0') {
+        pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 2);
+      }
+      PM_trace(puVar5,auStack_70,param_2 + 0x24,param_2 + 0x24,0xffffffff8200c2a0,
+               *(undefined4 *)(uVar1 + 0x150),puVar5[0x17]);
+      if (local_41 == '\0') {
+        pfVar2[0xc] = (float)((uint)pfVar2[0xc] | 4);
+      }
+    }
+    Mantle_Start(puVar5,uVar6,param_2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -413,8 +894,35 @@ void Mantle_Activate(void)
 void Mantle_Update(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  char cVar3;
+  undefined8 *puVar4;
+  longlong lVar5;
+  undefined8 uStack_68;
+  undefined1 local_60 [96];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82004d34,0x358,0,0xffffffff82000f98,0xffffffff82004978);
+  }
+  iVar1 = *piVar2;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x35b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  puVar4 = &uStack_68;
+  lVar5 = 7;
+  do {
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  cVar3 = Mantle_CanMantle(iVar1,*(undefined1 *)(piVar2 + 0x4d),piVar2[0x17],local_60);
+  if (cVar3 != '\0') {
+    Mantle_Activate(piVar2,local_60);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -449,11 +957,9 @@ void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
   iVar7 = __savegprlr_21();
   iVar3 = (int)param_2;
   if ((*(uint *)(iVar3 + 0xc) & 4) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x370,0,0xffffffff82000f98,0xffffffff82005308);
   }
   if (*(int *)(param_3 + 0x28) < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x371,0,0xffffffff820052dc,0xffffffff820052f4);
   }
   if (*(char *)(DAT_829c401c + 0xc) != '\0') {
@@ -463,7 +969,7 @@ void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
     if ((uVar1 & 2) != 0) {
       BG_AddPredictableEventToPlayerstate(7,0,param_2);
     }
-    uVar10 = *(undefined4 *)(&DAT_82960d18 + *(int *)(iVar3 + 0x234) * 0xc);
+    uVar10 = (&DAT_82960d18)[*(int *)(iVar3 + 0x234) * 3];
     uVar5 = Mantle_GetActiveXAnimGroup(lVar13);
     iVar8 = XAnimGetLengthMsec(uVar5,uVar10);
     iVar9 = Mantle_GetOverLength(lVar13);
@@ -489,7 +995,7 @@ void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
       local_74 = *(float *)(iVar3 + 0x20) + local_94;
       local_70 = *(float *)(iVar3 + 0x24) + local_90;
       uVar12 = 0xffffffff821818b8;
-      uVar10 = *(undefined4 *)(&DAT_82960d18 + *(int *)(iVar3 + 0x234) * 0xc);
+      uVar10 = (&DAT_82960d18)[*(int *)(iVar3 + 0x234) * 3];
       uVar5 = Mantle_GetActiveXAnimGroup(lVar13);
       iVar11 = XAnimGetLengthMsec(uVar5,uVar10);
       if (iVar11 <= *(int *)(iVar3 + 0x230)) {
@@ -506,7 +1012,6 @@ void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
     *(float *)(iVar3 + 0x30) = local_90 * fVar4;
     if (*(int *)(iVar3 + 0x230) == iVar9) {
       if ((*(uint *)(iVar3 + 0xc) & 4) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82004d34,0x3b6,0,0xffffffff82000f98,0xffffffff820052bc);
       }
       *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffb;
@@ -531,8 +1036,37 @@ void Mantle_Move(undefined8 param_1,longlong param_2,int param_3)
 void Mantle_CapView(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x3d6,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  if ((*(uint *)(iVar1 + 0xc) & 4) == 0) {
+    MyAssertHandler(0xffffffff82004d34,0x3d7,0,0xffffffff82000f98,0xffffffff82005308);
+  }
+  if (*(char *)(DAT_829c401c + 0xc) != '\0') {
+    dVar3 = (double)AngleDelta((double)*(float *)(iVar1 + 0x22c),(double)*(float *)(iVar1 + 0x15c));
+    dVar2 = (double)*(float *)(DAT_829c402c + 0xc);
+    dVar4 = -dVar2;
+    if ((dVar3 < dVar4) || (dVar2 < dVar3)) {
+      for (; dVar3 < dVar4; dVar3 = (double)(float)(dVar2 + dVar3)) {
+      }
+      for (; dVar2 < dVar3; dVar3 = (double)(float)(dVar3 - dVar2)) {
+      }
+      if (0.0 < dVar3) {
+        dVar2 = dVar4;
+      }
+      *(float *)(iVar1 + 100) = (float)((double)*(float *)(iVar1 + 100) + dVar3);
+      dVar3 = (double)AngleNormalize360((double)(float)((double)*(float *)(iVar1 + 0x22c) + dVar2));
+      *(float *)(iVar1 + 0x15c) = (float)dVar3;
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -542,7 +1076,6 @@ void Mantle_ClearFlags(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82004d34,0x3f4,0,0xffffffff82000f98,0xffffffff82001fdc);
   }
   *(uint *)(param_1 + 0x238) = *(uint *)(param_1 + 0x238) & 0xffffffe7;
@@ -558,8 +1091,8 @@ longlong Mantle_IsWeaponInactive(int param_1)
   longlong lVar1;
   
   if ((*(char *)(DAT_829c401c + 0xc) != '\0') && ((*(uint *)(param_1 + 0xc) & 4) != 0)) {
-    lVar1 = (ulonglong)*(uint *)(&DAT_82960d1c + *(int *)(param_1 + 0x234) * 0xc) - 10;
-    return lVar1 - (((ulonglong)*(uint *)(&DAT_82960d1c + *(int *)(param_1 + 0x234) * 0xc) - 0xb) +
+    lVar1 = (ulonglong)(uint)(&DAT_82960d1c)[*(int *)(param_1 + 0x234) * 3] - 10;
+    return lVar1 - (((ulonglong)(uint)(&DAT_82960d1c)[*(int *)(param_1 + 0x234) * 3] - 0xb) +
                    (ulonglong)(lVar1 == 0));
   }
   return 0;

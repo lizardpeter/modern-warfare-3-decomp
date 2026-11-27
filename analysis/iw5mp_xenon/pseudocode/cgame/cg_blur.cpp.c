@@ -10,6 +10,53 @@ void TRACK_cg_blur(void)
 }
 
 
+// 822A5528  CG_Blur  (cgame/cg_blur.cpp:46)
+
+void CG_Blur(undefined8 param_1,int param_2,undefined8 param_3,int param_4,int param_5)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar1 = __savegprlr_25();
+  dVar5 = extraout_f1;
+  iVar2 = CG_GetLocalClientGlobals();
+  if (param_2 < 0) {
+    MyAssertHandler(0xffffffff820101d0,0x34,0,0xffffffff82000f98,0xffffffff820101c4);
+  }
+  dVar6 = 0.0;
+  if (dVar5 < 0.0) {
+    MyAssertHandler(dVar5,0xffffffff820101d0,0x35,0,0xffffffff820101a0,0xffffffff820101b4,dVar5);
+  }
+  dVar4 = (double)*(float *)(iVar2 + 0x6ba0c);
+  if (dVar4 < dVar6) {
+    MyAssertHandler(0xffffffff820101d0,0x36,0,0xffffffff82010154,0xffffffff8201017c,dVar4);
+  }
+  iVar1 = iVar1 * 0x1c;
+  if (*(int *)(&DAT_829d8aa0 + iVar1) <= param_5) {
+    if (param_4 == 1) {
+      iVar3 = Sys_Milliseconds();
+    }
+    else {
+      iVar3 = *(int *)(iVar2 + 0x6b98c);
+    }
+    *(int *)(&DAT_829d8aa8 + iVar1) = iVar3;
+    *(int *)(&DAT_829d8aac + iVar1) = iVar3 + param_2;
+    *(float *)(&DAT_829d8ab0 + iVar1) = *(float *)(iVar2 + 0x6ba0c);
+    *(int *)(&DAT_829d8aa4 + iVar1) = param_4;
+    *(float *)(&DAT_829d8ab4 + iVar1) = (float)dVar5;
+    *(int *)(&DAT_829d8aa0 + iVar1) = param_5;
+  }
+  __restgprlr_25();
+  return;
+}
+
+
 // 822A5668  CG_ClearBlur  (cgame/cg_blur.cpp:70)
 
 void CG_ClearBlur(int param_1)
@@ -38,6 +85,78 @@ double CG_GetBlurRadius(undefined8 param_1)
     return (double)*(float *)(&DAT_829d8ab8 + (int)param_1 * 0x1c);
   }
   return 0.0;
+}
+
+
+// 822A5720  CG_ScreenBlur  (cgame/cg_blur.cpp:100)
+
+void CG_ScreenBlur(void)
+
+{
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  iVar1 = iVar1 * 0x1c;
+  iVar2 = *(int *)(iVar2 + 0x6b98c);
+  if (*(int *)(&DAT_829d8aa4 + iVar1) == 1) {
+    iVar2 = Sys_Milliseconds();
+  }
+  if (*(int *)(&DAT_829d8aa8 + iVar1) == 0) goto LAB_822a5934;
+  if (iVar2 < *(int *)(&DAT_829d8aa8 + iVar1)) {
+    MyAssertHandler(0xffffffff820101d0,0x72,0,0xffffffff82000f98,0xffffffff82010300);
+  }
+  if (*(int *)(&DAT_829d8aac + iVar1) < *(int *)(&DAT_829d8aa8 + iVar1)) {
+    MyAssertHandler(0xffffffff820101d0,0x73,0,0xffffffff82000f98,0xffffffff820102d8);
+  }
+  if (iVar2 < *(int *)(&DAT_829d8aac + iVar1)) {
+    dVar5 = 0.0;
+    if ((double)(longlong)(*(int *)(&DAT_829d8aac + iVar1) - *(int *)(&DAT_829d8aa8 + iVar1)) <= 0.0
+       ) {
+      MyAssertHandler(0xffffffff820101d0,0x77,0,0xffffffff82000f98,0xffffffff820102a8);
+    }
+    dVar6 = (double)(float)((double)(longlong)(iVar2 - *(int *)(&DAT_829d8aa8 + iVar1)) /
+                           (double)(longlong)
+                                   (*(int *)(&DAT_829d8aac + iVar1) -
+                                   *(int *)(&DAT_829d8aa8 + iVar1)));
+    if ((dVar6 < dVar5) || (1.0 <= dVar6)) {
+      MyAssertHandler(dVar6,0xffffffff820101d0,0x79,0,0xffffffff82010284,0xffffffff82010294,dVar6);
+    }
+    dVar3 = (double)*(float *)(&DAT_829d8ab4 + iVar1);
+    dVar5 = (double)(float)((double)(float)(dVar3 - (double)*(float *)(&DAT_829d8ab0 + iVar1)) *
+                            dVar6 + (double)*(float *)(&DAT_829d8ab0 + iVar1));
+  }
+  else {
+    dVar3 = (double)*(float *)(&DAT_829d8ab4 + iVar1);
+    *(undefined4 *)(&DAT_829d8aa8 + iVar1) = 0;
+    *(undefined4 *)(&DAT_829d8aac + iVar1) = 0;
+    *(undefined4 *)(&DAT_829d8aa0 + iVar1) = 0;
+    dVar5 = dVar3;
+  }
+  dVar6 = (double)*(float *)(&DAT_829d8ab0 + iVar1);
+  dVar4 = dVar6;
+  if ((float)(dVar3 - dVar6) < 0.0) {
+    dVar4 = dVar3;
+  }
+  if (dVar5 < dVar4) {
+LAB_822a5904:
+    MyAssertHandler(dVar5,0xffffffff820101d0,0x85,0,0xffffffff8201020c,0xffffffff82010220,dVar5);
+  }
+  else {
+    if ((float)(dVar6 - dVar3) < 0.0) {
+      dVar6 = dVar3;
+    }
+    if (dVar6 < dVar5) goto LAB_822a5904;
+  }
+  *(float *)(&DAT_829d8ab8 + iVar1) = (float)dVar5;
+LAB_822a5934:
+  __restgprlr_28();
+  return;
 }
 
 

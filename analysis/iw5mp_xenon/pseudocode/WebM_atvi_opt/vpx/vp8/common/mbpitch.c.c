@@ -186,12 +186,195 @@ void vp8_setup_macroblock(int param_1,int param_2)
 }
 
 
+// 828167F0  vp8_setup_block_dptrs  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:86)
+
+void vp8_setup_block_dptrs(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  longlong lVar5;
+  
+  iVar2 = param_1 + 0x10;
+  iVar3 = param_1 + 0x324;
+  piVar4 = (int *)(param_1 + 0xac8);
+  lVar5 = 4;
+  do {
+    piVar4[0x1e] = iVar3;
+    piVar4[0x2e] = iVar2;
+    piVar4[0x10] = iVar2 + -0x10;
+    piVar4[0xf] = iVar3 + -4;
+    piVar4[0x1f] = iVar2 + -8;
+    iVar1 = iVar3 + 8;
+    piVar4[0x2d] = iVar3 + 4;
+    piVar4[0x3d] = iVar2 + 8;
+    iVar3 = iVar3 + 0x40;
+    piVar4 = piVar4 + 0x3c;
+    *piVar4 = iVar1;
+    iVar2 = iVar2 + 0x80;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar2 = param_1 + 0x424;
+  iVar3 = param_1 + 0x208;
+  piVar4 = (int *)(param_1 + 0xe88);
+  lVar5 = 2;
+  do {
+    piVar4[0x1f] = iVar3;
+    piVar4[0x10] = iVar3 + -8;
+    iVar3 = iVar3 + 0x40;
+    piVar4[0xf] = iVar2 + -4;
+    piVar4 = piVar4 + 0x1e;
+    *piVar4 = iVar2;
+    iVar2 = iVar2 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  iVar2 = param_1 + 0x464;
+  iVar3 = param_1 + 0x288;
+  piVar4 = (int *)(param_1 + 0xf78);
+  lVar5 = 2;
+  do {
+    piVar4[0x1f] = iVar3;
+    piVar4[0x10] = iVar3 + -8;
+    iVar3 = iVar3 + 0x40;
+    piVar4[0xf] = iVar2 + -4;
+    piVar4 = piVar4 + 0x1e;
+    *piVar4 = iVar2;
+    iVar2 = iVar2 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  piVar4 = (int *)(param_1 + 0xac4);
+  *(int *)(param_1 + 0x10a8) = param_1 + 0x300;
+  param_1 = param_1 + 0x7c0;
+  lVar5 = 0x19;
+  do {
+    piVar4[0xe] = param_1 + -800;
+    piVar4 = piVar4 + 0xf;
+    *piVar4 = param_1;
+    param_1 = param_1 + 0x20;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  return;
+}
+
+
 // 828168E8  vp8_build_block_doffsets  (WebM_atvi_opt/vpx/vp8/common/mbpitch.c:128)
 
 void vp8_build_block_doffsets(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int *piVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  
+  iVar1 = __savegprlr_17();
+  iVar2 = iVar1 + 0x1124;
+  iVar7 = iVar1 + 0x1128;
+  iVar6 = iVar1 + 0x112c;
+  piVar4 = (int *)(iVar1 + 0xae4);
+  uVar3 = 1;
+  do {
+    iVar5 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x11] = iVar5;
+    piVar4[0xf] = iVar2;
+    piVar4[0x10] = (((int)(uVar3 - 1) >> 2) * iVar5 + (uVar3 - 1 & 3)) * 4;
+    iVar5 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x20] = iVar5;
+    piVar4[0x1f] = (((int)uVar3 >> 2) * iVar5 + (uVar3 & 3)) * 4;
+    piVar4[0x1e] = iVar2;
+    iVar5 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x2f] = iVar5;
+    iVar8 = uVar3 + 3;
+    piVar4[0x2e] = (((int)(uVar3 + 1) >> 2) * iVar5 + (uVar3 + 1 & 3)) * 4;
+    piVar4[0x2d] = iVar2;
+    iVar5 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x3e] = iVar5;
+    piVar4[0x3d] = (((int)(uVar3 + 2) >> 2) * iVar5 + (uVar3 - 2 & 3)) * 4;
+    piVar4 = piVar4 + 0x3c;
+    *piVar4 = iVar2;
+    uVar3 = uVar3 + 4;
+  } while (iVar8 < 0x10);
+  *(int *)(iVar1 + 0xee0) = iVar7;
+  *(undefined4 *)(iVar1 + 0xee4) = 0;
+  iVar8 = iVar1 + 0x10f0;
+  *(undefined4 *)(iVar1 + 0xee8) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0xfd8) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0xfd4) = 0;
+  *(int *)(iVar1 + 0xfd0) = iVar6;
+  *(undefined4 *)(iVar1 + 0xf24) = *(undefined4 *)(iVar1 + 0x1120);
+  iVar5 = iVar1 + 0x10f4;
+  *(undefined4 *)(iVar1 + 0xf20) = 4;
+  iVar2 = iVar1 + 0x10f8;
+  *(int *)(iVar1 + 0xf1c) = iVar7;
+  piVar4 = (int *)(iVar1 + 0xad8);
+  *(undefined4 *)(iVar1 + 0x1014) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0x1010) = 4;
+  *(int *)(iVar1 + 0x100c) = iVar6;
+  *(int *)(iVar1 + 0xf60) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0xf5c) = *(int *)(iVar1 + 0x1120) << 2;
+  *(int *)(iVar1 + 0xf58) = iVar7;
+  *(int *)(iVar1 + 0x1050) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0x104c) = *(int *)(iVar1 + 0x1120) << 2;
+  *(int *)(iVar1 + 0x1048) = iVar6;
+  *(int *)(iVar1 + 0xf9c) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0xf98) = (*(int *)(iVar1 + 0x1120) + 1) * 4;
+  *(int *)(iVar1 + 0xf94) = iVar7;
+  *(int *)(iVar1 + 0x108c) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0x1088) = (*(int *)(iVar1 + 0x1120) + 1) * 4;
+  *(int *)(iVar1 + 0x1084) = iVar6;
+  uVar3 = 1;
+  do {
+    iVar6 = *(int *)(iVar1 + 0x1114);
+    piVar4[0xf] = iVar8;
+    piVar4[0x11] = iVar6;
+    piVar4[0x10] = (((int)(uVar3 - 1) >> 2) * iVar6 + (uVar3 - 1 & 3)) * 4;
+    iVar6 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x20] = iVar6;
+    iVar7 = uVar3 + 3;
+    piVar4[0x1f] = (((int)uVar3 >> 2) * iVar6 + (uVar3 & 3)) * 4;
+    piVar4[0x1e] = iVar8;
+    iVar6 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x2f] = iVar6;
+    piVar4[0x2e] = (((int)(uVar3 + 1) >> 2) * iVar6 + (uVar3 + 1 & 3)) * 4;
+    piVar4[0x2d] = iVar8;
+    iVar6 = *(int *)(iVar1 + 0x1114);
+    piVar4[0x3e] = iVar6;
+    piVar4[0x3d] = (((int)(uVar3 + 2) >> 2) * iVar6 + (uVar3 - 2 & 3)) * 4;
+    piVar4 = piVar4 + 0x3c;
+    *piVar4 = iVar8;
+    uVar3 = uVar3 + 4;
+  } while (iVar7 < 0x10);
+  *(int *)(iVar1 + 0xed4) = iVar5;
+  *(undefined4 *)(iVar1 + 0xed8) = 0;
+  *(undefined4 *)(iVar1 + 0xedc) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0xfcc) = *(undefined4 *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0xfc4) = iVar2;
+  *(undefined4 *)(iVar1 + 0xfc8) = 0;
+  *(undefined4 *)(iVar1 + 0xf18) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0xf14) = 4;
+  *(int *)(iVar1 + 0xf10) = iVar5;
+  *(undefined4 *)(iVar1 + 0x1008) = *(undefined4 *)(iVar1 + 0x1120);
+  *(undefined4 *)(iVar1 + 0x1004) = 4;
+  *(int *)(iVar1 + 0x1000) = iVar2;
+  *(int *)(iVar1 + 0xf54) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0xf50) = *(int *)(iVar1 + 0x1120) << 2;
+  *(int *)(iVar1 + 0xf4c) = iVar5;
+  *(int *)(iVar1 + 0x1044) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0x1040) = *(int *)(iVar1 + 0x1120) << 2;
+  *(int *)(iVar1 + 0x103c) = iVar2;
+  *(int *)(iVar1 + 0xf90) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0xf8c) = (*(int *)(iVar1 + 0x1120) + 1) * 4;
+  *(int *)(iVar1 + 0xf88) = iVar5;
+  *(int *)(iVar1 + 0x1080) = *(int *)(iVar1 + 0x1120);
+  *(int *)(iVar1 + 0x107c) = (*(int *)(iVar1 + 0x1120) + 1) * 4;
+  *(int *)(iVar1 + 0x1078) = iVar2;
+  __restgprlr_17();
+  return;
 }
 

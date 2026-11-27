@@ -5,7 +5,27 @@
 void GfxSModelSurfIter__SkipToNextDrawGroup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  ushort uVar2;
+  ushort uVar3;
+  int iVar4;
+  ushort *puVar5;
+  
+  iVar4 = __savegprlr_27();
+  puVar5 = *(ushort **)(iVar4 + 4);
+  uVar2 = *puVar5;
+  bVar1 = *(byte *)(puVar5 + 1);
+  do {
+    uVar3 = *puVar5;
+    *(ushort **)(iVar4 + 4) = puVar5 + (uVar3 >> 0xc) + 3;
+    if (*(ushort **)(iVar4 + 8) < puVar5 + (uVar3 >> 0xc) + 3) {
+      MyAssertHandler(0xffffffff821be9d8,0xa6,0,0xffffffff82000f98,0xffffffff821bea24);
+    }
+    puVar5 = *(ushort **)(iVar4 + 4);
+  } while ((puVar5 != *(ushort **)(iVar4 + 8)) &&
+          ((((ulonglong)*puVar5 & 0xfff) << 10 | (ulonglong)*(byte *)(puVar5 + 1)) << 8 ==
+           (((ulonglong)uVar2 & 0xfff) << 10 | (ulonglong)bVar1) << 8));
+  __restgprlr_27();
+  return;
 }
 

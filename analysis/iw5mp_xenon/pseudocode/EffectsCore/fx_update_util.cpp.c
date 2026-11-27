@@ -2,21 +2,115 @@
 
 // 8244F3A0  FX_TransformPosFromLocalToWorld  (EffectsCore/fx_update_util.cpp:80)
 
-void FX_TransformPosFromLocalToWorld(void)
+void FX_TransformPosFromLocalToWorld(undefined8 param_1,float *param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44;
+  float local_40;
+  float local_3c;
+  float local_38;
+  float local_34;
+  float local_30;
+  
+  iVar5 = __savegprlr_29();
+  UnitQuatToAxis(iVar5,&local_50);
+  fVar1 = *param_2;
+  fVar4 = local_50 * fVar1 + *(float *)(iVar5 + 0x10);
+  *param_3 = fVar4;
+  fVar3 = fVar1 * local_4c + *(float *)(iVar5 + 0x14);
+  param_3[1] = fVar3;
+  fVar2 = local_48 * fVar1 + *(float *)(iVar5 + 0x18);
+  param_3[2] = fVar2;
+  fVar1 = param_2[1];
+  fVar4 = local_44 * fVar1 + fVar4;
+  fVar3 = local_40 * fVar1 + fVar3;
+  fVar2 = local_3c * fVar1 + fVar2;
+  *param_3 = fVar4;
+  param_3[1] = fVar3;
+  param_3[2] = fVar2;
+  fVar1 = param_2[2];
+  *param_3 = local_38 * fVar1 + fVar4;
+  param_3[1] = local_34 * fVar1 + fVar3;
+  param_3[2] = local_30 * fVar1 + fVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8244F458  FX_OffsetSpawnOrigin  (EffectsCore/fx_update_util.cpp:96)
 
-void FX_OffsetSpawnOrigin(void)
+void FX_OffsetSpawnOrigin(undefined8 param_1,uint *param_2,ulonglong param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  uint uVar6;
+  undefined8 uVar7;
+  double dVar8;
+  double dVar9;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
+  
+  uVar7 = __savegprlr_27();
+  uVar6 = *param_2 & 0x30;
+  if (uVar6 != 0) {
+    if (uVar6 != 0x10) {
+      if (uVar6 != 0x20) {
+        MyAssertHandler(0xffffffff8206a9e8,0x75,0,0xffffffff8206aa34,0xffffffff8206aa70);
+      }
+      iVar3 = (int)((param_3 & 0x3fffffff) << 2);
+      dVar9 = (double)*(float *)(&DAT_82066aec + iVar3);
+      dVar8 = (double)(*(float *)(&DAT_82066af4 + iVar3) * (float)param_2[0x15] +
+                      (float)param_2[0x14]);
+      uVar7 = UnitQuatToAxis(uVar7,&local_70);
+      FastSinCos((double)(float)(dVar9 * 6.2831854820251465),uVar7,&local_90,&local_8c);
+      fVar1 = (float)((double)local_8c * dVar8);
+      fVar2 = (float)((double)local_90 * dVar8);
+      fVar4 = local_58 * fVar2 + local_64 * fVar1 + *param_4;
+      *param_4 = fVar4;
+      fVar5 = local_60 * fVar1 + local_54 * fVar2 + param_4[1];
+      param_4[1] = fVar5;
+      fVar1 = local_5c * fVar1 + local_50 * fVar2 + param_4[2];
+      param_4[2] = fVar1;
+      fVar2 = *(float *)(&DAT_82066af0 + iVar3) * (float)param_2[0x17] + (float)param_2[0x16];
+      *param_4 = local_70 * fVar2 + fVar4;
+      param_4[1] = local_6c * fVar2 + fVar5;
+      param_4[2] = local_68 * fVar2 + fVar1;
+      __restgprlr_27();
+      return;
+    }
+    FX_RandomDir(param_3,&local_88);
+    fVar1 = *(float *)(&DAT_82066af4 + (int)((param_3 & 0xffffffff) << 2)) * (float)param_2[0x15] +
+            (float)param_2[0x14];
+    *param_4 = local_88 * fVar1 + *param_4;
+    param_4[1] = local_84 * fVar1 + param_4[1];
+    param_4[2] = local_80 * fVar1 + param_4[2];
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -38,26 +132,24 @@ void FX_GetOriginForTrailElem
   undefined4 local_50;
   
   puVar1 = (uint *)__savegprlr_25();
-  if (((param_6 & 0xffffffff) != 0) && (param_7 != (undefined4 *)0x0)) {
-    if ((*puVar1 & 0xc0) != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8206a9e8,0x8e,0,0xffffffff8206acf8,0xffffffff8206ad28);
-    }
-    UnitQuatToAxis(param_3,auStack_70);
-    puVar2 = (undefined4 *)param_6;
-    *puVar2 = local_64;
-    puVar2[1] = local_60;
-    puVar2[2] = local_5c;
-    *param_7 = local_58;
-    param_7[1] = local_54;
-    param_7[2] = local_50;
-    FX_GetSpawnOrigin(param_3,puVar1,param_4,param_5);
-    FX_OffsetSpawnOrigin(param_3,puVar1,param_4,param_5);
-    __restgprlr_25();
-    return;
+  if (((param_6 & 0xffffffff) == 0) || (param_7 == (undefined4 *)0x0)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x8d,0,0xffffffff82000f98,0xffffffff8206ad70);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8206a9e8,0x8d,0,0xffffffff82000f98,0xffffffff8206ad70);
+  if ((*puVar1 & 0xc0) != 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x8e,0,0xffffffff8206acf8,0xffffffff8206ad28);
+  }
+  UnitQuatToAxis(param_3,auStack_70);
+  puVar2 = (undefined4 *)param_6;
+  *puVar2 = local_64;
+  puVar2[1] = local_60;
+  puVar2[2] = local_5c;
+  *param_7 = local_58;
+  param_7[1] = local_54;
+  param_7[2] = local_50;
+  FX_GetSpawnOrigin(param_3,puVar1,param_4,param_5);
+  FX_OffsetSpawnOrigin(param_3,puVar1,param_4,param_5);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -134,11 +226,22 @@ void FX_SpatialFrameInvert(int param_1,longlong param_2)
 
 // 8244F7C0  FX_SpatialFrameMultiply  (EffectsCore/fx_update_util.cpp:202)
 
-void FX_SpatialFrameMultiply(void)
+void FX_SpatialFrameMultiply(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  float local_30;
+  float local_2c;
+  float local_28;
+  
+  iVar1 = __savegprlr_29();
+  QuatMultiply();
+  QuatTransform(iVar1,param_2 + 0x10,&local_30);
+  *(float *)(param_3 + 0x10) = *(float *)(iVar1 + 0x10) + local_30;
+  *(float *)(param_3 + 0x14) = *(float *)(iVar1 + 0x14) + local_2c;
+  *(float *)(param_3 + 0x18) = *(float *)(iVar1 + 0x18) + local_28;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -164,6 +267,7 @@ void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,
   double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
   float local_70;
   float local_6c;
   float local_68;
@@ -174,14 +278,14 @@ void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,
   dVar13 = (double)*pfVar5;
   dVar15 = (double)pfVar5[2];
   dVar14 = (double)pfVar5[3];
-  dVar16 = 1.0;
+  dVar17 = 1.0;
+  dVar16 = 0.0020000000949949026;
   if (0.002 <= ABS((float)(dVar14 * dVar14 +
                           (double)(float)(dVar15 * dVar15 +
                                          (double)(float)(dVar13 * dVar13 +
                                                         (double)(float)(dVar12 * dVar12)))) - 1.0))
   {
     uVar9 = va(dVar13,dVar12,dVar15,dVar14,0xffffffff8200c4fc,dVar13,dVar12,dVar15,dVar14);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206a9e8,0xd9,0,0xffffffff820011f4,0xffffffff8206ab30,uVar9);
   }
   pfVar6 = (float *)param_3;
@@ -189,13 +293,12 @@ void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,
   dVar13 = (double)*pfVar6;
   dVar15 = (double)pfVar6[2];
   dVar14 = (double)pfVar6[3];
-  if (0.002 <= ABS((float)(dVar14 * dVar14 +
-                          (double)(float)(dVar15 * dVar15 +
-                                         (double)(float)(dVar13 * dVar13 +
-                                                        (double)(float)(dVar12 * dVar12)))) - 1.0))
-  {
+  if (dVar16 <= ABS((double)(float)((double)(float)(dVar14 * dVar14 +
+                                                   (double)(float)(dVar15 * dVar15 +
+                                                                  (double)(float)(dVar13 * dVar13 +
+                                                                                 (double)(float)(
+                                                  dVar12 * dVar12)))) - dVar17))) {
     uVar9 = va(dVar13,dVar12,dVar15,dVar14,0xffffffff8200c4fc,dVar13,dVar12,dVar15,dVar14);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206a9e8,0xda,0,0xffffffff820011f4,0xffffffff8206ab0c,uVar9);
   }
   uVar8 = *puVar10 & 0xc0;
@@ -204,15 +307,15 @@ void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,
     *pfVar7 = 0.0;
     pfVar7[1] = 0.0;
     pfVar7[2] = 0.0;
-    pfVar7[3] = 1.0;
+    pfVar7[3] = (float)dVar17;
     pfVar7[4] = 0.0;
     pfVar7[5] = 0.0;
     pfVar7[6] = 0.0;
-    pfVar7[7] = 1.0;
+    pfVar7[7] = (float)dVar17;
     pfVar7[8] = 0.0;
     pfVar7[9] = 0.0;
     pfVar7[10] = 0.0;
-    pfVar7[0xb] = 1.0;
+    pfVar7[0xb] = (float)dVar17;
     __restgprlr_24();
     return;
   }
@@ -224,66 +327,78 @@ void FX_GetOrientation(undefined8 param_1,undefined8 param_2,undefined8 param_3,
     __restgprlr_24();
     return;
   }
-  if (uVar8 == 0x80) {
-    *pfVar7 = pfVar6[4];
-    pfVar7[1] = pfVar6[5];
-    pfVar7[2] = pfVar6[6];
-    UnitQuatToAxis(param_3,param_5 + 0xc);
+  if (uVar8 != 0x80) {
+    if (uVar8 != 0xc0) {
+      MyAssertHandler(0xffffffff8206a9e8,0xf2,0,0xffffffff8206a7d4,0xffffffff8206a7e8);
+    }
+    if ((*puVar10 & 0x30) == 0) {
+      MyAssertHandler(0xffffffff8206a9e8,0xf3,0,0xffffffff8206aa34,0xffffffff8206aac0,0);
+    }
+    FX_GetSpawnOrigin(param_2,puVar10,param_4,param_5);
+    lVar11 = param_5 + 0xc;
+    dVar14 = 0.0;
+    pfVar7[3] = 0.0;
+    pfVar7[4] = 0.0;
+    pfVar7[5] = 0.0;
+    FX_OffsetSpawnOrigin(param_2,puVar10,param_4,lVar11);
+    *pfVar7 = pfVar7[3] + *pfVar7;
+    pfVar7[1] = pfVar7[4] + pfVar7[1];
+    pfVar7[2] = pfVar7[2] + pfVar7[5];
+    fVar2 = pfVar7[3];
+    fVar3 = pfVar7[5];
+    fVar4 = pfVar7[4];
+    dVar13 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
+    dVar12 = dVar17;
+    if (-dVar13 < 0.0) {
+      dVar12 = dVar13;
+    }
+    fVar1 = (float)(dVar17 / dVar12);
+    pfVar7[3] = fVar2 * fVar1;
+    pfVar7[4] = fVar4 * fVar1;
+    pfVar7[5] = fVar3 * fVar1;
+    if (dVar13 == dVar14) {
+      *(float *)lVar11 = (float)dVar17;
+      pfVar7[4] = (float)dVar14;
+      pfVar7[5] = (float)dVar14;
+    }
+    if ((*puVar10 & 0x30) != 0x10) {
+      if ((*puVar10 & 0x30) != 0x20) {
+        MyAssertHandler(0xffffffff8206a9e8,0x104,0,0xffffffff8206aa34,0xffffffff8206aa70);
+      }
+      local_70 = (float)dVar14;
+      dVar12 = dVar14;
+      dVar13 = dVar17;
+      if (0.999 <= ABS(pfVar7[5])) {
+        dVar12 = dVar17;
+        dVar13 = dVar14;
+      }
+      local_68 = (float)dVar13;
+      local_6c = (float)dVar12;
+      Vec3Cross(&local_70,lVar11,param_5 + 0x18);
+      fVar2 = pfVar7[7];
+      fVar3 = pfVar7[6];
+      fVar4 = pfVar7[8];
+      dVar13 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+      dVar12 = dVar17;
+      if (-dVar13 < 0.0) {
+        dVar12 = dVar13;
+      }
+      fVar1 = (float)(dVar17 / dVar12);
+      pfVar7[6] = fVar3 * fVar1;
+      pfVar7[7] = fVar2 * fVar1;
+      pfVar7[8] = fVar4 * fVar1;
+      Vec3Cross(lVar11,param_5 + 0x18,param_5 + 0x24);
+      __restgprlr_24();
+      return;
+    }
+    Vec3Basis_RightHanded(lVar11,param_5 + 0x18,param_5 + 0x24);
     __restgprlr_24();
     return;
   }
-  if (uVar8 != 0xc0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8206a9e8,0xf2,0,0xffffffff8206a7d4,0xffffffff8206a7e8);
-  }
-  if ((*puVar10 & 0x30) == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8206a9e8,0xf3,0,0xffffffff8206aa34,0xffffffff8206aac0,0);
-  }
-  FX_GetSpawnOrigin(param_2,puVar10,param_4,param_5);
-  lVar11 = param_5 + 0xc;
-  dVar14 = 0.0;
-  pfVar7[3] = 0.0;
-  pfVar7[4] = 0.0;
-  pfVar7[5] = 0.0;
-  FX_OffsetSpawnOrigin(param_2,puVar10,param_4,lVar11);
-  *pfVar7 = pfVar7[3] + *pfVar7;
-  pfVar7[1] = pfVar7[4] + pfVar7[1];
-  pfVar7[2] = pfVar7[2] + pfVar7[5];
-  fVar2 = pfVar7[3];
-  fVar3 = pfVar7[5];
-  fVar4 = pfVar7[4];
-  dVar13 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
-  dVar12 = dVar16;
-  if (-dVar13 < 0.0) {
-    dVar12 = dVar13;
-  }
-  fVar1 = (float)(dVar16 / dVar12);
-  pfVar7[3] = fVar2 * fVar1;
-  pfVar7[4] = fVar4 * fVar1;
-  pfVar7[5] = fVar3 * fVar1;
-  if (dVar13 == dVar14) {
-    *(float *)lVar11 = (float)dVar16;
-    pfVar7[4] = (float)dVar14;
-    pfVar7[5] = (float)dVar14;
-  }
-  if ((*puVar10 & 0x30) != 0x10) {
-    if ((*puVar10 & 0x30) == 0x20) {
-      local_70 = (float)dVar14;
-      dVar12 = dVar14;
-      if (0.999 <= ABS(pfVar7[5])) {
-        dVar12 = dVar16;
-        dVar16 = dVar14;
-      }
-      local_68 = (float)dVar16;
-      local_6c = (float)dVar12;
-                    /* WARNING: Subroutine does not return */
-      Vec3Cross(&local_70,lVar11,param_5 + 0x18);
-    }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8206a9e8,0x104,0,0xffffffff8206aa34,0xffffffff8206aa70);
-  }
-  Vec3Basis_RightHanded(lVar11,param_5 + 0x18,param_5 + 0x24);
+  *pfVar7 = pfVar6[4];
+  pfVar7[1] = pfVar6[5];
+  pfVar7[2] = pfVar6[6];
+  UnitQuatToAxis(param_3,param_5 + 0xc);
   __restgprlr_24();
   return;
 }
@@ -318,19 +433,18 @@ void FX_GetVelocityAtTime
 
 {
   uint uVar1;
-  float fVar2;
-  byte bVar3;
-  uint uVar4;
-  int iVar5;
-  uint *puVar7;
-  undefined8 uVar6;
-  longlong lVar8;
-  ulonglong uVar9;
+  byte bVar2;
+  uint uVar3;
+  int iVar4;
+  uint *puVar6;
+  undefined8 uVar5;
+  longlong lVar7;
+  ulonglong uVar8;
   double extraout_f1;
-  double dVar10;
+  double dVar9;
   double _X;
+  double dVar10;
   double dVar11;
-  double dVar12;
   undefined8 local_a0;
   float local_98;
   float local_94;
@@ -340,86 +454,113 @@ void FX_GetVelocityAtTime
   undefined4 local_80;
   undefined1 auStack_78 [120];
   
-  puVar7 = (uint *)__savegprlr_24();
-  if (puVar7 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
+  puVar6 = (uint *)__savegprlr_24();
+  dVar9 = extraout_f1;
+  if (puVar6 == (uint *)0x0) {
     MyAssertHandler(0xffffffff8206a9e8,0x12e,0,0xffffffff82000f98,0xffffffff82061c6c);
   }
-  if (puVar7[0x2d] == 0) {
-                    /* WARNING: Subroutine does not return */
+  if (puVar6[0x2d] == 0) {
     MyAssertHandler(0xffffffff8206a9e8,0x12f,0,0xffffffff82000f98,0xffffffff8206a364);
   }
-  if (*(char *)((int)puVar7 + 0xb2) == '\0') {
-                    /* WARNING: Subroutine does not return */
+  if (*(char *)((int)puVar6 + 0xb2) == '\0') {
     MyAssertHandler(0xffffffff8206a9e8,0x130,0,0xffffffff8206a318,0xffffffff8206a340);
   }
-  dVar12 = (double)(float)(param_2 / extraout_f1);
-  if ((0.0 <= dVar12) && (dVar12 < 1.0)) {
-    bVar3 = *(byte *)((int)puVar7 + 0xb2);
-    uVar9 = (ulonglong)bVar3;
-    dVar11 = (double)uVar9;
-    iVar5 = (int)((param_4 & 0x3fffffff) << 2);
-    local_88 = *(undefined4 *)(&DAT_82066ac8 + iVar5);
-    local_84 = *(undefined4 *)(&DAT_82066acc + iVar5);
-    local_80 = *(undefined4 *)(&DAT_82066ad0 + iVar5);
-    _X = (double)(float)(dVar11 * dVar12);
-    local_a0 = uVar9;
-    dVar10 = floor(_X);
-    uVar1 = (uint)dVar10;
-    local_a0 = (ulonglong)(int)uVar1;
-    if ((-1 < (int)uVar1) && ((int)uVar1 < (int)(uint)bVar3)) {
-      uVar4 = puVar7[0x2d];
-      *param_9 = *param_8;
-      fVar2 = (float)(dVar11 * (double)(float)(_X - (double)(longlong)local_a0));
-      dVar12 = 1000.0;
-      lVar8 = ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 +
-              (ulonglong)uVar4;
-      local_a0 = CONCAT44((float)(dVar11 - (double)fVar2),fVar2);
-      param_9[1] = param_8[1];
-      param_9[2] = param_8[2];
-      if ((*puVar7 & 0x2000000) != 0) {
-        FX_GetVelocityAtTimeInFrame(lVar8 + 0x30,lVar8 + 0x90,&local_88,&local_a0,&local_98);
-        *param_9 = (float)((double)local_98 * dVar12 + (double)*param_9);
-        param_9[1] = (float)((double)local_94 * dVar12 + (double)param_9[1]);
-        param_9[2] = (float)((double)local_90 * dVar12 + (double)param_9[2]);
-      }
-      if ((*puVar7 & 0x1000000) != 0) {
-        FX_GetVelocityAtTimeInFrame(lVar8,lVar8 + 0x60,&local_88,&local_a0,auStack_78);
-        MatrixTransformVector(auStack_78,param_7 + 0xc,&local_98);
-        *param_9 = (float)((double)local_98 * dVar12 + (double)*param_9);
-        param_9[1] = (float)((double)local_94 * dVar12 + (double)param_9[1]);
-        param_9[2] = (float)((double)local_90 * dVar12 + (double)param_9[2]);
-      }
-      __restgprlr_24();
-      return;
-    }
-    uVar6 = va(dVar12,0xffffffff820651e4,(ulonglong)uVar1,dVar12,uVar9);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8206a9e8,0x13d,1,0xffffffff8206ab58,0xffffffff8206abb0,uVar6);
+  dVar11 = (double)(float)(param_2 / dVar9);
+  if ((dVar11 < 0.0) || (1.0 <= dVar11)) {
+    uVar5 = va(dVar11,param_2,dVar9,0xffffffff8206ac0c,dVar11,param_2,dVar9);
+    MyAssertHandler(0xffffffff8206a9e8,0x133,0,0xffffffff820011f4,0xffffffff8206abe4,uVar5);
   }
-  uVar6 = va(dVar12,param_2,extraout_f1,0xffffffff8206ac0c,dVar12,param_2,extraout_f1);
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8206a9e8,0x133,0,0xffffffff820011f4,0xffffffff8206abe4,uVar6);
+  bVar2 = *(byte *)((int)puVar6 + 0xb2);
+  uVar8 = (ulonglong)bVar2;
+  dVar10 = (double)uVar8;
+  iVar4 = (int)((param_4 & 0x3fffffff) << 2);
+  local_88 = *(undefined4 *)(&DAT_82066ac8 + iVar4);
+  local_84 = *(undefined4 *)(&DAT_82066acc + iVar4);
+  local_80 = *(undefined4 *)(&DAT_82066ad0 + iVar4);
+  _X = (double)(float)(dVar10 * dVar11);
+  local_a0 = uVar8;
+  dVar9 = floor(_X);
+  uVar1 = (uint)dVar9;
+  local_a0 = (ulonglong)(int)uVar1;
+  dVar9 = (double)(float)(_X - (double)(longlong)local_a0);
+  if (((int)uVar1 < 0) || ((int)(uint)bVar2 <= (int)uVar1)) {
+    uVar5 = va(dVar11,0xffffffff820651e4,(ulonglong)uVar1,dVar11,uVar8);
+    MyAssertHandler(0xffffffff8206a9e8,0x13d,1,0xffffffff8206ab58,0xffffffff8206abb0,uVar5);
+  }
+  uVar3 = puVar6[0x2d];
+  *param_9 = *param_8;
+  dVar11 = 1000.0;
+  lVar7 = ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 +
+          (ulonglong)uVar3;
+  local_a0 = CONCAT44((float)(dVar10 - (double)(float)(dVar10 * dVar9)),(float)(dVar10 * dVar9));
+  param_9[1] = param_8[1];
+  param_9[2] = param_8[2];
+  if ((*puVar6 & 0x2000000) != 0) {
+    FX_GetVelocityAtTimeInFrame(lVar7 + 0x30,lVar7 + 0x90,&local_88,&local_a0,&local_98);
+    *param_9 = (float)((double)local_98 * dVar11 + (double)*param_9);
+    param_9[1] = (float)((double)local_94 * dVar11 + (double)param_9[1]);
+    param_9[2] = (float)((double)local_90 * dVar11 + (double)param_9[2]);
+  }
+  if ((*puVar6 & 0x1000000) != 0) {
+    FX_GetVelocityAtTimeInFrame(lVar7,lVar7 + 0x60,&local_88,&local_a0,auStack_78);
+    MatrixTransformVector(auStack_78,param_7 + 0xc,&local_98);
+    *param_9 = (float)((double)local_98 * dVar11 + (double)*param_9);
+    param_9[1] = (float)((double)local_94 * dVar11 + (double)param_9[1]);
+    param_9[2] = (float)((double)local_90 * dVar11 + (double)param_9[2]);
+  }
+  __restgprlr_24();
+  return;
 }
 
 
 // 82450040  FX_OrientationPosToWorldPos  (EffectsCore/fx_update_util.cpp:343)
 
-void FX_OrientationPosToWorldPos(void)
+void FX_OrientationPosToWorldPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar1 = (float *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x158,0,0xffffffff82000f98,0xffffffff8206ac18);
+  }
+  pfVar2 = (float *)param_2;
+  pfVar3 = (float *)param_3;
+  *pfVar3 = pfVar1[9] * pfVar2[2] + pfVar1[6] * pfVar2[1] + pfVar1[3] * *pfVar2 + *pfVar1;
+  pfVar3[1] = pfVar1[10] * pfVar2[2] + pfVar1[7] * pfVar2[1] + pfVar1[4] * *pfVar2 + pfVar1[1];
+  pfVar3[2] = pfVar1[0xb] * pfVar2[2] + pfVar1[8] * pfVar2[1] + pfVar1[5] * *pfVar2 + pfVar1[2];
+  __restgprlr_29();
+  return;
 }
 
 
 // 82450120  FX_OrientationPosFromWorldPos  (EffectsCore/fx_update_util.cpp:352)
 
-void FX_OrientationPosFromWorldPos(void)
+void FX_OrientationPosFromWorldPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float *pfVar5;
+  
+  pfVar4 = (float *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206a9e8,0x163,0,0xffffffff82000f98,0xffffffff8206ac18);
+  }
+  pfVar5 = (float *)param_2;
+  fVar1 = pfVar5[1] - pfVar4[1];
+  fVar2 = pfVar5[2] - pfVar4[2];
+  fVar3 = *pfVar5 - *pfVar4;
+  pfVar5 = (float *)param_3;
+  *pfVar5 = pfVar4[3] * fVar3 + pfVar4[5] * fVar2 + pfVar4[4] * fVar1;
+  pfVar5[1] = pfVar4[6] * fVar3 + pfVar4[8] * fVar2 + pfVar4[7] * fVar1;
+  pfVar5[2] = pfVar4[9] * fVar3 + pfVar4[0xb] * fVar2 + pfVar4[10] * fVar1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -436,35 +577,39 @@ void FX_CullSphere(undefined8 param_1,ulonglong param_2,float *param_3)
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   
   iVar2 = __savegprlr_24();
+  dVar8 = extraout_f1;
   if (*(int *)(iVar2 + 0xc) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206a9e8,0x174,0,0xffffffff82000f98,0xffffffff82061590);
   }
   if (((param_2 & 0xffffffff) != (ulonglong)*(uint *)(iVar2 + 0x94)) &&
      ((param_2 & 0xffffffff) != 5)) {
     uVar1 = va(0xffffffff82061b5c,param_2);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206a9e8,0x175,0,0xffffffff820011f4,0xffffffff82061b10,uVar1);
   }
   uVar3 = 0;
   if ((param_2 & 0xffffffff) != 0) {
+    dVar8 = -dVar8;
     pfVar4 = (float *)(iVar2 + 0x18);
+    dVar9 = 0.0020000000949949026;
+    dVar10 = 1.0;
     do {
       dVar5 = (double)pfVar4[-2];
-      if (0.002 <= ABS((pfVar4[-1] * pfVar4[-1] + *pfVar4 * *pfVar4 + (float)(dVar5 * dVar5)) - 1.0)
-         ) {
+      if (dVar9 <= ABS((double)(float)((double)(pfVar4[-1] * pfVar4[-1] + *pfVar4 * *pfVar4 +
+                                               (float)(dVar5 * dVar5)) - dVar10))) {
         dVar7 = (double)*pfVar4;
         dVar6 = (double)pfVar4[-1];
         uVar1 = va(dVar5,dVar6,dVar7,0xffffffff82015f2c,dVar5,dVar6,dVar7,
                    (double)SQRT((float)(dVar6 * dVar6 + (double)(float)(dVar7 * dVar7)) +
                                 (float)(dVar5 * dVar5)));
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206a9e8,0x179,0,0xffffffff820011f4,0xffffffff82061ae0,uVar1);
       }
       if ((double)((*pfVar4 * param_3[2] + pfVar4[-1] * param_3[1] + pfVar4[-2] * *param_3) -
-                  pfVar4[1]) <= -extraout_f1) {
+                  pfVar4[1]) <= dVar8) {
         __restgprlr_24(1);
         return;
       }
@@ -492,40 +637,237 @@ void FX_AnglesToOrientedAxis(undefined8 param_1,longlong param_2,undefined8 para
 
 // 82450418  FX_GetElemAxis  (EffectsCore/fx_update_util.cpp:398)
 
-void FX_GetElemAxis(void)
+void FX_GetElemAxis(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
+                   undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  double extraout_f1;
+  float local_60;
+  float local_5c;
+  float local_58;
+  undefined1 auStack_50 [80];
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = (int)((param_2 & 0x3fffffff) << 2);
+  local_60 = (float)((double)(*(float *)(&DAT_82066ad4 + iVar1) * *(float *)(iVar2 + 0x7c) +
+                             *(float *)(iVar2 + 0x78)) * extraout_f1 +
+                    (double)(*(float *)(&DAT_82066af8 + iVar1) * *(float *)(iVar2 + 100) +
+                            *(float *)(iVar2 + 0x60)));
+  local_5c = (float)((double)(*(float *)(&DAT_82066ad8 + iVar1) * *(float *)(iVar2 + 0x84) +
+                             *(float *)(iVar2 + 0x80)) * extraout_f1 +
+                    (double)(*(float *)(&DAT_82066afc + iVar1) * *(float *)(iVar2 + 0x6c) +
+                            *(float *)(iVar2 + 0x68)));
+  local_58 = (float)((double)(*(float *)(&DAT_82066adc + iVar1) * *(float *)(iVar2 + 0x8c) +
+                             *(float *)(iVar2 + 0x88)) * extraout_f1 +
+                    (double)(*(float *)(&DAT_82066b00 + iVar1) * *(float *)(iVar2 + 0x74) +
+                            *(float *)(iVar2 + 0x70)));
+  RadianToAxis(&local_60,auStack_50);
+  MatrixMultiply(auStack_50,param_3 + 0xc,param_5);
+  __restgprlr_29();
+  return;
 }
 
 
 // 824504F8  FX_SetUpdateCamera  (EffectsCore/fx_update_util.cpp:414)
 
-void FX_SetUpdateCamera(void)
+void FX_SetUpdateCamera(undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
+                       ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  int iVar6;
+  undefined8 uVar5;
+  float *pfVar7;
+  float fVar8;
+  longlong lVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  
+  iVar6 = __savegprlr_23();
+  dVar12 = extraout_f1;
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a3,0,0xffffffff82000f98,0xffffffff82015314);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a4,0,0xffffffff82000f98,0xffffffff8206ac2c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x1a5,0,0xffffffff82000f98,0xffffffff8206ac24);
+  }
+  pfVar2 = (float *)param_2;
+  pfVar7 = (float *)param_5;
+  *pfVar7 = pfVar2[2];
+  pfVar7[1] = pfVar2[3];
+  pfVar7[2] = pfVar2[4];
+  AxisCopy(param_2 + 0x14,param_5 + 0x70);
+  pfVar7[4] = pfVar2[5];
+  pfVar7[5] = pfVar2[6];
+  pfVar7[6] = pfVar2[7];
+  pfVar7[0x26] = *(float *)(iVar6 + 0x4c);
+  pfVar7[0x27] = *(float *)(iVar6 + 0x50);
+  pfVar7[0x28] = *(float *)(iVar6 + 0x54);
+  dVar14 = 1.0;
+  fVar1 = *pfVar2;
+  fVar4 = 1.0 / SQRT(fVar1 * fVar1 + 1.0);
+  fVar1 = fVar1 * fVar4;
+  fVar3 = -fVar4;
+  pfVar7[8] = pfVar2[8] * fVar4 + pfVar2[5] * fVar1;
+  pfVar7[9] = pfVar2[6] * fVar1 + fVar4 * pfVar2[9];
+  pfVar7[10] = pfVar2[10] * fVar4 + fVar1 * pfVar2[7];
+  pfVar7[0xc] = pfVar2[8] * fVar3 + pfVar2[5] * fVar1;
+  pfVar7[0xd] = fVar3 * pfVar2[9] + pfVar2[6] * fVar1;
+  pfVar7[0xe] = fVar3 * pfVar2[10] + fVar1 * pfVar2[7];
+  fVar1 = pfVar2[1];
+  fVar4 = 1.0 / SQRT(fVar1 * fVar1 + 1.0);
+  fVar1 = fVar1 * fVar4;
+  fVar3 = -fVar4;
+  pfVar7[0x10] = pfVar2[5] * fVar1 + fVar4 * pfVar2[0xb];
+  pfVar7[0x11] = pfVar2[6] * fVar1 + pfVar2[0xc] * fVar4;
+  fVar8 = 0.0;
+  lVar9 = param_5 + 0xc;
+  dVar13 = 0.0020000000949949026;
+  pfVar7[0x12] = pfVar2[0xd] * fVar4 + fVar1 * pfVar2[7];
+  pfVar7[0x14] = fVar3 * pfVar2[0xb] + pfVar2[5] * fVar1;
+  pfVar7[0x15] = fVar3 * pfVar2[0xc] + pfVar2[6] * fVar1;
+  pfVar7[0x16] = pfVar2[0xd] * fVar3 + fVar1 * pfVar2[7];
+  pfVar7[0x25] = 7.00649e-45;
+  do {
+    iVar6 = (int)lVar9;
+    fVar1 = *(float *)(iVar6 + 4) * *(float *)(iVar6 + 4);
+    if (dVar13 <= ABS((double)(float)((double)(*(float *)(iVar6 + 8) * *(float *)(iVar6 + 8) +
+                                               *(float *)(iVar6 + 0xc) * *(float *)(iVar6 + 0xc) +
+                                              fVar1) - dVar14))) {
+      dVar11 = (double)*(float *)(iVar6 + 0xc);
+      dVar10 = (double)*(float *)(iVar6 + 8);
+      uVar5 = va((double)*(float *)(iVar6 + 4),dVar10,dVar11,0xffffffff82015f2c,
+                 (double)*(float *)(iVar6 + 4),dVar10,dVar11,
+                 (double)SQRT((float)(dVar10 * dVar10 + (double)(float)(dVar11 * dVar11)) + fVar1));
+      MyAssertHandler(0xffffffff8206a9e8,0x1ba,0,0xffffffff820011f4,0xffffffff82061ae0,uVar5);
+    }
+    fVar8 = (float)((int)fVar8 + 1);
+    lVar9 = lVar9 + 0x10;
+    *(float *)lVar9 =
+         *(float *)(iVar6 + 0xc) * pfVar7[2] +
+         *(float *)(iVar6 + 4) * *pfVar7 + *(float *)(iVar6 + 8) * pfVar7[1];
+  } while ((uint)fVar8 < (uint)pfVar7[0x25]);
+  if (0.0 < dVar12) {
+    pfVar7[0x18] = -*(float *)(param_2 + 0x14);
+    pfVar7[0x19] = -pfVar2[6];
+    pfVar7[0x1a] = -pfVar2[7];
+    pfVar7[0x25] = 8.40779e-45;
+    pfVar7[0x1b] = (float)(-(double)pfVar7[7] - dVar12);
+  }
+  *(bool *)(pfVar7 + 0x29) = param_4 != 0;
+  sync(1);
+  pfVar7[3] = 1.4013e-45;
+  __restgprlr_23();
+  return;
 }
 
 
 // 824508A0  FX_AddVisBlocker  (EffectsCore/fx_update_util.cpp:462)
 
-void FX_AddVisBlocker(void)
+void FX_AddVisBlocker(undefined8 param_1,double param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  uint *puVar5;
+  undefined4 *puVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  undefined2 uStack_4a;
+  undefined2 uStack_42;
+  
+  iVar3 = __savegprlr_28();
+  uVar1 = *(uint *)(iVar3 + 100);
+  iVar4 = *(int *)(uVar1 + 0x1000) + 1;
+  if (iVar4 < 0x100) {
+    puVar6 = (undefined4 *)(iVar4 * 0x10 + uVar1);
+    *puVar6 = *param_4;
+    puVar6[1] = param_4[1];
+    puVar6[2] = param_4[2];
+    dVar7 = extraout_f1;
+    if (4096.0 <= extraout_f1) {
+      MyAssertHandler(0xffffffff8206a9e8,0x1f1,0,0xffffffff82000f98,0xffffffff8206ac84);
+    }
+    dVar8 = 1.0;
+    if ((param_2 < 0.0) || (1.0 <= param_2)) {
+      MyAssertHandler(0xffffffff8206a9e8,0x1f2,0,0xffffffff82000f98,0xffffffff8206ac38);
+    }
+    uStack_42 = (undefined2)(longlong)(dVar7 * 16.0);
+    *(undefined2 *)(puVar6 + 3) = uStack_42;
+    uStack_4a = (undefined2)(longlong)((float)(dVar8 - param_2) * 65536.0);
+    *(undefined2 *)((int)puVar6 + 0xe) = uStack_4a;
+    do {
+      puVar5 = (uint *)((ulonglong)uVar1 + 0x1000);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,(ulonglong)uVar1 + 0x1000);
+        *puVar5 = uVar2;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  else if (DAT_8333cabc != *(int *)(iVar3 + 0x94)) {
+    DAT_8333cabc = *(int *)(iVar3 + 0x94);
+    Com_PrintWarning(0x15,0xffffffff8206acb8,0x100);
+    __restgprlr_28();
+    return;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82450A20  FX_ToggleVisBlockerFrame  (EffectsCore/fx_update_util.cpp:509)
+
+void FX_ToggleVisBlockerFrame(int param_1)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8206a9e8,0x202,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  Sys_EnterCriticalSection(0xf);
+  iVar1 = *(int *)(param_1 + 0x60);
+  uVar2 = *(undefined4 *)(param_1 + 100);
+  *(int *)(param_1 + 100) = iVar1;
+  *(undefined4 *)(param_1 + 0x60) = uVar2;
+  *(undefined4 *)(iVar1 + 0x1000) = 0;
+  Sys_LeaveCriticalSection(0xf);
+  return;
 }
 
 
 // 82450AA0  FX_WorldTrace  (EffectsCore/fx_update_util.cpp:554)
 
-void FX_WorldTrace(void)
+void FX_WorldTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  Profile_Begin(0xbe);
+  CG_WorldTrace(uVar1,param_2,param_3,param_4,param_5);
+  Profile_EndInternal(0);
+  __restgprlr_27();
+  return;
 }
 

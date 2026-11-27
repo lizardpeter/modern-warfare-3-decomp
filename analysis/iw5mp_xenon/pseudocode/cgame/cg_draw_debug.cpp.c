@@ -5,8 +5,61 @@
 void CG_DrawScriptUsage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Scr_GetMaxChild0ScriptVars();
+  uVar3 = Scr_GetNumChild0ScriptVars();
+  va(0xffffffff82013478,uVar3,uVar2);
+  uVar5 = 0x407b800000000000;
+  uVar4 = 0x4032000000000000;
+  CG_DrawStringExt(0x407b800000000000,0x4056800000000000,0x4032000000000000,uVar1);
+  uVar2 = Scr_GetMaxChild1ScriptVars();
+  uVar3 = Scr_GetNumChild1ScriptVars();
+  va(0xffffffff8201345c,uVar3,uVar2);
+  CG_DrawStringExt(uVar5,0x405b000000000000,uVar4,uVar1);
+  uVar2 = Scr_GetMaxParent0ScriptVars();
+  uVar3 = Scr_GetNumParent0ScriptVars();
+  va(0xffffffff82013440,uVar3,uVar2);
+  CG_DrawStringExt(uVar5,0x405f800000000000,uVar4,uVar1);
+  uVar2 = Scr_GetMaxParent1ScriptVars();
+  uVar3 = Scr_GetNumParent1ScriptVars();
+  va(0xffffffff82013424,uVar3,uVar2);
+  CG_DrawStringExt(uVar5,0x4062000000000000,uVar4,uVar1);
+  uVar2 = Scr_GetNumScriptThreads();
+  va(0xffffffff82013410,uVar2);
+  CG_DrawStringExt(uVar5,0x4064400000000000,uVar4,uVar1);
+  uVar2 = Scr_GetStringUsage();
+  va(0xffffffff820133f8,uVar2);
+  CG_DrawStringExt(uVar5,0x4066800000000000,uVar4,uVar1);
+  __restgprlr_28();
+  return;
+}
+
+
+// 822B3C00  CG_CalculateFPS  (cgame/cg_draw_debug.cpp:227)
+
+void CG_CalculateFPS(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  longlong lVar3;
+  
+  lVar3 = R_GPU_GetMicroseconds();
+  if (lVar3 == 0) {
+    lVar3 = Sys_Microseconds();
+  }
+  uVar2 = DAT_82a1eca8 & 0x1f;
+  iVar1 = (int)DAT_82a1eca0;
+  DAT_82a1eca8 = DAT_82a1eca8 + 1;
+  DAT_82a1eca0 = lVar3;
+  (&DAT_82a1ecd8)[uVar2] = (int)lVar3 - iVar1;
+  return;
 }
 
 
@@ -22,35 +75,80 @@ ulonglong CG_GetLastFrameTimesUSec(int param_1,ulonglong param_2)
   uint uVar5;
   ulonglong uVar6;
   
-  if (param_1 != 0) {
-    if (0x20 < (param_2 & 0xffffffff)) {
-      param_2 = 0x20;
-    }
-    if ((ulonglong)DAT_82a1eca8 < (param_2 & 0xffffffff)) {
-      param_2 = (ulonglong)DAT_82a1eca8;
-    }
-    uVar1 = 0;
-    if ((param_2 & 0xffffffff) != 0) {
-      puVar2 = (undefined4 *)(param_1 + -4);
-      uVar6 = param_2;
-      uVar5 = DAT_82a1eca8 & 0x1f;
-      do {
-        uVar4 = uVar5 - 1;
-        uVar3 = uVar4;
-        if ((int)uVar4 < 0) {
-          uVar3 = uVar5 + 0x1f;
-        }
-        puVar2 = puVar2 + 1;
-        *puVar2 = *(undefined4 *)(&DAT_82a1ecd8 + uVar3 * 4);
-        uVar6 = uVar6 - 1;
-        uVar1 = param_2;
-        uVar5 = uVar4;
-      } while (uVar6 != 0);
-    }
-    return uVar1;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82013490,0x100,0,0xffffffff82000f98,0xffffffff820134d4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82013490,0x100,0,0xffffffff82000f98,0xffffffff820134d4);
+  if (0x20 < (param_2 & 0xffffffff)) {
+    param_2 = 0x20;
+  }
+  if ((ulonglong)DAT_82a1eca8 < (param_2 & 0xffffffff)) {
+    param_2 = (ulonglong)DAT_82a1eca8;
+  }
+  uVar1 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    puVar2 = (undefined4 *)(param_1 + -4);
+    uVar6 = param_2;
+    uVar5 = DAT_82a1eca8 & 0x1f;
+    do {
+      uVar4 = uVar5 - 1;
+      uVar3 = uVar4;
+      if ((int)uVar4 < 0) {
+        uVar3 = uVar5 + 0x1f;
+      }
+      puVar2 = puVar2 + 1;
+      *puVar2 = (&DAT_82a1ecd8)[uVar3];
+      uVar6 = uVar6 - 1;
+      uVar1 = param_2;
+      uVar5 = uVar4;
+    } while (uVar6 != 0);
+  }
+  return uVar1;
+}
+
+
+// 822B3D38  CG_CornerDebugPrint  (cgame/cg_draw_debug.cpp:290)
+
+void CG_CornerDebugPrint(undefined8 param_1,undefined8 param_2,double param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  
+  uVar1 = __savegprlr_27();
+  if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
+    iVar3 = CG_DrawDevString();
+  }
+  else {
+    dVar4 = (double)(float)(extraout_f1 - param_3);
+    iVar2 = CG_DrawDevString(dVar4);
+    iVar3 = CG_DrawDevString(dVar4,param_2,0x3ff0000000000000,0x3ff19999a0000000,uVar1);
+    if (iVar3 <= iVar2) {
+      iVar3 = iVar2;
+    }
+  }
+  __restgprlr_27((double)((float)(longlong)iVar3 * 0.75));
+  return;
+}
+
+
+// 822B3E38  CG_CornerDebugPrintCaption  (cgame/cg_draw_debug.cpp:311)
+
+double CG_CornerDebugPrintCaption(double param_1,undefined8 param_2,double param_3)
+
+{
+  int iVar1;
+  
+  if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
+    iVar1 = CG_DrawDevString(param_1,param_2,0x3ff0000000000000,0x3ff19999a0000000);
+  }
+  else {
+    iVar1 = CG_DrawDevString((double)(float)(param_1 - param_3),param_2,0x3ff0000000000000,
+                             0x3ff19999a0000000);
+  }
+  return (double)((float)(longlong)iVar1 * 0.75);
 }
 
 
@@ -76,23 +174,472 @@ double CG_CornerDebugLabelWidth(undefined4 param_1)
 }
 
 
-// 822B4130  CG_DrawFPS  (cgame/cg_draw_debug.cpp:373)
+// 822B3F40  CG_DrawHostName  (cgame/cg_draw_debug.cpp:344)
 
-void CG_DrawFPS(void)
+void CG_DrawHostName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  
+  iVar1 = __savegprlr_28();
+  dVar4 = extraout_f1;
+  if (DAT_82b58fac == 0) {
+    MyAssertHandler(0xffffffff82013490,0x159,0,0xffffffff82000f98,0xffffffff8201351c);
+  }
+  if (*(int *)(DAT_82b58fac + 0xc) == 0) {
+    MyAssertHandler(0xffffffff82013490,0x15a,0,0xffffffff82000f98,0xffffffff820134fc);
+  }
+  if (**(char **)(DAT_82b58fac + 0xc) != '\0') {
+    iVar2 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
+    dVar3 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar1 + 0x30) -
+                                                 *(float *)(iVar1 + 0x28)) +
+                                                *(float *)(DAT_82a3d628 + 0xc)),dVar4,
+                                        (double)(longlong)iVar2,iVar1);
+    __restgprlr_28((double)(float)(dVar3 + dVar4));
+    return;
+  }
+  __restgprlr_28(dVar4);
+  return;
+}
+
+
+// 822B4068  CG_DrawTeamDebug  (cgame/cg_draw_debug.cpp:357)
+
+double CG_DrawTeamDebug(double param_1,int param_2)
+
+{
+  int iVar1;
+  double dVar2;
+  
+  if (DAT_82b5b398 != '\0') {
+    iVar1 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
+    dVar2 = (double)CG_CornerDebugPrint((double)((*(float *)(param_2 + 0x30) -
+                                                 *(float *)(param_2 + 0x28)) +
+                                                *(float *)(DAT_82a3d628 + 0xc)),param_1,
+                                        (double)(longlong)iVar1,param_2);
+    param_1 = (double)(float)(dVar2 + param_1);
+  }
+  return param_1;
+}
+
+
+// 822B4130  CG_DrawFPS  (cgame/cg_draw_debug.cpp:373)
+
+void CG_DrawFPS(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+
+{
+  uint uVar1;
+  float fVar2;
+  uint *puVar3;
+  undefined8 uVar4;
+  int iVar5;
+  float *pfVar6;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  double extraout_f1;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  undefined4 uStack_158;
+  int local_110 [2];
+  ulonglong local_108;
+  ulonglong local_100;
+  ulonglong local_f8;
+  ulonglong local_f0;
+  longlong local_e8;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  
   __savegprlr_16();
+  uVar4 = __savefpr_24();
+  if (DAT_82a1eca8 < 0x20) {
+    __restfpr_24();
+    __restgprlr_16();
+    return;
+  }
+  uVar13 = 0xffffffffffffffff;
+  uVar12 = 0;
+  lVar8 = 0;
+  lVar9 = 0;
+  lVar14 = 0x10;
+  puVar10 = &DAT_82a1ecdc;
+  dVar25 = (double)((*(float *)((int)param_2 + 0x30) - *(float *)((int)param_2 + 0x28)) +
+                   *(float *)(DAT_82a3d628 + 0xc));
+  do {
+    uVar11 = (ulonglong)puVar10[-1];
+    lVar8 = uVar11 + lVar8;
+    if (uVar11 < (uVar13 & 0xffffffff)) {
+      uVar13 = uVar11;
+    }
+    if (uVar12 < uVar11) {
+      uVar12 = uVar11;
+    }
+    uVar11 = (ulonglong)*puVar10;
+    lVar9 = lVar9 + uVar11;
+    if (uVar11 < (uVar13 & 0xffffffff)) {
+      uVar13 = uVar11;
+    }
+    if (uVar12 < uVar11) {
+      uVar12 = uVar11;
+    }
+    puVar10 = puVar10 + 2;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  uVar11 = lVar9 + lVar8;
+  dVar23 = 0.0;
+  lVar8 = 8;
+  puVar10 = (uint *)0x82a1ecd4;
+  fVar2 = (float)(uVar11 & 0xffffffff) * 0.03125;
+  dVar18 = dVar23;
+  dVar19 = dVar23;
+  dVar20 = dVar23;
+  dVar21 = dVar23;
+  do {
+    local_f8 = (ulonglong)puVar10[2];
+    local_108 = (ulonglong)puVar10[3];
+    puVar3 = puVar10 + 1;
+    puVar10 = puVar10 + 4;
+    local_100 = (ulonglong)*puVar10;
+    dVar20 = (double)(float)(ABS((double)((float)local_f8 - fVar2)) + dVar20);
+    dVar19 = (double)(float)(ABS((double)((float)local_108 - fVar2)) + dVar19);
+    dVar21 = (double)(float)(ABS((double)((float)*puVar3 - fVar2)) + dVar21);
+    dVar18 = (double)(float)(ABS((double)((float)local_100 - fVar2)) + dVar18);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  dVar18 = (double)((float)((double)(float)((double)(float)(dVar20 + dVar19) + dVar18) + dVar21) *
+                   0.03125);
+  if ((uVar11 & 0xffffffff) == 0) {
+    uVar11 = 1;
+  }
+  if ((uVar13 & 0xffffffff) == 0) {
+    uVar13 = 1;
+  }
+  dVar21 = 1000000.0;
+  dVar24 = 0.5;
+  dVar19 = extraout_f1;
+  local_f0 = uVar12;
+  dVar20 = floor((double)((float)(1000000.0 / (double)uVar12) + 0.5));
+  local_e8 = (longlong)(int)dVar20;
+  dVar21 = floor((double)(float)((double)(float)(dVar21 / (double)(uVar13 & 0xffffffff)) + dVar24));
+  dVar22 = (double)(uVar11 & 0xffffffff);
+  local_e8 = (longlong)(int)dVar21;
+  dVar15 = floor((double)(float)((double)(float)(32000000.0 / dVar22) + dVar24));
+  iVar7 = (int)dVar15;
+  local_e8 = (longlong)iVar7;
+  dVar15 = (double)local_e8;
+  PIXAddNamedCounter(dVar15,CONCAT44((float)local_e8,uStack_158),0xffffffff82013708);
+  iVar5 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
+  local_e8 = (longlong)iVar5;
+  dVar26 = (double)local_e8;
+  if (3 < *(int *)(DAT_82a3824c + 0xc)) {
+    iVar5 = CG_GetLocalClientGlobals(uVar4);
+    va(0xffffffff820136f0,(double)*(float *)(iVar5 + 0x6b9c8),(double)*(float *)(iVar5 + 0x6b9cc),
+       (double)*(float *)(iVar5 + 0x6b9d0),(double)*(float *)(iVar5 + 460000));
+    dVar16 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar19 = (double)(float)(dVar16 + dVar19);
+  }
+  dVar16 = (double)(((float)(dVar15 - 60.0) + 10.0) * 0.1);
+  dVar15 = 1.0;
+  if ((float)(dVar16 - 1.0) < 0.0) {
+    dVar15 = dVar16;
+  }
+  dVar17 = dVar23;
+  if (-dVar16 < 0.0) {
+    dVar17 = dVar15;
+  }
+  local_d8 = (float)(dVar17 * 1.0 + 0.0);
+  local_d4 = (float)(dVar17 * 0.0 + 1.0);
+  local_e0 = (float)(dVar17 * 0.0 + 1.0);
+  local_dc = (float)(dVar17 * 1.0 + 0.0);
+  if (*(int *)(DAT_82a3824c + 0xc) < 2) {
+    va(0xffffffff8200c28c,iVar7);
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar18 = dVar18 + dVar19;
+  }
+  else {
+    dVar18 = floor((double)(float)(dVar18 * 0.0010000000474974513 + dVar24));
+    local_e8 = (longlong)(int)dVar18;
+    va(0xffffffff820136cc,(int)dVar20,(int)dVar21,(int)dVar18,iVar7);
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar19 = (double)(float)(dVar18 + dVar19);
+    va(0xffffffff820136b0,(uVar13 & 0xffffffff) / 1000,uVar12 / 1000,
+       (double)(float)(dVar22 * 3.125000148429535e-05));
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar18 = dVar18 + dVar19;
+  }
+  dVar18 = (double)(float)dVar18;
+  pfVar6 = (float *)SV_GetProfileTimes();
+  if (dVar23 < (double)*pfVar6) {
+    if (*(int *)(DAT_82a3824c + 0xc) < 2) {
+      va(0xffffffff8201366c,(double)*pfVar6);
+      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+      dVar18 = (double)(float)(dVar19 + dVar18);
+    }
+    else {
+      va(0xffffffff8201369c,(double)pfVar6[2],(double)pfVar6[3],(double)*pfVar6);
+      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+      dVar19 = (double)(float)(dVar19 + dVar18);
+      dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+      dVar18 = (double)(float)(dVar18 + dVar19);
+      va(0xffffffff82013674,(double)(50.0 / pfVar6[1]),(double)pfVar6[1]);
+    }
+  }
+  DB_GetStreamMemoryStats(local_110,&local_f0);
+  iVar7 = PMem_GetShippingFreeAmount_NoStreaming();
+  local_e8 = (longlong)(iVar7 - local_110[0]);
+  dVar20 = 9.5367431640625e-07;
+  va((double)(float)((double)local_e8 * 9.5367431640625e-07),0xffffffff82013658,
+     (double)(float)((double)local_e8 * 9.5367431640625e-07));
+  dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+  dVar18 = (double)(float)(dVar19 + dVar18);
+  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
+    iVar7 = PMem_GetLegacyFreeAmount();
+    local_e8 = (longlong)iVar7;
+    va((double)(float)((double)local_e8 * dVar20),0xffffffff82013658,
+       (double)(float)((double)local_e8 * dVar20));
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar19 + dVar18);
+  }
+  if (2 < *(int *)(DAT_82a3824c + 0xc)) {
+    R_TrackStatistics(0xffffffff82a1ecac);
+    if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
+      iVar7 = CG_DrawDevString(dVar25,dVar18,0x3ff0000000000000,0x3ff19999a0000000,param_2);
+    }
+    else {
+      iVar7 = CG_DrawDevString((double)(float)(dVar25 - dVar26),dVar18,0x3ff0000000000000,
+                               0x3ff19999a0000000,param_2);
+    }
+    local_e8 = (longlong)iVar7;
+    dVar19 = (double)(float)((double)local_e8 * 0.75 + dVar18);
+    va(0xffffffff82013628,
+       (longlong)((int)DAT_82a1ecc8 >> 10) +
+       (ulonglong)((int)DAT_82a1ecc8 < 0 && (DAT_82a1ecc8 & 0x3ff) != 0),
+       (longlong)((int)DAT_82a1ecc4 >> 10) +
+       (ulonglong)((int)DAT_82a1ecc4 < 0 && (DAT_82a1ecc4 & 0x3ff) != 0));
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar18 = (double)(float)(dVar18 + dVar19);
+    if (*(char *)(DAT_845aa6d4 + 0xc) != '\0') {
+      va(0xffffffff8200c28c,DAT_82a1eccc);
+      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+      dVar18 = (double)(float)(dVar19 + dVar18);
+    }
+    va(0xffffffff8200c28c,DAT_82a1ecb4 / 3);
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar19 + dVar18);
+    if (DAT_82a1ecb8 != 0) {
+      va(0xffffffff8200c28c,DAT_82a1ecb8 / 3);
+      dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+      dVar18 = (double)(float)(dVar19 + dVar18);
+    }
+    va(0xffffffff8200c28c,DAT_82a1ecac / 3);
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar19 = (double)(float)(dVar19 + dVar18);
+    va(0xffffffff8200c28c,DAT_82a1ecb0 / 3);
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar19 = (double)(float)(dVar18 + dVar19);
+    va(0xffffffff8200c28c,DAT_82a1ecbc);
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar19 = (double)(float)(dVar18 + dVar19);
+    va(0xffffffff8200c28c,DAT_82a1ecd0);
+    dVar18 = (double)CG_CornerDebugPrint(dVar25,dVar19,dVar26,param_2);
+    dVar18 = (double)(float)(dVar18 + dVar19);
+    DAT_82a1ecd0 = 0xae00;
+    if (*(char *)(DAT_82a3d618 + 0xc) == '\0') {
+      iVar7 = CG_DrawDevString(dVar25,dVar18,0x3ff0000000000000,0x3ff19999a0000000,param_2);
+    }
+    else {
+      iVar7 = CG_DrawDevString((double)(float)(dVar25 - dVar26),dVar18,0x3ff0000000000000,
+                               0x3ff19999a0000000,param_2);
+    }
+    local_e8 = (longlong)iVar7;
+    uVar1 = *(uint *)(param_4 + 8);
+    dVar18 = (double)(float)((double)local_e8 * 0.75 + dVar18);
+    iVar7 = XenonTotalMemory();
+    if (iVar7 < (int)uVar1) {
+      iVar7 = XenonTotalMemory();
+      local_e8 = (longlong)iVar7;
+      va(0xffffffff82013590,(double)(float)((double)local_e8 * dVar20),
+         (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+    }
+    else {
+      va(0xffffffff8200c28c,
+         (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+    }
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar19 + dVar18);
+    *(undefined4 *)(param_4 + 8) = 0;
+  }
+  Phys_PerformanceEndFrame();
+  Phys_GetPerformance(&local_108,&local_f8,&local_100);
+  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
+    va(0xffffffff82013578,local_f8._0_4_,local_100._0_4_,(double)local_108._0_4_);
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar19 + dVar18);
+  }
+  if (1 < *(int *)(DAT_82a3824c + 0xc)) {
+    lVar8 = Com_GetFreeDObjCount();
+    lVar9 = Com_GetMaxDObjCount();
+    va(0xffffffff82013564,lVar9 - lVar8);
+    dVar19 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar19 + dVar18);
+  }
+  if (*(char *)(DAT_82a38280 + 0xc) != '\0') {
+    iVar7 = FX_GetSystem(uVar4);
+    va(0xffffffff8201353c,*(undefined4 *)(iVar7 + 0x250),*(undefined4 *)(iVar7 + 0x254),
+       *(undefined4 *)(iVar7 + 600),*(undefined4 *)(iVar7 + 0x25c));
+    dVar25 = (double)CG_CornerDebugPrint(dVar25,dVar18,dVar26,param_2);
+    dVar18 = (double)(float)(dVar25 + dVar18);
+  }
+  __restfpr_24(dVar18);
+  __restgprlr_16();
+  return;
+}
+
+
+// 822B4D58  CG_DrawSnapshot  (cgame/cg_draw_debug.cpp:712)
+
+void CG_DrawSnapshot(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  uVar1 = __savegprlr_26();
+  dVar7 = extraout_f1;
+  iVar2 = CG_GetLocalClientGlobals();
+  iVar3 = CG_GetLocalClientStaticGlobals(uVar1);
+  iVar4 = ScrPlace_GetActivePlacement(uVar1);
+  dVar9 = (double)((*(float *)(iVar4 + 0x30) - *(float *)(iVar4 + 0x28)) +
+                  *(float *)(DAT_82a3d628 + 0xc));
+  iVar5 = R_TextWidth(0xffffffff82013738,0,DAT_82a39350);
+  dVar8 = (double)(longlong)iVar5;
+  dVar6 = (double)CG_CornerDebugPrintCaption(dVar9,dVar7,dVar8,iVar4);
+  dVar6 = (double)(float)(dVar6 + dVar7);
+  va(0xffffffff8200c28c,*(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308));
+  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
+  dVar6 = (double)(float)(dVar7 + dVar6);
+  va(0xffffffff8200c28c,*(undefined4 *)(iVar2 + 0x3350));
+  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
+  dVar6 = (double)(float)(dVar7 + dVar6);
+  va(0xffffffff8200c28c,*(undefined4 *)(iVar3 + 0x18));
+  dVar7 = (double)CG_CornerDebugPrint(dVar9,dVar6,dVar8,iVar4);
+  __restgprlr_26((double)(float)(dVar7 + dVar6));
+  return;
 }
 
 
 // 822B4ED0  CG_DrawStatmon  (cgame/cg_draw_debug.cpp:741)
 
-void CG_DrawStatmon(void)
+void CG_DrawStatmon(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  int *piVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  undefined8 uVar9;
+  double dVar10;
+  
   __savegprlr_23();
+  iVar2 = __savefpr_28();
+  uVar9 = 0;
+  dVar7 = 0.0009765625;
+  lVar4 = param_3 + 0xc;
+  piVar5 = &DAT_8201318c;
+  dVar8 = (double)((*(float *)(iVar2 + 0x30) - *(float *)(iVar2 + 0x28)) +
+                  *(float *)(DAT_82a3d628 + 0xc));
+  dVar10 = extraout_f1;
+  do {
+    iVar3 = *piVar5;
+    if (iVar3 != 0) {
+      if (iVar3 << 10 < (int)*(uint *)lVar4) {
+        va(0xffffffff82013760,piVar5[-1],(double)(float)((double)(longlong)iVar3 * dVar7));
+        CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
+        uVar1 = *(uint *)lVar4;
+        va(0xffffffff8200c28c,
+           (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+        dVar6 = (double)CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
+        dVar10 = (double)(float)(dVar6 + dVar10);
+      }
+    }
+    piVar5 = piVar5 + 2;
+    lVar4 = lVar4 + 4;
+  } while ((int)piVar5 < -0x7dfecd44);
+  iVar3 = XenonTotalMemory();
+  if (iVar3 < *(int *)((int)param_3 + 8)) {
+    iVar3 = XenonTotalMemory();
+    va(0xffffffff82013748,(double)((float)(longlong)iVar3 * 9.536743e-07));
+    CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
+    uVar1 = *(uint *)((int)param_3 + 8);
+    va(0xffffffff8200c28c,
+       (longlong)((int)uVar1 >> 0x14) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 0xfffff) != 0));
+    dVar7 = (double)CG_CornerDebugPrint(dVar8,dVar10,uVar9,iVar2);
+    __restfpr_28((double)(float)(dVar7 + dVar10));
+    __restgprlr_23();
+    return;
+  }
+  __restfpr_28(dVar10);
+  __restgprlr_23();
+  return;
+}
+
+
+// 822B50C8  CG_DrawViewpos  (cgame/cg_draw_debug.cpp:833)
+
+double CG_DrawViewpos(double param_1,undefined8 param_2,int param_3)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  undefined1 local_40 [8];
+  longlong local_38;
+  
+  local_40[0] = 0;
+  dVar3 = (double)((*(float *)(param_3 + 0x30) - *(float *)(param_3 + 0x28)) +
+                  *(float *)(DAT_82a3d628 + 0xc));
+  iVar1 = R_TextWidth(local_40,0,DAT_82a39350);
+  local_38 = (longlong)iVar1;
+  dVar2 = (double)local_38;
+  iVar1 = CG_GetLocalClientGlobals(param_2);
+  va(0xffffffff82013774,(double)*(float *)(iVar1 + 0x6b9c8),(double)*(float *)(iVar1 + 0x6b9cc),
+     (double)*(float *)(iVar1 + 0x6b9d0));
+  dVar2 = (double)CG_CornerDebugPrint(dVar3,param_1,dVar2,param_3);
+  return (double)(float)(dVar2 + param_1);
 }
 
 
@@ -101,8 +648,157 @@ void CG_DrawStatmon(void)
 void CG_DrawCommonMPDebugInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar5;
+  undefined8 extraout_f1;
+  double dVar6;
+  double dVar7;
+  undefined8 uVar8;
+  
+  uVar1 = __savegprlr_29();
+  uVar8 = extraout_f1;
+  iVar2 = ScrPlace_GetActivePlacement();
+  dVar7 = (double)((*(float *)(iVar2 + 0x30) - *(float *)(iVar2 + 0x28)) +
+                  *(float *)(DAT_82a3d628 + 0xc));
+  iVar3 = R_TextWidth(0xffffffff820134ec,0,DAT_82a39350);
+  dVar6 = (double)(longlong)iVar3;
+  if (*(char *)(DAT_82a3837c + 0xc) != '\0') {
+    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+    uVar5 = 0xffffffff820137b0;
+    iVar3 = LiveStorage_GetActiveStatsSource();
+    if (iVar3 == 1) {
+      uVar5 = 0xffffffff820137a8;
+    }
+    cVar4 = LiveStorage_DoWeHaveStats(uVar1);
+    if (cVar4 == '\0') {
+      uVar1 = 0xffffffff82013798;
+    }
+    else {
+      uVar1 = 0xffffffff820068af;
+    }
+    va(0xffffffff82013790,uVar5,uVar1);
+    CG_CornerDebugPrint(dVar7,uVar8,dVar6,iVar2);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 822B5310  CG_DrawPartyAndPresenceDebugInfo  (cgame/cg_draw_debug.cpp:885)
+
+void CG_DrawPartyAndPresenceDebugInfo(undefined8 param_1,float *param_2,int param_3)
+
+{
+  bool bVar1;
+  float fVar2;
+  int iVar5;
+  int iVar6;
+  char cVar7;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar8;
+  char *pcVar9;
+  longlong lVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  undefined1 auStack_e0 [224];
+  
+  iVar5 = __savegprlr_15();
+  if (DAT_82b5700c != 0) {
+    if (param_3 == 0) {
+      iVar6 = R_TextWidth(0xffffffff820034a0,0,DAT_82a39350);
+    }
+    else {
+      iVar6 = R_TextWidth(0xffffffff82013850,0,DAT_82a39350);
+    }
+    dVar13 = (double)(longlong)iVar6;
+    *param_2 = *param_2 + 10.0;
+    iVar6 = R_TextWidth(0xffffffff82013840,0,DAT_82a39350);
+    dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
+                                                  *(float *)(iVar5 + 0x28)) +
+                                                 *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
+                                         (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
+    *param_2 = (float)(dVar12 + (double)*param_2);
+    if (DAT_82b55120 == 0) {
+      MyAssertHandler(0xffffffff82013490,0x387,0,0xffffffff82000f98,0xffffffff8201381c);
+    }
+    iVar6 = Party_IsRunning(0xffffffff82b55118);
+    bVar1 = iVar6 == 1;
+    if ((bool)*(char *)(DAT_82b55120 + 0x50) != bVar1) {
+      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
+      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
+                                                    *(float *)(iVar5 + 0x28)) +
+                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
+                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
+      *param_2 = (float)(dVar12 + (double)*param_2);
+    }
+    if ((*(int *)(DAT_82b55120 + 0x10) != 0) != bVar1) {
+      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
+      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
+                                                    *(float *)(iVar5 + 0x28)) +
+                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
+                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
+      *param_2 = (float)(dVar12 + (double)*param_2);
+    }
+    cVar7 = Session_IsValid(DAT_82b55120);
+    if ((bool)cVar7 != bVar1) {
+      iVar6 = R_TextWidth(0xffffffff82013810,0,DAT_82a39350);
+      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
+                                                    *(float *)(iVar5 + 0x28)) +
+                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
+                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
+      *param_2 = (float)(dVar12 + (double)*param_2);
+    }
+    lVar11 = 0;
+    lVar10 = 0x12;
+    pcVar9 = &DAT_82b55170;
+    do {
+      if (*pcVar9 == '\0') {
+        cVar7 = Party_IsHost();
+        if (cVar7 != '\0') {
+          iVar6 = R_TextWidth(0xffffffff820137c8,0,DAT_82a39350);
+          fVar2 = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x28)) +
+                  *(float *)(DAT_82a3d628 + 0xc);
+          goto LAB_822b572c;
+        }
+      }
+      else {
+        uVar3 = Party_GetMemberStatus(0xffffffff82b55118,lVar11);
+        uVar4 = Party_GetMemberName(0xffffffff82b55118,lVar11);
+        cVar7 = Party_IsHost(0xffffffff82b55118,lVar11);
+        uVar8 = 0xffffffff820137d8;
+        if (cVar7 == '\0') {
+          uVar8 = 0xffffffff820068af;
+        }
+        Com_sprintf(auStack_e0,0x40,0xffffffff820137e0,uVar4,lVar11,uVar8);
+        iVar6 = R_TextWidth(uVar3,0,DAT_82a39350);
+        fVar2 = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x28)) +
+                *(float *)(DAT_82a3d628 + 0xc);
+LAB_822b572c:
+        dVar12 = (double)CG_CornerDebugPrint((double)fVar2,(double)*param_2,
+                                             (double)(float)((double)(longlong)iVar6 + dVar13),iVar5
+                                            );
+        *param_2 = (float)(dVar12 + (double)*param_2);
+      }
+      lVar10 = lVar10 + -1;
+      lVar11 = lVar11 + 1;
+      pcVar9 = pcVar9 + 0x150;
+    } while (lVar10 != 0);
+    if (DAT_82b57018 != 0) {
+      iVar6 = R_TextWidth(0xffffffff820137b8,0,DAT_82a39350);
+      dVar12 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar5 + 0x30) -
+                                                    *(float *)(iVar5 + 0x28)) +
+                                                   *(float *)(DAT_82a3d628 + 0xc)),(double)*param_2,
+                                           (double)(float)((double)(longlong)iVar6 + dVar13),iVar5);
+      *param_2 = (float)(dVar12 + (double)*param_2);
+    }
+  }
+  __restgprlr_15();
+  return;
 }
 
 
@@ -111,8 +807,42 @@ void CG_DrawCommonMPDebugInfo(void)
 void CG_DrawHostDebugInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  longlong local_40 [8];
+  
+  uVar1 = __savegprlr_27();
+  if (DAT_82b58fac == 0) {
+    MyAssertHandler(0xffffffff82013490,0x3b4,0,0xffffffff82000f98,0xffffffff8201351c);
+  }
+  if (*(int *)(DAT_82b58fac + 0xc) == 0) {
+    MyAssertHandler(0xffffffff82013490,0x3b5,0,0xffffffff82000f98,0xffffffff820134fc);
+  }
+  local_40[0]._0_4_ = *(float *)(DAT_82a3d628 + 0x10);
+  dVar5 = (double)local_40[0]._0_4_;
+  if (*(int *)(DAT_82a3824c + 0xc) == 0) {
+    __restgprlr_27(dVar5);
+    return;
+  }
+  if (DAT_82a39350 == 0) {
+    DAT_82a39350 = CL_RegisterFont(0xffffffff82013870,1);
+  }
+  iVar2 = ScrPlace_GetActivePlacement(uVar1);
+  if (**(char **)(DAT_82b58fac + 0xc) != '\0') {
+    iVar3 = R_TextWidth(0xffffffff8201385c,0,DAT_82a39350);
+    local_40[0] = (longlong)iVar3;
+    dVar4 = (double)CG_CornerDebugPrint((double)((*(float *)(iVar2 + 0x30) -
+                                                 *(float *)(iVar2 + 0x28)) +
+                                                *(float *)(DAT_82a3d628 + 0xc)),dVar5,
+                                        (double)local_40[0],iVar2);
+    local_40[0]._0_4_ = (float)(dVar4 + dVar5);
+  }
+  CG_DrawPartyAndPresenceDebugInfo(iVar2,local_40,1);
+  __restgprlr_27((double)local_40[0]._0_4_);
+  return;
 }
 
 
@@ -121,18 +851,101 @@ void CG_DrawHostDebugInfo(void)
 void CG_DrawLiveDebugInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  double extraout_f1;
+  double dVar4;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  
+  uVar1 = __savegprlr_27();
+  if (*(int *)(DAT_82a3824c + 0xc) != 0) {
+    dVar7 = extraout_f1;
+    if (DAT_82a39350 == 0) {
+      DAT_82a39350 = CL_RegisterFont(0xffffffff82013870,1);
+    }
+    iVar3 = ScrPlace_GetActivePlacement(uVar1);
+    uVar2 = Live_GetStatusFlags(uVar1);
+    uVar5 = 0x4049000000000000;
+    dVar6 = (double)((*(float *)(iVar3 + 0x30) - *(float *)(iVar3 + 0x28)) +
+                    *(float *)(DAT_82a3d628 + 0xc));
+    if ((uVar2 & 4) != 0) {
+      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,0x4049000000000000,iVar3);
+      dVar7 = (double)(float)(dVar4 + dVar7);
+    }
+    if ((uVar2 & 0x80) != 0) {
+      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
+      dVar7 = (double)(float)(dVar4 + dVar7);
+    }
+    if ((uVar2 & 0x20) != 0) {
+      dVar4 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
+      dVar7 = (double)(float)(dVar4 + dVar7);
+    }
+    if ((uVar2 & 8) != 0) {
+      dVar6 = (double)CG_CornerDebugPrint(dVar6,dVar7,uVar5,iVar3);
+      dVar7 = (double)(float)(dVar6 + dVar7);
+    }
+    CG_DrawCommonMPDebugInfo(dVar7,uVar1);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 822B5B00  CG_DrawUpperRightDebugInfo  (cgame/cg_draw_debug.cpp:1056)
 
-void CG_DrawUpperRightDebugInfo(void)
+void CG_DrawUpperRightDebugInfo(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  float local_e0 [4];
+  undefined1 auStack_d0 [208];
+  
+  uVar1 = __savegprlr_29();
+  track_getbasicinfo(auStack_d0);
+  iVar2 = CG_GetPredictedPlayerState(uVar1);
+  if (*(int *)(iVar2 + 4) != 4) {
+    if (*(int *)(DAT_82a3824c + 0xc) < 3) {
+      R_TrackStatistics(0);
+    }
+    local_e0[0] = *(float *)(DAT_82a3d628 + 0x10);
+    dVar3 = (double)local_e0[0];
+    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
+      dVar3 = (double)CG_DrawFPS(uVar1,param_2);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(char *)(DAT_8365e12c + 0xc) != '\0') {
+      dVar3 = (double)CG_DrawStatmon(param_2);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
+      dVar3 = (double)CG_DrawHostName(param_2);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
+      dVar3 = (double)CG_DrawTeamDebug(param_2);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(char *)(DAT_82a382e0 + 0xc) != '\0') {
+      dVar3 = (double)CG_DrawSnapshot(uVar1);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(char *)(DAT_82a2f808 + 0xc) != '\0') {
+      dVar3 = (double)CG_DrawViewpos(uVar1,param_2);
+      local_e0[0] = (float)dVar3;
+    }
+    if (*(int *)(DAT_82a3824c + 0xc) != 0) {
+      CG_DrawPartyAndPresenceDebugInfo(param_2,local_e0,0);
+      dVar3 = (double)local_e0[0];
+    }
+    CG_DrawCommonMPDebugInfo(dVar3,uVar1);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -141,8 +954,66 @@ void CG_DrawUpperRightDebugInfo(void)
 void CG_DrawVersion(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  undefined4 local_80;
+  undefined4 local_7c;
+  undefined4 local_78;
+  char local_74 [116];
+  
   __savegprlr_26();
+  __savefpr_28();
+  dVar6 = 1.0;
+  local_74[4] = '>';
+  local_74[5] = -0x34;
+  local_74[6] = -0x34;
+  local_74[7] = -0x33;
+  local_74[8] = '?';
+  local_74[9] = '3';
+  local_74[10] = '3';
+  local_74[0xb] = '3';
+  local_74[0xc] = '?';
+  local_74[0xd] = -0x80;
+  local_74[0xe] = '\0';
+  local_74[0xf] = '\0';
+  local_74[0x10] = '?';
+  local_74[0x11] = '3';
+  local_74[0x12] = '3';
+  local_74[0x13] = '3';
+  local_80 = 0;
+  local_7c = 0;
+  local_78 = 0;
+  local_74[0] = '?';
+  local_74[1] = '3';
+  local_74[2] = '3';
+  local_74[3] = '3';
+  iVar3 = ScrPlace_IsFullScreenActive();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82013490,0x47f,0,0xffffffff82000f98,0xffffffff820138cc);
+  }
+  uVar1 = ScrPlace_GetUnsafeFullPlacement();
+  uVar2 = UI_GetFontHandle(0x3fe2aaaaa0000000,uVar1,0);
+  uVar7 = 0x3fd0000000000000;
+  iVar3 = UI_TextWidth(0x3fd0000000000000,*(undefined4 *)(DAT_83666170 + 0xc),0,uVar2);
+  dVar5 = (double)(longlong)iVar3;
+  iVar3 = UI_TextHeight(uVar7,uVar2);
+  dVar4 = (double)(longlong)iVar3;
+  UI_DrawText((double)(float)(dVar6 - (double)(float)((double)*(float *)(DAT_82a38250 + 0xc) + dVar5
+                                                     )),
+              (double)(float)(dVar6 - (double)(float)((double)*(float *)(DAT_82a2f7fc + 0xc) + dVar4
+                                                     )),uVar7,uVar1,
+              *(undefined4 *)(DAT_83666170 + 0xc),0x7fffffff,uVar2,&local_80,(longlong)iVar3,3,3);
+  UI_DrawText((double)(float)(-dVar5 - (double)*(float *)(DAT_82a38250 + 0xc)),
+              (double)(float)(-dVar4 - (double)*(float *)(DAT_82a2f7fc + 0xc)),uVar7,uVar1,
+              *(undefined4 *)(DAT_83666170 + 0xc),0x7fffffff,uVar2,DAT_82a38250,DAT_82a2f7fc,3,3);
+  __restfpr_28();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -152,7 +1023,6 @@ longlong CL_GetLocalClientUIGlobals(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
   }
   return param_1 * 0x1e4 + -0x7d4c1b10;
@@ -296,8 +1166,94 @@ void CG_DrawSoundEqOverlay(void)
 void CG_DrawSoundOverlay(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  bool bVar2;
+  undefined8 uVar3;
+  int iVar6;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int iVar7;
+  longlong lVar8;
+  int *piVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  byte local_4a20 [4];
+  undefined4 local_4a1c;
+  float local_4a18 [2];
+  undefined1 auStack_4a10 [64];
+  undefined1 local_49d0 [284];
+  int aiStack_48b4 [4653];
+  
   __savegprlr();
+  uVar3 = __savefpr_26();
+  iVar7 = *(int *)(DAT_82a3d5a4 + 0xc);
+  iVar6 = SND_GetSoundOverlay(iVar7,local_49d0,0x40,&local_4a1c,local_4a20,local_4a18);
+  if (0 < iVar6) {
+    if ((iVar7 < 4) || (bVar2 = true, 6 < iVar7)) {
+      bVar2 = false;
+    }
+    uVar4 = Dvar_GetInt(0xffffffff82013aa0);
+    uVar5 = va(0xffffffff82013a7c,*(undefined4 *)(*(int *)(DAT_82a3d5a4 + 0x40) + iVar7 * 4));
+    dVar15 = 0.0;
+    dVar14 = 12.0;
+    CG_DrawStringExt(0,0,0x4028000000000000,uVar3,0xffffffff82000000,0xffffffff82000000,uVar5,
+                     0xffffffff821818b8,0,1);
+    va(0xffffffff82013a4c,local_4a1c,uVar4,local_4a20[0],(double)local_4a18[0]);
+    CG_DrawStringExt(dVar15,dVar14,dVar14,uVar3);
+    lVar8 = 0;
+    fVar1 = 24.0;
+    if (0 < iVar6) {
+      dVar11 = 1.0;
+      piVar9 = aiStack_48b4;
+      do {
+        dVar13 = (double)fVar1;
+        if (*(char *)(piVar9 + -0x47) == '\0') {
+          va(0xffffffff8201230c,lVar8);
+        }
+        else {
+          uVar4 = 0xffffffff82013950;
+          if (*(byte *)(piVar9 + -1) < local_4a20[0]) {
+            uVar4 = 0xffffffff82013954;
+          }
+          uVar5 = 0xffffffff82013958;
+          if (*(char *)((int)piVar9 + -3) == '\0') {
+            uVar5 = 0xffffffff8201394c;
+          }
+          if (bVar2) {
+            uVar4 = SND_GetVolModName(*piVar9);
+            Com_sprintf(auStack_4a10,0x40,0xffffffff82000f98,uVar4);
+            dVar10 = (double)(float)piVar9[-3];
+            dVar12 = (double)(float)(&DAT_8488cba0)[*piVar9 * 3];
+            dVar16 = dVar11;
+            if (dVar15 < dVar10) {
+              dVar16 = (double)(float)((double)(float)piVar9[-2] * dVar10 +
+                                      (double)(float)(dVar11 - dVar10));
+            }
+            iVar7 = SND_GetEntChannelFromName(piVar9 + -0x17);
+            dVar10 = (double)*(float *)(iVar7 * 0xc + DAT_84886910);
+            va((double)(float)piVar9[-7],dVar10,dVar12,(double)(float)(&DAT_848859fc)[iVar7 * 3],
+               dVar16,0xffffffff82013960,lVar8,uVar5,piVar9 + -0x17,auStack_4a10,piVar9 + -0x27,
+               (double)(float)piVar9[-7],dVar10);
+          }
+          else {
+            va(0xffffffff820139e8,lVar8,uVar5,piVar9 + -0x17,piVar9 + -0x27,piVar9 + -0x47,uVar4);
+          }
+        }
+        CG_DrawStringExt(dVar15,dVar13,dVar14,uVar3);
+        lVar8 = lVar8 + 1;
+        fVar1 = (float)(dVar13 + dVar14);
+        piVar9 = piVar9 + 0x49;
+      } while ((int)lVar8 < iVar6);
+    }
+  }
+  __restfpr_26();
+  __restgprlr();
+  return;
 }
 
 
@@ -306,8 +1262,51 @@ void CG_DrawSoundOverlay(void)
 void CG_DrawPerformanceWarnings(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  double dVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int local_60;
+  int local_5c [23];
+  
   __savegprlr_28();
+  uVar2 = __savefpr_26();
+  iVar3 = Sys_Milliseconds();
+  StatMon_GetStatsArray(local_5c,&local_60);
+  uVar2 = ScrPlace_GetActivePlacement(uVar2);
+  iVar4 = 0;
+  dVar7 = 2.0;
+  dVar10 = 200.0;
+  if (0 < local_60) {
+    iVar5 = 0;
+    dVar6 = 68.0;
+    dVar8 = 34.0;
+    dVar9 = 32.0;
+    dVar11 = dVar7;
+    do {
+      if (iVar3 <= *(int *)(iVar5 + local_5c[0])) {
+        UI_DrawHandlePic(dVar11,dVar10,dVar9,dVar9,uVar2);
+      }
+      dVar1 = dVar11 + dVar8;
+      dVar11 = (double)(float)dVar1;
+      if (dVar6 < (double)(float)((double)(float)dVar1 + dVar9)) {
+        dVar10 = (double)(float)(dVar10 + dVar8);
+        dVar11 = dVar7;
+      }
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 8;
+    } while (iVar4 < local_60);
+  }
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -349,11 +1348,9 @@ void CG_DrawMaterialInternal(undefined8 param_1,ulonglong param_2)
   local_9c = 0x3f800000;
   local_98 = 0x3f800000;
   if ((int)param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82013490,0x605,0,0xffffffff82000f98,0xffffffff82013b04);
   }
-  if (4 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
+  else if (4 < (param_2 & 0xffffffff)) {
     MyAssertHandler(0xffffffff82013490,0x606,0,0xffffffff82013ab8,param_2,5);
   }
   lVar2 = CG_GetLocalClientGlobals(uVar1);
@@ -403,11 +1400,21 @@ void CG_DrawMaterial(undefined8 param_1,undefined8 param_2)
 
 // 822B6810  CG_DrawFxText  (cgame/cg_draw_debug.cpp:1609)
 
-void CG_DrawFxText(void)
+void CG_DrawFxText(undefined8 param_1,ulonglong param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82013490,0x64d,0,0xffffffff82000f98,0xffffffff82013b1c);
+  }
+  uVar1 = ScrPlace_GetActivePlacement(uVar1);
+  CL_DrawText((double)*param_3,(double)param_3[1],(double)DAT_8296220c,uVar1,param_2,0x7fffffff,
+              DAT_82a39350,0x80,0xffffffff82a383d8,1,1);
+  param_3[1] = param_3[1] + DAT_82962208;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -441,13 +1448,73 @@ void CG_DrawFxMarkProfile(undefined8 param_1)
 }
 
 
-// 822B6AF8  CG_DrawNetFieldString  (cgame/cg_draw_debug.cpp:1671)
+// 822B6958  CG_DrawDebugPlayerHealth  (cgame/cg_draw_debug.cpp:1641)
 
-void CG_DrawNetFieldString(void)
+void CG_DrawDebugPlayerHealth(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  
   __savegprlr_29();
+  uVar1 = __savefpr_27();
+  if (*(char *)(DAT_829c4034 + 0xc) == '\0') {
+    MyAssertHandler(0xffffffff82013490,0x66e,0,0xffffffff82000f98,0xffffffff82013b24);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  dVar6 = 1.0;
+  if ((*(int *)(iVar2 + 0x19c) == 0) || (*(int *)(iVar2 + 0x1a4) == 0)) {
+    dVar4 = 0.0;
+  }
+  else {
+    dVar3 = (double)((float)(longlong)*(int *)(iVar2 + 0x19c) /
+                    (float)(longlong)*(int *)(iVar2 + 0x1a4));
+    dVar5 = dVar6;
+    if ((float)(dVar3 - 1.0) < 0.0) {
+      dVar5 = dVar3;
+    }
+    dVar4 = 0.0;
+    if (-dVar3 < 0.0) {
+      dVar4 = dVar5;
+    }
+  }
+  uVar8 = 0;
+  ScrPlace_GetActivePlacement(uVar1);
+  uVar7 = 0x4024000000000000;
+  dVar5 = 100.0;
+  CL_DrawStretchPic(0x4024000000000000,0x4024000000000000,0x4059000000000000,0x4024000000000000,
+                    uVar8,uVar8,dVar6,dVar6);
+  ScrPlace_GetActivePlacement(uVar1);
+  CL_DrawStretchPic(uVar7,uVar7,(double)(float)(dVar4 * dVar5),uVar7,uVar8,uVar8,dVar4,dVar6);
+  __restfpr_27();
+  __restgprlr_29();
+  return;
+}
+
+
+// 822B6AF8  CG_DrawNetFieldString  (cgame/cg_draw_debug.cpp:1671)
+
+void CG_DrawNetFieldString
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar3 = __savegprlr_29();
+  uVar1 = ScrPlace_GetActivePlacement();
+  uVar2 = UI_GetFontHandle(param_3,uVar1,0);
+  UI_DrawText(uVar3,param_2,param_3,uVar1,param_5,0x7fffffff,uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -459,21 +1526,17 @@ longlong CG_GetLocalClientStaticGlobals(ulonglong param_1)
   undefined8 uVar1;
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,param_1,4);
   }
   if ((&DAT_82b3e4f3)[(int)param_1 * 0x1e4] == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820100f8,0x692,0,0xffffffff82000f98,0xffffffff82013318);
   }
   if ((ulonglong)DAT_82aa1ae8 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820100f8,0x695,0,0xffffffff8200d150,param_1);
   }
   if (DAT_82a383cc == 0) {
     uVar1 = CL_GetLocalClientConnectionState(param_1);
     uVar1 = va(0xffffffff820132c0,uVar1,param_1);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820100f8,0x696,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
   }
   return param_1 * 0x4098 + (ulonglong)DAT_82a383b0;
@@ -537,11 +1600,27 @@ void CG_DrawNetFieldLine(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 822B3920  CG_GetLocalClientViewModelHand  (cgame_mp/cg_local_mp.h:1698)
 
-void CG_GetLocalClientViewModelHand(void)
+void CG_GetLocalClientViewModelHand(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (1 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820100f8,0x6a3,0,0xffffffff820133b8,param_2,2);
+  }
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820100f8,0x6a5,0,0xffffffff820011a8,uVar1,4);
+  }
+  if ((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x1fffffff) == 0xfab8567) {
+    uVar2 = CL_GetLocalClientConnectionState(uVar1);
+    uVar2 = va(0xffffffff82013358,uVar2,uVar1);
+    MyAssertHandler(0xffffffff820100f8,0x6a6,0,0xffffffff820011f4,0xffffffff82013330,uVar2);
+  }
+  param_2 = (uVar1 & 0x7fffffff) * 2 + param_2;
+  __restgprlr_28((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d5c2b38);
+  return;
 }
 
 
@@ -634,13 +1713,242 @@ void CG_DrawNetFieldHistogram
 }
 
 
+// 822B7018  CG_DrawDebugBones  (cgame/cg_draw_debug.cpp:1793)
+
+void CG_DrawDebugBones(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  undefined8 uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  char *_Str1;
+  int iVar11;
+  longlong lVar12;
+  int iVar13;
+  longlong lVar14;
+  int iVar15;
+  int iVar16;
+  longlong lVar17;
+  longlong lVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  float local_1c0;
+  float local_1bc;
+  float local_1b8;
+  undefined1 auStack_1b0 [16];
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_190;
+  float local_18c;
+  float local_188;
+  undefined1 auStack_180 [16];
+  undefined1 auStack_170 [16];
+  undefined1 auStack_160 [48];
+  undefined1 auStack_130 [48];
+  undefined1 auStack_100 [48];
+  undefined1 auStack_d0 [208];
+  
+  uVar5 = __savegprlr_15();
+  uVar6 = Com_GetClientDObj(param_3,uVar5);
+  if ((uVar6 & 0xffffffff) != 0) {
+    uVar7 = CG_GetPose(uVar5,param_3);
+    if ((uVar7 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82013490,0x729,0,0xffffffff82000f98,0xffffffff82013bec);
+    }
+    iVar8 = DObjGetNumModels(uVar6);
+    if (iVar8 < 1) {
+      MyAssertHandler(0xffffffff82013490,0x72c,0,0xffffffff82000f98,0xffffffff82013bdc);
+    }
+    dVar20 = (double)DObjGetRadius(uVar6);
+    if (10.0 <= dVar20) {
+      fVar2 = (float)(dVar20 * 0.0017500000540167093);
+    }
+    else {
+      fVar2 = 0.05;
+    }
+    dVar22 = (double)fVar2;
+    iVar13 = 0;
+    lVar12 = 0;
+    lVar14 = 0;
+    dVar20 = 0.8191519975662231;
+    if (0 < iVar8) {
+      dVar23 = 1.0;
+      do {
+        iVar9 = DObjGetModel(uVar6,lVar14);
+        iVar10 = XModelNumBones();
+        iVar15 = 0;
+        if (0 < iVar10) {
+          iVar16 = 0;
+          do {
+            _Str1 = (char *)SL_ConvertToString(*(undefined2 *)(*(int *)(iVar9 + 0x24) + iVar16));
+            CG_DObjGetWorldBoneMatrix(uVar7,uVar6,iVar15,auStack_160,&local_1c0);
+            if (((0 < *(int *)(DAT_82a3d5e8 + 0xc)) &&
+                (iVar11 = strncmp(_Str1,"tag_",4), iVar11 == 0)) ||
+               (0 < *(int *)(DAT_82a382ec + 0xc))) {
+              CL_AddOrientedDebugStar(dVar22,&local_1c0,auStack_160,0xffffffff821817f8);
+              CL_GetViewForward(uVar5,&local_190);
+              CL_GetViewPos(uVar5,&local_1a0);
+              fVar2 = local_1bc - local_19c;
+              fVar3 = local_1b8 - local_198;
+              fVar4 = local_1c0 - local_1a0;
+              dVar21 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+              dVar19 = dVar23;
+              if (-dVar21 < 0.0) {
+                dVar19 = dVar21;
+              }
+              fVar1 = (float)(dVar23 / dVar19);
+              dVar19 = (double)(local_188 * fVar3 * fVar1 +
+                               local_18c * fVar2 * fVar1 + local_190 * fVar1 * fVar4);
+              if (dVar20 < dVar19) {
+                lVar12 = lVar14;
+                dVar20 = dVar19;
+                iVar13 = iVar15;
+              }
+            }
+            iVar15 = iVar15 + 1;
+            iVar16 = iVar16 + 2;
+          } while (iVar15 < iVar10);
+        }
+        lVar14 = lVar14 + 1;
+      } while ((int)lVar14 < iVar8);
+    }
+    lVar14 = 0;
+    if (0 < iVar8) {
+      do {
+        iVar9 = DObjGetModel(uVar6,lVar14);
+        iVar10 = XModelNumBones();
+        lVar18 = 0;
+        if (0 < iVar10) {
+          iVar15 = 0;
+          do {
+            SL_ConvertToString(*(undefined2 *)(*(int *)(iVar9 + 0x24) + iVar15));
+            CG_DObjGetWorldBoneMatrix(uVar7,uVar6,lVar18,auStack_160,&local_1c0);
+            CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,lVar18,auStack_130,auStack_1b0);
+            if (*(int *)(iVar9 + 0x28) != 0) {
+              lVar17 = lVar18 - (ulonglong)
+                                *(byte *)((*(int *)(iVar9 + 0x28) - (uint)*(byte *)(iVar9 + 5)) +
+                                         (int)lVar18);
+              if ((-1 < lVar17) && ((int)lVar17 < (int)(uint)*(byte *)(iVar9 + 4))) {
+                CG_DObjGetWorldBoneMatrix(uVar7,uVar6,lVar17,auStack_100,auStack_180);
+                CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,lVar17,auStack_d0,auStack_170);
+                if (((int)lVar18 != iVar13) ||
+                   (uVar5 = 0xffffffff821817f8, (int)lVar14 != (int)lVar12)) {
+                  uVar5 = 0xffffffff821818b8;
+                }
+                CL_AddDebugLine(&local_1c0,auStack_180,uVar5,0,0,0);
+                if ((param_2 & 0xff) != 0) {
+                  CL_AddDebugLine(auStack_1b0,auStack_170,0xffffffff821817e8,0,0,0);
+                }
+              }
+            }
+            lVar18 = lVar18 + 1;
+            iVar15 = iVar15 + 2;
+          } while ((int)lVar18 < iVar10);
+        }
+        lVar14 = lVar14 + 1;
+      } while ((int)lVar14 < iVar8);
+    }
+    iVar8 = DObjGetModel(uVar6,lVar12);
+    SL_ConvertToString(*(undefined2 *)(*(int *)(iVar8 + 0x24) + iVar13 * 2));
+    CG_DObjGetWorldBoneMatrix(uVar7,uVar6,iVar13,auStack_160,&local_1c0);
+    CL_AddDebugString(dVar22,&local_1c0,0xffffffff821817f8);
+    if ((param_2 & 0xff) != 0) {
+      CG_DObjGetWorldBoneBindMatrix(uVar7,uVar6,iVar13,auStack_130,auStack_1b0);
+      CL_AddDebugString(dVar22,auStack_1b0,0xffffffff821817e8);
+      CL_AddDebugLine(&local_1c0,auStack_1b0,0xffffffff82181838,0,0,0);
+    }
+    __restgprlr_15();
+    return;
+  }
+  Com_Printf(uVar6,0xffffffff82013bf4,param_3);
+  Dvar_SetInt(DAT_82a3d5e8,0);
+  Dvar_SetInt(DAT_82a382ec,0);
+  __restgprlr_15();
+  return;
+}
+
+
 // 822B74E0  CG_DrawDebugOverlays  (cgame/cg_draw_debug.cpp:1925)
 
 void CG_DrawDebugOverlays(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined8 uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  
+  uVar2 = __savegprlr_27();
+  iVar1 = *(int *)(DAT_82a3d594 + 0xc);
+  if (iVar1 == 0) {
+    if (*(char *)(DAT_82a3d450 + 0xc) != '\0') {
+      CG_DrawRumbleDebug(uVar2);
+    }
+    if (*(char *)(DAT_829c4034 + 0xc) != '\0') {
+      CG_DrawDebugPlayerHealth(uVar2);
+    }
+    AimAssist_DrawDebugOverlay(uVar2);
+    if (0 < *(int *)(DAT_8332cbbc + 0xc)) {
+      FX_DrawDebug3D((double)(longlong)*(int *)(DAT_8332cbbc + 0xc),uVar2);
+    }
+    if ((0 < *(int *)(DAT_82a382ec + 0xc)) || (0 < *(int *)(DAT_82a3d5e8 + 0xc))) {
+      iVar1 = *(int *)(DAT_82a382ec + 0xc);
+      if (0 < *(int *)(DAT_82a3d5e8 + 0xc)) {
+        iVar1 = *(int *)(DAT_82a3d5e8 + 0xc);
+      }
+      CG_DrawDebugBones(uVar2,*(undefined1 *)(DAT_82a383d0 + 0xc),iVar1);
+    }
+    if (*(char *)(DAT_82a38368 + 0xc) != '\0') {
+      CG_DrawTriggerState(uVar2);
+    }
+    if (*(char *)(DAT_82a3d448 + 0xc) != '\0') {
+      Dvar_SetBool(DAT_82a3d448,0);
+      ResetNetFieldHistograms();
+    }
+    if (*(char *)(DAT_82a38358 + 0xc) == '\0') {
+      iVar1 = *(int *)(DAT_82a3d4b0 + 0xc);
+      if (iVar1 < 0) goto LAB_822b76f0;
+      uVar3 = GetEntityStateHistogram(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
+      uVar4 = GetNumEntityStateFields(iVar1);
+      uVar7 = GetAveragePacketBitCost(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
+      uVar8 = GetMaxPacketBitCost(iVar1,*(undefined1 *)(DAT_82a3d59c + 0xc));
+      uVar6 = ZEXT48((&PTR_s_General_82962210)[iVar1]);
+    }
+    else {
+      uVar3 = GetPlayerStateHistogram();
+      uVar4 = GetNumPlayerStateFields();
+      uVar7 = GetAveragePlayerStatePacketBitCost();
+      uVar8 = GetMaxPlayerStatePacketBitCost();
+      uVar6 = 0xffffffff82013c18;
+    }
+    CG_DrawNetFieldHistogram(uVar7,uVar8,uVar2,uVar3,uVar4,uVar6);
+  }
+  else {
+    cVar5 = Sys_IsMainThread();
+    if (cVar5 != '\0') {
+      CG_DrawMaterialInternal(uVar2,iVar1);
+      __restgprlr_27();
+      return;
+    }
+  }
+LAB_822b76f0:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -658,7 +1966,6 @@ void CG_DrawFullScreenDebugOverlays(undefined8 param_1)
   
   iVar2 = ScrPlace_IsFullScreenActive();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82013490,0x7ef,0,0xffffffff82000f98,0xffffffff820138cc);
   }
   uVar1 = ScrPlace_GetActivePlacement(param_1);
@@ -845,8 +2152,39 @@ void CG_Debug_DrawViewmodelInfo(void)
 void CG_Debug_DrawFontTest(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  undefined1 auStack_250 [592];
+  
   __savegprlr_23();
+  uVar1 = ScrPlace_GetActivePlacement();
+  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,1);
+  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
+  UI_FilterStringForButtonAnimation(auStack_250,0x200);
+  UI_DrawText(0xc039000000000000,0x4024000000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
+              puVar2,0xffffffff82180000,0x7fff0000,1,1);
+  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,2);
+  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
+  UI_FilterStringForButtonAnimation(auStack_250,0x200);
+  UI_DrawText(0xc039000000000000,0x4041800000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
+              puVar2);
+  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,3);
+  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
+  UI_FilterStringForButtonAnimation(auStack_250,0x200);
+  UI_DrawText(0xc039000000000000,0x404e000000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
+              puVar2);
+  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,5);
+  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
+  UI_FilterStringForButtonAnimation(auStack_250,0x200);
+  UI_DrawText(0xc039000000000000,0x4055400000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
+              puVar2);
+  puVar2 = (undefined4 *)UI_GetFontHandle(0x3fd99999a0000000,uVar1,6);
+  Com_sprintf(auStack_250,0x200,0xffffffff82013e00,*puVar2,0xffffffff82013e44);
+  UI_FilterStringForButtonAnimation(auStack_250,0x200);
+  UI_DrawText(0xc039000000000000,0x405b800000000000,0x3fd99999a0000000,uVar1,auStack_250,0x7fffffff,
+              puVar2);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -855,6 +2193,366 @@ void CG_Debug_DrawFontTest(void)
 void CG_Debug_DrawSaveInfo(void)
 
 {
+  return;
+}
+
+
+// 822B7EC8  CG_Debug_DrawPSFlags  (cgame/cg_draw_debug.cpp:2293)
+
+void CG_Debug_DrawPSFlags(void)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar8;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  uVar2 = ZEXT48(&stack0x00000000);
+  uVar3 = __savegprlr_25();
+  iVar8 = CG_GetLocalClientGlobals();
+  uVar3 = ScrPlace_GetActivePlacement(uVar3);
+  uVar4 = UI_GetFontHandle((double)DAT_82962288,uVar3,6);
+  uVar5 = UI_GetFontHandle((double)DAT_82962284,uVar3,6);
+  UI_DrawText((double)DAT_82962280,(double)DAT_82a1ed58,(double)DAT_82962284,uVar3,
+              0xffffffff820145d8,0x800,uVar5);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 1) != 0);
+  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff820145c8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 4) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820145b8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 8) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820145a8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x10) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014590,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x20) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014578,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x40) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014568,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x80) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff8201454c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x100) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014534,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x200) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014514,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x400) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014500,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x800) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144f0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x1000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820144dc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x2000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144cc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x4000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820144b8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x8000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820144a0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x10000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014488,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x20000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014474,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x40000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014464,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x80000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014448,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x100000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014430,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0xc) & 0x400000) != 0);
+  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014420,
+              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  UI_DrawText((double)DAT_82962278,(double)DAT_8296227c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
+              0x800,uVar4);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 1) != 0);
+  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff8201440c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 2) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143f4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 4) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820143dc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 8) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143c4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x10) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820143b0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x20) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820143a0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x40) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014384,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x80) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201436c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x100) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014350,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x200) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014334,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x400) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014318,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x800) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820142f8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x1000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820142d8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x2000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820142b8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x4000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820142a0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x10000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014280,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x374) & 0x20000) != 0);
+  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014264,
+              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  UI_DrawText((double)DAT_82962270,(double)DAT_82962274,(double)DAT_82962288,uVar3,uVar2 - 0x840,
+              0x800,uVar4);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 1) != 0);
+  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff8201424c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 2) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014238,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 4) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014220,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 8) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014208,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x10) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820141e4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x20) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820141c4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x40) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820141a8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x80) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201418c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x100) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014164,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x200) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014144,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x400) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014130,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x800) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014120,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x1000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014110,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x2000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820140f4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x4000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820140d8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x8000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff820140c8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x10000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff820140b0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x20000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014090,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x40000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82014074,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x80000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff8201405c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x10) & 0x100000) != 0);
+  Com_sprintf(lVar7 + lVar6 + (uVar2 - 0x840),0x800 - (lVar7 + lVar6),0xffffffff82014040,
+              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  UI_DrawText((double)DAT_82962268,(double)DAT_8296226c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
+              0x800,uVar4);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 1) != 0);
+  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff82014028,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 2) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82014014,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 4) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ffc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(iVar8 + 0x14) & 8) != 0);
+  Com_sprintf(lVar6 + lVar7 + (uVar2 - 0x840),0x800 - (lVar6 + lVar7),0xffffffff82013fe8,
+              (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  UI_DrawText((double)DAT_82962260,(double)DAT_82962264,(double)DAT_82962288,uVar3,uVar2 - 0x840,
+              0x800,uVar4);
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 1) != 0);
+  lVar6 = Com_sprintf(uVar2 - 0x840,0x800,0xffffffff82013fd0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 2) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013fbc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 4) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013fa8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 8) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f98,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x20) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f88,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x800000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f78,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x800) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f5c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x1000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f40,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x4000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f2c,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x8000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013f18,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x10000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013f04,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x20000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013ef4,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x40000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ee8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x80000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013edc,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x100000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ed0,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x200000) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013eb8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x400000) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013ea8,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x40) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013e94,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x80) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013e84,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar6 = lVar6 + lVar7;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x100) != 0);
+  lVar7 = Com_sprintf(lVar6 + (uVar2 - 0x840),0x800 - lVar6,0xffffffff82013e78,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  lVar7 = lVar7 + lVar6;
+  uVar1 = -(ulonglong)((*(uint *)(*(int *)(iVar8 + 0x3300) + 0xcc) & 0x200) != 0);
+  lVar6 = Com_sprintf(lVar7 + (uVar2 - 0x840),0x800 - lVar7,0xffffffff82013e64,
+                      (uVar1 << 0x20 | uVar1 & 0xfffffffb) + 0x37);
+  Com_sprintf(lVar6 + lVar7 + (uVar2 - 0x840),0x800 - (lVar6 + lVar7),0xffffffff82013e58,0x30);
+  UI_DrawText((double)DAT_82962258,(double)DAT_8296225c,(double)DAT_82962288,uVar3,uVar2 - 0x840,
+              0x800,uVar4,0xffffffff82960000,0xffffffff82960000,1,1);
+  __restgprlr_25();
   return;
 }
 
@@ -871,5 +2569,69 @@ undefined8 WarningColor(double param_1)
     return 0xffffffff82013954;
   }
   return 0xffffffff8201394c;
+}
+
+
+// 822B9220  CG_Debug_DrawGameETCounts  (cgame/cg_draw_debug.cpp:2556)
+
+void CG_Debug_DrawGameETCounts(void)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  char cVar7;
+  longlong lVar5;
+  longlong lVar6;
+  undefined8 uVar8;
+  undefined4 *puVar9;
+  double dVar10;
+  double dVar11;
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  __savegprlr_20();
+  uVar2 = ScrPlace_GetActivePlacement();
+  uVar3 = UI_GetFontHandle((double)DAT_829622a4,uVar2,DAT_829622a8);
+  uVar4 = UI_GetFontHandle((double)DAT_8296229c,uVar2,DAT_829622a0);
+  UI_DrawText((double)DAT_82962298,(double)DAT_82a1ed5c,(double)DAT_8296229c,uVar2,
+              0xffffffff82014704,0x800,uVar4,0xffffffff82010000,0xffffffff82960000,2,1);
+  cVar7 = G_LogDebugEntInfoResults();
+  if (cVar7 != '\0') {
+    lVar5 = Com_sprintf(uVar1 - 0x870,0x800,0xffffffff820146cc);
+    lVar6 = Com_sprintf(lVar5 + (uVar1 - 0x870),0x800 - lVar5,0xffffffff82014688);
+    lVar6 = lVar6 + lVar5;
+    puVar9 = &DAT_83346290;
+    dVar11 = 100.0;
+    do {
+      lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff82014654,puVar9[-2],
+                          (double)(float)((double)(float)puVar9[2] * dVar11),puVar9[-1],*puVar9,
+                          (double)(float)((double)(float)puVar9[3] * dVar11));
+      puVar9 = puVar9 + 6;
+      lVar6 = lVar5 + lVar6;
+    } while ((int)puVar9 < -0x7ccb9bbf);
+    lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff82014628);
+    dVar10 = (double)DAT_83346460;
+    lVar5 = lVar5 + lVar6;
+    uVar8 = 0xffffffff82013958;
+    uVar4 = uVar8;
+    if ((dVar10 < 0.949999988079071) && (uVar4 = 0xffffffff82013954, dVar10 < 0.75)) {
+      uVar4 = 0xffffffff8201394c;
+    }
+    lVar6 = Com_sprintf(lVar5 + (uVar1 - 0x870),0x800 - lVar5,0xffffffff820145f8,DAT_83346450,uVar4,
+                        (double)(float)(dVar10 * dVar11),DAT_83346454,DAT_8334645c);
+    lVar6 = lVar6 + lVar5;
+    lVar5 = Com_sprintf(lVar6 + (uVar1 - 0x870),0x800 - lVar6,0xffffffff820145f4);
+    dVar10 = (double)DAT_83346478;
+    if ((dVar10 < 0.949999988079071) && (uVar8 = 0xffffffff82013954, dVar10 < 0.75)) {
+      uVar8 = 0xffffffff8201394c;
+    }
+    Com_sprintf(lVar5 + lVar6 + (uVar1 - 0x870),0x800 - (lVar5 + lVar6),0xffffffff820145f8,
+                DAT_83346468,uVar8,(double)(float)(dVar10 * dVar11),DAT_8334646c,DAT_83346474);
+    UI_DrawText((double)DAT_8296228c,(double)DAT_82962290,(double)DAT_829622a4,uVar2,uVar1 - 0x870,
+                0x800,uVar3,0xffffffff82960000,0xffffffff82960000,1,1);
+  }
+  __restgprlr_20();
+  return;
 }
 

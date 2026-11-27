@@ -16,8 +16,32 @@ void TRACK_scr_parser(void)
 void Scr_InitOpcodeLookup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_28();
+  if (DAT_8382d888 != 0) {
+    MyAssertHandler(0xffffffff82151460,0x54,0,0xffffffff82000f98,0xffffffff82151444);
+  }
+  if (DAT_8382d894 != 0) {
+    MyAssertHandler(0xffffffff82151460,0x55,0,0xffffffff82000f98,0xffffffff82151424);
+  }
+  if (DAT_8382d8c8 != 0) {
+    MyAssertHandler(0xffffffff82151460,0x56,0,0xffffffff82000f98,0xffffffff82151400);
+  }
+  if (DAT_83c4ba96 != '\0') {
+    DAT_8382d8b4 = 0xffffffff;
+    DAT_8382d88c = 0;
+    DAT_8382d890 = 0;
+    DAT_8382d888 = Z_VirtualReserve(0x1000000,0xffffffff821513e8);
+    DAT_8382d898 = 0;
+    DAT_8382d89c = 0;
+    DAT_8382d894 = Z_VirtualReserve(0x400000,0xffffffff821513d0);
+    DAT_8382d8a4 = 0;
+    DAT_8382d8a8 = 0;
+    DAT_8382d8a0 = 0;
+    DAT_8382d8cc = 0;
+    DAT_8382d8c8 = Z_VirtualReserve(0x40000,0xffffffff821513b8);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -26,8 +50,56 @@ void Scr_InitOpcodeLookup(void)
 void Scr_ShutdownOpcodeLookup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  
   __savegprlr_28();
+  if (DAT_8382d888 != 0) {
+    Z_VirtualFree(DAT_8382d888,0);
+    DAT_8382d888 = 0;
+  }
+  if (DAT_8382d894 != 0) {
+    Z_VirtualFree(DAT_8382d894,0);
+    DAT_8382d894 = 0;
+  }
+  if (DAT_8382d8c8 != 0) {
+    uVar3 = 0;
+    if (DAT_8382d8cc != 0) {
+      iVar4 = 0;
+      iVar2 = DAT_8382d8c8;
+      do {
+        Hunk_FreeDebugMem(*(undefined4 *)(iVar2 + 4));
+        uVar3 = uVar3 + 1;
+        iVar4 = iVar4 + 0x2c;
+        iVar2 = iVar4 + DAT_8382d8c8;
+      } while (uVar3 < DAT_8382d8cc);
+    }
+    Z_VirtualFree(DAT_8382d8c8,0);
+    DAT_8382d8c8 = 0;
+  }
+  if (DAT_8382d8ac != 0) {
+    uVar3 = 0;
+    if (DAT_8382d8b0 != 0) {
+      iVar4 = 0;
+      iVar2 = DAT_8382d8ac;
+      uVar1 = DAT_8382d8b0;
+      do {
+        if (*(int *)(iVar4 + iVar2) != 0) {
+          Hunk_FreeDebugMem(*(int *)(iVar4 + iVar2));
+          iVar2 = DAT_8382d8ac;
+          uVar1 = DAT_8382d8b0;
+        }
+        uVar3 = uVar3 + 1;
+        iVar4 = iVar4 + 0xc;
+      } while (uVar3 < uVar1);
+    }
+    Hunk_FreeDebugMem();
+    DAT_8382d8ac = 0;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -48,8 +120,9 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
   if (DAT_83c4ba96 != '\0') {
     if (DAT_83700fe8 == 2) {
       if (DAT_83c4ba97 != '\0') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151460,0xbe,0,0xffffffff82000f98,0xffffffff8214e1a0);
+        __restgprlr_24();
+        return;
       }
     }
     else if (DAT_83700fe8 != 3) {
@@ -57,15 +130,12 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
         param_2 = param_2 & 0xfe;
       }
       if (DAT_8382d888 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151460,0xca,0,0xffffffff82000f98,0xffffffff8215168c);
       }
       if (DAT_8382d894 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151460,0xcb,0,0xffffffff82000f98,0xffffffff8215166c);
       }
       if (DAT_83700fec == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151460,0xcc,0,0xffffffff82000f98,0xffffffff82151654);
       }
       uVar6 = (DAT_8382d890 + 1) * 0x18;
@@ -76,7 +146,6 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
         Z_VirtualCommit(DAT_8382d88c + DAT_8382d888,0x10000,0);
         DAT_8382d88c = DAT_8382d88c + 0x10000;
         if (DAT_8382d88c < uVar6) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0xd5,0,0xffffffff82000f98,0xffffffff82151608);
         }
       }
@@ -88,23 +157,19 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
         Z_VirtualCommit(DAT_8382d898 + DAT_8382d894,0x10000,0);
         DAT_8382d898 = DAT_8382d898 + 0x10000;
         if (DAT_8382d898 < uVar6) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0xdf,0,0xffffffff82000f98,0xffffffff821515b4);
         }
       }
       if (DAT_8382d8a4 == DAT_83700fec) {
         if (DAT_8382d8a8 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0xe4,0,0xffffffff82000f98,0xffffffff82151590);
         }
         DAT_8382d890 = DAT_8382d890 + -1;
         piVar7 = (int *)(DAT_8382d890 * 0x18 + DAT_8382d888);
         if (piVar7[1] + DAT_8382d8a8 != DAT_8382d89c) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0xea,0,0xffffffff82000f98,0xffffffff82151528);
         }
         if (*piVar7 != DAT_8382d8a4) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0xeb,0,0xffffffff82000f98,0xffffffff821514e8);
         }
       }
@@ -120,14 +185,13 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
       *(uint *)(iVar4 * 4 + DAT_8382d894) = (uint)*(byte *)((int)puVar5 + 3) | iVar2 << 8;
       if (iVar2 == -1) {
         if (DAT_8382d8b4 != -1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0x103,0,0xffffffff82000f98,0xffffffff821514c0);
         }
         iVar1 = iVar4;
         iVar4 = DAT_8382d8b8;
         if ((param_2 & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0x104,0,0xffffffff82000f98,0xffffffff821514a0);
+          iVar4 = DAT_8382d8b8;
         }
       }
       else {
@@ -159,8 +223,57 @@ void AddOpcodePos(undefined8 param_1,ulonglong param_2)
 void RemoveOpcodePos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int *piVar1;
+  
   __savegprlr_28();
+  if (DAT_83c4ba96 != '\0') {
+    if (DAT_83700fe8 == 2) {
+      if (DAT_83c4ba97 != '\0') {
+        MyAssertHandler(0xffffffff82151460,0x128,0,0xffffffff82000f98,0xffffffff8214e1a0);
+        __restgprlr_28();
+        return;
+      }
+    }
+    else {
+      if (DAT_8382d888 == 0) {
+        MyAssertHandler(0xffffffff82151460,300,0,0xffffffff82000f98,0xffffffff8215168c);
+      }
+      if (DAT_8382d894 == 0) {
+        MyAssertHandler(0xffffffff82151460,0x12d,0,0xffffffff82000f98,0xffffffff8215166c);
+      }
+      if (DAT_83700fec == 0) {
+        MyAssertHandler(0xffffffff82151460,0x12e,0,0xffffffff82000f98,0xffffffff82151654);
+      }
+      if (DAT_8382d89c == 0) {
+        MyAssertHandler(0xffffffff82151460,0x130,0,0xffffffff82000f98,0xffffffff82151700);
+      }
+      DAT_8382d89c = DAT_8382d89c + -1;
+      if (DAT_8382d890 == 0) {
+        MyAssertHandler(0xffffffff82151460,0x133,0,0xffffffff82000f98,0xffffffff821516e0);
+      }
+      DAT_8382d890 = DAT_8382d890 + -1;
+      if (DAT_8382d8a8 == 0) {
+        MyAssertHandler(0xffffffff82151460,0x136,0,0xffffffff82000f98,0xffffffff82151590);
+      }
+      DAT_8382d8a8 = DAT_8382d8a8 + -1;
+      piVar1 = (int *)(DAT_8382d890 * 0x18 + DAT_8382d888);
+      if (DAT_8382d8a4 != DAT_83700fec) {
+        MyAssertHandler(0xffffffff82151460,0x13b,0,0xffffffff82000f98,0xffffffff821516a8);
+      }
+      if (piVar1[1] + DAT_8382d8a8 != DAT_8382d89c) {
+        MyAssertHandler(0xffffffff82151460,0x13c,0,0xffffffff82000f98,0xffffffff82151528);
+      }
+      if (*piVar1 != DAT_8382d8a4) {
+        MyAssertHandler(0xffffffff82151460,0x13d,0,0xffffffff82000f98,0xffffffff821514e8);
+      }
+      if (DAT_8382d8a8 == 0) {
+        DAT_8382d8a4 = 0;
+      }
+      *(short *)(piVar1 + 2) = (short)DAT_8382d8a8;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -169,28 +282,197 @@ void RemoveOpcodePos(void)
 void AddThreadStartOpcodePos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (DAT_83c4ba96 != '\0') {
+    if (DAT_83700fe8 == 2) {
+      if (DAT_83c4ba97 != '\0') {
+        MyAssertHandler(0xffffffff82151460,0x152,0,0xffffffff82000f98,0xffffffff8214e1a0);
+        __restgprlr_28();
+        return;
+      }
+    }
+    else {
+      if (DAT_8382d8b8 < 0) {
+        MyAssertHandler(0xffffffff82151460,0x156,0,0xffffffff82000f98,0xffffffff8215173c);
+      }
+      iVar3 = DAT_8382d8b8 * 4 + DAT_8382d894;
+      bVar1 = *(byte *)(iVar3 + 3);
+      *(uint *)(DAT_8382d8b8 * 4 + DAT_8382d894) = (uint)bVar1 | iVar2 << 8;
+      if (bVar1 != 0) {
+        MyAssertHandler(0xffffffff82151460,0x159,0,0xffffffff82000f98,0xffffffff82151724);
+      }
+      *(undefined1 *)(iVar3 + 3) = 8;
+      DAT_8382d8b8 = -1;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253A200  Scr_GetOpcodePosOfType  (script/scr_parser.cpp:352)
 
-void Scr_GetOpcodePosOfType(void)
+void Scr_GetOpcodePosOfType
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               undefined4 *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ushort uVar1;
+  uint uVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint uVar6;
+  uint *puVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  uint uVar13;
+  uint uVar14;
+  undefined4 uVar12;
+  
+  iVar5 = __savegprlr_17();
+  if ((param_4 & 0xff) == 0) {
+    MyAssertHandler(0xffffffff82151460,0x172,0,0xffffffff82000f98,0xffffffff820928bc);
+  }
+  puVar7 = (uint *)(iVar5 * 0x2c + DAT_8382d8c8);
+  uVar11 = 0;
+  uVar12 = 0;
+  puVar10 = puVar7 + 0xb;
+  if (DAT_8382d8cc <= iVar5 + 1U) {
+    puVar10 = (uint *)0x0;
+  }
+  uVar2 = *puVar7;
+  if (uVar2 == 0) {
+    *param_5 = 0;
+    __restgprlr_17(0);
+    return;
+  }
+  uVar14 = 0;
+  if (puVar10 == (uint *)0x0) {
+    uVar8 = 0;
+  }
+  else {
+    uVar8 = *puVar10;
+  }
+  uVar13 = 0;
+  if (DAT_8382d890 != 0) {
+    iVar5 = 0;
+    uVar6 = DAT_8382d890;
+    do {
+      uVar3 = *(uint *)(iVar5 + DAT_8382d888);
+      if (uVar2 <= uVar3) {
+        if (uVar8 - 1 < uVar3) {
+          if (puVar10 == (uint *)0x0) {
+            MyAssertHandler(0xffffffff82151460,0x18b,0,0xffffffff82000f98,0xffffffff82151768);
+            uVar6 = DAT_8382d890;
+          }
+        }
+        else {
+          uVar1 = *(ushort *)(iVar5 + DAT_8382d888 + 8);
+          uVar9 = (ulonglong)uVar1;
+          if (uVar1 != 0) {
+            puVar7 = (uint *)(*(int *)(iVar5 + DAT_8382d888 + 4) * 4 + DAT_8382d894);
+            do {
+              uVar4 = (ulonglong)(*puVar7 >> 8);
+              if (((((param_2 & 0xffffffff) <= uVar4) && (uVar4 < (param_3 & 0xffffffff))) &&
+                  ((param_4 & 0xff & (ulonglong)*puVar7) != 0)) &&
+                 ((uVar14 == 0 || (uVar3 < uVar14)))) {
+                uVar11 = uVar4;
+                uVar14 = uVar3;
+              }
+              puVar7 = puVar7 + 1;
+              uVar9 = uVar9 - 1;
+            } while (uVar9 != 0);
+          }
+        }
+      }
+      uVar12 = (undefined4)uVar11;
+      uVar13 = uVar13 + 1;
+      iVar5 = iVar5 + 0x18;
+    } while (uVar13 < uVar6);
+  }
+  *param_5 = uVar12;
+  __restgprlr_17(uVar14);
+  return;
 }
 
 
 // 8253A3A8  Scr_GetClosestSourcePosOfType  (script/scr_parser.cpp:529)
 
-void Scr_GetClosestSourcePosOfType(void)
+void Scr_GetClosestSourcePosOfType(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ushort uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  uint *puVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  int iVar10;
+  uint *puVar11;
+  
+  iVar4 = __savegprlr_17();
+  puVar11 = (uint *)(iVar4 * 0x2c + DAT_8382d8c8);
+  uVar9 = 0;
+  puVar7 = puVar11 + 0xb;
+  if (DAT_8382d8cc <= iVar4 + 1U) {
+    puVar7 = (uint *)0x0;
+  }
+  uVar2 = *puVar11;
+  if (uVar2 != 0) {
+    if (puVar7 == (uint *)0x0) {
+      uVar6 = 0;
+    }
+    else {
+      uVar6 = *puVar7;
+    }
+    uVar8 = 0;
+    if (DAT_8382d890 != 0) {
+      iVar4 = 0;
+      uVar5 = DAT_8382d890;
+      do {
+        iVar10 = 0;
+        puVar11 = (uint *)(iVar4 + DAT_8382d888);
+        uVar1 = *(ushort *)(puVar11 + 2);
+        if (uVar1 != 0) {
+          do {
+            if (uVar2 <= *puVar11) {
+              if (uVar6 - 1 < *puVar11) {
+                if (puVar7 == (uint *)0x0) {
+                  MyAssertHandler(0xffffffff82151460,0x236,0,0xffffffff82000f98,0xffffffff82151768);
+                }
+              }
+              else {
+                uVar5 = *(uint *)((puVar11[1] + iVar10) * 4 + DAT_8382d894);
+                if ((((param_3 & 0xff & (ulonglong)uVar5) == (param_3 & 0xff)) &&
+                    (uVar3 = (ulonglong)(uVar5 >> 8), uVar9 <= uVar3)) &&
+                   (uVar3 <= (param_2 & 0xffffffff))) {
+                  uVar9 = uVar3;
+                }
+              }
+            }
+            iVar10 = iVar10 + 1;
+            uVar5 = DAT_8382d890;
+          } while (iVar10 < (int)(uint)uVar1);
+        }
+        uVar8 = uVar8 + 1;
+        iVar4 = iVar4 + 0x18;
+      } while (uVar8 < uVar5);
+    }
+    __restgprlr_17(uVar9);
+    return;
+  }
+  __restgprlr_17(0);
+  return;
 }
 
 
@@ -199,8 +481,98 @@ void Scr_GetClosestSourcePosOfType(void)
 void Scr_GetPrevSourcePosOpcodeLookup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  uint uVar3;
+  int iVar4;
+  longlong lVar2;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  
+  uVar3 = __savegprlr_28();
+  iVar4 = Scr_IsInOpcodeMemory();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x24d,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  uVar6 = (ulonglong)DAT_8382d888;
+  if (uVar6 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x24e,0,0xffffffff82000f98,0xffffffff8215168c);
+    uVar6 = (ulonglong)DAT_8382d888;
+  }
+  uVar8 = 0;
+  uVar5 = (ulonglong)DAT_8382d890 - 1;
+  do {
+    uVar1 = (uVar5 + uVar8 & 0xffffffff) >> 1;
+    lVar7 = (uVar1 * 3 & 0x1fffffff) * 8;
+    lVar2 = lVar7 + uVar6;
+    if (uVar3 < *(uint *)((int)lVar7 + (int)uVar6)) {
+      uVar5 = uVar1 - 1;
+    }
+    else {
+      uVar8 = uVar1 + 1;
+      if ((uVar8 == DAT_8382d890) ||
+         (uVar3 < *(uint *)((int)((uVar8 + (uVar8 * 2 & 0xfffffffe) & 0xffffffff) << 3) + (int)uVar6
+                           ))) goto LAB_8253a614;
+    }
+  } while (uVar8 <= (uVar5 & 0xffffffff));
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x261,0,0xffffffff8202882c);
+  }
+  lVar2 = 0;
+LAB_8253a614:
+  __restgprlr_28(lVar2);
+  return;
+}
+
+
+// 8253A620  Scr_GetSourcePosOpcodeLookup  (script/scr_parser.cpp:615)
+
+void Scr_GetSourcePosOpcodeLookup(void)
+
+{
+  uint uVar2;
+  int iVar3;
+  longlong lVar1;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  uint uVar9;
+  ulonglong uVar8;
+  
+  uVar2 = __savegprlr_28();
+  iVar3 = Scr_IsInOpcodeMemory();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x26c,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  uVar4 = (ulonglong)DAT_8382d888;
+  if (uVar4 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x26d,0,0xffffffff82000f98,0xffffffff8215168c);
+    uVar4 = (ulonglong)DAT_8382d888;
+  }
+  lVar5 = 0;
+  lVar6 = (ulonglong)DAT_8382d890 - 1;
+  if (-1 < lVar6) {
+    do {
+      uVar9 = (int)lVar6 + (int)lVar5;
+      uVar8 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+      lVar7 = (uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
+      lVar1 = lVar7 + uVar4;
+      uVar9 = *(uint *)((int)lVar7 + (int)uVar4);
+      if (uVar2 < uVar9) {
+        lVar6 = uVar8 - 1;
+      }
+      else {
+        if (uVar2 == uVar9) goto LAB_8253a6f0;
+        lVar5 = uVar8 + 1;
+      }
+    } while ((int)lVar5 <= (int)lVar6);
+  }
+  lVar1 = 0;
+LAB_8253a6f0:
+  __restgprlr_28(lVar1);
+  return;
 }
 
 
@@ -218,21 +590,73 @@ uint Scr_GetPrevSourcePos(undefined8 param_1,int param_2)
 
 // 8253A748  Scr_GetFunctionLineNumInternal  (script/scr_parser.cpp:811)
 
-void Scr_GetFunctionLineNumInternal(void)
+void Scr_GetFunctionLineNumInternal(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char *pcVar1;
+  ulonglong uVar2;
+  char *pcVar4;
+  longlong lVar3;
+  char *pcVar5;
+  longlong lVar6;
+  
+  pcVar4 = (char *)__savegprlr_29();
+  if (pcVar4 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82151460,0x330,0,0xffffffff82000f98,0xffffffff8205af0c);
+  }
+  *param_3 = pcVar4;
+  lVar6 = 0;
+  lVar3 = 0;
+  pcVar1 = pcVar4;
+  uVar2 = param_2 & 0xffffffff;
+  while (uVar2 != 0) {
+    pcVar5 = pcVar1 + 1;
+    if (*pcVar1 == '\0') {
+      if (*pcVar5 == '{') {
+        pcVar4 = (char *)*param_3;
+        lVar3 = lVar6;
+      }
+      *param_3 = pcVar5;
+      lVar6 = lVar6 + 1;
+    }
+    param_2 = param_2 - 1;
+    pcVar1 = pcVar5;
+    uVar2 = param_2;
+  }
+  *param_3 = pcVar4;
+  __restgprlr_29(lVar3);
+  return;
 }
 
 
 // 8253A7E8  Scr_GetLineNumInternal  (script/scr_parser.cpp:846)
 
-void Scr_GetLineNumInternal(void)
+void Scr_GetLineNumInternal(undefined8 param_1,ulonglong param_2,int *param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char *pcVar3;
+  longlong lVar2;
+  
+  pcVar3 = (char *)__savegprlr_28();
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82151460,0x351,0,0xffffffff82000f98,0xffffffff8205af0c);
+  }
+  *param_3 = (int)pcVar3;
+  lVar2 = 0;
+  uVar1 = param_2 & 0xffffffff;
+  while (uVar1 != 0) {
+    if (*pcVar3 == '\0') {
+      lVar2 = lVar2 + 1;
+      *param_3 = (int)(pcVar3 + 1);
+    }
+    pcVar3 = pcVar3 + 1;
+    param_2 = param_2 - 1;
+    uVar1 = param_2;
+  }
+  *param_4 = (int)pcVar3 - *param_3;
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
@@ -245,7 +669,6 @@ void Scr_GetLineNum(int param_1,undefined8 param_2)
   undefined1 auStack_1c [4];
   
   if (DAT_83c4ba96 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x36c,0,0xffffffff82000f98,0xffffffff8214fda4);
   }
   Scr_GetLineNumInternal
@@ -262,7 +685,6 @@ void Scr_GetFunctionLineNum(int param_1,undefined8 param_2)
   undefined1 auStack_20 [8];
   
   if (DAT_83c4ba96 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x376,0,0xffffffff82000f98,0xffffffff8214fda4);
   }
   Scr_GetFunctionLineNumInternal
@@ -273,11 +695,45 @@ void Scr_GetFunctionLineNum(int param_1,undefined8 param_2)
 
 // 8253CCB8  Scr_GetSourcePosOfType  (script/scr_parser.cpp:893)
 
-void Scr_GetSourcePosOfType(void)
+void Scr_GetSourcePosOfType(undefined8 param_1,ulonglong param_2,int param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  
+  uVar1 = __savegprlr_29();
+  if (param_3 == 0) {
+    iVar2 = Scr_GetPrevSourcePosOpcodeLookup();
+  }
+  else {
+    iVar2 = Scr_GetSourcePosOpcodeLookup();
+  }
+  if (iVar2 != 0) {
+    uVar4 = 0;
+    if (*(ushort *)(iVar2 + 8) != 0) {
+      do {
+        if (((param_2 & 0xff) == 0) ||
+           ((param_2 & 0xff & (ulonglong)*(uint *)((*(int *)(iVar2 + 4) + uVar4) * 4 + DAT_8382d894)
+            ) != 0)) {
+          param_4[2] = *(uint *)((*(int *)(iVar2 + 4) + uVar4) * 4 + DAT_8382d894) >> 8;
+          uVar1 = Scr_GetSourceBuffer(uVar1);
+          *param_4 = (int)uVar1;
+          uVar3 = Scr_GetLineNum(uVar1,param_4[2]);
+          param_4[1] = uVar3;
+          __restgprlr_29(1);
+          return;
+        }
+        uVar4 = uVar4 + 1;
+      } while (uVar4 < *(ushort *)(iVar2 + 8));
+    }
+  }
+  param_4[2] = 0;
+  *param_4 = 0;
+  param_4[1] = 0;
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -286,8 +742,32 @@ void Scr_GetSourcePosOfType(void)
 void Scr_GetNewSourceBuffer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
   __savegprlr_27();
+  if (DAT_8382d8c8 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x39c,0,0xffffffff82000f98,0xffffffff821517d0);
+  }
+  uVar2 = (ulonglong)DAT_8382d8cc;
+  uVar3 = (uVar2 + 1) * 0x2c;
+  uVar1 = (ulonglong)DAT_8382d8a0;
+  if (uVar1 < (uVar3 & 0xffffffff)) {
+    if (0x3ffff < uVar1) {
+      Sys_Error(0xffffffff821517ac);
+      uVar1 = (ulonglong)DAT_8382d8a0;
+    }
+    Z_VirtualCommit(uVar1 + DAT_8382d8c8,0x10000,0);
+    DAT_8382d8a0 = DAT_8382d8a0 + 0x10000;
+    if ((ulonglong)DAT_8382d8a0 < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82151460,0x3a5,0,0xffffffff82000f98,0xffffffff8215177c);
+    }
+    uVar2 = (ulonglong)DAT_8382d8cc;
+  }
+  DAT_8382d8cc = (int)uVar2 + 1;
+  __restgprlr_27(uVar2 * 0x2c + (ulonglong)DAT_8382d8c8);
+  return;
 }
 
 
@@ -313,16 +793,13 @@ void Scr_AddSourceBufferInternal
   void *_Dst;
   
   pcVar4 = (char *)__savegprlr_21();
-  if (DAT_8382d8c8 == 0) {
-    DAT_8382d8d4 = (void *)DAT_8382d8c8;
-    __restgprlr_21();
-    return;
-  }
-  iVar10 = (int)param_4;
-  if (-2 < iVar10) {
+  if (DAT_8382d8c8 != 0) {
+    iVar10 = (int)param_4;
+    if (iVar10 < -1) {
+      MyAssertHandler(0xffffffff82151460,0x3c2,0,0xffffffff82151828,0xffffffff82151838,param_4);
+    }
     pcVar9 = pcVar4;
     if ((iVar10 < 0) && ((param_3 & 0xffffffff) != 0)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82151460,0x3c3,0,0xffffffff82000f98,0xffffffff8215180c);
     }
     do {
@@ -389,18 +866,83 @@ void Scr_AddSourceBufferInternal
     __restgprlr_21();
     return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82151460,0x3c2,0,0xffffffff82151828,0xffffffff82151838,param_4);
+  DAT_8382d8d4 = (void *)DAT_8382d8c8;
+  __restgprlr_21();
+  return;
+}
+
+
+// 8253AC78  Scr_SendSource  (script/scr_parser.cpp:1023)
+
+void Scr_SendSource(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  
+  __savegprlr_28();
+  iVar1 = Sys_IsRemoteDebugServer();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x403,0,0xffffffff82000f98,0xffffffff8214fb44);
+  }
+  if (DAT_83c4ba96 != '\0') {
+    Sys_WriteDebugSocketMessageType(3);
+    Sys_EndWriteDebugSocket();
+    uVar3 = 0;
+    if (DAT_8382d8cc != 0) {
+      iVar1 = 0;
+      uVar2 = DAT_8382d8cc;
+      do {
+        iVar4 = iVar1 + DAT_8382d8c8;
+        if (*(int *)(iVar1 + DAT_8382d8c8) != 0) {
+          Sys_WriteDebugSocketMessageType(1);
+          Sys_WriteDebugSocketString(*(undefined4 *)(iVar4 + 4));
+          Sys_WriteDebugSocketInt(*(undefined4 *)(iVar4 + 0xc));
+          if (0 < *(int *)(iVar4 + 0xc)) {
+            Sys_WriteDebugSocketData(*(undefined4 *)(iVar4 + 8));
+          }
+          Sys_EndWriteDebugSocket();
+          uVar2 = DAT_8382d8cc;
+        }
+        uVar3 = uVar3 + 1;
+        iVar1 = iVar1 + 0x2c;
+      } while (uVar3 < uVar2);
+    }
+    Sys_WriteDebugSocketMessageType(4);
+    Sys_EndWriteDebugSocket();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253AD60  Scr_ReadFile_FastFile  (script/scr_parser.cpp:1058)
 
-void Scr_ReadFile_FastFile(void)
+void Scr_ReadFile_FastFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar5;
+  longlong lVar3;
+  undefined8 uVar4;
+  
+  uVar1 = __savegprlr_26();
+  uVar2 = DB_FindXAssetHeader(0x24,uVar1,1);
+  iVar5 = DB_IsXAssetDefault(0x24,uVar1);
+  if (iVar5 != 0) {
+    Scr_AddSourceBufferInternal(uVar1,param_2,0,0xffffffffffffffff,1,param_3,1);
+    __restgprlr_26(0);
+    return;
+  }
+  lVar3 = DB_GetRawFileLen(uVar2);
+  uVar4 = Hunk_AllocateTempMemoryHigh(lVar3,0xffffffff82151844);
+  DB_GetRawBuffer(uVar2,uVar4,lVar3);
+  Scr_AddSourceBufferInternal(uVar1,param_2,uVar4,lVar3 + -1,1,param_3,1);
+  __restgprlr_26(uVar4);
+  return;
 }
 
 
@@ -425,7 +967,6 @@ void Scr_AddSourceBuffer(undefined8 param_1,undefined8 param_2,undefined8 param_
     return;
   }
   if (DAT_8382d8b0 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x4c0,0,0xffffffff82000f98,0xffffffff82151880);
   }
   DAT_8382d8b0 = DAT_8382d8b0 + -1;
@@ -433,7 +974,6 @@ void Scr_AddSourceBuffer(undefined8 param_1,undefined8 param_2,undefined8 param_
   uVar1 = *(uint *)(iVar6 + 8);
   uVar7 = (ulonglong)uVar1;
   if ((int)uVar1 < -1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x4c4,0,0xffffffff82000f98,0xffffffff82151874);
   }
   if ((int)uVar1 < 0) {
@@ -555,7 +1095,6 @@ void Scr_PrintSourcePos(undefined8 param_1,ulonglong param_2,undefined8 param_3,
   
   uVar1 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x521,0,0xffffffff82000f98,0xffffffff8215192c);
   }
   lVar2 = Scr_GetLineNumInternal(param_3,param_4,local_44c,&local_450);
@@ -593,7 +1132,6 @@ void Scr_PrintSourcePos(undefined8 param_1,ulonglong param_2,undefined8 param_3,
   local_440[iVar5] = 0x2a;
   local_440[iVar5 + 1] = 0;
   if (0x3ff < iVar5 + 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x53c,0,0xffffffff82000f98,0xffffffff821518ac);
   }
   if ((param_5 & 0xff) != 0) {
@@ -610,21 +1148,64 @@ void Scr_PrintSourcePos(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 8253B2B8  Scr_PrintSourcePosSpreadSheet  (script/scr_parser.cpp:1354)
 
-void Scr_PrintSourcePosSpreadSheet(void)
+void Scr_PrintSourcePosSpreadSheet
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  undefined4 local_440;
+  undefined4 local_43c [3];
+  undefined1 auStack_430 [1072];
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82151460,0x54f,0,0xffffffff82000f98,0xffffffff8215192c);
+  }
+  lVar2 = Scr_GetLineNumInternal(param_3,param_4,local_43c,&local_440);
+  Scr_CopyFormattedLine(auStack_430,local_43c[0]);
+  if (DAT_8382d8ac == 0) {
+    uVar3 = 0xffffffff820068af;
+  }
+  else {
+    uVar3 = 0xffffffff82151948;
+  }
+  uVar3 = va(0xffffffff82151938,param_2,uVar3,lVar2 + 1,auStack_430,local_440);
+  Com_PrintMessage(uVar1,uVar3,0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253B380  Scr_PrintFunctionPosSpreadSheet  (script/scr_parser.cpp:1368)
 
-void Scr_PrintFunctionPosSpreadSheet(void)
+void Scr_PrintFunctionPosSpreadSheet
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  undefined4 local_440 [4];
+  undefined1 auStack_430 [1072];
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82151460,0x55c,0,0xffffffff82000f98,0xffffffff8215192c);
+  }
+  lVar2 = Scr_GetFunctionLineNumInternal(param_3,param_4,local_440);
+  Scr_CopyFormattedLine(auStack_430,local_440[0]);
+  if (DAT_8382d8ac == 0) {
+    uVar3 = 0xffffffff820068af;
+  }
+  else {
+    uVar3 = 0xffffffff82151948;
+  }
+  uVar3 = va(0xffffffff82151954,param_2,uVar3,lVar2 + 1,auStack_430);
+  Com_PrintMessage(uVar1,uVar3,0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -636,7 +1217,6 @@ void Scr_PrintSourcePosSummary(undefined8 param_1,ulonglong param_2)
   undefined8 uVar1;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x566,0,0xffffffff82000f98,0xffffffff8215192c);
   }
   if (DAT_8382d8ac == 0) {
@@ -653,31 +1233,92 @@ void Scr_PrintSourcePosSummary(undefined8 param_1,ulonglong param_2)
 
 // 8253B4E8  Scr_GetSourcePos  (script/scr_parser.cpp:1389)
 
-void Scr_GetSourcePos(void)
+void Scr_GetSourcePos(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  longlong lVar1;
+  undefined8 uVar3;
+  undefined4 local_440;
+  undefined1 auStack_43c [12];
+  undefined1 auStack_430 [1072];
+  
+  iVar2 = __savegprlr_27();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x572,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  lVar1 = Scr_GetLineNumInternal
+                    (*(undefined4 *)(iVar2 * 0x2c + DAT_8382d8c8 + 8),param_2,&local_440,auStack_43c
+                    );
+  Scr_CopyFormattedLine(auStack_430,local_440);
+  if (DAT_8382d8ac == 0) {
+    uVar3 = 0xffffffff820068af;
+  }
+  else {
+    uVar3 = 0xffffffff82151920;
+  }
+  Com_sprintf(param_3,param_4,0xffffffff82151968,auStack_430,
+              *(undefined4 *)(iVar2 * 0x2c + DAT_8382d8c8 + 4),uVar3,lVar1 + 1);
+  __restgprlr_27(lVar1);
+  return;
 }
 
 
 // 8253B5D0  Scr_GetSourcePos2  (script/scr_parser.cpp:1403)
 
-void Scr_GetSourcePos2(void)
+void Scr_GetSourcePos2(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x57c,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  if (DAT_8382d8ac == 0) {
+    uVar2 = 0xffffffff820068af;
+  }
+  else {
+    uVar2 = 0xffffffff82151920;
+  }
+  Com_sprintf(param_3,param_4,0xffffffff8215197c,*(undefined4 *)(iVar1 * 0x2c + DAT_8382d8c8 + 4),
+              uVar2,param_2 + 1);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253B680  Scr_GetSourcePos3  (script/scr_parser.cpp:1411)
 
-void Scr_GetSourcePos3(void)
+void Scr_GetSourcePos3(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  longlong lVar1;
+  undefined8 uVar3;
+  undefined4 local_440;
+  undefined1 auStack_43c [12];
+  undefined1 auStack_430 [1072];
+  
+  iVar2 = __savegprlr_27();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x588,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  lVar1 = Scr_GetLineNumInternal
+                    (*(undefined4 *)(iVar2 * 0x2c + DAT_8382d8c8 + 8),param_2,&local_440,auStack_43c
+                    );
+  Scr_CopyFormattedLine(auStack_430,local_440);
+  if (DAT_8382d8ac == 0) {
+    uVar3 = 0xffffffff820068af;
+  }
+  else {
+    uVar3 = 0xffffffff82151920;
+  }
+  Com_sprintf(param_3,param_4,0xffffffff8215197c,*(undefined4 *)(iVar2 * 0x2c + DAT_8382d8c8 + 4),
+              uVar3,lVar1 + 1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -686,28 +1327,119 @@ void Scr_GetSourcePos3(void)
 void Scr_GetSourceBuffer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = Scr_IsInOpcodeMemory();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x593,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  if (DAT_8382d8cc == 0) {
+    MyAssertHandler(0xffffffff82151460,0x594,0,0xffffffff82000f98,0xffffffff82151984);
+  }
+  iVar2 = DAT_8382d8cc + -1;
+  if (iVar2 != 0) {
+    puVar3 = (uint *)(iVar2 * 0x2c + DAT_8382d8c8);
+    do {
+      if ((*puVar3 != 0) && (*puVar3 <= uVar1)) break;
+      iVar2 = iVar2 + -1;
+      puVar3 = puVar3 + -0xb;
+    } while (iVar2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253B818  Scr_GetTextSourcePos  (script/scr_parser.cpp:1443)
 
-void Scr_GetTextSourcePos(void)
+void Scr_GetTextSourcePos(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined4 local_30;
+  undefined1 auStack_2c [44];
+  
+  puVar2 = (undefined *)__savegprlr_29();
+  if (((DAT_83c4ba96 != '\0') && (puVar2 != (undefined *)0x0)) && (DAT_83c4baf4 != 0)) {
+    iVar3 = Scr_IsInOpcodeMemory();
+    if ((iVar3 != 0) && (puVar2 != &DAT_83ca8c50)) {
+      iVar3 = Scr_GetSourceBuffer(puVar2 + -1);
+      uVar1 = Scr_GetPrevSourcePos(puVar2 + -1,0);
+      Scr_GetLineNumInternal
+                (*(undefined4 *)(iVar3 * 0x2c + DAT_8382d8c8 + 8),uVar1,&local_30,auStack_2c);
+      Scr_CopyFormattedLine(param_2,local_30);
+      __restgprlr_29();
+      return;
+    }
+  }
+  *(undefined1 *)param_2 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253B8D8  Scr_PrintPrevCodePos  (script/scr_parser.cpp:1466)
 
-void Scr_PrintPrevCodePos(void)
+void Scr_PrintPrevCodePos(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff821519d0;
+LAB_8253b904:
+    Com_PrintError(uVar1,uVar3);
+    __restgprlr_27();
+    return;
+  }
+  if ((param_2 & 0xffffffff) == ZEXT48(&DAT_83ca8c50)) {
+    uVar3 = 0xffffffff821519ac;
+    if ((param_4 & 0xff) == 0) {
+      Com_Printf(uVar1,0xffffffff821519ac);
+      __restgprlr_27();
+      return;
+    }
+    goto LAB_8253b904;
+  }
+  if (DAT_83c4ba96 == '\0') {
+    iVar2 = Scr_IsInOpcodeMemory(param_2 - 1);
+    if (iVar2 != 0) {
+      param_2 = param_2 - DAT_83c4baf4;
+      uVar3 = 0xffffffff821519c8;
+      if ((param_4 & 0xff) != 0) {
+        Com_PrintError(uVar1,0xffffffff821519c8,param_2);
+        __restgprlr_27();
+        return;
+      }
+      goto LAB_8253b9d4;
+    }
+  }
+  else if ((DAT_83c4baf4 != 0) && (iVar2 = Scr_IsInOpcodeMemory(param_2), iVar2 != 0)) {
+    iVar2 = Scr_GetSourceBuffer(param_2 - 1);
+    iVar2 = iVar2 * 0x2c + DAT_8382d8c8;
+    uVar3 = Scr_GetPrevSourcePos(param_2 - 1,param_3);
+    Scr_PrintSourcePos(uVar1,*(undefined4 *)(iVar2 + 4),*(undefined4 *)(iVar2 + 8),uVar3,param_4);
+    __restgprlr_27();
+    return;
+  }
+  uVar3 = 0xffffffff821519c0;
+  if ((param_4 & 0xff) != 0) {
+    Com_PrintError();
+    __restgprlr_27();
+    return;
+  }
+LAB_8253b9d4:
+  Com_Printf(uVar1,uVar3,param_2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -718,21 +1450,20 @@ char * Scr_PrevCodePosFileName(char *param_1)
 {
   int iVar1;
   
-  if (DAT_83c4ba96 != '\0') {
-    if (param_1 == (char *)0x0) {
-      param_1 = "<frozen thread>";
-    }
-    else if (param_1 == &DAT_83ca8c50) {
-      param_1 = "<removed thread>";
-    }
-    else if ((DAT_83c4baf4 != 0) && (iVar1 = Scr_IsInOpcodeMemory(param_1), iVar1 != 0)) {
-      iVar1 = Scr_GetSourceBuffer(param_1 + -1);
-      param_1 = *(char **)(iVar1 * 0x2c + DAT_8382d8c8 + 4);
-    }
-    return param_1;
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x5f4,0,0xffffffff82000f98,0xffffffff8214fda4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82151460,0x5f4,0,0xffffffff82000f98,0xffffffff8214fda4);
+  if (param_1 == (char *)0x0) {
+    param_1 = "<frozen thread>";
+  }
+  else if (param_1 == &DAT_83ca8c50) {
+    param_1 = "<removed thread>";
+  }
+  else if ((DAT_83c4baf4 != 0) && (iVar1 = Scr_IsInOpcodeMemory(param_1), iVar1 != 0)) {
+    iVar1 = Scr_GetSourceBuffer(param_1 + -1);
+    param_1 = *(char **)(iVar1 * 0x2c + DAT_8382d8c8 + 4);
+  }
+  return param_1;
 }
 
 
@@ -747,7 +1478,6 @@ ulonglong Scr_PrevCodePosFunctionName(undefined *param_1)
   uint local_20 [2];
   
   if (DAT_83c4ba96 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x610,0,0xffffffff82000f98,0xffffffff8214fda4);
   }
   if (param_1 == (undefined *)0x0) {
@@ -771,31 +1501,209 @@ ulonglong Scr_PrevCodePosFunctionName(undefined *param_1)
 
 // 8253BC08  Scr_PrevCodePosFileNameMatches  (script/scr_parser.cpp:1582)
 
-void Scr_PrevCodePosFileNameMatches(void)
+void Scr_PrevCodePosFileNameMatches(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82151460,0x631,0,0xffffffff82000f98,0xffffffff8208e528);
+  }
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x632,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  uVar2 = Scr_PrevCodePosFileName(uVar1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_28();
+    return;
+  }
+  lVar3 = I_stristr(uVar2,param_2);
+  __restgprlr_28(lVar3 != 0);
+  return;
+}
+
+
+// 8253BCB8  Scr_PrintPrevCodePosSpreadSheet  (script/scr_parser.cpp:1598)
+
+void Scr_PrintPrevCodePosSpreadSheet
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_27();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff82151460,0x641,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    Com_PrintMessage(uVar1,0xffffffff821519d0,0);
+    __restgprlr_27();
+    return;
+  }
+  if ((param_2 & 0xffffffff) == ZEXT48(&DAT_83ca8c50)) {
+    Com_PrintMessage(uVar1,0xffffffff821519ac,0);
+    __restgprlr_27();
+    return;
+  }
+  if ((DAT_83c4baf4 != 0) && (iVar3 = Scr_IsInOpcodeMemory(param_2), iVar3 != 0)) {
+    lVar4 = param_2 - 1;
+    iVar3 = Scr_GetSourceBuffer(lVar4);
+    if ((param_3 & 0xff) != 0) {
+      Scr_GetPrevSourcePos(lVar4,0);
+      Scr_PrintSourcePosSummary(uVar1,*(undefined4 *)(iVar3 * 0x2c + DAT_8382d8c8 + 4));
+      __restgprlr_27();
+      return;
+    }
+    iVar3 = iVar3 * 0x2c + DAT_8382d8c8;
+    if ((param_4 & 0xff) != 0) {
+      uVar2 = Scr_GetPrevSourcePos(lVar4,0);
+      Scr_PrintFunctionPosSpreadSheet
+                (uVar1,*(undefined4 *)(iVar3 + 4),*(undefined4 *)(iVar3 + 8),uVar2);
+      __restgprlr_27();
+      return;
+    }
+    uVar2 = Scr_GetPrevSourcePos(lVar4,0);
+    Scr_PrintSourcePosSpreadSheet(uVar1,*(undefined4 *)(iVar3 + 4),*(undefined4 *)(iVar3 + 8),uVar2)
+    ;
+    __restgprlr_27();
+    return;
+  }
+  uVar2 = va(0xffffffff82004d30,param_2);
+  Com_PrintMessage(uVar1,uVar2,0);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253CD98  Scr_GetCodePos  (script/scr_parser.cpp:1638)
 
-void Scr_GetCodePos(void)
+void Scr_GetCodePos(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  int iVar2;
+  undefined4 local_40 [2];
+  undefined4 local_38;
+  
+  lVar1 = __savegprlr_28();
+  if (DAT_83c4ba96 != '\0') {
+    Scr_GetSourcePosOfType(lVar1,8,1,local_40);
+    Scr_GetSourcePos(local_40[0],local_38,param_3,param_4);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = Scr_IsInOpcodeMemory();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x672,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  Com_sprintf(param_3,param_4,0xffffffff82151cbc,lVar1 - (ulonglong)DAT_83c4baf4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253BE48  Scr_GetFileAndLine  (script/scr_parser.cpp:1658)
 
-void Scr_GetFileAndLine(void)
+void Scr_GetFileAndLine(undefined8 param_1,undefined4 *param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_28();
+  iVar3 = Scr_IsInOpcodeMemory();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x67f,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  iVar3 = Scr_GetPrevSourcePosOpcodeLookup(uVar2);
+  if (iVar3 != 0) {
+    uVar1 = *(uint *)(*(int *)(iVar3 + 4) * 4 + DAT_8382d894);
+    uVar2 = Scr_GetSourceBuffer(uVar2);
+    iVar3 = Scr_GetLineNum(uVar2,uVar1 >> 8);
+    *param_3 = iVar3 + 1;
+    *param_2 = *(undefined4 *)((int)uVar2 * 0x2c + DAT_8382d8c8 + 4);
+    __restgprlr_28();
+    return;
+  }
+  *param_3 = 0;
+  *param_2 = &DAT_820068af;
+  __restgprlr_28();
+  return;
+}
+
+
+// 8253BF18  Scr_AddProfileTime  (script/scr_parser.cpp:1685)
+
+void Scr_AddProfileTime(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  
+  uVar3 = __savegprlr_22();
+  iVar5 = (int)param_2;
+  if (iVar5 < 0) {
+    MyAssertHandler(0xffffffff82151460,0x69a,0,0xffffffff8202a2b0,0xffffffff82151a48,param_2);
+  }
+  if (iVar5 < (int)param_3) {
+    MyAssertHandler(0xffffffff82151460,0x69b,0,0xffffffff82151a2c,param_3,param_2);
+  }
+  iVar4 = Scr_IsInOpcodeMemory(uVar3);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x69c,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  if (DAT_8382d888 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x69d,0,0xffffffff82000f98,0xffffffff8215168c);
+  }
+  uVar6 = (ulonglong)DAT_8382d890;
+  uVar8 = 0;
+  uVar7 = uVar6 - 1;
+  iVar4 = DAT_8382d888;
+  do {
+    uVar1 = (uVar7 + uVar8 & 0xffffffff) >> 1;
+    iVar2 = (int)((uVar1 * 3 & 0x1fffffff) << 3);
+    if ((ulonglong)*(uint *)(iVar2 + iVar4) < (uVar3 & 0xffffffff)) {
+      uVar8 = uVar1 + 1;
+      if (uVar6 <= uVar8) {
+        MyAssertHandler(0xffffffff82151460,0x6a7,0,0xffffffff82000f98,0xffffffff82151a08);
+        uVar6 = (ulonglong)DAT_8382d890;
+        iVar4 = DAT_8382d888;
+      }
+      if ((uVar3 & 0xffffffff) <=
+          (ulonglong)*(uint *)((int)((uVar8 + (uVar8 * 2 & 0xfffffffe) & 0xffffffff) << 3) + iVar4))
+      {
+        *(int *)(iVar2 + iVar4 + 0xc) = *(int *)(iVar2 + iVar4 + 0xc) + iVar5;
+        *(int *)(iVar2 + DAT_8382d888 + 0x10) = *(int *)(iVar2 + DAT_8382d888 + 0x10) + (int)param_3
+        ;
+        *(int *)(iVar2 + DAT_8382d888 + 0x14) = *(int *)(iVar2 + DAT_8382d888 + 0x14) + 1;
+        __restgprlr_22();
+        return;
+      }
+    }
+    else {
+      uVar7 = uVar1 - 1;
+    }
+    if ((uVar7 & 0xffffffff) < uVar8) {
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff82151460,0x6b6,0,0xffffffff8202882c);
+      }
+      __restgprlr_22();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -832,7 +1740,7 @@ void Scr_CalcScriptFileProfile(void)
   int iVar6;
   int *piVar7;
   int iVar8;
-  ulonglong uVar9;
+  uint uVar9;
   uint uVar10;
   undefined8 local_1098;
   undefined1 local_1090 [4240];
@@ -841,14 +1749,13 @@ void Scr_CalcScriptFileProfile(void)
   if (DAT_83c4ba96 != '\0') {
     iVar4 = Profile_GetScript();
     *(undefined4 *)(iVar4 + 0x680) = 0;
-    uVar10 = 0;
+    uVar9 = 0;
     if (DAT_8382d890 != 0) {
       iVar8 = 0;
       do {
         iVar6 = iVar8 + DAT_8382d888;
         if (*(int *)(iVar6 + 0x14) == 0) {
           if (*(int *)(iVar6 + 0xc) != 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82151460,0x6d8,0,0xffffffff82000f98,0xffffffff82151a54);
           }
         }
@@ -860,11 +1767,9 @@ void Scr_CalcScriptFileProfile(void)
           *(undefined4 *)(iVar8 + DAT_8382d888 + 0x10) = 0;
           iVar6 = *(int *)(iVar8 + DAT_8382d888);
           if ((iVar6 + 1 == 0) || ((undefined *)(iVar6 + 1) == &DAT_83ca8c50)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82151460,0x6e3,0,0xffffffff82000f98,0xffffffff82151a80);
           }
           if ((DAT_83c4baf4 == 0) || (iVar5 = Scr_IsInOpcodeMemory(iVar6 + 1), iVar5 == 0)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82151460,0x6e4,0,0xffffffff82000f98,0xffffffff82151aa0);
           }
           iVar6 = Scr_GetSourceBuffer(iVar6);
@@ -883,34 +1788,33 @@ void Scr_CalcScriptFileProfile(void)
                *(float *)(iVar5 + 0x4ac0) * (float)(longlong)iVar2 + *(float *)(iVar6 + 0x28);
           *(int *)(iVar4 + 0x680) = *(int *)(iVar4 + 0x680) + iVar1;
         }
-        uVar10 = uVar10 + 1;
+        uVar9 = uVar9 + 1;
         iVar8 = iVar8 + 0x18;
-      } while (uVar10 < DAT_8382d890);
+      } while (uVar9 < DAT_8382d890);
     }
-    uVar10 = *(uint *)(iVar4 + 0x680);
-    *(uint *)(iVar4 + 0x684) = (*(int *)(iVar4 + 0x684) * 4 + uVar10) / 5;
-    if (*(uint *)(iVar4 + 0x688) < uVar10) {
-      *(uint *)(iVar4 + 0x688) = uVar10;
+    uVar9 = *(uint *)(iVar4 + 0x680);
+    *(uint *)(iVar4 + 0x684) = (*(int *)(iVar4 + 0x684) * 4 + uVar9) / 5;
+    if (*(uint *)(iVar4 + 0x688) < uVar9) {
+      *(uint *)(iVar4 + 0x688) = uVar9;
     }
-    uVar10 = DAT_8382d8cc;
-    uVar9 = (ulonglong)DAT_8382d8cc;
-    if (0x3ff < uVar9) {
-                    /* WARNING: Subroutine does not return */
+    if (0x3ff < DAT_8382d8cc) {
       MyAssertHandler(0xffffffff82151460,0x6f8,0,0xffffffff82000f98,0xffffffff82151cc4);
     }
+    uVar9 = DAT_8382d8cc;
     iVar8 = 0;
-    if (uVar9 != 0) {
+    if (DAT_8382d8cc != 0) {
       piVar7 = (int *)((int)&local_1098 + 4);
+      uVar10 = DAT_8382d8cc;
       do {
         piVar7 = piVar7 + 1;
         *piVar7 = iVar8;
         iVar8 = iVar8 + 1;
-        uVar9 = uVar9 - 1;
-      } while (uVar9 != 0);
+        uVar10 = uVar10 - 1;
+      } while (uVar10 != 0);
     }
     std___Sort<int_*,int,bool_(__cdecl*)(int,int)>
-              (local_1090,local_1090 + uVar10 * 4,
-               (int)(local_1090 + uVar10 * 4) - (int)local_1090 >> 2,0xffffffff8253c118);
+              (local_1090,local_1090 + uVar9 * 4,
+               (int)(local_1090 + uVar9 * 4) - (int)local_1090 >> 2,0xffffffff8253c118);
     pvVar3 = memcpy((void *)(iVar4 + 0x600),local_1090,0x80);
   }
   __restgprlr_15(pvVar3);
@@ -920,11 +1824,55 @@ void Scr_CalcScriptFileProfile(void)
 
 // 8253C150  Scr_CalcAnimscriptProfile  (script/scr_parser.cpp:1795)
 
-void Scr_CalcAnimscriptProfile(void)
+void Scr_CalcAnimscriptProfile(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  
+  piVar3 = (int *)__savegprlr();
+  *piVar3 = 0;
+  *param_2 = 0;
+  if ((DAT_83c4ba96 != '\0') && (uVar6 = 0, DAT_8382d890 != 0)) {
+    iVar7 = 0;
+    do {
+      iVar5 = iVar7 + DAT_8382d888;
+      if (*(int *)(iVar5 + 0x14) == 0) {
+        if (*(int *)(iVar5 + 0xc) != 0) {
+          MyAssertHandler(0xffffffff82151460,0x712,0,0xffffffff82000f98,0xffffffff82151a54);
+        }
+      }
+      else {
+        iVar1 = *(int *)(iVar5 + 0xc);
+        iVar2 = *(int *)(iVar5 + 0x10);
+        *(undefined4 *)(iVar5 + 0x14) = 0;
+        *(undefined4 *)(iVar7 + DAT_8382d888 + 0xc) = 0;
+        *(undefined4 *)(iVar7 + DAT_8382d888 + 0x10) = 0;
+        iVar5 = *(int *)(iVar7 + DAT_8382d888);
+        if ((iVar5 + 1 == 0) || ((undefined *)(iVar5 + 1) == &DAT_83ca8c50)) {
+          MyAssertHandler(0xffffffff82151460,0x71d,0,0xffffffff82000f98,0xffffffff82151a80);
+        }
+        if ((DAT_83c4baf4 == 0) || (iVar4 = Scr_IsInOpcodeMemory(iVar5 + 1), iVar4 == 0)) {
+          MyAssertHandler(0xffffffff82151460,0x71e,0,0xffffffff82000f98,0xffffffff82151aa0);
+        }
+        iVar5 = Scr_GetSourceBuffer(iVar5);
+        iVar5 = strncmp(*(char **)(iVar5 * 0x2c + DAT_8382d8c8 + 4),"animscript",10);
+        if (iVar5 == 0) {
+          *piVar3 = *piVar3 + iVar1;
+          *param_2 = (*param_2 - iVar2) + iVar1;
+        }
+      }
+      uVar6 = uVar6 + 1;
+      iVar7 = iVar7 + 0x18;
+    } while (uVar6 < DAT_8382d890);
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -933,8 +1881,43 @@ void Scr_CalcAnimscriptProfile(void)
 void Scr_PrintScriptProfileTimesForScriptFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
   __savegprlr_27();
+  Com_Printf(0x17,0xffffffff82151b18);
+  uVar3 = 0;
+  if (DAT_8382d8cc != 0) {
+    iVar4 = 0;
+    dVar8 = 0.0;
+    uVar2 = DAT_8382d8cc;
+    do {
+      iVar5 = iVar4 + DAT_8382d8c8;
+      if ((double)*(float *)(iVar5 + 0x24) != dVar8) {
+        iVar1 = Sys_GetValue(0);
+        dVar7 = (double)*(float *)(iVar1 + 0x4ac0);
+        iVar1 = Sys_GetValue(0);
+        dVar6 = (double)*(float *)(iVar1 + 0x4ac0);
+        iVar1 = Sys_GetValue(0);
+        Com_Printf(0x17,0xffffffff82151adc,*(undefined4 *)(iVar5 + 4),
+                   (double)((float)(longlong)*(int *)(iVar5 + 0x18) * *(float *)(iVar1 + 0x4ac0)),
+                   (double)(float)((double)(longlong)*(int *)(iVar5 + 0x1c) * dVar6),
+                   (double)(float)((double)(longlong)*(int *)(iVar5 + 0x20) * dVar7),
+                   (double)*(float *)(iVar5 + 0x24),(double)*(float *)(iVar5 + 0x28));
+        uVar2 = DAT_8382d8cc;
+      }
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 0x2c;
+    } while (uVar3 < uVar2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -983,23 +1966,24 @@ void Scr_PrintProfileTimes(void)
   undefined4 *puVar7;
   char *pcVar8;
   uint uVar9;
-  int iVar10;
-  undefined4 *puVar11;
-  char *pcVar12;
-  int iVar13;
-  char *pcVar14;
-  int iVar15;
-  char *pcVar16;
-  uint *puVar17;
-  longlong lVar18;
-  double dVar19;
+  uint uVar10;
+  int iVar11;
+  undefined4 *puVar12;
+  char *pcVar13;
+  int iVar14;
+  char *pcVar15;
+  int iVar16;
+  char *pcVar17;
+  uint *puVar18;
+  longlong lVar19;
+  double dVar20;
   
-  dVar19 = (double)__savegprlr_20();
-  pcVar14 = (char *)0x0;
-  if (0.0 < dVar19) {
+  dVar20 = (double)__savegprlr_20();
+  pcVar15 = (char *)0x0;
+  if (0.0 < dVar20) {
     iVar4 = 0;
     iVar5 = 0;
-    iVar13 = 0;
+    iVar14 = 0;
     uVar9 = 0;
     if (1 < (int)DAT_8382d890) {
       piVar6 = (int *)(DAT_8382d888 + -0xc);
@@ -1012,136 +1996,135 @@ void Scr_PrintProfileTimes(void)
       } while (uVar9 < DAT_8382d890 - 1);
     }
     if (uVar9 < DAT_8382d890) {
-      iVar13 = *(int *)(uVar9 * 0x18 + DAT_8382d888 + 0xc);
+      iVar14 = *(int *)(uVar9 * 0x18 + DAT_8382d888 + 0xc);
     }
     iVar3 = Sys_GetValue(0);
-    if ((double)((float)(longlong)(iVar4 + iVar5 + iVar13) * *(float *)(iVar3 + 0x4ac0)) < dVar19) {
+    if ((double)((float)(longlong)(iVar4 + iVar5 + iVar14) * *(float *)(iVar3 + 0x4ac0)) < dVar20) {
       uVar9 = 0;
       if (DAT_8382d890 != 0) {
         iVar5 = 0;
-        iVar13 = DAT_8382d888;
+        iVar14 = DAT_8382d888;
         do {
-          *(undefined4 *)(iVar13 + 0x14) = 0;
+          *(undefined4 *)(iVar14 + 0x14) = 0;
           uVar9 = uVar9 + 1;
           *(undefined4 *)(iVar5 + DAT_8382d888 + 0xc) = 0;
           *(undefined4 *)(iVar5 + DAT_8382d888 + 0x10) = 0;
           iVar5 = iVar5 + 0x18;
-          iVar13 = iVar5 + DAT_8382d888;
+          iVar14 = iVar5 + DAT_8382d888;
         } while (uVar9 < DAT_8382d890);
       }
       __restgprlr_20(0);
       return;
     }
   }
-  iVar13 = 0;
+  iVar14 = 0;
   uVar9 = 0;
   if (DAT_8382d890 != 0) {
     iVar5 = 0;
+    uVar10 = DAT_8382d890;
     do {
       if (*(int *)(iVar5 + DAT_8382d888 + 0x14) == 0) {
         if (*(int *)(iVar5 + DAT_8382d888 + 0xc) != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82151460,0x77f,0,0xffffffff82000f98,0xffffffff82151a54);
+          uVar10 = DAT_8382d890;
         }
       }
       else {
-        iVar13 = iVar13 + 1;
+        iVar14 = iVar14 + 1;
       }
       uVar9 = uVar9 + 1;
       iVar5 = iVar5 + 0x18;
-    } while (uVar9 < DAT_8382d890);
+    } while (uVar9 < uVar10);
   }
-  iVar4 = Z_VirtualAlloc(iVar13 * 0x18,0xffffffff82151d4c,0);
+  iVar4 = Z_VirtualAlloc(iVar14 * 0x18,0xffffffff82151d4c,0);
   iVar5 = 0;
   uVar9 = 0;
   if (DAT_8382d890 != 0) {
-    iVar15 = 0;
+    iVar16 = 0;
     iVar5 = 0;
     iVar3 = iVar4;
     do {
-      iVar10 = iVar15 + DAT_8382d888;
-      if (*(int *)(iVar10 + 0x14) == 0) {
-        if (*(int *)(iVar10 + 0xc) != 0) {
-                    /* WARNING: Subroutine does not return */
+      iVar11 = iVar16 + DAT_8382d888;
+      if (*(int *)(iVar11 + 0x14) == 0) {
+        if (*(int *)(iVar11 + 0xc) != 0) {
           MyAssertHandler(0xffffffff82151460,0x78c,0,0xffffffff82000f98,0xffffffff82151a54);
         }
       }
       else {
-        puVar11 = (undefined4 *)(iVar10 + -4);
+        puVar12 = (undefined4 *)(iVar11 + -4);
         puVar7 = (undefined4 *)(iVar3 + -4);
-        lVar18 = 6;
+        lVar19 = 6;
         do {
-          puVar11 = puVar11 + 1;
+          puVar12 = puVar12 + 1;
           puVar7 = puVar7 + 1;
-          *puVar7 = *puVar11;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
+          *puVar7 = *puVar12;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
         iVar5 = iVar5 + 1;
         iVar3 = iVar3 + 0x18;
-        *(undefined4 *)(iVar15 + DAT_8382d888 + 0x14) = 0;
-        *(undefined4 *)(iVar15 + DAT_8382d888 + 0xc) = 0;
-        *(undefined4 *)(iVar15 + DAT_8382d888 + 0x10) = 0;
+        *(undefined4 *)(iVar16 + DAT_8382d888 + 0x14) = 0;
+        *(undefined4 *)(iVar16 + DAT_8382d888 + 0xc) = 0;
+        *(undefined4 *)(iVar16 + DAT_8382d888 + 0x10) = 0;
       }
       uVar9 = uVar9 + 1;
-      iVar15 = iVar15 + 0x18;
+      iVar16 = iVar16 + 0x18;
     } while (uVar9 < DAT_8382d890);
   }
-  if (iVar5 == iVar13) {
-    iVar5 = iVar13 * 0x18 + iVar4;
-    std___Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-              (iVar4,iVar5,(iVar5 - iVar4) / 0x18,0xffffffff8253c0f8);
-    Com_Printf(0x17,0xffffffff820044d8);
-    iVar5 = Profile_GetScript();
-    pcVar16 = (char *)(iVar5 + 0x380);
-    lVar18 = 0x20;
-    pcVar12 = pcVar16;
-    pcVar8 = pcVar16;
-    do {
-      do {
-        cVar1 = *pcVar12;
-        pcVar12 = pcVar12 + 1;
-      } while (cVar1 != '\0');
-      if (pcVar14 < pcVar12 + (-1 - (int)pcVar8)) {
-        pcVar14 = pcVar12 + (-1 - (int)pcVar8);
-      }
-      pcVar12 = pcVar8 + 0x14;
-      lVar18 = lVar18 + -1;
-      pcVar8 = pcVar12;
-    } while (lVar18 != 0);
-    puVar17 = (uint *)(iVar5 + 8);
-    lVar18 = 0x20;
-    do {
-      if (*pcVar16 != '\0') {
-        iVar5 = Sys_GetValue(0);
-        Com_Printf(0x17,0xffffffff82151d20,pcVar14,pcVar16,
-                   (double)(*(float *)(iVar5 + 0x4ac0) * (float)*puVar17));
-      }
-      lVar18 = lVar18 + -1;
-      pcVar16 = pcVar16 + 0x14;
-      puVar17 = puVar17 + 3;
-    } while (lVar18 != 0);
-    Com_Printf(0x17,0xffffffff820044d8);
-    if (0 < iVar13) {
-      puVar17 = (uint *)(iVar4 + -0x18);
-      do {
-        iVar5 = Sys_GetValue(0);
-        dVar19 = (double)*(float *)(iVar5 + 0x4ac0);
-        iVar5 = Sys_GetValue(0);
-        Com_Printf(0x17,0xffffffff82151cfc,
-                   (double)(*(float *)(iVar5 + 0x4ac0) * (float)(longlong)(int)puVar17[9]),
-                   (double)(float)((double)(longlong)(int)puVar17[10] * dVar19),puVar17[0xb]);
-        puVar17 = puVar17 + 6;
-        Scr_PrintPrevCodePos(0x17,(ulonglong)*puVar17 + 1,1,1);
-        iVar13 = iVar13 + -1;
-      } while (iVar13 != 0);
-    }
-    Com_Printf(0x17,0xffffffff820044d8);
-    Z_VirtualFree(iVar4,0);
-    __restgprlr_20(1);
-    return;
+  if (iVar5 != iVar14) {
+    MyAssertHandler(0xffffffff82151460,0x796,0,0xffffffff82000f98,0xffffffff82151d2c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82151460,0x796,0,0xffffffff82000f98,0xffffffff82151d2c);
+  iVar5 = iVar14 * 0x18 + iVar4;
+  std___Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+            (iVar4,iVar5,(iVar5 - iVar4) / 0x18,0xffffffff8253c0f8);
+  Com_Printf(0x17,0xffffffff820044d8);
+  iVar5 = Profile_GetScript();
+  pcVar17 = (char *)(iVar5 + 0x380);
+  lVar19 = 0x20;
+  pcVar13 = pcVar17;
+  pcVar8 = pcVar17;
+  do {
+    do {
+      cVar1 = *pcVar13;
+      pcVar13 = pcVar13 + 1;
+    } while (cVar1 != '\0');
+    if (pcVar15 < pcVar13 + (-1 - (int)pcVar8)) {
+      pcVar15 = pcVar13 + (-1 - (int)pcVar8);
+    }
+    pcVar13 = pcVar8 + 0x14;
+    lVar19 = lVar19 + -1;
+    pcVar8 = pcVar13;
+  } while (lVar19 != 0);
+  puVar18 = (uint *)(iVar5 + 8);
+  lVar19 = 0x20;
+  do {
+    if (*pcVar17 != '\0') {
+      iVar5 = Sys_GetValue(0);
+      Com_Printf(0x17,0xffffffff82151d20,pcVar15,pcVar17,
+                 (double)(*(float *)(iVar5 + 0x4ac0) * (float)*puVar18));
+    }
+    lVar19 = lVar19 + -1;
+    pcVar17 = pcVar17 + 0x14;
+    puVar18 = puVar18 + 3;
+  } while (lVar19 != 0);
+  Com_Printf(0x17,0xffffffff820044d8);
+  if (0 < iVar14) {
+    puVar18 = (uint *)(iVar4 + -0x18);
+    do {
+      iVar5 = Sys_GetValue(0);
+      dVar20 = (double)*(float *)(iVar5 + 0x4ac0);
+      iVar5 = Sys_GetValue(0);
+      Com_Printf(0x17,0xffffffff82151cfc,
+                 (double)(*(float *)(iVar5 + 0x4ac0) * (float)(longlong)(int)puVar18[9]),
+                 (double)(float)((double)(longlong)(int)puVar18[10] * dVar20),puVar18[0xb]);
+      puVar18 = puVar18 + 6;
+      Scr_PrintPrevCodePos(0x17,(ulonglong)*puVar18 + 1,1,1);
+      iVar14 = iVar14 + -1;
+    } while (iVar14 != 0);
+  }
+  Com_Printf(0x17,0xffffffff820044d8);
+  Z_VirtualFree(iVar4,0);
+  __restgprlr_20(1);
+  return;
 }
 
 
@@ -1203,7 +2186,6 @@ void CompileError(undefined8 param_1,char *param_2,undefined8 param_3,undefined8
     }
     else {
       if (DAT_8382d8d4 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151460,0x7f3,0,0xffffffff82000f98,0xffffffff82151bcc);
       }
       Com_PrintError(0x17,0xffffffff82151bc4,acStack_820);
@@ -1223,31 +2205,178 @@ void CompileError(undefined8 param_1,char *param_2,undefined8 param_3,undefined8
 
 // 8253C700  CompileError2  (script/scr_parser.cpp:2057)
 
-void CompileError2(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void CompileError2(undefined8 param_1,char *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char acStack_820 [1024];
+  undefined1 auStack_420 [1056];
+  
+  uVar1 = __savegprlr_29();
+  _vsnprintf(acStack_820,0x400,param_2,&stack0x00000020);
+  if (DAT_83c4ba98 != '\0') {
+    MyAssertHandler(0xffffffff82151460,0x815,0,0xffffffff82000f98,0xffffffff8214e7a8);
+  }
+  iVar2 = Scr_IsInOpcodeMemory(uVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x816,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  if (DAT_838fba0c != 0) {
+    *(undefined4 *)(DAT_838fba0c + 0x40004) = 1;
+  }
+  DAT_83c4ba8c = 0;
+  Com_PrintError(0x17,0xffffffff820044d8);
+  Com_PrintError(0x17,0xffffffff82151be4);
+  Com_PrintError(0x17,0xffffffff82151bc4,acStack_820);
+  Scr_PrintPrevCodePos(0x17,uVar1,0,1);
+  Com_Printf(0x17,0xffffffff82151b9c);
+  Scr_GetTextSourcePos(uVar1,auStack_420);
+  Com_Error(5,0xffffffff82151b64,acStack_820,auStack_420);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253C868  RuntimeErrorInternal  (script/scr_parser.cpp:2102)
 
-void RuntimeErrorInternal(void)
+void RuntimeErrorInternal
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined *puVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  int iVar6;
+  undefined4 *puVar7;
+  
+  uVar2 = __savegprlr_18();
+  iVar4 = Scr_IsInOpcodeMemory(param_2);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82151460,0x83b,0,0xffffffff82000f98,0xffffffff8214fa24);
+  }
+  Com_PrintError(uVar2,0xffffffff82151c58,param_4);
+  va(0xffffffff82151c2c,param_4);
+  LSP_LogStringEvenIfControllerIsInactive();
+  Scr_PrintPrevCodePos(uVar2,param_2,param_3,1);
+  if (DAT_83ca44a8 != 0) {
+    iVar4 = DAT_83ca44a8 + -1;
+    if (0 < iVar4) {
+      puVar7 = &DAT_83ca44c8 + iVar4 * 6;
+      do {
+        Com_PrintError(uVar2,0xffffffff82151c1c);
+        iVar6 = puVar7[1];
+        puVar1 = (undefined *)*puVar7;
+        uVar3 = 0xffffffff821519d0;
+        if (puVar1 == (undefined *)0x0) {
+LAB_8253ca44:
+          Com_PrintError(0,uVar3);
+        }
+        else {
+          if (puVar1 == &DAT_83ca8c50) {
+            uVar3 = 0xffffffff821519ac;
+            goto LAB_8253ca44;
+          }
+          if (DAT_83c4ba96 == '\0') {
+            iVar6 = Scr_IsInOpcodeMemory(puVar1 + -1);
+            if (iVar6 == 0) goto LAB_8253ca2c;
+            Com_PrintError(0,0xffffffff821519c8,(int)puVar1 - DAT_83c4baf4);
+          }
+          else if ((DAT_83c4baf4 == 0) || (iVar5 = Scr_IsInOpcodeMemory(puVar1), iVar5 == 0)) {
+LAB_8253ca2c:
+            Com_PrintError(0,0xffffffff821519c0,puVar1);
+          }
+          else {
+            iVar5 = Scr_GetSourceBuffer(puVar1 + -1);
+            iVar5 = iVar5 * 0x2c + DAT_8382d8c8;
+            uVar3 = Scr_GetPrevSourcePos(puVar1 + -1,iVar6 == 0);
+            Scr_PrintSourcePos(0,*(undefined4 *)(iVar5 + 4),*(undefined4 *)(iVar5 + 8),uVar3,1);
+          }
+        }
+        iVar4 = iVar4 + -1;
+        puVar7 = puVar7 + -6;
+      } while (iVar4 != 0);
+    }
+    Com_PrintError(uVar2,0xffffffff82151c0c);
+    Scr_PrintPrevCodePos(0,DAT_83ca44c8,1,1);
+  }
+  DAT_83667304 = 0;
+  Com_PrintError(uVar2,0xffffffff82151b9c);
+  __restgprlr_18();
+  return;
 }
 
 
 // 8253CAA0  RuntimeError  (script/scr_parser.cpp:2141)
 
-void RuntimeError(void)
+void RuntimeError(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar4;
+  longlong lVar3;
+  ulonglong uVar5;
+  bool bVar6;
+  byte bVar7;
+  
+  uVar2 = __savegprlr_26();
+  cVar1 = DAT_83ca44b6;
+  if (DAT_83c4ba96 == '\0') {
+    iVar4 = Scr_IsInOpcodeMemory();
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82151460,0x869,0,0xffffffff82000f98,0xffffffff8214fa24);
+    }
+    if (cVar1 == '\0') goto LAB_8253cc2c;
+  }
+  if (DAT_83ca44b4 == '\0') {
+    if ((DAT_83ca44b5 != '\0') || (bVar7 = 0, cVar1 != '\0')) {
+      bVar7 = 1;
+    }
+    lVar3 = Scr_IgnoreErrors();
+    bVar6 = (bool)(lVar3 == 0 & bVar7);
+    uVar5 = -(ulonglong)bVar6;
+    RuntimeErrorInternal(((uVar5 & 0x1f) << 0x20 | uVar5 & 0x11) + 6,uVar2,param_2,param_3);
+    if (!bVar6) goto LAB_8253cc2c;
+  }
+  else {
+    Com_Printf(0x17,0xffffffff82004d30,param_3);
+    if (cVar1 == '\0') {
+      __restgprlr_26();
+      return;
+    }
+  }
+  if (cVar1 != '\0') {
+    if (DAT_838fba0c != 0) {
+      *(undefined4 *)(DAT_838fba0c + 0x40004) = 1;
+    }
+    DAT_83c4ba8c = 0;
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    uVar5 = 0xffffffff820068af;
+    param_4 = uVar5;
+  }
+  else {
+    uVar5 = 0xffffffff820044d8;
+  }
+  Com_Error((cVar1 != '\0') + '\x04',0xffffffff82151c84,param_3,uVar5,param_4);
+LAB_8253cc2c:
+  __restgprlr_26();
+  return;
+}
+
+
+// 8253CC38  Scr_SetLoadedImpureScript  (script/scr_parser.cpp:2201)
+
+void Scr_SetLoadedImpureScript(undefined1 param_1)
+
+{
+  DAT_8382d8bc = param_1;
+  return;
 }
 
 
@@ -1262,14 +2391,13 @@ undefined1 Scr_LoadedImpureScript(void)
 
 // 8253CC58  Scr_GetSourceBufferLookup  (script/scr_parser.cpp:2215)
 
-void Scr_GetSourceBufferLookup(void)
+int Scr_GetSourceBufferLookup(void)
 
 {
   if (DAT_8382d8c8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151460,0x8a9,0,0xffffffff82000f98,0xffffffff821517d0);
   }
-  return;
+  return DAT_8382d8c8;
 }
 
 
@@ -1503,6 +2631,66 @@ void std___Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLoo
 }
 
 
+// 8253D9A8  std::_Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+
+void std___Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  char cVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  undefined4 local_50 [20];
+  
+  lVar4 = __savegprlr_24();
+  iVar2 = (int)lVar4;
+  uVar1 = param_2 - iVar2 >> 2;
+  uVar9 = (longlong)(param_2 - iVar2 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar9) {
+    uVar7 = (uVar9 + 1 & 0x7fffffff) << 1;
+    lVar6 = (uVar9 & 0x3fffffff) * 4 + lVar4;
+    do {
+      lVar6 = lVar6 + -4;
+      local_50[0] = *(undefined4 *)lVar6;
+      uVar7 = uVar7 - 2;
+      uVar9 = uVar9 - 1;
+      iVar8 = (int)uVar7;
+      uVar12 = uVar7;
+      uVar10 = uVar9;
+      while (uVar11 = uVar12, iVar8 < (int)uVar1) {
+        puVar3 = (undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
+        cVar5 = (*(code *)param_3)(*puVar3,puVar3[-1]);
+        if (cVar5 != '\0') {
+          uVar11 = uVar11 - 1;
+        }
+        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar2) =
+             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
+        iVar8 = (int)uVar12;
+        uVar10 = uVar11;
+      }
+      if ((uint)uVar11 == uVar1) {
+        uVar12 = uVar10 & 0xffffffff;
+        uVar10 = (longlong)(int)uVar1 - 1;
+        *(undefined4 *)((int)(uVar12 << 2) + iVar2) = *(undefined4 *)(uVar1 * 4 + iVar2 + -4);
+      }
+      std___Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>(lVar4,uVar10,uVar9,local_50,param_3);
+    } while (0 < (int)uVar9);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
 // 8253DB78  std::_Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
 void std___Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
@@ -1592,22 +2780,132 @@ void std___Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLooku
 
 // 8253E8A8  std::_Sort_heap<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<int_*,bool_(__cdecl*)(int,int)>(void)
+void std___Sort_heap<int_*,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  undefined4 local_30 [12];
+  
+  lVar3 = __savegprlr_28();
+  param_2 = param_2 - lVar3;
+  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
+    puVar2 = (undefined4 *)lVar3;
+    do {
+      iVar1 = (int)param_2;
+      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
+      param_2 = param_2 + -4;
+      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
+      std___Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
+                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253E918  std::_Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
 void std___Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  undefined4 uStack_44;
+  undefined1 local_40 [64];
+  
+  lVar1 = __savegprlr_28();
+  lVar4 = param_2 - lVar1;
+  if (1 < (int)lVar4 / 0x18) {
+    param_2 = param_2 + -0x18;
+    do {
+      puVar2 = &uStack_44;
+      lVar3 = param_2 + -4;
+      lVar5 = 6;
+      do {
+        lVar3 = lVar3 + 4;
+        puVar2 = puVar2 + 1;
+        *puVar2 = *(undefined4 *)lVar3;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      lVar3 = lVar1 + -4;
+      lVar5 = param_2 + -4;
+      lVar6 = 6;
+      do {
+        lVar3 = lVar3 + 4;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *(undefined4 *)lVar3;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      std___Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+                (lVar1,0,((int)lVar4 + -0x18) / 0x18,local_40,param_3);
+      param_2 = param_2 + -0x18;
+      lVar4 = (param_2 - lVar1) + 0x18;
+    } while (1 < (int)lVar4 / 0x18);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 8253DA98  std::_Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+
+void std___Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>
+               (undefined8 param_1,ulonglong param_2,code *param_3)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *_Src;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char cVar8;
+  void *pvVar7;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  
+  uVar6 = __savegprlr_24();
+  if (((uVar6 & 0xffffffff) != (param_2 & 0xffffffff)) &&
+     (uVar9 = uVar6 + 4, (uVar9 & 0xffffffff) != (param_2 & 0xffffffff))) {
+    _Src = (undefined4 *)uVar6;
+    do {
+      puVar10 = (undefined4 *)uVar9;
+      uVar1 = *puVar10;
+      cVar8 = (*param_3)(uVar1,*_Src);
+      if (cVar8 == '\0') {
+        uVar6 = (*param_3)(uVar1,puVar10[-1]);
+        uVar5 = uVar9 - 4;
+        uVar4 = uVar9;
+        while (uVar3 = uVar5, (uVar6 & 0xff) != 0) {
+          puVar10 = (undefined4 *)uVar3;
+          *(undefined4 *)uVar4 = *puVar10;
+          uVar6 = (*param_3)(uVar1,*(undefined4 *)(uVar3 - 4));
+          uVar5 = uVar3 - 4;
+          uVar4 = uVar3;
+        }
+        *puVar10 = uVar1;
+      }
+      else {
+        iVar2 = (int)puVar10 - (int)_Src >> 2;
+        pvVar7 = memmove(puVar10 + (1 - iVar2),_Src,iVar2 * 4);
+        uVar6 = (ulonglong)(int)pvVar7;
+        *_Src = uVar1;
+      }
+      uVar9 = uVar9 + 4;
+    } while ((uVar9 & 0xffffffff) != (param_2 & 0xffffffff));
+  }
+  __restgprlr_24(uVar6);
+  return;
 }
 
 
@@ -1711,62 +3009,737 @@ void std___Insertion_sort1<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,O
 
 // 8253DCE0  std::_Med3<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<int_*,bool_(__cdecl*)(int,int)>(void)
+void std___Med3<int_*,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  char cVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  cVar3 = (*param_4)(*param_2,*puVar2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_2;
+    *param_2 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  cVar3 = (*param_4)(*param_3,*param_2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_3;
+    *param_3 = *param_2;
+    *param_2 = uVar1;
+  }
+  cVar3 = (*param_4)(*param_2,*puVar2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_2;
+    *param_2 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253DD88  std::_Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>(void)
+void std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 uStack_44;
+  undefined4 local_40 [16];
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined4 *)(iVar1 + -4);
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 4;
+      *(undefined4 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_44;
+    puVar3 = (undefined4 *)(iVar1 + -4);
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  cVar2 = (*param_4)(param_3,param_2);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_3 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar4 = param_2 + -4;
+    param_3 = param_3 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      param_3 = param_3 + 4;
+      *(undefined4 *)param_3 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 4;
+      *(undefined4 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined4 *)(iVar1 + -4);
+    param_2 = param_2 + -4;
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      param_2 = param_2 + 4;
+      *(undefined4 *)param_2 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    puVar5 = &uStack_44;
+    puVar3 = (undefined4 *)(iVar1 + -4);
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 8253DF00  std::_Median<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+
+void std___Median<int_*,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x3fffffff;
+    uVar4 = uVar4 & 0x1fffffff;
+    lVar6 = uVar2 * 4 + lVar3;
+    std___Med3<int_*,bool_(__cdecl*)(int,int)>(lVar3,lVar6,uVar4 * 8 + lVar3);
+    std___Med3<int_*,bool_(__cdecl*)(int,int)>
+              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -4;
+    std___Med3<int_*,bool_(__cdecl*)(int,int)>(param_3 + uVar4 * -8,lVar3,param_3,param_4);
+    std___Med3<int_*,bool_(__cdecl*)(int,int)>(lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<int_*,bool_(__cdecl*)(int,int)>(lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8253DFA8  std::_Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>(void)
+void std___Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar3) / 0x18;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff;
+    uVar4 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xfffffff;
+    lVar6 = uVar2 * 8 + lVar3;
+    std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
+    std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -8;
+    std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
+    std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8253E1C0  std::_Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>(void)
+void std___Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  char cVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  undefined4 *puVar13;
+  undefined4 *puVar14;
+  
+  puVar4 = (undefined4 *)__savegprlr_23();
+  iVar6 = (int)param_3 - (int)param_2;
+  uVar3 = iVar6 >> 2;
+  uVar12 = ((longlong)(iVar6 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff) *
+           4 + param_2;
+  std___Median<int_*,bool_(__cdecl*)(int,int)>(param_2,uVar12,param_3 - 4);
+  uVar7 = uVar12 + 4;
+  if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+    do {
+      puVar13 = (undefined4 *)uVar12;
+      uVar10 = uVar12 - 4;
+      cVar5 = (*param_4)(puVar13[-1],*puVar13);
+      if ((cVar5 != '\0') || (cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10), cVar5 != '\0'))
+      break;
+      uVar12 = uVar10;
+    } while ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff));
+  }
+  uVar9 = uVar7;
+  uVar10 = uVar12;
+  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar5 = (*param_4)(*(undefined4 *)uVar7,*(undefined4 *)uVar12);
+      uVar9 = uVar7;
+      if ((cVar5 != '\0') ||
+         (cVar5 = (*param_4)(*(undefined4 *)uVar12,*(undefined4 *)uVar7), cVar5 != '\0')) break;
+      uVar7 = uVar7 + 4;
+      uVar9 = uVar7;
+    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar11 = uVar7;
+    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        puVar13 = (undefined4 *)uVar9;
+        cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
+        uVar7 = uVar11;
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10);
+          if (cVar5 != '\0') break;
+          uVar7 = uVar11 + 4;
+          uVar2 = *(undefined4 *)uVar11;
+          *(undefined4 *)uVar11 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar9 = uVar9 + 4;
+        uVar11 = uVar7;
+      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+    if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+      do {
+        uVar11 = uVar12 - 4;
+        cVar5 = (*param_4)(*(undefined4 *)((int)uVar12 + -4),*(undefined4 *)uVar10);
+        puVar13 = (undefined4 *)uVar11;
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
+          if (cVar5 != '\0') break;
+          uVar10 = uVar10 - 4;
+          uVar2 = *(undefined4 *)uVar10;
+          *(undefined4 *)uVar10 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar12 = uVar11;
+      } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
+      bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar13 = (undefined4 *)uVar9;
+    if (bVar1) {
+      puVar8 = (undefined4 *)uVar7;
+      puVar14 = (undefined4 *)uVar10;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar4 = puVar14;
+        puVar4[1] = puVar8;
+        __restgprlr_23(puVar4);
+        return;
+      }
+      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+        uVar2 = *puVar14;
+        *puVar14 = *puVar8;
+        *puVar8 = uVar2;
+      }
+      uVar7 = uVar7 + 4;
+      uVar2 = *puVar14;
+      *puVar14 = *puVar13;
+      *puVar13 = uVar2;
+      uVar9 = uVar9 + 4;
+      uVar10 = uVar10 + 4;
+    }
+    else {
+      uVar12 = uVar12 - 4;
+      puVar8 = (undefined4 *)uVar12;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar10 = uVar10 - 4;
+        puVar13 = (undefined4 *)uVar10;
+        if ((uVar12 & 0xffffffff) != (uVar10 & 0xffffffff)) {
+          uVar2 = *puVar8;
+          *puVar8 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar7 = uVar7 - 4;
+        uVar2 = *puVar13;
+        *puVar13 = *(undefined4 *)uVar7;
+        *(undefined4 *)uVar7 = uVar2;
+      }
+      else {
+        uVar2 = *puVar13;
+        *puVar13 = *puVar8;
+        *puVar8 = uVar2;
+        uVar9 = uVar9 + 4;
+      }
+    }
+  } while( true );
 }
 
 
 // 8253E430  std::_Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  undefined4 uStack_134;
+  undefined4 local_130 [7];
+  undefined4 uStack_114;
+  undefined4 local_110 [7];
+  undefined4 uStack_f4;
+  undefined4 local_f0 [7];
+  undefined4 uStack_d4;
+  undefined4 local_d0 [7];
+  undefined4 uStack_b4;
+  undefined4 local_b0 [7];
+  undefined4 uStack_94;
+  undefined4 local_90 [7];
+  undefined4 uStack_74;
+  undefined4 local_70 [28];
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  uVar2 = ((int)param_3 - (int)param_2) / 0x18;
+  uVar6 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  uVar13 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + param_2;
+  std___Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
+            (param_2,uVar13,param_3 - 0x18);
+  uVar6 = uVar13 + 0x18;
+  if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+    do {
+      uVar14 = uVar13 - 0x18;
+      cVar4 = (*param_4)(uVar14,uVar13);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar14), cVar4 != '\0')) break;
+      uVar13 = uVar14;
+    } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+  }
+  uVar14 = uVar13;
+  uVar10 = uVar6;
+  if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar4 = (*param_4)(uVar6,uVar13);
+      uVar10 = uVar6;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar6), cVar4 != '\0')) break;
+      uVar6 = uVar6 + 0x18;
+      uVar10 = uVar6;
+    } while ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar9 = uVar6;
+    uVar11 = uVar10;
+    if ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar4 = (*param_4)(uVar13,uVar10);
+        uVar9 = uVar6;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar10,uVar13);
+          uVar11 = uVar10;
+          if (cVar4 != '\0') break;
+          puVar8 = &uStack_114;
+          uVar9 = uVar6 + 0x18;
+          lVar5 = uVar6 - 4;
+          lVar15 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined4 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar10 - 4;
+          lVar15 = uVar6 - 4;
+          lVar16 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            lVar15 = lVar15 + 4;
+            *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar8 = &uStack_114;
+          lVar5 = uVar10 - 4;
+          lVar15 = 6;
+          do {
+            puVar8 = puVar8 + 1;
+            lVar5 = lVar5 + 4;
+            *(undefined4 *)lVar5 = *puVar8;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar10 = uVar10 + 0x18;
+        uVar6 = uVar9;
+        uVar11 = uVar10;
+      } while ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar12 = uVar13;
+    uVar6 = uVar14;
+    if ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+      do {
+        uVar10 = uVar6 - 0x18;
+        cVar4 = (*param_4)(uVar10,uVar13);
+        uVar12 = uVar13;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar13,uVar10);
+          if (cVar4 != '\0') break;
+          uVar12 = uVar13 - 0x18;
+          puVar8 = &uStack_94;
+          lVar5 = uVar13 - 0x1c;
+          lVar15 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined4 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar6 - 0x1c;
+          lVar15 = uVar13 - 0x1c;
+          lVar16 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            lVar15 = lVar15 + 4;
+            *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar8 = &uStack_94;
+          lVar5 = uVar6 - 0x1c;
+          lVar15 = 6;
+          do {
+            puVar8 = puVar8 + 1;
+            lVar5 = lVar5 + 4;
+            *(undefined4 *)lVar5 = *puVar8;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar14 = uVar14 - 0x18;
+        uVar13 = uVar12;
+        uVar6 = uVar10;
+      } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+      bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    if (bVar1) {
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = (int)uVar12;
+        puVar3[1] = (int)uVar9;
+        __restgprlr_23(puVar3);
+        return;
+      }
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        puVar8 = &uStack_d4;
+        lVar5 = uVar12 - 4;
+        lVar15 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined4 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar9 - 4;
+        lVar15 = uVar12 - 4;
+        lVar16 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          lVar15 = lVar15 + 4;
+          *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar8 = &uStack_d4;
+        lVar5 = uVar9 - 4;
+        lVar15 = 6;
+        do {
+          puVar8 = puVar8 + 1;
+          lVar5 = lVar5 + 4;
+          *(undefined4 *)lVar5 = *puVar8;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      puVar8 = &uStack_134;
+      uVar6 = uVar9 + 0x18;
+      lVar15 = 6;
+      uVar13 = uVar12 + 0x18;
+      uVar10 = uVar11 + 0x18;
+      lVar5 = uVar12 - 4;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar11 - 4;
+      lVar15 = uVar12 - 4;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_134;
+      lVar5 = uVar11 - 4;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+    }
+    else if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+      uVar7 = uVar14 - 0x18;
+      uVar13 = uVar12 - 0x18;
+      if ((uVar7 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+        puVar8 = &uStack_f4;
+        lVar5 = uVar14 - 0x1c;
+        lVar15 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined4 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar12 - 0x1c;
+        lVar15 = uVar14 - 0x1c;
+        lVar16 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          lVar15 = lVar15 + 4;
+          *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar8 = &uStack_f4;
+        lVar5 = uVar12 - 0x1c;
+        lVar15 = 6;
+        do {
+          puVar8 = puVar8 + 1;
+          lVar5 = lVar5 + 4;
+          *(undefined4 *)lVar5 = *puVar8;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      uVar6 = uVar9 - 0x18;
+      puVar8 = &uStack_b4;
+      lVar5 = uVar12 - 0x1c;
+      lVar15 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar9 - 0x1c;
+      lVar15 = uVar12 - 0x1c;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_b4;
+      lVar5 = uVar9 - 0x1c;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+        uVar14 = uVar7;
+        uVar10 = uVar11;
+      } while (lVar15 != 0);
+    }
+    else {
+      puVar8 = &uStack_74;
+      lVar5 = uVar11 - 4;
+      lVar15 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar14 - 0x1c;
+      lVar15 = uVar11 - 4;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_74;
+      lVar5 = uVar14 - 0x1c;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      uVar14 = uVar14 - 0x18;
+      uVar6 = uVar9;
+      uVar10 = uVar11 + 0x18;
+      uVar13 = uVar12;
+    }
+  } while( true );
 }
 
 
 // 8253E9B8  std::_Sort<int_*,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<int_*,int,bool_(__cdecl*)(int,int)>(void)
+void std___Sort<int_*,int,bool_(__cdecl*)(int,int)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
+LAB_8253ea70:
+      if (1 < iVar2) {
+        std___Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>(uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>(uVar1,param_2,param_4,0,0);
+        }
+        std___Sort_heap<int_*,bool_(__cdecl*)(int,int)>(uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_8253ea70;
+    }
+    std___Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>(&local_40,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
+      std___Sort<int_*,int,bool_(__cdecl*)(int,int)>(uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<int_*,int,bool_(__cdecl*)(int,int)>(uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 
 

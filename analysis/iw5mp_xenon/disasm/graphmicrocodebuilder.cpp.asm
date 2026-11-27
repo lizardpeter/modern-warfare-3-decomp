@@ -28,6 +28,73 @@ LAB_8289d11c:
 ; 8289D138  D3D::CArena::Alloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:38)
   8289D138  7D8802A6             mfspr r12,LR
   8289D13C  48079581             bl 0x829166bc
+  8289D140  9421FF90             stwu r1,-0x70(r1)
+  8289D144  7C7F1B78             or r31,r3,r3
+  8289D148  7C9E2378             or r30,r4,r4
+  8289D14C  7DAD6B78             or r13,r13,r13
+  8289D150  397E000F             addi r11,r30,0xf
+  8289D154  815F0008             lwz r10,0x8(r31)
+  8289D158  557D0036             rlwinm r29,r11,0x0,0x0,0x1b
+  8289D15C  7F0AE840             cmplw cr6,r10,r29
+  8289D160  40980054             bge cr6,0x8289d1b4
+  8289D164  3BDD0010             addi r30,r29,0x10
+  8289D168  2B1EFE70             cmplwi cr6,r30,0xfe70
+  8289D16C  4098000C             bge cr6,0x8289d178
+  8289D170  3FC00000             lis r30,0x0
+  8289D174  63DEFE70             ori r30,r30,0xfe70
+LAB_8289d178:
+  8289D178  3C806480             lis r4,0x6480
+  8289D17C  7FC3F378             or r3,r30,r30
+  8289D180  4BD69A69             bl 0x82606be8
+  8289D184  28030000             cmplwi r3,0x0
+  8289D188  40820010             bne 0x8289d198
+  8289D18C  7DCE7378             or r14,r14,r14
+  8289D190  38600000             li r3,0x0
+  8289D194  48000040             b 0x8289d1d4
+LAB_8289d198:
+  8289D198  817F0000             lwz r11,0x0(r31)
+  8289D19C  39430010             addi r10,r3,0x10
+  8289D1A0  393EFFF0             subi r9,r30,0x10
+  8289D1A4  91630000             stw r11,0x0(r3)
+  8289D1A8  907F0000             stw r3,0x0(r31)
+  8289D1AC  915F0004             stw r10,0x4(r31)
+  8289D1B0  913F0008             stw r9,0x8(r31)
+LAB_8289d1b4:
+  8289D1B4  83DF0004             lwz r30,0x4(r31)
+  8289D1B8  817F0008             lwz r11,0x8(r31)
+  8289D1BC  7D5EEA14             add r10,r30,r29
+  8289D1C0  7D7D5850             subf r11,r29,r11
+  8289D1C4  915F0004             stw r10,0x4(r31)
+  8289D1C8  917F0008             stw r11,0x8(r31)
+  8289D1CC  7DCE7378             or r14,r14,r14
+  8289D1D0  7FC3F378             or r3,r30,r30
+LAB_8289d1d4:
+  8289D1D4  38210070             addi r1,r1,0x70
+  8289D1D8  48079534             b 0x8291670c
+
+; 8289CF50  D3D::FlowNode::GetLastChild  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:62)
+  8289CF50  7D8802A6             mfspr r12,LR
+  8289CF54  9181FFF8             stw r12,-0x8(r1)
+  8289CF58  FBE1FFF0             std r31,-0x10(r1)
+  8289CF5C  9421FFA0             stwu r1,-0x60(r1)
+  8289CF60  7C7F1B78             or r31,r3,r3
+  8289CF64  7DAD6B78             or r13,r13,r13
+  8289CF68  817F0010             lwz r11,0x10(r31)
+  8289CF6C  3BE00000             li r31,0x0
+  8289CF70  4800000C             b 0x8289cf7c
+LAB_8289cf74:
+  8289CF74  7D7F5B78             or r31,r11,r11
+  8289CF78  816B0000             lwz r11,0x0(r11)
+LAB_8289cf7c:
+  8289CF7C  2B0B0000             cmplwi cr6,r11,0x0
+  8289CF80  409AFFF4             bne cr6,0x8289cf74
+  8289CF84  7DCE7378             or r14,r14,r14
+  8289CF88  7FE3FB78             or r3,r31,r31
+  8289CF8C  38210060             addi r1,r1,0x60
+  8289CF90  8181FFF8             lwz r12,-0x8(r1)
+  8289CF94  7D8803A6             mtspr LR,r12
+  8289CF98  EBE1FFF0             ld r31,-0x10(r1)
+  8289CF9C  4E800020             blr
 
 ; 8289D1E0  D3D::GraphMicrocodeBuilder::GraphMicrocodeBuilder  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:97)
   8289D1E0  7D8802A6             mfspr r12,LR
@@ -85,17 +152,237 @@ LAB_8289d11c:
   8289D2A4  EBE1FFF0             ld r31,-0x10(r1)
   8289D2A8  4E800020             blr
 
+; 8289D2B0  D3D::GraphMicrocodeBuilder::NewFlowNode  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:112)
+  8289D2B0  7D8802A6             mfspr r12,LR
+  8289D2B4  9181FFF8             stw r12,-0x8(r1)
+  8289D2B8  FBE1FFF0             std r31,-0x10(r1)
+  8289D2BC  9421FFA0             stwu r1,-0x60(r1)
+  8289D2C0  7C7F1B78             or r31,r3,r3
+  8289D2C4  7DAD6B78             or r13,r13,r13
+  8289D2C8  38800018             li r4,0x18
+  8289D2CC  7FE3FB78             or r3,r31,r31
+  8289D2D0  4BFFFE69             bl 0x8289d138
+  8289D2D4  7C7F1B78             or r31,r3,r3
+  8289D2D8  7DCE7378             or r14,r14,r14
+  8289D2DC  7FE3FB78             or r3,r31,r31
+  8289D2E0  38210060             addi r1,r1,0x60
+  8289D2E4  8181FFF8             lwz r12,-0x8(r1)
+  8289D2E8  7D8803A6             mtspr LR,r12
+  8289D2EC  EBE1FFF0             ld r31,-0x10(r1)
+  8289D2F0  4E800020             blr
+
 ; 8289DB88  D3D::GMB_CSG_Callback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:135)
   8289DB88  7D8802A6             mfspr r12,LR
   8289DB8C  48078B29             bl 0x829166b4
+  8289DB90  9421FF70             stwu r1,-0x90(r1)
+  8289DB94  7C7E1B78             or r30,r3,r3
+  8289DB98  7C9C2378             or r28,r4,r4
+  8289DB9C  7CBD2B78             or r29,r5,r5
+  8289DBA0  7CDF3378             or r31,r6,r6
+  8289DBA4  7DAD6B78             or r13,r13,r13
+  8289DBA8  3B600000             li r27,0x0
+  8289DBAC  57CB0673             rlwinm. r11,r30,0x0,0x19,0x19
+  8289DBB0  93610050             stw r27,0x50(r1)
+  8289DBB4  4182000C             beq 0x8289dbc0
+  8289DBB8  3B60F002             li r27,-0xffe
+  8289DBBC  48000114             b 0x8289dcd0
+LAB_8289dbc0:
+  8289DBC0  807F0018             lwz r3,0x18(r31)
+  8289DBC4  57CB07FF             rlwinm. r11,r30,0x0,0x1f,0x1f
+  8289DBC8  41820088             beq 0x8289dc50
+  8289DBCC  4BFFF6E5             bl 0x8289d2b0
+  8289DBD0  7C7E1B79             or. r30,r3,r3
+  8289DBD4  40820010             bne 0x8289dbe4
+  8289DBD8  3F608007             lis r27,-0x7ff9
+  8289DBDC  637B000E             ori r27,r27,0xe
+  8289DBE0  480000F0             b 0x8289dcd0
+LAB_8289dbe4:
+  8289DBE4  817F0000             lwz r11,0x0(r31)
+  8289DBE8  2B0B0000             cmplwi cr6,r11,0x0
+  8289DBEC  409A000C             bne cr6,0x8289dbf8
+  8289DBF0  93DF0000             stw r30,0x0(r31)
+  8289DBF4  4800000C             b 0x8289dc00
+LAB_8289dbf8:
+  8289DBF8  817F0004             lwz r11,0x4(r31)
+  8289DBFC  93CB0000             stw r30,0x0(r11)
+LAB_8289dc00:
+  8289DC00  93DF0004             stw r30,0x4(r31)
+  8289DC04  817D0000             lwz r11,0x0(r29)
+  8289DC08  917E0004             stw r11,0x4(r30)
+  8289DC0C  817D0004             lwz r11,0x4(r29)
+  8289DC10  917E0008             stw r11,0x8(r30)
+  8289DC14  817F0010             lwz r11,0x10(r31)
+  8289DC18  937F0008             stw r27,0x8(r31)
+  8289DC1C  7F1C5840             cmplw cr6,r28,r11
+  8289DC20  41980020             blt cr6,0x8289dc40
+  8289DC24  38A10050             addi r5,r1,0x50
+  8289DC28  389C0001             addi r4,r28,0x1
+  8289DC2C  387F000C             addi r3,r31,0xc
+  8289DC30  4BFFFF01             bl 0x8289db30
+  8289DC34  83610050             lwz r27,0x50(r1)
+  8289DC38  2F1B0000             cmpwi cr6,r27,0x0
+  8289DC3C  41980094             blt cr6,0x8289dcd0
+LAB_8289dc40:
+  8289DC40  817F000C             lwz r11,0xc(r31)
+  8289DC44  578A103A             rlwinm r10,r28,0x2,0x0,0x1d
+  8289DC48  7FCA592E             stwx r30,r10,r11
+  8289DC4C  48000084             b 0x8289dcd0
+LAB_8289dc50:
+  8289DC50  4BFFF619             bl 0x8289d268
+  8289DC54  28030000             cmplwi r3,0x0
+  8289DC58  40820014             bne 0x8289dc6c
+  8289DC5C  7DCE7378             or r14,r14,r14
+  8289DC60  3C608007             lis r3,-0x7ff9
+  8289DC64  6063000E             ori r3,r3,0xe
+  8289DC68  48000070             b 0x8289dcd8
+LAB_8289dc6c:
+  8289DC6C  81630010             lwz r11,0x10(r3)
+  8289DC70  57C9DFFE             rlwinm r9,r30,0x1b,0x1f,0x1f
+  8289DC74  57CAEFBC             rlwinm r10,r30,0x1d,0x1e,0x1e
+  8289DC78  811D0000             lwz r8,0x0(r29)
+  8289DC7C  556B00FE             rlwinm r11,r11,0x0,0x3,0x1f
+  8289DC80  57C7F000             rlwinm r7,r30,0x1e,0x0,0x0
+  8289DC84  7D4A4B78             or r10,r10,r9
+  8289DC88  7CEB5B78             or r11,r7,r11
+  8289DC8C  554AE804             rlwinm r10,r10,0x1d,0x0,0x2
+  8289DC90  91030004             stw r8,0x4(r3)
+  8289DC94  556B00C0             rlwinm r11,r11,0x0,0x3,0x0
+  8289DC98  813D0004             lwz r9,0x4(r29)
+  8289DC9C  91230008             stw r9,0x8(r3)
+  8289DCA0  7D4B5B78             or r11,r10,r11
+  8289DCA4  815D0008             lwz r10,0x8(r29)
+  8289DCA8  9143000C             stw r10,0xc(r3)
+  8289DCAC  91630010             stw r11,0x10(r3)
+  8289DCB0  817F0008             lwz r11,0x8(r31)
+  8289DCB4  2B0B0000             cmplwi cr6,r11,0x0
+  8289DCB8  419A000C             beq cr6,0x8289dcc4
+  8289DCBC  906B0000             stw r3,0x0(r11)
+  8289DCC0  4800000C             b 0x8289dccc
+LAB_8289dcc4:
+  8289DCC4  817F0004             lwz r11,0x4(r31)
+  8289DCC8  906B0010             stw r3,0x10(r11)
+LAB_8289dccc:
+  8289DCCC  907F0008             stw r3,0x8(r31)
+LAB_8289dcd0:
+  8289DCD0  7DCE7378             or r14,r14,r14
+  8289DCD4  7F63DB78             or r3,r27,r27
+LAB_8289dcd8:
+  8289DCD8  38210090             addi r1,r1,0x90
+  8289DCDC  48078A28             b 0x82916704
 
 ; 8289DCE0  D3D::GraphMicrocodeBuilder::ConvertShaderToGraph  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:197)
   8289DCE0  7D8802A6             mfspr r12,LR
   8289DCE4  480789D9             bl 0x829166bc
+  8289DCE8  9421FF60             stwu r1,-0xa0(r1)
+  8289DCEC  7C7F1B78             or r31,r3,r3
+  8289DCF0  7C9E2378             or r30,r4,r4
+  8289DCF4  7CBD2B78             or r29,r5,r5
+  8289DCF8  7DAD6B78             or r13,r13,r13
+  8289DCFC  38610060             addi r3,r1,0x60
+  8289DD00  93E10078             stw r31,0x78(r1)
+  8289DD04  3D40828A             lis r10,-0x7d76
+  8289DD08  39600000             li r11,0x0
+  8289DD0C  90610054             stw r3,0x54(r1)
+  8289DD10  394ADB88             subi r10,r10,0x2478
+  8289DD14  39200027             li r9,0x27
+  8289DD18  9161006C             stw r11,0x6c(r1)
+  8289DD1C  39000000             li r8,0x0
+  8289DD20  91610070             stw r11,0x70(r1)
+  8289DD24  38E00000             li r7,0x0
+  8289DD28  91610074             stw r11,0x74(r1)
+  8289DD2C  38C00000             li r6,0x0
+  8289DD30  91610060             stw r11,0x60(r1)
+  8289DD34  38A00000             li r5,0x0
+  8289DD38  91610064             stw r11,0x64(r1)
+  8289DD3C  7FA4EB78             or r4,r29,r29
+  8289DD40  91610068             stw r11,0x68(r1)
+  8289DD44  7FC3F378             or r3,r30,r30
+  8289DD48  4BFCBCE1             bl 0x82869a28
+  8289DD4C  7C7E1B79             or. r30,r3,r3
+  8289DD50  4180005C             blt 0x8289ddac
+  8289DD54  81610060             lwz r11,0x60(r1)
+  8289DD58  2B0B0000             cmplwi cr6,r11,0x0
+  8289DD5C  419A0044             beq cr6,0x8289dda0
+LAB_8289dd60:
+  8289DD60  814B0008             lwz r10,0x8(r11)
+  8289DD64  39200001             li r9,0x1
+  8289DD68  554AA73E             rlwinm r10,r10,0x14,0x1c,0x1f
+  8289DD6C  7D2A5030             slw r10,r9,r10
+  8289DD70  714A0B80             andi. r10,r10,0xb80
+  8289DD74  280A0000             cmplwi r10,0x0
+  8289DD78  41820018             beq 0x8289dd90
+  8289DD7C  814B0004             lwz r10,0x4(r11)
+  8289DD80  8121006C             lwz r9,0x6c(r1)
+  8289DD84  554A147A             rlwinm r10,r10,0x2,0x11,0x1d
+  8289DD88  7D4A482E             lwzx r10,r10,r9
+  8289DD8C  914B000C             stw r10,0xc(r11)
+LAB_8289dd90:
+  8289DD90  816B0000             lwz r11,0x0(r11)
+  8289DD94  2B0B0000             cmplwi cr6,r11,0x0
+  8289DD98  409AFFC8             bne cr6,0x8289dd60
+  8289DD9C  81610060             lwz r11,0x60(r1)
+LAB_8289dda0:
+  8289DDA0  81410064             lwz r10,0x64(r1)
+  8289DDA4  917F000C             stw r11,0xc(r31)
+  8289DDA8  915F0010             stw r10,0x10(r31)
+LAB_8289ddac:
+  8289DDAC  8061006C             lwz r3,0x6c(r1)
+  8289DDB0  2B030000             cmplwi cr6,r3,0x0
+  8289DDB4  419A000C             beq cr6,0x8289ddc0
+  8289DDB8  3C802480             lis r4,0x2480
+  8289DDBC  4BD696BD             bl 0x82607478
+LAB_8289ddc0:
+  8289DDC0  7DCE7378             or r14,r14,r14
+  8289DDC4  7FC3F378             or r3,r30,r30
+  8289DDC8  382100A0             addi r1,r1,0xa0
+  8289DDCC  48078940             b 0x8291670c
 
 ; 8289CFA0  D3D::GetShaderSize_Imp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:233)
   8289CFA0  7D8802A6             mfspr r12,LR
   8289CFA4  48079719             bl 0x829166bc
+  8289CFA8  9421FF90             stwu r1,-0x70(r1)
+  8289CFAC  7C7F1B78             or r31,r3,r3
+  8289CFB0  7C9E2378             or r30,r4,r4
+  8289CFB4  7CBD2B78             or r29,r5,r5
+  8289CFB8  7DAD6B78             or r13,r13,r13
+  8289CFBC  39200000             li r9,0x0
+  8289CFC0  39600000             li r11,0x0
+  8289CFC4  7FEAFB78             or r10,r31,r31
+  8289CFC8  2B1F0000             cmplwi cr6,r31,0x0
+  8289CFCC  419A0048             beq cr6,0x8289d014
+LAB_8289cfd0:
+  8289CFD0  810A0008             lwz r8,0x8(r10)
+  8289CFD4  38E00001             li r7,0x1
+  8289CFD8  396B0001             addi r11,r11,0x1
+  8289CFDC  5508A73E             rlwinm r8,r8,0x14,0x1c,0x1f
+  8289CFE0  7CE84030             slw r8,r7,r8
+  8289CFE4  7108607E             andi. r8,r8,0x607e
+  8289CFE8  28080000             cmplwi r8,0x0
+  8289CFEC  4182001C             beq 0x8289d008
+  8289CFF0  810A0010             lwz r8,0x10(r10)
+  8289CFF4  4800000C             b 0x8289d000
+LAB_8289cff8:
+  8289CFF8  81080000             lwz r8,0x0(r8)
+  8289CFFC  39290001             addi r9,r9,0x1
+LAB_8289d000:
+  8289D000  2B080000             cmplwi cr6,r8,0x0
+  8289D004  409AFFF4             bne cr6,0x8289cff8
+LAB_8289d008:
+  8289D008  814A0000             lwz r10,0x0(r10)
+  8289D00C  2B0A0000             cmplwi cr6,r10,0x0
+  8289D010  409AFFC0             bne cr6,0x8289cfd0
+LAB_8289d014:
+  8289D014  556A07FE             rlwinm r10,r11,0x0,0x1f,0x1f
+  8289D018  7D6A5A14             add r11,r10,r11
+  8289D01C  556AF87E             rlwinm r10,r11,0x1f,0x1,0x1f
+  8289D020  7D4A4A14             add r10,r10,r9
+  8289D024  394A0001             addi r10,r10,0x1
+  8289D028  1D4A000C             mulli r10,r10,0xc
+  8289D02C  915E0000             stw r10,0x0(r30)
+  8289D030  917D0000             stw r11,0x0(r29)
+  8289D034  7DCE7378             or r14,r14,r14
+  8289D038  38210070             addi r1,r1,0x70
+  8289D03C  480796D0             b 0x8291670c
 
 ; 8289D040  D3D::GraphMicrocodeBuilder::GetShaderSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:262)
   8289D040  7D8802A6             mfspr r12,LR
@@ -389,6 +676,51 @@ LAB_8289d6ac:
 ; 8289D6B8  D3D::GraphMicrocodeBuilder::AddFlowAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:420)
   8289D6B8  7D8802A6             mfspr r12,LR
   8289D6BC  48078FF9             bl 0x829166b4
+  8289D6C0  9421FF80             stwu r1,-0x80(r1)
+  8289D6C4  7C7F1B78             or r31,r3,r3
+  8289D6C8  7C9E2378             or r30,r4,r4
+  8289D6CC  7CBD2B78             or r29,r5,r5
+  8289D6D0  7CDC3378             or r28,r6,r6
+  8289D6D4  7DAD6B78             or r13,r13,r13
+  8289D6D8  7FE3FB78             or r3,r31,r31
+  8289D6DC  3B600000             li r27,0x0
+  8289D6E0  4BFFFBD1             bl 0x8289d2b0
+  8289D6E4  28030000             cmplwi r3,0x0
+  8289D6E8  40820010             bne 0x8289d6f8
+  8289D6EC  3F608007             lis r27,-0x7ff9
+  8289D6F0  637B000E             ori r27,r27,0xe
+  8289D6F4  4800005C             b 0x8289d750
+LAB_8289d6f8:
+  8289D6F8  817D0000             lwz r11,0x0(r29)
+  8289D6FC  2B1E0000             cmplwi cr6,r30,0x0
+  8289D700  91630004             stw r11,0x4(r3)
+  8289D704  817D0004             lwz r11,0x4(r29)
+  8289D708  91630008             stw r11,0x8(r3)
+  8289D70C  409A001C             bne cr6,0x8289d728
+  8289D710  817F000C             lwz r11,0xc(r31)
+  8289D714  91630000             stw r11,0x0(r3)
+  8289D718  907F000C             stw r3,0xc(r31)
+  8289D71C  817F0010             lwz r11,0x10(r31)
+  8289D720  2B0B0000             cmplwi cr6,r11,0x0
+  8289D724  48000018             b 0x8289d73c
+LAB_8289d728:
+  8289D728  817E0000             lwz r11,0x0(r30)
+  8289D72C  91630000             stw r11,0x0(r3)
+  8289D730  907E0000             stw r3,0x0(r30)
+  8289D734  817F0010             lwz r11,0x10(r31)
+  8289D738  7F1E5840             cmplw cr6,r30,r11
+LAB_8289d73c:
+  8289D73C  409A0008             bne cr6,0x8289d744
+  8289D740  907F0010             stw r3,0x10(r31)
+LAB_8289d744:
+  8289D744  2B1C0000             cmplwi cr6,r28,0x0
+  8289D748  419A0008             beq cr6,0x8289d750
+  8289D74C  907C0000             stw r3,0x0(r28)
+LAB_8289d750:
+  8289D750  7DCE7378             or r14,r14,r14
+  8289D754  7F63DB78             or r3,r27,r27
+  8289D758  38210080             addi r1,r1,0x80
+  8289D75C  48078FA8             b 0x82916704
 
 ; 8289D9B8  D3D::GraphMicrocodeBuilder::AddALUAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:489)
   8289D9B8  7D8802A6             mfspr r12,LR
@@ -496,15 +828,213 @@ LAB_8289db1c:
 ; 8289D858  D3D::GraphMicrocodeBuilder::SplitExecBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:562)
   8289D858  7D8802A6             mfspr r12,LR
   8289D85C  48078E5D             bl 0x829166b8
+  8289D860  9421FF80             stwu r1,-0x80(r1)
+  8289D864  7C7C1B78             or r28,r3,r3
+  8289D868  7C9F2378             or r31,r4,r4
+  8289D86C  7CBE2B78             or r30,r5,r5
+  8289D870  7CDD3378             or r29,r6,r6
+  8289D874  7DAD6B78             or r13,r13,r13
+  8289D878  38A10050             addi r5,r1,0x50
+  8289D87C  7FE4FB78             or r4,r31,r31
+  8289D880  7F83E378             or r3,r28,r28
+  8289D884  4BFFFEDD             bl 0x8289d760
+  8289D888  7C7C1B79             or. r28,r3,r3
+  8289D88C  41800118             blt 0x8289d9a4
+  8289D890  80C10050             lwz r6,0x50(r1)
+  8289D894  3D608220             lis r11,-0x7de0
+  8289D898  811F0008             lwz r8,0x8(r31)
+  8289D89C  393F0004             addi r9,r31,0x4
+  8289D8A0  38EBCCBC             subi r7,r11,0x3344
+  8289D8A4  39460004             addi r10,r6,0x4
+  8289D8A8  81660008             lwz r11,0x8(r6)
+  8289D8AC  510B0426             rlwimi r11,r8,0x0,0x10,0x13
+  8289D8B0  91660008             stw r11,0x8(r6)
+  8289D8B4  817F0008             lwz r11,0x8(r31)
+  8289D8B8  5568A73E             rlwinm r8,r11,0x14,0x1c,0x1f
+  8289D8BC  7D0838AE             lbzx r8,r8,r7
+  8289D8C0  510B6426             rlwimi r11,r8,0xc,0x10,0x13
+  8289D8C4  917F0008             stw r11,0x8(r31)
+  8289D8C8  80E60008             lwz r7,0x8(r6)
+  8289D8CC  54E8A73E             rlwinm r8,r7,0x14,0x1c,0x1f
+  8289D8D0  2B080003             cmplwi cr6,r8,0x3
+  8289D8D4  41980038             blt cr6,0x8289d90c
+  8289D8D8  2B080004             cmplwi cr6,r8,0x4
+  8289D8DC  4099001C             ble cr6,0x8289d8f8
+  8289D8E0  2B080006             cmplwi cr6,r8,0x6
+  8289D8E4  4099007C             ble cr6,0x8289d960
+  8289D8E8  2B08000C             cmplwi cr6,r8,0xc
+  8289D8EC  40990020             ble cr6,0x8289d90c
+  8289D8F0  2B08000E             cmplwi cr6,r8,0xe
+  8289D8F4  41990018             bgt cr6,0x8289d90c
+LAB_8289d8f8:
+  8289D8F8  50EB05A8             rlwimi r11,r7,0x0,0x16,0x14
+  8289D8FC  916A0004             stw r11,0x4(r10)
+  8289D900  81090004             lwz r8,0x4(r9)
+  8289D904  516807AA             rlwimi r8,r11,0x0,0x1e,0x15
+  8289D908  910A0004             stw r8,0x4(r10)
+LAB_8289d90c:
+  8289D90C  2B1E0000             cmplwi cr6,r30,0x0
+  8289D910  419A005C             beq cr6,0x8289d96c
+  8289D914  817E0000             lwz r11,0x0(r30)
+  8289D918  2B0B0000             cmplwi cr6,r11,0x0
+  8289D91C  419A007C             beq cr6,0x8289d998
+  8289D920  39000000             li r8,0x0
+  8289D924  91660010             stw r11,0x10(r6)
+  8289D928  911E0000             stw r8,0x0(r30)
+LAB_8289d92c:
+  8289D92C  816B0000             lwz r11,0x0(r11)
+  8289D930  39080001             addi r8,r8,0x1
+  8289D934  2B0B0000             cmplwi cr6,r11,0x0
+  8289D938  409AFFF4             bne cr6,0x8289d92c
+  8289D93C  81690000             lwz r11,0x0(r9)
+  8289D940  55076026             rlwinm r7,r8,0xc,0x0,0x13
+  8289D944  7CE75850             subf r7,r7,r11
+  8289D948  51670520             rlwimi r7,r11,0x0,0x14,0x10
+  8289D94C  90E90000             stw r7,0x0(r9)
+  8289D950  816A0000             lwz r11,0x0(r10)
+  8289D954  510B6466             rlwimi r11,r8,0xc,0x11,0x13
+  8289D958  916A0000             stw r11,0x0(r10)
+  8289D95C  4800003C             b 0x8289d998
+LAB_8289d960:
+  8289D960  50EB05A8             rlwimi r11,r7,0x0,0x16,0x14
+  8289D964  916A0004             stw r11,0x4(r10)
+  8289D968  4BFFFFA4             b 0x8289d90c
+LAB_8289d96c:
+  8289D96C  817F0010             lwz r11,0x10(r31)
+  8289D970  39000000             li r8,0x0
+  8289D974  91660010             stw r11,0x10(r6)
+  8289D978  911F0010             stw r8,0x10(r31)
+  8289D97C  816A0000             lwz r11,0x0(r10)
+  8289D980  81090000             lwz r8,0x0(r9)
+  8289D984  510B0466             rlwimi r11,r8,0x0,0x11,0x13
+  8289D988  916A0000             stw r11,0x0(r10)
+  8289D98C  81690000             lwz r11,0x0(r9)
+  8289D990  556B0520             rlwinm r11,r11,0x0,0x14,0x10
+  8289D994  91690000             stw r11,0x0(r9)
+LAB_8289d998:
+  8289D998  2B1D0000             cmplwi cr6,r29,0x0
+  8289D99C  419A0008             beq cr6,0x8289d9a4
+  8289D9A0  90DD0000             stw r6,0x0(r29)
+LAB_8289d9a4:
+  8289D9A4  7DCE7378             or r14,r14,r14
+  8289D9A8  7F83E378             or r3,r28,r28
+  8289D9AC  38210080             addi r1,r1,0x80
+  8289D9B0  48078D58             b 0x82916708
 
 ; 8289D088  D3D::GraphMicrocodeBuilder::ComputeSwizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:666)
   8289D088  7D8802A6             mfspr r12,LR
   8289D08C  4807962D             bl 0x829166b8
+  8289D090  9421FF80             stwu r1,-0x80(r1)
+  8289D094  7C7C1B78             or r28,r3,r3
+  8289D098  7C9E2378             or r30,r4,r4
+  8289D09C  7CBF2B78             or r31,r5,r5
+  8289D0A0  7CDD3378             or r29,r6,r6
+  8289D0A4  7DAD6B78             or r13,r13,r13
+  8289D0A8  397FFFFE             subi r11,r31,0x2
+  8289D0AC  395EFFFF             subi r10,r30,0x1
+  8289D0B0  393D0001             addi r9,r29,0x1
+  8289D0B4  516A173A             rlwimi r10,r11,0x2,0x1c,0x1d
+  8289D0B8  552B3632             rlwinm r11,r9,0x6,0x18,0x19
+  8289D0BC  554A16BA             rlwinm r10,r10,0x2,0x1a,0x1d
+  8289D0C0  578907BE             rlwinm r9,r28,0x0,0x1e,0x1f
+  8289D0C4  7D4B5B78             or r11,r10,r11
+  8289D0C8  7D7F4B78             or r31,r11,r9
+  8289D0CC  7DCE7378             or r14,r14,r14
+  8289D0D0  7FE3FB78             or r3,r31,r31
+  8289D0D4  38210080             addi r1,r1,0x80
+  8289D0D8  48079630             b 0x82916708
 
 ; 8289D760  D3D::GraphMicrocodeBuilder::CreateExecAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:681)
   8289D760  7D8802A6             mfspr r12,LR
   8289D764  48078F59             bl 0x829166bc
+  8289D768  9421FF80             stwu r1,-0x80(r1)
+  8289D76C  7C7F1B78             or r31,r3,r3
+  8289D770  7C9E2378             or r30,r4,r4
+  8289D774  7CBD2B78             or r29,r5,r5
+  8289D778  7DAD6B78             or r13,r13,r13
+  8289D77C  39610050             addi r11,r1,0x50
+  8289D780  39400000             li r10,0x0
+  8289D784  39200001             li r9,0x1
+  8289D788  7FA6EB78             or r6,r29,r29
+  8289D78C  38A10050             addi r5,r1,0x50
+  8289D790  F94B0000             std r10,0x0(r11)
+  8289D794  7FC4F378             or r4,r30,r30
+  8289D798  7FE3FB78             or r3,r31,r31
+  8289D79C  81610054             lwz r11,0x54(r1)
+  8289D7A0  512B6426             rlwimi r11,r9,0xc,0x10,0x13
+  8289D7A4  91610054             stw r11,0x54(r1)
+  8289D7A8  4BFFFF11             bl 0x8289d6b8
+  8289D7AC  7C7F1B78             or r31,r3,r3
+  8289D7B0  7DCE7378             or r14,r14,r14
+  8289D7B4  7FE3FB78             or r3,r31,r31
+  8289D7B8  38210080             addi r1,r1,0x80
+  8289D7BC  48078F50             b 0x8291670c
+
+; 8289DB30  D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::resize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:881)
+  8289DB30  7D8802A6             mfspr r12,LR
+  8289DB34  48078B89             bl 0x829166bc
+  8289DB38  9421FF90             stwu r1,-0x70(r1)
+  8289DB3C  7C7F1B78             or r31,r3,r3
+  8289DB40  7C9E2378             or r30,r4,r4
+  8289DB44  7CBD2B78             or r29,r5,r5
+  8289DB48  7DAD6B78             or r13,r13,r13
+  8289DB4C  817F0008             lwz r11,0x8(r31)
+  8289DB50  7F1E5840             cmplw cr6,r30,r11
+  8289DB54  40990014             ble cr6,0x8289db68
+  8289DB58  7FA5EB78             or r5,r29,r29
+  8289DB5C  7FC4F378             or r4,r30,r30
+  8289DB60  7FE3FB78             or r3,r31,r31
+  8289DB64  4BFFFC5D             bl 0x8289d7c0
+LAB_8289db68:
+  8289DB68  817D0000             lwz r11,0x0(r29)
+  8289DB6C  2F0B0000             cmpwi cr6,r11,0x0
+  8289DB70  41980008             blt cr6,0x8289db78
+  8289DB74  93DF0004             stw r30,0x4(r31)
+LAB_8289db78:
+  8289DB78  7DCE7378             or r14,r14,r14
+  8289DB7C  38210070             addi r1,r1,0x70
+  8289DB80  48078B8C             b 0x8291670c
 
 ; 8289D7C0  D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::ensure2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:914)
   8289D7C0  7D8802A6             mfspr r12,LR
   8289D7C4  48078EF5             bl 0x829166b8
+  8289D7C8  9421FF80             stwu r1,-0x80(r1)
+  8289D7CC  7C7F1B78             or r31,r3,r3
+  8289D7D0  7C9D2378             or r29,r4,r4
+  8289D7D4  7CBC2B78             or r28,r5,r5
+  8289D7D8  7DAD6B78             or r13,r13,r13
+  8289D7DC  817F0008             lwz r11,0x8(r31)
+  8289D7E0  7F1D5840             cmplw cr6,r29,r11
+  8289D7E4  40990068             ble cr6,0x8289d84c
+  8289D7E8  557E083C             rlwinm r30,r11,0x1,0x0,0x1e
+  8289D7EC  7F1EE840             cmplw cr6,r30,r29
+  8289D7F0  40980008             bge cr6,0x8289d7f8
+  8289D7F4  7FBEEB78             or r30,r29,r29
+LAB_8289d7f8:
+  8289D7F8  3C806480             lis r4,0x6480
+  8289D7FC  57C3103A             rlwinm r3,r30,0x2,0x0,0x1d
+  8289D800  4BD693E9             bl 0x82606be8
+  8289D804  7C7D1B79             or. r29,r3,r3
+  8289D808  40820014             bne 0x8289d81c
+  8289D80C  3D608007             lis r11,-0x7ff9
+  8289D810  616B000E             ori r11,r11,0xe
+  8289D814  917C0000             stw r11,0x0(r28)
+  8289D818  48000034             b 0x8289d84c
+LAB_8289d81c:
+  8289D81C  809F0000             lwz r4,0x0(r31)
+  8289D820  93DF0008             stw r30,0x8(r31)
+  8289D824  2B040000             cmplwi cr6,r4,0x0
+  8289D828  419A0020             beq cr6,0x8289d848
+  8289D82C  817F0004             lwz r11,0x4(r31)
+  8289D830  7FA3EB78             or r3,r29,r29
+  8289D834  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  8289D838  48079129             bl 0x82916960
+  8289D83C  3C802480             lis r4,0x2480
+  8289D840  807F0000             lwz r3,0x0(r31)
+  8289D844  4BD69C35             bl 0x82607478
+LAB_8289d848:
+  8289D848  93BF0000             stw r29,0x0(r31)
+LAB_8289d84c:
+  8289D84C  7DCE7378             or r14,r14,r14
+  8289D850  38210080             addi r1,r1,0x80
+  8289D854  48078EB4             b 0x82916708

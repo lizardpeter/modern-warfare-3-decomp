@@ -69,3 +69,20 @@ LAB_827b7154:
   827B71A8  8181FFF8             lwz r12,-0x8(r1)
   827B71AC  7D8803A6             mtspr LR,r12
   827B71B0  4E800020             blr
+
+; 827B71B8  jpeg_alloc_huff_table  (jpeg-6/jcomapi.c:99)
+  827B71B8  7D8802A6             mfspr r12,LR
+  827B71BC  9181FFF8             stw r12,-0x8(r1)
+  827B71C0  9421FFA0             stwu r1,-0x60(r1)
+  827B71C4  81630004             lwz r11,0x4(r3)
+  827B71C8  38A00112             li r5,0x112
+  827B71CC  38800000             li r4,0x0
+  827B71D0  814B0000             lwz r10,0x0(r11)
+  827B71D4  7D4903A6             mtspr CTR,r10
+  827B71D8  4E800421             bctrl
+  827B71DC  39200000             li r9,0x0
+  827B71E0  99230111             stb r9,0x111(r3)
+  827B71E4  38210060             addi r1,r1,0x60
+  827B71E8  8181FFF8             lwz r12,-0x8(r1)
+  827B71EC  7D8803A6             mtspr LR,r12
+  827B71F0  4E800020             blr

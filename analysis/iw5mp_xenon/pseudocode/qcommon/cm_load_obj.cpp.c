@@ -6,7 +6,6 @@ undefined4 CM_EntityString(void)
 
 {
   if (DAT_835a2918 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82081d68,0xadd,0,0xffffffff82000f98,0xffffffff82081dac);
   }
   return *(undefined4 *)(DAT_835a2918 + 4);

@@ -5,17 +5,15 @@
 void Live_SetMainMenuPresence(ulonglong param_1)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   
   if ((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) {
     if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218fea8,0x67,0,0xffffffff82057c60,param_1,4);
     }
-    iVar1 = XUserSetContextEx(param_1,0x8001,0,0);
-    if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218fea8,0x69,0,0xffffffff82174e08,0xffffffff8218fe9c);
+    uVar1 = XUserSetContextEx(param_1,0x8001,0,0);
+    if ((uVar1 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0x69,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
     }
     Social_SetMainMenuPresence(param_1);
   }
@@ -34,24 +32,44 @@ void Live_Disconnected(undefined8 param_1)
 }
 
 
+// 82652BD8  Live_NotPlaying  (xenon/xenon_presence.cpp:124)
+
+void Live_NotPlaying(ulonglong param_1)
+
+{
+  ulonglong uVar1;
+  
+  if ((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) {
+    if (3 < (param_1 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8218fea8,0x80,0,0xffffffff82057c60,param_1,4);
+    }
+    uVar1 = XUserSetContextEx(param_1,0x8001,5,0);
+    if ((uVar1 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0x82,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
+    }
+    Social_SetNotPlayingPresence(param_1);
+  }
+  return;
+}
+
+
 // 82652CA0  Live_SetLobbyPresence  (xenon/xenon_presence.cpp:140)
 
 void Live_SetLobbyPresence(undefined8 param_1)
 
 {
-  int iVar1;
+  int iVar2;
+  ulonglong uVar1;
   
   if (((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) &&
-     (iVar1 = XUserGetSigninState(), iVar1 != 0)) {
+     (iVar2 = XUserGetSigninState(), iVar2 != 0)) {
     if (((int)param_1 < 0) || (3 < (int)param_1)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218fea8,0x90,0,0xffffffff8218d428,0xffffffff8218ff28,param_1);
     }
     Com_Printf(0x10,0xffffffff8218feec,param_1);
-    iVar1 = XUserSetContextEx(param_1,0x8001,3,0);
-    if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218fea8,0x93,0,0xffffffff82174e08,0xffffffff8218fe9c);
+    uVar1 = XUserSetContextEx(param_1,0x8001,3,0);
+    if ((uVar1 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0x93,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
     }
     Social_SetLobbyPresence(param_1);
   }
@@ -64,19 +82,18 @@ void Live_SetLobbyPresence(undefined8 param_1)
 void Live_SetSpecialOpsLobbyPresence(undefined8 param_1)
 
 {
-  int iVar1;
+  int iVar2;
+  ulonglong uVar1;
   
   if (((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) &&
-     (iVar1 = XUserGetSigninState(), iVar1 != 0)) {
+     (iVar2 = XUserGetSigninState(), iVar2 != 0)) {
     if (((int)param_1 < 0) || (3 < (int)param_1)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218fea8,0xa1,0,0xffffffff8218d428,0xffffffff8218ff28,param_1);
     }
     Com_Printf(0x10,0xffffffff8218ff60,param_1);
-    iVar1 = XUserSetContextEx(param_1,0x8001,7,0);
-    if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218fea8,0xa4,0,0xffffffff82174e08,0xffffffff8218fe9c);
+    uVar1 = XUserSetContextEx(param_1,0x8001,7,0);
+    if ((uVar1 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0xa4,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
     }
     Social_SetSpecOpsLobbyPresence(param_1);
   }
@@ -89,18 +106,16 @@ void Live_SetSpecialOpsLobbyPresence(undefined8 param_1)
 void Live_SetPartyPresence(ulonglong param_1)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   
   if ((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) {
     if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218fea8,0xb2,0,0xffffffff82057c60,param_1,4);
     }
     Com_Printf(0x10,0xffffffff8218ffa8);
-    iVar1 = XUserSetContextEx(param_1,0x8001,4,0);
-    if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218fea8,0xb5,0,0xffffffff82174e08,0xffffffff8218fe9c);
+    uVar1 = XUserSetContextEx(param_1,0x8001,4,0);
+    if ((uVar1 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0xb5,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
     }
     Social_SetPartyPresence(param_1);
   }
@@ -137,10 +152,37 @@ ulonglong Live_GetGameModeContextForPlaylist(void)
   
   uVar1 = Playlist_GetPlaylistIdForNum();
   if (0x27 < (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218fea8,0xd4,0,0xffffffff82190058,uVar1,0x28);
   }
   return uVar1;
+}
+
+
+// 82653070  Live_SetPlaylistNum  (xenon/xenon_presence.cpp:219)
+
+void Live_SetPlaylistNum(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  
+  if ((DAT_8424a648 != 0) && (*(char *)(DAT_8424a648 + 0xc) != '\0')) {
+    uVar1 = Playlist_GetPlaylistIdForNum();
+    uVar1 = va(0xffffffff8216ece4,uVar1);
+    ComGroups_JoinGroup(param_1,uVar1);
+    uVar1 = Playlist_GetPlaylistIdForNum(param_1,param_2);
+    Com_Printf(0x10,0xffffffff8219011c,uVar1,param_1);
+    uVar1 = Playlist_GetPlaylistIdForNum(param_1,param_2);
+    XUserSetContext(param_1,6,uVar1);
+    if (0x27 < (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8218fea8,0xe4,0,0xffffffff821900d0,param_2,0x28);
+    }
+    uVar1 = Live_GetGameModeContextForPlaylist(param_1,param_2);
+    Com_Printf(0x10,0xffffffff821900a4,uVar1,param_1);
+    uVar1 = Live_GetGameModeContextForPlaylist(param_1,param_2);
+    XUserSetContext(param_1,0x800b,uVar1);
+    DAT_82aa1af4 = (undefined4)param_2;
+  }
+  return;
 }
 
 
@@ -177,8 +219,29 @@ void Live_SetCountryCodeAndRegion(undefined8 param_1)
 void Live_LookupContextFromGametypeNoModifier(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_28();
+  puVar3 = &DAT_821768f8;
+  iVar5 = 0;
+  iVar4 = 0;
+  do {
+    iVar2 = I_strcmp(uVar1,puVar3);
+    if (iVar2 == 0) {
+      __restgprlr_28(*(undefined4 *)((int)&DAT_82176918 + iVar4));
+      return;
+    }
+    iVar5 = iVar5 + 1;
+    iVar4 = iVar5 * 0x24;
+    puVar3 = &DAT_821768f8 + iVar4;
+  } while ((&DAT_821768f8)[iVar4] != '\0');
+  Com_PrintWarning(0x10,0xffffffff82190148,uVar1);
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -196,13 +259,88 @@ void Live_SetGametype(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 82653340  Live_LookupGametypeFromStatsView  (xenon/xenon_presence.cpp:326)
+
+undefined8 Live_LookupGametypeFromStatsView(ulonglong param_1)
+
+{
+  undefined8 uVar1;
+  
+  if ((0xfffdffff < (param_1 & 0xffffffff)) && ((param_1 & 0xffffffff) < 0xffff0028)) {
+    uVar1 = va(0xffffffff821901d0,param_1 + 0x20000);
+    return uVar1;
+  }
+  if ((0xfffeffff < (param_1 & 0xffffffff)) && ((param_1 & 0xffffffff) < 0xffff0028)) {
+    uVar1 = va(0xffffffff821901b4,param_1 + 0x10000);
+    return uVar1;
+  }
+  if ((param_1 & 0xffffffff) == 0xfffe0028) {
+    return 0xffffffff821901a8;
+  }
+  if ((param_1 & 0xffffffff) == 0xffff0028) {
+    return 0xffffffff82190190;
+  }
+  uVar1 = va(0xffffffff82190178);
+  return uVar1;
+}
+
+
 // 826533D8  Live_SetTheatreContext  (xenon/xenon_presence.cpp:342)
 
 void Live_SetTheatreContext(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  char cVar3;
+  ulonglong uVar2;
+  longlong lVar4;
+  
   __savegprlr_26();
+  if (*(char *)(DAT_8424a648 + 0xc) != '\0') {
+    if (DAT_82966e98 != 0) {
+      lVar4 = 0;
+      do {
+        uVar1 = CL_ControllerIndexFromClientNum(lVar4);
+        cVar3 = CL_IsLocalClientActive(lVar4);
+        if (cVar3 == '\0') {
+          uVar2 = XUserSetContextEx(uVar1,0x8001,5,0);
+          if ((uVar2 & 0xffffffff) != 0) {
+            MyAssertHandler(0xffffffff8218fea8,0x16f,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar2);
+          }
+          Social_SetNotPlayingPresence(uVar1);
+        }
+        else {
+          uVar2 = XUserSetContextEx(uVar1,0x8001,9,0);
+          if ((uVar2 & 0xffffffff) != 0) {
+            MyAssertHandler(0xffffffff8218fea8,0x166,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar2);
+          }
+          Social_SetWatchingTheatrePresence(uVar1);
+        }
+        lVar4 = lVar4 + 1;
+      } while ((int)lVar4 < 4);
+      __restgprlr_26();
+      return;
+    }
+    uVar1 = CL_ControllerIndexFromClientNum(0);
+    uVar2 = XUserSetContextEx(uVar1,0x8001,9,0);
+    if ((uVar2 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0x17c,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar2);
+    }
+    Social_SetWatchingTheatrePresence(uVar1);
+    lVar4 = 0;
+    do {
+      if ((int)uVar1 != (int)lVar4) {
+        uVar2 = XUserSetContextEx(lVar4,0x8001,5,0);
+        if ((uVar2 & 0xffffffff) != 0) {
+          MyAssertHandler(0xffffffff8218fea8,0x187,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar2);
+        }
+        Social_SetNotPlayingPresence(lVar4);
+      }
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < 4);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -214,7 +352,7 @@ void Live_SetMapContext(void)
   undefined8 uVar1;
   char cVar4;
   undefined8 uVar2;
-  int iVar3;
+  ulonglong uVar3;
   longlong lVar5;
   
   uVar1 = __savegprlr_25();
@@ -226,10 +364,9 @@ void Live_SetMapContext(void)
         if (cVar4 != '\0') {
           uVar2 = CL_ControllerIndexFromClientNum(lVar5);
           XUserSetContext(uVar2,0,uVar1);
-          iVar3 = XUserSetContextEx(uVar2,0x8001,1,0);
-          if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff8218fea8,0x1c5,0,0xffffffff82174e08,0xffffffff8218fe9c);
+          uVar3 = XUserSetContextEx(uVar2,0x8001,1,0);
+          if ((uVar3 & 0xffffffff) != 0) {
+            MyAssertHandler(0xffffffff8218fea8,0x1c5,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar3);
           }
           Social_SetMapPresence(uVar2,1,uVar1);
         }
@@ -239,10 +376,9 @@ void Live_SetMapContext(void)
       do {
         cVar4 = CL_IsSplitscreenControllerActive(lVar5);
         if (cVar4 == '\0') {
-          iVar3 = XUserSetContextEx(lVar5,0x8001,5,0);
-          if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff8218fea8,0x1d3,0,0xffffffff82174e08,0xffffffff8218fe9c);
+          uVar3 = XUserSetContextEx(lVar5,0x8001,5,0);
+          if ((uVar3 & 0xffffffff) != 0) {
+            MyAssertHandler(0xffffffff8218fea8,0x1d3,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar3);
           }
           Social_SetNotPlayingPresence(lVar5);
         }
@@ -253,19 +389,17 @@ void Live_SetMapContext(void)
     }
     uVar2 = CL_ControllerIndexFromClientNum(0);
     XUserSetContext(uVar2,0,uVar1);
-    iVar3 = XUserSetContextEx(uVar2,0x8001,1,0);
-    if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218fea8,0x1e0,0,0xffffffff82174e08,0xffffffff8218fe9c);
+    uVar3 = XUserSetContextEx(uVar2,0x8001,1,0);
+    if ((uVar3 & 0xffffffff) != 0) {
+      MyAssertHandler(0xffffffff8218fea8,0x1e0,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar3);
     }
     Social_SetMapPresence(uVar2,1,uVar1);
     lVar5 = 0;
     do {
       if ((int)uVar2 != (int)lVar5) {
-        iVar3 = XUserSetContextEx(lVar5,0x8001,5,0);
-        if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff8218fea8,0x1eb,0,0xffffffff82174e08,0xffffffff8218fe9c);
+        uVar3 = XUserSetContextEx(lVar5,0x8001,5,0);
+        if ((uVar3 & 0xffffffff) != 0) {
+          MyAssertHandler(0xffffffff8218fea8,0x1eb,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar3);
         }
         Social_SetNotPlayingPresence(lVar5);
       }
@@ -277,13 +411,81 @@ void Live_SetMapContext(void)
 }
 
 
-// 82653878  Live_SetGameJoinable  (xenon/xenon_presence.cpp:544)
+// 826537C8  Live_SetCurrentMapname  (xenon/xenon_presence.cpp:503)
 
-void Live_SetGameJoinable(void)
+void Live_SetCurrentMapname(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_28();
+  if (*(char *)(DAT_8424a648 + 0xc) != '\0') {
+    iVar5 = 0;
+    pcVar3 = "mp_alpha";
+    iVar4 = 0;
+    do {
+      iVar2 = I_stricmp(uVar1,pcVar3);
+      if (iVar2 == 0) {
+        Live_SetMapContext(*(undefined4 *)((int)&DAT_82176670 + iVar4));
+        __restgprlr_28();
+        return;
+      }
+      iVar5 = iVar5 + 1;
+      iVar4 = iVar5 * 0x28;
+      pcVar3 = "mp_alpha" + iVar4;
+    } while ("mp_alpha"[iVar4] != '\0');
+    Com_Printf(0x10,0xffffffff821901dc,uVar1);
+    Live_SetMapContext(0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82653878  Live_SetGameJoinable  (xenon/xenon_presence.cpp:544)
+
+void Live_SetGameJoinable(undefined8 param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = Party_IsRunning(0xffffffff82b55118);
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x225,0,0xffffffff820011f4,0xffffffff8203f820,
+                    0xffffffff821902b0);
+  }
+  if (DAT_844c7d60 == '\0') {
+    if (param_2 != 0) {
+      uVar5 = (ulonglong)DAT_844c78c0;
+      uVar4 = (ulonglong)DAT_844c78c4;
+      DAT_844c7d60 = '\x01';
+      cVar3 = Session_NeedToSyncParams(0xffffffff844c7860,uVar5 + uVar4,0,DAT_844c78c8);
+      if (cVar3 != '\0') {
+        Session_SyncParams(uVar1,0xffffffff844c7860,uVar5 + uVar4,0,DAT_844c78c8);
+        Dvar_SetInt(DAT_83d0b554,0);
+      }
+      if (DAT_844c7d60 == '\0') {
+        MyAssertHandler(0xffffffff8218fea8,0x23d,0,0xffffffff82000f98,0xffffffff82190218);
+      }
+    }
+  }
+  else if ((int)DAT_844c78c4 < 1) {
+    MyAssertHandler(0xffffffff8218fea8,0x22a,0,0xffffffff820011f4,0xffffffff8219023c,
+                    0xffffffff82190260);
+    __restgprlr_27();
+    return;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -292,8 +494,24 @@ void Live_SetGameJoinable(void)
 void Live_UpdateMatchMaking(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar4;
+  int iVar2;
+  int iVar3;
+  undefined1 uVar5;
+  
+  uVar1 = __savegprlr_29();
+  if (((DAT_844c7870 != 0) && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) &&
+     (cVar4 = Live_IsUserSignedIn(), cVar4 != '\0')) {
+    iVar2 = Live_GetOurClientNum(uVar1,0xffffffff844c7860);
+    if (((-1 < iVar2) && (iVar3 = Session_HostNum(0xffffffff844c7860), iVar2 == iVar3)) &&
+       (iVar2 = Session_SessionTasksInProgress(0xffffffff844c7860), iVar2 == 0)) {
+      uVar5 = Session_ShouldAdvertise(uVar1);
+      Live_SetGameJoinable(uVar1,uVar5);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -325,8 +543,52 @@ void Live_SetMaxFreeSlots(undefined4 param_1)
 void Live_SetPartyState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar2;
+  ulonglong uVar1;
+  undefined8 uVar3;
+  longlong lVar4;
+  int in_stack_00000014;
+  
+  in_stack_00000014 = __savegprlr_27();
+  if (in_stack_00000014 == 1) {
+    uVar3 = 0xffffffff82190334;
+  }
+  else {
+    uVar3 = 0xffffffff8203d0f4;
+  }
+  Com_Printf(0x10,0xffffffff82190318,uVar3);
+  if (DAT_82966e98 != 0) {
+    lVar4 = 0;
+    do {
+      cVar2 = CL_IsLocalClientActive(lVar4);
+      if (cVar2 == '\0') {
+        uVar3 = CL_ControllerIndexFromClientNum(lVar4);
+        uVar1 = XUserSetContextEx(uVar3,0x8001,5,0);
+        if ((uVar1 & 0xffffffff) != 0) {
+          MyAssertHandler(0xffffffff8218fea8,0x283,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
+        }
+      }
+      else {
+        uVar3 = CL_ControllerIndexFromClientNum(lVar4);
+        XUserSetProperty(uVar3,0x1000000f,4,&stack0x00000014);
+      }
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < 4);
+    __restgprlr_27();
+    return;
+  }
+  uVar3 = CL_ControllerIndexFromClientNum(0);
+  XUserSetProperty(uVar3,0x1000000f,4,&stack0x00000014);
+  lVar4 = 0;
+  do {
+    if (((int)uVar3 != (int)lVar4) &&
+       (uVar1 = XUserSetContextEx(lVar4,0x8001,5,0), (uVar1 & 0xffffffff) != 0)) {
+      MyAssertHandler(0xffffffff8218fea8,0x290,0,0xffffffff82174e08,0xffffffff8218fe9c,uVar1);
+    }
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 < 4);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -336,11 +598,10 @@ undefined4 GetDLCPropertyValue(int param_1)
 
 {
   if ((param_1 < 0) || (0xf < param_1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218fea8,0x29b,0,0xffffffff82000f98,0xffffffff8219033c);
   }
   if ((-1 < param_1) && (param_1 < 0x10)) {
-    return *(undefined4 *)(&DAT_82995aa8 + param_1 * 4);
+    return (&DAT_82995aa8)[param_1];
   }
   return 0;
 }
@@ -351,8 +612,66 @@ undefined4 GetDLCPropertyValue(int param_1)
 void Live_SetMapPacks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  char cVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  undefined4 uVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  double dVar9;
+  uint in_stack_00000014;
+  uint local_70;
+  float local_6c;
+  longlong local_68;
+  
+  in_stack_00000014 = __savegprlr_23();
+  if ((int)in_stack_00000014 < 1) {
+    MyAssertHandler(0xffffffff8218fea8,0x2c1,0,0xffffffff82000f98,0xffffffff82190390);
+  }
+  DAT_8425f308 = in_stack_00000014;
+  Com_Printf(0x10,0xffffffff82190374);
+  lVar4 = 0;
+  dVar9 = 0.0625;
+  do {
+    cVar2 = CL_IsLocalClientActive(lVar4);
+    if (cVar2 != '\0') {
+      uVar1 = CL_ControllerIndexFromClientNum(lVar4);
+      XUserSetProperty(uVar1,0x10000015,4,&stack0x00000014);
+      iVar7 = 0;
+      uVar5 = 1;
+      puVar8 = &DAT_82995aa8;
+      do {
+        local_70 = (uint)((uVar5 & in_stack_00000014) != 0);
+        if ((iVar7 < 0) || (0xf < iVar7)) {
+          MyAssertHandler(0xffffffff8218fea8,0x29b,0,0xffffffff82000f98,0xffffffff8219033c);
+        }
+        if ((iVar7 < 0) || (0xf < iVar7)) {
+          uVar6 = 0;
+        }
+        else {
+          uVar6 = *puVar8;
+        }
+        uVar1 = CL_ControllerIndexFromClientNum(lVar4);
+        XUserSetProperty(uVar1,uVar6,4,&local_70);
+        puVar8 = puVar8 + 1;
+        iVar7 = iVar7 + 1;
+        uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+      } while ((int)puVar8 < -0x7d66a518);
+      iVar7 = 0;
+      for (uVar3 = in_stack_00000014; uVar3 != 0; uVar3 = uVar3 - 1 & uVar3) {
+        iVar7 = iVar7 + 1;
+      }
+      local_68 = (longlong)iVar7;
+      local_6c = (float)((double)local_68 * dVar9);
+      uVar1 = CL_ControllerIndexFromClientNum(lVar4);
+      XUserSetProperty(uVar1,0x50000056,4,&local_6c);
+    }
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 < 4);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -404,6 +723,24 @@ void Live_SetCurrentGametype(void)
 }
 
 
+// 82653FD8  Live_SetDeaths  (xenon/xenon_presence.cpp:773)
+
+void Live_SetDeaths(void)
+
+{
+  return;
+}
+
+
+// 82653FE0  Live_SetScore  (xenon/xenon_presence.cpp:789)
+
+void Live_SetScore(void)
+
+{
+  return;
+}
+
+
 // 82653FE8  Xenon_PresenceIndex  (xenon/xenon_presence.cpp:811)
 
 longlong Xenon_PresenceIndex(ulonglong param_1,longlong param_2)
@@ -450,52 +787,51 @@ ulonglong Xenon_PresenceIsSubscribed(undefined8 param_1,undefined8 param_2)
 void Xenon_PresenceGatherCurrentUsers(undefined8 param_1,int param_2,uint *param_3)
 
 {
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar1;
-  char cVar5;
+  char cVar4;
+  undefined8 uVar5;
   int iVar7;
   longlong lVar6;
   int iVar8;
   
-  iVar2 = __savegprlr_22();
+  iVar1 = __savegprlr_22();
   *param_3 = 0;
   iVar7 = 0;
-  iVar3 = MeetPlayer_GetCount();
-  if (0 < iVar3) {
+  iVar2 = MeetPlayer_GetCount();
+  if (0 < iVar2) {
     iVar8 = 0;
-    iVar3 = iVar2 * 0x2bd0;
+    iVar2 = iVar1 * 0x2bd0;
     do {
+      uVar5 = *(undefined8 *)(&DAT_84553b98 + iVar2);
       if (0x51 < *param_3) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218fea8,0x352,0,0xffffffff821903d8,*param_3,0x52);
       }
       iVar7 = iVar7 + 1;
       iVar8 = iVar8 + 0xe0;
-      *(undefined8 *)(*param_3 * 8 + param_2) = *(undefined8 *)(&DAT_84553b98 + iVar3);
+      *(undefined8 *)(*param_3 * 8 + param_2) = uVar5;
       *param_3 = *param_3 + 1;
-      iVar4 = MeetPlayer_GetCount(iVar2);
-      iVar3 = iVar8 + iVar2 * 0x2bd0;
-    } while (iVar7 < iVar4);
+      iVar3 = MeetPlayer_GetCount(iVar1);
+      iVar2 = iVar8 + iVar1 * 0x2bd0;
+    } while (iVar7 < iVar3);
   }
   lVar6 = 0;
-  iVar3 = LiveParty_GetCount();
-  if (0 < iVar3) {
+  iVar2 = LiveParty_GetCount();
+  if (0 < iVar2) {
     do {
-      uVar1 = LiveParty_GetPlayer(lVar6);
-      cVar5 = Live_XUIDIsLocalPlayer();
-      if ((cVar5 == '\0') && (iVar3 = MeetPlayer_GetPositionByXuid(iVar2,uVar1), iVar3 < 0)) {
+      uVar5 = LiveParty_GetPlayer(lVar6);
+      cVar4 = Live_XUIDIsLocalPlayer();
+      if ((cVar4 == '\0') && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar5), iVar2 < 0)) {
         if (0x51 < *param_3) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218fea8,0x360,0,0xffffffff821903d8,*param_3,0x52);
         }
-        *(undefined8 *)(*param_3 * 8 + param_2) = uVar1;
+        *(undefined8 *)(*param_3 * 8 + param_2) = uVar5;
         *param_3 = *param_3 + 1;
       }
       lVar6 = lVar6 + 1;
-      iVar3 = LiveParty_GetCount();
-    } while ((int)lVar6 < iVar3);
+      iVar2 = LiveParty_GetCount();
+    } while ((int)lVar6 < iVar2);
   }
   __restgprlr_22();
   return;
@@ -519,15 +855,12 @@ void Xenon_PresenceGatherOldUsers
   
   uVar3 = __savegprlr_22();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218fea8,0x36f,0,0xffffffff82000f98,0xffffffff821904a0);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218fea8,0x370,0,0xffffffff82000f98,0xffffffff82190490);
   }
   if ((param_3 != 0) && ((param_2 & 0xffffffff) == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218fea8,0x371,0,0xffffffff82000f98,0xffffffff82190468);
   }
   iVar2 = (int)((uVar3 & 0xffffffff) << 2);
@@ -552,7 +885,6 @@ void Xenon_PresenceGatherOldUsers
       }
       if (bVar1) {
         if (0x51 < *puVar4) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218fea8,900,0,0xffffffff82190420,*puVar4,0x52);
         }
         *(undefined8 *)(*puVar4 * 8 + (int)param_4) =
@@ -569,11 +901,55 @@ void Xenon_PresenceGatherOldUsers
 
 // 82654398  Xenon_PresenceGatherNewUsers  (xenon/xenon_presence.cpp:908)
 
-void Xenon_PresenceGatherNewUsers(void)
+void Xenon_PresenceGatherNewUsers
+               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  ulonglong uVar2;
+  uint *puVar3;
+  longlong lVar4;
+  
+  uVar2 = __savegprlr_23();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x391,0,0xffffffff82000f98,0xffffffff82190508);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x392,0,0xffffffff82000f98,0xffffffff821904f8);
+  }
+  if (((int)param_3 != 0) && ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff8218fea8,0x393,0,0xffffffff82000f98,0xffffffff82190468);
+  }
+  puVar3 = (uint *)param_5;
+  *puVar3 = 0;
+  if (0 < (int)param_3) {
+    do {
+      bVar1 = true;
+      lVar4 = 0;
+      if (0 < *(int *)(&DAT_8425e8a8 + (int)((uVar2 & 0xffffffff) << 2))) {
+        do {
+          if (*(longlong *)(&DAT_8425e8c8 + (int)((uVar2 * 0x52 + lVar4 & 0xffffffff) << 3)) ==
+              *(longlong *)param_2) {
+            bVar1 = false;
+            break;
+          }
+          lVar4 = lVar4 + 1;
+        } while ((int)lVar4 < *(int *)(&DAT_8425e8a8 + (int)((uVar2 & 0xffffffff) << 2)));
+      }
+      if (bVar1) {
+        if (0x51 < *puVar3) {
+          MyAssertHandler(0xffffffff8218fea8,0x3a6,0,0xffffffff821904b0,*puVar3,0x52);
+        }
+        *(longlong *)(*puVar3 * 8 + (int)param_4) = *(longlong *)param_2;
+        *puVar3 = *puVar3 + 1;
+      }
+      param_3 = param_3 + -1;
+      param_2 = param_2 + 8;
+    } while (param_3 != 0);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -582,8 +958,42 @@ void Xenon_PresenceGatherNewUsers(void)
 void Xenon_PresenceNeeded(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar3;
+  undefined4 local_40 [16];
+  
+  uVar2 = __savegprlr_27();
+  if (DAT_84253bc0 == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x3b2,0,0xffffffff82000f98,0xffffffff8218ce1c);
+  }
+  if (DAT_842537fc == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x3b3,0,0xffffffff82000f98,0xffffffff8218cda0);
+  }
+  iVar4 = Sys_Milliseconds();
+  cVar5 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,local_40);
+  if ((cVar5 == '\0') ||
+     (cVar5 = Menu_IsMenuOpenAndVisible(local_40[0],0xffffffff8218e804), cVar5 == '\0')) {
+    if (*(int *)(&DAT_8425e8b8 + (int)((uVar2 & 0xffffffff) << 2)) != 0) {
+      uVar3 = 1;
+      if (iVar4 - *(int *)(&DAT_8425e8b8 + (int)((uVar2 & 0xffffffff) << 2)) <
+          *(int *)(DAT_84253bc0 + 0xc)) goto LAB_82654628;
+    }
+  }
+  else {
+    iVar1 = (int)((uVar2 & 0xffffffff) << 2);
+    if ((*(int *)(&DAT_8425e8b8 + iVar1) != 0) || (*(int *)(DAT_842537fc + 0xc) <= iVar4)) {
+      *(int *)(&DAT_8425e8b8 + iVar1) = iVar4;
+      __restgprlr_27(1);
+      return;
+    }
+  }
+  uVar3 = 0;
+LAB_82654628:
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
@@ -598,6 +1008,7 @@ void Xenon_PresenceUpdate(void)
   ulonglong uVar4;
   char cVar6;
   ulonglong uVar5;
+  int iVar7;
   int local_800 [4];
   undefined1 auStack_7f0 [656];
   undefined1 auStack_560 [656];
@@ -608,36 +1019,36 @@ void Xenon_PresenceUpdate(void)
   if ((cVar6 == '\0') && (cVar6 = MeetPlayer_PresenceBusy(), cVar6 == '\0')) {
     cVar6 = Xenon_PresenceNeeded(uVar4);
     if (cVar6 == '\0') {
-      iVar3 = (int)((uVar4 & 0xffffffff) << 2);
-      if (*(int *)(&DAT_8425e8a8 + iVar3) != 0) {
+      iVar2 = (int)((uVar4 & 0xffffffff) << 2);
+      if (*(int *)(&DAT_8425e8a8 + iVar2) != 0) {
         uVar4 = XPresenceUnsubscribe
-                          (uVar4,*(int *)(&DAT_8425e8a8 + iVar3),uVar4 * 0x290 + -0x7bda1738);
+                          (uVar4,*(int *)(&DAT_8425e8a8 + iVar2),uVar4 * 0x290 + -0x7bda1738);
         if ((uVar4 & 0xffffffff) != 0) {
           Com_PrintError(0x10,0xffffffff82190518,uVar4);
           __restgprlr_25();
           return;
         }
-        *(undefined4 *)(&DAT_8425e8a8 + iVar3) = 0;
+        *(undefined4 *)(&DAT_8425e8a8 + iVar2) = 0;
       }
     }
     else {
       bVar1 = false;
       Xenon_PresenceGatherCurrentUsers(uVar4,auStack_7f0,local_800);
-      iVar3 = local_800[0];
+      iVar2 = local_800[0];
       if ((local_800[0] < 0) || (0x52 < local_800[0])) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218fea8,0x3e9,0,0xffffffff82190690,local_800[0],0,0x52);
       }
-      Xenon_PresenceGatherOldUsers(uVar4,auStack_7f0,local_800[0],auStack_560,local_800);
+      Xenon_PresenceGatherOldUsers(uVar4,auStack_7f0,iVar2,auStack_560,local_800);
+      iVar3 = local_800[0];
       if ((local_800[0] < 0) ||
-         (iVar2 = (int)((uVar4 & 0xffffffff) << 2), *(int *)(&DAT_8425e8a8 + iVar2) < local_800[0]))
+         (iVar7 = (int)((uVar4 & 0x3fffffff) << 2), *(int *)(&DAT_8425e8a8 + iVar7) < local_800[0]))
       {
-                    /* WARNING: Subroutine does not return */
+        iVar7 = (int)((uVar4 & 0x3fffffff) << 2);
         MyAssertHandler(0xffffffff8218fea8,0x3ec,0,0xffffffff82190638,local_800[0],0,
-                        *(undefined4 *)(&DAT_8425e8a8 + (int)((uVar4 & 0xffffffff) << 2)));
+                        *(undefined4 *)(&DAT_8425e8a8 + iVar7));
       }
-      if (local_800[0] != 0) {
-        uVar5 = XPresenceUnsubscribe(uVar4,local_800[0],auStack_560);
+      if (iVar3 != 0) {
+        uVar5 = XPresenceUnsubscribe(uVar4,iVar3,auStack_560);
         if ((uVar5 & 0xffffffff) != 0) {
           Com_PrintError(0x10,0xffffffff821905e0,uVar5);
           __restgprlr_25();
@@ -645,10 +1056,9 @@ void Xenon_PresenceUpdate(void)
         }
         bVar1 = true;
       }
-      Xenon_PresenceGatherNewUsers(uVar4,auStack_7f0,iVar3,auStack_2d0,local_800);
-      if ((local_800[0] < 0) || (iVar3 < local_800[0])) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8218fea8,0x3f9,0,0xffffffff821905a8,local_800[0],0,iVar3);
+      Xenon_PresenceGatherNewUsers(uVar4,auStack_7f0,iVar2,auStack_2d0,local_800);
+      if ((local_800[0] < 0) || (iVar2 < local_800[0])) {
+        MyAssertHandler(0xffffffff8218fea8,0x3f9,0,0xffffffff821905a8,local_800[0],0,iVar2);
       }
       if (local_800[0] != 0) {
         uVar5 = XPresenceSubscribe(uVar4,local_800[0],auStack_2d0);
@@ -659,9 +1069,9 @@ void Xenon_PresenceUpdate(void)
         }
         bVar1 = true;
       }
-      *(int *)(&DAT_8425e8a8 + iVar2) = iVar3;
-      if (iVar3 != 0) {
-        Com_Memcpy(uVar4 * 0x290 + -0x7bda1738,auStack_7f0,iVar3 << 3);
+      *(int *)(&DAT_8425e8a8 + iVar7) = iVar2;
+      if (iVar2 != 0) {
+        Com_Memcpy(uVar4 * 0x290 + -0x7bda1738,auStack_7f0,iVar2 << 3);
       }
       if (bVar1) {
         LiveParty_MarkPresenceForUpdate();
@@ -678,10 +1088,61 @@ void Xenon_PresenceUpdate(void)
 
 // 826548A8  Xenon_GetPresenceString  (xenon/xenon_presence.cpp:1059)
 
-void Xenon_GetPresenceString(void)
+void Xenon_GetPresenceString(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar2;
+  undefined8 uVar5;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x424,0,0xffffffff82000f98,0xffffffff8218ae50);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218fea8,0x425,0,0xffffffff82000f98,0xffffffff821906d4);
+  }
+  if ((int)param_3 < 1) {
+    MyAssertHandler(0xffffffff8218fea8,0x426,0,0xffffffff82000f98,0xffffffff820589cc);
+  }
+  uVar5 = 0xffffffff8218adfc;
+  if ((*(uint *)(iVar3 + 8) & 0x40000000) == 0) {
+    if ((*(uint *)(iVar3 + 8) & 0x80000000) != 0) {
+      uVar2 = 0xffffffff8218ae0c;
+      goto LAB_826549b8;
+    }
+    if ((*(int *)(iVar3 + 0x14) == 0x415608cb) &&
+       ((uVar2 = uVar5, *(int *)(iVar3 + 0x20) == 0 ||
+        (cVar4 = MakeWideCharNameSafeForAllLanguages(param_2,iVar3 + 0x24,param_3), cVar4 == '\0')))
+       ) goto LAB_826549b8;
+  }
+  else {
+    uVar2 = 0xffffffff8218ae30;
+LAB_826549b8:
+    uVar2 = SEH_SafeTranslateString(uVar2);
+    Com_sprintf(param_2,param_3,0xffffffff82000f98,uVar2);
+  }
+  uVar1 = *(uint *)(iVar3 + 8);
+  if ((uVar1 & 1) != 0) {
+    if ((uVar1 & 0xf0000) == 0x10000) {
+      uVar5 = 0xffffffff8218adec;
+      goto LAB_82654a38;
+    }
+    if ((uVar1 & 1) != 0) {
+      if ((uVar1 & 0xf0000) == 0x20000) {
+        uVar5 = 0xffffffff8218addc;
+        goto LAB_82654a38;
+      }
+      if ((uVar1 & 1) != 0) goto LAB_82654a38;
+    }
+  }
+  uVar5 = 0xffffffff8218adc8;
+LAB_82654a38:
+  uVar5 = SEH_SafeTranslateString(uVar5);
+  Com_sprintf(param_2,param_3,0xffffffff82000f98,uVar5);
+  __restgprlr_27();
+  return;
 }
 

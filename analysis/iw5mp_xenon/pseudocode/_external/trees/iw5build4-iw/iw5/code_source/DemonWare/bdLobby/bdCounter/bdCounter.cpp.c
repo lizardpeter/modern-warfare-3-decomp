@@ -9,3 +9,160 @@ void bdCounter__bdCounter(undefined4 *param_1,undefined4 param_2)
   return;
 }
 
+
+// 829017A0  bdCounter::~bdCounter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcounter.cpp:23)
+
+void bdCounter___bdCounter(void)
+
+{
+  return;
+}
+
+
+// 829017B0  bdCounter::incrementCounters  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcounter.cpp:27)
+
+void bdCounter__incrementCounters
+               (undefined8 param_1,undefined4 *param_2,longlong param_3,ulonglong param_4)
+
+{
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar5;
+  longlong lVar4;
+  uint *puVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  char in_RESERVE;
+  byte bVar10;
+  undefined1 local_60 [96];
+  
+  puVar5 = (undefined4 *)__savegprlr_23();
+  lVar7 = param_4 + 0x40;
+  lVar9 = param_3;
+  uVar8 = param_4;
+  uVar3 = param_4 & 0xffffffff;
+  while (uVar3 != 0) {
+    lVar4 = (**(code **)(*(int *)lVar9 + 8))(lVar9);
+    lVar7 = lVar4 + lVar7;
+    lVar9 = lVar9 + 0x10;
+    uVar8 = uVar8 - 1;
+    uVar3 = uVar8;
+  }
+  uVar8 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar8 & 0xffffffff) == 0;
+  bVar10 = bVar1 << 1;
+  if (bVar1) {
+    uVar8 = 0;
+  }
+  else {
+    uVar8 = bdTaskByteBuffer__bdTaskByteBuffer(uVar8,lVar7,1);
+  }
+  if ((uVar8 & 0xffffffff) != 0) {
+    do {
+      puVar6 = (uint *)(uVar8 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar8 + 4);
+        *puVar6 = uVar2;
+        bVar10 = 2;
+      }
+    } while (!(bool)(bVar10 >> 1 & 1));
+  }
+  *puVar5 = 0;
+  bdRemoteTaskManager__initTaskBuffer(local_60,0x17,1);
+  uVar3 = param_4 & 0xffffffff;
+  while (uVar3 != 0) {
+    (**(code **)(*(int *)param_3 + 0xc))(param_3,(int)uVar8);
+    param_3 = param_3 + 0x10;
+    param_4 = param_4 - 1;
+    uVar3 = param_4;
+  }
+  lVar7 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_60);
+  if (lVar7 != 0) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220dee4,0xffffffff8220def0,0xffffffff8220df40,0x33,
+                 0xffffffff8220c90c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+  __restgprlr_23(puVar5);
+  return;
+}
+
+
+// 829019B0  bdCounter::getCounterTotals  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcounter.cpp:63)
+
+void bdCounter__getCounterTotals
+               (undefined8 param_1,undefined4 *param_2,longlong param_3,ulonglong param_4)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  char cVar5;
+  uint *puVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  char in_RESERVE;
+  byte bVar9;
+  undefined1 local_60 [96];
+  
+  puVar4 = (undefined4 *)__savegprlr_24();
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar9 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,param_4 * 5 + 0x40,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar6 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar3 + 4);
+        *puVar6 = uVar2;
+        bVar9 = 2;
+      }
+    } while (!(bool)(bVar9 >> 1 & 1));
+  }
+  *puVar4 = 0;
+  bdRemoteTaskManager__initTaskBuffer(local_60,0x17,2);
+  bVar1 = true;
+  if ((param_4 & 0xffffffff) != 0) {
+    lVar7 = param_3 + 4;
+    uVar8 = param_4;
+    do {
+      if (bVar1) {
+        cVar5 = bdByteBuffer__writeUInt32((int)uVar3,*(undefined4 *)lVar7);
+        bVar1 = true;
+        if (cVar5 == '\0') goto LAB_82901a8c;
+      }
+      else {
+LAB_82901a8c:
+        bVar1 = false;
+      }
+      uVar8 = uVar8 - 1;
+      lVar7 = lVar7 + 0x10;
+    } while (uVar8 != 0);
+  }
+  if (bVar1) {
+    lVar7 = bdRemoteTaskManager__startTask(*param_2,puVar4,local_60);
+    if (lVar7 == 0) {
+      bdRemoteTask__setTaskResult(*puVar4,param_3,param_4);
+    }
+    else {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8220dee4,0xffffffff8220def0,0xffffffff8220dfd0,
+                   0x54,0xffffffff8220c90c);
+    }
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220dee4,0xffffffff8220def0,0xffffffff8220dfd0,0x5d,
+                 0xffffffff8220c89c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+  __restgprlr_24(puVar4);
+  return;
+}
+

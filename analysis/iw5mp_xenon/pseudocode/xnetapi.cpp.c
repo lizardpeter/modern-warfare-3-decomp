@@ -72,6 +72,36 @@ void XNetServerToInAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3
 }
 
 
+// 828B8440  XNetInAddrToXnAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetInAddrToXnAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  NetDll_XNetInAddrToXnAddr(1,param_1,param_2,param_3);
+  return;
+}
+
+
+// 828B8458  XNetInAddrToString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetInAddrToString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  NetDll_XNetInAddrToString(1,param_1,param_2,param_3);
+  return;
+}
+
+
+// 828B8470  XNetUnregisterInAddr  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetUnregisterInAddr(undefined8 param_1)
+
+{
+  NetDll_XNetUnregisterInAddr(1,param_1);
+  return;
+}
+
+
 // 828B8480  XNetXnAddrToMachineId  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
 void XNetXnAddrToMachineId(undefined8 param_1,undefined8 param_2)
@@ -102,6 +132,26 @@ void XNetGetConnectStatus(undefined8 param_1)
 }
 
 
+// 828B84B0  XNetDnsLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetDnsLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  NetDll_XNetDnsLookup(1,param_1,param_2,param_3);
+  return;
+}
+
+
+// 828B84C8  XNetDnsRelease  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetDnsRelease(undefined8 param_1)
+
+{
+  NetDll_XNetDnsRelease(1,param_1);
+  return;
+}
+
+
 // 828B84D8  XNetQosListen  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
 void XNetQosListen(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
@@ -109,6 +159,31 @@ void XNetQosListen(undefined8 param_1,undefined8 param_2,undefined8 param_3,unde
 
 {
   NetDll_XNetQosListen(1,param_1,param_2,param_3,param_4,param_5);
+  return;
+}
+
+
+// 828B84F8  XNetQosLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetQosLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  NetDll_XNetQosLookup(1,uVar1,param_2,param_3,param_4,param_5,param_6,param_7);
+  __restgprlr_28();
+  return;
+}
+
+
+// 828B8558  XNetQosServiceLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
+
+void XNetQosServiceLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  NetDll_XNetQosServiceLookup(1,param_1,param_2,param_3);
   return;
 }
 

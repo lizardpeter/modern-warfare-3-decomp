@@ -681,3 +681,49 @@ default:
 ; 8281B300  vp8_recon_intra4x4mb  (WebM_atvi_opt/vpx/vp8/common/reconintra4x4.c:321)
   8281B300  7D8802A6             mfspr r12,LR
   8281B304  480FB3B5             bl 0x829166b8
+  8281B308  9421FF80             stwu r1,-0x80(r1)
+  8281B30C  81240B20             lwz r9,0xb20(r4)
+  8281B310  7C9E2378             or r30,r4,r4
+  8281B314  81640B28             lwz r11,0xb28(r4)
+  8281B318  3BE40B20             addi r31,r4,0xb20
+  8281B31C  80E40B24             lwz r7,0xb24(r4)
+  8281B320  7C7C1B78             or r28,r3,r3
+  8281B324  5568083C             rlwinm r8,r11,0x1,0x0,0x1e
+  8281B328  7D4B3850             subf r10,r11,r7
+  8281B32C  81290000             lwz r9,0x0(r9)
+  8281B330  7CCB4214             add r6,r11,r8
+  8281B334  55681838             rlwinm r8,r11,0x3,0x0,0x1c
+  8281B338  7D4A4A14             add r10,r10,r9
+  8281B33C  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  8281B340  396A0010             addi r11,r10,0x10
+  8281B344  54C9103A             rlwinm r9,r6,0x2,0x0,0x1d
+  8281B348  3BA00010             li r29,0x10
+  8281B34C  808A0010             lwz r4,0x10(r10)
+  8281B350  7C85592E             stwx r4,r5,r11
+  8281B354  806A0010             lwz r3,0x10(r10)
+  8281B358  7C68592E             stwx r3,r8,r11
+  8281B35C  814A0010             lwz r10,0x10(r10)
+  8281B360  7D49592E             stwx r10,r9,r11
+LAB_8281b364:
+  8281B364  387FFFDC             subi r3,r31,0x24
+  8281B368  80BFFFE4             lwz r5,-0x1c(r31)
+  8281B36C  809F0010             lwz r4,0x10(r31)
+  8281B370  4BFFF539             bl 0x8281a8a8
+  8281B374  815F0000             lwz r10,0x0(r31)
+  8281B378  813C000C             lwz r9,0xc(r28)
+  8281B37C  817F0004             lwz r11,0x4(r31)
+  8281B380  80DF0008             lwz r6,0x8(r31)
+  8281B384  809FFFE8             lwz r4,-0x18(r31)
+  8281B388  807FFFE4             lwz r3,-0x1c(r31)
+  8281B38C  7D2903A6             mtspr CTR,r9
+  8281B390  814A0000             lwz r10,0x0(r10)
+  8281B394  7CAB5214             add r5,r11,r10
+  8281B398  4E800421             bctrl
+  8281B39C  37BDFFFF             subic. r29,r29,0x1
+  8281B3A0  3BFF003C             addi r31,r31,0x3c
+  8281B3A4  4082FFC0             bne 0x8281b364
+  8281B3A8  7FC4F378             or r4,r30,r30
+  8281B3AC  7F83E378             or r3,r28,r28
+  8281B3B0  4BFFE331             bl 0x828196e0
+  8281B3B4  38210080             addi r1,r1,0x80
+  8281B3B8  480FB350             b 0x82916708

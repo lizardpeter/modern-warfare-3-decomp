@@ -3,6 +3,24 @@
 ; 828A5400  CopyFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/copyfile.c:58)
   828A5400  7D8802A6             mfspr r12,LR
   828A5404  480712B9             bl 0x829166bc
+  828A5408  9421FF90             stwu r1,-0x70(r1)
+  828A540C  7C7F1B78             or r31,r3,r3
+  828A5410  7C9E2378             or r30,r4,r4
+  828A5414  7CBD2B78             or r29,r5,r5
+  828A5418  7DAD6B78             or r13,r13,r13
+  828A541C  317DFFFF             subic r11,r29,0x1
+  828A5420  38E00000             li r7,0x0
+  828A5424  7D0BE910             subfe r8,r11,r29
+  828A5428  38C00000             li r6,0x0
+  828A542C  38A00000             li r5,0x0
+  828A5430  7FC4F378             or r4,r30,r30
+  828A5434  7FE3FB78             or r3,r31,r31
+  828A5438  4BFFFC59             bl 0x828a5090
+  828A543C  7C7F1B78             or r31,r3,r3
+  828A5440  7DCE7378             or r14,r14,r14
+  828A5444  7FE3FB78             or r3,r31,r31
+  828A5448  38210070             addi r1,r1,0x70
+  828A544C  480712C0             b 0x8291670c
 
 ; 828A5090  CopyFileExA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/copyfile.c:120)
   828A5090  7D8802A6             mfspr r12,LR

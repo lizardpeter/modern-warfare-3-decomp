@@ -22,8 +22,25 @@ void bdPacket__bdPacket(undefined4 *param_1)
 void bdLinkedList<bdReference<bdChunk>_>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_29();
+  while( true ) {
+    if (*piVar3 == 0) break;
+    iVar1 = *piVar3;
+    iVar2 = *(int *)(iVar1 + 4);
+    if (iVar1 != 0) {
+      bdReference<bdChunk>___bdReference<bdChunk>(iVar1);
+      bdMemory__deallocate(iVar1);
+    }
+    *piVar3 = iVar2;
+  }
+  piVar3[1] = 0;
+  piVar3[2] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -61,11 +78,172 @@ void bdPacket___bdPacket(undefined4 *param_1)
 
 // 8293AC10  bdPacket::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdpacket.cpp:51)
 
-void bdPacket__serialize(void)
+void bdPacket__serialize(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint *puVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  int iVar7;
+  char cVar9;
+  ulonglong uVar6;
+  int iVar8;
+  int **ppiVar10;
+  undefined1 *puVar11;
+  uint *puVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  uint uVar16;
+  char in_RESERVE;
+  byte in_cr0;
+  longlong lVar17;
+  undefined4 local_90;
+  undefined1 auStack_8c [2];
+  undefined1 auStack_8a [2];
+  uint local_88;
+  undefined1 auStack_84 [4];
+  int *local_80;
+  undefined4 local_7c [31];
+  
+  iVar7 = __savegprlr_18();
+  local_88 = 2;
+  lVar17 = 4;
+  iVar8 = 0;
+  ppiVar10 = &local_80;
+  do {
+    puVar11 = (undefined1 *)(iVar8 + iVar7 + 0x14);
+    iVar8 = iVar8 + 1;
+    ppiVar10 = (int **)((int)ppiVar10 + -1);
+    *(undefined1 *)ppiVar10 = *puVar11;
+    lVar17 = lVar17 + -1;
+  } while (lVar17 != 0);
+  cVar9 = bdBytePacker__appendBuffer(param_2,param_3,2,&local_88,auStack_84,4);
+  uVar14 = param_3 - (ulonglong)local_88;
+  uVar13 = (ulonglong)local_88 - 2;
+  puVar12 = *(uint **)(iVar7 + 4);
+  while ((puVar12 != (uint *)0x0 && (in_cr0 = (cVar9 == '\0') << 1, cVar9 != '\0'))) {
+    puVar1 = (uint *)puVar12[1];
+    piVar2 = (int *)*puVar12;
+    uVar15 = ZEXT48(piVar2);
+    if (uVar15 != 0) {
+      do {
+        puVar12 = (uint *)(uVar15 + 4);
+        if (in_RESERVE != '\0') {
+          uVar16 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,uVar15 + 4);
+          *puVar12 = uVar16;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1));
+    }
+    local_90 = piVar2;
+    uVar6 = (**(code **)(*piVar2 + 0x10))(uVar15);
+    if ((uVar14 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+      cVar9 = '\0';
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff822199b0,0xffffffff82219d90,0xffffffff82219d78,
+                   0x51,0xffffffff82219d50);
+    }
+    else {
+      uVar14 = uVar14 - uVar6;
+      lVar17 = (**(code **)(*piVar2 + 8))
+                         (uVar15,(ulonglong)local_88 + param_2,param_3 - (ulonglong)local_88);
+      uVar13 = lVar17 + uVar13;
+      local_88 = (int)lVar17 + local_88;
+    }
+    bdReference<bdChunk>___bdReference<bdChunk>(&local_90);
+    puVar12 = puVar1;
+  }
+  puVar5 = *(undefined4 **)(iVar7 + 4);
+  while ((puVar5 != (undefined4 *)0x0 && (cVar9 != '\0'))) {
+    puVar3 = (undefined4 *)puVar5[1];
+    piVar2 = (int *)*puVar5;
+    uVar14 = ZEXT48(piVar2);
+    if (uVar14 != 0) {
+      do {
+        puVar12 = (uint *)(uVar14 + 4);
+        if (in_RESERVE != '\0') {
+          uVar16 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,uVar14 + 4);
+          *puVar12 = uVar16;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+    }
+    local_80 = piVar2;
+    iVar8 = (**(code **)(*piVar2 + 4))(uVar14);
+    if (iVar8 == 2) {
+      lVar17 = uVar14 + 4;
+      do {
+        puVar12 = (uint *)lVar17;
+        if (in_RESERVE != '\0') {
+          uVar16 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,lVar17);
+          *puVar12 = uVar16;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      local_90 = piVar2;
+      bdReference<bdChunk>___bdReference<bdChunk>(&local_90);
+      do {
+        if (in_RESERVE != '\0') {
+          uVar16 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,lVar17);
+          *puVar12 = uVar16;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      local_90 = piVar2;
+      iVar8 = bdDataChunk__serializeUnencrypted
+                        (uVar14,(ulonglong)local_88 + param_2,param_3 - (ulonglong)local_88);
+      local_88 = iVar8 + local_88;
+      bdReference<bdDataChunk>___bdReference<bdDataChunk>(&local_90);
+    }
+    bdReference<bdChunk>___bdReference<bdChunk>(&local_80);
+    puVar5 = puVar3;
+  }
+  uVar16 = 0;
+  if (cVar9 != '\0') {
+    local_90 = (int *)CONCAT22((short)uVar13,SUB42(local_90,0));
+    if ((uVar13 & 0xffff) == (uVar13 & 0xffffffff)) {
+      iVar8 = 0;
+      local_7c[0] = 0;
+      puVar11 = auStack_8a;
+      lVar17 = 2;
+      do {
+        iVar4 = iVar8 + -4;
+        iVar8 = iVar8 + 1;
+        puVar11 = puVar11 + -1;
+        *puVar11 = auStack_8c[iVar4];
+        lVar17 = lVar17 + -1;
+      } while (lVar17 != 0);
+      cVar9 = bdBytePacker__appendBuffer(param_2,param_3,0,local_7c,auStack_8c,2);
+      if (cVar9 != '\0') {
+        uVar16 = local_88;
+      }
+    }
+    else {
+      bdLogMessage(2,0xffffffff8220a58c,0xffffffff822199b0,0xffffffff82219d90,0xffffffff82219d78,
+                   0x76,0xffffffff82219d18);
+    }
+  }
+  if (*(uint *)(iVar7 + 0x1c) != uVar16) {
+    MyAssertHandler(0xffffffff82219d90,0x7a,0,0xffffffff820011f4,0xffffffff82219cd8,
+                    0xffffffff82219cfc);
+  }
+  __restgprlr_18(uVar16);
+  return;
+}
+
+
+// 8293ABA0  bdLinkedList<bdReference<bdChunk>_>::getHead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:53)
+
+int bdLinkedList<bdReference<bdChunk>_>__getHead(int *param_1)
+
+{
+  if (*param_1 == 0) {
+    MyAssertHandler(0xffffffff8220d4a8,0x37,0,0xffffffff820011f4,0xffffffff8220d460,
+                    0xffffffff8220d470);
+  }
+  return *param_1;
 }
 
 
@@ -119,11 +297,145 @@ uint * bdReference<bdChunk>__operator_(uint *param_1,uint *param_2)
 
 // 8293B208  bdPacket::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdpacket.cpp:129)
 
-void bdPacket__deserialize(void)
+/* WARNING: Removing unreachable block (ram,0x8293b2e4) */
+/* WARNING: Removing unreachable block (ram,0x8293b5c0) */
+/* WARNING: Removing unreachable block (ram,0x8293b5c8) */
+/* WARNING: Removing unreachable block (ram,0x8293b660) */
+/* WARNING: Removing unreachable block (ram,0x8293b5d0) */
+/* WARNING: Removing unreachable block (ram,0x8293b5d8) */
+/* WARNING: Removing unreachable block (ram,0x8293b5e8) */
+/* WARNING: Removing unreachable block (ram,0x8293b5ec) */
+/* WARNING: Removing unreachable block (ram,0x8293b5f4) */
+/* WARNING: Removing unreachable block (ram,0x8293b604) */
+/* WARNING: Removing unreachable block (ram,0x8293b614) */
+/* WARNING: Removing unreachable block (ram,0x8293b618) */
+/* WARNING: Removing unreachable block (ram,0x8293b620) */
+/* WARNING: Removing unreachable block (ram,0x8293b690) */
+/* WARNING: Removing unreachable block (ram,0x8293b6ac) */
+/* WARNING: Removing unreachable block (ram,0x8293b698) */
+/* WARNING: Removing unreachable block (ram,0x8293b6cc) */
+/* WARNING: Removing unreachable block (ram,0x8293b324) */
+/* WARNING: Removing unreachable block (ram,0x8293b32c) */
+/* WARNING: Removing unreachable block (ram,0x8293b334) */
+/* WARNING: Removing unreachable block (ram,0x8293b594) */
+/* WARNING: Removing unreachable block (ram,0x8293b358) */
+/* WARNING: Removing unreachable block (ram,0x8293b4d8) */
+/* WARNING: Removing unreachable block (ram,0x8293b4f8) */
+/* WARNING: Removing unreachable block (ram,0x8293b4ec) */
+/* WARNING: Removing unreachable block (ram,0x8293b4fc) */
+/* WARNING: Removing unreachable block (ram,0x8293b4ac) */
+/* WARNING: Removing unreachable block (ram,0x8293b4cc) */
+/* WARNING: Removing unreachable block (ram,0x8293b4c0) */
+/* WARNING: Removing unreachable block (ram,0x8293b4d0) */
+/* WARNING: Removing unreachable block (ram,0x8293b4a0) */
+/* WARNING: Removing unreachable block (ram,0x8293b568) */
+/* WARNING: Removing unreachable block (ram,0x8293b588) */
+/* WARNING: Removing unreachable block (ram,0x8293b57c) */
+/* WARNING: Removing unreachable block (ram,0x8293b58c) */
+/* WARNING: Removing unreachable block (ram,0x8293b53c) */
+/* WARNING: Removing unreachable block (ram,0x8293b55c) */
+/* WARNING: Removing unreachable block (ram,0x8293b550) */
+/* WARNING: Removing unreachable block (ram,0x8293b560) */
+/* WARNING: Removing unreachable block (ram,0x8293b510) */
+/* WARNING: Removing unreachable block (ram,0x8293b530) */
+/* WARNING: Removing unreachable block (ram,0x8293b524) */
+/* WARNING: Removing unreachable block (ram,0x8293b534) */
+/* WARNING: Removing unreachable block (ram,0x8293b504) */
+/* WARNING: Removing unreachable block (ram,0x8293b6b4) */
+/* WARNING: Removing unreachable block (ram,0x8293b41c) */
+/* WARNING: Removing unreachable block (ram,0x8293b43c) */
+/* WARNING: Removing unreachable block (ram,0x8293b430) */
+/* WARNING: Removing unreachable block (ram,0x8293b440) */
+/* WARNING: Removing unreachable block (ram,0x8293b3f0) */
+/* WARNING: Removing unreachable block (ram,0x8293b410) */
+/* WARNING: Removing unreachable block (ram,0x8293b404) */
+/* WARNING: Removing unreachable block (ram,0x8293b414) */
+/* WARNING: Removing unreachable block (ram,0x8293b3c4) */
+/* WARNING: Removing unreachable block (ram,0x8293b3e4) */
+/* WARNING: Removing unreachable block (ram,0x8293b3d8) */
+/* WARNING: Removing unreachable block (ram,0x8293b3e8) */
+/* WARNING: Removing unreachable block (ram,0x8293b474) */
+/* WARNING: Removing unreachable block (ram,0x8293b494) */
+/* WARNING: Removing unreachable block (ram,0x8293b488) */
+/* WARNING: Removing unreachable block (ram,0x8293b498) */
+/* WARNING: Removing unreachable block (ram,0x8293b448) */
+/* WARNING: Removing unreachable block (ram,0x8293b468) */
+/* WARNING: Removing unreachable block (ram,0x8293b45c) */
+/* WARNING: Removing unreachable block (ram,0x8293b46c) */
+/* WARNING: Removing unreachable block (ram,0x8293b390) */
+/* WARNING: Removing unreachable block (ram,0x8293b3b0) */
+/* WARNING: Removing unreachable block (ram,0x8293b3a4) */
+/* WARNING: Removing unreachable block (ram,0x8293b3b4) */
+/* WARNING: Removing unreachable block (ram,0x8293b3b8) */
+/* WARNING: Removing unreachable block (ram,0x8293b5b8) */
+/* WARNING: Removing unreachable block (ram,0x8293b380) */
+/* WARNING: Recovered jumptable eliminated as dead code */
+
+void bdPacket__deserialize(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined1 uVar4;
+  undefined1 local_b0 [4];
+  undefined1 local_ac [172];
+  
+  lVar2 = __savegprlr();
+  if (((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) < 7)) {
+    bVar1 = false;
+  }
+  else {
+    bVar1 = true;
+  }
+  if (bVar1) {
+    cVar3 = bdBytePacker__removeBasicType<unsigned_short>(param_2,param_3,0,local_ac,local_b0);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8293b27c;
+  }
+  else {
+LAB_8293b27c:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdBytePacker__removeBasicType<unsigned_int>(param_2,0,0,local_ac,lVar2 + 0x14);
+    uVar4 = 1;
+    if (cVar3 != '\0') goto LAB_8293b2d8;
+  }
+  uVar4 = 0;
+LAB_8293b2d8:
+  __restgprlr(uVar4);
+  return;
+}
+
+
+// 8293B158  bdLinkedList<bdReference<bdChunk>_>::removeAt  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:209)
+
+void bdLinkedList<bdReference<bdChunk>_>__removeAt(int *param_1,int *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = *param_2;
+  if (iVar1 != 0) {
+    *param_2 = *(int *)(iVar1 + 4);
+    if (iVar1 == *param_1) {
+      *param_1 = *(int *)(*param_1 + 4);
+    }
+    else {
+      *(undefined4 *)(*(int *)(iVar1 + 8) + 4) = *(undefined4 *)(iVar1 + 4);
+    }
+    if (iVar1 == param_1[1]) {
+      param_1[1] = *(int *)(iVar1 + 8);
+    }
+    else {
+      *(undefined4 *)(*(int *)(iVar1 + 4) + 8) = *(undefined4 *)(iVar1 + 8);
+    }
+    bdReference<bdChunk>___bdReference<bdChunk>(iVar1);
+    bdMemory__deallocate(iVar1);
+    param_1[2] = param_1[2] + -1;
+  }
+  return;
 }
 
 
@@ -138,21 +450,52 @@ undefined4 bdPacket__getVerificationTag(int param_1)
 
 // 8293B900  bdPacket::addChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdpacket.cpp:252)
 
-void bdPacket__addChunk(void)
+void bdPacket__addChunk(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  
+  iVar2 = __savegprlr_27();
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82219d90,0xfd,0,0xffffffff820011f4,0xffffffff82218ddc,
+                    0xffffffff822191fc);
+  }
+  iVar3 = (**(code **)(*(int *)*(int *)param_2 + 0x10))();
+  uVar4 = iVar3 + *(int *)(iVar2 + 0x1c);
+  bVar1 = uVar4 <= *(uint *)(iVar2 + 0x18);
+  if (bVar1) {
+    bdLinkedList<bdReference<bdChunk>_>__insertAfter(iVar2 + 4,*(undefined4 *)(iVar2 + 8),param_2);
+    *(uint *)(iVar2 + 0x1c) = uVar4;
+  }
+  bdReference<bdChunk>___bdReference<bdChunk>(param_2);
+  __restgprlr_27(bVar1);
+  return;
 }
 
 
 // 8293BAD0  bdPacket::getNextChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdpacket.cpp:273)
 
-void bdPacket__getNextChunk(void)
+void bdPacket__getNextChunk(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 local_30 [12];
+  
+  iVar3 = __savegprlr_29();
+  bVar1 = *(int *)(iVar3 + 0xc) != 0;
+  if (bVar1) {
+    uVar2 = bdLinkedList<bdReference<bdChunk>_>__getHead(iVar3 + 4);
+    bdReference<bdChunk>__operator_(param_2,uVar2);
+    local_30[0] = *(undefined4 *)(iVar3 + 4);
+    bdLinkedList<bdReference<bdChunk>_>__removeAt(iVar3 + 4,local_30);
+  }
+  __restgprlr_29(bVar1);
+  return;
 }
 
 
@@ -167,11 +510,71 @@ bool bdPacket__isEmpty(int param_1)
 
 // 8293AFE8  bdLinkedList<bdReference<bdChunk>_>::insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
-void bdLinkedList<bdReference<bdChunk>_>__insertAfter(void)
+void bdLinkedList<bdReference<bdChunk>_>__insertAfter
+               (undefined8 param_1,ulonglong param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  undefined4 *puVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  puVar5 = (uint *)bdMemory__allocate(0xc);
+  if (puVar5 == (uint *)0x0) {
+    puVar5 = (uint *)0x0;
+  }
+  else {
+    uVar1 = *param_3;
+    *puVar5 = uVar1;
+    if ((ulonglong)uVar1 != 0) {
+      lVar6 = (ulonglong)uVar1 + 4;
+      bVar3 = false;
+      do {
+        puVar7 = (uint *)lVar6;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar1;
+          bVar3 = true;
+        }
+      } while (!bVar3);
+    }
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    puVar5[1] = 0;
+    puVar5[2] = puVar4[1];
+    if (puVar4[1] == 0) {
+      *puVar4 = puVar5;
+    }
+    else {
+      *(uint **)(puVar4[1] + 4) = puVar5;
+    }
+    puVar4[1] = puVar5;
+  }
+  else {
+    uVar2 = (uint)param_2;
+    uVar1 = *(uint *)(uVar2 + 4);
+    puVar5[2] = uVar2;
+    puVar5[1] = uVar1;
+    if (*(int *)(uVar2 + 4) == 0) {
+      if ((param_2 & 0xffffffff) != (ulonglong)(uint)puVar4[1]) {
+        MyAssertHandler(0xffffffff8220d4a8,0x16b,0,0xffffffff820011f4,0xffffffff8220d61c,
+                        0xffffffff8220d630);
+      }
+      puVar4[1] = puVar5;
+    }
+    else {
+      *(uint **)(*(int *)(uVar2 + 4) + 8) = puVar5;
+    }
+    *(uint **)(uVar2 + 4) = puVar5;
+  }
+  puVar4[2] = puVar4[2] + 1;
+  __restgprlr_29();
+  return;
 }
 
 

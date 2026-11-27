@@ -2,11 +2,40 @@
 
 // 82254428  ltc_init_multi  (line unknown)
 
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
 void ltc_init_multi(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined1 *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  iVar5 = 0;
+  puVar2 = &stack0x00000018;
+  puVar1 = puVar3;
+  while( true ) {
+    if (puVar1 == (undefined4 *)0x0) {
+      __restgprlr_29(0);
+      return;
+    }
+    iVar4 = (*DAT_84897ee8)();
+    if (iVar4 != 0) break;
+    iVar5 = iVar5 + 1;
+    puVar1 = *(undefined4 **)(puVar2 + 4);
+    puVar2 = puVar2 + 8;
+  }
+  puVar2 = &stack0x00000018;
+  for (; iVar5 != 0; iVar5 = iVar5 + -1) {
+    (*DAT_84897ef0)(*puVar3);
+    puVar3 = *(undefined4 **)(puVar2 + 4);
+    puVar2 = puVar2 + 8;
+  }
+  __restgprlr_29(0xd);
+  return;
 }
 
 

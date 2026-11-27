@@ -26,11 +26,25 @@ void bdCounterValue__serialize(int param_1,undefined8 param_2)
 
 // 82901CE0  bdCounterValue::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcounter/bdcountervalue.cpp:24)
 
-void bdCounterValue__deserialize(void)
+void bdCounterValue__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt32(*(undefined4 *)param_2,lVar1 + 4);
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readInt64(*(undefined4 *)param_2,lVar1 + 8);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_82901d38;
+  }
+  uVar3 = 0;
+LAB_82901d38:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 

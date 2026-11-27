@@ -30,6 +30,41 @@
 ; 828F48D0  bdLogSubscriber::addChannel  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:43)
   828F48D0  7D8802A6             mfspr r12,LR
   828F48D4  48021DE9             bl 0x829166bc
+  828F48D8  9421FF90             stwu r1,-0x70(r1)
+  828F48DC  7C7E1B78             or r30,r3,r3
+  828F48E0  3BA00000             li r29,0x0
+  828F48E4  39400000             li r10,0x0
+  828F48E8  39630010             addi r11,r3,0x10
+LAB_828f48ec:
+  828F48EC  2B0A0005             cmplwi cr6,r10,0x5
+  828F48F0  40980028             bge cr6,0x828f4918
+  828F48F4  812B0000             lwz r9,0x0(r11)
+  828F48F8  2B090000             cmplwi cr6,r9,0x0
+  828F48FC  409A000C             bne cr6,0x828f4908
+  828F4900  3BA00001             li r29,0x1
+  828F4904  908B0000             stw r4,0x0(r11)
+LAB_828f4908:
+  828F4908  57A9063F             rlwinm. r9,r29,0x0,0x18,0x1f
+  828F490C  394A0001             addi r10,r10,0x1
+  828F4910  396B0004             addi r11,r11,0x4
+  828F4914  4182FFD8             beq 0x828f48ec
+LAB_828f4918:
+  828F4918  57AB063F             rlwinm. r11,r29,0x0,0x18,0x1f
+  828F491C  4182002C             beq 0x828f4948
+  828F4920  3D608489             lis r11,-0x7b77
+  828F4924  7FC4F378             or r4,r30,r30
+  828F4928  3BEB5D58             addi r31,r11,0x5d58
+  828F492C  806B5D58             lwz r3,0x5d58(r11)
+  828F4930  48000489             bl 0x828f4db8
+  828F4934  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F4938  40820010             bne 0x828f4948
+  828F493C  7FE4FB78             or r4,r31,r31
+  828F4940  7FC3F378             or r3,r30,r30
+  828F4944  480004B5             bl 0x828f4df8
+LAB_828f4948:
+  828F4948  7FA3EB78             or r3,r29,r29
+  828F494C  38210070             addi r1,r1,0x70
+  828F4950  48021DBC             b 0x8291670c
 
 ; 828F4958  bdLogSubscriber::publish  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:119)
   828F4958  7D254B78             or r5,r9,r9
@@ -56,6 +91,33 @@ LAB_828f4990:
 ; 828F4A40  bdSnprintf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:188)
   828F4A40  7D8802A6             mfspr r12,LR
   828F4A44  48021C71             bl 0x829166b4
+  828F4A48  F8C10028             std r6,0x28(r1)
+  828F4A4C  F8E10030             std r7,0x30(r1)
+  828F4A50  F9010038             std r8,0x38(r1)
+  828F4A54  F9210040             std r9,0x40(r1)
+  828F4A58  F9410048             std r10,0x48(r1)
+  828F4A5C  9421FF70             stwu r1,-0x90(r1)
+  828F4A60  90A100B4             stw r5,0xb4(r1)
+  828F4A64  39610050             addi r11,r1,0x50
+  828F4A68  394100B8             addi r10,r1,0xb8
+  828F4A6C  7C7E1B78             or r30,r3,r3
+  828F4A70  7C9D2378             or r29,r4,r4
+  828F4A74  7CA32B78             or r3,r5,r5
+  828F4A78  914B0000             stw r10,0x0(r11)
+  828F4A7C  7CBC2B78             or r28,r5,r5
+  828F4A80  83E10050             lwz r31,0x50(r1)
+  828F4A84  7FE4FB78             or r4,r31,r31
+  828F4A88  480284E9             bl 0x8291cf70
+  828F4A8C  7C7B1B78             or r27,r3,r3
+  828F4A90  7FE7FB78             or r7,r31,r31
+  828F4A94  7F86E378             or r6,r28,r28
+  828F4A98  38A0FFFF             li r5,-0x1
+  828F4A9C  7FA4EB78             or r4,r29,r29
+  828F4AA0  7FC3F378             or r3,r30,r30
+  828F4AA4  48025F8D             bl 0x8291aa30
+  828F4AA8  7F63DB78             or r3,r27,r27
+  828F4AAC  38210090             addi r1,r1,0x90
+  828F4AB0  48021C54             b 0x82916704
 
 ; 828F49A8  bdLogSubscriber::logMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:203)
   828F49A8  7D8802A6             mfspr r12,LR

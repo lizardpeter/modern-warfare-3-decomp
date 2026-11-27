@@ -20,12 +20,51 @@ void bdConnection___bdConnection(undefined4 *param_1)
 }
 
 
+// 82930268  bdConnection::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:19)
+
+void bdConnection__getAddress(uint *param_1,int param_2)
+
+{
+  uint uVar1;
+  longlong lVar2;
+  uint *puVar3;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar1 = *(uint *)(param_2 + 8);
+  *param_1 = uVar1;
+  if ((ulonglong)uVar1 == 0) {
+    return;
+  }
+  lVar2 = (ulonglong)uVar1 + 4;
+  do {
+    puVar3 = (uint *)lVar2;
+    if (in_RESERVE != '\0') {
+      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar2);
+      *puVar3 = uVar1;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  return;
+}
+
+
 // 82930220  bdConnection::getAddressHandle  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:24)
 
 longlong bdConnection__getAddressHandle(longlong param_1)
 
 {
   return param_1 + 0xc;
+}
+
+
+// 829302A0  bdConnection::setAddressHandle  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:29)
+
+void bdConnection__setAddressHandle(longlong param_1)
+
+{
+  bdReference<bdAddrHandle>__operator_(param_1 + 0xc);
+  return;
 }
 
 

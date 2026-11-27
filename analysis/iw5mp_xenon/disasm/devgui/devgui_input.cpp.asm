@@ -103,6 +103,176 @@ LAB_8240ad84:
   8240ADC8  EBE1FFF0             ld r31,-0x10(r1)
   8240ADCC  4E800020             blr
 
+; 8240A458  DevGui_UpdateScrollStates  (devgui/devgui_input.cpp:207)
+  8240A458  FBC1FFF0             std r30,-0x10(r1)
+  8240A45C  FBE1FFF8             std r31,-0x8(r1)
+  8240A460  7D462050             subf r10,r6,r4
+  8240A464  3D208200             lis r9,-0x7e00
+  8240A468  3C808200             lis r4,-0x7e00
+  8240A46C  3FC08200             lis r30,-0x7e00
+  8240A470  3BE00002             li r31,0x2
+  8240A474  7C662850             subf r3,r6,r5
+  8240A478  7CCB3378             or r11,r6,r6
+  8240A47C  C1691A6C             lfs f11,0x1a6c(r9)
+  8240A480  C184244C             lfs f12,0x244c(r4)
+  8240A484  7FE8FB78             or r8,r31,r31
+  8240A488  C1BE13F8             lfs f13,0x13f8(r30)
+  8240A48C  38A00000             li r5,0x0
+  8240A490  38C00003             li r6,0x3
+  8240A494  38E00001             li r7,0x1
+LAB_8240a498:
+  8240A498  7C035C2E             lfsx f0,r3,r11
+  8240A49C  FF006800             fcmpu cr6,f0,f13
+  8240A4A0  409A0010             bne cr6,0x8240a4b0
+  8240A4A4  7CAA592E             stwx r5,r10,r11
+  8240A4A8  D1AB0000             stfs f13,0x0(r11)
+  8240A4AC  48000058             b 0x8240a504
+LAB_8240a4b0:
+  8240A4B0  7D2A582E             lwzx r9,r10,r11
+  8240A4B4  2B090001             cmplwi cr6,r9,0x1
+  8240A4B8  4198003C             blt cr6,0x8240a4f4
+  8240A4BC  419A002C             beq cr6,0x8240a4e8
+  8240A4C0  C00B0000             lfs f0,0x0(r11)
+  8240A4C4  2B090003             cmplwi cr6,r9,0x3
+  8240A4C8  ED41002A             fadds f10,f1,f0
+  8240A4CC  D14B0000             stfs f10,0x0(r11)
+  8240A4D0  40980034             bge cr6,0x8240a504
+  8240A4D4  FF0A6000             fcmpu cr6,f10,f12
+  8240A4D8  4099002C             ble cr6,0x8240a504
+  8240A4DC  7CCA592E             stwx r6,r10,r11
+  8240A4E0  D1AB0000             stfs f13,0x0(r11)
+  8240A4E4  48000020             b 0x8240a504
+LAB_8240a4e8:
+  8240A4E8  7FEA592E             stwx r31,r10,r11
+  8240A4EC  D1AB0000             stfs f13,0x0(r11)
+  8240A4F0  48000014             b 0x8240a504
+LAB_8240a4f4:
+  8240A4F4  FC000210             fabs f0,f0
+  8240A4F8  FF005800             fcmpu cr6,f0,f11
+  8240A4FC  40990008             ble cr6,0x8240a504
+  8240A500  7CEA592E             stwx r7,r10,r11
+LAB_8240a504:
+  8240A504  3508FFFF             subic. r8,r8,0x1
+  8240A508  396B0004             addi r11,r11,0x4
+  8240A50C  4082FF8C             bne 0x8240a498
+  8240A510  EBC1FFF0             ld r30,-0x10(r1)
+  8240A514  EBE1FFF8             ld r31,-0x8(r1)
+  8240A518  4E800020             blr
+
+; 8240A520  DevGui_UpdateMenuScroll  (devgui/devgui_input.cpp:252)
+  8240A520  3D608332             lis r11,-0x7cce
+  8240A524  38CBAA38             subi r6,r11,0x55c8
+  8240A528  3D608200             lis r11,-0x7e00
+  8240A52C  396B13F8             addi r11,r11,0x13f8
+  8240A530  C0060044             lfs f0,0x44(r6)
+  8240A534  C1A60048             lfs f13,0x48(r6)
+  8240A538  FD800210             fabs f12,f0
+  8240A53C  FD606A10             fabs f11,f13
+  8240A540  C14B0000             lfs f10,0x0(r11)
+  8240A544  FF0C5800             fcmpu cr6,f12,f11
+  8240A548  40990010             ble cr6,0x8240a558
+  8240A54C  D001FFF0             stfs f0,-0x10(r1)
+  8240A550  D141FFF4             stfs f10,-0xc(r1)
+  8240A554  4800000C             b 0x8240a560
+LAB_8240a558:
+  8240A558  D1A1FFF4             stfs f13,-0xc(r1)
+  8240A55C  D141FFF0             stfs f10,-0x10(r1)
+LAB_8240a560:
+  8240A560  3D408200             lis r10,-0x7e00
+  8240A564  3D208200             lis r9,-0x7e00
+  8240A568  3CE08200             lis r7,-0x7e00
+  8240A56C  38A00000             li r5,0x0
+  8240A570  39060054             addi r8,r6,0x54
+  8240A574  C18A139C             lfs f12,0x139c(r10)
+  8240A578  7CAB2B78             or r11,r5,r5
+  8240A57C  C1A90F10             lfs f13,0xf10(r9)
+  8240A580  C1673F30             lfs f11,0x3f30(r7)
+LAB_8240a584:
+  8240A584  3946003C             addi r10,r6,0x3c
+  8240A588  B0A80000             sth r5,0x0(r8)
+  8240A58C  7D2B5214             add r9,r11,r10
+  8240A590  8149FFE8             lwz r10,-0x18(r9)
+  8240A594  2F0A0003             cmpwi cr6,r10,0x3
+  8240A598  419A0014             beq cr6,0x8240a5ac
+  8240A59C  80E90000             lwz r7,0x0(r9)
+  8240A5A0  2F070003             cmpwi cr6,r7,0x3
+  8240A5A4  7CA72B78             or r7,r5,r5
+  8240A5A8  409A0008             bne cr6,0x8240a5b0
+LAB_8240a5ac:
+  8240A5AC  38E00001             li r7,0x1
+LAB_8240a5b0:
+  8240A5B0  54E7063E             rlwinm r7,r7,0x0,0x18,0x1f
+  8240A5B4  2F0A0001             cmpwi cr6,r10,0x1
+  8240A5B8  419A0014             beq cr6,0x8240a5cc
+  8240A5BC  81490000             lwz r10,0x0(r9)
+  8240A5C0  2F0A0001             cmpwi cr6,r10,0x1
+  8240A5C4  7CAA2B78             or r10,r5,r5
+  8240A5C8  409A0008             bne cr6,0x8240a5d0
+LAB_8240a5cc:
+  8240A5CC  39400001             li r10,0x1
+LAB_8240a5d0:
+  8240A5D0  3881FFF0             subi r4,r1,0x10
+  8240A5D4  C129FFF0             lfs f9,-0x10(r9)
+  8240A5D8  54E3063E             rlwinm r3,r7,0x0,0x18,0x1f
+  8240A5DC  C0060020             lfs f0,0x20(r6)
+  8240A5E0  554A063E             rlwinm r10,r10,0x0,0x18,0x1f
+  8240A5E4  2B030000             cmplwi cr6,r3,0x0
+  8240A5E8  7D0B242E             lfsx f8,r11,r4
+  8240A5EC  ECE8482A             fadds f7,f8,f9
+  8240A5F0  EC070032             fmuls f0,f7,f0
+  8240A5F4  419A0060             beq cr6,0x8240a654
+  8240A5F8  FD200210             fabs f9,f0
+  8240A5FC  39460058             addi r10,r6,0x58
+  8240A600  7D0B542E             lfsx f8,r11,r10
+  8240A604  ECE9407A             fmadds f7,f9,f1,f8
+  8240A608  7CEB552E             stfsx f7,r11,r10
+  8240A60C  FF075800             fcmpu cr6,f7,f11
+  8240A610  4099006C             ble cr6,0x8240a67c
+  8240A614  FC00636E             fsel f0,f0,f13,f12
+  8240A618  FD20001E             fctiwz f9,f0
+  8240A61C  D921FFF8             stfd f9,-0x8(r1)
+  8240A620  80E1FFFC             lwz r7,-0x4(r1)
+LAB_8240a624:
+  8240A624  A1280000             lhz r9,0x0(r8)
+  8240A628  7D290734             extsh r9,r9
+  8240A62C  7C893A14             add r4,r9,r7
+  8240A630  7C830734             extsh r3,r4
+  8240A634  B0680000             sth r3,0x0(r8)
+  8240A638  7C0B542E             lfsx f0,r11,r10
+  8240A63C  ED205828             fsubs f9,f0,f11
+  8240A640  7D2B552E             stfsx f9,r11,r10
+  8240A644  FD004890             fmr f8,f9
+  8240A648  FF095800             fcmpu cr6,f9,f11
+  8240A64C  4199FFD8             bgt cr6,0x8240a624
+  8240A650  4800002C             b 0x8240a67c
+LAB_8240a654:
+  8240A654  554A063E             rlwinm r10,r10,0x0,0x18,0x1f
+  8240A658  2B0A0000             cmplwi cr6,r10,0x0
+  8240A65C  419A0020             beq cr6,0x8240a67c
+  8240A660  FC00636E             fsel f0,f0,f13,f12
+  8240A664  39460058             addi r10,r6,0x58
+  8240A668  FD20001E             fctiwz f9,f0
+  8240A66C  D921FFF8             stfd f9,-0x8(r1)
+  8240A670  8121FFFC             lwz r9,-0x4(r1)
+  8240A674  B1280000             sth r9,0x0(r8)
+  8240A678  7D4B552E             stfsx f10,r11,r10
+LAB_8240a67c:
+  8240A67C  39080002             addi r8,r8,0x2
+  8240A680  39460058             addi r10,r6,0x58
+  8240A684  396B0004             addi r11,r11,0x4
+  8240A688  7F085000             cmpw cr6,r8,r10
+  8240A68C  4198FEF8             blt cr6,0x8240a584
+  8240A690  4E800020             blr
+
+; 8240A698  DevGui_InputInit  (devgui/devgui_input.cpp:301)
+  8240A698  3D608332             lis r11,-0x7cce
+  8240A69C  3D408241             lis r10,-0x7dbf
+  8240A6A0  3D208203             lis r9,-0x7dfd
+  8240A6A4  38ABAAA8             subi r5,r11,0x5558
+  8240A6A8  3869ECB0             subi r3,r9,0x1350
+  8240A6AC  388AA2B0             subi r4,r10,0x5d50
+  8240A6B0  480CB1B8             b 0x824d5868
+
 ; 8240A6B8  DevGui_InputShutdown  (devgui/devgui_input.cpp:310)
   8240A6B8  3D608203             lis r11,-0x7dfd
   8240A6BC  386BECB0             subi r3,r11,0x1350
@@ -113,9 +283,111 @@ LAB_8240ad84:
   8240A6CC  906BAA38             stw r3,-0x55c8(r11)
   8240A6D0  4E800020             blr
 
+; 8240A6D8  DevGui_InputUpdateGamepad  (devgui/devgui_input.cpp:328)
+  8240A6D8  7D8802A6             mfspr r12,LR
+  8240A6DC  9181FFF8             stw r12,-0x8(r1)
+  8240A6E0  FBE1FFF0             std r31,-0x10(r1)
+  8240A6E4  9421FFA0             stwu r1,-0x60(r1)
+  8240A6E8  3D608332             lis r11,-0x7cce
+  8240A6EC  3BEBAA38             subi r31,r11,0x55c8
+  8240A6F0  806BAA38             lwz r3,-0x55c8(r11)
+  8240A6F4  2F030000             cmpwi cr6,r3,0x0
+  8240A6F8  907F0004             stw r3,0x4(r31)
+  8240A6FC  41980044             blt cr6,0x8240a740
+  8240A700  48238311             bl 0x82642a10
+  8240A704  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8240A708  2B0B0000             cmplwi cr6,r11,0x0
+  8240A70C  419A0034             beq cr6,0x8240a740
+  8240A710  3D608200             lis r11,-0x7e00
+  8240A714  3D408200             lis r10,-0x7e00
+  8240A718  38600001             li r3,0x1
+  8240A71C  C00B2450             lfs f0,0x2450(r11)
+  8240A720  C1AA3F30             lfs f13,0x3f30(r10)
+  8240A724  D01F0068             stfs f0,0x68(r31)
+  8240A728  D1BF006C             stfs f13,0x6c(r31)
+  8240A72C  38210060             addi r1,r1,0x60
+  8240A730  8181FFF8             lwz r12,-0x8(r1)
+  8240A734  7D8803A6             mtspr LR,r12
+  8240A738  EBE1FFF0             ld r31,-0x10(r1)
+  8240A73C  4E800020             blr
+LAB_8240a740:
+  8240A740  3960FFFF             li r11,-0x1
+  8240A744  38600000             li r3,0x0
+  8240A748  917F0004             stw r11,0x4(r31)
+  8240A74C  38210060             addi r1,r1,0x60
+  8240A750  8181FFF8             lwz r12,-0x8(r1)
+  8240A754  7D8803A6             mtspr LR,r12
+  8240A758  EBE1FFF0             ld r31,-0x10(r1)
+  8240A75C  4E800020             blr
+
 ; 8240ADD0  DevGui_InputUpdate  (devgui/devgui_input.cpp:359)
   8240ADD0  7D8802A6             mfspr r12,LR
   8240ADD4  4850B8E1             bl 0x829166b4
+  8240ADD8  DBC1FFC0             stfd f30,-0x40(r1)
+  8240ADDC  DBE1FFC8             stfd f31,-0x38(r1)
+  8240ADE0  9421FF70             stwu r1,-0x90(r1)
+  8240ADE4  FFC00890             fmr f30,f1
+  8240ADE8  4BFFF8F1             bl 0x8240a6d8
+  8240ADEC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8240ADF0  2B0B0000             cmplwi cr6,r11,0x0
+  8240ADF4  409A0018             bne cr6,0x8240ae0c
+  8240ADF8  38600000             li r3,0x0
+  8240ADFC  38210090             addi r1,r1,0x90
+  8240AE00  CBC1FFC0             lfd f30,-0x40(r1)
+  8240AE04  CBE1FFC8             lfd f31,-0x38(r1)
+  8240AE08  4850B8FC             b 0x82916704
+LAB_8240ae0c:
+  8240AE0C  3D608296             lis r11,-0x7d6a
+  8240AE10  3D408200             lis r10,-0x7e00
+  8240AE14  3B6B7F50             addi r27,r11,0x7f50
+  8240AE18  3D608332             lis r11,-0x7cce
+  8240AE1C  3BA00000             li r29,0x0
+  8240AE20  7F7CDB78             or r28,r27,r27
+  8240AE24  C3EA13F8             lfs f31,0x13f8(r10)
+  8240AE28  3BCBAA38             subi r30,r11,0x55c8
+LAB_8240ae2c:
+  8240AE2C  397E0008             addi r11,r30,0x8
+  8240AE30  7FFD5A14             add r31,r29,r11
+  8240AE34  7D7D58AE             lbzx r11,r29,r11
+  8240AE38  997F000B             stb r11,0xb(r31)
+  8240AE3C  807E0004             lwz r3,0x4(r30)
+  8240AE40  2F030000             cmpwi cr6,r3,0x0
+  8240AE44  41980020             blt cr6,0x8240ae64
+  8240AE48  809C0000             lwz r4,0x0(r28)
+  8240AE4C  48237CC5             bl 0x82642b10
+  8240AE50  FF01F800             fcmpu cr6,f1,f31
+  8240AE54  39600001             li r11,0x1
+  8240AE58  41990008             bgt cr6,0x8240ae60
+  8240AE5C  39600000             li r11,0x0
+LAB_8240ae60:
+  8240AE60  997F0000             stb r11,0x0(r31)
+LAB_8240ae64:
+  8240AE64  3B9C0004             addi r28,r28,0x4
+  8240AE68  397B002C             addi r11,r27,0x2c
+  8240AE6C  3BBD0001             addi r29,r29,0x1
+  8240AE70  7F1C5800             cmpw cr6,r28,r11
+  8240AE74  4198FFB8             blt cr6,0x8240ae2c
+  8240AE78  4BFFFDF1             bl 0x8240ac68
+  8240AE7C  38DE0034             addi r6,r30,0x34
+  8240AE80  38BE002C             addi r5,r30,0x2c
+  8240AE84  FC20F090             fmr f1,f30
+  8240AE88  389E0024             addi r4,r30,0x24
+  8240AE8C  4BFFF5CD             bl 0x8240a458
+  8240AE90  817E0004             lwz r11,0x4(r30)
+  8240AE94  2F0B0000             cmpwi cr6,r11,0x0
+  8240AE98  41980014             blt cr6,0x8240aeac
+  8240AE9C  38DE004C             addi r6,r30,0x4c
+  8240AEA0  38BE0044             addi r5,r30,0x44
+  8240AEA4  389E003C             addi r4,r30,0x3c
+  8240AEA8  4BFFF5B1             bl 0x8240a458
+LAB_8240aeac:
+  8240AEAC  FC20F090             fmr f1,f30
+  8240AEB0  4BFFF671             bl 0x8240a520
+  8240AEB4  38600001             li r3,0x1
+  8240AEB8  38210090             addi r1,r1,0x90
+  8240AEBC  CBC1FFC0             lfd f30,-0x40(r1)
+  8240AEC0  CBE1FFC8             lfd f31,-0x38(r1)
+  8240AEC4  4850B840             b 0x82916704
 
 ; 8240A760  DevGui_MouseEvent  (devgui/devgui_input.cpp:427)
   8240A760  4E800020             blr
@@ -316,6 +588,155 @@ LAB_8240aa08:
 ; 8240AA18  DevGui_UpdateFloatScroll  (devgui/devgui_input.cpp:537)
   8240AA18  7D8802A6             mfspr r12,LR
   8240AA1C  4850BCA1             bl 0x829166bc
+  8240AA20  3981FFE0             subi r12,r1,0x20
+  8240AA24  4850BD65             bl 0x82916788
+  8240AA28  9421FF50             stwu r1,-0xb0(r1)
+  8240AA2C  EFE41828             fsubs f31,f4,f3
+  8240AA30  3D208200             lis r9,-0x7e00
+  8240AA34  3D608206             lis r11,-0x7dfa
+  8240AA38  FFC00890             fmr f30,f1
+  8240AA3C  3D408200             lis r10,-0x7e00
+  8240AA40  FF001090             fmr f24,f2
+  8240AA44  FF401890             fmr f26,f3
+  8240AA48  7D1D4378             or r29,r8,r8
+  8240AA4C  FF202090             fmr f25,f4
+  8240AA50  3BEBF7C0             subi r31,r11,0x840
+  8240AA54  C38913F8             lfs f28,0x13f8(r9)
+  8240AA58  FFA02890             fmr f29,f5
+  8240AA5C  FF603090             fmr f27,f6
+  8240AA60  3BCA0F98             addi r30,r10,0xf98
+  8240AA64  FF1FE000             fcmpu cr6,f31,f28
+  8240AA68  40980020             bge cr6,0x8240aa88
+  8240AA6C  3D608206             lis r11,-0x7dfa
+  8240AA70  7FC6F378             or r6,r30,r30
+  8240AA74  38EBF7B4             subi r7,r11,0x84c
+  8240AA78  7FE3FB78             or r3,r31,r31
+  8240AA7C  38A00000             li r5,0x0
+  8240AA80  38800220             li r4,0x220
+  8240AA84  481C9A7D             bl 0x825d4500
+LAB_8240aa88:
+  8240AA88  FF1DE000             fcmpu cr6,f29,f28
+  8240AA8C  409A0020             bne cr6,0x8240aaac
+  8240AA90  3D608206             lis r11,-0x7dfa
+  8240AA94  7FC6F378             or r6,r30,r30
+  8240AA98  38EBF804             subi r7,r11,0x7fc
+  8240AA9C  7FE3FB78             or r3,r31,r31
+  8240AAA0  38A00000             li r5,0x0
+  8240AAA4  38800221             li r4,0x221
+  8240AAA8  481C9A59             bl 0x825d4500
+LAB_8240aaac:
+  8240AAAC  2F1D0000             cmpwi cr6,r29,0x0
+  8240AAB0  4198000C             blt cr6,0x8240aabc
+  8240AAB4  2F1D0002             cmpwi cr6,r29,0x2
+  8240AAB8  41980020             blt cr6,0x8240aad8
+LAB_8240aabc:
+  8240AABC  3D608206             lis r11,-0x7dfa
+  8240AAC0  7FC6F378             or r6,r30,r30
+  8240AAC4  38EBF780             subi r7,r11,0x880
+  8240AAC8  7FE3FB78             or r3,r31,r31
+  8240AACC  38A00000             li r5,0x0
+  8240AAD0  38800222             li r4,0x222
+  8240AAD4  481C9A2D             bl 0x825d4500
+LAB_8240aad8:
+  8240AAD8  3D608332             lis r11,-0x7cce
+  8240AADC  57AA103A             rlwinm r10,r29,0x2,0x0,0x1d
+  8240AAE0  396BAA38             subi r11,r11,0x55c8
+  8240AAE4  392B0044             addi r9,r11,0x44
+  8240AAE8  390B0024             addi r8,r11,0x24
+  8240AAEC  C00B0020             lfs f0,0x20(r11)
+  8240AAF0  C1AB0068             lfs f13,0x68(r11)
+  8240AAF4  7D8A4C2E             lfsx f12,r10,r9
+  8240AAF8  ED6C0032             fmuls f11,f12,f0
+  8240AAFC  7D2A402E             lwzx r9,r10,r8
+  8240AB00  2F090003             cmpwi cr6,r9,0x3
+  8240AB04  ED4B6824             fdivs f10,f11,f13
+  8240AB08  ED2A07F2             fmuls f9,f10,f31
+  8240AB0C  EDA907B2             fmuls f13,f9,f30
+  8240AB10  409A0054             bne cr6,0x8240ab64
+  8240AB14  3D208200             lis r9,-0x7e00
+  8240AB18  C16B006C             lfs f11,0x6c(r11)
+  8240AB1C  C1893F30             lfs f12,0x3f30(r9)
+  8240AB20  ED8C0024             fdivs f12,f12,f0
+  8240AB24  FF0C5800             fcmpu cr6,f12,f11
+  8240AB28  40990008             ble cr6,0x8240ab30
+  8240AB2C  FD805890             fmr f12,f11
+LAB_8240ab30:
+  8240AB30  C00B0060             lfs f0,0x60(r11)
+  8240AB34  EC00F02A             fadds f0,f0,f30
+  8240AB38  D00B0060             stfs f0,0x60(r11)
+  8240AB3C  FF006000             fcmpu cr6,f0,f12
+  8240AB40  40990038             ble cr6,0x8240ab78
+  8240AB44  392B002C             addi r9,r11,0x2c
+LAB_8240ab48:
+  8240AB48  EC006028             fsubs f0,f0,f12
+  8240AB4C  7D6A4C2E             lfsx f11,r10,r9
+  8240AB50  D00B0060             stfs f0,0x60(r11)
+  8240AB54  EDAB6F7A             fmadds f13,f11,f29,f13
+  8240AB58  FF006000             fcmpu cr6,f0,f12
+  8240AB5C  4199FFEC             bgt cr6,0x8240ab48
+  8240AB60  48000018             b 0x8240ab78
+LAB_8240ab64:
+  8240AB64  2F090001             cmpwi cr6,r9,0x1
+  8240AB68  409A0010             bne cr6,0x8240ab78
+  8240AB6C  396B002C             addi r11,r11,0x2c
+  8240AB70  7C0A5C2E             lfsx f0,r10,r11
+  8240AB74  EDA06F7A             fmadds f13,f0,f29,f13
+LAB_8240ab78:
+  8240AB78  FF0DE000             fcmpu cr6,f13,f28
+  8240AB7C  40980014             bge cr6,0x8240ab90
+  8240AB80  FC00D850             fneg f0,f27
+  8240AB84  FF0D0000             fcmpu cr6,f13,f0
+  8240AB88  40990008             ble cr6,0x8240ab90
+  8240AB8C  FDA00090             fmr f13,f0
+LAB_8240ab90:
+  8240AB90  FF0DE000             fcmpu cr6,f13,f28
+  8240AB94  40990010             ble cr6,0x8240aba4
+  8240AB98  FF0DD800             fcmpu cr6,f13,f27
+  8240AB9C  40980008             bge cr6,0x8240aba4
+  8240ABA0  FDA0D890             fmr f13,f27
+LAB_8240aba4:
+  8240ABA4  EC2DC02A             fadds f1,f13,f24
+  8240ABA8  FF01D000             fcmpu cr6,f1,f26
+  8240ABAC  41990018             bgt cr6,0x8240abc4
+  8240ABB0  FC20D090             fmr f1,f26
+  8240ABB4  382100B0             addi r1,r1,0xb0
+  8240ABB8  3981FFE0             subi r12,r1,0x20
+  8240ABBC  4850BC19             bl 0x829167d4
+  8240ABC0  4850BB4C             b 0x8291670c
+LAB_8240abc4:
+  8240ABC4  FF01C800             fcmpu cr6,f1,f25
+  8240ABC8  41980008             blt cr6,0x8240abd0
+  8240ABCC  FC20C890             fmr f1,f25
+LAB_8240abd0:
+  8240ABD0  382100B0             addi r1,r1,0xb0
+  8240ABD4  3981FFE0             subi r12,r1,0x20
+  8240ABD8  4850BBFD             bl 0x829167d4
+  8240ABDC  4850BB30             b 0x8291670c
+
+; 8240ABE0  DevGui_IsButtonDown  (devgui/devgui_input.cpp:589)
+  8240ABE0  3D608332             lis r11,-0x7cce
+  8240ABE4  396BAA38             subi r11,r11,0x55c8
+  8240ABE8  394B0008             addi r10,r11,0x8
+  8240ABEC  7C6A18AE             lbzx r3,r10,r3
+  8240ABF0  4E800020             blr
+
+; 8240ABF8  DevGui_IsButtonPressed  (devgui/devgui_input.cpp:598)
+  8240ABF8  3D608332             lis r11,-0x7cce
+  8240ABFC  396BAA38             subi r11,r11,0x55c8
+  8240AC00  394B0008             addi r10,r11,0x8
+  8240AC04  7D2A18AE             lbzx r9,r10,r3
+  8240AC08  2B090000             cmplwi cr6,r9,0x0
+  8240AC0C  419A0018             beq cr6,0x8240ac24
+  8240AC10  396B0013             addi r11,r11,0x13
+  8240AC14  7D4B18AE             lbzx r10,r11,r3
+  8240AC18  39600001             li r11,0x1
+  8240AC1C  2B0A0000             cmplwi cr6,r10,0x0
+  8240AC20  419A0008             beq cr6,0x8240ac28
+LAB_8240ac24:
+  8240AC24  39600000             li r11,0x0
+LAB_8240ac28:
+  8240AC28  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  8240AC2C  4E800020             blr
 
 ; 8240AC30  DevGui_IsButtonReleased  (devgui/devgui_input.cpp:607)
   8240AC30  3D608332             lis r11,-0x7cce

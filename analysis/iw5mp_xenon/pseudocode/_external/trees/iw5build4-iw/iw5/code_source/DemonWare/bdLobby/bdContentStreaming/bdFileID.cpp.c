@@ -35,11 +35,17 @@ void bdFileID__serialize(int param_1,undefined8 param_2)
 
 // 828FF348  bdFileID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:27)
 
-void bdFileID__deserialize(void)
+void bdFileID__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(cVar2 != '\0');
+  return;
 }
 
 

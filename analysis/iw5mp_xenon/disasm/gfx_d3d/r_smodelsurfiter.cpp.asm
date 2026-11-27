@@ -3,3 +3,50 @@
 ; 8277B070  GfxSModelSurfIter::SkipToNextDrawGroup  (gfx_d3d/r_smodelsurfiter.cpp:9)
   8277B070  7D8802A6             mfspr r12,LR
   8277B074  4819B641             bl 0x829166b4
+  8277B078  9421FF80             stwu r1,-0x80(r1)
+  8277B07C  81630004             lwz r11,0x4(r3)
+  8277B080  7C7F1B78             or r31,r3,r3
+  8277B084  A14B0000             lhz r10,0x0(r11)
+  8277B088  892B0002             lbz r9,0x2(r11)
+  8277B08C  554852AA             rlwinm r8,r10,0xa,0xa,0x15
+  8277B090  3D40821C             lis r10,-0x7de4
+  8277B094  7D074B78             or r7,r8,r9
+  8277B098  3D00821C             lis r8,-0x7de4
+  8277B09C  54E6062A             rlwinm r6,r7,0x0,0x18,0x15
+  8277B0A0  3D208200             lis r9,-0x7e00
+  8277B0A4  54DB402E             rlwinm r27,r6,0x8,0x0,0x17
+  8277B0A8  3BC8E9D8             subi r30,r8,0x1628
+  8277B0AC  3BA90F98             addi r29,r9,0xf98
+  8277B0B0  3B8AEA24             subi r28,r10,0x15dc
+LAB_8277b0b4:
+  8277B0B4  A14B0000             lhz r10,0x0(r11)
+  8277B0B8  813F0008             lwz r9,0x8(r31)
+  8277B0BC  554AA33E             rlwinm r10,r10,0x14,0xc,0x1f
+  8277B0C0  390A0003             addi r8,r10,0x3
+  8277B0C4  550A083C             rlwinm r10,r8,0x1,0x0,0x1e
+  8277B0C8  7D6A5A14             add r11,r10,r11
+  8277B0CC  917F0004             stw r11,0x4(r31)
+  8277B0D0  7F0B4840             cmplw cr6,r11,r9
+  8277B0D4  4099001C             ble cr6,0x8277b0f0
+  8277B0D8  7F87E378             or r7,r28,r28
+  8277B0DC  7FA6EB78             or r6,r29,r29
+  8277B0E0  7FC3F378             or r3,r30,r30
+  8277B0E4  38A00000             li r5,0x0
+  8277B0E8  388000A6             li r4,0xa6
+  8277B0EC  4BE59415             bl 0x825d4500
+LAB_8277b0f0:
+  8277B0F0  817F0004             lwz r11,0x4(r31)
+  8277B0F4  815F0008             lwz r10,0x8(r31)
+  8277B0F8  7F0B5040             cmplw cr6,r11,r10
+  8277B0FC  419A0024             beq cr6,0x8277b120
+  8277B100  A14B0000             lhz r10,0x0(r11)
+  8277B104  892B0002             lbz r9,0x2(r11)
+  8277B108  554852AA             rlwinm r8,r10,0xa,0xa,0x15
+  8277B10C  7D074B78             or r7,r8,r9
+  8277B110  54E6062A             rlwinm r6,r7,0x0,0x18,0x15
+  8277B114  54C5402E             rlwinm r5,r6,0x8,0x0,0x17
+  8277B118  7F05D840             cmplw cr6,r5,r27
+  8277B11C  419AFF98             beq cr6,0x8277b0b4
+LAB_8277b120:
+  8277B120  38210080             addi r1,r1,0x80
+  8277B124  4819B5E0             b 0x82916704

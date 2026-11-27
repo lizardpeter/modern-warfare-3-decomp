@@ -6,11 +6,9 @@ longlong DynEnt_GetEntityProps(ulonglong param_1)
 
 {
   if ((int)param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82060638,0x2d9,0,0xffffffff82000f98,0xffffffff82060684);
   }
-  if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
+  else if (3 < (param_1 & 0xffffffff)) {
     MyAssertHandler(0xffffffff82060638,0x2da,0,0xffffffff820605f8,param_1,4);
   }
   return (param_1 & 0x1fffffff) * 8 + -0x7df9fa28;
@@ -35,6 +33,15 @@ undefined4 DynEnt_GetPoseList(int param_1)
 }
 
 
+// 82413200  DynEnt_GetClientModelPoseList  (DynEntity/DynEntity_load_obj.cpp:758)
+
+undefined4 DynEnt_GetClientModelPoseList(void)
+
+{
+  return DAT_835a2950;
+}
+
+
 // 82413210  DynEnt_GetClientModelPoseCount  (DynEntity/DynEntity_load_obj.cpp:767)
 
 undefined2 DynEnt_GetClientModelPoseCount(void)
@@ -49,8 +56,52 @@ undefined2 DynEnt_GetClientModelPoseCount(void)
 void DynEnt_SaveEntities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  longlong lVar2;
+  uint uVar3;
+  ushort *puVar4;
+  int *piVar5;
+  int iVar6;
+  char local_40;
+  char local_3f [63];
+  
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82060638,0x310,0,0xffffffff82000f98,0xffffffff82001348);
+  }
+  lVar2 = 2;
+  puVar4 = &DAT_835a2944;
+  piVar5 = &DAT_835a2958;
+  do {
+    MemFile_WriteData(uVar1,2,puVar4);
+    if ((ulonglong)*puVar4 != 0) {
+      MemFile_WriteData(uVar1,(ulonglong)*puVar4 << 5,piVar5[-2]);
+      MemFile_WriteData(uVar1,(ulonglong)*puVar4 << 4,*piVar5);
+      uVar3 = 0;
+      if (*puVar4 != 0) {
+        iVar6 = 0;
+        do {
+          local_40 = '\x01' - (*(int *)(*piVar5 + iVar6) == 0);
+          MemFile_WriteData(uVar1,1,&local_40);
+          if (local_40 != '\0') {
+            Phys_ObjSave(*(undefined4 *)(*piVar5 + iVar6),uVar1);
+          }
+          local_3f[0] = '\x01' - (*(int *)(*piVar5 + iVar6 + 0xc) == 0);
+          MemFile_WriteData(uVar1,1,local_3f);
+          if (local_3f[0] != '\0') {
+            Hinge_Save(*(undefined4 *)(*piVar5 + iVar6 + 0xc),uVar1);
+          }
+          uVar3 = uVar3 + 1;
+          iVar6 = iVar6 + 0x10;
+        } while (uVar3 < *puVar4);
+      }
+    }
+    lVar2 = lVar2 + -1;
+    piVar5 = piVar5 + 1;
+    puVar4 = puVar4 + 1;
+  } while (lVar2 != 0);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -59,8 +110,104 @@ void DynEnt_SaveEntities(void)
 void DynEnt_LoadEntities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  ushort *puVar7;
+  int *piVar8;
+  int iVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte in_cr0;
+  char local_b0;
+  char local_af [7];
+  undefined1 auStack_a8 [168];
+  
+  uVar2 = __savegprlr();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82060638,0x343,0,0xffffffff82000f98,0xffffffff82001348);
+  }
+  uVar4 = 0;
+  iVar5 = 0;
+  puVar7 = &DAT_835a2944;
+  do {
+    MemFile_ReadData(uVar2,2,puVar7);
+    if ((ulonglong)*puVar7 != 0) {
+      piVar8 = (int *)((int)&DAT_835a2958 + iVar5);
+      MemFile_ReadData(uVar2,(ulonglong)*puVar7 << 5,*(undefined4 *)((int)&DAT_835a2950 + iVar5));
+      MemFile_ReadData(uVar2,(ulonglong)*puVar7 << 4,*piVar8);
+      uVar11 = 0;
+      if (*puVar7 != 0) {
+        iVar9 = 0;
+        iVar6 = 0;
+        do {
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
+          }
+          iVar10 = *piVar8;
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar11);
+          }
+          uVar1 = *(ushort *)(iVar9 + iVar10 + 4);
+          iVar10 = iVar6 + *(int *)((int)&DAT_835a2948 + iVar5);
+          if (((uVar1 & 4) != 0) && ((uVar1 & 2) == 0)) {
+            MyAssertHandler(0xffffffff82060638,0x35b,0,0xffffffff82000f98,0xffffffff8205fef8);
+          }
+          MemFile_ReadData(uVar2,1,&local_b0);
+          if (local_b0 == '\0') {
+            *(undefined4 *)(iVar9 + *piVar8) = 0;
+          }
+          else {
+            uVar3 = Phys_ObjLoad(0,uVar2);
+            *(undefined4 *)(iVar9 + *piVar8) = uVar3;
+            do {
+              if (in_RESERVE != '\0') {
+                DAT_8427b8f0 = storeWordConditionalIndexed
+                                         ((ulonglong)DAT_8427b8f0 + 1,0,0xffffffff8427b8f0);
+                in_cr0 = 2;
+              }
+            } while (!(bool)(in_cr0 >> 1 & 1));
+            if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar11,(ulonglong)*puVar7
+                              ,in_MSR);
+            }
+            DynEnt_SetPhysObjCollision
+                      (iVar6 + *(int *)((int)&DAT_835a2948 + iVar5),*(undefined4 *)(iVar9 + *piVar8)
+                       ,1);
+          }
+          MemFile_ReadData(uVar2,1,local_af);
+          if (local_af[0] == '\0') {
+            *(undefined4 *)(iVar9 + *piVar8 + 0xc) = 0;
+          }
+          else {
+            DynEntCl_GetStartingCenterOfMassForHinge(iVar10,auStack_a8);
+            uVar3 = Hinge_Load(uVar2,*(undefined4 *)(iVar10 + 0x34),*(undefined4 *)(iVar10 + 0x2c),
+                               auStack_a8);
+            *(undefined4 *)(iVar9 + *piVar8 + 0xc) = uVar3;
+          }
+          if ((ulonglong)*puVar7 <= (uVar11 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
+          }
+          if ((*(ushort *)(iVar9 + *piVar8 + 4) & 4) == 0) {
+            DynEntCl_UnlinkEntity(uVar11,uVar4);
+          }
+          uVar11 = uVar11 + 1;
+          iVar6 = iVar6 + 0x60;
+          iVar9 = iVar9 + 0x10;
+        } while ((uVar11 & 0xffffffff) < (ulonglong)*puVar7);
+      }
+    }
+    uVar4 = uVar4 + 1;
+    iVar5 = iVar5 + 4;
+    puVar7 = puVar7 + 1;
+  } while ((uVar4 & 0xffffffff) < 2);
+  __restgprlr();
+  return;
 }
 
 
@@ -78,7 +225,6 @@ longlong DynEnt_GetXModelUsageCount(int param_1)
   int iVar7;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82060638,0x39c,0,0xffffffff82000f98,0xffffffff820606a8);
   }
   lVar1 = 0;

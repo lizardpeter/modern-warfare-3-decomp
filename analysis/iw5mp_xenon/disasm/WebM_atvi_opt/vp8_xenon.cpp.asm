@@ -12,6 +12,16 @@
 ; 8280E8C8  vp8_fast_quantize_b_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:200)
   8280E8C8  7D8802A6             mfspr r12,LR
   8280E8CC  48107DF1             bl 0x829166bc
+  8280E8D0  81430004             lwz r10,0x4(r3)
+  8280E8D4  39600010             li r11,0x10
+  8280E8D8  11AF034C             vspltish v13,0xf
+  8280E8DC  81230018             lwz r9,0x18(r3)
+  8280E8E0  81030008             lwz r8,0x8(r3)
+  8280E8E4  3CE0829A             lis r7,-0x7d66
+  8280E8E8  80C40014             lwz r6,0x14(r4)
+  8280E8EC  38A1FFC0             subi r5,r1,0x40
+  8280E8F0  38E75A10             addi r7,r7,0x5a10
+  8280E8F4  80640004             lwz r3,0x4(r4)
 
 ; 82804600  vp8_sad  (WebM_atvi_opt/vp8_xenon.cpp:251)
   82804600  39600010             li r11,0x10
@@ -141,6 +151,50 @@
   828060AC  132B4C47             vcmpneh. v25,v11,v9
   828060B0  7D293214             add r9,r9,r6
   828060B4  130B2C47             vcmpneh. v24,v11,v5
+
+; 82806A30  vp8_variance8x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:696)
+  82806A30  39600010             li r11,0x10
+  82806A34  13E02C07             vcmpneb. v31,v0,v5
+  82806A38  13C01C07             vcmpneb. v30,v0,v3
+  82806A3C  1000038C             vspltisw v0,0x0
+  82806A40  7D453214             add r10,r5,r6
+  82806A44  13A53407             vcmpneb. v29,v5,v6
+  82806A48  7D232214             add r9,r3,r4
+  82806A4C  13832407             vcmpneb. v28,v3,v4
+  82806A50  136B2C47             vcmpneh. v27,v11,v5
+  82806A54  130B1C47             vcmpneh. v24,v11,v3
+
+; 82806CE0  vp8_variance8x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:733)
+  82806CE0  39600010             li r11,0x10
+  82806CE4  13E02C07             vcmpneb. v31,v0,v5
+  82806CE8  7D453214             add r10,r5,r6
+  82806CEC  13C01C07             vcmpneb. v30,v0,v3
+  82806CF0  7D232214             add r9,r3,r4
+  82806CF4  13A53407             vcmpneb. v29,v5,v6
+  82806CF8  13832407             vcmpneb. v28,v3,v4
+  82806CFC  1000038C             vspltisw v0,0x0
+  82806D00  136B2C47             vcmpneh. v27,v11,v5
+  82806D04  134B5447             vcmpneh. v26,v11,v10
+  82806D08  7D4A3214             add r10,r10,r6
+  82806D0C  132B4C47             vcmpneh. v25,v11,v9
+  82806D10  7D292214             add r9,r9,r4
+  82806D14  130B1C47             vcmpneh. v24,v11,v3
+
+; 828071F8  vp8_variance16x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:778)
+  828071F8  39600010             li r11,0x10
+  828071FC  13E01C07             vcmpneb. v31,v0,v3
+  82807200  7D432214             add r10,r3,r4
+  82807204  13C02C07             vcmpneb. v30,v0,v5
+  82807208  7D253214             add r9,r5,r6
+  8280720C  13A32407             vcmpneb. v29,v3,v4
+  82807210  13853407             vcmpneb. v28,v5,v6
+  82807214  1000038C             vspltisw v0,0x0
+  82807218  136B1C47             vcmpneh. v27,v11,v3
+  8280721C  134B5447             vcmpneh. v26,v11,v10
+  82807220  7D4A2214             add r10,r10,r4
+  82807224  132B4C47             vcmpneh. v25,v11,v9
+  82807228  7D293214             add r9,r9,r6
+  8280722C  130B2C47             vcmpneh. v24,v11,v5
 
 ; 82807610  vp8Lerp_1  (WebM_atvi_opt/vp8_xenon.cpp:861)
   82807610  1000038C             vspltisw v0,0x0
@@ -492,19 +546,281 @@
 ; 8280E5F8  vp8_sub_pixel_variance16x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1568)
   8280E5F8  7D8802A6             mfspr r12,LR
   8280E5FC  481080B9             bl 0x829166b4
+  8280E600  9421FC20             stwu r1,-0x3e0(r1)
+  8280E604  7CDE3378             or r30,r6,r6
+  8280E608  7CFD3B78             or r29,r7,r7
+  8280E60C  7D1C4378             or r28,r8,r8
+  8280E610  7D3B4B78             or r27,r9,r9
+  8280E614  2F050000             cmpwi cr6,r5,0x0
+  8280E618  409A0028             bne cr6,0x8280e640
+  8280E61C  3D60829A             lis r11,-0x7d66
+  8280E620  54CA103A             rlwinm r10,r6,0x2,0x0,0x1d
+  8280E624  392B5A20             addi r9,r11,0x5a20
+  8280E628  7C852378             or r5,r4,r4
+  8280E62C  38810050             addi r4,r1,0x50
+  8280E630  7D0A482E             lwzx r8,r10,r9
+  8280E634  7D0903A6             mtspr CTR,r8
+  8280E638  4E800421             bctrl
+  8280E63C  4800007C             b 0x8280e6b8
+LAB_8280e640:
+  8280E640  2F1E0000             cmpwi cr6,r30,0x0
+  8280E644  409A0028             bne cr6,0x8280e66c
+  8280E648  3D60829A             lis r11,-0x7d66
+  8280E64C  54AA103A             rlwinm r10,r5,0x2,0x0,0x1d
+  8280E650  392B5A40             addi r9,r11,0x5a40
+  8280E654  7C852378             or r5,r4,r4
+  8280E658  38810050             addi r4,r1,0x50
+  8280E65C  7D0A482E             lwzx r8,r10,r9
+  8280E660  7D0903A6             mtspr CTR,r8
+  8280E664  4E800421             bctrl
+  8280E668  48000050             b 0x8280e6b8
+LAB_8280e66c:
+  8280E66C  3D40821E             lis r10,-0x7de2
+  8280E670  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8280E674  3BEA6500             addi r31,r10,0x6500
+  8280E678  7C852378             or r5,r4,r4
+  8280E67C  39000010             li r8,0x10
+  8280E680  7D2BFA14             add r9,r11,r31
+  8280E684  38E00011             li r7,0x11
+  8280E688  38C00001             li r6,0x1
+  8280E68C  38810190             addi r4,r1,0x190
+  8280E690  4802E2B1             bl 0x8283c940
+  8280E694  57CB1838             rlwinm r11,r30,0x3,0x0,0x1c
+  8280E698  39000010             li r8,0x10
+  8280E69C  7D2BFA14             add r9,r11,r31
+  8280E6A0  38E00010             li r7,0x10
+  8280E6A4  38C00010             li r6,0x10
+  8280E6A8  38A00010             li r5,0x10
+  8280E6AC  38810050             addi r4,r1,0x50
+  8280E6B0  38610190             addi r3,r1,0x190
+  8280E6B4  4802E305             bl 0x8283c9b8
+LAB_8280e6b8:
+  8280E6B8  7F67DB78             or r7,r27,r27
+  8280E6BC  7F86E378             or r6,r28,r28
+  8280E6C0  7FA5EB78             or r5,r29,r29
+  8280E6C4  38800010             li r4,0x10
+  8280E6C8  38610050             addi r3,r1,0x50
+  8280E6CC  4BFF79A5             bl 0x82806070
+  8280E6D0  382103E0             addi r1,r1,0x3e0
+  8280E6D4  48108030             b 0x82916704
 
 ; 8280E6D8  vp8_sub_pixel_variance8x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1597)
   8280E6D8  7D8802A6             mfspr r12,LR
   8280E6DC  48107FD9             bl 0x829166b4
+  8280E6E0  9421FDB0             stwu r1,-0x250(r1)
+  8280E6E4  3D40821E             lis r10,-0x7de2
+  8280E6E8  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8280E6EC  3BEA6500             addi r31,r10,0x6500
+  8280E6F0  7CDE3378             or r30,r6,r6
+  8280E6F4  7CFD3B78             or r29,r7,r7
+  8280E6F8  7D1C4378             or r28,r8,r8
+  8280E6FC  7D3B4B78             or r27,r9,r9
+  8280E700  7C852378             or r5,r4,r4
+  8280E704  39000008             li r8,0x8
+  8280E708  7D2BFA14             add r9,r11,r31
+  8280E70C  38E00009             li r7,0x9
+  8280E710  38C00001             li r6,0x1
+  8280E714  38810050             addi r4,r1,0x50
+  8280E718  4802E229             bl 0x8283c940
+  8280E71C  57CB1838             rlwinm r11,r30,0x3,0x0,0x1c
+  8280E720  39000008             li r8,0x8
+  8280E724  7D2BFA14             add r9,r11,r31
+  8280E728  38E00008             li r7,0x8
+  8280E72C  38C00008             li r6,0x8
+  8280E730  38A00008             li r5,0x8
+  8280E734  388100E0             addi r4,r1,0xe0
+  8280E738  38610050             addi r3,r1,0x50
+  8280E73C  4802E27D             bl 0x8283c9b8
+  8280E740  7F67DB78             or r7,r27,r27
+  8280E744  7F86E378             or r6,r28,r28
+  8280E748  7FA5EB78             or r5,r29,r29
+  8280E74C  38800008             li r4,0x8
+  8280E750  386100E0             addi r3,r1,0xe0
+  8280E754  4BFF82DD             bl 0x82806a30
+  8280E758  38210250             addi r1,r1,0x250
+  8280E75C  48107FA8             b 0x82916704
 
 ; 8280E760  vp8_sub_pixel_variance16x8_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1621)
   8280E760  7D8802A6             mfspr r12,LR
   8280E764  48107F51             bl 0x829166b4
+  8280E768  9421FD20             stwu r1,-0x2e0(r1)
+  8280E76C  7CDE3378             or r30,r6,r6
+  8280E770  7CFD3B78             or r29,r7,r7
+  8280E774  7D1C4378             or r28,r8,r8
+  8280E778  7D3B4B78             or r27,r9,r9
+  8280E77C  2F050000             cmpwi cr6,r5,0x0
+  8280E780  409A0028             bne cr6,0x8280e7a8
+  8280E784  3D60829A             lis r11,-0x7d66
+  8280E788  54CA103A             rlwinm r10,r6,0x2,0x0,0x1d
+  8280E78C  392B5A60             addi r9,r11,0x5a60
+  8280E790  7C852378             or r5,r4,r4
+  8280E794  38810050             addi r4,r1,0x50
+  8280E798  7D0A482E             lwzx r8,r10,r9
+  8280E79C  7D0903A6             mtspr CTR,r8
+  8280E7A0  4E800421             bctrl
+  8280E7A4  4800007C             b 0x8280e820
+LAB_8280e7a8:
+  8280E7A8  2F1E0000             cmpwi cr6,r30,0x0
+  8280E7AC  409A0028             bne cr6,0x8280e7d4
+  8280E7B0  3D60829A             lis r11,-0x7d66
+  8280E7B4  54AA103A             rlwinm r10,r5,0x2,0x0,0x1d
+  8280E7B8  392B5A80             addi r9,r11,0x5a80
+  8280E7BC  7C852378             or r5,r4,r4
+  8280E7C0  38810050             addi r4,r1,0x50
+  8280E7C4  7D0A482E             lwzx r8,r10,r9
+  8280E7C8  7D0903A6             mtspr CTR,r8
+  8280E7CC  4E800421             bctrl
+  8280E7D0  48000050             b 0x8280e820
+LAB_8280e7d4:
+  8280E7D4  3D40821E             lis r10,-0x7de2
+  8280E7D8  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8280E7DC  3BEA6500             addi r31,r10,0x6500
+  8280E7E0  7C852378             or r5,r4,r4
+  8280E7E4  39000010             li r8,0x10
+  8280E7E8  7D2BFA14             add r9,r11,r31
+  8280E7EC  38E00009             li r7,0x9
+  8280E7F0  38C00001             li r6,0x1
+  8280E7F4  38810190             addi r4,r1,0x190
+  8280E7F8  4802E149             bl 0x8283c940
+  8280E7FC  57CB1838             rlwinm r11,r30,0x3,0x0,0x1c
+  8280E800  39000010             li r8,0x10
+  8280E804  7D2BFA14             add r9,r11,r31
+  8280E808  38E00008             li r7,0x8
+  8280E80C  38C00010             li r6,0x10
+  8280E810  38A00010             li r5,0x10
+  8280E814  38810050             addi r4,r1,0x50
+  8280E818  38610190             addi r3,r1,0x190
+  8280E81C  4802E19D             bl 0x8283c9b8
+LAB_8280e820:
+  8280E820  7F67DB78             or r7,r27,r27
+  8280E824  7F86E378             or r6,r28,r28
+  8280E828  7FA5EB78             or r5,r29,r29
+  8280E82C  38800010             li r4,0x10
+  8280E830  38610050             addi r3,r1,0x50
+  8280E834  4BFF89C5             bl 0x828071f8
+  8280E838  382102E0             addi r1,r1,0x2e0
+  8280E83C  48107EC8             b 0x82916704
 
 ; 8280E840  vp8_sub_pixel_variance8x16_xenon_c  (WebM_atvi_opt/vp8_xenon.cpp:1652)
   8280E840  7D8802A6             mfspr r12,LR
   8280E844  48107E71             bl 0x829166b4
+  8280E848  9421FD20             stwu r1,-0x2e0(r1)
+  8280E84C  3D40821E             lis r10,-0x7de2
+  8280E850  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8280E854  3BEA6500             addi r31,r10,0x6500
+  8280E858  7CDE3378             or r30,r6,r6
+  8280E85C  7CFD3B78             or r29,r7,r7
+  8280E860  7D1C4378             or r28,r8,r8
+  8280E864  7D3B4B78             or r27,r9,r9
+  8280E868  7C852378             or r5,r4,r4
+  8280E86C  39000008             li r8,0x8
+  8280E870  7D2BFA14             add r9,r11,r31
+  8280E874  38E00011             li r7,0x11
+  8280E878  38C00001             li r6,0x1
+  8280E87C  38810050             addi r4,r1,0x50
+  8280E880  4802E0C1             bl 0x8283c940
+  8280E884  57CB1838             rlwinm r11,r30,0x3,0x0,0x1c
+  8280E888  39000008             li r8,0x8
+  8280E88C  7D2BFA14             add r9,r11,r31
+  8280E890  38E00010             li r7,0x10
+  8280E894  38C00008             li r6,0x8
+  8280E898  38A00008             li r5,0x8
+  8280E89C  38810170             addi r4,r1,0x170
+  8280E8A0  38610050             addi r3,r1,0x50
+  8280E8A4  4802E115             bl 0x8283c9b8
+  8280E8A8  7F67DB78             or r7,r27,r27
+  8280E8AC  7F86E378             or r6,r28,r28
+  8280E8B0  7FA5EB78             or r5,r29,r29
+  8280E8B4  38800008             li r4,0x8
+  8280E8B8  38610170             addi r3,r1,0x170
+  8280E8BC  4BFF8425             bl 0x82806ce0
+  8280E8C0  382102E0             addi r1,r1,0x2e0
+  8280E8C4  48107E40             b 0x82916704
 
 ; 8280EAD0  vp8_arch_xenon_encoder_init  (WebM_atvi_opt/vp8_xenon.cpp:1669)
   8280EAD0  7D8802A6             mfspr r12,LR
   8280EAD4  48107BAD             bl 0x82916680
+  8280EAD8  3DE00003             lis r15,0x3
+  8280EADC  3E200003             lis r17,0x3
+  8280EAE0  61EF04E8             ori r15,r15,0x4e8
+  8280EAE4  623104EC             ori r17,r17,0x4ec
+  8280EAE8  91E1FF54             stw r15,-0xac(r1)
+  8280EAEC  3DE00003             lis r15,0x3
+  8280EAF0  9221FF50             stw r17,-0xb0(r1)
+  8280EAF4  3D200003             lis r9,0x3
+  8280EAF8  61EF04E4             ori r15,r15,0x4e4
+  8280EAFC  3CE00003             lis r7,0x3
+  8280EB00  91E1FF58             stw r15,-0xa8(r1)
+  8280EB04  612904D8             ori r9,r9,0x4d8
+  8280EB08  60E704D4             ori r7,r7,0x4d4
+  8280EB0C  3D600003             lis r11,0x3
+  8280EB10  3D008280             lis r8,-0x7d80
+  8280EB14  3CC08280             lis r6,-0x7d80
+  8280EB18  3F600003             lis r27,0x3
+  8280EB1C  3EE00003             lis r23,0x3
+  8280EB20  3EA00003             lis r21,0x3
+  8280EB24  616B04DC             ori r11,r11,0x4dc
+  8280EB28  39084A30             addi r8,r8,0x4a30
+  8280EB2C  38C64FA8             addi r6,r6,0x4fa8
+  8280EB30  3D408280             lis r10,-0x7d80
+  8280EB34  7D03492E             stwx r8,r3,r9
+  8280EB38  3CA00003             lis r5,0x3
+  8280EB3C  7CC3392E             stwx r6,r3,r7
+  8280EB40  3FE00003             lis r31,0x3
+  8280EB44  3FA00003             lis r29,0x3
+  8280EB48  637B0504             ori r27,r27,0x504
+  8280EB4C  3F408281             lis r26,-0x7d7f
+  8280EB50  62F704FC             ori r23,r23,0x4fc
+  8280EB54  3EC08281             lis r22,-0x7d7f
+  8280EB58  62B504F8             ori r21,r21,0x4f8
+  8280EB5C  3E808281             lis r20,-0x7d7f
+  8280EB60  394A4648             addi r10,r10,0x4648
+  8280EB64  60A504D0             ori r5,r5,0x4d0
+  8280EB68  393AE5F8             subi r9,r26,0x1a08
+  8280EB6C  7D43592E             stwx r10,r3,r11
+  8280EB70  38F6E840             subi r7,r22,0x17c0
+  8280EB74  38D4E6D8             subi r6,r20,0x1928
+  8280EB78  7D23D92E             stwx r9,r3,r27
+  8280EB7C  3C808280             lis r4,-0x7d80
+  8280EB80  7CE3B92E             stwx r7,r3,r23
+  8280EB84  63FF0524             ori r31,r31,0x524
+  8280EB88  7CC3A92E             stwx r6,r3,r21
+  8280EB8C  3FC08280             lis r30,-0x7d80
+  8280EB90  8121FF50             lwz r9,-0xb0(r1)
+  8280EB94  63BD0528             ori r29,r29,0x528
+  8280EB98  80E1FF54             lwz r7,-0xac(r1)
+  8280EB9C  3F808280             lis r28,-0x7d80
+  8280EBA0  80C1FF58             lwz r6,-0xa8(r1)
+  8280EBA4  3F200003             lis r25,0x3
+  8280EBA8  3E200003             lis r17,0x3
+  8280EBAC  3E600003             lis r19,0x3
+  8280EBB0  6231059C             ori r17,r17,0x59c
+  8280EBB4  38844DE8             addi r4,r4,0x4de8
+  8280EBB8  397E53F8             addi r11,r30,0x53f8
+  8280EBBC  9221FF5C             stw r17,-0xa4(r1)
+  8280EBC0  395C56B0             addi r10,r28,0x56b0
+  8280EBC4  7C83292E             stwx r4,r3,r5
+  8280EBC8  63390500             ori r25,r25,0x500
+  8280EBCC  7D63F92E             stwx r11,r3,r31
+  8280EBD0  3F008281             lis r24,-0x7d7f
+  8280EBD4  7D43E92E             stwx r10,r3,r29
+  8280EBD8  627304F0             ori r19,r19,0x4f0
+  8280EBDC  3E408280             lis r18,-0x7d80
+  8280EBE0  3E008280             lis r16,-0x7d80
+  8280EBE4  3DC08280             lis r14,-0x7d80
+  8280EBE8  3DE08280             lis r15,-0x7d80
+  8280EBEC  3918E760             subi r8,r24,0x18a0
+  8280EBF0  3E208281             lis r17,-0x7d7f
+  8280EBF4  38B26070             addi r5,r18,0x6070
+  8280EBF8  7D03C92E             stwx r8,r3,r25
+  8280EBFC  389071F8             addi r4,r16,0x71f8
+  8280EC00  396E6CE0             addi r11,r14,0x6ce0
+  8280EC04  7CA3992E             stwx r5,r3,r19
+  8280EC08  394F6A30             addi r10,r15,0x6a30
+  8280EC0C  7C83492E             stwx r4,r3,r9
+  8280EC10  3911E8C8             subi r8,r17,0x1738
+  8280EC14  7D63392E             stwx r11,r3,r7
+  8280EC18  7D43312E             stwx r10,r3,r6
+  8280EC1C  80A1FF5C             lwz r5,-0xa4(r1)
+  8280EC20  7D03292E             stwx r8,r3,r5
+  8280EC24  48107AAC             b 0x829166d0

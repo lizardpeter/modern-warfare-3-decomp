@@ -49,11 +49,30 @@ void DrawAmmoPic(void)
 
 // 822A27B0  CG_DrawPlayerWeaponAmmoClipGraphic_GetBaseRectPos  (cgame/cg_ammocounter.cpp:66)
 
-void CG_DrawPlayerWeaponAmmoClipGraphic_GetBaseRectPos(void)
+void CG_DrawPlayerWeaponAmmoClipGraphic_GetBaseRectPos
+               (undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 uVar1;
+  undefined1 uVar2;
+  undefined8 uVar3;
+  undefined4 *puVar4;
+  undefined1 auStack_30 [4];
+  undefined1 auStack_2c [44];
+  
+  uVar3 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x46,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  puVar4 = (undefined4 *)param_2;
+  *(undefined4 *)param_3 = *puVar4;
+  ((undefined4 *)param_3)[1] = puVar4[1];
+  uVar1 = *(undefined1 *)((int)puVar4 + 0x11);
+  uVar2 = *(undefined1 *)(puVar4 + 4);
+  uVar3 = ScrPlace_GetActivePlacement(uVar3);
+  ScrPlace_ApplyRect(uVar3,param_3,param_3 + 4,auStack_30,auStack_2c,uVar2,uVar1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -122,6 +141,212 @@ void AmmoColor(int param_1,float *param_2,undefined8 param_3,undefined8 param_4,
 }
 
 
+// 822A2A38  DrawClipAmmoGeneric  (cgame/cg_ammocounter.cpp:158)
+
+void DrawClipAmmoGeneric(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+                        undefined8 param_5,int param_6,undefined8 param_7,ulonglong param_8)
+
+{
+  float fVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  float *pfVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  undefined8 uVar15;
+  undefined8 uVar16;
+  double dVar17;
+  double dVar18;
+  undefined4 local_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  uint local_90;
+  undefined4 *local_8c;
+  
+  __savegprlr_22();
+  iVar2 = __savefpr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0xaa,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  if ((param_8 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0xab,0,0xffffffff82000f98,0xffffffff8200fd64);
+  }
+  puVar6 = &local_a4;
+  lVar7 = param_8 - 4;
+  lVar10 = 6;
+  do {
+    lVar7 = lVar7 + 4;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *(undefined4 *)lVar7;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  ScrPlace_HiResScaleRect(&local_98,&local_94,&local_a0,&local_9c);
+  cVar4 = Mantle_IsWeaponInactive(iVar2);
+  if ((cVar4 == '\0') && ((*(uint *)(iVar2 + 0xc) & 8) == 0)) {
+    dVar14 = -(double)(local_9c * 0.5 - param_2[1]);
+    iVar3 = BG_GetAmmoInClipForWeapon(iVar2,param_3,param_4,param_7);
+    AmmoColor(iVar2,param_5,param_3,param_4,param_7);
+    iVar2 = BG_GetClipSize(iVar2,param_3,param_4);
+    dVar11 = (double)local_a0;
+    dVar12 = (double)local_98;
+    if (param_6 == 10) {
+      fVar1 = (float)((double)*param_2 - dVar11);
+      dVar17 = -dVar12;
+    }
+    else {
+      fVar1 = *param_2;
+      dVar17 = dVar12;
+    }
+    uVar8 = 0;
+    if (0 < iVar2) {
+      uVar15 = 0x3ff0000000000000;
+      uVar16 = 0;
+      dVar13 = 0.30000001192092896;
+      while( true ) {
+        dVar18 = (double)fVar1;
+        iVar9 = (int)uVar8;
+        pfVar5 = (float *)param_5;
+        if (iVar9 == iVar3) {
+          *pfVar5 = (float)dVar13;
+          pfVar5[1] = 0.3;
+          pfVar5[2] = 0.3;
+          pfVar5[3] = 0.4;
+        }
+        if (iVar9 != 0) {
+          trapWord(6,(ulonglong)local_90,0);
+          trapWord(5,(ulonglong)local_90 &
+                     ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+          if (uVar8 == (longlong)(iVar9 / (int)local_90) * (longlong)(int)local_90) {
+            if (param_6 == 10) {
+              dVar12 = -dVar12;
+              fVar1 = (float)((double)*param_2 - dVar11);
+            }
+            else {
+              fVar1 = *param_2;
+            }
+            dVar18 = (double)fVar1;
+            dVar14 = (double)(float)((double)local_94 + dVar14);
+            dVar17 = dVar12;
+          }
+        }
+        local_a4 = *local_8c;
+        CL_DrawStretchPicPhysical(dVar18,dVar14,dVar11,(double)local_9c,uVar16,uVar16,uVar15,uVar15)
+        ;
+        uVar8 = uVar8 + 1;
+        fVar1 = (float)(dVar17 + dVar18);
+        if (iVar2 <= (int)uVar8) break;
+        dVar12 = (double)local_98;
+        dVar11 = (double)local_a0;
+      }
+    }
+  }
+  __restfpr_26();
+  __restgprlr_22();
+  return;
+}
+
+
+// 822A2CA0  DrawClipAmmoBeltfed  (cgame/cg_ammocounter.cpp:230)
+
+void DrawClipAmmoBeltfed(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+                        undefined8 param_5,int param_6,undefined8 param_7,longlong param_8)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  double dVar8;
+  double dVar9;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  undefined4 uStack_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  uint local_90;
+  
+  __savegprlr_24();
+  uVar1 = __savefpr_25();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0xf2,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  puVar6 = &uStack_a4;
+  param_8 = param_8 + -4;
+  lVar7 = 6;
+  do {
+    param_8 = param_8 + 4;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *(undefined4 *)param_8;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  ScrPlace_HiResScaleRect(&local_98,&local_94,&local_a0,&local_9c);
+  dVar14 = (double)*param_2;
+  uVar2 = BG_GetClipSize(uVar1,param_3,param_4);
+  trapWord(6,(ulonglong)local_90,0);
+  trapWord(5,(ulonglong)local_90 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1)
+           ,0xffff);
+  dVar12 = (double)((float)(longlong)((int)uVar2 / (int)local_90) * local_9c * 0.5 + param_2[1]);
+  iVar3 = BG_GetAmmoInClipForWeapon(uVar1,param_3,param_4,param_7);
+  AmmoColor(uVar1,param_5,param_3,param_4,param_7);
+  iVar4 = BG_GetClipSize(uVar1,param_3,param_4);
+  if (param_6 == 10) {
+    dVar13 = (double)local_98;
+  }
+  else {
+    dVar13 = -(double)local_98;
+  }
+  uVar1 = 0;
+  if (0 < iVar4) {
+    uVar10 = 0x3ff0000000000000;
+    uVar11 = 0;
+    dVar8 = -1.0;
+    dVar9 = 0.30000001192092896;
+    do {
+      pfVar5 = (float *)param_5;
+      if ((int)uVar1 == iVar3) {
+        *pfVar5 = (float)dVar9;
+        pfVar5[1] = 0.3;
+        pfVar5[2] = 0.3;
+        pfVar5[3] = 0.4;
+      }
+      trapWord(6,(ulonglong)local_90,0);
+      trapWord(5,(ulonglong)local_90 &
+                 ~(((uVar1 & 0x7fffffff) << 1 | (uVar1 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar1 == (longlong)((int)uVar1 / (int)local_90) * (longlong)(int)local_90) {
+        dVar13 = (double)(float)(dVar13 * dVar8);
+        dVar12 = (double)(float)((double)local_94 + dVar12);
+        dVar14 = (double)(float)(dVar13 + dVar14);
+      }
+      CL_DrawStretchPicPhysical
+                (dVar14,dVar12,(double)local_a0,(double)local_9c,uVar11,uVar11,uVar10,uVar10);
+      uVar1 = uVar1 + 1;
+      dVar14 = (double)(float)(dVar13 + dVar14);
+    } while ((int)uVar1 < iVar4);
+  }
+  __restfpr_25();
+  __restgprlr_24();
+  return;
+}
+
+
 // 822A4C98  Byte4UnpackRgba  (universal/com_color.h:232)
 
 void Byte4UnpackRgba(byte *param_1,float *param_2)
@@ -131,6 +356,57 @@ void Byte4UnpackRgba(byte *param_1,float *param_2)
   param_2[1] = (float)param_1[1] * 0.003921569;
   param_2[2] = (float)param_1[2] * 0.003921569;
   param_2[3] = (float)param_1[3] * 0.003921569;
+  return;
+}
+
+
+// 822A2ED0  DrawClipAmmo  (cgame/cg_ammocounter.cpp:283)
+
+void DrawClipAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                 undefined8 param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  bool bVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_23();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x11e,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  lVar3 = BG_AmmoCounterClip(param_3,param_4);
+  if (5 < (lVar3 - 1U & 0xffffffff)) {
+    if ((int)lVar3 != 0) {
+      MyAssertHandler(0xffffffff8200fd18,0x135,0,0xffffffff82000f98,0xffffffff8200fd70);
+    }
+    __restgprlr_23();
+    return;
+  }
+  bVar1 = (int)(lVar3 - 1U) != 0;
+  if (lVar3 == 2 && bVar1) {
+    DrawClipAmmoGeneric(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,0xffffffff8200f94c);
+    __restgprlr_23();
+    return;
+  }
+  if (lVar3 != 3 || !bVar1) {
+    if (lVar3 == 4 && bVar1) {
+      DrawClipAmmoGeneric(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,0xffffffff8200f97c);
+      __restgprlr_23();
+      return;
+    }
+    if (lVar3 == 5 && bVar1) {
+      DrawClipAmmoBeltfed(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,0xffffffff8200f994);
+      __restgprlr_23();
+      return;
+    }
+    if (!bVar1) {
+      DrawClipAmmoGeneric(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,0xffffffff8200f934);
+      __restgprlr_23();
+      return;
+    }
+  }
+  DrawClipAmmoGeneric(uVar2,param_2,param_3,param_4,param_5,param_6,param_7,0xffffffff8200f964);
+  __restgprlr_23();
   return;
 }
 
@@ -191,6 +467,138 @@ LAB_822a3270:
 }
 
 
+// 822A3288  CG_GetPlayerWeaponAmmoStock  (cgame/cg_ammocounter.cpp:366)
+
+undefined8 CG_GetPlayerWeaponAmmoStock(void)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  int iVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  
+  iVar2 = CG_GetLocalClientGlobals();
+  uVar1 = GetWeapon();
+  if ((iVar2 == 0) || (uVar5 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
+    uVar5 = 0;
+  }
+  if ((uVar1 & 0xff) != 0) {
+    iVar3 = BG_AmmoCounterClip(uVar1,uVar5);
+    uVar4 = 0;
+    if (iVar3 == 0) goto LAB_822a32f4;
+  }
+  uVar4 = uVar1;
+LAB_822a32f4:
+  if ((uVar4 & 0xff) == 0) {
+    uVar5 = 0;
+  }
+  else {
+    if ((iVar2 == 0) || (uVar5 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
+      uVar5 = 0;
+    }
+    uVar5 = BG_GetTotalAmmoReserve(iVar2,uVar4,uVar5);
+  }
+  return uVar5;
+}
+
+
+// 822A3350  DpadIconDims  (cgame/cg_ammocounter.cpp:386)
+
+void DpadIconDims(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                 ulonglong param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float *pfVar6;
+  float *pfVar7;
+  double dVar8;
+  
+  pfVar2 = (float *)__savegprlr_22();
+  if (pfVar2 == (float *)0x0) {
+    MyAssertHandler(0xffffffff8200fd18,0x186,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x187,0,0xffffffff82000f98,0xffffffff8200fdbc);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x188,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x189,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  }
+  if ((param_8 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x18a,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  }
+  iVar3 = BG_DPadIconRatio(param_3,param_4);
+  pfVar4 = (float *)param_5;
+  pfVar6 = (float *)param_7;
+  pfVar5 = (float *)param_6;
+  pfVar7 = (float *)param_8;
+  if (iVar3 != 2) {
+    if (iVar3 != 1) {
+      *pfVar4 = *pfVar2;
+      *pfVar5 = pfVar2[1];
+      *pfVar6 = pfVar2[2];
+      *pfVar7 = pfVar2[3];
+      __restgprlr_22();
+      return;
+    }
+    if (1 < (param_2 & 0xffffffff)) {
+      if ((param_2 & 0xffffffff) != 2) {
+        if ((param_2 & 0xffffffff) != 3) {
+          MyAssertHandler(0xffffffff8200fd18,0x1b1,0,0xffffffff82000f98,0xffffffff8200fda0);
+        }
+        *pfVar4 = *pfVar2;
+        *pfVar6 = pfVar2[2] * 2.0;
+        *pfVar5 = pfVar2[1];
+        *pfVar7 = pfVar2[3];
+        __restgprlr_22();
+        return;
+      }
+      *pfVar4 = *pfVar2 - pfVar2[2];
+      *pfVar6 = pfVar2[2] * 2.0;
+      *pfVar5 = pfVar2[1];
+      *pfVar7 = pfVar2[3];
+      __restgprlr_22();
+      return;
+    }
+    *pfVar4 = -(pfVar2[2] * 0.5 - *pfVar2);
+    *pfVar6 = pfVar2[2] * 2.0;
+    *pfVar5 = pfVar2[1];
+    *pfVar7 = pfVar2[3];
+    __restgprlr_22();
+    return;
+  }
+  dVar8 = 0.5;
+  if ((param_2 & 0xffffffff) < 2) {
+    fVar1 = -(pfVar2[2] * 0.5 - *pfVar2);
+  }
+  else {
+    if ((param_2 & 0xffffffff) != 2) {
+      if ((param_2 & 0xffffffff) != 3) {
+        MyAssertHandler(0xffffffff8200fd18,0x19c,0,0xffffffff82000f98,0xffffffff8200fda0);
+      }
+      *pfVar4 = *pfVar2;
+      *pfVar6 = pfVar2[2] * 2.0;
+      goto LAB_822a34e4;
+    }
+    fVar1 = *pfVar2 - pfVar2[2];
+  }
+  *pfVar4 = fVar1;
+  *pfVar6 = pfVar2[2] * 2.0;
+LAB_822a34e4:
+  *pfVar5 = pfVar2[3] * 0.25 + pfVar2[1];
+  *pfVar7 = (float)((double)pfVar2[3] * dVar8);
+  __restgprlr_22();
+  return;
+}
+
+
 // 822A3638  DpadTextPos  (cgame/cg_ammocounter.cpp:451)
 
 void DpadTextPos(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
@@ -204,15 +612,12 @@ void DpadTextPos(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefin
   
   pfVar2 = (float *)__savegprlr_24();
   if (pfVar2 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200fd18,0x1c9,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200fd18,0x1ca,0,0xffffffff82000f98,0xffffffff8200fdbc);
   }
   if ((param_6 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200fd18,0x1cb,0,0xffffffff82000f98,0xffffffff8200fdb8);
   }
   iVar3 = BG_DPadIconRatio(param_3,param_4);
@@ -271,8 +676,39 @@ undefined8 ActionSlotIsActive(undefined8 param_1,longlong param_2)
     }
   }
   else if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200fd18,0x23c,0,0xffffffff82000f98,0xffffffff8200fdc8);
+  }
+  return 0;
+}
+
+
+// 822A2428  BG_WeaponDisableSwitchToEmpty  (bgame/bg_weapons_util.h:536)
+
+undefined8 BG_WeaponDisableSwitchToEmpty(int param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82003180,0x219,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  else {
+    uVar3 = 1;
+    if ((*(uint *)(param_1 + 0x374) & 0x8000) != 0) goto LAB_822a248c;
+  }
+  uVar3 = 0;
+LAB_822a248c:
+  uVar1 = BG_GetAlternateWeapon(param_2,uVar3);
+  if (*(char *)((&DAT_829d84a0)[uVar1 & 0xff] + 0x77e) != '\0') {
+    if ((param_1 == 0) || (uVar3 = 1, (*(uint *)(param_1 + 0x374) & 0x8000) == 0)) {
+      uVar3 = 0;
+    }
+    iVar2 = BG_WeaponAmmo(param_1,param_2,uVar3);
+    if (iVar2 == 0) {
+      return 1;
+    }
   }
   return 0;
 }
@@ -280,11 +716,61 @@ undefined8 ActionSlotIsActive(undefined8 param_1,longlong param_2)
 
 // 822A3878  CG_ActionSlotIsUsable  (cgame/cg_ammocounter.cpp:580)
 
-void CG_ActionSlotIsUsable(void)
+void CG_ActionSlotIsUsable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  uint uVar5;
+  undefined4 *puVar6;
+  
+  uVar1 = __savegprlr_29();
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8200fd18,0x24a,0,0xffffffff8200fe00,param_2,3);
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  if (*(int *)((int)((param_2 + 0x150 & 0xffffffff) << 2) + iVar2) != 0) goto LAB_822a38dc;
+  iVar3 = *(int *)((int)((param_2 + 0x146 & 0xffffffff) << 2) + iVar2);
+  if (iVar3 != 1) {
+    if (iVar3 == 2) {
+      if (((*(char *)(iVar2 + 0x373) == '\0') ||
+          (cVar4 = Mantle_IsWeaponInactive(iVar2), cVar4 != '\0')) ||
+         ((*(uint *)(iVar2 + 0xc) & 8) != 0)) goto LAB_822a394c;
+      uVar5 = 0;
+      puVar6 = (undefined4 *)(iVar2 + 0x274);
+      while ((*(char *)((int)puVar6 + 3) == '\0' ||
+             (cVar4 = BG_HasUnderbarrelAmmo(*puVar6), cVar4 == '\0'))) {
+        uVar5 = uVar5 + 1;
+        puVar6 = puVar6 + 1;
+        if (0xe < uVar5) {
+          __restgprlr_29(0);
+          return;
+        }
+      }
+    }
+    else if (iVar3 != 3) {
+      if (iVar3 != 0) {
+        MyAssertHandler(0xffffffff8200fd18,0x275,0,0xffffffff82000f98,0xffffffff8200fdc8);
+        __restgprlr_29(0);
+        return;
+      }
+      goto LAB_822a394c;
+    }
+LAB_822a38dc:
+    __restgprlr_29(1);
+    return;
+  }
+  uVar5 = *(uint *)((int)((param_2 + 0x14a & 0xffffffff) << 2) + iVar2);
+  if (((uVar5 & 0xff) != 0) && (iVar3 = BG_PlayerHasWeapon(iVar2,uVar5), iVar3 != 0)) {
+    iVar2 = BG_WeaponDisableSwitchToEmpty(iVar2,uVar5);
+    __restgprlr_29(iVar2 == 0);
+    return;
+  }
+LAB_822a394c:
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -303,7 +789,6 @@ void CG_DrawPlayerActionSlotDpad(undefined8 param_1,ulonglong param_2,int param_
   
   uVar2 = __savegprlr_22();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200fd18,0x28e,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   cVar4 = CG_ActionSlotIsUsable(uVar2,0);
@@ -358,41 +843,377 @@ void DrawAnimatedMaterial(void)
 
 // 822A3CC0  CG_DrawPlayerActionSlot  (cgame/cg_ammocounter.cpp:703)
 
-void CG_DrawPlayerActionSlot(void)
+void CG_DrawPlayerActionSlot
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,undefined8 param_6,undefined8 param_7,ulonglong param_8,
+               char *param_9,undefined8 param_10)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  float *pfVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  int iVar6;
+  undefined8 uVar5;
+  char cVar11;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  uint *puVar12;
+  undefined4 *puVar13;
+  double extraout_f1;
+  double dVar14;
+  undefined8 uVar15;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  float local_f4;
+  int local_f0 [4];
+  char local_e0 [4];
+  undefined4 local_dc;
+  undefined4 local_d8;
+  float local_d4;
+  undefined1 auStack_b0 [176];
+  
   __savegprlr_23();
+  uVar4 = __savefpr_28();
+  dVar14 = extraout_f1;
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x2d0,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  if (3 < (param_8 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8200fd18,0x2d1,0,0xffffffff8200fe00,param_8,3);
+  }
+  iVar6 = CG_GetLocalClientGlobals(uVar4);
+  local_d4 = *(float *)(param_9 + 0xc);
+  local_e0 = *(char (*) [4])param_9;
+  local_dc = *(undefined4 *)(param_9 + 4);
+  local_d8 = *(undefined4 *)(param_9 + 8);
+  uVar15 = 0;
+  if (local_d4 != 0.0) {
+    uVar5 = ScrPlace_GetActivePlacement(uVar4);
+    if (*(int *)((int)((param_8 + 0x150 & 0xffffffff) << 2) + iVar6) != 0) {
+      CG_MaterialHandleForIndex(uVar4);
+      pfVar2 = (float *)param_5;
+      CL_DrawStretchPic((double)*pfVar2,(double)pfVar2[1],(double)pfVar2[2],(double)pfVar2[3],uVar15
+                        ,uVar15,0x3ff0000000000000,uVar5);
+      __restfpr_28();
+      __restgprlr_23();
+      return;
+    }
+    iVar9 = *(int *)((int)((param_8 + 0x146 & 0xffffffff) << 2) + iVar6);
+    if (iVar9 == 1) {
+      uVar7 = *(uint *)((int)((param_8 + 0x14a & 0xffffffff) << 2) + iVar6);
+      if ((((uVar7 & 0xff) != 0) && (iVar9 = BG_PlayerHasWeapon(iVar6,uVar7), iVar9 != 0)) &&
+         (iVar9 = BG_WeaponDisableSwitchToEmpty(iVar6,uVar7), iVar9 == 0)) {
+        if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+          uVar4 = 0;
+        }
+        uVar10 = BG_GetAlternateWeapon(uVar7,uVar4);
+        iVar9 = (&DAT_829d80d8)[uVar10 & 0xff];
+        if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+          uVar4 = 0;
+        }
+        iVar8 = BG_DPadIcon(uVar7,uVar4);
+        if (iVar8 != 0) {
+          if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+            uVar4 = 0;
+          }
+          DpadIconDims(param_5,param_8,uVar7,uVar4,&local_fc,&local_100,&local_f4,&local_f8);
+          CL_DrawStretchPic((double)local_fc,(double)local_100,(double)local_f4,(double)local_f8,
+                            uVar15,uVar15,0x3ff0000000000000,uVar5);
+        }
+        if (*(char *)(iVar9 + 0xb6) != '\0') {
+          if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+            uVar4 = 0;
+          }
+          iVar9 = BG_WeaponAmmo(iVar6,uVar7,uVar4);
+          if (iVar9 == 0) {
+            builtin_strncpy(local_e0,"?333",4);
+            local_dc = 0x3ecccccd;
+            local_d8 = 0x3ecccccd;
+          }
+          if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+            uVar4 = 0;
+          }
+          DpadTextPos(param_5,param_8,uVar7,uVar4,&local_fc,&local_100);
+          if ((iVar6 == 0) || (uVar4 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
+            uVar4 = 0;
+          }
+          uVar4 = BG_WeaponAmmo(iVar6,uVar7,uVar4);
+          Com_sprintf(auStack_b0,0x40,0xffffffff8200fd9c,uVar4);
+          UI_DrawWrappedText((double)(float)((double)local_fc + dVar14),
+                             (double)(float)((double)local_100 + param_2),param_3,uVar5,auStack_b0,
+                             param_5,param_10);
+        }
+      }
+    }
+    else if (iVar9 == 2) {
+      uVar7 = *(uint *)(iVar6 + 0x370);
+      if ((((uVar7 & 0xff) != 0) && (cVar11 = Mantle_IsWeaponInactive(iVar6), cVar11 == '\0')) &&
+         ((*(uint *)(iVar6 + 0xc) & 8) == 0)) {
+        cVar11 = BG_HasUnderbarrelAmmo(uVar7);
+        uVar10 = 0;
+        if (cVar11 == '\0') {
+          puVar13 = (undefined4 *)(iVar6 + 0x274);
+          do {
+            if ((*(char *)((int)puVar13 + 3) != '\0') &&
+               (cVar11 = BG_HasUnderbarrelAmmo(*puVar13), cVar11 != '\0')) break;
+            uVar10 = uVar10 + 1;
+            puVar13 = puVar13 + 1;
+          } while (uVar10 < 0xf);
+        }
+        else {
+          puVar12 = (uint *)(iVar6 + 0x278);
+          do {
+            if (puVar12[-1] == uVar7) break;
+            if (*puVar12 == uVar7) {
+              uVar10 = uVar10 + 1;
+              break;
+            }
+            if (puVar12[1] == uVar7) {
+              uVar10 = uVar10 + 2;
+              break;
+            }
+            if (puVar12[2] == uVar7) {
+              uVar10 = uVar10 + 3;
+              break;
+            }
+            if (puVar12[3] == uVar7) {
+              uVar10 = uVar10 + 4;
+              break;
+            }
+            uVar10 = uVar10 + 5;
+            puVar12 = puVar12 + 5;
+          } while (uVar10 < 0xf);
+        }
+        if (uVar10 != 0xf) {
+          uVar1 = *(undefined4 *)((uVar10 + 0x9d) * 4 + iVar6);
+          uVar7 = BG_GetAlternateWeapon(uVar1,1);
+          iVar9 = (&DAT_829d80d8)[uVar7 & 0xff];
+          iVar8 = BG_DPadIcon(uVar1,1);
+          if (iVar8 != 0) {
+            DpadIconDims(param_5,param_8,uVar1,1,&local_fc,&local_100,&local_f4,&local_f8);
+            CL_DrawStretchPic((double)local_fc,(double)local_100,(double)local_f4,(double)local_f8,
+                              uVar15,uVar15,0x3ff0000000000000,uVar5);
+          }
+          if (*(char *)(iVar9 + 0xb6) != '\0') {
+            cVar11 = BG_IsIW5Weapon(uVar1);
+            if (cVar11 != '\0') {
+              BG_GetWeaponAttachments(uVar1,1,&local_f4,&local_f8,local_f0);
+              bVar3 = local_f4 == 0.0;
+              if ((local_f4 != 0.0) &&
+                 ((bVar3 || (bVar3 = false, *(char *)((int)local_f4 + 0xa1) != '\0')))) {
+                bVar3 = true;
+              }
+              if ((local_f8 != 0.0) &&
+                 ((bVar3 || (bVar3 = false, *(char *)((int)local_f8 + 0xa1) != '\0')))) {
+                bVar3 = true;
+              }
+              if ((local_f0[0] != 0) &&
+                 ((bVar3 || (bVar3 = false, *(char *)(local_f0[0] + 0xa1) != '\0')))) {
+                bVar3 = true;
+              }
+              if (bVar3) goto LAB_822a4420;
+            }
+            iVar9 = BG_WeaponAmmo(iVar6,uVar1,1);
+            if (iVar9 == 0) {
+              builtin_strncpy(local_e0,"?333",4);
+              local_dc = 0x3ecccccd;
+              local_d8 = 0x3ecccccd;
+            }
+            DpadTextPos(param_5,param_8,uVar1,1,&local_fc,&local_100);
+            uVar4 = BG_WeaponAmmo(iVar6,uVar1,1);
+            Com_sprintf(auStack_b0,0x40,0xffffffff8200fd9c,uVar4);
+            UI_DrawWrappedText((double)(float)((double)local_fc + dVar14),
+                               (double)(float)((double)local_100 + param_2),param_3,uVar5,auStack_b0
+                               ,param_5,param_10);
+            __restfpr_28();
+            __restgprlr_23();
+            return;
+          }
+        }
+      }
+    }
+    else if (iVar9 != 0) {
+      MyAssertHandler(0xffffffff8200fd18,0x36d,0,0xffffffff82000f98,0xffffffff8200fdc8);
+      __restfpr_28();
+      __restgprlr_23();
+      return;
+    }
+  }
+LAB_822a4420:
+  __restfpr_28();
+  __restgprlr_23();
+  return;
 }
 
 
 // 822A4430  CG_DrawPlayerWeaponBackground  (cgame/cg_ammocounter.cpp:883)
 
-void CG_DrawPlayerWeaponBackground(void)
+void CG_DrawPlayerWeaponBackground(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float *pfVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x377,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  uVar3 = 0;
+  if (*(float *)(param_3 + 0xc) != 0.0) {
+    ScrPlace_GetActivePlacement(uVar2);
+    pfVar1 = (float *)param_2;
+    CL_DrawStretchPic((double)*pfVar1,(double)pfVar1[1],(double)pfVar1[2],(double)pfVar1[3],uVar3,
+                      uVar3,0x3ff0000000000000);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 822A4500  CG_DrawPlayerWeaponAmmoClipGraphic  (cgame/cg_ammocounter.cpp:899)
 
-void CG_DrawPlayerWeaponAmmoClipGraphic(void)
+void CG_DrawPlayerWeaponAmmoClipGraphic
+               (undefined8 param_1,ulonglong param_2,undefined4 *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  char cVar6;
+  longlong lVar3;
+  int iVar5;
+  undefined1 auStack_50 [16];
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x38b,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  iVar4 = CG_GetLocalClientGlobals(uVar1);
+  if ((*(uint *)(iVar4 + 0xf8) & 0x200000) == 0) {
+    local_34 = (float)param_3[3];
+    local_40 = *param_3;
+    local_3c = param_3[1];
+    local_38 = param_3[2];
+    if (local_34 != 0.0) {
+      uVar2 = GetWeapon();
+      if ((((uVar2 & 0xff) != 0) && (cVar6 = Mantle_IsWeaponInactive(iVar4), cVar6 == '\0')) &&
+         ((*(uint *)(iVar4 + 0xc) & 8) == 0)) {
+        lVar3 = BG_PlayerDualWieldingWeapon(iVar4,uVar2);
+        if ((int)param_4 <= (int)(uint)(lVar3 != 0)) {
+          CG_DrawPlayerWeaponAmmoClipGraphic_GetBaseRectPos(uVar1,param_2,auStack_50);
+          iVar5 = BG_GetEquippedWeaponIndex(iVar4,uVar2);
+          if (-1 < iVar5) {
+            DrawClipAmmo(iVar4,auStack_50,uVar2,*(undefined1 *)(iVar5 * 0xc + iVar4 + 0x2b2),
+                         &local_40,*(undefined1 *)((int)param_2 + 0x10),param_4);
+          }
+        }
+      }
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 822A4648  DrawStretchPicGun  (cgame/cg_ammocounter.cpp:941)
+
+void DrawStretchPicGun(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                      ulonglong param_5)
+
+{
+  undefined8 uVar1;
+  float *pfVar2;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44 [17];
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x3b3,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  pfVar2 = (float *)param_2;
+  local_4c = *pfVar2;
+  local_44[0] = pfVar2[1];
+  local_50 = pfVar2[2];
+  local_48 = pfVar2[3];
+  ScrPlace_ApplyRect(uVar1,&local_4c,local_44,&local_50,&local_48,*(undefined1 *)(pfVar2 + 4),
+                     *(undefined1 *)((int)pfVar2 + 0x11));
+  if ((param_5 & 0xffffffff) != 0) {
+    if ((param_5 & 0xffffffff) == 1) {
+      local_4c = local_4c - local_50;
+      local_50 = local_50 * 2.0;
+    }
+    else {
+      if ((int)param_5 != 2) {
+        MyAssertHandler(0xffffffff8200fd18,0x3c3,0,0xffffffff8200fec0,0xffffffff8200fed4,param_5);
+      }
+      local_4c = -(local_50 * 3.0 - local_4c);
+      local_50 = local_50 * 4.0;
+    }
+  }
+  CL_DrawStretchPicPhysical
+            ((double)local_4c,(double)local_44[0],(double)local_50,(double)local_48,0,0,
+             0x3ff0000000000000);
+  __restgprlr_26();
+  return;
 }
 
 
 // 822A4798  CG_DrawPlayerWeaponIcon  (cgame/cg_ammocounter.cpp:972)
 
-void CG_DrawPlayerWeaponIcon(void)
+void CG_DrawPlayerWeaponIcon(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  char cVar4;
+  undefined8 uVar5;
+  undefined4 local_50;
+  undefined4 local_4c [3];
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200fd18,0x3d4,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  local_34 = (float)param_3[3];
+  local_40 = *param_3;
+  local_3c = param_3[1];
+  local_38 = param_3[2];
+  if (local_34 == 0.0) goto LAB_822a48b4;
+  uVar2 = GetWeapon();
+  if ((((uVar2 & 0xff) == 0) || (cVar4 = Mantle_IsWeaponInactive(iVar3), cVar4 != '\0')) ||
+     ((*(uint *)(iVar3 + 0xc) & 8) != 0)) goto LAB_822a48b4;
+  if ((*(uint *)(iVar3 + 0x374) >> 0xf & 1) == 0) {
+LAB_822a4878:
+    uVar5 = 0;
+  }
+  else {
+    cVar4 = BG_HasUnderbarrelAmmo(uVar2);
+    uVar5 = 1;
+    if (cVar4 == '\0') goto LAB_822a4878;
+  }
+  BG_GetAmmoCounterIcon(uVar2,uVar5,&local_50,local_4c);
+  uVar1 = ScrPlace_GetActivePlacement(uVar1);
+  DrawStretchPicGun(uVar1,param_2,&local_40,local_4c[0],local_50);
+LAB_822a48b4:
+  __restgprlr_28();
+  return;
 }
 
 

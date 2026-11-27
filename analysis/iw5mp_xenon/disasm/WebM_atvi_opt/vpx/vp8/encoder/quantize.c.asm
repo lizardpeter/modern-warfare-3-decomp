@@ -484,7 +484,96 @@ LAB_82835da0:
 ; 82835DC8  vp8_quantize_mby  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:283)
   82835DC8  7D8802A6             mfspr r12,LR
   82835DCC  480E08E5             bl 0x829166b0
+  82835DD0  9421FF70             stwu r1,-0x90(r1)
+  82835DD4  81631C70             lwz r11,0x1c70(r3)
+  82835DD8  7C7B1B78             or r27,r3,r3
+  82835DDC  816B0000             lwz r11,0x0(r11)
+  82835DE0  2F0B0004             cmpwi cr6,r11,0x4
+  82835DE4  419A0010             beq cr6,0x82835df4
+  82835DE8  2F0B0009             cmpwi cr6,r11,0x9
+  82835DEC  3B400001             li r26,0x1
+  82835DF0  409A0008             bne cr6,0x82835df8
+LAB_82835df4:
+  82835DF4  3B400000             li r26,0x0
+LAB_82835df8:
+  82835DF8  3F9B0001             addis r28,r27,0x1
+  82835DFC  3BBB0640             addi r29,r27,0x640
+  82835E00  3B9CBFD0             subi r28,r28,0x4030
+  82835E04  3BDB162C             addi r30,r27,0x162c
+  82835E08  3BE00010             li r31,0x10
+LAB_82835e0c:
+  82835E0C  817C0000             lwz r11,0x0(r28)
+  82835E10  7FC4F378             or r4,r30,r30
+  82835E14  7FA3EB78             or r3,r29,r29
+  82835E18  7D6903A6             mtspr CTR,r11
+  82835E1C  4E800421             bctrl
+  82835E20  37FFFFFF             subic. r31,r31,0x1
+  82835E24  3BDE003C             addi r30,r30,0x3c
+  82835E28  3BBD0030             addi r29,r29,0x30
+  82835E2C  4082FFE0             bne 0x82835e0c
+  82835E30  2F1A0000             cmpwi cr6,r26,0x0
+  82835E34  419A0018             beq cr6,0x82835e4c
+  82835E38  817C0000             lwz r11,0x0(r28)
+  82835E3C  389B1BCC             addi r4,r27,0x1bcc
+  82835E40  387B0AC0             addi r3,r27,0xac0
+  82835E44  7D6903A6             mtspr CTR,r11
+  82835E48  4E800421             bctrl
+LAB_82835e4c:
+  82835E4C  38210090             addi r1,r1,0x90
+  82835E50  480E08B0             b 0x82916700
+
+; 82835E58  vp8_quantize_mb  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:296)
+  82835E58  7D8802A6             mfspr r12,LR
+  82835E5C  480E085D             bl 0x829166b8
+  82835E60  9421FF80             stwu r1,-0x80(r1)
+  82835E64  81631C70             lwz r11,0x1c70(r3)
+  82835E68  816B0000             lwz r11,0x0(r11)
+  82835E6C  2F0B0004             cmpwi cr6,r11,0x4
+  82835E70  419A0010             beq cr6,0x82835e80
+  82835E74  2F0B0009             cmpwi cr6,r11,0x9
+  82835E78  39600001             li r11,0x1
+  82835E7C  409A0008             bne cr6,0x82835e84
+LAB_82835e80:
+  82835E80  39600000             li r11,0x0
+LAB_82835e84:
+  82835E84  37EB0018             addic. r31,r11,0x18
+  82835E88  40810038             ble 0x82835ec0
+  82835E8C  3F830001             addis r28,r3,0x1
+  82835E90  3BA30640             addi r29,r3,0x640
+  82835E94  3B9CBFD0             subi r28,r28,0x4030
+  82835E98  3BC3162C             addi r30,r3,0x162c
+LAB_82835e9c:
+  82835E9C  817C0000             lwz r11,0x0(r28)
+  82835EA0  7FC4F378             or r4,r30,r30
+  82835EA4  7FA3EB78             or r3,r29,r29
+  82835EA8  7D6903A6             mtspr CTR,r11
+  82835EAC  4E800421             bctrl
+  82835EB0  37FFFFFF             subic. r31,r31,0x1
+  82835EB4  3BDE003C             addi r30,r30,0x3c
+  82835EB8  3BBD0030             addi r29,r29,0x30
+  82835EBC  4082FFE0             bne 0x82835e9c
+LAB_82835ec0:
+  82835EC0  38210080             addi r1,r1,0x80
+  82835EC4  480E0844             b 0x82916708
 
 ; 82835EC8  vp8_quantize_mbuv  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:307)
   82835EC8  7D8802A6             mfspr r12,LR
   82835ECC  480E07ED             bl 0x829166b8
+  82835ED0  9421FF80             stwu r1,-0x80(r1)
+  82835ED4  3F830001             addis r28,r3,0x1
+  82835ED8  3BA30940             addi r29,r3,0x940
+  82835EDC  3B9CBFD0             subi r28,r28,0x4030
+  82835EE0  3BC319EC             addi r30,r3,0x19ec
+  82835EE4  3BE00008             li r31,0x8
+LAB_82835ee8:
+  82835EE8  817C0000             lwz r11,0x0(r28)
+  82835EEC  7FC4F378             or r4,r30,r30
+  82835EF0  7FA3EB78             or r3,r29,r29
+  82835EF4  7D6903A6             mtspr CTR,r11
+  82835EF8  4E800421             bctrl
+  82835EFC  37FFFFFF             subic. r31,r31,0x1
+  82835F00  3BDE003C             addi r30,r30,0x3c
+  82835F04  3BBD0030             addi r29,r29,0x30
+  82835F08  4082FFE0             bne 0x82835ee8
+  82835F0C  38210080             addi r1,r1,0x80
+  82835F10  480E07F8             b 0x82916708

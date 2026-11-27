@@ -5,7 +5,77 @@
 int fprintf(FILE *_File,char *_Format,...)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_File,_Format);
+  FILE *_File_00;
+  int *piVar2;
+  ulonglong uVar1;
+  uint uVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined8 in_r5;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined *puVar6;
+  undefined8 in_r10;
+  undefined *puVar7;
+  undefined8 in_stack_00000020;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  uint local_30;
+  
+  lVar5 = (longlong)(int)_Format;
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  iVar4 = 0;
+  local_30 = 0;
+  in_stack_00000020 = in_r5;
+  in_stack_00000028 = in_r6;
+  in_stack_00000030 = in_r7;
+  in_stack_00000038 = in_r8;
+  in_stack_00000040 = in_r9;
+  in_stack_00000048 = in_r10;
+  if ((_File_00 == (FILE *)0x0) || (lVar5 == 0)) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar1 = 0xffffffffffffffff;
+    goto LAB_8291aeb0;
+  }
+  _lock_file(_File_00);
+  if ((_File_00->_flag & 0x40U) == 0) {
+    uVar3 = _fileno(_File_00);
+    if ((uVar3 == 0xffffffff) || (uVar3 == 0xfffffffe)) {
+      puVar6 = &DAT_829b0a68;
+    }
+    else {
+      puVar6 = (undefined *)((&DAT_84897dc0)[(int)uVar3 >> 5] + (uVar3 & 0x1f) * 0x48);
+    }
+    puVar7 = &DAT_829b0a68;
+    if ((puVar6[0x28] & 0xfe) == 0) {
+      if ((uVar3 != 0xffffffff) && (uVar3 != 0xfffffffe)) {
+        puVar7 = (undefined *)((&DAT_84897dc0)[(int)uVar3 >> 5] + (uVar3 & 0x1f) * 0x48);
+      }
+      if ((puVar7[0x28] & 1) == 0) goto LAB_8291ae68;
+    }
+    piVar2 = _errno();
+    *piVar2 = 0x16;
+    _invalid_parameter_noinfo();
+    iVar4 = -1;
+    local_30 = 0xffffffff;
+  }
+LAB_8291ae68:
+  if (iVar4 == 0) {
+    iVar4 = _stbuf(_File_00);
+    local_30 = _output_l(_File_00,(char *)lVar5,(_locale_t)0x0,(va_list)&stack0x00000020);
+    _ftbuf(iVar4,_File_00);
+  }
+  FUN_8291aeb8();
+  uVar1 = (ulonglong)local_30;
+LAB_8291aeb0:
+  iVar4 = __restgprlr_29(uVar1);
+  return iVar4;
 }
 

@@ -50,31 +50,276 @@ void D3D__AlignTextureDimensions
 
 // 82864748  D3D::FindTextureSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:106)
 
-void D3D__FindTextureSize(void)
+void D3D__FindTextureSize
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,ulonglong param_6,undefined8 param_7,int param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  uint uVar2;
+  longlong lVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  uint in_stack_00000054;
+  uint in_stack_00000064;
+  uint *in_stack_0000006c;
+  uint *in_stack_00000074;
+  int *in_stack_0000007c;
+  int local_b0;
+  uint local_ac;
+  int local_a8;
+  uint local_a4;
+  int local_a0 [40];
+  
+  lVar3 = __savegprlr();
+  iVar5 = (int)param_3;
+  iVar7 = 0;
+  if (((param_6 & 0xffffffff) == 1) && (1 < (param_3 & 0xffffffff))) {
+    local_a0[0] = 1;
+LAB_828647b0:
+    local_a8 = 1;
+  }
+  else {
+    local_a0[0] = 0;
+    local_a8 = 0;
+    if ((param_6 & 0xffffffff) == 3) goto LAB_828647b0;
+  }
+  if (local_a8 != 0) {
+    param_3 = 1;
+  }
+  uVar16 = (ulonglong)in_stack_00000054;
+  uVar11 = (ulonglong)in_stack_00000054 & 0x7fffffff;
+  uVar9 = lVar3 + uVar11 * -2;
+  uVar10 = param_2 + uVar11 * -2;
+  iVar4 = (int)uVar9;
+  bVar1 = (&DAT_821f3a09)[(int)((param_5 & 0xffffffff) << 1)];
+  uVar8 = (ulonglong)bVar1;
+  uVar14 = (uVar16 - LZCOUNT(iVar4 + -1)) + 0x20;
+  uVar15 = (uVar16 - LZCOUNT((int)uVar10 + -1)) + 0x20;
+  if ((param_6 & 0xffffffff) == 2) {
+    uVar11 = param_3 + uVar11 * -2;
+    uVar13 = (ulonglong)in_stack_00000064;
+    uVar6 = (in_stack_00000054 - (int)LZCOUNT((int)uVar11 + -1)) + 0x20;
+  }
+  else {
+    uVar11 = 1;
+    uVar6 = 0;
+    uVar13 = -(ulonglong)(param_6 != 0) & (ulonglong)in_stack_00000064;
+  }
+  uVar12 = (uint)uVar13;
+  local_b0 = 1 << (uVar6 & 0x3f);
+  local_a4 = 1 << ((uint)uVar14 & 0x3f);
+  local_ac = 1 << ((uint)uVar15 & 0x3f);
+  if (((0x10 < local_a4) && (0x10 < local_ac)) || (param_8 == 0)) {
+    if (uVar13 == 0) {
+      local_a4 = (uint)lVar3;
+    }
+    else {
+      trapWord(6,uVar8,0);
+      local_a4 = (uint)(((uVar13 & 0x1fffffff) << 3) / uVar8);
+    }
+    local_b0 = (int)param_3;
+    local_ac = (uint)param_2;
+  }
+  D3D__AlignTextureDimensions(&local_a4,&local_ac,&local_b0,uVar8,param_5,param_6,param_7);
+  uVar6 = local_a4;
+  if (uVar13 == 0) {
+    uVar12 = local_a4 * bVar1 >> 3;
+  }
+  if (((int)param_7 == 0) && (local_a8 == 0)) {
+    if ((param_6 & 0xffffffff) == 2) {
+LAB_82864974:
+      uVar12 = uVar12 * local_b0 * local_ac + 0xfff & 0xfffff000;
+      goto LAB_8286498c;
+    }
+    if ((((param_6 & 0xffffffff) == 1) && ((param_4 & 0xffffffff) == 1)) &&
+       ((param_8 == 0 && (uVar16 == 0)))) {
+      D3D__BlockSizeOfGpuFormat(param_5,&local_a4,local_a0);
+      uVar12 = ((local_a0[0] + (uint)param_2) - 1 & ~(local_a0[0] - 1U)) * uVar12;
+      goto LAB_82864abc;
+    }
+    uVar12 = uVar12 * local_b0 * local_ac;
+  }
+  else {
+    if ((param_6 & 0xffffffff) == 2) goto LAB_82864974;
+    uVar12 = (uVar12 * local_ac + 0xfff & 0xfffff000) * local_b0;
+LAB_8286498c:
+    if (local_a8 != 0) {
+      uVar12 = uVar12 * iVar5;
+    }
+  }
+  if ((1 < (param_4 & 0xffffffff)) || ((param_4 & 0xffffffff) == 0)) {
+    uVar16 = uVar10;
+    if ((uVar10 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+      uVar16 = uVar11;
+    }
+    if (((uVar9 & 0xffffffff) <= (uVar16 & 0xffffffff)) &&
+       (iVar4 = (int)uVar10, (uVar10 & 0xffffffff) <= (uVar11 & 0xffffffff))) {
+      iVar4 = (int)uVar11;
+    }
+    uVar11 = param_4;
+    iVar7 = 0;
+    if ((param_4 & 0xffffffff) == 0) {
+      uVar11 = 0x20 - LZCOUNT(iVar4);
+      param_4 = uVar11;
+    }
+    while ((uVar11 - 1 != 0 &&
+           ((param_8 == 0 || ((4 < (uVar14 & 0xffffffff) && (4 < (uVar15 & 0xffffffff)))))))) {
+      if ((uVar14 & 0xffffffff) != 0) {
+        uVar14 = uVar14 - 1;
+      }
+      if ((uVar15 & 0xffffffff) != 0) {
+        uVar15 = uVar15 - 1;
+      }
+      if (1 < (param_3 & 0xffffffff)) {
+        param_3 = (param_3 & 0xffffffff) >> 1;
+      }
+      local_b0 = 1 << ((uint)uVar14 & 0x3f);
+      local_a4 = (uint)param_3;
+      local_ac = 1 << ((uint)uVar15 & 0x3f);
+      iVar4 = D3D__AlignTextureDimensions
+                        (&local_b0,&local_ac,&local_a4,uVar8,param_5,param_6,param_7);
+      uVar11 = uVar11 - 1;
+      iVar7 = iVar4 + iVar7;
+    }
+    if (local_a8 != 0) {
+      uVar2 = -(uint)(local_a0[0] != 0) & 3;
+      iVar7 = (uVar2 + iVar5 & ~uVar2) * iVar7;
+    }
+  }
+LAB_82864abc:
+  *in_stack_0000006c = uVar6;
+  *in_stack_00000074 = uVar12;
+  *in_stack_0000007c = iVar7;
+  __restgprlr(param_4);
+  return;
 }
 
 
 // 82864430  D3D::BlockSizeOfGpuFormat  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:353)
 
-void D3D__BlockSizeOfGpuFormat(void)
+void D3D__BlockSizeOfGpuFormat(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if (uVar1 < 0x2d) {
+    if (uVar1 == 0x2c) {
+LAB_8286449c:
+      uVar2 = 4;
+LAB_8286448c:
+      *param_2 = uVar2;
+      *param_3 = 1;
+      goto LAB_828644e0;
+    }
+    if (10 < uVar1) {
+      if (uVar1 < 0xd) {
+LAB_82864488:
+        uVar2 = 2;
+        goto LAB_8286448c;
+      }
+      if (0x11 < uVar1) {
+        if (uVar1 < 0x15) goto LAB_828644d4;
+        if (uVar1 == 0x27) goto LAB_8286449c;
+        if (uVar1 == 0x28) goto LAB_82864488;
+      }
+    }
+LAB_828644cc:
+    uVar2 = 1;
+  }
+  else {
+    if ((uVar1 != 0x31) &&
+       ((uVar1 < 0x33 || ((0x35 < uVar1 && ((uVar1 < 0x3a || (0x3d < uVar1))))))))
+    goto LAB_828644cc;
+LAB_828644d4:
+    uVar2 = 4;
+  }
+  *param_2 = uVar2;
+  *param_3 = uVar2;
+LAB_828644e0:
+  __restgprlr_29();
+  return;
+}
+
+
+// 828642A8  D3D::GetTextureDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:452)
+
+void D3D__GetTextureDimensions(undefined8 param_1,int *param_2,int *param_3,int *param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  uVar1 = *(uint *)(iVar2 + 0x30) >> 9 & 3;
+  iVar3 = (*(uint *)(iVar2 + 0x28) >> 0x1e & 2) + 1;
+  if (uVar1 == 0) {
+    *param_2 = (*(uint *)(iVar2 + 0x24) & 0xffffff) + iVar3;
+    *param_3 = 1;
+  }
+  else {
+    if (uVar1 == 2) {
+      *param_2 = (*(uint *)(iVar2 + 0x24) & 0x7ff) + iVar3;
+      *param_3 = (*(uint *)(iVar2 + 0x24) >> 0xb & 0x7ff) + iVar3;
+      *param_4 = (*(uint *)(iVar2 + 0x24) >> 0x16) + iVar3;
+      goto LAB_8286435c;
+    }
+    *param_2 = (*(uint *)(iVar2 + 0x24) & 0x1fff) + iVar3;
+    *param_3 = (*(uint *)(iVar2 + 0x24) >> 0xd & 0x1fff) + iVar3;
+  }
+  *param_4 = 1;
+LAB_8286435c:
+  __restgprlr_28();
+  return;
 }
 
 
 // 82864368  D3D::GetGpuTextureDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:486)
 
-void D3D__GetGpuTextureDimensions(void)
+void D3D__GetGpuTextureDimensions(undefined8 param_1,int *param_2,int *param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  uVar1 = *(uint *)(iVar2 + 0x14) >> 9 & 3;
+  iVar3 = (*(uint *)(iVar2 + 0xc) >> 0x1e & 2) + 1;
+  if (uVar1 == 0) {
+    *param_2 = (*(uint *)(iVar2 + 8) & 0xffffff) + iVar3;
+    *param_3 = 1;
+    *param_4 = 1;
+  }
+  else {
+    if (uVar1 == 2) {
+      *param_2 = (*(uint *)(iVar2 + 8) & 0x7ff) + iVar3;
+      *param_3 = (*(uint *)(iVar2 + 8) >> 0xb & 0x7ff) + iVar3;
+      iVar3 = (*(uint *)(iVar2 + 8) >> 0x16) + iVar3;
+    }
+    else {
+      *param_2 = (*(uint *)(iVar2 + 8) & 0x1fff) + iVar3;
+      *param_3 = (*(uint *)(iVar2 + 8) >> 0xd & 0x1fff) + iVar3;
+      iVar3 = (*(uint *)(iVar2 + 8) >> 0x1a) + 1;
+    }
+    *param_4 = iVar3;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -139,11 +384,48 @@ void D3D__GetMipTailLevelOffsetCoords
 
 // 828644F0  D3D::GetMaxMipLevels  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:581)
 
-void D3D__GetMaxMipLevels(void)
+void D3D__GetMaxMipLevels(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  
+  lVar1 = __savegprlr_28();
+  param_4 = param_4 & 0x7fffffff;
+  uVar3 = param_3 + param_4 * -2;
+  iVar4 = (int)uVar3;
+  uVar6 = uVar3;
+  if (iVar4 < 2) {
+    uVar6 = 1;
+  }
+  uVar2 = param_2 + param_4 * -2;
+  uVar5 = uVar2;
+  if (((uVar2 & 0xffffffff) <= (uVar6 & 0xffffffff)) && (uVar5 = uVar3, iVar4 < 2)) {
+    uVar5 = 1;
+  }
+  uVar6 = lVar1 + param_4 * -2;
+  iVar7 = (int)uVar6;
+  if ((uVar6 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
+    if (iVar4 < 2) {
+      uVar3 = 1;
+    }
+    if ((uVar3 & 0xffffffff) < (uVar2 & 0xffffffff)) {
+      iVar7 = (int)uVar2;
+    }
+    else {
+      iVar7 = iVar4;
+      if (iVar4 < 2) {
+        iVar7 = 1;
+      }
+    }
+  }
+  __restgprlr_28(0x20 - LZCOUNT(iVar7));
+  return;
 }
 
 
@@ -167,51 +449,477 @@ void D3D__GetMipTailLevelOffset
 
 // 828645A0  D3D::GetMipTailBaseLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:593)
 
-void D3D__GetMipTailBaseLevel(void)
+void D3D__GetMipTailBaseLevel(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = (int)((param_3 & 0xffffffff) << 1);
+  lVar4 = (param_3 - LZCOUNT((iVar2 - iVar1) + -1)) + 0x20;
+  lVar3 = (param_3 - LZCOUNT((param_2 - iVar1) + -1)) + 0x20;
+  if ((int)lVar3 <= (int)lVar4) {
+    lVar4 = lVar3;
+  }
+  uVar5 = lVar4 - 4;
+  __restgprlr_29((((uVar5 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar5 == 0) & uVar5);
+  return;
+}
+
+
+// 82864CC8  D3D::GetLevelSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:605)
+
+void D3D__GetLevelSize(undefined8 param_1,ulonglong param_2,uint *param_3,uint *param_4,
+                      uint *param_5,int *param_6,uint *param_7)
+
+{
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar8;
+  ulonglong uVar7;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  uint uVar13;
+  int iVar14;
+  int iVar15;
+  uint local_c0;
+  uint local_bc;
+  uint local_b8;
+  uint local_b4;
+  uint local_b0;
+  uint local_ac;
+  int local_a8;
+  
+  iVar8 = __savegprlr();
+  uVar4 = *(uint *)(iVar8 + 0x20) & 0x3f;
+  bVar1 = (&DAT_821f3a09)[(*(uint *)(iVar8 + 0x20) & 0x3f) * 2];
+  local_a8 = D3DResource_GetType(iVar8);
+  if (local_a8 == 4) {
+    D3D__GetTextureDimensions(iVar8,&local_b4,&local_b0,&local_ac);
+    iVar15 = (*(uint *)(iVar8 + 0x1c) >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
+    local_b8 = local_b4;
+    local_c0 = local_b0;
+    local_bc = local_ac;
+    D3D__AlignTextureDimensions
+              (&local_b8,&local_c0,&local_bc,bVar1,uVar4,*(uint *)(iVar8 + 0x30) >> 9 & 3,
+               *(uint *)(iVar8 + 0x1c) >> 0x1f);
+    uVar12 = local_b4;
+    uVar13 = local_b0;
+    uVar11 = local_ac;
+    iVar14 = 4;
+  }
+  else {
+    iVar6 = *(int *)(iVar8 + 0x28) >> 0x1f;
+    iVar15 = -iVar6;
+    iVar14 = iVar6 * -2;
+    D3D__GetTextureDimensions(iVar8,&local_b4,&local_b0,&local_ac);
+    uVar11 = local_ac;
+    uVar9 = *(uint *)(iVar8 + 0x30);
+    uVar5 = uVar9 >> 9 & 3;
+    uVar12 = local_b4 + iVar6 * 2;
+    uVar13 = local_b0 + iVar6 * 2;
+    uVar2 = 1 << ((iVar15 - (int)LZCOUNT(uVar12 - 1)) + 0x20U & 0x3f);
+    uVar3 = 1 << ((iVar15 - (int)LZCOUNT(uVar13 - 1)) + 0x20U & 0x3f);
+    if (uVar5 == 2) {
+      uVar10 = 1 << ((iVar15 - (int)LZCOUNT(local_ac + iVar6 * 2 + -1)) + 0x20U & 0x3f);
+    }
+    else {
+      uVar10 = 1;
+    }
+    local_c0 = uVar3;
+    local_bc = uVar10;
+    local_b8 = uVar2;
+    if ((param_2 & 0xffffffff) == 0) {
+      if (((0x10 < uVar2) && (0x10 < uVar3)) || ((uVar9 & 0x800) == 0)) {
+        local_b8 = local_b4;
+        local_c0 = local_b0;
+        local_bc = local_ac;
+      }
+      uVar2 = *(uint *)(iVar8 + 0x1c);
+      iVar14 = -((int)uVar2 >> 0x1f);
+      D3D__AlignTextureDimensions(&local_b8,&local_c0,&local_bc,bVar1,uVar4,uVar5,iVar14);
+      if ((((iVar14 == 0) && ((*(uint *)(iVar8 + 0x20) & 0x400) == 0)) &&
+          (((uVar9 & 0x800) == 0 && ((uVar5 == 1 && ((*(uint *)(iVar8 + 0x2c) & 0x3c0) == 0)))))) &&
+         (iVar15 == 0)) {
+        D3D__BlockSizeOfGpuFormat(*(uint *)(iVar8 + 0x20) & 0x3f,&local_b0,&local_ac);
+        local_c0 = (local_ac + local_b0) - 1 & ~(local_ac - 1);
+      }
+      iVar15 = (uVar2 >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
+      uVar12 = local_b4;
+      uVar13 = local_b0;
+      iVar14 = local_a8;
+    }
+    else {
+      uVar11 = (uint)param_2;
+      uVar12 = uVar12 >> (uVar11 & 0x3f);
+      if (uVar12 < 2) {
+        uVar12 = 1;
+      }
+      uVar13 = uVar13 >> (uVar11 & 0x3f);
+      uVar12 = uVar12 + iVar14;
+      if (uVar13 < 2) {
+        uVar13 = 1;
+      }
+      uVar13 = uVar13 + iVar14;
+      if (uVar5 == 2) {
+        uVar11 = local_ac + iVar6 * 2 >> (uVar11 & 0x3f);
+        if (uVar11 < 2) {
+          uVar11 = 1;
+        }
+        uVar11 = uVar11 + iVar14;
+      }
+      else {
+        uVar11 = 1;
+      }
+      if (((uVar9 & 0x800) != 0) &&
+         (uVar7 = D3D__GetMipTailBaseLevel(local_b4,local_b0,iVar15),
+         (uVar7 & 0xffffffff) <= (param_2 & 0xffffffff))) {
+        param_2 = uVar7;
+      }
+      uVar9 = (uint)param_2;
+      local_b8 = uVar2 >> (uVar9 & 0x3f);
+      if (local_b8 < 2) {
+        local_b8 = 1;
+      }
+      local_c0 = uVar3 >> (uVar9 & 0x3f);
+      if (local_c0 < 2) {
+        local_c0 = 1;
+      }
+      local_bc = uVar10 >> (uVar9 & 0x3f);
+      if (local_bc < 2) {
+        local_bc = 1;
+      }
+      D3D__AlignTextureDimensions
+                (&local_b8,&local_c0,&local_bc,bVar1,uVar4,uVar5,*(uint *)(iVar8 + 0x1c) >> 0x1f);
+      iVar15 = (int)(((longlong)(int)local_b8 * (longlong)(int)(uint)bVar1 & 0xffffffffU) >> 3);
+      iVar14 = local_a8;
+    }
+  }
+  *param_3 = uVar12;
+  *param_4 = uVar13;
+  *param_5 = uVar11;
+  *param_6 = iVar15;
+  *param_7 = iVar15 * local_c0;
+  if (((((*(uint *)(iVar8 + 0x1c) & 0x80000000) != 0) || (1 < (param_2 & 0xffffffff))) ||
+      ((iVar14 != 3 && (iVar14 != 0x14)))) && ((*(uint *)(iVar8 + 0x30) & 0x600) != 0x400)) {
+    *param_7 = iVar15 * local_c0 + 0xfff & 0xfffff000;
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82865038  D3D::Get2DSurfaceDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:767)
 
-void D3D__Get2DSurfaceDesc(void)
+void D3D__Get2DSurfaceDesc(undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  uint local_40;
+  uint local_3c;
+  undefined1 auStack_38 [4];
+  undefined1 auStack_34 [4];
+  undefined1 auStack_30 [48];
+  
+  iVar2 = __savegprlr_29();
+  D3D__GetLevelSize(iVar2,param_2,&local_40,&local_3c,auStack_30,auStack_34,auStack_38);
+  uVar3 = *(uint *)(iVar2 + 0x28);
+  uVar1 = *(uint *)(iVar2 + 0x1c);
+  *param_3 = ((((((((((uVar3 >> 7 & 0x38 | uVar3 >> 7 & 7) << 3 | uVar3 >> 4 & 7) << 3 |
+                    uVar3 >> 1 & 7) << 1 | uVar3 & 1) << 2 | uVar1 >> 8 & 3) << 2 | uVar1 >> 6 & 3)
+                 << 2 | uVar1 >> 4 & 3) << 2 | uVar1 >> 2 & 3) << 1 | uVar1 >> 0x1f) << 2 |
+             *(uint *)(iVar2 + 0x20) >> 6 & 3) << 6 | *(uint *)(iVar2 + 0x20) & 0x3f;
+  uVar3 = D3DResource_GetType(iVar2);
+  param_3[1] = uVar3;
+  param_3[2] = 0;
+  param_3[3] = 0;
+  param_3[5] = 0;
+  param_3[6] = local_40;
+  param_3[7] = local_3c;
+  param_3[4] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82865138  D3D::Get3DSurfaceDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:798)
 
-void D3D__Get3DSurfaceDesc(void)
+void D3D__Get3DSurfaceDesc(undefined8 param_1,undefined8 param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  uint local_40;
+  uint local_3c;
+  uint local_38;
+  undefined1 auStack_34 [4];
+  undefined1 auStack_30 [48];
+  
+  iVar2 = __savegprlr_29();
+  D3D__GetLevelSize(iVar2,param_2,&local_40,&local_3c,&local_38,auStack_30,auStack_34);
+  uVar3 = *(uint *)(iVar2 + 0x28);
+  uVar1 = *(uint *)(iVar2 + 0x1c);
+  *param_3 = ((((((((((uVar3 >> 7 & 0x38 | uVar3 >> 7 & 7) << 3 | uVar3 >> 4 & 7) << 3 |
+                    uVar3 >> 1 & 7) << 1 | uVar3 & 1) << 2 | uVar1 >> 8 & 3) << 2 | uVar1 >> 6 & 3)
+                 << 2 | uVar1 >> 4 & 3) << 2 | uVar1 >> 2 & 3) << 1 | uVar1 >> 0x1f) << 2 |
+             *(uint *)(iVar2 + 0x20) >> 6 & 3) << 6 | *(uint *)(iVar2 + 0x20) & 0x3f;
+  uVar3 = D3DResource_GetType(iVar2);
+  param_3[1] = uVar3;
+  param_3[2] = 0;
+  param_3[3] = 0;
+  param_3[4] = local_40;
+  param_3[5] = local_3c;
+  param_3[6] = local_38;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82865238  D3D::FindSurfaceWithinTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:835)
 
-void D3D__FindSurfaceWithinTexture(void)
+void D3D__FindSurfaceWithinTexture
+               (undefined8 param_1,int param_2,ulonglong param_3,int *param_4,uint *param_5,
+               uint *param_6,int *param_7,uint *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  longlong lVar4;
+  bool bVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  int iVar15;
+  uint uVar16;
+  uint uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  uint *in_stack_00000054;
+  int *in_stack_0000005c;
+  int *in_stack_00000064;
+  int local_c0;
+  uint local_bc;
+  uint local_b8;
+  int local_b4;
+  uint local_b0;
+  uint local_ac;
+  uint local_a8;
+  int local_a4;
+  int local_a0 [40];
+  
+  iVar8 = __savegprlr();
+  uVar16 = *(uint *)(iVar8 + 0x1c);
+  local_a4 = 0;
+  iVar7 = *(int *)(iVar8 + 0x28) >> 0x1f;
+  iVar15 = -iVar7;
+  uVar12 = *(uint *)(iVar8 + 0x30) >> 9 & 3;
+  bVar1 = (&DAT_821f3a09)[(*(uint *)(iVar8 + 0x20) & 0x3f) * 2];
+  iVar9 = iVar7 * -2;
+  D3DResource_GetType(iVar8);
+  D3D__GetTextureDimensions(iVar8,&local_ac,&local_a8,&local_b4);
+  uVar3 = local_a8;
+  uVar10 = local_ac + iVar7 * 2;
+  uVar13 = 1 << ((iVar15 - (int)LZCOUNT(uVar10 - 1)) + 0x20U & 0x3f);
+  uVar11 = local_a8 + iVar7 * 2;
+  uVar17 = 1 << ((iVar15 - (int)LZCOUNT(uVar11 - 1)) + 0x20U & 0x3f);
+  if (uVar12 == 2) {
+    iVar15 = 1 << ((iVar15 - (int)LZCOUNT(local_b4 + iVar7 * 2 + -1)) + 0x20U & 0x3f);
+  }
+  else {
+    iVar15 = 1;
+  }
+  if (((0x10 < uVar13) && (0x10 < uVar17)) || (bVar5 = true, (*(uint *)(iVar8 + 0x30) & 0x800) == 0)
+     ) {
+    bVar5 = false;
+  }
+  if (((param_3 & 0xffffffff) == 0) || (bVar5)) {
+    local_b8 = *(uint *)(iVar8 + 0x20);
+  }
+  else {
+    local_b8 = *(uint *)(iVar8 + 0x30);
+  }
+  local_b8 = local_b8 & 0xfffff000;
+  uVar14 = (uint)bVar1;
+  if (((param_3 & 0xffffffff) != 0) || (bVar5)) {
+    uVar16 = (uint)param_3;
+    uVar10 = uVar10 >> (uVar16 & 0x3f);
+    if (uVar10 < 2) {
+      uVar10 = 1;
+    }
+    uVar11 = uVar11 >> (uVar16 & 0x3f);
+    local_ac = uVar10 + iVar9;
+    if (uVar11 < 2) {
+      uVar11 = 1;
+    }
+    local_a8 = uVar11 + iVar9;
+    if (uVar12 == 2) {
+      uVar16 = (uint)(local_b4 + iVar7 * 2) >> (uVar16 & 0x3f);
+      if (uVar16 < 2) {
+        uVar16 = 1;
+      }
+      local_b4 = uVar16 + iVar9;
+    }
+    else {
+      local_b4 = 1;
+    }
+    iVar9 = D3DResource_GetType(iVar8);
+    if ((iVar9 == 0x12) || (iVar9 == 0x13)) {
+      iVar9 = 1 << (*(uint *)(iVar8 + 0x20) >> 9 & 2);
+      uVar16 = (*(uint *)(iVar8 + 0x24) >> 0x1a) + iVar9 & ~(iVar9 - 1U);
+    }
+    else {
+      uVar16 = 1;
+    }
+    lVar4 = -LZCOUNT(uVar13);
+    uVar18 = lVar4 + 0x1f;
+    uVar19 = -LZCOUNT(uVar17) + 0x1f;
+    uVar20 = -LZCOUNT(iVar15) + 0x1f;
+    if (bVar5) {
+      uVar18 = lVar4 + 0x20;
+      uVar19 = -LZCOUNT(uVar17) + 0x20;
+      uVar20 = -LZCOUNT(iVar15) + 0x20;
+    }
+    else {
+      param_3 = param_3 - 1;
+    }
+    if (-1 < (int)param_3) {
+      uVar13 = *(uint *)(iVar8 + 0x1c);
+      uVar10 = *(uint *)(iVar8 + 0x30);
+      uVar11 = *(uint *)(iVar8 + 0x20) & 0x3f;
+      do {
+        if ((uVar18 & 0xffffffff) != 0) {
+          uVar18 = uVar18 - 1;
+        }
+        if ((uVar19 & 0xffffffff) != 0) {
+          uVar19 = uVar19 - 1;
+        }
+        if ((uVar20 & 0xffffffff) != 0) {
+          uVar20 = uVar20 - 1;
+        }
+        uVar12 = 1 << ((uint)uVar18 & 0x3f);
+        uVar3 = 1 << ((uint)uVar19 & 0x3f);
+        iVar15 = 1 << ((uint)uVar20 & 0x3f);
+        uVar6 = uVar10 >> 9 & 3;
+        local_c0 = iVar15;
+        local_bc = uVar3;
+        local_b0 = uVar12;
+        D3D__AlignTextureDimensions(&local_b0,&local_bc,&local_c0,bVar1,uVar11,uVar6,uVar13 >> 0x1f)
+        ;
+        uVar17 = local_bc;
+        uVar2 = ((longlong)(int)local_b0 * (longlong)(int)uVar14 & 0xffffffffU) >> 3;
+        local_a0[0] = (int)uVar2;
+        if (((uVar12 < 0x11) || (uVar3 < 0x11)) && ((uVar10 & 0x800) != 0)) {
+          local_a4 = D3D__GetMipTailLevelOffset
+                               (param_3,uVar12,uVar3,iVar15,uVar2,
+                                (longlong)local_a0[0] * (longlong)(int)local_bc,uVar11);
+          local_b8 = local_b8 + local_a4;
+          iVar15 = local_c0;
+          break;
+        }
+        if (0 < (int)param_3) {
+          if (uVar6 == 2) {
+            uVar12 = local_a0[0] * local_c0 * local_bc + 0xfff & 0xfffff000;
+          }
+          else {
+            uVar12 = (local_a0[0] * local_bc + 0xfff & 0xfffff000) * local_c0;
+          }
+          local_b8 = uVar12 * uVar16 + local_b8;
+        }
+        param_3 = param_3 - 1;
+        iVar15 = local_c0;
+      } while (-1 < (longlong)param_3);
+    }
+  }
+  else {
+    local_b0 = local_ac;
+    local_bc = local_a8;
+    uVar13 = *(uint *)(iVar8 + 0x30);
+    uVar10 = *(uint *)(iVar8 + 0x20);
+    local_c0 = local_b4;
+    uVar6 = uVar13 >> 9 & 3;
+    uVar11 = uVar10 & 0x3f;
+    D3D__AlignTextureDimensions(&local_b0,&local_bc,&local_c0,bVar1,uVar11,uVar6,uVar16 >> 0x1f);
+    uVar16 = *(uint *)(iVar8 + 0x1c);
+    uVar17 = local_bc;
+    if (((((uVar16 & 0x80000000) == 0) && ((uVar10 & 0x400) == 0)) &&
+        (((uVar13 & 0x800) == 0 && ((uVar6 == 1 && ((*(uint *)(iVar8 + 0x2c) & 0x3c0) == 0)))))) &&
+       ((*(uint *)(iVar8 + 0x28) & 0x80000000) == 0)) {
+      D3D__BlockSizeOfGpuFormat(uVar11,local_a0,&local_bc);
+      uVar17 = (local_bc + uVar3) - 1 & ~(local_bc - 1);
+    }
+    iVar15 = local_c0;
+    if (uVar12 == 0) {
+      local_a0[0] = (int)(((longlong)(int)local_b0 * (longlong)(int)uVar14 & 0xffffffffU) >> 3);
+    }
+    else {
+      local_a0[0] = (uVar16 >> 0x16 & 0x1ff) * uVar14 * 4;
+    }
+  }
+  uVar17 = local_a0[0] * uVar17;
+  uVar16 = uVar17 + 0xfff & 0xfffff000;
+  *in_stack_00000064 = uVar16 * param_2 + local_b8;
+  *param_4 = local_a0[0];
+  if ((*(uint *)(iVar8 + 0x30) & 0x600) == 0x400) {
+    *param_5 = uVar17;
+    uVar13 = uVar17 * iVar15 + 0xfff & 0xfffff000;
+  }
+  else {
+    uVar13 = uVar16 * iVar15;
+    *param_5 = uVar16;
+  }
+  *param_6 = uVar13;
+  *param_8 = local_ac;
+  *in_stack_00000054 = local_a8;
+  *in_stack_0000005c = local_b4;
+  *param_7 = local_a4;
+  __restgprlr();
+  return;
 }
 
 
 // 82865718  D3D::LockSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1079)
 
-void D3D__LockSurface(void)
+void D3D__LockSurface(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                     undefined8 param_5,int *param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  HGLOBAL hResData;
+  LPVOID pvVar1;
+  int *in_stack_00000054;
+  undefined1 local_60 [4];
+  int local_5c [2];
+  undefined1 auStack_54 [84];
+  
+  hResData = (HGLOBAL)__savegprlr_23();
+  D3D__FindSurfaceWithinTexture
+            (hResData,param_3,param_4,param_7,param_8,local_60,in_stack_00000054,auStack_54);
+  D3D__BlockSizeOfGpuFormat(*(uint *)((int)hResData + 0x20) & 0x3f,auStack_54,local_5c);
+  *(int *)param_7 = *(int *)param_7 * local_5c[0];
+  pvVar1 = D3D__LockResource(hResData);
+  *param_6 = *in_stack_00000054 + (int)pvVar1;
+  __restgprlr_23();
+  return;
 }
 
 
@@ -241,21 +949,230 @@ void D3D__Lock2DSurface(undefined8 param_1,undefined8 param_2,undefined8 param_3
 
 // 828658B8  D3D::SetTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1331)
 
-void D3D__SetTextureHeader(void)
+void D3D__SetTextureHeader
+               (undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4,
+               ulonglong param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  uint in_stack_00000054;
+  uint in_stack_0000005c;
+  uint *in_stack_0000006c;
+  undefined4 *in_stack_00000074;
+  uint *in_stack_0000007c;
+  uint local_80;
+  undefined4 local_7c;
+  uint local_78;
+  
+  iVar3 = __savegprlr_19();
+  lVar8 = ((ulonglong)in_stack_00000054 & 0x7fffffff) * 2 + 1;
+  lVar4 = param_4;
+  if (iVar3 == 3) {
+LAB_8286596c:
+    uVar5 = 1;
+LAB_82865978:
+    if (iVar3 != 0x11) {
+LAB_82865980:
+      lVar4 = 1;
+    }
+  }
+  else {
+    if (iVar3 != 0x11) {
+      if (iVar3 == 0x12) {
+        uVar5 = 3;
+      }
+      else {
+        if (iVar3 == 0x13) goto LAB_8286596c;
+        uVar5 = local_78;
+        if (iVar3 != 0x14) goto LAB_82865978;
+        uVar5 = 0;
+        param_8 = 0;
+      }
+      goto LAB_82865980;
+    }
+    uVar5 = 2;
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    param_5 = D3D__GetMaxMipLevels(param_2,param_3,lVar4,in_stack_00000054);
+  }
+  if ((int)param_8 == 2) {
+    param_8 = -(ulonglong)(1 < param_5) & 1;
+  }
+  D3D__FindTextureSize
+            (param_2,param_3,param_4,param_5,param_7 & 0x3f,uVar5,(param_7 & 0xffffffff) >> 8 & 1,
+             param_8);
+  uVar7 = 0x100003;
+  if ((param_6 & 4) != 0) {
+    uVar7 = 0x300003;
+  }
+  if ((param_6 & 0x200) != 0) {
+    uVar7 = uVar7 | 0x400000;
+  }
+  *in_stack_0000006c = uVar7;
+  uVar7 = in_stack_0000006c[0xc];
+  in_stack_0000006c[1] = 1;
+  uVar1 = (uVar5 & 3) << 9;
+  in_stack_0000006c[5] = 0xffff0000;
+  in_stack_0000006c[6] = 0xffff0000;
+  in_stack_0000006c[2] = 0;
+  in_stack_0000006c[0xc] = uVar1 | uVar7 & 0xfffff9ff;
+  iVar9 = (int)param_2;
+  iVar2 = (int)lVar8;
+  if (uVar5 == 0) {
+    uVar5 = in_stack_0000006c[9] & 0xff000000 | iVar9 - iVar2 & 0xffffffU;
+LAB_82865ad8:
+    in_stack_0000006c[9] = uVar5;
+  }
+  else {
+    if (uVar5 == 1) {
+      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xffffe000 | iVar9 - iVar2 & 0x1fffU;
+      uVar6 = (uint)((param_3 - lVar8 & 0xffffffffU) << 0xd) & 0x3ffe000 |
+              (uint)((param_4 - 1U & 0xffffffff) << 0x1a);
+      uVar5 = in_stack_0000006c[9] & 0x1fff;
+    }
+    else {
+      if (2 < uVar5) {
+        if (uVar5 != 3) goto LAB_82865adc;
+        uVar5 = (uint)((param_4 - 1U & 0xffffffff) << 0x1a) |
+                (uint)((param_3 - lVar8 & 0xffffffffU) << 0xd) & 0x3ffe000 | iVar9 - iVar2 & 0x1fffU
+        ;
+        goto LAB_82865ad8;
+      }
+      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xfffff800 | iVar9 - iVar2 & 0x7ffU;
+      uVar5 = iVar9 - iVar2 & 0x7ff;
+      uVar6 = (uint)((param_3 - lVar8 & 0xffffffffU) << 0xb) & 0x3ff800 |
+              (uint)((param_4 - lVar8 & 0xffffffffU) << 0x16);
+    }
+    in_stack_0000006c[9] = uVar6 | uVar5;
+  }
+LAB_82865adc:
+  iVar9 = (int)param_7;
+  in_stack_0000006c[7] =
+       ((((iVar9 >> 0xf & 3U) << 2 | iVar9 >> 0xd & 3U) << 2 | iVar9 >> 0xb & 3U) << 2 |
+       iVar9 >> 9 & 3U) << 2 |
+       (((iVar9 >> 8) << 0xe | local_80 & 0x3fff) & 0x7fe0) << 0x11 |
+       in_stack_0000006c[7] & 0x3ffc00 | 2;
+  in_stack_0000006c[0xb] =
+       (uint)((param_5 - 1 & 0xffffffff) << 6) & 0x3c0 | in_stack_0000006c[0xb] & 0xfffffc3f;
+  in_stack_0000006c[8] =
+       (uint)(iVar3 == 0x13) << 10 |
+       (iVar9 >> 6 & 3U) << 6 | in_stack_0000006c[8] & 0xfffffb00 | (uint)(param_7 & 0x3f);
+  in_stack_0000006c[0xc] =
+       (uint)((param_8 & 0xffffffff) << 0xb) & 0x800 | uVar1 | uVar7 & 0xfffff1ff;
+  in_stack_0000006c[10] =
+       (in_stack_0000005c & 0x3f | in_stack_00000054 << 0x12) << 0xd | iVar9 >> 0x11 & 0x1fffU |
+       in_stack_0000006c[10] & 0x7ff80000;
+  *in_stack_00000074 = local_7c;
+  *in_stack_0000007c = local_78;
+  __restgprlr_19();
+  return;
 }
 
 
 // 82865BB8  D3D::SetSurfaceHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1536)
 
-void D3D__SetSurfaceHeader(void)
+void D3D__SetSurfaceHeader
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,undefined4 *param_6,int *param_7,undefined4 *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint *puVar1;
+  bool bVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined4 uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  
+  lVar3 = __savegprlr_19();
+  uVar11 = param_3 & 0x3f;
+  if ((uVar11 == 0x16) || (bVar2 = false, uVar11 == 0x17)) {
+    bVar2 = true;
+  }
+  if (uVar11 == 0x36) {
+    uVar11 = 7;
+  }
+  param_6[1] = 1;
+  *param_6 = 4;
+  param_6[5] = 0xffff0000;
+  uVar10 = 0xffffffffffffffff;
+  iVar4 = XGSurfaceSize(lVar3,param_2,param_3,param_4);
+  if (bVar2) {
+    uVar5 = XGHierarchicalZSize(lVar3,param_2,param_4);
+  }
+  else {
+    uVar5 = 0;
+  }
+  puVar1 = (uint *)param_5;
+  if ((param_5 & 0xffffffff) == 0) {
+    uVar7 = 0;
+    uVar6 = 0;
+    if (bVar2) {
+      uVar10 = -(ulonglong)(DAT_8488fed8 != 0);
+    }
+  }
+  else {
+    uVar7 = *puVar1;
+    uVar10 = (ulonglong)puVar1[1];
+    uVar6 = (ulonglong)puVar1[2];
+  }
+  if (((int)param_4 == 0) || ((int)param_4 == 1)) {
+    uVar8 = (int)((lVar3 + 0x4fU & 0xffffffff) / 0x50) * 0x50;
+    uVar9 = lVar3 + 0x1fU & 0xffffffe0;
+  }
+  else {
+    uVar8 = (int)((lVar3 + 0x27U & 0xffffffff) / 0x28) * 0x28;
+    uVar9 = lVar3 + 0xfU & 0xfffffff0;
+  }
+  uVar12 = (uint)param_3;
+  param_6[10] = uVar12;
+  param_6[9] = (uint)((param_2 - 1U & 0xffffffff) << 3) & 0x3fff8 |
+               (uint)((lVar3 - 1U & 0xffffffff) << 0x12) | param_6[9] & 7;
+  param_6[6] = (uint)(((uVar9 & 0x3fffffff) << 2 | param_4 & 3) << 0x10) | uVar8 & 0x3fff;
+  uVar9 = (ulonglong)(*(ushort *)(&DAT_821f3a08 + (int)(uVar11 << 1)) >> 8) & 0xf;
+  if (bVar2) {
+    param_6[7] = (uint)(uVar9 << 0x10) & 0x10000 | uVar7 & 0xfff;
+    if ((int)uVar10 == -1) {
+      param_6[8] = 0;
+    }
+    else {
+      if (((param_5 & 0xffffffff) == 0) || (puVar1[3] == 0)) {
+        uVar11 = (uVar11 - 0x16) - ((uVar11 - 0x17) + (ulonglong)(uVar11 - 0x16 == 0));
+      }
+      else {
+        uVar11 = (ulonglong)puVar1[3] - 1;
+      }
+      param_6[8] = (uint)((uVar11 & 1 | (uVar10 & 0x7ffff) << 0xd) << 4) | 1;
+    }
+  }
+  else {
+    if ((*(ushort *)(&DAT_821f3a08 + (int)(uVar11 << 1)) >> 8 & 0xf) == 0) {
+      if (((((param_3 & 0x20000) == 0) && ((uVar12 & 0x600) == 0x600)) &&
+          ((uVar12 & 0x1800) == 0x1800)) &&
+         (((uVar12 & 0x6000) == 0x6000 && ((param_3 & 0x18000) == 0)))) {
+        uVar9 = 1;
+      }
+    }
+    param_6[7] = (uint)(((uVar6 & 0x3f) << 4 | uVar9) << 0x10) | uVar7 & 0xfff;
+  }
+  param_6[0xb] = iVar4 * 0x1400;
+  *param_7 = iVar4;
+  *param_8 = uVar5;
+  __restgprlr_19();
+  return;
 }
 
 
@@ -270,31 +1187,66 @@ int D3DBaseTexture_GetLevelCount(int param_1)
 
 // 82865E50  D3DTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1997)
 
-void D3DTexture_GetLevelDesc(void)
+void D3DTexture_GetLevelDesc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  D3D__Get2DSurfaceDesc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82865E88  D3DTexture_GetSurfaceLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2007)
 
-void D3DTexture_GetSurfaceLevel(void)
+void D3DTexture_GetSurfaceLevel(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar2;
+  uint *puVar3;
+  undefined1 auStack_34 [4];
+  undefined1 auStack_30 [4];
+  undefined1 auStack_2c [4];
+  undefined1 auStack_28 [4];
+  undefined1 auStack_24 [36];
+  
+  puVar2 = (uint *)__savegprlr_29();
+  D3D__FindSurfaceWithinTexture
+            (puVar2,0,param_2,auStack_24,auStack_28,auStack_2c,auStack_30,auStack_34);
+  puVar3 = (uint *)XMemAlloc(0x30,0x64800000);
+  if (puVar3 == (uint *)0x0) {
+    puVar3 = (uint *)0x0;
+  }
+  else {
+    uVar1 = *puVar2;
+    puVar3[6] = (uint)puVar2;
+    *puVar3 = uVar1 & 0x200000 | 0x40100004;
+    puVar3[1] = 1;
+    puVar3[5] = 0xffff0000;
+    puVar3[7] = puVar3[7] & 0x3fffff | (uint)((param_2 & 0xffffffff) << 0x1c);
+    D3DResource_AddRef(puVar2);
+  }
+  __restgprlr_29(puVar3);
+  return;
 }
 
 
 // 82865F50  D3DTexture_LockRect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2069)
 
-void D3DTexture_LockRect(void)
+void D3DTexture_LockRect(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        ,undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  PIXAddPixOpWithData(0x800012,0,0);
+  D3D__Lock2DSurface(uVar1,0,0,param_2,param_3,param_4,param_5);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -310,33 +1262,59 @@ void D3DTexture_UnlockRect(int param_1)
 }
 
 
-// 82866050  D3DArrayTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2260)
+// 82866018  D3DCubeTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2127)
 
-void D3DArrayTexture_GetLevelDesc(void)
+void D3DCubeTexture_GetLevelDesc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  D3D__Get2DSurfaceDesc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82866050  D3DArrayTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2260)
+
+void D3DArrayTexture_GetLevelDesc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  D3D__Get2DSurfaceDesc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82866088  D3DVolumeTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2384)
 
-void D3DVolumeTexture_GetLevelDesc(void)
+void D3DVolumeTexture_GetLevelDesc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  D3D__Get3DSurfaceDesc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 828660C0  D3DLineTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2483)
 
-void D3DLineTexture_GetLevelDesc(void)
+void D3DLineTexture_GetLevelDesc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  D3D__Get2DSurfaceDesc(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -392,11 +1370,89 @@ LAB_82866248:
 
 // 82866250  D3DDevice_CreateSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2752)
 
-void D3DDevice_CreateSurface(void)
+void D3DDevice_CreateSurface
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  uint *puVar4;
+  int iVar5;
+  uint local_40;
+  undefined1 auStack_3c [60];
+  
+  uVar3 = __savegprlr_26();
+  puVar4 = (uint *)XMemAlloc(0x30,0x64800000);
+  if (puVar4 != (uint *)0x0) {
+    D3D__SetSurfaceHeader(uVar3,param_2,param_3,param_4,param_5,puVar4,&local_40,auStack_3c);
+    uVar2 = local_40;
+    *puVar4 = *puVar4 | 0x100000;
+    if ((param_5 & 0xffffffff) != 0) goto LAB_8286638c;
+    if (((puVar4[10] & 0x3f) == 0x16) || (bVar1 = false, (puVar4[10] & 0x3f) == 0x17)) {
+      bVar1 = true;
+    }
+    iVar5 = D3D__AllocateEdramMemory(local_40,&local_40);
+    if (iVar5 != 0) {
+      if (local_40 + uVar2 < 0x801) {
+        *puVar4 = *puVar4 | 0x80000000;
+        if (bVar1) {
+          puVar4[7] = puVar4[7] & 0xfffff000 | local_40 & 0xfff;
+          if (DAT_8488fed8 == 0) {
+            DAT_8488fed8 = 1;
+            puVar4[8] = puVar4[8] & 0x1ffff;
+          }
+        }
+        else {
+          puVar4[7] = puVar4[7] & 0xfffff000 | local_40 & 0xfff;
+        }
+        goto LAB_8286638c;
+      }
+      D3D__FreeEdramMemory(local_40,uVar2);
+    }
+    XMemFree(puVar4,0x24800000);
+  }
+  puVar4 = (uint *)0x0;
+LAB_8286638c:
+  __restgprlr_26(puVar4);
+  return;
+}
+
+
+// 82866398  D3DSurface_GetDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2817)
+
+void D3DSurface_GetDesc(uint *param_1,uint *param_2)
+
+{
+  uint uVar1;
+  
+  if ((*param_1 & 0x40000000) == 0) {
+    uVar1 = param_1[10];
+    param_2[2] = 0;
+    param_2[3] = 0;
+    param_2[5] = 0;
+    *param_2 = uVar1;
+    param_2[6] = (param_1[9] >> 0x12) + 1;
+    param_2[7] = (param_1[9] >> 3 & 0x7fff) + 1;
+    param_2[4] = *(ushort *)(param_1 + 6) & 3;
+  }
+  else {
+    D3D__Get2DSurfaceDesc(param_1[6],param_1[7] >> 0x1c,param_2);
+  }
+  param_2[1] = 4;
+  return;
+}
+
+
+// 82866448  D3DVolume_GetDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2936)
+
+void D3DVolume_GetDesc(int param_1,int param_2)
+
+{
+  D3D__Get3DSurfaceDesc(*(undefined4 *)(param_1 + 0x18),*(uint *)(param_1 + 0x1c) >> 0x1c,param_2);
+  *(undefined4 *)(param_2 + 4) = 0x10;
+  return;
 }
 
 

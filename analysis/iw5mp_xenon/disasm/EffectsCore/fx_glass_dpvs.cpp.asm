@@ -35,6 +35,122 @@ LAB_8242adf4:
 ; 8242AE00  Glass_GetPieceDrawFlags  (EffectsCore/fx_glass_dpvs.cpp:91)
   8242AE00  7D8802A6             mfspr r12,LR
   8242AE04  484EB8B5             bl 0x829166b8
+  8242AE08  3981FFD8             subi r12,r1,0x28
+  8242AE0C  484EB985             bl 0x82916790
+  8242AE10  9421FF40             stwu r1,-0xc0(r1)
+  8242AE14  C0050004             lfs f0,0x4(r5)
+  8242AE18  EDA10072             fmuls f13,f1,f1
+  8242AE1C  C1830014             lfs f12,0x14(r3)
+  8242AE20  3D608206             lis r11,-0x7dfa
+  8242AE24  EF8C0028             fsubs f28,f12,f0
+  8242AE28  C1650008             lfs f11,0x8(r5)
+  8242AE2C  C1430018             lfs f10,0x18(r3)
+  8242AE30  7C7C1B78             or r28,r3,r3
+  8242AE34  EF6A5828             fsubs f27,f10,f11
+  8242AE38  C1250000             lfs f9,0x0(r5)
+  8242AE3C  C1030010             lfs f8,0x10(r3)
+  8242AE40  FFC00890             fmr f30,f1
+  8242AE44  EFA84828             fsubs f29,f8,f9
+  8242AE48  C0E3001C             lfs f7,0x1c(r3)
+  8242AE4C  C00B4B6C             lfs f0,0x4b6c(r11)
+  8242AE50  7CDD3378             or r29,r6,r6
+  8242AE54  7CFE3B78             or r30,r7,r7
+  8242AE58  3BE30010             addi r31,r3,0x10
+  8242AE5C  EFE769F8             fmsubs f31,f7,f7,f13
+  8242AE60  ECDC0732             fmuls f6,f28,f28
+  8242AE64  ECBB36FA             fmadds f5,f27,f27,f6
+  8242AE68  EF5D2F7A             fmadds f26,f29,f29,f5
+  8242AE6C  EC9A0032             fmuls f4,f26,f0
+  8242AE70  FF1F2000             fcmpu cr6,f31,f4
+  8242AE74  40980018             bge cr6,0x8242ae8c
+LAB_8242ae78:
+  8242AE78  38600000             li r3,0x0
+  8242AE7C  382100C0             addi r1,r1,0xc0
+  8242AE80  3981FFD8             subi r12,r1,0x28
+  8242AE84  484EB959             bl 0x829167dc
+  8242AE88  484EB880             b 0x82916708
+LAB_8242ae8c:
+  8242AE8C  38810050             addi r4,r1,0x50
+  8242AE90  7F83E378             or r3,r28,r28
+  8242AE94  4BE4D215             bl 0x822780a8
+  8242AE98  C1610058             lfs f11,0x58(r1)
+  8242AE9C  C1410054             lfs f10,0x54(r1)
+  8242AEA0  39200000             li r9,0x0
+  8242AEA4  C1210050             lfs f9,0x50(r1)
+  8242AEA8  2B1D0000             cmplwi cr6,r29,0x0
+  8242AEAC  419A0084             beq cr6,0x8242af30
+  8242AEB0  C01F0004             lfs f0,0x4(r31)
+  8242AEB4  397E0008             addi r11,r30,0x8
+  8242AEB8  C1BF0000             lfs f13,0x0(r31)
+  8242AEBC  C19F0008             lfs f12,0x8(r31)
+LAB_8242aec0:
+  8242AEC0  C10BFFFC             lfs f8,-0x4(r11)
+  8242AEC4  39400001             li r10,0x1
+  8242AEC8  C0EBFFF8             lfs f7,-0x8(r11)
+  8242AECC  ECC802B2             fmuls f6,f8,f10
+  8242AED0  ECA70372             fmuls f5,f7,f13
+  8242AED4  C08B0000             lfs f4,0x0(r11)
+  8242AED8  C06B0004             lfs f3,0x4(r11)
+  8242AEDC  EC47327A             fmadds f2,f7,f9,f6
+  8242AEE0  EC28283A             fmadds f1,f8,f0,f5
+  8242AEE4  ED0412FA             fmadds f8,f4,f11,f2
+  8242AEE8  ECE40B3A             fmadds f7,f4,f12,f1
+  8242AEEC  FCC04210             fabs f6,f8
+  8242AEF0  ECA7182A             fadds f5,f7,f3
+  8242AEF4  EC880232             fmuls f4,f8,f8
+  8242AEF8  EC662FBA             fmadds f3,f6,f30,f5
+  8242AEFC  EC44FFF8             fmsubs f2,f4,f31,f31
+  8242AF00  FC201A10             fabs f1,f3
+  8242AF04  ED0100F2             fmuls f8,f1,f3
+  8242AF08  FF081000             fcmpu cr6,f8,f2
+  8242AF0C  41980008             blt cr6,0x8242af14
+  8242AF10  39400000             li r10,0x0
+LAB_8242af14:
+  8242AF14  554A063E             rlwinm r10,r10,0x0,0x18,0x1f
+  8242AF18  2B0A0000             cmplwi cr6,r10,0x0
+  8242AF1C  409AFF5C             bne cr6,0x8242ae78
+  8242AF20  39290001             addi r9,r9,0x1
+  8242AF24  396B0010             addi r11,r11,0x10
+  8242AF28  7F09E840             cmplw cr6,r9,r29
+  8242AF2C  4198FF94             blt cr6,0x8242aec0
+LAB_8242af30:
+  8242AF30  EDBAF828             fsubs f13,f26,f31
+  8242AF34  3D608200             lis r11,-0x7e00
+  8242AF38  38600003             li r3,0x3
+  8242AF3C  C00B0F10             lfs f0,0xf10(r11)
+  8242AF40  FF0D0000             fcmpu cr6,f13,f0
+  8242AF44  41990014             bgt cr6,0x8242af58
+  8242AF48  382100C0             addi r1,r1,0xc0
+  8242AF4C  3981FFD8             subi r12,r1,0x28
+  8242AF50  484EB88D             bl 0x829167dc
+  8242AF54  484EB7B4             b 0x82916708
+LAB_8242af58:
+  8242AF58  ED890772             fmuls f12,f9,f29
+  8242AF5C  3D608206             lis r11,-0x7dfa
+  8242AF60  C13C001C             lfs f9,0x1c(r28)
+  8242AF64  C00B4B68             lfs f0,0x4b68(r11)
+  8242AF68  EC0D0032             fmuls f0,f13,f0
+  8242AF6C  ED0A673A             fmadds f8,f10,f28,f12
+  8242AF70  ECEB46FA             fmadds f7,f11,f27,f8
+  8242AF74  FDA03A10             fabs f13,f7
+  8242AF78  ECC90372             fmuls f6,f9,f13
+  8242AF7C  FF060000             fcmpu cr6,f6,f0
+  8242AF80  40980008             bge cr6,0x8242af88
+  8242AF84  38600002             li r3,0x2
+LAB_8242af88:
+  8242AF88  EDADD37C             fnmsubs f13,f13,f13,f26
+  8242AF8C  ED800032             fmuls f12,f0,f0
+  8242AF90  ED6D07B2             fmuls f11,f13,f30
+  8242AF94  ED4B07B2             fmuls f10,f11,f30
+  8242AF98  FF0A6000             fcmpu cr6,f10,f12
+  8242AF9C  4098000C             bge cr6,0x8242afa8
+  8242AFA0  5463063E             rlwinm r3,r3,0x0,0x18,0x1f
+  8242AFA4  546307FA             rlwinm r3,r3,0x0,0x1f,0x1d
+LAB_8242afa8:
+  8242AFA8  382100C0             addi r1,r1,0xc0
+  8242AFAC  3981FFD8             subi r12,r1,0x28
+  8242AFB0  484EB82D             bl 0x829167dc
+  8242AFB4  484EB754             b 0x82916708
 
 ; 8242B228  FX_AddCellGlassSurfacesInFrustumCmd  (EffectsCore/fx_glass_dpvs.cpp:162)
   8242B228  7D8802A6             mfspr r12,LR
@@ -59,6 +175,7 @@ LAB_8242adf4:
   8242B274  38A00000             li r5,0x0
   8242B278  388000C1             li r4,0xc1
   8242B27C  481A9285             bl 0x825d4500
+  8242B280  817F004C             lwz r11,0x4c(r31)
 LAB_8242b284:
   8242B284  A15D0006             lhz r10,0x6(r29)
   8242B288  39200000             li r9,0x0
@@ -114,9 +231,95 @@ LAB_8242b344:
   8242B344  382100C0             addi r1,r1,0xc0
   8242B348  484EB3A8             b 0x829166f0
 
+; 8242AFB8  FX_ClearGlassVisData  (EffectsCore/fx_glass_dpvs.cpp:267)
+  8242AFB8  3D608334             lis r11,-0x7ccc
+  8242AFBC  38800000             li r4,0x0
+  8242AFC0  394BCAC0             subi r10,r11,0x3540
+  8242AFC4  816A0010             lwz r11,0x10(r10)
+  8242AFC8  806A0050             lwz r3,0x50(r10)
+  8242AFCC  392B000F             addi r9,r11,0xf
+  8242AFD0  55250036             rlwinm r5,r9,0x0,0x0,0x1b
+  8242AFD4  481BBC4C             b 0x825e6c20
+
 ; 8242AFD8  Glass_LinkPiece_Static  (EffectsCore/fx_glass_dpvs.cpp:278)
   8242AFD8  7D8802A6             mfspr r12,LR
   8242AFDC  484EB6E1             bl 0x829166bc
+  8242AFE0  9421FF60             stwu r1,-0xa0(r1)
+  8242AFE4  548B083C             rlwinm r11,r4,0x1,0x0,0x1e
+  8242AFE8  81230034             lwz r9,0x34(r3)
+  8242AFEC  81030050             lwz r8,0x50(r3)
+  8242AFF0  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  8242AFF4  7D645A14             add r11,r4,r11
+  8242AFF8  7FE95214             add r31,r9,r10
+  8242AFFC  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  8242B000  7C7D1B78             or r29,r3,r3
+  8242B004  7D685A14             add r11,r8,r11
+  8242B008  7C9E2378             or r30,r4,r4
+  8242B00C  C01F0010             lfs f0,0x10(r31)
+  8242B010  C1AB0000             lfs f13,0x0(r11)
+  8242B014  FF006800             fcmpu cr6,f0,f13
+  8242B018  409A0024             bne cr6,0x8242b03c
+  8242B01C  C01F0014             lfs f0,0x14(r31)
+  8242B020  C1AB0004             lfs f13,0x4(r11)
+  8242B024  FF006800             fcmpu cr6,f0,f13
+  8242B028  409A0014             bne cr6,0x8242b03c
+  8242B02C  C01F0018             lfs f0,0x18(r31)
+  8242B030  C1AB0008             lfs f13,0x8(r11)
+  8242B034  FF006800             fcmpu cr6,f0,f13
+  8242B038  419A00C8             beq cr6,0x8242b100
+LAB_8242b03c:
+  8242B03C  3D408206             lis r10,-0x7dfa
+  8242B040  38810050             addi r4,r1,0x50
+  8242B044  7FE3FB78             or r3,r31,r31
+  8242B048  C00A2D6C             lfs f0,0x2d6c(r10)
+  8242B04C  D00B0000             stfs f0,0x0(r11)
+  8242B050  D00B0004             stfs f0,0x4(r11)
+  8242B054  D00B0008             stfs f0,0x8(r11)
+  8242B058  C01F0010             lfs f0,0x10(r31)
+  8242B05C  D0010060             stfs f0,0x60(r1)
+  8242B060  C1BF0014             lfs f13,0x14(r31)
+  8242B064  D1A10064             stfs f13,0x64(r1)
+  8242B068  C19F0018             lfs f12,0x18(r31)
+  8242B06C  D1810068             stfs f12,0x68(r1)
+  8242B070  4BE4D039             bl 0x822780a8
+  8242B074  C0010054             lfs f0,0x54(r1)
+  8242B078  C1A10058             lfs f13,0x58(r1)
+  8242B07C  ED600032             fmuls f11,f0,f0
+  8242B080  ED4D0372             fmuls f10,f13,f13
+  8242B084  C1810050             lfs f12,0x50(r1)
+  8242B088  FD206210             fabs f9,f12
+  8242B08C  811D0054             lwz r8,0x54(r29)
+  8242B090  57C9103A             rlwinm r9,r30,0x2,0x0,0x1d
+  8242B094  FCE00210             fabs f7,f0
+  8242B098  ED0C0332             fmuls f8,f12,f12
+  8242B09C  C05F001C             lfs f2,0x1c(r31)
+  8242B0A0  FCC06A10             fabs f6,f13
+  8242B0A4  38810060             addi r4,r1,0x60
+  8242B0A8  7FC3F378             or r3,r30,r30
+  8242B0AC  80DD0010             lwz r6,0x10(r29)
+  8242B0B0  80BD0048             lwz r5,0x48(r29)
+  8242B0B4  ECAA582A             fadds f5,f10,f11
+  8242B0B8  EC88502A             fadds f4,f8,f10
+  8242B0BC  EC68582A             fadds f3,f8,f11
+  8242B0C0  7C084C2E             lfsx f0,r8,r9
+  8242B0C4  EDA90032             fmuls f13,f9,f0
+  8242B0C8  EC20282C             fsqrts f1,f5
+  8242B0CC  ED4168BA             fmadds f10,f1,f2,f13
+  8242B0D0  D141006C             stfs f10,0x6c(r1)
+  8242B0D4  ED870032             fmuls f12,f7,f0
+  8242B0D8  ED60202C             fsqrts f11,f4
+  8242B0DC  C0FF001C             lfs f7,0x1c(r31)
+  8242B0E0  ED260032             fmuls f9,f6,f0
+  8242B0E4  ECCB61FA             fmadds f6,f11,f7,f12
+  8242B0E8  D0C10070             stfs f6,0x70(r1)
+  8242B0EC  ED00182C             fsqrts f8,f3
+  8242B0F0  C0BF001C             lfs f5,0x1c(r31)
+  8242B0F4  EC88497A             fmadds f4,f8,f5,f9
+  8242B0F8  D0810074             stfs f4,0x74(r1)
+  8242B0FC  48302A95             bl 0x8272db90
+LAB_8242b100:
+  8242B100  382100A0             addi r1,r1,0xa0
+  8242B104  484EB608             b 0x8291670c
 
 ; 8242B108  Glass_LinkPiece_Dynamic  (EffectsCore/fx_glass_dpvs.cpp:310)
   8242B108  7D8802A6             mfspr r12,LR

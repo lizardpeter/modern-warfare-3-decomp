@@ -25,7 +25,6 @@ void VehicleAudio_ResetSounds(int param_1)
   undefined4 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219f5e0,0x2e,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   *(undefined4 *)(param_1 + 0x50) = *(undefined4 *)(param_1 + 0x14);
@@ -41,11 +40,44 @@ void VehicleAudio_ResetSounds(int param_1)
 
 // 826B69A0  VehicleAudio_PlaySoundInternal  (vehicle/vehicle_audio.cpp:63)
 
-void VehicleAudio_PlaySoundInternal(void)
+void VehicleAudio_PlaySoundInternal
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  ulonglong in_r8;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  
+  iVar1 = __savegprlr_26();
+  dVar4 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x43,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x44,0,0xffffffff82000f98,0xffffffff82176e88);
+  }
+  dVar3 = 0.0;
+  if (dVar4 != 0.0) {
+    if ((in_r8 & 0xff) == 0) {
+      iVar2 = Com_PickSoundAliasFromListNoError(param_4);
+    }
+    else {
+      iVar2 = Com_PickSoundAliasFromList();
+    }
+    if ((iVar2 != 0) &&
+       (((*(uint *)(iVar2 + 0x3c) & 1) == 0 ||
+        (dVar4 = (double)(float)((double)*(float *)(iVar1 + 0x58) * dVar4), dVar4 != dVar3)))) {
+      CG_GenerateSndEntHandle(*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+      SND_PlayScaledSoundAlias(dVar4,param_2,iVar2);
+      __restgprlr_26(1);
+      return;
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -71,111 +103,582 @@ void VehicleAudio_PlaySoundNoError(void)
 
 // 826B6AF0  VehicleAudio_PlayBlendedSound  (vehicle/vehicle_audio.cpp:113)
 
-void VehicleAudio_PlayBlendedSound(void)
+void VehicleAudio_PlayBlendedSound
+               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
   __savegprlr_26();
+  iVar1 = __savefpr_28();
+  dVar5 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x76,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x77,0,0xffffffff82000f98,0xffffffff8219f630);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x78,0,0xffffffff82000f98,0xffffffff8219f624);
+  }
+  dVar6 = 0.0;
+  dVar4 = 1.0;
+  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    MyAssertHandler(dVar5,0xffffffff8219f5e0,0x79,0,0xffffffff820180f8,dVar5,0,0x3ff0000000000000);
+  }
+  if (((((param_2 != dVar6) && (iVar2 = Com_PickSoundAliasFromList(param_4), iVar2 != 0)) &&
+       ((dVar5 != dVar6 ||
+        (((double)*(float *)(iVar2 + 0x1c) != dVar6 || ((double)*(float *)(iVar2 + 0x20) != dVar6)))
+        ))) && (((*(uint *)(iVar2 + 0x3c) & 1) == 0 ||
+                (param_2 = (double)(float)((double)*(float *)(iVar1 + 0x58) * param_2),
+                param_2 != dVar6)))) &&
+     ((iVar3 = Com_PickSoundAliasFromList(param_5), iVar3 != 0 &&
+      (((dVar5 != dVar4 || ((double)*(float *)(iVar3 + 0x1c) != dVar6)) ||
+       ((double)*(float *)(iVar3 + 0x20) != dVar6)))))) {
+    CG_GenerateSndEntHandle(*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+    SND_PlayBlendedSoundAliases(dVar5,param_2,iVar2,iVar3);
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
+}
+
+
+// 826B6CD0  VehicleAudio_StopSound  (vehicle/vehicle_audio.cpp:152)
+
+void VehicleAudio_StopSound(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x9b,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x9c,0,0xffffffff82000f98,0xffffffff82176e88);
+  }
+  uVar1 = CG_GenerateSndEntHandle(*(undefined4 *)(iVar2 + 0xc),*(undefined4 *)(iVar2 + 8));
+  SND_StopSoundAliasOnEnt(uVar1,*(undefined4 *)param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B6D58  VehicleAudio_EngineOff_Start  (vehicle/vehicle_audio.cpp:169)
 
-void VehicleAudio_EngineOff_Start(void)
+void VehicleAudio_EngineOff_Start(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xaa,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xab,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  *(undefined4 *)(iVar2 + 0x60) = 0;
+  iVar1 = *(int *)((int)param_2 + 0x330);
+  if (iVar1 != 0) {
+    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B8188  VehicleAudio_EngineOff  (vehicle/vehicle_audio.cpp:181)
 
-void VehicleAudio_EngineOff(void)
+void VehicleAudio_EngineOff(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xb6,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xb7,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  if ((*(uint *)(iVar1 + 0x18) & 0x20) == 0) {
+    VehicleAudio_EngineStartUp_Start(iVar1,param_2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826B79E8  VehicleAudio_EngineStartUp_Start  (vehicle/vehicle_audio.cpp:191)
+
+void VehicleAudio_EngineStartUp_Start(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xc0,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xc1,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  *(undefined4 *)(iVar2 + 0x60) = 1;
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x328) != 0) {
+    *(int *)(iVar2 + 0x4c) = *(int *)(iVar1 + 0x32c) + *(int *)(iVar2 + 0x14);
+    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,*(undefined4 *)(iVar1 + 0x328),0);
+    __restgprlr_28();
+    return;
+  }
+  VehicleAudio_EngineIdle_Start(iVar2,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B7AB0  VehicleAudio_EngineStartUp  (vehicle/vehicle_audio.cpp:210)
 
-void VehicleAudio_EngineStartUp(void)
+void VehicleAudio_EngineStartUp(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xd3,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xd4,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  if (*(int *)(iVar1 + 0x4c) <= *(int *)(iVar1 + 0x14)) {
+    VehicleAudio_EngineIdle_Start(iVar1,param_2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826B6E00  VehicleAudio_EngineIdle_Start  (vehicle/vehicle_audio.cpp:220)
+
+void VehicleAudio_EngineIdle_Start(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xdd,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xde,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  *(undefined4 *)(iVar2 + 0x60) = 2;
+  iVar1 = *(int *)((int)param_2 + 0x334);
+  if (iVar1 != 0) {
+    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B8218  VehicleAudio_EngineIdle  (vehicle/vehicle_audio.cpp:232)
 
-void VehicleAudio_EngineIdle(void)
+void VehicleAudio_EngineIdle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xe9,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xea,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar1 = *(int *)((int)param_2 + 0x334);
+  if (iVar1 != 0) {
+    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  }
+  if ((*(uint *)(iVar2 + 0x18) & 0x20) != 0) {
+    VehicleAudio_EngineOff_Start(iVar2,param_2);
+    __restgprlr_28();
+    return;
+  }
+  if (*(char *)(iVar2 + 0x48) != '\0') {
+    VehicleAudio_EngineRampUp_Start(0,iVar2,param_2);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B7B40  VehicleAudio_EngineRampUp_Start  (vehicle/vehicle_audio.cpp:251)
 
-void VehicleAudio_EngineRampUp_Start(void)
+void VehicleAudio_EngineRampUp_Start(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 uVar5;
+  double extraout_f1;
+  double dVar6;
+  undefined8 uVar7;
+  double dVar8;
+  
+  iVar4 = __savegprlr_28();
+  dVar8 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xfe,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0xff,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  dVar6 = 0.0;
+  uVar7 = 0x3ff0000000000000;
+  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+    MyAssertHandler(dVar8,0xffffffff8219f5e0,0x100,0,0xffffffff8219f63c,dVar8,0,0x3ff0000000000000);
+  }
+  iVar3 = (int)param_2;
+  if (*(int *)(iVar3 + 0x33c) == 0) {
+    VehicleAudio_EngineSustain_Start(iVar4,param_2);
+    __restgprlr_28();
+    return;
+  }
+  iVar1 = *(int *)(iVar3 + 0x340);
+  *(undefined4 *)(iVar4 + 0x60) = 3;
+  uVar2 = *(uint *)(iVar4 + 0x18);
+  *(int *)(iVar4 + 100) =
+       (*(int *)(iVar4 + 0x14) - (int)((double)(longlong)iVar1 * dVar8)) + *(int *)(iVar3 + 0x340);
+  if (((uVar2 & 2) == 0) || (*(int *)(iVar3 + 0x338) == 0)) {
+    VehicleAudio_PlaySoundInternal(uVar7,uVar7,iVar4,*(undefined4 *)(iVar3 + 0x33c));
+    *(float *)(iVar4 + 0x6c) = (float)dVar6;
+    uVar5 = 0;
+  }
+  else {
+    VehicleAudio_PlaySoundInternal
+              (uVar7,(double)*(float *)(iVar4 + 0x5c),iVar4,*(int *)(iVar3 + 0x338),0,uVar2 & 2,
+               uVar2,1);
+    *(float *)(iVar4 + 0x6c) = (float)dVar8;
+    uVar5 = 1;
+  }
+  *(undefined1 *)(iVar4 + 0x68) = uVar5;
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B7D08  VehicleAudio_EngineRampUp  (vehicle/vehicle_audio.cpp:287)
 
-void VehicleAudio_EngineRampUp(void)
+void VehicleAudio_EngineRampUp(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x122,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x123,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x33c) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x124,0,0xffffffff82000f98,0xffffffff8219f77c);
+  }
+  if (*(int *)(iVar2 + 100) <= *(int *)(iVar2 + 0x14)) {
+    VehicleAudio_EngineSustain_Start(iVar2,param_2);
+    __restgprlr_28();
+    return;
+  }
+  if (*(char *)(iVar2 + 0x48) == '\0') {
+    if (*(int *)(iVar1 + 0x340) < 1) {
+      MyAssertHandler(0xffffffff8219f5e0,0x12e,0,0xffffffff82000f98,0xffffffff8219f75c);
+    }
+    dVar3 = (double)(float)((double)(longlong)(*(int *)(iVar2 + 100) - *(int *)(iVar2 + 0x14)) /
+                           (double)(longlong)*(int *)(iVar1 + 0x340));
+    VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x33c));
+    VehicleAudio_EngineRampDown_Start(dVar3,iVar2,param_2);
+    __restgprlr_28();
+    return;
+  }
+  if (((*(uint *)(iVar2 + 0x18) & 2) != 0) && (*(int *)(iVar1 + 0x338) != 0)) {
+    dVar3 = 1.0;
+    if (*(char *)(iVar2 + 0x68) == '\0') {
+      if (*(int *)(iVar1 + 0x340) < 1) {
+        MyAssertHandler(0xffffffff8219f5e0,0x13a,0,0xffffffff82000f98,0xffffffff8219f75c);
+      }
+      *(undefined1 *)(iVar2 + 0x68) = 1;
+      *(float *)(iVar2 + 0x6c) =
+           (float)(dVar3 - (double)(float)((double)(longlong)
+                                                   (*(int *)(iVar2 + 100) - *(int *)(iVar2 + 0x14))
+                                          / (double)(longlong)*(int *)(iVar1 + 0x340)));
+      VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x33c));
+    }
+    VehicleAudio_PlaySoundInternal
+              (dVar3,(double)*(float *)(iVar2 + 0x5c),iVar2,*(undefined4 *)(iVar1 + 0x338),0);
+    *(int *)(iVar2 + 100) = *(int *)(iVar2 + 0x10) + *(int *)(iVar2 + 100);
+    __restgprlr_28();
+    return;
+  }
+  if (*(char *)(iVar2 + 0x68) != '\0') {
+    VehicleAudio_EngineRampUp_Start((double)*(float *)(iVar2 + 0x6c),iVar2,param_2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826B6EA8  VehicleAudio_EngineSustain_Start  (vehicle/vehicle_audio.cpp:333)
+
+void VehicleAudio_EngineSustain_Start(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x14e,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x14f,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  *(undefined4 *)(iVar2 + 0x60) = 4;
+  iVar1 = *(int *)((int)param_2 + 0x338);
+  if (iVar1 != 0) {
+    VehicleAudio_PlaySoundInternal
+              (0x3ff0000000000000,(double)*(float *)(iVar2 + 0x5c),iVar2,iVar1,0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B7F70  VehicleAudio_EngineSustain  (vehicle/vehicle_audio.cpp:345)
 
-void VehicleAudio_EngineSustain(void)
+void VehicleAudio_EngineSustain(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x15a,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x15b,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar1 = *(int *)((int)param_2 + 0x338);
+  if (iVar1 != 0) {
+    VehicleAudio_PlaySoundInternal
+              (0x3ff0000000000000,(double)*(float *)(iVar2 + 0x5c),iVar2,iVar1,0);
+  }
+  if (*(char *)(iVar2 + 0x48) == '\0') {
+    VehicleAudio_EngineRampDown_Start(0,iVar2,param_2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826B6F50  VehicleAudio_EngineRampDown_Start  (vehicle/vehicle_audio.cpp:358)
+
+void VehicleAudio_EngineRampDown_Start(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  undefined8 uVar4;
+  double dVar5;
+  
+  iVar3 = __savegprlr_28();
+  dVar5 = extraout_f1;
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x169,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x16a,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  uVar4 = 0x3ff0000000000000;
+  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    MyAssertHandler(dVar5,0xffffffff8219f5e0,0x16b,0,0xffffffff8219f63c,dVar5,0,0x3ff0000000000000);
+  }
+  iVar2 = (int)param_2;
+  if (*(int *)(iVar2 + 0x344) == 0) {
+    VehicleAudio_EngineIdle_Start(iVar3,param_2);
+    __restgprlr_28();
+    return;
+  }
+  iVar1 = *(int *)(iVar2 + 0x348);
+  *(undefined4 *)(iVar3 + 0x60) = 5;
+  *(int *)(iVar3 + 0x70) =
+       (*(int *)(iVar3 + 0x14) - (int)((double)(longlong)iVar1 * dVar5)) + *(int *)(iVar2 + 0x348);
+  VehicleAudio_PlaySoundInternal(uVar4,uVar4,iVar3,*(undefined4 *)(iVar2 + 0x344));
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B8030  VehicleAudio_EngineRampDown  (vehicle/vehicle_audio.cpp:381)
 
-void VehicleAudio_EngineRampDown(void)
+void VehicleAudio_EngineRampDown(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x180,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x181,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x344) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x183,0,0xffffffff82000f98,0xffffffff8219f7b8);
+  }
+  if (*(int *)(iVar2 + 0x70) <= *(int *)(iVar2 + 0x14)) {
+    VehicleAudio_EngineIdle_Start(iVar2,param_2);
+    __restgprlr_28();
+    return;
+  }
+  if (*(char *)(iVar2 + 0x48) != '\0') {
+    if (*(int *)(iVar1 + 0x348) < 1) {
+      MyAssertHandler(0xffffffff8219f5e0,0x18d,0,0xffffffff82000f98,0xffffffff8219f794);
+    }
+    dVar3 = (double)(float)((double)(longlong)(*(int *)(iVar2 + 0x70) - *(int *)(iVar2 + 0x14)) /
+                           (double)(longlong)*(int *)(iVar1 + 0x348));
+    VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x344));
+    VehicleAudio_EngineRampUp_Start(dVar3,iVar2,param_2);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B70C0  VehicleAudio_PlayEngineBlendSounds  (vehicle/vehicle_audio.cpp:407)
 
-void VehicleAudio_PlayEngineBlendSounds(void)
+void VehicleAudio_PlayEngineBlendSounds(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x19d,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x19e,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  if ((*(int *)(iVar2 + 0x60) != 0) && (*(int *)(iVar2 + 0x60) != 1)) {
+    iVar1 = (int)param_2;
+    dVar7 = 1.0;
+    dVar5 = (double)(ABS(*(float *)(iVar2 + 0x1c)) / *(float *)(iVar1 + 0x300));
+    dVar4 = dVar7;
+    if ((float)(dVar5 - 1.0) < 0.0) {
+      dVar4 = dVar5;
+    }
+    dVar6 = 0.0;
+    if (-dVar5 < 0.0) {
+      dVar6 = dVar4;
+    }
+    if ((*(int *)(iVar1 + 4) == 1) && (0.0 < *(float *)(iVar1 + 0x20))) {
+      dVar5 = (double)(ABS(*(float *)(iVar2 + 0x2c)) / *(float *)(iVar1 + 0x20));
+      dVar4 = dVar7;
+      if ((float)(dVar5 - 1.0) < 0.0) {
+        dVar4 = dVar5;
+      }
+      dVar3 = 0.0;
+      if (-dVar5 < 0.0) {
+        dVar3 = dVar4;
+      }
+      if (dVar6 < dVar3) {
+        dVar6 = dVar3;
+      }
+    }
+    if ((*(int *)(iVar1 + 0x2f0) != 0) && (*(int *)(iVar1 + 0x2f4) != 0)) {
+      VehicleAudio_PlayBlendedSound((double)(float)(1.0 - dVar6),0x3ff0000000000000,iVar2);
+    }
+    if ((*(int *)(iVar1 + 0x2f8) != 0) && (*(int *)(iVar1 + 0x2fc) != 0)) {
+      VehicleAudio_PlayBlendedSound(dVar6,dVar7,iVar2);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B7220  VehicleAudio_PlaySpeedSounds  (vehicle/vehicle_audio.cpp:451)
 
-void VehicleAudio_PlaySpeedSounds(void)
+void VehicleAudio_PlaySpeedSounds(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x1c6,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x1c7,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x364) != 0) {
+    dVar6 = 0.0;
+    if (*(float *)(iVar1 + 0x368) <= 0.0) {
+      MyAssertHandler(0xffffffff8219f5e0,0x1cc,0,0xffffffff82000f98,0xffffffff8219f66c);
+    }
+    dVar5 = (double)(ABS(*(float *)(iVar2 + 0x1c)) / *(float *)(iVar1 + 0x368));
+    dVar4 = 1.0;
+    if ((float)(dVar5 - 1.0) < 0.0) {
+      dVar4 = dVar5;
+    }
+    dVar3 = dVar6;
+    if (-dVar5 < 0.0) {
+      dVar3 = dVar4;
+    }
+    if (dVar6 < dVar3) {
+      VehicleAudio_PlaySoundInternal(iVar2,*(undefined4 *)(iVar1 + 0x364),0);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -197,35 +700,35 @@ void VehicleAudio_PlaySurfaceSounds(undefined8 param_1,ulonglong param_2,ulonglo
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   
   iVar2 = __savegprlr_21();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219f5e0,0x1dd,0,0xffffffff82000f98,0xffffffff82002118);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219f5e0,0x1de,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219f5e0,0x1df,0,0xffffffff82000f98,0xffffffff8200d194);
   }
   iVar6 = 0;
-  dVar12 = 1.0;
+  dVar11 = 1.0;
+  dVar13 = 1.5259021893143654e-05;
   puVar5 = (ushort *)(iVar2 + 0x40);
-  dVar13 = dVar12;
+  dVar12 = dVar11;
   uVar4 = 0;
   do {
     iVar1 = (int)param_2;
     if ((*(byte *)(iVar2 + 0x4c + iVar6) < 0xfe) &&
        (uVar7 = (uint)*(byte *)(iVar6 + iVar2 + 0x52), uVar7 != 0)) {
-      if ((double)((float)*puVar5 * 1.5259022e-05) < dVar13) {
+      dVar14 = (double)(float)((double)*puVar5 * dVar13);
+      if (dVar14 < dVar11) {
+        dVar11 = dVar14;
         if (0x1e < uVar7) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8219f5e0,0x1f1,0,0xffffffff8200e564,uVar7,0x1f);
+          dVar11 = dVar14;
         }
-        dVar13 = (double)((float)*puVar5 * 1.5259022e-05);
         uVar4 = uVar7;
         if (*(byte *)(iVar1 + 0x80) == uVar7) break;
       }
@@ -239,36 +742,35 @@ void VehicleAudio_PlaySurfaceSounds(undefined8 param_1,ulonglong param_2,ulonglo
   if (uVar7 != 0) {
     iVar2 = (int)param_3;
     if (*(int *)((uVar7 + 0xdc) * 4 + iVar2) != 0) {
+      dVar11 = 0.0;
       if (*(float *)(iVar2 + 0x3ec) <= 0.0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8219f5e0,0x1ff,0,0xffffffff82000f98,0xffffffff8219f6b0);
       }
-      if (*(float *)(iVar2 + 0x3f4) <= 0.0) {
-                    /* WARNING: Subroutine does not return */
+      if ((double)*(float *)(iVar2 + 0x3f4) <= dVar11) {
         MyAssertHandler(0xffffffff8219f5e0,0x200,0,0xffffffff82000f98,0xffffffff8219f690);
       }
-      dVar10 = (double)(ABS(*(float *)(iVar1 + 0x1c)) / *(float *)(iVar2 + 0x3ec));
-      dVar9 = (double)(ABS(*(float *)(iVar1 + 0x20)) / *(float *)(iVar2 + 0x3f4));
+      dVar9 = (double)(ABS(*(float *)(iVar1 + 0x1c)) / *(float *)(iVar2 + 0x3ec));
+      dVar14 = (double)(ABS(*(float *)(iVar1 + 0x20)) / *(float *)(iVar2 + 0x3f4));
       dVar13 = dVar12;
-      if ((float)(dVar10 - 1.0) < 0.0) {
-        dVar13 = dVar10;
+      if ((float)(dVar9 - dVar12) < 0.0) {
+        dVar13 = dVar9;
       }
       dVar8 = dVar12;
-      if ((float)(dVar9 - 1.0) < 0.0) {
-        dVar8 = dVar9;
+      if ((float)(dVar14 - dVar12) < 0.0) {
+        dVar8 = dVar14;
       }
-      dVar11 = 0.0;
-      if (-dVar10 < 0.0) {
-        dVar11 = dVar13;
-      }
-      dVar13 = 0.0;
+      dVar10 = dVar11;
       if (-dVar9 < 0.0) {
+        dVar10 = dVar13;
+      }
+      dVar13 = dVar11;
+      if (-dVar14 < 0.0) {
         dVar13 = dVar8;
       }
-      dVar13 = (double)(float)((double)*(float *)(iVar2 + 0x3f0) * dVar13 + dVar11);
-      if (0.0 < dVar13) {
+      dVar13 = (double)(float)((double)*(float *)(iVar2 + 0x3f0) * dVar13 + dVar10);
+      if (dVar11 < dVar13) {
         cVar3 = VehicleAudio_PlaySoundInternal
-                          (dVar13,0x3ff0000000000000,param_2,
+                          (dVar13,dVar12,param_2,
                            *(undefined4 *)((*(byte *)(iVar1 + 0x80) + 0xdc) * 4 + iVar2),0);
         if (cVar3 == '\0') {
           VehicleAudio_PlaySoundInternal(dVar13,dVar12,param_2,*(undefined4 *)(iVar2 + 0x370),0);
@@ -283,30 +785,257 @@ void VehicleAudio_PlaySurfaceSounds(undefined8 param_1,ulonglong param_2,ulonglo
 
 // 826B75A8  VehicleAudio_PlayTurretSounds  (vehicle/vehicle_audio.cpp:526)
 
-void VehicleAudio_PlayTurretSounds(void)
+void VehicleAudio_PlayTurretSounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  undefined8 uVar11;
+  
   __savegprlr_27();
+  iVar5 = __savefpr_28();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x217,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x218,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x219,0,0xffffffff82000f98,0xffffffff8200d194);
+  }
+  iVar2 = *(int *)((int)param_3 + 0x2ac);
+  iVar3 = *(int *)((int)param_3 + 0x2b0);
+  if ((iVar2 != 0) || (iVar3 != 0)) {
+    dVar9 = 0.0027777778450399637;
+    dVar10 = 0.5;
+    dVar7 = (double)((*(float *)(iVar5 + 0xbc) - *(float *)(iVar5 + 300)) * 0.0027777778);
+    dVar6 = floor((double)(float)(dVar7 + 0.5));
+    dVar8 = 360.0;
+    dVar9 = (double)(float)((double)(*(float *)(iVar5 + 0xc0) - *(float *)(iVar5 + 0x130)) * dVar9);
+    dVar7 = (double)((float)(dVar7 - (double)(float)dVar6) * 360.0);
+    dVar6 = floor((double)(float)(dVar9 + dVar10));
+    iVar5 = (int)param_2;
+    cVar1 = *(char *)(iVar5 + 0x74);
+    if ((dVar10 < ABS(dVar7)) ||
+       (bVar4 = false,
+       dVar10 < ABS((double)(float)((double)(float)(dVar9 - (double)(float)dVar6) * dVar8)))) {
+      bVar4 = true;
+    }
+    *(bool *)(iVar5 + 0x74) = bVar4;
+    uVar11 = 0x3ff0000000000000;
+    if ((iVar2 != 0) && (bVar4)) {
+      VehicleAudio_PlaySoundInternal(0x3ff0000000000000,0x3ff0000000000000,param_2,iVar2,0);
+    }
+    if (((iVar3 != 0) && (cVar1 != '\0')) && (*(char *)(iVar5 + 0x74) == '\0')) {
+      VehicleAudio_PlaySoundInternal(uVar11,uVar11,param_2,iVar3,0);
+    }
+  }
+  __restfpr_28();
+  __restgprlr_27();
+  return;
 }
 
 
 // 826B82F8  VehicleAudio_UpdateSounds  (vehicle/vehicle_audio.cpp:573)
 
-void VehicleAudio_UpdateSounds(void)
+void VehicleAudio_UpdateSounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  undefined8 uVar5;
+  char cVar8;
+  int iVar6;
+  int iVar7;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  uVar5 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x24a,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar8 = VehicleCl_IsCorpse(param_2);
+  if (cVar8 != '\0') {
+    MyAssertHandler(0xffffffff8219f5e0,0x24b,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x24c,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar2 = (int)param_2;
+  iVar3 = (int)param_3;
+  if (*(int *)(iVar3 + 8) != *(int *)(iVar2 + 0xc4)) {
+    MyAssertHandler(0xffffffff8219f5e0,0x250,0,0xffffffff82000f98,0xffffffff8219f808);
+  }
+  if (*(int *)(iVar3 + 8) == *(int *)(iVar2 + 0xc4)) {
+    iVar6 = VehicleCl_GetClientDef(param_3);
+    uVar5 = VehicleCl_GetEntDObj(uVar5,param_2);
+    iVar7 = DObjGetModel(uVar5,0);
+    *(float *)(iVar3 + 0x3c) = *(float *)(iVar2 + 0x14) + *(float *)(iVar7 + 0xf8);
+    *(float *)(iVar3 + 0x40) = *(float *)(iVar2 + 0x18) + *(float *)(iVar7 + 0xfc);
+    *(float *)(iVar3 + 0x44) = *(float *)(iVar2 + 0x1c) + *(float *)(iVar7 + 0x100);
+    uVar1 = *(uint *)(iVar3 + 0x18);
+    if (((uVar1 & 4) == 0) || (bVar4 = true, (uVar1 & 8) != 0)) {
+      bVar4 = false;
+    }
+    iVar2 = *(int *)(iVar3 + 0x54);
+    *(bool *)(iVar3 + 0x48) = bVar4;
+    iVar7 = *(int *)(iVar3 + 0x50) + iVar2;
+    if ((iVar2 < 1) || (iVar7 <= *(int *)(iVar3 + 0x14))) {
+      *(undefined4 *)(iVar3 + 0x58) = 0x3f800000;
+    }
+    else {
+      dVar11 = (double)(float)((double)(longlong)(iVar7 - *(int *)(iVar3 + 0x14)) /
+                              (double)(longlong)iVar2);
+      dVar9 = 1.0;
+      if ((float)(dVar11 - 1.0) < 0.0) {
+        dVar9 = dVar11;
+      }
+      dVar10 = 0.0;
+      if (-dVar11 < 0.0) {
+        dVar10 = dVar9;
+      }
+      *(float *)(iVar3 + 0x58) = (float)(1.0 - dVar10);
+    }
+    dVar9 = 1.0;
+    if (((uVar1 & 2) == 0) || (!bVar4)) {
+      iVar2 = *(int *)(iVar3 + 0x10);
+      iVar7 = DAT_8444fea8;
+    }
+    else {
+      iVar2 = *(int *)(iVar3 + 0x10);
+      dVar9 = (double)*(float *)(iVar6 + 0x3f8);
+      iVar7 = DAT_8444feac;
+    }
+    dVar9 = (double)LinearTrack(dVar9,(double)*(float *)(iVar3 + 0x5c),
+                                (double)*(float *)(iVar7 + 0xc),
+                                (double)((float)(longlong)iVar2 * 0.001));
+    uVar1 = *(uint *)(iVar3 + 0x60);
+    *(float *)(iVar3 + 0x5c) = (float)dVar9;
+    if (uVar1 < 6) {
+      if (uVar1 == 1) {
+        VehicleAudio_EngineStartUp(param_3,iVar6);
+      }
+      else if (uVar1 == 2) {
+        VehicleAudio_EngineIdle(param_3,iVar6);
+      }
+      else if (uVar1 == 3) {
+        VehicleAudio_EngineRampUp(param_3,iVar6);
+      }
+      else if (uVar1 == 4) {
+        VehicleAudio_EngineSustain(param_3,iVar6);
+      }
+      else if (uVar1 == 0) {
+        VehicleAudio_EngineOff(param_3,iVar6);
+      }
+      else {
+        VehicleAudio_EngineRampDown(param_3,iVar6);
+      }
+    }
+    else if (DAT_84013128 == 0) {
+      uVar5 = va(0xffffffff8219f7d4);
+      MyAssertHandler(0xffffffff8219f5e0,0x2a6,0,uVar5);
+    }
+    VehicleAudio_PlayEngineBlendSounds(param_3,iVar6);
+    VehicleAudio_PlaySpeedSounds(param_3,iVar6);
+    VehicleAudio_PlaySurfaceSounds(param_2,param_3,iVar6);
+    VehicleAudio_PlayTurretSounds(param_2,param_3,iVar6);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 826B7770  VehicleAudio_CollisionEvent  (vehicle/vehicle_audio.cpp:690)
+
+void VehicleAudio_CollisionEvent(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  int iVar2;
+  int iVar3;
+  double extraout_f1;
+  undefined8 uVar5;
+  double dVar6;
+  
+  uVar1 = __savegprlr_28();
+  dVar6 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x2b6,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar4 = VehicleCl_IsCorpse(param_2);
+  if (cVar4 != '\0') {
+    MyAssertHandler(0xffffffff8219f5e0,0x2b7,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  uVar5 = 0x3ff0000000000000;
+  if ((dVar6 < 0.0) || (1.0 < dVar6)) {
+    MyAssertHandler(dVar6,0xffffffff8219f5e0,0x2b8,0,0xffffffff8219f6d4,dVar6,0,0x3ff0000000000000);
+  }
+  iVar2 = VehicleCl_GetClient(uVar1,param_2);
+  iVar3 = VehicleCl_GetClientDef();
+  if (*(int *)(iVar3 + 0x35c) != 0) {
+    if ((*(int *)(iVar2 + 0x78) <= *(int *)(iVar2 + 0x14)) ||
+       ((double)*(float *)(iVar2 + 0x7c) <= dVar6)) {
+      *(float *)(iVar2 + 0x7c) = (float)dVar6;
+      *(int *)(iVar2 + 0x78) = *(int *)(iVar2 + 0x14) + 500;
+      VehicleAudio_PlaySoundInternal(dVar6,uVar5,iVar2,*(undefined4 *)(iVar3 + 0x35c),0);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826B78D0  VehicleAudio_SuspensionEvent  (vehicle/vehicle_audio.cpp:715)
 
-void VehicleAudio_SuspensionEvent(void)
+void VehicleAudio_SuspensionEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219f5e0,0x2cf,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  cVar3 = VehicleCl_IsCorpse(param_2);
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff8219f5e0,0x2d0,0,0xffffffff82000f98,0xffffffff8219f708);
+  }
+  uVar1 = VehicleCl_GetClient(uVar1,param_2);
+  iVar2 = VehicleCl_GetClientDef();
+  if ((int)param_3 == 0x73) {
+    iVar2 = *(int *)(iVar2 + 0x34c);
+  }
+  else {
+    if ((int)param_3 != 0x74) {
+      if (DAT_84013128 == 0) {
+        uVar1 = va(0xffffffff8219f724,param_3);
+        MyAssertHandler(0xffffffff8219f5e0,0x2e2,0,uVar1);
+        __restgprlr_27();
+        return;
+      }
+      goto LAB_826b79dc;
+    }
+    iVar2 = *(int *)(iVar2 + 0x354);
+  }
+  if (iVar2 != 0) {
+    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,uVar1,iVar2,0);
+  }
+LAB_826b79dc:
+  __restgprlr_27();
+  return;
 }
 

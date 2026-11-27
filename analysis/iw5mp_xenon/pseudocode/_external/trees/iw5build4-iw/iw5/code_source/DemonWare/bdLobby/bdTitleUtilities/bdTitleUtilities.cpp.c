@@ -11,13 +11,63 @@ void bdTitleUtilities__bdTitleUtilities(undefined4 *param_1,undefined4 param_2)
 }
 
 
-// 828FF3E0  bdTitleUtilities::getServerTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:147)
+// 828FF3C8  bdTitleUtilities::~bdTitleUtilities  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:27)
 
-void bdTitleUtilities__getServerTime(void)
+void bdTitleUtilities___bdTitleUtilities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  return;
+}
+
+
+// 828FF3E0  bdTitleUtilities::getServerTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:147)
+
+void bdTitleUtilities__getServerTime(undefined8 param_1,undefined4 *param_2,undefined8 param_3)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  longlong lVar4;
+  uint *puVar6;
+  char in_RESERVE;
+  byte bVar7;
+  undefined1 local_40 [64];
+  
+  puVar5 = (undefined4 *)__savegprlr_27();
+  *puVar5 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar7 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x40,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar6 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar3 + 4);
+        *puVar6 = uVar2;
+        bVar7 = 2;
+      }
+    } while (!(bool)(bVar7 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_40,0xc,6);
+  lVar4 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_40);
+  if (lVar4 == 0) {
+    bdRemoteTask__setTaskResult(*puVar5,param_3,1);
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220d250,0xffffffff8220d288,0xffffffff8220d2e8,0x9d,
+                 0xffffffff8220c90c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_40);
+  __restgprlr_27(puVar5);
+  return;
 }
 
 

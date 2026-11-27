@@ -50,7 +50,31 @@ void _invoke_watson(wchar_t *param_1,wchar_t *param_2,wchar_t *param_3,uint para
 void _call_reportfault(int nDbgHookCode,DWORD dwExceptionCode,DWORD dwExceptionFlags)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(nDbgHookCode,dwExceptionCode,dwExceptionFlags);
+  int iVar1;
+  LONG LVar2;
+  _EXCEPTION_POINTERS local_ac0 [2];
+  EXCEPTION_RECORD local_ab0;
+  CONTEXT aCStack_a60 [3];
+  PVOID local_8;
+  
+  iVar1 = __savegprlr_29(nDbgHookCode);
+  if (iVar1 != -1) {
+    __crt_debugger_hook(iVar1);
+  }
+  local_ab0.ExceptionCode = 0;
+  memset(&local_ab0.ExceptionFlags,0,0x4c);
+  local_ac0[0].ExceptionRecord = &local_ab0;
+  local_ac0[0].ContextRecord = aCStack_a60;
+  memset(aCStack_a60,0,0xa40);
+  local_ab0.ExceptionAddress = local_8;
+  local_ab0.ExceptionCode = dwExceptionCode;
+  local_ab0.ExceptionFlags = dwExceptionFlags;
+  SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)0x0);
+  LVar2 = UnhandledExceptionFilter(local_ac0);
+  if ((LVar2 == 0) && (iVar1 != -1)) {
+    __crt_debugger_hook(iVar1);
+  }
+  __restgprlr_29();
+  return;
 }
 

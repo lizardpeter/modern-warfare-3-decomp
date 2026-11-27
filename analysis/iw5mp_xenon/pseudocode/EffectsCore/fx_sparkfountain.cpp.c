@@ -2,11 +2,59 @@
 
 // 8243C0A8  FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain  (EffectsCore/fx_sparkfountain.cpp:37)
 
-void FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain(void)
+/* WARNING: Removing unreachable block (ram,0x8243c1dc) */
+
+void FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain
+               (undefined8 param_1,int param_2,byte *param_3,undefined8 param_4,ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar5;
+  undefined8 uVar4;
+  undefined4 *puVar6;
+  ushort *puVar7;
+  
+  iVar5 = __savegprlr_18();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82067668,0x29,0,0xffffffff82000f98,0xffffffff82067714);
+  }
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff820676dc);
+  uVar1 = *(ushort *)(param_2 + 0x12);
+  puVar6 = (undefined4 *)param_5;
+  while( true ) {
+    uVar3 = (uint)uVar1;
+    if (uVar3 == 0xffff) {
+      PIXEndNamedEvent();
+      FX_SetElemChild(iVar5,param_4,0xffffffffffffffff);
+      *puVar6 = 0;
+      __restgprlr_18(2);
+      return;
+    }
+    if (iVar5 == 0) {
+      MyAssertHandler(0xffffffff82060828,0xc4,0,0xffffffff82000f98,0xffffffff82038694);
+    }
+    iVar2 = *(int *)(iVar5 + 0x1c);
+    if ((0xfff < uVar3) || ((uVar1 & 0x3f) != 0)) {
+      uVar4 = va(0xffffffff82060820,iVar2,uVar3);
+      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar4);
+    }
+    puVar7 = (ushort *)(uVar3 + iVar2);
+    if (*puVar7 == (ushort)(*param_3 >> 2)) break;
+    uVar1 = puVar7[1];
+  }
+  FX_SetElemChild(iVar5,param_4,uVar3);
+  if (*(char *)(puVar7 + 2) == '\0') {
+    *puVar6 = puVar7;
+    PIXEndNamedEvent();
+    __restgprlr_18(0);
+    return;
+  }
+  PIXEndNamedEvent();
+  *puVar6 = 0;
+  __restgprlr_18(1);
+  return;
 }
 
 
@@ -34,13 +82,12 @@ longlong FX_PoolFromHandle_Generic<FxSparkFountainCluster>(longlong param_1,ulon
   uVar2 = param_2 & 0xffff;
   if (uVar2 < 0x2a0) {
     uVar1 = ((uVar2 - uVar2 / 7 & 0xffffffff) >> 1) + uVar2 / 7 >> 2;
-    if (uVar2 == (uVar1 & 0x1fffffff) * 8 - uVar1) {
-      return (param_2 & 0xffff) * 0x400 + param_1;
-    }
+    if (uVar2 == (uVar1 & 0x1fffffff) * 8 - uVar1) goto LAB_8243ce70;
   }
   uVar3 = va(0xffffffff82060820,param_1,uVar2);
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar3);
+LAB_8243ce70:
+  return (param_2 & 0xffff) * 0x400 + param_1;
 }
 
 
@@ -182,7 +229,6 @@ void FX_SparkFountainFromHandle_Const(int param_1,undefined8 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82060828,0xcb,0,0xffffffff82000f98,0xffffffff82038694);
   }
   FX_PoolFromHandle_Generic<FxSparkFountain>(*(undefined4 *)(param_1 + 0x1c),param_2);
@@ -325,13 +371,25 @@ void CollideTrajectory(undefined8 param_1,float *param_2,float *param_3,undefine
 }
 
 
+// 8243CF00  FX_SparkFountainClusterFromHandle  (EffectsCore/fx_system_handle.h:216)
+
+void FX_SparkFountainClusterFromHandle(int param_1,undefined8 param_2)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82060828,0xd9,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  FX_PoolFromHandle_Generic<FxSparkFountainCluster>(*(undefined4 *)(param_1 + 0x20),param_2);
+  return;
+}
+
+
 // 8243CF70  FX_SparkFountainClusterFromHandle_Const  (EffectsCore/fx_system_handle.h:223)
 
 void FX_SparkFountainClusterFromHandle_Const(int param_1,undefined8 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82060828,0xe0,0,0xffffffff82000f98,0xffffffff82038694);
   }
   FX_PoolFromHandle_Generic<FxSparkFountainCluster>(*(undefined4 *)(param_1 + 0x20),param_2);
@@ -345,7 +403,6 @@ longlong FXIW_GetUpdateElemDef(int param_1)
 
 {
   if (*(int *)(param_1 + 4) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820675d0,0xfa,0,0xffffffff82000f98,0xffffffff82067614);
   }
   return ((ulonglong)*(uint *)(param_1 + 8) & 0xffffff) * 0x100 +
@@ -355,92 +412,724 @@ longlong FXIW_GetUpdateElemDef(int param_1)
 
 // 8243B748  InitTrajectories  (EffectsCore/fx_sparkfountain.cpp:286)
 
-void InitTrajectories(void)
+void InitTrajectories(undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+                     undefined8 param_5,ulonglong param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong in_r10;
+  longlong lVar7;
+  longlong lVar8;
+  float *pfVar9;
+  longlong lVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float local_98;
+  float local_94;
+  float local_90;
+  
+  iVar5 = (int)param_5;
+  uVar4 = (undefined4)((ulonglong)param_5 >> 0x20);
   __savegprlr_27();
+  iVar3 = __savefpr_22();
+  if (iVar5 != 0) {
+    in_r10 = in_r10 + 0x18;
+    dVar14 = (double)(float)(param_2 - extraout_f1);
+    pfVar9 = (float *)(iVar3 + -4);
+    dVar13 = 3.4028234663852886e+38;
+    lVar10 = CONCAT44(uVar4,iVar5);
+    dVar16 = 3.0518509447574615e-05;
+    dVar21 = 0.0;
+    dVar17 = 1.0;
+    dVar15 = extraout_f1;
+    do {
+      dVar20 = (double)pfVar9[1];
+      dVar19 = (double)pfVar9[2];
+      pfVar9 = pfVar9 + 3;
+      dVar18 = (double)*pfVar9;
+      if (param_3 == dVar17) {
+        Vec3Rand(&local_98);
+        dVar12 = (double)SQRT(local_98 * local_98 + local_90 * local_90 + local_94 * local_94);
+        dVar11 = dVar17;
+        if (-dVar12 < 0.0) {
+          dVar11 = dVar12;
+        }
+        fVar1 = (float)(dVar17 / dVar11);
+        local_98 = local_98 * fVar1;
+        local_94 = local_94 * fVar1;
+        local_90 = local_90 * fVar1;
+      }
+      else {
+        RandomizeNormal(param_3,param_7);
+      }
+      iVar3 = rand();
+      pfVar2 = (float *)in_r10;
+      pfVar2[-6] = (float)dVar21;
+      pfVar2[-2] = (float)dVar20;
+      pfVar2[-1] = (float)dVar19;
+      *pfVar2 = (float)dVar18;
+      fVar1 = (float)((double)(float)((double)(longlong)iVar3 * dVar14) * dVar16 + dVar15);
+      pfVar2[10] = fVar1 * local_98;
+      pfVar2[0xb] = local_94 * fVar1;
+      pfVar2[0xc] = local_90 * fVar1;
+      if ((param_6 & 0xffffffff) != 1) {
+        lVar6 = param_6 - 1;
+        lVar7 = in_r10 + -0x18;
+        lVar8 = in_r10 + 0x30;
+        do {
+          lVar7 = lVar7 + 4;
+          *(float *)lVar7 = (float)dVar13;
+          iVar3 = (int)lVar8;
+          *(float *)(iVar3 + -0x2c) = (float)dVar21;
+          *(float *)(iVar3 + -0x28) = (float)dVar21;
+          *(float *)(iVar3 + -0x24) = (float)dVar21;
+          *(float *)(iVar3 + 4) = (float)dVar21;
+          *(float *)(iVar3 + 8) = (float)dVar21;
+          lVar8 = lVar8 + 0xc;
+          *(float *)lVar8 = (float)dVar21;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
+      }
+      lVar10 = lVar10 + -1;
+      in_r10 = in_r10 + 0x70;
+    } while (lVar10 != 0);
+  }
+  __restfpr_22();
+  __restgprlr_27();
+  return;
 }
 
 
 // 8243B020  FX_SetElemChild  (EffectsCore/fx_system.h:302)
 
-void FX_SetElemChild(void)
+void FX_SetElemChild(undefined8 param_1,ulonglong param_2,undefined2 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  
+  iVar1 = __savegprlr_27();
+  uVar2 = (param_2 & 0xffffffff) >> 3 & 0x1fff;
+  if (0x7ff < uVar2) {
+    MyAssertHandler(0xffffffff82060900,0x12f,0,0xffffffff82060898,uVar2,0x800);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82060900,0x130,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  if (*(int *)(iVar1 + 0x40) == 0) {
+    MyAssertHandler(0xffffffff82060900,0x131,0,0xffffffff82000f98,0xffffffff82061210);
+  }
+  *(undefined2 *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x40)) = param_3;
+  __restgprlr_27();
+  return;
+}
+
+
+// 8243B8C0  CollideTrajectories  (EffectsCore/fx_sparkfountain.cpp:335)
+
+void CollideTrajectories(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                        ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                        undefined8 param_9,longlong param_10)
+
+{
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  char cVar5;
+  float *pfVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  double extraout_f1;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  float local_120 [2];
+  float local_118;
+  float local_114;
+  float local_110;
+  float local_108;
+  float local_104;
+  float local_100;
+  float local_f8;
+  float local_f4;
+  float local_f0;
+  undefined4 local_e8;
+  undefined4 local_e4;
+  undefined4 local_e0;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  
+  __savegprlr_22();
+  uVar4 = __savefpr_19();
+  dVar17 = extraout_f1;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82067630);
+  dVar19 = 0.0;
+  local_108 = 0.0;
+  local_104 = 0.0;
+  local_100 = 0.0;
+  local_e8 = 0;
+  local_e4 = 0;
+  local_e0 = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
+    param_10 = param_10 + 0x18;
+    dVar20 = -2.0;
+    dVar18 = 3.4028234663852886e+38;
+    do {
+      pfVar6 = (float *)param_10;
+      local_f8 = pfVar6[-2];
+      dVar23 = (double)local_f8;
+      local_f4 = pfVar6[-1];
+      dVar22 = (double)local_f4;
+      local_f0 = *pfVar6;
+      dVar21 = (double)local_f0;
+      local_118 = pfVar6[10];
+      uVar10 = 0;
+      local_114 = pfVar6[0xb];
+      bVar3 = true;
+      local_110 = pfVar6[0xc];
+      lVar7 = param_10 + -0x1c;
+      lVar11 = param_10 + 0x24;
+      lVar12 = param_10 + -0xc;
+      lVar8 = param_10 + 0x1c;
+      dVar24 = dVar19;
+      do {
+        while( true ) {
+          uVar10 = uVar10 + 1;
+          lVar9 = lVar8 + 0xc;
+          iVar1 = (int)lVar12;
+          iVar2 = (int)lVar11;
+          if (!bVar3) break;
+          lVar7 = lVar7 + 4;
+          *(float *)lVar7 = (float)dVar24;
+          *(float *)(iVar1 + 4) = (float)dVar23;
+          *(float *)(iVar1 + 8) = (float)dVar22;
+          lVar12 = lVar12 + 0xc;
+          *(float *)lVar12 = (float)dVar21;
+          *(float *)(iVar2 + 4) = local_118;
+          *(float *)(iVar2 + 8) = local_114;
+          lVar11 = lVar11 + 0xc;
+          *(float *)lVar11 = local_110;
+          if ((uVar10 & 0xffffffff) == (param_5 & 0xffffffff)) goto LAB_8243b9d8;
+          cVar5 = CollideTrajectory((double)(float)(dVar17 - dVar24),&local_f8,&local_118,param_9,
+                                    param_7,&local_108,&local_e8,local_120,&local_118);
+          if (cVar5 == '\0') {
+            bVar3 = false;
+            lVar8 = lVar9;
+          }
+          else {
+            *(float *)lVar9 = local_118;
+            *(float *)((int)lVar8 + 0x10) = local_114;
+            *(float *)((int)lVar8 + 0x14) = local_110;
+            dVar21 = (double)local_120[0];
+            pfVar6 = (float *)param_9;
+            dVar24 = (double)(float)(dVar21 + dVar24);
+            dVar16 = (double)(float)((double)*pfVar6 * dVar21 + (double)local_118);
+            dVar15 = (double)(float)((double)pfVar6[1] * dVar21 + (double)local_114);
+            dVar23 = (double)local_108;
+            dVar14 = (double)(float)((double)pfVar6[2] * dVar21 + (double)local_110);
+            dVar22 = (double)local_104;
+            dVar21 = (double)local_100;
+            local_f8 = local_108;
+            local_f4 = local_104;
+            local_f0 = local_100;
+            RandomizeNormal(param_3,&local_e8);
+            dVar13 = (double)(float)((double)(float)((double)(float)((double)local_d0 * dVar14 +
+                                                                    (double)(float)((double)local_d4
+                                                                                    * dVar15 +
+                                                                                   (double)(float)(
+                                                  dVar16 * (double)local_d8))) * param_2) * dVar20);
+            local_118 = (float)(dVar13 * (double)local_d8 + (double)(float)(dVar16 * param_2));
+            local_114 = (float)((double)local_d4 * dVar13 + (double)(float)(dVar15 * param_2));
+            local_110 = (float)((double)local_d0 * dVar13 + (double)(float)(dVar14 * param_2));
+            lVar8 = lVar9;
+          }
+        }
+        *(float *)((int)lVar7 + 4) = (float)dVar18;
+        lVar7 = lVar7 + 4;
+        *(float *)(iVar1 + 4) = (float)dVar19;
+        *(float *)(iVar1 + 8) = (float)dVar19;
+        *(float *)(iVar1 + 0xc) = (float)dVar19;
+        lVar12 = lVar12 + 0xc;
+        *(float *)(iVar2 + 4) = (float)dVar19;
+        *(float *)(iVar2 + 8) = (float)dVar19;
+        *(float *)(iVar2 + 0xc) = (float)dVar19;
+        lVar11 = lVar11 + 0xc;
+        lVar8 = lVar9;
+      } while ((uVar10 & 0xffffffff) != (param_5 & 0xffffffff));
+LAB_8243b9d8:
+      uVar4 = uVar4 - 1;
+      param_10 = param_10 + 0x70;
+    } while (uVar4 != 0);
+  }
+  PIXEndNamedEvent();
+  __restfpr_19();
+  __restgprlr_22();
+  return;
 }
 
 
 // 8243BB08  FX_SparkFountain_DoClusterPortion  (EffectsCore/fx_sparkfountain.cpp:415)
 
-void FX_SparkFountain_DoClusterPortion(void)
+void FX_SparkFountain_DoClusterPortion
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82067668,0x1a4,0,0xffffffff82000f98,0xffffffff8206765c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82067668,0x1a5,0,0xffffffff82000f98,0xffffffff82067650);
+  }
+  CollideTrajectories(0x40b3880000000000,(double)*(float *)((int)param_2 + 4),
+                      (double)*(float *)((int)param_2 + 8),param_4,4);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8243C268  FX_SpawnSparkFountain  (EffectsCore/fx_sparkfountain.cpp:437)
 
-void FX_SpawnSparkFountain(void)
+void FX_SpawnSparkFountain
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4,
+               ulonglong param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  undefined2 uVar2;
+  uint uVar3;
+  uint *puVar4;
+  bool bVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  float *pfVar9;
+  ulonglong uVar10;
+  float *pfVar11;
+  undefined2 *puVar12;
+  float *pfVar13;
+  float *pfVar14;
+  longlong lVar15;
+  longlong lVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  float local_460;
+  float local_45c;
+  float local_458;
+  longlong local_450;
+  undefined4 local_448;
+  undefined4 local_444;
+  undefined4 local_440;
+  float local_438;
+  float local_434;
+  float local_430;
+  undefined4 local_420;
+  undefined4 local_41c;
+  undefined4 local_418;
+  undefined1 auStack_3f0 [44];
+  float afStack_3c4 [241];
+  
   __savegprlr_19();
+  iVar6 = __savefpr_22();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82067778);
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82067668,0x1c7,0,0xffffffff82000f98,0xffffffff82061c6c);
+  }
+  puVar4 = (uint *)param_5;
+  if (puVar4[0x3d] == 0) {
+    MyAssertHandler(0xffffffff82067668,0x1c8,0,0xffffffff82000f98,0xffffffff82067754);
+  }
+  if (((*puVar4 & 0x80000000) == 0) || (bVar5 = true, puVar4[0x38] == 0)) {
+    bVar5 = false;
+  }
+  if (bVar5) {
+    MyAssertHandler(0xffffffff82067668,0x1ca,0,0xffffffff82000f98,0xffffffff8206772c);
+  }
+  iVar7 = FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain
+                    (iVar6,param_2,param_3,param_4,&local_450);
+  if (iVar7 != 1) {
+    if (iVar7 == 2) {
+      PIXEndNamedEvent();
+      __restfpr_22(0);
+      __restgprlr_19();
+      return;
+    }
+    FX_GetOrientation(param_5,param_2 + 0x34,param_2 + 0x50,param_6,auStack_3f0);
+    FX_OrientationPosToWorldPos(auStack_3f0,param_3 + 0x14,&local_438);
+    dVar28 = 0.0;
+    FX_GetElemAxis(0,param_5,param_6,auStack_3f0);
+    iVar7 = local_450._0_4_;
+    local_448 = local_420;
+    local_444 = local_41c;
+    uVar10 = (ulonglong)*(byte *)(local_450._0_4_ + 5);
+    local_440 = local_418;
+    uVar3 = puVar4[0x3d];
+    if (*(byte *)(local_450._0_4_ + 5) != 0) {
+      dVar19 = 3.4028234663852886e+38;
+      dVar20 = 3.0518509447574615e-05;
+      puVar12 = (undefined2 *)(local_450._0_4_ + 8);
+      dVar24 = 1.0;
+      do {
+        uVar2 = *puVar12;
+        if (iVar6 == 0) {
+          MyAssertHandler(0xffffffff82060828,0xd9,0,0xffffffff82000f98,0xffffffff82038694);
+        }
+        iVar8 = FX_PoolFromHandle_Generic<FxSparkFountainCluster>
+                          (*(undefined4 *)(iVar6 + 0x20),uVar2);
+        pfVar13 = afStack_3c4;
+        lVar15 = 0x40;
+        do {
+          pfVar13[1] = local_438;
+          pfVar13[2] = local_434;
+          pfVar13 = pfVar13 + 3;
+          *pfVar13 = local_430;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        dVar23 = (double)*(float *)(uVar3 + 0x1c);
+        pfVar14 = (float *)(iVar8 + 0x18);
+        dVar21 = (double)*(float *)(uVar3 + 0x24);
+        dVar22 = (double)(float)((double)*(float *)(uVar3 + 0x20) - dVar23);
+        pfVar13 = afStack_3c4;
+        lVar15 = 0x40;
+        do {
+          dVar27 = (double)pfVar13[1];
+          dVar26 = (double)pfVar13[2];
+          pfVar13 = pfVar13 + 3;
+          dVar25 = (double)*pfVar13;
+          if (dVar21 == dVar24) {
+            Vec3Rand(&local_460);
+            dVar18 = (double)SQRT(local_460 * local_460 +
+                                  local_458 * local_458 + local_45c * local_45c);
+            dVar17 = dVar24;
+            if (-dVar18 < 0.0) {
+              dVar17 = dVar18;
+            }
+            fVar1 = (float)(dVar24 / dVar17);
+            local_460 = local_460 * fVar1;
+            local_45c = local_45c * fVar1;
+            local_458 = local_458 * fVar1;
+          }
+          else {
+            RandomizeNormal(dVar21,&local_448);
+          }
+          iVar8 = rand();
+          local_450 = (longlong)iVar8;
+          pfVar14[-6] = (float)dVar28;
+          pfVar9 = pfVar14 + -6;
+          pfVar14[-2] = (float)dVar27;
+          pfVar11 = pfVar14 + 0xc;
+          pfVar14[-1] = (float)dVar26;
+          lVar16 = 3;
+          *pfVar14 = (float)dVar25;
+          fVar1 = (float)((double)(float)((double)local_450 * dVar22) * dVar20 + dVar23);
+          pfVar14[10] = fVar1 * local_460;
+          pfVar14[0xb] = local_45c * fVar1;
+          pfVar14[0xc] = local_458 * fVar1;
+          do {
+            pfVar9 = pfVar9 + 1;
+            *pfVar9 = (float)dVar19;
+            pfVar11[-0xb] = (float)dVar28;
+            pfVar11[-10] = (float)dVar28;
+            pfVar11[-9] = (float)dVar28;
+            pfVar11[1] = (float)dVar28;
+            pfVar11[2] = (float)dVar28;
+            pfVar11 = pfVar11 + 3;
+            *pfVar11 = (float)dVar28;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          lVar15 = lVar15 + -1;
+          pfVar14 = pfVar14 + 0x1c;
+        } while (lVar15 != 0);
+        uVar10 = uVar10 - 1;
+        puVar12 = puVar12 + 1;
+      } while (uVar10 != 0);
+    }
+    if ((*puVar4 & 0x80000000) == 0) {
+      *(undefined1 *)(iVar7 + 6) = 0;
+    }
+    else {
+      *(undefined1 *)(iVar7 + 6) = *(undefined1 *)(iVar7 + 5);
+    }
+    *(undefined1 *)(iVar7 + 7) = 0;
+    *(undefined1 *)(iVar7 + 4) = 1;
+  }
+  PIXEndNamedEvent();
+  __restfpr_22(1);
+  __restgprlr_19();
+  return;
 }
 
 
 // 8243C600  FXW_UpdateElement_SparkFountain  (EffectsCore/fx_sparkfountain.cpp:517)
 
-void FXW_UpdateElement_SparkFountain(void)
+void FXW_UpdateElement_SparkFountain
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar3;
+  uint *puVar4;
+  undefined8 uVar2;
+  int iVar5;
+  char cVar6;
+  
+  iVar3 = __savegprlr_28();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff820677d0);
+  puVar4 = (uint *)FXIW_GetUpdateElemDef(param_2);
+  if (((*puVar4 & 0x80000000) == 0) || (bVar1 = true, puVar4[0x38] == 0)) {
+    bVar1 = false;
+  }
+  if (bVar1) {
+    MyAssertHandler(0xffffffff82067668,0x219,0,0xffffffff82000f98,0xffffffff82067790);
+  }
+  uVar2 = FX_GetElemChild(iVar3,param_4);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82060828,0xc4,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  iVar5 = FX_PoolFromHandle_Generic<FxSparkFountain>(*(undefined4 *)(iVar3 + 0x1c),uVar2);
+  if ((uint)*(byte *)(iVar5 + 6) != (uint)*(byte *)(iVar5 + 5)) {
+    uVar2 = FX_SparkFountainClusterFromHandle
+                      (iVar3,*(undefined2 *)((*(byte *)(iVar5 + 6) + 4) * 2 + iVar5));
+    iVar3 = FXIW_GetUpdateElemDef(param_2);
+    FX_SparkFountain_DoClusterPortion
+              (uVar2,*(undefined4 *)(iVar3 + 0xf4),*(undefined1 *)(iVar5 + 7),0x10);
+    cVar6 = *(char *)(iVar5 + 7) + '\x10';
+    *(char *)(iVar5 + 7) = cVar6;
+    if (cVar6 == '@') {
+      *(undefined1 *)(iVar5 + 7) = 0;
+      *(char *)(iVar5 + 6) = *(char *)(iVar5 + 6) + '\x01';
+    }
+  }
+  PIXEndNamedEvent();
+  __restgprlr_28();
+  return;
 }
 
 
 // 8243BBC8  FX_DrawElem_SparkFountain_PopulateVertices  (EffectsCore/fx_sparkfountain.cpp:567)
 
-void FX_DrawElem_SparkFountain_PopulateVertices(void)
+void FX_DrawElem_SparkFountain_PopulateVertices
+               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+               int *param_6,float *param_7,longlong param_8)
 
 {
-  float *pfVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float *in_r6;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float *pfVar11;
+  int iVar12;
+  float *pfVar13;
+  float *pfVar14;
+  float *pfVar15;
+  longlong lVar16;
+  int iVar17;
+  float *pfVar18;
+  float *pfVar19;
+  double extraout_f1;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
   float local_130;
   float local_12c;
   float local_128;
   float local_120;
   float local_11c;
   float local_118;
-  undefined1 auStack_110 [272];
+  float local_110 [6];
+  float local_f8;
+  float local_f4;
+  float local_f0;
+  float local_e0 [6];
+  float local_c8;
+  float local_c4;
+  float local_c0;
   
   __savegprlr_22();
-  iVar4 = __savefpr_21();
-  pfVar1 = *(float **)(iVar4 + 0x44);
-  local_11c = in_r6[4] - in_r6[1];
-  local_120 = in_r6[3] - *in_r6;
-  local_12c = pfVar1[1] - in_r6[1];
-  local_118 = in_r6[5] - in_r6[2];
-  local_130 = *pfVar1 - *in_r6;
-  local_128 = pfVar1[2] - in_r6[2];
-  fVar3 = SQRT(local_120 * local_120 + local_118 * local_118 + local_11c * local_11c);
-  fVar2 = 1.0;
-  if (-fVar3 < 0.0) {
-    fVar2 = fVar3;
-  }
-  fVar2 = 1.0 / fVar2;
-  local_120 = fVar2 * local_120;
-  local_11c = local_11c * fVar2;
-  local_118 = local_118 * fVar2;
-                    /* WARNING: Subroutine does not return */
-  Vec3Cross(&local_120,&local_130,auStack_110);
+  iVar12 = __savefpr_21();
+  pfVar11 = (float *)*param_6;
+  dVar23 = 1.0;
+  lVar16 = param_8 + 8;
+  iVar17 = 0;
+  dVar24 = (double)(*(float *)(iVar12 + 0x7c) * 0.5);
+  dVar22 = 0.009999999776482582;
+  dVar25 = extraout_f1;
+  do {
+    pfVar19 = (float *)lVar16;
+    pfVar15 = *(float **)(iVar12 + 0x44);
+    local_11c = pfVar19[2] - pfVar19[-1];
+    pfVar18 = (float *)((int)local_110 + iVar17);
+    local_120 = pfVar19[1] - pfVar19[-2];
+    lVar16 = lVar16 + 0xc;
+    local_12c = pfVar15[1] - pfVar19[-1];
+    local_118 = *(float *)lVar16 - *pfVar19;
+    local_130 = *pfVar15 - pfVar19[-2];
+    local_128 = pfVar15[2] - *pfVar19;
+    dVar21 = (double)SQRT(local_120 * local_120 + local_118 * local_118 + local_11c * local_11c);
+    dVar20 = dVar23;
+    if (-dVar21 < 0.0) {
+      dVar20 = dVar21;
+    }
+    fVar1 = (float)(dVar23 / dVar20);
+    local_120 = fVar1 * local_120;
+    local_11c = local_11c * fVar1;
+    local_118 = local_118 * fVar1;
+    Vec3Cross(&local_120,&local_130,pfVar18);
+    fVar1 = (float)((double)*pfVar18 + dVar22);
+    *pfVar18 = fVar1;
+    pfVar19 = (float *)((int)local_110 + iVar17 + 8);
+    pfVar15 = (float *)((int)local_e0 + iVar17);
+    fVar10 = *(float *)((int)local_110 + iVar17 + 8);
+    fVar3 = *(float *)((int)local_110 + iVar17 + 4);
+    dVar21 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
+    dVar20 = dVar23;
+    if (-dVar21 < 0.0) {
+      dVar20 = dVar21;
+    }
+    fVar2 = (float)(dVar23 / dVar20);
+    *pfVar18 = fVar2 * fVar1;
+    *(float *)((int)local_110 + iVar17 + 4) = fVar2 * fVar3;
+    *(float *)((int)local_110 + iVar17 + 8) = fVar2 * fVar10;
+    Vec3Cross(&local_130,pfVar18,pfVar15);
+    pfVar14 = (float *)((int)local_e0 + iVar17 + 8);
+    pfVar13 = (float *)((int)local_e0 + iVar17 + 4);
+    *pfVar18 = (float)((double)*pfVar18 * dVar24);
+    fVar1 = *pfVar14;
+    fVar3 = *pfVar15;
+    *(float *)((int)local_110 + iVar17 + 4) =
+         (float)(dVar24 * (double)*(float *)((int)local_110 + iVar17 + 4));
+    fVar10 = *pfVar13;
+    iVar17 = iVar17 + 0xc;
+    *pfVar19 = (float)((double)*pfVar19 * dVar24);
+    dVar21 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
+    dVar20 = dVar23;
+    if (-dVar21 < 0.0) {
+      dVar20 = dVar21;
+    }
+    fVar2 = (float)(dVar23 / dVar20);
+    *pfVar15 = fVar2 * fVar3;
+    *pfVar13 = fVar2 * fVar10;
+    *pfVar14 = fVar2 * fVar1;
+    *pfVar15 = (float)((double)(fVar2 * fVar3) * dVar24);
+    *pfVar13 = (float)((double)*pfVar13 * dVar24);
+    *pfVar14 = (float)((double)*pfVar14 * dVar24);
+  } while (iVar17 != 0x24);
+  pfVar15 = (float *)param_8;
+  fVar2 = pfVar15[2];
+  fVar1 = (float)(dVar25 + param_2);
+  fVar4 = *pfVar15;
+  fVar5 = pfVar15[1];
+  fVar3 = *param_7;
+  pfVar11[2] = (fVar2 - local_110[2]) - local_e0[2];
+  fVar3 = (float)((double)fVar3 * param_4 + param_3);
+  *pfVar11 = (fVar4 - local_110[0]) - local_e0[0];
+  fVar6 = pfVar15[3];
+  pfVar11[1] = (fVar5 - local_110[1]) - local_e0[1];
+  fVar7 = pfVar15[4];
+  fVar8 = pfVar15[5];
+  pfVar11[4] = fVar3;
+  pfVar11[3] = (float)dVar25;
+  fVar10 = param_7[1];
+  pfVar11[5] = fVar6 - local_110[3];
+  fVar10 = (float)((double)fVar10 * param_4 + param_3);
+  pfVar11[6] = fVar7 - local_110[4];
+  pfVar11[7] = fVar8 - local_110[5];
+  pfVar11[8] = (float)dVar25;
+  pfVar11[9] = fVar10;
+  pfVar11[10] = (fVar4 + local_110[3]) - local_e0[0];
+  pfVar11[0xb] = (fVar5 + local_110[4]) - local_e0[1];
+  pfVar11[0xc] = (fVar2 + local_110[5]) - local_e0[2];
+  pfVar11[0xe] = fVar3;
+  pfVar11[0xd] = fVar1;
+  fVar3 = param_7[2];
+  pfVar11[0xf] = local_110[3] + fVar6;
+  fVar3 = (float)((double)fVar3 * param_4 + param_3);
+  fVar4 = pfVar15[9];
+  fVar2 = (float)((double)param_7[3] * param_4 + param_3);
+  fVar5 = pfVar15[6];
+  fVar6 = pfVar15[7];
+  pfVar11[0x10] = local_110[4] + fVar7;
+  pfVar11[0x11] = fVar8 + local_110[5];
+  fVar7 = pfVar15[8];
+  fVar8 = pfVar15[10];
+  fVar9 = pfVar15[0xb];
+  pfVar11[0x12] = fVar1;
+  pfVar11[0x13] = fVar10;
+  pfVar11[0x14] = fVar5 - local_110[3];
+  pfVar11[0x15] = fVar6 - local_110[4];
+  pfVar11[0x16] = fVar7 - local_110[5];
+  pfVar11[0x17] = (float)dVar25;
+  pfVar11[0x18] = fVar3;
+  pfVar11[0x19] = local_c8 + (fVar4 - local_f8);
+  pfVar11[0x1a] = local_c4 + (fVar8 - local_f4);
+  pfVar11[0x1b] = local_c0 + (fVar9 - local_f0);
+  pfVar11[0x1c] = (float)dVar25;
+  pfVar11[0x1d] = fVar2;
+  pfVar11[0x1e] = fVar5 + local_110[3];
+  pfVar11[0x1f] = fVar6 + local_110[4];
+  pfVar11[0x20] = fVar7 + local_110[5];
+  pfVar11[0x21] = fVar1;
+  pfVar11[0x22] = fVar3;
+  pfVar11[0x23] = local_c8 + fVar4 + local_f8;
+  pfVar11[0x24] = local_c4 + fVar8 + local_f4;
+  pfVar11[0x25] = local_c0 + fVar9 + local_f0;
+  pfVar11[0x26] = fVar1;
+  pfVar11[0x27] = fVar2;
+  *param_6 = (int)(pfVar11 + 0x28);
+  __restfpr_21();
+  __restgprlr_22();
+  return;
 }
 
 
@@ -563,7 +1252,6 @@ void FX_DrawElem_SparkFountain(void)
   cVar26 = FX_DrawElem_Cloud_ShouldBeDrawn(puVar24);
   if (cVar26 != '\0') {
     if (*(int *)(puVar24[3] + 0xf4) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82067668,0x387,0,0xffffffff82000f98,0xffffffff8206786c);
     }
     puVar13 = (uint *)puVar24[3];
@@ -577,7 +1265,6 @@ void FX_DrawElem_SparkFountain(void)
         bVar19 = false;
       }
       if (bVar19) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82067668,0x396,0,0xffffffff82000f98,0xffffffff820613d4);
       }
       uVar21 = FX_GetElemChild(*puVar24,*(undefined2 *)(puVar24 + 0x2b));
@@ -595,7 +1282,6 @@ void FX_DrawElem_SparkFountain(void)
             dVar57 = (double)(float)((double)local_190 * dVar57);
             uVar22 = FX_GetElemVisuals(puVar24[3],puVar24[0x12]);
             if ((uVar22 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82067668,0x3b3,0,0xffffffff82000f98,0xffffffff820612f4);
             }
             dVar52 = 1.0;
@@ -605,7 +1291,6 @@ void FX_DrawElem_SparkFountain(void)
             dVar54 = (double)(float)(1.0 / (double)(longlong)(int)uVar16);
             dVar53 = (double)(float)(1.0 / (double)(longlong)(int)uVar15);
             if (0x10 < bVar3) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82067668,0x3bc,0,0xffffffff82067800,0xffffffff82067820,
                               uVar37);
             }

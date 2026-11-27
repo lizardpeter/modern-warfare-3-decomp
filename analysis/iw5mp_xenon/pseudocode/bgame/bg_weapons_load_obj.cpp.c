@@ -5,7 +5,7 @@
 undefined4 BG_GetPlayerAnimTypeName(int param_1)
 
 {
-  return *(undefined4 *)(&DAT_829d7f58 + param_1 * 4);
+  return (&DAT_829d7f58)[param_1];
 }
 
 
@@ -18,16 +18,52 @@ undefined4 BG_GetPlayerAnimTypeIndexHold(void)
 }
 
 
+// 82291C78  TRACK_bg_weapons_load_obj  (bgame/bg_weapons_load_obj.cpp:2697)
+
+void TRACK_bg_weapons_load_obj(void)
+
+{
+  track_static_alloc_internal(0xffffffff82961930,0x14,0xffffffff8200e124,9);
+  track_static_alloc_internal(0xffffffff82961944,0x30,0xffffffff8200e110,9);
+  track_static_alloc_internal(0xffffffff829d7f58,0x100,0xffffffff8200e0f8,9);
+  track_static_alloc_internal(0xffffffff82961974,0x18,0xffffffff8200e0dc,9);
+  return;
+}
+
+
+// 82291D08  BG_GetWeaponTypeName  (bgame/bg_weapons_load_obj.cpp:2718)
+
+undefined4 BG_GetWeaponTypeName(uint param_1)
+
+{
+  if (4 < param_1) {
+    MyAssertHandler(0xffffffff8200e138,0xa9f,0,0xffffffff8200e180,param_1,5);
+  }
+  return *(undefined4 *)(&DAT_82961930 + param_1 * 4);
+}
+
+
 // 82291D70  BG_GetWeaponClassName  (bgame/bg_weapons_load_obj.cpp:2726)
 
 undefined4 BG_GetWeaponClassName(uint param_1)
 
 {
   if (0xb < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200e138,0xaa7,0,0xffffffff8200e1c8,param_1,0xc);
   }
   return *(undefined4 *)(&DAT_82961944 + param_1 * 4);
+}
+
+
+// 82291DD8  BG_GetWeaponInventoryTypeName  (bgame/bg_weapons_load_obj.cpp:2734)
+
+undefined4 BG_GetWeaponInventoryTypeName(uint param_1)
+
+{
+  if (5 < param_1) {
+    MyAssertHandler(0xffffffff8200e138,0xaaf,0,0xffffffff8200e210,param_1,6);
+  }
+  return *(undefined4 *)(&DAT_82961974 + param_1 * 4);
 }
 
 
@@ -36,8 +72,54 @@ undefined4 BG_GetWeaponClassName(uint param_1)
 void BG_LoadWeaponStrings(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  
   __savegprlr_29();
+  uVar2 = 0;
+  if (DAT_829d7f4c != 0) {
+    puVar1 = (undefined4 *)0x829d7f54;
+    do {
+      puVar1 = puVar1 + 1;
+      BG_InitWeaponString(uVar2,*puVar1);
+      uVar2 = uVar2 + 1;
+    } while ((uVar2 & 0xffffffff) < (ulonglong)DAT_829d7f4c);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82291E90  Weapon_GetStringArrayIndex  (bgame/bg_weapons_load_obj.cpp:2753)
+
+void Weapon_GetStringArrayIndex(undefined8 param_1,ulonglong param_2,int param_3)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e138,0xac4,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8200e138,0xac5,0,0xffffffff82000f98,0xffffffff8200e260);
+  }
+  lVar3 = 0;
+  if (0 < param_3) {
+    do {
+      iVar2 = I_stricmp(uVar1,*(undefined4 *)param_2);
+      if (iVar2 == 0) {
+        __restgprlr_27(lVar3);
+        return;
+      }
+      lVar3 = lVar3 + 1;
+      param_2 = param_2 + 4;
+    } while ((int)lVar3 < param_3);
+  }
+  __restgprlr_27(0xffffffffffffffff);
+  return;
 }
 
 
@@ -46,8 +128,51 @@ void BG_LoadWeaponStrings(void)
 void BG_LoadPlayerAnimTypes(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  undefined8 uVar2;
+  char *pcVar3;
+  int iVar4;
+  char *pcVar5;
+  uint local_40 [2];
+  undefined1 auStack_38 [56];
+  
   __savegprlr_28();
+  LargeLocal__LargeLocal(auStack_38,0x18000);
+  uVar2 = LargeLocal__GetBuf(auStack_38);
+  DAT_829d7f4c = 0;
+  local_40[0] = Com_LoadRawTextFile(0xffffffff8200e2d8,uVar2,0x18000);
+  if (local_40[0] == 0) {
+    Com_Error(1,0xffffffff8200e2bc,0xffffffff8200e2d8);
+  }
+  Com_BeginParseSession(0xffffffff82003a08);
+  pcVar3 = (char *)Com_Parse(local_40);
+  while ((pcVar3 != (char *)0x0 && (*pcVar3 != '\0'))) {
+    pcVar5 = pcVar3;
+    if (0x3f < DAT_829d7f4c) {
+      Com_Error(1,0xffffffff8200e27c);
+    }
+    do {
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 != '\0');
+    iVar4 = Hunk_Alloc((int)pcVar5 - (int)pcVar3,0xffffffff8200e2a4,9);
+    pcVar3 = pcVar3 + -1;
+    pcVar5 = (char *)(iVar4 + -1);
+    (&DAT_829d7f58)[DAT_829d7f4c] = iVar4;
+    do {
+      pcVar3 = pcVar3 + 1;
+      cVar1 = *pcVar3;
+      pcVar5 = pcVar5 + 1;
+      *pcVar5 = cVar1;
+    } while (cVar1 != '\0');
+    DAT_829d7f4c = DAT_829d7f4c + 1;
+    pcVar3 = (char *)Com_Parse(local_40);
+  }
+  Com_EndParseSession();
+  DAT_829d7f48 = Weapon_GetStringArrayIndex(0xffffffff8200e274,0xffffffff829d7f58,DAT_829d7f4c);
+  LargeLocal___LargeLocal(auStack_38);
+  __restgprlr_28();
+  return;
 }
 
 

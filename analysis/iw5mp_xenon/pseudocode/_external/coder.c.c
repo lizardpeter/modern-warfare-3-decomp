@@ -2,10 +2,30 @@
 
 // 828C64B8  NellyQuantSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/coder.c:92)
 
-void NellyQuantSC3(void)
+void NellyQuantSC3(undefined8 param_1,int param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 uVar3;
+  double dVar4;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  iVar1 = (int)param_3;
+  uVar3 = QuanPvSC3((double)*(float *)(param_2 + 0x38),(double)*(float *)(iVar1 + 4),
+                    (double)*(float *)(iVar1 + 0xc));
+  puVar2[1] = uVar3;
+  UnQuanPvSC3((double)*(float *)(param_2 + 0x38));
+  uVar3 = NellyQuanPitchSC3((double)*(float *)(iVar1 + 8));
+  puVar2[2] = uVar3;
+  dVar4 = (double)NellyUnQuanPitchSC3();
+  *(float *)(iVar1 + 8) = (float)dVar4;
+  uVar3 = QuanGainSC3((double)*(float *)(iVar1 + 0x10));
+  *puVar2 = uVar3;
+  NellyMSVQEncPred((double)*(float *)(iVar1 + 0xc),param_3 + 0x14,puVar2 + 3,0xc);
+  *(undefined4 *)(param_2 + 0x38) = *(undefined4 *)(iVar1 + 0xc);
+  *(undefined4 *)(param_2 + 0x3c) = *(undefined4 *)(iVar1 + 8);
+  __restgprlr_27();
+  return;
 }
 

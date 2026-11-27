@@ -75,8 +75,26 @@ void D3D__RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysica
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  longlong lVar1;
+  undefined4 local_60;
+  undefined1 auStack_5c [24];
+  undefined4 local_44;
+  code *local_38;
+  code *local_34;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  local_60 = 0;
+  memset(auStack_5c,0,0x30);
+  local_38 = D3D__RT_XMCORE_MemAlloc;
+  local_34 = D3D__RT_XMCORE_MemFree;
+  local_44 = 0x34;
+  lVar1 = (*DAT_829a70f8)(&local_60,puVar2);
+  if (lVar1 < 0) {
+    *puVar2 = 0;
+  }
+  __restgprlr_29(lVar1);
+  return;
 }
 
 
@@ -86,8 +104,26 @@ void D3D__RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemF
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  longlong lVar1;
+  undefined4 local_60;
+  undefined1 auStack_5c [24];
+  undefined4 local_44;
+  code *local_38;
+  code *local_34;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  local_60 = 0;
+  memset(auStack_5c,0,0x30);
+  local_38 = D3D__RT_XMCORE_MemAlloc;
+  local_34 = D3D__RT_XMCORE_MemFree;
+  local_44 = 0x34;
+  lVar1 = (*DAT_829a70f8)(&local_60,puVar2);
+  if (lVar1 < 0) {
+    *puVar2 = 0;
+  }
+  __restgprlr_29(lVar1);
+  return;
 }
 
 
@@ -117,6 +153,27 @@ void D3D__RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemF
     (*DAT_829a70fc)(*param_1);
   }
   return;
+}
+
+
+// 8289B330  D3D::RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>::Put  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:124)
+
+longlong D3D__RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>__Put
+                   (undefined4 *param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  
+  lVar1 = (*DAT_829a7100)(*param_1,param_2);
+  if ((lVar1 < 0) && ((param_2 & 0xffffffff) != 0)) {
+    if (DAT_84890370 == 0) {
+      XMemFree(param_2,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,param_2);
+    }
+  }
+  return lVar1;
 }
 
 
@@ -225,66 +282,343 @@ D3D__RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>_
 
 // 8289CD50  D3D::CRTResultsTracker::InitializeCollectorThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:167)
 
-void D3D__CRTResultsTracker__InitializeCollectorThread(void)
+void D3D__CRTResultsTracker__InitializeCollectorThread
+               (undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  LPVOID lpParameter;
+  HANDLE pvVar2;
+  undefined8 uVar1;
+  int iVar3;
+  undefined4 local_30;
+  DWORD aDStack_2c [11];
+  
+  lpParameter = (LPVOID)__savegprlr_29();
+  pvVar2 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0x10000,D3D__CRTResultsTracker_CollectorMain,
+                        lpParameter,4,aDStack_2c);
+  *param_3 = pvVar2;
+  if (pvVar2 == (HANDLE)0x0) {
+    uVar1 = 0xffffffff80004005;
+  }
+  else {
+    XSetThreadProcessor(pvVar2,param_2);
+    *(int *)((int)lpParameter + 0x1808) = (int)param_2;
+    iVar3 = ObReferenceObjectByHandle(*param_3,0x1b,&local_30);
+    if (-1 < iVar3) {
+      KeSetBasePriorityThread(local_30,0x11);
+      ObDereferenceObject(local_30);
+    }
+    ResumeThread((HANDLE)*param_3);
+    uVar1 = 0;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 8289AC20  D3D::CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289ace0;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x28,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289acc4;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289acc4:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289ace0;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289ace0:
+  __restgprlr_29(puVar5);
+  return;
+}
+
+
+// 8289AD50  D3D::CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+
+void D3D__CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+               (undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289ae10;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x28,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289adf4;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289adf4:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289ae10;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289ae10:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
 // 8289AE80  D3D::CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289af40;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x18,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289af24;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289af24:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289af40;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289af40:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
 // 8289AFB8  D3D::CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289b078;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x18,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289b05c;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289b05c:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289b078;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289b078:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
 // 8289B080  D3D::CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289b140;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x18,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289b124;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289b124:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289b140;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289b140:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
 // 8289B148  D3D::CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_8289b208;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x18,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289b1ec;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289b1ec:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_8289b208;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_8289b208:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
@@ -358,8 +692,26 @@ void D3D__CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugM
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -369,8 +721,26 @@ void D3D__CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugM
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -380,8 +750,27 @@ void D3D__CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    D3D__CRTUniqueNameDimensionsInfo__Destroy(puVar2 + 4);
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -391,8 +780,28 @@ void D3D__CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDeb
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    D3D__StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+              (puVar2 + 4);
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -402,8 +811,28 @@ void D3D__CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDeb
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    D3D__StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+              (puVar2 + 4);
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -413,8 +842,28 @@ void D3D__CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    D3D__StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+              (puVar2 + 4);
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -423,8 +872,50 @@ void D3D__CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3
 void D3D__CRTResultsTracker__Destroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  BOOL BVar2;
+  undefined4 local_30;
+  char local_2c;
+  
+  iVar1 = __savegprlr_29();
+  D3D__AutoCriticalSection__AutoCriticalSection(&local_30,(ulonglong)DAT_829a70dc + 0x7c08);
+  D3D__CTSHashTable<D3D::RTUnusedTextureInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1);
+  D3D__CTSHashTable<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0x400);
+  D3D__CTSHashTable<D3D::CRTUniqueNameDimensionsInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0x1000);
+  D3D__CTSHashTable<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0x1400);
+  D3D__CTSHashTable<D3D::RTResolveTargetInfo,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0x800);
+  D3D__CTSHashTable<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0xc00);
+  if (*(int *)(iVar1 + 0x1800) != 0) {
+    (*DAT_829a70fc)();
+    *(undefined4 *)(iVar1 + 0x1800) = 0;
+  }
+  if (*(int *)(iVar1 + 0x1804) != 0) {
+    (*DAT_829a70fc)();
+    *(undefined4 *)(iVar1 + 0x1804) = 0;
+  }
+  D3D__RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>__Destroy
+            (iVar1 + 0x1848);
+  D3D__RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>__Destroy
+            (iVar1 + 0x1844);
+  DAT_829a70ec = 0;
+  if (DAT_84890370 == 0) {
+    XMemFree(iVar1,0x24800000);
+  }
+  else {
+    DmDebugFree();
+  }
+  BVar2 = SetEvent(DAT_829a70b0);
+  if (local_2c != '\0') {
+    BVar2 = RtlLeaveCriticalSection(local_30);
+  }
+  __restgprlr_29(BVar2);
+  return;
 }
 
 
@@ -554,6 +1045,18 @@ void D3D__CRTResultsTracker__EndCapture_Now(int param_1)
 }
 
 
+// 828990F0  D3D::CRTResultsTracker::EndCapture_WhenDone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:328)
+
+void D3D__CRTResultsTracker__EndCapture_WhenDone(int param_1)
+
+{
+  *(undefined4 *)(param_1 + 0x1828) = 1;
+  sync(1);
+  KeSetEvent(param_1 + 0x1810,0x11,0);
+  return;
+}
+
+
 // 82899140  D3D::CRTResultsTracker::GpuCallbackFenceUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:343)
 
 void D3D__CRTResultsTracker__GpuCallbackFenceUpdate(longlong param_1)
@@ -639,35 +1142,299 @@ void D3D__StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,
 }
 
 
+// 8289B270  D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
+
+void D3D__StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+               (undefined4 *param_1)
+
+{
+  if (DAT_84890370 == 0) {
+    XMemFree(*param_1,0x24800000);
+  }
+  else {
+    DmDebugFree();
+  }
+  D3D__CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (param_1 + 1);
+  return;
+}
+
+
+// 8289B2D0  D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:414)
+
+void D3D__StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+               (undefined4 *param_1)
+
+{
+  if (DAT_84890370 == 0) {
+    XMemFree(*param_1,0x24800000);
+  }
+  else {
+    DmDebugFree();
+  }
+  D3D__CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
+            (param_1 + 1);
+  return;
+}
+
+
+// 82899968  D3D::CRTUniqueNameDimensionsInfo::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:428)
+
+void D3D__CRTUniqueNameDimensionsInfo__FindOrAdd
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
+
+{
+  undefined4 *puVar1;
+  int *piVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  piVar2 = (int *)puVar1[1];
+  if (piVar2 != (int *)0x0) {
+    do {
+      if (((param_3 & 0xffffffff) < ((ulonglong)(uint)piVar2[0x10] & 0x1f)) &&
+         (*(longlong *)((int)((param_3 + 10 & 0xffffffff) << 3) + (int)piVar2) == param_2)) break;
+      piVar2 = (int *)*piVar2;
+    } while (piVar2 != (int *)0x0);
+    if (piVar2 != (int *)0x0) goto LAB_82899a18;
+  }
+  piVar2 = (int *)D3D__RTTextureUsageResults__Allocate(*puVar1);
+  if (piVar2 != (int *)0x0) {
+    *piVar2 = puVar1[1];
+    puVar1[1] = piVar2;
+    *(longlong *)((int)((param_3 + 10 & 0xffffffff) << 3) + (int)piVar2) = param_2;
+    piVar2[2] = piVar2[2] | 0x80000000;
+    piVar2[0x10] = piVar2[0x10] & 0xfffffe1fU |
+                   ((1 << ((uint)param_3 & 0x3f)) << 5 | piVar2[0x10]) & 0x1e0U;
+  }
+LAB_82899a18:
+  __restgprlr_28(piVar2);
+  return;
+}
+
+
 // 8289BA20  D3D::CStringHashOfLists<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
 
 void D3D__CStringHashOfLists<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  char *pcVar5;
+  
+  lVar1 = __savegprlr_27();
+  uVar2 = D3D__GetHashOfString(param_2);
+  piVar4 = (int *)D3D__CTSSortedList<D3D::StringWithList<D3D::RTUnusedTextureInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                            ((uVar2 & 0xff) * 4 + lVar1,uVar2);
+  if (piVar4 == (int *)0x0) {
+LAB_8289ba5c:
+    uVar3 = 0;
+  }
+  else {
+    lVar1 = param_2;
+    if (*piVar4 == 0) {
+      do {
+        pcVar5 = (char *)lVar1;
+        lVar1 = lVar1 + 1;
+      } while (*pcVar5 != '\0');
+      lVar1 = ((lVar1 - param_2) - 1U & 0xffffffff) + 1;
+      if (DAT_84890370 == 0) {
+        uVar2 = XMemAlloc(lVar1,0x64800000);
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31e8;
+          goto LAB_8289badc;
+        }
+      }
+      else {
+        uVar2 = DmDebugAlloc();
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31fc;
+LAB_8289badc:
+          D3D__DefaultTextureTrackerErrorCallback(uVar3);
+        }
+      }
+      *piVar4 = (int)(void *)uVar2;
+      if ((uVar2 & 0xffffffff) == 0) goto LAB_8289ba5c;
+      memcpy((void *)uVar2,(void *)param_2,(size_t)lVar1);
+    }
+    uVar3 = D3D__CTSSortedList<D3D::RTUnusedTextureInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                      (piVar4 + 1,param_3);
+  }
+  __restgprlr_27(uVar3);
+  return;
+}
+
+
+// 8289BB20  D3D::CStringHashOfLists<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
+
+void D3D__CStringHashOfLists<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  longlong lVar1;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  char *pcVar5;
+  
+  lVar1 = __savegprlr_27();
+  uVar2 = D3D__GetHashOfString(param_2);
+  piVar4 = (int *)D3D__CTSSortedList<D3D::StringWithList<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                            ((uVar2 & 0xff) * 4 + lVar1,uVar2);
+  if (piVar4 == (int *)0x0) {
+LAB_8289bb5c:
+    uVar3 = 0;
+  }
+  else {
+    lVar1 = param_2;
+    if (*piVar4 == 0) {
+      do {
+        pcVar5 = (char *)lVar1;
+        lVar1 = lVar1 + 1;
+      } while (*pcVar5 != '\0');
+      lVar1 = ((lVar1 - param_2) - 1U & 0xffffffff) + 1;
+      if (DAT_84890370 == 0) {
+        uVar2 = XMemAlloc(lVar1,0x64800000);
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31e8;
+          goto LAB_8289bbdc;
+        }
+      }
+      else {
+        uVar2 = DmDebugAlloc();
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31fc;
+LAB_8289bbdc:
+          D3D__DefaultTextureTrackerErrorCallback(uVar3);
+        }
+      }
+      *piVar4 = (int)(void *)uVar2;
+      if ((uVar2 & 0xffffffff) == 0) goto LAB_8289bb5c;
+      memcpy((void *)uVar2,(void *)param_2,(size_t)lVar1);
+    }
+    uVar3 = D3D__CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                      (piVar4 + 1,param_3);
+  }
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 8289BC20  D3D::CStringHashOfLists<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:440)
 
 void D3D__CStringHashOfLists<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  char *pcVar5;
+  
+  lVar1 = __savegprlr_27();
+  uVar2 = D3D__GetHashOfString(param_2);
+  piVar4 = (int *)D3D__CTSSortedList<D3D::StringWithList<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                            ((uVar2 & 0xff) * 4 + lVar1,uVar2);
+  if (piVar4 == (int *)0x0) {
+LAB_8289bc5c:
+    uVar3 = 0;
+  }
+  else {
+    lVar1 = param_2;
+    if (*piVar4 == 0) {
+      do {
+        pcVar5 = (char *)lVar1;
+        lVar1 = lVar1 + 1;
+      } while (*pcVar5 != '\0');
+      lVar1 = ((lVar1 - param_2) - 1U & 0xffffffff) + 1;
+      if (DAT_84890370 == 0) {
+        uVar2 = XMemAlloc(lVar1,0x64800000);
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31e8;
+          goto LAB_8289bcdc;
+        }
+      }
+      else {
+        uVar2 = DmDebugAlloc();
+        if (uVar2 == 0) {
+          uVar3 = 0xffffffff821f31fc;
+LAB_8289bcdc:
+          D3D__DefaultTextureTrackerErrorCallback(uVar3);
+        }
+      }
+      *piVar4 = (int)(void *)uVar2;
+      if ((uVar2 & 0xffffffff) == 0) goto LAB_8289bc5c;
+      memcpy((void *)uVar2,(void *)param_2,(size_t)lVar1);
+    }
+    uVar3 = D3D__CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                      (piVar4 + 1,param_3);
+  }
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 82899A28  D3D::CRTUniqueNameDimensionsInfo::FindOrAdd2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:467)
 
-void D3D__CRTUniqueNameDimensionsInfo__FindOrAdd2(void)
+void D3D__CRTUniqueNameDimensionsInfo__FindOrAdd2
+               (undefined8 param_1,longlong *param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int *piVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  piVar2 = (int *)puVar1[1];
+  if (piVar2 != (int *)0x0) {
+    do {
+      if (((param_3 + 1U & 0xffffffff) < ((ulonglong)(uint)piVar2[0x10] & 0x1f)) &&
+         ((*(longlong *)((int)((param_3 + 10U & 0xffffffff) << 3) + (int)piVar2) == *param_2 ||
+          (*(longlong *)((int)((param_3 + 0xbU & 0xffffffff) << 3) + (int)piVar2) == param_2[1]))))
+      break;
+      piVar2 = (int *)*piVar2;
+    } while (piVar2 != (int *)0x0);
+    if (piVar2 != (int *)0x0) goto LAB_82899b0c;
+  }
+  piVar2 = (int *)D3D__RTTextureUsageResults__Allocate(*puVar1);
+  if (piVar2 != (int *)0x0) {
+    *piVar2 = puVar1[1];
+    puVar1[1] = piVar2;
+    *(longlong *)((int)((param_3 + 10U & 0xffffffff) << 3) + (int)piVar2) = *param_2;
+    *(longlong *)((int)((param_3 + 0xbU & 0xffffffff) << 3) + (int)piVar2) = param_2[1];
+    piVar2[2] = piVar2[2] | 0x80000000;
+    piVar2[0x10] = piVar2[0x10] & 0xfffffe1fU |
+                   ((3 << ((uint)param_3 & 0x3f)) << 5 | piVar2[0x10]) & 0x1e0U;
+  }
+LAB_82899b0c:
+  __restgprlr_28(piVar2);
+  return;
+}
+
+
+// 82899B20  D3D::CRTUniqueNameDimensionsInfo::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:505)
+
+void D3D__CRTUniqueNameDimensionsInfo__Destroy(int param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = *(undefined4 **)(param_1 + 4);
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  return;
 }
 
 
@@ -689,41 +1456,332 @@ void D3D__CRTResultsTracker__UpdateUsageCreationTime
 
 // 8289BE10  D3D::CRTResultsTracker::FindOrMakeResultsObject  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:611)
 
-void D3D__CRTResultsTracker__FindOrMakeResultsObject(void)
+void D3D__CRTResultsTracker__FindOrMakeResultsObject
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  longlong lVar3;
+  ulonglong uVar5;
+  
+  lVar1 = __savegprlr_28();
+  if (*(int *)(param_2 + 0x20) == 0) {
+    uVar5 = (ulonglong)*(uint *)(param_2 + 0x1c) * 0xd13f8c63 +
+            (ulonglong)*(uint *)(param_2 + 0x18) * 0x2c8b779b;
+    puVar4 = (undefined4 *)
+             D3D__CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                       (((~(uVar5 >> 0x18) & 0xff ^ uVar5 >> 0x20 & 0xff) + 0x400) * 4 + lVar1,
+                        *(undefined8 *)(param_2 + 0x18));
+  }
+  else {
+    puVar4 = (undefined4 *)
+             D3D__CStringHashOfLists<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                       (lVar1 + 0x1400);
+  }
+  if (puVar4 != (undefined4 *)0x0) {
+    *puVar4 = 0xffffff;
+    lVar3 = D3D__CRTUniqueNameDimensionsInfo__FindOrAdd(puVar4,param_3,param_4);
+    if (lVar3 != 0) {
+      D3D__CRTResultsTracker__UpdateUsageCreationTime(lVar1,lVar3,*(undefined8 *)(param_2 + 0x30));
+      *(int *)(param_2 + 0x24) = (int)lVar3;
+      uVar2 = 0;
+      goto LAB_8289bef4;
+    }
+  }
+  uVar2 = 0xffffffff8007000e;
+LAB_8289bef4:
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 8289BF00  D3D::CRTResultsTracker::FindOrMakeResultsObject2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:678)
+
+void D3D__CRTResultsTracker__FindOrMakeResultsObject2
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  longlong lVar1;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  longlong lVar3;
+  ulonglong uVar5;
+  
+  lVar1 = __savegprlr_28();
+  if (*(int *)(param_2 + 0x20) == 0) {
+    uVar5 = (ulonglong)*(uint *)(param_2 + 0x1c) * 0xd13f8c63 +
+            (ulonglong)*(uint *)(param_2 + 0x18) * 0x2c8b779b;
+    puVar4 = (undefined4 *)
+             D3D__CTSSortedList<D3D::CRTUniqueNameDimensionsInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                       (((~(uVar5 >> 0x18) & 0xff ^ uVar5 >> 0x20 & 0xff) + 0x400) * 4 + lVar1,
+                        *(undefined8 *)(param_2 + 0x18));
+  }
+  else {
+    puVar4 = (undefined4 *)
+             D3D__CStringHashOfLists<D3D::CRTUniqueNameDimensionsInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                       (lVar1 + 0x1400);
+  }
+  if (puVar4 != (undefined4 *)0x0) {
+    *puVar4 = 0xffffff;
+    lVar3 = D3D__CRTUniqueNameDimensionsInfo__FindOrAdd2(puVar4,param_3,param_4);
+    if (lVar3 != 0) {
+      D3D__CRTResultsTracker__UpdateUsageCreationTime(lVar1,lVar3,*(undefined8 *)(param_2 + 0x30));
+      *(int *)(param_2 + 0x24) = (int)lVar3;
+      uVar2 = 0;
+      goto LAB_8289bfe4;
+    }
+  }
+  uVar2 = 0xffffffff8007000e;
+LAB_8289bfe4:
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 82899B98  D3D::CRTResultsTracker::GenerateHashOfThumbnail  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:730)
+
+longlong D3D__CRTResultsTracker__GenerateHashOfThumbnail(undefined8 param_1,uint *param_2)
+
+{
+  uint *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  uVar3 = ((longlong)
+           (int)((uint)(byte)(&DAT_821f3a09)[(*param_2 & 0x3f) * 2] *
+                ((*param_2 >> 6 & 0xffffff) + 1)) * (longlong)(int)((param_2[1] & 0x1fff) + 1) &
+          0xffffffffU) >> 5;
+  uVar2 = ((longlong)(int)(param_2[1] >> 0x17 & 0x1f) * 0x1234f98a & 0xffffffffU) + 0x14164f51;
+  if (uVar3 != 0) {
+    puVar1 = (uint *)(param_2[2] - 4);
+    do {
+      puVar1 = puVar1 + 1;
+      uVar2 = ((ulonglong)*puVar1 * 0xe343425b ^ uVar2 >> 0x25) + uVar2;
+      uVar3 = uVar3 - 1;
+    } while (uVar3 != 0);
+  }
+  return (uVar2 >> 7 ^ uVar2) * 0x2001;
 }
 
 
 // 8289BFF0  D3D::CRTResultsTracker::ProcessThumbnailForHash  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:749)
 
-void D3D__CRTResultsTracker__ProcessThumbnailForHash(void)
+void D3D__CRTResultsTracker__ProcessThumbnailForHash(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar5;
+  longlong lVar4;
+  uint uVar6;
+  undefined8 uVar7;
+  int local_30;
+  
+  iVar5 = __savegprlr_28();
+  uVar7 = 0;
+  iVar3 = (int)param_2;
+  if (*(int *)(iVar5 + 0x182c) == 0) {
+    local_30 = *(int *)(iVar3 + 0xc);
+    lVar4 = D3D__CRTResultsTracker__GenerateHashOfThumbnail(iVar5,param_2);
+    iVar1 = *(int *)(local_30 + 0x24);
+    if (iVar1 == 0) {
+      uVar7 = D3D__CRTResultsTracker__FindOrMakeResultsObject
+                        (iVar5,local_30,lVar4,*(uint *)(iVar3 + 4) >> 0x17 & 0x1f);
+    }
+    else {
+      uVar6 = *(uint *)(iVar3 + 4) >> 0x17 & 0x1f;
+      uVar2 = 1 << uVar6;
+      if ((*(uint *)(iVar1 + 0x40) >> 5 & uVar2 & 0xf) == 0) {
+        uVar6 = *(uint *)(*(int *)(local_30 + 0x24) + 0x40);
+        *(uint *)(*(int *)(local_30 + 0x24) + 0x40) =
+             uVar6 & 0xfffffe1f | (uVar2 << 5 | uVar6) & 0x1e0;
+      }
+      else {
+        if (lVar4 == *(longlong *)((uVar6 + 10) * 8 + iVar1)) goto LAB_8289c0e8;
+        *(uint *)(*(int *)(local_30 + 0x24) + 0x48) =
+             *(uint *)(*(int *)(local_30 + 0x24) + 0x48) | 0x80000000;
+      }
+      *(longlong *)(((*(uint *)(iVar3 + 4) >> 0x17 & 0x1f) + 10) * 8 + *(int *)(local_30 + 0x24)) =
+           lVar4;
+      *(uint *)(*(int *)(local_30 + 0x24) + 8) =
+           *(uint *)(*(int *)(local_30 + 0x24) + 8) | 0x80000000;
+    }
+  }
+LAB_8289c0e8:
+  iVar5 = *(int *)(iVar3 + 8);
+  if (iVar5 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(iVar5,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,iVar5);
+    }
+  }
+  *(undefined4 *)(iVar3 + 8) = 0;
+  D3D__RTBasicTextureInfo__Release(local_30);
+  __restgprlr_28(uVar7);
+  return;
 }
 
 
 // 8289C140  D3D::CRTResultsTracker::ProcessThumbnailForHash2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:805)
 
-void D3D__CRTResultsTracker__ProcessThumbnailForHash2(void)
+void D3D__CRTResultsTracker__ProcessThumbnailForHash2(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  longlong *plVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  int local_50;
+  longlong local_40;
+  undefined8 local_38;
+  
+  iVar4 = __savegprlr_27();
+  lVar9 = 0;
+  iVar3 = (int)param_2;
+  if (*(int *)(iVar4 + 0x182c) == 0) {
+    local_50 = *(int *)(iVar3 + 0xc);
+    local_40 = D3D__CRTResultsTracker__GenerateHashOfThumbnail(iVar4,param_2);
+    local_38 = D3D__CRTResultsTracker__GenerateHashOfThumbnail(iVar4,param_2 + 0x10);
+    if ((*(int *)(local_50 + 0x24) != 0) ||
+       (lVar9 = D3D__CRTResultsTracker__FindOrMakeResultsObject2
+                          (iVar4,local_50,&local_40,*(uint *)(iVar3 + 4) >> 0x17 & 0x1f), -1 < lVar9
+       )) {
+      lVar8 = 0;
+      plVar5 = &local_40;
+      lVar10 = 2;
+      do {
+        lVar6 = ((ulonglong)(*(uint *)(iVar3 + 4) >> 0x17) & 0x1f) + lVar8;
+        uVar2 = 1 << ((uint)lVar6 & 0x3f);
+        if ((*(uint *)(*(int *)(local_50 + 0x24) + 0x40) >> 5 & uVar2 & 0xf) == 0) {
+          lVar6 = *plVar5;
+          uVar1 = *(uint *)(*(int *)(local_50 + 0x24) + 0x40);
+          *(uint *)(*(int *)(local_50 + 0x24) + 0x40) =
+               uVar1 & 0xfffffe1f | (uVar2 << 5 | uVar1) & 0x1e0;
+          *(longlong *)
+           ((int)((((ulonglong)(*(uint *)(iVar3 + 4) >> 0x17) & 0x1f) + lVar8 + 10 & 0xffffffff) <<
+                 3) + *(int *)(local_50 + 0x24)) = lVar6;
+LAB_8289c278:
+          *(uint *)(*(int *)(local_50 + 0x24) + 8) =
+               *(uint *)(*(int *)(local_50 + 0x24) + 8) | 0x80000000;
+        }
+        else {
+          lVar7 = *plVar5;
+          if (lVar7 != *(longlong *)
+                        ((int)((lVar6 + 10U & 0xffffffff) << 3) + *(int *)(local_50 + 0x24))) {
+            *(uint *)(*(int *)(local_50 + 0x24) + 0x48) =
+                 *(uint *)(*(int *)(local_50 + 0x24) + 0x48) | 0x80000000;
+            *(longlong *)
+             ((int)((((ulonglong)(*(uint *)(iVar3 + 4) >> 0x17) & 0x1f) + lVar8 + 10 & 0xffffffff)
+                   << 3) + *(int *)(local_50 + 0x24)) = lVar7;
+            goto LAB_8289c278;
+          }
+        }
+        lVar8 = lVar8 + 1;
+        plVar5 = plVar5 + 1;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+      *(uint *)(*(int *)(local_50 + 0x24) + 8) =
+           *(uint *)(*(int *)(local_50 + 0x24) + 8) | 0x80000000;
+    }
+  }
+  iVar4 = *(int *)(iVar3 + 8);
+  if (iVar4 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(iVar4,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,iVar4);
+    }
+  }
+  iVar4 = *(int *)(iVar3 + 0x18);
+  *(undefined4 *)(iVar3 + 8) = 0;
+  if (iVar4 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(iVar4,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,iVar4);
+    }
+  }
+  *(undefined4 *)(iVar3 + 0x18) = 0;
+  D3D__RTBasicTextureInfo__Release(local_50);
+  __restgprlr_27(lVar9);
+  return;
 }
 
 
 // 82899C60  D3D::CRTResultsTracker::ProcessThumbnailForChannelCheck  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:865)
 
-void D3D__CRTResultsTracker__ProcessThumbnailForChannelCheck(void)
+void D3D__CRTResultsTracker__ProcessThumbnailForChannelCheck(undefined8 param_1,uint *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  uint *puVar4;
+  uint uVar5;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = param_2[3];
+  if ((*(int *)(iVar2 + 0x182c) == 0) && (*(int *)(uVar1 + 0x24) != 0)) {
+    if (*(int *)(iVar2 + 0x183c) == 0) {
+      uVar5 = 0xaaaaa;
+    }
+    else {
+      uVar5 = 0xfffff;
+    }
+    uVar3 = 0;
+    if (((ulonglong)(*param_2 >> 6) & 0xffffff) != 0xffffffffffffffff) {
+      puVar4 = (uint *)(param_2[2] - 4);
+      do {
+        puVar4 = puVar4 + 1;
+        uVar3 = uVar3 + 1;
+        uVar5 = *puVar4 & uVar5;
+      } while (uVar3 < (*param_2 >> 6 & 0xffffff) + 1);
+    }
+    uVar5 = uVar5 << 8;
+    uVar3 = *(uint *)(uVar1 + 0x2c) >> 8 & 3;
+    if (uVar3 == 0) {
+      uVar5 = uVar5 & 0x300000;
+    }
+    else if (uVar3 == 1) {
+      uVar5 = uVar5 & 0xf00300;
+    }
+    else if (uVar3 < 3) {
+      uVar5 = uVar5 & 0xf3f0cf00;
+    }
+    uVar3 = *(uint *)(*(int *)(uVar1 + 0x24) + 0x48);
+    uVar5 = (*(uint *)(uVar1 + 0x2c) & 0xff | uVar5 | 0xf0000000) & uVar3;
+    if (uVar5 != uVar3) {
+      *(uint *)(*(int *)(uVar1 + 0x24) + 0x48) = uVar5;
+      *(uint *)(*(int *)(uVar1 + 0x24) + 0x40) = *(uint *)(*(int *)(uVar1 + 0x24) + 0x40) | 0x80000;
+      *(uint *)(*(int *)(uVar1 + 0x24) + 8) = *(uint *)(*(int *)(uVar1 + 0x24) + 8) | 0x80000000;
+    }
+  }
+  uVar5 = param_2[2];
+  if (uVar5 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(uVar5,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,uVar5);
+    }
+  }
+  param_2[2] = 0;
+  D3D__RTBasicTextureInfo__Release(uVar1);
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -783,21 +1841,124 @@ void D3D__CRTResultsTracker__SaveThumbnailToDisk(undefined8 param_1,uint *param_
 
 // 82899F48  D3D::CRTResultsTracker::ProcessThumbnailForPix  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1098)
 
-void D3D__CRTResultsTracker__ProcessThumbnailForPix(void)
+void D3D__CRTResultsTracker__ProcessThumbnailForPix(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 uVar7;
+  
+  iVar6 = __savegprlr_28();
+  uVar7 = 0;
+  iVar3 = (int)param_2;
+  iVar1 = *(int *)(iVar3 + 0xc);
+  if (*(int *)(iVar6 + 0x182c) == 0) {
+    iVar2 = *(int *)(iVar1 + 0x24);
+    if (iVar2 != 0) {
+      uVar4 = *(uint *)(iVar3 + 4) >> 0x17;
+      uVar5 = uVar4 & 0x1f;
+      if (uVar5 < (*(uint *)(iVar2 + 0x44) & 0xf)) {
+        if (uVar5 == (*(uint *)(iVar1 + 0x28) >> 0xe & 0xf)) {
+          *(uint *)(iVar2 + 0x44) = uVar4 & 0xf | *(uint *)(iVar2 + 0x44) & 0xfffffff0;
+          uVar7 = D3D__CRTResultsTracker__SaveThumbnailToDisk(iVar6,param_2);
+        }
+      }
+    }
+  }
+  iVar6 = *(int *)(iVar3 + 8);
+  if (iVar6 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(iVar6,0xffffffffa1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,iVar6);
+    }
+  }
+  *(undefined4 *)(iVar3 + 8) = 0;
+  D3D__RTBasicTextureInfo__Release(iVar1);
+  __restgprlr_28(uVar7);
+  return;
 }
 
 
 // 8289B578  D3D::CRTResultsTracker::ProcessMipData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1152)
 
-void D3D__CRTResultsTracker__ProcessMipData(void)
+void D3D__CRTResultsTracker__ProcessMipData(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  uint *puVar5;
+  int iVar6;
+  uint uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  int iVar10;
+  longlong lVar11;
+  
+  iVar4 = __savegprlr_27();
+  puVar5 = (uint *)param_2;
+  if (*(int *)(iVar4 + 0x182c) == 0) {
+    D3D__DCBF(param_3 + 4,*(undefined4 *)param_3);
+    iVar6 = 0;
+    uVar7 = 0;
+    lVar11 = param_2;
+    if (*puVar5 != 0) {
+      do {
+        puVar2 = (undefined4 *)(lVar11 + 0x10);
+        iVar3 = (int)lVar11;
+        if ((puVar2[1] & 0x3fc000) == 0x1c000) {
+          iVar6 = *(int *)*puVar2 - **(int **)(iVar3 + 0xc);
+        }
+        iVar1 = *(int *)(iVar3 + 8);
+        if ((iVar1 != 0) && (*(int *)(iVar1 + 0x24) != 0)) {
+          iVar10 = (*(uint *)(iVar3 + 0x14) >> 0x16 & 3) * 0xc + *(int *)(iVar1 + 0x24);
+          lVar8 = (longlong)(*(int *)*puVar2 - **(int **)(iVar3 + 0xc)) *
+                  (longlong)(int)(uint)*(byte *)(iVar3 + 0x14);
+          *(int *)(iVar10 + 0x14) = *(int *)(iVar10 + 0x14) + 1;
+          if (lVar8 != 0) {
+            uVar9 = lVar8 + (ulonglong)*(uint *)(iVar10 + 0x10);
+            *(uint *)(iVar10 + 0x10) = (uint)uVar9;
+            *(int *)(iVar10 + 0x18) = *(int *)(iVar10 + 0x18) + 1;
+            if ((uVar9 & 0x80000000) != 0) {
+              *(undefined4 *)(iVar4 + 0x1840) = 1;
+            }
+          }
+          *(int *)(*(int *)(iVar1 + 0x24) + 0xc) = *(int *)(*(int *)(iVar1 + 0x24) + 0xc) + iVar6;
+          if ((*(uint *)(*(int *)(iVar1 + 0x24) + 0xc) & 0x80000000) != 0) {
+            *(undefined4 *)(iVar4 + 0x1840) = 1;
+          }
+          *(uint *)(*(int *)(iVar1 + 0x24) + 8) = *(uint *)(*(int *)(iVar1 + 0x24) + 8) | 0x40000000
+          ;
+        }
+        uVar7 = uVar7 + 1;
+        lVar11 = lVar11 + 0x10;
+      } while (uVar7 < *puVar5);
+    }
+  }
+  uVar7 = 0;
+  if (*puVar5 != 0) {
+    lVar11 = param_2 + 8;
+    do {
+      if (*(int *)lVar11 != 0) {
+        D3D__RTBasicTextureInfo__Release();
+      }
+      uVar7 = uVar7 + 1;
+      lVar11 = lVar11 + 0x10;
+    } while (uVar7 < *puVar5);
+  }
+  D3D__RecycleQueue<D3D::RTPerfCounterMipResultsBuffer,&D3D::RTMemFreePhysicalReadWrite>__Put
+            (iVar4 + 0x1848,param_3);
+  D3D__RecycleQueue<D3D::RTPerfCounterMipResultsDescription,&D3D::RTDebugMemFree>__Put
+            (iVar4 + 0x1844,param_2);
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -857,11 +2018,41 @@ undefined8 D3D__CRTResultsTracker__ProcessUpdateIssue(int param_1,int param_2)
 
 // 8289A018  D3D::CRTResultsTracker::ProcessScreenshot  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1304)
 
-void D3D__CRTResultsTracker__ProcessScreenshot(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__CRTResultsTracker__ProcessScreenshot(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 local_50 [2];
+  int local_48;
+  undefined4 local_40 [2];
+  undefined4 local_38;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(iVar1 + 0x182c) == 0) {
+    local_50[0] = 0x7d;
+    local_48 = param_2;
+    if (_DAT_00000059 != 0) {
+      (**(code **)(_DAT_00000059 + 0x18))(0x84,local_50);
+    }
+    D3D__DCBF(param_3,*(undefined2 *)(param_2 + 6));
+    local_40[0] = 0x7e;
+    local_38 = (int)param_3;
+    if (_DAT_00000059 != 0) {
+      (**(code **)(_DAT_00000059 + 0x18))(0x84,local_40);
+    }
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(param_3,0xffffffffb1800000);
+    }
+    else {
+      MmFreePhysicalMemory(3,param_3);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -1044,11 +2235,88 @@ void D3D__CRTResultsTracker__SaveUnnamedUsedTexturesToDisk(void)
 
 // 8289C330  D3D::CRTResultsTracker::ProcessResolveData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1488)
 
-void D3D__CRTResultsTracker__ProcessResolveData(void)
+void D3D__CRTResultsTracker__ProcessResolveData(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  longlong lVar2;
+  uint *puVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  
+  lVar2 = __savegprlr_27();
+  if (*(int *)((int)lVar2 + 0x182c) == 0) {
+    iVar7 = 1;
+    uVar8 = param_2;
+    do {
+      iVar1 = *(int *)(uVar8 + 8);
+      if (iVar1 == 0) break;
+      if (*(int *)(iVar1 + 0x24) == 0) {
+        if (*(int *)(iVar1 + 0x20) == 0) {
+          uVar5 = (ulonglong)*(uint *)(iVar1 + 0x1c) * 0xd13f8c63 +
+                  (ulonglong)*(uint *)(iVar1 + 0x18) * 0x2c8b779b;
+          puVar3 = (uint *)D3D__CTSSortedList<D3D::RTResolveTargetInfo,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                                     (((~(uVar5 >> 0x18) & 0xff ^ uVar5 >> 0x20 & 0xff) + 0x200) * 4
+                                      + lVar2,*(undefined8 *)(iVar1 + 0x18));
+        }
+        else {
+          puVar3 = (uint *)D3D__CStringHashOfLists<D3D::RTResolveTargetInfo,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                                     (lVar2 + 0xc00);
+        }
+        uVar6 = puVar3[1];
+        if (((uVar6 & 0xf) == 0) && ((uVar6 & 0xf0) == 0)) {
+          puVar3[1] = *(uint *)(iVar1 + 0xc) >> 0x11 & 0xf | uVar6 & 0xfffffff0;
+          puVar3[1] = *(uint *)(iVar1 + 0xc) >> 0x11 & 0xf0 | puVar3[1] & 0xffffff0f;
+        }
+        else {
+          uVar4 = *(uint *)(iVar1 + 0xc) >> 0x11 & 0xf;
+          if (uVar4 < (uVar6 & 0xf)) {
+            puVar3[1] = uVar6 & 0xfffffff0 | uVar4;
+          }
+          if ((puVar3[1] & 0xf0) < (*(uint *)(iVar1 + 0xc) >> 0x11 & 0xf0)) {
+            puVar3[1] = *(uint *)(iVar1 + 0xc) >> 0x11 & 0xf0 | puVar3[1] & 0xffffff0f;
+          }
+        }
+        uVar6 = (~*(uint *)(iVar1 + 0x2c) & 0x20) << 0x19 | *puVar3;
+        *puVar3 = uVar6;
+        uVar6 = (~*(uint *)(iVar1 + 0x2c) & 0x40) << 0x19 | uVar6;
+        *puVar3 = uVar6;
+        puVar3[2] = (uint)((ulonglong)*(undefined8 *)(iVar1 + 0x30) >> 0x20);
+        puVar3[3] = (uint)*(undefined8 *)(iVar1 + 0x30);
+        iVar1 = *(int *)((int)uVar8 + 0xc);
+        *puVar3 = uVar6 | 0x20000000;
+        puVar3[4] = iVar1 + puVar3[4];
+      }
+      else if ((*(uint *)(*(int *)(iVar1 + 0x24) + 0x48) & 0x40000000) == 0) {
+        *(uint *)(*(int *)(iVar1 + 0x24) + 0x48) =
+             *(uint *)(*(int *)(iVar1 + 0x24) + 0x48) | 0x40000000;
+        *(uint *)(*(int *)(iVar1 + 0x24) + 8) = *(uint *)(*(int *)(iVar1 + 0x24) + 8) | 0x80000000;
+      }
+      iVar7 = iVar7 + 1;
+      uVar8 = uVar8 + 8;
+    } while (iVar7 < 0x100);
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    iVar7 = 1;
+    uVar8 = param_2;
+    do {
+      uVar8 = uVar8 + 8;
+      if (*(int *)uVar8 == 0) break;
+      D3D__RTBasicTextureInfo__Release();
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < 0x100);
+    if (DAT_84890370 == 0) {
+      XMemFree(param_2,0x24800000);
+    }
+    else {
+      DmDebugFree();
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1128,8 +2396,137 @@ void D3D__CRTResultsTracker__UpdateResolveTargetResults
 void D3D__CRTResultsTracker__SaveNamedResolveTargetsToDisk(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  uint uVar6;
+  char local_40 [64];
+  
+  iVar3 = __savegprlr_26();
+  puVar5 = (undefined4 *)(iVar3 + 0xc00);
+  lVar4 = 0x100;
+  do {
+    for (puVar1 = (undefined4 *)*puVar5; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+        ) {
+      uVar6 = puVar1[4];
+      for (puVar2 = (undefined4 *)puVar1[5]; puVar2 != (undefined4 *)0x0;
+          puVar2 = (undefined4 *)*puVar2) {
+        local_40[0] = '\0';
+        D3D__CRTResultsTracker__UpdateResolveTargetResults
+                  (iVar3,puVar2 + 4,uVar6,puVar2 + 2,local_40);
+        uVar6 = -(uint)(local_40[0] == '\0') & uVar6;
+      }
+    }
+    lVar4 = lVar4 + -1;
+    puVar5 = puVar5 + 1;
+  } while (lVar4 != 0);
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 8289A720  D3D::CRTResultsTracker::SaveUnnamedResolveTargetsToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1679)
+
+void D3D__CRTResultsTracker__SaveUnnamedResolveTargetsToDisk(void)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
+  ulonglong uVar5;
+  char local_40 [64];
+  
+  iVar2 = __savegprlr_27();
+  puVar4 = (undefined4 *)(iVar2 + 0x800);
+  uVar5 = 0xffffffff820068af;
+  lVar3 = 0x100;
+  do {
+    for (puVar1 = (undefined4 *)*puVar4; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+        ) {
+      local_40[0] = '\0';
+      D3D__CRTResultsTracker__UpdateResolveTargetResults(iVar2,puVar1 + 4,uVar5,puVar1 + 2,local_40)
+      ;
+      uVar5 = -(ulonglong)(local_40[0] == '\0') & uVar5;
+    }
+    lVar3 = lVar3 + -1;
+    puVar4 = puVar4 + 1;
+  } while (lVar3 != 0);
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 8289A7A8  D3D::CRTResultsTracker::UpdateUnusedResults  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1716)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__CRTResultsTracker__UpdateUnusedResults
+               (undefined8 param_1,uint *param_2,ulonglong param_3,ulonglong param_4,
+               undefined1 *param_5)
+
+{
+  int iVar1;
+  char *pcVar3;
+  ulonglong uVar2;
+  uint uVar4;
+  undefined4 local_80;
+  uint local_7c;
+  int local_78;
+  undefined4 local_70 [2];
+  undefined4 local_68;
+  undefined4 local_60;
+  undefined4 local_5c;
+  uint *local_58;
+  undefined4 local_50 [2];
+  uint *local_48;
+  
+  iVar1 = __savegprlr_25();
+  if ((*param_2 & 0x7fffffff) == 0) {
+    uVar2 = param_3;
+    if ((param_3 & 0xffffffff) != 0) {
+      do {
+        pcVar3 = (char *)uVar2;
+        uVar2 = uVar2 + 1;
+      } while (*pcVar3 != '\0');
+      local_78 = (int)param_3;
+      local_80 = 0x73;
+      local_7c = ((int)uVar2 - local_78) + 3U >> 2;
+      if (_DAT_00000059 != 0) {
+        (**(code **)(_DAT_00000059 + 0x18))(0x84,&local_80);
+      }
+    }
+    if ((param_4 & 0xffffffff) != 0) {
+      local_70[0] = 0x74;
+      local_68 = (undefined4)param_4;
+      if (_DAT_00000059 != 0) {
+        (**(code **)(_DAT_00000059 + 0x18))(0x84,local_70);
+      }
+    }
+    uVar4 = *(int *)(iVar1 + 0x180c) + 1;
+    *(uint *)(iVar1 + 0x180c) = uVar4;
+    *param_2 = uVar4 & 0x7fffffff | *param_2 & 0x80000000;
+    local_60 = 0x77;
+    local_5c = 5;
+    local_58 = param_2;
+    if (_DAT_00000059 != 0) {
+      (**(code **)(_DAT_00000059 + 0x18))(0x84,&local_60);
+    }
+    *param_2 = *param_2 & 0x7fffffff;
+    *param_5 = 1;
+  }
+  else if ((*param_2 & 0x80000000) != 0) {
+    local_50[0] = 0x78;
+    local_48 = param_2;
+    if (_DAT_00000059 != 0) {
+      (**(code **)(_DAT_00000059 + 0x18))(0x84,local_50);
+    }
+    *param_2 = *param_2 & 0x7fffffff;
+  }
+  __restgprlr_25(0);
+  return;
 }
 
 
@@ -1138,18 +2535,164 @@ void D3D__CRTResultsTracker__SaveNamedResolveTargetsToDisk(void)
 void D3D__CRTResultsTracker__SaveNamedUnusedTexturesToDisk(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  uint uVar6;
+  char local_40 [64];
+  
+  iVar3 = __savegprlr_26();
+  puVar5 = (undefined4 *)(iVar3 + 0x400);
+  lVar4 = 0x100;
+  do {
+    for (puVar1 = (undefined4 *)*puVar5; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+        ) {
+      uVar6 = puVar1[4];
+      for (puVar2 = (undefined4 *)puVar1[5]; puVar2 != (undefined4 *)0x0;
+          puVar2 = (undefined4 *)*puVar2) {
+        local_40[0] = '\0';
+        D3D__CRTResultsTracker__UpdateUnusedResults(iVar3,puVar2 + 4,uVar6,puVar2 + 2,local_40);
+        uVar6 = -(uint)(local_40[0] == '\0') & uVar6;
+      }
+    }
+    lVar4 = lVar4 + -1;
+    puVar5 = puVar5 + 1;
+  } while (lVar4 != 0);
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 8289AA18  D3D::CRTResultsTracker::SaveUnnamedUnusedTexturesToDisk  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1786)
+
+void D3D__CRTResultsTracker__SaveUnnamedUnusedTexturesToDisk(void)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
+  ulonglong uVar5;
+  char local_40 [64];
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  uVar5 = 0xffffffff820068af;
+  lVar3 = 0x100;
+  puVar4 = puVar2;
+  do {
+    for (puVar1 = (undefined4 *)*puVar4; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+        ) {
+      local_40[0] = '\0';
+      D3D__CRTResultsTracker__UpdateUnusedResults(puVar2,puVar1 + 4,uVar5,puVar1 + 2,local_40);
+      uVar5 = -(ulonglong)(local_40[0] == '\0') & uVar5;
+    }
+    lVar3 = lVar3 + -1;
+    puVar4 = puVar4 + 1;
+  } while (lVar3 != 0);
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 8289AAA0  D3D::CRTResultsTracker::AutoSave  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1826)
 
-void D3D__CRTResultsTracker__AutoSave(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__CRTResultsTracker__AutoSave(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  longlong lVar1;
+  BOOL BVar3;
+  undefined4 *puVar4;
+  undefined4 local_70;
+  char local_6c;
+  undefined4 local_68 [2];
+  undefined4 local_60;
+  undefined4 local_58 [2];
+  undefined4 *local_50;
+  undefined4 local_40 [2];
+  LARGE_INTEGER aLStack_38 [7];
+  
+  iVar2 = __savegprlr_28();
+  lVar1 = D3D__CRTResultsTracker__SaveNamedUsedTexturesToDisk(iVar2);
+  if ((((lVar1 < 0) ||
+       (lVar1 = D3D__CRTResultsTracker__SaveUnnamedUsedTexturesToDisk(iVar2), lVar1 < 0)) ||
+      (lVar1 = D3D__CRTResultsTracker__SaveNamedResolveTargetsToDisk(iVar2), lVar1 < 0)) ||
+     (lVar1 = D3D__CRTResultsTracker__SaveUnnamedResolveTargetsToDisk(iVar2), lVar1 < 0)) {
+LAB_8289ab8c:
+    local_68[0] = 0x79;
+    local_60 = 0;
+    if (_DAT_00000059 == 0) goto LAB_8289ac10;
+    puVar4 = local_68;
+  }
+  else {
+    if (param_2 != 0) {
+      D3D__AutoCriticalSection__AutoCriticalSection(&local_70,(ulonglong)DAT_829a70dc + 0x7c08);
+      lVar1 = D3D__CRTResultsTracker__SaveNamedUnusedTexturesToDisk(iVar2);
+      if ((lVar1 < 0) ||
+         (lVar1 = D3D__CRTResultsTracker__SaveUnnamedUnusedTexturesToDisk(iVar2), lVar1 < 0)) {
+        if (local_6c != '\0') {
+          RtlLeaveCriticalSection(local_70);
+        }
+        goto LAB_8289ab8c;
+      }
+      lVar1 = 0;
+      if (local_6c != '\0') {
+        RtlLeaveCriticalSection(local_70);
+      }
+    }
+    local_40[0] = *(undefined4 *)(iVar2 + 0x1838);
+    BVar3 = QueryPerformanceCounter(aLStack_38);
+    if (BVar3 == 0) {
+      lVar1 = -0x7fffbffb;
+      goto LAB_8289ab8c;
+    }
+    local_50 = local_40;
+    local_58[0] = 0x72;
+    if (_DAT_00000059 == 0) goto LAB_8289ac10;
+    puVar4 = local_58;
+  }
+  (**(code **)(_DAT_00000059 + 0x18))(0x84,puVar4);
+LAB_8289ac10:
+  __restgprlr_28(lVar1);
+  return;
+}
+
+
+// 8289C890  D3D::CRTResultsTracker::FinishCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtresultstracker.cpp:1875)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__CRTResultsTracker__FinishCapture(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  undefined8 uVar3;
+  uint local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  uVar3 = 0;
+  D3D__CRTTextureTracker__OnCollectorEndingCapture(DAT_829a70dc);
+  D3D__CRTResultsTracker__DrainUnusedTextureQueue(uVar1);
+  D3D__CRTResultsTracker__AutoSave(uVar1,1);
+  local_30[0] = (uint)DAT_829a7080;
+  if (_DAT_00000059 == 0) {
+    iVar2 = 0;
+  }
+  else {
+    iVar2 = (**(code **)(_DAT_00000059 + 0x18))(0x85,local_30);
+  }
+  if (iVar2 == 0) {
+    D3D__DefaultTextureTrackerErrorCallback(0xffffffff821fcc74);
+    uVar3 = 0xffffffff80004005;
+  }
+  D3D__CRTTextureTracker__OnCollectorEndedCapture(DAT_829a70dc);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -1212,8 +2755,33 @@ void D3D__CRTResultsTracker__AddUnusedTexture(longlong param_1,int param_2)
 void D3D__CRTResultsTracker__DrainUnusedTextureQueue(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int local_30 [12];
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = (*DAT_829a7104)(*(undefined4 *)(iVar1 + 0x1804),local_30);
+  while ((-1 < iVar2 && (local_30[0] != 0))) {
+    D3D__CRTResultsTracker__AddUnusedTexture(iVar1);
+    if (*(int *)(local_30[0] + 0x20) != 0) {
+      if (DAT_84890370 == 0) {
+        XMemFree(*(undefined4 *)(local_30[0] + 0x20),0x24800000);
+      }
+      else {
+        DmDebugFree();
+      }
+      *(undefined4 *)(local_30[0] + 0x20) = 0;
+    }
+    if (DAT_84890370 == 0) {
+      XMemFree(local_30[0],0x24800000);
+    }
+    else {
+      DmDebugFree();
+    }
+    iVar2 = (*DAT_829a7104)(*(undefined4 *)(iVar1 + 0x1804),local_30);
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -1222,7 +2790,188 @@ void D3D__CRTResultsTracker__DrainUnusedTextureQueue(void)
 void D3D__CRTResultsTracker__CollectorMain(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined4 *local_40 [16];
+  
+  iVar4 = __savegprlr_26();
+  do {
+    uVar2 = DAT_829a7000;
+    uVar6 = (ulonglong)DAT_829a7000;
+    bVar1 = (DAT_829a7000 & 0x80000000) == 0;
+    if (!bVar1) goto LAB_8289c9f0;
+    do {
+      uVar3 = DAT_829a7000;
+      if (DAT_829a7000 != uVar2) {
+        if (in_RESERVE != '\0') {
+          DAT_829a7000 = storeWordConditionalIndexed((ulonglong)DAT_829a7000,0,0xffffffff829a7000);
+          bVar1 = true;
+        }
+        break;
+      }
+      if (in_RESERVE != '\0') {
+        DAT_829a7000 = storeWordConditionalIndexed(uVar6 + 1,0,0xffffffff829a7000);
+        bVar1 = true;
+      }
+    } while (!bVar1);
+    sync(1);
+  } while (uVar3 != uVar2);
+  if (DAT_829a6f80 == 0) {
+    sync(1);
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_829a7000 = storeWordConditionalIndexed((ulonglong)DAT_829a7000 - 1,0,0xffffffff829a7000)
+        ;
+        bVar1 = true;
+      }
+    } while (!bVar1);
+LAB_8289c9f0:
+    bVar1 = false;
+  }
+  else {
+    bVar1 = true;
+  }
+  bVar8 = !bVar1 << 1;
+  if (bVar1) {
+    local_40[0] = (undefined4 *)0x0;
+    D3D__CRTResultsTracker__WaitForGpu(iVar4,0);
+LAB_8289ca14:
+    do {
+      if (*(int *)(iVar4 + 0x1828) != 0) {
+        iVar5 = (*DAT_829a7108)(*(undefined4 *)(iVar4 + 0x1800));
+        bVar8 = (iVar5 == 0) << 1;
+        if (iVar5 != 0) break;
+      }
+      if (*(int *)(iVar4 + 0x1824) != 0) break;
+      if (local_40[0] != (undefined4 *)0x0) {
+        if (DAT_84890370 == 0) {
+          XMemFree(local_40[0],0x24800000);
+        }
+        else {
+          DmDebugFree();
+        }
+      }
+      local_40[0] = (undefined4 *)0x0;
+      iVar5 = (*DAT_829a7104)(*(undefined4 *)(iVar4 + 0x1800),local_40);
+      if (local_40[0] == (undefined4 *)0x0) goto LAB_8289cc8c;
+      if (iVar5 < 0) break;
+      switch(*local_40[0]) {
+      case 0:
+        if (*(int *)(iVar4 + 0x1828) != 0) {
+          iVar5 = (*DAT_829a7108)(*(undefined4 *)(iVar4 + 0x1800));
+          bVar8 = (iVar5 == 0) << 1;
+          if (iVar5 != 0) goto switchD_8289cacc_default;
+        }
+        D3D__CRTResultsTracker__WaitForGpu(iVar4,local_40[0][1]);
+        iVar5 = D3D__CRTResultsTracker__DrainUnusedTextureQueue(iVar4);
+        bVar8 = (iVar5 == 0) << 1;
+        if (iVar5 < 0) goto switchD_8289cacc_default;
+        if (local_40[0][2] == 0) goto LAB_8289ca14;
+        *(int *)(iVar4 + 0x1838) = *(int *)(iVar4 + 0x1838) + 1;
+        SetEvent(DAT_829a70b8);
+        uVar2 = *(uint *)(iVar4 + 0x1834);
+        if ((ulonglong)uVar2 == 0) {
+LAB_8289cb5c:
+          if (*(int *)(iVar4 + 0x1840) == 0) goto LAB_8289ca14;
+          uVar2 = *(uint *)(iVar4 + 0x1838);
+          bVar1 = uVar2 == (((int)uVar2 >> 4) + (uint)((int)uVar2 < 0 && (uVar2 & 0xf) != 0)) * 0x10
+          ;
+          bVar8 = bVar1 << 1;
+          if (!bVar1) goto LAB_8289ca14;
+        }
+        else {
+          trapWord(6,(ulonglong)uVar2,0);
+          bVar1 = (ulonglong)*(uint *)(iVar4 + 0x1838) ==
+                  (longlong)(int)(*(uint *)(iVar4 + 0x1838) / uVar2) * (longlong)(int)uVar2;
+          bVar8 = bVar1 << 1;
+          if (!bVar1) goto LAB_8289cb5c;
+        }
+        iVar5 = D3D__CRTResultsTracker__AutoSave(iVar4,0);
+        *(undefined4 *)(iVar4 + 0x1840) = 0;
+        break;
+      case 1:
+        iVar5 = D3D__CRTResultsTracker__ProcessThumbnailForHash(iVar4,local_40[0] + 1);
+        break;
+      case 2:
+        iVar5 = D3D__CRTResultsTracker__ProcessThumbnailForHash2(iVar4,local_40[0] + 1);
+        break;
+      case 3:
+        iVar5 = D3D__CRTResultsTracker__ProcessThumbnailForPix(iVar4,local_40[0] + 1);
+        break;
+      case 4:
+        iVar5 = D3D__CRTResultsTracker__ProcessThumbnailForChannelCheck(iVar4,local_40[0] + 1);
+        break;
+      case 5:
+        iVar5 = D3D__CRTResultsTracker__ProcessMipData(iVar4,local_40[0][2],local_40[0][1]);
+        break;
+      case 6:
+        iVar5 = D3D__CRTResultsTracker__ProcessResolveData(iVar4,local_40[0][1]);
+        break;
+      case 7:
+        iVar5 = D3D__CRTResultsTracker__ProcessUpdateIssue(iVar4,local_40[0][1]);
+        break;
+      case 8:
+        *(undefined4 *)(iVar4 + 0x1828) = 1;
+        *(undefined4 *)(iVar4 + 0x182c) = 1;
+        goto switchD_8289cacc_default;
+      case 9:
+        SetEvent(DAT_829a70b0);
+        goto LAB_8289ca14;
+      case 10:
+        iVar5 = D3D__CRTResultsTracker__ProcessScreenshot(iVar4,local_40[0] + 1,local_40[0][5]);
+        break;
+      case 0xb:
+        iVar5 = local_40[0][1];
+        uVar7 = *(undefined8 *)(local_40[0] + 10);
+        *(int *)(iVar5 + 0x7c) = (int)uVar7;
+        *(int *)(iVar5 + 0x78) = (int)((ulonglong)uVar7 >> 0x20);
+        *(uint *)(iVar5 + 8) = *(uint *)(iVar5 + 8) | 0x80000000;
+        goto LAB_8289ca14;
+      default:
+        goto switchD_8289cacc_default;
+      }
+      bVar8 = (iVar5 == 0) << 1;
+    } while (-1 < iVar5);
+switchD_8289cacc_default:
+    if (local_40[0] != (undefined4 *)0x0) {
+      if (DAT_84890370 == 0) {
+        XMemFree(local_40[0],0x24800000);
+      }
+      else {
+        DmDebugFree();
+      }
+    }
+LAB_8289cc8c:
+    sync(1);
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_829a7000 = storeWordConditionalIndexed((ulonglong)DAT_829a7000 - 1,0,0xffffffff829a7000)
+        ;
+        bVar8 = 2;
+      }
+    } while (!(bool)(bVar8 >> 1 & 1));
+    while( true ) {
+      if ((DAT_829a7000 & 0x80000000) == 0) {
+        uVar6 = 0;
+      }
+      else {
+        uVar6 = (-((ulonglong)DAT_829a7000 & 0x7fffffff) & ~((ulonglong)DAT_829a7000 & 0x7fffffff) &
+                0xffffffff) >> 0x1f;
+      }
+      if (uVar6 == 0) break;
+      Sleep(10);
+    }
+    D3D__CRTResultsTracker__FinishCapture(iVar4);
+    D3D__CRTResultsTracker__Destroy(iVar4);
+  }
+  __restgprlr_26();
+  return;
 }
 

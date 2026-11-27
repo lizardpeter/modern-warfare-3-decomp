@@ -6,7 +6,6 @@ longlong Ragdoll_HandleBody(longlong param_1)
 
 {
   if (0x1f < (param_1 - 1U & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219be98,0x1f,0,0xffffffff8219bee4,param_1 + -1,0x20);
   }
   return param_1 * 0x954 + -0x7bbca72c;
@@ -19,11 +18,9 @@ int Ragdoll_BodyBoneOrientations(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219be98,0x2a,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if (1 < *(uint *)(param_1 + 0x138)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219be98,0x2b,0,0xffffffff8219bf28,*(uint *)(param_1 + 0x138),2);
   }
   return *(int *)(param_1 + 0x138) * 0x2e0 + param_1 + 0x13c;
@@ -36,11 +33,9 @@ int Ragdoll_BodyPrevBoneOrientations(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219be98,0x32,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if (1 < *(uint *)(param_1 + 0x138)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219be98,0x33,0,0xffffffff8219bf28,*(uint *)(param_1 + 0x138),2);
   }
   return (*(uint *)(param_1 + 0x138) ^ 1) * 0x2e0 + param_1 + 0x13c;
@@ -49,10 +44,146 @@ int Ragdoll_BodyPrevBoneOrientations(int param_1)
 
 // 826A4470  Ragdoll_DoControllers  (ragdoll/ragdoll_controller.cpp:57)
 
-void Ragdoll_DoControllers(void)
+void Ragdoll_DoControllers(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte bVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  int iVar6;
+  char cVar9;
+  int iVar7;
+  float *pfVar8;
+  int iVar10;
+  byte *pbVar11;
+  float *pfVar12;
+  double dVar13;
+  double extraout_f1;
+  double extraout_f1_00;
+  double extraout_f1_01;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  
   __savegprlr_19();
+  iVar6 = __savefpr_26();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8219be98,0x45,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219be98,0x46,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((*(char *)(iVar6 + 4) != '\0') && ((*(int *)(iVar6 + 8) != 0 || (*(int *)(iVar6 + 0xc) != 0)))
+     ) {
+    iVar7 = *(int *)(iVar6 + 8);
+    if (*(int *)(iVar6 + 0xc) != 0) {
+      iVar7 = *(int *)(iVar6 + 0xc);
+    }
+    iVar6 = Ragdoll_HandleBody(iVar7);
+    if (iVar6 == 0) {
+      MyAssertHandler(0xffffffff8219be98,0x58,0,0xffffffff82000f98,0xffffffff82003cbc);
+    }
+    cVar9 = Ragdoll_BodyPoseValid(iVar6);
+    if ((cVar9 != '\0') && (iVar7 = DObjGetRotTransArray(param_2), iVar7 != 0)) {
+      dVar20 = (double)*(float *)(DAT_82a3d5f8 + 0x4c);
+      dVar19 = (double)*(float *)(DAT_82a3d5f8 + 0x50);
+      dVar18 = (double)*(float *)(DAT_82a3d5f8 + 0x54);
+      pfVar8 = (float *)Ragdoll_BodyBoneOrientations(iVar6);
+      dVar15 = 1.0;
+      dVar16 = 2.0;
+      dVar17 = 1e-06;
+      iVar10 = 0;
+      dVar14 = extraout_f1;
+      if (0 < *(int *)(iVar6 + 0x18)) {
+        pbVar11 = (byte *)(iVar6 + 0x820);
+        pfVar12 = pfVar8 + 6;
+        do {
+          bVar1 = *pbVar11;
+          cVar9 = DObjSetSkelRotTransIndex(dVar14,param_2,param_3,bVar1);
+          dVar14 = extraout_f1_00;
+          if (cVar9 != '\0') {
+            pfVar5 = (float *)((uint)bVar1 * 0x20 + iVar7);
+            pfVar5[4] = (float)((double)*pfVar8 - dVar20);
+            pfVar5[5] = (float)((double)pfVar12[-5] - dVar19);
+            pfVar5[6] = (float)((double)pfVar12[-4] - dVar18);
+            fVar2 = pfVar12[-2];
+            *pfVar5 = fVar2;
+            fVar3 = pfVar12[-1];
+            pfVar5[1] = fVar3;
+            dVar14 = (double)*pfVar12;
+            pfVar5[2] = *pfVar12;
+            fVar4 = pfVar12[1];
+            pfVar5[3] = fVar4;
+            dVar13 = (double)(fVar4 * fVar4 +
+                             (float)(dVar14 * dVar14 + (double)(fVar2 * fVar2 + fVar3 * fVar3)));
+            if (dVar13 <= dVar17) {
+              pfVar5[3] = (float)dVar15;
+              pfVar5[7] = (float)dVar16;
+            }
+            else {
+              pfVar5[7] = (float)(dVar16 / dVar13);
+            }
+            if (((uint)pfVar5[7] & 0x7f800000) == 0x7f800000) {
+              dVar14 = (double)MyAssertHandler(0xffffffff8219be48,0x2fa,0,0xffffffff82000f98,
+                                               0xffffffff820159d4);
+            }
+          }
+          iVar10 = iVar10 + 1;
+          pbVar11 = pbVar11 + 0x10;
+          pfVar8 = pfVar8 + 8;
+          pfVar12 = pfVar12 + 8;
+        } while (iVar10 < *(int *)(iVar6 + 0x18));
+      }
+      iVar10 = 0;
+      if (0 < *(int *)(iVar6 + 0x1c)) {
+        pbVar11 = (byte *)(iVar6 + 0x900);
+        pfVar8 = pfVar8 + 6;
+        do {
+          bVar1 = *pbVar11;
+          cVar9 = DObjSetSkelRotTransIndex(dVar14,param_2,param_3,bVar1);
+          dVar14 = extraout_f1_01;
+          if (cVar9 != '\0') {
+            pfVar12 = (float *)((uint)bVar1 * 0x20 + iVar7);
+            pfVar12[4] = (float)((double)pfVar8[-6] - dVar20);
+            pfVar12[5] = (float)((double)pfVar8[-5] - dVar19);
+            pfVar12[6] = (float)((double)pfVar8[-4] - dVar18);
+            fVar2 = pfVar8[-2];
+            *pfVar12 = fVar2;
+            fVar3 = pfVar8[-1];
+            pfVar12[1] = fVar3;
+            dVar14 = (double)*pfVar8;
+            pfVar12[2] = *pfVar8;
+            fVar4 = pfVar8[1];
+            dVar13 = (double)(fVar4 * fVar4 +
+                             (float)(dVar14 * dVar14 + (double)(fVar2 * fVar2 + fVar3 * fVar3)));
+            pfVar12[3] = fVar4;
+            if (dVar13 <= dVar17) {
+              pfVar12[3] = (float)dVar15;
+              pfVar12[7] = (float)dVar16;
+            }
+            else {
+              pfVar12[7] = (float)(dVar16 / dVar13);
+            }
+            if (((uint)pfVar12[7] & 0x7f800000) == 0x7f800000) {
+              dVar14 = (double)MyAssertHandler(0xffffffff8219be48,0x2fa,0,0xffffffff82000f98,
+                                               0xffffffff820159d4);
+            }
+          }
+          iVar10 = iVar10 + 1;
+          pbVar11 = pbVar11 + 8;
+          pfVar8 = pfVar8 + 8;
+        } while (iVar10 < *(int *)(iVar6 + 0x1c));
+      }
+    }
+  }
+  __restfpr_26();
+  __restgprlr_19();
+  return;
 }
 

@@ -18,21 +18,126 @@ undefined8 sha1_init(undefined8 *param_1)
 
 // 82254170  sha1_process  (line unknown)
 
-void sha1_process(void)
+void sha1_process(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  longlong *plVar3;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar5;
+  
+  plVar3 = (longlong *)__savegprlr_27();
+  if (0x40 < *(uint *)((int)plVar3 + 0x1c)) {
+    __restgprlr_27(0x10);
+    return;
+  }
+joined_r0x822541a4:
+  if ((param_3 & 0xffffffff) == 0) {
+    uVar2 = 0;
+  }
+  else {
+    uVar1 = *(uint *)((int)plVar3 + 0x1c);
+    if (((ulonglong)uVar1 != 0) || ((param_3 & 0xffffffff) < 0x40)) goto LAB_822541e0;
+    uVar2 = sha1_compress(plVar3,param_2);
+    if ((int)uVar2 == 0) {
+      param_2 = param_2 + 0x40;
+      param_3 = param_3 - 0x40;
+      goto LAB_82254238;
+    }
+  }
+  goto LAB_82254250;
+LAB_822541e0:
+  uVar5 = 0x40 - (ulonglong)uVar1;
+  if ((param_3 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+    uVar5 = param_3;
+  }
+  memcpy((void *)((int)plVar3 + uVar1 + 0x20),(void *)param_2,(size_t)uVar5);
+  param_2 = uVar5 + param_2;
+  iVar4 = (size_t)uVar5 + *(int *)((int)plVar3 + 0x1c);
+  param_3 = param_3 - uVar5;
+  *(int *)((int)plVar3 + 0x1c) = iVar4;
+  if (iVar4 == 0x40) {
+    uVar2 = sha1_compress(plVar3,plVar3 + 4);
+    if ((int)uVar2 != 0) {
+LAB_82254250:
+      __restgprlr_27(uVar2);
+      return;
+    }
+    *(undefined4 *)((int)plVar3 + 0x1c) = 0;
+LAB_82254238:
+    *plVar3 = *plVar3 + 0x200;
+  }
+  goto joined_r0x822541a4;
 }
 
 
 // 82254258  sha1_done  (line unknown)
 
-void sha1_done(void)
+void sha1_done(undefined8 param_1,undefined1 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  longlong *plVar2;
+  uint uVar3;
+  
+  plVar2 = (longlong *)__savegprlr_29();
+  uVar3 = *(uint *)((int)plVar2 + 0x1c);
+  if (0x3f < uVar3) {
+    __restgprlr_29(0x10);
+    return;
+  }
+  *plVar2 = ((ulonglong)uVar3 & 0x1fffffff) * 8 + *plVar2;
+  ((undefined1 *)(uVar3 + (int)plVar2))[0x20] = 0x80;
+  uVar3 = *(int *)((int)plVar2 + 0x1c) + 1;
+  *(uint *)((int)plVar2 + 0x1c) = uVar3;
+  if (0x38 < uVar3) {
+    while (uVar3 < 0x40) {
+      ((undefined1 *)((int)plVar2 + *(int *)((int)plVar2 + 0x1c)))[0x20] = 0;
+      iVar1 = *(int *)((int)plVar2 + 0x1c);
+      *(int *)((int)plVar2 + 0x1c) = iVar1 + 1;
+      uVar3 = iVar1 + 1;
+    }
+    sha1_compress(plVar2,plVar2 + 4);
+    *(undefined4 *)((int)plVar2 + 0x1c) = 0;
+  }
+  uVar3 = *(uint *)((int)plVar2 + 0x1c);
+  while (uVar3 < 0x38) {
+    ((undefined1 *)((int)plVar2 + *(int *)((int)plVar2 + 0x1c)))[0x20] = 0;
+    uVar3 = *(int *)((int)plVar2 + 0x1c) + 1;
+    *(uint *)((int)plVar2 + 0x1c) = uVar3;
+  }
+  *(undefined1 *)(plVar2 + 0xb) = *(undefined1 *)plVar2;
+  *(undefined1 *)((int)plVar2 + 0x59) = *(undefined1 *)((int)plVar2 + 1);
+  *(undefined1 *)((int)plVar2 + 0x5a) = *(undefined1 *)((int)plVar2 + 2);
+  *(undefined1 *)((int)plVar2 + 0x5b) = *(undefined1 *)((int)plVar2 + 3);
+  *(undefined1 *)((int)plVar2 + 0x5c) = *(undefined1 *)((int)plVar2 + 4);
+  *(undefined1 *)((int)plVar2 + 0x5d) = *(undefined1 *)((int)plVar2 + 5);
+  *(undefined1 *)((int)plVar2 + 0x5e) = *(undefined1 *)((int)plVar2 + 6);
+  *(char *)((int)plVar2 + 0x5f) = (char)*plVar2;
+  sha1_compress(plVar2,plVar2 + 4);
+  *param_2 = *(undefined1 *)(plVar2 + 1);
+  param_2[1] = *(undefined1 *)((int)plVar2 + 9);
+  param_2[2] = *(undefined1 *)((int)plVar2 + 10);
+  param_2[3] = (char)*(undefined4 *)(plVar2 + 1);
+  param_2[4] = *(undefined1 *)((int)plVar2 + 0xc);
+  param_2[5] = *(undefined1 *)((int)plVar2 + 0xd);
+  param_2[6] = *(undefined1 *)((int)plVar2 + 0xe);
+  param_2[7] = (char)*(undefined4 *)((int)plVar2 + 0xc);
+  param_2[8] = *(undefined1 *)(plVar2 + 2);
+  param_2[9] = *(undefined1 *)((int)plVar2 + 0x11);
+  param_2[10] = *(undefined1 *)((int)plVar2 + 0x12);
+  param_2[0xb] = (char)*(undefined4 *)(plVar2 + 2);
+  param_2[0xc] = *(undefined1 *)((int)plVar2 + 0x14);
+  param_2[0xd] = *(undefined1 *)((int)plVar2 + 0x15);
+  param_2[0xe] = *(undefined1 *)((int)plVar2 + 0x16);
+  param_2[0xf] = (char)*(undefined4 *)((int)plVar2 + 0x14);
+  param_2[0x10] = *(undefined1 *)(plVar2 + 3);
+  param_2[0x11] = *(undefined1 *)((int)plVar2 + 0x19);
+  param_2[0x12] = *(undefined1 *)((int)plVar2 + 0x1a);
+  param_2[0x13] = (char)*(undefined4 *)(plVar2 + 3);
+  __restgprlr_29(0);
+  return;
 }
 
 

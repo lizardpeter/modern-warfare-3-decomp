@@ -3,3 +3,120 @@
 ; 82924DF8  _filbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_filbuf.c:100)
   82924DF8  7D8802A6             mfspr r12,LR
   82924DFC  4BFF18C1             bl 0x829166bc
+  82924E00  9421FF90             stwu r1,-0x70(r1)
+  82924E04  7C7F1B78             or r31,r3,r3
+  82924E08  2B030000             cmplwi cr6,r3,0x0
+  82924E0C  409A0018             bne cr6,0x82924e24
+  82924E10  4BFFAF71             bl 0x8291fd80
+  82924E14  39600016             li r11,0x16
+  82924E18  91630000             stw r11,0x0(r3)
+  82924E1C  4BFFADF5             bl 0x8291fc10
+  82924E20  48000178             b 0x82924f98
+LAB_82924e24:
+  82924E24  817F000C             lwz r11,0xc(r31)
+  82924E28  716A0083             andi. r10,r11,0x83
+  82924E2C  2C0A0000             cmpwi r10,0x0
+  82924E30  41820168             beq 0x82924f98
+  82924E34  556A0673             rlwinm. r10,r11,0x0,0x19,0x19
+  82924E38  40820160             bne 0x82924f98
+  82924E3C  556A07BD             rlwinm. r10,r11,0x0,0x1e,0x1e
+  82924E40  4182000C             beq 0x82924e4c
+  82924E44  616B0020             ori r11,r11,0x20
+  82924E48  4800014C             b 0x82924f94
+LAB_82924e4c:
+  82924E4C  616B0001             ori r11,r11,0x1
+  82924E50  716A010C             andi. r10,r11,0x10c
+  82924E54  917F000C             stw r11,0xc(r31)
+  82924E58  2C0A0000             cmpwi r10,0x0
+  82924E5C  40820010             bne 0x82924e6c
+  82924E60  7FE3FB78             or r3,r31,r31
+  82924E64  48003385             bl 0x829281e8
+  82924E68  4800000C             b 0x82924e74
+LAB_82924e6c:
+  82924E6C  817F0008             lwz r11,0x8(r31)
+  82924E70  917F0000             stw r11,0x0(r31)
+LAB_82924e74:
+  82924E74  7FE3FB78             or r3,r31,r31
+  82924E78  83DF0008             lwz r30,0x8(r31)
+  82924E7C  83BF0018             lwz r29,0x18(r31)
+  82924E80  4BFFD4C9             bl 0x82922348
+  82924E84  7FC4F378             or r4,r30,r30
+  82924E88  7FA5EB78             or r5,r29,r29
+  82924E8C  4800073D             bl 0x829255c8
+  82924E90  2C030000             cmpwi r3,0x0
+  82924E94  907F0004             stw r3,0x4(r31)
+  82924E98  418200DC             beq 0x82924f74
+  82924E9C  2F03FFFF             cmpwi cr6,r3,-0x1
+  82924EA0  419A00D4             beq cr6,0x82924f74
+  82924EA4  817F000C             lwz r11,0xc(r31)
+  82924EA8  716B0082             andi. r11,r11,0x82
+  82924EAC  2C0B0000             cmpwi r11,0x0
+  82924EB0  4082007C             bne 0x82924f2c
+  82924EB4  7FE3FB78             or r3,r31,r31
+  82924EB8  4BFFD491             bl 0x82922348
+  82924EBC  2F03FFFF             cmpwi cr6,r3,-0x1
+  82924EC0  419A0048             beq cr6,0x82924f08
+  82924EC4  7FE3FB78             or r3,r31,r31
+  82924EC8  4BFFD481             bl 0x82922348
+  82924ECC  2F03FFFE             cmpwi cr6,r3,-0x2
+  82924ED0  419A0038             beq cr6,0x82924f08
+  82924ED4  7FE3FB78             or r3,r31,r31
+  82924ED8  4BFFD471             bl 0x82922348
+  82924EDC  7C6B2E70             srawi r11,r3,0x5
+  82924EE0  3D408489             lis r10,-0x7b77
+  82924EE4  7FE3FB78             or r3,r31,r31
+  82924EE8  557D103A             rlwinm r29,r11,0x2,0x0,0x1d
+  82924EEC  3BCA7DC0             addi r30,r10,0x7dc0
+  82924EF0  4BFFD459             bl 0x82922348
+  82924EF4  546A06FE             rlwinm r10,r3,0x0,0x1b,0x1f
+  82924EF8  7D7DF02E             lwzx r11,r29,r30
+  82924EFC  1D4A0048             mulli r10,r10,0x48
+  82924F00  7D6A5A14             add r11,r10,r11
+  82924F04  4800000C             b 0x82924f10
+LAB_82924f08:
+  82924F08  3D60829B             lis r11,-0x7d65
+  82924F0C  396B0A68             addi r11,r11,0xa68
+LAB_82924f10:
+  82924F10  896B0004             lbz r11,0x4(r11)
+  82924F14  716B0082             andi. r11,r11,0x82
+  82924F18  2B0B0082             cmplwi cr6,r11,0x82
+  82924F1C  409A0010             bne cr6,0x82924f2c
+  82924F20  817F000C             lwz r11,0xc(r31)
+  82924F24  616B2000             ori r11,r11,0x2000
+  82924F28  917F000C             stw r11,0xc(r31)
+LAB_82924f2c:
+  82924F2C  817F0018             lwz r11,0x18(r31)
+  82924F30  2F0B0200             cmpwi cr6,r11,0x200
+  82924F34  409A0020             bne cr6,0x82924f54
+  82924F38  817F000C             lwz r11,0xc(r31)
+  82924F3C  556A0739             rlwinm. r10,r11,0x0,0x1c,0x1c
+  82924F40  41820014             beq 0x82924f54
+  82924F44  556B056B             rlwinm. r11,r11,0x0,0x15,0x15
+  82924F48  4082000C             bne 0x82924f54
+  82924F4C  39601000             li r11,0x1000
+  82924F50  917F0018             stw r11,0x18(r31)
+LAB_82924f54:
+  82924F54  815F0004             lwz r10,0x4(r31)
+  82924F58  817F0000             lwz r11,0x0(r31)
+  82924F5C  394AFFFF             subi r10,r10,0x1
+  82924F60  392B0001             addi r9,r11,0x1
+  82924F64  915F0004             stw r10,0x4(r31)
+  82924F68  886B0000             lbz r3,0x0(r11)
+  82924F6C  913F0000             stw r9,0x0(r31)
+  82924F70  4800002C             b 0x82924f9c
+LAB_82924f74:
+  82924F74  21630000             subfic r11,r3,0x0
+  82924F78  815F000C             lwz r10,0xc(r31)
+  82924F7C  39200000             li r9,0x0
+  82924F80  7D6B5910             subfe r11,r11,r11
+  82924F84  913F0004             stw r9,0x4(r31)
+  82924F88  556B06F6             rlwinm r11,r11,0x0,0x1b,0x1b
+  82924F8C  396B0010             addi r11,r11,0x10
+  82924F90  7D6B5378             or r11,r11,r10
+LAB_82924f94:
+  82924F94  917F000C             stw r11,0xc(r31)
+LAB_82924f98:
+  82924F98  3860FFFF             li r3,-0x1
+LAB_82924f9c:
+  82924F9C  38210070             addi r1,r1,0x70
+  82924FA0  4BFF176C             b 0x8291670c

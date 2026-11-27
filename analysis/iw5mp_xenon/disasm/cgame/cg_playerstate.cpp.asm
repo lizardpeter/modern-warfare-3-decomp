@@ -39,6 +39,7 @@ LAB_822ef6f0:
   822EF730  38A00000             li r5,0x0
   822EF734  3880002E             li r4,0x2e
   822EF738  482E4DC9             bl 0x825d4500
+  822EF73C  817FD47C             lwz r11,-0x2b84(r31)
 LAB_822ef740:
   822EF740  3D4082A4             lis r10,-0x7d5c
   822EF744  812B000C             lwz r9,0xc(r11)
@@ -62,6 +63,42 @@ LAB_822ef77c:
   822EF788  EBC1FFE8             ld r30,-0x18(r1)
   822EF78C  EBE1FFF0             ld r31,-0x10(r1)
   822EF790  4E800020             blr
+
+; 822EF798  CG_PainVisionStopSound  (cgame/cg_playerstate.cpp:54)
+  822EF798  7D8802A6             mfspr r12,LR
+  822EF79C  9181FFF8             stw r12,-0x8(r1)
+  822EF7A0  FBE1FFF0             std r31,-0x10(r1)
+  822EF7A4  9421FFA0             stwu r1,-0x60(r1)
+  822EF7A8  7C7F1B78             or r31,r3,r3
+  822EF7AC  2B030000             cmplwi cr6,r3,0x0
+  822EF7B0  409A0028             bne cr6,0x822ef7d8
+  822EF7B4  3D608200             lis r11,-0x7e00
+  822EF7B8  3D408200             lis r10,-0x7e00
+  822EF7BC  3D208202             lis r9,-0x7dfe
+  822EF7C0  38EB2798             addi r7,r11,0x2798
+  822EF7C4  38CA0F98             addi r6,r10,0xf98
+  822EF7C8  386914C0             addi r3,r9,0x14c0
+  822EF7CC  38A00000             li r5,0x0
+  822EF7D0  38800037             li r4,0x37
+  822EF7D4  482E4D2D             bl 0x825d4500
+LAB_822ef7d8:
+  822EF7D8  3D7F0008             addis r11,r31,0x8
+  822EF7DC  396B9860             subi r11,r11,0x67a0
+  822EF7E0  894B0000             lbz r10,0x0(r11)
+  822EF7E4  2B0A0000             cmplwi cr6,r10,0x0
+  822EF7E8  419A001C             beq cr6,0x822ef804
+  822EF7EC  39400000             li r10,0x0
+  822EF7F0  388007D0             li r4,0x7d0
+  822EF7F4  994B0000             stb r10,0x0(r11)
+  822EF7F8  38600004             li r3,0x4
+  822EF7FC  48560215             bl 0x8284fa10
+  822EF800  48568609             bl 0x82857e08
+LAB_822ef804:
+  822EF804  38210060             addi r1,r1,0x60
+  822EF808  8181FFF8             lwz r12,-0x8(r1)
+  822EF80C  7D8803A6             mtspr LR,r12
+  822EF810  EBE1FFF0             ld r31,-0x10(r1)
+  822EF814  4E800020             blr
 
 ; 822EF818  CG_PainVisionEnable  (cgame/cg_playerstate.cpp:72)
   822EF818  7D8802A6             mfspr r12,LR
@@ -93,17 +130,624 @@ LAB_822ef858:
   822EF87C  EBE1FFF0             ld r31,-0x10(r1)
   822EF880  4E800020             blr
 
+; 822EF888  CG_PainVisionDisable  (cgame/cg_playerstate.cpp:84)
+  822EF888  7D8802A6             mfspr r12,LR
+  822EF88C  9181FFF8             stw r12,-0x8(r1)
+  822EF890  FBE1FFF0             std r31,-0x10(r1)
+  822EF894  9421FFA0             stwu r1,-0x60(r1)
+  822EF898  7C7F1B78             or r31,r3,r3
+  822EF89C  2B030000             cmplwi cr6,r3,0x0
+  822EF8A0  409A0028             bne cr6,0x822ef8c8
+  822EF8A4  3D608200             lis r11,-0x7e00
+  822EF8A8  3D408200             lis r10,-0x7e00
+  822EF8AC  3D208202             lis r9,-0x7dfe
+  822EF8B0  38EB2798             addi r7,r11,0x2798
+  822EF8B4  38CA0F98             addi r6,r10,0xf98
+  822EF8B8  386914C0             addi r3,r9,0x14c0
+  822EF8BC  38A00000             li r5,0x0
+  822EF8C0  38800055             li r4,0x55
+  822EF8C4  482E4C3D             bl 0x825d4500
+LAB_822ef8c8:
+  822EF8C8  7FE3FB78             or r3,r31,r31
+  822EF8CC  4BFFFECD             bl 0x822ef798
+  822EF8D0  3D600010             lis r11,0x10
+  822EF8D4  3D400010             lis r10,0x10
+  822EF8D8  3D208200             lis r9,-0x7e00
+  822EF8DC  6168803A             ori r8,r11,0x803a
+  822EF8E0  6147803C             ori r7,r10,0x803c
+  822EF8E4  38C00000             li r6,0x0
+  822EF8E8  C00913F8             lfs f0,0x13f8(r9)
+  822EF8EC  7CDF41AE             stbx r6,r31,r8
+  822EF8F0  7C1F3D2E             stfsx f0,r31,r7
+  822EF8F4  38210060             addi r1,r1,0x60
+  822EF8F8  8181FFF8             lwz r12,-0x8(r1)
+  822EF8FC  7D8803A6             mtspr LR,r12
+  822EF900  EBE1FFF0             ld r31,-0x10(r1)
+  822EF904  4E800020             blr
+
 ; 822EF908  CG_PainVisionUpdate  (cgame/cg_playerstate.cpp:148)
   822EF908  7D8802A6             mfspr r12,LR
   822EF90C  48626DA9             bl 0x829166b4
+  822EF910  3981FFD0             subi r12,r1,0x30
+  822EF914  48626E85             bl 0x82916798
+  822EF918  9421FF50             stwu r1,-0xb0(r1)
+  822EF91C  3D608202             lis r11,-0x7dfe
+  822EF920  3D408200             lis r10,-0x7e00
+  822EF924  7C7B1B78             or r27,r3,r3
+  822EF928  7C9C2378             or r28,r4,r4
+  822EF92C  7CBD2B78             or r29,r5,r5
+  822EF930  2B040000             cmplwi cr6,r4,0x0
+  822EF934  3BEB14C0             addi r31,r11,0x14c0
+  822EF938  3BCA0F98             addi r30,r10,0xf98
+  822EF93C  409A0020             bne cr6,0x822ef95c
+  822EF940  3D608200             lis r11,-0x7e00
+  822EF944  7FC6F378             or r6,r30,r30
+  822EF948  38EB1FDC             addi r7,r11,0x1fdc
+  822EF94C  7FE3FB78             or r3,r31,r31
+  822EF950  38A00000             li r5,0x0
+  822EF954  3880009C             li r4,0x9c
+  822EF958  482E4BA9             bl 0x825d4500
+LAB_822ef95c:
+  822EF95C  2B1D0000             cmplwi cr6,r29,0x0
+  822EF960  409A0020             bne cr6,0x822ef980
+  822EF964  3D608202             lis r11,-0x7dfe
+  822EF968  7FC6F378             or r6,r30,r30
+  822EF96C  38EB1504             addi r7,r11,0x1504
+  822EF970  7FE3FB78             or r3,r31,r31
+  822EF974  38A00000             li r5,0x0
+  822EF978  3880009D             li r4,0x9d
+  822EF97C  482E4B85             bl 0x825d4500
+LAB_822ef980:
+  822EF980  7F63DB78             or r3,r27,r27
+  822EF984  4BF7177D             bl 0x82261100
+  822EF988  3D600006             lis r11,0x6
+  822EF98C  7C7E1B78             or r30,r3,r3
+  822EF990  616AB988             ori r10,r11,0xb988
+  822EF994  3D208200             lis r9,-0x7e00
+  822EF998  7F83E378             or r3,r28,r28
+  822EF99C  7D1E502E             lwzx r8,r30,r10
+  822EF9A0  C00927A4             lfs f0,0x27a4(r9)
+  822EF9A4  7D0707B4             extsw r7,r8
+  822EF9A8  F8E10050             std r7,0x50(r1)
+  822EF9AC  C9A10050             lfd f13,0x50(r1)
+  822EF9B0  FD806E9C             fcfid f12,f13
+  822EF9B4  FD606018             frsp f11,f12
+  822EF9B8  EFAB0032             fmuls f29,f11,f0
+  822EF9BC  4BFF7A25             bl 0x822e73e0
+  822EF9C0  3CC08200             lis r6,-0x7e00
+  822EF9C4  FFE00890             fmr f31,f1
+  822EF9C8  C38613F8             lfs f28,0x13f8(r6)
+  822EF9CC  FF01E000             fcmpu cr6,f1,f28
+  822EF9D0  419A0014             beq cr6,0x822ef9e4
+  822EF9D4  817C0004             lwz r11,0x4(r28)
+  822EF9D8  2F0B0005             cmpwi cr6,r11,0x5
+  822EF9DC  39600000             li r11,0x0
+  822EF9E0  409A0008             bne cr6,0x822ef9e8
+LAB_822ef9e4:
+  822EF9E4  39600001             li r11,0x1
+LAB_822ef9e8:
+  822EF9E8  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  822EF9EC  2B0B0000             cmplwi cr6,r11,0x0
+  822EF9F0  409A0030             bne cr6,0x822efa20
+  822EF9F4  817C0010             lwz r11,0x10(r28)
+  822EF9F8  556A0528             rlwinm r10,r11,0x0,0x14,0x14
+  822EF9FC  2F0A0000             cmpwi cr6,r10,0x0
+  822EFA00  419A0018             beq cr6,0x822efa18
+  822EFA04  3D600006             lis r11,0x6
+  822EFA08  616AB9A0             ori r10,r11,0xb9a0
+  822EFA0C  7D3E502E             lwzx r9,r30,r10
+  822EFA10  2F090000             cmpwi cr6,r9,0x0
+  822EFA14  409A000C             bne cr6,0x822efa20
+LAB_822efa18:
+  822EFA18  39600000             li r11,0x0
+  822EFA1C  48000008             b 0x822efa24
+LAB_822efa20:
+  822EFA20  39600001             li r11,0x1
+LAB_822efa24:
+  822EFA24  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  822EFA28  2B0B0000             cmplwi cr6,r11,0x0
+  822EFA2C  409A0028             bne cr6,0x822efa54
+  822EFA30  817C0010             lwz r11,0x10(r28)
+  822EFA34  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  822EFA38  2F0A0000             cmpwi cr6,r10,0x0
+  822EFA3C  409A0018             bne cr6,0x822efa54
+  822EFA40  817C0014             lwz r11,0x14(r28)
+  822EFA44  556A077A             rlwinm r10,r11,0x0,0x1d,0x1d
+  822EFA48  39600000             li r11,0x0
+  822EFA4C  2F0A0000             cmpwi cr6,r10,0x0
+  822EFA50  419A0008             beq cr6,0x822efa58
+LAB_822efa54:
+  822EFA54  39600001             li r11,0x1
+LAB_822efa58:
+  822EFA58  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  822EFA5C  2B0B0000             cmplwi cr6,r11,0x0
+  822EFA60  409A0014             bne cr6,0x822efa74
+  822EFA64  817C00AC             lwz r11,0xac(r28)
+  822EFA68  2F0B07FF             cmpwi cr6,r11,0x7ff
+  822EFA6C  39600000             li r11,0x0
+  822EFA70  419A0008             beq cr6,0x822efa78
+LAB_822efa74:
+  822EFA74  39600001             li r11,0x1
+LAB_822efa78:
+  822EFA78  7F63DB78             or r3,r27,r27
+  822EFA7C  557F063E             rlwinm r31,r11,0x0,0x18,0x1f
+  822EFA80  4801FD31             bl 0x8230f7b0
+  822EFA84  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  822EFA88  2B0B0000             cmplwi cr6,r11,0x0
+  822EFA8C  419A0008             beq cr6,0x822efa94
+  822EFA90  3BE00001             li r31,0x1
+LAB_822efa94:
+  822EFA94  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  822EFA98  2B0B0000             cmplwi cr6,r11,0x0
+  822EFA9C  409A00D4             bne cr6,0x822efb70
+  822EFAA0  3FFE0011             addis r31,r30,0x11
+  822EFAA4  3D608200             lis r11,-0x7e00
+  822EFAA8  3BFF803A             subi r31,r31,0x7fc6
+  822EFAAC  C3CB0F10             lfs f30,0xf10(r11)
+  822EFAB0  895F0000             lbz r10,0x0(r31)
+  822EFAB4  2B0A0000             cmplwi cr6,r10,0x0
+  822EFAB8  419A0018             beq cr6,0x822efad0
+  822EFABC  FF1FF000             fcmpu cr6,f31,f30
+  822EFAC0  39600000             li r11,0x0
+  822EFAC4  419A0028             beq cr6,0x822efaec
+  822EFAC8  39600001             li r11,0x1
+  822EFACC  48000020             b 0x822efaec
+LAB_822efad0:
+  822EFAD0  3D6082A4             lis r11,-0x7d5c
+  822EFAD4  816B82B4             lwz r11,-0x7d4c(r11)
+  822EFAD8  C00B000C             lfs f0,0xc(r11)
+  822EFADC  39600001             li r11,0x1
+  822EFAE0  FF1F0000             fcmpu cr6,f31,f0
+  822EFAE4  40990008             ble cr6,0x822efaec
+  822EFAE8  39600000             li r11,0x0
+LAB_822efaec:
+  822EFAEC  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  822EFAF0  7FC3F378             or r3,r30,r30
+  822EFAF4  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  822EFAF8  2B0B0000             cmplwi cr6,r11,0x0
+  822EFAFC  419A000C             beq cr6,0x822efb08
+  822EFB00  4BFFFD19             bl 0x822ef818
+  822EFB04  48000008             b 0x822efb0c
+LAB_822efb08:
+  822EFB08  4BFFFC91             bl 0x822ef798
+LAB_822efb0c:
+  822EFB0C  897F0000             lbz r11,0x0(r31)
+  822EFB10  2B0B0000             cmplwi cr6,r11,0x0
+  822EFB14  419A0064             beq cr6,0x822efb78
+  822EFB18  ED9EF828             fsubs f12,f30,f31
+  822EFB1C  3D7E0011             addis r11,r30,0x11
+  822EFB20  396B803C             subi r11,r11,0x7fc4
+  822EFB24  C00B0000             lfs f0,0x0(r11)
+  822EFB28  FF006000             fcmpu cr6,f0,f12
+  822EFB2C  40990028             ble cr6,0x822efb54
+  822EFB30  3D4082A3             lis r10,-0x7d5d
+  822EFB34  814AF800             lwz r10,-0x800(r10)
+  822EFB38  C1AA000C             lfs f13,0xc(r10)
+  822EFB3C  FF0DE000             fcmpu cr6,f13,f28
+  822EFB40  419A0010             beq cr6,0x822efb50
+  822EFB44  EC0D077C             fnmsubs f0,f13,f29,f0
+  822EFB48  D00B0000             stfs f0,0x0(r11)
+  822EFB4C  48000008             b 0x822efb54
+LAB_822efb50:
+  822EFB50  D18B0000             stfs f12,0x0(r11)
+LAB_822efb54:
+  822EFB54  C00B0000             lfs f0,0x0(r11)
+  822EFB58  FF006000             fcmpu cr6,f0,f12
+  822EFB5C  40980008             bge cr6,0x822efb64
+  822EFB60  D18B0000             stfs f12,0x0(r11)
+LAB_822efb64:
+  822EFB64  C00B0000             lfs f0,0x0(r11)
+  822EFB68  FF00E000             fcmpu cr6,f0,f28
+  822EFB6C  4199000C             bgt cr6,0x822efb78
+LAB_822efb70:
+  822EFB70  7FC3F378             or r3,r30,r30
+  822EFB74  4BFFFD15             bl 0x822ef888
+LAB_822efb78:
+  822EFB78  382100B0             addi r1,r1,0xb0
+  822EFB7C  3981FFD0             subi r12,r1,0x30
+  822EFB80  48626C65             bl 0x829167e4
+  822EFB84  48626B80             b 0x82916704
+
+; 822EFB88  CG_FindLruDamageSlot  (cgame/cg_playerstate.cpp:215)
+  822EFB88  38E0000B             li r7,0xb
+  822EFB8C  3D600007             lis r11,0x7
+  822EFB90  39000000             li r8,0x0
+  822EFB94  61699424             ori r9,r11,0x9424
+  822EFB98  38C00000             li r6,0x0
+  822EFB9C  7CE903A6             mtspr CTR,r7
+  822EFBA0  7CA34A14             add r5,r3,r9
+  822EFBA4  39400001             li r10,0x1
+  822EFBA8  39600044             li r11,0x44
+  822EFBAC  7CE81A14             add r7,r8,r3
+LAB_822efbb0:
+  822EFBB0  7C85582E             lwzx r4,r5,r11
+  822EFBB4  7CE7482E             lwzx r7,r7,r9
+  822EFBB8  7F043800             cmpw cr6,r4,r7
+  822EFBBC  4098000C             bge cr6,0x822efbc8
+  822EFBC0  7D465378             or r6,r10,r10
+  822EFBC4  7D685B78             or r8,r11,r11
+LAB_822efbc8:
+  822EFBC8  394A0001             addi r10,r10,0x1
+  822EFBCC  396B0044             addi r11,r11,0x44
+  822EFBD0  7CE81A14             add r7,r8,r3
+  822EFBD4  4200FFDC             bdnz 0x822efbb0
+  822EFBD8  1D660044             mulli r11,r6,0x44
+  822EFBDC  7D6B1A14             add r11,r11,r3
+  822EFBE0  7C6B4A14             add r3,r11,r9
+  822EFBE4  4E800020             blr
 
 ; 822EFBE8  CG_DamageFeedback  (cgame/cg_playerstate.cpp:231)
   822EFBE8  7D8802A6             mfspr r12,LR
   822EFBEC  48626AC5             bl 0x829166b0
+  822EFBF0  DBC1FFB8             stfd f30,-0x48(r1)
+  822EFBF4  DBE1FFC0             stfd f31,-0x40(r1)
+  822EFBF8  9421FF30             stwu r1,-0xd0(r1)
+  822EFBFC  7C7A1B78             or r26,r3,r3
+  822EFC00  7C9E2378             or r30,r4,r4
+  822EFC04  7CBC2B78             or r28,r5,r5
+  822EFC08  7CDD3378             or r29,r6,r6
+  822EFC0C  7CFB3B78             or r27,r7,r7
+  822EFC10  4BF714F1             bl 0x82261100
+  822EFC14  3D608200             lis r11,-0x7e00
+  822EFC18  C0230560             lfs f1,0x560(r3)
+  822EFC1C  7C7F1B78             or r31,r3,r3
+  822EFC20  C3CB13F8             lfs f30,0x13f8(r11)
+  822EFC24  FF01F000             fcmpu cr6,f1,f30
+  822EFC28  40980038             bge cr6,0x822efc60
+  822EFC2C  3D608200             lis r11,-0x7e00
+  822EFC30  D8210030             stfd f1,0x30(r1)
+  822EFC34  E8E10030             ld r7,0x30(r1)
+  822EFC38  3D408202             lis r10,-0x7dfe
+  822EFC3C  3D208202             lis r9,-0x7dfe
+  822EFC40  38CA150C             addi r6,r10,0x150c
+  822EFC44  386914C0             addi r3,r9,0x14c0
+  822EFC48  C84B2098             lfd f2,0x2098(r11)
+  822EFC4C  38A00000             li r5,0x0
+  822EFC50  D8410038             stfd f2,0x38(r1)
+  822EFC54  E9010038             ld r8,0x38(r1)
+  822EFC58  388000F6             li r4,0xf6
+  822EFC5C  482E48A5             bl 0x825d4500
+LAB_822efc60:
+  822EFC60  7FAB07B4             extsw r11,r29
+  822EFC64  3D40829C             lis r10,-0x7d64
+  822EFC68  F9610050             std r11,0x50(r1)
+  822EFC6C  C8010050             lfd f0,0x50(r1)
+  822EFC70  FDA0069C             fcfid f13,f0
+  822EFC74  3D20829C             lis r9,-0x7d64
+  822EFC78  3D00829C             lis r8,-0x7d64
+  822EFC7C  FD806818             frsp f12,f13
+  822EFC80  816A7D88             lwz r11,0x7d88(r10)
+  822EFC84  81497E74             lwz r10,0x7e74(r9)
+  822EFC88  81287CF8             lwz r9,0x7cf8(r8)
+  822EFC8C  C16B000C             lfs f11,0xc(r11)
+  822EFC90  C06A000C             lfs f3,0xc(r10)
+  822EFC94  C049000C             lfs f2,0xc(r9)
+  822EFC98  EC2B0332             fmuls f1,f11,f12
+  822EFC9C  4BFFF97D             bl 0x822ef618
+  822EFCA0  C15F0560             lfs f10,0x560(r31)
+  822EFCA4  2F1E00FF             cmpwi cr6,r30,0xff
+  822EFCA8  EFE102B2             fmuls f31,f1,f10
+  822EFCAC  409A002C             bne cr6,0x822efcd8
+  822EFCB0  2F1C00FF             cmpwi cr6,r28,0xff
+  822EFCB4  409A0024             bne cr6,0x822efcd8
+  822EFCB8  3D600007             lis r11,0x7
+  822EFCBC  FC00F850             fneg f0,f31
+  822EFCC0  3D400007             lis r10,0x7
+  822EFCC4  61699774             ori r9,r11,0x9774
+  822EFCC8  61489770             ori r8,r10,0x9770
+  822EFCCC  7FDF4D2E             stfsx f30,r31,r9
+  822EFCD0  7C1F452E             stfsx f0,r31,r8
+  822EFCD4  4800014C             b 0x822efe20
+LAB_822efcd8:
+  822EFCD8  7F8A07B4             extsw r10,r28
+  822EFCDC  D3C10078             stfs f30,0x78(r1)
+  822EFCE0  7FCB07B4             extsw r11,r30
+  822EFCE4  F9410050             std r10,0x50(r1)
+  822EFCE8  C8010050             lfd f0,0x50(r1)
+  822EFCEC  F9610058             std r11,0x58(r1)
+  822EFCF0  C9810058             lfd f12,0x58(r1)
+  822EFCF4  FD40669C             fcfid f10,f12
+  822EFCF8  3D208202             lis r9,-0x7dfe
+  822EFCFC  FDA0069C             fcfid f13,f0
+  822EFD00  C0091508             lfs f0,0x1508(r9)
+  822EFD04  FD005018             frsp f8,f10
+  822EFD08  38C00000             li r6,0x0
+  822EFD0C  38A00000             li r5,0x0
+  822EFD10  38810060             addi r4,r1,0x60
+  822EFD14  38610070             addi r3,r1,0x70
+  822EFD18  FD606818             frsp f11,f13
+  822EFD1C  EFC80032             fmuls f30,f8,f0
+  822EFD20  D3C10074             stfs f30,0x74(r1)
+  822EFD24  ED2B0032             fmuls f9,f11,f0
+  822EFD28  D1210070             stfs f9,0x70(r1)
+  822EFD2C  482F0185             bl 0x825dfeb0
+  822EFD30  3D1F0007             addis r8,r31,0x7
+  822EFD34  3FBF0007             addis r29,r31,0x7
+  822EFD38  C0010060             lfs f0,0x60(r1)
+  822EFD3C  3908B9E0             subi r8,r8,0x4620
+  822EFD40  C1A10068             lfs f13,0x68(r1)
+  822EFD44  3BBDB9D4             subi r29,r29,0x462c
+  822EFD48  3CE00007             lis r7,0x7
+  822EFD4C  3CC00007             lis r6,0x7
+  822EFD50  60E59774             ori r5,r7,0x9774
+  822EFD54  C0E80000             lfs f7,0x0(r8)
+  822EFD58  60C49770             ori r4,r6,0x9770
+  822EFD5C  ECC70032             fmuls f6,f7,f0
+  822EFD60  C0BD0000             lfs f5,0x0(r29)
+  822EFD64  EC850032             fmuls f4,f5,f0
+  822EFD68  C0680004             lfs f3,0x4(r8)
+  822EFD6C  C0280008             lfs f1,0x8(r8)
+  822EFD70  7FE3FB78             or r3,r31,r31
+  822EFD74  C05D0004             lfs f2,0x4(r29)
+  822EFD78  C19D0008             lfs f12,0x8(r29)
+  822EFD7C  C0010064             lfs f0,0x64(r1)
+  822EFD80  ED63303A             fmadds f11,f3,f0,f6
+  822EFD84  ED42203A             fmadds f10,f2,f0,f4
+  822EFD88  ED215B7A             fmadds f9,f1,f13,f11
+  822EFD8C  ED0C537A             fmadds f8,f12,f13,f10
+  822EFD90  ECE907F2             fmuls f7,f9,f31
+  822EFD94  ECC807F2             fmuls f6,f8,f31
+  822EFD98  7CDF252E             stfsx f6,r31,r4
+  822EFD9C  FCA03850             fneg f5,f7
+  822EFDA0  7CBF2D2E             stfsx f5,r31,r5
+  822EFDA4  4BFFFDE5             bl 0x822efb88
+  822EFDA8  817F3358             lwz r11,0x3358(r31)
+  822EFDAC  3D4082A4             lis r10,-0x7d5c
+  822EFDB0  7C7E1B78             or r30,r3,r3
+  822EFDB4  812B3308             lwz r9,0x3308(r11)
+  822EFDB8  91230000             stw r9,0x0(r3)
+  822EFDBC  816AD624             lwz r11,-0x29dc(r10)
+  822EFDC0  810B000C             lwz r8,0xc(r11)
+  822EFDC4  91030004             stw r8,0x4(r3)
+  822EFDC8  482E7C89             bl 0x825d7a50
+  822EFDCC  3CE08200             lis r7,-0x7e00
+  822EFDD0  3CC08200             lis r6,-0x7e00
+  822EFDD4  C0070F18             lfs f0,0xf18(r7)
+  822EFDD8  EC810028             fsubs f4,f1,f0
+  822EFDDC  C0063F24             lfs f0,0x3f24(r6)
+  822EFDE0  EC24F03A             fmadds f1,f4,f0,f30
+  822EFDE4  482ECA6D             bl 0x825dc850
+  822EFDE8  D03E0014             stfs f1,0x14(r30)
+  822EFDEC  9B7E0040             stb r27,0x40(r30)
+  822EFDF0  C0610060             lfs f3,0x60(r1)
+  822EFDF4  7FA3EB78             or r3,r29,r29
+  822EFDF8  D07E0008             stfs f3,0x8(r30)
+  822EFDFC  389E001C             addi r4,r30,0x1c
+  822EFE00  C0410064             lfs f2,0x64(r1)
+  822EFE04  D05E000C             stfs f2,0xc(r30)
+  822EFE08  C0210068             lfs f1,0x68(r1)
+  822EFE0C  D03E0010             stfs f1,0x10(r30)
+  822EFE10  482ECD91             bl 0x825dcba0
+  822EFE14  7FA3EB78             or r3,r29,r29
+  822EFE18  482E90F1             bl 0x825d8f08
+  822EFE1C  D03E0018             stfs f1,0x18(r30)
+LAB_822efe20:
+  822EFE20  817F3358             lwz r11,0x3358(r31)
+  822EFE24  5769063E             rlwinm r9,r27,0x0,0x18,0x1f
+  822EFE28  3D400007             lis r10,0x7
+  822EFE2C  2B090000             cmplwi cr6,r9,0x0
+  822EFE30  61489754             ori r8,r10,0x9754
+  822EFE34  3D400007             lis r10,0x7
+  822EFE38  80EB3308             lwz r7,0x3308(r11)
+  822EFE3C  3D600006             lis r11,0x6
+  822EFE40  6169B98C             ori r9,r11,0xb98c
+  822EFE44  7CFF412E             stwx r7,r31,r8
+  822EFE48  6148976C             ori r8,r10,0x976c
+  822EFE4C  7D7F482E             lwzx r11,r31,r9
+  822EFE50  38EB01F4             addi r7,r11,0x1f4
+  822EFE54  409A0008             bne cr6,0x822efe5c
+  822EFE58  61489768             ori r8,r10,0x9768
+LAB_822efe5c:
+  822EFE5C  7CFF412E             stwx r7,r31,r8
+  822EFE60  38800000             li r4,0x0
+  822EFE64  7F43D378             or r3,r26,r26
+  822EFE68  4800C931             bl 0x822fc798
+  822EFE6C  382100D0             addi r1,r1,0xd0
+  822EFE70  CBC1FFB8             lfd f30,-0x48(r1)
+  822EFE74  CBE1FFC0             lfd f31,-0x40(r1)
+  822EFE78  48626888             b 0x82916700
 
 ; 822EFE80  CG_Respawn  (cgame/cg_playerstate.cpp:307)
   822EFE80  7D8802A6             mfspr r12,LR
   822EFE84  48626831             bl 0x829166b4
+  822EFE88  DBE1FFC8             stfd f31,-0x38(r1)
+  822EFE8C  9421FF70             stwu r1,-0x90(r1)
+  822EFE90  7C7D1B78             or r29,r3,r3
+  822EFE94  7C9B2378             or r27,r4,r4
+  822EFE98  4BF71269             bl 0x82261100
+  822EFE9C  8163335C             lwz r11,0x335c(r3)
+  822EFEA0  7C7F1B78             or r31,r3,r3
+  822EFEA4  2B0B0000             cmplwi cr6,r11,0x0
+  822EFEA8  409A0028             bne cr6,0x822efed0
+  822EFEAC  3D608200             lis r11,-0x7e00
+  822EFEB0  3D408200             lis r10,-0x7e00
+  822EFEB4  3D208202             lis r9,-0x7dfe
+  822EFEB8  38EB2858             addi r7,r11,0x2858
+  822EFEBC  38CA0F98             addi r6,r10,0xf98
+  822EFEC0  386914C0             addi r3,r9,0x14c0
+  822EFEC4  38A00000             li r5,0x0
+  822EFEC8  3880013C             li r4,0x13c
+  822EFECC  482E4635             bl 0x825d4500
+LAB_822efed0:
+  822EFED0  2F1B0000             cmpwi cr6,r27,0x0
+  822EFED4  7FA3EB78             or r3,r29,r29
+  822EFED8  419A000C             beq cr6,0x822efee4
+  822EFEDC  480022B5             bl 0x822f2190
+  822EFEE0  4800001C             b 0x822efefc
+LAB_822efee4:
+  822EFEE4  480021F5             bl 0x822f20d8
+  822EFEE8  3D7F0011             addis r11,r31,0x11
+  822EFEEC  396B807C             subi r11,r11,0x7f84
+  822EFEF0  814B0000             lwz r10,0x0(r11)
+  822EFEF4  61498000             ori r9,r10,0x8000
+  822EFEF8  912B0000             stw r9,0x0(r11)
+LAB_822efefc:
+  822EFEFC  38A03300             li r5,0x3300
+  822EFF00  809F335C             lwz r4,0x335c(r31)
+  822EFF04  7FE3FB78             or r3,r31,r31
+  822EFF08  48626A59             bl 0x82916960
+  822EFF0C  3F9F0007             addis r28,r31,0x7
+  822EFF10  3D600006             lis r11,0x6
+  822EFF14  3B9CB98C             subi r28,r28,0x4674
+  822EFF18  616AB998             ori r10,r11,0xb998
+  822EFF1C  3BC00000             li r30,0x0
+  822EFF20  2F1B0000             cmpwi cr6,r27,0x0
+  822EFF24  817C0000             lwz r11,0x0(r28)
+  822EFF28  392BFC18             subi r9,r11,0x3e8
+  822EFF2C  7D3F512E             stwx r9,r31,r10
+  822EFF30  409A0020             bne cr6,0x822eff50
+  822EFF34  38A00000             li r5,0x0
+  822EFF38  809F0370             lwz r4,0x370(r31)
+  822EFF3C  7FA3EB78             or r3,r29,r29
+  822EFF40  4802FDE9             bl 0x8231fd28
+  822EFF44  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  822EFF48  2B0B0000             cmplwi cr6,r11,0x0
+  822EFF4C  409A001C             bne cr6,0x822eff68
+LAB_822eff50:
+  822EFF50  3D400007             lis r10,0x7
+  822EFF54  3D600007             lis r11,0x7
+  822EFF58  61486ED0             ori r8,r10,0x6ed0
+  822EFF5C  61696ECC             ori r9,r11,0x6ecc
+  822EFF60  7FDF412E             stwx r30,r31,r8
+  822EFF64  7FDF492E             stwx r30,r31,r9
+LAB_822eff68:
+  822EFF68  3D600007             lis r11,0x7
+  822EFF6C  815C0000             lwz r10,0x0(r28)
+  822EFF70  3D200007             lis r9,0x7
+  822EFF74  811F0364             lwz r8,0x364(r31)
+  822EFF78  3CE00007             lis r7,0x7
+  822EFF7C  3CC00007             lis r6,0x7
+  822EFF80  3CA00007             lis r5,0x7
+  822EFF84  61646ED4             ori r4,r11,0x6ed4
+  822EFF88  61239420             ori r3,r9,0x9420
+  822EFF8C  60EB6E84             ori r11,r7,0x6e84
+  822EFF90  60C96E8C             ori r9,r6,0x6e8c
+  822EFF94  60A76E7C             ori r7,r5,0x6e7c
+  822EFF98  38C0FFFF             li r6,-0x1
+  822EFF9C  7D5F212E             stwx r10,r31,r4
+  822EFFA0  7D1F192E             stwx r8,r31,r3
+  822EFFA4  7FDF592E             stwx r30,r31,r11
+  822EFFA8  7FDF492E             stwx r30,r31,r9
+  822EFFAC  7CDF392E             stwx r6,r31,r7
+  822EFFB0  4BFCA9B9             bl 0x822ba968
+  822EFFB4  3C7F0008             addis r3,r31,0x8
+  822EFFB8  3D1F0008             addis r8,r31,0x8
+  822EFFBC  3CA08200             lis r5,-0x7e00
+  822EFFC0  3C800007             lis r4,0x7
+  822EFFC4  38639788             subi r3,r3,0x6878
+  822EFFC8  3908977C             subi r8,r8,0x6884
+  822EFFCC  60879778             ori r7,r4,0x9778
+  822EFFD0  39400008             li r10,0x8
+  822EFFD4  C3E513F8             lfs f31,0x13f8(r5)
+  822EFFD8  397F3300             addi r11,r31,0x3300
+  822EFFDC  D3E30000             stfs f31,0x0(r3)
+  822EFFE0  7FC9F378             or r9,r30,r30
+  822EFFE4  D3E30004             stfs f31,0x4(r3)
+  822EFFE8  D3E30008             stfs f31,0x8(r3)
+  822EFFEC  D3E80000             stfs f31,0x0(r8)
+  822EFFF0  7D4903A6             mtspr CTR,r10
+  822EFFF4  D3E80004             stfs f31,0x4(r8)
+  822EFFF8  D3E80008             stfs f31,0x8(r8)
+  822EFFFC  7FFF3D2E             stfsx f31,r31,r7
+LAB_822f0000:
+  822F0000  952B0004             stwu r9,0x4(r11)
+  822F0004  4200FFFC             bdnz 0x822f0000
+  822F0008  3D600007             lis r11,0x7
+  822F000C  3D400007             lis r10,0x7
+  822F0010  61689754             ori r8,r11,0x9754
+  822F0014  3D200007             lis r9,0x7
+  822F0018  3C7F0007             addis r3,r31,0x7
+  822F001C  61479770             ori r7,r10,0x9770
+  822F0020  61269774             ori r6,r9,0x9774
+  822F0024  38630548             addi r3,r3,0x548
+  822F0028  7FDF412E             stwx r30,r31,r8
+  822F002C  3D7F0007             addis r11,r31,0x7
+  822F0030  3D5F0007             addis r10,r31,0x7
+  822F0034  3D3F0007             addis r9,r31,0x7
+  822F0038  7FFF3D2E             stfsx f31,r31,r7
+  822F003C  396B0554             addi r11,r11,0x554
+  822F0040  7FFF352E             stfsx f31,r31,r6
+  822F0044  3D1F0007             addis r8,r31,0x7
+  822F0048  D3E30000             stfs f31,0x0(r3)
+  822F004C  394A0524             addi r10,r10,0x524
+  822F0050  D3E30004             stfs f31,0x4(r3)
+  822F0054  39290530             addi r9,r9,0x530
+  822F0058  D3E30008             stfs f31,0x8(r3)
+  822F005C  3908053C             addi r8,r8,0x53c
+  822F0060  3C7F0008             addis r3,r31,0x8
+  822F0064  D3EB0000             stfs f31,0x0(r11)
+  822F0068  D3EB0004             stfs f31,0x4(r11)
+  822F006C  38A00330             li r5,0x330
+  822F0070  D3EB0008             stfs f31,0x8(r11)
+  822F0074  38800000             li r4,0x0
+  822F0078  D3EA0000             stfs f31,0x0(r10)
+  822F007C  38639424             subi r3,r3,0x6bdc
+  822F0080  D3EA0004             stfs f31,0x4(r10)
+  822F0084  D3EA0008             stfs f31,0x8(r10)
+  822F0088  D3E90000             stfs f31,0x0(r9)
+  822F008C  D3E90004             stfs f31,0x4(r9)
+  822F0090  D3E90008             stfs f31,0x8(r9)
+  822F0094  D3E80000             stfs f31,0x0(r8)
+  822F0098  D3E80004             stfs f31,0x4(r8)
+  822F009C  D3E80008             stfs f31,0x8(r8)
+  822F00A0  48626761             bl 0x82916800
+  822F00A4  3CE00007             lis r7,0x7
+  822F00A8  D3FF3328             stfs f31,0x3328(r31)
+  822F00AC  D3FF332C             stfs f31,0x332c(r31)
+  822F00B0  38800000             li r4,0x0
+  822F00B4  60E6A704             ori r6,r7,0xa704
+  822F00B8  D3FF3330             stfs f31,0x3330(r31)
+  822F00BC  7FA3EB78             or r3,r29,r29
+  822F00C0  7FDF312E             stwx r30,r31,r6
+  822F00C4  48048BFD             bl 0x82338cc0
+  822F00C8  38800000             li r4,0x0
+  822F00CC  7FA3EB78             or r3,r29,r29
+  822F00D0  4803C119             bl 0x8232c1e8
+  822F00D4  7FA3EB78             or r3,r29,r29
+  822F00D8  809F0364             lwz r4,0x364(r31)
+  822F00DC  48039BAD             bl 0x82329c88
+  822F00E0  3CA00007             lis r5,0x7
+  822F00E4  3C808200             lis r4,-0x7e00
+  822F00E8  60AB9868             ori r11,r5,0x9868
+  822F00EC  7FA3EB78             or r3,r29,r29
+  822F00F0  C0040F10             lfs f0,0xf10(r4)
+  822F00F4  D01F3308             stfs f0,0x3308(r31)
+  822F00F8  7FFF5D2E             stfsx f31,r31,r11
+  822F00FC  48143C45             bl 0x82433d40
+  822F0100  3880FFFF             li r4,-0x1
+  822F0104  7FA3EB78             or r3,r29,r29
+  822F0108  48014CC9             bl 0x82304dd0
+  822F010C  7FA3EB78             or r3,r29,r29
+  822F0110  4BFB5FA1             bl 0x822a60b0
+  822F0114  3D400007             lis r10,0x7
+  822F0118  3D200010             lis r9,0x10
+  822F011C  3D000006             lis r8,0x6
+  822F0120  3CE08200             lis r7,-0x7e00
+  822F0124  61466588             ori r6,r10,0x6588
+  822F0128  612584D0             ori r5,r9,0x84d0
+  822F012C  6104B9AC             ori r4,r8,0xb9ac
+  822F0130  38600001             li r3,0x1
+  822F0134  396007FF             li r11,0x7ff
+  822F0138  C0074B70             lfs f0,0x4b70(r7)
+  822F013C  7C7F312E             stwx r3,r31,r6
+  822F0140  7FE3FB78             or r3,r31,r31
+  822F0144  7D7F292E             stwx r11,r31,r5
+  822F0148  7C1F252E             stfsx f0,r31,r4
+  822F014C  4802AFE5             bl 0x8231b130
+  822F0150  7FE3FB78             or r3,r31,r31
+  822F0154  4BFF7B75             bl 0x822e7cc8
+  822F0158  7FE3FB78             or r3,r31,r31
+  822F015C  4BFFF72D             bl 0x822ef888
+  822F0160  7FA3EB78             or r3,r29,r29
+  822F0164  4BFF374D             bl 0x822e38b0
+  822F0168  3C7F0011             addis r3,r31,0x11
+  822F016C  389F00FC             addi r4,r31,0xfc
+  822F0170  386380AC             subi r3,r3,0x7f54
+  822F0174  38A0002C             li r5,0x2c
+  822F0178  486267E9             bl 0x82916960
+  822F017C  38210090             addi r1,r1,0x90
+  822F0180  CBE1FFC8             lfd f31,-0x38(r1)
+  822F0184  48626580             b 0x82916704
 
 ; 822F0188  CG_ResetSpectatorViewAngles  (cgame/cg_playerstate.cpp:440)
   822F0188  7D8802A6             mfspr r12,LR
@@ -234,6 +878,76 @@ LAB_822f02f8:
 LAB_822f0354:
   822F0354  382100B0             addi r1,r1,0xb0
   822F0358  48626394             b 0x829166ec
+
+; 822F0360  CG_TransitionPlayerState  (cgame/cg_playerstate.cpp:507)
+  822F0360  7D8802A6             mfspr r12,LR
+  822F0364  48626355             bl 0x829166b8
+  822F0368  9421FF80             stwu r1,-0x80(r1)
+  822F036C  7C7E1B78             or r30,r3,r3
+  822F0370  7C9F2378             or r31,r4,r4
+  822F0374  7CBD2B78             or r29,r5,r5
+  822F0378  4BF70D89             bl 0x82261100
+  822F037C  7C7C1B78             or r28,r3,r3
+  822F0380  7FC3F378             or r3,r30,r30
+  822F0384  4BFFD72D             bl 0x822edab0
+  822F0388  2F030000             cmpwi cr6,r3,0x0
+  822F038C  419A0010             beq cr6,0x822f039c
+  822F0390  7FC3F378             or r3,r30,r30
+  822F0394  809C3300             lwz r4,0x3300(r28)
+  822F0398  4BFFD631             bl 0x822ed9c8
+LAB_822f039c:
+  822F039C  817F0188             lwz r11,0x188(r31)
+  822F03A0  815D0004             lwz r10,0x4(r29)
+  822F03A4  7F0B5000             cmpw cr6,r11,r10
+  822F03A8  419A0028             beq cr6,0x822f03d0
+  822F03AC  80DF0194             lwz r6,0x194(r31)
+  822F03B0  2F060000             cmpwi cr6,r6,0x0
+  822F03B4  419A001C             beq cr6,0x822f03d0
+  822F03B8  817F0198             lwz r11,0x198(r31)
+  822F03BC  7FC3F378             or r3,r30,r30
+  822F03C0  80BF0190             lwz r5,0x190(r31)
+  822F03C4  556707FE             rlwinm r7,r11,0x0,0x1f,0x1f
+  822F03C8  809F018C             lwz r4,0x18c(r31)
+  822F03CC  4BFFF81D             bl 0x822efbe8
+LAB_822f03d0:
+  822F03D0  480AAE91             bl 0x8239b260
+  822F03D4  2F030001             cmpwi cr6,r3,0x1
+  822F03D8  409A0024             bne cr6,0x822f03fc
+  822F03DC  817F0010             lwz r11,0x10(r31)
+  822F03E0  815D0000             lwz r10,0x0(r29)
+  822F03E4  7D695278             xor r9,r11,r10
+  822F03E8  55280420             rlwinm r8,r9,0x0,0x10,0x10
+  822F03EC  2F080000             cmpwi cr6,r8,0x0
+  822F03F0  419A000C             beq cr6,0x822f03fc
+  822F03F4  7FC3F378             or r3,r30,r30
+  822F03F8  4BFEB3E9             bl 0x822db7e0
+LAB_822f03fc:
+  822F03FC  7FA5EB78             or r5,r29,r29
+  822F0400  7FE4FB78             or r4,r31,r31
+  822F0404  7FC3F378             or r3,r30,r30
+  822F0408  4BFFFDB9             bl 0x822f01c0
+  822F040C  7FA5EB78             or r5,r29,r29
+  822F0410  7FE4FB78             or r4,r31,r31
+  822F0414  7FC3F378             or r3,r30,r30
+  822F0418  4BFFF4F1             bl 0x822ef908
+  822F041C  38210080             addi r1,r1,0x80
+  822F0420  486262E8             b 0x82916708
+
+; 822F0428  CG_ClearTransPlayerState  (cgame/cg_playerstate.cpp:535)
+  822F0428  39600000             li r11,0x0
+  822F042C  91630000             stw r11,0x0(r3)
+  822F0430  91630004             stw r11,0x4(r3)
+  822F0434  91630008             stw r11,0x8(r3)
+  822F0438  9163000C             stw r11,0xc(r3)
+  822F043C  91630010             stw r11,0x10(r3)
+  822F0440  91630014             stw r11,0x14(r3)
+  822F0444  91630018             stw r11,0x18(r3)
+  822F0448  9163001C             stw r11,0x1c(r3)
+  822F044C  91630020             stw r11,0x20(r3)
+  822F0450  91630024             stw r11,0x24(r3)
+  822F0454  91630028             stw r11,0x28(r3)
+  822F0458  9163002C             stw r11,0x2c(r3)
+  822F045C  4E800020             blr
 
 ; 822F0460  CG_ExtractTransPlayerState  (cgame/cg_playerstate.cpp:546)
   822F0460  81430010             lwz r10,0x10(r3)

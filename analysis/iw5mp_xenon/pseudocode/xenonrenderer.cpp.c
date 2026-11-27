@@ -50,11 +50,35 @@ undefined8 XAUDIO__CXenonRenderer__GetInfo(undefined8 param_1,undefined1 *param_
 
 // 828D2248  XAudioCreateNativeRenderEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:81)
 
-void XAudioCreateNativeRenderEffect(void)
+void XAudioCreateNativeRenderEffect(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined4 *puVar3;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_27();
+  puVar3 = (undefined4 *)(**(code **)(*(int *)param_2 + 0x14))(param_2,0x1c);
+  if (puVar3 == (undefined4 *)0x0) {
+    __restgprlr_27(0xffffffff8007000e);
+    return;
+  }
+  puVar3[2] = 1;
+  puVar3[1] = &PTR_XAUDIO__CEffect___scalar_deleting_destructor__8220735c;
+  puVar3[3] = *(undefined4 *)(iVar2 + 4);
+  *puVar3 = &PTR_XAUDIO__CXenonRenderer__AddRef_82207394;
+  puVar3[4] = 0;
+  puVar3[1] = &PTR__thunk__XAUDIO__CXenonRenderer___vector_deleting_destructor__82207378;
+  puVar3[5] = 0;
+  uVar1 = XAUDIO__CXenonRenderer__Initialize(puVar3,iVar2,param_2);
+  if (-1 < (int)uVar1) {
+    *param_3 = puVar3;
+    __restgprlr_27();
+    return;
+  }
+  (**(code **)(puVar3[1] + 0xc))(puVar3 + 1);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -187,11 +211,29 @@ void XAUDIO__CXenonRenderer__Process(int *param_1,undefined8 param_2)
 
 // 828D1E48  XAUDIO::CXenonRenderer::SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
 
-void XAUDIO__CXenonRenderer__SetCallback(void)
+void XAUDIO__CXenonRenderer__SetCallback(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = 0;
+  if (*(int *)(iVar2 + 0x18) != 0) {
+    uVar1 = XAudioUnregisterRenderDriverClient(*(int *)(iVar2 + 0x18));
+    if ((int)uVar1 < 0) goto LAB_828d1ea8;
+    *(undefined4 *)(iVar2 + 0x18) = 0;
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    local_2c = *(undefined4 *)(iVar2 + 0xc);
+    local_30 = (undefined4)param_2;
+    uVar1 = XAudioRegisterRenderDriverClient(&local_30,(undefined4 *)(iVar2 + 0x18));
+  }
+LAB_828d1ea8:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 

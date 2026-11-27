@@ -37,6 +37,16 @@
   82687CAC  EBE1FFF0             ld r31,-0x10(r1)
   82687CB0  4E800020             blr
 
+; 82687CB8  dxGeomTransform::Destruct  (physics/ode/src/collision_transform.cpp:62)
+  82687CB8  7C6B1B78             or r11,r3,r3
+  82687CBC  8063004C             lwz r3,0x4c(r3)
+  82687CC0  2B030000             cmplwi cr6,r3,0x0
+  82687CC4  4D9A0020             beqlr cr6
+  82687CC8  816B0050             lwz r11,0x50(r11)
+  82687CCC  2F0B0000             cmpwi cr6,r11,0x0
+  82687CD0  4D9A0020             beqlr cr6
+  82687CD4  4BFFB654             b 0x82683328
+
 ; 82687CE0  dxGeomTransform::~dxGeomTransform  (physics/ode/src/collision_transform.cpp:69)
   82687CE0  7D8802A6             mfspr r12,LR
   82687CE4  9181FFF8             stw r12,-0x8(r1)
@@ -66,10 +76,112 @@ LAB_82687d1c:
 ; 82688658  dxGeomTransform::computeAABB  (physics/ode/src/collision_transform.cpp:75)
   82688658  7D8802A6             mfspr r12,LR
   8268865C  4828E061             bl 0x829166bc
+  82688660  9421FF90             stwu r1,-0x70(r1)
+  82688664  8163004C             lwz r11,0x4c(r3)
+  82688668  7C7F1B78             or r31,r3,r3
+  8268866C  2B0B0000             cmplwi cr6,r11,0x0
+  82688670  409A0018             bne cr6,0x82688688
+  82688674  38800006             li r4,0x6
+  82688678  3863002C             addi r3,r3,0x2c
+  8268867C  4800E615             bl 0x82696c90
+  82688680  38210070             addi r1,r1,0x70
+  82688684  4828E088             b 0x8291670c
+LAB_82688688:
+  82688688  817F004C             lwz r11,0x4c(r31)
+  8268868C  7FE3FB78             or r3,r31,r31
+  82688690  83CB0018             lwz r30,0x18(r11)
+  82688694  83AB001C             lwz r29,0x1c(r11)
+  82688698  4BFFFCB1             bl 0x82688348
+  8268869C  811F004C             lwz r8,0x4c(r31)
+  826886A0  395F00C4             addi r10,r31,0xc4
+  826886A4  393F0094             addi r9,r31,0x94
+  826886A8  91480018             stw r10,0x18(r8)
+  826886AC  80FF004C             lwz r7,0x4c(r31)
+  826886B0  9127001C             stw r9,0x1c(r7)
+  826886B4  807F004C             lwz r3,0x4c(r31)
+  826886B8  80C30000             lwz r6,0x0(r3)
+  826886BC  80A60004             lwz r5,0x4(r6)
+  826886C0  7CA903A6             mtspr CTR,r5
+  826886C4  4E800421             bctrl
+  826886C8  39600006             li r11,0x6
+  826886CC  395F002C             addi r10,r31,0x2c
+  826886D0  394AFFFC             subi r10,r10,0x4
+  826886D4  7D6903A6             mtspr CTR,r11
+  826886D8  817F004C             lwz r11,0x4c(r31)
+  826886DC  396B0028             addi r11,r11,0x28
+LAB_826886e0:
+  826886E0  852B0004             lwzu r9,0x4(r11)
+  826886E4  952A0004             stwu r9,0x4(r10)
+  826886E8  4200FFF8             bdnz 0x826886e0
+  826886EC  817F004C             lwz r11,0x4c(r31)
+  826886F0  93CB0018             stw r30,0x18(r11)
+  826886F4  815F004C             lwz r10,0x4c(r31)
+  826886F8  93AA001C             stw r29,0x1c(r10)
+  826886FC  38210070             addi r1,r1,0x70
+  82688700  4828E00C             b 0x8291670c
 
 ; 82688708  ODE_GeomTransformGetAAContainedBox  (physics/ode/src/collision_transform.cpp:103)
   82688708  7D8802A6             mfspr r12,LR
   8268870C  4828DFAD             bl 0x829166b8
+  82688710  9421FF80             stwu r1,-0x80(r1)
+  82688714  81230004             lwz r9,0x4(r3)
+  82688718  3D60821A             lis r11,-0x7de6
+  8268871C  3D408200             lis r10,-0x7e00
+  82688720  7C7F1B78             or r31,r3,r3
+  82688724  7C9E2378             or r30,r4,r4
+  82688728  2F090001             cmpwi cr6,r9,0x1
+  8268872C  3BAB81C8             subi r29,r11,0x7e38
+  82688730  3B8A0F98             addi r28,r10,0xf98
+  82688734  419A0020             beq cr6,0x82688754
+  82688738  3D60821A             lis r11,-0x7de6
+  8268873C  7F86E378             or r6,r28,r28
+  82688740  38EB82E0             subi r7,r11,0x7d20
+  82688744  7FA3EB78             or r3,r29,r29
+  82688748  38A00000             li r5,0x0
+  8268874C  3880006A             li r4,0x6a
+  82688750  4BF4BDB1             bl 0x825d4500
+LAB_82688754:
+  82688754  817F004C             lwz r11,0x4c(r31)
+  82688758  2B0B0000             cmplwi cr6,r11,0x0
+  8268875C  409A0020             bne cr6,0x8268877c
+  82688760  3D60821A             lis r11,-0x7de6
+  82688764  7F86E378             or r6,r28,r28
+  82688768  38EB82D8             subi r7,r11,0x7d28
+  8268876C  7FA3EB78             or r3,r29,r29
+  82688770  38A00000             li r5,0x0
+  82688774  3880006E             li r4,0x6e
+  82688778  4BF4BD89             bl 0x825d4500
+LAB_8268877c:
+  8268877C  817F0008             lwz r11,0x8(r31)
+  82688780  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  82688784  2F0A0000             cmpwi cr6,r10,0x0
+  82688788  419A000C             beq cr6,0x82688794
+  8268878C  7FE3FB78             or r3,r31,r31
+  82688790  4BFFFBB9             bl 0x82688348
+LAB_82688794:
+  82688794  817F004C             lwz r11,0x4c(r31)
+  82688798  395F00C4             addi r10,r31,0xc4
+  8268879C  393F0094             addi r9,r31,0x94
+  826887A0  7FC4F378             or r4,r30,r30
+  826887A4  914B0018             stw r10,0x18(r11)
+  826887A8  811F004C             lwz r8,0x4c(r31)
+  826887AC  9128001C             stw r9,0x1c(r8)
+  826887B0  C01F0088             lfs f0,0x88(r31)
+  826887B4  C1BE0004             lfs f13,0x4(r30)
+  826887B8  C19E0008             lfs f12,0x8(r30)
+  826887BC  C17E0000             lfs f11,0x0(r30)
+  826887C0  ED40582A             fadds f10,f0,f11
+  826887C4  D15E0000             stfs f10,0x0(r30)
+  826887C8  C13F008C             lfs f9,0x8c(r31)
+  826887CC  ED09682A             fadds f8,f9,f13
+  826887D0  D11E0004             stfs f8,0x4(r30)
+  826887D4  C0FF0090             lfs f7,0x90(r31)
+  826887D8  ECC7602A             fadds f6,f7,f12
+  826887DC  D0DE0008             stfs f6,0x8(r30)
+  826887E0  807F004C             lwz r3,0x4c(r31)
+  826887E4  4BFFA495             bl 0x82682c78
+  826887E8  38210080             addi r1,r1,0x80
+  826887EC  4828DF1C             b 0x82916708
 
 ; 82688348  dxGeomTransform::computeFinalTx  (physics/ode/src/collision_transform.cpp:128)
   82688348  7D8802A6             mfspr r12,LR
@@ -226,6 +338,73 @@ LAB_82688528:
 ; 82687D40  ODE_GeomTransformInit  (physics/ode/src/collision_transform.cpp:181)
   82687D40  7D8802A6             mfspr r12,LR
   82687D44  4828E971             bl 0x829166b4
+  82687D48  9421FF80             stwu r1,-0x80(r1)
+  82687D4C  3D60821A             lis r11,-0x7de6
+  82687D50  3D408200             lis r10,-0x7e00
+  82687D54  7C7F1B78             or r31,r3,r3
+  82687D58  7C9E2378             or r30,r4,r4
+  82687D5C  7CBB2B78             or r27,r5,r5
+  82687D60  2B030000             cmplwi cr6,r3,0x0
+  82687D64  3BAB81C8             subi r29,r11,0x7e38
+  82687D68  3B8A0F98             addi r28,r10,0xf98
+  82687D6C  409A0020             bne cr6,0x82687d8c
+  82687D70  3D608219             lis r11,-0x7de7
+  82687D74  7F86E378             or r6,r28,r28
+  82687D78  38EB3AE4             addi r7,r11,0x3ae4
+  82687D7C  7FA3EB78             or r3,r29,r29
+  82687D80  38A00000             li r5,0x0
+  82687D84  388000B8             li r4,0xb8
+  82687D88  4BF4C779             bl 0x825d4500
+LAB_82687d8c:
+  82687D8C  38600015             li r3,0x15
+  82687D90  4BF8BCE9             bl 0x82613a78
+  82687D94  2B1E0000             cmplwi cr6,r30,0x0
+  82687D98  409A0020             bne cr6,0x82687db8
+  82687D9C  3D608219             lis r11,-0x7de7
+  82687DA0  7F86E378             or r6,r28,r28
+  82687DA4  38EB74D0             addi r7,r11,0x74d0
+  82687DA8  7FA3EB78             or r3,r29,r29
+  82687DAC  38A00000             li r5,0x0
+  82687DB0  388000BF             li r4,0xbf
+  82687DB4  4BF4C74D             bl 0x825d4500
+LAB_82687db8:
+  82687DB8  817E0064             lwz r11,0x64(r30)
+  82687DBC  2F0B0000             cmpwi cr6,r11,0x0
+  82687DC0  419A0020             beq cr6,0x82687de0
+  82687DC4  3D608219             lis r11,-0x7de7
+  82687DC8  7F86E378             or r6,r28,r28
+  82687DCC  38EB7964             addi r7,r11,0x7964
+  82687DD0  7FA3EB78             or r3,r29,r29
+  82687DD4  38A00000             li r5,0x0
+  82687DD8  388000C0             li r4,0xc0
+  82687DDC  4BF4C725             bl 0x825d4500
+LAB_82687de0:
+  82687DE0  39600001             li r11,0x1
+  82687DE4  2B1F0000             cmplwi cr6,r31,0x0
+  82687DE8  917E0064             stw r11,0x64(r30)
+  82687DEC  419A0014             beq cr6,0x82687e00
+  82687DF0  7F65DB78             or r5,r27,r27
+  82687DF4  7FC4F378             or r4,r30,r30
+  82687DF8  7FE3FB78             or r3,r31,r31
+  82687DFC  4BFFFE2D             bl 0x82687c28
+LAB_82687e00:
+  82687E00  817E0064             lwz r11,0x64(r30)
+  82687E04  2F0B0000             cmpwi cr6,r11,0x0
+  82687E08  409A0020             bne cr6,0x82687e28
+  82687E0C  3D608219             lis r11,-0x7de7
+  82687E10  7F86E378             or r6,r28,r28
+  82687E14  38EB794C             addi r7,r11,0x794c
+  82687E18  7FA3EB78             or r3,r29,r29
+  82687E1C  38A00000             li r5,0x0
+  82687E20  388000C7             li r4,0xc7
+  82687E24  4BF4C6DD             bl 0x825d4500
+LAB_82687e28:
+  82687E28  39600000             li r11,0x0
+  82687E2C  38600015             li r3,0x15
+  82687E30  917E0064             stw r11,0x64(r30)
+  82687E34  4BF8BCAD             bl 0x82613ae0
+  82687E38  38210080             addi r1,r1,0x80
+  82687E3C  4828E8C8             b 0x82916704
 
 ; 826887F0  dMULTIPLY0_333<float,float,float>  (physics/ode/odemath.h:183)
   826887F0  C0040000             lfs f0,0x0(r4)
@@ -327,42 +506,418 @@ LAB_82688528:
 ; 82687E40  dGeomTransformSetGeom  (physics/ode/src/collision_transform.cpp:210)
   82687E40  7D8802A6             mfspr r12,LR
   82687E44  4828E875             bl 0x829166b8
+  82687E48  9421FF80             stwu r1,-0x80(r1)
+  82687E4C  3D60821A             lis r11,-0x7de6
+  82687E50  3D408200             lis r10,-0x7e00
+  82687E54  7C7F1B78             or r31,r3,r3
+  82687E58  7C9C2378             or r28,r4,r4
+  82687E5C  2B030000             cmplwi cr6,r3,0x0
+  82687E60  3BCB81C8             subi r30,r11,0x7e38
+  82687E64  3BAA0F98             addi r29,r10,0xf98
+  82687E68  409A0020             bne cr6,0x82687e88
+  82687E6C  3D608211             lis r11,-0x7def
+  82687E70  7FA6EB78             or r6,r29,r29
+  82687E74  38EBCBB0             subi r7,r11,0x3450
+  82687E78  7FC3F378             or r3,r30,r30
+  82687E7C  38A00000             li r5,0x0
+  82687E80  388000D3             li r4,0xd3
+  82687E84  4BF4C67D             bl 0x825d4500
+LAB_82687e88:
+  82687E88  817F0004             lwz r11,0x4(r31)
+  82687E8C  2F0B0001             cmpwi cr6,r11,0x1
+  82687E90  419A0020             beq cr6,0x82687eb0
+  82687E94  3D60821A             lis r11,-0x7de6
+  82687E98  7FA6EB78             or r6,r29,r29
+  82687E9C  38EB821C             subi r7,r11,0x7de4
+  82687EA0  7FC3F378             or r3,r30,r30
+  82687EA4  38A00000             li r5,0x0
+  82687EA8  388000D4             li r4,0xd4
+  82687EAC  4BF4C655             bl 0x825d4500
+LAB_82687eb0:
+  82687EB0  2B1C0000             cmplwi cr6,r28,0x0
+  82687EB4  409A0020             bne cr6,0x82687ed4
+  82687EB8  3D608200             lis r11,-0x7e00
+  82687EBC  7FA6EB78             or r6,r29,r29
+  82687EC0  38EB40B4             addi r7,r11,0x40b4
+  82687EC4  7FC3F378             or r3,r30,r30
+  82687EC8  38A00000             li r5,0x0
+  82687ECC  388000D5             li r4,0xd5
+  82687ED0  4BF4C631             bl 0x825d4500
+LAB_82687ed4:
+  82687ED4  807F004C             lwz r3,0x4c(r31)
+  82687ED8  2B030000             cmplwi cr6,r3,0x0
+  82687EDC  419A0024             beq cr6,0x82687f00
+  82687EE0  817F0050             lwz r11,0x50(r31)
+  82687EE4  2F0B0000             cmpwi cr6,r11,0x0
+  82687EE8  419A0018             beq cr6,0x82687f00
+  82687EEC  81630000             lwz r11,0x0(r3)
+  82687EF0  38800001             li r4,0x1
+  82687EF4  814B0000             lwz r10,0x0(r11)
+  82687EF8  7D4903A6             mtspr CTR,r10
+  82687EFC  4E800421             bctrl
+LAB_82687f00:
+  82687F00  7F84E378             or r4,r28,r28
+  82687F04  807C0028             lwz r3,0x28(r28)
+  82687F08  4BFFCD99             bl 0x82684ca0
+  82687F0C  7F83E378             or r3,r28,r28
+  82687F10  4BFF9E09             bl 0x82681d18
+  82687F14  939F004C             stw r28,0x4c(r31)
+  82687F18  38210080             addi r1,r1,0x80
+  82687F1C  4828E7EC             b 0x82916708
 
 ; 82687F20  dGeomTransformGetGeom  (physics/ode/src/collision_transform.cpp:226)
   82687F20  7D8802A6             mfspr r12,LR
   82687F24  4828E799             bl 0x829166bc
+  82687F28  9421FF90             stwu r1,-0x70(r1)
+  82687F2C  3D60821A             lis r11,-0x7de6
+  82687F30  3D408200             lis r10,-0x7e00
+  82687F34  7C7F1B78             or r31,r3,r3
+  82687F38  2B030000             cmplwi cr6,r3,0x0
+  82687F3C  3BCB81C8             subi r30,r11,0x7e38
+  82687F40  3BAA0F98             addi r29,r10,0xf98
+  82687F44  409A0020             bne cr6,0x82687f64
+  82687F48  3D608211             lis r11,-0x7def
+  82687F4C  7FA6EB78             or r6,r29,r29
+  82687F50  38EBCBB0             subi r7,r11,0x3450
+  82687F54  7FC3F378             or r3,r30,r30
+  82687F58  38A00000             li r5,0x0
+  82687F5C  388000E3             li r4,0xe3
+  82687F60  4BF4C5A1             bl 0x825d4500
+LAB_82687f64:
+  82687F64  817F0004             lwz r11,0x4(r31)
+  82687F68  2F0B0001             cmpwi cr6,r11,0x1
+  82687F6C  419A0020             beq cr6,0x82687f8c
+  82687F70  3D60821A             lis r11,-0x7de6
+  82687F74  7FA6EB78             or r6,r29,r29
+  82687F78  38EB821C             subi r7,r11,0x7de4
+  82687F7C  7FC3F378             or r3,r30,r30
+  82687F80  38A00000             li r5,0x0
+  82687F84  388000E4             li r4,0xe4
+  82687F88  4BF4C579             bl 0x825d4500
+LAB_82687f8c:
+  82687F8C  807F004C             lwz r3,0x4c(r31)
+  82687F90  38210070             addi r1,r1,0x70
+  82687F94  4828E778             b 0x8291670c
 
 ; 82687F98  dGeomTransformSetCleanup  (physics/ode/src/collision_transform.cpp:236)
   82687F98  7D8802A6             mfspr r12,LR
   82687F9C  4828E71D             bl 0x829166b8
+  82687FA0  9421FF80             stwu r1,-0x80(r1)
+  82687FA4  3D60821A             lis r11,-0x7de6
+  82687FA8  3D408200             lis r10,-0x7e00
+  82687FAC  7C7F1B78             or r31,r3,r3
+  82687FB0  7C9C2378             or r28,r4,r4
+  82687FB4  2B030000             cmplwi cr6,r3,0x0
+  82687FB8  3BCB81C8             subi r30,r11,0x7e38
+  82687FBC  3BAA0F98             addi r29,r10,0xf98
+  82687FC0  409A0020             bne cr6,0x82687fe0
+  82687FC4  3D608211             lis r11,-0x7def
+  82687FC8  7FA6EB78             or r6,r29,r29
+  82687FCC  38EBCBB0             subi r7,r11,0x3450
+  82687FD0  7FC3F378             or r3,r30,r30
+  82687FD4  38A00000             li r5,0x0
+  82687FD8  388000ED             li r4,0xed
+  82687FDC  4BF4C525             bl 0x825d4500
+LAB_82687fe0:
+  82687FE0  817F0004             lwz r11,0x4(r31)
+  82687FE4  2F0B0001             cmpwi cr6,r11,0x1
+  82687FE8  419A0020             beq cr6,0x82688008
+  82687FEC  3D60821A             lis r11,-0x7de6
+  82687FF0  7FA6EB78             or r6,r29,r29
+  82687FF4  38EB821C             subi r7,r11,0x7de4
+  82687FF8  7FC3F378             or r3,r30,r30
+  82687FFC  38A00000             li r5,0x0
+  82688000  388000EE             li r4,0xee
+  82688004  4BF4C4FD             bl 0x825d4500
+LAB_82688008:
+  82688008  939F0050             stw r28,0x50(r31)
+  8268800C  38210080             addi r1,r1,0x80
+  82688010  4828E6F8             b 0x82916708
 
 ; 82688018  dGeomTransformGetCleanup  (physics/ode/src/collision_transform.cpp:246)
   82688018  7D8802A6             mfspr r12,LR
   8268801C  4828E6A1             bl 0x829166bc
+  82688020  9421FF90             stwu r1,-0x70(r1)
+  82688024  3D60821A             lis r11,-0x7de6
+  82688028  3D408200             lis r10,-0x7e00
+  8268802C  7C7F1B78             or r31,r3,r3
+  82688030  2B030000             cmplwi cr6,r3,0x0
+  82688034  3BCB81C8             subi r30,r11,0x7e38
+  82688038  3BAA0F98             addi r29,r10,0xf98
+  8268803C  409A0020             bne cr6,0x8268805c
+  82688040  3D608211             lis r11,-0x7def
+  82688044  7FA6EB78             or r6,r29,r29
+  82688048  38EBCBB0             subi r7,r11,0x3450
+  8268804C  7FC3F378             or r3,r30,r30
+  82688050  38A00000             li r5,0x0
+  82688054  388000F7             li r4,0xf7
+  82688058  4BF4C4A9             bl 0x825d4500
+LAB_8268805c:
+  8268805C  817F0004             lwz r11,0x4(r31)
+  82688060  2F0B0001             cmpwi cr6,r11,0x1
+  82688064  419A0020             beq cr6,0x82688084
+  82688068  3D60821A             lis r11,-0x7de6
+  8268806C  7FA6EB78             or r6,r29,r29
+  82688070  38EB821C             subi r7,r11,0x7de4
+  82688074  7FC3F378             or r3,r30,r30
+  82688078  38A00000             li r5,0x0
+  8268807C  388000F8             li r4,0xf8
+  82688080  4BF4C481             bl 0x825d4500
+LAB_82688084:
+  82688084  807F0050             lwz r3,0x50(r31)
+  82688088  38210070             addi r1,r1,0x70
+  8268808C  4828E680             b 0x8291670c
 
 ; 82688090  dGeomTransformSetInfo  (physics/ode/src/collision_transform.cpp:256)
   82688090  7D8802A6             mfspr r12,LR
   82688094  4828E625             bl 0x829166b8
+  82688098  9421FF80             stwu r1,-0x80(r1)
+  8268809C  3D60821A             lis r11,-0x7de6
+  826880A0  3D408200             lis r10,-0x7e00
+  826880A4  7C7F1B78             or r31,r3,r3
+  826880A8  7C9C2378             or r28,r4,r4
+  826880AC  2B030000             cmplwi cr6,r3,0x0
+  826880B0  3BCB81C8             subi r30,r11,0x7e38
+  826880B4  3BAA0F98             addi r29,r10,0xf98
+  826880B8  409A0020             bne cr6,0x826880d8
+  826880BC  3D608211             lis r11,-0x7def
+  826880C0  7FA6EB78             or r6,r29,r29
+  826880C4  38EBCBB0             subi r7,r11,0x3450
+  826880C8  7FC3F378             or r3,r30,r30
+  826880CC  38A00000             li r5,0x0
+  826880D0  38800101             li r4,0x101
+  826880D4  4BF4C42D             bl 0x825d4500
+LAB_826880d8:
+  826880D8  817F0004             lwz r11,0x4(r31)
+  826880DC  2F0B0001             cmpwi cr6,r11,0x1
+  826880E0  419A0020             beq cr6,0x82688100
+  826880E4  3D60821A             lis r11,-0x7de6
+  826880E8  7FA6EB78             or r6,r29,r29
+  826880EC  38EB821C             subi r7,r11,0x7de4
+  826880F0  7FC3F378             or r3,r30,r30
+  826880F4  38A00000             li r5,0x0
+  826880F8  38800102             li r4,0x102
+  826880FC  4BF4C405             bl 0x825d4500
+LAB_82688100:
+  82688100  939F0054             stw r28,0x54(r31)
+  82688104  38210080             addi r1,r1,0x80
+  82688108  4828E600             b 0x82916708
 
 ; 82688110  dGeomTransformGetInfo  (physics/ode/src/collision_transform.cpp:266)
   82688110  7D8802A6             mfspr r12,LR
   82688114  4828E5A9             bl 0x829166bc
+  82688118  9421FF90             stwu r1,-0x70(r1)
+  8268811C  3D60821A             lis r11,-0x7de6
+  82688120  3D408200             lis r10,-0x7e00
+  82688124  7C7F1B78             or r31,r3,r3
+  82688128  2B030000             cmplwi cr6,r3,0x0
+  8268812C  3BCB81C8             subi r30,r11,0x7e38
+  82688130  3BAA0F98             addi r29,r10,0xf98
+  82688134  409A0020             bne cr6,0x82688154
+  82688138  3D608211             lis r11,-0x7def
+  8268813C  7FA6EB78             or r6,r29,r29
+  82688140  38EBCBB0             subi r7,r11,0x3450
+  82688144  7FC3F378             or r3,r30,r30
+  82688148  38A00000             li r5,0x0
+  8268814C  3880010B             li r4,0x10b
+  82688150  4BF4C3B1             bl 0x825d4500
+LAB_82688154:
+  82688154  817F0004             lwz r11,0x4(r31)
+  82688158  2F0B0001             cmpwi cr6,r11,0x1
+  8268815C  419A0020             beq cr6,0x8268817c
+  82688160  3D60821A             lis r11,-0x7de6
+  82688164  7FA6EB78             or r6,r29,r29
+  82688168  38EB821C             subi r7,r11,0x7de4
+  8268816C  7FC3F378             or r3,r30,r30
+  82688170  38A00000             li r5,0x0
+  82688174  3880010C             li r4,0x10c
+  82688178  4BF4C389             bl 0x825d4500
+LAB_8268817c:
+  8268817C  807F0054             lwz r3,0x54(r31)
+  82688180  38210070             addi r1,r1,0x70
+  82688184  4828E588             b 0x8291670c
 
 ; 82688188  ODE_GeomTransformSetRotation  (physics/ode/src/collision_transform.cpp:276)
   82688188  7D8802A6             mfspr r12,LR
   8268818C  4828E529             bl 0x829166b4
+  82688190  9421FF80             stwu r1,-0x80(r1)
+  82688194  3D60821A             lis r11,-0x7de6
+  82688198  3D408200             lis r10,-0x7e00
+  8268819C  7C7F1B78             or r31,r3,r3
+  826881A0  7C9E2378             or r30,r4,r4
+  826881A4  7CBB2B78             or r27,r5,r5
+  826881A8  2B030000             cmplwi cr6,r3,0x0
+  826881AC  3BAB81C8             subi r29,r11,0x7e38
+  826881B0  3B8A0F98             addi r28,r10,0xf98
+  826881B4  409A0020             bne cr6,0x826881d4
+  826881B8  3D608211             lis r11,-0x7def
+  826881BC  7F86E378             or r6,r28,r28
+  826881C0  38EBCBB0             subi r7,r11,0x3450
+  826881C4  7FA3EB78             or r3,r29,r29
+  826881C8  38A00000             li r5,0x0
+  826881CC  38800117             li r4,0x117
+  826881D0  4BF4C331             bl 0x825d4500
+LAB_826881d4:
+  826881D4  817F0004             lwz r11,0x4(r31)
+  826881D8  2F0B0001             cmpwi cr6,r11,0x1
+  826881DC  419A0020             beq cr6,0x826881fc
+  826881E0  3D60821A             lis r11,-0x7de6
+  826881E4  7F86E378             or r6,r28,r28
+  826881E8  38EB821C             subi r7,r11,0x7de4
+  826881EC  7FA3EB78             or r3,r29,r29
+  826881F0  38A00000             li r5,0x0
+  826881F4  38800118             li r4,0x118
+  826881F8  4BF4C309             bl 0x825d4500
+LAB_826881fc:
+  826881FC  389F0058             addi r4,r31,0x58
+  82688200  7F63DB78             or r3,r27,r27
+  82688204  4BFD6AE5             bl 0x8265ece8
+  82688208  C01E0000             lfs f0,0x0(r30)
+  8268820C  D01F0088             stfs f0,0x88(r31)
+  82688210  C1BE0004             lfs f13,0x4(r30)
+  82688214  D1BF008C             stfs f13,0x8c(r31)
+  82688218  C19E0008             lfs f12,0x8(r30)
+  8268821C  D19F0090             stfs f12,0x90(r31)
+  82688220  38210080             addi r1,r1,0x80
+  82688224  4828E4E0             b 0x82916704
 
 ; 82688228  ODE_GeomTransformSetOffset  (physics/ode/src/collision_transform.cpp:289)
   82688228  7D8802A6             mfspr r12,LR
   8268822C  4828E48D             bl 0x829166b8
+  82688230  9421FF80             stwu r1,-0x80(r1)
+  82688234  3D60821A             lis r11,-0x7de6
+  82688238  3D408200             lis r10,-0x7e00
+  8268823C  7C7F1B78             or r31,r3,r3
+  82688240  7C9C2378             or r28,r4,r4
+  82688244  2B030000             cmplwi cr6,r3,0x0
+  82688248  3BCB81C8             subi r30,r11,0x7e38
+  8268824C  3BAA0F98             addi r29,r10,0xf98
+  82688250  409A0020             bne cr6,0x82688270
+  82688254  3D608211             lis r11,-0x7def
+  82688258  7FA6EB78             or r6,r29,r29
+  8268825C  38EBCBB0             subi r7,r11,0x3450
+  82688260  7FC3F378             or r3,r30,r30
+  82688264  38A00000             li r5,0x0
+  82688268  38800124             li r4,0x124
+  8268826C  4BF4C295             bl 0x825d4500
+LAB_82688270:
+  82688270  817F0004             lwz r11,0x4(r31)
+  82688274  2F0B0001             cmpwi cr6,r11,0x1
+  82688278  419A0020             beq cr6,0x82688298
+  8268827C  3D60821A             lis r11,-0x7de6
+  82688280  7FA6EB78             or r6,r29,r29
+  82688284  38EB821C             subi r7,r11,0x7de4
+  82688288  7FC3F378             or r3,r30,r30
+  8268828C  38A00000             li r5,0x0
+  82688290  38800125             li r4,0x125
+  82688294  4BF4C26D             bl 0x825d4500
+LAB_82688298:
+  82688298  C01C0000             lfs f0,0x0(r28)
+  8268829C  D01F0088             stfs f0,0x88(r31)
+  826882A0  C1BC0004             lfs f13,0x4(r28)
+  826882A4  D1BF008C             stfs f13,0x8c(r31)
+  826882A8  C19C0008             lfs f12,0x8(r28)
+  826882AC  D19F0090             stfs f12,0x90(r31)
+  826882B0  38210080             addi r1,r1,0x80
+  826882B4  4828E454             b 0x82916708
 
 ; 826882B8  ODE_GeomTransformGetOffset  (physics/ode/src/collision_transform.cpp:301)
   826882B8  7D8802A6             mfspr r12,LR
   826882BC  4828E3FD             bl 0x829166b8
+  826882C0  9421FF80             stwu r1,-0x80(r1)
+  826882C4  3D60821A             lis r11,-0x7de6
+  826882C8  3D408200             lis r10,-0x7e00
+  826882CC  7C7F1B78             or r31,r3,r3
+  826882D0  7C9C2378             or r28,r4,r4
+  826882D4  2B030000             cmplwi cr6,r3,0x0
+  826882D8  3BCB81C8             subi r30,r11,0x7e38
+  826882DC  3BAA0F98             addi r29,r10,0xf98
+  826882E0  409A0020             bne cr6,0x82688300
+  826882E4  3D608211             lis r11,-0x7def
+  826882E8  7FA6EB78             or r6,r29,r29
+  826882EC  38EBCBB0             subi r7,r11,0x3450
+  826882F0  7FC3F378             or r3,r30,r30
+  826882F4  38A00000             li r5,0x0
+  826882F8  38800130             li r4,0x130
+  826882FC  4BF4C205             bl 0x825d4500
+LAB_82688300:
+  82688300  817F0004             lwz r11,0x4(r31)
+  82688304  2F0B0001             cmpwi cr6,r11,0x1
+  82688308  419A0020             beq cr6,0x82688328
+  8268830C  3D60821A             lis r11,-0x7de6
+  82688310  7FA6EB78             or r6,r29,r29
+  82688314  38EB821C             subi r7,r11,0x7de4
+  82688318  7FC3F378             or r3,r30,r30
+  8268831C  38A00000             li r5,0x0
+  82688320  38800131             li r4,0x131
+  82688324  4BF4C1DD             bl 0x825d4500
+LAB_82688328:
+  82688328  C01F0088             lfs f0,0x88(r31)
+  8268832C  D01C0000             stfs f0,0x0(r28)
+  82688330  C1BF008C             lfs f13,0x8c(r31)
+  82688334  D1BC0004             stfs f13,0x4(r28)
+  82688338  C19F0090             lfs f12,0x90(r31)
+  8268833C  D19C0008             stfs f12,0x8(r28)
+  82688340  38210080             addi r1,r1,0x80
+  82688344  4828E3C4             b 0x82916708
 
 ; 82688588  ODE_GeomTransformUpdateGeomOrientation  (physics/ode/src/collision_transform.cpp:313)
   82688588  7D8802A6             mfspr r12,LR
   8268858C  4828E131             bl 0x829166bc
+  82688590  9421FF90             stwu r1,-0x70(r1)
+  82688594  3D60821A             lis r11,-0x7de6
+  82688598  3D408200             lis r10,-0x7e00
+  8268859C  7C7F1B78             or r31,r3,r3
+  826885A0  2B030000             cmplwi cr6,r3,0x0
+  826885A4  3BCB81C8             subi r30,r11,0x7e38
+  826885A8  3BAA0F98             addi r29,r10,0xf98
+  826885AC  409A0020             bne cr6,0x826885cc
+  826885B0  3D608211             lis r11,-0x7def
+  826885B4  7FA6EB78             or r6,r29,r29
+  826885B8  38EBCBB0             subi r7,r11,0x3450
+  826885BC  7FC3F378             or r3,r30,r30
+  826885C0  38A00000             li r5,0x0
+  826885C4  3880013C             li r4,0x13c
+  826885C8  4BF4BF39             bl 0x825d4500
+LAB_826885cc:
+  826885CC  817F0004             lwz r11,0x4(r31)
+  826885D0  2F0B0001             cmpwi cr6,r11,0x1
+  826885D4  419A0020             beq cr6,0x826885f4
+  826885D8  3D60821A             lis r11,-0x7de6
+  826885DC  7FA6EB78             or r6,r29,r29
+  826885E0  38EB821C             subi r7,r11,0x7de4
+  826885E4  7FC3F378             or r3,r30,r30
+  826885E8  38A00000             li r5,0x0
+  826885EC  3880013D             li r4,0x13d
+  826885F0  4BF4BF11             bl 0x825d4500
+LAB_826885f4:
+  826885F4  817F004C             lwz r11,0x4c(r31)
+  826885F8  2B0B0000             cmplwi cr6,r11,0x0
+  826885FC  409A0020             bne cr6,0x8268861c
+  82688600  3D60821A             lis r11,-0x7de6
+  82688604  7FA6EB78             or r6,r29,r29
+  82688608  38EB82D8             subi r7,r11,0x7d28
+  8268860C  7FC3F378             or r3,r30,r30
+  82688610  38A00000             li r5,0x0
+  82688614  38800141             li r4,0x141
+  82688618  4BF4BEE9             bl 0x825d4500
+LAB_8268861c:
+  8268861C  817F0008             lwz r11,0x8(r31)
+  82688620  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  82688624  2F0A0000             cmpwi cr6,r10,0x0
+  82688628  419A000C             beq cr6,0x82688634
+  8268862C  7FE3FB78             or r3,r31,r31
+  82688630  4BFFFD19             bl 0x82688348
+LAB_82688634:
+  82688634  817F004C             lwz r11,0x4c(r31)
+  82688638  395F00C4             addi r10,r31,0xc4
+  8268863C  393F0094             addi r9,r31,0x94
+  82688640  914B0018             stw r10,0x18(r11)
+  82688644  811F004C             lwz r8,0x4c(r31)
+  82688648  9128001C             stw r9,0x1c(r8)
+  8268864C  807F004C             lwz r3,0x4c(r31)
+  82688650  38210070             addi r1,r1,0x70
+  82688654  4828E0B8             b 0x8291670c
 
 ; 82688970  dxGeomTransform::`scalar_deleting_destructor'  (line unknown)
   82688970  7D8802A6             mfspr r12,LR

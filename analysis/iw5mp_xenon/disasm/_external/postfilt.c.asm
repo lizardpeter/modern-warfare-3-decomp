@@ -3,3 +3,117 @@
 ; 828CCFB0  PostFilter  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/postfilt.c:111)
   828CCFB0  7D8802A6             mfspr r12,LR
   828CCFB4  48049701             bl 0x829166b4
+  828CCFB8  3981FFD0             subi r12,r1,0x30
+  828CCFBC  480497DD             bl 0x82916798
+  828CCFC0  9421FF20             stwu r1,-0xe0(r1)
+  828CCFC4  7CBF2B78             or r31,r5,r5
+  828CCFC8  FFC00890             fmr f30,f1
+  828CCFCC  38C10050             addi r6,r1,0x50
+  828CCFD0  38A10058             addi r5,r1,0x58
+  828CCFD4  38800040             li r4,0x40
+  828CCFD8  7C7B1B78             or r27,r3,r3
+  828CCFDC  4BFFC25D             bl 0x828c9238
+  828CCFE0  3D208200             lis r9,-0x7e00
+  828CCFE4  3960000B             li r11,0xb
+  828CCFE8  7FEAFB78             or r10,r31,r31
+  828CCFEC  C3E90F10             lfs f31,0xf10(r9)
+  828CCFF0  FC20F890             fmr f1,f31
+  828CCFF4  7D6903A6             mtspr CTR,r11
+LAB_828ccff8:
+  828CCFF8  C40A0004             lfsu f0,0x4(r10)
+  828CCFFC  EC00F83C             fnmsubs f0,f0,f0,f31
+  828CD000  EC200072             fmuls f1,f0,f1
+  828CD004  4200FFF4             bdnz 0x828ccff8
+  828CD008  4BFFC6E1             bl 0x828c96e8
+  828CD00C  3D408200             lis r10,-0x7e00
+  828CD010  3D208200             lis r9,-0x7e00
+  828CD014  C1BF0000             lfs f13,0x0(r31)
+  828CD018  EFADFB7A             fmadds f29,f13,f13,f31
+  828CD01C  39610070             addi r11,r1,0x70
+  828CD020  3BE00000             li r31,0x0
+  828CD024  3BABFFFC             subi r29,r11,0x4
+  828CD028  C3EA0F18             lfs f31,0xf18(r10)
+  828CD02C  3BC00005             li r30,0x5
+  828CD030  C0094948             lfs f0,0x4948(r9)
+  828CD034  EFC1F7FC             fnmsubs f30,f1,f31,f30
+  828CD038  EF8D0032             fmuls f28,f13,f0
+  828CD03C  3F80829B             lis r28,-0x7d65
+LAB_828cd040:
+  828CD040  817CFE88             lwz r11,-0x178(r28)
+  828CD044  7C1F5C2E             lfsx f0,r31,r11
+  828CD048  3BFF0080             addi r31,r31,0x80
+  828CD04C  EC20EF3A             fmadds f1,f0,f28,f29
+  828CD050  4BFFC699             bl 0x828c96e8
+  828CD054  EC01F7FC             fnmsubs f0,f1,f31,f30
+  828CD058  D41D0004             stfsu f0,0x4(r29)
+  828CD05C  37DEFFFF             subic. r30,r30,0x1
+  828CD060  4082FFE0             bne 0x828cd040
+  828CD064  3920003F             li r9,0x3f
+  828CD068  39600001             li r11,0x1
+  828CD06C  7F6ADB78             or r10,r27,r27
+  828CD070  7D2903A6             mtspr CTR,r9
+  828CD074  3D208220             lis r9,-0x7de0
+  828CD078  39097110             addi r8,r9,0x7110
+  828CD07C  C1897110             lfs f12,0x7110(r9)
+  828CD080  C1480004             lfs f10,0x4(r8)
+  828CD084  C168000C             lfs f11,0xc(r8)
+LAB_828cd088:
+  828CD088  5568073E             rlwinm r8,r11,0x0,0x1c,0x1f
+  828CD08C  C1AA0004             lfs f13,0x4(r10)
+  828CD090  7D692670             srawi r9,r11,0x4
+  828CD094  F9010060             std r8,0x60(r1)
+  828CD098  C8010060             lfd f0,0x60(r1)
+  828CD09C  FC00069C             fcfid f0,f0
+  828CD0A0  5529103A             rlwinm r9,r9,0x2,0x0,0x1d
+  828CD0A4  FC000018             frsp f0,f0
+  828CD0A8  39010070             addi r8,r1,0x70
+  828CD0AC  38E10074             addi r7,r1,0x74
+  828CD0B0  7D29442E             lfsx f9,r9,r8
+  828CD0B4  7D093C2E             lfsx f8,r9,r7
+  828CD0B8  ED084828             fsubs f8,f8,f9
+  828CD0BC  EC0002F2             fmuls f0,f0,f11
+  828CD0C0  EC08483A             fmadds f0,f8,f0,f9
+  828CD0C4  EC0D0028             fsubs f0,f13,f0
+  828CD0C8  EC0007F2             fmuls f0,f0,f31
+  828CD0CC  FF006000             fcmpu cr6,f0,f12
+  828CD0D0  40990008             ble cr6,0x828cd0d8
+  828CD0D4  FC006090             fmr f0,f12
+LAB_828cd0d8:
+  828CD0D8  FF005000             fcmpu cr6,f0,f10
+  828CD0DC  41990008             bgt cr6,0x828cd0e4
+  828CD0E0  FC005090             fmr f0,f10
+LAB_828cd0e4:
+  828CD0E4  2F0B0010             cmpwi cr6,r11,0x10
+  828CD0E8  40980020             bge cr6,0x828cd108
+  828CD0EC  7D6907B4             extsw r9,r11
+  828CD0F0  F9210068             std r9,0x68(r1)
+  828CD0F4  C9210068             lfd f9,0x68(r1)
+  828CD0F8  FD204E9C             fcfid f9,f9
+  828CD0FC  FD204818             frsp f9,f9
+  828CD100  ED2902F2             fmuls f9,f9,f11
+  828CD104  EC090032             fmuls f0,f9,f0
+LAB_828cd108:
+  828CD108  EC0D002A             fadds f0,f13,f0
+  828CD10C  D40A0004             stfsu f0,0x4(r10)
+  828CD110  396B0001             addi r11,r11,0x1
+  828CD114  4200FF74             bdnz 0x828cd088
+  828CD118  38C10054             addi r6,r1,0x54
+  828CD11C  38A1005C             addi r5,r1,0x5c
+  828CD120  38800040             li r4,0x40
+  828CD124  7F63DB78             or r3,r27,r27
+  828CD128  4BFFC111             bl 0x828c9238
+  828CD12C  39400040             li r10,0x40
+  828CD130  C0010050             lfs f0,0x50(r1)
+  828CD134  397BFFFC             subi r11,r27,0x4
+  828CD138  C1A10054             lfs f13,0x54(r1)
+  828CD13C  EC006828             fsubs f0,f0,f13
+  828CD140  7D4903A6             mtspr CTR,r10
+LAB_828cd144:
+  828CD144  C1AB0004             lfs f13,0x4(r11)
+  828CD148  EDAD002A             fadds f13,f13,f0
+  828CD14C  D5AB0004             stfsu f13,0x4(r11)
+  828CD150  4200FFF4             bdnz 0x828cd144
+  828CD154  382100E0             addi r1,r1,0xe0
+  828CD158  3981FFD0             subi r12,r1,0x30
+  828CD15C  48049689             bl 0x829167e4
+  828CD160  480495A4             b 0x82916704

@@ -3,3 +3,24 @@
 ; 828A9748  DuplicateHandle  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/duplicatehandle.c:103)
   828A9748  7D8802A6             mfspr r12,LR
   828A974C  4806CF71             bl 0x829166bc
+  828A9750  9421FF90             stwu r1,-0x70(r1)
+  828A9754  7C9F2378             or r31,r4,r4
+  828A9758  7CDE3378             or r30,r6,r6
+  828A975C  7D3D4B78             or r29,r9,r9
+  828A9760  7DAD6B78             or r13,r13,r13
+  828A9764  7FA5EB78             or r5,r29,r29
+  828A9768  7FC4F378             or r4,r30,r30
+  828A976C  7FE3FB78             or r3,r31,r31
+  828A9770  480987C5             bl 0x82941f34
+  828A9774  2C030000             cmpwi r3,0x0
+  828A9778  41800010             blt 0x828a9788
+  828A977C  7DCE7378             or r14,r14,r14
+  828A9780  38600001             li r3,0x1
+  828A9784  48000010             b 0x828a9794
+LAB_828a9788:
+  828A9788  48002591             bl 0x828abd18
+  828A978C  7DCE7378             or r14,r14,r14
+  828A9790  38600000             li r3,0x0
+LAB_828a9794:
+  828A9794  38210070             addi r1,r1,0x70
+  828A9798  4806CF74             b 0x8291670c

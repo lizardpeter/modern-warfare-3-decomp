@@ -5,8 +5,16 @@
 BOOL CopyFileA(LPCSTR lpExistingFileName,LPCSTR lpNewFileName,BOOL bFailIfExists)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(lpExistingFileName,lpNewFileName,bFailIfExists);
+  LPCSTR lpExistingFileName_00;
+  BOOL BVar1;
+  longlong lVar2;
+  
+  lVar2 = (longlong)bFailIfExists;
+  lpExistingFileName_00 = (LPCSTR)__savegprlr_29(lpExistingFileName);
+  BVar1 = CopyFileExA(lpExistingFileName_00,lpNewFileName,(LPPROGRESS_ROUTINE)0x0,(LPVOID)0x0,
+                      (LPBOOL)0x0,(uint)(lVar2 != 0));
+  BVar1 = __restgprlr_29(BVar1);
+  return BVar1;
 }
 
 

@@ -3,6 +3,179 @@
 ; 828F1E80  `anonymous_namespace'::i3dl2_to_properties  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room_3dl2_float.cpp:28)
   828F1E80  7D8802A6             mfspr r12,LR
   828F1E84  48024839             bl 0x829166bc
+  828F1E88  DBC1FFD0             stfd f30,-0x30(r1)
+  828F1E8C  DBE1FFD8             stfd f31,-0x28(r1)
+  828F1E90  9421FF70             stwu r1,-0x90(r1)
+  828F1E94  3D608221             lis r11,-0x7ddf
+  828F1E98  7CBF2B78             or r31,r5,r5
+  828F1E9C  3D408221             lis r10,-0x7ddf
+  828F1EA0  3D208221             lis r9,-0x7ddf
+  828F1EA4  3D008221             lis r8,-0x7ddf
+  828F1EA8  816B80A0             lwz r11,-0x7f60(r11)
+  828F1EAC  7C9E2378             or r30,r4,r4
+  828F1EB0  3CE08200             lis r7,-0x7e00
+  828F1EB4  3CC08200             lis r6,-0x7e00
+  828F1EB8  3BA00004             li r29,0x4
+  828F1EBC  38A00006             li r5,0x6
+  828F1EC0  917F0030             stw r11,0x30(r31)
+  828F1EC4  816A8098             lwz r11,-0x7f68(r10)
+  828F1EC8  C3E73EC0             lfs f31,0x3ec0(r7)
+  828F1ECC  917F0008             stw r11,0x8(r31)
+  828F1ED0  C3C60F10             lfs f30,0xf10(r6)
+  828F1ED4  816A8098             lwz r11,-0x7f68(r10)
+  828F1ED8  917F000C             stw r11,0xc(r31)
+  828F1EDC  8169809C             lwz r11,-0x7f64(r9)
+  828F1EE0  917F0010             stw r11,0x10(r31)
+  828F1EE4  8169809C             lwz r11,-0x7f64(r9)
+  828F1EE8  917F0014             stw r11,0x14(r31)
+  828F1EEC  C00880B8             lfs f0,-0x7f48(r8)
+  828F1EF0  D01F0050             stfs f0,0x50(r31)
+  828F1EF4  80840000             lwz r4,0x0(r4)
+  828F1EF8  7C8307B4             extsw r3,r4
+  828F1EFC  F8610050             std r3,0x50(r1)
+  828F1F00  C8010050             lfd f0,0x50(r1)
+  828F1F04  FDA0069C             fcfid f13,f0
+  828F1F08  FD806818             frsp f12,f13
+  828F1F0C  ED6C07F2             fmuls f11,f12,f31
+  828F1F10  D17F0038             stfs f11,0x38(r31)
+  828F1F14  817E0004             lwz r11,0x4(r30)
+  828F1F18  7D6A07B4             extsw r10,r11
+  828F1F1C  F9410050             std r10,0x50(r1)
+  828F1F20  C9410050             lfd f10,0x50(r1)
+  828F1F24  FD20569C             fcfid f9,f10
+  828F1F28  93BF0024             stw r29,0x24(r31)
+  828F1F2C  FD004818             frsp f8,f9
+  828F1F30  90BF002C             stw r5,0x2c(r31)
+  828F1F34  39600008             li r11,0x8
+  828F1F38  ECE807F2             fmuls f7,f8,f31
+  828F1F3C  D0FF003C             stfs f7,0x3c(r31)
+  828F1F40  C0DE0010             lfs f6,0x10(r30)
+  828F1F44  FF06F000             fcmpu cr6,f6,f30
+  828F1F48  4198006C             blt cr6,0x828f1fb4
+  828F1F4C  917F0028             stw r11,0x28(r31)
+  828F1F50  C03E0010             lfs f1,0x10(r30)
+  828F1F54  48027035             bl 0x82918f88
+  828F1F58  FDA00818             frsp f13,f1
+  828F1F5C  3D408221             lis r10,-0x7ddf
+  828F1F60  C80A8DC0             lfd f0,-0x7240(r10)
+  828F1F64  FD8D0032             fmul f12,f13,f0
+  828F1F68  FD60601E             fctiwz f11,f12
+  828F1F6C  D9610050             stfd f11,0x50(r1)
+  828F1F70  81610054             lwz r11,0x54(r1)
+  828F1F74  2F0BFFF8             cmpwi cr6,r11,-0x8
+  828F1F78  40980010             bge cr6,0x828f1f88
+  828F1F7C  3960FFF8             li r11,-0x8
+  828F1F80  396B0008             addi r11,r11,0x8
+  828F1F84  48000018             b 0x828f1f9c
+LAB_828f1f88:
+  828F1F88  2F0B0000             cmpwi cr6,r11,0x0
+  828F1F8C  4098000C             bge cr6,0x828f1f98
+  828F1F90  396B0008             addi r11,r11,0x8
+  828F1F94  48000008             b 0x828f1f9c
+LAB_828f1f98:
+  828F1F98  39600008             li r11,0x8
+LAB_828f1f9c:
+  828F1F9C  917F0020             stw r11,0x20(r31)
+  828F1FA0  C1BE0010             lfs f13,0x10(r30)
+  828F1FA4  C01E000C             lfs f0,0xc(r30)
+  828F1FA8  ED800372             fmuls f12,f0,f13
+  828F1FAC  D19F0048             stfs f12,0x48(r31)
+  828F1FB0  48000060             b 0x828f2010
+LAB_828f1fb4:
+  828F1FB4  917F0020             stw r11,0x20(r31)
+  828F1FB8  C03E0010             lfs f1,0x10(r30)
+  828F1FBC  48026FCD             bl 0x82918f88
+  828F1FC0  FDA00818             frsp f13,f1
+  828F1FC4  3D408208             lis r10,-0x7df8
+  828F1FC8  C80A9F50             lfd f0,-0x60b0(r10)
+  828F1FCC  FD8D0032             fmul f12,f13,f0
+  828F1FD0  FD60601E             fctiwz f11,f12
+  828F1FD4  D9610050             stfd f11,0x50(r1)
+  828F1FD8  81610054             lwz r11,0x54(r1)
+  828F1FDC  2F0BFFF8             cmpwi cr6,r11,-0x8
+  828F1FE0  40980010             bge cr6,0x828f1ff0
+  828F1FE4  3960FFF8             li r11,-0x8
+  828F1FE8  396B0008             addi r11,r11,0x8
+  828F1FEC  48000018             b 0x828f2004
+LAB_828f1ff0:
+  828F1FF0  2F0B0000             cmpwi cr6,r11,0x0
+  828F1FF4  4098000C             bge cr6,0x828f2000
+  828F1FF8  396B0008             addi r11,r11,0x8
+  828F1FFC  48000008             b 0x828f2004
+LAB_828f2000:
+  828F2000  39600008             li r11,0x8
+LAB_828f2004:
+  828F2004  917F0028             stw r11,0x28(r31)
+  828F2008  C01E000C             lfs f0,0xc(r30)
+  828F200C  D01F0048             stfs f0,0x48(r31)
+LAB_828f2010:
+  828F2010  817E0014             lwz r11,0x14(r30)
+  828F2014  3D408221             lis r10,-0x7ddf
+  828F2018  3D208200             lis r9,-0x7e00
+  828F201C  7D6807B4             extsw r8,r11
+  828F2020  F9010050             std r8,0x50(r1)
+  828F2024  C8010050             lfd f0,0x50(r1)
+  828F2028  FDA0069C             fcfid f13,f0
+  828F202C  FD606818             frsp f11,f13
+  828F2030  C1894214             lfs f12,0x4214(r9)
+  828F2034  ED4B07F2             fmuls f10,f11,f31
+  828F2038  D15F0040             stfs f10,0x40(r31)
+  828F203C  C13E0018             lfs f9,0x18(r30)
+  828F2040  80EA8090             lwz r7,-0x7f70(r10)
+  828F2044  F8E10050             std r7,0x50(r1)
+  828F2048  C9010050             lfd f8,0x50(r1)
+  828F204C  EC090332             fmuls f0,f9,f12
+  828F2050  FCE0469C             fcfid f7,f8
+  828F2054  FDA03818             frsp f13,f7
+  828F2058  FF006800             fcmpu cr6,f0,f13
+  828F205C  41980008             blt cr6,0x828f2064
+  828F2060  EC0DF028             fsubs f0,f13,f30
+LAB_828f2064:
+  828F2064  FF00F000             fcmpu cr6,f0,f30
+  828F2068  41990008             bgt cr6,0x828f2070
+  828F206C  FC00F090             fmr f0,f30
+LAB_828f2070:
+  828F2070  FC00065E             fctidz f0,f0
+  828F2074  7C00FFAE             stfiwx f0,0,r31
+  828F2078  3D608221             lis r11,-0x7ddf
+  828F207C  815E001C             lwz r10,0x1c(r30)
+  828F2080  7D4907B4             extsw r9,r10
+  828F2084  F9210050             std r9,0x50(r1)
+  828F2088  C9A10050             lfd f13,0x50(r1)
+  828F208C  FD606E9C             fcfid f11,f13
+  828F2090  FD405818             frsp f10,f11
+  828F2094  ED2A07F2             fmuls f9,f10,f31
+  828F2098  D13F0044             stfs f9,0x44(r31)
+  828F209C  810B8094             lwz r8,-0x7f6c(r11)
+  828F20A0  C11E0020             lfs f8,0x20(r30)
+  828F20A4  EC080332             fmuls f0,f8,f12
+  828F20A8  F9010050             std r8,0x50(r1)
+  828F20AC  C8E10050             lfd f7,0x50(r1)
+  828F20B0  FCC03E9C             fcfid f6,f7
+  828F20B4  FDA03018             frsp f13,f6
+  828F20B8  FF006800             fcmpu cr6,f0,f13
+  828F20BC  41980008             blt cr6,0x828f20c4
+  828F20C0  EC0DF028             fsubs f0,f13,f30
+LAB_828f20c4:
+  828F20C4  FC00065E             fctidz f0,f0
+  828F20C8  7C1FEFAE             stfiwx f0,r31,r29
+  828F20CC  3D608200             lis r11,-0x7e00
+  828F20D0  C00B3F44             lfs f0,0x3f44(r11)
+  828F20D4  C1BE0024             lfs f13,0x24(r30)
+  828F20D8  ED8D0032             fmuls f12,f13,f0
+  828F20DC  FD60665E             fctidz f11,f12
+  828F20E0  D9610050             stfd f11,0x50(r1)
+  828F20E4  81410054             lwz r10,0x54(r1)
+  828F20E8  915F001C             stw r10,0x1c(r31)
+  828F20EC  915F0018             stw r10,0x18(r31)
+  828F20F0  C15E0028             lfs f10,0x28(r30)
+  828F20F4  D15F004C             stfs f10,0x4c(r31)
+  828F20F8  C13E002C             lfs f9,0x2c(r30)
+  828F20FC  D13F0034             stfs f9,0x34(r31)
+  828F2100  38210090             addi r1,r1,0x90
+  828F2104  CBC1FFD0             lfd f30,-0x30(r1)
+  828F2108  CBE1FFD8             lfd f31,-0x28(r1)
+  828F210C  48024600             b 0x8291670c
 
 ; 828F2268  princeton_digital::stereo_room_3dl2_t<float>::stereo_room_3dl2_t<float>  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room_3dl2_float.cpp:107)
   828F2268  7D8802A6             mfspr r12,LR

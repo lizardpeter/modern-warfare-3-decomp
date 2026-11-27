@@ -32,20 +32,91 @@ void FreeSpCBM(int *param_1)
 
 // 828C8D88  PutFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:180)
 
-void PutFrameSpCBM(void)
+void PutFrameSpCBM(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  uint uVar2;
+  longlong lVar3;
+  uint *puVar5;
+  longlong lVar4;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  
+  lVar3 = __savegprlr_23();
+  puVar5 = (uint *)lVar3;
+  uVar1 = *puVar5;
+  uVar10 = (ulonglong)uVar1;
+  uVar2 = puVar5[1];
+  trapWord(5,uVar10 & ~(((param_2 & 0x7fffffff) << 1 | (param_2 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  uVar6 = (param_2 - (longlong)((int)param_2 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)uVar2 + uVar10;
+  uVar7 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
+  uVar9 = uVar10 - uVar7;
+  trapWord(6,uVar10,0);
+  trapWord(6,uVar10,0);
+  trapWord(5,uVar10 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  lVar4 = (uVar7 & 0x3fffffff) * 4 + lVar3 + 8;
+  uVar6 = param_3;
+  if ((int)uVar9 < (int)param_3) {
+    lVar8 = (uVar9 & 0x3fffffff) * 4;
+    (*DAT_848958cc)(lVar4,param_4,lVar8);
+    param_4 = lVar8 + param_4;
+    lVar4 = lVar3 + 8;
+    uVar6 = param_3 - uVar9;
+  }
+  (*DAT_848958cc)(lVar4,param_4,(uVar6 & 0x3fffffff) << 2);
+  uVar6 = (param_3 - (longlong)((int)param_3 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)uVar2 + uVar10;
+  trapWord(5,uVar10 & ~(((param_3 & 0x7fffffff) << 1 | (param_3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  trapWord(6,uVar10,0);
+  puVar5[1] = (int)uVar6 - ((int)uVar6 / (int)uVar1) * uVar1;
+  trapWord(6,uVar10,0);
+  trapWord(5,uVar10 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  __restgprlr_23();
+  return;
 }
 
 
 // 828C8EA8  GetFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:266)
 
-void GetFrameSpCBM(void)
+void GetFrameSpCBM(undefined8 param_1,longlong param_2,ulonglong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  
+  lVar2 = __savegprlr_26();
+  uVar1 = *(uint *)lVar2;
+  uVar6 = (ulonglong)uVar1;
+  trapWord(6,uVar6,0);
+  uVar4 = -(((int)param_3 + 1 >> 1) + param_2);
+  trapWord(6,uVar6,0);
+  uVar5 = (uVar4 - (longlong)((int)uVar4 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)((uint *)lVar2)[1] + uVar6;
+  trapWord(5,uVar6 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  uVar4 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
+  uVar8 = uVar6 - uVar4;
+  trapWord(5,uVar6 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  lVar3 = (uVar4 & 0x3fffffff) * 4 + lVar2 + 8;
+  if ((int)uVar8 < (int)param_3) {
+    lVar7 = (uVar8 & 0x3fffffff) * 4;
+    (*DAT_848958cc)(param_4,lVar3,lVar7);
+    param_3 = param_3 - uVar8;
+    param_4 = lVar7 + param_4;
+    lVar3 = lVar2 + 8;
+  }
+  (*DAT_848958cc)(param_4,lVar3,(param_3 & 0x3fffffff) << 2);
+  __restgprlr_26();
+  return;
 }
 

@@ -3,10 +3,62 @@
 ; 828A9AF8  XPhysicalAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:33)
   828A9AF8  7D8802A6             mfspr r12,LR
   828A9AFC  4806CBBD             bl 0x829166b8
+  828A9B00  9421FF80             stwu r1,-0x80(r1)
+  828A9B04  7C7D1B78             or r29,r3,r3
+  828A9B08  7C9F2378             or r31,r4,r4
+  828A9B0C  7CBE2B78             or r30,r5,r5
+  828A9B10  7CDC3378             or r28,r6,r6
+  828A9B14  7DAD6B78             or r13,r13,r13
+  828A9B18  3D608489             lis r11,-0x7b77
+  828A9B1C  816B5774             lwz r11,0x5774(r11)
+  828A9B20  2F0B0000             cmpwi cr6,r11,0x0
+  828A9B24  419A0008             beq cr6,0x828a9b2c
+  828A9B28  579C00C2             rlwinm r28,r28,0x0,0x3,0x1
+LAB_828a9b2c:
+  828A9B2C  2F1FFFFF             cmpwi cr6,r31,-0x1
+  828A9B30  419A0018             beq cr6,0x828a9b48
+  828A9B34  7D7DFA14             add r11,r29,r31
+  828A9B38  7FE6FB78             or r6,r31,r31
+  828A9B3C  38EBFFFF             subi r7,r11,0x1
+  828A9B40  3BC00000             li r30,0x0
+  828A9B44  4800000C             b 0x828a9b50
+LAB_828a9b48:
+  828A9B48  38C00000             li r6,0x0
+  828A9B4C  38E0FFFF             li r7,-0x1
+LAB_828a9b50:
+  828A9B50  7FC8F378             or r8,r30,r30
+  828A9B54  7F85E378             or r5,r28,r28
+  828A9B58  7FA4EB78             or r4,r29,r29
+  828A9B5C  38600000             li r3,0x0
+  828A9B60  48097F35             bl 0x82941a94
+  828A9B64  7C7F1B79             or. r31,r3,r3
+  828A9B68  4082000C             bne 0x828a9b74
+  828A9B6C  38600008             li r3,0x8
+  828A9B70  480022C1             bl 0x828abe30
+LAB_828a9b74:
+  828A9B74  7DCE7378             or r14,r14,r14
+  828A9B78  7FE3FB78             or r3,r31,r31
+  828A9B7C  38210080             addi r1,r1,0x80
+  828A9B80  4806CB88             b 0x82916708
 
 ; 828A9B88  XPhysicalProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:131)
   828A9B88  7D8802A6             mfspr r12,LR
   828A9B8C  4806CB31             bl 0x829166bc
+  828A9B90  9421FF90             stwu r1,-0x70(r1)
+  828A9B94  7C7E1B78             or r30,r3,r3
+  828A9B98  7C9F2378             or r31,r4,r4
+  828A9B9C  7CBD2B78             or r29,r5,r5
+  828A9BA0  7DAD6B78             or r13,r13,r13
+  828A9BA4  2B1F0000             cmplwi cr6,r31,0x0
+  828A9BA8  419A0014             beq cr6,0x828a9bbc
+  828A9BAC  7FA5EB78             or r5,r29,r29
+  828A9BB0  7FE4FB78             or r4,r31,r31
+  828A9BB4  7FC3F378             or r3,r30,r30
+  828A9BB8  4809839D             bl 0x82941f54
+LAB_828a9bbc:
+  828A9BBC  7DCE7378             or r14,r14,r14
+  828A9BC0  38210070             addi r1,r1,0x70
+  828A9BC4  4806CB48             b 0x8291670c
 
 ; 828A9BC8  XQueryMemoryProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:157)
   828A9BC8  7D8802A6             mfspr r12,LR

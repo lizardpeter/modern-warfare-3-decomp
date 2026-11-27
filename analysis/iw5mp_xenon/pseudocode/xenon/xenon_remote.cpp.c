@@ -41,7 +41,7 @@ undefined8 NET_DebugConsoleBinarySendHandler(int param_1)
     *(int *)(param_1 + 4) = iVar3;
     *(int *)(param_1 + 0x14) = iVar1 - iVar3;
     uVar2 = 0x2da0000;
-    *(undefined **)(param_1 + 8) = &DAT_84277350 + (*(int *)(param_1 + 0xc) - iVar1);
+    *(int *)(param_1 + 8) = (int)&DAT_84277350 + (*(int *)(param_1 + 0xc) - iVar1);
   }
   return uVar2;
 }
@@ -57,7 +57,6 @@ undefined4 * NET_AllocNode(void)
   Sys_EnterCriticalSection(0x13);
   puVar1 = DAT_8425f314;
   if (DAT_8425f314 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190720,0xae,0,0xffffffff82000f98,0xffffffff8206f7e8);
   }
   DAT_8425f314 = (undefined4 *)*DAT_8425f314;
@@ -84,13 +83,66 @@ void NET_FreeNode(undefined4 *param_1)
 }
 
 
+// 82654C78  NET_InitStringNodes  (xenon/xenon_remote.cpp:196)
+
+void NET_InitStringNodes(void)
+
+{
+  undefined4 *puVar1;
+  longlong lVar2;
+  
+  lVar2 = 0x3ff;
+  DAT_8425f314 = &DAT_84279380;
+  puVar1 = &DAT_84279380;
+  do {
+    *puVar1 = puVar1 + 2;
+    lVar2 = lVar2 + -1;
+    puVar1 = puVar1 + 2;
+  } while (lVar2 != 0);
+  if (DAT_8427b378 == 0) {
+    return;
+  }
+  MyAssertHandler(0xffffffff82190720,0xcc,0,0xffffffff82000f98,0xffffffff82190764);
+  return;
+}
+
+
 // 82654CD8  RConsCmdListBuildCallback  (xenon/xenon_remote.cpp:211)
 
 void RConsCmdListBuildCallback(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
+  char *pcVar4;
+  
+  pcVar2 = (char *)__savegprlr_28();
+  pcVar3 = pcVar2;
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82190720,0xd6,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  do {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  pcVar3 = pcVar3 + (-1 - (int)pcVar2);
+  if (DAT_84277344 <= (int)(pcVar3 + (int)DAT_84277348 + 1)) {
+    MyAssertHandler(0xffffffff82190720,0xd9,0,0xffffffff82151828,0xffffffff821907a0,pcVar3);
+  }
+  pcVar2 = pcVar2 + -1;
+  pcVar4 = (char *)(DAT_84277340 + (int)DAT_84277348 + -1);
+  do {
+    pcVar2 = pcVar2 + 1;
+    cVar1 = *pcVar2;
+    pcVar4 = pcVar4 + 1;
+    *pcVar4 = cVar1;
+  } while (cVar1 != '\0');
+  DAT_84277348 = pcVar3 + (int)DAT_84277348 + 1;
+  DAT_84277348[DAT_84277340 + -1] = ',';
+  DAT_84277348[DAT_84277340] = '\0';
+  __restgprlr_28();
+  return;
 }
 
 
@@ -187,8 +239,127 @@ void RConsViewPosBuild(void)
 void RConsGetDVar(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  uint uVar2;
+  float fVar3;
+  int iVar4;
+  byte bVar5;
+  undefined4 *puVar6;
+  undefined8 uVar7;
+  undefined4 *puVar8;
+  char *pcVar9;
+  undefined1 *puVar10;
+  char *pcVar11;
+  undefined *puVar12;
+  longlong lVar13;
+  char *local_30;
+  float fStack_2c;
+  
   __savegprlr_29();
+  puVar6 = (undefined4 *)Dvar_FindVar();
+  if (puVar6 != (undefined4 *)0x0) {
+    uVar2 = puVar6[3];
+    lVar13 = *(longlong *)(puVar6 + 3);
+    puVar8 = puVar6 + 3;
+    fVar3 = (float)puVar6[5];
+    local_30._0_1_ = (byte)((ulonglong)lVar13 >> 0x38);
+    bVar5 = local_30._0_1_;
+    fStack_2c = (float)lVar13;
+    local_30 = (char *)((ulonglong)lVar13 >> 0x20);
+    switch(*(undefined1 *)((int)puVar6 + 10)) {
+    case 0:
+      if (bVar5 == 0) {
+        uVar7 = 0xffffffff8203248c;
+      }
+      else {
+        uVar7 = 0xffffffff82032490;
+      }
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff82000f98,uVar7,puVar8);
+      break;
+    case 1:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff820181dc,(double)(float)local_30,puVar8);
+      break;
+    case 2:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8217b3ec,(double)(float)local_30,
+                  (double)fStack_2c);
+      break;
+    case 3:
+    case 9:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff82023670,(double)(float)local_30,
+                  (double)fStack_2c,(double)fVar3);
+      break;
+    case 4:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c4fc,(double)(float)local_30,
+                  (double)fStack_2c,(double)fVar3,(double)(float)puVar6[6]);
+      break;
+    case 5:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c28c,local_30,puVar8);
+      break;
+    case 6:
+      if ((lVar13 < 0) || (((int)puVar6[0xf] <= (int)local_30 && (local_30 != (char *)0x0)))) {
+        MyAssertHandler(0xffffffff82190720,0x13a,0,0xffffffff8217b36c,0xffffffff8217b388,local_30);
+      }
+      if (puVar6[0xf] == 0) {
+        DAT_8425f338 = 0;
+      }
+      else {
+        pcVar9 = (char *)((int)&DAT_8425f334 + 3);
+        pcVar11 = (char *)(*(int *)(puVar6[0x10] + (int)local_30 * 4) + -1);
+        do {
+          pcVar11 = pcVar11 + 1;
+          cVar1 = *pcVar11;
+          pcVar9 = pcVar9 + 1;
+          *pcVar9 = cVar1;
+        } while (cVar1 != '\0');
+      }
+      break;
+    case 7:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff820068af,fVar3,puVar8);
+      if (local_30 == (char *)0x0) {
+        MyAssertHandler(0xffffffff82190720,0x142,0,0xffffffff8201f614,0xffffffff8217b35c,*puVar6);
+      }
+      iVar4 = (int)&DAT_8425f338 - (int)local_30;
+      do {
+        cVar1 = *local_30;
+        local_30[iVar4] = cVar1;
+        local_30 = local_30 + 1;
+      } while (cVar1 != '\0');
+      break;
+    case 8:
+      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c4fc,(double)((float)bVar5 * 0.003921569)
+                  ,(double)((float)(uVar2 >> 0x10 & 0xff) * 0.003921569),
+                  (double)((float)(uVar2 >> 8 & 0xff) * 0.003921569),
+                  (double)((float)(uVar2 & 0xff) * 0.003921569));
+      break;
+    default:
+      puVar10 = (undefined1 *)((int)&DAT_8425f334 + 3);
+      puVar12 = &UNK_821907ff;
+      lVar13 = 0x13;
+      do {
+        puVar12 = puVar12 + 1;
+        puVar10 = puVar10 + 1;
+        *puVar10 = *puVar12;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+    }
+    pcVar11 = &DAT_8425f338;
+    do {
+      pcVar9 = pcVar11;
+      pcVar11 = pcVar9 + 1;
+    } while (*pcVar9 != '\0');
+    DAT_8425f334 = pcVar9 + 0x7bda0cc8;
+    __restgprlr_29();
+    return;
+  }
+  DAT_8425f338 = 0;
+  pcVar11 = &DAT_8425f338;
+  do {
+    pcVar9 = pcVar11;
+    pcVar11 = pcVar9 + 1;
+  } while (*pcVar9 != '\0');
+  DAT_8425f334 = pcVar9 + 0x7bda0cc8;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -202,7 +373,6 @@ undefined8 RConsSendHandler(int param_1,int param_2)
   int iVar3;
   
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190720,0x16d,0,0xffffffff82000f98,0xffffffff82190814);
   }
   RtlEnterCriticalSection(0xffffffff8425f318);
@@ -241,7 +411,6 @@ undefined8 RConsBeginBufferSend(undefined4 *param_1)
   int iVar2;
   
   if (DAT_84277338 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190720,0x18b,0,0xffffffff82000f98,0xffffffff82190820);
   }
   if (DAT_8425f334 == 0) {
@@ -270,23 +439,73 @@ void RConsWriteTextToRemote(void)
 }
 
 
-// 826556E0  RConsBinarySendJob  (xenon/xenon_remote.cpp:469)
+// 82655668  RConsBlockUntilBinSent  (xenon/xenon_remote.cpp:450)
 
-void RConsBinarySendJob(void)
+void RConsBlockUntilBinSent(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  DWORD DVar1;
+  
   __savegprlr_29();
+  if (DAT_84277338 != '\0') {
+    RtlLeaveCriticalSection(0xffffffff8425f318);
+    DVar1 = WaitForSingleObject(DAT_8427733c,6000);
+    RtlEnterCriticalSection(0xffffffff8425f318);
+    __restgprlr_29(-(DVar1 != 0x102) & 1);
+    return;
+  }
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 826556E0  RConsBinarySendJob  (xenon/xenon_remote.cpp:469)
+
+void RConsBinarySendJob(undefined8 param_1,undefined8 param_2)
+
+{
+  code *pcVar2;
+  char cVar3;
+  undefined8 uVar1;
+  
+  pcVar2 = (code *)__savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff8425f318);
+  cVar3 = RConsBlockUntilBinSent();
+  if (cVar3 == '\0') {
+    RtlLeaveCriticalSection(0xffffffff8425f318);
+    __restgprlr_29(0x2da0000);
+    return;
+  }
+  (*pcVar2)();
+  uVar1 = RConsBeginBufferSend(param_2);
+  RtlLeaveCriticalSection(0xffffffff8425f318);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 82655750  RConsBinarySendJobArg  (xenon/xenon_remote.cpp:488)
 
-void RConsBinarySendJobArg(void)
+void RConsBinarySendJobArg(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  code *pcVar2;
+  char cVar3;
+  undefined8 uVar1;
+  
+  pcVar2 = (code *)__savegprlr_28();
+  RtlEnterCriticalSection(0xffffffff8425f318);
+  cVar3 = RConsBlockUntilBinSent();
+  if (cVar3 == '\0') {
+    RtlLeaveCriticalSection(0xffffffff8425f318);
+    __restgprlr_28(0x2da0000);
+    return;
+  }
+  (*pcVar2)(param_2);
+  uVar1 = RConsBeginBufferSend(param_3);
+  RtlLeaveCriticalSection(0xffffffff8425f318);
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
@@ -366,8 +585,79 @@ void RConsInit(void)
 void NET_DebugConsoleCmdProcessor(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  HANDLE pvVar2;
+  int iVar3;
+  undefined *puVar4;
+  undefined4 *in_r6;
+  
+  iVar3 = __savegprlr_29();
+  bVar1 = *(byte *)(iVar3 + 2);
+  if (bVar1 < 100) {
+    if (bVar1 == 99) {
+      if (DAT_84279378 != 0) {
+        puVar4 = (undefined *)NET_AllocNode();
+        iVar3 = CopyString(iVar3 + 3,0xffffffff821908c0,0);
+        *(int *)(puVar4 + 4) = iVar3;
+        if (iVar3 == 0) {
+          MyAssertHandler(0xffffffff82190720,0x277,0,0xffffffff82000f98,0xffffffff821908b4);
+        }
+        RtlEnterCriticalSection(0xffffffff84279350);
+        pvVar2 = DAT_84279374;
+        *(undefined **)PTR_DAT_82995ae8 = puVar4;
+        PTR_DAT_82995ae8 = puVar4;
+        SetEvent(pvVar2);
+LAB_82655bdc:
+        RtlLeaveCriticalSection(0xffffffff84279350);
+        __restgprlr_29(0x2da0000);
+        return;
+      }
+    }
+    else if (bVar1 == 0x61) {
+      DAT_84279370 = 1;
+      Sys_TitleServerThreadData();
+      NET_InitStringNodes();
+      if (DAT_84279378 == 0) goto LAB_82655c1c;
+    }
+    else if (bVar1 == 0x62) {
+      RtlEnterCriticalSection(0xffffffff84279350);
+      if (DAT_8427b380 != '\0') {
+        MyAssertHandler(0xffffffff82190720,0x254,0,0xffffffff82000f98,0xffffffff821908e0);
+      }
+      pvVar2 = DAT_8427734c;
+      if (DAT_8425f310 != 0) {
+        iVar3 = DAT_8425f310 + 4;
+        DAT_84277350 = DAT_8425f310 << 0x18 |
+                       (DAT_8425f310 & 0xff00) << 8 |
+                       DAT_8425f310 >> 8 & 0xff00 | DAT_8425f310 >> 0x18;
+        in_r6[2] = &DAT_84277350;
+        *in_r6 = NET_DebugConsoleBinarySendHandler;
+        DAT_8427b380 = 1;
+        in_r6[3] = iVar3;
+        in_r6[5] = iVar3;
+        in_r6[4] = 0;
+        ResetEvent(pvVar2);
+        RtlLeaveCriticalSection(0xffffffff84279350);
+        __restgprlr_29(0x2da0003);
+        return;
+      }
+      if ((DAT_84279370 == 0) && (DAT_84279378 == 0)) {
+        RtlLeaveCriticalSection(0xffffffff84279350);
+        __restgprlr_29(0xffffffff82da0000);
+        return;
+      }
+      goto LAB_82655bdc;
+    }
+  }
+  else if (bVar1 == 0x7a) {
+    Com_Printf(0x10,0xffffffff821908a8,iVar3 + 3);
+    Cbuf_AddText(0,iVar3 + 3);
+LAB_82655c1c:
+    __restgprlr_29(0x2da0000);
+    return;
+  }
+  __restgprlr_29(0xffffffff82da0000);
+  return;
 }
 
 
@@ -516,7 +806,6 @@ int Sys_ReadDebugSocketInt(void)
   
   uVar1 = Sys_ReadDebugSocketString();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190720,0x309,0,0xffffffff82000f98,0xffffffff8202e030);
   }
   iVar2 = atoi((char *)uVar1);
@@ -533,8 +822,9 @@ void Sys_WriteDebugSocketData(undefined8 param_1,longlong param_2)
   longlong lVar1;
   char cVar3;
   DWORD DVar2;
-  uint uVar4;
-  longlong lVar5;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
   
   lVar1 = __savegprlr_22();
   cVar3 = Com_ErrorEntered();
@@ -550,26 +840,25 @@ void Sys_WriteDebugSocketData(undefined8 param_1,longlong param_2)
         }
         RtlEnterCriticalSection(0xffffffff84279350);
       }
-      uVar4 = DAT_8425f310;
+      uVar5 = DAT_8425f310;
+      uVar4 = (ulonglong)DAT_8425f310;
       if ((int)param_2 < 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82190720,0x32f,0,0xffffffff82000f98,0xffffffff82034a78);
       }
-      lVar5 = param_2;
-      if ((int)(0x1ffc - (ulonglong)DAT_8425f310) < (int)param_2) {
-        lVar5 = 0x1ffc - (ulonglong)DAT_8425f310;
+      lVar6 = param_2;
+      if ((int)(0x1ffc - uVar4) < (int)param_2) {
+        lVar6 = 0x1ffc - uVar4;
       }
-      memcpy((void *)(DAT_8425f310 + 0x84277354),(void *)lVar1,(size_t)lVar5);
-      uVar4 = (size_t)lVar5 + uVar4;
-      lVar1 = lVar5 + lVar1;
-      param_2 = param_2 - lVar5;
-      DAT_8425f310 = uVar4;
+      memcpy((void *)(uVar5 + 0x84277354),(void *)lVar1,(size_t)lVar6);
+      uVar5 = (size_t)lVar6 + uVar5;
+      lVar1 = lVar6 + lVar1;
+      param_2 = param_2 - lVar6;
+      DAT_8425f310 = uVar5;
       RtlLeaveCriticalSection(0xffffffff84279350);
-      if (0x1ffc < (int)uVar4) {
-                    /* WARNING: Subroutine does not return */
+      if (0x1ffc < (int)uVar5) {
         MyAssertHandler(0xffffffff82190720,0x33d,0,0xffffffff82000f98,0xffffffff8219099c);
       }
-      if ((uVar4 == 0x1ffc) && (cVar3 = Sys_BlockUntilSend(), cVar3 == '\0')) break;
+      if ((uVar5 == 0x1ffc) && (cVar3 = Sys_BlockUntilSend(), cVar3 == '\0')) break;
       if ((int)param_2 == 0) {
         __restgprlr_22();
         return;
@@ -685,7 +974,6 @@ uint Sys_UpdateDebugSocket(void)
       uVar1 = Sys_ReadDebugSocketInt();
       uVar1 = uVar1 & 0xff;
       if (0x2e < uVar1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82190720,0x386,0,0xffffffff82000f98,0xffffffff82190a10);
       }
     }
@@ -697,11 +985,18 @@ uint Sys_UpdateDebugSocket(void)
 
 // 82656548  Sys_ReadDebugSocketStringBuffer  (xenon/xenon_remote.cpp:911)
 
-void Sys_ReadDebugSocketStringBuffer(void)
+void Sys_ReadDebugSocketStringBuffer(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = Sys_ReadDebugSocketString();
+  I_strncpyz(uVar1,uVar2,param_2);
+  FreeString(uVar2,0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -710,8 +1005,47 @@ void Sys_ReadDebugSocketStringBuffer(void)
 void Sys_ReadDebugSocketString(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  DWORD DVar2;
+  int *piVar3;
+  
   __savegprlr_29();
+  if (DAT_84279378 == 0) {
+    CopyString(0xffffffff820068af,0xffffffff821909f4,0);
+    __restgprlr_29();
+    return;
+  }
+  RtlEnterCriticalSection(0xffffffff84279350);
+  piVar3 = DAT_8427b384;
+  if (DAT_8427b384 == (int *)0x0) {
+    RtlLeaveCriticalSection(0xffffffff84279350);
+    DVar2 = WaitForSingleObject(DAT_84279374,15000);
+    if (DVar2 == 0x102) {
+      Sys_DebugSocketError(0xffffffff821909c4);
+      CopyString(0xffffffff820068af,0xffffffff821909f4,0);
+      __restgprlr_29();
+      return;
+    }
+    RtlEnterCriticalSection(0xffffffff84279350);
+    piVar3 = DAT_8427b384;
+    if (DAT_8427b384 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82190720,0x3ad,0,0xffffffff82000f98,0xffffffff821909bc);
+      piVar3 = DAT_8427b384;
+    }
+  }
+  iVar1 = piVar3[1];
+  DAT_8427b384 = (int *)*piVar3;
+  if (DAT_8427b384 == (int *)0x0) {
+    PTR_DAT_82995ae8 = (undefined *)&DAT_8427b384;
+    ResetEvent(DAT_84279374);
+  }
+  RtlLeaveCriticalSection(0xffffffff84279350);
+  Sys_EnterCriticalSection(0x13);
+  *piVar3 = (int)DAT_8425f314;
+  DAT_8425f314 = piVar3;
+  Sys_LeaveCriticalSection(0x13);
+  __restgprlr_29(iVar1);
+  return;
 }
 
 
@@ -720,7 +1054,38 @@ void Sys_ReadDebugSocketString(void)
 void NET_ShutdownDebug(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
   __savegprlr_28();
+  RtlEnterCriticalSection(0xffffffff84279350);
+  puVar2 = DAT_8427b384;
+  while (puVar2 != (undefined4 *)0x0) {
+    uVar1 = puVar2[1];
+    DAT_8427b384 = (undefined4 *)*puVar2;
+    Sys_EnterCriticalSection(0x13);
+    *puVar2 = DAT_8425f314;
+    DAT_8425f314 = puVar2;
+    Sys_LeaveCriticalSection(0x13);
+    FreeString(uVar1,0);
+    puVar2 = DAT_8427b384;
+  }
+  PTR_DAT_82995ae8 = (undefined *)&DAT_8427b384;
+  DAT_8427b384 = puVar2;
+  ResetEvent(DAT_84279374);
+  RtlLeaveCriticalSection(0xffffffff84279350);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82655E30  NET_RestartDebug  (xenon/xenon_remote.cpp:983)
+
+void NET_RestartDebug(void)
+
+{
+  NET_ShutdownDebug();
+  NET_InitDebug();
+  return;
 }
 

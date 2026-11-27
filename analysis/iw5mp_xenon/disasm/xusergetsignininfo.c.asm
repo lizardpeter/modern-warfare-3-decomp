@@ -3,3 +3,18 @@
 ; 828A5008  XUserGetSigninInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xusergetsignininfo.c:34)
   828A5008  7D8802A6             mfspr r12,LR
   828A500C  480716B1             bl 0x829166bc
+  828A5010  9421FF90             stwu r1,-0x70(r1)
+  828A5014  7C7F1B78             or r31,r3,r3
+  828A5018  7C9E2378             or r30,r4,r4
+  828A501C  7CBD2B78             or r29,r5,r5
+  828A5020  7DAD6B78             or r13,r13,r13
+  828A5024  7FA5EB78             or r5,r29,r29
+  828A5028  7FC4F378             or r4,r30,r30
+  828A502C  7FE3FB78             or r3,r31,r31
+  828A5030  4809C3C5             bl 0x829413f4
+  828A5034  4BFFD635             bl 0x828a2668
+  828A5038  7C7F1B78             or r31,r3,r3
+  828A503C  7DCE7378             or r14,r14,r14
+  828A5040  7FE3FB78             or r3,r31,r31
+  828A5044  38210070             addi r1,r1,0x70
+  828A5048  480716C4             b 0x8291670c

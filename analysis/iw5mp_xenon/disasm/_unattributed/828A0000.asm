@@ -50,6 +50,15 @@ LAB_828a7e24:
   828A80EC  83DF0064             lwz r30,0x64(r31)
   828A80F0  835F0054             lwz r26,0x54(r31)
   828A80F4  48000020             b 0x828a8114
+
+; 828A80F8  FUN_828a80f8  (line unknown)
+  828A80F8  FBE1FFF8             std r31,-0x8(r1)
+  828A80FC  3BECFF60             subi r31,r12,0xa0
+  828A8100  FBC1FFF0             std r30,-0x10(r1)
+  828A8104  FB41FFE8             std r26,-0x18(r1)
+  828A8108  7D8802A6             mfspr r12,LR
+  828A810C  9181FFE0             stw r12,-0x20(r1)
+  828A8110  9421FF90             stwu r1,-0x70(r1)
 LAB_828a8114:
   828A8114  2B1A0000             cmplwi cr6,r26,0x0
   828A8118  419A000C             beq cr6,0x828a8124

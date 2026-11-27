@@ -27,11 +27,66 @@ void bdUnreliableReceiveWindow___bdUnreliableReceiveWindow(undefined4 *param_1)
 
 // 82938538  bdUnreliableReceiveWindow::add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:24)
 
-void bdUnreliableReceiveWindow__add(void)
+void bdUnreliableReceiveWindow__add(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined2 uVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined4 local_30 [12];
+  
+  iVar1 = __savegprlr_28();
+  puVar4 = (undefined4 *)(iVar1 + 4);
+  uVar2 = bdDataChunk__getSequenceNumber(*(undefined4 *)param_2);
+  bdSequenceNumber__bdSequenceNumber(local_30,puVar4,uVar2,0x10);
+  cVar3 = bdSequenceNumber__operator>(local_30,puVar4);
+  if (cVar3 != '\0') {
+    bdLinkedList<bdReference<bdDataChunk>_>__insertAfter
+              (iVar1 + 8,*(undefined4 *)(iVar1 + 0xc),param_2);
+    *puVar4 = local_30[0];
+  }
+  bdReference<bdDataChunk>___bdReference<bdDataChunk>(param_2);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 82938368  bdUnreliableReceiveWindow::getNextToRead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:38)
+
+void bdUnreliableReceiveWindow__getNextToRead(undefined8 param_1,longlong param_2)
+
+{
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  *puVar2 = 0;
+  if (*(int *)((int)param_2 + 0x10) != 0) {
+    uVar1 = bdQueue<bdReference<bdDataChunk>_>__peek(param_2 + 8);
+    bdReference<bdDataChunk>__operator_(puVar2,uVar1);
+    bdQueue<bdReference<bdDataChunk>_>__dequeue(param_2 + 8);
+  }
+  __restgprlr_29(puVar2);
+  return;
+}
+
+
+// 82938410  bdUnreliableReceiveWindow::reset  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:52)
+
+void bdUnreliableReceiveWindow__reset(int param_1)
+
+{
+  undefined4 local_20 [2];
+  
+  bdSequenceNumber__bdSequenceNumber(local_20,0xffffffffffffffff);
+  *(undefined4 *)(param_1 + 4) = local_20[0];
+  if (*(int *)(param_1 + 0x10) != 0) {
+    do {
+      bdQueue<bdReference<bdDataChunk>_>__dequeue(param_1 + 8);
+    } while (*(int *)(param_1 + 0x10) != 0);
+  }
+  return;
 }
 
 

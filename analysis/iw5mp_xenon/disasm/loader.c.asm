@@ -98,3 +98,26 @@ LAB_828aaff4:
 ; 828AB008  XGetModuleSection  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:144)
   828AB008  7D8802A6             mfspr r12,LR
   828AB00C  4806B6AD             bl 0x829166b8
+  828AB010  9421FF80             stwu r1,-0x80(r1)
+  828AB014  7C7F1B78             or r31,r3,r3
+  828AB018  7C9E2378             or r30,r4,r4
+  828AB01C  7CBD2B78             or r29,r5,r5
+  828AB020  7CDC3378             or r28,r6,r6
+  828AB024  7DAD6B78             or r13,r13,r13
+  828AB028  7F86E378             or r6,r28,r28
+  828AB02C  7FA5EB78             or r5,r29,r29
+  828AB030  7FC4F378             or r4,r30,r30
+  828AB034  7FE3FB78             or r3,r31,r31
+  828AB038  48096F8D             bl 0x82941fc4
+  828AB03C  2C030000             cmpwi r3,0x0
+  828AB040  40800014             bge 0x828ab054
+  828AB044  480012A5             bl 0x828ac2e8
+  828AB048  7DCE7378             or r14,r14,r14
+  828AB04C  38600000             li r3,0x0
+  828AB050  4800000C             b 0x828ab05c
+LAB_828ab054:
+  828AB054  7DCE7378             or r14,r14,r14
+  828AB058  38600001             li r3,0x1
+LAB_828ab05c:
+  828AB05C  38210080             addi r1,r1,0x80
+  828AB060  4806B6A8             b 0x82916708

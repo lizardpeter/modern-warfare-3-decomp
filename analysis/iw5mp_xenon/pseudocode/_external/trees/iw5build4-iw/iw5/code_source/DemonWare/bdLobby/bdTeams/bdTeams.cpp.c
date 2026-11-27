@@ -10,6 +10,15 @@ void bdTeams__bdTeams(undefined4 *param_1,undefined4 param_2)
 }
 
 
+// 82909818  bdTeams::~bdTeams  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteams.cpp:29)
+
+void bdTeams___bdTeams(void)
+
+{
+  return;
+}
+
+
 // 82909828  bdTeams::getPublicProfiles  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteams.cpp:423)
 
 void bdTeams__getPublicProfiles
@@ -93,11 +102,181 @@ LAB_82909904:
 
 // 82909A68  bdTeams::getPrivateProfile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteams.cpp:460)
 
-void bdTeams__getPrivateProfile(void)
+void bdTeams__getPrivateProfile
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  char cVar6;
+  longlong lVar4;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_50 [80];
+  
+  puVar5 = (undefined4 *)__savegprlr_26();
+  *puVar5 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar8 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x49,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar7 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar3 + 4);
+        *puVar7 = uVar2;
+        bVar8 = 2;
+      }
+    } while (!(bool)(bVar8 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,3,10);
+  cVar6 = bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,param_3);
+  if (cVar6 == '\x01') {
+    lVar4 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_50);
+    if (lVar4 == 0) {
+      bdRemoteTask__setTaskResult(*puVar5,param_4,1);
+    }
+    else {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff822101a8,
+                   0x1d9,0xffffffff8220c90c);
+    }
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff822101a8,0x1e3
+                 ,0xffffffff8220c89c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_26(puVar5);
+  return;
+}
+
+
+// 82909C68  bdTeams::setPrivateProfile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteams.cpp:519)
+
+void bdTeams__setPrivateProfile
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar5;
+  longlong lVar3;
+  ulonglong uVar4;
+  char cVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_50 [80];
+  
+  puVar5 = (undefined4 *)__savegprlr_25();
+  *puVar5 = 0;
+  lVar3 = (**(code **)(*(int *)param_4 + 8))(param_4);
+  uVar4 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar4 & 0xffffffff) == 0;
+  bVar8 = bVar1 << 1;
+  if (bVar1) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = bdTaskByteBuffer__bdTaskByteBuffer(uVar4,lVar3 + 0x4a,1);
+  }
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar7 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar4 + 4);
+        *puVar7 = uVar2;
+        bVar8 = 2;
+      }
+    } while (!(bool)(bVar8 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,3,0xe);
+  cVar6 = bdByteBuffer__writeUInt64(uVar4 & 0xffffffff,param_3);
+  (**(code **)(*(int *)param_4 + 0xc))(param_4,uVar4 & 0xffffffff);
+  if (cVar6 == '\x01') {
+    lVar3 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_50);
+    if (lVar3 != 0) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff82210238,
+                   0x216,0xffffffff8220c90c);
+    }
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff82210238,0x21b
+                 ,0xffffffff8220c89c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_25(puVar5);
+  return;
+}
+
+
+// 82909E88  bdTeams::getMembershipsUser  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteams.cpp:689)
+
+void bdTeams__getMembershipsUser
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  char cVar6;
+  longlong lVar4;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_50 [80];
+  
+  puVar5 = (undefined4 *)__savegprlr_25();
+  *puVar5 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar8 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x49,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar7 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar3 + 4);
+        *puVar7 = uVar2;
+        bVar8 = 2;
+      }
+    } while (!(bool)(bVar8 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,3,0x1b);
+  cVar6 = bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,param_3);
+  if (cVar6 == '\x01') {
+    lVar4 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_50);
+    if (lVar4 == 0) {
+      bdRemoteTask__setTaskResult(*puVar5,param_4,param_5);
+    }
+    else {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff822102c8,
+                   0x2be,0xffffffff8220c90c);
+    }
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8214371c,0xffffffff822100d0,0xffffffff822102c8,0x2c7
+                 ,0xffffffff8220c89c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_25(puVar5);
+  return;
 }
 
 

@@ -2,31 +2,162 @@
 
 // 82302E08  CG_RegisterSurfaceTypeSounds  (cgame/cg_sound.cpp:20)
 
-void CG_RegisterSurfaceTypeSounds(void)
+void CG_RegisterSurfaceTypeSounds(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char *pcVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined8 uVar1;
+  int iVar5;
+  longlong lVar6;
+  char acStack_140 [320];
+  
+  pcVar2 = (char *)__savegprlr_26();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82024f68,0x19,0,0xffffffff82000f98,0xffffffff82024fa8);
+  }
+  if (*pcVar2 == '\0') {
+    uVar3 = Com_FindSoundAlias(0xffffffff82024f54);
+    param_2 = param_2 + -4;
+    lVar6 = 0x1f;
+    do {
+      param_2 = param_2 + 4;
+      *(undefined4 *)param_2 = uVar3;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    __restgprlr_26();
+    return;
+  }
+  sprintf(acStack_140,"%s_default",pcVar2);
+  iVar4 = Com_FindSoundAlias(acStack_140);
+  lVar6 = 0;
+  do {
+    if ((param_3 & 0xff) == 0) {
+LAB_82302ee8:
+      *(int *)param_2 = iVar4;
+    }
+    else {
+      uVar1 = Com_SurfaceTypeToName(lVar6);
+      sprintf(acStack_140,"%s_%s",pcVar2,uVar1);
+      iVar5 = Com_FindSoundAlias(acStack_140);
+      *(int *)param_2 = iVar5;
+      if (iVar5 == 0) goto LAB_82302ee8;
+    }
+    lVar6 = lVar6 + 1;
+    param_2 = param_2 + 4;
+    if (0x1e < (int)lVar6) {
+      __restgprlr_26();
+      return;
+    }
+  } while( true );
 }
 
 
 // 82302F08  CG_RegisterWhizbySounds  (cgame/cg_sound.cpp:56)
 
-void CG_RegisterWhizbySounds(void)
+void CG_RegisterWhizbySounds(undefined8 param_1,ulonglong param_2,ulonglong param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  longlong lVar5;
+  char acStack_250 [256];
+  char acStack_150 [336];
+  
+  uVar2 = __savegprlr_23();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3c,0,0xffffffff82000f98,0xffffffff82024fa8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3d,0,0xffffffff82000f98,0xffffffff82024fe4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x3e,0,0xffffffff82000f98,0xffffffff82024fd0);
+  }
+  lVar5 = 0;
+  *param_4 = 0;
+  iVar1 = (int)param_3;
+  do {
+    sprintf(acStack_150,"%s_%02d",uVar2,lVar5);
+    sprintf(acStack_250,"%s_L",acStack_150);
+    iVar3 = Com_TryFindSoundAlias(acStack_250);
+    *(int *)(((int)(undefined4 *)param_2 - iVar1) + (int)(undefined4 *)param_3) = iVar3;
+    if (iVar3 == 0) break;
+    *param_4 = *param_4 + 1;
+    sprintf(acStack_250,"%s_R",acStack_150);
+    uVar4 = Com_FindSoundAlias(acStack_250);
+    lVar5 = lVar5 + 1;
+    *(undefined4 *)param_3 = uVar4;
+    param_3 = param_3 + 4;
+  } while ((int)lVar5 < 0x10);
+  if (*param_4 == 0) {
+    *param_4 = 1;
+    uVar4 = Com_FindSoundAlias(0xffffffff82024fb0);
+    *(undefined4 *)param_2 = uVar4;
+  }
+  __restgprlr_23();
+  return;
 }
 
 
 // 82303060  CG_AddAudioPhysicsClass  (cgame/cg_sound.cpp:112)
 
-void CG_AddAudioPhysicsClass(void)
+void CG_AddAudioPhysicsClass(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint *puVar4;
+  int iVar5;
+  ulonglong uVar6;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x73,0,0xffffffff82000f98,0xffffffff82025024);
+  }
+  if (*(int *)(iVar2 + 0x1c) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x74,0,0xffffffff82000f98,0xffffffff82025008);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x75,0,0xffffffff82000f98,0xffffffff82024ffc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024f68,0x76,0,0xffffffff82000f98,0xffffffff82024ff4);
+  }
+  puVar4 = (uint *)param_3;
+  iVar5 = 0;
+  uVar6 = param_2;
+  if (0 < (int)*puVar4) {
+    do {
+      iVar3 = I_stricmp(*(undefined4 *)(iVar2 + 0x1c),uVar6);
+      if (iVar3 == 0) {
+        *(int *)(iVar2 + 4) = iVar5;
+        __restgprlr_27();
+        return;
+      }
+      iVar5 = iVar5 + 1;
+      uVar6 = uVar6 + 0x40;
+    } while (iVar5 < (int)*puVar4);
+  }
+  uVar1 = *puVar4;
+  *(uint *)(iVar2 + 4) = uVar1;
+  (&DAT_82a3a4cc)[uVar1 * 0x25] = *(undefined4 *)(iVar2 + 0x28);
+  *(undefined4 *)(&DAT_82a3a4d0 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x2c);
+  *(undefined4 *)(&DAT_82a3a4d4 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x30);
+  *(undefined4 *)(&DAT_82a3a4d8 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x34);
+  *(undefined4 *)(&DAT_82a3a4dc + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x38);
+  *(undefined4 *)(&DAT_82a3a4e0 + *(int *)(iVar2 + 4) * 0x94) = *(undefined4 *)(iVar2 + 0x3c);
+  CG_RegisterSurfaceTypeSounds
+            (*(undefined4 *)(iVar2 + 0x1c),(ulonglong)*(uint *)(iVar2 + 4) * 0x94 + -0x7d5c5bb0,
+             *(undefined1 *)(iVar2 + 0x41));
+  I_strncpyz(((ulonglong)*puVar4 & 0x3ffffff) * 0x40 + param_2,*(undefined4 *)(iVar2 + 0x1c),0x40);
+  *puVar4 = *puVar4 + 1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -55,11 +186,9 @@ void CG_RegisterPhysicsSounds_FastFile(void)
     do {
       iVar1 = *piVar4;
       if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82024f68,0x73,0,0xffffffff82000f98,0xffffffff82025024);
       }
       if (*(int *)(iVar1 + 0x1c) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82024f68,0x74,0,0xffffffff82000f98,0xffffffff82025008);
       }
       iVar8 = 0;

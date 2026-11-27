@@ -3,3 +3,63 @@
 ; 8288FA08  D3D::TrainEDRAM  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/hsio.cpp:2736)
   8288FA08  7D8802A6             mfspr r12,LR
   8288FA0C  48086CAD             bl 0x829166b8
+  8288FA10  9421F770             stwu r1,-0x890(r1)
+  8288FA14  7C7F1B78             or r31,r3,r3
+  8288FA18  7C9E2378             or r30,r4,r4
+  8288FA1C  7CBD2B78             or r29,r5,r5
+  8288FA20  7DAD6B78             or r13,r13,r13
+  8288FA24  480B22A1             bl 0x82941cc4
+  8288FA28  3F808200             lis r28,-0x7e00
+  8288FA2C  807C08D4             lwz r3,0x8d4(r28)
+  8288FA30  480B17E5             bl 0x82941214
+  8288FA34  2F1D0000             cmpwi cr6,r29,0x0
+  8288FA38  419A000C             beq cr6,0x8288fa44
+  8288FA3C  38600000             li r3,0x0
+  8288FA40  480B2275             bl 0x82941cb4
+LAB_8288fa44:
+  8288FA44  39600000             li r11,0x0
+  8288FA48  39000800             li r8,0x800
+  8288FA4C  91610054             stw r11,0x54(r1)
+  8288FA50  38E10060             addi r7,r1,0x60
+  8288FA54  91610050             stw r11,0x50(r1)
+  8288FA58  38C10054             addi r6,r1,0x54
+  8288FA5C  38A01000             li r5,0x1000
+  8288FA60  38810050             addi r4,r1,0x50
+  8288FA64  7FC3F378             or r3,r30,r30
+  8288FA68  480B223D             bl 0x82941ca4
+  8288FA6C  2C030000             cmpwi r3,0x0
+  8288FA70  41820068             beq 0x8288fad8
+  8288FA74  2F1D0000             cmpwi cr6,r29,0x0
+  8288FA78  409A000C             bne cr6,0x8288fa84
+  8288FA7C  7FE3FB78             or r3,r31,r31
+  8288FA80  4BFD8FC1             bl 0x82868a40
+LAB_8288fa84:
+  8288FA84  38801000             li r4,0x1000
+  8288FA88  7FE3FB78             or r3,r31,r31
+  8288FA8C  4BFD8F25             bl 0x828689b0
+  8288FA90  39630004             addi r11,r3,0x4
+  8288FA94  39000800             li r8,0x800
+  8288FA98  91610050             stw r11,0x50(r1)
+  8288FA9C  38E10060             addi r7,r1,0x60
+  8288FAA0  38C10054             addi r6,r1,0x54
+  8288FAA4  38A01000             li r5,0x1000
+  8288FAA8  38810050             addi r4,r1,0x50
+  8288FAAC  7FC3F378             or r3,r30,r30
+  8288FAB0  480B21F5             bl 0x82941ca4
+  8288FAB4  81610050             lwz r11,0x50(r1)
+  8288FAB8  7C7D1B78             or r29,r3,r3
+  8288FABC  396BFFFC             subi r11,r11,0x4
+  8288FAC0  7FE3FB78             or r3,r31,r31
+  8288FAC4  91610050             stw r11,0x50(r1)
+  8288FAC8  917F0030             stw r11,0x30(r31)
+  8288FACC  4BFD8F75             bl 0x82868a40
+  8288FAD0  2F1D0000             cmpwi cr6,r29,0x0
+  8288FAD4  409AFFB0             bne cr6,0x8288fa84
+LAB_8288fad8:
+  8288FAD8  807C08D4             lwz r3,0x8d4(r28)
+  8288FADC  480B1729             bl 0x82941204
+  8288FAE0  480B21B5             bl 0x82941c94
+  8288FAE4  7DCE7378             or r14,r14,r14
+  8288FAE8  38600001             li r3,0x1
+  8288FAEC  38210890             addi r1,r1,0x890
+  8288FAF0  48086C18             b 0x82916708

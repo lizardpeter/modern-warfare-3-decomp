@@ -143,6 +143,46 @@ LAB_82916314:
 ; 82916330  bdHeap::DW_Free  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdheap/bdheap.cpp:71)
   82916330  7D8802A6             mfspr r12,LR
   82916334  48000389             bl 0x829166bc
+  82916338  9421FF90             stwu r1,-0x70(r1)
+  8291633C  3D208489             lis r9,-0x7b77
+  82916340  3D608221             lis r11,-0x7ddf
+  82916344  3D408200             lis r10,-0x7e00
+  82916348  3BEB4418             addi r31,r11,0x4418
+  8291634C  7C7D1B78             or r29,r3,r3
+  82916350  89695DB4             lbz r11,0x5db4(r9)
+  82916354  3BCA11F4             addi r30,r10,0x11f4
+  82916358  280B0000             cmplwi r11,0x0
+  8291635C  40820028             bne 0x82916384
+  82916360  3D608221             lis r11,-0x7ddf
+  82916364  3D408221             lis r10,-0x7ddf
+  82916368  390B4518             addi r8,r11,0x4518
+  8291636C  38EA44A8             addi r7,r10,0x44a8
+  82916370  7FC6F378             or r6,r30,r30
+  82916374  7FE3FB78             or r3,r31,r31
+  82916378  38A00000             li r5,0x0
+  8291637C  38800048             li r4,0x48
+  82916380  4BCBE181             bl 0x825d4500
+LAB_82916384:
+  82916384  2B1D0000             cmplwi cr6,r29,0x0
+  82916388  409A0028             bne cr6,0x829163b0
+  8291638C  3D608221             lis r11,-0x7ddf
+  82916390  3D408221             lis r10,-0x7ddf
+  82916394  390B44F4             addi r8,r11,0x44f4
+  82916398  38EA44E4             addi r7,r10,0x44e4
+  8291639C  7FC6F378             or r6,r30,r30
+  829163A0  7FE3FB78             or r3,r31,r31
+  829163A4  38A00000             li r5,0x0
+  829163A8  38800049             li r4,0x49
+  829163AC  4BCBE155             bl 0x825d4500
+LAB_829163b0:
+  829163B0  3D608489             lis r11,-0x7b77
+  829163B4  3D408489             lis r10,-0x7b77
+  829163B8  7FA5EB78             or r5,r29,r29
+  829163BC  808B5DBC             lwz r4,0x5dbc(r11)
+  829163C0  806A5DB8             lwz r3,0x5db8(r10)
+  829163C4  4BF91A85             bl 0x828a7e48
+  829163C8  38210070             addi r1,r1,0x70
+  829163CC  48000340             b 0x8291670c
 
 ; 829163D0  bdSingletonRegistryImpl::cleanUp  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsingleton.h:124)
   829163D0  7D8802A6             mfspr r12,LR

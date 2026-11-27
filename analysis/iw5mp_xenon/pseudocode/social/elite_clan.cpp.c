@@ -21,8 +21,26 @@ int _dynamic_initializer_for__g_DWEliteClanTask__(void)
 void _dynamic_initializer_for__g_EliteClanStore__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  
   __savegprlr_28();
+  lVar2 = 3;
+  puVar3 = &DAT_844fc5d0;
+  do {
+    _vector_constructor_iterator_(puVar3 + -0x978,0x60,1,0xffffffff82909640);
+    _vector_constructor_iterator_(puVar3 + -0x960,0x60,100,0xffffffff82909490);
+    bdTeamProfile__bdTeamProfile(puVar3);
+    *puVar3 = &PTR_PrivateTeamProfile___scalar_deleting_destructor__821aef24;
+    bdTeamProfile__bdTeamProfile(puVar3 + 0x1e);
+    puVar3[0x1e] = &PTR_PublicTeamProfile___scalar_deleting_destructor__821aef14;
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0x19ae;
+  } while (-1 < lVar2);
+  iVar1 = atexit(_dynamic_atexit_destructor_for__g_EliteClanStore__);
+  __restgprlr_28(iVar1);
+  return;
 }
 
 
@@ -43,8 +61,62 @@ int _dynamic_initializer_for__g_DWEliteClanMOTDUpdateTask__(void)
 void EliteClan_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  uint *puVar5;
+  longlong lVar4;
+  uint *puVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  puVar6 = &DAT_844f9fdc;
+  do {
+    uVar1 = *puVar6;
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
+        do {
+          puVar5 = (uint *)((ulonglong)uVar1 + 4);
+          if (in_RESERVE != '\0') {
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar5 = uVar3;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = (undefined4 *)*puVar6;
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
+          }
+        }
+      }
+      *puVar6 = 0;
+    }
+    puVar2 = DAT_844f9fec;
+    puVar6 = puVar6 + 1;
+  } while ((int)puVar6 < -0x7bb06014);
+  if (ZEXT48(DAT_844f9fec) != 0) {
+    lVar4 = ZEXT48(DAT_844f9fec) + 4;
+    do {
+      puVar6 = (uint *)lVar4;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar4);
+        *puVar6 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (puVar2[1] == 0) {
+      if (DAT_844f9fec != (undefined4 *)0x0) {
+        (**(code **)*DAT_844f9fec)(DAT_844f9fec,1);
+      }
+    }
+  }
+  DAT_844f9fec = (undefined4 *)0x0;
+  DAT_844f9fd4 = 0;
+  DAT_844f9f84 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -88,8 +160,54 @@ void EliteClan_UserSignedOut(void)
 void EliteClan_SetMOTD(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  bool bVar2;
+  uint uVar5;
+  char cVar7;
+  int iVar6;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  undefined4 local_40;
+  undefined1 auStack_3c [4];
+  undefined1 auStack_38 [56];
+  
+  uVar5 = __savegprlr_27();
+  if (3 < uVar5) {
+    MyAssertHandler(0xffffffff821aecf8,0xb3,0,0xffffffff82031880,uVar5,4);
+  }
+  bVar1 = false;
+  cVar7 = CL_DoesControllerIndexHaveALocalClientNum(uVar5,&local_40);
+  if ((cVar7 != '\0') && (iVar6 = CL_IsCgameInitialized(local_40), iVar6 != 0)) {
+    bVar1 = true;
+  }
+  uVar3 = dwGetTeams(uVar5);
+  bVar2 = false;
+  if (((uVar3 & 0xffffffff) != 0) && (!bVar1)) {
+    cVar7 = dwGetOnlineUserID(uVar5,auStack_38);
+    if (cVar7 != '\0') {
+      uVar4 = bdTeams__setPrivateProfile
+                        (auStack_3c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
+                         &DAT_844fc5d0 + uVar5 * 0x19ae);
+      bdReference<bdRemoteTask>__operator_(0xffffffff844f9fec,uVar4);
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_3c);
+      if ((DAT_844f9fec != (int *)0x0) && (iVar6 = (**(code **)(*DAT_844f9fec + 4))(), iVar6 == 1))
+      {
+        bVar2 = true;
+        bdRemoteTask__setTimeout(0x4034000000000000,DAT_844f9fec);
+        DAT_844f9f84 = 1;
+        iVar6 = Sys_Milliseconds();
+        DAT_844f9fd4 = iVar6 + *(int *)(DAT_84546cf4 + 0xc);
+        UI_OpenMenu(local_40,0xffffffff821aef50);
+      }
+    }
+  }
+  if (!bVar2) {
+    DAT_844f9f84 = bVar2;
+    UI_SafeTranslateString(0xffffffff821aef34);
+    FriendsMenu_ShowErrorMessage();
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -98,8 +216,51 @@ void EliteClan_SetMOTD(void)
 void EliteClan_UpdateMOTD(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar5;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((DAT_844f9f84 != '\0') && (DAT_844f9fec != (int *)0x0)) {
+    cVar5 = Live_IsUserSignedInToDemonware();
+    if ((cVar5 == '\0') || (cVar5 = Live_IsUserSignedInToLive(uVar1), cVar5 == '\0')) {
+      Com_Printf(0x10,0xffffffff821aef70);
+      iVar3 = (**(code **)(*DAT_844f9fec + 4))();
+      if (iVar3 == 1) {
+        bdRemoteTask__cancelTask(DAT_844f9fec);
+      }
+      DAT_844f9f84 = '\0';
+      DAT_844f9fd4 = 0;
+    }
+    else {
+      iVar3 = (**(code **)(*DAT_844f9fec + 4))();
+      if ((iVar3 != 1) && (iVar4 = Sys_Milliseconds(), DAT_844f9fd4 <= iVar4)) {
+        DAT_844f9f84 = '\0';
+        DAT_844f9fd4 = 0;
+        uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+        UI_CloseMenu(uVar2,0xffffffff821aef50);
+        iVar4 = bdRemoteTask__getErrorCode(DAT_844f9fec);
+        if (iVar3 == 2) {
+          if (iVar4 == 0) {
+            uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+            UI_OpenMenu(uVar1,0xffffffff821aefa8);
+            __restgprlr_28();
+            return;
+          }
+        }
+        else if (iVar3 == 5) goto LAB_826f7494;
+        UI_SafeTranslateString(0xffffffff821aef34);
+        FriendsMenu_ShowErrorMessage();
+        __restgprlr_28();
+        return;
+      }
+    }
+  }
+LAB_826f7494:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -108,8 +269,23 @@ void EliteClan_UpdateMOTD(void)
 void EliteClan_RetryGetClan(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d04;
+  iVar4 = DAT_84545cac;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -118,8 +294,23 @@ void EliteClan_RetryGetClan(void)
 void EliteClan_RetryGetMembers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d54;
+  iVar4 = DAT_84546d30;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar1 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar4 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -128,8 +319,23 @@ void EliteClan_RetryGetMembers(void)
 void EliteClan_RetryGetPrivateProfile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546db0;
+  iVar4 = DAT_84545c88;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -138,8 +344,23 @@ void EliteClan_RetryGetPrivateProfile(void)
 void EliteClan_RetryGetPublicProfile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546cf0;
+  iVar4 = DAT_84545ccc;
+  iVar3 = (&DAT_844f9f50)[iVar2];
+  (&DAT_844f9f50)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_844f9f88)[iVar2] = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -148,8 +369,42 @@ void EliteClan_RetryGetPublicProfile(void)
 void EliteClan_ClearTeam(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  void *pvVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar2 = __savegprlr_29();
+  iVar2 = iVar2 * 0x66b8;
+  lVar5 = 100;
+  *(undefined8 *)(&DAT_844f9ff8 + iVar2) = 0;
+  iVar4 = 0;
+  *(undefined8 *)(&DAT_844fa000 + iVar2) = 0;
+  (&DAT_844fa008)[iVar2] = 0;
+  (&DAT_844fa048)[iVar2] = 0;
+  *(undefined4 *)(&DAT_84500688 + iVar2) = 0;
+  *(undefined4 *)(&DAT_8450068c + iVar2) = 0;
+  *(undefined4 *)(&DAT_84500690 + iVar2) = 0;
+  (&DAT_845006a0)[iVar2] = 1;
+  do {
+    iVar1 = iVar4 + iVar2;
+    *(undefined8 *)(&DAT_844fa058 + iVar1) = 0;
+    iVar4 = iVar4 + 0x60;
+    *(undefined8 *)(&DAT_844fa060 + iVar1) = 0;
+    (&DAT_844fa068)[iVar1] = 0;
+    (&DAT_844fa0a8)[iVar1] = 0;
+    (&DAT_844fa0a9)[iVar1] = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  *(undefined8 *)(&DAT_844fc5e0 + iVar2) = 0;
+  (&DAT_844fc5e8)[iVar2] = 0;
+  pvVar3 = memset((void *)(iVar2 + -0x7bb039a0),0,0x4001);
+  *(undefined4 *)(&DAT_84500664 + iVar2) = 0;
+  (&DAT_84500668)[iVar2] = 0;
+  (&DAT_8450066e)[iVar2] = 0;
+  __restgprlr_29(pvVar3);
+  return;
 }
 
 
@@ -158,8 +413,80 @@ void EliteClan_ClearTeam(void)
 void EliteClan_UpdateGettingClan(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int *piVar1;
+  undefined4 uVar2;
+  bool bVar3;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  char cVar9;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  int iVar10;
+  undefined4 local_60;
+  undefined1 auStack_5c [4];
+  undefined8 local_58 [11];
+  
+  uVar6 = __savegprlr_23();
+  if (3 < uVar6) {
+    MyAssertHandler(0xffffffff821aecf8,0x163,0,0xffffffff82031880,uVar6,4);
+  }
+  iVar7 = Sys_Milliseconds();
+  iVar10 = uVar6 * 4;
+  bVar3 = false;
+  if (*(int *)(&DAT_844f9f64 + iVar10) == 0) {
+    cVar9 = CL_DoesControllerIndexHaveALocalClientNum(uVar6,&local_60);
+    if ((cVar9 != '\0') && (iVar8 = CL_IsCgameInitialized(local_60), iVar8 != 0)) {
+      bVar3 = true;
+    }
+    uVar4 = dwGetTeams(uVar6);
+    if (((((uVar4 & 0xffffffff) == 0) || ((int)(&DAT_844f9f88)[uVar6] < 0)) ||
+        (iVar7 <= (int)(&DAT_844f9f88)[uVar6])) ||
+       ((bVar3 || (cVar9 = dwGetOnlineUserID(uVar6,local_58), cVar9 == '\0')))) goto LAB_826f75c4;
+    EliteClan_ClearTeam(uVar6);
+    uVar5 = bdTeams__getMembershipsUser
+                      (auStack_5c,uVar4,local_58[0],&DAT_844f9ff0 + uVar6 * 0x66b8,1);
+    bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar6,uVar5);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_5c);
+    piVar1 = (int *)(&DAT_844f9fdc)[uVar6];
+    if ((piVar1 != (int *)0x0) && (iVar7 = (**(code **)(*piVar1 + 4))(), iVar7 == 1)) {
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 1;
+      (&DAT_844f9f60)[uVar6] = 0;
+      __restgprlr_23();
+      return;
+    }
+  }
+  else {
+    if (*(int *)(&DAT_844f9f64 + iVar10) != 1) goto LAB_826f75c4;
+    if ((int *)(&DAT_844f9fdc)[uVar6] == (int *)0x0) goto LAB_826f75c4;
+    iVar7 = (**(code **)(*(int *)(&DAT_844f9fdc)[uVar6] + 4))();
+    if (iVar7 == 1) goto LAB_826f75c4;
+    iVar8 = bdRemoteTask__getErrorCode((&DAT_844f9fdc)[uVar6]);
+    if ((iVar7 == 2) && (iVar8 == 0)) {
+      (&DAT_844f9f50)[uVar6] = 0;
+      uVar2 = (&DAT_844f9fdc)[uVar6];
+      (&DAT_844f9fd8)[uVar6] = 1;
+      (&DAT_844f9f88)[uVar6] = 0;
+      iVar7 = bdRemoteTask__getNumResults(uVar2);
+      if (iVar7 == 1) {
+        *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+        (&DAT_844f9f74)[uVar6] = 1;
+        __restgprlr_23();
+        return;
+      }
+      EliteClan_ClearTeam(uVar6);
+      GamerProfile_ClearEliteClan(uVar6);
+      *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+      (&DAT_844f9f74)[uVar6] = 4;
+      __restgprlr_23();
+      return;
+    }
+    *(undefined4 *)(&DAT_844f9f64 + iVar10) = 0;
+  }
+  EliteClan_RetryGetClan(uVar6);
+LAB_826f75c4:
+  __restgprlr_23();
+  return;
 }
 
 
@@ -184,7 +511,6 @@ void EliteClan_UpdateGettingMembers(void)
   
   uVar5 = __savegprlr_25();
   if (3 < uVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x1bc,0,0xffffffff82031880,uVar5,4);
   }
   iVar6 = Sys_Milliseconds();
@@ -199,7 +525,7 @@ void EliteClan_UpdateGettingMembers(void)
     if (((((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_844f9f88)[uVar5])) || (bVar2)) ||
        (cVar9 = dwGetOnlineUserID(uVar5,auStack_48), cVar9 == '\0')) goto LAB_826f77e4;
     uVar4 = bdTeams__getMembers(auStack_4c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
-                                uVar5 * 0x66b8 + -0x7bb05fb0,100);
+                                &DAT_844fa050 + uVar5 * 0x66b8,100);
     bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
     bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_4c);
     piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
@@ -255,7 +581,6 @@ void EliteClan_UpdateGettingPrivateProfile(void)
   
   uVar5 = __savegprlr_25();
   if (3 < uVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x208,0,0xffffffff82031880,uVar5,4);
   }
   iVar6 = Sys_Milliseconds();
@@ -271,7 +596,7 @@ void EliteClan_UpdateGettingPrivateProfile(void)
        (cVar8 = dwGetOnlineUserID(uVar5,auStack_48), cVar8 == '\0')) goto LAB_826f79c0;
     uVar4 = bdTeams__getPrivateProfile
                       (auStack_4c,uVar3,*(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8),
-                       uVar5 * 0x66b8 + -0x7bb03a30);
+                       &DAT_844fc5d0 + uVar5 * 0x19ae);
     bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
     bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_4c);
     piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
@@ -325,7 +650,6 @@ void EliteClan_UpdateGettingPublicProfile(void)
   
   uVar5 = __savegprlr_25();
   if (3 < uVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x250,0,0xffffffff82031880,uVar5,4);
   }
   iVar6 = Sys_Milliseconds();
@@ -340,7 +664,7 @@ void EliteClan_UpdateGettingPublicProfile(void)
     if (((((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_844f9f88)[uVar5])) || (bVar2)) ||
        (cVar8 = dwGetOnlineUserID(uVar5,auStack_50), cVar8 == '\0')) goto LAB_826f7bd0;
     local_58 = *(undefined8 *)(&DAT_844f9ff8 + uVar5 * 0x66b8);
-    uVar4 = bdTeams__getPublicProfiles(auStack_5c,uVar3,&local_58,uVar5 * 0x66b8 + -0x7bb039b8,1);
+    uVar4 = bdTeams__getPublicProfiles(auStack_5c,uVar3,&local_58,&DAT_844fc648 + uVar5 * 0x19ae,1);
     bdReference<bdRemoteTask>__operator_(&DAT_844f9fdc + uVar5,uVar4);
     bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_5c);
     piVar1 = (int *)(&DAT_844f9fdc)[uVar5];
@@ -382,8 +706,36 @@ LAB_826f7bd0:
 void EliteClan_MessageKeyboard(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  LPCSTR lpMultiByteStr;
+  int iVar3;
+  longlong lVar1;
+  CHAR aCStack_b0 [176];
+  
   __savegprlr_28();
+  Cmd_LocalClientNum();
+  iVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = iVar2 * 0x66b8;
+  if ((*(longlong *)(&DAT_844f9ff8 + iVar3) != 0) && ((&DAT_844fa048)[iVar3] == '\x02')) {
+    lpMultiByteStr = (LPCSTR)UI_SafeTranslateString(0xffffffff821aeb5c);
+    MultiByteToWideChar(0xfde9,0,lpMultiByteStr,-1,&DAT_84253898,0x40);
+    DAT_84253916 = 0;
+    I_strncpyz(0xffffffff84253800,&DAT_844fc5e8 + iVar3,0x80);
+    I_strncpyz(aCStack_b0,&DAT_844fc5e8 + iVar3,0x80);
+    iVar3 = MultiByteToWideChar(0xfde9,0,aCStack_b0,-1,(LPWSTR)&DAT_84513ad0,0x80);
+    DAT_84513bce = 0;
+    lVar1 = Language_IsAsian(iVar3);
+    iVar2 = XShowKeyboardUI(iVar2,(-(lVar1 != 0) & 0x3fU) + 1,0xffffffff84513ad0,0xffffffff84253898,
+                            0,0xffffffff842536f8,0x5f,0xffffffff84253cac);
+    if (iVar2 != 0x3e5) {
+      Com_Printf(0x10,0xffffffff82172d44);
+      __restgprlr_28();
+      return;
+    }
+    DAT_844f9f85 = 1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -395,7 +747,7 @@ void EliteClan_MessageKeyboardComplete(undefined8 param_1)
   int iVar2;
   undefined8 uVar1;
   undefined2 local_30;
-  undefined *local_2e;
+  undefined2 *local_2e;
   undefined1 auStack_28 [2];
   int *local_26;
   
@@ -409,9 +761,8 @@ void EliteClan_MessageKeyboardComplete(undefined8 param_1)
       uVar1 = GetLocaleString();
       XStringVerify(0,uVar1,1,&local_30,0xe,auStack_28,0);
       if (*local_26 == 0) {
-        iVar2 = WideCharToMultiByte(0,0,(LPCWSTR)&DAT_842536f8,-1,
-                                    &DAT_844fc5e8 + (int)param_1 * 0x66b8,0x60,(LPCSTR)0x0,
-                                    (LPBOOL)0x0);
+        iVar2 = WideCharToMultiByte(0,0,&DAT_842536f8,-1,&DAT_844fc5e8 + (int)param_1 * 0x66b8,0x60,
+                                    (LPCSTR)0x0,(LPBOOL)0x0);
         if ((longlong)iVar2 + -1 < 0) {
           Com_PrintError(0xd,0xffffffff821aefc8);
         }
@@ -436,8 +787,29 @@ void EliteClan_MessageKeyboardComplete(undefined8 param_1)
 void EliteClan_SocialConfigComplete_Callback(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int *piVar4;
+  
   __savegprlr_28();
+  piVar4 = &DAT_844f9f88;
+  piVar3 = (int *)(DAT_84545c78 + 0xc);
+  iVar2 = DAT_84545c78;
+  do {
+    if (*piVar3 < 0) {
+      *piVar4 = *piVar3;
+    }
+    else {
+      piVar3 = (int *)(iVar2 + 0xc);
+      iVar1 = Sys_Milliseconds();
+      iVar2 = DAT_84545c78;
+      *piVar4 = iVar1 + *piVar3;
+    }
+    piVar4 = piVar4 + 1;
+  } while ((int)piVar4 < -0x7bb06068);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -484,7 +856,6 @@ void EliteClan_Update(uint param_1)
   int iVar2;
   
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x460,0,0xffffffff82031880,param_1,4);
   }
   cVar3 = SocialConfig_Ok();
@@ -672,6 +1043,59 @@ void EliteClan_RegisterCommands(void)
 }
 
 
+// 826F5A70  EliteClan_FeederItemText  (social/elite_clan.cpp:1276)
+
+void EliteClan_FeederItemText
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
+  
+  uVar1 = __savegprlr_27();
+  uVar3 = extraout_f1;
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4fd,0,0xffffffff82031880,uVar1,4);
+  }
+  if (99 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4fe,0,0xffffffff821aecbc,param_2,100);
+  }
+  if (2 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x4ff,0,0xffffffff821aec70,param_3,3);
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    __restgprlr_27(0xffffffff820068af);
+    return;
+  }
+  lVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + uVar1 * 0x66b8;
+  if ((&DAT_844fa0a9)[(int)lVar2] == '\x02') {
+    Com_sprintf(0xffffffff844f9fa0,0x31,0xffffffff820223e8,uVar1 * 0x66b8 + -0x7baff998,
+                lVar2 + -0x7bb05f98);
+  }
+  else {
+    Com_sprintf(0xffffffff844f9fa0,0x31,0xffffffff82000f98,lVar2 + -0x7bb05f98);
+  }
+  UI_TruncateTextWithEllipsis(uVar3,0xffffffff844f9fa0,param_4);
+  __restgprlr_27();
+  return;
+}
+
+
+// 826F5BD8  EliteClan_FeederSelection  (social/elite_clan.cpp:1307)
+
+void EliteClan_FeederSelection(ulonglong param_1,undefined4 param_2)
+
+{
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x51c,0,0xffffffff82031880,param_1,4);
+  }
+  *(undefined4 *)(&DAT_8450068c + (int)param_1 * 0x66b8) = param_2;
+  return;
+}
+
+
 // 826F5C50  EliteClan_FeederStoreXUID  (social/elite_clan.cpp:1314)
 
 void EliteClan_FeederStoreXUID(uint param_1)
@@ -681,7 +1105,6 @@ void EliteClan_FeederStoreXUID(uint param_1)
   int iVar2;
   
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x525,0,0xffffffff82031880,param_1,4);
   }
   iVar2 = param_1 * 0x66b8;
@@ -700,7 +1123,6 @@ void EliteClan_FeederClearXUID(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x532,0,0xffffffff82031880,param_1,4);
   }
   *(undefined8 *)(&DAT_84500698 + (int)param_1 * 0x66b8) = 0;
@@ -713,18 +1135,95 @@ void EliteClan_FeederClearXUID(ulonglong param_1)
 void EliteClan_FeederGamerTag(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff821aecf8,0x53b,0,0xffffffff82031880,uVar1,4);
+  }
+  uVar2 = EliteClan_GetPositionByXUID(uVar1,*(undefined8 *)(&DAT_84500698 + uVar1 * 0x66b8));
+  if ((int)uVar2 < 0) {
+    __restgprlr_28(0xffffffff820068af);
+    return;
+  }
+  if (99 < uVar2) {
+    MyAssertHandler(0xffffffff821aecf8,0x541,0,0xffffffff821af038,uVar2,100);
+  }
+  __restgprlr_28(&DAT_844fa068 + uVar2 * 0x60 + uVar1 * 0x66b8);
+  return;
+}
+
+
+// 826F5D60  EliteClan_GetPresence  (social/elite_clan.cpp:1351)
+
+longlong EliteClan_GetPresence(ulonglong param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  int iVar5;
+  ulonglong uVar6;
+  
+  if (3 < (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x54b,0,0xffffffff82031880,param_1,4);
+  }
+  uVar3 = Friends_FindIndex(param_1,param_2);
+  if (((int)uVar3 != -1) && (lVar4 = FriendsMenu_GetStatus(param_1,uVar3), 1 < (int)lVar4)) {
+    return lVar4;
+  }
+  iVar5 = MeetPlayer_GetPresence(param_1,param_2);
+  if (iVar5 == 0) {
+    iVar5 = LiveParty_GetPresence(param_2);
+    if (iVar5 == 0) {
+      lVar4 = Social_GetPresence(param_1,param_2);
+      uVar6 = -(ulonglong)(lVar4 != 0) & 4;
+      goto LAB_826f5e98;
+    }
+    iVar1 = *(int *)(iVar5 + 0x14);
+  }
+  else {
+    iVar1 = *(int *)(iVar5 + 0x14);
+  }
+  if (iVar1 == 0x415608cb) {
+    return 6;
+  }
+  uVar2 = *(uint *)(iVar5 + 8);
+  if ((uVar2 & 1) != 0) {
+    if ((uVar2 & 0xf0000) == 0x10000) {
+      return 4;
+    }
+    if (((uVar2 & 1) != 0) && ((uVar2 & 0xf0000) == 0x20000)) {
+      return 5;
+    }
+  }
+  uVar6 = (ulonglong)((uVar2 & 1) == 0) ^ 1;
+LAB_826f5e98:
+  return uVar6 + 2;
 }
 
 
 // 826F5EB8  EliteClan_Compare  (social/elite_clan.cpp:1425)
 
-void EliteClan_Compare(void)
+void EliteClan_Compare(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  longlong lVar1;
+  longlong lVar2;
+  
+  iVar3 = __savegprlr_29();
+  lVar1 = EliteClan_GetPresence(DAT_844f9f98,*(undefined8 *)(iVar3 + 0x10));
+  lVar2 = EliteClan_GetPresence(DAT_844f9f98,*(undefined8 *)((int)param_2 + 0x10));
+  if ((int)lVar2 == (int)lVar1) {
+    I_stricmp(iVar3 + 0x18,param_2 + 0x18);
+    __restgprlr_29();
+    return;
+  }
+  __restgprlr_29(lVar2 - lVar1);
+  return;
 }
 
 
@@ -733,8 +1232,63 @@ void EliteClan_Compare(void)
 void EliteClan_Sort(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_26();
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff821aecf8,0x5a7,0,0xffffffff82031880,uVar1,4);
+  }
+  iVar6 = uVar1 * 0x66b8;
+  if (*(size_t *)(&DAT_84500688 + iVar6) != 0) {
+    lVar5 = *(longlong *)(&DAT_844fa060 + *(int *)(&DAT_8450068c + iVar6) * 0x60 + iVar6);
+    DAT_844f9f98 = uVar1;
+    qsort(&DAT_844fa050 + iVar6,*(size_t *)(&DAT_84500688 + iVar6),0x60,EliteClan_Compare);
+    if ((&DAT_845006a0)[iVar6] != '\0') {
+      (&DAT_845006a0)[iVar6] = 0;
+      __restgprlr_26();
+      return;
+    }
+    iVar2 = 0;
+    if (0 < *(int *)(&DAT_84500688 + iVar6)) {
+      iVar4 = 0;
+      iVar3 = iVar6;
+      do {
+        if (lVar5 == *(longlong *)(&DAT_844fa060 + iVar3)) {
+          EliteClan_FeederSelection(uVar1);
+          __restgprlr_26();
+          return;
+        }
+        iVar2 = iVar2 + 1;
+        iVar4 = iVar4 + 0x60;
+        iVar3 = iVar4 + iVar6;
+      } while (iVar2 < *(int *)(&DAT_84500688 + iVar6));
+    }
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff821aecf8,0x5c2,0,0xffffffff821aed38);
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 826F6058  EliteClan_GetCount  (social/elite_clan.cpp:1479)
+
+undefined4 EliteClan_GetCount(uint param_1)
+
+{
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x5c8,0,0xffffffff82031880,param_1,4);
+  }
+  if ((&DAT_844f9f74)[param_1] != 4) {
+    return 0;
+  }
+  return *(undefined4 *)(&DAT_84500688 + param_1 * 0x66b8);
 }
 
 
@@ -746,7 +1300,6 @@ longlong EliteClan_IsPlatformFriend(ulonglong param_1)
   longlong lVar1;
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x5d4,0,0xffffffff82031880,param_1,4);
   }
   if (*(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8) == 0) {
@@ -768,7 +1321,6 @@ undefined8 EliteClan_SelectedIsMe(ulonglong param_1)
   longlong local_18;
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x5e3,0,0xffffffff82031880,param_1,4);
   }
   local_20 = 0;
@@ -791,7 +1343,6 @@ undefined8 EliteClan_IsMe(ulonglong param_1)
   longlong local_20 [2];
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x5f5,0,0xffffffff82031880,param_1,4);
   }
   cVar2 = dwGetOnlineUserID(param_1,local_20);
@@ -815,13 +1366,97 @@ bool EliteClan_IsLeader(int param_1)
 }
 
 
-// 826F6318  EliteClan_FeederOverrideCursorPos  (social/elite_clan.cpp:1566)
+// 826F6268  EliteClan_GetPositionByXUID  (social/elite_clan.cpp:1550)
 
-void EliteClan_FeederOverrideCursorPos(void)
+longlong EliteClan_GetPositionByXUID(uint param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  longlong lVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  if (3 < param_1) {
+    MyAssertHandler(0xffffffff821aecf8,0x611,0,0xffffffff82031880,param_1,4);
+  }
+  iVar3 = param_1 * 0x66b8;
+  lVar1 = 0;
+  if (0 < *(int *)(&DAT_84500688 + iVar3)) {
+    iVar4 = 0;
+    iVar2 = iVar3;
+    do {
+      if (*(longlong *)(&DAT_844fa060 + iVar2) == param_2) {
+        return lVar1;
+      }
+      lVar1 = lVar1 + 1;
+      iVar4 = iVar4 + 0x60;
+      iVar2 = iVar4 + iVar3;
+    } while ((int)lVar1 < *(int *)(&DAT_84500688 + iVar3));
+  }
+  return -1;
+}
+
+
+// 826F6318  EliteClan_FeederOverrideCursorPos  (social/elite_clan.cpp:1566)
+
+void EliteClan_FeederOverrideCursorPos
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  uint *puVar3;
+  uint *puVar4;
+  int iVar5;
+  uint uVar6;
+  
+  uVar2 = __savegprlr_23();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x61f,0,0xffffffff82000f98,0xffffffff8218eadc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x620,0,0xffffffff82000f98,0xffffffff82182238);
+  }
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x621,0,0xffffffff82057c60,uVar2,4);
+  }
+  puVar3 = (uint *)param_3;
+  if ((int)*puVar3 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x624,0,0xffffffff82000f98,0xffffffff8218eacc);
+  }
+  puVar4 = (uint *)param_4;
+  if ((int)*puVar4 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x625,0,0xffffffff82000f98,0xffffffff8218eabc);
+  }
+  iVar1 = (int)uVar2 * 0x66b8;
+  if (*(int *)(&DAT_84500688 + iVar1) == 0) {
+    *puVar3 = 0;
+    *puVar4 = 0;
+  }
+  else {
+    *puVar3 = *(uint *)(&DAT_8450068c + iVar1);
+  }
+  uVar6 = *puVar3;
+  if ((int)*puVar4 <= (int)uVar6) {
+    iVar5 = uVar6 - (int)param_2;
+    if (iVar5 < (int)*puVar4) goto LAB_826f6468;
+    uVar6 = iVar5 + 1;
+  }
+  *puVar4 = uVar6;
+LAB_826f6468:
+  if ((int)*puVar3 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x63a,1,0xffffffff82000f98,0xffffffff8218eacc);
+  }
+  if ((int)*puVar4 < 0) {
+    MyAssertHandler(0xffffffff821aecf8,0x63b,1,0xffffffff82000f98,0xffffffff8218eabc);
+  }
+  if ((param_2 & 0xffffffff) <= ((ulonglong)*puVar3 - (ulonglong)*puVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x63c,1,0xffffffff8218ea78,
+                    (ulonglong)*puVar3 - (ulonglong)*puVar4,param_2);
+  }
+  *(uint *)(&DAT_84500690 + iVar1) = *puVar4;
+  __restgprlr_23();
+  return;
 }
 
 
@@ -835,7 +1470,6 @@ void EliteClan_FeederOnReportRequest(ulonglong param_1,undefined8 param_2)
   undefined1 auStack_20 [8];
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x648,0,0xffffffff82031880,param_1,4);
   }
   cVar2 = Live_IsUserSignedInToLive(param_1);
@@ -864,7 +1498,6 @@ void EliteClan_FeederOnShowCard(ulonglong param_1)
   ulonglong uVar2;
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x65e,0,0xffffffff82031880,param_1,4);
   }
   cVar3 = Live_IsUserSignedInToLive(param_1);
@@ -890,18 +1523,18 @@ void EliteClan_FeederOnFriendRequest(ulonglong param_1)
   longlong local_20 [2];
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x670,0,0xffffffff82031880,param_1,4);
   }
   cVar3 = EliteClan_IsPlatformFriend(param_1);
-  if ((cVar3 == '\0') &&
-     ((cVar3 = dwGetOnlineUserID(param_1,local_20), cVar3 == '\0' ||
-      (local_20[0] != *(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8))))) {
-    iVar1 = (int)param_1 * 0x66b8;
-    if ((0 < *(int *)(&DAT_84500688 + iVar1)) &&
-       ((*(longlong *)(&DAT_84500698 + iVar1) != 0 &&
-        (uVar2 = XShowFriendRequestUI(param_1), (uVar2 & 0xffffffff) != 0)))) {
-      Com_PrintError(0x16,0xffffffff821aed70,uVar2);
+  if (cVar3 == '\0') {
+    cVar3 = dwGetOnlineUserID(param_1,local_20);
+    if ((cVar3 == '\0') || (local_20[0] != *(longlong *)(&DAT_84500698 + (int)param_1 * 0x66b8))) {
+      iVar1 = (int)param_1 * 0x66b8;
+      if ((0 < *(int *)(&DAT_84500688 + iVar1)) &&
+         ((*(longlong *)(&DAT_84500698 + iVar1) != 0 &&
+          (uVar2 = XShowFriendRequestUI(param_1), (uVar2 & 0xffffffff) != 0)))) {
+        Com_PrintError(0x16,0xffffffff821aed70,uVar2);
+      }
     }
   }
   return;
@@ -917,7 +1550,6 @@ undefined8 EliteClan_GetSelectedFeederXuid(int param_1,undefined8 *param_2)
   char cVar2;
   
   if (param_2 == (undefined8 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x6f8,0,0xffffffff82000f98,0xffffffff82032494);
   }
   cVar2 = Live_IsUserSignedInToLive(param_1);
@@ -939,8 +1571,63 @@ undefined8 EliteClan_GetSelectedFeederXuid(int param_1,undefined8 *param_2)
 void EliteClan_FeederOnInvite(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  char cVar4;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 uVar5;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x711,0,0xffffffff82031880,uVar1,4);
+  }
+  cVar4 = Live_IsUserSignedInToLive(uVar1);
+  if (cVar4 != '\0') {
+    iVar3 = (int)uVar1 * 0x66b8;
+    if (*(int *)(&DAT_84500688 + iVar3) != 0) {
+      cVar4 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
+      if (cVar4 == '\0') {
+        Com_PrintError(0x10,0xffffffff821aee40);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      uVar5 = *(undefined8 *)(&DAT_84500698 + iVar3);
+      uVar2 = Friends_FindIndex(uVar1,uVar5);
+      if ((((int)uVar2 != -1) && (iVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < iVar3)) &&
+         (cVar4 = FriendsMenu_IsUserInvitable(uVar1,uVar2,local_30), cVar4 == '\0')) {
+        Com_PrintError(0x10,0xffffffff821aedf0);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = MeetPlayer_GetPositionByXuid(uVar1,uVar5);
+      if (-1 < iVar3) {
+        MeetPlayer_Invite(uVar1,uVar5);
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = LiveParty_GetPositionByXuid(uVar5);
+      if (-1 < iVar3) {
+        LiveParty_InvitePartyMember();
+        __restgprlr_29();
+        return;
+      }
+      iVar3 = Social_GetPresence(uVar1,uVar5);
+      if ((iVar3 != 0) &&
+         (cVar4 = Social_IsAlreadyConnected(uVar1,*(undefined8 *)(iVar3 + 4),uVar5,local_30),
+         cVar4 != '\0')) {
+        Com_PrintError(0x10,0xffffffff821aeda0);
+        FriendsMenu_ShowErrorMessage(local_30[0]);
+        __restgprlr_29();
+        return;
+      }
+      Live_SendInvite(uVar1,uVar5);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -949,8 +1636,62 @@ void EliteClan_FeederOnInvite(void)
 void EliteClan_FeederOnJoin(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar3;
+  undefined8 uVar6;
+  char *local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821aecf8,0x775,0,0xffffffff82031880,uVar1,4);
+  }
+  cVar5 = Live_IsUserSignedInToLive(uVar1);
+  if (cVar5 != '\0') {
+    iVar4 = (int)uVar1 * 0x66b8;
+    if (*(int *)(&DAT_84500688 + iVar4) != 0) {
+      uVar6 = *(undefined8 *)(&DAT_84500698 + iVar4);
+      uVar2 = Friends_FindIndex(uVar1,uVar6);
+      if (((int)uVar2 == -1) || (iVar4 = FriendsMenu_GetStatus(uVar1,uVar2), iVar4 < 2)) {
+        iVar4 = MeetPlayer_GetPositionByXuid(uVar1,uVar6);
+        if (-1 < iVar4) {
+          MeetPlayer_Join(uVar1,uVar6);
+          __restgprlr_29();
+          return;
+        }
+        uVar2 = LiveParty_GetPositionByXuid(uVar6);
+        if (-1 < (int)uVar2) {
+          LiveParty_JoinPartyMember(uVar1,uVar2);
+          __restgprlr_29();
+          return;
+        }
+        uVar3 = Social_GetPresence(uVar1,uVar6);
+        if ((uVar3 & 0xffffffff) != 0) {
+          Social_JoinPlayer(uVar1,uVar6);
+          __restgprlr_29();
+          return;
+        }
+        Com_PrintError(0x10,0xffffffff821aeeb8,uVar3);
+        local_30[0] = "MENU_JOIN_SESSION_INVALID";
+      }
+      else {
+        cVar5 = FriendsMenu_JoinOnPresence(uVar1,uVar6,local_30);
+        if (cVar5 != '\0') goto LAB_826f6b84;
+        if (*local_30[0] == '\0') {
+          MyAssertHandler(0xffffffff821aecf8,0x788,0,0xffffffff82000f98,0xffffffff8218ea18);
+          FriendsMenu_ShowErrorMessage(local_30[0]);
+          __restgprlr_29();
+          return;
+        }
+      }
+      FriendsMenu_ShowErrorMessage(local_30[0]);
+    }
+  }
+LAB_826f6b84:
+  __restgprlr_29();
+  return;
 }
 
 
@@ -975,13 +1716,12 @@ undefined * EliteClan_GetClanName(uint param_1)
   undefined *puVar1;
   
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x7bf,0,0xffffffff82031880,param_1,4);
   }
-  if (((&DAT_844fa008)[param_1 * 0x66b8] != '\0') && ((&DAT_844f9f74)[param_1] == 4)) {
-    return &DAT_844fa008 + param_1 * 0x66b8;
+  puVar1 = &DAT_844fa008 + param_1 * 0x66b8;
+  if (((&DAT_844fa008)[param_1 * 0x66b8] == '\0') || ((&DAT_844f9f74)[param_1] != 4)) {
+    puVar1 = (undefined *)UI_SafeTranslateString(0xffffffff821aef00);
   }
-  puVar1 = (undefined *)UI_SafeTranslateString(0xffffffff821aef00);
   return puVar1;
 }
 
@@ -995,7 +1735,6 @@ undefined8 EliteClan_GetHelp(uint param_1)
   char cVar2;
   
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x7ca,0,0xffffffff82031880,param_1,4);
   }
   if ((&DAT_844f9f74)[param_1] == 4) {
@@ -1019,7 +1758,6 @@ undefined1 * EliteClan_GetClanNMOTD(uint param_1)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x7d8,0,0xffffffff82031880,param_1,4);
   }
   if ((&DAT_844f9f74)[param_1] != 4) {
@@ -1035,10 +1773,63 @@ bool EliteClan_IsMember(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aecf8,0x7e4,0,0xffffffff82031880,param_1,4);
   }
   return *(longlong *)(&DAT_844f9ff8 + (int)param_1 * 0x66b8) != 0;
+}
+
+
+// 826F6D70  EliteClan_IsSlotSelected  (social/elite_clan.cpp:2027)
+
+bool EliteClan_IsSlotSelected(int param_1,int param_2)
+
+{
+  if (((&DAT_844f9f74)[param_1] == 4) &&
+     (param_1 = param_1 * 0x66b8, *(int *)(&DAT_84500688 + param_1) != 0)) {
+    return param_2 == *(int *)(&DAT_8450068c + param_1) - *(int *)(&DAT_84500690 + param_1);
+  }
+  return false;
+}
+
+
+// 826F6DD0  EliteClan_GetPresenceForSlot  (social/elite_clan.cpp:2045)
+
+undefined8 EliteClan_GetPresenceForSlot(int param_1,int param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  if ((&DAT_844f9f74)[param_1] == 4) {
+    iVar2 = param_1 * 0x66b8;
+    if (*(int *)(&DAT_84500690 + iVar2) + param_2 < *(int *)(&DAT_84500688 + iVar2)) {
+      uVar1 = Social_GetPresenceString
+                        (param_1,*(undefined8 *)
+                                  (&DAT_844fa060 +
+                                  (*(int *)(&DAT_84500690 + iVar2) + param_2) * 0x60 + iVar2));
+      return uVar1;
+    }
+  }
+  return 0xffffffff820068af;
+}
+
+
+// 826F6E38  EliteClan_GetCurrentIndexName  (social/elite_clan.cpp:2070)
+
+undefined * EliteClan_GetCurrentIndexName(int param_1)
+
+{
+  return &DAT_844fa068 + *(int *)(&DAT_8450068c + param_1 * 0x66b8) * 0x60 + param_1 * 0x66b8;
+}
+
+
+// 826F6E68  EliteClan_GetCurrentIndexXUID  (social/elite_clan.cpp:2079)
+
+undefined8 EliteClan_GetCurrentIndexXUID(int param_1)
+
+{
+  return *(undefined8 *)
+          (&DAT_844fa060 + *(int *)(&DAT_8450068c + param_1 * 0x66b8) * 0x60 + param_1 * 0x66b8);
 }
 
 
@@ -1208,8 +1999,45 @@ undefined8 PrivateTeamProfile___scalar_deleting_destructor_(undefined8 param_1,u
 void _dynamic_atexit_destructor_for__g_DWEliteClanTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  lVar6 = 3;
+  puVar7 = &DAT_844f9fec;
+  do {
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
+        }
+        *puVar7 = 0;
+      }
+    }
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
+  __restgprlr_29();
+  return;
 }
 
 

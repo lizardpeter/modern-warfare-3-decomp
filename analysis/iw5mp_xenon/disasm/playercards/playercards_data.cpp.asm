@@ -29,10 +29,135 @@ LAB_826e6a54:
 ; 826E6A70  PlayerCards_GetTableString  (playercards/playercards_data.cpp:28)
   826E6A70  7D8802A6             mfspr r12,LR
   826E6A74  4822FC41             bl 0x829166b4
+  826E6A78  9421FF70             stwu r1,-0x90(r1)
+  826E6A7C  3D60821B             lis r11,-0x7de5
+  826E6A80  3D408200             lis r10,-0x7e00
+  826E6A84  7C7F1B78             or r31,r3,r3
+  826E6A88  7C9D2378             or r29,r4,r4
+  826E6A8C  7CBB2B78             or r27,r5,r5
+  826E6A90  2B030000             cmplwi cr6,r3,0x0
+  826E6A94  3BCB9BC0             subi r30,r11,0x6440
+  826E6A98  3B8A0F98             addi r28,r10,0xf98
+  826E6A9C  409A0020             bne cr6,0x826e6abc
+  826E6AA0  3D60821B             lis r11,-0x7de5
+  826E6AA4  7F86E378             or r6,r28,r28
+  826E6AA8  38EB9C5C             subi r7,r11,0x63a4
+  826E6AAC  7FC3F378             or r3,r30,r30
+  826E6AB0  38A00000             li r5,0x0
+  826E6AB4  38800020             li r4,0x20
+  826E6AB8  4BEEDA49             bl 0x825d4500
+LAB_826e6abc:
+  826E6ABC  38810050             addi r4,r1,0x50
+  826E6AC0  7FE3FB78             or r3,r31,r31
+  826E6AC4  4BF01035             bl 0x825e7af8
+  826E6AC8  81610050             lwz r11,0x50(r1)
+  826E6ACC  2B0B0000             cmplwi cr6,r11,0x0
+  826E6AD0  409A0020             bne cr6,0x826e6af0
+  826E6AD4  3D608203             lis r11,-0x7dfd
+  826E6AD8  7F86E378             or r6,r28,r28
+  826E6ADC  38EB62E8             addi r7,r11,0x62e8
+  826E6AE0  7FC3F378             or r3,r30,r30
+  826E6AE4  38A00001             li r5,0x1
+  826E6AE8  38800023             li r4,0x23
+  826E6AEC  4BEEDA15             bl 0x825d4500
+LAB_826e6af0:
+  826E6AF0  80610050             lwz r3,0x50(r1)
+  826E6AF4  4BF00EA5             bl 0x825e7998
+  826E6AF8  7F1D1840             cmplw cr6,r29,r3
+  826E6AFC  4198002C             blt cr6,0x826e6b28
+  826E6B00  80610050             lwz r3,0x50(r1)
+  826E6B04  4BF00E95             bl 0x825e7998
+  826E6B08  3D60821B             lis r11,-0x7de5
+  826E6B0C  7C681B78             or r8,r3,r3
+  826E6B10  38CB9C10             subi r6,r11,0x63f0
+  826E6B14  7FA7EB78             or r7,r29,r29
+  826E6B18  38A00000             li r5,0x0
+  826E6B1C  38800025             li r4,0x25
+  826E6B20  7FC3F378             or r3,r30,r30
+  826E6B24  4BEED9DD             bl 0x825d4500
+LAB_826e6b28:
+  826E6B28  7F65DB78             or r5,r27,r27
+  826E6B2C  80610050             lwz r3,0x50(r1)
+  826E6B30  7FA4EB78             or r4,r29,r29
+  826E6B34  4BF00C4D             bl 0x825e7780
+  826E6B38  7C7F1B78             or r31,r3,r3
+  826E6B3C  2B030000             cmplwi cr6,r3,0x0
+  826E6B40  409A0020             bne cr6,0x826e6b60
+  826E6B44  3D608202             lis r11,-0x7dfe
+  826E6B48  7F86E378             or r6,r28,r28
+  826E6B4C  38EB81D4             subi r7,r11,0x7e2c
+  826E6B50  7FC3F378             or r3,r30,r30
+  826E6B54  38A00001             li r5,0x1
+  826E6B58  38800028             li r4,0x28
+  826E6B5C  4BEED9A5             bl 0x825d4500
+LAB_826e6b60:
+  826E6B60  7FE3FB78             or r3,r31,r31
+  826E6B64  38210090             addi r1,r1,0x90
+  826E6B68  4822FB9C             b 0x82916704
 
 ; 826E6B70  PlayerCards_GetRowNumberFromHandle  (playercards/playercards_data.cpp:47)
   826E6B70  7D8802A6             mfspr r12,LR
   826E6B74  4822FB3D             bl 0x829166b0
+  826E6B78  9421FF70             stwu r1,-0x90(r1)
+  826E6B7C  3D60821B             lis r11,-0x7de5
+  826E6B80  3D408200             lis r10,-0x7e00
+  826E6B84  7C7F1B78             or r31,r3,r3
+  826E6B88  7C9B2378             or r27,r4,r4
+  826E6B8C  7CBC2B78             or r28,r5,r5
+  826E6B90  7CDA3378             or r26,r6,r6
+  826E6B94  2B030000             cmplwi cr6,r3,0x0
+  826E6B98  3BCB9BC0             subi r30,r11,0x6440
+  826E6B9C  3BAA0F98             addi r29,r10,0xf98
+  826E6BA0  409A0020             bne cr6,0x826e6bc0
+  826E6BA4  3D608203             lis r11,-0x7dfd
+  826E6BA8  7FA6EB78             or r6,r29,r29
+  826E6BAC  38EB63B8             addi r7,r11,0x63b8
+  826E6BB0  7FC3F378             or r3,r30,r30
+  826E6BB4  38A00000             li r5,0x0
+  826E6BB8  38800033             li r4,0x33
+  826E6BBC  4BEED945             bl 0x825d4500
+LAB_826e6bc0:
+  826E6BC0  897F0000             lbz r11,0x0(r31)
+  826E6BC4  2B0B0000             cmplwi cr6,r11,0x0
+  826E6BC8  409A0020             bne cr6,0x826e6be8
+  826E6BCC  3D60821B             lis r11,-0x7de5
+  826E6BD0  7FA6EB78             or r6,r29,r29
+  826E6BD4  38EB9CE4             subi r7,r11,0x631c
+  826E6BD8  7FC3F378             or r3,r30,r30
+  826E6BDC  38A00000             li r5,0x0
+  826E6BE0  38800034             li r4,0x34
+  826E6BE4  4BEED91D             bl 0x825d4500
+LAB_826e6be8:
+  826E6BE8  38810050             addi r4,r1,0x50
+  826E6BEC  7F63DB78             or r3,r27,r27
+  826E6BF0  4BF00F09             bl 0x825e7af8
+  826E6BF4  81610050             lwz r11,0x50(r1)
+  826E6BF8  2B0B0000             cmplwi cr6,r11,0x0
+  826E6BFC  409A0020             bne cr6,0x826e6c1c
+  826E6C00  3D608203             lis r11,-0x7dfd
+  826E6C04  7FA6EB78             or r6,r29,r29
+  826E6C08  38EB62E8             addi r7,r11,0x62e8
+  826E6C0C  7FC3F378             or r3,r30,r30
+  826E6C10  38A00001             li r5,0x1
+  826E6C14  38800037             li r4,0x37
+  826E6C18  4BEED8E9             bl 0x825d4500
+LAB_826e6c1c:
+  826E6C1C  7FE5FB78             or r5,r31,r31
+  826E6C20  80610050             lwz r3,0x50(r1)
+  826E6C24  7F84E378             or r4,r28,r28
+  826E6C28  4BF00A11             bl 0x825e7638
+  826E6C2C  2F030000             cmpwi cr6,r3,0x0
+  826E6C30  40980020             bge cr6,0x826e6c50
+  826E6C34  3D60821B             lis r11,-0x7de5
+  826E6C38  7F66DB78             or r6,r27,r27
+  826E6C3C  388B9C68             subi r4,r11,0x6398
+  826E6C40  7FE5FB78             or r5,r31,r31
+  826E6C44  38600001             li r3,0x1
+  826E6C48  4BE10039             bl 0x824f6c80
+  826E6C4C  7F43D378             or r3,r26,r26
+LAB_826e6c50:
+  826E6C50  38210090             addi r1,r1,0x90
+  826E6C54  4822FAAC             b 0x82916700
 
 ; 826E6C58  PlayerCards_GetTitleCount  (playercards/playercards_data.cpp:68)
   826E6C58  7D8802A6             mfspr r12,LR

@@ -2,10 +2,36 @@
 
 // 828B7758  XCOMPRESS::copy_data_to_output  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decout.cpp:12)
 
-void XCOMPRESS__copy_data_to_output(void)
+void XCOMPRESS__copy_data_to_output(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = *(int *)(iVar2 + 0x2b0c);
+  if (iVar3 == 0) goto LAB_828b77f4;
+  if ((*(int *)(iVar2 + 0x2ebc) == 0) || (bVar1 = true, 0x7fff < *(uint *)(iVar2 + 0x2ec4))) {
+    bVar1 = false;
+  }
+  if (*(char *)(iVar2 + 0x2fe4) == '\0') {
+LAB_828b77b8:
+    XMemCpy(iVar3);
+  }
+  else {
+    if (bVar1) {
+      iVar3 = *(int *)(iVar2 + 0x2fe8);
+      goto LAB_828b77b8;
+    }
+    XMemCpyStreaming_WriteCombined(iVar3,param_3,param_2);
+  }
+  if ((bVar1) &&
+     (XCOMPRESS__decoder_translate_e8(iVar2,iVar3,param_2), *(char *)(iVar2 + 0x2fe4) != '\0')) {
+    XMemCpyStreaming_WriteCombined(*(undefined4 *)(iVar2 + 0x2b0c),iVar3,param_2);
+  }
+LAB_828b77f4:
+  __restgprlr_28();
+  return;
 }
 

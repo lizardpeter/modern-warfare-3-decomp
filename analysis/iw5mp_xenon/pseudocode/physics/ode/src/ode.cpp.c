@@ -14,6 +14,16 @@ int _dynamic_initializer_for__odeGlob__(void)
 }
 
 
+// 826972F8  TRACK_phys_ode  (physics/ode/src/ode.cpp:57)
+
+void TRACK_phys_ode(void)
+
+{
+  track_static_alloc_internal(0xffffffff843cc8a0,0x60,0xffffffff82199b70,9);
+  return;
+}
+
+
 // 82697318  initObject  (physics/ode/src/ode.cpp:64)
 
 void initObject(undefined4 *param_1,undefined4 param_2)
@@ -30,11 +40,30 @@ void initObject(undefined4 *param_1,undefined4 param_2)
 
 // 82697338  addObjectToList  (physics/ode/src/ode.cpp:76)
 
-void addObjectToList(void)
+void addObjectToList(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82199b78,0x4d,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x4e,0,0xffffffff82000f98,0xffffffff820cbb24);
+  }
+  piVar3 = (int *)param_2;
+  iVar1 = *piVar3;
+  piVar2[1] = (int)piVar3;
+  *piVar2 = iVar1;
+  if (*piVar3 != 0) {
+    *(int **)(*piVar3 + 4) = piVar2;
+  }
+  *piVar3 = (int)piVar2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -43,8 +72,23 @@ void addObjectToList(void)
 void removeObjectFromList(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82199b78,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if (piVar1[1] == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x5d,0,0xffffffff82000f98,0xffffffff82199bbc);
+  }
+  if (*piVar1 != 0) {
+    *(int *)(*piVar1 + 4) = piVar1[1];
+  }
+  *(int *)piVar1[1] = *piVar1;
+  *piVar1 = 0;
+  piVar1[1] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -94,13 +138,166 @@ void removeJointReferencesFromAttachedBodies(int param_1)
 }
 
 
+// 826974F8  listHasLoops  (physics/ode/src/ode.cpp:138)
+
+undefined8 listHasLoops(int *param_1)
+
+{
+  int *piVar1;
+  bool bVar2;
+  
+  if ((param_1 != (int *)0x0) && (piVar1 = (int *)*param_1, piVar1 != (int *)0x0)) {
+    bVar2 = false;
+    do {
+      if (param_1 == piVar1) {
+        return 1;
+      }
+      piVar1 = (int *)*piVar1;
+      if (bVar2) {
+        param_1 = (int *)*param_1;
+      }
+      bVar2 = (bool)(bVar2 ^ 1);
+    } while (piVar1 != (int *)0x0);
+  }
+  return 0;
+}
+
+
 // 82697548  checkWorld  (physics/ode/src/ode.cpp:155)
 
 void checkWorld(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 *puVar1;
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  bool bVar6;
+  int *piVar7;
+  longlong lVar8;
+  int *piVar9;
+  
+  piVar2 = (int *)__savegprlr_23();
+  iVar3 = listHasLoops(*piVar2);
+  if ((iVar3 != 0) && (DAT_84013128 == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0xa0,0,0xffffffff82199d7c);
+  }
+  iVar3 = listHasLoops(piVar2[1]);
+  if ((iVar3 != 0) && (DAT_84013128 == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0xa1,0,0xffffffff82199d64);
+  }
+  for (piVar9 = (int *)*piVar2; piVar9 != (int *)0x0; piVar9 = (int *)*piVar9) {
+    if (((*piVar9 != 0) && (*(int **)(*piVar9 + 4) != piVar9)) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xa6,0,0xffffffff82199d44);
+    }
+  }
+  for (piVar9 = (int *)piVar2[1]; piVar9 != (int *)0x0; piVar9 = (int *)*piVar9) {
+    if (((*piVar9 != 0) && (*(int **)(*piVar9 + 4) != piVar9)) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xaa,0,0xffffffff82199d24);
+    }
+  }
+  iVar3 = 0;
+  for (puVar1 = (undefined4 *)*piVar2; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
+  {
+    iVar3 = iVar3 + 1;
+  }
+  if ((piVar2[2] != iVar3) && (DAT_84013128 == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0xb0,0,0xffffffff82199d0c);
+  }
+  iVar3 = 0;
+  for (puVar1 = (undefined4 *)piVar2[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+      ) {
+    iVar3 = iVar3 + 1;
+  }
+  if ((piVar2[3] != iVar3) && (DAT_84013128 == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0xb3,0,0xffffffff82199cf4);
+  }
+  DAT_843cc890 = DAT_843cc890 + 1;
+  for (puVar1 = (undefined4 *)*piVar2; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
+  {
+    puVar1[3] = DAT_843cc890;
+  }
+  for (puVar1 = (undefined4 *)piVar2[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+      ) {
+    puVar1[3] = DAT_843cc890;
+  }
+  for (puVar1 = (undefined4 *)*piVar2; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
+  {
+    if (((int *)puVar1[4] != piVar2) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xbd,0,0xffffffff82199cd4);
+    }
+  }
+  for (puVar1 = (undefined4 *)piVar2[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+      ) {
+    if (((int *)puVar1[4] != piVar2) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xbf,0,0xffffffff82199cb4);
+    }
+  }
+  for (puVar1 = (undefined4 *)piVar2[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+      ) {
+    piVar9 = puVar1 + 8;
+    lVar8 = 2;
+    do {
+      if (*piVar9 != 0) {
+        piVar7 = *(int **)(*piVar9 + 0x14);
+        bVar6 = false;
+        if (piVar7 != (int *)0x0) {
+          do {
+            if ((undefined4 *)*piVar7 == puVar1) {
+              bVar6 = true;
+            }
+            piVar7 = (int *)piVar7[3];
+          } while (piVar7 != (int *)0x0);
+          if (bVar6) goto LAB_82697880;
+        }
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82199b78,0xda,0,0xffffffff82199c88);
+        }
+      }
+LAB_82697880:
+      lVar8 = lVar8 + -1;
+      piVar9 = piVar9 + 4;
+    } while (lVar8 != 0);
+  }
+  piVar9 = (int *)*piVar2;
+  if (piVar9 != (int *)0x0) {
+    do {
+      for (piVar7 = (int *)piVar9[5]; piVar7 != (int *)0x0; piVar7 = (int *)piVar7[3]) {
+        iVar3 = *piVar7;
+        if ((int *)(iVar3 + 0x1c) == piVar7) {
+          if ((*(int **)(iVar3 + 0x30) != piVar9) && (DAT_84013128 == 0)) {
+            uVar4 = 0xe7;
+            uVar5 = 0xffffffff82199c08;
+LAB_8269791c:
+            MyAssertHandler(0xffffffff82199b78,uVar4,0,uVar5);
+          }
+        }
+        else if ((*(int **)(iVar3 + 0x20) != piVar9) && (DAT_84013128 == 0)) {
+          uVar5 = 0xffffffff82199c38;
+          uVar4 = 0xec;
+          goto LAB_8269791c;
+        }
+        if ((*(int *)(*piVar7 + 0xc) != DAT_843cc890) && (DAT_84013128 == 0)) {
+          MyAssertHandler(0xffffffff82199b78,0xef,0,0xffffffff82199c68);
+        }
+      }
+      piVar9 = (int *)*piVar9;
+    } while (piVar9 != (int *)0x0);
+  }
+  for (puVar1 = (undefined4 *)piVar2[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+      ) {
+    if (((puVar1[8] != 0) && (puVar1[8] == puVar1[0xc])) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xf6,0,0xffffffff82199bc8);
+    }
+    if ((((puVar1[8] != 0) && (*(int *)(puVar1[8] + 0xc) != DAT_843cc890)) ||
+        ((puVar1[0xc] != 0 && (*(int *)(puVar1[0xc] + 0xc) != DAT_843cc890)))) &&
+       (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82199b78,0xf9,0,0xffffffff82199bec);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -115,11 +312,56 @@ void ODE_Init(void)
 
 // 8269BA38  ODE_BodyInit  (physics/ode/src/ode.cpp:269)
 
-void ODE_BodyInit(void)
+void ODE_BodyInit(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  double dVar3;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82199b78,0x10e,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x10f,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  if (puVar1 != (undefined4 *)0x0) {
+    dMassSetZero(puVar1 + 8);
+  }
+  iVar2 = (int)param_2;
+  puVar1[4] = iVar2;
+  *puVar1 = 0;
+  puVar1[1] = 0;
+  puVar1[2] = 0;
+  puVar1[3] = 0;
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  dVar3 = 1.0;
+  puVar1[7] = 0;
+  dMassSetParameters(0x3ff0000000000000,0,0,0,0x3ff0000000000000,0x3ff0000000000000,
+                     0x3ff0000000000000,0,0,puVar1 + 8);
+  dSetZero(puVar1 + 0x19,0xc);
+  puVar1[0x19] = (float)dVar3;
+  puVar1[0x1e] = (float)dVar3;
+  puVar1[0x23] = (float)dVar3;
+  puVar1[0x25] = (float)dVar3;
+  dSetZero(puVar1 + 0x38,4);
+  dSetZero(puVar1 + 0x3c,4);
+  puVar1[0x3c] = (float)dVar3;
+  dRSetIdentity(puVar1 + 0x40);
+  dSetZero(puVar1 + 0x4c,4);
+  dSetZero(puVar1 + 0x50,4);
+  dSetZero(puVar1 + 0x26,4);
+  dSetZero(puVar1 + 0x2a,4);
+  dSetZero(puVar1 + 0x2e,4);
+  addObjectToList(puVar1,param_2);
+  *(int *)(iVar2 + 8) = *(int *)(iVar2 + 8) + 1;
+  dBodySetAutoDisableDefaults(puVar1);
+  puVar1[0x36] = puVar1[0x34];
+  puVar1[0x37] = puVar1[0x35];
+  __restgprlr_28();
+  return;
 }
 
 
@@ -149,8 +391,39 @@ void ODE_BodyDestroyAllGeoms(int param_1)
 void dBodyDestroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int *piVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x143,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (*(int *)(*(int *)(iVar2 + 0x10) + 0x50) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x144,0,0xffffffff82000f98,0xffffffff82199db0);
+  }
+  ODE_BodyDestroyAllGeoms(iVar2);
+  uVar3 = (ulonglong)*(uint *)(iVar2 + 0x14);
+  uVar1 = uVar3;
+  while (uVar1 != 0) {
+    piVar4 = (int *)uVar3;
+    *(undefined4 *)((((int *)(*piVar4 + 0x1c) == piVar4) + 2) * 0x10 + *piVar4) = 0;
+    uVar3 = (ulonglong)(uint)piVar4[3];
+    piVar4[3] = 0;
+    removeJointReferencesFromAttachedBodies(*piVar4);
+    uVar1 = uVar3 & 0xffffffff;
+  }
+  removeObjectFromList(iVar2);
+  if (*(int *)(iVar2 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x156,0,0xffffffff82000f98,0xffffffff82199da4);
+  }
+  if (*(int *)(*(int *)(iVar2 + 0x10) + 8) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x157,0,0xffffffff82000f98,0xffffffff82199d90);
+  }
+  *(int *)(*(int *)(iVar2 + 0x10) + 8) = *(int *)(*(int *)(iVar2 + 0x10) + 8) + -1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -160,7 +433,6 @@ void dBodySetData(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x15e,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(undefined4 *)(param_1 + 8) = param_2;
@@ -174,7 +446,6 @@ undefined4 dBodyGetData(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x165,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return *(undefined4 *)(param_1 + 8);
@@ -183,61 +454,298 @@ undefined4 dBodyGetData(int param_1)
 
 // 82697C98  dBodySetPosition  (physics/ode/src/ode.cpp:363)
 
-void dBodySetPosition(void)
+void dBodySetPosition(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  double extraout_f1;
+  double dVar4;
+  
+  iVar2 = __savegprlr_28();
+  dVar4 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x16c,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x16d,0,0xffffffff82000f98,0xffffffff82199de0);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x16e,0,0xffffffff82000f98,0xffffffff82199dd4);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x16f,0,0xffffffff82000f98,0xffffffff82199dc8);
+  }
+  *(float *)(iVar2 + 0xe0) = (float)dVar4;
+  *(float *)(iVar2 + 0xe4) = (float)param_2;
+  *(float *)(iVar2 + 0xe8) = (float)param_3;
+  uVar3 = (ulonglong)*(uint *)(iVar2 + 0x1c);
+  uVar1 = uVar3;
+  while (uVar1 != 0) {
+    dGeomMoved(uVar3);
+    uVar3 = dGeomGetBodyNext(uVar3);
+    uVar1 = uVar3 & 0xffffffff;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82697DD0  dBodySetRotation  (physics/ode/src/ode.cpp:380)
 
-void dBodySetRotation(void)
+void dBodySetRotation(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  uint local_40;
+  uint local_3c;
+  uint local_38;
+  uint local_34;
+  
+  iVar2 = __savegprlr_27();
+  if ((iVar2 == 0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0x180,0,0xffffffff82000f98,0xffffffff8219a014);
+  }
+  puVar3 = (uint *)param_2;
+  if ((((*puVar3 & 0x7f800000) == 0x7f800000) || ((puVar3[1] & 0x7f800000) == 0x7f800000)) ||
+     ((puVar3[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x181,0,0xffffffff82000f98,0xffffffff82199fdc);
+  }
+  if ((((puVar3[4] & 0x7f800000) == 0x7f800000) || ((puVar3[5] & 0x7f800000) == 0x7f800000)) ||
+     ((puVar3[6] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x182,0,0xffffffff82000f98,0xffffffff82199f98);
+  }
+  if ((((puVar3[8] & 0x7f800000) == 0x7f800000) || ((puVar3[9] & 0x7f800000) == 0x7f800000)) ||
+     ((puVar3[10] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x183,0,0xffffffff82000f98,0xffffffff82199f50);
+  }
+  dQfromR(&local_40,param_2);
+  if (((((local_40 & 0x7f800000) == 0x7f800000) || ((local_3c & 0x7f800000) == 0x7f800000)) ||
+      ((local_38 & 0x7f800000) == 0x7f800000)) || ((local_34 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x186,0,0xffffffff82000f98,0xffffffff82199f00);
+  }
+  dNormalize4(&local_40);
+  *(uint *)(iVar2 + 0xf0) = local_40;
+  *(uint *)(iVar2 + 0xf4) = local_3c;
+  *(uint *)(iVar2 + 0xf8) = local_38;
+  *(uint *)(iVar2 + 0xfc) = local_34;
+  dRfromQ(iVar2 + 0x100,iVar2 + 0xf0);
+  if ((((*(uint *)(iVar2 + 0x100) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x104) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x108) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x18e,0,0xffffffff82000f98,0xffffffff82199eb0);
+  }
+  if ((((*(uint *)(iVar2 + 0x110) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x114) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x118) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,399,0,0xffffffff82000f98,0xffffffff82199e50);
+  }
+  if ((((*(uint *)(iVar2 + 0x120) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x124) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x128) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,400,0,0xffffffff82000f98,0xffffffff82199df0);
+  }
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x1c);
+  uVar1 = uVar4;
+  while (uVar1 != 0) {
+    dGeomMoved(uVar4);
+    uVar4 = dGeomGetBodyNext(uVar4);
+    uVar1 = uVar4 & 0xffffffff;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82698168  dBodySetQuaternion  (physics/ode/src/ode.cpp:409)
 
-void dBodySetQuaternion(void)
+void dBodySetQuaternion(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  int iVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x19a,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x19b,0,0xffffffff82000f98,0xffffffff8219775c);
+  }
+  puVar3 = (uint *)param_2;
+  if (((((*puVar3 & 0x7f800000) == 0x7f800000) || ((puVar3[1] & 0x7f800000) == 0x7f800000)) ||
+      ((puVar3[2] & 0x7f800000) == 0x7f800000)) || ((puVar3[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x19c,0,0xffffffff82000f98,0xffffffff8219a020);
+  }
+  *(uint *)(iVar2 + 0xf0) = *puVar3;
+  *(uint *)(iVar2 + 0xf4) = puVar3[1];
+  *(uint *)(iVar2 + 0xf8) = puVar3[2];
+  *(uint *)(iVar2 + 0xfc) = puVar3[3];
+  dNormalize4(iVar2 + 0xf0);
+  dRfromQ(iVar2 + 0x100,iVar2 + 0xf0);
+  if ((((*(uint *)(iVar2 + 0x100) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x104) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x108) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1a1,0,0xffffffff82000f98,0xffffffff82199eb0);
+  }
+  if ((((*(uint *)(iVar2 + 0x110) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x114) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x118) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1a2,0,0xffffffff82000f98,0xffffffff82199e50);
+  }
+  if ((((*(uint *)(iVar2 + 0x120) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar2 + 0x124) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar2 + 0x128) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1a3,0,0xffffffff82000f98,0xffffffff82199df0);
+  }
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x1c);
+  uVar1 = uVar4;
+  while (uVar1 != 0) {
+    dGeomMoved(uVar4);
+    uVar4 = dGeomGetBodyNext(uVar4);
+    uVar1 = uVar4 & 0xffffffff;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 826983E8  dBodySetQuaternionExact  (physics/ode/src/ode.cpp:428)
 
-void dBodySetQuaternionExact(void)
+void dBodySetQuaternionExact(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  float *pfVar4;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1ad,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1ae,0,0xffffffff82000f98,0xffffffff8219775c);
+  }
+  pfVar4 = (float *)param_2;
+  if ((((((uint)*pfVar4 & 0x7f800000) == 0x7f800000) ||
+       (((uint)pfVar4[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)pfVar4[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar4[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1af,0,0xffffffff82000f98,0xffffffff8219a020);
+  }
+  dVar8 = (double)pfVar4[1];
+  dVar7 = (double)pfVar4[3];
+  dVar6 = (double)*pfVar4;
+  if (0.002 <= ABS((float)(dVar6 * dVar6 +
+                          (double)(float)(dVar7 * dVar7 +
+                                         (double)(float)(dVar8 * dVar8 +
+                                                        (double)(pfVar4[2] * pfVar4[2])))) - 1.0)) {
+    uVar2 = va(dVar6,dVar8,(double)pfVar4[2],dVar7,0xffffffff8200c4fc,dVar6,dVar8,(double)pfVar4[2],
+               dVar7);
+    MyAssertHandler(0xffffffff82199b78,0x1b0,0,0xffffffff820011f4,0xffffffff8200c4e0,uVar2);
+  }
+  *(float *)(iVar3 + 0xf0) = *pfVar4;
+  *(float *)(iVar3 + 0xf4) = pfVar4[1];
+  *(float *)(iVar3 + 0xf8) = pfVar4[2];
+  *(float *)(iVar3 + 0xfc) = pfVar4[3];
+  dRfromQ(iVar3 + 0x100,iVar3 + 0xf0);
+  if ((((*(uint *)(iVar3 + 0x100) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar3 + 0x104) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar3 + 0x108) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1b4,0,0xffffffff82000f98,0xffffffff82199eb0);
+  }
+  if ((((*(uint *)(iVar3 + 0x110) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar3 + 0x114) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar3 + 0x118) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1b5,0,0xffffffff82000f98,0xffffffff82199e50);
+  }
+  if ((((*(uint *)(iVar3 + 0x120) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar3 + 0x124) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar3 + 0x128) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82199b78,0x1b6,0,0xffffffff82000f98,0xffffffff82199df0);
+  }
+  uVar5 = (ulonglong)*(uint *)(iVar3 + 0x1c);
+  uVar1 = uVar5;
+  while (uVar1 != 0) {
+    dGeomMoved(uVar5);
+    uVar5 = dGeomGetBodyNext(uVar5);
+    uVar1 = uVar5 & 0xffffffff;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 826986F8  dBodySetLinearVel  (physics/ode/src/ode.cpp:447)
 
-void dBodySetLinearVel(void)
+void dBodySetLinearVel(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  dVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1c0,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1c1,0,0xffffffff82000f98,0xffffffff82199de0);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1c2,0,0xffffffff82000f98,0xffffffff82199dd4);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1c3,0,0xffffffff82000f98,0xffffffff82199dc8);
+  }
+  *(float *)(iVar1 + 0x130) = (float)dVar2;
+  *(float *)(iVar1 + 0x134) = (float)param_2;
+  *(float *)(iVar1 + 0x138) = (float)param_3;
+  __restgprlr_28();
+  return;
 }
 
 
 // 82698808  dBodySetAngularVel  (physics/ode/src/ode.cpp:460)
 
-void dBodySetAngularVel(void)
+void dBodySetAngularVel(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  dVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1cd,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1ce,0,0xffffffff82000f98,0xffffffff82199de0);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1cf,0,0xffffffff82000f98,0xffffffff82199dd4);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x1d0,0,0xffffffff82000f98,0xffffffff82199dc8);
+  }
+  *(float *)(iVar1 + 0x140) = (float)dVar2;
+  *(float *)(iVar1 + 0x144) = (float)param_2;
+  *(float *)(iVar1 + 0x148) = (float)param_3;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -247,7 +755,6 @@ longlong dBodyGetPosition(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x1da,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0xe0;
@@ -260,7 +767,6 @@ longlong dBodyGetRotation(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x1e1,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0x100;
@@ -273,7 +779,6 @@ longlong dBodyGetQuaternion(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x1e8,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0xf0;
@@ -286,7 +791,6 @@ longlong dBodyGetLinearVel(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x1ef,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0x130;
@@ -299,7 +803,6 @@ longlong dBodyGetAngularVel(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x1f6,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0x140;
@@ -308,21 +811,49 @@ longlong dBodyGetAngularVel(ulonglong param_1)
 
 // 82698AD0  dBodySetMass  (physics/ode/src/ode.cpp:508)
 
-void dBodySetMass(void)
+void dBodySetMass(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1fd,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x1fe,0,0xffffffff82000f98,0xffffffff8219a09c);
+  }
+  memcpy((float *)(iVar1 + 0x20),(void *)param_2,0x44);
+  iVar2 = dInvertPDMatrix3(iVar1 + 0x34,iVar1 + 100);
+  if (iVar2 == 0) {
+    Com_PrintWarning(0x14,0xffffffff8219a078);
+    dRSetIdentity(iVar1 + 100);
+  }
+  *(float *)(iVar1 + 0x94) = 1.0 / *(float *)(iVar1 + 0x20);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82698BA0  dBodyGetMass  (physics/ode/src/ode.cpp:523)
 
-void dBodyGetMass(void)
+void dBodyGetMass(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  void *pvVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x20c,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x20d,0,0xffffffff82000f98,0xffffffff8219a09c);
+  }
+  pvVar2 = memcpy((void *)param_2,(void *)(iVar1 + 0x20),0x44);
+  __restgprlr_28(pvVar2);
+  return;
 }
 
 
@@ -332,7 +863,6 @@ void dBodyAddRelForce(double param_1,double param_2,double param_3,int param_4)
 
 {
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x214,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(float *)(param_4 + 0x98) =
@@ -356,41 +886,352 @@ void dBodyAddRelForce(double param_1,double param_2,double param_3,int param_4)
 
 // 8269BCB8  dBodyAddRelTorque  (physics/ode/src/ode.cpp:546)
 
-void dBodyAddRelTorque(void)
+void dBodyAddRelTorque(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  double extraout_f1;
+  double dVar5;
+  
+  iVar4 = __savegprlr_28();
+  dVar5 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x225,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x226,0,0xffffffff82000f98,0xffffffff82198a78);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x227,0,0xffffffff82000f98,0xffffffff82198a6c);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x228,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  fVar1 = (float)((double)*(float *)(iVar4 + 0x100) * dVar5 +
+                 (double)(float)((double)*(float *)(iVar4 + 0x104) * param_2 +
+                                (double)(float)((double)*(float *)(iVar4 + 0x108) * param_3))) +
+          *(float *)(iVar4 + 0xa8);
+  fVar2 = (float)(dVar5 * (double)*(float *)(iVar4 + 0x110) +
+                 (double)(float)((double)*(float *)(iVar4 + 0x114) * param_2 +
+                                (double)(float)((double)*(float *)(iVar4 + 0x118) * param_3))) +
+          *(float *)(iVar4 + 0xac);
+  *(float *)(iVar4 + 0xa8) = fVar1;
+  fVar3 = (float)((double)*(float *)(iVar4 + 0x120) * dVar5 +
+                 (double)(float)((double)*(float *)(iVar4 + 0x124) * param_2 +
+                                (double)(float)((double)*(float *)(iVar4 + 0x128) * param_3))) +
+          *(float *)(iVar4 + 0xb0);
+  *(float *)(iVar4 + 0xac) = fVar2;
+  *(float *)(iVar4 + 0xb0) = fVar3;
+  if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar3 & 0x7f800000) != 0x7f800000) goto LAB_8269be70;
+    }
+  }
+  MyAssertHandler(0xffffffff82199b78,0x233,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_8269be70:
+  __restgprlr_28();
+  return;
+}
+
+
+// 82698C28  dBodyAddForceAtPos  (physics/ode/src/ode.cpp:569)
+
+void dBodyAddForceAtPos(undefined8 param_1,double param_2,double param_3,double param_4,
+                       double param_5,double param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
   __savegprlr_28();
+  iVar4 = __savefpr_26();
+  dVar8 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x23a,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar8 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x23b,0,0xffffffff82000f98,0xffffffff82198a78);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x23c,0,0xffffffff82000f98,0xffffffff82198a6c);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x23d,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x23e,0,0xffffffff82000f98,0xffffffff8219a0bc);
+  }
+  if (((uint)(float)param_5 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x23f,0,0xffffffff82000f98,0xffffffff8219a0b0);
+  }
+  if (((uint)(float)param_6 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x240,0,0xffffffff82000f98,0xffffffff8219a0a4);
+  }
+  dVar7 = (double)(float)(param_6 - (double)*(float *)(iVar4 + 0xe8));
+  dVar6 = (double)(float)(param_5 - (double)*(float *)(iVar4 + 0xe4));
+  dVar5 = (double)(float)(param_4 - (double)*(float *)(iVar4 + 0xe0));
+  *(float *)(iVar4 + 0x98) = (float)((double)*(float *)(iVar4 + 0x98) + dVar8);
+  *(float *)(iVar4 + 0x9c) = (float)((double)*(float *)(iVar4 + 0x9c) + param_2);
+  *(float *)(iVar4 + 0xa0) = (float)((double)*(float *)(iVar4 + 0xa0) + param_3);
+  fVar1 = (float)(dVar6 * param_3 - (double)(float)(dVar7 * param_2)) + *(float *)(iVar4 + 0xa8);
+  fVar2 = (float)(dVar5 * param_2 - (double)(float)(dVar6 * dVar8)) + *(float *)(iVar4 + 0xb0);
+  *(float *)(iVar4 + 0xa8) = fVar1;
+  fVar3 = (float)(dVar7 * dVar8 - (double)(float)(dVar5 * param_3)) + *(float *)(iVar4 + 0xac);
+  *(float *)(iVar4 + 0xb0) = fVar2;
+  *(float *)(iVar4 + 0xac) = fVar3;
+  if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar3 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar2 & 0x7f800000) != 0x7f800000) goto LAB_82698e80;
+    }
+  }
+  MyAssertHandler(0xffffffff82199b78,0x24e,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_82698e80:
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 
 // 8269BE88  dBodyAddForceAtRelPos  (physics/ode/src/ode.cpp:596)
 
-void dBodyAddForceAtRelPos(void)
+void dBodyAddForceAtRelPos
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  double dVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
   __savegprlr_28();
+  iVar4 = __savefpr_26();
+  dVar8 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82199b78,599,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar8 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,600,0,0xffffffff82000f98,0xffffffff82198a78);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x259,0,0xffffffff82000f98,0xffffffff82198a6c);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x25a,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x25b,0,0xffffffff82000f98,0xffffffff8219a0bc);
+  }
+  if (((uint)(float)param_5 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x25c,0,0xffffffff82000f98,0xffffffff8219a0b0);
+  }
+  if (((uint)(float)param_6 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x25d,0,0xffffffff82000f98,0xffffffff8219a0a4);
+  }
+  *(float *)(iVar4 + 0x9c) = (float)((double)*(float *)(iVar4 + 0x9c) + param_2);
+  *(float *)(iVar4 + 0x98) = (float)((double)*(float *)(iVar4 + 0x98) + dVar8);
+  *(float *)(iVar4 + 0xa0) = (float)((double)*(float *)(iVar4 + 0xa0) + param_3);
+  dVar5 = (double)(float)((double)*(float *)(iVar4 + 0x120) * param_4 +
+                         (double)(float)((double)*(float *)(iVar4 + 0x124) * param_5 +
+                                        (double)(float)((double)*(float *)(iVar4 + 0x128) * param_6)
+                                        ));
+  dVar7 = (double)(float)((double)*(float *)(iVar4 + 0x110) * param_4 +
+                         (double)(float)((double)*(float *)(iVar4 + 0x114) * param_5 +
+                                        (double)(float)((double)*(float *)(iVar4 + 0x118) * param_6)
+                                        ));
+  dVar6 = (double)(float)((double)*(float *)(iVar4 + 0x100) * param_4 +
+                         (double)(float)((double)*(float *)(iVar4 + 0x104) * param_5 +
+                                        (double)(float)((double)*(float *)(iVar4 + 0x108) * param_6)
+                                        ));
+  fVar1 = (float)(dVar7 * param_3 - (double)(float)(dVar5 * param_2)) + *(float *)(iVar4 + 0xa8);
+  fVar3 = (float)(dVar6 * param_2 - (double)(float)(dVar7 * dVar8)) + *(float *)(iVar4 + 0xb0);
+  *(float *)(iVar4 + 0xa8) = fVar1;
+  fVar2 = (float)(dVar5 * dVar8 - (double)(float)(dVar6 * param_3)) + *(float *)(iVar4 + 0xac);
+  *(float *)(iVar4 + 0xb0) = fVar3;
+  *(float *)(iVar4 + 0xac) = fVar2;
+  if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar3 & 0x7f800000) != 0x7f800000) goto LAB_8269c114;
+    }
+  }
+  MyAssertHandler(0xffffffff82199b78,0x26d,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_8269c114:
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 
 // 8269C128  dBodyAddRelForceAtPos  (physics/ode/src/ode.cpp:627)
 
-void dBodyAddRelForceAtPos(void)
+void dBodyAddRelForceAtPos
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  int iVar8;
+  double extraout_f1;
+  double dVar9;
+  
   __savegprlr_28();
+  iVar8 = __savefpr_26();
+  dVar9 = extraout_f1;
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x277,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x278,0,0xffffffff82000f98,0xffffffff82198a78);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x279,0,0xffffffff82000f98,0xffffffff82198a6c);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x27a,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x27b,0,0xffffffff82000f98,0xffffffff8219a0bc);
+  }
+  if (((uint)(float)param_5 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x27c,0,0xffffffff82000f98,0xffffffff8219a0b0);
+  }
+  if (((uint)(float)param_6 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x27d,0,0xffffffff82000f98,0xffffffff8219a0a4);
+  }
+  fVar4 = (float)(param_6 - (double)*(float *)(iVar8 + 0xe8));
+  fVar5 = (float)(param_5 - (double)*(float *)(iVar8 + 0xe4));
+  fVar6 = (float)(param_4 - (double)*(float *)(iVar8 + 0xe0));
+  fVar1 = (float)((double)*(float *)(iVar8 + 0x110) * dVar9 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x114) * param_2 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x118) * param_3)));
+  fVar2 = (float)((double)*(float *)(iVar8 + 0x120) * dVar9 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x124) * param_2 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x128) * param_3)));
+  fVar3 = (float)((double)*(float *)(iVar8 + 0x100) * dVar9 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x104) * param_2 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x108) * param_3)));
+  *(float *)(iVar8 + 0x9c) = *(float *)(iVar8 + 0x9c) + fVar1;
+  *(float *)(iVar8 + 0xa0) = *(float *)(iVar8 + 0xa0) + fVar2;
+  *(float *)(iVar8 + 0x98) = *(float *)(iVar8 + 0x98) + fVar3;
+  fVar7 = (fVar5 * fVar2 - fVar4 * fVar1) + *(float *)(iVar8 + 0xa8);
+  fVar2 = (fVar4 * fVar3 - fVar6 * fVar2) + *(float *)(iVar8 + 0xac);
+  *(float *)(iVar8 + 0xa8) = fVar7;
+  fVar1 = (fVar6 * fVar1 - fVar5 * fVar3) + *(float *)(iVar8 + 0xb0);
+  *(float *)(iVar8 + 0xac) = fVar2;
+  *(float *)(iVar8 + 0xb0) = fVar1;
+  if (((uint)fVar7 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar1 & 0x7f800000) != 0x7f800000) goto LAB_8269c3cc;
+    }
+  }
+  MyAssertHandler(0xffffffff82199b78,0x28c,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_8269c3cc:
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 
 // 8269C3E0  dBodyAddRelForceAtRelPos  (physics/ode/src/ode.cpp:658)
 
-void dBodyAddRelForceAtRelPos(void)
+void dBodyAddRelForceAtRelPos
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  int iVar8;
+  double extraout_f1;
+  double dVar9;
+  
   __savegprlr_28();
+  iVar8 = __savefpr_25();
+  dVar9 = extraout_f1;
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x295,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x296,0,0xffffffff82000f98,0xffffffff82198a78);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x297,0,0xffffffff82000f98,0xffffffff82198a6c);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x298,0,0xffffffff82000f98,0xffffffff82198a60);
+  }
+  if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x299,0,0xffffffff82000f98,0xffffffff8219a0bc);
+  }
+  if (((uint)(float)param_5 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x29a,0,0xffffffff82000f98,0xffffffff8219a0b0);
+  }
+  if (((uint)(float)param_6 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x29b,0,0xffffffff82000f98,0xffffffff8219a0a4);
+  }
+  fVar1 = (float)((double)*(float *)(iVar8 + 0x110) * dVar9 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x114) * param_2 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x118) * param_3)));
+  fVar2 = (float)((double)*(float *)(iVar8 + 0x120) * param_4 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x124) * param_5 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x128) * param_6)));
+  fVar3 = (float)((double)*(float *)(iVar8 + 0x108) * param_3 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x100) * dVar9 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x104) * param_2)));
+  fVar4 = (float)((double)*(float *)(iVar8 + 0x120) * dVar9 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x124) * param_2 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x128) * param_3)));
+  fVar5 = (float)((double)*(float *)(iVar8 + 0x110) * param_4 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x114) * param_5 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x118) * param_6)));
+  fVar6 = (float)((double)*(float *)(iVar8 + 0x108) * param_6 +
+                 (double)(float)((double)*(float *)(iVar8 + 0x100) * param_4 +
+                                (double)(float)((double)*(float *)(iVar8 + 0x104) * param_5)));
+  *(float *)(iVar8 + 0x9c) = *(float *)(iVar8 + 0x9c) + fVar1;
+  *(float *)(iVar8 + 0x98) = *(float *)(iVar8 + 0x98) + fVar3;
+  *(float *)(iVar8 + 0xa0) = *(float *)(iVar8 + 0xa0) + fVar4;
+  fVar7 = (fVar5 * fVar4 - fVar2 * fVar1) + *(float *)(iVar8 + 0xa8);
+  fVar1 = (fVar6 * fVar1 - fVar5 * fVar3) + *(float *)(iVar8 + 0xb0);
+  *(float *)(iVar8 + 0xa8) = fVar7;
+  fVar2 = (fVar2 * fVar3 - fVar6 * fVar4) + *(float *)(iVar8 + 0xac);
+  *(float *)(iVar8 + 0xb0) = fVar1;
+  *(float *)(iVar8 + 0xac) = fVar2;
+  if (((uint)fVar7 & 0x7f800000) != 0x7f800000) {
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      if (((uint)fVar1 & 0x7f800000) != 0x7f800000) goto LAB_8269c6b0;
+    }
+  }
+  MyAssertHandler(0xffffffff82199b78,0x2ac,0,0xffffffff82000f98,0xffffffff82198a18);
+LAB_8269c6b0:
+  __restfpr_25();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -400,7 +1241,6 @@ longlong dBodyGetForce(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x2b2,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0x98;
@@ -413,7 +1253,6 @@ longlong dBodyGetTorque(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x2b9,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return param_1 + 0xa8;
@@ -422,21 +1261,63 @@ longlong dBodyGetTorque(ulonglong param_1)
 
 // 82698F40  dBodySetForce  (physics/ode/src/ode.cpp:703)
 
-void dBodySetForce(void)
+void dBodySetForce(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  dVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x2c0,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2c1,0,0xffffffff82000f98,0xffffffff82199de0);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2c2,0,0xffffffff82000f98,0xffffffff82199dd4);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2c3,0,0xffffffff82000f98,0xffffffff82199dc8);
+  }
+  *(float *)(iVar1 + 0x98) = (float)dVar2;
+  *(float *)(iVar1 + 0x9c) = (float)param_2;
+  *(float *)(iVar1 + 0xa0) = (float)param_3;
+  __restgprlr_28();
+  return;
 }
 
 
 // 82699050  dBodySetTorque  (physics/ode/src/ode.cpp:716)
 
-void dBodySetTorque(void)
+void dBodySetTorque(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  dVar2 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x2cd,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2ce,0,0xffffffff82000f98,0xffffffff82199de0);
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2cf,0,0xffffffff82000f98,0xffffffff82199dd4);
+  }
+  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82199b78,0x2d0,0,0xffffffff82000f98,0xffffffff82199dc8);
+  }
+  *(float *)(iVar1 + 0xa8) = (float)dVar2;
+  *(float *)(iVar1 + 0xac) = (float)param_2;
+  *(float *)(iVar1 + 0xb0) = (float)param_3;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -454,7 +1335,6 @@ void dBodyGetRelPointPos(double param_1,double param_2,double param_3,int param_
   float *in_r7;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x2db,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   fVar1 = *(float *)(param_4 + 0x118);
@@ -479,6 +1359,59 @@ void dBodyGetRelPointPos(double param_1,double param_2,double param_3,int param_
 }
 
 
+// 8269C7B8  dBodyGetRelPointVel  (physics/ode/src/ode.cpp:746)
+
+void dBodyGetRelPointVel(double param_1,double param_2,double param_3,int param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float *in_r7;
+  
+  if (param_4 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x2eb,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  fVar1 = *(float *)(param_4 + 0x108);
+  fVar2 = *(float *)(param_4 + 0x100);
+  fVar3 = *(float *)(param_4 + 0x114);
+  fVar4 = *(float *)(param_4 + 0x118);
+  fVar5 = *(float *)(param_4 + 0x124);
+  fVar6 = *(float *)(param_4 + 0x128);
+  fVar7 = *(float *)(param_4 + 0x120);
+  fVar8 = *(float *)(param_4 + 0x130);
+  fVar9 = *(float *)(param_4 + 0x104);
+  fVar10 = *(float *)(param_4 + 0x110);
+  *in_r7 = fVar8;
+  fVar11 = *(float *)(param_4 + 0x134);
+  in_r7[1] = fVar11;
+  fVar12 = *(float *)(param_4 + 0x138);
+  in_r7[2] = fVar12;
+  fVar3 = (float)((double)fVar10 * param_1 +
+                 (double)(float)((double)fVar3 * param_2 + (double)(float)((double)fVar4 * param_3))
+                 );
+  fVar4 = (float)((double)fVar7 * param_1 +
+                 (double)(float)((double)fVar5 * param_2 + (double)(float)((double)fVar6 * param_3))
+                 );
+  fVar1 = (float)(param_1 * (double)fVar2 +
+                 (double)(float)((double)fVar9 * param_2 + (double)(float)((double)fVar1 * param_3))
+                 );
+  *in_r7 = (fVar4 * *(float *)(param_4 + 0x144) - fVar3 * *(float *)(param_4 + 0x148)) + fVar8;
+  in_r7[1] = (fVar1 * *(float *)(param_4 + 0x148) - *(float *)(param_4 + 0x140) * fVar4) + fVar11;
+  in_r7[2] = (*(float *)(param_4 + 0x140) * fVar3 - fVar1 * *(float *)(param_4 + 0x144)) + fVar12;
+  return;
+}
+
+
 // 82699160  dBodyGetPointVel  (physics/ode/src/ode.cpp:763)
 
 void dBodyGetPointVel(double param_1,double param_2,double param_3,int param_4)
@@ -493,7 +1426,6 @@ void dBodyGetPointVel(double param_1,double param_2,double param_3,int param_4)
   float *in_r7;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x2fc,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   fVar3 = *(float *)(param_4 + 0x130);
@@ -524,7 +1456,6 @@ void dBodyGetPosRelPoint(double param_1,double param_2,double param_3,int param_
   float *in_r7;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x30c,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   fVar1 = (float)(param_2 - (double)*(float *)(param_4 + 0xe4));
@@ -548,7 +1479,6 @@ void dBodyVectorToWorld(double param_1,double param_2,double param_3,int param_4
   float *in_r7;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x319,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *in_r7 = (float)((double)*(float *)(param_4 + 0x100) * param_1 +
@@ -572,7 +1502,6 @@ void dBodyVectorFromWorld(double param_1,double param_2,double param_3,int param
   float *in_r7;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x326,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *in_r7 = (float)((double)*(float *)(param_4 + 0x100) * param_1 +
@@ -596,7 +1525,6 @@ void dBodySetFiniteRotationMode(int param_1,int param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x332,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   uVar1 = *(uint *)(param_1 + 0x18) & 0xfffffffc;
@@ -620,7 +1548,6 @@ void dBodySetFiniteRotationAxis(double param_1,double param_2,double param_3,int
   uint uVar1;
   
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x340,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(float *)(param_4 + 0xbc) = (float)param_2;
@@ -640,12 +1567,14 @@ void dBodySetFiniteRotationAxis(double param_1,double param_2,double param_3,int
 
 // 826993E0  dBodyGetFiniteRotationMode  (physics/ode/src/ode.cpp:847)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 uint dBodyGetFiniteRotationMode(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x350,0,0xffffffff82000f98,0xffffffff8207c284);
+    return _DAT_00000018 & 1;
   }
   return *(uint *)(param_1 + 0x18) & 1;
 }
@@ -657,7 +1586,6 @@ void dBodyGetFiniteRotationAxis(int param_1,undefined4 *param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x357,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   *param_2 = *(undefined4 *)(param_1 + 0xb8);
@@ -675,15 +1603,35 @@ longlong dBodyGetNumJoints(int param_1)
   int iVar1;
   longlong lVar2;
   
-  if (param_1 != 0) {
-    lVar2 = 0;
-    for (iVar1 = *(int *)(param_1 + 0x14); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0xc)) {
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x364,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  lVar2 = 0;
+  for (iVar1 = *(int *)(param_1 + 0x14); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0xc)) {
+    lVar2 = lVar2 + 1;
+  }
+  return lVar2;
+}
+
+
+// 82699548  ODE_BodyGetContactJointCount  (physics/ode/src/ode.cpp:877)
+
+longlong ODE_BodyGetContactJointCount(int param_1)
+
+{
+  int *piVar1;
+  longlong lVar2;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x371,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  lVar2 = 0;
+  for (piVar1 = *(int **)(param_1 + 0x14); piVar1 != (int *)0x0; piVar1 = (int *)piVar1[3]) {
+    if (*(int *)(*piVar1 + 0x14) == 4) {
       lVar2 = lVar2 + 1;
     }
-    return lVar2;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82199b78,0x364,0,0xffffffff82000f98,0xffffffff82003cbc);
+  return lVar2;
 }
 
 
@@ -696,7 +1644,6 @@ undefined4 dBodyGetJoint(int param_1,int param_2)
   int iVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x37f,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   puVar1 = *(undefined4 **)(param_1 + 0x14);
@@ -719,7 +1666,6 @@ void dBodyEnable(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x38a,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(undefined4 *)(param_1 + 0xd8) = *(undefined4 *)(param_1 + 0xd0);
@@ -735,7 +1681,6 @@ void dBodyDisable(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x393,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(uint *)(param_1 + 0x18) = *(uint *)(param_1 + 0x18) | 4;
@@ -749,7 +1694,6 @@ ulonglong dBodyIsEnabled(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x39a,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return (~(ulonglong)*(uint *)(param_1 + 0x18) & 0xffffffff) >> 2 & 1;
@@ -764,7 +1708,6 @@ void dBodySetGravityMode(int param_1,int param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3a1,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   uVar1 = *(uint *)(param_1 + 0x18) & 0xfffffff7;
@@ -782,7 +1725,6 @@ ulonglong dBodyGetGravityMode(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3a9,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return (~(ulonglong)*(uint *)(param_1 + 0x18) & 0xffffffff) >> 3 & 1;
@@ -804,7 +1746,6 @@ double dBodyGetAutoDisableLinearThreshold(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3b8,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return (double)SQRT(*(float *)(param_1 + 200));
@@ -817,7 +1758,6 @@ void dBodySetAutoDisableLinearThreshold(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3bf,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(float *)(param_2 + 200) = (float)(param_1 * param_1);
@@ -831,7 +1771,6 @@ double dBodyGetAutoDisableAngularThreshold(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3c6,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return (double)SQRT(*(float *)(param_1 + 0xcc));
@@ -844,7 +1783,6 @@ void dBodySetAutoDisableAngularThreshold(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3cd,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(float *)(param_2 + 0xcc) = (float)(param_1 * param_1);
@@ -858,7 +1796,6 @@ undefined4 dBodyGetAutoDisableSteps(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3d4,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return *(undefined4 *)(param_1 + 0xd4);
@@ -871,7 +1808,6 @@ void dBodySetAutoDisableSteps(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3db,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(undefined4 *)(param_1 + 0xd4) = param_2;
@@ -885,7 +1821,6 @@ double dBodyGetAutoDisableTime(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3e2,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   return (double)*(float *)(param_1 + 0xd0);
@@ -898,7 +1833,6 @@ void dBodySetAutoDisableTime(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3e9,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   *(float *)(param_2 + 0xd0) = (float)param_1;
@@ -908,12 +1842,14 @@ void dBodySetAutoDisableTime(double param_1,int param_2)
 
 // 82699B88  dBodyGetAutoDisableFlag  (physics/ode/src/ode.cpp:1007)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 uint dBodyGetAutoDisableFlag(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3f0,0,0xffffffff82000f98,0xffffffff8207c284);
+    return _DAT_00000018 >> 4 & 1;
   }
   return *(uint *)(param_1 + 0x18) >> 4 & 1;
 }
@@ -927,7 +1863,6 @@ void dBodySetAutoDisableFlag(int param_1,int param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x3f7,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   uVar1 = *(uint *)(param_1 + 0x18) | 0x10;
@@ -941,12 +1876,14 @@ void dBodySetAutoDisableFlag(int param_1,int param_2)
 
 // 82699C78  ODE_BodyGetHasContactsFlag  (physics/ode/src/ode.cpp:1025)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 uint ODE_BodyGetHasContactsFlag(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x402,0,0xffffffff82000f98,0xffffffff8207c284);
+    return _DAT_00000018 >> 5 & 1;
   }
   return *(uint *)(param_1 + 0x18) >> 5 & 1;
 }
@@ -960,7 +1897,6 @@ void ODE_BodySetHasContactsFlag(int param_1,int param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x408,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   uVar1 = *(uint *)(param_1 + 0x18) | 0x20;
@@ -974,12 +1910,14 @@ void ODE_BodySetHasContactsFlag(int param_1,int param_2)
 
 // 82699D68  ODE_BodyGetSoftContactsFlag  (physics/ode/src/ode.cpp:1042)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 uint ODE_BodyGetSoftContactsFlag(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x413,0,0xffffffff82000f98,0xffffffff8207c284);
+    return _DAT_00000018 >> 6 & 1;
   }
   return *(uint *)(param_1 + 0x18) >> 6 & 1;
 }
@@ -993,7 +1931,6 @@ void ODE_BodySetSoftContacts(int param_1,char param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x41a,0,0xffffffff82000f98,0xffffffff8207c284);
   }
   uVar1 = *(uint *)(param_1 + 0x18) | 0x40;
@@ -1005,6 +1942,21 @@ void ODE_BodySetSoftContacts(int param_1,char param_2)
 }
 
 
+// 82699E60  ODE_BodyGetBreaksGlass  (physics/ode/src/ode.cpp:1060)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+uint ODE_BodyGetBreaksGlass(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x425,0,0xffffffff82000f98,0xffffffff82003cbc);
+    return _DAT_00000018 >> 7 & 1;
+  }
+  return *(uint *)(param_1 + 0x18) >> 7 & 1;
+}
+
+
 // 82699ED8  ODE_BodySetBreaksGlass  (physics/ode/src/ode.cpp:1067)
 
 void ODE_BodySetBreaksGlass(int param_1,char param_2)
@@ -1013,7 +1965,6 @@ void ODE_BodySetBreaksGlass(int param_1,char param_2)
   uint uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x42c,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   uVar1 = *(uint *)(param_1 + 0x18) | 0x80;
@@ -1030,28 +1981,99 @@ void ODE_BodySetBreaksGlass(int param_1,char param_2)
 void dBodySetAutoDisableDefaults(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x437,0,0xffffffff82000f98,0xffffffff8207c284);
+  }
+  iVar1 = *(int *)(iVar2 + 0x10);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x439,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  *(undefined4 *)(iVar2 + 200) = *(undefined4 *)(iVar1 + 0x38);
+  *(undefined4 *)(iVar2 + 0xcc) = *(undefined4 *)(iVar1 + 0x3c);
+  *(undefined4 *)(iVar2 + 0xd0) = *(undefined4 *)(iVar1 + 0x40);
+  *(undefined4 *)(iVar2 + 0xd4) = *(undefined4 *)(iVar1 + 0x44);
+  dBodySetAutoDisableFlag(iVar2,*(undefined4 *)(iVar1 + 0x48));
+  __restgprlr_28();
+  return;
 }
 
 
 // 8269A000  ODE_InitJoint  (physics/ode/src/ode.cpp:1090)
 
-void ODE_InitJoint(void)
+void ODE_InitJoint(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x443,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x444,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  puVar1 = (undefined4 *)param_2;
+  puVar1[4] = iVar2;
+  puVar1[7] = puVar1;
+  *puVar1 = 0;
+  puVar1[1] = 0;
+  puVar1[2] = 0;
+  puVar1[3] = 0;
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  puVar1[8] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = puVar1;
+  puVar1[0xc] = 0;
+  puVar1[0xe] = 0;
+  addObjectToList(param_2,iVar2 + 4);
+  *(int *)(iVar2 + 0xc) = *(int *)(iVar2 + 0xc) + 1;
+  puVar1[5] = param_3;
+  jointInit(param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8269A0D8  createJointInPlace  (physics/ode/src/ode.cpp:1114)
 
-void createJointInPlace(void)
+void createJointInPlace(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x45b,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x45c,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  if (0x3ff < *(int *)(iVar1 + 0xc)) {
+    __restgprlr_27(0);
+    return;
+  }
+  ODE_InitJoint(iVar1,param_2,param_3);
+  __restgprlr_27(param_2);
+  return;
+}
+
+
+// 8269A180  dJointCreateBall  (physics/ode/src/ode.cpp:1127)
+
+void dJointCreateBall(ulonglong param_1,undefined8 param_2)
+
+{
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x468,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  createJointInPlace(param_1,param_2,1);
+  return;
 }
 
 
@@ -1061,7 +2083,6 @@ void dJointCreateHinge(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x46f,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,2);
@@ -1075,7 +2096,6 @@ void ODE_JointCreateOrientation(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x476,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,5);
@@ -1089,7 +2109,6 @@ void ODE_JointCreatePath(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x47d,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,6);
@@ -1103,7 +2122,6 @@ void dJointCreateSlider(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x484,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,3);
@@ -1113,11 +2131,72 @@ void dJointCreateSlider(ulonglong param_1,undefined8 param_2)
 
 // 8269A3B0  dJointCreateContact  (physics/ode/src/ode.cpp:1162)
 
-void dJointCreateContact(void)
+void dJointCreateContact(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  uint *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  int iVar7;
+  longlong lVar8;
+  
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x48d,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x48e,0,0xffffffff82000f98,0xffffffff8219a108);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x48f,0,0xffffffff82000f98,0xffffffff82197168);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x490,0,0xffffffff82000f98,0xffffffff82025a10);
+  }
+  if ((*(int *)(iVar3 + 0xc) < 0x400) &&
+     (puVar4 = (uint *)param_2, uVar1 = *puVar4, uVar1 < puVar4[1])) {
+    *puVar4 = uVar1 + 1;
+    iVar7 = uVar1 * 0x9c + puVar4[2];
+    ODE_InitJoint(iVar3,iVar7,4);
+    if (*(int *)(iVar7 + 0x10) == 0) {
+      MyAssertHandler(0xffffffff82199b78,0x4be,0,0xffffffff82000f98,0xffffffff82193bbc);
+    }
+    if (*(int *)(iVar7 + 0x10) != iVar3) {
+      uVar2 = va(0xffffffff8219a0e0,*(undefined4 *)(*(int *)(iVar7 + 0x10) + 0x5c),
+                 *(undefined4 *)(iVar3 + 0x5c));
+      MyAssertHandler(0xffffffff82199b78,0x4bf,0,0xffffffff820011f4,0xffffffff8219a0c8,uVar2);
+    }
+    *(uint *)(iVar7 + 0x18) = *(uint *)(iVar7 + 0x18) | 1;
+    memcpy((void *)(iVar7 + 0x40),(void *)param_3,0x2c);
+    puVar5 = (undefined4 *)(iVar7 + 0x68);
+    lVar6 = param_4 - 4;
+    lVar8 = 8;
+    do {
+      lVar6 = lVar6 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar6;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    __restgprlr_26(iVar7);
+    return;
+  }
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 8269A568  ODE_JointSetContactDir1  (physics/ode/src/ode.cpp:1226)
+
+void ODE_JointSetContactDir1(int param_1,undefined4 *param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x8c) = *param_2;
+  *(undefined4 *)(param_1 + 0x90) = param_2[1];
+  *(undefined4 *)(param_1 + 0x94) = param_2[2];
+  return;
 }
 
 
@@ -1127,7 +2206,6 @@ void dJointCreateUniversal(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x4d2,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,7);
@@ -1141,7 +2219,6 @@ void dJointCreateFixed(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x4d9,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,8);
@@ -1155,7 +2232,6 @@ void dJointCreateNull(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x4e0,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,9);
@@ -1169,7 +2245,6 @@ void dJointCreateAMotor(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x4e7,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   createJointInPlace(param_1,param_2,10);
@@ -1182,8 +2257,22 @@ void dJointCreateAMotor(ulonglong param_1,undefined8 param_2)
 void dJointDestroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x4ee,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  if (*(int *)(*(int *)(iVar1 + 0x10) + 0x50) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x4ef,0,0xffffffff82000f98,0xffffffff8219a114);
+  }
+  if ((*(uint *)(iVar1 + 0x18) & 1) == 0) {
+    removeJointReferencesFromAttachedBodies(iVar1);
+    removeObjectFromList();
+    *(int *)(*(int *)(iVar1 + 0x10) + 0xc) = *(int *)(*(int *)(iVar1 + 0x10) + 0xc) + -1;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1197,13 +2286,124 @@ void ODE_ContactJointGroupInit(undefined4 *param_1)
 }
 
 
-// 8269A8D8  dJointAttach  (physics/ode/src/ode.cpp:1313)
+// 8269CBB0  dJointGroupDestroy  (physics/ode/src/ode.cpp:1279)
 
-void dJointAttach(void)
+void dJointGroupDestroy(ulonglong param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x500,0,0xffffffff82000f98,0xffffffff82025a10);
+  }
+  dJointGroupEmpty(param_1);
+  return;
+}
+
+
+// 8269A800  dJointGroupEmpty  (physics/ode/src/ode.cpp:1286)
+
+void dJointGroupEmpty(void)
+
+{
+  int iVar1;
+  uint *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  puVar2 = (uint *)__savegprlr_29();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82199b78,0x510,0,0xffffffff82000f98,0xffffffff82025a10);
+  }
+  if (puVar2[1] < *puVar2) {
+    MyAssertHandler(0xffffffff82199b78,0x511,0,0xffffffff82000f98,0xffffffff8219a130);
+  }
+  lVar3 = (ulonglong)*puVar2 - 1;
+  if (-1 < lVar3) {
+    lVar4 = lVar3 * 0x9c;
+    do {
+      if (*(int *)(puVar2[2] + (int)lVar4 + 0x10) != 0) {
+        removeJointReferencesFromAttachedBodies();
+        removeObjectFromList((ulonglong)puVar2[2] + lVar4);
+        iVar1 = *(int *)(puVar2[2] + (int)lVar4 + 0x10);
+        *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) + -1;
+      }
+      lVar3 = lVar3 + -1;
+      lVar4 = lVar4 + -0x9c;
+    } while (-1 < lVar3);
+  }
+  *puVar2 = 0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 8269A8D8  dJointAttach  (physics/ode/src/ode.cpp:1313)
+
+void dJointAttach(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x527,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  if (((param_2 & 0xffffffff) != 0) && ((param_2 & 0xffffffff) == (param_3 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82199b78,0x528,0,0xffffffff82000f98,0xffffffff8219a254);
+  }
+  if (*(int *)(iVar2 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x529,0,0xffffffff82000f98,0xffffffff82193bbc);
+  }
+  iVar5 = *(int *)(iVar2 + 0x10);
+  if (((param_2 & 0xffffffff) != 0) && (iVar6 = *(int *)((int)param_2 + 0x10), iVar6 != iVar5)) {
+    uVar1 = va(0xffffffff8219a22c,*(undefined4 *)(iVar6 + 0x5c),*(undefined4 *)(iVar5 + 0x5c));
+    MyAssertHandler(0xffffffff82199b78,0x52d,0,0xffffffff820011f4,0xffffffff8219a20c,uVar1);
+  }
+  if (((param_3 & 0xffffffff) != 0) && (iVar6 = *(int *)((int)param_3 + 0x10), iVar6 != iVar5)) {
+    uVar1 = va(0xffffffff8219a1e4,*(undefined4 *)(iVar6 + 0x5c),*(undefined4 *)(iVar5 + 0x5c));
+    MyAssertHandler(0xffffffff82199b78,0x52e,0,0xffffffff820011f4,0xffffffff8219a1c4,uVar1);
+  }
+  if (((*(uint *)(iVar2 + 0x18) & 4) != 0) && ((param_2 != 0) != (param_3 != 0))) {
+    MyAssertHandler(0xffffffff82199b78,0x535,0,0xffffffff820011f4,0xffffffff8219a150,
+                    0xffffffff8219a198);
+  }
+  if ((*(int *)(iVar2 + 0x20) != 0) || (*(int *)(iVar2 + 0x30) != 0)) {
+    removeJointReferencesFromAttachedBodies(iVar2);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar3 = *(uint *)(iVar2 + 0x18) | 2;
+    uVar4 = 0;
+    param_2 = param_3;
+  }
+  else {
+    uVar3 = *(uint *)(iVar2 + 0x18) & 0xfffffffd;
+    uVar4 = param_3;
+  }
+  *(uint *)(iVar2 + 0x18) = uVar3;
+  iVar6 = (int)param_2;
+  *(int *)(iVar2 + 0x20) = iVar6;
+  iVar5 = (int)uVar4;
+  *(int *)(iVar2 + 0x30) = iVar5;
+  if ((param_2 & 0xffffffff) == 0) {
+    *(undefined4 *)(iVar2 + 0x38) = 0;
+  }
+  else {
+    *(undefined4 *)(iVar2 + 0x38) = *(undefined4 *)(iVar6 + 0x14);
+    *(int *)(iVar6 + 0x14) = iVar2 + 0x2c;
+  }
+  if ((uVar4 & 0xffffffff) != 0) {
+    *(undefined4 *)(iVar2 + 0x28) = *(undefined4 *)(iVar5 + 0x14);
+    *(int *)(iVar5 + 0x14) = iVar2 + 0x1c;
+    __restgprlr_26();
+    return;
+  }
+  *(undefined4 *)(iVar2 + 0x28) = 0;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1213,7 +2413,6 @@ void dJointSetData(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x563,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
   *(undefined4 *)(param_1 + 8) = param_2;
@@ -1227,7 +2426,6 @@ undefined4 dJointGetData(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x56a,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
   return *(undefined4 *)(param_1 + 8);
@@ -1240,7 +2438,6 @@ undefined4 dJointGetType(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x571,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
   return *(undefined4 *)(param_1 + 0x14);
@@ -1256,7 +2453,6 @@ undefined4 dJointGetBody(int param_1,int param_2)
   int iVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x578,0,0xffffffff82000f98,0xffffffff82194ed4);
   }
   if ((param_2 == 0) || (param_2 == 1)) {
@@ -1280,19 +2476,18 @@ undefined8 dAreConnected(int param_1,int param_2)
 {
   int iVar1;
   
-  if ((param_1 != 0) && (param_2 != 0)) {
-    iVar1 = *(int *)(param_1 + 0x14);
-    while( true ) {
-      if (iVar1 == 0) {
-        return 0;
-      }
-      if (*(int *)(iVar1 + 4) == param_2) break;
-      iVar1 = *(int *)(iVar1 + 0xc);
-    }
-    return 1;
+  if ((param_1 == 0) || (param_2 == 0)) {
+    MyAssertHandler(0xffffffff82199b78,0x595,0,0xffffffff82000f98,0xffffffff8219a274);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82199b78,0x595,0,0xffffffff82000f98,0xffffffff8219a274);
+  iVar1 = *(int *)(param_1 + 0x14);
+  while( true ) {
+    if (iVar1 == 0) {
+      return 0;
+    }
+    if (*(int *)(iVar1 + 4) == param_2) break;
+    iVar1 = *(int *)(iVar1 + 0xc);
+  }
+  return 1;
 }
 
 
@@ -1306,7 +2501,6 @@ void dAreConnectedExcluding(undefined8 param_1,ulonglong param_2,int param_3)
   
   iVar2 = __savegprlr_25();
   if ((iVar2 == 0) || ((param_2 & 0xffffffff) == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x5a0,0,0xffffffff82000f98,0xffffffff8219a274);
   }
   piVar1 = *(int **)(iVar2 + 0x14);
@@ -1315,16 +2509,16 @@ void dAreConnectedExcluding(undefined8 param_1,ulonglong param_2,int param_3)
       __restgprlr_25(0);
       return;
     }
-    if (*piVar1 == 0) break;
-    if ((*(int *)(*piVar1 + 0x14) != param_3) &&
-       ((ulonglong)(uint)piVar1[1] == (param_2 & 0xffffffff))) {
-      __restgprlr_25(1);
-      return;
+    iVar2 = *piVar1;
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82199b78,0x571,0,0xffffffff82000f98,0xffffffff82194ed4);
     }
+    if ((*(int *)(iVar2 + 0x14) != param_3) &&
+       ((ulonglong)(uint)piVar1[1] == (param_2 & 0xffffffff))) break;
     piVar1 = (int *)piVar1[3];
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82199b78,0x571,0,0xffffffff82000f98,0xffffffff82194ed4);
+  __restgprlr_25(1);
+  return;
 }
 
 
@@ -1354,13 +2548,46 @@ void ODE_WorldInit(undefined4 *param_1)
 }
 
 
+// 8269AED0  ODE_WorldDestroy  (physics/ode/src/ode.cpp:1486)
+
+void ODE_WorldDestroy(undefined8 param_1,code *param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82199b78,0x5d5,0,0xffffffff82000f98,0xffffffff820665e4);
+  }
+  puVar1 = (undefined4 *)*puVar2;
+  while (puVar1 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar1;
+    (*param_2)();
+  }
+  puVar2 = (undefined4 *)puVar2[1];
+  while (puVar1 = puVar2, puVar1 != (undefined4 *)0x0) {
+    puVar2 = (undefined4 *)*puVar1;
+    if ((puVar1[6] & 1) != 0) {
+      puVar1[4] = 0;
+      puVar1[8] = 0;
+      puVar1[10] = 0;
+      puVar1[0xc] = 0;
+      puVar1[0xe] = 0;
+      Com_PrintWarning(0x14,0xffffffff8219a280);
+    }
+  }
+  __restgprlr_29();
+  return;
+}
+
+
 // 8269AF98  dWorldSetGravity  (physics/ode/src/ode.cpp:1527)
 
 void dWorldSetGravity(double param_1,double param_2,double param_3,int param_4)
 
 {
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x5f8,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_4 + 0x10) = (float)param_1;
@@ -1376,7 +2603,6 @@ void dWorldGetGravity(int param_1,undefined4 *param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x601,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *param_2 = *(undefined4 *)(param_1 + 0x10);
@@ -1392,7 +2618,6 @@ void dWorldSetERP(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x60a,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x20) = (float)param_1;
@@ -1406,7 +2631,6 @@ double dWorldGetERP(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x611,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x20);
@@ -1419,7 +2643,6 @@ void dWorldSetCFM(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x618,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x24) = (float)param_1;
@@ -1433,7 +2656,6 @@ double dWorldGetCFM(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x61f,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x24);
@@ -1445,8 +2667,23 @@ double dWorldGetCFM(int param_1)
 void dWorldQuickStep(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  uVar1 = __savegprlr_29();
+  dVar2 = extraout_f1;
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82199b78,0x626,0,0xffffffff820011f4,0xffffffff820665e4,
+                    0xffffffff8219a2dc);
+  }
+  if (dVar2 <= 0.0) {
+    MyAssertHandler(0xffffffff82199b78,0x627,0,0xffffffff820011f4,0xffffffff8219a2b4,
+                    0xffffffff8219a2c4);
+  }
+  dxProcessIslands(dVar2,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1461,11 +2698,11 @@ void dWorldImpulseToForce(undefined8 param_1,double param_2,double param_3,doubl
   double extraout_f1;
   
   iVar1 = __savefpr_28();
+  dVar2 = extraout_f1;
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x630,0,0xffffffff82000f98,0xffffffff820665e4);
   }
-  dVar2 = (double)(float)(1.0 / extraout_f1);
+  dVar2 = (double)(float)(1.0 / dVar2);
   *in_r8 = (float)(dVar2 * param_2);
   in_r8[1] = (float)(dVar2 * param_3);
   in_r8[2] = (float)(dVar2 * param_4);
@@ -1480,7 +2717,6 @@ double dWorldGetAutoDisableLinearThreshold(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x63d,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)SQRT(*(float *)(param_1 + 0x38));
@@ -1493,7 +2729,6 @@ void dWorldSetAutoDisableLinearThreshold(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x644,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x38) = (float)(param_1 * param_1);
@@ -1507,7 +2742,6 @@ double dWorldGetAutoDisableAngularThreshold(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x64b,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)SQRT(*(float *)(param_1 + 0x3c));
@@ -1520,7 +2754,6 @@ void dWorldSetAutoDisableAngularThreshold(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x652,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x3c) = (float)(param_1 * param_1);
@@ -1534,7 +2767,6 @@ undefined4 dWorldGetAutoDisableSteps(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x659,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return *(undefined4 *)(param_1 + 0x44);
@@ -1547,7 +2779,6 @@ void dWorldSetAutoDisableSteps(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x660,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(undefined4 *)(param_1 + 0x44) = param_2;
@@ -1561,7 +2792,6 @@ double dWorldGetAutoDisableTime(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x667,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x40);
@@ -1574,7 +2804,6 @@ void dWorldSetAutoDisableTime(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x66e,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x40) = (float)param_1;
@@ -1588,7 +2817,6 @@ undefined4 dWorldGetAutoDisableFlag(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x675,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return *(undefined4 *)(param_1 + 0x48);
@@ -1601,7 +2829,6 @@ void dWorldSetAutoDisableFlag(int param_1,longlong param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x67c,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(uint *)(param_1 + 0x48) = (uint)(param_2 != 0);
@@ -1615,7 +2842,6 @@ void dWorldSetQuickStepNumIterations(int param_1,undefined4 param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x683,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(undefined4 *)(param_1 + 0x28) = param_2;
@@ -1629,7 +2855,6 @@ undefined4 dWorldGetQuickStepNumIterations(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x68a,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return *(undefined4 *)(param_1 + 0x28);
@@ -1642,7 +2867,6 @@ void dWorldSetQuickStepW(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x691,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x2c) = (float)param_1;
@@ -1656,7 +2880,6 @@ double dWorldGetQuickStepW(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x698,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x2c);
@@ -1669,7 +2892,6 @@ void dWorldSetContactMaxCorrectingVel(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x69f,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x30) = (float)param_1;
@@ -1683,7 +2905,6 @@ double dWorldGetContactMaxCorrectingVel(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x6a6,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x30);
@@ -1696,7 +2917,6 @@ void dWorldSetContactSurfaceLayer(double param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x6ad,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   *(float *)(param_2 + 0x34) = (float)param_1;
@@ -1710,10 +2930,18 @@ double dWorldGetContactSurfaceLayer(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82199b78,0x6b4,0,0xffffffff82000f98,0xffffffff820665e4);
   }
   return (double)*(float *)(param_1 + 0x34);
+}
+
+
+// 8269BA28  ODE_WorldGetBodyCount  (physics/ode/src/ode.cpp:1722)
+
+undefined4 ODE_WorldGetBodyCount(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 8);
 }
 
 

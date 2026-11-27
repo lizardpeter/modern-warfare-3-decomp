@@ -2,11 +2,15 @@
 
 // 828A9FD0  XInputGetCapabilities  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:28)
 
-void XInputGetCapabilities(void)
+void XInputGetCapabilities(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  uVar1 = XamInputGetCapabilities(uVar1,param_2,param_3);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -52,11 +56,20 @@ undefined8 XInputSetState(undefined8 param_1,undefined4 *param_2)
 
 // 828AA148  XInputGetKeystrokeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:129)
 
-void XInputGetKeystrokeEx(void)
+void XInputGetKeystrokeEx(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 == 0xff) {
+    param_2 = param_2 | 0x40000000;
+    *piVar2 = 0;
+  }
+  uVar1 = XamInputGetKeystrokeEx(piVar2,param_2,param_3);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 

@@ -29,6 +29,39 @@ short __cdecl get_exp(undefined8 param_1)
 }
 
 
+// 8291EC10  sptype  (<external>/bt/278379/vctools/crt/src/fpw32/tran/util.c:67)
+
+/* WARNING: Unknown calling convention: __cdecl */
+/* sptype */
+
+undefined8 __cdecl sptype(ulonglong param_1)
+
+{
+  ulonglong uVar1;
+  int iStack00000010;
+  int iStack00000014;
+  
+  iStack00000010 = (int)(param_1 >> 0x20);
+  iStack00000014 = (int)param_1;
+  if (iStack00000010 == 0x7ff00000) {
+    if (iStack00000014 == 0) {
+      return 1;
+    }
+  }
+  else if ((iStack00000010 == -0x100000) && (iStack00000014 == 0)) {
+    return 2;
+  }
+  uVar1 = param_1 >> 0x30 & 0x7ff8;
+  if (uVar1 == 0x7ff8) {
+    return 3;
+  }
+  if ((uVar1 == 0x7ff0) && (((param_1 & 0x7ffff00000000) != 0 || (iStack00000014 != 0)))) {
+    return 4;
+  }
+  return 0;
+}
+
+
 // 8291EC98  decomp  (<external>/bt/278379/vctools/crt/src/fpw32/tran/util.c:96)
 
 /* WARNING: Unknown calling convention: __cdecl */

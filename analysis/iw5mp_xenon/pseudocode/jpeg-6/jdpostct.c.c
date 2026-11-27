@@ -54,8 +54,19 @@ LAB_827c46f4:
 void post_process_1pass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  longlong in_r7;
+  uint *in_r8;
+  
+  iVar2 = __savegprlr_28();
+  iVar1 = *(int *)(iVar2 + 0x194);
+  (**(code **)(*(int *)(iVar2 + 0x1a8) + 4))(iVar2);
+  (**(code **)(*(int *)(iVar2 + 0x1b0) + 4))
+            (iVar2,*(undefined4 *)(iVar1 + 0xc),((ulonglong)*in_r8 & 0x3fffffff) * 4 + in_r7,0);
+  *in_r8 = *in_r8;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -107,7 +118,86 @@ void post_process_prepass
 void post_process_2pass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  longlong in_r7;
+  uint *in_r8;
+  longlong in_r9;
+  ulonglong uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  
+  iVar2 = __savegprlr_27();
+  iVar1 = *(int *)(iVar2 + 0x194);
+  if (*(int *)(iVar1 + 0x18) == 0) {
+    uVar3 = (**(code **)(*(int *)(iVar2 + 4) + 0x1c))
+                      (iVar2,*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14),
+                       *(undefined4 *)(iVar1 + 0x10),0);
+    *(undefined4 *)(iVar1 + 0xc) = uVar3;
+  }
+  uVar4 = in_r9 - (ulonglong)*in_r8;
+  uVar6 = (ulonglong)*(uint *)(iVar1 + 0x10) - (ulonglong)*(uint *)(iVar1 + 0x18);
+  if ((uVar4 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+    uVar6 = uVar4;
+  }
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x68) - (ulonglong)*(uint *)(iVar1 + 0x14);
+  if ((uVar4 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+    uVar6 = uVar4;
+  }
+  (**(code **)(*(int *)(iVar2 + 0x1b0) + 4))
+            (iVar2,((ulonglong)*(uint *)(iVar1 + 0x18) & 0x3fffffff) * 4 +
+                   (ulonglong)*(uint *)(iVar1 + 0xc),((ulonglong)*in_r8 & 0x3fffffff) * 4 + in_r7,
+             uVar6);
+  *in_r8 = *in_r8 + (int)uVar6;
+  uVar5 = *(int *)(iVar1 + 0x18) + (int)uVar6;
+  *(uint *)(iVar1 + 0x18) = uVar5;
+  if (*(uint *)(iVar1 + 0x10) <= uVar5) {
+    *(undefined4 *)(iVar1 + 0x18) = 0;
+    *(uint *)(iVar1 + 0x14) = *(int *)(iVar1 + 0x14) + *(uint *)(iVar1 + 0x10);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 827C4718  jinit_d_post_controller  (jpeg-6/jdpostct.c:251)
+
+void jinit_d_post_controller(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 uVar5;
+  
+  iVar3 = __savegprlr_28();
+  puVar4 = (undefined4 *)(*(code *)**(undefined4 **)(iVar3 + 4))(iVar3,1,0x1c);
+  *(undefined4 **)(iVar3 + 0x194) = puVar4;
+  puVar4[2] = 0;
+  *puVar4 = start_pass_dpost;
+  puVar4[3] = 0;
+  if (*(char *)(iVar3 + 0x52) != '\0') {
+    uVar5 = *(undefined4 *)(iVar3 + 0x11c);
+    puVar4[4] = uVar5;
+    if ((param_2 & 0xff) != 0) {
+      iVar1 = *(int *)(iVar3 + 4);
+      uVar2 = jround_up(*(undefined4 *)(iVar3 + 0x68),uVar5);
+      uVar5 = (**(code **)(iVar1 + 0x10))
+                        (iVar3,1,0,
+                         (longlong)*(int *)(iVar3 + 0x6c) * (longlong)*(int *)(iVar3 + 100),uVar2,
+                         uVar5);
+      puVar4[2] = uVar5;
+      __restgprlr_28();
+      return;
+    }
+    uVar5 = (**(code **)(*(int *)(iVar3 + 4) + 8))
+                      (iVar3,1,(longlong)*(int *)(iVar3 + 0x6c) * (longlong)*(int *)(iVar3 + 100),
+                       uVar5);
+    puVar4[3] = uVar5;
+  }
+  __restgprlr_28();
+  return;
 }
 

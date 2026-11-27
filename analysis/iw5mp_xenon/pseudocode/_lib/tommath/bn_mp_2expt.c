@@ -2,10 +2,33 @@
 
 // 822598F8  mp_2expt  (line unknown)
 
-void mp_2expt(void)
+void mp_2expt(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  puVar1[2] = 0;
+  iVar2 = 0;
+  *puVar1 = 0;
+  if (0 < (int)puVar1[1]) {
+    puVar3 = (undefined4 *)(puVar1[3] + -4);
+    do {
+      iVar2 = iVar2 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = 0;
+    } while (iVar2 < (int)puVar1[1]);
+  }
+  lVar4 = (longlong)(param_2 / 0x1c) + 1;
+  iVar2 = mp_grow(puVar1,lVar4);
+  if (iVar2 == 0) {
+    *puVar1 = (int)lVar4;
+    *(int *)((param_2 / 0x1c) * 4 + puVar1[3]) = 1 << (param_2 % 0x1c & 0x3fU);
+  }
+  __restgprlr_28();
+  return;
 }
 

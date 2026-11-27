@@ -31,3 +31,32 @@ LAB_826c04a0:
 ; 826C04C8  Vehicle_Register  (vehicle/vehicle_load_obj.cpp:704)
   826C04C8  7D8802A6             mfspr r12,LR
   826C04CC  482561ED             bl 0x829166b8
+  826C04D0  9421FF80             stwu r1,-0x80(r1)
+  826C04D4  7C7F1B78             or r31,r3,r3
+  826C04D8  2B030000             cmplwi cr6,r3,0x0
+  826C04DC  409A004C             bne cr6,0x826c0528
+  826C04E0  3D608202             lis r11,-0x7dfe
+  826C04E4  3D408200             lis r10,-0x7e00
+  826C04E8  3D20821A             lis r9,-0x7de6
+  826C04EC  3BCB1A74             addi r30,r11,0x1a74
+  826C04F0  3BAA0F98             addi r29,r10,0xf98
+  826C04F4  3B890478             addi r28,r9,0x478
+  826C04F8  7FC7F378             or r7,r30,r30
+  826C04FC  7FA6EB78             or r6,r29,r29
+  826C0500  7F83E378             or r3,r28,r28
+  826C0504  38A00000             li r5,0x0
+  826C0508  388002C1             li r4,0x2c1
+  826C050C  4BF13FF5             bl 0x825d4500
+  826C0510  7FC7F378             or r7,r30,r30
+  826C0514  7FA6EB78             or r6,r29,r29
+  826C0518  7F83E378             or r3,r28,r28
+  826C051C  38A00000             li r5,0x0
+  826C0520  388002B8             li r4,0x2b8
+  826C0524  4BF13FDD             bl 0x825d4500
+LAB_826c0528:
+  826C0528  38A00001             li r5,0x1
+  826C052C  7FE4FB78             or r4,r31,r31
+  826C0530  3860002A             li r3,0x2a
+  826C0534  4BD2E425             bl 0x823ee958
+  826C0538  38210080             addi r1,r1,0x80
+  826C053C  482561CC             b 0x82916708

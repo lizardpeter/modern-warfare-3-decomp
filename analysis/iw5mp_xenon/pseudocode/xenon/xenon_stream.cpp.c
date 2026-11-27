@@ -5,8 +5,33 @@
 void Stream_Thread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  DWORD _Seed;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) != 9) {
+    MyAssertHandler(0xffffffff82191318,0x17,0,0xffffffff821912e8,uVar1,9);
+  }
+  _Seed = Sys_MillisecondsRaw();
+  srand(_Seed);
+  Sys_GetValue(2);
+  iVar2 = setjmp();
+  while (iVar2 != 0) {
+    Profile_Recover(1);
+    Sys_GetValue(2);
+    iVar2 = setjmp();
+  }
+  Profile_Guard(1);
+  do {
+    uVar1 = Sys_StreamSleep();
+    if (0xd < (uVar1 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82191318,0x28,0,0xffffffff8209af00,uVar1,0xe);
+    }
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821912d0);
+    SND_ExecuteStreamRead(uVar1);
+    PIXEndNamedEvent();
+  } while( true );
 }
 
 

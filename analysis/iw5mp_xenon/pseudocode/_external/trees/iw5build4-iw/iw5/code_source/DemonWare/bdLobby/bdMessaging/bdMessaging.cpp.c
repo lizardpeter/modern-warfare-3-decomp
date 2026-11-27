@@ -75,11 +75,83 @@ LAB_82902490:
 
 // 82902600  bdMessaging::getMails  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:64)
 
-void bdMessaging__getMails(void)
+void bdMessaging__getMails
+               (undefined8 param_1,undefined4 *param_2,longlong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar6;
+  ulonglong uVar4;
+  char cVar7;
+  char cVar8;
+  longlong lVar5;
+  uint *puVar9;
+  ulonglong uVar10;
+  char in_RESERVE;
+  byte bVar11;
+  undefined1 local_60 [96];
+  
+  puVar6 = (undefined4 *)__savegprlr_23();
+  *puVar6 = 0;
+  uVar4 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar4 & 0xffffffff) == 0;
+  bVar11 = bVar1 << 1;
+  if (bVar1) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = bdTaskByteBuffer__bdTaskByteBuffer(uVar4,param_4 * 9 + 0x42,1);
+  }
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar9 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar4 + 4);
+        *puVar9 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_60,6,9);
+  cVar7 = bdByteBuffer__writeBool(uVar4 & 0xffffffff,param_6);
+  uVar10 = param_4;
+  uVar3 = param_4 & 0xffffffff;
+  do {
+    if (uVar3 == 0) {
+      if (cVar7 == '\x01') {
+        lVar5 = bdRemoteTaskManager__startTask(*param_2,puVar6,local_60);
+        if (lVar5 == 0) {
+          bdRemoteTask__setTaskResult(*puVar6,param_5,param_4);
+        }
+        else {
+          bdLogMessage(1,0xffffffff8220a424,0xffffffff8220e1f0,0xffffffff8220e200,0xffffffff8220e2e0
+                       ,0x52,0xffffffff8220c90c);
+        }
+      }
+      else {
+        bdLogMessage(1,0xffffffff8220a424,0xffffffff8220e1f0,0xffffffff8220e200,0xffffffff8220e2e0,
+                     0x5b,0xffffffff8220c89c);
+      }
+      bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+      __restgprlr_23(puVar6);
+      return;
+    }
+    if (cVar7 == '\0') {
+LAB_829026e8:
+      cVar7 = '\0';
+    }
+    else {
+      cVar8 = bdByteBuffer__writeUInt64((int)uVar4,*(undefined8 *)param_3);
+      cVar7 = '\x01';
+      if (cVar8 == '\0') goto LAB_829026e8;
+    }
+    uVar10 = uVar10 - 1;
+    param_3 = param_3 + 8;
+    uVar3 = uVar10;
+  } while( true );
 }
 
 
@@ -246,6 +318,15 @@ void bdMessaging__bdMessaging(undefined4 *param_1,undefined4 param_2)
 
 {
   *param_1 = param_2;
+  return;
+}
+
+
+// 829023A8  bdMessaging::~bdMessaging  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmessaging.cpp:726)
+
+void bdMessaging___bdMessaging(void)
+
+{
   return;
 }
 

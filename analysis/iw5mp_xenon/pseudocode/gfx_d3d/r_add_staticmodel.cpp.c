@@ -5,8 +5,20 @@
 void Material_FromHandle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821b93c0,0x49,0,0xffffffff82000f98,0xffffffff820363b8);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff821b93c0,0x4a,0,0xffffffff82000f98,0xffffffff821b93a8);
+  }
+  if (*(char *)*piVar1 == '\0') {
+    MyAssertHandler(0xffffffff821b93c0,0x4b,0,0xffffffff82000f98,0xffffffff821b9390);
+  }
+  __restgprlr_29(piVar1);
+  return;
 }
 
 
@@ -15,8 +27,27 @@ void Material_FromHandle(void)
 void Material_GetSortedIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821b93c0,0xb6,0,0xffffffff82000f98,0xffffffff821b9468);
+  }
+  uVar1 = *(ulonglong *)(puVar3 + 2) >> 0x1d & 0xfff;
+  if (uVar1 == 0xfff) {
+    MyAssertHandler(0xffffffff821b93c0,0xb8,0,0xffffffff821b9434,0xffffffff821b9450,*puVar3);
+  }
+  puVar4 = (undefined4 *)R_GetSortedMaterial(uVar1);
+  if (puVar4 != puVar3) {
+    puVar4 = (undefined4 *)R_GetSortedMaterial(uVar1);
+    uVar2 = va(0xffffffff82183d10,*puVar4,*puVar3);
+    MyAssertHandler(0xffffffff821b93c0,0xb9,0,0xffffffff820011f4,0xffffffff821b9408,uVar2);
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -34,11 +65,58 @@ void R_AddStaticModelDebugString(undefined8 param_1,undefined8 param_2)
 
 // 8271A1E8  R_ShowCountsStaticModel  (gfx_d3d/r_add_staticmodel.cpp:331)
 
-void R_ShowCountsStaticModel(void)
+void R_ShowCountsStaticModel(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar4;
+  longlong lVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  uint local_60 [24];
+  
+  iVar4 = __savegprlr_23();
+  if (((*(char *)(DAT_845aa600 + 0xc) != '\0') || (*(char *)(DAT_845aa8a4 + 0xc) != '\0')) ||
+     (*(char *)(DAT_845aa7e8 + 0xc) != '\0')) {
+    iVar4 = *(int *)(DAT_846178cc + 0x58) + iVar4 * 0x2c;
+    lVar1 = XModelGetSurfaces(*(undefined4 *)(iVar4 + 0x1c),local_60,param_2);
+    if ((int)lVar1 == 0) {
+      MyAssertHandler(0xffffffff821b9470,0x15c,0,0xffffffff82000f98,0xffffffff8205dd18);
+    }
+    lVar7 = 0;
+    lVar5 = 0;
+    if (0 < (int)lVar1) {
+      lVar8 = 0;
+      lVar6 = lVar1;
+      do {
+        if (*(char *)(DAT_845aa600 + 0xc) == '\0') {
+          if (*(char *)(DAT_845aa8a4 + 0xc) != '\0') {
+            lVar2 = XSurfaceGetNumVerts(lVar8 + (ulonglong)local_60[0]);
+            lVar5 = lVar2 + lVar5;
+          }
+        }
+        else {
+          lVar2 = XSurfaceGetNumTris();
+          lVar7 = lVar2 + lVar7;
+        }
+        lVar6 = lVar6 + -1;
+        lVar8 = lVar8 + 0x80;
+      } while (lVar6 != 0);
+    }
+    if (((*(char *)(DAT_845aa600 + 0xc) != '\0') ||
+        (lVar7 = lVar5, *(char *)(DAT_845aa8a4 + 0xc) != '\0')) ||
+       (lVar7 = lVar1, *(char *)(DAT_845aa7e8 + 0xc) != '\0')) {
+      uVar3 = va(0xffffffff8200c28c,lVar7);
+      R_AddScaledDebugString
+                ((ulonglong)DAT_84628b00 + 0x18f0,(ulonglong)DAT_84618098 + 0x100,iVar4,
+                 0xffffffff82181878,uVar3);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -64,11 +142,60 @@ void R_StaticModelWriteInfoHeader(undefined8 param_1)
 
 // 8271A3E0  R_StaticModelWriteInfo  (gfx_d3d/r_add_staticmodel.cpp:395)
 
-void R_StaticModelWriteInfo(void)
+void R_StaticModelWriteInfo(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar1;
+  int *piVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  char *pcVar5;
+  double dVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  char local_1050 [4176];
+  
+  uVar3 = __savegprlr_26();
+  dVar9 = extraout_f1;
+  if ((DAT_845a0804 & 1) == 0) {
+    DAT_845a0804 = DAT_845a0804 | 1;
+    dVar7 = tan(0.6981317400932312);
+    DAT_845a0800 = 960.0 / (float)dVar7;
+  }
+  piVar2 = *(int **)(param_2 + 0x1c);
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821b9470,0x196,0,0xffffffff82000f98,0xffffffff82058d74);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff821b9470,0x197,0,0xffffffff82000f98,0xffffffff821877f0);
+  }
+  if (*(char *)((int)piVar2 + 0xe1) < '\x01') {
+    MyAssertHandler(0xffffffff821b9470,0x198,0,0xffffffff82000f98,0xffffffff821877dc);
+  }
+  dVar7 = 0.0;
+  dVar8 = (double)(float)piVar2[*(char *)((int)piVar2 + 0xe1) * 10 + 6];
+  if (dVar8 <= 0.0) {
+    MyAssertHandler(0xffffffff821b9470,0x19c,0,0xffffffff82000f98,0xffffffff821877cc);
+  }
+  dVar6 = (double)(float)piVar2[0x3d];
+  uVar4 = (ulonglong)DAT_8459e500;
+  DAT_8459e500 = (uint)(uVar4 + 1);
+  if (dVar7 < dVar9) {
+    Com_sprintf(dVar6,dVar8,(double)(float)((double)(float)(dVar6 / dVar8) * (double)DAT_845a0800),
+                (double)(float)(dVar6 * (double)DAT_845a0800),dVar9,local_1050,0x1000,
+                0xffffffff821b951c,uVar4 + 1,*piVar2,dVar6,*(undefined1 *)((int)piVar2 + 0xe1),dVar8
+               );
+  }
+  pcVar5 = local_1050;
+  do {
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  FS_Write(local_1050,pcVar5 + (-1 - (int)local_1050),uVar3);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -129,13 +256,163 @@ void R_EndDumpStaticModelLodInfo(void)
 }
 
 
-// 8271A748  R_SortSModelSurfDelaySort  (gfx_d3d/r_add_staticmodel.cpp:561)
+// 8271B710  R_EmitSModelSurfVisData  (gfx_d3d/r_add_staticmodel.cpp:513)
 
-void R_SortSModelSurfDelaySort(void)
+void R_EmitSModelSurfVisData
+               (undefined8 param_1,undefined8 param_2,void *param_3,ulonglong param_4,int param_5,
+               undefined2 *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  uint uVar1;
+  int *piVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  int local_50 [20];
+  
+  uVar4 = __savegprlr_25();
+  uVar1 = *(uint *)(param_5 + 8);
+  if (uVar1 != (uVar1 & 0xffff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar1,uVar1 & 0xffff);
+  }
+  *param_6 = (short)uVar1;
+  uVar1 = *(uint *)(param_5 + 8);
+  uVar3 = (param_4 & 0x7fffffff) * 2 + 9 & 0xfffffffc;
+  uVar5 = uVar1 + uVar3;
+  if ((ulonglong)*(uint *)(param_5 + 0xc) < (uVar5 & 0xffffffff)) {
+    R_WarnOncePerFrame(0xf);
+    __restgprlr_25(0);
+    return;
+  }
+  *(int *)(param_5 + 8) = (int)uVar5;
+  piVar2 = (int *)(*(int *)(param_5 + 4) + uVar1);
+  XModelGetSurfaces(uVar4,local_50,param_2);
+  if (local_50[0] == 0) {
+    MyAssertHandler(0xffffffff821b9470,0x227,0,0xffffffff82000f98,0xffffffff821b9840);
+  }
+  *(short *)(piVar2 + 1) = (short)param_4;
+  *piVar2 = local_50[0];
+  memcpy((void *)((int)piVar2 + 6),param_3,(int)uVar3 - 6);
+  __restgprlr_25(param_4);
+  return;
+}
+
+
+// 8271A748  R_SortSModelSurfDelaySort  (gfx_d3d/r_add_staticmodel.cpp:561)
+
+void R_SortSModelSurfDelaySort(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  uint *puVar13;
+  uint *puVar14;
+  ulonglong uVar15;
+  uint uStack_c0;
+  uint auStack_bc [47];
+  
+  lVar4 = __savegprlr_19();
+  uVar15 = 0;
+  puVar13 = auStack_bc;
+  puVar14 = &uStack_c0;
+  do {
+    while( true ) {
+      iVar2 = (int)lVar4;
+      if ((param_3 - param_2 & 0xffffffff) < 0xc) break;
+      uVar12 = (param_2 + param_3 & 0xffffffff) >> 1;
+      uVar8 = *(ulonglong *)((int)(uVar12 << 3) + iVar2);
+      uVar9 = param_3;
+      uVar7 = param_2;
+      do {
+        lVar6 = (uVar7 & 0x1fffffff) * 8 + lVar4;
+        uVar10 = *(ulonglong *)lVar6;
+        while (uVar10 < uVar8) {
+          uVar7 = uVar7 + 1;
+          lVar6 = lVar6 + 8;
+          if ((uVar7 & 0xffffffff) == (uVar9 & 0xffffffff)) goto LAB_8271a8b4;
+          uVar10 = *(ulonglong *)lVar6;
+        }
+        lVar6 = (uVar9 & 0x1fffffff) * 8 + lVar4;
+        do {
+          uVar9 = uVar9 - 1;
+          lVar6 = lVar6 + -8;
+          if ((uVar7 & 0xffffffff) == (uVar9 & 0xffffffff)) goto LAB_8271a8b4;
+        } while (uVar8 < *(ulonglong *)lVar6);
+        iVar1 = (int)((uVar9 & 0xffffffff) << 3);
+        iVar3 = (int)((uVar7 & 0xffffffff) << 3);
+        uVar7 = uVar7 + 1;
+        uVar5 = *(undefined8 *)(iVar3 + iVar2);
+        *(undefined8 *)(iVar3 + iVar2) = *(undefined8 *)(iVar1 + iVar2);
+        *(undefined8 *)(iVar1 + iVar2) = uVar5;
+      } while ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff));
+LAB_8271a8b4:
+      if ((param_2 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821b9470,0x27b,0,0xffffffff82000f98,0xffffffff821b9594);
+      }
+      if ((uVar7 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821b9470,0x27c,0,0xffffffff82000f98,0xffffffff821b95a8);
+      }
+      if (9 < (uVar15 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821b9470,0x27d,0,0xffffffff821b95bc,uVar15,10);
+      }
+      uVar15 = uVar15 + 1;
+      if (uVar12 < (uVar7 & 0xffffffff)) {
+        *puVar14 = (uint)param_2;
+        puVar14 = puVar14 + 2;
+        *puVar13 = (uint)uVar7;
+        puVar13 = puVar13 + 2;
+        param_2 = uVar7;
+      }
+      else {
+        *puVar13 = (uint)param_3;
+        puVar13 = puVar13 + 2;
+        *puVar14 = (uint)uVar7;
+        puVar14 = puVar14 + 2;
+        param_3 = uVar7;
+      }
+    }
+    if (1 < (param_3 - param_2 & 0xffffffff)) {
+      lVar6 = (param_3 - 1 & 0x1fffffff) * 8 + lVar4;
+      uVar12 = param_3 - 1;
+      do {
+        lVar6 = lVar6 + -8;
+        uVar9 = *(ulonglong *)lVar6;
+        uVar7 = uVar12 - 1;
+        lVar11 = (uVar12 & 0x1fffffff) * 8 + lVar4;
+        if (*(ulonglong *)lVar11 < uVar9) {
+          lVar11 = lVar11 + -0x10;
+          do {
+            iVar1 = (int)lVar11;
+            uVar12 = uVar12 + 1;
+            lVar11 = lVar11 + 8;
+            *(undefined8 *)lVar11 = *(undefined8 *)(iVar1 + 0x10);
+            if ((uVar12 & 0xffffffff) == (param_3 & 0xffffffff)) break;
+          } while ((ulonglong)((undefined8 *)lVar11)[2] < uVar9);
+          *(ulonglong *)((int)((uVar12 & 0xffffffff) << 3) + iVar2 + -8) = uVar9;
+        }
+        uVar12 = uVar7;
+      } while ((uVar7 & 0xffffffff) != (param_2 & 0xffffffff));
+    }
+    if ((uVar15 & 0xffffffff) == 0) {
+      __restgprlr_19();
+      return;
+    }
+    puVar14 = puVar14 + -2;
+    uVar15 = uVar15 - 1;
+    puVar13 = puVar13 + -2;
+    param_2 = (ulonglong)*puVar14;
+    param_3 = (ulonglong)*puVar13;
+  } while( true );
 }
 
 
@@ -149,7 +426,6 @@ void R_FinishEmittingPreviousSModelSurf(undefined4 *param_1)
   if (1 < (uint)param_1[2]) {
     param_1[10] = 0;
     if (param_1[1] == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9470,0x2a3,0,0xffffffff82000f98,0xffffffff821b95fc);
     }
     local_20 = (ushort)((uint)*param_1 >> 0x10);
@@ -191,7 +467,6 @@ LAB_8271aba4:
     if ((uVar1 != 0) && (1 < uVar1)) {
       puVar3[10] = 0;
       if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b9470,0x2a3,0,0xffffffff82000f98,0xffffffff821b95fc);
       }
       local_50 = (ushort)(*puVar3 >> 0x10);
@@ -203,7 +478,6 @@ LAB_8271aba4:
     if (1 < puVar3[2]) {
       puVar3[10] = 0;
       if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b9470,0x2a3,0,0xffffffff82000f98,0xffffffff821b95fc);
       }
       local_50 = (ushort)(*puVar3 >> 0x10);
@@ -219,7 +493,6 @@ LAB_8271aba4:
       puVar3[2] = 0;
       puVar3[1] = uVar1;
       if ((param_2 & 0xf0000000) != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821b9470,0x2cf,0,0xffffffff821b9618,0xffffffff821b9640,param_2);
       }
       puVar2 = (undefined2 *)puVar3[1];
@@ -261,14 +534,12 @@ void R_EmitDelayedSModelSurfsUpToMaterial(undefined8 param_1,undefined4 param_2,
   if (*(uint *)(iVar5 + 0x18) <= _uStack0000001c) {
     iVar1 = *(int *)(iVar5 + 0x1c);
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9470,0x306,0,0xffffffff82000f98,0xffffffff821b96c0);
     }
     uVar8 = *(uint *)(iVar5 + 0x20);
     uVar10 = 0;
     *(undefined4 *)(iVar5 + 0x18) = 0xffffffff;
     if (*(uint *)(iVar5 + 0x24) < uVar8) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9470,0x30b,0,0xffffffff82000f98,0xffffffff821b969c);
     }
     do {
@@ -301,7 +572,6 @@ void R_EmitDelayedSModelSurfsUpToMaterial(undefined8 param_1,undefined4 param_2,
     } while (uVar10 != uVar8);
 LAB_8271ad00:
     if (*(uint *)(iVar5 + 0x20) <= uVar10) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9470,0x327,0,0xffffffff82000f98,0xffffffff821b9678);
     }
     R_SortSModelSurfDelaySort(iVar1,uVar10,*(undefined4 *)(iVar5 + 0x20));
@@ -321,11 +591,35 @@ LAB_8271ad00:
 
 // 8271AD70  R_AddDelayedSModelSurf  (gfx_d3d/r_add_staticmodel.cpp:823)
 
-void R_AddDelayedSModelSurf(void)
+void R_AddDelayedSModelSurf(undefined8 param_1,ulonglong param_2,undefined2 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  iVar3 = __savegprlr_29();
+  if ((param_2 & 0xf0000000) != 0) {
+    MyAssertHandler(0xffffffff821b9470,0x33a,0,0xffffffff82000f98,0xffffffff821b96d0);
+  }
+  iVar1 = *(int *)(iVar3 + 0x20);
+  if (iVar1 == *(int *)(iVar3 + 0x24)) {
+    R_WarnOncePerFrame(0x11);
+    __restgprlr_29();
+    return;
+  }
+  uVar2 = *(uint *)(iVar3 + 0x18);
+  puVar4 = (undefined4 *)(iVar1 * 8 + *(int *)(iVar3 + 0x1c));
+  *(int *)(iVar3 + 0x20) = iVar1 + 1;
+  *(undefined2 *)((int)puVar4 + 6) = 0;
+  *puVar4 = (int)param_2;
+  *(undefined2 *)(puVar4 + 1) = param_3;
+  if ((param_2 & 0xffffffff) < (ulonglong)uVar2) {
+    *(int *)(iVar3 + 0x18) = (int)param_2;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -334,8 +628,56 @@ void R_AddDelayedSModelSurf(void)
 void R_EmitDelayedSModelSurfsRemaining(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar1 = __savegprlr_29();
+  uVar4 = (ulonglong)*(uint *)(iVar1 + 0x20);
+  if ((uVar4 != 0) && (R_SortSModelSurfDelaySort(*(undefined4 *)(iVar1 + 0x1c),0,uVar4), uVar4 != 0)
+     ) {
+    iVar3 = 0;
+    do {
+      puVar2 = (undefined4 *)(*(int *)(iVar1 + 0x1c) + iVar3);
+      R_EmitSingleSModelSurf(iVar1,*puVar2,*(undefined2 *)(puVar2 + 1));
+      uVar4 = uVar4 - 1;
+      iVar3 = iVar3 + 8;
+    } while (uVar4 != 0);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 8271AE88  R_StaticModelDebugAids  (gfx_d3d/r_add_staticmodel.cpp:884)
+
+void R_StaticModelDebugAids
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_27();
+  uVar3 = extraout_f1;
+  if (*(char *)(DAT_845aa8ac + 0xc) != '\0') {
+    R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,*(int *)(DAT_846178cc + 0x4c) + iVar2 * 0x24,
+                  0xffffffff821818c8);
+  }
+  if (*(char *)(DAT_845aa7b8 + 0xc) != '\0') {
+    uVar1 = XModelGetName(*(undefined4 *)(*(int *)(DAT_846178cc + 0x58) + iVar2 * 0x2c + 0x1c));
+    R_AddDebugString(0x3fd3333340000000,(ulonglong)DAT_84628b00 + 0x18f0,
+                     *(int *)(DAT_846178cc + 0x58) + iVar2 * 0x2c,0xffffffff821818b8,param_4,uVar1);
+  }
+  R_ShowCountsStaticModel(iVar2,param_2);
+  if (*(char *)(DAT_845aa5ec + 0xc) != '\0') {
+    R_DumpStaticModelLodInfo(uVar3,*(int *)(DAT_846178cc + 0x58) + iVar2 * 0x2c);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -368,7 +710,6 @@ void R_InitSModelSurfBuffers(undefined8 param_1,longlong param_2,longlong param_
   uVar3 = DAT_84628b00;
   uVar7 = (ulonglong)DAT_84628b00;
   if (uVar7 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9470,0x3a3,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
   do {
@@ -381,7 +722,6 @@ void R_InitSModelSurfBuffers(undefined8 param_1,longlong param_2,longlong param_
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (0xc000 < ((ulonglong)uVar1 + param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9470,0x3a6,0,0xffffffff82000f98,0xffffffff821b9768);
   }
   *(int *)(iVar4 + 0xc) = (int)param_2;
@@ -397,7 +737,6 @@ void R_InitSModelSurfBuffers(undefined8 param_1,longlong param_2,longlong param_
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (0x8c00 < (uVar5 + param_3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9470,0x3af,0,0xffffffff82000f98,0xffffffff821b9708);
   }
   __restgprlr_25(uVar5 + uVar7 + 0x4f400);
@@ -436,6 +775,82 @@ void R_InitSModelSurfBuildList
 }
 
 
+// 8271B140  R_InitSModelSurfBuildLists_Camera  (gfx_d3d/r_add_staticmodel.cpp:1000)
+
+void R_InitSModelSurfBuildLists_Camera(undefined8 param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  *puVar1 = 0;
+  iVar2 = R_InitSModelSurfBuffers(puVar1,0x4000,0x4800);
+  iVar4 = iVar2 + 0x2000;
+  puVar1[0x37] = param_2;
+  puVar1[0x33] = iVar2;
+  puVar1[0x35] = iVar4;
+  puVar1[0x34] = iVar2;
+  iVar3 = iVar2 + 0x4000;
+  puVar1[0x30] = 0xffffffff;
+  puVar1[0x31] = 0;
+  puVar1[0x32] = 0;
+  puVar1[0x36] = 0xffffffff;
+  puVar1[0x38] = 0;
+  puVar1[0x39] = 0x100;
+  puVar1[0x3a] = 0;
+  puVar1[0xb] = param_2 + 0x800;
+  puVar1[7] = iVar4;
+  puVar1[8] = iVar4;
+  iVar4 = iVar2 + 0x4400;
+  puVar1[9] = iVar3;
+  puVar1[4] = 0xffffffff;
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  puVar1[10] = 0xffffffff;
+  puVar1[0xc] = 0;
+  puVar1[0xd] = 0x100;
+  puVar1[0xe] = 0;
+  puVar1[0x12] = iVar3;
+  puVar1[0x13] = iVar3;
+  puVar1[0x16] = param_2 + 0x1000;
+  puVar1[0xf] = 0xffffffff;
+  puVar1[0x10] = 0;
+  puVar1[0x11] = 0;
+  puVar1[0x14] = iVar4;
+  puVar1[0x15] = 0xffffffff;
+  puVar1[0x17] = 0;
+  puVar1[0x18] = 0x80;
+  puVar1[0x19] = 0;
+  puVar1[0x25] = 0xffffffff;
+  puVar1[0x26] = 0;
+  puVar1[0x27] = 0;
+  puVar1[0x28] = iVar4;
+  puVar1[0x29] = iVar4;
+  puVar1[0x2a] = iVar4;
+  puVar1[0x2b] = 0xffffffff;
+  puVar1[0x2c] = param_2 + 0x1400;
+  puVar1[0x2d] = 0;
+  puVar1[0x2e] = 0;
+  puVar1[0x2f] = 0;
+  puVar1[0x1a] = 0xffffffff;
+  puVar1[0x1b] = 0;
+  puVar1[0x1c] = 0;
+  puVar1[0x1d] = iVar4;
+  puVar1[0x1e] = iVar4;
+  puVar1[0x1f] = iVar2 + 0x4800;
+  puVar1[0x20] = 0xffffffff;
+  puVar1[0x21] = param_2 + 0x1400;
+  puVar1[0x22] = 0;
+  puVar1[0x23] = 0x80;
+  puVar1[0x24] = 0;
+  __restgprlr_29();
+  return;
+}
+
+
 // 8271B278  R_GetSModelShadowCasterMaterialIndex  (gfx_d3d/r_add_staticmodel.cpp:1039)
 
 void R_GetSModelShadowCasterMaterialIndex(void)
@@ -448,11 +863,31 @@ void R_GetSModelShadowCasterMaterialIndex(void)
 
 // 8271B288  R_InitSModelSurfBuildLists_Shadow  (gfx_d3d/r_add_staticmodel.cpp:1053)
 
-void R_InitSModelSurfBuildLists_Shadow(void)
+void R_InitSModelSurfBuildLists_Shadow
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  uVar2 = Material_GetSortedIndex(DAT_84616548);
+  *puVar1 = uVar2;
+  iVar3 = R_InitSModelSurfBuffers(puVar1,param_3,param_2);
+  puVar1[0xb] = param_4;
+  puVar1[7] = iVar3;
+  puVar1[5] = 0;
+  puVar1[4] = 0xffffffff;
+  puVar1[6] = 0;
+  puVar1[8] = iVar3;
+  puVar1[9] = iVar3 + (int)param_2;
+  puVar1[10] = 0xffffffff;
+  puVar1[0xc] = 0;
+  puVar1[0xd] = 0x80;
+  puVar1[0xe] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -468,7 +903,6 @@ void R_InitSModelSurfBuildLists_SunShadow(undefined8 param_1,int param_2,undefin
   }
   else {
     if (param_2 != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9470,0x42c,0,0xffffffff82000f98,0xffffffff821b97b0);
     }
     uVar1 = 0x800;
@@ -490,11 +924,45 @@ void R_InitSModelSurfBuildLists_SpotShadow(undefined8 param_1,undefined8 param_2
 
 // 8271B3A8  R_InitSModelSurfBuildLists_DynLight  (gfx_d3d/r_add_staticmodel.cpp:1087)
 
-void R_InitSModelSurfBuildLists_DynLight(void)
+void R_InitSModelSurfBuildLists_DynLight(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  uVar2 = Material_GetSortedIndex(DAT_84616548);
+  *puVar1 = uVar2;
+  iVar3 = R_InitSModelSurfBuffers(puVar1,0x800,(-(ulonglong)(param_3 != 0) & 0x800) + 0x800);
+  puVar1[0xb] = param_2;
+  puVar1[7] = iVar3;
+  iVar4 = iVar3 + 0x800;
+  puVar1[8] = iVar3;
+  puVar1[4] = 0xffffffff;
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  puVar1[9] = iVar4;
+  puVar1[10] = 0xffffffff;
+  puVar1[0xc] = 0;
+  puVar1[0xd] = 0x80;
+  puVar1[0xe] = 0;
+  if ((param_3 & 0xffffffff) != 0) {
+    puVar1[0x12] = iVar4;
+    puVar1[0x13] = iVar4;
+    puVar1[0xf] = 0xffffffff;
+    puVar1[0x10] = 0;
+    puVar1[0x11] = 0;
+    puVar1[0x14] = iVar3 + 0x1000;
+    puVar1[0x15] = 0xffffffff;
+    puVar1[0x16] = param_2 + 0x400;
+    puVar1[0x17] = 0;
+    puVar1[0x18] = 0x80;
+    puVar1[0x19] = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -504,7 +972,6 @@ void R_GetSortedMaterial(uint param_1)
 
 {
   if (DAT_84616504 <= param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9310,0x44c,0,0xffffffff821b9350,param_1);
   }
   DB_GetMaterialAtIndex((&DAT_84613780)[param_1]);
@@ -517,8 +984,35 @@ void R_GetSortedMaterial(uint param_1)
 void R_EmitDelayedSModelSurfsRemaining_Camera(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  longlong lVar2;
+  int *piVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  piVar1 = (int *)__savegprlr_27();
+  lVar2 = 5;
+  do {
+    piVar3 = piVar1 + 0xb;
+    uVar5 = (ulonglong)(uint)piVar1[0xc];
+    if (uVar5 != 0) {
+      R_SortSModelSurfDelaySort(*piVar3,0,uVar5);
+      if (uVar5 != 0) {
+        iVar4 = 0;
+        do {
+          R_EmitSingleSModelSurf
+                    (piVar1 + 4,*(undefined4 *)(*piVar3 + iVar4),
+                     *(undefined2 *)((undefined4 *)(*piVar3 + iVar4) + 1));
+          uVar5 = uVar5 - 1;
+          iVar4 = iVar4 + 8;
+        } while (uVar5 != 0);
+      }
+    }
+    lVar2 = lVar2 + -1;
+    piVar1 = piVar3;
+  } while (lVar2 != 0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -534,11 +1028,36 @@ void R_EmitDelayedSModelSurfsRemaining_Shadow(longlong param_1)
 
 // 8271B4F0  R_SetSModelSurfList  (gfx_d3d/r_add_staticmodel.cpp:1123)
 
-void R_SetSModelSurfList(void)
+void R_SetSModelSurfList(undefined8 param_1,int param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  ushort local_40;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iVar2 = param_3 * 0x2c + param_2;
+  if (*(uint *)(iVar2 + 0x24) < *(uint *)(iVar2 + 0x20)) {
+    MyAssertHandler(0xffffffff821b9470,0x470,0,0xffffffff82000f98,0xffffffff821b97dc);
+  }
+  if (1 < *(uint *)(iVar2 + 0x18)) {
+    *(undefined4 *)(iVar2 + 0x38) = 0;
+    if (*(int *)(iVar2 + 0x14) == 0) {
+      MyAssertHandler(0xffffffff821b9470,0x2a3,0,0xffffffff82000f98,0xffffffff821b95fc);
+    }
+    local_40 = (ushort)((uint)*(undefined4 *)(iVar2 + 0x10) >> 0x10);
+    **(ushort **)(iVar2 + 0x14) =
+         (ushort)(((ulonglong)*(uint *)(iVar2 + 0x18) + 0xffff & 0xffffffff) << 0xc) |
+         local_40 & 0xfff;
+  }
+  iVar1 = *(int *)(iVar2 + 0x1c);
+  iVar2 = *(int *)(iVar2 + 0x20);
+  piVar3[2] = *(int *)(param_2 + 4);
+  piVar3[1] = iVar1;
+  *piVar3 = iVar2 - iVar1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -575,7 +1094,6 @@ longlong R_GetSModelSurfListIndexForShadowMap(ulonglong param_1,ulonglong param_
 
 {
   if (1 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9470,0x4a1,0,0xffffffff821b9810,param_2,2);
   }
   return (param_1 & 0x7fffffff) * 2 + param_2;
@@ -602,21 +1120,316 @@ ulonglong R_GetSModelUseShadowMapFromSurfListIndex(ulonglong param_1)
 
 // 8271B810  R_EmitSModelSurfs_Camera  (gfx_d3d/r_add_staticmodel.cpp:1206)
 
-void R_EmitSModelSurfs_Camera(void)
+void R_EmitSModelSurfs_Camera
+               (undefined8 param_1,undefined4 *param_2,uint param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined4 uVar1;
+  ulonglong uVar2;
+  ushort uVar3;
+  undefined4 uVar4;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar5;
+  uint uVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  ulonglong uVar6;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  int iVar16;
+  ushort local_c0 [2];
+  undefined4 local_bc;
+  char *local_b8;
+  char *local_b4;
+  char *local_b0;
+  char *local_ac;
+  char *local_a8;
+  
+  iVar7 = __savegprlr();
+  uVar1 = *param_2;
+  local_c0[0] = 0;
+  iVar8 = XModelGetSkins(uVar1,0);
+  Material_FromHandle(*(undefined4 *)(param_2[1] * 4 + iVar8));
+  uVar5 = Material_GetSortedIndex();
+  local_bc = (uint)*(byte *)(param_2 + 2) << 8;
+  Com_BitSetAssert(0xffffffff847b8f80,*(byte *)(param_2 + 2),0x80);
+  uVar3 = local_bc._0_2_;
+  local_bc = CONCAT31(local_bc._0_3_,*(undefined1 *)((int)param_2 + 9));
+  uVar4 = local_bc;
+  local_b4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h";
+  local_b8 = "count doesn\'t index 33\n\t%i not in [0, %i)";
+  local_a8 = 
+  "visDataRef.fields.surfIndex == 0 && (visDataRef.fields.visDataIndexPacked << R_SMODELSURF_BITS_VISDATA_ALIGN) == visDataIndex"
+  ;
+  local_ac = "usedCount == smodelCount";
+  local_b0 = "surfCount";
+  uVar6 = param_4;
+  do {
+    uVar15 = LZCOUNT((int)param_5);
+    if (0x20 < uVar15) {
+      MyAssertHandler(local_b4,0x475,0,local_b8,uVar15,0x21);
+    }
+    iVar8 = (int)(uVar15 << 2);
+    uVar2 = uVar15 >> 1;
+    param_5 = param_5 & ~(ulonglong)*(uint *)((int)&DAT_82992400 + iVar8);
+    uVar9 = XModelGetSurfCount(uVar1,uVar2);
+    puVar10 = (undefined4 *)XModelGetSkins(uVar1,uVar2);
+    if (uVar9 == 0) {
+      MyAssertHandler(0xffffffff821b9470,0x4ee,0,0xffffffff82000f98,local_b0);
+    }
+    iVar8 = *(int *)(iVar8 + (int)uVar6);
+    iVar11 = R_EmitSModelSurfVisData
+                       (uVar1,uVar2,uVar15 * 0x100 + (ulonglong)param_3,iVar8,iVar7,local_c0);
+    if (iVar11 != 0) {
+      if (iVar11 != iVar8) {
+        MyAssertHandler(0xffffffff821b9470,0x502,0,0xffffffff82000f98,local_ac);
+      }
+      uVar14 = (local_c0[0] & 0x3fff) << 2;
+      if (((local_c0[0] & 3) != 0) || ((local_c0[0] & 0x3ffc) != local_c0[0])) {
+        MyAssertHandler(0xffffffff821b9470,0x506,1,0xffffffff82000f98,local_a8);
+      }
+      uVar13 = 0;
+      do {
+        iVar11 = Material_FromHandle(*puVar10);
+        uVar12 = (uint)*(byte *)(iVar11 + 0x41);
+        if (uVar12 < 5) {
+          if (((uVar15 & 1) == 0) && (uVar12 == 0)) {
+            uVar12 = 4;
+          }
+          iVar11 = uVar12 * 0x2c + iVar7;
+          iVar16 = iVar11 + 0x10;
+          uVar6 = Material_GetSortedIndex();
+          local_bc = CONCAT22((ushort)uVar6 & 0xfff | uVar3 & 0xf000,(short)uVar4);
+          if ((uVar14 & 0xf) != uVar13) {
+            MyAssertHandler(0xffffffff821b9470,0x519,1,0xffffffff82000f98,0xffffffff821b9848);
+          }
+          *(int *)(iVar11 + 0x38) = *(int *)(iVar11 + 0x38) + iVar8;
+          if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+            R_EmitDelayedSModelSurfsUpToMaterial(iVar16,uVar4,uVar5);
+            R_EmitSingleSModelSurf(iVar16,local_bc,uVar14);
+          }
+          else {
+            R_AddDelayedSModelSurf(iVar16,local_bc,uVar14);
+          }
+        }
+        uVar13 = uVar13 + 1;
+        puVar10 = puVar10 + 1;
+        uVar14 = uVar14 + 1 & 0xffff;
+      } while (uVar13 != uVar9);
+      uVar6 = param_4 & 0xffffffff;
+    }
+  } while ((param_5 & 0xffffffff) != 0);
+  __restgprlr();
+  return;
 }
 
 
 // 8271BAE8  R_EmitSModelSurfs_Shadow  (gfx_d3d/r_add_staticmodel.cpp:1339)
 
-void R_EmitSModelSurfs_Shadow(void)
+void R_EmitSModelSurfs_Shadow
+               (undefined8 param_1,undefined8 param_2,uint param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int *piVar4;
+  uint uVar5;
+  undefined4 *puVar6;
+  int iVar7;
+  ushort uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  ushort local_b0 [2];
+  uint3 local_ac;
+  undefined1 uStack_a9;
+  undefined4 local_a8;
+  char *local_a4;
+  char *local_a0;
+  char *local_9c;
+  
+  piVar4 = (int *)__savegprlr();
+  local_b0[0] = 0;
+  _local_ac = CONCAT31((uint3)((uint)(*piVar4 << 0x10) >> 8) & 0xfffff,0xff);
+  uVar3 = _local_ac;
+  local_9c = 
+  "visDataRef.fields.surfIndex == 0 && (visDataRef.fields.visDataIndexPacked << R_SMODELSURF_BITS_VISDATA_ALIGN) == visDataIndex"
+  ;
+  local_a0 = "usedCount == smodelCount";
+  local_a4 = "surfCount";
+  uVar9 = param_4;
+  do {
+    uVar11 = LZCOUNT((int)param_5);
+    if (0x20 < uVar11) {
+      MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar11,0x21);
+    }
+    iVar2 = (int)(uVar11 << 2);
+    param_5 = param_5 & ~(ulonglong)*(uint *)((int)&DAT_82992400 + iVar2);
+    uVar5 = XModelGetSurfCount(param_2,uVar11);
+    puVar6 = (undefined4 *)XModelGetSkins(param_2,uVar11);
+    if (uVar5 == 0) {
+      MyAssertHandler(0xffffffff821b9470,0x565,0,0xffffffff82000f98,local_a4);
+    }
+    iVar2 = *(int *)(iVar2 + (int)uVar9);
+    iVar7 = R_EmitSModelSurfVisData
+                      (param_2,uVar11,uVar11 * 0x100 + (ulonglong)param_3,iVar2,piVar4,local_b0);
+    if (iVar7 != 0) {
+      if (iVar7 != iVar2) {
+        MyAssertHandler(0xffffffff821b9470,0x574,0,0xffffffff82000f98,local_a0);
+      }
+      uVar12 = (local_b0[0] & 0x3fff) << 2;
+      if (((local_b0[0] & 3) != 0) || ((local_b0[0] & 0x3ffc) != local_b0[0])) {
+        MyAssertHandler(0xffffffff821b9470,0x578,1,0xffffffff82000f98,local_9c);
+      }
+      uVar10 = 0;
+      do {
+        iVar7 = Material_FromHandle(*puVar6);
+        uVar8 = Material_GetSortedIndex();
+        bVar1 = *(byte *)(iVar7 + 4);
+        if ((bVar1 & 0xc0) != 0) {
+          piVar4[0xe] = piVar4[0xe] + iVar2;
+          if ((uVar12 & 0xf) != uVar10) {
+            MyAssertHandler(0xffffffff821b9470,0x597,1,0xffffffff82000f98,0xffffffff821b9848);
+          }
+          if ((bVar1 & 0x40) == 0) {
+            local_a8 = CONCAT22(uVar8 & 0xfff | local_ac._0_2_ & 0xf000,(short)uVar3);
+            R_AddDelayedSModelSurf(piVar4 + 4,local_a8,uVar12);
+          }
+          else {
+            R_EmitSingleSModelSurf(piVar4 + 4,uVar3);
+          }
+        }
+        uVar10 = uVar10 + 1;
+        puVar6 = puVar6 + 1;
+        uVar12 = uVar12 + 1 & 0xffff;
+      } while (uVar10 != uVar5);
+      uVar9 = param_4 & 0xffffffff;
+    }
+  } while ((param_5 & 0xffffffff) != 0);
+  __restgprlr();
+  return;
+}
+
+
+// 8271BD50  R_EmitSModelSurfs_DynLight  (gfx_d3d/r_add_staticmodel.cpp:1461)
+
+void R_EmitSModelSurfs_DynLight
+               (undefined8 param_1,undefined4 *param_2,uint param_3,ulonglong param_4,
+               ulonglong param_5,int param_6)
+
+{
+  byte bVar1;
+  undefined4 uVar2;
+  ushort uVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  undefined4 *puVar7;
+  int iVar8;
+  undefined8 uVar6;
+  uint uVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  int iVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  ushort local_c0 [2];
+  uint local_bc;
+  undefined4 local_b8;
+  char *local_b4;
+  char *local_b0;
+  char *local_ac;
+  char *local_a8;
+  char *local_a4;
+  char *local_a0;
+  int local_9c;
+  
+  puVar7 = (undefined4 *)__savegprlr();
+  uVar2 = *param_2;
+  local_c0[0] = 0;
+  iVar8 = XModelGetSkins(uVar2,0);
+  Material_FromHandle(*(undefined4 *)(param_2[1] * 4 + iVar8));
+  uVar6 = Material_GetSortedIndex();
+  local_9c = (int)uVar6;
+  local_bc = CONCAT31(CONCAT21((short)*puVar7,*(undefined1 *)(param_2 + 2)),
+                      *(undefined1 *)((int)param_2 + 9)) & 0xfffffff;
+  uVar4 = local_bc;
+  R_EmitDelayedSModelSurfsUpToMaterial(puVar7 + 4,local_bc,uVar6);
+  local_b0 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h";
+  local_b4 = "count doesn\'t index 33\n\t%i not in [0, %i)";
+  local_a0 = "visDataRef.fields.surfIndex == surfIndex";
+  local_a4 = 
+  "visDataRef.fields.surfIndex == 0 && (visDataRef.fields.visDataIndexPacked << R_SMODELSURF_BITS_VISDATA_ALIGN) == visDataIndex"
+  ;
+  local_a8 = "usedCount == smodelCount";
+  local_ac = "surfCount";
+  uVar14 = param_4;
+  do {
+    uVar16 = LZCOUNT((int)param_5);
+    if (0x20 < uVar16) {
+      MyAssertHandler(local_b0,0x475,0,local_b4,uVar16,0x21);
+    }
+    iVar8 = (int)(uVar16 << 2);
+    param_5 = param_5 & ~(ulonglong)*(uint *)((int)&DAT_82992400 + iVar8);
+    uVar9 = XModelGetSurfCount(uVar2,uVar16);
+    puVar10 = (undefined4 *)XModelGetSkins(uVar2,uVar16);
+    if (uVar9 == 0) {
+      MyAssertHandler(0xffffffff821b9470,0x5ea,0,0xffffffff82000f98,local_ac);
+    }
+    iVar8 = *(int *)(iVar8 + (int)uVar14);
+    iVar11 = R_EmitSModelSurfVisData
+                       (uVar2,uVar16,uVar16 * 0x100 + (ulonglong)param_3,iVar8,puVar7,local_c0);
+    if (iVar11 != 0) {
+      if (iVar11 != iVar8) {
+        MyAssertHandler(0xffffffff821b9470,0x5f9,0,0xffffffff82000f98,local_a8);
+      }
+      uVar15 = (local_c0[0] & 0x3fff) << 2;
+      if (((local_c0[0] & 3) != 0) || ((local_c0[0] & 0x3ffc) != local_c0[0])) {
+        MyAssertHandler(0xffffffff821b9470,0x5fd,1,0xffffffff82000f98,local_a4);
+      }
+      uVar13 = 0;
+      uVar3 = local_bc._0_2_ & 0xf000;
+      do {
+        iVar11 = Material_FromHandle(*puVar10);
+        iVar12 = Material_GetSortedIndex();
+        local_b8 = CONCAT22((ushort)iVar12 & 0xfff | uVar3,(short)uVar4);
+        if ((uVar15 & 0xf) != uVar13) {
+          MyAssertHandler(0xffffffff821b9470,0x607,1,0xffffffff82000f98,local_a0);
+        }
+        uVar5 = local_b8;
+        puVar7[0xe] = puVar7[0xe] + iVar8;
+        if (iVar12 == local_9c) {
+          R_EmitSingleSModelSurf();
+        }
+        else {
+          R_AddDelayedSModelSurf(puVar7 + 4,local_b8,uVar15);
+        }
+        if ((param_6 != 0) && (bVar1 = *(byte *)(iVar11 + 4), (bVar1 & 0xc0) != 0)) {
+          puVar7[0x19] = puVar7[0x19] + iVar8;
+          if ((bVar1 & 0x40) == 0) {
+            R_AddDelayedSModelSurf(puVar7 + 0xf,uVar5,uVar15);
+          }
+          else {
+            R_EmitSingleSModelSurf(puVar7 + 0xf,uVar4);
+          }
+        }
+        uVar13 = uVar13 + 1;
+        uVar15 = uVar15 + 1 & 0xffff;
+        puVar10 = puVar10 + 1;
+      } while (uVar13 != uVar9);
+      uVar14 = param_4 & 0xffffffff;
+    }
+  } while ((param_5 & 0xffffffff) != 0);
+  __restgprlr();
+  return;
 }
 
 
@@ -638,11 +1451,25 @@ ulonglong R_AddSModelToAppropriateList(undefined2 param_1,ulonglong param_2,int 
 
 // 8271B690  R_AddSModelToAppropriateListForShadowMap  (gfx_d3d/r_add_staticmodel.cpp:1699)
 
-void R_AddSModelToAppropriateListForShadowMap(void)
+void R_AddSModelToAppropriateListForShadowMap
+               (undefined8 param_1,ulonglong param_2,int param_3,int param_4,ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined2 uVar2;
+  
+  uVar2 = __savegprlr_27();
+  if (1 < (param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b9470,0x4a1,0,0xffffffff821b9810);
+  }
+  param_5 = (param_2 & 0x7fffffff) * 2 + param_5;
+  iVar1 = (int)((param_5 & 0x3fffffff) << 2);
+  *(undefined2 *)
+   ((int)(((param_5 & 0x1ffffff) * 0x80 + (ulonglong)*(uint *)(iVar1 + param_4) & 0xffffffff) << 1)
+   + param_3) = uVar2;
+  *(int *)(iVar1 + param_4) = *(int *)(iVar1 + param_4) + 1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -651,18 +1478,362 @@ void R_AddSModelToAppropriateListForShadowMap(void)
 void R_AddAllStaticModelSurfacesCamera(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  short sVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  float fVar6;
+  float fVar7;
+  int iVar8;
+  ulonglong uVar9;
+  int iVar11;
+  undefined8 uVar10;
+  char cVar13;
+  uint uVar12;
+  float fVar14;
+  int iVar15;
+  float *pfVar16;
+  ulonglong uVar17;
+  float fVar18;
+  uint uVar19;
+  char *pcVar20;
+  float *pfVar22;
+  longlong lVar21;
+  int *piVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  float local_2220;
+  uint local_221c;
+  int local_2218;
+  int local_2214;
+  undefined *local_2210;
+  char *local_220c;
+  uint local_2208;
+  int local_2204;
+  int local_2200;
+  longlong local_21f8;
+  int local_21f0 [8];
+  undefined1 auStack_21d0 [44];
+  int local_21a4 [49];
+  undefined1 auStack_20e0 [2048];
+  undefined1 auStack_18e0 [6368];
+  
   __savegprlr();
+  uVar9 = __savefpr_23();
+  Profile_Begin(0x1a2);
+  local_220c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_add_staticmodel.cpp";
+  local_2210 = &DAT_82000f98;
+  uVar12 = *DAT_846178cc;
+  pcVar20 = (char *)DAT_846178cc[0xc];
+  uVar3 = DAT_846178cc[0xd];
+  uVar4 = DAT_846178cc[0xe];
+  uVar5 = DAT_846178cc[0x16];
+  local_2208 = uVar12;
+  if (DAT_84618054 == '\0') {
+    MyAssertHandler(0xffffffff821b9470,0x712,0,0xffffffff82000f98,0xffffffff821b8f20);
+  }
+  dVar30 = (double)DAT_8461804c;
+  dVar28 = (double)DAT_84618050;
+  dVar27 = (double)DAT_84618040;
+  dVar26 = (double)DAT_84618044;
+  dVar25 = (double)DAT_84618048;
+  R_InitSModelSurfBuildLists_Camera(auStack_21d0,auStack_18e0);
+  local_2220 = 0.0;
+  uVar19 = 0;
+  local_221c = 0;
+  fVar14 = 0.0;
+  local_21f0[2] = 0;
+  local_21f0[3] = 0;
+  pfVar16 = (float *)0x0;
+  local_21f0[4] = 0;
+  local_21f0[5] = 0;
+  dVar29 = 0.0;
+  local_21f0[6] = 0;
+  local_21f0[7] = 0;
+  fVar18 = 0.0;
+  uVar17 = 0;
+  local_2218 = 0xff0000;
+  if (uVar12 != 0) {
+    local_2204 = uVar4 - (int)pcVar20;
+    local_2200 = uVar3 - (int)pcVar20;
+    dVar24 = 0.0010000000474974513;
+    pfVar22 = (float *)(uVar5 + 4);
+    iVar15 = local_2218;
+    do {
+      iVar8 = local_2200;
+      if (*pcVar20 != '\0') {
+        fVar6 = pfVar22[6];
+        if (fVar6 != fVar14) {
+          iVar11 = DB_GetXModelIndex(fVar6);
+          dVar29 = (double)*(float *)((int)fVar6 + 0xf4);
+          pfVar16 = (float *)(&DAT_8459e580 + iVar11 * 4);
+          fVar14 = fVar6;
+          fVar18 = fVar6;
+        }
+        dVar32 = (double)pfVar22[5];
+        dVar31 = (double)SQRT((float)(dVar27 - (double)pfVar22[-1]) *
+                              (float)(dVar27 - (double)pfVar22[-1]) +
+                              (float)(dVar25 - (double)pfVar22[1]) *
+                              (float)(dVar25 - (double)pfVar22[1]) +
+                              (float)(dVar26 - (double)*pfVar22) *
+                              (float)(dVar26 - (double)*pfVar22));
+        if (dVar32 <= dVar24) {
+          MyAssertHandler(local_220c,0x757,0,local_2210,0xffffffff821b9920);
+        }
+        dVar32 = (double)(float)(dVar31 / dVar32);
+        uVar1 = *(ushort *)(pfVar22 + 7);
+        fVar6 = (float)((double)(float)(dVar32 - dVar29) * dVar30);
+        fVar7 = *pfVar16;
+        if (fVar6 - *pfVar16 < 0.0) {
+          fVar7 = fVar6;
+        }
+        *pfVar16 = fVar7;
+        if ((uVar1 == 0) ||
+           (local_21f8 = (longlong)(int)(uint)uVar1, (float)(dVar31 * dVar28) < (float)local_21f8))
+        {
+          local_2214 = (uint)CONCAT11(*(undefined1 *)((int)pfVar22 + 0x21),
+                                      *(undefined1 *)(pfVar22 + 8)) << 0x10;
+          iVar11 = local_2214;
+          fVar6 = fVar18;
+          if ((fVar18 != 0.0) || (iVar15 != local_2214)) {
+            if (uVar19 != 0) {
+              R_EmitSModelSurfs_Camera(auStack_21d0,&local_2220,auStack_20e0,local_21f0,uVar19);
+              uVar19 = 0;
+              local_21f0[2] = 0;
+              local_21f0[3] = 0;
+              local_21f0[4] = 0;
+              local_21f0[5] = 0;
+              local_21f0[6] = 0;
+              local_21f0[7] = 0;
+            }
+            local_2218 = iVar11;
+            iVar15 = iVar11;
+            if (fVar18 != 0.0) {
+              local_221c = (uint)*(byte *)((int)pfVar22 + 0x23);
+              fVar6 = 0.0;
+              local_2220 = fVar18;
+            }
+          }
+          fVar18 = fVar6;
+          dVar31 = (double)(float)(dVar32 * dVar30);
+          uVar10 = XModelGetLodForDist(dVar31,(double)(float)(dVar32 * dVar28),local_2220);
+          if ((int)uVar10 < 0) {
+            *pcVar20 = '\0';
+          }
+          else {
+            R_StaticModelDebugAids(dVar31,uVar17,uVar10);
+            cVar13 = R_AllocStaticModelLighting(pfVar22 + -1,uVar17);
+            if (cVar13 == '\0') {
+              R_WarnOncePerFrame(0xe);
+              *pcVar20 = '\0';
+            }
+            else {
+              sVar2 = *(short *)((int)pfVar22 + 0x1e);
+              if (sVar2 == 0) {
+                MyAssertHandler(local_220c,0x79d,0,local_2210,0xffffffff821b9950);
+              }
+              if ((*(char *)(DAT_845aa740 + 0xc) == '\0') || (sVar2 != 1)) {
+                uVar12 = R_AddSModelToAppropriateListForShadowMap
+                                   (uVar17,uVar10,auStack_20e0,local_21f0,
+                                    pcVar20[iVar8] != '\0' || pcVar20[local_2204] != '\0');
+                if (0x20 < uVar12) {
+                  MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar12,0x21);
+                }
+                uVar3 = (&DAT_82992400)[uVar12];
+                uVar19 = uVar3 | uVar19;
+                if (local_21f0[uVar12] == 0x80) {
+                  R_EmitSModelSurfs_Camera(auStack_21d0,&local_2220,auStack_20e0,local_21f0,uVar3);
+                  uVar19 = uVar19 & ~uVar3;
+                  local_21f0[uVar12] = 0;
+                }
+              }
+              else {
+                *pcVar20 = '\0';
+              }
+            }
+          }
+        }
+        else {
+          *pcVar20 = '\0';
+        }
+      }
+      uVar17 = uVar17 + 1;
+      pfVar22 = pfVar22 + 0xb;
+      pcVar20 = pcVar20 + 1;
+    } while ((uVar17 & 0xffffffff) < (ulonglong)local_2208);
+    uVar9 = uVar9 & 0xffffffff;
+  }
+  if (*(char *)(DAT_845aa5ec + 0xc) != '\0') {
+    R_EndDumpStaticModelLodInfo();
+  }
+  if (uVar19 != 0) {
+    R_EmitSModelSurfs_Camera(auStack_21d0,&local_2220,auStack_20e0,local_21f0,uVar19);
+  }
+  piVar23 = local_21a4;
+  lVar21 = 5;
+  do {
+    uVar17 = (ulonglong)(uint)piVar23[1];
+    if ((uVar17 != 0) && (R_SortSModelSurfDelaySort(*piVar23,0,uVar17), uVar17 != 0)) {
+      iVar15 = 0;
+      do {
+        R_EmitSingleSModelSurf
+                  (piVar23 + -7,*(undefined4 *)(iVar15 + *piVar23),
+                   *(undefined2 *)((undefined4 *)(iVar15 + *piVar23) + 1));
+        uVar17 = uVar17 - 1;
+        iVar15 = iVar15 + 8;
+      } while (uVar17 != 0);
+    }
+    lVar21 = lVar21 + -1;
+    piVar23 = piVar23 + 0xb;
+  } while (lVar21 != 0);
+  R_SetSModelSurfList(uVar9 + 0xb60,auStack_21d0,4);
+  R_SetSModelSurfList(uVar9 + 0x968,auStack_21d0,0);
+  R_SetSModelSurfList(uVar9 + 0x24f8,auStack_21d0,1);
+  R_SetSModelSurfList(uVar9 + 0x2ed0,auStack_21d0,2);
+  Profile_EndInternal(0);
+  __restfpr_23();
+  __restgprlr();
+  return;
 }
 
 
 // 8271C548  R_AddAllStaticModelSurfacesRangeSunShadow  (gfx_d3d/r_add_staticmodel.cpp:2075)
 
-void R_AddAllStaticModelSurfacesRangeSunShadow(void)
+void R_AddAllStaticModelSurfacesRangeSunShadow(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar7;
+  ulonglong uVar6;
+  undefined8 uVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float *pfVar12;
+  uint uVar13;
+  uint uVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  uint local_9f0 [4];
+  longlong local_9e0;
+  undefined1 auStack_9d0 [16];
+  undefined1 auStack_9c0 [224];
+  undefined2 auStack_8e0 [512];
+  undefined1 auStack_4e0 [1248];
+  
   __savegprlr();
+  uVar7 = __savefpr_24();
+  Profile_Begin(0x1a3);
+  uVar1 = *DAT_846178cc;
+  iVar4 = *(int *)((int)((param_2 + 0xd & 0xffffffff) << 2) + (int)DAT_846178cc);
+  uVar2 = DAT_846178cc[0x16];
+  if (DAT_84618054 == '\0') {
+    MyAssertHandler(0xffffffff821b9470,0x855,0,0xffffffff82000f98,0xffffffff821b8f20);
+  }
+  dVar19 = (double)DAT_8461804c;
+  dVar20 = (double)DAT_84618050;
+  dVar18 = (double)DAT_84618040;
+  dVar17 = (double)DAT_84618044;
+  dVar16 = (double)DAT_84618048;
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar8 = 0x400;
+  }
+  else {
+    if ((param_2 & 0xffffffff) != 1) {
+      MyAssertHandler(0xffffffff821b9470,0x42c,0,0xffffffff82000f98,0xffffffff821b97b0);
+    }
+    uVar8 = 0x800;
+  }
+  R_InitSModelSurfBuildLists_Shadow(auStack_9d0,uVar8,0x2000,auStack_4e0);
+  uVar14 = 0;
+  fVar9 = 0.0;
+  local_9f0[2] = 0;
+  local_9f0[3] = 0;
+  uVar13 = 0;
+  if (uVar1 != 0) {
+    dVar15 = 0.0010000000474974513;
+    pfVar12 = (float *)(uVar2 + 4);
+    fVar10 = 0.0;
+    do {
+      fVar11 = fVar10;
+      if ((*(char *)(uVar13 + iVar4) != '\0') && ((*(byte *)((int)pfVar12 + 0x22) & 0x10) == 0)) {
+        dVar21 = (double)SQRT((float)(dVar17 - (double)*pfVar12) *
+                              (float)(dVar17 - (double)*pfVar12) +
+                              (float)(dVar18 - (double)pfVar12[-1]) *
+                              (float)(dVar18 - (double)pfVar12[-1]) +
+                              (float)(dVar16 - (double)pfVar12[1]) *
+                              (float)(dVar16 - (double)pfVar12[1]));
+        if ((*(ushort *)(pfVar12 + 7) == 0) ||
+           (local_9e0 = (longlong)(int)(uint)*(ushort *)(pfVar12 + 7),
+           (float)(dVar21 * dVar20) < (float)local_9e0)) {
+          if ((double)pfVar12[5] <= dVar15) {
+            MyAssertHandler(0xffffffff821b9470,0x885,0,0xffffffff82000f98,0xffffffff821b9920);
+          }
+          fVar3 = pfVar12[6];
+          dVar22 = (double)(float)((double)(float)(dVar21 / (double)pfVar12[5]) * dVar20);
+          dVar21 = (double)(float)((double)(float)(dVar21 / (double)pfVar12[5]) * dVar19);
+          if ((fVar3 != fVar9) && (fVar9 = fVar3, fVar11 = fVar3, uVar14 != 0)) {
+            R_EmitSModelSurfs_Shadow(auStack_9d0,fVar10,auStack_8e0,local_9f0,uVar14);
+            uVar14 = 0;
+            local_9f0[2] = 0;
+            local_9f0[3] = 0;
+          }
+          uVar6 = XModelGetLodForDist(dVar21,dVar22,fVar11);
+          if (-1 < (int)uVar6) {
+            iVar5 = (int)((uVar6 & 0x3fffffff) << 2);
+            uVar2 = *(uint *)((int)local_9f0 + iVar5);
+            *(uint *)((int)local_9f0 + iVar5) = uVar2 + 1;
+            *(short *)((int)auStack_8e0 +
+                      (int)(((uVar6 & 0x1ffffff) * 0x80 + (ulonglong)uVar2 & 0xffffffff) << 1)) =
+                 (short)uVar13;
+            if (0x20 < (uVar6 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar6,0x21);
+            }
+            uVar2 = *(uint *)((int)&DAT_82992400 + iVar5);
+            uVar14 = uVar2 | uVar14;
+            if (*(int *)((int)local_9f0 + iVar5) == 0x80) {
+              R_EmitSModelSurfs_Shadow(auStack_9d0,fVar11,auStack_8e0,local_9f0,uVar2);
+              uVar14 = uVar14 & ~uVar2;
+              *(undefined4 *)((int)local_9f0 + iVar5) = 0;
+            }
+          }
+        }
+        else {
+          *(undefined1 *)(uVar13 + iVar4) = 0;
+        }
+      }
+      uVar13 = uVar13 + 1;
+      pfVar12 = pfVar12 + 0xb;
+      fVar10 = fVar11;
+    } while (uVar13 < uVar1);
+    if (uVar14 != 0) {
+      R_EmitSModelSurfs_Shadow(auStack_9d0,fVar11,auStack_8e0,local_9f0,uVar14);
+    }
+  }
+  R_EmitDelayedSModelSurfsRemaining(auStack_9c0);
+  R_SetSModelSurfList(param_2 * 0x1f8 + (ulonglong)uVar7 + 0x2ae0,auStack_9d0,0);
+  Profile_EndInternal(0);
+  __restfpr_24();
+  __restgprlr();
+  return;
 }
 
 
@@ -679,10 +1850,310 @@ void R_AddAllStaticModelSurfacesSunShadow(undefined8 param_1)
 
 // 8271C8B0  R_AddAllStaticModelSurfacesSpotShadow  (gfx_d3d/r_add_staticmodel.cpp:2320)
 
-void R_AddAllStaticModelSurfacesSpotShadow(void)
+void R_AddAllStaticModelSurfacesSpotShadow(undefined8 param_1,uint param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  int iVar2;
+  float fVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
+  float fVar11;
+  float fVar12;
+  uint uVar13;
+  float *pfVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  uint local_9e0 [4];
+  longlong local_9d0;
+  undefined1 auStack_9c0 [16];
+  undefined1 auStack_9b0 [224];
+  ushort auStack_8d0 [512];
+  undefined1 auStack_4d0 [1232];
+  
   __savegprlr();
+  lVar7 = __savefpr_25();
+  iVar2 = *(int *)(DAT_846178cc + 0x58);
+  if (DAT_84618054 == '\0') {
+    MyAssertHandler(0xffffffff821b9470,0x92f,0,0xffffffff82000f98,0xffffffff821b9988);
+  }
+  dVar16 = (double)DAT_8461804c;
+  dVar20 = (double)DAT_84618050;
+  dVar19 = (double)DAT_84618040;
+  dVar18 = (double)DAT_84618044;
+  dVar17 = (double)DAT_84618048;
+  R_InitSModelSurfBuildLists_Shadow(auStack_9c0,0x400,0x800,auStack_4d0);
+  uVar13 = 0;
+  local_9e0[2] = 0;
+  local_9e0[3] = 0;
+  iVar5 = *(int *)(DAT_8461658c + 0x224) +
+          (int)((param_3 + (param_3 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+  uVar9 = (ulonglong)*(ushort *)(iVar5 + 2);
+  if (uVar9 != 0) {
+    iVar5 = *(int *)(iVar5 + 8);
+    dVar15 = 0.0010000000474974513;
+    iVar10 = 0;
+    fVar11 = 0.0;
+    do {
+      uVar1 = *(ushort *)(iVar10 + iVar5);
+      pfVar14 = (float *)((uint)uVar1 * 0x2c + iVar2);
+      fVar12 = fVar11;
+      if ((*(byte *)((int)pfVar14 + 0x26) & 0x10) == 0) {
+        dVar21 = (double)SQRT((float)(dVar18 - (double)pfVar14[1]) *
+                              (float)(dVar18 - (double)pfVar14[1]) +
+                              (float)(dVar19 - (double)*pfVar14) *
+                              (float)(dVar19 - (double)*pfVar14) +
+                              (float)(dVar17 - (double)pfVar14[2]) *
+                              (float)(dVar17 - (double)pfVar14[2]));
+        if ((*(ushort *)(pfVar14 + 8) == 0) ||
+           (local_9d0 = (longlong)(int)(uint)*(ushort *)(pfVar14 + 8),
+           (float)(dVar21 * dVar20) < (float)local_9d0)) {
+          if ((double)pfVar14[6] <= dVar15) {
+            MyAssertHandler(0xffffffff821b9470,0x951,0,0xffffffff82000f98,0xffffffff821b9920);
+          }
+          fVar3 = pfVar14[7];
+          uVar8 = XModelGetLodForDist((double)(float)((double)(float)(dVar21 / (double)pfVar14[6]) *
+                                                     dVar16),
+                                      (double)(float)((double)(float)(dVar21 / (double)pfVar14[6]) *
+                                                     dVar20),fVar3);
+          if (-1 < (int)uVar8) {
+            if ((fVar3 != fVar11) && (fVar12 = fVar3, uVar13 != 0)) {
+              R_EmitSModelSurfs_Shadow(auStack_9c0,fVar11,auStack_8d0,local_9e0,uVar13);
+              uVar13 = 0;
+              local_9e0[2] = 0;
+              local_9e0[3] = 0;
+            }
+            iVar6 = (int)((uVar8 & 0x3fffffff) << 2);
+            uVar4 = *(uint *)((int)local_9e0 + iVar6);
+            *(uint *)((int)local_9e0 + iVar6) = uVar4 + 1;
+            *(ushort *)
+             ((int)auStack_8d0 +
+             (int)(((uVar8 & 0x1ffffff) * 0x80 + (ulonglong)uVar4 & 0xffffffff) << 1)) = uVar1;
+            if (0x20 < (uVar8 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar8,0x21);
+            }
+            uVar4 = *(uint *)((int)&DAT_82992400 + iVar6);
+            uVar13 = uVar4 | uVar13;
+            if (*(int *)((int)local_9e0 + iVar6) == 0x80) {
+              R_EmitSModelSurfs_Shadow(auStack_9c0,fVar12,auStack_8d0,local_9e0,uVar13);
+              uVar13 = uVar13 & ~uVar4;
+              *(undefined4 *)((int)local_9e0 + iVar6) = 0;
+            }
+          }
+        }
+      }
+      uVar9 = uVar9 - 1;
+      iVar10 = iVar10 + 2;
+      fVar11 = fVar12;
+    } while (uVar9 != 0);
+    if (uVar13 != 0) {
+      R_EmitSModelSurfs_Shadow(auStack_9c0,fVar12,auStack_8d0,local_9e0,uVar13);
+    }
+  }
+  R_EmitDelayedSModelSurfsRemaining(auStack_9b0);
+  R_SetSModelSurfList((ulonglong)param_2 * 0x1f8 + lVar7 + 0x30c8,auStack_9c0,0);
+  __restfpr_25();
+  __restgprlr();
+  return;
+}
+
+
+// 8271CB98  R_AddAllStaticModelSurfacesDynLight  (gfx_d3d/r_add_staticmodel.cpp:2443)
+
+void R_AddAllStaticModelSurfacesDynLight
+               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,char param_5
+               )
+
+{
+  ushort uVar1;
+  float fVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  float fVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_df0;
+  uint local_dec;
+  undefined1 local_de8;
+  undefined1 local_de7;
+  undefined2 local_de6;
+  int local_de4;
+  uint local_de0 [4];
+  longlong local_dd0;
+  undefined4 local_dc0 [4];
+  undefined4 local_db0;
+  undefined4 local_dac;
+  undefined4 local_da8;
+  int local_da4;
+  int local_da0;
+  int local_d9c;
+  undefined4 local_d98;
+  undefined1 *local_d94;
+  undefined4 local_d90;
+  undefined4 local_d8c;
+  undefined4 local_d88;
+  undefined4 local_d84;
+  undefined4 local_d80;
+  undefined4 local_d7c;
+  int local_d78;
+  int local_d74;
+  int local_d70;
+  undefined4 local_d6c;
+  undefined1 *local_d68;
+  undefined4 local_d64;
+  undefined4 local_d60;
+  undefined4 local_d5c;
+  ushort auStack_cd0 [512];
+  undefined1 auStack_8d0 [1024];
+  undefined1 auStack_4d0 [1232];
+  
+  __savegprlr();
+  __savefpr_25();
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821b9470,0x9a8,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  local_de4 = *(int *)(DAT_846178cc + 0x58);
+  if (DAT_84618054 == '\0') {
+    MyAssertHandler(0xffffffff821b9470,0x9ac,0,0xffffffff82000f98,0xffffffff821b9988);
+  }
+  dVar11 = (double)DAT_8461804c;
+  dVar15 = (double)DAT_84618050;
+  dVar14 = (double)DAT_84618040;
+  dVar13 = (double)DAT_84618044;
+  dVar12 = (double)DAT_84618048;
+  if (*(char *)(((int)param_2 + 0x1d00) * 0x4c + DAT_84628b00) == '\x02') {
+    uVar7 = (ulonglong)*(uint *)(DAT_84628b00 + 0x23e4);
+  }
+  else {
+    uVar7 = 0;
+  }
+  local_dc0[0] = Material_GetSortedIndex(DAT_84616548);
+  local_da4 = R_InitSModelSurfBuffers(local_dc0,0x800,(-(ulonglong)(uVar7 != 0) & 0x800) + 0x800);
+  local_dac = 0;
+  local_d9c = local_da4 + 0x800;
+  local_d94 = auStack_8d0;
+  local_db0 = 0xffffffff;
+  local_da8 = 0;
+  local_d98 = 0xffffffff;
+  local_d90 = 0;
+  local_d8c = 0x80;
+  local_d88 = 0;
+  if (uVar7 != 0) {
+    local_d70 = local_da4 + 0x1000;
+    local_d68 = auStack_4d0;
+    local_d84 = 0xffffffff;
+    local_d80 = 0;
+    local_d7c = 0;
+    local_d6c = 0xffffffff;
+    local_d64 = 0;
+    local_d60 = 0x80;
+    local_d5c = 0;
+    local_d78 = local_d9c;
+    local_d74 = local_d9c;
+  }
+  local_df0 = 0.0;
+  local_dec = 0;
+  local_de6 = 0;
+  uVar8 = 0;
+  local_de8 = (undefined1)param_2;
+  fVar6 = 0.0;
+  local_de7 = 0xff;
+  local_de0[2] = 0;
+  local_de0[3] = 0;
+  local_da0 = local_da4;
+  if ((param_4 & 0xffffffff) != 0) {
+    dVar10 = 0.0010000000474974513;
+    do {
+      uVar1 = *(ushort *)param_3;
+      pfVar9 = (float *)((uint)uVar1 * 0x2c + local_de4);
+      fVar2 = pfVar9[7];
+      dVar16 = (double)SQRT((float)(dVar13 - (double)pfVar9[1]) *
+                            (float)(dVar13 - (double)pfVar9[1]) +
+                            (float)(dVar14 - (double)*pfVar9) * (float)(dVar14 - (double)*pfVar9) +
+                            (float)(dVar12 - (double)pfVar9[2]) *
+                            (float)(dVar12 - (double)pfVar9[2]));
+      if (*(ushort *)(pfVar9 + 8) == 0) {
+LAB_8271cdf8:
+        if ((double)pfVar9[6] <= dVar10) {
+          MyAssertHandler(0xffffffff821b9470,0x9d7,0,0xffffffff82000f98,0xffffffff821b9920);
+        }
+        uVar5 = XModelGetLodForDist((double)(float)((double)(float)(dVar16 / (double)pfVar9[6]) *
+                                                   dVar11),
+                                    (double)(float)((double)(float)(dVar16 / (double)pfVar9[6]) *
+                                                   dVar15),fVar2);
+        if (-1 < (int)uVar5) {
+          if ((*(short *)((int)pfVar9 + 0x22) == 0) && (param_5 == '\0')) {
+            MyAssertHandler(0xffffffff821b9470,0x9f3,0,0xffffffff82000f98,0xffffffff821b99a8);
+          }
+          if (fVar2 != fVar6) {
+            if (uVar8 != 0) {
+              R_EmitSModelSurfs_DynLight(local_dc0,&local_df0,auStack_cd0,local_de0,uVar8,uVar7);
+              uVar8 = 0;
+              local_de0[2] = 0;
+              local_de0[3] = 0;
+            }
+            local_de7 = *(undefined1 *)(pfVar9 + 9);
+            local_dec = (uint)*(byte *)((int)pfVar9 + 0x27);
+            fVar6 = fVar2;
+            local_df0 = fVar2;
+          }
+          iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
+          uVar3 = *(uint *)((int)local_de0 + iVar4);
+          *(uint *)((int)local_de0 + iVar4) = uVar3 + 1;
+          *(ushort *)
+           ((int)auStack_cd0 +
+           (int)(((uVar5 & 0x1ffffff) * 0x80 + (ulonglong)uVar3 & 0xffffffff) << 1)) = uVar1;
+          if (0x20 < (uVar5 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar5,0x21);
+          }
+          uVar3 = *(uint *)((int)&DAT_82992400 + iVar4);
+          uVar8 = uVar3 | uVar8;
+          if (*(int *)((int)local_de0 + iVar4) == 0x80) {
+            R_EmitSModelSurfs_DynLight(local_dc0,&local_df0,auStack_cd0,local_de0,uVar8,uVar7);
+            uVar8 = uVar8 & ~uVar3;
+            *(undefined4 *)((int)local_de0 + iVar4) = 0;
+          }
+        }
+      }
+      else {
+        local_dd0 = (longlong)(int)(uint)*(ushort *)(pfVar9 + 8);
+        if ((float)(dVar16 * dVar15) < (float)local_dd0) goto LAB_8271cdf8;
+      }
+      param_4 = param_4 - 1;
+      param_3 = param_3 + 2;
+    } while (param_4 != 0);
+    if (uVar8 != 0) {
+      R_EmitSModelSurfs_DynLight(local_dc0,&local_df0,auStack_cd0,local_de0,uVar8,uVar7);
+    }
+    param_2 = param_2 & 0xffffffff;
+  }
+  R_EmitDelayedSModelSurfsRemaining(&local_db0);
+  R_SetSModelSurfList((param_2 - *(uint *)(DAT_8461658c + 0x20)) * 0x1f8 + (ulonglong)DAT_84628b00 +
+                      0x1c10,local_dc0,0);
+  if (uVar7 != 0) {
+    R_SetSModelSurfList(uVar7 + 0x10,local_dc0,1);
+  }
+  __restfpr_25();
+  __restgprlr();
+  return;
 }
 

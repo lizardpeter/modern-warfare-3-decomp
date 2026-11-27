@@ -10,6 +10,16 @@ void bdMatchMaking__bdMatchMaking(undefined4 *param_1,undefined4 param_2)
 }
 
 
+// 82905490  bdMatchMaking::~bdMatchMaking  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdmatchmaking.cpp:28)
+
+void bdMatchMaking___bdMatchMaking(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  return;
+}
+
+
 // 829054A8  bdMatchMaking::submitPerformance  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdmatchmaking.cpp:354)
 
 void bdMatchMaking__submitPerformance
@@ -86,5 +96,87 @@ void bdMatchMaking__submitPerformance
   bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_70);
   __restgprlr_22(puVar5);
   return;
+}
+
+
+// 82905700  bdMatchMaking::getPerformanceValues  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdmatchmaking.cpp:393)
+
+void bdMatchMaking__getPerformanceValues
+               (undefined8 param_1,undefined4 *param_2,longlong param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6)
+
+{
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar6;
+  ulonglong uVar4;
+  char cVar7;
+  char cVar8;
+  longlong lVar5;
+  uint *puVar9;
+  ulonglong uVar10;
+  char in_RESERVE;
+  byte bVar11;
+  undefined1 local_60 [96];
+  
+  puVar6 = (undefined4 *)__savegprlr_23();
+  *puVar6 = 0;
+  uVar4 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar4 & 0xffffffff) == 0;
+  bVar11 = bVar1 << 1;
+  if (bVar1) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = bdTaskByteBuffer__bdTaskByteBuffer(uVar4,param_4 * 9 + 0x45,1);
+  }
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar9 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar4 + 4);
+        *puVar9 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_60,0x15,10);
+  cVar7 = bdByteBuffer__writeUInt32(uVar4 & 0xffffffff,param_5);
+  uVar10 = param_4;
+  uVar3 = param_4 & 0xffffffff;
+  do {
+    if (uVar3 == 0) {
+      if (cVar7 == '\x01') {
+        lVar5 = bdRemoteTaskManager__startTask(*param_2,puVar6,local_60);
+        if (lVar5 == 0) {
+          bdRemoteTask__setTaskResult(*puVar6,param_6,param_4);
+        }
+        else {
+          bdLogMessage(1,0xffffffff8220a424,0xffffffff8220ef18,0xffffffff8220ef28,0xffffffff8220f018
+                       ,0x19b,0xffffffff8220c90c);
+        }
+      }
+      else {
+        bdLogMessage(1,0xffffffff8220a424,0xffffffff8220ef18,0xffffffff8220ef28,0xffffffff8220f018,
+                     0x1a4,0xffffffff8220c89c);
+      }
+      bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+      __restgprlr_23(puVar6);
+      return;
+    }
+    if (cVar7 == '\0') {
+LAB_829057e8:
+      cVar7 = '\0';
+    }
+    else {
+      cVar8 = bdByteBuffer__writeUInt64((int)uVar4,*(undefined8 *)param_3);
+      cVar7 = '\x01';
+      if (cVar8 == '\0') goto LAB_829057e8;
+    }
+    uVar10 = uVar10 - 1;
+    param_3 = param_3 + 8;
+    uVar3 = uVar10;
+  } while( true );
 }
 

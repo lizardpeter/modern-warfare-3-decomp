@@ -11,9 +11,41 @@
   825B38DC  7D8803A6             mtspr LR,r12
   825B38E0  4E800020             blr
 
+; 825B38E8  GetLobbyMemberName  (ui_mp/ui_party.cpp:23)
+  825B38E8  7D8802A6             mfspr r12,LR
+  825B38EC  9181FFF8             stw r12,-0x8(r1)
+  825B38F0  FBC1FFE8             std r30,-0x18(r1)
+  825B38F4  FBE1FFF0             std r31,-0x10(r1)
+  825B38F8  9421FF90             stwu r1,-0x70(r1)
+  825B38FC  7C9F2378             or r31,r4,r4
+  825B3900  4BDE78A9             bl 0x8239b1a8
+  825B3904  7C7E1B78             or r30,r3,r3
+  825B3908  4BDAEB79             bl 0x82362480
+  825B390C  7FC4F378             or r4,r30,r30
+  825B3910  7FE5FB78             or r5,r31,r31
+  825B3914  4BDE448D             bl 0x82397da0
+  825B3918  38210070             addi r1,r1,0x70
+  825B391C  8181FFF8             lwz r12,-0x8(r1)
+  825B3920  7D8803A6             mtspr LR,r12
+  825B3924  EBC1FFE8             ld r30,-0x18(r1)
+  825B3928  EBE1FFF0             ld r31,-0x10(r1)
+  825B392C  4E800020             blr
+
 ; 825B3930  GetLobbyMemberStat  (ui_mp/ui_party.cpp:29)
   825B3930  7D8802A6             mfspr r12,LR
   825B3934  48362D89             bl 0x829166bc
+  825B3938  9421FF90             stwu r1,-0x70(r1)
+  825B393C  7C9F2378             or r31,r4,r4
+  825B3940  7CBE2B78             or r30,r5,r5
+  825B3944  4BDE7865             bl 0x8239b1a8
+  825B3948  7C7D1B78             or r29,r3,r3
+  825B394C  4BDAEB35             bl 0x82362480
+  825B3950  7FA4EB78             or r4,r29,r29
+  825B3954  7FE5FB78             or r5,r31,r31
+  825B3958  7FC6F378             or r6,r30,r30
+  825B395C  4BDE459D             bl 0x82397ef8
+  825B3960  38210070             addi r1,r1,0x70
+  825B3964  48362DA8             b 0x8291670c
 
 ; 825B3968  GetLobbyMemberSkill  (ui_mp/ui_party.cpp:35)
   825B3968  7D8802A6             mfspr r12,LR
@@ -131,6 +163,33 @@ LAB_825b3ad8:
   825B3B04  EBE1FFF0             ld r31,-0x10(r1)
   825B3B08  4E800020             blr
 
+; 825B3B10  GetLobbyMemberPartyIcon  (ui_mp/ui_party.cpp:68)
+  825B3B10  7D8802A6             mfspr r12,LR
+  825B3B14  48362BA9             bl 0x829166bc
+  825B3B18  9421FF90             stwu r1,-0x70(r1)
+  825B3B1C  7C9E2378             or r30,r4,r4
+  825B3B20  7CBF2B78             or r31,r5,r5
+  825B3B24  4BDE7685             bl 0x8239b1a8
+  825B3B28  7C7D1B78             or r29,r3,r3
+  825B3B2C  4BDAE955             bl 0x82362480
+  825B3B30  7FA4EB78             or r4,r29,r29
+  825B3B34  7FC5F378             or r5,r30,r30
+  825B3B38  4BDE5389             bl 0x82398ec0
+  825B3B3C  2F030000             cmpwi cr6,r3,0x0
+  825B3B40  419A0020             beq cr6,0x825b3b60
+  825B3B44  3D608202             lis r11,-0x7dfe
+  825B3B48  38800007             li r4,0x7
+  825B3B4C  386B2D58             addi r3,r11,0x2d58
+  825B3B50  481A0939             bl 0x82754488
+  825B3B54  907F0000             stw r3,0x0(r31)
+  825B3B58  38210070             addi r1,r1,0x70
+  825B3B5C  48362BB0             b 0x8291670c
+LAB_825b3b60:
+  825B3B60  39600000             li r11,0x0
+  825B3B64  917F0000             stw r11,0x0(r31)
+  825B3B68  38210070             addi r1,r1,0x70
+  825B3B6C  48362BA0             b 0x8291670c
+
 ; 825B3B70  IsHeadsetPresentForLobbyMember  (ui_mp/ui_party.cpp:89)
   825B3B70  7D8802A6             mfspr r12,LR
   825B3B74  9181FFF8             stw r12,-0x8(r1)
@@ -154,6 +213,18 @@ LAB_825b3ad8:
 ; 825B3BB8  GetLobbyMemberRankIcon  (ui_mp/ui_party.cpp:96)
   825B3BB8  7D8802A6             mfspr r12,LR
   825B3BBC  48362B01             bl 0x829166bc
+  825B3BC0  9421FF90             stwu r1,-0x70(r1)
+  825B3BC4  7C9F2378             or r31,r4,r4
+  825B3BC8  7CBE2B78             or r30,r5,r5
+  825B3BCC  4BDE75DD             bl 0x8239b1a8
+  825B3BD0  7C7D1B78             or r29,r3,r3
+  825B3BD4  4BDAE8AD             bl 0x82362480
+  825B3BD8  7FA4EB78             or r4,r29,r29
+  825B3BDC  7FE5FB78             or r5,r31,r31
+  825B3BE0  7FC6F378             or r6,r30,r30
+  825B3BE4  4BDE45FD             bl 0x823981e0
+  825B3BE8  38210070             addi r1,r1,0x70
+  825B3BEC  48362B20             b 0x8291670c
 
 ; 825B3BF0  GetLobbyMemberRank  (ui_mp/ui_party.cpp:101)
   825B3BF0  7D8802A6             mfspr r12,LR
@@ -178,11 +249,41 @@ LAB_825b3ad8:
 ; 825B3C38  GetLobbyMemberPartyColor  (ui_mp/ui_party.cpp:107)
   825B3C38  7D8802A6             mfspr r12,LR
   825B3C3C  48362A81             bl 0x829166bc
+  825B3C40  9421FF90             stwu r1,-0x70(r1)
+  825B3C44  7C9F2378             or r31,r4,r4
+  825B3C48  7CBE2B78             or r30,r5,r5
+  825B3C4C  4BDE755D             bl 0x8239b1a8
+  825B3C50  7C7D1B78             or r29,r3,r3
+  825B3C54  4BDAE82D             bl 0x82362480
+  825B3C58  7FA4EB78             or r4,r29,r29
+  825B3C5C  7FE5FB78             or r5,r31,r31
+  825B3C60  7FC6F378             or r6,r30,r30
+  825B3C64  4BDE4D15             bl 0x82398978
+  825B3C68  38210070             addi r1,r1,0x70
+  825B3C6C  48362AA0             b 0x8291670c
 
 ; 825B3C70  GetPartyMemberCount  (ui_mp/ui_party.cpp:113)
   825B3C70  3D6082B5             lis r11,-0x7d4b
   825B3C74  386B5118             addi r3,r11,0x5118
   825B3C78  4BDBF4D8             b 0x82373150
+
+; 825B3C80  GetPartyMemberName  (ui_mp/ui_party.cpp:119)
+  825B3C80  7D8802A6             mfspr r12,LR
+  825B3C84  9181FFF8             stw r12,-0x8(r1)
+  825B3C88  FBE1FFF0             std r31,-0x10(r1)
+  825B3C8C  9421FFA0             stwu r1,-0x60(r1)
+  825B3C90  7C9F2378             or r31,r4,r4
+  825B3C94  4BDE7515             bl 0x8239b1a8
+  825B3C98  3D6082B5             lis r11,-0x7d4b
+  825B3C9C  7C641B78             or r4,r3,r3
+  825B3CA0  386B5118             addi r3,r11,0x5118
+  825B3CA4  7FE5FB78             or r5,r31,r31
+  825B3CA8  4BDE40F9             bl 0x82397da0
+  825B3CAC  38210060             addi r1,r1,0x60
+  825B3CB0  8181FFF8             lwz r12,-0x8(r1)
+  825B3CB4  7D8803A6             mtspr LR,r12
+  825B3CB8  EBE1FFF0             ld r31,-0x10(r1)
+  825B3CBC  4E800020             blr
 
 ; 825B3CC0  GetPartyMemberXuid  (ui_mp/ui_party.cpp:125)
   825B3CC0  7D8802A6             mfspr r12,LR
@@ -205,6 +306,50 @@ LAB_825b3ad8:
 ; 825B3D00  IsPartyMemberAway  (ui_mp/ui_party.cpp:131)
   825B3D00  7D8802A6             mfspr r12,LR
   825B3D04  483629B9             bl 0x829166bc
+  825B3D08  9421FF90             stwu r1,-0x70(r1)
+  825B3D0C  3D6082B5             lis r11,-0x7d4b
+  825B3D10  7C7E1B78             or r30,r3,r3
+  825B3D14  3BEB5118             addi r31,r11,0x5118
+  825B3D18  7C9D2378             or r29,r4,r4
+  825B3D1C  817F1EF4             lwz r11,0x1ef4(r31)
+  825B3D20  2F0B0000             cmpwi cr6,r11,0x0
+  825B3D24  409A0028             bne cr6,0x825b3d4c
+  825B3D28  3D608204             lis r11,-0x7dfc
+  825B3D2C  3D408200             lis r10,-0x7e00
+  825B3D30  3D208217             lis r9,-0x7de9
+  825B3D34  38EBDEEC             subi r7,r11,0x2114
+  825B3D38  38CA0F98             addi r6,r10,0xf98
+  825B3D3C  3869D8A0             subi r3,r9,0x2760
+  825B3D40  38A00000             li r5,0x0
+  825B3D44  38800084             li r4,0x84
+  825B3D48  480207B9             bl 0x825d4500
+LAB_825b3d4c:
+  825B3D4C  7FC3F378             or r3,r30,r30
+  825B3D50  4BDE7459             bl 0x8239b1a8
+  825B3D54  7C641B78             or r4,r3,r3
+  825B3D58  7FE3FB78             or r3,r31,r31
+  825B3D5C  7FA5EB78             or r5,r29,r29
+  825B3D60  4BDE3F51             bl 0x82397cb0
+  825B3D64  38210070             addi r1,r1,0x70
+  825B3D68  483629A4             b 0x8291670c
+
+; 825B3D70  IsPartyMemberTalking  (ui_mp/ui_party.cpp:139)
+  825B3D70  7D8802A6             mfspr r12,LR
+  825B3D74  9181FFF8             stw r12,-0x8(r1)
+  825B3D78  FBE1FFF0             std r31,-0x10(r1)
+  825B3D7C  9421FFA0             stwu r1,-0x60(r1)
+  825B3D80  7C9F2378             or r31,r4,r4
+  825B3D84  4BDE7425             bl 0x8239b1a8
+  825B3D88  3D6082B5             lis r11,-0x7d4b
+  825B3D8C  7C641B78             or r4,r3,r3
+  825B3D90  386B5118             addi r3,r11,0x5118
+  825B3D94  7FE5FB78             or r5,r31,r31
+  825B3D98  4BDE4289             bl 0x82398020
+  825B3D9C  38210060             addi r1,r1,0x60
+  825B3DA0  8181FFF8             lwz r12,-0x8(r1)
+  825B3DA4  7D8803A6             mtspr LR,r12
+  825B3DA8  EBE1FFF0             ld r31,-0x10(r1)
+  825B3DAC  4E800020             blr
 
 ; 825B3DB0  IsPartyMemberMuted  (ui_mp/ui_party.cpp:145)
   825B3DB0  7D8802A6             mfspr r12,LR
@@ -256,6 +401,24 @@ LAB_825b3e4c:
   825B3E58  EBC1FFE8             ld r30,-0x18(r1)
   825B3E5C  EBE1FFF0             ld r31,-0x10(r1)
   825B3E60  4E800020             blr
+
+; 825B3E68  IsHeadsetPresentForPartyMember  (ui_mp/ui_party.cpp:173)
+  825B3E68  7D8802A6             mfspr r12,LR
+  825B3E6C  9181FFF8             stw r12,-0x8(r1)
+  825B3E70  FBE1FFF0             std r31,-0x10(r1)
+  825B3E74  9421FFA0             stwu r1,-0x60(r1)
+  825B3E78  7C9F2378             or r31,r4,r4
+  825B3E7C  4BDE732D             bl 0x8239b1a8
+  825B3E80  3D6082B5             lis r11,-0x7d4b
+  825B3E84  7C641B78             or r4,r3,r3
+  825B3E88  386B5118             addi r3,r11,0x5118
+  825B3E8C  7FE5FB78             or r5,r31,r31
+  825B3E90  4BDE42A1             bl 0x82398130
+  825B3E94  38210060             addi r1,r1,0x60
+  825B3E98  8181FFF8             lwz r12,-0x8(r1)
+  825B3E9C  7D8803A6             mtspr LR,r12
+  825B3EA0  EBE1FFF0             ld r31,-0x10(r1)
+  825B3EA4  4E800020             blr
 
 ; 825B3EA8  GetPartyMemberRankIcon  (ui_mp/ui_party.cpp:180)
   825B3EA8  7D8802A6             mfspr r12,LR
@@ -388,39 +551,176 @@ LAB_825b4024:
 ; 825B4078  GetTeamMemberXuid  (ui_mp/ui_party.cpp:243)
   825B4078  7D8802A6             mfspr r12,LR
   825B407C  48362641             bl 0x829166bc
+  825B4080  9421FF90             stwu r1,-0x70(r1)
+  825B4084  7C9F2378             or r31,r4,r4
+  825B4088  7CBE2B78             or r30,r5,r5
+  825B408C  4BDE711D             bl 0x8239b1a8
+  825B4090  7C7D1B78             or r29,r3,r3
+  825B4094  4BDAE3ED             bl 0x82362480
+  825B4098  7FA4EB78             or r4,r29,r29
+  825B409C  7FE5FB78             or r5,r31,r31
+  825B40A0  7FC6F378             or r6,r30,r30
+  825B40A4  4BDE461D             bl 0x823986c0
+  825B40A8  38210070             addi r1,r1,0x70
+  825B40AC  48362660             b 0x8291670c
 
 ; 825B40B0  GetTeamMemberName  (ui_mp/ui_party.cpp:249)
   825B40B0  7D8802A6             mfspr r12,LR
   825B40B4  48362609             bl 0x829166bc
+  825B40B8  9421FF90             stwu r1,-0x70(r1)
+  825B40BC  7C9F2378             or r31,r4,r4
+  825B40C0  7CBE2B78             or r30,r5,r5
+  825B40C4  4BDE70E5             bl 0x8239b1a8
+  825B40C8  7C7D1B78             or r29,r3,r3
+  825B40CC  4BDAE3B5             bl 0x82362480
+  825B40D0  7FA4EB78             or r4,r29,r29
+  825B40D4  7FE5FB78             or r5,r31,r31
+  825B40D8  7FC6F378             or r6,r30,r30
+  825B40DC  4BDE446D             bl 0x82398548
+  825B40E0  38210070             addi r1,r1,0x70
+  825B40E4  48362628             b 0x8291670c
 
 ; 825B40E8  GetTeamMemberStat  (ui_mp/ui_party.cpp:255)
   825B40E8  7D8802A6             mfspr r12,LR
   825B40EC  483625CD             bl 0x829166b8
+  825B40F0  9421FF80             stwu r1,-0x80(r1)
+  825B40F4  7C9F2378             or r31,r4,r4
+  825B40F8  7CBE2B78             or r30,r5,r5
+  825B40FC  7CDD3378             or r29,r6,r6
+  825B4100  4BDE70A9             bl 0x8239b1a8
+  825B4104  7C7C1B78             or r28,r3,r3
+  825B4108  4BDAE379             bl 0x82362480
+  825B410C  7F84E378             or r4,r28,r28
+  825B4110  7FE5FB78             or r5,r31,r31
+  825B4114  7FC6F378             or r6,r30,r30
+  825B4118  7FA7EB78             or r7,r29,r29
+  825B411C  4BDE44AD             bl 0x823985c8
+  825B4120  38210080             addi r1,r1,0x80
+  825B4124  483625E4             b 0x82916708
 
 ; 825B4128  GetTeamMemberSkill  (ui_mp/ui_party.cpp:261)
   825B4128  7D8802A6             mfspr r12,LR
   825B412C  48362591             bl 0x829166bc
+  825B4130  9421FF90             stwu r1,-0x70(r1)
+  825B4134  7C9F2378             or r31,r4,r4
+  825B4138  7CBE2B78             or r30,r5,r5
+  825B413C  4BDE706D             bl 0x8239b1a8
+  825B4140  7C7D1B78             or r29,r3,r3
+  825B4144  4BDAE33D             bl 0x82362480
+  825B4148  7FA4EB78             or r4,r29,r29
+  825B414C  7FE5FB78             or r5,r31,r31
+  825B4150  7FC6F378             or r6,r30,r30
+  825B4154  4BDE44E5             bl 0x82398638
+  825B4158  38210070             addi r1,r1,0x70
+  825B415C  483625B0             b 0x8291670c
 
 ; 825B4160  IsTeamMemberTalking  (ui_mp/ui_party.cpp:268)
   825B4160  7D8802A6             mfspr r12,LR
   825B4164  48362559             bl 0x829166bc
+  825B4168  9421FF90             stwu r1,-0x70(r1)
+  825B416C  7C9F2378             or r31,r4,r4
+  825B4170  7CBE2B78             or r30,r5,r5
+  825B4174  4BDE7035             bl 0x8239b1a8
+  825B4178  7C7D1B78             or r29,r3,r3
+  825B417C  4BDAE305             bl 0x82362480
+  825B4180  7FA4EB78             or r4,r29,r29
+  825B4184  7FE5FB78             or r5,r31,r31
+  825B4188  7FC6F378             or r6,r30,r30
+  825B418C  4BDE45BD             bl 0x82398748
+  825B4190  38210070             addi r1,r1,0x70
+  825B4194  48362578             b 0x8291670c
 
 ; 825B4198  IsTeamMemberMuted  (ui_mp/ui_party.cpp:274)
   825B4198  7D8802A6             mfspr r12,LR
   825B419C  48362521             bl 0x829166bc
+  825B41A0  9421FF90             stwu r1,-0x70(r1)
+  825B41A4  7C9F2378             or r31,r4,r4
+  825B41A8  7CBE2B78             or r30,r5,r5
+  825B41AC  4BDE6FFD             bl 0x8239b1a8
+  825B41B0  7C7D1B78             or r29,r3,r3
+  825B41B4  4BDAE2CD             bl 0x82362480
+  825B41B8  7FA4EB78             or r4,r29,r29
+  825B41BC  7FE5FB78             or r5,r31,r31
+  825B41C0  7FC6F378             or r6,r30,r30
+  825B41C4  4BDE45C5             bl 0x82398788
+  825B41C8  38210070             addi r1,r1,0x70
+  825B41CC  48362540             b 0x8291670c
 
 ; 825B41D0  IsHeadsetPresentForTeamMember  (ui_mp/ui_party.cpp:280)
   825B41D0  7D8802A6             mfspr r12,LR
   825B41D4  483624E9             bl 0x829166bc
+  825B41D8  9421FF90             stwu r1,-0x70(r1)
+  825B41DC  7C9F2378             or r31,r4,r4
+  825B41E0  7CBE2B78             or r30,r5,r5
+  825B41E4  4BDE6FC5             bl 0x8239b1a8
+  825B41E8  7C7D1B78             or r29,r3,r3
+  825B41EC  4BDAE295             bl 0x82362480
+  825B41F0  7FA4EB78             or r4,r29,r29
+  825B41F4  7FE5FB78             or r5,r31,r31
+  825B41F8  7FC6F378             or r6,r30,r30
+  825B41FC  4BDE45CD             bl 0x823987c8
+  825B4200  38210070             addi r1,r1,0x70
+  825B4204  48362508             b 0x8291670c
 
 ; 825B4208  GetTeamMemberRankIcon  (ui_mp/ui_party.cpp:287)
   825B4208  7D8802A6             mfspr r12,LR
   825B420C  483624AD             bl 0x829166b8
+  825B4210  9421FF80             stwu r1,-0x80(r1)
+  825B4214  7C9F2378             or r31,r4,r4
+  825B4218  7CBE2B78             or r30,r5,r5
+  825B421C  7CDD3378             or r29,r6,r6
+  825B4220  4BDE6F89             bl 0x8239b1a8
+  825B4224  7C7C1B78             or r28,r3,r3
+  825B4228  4BDAE259             bl 0x82362480
+  825B422C  7F84E378             or r4,r28,r28
+  825B4230  7FE5FB78             or r5,r31,r31
+  825B4234  7FC6F378             or r6,r30,r30
+  825B4238  7FA7EB78             or r7,r29,r29
+  825B423C  4BDE461D             bl 0x82398858
+  825B4240  38210080             addi r1,r1,0x80
+  825B4244  483624C4             b 0x82916708
 
 ; 825B4248  GetTeamMemberRank  (ui_mp/ui_party.cpp:293)
   825B4248  7D8802A6             mfspr r12,LR
   825B424C  48362471             bl 0x829166bc
+  825B4250  9421FF90             stwu r1,-0x70(r1)
+  825B4254  7C9F2378             or r31,r4,r4
+  825B4258  7CBE2B78             or r30,r5,r5
+  825B425C  4BDE6F4D             bl 0x8239b1a8
+  825B4260  7C7D1B78             or r29,r3,r3
+  825B4264  4BDAE21D             bl 0x82362480
+  825B4268  7FA4EB78             or r4,r29,r29
+  825B426C  7FE5FB78             or r5,r31,r31
+  825B4270  7FC6F378             or r6,r30,r30
+  825B4274  4BDE4685             bl 0x823988f8
+  825B4278  38210070             addi r1,r1,0x70
+  825B427C  48362490             b 0x8291670c
 
 ; 825B4280  GetTeamMembersPartyIcon  (ui_mp/ui_party.cpp:299)
   825B4280  7D8802A6             mfspr r12,LR
   825B4284  48362435             bl 0x829166b8
+  825B4288  9421FF80             stwu r1,-0x80(r1)
+  825B428C  7C9E2378             or r30,r4,r4
+  825B4290  7CBD2B78             or r29,r5,r5
+  825B4294  7CDF3378             or r31,r6,r6
+  825B4298  4BDE6F11             bl 0x8239b1a8
+  825B429C  7C7C1B78             or r28,r3,r3
+  825B42A0  4BDAE1E1             bl 0x82362480
+  825B42A4  7F84E378             or r4,r28,r28
+  825B42A8  7FC5F378             or r5,r30,r30
+  825B42AC  7FA6EB78             or r6,r29,r29
+  825B42B0  4BDE4CA1             bl 0x82398f50
+  825B42B4  2F030000             cmpwi cr6,r3,0x0
+  825B42B8  419A0020             beq cr6,0x825b42d8
+  825B42BC  3D608202             lis r11,-0x7dfe
+  825B42C0  38800007             li r4,0x7
+  825B42C4  386B2D58             addi r3,r11,0x2d58
+  825B42C8  481A01C1             bl 0x82754488
+  825B42CC  907F0000             stw r3,0x0(r31)
+  825B42D0  38210080             addi r1,r1,0x80
+  825B42D4  48362434             b 0x82916708
+LAB_825b42d8:
+  825B42D8  39600000             li r11,0x0
+  825B42DC  917F0000             stw r11,0x0(r31)
+  825B42E0  38210080             addi r1,r1,0x80
+  825B42E4  48362424             b 0x82916708

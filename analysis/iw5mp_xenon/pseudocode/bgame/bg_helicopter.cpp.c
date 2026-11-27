@@ -2,11 +2,83 @@
 
 // 828459F8  BG_HeliCmdScale  (bgame/bg_helicopter.cpp:33)
 
-void BG_HeliCmdScale(void)
+void BG_HeliCmdScale(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  char cVar2;
+  uint uVar3;
+  float fVar4;
+  char cVar5;
+  char *pcVar6;
+  float *pfVar7;
+  int iVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
   __savegprlr_26();
+  cVar5 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821eee48,0x28,0,0xffffffff82000f98,0xffffffff821425c0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821eee48,0x29,0,0xffffffff82000f98,0xffffffff821a00d4);
+  }
+  pcVar6 = (char *)param_2;
+  dVar10 = 0.0;
+  pfVar7 = (float *)param_3;
+  *pfVar7 = (float)(longlong)*pcVar6 * 0.007874016;
+  pfVar7[1] = (float)(longlong)pcVar6[1] * 0.007874016;
+  pfVar7[2] = (float)(longlong)pcVar6[2] * 0.007874016;
+  pfVar7[3] = (float)(longlong)pcVar6[3] * 0.007874016;
+  cVar1 = *pcVar6;
+  if ((cVar1 != 0) || (pcVar6[1] != '\0')) {
+    cVar2 = pcVar6[1];
+    uVar3 = (int)cVar1 >> 0x1f;
+    iVar9 = ((int)cVar1 ^ uVar3) - uVar3;
+    iVar8 = ((int)cVar2 ^ (int)cVar2 >> 0x1f) - ((int)cVar2 >> 0x1f);
+    if (iVar9 < iVar8) {
+      iVar9 = iVar8;
+    }
+    if (iVar9 != 0) {
+      fVar4 = (float)(longlong)iVar9 /
+              SQRT((float)(longlong)((int)cVar2 * (int)cVar2 + (int)cVar1 * (int)cVar1));
+      *pfVar7 = *pfVar7 * fVar4;
+      pfVar7[1] = pfVar7[1] * fVar4;
+    }
+    if (ABS(pfVar7[1]) < 0.3) {
+      pfVar7[1] = 0.0;
+    }
+    if (cVar5 != '\0') {
+      dVar12 = ABS((double)*pfVar7);
+      dVar13 = ABS((double)pfVar7[1]);
+      dVar11 = 1.0;
+      if (1.0 < dVar12) {
+        MyAssertHandler(0xffffffff821eee48,0x46,0,0xffffffff82000f98,0xffffffff821a00c0);
+      }
+      if (dVar11 < dVar13) {
+        MyAssertHandler(0xffffffff821eee48,0x47,0,0xffffffff82000f98,0xffffffff821a00ac);
+      }
+      if (dVar12 <= dVar13) {
+        *pfVar7 = (float)(dVar11 - (double)(float)(dVar13 - dVar12)) * *pfVar7;
+      }
+      else {
+        pfVar7[1] = (float)(dVar11 - (double)(float)(dVar12 - dVar13)) * pfVar7[1];
+      }
+    }
+  }
+  if (ABS(pfVar7[2]) < 0.3) {
+    pfVar7[2] = (float)dVar10;
+  }
+  if (ABS(pfVar7[3]) < 0.3) {
+    pfVar7[3] = (float)dVar10;
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -75,16 +147,13 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   __savegprlr_20();
   piVar11 = (int *)__savefpr_20();
   if (piVar11 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x7a,0,0xffffffff82000f98,0xffffffff82004978);
   }
   if (*piVar11 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x7b,0,0xffffffff82000f98,0xffffffff8200cdf4);
   }
   iVar12 = BG_GetVehicleDef(piVar11);
   if (iVar12 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x7e,0,0xffffffff82000f98,0xffffffff8200d194);
   }
   iVar13 = 0;
@@ -188,34 +257,34 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
            (float)(dVar25 - dVar19) / *(float *)(param_2 + 0x24) +
            *(float *)((int)local_1c0 + iVar14);
     }
-    fVar5 = *(float *)((int)local_158 + iVar14);
-    fVar6 = *(float *)((int)local_1c0 + iVar14);
-    fVar3 = fVar5 + fVar6;
-    fVar7 = *(float *)((int)local_168 + iVar14);
-    fVar9 = -fVar7;
-    fVar4 = fVar7;
-    if (fVar5 - fVar7 < 0.0) {
-      fVar4 = fVar5;
+    fVar4 = *(float *)((int)local_158 + iVar14);
+    fVar5 = *(float *)((int)local_1c0 + iVar14);
+    fVar3 = fVar4 + fVar5;
+    fVar6 = *(float *)((int)local_168 + iVar14);
+    fVar9 = -fVar6;
+    fVar7 = fVar6;
+    if (fVar4 - fVar6 < 0.0) {
+      fVar7 = fVar4;
     }
-    fVar10 = fVar7;
-    if (fVar6 - fVar7 < 0.0) {
-      fVar10 = fVar6;
+    fVar10 = fVar6;
+    if (fVar5 - fVar6 < 0.0) {
+      fVar10 = fVar5;
     }
-    if (fVar3 - fVar7 < 0.0) {
-      fVar7 = fVar3;
+    if (fVar3 - fVar6 < 0.0) {
+      fVar6 = fVar3;
     }
     fVar8 = fVar9;
-    if (fVar9 - fVar5 < 0.0) {
-      fVar8 = fVar4;
+    if (fVar9 - fVar4 < 0.0) {
+      fVar8 = fVar7;
     }
     *(float *)((int)local_158 + iVar14) = fVar8;
-    fVar5 = fVar9;
-    if (fVar9 - fVar6 < 0.0) {
-      fVar5 = fVar10;
+    fVar4 = fVar9;
+    if (fVar9 - fVar5 < 0.0) {
+      fVar4 = fVar10;
     }
-    *(float *)((int)local_1c0 + iVar14) = fVar5;
+    *(float *)((int)local_1c0 + iVar14) = fVar4;
     if (fVar9 - fVar3 < 0.0) {
-      fVar9 = fVar7;
+      fVar9 = fVar6;
     }
     *(float *)(iVar14 + (int)param_5) = fVar9;
     iVar14 = iVar14 + 4;
@@ -237,7 +306,6 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   }
   param_5[2] = (float)dVar24;
   if ((double)*(float *)(iVar12 + 0x1a0) <= dVar31) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0xcf,0,0xffffffff82000f98,0xffffffff821eef38);
   }
   dVar19 = (double)(*(float *)(iVar12 + 0x1a4) / *(float *)(iVar12 + 0x1a0));
@@ -264,27 +332,25 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   iVar14 = 0;
   fVar6 = (float)(dVar20 - (double)*(float *)(iVar13 + 0x2c)) / *(float *)(param_2 + 0x24);
   param_6[1] = fVar6;
-  fVar5 = *(float *)(iVar12 + 0x1a4);
-  fVar7 = fVar5;
-  if (fVar6 - fVar5 < 0.0) {
-    fVar7 = fVar6;
+  fVar4 = *(float *)(iVar12 + 0x1a4);
+  fVar5 = fVar4;
+  if (fVar6 - fVar4 < 0.0) {
+    fVar5 = fVar6;
   }
-  fVar3 = -fVar5;
-  if (-fVar5 - fVar6 < 0.0) {
-    fVar3 = fVar7;
+  fVar3 = -fVar4;
+  if (-fVar4 - fVar6 < 0.0) {
+    fVar3 = fVar5;
   }
   param_6[1] = fVar3;
   do {
     if ((double)*(float *)((int)local_1a8 + iVar14) <= dVar31) {
       if ((double)*(float *)(iVar12 + 0x184) <= dVar31) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821eee48,0xe0,0,0xffffffff82000f98,0xffffffff821eeee8);
       }
       *(float *)((int)local_1a8 + iVar14) = (float)((double)*(float *)(iVar12 + 0x184) * dVar21);
     }
     if ((double)*(float *)((int)local_168 + iVar14) <= dVar31) {
       if ((double)*(float *)(iVar12 + 0x18c) <= dVar31) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821eee48,0xe5,0,0xffffffff82000f98,0xffffffff821eef10);
       }
       *(float *)((int)local_168 + iVar14) = (float)((double)*(float *)(iVar12 + 0x18c) * dVar21);
@@ -327,24 +393,27 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   dVar21 = (double)local_1c0[3];
   if ((dVar31 < (double)*(float *)(iVar13 + 0x4c)) &&
      (dVar31 < ABS((double)*(float *)(iVar13 + 0x2c)))) {
+    dVar22 = dVar30;
     if ((double)local_1a8[0] <= dVar31) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821eee48,0x101,0,0xffffffff82000f98,0xffffffff821a0230);
+      dVar21 = (double)local_1c0[3];
+      dVar22 = dVar30;
     }
     dVar25 = (double)(float)(dVar25 * (double)*(float *)(iVar13 + 0x4c));
-    dVar22 = dVar30;
+    dVar30 = dVar22;
     if (dVar25 < (double)*(float *)(iVar12 + 0x1b8)) {
       if ((double)*(float *)(iVar12 + 0x1b8) <= dVar31) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821eee48,0x105,1,0xffffffff82000f98,0xffffffff821eeeb0);
+        dVar21 = (double)local_1c0[3];
+        dVar30 = dVar22;
       }
       dVar22 = (double)(float)(dVar25 / (double)*(float *)(iVar12 + 0x1b8));
     }
     if ((double)*(float *)(iVar12 + 0x1a0) <= dVar31) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821eee48,0x10b,0,0xffffffff82000f98,0xffffffff821eef38);
+      dVar21 = (double)local_1c0[3];
     }
-    dVar21 = (double)(float)((double)((-1.0 / *(float *)(iVar12 + 0x1a0)) *
+    dVar21 = (double)(float)((double)((float)(dVar27 / (double)*(float *)(iVar12 + 0x1a0)) *
                                       *(float *)(iVar13 + 0x2c) * *(float *)(iVar12 + 0x1bc)) *
                              dVar22 + dVar21);
   }
@@ -354,33 +423,33 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
     dVar22 = dVar21;
   }
   dVar25 = dVar27;
-  if ((float)(-1.0 - dVar21) < 0.0) {
+  if ((float)(dVar27 - dVar21) < 0.0) {
     dVar25 = dVar22;
   }
   local_1c0[3] = (float)dVar25;
   MatrixTransformVector(local_1c0 + 2,auStack_100,local_198);
+  dVar22 = (double)(local_198[0] - *(float *)(iVar13 + 0x58));
+  dVar21 = (double)(local_198[1] - *(float *)(iVar13 + 0x5c));
   if ((double)*(float *)(iVar12 + 0x1c0) == dVar31) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x117,0,0xffffffff82000f98,0xffffffff821eee8c);
   }
-  dVar21 = (double)(float)(dVar30 / (double)*(float *)(iVar12 + 0x1c0));
-  fVar7 = *(float *)(iVar13 + 0x60);
+  dVar28 = (double)(float)(dVar30 / (double)*(float *)(iVar12 + 0x1c0));
+  fVar5 = *(float *)(iVar13 + 0x60);
   lVar16 = param_3 + 0x60;
-  fVar3 = *(float *)(iVar13 + 100);
-  fVar4 = *(float *)(param_2 + 0x24);
+  fVar6 = *(float *)(iVar13 + 100);
+  fVar3 = *(float *)(param_2 + 0x24);
   lVar17 = 2;
-  fVar5 = (float)((double)*(float *)(iVar12 + 0x1c4) * dVar21);
-  fVar6 = (float)(dVar21 * dVar27);
-  fVar9 = fVar4 * (fVar7 * fVar6 + (local_198[0] - *(float *)(iVar13 + 0x58)) * fVar5) + fVar7;
-  *(float *)(iVar13 + 0x60) = fVar9;
-  fVar6 = (fVar3 * fVar6 + (local_198[1] - *(float *)(iVar13 + 0x5c)) * fVar5) * fVar4 +
-          *(float *)(iVar13 + 100);
-  *(float *)(iVar13 + 100) = fVar6;
-  fVar5 = *(float *)(param_2 + 0x24);
+  dVar25 = (double)(float)((double)*(float *)(iVar12 + 0x1c4) * dVar28);
+  fVar4 = (float)(dVar28 * dVar27);
+  fVar7 = fVar3 * (fVar5 * fVar4 + (float)(dVar22 * dVar25)) + fVar5;
+  *(float *)(iVar13 + 0x60) = fVar7;
+  fVar3 = (fVar6 * fVar4 + (float)(dVar21 * dVar25)) * fVar3 + *(float *)(iVar13 + 100);
+  *(float *)(iVar13 + 100) = fVar3;
+  fVar4 = *(float *)(param_2 + 0x24);
   pfVar15 = (float *)(param_3 + 0x58);
-  *pfVar15 = fVar5 * (float)((double)(fVar7 + fVar9) * dVar24) + *pfVar15;
+  *pfVar15 = fVar4 * (float)((double)(fVar5 + fVar7) * dVar24) + *pfVar15;
   *(float *)(iVar13 + 0x5c) =
-       (float)((double)(fVar3 + fVar6) * dVar24) * fVar5 + *(float *)(iVar13 + 0x5c);
+       (float)((double)(fVar6 + fVar3) * dVar24) * fVar4 + *(float *)(iVar13 + 0x5c);
   do {
     pfVar15 = (float *)lVar16;
     if ((double)pfVar15[-2] <= dVar30) {
@@ -404,19 +473,17 @@ LAB_82846550:
       if (((((uint)local_1c0[0] & 0x7f800000) == 0x7f800000) ||
           (local_1c0[0] = param_5[1], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) ||
          (local_1c0[0] = param_5[2], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821eee48,0x143,0,0xffffffff82000f98,0xffffffff821a0140);
       }
       local_1c0[0] = *param_6;
-      if (((((uint)local_1c0[0] & 0x7f800000) != 0x7f800000) &&
-          (local_1c0[0] = param_6[1], ((uint)local_1c0[0] & 0x7f800000) != 0x7f800000)) &&
-         (local_1c0[0] = param_6[2], ((uint)local_1c0[0] & 0x7f800000) != 0x7f800000)) {
-        __restfpr_20();
-        __restgprlr_20();
-        return;
+      if (((((uint)local_1c0[0] & 0x7f800000) == 0x7f800000) ||
+          (local_1c0[0] = param_6[1], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) ||
+         (local_1c0[0] = param_6[2], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff821eee48,0x144,0,0xffffffff82000f98,0xffffffff821a00f0);
       }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821eee48,0x144,0,0xffffffff82000f98,0xffffffff821a00f0);
+      __restfpr_20();
+      __restgprlr_20();
+      return;
     }
   } while( true );
 }
@@ -487,11 +554,9 @@ void BG_VehicleHelicopterMove(undefined8 param_1,undefined8 param_2)
   piVar4 = (int *)__savegprlr_25();
   local_1c0 = (float)((uint)local_1c0 & 0xffffff00);
   if (piVar4 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x15d,0,0xffffffff82000f98,0xffffffff82004978);
   }
   if (*piVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821eee48,0x15e,0,0xffffffff82000f98,0xffffffff8200cdf4);
   }
   iVar2 = *piVar4;
@@ -552,55 +617,52 @@ void BG_VehicleHelicopterMove(undefined8 param_1,undefined8 param_2)
   local_180 = local_1b8._0_4_;
   local_178 = local_1b0;
   local_17c = (float)(dVar6 - (double)(float)dVar5) * 360.0;
-  if ((((uint)local_1b8._0_4_ & 0x7f800000) != 0x7f800000) &&
-     (local_1c0 = local_17c, ((uint)local_17c & 0x7f800000) != 0x7f800000)) {
-    local_1c0 = local_1b0;
-    if (((uint)local_1b0 & 0x7f800000) != 0x7f800000) {
-      local_1a8 = (float)dVar8;
-      local_1a0 = (float)dVar8;
-      local_1a4 = local_17c;
-      AngleVectors(&local_1a8,auStack_100,auStack_f4,auStack_e8);
-      local_dc = (float)dVar8;
-      local_d8 = (float)dVar8;
-      local_d4 = (float)dVar8;
-      MatrixTransformVector(auStack_d0,auStack_100,&local_1b8);
-      fVar1 = *(float *)(iVar3 + 0x24);
-      local_174 = local_1b8._0_4_ * fVar1 + local_174;
-      local_170 = local_1b8._4_4_ * fVar1 + local_170;
-      local_16c = local_1b0 * fVar1 + local_16c;
-      if (((local_174 != 0.0) || (local_170 != 0.0)) || (local_16c != 0.0)) {
-        local_6c = 0;
-        BG_VehicleGroundTrace(piVar4,&local_190,auStack_b0);
-        local_10c = local_ac;
-        local_108 = local_a8;
-        local_104 = local_a4;
-        BG_VehicleSlideMove((double)*(float *)(iVar3 + 0x24),piVar4,&local_190,auStack_b0,0);
-      }
-      iVar3 = *piVar4;
-      *(undefined4 *)(iVar3 + 0xb4) = local_18c;
-      *(undefined4 *)(iVar3 + 0xb8) = local_188;
-      *(undefined4 *)(iVar3 + 0xbc) = local_184;
-      iVar3 = *piVar4;
-      *(float *)(iVar3 + 0xc0) = local_180;
-      *(float *)(iVar3 + 0xc4) = local_17c;
-      *(float *)(iVar3 + 200) = local_178;
-      iVar3 = *piVar4;
-      *(float *)(iVar3 + 0xcc) = local_174;
-      *(float *)(iVar3 + 0xd0) = local_170;
-      *(float *)(iVar3 + 0xd4) = local_16c;
-      iVar3 = *piVar4;
-      *(undefined4 *)(iVar3 + 0xd8) = local_168;
-      *(float *)(iVar3 + 0xdc) = local_164;
-      *(undefined4 *)(iVar3 + 0xe0) = local_160;
-      *(undefined4 *)(iVar2 + 0xe4) = local_138;
-      *(undefined4 *)(iVar2 + 0xe8) = local_134;
-      *(undefined4 *)(iVar2 + 0xec) = local_130;
-      *(undefined4 *)(iVar2 + 0xf0) = local_12c;
-      __restgprlr_25();
-      return;
-    }
+  if (((((uint)local_1b8._0_4_ & 0x7f800000) == 0x7f800000) ||
+      (local_1c0 = local_17c, ((uint)local_17c & 0x7f800000) == 0x7f800000)) ||
+     (local_1c0 = local_1b0, ((uint)local_1b0 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff821eee48,0x198,0,0xffffffff82000f98,0xffffffff821eef60);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821eee48,0x198,0,0xffffffff82000f98,0xffffffff821eef60);
+  local_1a8 = (float)dVar8;
+  local_1a0 = (float)dVar8;
+  local_1a4 = local_17c;
+  AngleVectors(&local_1a8,auStack_100,auStack_f4,auStack_e8);
+  local_dc = (float)dVar8;
+  local_d8 = (float)dVar8;
+  local_d4 = (float)dVar8;
+  MatrixTransformVector(auStack_d0,auStack_100,&local_1b8);
+  fVar1 = *(float *)(iVar3 + 0x24);
+  local_174 = local_1b8._0_4_ * fVar1 + local_174;
+  local_170 = local_1b8._4_4_ * fVar1 + local_170;
+  local_16c = local_1b0 * fVar1 + local_16c;
+  if (((local_174 != 0.0) || (local_170 != 0.0)) || (local_16c != 0.0)) {
+    local_6c = 0;
+    BG_VehicleGroundTrace(piVar4,&local_190,auStack_b0);
+    local_10c = local_ac;
+    local_108 = local_a8;
+    local_104 = local_a4;
+    BG_VehicleSlideMove((double)*(float *)(iVar3 + 0x24),piVar4,&local_190,auStack_b0,0);
+  }
+  iVar3 = *piVar4;
+  *(undefined4 *)(iVar3 + 0xb4) = local_18c;
+  *(undefined4 *)(iVar3 + 0xb8) = local_188;
+  *(undefined4 *)(iVar3 + 0xbc) = local_184;
+  iVar3 = *piVar4;
+  *(float *)(iVar3 + 0xc0) = local_180;
+  *(float *)(iVar3 + 0xc4) = local_17c;
+  *(float *)(iVar3 + 200) = local_178;
+  iVar3 = *piVar4;
+  *(float *)(iVar3 + 0xcc) = local_174;
+  *(float *)(iVar3 + 0xd0) = local_170;
+  *(float *)(iVar3 + 0xd4) = local_16c;
+  iVar3 = *piVar4;
+  *(undefined4 *)(iVar3 + 0xd8) = local_168;
+  *(float *)(iVar3 + 0xdc) = local_164;
+  *(undefined4 *)(iVar3 + 0xe0) = local_160;
+  *(undefined4 *)(iVar2 + 0xe4) = local_138;
+  *(undefined4 *)(iVar2 + 0xe8) = local_134;
+  *(undefined4 *)(iVar2 + 0xec) = local_130;
+  *(undefined4 *)(iVar2 + 0xf0) = local_12c;
+  __restgprlr_25();
+  return;
 }
 

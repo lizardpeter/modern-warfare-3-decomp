@@ -109,7 +109,6 @@ ulonglong G_SetEntityScriptVariableInternal(undefined8 param_1,undefined8 param_
     }
     else if (DAT_84013128 == 0) {
       uVar2 = va(0xffffffff8207d884);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207d840,0xc2,0,uVar2);
     }
   }
@@ -134,11 +133,95 @@ void G_SetEntityScriptVariable(undefined8 param_1,undefined8 param_2,undefined4 
 
 // 824AB2C8  G_ParseEntityField  (game_mp/g_spawn_mp.cpp:233)
 
-void G_ParseEntityField(void)
+void G_ParseEntityField(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  uint uVar3;
+  ulonglong uVar2;
+  char *_Src;
+  undefined2 uVar5;
+  int iVar4;
+  undefined4 *puVar6;
+  ushort *puVar7;
+  undefined **ppuVar8;
+  double dVar9;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38 [14];
+  
+  uVar1 = __savegprlr_28();
+  uVar3 = SL_FindString();
+  ppuVar8 = &PTR_DAT_8207d610;
+  puVar7 = &DAT_835a0dfa;
+  puVar6 = (undefined4 *)param_3;
+  do {
+    if (*puVar7 == uVar3) {
+      _Src = (char *)param_2;
+      switch(ppuVar8[3]) {
+      case (undefined *)0x0:
+        iVar4 = atoi(_Src);
+        *(int *)(ppuVar8[2] + (int)puVar6) = iVar4;
+        __restgprlr_28();
+        return;
+      case (undefined *)0x3:
+        dVar9 = atof(_Src);
+        *(float *)(ppuVar8[2] + (int)puVar6) = (float)dVar9;
+        __restgprlr_28();
+        return;
+      case (undefined *)0x5:
+        if (*(short *)(ppuVar8[2] + (int)puVar6) != 0) {
+          MyAssertHandler(0xffffffff8207d840,0x105,0,0xffffffff82000f98,0xffffffff8207dc2c);
+        }
+        Scr_SetString(ZEXT48(ppuVar8[2]) + param_3,0);
+        uVar5 = G_NewString(param_2);
+        *(undefined2 *)(ppuVar8[2] + (int)puVar6) = uVar5;
+        __restgprlr_28();
+        return;
+      case (undefined *)0x6:
+        local_40 = 0;
+        local_3c = 0;
+        local_38[0] = 0;
+        iVar4 = sscanf(_Src,"%f %f %f",&local_40,&local_3c,local_38);
+        *(undefined4 *)(ppuVar8[2] + (int)puVar6) = local_40;
+        *(undefined4 *)((int)puVar6 + (int)(ppuVar8[2] + 4)) = local_3c;
+        *(undefined4 *)((int)puVar6 + (int)(ppuVar8[2] + 8)) = local_38[0];
+        __restgprlr_28(iVar4);
+        return;
+      case (undefined *)0xb:
+        if (*_Src == '*') {
+          iVar4 = atoi(_Src + 1);
+          uVar3 = truncate_cast<unsigned_short>(iVar4);
+          puVar6[0x23] = uVar3 & 0xffff;
+          *(undefined1 *)((int)puVar6 + 0x101) = 4;
+          __restgprlr_28();
+          return;
+        }
+        if (*_Src != '?') {
+          G_SetModel(param_3,param_2);
+          __restgprlr_28();
+          return;
+        }
+        iVar4 = atoi(_Src + 1);
+        uVar3 = truncate_cast<unsigned_short>(iVar4);
+        puVar6[0x23] = uVar3 & 0xffff;
+        *(undefined1 *)((int)puVar6 + 0x101) = 3;
+        __restgprlr_28();
+        return;
+      }
+      goto switchD_824ab360_caseD_1;
+    }
+    ppuVar8 = ppuVar8 + 6;
+    puVar7 = (ushort *)*ppuVar8;
+  } while (puVar7 != (ushort *)0x0);
+  uVar1 = SL_GetCanonicalString(uVar1);
+  uVar2 = G_SetEntityScriptVariableInternal(uVar1,param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    Scr_SetDynamicEntityField(*puVar6,0,uVar2);
+  }
+switchD_824ab360_caseD_1:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -168,7 +251,6 @@ void G_ParseEntityFields(undefined8 param_1,ulonglong param_2)
   
   puVar4 = (undefined4 *)__savegprlr_15();
   if (DAT_83581038 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x141,0,0xffffffff82000f98,0xffffffff82073d24);
   }
   iVar10 = 0;
@@ -194,7 +276,6 @@ void G_ParseEntityFields(undefined8 param_1,ulonglong param_2)
             break;
           case (undefined *)0x5:
             if (*(short *)(ppuVar12[2] + (int)puVar4) != 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8207d840,0x105,0,0xffffffff82000f98,0xffffffff8207dc2c);
             }
             Scr_SetString(ppuVar12[2] + (int)puVar4,0);
@@ -215,7 +296,6 @@ void G_ParseEntityFields(undefined8 param_1,ulonglong param_2)
               uVar6 = atoi(_Src + 1);
               uVar5 = uVar6 & 0xffff;
               if (uVar6 != uVar5) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar6,uVar5);
               }
               puVar4[0x23] = uVar5;
@@ -248,16 +328,15 @@ switchD_824ab698_caseD_1:
   }
   G_SetOrigin(puVar4,puVar4 + 0x4e);
   G_SetAngle(puVar4,puVar4 + 0x51);
-  if (*(short *)((int)puVar4 + 0x172) == 0) {
-    if ((param_2 & 0xffffffff) != 0) {
-      uVar8 = G_NewString(param_2);
-      *(undefined2 *)((int)puVar4 + 0x172) = uVar8;
-    }
-    __restgprlr_15();
-    return;
+  if (*(short *)((int)puVar4 + 0x172) != 0) {
+    MyAssertHandler(0xffffffff8207d840,0x14e,0,0xffffffff82000f98,0xffffffff8207d9c8);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8207d840,0x14e,0,0xffffffff82000f98,0xffffffff8207d9c8);
+  if ((param_2 & 0xffffffff) != 0) {
+    uVar8 = G_NewString(param_2);
+    *(undefined2 *)((int)puVar4 + 0x172) = uVar8;
+  }
+  __restgprlr_15();
+  return;
 }
 
 
@@ -282,11 +361,9 @@ void G_SpawnStruct(void)
   
   __savegprlr_22();
   if (DAT_83581038 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x163,0,0xffffffff82000f98,0xffffffff82073d24);
   }
   if (DAT_8359a904 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x165,0,0xffffffff82000f98,0xffffffff8207d8b4);
   }
   Scr_AddExecThread(DAT_8359a904,0);
@@ -321,9 +398,8 @@ void G_SpawnStruct(void)
           }
         }
         else if (DAT_84013128 == 0) {
-          uVar1 = va(0xffffffff8207d884);
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff8207d840,0xc2,0,uVar1);
+          uVar2 = va(0xffffffff8207d884);
+          MyAssertHandler(0xffffffff8207d840,0xc2,0,uVar2);
         }
         Scr_SetStructField(uVar1,uVar3);
       }
@@ -336,13 +412,68 @@ void G_SpawnStruct(void)
 }
 
 
-// 824AA048  G_DuplicateScriptFields  (game_mp/g_spawn_mp.cpp:422)
+// 824A9F30  G_DuplicateEntityFieldsForSpawn  (game_mp/g_spawn_mp.cpp:378)
 
-void G_DuplicateScriptFields(void)
+void G_DuplicateEntityFieldsForSpawn(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int *piVar4;
+  
+  iVar3 = __savegprlr_28();
+  piVar4 = &DAT_8207d618;
+  do {
+    switch(piVar4[1]) {
+    case 0:
+      *(undefined4 *)(*piVar4 + iVar3) = *(undefined4 *)(*piVar4 + param_2);
+      break;
+    default:
+      Com_PrintError(1,0xffffffff8207d8cc);
+      break;
+    case 3:
+      *(undefined4 *)(*piVar4 + iVar3) = *(undefined4 *)(*piVar4 + param_2);
+      break;
+    case 5:
+      Scr_SetString(*piVar4 + iVar3,*(undefined2 *)(*piVar4 + param_2));
+      break;
+    case 6:
+      iVar1 = *piVar4;
+      *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar1 + param_2);
+      *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar1 + param_2 + 4);
+      *(undefined4 *)(iVar1 + iVar3 + 8) = *(undefined4 *)(iVar1 + param_2 + 8);
+      break;
+    case 7:
+      break;
+    case 0xb:
+      *(undefined2 *)(*piVar4 + iVar3) = *(undefined2 *)(*piVar4 + param_2);
+    }
+    piVar2 = piVar4 + 4;
+    piVar4 = piVar4 + 6;
+  } while (*piVar2 != 0);
+  __restgprlr_28();
+  return;
+}
+
+
+// 824AA048  G_DuplicateScriptFields  (game_mp/g_spawn_mp.cpp:422)
+
+void G_DuplicateScriptFields(undefined8 param_1,int *param_2)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_26();
+  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+    MyAssertHandler(0xffffffff8207d840,0x1a7,0,0xffffffff82000f98,0xffffffff8207d92c);
+  }
+  if (*param_2 != (int)(param_2 + 0x1f323260) / 0x280) {
+    MyAssertHandler(0xffffffff8207d840,0x1a8,0,0xffffffff82000f98,0xffffffff8207d904);
+  }
+  Scr_CopyEntityNum(*param_2,*piVar1,0);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -367,11 +498,30 @@ undefined8 G_GetItemForClassname(longlong param_1)
 
 // 824AA150  G_FindSpawnFunc  (game_mp/g_spawn_mp.cpp:448)
 
-void G_FindSpawnFunc(void)
+void G_FindSpawnFunc(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  uint uVar4;
+  
+  uVar1 = __savegprlr_27();
+  uVar4 = 0;
+  lVar3 = param_2;
+  if (0 < param_3) {
+    do {
+      iVar2 = IsParentClassname(uVar1,*(undefined4 *)lVar3);
+      if (iVar2 != 0) {
+        __restgprlr_27(((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2);
+        return;
+      }
+      uVar4 = uVar4 + 1;
+      lVar3 = lVar3 + 8;
+    } while ((int)uVar4 < param_3);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -380,8 +530,88 @@ void G_FindSpawnFunc(void)
 void G_CallSpawn(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined *puVar6;
+  undefined **ppuVar7;
+  undefined **ppuVar8;
+  int local_30 [12];
+  
   __savegprlr_28();
+  if (DAT_83581038 == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x1de,1,0xffffffff82000f98,0xffffffff82073d24);
+  }
+  G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff8207d840,0x1e1,0,0xffffffff82000f98,0xffffffff8207dca0);
+  }
+  iVar3 = IsDynClassname(local_30[0]);
+  if ((iVar3 != 0) || (iVar3 = IsNodeClassname(local_30[0]), iVar3 != 0)) goto LAB_824aba48;
+  iVar3 = IsParentClassname(local_30[0],0xffffffff8207dc8c);
+  if (iVar3 != 0) {
+    VehPath_SpawnNode();
+    __restgprlr_28();
+    return;
+  }
+  iVar3 = IsActorClassname(local_30[0]);
+  if (iVar3 != 0) {
+    Com_PrintError(1,0xffffffff8207dc50,local_30[0]);
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = G_GetItemForClassname(local_30[0]);
+  iVar3 = local_30[0];
+  if ((uVar1 & 0xff) != 0) {
+    uVar2 = G_Spawn();
+    G_ParseEntityFields(uVar2,local_30[0]);
+    G_SpawnItem(uVar2,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = 0;
+  ppuVar8 = &PTR_s_trigger_use_touch_8207d778;
+  ppuVar7 = &PTR_s_info_notnull_8207d7f0;
+  do {
+    iVar4 = IsParentClassname(iVar3,*ppuVar7);
+    if (iVar4 != 0) {
+      ppuVar7 = &PTR_s_info_notnull_8207d7f0 + iVar5 * 2;
+      if (ppuVar7 != (undefined **)0x0) goto LAB_824ab9f8;
+      break;
+    }
+    ppuVar7 = ppuVar7 + 2;
+    iVar5 = iVar5 + 1;
+  } while ((int)ppuVar7 < -0x7df827e8);
+  iVar3 = 0;
+  while (iVar5 = IsParentClassname(local_30[0],*ppuVar8), iVar5 == 0) {
+    ppuVar8 = ppuVar8 + 2;
+    iVar3 = iVar3 + 1;
+    if (-0x7df82811 < (int)ppuVar8) goto code_r0x824ab9e0;
+  }
+  ppuVar7 = &PTR_s_trigger_use_touch_8207d778 + iVar3 * 2;
+  if (ppuVar7 == (undefined **)0x0) goto LAB_824aba0c;
+LAB_824ab9f8:
+  if ((code *)ppuVar7[1] == G_FreeEntity) goto LAB_824aba48;
+LAB_824aba0c:
+  uVar2 = G_Spawn();
+  if (ppuVar7 == (undefined **)0x0) {
+    puVar6 = (undefined *)0x0;
+  }
+  else {
+    puVar6 = *ppuVar7;
+  }
+  G_ParseEntityFields(uVar2,puVar6);
+  if (ppuVar7 != (undefined **)0x0) {
+    (*(code *)ppuVar7[1])(uVar2);
+  }
+LAB_824aba48:
+  __restgprlr_28();
+  return;
+code_r0x824ab9e0:
+  ppuVar7 = (undefined **)0x0;
+  goto LAB_824aba0c;
 }
 
 
@@ -400,11 +630,9 @@ void G_CallSpawnEntity(void)
   
   iVar2 = __savegprlr_25();
   if (DAT_83581038 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x223,1,0xffffffff82000f98,0xffffffff8207d9d8);
   }
   if (*(short *)(iVar2 + 0x172) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x224,0,0xffffffff82000f98,0xffffffff8207d9c8);
   }
   if (*(short *)(iVar2 + 0x174) == 0) {
@@ -434,16 +662,14 @@ void G_CallSpawnEntity(void)
         uVar5 = G_NewString((&PTR_s_info_notnull_8207d7f0)[iVar3 * 2]);
         *(undefined2 *)(iVar2 + 0x172) = uVar5;
         if ((code *)(&PTR_SP_info_notnull_8207d7f4)[iVar3 * 2] == G_FreeEntity) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8207d840,0x23f,0,0xffffffff82000f98,0xffffffff8207d958);
         }
         (*(code *)(&PTR_SP_info_notnull_8207d7f4)[iVar3 * 2])(iVar2);
-        if (*(char *)(iVar2 + 0x103) != '\0') {
-          __restgprlr_25(1);
-          return;
+        if (*(char *)(iVar2 + 0x103) == '\0') {
+          MyAssertHandler(0xffffffff8207d840,0x241,0,0xffffffff82000f98,0xffffffff8206caf8);
         }
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8207d840,0x241,0,0xffffffff82000f98,0xffffffff8206caf8);
+        __restgprlr_25(1);
+        return;
       }
       break;
     }
@@ -461,8 +687,29 @@ void G_CallSpawnEntity(void)
 void GScr_AddFieldsForEntity(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  undefined **ppuVar3;
+  
   __savegprlr_23();
+  ppuVar3 = &PTR_DAT_8207d610;
+  iVar2 = 0;
+  do {
+    uVar1 = iVar2 / 0x18;
+    if ((uVar1 & 0xe000) != 0) {
+      MyAssertHandler(0xffffffff8207d840,0x251,0,0xffffffff82000f98,0xffffffff82070830);
+    }
+    if (uVar1 != (uVar1 & 0xffff)) {
+      MyAssertHandler(0xffffffff8207d840,0x252,0,0xffffffff82000f98,0xffffffff8206c644);
+    }
+    Scr_AddClassField(0,*(undefined2 *)*ppuVar3,ppuVar3[1],uVar1 & 0xffff);
+    ppuVar3 = ppuVar3 + 6;
+    iVar2 = iVar2 + 0x18;
+  } while (*ppuVar3 != (undefined *)0x0);
+  GScr_AddFieldsForClient();
+  VehicleScript_AddFields();
+  __restgprlr_23();
+  return;
 }
 
 
@@ -478,11 +725,52 @@ void GScr_AddFieldsForRadiant(void)
 
 // 824ABD98  Scr_SetEntityField  (game_mp/g_spawn_mp.cpp:624)
 
-void Scr_SetEntityField(void)
+void Scr_SetEntityField(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  
+  uVar2 = __savegprlr_28();
+  if (0x7ff < uVar2) {
+    MyAssertHandler(0xffffffff8207d840,0x275,0,0xffffffff82000f98,0xffffffff8207dcc8);
+  }
+  puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+  if ((&DAT_83373783)[uVar2 * 0x280] == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x278,0,0xffffffff82073850,0xffffffff8207da00,*puVar3);
+  }
+  uVar1 = (uint)param_2;
+  if ((uVar1 & 0xe000) == 0x6000) {
+    if ((&DAT_833737d8)[uVar2 * 0xa0] != 0) {
+      Scr_SetClientField((&DAT_833737d8)[uVar2 * 0xa0],param_2 << 0x20 | param_2 & 0xffff1fff);
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  else {
+    if ((uVar1 & 0xe000) != 0x8000) {
+      if (0xd < (param_2 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8207d840,0x28f,0,0xffffffff82000f98,0xffffffff820707a8);
+      }
+      if ((code *)(&PTR_Scr_ReadOnlyField_8207d620)[uVar1 * 6] != (code *)0x0) {
+        (*(code *)(&PTR_Scr_ReadOnlyField_8207d620)[uVar1 * 6])(puVar3,param_2);
+        __restgprlr_28(1);
+        return;
+      }
+      Scr_SetGenericField(puVar3,(&DAT_8207d61c)[uVar1 * 6],(&DAT_8207d618)[uVar1 * 6]);
+      __restgprlr_28(1);
+      return;
+    }
+    if (*(int *)(&DAT_833737e0 + uVar2 * 0x280) != 0) {
+      VehicleScript_SetField
+                (*(int *)(&DAT_833737e0 + uVar2 * 0x280),param_2 << 0x20 | param_2 & 0xffff1fff);
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -555,8 +843,8 @@ undefined8 Scr_SetObjectField(ulonglong param_1,undefined8 param_2,undefined8 pa
     }
     if (DAT_84013128 == 0) {
       uVar1 = va(0xffffffff8207dd08,param_1);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207d840,0x2d8,0,uVar1);
+      return 1;
     }
   }
   return 1;
@@ -565,11 +853,113 @@ undefined8 Scr_SetObjectField(ulonglong param_1,undefined8 param_2,undefined8 pa
 
 // 824ABFD0  Scr_GetEntityField  (game_mp/g_spawn_mp.cpp:742)
 
-void Scr_GetEntityField(void)
+void Scr_GetEntityField(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  
+  uVar2 = __savegprlr_28();
+  if (0x7ff < uVar2) {
+    MyAssertHandler(0xffffffff8207d840,0x2eb,0,0xffffffff82000f98,0xffffffff8207dcc8);
+  }
+  puVar3 = &DAT_83373680 + uVar2 * 0xa0;
+  if ((&DAT_83373783)[uVar2 * 0x280] == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x2ee,0,0xffffffff82073850,0xffffffff8207da00,*puVar3);
+  }
+  uVar1 = (uint)param_2;
+  if ((uVar1 & 0xe000) == 0x6000) {
+    if ((&DAT_833737d8)[uVar2 * 0xa0] != 0) {
+      Scr_GetClientField((&DAT_833737d8)[uVar2 * 0xa0],param_2 << 0x20 | param_2 & 0xffff1fff);
+    }
+  }
+  else {
+    if ((uVar1 & 0xe000) != 0x8000) {
+      if (0xd < (param_2 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff8207d840,0x305,0,0xffffffff82000f98,0xffffffff820707a8);
+      }
+      if (*(code **)(&DAT_8207d624 + uVar1 * 0x18) != (code *)0x0) {
+        (**(code **)(&DAT_8207d624 + uVar1 * 0x18))(puVar3,param_2);
+        __restgprlr_28();
+        return;
+      }
+      Scr_GetGenericField(puVar3,(&DAT_8207d61c)[uVar1 * 6],(&DAT_8207d618)[uVar1 * 6]);
+      __restgprlr_28();
+      return;
+    }
+    if (*(int *)(&DAT_833737e0 + uVar2 * 0x280) != 0) {
+      VehicleScript_GetField
+                (*(int *)(&DAT_833737e0 + uVar2 * 0x280),param_2 << 0x20 | param_2 & 0xffff1fff);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 824ABB70  Scr_GetGenericField  (game_mp/g_spawn_mp.cpp:793)
+
+void Scr_GetGenericField(int param_1,undefined4 param_2,int param_3)
+
+{
+  int iVar1;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  
+  switch(param_2) {
+  case 0:
+    Scr_AddInt(*(undefined4 *)(param_1 + param_3));
+    return;
+  case 3:
+    Scr_AddFloat((double)*(float *)(param_1 + param_3));
+    return;
+  case 4:
+    Scr_AddString(param_1 + param_3);
+    return;
+  case 5:
+    if (*(short *)(param_1 + param_3) == 0) {
+      return;
+    }
+    goto LAB_824abd08;
+  case 6:
+    Scr_AddVector(param_1 + param_3);
+    return;
+  case 7:
+    if (*(int *)(param_1 + param_3) != 0) {
+      Scr_AddEntity();
+      return;
+    }
+    break;
+  case 8:
+    iVar1 = EntHandle__isDefined(param_1 + param_3);
+    if (iVar1 != 0) {
+      EntHandle__ent(param_1 + param_3);
+      Scr_AddEntity();
+      return;
+    }
+    break;
+  case 9:
+    local_1c = *(undefined4 *)(param_1 + param_3);
+    local_20 = 0;
+    local_18 = 0;
+    Scr_AddVector(&local_20);
+    return;
+  case 10:
+    if (*(short *)(param_1 + param_3) != 0) {
+      Scr_AddObject();
+      return;
+    }
+    break;
+  case 0xb:
+    G_ModelName(*(undefined2 *)(param_1 + param_3));
+LAB_824abd08:
+    Scr_AddConstString();
+  }
+  return;
 }
 
 
@@ -594,10 +984,33 @@ void Scr_GetObjectField(ulonglong param_1,undefined8 param_2,undefined8 param_3)
     }
     if (DAT_84013128 == 0) {
       uVar1 = va(0xffffffff8207dd08,param_1);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207d840,0x35b,0,uVar1);
+      return;
     }
   }
+  return;
+}
+
+
+// 824AA490  Scr_FreeEntity  (game_mp/g_spawn_mp.cpp:871)
+
+void Scr_FreeEntity(int *param_1)
+
+{
+  if (param_1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x368,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*param_1 != (int)(param_1 + 0x1f323260) / 0x280) {
+    MyAssertHandler(0xffffffff8207d840,0x369,0,0xffffffff8207da14);
+  }
+  if (*(char *)((int)param_1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x36a,0,0xffffffff82073850,0xffffffff8207da00,*param_1);
+  }
+  if (param_1[0x56] != 0) {
+    Scr_FreeClientFields();
+  }
+  Scr_FreeEntityFields(param_1);
+  Scr_FreeEntityNum(*param_1,0);
   return;
 }
 
@@ -608,15 +1021,12 @@ void Scr_AddEntity(int *param_1)
 
 {
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x37b,0,0xffffffff82000f98,0xffffffff82002614);
   }
   if (*param_1 != (int)(param_1 + 0x1f323260) / 0x280) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x37c,0,0xffffffff8207da14);
   }
   if (*(char *)((int)param_1 + 0x103) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207d840,0x37d,0,0xffffffff82073850,0xffffffff8207da00,*param_1);
   }
   Scr_AddEntityNum(*param_1,0);
@@ -641,7 +1051,6 @@ longlong Scr_GetEntityAllowNull(undefined8 param_1)
     if (uStack_1e == 0) {
       local_20 = (ushort)((uint)uVar2 >> 0x10);
       if (0x7ff < (ulonglong)local_20) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8207d840,0x394,0,0xffffffff82000f98,0xffffffff8206d38c);
       }
       return (ulonglong)local_20 * 0x280 + -0x7cc8c980;
@@ -662,16 +1071,15 @@ longlong Scr_GetEntity(undefined8 param_1)
   
   uVar1 = Scr_GetEntityRef();
   uStack_1e = (short)uVar1;
-  if (uStack_1e != 0) {
-    Scr_ParamError(param_1,0xffffffff8206d360);
-    return 0;
+  if (uStack_1e == 0) {
+    local_20 = (ushort)((uint)uVar1 >> 0x10);
+    if (0x7ff < (ulonglong)local_20) {
+      MyAssertHandler(0xffffffff8207d840,0x3a8,0,0xffffffff82000f98,0xffffffff8206d38c);
+    }
+    return (ulonglong)local_20 * 0x280 + -0x7cc8c980;
   }
-  local_20 = (ushort)((uint)uVar1 >> 0x10);
-  if (0x7ff < (ulonglong)local_20) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8207d840,0x3a8,0,0xffffffff82000f98,0xffffffff8206d38c);
-  }
-  return (ulonglong)local_20 * 0x280 + -0x7cc8c980;
+  Scr_ParamError(param_1,0xffffffff8206d360);
+  return 0;
 }
 
 
@@ -680,8 +1088,25 @@ longlong Scr_GetEntity(undefined8 param_1)
 void Scr_FreeHudElem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x3b9,0,0xffffffff82000f98,0xffffffff8207045c);
+  }
+  uVar1 = (int)(piVar2 + 0x1f32e6c4) / 0xb4;
+  if (0x3ff < uVar1) {
+    MyAssertHandler(0xffffffff8207d840,0x3ba,0,0xffffffff8207da60,uVar1,0x400);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff8207d840,0x3bb,0,0xffffffff82000f98,0xffffffff8207da40);
+  }
+  Scr_NotifyNum(uVar1,1,DAT_835a0bae,0);
+  Scr_FreeHudElemConstStrings(piVar2);
+  Scr_FreeEntityNum(uVar1,1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -690,8 +1115,23 @@ void Scr_FreeHudElem(void)
 void Scr_AddHudElem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x3ce,0,0xffffffff82000f98,0xffffffff8207045c);
+  }
+  uVar1 = (int)(piVar2 + 0x1f32e6c4) / 0xb4;
+  if (0x3ff < uVar1) {
+    MyAssertHandler(0xffffffff8207d840,0x3cf,0,0xffffffff8207da60,uVar1,0x400);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff8207d840,0x3d0,0,0xffffffff82000f98,0xffffffff8207da40);
+  }
+  Scr_AddEntityNum(uVar1,1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -706,46 +1146,87 @@ longlong Scr_GetHudElem(undefined8 param_1)
   
   uVar1 = Scr_GetEntityRef();
   uStack_1e = (short)uVar1;
-  if (uStack_1e != 1) {
-    Scr_ParamError(param_1,0xffffffff8207daa8);
-    return 0;
+  if (uStack_1e == 1) {
+    local_20 = (ushort)((uint)uVar1 >> 0x10);
+    if (0x3ff < (ulonglong)local_20) {
+      MyAssertHandler(0xffffffff8207d840,0x3e2,0,0xffffffff82000f98,0xffffffff8207dab8);
+    }
+    return (ulonglong)local_20 * 0xb4 + -0x7ccb9b10;
   }
-  local_20 = (ushort)((uint)uVar1 >> 0x10);
-  if (0x3ff < (ulonglong)local_20) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8207d840,0x3e2,0,0xffffffff82000f98,0xffffffff8207dab8);
-  }
-  return (ulonglong)local_20 * 0xb4 + -0x7ccb9b10;
+  Scr_ParamError(param_1,0xffffffff8207daa8);
+  return 0;
 }
 
 
 // 824AAA00  Scr_ExecEntThread  (game_mp/g_spawn_mp.cpp:1008)
 
-void Scr_ExecEntThread(void)
+void Scr_ExecEntThread(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x3f1,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+    MyAssertHandler(0xffffffff8207d840,0x3f2,0,0xffffffff8207da14);
+  }
+  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x3f3,0,0xffffffff82073850,0xffffffff8207da00,*piVar1);
+  }
+  Scr_ExecEntThreadNum(*piVar1,0,param_2,param_3);
+  __restgprlr_28();
+  return;
 }
 
 
 // 824AAAD0  Scr_AddExecEntThread  (game_mp/g_spawn_mp.cpp:1023)
 
-void Scr_AddExecEntThread(void)
+void Scr_AddExecEntThread(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x400,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+    MyAssertHandler(0xffffffff8207d840,0x401,0,0xffffffff8207da14);
+  }
+  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x402,0,0xffffffff82073850,0xffffffff8207da00,*piVar1);
+  }
+  Scr_AddExecEntThreadNum(*piVar1,0,param_2,param_3);
+  __restgprlr_28();
+  return;
 }
 
 
 // 824AABA0  Scr_Notify  (game_mp/g_spawn_mp.cpp:1038)
 
-void Scr_Notify(void)
+void Scr_Notify(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8207d840,0x40f,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*piVar2 != (int)(piVar2 + 0x1f323260) / 0x280) {
+    uVar1 = SL_ConvertToString(param_2 & 0xffff);
+    uVar1 = va(0xffffffff8207db00,*piVar2,(int)(piVar2 + 0x1f323260) / 0x280,uVar1);
+    MyAssertHandler(0xffffffff8207d840,0x410,0,0xffffffff820011f4,0xffffffff8207dadc,uVar1);
+  }
+  if (*(char *)((int)piVar2 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8207d840,0x411,0,0xffffffff82073850,0xffffffff8207da00,*piVar2);
+  }
+  Scr_NotifyNum(*piVar2,0,param_2 & 0xffff,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -754,8 +1235,48 @@ void Scr_Notify(void)
 void Scr_GetEnt(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  short sVar5;
+  undefined8 uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  int iVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  
   __savegprlr_26();
+  sVar5 = Scr_GetConstString(0);
+  uVar2 = Scr_GetString(1);
+  iVar3 = Scr_GetOffset(0,uVar2);
+  if (-1 < iVar3) {
+    if (0xd < iVar3) {
+      MyAssertHandler(0xffffffff8207d840,0x42f,0,0xffffffff82000f98,0xffffffff8207db58);
+    }
+    if ((&DAT_8207d61c)[iVar3 * 6] == 5) {
+      puVar8 = &DAT_83373680;
+      puVar4 = (undefined4 *)0x0;
+      iVar7 = 0;
+      iVar6 = DAT_83580b08;
+      if (0 < DAT_83580b08) {
+        do {
+          if ((((*(char *)((int)puVar8 + 0x103) != '\0') &&
+               (*(short *)((&DAT_8207d618)[iVar3 * 6] + (int)puVar8) != 0)) &&
+              (*(short *)((&DAT_8207d618)[iVar3 * 6] + (int)puVar8) == sVar5)) &&
+             (bVar1 = puVar4 != (undefined4 *)0x0, puVar4 = puVar8, bVar1)) {
+            Scr_Error(0xffffffff8207db2c);
+            iVar6 = DAT_83580b08;
+          }
+          iVar7 = iVar7 + 1;
+          puVar8 = puVar8 + 0xa0;
+        } while (iVar7 < iVar6);
+        if (puVar4 != (undefined4 *)0x0) {
+          Scr_AddEntity();
+        }
+      }
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -764,8 +1285,65 @@ void Scr_GetEnt(void)
 void Scr_GetEntArray(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  short sVar3;
+  undefined8 uVar1;
+  int iVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  
   __savegprlr_27();
+  iVar2 = Scr_GetNumParam();
+  if (iVar2 == 0) {
+    Scr_MakeArray();
+    puVar6 = &DAT_83373680;
+    iVar4 = 0;
+    iVar2 = DAT_83580b08;
+    if (0 < DAT_83580b08) {
+      do {
+        if (*(char *)((int)puVar6 + 0x103) != '\0') {
+          Scr_AddEntity(puVar6);
+          Scr_AddArray();
+          iVar2 = DAT_83580b08;
+        }
+        iVar4 = iVar4 + 1;
+        puVar6 = puVar6 + 0xa0;
+      } while (iVar4 < iVar2);
+      __restgprlr_27();
+      return;
+    }
+  }
+  else {
+    sVar3 = Scr_GetConstString(0);
+    uVar1 = Scr_GetString(1);
+    iVar2 = Scr_GetOffset(0,uVar1);
+    if (-1 < iVar2) {
+      if (0xd < iVar2) {
+        MyAssertHandler(0xffffffff8207d840,0x470,0,0xffffffff82000f98,0xffffffff8207db58);
+      }
+      if ((&DAT_8207d61c)[iVar2 * 6] == 5) {
+        Scr_MakeArray();
+        puVar6 = &DAT_83373680;
+        iVar5 = 0;
+        iVar4 = DAT_83580b08;
+        if (0 < DAT_83580b08) {
+          do {
+            if (((*(char *)((int)puVar6 + 0x103) != '\0') &&
+                (*(short *)((&DAT_8207d618)[iVar2 * 6] + (int)puVar6) != 0)) &&
+               (*(short *)((&DAT_8207d618)[iVar2 * 6] + (int)puVar6) == sVar3)) {
+              Scr_AddEntity(puVar6);
+              Scr_AddArray();
+              iVar4 = DAT_83580b08;
+            }
+            iVar5 = iVar5 + 1;
+            puVar6 = puVar6 + 0xa0;
+          } while (iVar5 < iVar4);
+        }
+      }
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -784,8 +1362,66 @@ void GScr_SetDynamicEntityField(undefined4 *param_1,undefined8 param_2)
 void SP_worldspawn(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  undefined8 uVar1;
+  double dVar3;
+  double _X;
+  char *local_30 [12];
+  
   __savegprlr_29();
+  G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
+  iVar2 = I_stricmp(local_30[0],0xffffffff8207dc08);
+  if (iVar2 != 0) {
+    Com_Error(1,0xffffffff8207dbd4);
+  }
+  SV_SetConfigstring(2,0xffffffff8201dfe8);
+  G_SpawnString(0xffffffff83581038,0x30a,0xffffffff820068af,local_30);
+  if (*local_30[0] == '\0') {
+    uVar1 = 0xffffffff820068af;
+  }
+  else {
+    uVar1 = va(0xffffffff82079048,local_30[0],0,1000,1);
+  }
+  SV_SetConfigstring(0x3d6,uVar1);
+  SV_SetConfigstring(0x3d7,0xffffffff820068af);
+  G_SpawnString(0xffffffff83581038,0x30b,0xffffffff820068af,local_30);
+  if (*local_30[0] == '\0') {
+    uVar1 = 0xffffffff820068af;
+  }
+  else {
+    uVar1 = va(0xffffffff82079048,local_30[0],0,1000,1);
+  }
+  SV_SetConfigstring(0x3d8,uVar1);
+  G_SpawnString(0xffffffff83581038,0x30c,0xffffffff820068af,local_30);
+  SV_SetConfigstring(4,local_30[0]);
+  SV_SetConfigstring(0xe,*(undefined4 *)(DAT_8353ff88 + 0xc));
+  G_SpawnString(0xffffffff83581038,0x30d,0xffffffff820068af,local_30);
+  if (*local_30[0] == '\0') {
+    SV_SetConfigstring(0x3f9,0xffffffff8203248c);
+    DAT_83583360 = 1.0;
+    DAT_83583364 = 0.0;
+  }
+  else {
+    SV_SetConfigstring(0x3f9);
+    dVar3 = atof(local_30[0]);
+    _X = (double)((float)dVar3 * 0.017453292);
+    dVar3 = sin(_X);
+    DAT_83583364 = (float)dVar3;
+    dVar3 = cos(_X);
+    DAT_83583360 = (float)dVar3;
+  }
+  G_SpawnString(0xffffffff83581038,0x2c7,0xffffffff8203248c,local_30);
+  DAT_834b3300 = atoi(local_30[0]);
+  DAT_834b3180 = 0x7fe;
+  Scr_SetString(0xffffffff834b32f2,DAT_835a0ca6);
+  Scr_SetString(0xffffffff834b32f4,DAT_835a0ca6);
+  DAT_834b3283 = 1;
+  iVar2 = EntHandle__isDefined(0xffffffff834b32d0);
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff8207d840,0x4d8,0,0xffffffff82000f98,0xffffffff8207dba0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -807,6 +1443,35 @@ void G_SpawnEntitiesFromString(void)
     iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
   }
   G_ResetEntityParsePoint();
+  return;
+}
+
+
+// 824AB1B8  G_LoadStructs  (game_mp/g_spawn_mp.cpp:1276)
+
+void G_LoadStructs(void)
+
+{
+  int iVar1;
+  undefined4 local_30 [12];
+  
+  __savegprlr_29();
+  if (DAT_8359a900 == 0) {
+    MyAssertHandler(0xffffffff8207d840,0x500,0,0xffffffff82000f98,0xffffffff8207dc14);
+  }
+  Scr_ExecThread(DAT_8359a900,0);
+  Scr_FreeThread();
+  iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+  while (iVar1 != 0) {
+    G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
+    iVar1 = IsParentClassname(local_30[0],0xffffffff8207d54c);
+    if (iVar1 != 0) {
+      G_SpawnStruct();
+    }
+    iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+  }
+  G_ResetEntityParsePoint();
+  __restgprlr_29();
   return;
 }
 

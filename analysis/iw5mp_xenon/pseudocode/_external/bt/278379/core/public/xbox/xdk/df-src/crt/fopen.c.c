@@ -5,8 +5,43 @@
 FILE * _fsopen(char *_Filename,char *_Mode,int _ShFlag)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(_Filename,_Mode,_ShFlag);
+  char *_Filename_00;
+  int *piVar1;
+  FILE *pFVar2;
+  longlong lVar3;
+  
+  lVar3 = (longlong)(int)_Mode;
+  _Filename_00 = (char *)__savegprlr_26(_Filename);
+  if (_Filename_00 != (char *)0x0) {
+    if (lVar3 != lVar3 + -1 + (ulonglong)(lVar3 == 0)) {
+      if (*(char *)lVar3 != '\0') {
+        pFVar2 = _getstream();
+        if (pFVar2 == (FILE *)0x0) {
+          piVar1 = _errno();
+          pFVar2 = (FILE *)0x0;
+          *piVar1 = 0x18;
+        }
+        else if (*_Filename_00 == '\0') {
+          piVar1 = _errno();
+          *piVar1 = 0x16;
+          __jump_unwind(&stack0x00000000,0xffffffff82919ca0);
+          pFVar2 = (FILE *)0x0;
+        }
+        else {
+          pFVar2 = _openfile(_Filename_00,(char *)lVar3,_ShFlag,pFVar2);
+          FUN_82919ccc();
+        }
+        goto LAB_82919ca4;
+      }
+    }
+  }
+  piVar1 = _errno();
+  *piVar1 = 0x16;
+  _invalid_parameter_noinfo();
+  pFVar2 = (FILE *)0x0;
+LAB_82919ca4:
+  pFVar2 = (FILE *)__restgprlr_26(pFVar2);
+  return pFVar2;
 }
 
 

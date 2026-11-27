@@ -2,251 +2,1711 @@
 
 // 826EEDA0  dwFetchPublisherFile  (DW/dwStorage.cpp:21)
 
-void dwFetchPublisherFile(void)
+void dwFetchPublisherFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  int *piVar3;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x16,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x17,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar3 = (int *)param_2;
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x18,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  if (piVar3[0x36] == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x19,0,0xffffffff82000f98,0xffffffff821acf10);
+  }
+  uVar1 = dwGetStorage(*(undefined1 *)(iVar2 + 0x95));
+  if ((uVar1 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_28(0);
+    return;
+  }
+  piVar3[4] = 0;
+  piVar3[0x33] = piVar3[0x36];
+  piVar3[0x34] = piVar3[0x35];
+  bdStorage__getPublisherFile(local_80,uVar1,*piVar3,param_2 + 200);
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826EEF80  dwFetchUserFile  (DW/dwStorage.cpp:51)
 
-void dwFetchUserFile(void)
+void dwFetchUserFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  char cVar3;
+  int *piVar4;
+  int local_80 [2];
+  undefined1 auStack_78 [8];
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x34,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x35,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x36,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  if (piVar4[0x36] == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x37,0,0xffffffff82000f98,0xffffffff821acf10);
+  }
+  uVar1 = dwGetStorage(*(undefined1 *)(iVar2 + 0x95));
+  if ((uVar1 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_28(0);
+    return;
+  }
+  cVar3 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_78);
+  if (cVar3 == '\0') {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_28(0);
+    return;
+  }
+  piVar4[2] = 0;
+  piVar4[3] = 0;
+  piVar4[4] = 0;
+  piVar4[0x33] = piVar4[0x36];
+  piVar4[0x34] = piVar4[0x35];
+  bdStorage__getFile(local_80,uVar1,*piVar4,param_2 + 200,0);
+  if (local_80[0] == 0) {
+    dwStorageHandleTaskError(iVar2,5);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826EF198  dwFetchFileComplete  (DW/dwStorage.cpp:89)
 
-void dwFetchFileComplete(void)
+void dwFetchFileComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar6;
+  int iVar7;
+  undefined1 auStack_70 [112];
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x5a,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x5b,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  if (*(int *)(iVar4 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acf3c);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar4 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_27(2);
+    return;
+  }
+  iVar5 = dwGetStorage(*(undefined1 *)(iVar4 + 0x95));
+  if (iVar5 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar4 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_27(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar4 + 0x95));
+  uVar2 = (**(code **)(**(int **)(iVar4 + 8) + 4))();
+  uVar3 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar4 + 8));
+  bVar1 = false;
+  iVar5 = (int)param_2;
+  iVar6 = (int)uVar3;
+  *(int *)(iVar5 + 4) = iVar6;
+  if (((int)uVar2 == 2) &&
+     (iVar7 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar4 + 8)), iVar7 == 1)) {
+    bVar1 = true;
+    *(undefined4 *)(iVar5 + 0x10) = *(undefined4 *)(iVar5 + 0xd0);
+  }
+  if ((iVar6 != 0) && (iVar6 != 1000)) {
+    dwStorageHandleTaskError(iVar4,uVar3);
+    __restgprlr_27();
+    return;
+  }
+  uVar3 = dwTaskStatusConvert(uVar2,uVar3);
+  if (((int)uVar2 == 2) && (!bVar1)) {
+    uVar3 = 2;
+  }
+  __restgprlr_27(uVar3);
+  return;
+}
+
+
+// 826EF390  dwCreateFile  (DW/dwStorage.cpp:136)
+
+void dwCreateFile(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [128];
+  
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x89,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x8a,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x8b,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  if (piVar4[0x36] == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x8c,0,0xffffffff82000f98,0xffffffff821acf10);
+  }
+  uVar2 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_80,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_80);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_26(0);
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821acf64,*piVar4);
+  piVar4 = (int *)bdStorage__uploadFile(auStack_90,uVar2,*piVar4,param_3,param_4,1,0,param_2 + 0x18)
+  ;
+  iVar1 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_90);
+  if (iVar1 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_80,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_80);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_26(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 826EF580  dwCreateFileComplete  (DW/dwStorage.cpp:167)
 
-void dwCreateFileComplete(void)
+void dwCreateFileComplete(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined1 auStack_60 [96];
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xa8,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acf84);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_60,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),4,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(2);
+    return;
+  }
+  iVar3 = dwGetStorage(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_60,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar2 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 4))();
+  iVar3 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar2 + 8));
+  *(int *)(param_2 + 4) = iVar3;
+  if ((int)uVar1 == 2) {
+    *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_2 + 0x20);
+    *(undefined4 *)(param_2 + 0x10) = *(undefined4 *)(param_2 + 0xc0);
+  }
+  if (iVar3 != 0) {
+    dwStorageHandleTaskError(iVar2);
+    __restgprlr_29();
+    return;
+  }
+  dwTaskStatusConvert(uVar1,0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 826EF718  dwUpdateFile  (DW/dwStorage.cpp:206)
+
+void dwUpdateFile(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 *puVar5;
+  undefined1 auStack_90 [4];
+  undefined1 auStack_8c [12];
+  undefined1 auStack_80 [128];
+  
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xcf,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xd0,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xd1,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  if (piVar4[0x36] == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xd2,0,0xffffffff82000f98,0xffffffff821acf10);
+  }
+  uVar2 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_80,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_80);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_26(0);
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821acfac,*(undefined8 *)(piVar4 + 2),*piVar4);
+  if (*(longlong *)(piVar4 + 2) == 0) {
+    piVar4 = (int *)bdStorage__uploadFile
+                              (auStack_8c,uVar2,*piVar4,param_3,param_4,1,0,param_2 + 0x18);
+    puVar5 = auStack_8c;
+  }
+  else {
+    piVar4 = (int *)bdStorage__updateFile(auStack_90);
+    puVar5 = auStack_90;
+  }
+  iVar1 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(puVar5);
+  if (iVar1 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_80,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_80);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_26(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 826EF928  dwUpdateFileComplete  (DW/dwStorage.cpp:247)
 
-void dwUpdateFileComplete(void)
+void dwUpdateFileComplete(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined1 auStack_60 [96];
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0xf8,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_60,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),4,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(2);
+    return;
+  }
+  iVar3 = dwGetStorage(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_60,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar2 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 4))();
+  iVar3 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar2 + 8));
+  *(int *)(param_2 + 4) = iVar3;
+  if (((int)uVar1 == 2) && (*(longlong *)(param_2 + 8) == 0)) {
+    *(undefined8 *)(param_2 + 8) = *(undefined8 *)(param_2 + 0x20);
+  }
+  if (iVar3 != 0) {
+    dwStorageHandleTaskError(iVar2);
+    __restgprlr_29();
+    return;
+  }
+  dwTaskStatusConvert(uVar1,0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 826EFAC0  dwFetchFileInfoPersonalStorage  (DW/dwStorage.cpp:286)
 
-void dwFetchFileInfoPersonalStorage(void)
+void dwFetchFileInfoPersonalStorage(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x11f,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x120,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x121,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  uVar2 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821acff8,*piVar4);
+  if (*piVar4 != 0) {
+    piVar4 = (int *)bdStorage__listFilesByOwner(auStack_80,uVar2,0,0,param_2 + 0x18,1,0);
+    iVar1 = *piVar4;
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_80);
+    if (iVar1 != 0) {
+      bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+  dwLobbyErrorCodeToString(5,auStack_70,0x40);
+  Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+  TaskManager_ClearTask(iVar3);
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 826EFC88  dwFetchFileInfo  (DW/dwStorage.cpp:318)
+
+void dwFetchFileInfo(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x13f,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x140,0,0xffffffff82000f98,0xffffffff8208a098);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x141,0,0xffffffff82000f98,0xffffffff821acf24);
+  }
+  uVar2 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821acff8,*piVar4);
+  if (*piVar4 != 0) {
+    piVar4 = (int *)bdStorage__listAllPublisherFiles(auStack_80,uVar2,0,param_2 + 0x18,1,0);
+    iVar1 = *piVar4;
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_80);
+    if (iVar1 != 0) {
+      bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+      __restgprlr_28(1);
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+  dwLobbyErrorCodeToString(5,auStack_70,0x40);
+  Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+  TaskManager_ClearTask(iVar3);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 826EFE48  dwFetchFileInfoComplete  (DW/dwStorage.cpp:350)
 
-void dwFetchFileInfoComplete(void)
+void dwFetchFileInfoComplete(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x15f,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821ad024);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_60,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_60);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_29(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_60,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_60);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_29(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)(param_2 + 4) = (int)uVar2;
+  if ((int)uVar2 != 0) {
+    dwStorageHandleTaskError(iVar3,uVar2);
+    __restgprlr_29();
+    return;
+  }
+  dwTaskStatusConvert(uVar1,0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 826EEB60  dwStorageHandleTaskError  (DW/dwStorage.cpp:384)
 
-void dwStorageHandleTaskError(void)
+void dwStorageHandleTaskError(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 auStack_70 [112];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x181,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+  dwLobbyErrorCodeToString(param_2,auStack_70,0x40);
+  if ((int)param_2 == 2) {
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar1 + 0x90),2,auStack_70);
+  }
+  else {
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar1 + 0x90),param_2);
+  }
+  TaskManager_ClearTask(iVar1);
+  if ((int)param_2 == 1) {
+    MyAssertHandler(0xffffffff821ace48,0x196,0,0xffffffff82000f98,0xffffffff821ac060);
+  }
+  __restgprlr_28(2);
+  return;
 }
 
 
 // 826EFFC8  dwDeleteFile  (DW/dwStorage.cpp:413)
 
-void dwDeleteFile(void)
+void dwDeleteFile(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  ulonglong uVar1;
+  char cVar3;
+  int local_70 [2];
+  undefined1 auStack_68 [8];
+  undefined1 auStack_60 [96];
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x19e,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  uVar1 = dwGetStorage(*(undefined1 *)(iVar2 + 0x95));
+  if ((uVar1 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_60,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(0);
+    return;
+  }
+  cVar3 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_68);
+  if (cVar3 == '\0') {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_60,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),5,auStack_60);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_29(0);
+    return;
+  }
+  bdStorage__removeFile(local_70,uVar1,param_2,0);
+  if (local_70[0] == 0) {
+    dwStorageHandleTaskError(iVar2,5);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_70);
+    __restgprlr_29(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,local_70);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_70);
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 826F0148  dwDeleteFileComplete  (DW/dwStorage.cpp:444)
+
+void dwDeleteFileComplete(void)
+
+{
+  bool bVar1;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined1 auStack_70 [112];
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x1bd,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar4 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acf3c);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar4 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar5 = dwGetStorage(*(undefined1 *)(iVar4 + 0x95));
+  if (iVar5 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar4 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar4 + 0x95));
+  uVar2 = (**(code **)(**(int **)(iVar4 + 8) + 4))();
+  uVar3 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar4 + 8));
+  bVar1 = false;
+  if (((int)uVar2 == 2) &&
+     (iVar5 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar4 + 8)), iVar5 == 1)) {
+    bVar1 = true;
+  }
+  if (((int)uVar3 != 0) && ((int)uVar3 != 1000)) {
+    dwStorageHandleTaskError(iVar4,uVar3);
+    __restgprlr_28();
+    return;
+  }
+  uVar3 = dwTaskStatusConvert(uVar2,uVar3);
+  if (((int)uVar2 == 2) && (!bVar1)) {
+    uVar3 = 2;
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 826F0300  dwCSGetListing  (DW/dwStorage.cpp:492)
 
-void dwCSGetListing(void)
+void dwCSGetListing(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x1ed,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x1ee,0,0xffffffff82000f98,0xffffffff821ad064);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x1f1,0,0xffffffff82000f98,0xffffffff821ad050);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined4 *)param_2;
+  bdContentStreaming__listFilesByOwner
+            (local_80,uVar2,*(undefined8 *)(puVar1 + 2),puVar1[4],*(undefined2 *)(puVar1 + 6),
+             *puVar1,*(undefined2 *)((int)puVar1 + 0x1a),*(undefined2 *)(puVar1 + 7));
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826F04A8  dwCSGetListingComplete  (DW/dwStorage.cpp:518)
 
-void dwCSGetListingComplete(void)
+void dwCSGetListingComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x207,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x208,0,0xffffffff82000f98,0xffffffff821ad064);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x24) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F0638  dwCSGetDescriptors  (DW/dwStorage.cpp:547)
 
-void dwCSGetDescriptors(void)
+void dwCSGetDescriptors(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  undefined8 *puVar3;
+  int iVar5;
+  ulonglong uVar4;
+  int *piVar6;
+  undefined8 *puVar7;
+  int iVar8;
+  uint uVar9;
+  int iVar10;
+  int local_120 [4];
+  undefined1 auStack_110 [56];
+  undefined8 uStack_d8;
+  undefined1 local_d0 [208];
+  
+  iVar5 = __savegprlr_28();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x224,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x225,0,0xffffffff82000f98,0xffffffff821ad084);
+  }
+  piVar6 = (int *)param_2;
+  if (*piVar6 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x226,0,0xffffffff82000f98,0xffffffff821ad06c);
+  }
+  uVar4 = dwGetContentStreaming(*(undefined1 *)(iVar5 + 0x95));
+  if ((uVar4 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_110,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar5 + 0x90),2,auStack_110);
+    TaskManager_ClearTask(iVar5);
+    __restgprlr_28(0);
+    return;
+  }
+  if (0x14 < (uint)piVar6[2]) {
+    piVar6[2] = 0x14;
+  }
+  uVar1 = piVar6[2];
+  uVar9 = 0;
+  if (uVar1 != 0) {
+    iVar2 = piVar6[1];
+    iVar10 = 0;
+    puVar7 = &uStack_d8;
+    iVar8 = iVar2;
+    do {
+      puVar3 = (undefined8 *)(iVar8 + 8);
+      uVar9 = uVar9 + 1;
+      iVar10 = iVar10 + 0x10;
+      iVar8 = iVar10 + iVar2;
+      puVar7 = puVar7 + 1;
+      *puVar7 = *puVar3;
+    } while (uVar9 < uVar1);
+  }
+  bdContentStreaming__getFileMetaDataByID(local_120,uVar4,uVar1,local_d0,*piVar6);
+  if (local_120[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_110,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar5 + 0x90),5,auStack_110);
+    TaskManager_ClearTask(iVar5);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_120);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar5 + 8,local_120);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_120);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826F0828  dwCSGetDescriptorsComplete  (DW/dwStorage.cpp:583)
 
-void dwCSGetDescriptorsComplete(void)
+void dwCSGetDescriptorsComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x248,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x249,0,0xffffffff82000f98,0xffffffff821ad084);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x14) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826EEC40  dwCSGetProgress  (DW/dwStorage.cpp:612)
 
-void dwCSGetProgress(void)
+void dwCSGetProgress(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x265,0,0xffffffff82000f98,0xffffffff821ace90);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x266,0,0xffffffff82000f98,0xffffffff821ace84);
+  }
+  uVar2 = dwGetContentStreaming(uVar1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    *(undefined4 *)param_2 = 0;
+    *(undefined4 *)param_3 = 0;
+    __restgprlr_27();
+    return;
+  }
+  bdContentStreamingBase__checkProgress(uVar2,param_2,param_3);
+  __restgprlr_27(1);
+  return;
+}
+
+
+// 826EECF8  dwCSGetLastHTTPError  (DW/dwStorage.cpp:631)
+
+undefined8 dwCSGetLastHTTPError(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = dwGetContentStreaming();
+  if (iVar2 != 0) {
+    uVar1 = bdContentStreamingBase__getLastHTTPError();
+    return uVar1;
+  }
+  Com_PrintError(0x10,0xffffffff821ace98);
+  return 0;
 }
 
 
 // 826F09B8  dwCSSearch  (DW/dwStorage.cpp:648)
 
-void dwCSSearch(void)
+void dwCSSearch(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x289,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x28a,0,0xffffffff82000f98,0xffffffff821ad090);
+  }
+  uVar2 = dwGetTagService(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined4 *)param_2;
+  bdTags__searchByTags
+            (local_80,uVar2,1,puVar1[2],puVar1[3],*(undefined1 *)(puVar1 + 7),puVar1[4],*puVar1);
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 826F0B48  dwCSSearchComplete  (DW/dwStorage.cpp:675)
+
+void dwCSSearchComplete(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2a4,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2a5,0,0xffffffff82000f98,0xffffffff821ad090);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x20) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F0CD8  dwCSReadFile  (DW/dwStorage.cpp:704)
 
-void dwCSReadFile(void)
+void dwCSReadFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  int iVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int local_80;
+  undefined1 auStack_7c [12];
+  undefined1 auStack_70 [112];
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2c1,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2c2,0,0xffffffff82000f98,0xffffffff821ad09c);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar4 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar4 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined8 *)param_2;
+  local_80 = 0;
+  if (*(int *)((int)puVar1 + 0x7b4) == 0) {
+    uVar3 = bdContentStreaming__download
+                      (auStack_7c,uVar2,*puVar1,*(undefined4 *)((int)puVar1 + 0x79c),
+                       *(undefined4 *)((int)puVar1 + 0x7a4),param_2 + 8,0,0);
+  }
+  else {
+    uVar3 = bdContentStreaming__download();
+  }
+  bdReference<bdRemoteTask>__operator_(&local_80,uVar3);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_7c);
+  if (local_80 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar4 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar4 + 8,&local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_80);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 826F0E98  dwCSReadFileComplete  (DW/dwStorage.cpp:739)
+
+void dwCSReadFileComplete(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2e4,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x2e5,0,0xffffffff82000f98,0xffffffff821ad09c);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x7b0) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F1028  dwCSRemoveFile  (DW/dwStorage.cpp:768)
 
-void dwCSRemoveFile(void)
+void dwCSRemoveFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x301,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x302,0,0xffffffff82000f98,0xffffffff821ad064);
+  }
+  uVar1 = dwGetContentStreaming(*(undefined1 *)(iVar2 + 0x95));
+  if ((uVar1 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar2 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    __restgprlr_28(0);
+    return;
+  }
+  bdContentStreaming__removeFile(local_80,uVar1,*(undefined2 *)param_2);
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar2 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826F1198  dwCSRemoveFileComplete  (DW/dwStorage.cpp:794)
 
-void dwCSRemoveFileComplete(void)
+void dwCSRemoveFileComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x31b,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x31c,0,0xffffffff82000f98,0xffffffff821ad064);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 4) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F1328  dwCSWriteFile  (DW/dwStorage.cpp:823)
 
-void dwCSWriteFile(void)
+void dwCSWriteFile(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int local_80;
+  undefined1 auStack_7c [12];
+  undefined1 auStack_70 [112];
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x338,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x339,0,0xffffffff82000f98,0xffffffff821ad0a8);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar4 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar4 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    __restgprlr_27(0);
+    return;
+  }
+  iVar1 = (int)param_2;
+  local_80 = 0;
+  if (*(int *)(iVar1 + 0x3c) == 0) {
+    uVar3 = bdContentStreaming__upload
+                      (auStack_7c,uVar2,*(undefined2 *)(iVar1 + 0x18),*(undefined4 *)(iVar1 + 0x1c),
+                       *(undefined4 *)(iVar1 + 0x20),*(undefined4 *)(iVar1 + 0x24),
+                       *(undefined2 *)(iVar1 + 0x28),*(undefined4 *)(iVar1 + 0x2c));
+  }
+  else {
+    uVar3 = bdContentStreaming__upload();
+  }
+  bdReference<bdRemoteTask>__operator_(&local_80,uVar3);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_7c);
+  if (local_80 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar4 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_80);
+    __restgprlr_27(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar4 + 8,&local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(&local_80);
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 826F1510  dwCSWriteFileComplete  (DW/dwStorage.cpp:862)
 
-void dwCSWriteFileComplete(void)
+void dwCSWriteFileComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x35f,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x360,0,0xffffffff82000f98,0xffffffff821ad0a8);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x38) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F16A0  dwCSSetTags  (DW/dwStorage.cpp:891)
 
-void dwCSSetTags(void)
+void dwCSSetTags(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x37c,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x37d,0,0xffffffff82000f98,0xffffffff821ad0b4);
+  }
+  uVar2 = dwGetTagService(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined8 *)param_2;
+  bdTags__setTagsForEntityID
+            (local_80,uVar2,1,*puVar1,*(undefined4 *)((int)puVar1 + 0xc),*(undefined4 *)(puVar1 + 1)
+            );
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 826F1820  dwCSSetTagsComplete  (DW/dwStorage.cpp:918)
+
+void dwCSSetTagsComplete(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x397,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x398,0,0xffffffff82000f98,0xffffffff821ad0b4);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821acfd0);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x10) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F19B0  dwCSCopyFromUserStorage  (DW/dwStorage.cpp:947)
 
-void dwCSCopyFromUserStorage(void)
+void dwCSCopyFromUserStorage(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3b4,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3b5,0,0xffffffff82000f98,0xffffffff821ad0bc);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined8 *)param_2;
+  bdContentStreaming__copyFromUserStorage
+            (local_80,uVar2,*puVar1,*(undefined2 *)(puVar1 + 1),*(undefined4 *)((int)puVar1 + 0xc),
+             *(undefined2 *)(puVar1 + 2),*(undefined4 *)((int)puVar1 + 0x14),
+             *(undefined4 *)(puVar1 + 3));
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 826F1B50  dwCSCopyFromUserStorageComplete  (DW/dwStorage.cpp:980)
+
+void dwCSCopyFromUserStorageComplete(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3d5,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3d6,0,0xffffffff82000f98,0xffffffff821ad0bc);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821ad0c8);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x28) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F1CE0  dwCSUploadSummaryMetaData  (DW/dwStorage.cpp:1009)
 
-void dwCSUploadSummaryMetaData(void)
+void dwCSUploadSummaryMetaData(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3f2,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x3f3,0,0xffffffff82000f98,0xffffffff821ad100);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined8 *)param_2;
+  bdContentStreaming__uploadUserSummaryMetaData
+            (local_80,uVar2,*puVar1,*(undefined4 *)(puVar1 + 1),*(undefined4 *)((int)puVar1 + 0xc),
+             *(undefined4 *)(puVar1 + 2),*(undefined4 *)((int)puVar1 + 0x14),
+             *(undefined4 *)(puVar1 + 3));
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 826F1E70  dwCSUploadSummaryMetaDataComplete  (DW/dwStorage.cpp:1041)
+
+void dwCSUploadSummaryMetaDataComplete(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x412,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x413,0,0xffffffff82000f98,0xffffffff821ad100);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821ad10c);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x20) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826F2000  dwCSDownloadSummaryData  (DW/dwStorage.cpp:1070)
 
-void dwCSDownloadSummaryData(void)
+void dwCSDownloadSummaryData(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int local_80 [4];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x42f,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x430,0,0xffffffff82000f98,0xffffffff821ad100);
+  }
+  uVar2 = dwGetContentStreaming(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(0);
+    return;
+  }
+  puVar1 = (undefined8 *)param_2;
+  bdContentStreaming__downloadUserSummary
+            (local_80,uVar2,*puVar1,*(undefined4 *)(puVar1 + 1),*(undefined4 *)((int)puVar1 + 0xc),0
+             ,0);
+  if (local_80[0] == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(5,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),5,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+    __restgprlr_28(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar3 + 8,local_80);
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_80);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826F2180  dwCSDownloadSummaryComplete  (DW/dwStorage.cpp:1098)
 
-void dwCSDownloadSummaryComplete(void)
+void dwCSDownloadSummaryComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ace48,1099,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ace48,0x44c,0,0xffffffff82000f98,0xffffffff821ad100);
+  }
+  if (*(int *)(iVar3 + 8) == 0) {
+    Com_Printf(0x10,0xffffffff821ad10c);
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(4,auStack_70,0x40);
+    Com_PrintError(0x10,0xffffffff821acdfc,*(undefined4 *)(iVar3 + 0x90),4,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  iVar4 = dwGetStorage(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ace2c);
+    dwLobbyErrorCodeToString(2,auStack_70,0x40);
+    Com_Printf(0x10,0xffffffff821acda0,*(undefined4 *)(iVar3 + 0x90),2,auStack_70);
+    TaskManager_ClearTask(iVar3);
+    __restgprlr_28(2);
+    return;
+  }
+  dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+  uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+  uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+  *(int *)((int)param_2 + 0x10) = (int)uVar2;
+  dwTaskStatusConvert(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 

@@ -2,11 +2,118 @@
 
 // 828BFDE0  CodecProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:75)
 
-void CodecProcess(void)
+void CodecProcess(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  code *pcVar1;
+  bool bVar2;
+  int iVar3;
+  int *piVar4;
+  uint uVar5;
+  undefined8 uVar6;
+  ulonglong uVar7;
+  
+  iVar3 = __savegprlr_27();
+  uVar6 = 0;
+  piVar4 = (int *)(iVar3 + 0x10);
+  uVar5 = 0;
+  while ((piVar4[-2] == 0 || (*piVar4 != 1))) {
+    uVar5 = uVar5 + 1;
+    piVar4 = piVar4 + 1;
+    if (1 < uVar5) {
+      bVar2 = false;
+LAB_828bfe2c:
+      uVar7 = param_2 - param_3;
+      if ((int)param_3 != -1) {
+        piVar4 = *(int **)(*(int *)(iVar3 + 4) + 8);
+        while (((uVar7 & 0xffffffff) != 0 && (uVar7 = uVar7 - 1, piVar4 != (int *)0x0))) {
+          *(undefined4 *)*piVar4 = 0;
+          *(undefined4 *)(*piVar4 + 4) = *(undefined4 *)(*piVar4 + 0xc);
+          piVar4 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4));
+        }
+      }
+      if (bVar2) {
+        pcVar1 = *(code **)(*(int *)(iVar3 + 0x18) + 8);
+        if (pcVar1 == (code *)0x0) {
+          uVar6 = 1;
+        }
+        else {
+          uVar6 = (*pcVar1)(iVar3,param_3);
+        }
+      }
+      else {
+        piVar4 = *(int **)(*(int *)(iVar3 + 4) + 8);
+        while (((param_3 & 0xffffffff) != 0 && (param_3 = param_3 - 1, piVar4 != (int *)0x0))) {
+          *(undefined4 *)*piVar4 = 0;
+          *(undefined4 *)(*piVar4 + 4) = *(undefined4 *)(*piVar4 + 0xc);
+          piVar4 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4));
+        }
+      }
+      __restgprlr_27(uVar6);
+      return;
+    }
+  }
+  bVar2 = true;
+  goto LAB_828bfe2c;
+}
+
+
+// 828BFF08  CodecFlush  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codec.c:166)
+
+void CodecFlush(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  
+  iVar1 = __savegprlr_26();
+  uVar4 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    *(undefined4 *)param_2 = 0;
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    *(undefined4 *)param_3 = 0;
+  }
+  if (*(int *)(iVar1 + 4) != 0) {
+    puVar2 = *(undefined4 **)(*(int *)(iVar1 + 4) + 8);
+    if ((param_2 & 0xffffffff) == 0) {
+      while (puVar2 != (undefined4 *)0x0) {
+        *(undefined4 *)*puVar2 = 0xc0000001;
+        puVar2 = (undefined4 *)PacketProcessorRetireContext(*(undefined4 *)(iVar1 + 4));
+      }
+    }
+    else if (puVar2 != (undefined4 *)0x0) {
+      *(undefined4 *)*puVar2 = 0xc0000001;
+      *(undefined4 *)param_2 = *puVar2;
+      PacketProcessorRetireContext(*(undefined4 *)(iVar1 + 4));
+    }
+  }
+  piVar3 = (int *)(iVar1 + 8);
+  do {
+    if ((*piVar3 != 0) &&
+       (((param_3 & 0xffffffff) == 0 || ((uVar4 & 0xffffffff) == (param_4 & 0xffffffff))))) {
+      puVar2 = *(undefined4 **)(*piVar3 + 8);
+      if ((param_3 & 0xffffffff) != 0) {
+        if (puVar2 != (undefined4 *)0x0) {
+          *(undefined4 *)*puVar2 = 0xc0000001;
+          *(undefined4 *)param_3 = *puVar2;
+          PacketProcessorRetireContext
+                    (*(undefined4 *)((int)((uVar4 + 2 & 0xffffffff) << 2) + iVar1));
+        }
+        break;
+      }
+      while (puVar2 != (undefined4 *)0x0) {
+        *(undefined4 *)*puVar2 = 0xc0000001;
+        puVar2 = (undefined4 *)PacketProcessorRetireContext(*piVar3);
+      }
+    }
+    uVar4 = uVar4 + 1;
+    piVar3 = piVar3 + 1;
+  } while ((uVar4 & 0xffffffff) < 2);
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -85,7 +192,38 @@ LAB_828c01b4:
 void CodecDestroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  code *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  int *piVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 != 0) {
+    CodecFlush(iVar2,0,0,0);
+    if (*(int *)(iVar2 + 0x18) != 0) {
+      pcVar1 = *(code **)(*(int *)(iVar2 + 0x18) + 4);
+      if (pcVar1 != (code *)0x0) {
+        (*pcVar1)(iVar2);
+      }
+      *(undefined4 *)(iVar2 + 0x18) = 0;
+    }
+    if (*(int *)(iVar2 + 4) != 0) {
+      PacketProcessorDestroy();
+      *(undefined4 *)(iVar2 + 4) = 0;
+    }
+    piVar4 = (int *)(iVar2 + 8);
+    lVar3 = 2;
+    do {
+      if (*piVar4 != 0) {
+        PacketProcessorDestroy();
+        *piVar4 = 0;
+      }
+      lVar3 = lVar3 + -1;
+      piVar4 = piVar4 + 1;
+    } while (lVar3 != 0);
+    XMemFree(iVar2,0x648a0008);
+  }
+  __restgprlr_28();
+  return;
 }
 

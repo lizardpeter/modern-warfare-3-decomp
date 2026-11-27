@@ -5,8 +5,39 @@
 size_t fread_s(void *_DstBuf,size_t _DstSize,size_t _ElementSize,size_t _Count,FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(_DstBuf,_DstSize,_ElementSize,_Count,_File);
+  void *_DstBuf_00;
+  int *piVar1;
+  size_t sVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  FILE *_File_00;
+  FILE *pFStack00000034;
+  
+  uVar5 = (ulonglong)(int)_File;
+  uVar4 = (ulonglong)(int)_Count;
+  uVar3 = (ulonglong)(int)_ElementSize;
+  _DstBuf_00 = (void *)__savegprlr_26(_DstBuf);
+  _File_00 = (FILE *)uVar5;
+  pFStack00000034 = _File_00;
+  if (((uVar3 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 0)) {
+    if ((uVar5 & 0xffffffff) != 0) {
+      _lock_file(_File_00);
+      sVar2 = _fread_nolock_s(_DstBuf_00,_DstSize,(size_t)uVar3,(size_t)uVar4,_File_00);
+      FUN_8291bbe4();
+      goto LAB_8291bb80;
+    }
+    if (_DstSize != 0xffffffff) {
+      memset(_DstBuf_00,0,_DstSize);
+    }
+    piVar1 = _errno();
+    *piVar1 = 0x16;
+    _invalid_parameter_noinfo();
+  }
+  sVar2 = 0;
+LAB_8291bb80:
+  sVar2 = __restgprlr_26(sVar2);
+  return sVar2;
 }
 
 

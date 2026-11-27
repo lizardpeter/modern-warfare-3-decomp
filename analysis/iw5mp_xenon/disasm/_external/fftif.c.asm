@@ -3,3 +3,126 @@
 ; 828C9008  NellyFftCenter512  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:12)
   828C9008  7D8802A6             mfspr r12,LR
   828C900C  4804D6B1             bl 0x829166bc
+  828C9010  9421FF90             stwu r1,-0x70(r1)
+  828C9014  7C691B78             or r9,r3,r3
+  828C9018  7C830E70             srawi r3,r4,0x1
+  828C901C  7C8B1671             srawi. r11,r4,0x2
+  828C9020  7CDE3378             or r30,r6,r6
+  828C9024  20CB0100             subfic r6,r11,0x100
+  828C9028  39000001             li r8,0x1
+  828C902C  54CA103A             rlwinm r10,r6,0x2,0x0,0x1d
+  828C9030  7D052830             slw r5,r8,r5
+  828C9034  7D0AF214             add r8,r10,r30
+  828C9038  7CFD3B78             or r29,r7,r7
+  828C903C  7D4A3A14             add r10,r10,r7
+  828C9040  40810028             ble 0x828c9068
+  828C9044  38EAFFFC             subi r7,r10,0x4
+  828C9048  7D6903A6             mtspr CTR,r11
+  828C904C  3948FFFC             subi r10,r8,0x4
+LAB_828c9050:
+  828C9050  C0090000             lfs f0,0x0(r9)
+  828C9054  C5A90004             lfsu f13,0x4(r9)
+  828C9058  D40A0004             stfsu f0,0x4(r10)
+  828C905C  D5A70004             stfsu f13,0x4(r7)
+  828C9060  39290004             addi r9,r9,0x4
+  828C9064  4200FFEC             bdnz 0x828c9050
+LAB_828c9068:
+  828C9068  556B083C             rlwinm r11,r11,0x1,0x0,0x1e
+  828C906C  7FC7F378             or r7,r30,r30
+  828C9070  7D4B2050             subf r10,r11,r4
+  828C9074  7FABEB78             or r11,r29,r29
+  828C9078  7D480E71             srawi. r8,r10,0x1
+  828C907C  39400000             li r10,0x0
+  828C9080  4081002C             ble 0x828c90ac
+  828C9084  7D0903A6             mtspr CTR,r8
+  828C9088  7D0A4378             or r10,r8,r8
+LAB_828c908c:
+  828C908C  C0090000             lfs f0,0x0(r9)
+  828C9090  C5A90004             lfsu f13,0x4(r9)
+  828C9094  D0070000             stfs f0,0x0(r7)
+  828C9098  38E70004             addi r7,r7,0x4
+  828C909C  D1AB0000             stfs f13,0x0(r11)
+  828C90A0  39290004             addi r9,r9,0x4
+  828C90A4  396B0004             addi r11,r11,0x4
+  828C90A8  4200FFE4             bdnz 0x828c908c
+LAB_828c90ac:
+  828C90AC  5468083C             rlwinm r8,r3,0x1,0x0,0x1e
+  828C90B0  7F044000             cmpw cr6,r4,r8
+  828C90B4  419A0024             beq cr6,0x828c90d8
+  828C90B8  3D008200             lis r8,-0x7e00
+  828C90BC  C0090000             lfs f0,0x0(r9)
+  828C90C0  D0070000             stfs f0,0x0(r7)
+  828C90C4  38E70004             addi r7,r7,0x4
+  828C90C8  394A0001             addi r10,r10,0x1
+  828C90CC  C00813F8             lfs f0,0x13f8(r8)
+  828C90D0  D00B0000             stfs f0,0x0(r11)
+  828C90D4  396B0004             addi r11,r11,0x4
+LAB_828c90d8:
+  828C90D8  7F0A3000             cmpw cr6,r10,r6
+  828C90DC  40980044             bge cr6,0x828c9120
+  828C90E0  7D4A3050             subf r10,r10,r6
+  828C90E4  392BFFFC             subi r9,r11,0x4
+  828C90E8  554B103A             rlwinm r11,r10,0x2,0x0,0x1d
+  828C90EC  39000000             li r8,0x0
+  828C90F0  556AF0BF             rlwinm. r10,r11,0x1e,0x2,0x1f
+  828C90F4  41820010             beq 0x828c9104
+  828C90F8  7D4903A6             mtspr CTR,r10
+LAB_828c90fc:
+  828C90FC  95090004             stwu r8,0x4(r9)
+  828C9100  4200FFFC             bdnz 0x828c90fc
+LAB_828c9104:
+  828C9104  556BF0BF             rlwinm. r11,r11,0x1e,0x2,0x1f
+  828C9108  3947FFFC             subi r10,r7,0x4
+  828C910C  39200000             li r9,0x0
+  828C9110  41820010             beq 0x828c9120
+  828C9114  7D6903A6             mtspr CTR,r11
+LAB_828c9118:
+  828C9118  952A0004             stwu r9,0x4(r10)
+  828C911C  4200FFFC             bdnz 0x828c9118
+LAB_828c9120:
+  828C9120  7CAB0E70             srawi r11,r5,0x1
+  828C9124  7FA4EB78             or r4,r29,r29
+  828C9128  7FEB0194             addze r31,r11
+  828C912C  7FC3F378             or r3,r30,r30
+  828C9130  7FE5FB78             or r5,r31,r31
+  828C9134  48003025             bl 0x828cc158
+  828C9138  7FE5FB78             or r5,r31,r31
+  828C913C  7FA4EB78             or r4,r29,r29
+  828C9140  7FC3F378             or r3,r30,r30
+  828C9144  480032ED             bl 0x828cc430
+  828C9148  38210070             addi r1,r1,0x70
+  828C914C  4804D5C0             b 0x8291670c
+
+; 828C8F88  realFft  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:67)
+  828C8F88  7D8802A6             mfspr r12,LR
+  828C8F8C  4804D731             bl 0x829166bc
+  828C8F90  9421FF90             stwu r1,-0x70(r1)
+  828C8F94  7CAB0E70             srawi r11,r5,0x1
+  828C8F98  7C7E1B78             or r30,r3,r3
+  828C8F9C  7FEB0194             addze r31,r11
+  828C8FA0  7C9D2378             or r29,r4,r4
+  828C8FA4  7FE5FB78             or r5,r31,r31
+  828C8FA8  480031B1             bl 0x828cc158
+  828C8FAC  7FE5FB78             or r5,r31,r31
+  828C8FB0  7FA4EB78             or r4,r29,r29
+  828C8FB4  7FC3F378             or r3,r30,r30
+  828C8FB8  48003479             bl 0x828cc430
+  828C8FBC  38210070             addi r1,r1,0x70
+  828C8FC0  4804D74C             b 0x8291670c
+
+; 828C8FC8  inverseRealFft  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:76)
+  828C8FC8  7D8802A6             mfspr r12,LR
+  828C8FCC  4804D6F1             bl 0x829166bc
+  828C8FD0  9421FF90             stwu r1,-0x70(r1)
+  828C8FD4  7CAB0E70             srawi r11,r5,0x1
+  828C8FD8  7C7E1B78             or r30,r3,r3
+  828C8FDC  7FEB0194             addze r31,r11
+  828C8FE0  7C9D2378             or r29,r4,r4
+  828C8FE4  7FE5FB78             or r5,r31,r31
+  828C8FE8  48003569             bl 0x828cc550
+  828C8FEC  7FE5FB78             or r5,r31,r31
+  828C8FF0  7FC4F378             or r4,r30,r30
+  828C8FF4  7FA3EB78             or r3,r29,r29
+  828C8FF8  48003161             bl 0x828cc158
+  828C8FFC  38210070             addi r1,r1,0x70
+  828C9000  4804D70C             b 0x8291670c

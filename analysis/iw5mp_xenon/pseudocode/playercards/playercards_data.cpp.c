@@ -9,7 +9,6 @@ void PlayerCards_GetRowCount(undefined8 param_1)
   
   StringTable_GetAsset(param_1,local_10);
   if (local_10[0] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
   }
   StringTable_GetRowCount(local_10[0]);
@@ -19,21 +18,63 @@ void PlayerCards_GetRowCount(undefined8 param_1)
 
 // 826E6A70  PlayerCards_GetTableString  (playercards/playercards_data.cpp:28)
 
-void PlayerCards_GetTableString(void)
+void PlayerCards_GetTableString(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a9bc0,0x20,0,0xffffffff82000f98,0xffffffff821a9c5c);
+  }
+  StringTable_GetAsset(uVar1,local_40);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff821a9bc0,0x23,1,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  uVar1 = StringTable_GetRowCount(local_40[0]);
+  if ((uVar1 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    uVar2 = StringTable_GetRowCount(local_40[0]);
+    MyAssertHandler(0xffffffff821a9bc0,0x25,0,0xffffffff821a9c10,param_2,uVar2);
+  }
+  uVar1 = StringTable_GetColumnValueForRow(local_40[0],param_2,param_3);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a9bc0,0x28,1,0xffffffff82000f98,0xffffffff820181d4);
+  }
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 826E6B70  PlayerCards_GetRowNumberFromHandle  (playercards/playercards_data.cpp:47)
 
-void PlayerCards_GetRowNumberFromHandle(void)
+void PlayerCards_GetRowNumberFromHandle
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char *pcVar2;
+  undefined8 uVar1;
+  int local_40 [16];
+  
+  pcVar2 = (char *)__savegprlr_26();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff821a9bc0,0x33,0,0xffffffff82000f98,0xffffffff820363b8);
+  }
+  if (*pcVar2 == '\0') {
+    MyAssertHandler(0xffffffff821a9bc0,0x34,0,0xffffffff82000f98,0xffffffff821a9ce4);
+  }
+  StringTable_GetAsset(param_2,local_40);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff821a9bc0,0x37,1,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  uVar1 = StringTable_LookupRowNumForValue(local_40[0],param_3,pcVar2);
+  if ((int)uVar1 < 0) {
+    Com_PrintWarning(1,0xffffffff821a9c68,pcVar2,param_2);
+    uVar1 = param_4;
+  }
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
@@ -46,7 +87,6 @@ void PlayerCards_GetTitleCount(void)
   
   StringTable_GetAsset(0xffffffff820268f8,local_10);
   if (local_10[0] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
   }
   StringTable_GetRowCount(local_10[0]);
@@ -62,7 +102,6 @@ undefined8 PlayerCards_GetTitleIndexFromHandle(char *param_1)
   undefined8 uVar1;
   
   if (param_1 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x4b,0,0xffffffff82000f98,0xffffffff821a9cf8);
   }
   if (*param_1 == '\0') {
@@ -122,7 +161,6 @@ void PlayerCards_GetIconCount(void)
   
   StringTable_GetAsset(0xffffffff82026928,local_10);
   if (local_10[0] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
   }
   StringTable_GetRowCount(local_10[0]);
@@ -138,7 +176,6 @@ undefined8 PlayerCards_GetIconIndexFromHandle(char *param_1)
   undefined8 uVar1;
   
   if (param_1 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x76,0,0xffffffff82000f98,0xffffffff821a9d04);
   }
   if (*param_1 == '\0') {
@@ -181,7 +218,6 @@ void PlayerCards_GetNameplateCount(void)
   
   StringTable_GetAsset(0xffffffff821a9d10,local_10);
   if (local_10[0] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
   }
   StringTable_GetRowCount(local_10[0]);
@@ -197,7 +233,6 @@ undefined8 PlayerCards_GetNameplateIndexFromHandle(char *param_1)
   undefined8 uVar1;
   
   if (param_1 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a9bc0,0x93,0,0xffffffff82000f98,0xffffffff821a9d2c);
   }
   if (*param_1 == '\0') {

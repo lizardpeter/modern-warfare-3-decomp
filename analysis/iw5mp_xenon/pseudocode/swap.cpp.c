@@ -2,11 +2,56 @@
 
 // 82871FE8  D3D::VerticalBlankInterrupt  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:40)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 void D3D__VerticalBlankInterrupt(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int *piVar2;
+  int iVar4;
+  undefined8 uVar3;
+  int iVar5;
+  LARGE_INTEGER local_30;
+  undefined4 local_28;
+  
+  iVar4 = __savegprlr_29();
+  uVar3 = KfAcquireSpinLock(iVar4 + 0x4274);
+  *(int *)(iVar4 + 0x41cc) = *(int *)(iVar4 + 0x41cc) + 1;
+  uVar1 = TBLr;
+  *(int *)(iVar4 + 0x41d0) = (int)uVar1;
+  if (*(int *)(iVar4 + 17000) != *(int *)(iVar4 + 0x426c)) {
+    do {
+      piVar2 = (int *)(((*(uint *)(iVar4 + 17000) & 0xf) + 0x83d) * 8 + iVar4);
+      iVar5 = *piVar2;
+      if (*(uint *)(iVar4 + 0x41cc) < (uint)piVar2[1]) break;
+      *(int *)(iVar4 + 0x41e4) = *(int *)(iVar4 + 0x41e4) + 1;
+      *(undefined4 *)(iVar4 + 0x41d8) = *(undefined4 *)(iVar4 + 0x41d0);
+      if (iVar5 == 0) {
+        *(undefined4 *)(*(int *)(iVar4 + 0x2b14) + 4) = 0;
+      }
+      else {
+        enforceInOrderExecutionIO();
+        sync(0);
+        _DAT_7fc86110 = iVar5;
+      }
+      uVar1 = TBLr;
+      *(int *)(iVar4 + 0x5cc4) = (int)uVar1;
+      iVar5 = *(int *)(iVar4 + 17000) + 1;
+      *(int *)(iVar4 + 17000) = iVar5;
+    } while (iVar5 != *(int *)(iVar4 + 0x426c));
+  }
+  if (*(code **)(iVar4 + 0x41c8) != (code *)0x0) {
+    local_30.s.HighPart = *(LONG *)(iVar4 + 0x41e4);
+    local_30.s.LowPart = *(DWORD *)(iVar4 + 0x41cc);
+    local_28 = 0;
+    (**(code **)(iVar4 + 0x41c8))(&local_30);
+  }
+  QueryPerformanceCounter(&local_30);
+  *(int *)(iVar4 + 0x561c) = (int)(CONCAT44(local_30.s.LowPart,local_30.s.HighPart) >> 10);
+  KfReleaseSpinLock(iVar4 + 0x4274,uVar3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -112,11 +157,78 @@ void D3D__SwapCallback(void)
 
 // 828722F8  D3D::SynchronizeToPresentationInterval  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:280)
 
-void D3D__SynchronizeToPresentationInterval(void)
+void D3D__SynchronizeToPresentationInterval(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar6;
+  ulonglong uVar5;
+  undefined4 local_30;
+  int local_2c;
+  
+  iVar2 = __savegprlr_28();
+  local_30 = 0x10003b;
+  local_2c = iVar2;
+  if ((*(uint *)(iVar2 + 0x554c) & 0x80000000) != 0) {
+    PIXAddPixOpWithData(0x90003b,0,0);
+  }
+  D3D__PixSyncronizeToPresentationInterval(iVar2,1);
+  D3DDevice_SetPredication(iVar2,0);
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar3 = *(uint *)(iVar2 + 0x30);
+    if (*(uint *)(iVar2 + 0x38) < uVar3) {
+      uVar3 = D3D__CDevice__KickOff(iVar2);
+    }
+    *(undefined4 *)(uVar3 + 4) = 0x579;
+    *(undefined4 *)(uVar3 + 8) = 1;
+    *(undefined4 *)(uVar3 + 0xc) = 0xc0043c00;
+    *(undefined4 *)(uVar3 + 0x10) = 0x13;
+    uVar6 = *(int *)(iVar2 + 0x2b14) + 4;
+    *(uint *)(uVar3 + 0x14) = ((uVar6 >> 0x14) + 0x200 & 0x1000) + (uVar6 & 0x1fffffff) | 2;
+    *(undefined4 *)(uVar3 + 0x18) = 1;
+    *(undefined4 *)(uVar3 + 0x1c) = 0xffffffff;
+    *(undefined4 *)(uVar3 + 0x20) = 0x100;
+    *(undefined4 **)(iVar2 + 0x30) = (undefined4 *)(uVar3 + 0x20);
+  }
+  iVar1 = *(int *)(iVar2 + 0x3644);
+  if ((iVar1 == 0) || (iVar1 == 1)) {
+    uVar5 = 1;
+  }
+  else if (iVar1 == 2) {
+    uVar5 = 2;
+  }
+  else {
+    uVar5 = -(ulonglong)(iVar1 == 4) & 3;
+  }
+  uVar3 = *(uint *)(iVar2 + 0x2f7c);
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x30);
+  if (*(uint *)(iVar2 + 0x38) < uVar4) {
+    uVar4 = D3D__CDevice__KickOff(iVar2);
+  }
+  uVar3 = D3D__InsertCallback(iVar2,uVar4,0,0xffffffff82872110,
+                              (ulonglong)(uVar3 >> 0x17) & 0x7f | uVar5 << 8 | param_2);
+  *(uint *)(iVar2 + 0x30) = uVar3;
+  if ((param_2 & 0xffffffff) == 0) {
+    if (*(uint *)(iVar2 + 0x38) < uVar3) {
+      uVar3 = D3D__CDevice__KickOff(iVar2);
+    }
+    *(undefined4 *)(uVar3 + 4) = 0xc0043c00;
+    *(undefined4 *)(uVar3 + 8) = 0x13;
+    uVar6 = *(int *)(iVar2 + 0x2b14) + 4;
+    *(uint *)(uVar3 + 0xc) = ((uVar6 >> 0x14) + 0x200 & 0x1000) + (uVar6 & 0x1fffffff) | 2;
+    *(undefined4 *)(uVar3 + 0x10) = 0;
+    *(undefined4 *)(uVar3 + 0x14) = 0xffffffff;
+    *(undefined4 *)(uVar3 + 0x18) = 0x100;
+    *(undefined4 **)(iVar2 + 0x30) = (undefined4 *)(uVar3 + 0x18);
+  }
+  D3D__PixSyncronizeToPresentationInterval(iVar2,0);
+  *(byte *)(iVar2 + 0x2b3d) = *(byte *)(iVar2 + 0x2b3d) | 0x10;
+  D3D__GPUTimingMarkerFull___GPUTimingMarkerFull(&local_30);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -171,21 +283,132 @@ void D3D__SetupFormat(int param_1,longlong param_2)
 
 // 82871EE8  D3D::SetupGamma  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:397)
 
-void D3D__SetupGamma(void)
+void D3D__SetupGamma(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_28();
+  if ((param_3 & 0xffffffff) == 0) {
+    if (param_2 != 0x28280136) {
+      D3D__ResetGamma(uVar1 - 0x630,1);
+      param_3 = uVar1 - 0x630;
+      goto LAB_82871f38;
+    }
+    D3D__ResetGamma();
+    param_3 = uVar1 - 0x630;
+  }
+  else {
+LAB_82871f38:
+    if (param_2 != 0x28280136) {
+      D3D__SetRawGammaRamp(uVar2,param_3);
+      goto LAB_82871f5c;
+    }
+  }
+  D3D__SetRawPWLGamma(uVar2,param_3);
+LAB_82871f5c:
+  __restgprlr_28();
+  return;
+}
+
+
+// 828725B8  D3D::SimpleSwap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:434)
+
+void D3D__SimpleSwap(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(uint *)(iVar1 + 0x5f20) & 4) == 0) {
+    uVar2 = *(uint *)(iVar1 + 0x30);
+    if (*(uint *)(iVar1 + 0x38) < uVar2) {
+      uVar2 = D3D__CDevice__KickOff(iVar1);
+    }
+    *(undefined4 *)(uVar2 + 4) = 0x1844;
+    *(int *)(uVar2 + 8) =
+         ((int)((param_2 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)param_2 & 0x1fffffff);
+    *(int **)(iVar1 + 0x30) = (int *)(uVar2 + 8);
+    D3D__SetupFormat(iVar1,param_3);
+  }
+  else {
+    D3D__SynchronizeToPresentationInterval(iVar1,param_2);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82872648  D3D::ComplexSwap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:471)
 
-void D3D__ComplexSwap(void)
+void D3D__ComplexSwap(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+                     undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  iVar1 = __savegprlr();
+  if ((*(uint *)(iVar1 + 0x5f20) & 4) != 0) {
+    D3D__SynchronizeToPresentationInterval(iVar1,0);
+  }
+  if ((param_2 & 4) != 0) {
+    uVar2 = *(uint *)(iVar1 + 0x30);
+    if (*(uint *)(iVar1 + 0x38) < uVar2) {
+      uVar2 = D3D__CDevice__KickOff(iVar1);
+    }
+    *(undefined4 *)(uVar2 + 4) = 0x1973;
+    *(undefined4 *)(uVar2 + 8) = 0x10000;
+    *(undefined4 *)(uVar2 + 0xc) = 0x1964;
+    *(undefined4 *)(uVar2 + 0x10) = 1;
+    *(undefined4 *)(uVar2 + 0x14) = 0x1973;
+    *(undefined4 *)(uVar2 + 0x18) = 0;
+    *(undefined4 *)(uVar2 + 0x1c) = 0xc0043c00;
+    *(undefined4 *)(uVar2 + 0x20) = 3;
+    *(undefined4 *)(uVar2 + 0x24) = 0x1973;
+    *(undefined4 *)(uVar2 + 0x28) = 0;
+    *(undefined4 *)(uVar2 + 0x2c) = 1;
+    *(undefined4 *)(uVar2 + 0x30) = 0x100;
+    *(undefined4 *)(uVar2 + 0x34) = 0x1852;
+    *(undefined4 *)(uVar2 + 0x38) = 0;
+    *(undefined4 *)(uVar2 + 0x3c) = 0x1838;
+    *(undefined4 *)(uVar2 + 0x40) = 1;
+    *(undefined4 **)(iVar1 + 0x30) = (undefined4 *)(uVar2 + 0x40);
+    D3D__SetupScaler(iVar1,param_5,param_6,param_7,0);
+  }
+  D3D__SetupFormat(iVar1,param_4);
+  uVar2 = *(uint *)(iVar1 + 0x30);
+  if (*(uint *)(iVar1 + 0x38) < uVar2) {
+    uVar2 = D3D__CDevice__KickOff(iVar1);
+  }
+  *(undefined4 *)(uVar2 + 4) = 0x1844;
+  piVar3 = (int *)(uVar2 + 8);
+  *piVar3 = ((int)((param_3 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)param_3 & 0x1fffffff)
+  ;
+  if ((param_2 & 4) != 0) {
+    *(undefined4 *)(uVar2 + 0xc) = 0x1838;
+    *(undefined4 *)(uVar2 + 0x10) = 0;
+    *(undefined4 *)(uVar2 + 0x14) = 0xc0043c00;
+    *(undefined4 *)(uVar2 + 0x18) = 3;
+    *(undefined4 *)(uVar2 + 0x1c) = 0x1973;
+    *(undefined4 *)(uVar2 + 0x20) = 0;
+    *(undefined4 *)(uVar2 + 0x24) = 1;
+    *(undefined4 *)(uVar2 + 0x28) = 0x100;
+    *(undefined4 *)(uVar2 + 0x2c) = 0x1852;
+    piVar3 = (int *)(uVar2 + 0x30);
+    *piVar3 = 1;
+  }
+  *(int **)(iVar1 + 0x30) = piVar3;
+  if ((param_2 & 2) != 0) {
+    D3D__SetupGamma(iVar1,param_4,param_8);
+  }
+  D3D__CDevice__KickOff(iVar1);
+  __restgprlr();
+  return;
 }
 
 
@@ -414,13 +637,341 @@ void D3D__ValidateStereo3DBlankRegion(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 82872EF0  D3DDevice_Swap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:975)
+// 82872EB0  D3DDevice_SynchronizeToPresentationInterval  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:937)
 
-void D3DDevice_Swap(void)
+void D3DDevice_SynchronizeToPresentationInterval(undefined8 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  D3D__SynchronizeToPresentationInterval(param_1,0);
+  return;
+}
+
+
+// 82872EF0  D3DDevice_Swap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/swap.cpp:975)
+
+void D3DDevice_Swap(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  byte bVar1;
+  undefined8 uVar2;
+  bool bVar3;
+  bool bVar4;
+  int iVar6;
+  longlong lVar5;
+  uint uVar7;
+  int iVar8;
+  uint uVar9;
+  int iVar10;
+  void *_Src;
+  int iVar11;
+  uint uVar12;
+  byte *pbVar13;
+  byte *pbVar14;
+  longlong lVar15;
+  int iVar16;
+  byte *pbVar17;
+  byte bVar18;
+  int iVar19;
+  undefined4 uVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  int local_178;
+  uint local_174;
+  uint local_170;
+  undefined4 local_16c;
+  undefined8 local_168;
+  undefined4 local_160;
+  uint local_150;
+  uint local_14c;
+  uint local_148;
+  uint local_144;
+  undefined4 local_130;
+  uint local_12c;
+  undefined1 auStack_110 [4];
+  undefined4 local_10c;
+  int local_108;
+  int local_f4;
+  byte local_f0 [56];
+  byte abStack_b8 [56];
+  int local_80;
+  
+  iVar6 = __savegprlr_18();
+  PIXAddPixOpWithData(0x800005,0,0);
+  lVar5 = KeGetCurrentProcessType();
+  lVar5 = (lVar5 + -2) - (lVar5 + -3 + (ulonglong)(lVar5 + -2 == 0));
+  if ((*(uint *)(iVar6 + 0x363c) & 0x10) != 0) {
+    D3D__ValidateStereo3DBlankRegion(iVar6,param_2);
+  }
+  uVar2 = TBLr;
+  *(int *)(iVar6 + 0x55ec) = (int)uVar2;
+  _Src = (void *)((int)(void *)param_2 + 0x1c);
+  *(int *)(iVar6 + 0x41dc) = *(int *)(iVar6 + 0x41dc) + 1;
+  memcpy(&local_150,_Src,0x18);
+  uVar22 = (ulonglong)local_14c;
+  if ((local_14c & 0x3f) == 0x32) {
+    lVar15 = 3;
+LAB_82872f98:
+    uVar22 = lVar15 << 1 | uVar22 & 0xffffffffffffffc0;
+    local_14c = (uint)uVar22;
+  }
+  else if ((local_14c & 0x3f) == 7) {
+    lVar15 = 0x1b;
+    goto LAB_82872f98;
+  }
+  uVar21 = (ulonglong)(*(uint *)(iVar6 + 0x3650) >> 0x11);
+  local_150 = *(uint *)(iVar6 + 0x3650) >> 7 & 0x3fc | local_150 & 0xfffffc03;
+  uVar21 = (ulonglong)local_144 & 0xffffe000 | uVar21 & 0x1ffe | uVar21 & 1;
+  local_144 = (uint)uVar21;
+  if ((*(byte *)(iVar6 + 0x2b40) & 0x40) != 0) {
+    D3D__WaitUntilIdleOrFlushCaches(iVar6);
+    uVar21 = (ulonglong)local_144;
+    uVar22 = (ulonglong)local_14c;
+  }
+  memcpy((void *)(iVar6 + 0x3b24),(void *)param_2,0x34);
+  iVar10 = *(int *)(iVar6 + 0x3654);
+  iVar16 = ((uint)(uVar21 >> 0x1e) & 2) + 1;
+  iVar11 = (local_148 & 0x1fff) + iVar16;
+  uVar9 = (uint)uVar22 & 0x3f;
+  uVar22 = uVar22 & 0xfffff000;
+  iVar16 = (local_148 >> 0xd & 0x1fff) + iVar16;
+  uVar12 = (uint)uVar22;
+  bVar4 = false;
+  local_178 = iVar10;
+  local_174 = uVar9;
+  local_170 = uVar12;
+  if ((*(int *)(iVar6 + 0x55a8) != 0) && (*(uint *)(iVar6 + 0x55a4) - *(int *)(iVar6 + 0x55a0) < 6))
+  {
+    *(undefined4 *)(((*(uint *)(iVar6 + 0x55a4) & 7) + 0x10) * 4 + *(int *)(iVar6 + 0x2b10)) = 0;
+    *(undefined4 *)(((*(int *)(iVar6 + 0x55a4) + 1U & 7) + 0x10) * 4 + *(int *)(iVar6 + 0x2b10)) = 0
+    ;
+    D3D__QueueShaderWriteback
+              (iVar6,(((ulonglong)*(uint *)(iVar6 + 0x55a4) & 7) + 0x10) * 4 +
+                     (ulonglong)*(uint *)(iVar6 + 0x2b10));
+    bVar4 = true;
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+LAB_828730fc:
+    bVar3 = false;
+  }
+  else {
+    pbVar13 = (byte *)(iVar6 + 0x3670);
+    uVar21 = param_3;
+    do {
+      lVar15 = (ulonglong)*(byte *)uVar21 - (ulonglong)*pbVar13;
+      if (lVar15 != 0) break;
+      uVar21 = uVar21 + 1;
+      pbVar13 = pbVar13 + 1;
+    } while ((int)uVar21 != (int)(void *)param_3 + 0x1c);
+    bVar3 = true;
+    if ((int)lVar15 == 0) goto LAB_828730fc;
+  }
+  iVar19 = (int)lVar5;
+  if (iVar19 != 0) {
+    if (DAT_8488ff04 != 0) {
+      uVar7 = *(uint *)(iVar6 + 0x30);
+      if (*(uint *)(iVar6 + 0x38) < uVar7) {
+        uVar7 = D3D__CDevice__KickOff(iVar6);
+      }
+      *(undefined4 *)(uVar7 + 4) = 0x57e;
+      *(undefined4 *)(uVar7 + 8) = 0x10024;
+      *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar7 + 8);
+    }
+    if (bVar3) {
+      *(uint *)(iVar6 + 0x5f08) = *(uint *)(iVar6 + 0x5f08) | 0x40000000;
+    }
+    D3D__XBMProcessSwap(iVar6,param_2);
+  }
+  VdGetSystemCommandBuffer(auStack_110,&local_16c);
+  if (*(int *)(iVar6 + 0x5548) == 0) {
+    if (*(char *)(iVar6 + 0x35e1) != '\0') {
+      uVar7 = *(uint *)(iVar6 + 0x30);
+      if (*(uint *)(iVar6 + 0x38) < uVar7) {
+        uVar7 = D3D__CDevice__KickOff(iVar6);
+      }
+      *(undefined4 *)(uVar7 + 4) = 0x57e;
+      *(undefined4 *)(uVar7 + 8) = 0x10041;
+      *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar7 + 8);
+    }
+    local_168 = CONCAT44(0x100047,iVar6);
+    if ((*(uint *)(iVar6 + 0x554c) & 0x80000000) != 0) {
+      PIXAddPixOpWithData(0x900047,0,0);
+    }
+    iVar8 = D3D__CDevice__BeginRingBig(iVar6,0x40);
+    VdSwap(iVar8 + 4,&local_150,(ulonglong)*(uint *)(iVar6 + 0x2b10) + 8,auStack_110,local_16c,
+           &local_170,&local_174,&local_178);
+    uVar7 = iVar8 + 0x100;
+    *(uint *)(iVar6 + 0x30) = uVar7;
+    if (*(char *)(iVar6 + 0x35e1) != '\0') {
+      if (*(uint *)(iVar6 + 0x38) < uVar7) {
+        uVar7 = D3D__CDevice__KickOff(iVar6);
+      }
+      *(undefined4 *)(uVar7 + 4) = 0x57e;
+      *(undefined4 *)(uVar7 + 8) = 0x10042;
+      *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar7 + 8);
+    }
+    D3D__GPUTimingMarkerFull___GPUTimingMarkerFull(&local_168);
+  }
+  else {
+    *(undefined4 *)(*(int *)(iVar6 + 0x2b10) + 8) = local_16c;
+    uVar7 = *(uint *)(iVar6 + 0x30);
+    if (*(uint *)(iVar6 + 0x38) < uVar7) {
+      uVar7 = D3D__CDevice__KickOff(iVar6);
+    }
+    *(undefined4 *)(uVar7 + 4) = 0xc0001000;
+    *(undefined4 *)(uVar7 + 8) = 0;
+    *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar7 + 8);
+  }
+  *(undefined4 *)(iVar6 + 0x5ca8) = local_10c;
+  if (bVar4) {
+    D3D__QueueShaderWriteback
+              (iVar6,(((ulonglong)*(uint *)(iVar6 + 0x55a4) + 1 & 7) + 0x10) * 4 +
+                     (ulonglong)*(uint *)(iVar6 + 0x2b10));
+    *(int *)(iVar6 + 0x55a4) = *(int *)(iVar6 + 0x55a4) + 2;
+  }
+  if (local_108 != 0) {
+    *(int *)(iVar6 + 0x5f1c) = local_108;
+  }
+  uVar7 = *(uint *)(iVar6 + 0x4270);
+  *(undefined4 *)(iVar6 + 0x4270) = 0;
+  if ((uVar7 & 8) != 0) {
+    D3D__VideoModeInitialize(iVar6,iVar6 + 0x3610,lVar5);
+    D3D__CDevice__KickOff(iVar6);
+  }
+  if (bVar3) {
+    memcpy((void *)(iVar6 + 0x3670),(void *)param_3,0x1c);
+    D3DDevice_SetScalerParameters(iVar6,param_3);
+  }
+  if ((local_108 == 0) || (local_178 != iVar10)) {
+    pbVar13 = (byte *)(iVar6 + 0x36c4);
+    uVar20 = *(undefined4 *)(iVar6 + 0x3650);
+    iVar8 = iVar6 + 0x3bc4;
+    local_178 = iVar10;
+    local_174 = uVar9;
+    local_170 = uVar12;
+    if ((*(byte *)(iVar6 + 0x2b3e) & 0x10) != 0) {
+      memset((void *)(iVar6 + 0x368c),0,0x38);
+      uVar7 = uVar7 | 4;
+      *(byte *)(iVar6 + 0x2b3e) = *(byte *)(iVar6 + 0x2b3e) & 0xef;
+    }
+    if ((*(byte *)(iVar6 + 0x2b3f) & 0x40) != 0) {
+      uVar7 = uVar7 | 3;
+    }
+    bVar18 = *(byte *)(iVar6 + 0x2b3f) & 0xbf;
+    goto LAB_82873490;
+  }
+  pbVar13 = (byte *)(iVar6 + 0x368c);
+  iVar8 = 0;
+  if (local_174 == 7) {
+    uVar20 = 0x28280136;
+  }
+  else {
+    uVar20 = 0x28280106;
+  }
+  if (local_f4 == 0) {
+LAB_828733f4:
+    if (((*(byte *)(iVar6 + 0x2b3e) & 0x10) != 0) && (local_80 == 0)) {
+      pbVar13 = (byte *)(iVar6 + 0x36c4);
+      goto LAB_82873410;
+    }
+  }
+  else {
+    pbVar17 = local_f0;
+    pbVar14 = pbVar13;
+    do {
+      bVar18 = *pbVar17;
+      bVar1 = *pbVar14;
+      if ((ulonglong)bVar18 - (ulonglong)bVar1 != 0) break;
+      pbVar17 = pbVar17 + 1;
+      pbVar14 = pbVar14 + 1;
+    } while (pbVar17 != abStack_b8);
+    if ((int)((ulonglong)bVar18 - (ulonglong)bVar1) == 0) goto LAB_828733f4;
+    memcpy(pbVar13,local_f0,0x38);
+    *(byte *)(iVar6 + 0x2b3e) = *(byte *)(iVar6 + 0x2b3e) | 0x10;
+LAB_82873410:
+    uVar7 = uVar7 | 4;
+  }
+  if ((*(byte *)(iVar6 + 0x2b3f) & 0x40) == 0) {
+    uVar7 = uVar7 | 3;
+  }
+  uVar22 = (ulonglong)local_170;
+  bVar18 = *(byte *)(iVar6 + 0x2b3f) | 0x40;
+LAB_82873490:
+  *(byte *)(iVar6 + 0x2b3f) = bVar18;
+  if ((DAT_8488fedc != 0) || ((*(byte *)(iVar6 + 0x2b3d) & 2) != 0)) {
+    uVar7 = 0;
+  }
+  lVar5 = ((uVar22 >> 0x14) + 0x200 & 0x1000) + (uVar22 & 0x1fffffff);
+  if (uVar7 == 0) {
+    D3D__SimpleSwap(iVar6,lVar5,uVar20);
+  }
+  else {
+    D3D__ComplexSwap(iVar6,uVar7,lVar5,uVar20,iVar11,iVar16,pbVar13,iVar8);
+  }
+  D3D__PixCaptureVideoFrame(iVar6,uVar7,local_178,lVar5,uVar20,iVar11,iVar16,pbVar13);
+  if (((uVar7 & 8) != 0) && (iVar19 != 0)) {
+    uVar9 = *(uint *)(iVar6 + 0x30);
+    if (*(uint *)(iVar6 + 0x38) < uVar9) {
+      uVar9 = D3D__CDevice__KickOff(iVar6);
+    }
+    *(undefined4 *)(uVar9 + 4) = 0xc0022100;
+    *(undefined4 *)(uVar9 + 8) = 0x1e4e;
+    *(undefined4 *)(uVar9 + 0xc) = 0xfffffffe;
+    *(undefined4 *)(uVar9 + 0x10) = 0;
+    local_168 = 0;
+    local_160 = 0;
+    *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar9 + 0x10);
+    iVar10 = VdPersistDisplay(&local_168,&local_130);
+    if (iVar10 != 0) {
+      MmFreePhysicalMemory(1,local_130);
+    }
+  }
+  uVar20 = *(undefined4 *)(iVar6 + 0x2b1c);
+  *(undefined4 *)(iVar6 + 0x2b30) = uVar20;
+  D3D__CDevice__KickOff(iVar6);
+  D3D__TrainEDRAM(iVar6,0,0);
+  D3D__CDevice__StartNewSegment(iVar6,*(uint *)(iVar6 + 0x3b68) >> 2);
+  D3D__CDevice__BlockOnFence(iVar6,*(undefined4 *)(iVar6 + 0x3b84),3,0,0);
+  if ((*(uint *)(iVar6 + 0x5f20) & 4) == 0) {
+    *(undefined4 *)(iVar6 + 0x3b84) = uVar20;
+  }
+  else {
+    D3D__CBlocker__CBlocker(&local_130,iVar6,3);
+    do {
+      iVar10 = D3D__CBlocker__Check(&local_130);
+      if (iVar10 == 0) break;
+    } while (0xe < (uint)(*(int *)(iVar6 + 0x41dc) - *(int *)(iVar6 + 0x41e4)));
+    D3D__CBlocker___CBlocker(&local_130);
+  }
+  *(byte *)(iVar6 + 0x2b3d) = *(byte *)(iVar6 + 0x2b3d) & 0xef;
+  D3D__PixSwap(iVar6);
+  uVar9 = *(uint *)(iVar6 + 0x30);
+  if (*(uint *)(iVar6 + 0x38) < uVar9) {
+    uVar9 = D3D__CDevice__KickOff(iVar6);
+  }
+  local_168._0_4_ = uVar9;
+  memcpy(&local_130,_Src,0x18);
+  local_12c = local_12c & 0xfff | ((local_12c >> 0x14) + 0x200 & 0x1000) + (local_12c & 0x1ffff000);
+  D3D__CDevice__PutPix(iVar6,&local_168,0x1003e,&local_130,0x18);
+  *(uint *)(iVar6 + 0x30) = local_168._0_4_;
+  D3D__CDevice__RTOnSwap(iVar6);
+  uVar9 = *(uint *)(iVar6 + 0x30);
+  if (*(uint *)(iVar6 + 0x38) < uVar9) {
+    uVar9 = D3D__CDevice__KickOff(iVar6);
+  }
+  *(undefined4 *)(uVar9 + 4) = 0x57e;
+  *(undefined4 *)(uVar9 + 8) = 0x10045;
+  *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar9 + 8);
+  D3D__CDevice__NuiOnSwap(iVar6);
+  uVar9 = *(uint *)(iVar6 + 0x30);
+  if (*(uint *)(iVar6 + 0x38) < uVar9) {
+    uVar9 = D3D__CDevice__KickOff(iVar6);
+  }
+  *(undefined4 *)(uVar9 + 4) = 0x57e;
+  *(undefined4 *)(uVar9 + 8) = 0x10046;
+  *(undefined4 **)(iVar6 + 0x30) = (undefined4 *)(uVar9 + 8);
+  D3D__ResetAllState(iVar6,0);
+  __restgprlr_18();
+  return;
 }
 
 

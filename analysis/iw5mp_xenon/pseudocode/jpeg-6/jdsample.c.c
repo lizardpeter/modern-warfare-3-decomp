@@ -197,11 +197,43 @@ void h2v1_upsample(int param_1,undefined8 param_2,int param_3,undefined4 *param_
 
 // 827C4AA8  h2v2_upsample  (jpeg-6/jdsample.c:263)
 
-void h2v2_upsample(void)
+void h2v2_upsample(undefined8 param_1,undefined8 param_2,longlong param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 uVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  undefined1 *puVar4;
+  undefined1 *puVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  
+  iVar2 = __savegprlr_27();
+  param_4 = (undefined4 *)*param_4;
+  lVar6 = 0;
+  puVar7 = param_4;
+  if (0 < *(int *)(iVar2 + 0x11c)) {
+    do {
+      puVar5 = (undefined1 *)*puVar7;
+      puVar4 = puVar5 + *(int *)(iVar2 + 100);
+      if (puVar5 < puVar4) {
+        puVar3 = (undefined1 *)(*(int *)param_3 + -1);
+        do {
+          puVar3 = puVar3 + 1;
+          uVar1 = *puVar3;
+          *puVar5 = uVar1;
+          puVar5[1] = uVar1;
+          puVar5 = puVar5 + 2;
+        } while (puVar5 < puVar4);
+      }
+      jcopy_sample_rows(param_4,lVar6,param_4,lVar6 + 1,1,*(undefined4 *)(iVar2 + 100));
+      lVar6 = lVar6 + 2;
+      param_3 = param_3 + 4;
+      puVar7 = puVar7 + 2;
+    } while ((int)lVar6 < *(int *)(iVar2 + 0x11c));
+  }
+  __restgprlr_27();
+  return;
 }
 
 

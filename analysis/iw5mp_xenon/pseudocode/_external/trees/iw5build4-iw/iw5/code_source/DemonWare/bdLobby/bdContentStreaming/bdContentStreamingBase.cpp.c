@@ -2,11 +2,50 @@
 
 // 828FDCD8  bdContentStreamingBase::bdContentStreamingBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:48)
 
-void bdContentStreamingBase__bdContentStreamingBase(void)
+void bdContentStreamingBase__bdContentStreamingBase(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  puVar1[2] = 0;
+  *puVar1 = &PTR_bdContentStreamingBase___scalar_deleting_destructor__8220ccdc;
+  puVar1[3] = 0;
+  bdFileMetaData__bdFileMetaData(puVar1 + 6);
+  puVar1[0x1ea] = 0;
+  puVar1[0x1eb] = 0;
+  puVar3 = puVar1 + 0x1ec;
+  _eh_vector_constructor_iterator_(puVar3,0x210,3,0xffffffff82913820,0xffffffff82913870);
+  puVar1[0x378] = 0;
+  puVar1[0x379] = 0;
+  *(undefined1 *)((int)puVar1 + 0xdea) = 0;
+  puVar1[900] = 0;
+  puVar1[0x385] = 0;
+  puVar1[0x386] = 0;
+  puVar1[0x387] = 0;
+  puVar1[0x388] = 0;
+  _eh_vector_constructor_iterator_(puVar1 + 0x389,0x18c,3,0xffffffff82913650,0xffffffff82913638);
+  *(undefined1 *)(puVar1 + 0x4b2) = 0;
+  bdSummaryMetaHandler__bdSummaryMetaHandler(puVar1 + 0x4b4);
+  puVar1[0x698] = 0;
+  puVar1[0x699] = 0;
+  bdHTTPWrapper__bdHTTPWrapper(puVar1 + 0x69a);
+  puVar1[0x83d] = param_2;
+  puVar2 = puVar1 + 0x327;
+  *(undefined1 *)(puVar1 + 0x83c) = 1;
+  lVar4 = 3;
+  do {
+    puVar2 = puVar2 + 99;
+    *puVar2 = puVar3;
+    puVar3 = puVar3 + 0x84;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  memset((void *)((int)puVar1 + 0xdeb),0,0x20);
+  __restgprlr_27(puVar1);
+  return;
 }
 
 
@@ -178,13 +217,61 @@ undefined8 bdContentStreamingBase__startDownload(undefined8 param_1,undefined8 p
 }
 
 
-// 828FE6E8  bdContentStreamingBase::start  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:205)
+// 828FF010  bdContentStreamingBase::startDelete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:200)
 
-void bdContentStreamingBase__start(void)
+undefined8 bdContentStreamingBase__startDelete(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bdContentStreamingBase__start(param_1,param_2,0x67);
+  return param_1;
+}
+
+
+// 828FE6E8  bdContentStreamingBase::start  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:205)
+
+void bdContentStreamingBase__start(undefined8 param_1,longlong param_2,uint param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint *puVar4;
+  int iVar5;
+  undefined8 uVar3;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  
+  puVar4 = (uint *)__savegprlr_29();
+  iVar2 = (int)param_2;
+  *(uint *)(iVar2 + 8) = param_3 & 0xffff;
+  bdHTTPWrapper__resetTransferStats(param_2 + 0x1a68);
+  iVar5 = bdMemory__allocate(0x40);
+  bVar8 = (iVar5 == 0) << 1;
+  if (iVar5 == 0) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdRemoteTask__bdRemoteTask();
+  }
+  bdReference<bdRemoteTask>__operator_(param_2 + 0x1a60,uVar3);
+  *(undefined4 *)(*(int *)(iVar2 + 0x1a60) + 0x14) = 1;
+  bdContentStreamingBase__setState(param_2,1,0);
+  uVar1 = *(uint *)(iVar2 + 0x1a60);
+  *puVar4 = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
+    do {
+      puVar7 = (uint *)lVar6;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+        *puVar7 = uVar1;
+        bVar8 = 2;
+      }
+    } while (!(bool)(bVar8 >> 1 & 1));
+  }
+  __restgprlr_29(puVar4);
+  return;
 }
 
 
@@ -282,8 +369,113 @@ LAB_828ff170:
 void bdContentStreamingBase__handlePreHTTPComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  undefined4 uVar7;
+  undefined4 uVar8;
+  undefined8 uVar6;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  longlong lVar11;
+  
+  iVar2 = __savegprlr_27();
+  iVar3 = *(int *)(iVar2 + 8);
+  iVar4 = 0;
+  if (iVar3 == 0x65) {
+    iVar3 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar2 + 0x1a64));
+    if (iVar3 == 0) {
+      bdContentStreamingBase__setState(iVar2,4,0);
+    }
+    else {
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,
+                   0x15a,0xffffffff8220d048,(uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4
+                  );
+      *(undefined8 *)(iVar2 + 0x20) =
+           *(undefined8 *)((uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x9b8);
+      if (*(int *)(iVar2 + 0x10) == 0) {
+        iVar3 = iVar2 + 0xdeb;
+        if (*(char *)(iVar2 + 0xdea) == '\0') {
+          iVar3 = 0;
+        }
+        uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+        uVar7 = *(undefined4 *)(iVar2 + 0x7a8);
+        uVar9 = 0;
+      }
+      else {
+        uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+        uVar9 = *(undefined4 *)(iVar2 + 0x10);
+        iVar3 = 0;
+        uVar7 = 0;
+      }
+      iVar4 = bdHTTPWrapper___startUpload
+                        (iVar2 + 0x1a68,(uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4,
+                         uVar7,uVar9,*(undefined4 *)(iVar2 + 0x30),uVar5,iVar3);
+    }
+  }
+  else if (iVar3 == 0x68) {
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,0x16f
+                 ,0xffffffff8220d004,
+                 (ulonglong)*(uint *)((uint)*(ushort *)(iVar2 + 0xde8) * 0x18c + iVar2 + 0xe28) + 4)
+    ;
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,0x170
+                 ,0xffffffff8220cff4,(uint)*(ushort *)(iVar2 + 0xde8) * 0x18c + iVar2 + 0xe2c);
+    iVar3 = (uint)*(ushort *)(iVar2 + 0xde8) * 0x18c + iVar2;
+    uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+    iVar4 = bdHTTPWrapper__startCopy
+                      (iVar2 + 0x1a68,(ulonglong)*(uint *)(iVar3 + 0xe28) + 4,iVar3 + 0xe2c,uVar5);
+  }
+  else if (iVar3 == 0x66) {
+    lVar11 = (ulonglong)*(uint *)(iVar2 + 0xe10) + 0xea;
+    if (*(int *)(iVar2 + 0xe0c) == 0) {
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,
+                   0x183,0xffffffff8220cfe8,lVar11);
+      uVar9 = *(undefined4 *)(iVar2 + 0xe20);
+      uVar1 = *(undefined4 *)(iVar2 + 0xe1c);
+      uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+      uVar10 = *(undefined4 *)(iVar2 + 0xe18);
+      uVar7 = 0;
+      uVar8 = *(undefined4 *)(iVar2 + 0xe14);
+    }
+    else {
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,
+                   0x17a,0xffffffff8220cfe8,lVar11);
+      uVar9 = *(undefined4 *)(iVar2 + 0xe20);
+      uVar1 = *(undefined4 *)(iVar2 + 0xe1c);
+      uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+      uVar7 = *(undefined4 *)(iVar2 + 0xe0c);
+      uVar10 = 0;
+      uVar8 = 0;
+    }
+    iVar4 = bdHTTPWrapper___startDownload
+                      (iVar2 + 0x1a68,(ulonglong)*(uint *)(iVar2 + 0xe10) + 0xea,uVar8,uVar10,uVar7,
+                       uVar5,uVar1,uVar9);
+  }
+  else if (iVar3 == 0x67) {
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d018,399,
+                 0xffffffff8220cfd8,(uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4);
+    uVar5 = bdRemoteTask__getTransactionID(*(undefined4 *)(iVar2 + 0x1a64));
+    iVar4 = bdHTTPWrapper__startDelete
+                      (iVar2 + 0x1a68,(uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4,uVar5
+                      );
+  }
+  if (*(int *)(iVar2 + 0xc) != 4) {
+    if ((iVar4 == 1) || (iVar4 == 2)) {
+      uVar6 = 0;
+      uVar5 = 2;
+    }
+    else {
+      if (*(int *)(iVar2 + 0xc) == 4) goto LAB_828feb08;
+      uVar6 = 0x7e5;
+      uVar5 = 5;
+    }
+    bdContentStreamingBase__setState(iVar2,uVar5,uVar6);
+  }
+LAB_828feb08:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -292,8 +484,63 @@ void bdContentStreamingBase__handlePreHTTPComplete(void)
 void bdContentStreamingBase__handleHTTPComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  ulonglong uVar3;
+  longlong lVar6;
+  ushort uVar7;
+  undefined1 auStack_30 [48];
+  
+  piVar4 = (int *)__savegprlr_28();
+  iVar1 = piVar4[2];
+  if (iVar1 == 0x65) {
+    bdHTTPWrapper__getTransferSpeed(piVar4 + 0x69a);
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d078,0x1a2
+                 ,0xffffffff8220d0a4,(int)piVar4 + 0x82);
+    uVar2 = bdContentStreamingBase___postUpload(auStack_30,piVar4);
+    bdReference<bdRemoteTask>__operator_(piVar4 + 0x699,uVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+    iVar1 = piVar4[0x699];
+LAB_828febb0:
+    lVar6 = (-(ulonglong)(iVar1 != 0) & 0xfffffffe) + 5;
+  }
+  else if (iVar1 == 0x68) {
+    uVar7 = *(short *)(piVar4 + 0x37a) + 1;
+    *(ushort *)(piVar4 + 0x37a) = uVar7;
+    uVar5 = bdRemoteTask__getNumResults(piVar4[0x699]);
+    if ((uVar5 <= uVar7) || (2 < uVar7)) {
+      uVar2 = (**(code **)(*piVar4 + 0xc))(auStack_30,piVar4);
+      bdReference<bdRemoteTask>__operator_(piVar4 + 0x699,uVar2);
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+      iVar1 = piVar4[0x699];
+      goto LAB_828febb0;
+    }
+    lVar6 = 1;
+  }
+  else {
+    if (iVar1 == 0x66) {
+      uVar3 = bdHTTPWrapper__getTransferProgress(piVar4 + 0x69a);
+      bdHTTPWrapper__getTransferSpeed(piVar4 + 0x69a);
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d078,
+                   0x1b9,0xffffffff8220d054,(uVar3 & 0xffffffff) >> 10);
+      bdContentStreamingBase__setState(piVar4,4,0);
+      *(undefined4 *)(piVar4[0x698] + 0x24) = 1;
+      goto LAB_828fed00;
+    }
+    if (iVar1 != 0x67) goto LAB_828fed00;
+    uVar7 = *(short *)(piVar4 + 0x37a) + 1;
+    *(ushort *)(piVar4 + 0x37a) = uVar7;
+    uVar5 = bdRemoteTask__getNumResults(piVar4[0x699]);
+    if ((uVar5 <= uVar7) || (lVar6 = 1, 2 < uVar7)) {
+      lVar6 = 4;
+    }
+  }
+  bdContentStreamingBase__setState(piVar4,lVar6,0);
+LAB_828fed00:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -302,8 +549,72 @@ void bdContentStreamingBase__handleHTTPComplete(void)
 void bdContentStreamingBase__handleHTTPFailed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  ushort uVar7;
+  
+  iVar2 = __savegprlr_26();
+  iVar1 = *(int *)(iVar2 + 8);
+  if (iVar1 == 0x65) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d19c,0x1d4
+                 ,0xffffffff8220d138,(uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4);
+    uVar7 = *(short *)(iVar2 + 0xde8) + 1;
+    *(ushort *)(iVar2 + 0xde8) = uVar7;
+    uVar3 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar2 + 0x1a64));
+    if ((uVar7 < uVar3) && (uVar7 < 3)) {
+LAB_828fee34:
+      uVar5 = 0;
+      uVar4 = 1;
+    }
+    else {
+      uVar4 = 0x1da;
+      uVar5 = 0xffffffff8220d128;
+LAB_828fef34:
+      bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d19c,
+                   uVar4,uVar5);
+      uVar4 = 5;
+      uVar5 = 0x7e4;
+    }
+    bdContentStreamingBase__setState(iVar2,uVar4,uVar5);
+  }
+  else {
+    if (iVar1 == 0x66) {
+      uVar5 = 0xffffffff8220d154;
+      lVar6 = (ulonglong)*(uint *)(iVar2 + 0xe10) + 0xea;
+      uVar4 = 0x1e6;
+    }
+    else {
+      if (iVar1 == 0x67) {
+        bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d19c,
+                     0x1ef,0xffffffff8220d17c,
+                     (uint)*(ushort *)(iVar2 + 0xde8) * 0x210 + iVar2 + 0x7b4);
+        uVar7 = *(short *)(iVar2 + 0xde8) + 1;
+        *(ushort *)(iVar2 + 0xde8) = uVar7;
+        uVar3 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar2 + 0x1a64));
+        if ((uVar3 <= uVar7) || (2 < uVar7)) {
+          uVar4 = 0x1f5;
+          uVar5 = 0xffffffff8220d168;
+          goto LAB_828fef34;
+        }
+        goto LAB_828fee34;
+      }
+      if (iVar1 != 0x68) goto LAB_828fef5c;
+      uVar5 = 0xffffffff8220d1c8;
+      uVar4 = 0x201;
+      lVar6 = (ulonglong)*(uint *)((uint)*(ushort *)(iVar2 + 0xde8) * 0x18c + iVar2 + 0xe28) + 4;
+    }
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220cc08,0xffffffff8220cc50,0xffffffff8220d19c,uVar4
+                 ,uVar5,lVar6);
+    bdContentStreamingBase__setState(iVar2,5,0x7e4);
+    *(undefined4 *)(*(int *)(iVar2 + 0x1a60) + 0x24) = 0;
+  }
+LAB_828fef5c:
+  __restgprlr_26();
+  return;
 }
 
 
@@ -323,6 +634,66 @@ bool bdContentStreamingBase__initDelete(int param_1)
                  ,0xffffffff821adb04);
   }
   return cVar1 != '\0';
+}
+
+
+// 828FE0F0  bdContentStreamingBase::_postUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:534)
+
+void bdContentStreamingBase___postUpload(undefined8 param_1,longlong param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  int *piVar3;
+  uint *puVar5;
+  ulonglong uVar4;
+  int iVar6;
+  uint *puVar7;
+  longlong lVar8;
+  char in_RESERVE;
+  byte bVar9;
+  undefined1 auStack_4c [4];
+  undefined1 auStack_48 [72];
+  
+  puVar5 = (uint *)__savegprlr_26();
+  uVar4 = bdHTTPWrapper__getTransferProgress(param_2 + 0x1a68);
+  piVar3 = (int *)param_2;
+  if (((piVar3[0xc] != 0) && ((ulonglong)(uint)piVar3[0xc] != (uVar4 & 0xffffffff))) &&
+     (iVar6 = bdHTTPWrapperBase__getStatus(param_2 + 0x1a68), iVar6 == 2)) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220ce00,0xffffffff8220cc50,0xffffffff8220ce04,0x21b
+                 ,0xffffffff8220ce28,uVar4);
+  }
+  piVar3[0xc] = (int)uVar4;
+  bVar1 = *(char *)(piVar3 + 0x4b2) == '\0';
+  bVar9 = bVar1 << 1;
+  if (bVar1) {
+    puVar7 = (uint *)(**(code **)(*piVar3 + 4))(auStack_4c,param_2);
+  }
+  else {
+    puVar7 = (uint *)(**(code **)(*piVar3 + 8))(auStack_48);
+  }
+  uVar2 = *puVar7;
+  *puVar5 = uVar2;
+  if ((ulonglong)uVar2 != 0) {
+    lVar8 = (ulonglong)uVar2 + 4;
+    do {
+      puVar7 = (uint *)lVar8;
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar8);
+        *puVar7 = uVar2;
+        bVar9 = 2;
+      }
+    } while (!(bool)(bVar9 >> 1 & 1));
+  }
+  if (bVar1) {
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_4c);
+  }
+  else {
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_48);
+  }
+  *(undefined1 *)(piVar3 + 0x4b2) = 0;
+  __restgprlr_26(puVar5);
+  return;
 }
 
 
@@ -384,6 +755,35 @@ void bdContentStreamingBase__abortHTTPOperation(int param_1)
       bdRemoteTask__cancelTask();
     }
   }
+  return;
+}
+
+
+// 828FDC90  bdContentStreamingBase::checkProgress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:610)
+
+void bdContentStreamingBase__checkProgress(undefined8 param_1,undefined4 *param_2,float *param_3)
+
+{
+  longlong lVar1;
+  undefined4 uVar2;
+  double dVar3;
+  
+  lVar1 = __savegprlr_29();
+  uVar2 = bdHTTPWrapper__getTransferProgress(lVar1 + 0x1a68);
+  *param_2 = uVar2;
+  dVar3 = (double)bdHTTPWrapper__getTransferSpeed(lVar1 + 0x1a68);
+  *param_3 = (float)dVar3;
+  __restgprlr_29();
+  return;
+}
+
+
+// 828FDCC8  bdContentStreamingBase::getLastHTTPError  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:616)
+
+void bdContentStreamingBase__getLastHTTPError(longlong param_1)
+
+{
+  bdHTTPWrapper__getLastHTTPError(param_1 + 0x1a68);
   return;
 }
 

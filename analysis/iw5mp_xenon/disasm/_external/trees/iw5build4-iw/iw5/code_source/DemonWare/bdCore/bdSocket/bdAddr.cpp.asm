@@ -70,8 +70,15 @@
   828F6FC4  EBE1FFF0             ld r31,-0x10(r1)
   828F6FC8  4E800020             blr
 
+; 828F6FD0  bdAddr::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:91)
+  828F6FD0  4E800020             blr
+
 ; 828F6FD8  bdAddr::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:96)
   828F6FD8  4E800020             blr
+
+; 828F6FE0  bdAddr::getPort  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:106)
+  828F6FE0  A0630004             lhz r3,0x4(r3)
+  828F6FE4  4E800020             blr
 
 ; 828F6FE8  bdBytePacker::removeBasicType<unsigned_short>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.h:140)
   828F6FE8  7D8802A6             mfspr r12,LR

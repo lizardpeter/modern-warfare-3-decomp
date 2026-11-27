@@ -88,6 +88,54 @@ LAB_8260f214:
 ; 8260F230  RedBlackCache_FindOrInsertKey  (universal/redblackcache.cpp:49)
   8260F230  7D8802A6             mfspr r12,LR
   8260F234  48307481             bl 0x829166b4
+  8260F238  9421FF80             stwu r1,-0x80(r1)
+  8260F23C  3D608218             lis r11,-0x7de8
+  8260F240  3D408200             lis r10,-0x7e00
+  8260F244  7C7F1B78             or r31,r3,r3
+  8260F248  7C9B2378             or r27,r4,r4
+  8260F24C  2B030000             cmplwi cr6,r3,0x0
+  8260F250  3BAB2458             addi r29,r11,0x2458
+  8260F254  3B8A0F98             addi r28,r10,0xf98
+  8260F258  409A0020             bne cr6,0x8260f278
+  8260F25C  3D608218             lis r11,-0x7de8
+  8260F260  7F86E378             or r6,r28,r28
+  8260F264  38EB2450             addi r7,r11,0x2450
+  8260F268  7FA3EB78             or r3,r29,r29
+  8260F26C  38A00000             li r5,0x0
+  8260F270  38800035             li r4,0x35
+  8260F274  4BFC528D             bl 0x825d4500
+LAB_8260f278:
+  8260F278  897F0054             lbz r11,0x54(r31)
+  8260F27C  2B0B0000             cmplwi cr6,r11,0x0
+  8260F280  419A0020             beq cr6,0x8260f2a0
+  8260F284  3D608218             lis r11,-0x7de8
+  8260F288  7F86E378             or r6,r28,r28
+  8260F28C  38EB243C             addi r7,r11,0x243c
+  8260F290  7FA3EB78             or r3,r29,r29
+  8260F294  38A00000             li r5,0x0
+  8260F298  38800036             li r4,0x36
+  8260F29C  4BFC5265             bl 0x825d4500
+LAB_8260f2a0:
+  8260F2A0  3FC0841B             lis r30,-0x7be5
+  8260F2A4  817EC2C4             lwz r11,-0x3d3c(r30)
+  8260F2A8  2B0B0000             cmplwi cr6,r11,0x0
+  8260F2AC  419A0020             beq cr6,0x8260f2cc
+  8260F2B0  3D608218             lis r11,-0x7de8
+  8260F2B4  7F86E378             or r6,r28,r28
+  8260F2B8  38EB2424             addi r7,r11,0x2424
+  8260F2BC  7FA3EB78             or r3,r29,r29
+  8260F2C0  38A00000             li r5,0x0
+  8260F2C4  38800038             li r4,0x38
+  8260F2C8  4BFC5239             bl 0x825d4500
+LAB_8260f2cc:
+  8260F2CC  93FEC2C4             stw r31,-0x3d3c(r30)
+  8260F2D0  7F64DB78             or r4,r27,r27
+  8260F2D4  7FE3FB78             or r3,r31,r31
+  8260F2D8  48000881             bl 0x8260fb58
+  8260F2DC  39600000             li r11,0x0
+  8260F2E0  917EC2C4             stw r11,-0x3d3c(r30)
+  8260F2E4  38210080             addi r1,r1,0x80
+  8260F2E8  4830741C             b 0x82916704
 
 ; 8260F2F0  RedBlackCache_Init  (universal/redblackcache.cpp:68)
   8260F2F0  7D8802A6             mfspr r12,LR

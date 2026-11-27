@@ -26,37 +26,39 @@ void R_GetVec3FromByteArray(int param_1,int param_2)
 
 // 8274DE68  R_SetSunLightFromDvars  (gfx_d3d/r_light_tweak.cpp:35)
 
-void R_SetSunLightFromDvars(char *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void R_SetSunLightFromDvars(char *param_1)
 
 {
-  byte bVar1;
-  int iVar2;
-  float *pfVar3;
-  int iVar4;
-  longlong lVar5;
+  byte *pbVar1;
+  char *pcVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  longlong lVar6;
   undefined4 local_38;
   undefined4 local_34;
   undefined4 local_30;
   float fStack_2c;
   undefined1 local_28 [16];
   
+  pcVar2 = param_1;
   if (*param_1 != '\x01') {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821c6a08,0x26,0,0xffffffff82000f98,0xffffffff821bcea0);
+    pcVar2 = (char *)MyAssertHandler(0xffffffff821c6a08,0x26,0,0xffffffff82000f98,0xffffffff821bcea0
+                                    );
   }
-  pfVar3 = &fStack_2c;
-  iVar4 = 0;
-  lVar5 = 3;
-  iVar2 = DAT_8461822c + 0xc;
+  pfVar4 = &fStack_2c;
+  iVar5 = 0;
+  lVar6 = 3;
+  iVar3 = DAT_8461822c + 0xc;
   do {
-    bVar1 = *(byte *)(iVar4 + iVar2);
-    iVar4 = iVar4 + 1;
-    pfVar3 = pfVar3 + 1;
-    *pfVar3 = (float)bVar1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  R_GetSunColorFromLightAndColor
-            ((double)*(float *)(DAT_8461821c + 0xc),param_1,local_28,param_1 + 4,param_4,bVar1);
+    pbVar1 = (byte *)(iVar5 + iVar3);
+    iVar5 = iVar5 + 1;
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = (float)*pbVar1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  R_GetSunColorFromLightAndColor((double)*(float *)(DAT_8461821c + 0xc),pcVar2,local_28,param_1 + 4)
+  ;
   local_34 = *(undefined4 *)(DAT_84618230 + 0xc);
   local_38 = *(undefined4 *)(DAT_84618228 + 0xc);
   local_30 = 0;
@@ -67,38 +69,39 @@ void R_SetSunLightFromDvars(char *param_1,undefined8 param_2,undefined8 param_3,
 
 // 8274DF58  R_ResetSunLightFromDvars  (gfx_d3d/r_light_tweak.cpp:47)
 
-void R_ResetSunLightFromDvars
-               (char *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void R_ResetSunLightFromDvars(char *param_1)
 
 {
-  byte bVar1;
-  int iVar2;
-  float *pfVar3;
-  int iVar4;
-  longlong lVar5;
+  byte *pbVar1;
+  char *pcVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  longlong lVar6;
   undefined4 local_38;
   undefined4 local_34;
   undefined4 local_30;
   float fStack_2c;
   undefined1 local_28 [16];
   
+  pcVar2 = param_1;
   if (*param_1 != '\x01') {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821c6a08,0x32,0,0xffffffff82000f98,0xffffffff821bcea0);
+    pcVar2 = (char *)MyAssertHandler(0xffffffff821c6a08,0x32,0,0xffffffff82000f98,0xffffffff821bcea0
+                                    );
   }
-  pfVar3 = &fStack_2c;
-  iVar4 = 0;
-  lVar5 = 3;
-  iVar2 = DAT_8461822c + 0x2c;
+  pfVar4 = &fStack_2c;
+  iVar5 = 0;
+  lVar6 = 3;
+  iVar3 = DAT_8461822c + 0x2c;
   do {
-    bVar1 = *(byte *)(iVar4 + iVar2);
-    iVar4 = iVar4 + 1;
-    pfVar3 = pfVar3 + 1;
-    *pfVar3 = (float)bVar1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
+    pbVar1 = (byte *)(iVar5 + iVar3);
+    iVar5 = iVar5 + 1;
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = (float)*pbVar1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   R_GetSunColorFromLightAndColor
-            ((double)*(float *)(DAT_8461821c + 0x2c),param_1,local_28,param_1 + 4,param_4,bVar1);
+            ((double)*(float *)(DAT_8461821c + 0x2c),pcVar2,local_28,param_1 + 4);
   local_34 = *(undefined4 *)(DAT_84618230 + 0x2c);
   local_38 = *(undefined4 *)(DAT_84618228 + 0x2c);
   local_30 = 0;
@@ -112,8 +115,43 @@ void R_ResetSunLightFromDvars
 void R_LightTweaksModified(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  
   __savegprlr_29();
+  if (DAT_84618220 == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x3e,0,0xffffffff82000f98,0xffffffff821c69f4);
+  }
+  if (DAT_8461821c == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x3f,0,0xffffffff82000f98,0xffffffff821c69dc);
+  }
+  if (DAT_8461822c == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x40,0,0xffffffff82000f98,0xffffffff821c69c4);
+  }
+  if (DAT_84618228 == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x41,0,0xffffffff82000f98,0xffffffff821c69ac);
+  }
+  if (DAT_84618230 == 0) {
+    MyAssertHandler(0xffffffff821c6a08,0x42,0,0xffffffff82000f98,0xffffffff821c6994);
+  }
+  bVar1 = R_CheckDvarModified(DAT_8461821c);
+  bVar2 = R_CheckDvarModified(DAT_8461822c);
+  bVar3 = R_CheckDvarModified(DAT_84618228);
+  bVar4 = R_CheckDvarModified(DAT_84618230);
+  __restgprlr_29(bVar4 | bVar3 | bVar2 | bVar1);
+  return;
+}
+
+
+// 8274DB98  R_InitLightTweaks  (gfx_d3d/r_light_tweak.cpp:79)
+
+void R_InitLightTweaks(void)
+
+{
+  DAT_84618224 = 0;
+  return;
 }
 
 
@@ -141,7 +179,6 @@ void R_UpdateLightTweaks(undefined8 param_1,ulonglong param_2)
   if (uVar4 != (param_2 & 0xffffffff)) {
     if (uVar4 != 0) {
       if (*(char *)((int)(uVar4 * 0x4c) + (int)lVar2) != '\x01') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821c6a08,0x61,0,0xffffffff82000f98,0xffffffff821bcea0);
       }
       Dvar_Reset(DAT_8461821c,0);
@@ -153,7 +190,6 @@ void R_UpdateLightTweaks(undefined8 param_1,ulonglong param_2)
     if ((param_2 & 0xffffffff) != 0) {
       lVar5 = param_2 * 0x4c + lVar2;
       if (*(char *)((int)(param_2 * 0x4c) + (int)lVar2) != '\x01') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821c6a08,0x6f,0,0xffffffff82000f98,0xffffffff821bcea0);
       }
       Dvar_SetBool(DAT_84618220,0);
@@ -236,6 +272,31 @@ void R_LightTweakInitDvars(void)
   DAT_84618228 = Dvar_RegisterFloat(uVar2,0xc056800000000000,0x4056800000000000,0xffffffff821c69ac);
   DAT_84618230 = Dvar_RegisterFloat(uVar2,0xc066800000000000,0x4066800000000000,0xffffffff821c6994);
   return;
+}
+
+
+// 8274DCD8  R_LightTweakAngleChanged  (gfx_d3d/r_light_tweak.cpp:176)
+
+undefined8 R_LightTweakAngleChanged(double param_1)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  if (*(char *)(DAT_84618220 + 0xc) != '\0') {
+    dVar2 = (double)((*(float *)(DAT_84618228 + 0xc) - *(float *)(DAT_84618228 + 0x2c)) *
+                    0.0027777778);
+    dVar1 = floor((double)(float)(dVar2 + 0.5));
+    if (param_1 < ABS((double)((float)(dVar2 - (double)(float)dVar1) * 360.0))) {
+      return 1;
+    }
+    dVar1 = (double)AngleSubtract((double)*(float *)(DAT_84618230 + 0xc),
+                                  (double)*(float *)(DAT_84618230 + 0x2c));
+    if (param_1 < ABS(dVar1)) {
+      return 1;
+    }
+  }
+  return 0;
 }
 
 

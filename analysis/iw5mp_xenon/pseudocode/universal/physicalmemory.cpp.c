@@ -29,8 +29,27 @@ void PMem_DisableSoundAlloc(void)
 void Sound_PhysicalAlloc(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_29();
+  Sys_EnterCriticalSection(4);
+  if (((uVar2 & 0xffffffff) < 0x2080) || (0x2100 < (uVar2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff8217ce88,0x10c,0,0xffffffff8217cdf8,uVar2,0x2080,0x2100);
+  }
+  if (DAT_84123254 == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x10d,0,0xffffffff8217cdac,0xffffffff8217cdd4);
+  }
+  if (0x2100 < (uVar2 & 0xffffffff)) {
+    Sys_LeaveCriticalSection(4);
+    __restgprlr_29(0);
+    return;
+  }
+  DAT_84123254 = DAT_84123254 + -1;
+  uVar1 = (&DAT_84123558)[DAT_84123254];
+  Sys_LeaveCriticalSection(4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -39,16 +58,16 @@ void Sound_PhysicalAlloc(void)
 void Sound_PhysicalFree(undefined4 param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   
   Sys_EnterCriticalSection(4);
+  uVar1 = DAT_84123254;
   if (0x35 < DAT_84123254) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x123,0,0xffffffff8217cdac,0xffffffff8217ced0);
+    uVar1 = DAT_84123254;
   }
-  iVar1 = DAT_84123254 * 4;
-  DAT_84123254 = DAT_84123254 + 1;
-  *(undefined4 *)(&DAT_84123558 + iVar1) = param_1;
+  DAT_84123254 = uVar1 + 1;
+  (&DAT_84123558)[uVar1] = param_1;
   Sys_LeaveCriticalSection(4);
   return;
 }
@@ -59,8 +78,23 @@ void Sound_PhysicalFree(undefined4 param_1)
 void Sound_Alloc(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  void *_Dst;
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  Sys_EnterCriticalSection(4);
+  if (0x960 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8217ce88,0x132,0,0xffffffff8203b444,0xffffffff8217cfc8,uVar1);
+  }
+  if (DAT_84123634 == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x133,0,0xffffffff8217cf8c,0xffffffff8217cfac);
+  }
+  DAT_84123634 = DAT_84123634 + -1;
+  _Dst = (void *)(&DAT_84123258)[DAT_84123634];
+  memset(_Dst,0,(size_t)uVar1);
+  Sys_LeaveCriticalSection(4);
+  __restgprlr_29(_Dst);
+  return;
 }
 
 
@@ -69,17 +103,81 @@ void Sound_Alloc(void)
 void Sound_Free(undefined4 param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   
   Sys_EnterCriticalSection(4);
+  uVar1 = DAT_84123634;
   if (0x35 < DAT_84123634) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x143,0,0xffffffff8217cf8c,0xffffffff8217cfd8);
+    uVar1 = DAT_84123634;
   }
-  iVar1 = DAT_84123634 * 4;
-  DAT_84123634 = DAT_84123634 + 1;
-  *(undefined4 *)(&DAT_84123258 + iVar1) = param_1;
+  DAT_84123634 = uVar1 + 1;
+  (&DAT_84123258)[uVar1] = param_1;
   Sys_LeaveCriticalSection(4);
+  return;
+}
+
+
+// 82607650  PMem_SoundInitMemory  (universal/physicalmemory.cpp:333)
+
+void PMem_SoundInitMemory(void)
+
+{
+  ulonglong uVar1;
+  void *_Dst;
+  
+  __savegprlr_27();
+  if (DAT_84123334 != (void *)0x0) {
+    MyAssertHandler(0xffffffff8217ce88,0x150,0,0xffffffff82000f98,0xffffffff8217d6b0);
+  }
+  uVar1 = PMem_AllocFromSource_NoDebug(0x6f600,0x80,4,0);
+  _Dst = (void *)uVar1;
+  memset(_Dst,0x99,0x6f600);
+  DAT_84123334 = _Dst;
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x153,0,0xffffffff82000f98,0xffffffff8217d06c);
+    uVar1 = ZEXT48(DAT_84123334);
+  }
+  track_static_alloc_internal(uVar1,0x6f600,0xffffffff8217d6a0,0xe);
+  __restgprlr_27();
+  return;
+}
+
+
+// 826059D8  PMem_SoundInit  (universal/physicalmemory.cpp:347)
+
+void PMem_SoundInit(void)
+
+{
+  int *piVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined *puVar4;
+  longlong lVar5;
+  
+  puVar4 = &DAT_84123860;
+  if (DAT_84123334 == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x15e,0,0xffffffff82000f98,0xffffffff8217d06c);
+  }
+  piVar1 = &DAT_84123554;
+  lVar5 = 0x36;
+  iVar3 = DAT_84123334;
+  do {
+    piVar1 = piVar1 + 1;
+    *piVar1 = iVar3;
+    iVar3 = iVar3 + 0x2100;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  DAT_84123254 = 0x36;
+  puVar2 = &DAT_84123254;
+  lVar5 = 0x36;
+  do {
+    puVar2 = puVar2 + 1;
+    *puVar2 = puVar4;
+    puVar4 = puVar4 + 0x960;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  DAT_84123634 = 0x36;
   return;
 }
 
@@ -104,11 +202,24 @@ undefined8 PMem_GetPhysicalMemorySize(void)
 
 // 82605A98  PMem_InitPhysicalMemory  (universal/physicalmemory.cpp:379)
 
-void PMem_InitPhysicalMemory(void)
+void PMem_InitPhysicalMemory(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *_Dst;
+  void *pvVar1;
+  
+  _Dst = (undefined4 *)__savegprlr_27();
+  if (_Dst == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8217ce88,0x17c,0,0xffffffff82000f98,0xffffffff8217d088);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x17d,0,0xffffffff82000f98,0xffffffff8217d080);
+  }
+  pvVar1 = memset(_Dst,0,0x21c);
+  *_Dst = (int)param_2;
+  _Dst[0x46] = param_3;
+  __restgprlr_27(pvVar1);
+  return;
 }
 
 
@@ -122,7 +233,6 @@ void PMem_Init(void)
   __savegprlr_25();
   uVar1 = XPhysicalAlloc(0x19e00000,0xffffffffffffffff,0,0x20000404);
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x1ed,0,0xffffffff82000f98,0xffffffff8217d080);
   }
   PMem_InitPhysicalMemory(0xffffffff84123638,uVar1,0x19e00000);
@@ -131,7 +241,6 @@ void PMem_Init(void)
   DAT_84123854 = XPhysicalAlloc(0x1000,0xffffffffffffffff,0,0x204);
   DAT_84123858 = XPhysicalAlloc(0x1000,0xffffffffffffffff,0,4);
   if (DAT_84123858 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x1fa,0,0xffffffff82000f98,0xffffffff8217d090);
   }
   __restgprlr_25();
@@ -139,43 +248,177 @@ void PMem_Init(void)
 }
 
 
-// 82605CF8  PMem_BeginAllocInPrim  (universal/physicalmemory.cpp:709)
+// 82605C20  PMem_GiveMemory  (universal/physicalmemory.cpp:679)
 
-void PMem_BeginAllocInPrim(void)
+void PMem_GiveMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  char cVar3;
+  ulonglong uVar1;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_25();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8217ce88,0x2ab,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (iVar2 != 0) {
+    lVar4 = (ulonglong)(iVar2 - 1U >> 0x10) + 1;
+    do {
+      uVar1 = XPhysicalAlloc(0x10000,0xffffffffffffffff,0,0x20000404);
+      if ((uVar1 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8217ce88,0x2b0,0,0xffffffff82000f98,0xffffffff8217d080);
+      }
+      ImageCache_GiveMemory(uVar1,uVar1 + 0x10000);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  UpdateMemStats();
+  __restgprlr_25();
+  return;
+}
+
+
+// 82605CF0  PMem_FillInMemoryHoles  (universal/physicalmemory.cpp:701)
+
+void PMem_FillInMemoryHoles(void)
+
+{
+  PMem_GiveMemory(0x280000);
+  return;
+}
+
+
+// 82605CF8  PMem_BeginAllocInPrim  (universal/physicalmemory.cpp:709)
+
+void PMem_BeginAllocInPrim(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x2c8,0,0xffffffff82000f98,0xffffffff8217d0d0);
+  }
+  if (0x1f < (uint)piVar2[1]) {
+    MyAssertHandler(0xffffffff8217ce88,0x2c9,0,0xffffffff82000f98,0xffffffff8217d0a0);
+  }
+  iVar1 = piVar2[1];
+  *piVar2 = param_2;
+  piVar2[1] = iVar1 + 1;
+  piVar2[iVar1 * 2 + 3] = param_2;
+  piVar2[iVar1 * 2 + 4] = piVar2[2];
+  __restgprlr_28();
+  return;
 }
 
 
 // 82605DA0  PMem_BeginAlloc  (universal/physicalmemory.cpp:726)
 
-void PMem_BeginAlloc(void)
+void PMem_BeginAlloc(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int *in_r13;
+  
+  uVar3 = __savegprlr_27();
+  if (1 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8217ce88,0x2d7,0,0xffffffff8217d11c,param_2,2);
+  }
+  PMem_BeginAllocInPrim(param_2 * 0x10c + -0x7bedc9c4,uVar3);
+  PMem_BeginAllocInPrim(param_2 * 0x10c + -0x7bedccc4,uVar3);
+  iVar1 = *in_r13;
+  iVar2 = (int)param_2 + 0xf8;
+  if (*(char *)(iVar2 + iVar1) != '\0') {
+    MyAssertHandler(0xffffffff8217ce88,0x2df,0,0xffffffff8217d0e4,0xffffffff8217d0fc,param_2);
+    *(undefined1 *)(iVar2 + iVar1) = 1;
+    __restgprlr_27();
+    return;
+  }
+  *(undefined1 *)(iVar2 + iVar1) = 1;
+  __restgprlr_27();
+  return;
 }
 
 
 // 82605E70  PMem_EndAllocInPrim  (universal/physicalmemory.cpp:742)
 
-void PMem_EndAllocInPrim(void)
+void PMem_EndAllocInPrim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint *puVar3;
+  longlong lVar2;
+  longlong lVar4;
+  ulonglong uVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  
+  puVar3 = (uint *)__savegprlr_28();
+  iVar1 = (int)param_3;
+  puVar6 = puVar3 + iVar1 * 0x43 + 1;
+  uVar5 = (ulonglong)puVar3[iVar1 * 0x43 + 3];
+  if ((param_3 & 0xffffffff) == 0) {
+    uVar7 = uVar5 + 0xffff & 0xffff0000;
+    if (uVar7 == uVar5) goto LAB_82605ed8;
+    lVar4 = *puVar3 + uVar7;
+    lVar2 = *puVar3 + uVar5;
+  }
+  else {
+    uVar7 = (ulonglong)puVar3[iVar1 * 0x43 + 3] & 0xffff0000;
+    if (uVar7 == uVar5) goto LAB_82605ed8;
+    lVar4 = *puVar3 + uVar5;
+    lVar2 = *puVar3 + uVar7;
+  }
+  ImageCache_FreeMemory(lVar2,lVar4);
+LAB_82605ed8:
+  puVar3[iVar1 * 0x43 + 3] = (uint)uVar7;
+  if ((ulonglong)*puVar6 != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8217ce88,0x301,0,0xffffffff82000f98,0xffffffff8217d174);
+  }
+  *puVar6 = 0;
+  if (puVar3[iVar1 * 0x43 + 2] == 0) {
+    MyAssertHandler(0xffffffff8217ce88,0x305,0,0xffffffff82000f98,0xffffffff8217d158);
+  }
+  uVar5 = (ulonglong)
+          ((int)((ulonglong)puVar3[iVar1 * 0x43 + 3] -
+                (ulonglong)puVar6[(puVar3[iVar1 * 0x43 + 2] + 1) * 2]) >> 0x1f);
+  track_physical_alloc
+            (((ulonglong)puVar3[iVar1 * 0x43 + 3] -
+              (ulonglong)puVar6[(puVar3[iVar1 * 0x43 + 2] + 1) * 2] ^ uVar5) - uVar5,param_2,10);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82605F80  PMem_EndAlloc  (universal/physicalmemory.cpp:782)
 
-void PMem_EndAlloc(void)
+void PMem_EndAlloc(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int *in_r13;
+  
+  uVar3 = __savegprlr_27();
+  if (1 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8217ce88,0x30f,0,0xffffffff8217d11c,param_2,2);
+  }
+  iVar1 = *in_r13;
+  iVar2 = (int)param_2 + 0xf8;
+  if (*(char *)(iVar2 + iVar1) == '\0') {
+    MyAssertHandler(0xffffffff8217ce88,0x312,0,0xffffffff8217d0e4,0xffffffff8217d18c,param_2);
+  }
+  *(undefined1 *)(iVar2 + iVar1) = 0;
+  PMem_EndAllocInPrim(0xffffffff84123638,uVar3,param_2);
+  PMem_EndAllocInPrim(0xffffffff84123338,uVar3,param_2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -196,18 +439,15 @@ void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   iVar2 = (int)param_3;
   puVar7 = puVar3 + iVar2 * 0x43 + 1;
   if (*puVar7 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x32a,0,0xffffffff82000f98,0xffffffff8217d0d0);
   }
   iVar1 = (int)param_2;
   uVar5 = puVar7[iVar1 * 2 + 3];
   if (uVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x330,0,0xffffffff82000f98,0xffffffff82021a74);
   }
   puVar7[iVar1 * 2 + 3] = 0;
   if ((param_2 & 0xffffffff) != (ulonglong)(puVar3[iVar2 * 0x43 + 2] - 1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x336,0,0xffffffff82065348,0xffffffff8217d258,uVar5);
   }
   uVar4 = (ulonglong)
@@ -220,18 +460,15 @@ void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   if (uVar4 != uVar6) {
     if ((param_3 & 0xffffffff) != 0) {
       if ((param_3 & 0xffffffff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x343,0,0xffffffff82000f98,0xffffffff8217d238);
       }
       uVar6 = (ulonglong)puVar3[iVar2 * 0x43 + 3];
       uVar4 = (ulonglong)puVar7[iVar1 * 2 + 4];
     }
     if ((uVar6 & 0xffff) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,0x349,0,0xffffffff82000f98,0xffffffff8217d214);
     }
     if ((uVar4 & 0xffff) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,0x34a,0,0xffffffff82000f98,0xffffffff8217d1f4);
     }
     XPhysicalProtect(*puVar3 + uVar6,uVar4 - uVar6,0x404);
@@ -239,14 +476,91 @@ void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   }
   puVar3[iVar2 * 0x43 + 3] = puVar7[iVar1 * 2 + 4];
   if (puVar3[iVar2 * 0x43 + 2] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x363,0,0xffffffff82000f98,0xffffffff8217d1dc);
   }
   uVar5 = puVar3[iVar2 * 0x43 + 2] - 1;
   puVar3[iVar2 * 0x43 + 2] = uVar5;
   if ((uVar5 != 0) && (puVar7[uVar5 * 2 + 1] == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x368,0,0xffffffff82000f98,0xffffffff8217d1ac);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 82606260  PMem_FreeInPrim  (universal/physicalmemory.cpp:882)
+
+void PMem_FreeInPrim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  int iVar7;
+  uint uVar8;
+  int *piVar9;
+  
+  lVar2 = __savegprlr_24();
+  lVar5 = param_3 * 0x10c + lVar2;
+  uVar8 = 0;
+  iVar1 = (int)lVar5;
+  piVar9 = (int *)(iVar1 + 4);
+  if (*(uint *)(iVar1 + 8) != 0) {
+    lVar5 = lVar5 + 0x10;
+    while ((ulonglong)*(uint *)lVar5 != (param_2 & 0xffffffff)) {
+      uVar8 = uVar8 + 1;
+      lVar5 = lVar5 + 8;
+      if (*(uint *)(iVar1 + 8) <= uVar8) {
+        __restgprlr_24();
+        return;
+      }
+    }
+    if (*piVar9 != 0) {
+      MyAssertHandler(0xffffffff8217ce88,0x32a,0,0xffffffff82000f98,0xffffffff8217d0d0);
+    }
+    iVar7 = piVar9[uVar8 * 2 + 3];
+    if (iVar7 == 0) {
+      MyAssertHandler(0xffffffff8217ce88,0x330,0,0xffffffff82000f98,0xffffffff82021a74);
+    }
+    piVar9[uVar8 * 2 + 3] = 0;
+    if (uVar8 != *(int *)(iVar1 + 8) - 1U) {
+      MyAssertHandler(0xffffffff8217ce88,0x336,0,0xffffffff82065348,0xffffffff8217d258,iVar7);
+    }
+    uVar4 = (ulonglong)*(uint *)(iVar1 + 0xc) - (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
+    uVar3 = (ulonglong)((int)uVar4 >> 0x1f);
+    track_physical_alloc(-((uVar4 ^ uVar3) - uVar3),iVar7,10);
+    uVar3 = (ulonglong)*(uint *)(iVar1 + 0xc);
+    uVar4 = (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
+    if (uVar3 != uVar4) {
+      if ((param_3 & 0xffffffff) != 0) {
+        if ((param_3 & 0xffffffff) != 1) {
+          MyAssertHandler(0xffffffff8217ce88,0x343,0,0xffffffff82000f98,0xffffffff8217d238);
+        }
+        uVar4 = (ulonglong)*(uint *)(iVar1 + 0xc);
+        uVar3 = (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
+      }
+      if ((uVar4 & 0xffff) != 0) {
+        MyAssertHandler(0xffffffff8217ce88,0x349,0,0xffffffff82000f98,0xffffffff8217d214);
+      }
+      if ((uVar3 & 0xffff) != 0) {
+        MyAssertHandler(0xffffffff8217ce88,0x34a,0,0xffffffff82000f98,0xffffffff8217d1f4);
+      }
+      XPhysicalProtect(*(uint *)lVar2 + uVar4,uVar3 - uVar4,0x404);
+      uVar6 = (ulonglong)*(uint *)lVar2;
+      ImageCache_GiveMemoryDelayed(uVar6 + uVar4,uVar6 + uVar3);
+    }
+    *(int *)(iVar1 + 0xc) = piVar9[uVar8 * 2 + 4];
+    if (*(int *)(iVar1 + 8) == 0) {
+      MyAssertHandler(0xffffffff8217ce88,0x363,0,0xffffffff82000f98,0xffffffff8217d1dc);
+    }
+    iVar7 = *(int *)(iVar1 + 8) + -1;
+    *(int *)(iVar1 + 8) = iVar7;
+    if ((iVar7 != 0) && (piVar9[iVar7 * 2 + 1] == 0)) {
+      MyAssertHandler(0xffffffff8217ce88,0x368,0,0xffffffff82000f98,0xffffffff8217d1ac);
+    }
   }
   __restgprlr_24();
   return;
@@ -255,11 +569,19 @@ void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 826064B8  PMem_Free  (universal/physicalmemory.cpp:901)
 
-void PMem_Free(void)
+void PMem_Free(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (1 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8217ce88,0x386,0,0xffffffff8217d11c,param_2,2);
+  }
+  PMem_FreeInPrim(0xffffffff84123638,uVar1,param_2);
+  PMem_FreeInPrim(0xffffffff84123338,uVar1,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -311,7 +633,6 @@ void PMem_AllocFromSource_NoDebug
   if (cVar7 == '\0') {
     cVar7 = Sys_IsMainThread();
     if (cVar7 == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,0x3e3,0,0xffffffff82000f98,0xffffffff82010b48);
     }
     uVar5 = (param_3 - 4) - ((param_3 - 5) + (ulonglong)(param_3 - 4 == 0));
@@ -319,7 +640,6 @@ void PMem_AllocFromSource_NoDebug
   else {
     if ((param_4 == 0) && (DAT_84123250 == 0)) {
       if ((param_3 & 0xffffffff) != 4) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x3cc,0,0xffffffff82065e94,0xffffffff8217d2d0,param_3);
       }
       DB_Alloc(uVar4,param_2);
@@ -331,21 +651,17 @@ void PMem_AllocFromSource_NoDebug
 LAB_82606674:
   iVar2 = (int)uVar5;
   if (puVar8[iVar2 * 0x43 + 1] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x3e9,0,0xffffffff82000f98,0xffffffff8217d2c0);
   }
   if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x3ea,0,0xffffffff82000f98,0xffffffff82036204);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x3ec,0,0xffffffff82000f98,0xffffffff8217d2b4);
   }
   sVar1 = *(short *)((int)puVar8 + iVar2 * 0x10c + 0xe);
   param_2 = param_2 - 1;
   if (*(char *)(iVar2 + 0xf8 + *in_r13) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x3f3,0,0xffffffff8217d0e4,0xffffffff8217d18c,uVar5);
   }
   if ((uVar5 & 0xffffffff) == 0) {
@@ -374,7 +690,6 @@ LAB_82606674:
   }
   else {
     if ((uVar5 & 0xffffffff) != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,0x415,0,0xffffffff82000f98,0xffffffff8217d238);
     }
     uVar5 = puVar8[iVar2 * 0x43 + 3] - uVar4 & ~param_2;
@@ -441,6 +756,20 @@ longlong PMem_GetShippingFreeAmount_NoStreaming(void)
 }
 
 
+// 82606998  PMem_GetLegacyFreeAmount  (universal/physicalmemory.cpp:1153)
+
+longlong PMem_GetLegacyFreeAmount(void)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  
+  lVar1 = ImageCache_GetTotalMemorySize();
+  lVar2 = DB_StreamUsedMemory();
+  return lVar1 - lVar2;
+}
+
+
 // 826069D0  ConvertToMB  (universal/physicalmemory.cpp:1178)
 
 double ConvertToMB(int param_1)
@@ -455,8 +784,50 @@ double ConvertToMB(int param_1)
 void PMem_DumpMemStats(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int *piVar1;
+  int iVar2;
+  int *piVar4;
+  longlong lVar3;
+  uint uVar6;
+  ulonglong uVar5;
+  double dVar7;
+  
   __savegprlr_28();
+  uVar6 = 0;
+  dVar7 = 9.5367431640625e-07;
+  if (DAT_8412374c != 0) {
+    piVar4 = &DAT_84123750;
+    do {
+      iVar2 = DAT_84123750;
+      if (uVar6 != DAT_8412374c - 1) {
+        iVar2 = piVar4[4];
+      }
+      piVar1 = piVar4 + 1;
+      piVar4 = piVar4 + 2;
+      Com_Printf(0x10,0xffffffff8217d334,*piVar1,
+                 (double)(float)((double)(longlong)(*piVar4 - iVar2) * dVar7));
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < DAT_8412374c);
+  }
+  iVar2 = DB_StreamUsedMemory();
+  Com_Printf(0x10,0xffffffff8217d318,(double)(float)((double)(longlong)iVar2 * dVar7));
+  iVar2 = ImageCache_GetTotalMemorySize();
+  Com_Printf(0x10,0xffffffff8217d2fc,(double)(float)((double)(longlong)iVar2 * dVar7));
+  uVar5 = (ulonglong)DAT_84123640 - 1;
+  if (-1 < (longlong)uVar5) {
+    lVar3 = (uVar5 & 0x1fffffff) * 8 + -0x7bedc9ac;
+    iVar2 = DAT_84123644;
+    do {
+      Com_Printf(0x10,0xffffffff8217d334,*(undefined4 *)((int)lVar3 + -0xc),
+                 (double)(float)((double)(longlong)(iVar2 - *(int *)((int)lVar3 + -8)) * dVar7));
+      lVar3 = lVar3 + -8;
+      iVar2 = *(int *)lVar3;
+      uVar5 = uVar5 - 1;
+    } while (-1 < (longlong)uVar5);
+  }
+  Com_Printf(0x10,0xffffffff8217d2e0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -497,7 +868,6 @@ void XMemAlloc(undefined8 param_1,ulonglong param_2)
   uVar1 = __savegprlr_25();
   cVar4 = Sys_IsDatabaseThread();
   if ((cVar4 == '\0') && (DAT_84123250 != 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x4f8,0,0xffffffff82000f98,0xffffffff8217d618);
   }
   uVar7 = (param_2 & 0xffffffff) >> 0x1f;
@@ -519,15 +889,12 @@ LAB_82606d28:
       if (uVar7 != 2) {
         if (uVar7 != 3) {
           if (uVar7 != 1) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8217ce88,0x521,0,0xffffffff8217d5cc,0xffffffff8217d5f4);
           }
           if ((param_2 & 0x40000000) != 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8217ce88,0x522,0,0xffffffff82000f98,0xffffffff8217d5ac);
           }
           if (DAT_84123330 != 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8217ce88,0x523,0,0xffffffff82000f98,0xffffffff8217d594);
           }
           DAT_84123330 = 1;
@@ -540,23 +907,18 @@ LAB_82606d28:
     }
     if ((param_2 & 0xff0000) == 0x820000) {
       if ((param_2 & 0x40000000) != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x52b,0,0xffffffff82000f98,0xffffffff8217d5ac);
       }
       if (*(int *)(*in_r13 + 0xfc) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x52c,0,0xffffffff82000f98,0xffffffff8217d564);
       }
       if ((param_2 & 0x1fff) != 7) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x52d,0,0xffffffff8217d524,param_2 & 0x1fff,7);
       }
       if (lVar8 != 4) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x52e,0,0xffffffff8217d504,lVar8,4);
       }
       if (iVar3 != 0x80) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x52f,0,0xffffffff8217d4d4,iVar3,0x80);
       }
       uVar2 = Sound_PhysicalAlloc(uVar1);
@@ -569,7 +931,6 @@ LAB_82606d28:
       }
       else {
         if (DAT_84123250 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8217ce88,0x536,0,0xffffffff82000f98,0xffffffff8217d578);
         }
         uVar2 = XMemDebugAlloc(uVar1,iVar3);
@@ -586,7 +947,6 @@ LAB_82606d28:
     goto LAB_826072c0;
   }
   if (uVar7 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x54d,1,0xffffffff8217d490,0xffffffff8217d4b4);
   }
   uVar2 = (param_2 & 0xffffffff) >> 0x18 & 0xf;
@@ -595,7 +955,6 @@ LAB_82606d28:
     uVar7 = uVar2 << 2;
   }
   if ((param_2 & 0x30000000) != 0x20000000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8217ce88,0x553,0,0xffffffff82000f98,0xffffffff8217d454);
   }
   switch(((uint)(param_2 >> 0x10) & 0xff) - 0x80) {
@@ -605,12 +964,10 @@ LAB_82606d28:
        ((cVar4 = Sys_IsDatabaseThread(), cVar4 != '\0' &&
         (iVar3 = R_HasDeviceOwnership(), iVar3 != 0)))) {
       if ((param_2 & 0x4000) != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x561,0,0xffffffff82000f98,0xffffffff8217d438);
       }
       iVar3 = R_HasDeviceOwnership();
       if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x563,0,0xffffffff82000f98,0xffffffff8217d420);
       }
       uVar2 = ZEXT48(DAT_84123554);
@@ -618,8 +975,8 @@ LAB_82606d28:
         DAT_84123554 = HeapCreate((DWORD)DAT_84123554,0x10000,0);
         uVar2 = (ulonglong)(int)DAT_84123554;
         if (DAT_84123554 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8217ce88,0x568,0,0xffffffff82000f98,0xffffffff8217d414);
+          uVar2 = ZEXT48(DAT_84123554);
         }
       }
       uVar2 = RtlAllocateHeap(uVar2,0,uVar1);
@@ -628,8 +985,9 @@ LAB_82606d28:
       }
       trapWord(6,uVar7,0);
       if (uVar2 != (longlong)(int)((uVar2 & 0xffffffff) / uVar7) * (longlong)(int)uVar7) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x56c,0,0xffffffff82000f98,0xffffffff8217d3e4);
+        __restgprlr_25(uVar2);
+        return;
       }
       goto LAB_826072c0;
     }
@@ -642,7 +1000,6 @@ LAB_82606d28:
       uVar5 = 0x57a;
       uVar6 = 0xffffffff82010b48;
 LAB_82607238:
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,uVar5,0,0xffffffff82000f98,uVar6);
     }
     break;
@@ -650,7 +1007,6 @@ LAB_82607238:
     if (*(int *)(*in_r13 + 0xfc) == 0) {
       cVar4 = Sys_IsDatabaseThread();
       if (cVar4 != '\0') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x58b,0,0xffffffff82000f98,0xffffffff8217d380);
       }
       lVar8 = PMem_AllocFromSource_NoDebug(uVar7 + uVar1,uVar7,4,0);
@@ -664,11 +1020,9 @@ LAB_82607238:
     }
     else {
       if ((param_2 & 0x1fff) != 6) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x585,0,0xffffffff82000f98,0xffffffff8217d3b4);
       }
       if ((param_2 & 0x40000000) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8217ce88,0x586,0,0xffffffff82000f98,0xffffffff8217d398);
       }
       uVar2 = Sound_Alloc(uVar1);
@@ -684,7 +1038,6 @@ LAB_82607238:
     break;
   case 0x13:
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8217ce88,0x595,0,0xffffffff8217d364);
     }
     uVar2 = 0;
@@ -720,40 +1073,35 @@ undefined4 XMemSize(int param_1,ulonglong param_2)
   int *in_r13;
   
   if ((param_2 & 0x80000000) == 0x80000000) {
-    if ((param_2 & 0xff0000) != 0x820000) {
-      if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8217ce88,0x5c5,0,0xffffffff8217d650);
+    if ((param_2 & 0xff0000) == 0x820000) {
+      if ((param_2 & 0x1fff) != 7) {
+        MyAssertHandler(0xffffffff8217ce88,0x5c2,0,0xffffffff82000f98,0xffffffff8217d668);
       }
-      return 0;
+      return 0x2100;
     }
-    if ((param_2 & 0x1fff) != 7) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8217ce88,0x5c2,0,0xffffffff82000f98,0xffffffff8217d668);
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8217ce88,0x5c5,0,0xffffffff8217d650);
     }
-    return 0x2100;
+    return 0;
   }
   uVar1 = (param_2 & 0xffffffff) >> 0x10 & 0xff;
   if (uVar1 == 0x82) {
-    if (*(int *)(*in_r13 + 0xfc) == 0) {
-      return *(undefined4 *)(param_1 + -4);
+    if (*(int *)(*in_r13 + 0xfc) != 0) {
+      if ((param_2 & 0x1fff) != 6) {
+        MyAssertHandler(0xffffffff8217ce88,0x5d3,0,0xffffffff82000f98,0xffffffff8217d3b4);
+      }
+      return 0x960;
     }
-    if ((param_2 & 0x1fff) != 6) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8217ce88,0x5d3,0,0xffffffff82000f98,0xffffffff8217d3b4);
-    }
-    return 0x960;
+    return *(undefined4 *)(param_1 + -4);
   }
-  if (uVar1 == 0x93) {
+  if (uVar1 != 0x93) {
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8217ce88,0x5ce,0,0xffffffff8217d364);
+      MyAssertHandler(0xffffffff8217ce88,0x5d9,0,0xffffffff8217d650);
     }
     return 0;
   }
   if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8217ce88,0x5d9,0,0xffffffff8217d650);
+    MyAssertHandler(0xffffffff8217ce88,0x5ce,0,0xffffffff8217d364);
   }
   return 0;
 }
@@ -761,10 +1109,59 @@ undefined4 XMemSize(int param_1,ulonglong param_2)
 
 // 82607478  XMemFree  (universal/physicalmemory.cpp:1503)
 
-void XMemFree(void)
+void XMemFree(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar2;
+  ulonglong uVar3;
+  int *in_r13;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0x80000000) == 0x80000000) {
+    if ((param_2 & 0xff0000) == 0x820000) {
+      if ((param_2 & 0x1fff) != 7) {
+        MyAssertHandler(0xffffffff8217ce88,0x5f2,0,0xffffffff82000f98,0xffffffff8217d668);
+      }
+      if (*(int *)(*in_r13 + 0xfc) == 0) {
+        MyAssertHandler(0xffffffff8217ce88,0x5f3,0,0xffffffff82000f98,0xffffffff8217d564);
+      }
+      Sound_PhysicalFree(uVar1);
+      __restgprlr_28();
+      return;
+    }
+  }
+  else {
+    if ((param_2 & 0x30000000) != 0x20000000) {
+      MyAssertHandler(0xffffffff8217ce88,0x5fb,0,0xffffffff82000f98,0xffffffff8217d454);
+    }
+    uVar3 = (param_2 & 0xffffffff) >> 0x10 & 0xff;
+    if (uVar3 == 0x80) {
+      cVar2 = Sys_IsRenderThread();
+      if (cVar2 != '\0') {
+        if (DAT_84123554 == 0) {
+          MyAssertHandler(0xffffffff8217ce88,0x603,0,0xffffffff82000f98,0xffffffff8217d414);
+        }
+        RtlFreeHeap(DAT_84123554,0,uVar1);
+      }
+    }
+    else if (uVar3 == 0x82) {
+      if (*(int *)(*in_r13 + 0xfc) != 0) {
+        if ((param_2 & 0x1fff) != 6) {
+          MyAssertHandler(0xffffffff8217ce88,0x60c,0,0xffffffff82000f98,0xffffffff8217d3b4);
+        }
+        Sound_Free(uVar1);
+        __restgprlr_28();
+        return;
+      }
+    }
+    else if ((uVar3 == 0x93) && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff8217ce88,0x612,0,0xffffffff8217d364);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 

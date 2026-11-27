@@ -57,34 +57,329 @@
 ; 828CD5D8  XAudioVoice_SetEffectParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:62)
   828CD5D8  7D8802A6             mfspr r12,LR
   828CD5DC  480490D5             bl 0x829166b0
+  828CD5E0  9421FF70             stwu r1,-0x90(r1)
+  828CD5E4  3D60829B             lis r11,-0x7d65
+  828CD5E8  7C7E1B78             or r30,r3,r3
+  828CD5EC  3BEBFEB0             subi r31,r11,0x150
+  828CD5F0  7C9D2378             or r29,r4,r4
+  828CD5F4  387F0004             addi r3,r31,0x4
+  828CD5F8  7CBC2B78             or r28,r5,r5
+  828CD5FC  7CDB3378             or r27,r6,r6
+  828CD600  7CFA3B78             or r26,r7,r7
+  828CD604  48073C11             bl 0x82941214
+  828CD608  815E0000             lwz r10,0x0(r30)
+  828CD60C  7F47D378             or r7,r26,r26
+  828CD610  7F66DB78             or r6,r27,r27
+  828CD614  7F85E378             or r5,r28,r28
+  828CD618  7FA4EB78             or r4,r29,r29
+  828CD61C  7FC3F378             or r3,r30,r30
+  828CD620  812A0020             lwz r9,0x20(r10)
+  828CD624  7D2903A6             mtspr CTR,r9
+  828CD628  4E800421             bctrl
+  828CD62C  7C7E1B78             or r30,r3,r3
+  828CD630  387F0004             addi r3,r31,0x4
+  828CD634  48073BD1             bl 0x82941204
+  828CD638  7FC3F378             or r3,r30,r30
+  828CD63C  38210090             addi r1,r1,0x90
+  828CD640  480490C0             b 0x82916700
 
 ; 828CD648  XAudioVoice_SetVoiceOutput  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:68)
   828CD648  7D8802A6             mfspr r12,LR
   828CD64C  48049071             bl 0x829166bc
+  828CD650  9421FF90             stwu r1,-0x70(r1)
+  828CD654  3D60829B             lis r11,-0x7d65
+  828CD658  7C7E1B78             or r30,r3,r3
+  828CD65C  3BEBFEB0             subi r31,r11,0x150
+  828CD660  7C9D2378             or r29,r4,r4
+  828CD664  387F0004             addi r3,r31,0x4
+  828CD668  48073BAD             bl 0x82941214
+  828CD66C  815E0000             lwz r10,0x0(r30)
+  828CD670  7FA4EB78             or r4,r29,r29
+  828CD674  7FC3F378             or r3,r30,r30
+  828CD678  812A0024             lwz r9,0x24(r10)
+  828CD67C  7D2903A6             mtspr CTR,r9
+  828CD680  4E800421             bctrl
+  828CD684  7C7E1B78             or r30,r3,r3
+  828CD688  387F0004             addi r3,r31,0x4
+  828CD68C  48073B79             bl 0x82941204
+  828CD690  7FC3F378             or r3,r30,r30
+  828CD694  38210070             addi r1,r1,0x70
+  828CD698  48049074             b 0x8291670c
 
 ; 828CD6A0  XAudioVoice_SetVoiceOutputVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:74)
   828CD6A0  7D8802A6             mfspr r12,LR
   828CD6A4  48049019             bl 0x829166bc
+  828CD6A8  9421FF90             stwu r1,-0x70(r1)
+  828CD6AC  3D60829B             lis r11,-0x7d65
+  828CD6B0  7C7E1B78             or r30,r3,r3
+  828CD6B4  3BEBFEB0             subi r31,r11,0x150
+  828CD6B8  7C9D2378             or r29,r4,r4
+  828CD6BC  387F0004             addi r3,r31,0x4
+  828CD6C0  48073B55             bl 0x82941214
+  828CD6C4  815E0000             lwz r10,0x0(r30)
+  828CD6C8  7FA4EB78             or r4,r29,r29
+  828CD6CC  7FC3F378             or r3,r30,r30
+  828CD6D0  812A0028             lwz r9,0x28(r10)
+  828CD6D4  7D2903A6             mtspr CTR,r9
+  828CD6D8  4E800421             bctrl
+  828CD6DC  7C7E1B78             or r30,r3,r3
+  828CD6E0  387F0004             addi r3,r31,0x4
+  828CD6E4  48073B21             bl 0x82941204
+  828CD6E8  7FC3F378             or r3,r30,r30
+  828CD6EC  38210070             addi r1,r1,0x70
+  828CD6F0  4804901C             b 0x8291670c
+
+; 828CD6F8  XAudioVoice_GetVoiceState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:86)
+  828CD6F8  7D8802A6             mfspr r12,LR
+  828CD6FC  48048FC1             bl 0x829166bc
+  828CD700  9421FF90             stwu r1,-0x70(r1)
+  828CD704  3D60829B             lis r11,-0x7d65
+  828CD708  7C7E1B78             or r30,r3,r3
+  828CD70C  3BEBFEB0             subi r31,r11,0x150
+  828CD710  7C9D2378             or r29,r4,r4
+  828CD714  387F0004             addi r3,r31,0x4
+  828CD718  48073AFD             bl 0x82941214
+  828CD71C  815E0000             lwz r10,0x0(r30)
+  828CD720  7FA4EB78             or r4,r29,r29
+  828CD724  7FC3F378             or r3,r30,r30
+  828CD728  812A0030             lwz r9,0x30(r10)
+  828CD72C  7D2903A6             mtspr CTR,r9
+  828CD730  4E800421             bctrl
+  828CD734  7C7E1B78             or r30,r3,r3
+  828CD738  387F0004             addi r3,r31,0x4
+  828CD73C  48073AC9             bl 0x82941204
+  828CD740  7FC3F378             or r3,r30,r30
+  828CD744  38210070             addi r1,r1,0x70
+  828CD748  48048FC4             b 0x8291670c
 
 ; 828CD750  XAudioSourceVoice_SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:114)
   828CD750  7D8802A6             mfspr r12,LR
   828CD754  48048F65             bl 0x829166b8
+  828CD758  9421FF80             stwu r1,-0x80(r1)
+  828CD75C  3D60829B             lis r11,-0x7d65
+  828CD760  7C7E1B78             or r30,r3,r3
+  828CD764  3BEBFEB0             subi r31,r11,0x150
+  828CD768  7C9D2378             or r29,r4,r4
+  828CD76C  387F0004             addi r3,r31,0x4
+  828CD770  7CBC2B78             or r28,r5,r5
+  828CD774  48073AA1             bl 0x82941214
+  828CD778  807E004C             lwz r3,0x4c(r30)
+  828CD77C  7F85E378             or r5,r28,r28
+  828CD780  7FA4EB78             or r4,r29,r29
+  828CD784  81430000             lwz r10,0x0(r3)
+  828CD788  812A001C             lwz r9,0x1c(r10)
+  828CD78C  7D2903A6             mtspr CTR,r9
+  828CD790  4E800421             bctrl
+  828CD794  7C7E1B78             or r30,r3,r3
+  828CD798  387F0004             addi r3,r31,0x4
+  828CD79C  48073A69             bl 0x82941204
+  828CD7A0  7FC3F378             or r3,r30,r30
+  828CD7A4  38210080             addi r1,r1,0x80
+  828CD7A8  48048F60             b 0x82916708
+
+; 828CD7B0  XAudioSourceVoice_FlushPackets  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:120)
+  828CD7B0  7D8802A6             mfspr r12,LR
+  828CD7B4  9181FFF8             stw r12,-0x8(r1)
+  828CD7B8  FBC1FFE8             std r30,-0x18(r1)
+  828CD7BC  FBE1FFF0             std r31,-0x10(r1)
+  828CD7C0  9421FF90             stwu r1,-0x70(r1)
+  828CD7C4  3D60829B             lis r11,-0x7d65
+  828CD7C8  7C7E1B78             or r30,r3,r3
+  828CD7CC  3BEBFEB0             subi r31,r11,0x150
+  828CD7D0  387F0004             addi r3,r31,0x4
+  828CD7D4  48073A41             bl 0x82941214
+  828CD7D8  7FC3F378             or r3,r30,r30
+  828CD7DC  480091FD             bl 0x828d69d8
+  828CD7E0  7C7E1B78             or r30,r3,r3
+  828CD7E4  387F0004             addi r3,r31,0x4
+  828CD7E8  48073A1D             bl 0x82941204
+  828CD7EC  7FC3F378             or r3,r30,r30
+  828CD7F0  38210070             addi r1,r1,0x70
+  828CD7F4  8181FFF8             lwz r12,-0x8(r1)
+  828CD7F8  7D8803A6             mtspr LR,r12
+  828CD7FC  EBC1FFE8             ld r30,-0x18(r1)
+  828CD800  EBE1FFF0             ld r31,-0x10(r1)
+  828CD804  4E800020             blr
 
 ; 828CD808  XAudioSourceVoice_Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:138)
   828CD808  7D8802A6             mfspr r12,LR
   828CD80C  48048EB1             bl 0x829166bc
+  828CD810  9421FF90             stwu r1,-0x70(r1)
+  828CD814  3D60829B             lis r11,-0x7d65
+  828CD818  7C7E1B78             or r30,r3,r3
+  828CD81C  3BEBFEB0             subi r31,r11,0x150
+  828CD820  7C9D2378             or r29,r4,r4
+  828CD824  387F0004             addi r3,r31,0x4
+  828CD828  480739ED             bl 0x82941214
+  828CD82C  7FA4EB78             or r4,r29,r29
+  828CD830  7FC3F378             or r3,r30,r30
+  828CD834  4800A00D             bl 0x828d7840
+  828CD838  7C7E1B78             or r30,r3,r3
+  828CD83C  387F0004             addi r3,r31,0x4
+  828CD840  480739C5             bl 0x82941204
+  828CD844  7FC3F378             or r3,r30,r30
+  828CD848  38210070             addi r1,r1,0x70
+  828CD84C  48048EC0             b 0x8291670c
 
 ; 828CD850  XAudioSourceVoice_Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:144)
   828CD850  7D8802A6             mfspr r12,LR
   828CD854  48048E69             bl 0x829166bc
+  828CD858  9421FF90             stwu r1,-0x70(r1)
+  828CD85C  3D60829B             lis r11,-0x7d65
+  828CD860  7C7E1B78             or r30,r3,r3
+  828CD864  3BEBFEB0             subi r31,r11,0x150
+  828CD868  7C9D2378             or r29,r4,r4
+  828CD86C  387F0004             addi r3,r31,0x4
+  828CD870  480739A5             bl 0x82941214
+  828CD874  815E0000             lwz r10,0x0(r30)
+  828CD878  7FA4EB78             or r4,r29,r29
+  828CD87C  7FC3F378             or r3,r30,r30
+  828CD880  812A003C             lwz r9,0x3c(r10)
+  828CD884  7D2903A6             mtspr CTR,r9
+  828CD888  4E800421             bctrl
+  828CD88C  7C7E1B78             or r30,r3,r3
+  828CD890  387F0004             addi r3,r31,0x4
+  828CD894  48073971             bl 0x82941204
+  828CD898  7FC3F378             or r3,r30,r30
+  828CD89C  38210070             addi r1,r1,0x70
+  828CD8A0  48048E6C             b 0x8291670c
+
+; 828CD8A8  XAudioSourceVoice_Discontinuity  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:150)
+  828CD8A8  7D8802A6             mfspr r12,LR
+  828CD8AC  9181FFF8             stw r12,-0x8(r1)
+  828CD8B0  FBC1FFE8             std r30,-0x18(r1)
+  828CD8B4  FBE1FFF0             std r31,-0x10(r1)
+  828CD8B8  9421FF90             stwu r1,-0x70(r1)
+  828CD8BC  3D60829B             lis r11,-0x7d65
+  828CD8C0  7C7E1B78             or r30,r3,r3
+  828CD8C4  3BEBFEB0             subi r31,r11,0x150
+  828CD8C8  387F0004             addi r3,r31,0x4
+  828CD8CC  48073949             bl 0x82941214
+  828CD8D0  807E004C             lwz r3,0x4c(r30)
+  828CD8D4  81430000             lwz r10,0x0(r3)
+  828CD8D8  812A0038             lwz r9,0x38(r10)
+  828CD8DC  7D2903A6             mtspr CTR,r9
+  828CD8E0  4E800421             bctrl
+  828CD8E4  7C7E1B78             or r30,r3,r3
+  828CD8E8  387F0004             addi r3,r31,0x4
+  828CD8EC  48073919             bl 0x82941204
+  828CD8F0  7FC3F378             or r3,r30,r30
+  828CD8F4  38210070             addi r1,r1,0x70
+  828CD8F8  8181FFF8             lwz r12,-0x8(r1)
+  828CD8FC  7D8803A6             mtspr LR,r12
+  828CD900  EBC1FFE8             ld r30,-0x18(r1)
+  828CD904  EBE1FFF0             ld r31,-0x10(r1)
+  828CD908  4E800020             blr
+
+; 828CD910  XAudioSourceVoice_GetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:156)
+  828CD910  7D8802A6             mfspr r12,LR
+  828CD914  48048DA9             bl 0x829166bc
+  828CD918  9421FF90             stwu r1,-0x70(r1)
+  828CD91C  3D60829B             lis r11,-0x7d65
+  828CD920  7C7E1B78             or r30,r3,r3
+  828CD924  3BEBFEB0             subi r31,r11,0x150
+  828CD928  7C9D2378             or r29,r4,r4
+  828CD92C  387F0004             addi r3,r31,0x4
+  828CD930  480738E5             bl 0x82941214
+  828CD934  807E004C             lwz r3,0x4c(r30)
+  828CD938  7FA4EB78             or r4,r29,r29
+  828CD93C  81430000             lwz r10,0x0(r3)
+  828CD940  812A003C             lwz r9,0x3c(r10)
+  828CD944  7D2903A6             mtspr CTR,r9
+  828CD948  4E800421             bctrl
+  828CD94C  7C7E1B78             or r30,r3,r3
+  828CD950  387F0004             addi r3,r31,0x4
+  828CD954  480738B1             bl 0x82941204
+  828CD958  7FC3F378             or r3,r30,r30
+  828CD95C  38210070             addi r1,r1,0x70
+  828CD960  48048DAC             b 0x8291670c
 
 ; 828CD968  XAudioSourceVoice_SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:162)
   828CD968  7D8802A6             mfspr r12,LR
   828CD96C  48048D51             bl 0x829166bc
+  828CD970  9421FF90             stwu r1,-0x70(r1)
+  828CD974  3D60829B             lis r11,-0x7d65
+  828CD978  7C7E1B78             or r30,r3,r3
+  828CD97C  3BEBFEB0             subi r31,r11,0x150
+  828CD980  7C9D2378             or r29,r4,r4
+  828CD984  387F0004             addi r3,r31,0x4
+  828CD988  4807388D             bl 0x82941214
+  828CD98C  807E004C             lwz r3,0x4c(r30)
+  828CD990  7FA4EB78             or r4,r29,r29
+  828CD994  81430000             lwz r10,0x0(r3)
+  828CD998  812A0040             lwz r9,0x40(r10)
+  828CD99C  7D2903A6             mtspr CTR,r9
+  828CD9A0  4E800421             bctrl
+  828CD9A4  7C7E1B78             or r30,r3,r3
+  828CD9A8  387F0004             addi r3,r31,0x4
+  828CD9AC  48073859             bl 0x82941204
+  828CD9B0  7FC3F378             or r3,r30,r30
+  828CD9B4  38210070             addi r1,r1,0x70
+  828CD9B8  48048D54             b 0x8291670c
+
+; 828CD9C0  XAudioSourceVoice_SetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:174)
+  828CD9C0  7D8802A6             mfspr r12,LR
+  828CD9C4  48048CF9             bl 0x829166bc
+  828CD9C8  9421FF90             stwu r1,-0x70(r1)
+  828CD9CC  3D60829B             lis r11,-0x7d65
+  828CD9D0  7C7E1B78             or r30,r3,r3
+  828CD9D4  3BEBFEB0             subi r31,r11,0x150
+  828CD9D8  7C9D2378             or r29,r4,r4
+  828CD9DC  387F0004             addi r3,r31,0x4
+  828CD9E0  48073835             bl 0x82941214
+  828CD9E4  807E004C             lwz r3,0x4c(r30)
+  828CD9E8  7FA4EB78             or r4,r29,r29
+  828CD9EC  81430000             lwz r10,0x0(r3)
+  828CD9F0  812A0048             lwz r9,0x48(r10)
+  828CD9F4  7D2903A6             mtspr CTR,r9
+  828CD9F8  4E800421             bctrl
+  828CD9FC  7C7E1B78             or r30,r3,r3
+  828CDA00  387F0004             addi r3,r31,0x4
+  828CDA04  48073801             bl 0x82941204
+  828CDA08  7FC3F378             or r3,r30,r30
+  828CDA0C  38210070             addi r1,r1,0x70
+  828CDA10  48048CFC             b 0x8291670c
+
+; 828CDA18  XAudioSourceVoice_GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:186)
+  828CDA18  7D8802A6             mfspr r12,LR
+  828CDA1C  48048CA1             bl 0x829166bc
+  828CDA20  9421FF90             stwu r1,-0x70(r1)
+  828CDA24  3D60829B             lis r11,-0x7d65
+  828CDA28  7C7E1B78             or r30,r3,r3
+  828CDA2C  3BEBFEB0             subi r31,r11,0x150
+  828CDA30  7C9D2378             or r29,r4,r4
+  828CDA34  387F0004             addi r3,r31,0x4
+  828CDA38  480737DD             bl 0x82941214
+  828CDA3C  807E004C             lwz r3,0x4c(r30)
+  828CDA40  7FA4EB78             or r4,r29,r29
+  828CDA44  81430000             lwz r10,0x0(r3)
+  828CDA48  812A0050             lwz r9,0x50(r10)
+  828CDA4C  7D2903A6             mtspr CTR,r9
+  828CDA50  4E800421             bctrl
+  828CDA54  7C7E1B78             or r30,r3,r3
+  828CDA58  387F0004             addi r3,r31,0x4
+  828CDA5C  480737A9             bl 0x82941204
+  828CDA60  7FC3F378             or r3,r30,r30
+  828CDA64  38210070             addi r1,r1,0x70
+  828CDA68  48048CA4             b 0x8291670c
 
 ; 828CDA70  XAudioSourceVoice_GetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:192)
   828CDA70  7D8802A6             mfspr r12,LR
   828CDA74  48048C49             bl 0x829166bc
+  828CDA78  9421FF90             stwu r1,-0x70(r1)
+  828CDA7C  3D60829B             lis r11,-0x7d65
+  828CDA80  7C7E1B78             or r30,r3,r3
+  828CDA84  3BEBFEB0             subi r31,r11,0x150
+  828CDA88  7C9D2378             or r29,r4,r4
+  828CDA8C  387F0004             addi r3,r31,0x4
+  828CDA90  48073785             bl 0x82941214
+  828CDA94  C01E008C             lfs f0,0x8c(r30)
+  828CDA98  D01D0000             stfs f0,0x0(r29)
+  828CDA9C  387F0004             addi r3,r31,0x4
+  828CDAA0  48073765             bl 0x82941204
+  828CDAA4  38600000             li r3,0x0
+  828CDAA8  38210070             addi r1,r1,0x70
+  828CDAAC  48048C60             b 0x8291670c
 
 ; 828CDAB0  XAudioSourceVoice_SetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:198)
   828CDAB0  7D8802A6             mfspr r12,LR
@@ -148,6 +443,69 @@
   828CDB94  EBE1FFF0             ld r31,-0x10(r1)
   828CDB98  4E800020             blr
 
+; 828CDD80  XAudioInitialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:274)
+  828CDD80  38800000             li r4,0x0
+  828CDD84  4BFFFE1C             b 0x828cdba0
+
+; 828CDBA0  XAudioInitializeEx  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:301)
+  828CDBA0  7D8802A6             mfspr r12,LR
+  828CDBA4  48048B19             bl 0x829166bc
+  828CDBA8  9421FF80             stwu r1,-0x80(r1)
+  828CDBAC  3D60829B             lis r11,-0x7d65
+  828CDBB0  7C7E1B78             or r30,r3,r3
+  828CDBB4  3BEBFEB0             subi r31,r11,0x150
+  828CDBB8  7C9D2378             or r29,r4,r4
+  828CDBBC  387F0004             addi r3,r31,0x4
+  828CDBC0  48073655             bl 0x82941214
+  828CDBC4  3D608489             lis r11,-0x7b77
+  828CDBC8  806B5944             lwz r3,0x5944(r11)
+  828CDBCC  2B030000             cmplwi cr6,r3,0x0
+  828CDBD0  419A0028             beq cr6,0x828cdbf8
+  828CDBD4  81630000             lwz r11,0x0(r3)
+  828CDBD8  814B0004             lwz r10,0x4(r11)
+  828CDBDC  7D4903A6             mtspr CTR,r10
+  828CDBE0  4E800421             bctrl
+  828CDBE4  387F0004             addi r3,r31,0x4
+  828CDBE8  4807361D             bl 0x82941204
+  828CDBEC  38600000             li r3,0x0
+  828CDBF0  38210080             addi r1,r1,0x80
+  828CDBF4  48048B18             b 0x8291670c
+LAB_828cdbf8:
+  828CDBF8  2B1E0000             cmplwi cr6,r30,0x0
+  828CDBFC  409A0018             bne cr6,0x828cdc14
+  828CDC00  39410050             addi r10,r1,0x50
+  828CDC04  39600000             li r11,0x0
+  828CDC08  3BC10050             addi r30,r1,0x50
+  828CDC0C  F96A0000             std r11,0x0(r10)
+  828CDC10  916A0008             stw r11,0x8(r10)
+LAB_828cdc14:
+  828CDC14  3D408296             lis r10,-0x7d6a
+  828CDC18  3D608296             lis r11,-0x7d6a
+  828CDC1C  394A0340             addi r10,r10,0x340
+  828CDC20  388B0348             addi r4,r11,0x348
+  828CDC24  386A0004             addi r3,r10,0x4
+  828CDC28  7F032040             cmplw cr6,r3,r4
+  828CDC2C  4098001C             bge cr6,0x828cdc48
+LAB_828cdc30:
+  828CDC30  81630000             lwz r11,0x0(r3)
+  828CDC34  2B0B0000             cmplwi cr6,r11,0x0
+  828CDC38  409A0010             bne cr6,0x828cdc48
+  828CDC3C  38630004             addi r3,r3,0x4
+  828CDC40  7F032040             cmplw cr6,r3,r4
+  828CDC44  4198FFEC             blt cr6,0x828cdc30
+LAB_828cdc48:
+  828CDC48  81630000             lwz r11,0x0(r3)
+  828CDC4C  7FA6EB78             or r6,r29,r29
+  828CDC50  7FC5F378             or r5,r30,r30
+  828CDC54  7D6903A6             mtspr CTR,r11
+  828CDC58  4E800421             bctrl
+  828CDC5C  7C7E1B78             or r30,r3,r3
+  828CDC60  387F0004             addi r3,r31,0x4
+  828CDC64  480735A1             bl 0x82941204
+  828CDC68  7FC3F378             or r3,r30,r30
+  828CDC6C  38210080             addi r1,r1,0x80
+  828CDC70  48048A9C             b 0x8291670c
+
 ; 828CD4B8  XAudioInitializeInternal  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:371)
   828CD4B8  7D8802A6             mfspr r12,LR
   828CD4BC  9181FFF8             stw r12,-0x8(r1)
@@ -204,10 +562,93 @@ LAB_828cdcdc:
   828CDCEC  EBE1FFF0             ld r31,-0x10(r1)
   828CDCF0  4E800020             blr
 
+; 828CDCF8  XAudioRegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:576)
+  828CDCF8  7D8802A6             mfspr r12,LR
+  828CDCFC  9181FFF8             stw r12,-0x8(r1)
+  828CDD00  FBC1FFE8             std r30,-0x18(r1)
+  828CDD04  FBE1FFF0             std r31,-0x10(r1)
+  828CDD08  9421FF90             stwu r1,-0x70(r1)
+  828CDD0C  3D60829B             lis r11,-0x7d65
+  828CDD10  7C7E1B78             or r30,r3,r3
+  828CDD14  3BEBFEB0             subi r31,r11,0x150
+  828CDD18  387F0004             addi r3,r31,0x4
+  828CDD1C  480734F9             bl 0x82941214
+  828CDD20  3D608489             lis r11,-0x7b77
+  828CDD24  816B5944             lwz r11,0x5944(r11)
+  828CDD28  2B0B0000             cmplwi cr6,r11,0x0
+  828CDD2C  409A0018             bne cr6,0x828cdd44
+LAB_828cdd30:
+  828CDD30  387F0004             addi r3,r31,0x4
+  828CDD34  480734D1             bl 0x82941204
+  828CDD38  3C608000             lis r3,-0x8000
+  828CDD3C  60634005             ori r3,r3,0x4005
+  828CDD40  48000028             b 0x828cdd68
+LAB_828cdd44:
+  828CDD44  806B003C             lwz r3,0x3c(r11)
+  828CDD48  2B030000             cmplwi cr6,r3,0x0
+  828CDD4C  419AFFE4             beq cr6,0x828cdd30
+  828CDD50  7FC4F378             or r4,r30,r30
+  828CDD54  4800855D             bl 0x828d62b0
+  828CDD58  7C7E1B78             or r30,r3,r3
+  828CDD5C  387F0004             addi r3,r31,0x4
+  828CDD60  480734A5             bl 0x82941204
+  828CDD64  7FC3F378             or r3,r30,r30
+LAB_828cdd68:
+  828CDD68  38210070             addi r1,r1,0x70
+  828CDD6C  8181FFF8             lwz r12,-0x8(r1)
+  828CDD70  7D8803A6             mtspr LR,r12
+  828CDD74  EBC1FFE8             ld r30,-0x18(r1)
+  828CDD78  EBE1FFF0             ld r31,-0x10(r1)
+  828CDD7C  4E800020             blr
+
 ; 828CDD88  XAudioCreateSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:660)
   828CDD88  7D8802A6             mfspr r12,LR
   828CDD8C  48048931             bl 0x829166bc
+  828CDD90  9421FF80             stwu r1,-0x80(r1)
+  828CDD94  3D60829B             lis r11,-0x7d65
+  828CDD98  7C7E1B78             or r30,r3,r3
+  828CDD9C  3BEBFEB0             subi r31,r11,0x150
+  828CDDA0  7C9D2378             or r29,r4,r4
+  828CDDA4  387F0004             addi r3,r31,0x4
+  828CDDA8  4807346D             bl 0x82941214
+  828CDDAC  38A10050             addi r5,r1,0x50
+  828CDDB0  38800000             li r4,0x0
+  828CDDB4  7FC3F378             or r3,r30,r30
+  828CDDB8  48009989             bl 0x828d7740
+  828CDDBC  7C7E1B78             or r30,r3,r3
+  828CDDC0  2F030000             cmpwi cr6,r3,0x0
+  828CDDC4  4198000C             blt cr6,0x828cddd0
+  828CDDC8  81610050             lwz r11,0x50(r1)
+  828CDDCC  917D0000             stw r11,0x0(r29)
+LAB_828cddd0:
+  828CDDD0  387F0004             addi r3,r31,0x4
+  828CDDD4  48073431             bl 0x82941204
+  828CDDD8  7FC3F378             or r3,r30,r30
+  828CDDDC  38210080             addi r1,r1,0x80
+  828CDDE0  4804892C             b 0x8291670c
 
 ; 828CDDE8  XAudioCreateSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:727)
   828CDDE8  7D8802A6             mfspr r12,LR
   828CDDEC  480488D1             bl 0x829166bc
+  828CDDF0  9421FF80             stwu r1,-0x80(r1)
+  828CDDF4  3D60829B             lis r11,-0x7d65
+  828CDDF8  7C7E1B78             or r30,r3,r3
+  828CDDFC  3BEBFEB0             subi r31,r11,0x150
+  828CDE00  7C9D2378             or r29,r4,r4
+  828CDE04  387F0004             addi r3,r31,0x4
+  828CDE08  4807340D             bl 0x82941214
+  828CDE0C  38A10050             addi r5,r1,0x50
+  828CDE10  38800000             li r4,0x0
+  828CDE14  7FC3F378             or r3,r30,r30
+  828CDE18  48009F31             bl 0x828d7d48
+  828CDE1C  7C7E1B78             or r30,r3,r3
+  828CDE20  2F030000             cmpwi cr6,r3,0x0
+  828CDE24  4198000C             blt cr6,0x828cde30
+  828CDE28  81610050             lwz r11,0x50(r1)
+  828CDE2C  917D0000             stw r11,0x0(r29)
+LAB_828cde30:
+  828CDE30  387F0004             addi r3,r31,0x4
+  828CDE34  480733D1             bl 0x82941204
+  828CDE38  7FC3F378             or r3,r30,r30
+  828CDE3C  38210080             addi r1,r1,0x80
+  828CDE40  480488CC             b 0x8291670c

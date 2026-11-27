@@ -2,11 +2,148 @@
 
 // 824B2810  G_AntiLagRewindClientPos  (game/g_weapon.cpp:53)
 
-void G_AntiLagRewindClientPos(void)
+void G_AntiLagRewindClientPos(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  float *pfVar7;
+  int iVar8;
+  longlong lVar9;
+  void *_Dst;
+  char cVar11;
+  undefined8 uVar10;
+  ulonglong uVar12;
+  int iVar13;
+  ulonglong uVar14;
+  int iVar15;
+  int iVar16;
+  float *pfVar17;
+  char local_270 [4];
+  undefined4 local_26c;
+  undefined4 local_268;
+  undefined4 local_264;
+  undefined2 local_260;
+  float local_250 [56];
+  float local_170 [92];
+  
+  lVar9 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x3b,0,0xffffffff82000f98,0xffffffff8207ed78);
+  }
+  _Dst = (void *)param_2;
+  memset(_Dst,0,0x1c4);
+  if ((int)lVar9 < 1) {
+    MyAssertHandler(0xffffffff8207ed88,0x3e,0,0xffffffff82000f98,0xffffffff8207ed68);
+  }
+  if (1000 < (int)(DAT_83580fac - (int)lVar9)) {
+    lVar9 = (ulonglong)DAT_83580fac - 1000;
+  }
+  local_26c = 0;
+  local_268 = 0;
+  local_264 = 0;
+  local_260 = 0;
+  cVar11 = SV_GetClientPositionsAtTime(lVar9,local_250,local_170,local_270);
+  if ((cVar11 != '\0') && (iVar15 = 0, 0 < DAT_83580fa4)) {
+    iVar6 = (int)local_250 - (int)_Dst;
+    iVar8 = (int)local_170 - (int)_Dst;
+    pfVar17 = (float *)&DAT_833737c0;
+    uVar14 = param_2 + 0x1b0;
+    lVar9 = param_2 + 8;
+    iVar13 = 0;
+    iVar16 = 0;
+    uVar12 = uVar14;
+    do {
+      if (local_270[iVar15] == '\0') {
+LAB_824b2ca0:
+        *(undefined1 *)((int)uVar12 + iVar15) = 0;
+      }
+      else {
+        if ((*(int *)(iVar13 + DAT_83580b00 + 0x332c) != 2) ||
+           (*(int *)(iVar13 + DAT_83580b00 + 0x3300) != 0)) goto LAB_824b2ca0;
+        pfVar7 = (float *)lVar9;
+        if (((uint)*(float *)((int)local_250 + iVar16) & 0x7f800000) == 0x7f800000) {
+LAB_824b2a08:
+          uVar10 = va(0xffffffff8207ea5c,iVar15,(double)*(float *)((int)local_250 + iVar16),
+                      (double)*(float *)((int)local_250 + iVar16 + 4),
+                      (double)*(float *)(iVar6 + (int)pfVar7));
+          MyAssertHandler(0xffffffff8207ed88,0x4c,0,0xffffffff820011f4,0xffffffff8207ea98,uVar10);
+        }
+        else {
+          if ((*(uint *)((int)local_250 + iVar16 + 4) & 0x7f800000) == 0x7f800000)
+          goto LAB_824b2a08;
+          if ((*(uint *)(iVar6 + (int)pfVar7) & 0x7f800000) == 0x7f800000) goto LAB_824b2a08;
+        }
+        if (((uint)*(float *)((int)local_170 + iVar16) & 0x7f800000) == 0x7f800000) {
+LAB_824b2aac:
+          uVar10 = va(0xffffffff8207eb0c,iVar15,(double)*(float *)((int)local_170 + iVar16),
+                      (double)*(float *)((int)local_170 + iVar16 + 4),
+                      (double)*(float *)(iVar8 + (int)pfVar7));
+          MyAssertHandler(0xffffffff8207ed88,0x4d,0,0xffffffff820011f4,0xffffffff8207eb48,uVar10);
+        }
+        else {
+          if ((*(uint *)((int)local_170 + iVar16 + 4) & 0x7f800000) == 0x7f800000)
+          goto LAB_824b2aac;
+          if ((*(uint *)(iVar8 + (int)pfVar7) & 0x7f800000) == 0x7f800000) goto LAB_824b2aac;
+        }
+        pfVar7[-2] = pfVar17[-2];
+        pfVar7[-1] = pfVar17[-1];
+        *pfVar7 = *pfVar17;
+        pfVar7[0x34] = pfVar17[1];
+        pfVar7[0x35] = pfVar17[2];
+        pfVar7[0x36] = pfVar17[3];
+        if (((uint)pfVar7[-2] & 0x7f800000) == 0x7f800000) {
+LAB_824b2b74:
+          uVar10 = va("client %i\'s origin is invalid - (%f, %f, %f)",iVar15,(double)pfVar7[-2],
+                      (double)pfVar7[-1],(double)*pfVar7);
+          MyAssertHandler(0xffffffff8207ed88,0x53,0,0xffffffff820011f4,
+                          "!IS_NAN( antilagStore->realClientPositions[client][0]) && !IS_NAN(antilagStore->realClientPositions[client][1]) && !IS_NAN(antilagStore->realClientPositions[client][2])"
+                          ,uVar10);
+        }
+        else {
+          if (((uint)pfVar7[-1] & 0x7f800000) == 0x7f800000) goto LAB_824b2b74;
+          if (((uint)*pfVar7 & 0x7f800000) == 0x7f800000) goto LAB_824b2b74;
+        }
+        if (((uint)pfVar7[0x34] & 0x7f800000) == 0x7f800000) {
+LAB_824b2c04:
+          uVar10 = va("client %i\'s angles are invalid - (%f, %f, %f)",iVar15,(double)pfVar7[0x34],
+                      (double)pfVar7[0x35],(double)pfVar7[0x36]);
+          MyAssertHandler(0xffffffff8207ed88,0x54,0,0xffffffff820011f4,
+                          "!IS_NAN( antilagStore->realClientAngles[client][0]) && !IS_NAN(antilagStore->realClientAngles[client][1]) && !IS_NAN(antilagStore->realClientAngles[client][2])"
+                          ,uVar10);
+        }
+        else {
+          if (((uint)pfVar7[0x35] & 0x7f800000) == 0x7f800000) goto LAB_824b2c04;
+          if (((uint)pfVar7[0x36] & 0x7f800000) == 0x7f800000) goto LAB_824b2c04;
+        }
+        fVar1 = *(float *)((int)local_250 + iVar16 + 4);
+        fVar3 = *(float *)(iVar6 + (int)pfVar7);
+        fVar4 = *(float *)((int)local_170 + iVar16);
+        fVar2 = *(float *)((int)local_170 + iVar16 + 4);
+        fVar5 = *(float *)(iVar8 + (int)pfVar7);
+        pfVar17[-2] = *(float *)((int)local_250 + iVar16);
+        pfVar17[-1] = fVar1;
+        *pfVar17 = fVar3;
+        pfVar17[1] = fVar4;
+        pfVar17[2] = fVar2;
+        pfVar17[3] = fVar5;
+        SV_LinkEntity(pfVar17 + -0x50);
+        uVar12 = uVar14 & 0xffffffff;
+        *(undefined1 *)((int)uVar14 + iVar15) = 1;
+      }
+      iVar15 = iVar15 + 1;
+      iVar13 = iVar13 + 0x3980;
+      lVar9 = lVar9 + 0xc;
+      iVar16 = iVar16 + 0xc;
+      pfVar17 = pfVar17 + 0xa0;
+    } while (iVar15 < DAT_83580fa4);
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -25,18 +162,324 @@ void G_AntiLagRewindClientIndexPos(int param_1)
 void G_AntiLag_RestoreClientPos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  
+  iVar2 = __savegprlr_19();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x75,0,0xffffffff82000f98,0xffffffff8207ed78);
+  }
+  iVar4 = 0;
+  if (0 < DAT_83580fa4) {
+    pfVar5 = (float *)&DAT_833737c0;
+    pfVar6 = (float *)(iVar2 + 0xe0);
+    iVar3 = DAT_83580fa4;
+    do {
+      if (*(char *)(iVar2 + 0x1b0 + iVar4) != '\0') {
+        if (((uint)pfVar6[-0x38] & 0x7f800000) == 0x7f800000) {
+LAB_824b2dd8:
+          uVar1 = va(0xffffffff8207ebb4,iVar4,(double)pfVar6[-0x38],(double)pfVar6[-0x37],
+                     (double)pfVar6[-0x36]);
+          MyAssertHandler(0xffffffff8207ed88,0x7b,0,0xffffffff820011f4,0xffffffff8207edc8,uVar1);
+        }
+        else {
+          if (((uint)pfVar6[-0x37] & 0x7f800000) == 0x7f800000) goto LAB_824b2dd8;
+          if (((uint)pfVar6[-0x36] & 0x7f800000) == 0x7f800000) goto LAB_824b2dd8;
+        }
+        if (((uint)pfVar6[-2] & 0x7f800000) == 0x7f800000) {
+LAB_824b2e68:
+          uVar1 = va(0xffffffff8207ec94,iVar4,(double)pfVar6[-2],(double)pfVar6[-1],(double)*pfVar6)
+          ;
+          MyAssertHandler(0xffffffff8207ed88,0x7c,0,0xffffffff820011f4,0xffffffff8207ee70,uVar1);
+        }
+        else {
+          if (((uint)pfVar6[-1] & 0x7f800000) == 0x7f800000) goto LAB_824b2e68;
+          if (((uint)*pfVar6 & 0x7f800000) == 0x7f800000) goto LAB_824b2e68;
+        }
+        pfVar5[-2] = pfVar6[-0x38];
+        pfVar5[-1] = pfVar6[-0x37];
+        *pfVar5 = pfVar6[-0x36];
+        pfVar5[1] = pfVar6[-2];
+        pfVar5[2] = pfVar6[-1];
+        pfVar5[3] = *pfVar6;
+        SV_LinkEntity(pfVar5 + -0x50);
+        *(undefined1 *)(iVar2 + 0x1b0 + iVar4) = 0;
+        iVar3 = DAT_83580fa4;
+      }
+      iVar4 = iVar4 + 1;
+      pfVar6 = pfVar6 + 3;
+      pfVar5 = pfVar5 + 0xa0;
+    } while (iVar4 < iVar3);
+  }
+  __restgprlr_19();
+  return;
+}
+
+
+// 824B2F10  Melee_Trace  (game/g_weapon.cpp:461)
+
+void Melee_Trace(undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+                ulonglong param_5,undefined8 param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  float *pfVar4;
+  undefined4 *puVar6;
+  ulonglong uVar5;
+  uint uVar7;
+  int iVar8;
+  ulonglong in_r9;
+  float *_Dst;
+  ulonglong in_r10;
+  undefined8 uVar9;
+  uint uVar10;
+  uint uVar11;
+  int *piVar12;
+  double dVar13;
+  double extraout_f1;
+  double dVar14;
+  double dVar15;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  float local_110;
+  float local_10c;
+  float local_108;
+  undefined8 local_100;
+  undefined8 local_f8;
+  undefined8 local_f0;
+  float local_e0 [4];
+  uint local_d0;
+  short local_b4;
+  
+  __savegprlr_16();
+  puVar6 = (undefined4 *)__savefpr_28();
+  dVar15 = extraout_f1;
+  if (puVar6 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8207ed88,0x1de,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x1df,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  if ((in_r9 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x1e0,0,0xffffffff82000f98,0xffffffff8207ef64);
+  }
+  if ((in_r10 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x1e1,0,0xffffffff82000f98,0xffffffff8207ef58);
+  }
+  dVar14 = 1.0;
+  _Dst = (float *)in_r9;
+  *_Dst = 1.0;
+  if ((0.0 < param_2) || (uVar10 = 1, 0.0 < param_3)) {
+    uVar10 = 9;
+  }
+  pfVar4 = (float *)param_5;
+  if (puVar6[0x56] == 0) {
+    local_130 = pfVar4[9];
+    local_12c = pfVar4[10];
+    local_128 = pfVar4[0xb];
+  }
+  else {
+    local_130 = -(*pfVar4 * 10.0 - pfVar4[9]);
+    local_12c = -(pfVar4[1] * 10.0 - pfVar4[10]);
+    local_128 = -(pfVar4[2] * 10.0 - pfVar4[0xb]);
+  }
+  uVar11 = 0;
+  if (uVar10 != 0) {
+    do {
+      local_120 = (float)((double)*pfVar4 * dVar15 + (double)pfVar4[9]);
+      local_11c = (float)((double)pfVar4[1] * dVar15 + (double)pfVar4[10]);
+      local_118 = (float)((double)pfVar4[2] * dVar15 + (double)pfVar4[0xb]);
+      if (1 < uVar10) {
+        fVar1 = (float)((double)(float)(&DAT_8207ef10)[uVar11 * 2] * param_2);
+        fVar2 = (float)((double)(float)(&DAT_8207ef14)[uVar11 * 2] * param_3);
+        local_120 = fVar2 * pfVar4[6] + pfVar4[3] * fVar1 + local_120;
+        local_11c = pfVar4[7] * fVar2 + pfVar4[4] * fVar1 + local_11c;
+        local_118 = pfVar4[8] * fVar2 + pfVar4[5] * fVar1 + local_118;
+      }
+      G_LocationalTrace(local_e0,&local_130,&local_120,*puVar6,0x2806091,0xffffffff82969428);
+      dVar13 = (double)local_e0[0];
+      local_110 = (float)((double)(float)((double)local_120 - (double)local_130) * dVar13 +
+                         (double)local_130);
+      local_10c = (float)((double)(float)((double)local_11c - (double)local_12c) * dVar13 +
+                         (double)local_12c);
+      local_108 = (float)((double)(float)((double)local_118 - (double)local_128) * dVar13 +
+                         (double)local_128);
+      if (uVar11 == 0) {
+        G_CheckHitTriggerDamage(puVar6,&local_130,&local_130,&local_110,param_6,8);
+        uVar5 = Trace_GetGlassHitId(local_e0);
+        if ((uVar5 & 0xffff) != 0) {
+          G_Glass_DamagePiece((uVar5 & 0xffff) - 1,*(undefined4 *)(DAT_833464e4 + 0xc),&local_110,
+                              param_5);
+        }
+        dVar13 = (double)local_e0[0];
+      }
+      if ((dVar13 == dVar14) || ((local_d0 & 0x10) != 0)) {
+        if (*(char *)(DAT_834b3694 + 0xc) != '\0') {
+          G_DebugLineWithDuration(&local_130,&local_120,0xffffffff821817e8,1,200);
+        }
+      }
+      else {
+        uVar7 = Trace_GetEntityHitId(local_e0);
+        iVar8 = (uVar7 & 0xffff) + (uVar7 & 0xffff) * 4;
+        piVar12 = &DAT_83373680 + iVar8 * 0x20;
+        pfVar3 = (float *)in_r10;
+        if ((puVar6[0x56] == 0) || ((&DAT_833737d8)[iVar8 * 0x20] == 0)) {
+          if (*(char *)(DAT_834b3694 + 0xc) != '\0') {
+            G_DebugLineWithDuration(&local_130,&local_120,0xffffffff82181818,1,200);
+          }
+          if (local_e0[0] <= *_Dst) {
+            memcpy(_Dst,local_e0,0x34);
+            *pfVar3 = local_110;
+            pfVar3[1] = local_10c;
+            pfVar3[2] = local_108;
+          }
+        }
+        else if ((uVar11 < 5) || ((*(uint *)((&DAT_833737d8)[iVar8 * 0x20] + 0x10) & 0x100) == 0)) {
+          if ((*(int *)(DAT_83373634 + 0xc) == *piVar12) && (local_b4 != 0x13)) {
+            local_100 = 0xffffffffffffffff;
+            local_f8 = 0xffffffffffffffff;
+            local_f0 = 0xffffffffffffffff;
+            G_DObjCalcPose(piVar12,&local_100);
+            SV_XModelDebugBoxes(piVar12,0xffffffff82181838,*(undefined4 *)(DAT_8353feb4 + 0xc));
+            CL_AddDebugLine(&local_130,&local_120,0xffffffff821817f8,0,
+                            *(undefined4 *)(DAT_8353feb4 + 0xc),1);
+            CL_AddDebugStar(&local_110,0xffffffff821817e8,*(undefined4 *)(DAT_8353feb4 + 0xc),1);
+          }
+          else if (*(char *)(DAT_834b3694 + 0xc) != '\0') {
+            G_DebugLineWithDuration(&local_130,&local_120,0xffffffff821817f8,1,200);
+          }
+          memcpy(_Dst,local_e0,0x34);
+          *pfVar3 = local_110;
+          pfVar3[1] = local_10c;
+          pfVar3[2] = local_108;
+          __restfpr_28(1);
+          __restgprlr_16();
+          return;
+        }
+      }
+      uVar11 = uVar11 + 1;
+    } while (uVar11 < uVar10);
+    uVar9 = 1;
+    if ((double)*_Dst < dVar14) goto LAB_824b33a0;
+  }
+  uVar9 = 0;
+LAB_824b33a0:
+  __restfpr_28(uVar9);
+  __restgprlr_16();
+  return;
 }
 
 
 // 824B3420  Weapon_Melee_internal  (game/g_weapon.cpp:575)
 
-void Weapon_Melee_internal(void)
+void Weapon_Melee_internal
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined4 *puVar2;
+  bool bVar3;
+  int iVar7;
+  longlong lVar4;
+  char cVar11;
+  uint uVar8;
+  char *pcVar9;
+  undefined8 uVar5;
+  int iVar10;
+  longlong lVar6;
+  int iVar12;
+  ulonglong uVar13;
+  int *piVar14;
+  undefined8 extraout_f1;
+  undefined1 auStack_b0 [16];
+  undefined4 local_a0;
+  undefined4 local_9c;
+  float local_98;
+  undefined1 auStack_90 [44];
+  short local_64;
+  
+  iVar7 = __savegprlr_26();
+  uVar5 = extraout_f1;
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x251,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x252,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  puVar2 = (undefined4 *)param_5;
+  if (puVar2[0x11] == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x253,0,0xffffffff82000f98,0xffffffff8206b6a4);
+  }
+  lVar4 = BG_GetMeleeDamage(puVar2[0xf],*(undefined1 *)(puVar2 + 0x10));
+  cVar11 = Melee_Trace(uVar5,param_2,param_3,iVar7,param_5,lVar4);
+  if (cVar11 != '\0') {
+    uVar8 = Trace_GetEntityHitId(auStack_90);
+    iVar12 = (uVar8 & 0xffff) + (uVar8 & 0xffff) * 4;
+    iVar1 = iVar12 * 0x80;
+    piVar14 = &DAT_83373680 + iVar12 * 0x20;
+    bVar3 = local_64 != 0x13;
+    pcVar9 = (char *)BG_MeleeImpactRumble(puVar2[0xf],*(undefined1 *)(puVar2 + 0x10));
+    if ((((&DAT_833737d8)[iVar12 * 0x20] != 0) && (pcVar9 != (char *)0x0)) && (*pcVar9 != '\0')) {
+      (&DAT_83373782)[iVar1] = (&DAT_83373782)[iVar1] & 0xfe;
+      uVar5 = G_RumbleIndex();
+      G_AddEvent(piVar14,0x65,uVar5);
+    }
+    if (((*(int *)(iVar7 + 0x158) != 0) && ((&DAT_833737d8)[iVar12 * 0x20] != 0)) && (bVar3)) {
+      G_AddEvent(iVar7,0x35,0);
+    }
+    uVar5 = 0x33;
+    if ((&DAT_833737d8)[iVar12 * 0x20] == 0) {
+      uVar5 = 0x34;
+    }
+    iVar10 = G_TempEntity(auStack_b0,uVar5);
+    *(undefined4 *)(iVar10 + 0xd8) = 0;
+    *(int *)(iVar10 + 0x78) = *piVar14;
+    *(undefined4 *)(iVar10 + 200) = *(undefined4 *)(iVar7 + 200);
+    *(undefined4 *)(iVar10 + 0xcc) = *(undefined4 *)(iVar7 + 0xcc);
+    *(undefined4 *)(iVar10 + 0xa0) = 0;
+    if ((*(int *)(puVar2[0x11] + 0x1ec) != 0) && (*(int *)(iVar7 + 0x158) != 0)) {
+      *(undefined4 *)(iVar10 + 0xa0) = 1;
+    }
+    if (!bVar3) {
+      *(uint *)(iVar10 + 0xa0) = *(uint *)(iVar10 + 0xa0) | 2;
+    }
+    if ((*piVar14 != 0x7fe) && ((&DAT_833737eb)[iVar1] != '\0')) {
+      local_a0 = *puVar2;
+      local_9c = puVar2[1];
+      local_98 = (float)puVar2[2] + DAT_8296b508;
+      lVar6 = G_rand();
+      uVar8 = (int)lVar6 / 5 + ((int)lVar6 >> 0x1f);
+      uVar13 = (longlong)(int)uVar8 + (ulonglong)(uVar8 >> 0x1f);
+      lVar4 = (lVar6 - (uVar13 + (uVar13 & 0x3fffffff) * 4)) + lVar4;
+      if (bVar3) {
+        uVar5 = 0;
+      }
+      else {
+        uVar5 = 0x10;
+        if ((&DAT_833737d8)[iVar12 * 0x20] != 0) {
+          G_ShieldNotifyAndDamage(piVar14,iVar7,iVar7,&local_a0,auStack_b0,lVar4,0x10,8);
+          __restgprlr_26(piVar14);
+          return;
+        }
+      }
+      G_Damage(piVar14,iVar7,iVar7,&local_a0,auStack_b0,lVar4,uVar5,8);
+      __restgprlr_26(piVar14);
+      return;
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -58,53 +501,643 @@ Weapon_Melee(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8
 }
 
 
-// 824B38B0  Weapon_Throw_Grenade  (game/g_weapon.cpp:783)
+// 824B3818  gunrandom  (game/g_weapon.cpp:738)
 
-void Weapon_Throw_Grenade(void)
+void gunrandom(float *param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double _X;
+  
+  dVar1 = (double)G_random();
+  dVar3 = (double)(float)(dVar1 * 360.0);
+  dVar1 = (double)G_random();
+  _X = (double)(float)(dVar3 * 0.01745329238474369);
+  dVar3 = sin(_X);
+  dVar2 = (double)(float)dVar3;
+  dVar3 = cos(_X);
+  *param_1 = (float)((double)(float)dVar3 * dVar1);
+  *param_2 = (float)(dVar2 * dVar1);
+  return;
+}
+
+
+// 824B38B0  Weapon_Throw_Grenade  (game/g_weapon.cpp:783)
+
+void Weapon_Throw_Grenade(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  undefined4 uVar2;
+  float *pfVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  int local_60;
+  int local_5c;
+  longlong local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar6 = __savegprlr_28();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x318,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x319,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  pfVar3 = (float *)param_2;
+  BG_GetProjectileSpeed(pfVar3[0xf],*(undefined1 *)(pfVar3 + 0x10),&local_5c,&local_60);
+  dVar9 = (double)*pfVar3;
+  fVar1 = pfVar3[0x11];
+  local_58 = (longlong)local_5c;
+  dVar11 = (double)pfVar3[1];
+  dVar10 = (double)local_58;
+  local_50 = (float)(dVar9 * dVar10);
+  local_4c = (float)(dVar11 * dVar10);
+  local_48 = (float)((double)pfVar3[2] * dVar10 + (double)(longlong)local_60);
+  if (*(int *)((int)fVar1 + 0x504) != 0) {
+    dVar10 = (double)I_rsqrt((double)(float)(dVar11 * dVar11 + (double)(float)(dVar9 * dVar9)));
+    fVar1 = pfVar3[0x11];
+    local_58 = (longlong)*(int *)((int)fVar1 + 0x504);
+    local_50 = (float)local_58 * (float)(dVar9 * dVar10) + local_50;
+    local_4c = (float)(dVar11 * dVar10) * (float)local_58 + local_4c;
+  }
+  if (*(int *)(iVar6 + 0x158) == 0) {
+    uVar2 = *(undefined4 *)((int)fVar1 + 0x2e4);
+  }
+  else {
+    uVar2 = *(undefined4 *)((int)fVar1 + 0x2e0);
+  }
+  iVar7 = G_FireGrenade(iVar6,param_2 + 0x24,&local_50,pfVar3[0xf],1,uVar2);
+  iVar6 = *(int *)(iVar6 + 0x158);
+  uVar8 = iVar7 + 0x24;
+  fVar4 = SQRT(local_48 * local_48 + local_4c * local_4c + local_50 * local_50);
+  fVar1 = 1.0;
+  if (-fVar4 < 0.0) {
+    fVar1 = fVar4;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_50 = fVar1 * local_50;
+  local_4c = local_4c * fVar1;
+  local_48 = fVar1 * local_48;
+  fVar4 = *(float *)(iVar6 + 0x30) * local_48 +
+          *(float *)(iVar6 + 0x2c) * local_4c + *(float *)(iVar6 + 0x28) * local_50;
+  fVar1 = local_50 * fVar4 + *(float *)(iVar7 + 0x24);
+  local_58 = CONCAT44(fVar1,local_58._4_4_);
+  *(float *)(iVar7 + 0x24) = fVar1;
+  fVar5 = local_4c * fVar4 + *(float *)(iVar7 + 0x28);
+  *(float *)(iVar7 + 0x28) = fVar5;
+  fVar4 = fVar4 * local_48 + *(float *)(iVar7 + 0x2c);
+  *(float *)(iVar7 + 0x2c) = fVar4;
+  if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
+    local_58 = CONCAT44(fVar5,local_58._4_4_);
+    uVar8 = (uint)fVar5 & 0x7f800000;
+    if (uVar8 != 0x7f800000) {
+      local_58 = CONCAT44(fVar4,local_58._4_4_);
+      uVar8 = (uint)fVar4 & 0x7f800000;
+      if (uVar8 != 0x7f800000) goto LAB_824b3b1c;
+    }
+  }
+  MyAssertHandler(0xffffffff8207ed88,0x330,0,0xffffffff82000f98,0xffffffff8207ef70,
+                  0xffffffff82000000,0x7f800000,uVar8);
+LAB_824b3b1c:
+  __restgprlr_28(iVar7);
+  return;
 }
 
 
 // 824B3B30  Weapon_GrenadeLauncher_Fire  (game/g_weapon.cpp:827)
 
-void Weapon_GrenadeLauncher_Fire(void)
+void Weapon_GrenadeLauncher_Fire(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  int local_50;
+  int local_4c;
+  longlong local_48;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  iVar5 = __savegprlr_27();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x342,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x343,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  pfVar1 = (float *)param_3;
+  BG_GetProjectileSpeed(pfVar1[0xf],*(undefined1 *)(pfVar1 + 0x10),&local_4c,&local_50);
+  local_48 = (longlong)local_4c;
+  fVar2 = (float)local_48;
+  local_40 = *pfVar1 * fVar2;
+  local_3c = pfVar1[1] * fVar2;
+  local_38 = pfVar1[2] * fVar2 + (float)(longlong)local_50;
+  iVar6 = G_FireGrenade(iVar5,param_3 + 0x24,&local_40,param_2,0,0);
+  *(uint *)(iVar6 + 0x184) = *(uint *)(iVar6 + 0x184) | 0x20000;
+  iVar5 = *(int *)(iVar5 + 0x158);
+  if (iVar5 != 0) {
+    uVar7 = iVar6 + 0x24;
+    fVar3 = SQRT(local_38 * local_38 + local_3c * local_3c + local_40 * local_40);
+    fVar2 = 1.0;
+    if (-fVar3 < 0.0) {
+      fVar2 = fVar3;
+    }
+    fVar2 = 1.0 / fVar2;
+    local_40 = fVar2 * local_40;
+    local_3c = local_3c * fVar2;
+    local_38 = fVar2 * local_38;
+    fVar3 = *(float *)(iVar5 + 0x30) * local_38 +
+            *(float *)(iVar5 + 0x2c) * local_3c + local_40 * *(float *)(iVar5 + 0x28);
+    fVar2 = local_40 * fVar3 + *(float *)(iVar6 + 0x24);
+    local_48 = CONCAT44(fVar2,local_48._4_4_);
+    *(float *)(iVar6 + 0x24) = fVar2;
+    fVar4 = local_3c * fVar3 + *(float *)(iVar6 + 0x28);
+    *(float *)(iVar6 + 0x28) = fVar4;
+    fVar3 = fVar3 * local_38 + *(float *)(iVar6 + 0x2c);
+    *(float *)(iVar6 + 0x2c) = fVar3;
+    if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
+      local_48 = CONCAT44(fVar4,local_48._4_4_);
+      uVar7 = (uint)fVar4 & 0x7f800000;
+      if (uVar7 != 0x7f800000) {
+        local_48 = CONCAT44(fVar3,local_48._4_4_);
+        uVar7 = (uint)fVar3 & 0x7f800000;
+        if (uVar7 != 0x7f800000) goto LAB_824b3d38;
+      }
+    }
+    MyAssertHandler(0xffffffff8207ed88,0x352,0,0xffffffff82000f98,0xffffffff8207ef70,
+                    0xffffffff82000000,0x7f800000,uVar7);
+  }
+LAB_824b3d38:
+  __restgprlr_27(iVar6);
+  return;
+}
+
+
+// 824B3D48  MacrossMissiles  (game/g_weapon.cpp:858)
+
+void MacrossMissiles(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,
+                    undefined8 param_5,ulonglong param_6,undefined8 param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  undefined8 uVar8;
+  undefined4 *puVar9;
+  longlong lVar10;
+  float *pfVar11;
+  longlong lVar12;
+  double dVar13;
+  undefined8 uVar14;
+  undefined8 uVar15;
+  float local_120;
+  float local_11c;
+  float local_118;
+  float local_114;
+  float local_110;
+  float local_10c;
+  float local_108;
+  float local_104;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  float local_f4;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined4 uStack_b4;
+  undefined1 local_b0 [4];
+  float local_ac;
+  float local_a8;
+  float local_a4;
+  
+  __savegprlr_24();
+  uVar8 = __savefpr_22();
+  if ((param_6 & 0xffffffff) != 0) {
+    fVar1 = *param_3;
+    fVar2 = param_3[1];
+    fVar3 = param_3[2];
+    puVar9 = &uStack_b4;
+    local_120 = param_3[3];
+    lVar10 = param_6 - 4;
+    local_11c = param_3[4];
+    fVar4 = fVar1 * -1.0;
+    local_108 = param_3[6];
+    fVar5 = fVar2 * -1.0;
+    local_104 = param_3[7];
+    fVar6 = fVar3 * -1.0;
+    local_118 = param_3[5];
+    local_fc = local_108 + fVar1;
+    local_100 = param_3[8];
+    local_f8 = local_104 + fVar2;
+    local_114 = local_120 * -1.0;
+    lVar12 = 6;
+    local_110 = local_11c * -1.0;
+    local_10c = local_118 * -1.0;
+    local_f4 = local_100 + fVar3;
+    local_f0 = local_108 + local_120 + fVar1;
+    local_ec = local_104 + local_11c + fVar2;
+    local_e8 = local_100 + local_118 + fVar3;
+    local_e4 = local_108 + (fVar1 - local_120);
+    local_e0 = local_104 + (fVar2 - local_11c);
+    local_dc = local_100 + (fVar3 - local_118);
+    local_d8 = local_108 + fVar4;
+    local_d4 = local_104 + fVar5;
+    local_d0 = local_100 + fVar6;
+    local_cc = local_120 + local_108 + fVar4;
+    local_c8 = local_11c + local_104 + fVar5;
+    local_c4 = local_118 + local_100 + fVar6;
+    local_c0 = (local_108 + fVar4) - local_120;
+    local_bc = (local_104 + fVar5) - local_11c;
+    local_b8 = (local_100 + fVar6) - local_118;
+    do {
+      lVar10 = lVar10 + 4;
+      puVar9 = puVar9 + 1;
+      *puVar9 = *(undefined4 *)lVar10;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    pfVar11 = &local_120;
+    lVar10 = 9;
+    uVar14 = 0x4059000000000000;
+    uVar15 = 0xc059000000000000;
+    do {
+      dVar13 = (double)G_flrand(uVar15,uVar14);
+      iVar7 = (int)param_6;
+      local_ac = (float)(dVar13 + (double)*(float *)(iVar7 + 4));
+      dVar13 = (double)G_flrand(uVar15,uVar14);
+      local_a8 = (float)(dVar13 + (double)*(float *)(iVar7 + 8));
+      dVar13 = (double)G_flrand(uVar15,uVar14);
+      local_a4 = (float)(dVar13 + (double)*(float *)(iVar7 + 0xc));
+      G_FireRocket(uVar8,param_2,param_4,pfVar11,param_5,local_b0,param_7);
+      lVar10 = lVar10 + -1;
+      pfVar11 = pfVar11 + 3;
+    } while (lVar10 != 0);
+  }
+  __restfpr_22();
+  __restgprlr_24();
+  return;
+}
+
+
+// 824B3F60  Weapon_RocketLauncher_Fire  (game/g_weapon.cpp:914)
+
+void Weapon_RocketLauncher_Fire
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  float *pfVar5;
+  double extraout_f1;
+  double dVar6;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_68;
+  float local_64;
+  float local_60;
+  
+  uVar3 = __savegprlr_24();
+  dVar6 = extraout_f1;
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x39a,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x39b,0,0xffffffff82000f98,0xffffffff8206b270);
+  }
+  dVar6 = tan((double)(float)(dVar6 * 0.01745329238474369));
+  dVar6 = (double)((float)dVar6 * 16.0);
+  gunrandom(&local_80,&local_7c);
+  pfVar5 = (float *)param_4;
+  fVar1 = (float)((double)local_80 * dVar6);
+  fVar2 = (float)((double)local_7c * dVar6);
+  local_78 = pfVar5[9];
+  local_68 = pfVar5[6] * fVar2 + pfVar5[3] * fVar1 + *pfVar5 * 16.0;
+  local_60 = pfVar5[8] * fVar2 + pfVar5[5] * fVar1 + pfVar5[2] * 16.0;
+  local_74 = pfVar5[10];
+  local_70 = pfVar5[0xb];
+  local_64 = pfVar5[7] * fVar2 + pfVar5[4] * fVar1 + pfVar5[1] * 16.0;
+  fVar2 = SQRT(local_64 * local_64 + local_60 * local_60 + local_68 * local_68);
+  fVar1 = 1.0;
+  if (-fVar2 < 0.0) {
+    fVar1 = fVar2;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_68 = fVar1 * local_68;
+  local_64 = fVar1 * local_64;
+  local_60 = local_60 * fVar1;
+  uVar4 = G_FireRocket(uVar3,param_2,&local_78,&local_68,param_5,param_6,param_7);
+  if (*(char *)(DAT_835837f4 + 0xc) != '\0') {
+    MacrossMissiles(uVar3,param_2,param_4,&local_78,param_5,param_6,param_7);
+  }
+  __restgprlr_24(uVar4);
+  return;
 }
 
 
 // 824B4128  LogAccuracyHit  (game/g_weapon.cpp:946)
 
-void LogAccuracyHit(void)
+void LogAccuracyHit(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x3b3,0,0xffffffff82000f98,0xffffffff820025cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x3b4,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  }
+  if ((((*(char *)((int)uVar1 + 0x16b) != '\0') && ((uVar1 & 0xffffffff) != (param_2 & 0xffffffff)))
+      && (iVar2 = *(int *)((int)uVar1 + 0x158), iVar2 != 0)) &&
+     ((*(int *)((int)param_2 + 0x158) != 0 && (*(int *)(iVar2 + 4) < 8)))) {
+    iVar2 = OnSameTeam(uVar1,param_2);
+    __restgprlr_28(iVar2 == 0);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 824B41F8  CalcMuzzlePoints  (game/g_weapon.cpp:974)
+
+void CalcMuzzlePoints(undefined8 param_1,longlong param_2)
+
+{
+  int iVar1;
+  char cVar3;
+  int iVar2;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  
+  iVar1 = __savegprlr_27();
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x3d1,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  iVar2 = *(int *)(iVar1 + 0x158);
+  local_48 = *(undefined4 *)(iVar2 + 0x158);
+  local_44 = *(undefined4 *)(iVar2 + 0x15c);
+  local_40 = *(undefined4 *)(iVar2 + 0x160);
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    if ((*(uint *)(iVar2 + 0x3624) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff8207ed88,0x3d8,0,0xffffffff82000f98,0xffffffff8207f074);
+    }
+    if ((*(uint *)(*(int *)(iVar1 + 0x158) + 0x3628) & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff8207ed88,0x3d9,0,0xffffffff82000f98,0xffffffff8207f054);
+    }
+    local_48 = *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x3624);
+    local_44 = *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x3628);
+  }
+  cVar3 = BG_IsThirdPersonMode(*(undefined4 *)(iVar1 + 0x158));
+  if (cVar3 != '\0') {
+    local_48 = *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x3624);
+    local_44 = *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x3628);
+  }
+  AngleVectors(&local_48,param_2,param_2 + 0xc,param_2 + 0x18);
+  if ((*(uint *)(*(int *)(iVar1 + 0x158) + 0x14) & 4) != 0) {
+    if (*(int *)(iVar1 + 0x214) == 0) {
+      MyAssertHandler(0xffffffff8207ed88,0x3eb,0,0xffffffff82000f98,0xffffffff8207f044);
+    }
+    iVar2 = BG_GetWeaponType(*(undefined4 *)((int)param_2 + 0x3c),
+                             *(undefined1 *)((int)param_2 + 0x40));
+    if (iVar2 == 1) {
+      Com_PrintWarning(0xf,0xffffffff8207efe8,*(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x150));
+    }
+    G_DObjGetWorldTagPos_CheckTagExists
+              (**(undefined4 **)(iVar1 + 0x214),DAT_835a0c60,param_2 + 0x24);
+    __restgprlr_27();
+    return;
+  }
+  G_GetPlayerViewOrigin(*(int *)(iVar1 + 0x158),param_2 + 0x24);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824B43D0  FireWeapon_SendClientEvent  (game/g_weapon.cpp:1030)
 
-void FireWeapon_SendClientEvent(void)
+void FireWeapon_SendClientEvent(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  uVar2 = __savegprlr_29();
+  iVar3 = (int)param_3;
+  if ((iVar3 < -1) || (0x12 < iVar3)) {
+    MyAssertHandler(0xffffffff8207ed88,0x40a,0,0xffffffff8207f098,param_3,0xffffffffffffffff,0x12);
+  }
+  uVar4 = param_2 - 0x2a;
+  if ((uVar4 & 0xffffffff) < 4) {
+    bVar1 = (int)uVar4 != 0;
+    if (param_2 == 0x2b && bVar1) {
+      if (iVar3 == -1) {
+        G_AddEvent(uVar2,0x1f,0);
+        __restgprlr_29();
+        return;
+      }
+      param_2 = 0x27;
+    }
+    else if (uVar4 == 2 && bVar1) {
+      if (iVar3 == -1) {
+        G_AddEvent(uVar2,0x23,0);
+        __restgprlr_29();
+        return;
+      }
+      param_2 = 0x28;
+    }
+    else if (bVar1) {
+      if (iVar3 == -1) {
+        G_AddEvent(uVar2,0x24,0);
+        __restgprlr_29();
+        return;
+      }
+      param_2 = 0x29;
+    }
+    else {
+      if (iVar3 == -1) {
+        G_AddEvent(uVar2,0x1e,0);
+        __restgprlr_29();
+        return;
+      }
+      param_2 = 0x26;
+    }
+  }
+  if (iVar3 == -1) {
+    param_3 = 0;
+  }
+  G_AddEvent(uVar2,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 824B4508  FireWeapon  (game/g_weapon.cpp:1071)
 
-void FireWeapon(void)
+void FireWeapon(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  undefined8 uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_4c8;
+  float local_4c4 [3];
+  undefined8 local_4b8;
+  longlong local_4b0;
+  undefined1 auStack_4a0 [60];
+  uint local_464;
+  char local_460;
+  int local_45c;
+  undefined4 local_458;
+  undefined1 auStack_450 [1104];
+  
+  iVar7 = __savegprlr_26();
+  iVar4 = *(int *)(iVar7 + 0x158);
+  if ((((*(uint *)(iVar4 + 0xf8) & 0x203800) == 0) || (*(char *)(iVar7 + 0x16c) == '\0')) &&
+     (local_464 = *(uint *)(iVar7 + 200), (local_464 & 0xff) != 0)) {
+    local_460 = '\x01' - (*(int *)(iVar7 + 0xcc) == 0);
+    uVar8 = BG_GetAlternateWeapon();
+    local_45c = (&DAT_829d84a0)[uVar8 & 0xff];
+    uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(iVar7 + 200),local_460);
+    local_458 = (&DAT_829d80d8)[uVar8 & 0xff];
+    BG_GetWeaponName(*(undefined4 *)(iVar7 + 200),auStack_450,0x400);
+    Scr_AddString();
+    Scr_Notify(iVar7,DAT_835a0c9e,1);
+    CalcMuzzlePoints(iVar7,auStack_4a0);
+    dVar13 = (double)*(float *)(*(int *)(iVar7 + 0x158) + 0x3660);
+    BG_GetSpreadForWeapon(*(int *)(iVar7 + 0x158),local_464,&local_4c8,local_4c4);
+    dVar11 = (double)BG_ADSSpread(local_464,local_460);
+    dVar12 = 0.0;
+    if (*(float *)(iVar4 + 0x378) == 0.0) {
+      fVar1 = (float)((double)(float)((double)local_4c4[0] - (double)local_4c8) * dVar13 +
+                     (double)local_4c8);
+    }
+    else {
+      fVar1 = (float)((double)(float)((double)local_4c4[0] - (double)local_4c8) * dVar13 +
+                     (double)local_4c8) * (1.0 - *(float *)(iVar4 + 0x378)) +
+              (float)((double)(float)((double)local_4c4[0] - dVar11) * dVar13 + dVar11) *
+              *(float *)(iVar4 + 0x378);
+    }
+    dVar11 = (double)fVar1;
+    uVar10 = 0xffffffffffffffff;
+    iVar9 = BG_GetWeaponType(local_464,local_460);
+    if (iVar9 == 1) {
+      BG_GetHandFromWeaponEvent(param_3);
+      uVar10 = Bullet_Fire(dVar11,iVar7);
+    }
+    else {
+      iVar9 = BG_GetWeaponType(local_464,local_460);
+      if (iVar9 == 2) {
+        Weapon_Throw_Grenade(iVar7,auStack_4a0);
+      }
+      else {
+        iVar9 = BG_GetWeaponType(local_464,local_460);
+        if (iVar9 == 3) {
+          iVar9 = BG_GetWeaponClass(local_464,local_460);
+          if (iVar9 == 6) {
+            if (local_460 == '\0') {
+              Weapon_GrenadeLauncher_Fire(iVar7,*(undefined4 *)(iVar7 + 200),auStack_4a0);
+            }
+            else {
+              uVar5 = BG_GetAltWeapon(*(undefined4 *)(iVar7 + 200));
+              Weapon_GrenadeLauncher_Fire(iVar7,uVar5,auStack_4a0);
+            }
+          }
+          else {
+            uVar8 = *(uint *)(iVar4 + 0x4c0);
+            if ((uVar8 & 2) == 0) {
+              if (((*(int *)(iVar4 + 0x4e8) != 0) &&
+                  (dVar12 < (double)(longlong)*(int *)(local_45c + 0x4fc))) &&
+                 (uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(iVar7 + 200),0),
+                 *(char *)((&DAT_829d84a0)[uVar8 & 0xff] + 0x76b) != '\0')) {
+                local_4b8 = 0;
+                local_4b0 = (ulonglong)
+                            (uint)((*(float *)(DAT_8358337c + 0xc) + (float)*(uint *)(iVar4 + 0x4e8)
+                                   ) / (float)(longlong)*(int *)(local_45c + 0x4fc)) << 0x20;
+              }
+            }
+            else {
+              local_4b0 = 0x1000000;
+              if ((uVar8 & 0x40) == 0) {
+                uVar2 = *(undefined4 *)(*(int *)(iVar7 + 0x158) + 0x3908);
+                uVar3 = *(undefined4 *)(*(int *)(iVar7 + 0x158) + 0x390c);
+              }
+              else {
+                uVar2 = *(undefined4 *)(iVar4 + 0x4cc);
+                uVar3 = *(undefined4 *)(iVar4 + 0x4d0);
+              }
+              local_4b8 = CONCAT44(uVar2,uVar3);
+              if ((uVar8 & 4) != 0) {
+                local_4b0 = 0x1010000;
+              }
+            }
+            Weapon_RocketLauncher_Fire(dVar11,iVar7,*(undefined4 *)(iVar7 + 200));
+          }
+        }
+        else {
+          uVar5 = BG_GetWeaponName(*(undefined4 *)(iVar7 + 200),auStack_450,0x400);
+          uVar6 = BG_GetWeaponType(local_464,local_460);
+          Com_Error(1,0xffffffff8207f0e0,uVar6,uVar5);
+        }
+      }
+    }
+    FireWeapon_SendClientEvent(iVar7,param_3,uVar10);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -113,8 +1146,36 @@ void FireWeapon(void)
 void G_UseOffHand(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 auStack_70 [60];
+  undefined4 local_34;
+  undefined1 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x4c4,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  if (*(char *)(*(int *)(iVar1 + 0x158) + 0x367) == '\0') {
+    MyAssertHandler(0xffffffff8207ed88,0x4c5,0,0xffffffff82000f98,0xffffffff8207f144);
+  }
+  local_34 = *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x364);
+  local_30 = 0;
+  uVar2 = BG_GetAlternateWeapon(*(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x364),0);
+  local_2c = (&DAT_829d84a0)[uVar2 & 0xff];
+  uVar2 = BG_GetAlternateWeapon(*(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x364),0);
+  local_28 = (&DAT_829d80d8)[uVar2 & 0xff];
+  iVar3 = BG_GetWeaponType(local_34,local_30);
+  if (iVar3 != 2) {
+    MyAssertHandler(0xffffffff8207ed88,0x4cc,0,0xffffffff82000f98,0xffffffff8207f100);
+  }
+  CalcMuzzlePoints(iVar1,auStack_70);
+  Weapon_Throw_Grenade(iVar1,auStack_70);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -146,15 +1207,12 @@ void FireWeaponMelee(void)
     G_GetPlayerViewOrigin(*(undefined4 *)(iVar1 + 0x158),auStack_6c);
     BG_GetPlayerViewDirection(*(undefined4 *)(iVar1 + 0x158),auStack_90,auStack_84,auStack_78);
     if (DAT_829c7cb8 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207ed88,0x4e3,0,0xffffffff82000f98,0xffffffff82007a6c);
     }
     if (DAT_829c7dec == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207ed88,0x4e4,0,0xffffffff82000f98,0xffffffff82007a58);
     }
     if (DAT_829c5484 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207ed88,0x4e5,0,0xffffffff82000f98,0xffffffff820079f4);
     }
     Weapon_Melee((double)*(float *)(DAT_829c7cb8 + 0xc),(double)*(float *)(DAT_829c7dec + 0xc),
@@ -167,11 +1225,137 @@ void FireWeaponMelee(void)
 
 // 824B6138  G_GivePlayerWeapon  (game/g_weapon.cpp:1266)
 
-void G_GivePlayerWeapon(void)
+void G_GivePlayerWeapon(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  undefined8 uVar1;
+  char cVar7;
+  int iVar6;
+  undefined1 auStack_450 [1104];
+  
+  iVar2 = __savegprlr_23();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x4fc,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  iVar3 = BG_PlayerHasWeapon(iVar2,param_2);
+  if (iVar3 != 0) goto LAB_824b63dc;
+  uVar4 = BG_GetAlternateWeapon(param_2,0);
+  iVar3 = (&DAT_829d84a0)[uVar4 & 0xff];
+  iVar5 = BG_GetWeaponClass(param_2,0);
+  if ((iVar5 == 8) || (iVar5 == 10)) {
+LAB_824b61f0:
+    __restgprlr_23(0);
+    return;
+  }
+  if (*(int *)(iVar3 + 0x38) == 5) {
+    Com_PrintWarning(0x11,0xffffffff8207f748);
+    goto LAB_824b61f0;
+  }
+  if (*(int *)(((uint)param_2 >> 6 & 0x3c) + *(int *)(iVar3 + 4)) == 0) goto LAB_824b61f0;
+  if (DAT_83580b20 != 0) {
+    uVar1 = BG_GetWeaponName(param_2,auStack_450,0x400);
+    MyAssertHandler(0xffffffff8207ed88,0x513,0,0xffffffff8207f6f8,0xffffffff8207f72c,uVar1);
+  }
+  cVar7 = BG_EquipWeapon(iVar2,param_2);
+  if (cVar7 == '\0') {
+    Com_PrintWarning(0x11,0xffffffff8207f6b0,0xf);
+    __restgprlr_23(0);
+    return;
+  }
+  iVar6 = BG_GetEquippedWeaponStateNonConst(iVar2,param_2);
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x51c,0,0xffffffff82000f98,0xffffffff8200d52c);
+    __restgprlr_23(0);
+    return;
+  }
+  if (((*(char *)(iVar3 + 0x782) == '\0') && (*(char *)(DAT_829c7d78 + 0xc) != '\0')) ||
+     (((int)param_3 == 0 && (cVar7 = BG_WeaponIsDualWield(param_2), cVar7 != '\0')))) {
+    param_3 = 1;
+  }
+  *(undefined1 *)(iVar6 + 2) = 0;
+  *(char *)(iVar6 + 1) = '\x01' - (param_3 == 0);
+  *(undefined4 *)(iVar6 + 8) = 0;
+  if ((iVar5 == 0xb) || (*(int *)(iVar3 + 0x40) == 0)) goto LAB_824b63dc;
+  if (*(char *)(iVar2 + 0x367) == '\0') {
+LAB_824b63cc:
+    *(uint *)(iVar2 + 0x364) = (uint)param_2;
+  }
+  else {
+    if (((0xf < *(int *)(iVar2 + 0x24c)) && (*(int *)(iVar2 + 0x24c) < 0x16)) ||
+       (iVar3 = BG_WeaponAmmo(iVar2,*(undefined4 *)(iVar2 + 0x364),0), 0 < iVar3))
+    goto LAB_824b63dc;
+    uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x364),0);
+    iVar3 = (&DAT_829d84a0)[uVar4 & 0xff];
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff8207ed88,0x542,0,0xffffffff82000f98,0xffffffff8207f6a4);
+    }
+    uVar4 = BG_GetFirstAvailableOffhand(iVar2,*(undefined4 *)(iVar3 + 0x40));
+    if ((uVar4 & 0xff) == 0) goto LAB_824b63cc;
+    *(uint *)(iVar2 + 0x364) = uVar4;
+  }
+  G_SetEquippedOffHand(*(undefined4 *)(iVar2 + 0x150),*(undefined4 *)(iVar2 + 0x364));
+LAB_824b63dc:
+  __restgprlr_23(1);
+  return;
+}
+
+
+// 824B4BB0  G_FixupAttachmentOrdering  (game/g_weapon.cpp:1461)
+
+void G_FixupAttachmentOrdering(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
+  ulonglong uVar8;
+  
+  puVar2 = (undefined4 *)__savegprlr_21();
+  if ((param_2 & 0xffffffff) != 0x28) {
+    MyAssertHandler(0xffffffff8207ed88,0x5bc,0,0xffffffff8207f1a8,0x28,param_2);
+  }
+  uVar4 = param_2;
+  if (0x28 < (int)param_2) {
+    uVar4 = 0x28;
+  }
+  uVar6 = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
+    puVar5 = puVar2;
+    do {
+      uVar1 = *(undefined4 *)((int)&PTR_s_eotechlmg_8296b468 + ((int)puVar5 - (int)puVar2));
+      uVar8 = uVar6;
+      puVar7 = puVar5;
+      if ((uVar6 & 0xffffffff) < (param_2 & 0xffffffff)) {
+        do {
+          iVar3 = I_strcmp(uVar1,*(undefined4 *)*puVar7);
+          if (iVar3 == 0) {
+            if ((uVar8 & 0xffffffff) != (uVar6 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8207ed88,0x5cc,0,0xffffffff8207f17c,uVar8,uVar6);
+              iVar3 = (int)((uVar8 & 0xffffffff) << 2);
+              uVar1 = *(undefined4 *)(iVar3 + (int)puVar2);
+              *(undefined4 *)(iVar3 + (int)puVar2) = *puVar5;
+              *puVar5 = uVar1;
+            }
+            break;
+          }
+          uVar8 = uVar8 + 1;
+          puVar7 = puVar7 + 1;
+        } while ((uVar8 & 0xffffffff) < (param_2 & 0xffffffff));
+      }
+      uVar6 = uVar6 + 1;
+      puVar5 = puVar5 + 1;
+    } while ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff));
+  }
+  __restgprlr_21();
+  return;
 }
 
 
@@ -180,8 +1364,61 @@ void G_GivePlayerWeapon(void)
 void G_SetupWeaponDef(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  int *piVar6;
+  int local_330 [204];
+  
   __savegprlr_27();
+  Com_DPrintf(0x11,0xffffffff8207f7b8);
+  Com_DPrintf(0x11,0xffffffff8207f7a0);
+  if (DAT_829d8a50 == 0) {
+    Com_SetWeaponInfoMemory(1);
+    BG_ClearWeaponDef();
+    uVar5 = G_GetWeaponForName(0xffffffff8205b054);
+    DAT_829d849c = uVar5 & 0xff;
+    uVar4 = DB_GetAllXAssetOfType(0x1a,local_330,0xc0);
+    G_FixupAttachmentOrdering(local_330,uVar4);
+    if ((uVar4 & 0xffffffff) != 0) {
+      piVar6 = local_330;
+      do {
+        iVar1 = *piVar6;
+        uVar5 = 0;
+        do {
+          if (*(int *)(iVar1 + 0x14) != 0) {
+            iVar3 = *(int *)(uVar5 + *(int *)(iVar1 + 0x14));
+            if (iVar3 != 0) {
+              XModelGetName(iVar3);
+              G_ModelIndex();
+            }
+          }
+          uVar5 = uVar5 + 4;
+        } while (uVar5 < 0x40);
+        if ((*(int *)(iVar1 + 0x68) != 0) && (*(int *)(*(int *)(iVar1 + 0x68) + 0x20) != 0)) {
+          XModelGetName();
+          G_ModelIndex();
+        }
+        if (*(undefined4 **)(iVar1 + 100) != (undefined4 *)0x0) {
+          pcVar2 = (char *)**(undefined4 **)(iVar1 + 100);
+          if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+            G_RumbleIndex();
+          }
+          pcVar2 = *(char **)(*(int *)(iVar1 + 100) + 4);
+          if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+            G_RumbleIndex();
+          }
+        }
+        uVar4 = uVar4 - 1;
+        piVar6 = piVar6 + 1;
+      } while (uVar4 != 0);
+    }
+  }
+  Com_DPrintf(0x11,0xffffffff8207f7b8);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -224,7 +1461,6 @@ void G_GetAttachmentIndices
       puVar4 = puVar4 + 1;
     }
     if (6 < *param_3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207ed88,0x62e,0,0xffffffff82000f98,0xffffffff8207f234);
     }
     if (*param_3 == 0) {
@@ -248,7 +1484,6 @@ void G_GetAttachmentIndices
         puVar4 = puVar4 + 1;
       }
       if (3 < *param_4) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8207ed88,0x63a,0,0xffffffff82000f98,0xffffffff8207f200);
       }
       if (*param_4 == 0) {
@@ -272,7 +1507,6 @@ void G_GetAttachmentIndices
           puVar4 = puVar4 + 1;
         }
         if (4 < *param_5) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8207ed88,0x646,0,0xffffffff82000f98,0xffffffff8207f1d8);
         }
       }
@@ -285,21 +1519,293 @@ void G_GetAttachmentIndices
 
 // 824B4F10  G_GetWeaponParseBlock  (game/g_weapon.cpp:1614)
 
-void G_GetWeaponParseBlock(void)
+void G_GetWeaponParseBlock(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  char cVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8207ed88,0x652,0,0xffffffff82000f98,0xffffffff82002030);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x653,0,0xffffffff82000f98,0xffffffff8200202c);
+  }
+  pcVar3 = (char *)*puVar1;
+  cVar2 = *pcVar3;
+  uVar4 = param_2;
+  if (cVar2 != '\0') {
+    do {
+      if (cVar2 == '_') break;
+      *(char *)uVar4 = cVar2;
+      uVar4 = uVar4 + 1;
+      pcVar3 = pcVar3 + 1;
+      cVar2 = *pcVar3;
+    } while (cVar2 != '\0');
+    if (cVar2 != '\0') {
+      if ((((pcVar3[1] == 'm') && (pcVar3[2] == 'p')) ||
+          ((pcVar3[1] == 's' && ((pcVar3[2] == 'p' || (pcVar3[2] == 'o')))))) &&
+         ((pcVar3[3] == '\0' || (pcVar3[3] == '_')))) {
+        *(undefined1 *)uVar4 = 0x5f;
+        cVar2 = pcVar3[1];
+        pcVar3 = pcVar3 + 1;
+        while ((uVar4 = uVar4 + 1, cVar2 != '\0' && (cVar2 != '_'))) {
+          *(char *)uVar4 = cVar2;
+          pcVar3 = pcVar3 + 1;
+          cVar2 = *pcVar3;
+        }
+      }
+    }
+  }
+  *(undefined1 *)uVar4 = 0;
+  *puVar1 = pcVar3;
+  __restgprlr_28(param_2);
+  return;
 }
 
 
 // 824B5078  G_GetWeaponForName  (game/g_weapon.cpp:1654)
 
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
 void G_GetWeaponForName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  char cVar1;
+  char cVar2;
+  undefined2 uVar3;
+  undefined2 uVar4;
+  undefined4 uVar5;
+  int iVar6;
+  char *pcVar7;
+  char *pcVar8;
+  uint uVar9;
+  char *pcVar10;
+  longlong lVar11;
+  char cVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  int iVar21;
+  longlong lVar22;
+  longlong lVar23;
+  uint local_28b0 [2];
+  ushort local_28a8 [4];
+  ushort local_28a0 [5200];
+  char *pcVar12;
+  
+  uVar20 = ZEXT48(&stack0x00000000);
+  pcVar7 = (char *)__savegprlr_16();
+  if ((((*pcVar7 == 'a') && (pcVar7[1] == 'l')) && (pcVar7[2] == 't')) && (pcVar7[3] == '_')) {
+    pcVar7 = pcVar7 + 4;
+  }
+  lVar11 = uVar20 - 0x2090;
+  pcVar12 = (char *)lVar11;
+  cVar13 = *pcVar7;
+  pcVar8 = pcVar7;
+  while ((cVar13 != '\0' && (pcVar12 = (char *)lVar11, cVar13 != '_'))) {
+    *pcVar12 = cVar13;
+    lVar11 = lVar11 + 1;
+    pcVar12 = (char *)lVar11;
+    pcVar8 = pcVar8 + 1;
+    cVar13 = *pcVar8;
+  }
+  *pcVar12 = '\0';
+  pcVar10 = "iw5";
+  lVar11 = uVar20 - 0x2090;
+  do {
+    cVar13 = *(char *)lVar11;
+    cVar1 = *pcVar10;
+    if (cVar13 == '\0') break;
+    lVar11 = lVar11 + 1;
+    pcVar10 = pcVar10 + 1;
+  } while (cVar13 == cVar1);
+  if (cVar13 != cVar1) {
+    if (DAT_83580b1c == 0) {
+      BG_FindWeaponForName(pcVar7);
+      __restgprlr_16(local_28b0[0]);
+      return;
+    }
+    BG_GetWeaponForName(pcVar7,0xffffffff82476788);
+    __restgprlr_16(local_28b0[0]);
+    return;
+  }
+  pcVar10 = pcVar8 + 1;
+  *pcVar12 = *pcVar8;
+  G_GetWeaponParseBlock(uVar20 - 0x28b0);
+  uVar15 = 0;
+  uVar14 = 0;
+  uVar17 = 0;
+  cVar13 = *pcVar10;
+  if (cVar13 != '\0') {
+    lVar11 = uVar20 - 0x2890;
+    do {
+      if (cVar13 != '_') break;
+      pcVar10 = pcVar10 + 1;
+      pcVar8 = (char *)G_GetWeaponParseBlock(uVar20 - 0x28b0,lVar11);
+      cVar13 = *pcVar8;
+      if (((cVar13 == 'c') && (pcVar8[1] == 'a')) && ((pcVar8[2] == 'm' && (pcVar8[3] == 'o')))) {
+        cVar1 = pcVar8[4];
+        if (('1' < cVar1) || (cVar1 < '0')) goto LAB_824b52c0;
+        cVar2 = pcVar8[5];
+        if (('9' < cVar2) || (cVar2 < '0')) goto LAB_824b52c0;
+        uVar15 = ((longlong)cVar1 + 0xffd0U + ((longlong)cVar1 + 0xffd0U & 0x3fffffff) * 4 &
+                 0x7fffffff) * 2 + (longlong)cVar2 + 0xffd0 & 0xffff;
+        if (0xf < uVar15) {
+          Com_PrintWarning(0xf,0xffffffff8207f3f0,uVar15,pcVar7,0x10);
+          uVar15 = 0;
+        }
+      }
+      else {
+LAB_824b52c0:
+        if ((((cVar13 == 's') && (pcVar8[1] == 'c')) && (pcVar8[2] == 'o')) &&
+           ((pcVar8[3] == 'p' && (pcVar8[4] == 'e')))) {
+          cVar1 = pcVar8[5];
+          if ((cVar1 < '8') && ('/' < cVar1)) {
+            uVar14 = (longlong)cVar1 + 0xffd0U & 0xffff;
+            if (7 < uVar14) {
+              Com_PrintWarning(0xf,0xffffffff8207f448,uVar14,pcVar7,8);
+              uVar14 = 0;
+            }
+            goto LAB_824b5370;
+          }
+        }
+        if (cVar13 != '\0') {
+          if (2 < (uVar17 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8207ed88,0x6be,0,0xffffffff82000f98,0xffffffff8207f4a4);
+          }
+          uVar17 = uVar17 + 1;
+          lVar11 = lVar11 + 0x200;
+        }
+      }
+LAB_824b5370:
+      cVar13 = *pcVar10;
+    } while (cVar13 != '\0');
+  }
+  if (DAT_83580b1c == 0) {
+    BG_FindWeaponForName(uVar20 - 0x2090);
+  }
+  else {
+    BG_GetWeaponForName(uVar20 - 0x2090,0xffffffff82476788);
+  }
+  uVar16 = (ulonglong)local_28b0[0];
+  if ((local_28b0[0] & 0xff) != 0) {
+    uVar9 = BG_GetAlternateWeapon(uVar16,0);
+    uVar5 = (&DAT_829d80d8)[uVar9 & 0xff];
+    if (0 < (int)uVar17) {
+      lVar11 = uVar20 - 0x2890;
+      lVar22 = 0;
+      uVar16 = uVar17;
+      do {
+        G_GetAttachmentIndices
+                  (lVar11,uVar5,lVar22 + (uVar20 - 0x28b0),lVar22 + (uVar20 - 0x28a0),
+                   lVar22 + (uVar20 - 0x28a8));
+        uVar16 = uVar16 - 1;
+        lVar22 = lVar22 + 2;
+        lVar11 = lVar11 + 0x200;
+      } while (uVar16 != 0);
+    }
+    uVar16 = uVar17 - 1;
+    if (-1 < (longlong)uVar16) {
+      lVar22 = (uVar17 & 0x7fffffff) << 1;
+      lVar11 = (uVar16 & 0x7fffff) * 0x200 + (uVar20 - 0x2890);
+      lVar23 = (uVar16 & 0x7fffffff) << 1;
+      do {
+        iVar21 = (int)lVar23;
+        if (((*(short *)((int)local_28b0 + iVar21) == 0) &&
+            (*(short *)((int)local_28a0 + iVar21) == 0)) &&
+           (*(short *)((int)local_28a8 + iVar21) == 0)) {
+          Com_PrintWarning(0xf,0xffffffff8207f3c0,lVar11,pcVar7);
+          lVar22 = lVar22 + -2;
+          uVar17 = uVar17 - 1;
+          iVar6 = (int)lVar22;
+          uVar3 = *(undefined2 *)((int)local_28a0 + iVar6);
+          uVar4 = *(undefined2 *)((int)local_28a8 + iVar6);
+          *(undefined2 *)((int)local_28b0 + iVar21) = *(undefined2 *)((int)local_28b0 + iVar6);
+          *(undefined2 *)((int)local_28a0 + iVar21) = uVar3;
+          *(undefined2 *)((int)local_28a8 + iVar21) = uVar4;
+        }
+        uVar16 = uVar16 - 1;
+        lVar11 = lVar11 + -0x200;
+        lVar23 = lVar23 + -2;
+      } while (-1 < (longlong)uVar16);
+    }
+    uVar18 = 0;
+    uVar19 = 0;
+    uVar20 = 0;
+    uVar9 = 0;
+    if (0 < (int)uVar17) {
+      iVar21 = 0;
+      do {
+        if ((ulonglong)*(ushort *)((int)local_28b0 + iVar21) != 0) {
+          if (uVar18 == 0) {
+            if (uVar9 < 3) {
+              uVar9 = uVar9 + 1;
+              uVar18 = (ulonglong)*(ushort *)((int)local_28b0 + iVar21);
+            }
+            else {
+              Com_PrintWarning(0xf,0xffffffff8207f358,3,pcVar7);
+            }
+          }
+          else {
+            Com_PrintWarning(0xf,0xffffffff8207f328,pcVar7);
+          }
+        }
+        if ((ulonglong)*(ushort *)((int)local_28a0 + iVar21) != 0) {
+          if (uVar19 == 0) {
+            if (uVar9 < 3) {
+              uVar9 = uVar9 + 1;
+              uVar19 = (ulonglong)*(ushort *)((int)local_28a0 + iVar21);
+            }
+            else {
+              Com_PrintWarning(0xf,0xffffffff8207f358,3,pcVar7);
+            }
+          }
+          else {
+            Com_PrintWarning(0xf,0xffffffff8207f388,pcVar7);
+          }
+        }
+        if (*(ushort *)((int)local_28a8 + iVar21) != 0) {
+          if (uVar9 < 3) {
+            uVar9 = uVar9 + 1;
+            uVar20 = (ulonglong)(uint)(1 << (*(ushort *)((int)local_28a8 + iVar21) - 1 & 0x3f)) &
+                     0xffff | uVar20;
+          }
+          else {
+            Com_PrintWarning(0xf,0xffffffff8207f358,3,pcVar7);
+          }
+        }
+        uVar17 = uVar17 - 1;
+        iVar21 = iVar21 + 2;
+      } while (uVar17 != 0);
+    }
+    uVar16 = (((((uVar14 & 7) << 4 | uVar20 & 0xf) << 2 | uVar19 & 3) << 3 | uVar18 & 7) << 4 |
+             uVar15 & 0xf) << 8 | CONCAT44(local_28b0[0],local_28b0[0]) & 0xffffffffff0000ff;
+    if ((uVar18 & 7) != uVar18) {
+      MyAssertHandler(0xffffffff8207ed88,0x719,0,0xffffffff82000f98,0xffffffff8207f304);
+    }
+    if ((uVar19 & 3) != uVar19) {
+      MyAssertHandler(0xffffffff8207ed88,0x71a,0,0xffffffff82000f98,0xffffffff8207f2d4);
+    }
+    if ((uVar20 & 0xf) != uVar20) {
+      MyAssertHandler(0xffffffff8207ed88,0x71b,0,0xffffffff82000f98,0xffffffff8207f2b0);
+    }
+    if ((uVar14 & 7) != uVar14) {
+      MyAssertHandler(0xffffffff8207ed88,0x71c,0,0xffffffff82000f98,0xffffffff8207f288);
+    }
+    if ((uVar15 & 0xf) != uVar15) {
+      MyAssertHandler(0xffffffff8207ed88,0x71d,0,0xffffffff82000f98,0xffffffff8207f25c);
+    }
+  }
+  __restgprlr_16(uVar16);
+  return;
 }
 
 
@@ -311,6 +1817,20 @@ void G_SelectWeapon(undefined8 param_1,undefined8 param_2)
   undefined8 uVar1;
   
   uVar1 = va(0xffffffff8206d790,0x61,param_2);
+  SV_GameSendServerCommand(param_1,1,uVar1);
+  return;
+}
+
+
+// 824B5780  G_SetEquippedOffHand  (game/g_weapon.cpp:1842)
+
+void G_SetEquippedOffHand(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  BG_AssertOffhandIndexOrNone(param_2);
+  uVar1 = va(0xffffffff8206d790,0x77,param_2);
   SV_GameSendServerCommand(param_1,1,uVar1);
   return;
 }
@@ -331,51 +1851,278 @@ void G_RegisterWeaponForKillcamFXRemoval(undefined8 param_1,undefined8 param_2)
 
 // 824B5830  G_WorldPointToScreenPos  (game/g_weapon.cpp:1861)
 
-void G_WorldPointToScreenPos(void)
+void G_WorldPointToScreenPos
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4,
+               float *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float *pfVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_70;
+  float local_6c;
+  float local_68;
+  
   __savegprlr_26();
+  pfVar2 = (float *)__savefpr_27();
+  dVar6 = 0.0;
+  dVar3 = extraout_f1;
+  if (extraout_f1 <= 0.0) {
+    MyAssertHandler(0xffffffff8207ed88,0x74d,0,0xffffffff82000f98,0xffffffff8207f4f8);
+  }
+  local_80 = *param_4 - *pfVar2;
+  local_7c = param_4[1] - pfVar2[1];
+  local_78 = param_4[2] - pfVar2[2];
+  MatrixTransposeTransformVector(&local_80,param_2,&local_70);
+  if ((double)local_70 <= dVar6) {
+    __restfpr_27(0);
+    __restgprlr_26();
+    return;
+  }
+  fVar1 = (float)(1.0 / (double)local_70);
+  dVar5 = (double)(fVar1 * local_6c);
+  dVar4 = (double)(fVar1 * local_68);
+  dVar3 = tan((double)((float)(dVar3 * 0.01745329238474369) * 0.5));
+  dVar7 = (double)(float)dVar3;
+  dVar3 = (double)(float)(dVar7 * 0.75);
+  if (dVar7 <= dVar6) {
+    MyAssertHandler(0xffffffff8207ed88,0x758,1,0xffffffff82000f98,0xffffffff8207f4e8);
+  }
+  if (dVar3 <= dVar6) {
+    MyAssertHandler(0xffffffff8207ed88,0x759,1,0xffffffff82000f98,0xffffffff8207f4d8);
+  }
+  *param_5 = (float)(dVar5 / dVar7) * -320.0;
+  param_5[1] = (float)(dVar4 / dVar3) * -240.0;
+  __restfpr_27(1);
+  __restgprlr_26();
+  return;
+}
+
+
+// 824B59C0  G_InitDefaultViewmodelRumbles  (game/g_weapon.cpp:1891)
+
+void G_InitDefaultViewmodelRumbles(void)
+
+{
+  G_RumbleIndex(0xffffffff8202af98);
+  return;
+}
+
+
+// 824B59D0  G_GetShieldTagName  (game/g_weapon.cpp:1899)
+
+void G_GetShieldTagName(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x76c,0,0xffffffff82000f98,0xffffffff8207f56c);
+  }
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x76d,0,0xffffffff82000f98,0xffffffff8207f554);
+  }
+  if ((*(uint *)(*(int *)(iVar1 + 0x158) + 0x10) & 0x100) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x76e,0,0xffffffff82000f98,0xffffffff8207f508);
+    __restgprlr_29(*(undefined2 *)(*(int *)(iVar1 + 0x158) + 0x3910));
+    return;
+  }
+  __restgprlr_29(*(undefined2 *)(*(int *)(iVar1 + 0x158) + 0x3910));
+  return;
 }
 
 
 // 824B5A90  G_GetShieldTagMatrix  (game/g_weapon.cpp:1952)
 
-void G_GetShieldTagMatrix(void)
+void G_GetShieldTagMatrix(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  int iVar4;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7a4,0,0xffffffff82000f98,0xffffffff8207f56c);
+  }
+  uVar2 = G_GetShieldTagName(puVar3);
+  iVar4 = G_DObjGetWorldTagMatrix(puVar3,uVar2,param_2);
+  if (iVar4 == 0) {
+    uVar1 = *puVar3;
+    uVar2 = SL_ConvertToString(uVar2);
+    Com_PrintWarning(0xf,0xffffffff8207f57c,uVar2,uVar1);
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824B5B30  G_GetShieldCosOfAngleToPoint  (game/g_weapon.cpp:1972)
 
-void G_GetShieldCosOfAngleToPoint(void)
+void G_GetShieldCosOfAngleToPoint(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  char cVar4;
+  float *pfVar5;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_3c;
+  float local_38;
+  float local_34;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7bc,0,0xffffffff82000f98,0xffffffff8207f56c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7bd,0,0xffffffff82000f98,0xffffffff8206e8a0);
+  }
+  if ((*(uint *)(*(int *)(iVar3 + 0x158) + 0x10) & 0x100) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7c0,0,0xffffffff82000f98,0xffffffff8207f508);
+  }
+  cVar4 = G_GetShieldTagMatrix(iVar3,&local_60);
+  if (cVar4 == '\0') {
+    __restgprlr_28(0xbff0000000000000);
+    return;
+  }
+  pfVar5 = (float *)param_2;
+  local_3c = *pfVar5 - local_3c;
+  local_34 = pfVar5[2] - local_34;
+  local_38 = pfVar5[1] - local_38;
+  fVar1 = SQRT(local_38 * local_38 + local_34 * local_34 + local_3c * local_3c);
+  fVar2 = 1.0;
+  if (-fVar1 < 0.0) {
+    fVar2 = fVar1;
+  }
+  fVar2 = 1.0 / fVar2;
+  __restgprlr_28((double)(local_58 * local_34 * fVar2 +
+                         local_60 * fVar2 * local_3c + local_5c * fVar2 * local_38));
+  return;
 }
 
 
 // 824B5C68  G_GetShieldTagNormal  (game/g_weapon.cpp:2017)
 
-void G_GetShieldTagNormal(void)
+void G_GetShieldTagNormal(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  char cVar3;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7e6,0,0xffffffff82000f98,0xffffffff8207f56c);
+  }
+  if ((*(int *)(iVar2 + 0x158) != 0) && ((*(uint *)(*(int *)(iVar2 + 0x158) + 0x10) & 0x100) == 0))
+  {
+    MyAssertHandler(0xffffffff8207ed88,0x7e7,0,0xffffffff82000f98,0xffffffff8207f5c8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7e8,0,0xffffffff82000f98,0xffffffff8207f5b8);
+  }
+  cVar3 = G_GetShieldTagMatrix(iVar2,&local_60);
+  puVar1 = (undefined4 *)param_2;
+  if (cVar3 == '\0') {
+    *puVar1 = 0;
+    puVar1[1] = 0;
+    puVar1[2] = 0x3f800000;
+    __restgprlr_28();
+    return;
+  }
+  *puVar1 = local_60;
+  puVar1[1] = local_5c;
+  puVar1[2] = local_58;
+  __restgprlr_28();
+  return;
 }
 
 
 // 824B5D70  G_TakePlayerWeapon  (game/g_weapon.cpp:2038)
 
-void G_TakePlayerWeapon(void)
+void G_TakePlayerWeapon(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined1 auStack_430 [1072];
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7fb,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  iVar1 = *(int *)(iVar2 + 0x150);
+  if ((&DAT_833737d8)[iVar1 * 0xa0] == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x7fe,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  BG_GetWeaponName(param_2,auStack_430,0x400);
+  Scr_AddString();
+  Scr_Notify(&DAT_83373680 + iVar1 * 0xa0,DAT_835a0ca2,1);
+  BG_TakePlayerWeapon(iVar2,param_2);
+  __restgprlr_27();
+  return;
+}
+
+
+// 824B5E40  G_GetShieldBlastDamageProtection  (game/g_weapon.cpp:2062)
+
+void G_GetShieldBlastDamageProtection(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  
+  iVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x815,0,0xffffffff82000f98,0xffffffff8207f638);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8207ed88,0x816,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((*(int *)(iVar1 + 0x158) == 0) || ((*(uint *)(*(int *)(iVar1 + 0x158) + 0x10) & 0x100) == 0))
+  {
+    __restgprlr_28(0);
+    return;
+  }
+  dVar2 = (double)G_GetShieldCosOfAngleToPoint(iVar1,param_2);
+  if (0.9660000205039978 < dVar2) {
+    __restgprlr_28((double)*(float *)(DAT_83373674 + 0xc));
+    return;
+  }
+  if (0.8659999966621399 < dVar2) {
+    __restgprlr_28((double)*(float *)(DAT_83373648 + 0xc));
+    return;
+  }
+  if (0.5 < dVar2) {
+    __restgprlr_28((double)*(float *)(DAT_8353fec8 + 0xc));
+    return;
+  }
+  dVar3 = 0.0;
+  if (0.0 < dVar2) {
+    dVar3 = (double)*(float *)(DAT_8353ff2c + 0xc);
+  }
+  __restgprlr_28(dVar3);
+  return;
 }
 
 
@@ -387,7 +2134,6 @@ void G_AddShieldSplashDamageEvent(double param_1,double param_2,double param_3,u
   ulonglong uVar1;
   
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207ed88,0x836,0,0xffffffff82000f98,0xffffffff82002614);
   }
   uVar1 = (longlong)(param_1 * param_2) & 0xffffffff;
@@ -409,14 +2155,16 @@ undefined4 G_PlayerTurretWeapon(int param_1)
 {
   int iVar1;
   
+  iVar1 = 0x7ff;
   if ((*(uint *)(param_1 + 0xf8) & 0x3800) == 0) {
     if ((*(uint *)(param_1 + 0x10) & 0x80000) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207ed88,0x861,0,0xffffffff82000f98,0xffffffff8202b03c);
     }
-    iVar1 = *(int *)(param_1 + 0x50);
-    if (iVar1 == 0x7ff) {
-      return 0;
+    else {
+      iVar1 = *(int *)(param_1 + 0x50);
+      if (iVar1 == 0x7ff) {
+        return 0;
+      }
     }
   }
   else {

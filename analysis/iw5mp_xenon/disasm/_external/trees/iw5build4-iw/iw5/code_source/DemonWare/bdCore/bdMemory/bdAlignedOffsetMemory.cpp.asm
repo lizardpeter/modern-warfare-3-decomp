@@ -67,3 +67,25 @@ LAB_828f8360:
 ; 828F8378  bdAlignedOffsetRealloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:170)
   828F8378  7D8802A6             mfspr r12,LR
   828F837C  4801E33D             bl 0x829166b8
+  828F8380  9421FF80             stwu r1,-0x80(r1)
+  828F8384  7CBF2B78             or r31,r5,r5
+  828F8388  7C7D1B78             or r29,r3,r3
+  828F838C  7C9E2378             or r30,r4,r4
+  828F8390  7CE53B78             or r5,r7,r7
+  828F8394  7CC43378             or r4,r6,r6
+  828F8398  7FE3FB78             or r3,r31,r31
+  828F839C  4BFFFEF5             bl 0x828f8290
+  828F83A0  7C7C1B78             or r28,r3,r3
+  828F83A4  7F1FF040             cmplw cr6,r31,r30
+  828F83A8  7FE5FB78             or r5,r31,r31
+  828F83AC  41980008             blt cr6,0x828f83b4
+  828F83B0  7FC5F378             or r5,r30,r30
+LAB_828f83b4:
+  828F83B4  7FA4EB78             or r4,r29,r29
+  828F83B8  7F83E378             or r3,r28,r28
+  828F83BC  4801E5A5             bl 0x82916960
+  828F83C0  807DFFFC             lwz r3,-0x4(r29)
+  828F83C4  4801DF6D             bl 0x82916330
+  828F83C8  7F83E378             or r3,r28,r28
+  828F83CC  38210080             addi r1,r1,0x80
+  828F83D0  4801E338             b 0x82916708

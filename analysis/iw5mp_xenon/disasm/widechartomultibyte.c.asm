@@ -3,3 +3,60 @@
 ; 828A2720  WideCharToMultiByte  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/widechartomultibyte.c:26)
   828A2720  7D8802A6             mfspr r12,LR
   828A2724  48073F8D             bl 0x829166b0
+  828A2728  9421FF70             stwu r1,-0x90(r1)
+  828A272C  7C7B1B78             or r27,r3,r3
+  828A2730  7CBC2B78             or r28,r5,r5
+  828A2734  7CDF3378             or r31,r6,r6
+  828A2738  7CFA3B78             or r26,r7,r7
+  828A273C  7D1D4378             or r29,r8,r8
+  828A2740  7D5E5378             or r30,r10,r10
+  828A2744  7DAD6B78             or r13,r13,r13
+  828A2748  2B1E0000             cmplwi cr6,r30,0x0
+  828A274C  419A000C             beq cr6,0x828a2758
+  828A2750  39600000             li r11,0x0
+  828A2754  917E0000             stw r11,0x0(r30)
+LAB_828a2758:
+  828A2758  2B1BFDE9             cmplwi cr6,r27,0xfde9
+  828A275C  409A0028             bne cr6,0x828a2784
+  828A2760  7FA6EB78             or r6,r29,r29
+  828A2764  7F45D378             or r5,r26,r26
+  828A2768  7FE4FB78             or r4,r31,r31
+  828A276C  7F83E378             or r3,r28,r28
+  828A2770  480096F9             bl 0x828abe68
+  828A2774  7C7F1B78             or r31,r3,r3
+LAB_828a2778:
+  828A2778  7DCE7378             or r14,r14,r14
+  828A277C  7FE3FB78             or r3,r31,r31
+  828A2780  48000068             b 0x828a27e8
+LAB_828a2784:
+  828A2784  2F1FFFFF             cmpwi cr6,r31,-0x1
+  828A2788  409A0010             bne cr6,0x828a2798
+  828A278C  7F83E378             or r3,r28,r28
+  828A2790  48078B49             bl 0x8291b2d8
+  828A2794  3BE30001             addi r31,r3,0x1
+LAB_828a2798:
+  828A2798  2F1D0000             cmpwi cr6,r29,0x0
+  828A279C  419AFFDC             beq cr6,0x828a2778
+  828A27A0  2F1F0000             cmpwi cr6,r31,0x0
+  828A27A4  41980034             blt cr6,0x828a27d8
+  828A27A8  7F1DF800             cmpw cr6,r29,r31
+  828A27AC  4198002C             blt cr6,0x828a27d8
+  828A27B0  57E7083C             rlwinm r7,r31,0x1,0x0,0x1e
+  828A27B4  7F86E378             or r6,r28,r28
+  828A27B8  38A00000             li r5,0x0
+  828A27BC  7FA4EB78             or r4,r29,r29
+  828A27C0  7F43D378             or r3,r26,r26
+  828A27C4  4809F571             bl 0x82941d34
+  828A27C8  2C030000             cmpwi r3,0x0
+  828A27CC  4080FFAC             bge 0x828a2778
+  828A27D0  4809F555             bl 0x82941d24
+  828A27D4  48000008             b 0x828a27dc
+LAB_828a27d8:
+  828A27D8  3860007A             li r3,0x7a
+LAB_828a27dc:
+  828A27DC  48009655             bl 0x828abe30
+  828A27E0  7DCE7378             or r14,r14,r14
+  828A27E4  38600000             li r3,0x0
+LAB_828a27e8:
+  828A27E8  38210090             addi r1,r1,0x90
+  828A27EC  48073F14             b 0x82916700

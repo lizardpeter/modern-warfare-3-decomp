@@ -3,6 +3,69 @@
 ; 82788F00  R_UpdateFrameRate  (gfx_d3d/r_warn.cpp:166)
   82788F00  7D8802A6             mfspr r12,LR
   82788F04  4818D7B9             bl 0x829166bc
+  82788F08  9421FF80             stwu r1,-0x80(r1)
+  82788F0C  3D608461             lis r11,-0x7b9f
+  82788F10  3FA0847F             lis r29,-0x7b81
+  82788F14  3BCB7950             addi r30,r11,0x7950
+  82788F18  817DEC24             lwz r11,-0x13dc(r29)
+  82788F1C  815E016C             lwz r10,0x16c(r30)
+  82788F20  7F0B5040             cmplw cr6,r11,r10
+  82788F24  419A00B8             beq cr6,0x82788fdc
+  82788F28  3FE0847F             lis r31,-0x7b81
+  82788F2C  2B0B0000             cmplwi cr6,r11,0x0
+  82788F30  409A0024             bne cr6,0x82788f54
+  82788F34  4BECD69D             bl 0x826565d0
+  82788F38  3D60847F             lis r11,-0x7b81
+  82788F3C  C03FEC20             lfs f1,-0x13e0(r31)
+  82788F40  906BEC1C             stw r3,-0x13e4(r11)
+  82788F44  817E016C             lwz r11,0x16c(r30)
+  82788F48  917DEC24             stw r11,-0x13dc(r29)
+  82788F4C  38210080             addi r1,r1,0x80
+  82788F50  4818D7BC             b 0x8291670c
+LAB_82788f54:
+  82788F54  815E016C             lwz r10,0x16c(r30)
+  82788F58  392B0001             addi r9,r11,0x1
+  82788F5C  7F095040             cmplw cr6,r9,r10
+  82788F60  419A0020             beq cr6,0x82788f80
+LAB_82788f64:
+  82788F64  3D608200             lis r11,-0x7e00
+  82788F68  C02B13F8             lfs f1,0x13f8(r11)
+  82788F6C  817E016C             lwz r11,0x16c(r30)
+  82788F70  D03FEC20             stfs f1,-0x13e0(r31)
+  82788F74  917DEC24             stw r11,-0x13dc(r29)
+  82788F78  38210080             addi r1,r1,0x80
+  82788F7C  4818D790             b 0x8291670c
+LAB_82788f80:
+  82788F80  4BECD651             bl 0x826565d0
+  82788F84  3D40847F             lis r10,-0x7b81
+  82788F88  816AEC1C             lwz r11,-0x13e4(r10)
+  82788F8C  906AEC1C             stw r3,-0x13e4(r10)
+  82788F90  7D6B1851             subf. r11,r11,r3
+  82788F94  4082000C             bne 0x82788fa0
+  82788F98  39600001             li r11,0x1
+  82788F9C  4800000C             b 0x82788fa8
+LAB_82788fa0:
+  82788FA0  2F0B0000             cmpwi cr6,r11,0x0
+  82788FA4  4198FFC0             blt cr6,0x82788f64
+LAB_82788fa8:
+  82788FA8  7D6B07B4             extsw r11,r11
+  82788FAC  3D408200             lis r10,-0x7e00
+  82788FB0  F9610050             std r11,0x50(r1)
+  82788FB4  C8010050             lfd f0,0x50(r1)
+  82788FB8  FDA0069C             fcfid f13,f0
+  82788FBC  817E016C             lwz r11,0x16c(r30)
+  82788FC0  FD806818             frsp f12,f13
+  82788FC4  C00A4214             lfs f0,0x4214(r10)
+  82788FC8  917DEC24             stw r11,-0x13dc(r29)
+  82788FCC  EC206024             fdivs f1,f0,f12
+  82788FD0  D03FEC20             stfs f1,-0x13e0(r31)
+  82788FD4  38210080             addi r1,r1,0x80
+  82788FD8  4818D734             b 0x8291670c
+LAB_82788fdc:
+  82788FDC  3D60847F             lis r11,-0x7b81
+  82788FE0  C02BEC20             lfs f1,-0x13e0(r11)
+  82788FE4  38210080             addi r1,r1,0x80
+  82788FE8  4818D724             b 0x8291670c
 
 ; 82788FF0  R_WarnInit  (gfx_d3d/r_warn.cpp:213)
   82788FF0  3D60847F             lis r11,-0x7b81

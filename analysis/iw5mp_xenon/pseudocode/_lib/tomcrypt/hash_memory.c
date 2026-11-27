@@ -2,10 +2,39 @@
 
 // 8225F5B8  hash_memory  (line unknown)
 
-void hash_memory(void)
+void hash_memory(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                uint *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int iVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  iVar4 = __savegprlr_23();
+  if (((iVar4 < 0) || (0x1f < iVar4)) || (iVar1 = iVar4 * 0x68, (&DAT_84896148)[iVar4 * 0x1a] == 0))
+  {
+    __restgprlr_23(0xb);
+    return;
+  }
+  if (*param_5 < *(uint *)(&DAT_84896150 + iVar1)) {
+    *param_5 = *(uint *)(&DAT_84896150 + iVar1);
+    __restgprlr_23(6);
+    return;
+  }
+  uVar2 = tom_game_malloc(0x70);
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_23(0xd);
+    return;
+  }
+  uVar3 = (**(code **)(&DAT_8489619c + iVar1))(uVar2);
+  if (((int)uVar3 == 0) &&
+     (uVar3 = (**(code **)(&DAT_848961a0 + iVar1))(uVar2,param_2,param_3), (int)uVar3 == 0)) {
+    uVar3 = (**(code **)(&DAT_848961a4 + iVar1))(uVar2,param_4);
+    *param_5 = *(uint *)(&DAT_84896150 + iVar1);
+  }
+  tom_game_free(uVar2);
+  __restgprlr_23(uVar3);
+  return;
 }
 

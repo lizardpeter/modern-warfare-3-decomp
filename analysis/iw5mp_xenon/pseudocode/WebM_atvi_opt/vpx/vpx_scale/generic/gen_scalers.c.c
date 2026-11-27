@@ -499,11 +499,43 @@ void vp8cx_horizontal_line_5_4_scale_c(int param_1,int param_2,int param_3)
 
 // 828400A8  vp8cx_vertical_band_5_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:784)
 
-void vp8cx_vertical_band_5_4_scale_c(void)
+void vp8cx_vertical_band_5_4_scale_c
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  undefined1 *puVar5;
+  undefined1 *puVar6;
+  undefined1 *puVar7;
+  int iVar8;
+  
+  puVar6 = (undefined1 *)__savegprlr_23();
+  iVar8 = 0;
+  if ((param_5 & 0xffffffff) != 0) {
+    puVar7 = puVar6;
+    do {
+      bVar1 = puVar6[iVar8 + (int)param_2];
+      puVar5 = puVar7 + (param_3 - (int)puVar6);
+      bVar2 = puVar7[(int)((param_2 & 0xffffffff) << 2)];
+      iVar8 = iVar8 + 1;
+      bVar3 = puVar7[(int)((param_2 & 0xffffffff) << 1)];
+      bVar4 = puVar7[(int)param_2 + (int)((param_2 & 0xffffffff) << 1)];
+      puVar7[param_3 - (int)puVar6] = *puVar7;
+      puVar5[(int)param_4] = (char)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
+      puVar5[(int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
+      puVar7 = puVar7 + 1;
+      puVar5[(int)param_4 + (int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
+      param_5 = param_5 - 1;
+    } while (param_5 != 0);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -544,11 +576,41 @@ void vp8cx_horizontal_line_5_3_scale_c(int param_1,int param_2,int param_3)
 
 // 828401D0  vp8cx_vertical_band_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:865)
 
-void vp8cx_vertical_band_5_3_scale_c(void)
+void vp8cx_vertical_band_5_3_scale_c
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  byte bVar4;
+  undefined1 *puVar5;
+  undefined1 *puVar6;
+  int iVar7;
+  undefined1 *puVar8;
+  
+  puVar6 = (undefined1 *)__savegprlr_26();
+  iVar7 = 0;
+  if ((param_5 & 0xffffffff) != 0) {
+    puVar8 = puVar6;
+    do {
+      bVar1 = puVar6[iVar7 + (int)param_2];
+      puVar5 = puVar8 + (param_3 - (int)puVar6);
+      bVar2 = puVar8[(int)param_2 + (int)((param_2 & 0xffffffff) << 1)];
+      iVar7 = iVar7 + 1;
+      bVar3 = puVar8[(int)((param_2 & 0xffffffff) << 1)];
+      bVar4 = puVar8[(int)((param_2 & 0xffffffff) << 2)];
+      puVar8[param_3 - (int)puVar6] = *puVar8;
+      puVar5[(int)param_4] = (char)((ulonglong)bVar3 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
+      puVar8 = puVar8 + 1;
+      puVar5[(int)((param_4 & 0xffffffff) << 1)] =
+           (char)((ulonglong)bVar2 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
+      param_5 = param_5 - 1;
+    } while (param_5 != 0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 

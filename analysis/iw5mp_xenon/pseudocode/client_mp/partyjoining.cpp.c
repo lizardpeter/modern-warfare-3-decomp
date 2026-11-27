@@ -13,13 +13,37 @@ void PartyAtomic_Init(void)
 }
 
 
+// 8238A380  PartyAtomic_GetPartyFromJoinInfo  (client_mp/partyjoining.cpp:73)
+
+void PartyAtomic_GetPartyFromJoinInfo(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4a,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  iVar1 = *(int *)(iVar1 + 8);
+  if (iVar1 == 1) {
+    __restgprlr_29(0xffffffff82b55118);
+    return;
+  }
+  if ((iVar1 != 2) && (iVar1 != 0)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4f,0,0xffffffff82000f98,0xffffffff8204f480);
+  }
+  Lobby_GetPartyData();
+  __restgprlr_29();
+  return;
+}
+
+
 // 8238C138  PartyAtomic_IsJoiningActive  (client_mp/partyjoining.cpp:86)
 
 bool PartyAtomic_IsJoiningActive(int *param_1)
 
 {
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   return *param_1 != 0;
@@ -28,21 +52,76 @@ bool PartyAtomic_IsJoiningActive(int *param_1)
 
 // 8238C198  PartyAtomic_IsJoiningActiveForSpecificParty  (client_mp/partyjoining.cpp:93)
 
-void PartyAtomic_IsJoiningActiveForSpecificParty(void)
+void PartyAtomic_IsJoiningActiveForSpecificParty(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar1;
+  int iVar2;
+  
+  piVar1 = (int *)__savegprlr_26();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x60,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x61,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar1 == 0) {
+    __restgprlr_26(0);
+    return;
+  }
+  if ((piVar1[0x19] != 0) && (*(int *)(piVar1[0x19] + 0x1eb4) == *(int *)((int)param_2 + 0x1eb4))) {
+    __restgprlr_26(1);
+    return;
+  }
+  iVar2 = PartyAtomic_GetPartyFromJoinInfo(piVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6a,0,0xffffffff82000f98,0xffffffff8205038c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6b,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  __restgprlr_26(*(int *)((int)param_2 + 0x1eb4) == *(int *)(iVar2 + 0x1eb4));
+  return;
 }
 
 
 // 8238C2D8  PartyAtomic_IsJoiningActiveForSpecificSession  (client_mp/partyjoining.cpp:113)
 
-void PartyAtomic_IsJoiningActiveForSpecificSession(void)
+void PartyAtomic_IsJoiningActiveForSpecificSession(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  longlong lVar3;
+  byte *pbVar4;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x72,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x73,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar2 == 0) {
+    __restgprlr_27(0);
+    return;
+  }
+  pbVar4 = (byte *)(piVar2 + 4);
+  iVar1 = (int)param_2;
+  do {
+    lVar3 = (ulonglong)*(byte *)param_2 - (ulonglong)*pbVar4;
+    if (lVar3 != 0) break;
+    param_2 = param_2 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while ((int)param_2 != iVar1 + 0x3c);
+  __restgprlr_27((int)lVar3 == 0);
+  return;
 }
 
 
@@ -51,8 +130,48 @@ void PartyAtomic_IsJoiningActiveForSpecificSession(void)
 void PartyAtomic_IsJoiningOnPresence(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x7e,0,0xffffffff82000f98,0xffffffff8203fda8);
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar2 == 0) {
+    __restgprlr_28(0);
+    return;
+  }
+  if ((piVar2[1] == 2) || (uVar1 = 0, piVar2[1] == 1)) {
+    uVar1 = 1;
+  }
+  __restgprlr_28(uVar1);
+  return;
+}
+
+
+// 8238C460  PartyAtomic_IsJoiningOnHostequest  (client_mp/partyjoining.cpp:136)
+
+void PartyAtomic_IsJoiningOnHostequest(void)
+
+{
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x89,0,0xffffffff82000f98,0xffffffff8203fda8);
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar2 == 0) {
+    __restgprlr_28(0);
+    return;
+  }
+  if ((piVar2[1] == 3) || (uVar1 = 0, piVar2[1] == 4)) {
+    uVar1 = 1;
+  }
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
@@ -64,7 +183,6 @@ void PartyAtomic_FillSubPartyInfoForLocalClients(int param_1)
   char cVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x94,0,0xffffffff82000f98,0xffffffff8204f528);
   }
   *(undefined1 *)(param_1 + 0x2c1) = 1;
@@ -96,27 +214,22 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
   
   iVar8 = __savegprlr_20();
   if (iVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xab,0,0xffffffff82000f98,0xffffffff8204f528);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xac,0,0xffffffff82000f98,0xffffffff8204f688);
   }
   iVar2 = (int)param_2;
   if (*(int *)(iVar2 + 0x1eec) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xad,0,0xffffffff82000f98,0xffffffff8204f670);
   }
   uVar4 = PartyClient_CountMembersEvenIfInactive(param_2);
   uVar1 = *(uint *)(iVar2 + 0x1e28);
   if (0x11 < uVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xb7,0,0xffffffff8204bb20,0xffffffff8204f658,uVar1);
   }
   if (uVar1 == 0) {
     if ((uVar4 & 0xffffffff) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0xbc,0,0xffffffff8204baec,0xffffffff8204f644,uVar4);
     }
     PartyAtomic_FillSubPartyInfoForLocalClients(iVar8);
@@ -130,7 +243,6 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
       uVar5 = Party_CountActivePlayersInSubparty(param_2,uVar12);
       uVar9 = uVar5 + uVar9;
       if (0x12 < (uVar5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8204f4e0,200,0,0xffffffff8204f624,0xffffffff8204f608,uVar5);
       }
       *(char *)(iVar8 + 0x2c2 + uVar12) = (char)uVar5;
@@ -138,11 +250,9 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
     } while (uVar12 < uVar1);
   }
   if (0x12 < (uVar4 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xcc,0,0xffffffff8204baec,0xffffffff8204f5f4,uVar4);
   }
   if (0x12 < uVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0xcd,0,0xffffffff8204bb20,0xffffffff8204f5dc,uVar1);
   }
   *(char *)(iVar8 + 0x2c0) = (char)uVar4;
@@ -159,7 +269,6 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
           do {
             uVar1 = *(uint *)((iVar8 + iVar11) * 4 + iVar2);
             if (0x11 < uVar1) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8204f4e0,0xe0,0,0xffffffff82042480,uVar1,0x12);
             }
             iVar3 = uVar1 * 0x150 + iVar2;
@@ -181,7 +290,6 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
     }
     if ((uVar9 & 0xffffffff) != (uVar4 & 0xffffffff)) {
       uVar6 = va(0xffffffff8204f560,uVar9,uVar4);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0xe9,0,0xffffffff820011f4,0xffffffff8204f53c,uVar6);
     }
   }
@@ -190,33 +298,133 @@ void PartyAtomic_FillSubPartyInfoForParty(undefined8 param_1,ulonglong param_2)
 }
 
 
-// 8238C550  PartyAtomic_PacketIsFromPotentialHost  (client_mp/partyjoining.cpp:260)
+// 8238C500  PartyAtomic_FixupAddressForPotentialHost  (client_mp/partyjoining.cpp:240)
 
-void PartyAtomic_PacketIsFromPotentialHost(void)
+undefined8 PartyAtomic_FixupAddressForPotentialHost(int *param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  if (*param_1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0xf1,0,0xffffffff82000f98,0xffffffff820503a0);
+  }
+  return 0;
+}
+
+
+// 8238C550  PartyAtomic_PacketIsFromPotentialHost  (client_mp/partyjoining.cpp:260)
+
+void PartyAtomic_PacketIsFromPotentialHost(undefined8 param_1,int param_2,ulonglong param_3)
+
+{
+  int *piVar2;
+  int iVar3;
+  longlong lVar1;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x105,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (piVar2[0x13] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x106,0,0xffffffff82000f98,0xffffffff8204f980);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x107,0,0xffffffff82000f98,0xffffffff82001400);
+  }
+  if ((*piVar2 != 0) && ((piVar2[2] == 2 || (piVar2[2] == param_2)))) {
+    iVar3 = NET_CompareAdr(*(undefined8 *)(piVar2 + 0x15),*(undefined8 *)(piVar2 + 0x17),
+                           *(undefined8 *)param_3,((undefined8 *)param_3)[1]);
+    if ((iVar3 == 0) &&
+       (iVar3 = NET_XnAddrAndNetAddrAreSamePerson((ulonglong)(uint)piVar2[0x13] + 0x1c,param_3),
+       iVar3 == 0)) {
+      lVar1 = PartyAtomic_FixupAddressForPotentialHost(piVar2);
+      __restgprlr_27(lVar1 != 0);
+      return;
+    }
+    __restgprlr_27(1);
+    return;
+  }
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 8238C670  PartyAtomic_PacketIsFromJoiningHost  (client_mp/partyjoining.cpp:285)
+
+void PartyAtomic_PacketIsFromJoiningHost(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x11e,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x11f,0,0xffffffff82000f98,0xffffffff82001400);
+  }
+  if ((*piVar1 != 9) && (*piVar1 != 10)) {
+    __restgprlr_27(0);
+    return;
+  }
+  PartyAtomic_PacketIsFromPotentialHost(piVar1,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8238C718  PartyAtomicJoin_GetMainActiveClient  (client_mp/partyjoining.cpp:298)
 
-void PartyAtomicJoin_GetMainActiveClient(void)
+void PartyAtomicJoin_GetMainActiveClient(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  undefined4 uVar2;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x12d,0,0xffffffff82000f98,0xffffffff8203fda8);
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar1 != 0) {
+    if ((param_2 & 0xffffffff) != (ulonglong)(uint)piVar1[0xb6]) {
+      Com_Printf(0x19,0xffffffff820503e0,(ulonglong)(uint)piVar1[0xb6],param_2);
+    }
+    __restgprlr_27(*(undefined8 *)(piVar1 + 0xb5));
+    return;
+  }
+  uVar2 = CL_LocalClientNumFromControllerIndex(param_2);
+  __restgprlr_27(CONCAT44(uVar2,(int)param_2));
+  return;
 }
 
 
 // 8238A7C0  PartyAtomicJoin_GetSecondaryActiveClient  (client_mp/partyjoining.cpp:323)
 
-void PartyAtomicJoin_GetSecondaryActiveClient(void)
+void PartyAtomicJoin_GetSecondaryActiveClient(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x144,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x145,0,0xffffffff82000f98,0xffffffff82043e7c);
+  }
+  if (*(int *)(iVar1 + 0x2dc) != 0) {
+    if (*(int *)(iVar1 + 0x2e8) == *(int *)(iVar1 + 0x2d8)) {
+      MyAssertHandler(0xffffffff8204f4e0,0x14a,0,0xffffffff8204f730,0xffffffff8204f770);
+    }
+    if (*(int *)(iVar1 + 0x2e4) == *(int *)(iVar1 + 0x2d4)) {
+      MyAssertHandler(0xffffffff8204f4e0,0x14b,0,0xffffffff8204f698,0xffffffff8204f6d0);
+    }
+    ((undefined4 *)param_2)[1] = *(undefined4 *)(iVar1 + 0x2e8);
+    *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 0x2e4);
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -237,8 +445,30 @@ undefined8 PartyAtmoic_GetDesiredDialog(void)
 void PartyAtomic_AssertNoPendingMemberMessages(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  longlong lVar3;
+  undefined4 *puVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x178,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  puVar4 = (undefined4 *)(iVar2 + 0x88);
+  lVar3 = 0x12;
+  do {
+    if (puVar4[-6] != 0) {
+      iVar2 = RMsg_GetSendStatusFromHandle(*puVar4);
+      if (iVar2 != 0) {
+        uVar1 = RMsg_GetSendStatusFromHandle(*puVar4);
+        MyAssertHandler(0xffffffff8204f4e0,0x180,0,0xffffffff8204f7e0,uVar1,0);
+      }
+    }
+    lVar3 = lVar3 + -1;
+    puVar4 = puVar4 + 8;
+  } while (lVar3 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -252,7 +482,6 @@ void PartyAtomic_CancelMemberResponseMessage(int param_1)
   undefined4 *puVar3;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x188,0,0xffffffff82000f98,0xffffffff8204f888);
   }
   Com_PrintWarning(0xe,0xffffffff8204f854,*(undefined8 *)(param_1 + 8));
@@ -262,7 +491,6 @@ void PartyAtomic_CancelMemberResponseMessage(int param_1)
   iVar2 = RMsg_GetSendStatusFromHandle(*puVar3);
   if (iVar2 != 0) {
     uVar1 = RMsg_GetSendStatusFromHandle(*puVar3);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x18d,0,0xffffffff8204f7e0,uVar1,0);
   }
   return;
@@ -274,8 +502,93 @@ void PartyAtomic_CancelMemberResponseMessage(int param_1)
 void PartyAtomic_CancelAllMemberMessages(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  longlong lVar3;
+  undefined4 *puVar4;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x196,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  Com_PrintWarning(0xe,0xffffffff8204f898);
+  puVar4 = (undefined4 *)(iVar2 + 0x88);
+  lVar3 = 0x12;
+  do {
+    if (puVar4[-6] != 0) {
+      Com_PrintWarning(0xe,0xffffffff8204f854,*(undefined8 *)(puVar4 + -4));
+      RMsg_MarkHandleMsgReceived(*puVar4);
+      RMsg_ReleaseHandle(puVar4);
+      iVar2 = RMsg_GetSendStatusFromHandle(*puVar4);
+      if (iVar2 != 0) {
+        uVar1 = RMsg_GetSendStatusFromHandle(*puVar4);
+        MyAssertHandler(0xffffffff8204f4e0,0x18d,0,0xffffffff8204f7e0,uVar1,0);
+      }
+    }
+    lVar3 = lVar3 + -1;
+    puVar4 = puVar4 + 8;
+  } while (lVar3 != 0);
+  __restgprlr_27();
+  return;
+}
+
+
+// 8238C818  PartyAtomic_SendDisconnectMessage  (client_mp/partyjoining.cpp:429)
+
+void PartyAtomic_SendDisconnectMessage(int param_1)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined8 local_30;
+  undefined1 auStack_28 [16];
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x1b1,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (*(char *)(param_1 + 0x50) != '\0') {
+    if (*(int *)(param_1 + 0x54) != 4) {
+      MyAssertHandler(0xffffffff8204f4e0,0x1b7,0,0xffffffff8205048c,0xffffffff820504ac);
+    }
+    uVar1 = Sys_Milliseconds();
+    uVar2 = NET_AdrToString(*(undefined8 *)(param_1 + 0x54),*(undefined8 *)(param_1 + 0x5c));
+    Com_Printf(0x19,0xffffffff82050448,uVar2,uVar1);
+    local_30 = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
+    PartyClient_SendDisconnectMessage
+              (&local_30,*(undefined4 *)(param_1 + 8),*(undefined8 *)(param_1 + 0x54),
+               *(undefined8 *)(param_1 + 0x5c),param_1 + 0x10);
+    iVar3 = PartyAtomicJoin_GetSecondaryActiveClient(param_1,auStack_28);
+    if (iVar3 != 0) {
+      PartyClient_SendDisconnectMessage
+                (auStack_28,*(undefined4 *)(param_1 + 8),*(undefined8 *)(param_1 + 0x54),
+                 *(undefined8 *)(param_1 + 0x5c),param_1 + 0x10);
+    }
+  }
+  return;
+}
+
+
+// 8238C938  PartyAtomic_DisconnectFromJoiningSession  (client_mp/partyjoining.cpp:451)
+
+void PartyAtomic_DisconnectFromJoiningSession(void)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x1c4,0,0xffffffff82000f98,0xffffffff8203fda8);
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x1c5,0,0xffffffff82000f98,0xffffffff82049f44);
+  }
+  PartyAtomic_SendDisconnectMessage(piVar1);
+  Session_DeleteSessionDelayed(piVar1[0x13]);
+  Session_ClearSession(piVar1[0x13]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -284,8 +597,26 @@ void PartyAtomic_CancelAllMemberMessages(void)
 void PartyAtomic_AbortJoinAttempt(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  piVar2 = piVar1;
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x1d1,0,0xffffffff82000f98,0xffffffff8203fda8);
+    piVar2 = (int *)MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8)
+    ;
+  }
+  if (*piVar1 != 0) {
+    Com_Printf(0x19,0xffffffff820523f0);
+    PartyAtomic_CancelAllMemberMessages(piVar1);
+    PartyAtomic_DisconnectFromJoiningSession(piVar1);
+    PartyAtomic_SendAbortNotice(piVar1);
+    PartyAtomic_AssertNoPendingMemberMessages(piVar1);
+    piVar2 = memset(&DAT_82b59110,0,0x21e8);
+  }
+  __restgprlr_28(piVar2);
+  return;
 }
 
 
@@ -304,13 +635,22 @@ void PartyAtomic_AbortJoinAttemptForParty(undefined8 param_1)
 }
 
 
+// 82390470  PartyAtomic_HandleComError  (client_mp/partyjoining.cpp:491)
+
+void PartyAtomic_HandleComError(void)
+
+{
+  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  return;
+}
+
+
 // 8238C9E0  PartyAtomicClient_ShouldHandleJoinFailed  (client_mp/partyjoining.cpp:497)
 
 undefined8 PartyAtomicClient_ShouldHandleJoinFailed(int *param_1)
 
 {
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   if (*param_1 != 0) {
@@ -330,11 +670,30 @@ undefined8 PartyAtomicClient_ShouldHandleJoinFailed(int *param_1)
 
 // 8238CAA8  PartyAtomic_JoinAttemptFailed  (client_mp/partyjoining.cpp:519)
 
-void PartyAtomic_JoinAttemptFailed(void)
+void PartyAtomic_JoinAttemptFailed(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x208,0,0xffffffff82000f98,0xffffffff82050558);
+  }
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x209,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x20a,0,0xffffffff82000f98,0xffffffff820503a0);
+  }
+  uVar1 = Sys_Milliseconds();
+  Com_Printf(0x19,0xffffffff82050518,param_2,uVar1);
+  if (piVar2[0x878] != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x20e,0,0xffffffff820504cc,0xffffffff820504f4);
+  }
+  piVar2[0x878] = (int)param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -343,28 +702,258 @@ void PartyAtomic_JoinAttemptFailed(void)
 void PartyAtomic_HasErrorOccured(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x215,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x216,0,0xffffffff82000f98,0xffffffff820503a0);
+  }
+  __restgprlr_29(piVar1[0x878] != 0);
+  return;
+}
+
+
+// 8238AB08  PartyAtomicClient_CopyPartyState  (client_mp/partyjoining.cpp:546)
+
+void PartyAtomicClient_CopyPartyState(undefined8 param_1,ulonglong param_2)
+
+{
+  void *pvVar1;
+  uint *_Dst;
+  longlong lVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  pvVar1 = (void *)__savegprlr_28();
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x225,0,0xffffffff82000f98,0xffffffff8204f93c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x226,0,0xffffffff82000f98,0xffffffff8204f928);
+  }
+  _Dst = (uint *)param_2;
+  pvVar1 = memcpy(_Dst,pvVar1,0x1ec4);
+  if (5 < *_Dst) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff8204f4e0,0x22b,0,0xffffffff8204f8d0,*_Dst,6);
+  }
+  iVar3 = 0;
+  if (0 < (int)*_Dst) {
+    lVar2 = param_2 - 8;
+    lVar4 = param_2 + 0x124;
+    do {
+      iVar3 = iVar3 + 1;
+      lVar2 = lVar2 + 0x2c;
+      *(undefined4 *)lVar2 = (int)lVar4;
+      lVar4 = lVar4 + 0x4f0;
+    } while (iVar3 < (int)*_Dst);
+  }
+  __restgprlr_28(pvVar1);
+  return;
+}
+
+
+// 8238ABE8  PartyAtomicClient_MoveJoinSessionToParty  (client_mp/partyjoining.cpp:562)
+
+void PartyAtomicClient_MoveJoinSessionToParty(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x233,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x234,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x4c) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x236,0,0xffffffff82000f98,0xffffffff8204f980);
+  }
+  if (*(int *)(*(int *)(iVar1 + 0x4c) + 0x10) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x237,0,0xffffffff82000f98,0xffffffff8204f954);
+  }
+  Session_MoveSession(*(undefined4 *)(iVar1 + 0x4c),*(undefined4 *)(iVar2 + 4));
+  Session_ClearSession(*(undefined4 *)(iVar1 + 0x4c));
+  __restgprlr_28();
+  return;
+}
+
+
+// 8238ACC8  PartyAtomicClient_SetUpPartyHostFromJoinInfo  (client_mp/partyjoining.cpp:575)
+
+void PartyAtomicClient_SetUpPartyHostFromJoinInfo(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  byte *pbVar7;
+  byte local_40 [8];
+  byte abStack_38 [56];
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x240,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x241,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (DAT_8424a64c == 0) {
+    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  }
+  if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
+    pbVar7 = local_40;
+    lVar6 = param_2 + 0x10;
+    do {
+      lVar5 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)lVar6;
+      if (lVar5 != 0) break;
+      pbVar7 = pbVar7 + 1;
+      lVar6 = lVar6 + 1;
+    } while (pbVar7 != abStack_38);
+    if ((int)lVar5 == 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x247,0,0xffffffff82000f98,0xffffffff8203fba8);
+    }
+  }
+  iVar1 = (int)param_2;
+  uVar2 = NET_AdrToString(*(undefined8 *)(iVar1 + 0x54),*(undefined8 *)(iVar1 + 0x5c));
+  Com_Printf(0xe,0xffffffff8204f9cc,uVar2);
+  if (*(int *)(iVar1 + 0x60) != 4) {
+    MyAssertHandler(0xffffffff8204f4e0,0x24e,0,0xffffffff8204f998,*(int *)(iVar1 + 0x60),4);
+  }
+  memset((void *)(iVar3 + 0x1e2c),0,100);
+  Party_UpdateHostAddr(iVar3,*(undefined8 *)(iVar1 + 0x54),*(undefined8 *)(iVar1 + 0x5c));
+  *(undefined4 *)(iVar3 + 0x1e84) = *(undefined4 *)(iVar1 + 700);
+  *(undefined4 *)(iVar3 + 0x1e80) = *(undefined4 *)(iVar1 + 0x2b8);
+  uVar4 = Party_HostNum(iVar3);
+  *(undefined4 *)(iVar3 + 0x1e88) = uVar4;
+  uVar4 = Sys_Milliseconds();
+  *(undefined4 *)(iVar3 + 0x1e78) = uVar4;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8238CC10  PartyAtomic_ReturnToPartyScreen  (client_mp/partyjoining.cpp:605)
 
-void PartyAtomic_ReturnToPartyScreen(void)
+void PartyAtomic_ReturnToPartyScreen(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  undefined4 local_30;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x260,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x261,0,0xffffffff82000f98,0xffffffff82050564);
+  }
+  Lobby_GetPartyData();
+  Party_StopParty();
+  Party_StopParty(0xffffffff82b55118);
+  uVar1 = PartyAtomicJoin_GetMainActiveClient(iVar2,*(undefined4 *)(iVar2 + 0xc));
+  local_30 = (undefined4)(uVar1 >> 0x20);
+  Live_StartPrivateParty(local_30,uVar1 & 0xffffffff);
+  Com_SetErrorMessage(param_2);
+  UI_SetActiveMenu(0,9);
+  __restgprlr_28();
+  return;
+}
+
+
+// 8238AE68  PartyAtomic_UpdateMenuStateAfterJoin  (client_mp/partyjoining.cpp:625)
+
+void PartyAtomic_UpdateMenuStateAfterJoin(undefined8 param_1)
+
+{
+  char cVar2;
+  int iVar1;
+  undefined8 uVar3;
+  
+  if ((int)param_1 == 0) {
+    if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+      cVar2 = Menu_IsMenuOpenAndVisible(param_1,0xffffffff8203bbd8);
+      if (cVar2 != '\0') goto LAB_8238af30;
+      uVar3 = 10;
+      goto LAB_8238af28;
+    }
+    uVar3 = 0xb;
+  }
+  else {
+    if ((int)param_1 != 1) {
+      MyAssertHandler(0xffffffff8204f4e0,0x286,0,0xffffffff8204fa24,0xffffffff8204fa3c);
+    }
+    iVar1 = Party_IsRunning(0xffffffff82b55118);
+    if (iVar1 == 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x288,0,0xffffffff82000f98,0xffffffff8204fa04);
+    }
+    uVar3 = 9;
+LAB_8238af28:
+    param_1 = 0;
+  }
+  UI_SetActiveMenu(param_1,uVar3);
+LAB_8238af30:
+  Live_TryCloseDialog(0,1);
+  return;
 }
 
 
 // 8238AF50  PartyAtomicClient_SetSplitscreenDataForJoiningParty  (client_mp/partyjoining.cpp:658)
 
-void PartyAtomicClient_SetSplitscreenDataForJoiningParty(void)
+void PartyAtomicClient_SetSplitscreenDataForJoiningParty(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
+  byte *pbVar5;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x293,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x294,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*(int *)(iVar1 + 0x1ef4) != 0) {
+    if (*(int *)(iVar1 + 0x1ec0) != *(int *)((int)param_2 + 0x2dc)) {
+      MyAssertHandler(0xffffffff8204f4e0,0x29a,0,0xffffffff8204fad8);
+    }
+    if (*(int *)(iVar1 + 0x1ec0) != 0) {
+      pbVar5 = (byte *)(iVar1 + 0x1eb8);
+      lVar3 = param_2 + 0x2d4;
+      do {
+        lVar2 = (ulonglong)*pbVar5 - (ulonglong)*(byte *)lVar3;
+        if (lVar2 != 0) break;
+        pbVar5 = pbVar5 + 1;
+        lVar3 = lVar3 + 1;
+      } while (pbVar5 != (byte *)(iVar1 + 0x1ed0));
+      if ((int)lVar2 != 0) {
+        MyAssertHandler(0xffffffff8204f4e0,0x29c,0,0xffffffff82000f98,0xffffffff8204fa60);
+      }
+    }
+  }
+  lVar3 = param_2 + 0x2d0;
+  puVar4 = (undefined4 *)(iVar1 + 0x1eb4);
+  lVar2 = 6;
+  do {
+    lVar3 = lVar3 + 4;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *(undefined4 *)lVar3;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -373,8 +962,55 @@ void PartyAtomicClient_SetSplitscreenDataForJoiningParty(void)
 void PartyAtomic_MovePotentialStateToActiveState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  undefined8 local_30;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3[2] != 0) {
+    if ((puVar3[1] != 2) && (puVar3[1] != 1)) {
+      MyAssertHandler(0xffffffff8204f4e0,0x2aa,0,0xffffffff8205062c,0xffffffff82050650);
+    }
+  }
+  if (puVar3[2] == 1) {
+    puVar4 = &DAT_82b55118;
+    uVar2 = Lobby_GetPartyData();
+  }
+  else {
+    if (puVar3[2] != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x2b3,0,0xffffffff82000f98,0xffffffff82050600);
+    }
+    puVar4 = (undefined4 *)Lobby_GetPartyData();
+    uVar2 = 0xffffffff82b55118;
+    Voice_DisableLocalMics(DAT_82b55118);
+  }
+  Session_ResetMinPing();
+  Session_ResetFailedSearchCount();
+  PartyAtomicClient_CopyPartyState(puVar3 + 0xc5,puVar4 + 0x7ce);
+  PartyAtomicClient_MoveJoinSessionToParty(puVar4,puVar3);
+  PartyAtomicClient_SetUpPartyHostFromJoinInfo(puVar4,puVar3);
+  PartyAtomicClient_SetSplitscreenDataForJoiningParty(puVar4,puVar3);
+  local_30 = PartyAtomicJoin_GetMainActiveClient(puVar3,puVar3[3]);
+  *puVar3 = 0;
+  PartyAtomicClient_CommitNewPartyState
+            (puVar4,&local_30,*(undefined8 *)(puVar3 + 0x15),*(undefined8 *)(puVar3 + 0x17));
+  if (puVar4[0x7bd] == 0) {
+    Com_Printf(0x19,0xffffffff820505a8);
+    PartyAtomic_ReturnToPartyScreen(puVar3,0xffffffff8203c760);
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = puVar4[0x7cc];
+  Party_Sleep(uVar2);
+  Party_Awake(puVar4,local_30._4_4_,1);
+  puVar4[0x7cc] = uVar1;
+  PartyAtomic_UpdateMenuStateAfterJoin(puVar3[2]);
+  uVar2 = NET_AdrToString(*(undefined8 *)(puVar3 + 0x15),*(undefined8 *)(puVar3 + 0x17));
+  Com_Printf(0x19,0xffffffff82050574,uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -383,28 +1019,126 @@ void PartyAtomic_MovePotentialStateToActiveState(void)
 void PartyAtomic_HandleSuccessfulJoinAttempt(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x2e7,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar1 != 0xf) {
+    MyAssertHandler(0xffffffff8204f4e0,0x2e8,0,0xffffffff82000f98,0xffffffff82050730);
+  }
+  PartyAtomic_MovePotentialStateToActiveState(piVar1);
+  if (*(int *)(piVar1[0x13] + 0x10) != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x2f5,0,0xffffffff820011f4,0xffffffff820506d8,
+                    0xffffffff82050704);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238B070  PartyAtomic_WriteJoinIdentifier  (client_mp/partyjoining.cpp:762)
 
-void PartyAtomic_WriteJoinIdentifier(void)
+void PartyAtomic_WriteJoinIdentifier(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x2fb,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x2fc,0,0xffffffff82000f98,0xffffffff8204972c);
+  }
+  MSG_WriteData(uVar1,param_2 + 0x10,8);
+  MSG_WriteData(uVar1,param_2 + 0x30c,6);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8238B108  PartyAtomic_ReadJoinIdentifier  (client_mp/partyjoining.cpp:772)
 
-void PartyAtomic_ReadJoinIdentifier(void)
+void PartyAtomic_ReadJoinIdentifier(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x305,0,0xffffffff82000f98,0xffffffff82004d74);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x306,0,0xffffffff82000f98,0xffffffff82026780);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x307,0,0xffffffff82000f98,0xffffffff8204fb40);
+  }
+  MSG_ReadData(uVar1,param_3,8);
+  MSG_ReadData(uVar1,param_2,6);
+  __restgprlr_27();
+  return;
+}
+
+
+// 8238B1C8  PartyAtomic_ReadAndVerifyJoinIdentifier  (client_mp/partyjoining.cpp:783)
+
+void PartyAtomic_ReadAndVerifyJoinIdentifier(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  longlong lVar2;
+  longlong lVar3;
+  byte *pbVar4;
+  byte local_40 [6];
+  byte abStack_3a [2];
+  undefined8 local_38;
+  byte abStack_30 [48];
+  
+  piVar1 = (int *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x313,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x314,0,0xffffffff82000f98,0xffffffff82004d74);
+  }
+  MSG_ReadData(piVar1,&local_38,8);
+  MSG_ReadData(piVar1,local_40,6);
+  if (*piVar1 != 0) {
+    Com_Printf(0x19,0xffffffff8204fc20);
+    __restgprlr_28(0);
+    return;
+  }
+  pbVar4 = (byte *)&local_38;
+  lVar3 = param_2 + 0x10;
+  do {
+    lVar2 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)lVar3;
+    if (lVar2 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    lVar3 = lVar3 + 1;
+  } while (pbVar4 != abStack_30);
+  if ((int)lVar2 != 0) {
+    Com_Printf(0x19,0xffffffff8204fbb8,local_38,*(undefined8 *)(param_2 + 0x10));
+    __restgprlr_28(0);
+    return;
+  }
+  lVar3 = param_2 + 0x30c;
+  pbVar4 = local_40;
+  do {
+    lVar2 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)lVar3;
+    if (lVar2 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    lVar3 = lVar3 + 1;
+  } while (pbVar4 != abStack_3a);
+  if ((int)lVar2 != 0) {
+    Com_Printf(0x19,0xffffffff8204fb50,local_40);
+    __restgprlr_28(0);
+    return;
+  }
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -415,64 +1149,54 @@ void PartyAtomicClient_SendMemberActionResponse_Internal
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
-  undefined4 *puVar5;
-  undefined8 uVar4;
-  int iVar6;
+  uint *puVar2;
+  undefined4 *puVar4;
+  undefined8 uVar3;
+  int iVar5;
   undefined1 auStack_90 [16];
   undefined1 auStack_80 [128];
   
-  puVar5 = (undefined4 *)__savegprlr_24();
+  puVar4 = (undefined4 *)__savegprlr_24();
   LargeLocal__LargeLocal(auStack_90,0x800);
-  uVar4 = LargeLocal__GetBuf(auStack_90);
-  if (puVar5 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
+  uVar3 = LargeLocal__GetBuf(auStack_90);
+  if (puVar4 == (undefined4 *)0x0) {
     MyAssertHandler(0xffffffff8204f4e0,0x33a,0,0xffffffff82000f98,0xffffffff8203c270);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x33b,0,0xffffffff82000f98,0xffffffff8204f848);
   }
-  puVar3 = (uint *)param_2;
-  if (puVar3[1] != 4) {
-                    /* WARNING: Subroutine does not return */
+  puVar2 = (uint *)param_2;
+  if (puVar2[1] != 4) {
     MyAssertHandler(0xffffffff8204f4e0,0x33c,0,0xffffffff82000f98,0xffffffff82050868);
   }
   if ((int)param_3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x33d,0,0xffffffff82000f98,0xffffffff82050848);
   }
-  if (0x2c < (param_3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
+  else if (0x2c < (param_3 & 0xffffffff)) {
     MyAssertHandler(0xffffffff8204f4e0,0x33e,0,0xffffffff82049bdc,param_3,0x2d);
   }
-  if (puVar3[0x19] == 0) {
-                    /* WARNING: Subroutine does not return */
+  if (puVar2[0x19] == 0) {
     MyAssertHandler(0xffffffff8204f4e0,0x33f,0,0xffffffff82000f98,0xffffffff82050830);
   }
-  uVar1 = puVar3[0x19];
-  uVar2 = *puVar3;
-  iVar6 = ((int)uVar2 >> 0x1f) + (uint)(8 < (ulonglong)uVar2);
+  uVar1 = puVar2[0x19];
+  iVar5 = ((int)*puVar2 >> 0x1f) + (uint)(8 < *puVar2);
   if (*(int *)(uVar1 + 0x1e2c) != 4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x344,0,0xffffffff82000f98,0xffffffff82050814);
   }
-  if (puVar3[iVar6 + 0xac] == 1) {
-                    /* WARNING: Subroutine does not return */
+  if (puVar2[iVar5 + 0xac] == 1) {
     MyAssertHandler(0xffffffff8204f4e0,0x345,0,0xffffffff820011f4,0xffffffff82050788,
                     0xffffffff820507c8);
   }
-  MSG_Init(auStack_80,uVar4,0x800,(ulonglong)uVar2 - 9);
-  uVar4 = va(0xffffffff82050770,puVar3[2]);
-  MSG_WriteString(auStack_80,uVar4);
+  MSG_Init(auStack_80,uVar3,0x800);
+  uVar3 = va(0xffffffff82050770,puVar2[2]);
+  MSG_WriteString(auStack_80,uVar3);
   PartyAtomic_WriteJoinIdentifier(auStack_80,param_2);
-  MSG_WriteByte(auStack_80,iVar6);
-  uVar4 = Live_GetXuid(puVar5[1]);
-  MSG_WriteInt64(auStack_80,uVar4);
+  MSG_WriteByte(auStack_80,iVar5);
+  uVar3 = Live_GetXuid(puVar4[1]);
+  MSG_WriteInt64(auStack_80,uVar3);
   MSG_WriteLong(auStack_80,param_3);
-  uVar4 = NET_GetLocalNetIDFromLocalClientNum(*puVar5);
-  RMsg_AddMessage(uVar1 + 0x1e2c,auStack_80,uVar4);
+  uVar3 = NET_GetLocalNetIDFromLocalClientNum(*puVar4);
+  RMsg_AddMessage(uVar1 + 0x1e2c,auStack_80,uVar3);
   LargeLocal___LargeLocal(auStack_90);
   __restgprlr_24();
   return;
@@ -488,7 +1212,6 @@ void PartyAtomicClient_SendMemberActionResponse(int param_1,undefined8 param_2)
   undefined8 local_20;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x356,0,0xffffffff82000f98,0xffffffff8204f848);
   }
   local_20 = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
@@ -497,6 +1220,54 @@ void PartyAtomicClient_SendMemberActionResponse(int param_1,undefined8 param_2)
   if (iVar1 != 0) {
     PartyAtomicClient_SendMemberActionResponse_Internal(&local_20,param_1,param_2);
   }
+  return;
+}
+
+
+// 8238D200  PartyAtomic_HandleFailedJoinAttempt  (client_mp/partyjoining.cpp:865)
+
+void PartyAtomic_HandleFailedJoinAttempt(void)
+
+{
+  int iVar1;
+  int *piVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
+  piVar4 = (int *)__savegprlr_29();
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x362,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*piVar4 != 0x10) {
+    MyAssertHandler(0xffffffff8204f4e0,0x363,0,0xffffffff82000f98,0xffffffff82050930);
+  }
+  if (piVar4[0x878] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x364,0,0xffffffff82000f98,0xffffffff82050914);
+  }
+  uVar2 = Sys_Milliseconds();
+  uVar3 = NET_AdrToString(*(undefined8 *)(piVar4 + 0x15),*(undefined8 *)(piVar4 + 0x17));
+  Com_Printf(0x19,0xffffffff820508c8,uVar3,uVar2);
+  PartyAtomic_DisconnectFromJoiningSession(piVar4);
+  iVar1 = piVar4[1];
+  *piVar4 = 0;
+  if (iVar1 - 1U < 5) {
+    if (iVar1 != 2) {
+      if (iVar1 == 3) {
+        PartyAtomic_ReturnToPartyScreen(piVar4,0xffffffff820508ac);
+        __restgprlr_29();
+        return;
+      }
+      if ((iVar1 == 4) || (iVar1 != 1)) goto LAB_8238d34c;
+    }
+    PartyAtomic_ReturnToPartyScreen(piVar4,piVar4[0x878]);
+    __restgprlr_29();
+    return;
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x38a,0,0xffffffff82050890);
+  }
+LAB_8238d34c:
+  __restgprlr_29();
   return;
 }
 
@@ -527,36 +1298,29 @@ void PartyAtomic_AskToJoinParty_Internal(undefined8 param_1,ulonglong param_2)
   LargeLocal__LargeLocal(auStack_90,0x800);
   uVar2 = LargeLocal__GetBuf(auStack_90);
   if (puVar5 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x399,0,0xffffffff82000f98,0xffffffff8203c270);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x39a,0,0xffffffff82000f98,0xffffffff8204f848);
   }
   cVar7 = Session_SearchInProgress();
   if (cVar7 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x39b,0,0xffffffff82000f98,0xffffffff82047aec);
   }
   DAT_84253a7b = 0;
   piVar8 = (int *)param_2;
   if (*piVar8 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3a1,0,0xffffffff82000f98,0xffffffff82050ab8);
   }
   if (*(char *)(piVar8 + 0x14) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3a2,0,0xffffffff82000f98,0xffffffff82050a9c);
   }
   bVar1 = *(byte *)(piVar8 + 0xb0);
   if ((bVar1 == 0) || (0x12 < bVar1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3a5,0,0xffffffff82050a58,bVar1,1,0x12);
   }
   bVar1 = *(byte *)((int)piVar8 + 0x2c1);
   if ((bVar1 == 0) || (0x12 < bVar1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3a6,0,0xffffffff82050a10,bVar1,1,0x12);
   }
   uVar3 = Sys_Milliseconds();
@@ -569,7 +1333,6 @@ void PartyAtomic_AskToJoinParty_Internal(undefined8 param_1,ulonglong param_2)
   MSG_WriteLong(auStack_70,uVar2);
   iVar6 = LiveStorage_ShouldUseFFoTD();
   if (iVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3b1,0,0xffffffff82000f98,0xffffffff8204c8ec);
   }
   uVar2 = LiveStorage_GetFFotDChecksum(0);
@@ -577,27 +1340,26 @@ void PartyAtomic_AskToJoinParty_Internal(undefined8 param_1,ulonglong param_2)
   uVar2 = Live_GetXuid(puVar5[1]);
   MSG_WriteInt64(auStack_70,uVar2);
   iVar6 = piVar8[1];
-  if ((-1 < iVar6) && (iVar6 < 0x100)) {
-    MSG_WriteByte(auStack_70,piVar8[1]);
-    uVar2 = Playlist_GetVersionNumber();
-    MSG_WriteLong(auStack_70,uVar2);
-    MSG_WriteLong(auStack_70,*(undefined4 *)(DAT_82aa1adc + 0xc));
-    MSG_WriteByte(auStack_70,*(undefined1 *)(piVar8 + 0xb0));
-    MSG_WriteByte(auStack_70,*(undefined1 *)((int)piVar8 + 0x2c1));
-    MSG_WriteData(auStack_70,param_2 + 0x2c2,*(undefined1 *)((int)piVar8 + 0x2c1));
-    local_80 = piVar8[0x15];
-    iStack_7c = piVar8[0x16];
-    local_78 = piVar8[0x17];
-    iStack_74 = piVar8[0x18];
-    uVar2 = NET_GetLocalNetIDFromLocalClientNum(*puVar5);
-    NET_OutOfBandData(uVar2,CONCAT44(local_80,iStack_7c),CONCAT44(local_78,iStack_74),local_68,
-                      local_5c);
-    LargeLocal___LargeLocal(auStack_90);
-    __restgprlr_25();
-    return;
+  if ((iVar6 < 0) || (0xff < iVar6)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x3bc,0,0xffffffff82050970,iVar6,0,0xff);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8204f4e0,0x3bc,0,0xffffffff82050970,iVar6,0,0xff);
+  MSG_WriteByte(auStack_70,piVar8[1]);
+  uVar2 = Playlist_GetVersionNumber();
+  MSG_WriteLong(auStack_70,uVar2);
+  MSG_WriteLong(auStack_70,*(undefined4 *)(DAT_82aa1adc + 0xc));
+  MSG_WriteByte(auStack_70,*(undefined1 *)(piVar8 + 0xb0));
+  MSG_WriteByte(auStack_70,*(undefined1 *)((int)piVar8 + 0x2c1));
+  MSG_WriteData(auStack_70,param_2 + 0x2c2,*(undefined1 *)((int)piVar8 + 0x2c1));
+  local_80 = piVar8[0x15];
+  iStack_7c = piVar8[0x16];
+  local_78 = piVar8[0x17];
+  iStack_74 = piVar8[0x18];
+  uVar2 = NET_GetLocalNetIDFromLocalClientNum(*puVar5);
+  NET_OutOfBandData(uVar2,CONCAT44(local_80,iStack_7c),CONCAT44(local_78,iStack_74),local_68,
+                    local_5c);
+  LargeLocal___LargeLocal(auStack_90);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -609,7 +1371,6 @@ void PartyAtomic_AskToJoinParty(int param_1)
   undefined8 local_20 [2];
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x3e0,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   local_20[0] = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
@@ -618,13 +1379,36 @@ void PartyAtomic_AskToJoinParty(int param_1)
 }
 
 
-// 8238B3C8  PartyAtomicClient_HasClientJoinedAcceptedParty  (client_mp/partyjoining.cpp:1017)
+// 8238B340  PartyAtomic_JoinInfoToString  (client_mp/partyjoining.cpp:1000)
 
-void PartyAtomicClient_HasClientJoinedAcceptedParty(void)
+undefined8 PartyAtomic_JoinInfoToString(int param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x3ee,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  Com_sprintf(0xffffffff82b5c2c0,0x40,0xffffffff8204fc64,*(undefined4 *)(param_1 + 8),
+              *(undefined8 *)(param_1 + 0x10),param_1 + 0x30c);
+  return 0xffffffff82b5c2c0;
+}
+
+
+// 8238B3C8  PartyAtomicClient_HasClientJoinedAcceptedParty  (client_mp/partyjoining.cpp:1017)
+
+void PartyAtomicClient_HasClientJoinedAcceptedParty(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x3fa,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x3fb,0,0xffffffff820011a8,param_2,4);
+  }
+  __restgprlr_29(*(undefined4 *)((int)((param_2 + 0xbb & 0xffffffff) << 2) + iVar1));
+  return;
 }
 
 
@@ -639,7 +1423,6 @@ undefined8 PartyAtomicClient_HaveAllClientsJoinedAcceptedParty(int param_1)
   undefined8 local_20 [2];
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x404,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   uVar2 = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
@@ -661,23 +1444,169 @@ undefined8 PartyAtomicClient_HaveAllClientsJoinedAcceptedParty(int param_1)
 }
 
 
+// 8238D7A8  PartyAtomicClient_JoinAcceptedParty_Internal  (client_mp/partyjoining.cpp:1045)
+
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void PartyAtomicClient_JoinAcceptedParty_Internal
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int *piVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  int iVar4;
+  undefined4 *puVar6;
+  int *piVar7;
+  int *piVar8;
+  longlong lVar9;
+  undefined1 auStack_130 [16];
+  undefined1 auStack_120 [8];
+  undefined4 local_118;
+  int local_10c;
+  int local_100;
+  int iStack_ec;
+  int local_e8;
+  int iStack_e4;
+  undefined1 local_e0 [224];
+  
+  uVar2 = __savegprlr_25();
+  LargeLocal__LargeLocal(auStack_130,0x800);
+  uVar3 = LargeLocal__GetBuf(auStack_130);
+  cVar5 = CL_AllLocalClientsInactive();
+  if (cVar5 != '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x41b,0,0xffffffff82000f98,0xffffffff8203e4d0);
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x41c,0,0xffffffff82000f98,0xffffffff820321a4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x41d,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x41e,0,0xffffffff82000f98,0xffffffff82050c8c);
+  }
+  piVar7 = (int *)param_3;
+  if (*piVar7 != 3) {
+    MyAssertHandler(0xffffffff8204f4e0,0x420,0,0xffffffff82050c30,0xffffffff82050c4c,param_3);
+  }
+  Party_CheckValidAddress(*(undefined8 *)(piVar7 + 0x15),*(undefined8 *)(piVar7 + 0x17));
+  puVar6 = (undefined4 *)param_2;
+  iVar4 = PartyAtomicClient_HasClientJoinedAcceptedParty(param_3,*puVar6);
+  if (iVar4 != 0) {
+    Com_Printf(0x19,0xffffffff82050be8,*puVar6);
+    LargeLocal___LargeLocal(auStack_130);
+    __restgprlr_25();
+    return;
+  }
+  cVar5 = Live_UserIsGuest(puVar6[1]);
+  if (cVar5 == '\0') {
+    GamerProfile_UpdateSystemVarsFromProfile(puVar6[1]);
+  }
+  MSG_Init(auStack_120,uVar3,0x800);
+  if (local_10c != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x431,0,0xffffffff82000f98,0xffffffff82050bd0);
+  }
+  if (local_100 != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x432,0,0xffffffff82000f98,0xffffffff82050bc0);
+  }
+  uVar3 = PartyAtomic_JoinInfoToString(param_3);
+  Com_Printf(0x19,0xffffffff82050b90,*puVar6,uVar3);
+  uVar3 = va(0xffffffff82050b80,piVar7[2]);
+  MSG_WriteString(auStack_120,uVar3);
+  PartyAtomic_WriteJoinIdentifier(auStack_120,param_3);
+  uVar3 = Live_GetXuid(puVar6[1]);
+  MSG_WriteInt64(auStack_120,uVar3);
+  uVar3 = Xenon_GetXNAddrForLive();
+  MSG_WriteData(auStack_120,uVar3,0x24);
+  iVar4 = Live_GetLocalNatType();
+  if (iVar4 < 1) {
+    uVar3 = Live_GetLocalNatType();
+    MyAssertHandler(0xffffffff8204f4e0,0x43b,0,0xffffffff82050b3c,0xffffffff82050b60,uVar3);
+  }
+  uVar3 = Live_GetLocalNatType();
+  MSG_WriteBits(auStack_120,uVar3,2);
+  iVar4 = piVar7[1];
+  if ((iVar4 < 0) || (0xff < iVar4)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x43f,0,0xffffffff82050af8,iVar4,0,0xff);
+  }
+  MSG_WriteByte(auStack_120,piVar7[1]);
+  lVar9 = 0x13;
+  piVar1 = &local_e8;
+  do {
+    piVar8 = piVar1;
+    piVar1 = piVar8 + 2;
+    piVar1[0] = 0;
+    piVar1[1] = 0;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  piVar8[4] = 0;
+  Party_FillInOurMemberInfo(uVar2,puVar6[1],local_e0);
+  Party_WriteMemberInfo(auStack_120,local_e0);
+  iVar4 = piVar7[0x15];
+  iStack_ec = piVar7[0x16];
+  local_e8 = piVar7[0x17];
+  iStack_e4 = piVar7[0x18];
+  uVar3 = NET_GetLocalNetIDFromLocalClientNum(*puVar6);
+  NET_OutOfBandData(uVar3,CONCAT44(iVar4,iStack_ec),CONCAT44(local_e8,iStack_e4),local_118,local_10c
+                   );
+  LargeLocal___LargeLocal(auStack_130);
+  __restgprlr_25();
+  return;
+}
+
+
 // 8238DB00  PartyAtomicClient_JoinAcceptedParty  (client_mp/partyjoining.cpp:1099)
 
 void PartyAtomicClient_JoinAcceptedParty(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined8 local_30 [6];
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x44f,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (*(int *)(iVar1 + 8) == 2) {
+    MyAssertHandler(0xffffffff8204f4e0,0x452,0,0xffffffff82000f98,0xffffffff82050ca0);
+  }
+  if (*(int *)(iVar1 + 8) == 1) {
+    uVar3 = 0xffffffff82b55118;
+  }
+  else {
+    uVar3 = Lobby_GetPartyData();
+  }
+  local_30[0] = PartyAtomicJoin_GetMainActiveClient(iVar1,*(undefined4 *)(iVar1 + 0xc));
+  PartyAtomicClient_JoinAcceptedParty_Internal(uVar3,local_30,iVar1);
+  iVar2 = PartyAtomicJoin_GetSecondaryActiveClient(iVar1,local_30);
+  if (iVar2 != 0) {
+    PartyAtomicClient_JoinAcceptedParty_Internal(uVar3,local_30,iVar1);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238B448  PartyAtomicClient_IsClientCommittingToParty  (client_mp/partyjoining.cpp:1121)
 
-void PartyAtomicClient_IsClientCommittingToParty(void)
+void PartyAtomicClient_IsClientCommittingToParty(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x462,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x463,0,0xffffffff820011a8,param_2,4);
+  }
+  __restgprlr_29(*(undefined4 *)((int)((param_2 + 0xbf & 0xffffffff) << 2) + iVar1));
+  return;
 }
 
 
@@ -692,7 +1621,6 @@ undefined8 PartyAtomicClient_AreAllClientsCommittingToParty(int param_1)
   undefined8 local_20 [2];
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x46c,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   uVar2 = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
@@ -716,11 +1644,59 @@ undefined8 PartyAtomicClient_AreAllClientsCommittingToParty(int param_1)
 
 // 8238DCA0  PartyAtomicClient_CommitToJoinedParty_Internal  (client_mp/partyjoining.cpp:1149)
 
-void PartyAtomicClient_CommitToJoinedParty_Internal(void)
+void PartyAtomicClient_CommitToJoinedParty_Internal(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  char cVar3;
+  int *piVar4;
+  undefined1 auStack_80 [16];
+  int local_70;
+  int iStack_6c;
+  int local_68;
+  int iStack_64;
+  undefined1 auStack_60 [8];
+  undefined4 local_58;
+  undefined4 local_4c;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  LargeLocal__LargeLocal(auStack_80,0x800);
+  uVar1 = LargeLocal__GetBuf(auStack_80);
+  cVar3 = CL_AllLocalClientsInactive();
+  if (cVar3 != '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x481,0,0xffffffff82000f98,0xffffffff8203e4d0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x482,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x483,0,0xffffffff82000f98,0xffffffff8203c270);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 != 9) {
+    MyAssertHandler(0xffffffff8204f4e0,0x485,0,0xffffffff82050c30,0xffffffff82050d10,param_2);
+  }
+  Party_CheckValidAddress(*(undefined8 *)(piVar4 + 0x15),*(undefined8 *)(piVar4 + 0x17));
+  MSG_Init(auStack_60,uVar1,0x800);
+  uVar1 = PartyAtomic_JoinInfoToString(param_2);
+  Com_Printf(0x19,0xffffffff82050ce0,uVar1);
+  uVar1 = va(0xffffffff82050ccc,piVar4[2]);
+  MSG_WriteString(auStack_60,uVar1);
+  uVar1 = Live_GetXuid(puVar2[1]);
+  MSG_WriteInt64(auStack_60,uVar1);
+  uVar1 = Party_GetOurPrivatePartyId();
+  MSG_WriteData(auStack_60,uVar1,8);
+  local_70 = piVar4[0x15];
+  iStack_6c = piVar4[0x16];
+  local_68 = piVar4[0x17];
+  iStack_64 = piVar4[0x18];
+  uVar1 = NET_GetLocalNetIDFromLocalClientNum(*puVar2);
+  NET_OutOfBandData(uVar1,CONCAT44(local_70,iStack_6c),CONCAT44(local_68,iStack_64),local_58,
+                    local_4c);
+  LargeLocal___LargeLocal(auStack_80);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -733,7 +1709,6 @@ void PartyAtomicClient_CommitToJoinedParty(int param_1)
   undefined8 local_20 [2];
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x49b,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   local_20[0] = PartyAtomicJoin_GetMainActiveClient(param_1,*(undefined4 *)(param_1 + 0xc));
@@ -754,20 +1729,18 @@ bool PartyAtomicClient_CheckForJoinAbort(int param_1)
   bool bVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x4a7,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
-  if (*(int *)(param_1 + 0x2b0) != 1) {
-    bVar1 = *(int *)(param_1 + 0x2b0) != 0;
-    if (bVar1) {
-      Com_Printf(0x19,0xffffffff82050d50);
-      PartyAtomic_JoinAttemptFailed(param_1,0xffffffff8203c760);
-    }
-    return bVar1;
+  if (*(int *)(param_1 + 0x2b0) == 1) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4a9,0,0xffffffff820011f4,0xffffffff82050d98,
+                    0xffffffff82050de0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8204f4e0,0x4a9,0,0xffffffff820011f4,0xffffffff82050d98,
-                  0xffffffff82050de0);
+  bVar1 = *(int *)(param_1 + 0x2b0) != 0;
+  if (bVar1) {
+    Com_Printf(0x19,0xffffffff82050d50);
+    PartyAtomic_JoinAttemptFailed(param_1,0xffffffff8203c760);
+  }
+  return bVar1;
 }
 
 
@@ -779,30 +1752,91 @@ bool PartyAtomicClient_CheckForCommitAbort(int param_1)
   bool bVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x4b5,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
-  if (*(int *)(param_1 + 0x2b4) != 1) {
-    bVar1 = *(int *)(param_1 + 0x2b4) != 0;
-    if (bVar1) {
-      Com_Printf(0x19,0xffffffff82050e28);
-      PartyAtomic_JoinAttemptFailed(param_1,0xffffffff8203c760);
-    }
-    return bVar1;
+  if (*(int *)(param_1 + 0x2b4) == 1) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4b7,0,0xffffffff820011f4,0xffffffff82050e70,
+                    0xffffffff82050de0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8204f4e0,0x4b7,0,0xffffffff820011f4,0xffffffff82050e70,
-                  0xffffffff82050de0);
+  bVar1 = *(int *)(param_1 + 0x2b4) != 0;
+  if (bVar1) {
+    Com_Printf(0x19,0xffffffff82050e28);
+    PartyAtomic_JoinAttemptFailed(param_1,0xffffffff8203c760);
+  }
+  return bVar1;
 }
 
 
 // 8238E088  PartyAtomic_SetupPotentialHostForJoining  (client_mp/partyjoining.cpp:1218)
 
-void PartyAtomic_SetupPotentialHostForJoining(void)
+void PartyAtomic_SetupPotentialHostForJoining
+               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
+               ,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  int iVar2;
+  int *_Dst;
+  longlong lVar3;
+  undefined2 local_60 [2];
+  undefined1 auStack_5c [92];
+  
+  uVar1 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4c7,0,0xffffffff82000f98,0xffffffff82034334);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4c8,0,0xffffffff82000f98,0xffffffff82051128);
+  }
+  if (0x12 < (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4c9,0,0xffffffff820510f4,0xffffffff82051110,param_4);
+  }
+  if (0x12 < (param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4ca,0,0xffffffff820510c0,0xffffffff820510dc,param_5);
+  }
+  if (0x12 < (param_4 + param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4cb,0,0xffffffff82051064,0xffffffff82051094);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x57,0,0xffffffff82000f98,0xffffffff8203fda8);
+  }
+  _Dst = (int *)param_6;
+  if (*_Dst != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4cd,0,0xffffffff820011f4,0xffffffff8205100c,
+                    0xffffffff82051040);
+  }
+  memset(_Dst,0,0x21e8);
+  lVar3 = param_6 + 0x10;
+  memcpy((void *)lVar3,(void *)param_2,0x3c);
+  _Dst[3] = (int)uVar1;
+  _Dst[2] = param_3;
+  _Dst[0xaf] = (int)param_4;
+  _Dst[0xae] = (int)param_5;
+  _Dst[0x13] = (int)&DAT_844c7230;
+  if (*(char *)(_Dst + 0x14) != '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x4e0,0,0xffffffff82000f98,0xffffffff82050fe8);
+  }
+  iVar2 = Session_JoinPotentialHost
+                    (uVar1,lVar3,0x2e,_Dst[0xaf],_Dst[0xae],_Dst[0x13],auStack_5c,local_60);
+  if (iVar2 == 0) {
+    __restgprlr_23();
+    return;
+  }
+  iVar2 = Session_CompareSessionInfo(lVar3,(ulonglong)(uint)_Dst[0x13] + 0x14);
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4e8,0,0xffffffff82000f98,0xffffffff82050f78);
+  }
+  NET_ConvertInAddrToServerNetAddr(auStack_5c,local_60[0],param_6 + 0x54);
+  if (_Dst[0x15] != 4) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4ee,0,0xffffffff82000f98,0xffffffff82050f4c);
+  }
+  if ((((*(char *)(_Dst + 0x16) == '\x7f') && (*(char *)((int)_Dst + 0x59) == '\0')) &&
+      (*(char *)((int)_Dst + 0x5a) == '\0')) && (*(char *)((int)_Dst + 0x5b) == '\x01')) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4ef,0,0xffffffff82000f98,0xffffffff82050eb8);
+  }
+  *(undefined1 *)(_Dst + 0x14) = 1;
+  __restgprlr_23(1);
+  return;
 }
 
 
@@ -843,29 +1877,25 @@ void PartyAtomicHost_BuildJoinLobbyMessage
     lVar7 = lVar7 + 1;
   } while (pbVar6 != abStack_54);
   if ((int)lVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x4fd,0,0xffffffff82000f98,0xffffffff8204fd14);
   }
-  if ((-1 < (int)param_5) && ((int)param_5 < 0x100)) {
-    if ((-1 < (int)param_6) && ((int)param_6 < 0x100)) {
-      if ((int)param_2 != 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8204f4e0,0x503,0,0xffffffff82000f98,0xffffffff8204fc8c);
-      }
-      uVar3 = va(0xffffffff8204fc74,param_2);
-      MSG_WriteString(uVar2,uVar3);
-      MSG_WriteData(uVar2,param_3,6);
-      MSG_WriteData(uVar2,param_4,0x3c);
-      MSG_WriteByte(uVar2,param_5);
-      MSG_WriteByte(uVar2,param_6);
-      __restgprlr_24();
-      return;
-    }
-                    /* WARNING: Subroutine does not return */
+  if (((int)param_5 < 0) || (0xff < (int)param_5)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x4ff,0,0xffffffff8204b27c,0xffffffff8204fcec,param_5);
+  }
+  if (((int)param_6 < 0) || (0xff < (int)param_6)) {
     MyAssertHandler(0xffffffff8204f4e0,0x500,0,0xffffffff8204fca8,0xffffffff8204fcc0,param_6);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8204f4e0,0x4ff,0,0xffffffff8204b27c,0xffffffff8204fcec,param_5);
+  if ((int)param_2 != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x503,0,0xffffffff82000f98,0xffffffff8204fc8c);
+  }
+  uVar3 = va(0xffffffff8204fc74,param_2);
+  MSG_WriteString(uVar2,uVar3);
+  MSG_WriteData(uVar2,param_3,6);
+  MSG_WriteData(uVar2,param_4,0x3c);
+  MSG_WriteByte(uVar2,param_5);
+  MSG_WriteByte(uVar2,param_6);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -874,38 +1904,350 @@ void PartyAtomicHost_BuildJoinLobbyMessage
 void PartyAtomicJoin_SetupMemberJoinInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  undefined4 *puVar1;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar2;
+  longlong lVar5;
+  int *piVar6;
+  undefined8 *puVar7;
+  
+  iVar3 = __savegprlr_17();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x514,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (*(int *)(iVar3 + 8) != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x515,0,0xffffffff82000f98,0xffffffff8204fef8);
+  }
+  puVar1 = *(undefined4 **)(iVar3 + 100);
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x518,0,0xffffffff82000f98,0xffffffff8204fee8);
+  }
+  if (puVar1[0x7bd] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x519,0,0xffffffff82000f98,0xffffffff8204fed0);
+  }
+  if (puVar1[0x7bb] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x51a,0,0xffffffff82000f98,0xffffffff8204feb4);
+  }
+  memset((void *)(iVar3 + 0x70),0,0x240);
+  lVar5 = 0;
+  *(undefined4 *)(iVar3 + 0x68) = 0;
+  puVar7 = (undefined8 *)(puVar1 + 0x60);
+  piVar6 = (int *)(iVar3 + 0x84);
+  do {
+    if (piVar6[-5] != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x524,0,0xffffffff820011f4,0xffffffff8204fd80,
+                      0xffffffff8204fd50);
+    }
+    if (piVar6[-1] != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x525,0,0xffffffff820011f4,0xffffffff8204fd98,
+                      0xffffffff8204fd50);
+    }
+    if (*piVar6 != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x526,0,0xffffffff820011f4,0xffffffff8204fde0,
+                      0xffffffff8204fd50);
+    }
+    if ((*(char *)(puVar7 + -0x25) == '\x05') && (cVar4 = Party_IsHost(puVar1,lVar5), cVar4 == '\0')
+       ) {
+      cVar4 = Live_XUIDIsLocalPlayer(*puVar7);
+      if (cVar4 == '\0') {
+        cVar4 = Session_IsUserRegistered(*puVar1,lVar5);
+        if (cVar4 == '\0') {
+          MyAssertHandler(0xffffffff8204f4e0,0x533,0,0xffffffff82000f98,0xffffffff8204fe28);
+        }
+        uVar2 = PartyAtomic_JoinInfoToString(iVar3);
+        Com_Printf(0x10,0xffffffff8204fe70,(undefined4 *)((int)puVar7 + -0xfc),*puVar7,uVar2);
+        piVar6[-5] = 1;
+        *(undefined8 *)(piVar6 + -3) = *puVar7;
+      }
+    }
+    lVar5 = lVar5 + 1;
+    puVar7 = puVar7 + 0x2a;
+    piVar6 = piVar6 + 8;
+  } while ((int)lVar5 < 0x12);
+  __restgprlr_17();
+  return;
 }
 
 
 // 8238B8B8  PartyAtomicHost_BroadcastLobbyJoin  (client_mp/partyjoining.cpp:1342)
 
-void PartyAtomicHost_BroadcastLobbyJoin(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void PartyAtomicHost_BroadcastLobbyJoin(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined4 *puVar1;
+  longlong *plVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char cVar10;
+  int *piVar8;
+  int iVar9;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  longlong lVar11;
+  longlong lVar12;
+  char *pcVar13;
+  undefined1 auStack_100 [20];
+  int iStack_ec;
+  int local_e8;
+  int iStack_e4;
+  undefined1 auStack_e0 [16];
+  undefined1 auStack_d0 [8];
+  undefined4 local_c8;
+  undefined4 local_bc;
+  
+  uVar4 = __savegprlr();
+  LargeLocal__LargeLocal(auStack_100,0x800);
+  uVar5 = LargeLocal__GetBuf(auStack_100);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x546,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  iVar9 = (int)param_2;
+  if (*(int *)(iVar9 + 8) != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x547,0,0xffffffff82000f98,0xffffffff8204fef8);
+  }
+  if (*(int *)(iVar9 + 0x68) <= (int)uVar4) {
+    puVar1 = *(undefined4 **)(iVar9 + 100);
+    *(int *)(iVar9 + 0x68) = (int)uVar4 + 300;
+    if (puVar1 == (undefined4 *)0x0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x54f,0,0xffffffff82000f98,0xffffffff8204fee8);
+    }
+    if (puVar1[0x7bd] == 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x550,0,0xffffffff82000f98,0xffffffff8204fed0);
+    }
+    if (puVar1[0x7bb] == 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x551,0,0xffffffff82000f98,0xffffffff8204feb4);
+    }
+    MSG_Init(auStack_d0,uVar5,0x800);
+    PartyAtomicHost_BuildJoinLobbyMessage
+              (auStack_d0,*(undefined4 *)(iVar9 + 8),param_2 + 0x30c,param_2 + 0x10,
+               *(undefined4 *)(iVar9 + 700),*(undefined4 *)(iVar9 + 0x2b8));
+    lVar12 = 0;
+    pcVar13 = (char *)(puVar1 + 0x16);
+    lVar11 = param_2 + 0x78;
+    do {
+      plVar2 = (longlong *)lVar11;
+      if ((*(int *)(plVar2 + -1) != 0) && (*(int *)(plVar2 + 1) == 0)) {
+        if (*plVar2 != *(longlong *)(pcVar13 + 0x128)) {
+          MyAssertHandler(0xffffffff8204f4e0,0x55f,0,0xffffffff82000f98,0xffffffff8204ff20);
+        }
+        if (*pcVar13 != '\x05') {
+          MyAssertHandler(0xffffffff8204f4e0,0x560,0,0xffffffff8204ff70,*pcVar13,5);
+        }
+        cVar10 = Party_IsHost(puVar1,lVar12);
+        if (cVar10 != '\0') {
+          MyAssertHandler(0xffffffff8204f4e0,0x561,0,0xffffffff82000f98,0xffffffff8204ffc0);
+        }
+        cVar10 = Session_IsUserRegistered(*puVar1,lVar12);
+        if (cVar10 == '\0') {
+          MyAssertHandler(0xffffffff8204f4e0,0x562,0,0xffffffff82000f98,0xffffffff8204fe28);
+        }
+        piVar8 = (int *)Session_GetPlayerAddr(auStack_e0,*puVar1,lVar12);
+        iVar9 = *piVar8;
+        iStack_ec = piVar8[1];
+        local_e8 = piVar8[2];
+        iStack_e4 = piVar8[3];
+        if (iVar9 == 0) {
+          MyAssertHandler(0xffffffff8204f4e0,0x565,0,0xffffffff82000f98,0xffffffff8204fff0);
+        }
+        uVar5 = CONCAT44(iVar9,iStack_ec);
+        uVar3 = CONCAT44(local_e8,iStack_e4);
+        iVar9 = NET_IsLocalAddress(uVar5,uVar3);
+        if (iVar9 != 0) {
+          MyAssertHandler(0xffffffff8204f4e0,0x567,0,0xffffffff82000f98,0xffffffff8205000c);
+        }
+        uVar6 = PartyAtomic_JoinInfoToString(param_2);
+        uVar7 = NET_AdrToString(uVar5,uVar3);
+        Com_Printf(0x10,0xffffffff82050030,pcVar13 + 0x2c,uVar7,uVar6,uVar4);
+        NET_OutOfBandData(4,uVar5,uVar3,local_c8,local_bc);
+      }
+      lVar12 = lVar12 + 1;
+      lVar11 = lVar11 + 0x20;
+      pcVar13 = pcVar13 + 0x150;
+    } while ((int)lVar12 < 0x12);
+  }
+  LargeLocal___LargeLocal(auStack_100);
+  __restgprlr();
+  return;
+}
+
+
+// 8238BC00  PartyAtomicHost_SendJoinHostResponse  (client_mp/partyjoining.cpp:1392)
+
+void PartyAtomicHost_SendJoinHostResponse
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int local_a0 [12];
+  undefined1 auStack_70 [112];
+  
+  uVar1 = __savegprlr_27();
+  MSG_Init(local_a0,auStack_70,0x40);
+  uVar2 = va(0xffffffff8205009c,*(undefined4 *)((int)param_2 + 8));
+  MSG_WriteString(local_a0,uVar2);
+  PartyAtomic_WriteJoinIdentifier(local_a0,param_2);
+  MSG_WriteByte(local_a0,param_4);
+  MSG_WriteLong(local_a0,param_3);
+  if (local_a0[0] != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x579,0,0xffffffff82000f98,0xffffffff8205007c);
+  }
+  RMsg_AddMessageWithHandle(uVar1,local_a0,param_5,4);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8238E348  PartyAtomicHost_BroadcastActionResponse  (client_mp/partyjoining.cpp:1409)
 
-void PartyAtomicHost_BroadcastActionResponse(void)
+void PartyAtomicHost_BroadcastActionResponse(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined4 *puVar1;
+  uint *puVar3;
+  char cVar6;
+  undefined8 *puVar4;
+  int iVar5;
+  undefined8 uVar2;
+  uint *puVar7;
+  uint *puVar8;
+  int iVar9;
+  longlong lVar10;
+  char *pcVar11;
+  ulonglong uVar12;
+  undefined4 local_c0;
+  undefined4 uStack_bc;
+  undefined4 local_b8;
+  undefined4 uStack_b4;
+  undefined1 auStack_b0 [176];
+  
+  puVar3 = (uint *)__savegprlr();
+  if (puVar3 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x58c,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (puVar3[2] != 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x58d,0,0xffffffff82000f98,0xffffffff8204fef8);
+  }
+  puVar1 = (undefined4 *)puVar3[0x19];
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x590,0,0xffffffff82000f98,0xffffffff8204fee8);
+  }
+  if (puVar1[0x7bd] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x591,0,0xffffffff82000f98,0xffffffff8204fed0);
+  }
+  if (puVar1[0x7bb] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x592,0,0xffffffff82000f98,0xffffffff8204feb4);
+  }
+  iVar9 = ((int)*puVar3 >> 0x1f) + (uint)(8 < *puVar3);
+  Com_Printf(0x10,0xffffffff820512d8,iVar9,param_2,puVar1[0x7ad]);
+  lVar10 = 0;
+  puVar8 = puVar3 + 0x1c;
+  pcVar11 = (char *)(puVar1 + 0x16);
+  uVar12 = param_2;
+  do {
+    if (*puVar8 != 0) {
+      if ((puVar8[iVar9 + 4] != 1) && ((int)uVar12 == 1)) {
+        MyAssertHandler(0xffffffff8204f4e0,0x5a3,0,0xffffffff820011f4,0xffffffff82051178,
+                        0xffffffff8205113c);
+      }
+      if (*pcVar11 != '\x05') {
+        MyAssertHandler(0xffffffff8204f4e0,0x5a5,0,0xffffffff820011f4,0xffffffff820233b8,
+                        0xffffffff820511e8);
+      }
+      cVar6 = Party_IsHost(puVar1,lVar10);
+      if (cVar6 != '\0') {
+        MyAssertHandler(0xffffffff8204f4e0,0x5a6,0,0xffffffff82000f98,0xffffffff8204ffc0);
+      }
+      cVar6 = Session_IsUserRegistered(*puVar1,lVar10);
+      if (cVar6 == '\0') {
+        MyAssertHandler(0xffffffff8204f4e0,0x5a8,0,0xffffffff82000f98,0xffffffff8204fe28);
+      }
+      puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_b0,*puVar1,lVar10);
+      local_c0 = *(undefined4 *)puVar4;
+      uStack_bc = *(undefined4 *)((int)puVar4 + 4);
+      local_b8 = *(undefined4 *)(puVar4 + 1);
+      uStack_b4 = *(undefined4 *)((int)puVar4 + 0xc);
+      iVar5 = NET_IsLocalAddress(*puVar4,puVar4[1]);
+      if (iVar5 == 0) {
+        if (param_3 == 0) {
+          puVar7 = (uint *)0x0;
+        }
+        else {
+          puVar7 = puVar8 + 6;
+          iVar5 = RMsg_GetSendStatusFromHandle(puVar8[6]);
+          if (iVar5 != 0) {
+            MyAssertHandler(0xffffffff8204f4e0,0x5b0,0,0xffffffff82000f98,0xffffffff82051240);
+          }
+          uVar12 = param_2 & 0xffffffff;
+        }
+        PartyAtomicHost_SendJoinHostResponse(&local_c0,puVar3,uVar12,iVar9,puVar7);
+        uVar2 = NET_AdrToString(CONCAT44(local_c0,uStack_bc),CONCAT44(local_b8,uStack_b4));
+        Com_Printf(0x10,0xffffffff820512a0,pcVar11 + 0x2c,uVar2,param_3);
+      }
+    }
+    lVar10 = lVar10 + 1;
+    pcVar11 = pcVar11 + 0x150;
+    puVar8 = puVar8 + 8;
+  } while ((int)lVar10 < 0x12);
+  __restgprlr();
+  return;
 }
 
 
 // 8238BCC0  PartyAtomicHost_CheckForMemberDisconnect  (client_mp/partyjoining.cpp:1471)
 
-void PartyAtomicHost_CheckForMemberDisconnect(void)
+void PartyAtomicHost_CheckForMemberDisconnect(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  uVar3 = __savegprlr_27();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5c4,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5c5,0,0xffffffff8203b1ac,param_2,0x12);
+  }
+  iVar2 = *(int *)((int)uVar3 + 100);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5c8,0,0xffffffff82000f98,0xffffffff8204fee8);
+  }
+  if (*(int *)(iVar2 + 0x1ef4) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5c9,0,0xffffffff82000f98,0xffffffff8204fed0);
+  }
+  if (*(int *)(iVar2 + 0x1eec) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5ca,0,0xffffffff82000f98,0xffffffff8204feb4);
+  }
+  iVar2 = (int)param_2 * 0x150 + iVar2;
+  lVar4 = (param_2 & 0x7ffffff) * 0x20 + uVar3;
+  lVar5 = lVar4 + 0x70;
+  cVar1 = *(char *)(iVar2 + 0x58);
+  if (cVar1 != '\x05') {
+    if (cVar1 == '\x01') {
+      MyAssertHandler(0xffffffff8204f4e0,0x5d2,0,0xffffffff820011f4,0xffffffff8205017c,
+                      0xffffffff820501a8);
+    }
+    Com_PrintWarning(0x19,0xffffffff82050118,param_2);
+    *(undefined4 *)lVar5 = 0;
+    PartyAtomic_CancelMemberResponseMessage(lVar5);
+    __restgprlr_27(1);
+    return;
+  }
+  if (*(longlong *)(iVar2 + 0x180) != *(longlong *)((int)lVar4 + 0x78)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x5dc,0,0xffffffff820011f4,0xffffffff820500b0,
+                    0xffffffff820500dc);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -926,11 +2268,9 @@ void PartyAtomicHost_WaitForMembersToRespond(void)
   
   puVar3 = (uint *)__savegprlr_22();
   if (puVar3 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x5ec,0,0xffffffff82000f98,0xffffffff8204f848);
   }
   if ((*puVar3 != 7) && (*puVar3 != 0xd)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x5ed,0,0xffffffff82000f98,0xffffffff820513c0);
   }
   uVar1 = *puVar3;
@@ -951,7 +2291,6 @@ void PartyAtomicHost_WaitForMembersToRespond(void)
       }
       else {
         if ((int)uVar2 < 2) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8204f4e0,0x615,0,0xffffffff82000f98,0xffffffff82051380);
         }
         uVar7 = uVar7 + 1;
@@ -991,12 +2330,10 @@ void PartyAtomicHost_WaitForMembersToAckOurResponse(undefined8 param_1,ulonglong
   
   iVar3 = __savegprlr_22();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x632,0,0xffffffff82000f98,0xffffffff8204f848);
   }
   iVar5 = *(int *)param_2;
   if ((iVar5 != 8) && (iVar5 != 0xe)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x633,0,0xffffffff82000f98,0xffffffff82051540);
   }
   iVar5 = 0;
@@ -1025,24 +2362,21 @@ void PartyAtomicHost_WaitForMembersToAckOurResponse(undefined8 param_1,ulonglong
         iVar4 = RMsg_GetSendStatusFromHandle(*puVar1);
         if (iVar4 != 0) {
           uVar2 = RMsg_GetSendStatusFromHandle(*puVar1);
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8204f4e0,0x657,0,0xffffffff8204f7e0,uVar2,0);
         }
       }
     }
     uVar6 = uVar6 + 1;
     lVar7 = lVar7 + 0x20;
-    if (0x11 < (uVar6 & 0xffffffff)) {
-      if (iVar5 == 0) {
-        PartyAtomic_AssertNoPendingMemberMessages(param_2);
-        Com_Printf(0x19,0xffffffff82051448);
-        __restgprlr_22(1);
-        return;
-      }
-      __restgprlr_22(0);
-      return;
-    }
-  } while( true );
+  } while ((uVar6 & 0xffffffff) < 0x12);
+  if (iVar5 == 0) {
+    PartyAtomic_AssertNoPendingMemberMessages(param_2);
+    Com_Printf(0x19,0xffffffff82051448);
+    __restgprlr_22(1);
+    return;
+  }
+  __restgprlr_22(0);
+  return;
 }
 
 
@@ -1051,8 +2385,49 @@ void PartyAtomicHost_WaitForMembersToAckOurResponse(undefined8 param_1,ulonglong
 void PartyClientAtomic_HandleHostResponse(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
+  
+  puVar2 = (uint *)__savegprlr_29();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x669,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if ((*puVar2 != 6) && (*puVar2 != 0xc)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x66a,0,0xffffffff82000f98,0xffffffff82051660);
+  }
+  uVar1 = *puVar2;
+  iVar3 = ((int)uVar1 >> 0x1f) + (uint)(8 < (ulonglong)uVar1) + 0xac;
+  if (puVar2[iVar3] != 0) {
+    if (puVar2[iVar3] == 1) {
+      Com_Printf(0x19,0xffffffff820515d0,iVar3 * 4,iVar3,(ulonglong)uVar1 - 9);
+      __restgprlr_29(1);
+      return;
+    }
+    Com_PrintError(0x19,0xffffffff82051620);
+    PartyAtomic_JoinAttemptFailed(puVar2,0xffffffff8203c760);
+  }
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 8238EAA0  PartyAtomic_SendAbortNotice  (client_mp/partyjoining.cpp:1664)
+
+void PartyAtomic_SendAbortNotice(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x681,0,0xffffffff82000f98,0xffffffff8204f848);
+  }
+  if (*(int *)(param_1 + 4) == 4) {
+    PartyAtomicClient_SendMemberActionResponse(param_1,3);
+  }
+  else if (*(int *)(param_1 + 4) == 5) {
+    PartyAtomicHost_BroadcastActionResponse(param_1,3,0);
+    return;
+  }
+  return;
 }
 
 
@@ -1072,7 +2447,6 @@ ulonglong PartyAtomic_NeedsToCreatePrivateParty(int param_1)
       local_20 = (undefined4)(uVar1 >> 0x20);
       PartyHost_StartPrivateParty(local_20,uVar1 & 0xffffffff,0);
       if (DAT_82b5700c == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8204f4e0,0x69e,0,0xffffffff82000f98,0xffffffff8203deec);
       }
     }
@@ -1103,31 +2477,83 @@ void PartyAtomic_AssertHasConnectivity(void)
 
 // 8238EBE8  PartyAtomic_OnFrame_CheckTimeout  (client_mp/partyjoining.cpp:1741)
 
-void PartyAtomic_OnFrame_CheckTimeout(void)
+void PartyAtomic_OnFrame_CheckTimeout(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  puVar1 = (undefined4 *)param_3;
+  if ((int)puVar1[0x876] < 1) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6d0,0,0xffffffff82000f98,0xffffffff820517bc);
+  }
+  if ((int)puVar1[0x877] < 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6d1,0,0xffffffff82000f98,0xffffffff82051794);
+  }
+  if ((int)puVar1[0x876] <= iVar2) {
+    if (0 < (int)puVar1[0x877]) {
+      Com_PrintWarning(0xe,0xffffffff82051748);
+      *puVar1 = (int)param_2;
+      puVar1[0x877] = puVar1[0x877] + -1;
+      __restgprlr_27();
+      return;
+    }
+    Com_PrintError(0xe,0xffffffff820516f0,param_2);
+    PartyAtomic_JoinAttemptFailed(param_3,0xffffffff8203252c);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 8238ECC8  PartyAtomic_OnFrame_Request  (client_mp/partyjoining.cpp:1765)
 
-void PartyAtomic_OnFrame_Request(void)
+void PartyAtomic_OnFrame_Request(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  iVar1 = __savegprlr_29();
+  piVar3 = (int *)param_2;
+  if (*piVar3 != 1) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6e6,0,0xffffffff82000f98,0xffffffff82051854);
+  }
+  if (piVar3[1] == 4) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6e7,0,0xffffffff820011f4,0xffffffff820517dc,
+                    0xffffffff82051808);
+  }
+  iVar2 = PartyAtomic_NeedsToCreatePrivateParty(param_2);
+  if (iVar2 == 0) {
+    PartyAtomic_AskToJoinParty(param_2);
+    *piVar3 = 2;
+    piVar3[0x876] = *(int *)(DAT_82b59058 + 0xc) + iVar1;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238ED80  PartyAtomic_OnFrame_Requested  (client_mp/partyjoining.cpp:1785)
 
-void PartyAtomic_OnFrame_Requested(void)
+void PartyAtomic_OnFrame_Requested(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (*(int *)param_2 != 2) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6fa,0,0xffffffff82000f98,0xffffffff82051898);
+  }
+  if (((int *)param_2)[1] == 4) {
+    MyAssertHandler(0xffffffff8204f4e0,0x6fb,0,0xffffffff820011f4,0xffffffff820517dc,
+                    0xffffffff82051808);
+  }
+  PartyAtomic_OnFrame_CheckTimeout(uVar1,1,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1140,7 +2566,6 @@ void PartyAtomic_OnFrame_Join(int param_1,int *param_2)
   int iVar1;
   
   if (*param_2 != 3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x703,0,0xffffffff82000f98,0xffffffff82051934);
   }
   if (((*(int *)(DAT_82b5c2b4 + 0xc) < 1) || (param_2[1] != 4)) ||
@@ -1168,7 +2593,6 @@ void PartyAtomic_OnFrame_Joining(undefined8 param_1,int *param_2)
   int iVar1;
   
   if (*param_2 != 4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x71f,0,0xffffffff82000f98,0xffffffff82051970);
   }
   iVar1 = PartyAtomicClient_CheckForJoinAbort(param_2);
@@ -1187,21 +2611,97 @@ void PartyAtomic_OnFrame_Joining(undefined8 param_1,int *param_2)
 
 // 8238EFB0  PartyAtomic_OnFrame_Joined  (client_mp/partyjoining.cpp:1839)
 
-void PartyAtomic_OnFrame_Joined(void)
+void PartyAtomic_OnFrame_Joined(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int *piVar2;
+  
   __savegprlr_29();
+  piVar2 = (int *)param_2;
+  if (*piVar2 != 5) {
+    MyAssertHandler(0xffffffff8204f4e0,0x730,0,0xffffffff82000f98,0xffffffff820519fc);
+  }
+  iVar1 = piVar2[1];
+  if (iVar1 - 1U < 5) {
+    if (iVar1 == 2) {
+LAB_8238f020:
+      iVar1 = PartyAtomicClient_CheckForJoinAbort(param_2);
+      if (iVar1 != 0) {
+        MyAssertHandler(0xffffffff8204f4e0,0x736,0,0xffffffff82000f98,0xffffffff820519c4);
+      }
+      *piVar2 = 9;
+      __restgprlr_29();
+      return;
+    }
+    if (iVar1 != 3) {
+      if (iVar1 != 4) {
+        if (iVar1 != 1) {
+          iVar1 = PartyAtomicClient_CheckForJoinAbort(param_2);
+          if (iVar1 != 0) {
+            MyAssertHandler(0xffffffff8204f4e0,0x743,0,0xffffffff82000f98,0xffffffff820519c4);
+          }
+          PartyAtomicJoin_SetupMemberJoinInfo(param_2);
+          *piVar2 = 7;
+          __restgprlr_29();
+          return;
+        }
+        goto LAB_8238f020;
+      }
+      iVar1 = PartyAtomicClient_CheckForJoinAbort(param_2);
+      if (iVar1 == 0) {
+        PartyAtomicClient_SendMemberActionResponse(param_2,1);
+        *piVar2 = 6;
+        __restgprlr_29();
+        return;
+      }
+      goto LAB_8238f0f4;
+    }
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x749,0,0xffffffff820519b0);
+  }
+LAB_8238f0f4:
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238F100  PartyAtomic_OnFrame_ClientWait  (client_mp/partyjoining.cpp:1872)
 
-void PartyAtomic_OnFrame_ClientWait(void)
+void PartyAtomic_OnFrame_ClientWait(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
   __savegprlr_29();
+  piVar3 = (int *)param_2;
+  iVar1 = *piVar3;
+  if ((iVar1 != 6) && (iVar1 != 0xc)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x752,0,0xffffffff82051a5c,0xffffffff82051a78,iVar1);
+  }
+  iVar2 = PartyClientAtomic_HandleHostResponse(param_2);
+  if (iVar2 != 0) {
+    if (iVar1 == 6) {
+      *piVar3 = 9;
+    }
+    else {
+      if (iVar1 == 0xc) {
+        *piVar3 = 0xf;
+        __restgprlr_29();
+        return;
+      }
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff8204f4e0,0x761,0,0xffffffff82051a3c);
+        __restgprlr_29();
+        return;
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1213,7 +2713,6 @@ void PartyAtomic_OnFrame_WaitHost(undefined8 param_1,int *param_2)
   int iVar1;
   
   if (*param_2 != 7) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x769,0,0xffffffff82000f98,0xffffffff82051ad0);
   }
   PartyAtomicHost_BroadcastLobbyJoin(param_1,param_2);
@@ -1234,7 +2733,6 @@ void PartyAtomic_OnFrame_WaitHostPrimed(int param_1,int *param_2)
   int iVar1;
   
   if (*param_2 != 0xd) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x777,0,0xffffffff82000f98,0xffffffff82051b18);
   }
   iVar1 = PartyAtomicHost_WaitForMembersToRespond(param_2);
@@ -1248,21 +2746,74 @@ void PartyAtomic_OnFrame_WaitHostPrimed(int param_1,int *param_2)
 
 // 8238F2D8  PartyAtomic_OnFrame_WaitHostAck  (client_mp/partyjoining.cpp:1924)
 
-void PartyAtomic_OnFrame_WaitHostAck(void)
+void PartyAtomic_OnFrame_WaitHostAck(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int *piVar4;
+  
+  uVar2 = __savegprlr_28();
+  piVar4 = (int *)param_2;
+  iVar1 = *piVar4;
+  if ((iVar1 != 8) && (iVar1 != 0xe)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x786,0,0xffffffff82051a5c,0xffffffff82051b80,iVar1);
+  }
+  iVar3 = PartyAtomicHost_WaitForMembersToAckOurResponse(uVar2,param_2);
+  if (iVar3 != 0) {
+    if (iVar1 == 8) {
+      *piVar4 = 9;
+    }
+    else {
+      if (iVar1 == 0xe) {
+        *piVar4 = 0xf;
+        __restgprlr_28();
+        return;
+      }
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff8204f4e0,0x795,0,0xffffffff82051b60);
+        __restgprlr_28();
+        return;
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8238F3A0  PartyAtomic_OnFrame_Commit  (client_mp/partyjoining.cpp:1948)
 
-void PartyAtomic_OnFrame_Commit(void)
+void PartyAtomic_OnFrame_Commit(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  int *piVar4;
+  
+  iVar1 = __savegprlr_29();
+  piVar4 = (int *)param_2;
+  if (*piVar4 != 9) {
+    MyAssertHandler(0xffffffff8204f4e0,0x79d,0,0xffffffff82000f98,0xffffffff82051bdc);
+  }
+  iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
+  if (iVar2 == 0) {
+    if (((0 < *(int *)(DAT_82b5c2b8 + 0xc)) &&
+        (iVar2 = PartyAtomic_IsJoiningOnHostequest(param_2), iVar2 != 0)) &&
+       ((*(int *)(DAT_82b5c2b8 + 0xc) == 1 || (cVar3 = Lobby_IsInLobby(), cVar3 != '\0')))) {
+      Com_Printf(0xe,0xffffffff820518e0);
+      PartyAtomic_JoinAttemptFailed(param_2,0xffffffff8203c760);
+      __restgprlr_29();
+      return;
+    }
+    PartyAtomicClient_CommitToJoinedParty(param_2);
+    *piVar4 = 10;
+    piVar4[0x876] = *(int *)(DAT_82b59058 + 0xc) + iVar1;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1274,7 +2825,6 @@ void PartyAtomic_OnFrame_Committing(undefined8 param_1,int *param_2)
   int iVar1;
   
   if (*param_2 != 10) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x7ba,0,0xffffffff82000f98,0xffffffff82051c20);
   }
   iVar1 = PartyAtomicClient_CheckForCommitAbort(param_2);
@@ -1294,21 +2844,79 @@ void PartyAtomic_OnFrame_Committing(undefined8 param_1,int *param_2)
 
 // 8238F540  PartyAtomic_OnFrame_Committed  (client_mp/partyjoining.cpp:1996)
 
-void PartyAtomic_OnFrame_Committed(void)
+void PartyAtomic_OnFrame_Committed(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int *piVar2;
+  
   __savegprlr_29();
+  piVar2 = (int *)param_2;
+  if (*piVar2 != 0xb) {
+    MyAssertHandler(0xffffffff8204f4e0,0x7cd,0,0xffffffff82000f98,0xffffffff82051ca0);
+  }
+  iVar1 = piVar2[1];
+  if (iVar1 - 1U < 5) {
+    if ((iVar1 != 2) && (iVar1 != 3)) {
+      if (iVar1 == 4) {
+        iVar1 = PartyAtomicClient_CheckForCommitAbort(param_2);
+        if (iVar1 == 0) {
+          PartyAtomicClient_SendMemberActionResponse(param_2,1);
+          *piVar2 = 0xc;
+          __restgprlr_29();
+          return;
+        }
+        goto LAB_8238f67c;
+      }
+      if (iVar1 != 1) {
+        iVar1 = PartyAtomicClient_CheckForCommitAbort(param_2);
+        if (iVar1 != 0) {
+          MyAssertHandler(0xffffffff8204f4e0,0x7e2,0,0xffffffff82000f98,0xffffffff82051c64);
+        }
+        *piVar2 = 0xd;
+        __restgprlr_29();
+        return;
+      }
+    }
+    iVar1 = PartyAtomicClient_CheckForCommitAbort(param_2);
+    if (iVar1 != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x7d5,0,0xffffffff82000f98,0xffffffff82051c64);
+    }
+    *piVar2 = 0xf;
+    __restgprlr_29();
+    return;
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x7e7,0,0xffffffff820519b0);
+  }
+LAB_8238f67c:
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238F688  PartyAtomic_OnFrame_Success  (client_mp/partyjoining.cpp:2031)
 
-void PartyAtomic_OnFrame_Success(void)
+void PartyAtomic_OnFrame_Success(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  void *pvVar1;
+  int *_Dst;
+  
   __savegprlr_29();
+  _Dst = (int *)param_2;
+  if (*_Dst != 0xf) {
+    MyAssertHandler(0xffffffff8204f4e0,0x7f0,0,0xffffffff82000f98,0xffffffff82050730);
+  }
+  PartyAtomic_AssertNoPendingMemberMessages(param_2);
+  PartyAtomic_HandleSuccessfulJoinAttempt(param_2);
+  pvVar1 = memset(_Dst,0,0x21e8);
+  if (*_Dst != 0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff8204f4e0,0x7f6,1,0xffffffff82000f98,
+                                     0xffffffff8203dc78);
+  }
+  __restgprlr_29(pvVar1);
+  return;
 }
 
 
@@ -1321,7 +2929,6 @@ void PartyAtomic_OnError_FailedToJoin(undefined8 param_1,undefined4 *param_2)
   
   iVar1 = PartyAtomic_HasErrorOccured(param_2);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x801,0,0xffffffff82000f98,0xffffffff82051d34);
   }
   PartyAtomic_AssertNoPendingMemberMessages(param_2);
@@ -1345,7 +2952,6 @@ void PartyAtomic_OnError_ClientWaitFailed(undefined8 param_1,undefined4 *param_2
   
   iVar1 = PartyAtomic_HasErrorOccured(param_2);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x817,0,0xffffffff82000f98,0xffffffff82051d34);
   }
   Com_Printf(0xe,0xffffffff82051d64);
@@ -1363,11 +2969,9 @@ void PartyAtomic_OnError_TellPartyToAbortJoin(undefined8 param_1,int *param_2)
   
   iVar1 = PartyAtomic_HasErrorOccured(param_2);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x820,0,0xffffffff82000f98,0xffffffff82051d34);
   }
   if (8 < *param_2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x821,0,0xffffffff8203fc24,0xffffffff82051df4);
   }
   Com_Printf(0xe,0xffffffff82051da8);
@@ -1377,33 +2981,115 @@ void PartyAtomic_OnError_TellPartyToAbortJoin(undefined8 param_1,int *param_2)
 }
 
 
-// 8238F9C8  PartyAtomic_OnError_WaitHostAckFailed  (client_mp/partyjoining.cpp:2101)
+// 8238F908  PartyAtomic_OnError_TellPartyToAbortCommit  (client_mp/partyjoining.cpp:2090)
 
-void PartyAtomic_OnError_WaitHostAckFailed(void)
+void PartyAtomic_OnError_TellPartyToAbortCommit(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = PartyAtomic_HasErrorOccured(param_2);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x82b,0,0xffffffff82000f98,0xffffffff82051d34);
+  }
+  if (*param_2 < 9) {
+    MyAssertHandler(0xffffffff8204f4e0,0x82c,0,0xffffffff8203fc24,0xffffffff82051e88);
+  }
+  Com_Printf(0xe,0xffffffff82051e38);
+  PartyAtomicHost_BroadcastActionResponse(param_2,6,1);
+  *param_2 = 0xe;
+  return;
+}
+
+
+// 8238F9C8  PartyAtomic_OnError_WaitHostAckFailed  (client_mp/partyjoining.cpp:2101)
+
+void PartyAtomic_OnError_WaitHostAckFailed(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = *(int *)param_2;
+  if ((iVar2 != 8) && (iVar2 != 0xe)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x836,0,0xffffffff82000f98,0xffffffff82051ec8);
+  }
+  iVar2 = PartyAtomic_HasErrorOccured(param_2);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x837,0,0xffffffff82000f98,0xffffffff82051d34);
+  }
+  iVar2 = PartyAtomicHost_WaitForMembersToAckOurResponse(uVar1,param_2);
+  if (iVar2 != 0) {
+    *(int *)param_2 = 0x10;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8238FA70  PartyAtomic_OnError_CommitFailed  (client_mp/partyjoining.cpp:2111)
 
-void PartyAtomic_OnError_CommitFailed(void)
+void PartyAtomic_OnError_CommitFailed(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  
+  uVar1 = __savegprlr_29();
+  piVar3 = (int *)param_2;
+  if ((*piVar3 < 9) || (0xb < *piVar3)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x840,0,0xffffffff8203fc24,0xffffffff82051fa8);
+  }
+  iVar2 = PartyAtomic_HasErrorOccured(param_2);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x841,0,0xffffffff82000f98,0xffffffff82051d34);
+  }
+  PartyAtomic_AssertNoPendingMemberMessages(param_2);
+  if (piVar3[1] == 4) {
+    Com_Printf(0xe,0xffffffff82051f60);
+    PartyAtomicClient_SendMemberActionResponse(param_2,6);
+    *piVar3 = 0xc;
+    __restgprlr_29();
+    return;
+  }
+  if (piVar3[1] == 5) {
+    PartyAtomic_OnError_TellPartyToAbortCommit(uVar1,param_2);
+    __restgprlr_29();
+    return;
+  }
+  *piVar3 = 0x10;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8238FB60  PartyAtomic_OnError_Failed  (client_mp/partyjoining.cpp:2137)
 
-void PartyAtomic_OnError_Failed(void)
+void PartyAtomic_OnError_Failed(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  void *pvVar1;
+  int *_Dst;
+  
   __savegprlr_29();
+  _Dst = (int *)param_2;
+  if (*_Dst != 0x10) {
+    MyAssertHandler(0xffffffff8204f4e0,0x85a,0,0xffffffff82000f98,0xffffffff82050930);
+  }
+  if (_Dst[0x878] == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x85b,0,0xffffffff82000f98,0xffffffff82050914);
+  }
+  PartyAtomic_AssertNoPendingMemberMessages(param_2);
+  PartyAtomic_HandleFailedJoinAttempt(param_2);
+  pvVar1 = memset(_Dst,0,0x21e8);
+  if (*_Dst != 0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff8204f4e0,0x861,1,0xffffffff82000f98,
+                                     0xffffffff8203dc78);
+  }
+  __restgprlr_29(pvVar1);
+  return;
 }
 
 
@@ -1415,7 +3101,6 @@ void PartyAtomic_UpdateFakeLatency(int *param_1)
   int iVar1;
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x88e,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   iVar1 = *(int *)(DAT_82b5c2b0 + 0xc);
@@ -1450,29 +3135,24 @@ void PartyAtomic_PartySanityCheck(void)
   
   piVar3 = (int *)__savegprlr_25();
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x8a9,0,0xffffffff82000f98,0xffffffff8203fda8);
   }
   if (*piVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x8aa,0,0xffffffff82000f98,0xffffffff820503a0);
   }
   puVar1 = (undefined4 *)piVar3[0x19];
   if (puVar1 != (undefined4 *)0x0) {
     if (puVar1[0x7bd] == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8af,0,0xffffffff82000f98,0xffffffff8204fed0);
     }
     iVar4 = PartyMigrate_MigrateActive(puVar1);
     if (iVar4 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8b0,0,0xffffffff820011f4,0xffffffff8205219c,
                       0xffffffff820521cc);
     }
     uVar2 = Party_HostNum(puVar1);
     iVar4 = Party_IsMemberIndexDataAvailable(puVar1,uVar2);
     if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8b1,0,0xffffffff820011f4,0xffffffff82052118,
                       0xffffffff8205216c);
     }
@@ -1481,51 +3161,42 @@ void PartyAtomic_PartySanityCheck(void)
     puVar5 = &DAT_82b55118;
     iVar4 = Party_AreWeHost(0xffffffff82b55118);
     if (iVar4 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8ba,0,0xffffffff82000f98,0xffffffff820520d8);
     }
     Lobby_GetPartyData();
     iVar4 = Party_AreWeHost();
     if (iVar4 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8bb,0,0xffffffff82000f98,0xffffffff820520ac);
     }
     if (piVar3[1] == 4) {
       cVar7 = Lobby_IsInRunningLobby();
       if (cVar7 == '\0') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8204f4e0,0x8be,0,0xffffffff82000f98,0xffffffff820520fc);
       }
       puVar5 = (undefined4 *)Lobby_GetPartyData();
     }
     else if (DAT_82b5700c == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8c3,0,0xffffffff82000f98,0xffffffff8203deec);
     }
     if (puVar1 != puVar5) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8c6,0,0xffffffff82000f98,0xffffffff82052094);
     }
     uVar6 = Party_HostNum(puVar5);
     if (0x11 < uVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8c9,0,0xffffffff82052058,uVar6,0x12);
     }
     iVar4 = Party_IsMemberDataAvailable(puVar5 + uVar6 * 0x54 + 0x16);
     if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8cb,0,0xffffffff82000f98,0xffffffff8203be7c);
     }
   }
   if (piVar3[1] == 5) {
     puVar5 = (undefined4 *)Lobby_GetPartyData();
     if (puVar1 != puVar5) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8cf,0,0xffffffff82000f98,0xffffffff82052030);
     }
     cVar7 = Lobby_IsInRunningLobby();
     if (cVar7 == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8204f4e0,0x8d0,0,0xffffffff82000f98,0xffffffff820520fc);
     }
   }
@@ -1539,8 +3210,53 @@ void PartyAtomic_PartySanityCheck(void)
 void PartyAtomic_PartyJoinFrame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  code *pcVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
+  
   __savegprlr_19();
+  uVar6 = Sys_Milliseconds();
+  PartyAtomic_UpdateFakeLatency(0xffffffff82b59110);
+  do {
+    do {
+      if (DAT_82b59110 == 0) goto LAB_82390158;
+      PartyAtomic_PartySanityCheck(0xffffffff82b59110);
+      uVar4 = DAT_82b59110;
+      if (DAT_82b59110 == 0) {
+        MyAssertHandler(0xffffffff8204f4e0,0x216,0,0xffffffff82000f98,0xffffffff820503a0);
+      }
+      iVar5 = DAT_82b5b2f0;
+      iVar3 = DAT_82b5b2f0 + -1 + (uint)(DAT_82b5b2f0 == 0);
+      uVar7 = DAT_82b5b2f0 - iVar3;
+      if (0x10 < uVar4) {
+        MyAssertHandler(0xffffffff8204f4e0,0x8f0,0,0xffffffff82052204,uVar4,0x11);
+      }
+      iVar2 = uVar4 * 8;
+      if (iVar5 == iVar3) {
+        if (*(int *)(&DAT_829669d0 + iVar2) == 0) {
+          MyAssertHandler(0xffffffff8204f4e0,0x8f9,0,0xffffffff82000f98,0xffffffff82052270);
+        }
+        pcVar1 = *(code **)(&DAT_829669d0 + iVar2);
+      }
+      else {
+        if (*(int *)(&DAT_829669d4 + iVar2) == 0) {
+          MyAssertHandler(0xffffffff8204f4e0,0x8f4,0,0xffffffff82000f98,0xffffffff82052244);
+        }
+        pcVar1 = *(code **)(&DAT_829669d4 + iVar2);
+      }
+      (*pcVar1)(uVar6,0xffffffff82b59110);
+    } while (uVar4 != DAT_82b59110);
+    if (DAT_82b59110 == 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x216,0,0xffffffff82000f98,0xffffffff820503a0);
+    }
+  } while (uVar7 != (DAT_82b5b2f0 != 0));
+LAB_82390158:
+  __restgprlr_19();
+  return;
 }
 
 
@@ -1565,11 +3281,67 @@ void PartyAtomic_Shutdown(void)
 
 // 8238BEF8  PartyAtomic_SetupSplitscreenControllersForInvite  (client_mp/partyjoining.cpp:2337)
 
-void PartyAtomic_SetupSplitscreenControllersForInvite(void)
+void PartyAtomic_SetupSplitscreenControllersForInvite
+               (undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  char cVar5;
+  
+  uVar2 = __savegprlr_27();
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x924,0,0xffffffff82050340,uVar2,4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8204f4e0,0x925,0,0xffffffff82000f98,0xffffffff82043ce8);
+  }
+  iVar1 = (int)param_3;
+  if (param_2 == 0) {
+    CL_ForceNoSplitscreenControl(0xffffffff820502c0,uVar2);
+    CL_UnMapInactiveClientControllers();
+    Dvar_SetBool(DAT_82b3ecb8,0);
+    Party_SetupSplitscreenData(param_3,uVar2,0);
+    if (*(int *)(iVar1 + 8) != 0) {
+      MyAssertHandler(0xffffffff8204f4e0,0x941,0,0xffffffff82000f98,0xffffffff8205029c);
+    }
+  }
+  else {
+    CL_EnsureClientIsActive(uVar2);
+    iVar4 = CL_GetLocalClientActiveCount();
+    if (2 < iVar4) {
+      uVar3 = CL_GetLocalClientActiveCount();
+      MyAssertHandler(0xffffffff8204f4e0,0x92d,0,0xffffffff820502f8,uVar3,2);
+    }
+    uVar2 = CL_ControllerIndexFromClientNum(0);
+    CL_EnsureClientIsActive();
+    Party_SetupSplitscreenData(param_3,uVar2,0);
+    if (*(int *)(iVar1 + 8) == 0) {
+      CL_ForceNoSplitscreenControl(0xffffffff820502c0,uVar2);
+    }
+  }
+  cVar5 = CL_IsLocalClientActive(0);
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x944,0,0xffffffff82000f98,0xffffffff82050270);
+  }
+  cVar5 = CL_IsLocalClientActive(1);
+  if ((cVar5 != '\0') && (*(int *)(iVar1 + 8) == 0)) {
+    MyAssertHandler(0xffffffff8204f4e0,0x945,0,0xffffffff82000f98,0xffffffff82050220);
+  }
+  cVar5 = CL_IsLocalClientActive(2);
+  if (cVar5 != '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x946,0,0xffffffff82000f98,0xffffffff820501f4);
+  }
+  cVar5 = CL_IsLocalClientActive(3);
+  if (cVar5 != '\0') {
+    MyAssertHandler(0xffffffff8204f4e0,0x947,0,0xffffffff82000f98,0xffffffff820501c8);
+  }
+  CL_UnMapInactiveClientControllers();
+  CL_EnsureClientIsActive(uVar2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1594,21 +3366,17 @@ void PartyAtomic_AcceptInviteMP
   uVar1 = __savegprlr_25();
   cVar4 = Live_AreWeAcceptingInvite();
   if (cVar4 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x95e,0,0xffffffff82000f98,0xffffffff820523d0);
   }
   cVar4 = Live_HasAcceptedInvitation();
   if (cVar4 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x95f,0,0xffffffff82000f98,0xffffffff820523b0);
   }
   cVar4 = CL_AllLocalClientsDisconnected();
   if (cVar4 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x960,0,0xffffffff82000f98,0xffffffff82031c9c);
   }
   if (DAT_82b59110 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x961,0,0xffffffff82052330,0xffffffff82052368);
   }
   uVar2 = Sys_Milliseconds();
@@ -1621,7 +3389,6 @@ void PartyAtomic_AcceptInviteMP
   Live_SetCurrentGametype();
   PartyAtomic_Shutdown();
   if (DAT_82b3e4f0 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8204f4e0,0x97f,0,0xffffffff82000f98,0xffffffff820522c4);
   }
   DAT_82b3e55c = param_3 == 1;

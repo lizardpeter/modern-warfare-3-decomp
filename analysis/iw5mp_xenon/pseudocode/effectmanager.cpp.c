@@ -36,6 +36,42 @@ void XAudioEffectManager_QueryEffectSize(int param_1)
 }
 
 
+// 828D6290  XAudioEffectManager_CreateEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:32)
+
+void XAudioEffectManager_CreateEffect(int param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)(param_1 + -8);
+  if (param_1 == 0) {
+    piVar1 = (int *)0x0;
+  }
+                    /* WARNING: Could not recover jumptable at 0x828d62ac. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*piVar1 + 0x18))();
+  return;
+}
+
+
+// 828D62B0  XAudioEffectManager_RegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:37)
+
+void XAudioEffectManager_RegisterEffects(int param_1)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)(param_1 + -8);
+  if (param_1 == 0) {
+    piVar1 = (int *)0x0;
+  }
+                    /* WARNING: Could not recover jumptable at 0x828d62cc. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(*piVar1 + 0x1c))();
+  return;
+}
+
+
 // 828D68C0  XAudioQueryEffectManagerSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:69)
 
 undefined8 XAudioQueryEffectManagerSize(undefined8 param_1,int *param_2)
@@ -51,11 +87,23 @@ undefined8 XAudioQueryEffectManagerSize(undefined8 param_1,int *param_2)
 
 // 828D68F8  XAudioCreateEffectManager  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:100)
 
-void XAudioCreateEffectManager(void)
+void XAudioCreateEffectManager(undefined8 param_1,undefined8 param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = (**(code **)(*(int *)param_2 + 0x14))(param_2,0x18);
+  if (((uVar2 & 0xffffffff) != 0) &&
+     (iVar3 = XAUDIO__CEffectManager__CEffectManager(uVar2,uVar1,param_2), iVar3 != 0)) {
+    *param_3 = iVar3 + 8;
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(0xffffffff8007000e);
+  return;
 }
 
 

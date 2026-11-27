@@ -17,30 +17,113 @@ longlong * RtlpFormatTimeOut(longlong *param_1,uint param_2)
 
 // 828AC3F8  RtlFindFirstFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:107)
 
-void RtlFindFirstFile(void)
+void RtlFindFirstFile(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar2;
+  ulonglong uVar1;
+  uint uVar3;
+  uint uVar4;
+  undefined4 local_60 [2];
+  ushort local_58;
+  undefined2 uStack_56;
+  int iStack_54;
+  ushort local_50;
+  ushort local_4e;
+  char *local_4c;
+  uint local_48 [2];
+  undefined4 local_40;
+  ushort *local_3c;
+  undefined4 local_38;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  local_40 = *puVar2;
+  local_3c = &local_58;
+  local_38 = puVar2[2];
+  local_60[0] = 0;
+  local_58 = (ushort)((ulonglong)*(undefined8 *)puVar2[1] >> 0x30);
+  uVar3 = (uint)local_58;
+  iStack_54 = (int)*(undefined8 *)puVar2[1];
+  uVar4 = uVar3;
+  if (uVar3 != 0) {
+    do {
+      if (*(char *)(iStack_54 + -1 + uVar4) == '\\') break;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+  }
+  local_4e = (ushort)(uVar3 - uVar4);
+  uVar3 = uVar3 - uVar4 & 0xffff;
+  local_4c = (char *)(iStack_54 + uVar4);
+  _local_58 = CONCAT26((short)uVar4,CONCAT24((short)uVar4,iStack_54));
+  local_50 = local_4e;
+  if (((uVar4 & 0xffff) == 0) || (uVar3 == 0)) {
+    uVar1 = 0xffffffffc000000d;
+  }
+  else {
+    if (((uVar3 == 3) && (*local_4c == '*')) && (local_4c[1] == '.')) {
+      local_50 = -(ushort)(local_4c[2] != '*') & local_4e;
+    }
+    uVar1 = NtOpenFile(local_60,0x100001,&local_40,local_48,3,0x4021);
+    if (-1 < (longlong)uVar1) {
+      uVar1 = (**(code **)(PTR_DAT_829a8580 + 0x18))
+                        (local_60[0],0,0,0,local_48,param_2,param_3,&local_50);
+      if ((longlong)uVar1 < 0) {
+        NtClose(local_60[0]);
+      }
+      else {
+        if ((param_4 & 0xffffffff) == 0) {
+          NtClose(local_60[0]);
+        }
+        else {
+          *(undefined4 *)param_4 = local_60[0];
+        }
+        uVar1 = (ulonglong)local_48[0];
+      }
+    }
+  }
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 828AC598  RtlFindNextFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:270)
 
-void RtlFindNextFile(void)
+void RtlFindNextFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  uint local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = (**(code **)(PTR_DAT_829a8580 + 0x18))(uVar1,0,0,0,local_30,param_2,param_3,0);
+  if (-1 < (longlong)uVar2) {
+    uVar2 = (ulonglong)local_30[0];
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 828AC618  RtlSleep  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:457)
 
-void RtlSleep(void)
+void RtlSleep(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_29();
+  lVar2 = RtlpFormatTimeOut(ZEXT48(&stack0x00000000) - 0x30,uVar1);
+  if (lVar2 == 0) {
+    lVar2 = ZEXT48(&stack0x00000000) - 0x30;
+  }
+  do {
+    lVar3 = KeDelayExecutionThread(1,param_2,lVar2);
+    if ((param_2 & 0xff) == 0) break;
+  } while ((int)lVar3 == 0x101);
+  __restgprlr_29(-(lVar3 == 0xc0) & 0xc0);
+  return;
 }
 

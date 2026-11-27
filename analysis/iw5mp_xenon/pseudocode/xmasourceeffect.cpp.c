@@ -60,21 +60,124 @@ longlong XAUDIO__CObjectRefCount__Release(int *param_1)
 
 // 828CE198  XAudioGetXMAPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:102)
 
-void XAudioGetXMAPacketPosition(void)
+void XAudioGetXMAPacketPosition(undefined8 param_1,uint *param_2,int param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  uint uVar9;
+  
+  uVar4 = __savegprlr_28();
+  lVar7 = (ulonglong)*param_2 - 1;
+  lVar6 = 0;
+  lVar8 = lVar7;
+  if (-1 < lVar7) {
+    do {
+      iVar2 = (int)lVar8 + (int)lVar6 >> 1;
+      if (iVar2 == (int)lVar7) {
+LAB_828ce220:
+        uVar1 = param_2[iVar2 + 1];
+        if ((int)lVar6 <= (int)lVar8) {
+          puVar3 = (undefined4 *)(param_3 + iVar2 * 0x800);
+          uVar5 = XMAPlaybackGetFrameOffsetFromPacketHeader(*puVar3);
+          uVar9 = 0x200;
+          if (uVar5 < 0x4000) {
+            do {
+              if (uVar4 - uVar1 < uVar9) {
+                *(short *)(param_4 + 1) = ((short)(uVar4 - uVar1) - (short)uVar9) + 0x200;
+                *param_4 = iVar2 * 0x4000 + uVar5;
+                __restgprlr_28(0);
+                return;
+              }
+              uVar9 = uVar9 + 0x200;
+              uVar5 = (((uint)*(uint3 *)((uVar5 >> 3) + (int)puVar3) << 8) >>
+                       (0x11 - (uVar5 & 7) & 0x3f) & 0x7fff) + uVar5;
+            } while (uVar5 < 0x4000);
+            __restgprlr_28(0xffffffff80004005);
+            return;
+          }
+        }
+        break;
+      }
+      uVar1 = param_2[iVar2 + 1];
+      if (uVar4 < uVar1) {
+LAB_828ce1fc:
+        lVar8 = (longlong)iVar2 + -1;
+      }
+      else {
+        if (uVar4 < (param_2 + iVar2 + 1)[1]) goto LAB_828ce220;
+        if (uVar4 < uVar1) goto LAB_828ce1fc;
+        lVar6 = (longlong)iVar2 + 1;
+      }
+    } while ((int)lVar6 <= (int)lVar8);
+  }
+  __restgprlr_28(0xffffffff80004005);
+  return;
 }
 
 
 // 828CFD80  XAUDIO::CSourceStream::GetCurrentPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:103)
 
-void XAUDIO__CSourceStream__GetCurrentPacket(void)
+void XAUDIO__CSourceStream__GetCurrentPacket(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  ulonglong uVar1;
+  ulonglong uVar3;
+  uint uVar4;
+  int in_r13;
+  int iVar5;
+  
+  iVar2 = __savegprlr_27();
+  uVar1 = KeRaiseIrqlToDpcLevel();
+  iVar5 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e4 = (byte)uVar1;
+    DAT_848958e0 = in_r13;
+  }
+  else {
+    uVar1 = (ulonglong)DAT_848958e4;
+  }
+  uVar3 = (ulonglong)DAT_848958dc + 1;
+  uVar4 = (uint)uVar3;
+  if ((iVar2 + 4 != *(int *)(iVar2 + 4)) &&
+     (iVar2 = *(int *)(iVar2 + 4) - *(int *)(iVar2 + 0xc), iVar2 != 0)) {
+    DAT_848958dc = uVar4;
+    if ((param_2 & 0xffffffff) != 0) {
+      *(int *)param_2 = iVar2;
+      uVar1 = (ulonglong)DAT_848958e4;
+      uVar3 = (ulonglong)DAT_848958dc;
+    }
+    if (((int)uVar3 != 0) && (iVar5 == DAT_848958e0)) {
+      DAT_848958dc = (uint)(uVar3 - 1);
+      if (uVar3 - 1 == 0) {
+        DAT_848958e4 = 0;
+        DAT_848958e0 = 0;
+        KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+        KfLowerIrql(uVar1);
+      }
+    }
+    __restgprlr_27(0);
+    return;
+  }
+  if (((uVar4 != 0) && (iVar5 == DAT_848958e0)) &&
+     (uVar4 = DAT_848958dc, (ulonglong)DAT_848958dc == 0)) {
+    DAT_848958e4 = 0;
+    DAT_848958e0 = 0;
+    KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+    KfLowerIrql(uVar1);
+    uVar4 = DAT_848958dc;
+  }
+  DAT_848958dc = uVar4;
+  __restgprlr_27(0xffffffff80004005);
+  return;
 }
 
 
@@ -104,11 +207,38 @@ undefined4 XAUDIO__CObjectRefCount__GetRefCount(int param_1)
 
 // 828CF658  XAUDIO::CSourceStream::SetState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:123)
 
-void XAUDIO__CSourceStream__SetState(void)
+void XAUDIO__CSourceStream__SetState(undefined8 param_1,byte param_2,byte param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
+  int in_r13;
+  int iVar4;
+  
+  iVar1 = __savegprlr_26();
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar4 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar2;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  *(byte *)(iVar1 + 0x9c) = *(byte *)(iVar1 + 0x9c) & ~param_2 | param_3;
+  uVar2 = DAT_848958e4;
+  uVar3 = (ulonglong)DAT_848958dc;
+  if ((DAT_848958dc != 0) && (iVar4 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
+      DAT_848958e0 = 0;
+      DAT_848958e4 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -117,8 +247,48 @@ void XAUDIO__CSourceStream__SetState(void)
 void XAUDIO__CSourceStream__Start(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  undefined1 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  int in_r13;
+  int iVar6;
+  
+  piVar1 = (int *)__savegprlr_28();
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar6 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar2;
+  }
+  uVar5 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar5;
+  if ((*(byte *)(piVar1 + 0x27) & 1) == 0) {
+    uVar4 = 3;
+    uVar3 = 3;
+  }
+  else {
+    if ((*(byte *)(piVar1 + 0x27) & 4) == 0) goto LAB_828cf7c8;
+    uVar4 = 2;
+    uVar3 = 6;
+  }
+  (**(code **)(*piVar1 + 0x54))(piVar1,uVar3,uVar4);
+  uVar5 = (ulonglong)DAT_848958dc;
+LAB_828cf7c8:
+  uVar2 = DAT_848958e4;
+  if (((int)uVar5 != 0) && (iVar6 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar5 - 1);
+    if (uVar5 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -134,11 +304,51 @@ void XAUDIO__CXMASourceEffect__AddRef(int param_1)
 
 // 828CF820  XAUDIO::CSourceStream::Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:150)
 
-void XAUDIO__CSourceStream__Stop(void)
+void XAUDIO__CSourceStream__Stop(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  int *piVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  int in_r13;
+  int iVar5;
+  
+  piVar2 = (int *)__savegprlr_27();
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar5 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar3;
+  }
+  uVar4 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar4;
+  bVar1 = *(byte *)(piVar2 + 0x27);
+  if ((bVar1 & 1) != 0) {
+    if (((param_2 & 1) == 0) && ((bVar1 & 0x12) == 0)) {
+      if ((bVar1 & 4) != 0) goto LAB_828cf900;
+      (**(code **)(*piVar2 + 0x54))(piVar2,4,4);
+      *(undefined2 *)((int)piVar2 + 0x9e) = 10;
+    }
+    else {
+      (**(code **)(*piVar2 + 0x54))(piVar2,0x57,0);
+    }
+    uVar4 = (ulonglong)DAT_848958dc;
+  }
+LAB_828cf900:
+  uVar3 = DAT_848958e4;
+  if (((int)uVar4 != 0) && (iVar5 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar3);
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -185,8 +395,38 @@ undefined8 XAUDIO__CXMASourceEffect__GetContext(int param_1,undefined4 *param_2)
 void XAUDIO__CSourceStream__Discontinuity(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
+  int in_r13;
+  int iVar4;
+  
+  piVar1 = (int *)__savegprlr_28();
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar4 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar2;
+  }
+  uVar3 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar3;
+  if ((piVar1 + 1 != (int *)piVar1[1]) && ((int *)piVar1[1] != (int *)piVar1[3])) {
+    (**(code **)(*piVar1 + 0x54))(piVar1,8,8);
+    uVar3 = (ulonglong)DAT_848958dc;
+  }
+  uVar2 = DAT_848958e4;
+  if (((int)uVar3 != 0) && (iVar4 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -254,8 +494,39 @@ undefined8 XAUDIO__CXMASourceEffect__GetFrequencyScale(int param_1,undefined4 *p
 void XAUDIO__CXMASourceEffect__Discontinuity(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
+  int in_r13;
+  int iVar4;
+  
+  iVar1 = __savegprlr_28();
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar4 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar2;
+  }
+  uVar3 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar3;
+  if ((iVar1 + 0x14 != *(int *)(iVar1 + 0x14)) && (*(int *)(iVar1 + 0x14) != *(int *)(iVar1 + 0x1c))
+     ) {
+    (**(code **)(*(int *)(iVar1 + 0x10) + 0x54))((int *)(iVar1 + 0x10),8,8);
+    uVar3 = (ulonglong)DAT_848958dc;
+  }
+  uVar2 = DAT_848958e4;
+  if (((int)uVar3 != 0) && (iVar4 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -643,21 +914,83 @@ undefined8 XAudioQueryXMASourceEffectSize(int param_1,int *param_2)
 
 // 828D0E10  XAudioCreateXMASourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:474)
 
-void XAudioCreateXMASourceEffect(void)
+void XAudioCreateXMASourceEffect(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = (**(code **)(*(int *)param_2 + 0x14))(param_2,0x138);
+  if (((uVar2 & 0xffffffff) != 0) &&
+     (piVar3 = (int *)XAUDIO__CXMASourceEffect__CXMASourceEffect(uVar2,uVar1,param_2),
+     piVar3 != (int *)0x0)) {
+    uVar1 = (**(code **)(*piVar3 + 0x78))(piVar3);
+    if (-1 < (int)uVar1) {
+      *param_3 = piVar3;
+      __restgprlr_29();
+      return;
+    }
+    (**(code **)(piVar3[1] + 0xc))(piVar3 + 1);
+    __restgprlr_29(uVar1);
+    return;
+  }
+  __restgprlr_29(0xffffffff8007000e);
+  return;
 }
 
 
 // 828D00A0  XAUDIO::CXMASourceEffect::CXMASourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:530)
 
-void XAUDIO__CXMASourceEffect__CXMASourceEffect(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAUDIO__CXMASourceEffect__CXMASourceEffect
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  void *_Dst;
+  undefined4 *puVar1;
+  void *pvVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  
+  puVar1 = (undefined4 *)__savegprlr_26();
+  XAUDIO__CSourceEffect__CSourceEffect(puVar1 + 1);
+  puVar1[0x2e] = 0;
+  *puVar1 = &PTR_XAUDIO__CXMASourceEffect__AddRef_822072b0;
+  puVar1[1] = &PTR__thunk__XAUDIO__CXMASourceEffect___vector_deleting_destructor__82207288;
+  puVar1[4] = &PTR__thunk__XAUDIO__CXMASourceEffect___vector_deleting_destructor__82207228;
+  *(undefined1 *)(puVar1 + 0x42) = *(undefined1 *)((int)param_2 + 0x45);
+  puVar1[0x43] = 0;
+  puVar1[0x44] = 0;
+  puVar1[0x48] = 0;
+  *(undefined1 *)(puVar1 + 0x49) = 0;
+  puVar1[0x4b] = 0;
+  puVar1[0x4c] = 0;
+  *(undefined1 *)(puVar1 + 0x4d) = 0;
+  puVar1[0x4a] = 0;
+  XAUDIO__CSourceEffect__Initialize(puVar1 + 1,param_2,param_3);
+  uVar4 = (ulonglong)*(byte *)(puVar1 + 0xe);
+  lVar3 = uVar4 * 0x58;
+  if (0x2e8ba2e < uVar4) {
+    lVar3 = -1;
+  }
+  pvVar2 = (void *)(**(code **)(*(int *)param_3 + 0x14))(param_3,lVar3);
+  _Dst = pvVar2;
+  if (pvVar2 == (void *)0x0) {
+    pvVar2 = (void *)0x0;
+  }
+  else {
+    while (uVar4 = uVar4 - 1, -1 < (longlong)uVar4) {
+      memset(_Dst,0,0x4c);
+      *(undefined4 *)((int)_Dst + 0x4c) = 0;
+      _Dst = (void *)((int)_Dst + 0x58);
+    }
+  }
+  puVar1[0x32] = pvVar2;
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -699,8 +1032,48 @@ void XAUDIO__CXMASourceEffect__SetFormat(int param_1)
 void XAUDIO__CXMASourceEffect__SetVolume(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  int in_r13;
+  int iVar6;
+  double extraout_f1;
+  double dVar7;
+  
+  iVar2 = __savegprlr_28();
+  dVar7 = extraout_f1;
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar6 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar3;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  *(float *)(iVar2 + 0x70) = (float)dVar7;
+  if (*(char *)(iVar2 + 0x38) != '\0') {
+    uVar5 = 0;
+    do {
+      iVar1 = uVar5 * 0x58;
+      uVar5 = uVar5 + 1 & 0xff;
+      *(undefined4 *)(iVar1 + *(int *)(iVar2 + 200) + 0x28) = *(undefined4 *)(iVar2 + 0x70);
+    } while (uVar5 < *(byte *)(iVar2 + 0x38));
+  }
+  uVar3 = DAT_848958e4;
+  uVar4 = (ulonglong)DAT_848958dc;
+  if ((DAT_848958dc != 0) && (iVar6 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
+      DAT_848958e0 = 0;
+      DAT_848958e4 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar3);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -709,8 +1082,57 @@ void XAUDIO__CXMASourceEffect__SetVolume(void)
 void XAUDIO__CXMASourceEffect__SetPitch(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  int in_r13;
+  int iVar8;
+  double extraout_f1;
+  double dVar9;
+  
+  iVar4 = __savegprlr_28();
+  dVar9 = extraout_f1;
+  uVar5 = KeRaiseIrqlToDpcLevel();
+  iVar8 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar5;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  dVar9 = pow(2.0,dVar9);
+  *(float *)(iVar4 + 0x74) = (float)dVar9;
+  if (*(char *)(iVar4 + 0x38) != '\0') {
+    uVar7 = 0;
+    do {
+      fVar1 = *(float *)(iVar4 + 0x74);
+      uVar2 = *(uint *)(uVar7 * 8 + iVar4 + 0x3c);
+      iVar3 = uVar7 * 0x58 + *(int *)(iVar4 + 200);
+      uVar5 = *(undefined1 *)((uVar7 + 8) * 8 + iVar4);
+      *(undefined1 *)(iVar3 + 0xc) = 1;
+      uVar7 = uVar7 + 1 & 0xff;
+      *(undefined1 *)(iVar3 + 0xd) = uVar5;
+      *(uint *)(iVar3 + 0x50) = *(uint *)(iVar3 + 0x50) | 1;
+      *(int *)(iVar3 + 0x10) = (int)(longlong)((float)uVar2 * fVar1);
+    } while (uVar7 < *(byte *)(iVar4 + 0x38));
+  }
+  uVar5 = DAT_848958e4;
+  uVar6 = (ulonglong)DAT_848958dc;
+  if ((DAT_848958dc != 0) && (iVar8 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar6 - 1);
+    if (uVar6 - 1 == 0) {
+      DAT_848958e0 = 0;
+      DAT_848958e4 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar5);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -719,8 +1141,56 @@ void XAUDIO__CXMASourceEffect__SetPitch(void)
 void XAUDIO__CXMASourceEffect__SetFrequencyScale(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  int in_r13;
+  int iVar8;
+  double extraout_f1;
+  double dVar9;
+  
+  iVar4 = __savegprlr_28();
+  dVar9 = extraout_f1;
+  uVar5 = KeRaiseIrqlToDpcLevel();
+  iVar8 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar5;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  *(float *)(iVar4 + 0x74) = (float)dVar9;
+  if (*(char *)(iVar4 + 0x38) != '\0') {
+    uVar7 = 0;
+    do {
+      fVar1 = *(float *)(iVar4 + 0x74);
+      uVar2 = *(uint *)(uVar7 * 8 + iVar4 + 0x3c);
+      iVar3 = uVar7 * 0x58 + *(int *)(iVar4 + 200);
+      uVar5 = *(undefined1 *)((uVar7 + 8) * 8 + iVar4);
+      *(undefined1 *)(iVar3 + 0xc) = 1;
+      uVar7 = uVar7 + 1 & 0xff;
+      *(undefined1 *)(iVar3 + 0xd) = uVar5;
+      *(uint *)(iVar3 + 0x50) = *(uint *)(iVar3 + 0x50) | 1;
+      *(int *)(iVar3 + 0x10) = (int)(longlong)((float)uVar2 * fVar1);
+    } while (uVar7 < *(byte *)(iVar4 + 0x38));
+  }
+  uVar5 = DAT_848958e4;
+  uVar6 = (ulonglong)DAT_848958dc;
+  if ((DAT_848958dc != 0) && (iVar8 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar6 - 1);
+    if (uVar6 - 1 == 0) {
+      DAT_848958e0 = 0;
+      DAT_848958e4 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar5);
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -1298,8 +1768,50 @@ XAUDIO__CXMASourceEffect__SubmitSourceBuffer(int param_1,undefined1 *param_2,byt
 void XAUDIO__CXMASourceEffect__FlushPackets(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 uVar3;
+  int iVar2;
+  longlong lVar4;
+  int in_r13;
+  int iVar5;
+  byte bVar6;
+  
+  iVar1 = __savegprlr_28();
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar5 = in_r13;
+  if ((*(int *)(iVar1 + 300) == 0) || (in_r13 != *(int *)(iVar1 + 0x130))) {
+    KeAcquireSpinLockAtRaisedIrql(iVar1 + 0x128);
+    *(int *)(iVar1 + 0x130) = in_r13;
+    *(undefined1 *)(iVar1 + 0x134) = uVar3;
+  }
+  *(int *)(iVar1 + 300) = *(int *)(iVar1 + 300) + 1;
+  iVar2 = XMAPlaybackQueryContextsAllocated(*(undefined4 *)(iVar1 + 0xb8));
+  if (iVar2 != 0) {
+    XMAPlaybackRequestModifyLock(*(undefined4 *)(iVar1 + 0xb8));
+    XMAPlaybackWaitUntilModifyLockObtained(*(undefined4 *)(iVar1 + 0xb8));
+    if (*(char *)(iVar1 + 0x38) != '\0') {
+      bVar6 = 0;
+      do {
+        XMAPlaybackFlushData(*(undefined4 *)(iVar1 + 0xb8),bVar6);
+        bVar6 = bVar6 + 1;
+      } while (bVar6 < *(byte *)(iVar1 + 0x38));
+    }
+  }
+  *(undefined1 *)(iVar1 + 0x124) = 0;
+  if ((*(uint *)(iVar1 + 300) != 0) && (iVar5 == *(int *)(iVar1 + 0x130))) {
+    lVar4 = (ulonglong)*(uint *)(iVar1 + 300) - 1;
+    *(int *)(iVar1 + 300) = (int)lVar4;
+    if (lVar4 == 0) {
+      uVar3 = *(undefined1 *)(iVar1 + 0x134);
+      *(undefined1 *)(iVar1 + 0x134) = 0;
+      *(undefined4 *)(iVar1 + 0x130) = 0;
+      KeReleaseSpinLockFromRaisedIrql(iVar1 + 0x128);
+      KfLowerIrql(uVar3);
+    }
+  }
+  XAUDIO__CSourceStream__FlushPackets(iVar1 + 0x10);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1308,8 +1820,357 @@ void XAUDIO__CXMASourceEffect__FlushPackets(void)
 void XAUDIO__CXMASourceEffect__SynchronizePackets(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int *piVar1;
+  bool bVar2;
+  bool bVar3;
+  uint uVar4;
+  int iVar6;
+  int iVar7;
+  longlong lVar5;
+  undefined1 uVar10;
+  int iVar8;
+  undefined4 uVar9;
+  uint uVar12;
+  ulonglong uVar11;
+  ulonglong uVar13;
+  int in_r13;
+  int *piVar14;
+  int *piVar15;
+  byte bVar17;
+  int *piVar16;
+  byte bVar18;
+  int local_90 [2];
+  undefined4 local_88;
+  int local_84;
+  undefined4 local_80;
+  
+  iVar6 = __savegprlr_18();
+  bVar18 = 1;
+  bVar3 = false;
+  if (*(char *)(iVar6 + 0x38) != '\0') {
+    bVar17 = 0;
+    do {
+      iVar7 = XMAPlaybackQueryReadyForMoreData(*(undefined4 *)(iVar6 + 0xb8),bVar17);
+      if (iVar7 == 0) goto LAB_828d02d8;
+      lVar5 = XMAPlaybackIsIdle(*(undefined4 *)(iVar6 + 0xb8),bVar17);
+      bVar17 = bVar17 + 1;
+      bVar18 = lVar5 != 0 & bVar18;
+    } while (bVar17 < *(byte *)(iVar6 + 0x38));
+  }
+  uVar10 = KeRaiseIrqlToDpcLevel();
+  iVar7 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar10;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  piVar14 = (int *)(iVar6 + 0x14);
+  if (piVar14 == *(int **)(iVar6 + 0x14)) {
+    piVar16 = (int *)0x0;
+  }
+  else {
+    piVar16 = (int *)((int)*(int **)(iVar6 + 0x14) - *(int *)(iVar6 + 0x1c));
+  }
+  if (piVar16 != (int *)0x0) {
+    iVar8 = *(int *)(iVar6 + 0x110);
+    if ((iVar8 != 0) && (*(uint *)(iVar6 + 0x10c) <= *(uint *)(iVar6 + 0xa8))) {
+      if (iVar8 == -1) {
+        iVar8 = -1;
+      }
+      else {
+        iVar8 = iVar8 + -1;
+        *(int *)(iVar6 + 0x110) = iVar8;
+      }
+      *(int *)(iVar6 + 0x110) = iVar8;
+      *(uint *)(iVar6 + 0x10c) = (piVar16[6] - piVar16[5]) + *(uint *)(iVar6 + 0x10c);
+      uVar10 = DAT_848958e4;
+      uVar13 = (ulonglong)DAT_848958dc;
+      if (((DAT_848958dc != 0) && (iVar7 == DAT_848958e0)) &&
+         (DAT_848958dc = (uint)(uVar13 - 1), uVar13 - 1 == 0)) {
+        DAT_848958e0 = 0;
+        DAT_848958e4 = 0;
+        KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+        KfLowerIrql(uVar10);
+      }
+      if (((*(uint *)(iVar6 + 300) != 0) && (iVar7 == *(int *)(iVar6 + 0x130))) &&
+         (lVar5 = (ulonglong)*(uint *)(iVar6 + 300) - 1, *(int *)(iVar6 + 300) = (int)lVar5,
+         lVar5 == 0)) {
+        uVar10 = *(undefined1 *)(iVar6 + 0x134);
+        *(undefined1 *)(iVar6 + 0x134) = 0;
+        *(undefined4 *)(iVar6 + 0x130) = 0;
+        KeReleaseSpinLockFromRaisedIrql(iVar6 + 0x128);
+        KfLowerIrql(uVar10);
+      }
+      if (*(code **)(iVar6 + 0xb4) != (code *)0x0) {
+        local_88 = *(undefined4 *)(iVar6 + 0xc);
+        local_84 = piVar16[9];
+        local_80 = 0;
+        (**(code **)(iVar6 + 0xb4))(&local_88);
+      }
+      uVar10 = KeRaiseIrqlToDpcLevel();
+      iVar8 = iVar7;
+      if ((*(int *)(iVar6 + 300) == 0) || (iVar7 != *(int *)(iVar6 + 0x130))) {
+        KeAcquireSpinLockAtRaisedIrql(iVar6 + 0x128);
+        *(int *)(iVar6 + 0x130) = iVar7;
+        *(undefined1 *)(iVar6 + 0x134) = uVar10;
+      }
+      *(int *)(iVar6 + 300) = *(int *)(iVar6 + 300) + 1;
+      uVar10 = KeRaiseIrqlToDpcLevel();
+      iVar7 = iVar8;
+      if ((DAT_848958dc == 0) || (iVar8 != DAT_848958e0)) {
+        KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+        DAT_848958e0 = iVar8;
+        DAT_848958e4 = uVar10;
+      }
+      DAT_848958dc = DAT_848958dc + 1;
+    }
+    if (*(int *)(iVar6 + 0x120) != 0) {
+      *(undefined4 *)(iVar6 + 0x120) = 0;
+      *(uint *)(iVar6 + 0x110) = (uint)*(byte *)(iVar6 + 0xc6);
+      if (*(char *)(iVar6 + 0x38) != '\0') {
+        bVar17 = 0;
+        do {
+          XMAPlaybackSetLoop(*(undefined4 *)(iVar6 + 0xb8),bVar17,iVar6 + 0xbc);
+          bVar17 = bVar17 + 1;
+        } while (bVar17 < *(byte *)(iVar6 + 0x38));
+      }
+    }
+    do {
+      if ((int *)*piVar16 == piVar16) break;
+      piVar1 = *(int **)(*(int *)(iVar6 + 0x1c) + (int)piVar16);
+      piVar15 = (int *)((int)piVar1 - *(int *)(iVar6 + 0x1c));
+      if (piVar14 == piVar1) {
+        piVar15 = (int *)0x0;
+      }
+      if (*(char *)(piVar16 + 0x1d) == '\0') {
+        bVar3 = true;
+      }
+      else {
+        bVar2 = false;
+        if (*(char *)(iVar6 + 0x38) != '\0') {
+          bVar17 = 0;
+          do {
+            iVar8 = XMAPlaybackQueryInputDataPending
+                              (*(undefined4 *)(iVar6 + 0xb8),bVar17,piVar16[2]);
+            if ((iVar8 != 0) &&
+               (uVar13 = XMAPlaybackGetErrorBits(*(undefined4 *)(iVar6 + 0xb8),bVar17),
+               (uVar13 & 8) == 0)) {
+              bVar2 = true;
+              break;
+            }
+            bVar17 = bVar17 + 1;
+          } while (bVar17 < *(byte *)(iVar6 + 0x38));
+        }
+        if (!bVar2) {
+          *(undefined1 *)(piVar16 + 0x1d) = 4;
+        }
+      }
+      uVar10 = DAT_848958e4;
+      if ((*(char *)(piVar16 + 0x1d) == '\x04') &&
+         (((piVar15 != (int *)0x0 || ((*(byte *)(iVar6 + 0xac) & 1) == 0)) ||
+          ((*(byte *)(iVar6 + 0xac) & 0x10) != 0)))) {
+        if (((DAT_848958dc != 0) && (iVar7 == DAT_848958e0)) &&
+           (uVar13 = (ulonglong)DAT_848958dc, DAT_848958dc = (uint)(uVar13 - 1), uVar13 - 1 == 0)) {
+          DAT_848958e4 = 0;
+          DAT_848958e0 = 0;
+          KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+          KfLowerIrql(uVar10);
+        }
+        if (((*(uint *)(iVar6 + 300) != 0) && (iVar7 == *(int *)(iVar6 + 0x130))) &&
+           (lVar5 = (ulonglong)*(uint *)(iVar6 + 300) - 1, *(int *)(iVar6 + 300) = (int)lVar5,
+           lVar5 == 0)) {
+          uVar10 = *(undefined1 *)(iVar6 + 0x134);
+          *(undefined1 *)(iVar6 + 0x134) = 0;
+          *(undefined4 *)(iVar6 + 0x130) = 0;
+          KeReleaseSpinLockFromRaisedIrql(iVar6 + 0x128);
+          KfLowerIrql(uVar10);
+        }
+        (**(code **)(*(int *)(iVar6 + 0x10) + 0x5c))(iVar6 + 0x10,piVar16,0);
+        uVar10 = KeRaiseIrqlToDpcLevel();
+        iVar8 = iVar7;
+        if ((*(int *)(iVar6 + 300) == 0) || (iVar7 != *(int *)(iVar6 + 0x130))) {
+          KeAcquireSpinLockAtRaisedIrql(iVar6 + 0x128);
+          *(int *)(iVar6 + 0x130) = iVar7;
+          *(undefined1 *)(iVar6 + 0x134) = uVar10;
+        }
+        *(int *)(iVar6 + 300) = *(int *)(iVar6 + 300) + 1;
+        uVar10 = KeRaiseIrqlToDpcLevel();
+        iVar7 = iVar8;
+        if ((DAT_848958dc == 0) || (iVar8 != DAT_848958e0)) {
+          KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+          DAT_848958e0 = iVar8;
+          DAT_848958e4 = uVar10;
+        }
+        DAT_848958dc = DAT_848958dc + 1;
+      }
+      piVar16 = piVar15;
+    } while (piVar15 != (int *)0x0);
+  }
+  uVar10 = DAT_848958e4;
+  if (*(char *)(iVar6 + 0x124) == '\x02') {
+    bVar3 = (bool)(bVar18 & bVar3);
+  }
+  if (((DAT_848958dc != 0) && (iVar7 == DAT_848958e0)) &&
+     (uVar13 = (ulonglong)DAT_848958dc, DAT_848958dc = (uint)(uVar13 - 1), uVar13 - 1 == 0)) {
+    DAT_848958e4 = 0;
+    DAT_848958e0 = 0;
+    KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+    KfLowerIrql(uVar10);
+  }
+  if (bVar3) {
+    uVar10 = KeRaiseIrqlToDpcLevel();
+    iVar8 = iVar7;
+    if ((DAT_848958dc == 0) || (iVar7 != DAT_848958e0)) {
+      KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+      DAT_848958e0 = iVar7;
+      DAT_848958e4 = uVar10;
+    }
+    uVar13 = (ulonglong)DAT_848958dc + 1;
+    DAT_848958dc = (uint)uVar13;
+    if (piVar14 == (int *)*piVar14) {
+      piVar16 = (int *)0x0;
+    }
+    else {
+      piVar16 = (int *)(*piVar14 - *(int *)(iVar6 + 0x1c));
+    }
+    if (piVar16 != (int *)0x0) {
+      do {
+        if ((int *)*piVar16 == piVar16) break;
+        piVar1 = *(int **)(*(int *)(iVar6 + 0x1c) + (int)piVar16);
+        piVar15 = (int *)((int)piVar1 - *(int *)(iVar6 + 0x1c));
+        if (piVar14 == piVar1) {
+          piVar15 = (int *)0x0;
+        }
+        if (*(char *)(piVar16 + 0x1d) == '\0') {
+          bVar3 = true;
+          if (*(char *)(iVar6 + 0x38) != '\0') {
+            uVar13 = 0;
+            do {
+              iVar7 = 0;
+              if (*(char *)(iVar6 + 0x124) == '\x02') {
+                iVar7 = 1;
+              }
+              else if (uVar13 != 0) {
+                iVar7 = XMAPlaybackIsIdle(*(undefined4 *)(iVar6 + 0xb8),uVar13);
+              }
+              XMAPlaybackSubmitData(*(undefined4 *)(iVar6 + 0xb8),uVar13,piVar16[2],piVar16[3]);
+              if (iVar7 != 0) {
+                if (*(char *)(iVar6 + 0x124) == '\x02') {
+                  lVar5 = XAudioXMA2GetSampleBitPosition(piVar16[2],piVar16[3],uVar13,piVar16[7],0);
+                  uVar12 = (uint)piVar16[7] >> 7 & 3;
+                }
+                else {
+                  uVar12 = 0;
+                  lVar5 = uVar13 * 0x4000 + 0x20;
+                }
+                XMAPlaybackSetDecodePosition(*(undefined4 *)(iVar6 + 0xb8),uVar13,lVar5,uVar12);
+              }
+              if (piVar16[4] == 0) {
+                if (*(char *)(iVar6 + 0x124) == '\x02') {
+                  *(undefined4 *)(iVar6 + 0xbc) = 0;
+                  *(undefined4 *)(iVar6 + 0xc0) = 0;
+                  *(undefined4 *)(iVar6 + 0xc4) = 0;
+                  goto LAB_828d0a14;
+                }
+              }
+              else {
+                *(undefined4 *)(iVar6 + 0xbc) = 0;
+                *(undefined4 *)(iVar6 + 0xc0) = 0;
+                *(undefined4 *)(iVar6 + 0xc4) = 0;
+                *(char *)(iVar6 + 0xc6) = (char)piVar16[4];
+                if (*(char *)(iVar6 + 0x124) == '\x02') {
+                  uVar12 = piVar16[6];
+                  uVar9 = XAudioXMA2GetSampleBitPosition
+                                    (piVar16[2],piVar16[3],uVar13,(ulonglong)uVar12 - 0x80,0);
+                  local_90[0] = 0;
+                  iVar7 = XAudioXMA2GetSampleBitPosition
+                                    (piVar16[2],piVar16[3],uVar13,piVar16[5],local_90);
+                  uVar11 = (ulonglong)(uint)piVar16[5];
+                  uVar4 = (uint)piVar16[5] >> 7 & 3;
+                  uVar10 = (undefined1)uVar4;
+                  if (uVar4 == 0) {
+                    if (uVar11 < 0x200) {
+                      iVar7 = XAudioXMA2GetSampleBitPosition(piVar16[2],piVar16[3],uVar13,0,0);
+                      uVar10 = 0;
+                    }
+                    else if (local_90[0] == 0) {
+                      iVar7 = XAudioXMA2GetSampleBitPosition
+                                        (piVar16[2],piVar16[3],uVar13,uVar11 - 0x200,0);
+                      uVar10 = 4;
+                    }
+                  }
+                  else {
+                    iVar7 = XAudioXMA2GetSampleBitPosition(piVar16[2],piVar16[3],uVar13,uVar11,0);
+                  }
+                  *(int *)(iVar6 + 0xbc) = iVar7;
+                  *(undefined4 *)(iVar6 + 0xc0) = uVar9;
+                  *(byte *)(iVar6 + 0xc4) = (byte)(((ulonglong)uVar12 - 0x80 & 0xffffffff) >> 7) & 3
+                  ;
+                  *(undefined1 *)(iVar6 + 0xc5) = uVar10;
+                }
+                else {
+                  piVar1 = piVar16 + (int)uVar13 * 3;
+                  *(int *)(iVar6 + 0xbc) = piVar1[10];
+                  *(int *)(iVar6 + 0xc0) = piVar1[0xb];
+                  *(undefined1 *)(iVar6 + 0xc4) = *(undefined1 *)(piVar16 + ((int)uVar13 + 4) * 3);
+                  *(undefined1 *)(iVar6 + 0xc5) = *(undefined1 *)((int)piVar1 + 0x31);
+                }
+LAB_828d0a14:
+                XMAPlaybackSetLoop(*(undefined4 *)(iVar6 + 0xb8),uVar13,iVar6 + 0xbc);
+              }
+              if ((*(char *)(iVar6 + 0x124) == '\x02') ||
+                 (iVar7 = XMAPlaybackQueryReadyForMoreData(*(undefined4 *)(iVar6 + 0xb8),uVar13),
+                 iVar7 == 0)) {
+                bVar3 = false;
+              }
+              uVar13 = uVar13 + 1 & 0xff;
+            } while (uVar13 < *(byte *)(iVar6 + 0x38));
+          }
+          *(undefined1 *)(piVar16 + 0x1d) = 3;
+          if (!bVar3) break;
+        }
+        piVar16 = piVar15;
+      } while (piVar15 != (int *)0x0);
+      uVar13 = (ulonglong)DAT_848958dc;
+    }
+    uVar10 = DAT_848958e4;
+    if ((((int)uVar13 != 0) && (iVar8 == DAT_848958e0)) &&
+       (DAT_848958dc = (uint)(uVar13 - 1), uVar13 - 1 == 0)) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar10);
+    }
+  }
+  if (*(int *)(iVar6 + 0x78) != 0) {
+    if (*(char *)(iVar6 + 0x38) != '\0') {
+      uVar12 = 0;
+      do {
+        XMAPlaybackSetDecodePosition
+                  (*(undefined4 *)(iVar6 + 0xb8),uVar12,*(undefined4 *)((uVar12 + 0xf) * 8 + iVar6),
+                   *(ushort *)(uVar12 * 8 + iVar6 + 0x7c) >> 7);
+        uVar12 = uVar12 + 1 & 0xff;
+      } while (uVar12 < *(byte *)(iVar6 + 0x38));
+    }
+    *(undefined4 *)(iVar6 + 0x78) = 0;
+  }
+  if (*(char *)(iVar6 + 0x38) != '\0') {
+    bVar18 = 0;
+    do {
+      iVar7 = XMAPlaybackIsIdle(*(undefined4 *)(iVar6 + 0xb8),bVar18);
+      if ((iVar7 == 0) &&
+         (uVar13 = XMAPlaybackGetErrorBits(*(undefined4 *)(iVar6 + 0xb8),bVar18), (uVar13 & 8) == 0)
+         ) {
+LAB_828d02d8:
+        __restgprlr_18(1);
+        return;
+      }
+      bVar18 = bVar18 + 1;
+    } while (bVar18 < *(byte *)(iVar6 + 0x38));
+  }
+  __restgprlr_18(0);
+  return;
 }
 
 
@@ -1420,11 +2281,34 @@ LAB_828d0db4:
 
 // 828CE618  XAUDIO::CXMASourceEffect::CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:2336)
 
-void XAUDIO__CXMASourceEffect__CompletePacket(void)
+void XAUDIO__CXMASourceEffect__CompletePacket
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  byte bVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (*(char *)(iVar1 + 0x28) != '\0') {
+    bVar3 = 0;
+    do {
+      iVar2 = XMAPlaybackGetParseError(*(undefined4 *)(iVar1 + 0xa8),bVar3);
+      if (iVar2 != 0) {
+        param_3 = 0xffffffff80040002;
+      }
+      XMAPlaybackGetErrorBits(*(undefined4 *)(iVar1 + 0xa8),bVar3);
+      iVar2 = *(int *)(iVar1 + 0xa8);
+      if ((*(uint *)(iVar2 + 4) & 0x80000) != 0) {
+        param_3 = 0xffffffff80040003;
+        *(uint *)(iVar2 + 4) = *(uint *)(iVar2 + 4) & 0xfff7ffff;
+      }
+      bVar3 = bVar3 + 1;
+    } while (bVar3 < *(byte *)(iVar1 + 0x28));
+  }
+  XAUDIO__CSourceEffect__CompletePacket(iVar1,param_2,param_3);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1495,11 +2379,42 @@ LAB_828cf498:
 
 // 828CF4E8  XAUDIO::CXMASourceEffect::SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:2529)
 
-void XAUDIO__CXMASourceEffect__SetPacketPosition(void)
+void XAUDIO__CXMASourceEffect__SetPacketPosition(undefined8 param_1,void *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined1 uVar2;
+  longlong lVar3;
+  int in_r13;
+  int iVar4;
+  
+  iVar1 = __savegprlr_27();
+  if (*(char *)(iVar1 + 0x124) == '\x02') {
+    __restgprlr_27(0xffffffff80004001);
+    return;
+  }
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  iVar4 = in_r13;
+  if ((*(int *)(iVar1 + 300) == 0) || (in_r13 != *(int *)(iVar1 + 0x130))) {
+    KeAcquireSpinLockAtRaisedIrql(iVar1 + 0x128);
+    *(undefined1 *)(iVar1 + 0x134) = uVar2;
+    *(int *)(iVar1 + 0x130) = in_r13;
+  }
+  *(int *)(iVar1 + 300) = *(int *)(iVar1 + 300) + 1;
+  memcpy((void *)(iVar1 + 0x78),param_2,0x30);
+  if ((*(uint *)(iVar1 + 300) != 0) && (iVar4 == *(int *)(iVar1 + 0x130))) {
+    lVar3 = (ulonglong)*(uint *)(iVar1 + 300) - 1;
+    *(int *)(iVar1 + 300) = (int)lVar3;
+    if (lVar3 == 0) {
+      uVar2 = *(undefined1 *)(iVar1 + 0x134);
+      *(undefined1 *)(iVar1 + 0x134) = 0;
+      *(undefined4 *)(iVar1 + 0x130) = 0;
+      KeReleaseSpinLockFromRaisedIrql(iVar1 + 0x128);
+      KfLowerIrql(uVar2);
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1508,18 +2423,152 @@ void XAUDIO__CXMASourceEffect__SetPacketPosition(void)
 void XAUDIO__CXMASourceEffect__Start(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined1 uVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  int in_r13;
+  int iVar7;
+  
+  iVar2 = __savegprlr_27();
+  if ((*(byte *)(iVar2 + 0x108) & 2) != 0) {
+    uVar3 = KeRaiseIrqlToDpcLevel();
+    if ((*(int *)(iVar2 + 300) == 0) || (in_r13 != *(int *)(iVar2 + 0x130))) {
+      iVar7 = in_r13;
+      KeAcquireSpinLockAtRaisedIrql(iVar2 + 0x128);
+      *(undefined1 *)(iVar2 + 0x134) = uVar3;
+      *(int *)(iVar2 + 0x130) = in_r13;
+      in_r13 = iVar7;
+    }
+    *(int *)(iVar2 + 300) = *(int *)(iVar2 + 300) + 1;
+    uVar1 = XMAPlaybackAllocateContexts(*(undefined4 *)(iVar2 + 0xb8));
+    if ((*(uint *)(iVar2 + 300) != 0) && (in_r13 == *(int *)(iVar2 + 0x130))) {
+      lVar5 = (ulonglong)*(uint *)(iVar2 + 300) - 1;
+      *(int *)(iVar2 + 300) = (int)lVar5;
+      if (lVar5 == 0) {
+        uVar3 = *(undefined1 *)(iVar2 + 0x134);
+        *(undefined1 *)(iVar2 + 0x134) = 0;
+        *(undefined4 *)(iVar2 + 0x130) = 0;
+        KeReleaseSpinLockFromRaisedIrql(iVar2 + 0x128);
+        KfLowerIrql(uVar3);
+      }
+    }
+    if ((int)uVar1 < 0) {
+      __restgprlr_27(uVar1);
+      return;
+    }
+  }
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar7 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar3;
+  }
+  uVar6 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar6;
+  if ((*(byte *)(iVar2 + 0xac) & 1) == 0) {
+    uVar4 = 3;
+    uVar1 = 3;
+  }
+  else {
+    if ((*(byte *)(iVar2 + 0xac) & 4) == 0) goto LAB_828cfb24;
+    uVar4 = 2;
+    uVar1 = 6;
+  }
+  (**(code **)(*(int *)(iVar2 + 0x10) + 0x54))((int *)(iVar2 + 0x10),uVar1,uVar4);
+  uVar6 = (ulonglong)DAT_848958dc;
+LAB_828cfb24:
+  uVar3 = DAT_848958e4;
+  if (((int)uVar6 != 0) && (iVar7 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar6 - 1);
+    if (uVar6 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar3);
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 828CFB88  XAUDIO::CXMASourceEffect::Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmasourceeffect.cpp:2642)
 
-void XAUDIO__CXMASourceEffect__Stop(void)
+void XAUDIO__CXMASourceEffect__Stop(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  int iVar2;
+  undefined1 uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  int in_r13;
+  int iVar6;
+  int *piVar7;
+  
+  iVar2 = __savegprlr_26();
+  if (((param_2 & 1) != 0) && ((*(byte *)(iVar2 + 0x108) & 2) != 0)) {
+    uVar3 = KeRaiseIrqlToDpcLevel();
+    if ((*(int *)(iVar2 + 300) == 0) || (in_r13 != *(int *)(iVar2 + 0x130))) {
+      iVar6 = in_r13;
+      KeAcquireSpinLockAtRaisedIrql(iVar2 + 0x128);
+      *(undefined1 *)(iVar2 + 0x134) = uVar3;
+      *(int *)(iVar2 + 0x130) = in_r13;
+      in_r13 = iVar6;
+    }
+    *(int *)(iVar2 + 300) = *(int *)(iVar2 + 300) + 1;
+    XMAPlaybackFreeContexts(*(undefined4 *)(iVar2 + 0xb8));
+    if ((*(uint *)(iVar2 + 300) != 0) && (in_r13 == *(int *)(iVar2 + 0x130))) {
+      lVar4 = (ulonglong)*(uint *)(iVar2 + 300) - 1;
+      *(int *)(iVar2 + 300) = (int)lVar4;
+      if (lVar4 == 0) {
+        uVar3 = *(undefined1 *)(iVar2 + 0x134);
+        *(undefined1 *)(iVar2 + 0x134) = 0;
+        *(undefined4 *)(iVar2 + 0x130) = 0;
+        KeReleaseSpinLockFromRaisedIrql(iVar2 + 0x128);
+        KfLowerIrql(uVar3);
+      }
+    }
+  }
+  piVar7 = (int *)(iVar2 + 0x10);
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar6 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar3;
+  }
+  uVar5 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar5;
+  bVar1 = *(byte *)(iVar2 + 0xac);
+  if ((bVar1 & 1) != 0) {
+    if (((param_2 & 1) == 0) && ((bVar1 & 0x12) == 0)) {
+      if ((bVar1 & 4) != 0) goto LAB_828cfd14;
+      (**(code **)(*piVar7 + 0x54))(piVar7,4,4);
+      *(undefined2 *)(iVar2 + 0xae) = 10;
+    }
+    else {
+      (**(code **)(*piVar7 + 0x54))(piVar7,0x57,0);
+    }
+    uVar5 = (ulonglong)DAT_848958dc;
+  }
+LAB_828cfd14:
+  uVar3 = DAT_848958e4;
+  if (((int)uVar5 != 0) && (iVar6 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar5 - 1);
+    if (uVar5 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar3);
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 

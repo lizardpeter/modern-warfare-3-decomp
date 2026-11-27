@@ -10,6 +10,16 @@ void bdTags__bdTags(undefined4 *param_1,undefined4 param_2)
 }
 
 
+// 82903968  bdTags::~bdTags  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:31)
+
+void bdTags___bdTags(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  return;
+}
+
+
 // 829039D8  bdTags::setTagsForEntityID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:67)
 
 void bdTags__setTagsForEntityID
@@ -140,10 +150,31 @@ void bdTags__searchByTags
 
 // 82903978  bdTags::countValidTags  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtags.cpp:186)
 
-void bdTags__countValidTags(void)
+void bdTags__countValidTags(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  undefined4 uVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  iVar3 = (int)param_2;
+  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
   __savegprlr_29();
+  lVar4 = 0;
+  if (iVar3 != 0) {
+    lVar5 = CONCAT44(uVar2,iVar3);
+    do {
+      cVar1 = (**(code **)(*(int *)param_3 + 0x10))(param_3);
+      if (cVar1 != '\0') {
+        lVar4 = lVar4 + 1;
+      }
+      lVar5 = lVar5 + -1;
+      param_3 = param_3 + 0x18;
+    } while (lVar5 != 0);
+  }
+  __restgprlr_29(lVar4);
+  return;
 }
 

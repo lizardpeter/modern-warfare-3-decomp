@@ -2,11 +2,44 @@
 
 // 82355298  LAN_GetServerAddressString  (client_mp/cl_ui_xenon_mp.cpp:29)
 
-void LAN_GetServerAddressString(void)
+void LAN_GetServerAddressString
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  undefined1 auStack_f0 [32];
+  undefined1 auStack_d0 [32];
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
+  iVar2 = __savegprlr_28();
+  if (((iVar2 == 0) && (-1 < (int)param_2)) && ((int)param_2 < 0x10)) {
+    param_2 = param_2 * 0xd0;
+    Int128ToString(param_2 + -0x7d55e384,auStack_b0);
+    iVar2 = (int)param_2;
+    Int64ToString(*(undefined8 *)((int)&DAT_82aa1c8c + iVar2),auStack_f0);
+    XNAddrToString(param_2 + -0x7d55e3a8,auStack_80);
+    Int64ToString(*(undefined8 *)(&DAT_82aa1ca8 + iVar2),auStack_d0);
+    uVar1 = va(0xffffffff82036904,auStack_80,auStack_b0,auStack_f0,
+               *(undefined4 *)(&DAT_82aa1c94 + iVar2),*(undefined4 *)(&DAT_82aa1c9c + iVar2),
+               auStack_d0);
+    I_strncpyz(param_3,uVar1,param_4);
+    __restgprlr_28();
+    return;
+  }
+  *(undefined1 *)param_3 = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 82355368  LAN_LoadCachedServers  (client_mp/cl_ui_xenon_mp.cpp:102)
+
+void LAN_LoadCachedServers(void)
+
+{
+  return;
 }
 
 
@@ -24,7 +57,37 @@ void LAN_SaveServersToCache(void)
 void CL_XenonHudIsOffscreen(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar2;
+  CHAR aCStack_120 [255];
+  undefined1 local_21;
+  
+  uVar1 = __savegprlr_29();
+  if (DAT_842546d0 != '\0') {
+    if (DAT_84253cc4 == 0) {
+      WideCharToMultiByte(0,0,&DAT_842536f8,-1,aCStack_120,0x100,(LPCSTR)0x0,(LPBOOL)0x0);
+      local_21 = 0;
+      Com_Printf(0x10,0xffffffff82004d30,aCStack_120);
+      cVar2 = UI_VerifyString(aCStack_120,0xffffffff842536f8);
+      if (cVar2 == '\0') {
+        Com_SetErrorMessage(0xffffffff8203692c);
+        UI_OpenMenu(uVar1,0xffffffff82036918);
+        DAT_842546d0 = 0;
+        UI_CallKeyboardCallbackCancelled(uVar1);
+        __restgprlr_29();
+        return;
+      }
+      UI_CallKeyboardCallback(uVar1,aCStack_120);
+      DAT_842546d0 = 0;
+      __restgprlr_29();
+      return;
+    }
+    if (DAT_84253cc4 == 0x4c7) {
+      UI_CallKeyboardCallbackCancelled(uVar1);
+    }
+    DAT_842546d0 = '\0';
+  }
+  __restgprlr_29();
+  return;
 }
 

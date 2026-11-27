@@ -8,7 +8,7 @@ void Vehicle_UpdateTrackMove(void)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff821a1d28,0x4a7,0,0xffffffff821a1d6c);
+  return;
 }
 

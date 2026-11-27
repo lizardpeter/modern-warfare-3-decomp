@@ -2,11 +2,131 @@
 
 // 82740348  R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>  (gfx_d3d/r_sortsurfs.h:17)
 
-void R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>(void)
+void R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  ushort uVar1;
+  uint uVar2;
+  uint uVar3;
+  ushort *puVar4;
+  int iVar5;
+  uint *puVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  ushort *puVar10;
+  uint uVar11;
+  ushort *puVar12;
+  uint *puVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  uint *puVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ushort local_470 [2];
+  uint auStack_46c [283];
+  
+  puVar6 = (uint *)__savegprlr_19();
+  if (puVar6 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821c3660,0x1e,0,0xffffffff82000f98,0xffffffff82181e84);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c3660,0x1f,0,0xffffffff82000f98,0xffffffff82012428);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    __restgprlr_19(0);
+    return;
+  }
+  uVar15 = 0x1660;
+  uVar17 = 0;
+  uVar14 = 0;
+  uVar7 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    puVar10 = local_470;
+    puVar16 = puVar6;
+    do {
+      uVar2 = *puVar16;
+      uVar3 = uVar2 >> 0x12;
+      if (uVar3 != uVar15) {
+        uVar8 = 0;
+        uVar18 = uVar17;
+        uVar15 = uVar3;
+        if ((uVar17 & 0xffffffff) != 0) {
+          do {
+            uVar14 = (uVar18 + uVar8 & 0xffffffff) >> 1;
+            uVar11 = (uint)*(ushort *)((int)local_470 + (int)(uVar14 << 3));
+            if (uVar11 < uVar3) {
+              uVar8 = uVar14 + 1;
+              uVar14 = uVar18;
+            }
+            else if (uVar11 <= uVar3) goto LAB_827404b4;
+            uVar18 = uVar14;
+          } while (uVar8 != (uVar14 & 0xffffffff));
+        }
+        if (0x5f < (uVar17 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff821c3660,0x35,0,0xffffffff82000f98,0xffffffff821c3630);
+        }
+        uVar14 = uVar17;
+        if ((uVar18 & 0xffffffff) < (uVar17 & 0xffffffff)) {
+          lVar9 = uVar17 - uVar18;
+          puVar12 = puVar10 + 4;
+          do {
+            puVar4 = puVar12 + -8;
+            uVar14 = uVar14 - 1;
+            puVar12 = puVar12 + -4;
+            *(undefined8 *)puVar12 = *(undefined8 *)puVar4;
+            lVar9 = lVar9 + -1;
+          } while (lVar9 != 0);
+        }
+        iVar5 = (int)((uVar14 & 0xffffffff) << 3);
+        uVar17 = uVar17 + 1;
+        puVar10 = puVar10 + 4;
+        *(ushort *)((int)local_470 + iVar5) = (ushort)(uVar2 >> 0x12);
+        *(short *)((int)local_470 + iVar5 + 2) = (short)uVar7;
+      }
+LAB_827404b4:
+      puVar16 = puVar16 + 4;
+      *(uint *)((int)local_470 + (int)((uVar14 & 0xffffffff) << 3) + 4) = uVar7;
+      uVar7 = uVar7 + 1;
+    } while ((ulonglong)uVar7 < (param_2 & 0xffffffff));
+    if ((uVar17 & 0xffffffff) != 0) goto LAB_827404f4;
+  }
+  MyAssertHandler(0xffffffff821c3660,0x4a,0,0xffffffff82000f98,0xffffffff821c3624);
+LAB_827404f4:
+  uVar14 = 0;
+  uVar18 = 0;
+  puVar10 = local_470;
+  do {
+    uVar7 = (uint)puVar10[1];
+    uVar1 = *puVar10;
+    uVar15 = *(uint *)(puVar10 + 2);
+    lVar9 = (uVar18 & 0xfffffff) * 0x10 + param_3;
+    puVar16 = puVar6 + uVar7 * 4;
+    do {
+      if ((uint)uVar1 == *puVar16 >> 0x12) {
+        uVar2 = puVar16[1];
+        uVar3 = puVar16[2];
+        uVar18 = uVar18 + 1;
+        uVar11 = puVar16[3];
+        puVar13 = (uint *)lVar9;
+        *puVar13 = *puVar16;
+        puVar13[1] = uVar2;
+        puVar13[2] = uVar3;
+        puVar13[3] = uVar11;
+        lVar9 = lVar9 + 0x10;
+      }
+      uVar7 = uVar7 + 1;
+      puVar16 = puVar16 + 4;
+    } while (uVar7 <= uVar15);
+    uVar14 = uVar14 + 1;
+    puVar10 = puVar10 + 4;
+  } while ((uVar14 & 0xffffffff) != (uVar17 & 0xffffffff));
+  if ((uVar18 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821c3660,0x5e,0,0xffffffff82000f98,0xffffffff821c3610);
+  }
+  __restgprlr_19(uVar18);
+  return;
 }
 
 
@@ -16,7 +136,6 @@ undefined8 R_BeginGlassMeshVerts(void)
 
 {
   if (DAT_84628b00 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c34e0,0x33,0,0xffffffff82000f98,0xffffffff821bb4cc);
   }
   DAT_845aa904 = 1;
@@ -29,13 +148,47 @@ undefined8 R_BeginGlassMeshVerts(void)
 }
 
 
-// 8273FDA8  R_ReserveGlassMeshIndices  (gfx_d3d/r_glasssurf.cpp:110)
+// 8273FD08  R_EndGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:82)
 
-void R_ReserveGlassMeshIndices(void)
+void R_EndGlassMeshVerts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821c34e0,0x57,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  }
+  uVar1 = DAT_845aa8f8;
+  DAT_845aa904 = 0;
+  DAT_847b9690 = DAT_845aa8f0;
+  *(int *)(DAT_84628b00 + 0x1424) = DAT_845aa8f4 << 5;
+  *(undefined4 *)(DAT_84628b00 + 0x13f8) = uVar1;
+  return;
+}
+
+
+// 8273FDA8  R_ReserveGlassMeshIndices  (gfx_d3d/r_glasssurf.cpp:110)
+
+void R_ReserveGlassMeshIndices(undefined8 param_1,int *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (DAT_845aa904 == '\0') {
+    MyAssertHandler(0xffffffff821c34e0,0x6f,0,0xffffffff82000f98,0xffffffff821c3524);
+  }
+  if (0x4800 < DAT_845aa8f8 + iVar2) {
+    R_WarnOncePerFrame(0x2a);
+    __restgprlr_29(0);
+    return;
+  }
+  iVar1 = DAT_845aa8f8 * 2;
+  DAT_845aa8f8 = DAT_845aa8f8 + iVar2;
+  *param_2 = iVar1 + DAT_845aa900;
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -45,20 +198,56 @@ longlong R_GlassMeshVertIter_Begin(ulonglong param_1)
 
 {
   if (DAT_845aa904 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c34e0,0x81,0,0xffffffff82000f98,0xffffffff821c3524);
   }
   return (param_1 & 0xffff) * 0x20 + (ulonglong)DAT_845aa8fc;
 }
 
 
-// 82740010  R_ReserveGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:155)
+// 8273FEB0  R_GlassMeshVertIter_Next  (gfx_d3d/r_glasssurf.cpp:137)
 
-void R_ReserveGlassMeshVerts(void)
+longlong R_GlassMeshVertIter_Next(longlong param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  return param_1 + 0x20;
+}
+
+
+// 8273FEB8  R_GlassMeshVertIter_End  (gfx_d3d/r_glasssurf.cpp:146)
+
+void R_GlassMeshVertIter_End(void)
+
+{
+  return;
+}
+
+
+// 82740010  R_ReserveGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:155)
+
+void R_ReserveGlassMeshVerts(undefined8 param_1,undefined2 *param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (DAT_845aa904 == '\0') {
+    MyAssertHandler(0xffffffff821c34e0,0x9c,0,0xffffffff82000f98,0xffffffff821c3524);
+  }
+  uVar1 = DAT_845aa8f4;
+  if (0x2100 < DAT_845aa8f4 + iVar2) {
+    R_WarnOncePerFrame(0x2b);
+    __restgprlr_28(0);
+    return;
+  }
+  if (DAT_845aa8f4 != (DAT_845aa8f4 & 0xffff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,DAT_845aa8f4,DAT_845aa8f4 & 0xffff
+                   );
+  }
+  DAT_845aa8f4 = DAT_845aa8f4 + iVar2;
+  *param_2 = (short)uVar1;
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -67,8 +256,21 @@ void R_ReserveGlassMeshVerts(void)
 void R_ReturnGlassMeshIndices(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((int)uVar1 < 0) {
+    MyAssertHandler(0xffffffff821c34e0,0xad,0,0xffffffff821c359c,0xffffffff821c3588,uVar1);
+  }
+  if ((uVar1 & 1) != 0) {
+    MyAssertHandler(0xffffffff821c34e0,0xae,0,0xffffffff821c359c,0xffffffff821c3574,uVar1);
+  }
+  if ((ulonglong)DAT_845aa8f8 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821c34e0,0xaf,0,0xffffffff82000f98,0xffffffff821c3544);
+  }
+  DAT_845aa8f8 = DAT_845aa8f8 - (int)uVar1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -77,8 +279,18 @@ void R_ReturnGlassMeshIndices(void)
 void R_ReturnGlassMeshVerts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((int)uVar1 < 0) {
+    MyAssertHandler(0xffffffff821c34e0,0xb7,0,0xffffffff821c35e4,0xffffffff821c35fc,uVar1);
+  }
+  if ((ulonglong)DAT_845aa8f4 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821c34e0,0xb8,0,0xffffffff82000f98,0xffffffff821c35b4);
+  }
+  DAT_845aa8f4 = DAT_845aa8f4 - (int)uVar1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -88,25 +300,21 @@ void R_AddGlassSurf(undefined8 param_1,undefined1 param_2,undefined1 param_3,und
                    undefined4 param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  uint *puVar5;
+  ulonglong uVar3;
+  uint *puVar4;
   undefined4 local_70;
   
-  iVar2 = __savegprlr_21();
+  iVar1 = __savegprlr_21();
   if ((param_6 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c34e0,0xc4,0,0xffffffff82000f98,0xffffffff821bb904);
   }
   if (DAT_845aa904 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c34e0,0xc5,0,0xffffffff82000f98,0xffffffff821c3524);
   }
-  iVar3 = R_GetSortedMaterial(*(ulonglong *)(iVar2 + 8) >> 0x1d & 0xfff);
-  if (iVar3 != iVar2) {
-                    /* WARNING: Subroutine does not return */
+  iVar2 = R_GetSortedMaterial(*(ulonglong *)(iVar1 + 8) >> 0x1d & 0xfff);
+  if (iVar2 != iVar1) {
     MyAssertHandler(0xffffffff821c34e0,200,0,0xffffffff82000f98,0xffffffff821bb8a8);
   }
   if (0x2ff < DAT_845aa8f0) {
@@ -114,24 +322,22 @@ void R_AddGlassSurf(undefined8 param_1,undefined1 param_2,undefined1 param_3,und
     __restgprlr_21();
     return;
   }
-  iVar3 = DAT_845aa8f0 * 0x10;
-  puVar5 = (uint *)(&DAT_84772a00 + iVar3);
+  iVar2 = DAT_845aa8f0 * 0x10;
+  puVar4 = (uint *)(&DAT_84772a00 + iVar2);
   DAT_845aa8f0 = DAT_845aa8f0 + 1;
-  iVar2 = Material_GetSortedIndex(iVar2);
-  (&DAT_84772a05)[iVar3] = param_3;
-  *puVar5 = iVar2 << 0x12 | *puVar5 & 0x3ffff;
-  (&DAT_84772a02)[iVar3] = param_2;
-  uVar4 = (param_6 & 0xffffffff) / 3;
-  uVar1 = (uint)uVar4;
-  (&DAT_84772a04)[iVar3] = 0;
-  *puVar5 = *puVar5 & 0xfffcff00 | 0x10;
-  if (uVar1 != (uVar1 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c);
+  iVar1 = Material_GetSortedIndex(iVar1);
+  (&DAT_84772a05)[iVar2] = param_3;
+  *puVar4 = iVar1 << 0x12 | *puVar4 & 0x3ffff;
+  (&DAT_84772a02)[iVar2] = param_2;
+  uVar3 = (param_6 & 0xffffffff) / 3;
+  (&DAT_84772a04)[iVar2] = 0;
+  *puVar4 = *puVar4 & 0xfffcff00 | 0x10;
+  if ((int)uVar3 != (int)(uVar3 & 0xffff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar3 & 0xffff);
   }
-  *(short *)(&DAT_84772a06 + iVar3) = (short)uVar4;
-  *(undefined4 *)(&DAT_84772a08 + iVar3) = param_5;
-  *(undefined2 *)(&DAT_84772a0c + iVar3) = param_4;
+  *(short *)(&DAT_84772a06 + iVar2) = (short)uVar3;
+  *(undefined4 *)(&DAT_84772a08 + iVar2) = param_5;
+  *(undefined2 *)(&DAT_84772a0c + iVar2) = param_4;
   if ((param_8 & 0xff) != 0) {
     local_70 = CONCAT13(1,CONCAT12(param_3,param_4));
     *(undefined4 *)(&DAT_847ed8dc + (int)((param_7 & 0xffffffff) << 2)) = local_70;
@@ -143,10 +349,29 @@ void R_AddGlassSurf(undefined8 param_1,undefined1 param_2,undefined1 param_3,und
 
 // 82740280  R_EmitGlassSurfs  (gfx_d3d/r_glasssurf.cpp:254)
 
-void R_EmitGlassSurfs(void)
+void R_EmitGlassSurfs(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1[1] != 0) {
+    MyAssertHandler(0xffffffff821c34e0,0x101,0,0xffffffff82000f98,0xffffffff821c36c0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff821c34e0,0x102,0,0xffffffff82000f98,0xffffffff821c36a0);
+  }
+  uVar3 = (ulonglong)DAT_847b9690;
+  if ((int)param_2 < (int)DAT_847b9690) {
+    uVar3 = param_2;
+  }
+  iVar2 = R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
+                    (0xffffffff84772a00,uVar3,*piVar1);
+  piVar1[1] = iVar2;
+  DAT_847b9690 = 0;
+  __restgprlr_28();
+  return;
 }
 

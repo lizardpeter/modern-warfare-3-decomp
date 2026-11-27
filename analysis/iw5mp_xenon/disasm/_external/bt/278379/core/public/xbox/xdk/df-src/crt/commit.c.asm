@@ -3,3 +3,79 @@
 ; 82924C88  _commit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/commit.c:39)
   82924C88  7D8802A6             mfspr r12,LR
   82924C8C  4BFF1A29             bl 0x829166b4
+  82924C90  3BE1FF70             subi r31,r1,0x90
+  82924C94  9421FF70             stwu r1,-0x90(r1)
+  82924C98  7C7B1B78             or r27,r3,r3
+  82924C9C  907F00A4             stw r3,0xa4(r31)
+  82924CA0  2F03FFFE             cmpwi cr6,r3,-0x2
+  82924CA4  409A001C             bne cr6,0x82924cc0
+  82924CA8  4BFFB0D9             bl 0x8291fd80
+  82924CAC  7C6B1B78             or r11,r3,r3
+  82924CB0  39400009             li r10,0x9
+  82924CB4  3860FFFF             li r3,-0x1
+  82924CB8  914B0000             stw r10,0x0(r11)
+  82924CBC  480000DC             b 0x82924d98
+LAB_82924cc0:
+  82924CC0  2F1B0000             cmpwi cr6,r27,0x0
+  82924CC4  41980014             blt cr6,0x82924cd8
+  82924CC8  3D608489             lis r11,-0x7b77
+  82924CCC  816B7DB0             lwz r11,0x7db0(r11)
+  82924CD0  7F1B5840             cmplw cr6,r27,r11
+  82924CD4  4198001C             blt cr6,0x82924cf0
+LAB_82924cd8:
+  82924CD8  4BFFB0A9             bl 0x8291fd80
+  82924CDC  39600009             li r11,0x9
+  82924CE0  91630000             stw r11,0x0(r3)
+  82924CE4  4BFFAF2D             bl 0x8291fc10
+  82924CE8  3860FFFF             li r3,-0x1
+  82924CEC  480000AC             b 0x82924d98
+LAB_82924cf0:
+  82924CF0  7F6B2E70             srawi r11,r27,0x5
+  82924CF4  3D408489             lis r10,-0x7b77
+  82924CF8  557C103A             rlwinm r28,r11,0x2,0x0,0x1d
+  82924CFC  3BAA7DC0             addi r29,r10,0x7dc0
+  82924D00  576B06FE             rlwinm r11,r27,0x0,0x1b,0x1f
+  82924D04  1FCB0048             mulli r30,r11,0x48
+  82924D08  7D7CE82E             lwzx r11,r28,r29
+  82924D0C  7D7E5A14             add r11,r30,r11
+  82924D10  896B0004             lbz r11,0x4(r11)
+  82924D14  556B07FF             rlwinm. r11,r11,0x0,0x1f,0x1f
+  82924D18  4182FFC0             beq 0x82924cd8
+  82924D1C  7F63DB78             or r3,r27,r27
+  82924D20  48004CD1             bl 0x829299f0
+  82924D24  7D084378             or r8,r8,r8
+  82924D28  7D7CE82E             lwzx r11,r28,r29
+  82924D2C  7D7E5A14             add r11,r30,r11
+  82924D30  896B0004             lbz r11,0x4(r11)
+  82924D34  556B07FF             rlwinm. r11,r11,0x0,0x1f,0x1f
+  82924D38  4182003C             beq 0x82924d74
+  82924D3C  7F63DB78             or r3,r27,r27
+  82924D40  48004BF1             bl 0x82929930
+  82924D44  48006C55             bl 0x8292b998
+  82924D48  2C030000             cmpwi r3,0x0
+  82924D4C  40820010             bne 0x82924d5c
+  82924D50  4BF7DFE9             bl 0x828a2d38
+  82924D54  7C7E1B78             or r30,r3,r3
+  82924D58  48000008             b 0x82924d60
+LAB_82924d5c:
+  82924D5C  3BC00000             li r30,0x0
+LAB_82924d60:
+  82924D60  93DF0050             stw r30,0x50(r31)
+  82924D64  2F1E0000             cmpwi cr6,r30,0x0
+  82924D68  419A0020             beq cr6,0x82924d88
+  82924D6C  4BFFB04D             bl 0x8291fdb8
+  82924D70  93C30000             stw r30,0x0(r3)
+LAB_82924d74:
+  82924D74  4BFFB00D             bl 0x8291fd80
+  82924D78  39600009             li r11,0x9
+  82924D7C  3940FFFF             li r10,-0x1
+  82924D80  91630000             stw r11,0x0(r3)
+  82924D84  915F0050             stw r10,0x50(r31)
+LAB_82924d88:
+  82924D88  7D084378             or r8,r8,r8
+  82924D8C  399F0090             addi r12,r31,0x90
+  82924D90  48000031             bl 0x82924dc0
+  82924D94  807F0050             lwz r3,0x50(r31)
+LAB_82924d98:
+  82924D98  383F0090             addi r1,r31,0x90
+  82924D9C  4BFF1968             b 0x82916704

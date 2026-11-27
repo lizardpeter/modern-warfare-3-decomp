@@ -86,31 +86,63 @@ bool MSG_ValuesAreEqual(undefined4 param_1,float *param_2,float *param_3)
 
 // 825056B0  MSG_WriteDeltaKey  (qcommon/msg_mp.cpp:140)
 
-void MSG_WriteDeltaKey(void)
+void MSG_WriteDeltaKey(undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,
+                      undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (*(int *)(iVar1 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f184,0x8d,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  if (param_3 == (int)param_4) {
+    MSG_WriteBit0();
+    __restgprlr_27();
+    return;
+  }
+  MSG_WriteBit1(iVar1);
+  MSG_WriteBits(iVar1,param_2 ^ param_4,param_5);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82505738  MSG_ReadDeltaKey  (qcommon/msg_mp.cpp:153)
 
-void MSG_ReadDeltaKey(void)
+void MSG_ReadDeltaKey(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = MSG_ReadBit();
+  if (iVar3 != 0) {
+    uVar2 = MSG_ReadBits(uVar1,param_4);
+    __restgprlr_28(uVar2 ^ *(uint *)(&DAT_8296d108 + (int)((param_4 & 0xffffffff) << 2)) & param_2);
+    return;
+  }
+  __restgprlr_28(param_3);
+  return;
 }
 
 
 // 82505798  MSG_WriteKey  (qcommon/msg_mp.cpp:163)
 
-void MSG_WriteKey(void)
+void MSG_WriteKey(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(iVar1 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f184,0xa4,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  MSG_WriteBits(iVar1,param_2 ^ param_3,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -128,41 +160,119 @@ ulonglong MSG_ReadKey(undefined8 param_1,ulonglong param_2,int param_3)
 
 // 82505858  MSG_WriteDeltaKeyByte  (qcommon/msg_mp.cpp:176)
 
-void MSG_WriteDeltaKeyByte(void)
+void MSG_WriteDeltaKeyByte(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(iVar1 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f184,0xb1,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  if ((param_3 & 0xff) == (param_4 & 0xff)) {
+    MSG_WriteBit0();
+    __restgprlr_28();
+    return;
+  }
+  MSG_WriteBit1(iVar1);
+  MSG_WriteByte(iVar1,param_2 ^ param_4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825058E0  MSG_ReadDeltaKeyByte  (qcommon/msg_mp.cpp:189)
 
-void MSG_ReadDeltaKeyByte(void)
+void MSG_ReadDeltaKeyByte(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar3 = MSG_ReadBit();
+  if (iVar3 != 0) {
+    uVar2 = MSG_ReadByte(uVar1);
+    __restgprlr_29(uVar2 & 0xff ^ param_2 & 0xff);
+    return;
+  }
+  __restgprlr_29(param_3);
+  return;
 }
 
 
 // 82505930  MSG_WriteDeltaKeyShort  (qcommon/msg_mp.cpp:198)
 
-void MSG_WriteDeltaKeyShort(void)
+void MSG_WriteDeltaKeyShort(undefined8 param_1,ulonglong param_2,short param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(iVar1 + 4) != 0) {
+    MyAssertHandler(0xffffffff8208f184,199,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  if (param_3 == (short)param_4) {
+    MSG_WriteBit0();
+    __restgprlr_28();
+    return;
+  }
+  MSG_WriteBit1(iVar1);
+  MSG_WriteShort(iVar1,param_2 ^ param_4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825059B8  MSG_ReadDeltaKeyShort  (qcommon/msg_mp.cpp:211)
 
-void MSG_ReadDeltaKeyShort(void)
+void MSG_ReadDeltaKeyShort(undefined8 param_1,ushort param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  ushort uVar3;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = MSG_ReadBit();
+  if (iVar2 != 0) {
+    uVar3 = MSG_ReadShort(uVar1);
+    __restgprlr_29(uVar3 ^ param_2);
+    return;
+  }
+  __restgprlr_29(param_3);
+  return;
+}
+
+
+// 82505A08  MSG_CompressWithZLib  (qcommon/msg_mp.cpp:261)
+
+void MSG_CompressWithZLib
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  MemFile_deflateInit(param_3,param_4,1);
+  DAT_840c31cc = 0;
+  DAT_840c31a0 = uVar1;
+  DAT_840c31a4 = param_2;
+  iVar2 = deflate(0xffffffff840c31a0,4);
+  if (iVar2 == 1) {
+    iVar2 = MemFile_deflateEnd(1);
+    if (iVar2 == 0) {
+      __restgprlr_29(DAT_840c31b4);
+      return;
+    }
+  }
+  else {
+    MemFile_deflateEnd(1);
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -194,15 +304,12 @@ void MSG_WriteDeltaUsercmdKey(undefined8 param_1,ulonglong param_2,uint *param_3
   
   iVar4 = __savegprlr_24();
   if (*(int *)(iVar4 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0x13e,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   if (0xfffffff < (int)param_3[1]) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0x140,0,0xffffffff82000f98,0xffffffff8208f1ec);
   }
   if (0xfffffff < (int)param_4[1]) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0x141,0,0xffffffff82000f98,0xffffffff8208f1c4);
   }
   uVar1 = *param_4;
@@ -219,54 +326,49 @@ void MSG_WriteDeltaUsercmdKey(undefined8 param_1,ulonglong param_2,uint *param_3
      (bVar5 = true, *(char *)((int)param_3 + 0x1d) != *(char *)((int)param_4 + 0x1d))) {
     bVar5 = false;
   }
-  if ((((((param_4[1] ^ param_3[1]) & 0xfffffffe) != 0) || (param_3[5] != param_4[5])) ||
-      (param_3[6] != param_4[6])) || (param_3[4] != param_4[4])) goto LAB_82505d6c;
-  if (*(short *)(param_3 + 8) == *(short *)(param_4 + 8)) {
-    bVar3 = false;
-    if (*(char *)((int)param_3 + 0x22) != *(char *)((int)param_4 + 0x22)) goto LAB_82505c38;
-  }
-  else {
-LAB_82505c38:
-    bVar3 = true;
-  }
-  if (!bVar3) {
-    if (((param_3[2] == param_4[2]) && (param_3[3] == param_4[3])) &&
-       ((((param_4[1] ^ param_3[1]) & 1) == 0 && (bVar5)))) {
+  if ((((((param_4[1] ^ param_3[1]) & 0xfffffffe) == 0) && (param_3[5] == param_4[5])) &&
+      (param_3[6] == param_4[6])) && (param_3[4] == param_4[4])) {
+    if ((*(short *)(param_3 + 8) != *(short *)(param_4 + 8)) ||
+       (bVar3 = false, *(char *)((int)param_3 + 0x22) != *(char *)((int)param_4 + 0x22))) {
+      bVar3 = true;
+    }
+    if (!bVar3) {
+      if (((param_3[2] == param_4[2]) && (param_3[3] == param_4[3])) &&
+         ((((param_4[1] ^ param_3[1]) & 1) == 0 && (bVar5)))) {
+        MSG_WriteKey(iVar4,param_2,0,1);
+        MSG_WriteBits(iVar4,7,3);
+        __restgprlr_24();
+        return;
+      }
+      MSG_WriteKey(iVar4,param_2,1,1);
       MSG_WriteKey(iVar4,param_2,0,1);
-      MSG_WriteBits(iVar4,7,3);
+      param_2 = *param_4 ^ param_2;
+      MSG_WriteKey(iVar4,param_2,param_4[1],1);
+      MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[2],param_4[2]);
+      MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[3],param_4[3]);
+      MSG_WriteDeltaKeyByte(iVar4,param_2,*(undefined1 *)(param_3 + 7),*(undefined1 *)(param_4 + 7))
+      ;
+      MSG_WriteDeltaKeyByte
+                (iVar4,param_2,*(undefined1 *)((int)param_3 + 0x1d),
+                 *(undefined1 *)((int)param_4 + 0x1d));
+      MSG_WriteBits(iVar4,2,3);
       __restgprlr_24();
       return;
     }
-    MSG_WriteKey(iVar4,param_2,1,1);
-    MSG_WriteKey(iVar4,param_2,0,1);
-    param_2 = *param_4 ^ param_2;
-    MSG_WriteKey(iVar4,param_2,param_4[1],1);
-    MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[2],param_4[2]);
-    MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[3],param_4[3]);
-    MSG_WriteDeltaKeyByte(iVar4,param_2,*(undefined1 *)(param_3 + 7),*(undefined1 *)(param_4 + 7));
-    MSG_WriteDeltaKeyByte
-              (iVar4,param_2,*(undefined1 *)((int)param_3 + 0x1d),
-               *(undefined1 *)((int)param_4 + 0x1d));
-    MSG_WriteBits(iVar4,2,3);
-    __restgprlr_24();
-    return;
   }
-LAB_82505d6c:
   if (*(int *)(iVar4 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0xa4,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   MSG_WriteBits(iVar4,param_2 ^ 1,1);
   if (*(int *)(iVar4 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0xa4,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   MSG_WriteBits(iVar4,param_2 ^ 1,1);
+  uVar1 = param_4[1];
   if (*(int *)(iVar4 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0xa4,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
-  MSG_WriteBits(iVar4,param_4[1] ^ param_2,1);
+  MSG_WriteBits(iVar4,uVar1 ^ param_2,1);
   MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[2],param_4[2]);
   MSG_WriteDeltaKeyShort(iVar4,param_2,param_3[3],param_4[3]);
   MSG_WriteDeltaKeyByte(iVar4,param_2,*(undefined1 *)(param_3 + 7),*(undefined1 *)(param_4 + 7));
@@ -314,6 +416,215 @@ LAB_82505d6c:
   }
   MSG_WriteBits(iVar4,5,3);
   __restgprlr_24();
+  return;
+}
+
+
+// 82506058  MSG_ReadDeltaUsercmdKey  (qcommon/msg_mp.cpp:441)
+
+void MSG_ReadDeltaUsercmdKey(undefined8 param_1,ulonglong param_2,int *param_3,uint *param_4)
+
+{
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  ushort uVar6;
+  byte bVar8;
+  byte bVar9;
+  undefined2 uVar7;
+  undefined1 uVar10;
+  
+  uVar2 = __savegprlr_26();
+  if (0xfffffff < param_3[1]) {
+    MyAssertHandler(0xffffffff8208f184,0x1bf,0,0xffffffff82000f98,0xffffffff8208f1ec);
+  }
+  memcpy(param_4,param_3,0x2c);
+  iVar3 = MSG_ReadBit(uVar2);
+  if (iVar3 == 0) {
+    uVar5 = MSG_ReadLong(uVar2);
+    *param_4 = uVar5;
+  }
+  else {
+    iVar3 = MSG_ReadByte();
+    *param_4 = iVar3 + *param_3;
+  }
+  uVar4 = MSG_ReadBits(uVar2,1);
+  uVar5 = (uint)param_2;
+  if (uVar4 == (DAT_8296d10c & uVar5)) {
+    iVar3 = MSG_ReadBits(uVar2,3);
+    bVar1 = iVar3 == 7;
+  }
+  else {
+    param_4[1] = param_4[1] & 0xfffffffe;
+    uVar4 = MSG_ReadBits(uVar2,1);
+    if (uVar4 == (DAT_8296d10c & uVar5)) {
+      param_2 = *param_4 ^ param_2;
+      uVar5 = MSG_ReadBits(uVar2,1);
+      param_4[1] = param_4[1] | uVar5 ^ DAT_8296d10c & (uint)param_2;
+      uVar5 = param_3[2];
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        uVar6 = MSG_ReadShort(uVar2);
+        uVar5 = (uint)(short)(uVar6 ^ (ushort)param_2);
+      }
+      param_4[2] = uVar5 & 0xffff;
+      uVar5 = param_3[3];
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        uVar6 = MSG_ReadShort(uVar2);
+        uVar5 = (uint)(short)(uVar6 ^ (ushort)param_2);
+      }
+      param_4[3] = uVar5 & 0xffff;
+      bVar8 = *(byte *)(param_3 + 7);
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        bVar8 = MSG_ReadByte(uVar2);
+        bVar8 = bVar8 ^ (byte)param_2;
+      }
+      *(byte *)(param_4 + 7) = bVar8;
+      bVar8 = *(byte *)((int)param_3 + 0x1d);
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        bVar8 = MSG_ReadByte(uVar2);
+        bVar8 = bVar8 ^ (byte)param_2;
+      }
+      *(byte *)((int)param_4 + 0x1d) = bVar8;
+      iVar3 = MSG_ReadBits(uVar2,3);
+      bVar1 = iVar3 == 2;
+    }
+    else {
+      uVar4 = MSG_ReadBits(uVar2,1);
+      param_4[1] = param_4[1] | uVar4 ^ DAT_8296d10c & uVar5;
+      uVar5 = param_3[2];
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        uVar6 = MSG_ReadShort(uVar2);
+        uVar5 = (uint)(short)(uVar6 ^ (ushort)param_2);
+      }
+      param_4[2] = uVar5 & 0xffff;
+      uVar5 = param_3[3];
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        uVar6 = MSG_ReadShort(uVar2);
+        uVar5 = (uint)(short)(uVar6 ^ (ushort)param_2);
+      }
+      param_4[3] = uVar5 & 0xffff;
+      bVar8 = *(byte *)(param_3 + 7);
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        bVar8 = MSG_ReadByte(uVar2);
+        bVar8 = bVar8 ^ (byte)param_2;
+      }
+      *(byte *)(param_4 + 7) = bVar8;
+      bVar8 = *(byte *)((int)param_3 + 0x1d);
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        bVar8 = MSG_ReadByte(uVar2);
+        bVar8 = bVar8 ^ (byte)param_2;
+      }
+      *(byte *)((int)param_4 + 0x1d) = bVar8;
+      uVar5 = param_3[4];
+      param_2 = *param_4 ^ param_2;
+      iVar3 = MSG_ReadBit(uVar2);
+      if (iVar3 != 0) {
+        uVar6 = MSG_ReadShort(uVar2);
+        uVar5 = (uint)(short)(uVar6 ^ (ushort)param_2);
+      }
+      param_4[4] = uVar5 & 0xffff;
+      param_4[1] = param_4[1] & 1;
+      iVar3 = MSG_ReadDeltaKey(uVar2,param_2,param_3[1] >> 1,0x1b);
+      param_4[1] = iVar3 << 1 | param_4[1];
+      uVar5 = MSG_ReadDeltaKey(uVar2,param_2,param_3[5],0x18);
+      param_4[5] = uVar5;
+      uVar5 = MSG_ReadDeltaKey(uVar2,param_2,param_3[6],0x18);
+      param_4[6] = uVar5 & 0xffff;
+      bVar8 = (byte)param_2;
+      if ((param_4[1] & 0x10000) != 0) {
+        bVar9 = *(byte *)((int)param_3 + 0x23);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x23) = bVar9;
+        bVar9 = *(byte *)(param_3 + 9);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)(param_4 + 9) = bVar9;
+        bVar9 = *(byte *)((int)param_3 + 0x25);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x25) = bVar9;
+      }
+      if ((param_4[1] & 0x100000) != 0) {
+        bVar9 = *(byte *)((int)param_3 + 0x26);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x26) = bVar9;
+        bVar9 = *(byte *)((int)param_3 + 0x27);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x27) = bVar9;
+        bVar9 = *(byte *)(param_3 + 10);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)(param_4 + 10) = bVar9;
+        bVar9 = *(byte *)((int)param_3 + 0x29);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x29) = bVar9;
+        bVar9 = *(byte *)((int)param_3 + 0x2a);
+        iVar3 = MSG_ReadBit(uVar2);
+        if (iVar3 != 0) {
+          bVar9 = MSG_ReadByte(uVar2);
+          bVar9 = bVar9 ^ bVar8;
+        }
+        *(byte *)((int)param_4 + 0x2a) = bVar9;
+      }
+      if ((param_4[1] & 4) != 0) {
+        uVar7 = MSG_ReadDeltaKey(uVar2,param_2,*(undefined2 *)(param_3 + 8),0xb);
+        *(undefined2 *)(param_4 + 8) = uVar7;
+        uVar10 = MSG_ReadDeltaKey(uVar2,param_2,*(undefined1 *)((int)param_3 + 0x22),8);
+        *(undefined1 *)((int)param_4 + 0x22) = uVar10;
+      }
+      if ((param_4[1] & 0x8000000) != 0) {
+        uVar7 = MSG_ReadDeltaKey(uVar2,param_2,*(undefined2 *)((int)param_3 + 0x1e),0x10);
+        *(undefined2 *)((int)param_4 + 0x1e) = uVar7;
+      }
+      if (0xfffffff < (int)param_4[1]) {
+        Com_PrintError(0xf,0xffffffff8208f230);
+        param_4[1] = param_3[1];
+      }
+      iVar3 = MSG_ReadBits(uVar2,3);
+      bVar1 = iVar3 == 5;
+    }
+  }
+  if (bVar1) {
+    __restgprlr_26(1);
+    return;
+  }
+  Com_PrintError(0xf,0xffffffff8208f214);
+  __restgprlr_26(0);
   return;
 }
 
@@ -388,11 +699,31 @@ void MSG_ReadDeltaEventParamField(undefined8 param_1)
 
 // 825067B0  MSG_ReadEFlags  (qcommon/msg_mp.cpp:656)
 
-void MSG_ReadEFlags(void)
+void MSG_ReadEFlags(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  uint uVar4;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff8208f184,0x294,0,0xffffffff82000f98,0xffffffff8208f29c);
+  }
+  iVar3 = MSG_ReadBit(piVar2);
+  if (iVar3 == 1) {
+    MSG_ReadBits(piVar2,0x1d);
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = MSG_ReadBits(piVar2,5);
+  uVar4 = (uint)uVar1;
+  if (((int)uVar4 < 0) || (0x1c < (int)uVar4)) {
+    MyAssertHandler(0xffffffff8208f184,0x29f,0,0xffffffff8208f25c,0xffffffff8208f274,uVar1);
+  }
+  __restgprlr_29((uint)(1 << (uVar4 & 0x3f)) ^ param_2);
+  return;
 }
 
 
@@ -417,7 +748,6 @@ double MSG_ReadOriginFloat(double param_1,int param_2,undefined8 param_3)
     }
     else {
       if ((param_2 != -0x5b) && (param_2 != -0x52)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208f184,0x2c1,0,0xffffffff82000f98,0xffffffff8208f2b0);
       }
       iVar1 = 1;
@@ -460,18 +790,70 @@ double MSG_ReadOriginZFloat(double param_1,undefined8 param_2)
 }
 
 
+// 82506AE0  MSG_ReadEntityIndex  (qcommon/msg_mp.cpp:784)
+
+void MSG_ReadEntityIndex(undefined8 param_1,longlong param_2)
+
+{
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  piVar3 = (int *)__savegprlr_28();
+  iVar4 = MSG_ReadBit();
+  if (iVar4 == 0) {
+    if (((int)param_2 == 0xb) && (iVar4 = MSG_ReadBit(piVar3), iVar4 == 0)) {
+      if (*(char *)(DAT_836b93b0 + 0xc) != '\0') {
+        Com_Printf(0x19,0xffffffff8208f3b8,0xb);
+      }
+      uVar1 = MSG_ReadBits(piVar3,9);
+      if ((int)uVar1 < 1) {
+        MyAssertHandler(0xffffffff8208f184,0x32d,0,0xffffffff8208f398,0xffffffff8208f3ac,uVar1);
+      }
+      piVar3[9] = piVar3[9] + (int)uVar1;
+    }
+    else {
+      if (*(char *)(DAT_836b93b0 + 0xc) != '\0') {
+        Com_Printf(0x19,0xffffffff8208f37c,param_2 + 2);
+      }
+      uVar1 = MSG_ReadBits(piVar3,param_2);
+      if ((int)uVar1 <= piVar3[9]) {
+        uVar2 = va(0xffffffff8208f370,uVar1);
+        MyAssertHandler(0xffffffff8208f184,0x337,0,0xffffffff820011f4,0xffffffff8208f354,uVar2);
+      }
+      piVar3[9] = (int)uVar1;
+    }
+  }
+  else {
+    if (*(char *)(DAT_836b93b0 + 0xc) != '\0') {
+      Com_Printf(0x19,0xffffffff8208f3d8);
+    }
+    piVar3[9] = piVar3[9] + 1;
+  }
+  if (*(char *)(DAT_836b93b0 + 0xc) != '\0') {
+    Com_Printf(0x19,0xffffffff8208f340,piVar3[9]);
+  }
+  if ((*piVar3 == 0) && (piVar3[9] < 0)) {
+    MyAssertHandler(0xffffffff8208f184,0x33e,0,0xffffffff8208f2f0,0xffffffff8208f310);
+  }
+  __restgprlr_28(piVar3[9]);
+  return;
+}
+
+
 // 82506CB8  MSG_ReadLastChangedField  (qcommon/msg_mp.cpp:846)
 
 undefined8 MSG_ReadLastChangedField(undefined8 param_1,undefined8 param_2)
 
 {
   undefined8 uVar1;
+  undefined8 uVar2;
   
   uVar1 = MSG_ReadBits(param_1,0x20 - LZCOUNT((int)param_2));
   if ((int)param_2 < (int)uVar1) {
-    uVar1 = va(0xffffffff8208f410,uVar1,param_2);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8208f184,0x362,0,0xffffffff820011f4,0xffffffff8208f3f4,uVar1);
+    uVar2 = va(0xffffffff8208f410,uVar1,param_2);
+    MyAssertHandler(0xffffffff8208f184,0x362,0,0xffffffff820011f4,0xffffffff8208f3f4,uVar2);
   }
   return uVar1;
 }
@@ -479,21 +861,74 @@ undefined8 MSG_ReadLastChangedField(undefined8 param_1,undefined8 param_2)
 
 // 82506D48  MSG_ReadValueNoXor  (qcommon/msg_mp.cpp:872)
 
-void MSG_ReadValueNoXor(void)
+void MSG_ReadValueNoXor(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  
+  uVar1 = __savegprlr_28();
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff8208f184,0x36d,0,0xffffffff82000f98,0xffffffff8208f438);
+  }
+  uVar4 = param_2 & 7;
+  iVar3 = (int)uVar4;
+  if (iVar3 == 0) {
+    uVar2 = 0;
+  }
+  else {
+    uVar2 = MSG_ReadBits(uVar1,uVar4);
+  }
+  while (iVar3 < (int)param_2) {
+    iVar3 = MSG_ReadByte(uVar1);
+    uVar5 = (uint)uVar4;
+    uVar4 = uVar4 + 8;
+    uVar2 = (uint)(iVar3 << (uVar5 & 0x3f)) | uVar2;
+    iVar3 = (int)uVar4;
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 82506DE0  MSG_ReadValue  (qcommon/msg_mp.cpp:899)
 
-void MSG_ReadValue(void)
+void MSG_ReadValue(undefined8 param_1,uint *param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  
+  uVar2 = __savegprlr_28();
+  iVar1 = (int)param_3;
+  if (iVar1 < 0) {
+    param_3 = -param_3;
+  }
+  uVar3 = MSG_ReadValueNoXor(uVar2,param_3);
+  uVar5 = (uint)param_3;
+  if (0x20 < (int)uVar5) {
+    MyAssertHandler(0xffffffff8208f184,0x38f,0,0xffffffff8208f444,0xffffffff8208f458,param_3);
+  }
+  if (uVar5 == 0x20) {
+    uVar4 = 0xffffffffffffffff;
+  }
+  else {
+    uVar4 = (ulonglong)(uint)(1 << (uVar5 & 0x3f)) - 1;
+  }
+  uVar3 = *param_2 & uVar4 ^ uVar3;
+  if (iVar1 < 0) {
+    if ((1 << (uVar5 - 1 & 0x3f) & (uint)uVar3) != 0) {
+      uVar3 = uVar3 | ~uVar4;
+    }
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
@@ -502,8 +937,57 @@ void MSG_ReadValue(void)
 void MSG_ReadDeltaAngle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  uint uVar3;
+  short sVar4;
+  short sVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  
+  uVar1 = __savegprlr_29();
+  sVar5 = 1;
+  dVar7 = (double)(float)(extraout_f1 * 182.04444885253906);
+  dVar6 = 0.5;
+  floor((double)(float)(dVar7 + 0.5));
+  iVar2 = MSG_ReadBit(uVar1);
+  if (iVar2 == 1) {
+    iVar2 = MSG_ReadBit(uVar1);
+    if (iVar2 != 0) {
+      sVar5 = -1;
+    }
+    uVar3 = MSG_ReadBits(uVar1,3);
+    if (6 < uVar3) {
+      MyAssertHandler(0xffffffff8208f184,0x3b1,0,0xffffffff8208f470,uVar3,7);
+    }
+    sVar4 = (&DAT_8296d18c)[uVar3];
+    if (sVar4 == 0) {
+      MyAssertHandler(0xffffffff8208f184,0x3b3,0,0xffffffff82000f98,0xffffffff8208f468);
+    }
+    dVar6 = floor((double)(float)(dVar7 + dVar6));
+    sVar5 = (short)(int)dVar6 + sVar5 * sVar4;
+  }
+  else {
+    iVar2 = MSG_ReadBit(uVar1);
+    if (iVar2 == 0) {
+      MSG_ReadAngle16();
+      __restgprlr_29();
+      return;
+    }
+    iVar2 = MSG_ReadBit(uVar1);
+    if (iVar2 != 0) {
+      sVar5 = -1;
+    }
+    sVar4 = MSG_ReadBits(uVar1,0xc);
+    if (sVar4 == 0) {
+      MyAssertHandler(0xffffffff8208f184,0x3c9,0,0xffffffff82000f98,0xffffffff8208f468);
+    }
+    dVar6 = floor((double)(float)(dVar7 + dVar6));
+    sVar5 = (short)(int)dVar6 + sVar5 * sVar4;
+  }
+  __restgprlr_29((double)((float)(longlong)sVar5 * 0.005493164));
+  return;
 }
 
 
@@ -529,8 +1013,7 @@ void MSG_ReadDeltaField(undefined8 param_1,undefined8 param_2,ulonglong param_3,
   
   piVar2 = (int *)__savegprlr_22();
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8208f184,0x401,0,0xffffffff82000f98,0xffffffff82001400);
+    MyAssertHandler(0xffffffff8208f184,0x401,0,0xffffffff82000f98);
   }
   if ((param_7 & 0xff) == 0) {
     lVar9 = (uint)param_5[1] + param_3;
@@ -540,8 +1023,7 @@ void MSG_ReadDeltaField(undefined8 param_1,undefined8 param_2,ulonglong param_3,
   }
   pfVar11 = (float *)(param_5[1] + param_4);
   if (*piVar2 != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8208f184,0x409,0,0xffffffff82000f98,0xffffffff8208f29c);
+    MyAssertHandler(0xffffffff8208f184,0x409,0,0xffffffff82000f98);
   }
   pfVar10 = (float *)lVar9;
   switch(param_5[2]) {
@@ -551,8 +1033,9 @@ void MSG_ReadDeltaField(undefined8 param_1,undefined8 param_2,ulonglong param_3,
       iVar6 = MSG_ReadBit(piVar2);
       *pfVar11 = (float)(iVar6 << 0x1f);
       if (*pfVar11 != 0.0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208f184,0x422,0,0xffffffff82000f98,0xffffffff8208f524);
+        __restgprlr_22();
+        return;
       }
       break;
     }
@@ -623,7 +1106,6 @@ LAB_82507990:
     if (iVar6 == 0) {
       *pfVar11 = 0.0;
       if (*pfVar11 != 0.0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208f184,0x48a,0,0xffffffff82000f98,0xffffffff8208f524);
       }
     }
@@ -647,8 +1129,9 @@ LAB_82507990:
     }
     uStack_5c = (uint)(longlong)(*pfVar11 + 2048.0);
     if (0xfff < uStack_5c) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208f184,0x4ae,0,0xffffffff8208f4b8,uStack_5c,0x1000);
+      __restgprlr_22();
+      return;
     }
     break;
   case 0xffffff9e:
@@ -836,8 +1319,9 @@ void MSG_ReadNumFieldsSkipped(undefined8 param_1,undefined8 param_2,int param_3)
       iVar2 = MSG_ReadBit(uVar1);
     } while (iVar2 == 0);
     if (param_3 < (int)lVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208f184,0x579,0,0xffffffff82000f98,0xffffffff8208f578);
+      __restgprlr_24(lVar6);
+      return;
     }
   }
   else {
@@ -852,7 +1336,6 @@ void MSG_ReadNumFieldsSkipped(undefined8 param_1,undefined8 param_2,int param_3)
     iVar5 = (int)lVar4;
     iVar2 = (int)lVar6;
     if (iVar5 < iVar2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208f184,0x59b,0,0xffffffff82000f98,0xffffffff8208f550);
     }
     while (iVar2 == iVar5) {
@@ -860,7 +1343,6 @@ void MSG_ReadNumFieldsSkipped(undefined8 param_1,undefined8 param_2,int param_3)
       lVar6 = MSG_ReadBits(uVar1,param_2);
       iVar2 = (int)lVar6;
       if (iVar5 < iVar2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208f184,0x5a7,0,0xffffffff82000f98,0xffffffff8208f550);
       }
     }
@@ -886,11 +1368,126 @@ void MSG_CopyFieldOver(int param_1,int param_2,int param_3,int param_4)
 
 // 82507B28  MSG_ReadDeltaFields  (qcommon/msg_mp.cpp:1499)
 
-void MSG_ReadDeltaFields(void)
+void MSG_ReadDeltaFields(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        ,ulonglong param_5,longlong param_6,undefined8 param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  bool bVar5;
+  undefined8 uVar6;
+  int iVar10;
+  longlong lVar7;
+  longlong lVar8;
+  undefined8 uVar9;
+  longlong lVar11;
+  int *piVar12;
+  int *piVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  int iVar16;
+  
+  uVar6 = __savegprlr();
+  iVar1 = (int)param_3;
+  iVar2 = (int)param_4;
+  if ((param_8 & 0xff) == 0) {
+    piVar13 = (int *)0x0;
+    piVar12 = (int *)0x0;
+  }
+  else {
+    iVar10 = *(int *)((int)param_6 + 4);
+    piVar13 = (int *)(iVar10 + iVar1);
+    piVar12 = (int *)(iVar10 + iVar2);
+  }
+  iVar10 = MSG_ReadBit(uVar6);
+  if (iVar10 == 0) {
+    if (0 < (int)param_5) {
+      param_6 = param_6 + -0xc;
+      do {
+        param_6 = param_6 + 0x10;
+        *(undefined4 *)(*(int *)param_6 + iVar2) = *(undefined4 *)(*(int *)param_6 + iVar1);
+        param_5 = param_5 - 1;
+      } while (param_5 != 0);
+    }
+  }
+  else {
+    uVar14 = 0xffffffffffffffff;
+    lVar7 = MSG_ReadLastChangedField(uVar6,param_5);
+    iVar10 = (int)lVar7;
+    if ((int)param_5 < iVar10) {
+      MSG_Discard(uVar6);
+      Com_PrintError(0x19,0xffffffff8208f618,lVar7,param_5);
+      __restgprlr();
+      return;
+    }
+    bVar3 = true;
+    uVar15 = param_5;
+    bVar5 = true;
+    if (iVar10 != -1) {
+      do {
+        bVar3 = bVar5;
+        lVar8 = MSG_ReadNumFieldsSkipped(uVar6,param_7,lVar7 - uVar14);
+        uVar15 = lVar8 + uVar14;
+        iVar16 = (int)uVar15;
+        if (iVar16 <= (int)uVar14) {
+          uVar9 = va(0xffffffff8208f590,uVar14,uVar15);
+          MyAssertHandler(0xffffffff8208f184,0x620,0,0xffffffff820011f4,0xffffffff8208f5b8,uVar9);
+        }
+        if (iVar10 < iVar16) {
+          uVar9 = va(0xffffffff8208f5d4,uVar15,lVar7);
+          MyAssertHandler(0xffffffff8208f184,0x621,0,0xffffffff820011f4,0xffffffff8208f5f0,uVar9);
+        }
+        uVar14 = uVar14 + 1;
+        if ((int)uVar14 < iVar16) {
+          uVar4 = uVar14 & 0xfffffff;
+          lVar11 = uVar15 - uVar14;
+          uVar14 = lVar11 + uVar14;
+          lVar8 = uVar4 * 0x10 + param_6 + -0xc;
+          do {
+            lVar8 = lVar8 + 0x10;
+            *(undefined4 *)(*(int *)lVar8 + iVar2) = *(undefined4 *)(*(int *)lVar8 + iVar1);
+            lVar11 = lVar11 + -1;
+          } while (lVar11 != 0);
+        }
+        if (((param_8 & 0xff) != 0) && (0 < (int)uVar14)) {
+          bVar3 = *piVar12 == *piVar13;
+        }
+        MSG_ReadDeltaField(uVar6,param_2,param_3,param_4,(uVar15 & 0xfffffff) * 0x10 + param_6,0,
+                           !bVar3);
+        uVar14 = uVar15;
+        bVar5 = bVar3;
+      } while (iVar16 != iVar10);
+      uVar15 = param_5 & 0xffffffff;
+    }
+    lVar8 = lVar7;
+    lVar11 = param_6;
+    if (0 < iVar10) {
+      do {
+        if (*(char *)((int)lVar11 + 0xc) == '\x02') {
+          MSG_ReadDeltaField(uVar6,param_2,param_3,param_4,lVar11,0,!bVar3);
+        }
+        lVar8 = lVar8 + -1;
+        lVar11 = lVar11 + 0x10;
+      } while (lVar8 != 0);
+      uVar15 = param_5 & 0xffffffff;
+    }
+    uVar14 = lVar7 + 1;
+    if ((int)uVar14 < (int)uVar15) {
+      lVar8 = uVar15 - uVar14;
+      lVar7 = (uVar14 & 0xfffffff) * 0x10 + param_6 + -0xc;
+      do {
+        lVar7 = lVar7 + 0x10;
+        *(undefined4 *)(*(int *)lVar7 + iVar2) = *(undefined4 *)(*(int *)lVar7 + iVar1);
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      __restgprlr();
+      return;
+    }
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -907,7 +1504,6 @@ void MSG_ReadDeltaStruct(undefined8 param_1,undefined8 param_2,undefined8 param_
   
   iVar1 = __savegprlr_25();
   if ((ulonglong)(uint)(1 << (param_7 & 0x3f)) <= (param_5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f184,0x662,0,0xffffffff82000f98,0xffffffff8208f668);
   }
   iVar2 = MSG_ReadBit(iVar1);
@@ -929,21 +1525,263 @@ void MSG_ReadDeltaStruct(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 82507EC0  MSG_ReadDeltaEntityStruct  (qcommon/msg_mp.cpp:1682)
 
-void MSG_ReadDeltaEntityStruct(void)
+void MSG_ReadDeltaEntityStruct
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  bool bVar5;
+  undefined4 *puVar9;
+  int iVar10;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  longlong lVar13;
+  char *pcVar14;
+  char *pcVar17;
+  undefined8 uVar15;
+  ulonglong uVar16;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  int iVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  int iVar23;
+  
+  puVar9 = (undefined4 *)__savegprlr();
+  if (0x7ff < (param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8208f184,0x6a6,0,0xffffffff82000f98,0xffffffff8208f7f4);
+  }
+  iVar10 = MSG_ReadBit(puVar9);
+  if (iVar10 == 1) {
+    if ((DAT_82b3ecc8 != 0) &&
+       ((1 < *(int *)(DAT_82b3ecc8 + 0xc) || (*(int *)(DAT_82b3ecc8 + 0xc) == -1)))) {
+      Com_Printf(0x19,0xffffffff8208f654,puVar9[7],param_5);
+    }
+    __restgprlr(1);
+    return;
+  }
+  iVar10 = MSG_ReadBit(puVar9);
+  if (iVar10 == 0) {
+    Com_Memcpy(param_4,param_3,0x100);
+    __restgprlr(0);
+    return;
+  }
+  uVar18 = (ulonglong)*(uint *)(PTR_PTR_8296d104 + 0x2c);
+  puVar3 = *(undefined4 **)(PTR_PTR_8296d104 + 0x28);
+  lVar6 = MSG_ReadBit(puVar9);
+  uVar7 = MSG_ReadLastChangedField(puVar9,uVar18);
+  if (uVar18 < (uVar7 & 0xffffffff)) {
+    MSG_Discard(puVar9);
+    __restgprlr(0);
+    return;
+  }
+  puVar12 = (undefined4 *)param_4;
+  if ((DAT_82b3ecc8 != 0) &&
+     ((1 < *(int *)(DAT_82b3ecc8 + 0xc) || (*(int *)(DAT_82b3ecc8 + 0xc) == -1)))) {
+    Com_Printf(0x19,0xffffffff8208f7e8,puVar9[7],*puVar12);
+  }
+  *puVar12 = (int)param_5;
+  pcVar17 = (char *)*puVar3;
+  pcVar14 = "eType";
+  do {
+    cVar1 = *pcVar17;
+    cVar2 = *pcVar14;
+    if (cVar1 == '\0') break;
+    pcVar17 = pcVar17 + 1;
+    pcVar14 = pcVar14 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    MyAssertHandler(0xffffffff8208f184,0x6ef,0,0xffffffff82000f98,0xffffffff8208f7b8);
+  }
+  if (puVar3[2] != -0x4d) {
+    MyAssertHandler(0xffffffff8208f184,0x6f0,0,0xffffffff82000f98,0xffffffff8208f794);
+  }
+  uVar21 = 0xffffffffffffffff;
+  lVar8 = MSG_ReadNumFieldsSkipped(puVar9,param_6,uVar7 + 1);
+  uVar22 = lVar8 - 1;
+  iVar10 = (int)param_3;
+  if ((longlong)uVar22 < 1) {
+    MSG_ReadDeltaField(puVar9,param_2,param_3,param_4,puVar3,0,0);
+    uVar21 = 0;
+    if ((uVar7 & 0xffffffff) != 0) {
+      uVar22 = MSG_ReadNumFieldsSkipped(puVar9,param_6,uVar7);
+    }
+  }
+  else {
+    *(undefined4 *)(puVar3[1] + (int)puVar12) = *(undefined4 *)(puVar3[1] + iVar10);
+  }
+  puVar11 = (undefined4 *)
+            MSG_GetStateFieldListForEntityType(*(undefined4 *)(puVar3[1] + (int)puVar12));
+  puVar4 = (undefined4 *)*puVar11;
+  uVar19 = ZEXT48(puVar4);
+  if ((ulonglong)(uint)puVar11[1] < (uVar7 & 0xffffffff)) {
+    Com_Printf(0xe,0xffffffff8208f758,uVar7);
+    *puVar9 = 1;
+    __restgprlr(0);
+    return;
+  }
+  iVar20 = (int)uVar7;
+  uVar16 = uVar7;
+  if ((int)uVar21 != iVar20) {
+    do {
+      uVar16 = uVar22;
+      uVar21 = uVar21 + 1;
+      if ((uVar21 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+        lVar13 = uVar16 - uVar21;
+        lVar8 = (uVar21 & 0xfffffff) * 0x10 + uVar19 + -0xc;
+        do {
+          lVar8 = lVar8 + 0x10;
+          *(undefined4 *)(*(int *)lVar8 + (int)puVar12) = *(undefined4 *)(*(int *)lVar8 + iVar10);
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+      }
+      lVar8 = (uVar16 & 0xfffffff) * 0x10 + uVar19;
+      if (*(int *)(iVar10 + 4) == puVar12[1]) {
+        if (lVar6 != 0) {
+          iVar23 = *(int *)((int)lVar8 + 8);
+          if ((iVar23 < -0x53) || (bVar5 = true, -0x4e < iVar23)) {
+            bVar5 = false;
+          }
+          if (bVar5) goto LAB_82508218;
+        }
+        uVar15 = 0;
+      }
+      else {
+LAB_82508218:
+        uVar15 = 1;
+      }
+      MSG_ReadDeltaField(puVar9,param_2,param_3,param_4,lVar8,0,uVar15);
+      if ((int)uVar16 == iVar20) break;
+      lVar8 = MSG_ReadNumFieldsSkipped(puVar9,param_6,uVar7 - uVar16);
+      uVar22 = lVar8 + uVar16;
+      iVar23 = (int)uVar22;
+      if (iVar20 < iVar23) {
+        uVar15 = va(0xffffffff8208f5d4,uVar22,uVar7);
+        MyAssertHandler(0xffffffff8208f184,0x751,0,0xffffffff820011f4,0xffffffff8208f5f0,uVar15);
+      }
+      if (iVar23 <= (int)uVar16) {
+        uVar15 = va(0xffffffff8208f730,uVar22,uVar16);
+        MyAssertHandler(0xffffffff8208f184,0x752,0,0xffffffff820011f4,0xffffffff8208f5b8,uVar15);
+      }
+      uVar21 = uVar16;
+    } while (iVar23 <= iVar20);
+    param_5 = param_5 & 0xffffffff;
+  }
+  if ((uVar7 & 0xffffffff) != 0) {
+    lVar8 = uVar19 + 8;
+    do {
+      if (*(char *)((int *)lVar8 + 1) == '\x02') {
+        if (*(int *)(iVar10 + 4) == puVar12[1]) {
+          if (lVar6 != 0) {
+            iVar23 = *(int *)lVar8;
+            if ((iVar23 < -0x53) || (bVar5 = true, -0x4e < iVar23)) {
+              bVar5 = false;
+            }
+            if (bVar5) goto LAB_82508340;
+          }
+          uVar15 = 0;
+        }
+        else {
+LAB_82508340:
+          uVar15 = 1;
+        }
+        MSG_ReadDeltaField(puVar9,param_2,param_3,param_4,lVar8 + -8,0,uVar15);
+      }
+      uVar7 = uVar7 - 1;
+      lVar8 = lVar8 + 0x10;
+    } while (uVar7 != 0);
+  }
+  if ((int)uVar16 != iVar20) {
+    MyAssertHandler(0xffffffff8208f184,0x785,0,&DAT_82000f98,0xffffffff8208f708);
+  }
+  if ((int)uVar16 < 0) {
+    MyAssertHandler(0xffffffff8208f184,0x786,0,&DAT_82000f98,0xffffffff8208f6f4);
+  }
+  uVar16 = uVar16 + 1;
+  if ((uVar16 & 0xffffffff) < uVar18) {
+    lVar8 = uVar18 - uVar16;
+    lVar6 = (uVar16 & 0xfffffff) * 0x10 + uVar19 + -0xc;
+    do {
+      lVar6 = lVar6 + 0x10;
+      *(undefined4 *)(*(int *)lVar6 + (int)puVar12) = *(undefined4 *)(*(int *)lVar6 + iVar10);
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  if (*(char *)(DAT_836b9398 + 0xc) != '\0') {
+    uVar15 = BG_GetEntityTypeName(*(undefined4 *)(puVar3[1] + (int)puVar12));
+    Com_Printf(0x19,0xffffffff8208f6d8,param_5,uVar15);
+  }
+  pcVar17 = (char *)*puVar4;
+  pcVar14 = "eType";
+  do {
+    cVar1 = *pcVar17;
+    cVar2 = *pcVar14;
+    if (cVar1 == '\0') break;
+    pcVar17 = pcVar17 + 1;
+    pcVar14 = pcVar14 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    MyAssertHandler(0xffffffff8208f184,0x795,0,&DAT_82000f98,0xffffffff8208f6ac);
+  }
+  if (puVar4[2] != -0x4d) {
+    MyAssertHandler(0xffffffff8208f184,0x796,0,&DAT_82000f98,0xffffffff8208f684);
+  }
+  __restgprlr(0);
+  return;
 }
 
 
 // 825084A8  MSG_ReadDeltaEntity  (qcommon/msg_mp.cpp:1959)
 
-void MSG_ReadDeltaEntity(void)
+void MSG_ReadDeltaEntity(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+                        undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) != 0) {
+    SV_ValidateEntityState(param_3);
+  }
+  uVar1 = MSG_ReadDeltaEntityStruct(uVar1,param_2,param_3,param_4,param_5,3);
+  if (((int)uVar1 == 0) && ((param_4 & 0xffffffff) != 0)) {
+    SV_ValidateEntityState(param_4);
+  }
+  __restgprlr_27(uVar1);
+  return;
+}
+
+
+// 82508520  MSG_ReadDeltaArchivedEntity  (qcommon/msg_mp.cpp:1987)
+
+void MSG_ReadDeltaArchivedEntity
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               undefined8 param_5)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  
+  uVar3 = __savegprlr_25();
+  uVar1 = *(undefined4 *)(PTR_PTR_8296d104 + 4);
+  uVar2 = *(undefined4 *)PTR_PTR_8296d104;
+  if ((param_3 & 0xffffffff) != 0) {
+    SV_ValidateEntityState(param_3);
+  }
+  uVar3 = MSG_ReadDeltaStruct(uVar3,param_2,param_3,param_4,param_5,uVar1,0xb,uVar2);
+  if (((int)uVar3 == 0) && ((param_4 & 0xffffffff) != 0)) {
+    SV_ValidateEntityState(param_4);
+  }
+  __restgprlr_25(uVar3);
+  return;
 }
 
 
@@ -973,11 +1811,720 @@ void MSG_ReadDeltaClient(undefined8 param_1,undefined8 param_2,ulonglong param_3
 
 // 82508648  MSG_ReadDeltaHudElems  (qcommon/msg_mp.cpp:2074)
 
-void MSG_ReadDeltaHudElems(void)
+void MSG_ReadDeltaHudElems
+               (undefined8 param_1,undefined4 param_2,longlong param_3,longlong param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint *puVar5;
+  uint uVar6;
+  undefined8 uVar7;
+  ulonglong uVar8;
+  int iVar10;
+  int iVar11;
+  undefined8 uVar9;
+  void *pvVar12;
+  int iVar13;
+  int iVar15;
+  ulonglong uVar14;
+  longlong lVar16;
+  longlong lVar17;
+  int *piVar18;
+  uint local_c0;
+  uint local_b8;
+  
+  uVar7 = __savegprlr();
+  if (param_5 != 0x1f) {
+    MyAssertHandler(0xffffffff8208f184,0x824,0,0xffffffff82000f98,0xffffffff8208f8c8);
+  }
+  iVar1 = *(int *)(PTR_PTR_8296d104 + 0x24);
+  iVar2 = *(int *)(PTR_PTR_8296d104 + 0x20);
+  uVar8 = MSG_ReadBits(uVar7,5);
+  local_c0 = (uint)uVar8;
+  if (0 < (int)local_c0) {
+    iVar3 = (int)param_4;
+    lVar17 = param_4 + 0x28;
+    lVar16 = param_3;
+    local_b8 = local_c0;
+    do {
+      iVar10 = MSG_ReadBits(uVar7,6);
+      iVar11 = -1;
+      iVar4 = (int)param_3;
+      puVar5 = (uint *)lVar17;
+      if ((iVar10 != 0) && (iVar10 = iVar10 + -1, -1 < iVar10)) {
+        iVar15 = -1;
+        do {
+          iVar11 = MSG_ReadNumFieldsSkipped(uVar7,3,iVar10 - iVar15);
+          iVar11 = iVar11 + iVar15;
+          if (iVar10 < iVar11) {
+            uVar9 = va("lc is %i, nextChanged is %i",iVar10,iVar11);
+            MyAssertHandler(0xffffffff8208f184,0x83c,0,0xffffffff820011f4,0xffffffff8208f5f0,uVar9);
+          }
+          if (iVar11 <= iVar15) {
+            uVar9 = va(0xffffffff8208f730,iVar11,iVar15);
+            MyAssertHandler(0xffffffff8208f184,0x83d,0,0xffffffff820011f4,0xffffffff8208f5b8,uVar9);
+          }
+          iVar15 = iVar15 + 1;
+          if (iVar15 < iVar11) {
+            iVar13 = iVar11 - iVar15;
+            piVar18 = (int *)(iVar15 * 0x10 + iVar2 + -0xc);
+            do {
+              piVar18 = piVar18 + 4;
+              iVar15 = *piVar18 + (-0x28 - iVar3);
+              *(undefined4 *)((int)puVar5 + iVar3 + iVar15) =
+                   *(undefined4 *)((int)puVar5 + iVar4 + iVar15);
+              iVar13 = iVar13 + -1;
+            } while (iVar13 != 0);
+          }
+          MSG_ReadDeltaField(uVar7,param_2,lVar16,lVar17 + -0x28,iVar11 * 0x10 + iVar2,0,0);
+          iVar15 = iVar11;
+        } while (iVar11 < iVar10);
+      }
+      iVar11 = iVar11 + 1;
+      if (iVar11 < iVar1) {
+        iVar10 = iVar1 - iVar11;
+        piVar18 = (int *)(iVar11 * 0x10 + iVar2 + -0xc);
+        do {
+          piVar18 = piVar18 + 4;
+          iVar11 = *piVar18 + (-0x28 - iVar3);
+          *(undefined4 *)((int)puVar5 + iVar3 + iVar11) =
+               *(undefined4 *)((int)puVar5 + iVar4 + iVar11);
+          iVar10 = iVar10 + -1;
+        } while (iVar10 != 0);
+      }
+      iVar4 = iVar4 - iVar3;
+      if ((*(uint *)(iVar4 + (int)puVar5) & 0xfffffff0) != 0) {
+        MyAssertHandler(0xffffffff8208f184,0x84b,0,0xffffffff8208f838,"(!(from[i].alignOrg & ~15))")
+        ;
+      }
+      if ((*puVar5 & 0xfffffff0) != 0) {
+        MyAssertHandler(0xffffffff8208f184,0x84c,0,0xffffffff8208f854,"(!(to[i].alignOrg & ~15))");
+      }
+      uVar6 = *(int *)(iVar4 + (int)puVar5) >> 2 & 3;
+      if (((uVar6 != 0) && (uVar6 != 1)) && (uVar6 != 2)) {
+        MyAssertHandler(0xffffffff8208f184,0x84f,0,0xffffffff8208f838,
+                        "(alignX == 0 || alignX == 1 || alignX == 2)");
+      }
+      uVar6 = *(uint *)(iVar4 + (int)puVar5) & 3;
+      if (((uVar6 != 0) && (uVar6 != 1)) && (uVar6 != 2)) {
+        MyAssertHandler(0xffffffff8208f184,0x852,0,0xffffffff8208f838,
+                        "(alignY == 0 || alignY == 1 || alignY == 2)");
+      }
+      uVar6 = (int)*puVar5 >> 2 & 3;
+      if (((uVar6 != 0) && (uVar6 != 1)) && (uVar6 != 2)) {
+        MyAssertHandler(0xffffffff8208f184,0x855,0,0xffffffff8208f854,
+                        "(alignX == 0 || alignX == 1 || alignX == 2)");
+      }
+      uVar6 = *puVar5 & 3;
+      if (((uVar6 != 0) && (uVar6 != 1)) && (uVar6 != 2)) {
+        MyAssertHandler(0xffffffff8208f184,0x858,0,0xffffffff8208f854,
+                        "(alignY == 0 || alignY == 1 || alignY == 2)");
+      }
+      uVar14 = (ulonglong)local_b8;
+      lVar16 = lVar16 + 0xa8;
+      lVar17 = lVar17 + 0xa8;
+      local_b8 = (uint)(uVar14 - 1);
+    } while (uVar14 - 1 != 0);
+    uVar8 = uVar8 & 0xffffffff;
+  }
+  if ((int)uVar8 < param_5) {
+    param_4 = uVar8 * 0xa8 + param_4;
+    do {
+      piVar18 = (int *)param_4;
+      if (*piVar18 == 0) break;
+      pvVar12 = memset(piVar18,0,0xa8);
+      uVar8 = (ulonglong)(int)pvVar12;
+      if (*piVar18 != 0) {
+        uVar8 = MyAssertHandler(0xffffffff8208f184,0x85f,0,&DAT_82000f98,0xffffffff8208f818);
+      }
+      param_4 = param_4 + 0xa8;
+      local_c0 = local_c0 + 1;
+    } while ((int)local_c0 < param_5);
+  }
+  __restgprlr(uVar8);
+  return;
+}
+
+
+// 82508A88  MSG_ReadDeltaPlayerstate  (qcommon/msg_mp.cpp:2158)
+
+void MSG_ReadDeltaPlayerstate
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,ulonglong param_4,
+               int *param_5,ulonglong param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  uint uVar3;
+  undefined4 uVar4;
+  int *piVar5;
+  float fVar6;
+  bool bVar7;
+  undefined4 uVar11;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar12;
+  int iVar13;
+  undefined8 uVar10;
+  int iVar14;
+  char cVar16;
+  int iVar15;
+  undefined1 *_Src;
+  int iVar17;
+  int *piVar18;
+  uint *puVar19;
+  undefined1 uVar20;
+  undefined8 uVar21;
+  int iVar22;
+  int iVar23;
+  longlong lVar24;
+  undefined1 *puVar25;
+  int *piVar26;
+  int local_37a4;
+  undefined1 auStack_37a0 [1024];
+  undefined1 auStack_33a0 [13216];
+  
+  uVar11 = __savegprlr();
+  _Src = (undefined1 *)param_4;
+  if ((param_4 & 0xffffffff) == 0) {
+    _Src = auStack_33a0;
+    memset(auStack_33a0,0,0x3300);
+  }
+  memcpy(param_5,_Src,0x3300);
+  piVar5 = (int *)param_2;
+  if ((DAT_82b3ecc8 == 0) ||
+     ((*(int *)(DAT_82b3ecc8 + 0xc) < 2 && (*(int *)(DAT_82b3ecc8 + 0xc) != -2)))) {
+    uVar21 = 0;
+  }
+  else {
+    uVar21 = 1;
+    Com_Printf(0x19,0xffffffff8208fae4,piVar5[7]);
+  }
+  uVar8 = MSG_ReadBit(param_2);
+  uVar8 = (-uVar8 & ~uVar8 & 0xffffffff) >> 0x1f;
+  uVar9 = MSG_ReadBit(param_2);
+  uVar9 = (-uVar9 & ~uVar9 & 0xffffffff) >> 0x1f;
+  iVar14 = *(int *)(PTR_PTR_8296d104 + 0x14);
+  iVar15 = *(int *)(PTR_PTR_8296d104 + 0x10);
+  iVar12 = MSG_ReadLastChangedField(param_2,iVar14 + 1);
+  if (iVar12 < 0) {
+    MyAssertHandler(0xffffffff8208f184,0x8af,0,0xffffffff82000f98,0xffffffff8208fadc);
+  }
+  if (iVar14 + 1 < iVar12) {
+    MSG_Discard(param_2);
+    __restgprlr();
+    return;
+  }
+  iVar13 = -1;
+  if (0 < iVar12) {
+    iVar12 = iVar12 + -1;
+    if (-1 < iVar12) {
+      iVar22 = iVar13;
+      do {
+        if (*piVar5 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
+                          0x8bf,0,&DAT_82000f98,0xffffffff8208f29c);
+        }
+        iVar13 = MSG_ReadNumFieldsSkipped(param_2,4,iVar12 - iVar22);
+        iVar13 = iVar13 + iVar22;
+        iVar23 = iVar22 + 1;
+        if (iVar23 < iVar13) {
+          iVar17 = iVar13 - iVar23;
+          piVar26 = (int *)(iVar23 * 0x10 + iVar15 + 4);
+          do {
+            if (*(char *)(piVar26 + 2) != '\x02') {
+              *(undefined4 *)(*piVar26 + (int)param_5) = *(undefined4 *)(_Src + *piVar26);
+            }
+            piVar26 = piVar26 + 4;
+            iVar17 = iVar17 + -1;
+          } while (iVar17 != 0);
+        }
+        iVar23 = iVar13 * 0x10 + iVar15;
+        if (((uVar8 == 0) || (*(char *)(iVar23 + 0xc) != '\x03')) &&
+           ((uVar9 == 0 || (*(char *)(iVar23 + 0xc) != '\x04')))) {
+          bVar7 = false;
+        }
+        else {
+          bVar7 = true;
+        }
+        if (iVar12 < iVar13) {
+          uVar10 = va(0xffffffff8208fa84,iVar13,iVar12);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
+                          0x8d5,0,"%s\n\t%s",0xffffffff8208faa0,uVar10);
+        }
+        if (iVar13 <= iVar22) {
+          uVar10 = va(0xffffffff8208fab4,iVar13,iVar22);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
+                          0x8d6,0,"%s\n\t%s",0xffffffff8208f5b8,uVar10);
+        }
+        if (((param_6 & 0xff) == 0) || (uVar10 = 1, !bVar7)) {
+          uVar10 = 0;
+        }
+        MSG_ReadDeltaField(param_2,param_3,_Src,param_5,iVar23,uVar21,uVar10);
+        if (*piVar5 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
+                          0x8d8,0,&DAT_82000f98,0xffffffff8208f29c);
+        }
+        iVar22 = iVar13;
+      } while (iVar13 < iVar12);
+    }
+    if (iVar13 != iVar12) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x8db,0,
+                      &DAT_82000f98,0xffffffff8208fa70);
+    }
+  }
+  iVar13 = iVar13 + 1;
+  if (iVar13 < iVar14) {
+    iVar14 = iVar14 - iVar13;
+    piVar26 = (int *)(iVar13 * 0x10 + iVar15 + -0xc);
+    do {
+      piVar26 = piVar26 + 4;
+      *(undefined4 *)(*piVar26 + (int)param_5) = *(undefined4 *)(_Src + *piVar26);
+      iVar14 = iVar14 + -1;
+    } while (iVar14 != 0);
+  }
+  if (0 < iVar12) {
+    do {
+      if (*(char *)(iVar15 + 0xc) == '\x02') {
+        MSG_ReadDeltaField(param_2,param_3,_Src,param_5,iVar15,uVar21,0);
+      }
+      iVar12 = iVar12 + -1;
+      iVar15 = iVar15 + 0x10;
+    } while (iVar12 != 0);
+  }
+  if (uVar8 == 0) {
+    uVar21 = CL_GetLocalClientGlobals(uVar11);
+    iVar14 = CL_GetPredictedPlayerInformationForServerTime(uVar21,*param_5,param_5);
+    if (iVar14 == 0) {
+      Com_PrintError(0x19,0xffffffff8208fa30);
+      param_5[7] = *(int *)(_Src + 0x1c);
+      param_5[8] = *(int *)(_Src + 0x20);
+      param_5[9] = *(int *)(_Src + 0x24);
+      param_5[10] = *(int *)(_Src + 0x28);
+      param_5[0xb] = *(int *)(_Src + 0x2c);
+      param_5[0xc] = *(int *)(_Src + 0x30);
+      param_5[6] = *(int *)(_Src + 0x18);
+      param_5[0x3d] = *(int *)(_Src + 0xf4);
+    }
+    cVar16 = CL_Demo_IsPlaying(uVar11);
+    if ((cVar16 != '\0') &&
+       (iVar14 = CL_UpdatePredictedPlayerInformationForServerTime(uVar11,*param_5,param_5),
+       iVar14 == 0)) {
+      param_5[0x56] = *(int *)(_Src + 0x158);
+      param_5[0x57] = *(int *)(_Src + 0x15c);
+      param_5[0x58] = *(int *)(_Src + 0x160);
+    }
+  }
+  else if (0.0 < *(float *)(DAT_836b93a8 + 0xc)) {
+    iVar14 = CL_GetLocalClientGlobals(uVar11);
+    iVar15 = CL_GetClientArchiveIndexForServerTime(iVar14,*param_5,&local_37a4);
+    if (iVar15 != 0) {
+      iVar14 = local_37a4 * 0x88 + iVar14;
+      if (*(int *)(iVar14 + 0x4bfc) == *param_5) {
+        fVar6 = (float)param_5[9] - *(float *)(iVar14 + 0x4c08);
+        fVar1 = (float)((double)(float)param_5[7] - (double)*(float *)(iVar14 + 0x4c00));
+        fVar2 = (float)((double)(float)param_5[8] - (double)*(float *)(iVar14 + 0x4c04));
+        fVar1 = fVar2 * fVar2 + fVar1 * fVar1 + fVar6 * fVar6;
+        if ((fVar1 < *(float *)(DAT_836b93a8 + 0xc) * *(float *)(DAT_836b93a8 + 0xc)) &&
+           (0.01 < fVar1)) {
+          Com_Printf(0xe,0xffffffff8208f9d0,*param_5,(double)*(float *)(iVar14 + 0x4c00),
+                     (double)*(float *)(iVar14 + 0x4c04),(double)*(float *)(iVar14 + 0x4c08),
+                     (double)(float)param_5[7],(double)(float)param_5[8]);
+        }
+      }
+    }
+  }
+  if ((uVar9 == 0) && (param_5[0x2b] != 0x7ff)) {
+    uVar21 = CL_GetLocalClientGlobals(uVar11);
+    iVar14 = CL_GetPredictedVehicleForServerTime(uVar21,*param_5,param_5 + 0x2b);
+    if (iVar14 == 0) {
+      param_5[0x2c] = *(int *)(_Src + 0xb0);
+      param_5[0x2d] = *(int *)(_Src + 0xb4);
+      param_5[0x2e] = *(int *)(_Src + 0xb8);
+      param_5[0x2f] = *(int *)(_Src + 0xbc);
+      param_5[0x30] = *(int *)(_Src + 0xc0);
+      param_5[0x31] = *(int *)(_Src + 0xc4);
+      param_5[0x32] = *(int *)(_Src + 200);
+      param_5[0x33] = *(int *)(_Src + 0xcc);
+      param_5[0x34] = *(int *)(_Src + 0xd0);
+      param_5[0x35] = *(int *)(_Src + 0xd4);
+      param_5[0x36] = *(int *)(_Src + 0xd8);
+      param_5[0x37] = *(int *)(_Src + 0xdc);
+      param_5[0x38] = *(int *)(_Src + 0xe0);
+      param_5[0x39] = *(int *)(_Src + 0xe4);
+      param_5[0x3a] = *(int *)(_Src + 0xe8);
+      param_5[0x3b] = *(int *)(_Src + 0xec);
+      param_5[0x3c] = *(int *)(_Src + 0xf0);
+    }
+  }
+  uVar3 = piVar5[8];
+  if ((uVar3 & 7) == 0) {
+    iVar14 = piVar5[7];
+    if (iVar14 < piVar5[6] + piVar5[5]) {
+      piVar5[8] = iVar14 << 3;
+      piVar5[7] = iVar14 + 1;
+      goto LAB_82509134;
+    }
+    *piVar5 = 1;
+  }
+  else {
+LAB_82509134:
+    iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+    piVar5[8] = piVar5[8] + 1;
+    if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_82509208;
+  }
+  if ((DAT_82b3ecc8 != 0) && (*(int *)(DAT_82b3ecc8 + 0xc) == 4)) {
+    Com_Printf(0x19,0xffffffff82085fdc,0xffffffff8208f9c0);
+  }
+  uVar8 = MSG_ReadBits(param_2,4);
+  if ((uVar8 & 1) != 0) {
+    iVar14 = MSG_ReadShort(param_2);
+    param_5[0x67] = iVar14;
+  }
+  if ((uVar8 & 2) != 0) {
+    iVar14 = MSG_ReadShort(param_2);
+    param_5[0x68] = iVar14;
+  }
+  if ((uVar8 & 4) != 0) {
+    iVar14 = MSG_ReadShort(param_2);
+    param_5[0x69] = iVar14;
+  }
+  if ((uVar8 & 8) != 0) {
+    iVar14 = MSG_ReadByte(param_2);
+    param_5[0x6a] = iVar14;
+  }
+LAB_82509208:
+  do {
+    uVar3 = piVar5[8];
+    if ((uVar3 & 7) == 0) {
+      iVar14 = piVar5[7];
+      if (iVar14 < piVar5[6] + piVar5[5]) {
+        piVar5[8] = iVar14 << 3;
+        piVar5[7] = iVar14 + 1;
+        goto LAB_82509248;
+      }
+      *piVar5 = 1;
+    }
+    else {
+LAB_82509248:
+      iVar15 = MSG_GetByte(param_2,piVar5[8] >> 3);
+      iVar14 = piVar5[8];
+      piVar5[8] = iVar14 + 1U;
+      if ((iVar15 >> (uVar3 & 7) & 1U) == 0) break;
+    }
+    iVar14 = MSG_ReadBits(param_2,4);
+    iVar15 = MSG_ReadBits(param_2,0x19);
+    param_5[iVar14 * 3 + 0x103] = iVar15;
+    piVar26 = param_5 + iVar14 * 3 + 0x104;
+    lVar24 = 2;
+    do {
+      uVar3 = piVar5[8];
+      if ((uVar3 & 7) == 0) {
+        iVar14 = piVar5[7];
+        if (iVar14 < piVar5[6] + piVar5[5]) {
+          piVar5[8] = iVar14 << 3;
+          piVar5[7] = iVar14 + 1;
+          goto LAB_825092f0;
+        }
+        *piVar5 = 1;
+LAB_8250931c:
+        iVar14 = MSG_ReadBits(param_2,8);
+        *piVar26 = iVar14;
+      }
+      else {
+LAB_825092f0:
+        iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+        piVar5[8] = piVar5[8] + 1;
+        if ((iVar14 >> (uVar3 & 7) & 1U) != 0) goto LAB_8250931c;
+      }
+      lVar24 = lVar24 + -1;
+      piVar26 = piVar26 + 1;
+    } while (lVar24 != 0);
+  } while( true );
+  uVar3 = iVar14 + 1U & 7;
+  if (uVar3 == 0) {
+    iVar14 = piVar5[7];
+    if (iVar14 < piVar5[6] + piVar5[5]) {
+      piVar5[8] = iVar14 << 3;
+      piVar5[7] = iVar14 + 1;
+      goto LAB_8250937c;
+    }
+    *piVar5 = 1;
+LAB_825093a8:
+    puVar25 = (undefined1 *)((int)param_5 + 0x2b1);
+    lVar24 = 0xf;
+    piVar26 = param_5 + 0x9d;
+    do {
+      uVar3 = piVar5[8];
+      if ((uVar3 & 7) == 0) {
+        iVar14 = piVar5[7];
+        if (iVar14 < piVar5[6] + piVar5[5]) {
+          piVar5[8] = iVar14 << 3;
+          piVar5[7] = iVar14 + 1;
+          goto LAB_82509408;
+        }
+        *piVar5 = 1;
+LAB_82509434:
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_82509474;
+          }
+          *piVar5 = 1;
+LAB_825094a0:
+          iVar14 = MSG_ReadBits(param_2,0x18);
+          *piVar26 = iVar14;
+          if ((DAT_8337367c == 0) || (*(char *)(DAT_8337367c + 0xc) == '\0')) {
+            iVar15 = 0;
+            piVar18 = param_5 + 0x9d;
+            do {
+              if (*piVar18 == iVar14) {
+                if (-1 < iVar15) goto LAB_82509500;
+                break;
+              }
+              iVar15 = iVar15 + 1;
+              piVar18 = piVar18 + 1;
+            } while (iVar15 < 0xf);
+          }
+          else {
+            iVar15 = 0xe;
+LAB_82509500:
+            if (param_5 + iVar15 * 3 + 0xac != (int *)0x0) goto LAB_82509534;
+          }
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
+                          0x988,0,&DAT_82000f98,0xffffffff8200d52c);
+        }
+        else {
+LAB_82509474:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) != 0) goto LAB_825094a0;
+        }
+LAB_82509534:
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_82509574;
+          }
+          *piVar5 = 1;
+LAB_825095a4:
+          uVar20 = 0;
+        }
+        else {
+LAB_82509574:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          uVar20 = 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_825095a4;
+        }
+        puVar25[-1] = uVar20;
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_825095ec;
+          }
+          *piVar5 = 1;
+LAB_8250961c:
+          uVar20 = 0;
+        }
+        else {
+LAB_825095ec:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          uVar20 = 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_8250961c;
+        }
+        *puVar25 = uVar20;
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_82509664;
+          }
+          *piVar5 = 1;
+LAB_82509694:
+          uVar20 = 0;
+        }
+        else {
+LAB_82509664:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          uVar20 = 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_82509694;
+        }
+        puVar25[1] = uVar20;
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_825096dc;
+          }
+          *piVar5 = 1;
+LAB_8250970c:
+          uVar20 = 0;
+        }
+        else {
+LAB_825096dc:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          uVar20 = 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_8250970c;
+        }
+        puVar25[2] = uVar20;
+        uVar3 = piVar5[8];
+        if ((uVar3 & 7) == 0) {
+          iVar14 = piVar5[7];
+          if (iVar14 < piVar5[6] + piVar5[5]) {
+            piVar5[8] = iVar14 << 3;
+            piVar5[7] = iVar14 + 1;
+            goto LAB_82509754;
+          }
+          *piVar5 = 1;
+LAB_82509784:
+          uVar20 = 0;
+        }
+        else {
+LAB_82509754:
+          iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+          piVar5[8] = piVar5[8] + 1;
+          uVar20 = 1;
+          if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_82509784;
+        }
+        puVar25[3] = uVar20;
+        uVar11 = MSG_ReadBits(param_2,2);
+        *(undefined4 *)(puVar25 + 7) = uVar11;
+      }
+      else {
+LAB_82509408:
+        iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+        piVar5[8] = piVar5[8] + 1;
+        if ((iVar14 >> (uVar3 & 7) & 1U) != 0) goto LAB_82509434;
+      }
+      lVar24 = lVar24 + -1;
+      piVar26 = piVar26 + 1;
+      puVar25 = puVar25 + 0xc;
+    } while (lVar24 != 0);
+  }
+  else {
+LAB_8250937c:
+    iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+    piVar5[8] = piVar5[8] + 1;
+    if ((iVar14 >> uVar3 & 1U) != 0) goto LAB_825093a8;
+  }
+  if ((param_5[0xdc] & 0xffU) != 0) {
+    if ((DAT_8337367c == 0) || (*(char *)(DAT_8337367c + 0xc) == '\0')) {
+      iVar14 = 0;
+      puVar19 = (uint *)(param_5 + 0x9d);
+      do {
+        if (*puVar19 == param_5[0xdc]) {
+          if (-1 < iVar14) goto LAB_82509814;
+          break;
+        }
+        iVar14 = iVar14 + 1;
+        puVar19 = puVar19 + 1;
+      } while (iVar14 < 0xf);
+    }
+    else {
+      iVar14 = 0xe;
+LAB_82509814:
+      if (param_5 + iVar14 * 3 + 0xac != (int *)0x0) goto LAB_82509870;
+    }
+    uVar21 = BG_GetWeaponName(param_5[0xdc],auStack_37a0,0x400);
+    uVar21 = va(0xffffffff8208f970,uVar21);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x997,0,
+                    "%s\n\t%s",0xffffffff8208f908,uVar21);
+  }
+LAB_82509870:
+  do {
+    uVar3 = piVar5[8];
+    if ((uVar3 & 7) == 0) {
+      iVar14 = piVar5[7];
+      if (iVar14 < piVar5[6] + piVar5[5]) {
+        piVar5[8] = iVar14 << 3;
+        piVar5[7] = iVar14 + 1;
+        goto LAB_825098b0;
+      }
+      *piVar5 = 1;
+    }
+    else {
+LAB_825098b0:
+      iVar15 = MSG_GetByte(param_2,piVar5[8] >> 3);
+      iVar14 = piVar5[8];
+      piVar5[8] = iVar14 + 1U;
+      if ((iVar15 >> (uVar3 & 7) & 1U) == 0) break;
+    }
+    uVar8 = MSG_ReadBits(param_2,4);
+    uVar11 = MSG_ReadBits(param_2,0x19);
+    *(undefined4 *)((int)param_5 + (int)((uVar8 & 0xffffffff) << 3) + 0x394) = uVar11;
+    uVar11 = MSG_ReadBits(param_2,10);
+    *(undefined4 *)((int)((uVar8 + 0x73 & 0xffffffff) << 3) + (int)param_5) = uVar11;
+  } while( true );
+  uVar3 = iVar14 + 1U & 7;
+  if (uVar3 == 0) {
+    iVar14 = piVar5[7];
+    if (iVar14 < piVar5[6] + piVar5[5]) {
+      piVar5[8] = iVar14 << 3;
+      piVar5[7] = iVar14 + 1;
+      goto LAB_8250995c;
+    }
+    *piVar5 = 1;
+LAB_82509988:
+    lVar24 = 0x20;
+    piVar26 = param_5 + 0x161;
+    uVar11 = *(undefined4 *)(PTR_PTR_8296d104 + 0x1c);
+    uVar4 = *(undefined4 *)(PTR_PTR_8296d104 + 0x18);
+    do {
+      iVar14 = MSG_ReadBits(param_2,3);
+      *piVar26 = iVar14;
+      MSG_ReadDeltaFields(param_2,param_3,((int)_Src - (int)param_5) + (int)piVar26,piVar26,uVar11,
+                          uVar4,1,0);
+      lVar24 = lVar24 + -1;
+      piVar26 = piVar26 + 9;
+    } while (lVar24 != 0);
+  }
+  else {
+LAB_8250995c:
+    iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+    piVar5[8] = piVar5[8] + 1;
+    if ((iVar14 >> uVar3 & 1U) != 0) goto LAB_82509988;
+  }
+  uVar3 = piVar5[8];
+  if ((uVar3 & 7) == 0) {
+    iVar14 = piVar5[7];
+    if (iVar14 < piVar5[6] + piVar5[5]) {
+      piVar5[8] = iVar14 << 3;
+      piVar5[7] = iVar14 + 1;
+      goto LAB_82509a44;
+    }
+    *piVar5 = 1;
+  }
+  else {
+LAB_82509a44:
+    iVar14 = MSG_GetByte(param_2,piVar5[8] >> 3);
+    piVar5[8] = piVar5[8] + 1;
+    if ((iVar14 >> (uVar3 & 7) & 1U) == 0) goto LAB_82509aa0;
+  }
+  MSG_ReadDeltaHudElems(param_2,param_3,_Src + 0x1e6c,param_5 + 0x79b,0x1f);
+  MSG_ReadDeltaHudElems(param_2,param_3,_Src + 0xa14,param_5 + 0x285,0x1f);
+LAB_82509aa0:
+  __restgprlr();
+  return;
 }
 
 
@@ -995,6 +2542,141 @@ void MSG_initHuffmanInternal(void)
   lVar2 = Sys_Milliseconds();
   Com_Printf(0x19,0xffffffff8208faf8,lVar2 - lVar1);
   return;
+}
+
+
+// 82509B18  MSG_CheckFields  (qcommon/msg_mp.cpp:2577)
+
+void MSG_CheckFields(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  undefined4 uVar3;
+  bool bVar4;
+  int *piVar6;
+  undefined8 uVar5;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  undefined4 *puVar12;
+  undefined4 *puVar13;
+  undefined4 *puVar14;
+  
+  __savegprlr_18();
+  bVar4 = false;
+  lVar8 = 0;
+  uVar1 = *(uint *)(PTR_PTR_8296d104 + 0x2c);
+  puVar13 = *(undefined4 **)(PTR_PTR_8296d104 + 0x28);
+  do {
+    piVar6 = (int *)MSG_GetStateFieldListForEntityType(lVar8);
+    puVar12 = (undefined4 *)*piVar6;
+    uVar2 = piVar6[1];
+    uVar10 = (ulonglong)uVar1;
+    puVar14 = puVar13;
+    if (0 < (int)uVar1) {
+      do {
+        iVar7 = 0;
+        if (0 < (int)uVar2) {
+          piVar6 = puVar12 + 1;
+          do {
+            if (*piVar6 == puVar14[1]) {
+              if (iVar7 < (int)uVar2) goto LAB_82509bcc;
+              break;
+            }
+            iVar7 = iVar7 + 1;
+            piVar6 = piVar6 + 4;
+          } while (iVar7 < (int)uVar2);
+        }
+        uVar3 = *puVar14;
+        bVar4 = true;
+        uVar5 = BG_GetEntityTypeName(lVar8);
+        Com_PrintError(0x19,0xffffffff8208fbfc,uVar3,uVar5);
+LAB_82509bcc:
+        uVar10 = uVar10 - 1;
+        puVar14 = puVar14 + 4;
+      } while (uVar10 != 0);
+    }
+    if (0 < (int)uVar2) {
+      lVar9 = 1;
+      uVar10 = (ulonglong)uVar2;
+      do {
+        if ((int)lVar9 < (int)uVar2) {
+          lVar11 = (ulonglong)uVar2 - lVar9;
+          puVar14 = puVar12;
+          do {
+            if (puVar12[1] == puVar14[5]) {
+              uVar3 = puVar14[4];
+              bVar4 = true;
+              uVar5 = BG_GetEntityTypeName(lVar8);
+              Com_PrintError(0x19,0xffffffff8208fbb8,*puVar12,uVar3,uVar5);
+            }
+            lVar11 = lVar11 + -1;
+            puVar14 = puVar14 + 4;
+          } while (lVar11 != 0);
+        }
+        uVar10 = uVar10 - 1;
+        lVar9 = lVar9 + 1;
+        puVar12 = puVar12 + 4;
+      } while (uVar10 != 0);
+    }
+    lVar8 = lVar8 + 1;
+    if (0x12 < (int)lVar8) {
+      uVar1 = *(uint *)(PTR_PTR_8296d104 + 0x14);
+      puVar13 = *(undefined4 **)(PTR_PTR_8296d104 + 0x10);
+      if (0 < (int)uVar1) {
+        lVar8 = 1;
+        uVar10 = (ulonglong)uVar1;
+        do {
+          if ((int)lVar8 < (int)uVar1) {
+            lVar9 = (ulonglong)uVar1 - lVar8;
+            puVar12 = puVar13;
+            do {
+              if (puVar13[1] == puVar12[5]) {
+                bVar4 = true;
+                Com_PrintError(0x19,0xffffffff8208fb7c,*puVar13,puVar12[4]);
+              }
+              lVar9 = lVar9 + -1;
+              puVar12 = puVar12 + 4;
+            } while (lVar9 != 0);
+          }
+          uVar10 = uVar10 - 1;
+          lVar8 = lVar8 + 1;
+          puVar13 = puVar13 + 4;
+        } while (uVar10 != 0);
+      }
+      uVar1 = *(uint *)(PTR_PTR_8296d104 + 0xc);
+      puVar13 = *(undefined4 **)(PTR_PTR_8296d104 + 8);
+      if (0 < (int)uVar1) {
+        lVar8 = 1;
+        uVar10 = (ulonglong)uVar1;
+        do {
+          if ((int)lVar8 < (int)uVar1) {
+            lVar9 = (ulonglong)uVar1 - lVar8;
+            puVar12 = puVar13;
+            do {
+              if (puVar13[1] == puVar12[5]) {
+                bVar4 = true;
+                Com_PrintError(0x19,0xffffffff8208fb40,*puVar13,puVar12[4]);
+              }
+              lVar9 = lVar9 + -1;
+              puVar12 = puVar12 + 4;
+            } while (lVar9 != 0);
+          }
+          uVar10 = uVar10 - 1;
+          lVar8 = lVar8 + 1;
+          puVar13 = puVar13 + 4;
+        } while (uVar10 != 0);
+      }
+      if ((bVar4) && (DAT_84013128 == 0)) {
+        MyAssertHandler(0xffffffff8208f184,0xa6d,0,0xffffffff8208fb18);
+      }
+      __restgprlr_18();
+      return;
+    }
+  } while( true );
 }
 
 

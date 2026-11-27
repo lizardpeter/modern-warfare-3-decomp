@@ -3,3 +3,38 @@
 ; 8292D8C0  bdEndpoint::operator==  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdendpoint.cpp:26)
   8292D8C0  7D8802A6             mfspr r12,LR
   8292D8C4  4BFE8DF5             bl 0x829166b8
+  8292D8C8  9421FF80             stwu r1,-0x80(r1)
+  8292D8CC  83E30000             lwz r31,0x0(r3)
+  8292D8D0  7C7E1B78             or r30,r3,r3
+  8292D8D4  7C9D2378             or r29,r4,r4
+  8292D8D8  39600000             li r11,0x0
+  8292D8DC  2B1F0000             cmplwi cr6,r31,0x0
+  8292D8E0  419A0048             beq cr6,0x8292d928
+  8292D8E4  80640000             lwz r3,0x0(r4)
+  8292D8E8  2B030000             cmplwi cr6,r3,0x0
+  8292D8EC  419A004C             beq cr6,0x8292d938
+  8292D8F0  4BFFFEC1             bl 0x8292d7b0
+  8292D8F4  7C7C1B78             or r28,r3,r3
+  8292D8F8  7FE3FB78             or r3,r31,r31
+  8292D8FC  4BFFFEB5             bl 0x8292d7b0
+  8292D900  7F03E040             cmplw cr6,r3,r28
+  8292D904  409A0018             bne cr6,0x8292d91c
+  8292D908  E97E0004             ld r11,0x4(r30)
+  8292D90C  E95D0004             ld r10,0x4(r29)
+  8292D910  7F2B5040             cmpld cr6,r11,r10
+  8292D914  39600001             li r11,0x1
+  8292D918  419A0008             beq cr6,0x8292d920
+LAB_8292d91c:
+  8292D91C  39600000             li r11,0x0
+LAB_8292d920:
+  8292D920  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  8292D924  48000014             b 0x8292d938
+LAB_8292d928:
+  8292D928  815D0000             lwz r10,0x0(r29)
+  8292D92C  2B0A0000             cmplwi cr6,r10,0x0
+  8292D930  409A0008             bne cr6,0x8292d938
+  8292D934  39600001             li r11,0x1
+LAB_8292d938:
+  8292D938  7D635B78             or r3,r11,r11
+  8292D93C  38210080             addi r1,r1,0x80
+  8292D940  4BFE8DC8             b 0x82916708

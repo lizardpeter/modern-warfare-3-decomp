@@ -5,7 +5,47 @@
 errno_t memcpy_s(void *_Dst,rsize_t _DstSize,void *_Src,rsize_t _MaxCount)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_Dst,_DstSize,_Src,_MaxCount);
+  void *_Dst_00;
+  int *piVar1;
+  errno_t eVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  int iVar6;
+  
+  uVar5 = (ulonglong)(int)_MaxCount;
+  uVar4 = (ulonglong)(int)_Src;
+  uVar3 = (ulonglong)(int)_DstSize;
+  _Dst_00 = (void *)__savegprlr_29(_Dst);
+  if ((uVar5 & 0xffffffff) != 0) {
+    if (_Dst_00 == (void *)0x0) {
+      piVar1 = _errno();
+      *piVar1 = 0x16;
+      _invalid_parameter_noinfo();
+LAB_829257b0:
+      iVar6 = 0x16;
+      goto LAB_829257b4;
+    }
+    if (((uVar4 & 0xffffffff) == 0) || ((uVar3 & 0xffffffff) < (uVar5 & 0xffffffff))) {
+      memset(_Dst_00,0,(size_t)uVar3);
+      if ((uVar4 & 0xffffffff) == 0) {
+        piVar1 = _errno();
+        iVar6 = 0x16;
+      }
+      else {
+        if ((uVar5 & 0xffffffff) <= (uVar3 & 0xffffffff)) goto LAB_829257b0;
+        piVar1 = _errno();
+        iVar6 = 0x22;
+      }
+      *piVar1 = iVar6;
+      _invalid_parameter_noinfo();
+      goto LAB_829257b4;
+    }
+    memcpy(_Dst_00,(void *)uVar4,(size_t)uVar5);
+  }
+  iVar6 = 0;
+LAB_829257b4:
+  eVar2 = __restgprlr_29(iVar6);
+  return eVar2;
 }
 

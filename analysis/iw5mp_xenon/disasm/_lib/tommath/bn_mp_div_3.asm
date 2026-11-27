@@ -3,3 +3,112 @@
 ; 8225E8A0  mp_div_3  (line unknown)
   8225E8A0  7D8802A6             mfspr r12,LR
   8225E8A4  486B7E11             bl 0x829166b4
+  8225E8A8  9421FF60             stwu r1,-0xa0(r1)
+  8225E8AC  7C7F1B78             or r31,r3,r3
+  8225E8B0  38610050             addi r3,r1,0x50
+  8225E8B4  7C9D2378             or r29,r4,r4
+  8225E8B8  7CBC2B78             or r28,r5,r5
+  8225E8BC  809F0000             lwz r4,0x0(r31)
+  8225E8C0  4BFFE601             bl 0x8225cec0
+  8225E8C4  2F030000             cmpwi cr6,r3,0x0
+  8225E8C8  409A0164             bne cr6,0x8225ea2c
+  8225E8CC  815F0000             lwz r10,0x0(r31)
+  8225E8D0  39600000             li r11,0x0
+  8225E8D4  837F0008             lwz r27,0x8(r31)
+  8225E8D8  83C1005C             lwz r30,0x5c(r1)
+  8225E8DC  34EAFFFF             subic. r7,r10,0x1
+  8225E8E0  7D435378             or r3,r10,r10
+  8225E8E4  91410050             stw r10,0x50(r1)
+  8225E8E8  93610058             stw r27,0x58(r1)
+  8225E8EC  41800070             blt 0x8225e95c
+  8225E8F0  3D400555             lis r10,0x555
+  8225E8F4  54E6103A             rlwinm r6,r7,0x2,0x0,0x1d
+  8225E8F8  38800003             li r4,0x3
+  8225E8FC  61455555             ori r5,r10,0x5555
+LAB_8225e900:
+  8225E900  815F000C             lwz r10,0xc(r31)
+  8225E904  7969E0E4             rldicr r9,r11,0x1c,0x23
+  8225E908  7D06502E             lwzx r8,r6,r10
+  8225E90C  7D0B4B78             or r11,r8,r9
+  8225E910  2B2B0003             cmpldi cr6,r11,0x3
+  8225E914  41980030             blt cr6,0x8225e944
+  8225E918  7D4B29D2             mulld r10,r11,r5
+  8225E91C  794A2702             rldicl r10,r10,0x24,0x1c
+  8225E920  1D2AFFFD             mulli r9,r10,-0x3
+  8225E924  7D695A14             add r11,r9,r11
+  8225E928  2B2B0003             cmpldi cr6,r11,0x3
+  8225E92C  4198001C             blt cr6,0x8225e948
+  8225E930  7D2B2392             divdu r9,r11,r4
+  8225E934  1D09FFFD             mulli r8,r9,-0x3
+  8225E938  7D685A14             add r11,r8,r11
+  8225E93C  7D495214             add r10,r9,r10
+  8225E940  48000008             b 0x8225e948
+LAB_8225e944:
+  8225E944  39400000             li r10,0x0
+LAB_8225e948:
+  8225E948  554A003E             rlwinm r10,r10,0x0,0x0,0x1f
+  8225E94C  34E7FFFF             subic. r7,r7,0x1
+  8225E950  7D46F12E             stwx r10,r6,r30
+  8225E954  38C6FFFC             subi r6,r6,0x4
+  8225E958  4080FFA8             bge 0x8225e900
+LAB_8225e95c:
+  8225E95C  2B1C0000             cmplwi cr6,r28,0x0
+  8225E960  419A0008             beq cr6,0x8225e968
+  8225E964  917C0000             stw r11,0x0(r28)
+LAB_8225e968:
+  8225E968  2B1D0000             cmplwi cr6,r29,0x0
+  8225E96C  419A00B4             beq cr6,0x8225ea20
+  8225E970  2F030000             cmpwi cr6,r3,0x0
+  8225E974  4099002C             ble cr6,0x8225e9a0
+  8225E978  546B103A             rlwinm r11,r3,0x2,0x0,0x1d
+  8225E97C  7D6BF214             add r11,r11,r30
+  8225E980  396BFFFC             subi r11,r11,0x4
+LAB_8225e984:
+  8225E984  814B0000             lwz r10,0x0(r11)
+  8225E988  2B0A0000             cmplwi cr6,r10,0x0
+  8225E98C  409A0010             bne cr6,0x8225e99c
+  8225E990  3463FFFF             subic. r3,r3,0x1
+  8225E994  396BFFFC             subi r11,r11,0x4
+  8225E998  4181FFEC             bgt 0x8225e984
+LAB_8225e99c:
+  8225E99C  90610050             stw r3,0x50(r1)
+LAB_8225e9a0:
+  8225E9A0  21630000             subfic r11,r3,0x0
+  8225E9A4  813D0000             lwz r9,0x0(r29)
+  8225E9A8  39010050             addi r8,r1,0x50
+  8225E9AC  80FD0004             lwz r7,0x4(r29)
+  8225E9B0  7CCA5110             subfe r6,r10,r10
+  8225E9B4  80BD0008             lwz r5,0x8(r29)
+  8225E9B8  38810060             addi r4,r1,0x60
+  8225E9BC  807D000C             lwz r3,0xc(r29)
+  8225E9C0  7CCBD838             and r11,r6,r27
+  8225E9C4  39410060             addi r10,r1,0x60
+  8225E9C8  91610058             stw r11,0x58(r1)
+  8225E9CC  38C10050             addi r6,r1,0x50
+  8225E9D0  81680004             lwz r11,0x4(r8)
+  8225E9D4  83E80008             lwz r31,0x8(r8)
+  8225E9D8  83C8000C             lwz r30,0xc(r8)
+  8225E9DC  81080000             lwz r8,0x0(r8)
+  8225E9E0  91040000             stw r8,0x0(r4)
+  8225E9E4  91640004             stw r11,0x4(r4)
+  8225E9E8  93E40008             stw r31,0x8(r4)
+  8225E9EC  93C4000C             stw r30,0xc(r4)
+  8225E9F0  808A000C             lwz r4,0xc(r10)
+  8225E9F4  816A0000             lwz r11,0x0(r10)
+  8225E9F8  810A0004             lwz r8,0x4(r10)
+  8225E9FC  814A0008             lwz r10,0x8(r10)
+  8225EA00  91260000             stw r9,0x0(r6)
+  8225EA04  90E60004             stw r7,0x4(r6)
+  8225EA08  90A60008             stw r5,0x8(r6)
+  8225EA0C  9066000C             stw r3,0xc(r6)
+  8225EA10  909D000C             stw r4,0xc(r29)
+  8225EA14  917D0000             stw r11,0x0(r29)
+  8225EA18  911D0004             stw r8,0x4(r29)
+  8225EA1C  915D0008             stw r10,0x8(r29)
+LAB_8225ea20:
+  8225EA20  38610050             addi r3,r1,0x50
+  8225EA24  4BFFAC2D             bl 0x82259650
+  8225EA28  38600000             li r3,0x0
+LAB_8225ea2c:
+  8225EA2C  382100A0             addi r1,r1,0xa0
+  8225EA30  486B7CD4             b 0x82916704

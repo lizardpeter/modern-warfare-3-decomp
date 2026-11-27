@@ -2,21 +2,130 @@
 
 // 82722090  R_AddCloudSurf  (gfx_d3d/r_cloudsurf.cpp:12)
 
-void R_AddCloudSurf(void)
+void R_AddCloudSurf(undefined8 param_1,undefined8 param_2,undefined1 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint local_30;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = Material_FromHandle(param_2);
+  uVar3 = *(ulonglong *)(iVar2 + 8);
+  if (uVar1 != (uVar1 & 0xff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar1,uVar1 & 0xff);
+  }
+  local_30 = CONCAT31(CONCAT21((short)(uVar3 >> 0x1d),(char)uVar1),param_3) & 0xfffffff;
+  *(uint *)(&DAT_84775a00 + uVar1 * 4) = local_30;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82722118  R_EmitCloudSurfs  (gfx_d3d/r_cloudsurf.cpp:52)
 
-void R_EmitCloudSurfs(void)
+void R_EmitCloudSurfs(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  ulonglong uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if ((int)param_2 < *(int *)(DAT_84628b00 + 0x1560)) {
+    MyAssertHandler(0xffffffff821baf98,0x35,0,0xffffffff821baf5c,
+                    *(undefined4 *)(DAT_84628b00 + 0x1560),param_2);
+  }
+  if (*(int *)(iVar2 + 8) != 0) {
+    MyAssertHandler(0xffffffff821baf98,0x36,0,0xffffffff82000f98,0xffffffff821baf40);
+  }
+  if (*(int *)(iVar2 + 4) == 0) {
+    MyAssertHandler(0xffffffff821baf98,0x37,0,0xffffffff82000f98,0xffffffff821baf20);
+  }
+  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>
+                    (0xffffffff84775a00,*(undefined4 *)(DAT_84628b00 + 0x1560),
+                     *(undefined4 *)(DAT_8461658c + 0x2c),*(undefined4 *)(iVar2 + 4));
+  *(int *)(iVar2 + 8) = (int)uVar1;
+  if ((ulonglong)*(uint *)(DAT_84628b00 + 0x1560) < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821baf98,0x3a,0,0xffffffff821baec8,uVar1,
+                    *(undefined4 *)(DAT_84628b00 + 0x1560));
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82721F88  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:101)
+
+void R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+               (undefined8 param_1,uint param_2,uint param_3,uint param_4,longlong param_5,
+               ulonglong param_6)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  uint uVar7;
+  undefined4 *puVar8;
+  
+  iVar2 = __savegprlr_28();
+  uVar7 = 0;
+  if (param_2 != 0) {
+    lVar6 = (param_6 & 0x3fffffff) * 4 + param_5 + -4;
+    do {
+      puVar8 = (undefined4 *)(uVar7 * 4 + iVar2);
+      uVar3 = (uint)*(ushort *)(uVar7 * 4 + iVar2);
+      if ((param_3 <= uVar3) && (uVar3 < param_4)) {
+        uVar4 = param_6;
+        if ((param_6 & 0xffffffff) != 0) {
+          lVar5 = lVar6 + 8;
+          do {
+            iVar1 = (int)lVar5;
+            if (*(ushort *)(iVar1 + -8) <= uVar3) break;
+            uVar4 = uVar4 - 1;
+            lVar5 = lVar5 + -4;
+            *(undefined4 *)lVar5 = *(undefined4 *)(iVar1 + -8);
+          } while (uVar4 != 0);
+        }
+        param_6 = param_6 + 1;
+        lVar6 = lVar6 + 4;
+        *(undefined4 *)((int)((uVar4 & 0xffffffff) << 2) + (int)param_5) = *puVar8;
+      }
+      uVar7 = (*(byte *)((int)puVar8 + 3) - 0xb) * 2 + uVar7 + 1;
+    } while (uVar7 < param_2);
+  }
+  __restgprlr_28(param_6);
+  return;
+}
+
+
+// 82722028  R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:128)
+
+int R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+              (int param_1,uint param_2,uint param_3,uint param_4,int param_5,int param_6)
+
+{
+  undefined4 *puVar1;
+  ushort *puVar2;
+  uint uVar3;
+  
+  uVar3 = 0;
+  if (param_2 != 0) {
+    puVar1 = (undefined4 *)(param_6 * 4 + param_5 + -4);
+    do {
+      puVar2 = (ushort *)(uVar3 * 4 + param_1);
+      if ((param_3 <= *puVar2) && (*puVar2 < param_4)) {
+        param_6 = param_6 + 1;
+        puVar1 = puVar1 + 1;
+        *puVar1 = *(undefined4 *)puVar2;
+      }
+      uVar3 = (*(byte *)((int)puVar2 + 3) - 0xb) * 2 + uVar3 + 1;
+    } while (uVar3 < param_2);
+  }
+  return param_6;
 }
 
 
@@ -25,7 +134,13 @@ void R_EmitCloudSurfs(void)
 void R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>();
+  R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>(uVar1);
+  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>(uVar1);
+  __restgprlr_27();
+  return;
 }
 

@@ -52,6 +52,24 @@ undefined8 LiveStorage_CS_IsCached(ulonglong param_1,int *param_2)
 }
 
 
+// 824D6D88  LiveStorage_CSCache_AddDescriptor  (qcommon/com_contentserver_cache.cpp:69)
+
+ulonglong LiveStorage_CSCache_AddDescriptor(ulonglong param_1,void *param_2)
+
+{
+  void *pvVar1;
+  ulonglong uVar2;
+  
+  if (DAT_835f15ec == 0) {
+    return param_1;
+  }
+  uVar2 = param_1 >> 0x20 ^ param_1 & 0xffffffff;
+  pvVar1 = memcpy((void *)(((int)uVar2 + (int)(uVar2 / 100) * -100) * 0x790 + DAT_835f15ec),param_2,
+                  0x790);
+  return (longlong)(int)pvVar1;
+}
+
+
 // 824D6DD0  LiveStorage_CSCache_GetDescriptor  (qcommon/com_contentserver_cache.cpp:80)
 
 undefined8 LiveStorage_CSCache_GetDescriptor(ulonglong param_1,void *param_2)
@@ -82,10 +100,38 @@ LAB_824d6e40:
 
 // 824D6EB0  AllocContentServerArray<csCacheFileDetails_t>  (qcommon/com_storage_contentserver.h:211)
 
-void AllocContentServerArray<csCacheFileDetails_t>(void)
+void AllocContentServerArray<csCacheFileDetails_t>(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  uint uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (*puVar1 != 0) {
+    __restgprlr_28(1);
+    return;
+  }
+  lVar3 = param_2 * 0x790;
+  uVar2 = PMem_AllocFromSource_NoDebug(lVar3,8,4,1);
+  if (uVar2 != 0) {
+    *puVar1 = uVar2;
+    if (0 < (int)param_2) {
+      lVar4 = 0;
+      do {
+        if ((ulonglong)*puVar1 + lVar4 != 0) {
+          bdFileMetaData__bdFileMetaData();
+        }
+        param_2 = param_2 + -1;
+        lVar4 = lVar4 + 0x790;
+      } while (param_2 != 0);
+    }
+    DAT_835f15e8 = DAT_835f15e8 + (int)lVar3;
+    __restgprlr_28(1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 

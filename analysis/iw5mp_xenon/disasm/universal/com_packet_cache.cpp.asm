@@ -88,6 +88,58 @@ LAB_825e5788:
 ; 825E57D8  Com_PacketCacheUnlock  (universal/com_packet_cache.cpp:68)
   825E57D8  7D8802A6             mfspr r12,LR
   825E57DC  48330EE1             bl 0x829166bc
+  825E57E0  9421FF90             stwu r1,-0x70(r1)
+  825E57E4  816D0000             lwz r11,0x0(r13)
+  825E57E8  394000EC             li r10,0xec
+  825E57EC  7CEA5A14             add r7,r10,r11
+LAB_825e57f0:
+  825E57F0  7D0000A6             mfmsr r8
+  825E57F4  7DA10164             mtmsrd r13,1
+  825E57F8  7D203828             lwarx r9,0,r7
+  825E57FC  3929FFFF             subi r9,r9,0x1
+  825E5800  7D20392D             stwcx. r9,0,r7
+  825E5804  7D010164             mtmsrd r8,1
+  825E5808  4082FFE8             bne 0x825e57f0
+  825E580C  3D408217             lis r10,-0x7de9
+  825E5810  3D608200             lis r11,-0x7e00
+  825E5814  7D3F4B78             or r31,r9,r9
+  825E5818  2F090000             cmpwi cr6,r9,0x0
+  825E581C  3BCA64D0             addi r30,r10,0x64d0
+  825E5820  3BAB0F98             addi r29,r11,0xf98
+  825E5824  40980024             bge cr6,0x825e5848
+  825E5828  3D608217             lis r11,-0x7de9
+  825E582C  7FA6EB78             or r6,r29,r29
+  825E5830  38EB6588             addi r7,r11,0x6588
+  825E5834  7FC3F378             or r3,r30,r30
+  825E5838  38A00000             li r5,0x0
+  825E583C  3880004D             li r4,0x4d
+  825E5840  4BFEECC1             bl 0x825d4500
+  825E5844  2F1F0000             cmpwi cr6,r31,0x0
+LAB_825e5848:
+  825E5848  409A0050             bne cr6,0x825e5898
+  825E584C  3D608405             lis r11,-0x7bfb
+  825E5850  39000000             li r8,0x0
+  825E5854  38EBEDE4             subi r7,r11,0x121c
+LAB_825e5858:
+  825E5858  7D2000A6             mfmsr r9
+  825E585C  7DA10164             mtmsrd r13,1
+  825E5860  7D403828             lwarx r10,0,r7
+  825E5864  7D00392D             stwcx. r8,0,r7
+  825E5868  7D210164             mtmsrd r9,1
+  825E586C  4082FFEC             bne 0x825e5858
+  825E5870  7D4B5378             or r11,r10,r10
+  825E5874  2F0A0001             cmpwi cr6,r10,0x1
+  825E5878  419A0020             beq cr6,0x825e5898
+  825E587C  3D608217             lis r11,-0x7de9
+  825E5880  7FA6EB78             or r6,r29,r29
+  825E5884  38EB6554             addi r7,r11,0x6554
+  825E5888  7FC3F378             or r3,r30,r30
+  825E588C  38A00000             li r5,0x0
+  825E5890  38800050             li r4,0x50
+  825E5894  4BFEEC6D             bl 0x825d4500
+LAB_825e5898:
+  825E5898  38210070             addi r1,r1,0x70
+  825E589C  48330E70             b 0x8291670c
 
 ; 825E58A0  Com_PacketCacheInitMemory  (universal/com_packet_cache.cpp:87)
   825E58A0  7D8802A6             mfspr r12,LR
@@ -114,6 +166,9 @@ LAB_825e5788:
   825E58F4  38A00000             li r5,0x0
   825E58F8  3880005A             li r4,0x5a
   825E58FC  4BFEEC05             bl 0x825d4500
+  825E5900  3D000001             lis r8,0x1
+  825E5904  61076050             ori r7,r8,0x6050
+  825E5908  7C7F382E             lwzx r3,r31,r7
 LAB_825e590c:
   825E590C  3D608217             lis r11,-0x7de9
   825E5910  38C0000E             li r6,0xe
@@ -126,31 +181,506 @@ LAB_825e590c:
   825E592C  EBE1FFF0             ld r31,-0x10(r1)
   825E5930  4E800020             blr
 
+; 825E5938  Com_PacketCacheInit  (universal/com_packet_cache.cpp:211)
+  825E5938  7D8802A6             mfspr r12,LR
+  825E593C  48330D7D             bl 0x829166b8
+  825E5940  9421FF80             stwu r1,-0x80(r1)
+  825E5944  3D608401             lis r11,-0x7bff
+  825E5948  3BA00800             li r29,0x800
+  825E594C  3BEB6D90             addi r31,r11,0x6d90
+  825E5950  3D7F0001             addis r11,r31,0x1
+  825E5954  3BDF0028             addi r30,r31,0x28
+  825E5958  3B8B6054             addi r28,r11,0x6054
+LAB_825e595c:
+  825E595C  397EFFB0             subi r11,r30,0x50
+  825E5960  93DEFFF4             stw r30,-0xc(r30)
+  825E5964  7F84E378             or r4,r28,r28
+  825E5968  917EFFF0             stw r11,-0x10(r30)
+  825E596C  387EFFD8             subi r3,r30,0x28
+  825E5970  4802CDF1             bl 0x82612760
+  825E5974  37BDFFFF             subic. r29,r29,0x1
+  825E5978  3B9C0040             addi r28,r28,0x40
+  825E597C  3BDE0028             addi r30,r30,0x28
+  825E5980  4082FFDC             bne 0x825e595c
+  825E5984  3D5F0001             addis r10,r31,0x1
+  825E5988  3D200001             lis r9,0x1
+  825E598C  394A6028             addi r10,r10,0x6028
+  825E5990  61283FF4             ori r8,r9,0x3ff4
+  825E5994  3CC00001             lis r6,0x1
+  825E5998  915F0018             stw r10,0x18(r31)
+  825E599C  3D7F0001             addis r11,r31,0x1
+  825E59A0  3CA00001             lis r5,0x1
+  825E59A4  60CA6044             ori r10,r6,0x6044
+  825E59A8  3C800001             lis r4,0x1
+  825E59AC  396B6028             addi r11,r11,0x6028
+  825E59B0  3C600001             lis r3,0x1
+  825E59B4  60A66040             ori r6,r5,0x6040
+  825E59B8  7D7F412E             stwx r11,r31,r8
+  825E59BC  6085601C             ori r5,r4,0x601c
+  825E59C0  7FFF512E             stwx r31,r31,r10
+  825E59C4  3D3F0001             addis r9,r31,0x1
+  825E59C8  3D1F0001             addis r8,r31,0x1
+  825E59CC  3CFF0001             addis r7,r31,0x1
+  825E59D0  60646018             ori r4,r3,0x6018
+  825E59D4  39293FD8             addi r9,r9,0x3fd8
+  825E59D8  39686000             addi r11,r8,0x6000
+  825E59DC  39476000             addi r10,r7,0x6000
+  825E59E0  7D3F312E             stwx r9,r31,r6
+  825E59E4  7D7F292E             stwx r11,r31,r5
+  825E59E8  7D5F212E             stwx r10,r31,r4
+  825E59EC  38210080             addi r1,r1,0x80
+  825E59F0  48330D18             b 0x82916708
+
+; 825E59F8  Com_GetFreeCacheEntry  (universal/com_packet_cache.cpp:261)
+  825E59F8  3D608401             lis r11,-0x7bff
+  825E59FC  394B6D90             addi r10,r11,0x6d90
+  825E5A00  3D6A0001             addis r11,r10,0x1
+  825E5A04  386B6028             addi r3,r11,0x6028
+  825E5A08  4E800020             blr
+
+; 825E5A10  Com_GetSemiFreeCacheEntry  (universal/com_packet_cache.cpp:267)
+  825E5A10  3D608401             lis r11,-0x7bff
+  825E5A14  394B6D90             addi r10,r11,0x6d90
+  825E5A18  3D6A0001             addis r11,r10,0x1
+  825E5A1C  386B6000             addi r3,r11,0x6000
+  825E5A20  4E800020             blr
+
 ; 825E5A28  Com_GetCacheEntryIndex  (universal/com_packet_cache.cpp:273)
   825E5A28  548BAAFE             rlwinm r11,r4,0x15,0xb,0x1f
   825E5A2C  7D6B1A14             add r11,r11,r3
   825E5A30  5563057E             rlwinm r3,r11,0x0,0x15,0x1f
   825E5A34  4E800020             blr
 
+; 825E5A38  Com_GetCacheEntry  (universal/com_packet_cache.cpp:279)
+  825E5A38  3D408401             lis r10,-0x7bff
+  825E5A3C  548BAAFE             rlwinm r11,r4,0x15,0xb,0x1f
+  825E5A40  392A6D90             addi r9,r10,0x6d90
+  825E5A44  7D0B1A14             add r8,r11,r3
+  825E5A48  3D690001             addis r11,r9,0x1
+  825E5A4C  550714FA             rlwinm r7,r8,0x2,0x13,0x1d
+  825E5A50  38CB4000             addi r6,r11,0x4000
+  825E5A54  7C67302E             lwzx r3,r7,r6
+  825E5A58  4E800020             blr
+
+; 825E5A60  Com_AddCacheEntry  (universal/com_packet_cache.cpp:285)
+  825E5A60  7D8802A6             mfspr r12,LR
+  825E5A64  9181FFF8             stw r12,-0x8(r1)
+  825E5A68  FBE1FFF0             std r31,-0x10(r1)
+  825E5A6C  9421FFA0             stwu r1,-0x60(r1)
+  825E5A70  7C7F1B78             or r31,r3,r3
+  825E5A74  4BFFFC8D             bl 0x825e5700
+  825E5A78  3D608401             lis r11,-0x7bff
+  825E5A7C  813F0014             lwz r9,0x14(r31)
+  825E5A80  394B6D90             addi r10,r11,0x6d90
+  825E5A84  5529AAFE             rlwinm r9,r9,0x15,0xb,0x1f
+  825E5A88  3D6A0001             addis r11,r10,0x1
+  825E5A8C  394B4000             addi r10,r11,0x4000
+  825E5A90  817F0010             lwz r11,0x10(r31)
+  825E5A94  7D095A14             add r8,r9,r11
+  825E5A98  550B14FA             rlwinm r11,r8,0x2,0x13,0x1d
+  825E5A9C  7CCB502E             lwzx r6,r11,r10
+  825E5AA0  90DF000C             stw r6,0xc(r31)
+  825E5AA4  7FEB512E             stwx r31,r11,r10
+  825E5AA8  4BFFFD31             bl 0x825e57d8
+  825E5AAC  38210060             addi r1,r1,0x60
+  825E5AB0  8181FFF8             lwz r12,-0x8(r1)
+  825E5AB4  7D8803A6             mtspr LR,r12
+  825E5AB8  EBE1FFF0             ld r31,-0x10(r1)
+  825E5ABC  4E800020             blr
+
 ; 825E5AC0  Com_GetCacheEntryBuffer  (universal/com_packet_cache.cpp:297)
   825E5AC0  7D8802A6             mfspr r12,LR
   825E5AC4  48330BF9             bl 0x829166bc
+  825E5AC8  9421FF90             stwu r1,-0x70(r1)
+  825E5ACC  3D608401             lis r11,-0x7bff
+  825E5AD0  3D400001             lis r10,0x1
+  825E5AD4  3BEB6D90             addi r31,r11,0x6d90
+  825E5AD8  61496050             ori r9,r10,0x6050
+  825E5ADC  3D608217             lis r11,-0x7de9
+  825E5AE0  7C7E1B78             or r30,r3,r3
+  825E5AE4  3BAB64D0             addi r29,r11,0x64d0
+  825E5AE8  7D7F482E             lwzx r11,r31,r9
+  825E5AEC  2B0B0000             cmplwi cr6,r11,0x0
+  825E5AF0  409A0030             bne cr6,0x825e5b20
+  825E5AF4  3D608217             lis r11,-0x7de9
+  825E5AF8  3D408200             lis r10,-0x7e00
+  825E5AFC  38EB65A4             addi r7,r11,0x65a4
+  825E5B00  38CA0F98             addi r6,r10,0xf98
+  825E5B04  7FA3EB78             or r3,r29,r29
+  825E5B08  38A00000             li r5,0x0
+  825E5B0C  3880012C             li r4,0x12c
+  825E5B10  4BFEE9F1             bl 0x825d4500
+  825E5B14  3D200001             lis r9,0x1
+  825E5B18  61286050             ori r8,r9,0x6050
+  825E5B1C  7D7F402E             lwzx r11,r31,r8
+LAB_825e5b20:
+  825E5B20  39400028             li r10,0x28
+  825E5B24  7D3FF050             subf r9,r31,r30
+  825E5B28  7FC953D7             divw. r30,r9,r10
+  825E5B2C  4180000C             blt 0x825e5b38
+  825E5B30  2F1E0800             cmpwi cr6,r30,0x800
+  825E5B34  41980034             blt cr6,0x825e5b68
+LAB_825e5b38:
+  825E5B38  3D608217             lis r11,-0x7de9
+  825E5B3C  3D408201             lis r10,-0x7dff
+  825E5B40  38EB65C0             addi r7,r11,0x65c0
+  825E5B44  38CAAEF4             subi r6,r10,0x510c
+  825E5B48  7FA3EB78             or r3,r29,r29
+  825E5B4C  7FC8F378             or r8,r30,r30
+  825E5B50  38A00000             li r5,0x0
+  825E5B54  3880012F             li r4,0x12f
+  825E5B58  4BFEE9A9             bl 0x825d4500
+  825E5B5C  3D200001             lis r9,0x1
+  825E5B60  61286050             ori r8,r9,0x6050
+  825E5B64  7D7F402E             lwzx r11,r31,r8
+LAB_825e5b68:
+  825E5B68  57CA5828             rlwinm r10,r30,0xb,0x0,0x14
+  825E5B6C  7C6A5A14             add r3,r10,r11
+  825E5B70  38210070             addi r1,r1,0x70
+  825E5B74  48330B98             b 0x8291670c
 
 ; 825E5B78  Com_MoveToFreeTail  (universal/com_packet_cache.cpp:310)
   825E5B78  7D8802A6             mfspr r12,LR
   825E5B7C  48330B3D             bl 0x829166b8
+  825E5B80  9421FF80             stwu r1,-0x80(r1)
+  825E5B84  8123001C             lwz r9,0x1c(r3)
+  825E5B88  3D608217             lis r11,-0x7de9
+  825E5B8C  3D408200             lis r10,-0x7e00
+  825E5B90  7C7F1B78             or r31,r3,r3
+  825E5B94  7C9E2378             or r30,r4,r4
+  825E5B98  3BAB64D0             addi r29,r11,0x64d0
+  825E5B9C  3B8A0F98             addi r28,r10,0xf98
+  825E5BA0  2B090000             cmplwi cr6,r9,0x0
+  825E5BA4  419A0020             beq cr6,0x825e5bc4
+  825E5BA8  3D608217             lis r11,-0x7de9
+  825E5BAC  7F86E378             or r6,r28,r28
+  825E5BB0  38EB65F0             addi r7,r11,0x65f0
+  825E5BB4  7FA3EB78             or r3,r29,r29
+  825E5BB8  38A00000             li r5,0x0
+  825E5BBC  38800137             li r4,0x137
+  825E5BC0  4BFEE941             bl 0x825d4500
+LAB_825e5bc4:
+  825E5BC4  817F0018             lwz r11,0x18(r31)
+  825E5BC8  2B0B0000             cmplwi cr6,r11,0x0
+  825E5BCC  419A0020             beq cr6,0x825e5bec
+  825E5BD0  3D608217             lis r11,-0x7de9
+  825E5BD4  7F86E378             or r6,r28,r28
+  825E5BD8  38EB65E0             addi r7,r11,0x65e0
+  825E5BDC  7FA3EB78             or r3,r29,r29
+  825E5BE0  38A00000             li r5,0x0
+  825E5BE4  38800138             li r4,0x138
+  825E5BE8  4BFEE919             bl 0x825d4500
+LAB_825e5bec:
+  825E5BEC  817E0018             lwz r11,0x18(r30)
+  825E5BF0  93DF001C             stw r30,0x1c(r31)
+  825E5BF4  917F0018             stw r11,0x18(r31)
+  825E5BF8  815E0018             lwz r10,0x18(r30)
+  825E5BFC  93EA001C             stw r31,0x1c(r10)
+  825E5C00  93FE0018             stw r31,0x18(r30)
+  825E5C04  38210080             addi r1,r1,0x80
+  825E5C08  48330B00             b 0x82916708
 
 ; 825E5C10  Com_RemoveFromFreeList  (universal/com_packet_cache.cpp:326)
   825E5C10  7D8802A6             mfspr r12,LR
   825E5C14  48330AA9             bl 0x829166bc
+  825E5C18  9421FF90             stwu r1,-0x70(r1)
+  825E5C1C  7C7F1B78             or r31,r3,r3
+  825E5C20  4BFFFAE1             bl 0x825e5700
+  825E5C24  3D608217             lis r11,-0x7de9
+  825E5C28  3D408200             lis r10,-0x7e00
+  825E5C2C  3BCB64D0             addi r30,r11,0x64d0
+  825E5C30  3BAA0F98             addi r29,r10,0xf98
+  825E5C34  817F001C             lwz r11,0x1c(r31)
+  825E5C38  2B0B0000             cmplwi cr6,r11,0x0
+  825E5C3C  409A0020             bne cr6,0x825e5c5c
+  825E5C40  3D608217             lis r11,-0x7de9
+  825E5C44  7FA6EB78             or r6,r29,r29
+  825E5C48  38EB660C             addi r7,r11,0x660c
+  825E5C4C  7FC3F378             or r3,r30,r30
+  825E5C50  38A00000             li r5,0x0
+  825E5C54  38800148             li r4,0x148
+  825E5C58  4BFEE8A9             bl 0x825d4500
+LAB_825e5c5c:
+  825E5C5C  817F0018             lwz r11,0x18(r31)
+  825E5C60  2B0B0000             cmplwi cr6,r11,0x0
+  825E5C64  409A0020             bne cr6,0x825e5c84
+  825E5C68  3D608217             lis r11,-0x7de9
+  825E5C6C  7FA6EB78             or r6,r29,r29
+  825E5C70  38EB6600             addi r7,r11,0x6600
+  825E5C74  7FC3F378             or r3,r30,r30
+  825E5C78  38A00000             li r5,0x0
+  825E5C7C  38800149             li r4,0x149
+  825E5C80  4BFEE881             bl 0x825d4500
+LAB_825e5c84:
+  825E5C84  815F0018             lwz r10,0x18(r31)
+  825E5C88  39600000             li r11,0x0
+  825E5C8C  813F001C             lwz r9,0x1c(r31)
+  825E5C90  912A001C             stw r9,0x1c(r10)
+  825E5C94  811F001C             lwz r8,0x1c(r31)
+  825E5C98  80FF0018             lwz r7,0x18(r31)
+  825E5C9C  90E80018             stw r7,0x18(r8)
+  825E5CA0  917F0018             stw r11,0x18(r31)
+  825E5CA4  917F001C             stw r11,0x1c(r31)
+  825E5CA8  4BFFFB31             bl 0x825e57d8
+  825E5CAC  38210070             addi r1,r1,0x70
+  825E5CB0  48330A5C             b 0x8291670c
 
 ; 825E5CB8  Com_TouchEntryWithTime  (universal/com_packet_cache.cpp:340)
   825E5CB8  7D8802A6             mfspr r12,LR
   825E5CBC  483309F9             bl 0x829166b4
+  825E5CC0  9421FF80             stwu r1,-0x80(r1)
+  825E5CC4  7C7E1B78             or r30,r3,r3
+  825E5CC8  7C9D2378             or r29,r4,r4
+  825E5CCC  4BFFFA35             bl 0x825e5700
+  825E5CD0  3D608217             lis r11,-0x7de9
+  825E5CD4  3D408200             lis r10,-0x7e00
+  825E5CD8  2B1E0000             cmplwi cr6,r30,0x0
+  825E5CDC  3B8B64D0             addi r28,r11,0x64d0
+  825E5CE0  3B6A0F98             addi r27,r10,0xf98
+  825E5CE4  409A0020             bne cr6,0x825e5d04
+  825E5CE8  3D608206             lis r11,-0x7dfa
+  825E5CEC  7F66DB78             or r6,r27,r27
+  825E5CF0  38EB89D8             subi r7,r11,0x7628
+  825E5CF4  7F83E378             or r3,r28,r28
+  825E5CF8  38A00000             li r5,0x0
+  825E5CFC  38800156             li r4,0x156
+  825E5D00  4BFEE801             bl 0x825d4500
+LAB_825e5d04:
+  825E5D04  3D608401             lis r11,-0x7bff
+  825E5D08  39400028             li r10,0x28
+  825E5D0C  3BEB6D90             addi r31,r11,0x6d90
+  825E5D10  7D3FF050             subf r9,r31,r30
+  825E5D14  3D7F0003             addis r11,r31,0x3
+  825E5D18  7D0953D6             divw r8,r9,r10
+  825E5D1C  38EB6054             addi r7,r11,0x6054
+  825E5D20  5506103A             rlwinm r6,r8,0x2,0x0,0x1d
+  825E5D24  7FA6392E             stwx r29,r6,r7
+  825E5D28  80BE001C             lwz r5,0x1c(r30)
+  825E5D2C  2B050000             cmplwi cr6,r5,0x0
+  825E5D30  409A0034             bne cr6,0x825e5d64
+  825E5D34  817E0018             lwz r11,0x18(r30)
+  825E5D38  2B0B0000             cmplwi cr6,r11,0x0
+  825E5D3C  419A0054             beq cr6,0x825e5d90
+  825E5D40  3D608217             lis r11,-0x7de9
+  825E5D44  7F66DB78             or r6,r27,r27
+  825E5D48  38EB65E0             addi r7,r11,0x65e0
+  825E5D4C  7F83E378             or r3,r28,r28
+  825E5D50  3880015E             li r4,0x15e
+  825E5D54  4BFEE7AD             bl 0x825d4500
+  825E5D58  4BFFFA81             bl 0x825e57d8
+  825E5D5C  38210080             addi r1,r1,0x80
+  825E5D60  483309A4             b 0x82916704
+LAB_825e5d64:
+  825E5D64  7FC3F378             or r3,r30,r30
+  825E5D68  4BFFFEA9             bl 0x825e5c10
+  825E5D6C  7FC3F378             or r3,r30,r30
+  825E5D70  4802C9C9             bl 0x82612738
+  825E5D74  3D7F0001             addis r11,r31,0x1
+  825E5D78  2F030000             cmpwi cr6,r3,0x0
+  825E5D7C  388B6000             addi r4,r11,0x6000
+  825E5D80  409A0008             bne cr6,0x825e5d88
+  825E5D84  388B6028             addi r4,r11,0x6028
+LAB_825e5d88:
+  825E5D88  7FC3F378             or r3,r30,r30
+  825E5D8C  4BFFFDED             bl 0x825e5b78
+LAB_825e5d90:
+  825E5D90  4BFFFA49             bl 0x825e57d8
+  825E5D94  38210080             addi r1,r1,0x80
+  825E5D98  4833096C             b 0x82916704
+
+; 825E5DA0  Com_TouchEntry  (universal/com_packet_cache.cpp:362)
+  825E5DA0  7D8802A6             mfspr r12,LR
+  825E5DA4  9181FFF8             stw r12,-0x8(r1)
+  825E5DA8  FBE1FFF0             std r31,-0x10(r1)
+  825E5DAC  9421FFA0             stwu r1,-0x60(r1)
+  825E5DB0  7C7F1B78             or r31,r3,r3
+  825E5DB4  4BFFF94D             bl 0x825e5700
+  825E5DB8  817F001C             lwz r11,0x1c(r31)
+  825E5DBC  2B0B0000             cmplwi cr6,r11,0x0
+  825E5DC0  409A0038             bne cr6,0x825e5df8
+  825E5DC4  817F0018             lwz r11,0x18(r31)
+  825E5DC8  2B0B0000             cmplwi cr6,r11,0x0
+  825E5DCC  419A0060             beq cr6,0x825e5e2c
+  825E5DD0  3D608217             lis r11,-0x7de9
+  825E5DD4  3D408200             lis r10,-0x7e00
+  825E5DD8  3D208217             lis r9,-0x7de9
+  825E5DDC  38EB65E0             addi r7,r11,0x65e0
+  825E5DE0  38CA0F98             addi r6,r10,0xf98
+  825E5DE4  386964D0             addi r3,r9,0x64d0
+  825E5DE8  38A00000             li r5,0x0
+  825E5DEC  3880016E             li r4,0x16e
+  825E5DF0  4BFEE711             bl 0x825d4500
+  825E5DF4  48000038             b 0x825e5e2c
+LAB_825e5df8:
+  825E5DF8  7FE3FB78             or r3,r31,r31
+  825E5DFC  4BFFFE15             bl 0x825e5c10
+  825E5E00  7FE3FB78             or r3,r31,r31
+  825E5E04  4802C935             bl 0x82612738
+  825E5E08  3D608401             lis r11,-0x7bff
+  825E5E0C  2F030000             cmpwi cr6,r3,0x0
+  825E5E10  394B6D90             addi r10,r11,0x6d90
+  825E5E14  3D6A0001             addis r11,r10,0x1
+  825E5E18  388B6000             addi r4,r11,0x6000
+  825E5E1C  409A0008             bne cr6,0x825e5e24
+  825E5E20  388B6028             addi r4,r11,0x6028
+LAB_825e5e24:
+  825E5E24  7FE3FB78             or r3,r31,r31
+  825E5E28  4BFFFD51             bl 0x825e5b78
+LAB_825e5e2c:
+  825E5E2C  4BFFF9AD             bl 0x825e57d8
+  825E5E30  38210060             addi r1,r1,0x60
+  825E5E34  8181FFF8             lwz r12,-0x8(r1)
+  825E5E38  7D8803A6             mtspr LR,r12
+  825E5E3C  EBE1FFF0             ld r31,-0x10(r1)
+  825E5E40  4E800020             blr
+
+; 825E5E48  Com_FreeEntry  (universal/com_packet_cache.cpp:378)
+  825E5E48  7D8802A6             mfspr r12,LR
+  825E5E4C  48330869             bl 0x829166b4
+  825E5E50  9421FF80             stwu r1,-0x80(r1)
+  825E5E54  7C7F1B78             or r31,r3,r3
+  825E5E58  4BFFF8A9             bl 0x825e5700
+  825E5E5C  7FE3FB78             or r3,r31,r31
+  825E5E60  4802C8D9             bl 0x82612738
+  825E5E64  3D608217             lis r11,-0x7de9
+  825E5E68  3D408200             lis r10,-0x7e00
+  825E5E6C  2F030000             cmpwi cr6,r3,0x0
+  825E5E70  3B8B64D0             addi r28,r11,0x64d0
+  825E5E74  3B6A0F98             addi r27,r10,0xf98
+  825E5E78  409A0020             bne cr6,0x825e5e98
+  825E5E7C  3D608217             lis r11,-0x7de9
+  825E5E80  7F66DB78             or r6,r27,r27
+  825E5E84  38EB6620             addi r7,r11,0x6620
+  825E5E88  7F83E378             or r3,r28,r28
+  825E5E8C  38A00000             li r5,0x0
+  825E5E90  3880017E             li r4,0x17e
+  825E5E94  4BFEE66D             bl 0x825d4500
+LAB_825e5e98:
+  825E5E98  3D608401             lis r11,-0x7bff
+  825E5E9C  39400028             li r10,0x28
+  825E5EA0  3BCB6D90             addi r30,r11,0x6d90
+  825E5EA4  7FE3FB78             or r3,r31,r31
+  825E5EA8  7D3EF850             subf r9,r30,r31
+  825E5EAC  3D7E0001             addis r11,r30,0x1
+  825E5EB0  7FA953D6             divw r29,r9,r10
+  825E5EB4  394B6054             addi r10,r11,0x6054
+  825E5EB8  57AB3032             rlwinm r11,r29,0x6,0x0,0x19
+  825E5EBC  7C8B5214             add r4,r11,r10
+  825E5EC0  4802C8A1             bl 0x82612760
+  825E5EC4  3D7E0003             addis r11,r30,0x3
+  825E5EC8  57A8103A             rlwinm r8,r29,0x2,0x0,0x1d
+  825E5ECC  38EB6054             addi r7,r11,0x6054
+  825E5ED0  38C0FFFF             li r6,-0x1
+  825E5ED4  3D7E0001             addis r11,r30,0x1
+  825E5ED8  394B4000             addi r10,r11,0x4000
+  825E5EDC  7CC8392E             stwx r6,r8,r7
+  825E5EE0  813F0010             lwz r9,0x10(r31)
+  825E5EE4  80BF0014             lwz r5,0x14(r31)
+  825E5EE8  54ABAAFE             rlwinm r11,r5,0x15,0xb,0x1f
+  825E5EEC  7C8B4A14             add r4,r11,r9
+  825E5EF0  548B14FA             rlwinm r11,r4,0x2,0x13,0x1d
+  825E5EF4  7FCB5214             add r30,r11,r10
+  825E5EF8  7C6B502E             lwzx r3,r11,r10
+  825E5EFC  7F1F1840             cmplw cr6,r31,r3
+  825E5F00  419A0044             beq cr6,0x825e5f44
+  825E5F04  3D608217             lis r11,-0x7de9
+  825E5F08  3BAB6618             addi r29,r11,0x6618
+LAB_825e5f0c:
+  825E5F0C  817E0000             lwz r11,0x0(r30)
+  825E5F10  2B0B0000             cmplwi cr6,r11,0x0
+  825E5F14  409A001C             bne cr6,0x825e5f30
+  825E5F18  7FA7EB78             or r7,r29,r29
+  825E5F1C  7F66DB78             or r6,r27,r27
+  825E5F20  7F83E378             or r3,r28,r28
+  825E5F24  38A00000             li r5,0x0
+  825E5F28  38800189             li r4,0x189
+  825E5F2C  4BFEE5D5             bl 0x825d4500
+LAB_825e5f30:
+  825E5F30  817E0000             lwz r11,0x0(r30)
+  825E5F34  3BCB000C             addi r30,r11,0xc
+  825E5F38  816B000C             lwz r11,0xc(r11)
+  825E5F3C  7F1F5840             cmplw cr6,r31,r11
+  825E5F40  409AFFCC             bne cr6,0x825e5f0c
+LAB_825e5f44:
+  825E5F44  817F000C             lwz r11,0xc(r31)
+  825E5F48  917E0000             stw r11,0x0(r30)
+  825E5F4C  4BFFF88D             bl 0x825e57d8
+  825E5F50  38210080             addi r1,r1,0x80
+  825E5F54  483307B0             b 0x82916704
 
 ; 825E5F58  Com_ReleaseEntry  (universal/com_packet_cache.cpp:403)
   825E5F58  7D8802A6             mfspr r12,LR
   825E5F5C  48330761             bl 0x829166bc
+  825E5F60  9421FF90             stwu r1,-0x70(r1)
+  825E5F64  7C7D1B78             or r29,r3,r3
+  825E5F68  4BFFF799             bl 0x825e5700
+  825E5F6C  3D608217             lis r11,-0x7de9
+  825E5F70  3D408200             lis r10,-0x7e00
+  825E5F74  3BEB64D0             addi r31,r11,0x64d0
+  825E5F78  3BCA0F98             addi r30,r10,0xf98
+  825E5F7C  817D001C             lwz r11,0x1c(r29)
+  825E5F80  2B0B0000             cmplwi cr6,r11,0x0
+  825E5F84  419A0020             beq cr6,0x825e5fa4
+  825E5F88  3D608217             lis r11,-0x7de9
+  825E5F8C  7FC6F378             or r6,r30,r30
+  825E5F90  38EB65F0             addi r7,r11,0x65f0
+  825E5F94  7FE3FB78             or r3,r31,r31
+  825E5F98  38A00000             li r5,0x0
+  825E5F9C  38800197             li r4,0x197
+  825E5FA0  4BFEE561             bl 0x825d4500
+LAB_825e5fa4:
+  825E5FA4  817D0018             lwz r11,0x18(r29)
+  825E5FA8  2B0B0000             cmplwi cr6,r11,0x0
+  825E5FAC  419A0020             beq cr6,0x825e5fcc
+  825E5FB0  3D608217             lis r11,-0x7de9
+  825E5FB4  7FC6F378             or r6,r30,r30
+  825E5FB8  38EB65E0             addi r7,r11,0x65e0
+  825E5FBC  7FE3FB78             or r3,r31,r31
+  825E5FC0  38A00000             li r5,0x0
+  825E5FC4  38800198             li r4,0x198
+  825E5FC8  4BFEE539             bl 0x825d4500
+LAB_825e5fcc:
+  825E5FCC  3D600006             lis r11,0x6
+  825E5FD0  815D0014             lwz r10,0x14(r29)
+  825E5FD4  61694000             ori r9,r11,0x4000
+  825E5FD8  7F0A4800             cmpw cr6,r10,r9
+  825E5FDC  40980038             bge cr6,0x825e6014
+  825E5FE0  7FA3EB78             or r3,r29,r29
+  825E5FE4  4802C755             bl 0x82612738
+  825E5FE8  2F030000             cmpwi cr6,r3,0x0
+  825E5FEC  419A0028             beq cr6,0x825e6014
+  825E5FF0  3D608401             lis r11,-0x7bff
+  825E5FF4  7FA3EB78             or r3,r29,r29
+  825E5FF8  394B6D90             addi r10,r11,0x6d90
+  825E5FFC  3D6A0001             addis r11,r10,0x1
+  825E6000  388B6000             addi r4,r11,0x6000
+  825E6004  4BFFFB75             bl 0x825e5b78
+  825E6008  4BFFF7D1             bl 0x825e57d8
+  825E600C  38210070             addi r1,r1,0x70
+  825E6010  483306FC             b 0x8291670c
+LAB_825e6014:
+  825E6014  3D608401             lis r11,-0x7bff
+  825E6018  7FA3EB78             or r3,r29,r29
+  825E601C  394B6D90             addi r10,r11,0x6d90
+  825E6020  3D6A0001             addis r11,r10,0x1
+  825E6024  388B6028             addi r4,r11,0x6028
+  825E6028  4BFFFB51             bl 0x825e5b78
+  825E602C  4BFFF7AD             bl 0x825e57d8
+  825E6030  38210070             addi r1,r1,0x70
+  825E6034  483306D8             b 0x8291670c
+
+; 825E6038  Com_CacheFileNameCopy  (universal/com_packet_cache.cpp:429)
+  825E6038  3D608401             lis r11,-0x7bff
+  825E603C  39400028             li r10,0x28
+  825E6040  392B6D90             addi r9,r11,0x6d90
+  825E6044  38C00040             li r6,0x40
+  825E6048  7D092050             subf r8,r9,r4
+  825E604C  3D690001             addis r11,r9,0x1
+  825E6050  7CE853D6             divw r7,r8,r10
+  825E6054  396B6054             addi r11,r11,0x6054
+  825E6058  54EA3032             rlwinm r10,r7,0x6,0x0,0x19
+  825E605C  7CAA5A14             add r5,r10,r11
+  825E6060  4802C7F8             b 0x82612858
 
 ; 825E6068  Com_SetCacheEntryTouched  (universal/com_packet_cache.cpp:435)
   825E6068  3D608401             lis r11,-0x7bff

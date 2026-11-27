@@ -18,3 +18,52 @@
   828F8410  4D9A0020             beqlr cr6
   828F8414  5463083C             rlwinm r3,r3,0x1,0x0,0x1e
   828F8418  4E800020             blr
+
+; 828F8420  bdBitOperations::highBitNumber  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbitoperations.cpp:40)
+  828F8420  7D8802A6             mfspr r12,LR
+  828F8424  9181FFF8             stw r12,-0x8(r1)
+  828F8428  FBE1FFF0             std r31,-0x10(r1)
+  828F842C  9421FFA0             stwu r1,-0x60(r1)
+  828F8430  7C7F1B78             or r31,r3,r3
+  828F8434  2B030000             cmplwi cr6,r3,0x0
+  828F8438  409A0030             bne cr6,0x828f8468
+  828F843C  3CA08221             lis r5,-0x7ddf
+  828F8440  3D608221             lis r11,-0x7ddf
+  828F8444  3D408221             lis r10,-0x7ddf
+  828F8448  3D208200             lis r9,-0x7e00
+  828F844C  3865B338             subi r3,r5,0x4cc8
+  828F8450  390BB2F0             subi r8,r11,0x4d10
+  828F8454  38EAB2E4             subi r7,r10,0x4d1c
+  828F8458  38C911F4             addi r6,r9,0x11f4
+  828F845C  38A00000             li r5,0x0
+  828F8460  38800029             li r4,0x29
+  828F8464  4BCDC09D             bl 0x825d4500
+LAB_828f8468:
+  828F8468  57EB001E             rlwinm r11,r31,0x0,0x0,0xf
+  828F846C  39400010             li r10,0x10
+  828F8470  216B0000             subfic r11,r11,0x0
+  828F8474  7D6B5910             subfe r11,r11,r11
+  828F8478  7D6A5038             and r10,r11,r10
+  828F847C  7FEB5430             srw r11,r31,r10
+  828F8480  5569042F             rlwinm. r9,r11,0x0,0x10,0x17
+  828F8484  4182000C             beq 0x828f8490
+  828F8488  614A0008             ori r10,r10,0x8
+  828F848C  556BC23E             rlwinm r11,r11,0x18,0x8,0x1f
+LAB_828f8490:
+  828F8490  55690637             rlwinm. r9,r11,0x0,0x18,0x1b
+  828F8494  4182000C             beq 0x828f84a0
+  828F8498  614A0004             ori r10,r10,0x4
+  828F849C  556BE13E             rlwinm r11,r11,0x1c,0x4,0x1f
+LAB_828f84a0:
+  828F84A0  5569073B             rlwinm. r9,r11,0x0,0x1c,0x1d
+  828F84A4  4182000C             beq 0x828f84b0
+  828F84A8  614A0002             ori r10,r10,0x2
+  828F84AC  556BF0BE             rlwinm r11,r11,0x1e,0x2,0x1f
+LAB_828f84b0:
+  828F84B0  556BF87E             rlwinm r11,r11,0x1f,0x1,0x1f
+  828F84B4  7D635378             or r3,r11,r10
+  828F84B8  38210060             addi r1,r1,0x60
+  828F84BC  8181FFF8             lwz r12,-0x8(r1)
+  828F84C0  7D8803A6             mtspr LR,r12
+  828F84C4  EBE1FFF0             ld r31,-0x10(r1)
+  828F84C8  4E800020             blr

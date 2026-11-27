@@ -86,6 +86,40 @@ LAB_828b9e4c:
   828B9E54  7D8803A6             mtspr LR,r12
   828B9E58  4E800020             blr
 
+; 828B9E60  XOnlineGetServiceInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:103)
+  828B9E60  7D8802A6             mfspr r12,LR
+  828B9E64  9181FFF8             stw r12,-0x8(r1)
+  828B9E68  9421FFA0             stwu r1,-0x60(r1)
+  828B9E6C  7C862378             or r6,r4,r4
+  828B9E70  3C800005             lis r4,0x5
+  828B9E74  7C651B78             or r5,r3,r3
+  828B9E78  386000FC             li r3,0xfc
+  828B9E7C  60848007             ori r4,r4,0x8007
+  828B9E80  480876A5             bl 0x82941524
+  828B9E84  2C030000             cmpwi r3,0x0
+  828B9E88  4180000C             blt 0x828b9e94
+  828B9E8C  38600000             li r3,0x0
+  828B9E90  48000034             b 0x828b9ec4
+LAB_828b9e94:
+  828B9E94  3D608015             lis r11,-0x7feb
+  828B9E98  616B1100             ori r11,r11,0x1100
+  828B9E9C  7F035800             cmpw cr6,r3,r11
+  828B9EA0  409A000C             bne cr6,0x828b9eac
+  828B9EA4  386004DB             li r3,0x4db
+  828B9EA8  4800001C             b 0x828b9ec4
+LAB_828b9eac:
+  828B9EAC  3D608015             lis r11,-0x7feb
+  828B9EB0  616B1802             ori r11,r11,0x1802
+  828B9EB4  7F035800             cmpw cr6,r3,r11
+  828B9EB8  386004CD             li r3,0x4cd
+  828B9EBC  419A0008             beq cr6,0x828b9ec4
+  828B9EC0  3860065B             li r3,0x65b
+LAB_828b9ec4:
+  828B9EC4  38210060             addi r1,r1,0x60
+  828B9EC8  8181FFF8             lwz r12,-0x8(r1)
+  828B9ECC  7D8803A6             mtspr LR,r12
+  828B9ED0  4E800020             blr
+
 ; 828B9ED8  XLookupSchemaIndexFromOrdinal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:125)
   828B9ED8  7D8802A6             mfspr r12,LR
   828B9EDC  9181FFF8             stw r12,-0x8(r1)
@@ -127,6 +161,64 @@ LAB_828b9f48:
 ; 828B9F60  XOnlinepGetContextSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:181)
   828B9F60  7D8802A6             mfspr r12,LR
   828B9F64  4805C74D             bl 0x829166b0
+  828B9F68  9421FF60             stwu r1,-0xa0(r1)
+  828B9F6C  7C6B1B78             or r11,r3,r3
+  828B9F70  3D408489             lis r10,-0x7b77
+  828B9F74  7C9D2378             or r29,r4,r4
+  828B9F78  7CBF2B78             or r31,r5,r5
+  828B9F7C  38A10050             addi r5,r1,0x50
+  828B9F80  386A57F0             addi r3,r10,0x57f0
+  828B9F84  7D645B78             or r4,r11,r11
+  828B9F88  7CDA3378             or r26,r6,r6
+  828B9F8C  7CFB3B78             or r27,r7,r7
+  828B9F90  7D1E4378             or r30,r8,r8
+  828B9F94  7D3C4B78             or r28,r9,r9
+  828B9F98  480016F9             bl 0x828bb690
+  828B9F9C  2C030000             cmpwi r3,0x0
+  828B9FA0  4180008C             blt 0x828ba02c
+  828B9FA4  57AB0739             rlwinm. r11,r29,0x0,0x1c,0x1c
+  828B9FA8  7FEBFB78             or r11,r31,r31
+  828B9FAC  40820008             bne 0x828b9fb4
+  828B9FB0  8161005C             lwz r11,0x5c(r1)
+LAB_828b9fb4:
+  828B9FB4  57AA05EF             rlwinm. r10,r29,0x0,0x17,0x17
+  828B9FB8  41820010             beq 0x828b9fc8
+  828B9FBC  396B0010             addi r11,r11,0x10
+  828B9FC0  556B0036             rlwinm r11,r11,0x0,0x0,0x1b
+  828B9FC4  396B0104             addi r11,r11,0x104
+LAB_828b9fc8:
+  828B9FC8  1D6B0078             mulli r11,r11,0x78
+  828B9FCC  39400064             li r10,0x64
+  828B9FD0  2B1E0000             cmplwi cr6,r30,0x0
+  828B9FD4  7D6B5396             divwu r11,r11,r10
+  828B9FD8  396B0003             addi r11,r11,0x3
+  828B9FDC  556A003A             rlwinm r10,r11,0x0,0x0,0x1d
+  828B9FE0  419A0008             beq cr6,0x828b9fe8
+  828B9FE4  915E0000             stw r10,0x0(r30)
+LAB_828b9fe8:
+  828B9FE8  2B1C0000             cmplwi cr6,r28,0x0
+  828B9FEC  419A000C             beq cr6,0x828b9ff8
+  828B9FF0  39601000             li r11,0x1000
+  828B9FF4  917C0000             stw r11,0x0(r28)
+LAB_828b9ff8:
+  828B9FF8  2B1B0000             cmplwi cr6,r27,0x0
+  828B9FFC  419A0030             beq cr6,0x828ba02c
+  828BA000  57A907BD             rlwinm. r9,r29,0x0,0x1e,0x1e
+  828BA004  3960004C             li r11,0x4c
+  828BA008  41820008             beq 0x828ba010
+  828BA00C  39600050             li r11,0x50
+LAB_828ba010:
+  828BA010  57A905AD             rlwinm. r9,r29,0x0,0x16,0x16
+  828BA014  41820008             beq 0x828ba01c
+  828BA018  396B0004             addi r11,r11,0x4
+LAB_828ba01c:
+  828BA01C  7D6B5214             add r11,r11,r10
+  828BA020  7D6BD214             add r11,r11,r26
+  828BA024  396B2E20             addi r11,r11,0x2e20
+  828BA028  917B0000             stw r11,0x0(r27)
+LAB_828ba02c:
+  828BA02C  382100A0             addi r1,r1,0xa0
+  828BA030  4805C6D0             b 0x82916700
 
 ; 828BA038  XOnlineSetupUserBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:270)
   828BA038  7D8802A6             mfspr r12,LR

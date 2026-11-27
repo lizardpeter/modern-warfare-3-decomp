@@ -25,11 +25,33 @@ void bdLogSubscriber___bdLogSubscriber(undefined4 *param_1)
 
 // 828F48D0  bdLogSubscriber::addChannel  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:43)
 
-void bdLogSubscriber__addChannel(void)
+void bdLogSubscriber__addChannel(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char cVar2;
+  uint uVar3;
+  int *piVar4;
+  longlong lVar5;
+  
+  iVar1 = __savegprlr_29();
+  lVar5 = 0;
+  uVar3 = 0;
+  piVar4 = (int *)(iVar1 + 0x10);
+  do {
+    if (4 < uVar3) break;
+    if (*piVar4 == 0) {
+      lVar5 = 1;
+      *piVar4 = param_2;
+    }
+    uVar3 = uVar3 + 1;
+    piVar4 = piVar4 + 1;
+  } while (lVar5 == 0);
+  if ((lVar5 != 0) && (cVar2 = bdLinkable__find(DAT_84895d58,iVar1), cVar2 == '\0')) {
+    bdLinkable__link(iVar1,0xffffffff84895d58);
+  }
+  __restgprlr_29(lVar5);
+  return;
 }
 
 
@@ -58,11 +80,28 @@ void bdLogSubscriber__publish(undefined8 param_1,uint param_2)
 
 // 828F4A40  bdSnprintf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:188)
 
-void bdSnprintf(void)
+void bdSnprintf(undefined8 param_1,size_t param_2,char *param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char *_DstBuf;
+  int iVar1;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  
+  _DstBuf = (char *)__savegprlr_27();
+  in_stack_00000028 = param_4;
+  in_stack_00000030 = param_5;
+  in_stack_00000038 = param_6;
+  in_stack_00000040 = param_7;
+  in_stack_00000048 = param_8;
+  iVar1 = _vscprintf(param_3,(va_list)&stack0x00000028);
+  _vsnprintf_s(_DstBuf,param_2,0xffffffff,param_3,(va_list)&stack0x00000028);
+  __restgprlr_27(iVar1);
+  return;
 }
 
 

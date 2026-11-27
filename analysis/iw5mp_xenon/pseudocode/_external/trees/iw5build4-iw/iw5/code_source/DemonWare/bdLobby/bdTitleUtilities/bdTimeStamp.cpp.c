@@ -14,11 +14,17 @@ undefined4 * bdTimeStamp__bdTimeStamp(undefined4 *param_1)
 
 // 828FDAA0  bdTimeStamp::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:18)
 
-void bdTimeStamp__deserialize(void)
+void bdTimeStamp__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt32(*(undefined4 *)param_2,lVar1 + 4);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(cVar2 != '\0');
+  return;
 }
 
 

@@ -104,7 +104,60 @@ LAB_82731e74:
 void R_AddEntitySurfacesInFrustumCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  int iVar5;
+  float *pfVar6;
+  int local_40;
+  undefined4 local_3c [15];
+  
+  puVar3 = (undefined4 *)__savegprlr_26();
+  iVar4 = DAT_8461658c;
+  uVar1 = *puVar3;
+  uVar2 = R_UpdateSceneEntBounds(uVar1,&local_40,local_3c,1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    if (local_40 != 0) {
+      CG_UsedDObjCalcPose(*(undefined4 *)(local_40 + 0x70));
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    if (local_40 == 0) {
+      MyAssertHandler(0xffffffff821bd5d8,0x12e,0,0xffffffff82000f98,0xffffffff821bc334);
+    }
+    sync(1);
+    pfVar6 = (float *)puVar3[1];
+    iVar5 = 0;
+    if (*(ushort *)(puVar3 + 2) != 0) {
+      do {
+        if (*(float *)(local_40 + 0x34) * pfVar6[2] +
+            *(float *)(local_40 + 0x30) * pfVar6[1] +
+            *(float *)(local_40 + 0x2c) * *pfVar6 +
+            ABS(pfVar6[2]) * *(float *)(local_40 + 0x40) +
+            ABS(*pfVar6) * *(float *)(local_40 + 0x38) +
+            ABS(pfVar6[1]) * *(float *)(local_40 + 0x3c) + pfVar6[3] <= 0.0) goto LAB_82732168;
+        iVar5 = iVar5 + 1;
+        pfVar6 = pfVar6 + 4;
+      } while (iVar5 < (int)(uint)*(ushort *)(puVar3 + 2));
+    }
+    iVar4 = R_BoundsInCell(*(undefined4 *)(iVar4 + 0x3c),*(undefined2 *)((int)puVar3 + 10));
+    if (iVar4 != 0) {
+      CG_CullIn(*(undefined4 *)(local_40 + 0x70));
+      R_SkinSceneDObj(uVar1,local_40,local_3c[0],uVar2);
+      if ((*(uint *)(local_40 + 0x68) >> 0xd & 0xfff) == DAT_84613768) {
+        MyAssertHandler(0xffffffff821bd5d8,0x147,0,0xffffffff82000f98,0xffffffff821bd5ac);
+      }
+      *(undefined1 *)((*(uint *)(local_40 + 0x68) >> 0xd & 0xfff) + puVar3[3]) = 1;
+      __restgprlr_26();
+      return;
+    }
+LAB_82732168:
+    CG_UsedDObjCalcPose(*(undefined4 *)(local_40 + 0x70));
+  }
+  __restgprlr_26();
+  return;
 }
 

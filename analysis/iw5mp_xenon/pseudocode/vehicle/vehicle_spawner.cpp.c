@@ -2,20 +2,60 @@
 
 // 826C9E20  Vehicle_CreateSpawner  (vehicle/vehicle_spawner.cpp:14)
 
-void Vehicle_CreateSpawner(void)
+void Vehicle_CreateSpawner(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a1c90,0xf,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a1c90,0x10,0,0xffffffff82000f98,0xffffffff821a1c84);
+  }
+  *(undefined4 *)(iVar1 + 0x18c) = 0;
+  *(undefined4 *)(iVar1 + 0x11c) = 0;
+  *(undefined1 *)(iVar1 + 0x102) = 1;
+  *(undefined4 *)(iVar1 + 4) = 0x11;
+  *(undefined4 *)(iVar1 + 0x1ac) = 0;
+  *(undefined4 *)(iVar1 + 0x1b0) = 0xffffffff;
+  uVar2 = Vehicle_RegisterServerDef(param_2);
+  *(undefined4 *)(iVar1 + 0x1b4) = uVar2;
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C9EC8  Vehicle_DoSpawn  (vehicle/vehicle_spawner.cpp:31)
 
-void Vehicle_DoSpawn(void)
+void Vehicle_DoSpawn(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a1c90,0x23,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (DAT_83580fac <= *(int *)(iVar1 + 0x1b0)) {
+    __restgprlr_27(0);
+    return;
+  }
+  *(int *)(iVar1 + 0x1b0) = DAT_83580fac;
+  iVar2 = G_Spawn();
+  puVar3 = (undefined4 *)Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x1b4));
+  G_DuplicateEntityFieldsForSpawn(iVar2,iVar1);
+  G_DuplicateScriptFields(iVar2,iVar1);
+  *(uint *)(iVar2 + 0x180) = *(uint *)(iVar2 + 0x180) & 0xfffffffd;
+  Scr_SetString(iVar2 + 0x17a,param_2);
+  Vehicle_Create(iVar2,*puVar3,param_3,0);
+  Scr_AddEntity(iVar2);
+  Scr_Notify(iVar1,DAT_835a0c30,1);
+  __restgprlr_27(iVar2);
+  return;
 }
 

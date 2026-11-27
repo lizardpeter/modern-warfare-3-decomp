@@ -2,20 +2,51 @@
 
 // 8291D968  __ArrayUnwind  (<external>/bt/278379/vctools/crt/src/crtw32/eh/ehvecdtr.cpp:131)
 
-void __ArrayUnwind(void)
+void __ArrayUnwind(undefined8 param_1,longlong param_2,longlong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  
+  lVar1 = __savegprlr_27();
+  while( true ) {
+    param_3 = param_3 + -1;
+    if (param_3 < 0) break;
+    lVar1 = lVar1 - param_2;
+    (*param_4)(lVar1);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 8291DA40  `eh_vector_destructor_iterator'  (line unknown)
 
-void _eh_vector_destructor_iterator_(void)
+void _eh_vector_destructor_iterator_
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  longlong lVar6;
+  
+  iVar5 = (int)param_3;
+  uVar4 = (undefined4)((ulonglong)param_3 >> 0x20);
+  iVar3 = (int)param_2;
+  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
+  lVar1 = __savegprlr_27();
+  lVar6 = CONCAT44(uVar4,iVar5);
+  lVar1 = (longlong)iVar3 * (longlong)iVar5 + lVar1;
+  while( true ) {
+    lVar6 = lVar6 + -1;
+    if (lVar6 < 0) break;
+    lVar1 = lVar1 - CONCAT44(uVar2,iVar3);
+    (*param_4)(lVar1);
+  }
+  FUN_8291dafc();
+  __restgprlr_27();
+  return;
 }
 

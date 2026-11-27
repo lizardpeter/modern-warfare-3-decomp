@@ -3,3 +3,58 @@
 ; 82257B08  mp_lcm  (line unknown)
   82257B08  7D8802A6             mfspr r12,LR
   82257B0C  486BEBAD             bl 0x829166b8
+  82257B10  9421FF40             stwu r1,-0xc0(r1)
+  82257B14  7C7E1B78             or r30,r3,r3
+  82257B18  7C9D2378             or r29,r4,r4
+  82257B1C  7CBC2B78             or r28,r5,r5
+  82257B20  38A00000             li r5,0x0
+  82257B24  38810070             addi r4,r1,0x70
+  82257B28  38610080             addi r3,r1,0x80
+  82257B2C  480026BD             bl 0x8225a1e8
+  82257B30  2F030000             cmpwi cr6,r3,0x0
+  82257B34  409A00A0             bne cr6,0x82257bd4
+  82257B38  38A10080             addi r5,r1,0x80
+  82257B3C  7FA4EB78             or r4,r29,r29
+  82257B40  7FC3F378             or r3,r30,r30
+  82257B44  4800069D             bl 0x822581e0
+  82257B48  7C7F1B78             or r31,r3,r3
+  82257B4C  2F030000             cmpwi cr6,r3,0x0
+  82257B50  409A0070             bne cr6,0x82257bc0
+  82257B54  7FA4EB78             or r4,r29,r29
+  82257B58  7FC3F378             or r3,r30,r30
+  82257B5C  48001F8D             bl 0x82259ae8
+  82257B60  2F03FFFF             cmpwi cr6,r3,-0x1
+  82257B64  38C00000             li r6,0x0
+  82257B68  38A10070             addi r5,r1,0x70
+  82257B6C  38810080             addi r4,r1,0x80
+  82257B70  409A0020             bne cr6,0x82257b90
+  82257B74  7FC3F378             or r3,r30,r30
+  82257B78  48001161             bl 0x82258cd8
+  82257B7C  7C7F1B78             or r31,r3,r3
+  82257B80  2F030000             cmpwi cr6,r3,0x0
+  82257B84  409A003C             bne cr6,0x82257bc0
+  82257B88  7FA3EB78             or r3,r29,r29
+  82257B8C  4800001C             b 0x82257ba8
+LAB_82257b90:
+  82257B90  7FA3EB78             or r3,r29,r29
+  82257B94  48001145             bl 0x82258cd8
+  82257B98  7C7F1B78             or r31,r3,r3
+  82257B9C  2F030000             cmpwi cr6,r3,0x0
+  82257BA0  409A0020             bne cr6,0x82257bc0
+  82257BA4  7FC3F378             or r3,r30,r30
+LAB_82257ba8:
+  82257BA8  7F85E378             or r5,r28,r28
+  82257BAC  38810070             addi r4,r1,0x70
+  82257BB0  48001841             bl 0x822593f0
+  82257BB4  39600000             li r11,0x0
+  82257BB8  7C7F1B78             or r31,r3,r3
+  82257BBC  917C0008             stw r11,0x8(r28)
+LAB_82257bc0:
+  82257BC0  38A00000             li r5,0x0
+  82257BC4  38810070             addi r4,r1,0x70
+  82257BC8  38610080             addi r3,r1,0x80
+  82257BCC  4800276D             bl 0x8225a338
+  82257BD0  7FE3FB78             or r3,r31,r31
+LAB_82257bd4:
+  82257BD4  382100C0             addi r1,r1,0xc0
+  82257BD8  486BEB30             b 0x82916708

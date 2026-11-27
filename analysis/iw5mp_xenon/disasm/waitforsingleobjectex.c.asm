@@ -3,3 +3,35 @@
 ; 828B4F50  WaitForSingleObjectEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/waitforsingleobjectex.c:82)
   828B4F50  7D8802A6             mfspr r12,LR
   828B4F54  48061761             bl 0x829166b4
+  828B4F58  9421FF70             stwu r1,-0x90(r1)
+  828B4F5C  7C7E1B78             or r30,r3,r3
+  828B4F60  7C9F2378             or r31,r4,r4
+  828B4F64  7CBB2B78             or r27,r5,r5
+  828B4F68  7DAD6B78             or r13,r13,r13
+  828B4F6C  7FE4FB78             or r4,r31,r31
+  828B4F70  38610050             addi r3,r1,0x50
+  828B4F74  4800012D             bl 0x828b50a0
+  828B4F78  7C7D1B78             or r29,r3,r3
+  828B4F7C  577C063E             rlwinm r28,r27,0x0,0x18,0x1f
+LAB_828b4f80:
+  828B4F80  7FA6EB78             or r6,r29,r29
+  828B4F84  7F85E378             or r5,r28,r28
+  828B4F88  38800001             li r4,0x1
+  828B4F8C  7FC3F378             or r3,r30,r30
+  828B4F90  4808CDC5             bl 0x82941d54
+  828B4F94  7C7F1B79             or. r31,r3,r3
+  828B4F98  41800018             blt 0x828b4fb0
+  828B4F9C  2F1B0000             cmpwi cr6,r27,0x0
+  828B4FA0  419A001C             beq cr6,0x828b4fbc
+  828B4FA4  2F1F0101             cmpwi cr6,r31,0x101
+  828B4FA8  419AFFD8             beq cr6,0x828b4f80
+  828B4FAC  48000010             b 0x828b4fbc
+LAB_828b4fb0:
+  828B4FB0  7FE3FB78             or r3,r31,r31
+  828B4FB4  4BFF6D65             bl 0x828abd18
+  828B4FB8  3BE0FFFF             li r31,-0x1
+LAB_828b4fbc:
+  828B4FBC  7DCE7378             or r14,r14,r14
+  828B4FC0  7FE3FB78             or r3,r31,r31
+  828B4FC4  38210090             addi r1,r1,0x90
+  828B4FC8  4806173C             b 0x82916704

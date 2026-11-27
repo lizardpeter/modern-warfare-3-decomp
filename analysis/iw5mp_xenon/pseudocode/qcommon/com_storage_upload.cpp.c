@@ -15,8 +15,30 @@ void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 void LiveStorage_DoWeNeedOnlineStatsWrite(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  longlong lVar4;
+  
+  iVar1 = __savegprlr_28();
+  lVar4 = 0;
+  iVar2 = LiveStorage_GetActiveStatsSource();
+  if (((&DAT_836398d1)[iVar2 * 0x3005 + iVar1 * 0x9238] != '\0') && (iVar2 == 0)) {
+    iVar1 = Sys_Milliseconds();
+    if ((DAT_8365e004 == 0) ||
+       (cVar3 = Live_GetShouldDemonwareRetry((iVar1 - DAT_8365e008) / 1000,DAT_8365e004,0x3c),
+       cVar3 != '\0')) {
+      lVar4 = 1;
+    }
+    if (lVar4 != 0) {
+      DAT_8365e004 = DAT_8365e004 + 1;
+      DAT_8365e008 = iVar1;
+      __restgprlr_28(lVar4);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -25,8 +47,95 @@ void LiveStorage_DoWeNeedOnlineStatsWrite(void)
 void LiveStorage_UploadStats(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar5;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar6;
+  undefined4 *puVar7;
+  
+  uVar1 = __savegprlr_27();
+  iVar6 = (int)uVar1 * 0x9238;
+  if ((&DAT_836398d0)[iVar6] == '\0') {
+    Com_Printf(6,0xffffffff8208b3a8,uVar1);
+    __restgprlr_27();
+    return;
+  }
+  if ((&DAT_836398d2)[iVar6] == '\0') {
+    Com_Printf(6,0xffffffff8208b360,uVar1);
+    __restgprlr_27();
+    return;
+  }
+  if ((&DAT_8363c8da)[iVar6] != '\0') {
+    Com_Printf(6,0xffffffff8208b318,uVar1);
+    __restgprlr_27();
+    return;
+  }
+  cVar5 = Live_IsUserSignedInToLive(uVar1);
+  if (cVar5 != '\0') {
+    cVar5 = Live_IsUserSignedInToDemonware(uVar1);
+    if (cVar5 == '\0') {
+      Com_Printf(6,0xffffffff8208b288,uVar1);
+      (&DAT_836398d1)[iVar6] = 1;
+      __restgprlr_27();
+      return;
+    }
+    iVar2 = XUserGetSigninState(uVar1);
+    if (iVar2 == 2) {
+      cVar5 = Sys_IsMainThread();
+      if (cVar5 == '\0') {
+        MyAssertHandler(0xffffffff8208b238,0x7e,0,0xffffffff82000f98,0xffffffff82010b48);
+      }
+      (&DAT_8363c8da)[iVar6] = 1;
+      sync(1);
+      memcpy(&DAT_8363c8dc + iVar6,&DAT_836368d0 + iVar6,0x3000);
+      uVar3 = Com_BlockChecksumKey32(iVar6 + -0x7c9c3720,0x2ffc,0);
+      *(undefined4 *)(&DAT_8363c8dc + iVar6) = uVar3;
+      iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,7);
+      if (iVar2 == 0) {
+        Com_PrintWarning(0x10,0xffffffff8208b1fc);
+        (&DAT_836398d1)[iVar6] = 1;
+        (&DAT_8363c8da)[iVar6] = 0;
+        __restgprlr_27();
+        return;
+      }
+      puVar7 = &DAT_8363fb04 + (int)uVar1 * 0x248e;
+      *(char **)*puVar7 = "mpdata";
+      *(undefined4 *)(iVar2 + 0x98) = *puVar7;
+      if ((&DAT_8363fb00)[iVar6] == '\0') {
+        iVar4 = dwUpdateFile(iVar2,*puVar7,&DAT_8363c8dc + iVar6,0x3000);
+        if (iVar4 == 0) {
+          Com_Printf(6,0xffffffff8208b1b4);
+          TaskManager_ClearTask(iVar2);
+          (&DAT_836398d1)[iVar6] = 1;
+          (&DAT_8363c8da)[iVar6] = 0;
+          __restgprlr_27();
+          return;
+        }
+      }
+      else {
+        iVar4 = dwCreateFile();
+        if (iVar4 == 0) {
+          Com_Printf(6,0xffffffff8208b1d8);
+          TaskManager_ClearTask(iVar2);
+          (&DAT_836398d1)[iVar6] = 1;
+          (&DAT_8363c8da)[iVar6] = 0;
+          __restgprlr_27();
+          return;
+        }
+      }
+      Com_Printf(0x10,0xffffffff8208b188,uVar1);
+      (&DAT_836398d2)[iVar6] = 0;
+      (&DAT_836398d3)[iVar6] = 0;
+      __restgprlr_27();
+      return;
+    }
+  }
+  Com_Printf(6,0xffffffff8208b2d0,uVar1);
+  (&DAT_836398d1)[iVar6] = 1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -40,25 +149,23 @@ void LiveStorage_StatsWriteComplete(void)
   int iVar3;
   
   iVar2 = __savegprlr_25();
-  iVar2 = iVar2 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar2] == '\0') {
-                    /* WARNING: Subroutine does not return */
+  iVar3 = iVar2 * 0xa0;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
     MyAssertHandler(0xffffffff8208b238,0x10a,0,0xffffffff82000f98,0xffffffff820851b0);
   }
-  if (*(int *)(&DAT_8365bcd0 + iVar2) != 7) {
-                    /* WARNING: Subroutine does not return */
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 7) {
     MyAssertHandler(0xffffffff8208b238,0x10b,0,0xffffffff82000f98,0xffffffff8208b47c);
   }
-  iVar3 = (uint)(byte)(&DAT_8365bcd5)[iVar2] * 0x9238;
-  if ((&DAT_8363fb00)[iVar3] == '\0') {
+  iVar2 = (uint)(byte)(&DAT_8365bcd5)[iVar3] * 0x9238;
+  if ((&DAT_8363fb00)[iVar2] == '\0') {
     uVar1 = dwUpdateFileComplete
-                      (&DAT_8365bc40 + iVar2,
-                       (&DAT_8363fb04)[(uint)(byte)(&DAT_8365bcd5)[iVar2] * 0x248e]);
+                      (&DAT_8365bc40 + iVar3,
+                       (&DAT_8363fb04)[(uint)(byte)(&DAT_8365bcd5)[iVar3] * 0x248e]);
   }
   else {
     uVar1 = dwCreateFileComplete();
     if ((int)uVar1 == 1) {
-      (&DAT_8363fb00)[iVar3] = '\0';
+      (&DAT_8363fb00)[iVar2] = '\0';
       goto LAB_824f4a78;
     }
   }
@@ -67,27 +174,25 @@ void LiveStorage_StatsWriteComplete(void)
     return;
   }
 LAB_824f4a78:
-  if ((&DAT_8363c8da)[iVar3] == '\0') {
-                    /* WARNING: Subroutine does not return */
+  if ((&DAT_8363c8da)[iVar2] == '\0') {
     MyAssertHandler(0xffffffff8208b238,0x120,0,0xffffffff82000f98,0xffffffff8208b454);
   }
-  (&DAT_8363c8da)[iVar3] = 0;
+  (&DAT_8363c8da)[iVar2] = 0;
   sync(1);
   UI_CloseMenu(0,0xffffffff8208b440);
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar2);
+  TaskManager_ClearTask(&DAT_8365bc40 + iVar3);
   if ((int)uVar1 == 2) {
     Com_PrintError(0x10,0xffffffff8208b418);
-    (&DAT_836398d2)[iVar3] = 1;
-    (&DAT_836398d1)[iVar3] = 1;
+    (&DAT_836398d2)[iVar2] = 1;
+    (&DAT_836398d1)[iVar2] = 1;
     __restgprlr_25(2);
     return;
   }
   if ((int)uVar1 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208b238,0x131,0,0xffffffff82058ff0,0xffffffff8208ad4c,uVar1);
   }
   Com_Printf(0x10,0xffffffff8208b3ec);
-  (&DAT_836398d1)[iVar3] = 0;
+  (&DAT_836398d1)[iVar2] = 0;
   __restgprlr_25(1);
   return;
 }

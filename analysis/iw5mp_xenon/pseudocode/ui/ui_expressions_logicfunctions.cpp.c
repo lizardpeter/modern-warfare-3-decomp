@@ -2,51 +2,110 @@
 
 // 825A1530  compare_doesStringEqualString  (ui/ui_expressions_logicfunctions.cpp:12)
 
-void compare_doesStringEqualString(void)
+void compare_doesStringEqualString(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int iVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0xd,0,0xffffffff82168d1c,0xffffffff82168d3c);
+  }
+  if (*param_2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0xe,0,0xffffffff82168cd8,0xffffffff82168cf8);
+  }
+  *param_3 = 0;
+  iVar2 = I_stricmp(piVar1[1],param_2[1]);
+  param_3[1] = (uint)(iVar2 == 0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A15D0  compare_doesStringNotEqualString  (ui/ui_expressions_logicfunctions.cpp:21)
 
-void compare_doesStringNotEqualString(void)
+void compare_doesStringNotEqualString(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  longlong lVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x16,0,0xffffffff82168d1c,0xffffffff82168d3c);
+  }
+  if (*param_2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x17,0,0xffffffff82168cd8,0xffffffff82168cf8);
+  }
+  *param_3 = 0;
+  lVar1 = I_stricmp(piVar2[1],param_2[1]);
+  param_3[1] = (uint)(lVar1 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1670  compare_doesIntEqualInt  (ui/ui_expressions_logicfunctions.cpp:30)
 
-void compare_doesIntEqualInt(void)
+void compare_doesIntEqualInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x1f,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x20,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)(param_2[1] == piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1710  compare_doesIntNotEqualInt  (ui/ui_expressions_logicfunctions.cpp:38)
 
-void compare_doesIntNotEqualInt(void)
+void compare_doesIntNotEqualInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x27,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x28,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)(param_2[1] != piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A17B0  compare_doesIntEqualFloat  (ui/ui_expressions_logicfunctions.cpp:46)
 
-void compare_doesIntEqualFloat(void)
+void compare_doesIntEqualFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x2f,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x30,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)piVar1[1] == (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -62,21 +121,43 @@ void compare_doesFloatEqualInt(undefined8 param_1,undefined8 param_2)
 
 // 825A1878  compare_doesFloatEqualFloat  (ui/ui_expressions_logicfunctions.cpp:59)
 
-void compare_doesFloatEqualFloat(void)
+void compare_doesFloatEqualFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x3c,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x3d,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] == (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1918  compare_doesIntNotEqualFloat  (ui/ui_expressions_logicfunctions.cpp:67)
 
-void compare_doesIntNotEqualFloat(void)
+void compare_doesIntNotEqualFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x44,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x45,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)piVar1[1] != (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -92,71 +173,150 @@ void compare_doesFloatNotEqualInt(undefined8 param_1,undefined8 param_2)
 
 // 825A19E0  compare_doesFloatNotEqualFloat  (ui/ui_expressions_logicfunctions.cpp:80)
 
-void compare_doesFloatNotEqualFloat(void)
+void compare_doesFloatNotEqualFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x51,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x52,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] != (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1A80  compare_isIntLessThanInt  (ui/ui_expressions_logicfunctions.cpp:88)
 
-void compare_isIntLessThanInt(void)
+void compare_isIntLessThanInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x59,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x5a,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (int)((~(ulonglong)(uint)(param_2[1] ^ piVar1[1]) & 0xffffffff) >> 0x1f) +
+               (uint)((uint)param_2[1] <= (uint)piVar1[1]) & 1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1B28  compare_isIntLessThanFloat  (ui/ui_expressions_logicfunctions.cpp:96)
 
-void compare_isIntLessThanFloat(void)
+void compare_isIntLessThanFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x61,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x62,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)piVar1[1] < (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1BE0  compare_isFloatLessThanInt  (ui/ui_expressions_logicfunctions.cpp:104)
 
-void compare_isFloatLessThanInt(void)
+void compare_isFloatLessThanInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x69,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x6a,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] < (float)(longlong)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1C98  compare_isFloatLessThanFloat  (ui/ui_expressions_logicfunctions.cpp:112)
 
-void compare_isFloatLessThanFloat(void)
+void compare_isFloatLessThanFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x71,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x72,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] < (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1D38  compare_isIntLessThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:120)
 
-void compare_isIntLessThanEqualToInt(void)
+void compare_isIntLessThanEqualToInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x79,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x7a,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = ((param_2[1] >> 0x1f) - (piVar1[1] >> 0x1f)) +
+               (uint)((uint)piVar1[1] <= (uint)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1DE0  compare_isFloatGreaterThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:128)
 
-void compare_isFloatGreaterThanEqualToInt(void)
+void compare_isFloatGreaterThanEqualToInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x81,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x82,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)param_2[1] <= (float)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -172,21 +332,43 @@ void compare_isIntLessThanEqualToFloat(undefined8 param_1,undefined8 param_2)
 
 // 825A1EA8  compare_isFloatLessThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:141)
 
-void compare_isFloatLessThanEqualToInt(void)
+void compare_isFloatLessThanEqualToInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x8e,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x8f,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] <= (float)(longlong)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A1F60  compare_isFloatLessThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:149)
 
-void compare_isFloatLessThanEqualToFloat(void)
+void compare_isFloatLessThanEqualToFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x96,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x97,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)piVar1[1] <= (float)param_2[1]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -212,71 +394,149 @@ void compare_isIntGreaterThanFloat(undefined8 param_1,undefined8 param_2)
 
 // 825A2020  compare_isFloatGreaterThanInt  (ui/ui_expressions_logicfunctions.cpp:167)
 
-void compare_isFloatGreaterThanInt(void)
+void compare_isFloatGreaterThanInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xa8,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xa9,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)(longlong)param_2[1] < (float)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A20D8  compare_isFloatGreaterThanFloat  (ui/ui_expressions_logicfunctions.cpp:175)
 
-void compare_isFloatGreaterThanFloat(void)
+void compare_isFloatGreaterThanFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xb0,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xb1,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)param_2[1] < (float)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2178  compare_isIntGreaterThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:183)
 
-void compare_isIntGreaterThanEqualToInt(void)
+void compare_isIntGreaterThanEqualToInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xb8,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xb9,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = ((piVar1[1] >> 0x1f) - (param_2[1] >> 0x1f)) +
+               (uint)((uint)param_2[1] <= (uint)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2220  compare_isIntGreaterThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:191)
 
-void compare_isIntGreaterThanEqualToFloat(void)
+void compare_isIntGreaterThanEqualToFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xc0,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xc1,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)param_2[1] <= (float)(longlong)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A22D8  compare_isFloatGreaterThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:199)
 
-void compare_isFloatGreaterThanEqualToFloat(void)
+void compare_isFloatGreaterThanEqualToFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,200,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xc9,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  param_3[1] = (uint)((float)param_2[1] <= (float)piVar1[1]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2378  add_IntWithInt  (ui/ui_expressions_logicfunctions.cpp:207)
 
-void add_IntWithInt(void)
+void add_IntWithInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xd0,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xd1,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = piVar1[1] + param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2410  add_IntWithFloat  (ui/ui_expressions_logicfunctions.cpp:215)
 
-void add_IntWithFloat(void)
+void add_IntWithFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0xd8,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xd9,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)piVar1[1] + (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
@@ -292,121 +552,280 @@ void add_FloatWithInt(undefined8 param_1,undefined8 param_2)
 
 // 825A24D0  add_FloatWithFloat  (ui/ui_expressions_logicfunctions.cpp:228)
 
-void add_FloatWithFloat(void)
+void add_FloatWithFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xe5,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0xe6,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)piVar1[1] + (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2568  add_StringWithString  (ui/ui_expressions_logicfunctions.cpp:236)
 
-void add_StringWithString(void)
+void add_StringWithString(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined1 auStack_230 [256];
+  undefined1 auStack_130 [304];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0xf1,0,0xffffffff82168d1c,0xffffffff82168d3c);
+  }
+  if (*param_2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0xf2,0,0xffffffff82168cd8,0xffffffff82168cf8);
+  }
+  *param_3 = 2;
+  I_strncpyz(auStack_130,piVar2[1],0x100);
+  I_strncpyz(auStack_230,param_2[1],0x100);
+  uVar1 = GetAvailableOperandString();
+  Com_sprintf(uVar1,0x100,0xffffffff82013790,auStack_130,auStack_230);
+  param_3[1] = (int)uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2638  add_StringWithInt  (ui/ui_expressions_logicfunctions.cpp:254)
 
-void add_StringWithInt(void)
+void add_StringWithInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined1 auStack_130 [304];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x102,0,0xffffffff82168d1c,0xffffffff82168d3c);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x103,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 2;
+  I_strncpyz(auStack_130,piVar2[1],0x100);
+  uVar1 = GetAvailableOperandString();
+  Com_sprintf(uVar1,0x100,0xffffffff82168e3c,auStack_130,param_2[1]);
+  param_3[1] = (int)uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A26F8  add_IntWithString  (ui/ui_expressions_logicfunctions.cpp:271)
 
-void add_IntWithString(void)
+void add_IntWithString(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined1 auStack_130 [304];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x113,0,0xffffffff82168cd8,0xffffffff82168dd4,*param_2);
+  }
+  if (*param_2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x114,0,0xffffffff82168d1c,0xffffffff82168cf8,*piVar2);
+  }
+  *param_3 = 2;
+  I_strncpyz(auStack_130,param_2[1],0x100);
+  uVar1 = GetAvailableOperandString();
+  Com_sprintf(uVar1,0x100,0xffffffff82168e44,piVar2[1],auStack_130);
+  param_3[1] = (int)uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A27C0  add_FloatWithString  (ui/ui_expressions_logicfunctions.cpp:287)
 
-void add_FloatWithString(void)
+void add_FloatWithString(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined1 auStack_130 [304];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x123,0,0xffffffff82168cd8,0xffffffff82168e18,*param_2);
+  }
+  if (*param_2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x124,0,0xffffffff82168d1c,0xffffffff82168cf8,*piVar2);
+  }
+  *param_3 = 2;
+  I_strncpyz(auStack_130,param_2[1],0x100);
+  uVar1 = GetAvailableOperandString();
+  Com_sprintf(uVar1,0x100,0xffffffff82168e4c,(double)(float)piVar2[1],auStack_130);
+  param_3[1] = (int)uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2890  add_StringWithFloat  (ui/ui_expressions_logicfunctions.cpp:304)
 
-void add_StringWithFloat(void)
+void add_StringWithFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined1 auStack_130 [304];
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 2) {
+    MyAssertHandler(0xffffffff82168d60,0x134,0,0xffffffff82168d1c,0xffffffff82168d3c);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x135,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 2;
+  I_strncpyz(auStack_130,piVar2[1],0x100);
+  uVar1 = GetAvailableOperandString();
+  Com_sprintf(uVar1,0x100,0xffffffff82168e54,auStack_130,(double)(float)param_2[1]);
+  param_3[1] = (int)uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2958  subtract_IntFromInt  (ui/ui_expressions_logicfunctions.cpp:323)
 
-void subtract_IntFromInt(void)
+void subtract_IntFromInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x144,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x145,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = piVar1[1] - param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A29F0  subtract_FloatFromInt  (ui/ui_expressions_logicfunctions.cpp:331)
 
-void subtract_FloatFromInt(void)
+void subtract_FloatFromInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x14c,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x14d,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)piVar1[1] - (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2AA0  subtract_IntFromFloat  (ui/ui_expressions_logicfunctions.cpp:339)
 
-void subtract_IntFromFloat(void)
+void subtract_IntFromFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x154,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x155,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)piVar1[1] - (float)(longlong)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2B50  subtract_FloatFromFloat  (ui/ui_expressions_logicfunctions.cpp:347)
 
-void subtract_FloatFromFloat(void)
+void subtract_FloatFromFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x15c,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x15d,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)piVar1[1] - (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2BE8  multiply_IntByInt  (ui/ui_expressions_logicfunctions.cpp:357)
 
-void multiply_IntByInt(void)
+void multiply_IntByInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x166,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x167,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  param_3[1] = piVar1[1] * param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2C80  multiply_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:365)
 
-void multiply_IntByFloat(void)
+void multiply_IntByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x16e,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x16f,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)(longlong)piVar1[1] * (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
@@ -422,110 +841,339 @@ void multiply_FloatByInt(undefined8 param_1,undefined8 param_2)
 
 // 825A2D40  multiply_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:378)
 
-void multiply_FloatByFloat(void)
+void multiply_FloatByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x17b,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x17c,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  param_3[1] = (float)piVar1[1] * (float)param_2[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2DD8  divide_IntByInt  (ui/ui_expressions_logicfunctions.cpp:388)
 
-void divide_IntByInt(void)
+void divide_IntByInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x185,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x186,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 1;
+  if (param_2[1] != 0) {
+    param_3[1] = (float)((double)(longlong)piVar1[1] / (double)(longlong)param_2[1]);
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2EB8  divide_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:399)
 
-void divide_IntByFloat(void)
+void divide_IntByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff82168d60,400,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x191,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  if ((float)param_2[1] != 0.0) {
+    param_3[1] = (float)(longlong)piVar1[1] / (float)param_2[1];
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A2F80  divide_FloatByInt  (ui/ui_expressions_logicfunctions.cpp:410)
 
-void divide_FloatByInt(void)
+void divide_FloatByInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x19b,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x19c,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 1;
+  if (param_2[1] != 0) {
+    param_3[1] = (float)piVar1[1] / (float)(longlong)param_2[1];
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A3048  divide_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:421)
 
-void divide_FloatByFloat(void)
+void divide_FloatByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1a6,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1a7,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 1;
+  if ((float)param_2[1] != 0.0) {
+    param_3[1] = (float)piVar1[1] / (float)param_2[1];
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A3100  mod_IntByInt  (ui/ui_expressions_logicfunctions.cpp:434)
 
-void mod_IntByInt(void)
+void mod_IntByInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  int *piVar4;
+  ulonglong uVar5;
+  
+  piVar3 = (int *)__savegprlr_28();
+  piVar4 = piVar3;
+  if (*piVar3 != 0) {
+    piVar4 = (int *)MyAssertHandler(0xffffffff82168d60,0x1b3,0,0xffffffff82168d1c,0xffffffff82168dd4
+                                   );
+  }
+  if (*param_2 != 0) {
+    piVar4 = (int *)MyAssertHandler(0xffffffff82168d60,0x1b4,0,0xffffffff82168cd8,0xffffffff82168db0
+                                   );
+  }
+  *param_3 = 0;
+  uVar1 = param_2[1];
+  if (uVar1 != 0) {
+    uVar2 = piVar3[1];
+    trapWord(6,(ulonglong)uVar1,0);
+    uVar5 = (ulonglong)uVar1 &
+            ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1);
+    param_3[1] = uVar2 - ((int)uVar2 / (int)uVar1) * uVar1;
+    trapWord(5,uVar5,0xffff);
+    __restgprlr_28(piVar4,uVar5);
+    return;
+  }
+  param_3[1] = piVar3[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A31D0  mod_FloatByInt  (ui/ui_expressions_logicfunctions.cpp:445)
 
-void mod_FloatByInt(void)
+void mod_FloatByInt(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  double dVar4;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (*piVar3 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1be,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x1bf,0,0xffffffff82168cd8,0xffffffff82168db0);
+  }
+  *param_3 = 0;
+  if (param_2[1] != 0) {
+    dVar4 = floor((double)((float)piVar3[1] + 0.5));
+    uVar2 = param_2[1];
+    trapWord(6,(ulonglong)uVar2,0);
+    uVar1 = (uint)dVar4;
+    param_3[1] = uVar1 - ((int)uVar1 / (int)uVar2) * uVar2;
+    trapWord(5,(ulonglong)uVar2 &
+               ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff);
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = piVar3[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A32C0  mod_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:456)
 
-void mod_IntByFloat(void)
+void mod_IntByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  double dVar4;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (*piVar3 != 0) {
+    MyAssertHandler(0xffffffff82168d60,0x1ca,0,0xffffffff82168d1c,0xffffffff82168dd4);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1cb,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  dVar4 = floor((double)((float)param_2[1] + 0.5));
+  uVar1 = (uint)dVar4;
+  if (uVar1 != 0) {
+    uVar2 = piVar3[1];
+    trapWord(6,(ulonglong)uVar1,0);
+    param_3[1] = uVar2 - ((int)uVar2 / (int)uVar1) * uVar1;
+    trapWord(5,(ulonglong)uVar1 &
+               ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    __restgprlr_28();
+    return;
+  }
+  param_3[1] = piVar3[1];
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A33B0  mod_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:469)
 
-void mod_FloatByFloat(void)
+void mod_FloatByFloat(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  double dVar4;
+  double dVar5;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (*piVar3 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1d7,0,0xffffffff82168d1c,0xffffffff82168e18);
+  }
+  if (*param_2 != 1) {
+    MyAssertHandler(0xffffffff82168d60,0x1d8,0,0xffffffff82168cd8,0xffffffff82168df4);
+  }
+  *param_3 = 0;
+  dVar5 = 0.5;
+  dVar4 = floor((double)((float)param_2[1] + 0.5));
+  uVar1 = (uint)dVar4;
+  if (uVar1 != 0) {
+    dVar4 = floor((double)(float)((double)(float)piVar3[1] + dVar5));
+    trapWord(6,(ulonglong)uVar1,0);
+    uVar2 = (uint)dVar4;
+    param_3[1] = uVar2 - ((int)uVar2 / (int)uVar1) * uVar1;
+    trapWord(5,(ulonglong)uVar1 &
+               ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    __restgprlr_28();
+    return;
+  }
+  dVar4 = floor((double)(float)((double)(float)piVar3[1] + dVar5));
+  param_3[1] = (int)dVar4;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A34D0  bitwiseAnd  (ui/ui_expressions_logicfunctions.cpp:482)
 
-void bitwiseAnd(void)
+void bitwiseAnd(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  
   __savegprlr_29();
+  *param_3 = 0;
+  uVar1 = GetSourceInt();
+  uVar2 = GetSourceInt(param_2);
+  param_3[1] = uVar1 & uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 825A3510  bitwiseOr  (ui/ui_expressions_logicfunctions.cpp:488)
 
-void bitwiseOr(void)
+void bitwiseOr(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  
   __savegprlr_29();
+  *param_3 = 0;
+  uVar1 = GetSourceInt();
+  uVar2 = GetSourceInt(param_2);
+  param_3[1] = uVar1 | uVar2;
+  __restgprlr_29();
+  return;
+}
+
+
+// 825A3550  Expressions_LogicTableInit  (ui/ui_expressions_logicfunctions.cpp:582)
+
+void Expressions_LogicTableInit(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  int *piVar6;
+  int iVar7;
+  
+  iVar7 = 0;
+  piVar6 = &DAT_82991390;
+  iVar2 = DAT_82991390;
+  while (iVar2 != 0) {
+    iVar1 = *piVar6;
+    iVar7 = iVar7 + 1;
+    piVar3 = piVar6 + 1;
+    piVar4 = piVar6 + 2;
+    piVar5 = piVar6 + 3;
+    piVar6 = &DAT_82991390 + iVar7 * 4;
+    iVar2 = *piVar6;
+    *(int *)(&DAT_83f66dd8 + ((iVar1 * 3 + *piVar3) * 3 + *piVar4) * 4) = *piVar5;
+  }
+  return;
 }
 

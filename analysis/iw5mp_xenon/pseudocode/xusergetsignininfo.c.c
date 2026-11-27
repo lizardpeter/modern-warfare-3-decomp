@@ -2,10 +2,15 @@
 
 // 828A5008  XUserGetSigninInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xusergetsignininfo.c:34)
 
-void XUserGetSigninInfo(void)
+void XUserGetSigninInfo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  XamUserGetSigninInfo(uVar1,param_2,param_3);
+  uVar1 = Win32FromHRESULT();
+  __restgprlr_29(uVar1);
+  return;
 }
 

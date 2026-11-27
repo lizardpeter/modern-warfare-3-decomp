@@ -30,11 +30,29 @@ void D3D__BusyYield(void)
 
 // 8285A098  D3D::CBlocker::CBlocker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:188)
 
-void D3D__CBlocker__CBlocker(void)
+void D3D__CBlocker__CBlocker(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  int *piVar3;
+  int in_r13;
+  
+  piVar3 = (int *)__savegprlr_29();
+  *piVar3 = param_2;
+  piVar3[1] = (int)param_3;
+  iVar1 = *(int *)(*(int *)(in_r13 + 0x100) + 0x58);
+  piVar3[2] = **(int **)(param_2 + 0x2b10);
+  piVar3[3] = iVar1;
+  piVar3[4] = iVar1;
+  uVar2 = TBLr;
+  piVar3[5] = (int)uVar2;
+  if ((int)param_3 != 0) {
+    PIXAddPixOpWithData(*(uint *)(&DAT_821f2fc0 + (int)((param_3 & 0xffffffff) << 2)) | 0x800000,0,0
+                       );
+  }
+  __restgprlr_29(piVar3);
+  return;
 }
 
 
@@ -43,8 +61,31 @@ void D3D__CBlocker__CBlocker(void)
 void D3D__CBlocker___CBlocker(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  code *pcVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  
+  piVar3 = (int *)__savegprlr_29();
+  if (piVar3[1] != 0) {
+    uVar4 = TBLr;
+    uVar4 = (uVar4 & 0xffffffff) - (ulonglong)(uint)piVar3[5];
+    iVar1 = *piVar3;
+    if (piVar3[1] == 3) {
+      *(ulonglong *)(iVar1 + 0x5590) = (uVar4 & 0xffffffff) + *(longlong *)(iVar1 + 0x5590);
+    }
+    else {
+      *(ulonglong *)(iVar1 + 0x5588) = (uVar4 & 0xffffffff) + *(longlong *)(iVar1 + 0x5588);
+    }
+    PIXAddPixOpWithData(*(uint *)(&DAT_821f2fc0 + piVar3[1] * 4) | 0x400000,0,0);
+    pcVar2 = *(code **)(*piVar3 + 0x358c);
+    if (pcVar2 != (code *)0x0) {
+      (*pcVar2)((double)(*(float *)(*piVar3 + 0x5584) * (float)(uVar4 & 0xffffffff) * 1000.0),0,
+                piVar3[1]);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -75,8 +116,47 @@ void D3D__MemFree(undefined8 param_1)
 void D3D__CBlocker__Check(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar4;
+  DWORD DVar5;
+  undefined8 uVar3;
+  int iVar6;
+  int in_r13;
+  
+  piVar4 = (int *)__savegprlr_29();
+  iVar6 = *piVar4;
+  D3D__BusyYield();
+  if ((*(byte *)(iVar6 + 0x2b3d) & 2) == 0) {
+    iVar1 = *(int *)(*(int *)(in_r13 + 0x100) + 0x58);
+    if (piVar4[2] != **(int **)(iVar6 + 0x2b10)) {
+      iVar2 = **(int **)(iVar6 + 0x2b10);
+      piVar4[3] = iVar1;
+      piVar4[2] = iVar2;
+    }
+    DVar5 = GetCurrentThreadId();
+    if ((*(DWORD *)(iVar6 + 0x2b08) == DVar5) && (*(int *)(iVar6 + 0x2b80) != 0)) {
+      piVar4[3] = iVar1;
+    }
+    if (4999 < (uint)(iVar1 - piVar4[3])) {
+      if (piVar4[1] == 0x13) {
+        DbgPrint(0xffffffff821f3198);
+        DbgPrint(0xffffffff821f3118);
+        DbgPrint(0xffffffff821f3098);
+        DbgPrint(0xffffffff821f3030);
+      }
+      iVar6 = D3D__DebugGpuDeadlock(iVar6);
+      if (iVar6 != 0) goto LAB_8285a2e8;
+      piVar4[3] = iVar1;
+    }
+    uVar3 = 1;
+  }
+  else {
+LAB_8285a2e8:
+    uVar3 = 0;
+  }
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -241,6 +321,21 @@ void D3D__UninitializeAsyncCommandBuffers(int param_1)
 }
 
 
+// 8285A8F8  D3D::MemAllocAligned  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/memory.hpp:550)
+
+longlong D3D__MemAllocAligned(undefined8 param_1,undefined8 param_2)
+
+{
+  longlong lVar1;
+  
+  lVar1 = D3D__MemAllocAlignedNoZero(param_1,param_2);
+  if (lVar1 != 0) {
+    memset((void *)lVar1,0,(size_t)param_1);
+  }
+  return lVar1;
+}
+
+
 // 8285A4F8  D3D::WaitUntilIdleOrFlushCaches  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:566)
 
 void D3D__WaitUntilIdleOrFlushCaches(int param_1)
@@ -275,11 +370,67 @@ void D3D__WaitUntilIdleOrFlushCaches(int param_1)
 
 // 8285AAF0  Direct3D_CreateDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:618)
 
-void Direct3D_CreateDevice(void)
+void Direct3D_CreateDevice
+               (undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4,
+               undefined8 param_5,int *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  uint uVar4;
+  undefined4 local_40;
+  char local_3c;
+  
   __savegprlr_27();
+  uVar4 = (uint)param_4;
+  *param_6 = 0;
+  iVar2 = D3D__MemAllocAligned(0x5f80,0x80);
+  if (iVar2 != 0) {
+    iVar3 = D3D__InitializeCommonDeviceState(iVar2);
+    if (iVar3 == 0) {
+      XMemFree(*(undefined4 *)(iVar2 + -4),0x24800000);
+    }
+    else if (param_2 == 2) {
+      *(byte *)(iVar2 + 0x2b3c) = *(byte *)(iVar2 + 0x2b3c) | 0x80;
+      D3D__CDevice__MarkAsOutOfMemory(iVar2);
+      iVar3 = D3D__InitializeCommandBufferDevice(iVar2);
+      if (iVar3 != 0) {
+LAB_8285ac3c:
+        *param_6 = iVar2;
+        uVar1 = 0;
+        goto LAB_8285ac48;
+      }
+      D3DDevice_Release(iVar2);
+    }
+    else {
+      D3D__AutoCriticalSection__AutoCriticalSection(&local_40,0xffffffff829a7094);
+      if (DAT_829a70bc != 0) {
+        D3D__CDevice__RTEnableTextureTracking(iVar2);
+      }
+      *(char *)(iVar2 + 0x35e0) = '\x01' - (DAT_829a6f80 == 0);
+      *(char *)(iVar2 + 0x35e1) = '\x01' - (DAT_829a6f84 == 0);
+      if (((param_4 & 0x100) == 0) && ((param_4 & 0x3f000000) == 0)) {
+        uVar4 = uVar4 | 0xc000000;
+      }
+      *(uint *)(iVar2 + 0x5f20) = uVar4;
+      iVar3 = D3D__InitializeHardwareDevice(iVar2,param_5);
+      if (iVar3 != 0) {
+        if (local_3c != '\0') {
+          RtlLeaveCriticalSection(local_40);
+        }
+        goto LAB_8285ac3c;
+      }
+      D3DDevice_Release(iVar2);
+      if (local_3c != '\0') {
+        RtlLeaveCriticalSection(local_40);
+      }
+    }
+  }
+  uVar1 = 0xffffffff8007000e;
+LAB_8285ac48:
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -374,7 +525,41 @@ void D3DDevice_FlushHiZStencil(int param_1,int param_2)
 void D3DDevice_UnsetAll(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int *piVar2;
+  ulonglong uVar3;
+  
+  iVar1 = __savegprlr_29();
+  uVar3 = 0;
+  piVar2 = (int *)(iVar1 + 0x3190);
+  do {
+    if (*piVar2 != *(int *)(iVar1 + 0x3b18)) {
+      D3DDevice_SetRenderTarget(iVar1,uVar3,0);
+    }
+    uVar3 = uVar3 + 1;
+    piVar2 = piVar2 + 1;
+  } while ((uVar3 & 0xffffffff) < 4);
+  if (*(int *)(iVar1 + 0x31a0) != *(int *)(iVar1 + 0x3b10)) {
+    D3DDevice_SetDepthStencilSurface(iVar1,0);
+  }
+  D3DDevice_SetVertexShader(iVar1,0);
+  D3DDevice_SetPixelShader(iVar1,0);
+  D3DDevice_SetVertexDeclaration(iVar1,0);
+  D3DDevice_SetIndices(iVar1,0);
+  uVar3 = 0;
+  do {
+    D3DDevice_SetStreamSource
+              (iVar1,uVar3,0,0,4,
+               0x8000000000000000 >>
+               ((((0x5f - uVar3) * 0x5556 & 0xffffffff) >> 0x10) + 0x20 & 0x7f));
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x10);
+  uVar3 = 0;
+  do {
+    D3DDevice_SetTexture(iVar1,uVar3,0,0x8000000000000000 >> (uVar3 + 0x20 & 0x7f));
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x1a);
+  __restgprlr_29();
+  return;
 }
 

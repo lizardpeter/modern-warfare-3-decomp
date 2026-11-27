@@ -33,11 +33,17 @@ void bdTeamProfile__serialize(void)
 
 // 82909428  bdTeamProfile::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteamprofile.cpp:26)
 
-void bdTeamProfile__deserialize(void)
+void bdTeamProfile__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  undefined8 uVar2;
+  
+  lVar1 = __savegprlr_29();
+  uVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

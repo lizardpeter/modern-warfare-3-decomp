@@ -2,41 +2,151 @@
 
 // 82431590  FX_MarkToHandle  (EffectsCore/fx_marks.h:159)
 
-void FX_MarkToHandle(void)
+void FX_MarkToHandle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82065788,0xa2,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065788,0xa3,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  uVar1 = (int)param_2 - *(int *)(iVar2 + 0x101c) >> 6 & 0xffff;
+  if (0x1ff < uVar1) {
+    MyAssertHandler(0xffffffff82065788,0xa6,0,0xffffffff8206573c,uVar1,0x200);
+  }
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 82431640  FX_MarkFromHandle  (EffectsCore/fx_marks.h:172)
 
-void FX_MarkFromHandle(void)
+void FX_MarkFromHandle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (0x1ff < (param_2 & 0xffff)) {
+    MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2 & 0xffff,0x200);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  __restgprlr_29((param_2 & 0xffff) * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c));
+  return;
+}
+
+
+// 82431830  FX_GetDobjModelGlobalBoneBase  (EffectsCore/fx_marks.cpp:178)
+
+void FX_GetDobjModelGlobalBoneBase(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  longlong lVar4;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_28();
+  iVar5 = DObjGetNumModels();
+  iVar6 = (int)param_2;
+  if (iVar5 <= iVar6) {
+    uVar2 = DObjGetName(uVar1);
+    uVar3 = DObjGetNumModels(uVar1);
+    uVar2 = va(0xffffffff820658b4,param_2,uVar3,uVar2);
+    MyAssertHandler(0xffffffff82065870,0xb8,0,0xffffffff820011f4,0xffffffff82065848,uVar2);
+  }
+  lVar7 = 0;
+  lVar8 = 0;
+  if (iVar6 != 0) {
+    do {
+      DObjGetModel(uVar1,lVar8);
+      lVar4 = XModelNumBones();
+      lVar8 = lVar8 + 1;
+      lVar7 = lVar4 + lVar7;
+    } while ((int)lVar8 != iVar6);
+  }
+  __restgprlr_28(lVar7);
+  return;
 }
 
 
 // 824316C0  FX_TriGroupToHandle  (EffectsCore/fx_marks.h:181)
 
-void FX_TriGroupToHandle(void)
+void FX_TriGroupToHandle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82065788,0xb9,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065788,0xba,0,0xffffffff82000f98,0xffffffff82025a10);
+  }
+  uVar1 = ((int)param_2 - *(int *)(iVar2 + 0x1020)) / 0x18 & 0xffff;
+  if (0x7ff < uVar1) {
+    MyAssertHandler(0xffffffff82065788,0xbf,0,0xffffffff820657cc,uVar1,0x800);
+  }
+  __restgprlr_28(uVar1);
+  return;
+}
+
+
+// 824318E8  TRACK_fx_marks  (EffectsCore/fx_marks.cpp:201)
+
+void TRACK_fx_marks(void)
+
+{
+  track_static_alloc_internal(0xffffffff8332cc70,0x5fa0,0xffffffff820658dc,8);
+  return;
 }
 
 
 // 82431778  FX_PointGroupToHandle  (EffectsCore/fx_marks.h:206)
 
-void FX_PointGroupToHandle(void)
+void FX_PointGroupToHandle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82065788,0xd2,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065788,0xd3,0,0xffffffff82000f98,0xffffffff82025a10);
+  }
+  uVar1 = ((int)param_2 - *(int *)(iVar2 + 0x1024)) / 0x44 & 0xffff;
+  if (0xbff < uVar1) {
+    MyAssertHandler(0xffffffff82065788,0xd8,0,0xffffffff82065808,uVar1,0xc00);
+  }
+  __restgprlr_28(uVar1);
+  return;
+}
+
+
+// 82431908  FX_MarkAllocateClientMemory  (EffectsCore/fx_marks.cpp:212)
+
+void FX_MarkAllocateClientMemory(int param_1)
+
+{
+  DAT_83332c10 = param_1;
+  DAT_83332c14 = PMem_AllocFromSource_NoDebug((longlong)param_1 * 0x47000,0x80,4,1);
+  return;
 }
 
 
@@ -51,53 +161,340 @@ void FX_MarkFreeClientMemory(void)
 }
 
 
+// 82431978  FX_InitMarksBuffers  (EffectsCore/fx_marks.cpp:232)
+
+void FX_InitMarksBuffers(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((ulonglong)DAT_83332c10 <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82065870,0xef,0,0xffffffff820658f0,uVar2);
+  }
+  iVar3 = (int)uVar2 * 0x47000 + DAT_83332c14;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0xf7,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  iVar1 = (int)param_2;
+  *(int *)(iVar1 + 0x101c) = iVar3;
+  *(int *)(iVar1 + 0x1020) = iVar3 + 0x8000;
+  *(int *)(iVar1 + 0x1024) = iVar3 + 0x14000;
+  __restgprlr_28();
+  return;
+}
+
+
 // 82431A28  FX_InitMarksSystem  (EffectsCore/fx_marks.cpp:255)
 
 void FX_InitMarksSystem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  undefined2 uVar3;
+  int *piVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  uint uVar7;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_27();
+  puVar2 = (undefined4 *)FX_GetMarksSystem();
+  FX_InitMarksBuffers(uVar1,puVar2);
+  puVar5 = puVar2 + 2;
+  lVar8 = 0x800;
+  do {
+    puVar5 = (undefined4 *)((int)puVar5 + 2);
+    *(undefined2 *)puVar5 = 0xffff;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  *(undefined2 *)((int)puVar2 + 0x100a) = 0xffff;
+  *(undefined2 *)(puVar2 + 0x403) = 0xffff;
+  *(undefined2 *)((int)puVar2 + 0x100e) = 0xffff;
+  *(undefined2 *)(puVar2 + 0x404) = 0xffff;
+  *(undefined2 *)((int)puVar2 + 0x1012) = 0xffff;
+  uVar3 = FX_MarkToHandle(puVar2,puVar2[0x407]);
+  *(undefined2 *)(puVar2 + 1) = uVar3;
+  uVar7 = 0;
+  do {
+    *(undefined2 *)(uVar7 + puVar2[0x407]) = 0xffff;
+    uVar3 = FX_MarkToHandle(puVar2,uVar7 + puVar2[0x407] + 0x40);
+    *(undefined2 *)(uVar7 + puVar2[0x407] + 2) = uVar3;
+    iVar6 = uVar7 + puVar2[0x407];
+    uVar7 = uVar7 + 0x40;
+    *(undefined4 *)(iVar6 + 4) = 0xffffffff;
+  } while (uVar7 < 0x7fc0);
+  iVar6 = 0;
+  *(undefined2 *)(puVar2[0x407] + 0x7fc0) = 0xffff;
+  lVar8 = 0x7ff;
+  *(undefined2 *)(puVar2[0x407] + 0x7fc2) = 0xffff;
+  *(undefined4 *)(puVar2[0x407] + 0x7fc4) = 0xffffffff;
+  puVar2[0x405] = puVar2[0x408];
+  do {
+    piVar4 = (int *)(iVar6 + puVar2[0x408]);
+    iVar6 = iVar6 + 0x18;
+    *piVar4 = (int)(piVar4 + 6);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar6 = 0;
+  lVar8 = 0xbff;
+  *(undefined4 *)(puVar2[0x408] + 0xbfe8) = 0;
+  puVar2[0x406] = puVar2[0x409];
+  do {
+    piVar4 = (int *)(iVar6 + puVar2[0x409]);
+    iVar6 = iVar6 + 0x44;
+    *piVar4 = (int)(piVar4 + 0x11);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar6 = 0;
+  lVar8 = 5;
+  *(undefined4 *)(puVar2[0x409] + 0x32fbc) = 0;
+  *(undefined2 *)(puVar2 + 2) = 0xffff;
+  *(undefined2 *)((int)puVar2 + 6) = 0xffff;
+  do {
+    *(undefined1 *)((int)puVar2 + iVar6 + 0x1030) = 0;
+    iVar6 = iVar6 + 1;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  puVar2[0x40a] = 0;
+  puVar2[0x40b] = 0;
+  *puVar2 = 1;
+  __restgprlr_27();
+  return;
 }
 
 
 // 82431BC0  FX_FreeMarkTriGroups  (EffectsCore/fx_marks.cpp:336)
 
-void FX_FreeMarkTriGroups(void)
+void FX_FreeMarkTriGroups(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_26();
+  param_2 = param_2 & 0xffff;
+  do {
+    if (0x7ff < param_2) {
+      MyAssertHandler(0xffffffff82065788,0xc6,0,0xffffffff820657cc,param_2,0x800);
+    }
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82065788,199,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    puVar1 = (undefined4 *)((int)param_2 * 0x18 + *(int *)(iVar2 + 0x1020));
+    param_2 = (ulonglong)*(ushort *)(puVar1 + 5);
+    *puVar1 = *(undefined4 *)(iVar2 + 0x1014);
+    *(undefined4 **)(iVar2 + 0x1014) = puVar1;
+  } while (param_2 != 0xffff);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82431C70  FX_FreeMarkPointGroups  (EffectsCore/fx_marks.cpp:354)
 
-void FX_FreeMarkPointGroups(void)
+void FX_FreeMarkPointGroups(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_26();
+  param_2 = param_2 & 0xffff;
+  do {
+    if (0xbff < param_2) {
+      MyAssertHandler(0xffffffff82065788,0xdf,0,0xffffffff82065808,param_2,0xc00);
+    }
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82065788,0xe0,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    puVar1 = (undefined4 *)((int)param_2 * 0x44 + *(int *)(iVar2 + 0x1024));
+    param_2 = (ulonglong)*(ushort *)(puVar1 + 0x10);
+    *puVar1 = *(undefined4 *)(iVar2 + 0x1018);
+    *(undefined4 **)(iVar2 + 0x1018) = puVar1;
+  } while (param_2 != 0xffff);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82431D18  FX_FreeMarkFromList  (EffectsCore/fx_marks.cpp:373)
 
-void FX_FreeMarkFromList(void)
+void FX_FreeMarkFromList(undefined8 param_1,short *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  short sVar5;
+  short *psVar3;
+  int iVar4;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  sVar5 = FX_MarkToHandle();
+  FX_FreeMarkTriGroups(iVar2,param_2[0x1e]);
+  FX_FreeMarkPointGroups(iVar2,param_2[0x1f]);
+  if (param_2[1] != -1) {
+    psVar3 = (short *)FX_MarkFromHandle(iVar2);
+    *psVar3 = *param_2;
+  }
+  if (*param_2 == -1) {
+    if ((param_3 & 0xffffffff) != 0) {
+      if (*(short *)param_3 != sVar5) {
+        uVar1 = va(0xffffffff82065950);
+        MyAssertHandler(0xffffffff82065870,0x185,0,0xffffffff820011f4,0xffffffff82065938,uVar1);
+      }
+      *(short *)param_3 = param_2[1];
+    }
+  }
+  else {
+    iVar4 = FX_MarkFromHandle(iVar2);
+    *(short *)(iVar4 + 2) = param_2[1];
+  }
+  param_2[2] = -1;
+  param_2[3] = -1;
+  param_2[1] = *(short *)(iVar2 + 4);
+  *(short *)(iVar2 + 4) = sVar5;
+  __restgprlr_28();
+  return;
 }
 
 
 // 82431E00  FX_FreeMark  (EffectsCore/fx_marks.cpp:400)
 
-void FX_FreeMark(void)
+void FX_FreeMark(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  int iVar2;
+  char cVar5;
+  int iVar3;
+  uint uVar4;
+  longlong lVar6;
+  
+  iVar2 = __savegprlr_28();
+  lVar6 = param_2 + 0x30;
+  if (lVar6 == 0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  bVar1 = *(byte *)lVar6;
+  if (4 < bVar1) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82065870,0x1b7,0,0xffffffff82065958);
+    }
+    *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+    __restgprlr_28();
+    return;
+  }
+  if (bVar1 == 1) {
+    FX_FreeMarkFromList(iVar2,param_2,0);
+    *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+    __restgprlr_28();
+    return;
+  }
+  if (bVar1 != 2) {
+    if (bVar1 != 3) {
+      if (bVar1 != 0) {
+        FX_FreeMarkFromList(iVar2,param_2,iVar2 + 8);
+        *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+        __restgprlr_28();
+        return;
+      }
+      FX_FreeMarkFromList(iVar2,param_2,iVar2 + 6);
+      *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+      __restgprlr_28();
+      return;
+    }
+    cVar5 = FX_GetMarkContext_DObjIsViewmodel(lVar6);
+    if (cVar5 != '\0') {
+      iVar3 = FX_GetMarkContext_ViewmodelClientIndex();
+      FX_FreeMarkFromList(iVar2,param_2,(iVar3 + 0x805) * 2 + iVar2);
+      iVar3 = iVar3 + iVar2;
+      if (*(char *)(iVar3 + 0x1030) == '\0') {
+        MyAssertHandler(0xffffffff82065870,0x19f,0,0xffffffff82000f98,0xffffffff8206596c);
+      }
+      *(char *)(iVar3 + 0x1030) = *(char *)(iVar3 + 0x1030) + -1;
+      *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+      __restgprlr_28();
+      return;
+    }
+  }
+  uVar4 = FX_GetMarkContext_EntNum(lVar6);
+  FX_FreeMarkFromList(iVar2,param_2,((uVar4 & 0xffff) + 5) * 2 + iVar2);
+  *(int *)(iVar2 + 0x102c) = *(int *)(iVar2 + 0x102c) + 1;
+  __restgprlr_28();
+  return;
+}
+
+
+// 82431FD8  FX_FreeRewoundMarks  (EffectsCore/fx_marks.cpp:447)
+
+void FX_FreeRewoundMarks(undefined8 param_1,int param_2)
+
+{
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  char cVar6;
+  int iVar4;
+  uint uVar5;
+  byte *pbVar7;
+  int iVar8;
+  
+  iVar3 = __savegprlr_19();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82065870,0x1c3,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  iVar2 = *(int *)(iVar3 + 0x101c);
+  if (iVar2 != iVar2 + 0x8000) {
+    pbVar7 = (byte *)(iVar2 + 0x30);
+    iVar8 = iVar2;
+    do {
+      if ((*(int *)(pbVar7 + -0x2c) != -1) && (param_2 <= *(int *)(pbVar7 + -0x28))) {
+        if (pbVar7 == (byte *)0x0) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+        }
+        bVar1 = *pbVar7;
+        if (bVar1 < 5) {
+          if (bVar1 == 1) {
+            FX_FreeMarkFromList(iVar3,iVar8,0);
+          }
+          else if (bVar1 == 2) {
+LAB_82432144:
+            uVar5 = FX_GetMarkContext_EntNum(pbVar7);
+            FX_FreeMarkFromList(iVar3,iVar8,((uVar5 & 0xffff) + 5) * 2 + iVar3);
+          }
+          else if (bVar1 == 3) {
+            cVar6 = FX_GetMarkContext_DObjIsViewmodel(pbVar7);
+            if (cVar6 == '\0') goto LAB_82432144;
+            iVar4 = FX_GetMarkContext_ViewmodelClientIndex();
+            FX_FreeMarkFromList(iVar3,iVar8,(iVar4 + 0x805) * 2 + iVar3);
+            iVar4 = iVar4 + iVar3;
+            if (*(char *)(iVar4 + 0x1030) == '\0') {
+              MyAssertHandler(0xffffffff82065870,0x19f,0,0xffffffff82000f98,0xffffffff8206596c);
+            }
+            *(char *)(iVar4 + 0x1030) = *(char *)(iVar4 + 0x1030) + -1;
+          }
+          else if (bVar1 == 0) {
+            FX_FreeMarkFromList(iVar3,iVar8,iVar3 + 6);
+          }
+          else {
+            FX_FreeMarkFromList(iVar3,iVar8,iVar3 + 8);
+          }
+        }
+        else if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82065870,0x1b7,0,0xffffffff82065958);
+        }
+        *(int *)(iVar3 + 0x102c) = *(int *)(iVar3 + 0x102c) + 1;
+      }
+      iVar8 = iVar8 + 0x40;
+      pbVar7 = pbVar7 + 0x40;
+    } while (iVar8 != iVar2 + 0x8000);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -106,38 +503,355 @@ void FX_FreeMark(void)
 void FX_FreeLruMark(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  longlong lVar4;
+  char *pcVar6;
+  longlong lVar5;
+  int iVar7;
+  int iVar8;
+  
+  iVar2 = __savegprlr_23();
+  Profile_Begin(0xc3);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82065870,0x1d8,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  iVar1 = *(int *)(iVar2 + 0x101c);
+  iVar7 = 0;
+  iVar8 = iVar1;
+  if (iVar1 != iVar1 + 0x8000) {
+    do {
+      if (*(int *)(iVar8 + 4) != -1) {
+        pcVar6 = (char *)(iVar8 + 0x30);
+        if (pcVar6 == (char *)0x0) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+        }
+        if (((*pcVar6 != '\x03') ||
+            (cVar3 = FX_GetMarkContext_DObjIsViewmodel(pcVar6), cVar3 == '\0')) &&
+           (((iVar7 == 0 || (*(int *)(iVar8 + 4) < *(int *)(iVar7 + 4))) ||
+            ((*(int *)(iVar8 + 4) == *(int *)(iVar7 + 4) &&
+             (*(int *)(iVar8 + 8) < *(int *)(iVar7 + 8))))))) {
+          iVar7 = iVar8;
+        }
+      }
+      iVar8 = iVar8 + 0x40;
+    } while (iVar8 != iVar1 + 0x8000);
+    if (iVar7 != 0) {
+      FX_FreeMark(iVar2,iVar7);
+      Profile_EndInternal(0);
+      __restgprlr_23();
+      return;
+    }
+  }
+  iVar8 = *(int *)(iVar2 + 0x101c);
+  lVar4 = 0;
+  lVar5 = 0;
+  if (iVar8 != iVar1 + 0x8000) {
+    do {
+      if (*(int *)(iVar8 + 4) == -1) {
+        lVar4 = lVar4 + 1;
+      }
+      else {
+        if (iVar8 == -0x30) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+        }
+        if ((*(char *)(iVar8 + 0x30) == '\x03') &&
+           (cVar3 = FX_GetMarkContext_DObjIsViewmodel(iVar8 + 0x30), cVar3 != '\0')) {
+          lVar5 = lVar5 + 1;
+        }
+      }
+      iVar8 = iVar8 + 0x40;
+    } while (iVar8 != iVar1 + 0x8000);
+  }
+  Com_PrintError(1,0xffffffff820659a0,*(undefined4 *)(iVar2 + 0x1018),
+                 *(undefined4 *)(iVar2 + 0x1014),*(undefined2 *)(iVar2 + 4),
+                 *(undefined4 *)(iVar2 + 0x102c),lVar4,lVar5);
+  Profile_EndInternal(0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 824323B8  FX_AllocMarkTris  (EffectsCore/fx_marks.cpp:521)
 
-void FX_AllocMarkTris(void)
+void FX_AllocMarkTris(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  
+  iVar1 = __savegprlr_28();
+  uVar6 = 0xffffffffffffffff;
+  do {
+    puVar2 = *(undefined4 **)(iVar1 + 0x1014);
+    if (puVar2 == (undefined4 *)0x0) {
+      FX_FreeLruMark(iVar1);
+      puVar2 = *(undefined4 **)(iVar1 + 0x1014);
+      if (puVar2 == (undefined4 *)0x0) {
+        if ((uVar6 & 0xffff) != 0xffff) {
+          FX_FreeMarkTriGroups(iVar1,uVar6);
+        }
+        __restgprlr_28(0xffffffffffffffff);
+        return;
+      }
+    }
+    *(undefined4 *)(iVar1 + 0x1014) = *puVar2;
+    *(short *)(puVar2 + 5) = (short)uVar6;
+    uVar6 = FX_TriGroupToHandle(iVar1);
+    if ((int)param_3 < 2) {
+LAB_8243244c:
+      lVar4 = 1;
+    }
+    else {
+      lVar5 = param_2 + 6;
+      lVar4 = param_2 + 0x14;
+      do {
+        lVar3 = (ulonglong)*(byte *)lVar5 - (ulonglong)*(byte *)lVar4;
+        if (lVar3 != 0) break;
+        lVar5 = lVar5 + 1;
+        lVar4 = lVar4 + 1;
+      } while ((int)lVar5 != (int)param_2 + 0xd);
+      lVar4 = 2;
+      if ((int)lVar3 != 0) goto LAB_8243244c;
+    }
+    param_3 = param_3 - lVar4;
+    param_2 = lVar4 * 0xe + param_2;
+    if (param_3 == 0) {
+      __restgprlr_28(uVar6);
+      return;
+    }
+  } while( true );
 }
 
 
 // 82432490  FX_AllocMarkPoints  (EffectsCore/fx_marks.cpp:558)
 
-void FX_AllocMarkPoints(void)
+void FX_AllocMarkPoints(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  
+  iVar1 = __savegprlr_29();
+  uVar3 = param_2 + 1;
+  uVar4 = 0xffffffffffffffff;
+  lVar5 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  if ((int)lVar5 < 1) {
+    MyAssertHandler(0xffffffff82065870,0x235,0,0xffffffff82065a44,0xffffffff82065a60,lVar5);
+  }
+  do {
+    puVar2 = *(undefined4 **)(iVar1 + 0x1018);
+    if (puVar2 == (undefined4 *)0x0) {
+      FX_FreeLruMark(iVar1);
+      puVar2 = *(undefined4 **)(iVar1 + 0x1018);
+      if (puVar2 == (undefined4 *)0x0) {
+        if ((uVar4 & 0xffff) != 0xffff) {
+          FX_FreeMarkPointGroups(iVar1,uVar4);
+        }
+        __restgprlr_29(0xffffffffffffffff);
+        return;
+      }
+    }
+    *(undefined4 *)(iVar1 + 0x1018) = *puVar2;
+    *(short *)(puVar2 + 0x10) = (short)uVar4;
+    uVar4 = FX_PointGroupToHandle(iVar1);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82432550  FX_FindSpotForMark  (EffectsCore/fx_marks.cpp:591)
+
+void FX_FindSpotForMark(undefined8 param_1,int *param_2,ulonglong param_3,longlong param_4,
+                       longlong param_5)
+
+{
+  short sVar1;
+  int iVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  ushort *puVar7;
+  int iVar8;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  ushort uVar12;
+  ushort *puVar13;
+  ulonglong uVar14;
+  
+  puVar7 = (ushort *)__savegprlr_21();
+  *puVar7 = 0xffff;
+  *param_2 = (int)(short *)param_4;
+  sVar1 = *(short *)param_4;
+  uVar12 = 0xffff;
+  do {
+    if (sVar1 == -1) {
+      if (*(ushort *)*param_2 != 0xffff) {
+        *puVar7 = *(ushort *)*param_2;
+        iVar8 = FX_MarkFromHandle(param_3,*(undefined2 *)*param_2);
+        *param_2 = iVar8 + 2;
+      }
+      __restgprlr_21();
+      return;
+    }
+    puVar13 = (ushort *)param_4;
+    uVar14 = (ulonglong)*puVar13;
+    if (0x1ff < uVar14) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar14,0x200);
+    }
+    if ((param_3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    iVar8 = (int)param_5;
+    param_4 = uVar14 * 0x40 + (ulonglong)*(uint *)((int)param_3 + 0x101c);
+    iVar2 = (int)param_4;
+    if (*(int *)(iVar2 + 0x2c) == *(int *)(iVar8 + 0x2c)) {
+      lVar11 = param_4 + 0x30;
+      lVar10 = param_5 + 0x30;
+      do {
+        lVar9 = (ulonglong)*(byte *)lVar11 - (ulonglong)*(byte *)lVar10;
+        if (lVar9 != 0) break;
+        lVar11 = lVar11 + 1;
+        lVar10 = lVar10 + 1;
+      } while ((int)lVar11 != iVar2 + 0x37);
+      if ((int)lVar9 != 0) goto LAB_82432648;
+LAB_82432690:
+      *puVar7 = uVar12;
+      *param_2 = (int)puVar13;
+    }
+    else {
+LAB_82432648:
+      fVar3 = *(float *)(iVar2 + 0x14) - *(float *)(iVar8 + 0x14);
+      fVar4 = *(float *)(iVar2 + 0xc) - *(float *)(iVar8 + 0xc);
+      fVar5 = *(float *)(iVar2 + 0x10) - *(float *)(iVar8 + 0x10);
+      fVar6 = *(float *)(iVar2 + 0x18) + *(float *)(iVar8 + 0x18);
+      if (fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3 < fVar6 * fVar6) goto LAB_82432690;
+    }
+    sVar1 = *(short *)(iVar2 + 2);
+    uVar12 = *puVar13;
+    param_4 = param_4 + 2;
+  } while( true );
 }
 
 
 // 824326E0  FX_LinkMarkIntoList  (EffectsCore/fx_marks.cpp:658)
 
-void FX_LinkMarkIntoList(void)
+void FX_LinkMarkIntoList(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  short sVar1;
+  undefined8 uVar2;
+  short sVar4;
+  short *psVar3;
+  short *psVar5;
+  short local_30 [2];
+  short *local_2c [11];
+  
+  uVar2 = __savegprlr_28();
+  FX_FindSpotForMark(local_30,local_2c,uVar2,param_2,param_3);
+  sVar4 = FX_MarkToHandle(uVar2,param_3);
+  sVar1 = *local_2c[0];
+  psVar5 = (short *)param_3;
+  *psVar5 = local_30[0];
+  psVar5[1] = sVar1;
+  if (sVar1 != -1) {
+    psVar3 = (short *)FX_MarkFromHandle(uVar2);
+    if (*psVar3 != *psVar5) {
+      MyAssertHandler(0xffffffff82065870,0x2a1,0,0xffffffff82000f98,0xffffffff82065a78);
+    }
+    *psVar3 = sVar4;
+  }
+  *local_2c[0] = sVar4;
+  __restgprlr_28();
+  return;
+}
+
+
+// 82432790  FX_CopyMarkTris  (EffectsCore/fx_marks.cpp:682)
+
+void FX_CopyMarkTris(undefined8 param_1,longlong param_2,ulonglong param_3,longlong param_4)
+
+{
+  undefined2 *puVar1;
+  ulonglong uVar2;
+  int iVar4;
+  longlong lVar3;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  
+  iVar4 = __savegprlr_23();
+  do {
+    uVar2 = param_3 & 0xffff;
+    if (0x7ff < uVar2) {
+      MyAssertHandler(0xffffffff82065788,0xc6,0,0xffffffff820657cc,uVar2,0x800);
+    }
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82065788,199,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    lVar3 = (uVar2 + (param_3 & 0xffff) * 2) * 8 + (ulonglong)*(uint *)(iVar4 + 0x1020);
+    lVar10 = 2;
+    if ((int)param_4 < 2) {
+      lVar10 = param_4;
+    }
+    uVar5 = 0;
+    lVar8 = param_2 + 5;
+    lVar7 = lVar3 + 0xb;
+    lVar11 = 7;
+    do {
+      lVar8 = lVar8 + 1;
+      lVar7 = lVar7 + 1;
+      *(undefined1 *)lVar7 = *(undefined1 *)lVar8;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    lVar8 = lVar3 + -2;
+    lVar7 = param_2 + 4;
+    do {
+      puVar1 = (undefined2 *)lVar7;
+      uVar5 = uVar5 + 1;
+      *(undefined2 *)((int)lVar8 + 2) = puVar1[-2];
+      *(undefined2 *)((int)lVar8 + 4) = puVar1[-1];
+      lVar8 = lVar8 + 6;
+      *(undefined2 *)lVar8 = *puVar1;
+      if (uVar5 == (uint)lVar10) break;
+      lVar9 = lVar7 + 0x10;
+      lVar11 = lVar3 + 0xc;
+      do {
+        lVar6 = (ulonglong)*(byte *)lVar9 - (ulonglong)*(byte *)lVar11;
+        if (lVar6 != 0) break;
+        lVar9 = lVar9 + 1;
+        lVar11 = lVar11 + 1;
+      } while ((int)lVar9 != (int)puVar1 + 0x17);
+      lVar7 = lVar7 + 0xe;
+    } while ((int)lVar6 == 0);
+    param_3 = (ulonglong)*(ushort *)((int)lVar3 + 0x14);
+    *(char *)((int)lVar3 + 0x13) = (char)uVar5;
+    param_4 = param_4 - ((ulonglong)uVar5 & 0xff);
+    param_2 = ((ulonglong)uVar5 & 0xff) * 0xe + param_2;
+    if (param_4 == 0) {
+      if (param_3 != 0xffff) {
+        MyAssertHandler(0xffffffff82065870,0x2c4,0,0xffffffff82065aa0,0xffffffff82065abc);
+      }
+      __restgprlr_23();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -159,18 +873,15 @@ void FX_CopyMarkPoints(undefined8 param_1,longlong param_2,ulonglong param_3,ulo
   do {
     param_3 = param_3 & 0xffff;
     if (0xbff < param_3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xdf,0,0xffffffff82065808,param_3,0xc00);
     }
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xe0,0,0xffffffff82000f98,0xffffffff8206577c);
     }
     lVar6 = param_3 * 0x44 + (ulonglong)*(uint *)(iVar1 + 0x1024);
     if ((int)param_4 < 3) {
       uVar7 = param_4;
       if ((int)param_4 < 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82065870,0x2d3,0,0xffffffff82065ae8,0xffffffff82065ad8,param_4);
       }
     }
@@ -197,7 +908,6 @@ void FX_CopyMarkPoints(undefined8 param_1,longlong param_2,ulonglong param_3,ulo
     param_2 = (uVar7 & 0x7ffffff) * 0x20 + param_2;
   } while (param_4 != 0);
   if (param_3 != 0xffff) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x2df,0,0xffffffff82065aa0,0xffffffff82065abc);
   }
   __restgprlr_20();
@@ -222,7 +932,6 @@ void FX_FindModelHead(undefined8 param_1,ulonglong param_2,uint param_3)
     do {
       if ((*(int *)(psVar4 + 2) != -1) && (*psVar4 == -1)) {
         if (psVar4 == (short *)0xffffffd0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
         }
         if ((*(byte *)(psVar4 + 0x18) == param_3) &&
@@ -243,11 +952,56 @@ void FX_FindModelHead(undefined8 param_1,ulonglong param_2,uint param_3)
 
 // 82432B40  FX_MarkContextsCompare  (EffectsCore/fx_marks.cpp:763)
 
-void FX_MarkContextsCompare(void)
+void FX_MarkContextsCompare(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  byte *pbVar4;
+  longlong lVar2;
+  longlong lVar3;
+  byte *pbVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  pbVar4 = (byte *)__savegprlr_26();
+  if (pbVar4 == (byte *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  bVar1 = *pbVar4;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  pbVar5 = (byte *)param_2;
+  if (bVar1 != *pbVar5) {
+    __restgprlr_26((ulonglong)*pbVar5 - (ulonglong)bVar1);
+    return;
+  }
+  uVar7 = (ulonglong)pbVar4[5];
+  uVar6 = (ulonglong)pbVar5[5];
+  if (uVar7 == uVar6) {
+    uVar7 = (ulonglong)pbVar4[6];
+    uVar6 = (ulonglong)pbVar5[6];
+    if (uVar7 == uVar6) {
+      uVar7 = (ulonglong)pbVar4[1];
+      uVar6 = (ulonglong)pbVar5[1];
+      if (bVar1 == 3) {
+        if (uVar7 == uVar6) {
+          lVar2 = FX_GetMarkContext_DObjModelIndex(pbVar4);
+          lVar3 = FX_GetMarkContext_DObjModelIndex(param_2);
+          __restgprlr_26(lVar3 - lVar2);
+          return;
+        }
+      }
+      else if (uVar7 == uVar6) {
+        lVar2 = FX_GetMarkContext_SurfaceIndex(pbVar4);
+        lVar3 = FX_GetMarkContext_SurfaceIndex(param_2);
+        __restgprlr_26(lVar3 - lVar2);
+        return;
+      }
+    }
+  }
+  __restgprlr_26(uVar6 - uVar7);
+  return;
 }
 
 
@@ -271,11 +1025,252 @@ ulonglong FX_CompareMarkTris(ushort *param_1,ushort *param_2)
 
 // 82436D48  FX_AllocAndConstructMark  (EffectsCore/fx_marks.cpp:817)
 
-void FX_AllocAndConstructMark(void)
+void FX_AllocAndConstructMark
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4,
+               undefined1 param_5,longlong param_6,undefined8 param_7,undefined4 *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  uint uVar1;
+  ulonglong uVar2;
+  int *piVar5;
+  char cVar10;
+  ulonglong uVar3;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar4;
+  short sVar9;
+  uint uVar8;
+  longlong lVar11;
+  int *piVar12;
+  undefined1 *puVar13;
+  byte bVar14;
+  uint *puVar15;
+  short sVar16;
+  int iVar17;
+  longlong lVar18;
+  char in_RESERVE;
+  byte in_cr0;
+  longlong lVar19;
+  double extraout_f1;
+  double dVar20;
+  undefined4 *in_stack_0000005c;
+  undefined4 *in_stack_00000064;
+  int in_stack_0000006c;
+  int local_b0 [44];
+  
+  piVar12 = local_b0;
+  uVar2 = __savegprlr();
+  lVar11 = param_2 * 0xe + param_6;
+  dVar20 = extraout_f1;
+  std___Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+            (param_6,lVar11,((int)lVar11 - (int)param_6) / 0xe,0xffffffff82432c58);
+  Sys_EnterCriticalSection(6);
+  lVar11 = (uVar2 & 0x3fffffff) * 4 + -0x7cccd3e8;
+  do {
+    puVar15 = (uint *)lVar11;
+    uVar8 = *puVar15;
+    if (in_RESERVE != '\0') {
+      uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 + 1,0,lVar11);
+      *puVar15 = uVar1;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)((ulonglong)uVar8 + 1) != 1) {
+    MyAssertHandler(0xffffffff82065870,0x33e,0,0xffffffff82000f98,0xffffffff820661a4);
+  }
+  piVar5 = (int *)FX_GetMarksSystem(uVar2);
+  if (0xf < *(byte *)((int)piVar5 + in_stack_0000006c + 0x1030)) {
+    lVar18 = param_6 + 6;
+    in_cr0 = (lVar18 == 0) << 1;
+    if (lVar18 == 0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+    }
+    if ((*(char *)lVar18 == '\x03') &&
+       (cVar10 = FX_GetMarkContext_DObjIsViewmodel(lVar18), cVar10 != '\0')) {
+      do {
+        uVar8 = *puVar15;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 - 1,0,lVar11);
+          *puVar15 = uVar1;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if ((int)((ulonglong)uVar8 - 1) != 0) {
+        MyAssertHandler(0xffffffff82065870,0x347,0,0xffffffff82000f98,0xffffffff82066164);
+      }
+      Sys_LeaveCriticalSection(6);
+      __restgprlr();
+      return;
+    }
+  }
+  uVar2 = FX_AllocMarkTris(piVar5,param_6,param_2);
+  if ((uVar2 & 0xffff) == 0xffff) {
+    do {
+      uVar8 = *puVar15;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 - 1,0,lVar11);
+        *puVar15 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if ((int)((ulonglong)uVar8 - 1) != 0) {
+      MyAssertHandler(0xffffffff82065870,0x356,0,0xffffffff82000f98,0xffffffff82066164);
+    }
+    Sys_LeaveCriticalSection(6);
+    __restgprlr();
+    return;
+  }
+  uVar3 = FX_AllocMarkPoints(piVar5,param_3);
+  if ((uVar3 & 0xffff) == 0xffff) {
+    FX_FreeMarkTriGroups(piVar5,uVar2);
+    do {
+      uVar8 = *puVar15;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 - 1,0,lVar11);
+        *puVar15 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if ((int)((ulonglong)uVar8 - 1) != 0) {
+      MyAssertHandler(0xffffffff82065870,0x361,0,0xffffffff82000f98,0xffffffff82066164);
+    }
+    Sys_LeaveCriticalSection(6);
+    __restgprlr();
+    return;
+  }
+  sVar16 = *(short *)(piVar5 + 1);
+  if (sVar16 == -1) {
+    FX_FreeLruMark(piVar5);
+    sVar16 = *(short *)(piVar5 + 1);
+    if (sVar16 == -1) {
+      FX_FreeMarkTriGroups(piVar5,uVar2);
+      FX_FreeMarkPointGroups(piVar5,uVar3);
+      do {
+        uVar8 = *puVar15;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 - 1,0,lVar11);
+          *puVar15 = uVar1;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if ((int)((ulonglong)uVar8 - 1) != 0) {
+        MyAssertHandler(0xffffffff82065870,0x36f,0,0xffffffff82000f98,0xffffffff82066164);
+      }
+      Sys_LeaveCriticalSection(6);
+      __restgprlr();
+      return;
+    }
+  }
+  iVar6 = FX_MarkFromHandle(piVar5,sVar16);
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82065870,0x378,0,0xffffffff82000f98,0xffffffff82066354);
+  }
+  *(undefined2 *)(piVar5 + 1) = *(undefined2 *)(iVar6 + 2);
+  if (*piVar5 < 1) {
+    MyAssertHandler(0xffffffff82065870,0x37b,0,0xffffffff8206631c,0xffffffff8206633c);
+  }
+  iVar17 = iVar6 + 0x30;
+  lVar18 = param_6 + 5;
+  puVar13 = (undefined1 *)(iVar6 + 0x2f);
+  lVar19 = 7;
+  do {
+    lVar18 = lVar18 + 1;
+    puVar13 = puVar13 + 1;
+    *puVar13 = *(undefined1 *)lVar18;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  *(float *)(iVar6 + 0x18) = (float)dVar20;
+  *(undefined4 *)(iVar6 + 0x2c) = param_4;
+  *(undefined1 *)(iVar6 + 0x37) = param_5;
+  *(undefined4 *)(iVar6 + 0xc) = *param_8;
+  *(undefined4 *)(iVar6 + 0x10) = param_8[1];
+  *(undefined4 *)(iVar6 + 0x14) = param_8[2];
+  *(undefined4 *)(iVar6 + 0x1c) = *in_stack_0000005c;
+  *(undefined4 *)(iVar6 + 0x20) = in_stack_0000005c[1];
+  *(undefined4 *)(iVar6 + 0x24) = in_stack_0000005c[2];
+  *(undefined4 *)(iVar6 + 0x28) = *in_stack_00000064;
+  iVar7 = FX_GetMarkContext_ModelType(iVar17);
+  if (iVar7 == 3) {
+    cVar10 = FX_GetMarkContext_DObjIsViewmodel(iVar17);
+    if (cVar10 != '\0') {
+      FX_LinkMarkIntoList(piVar5,(in_stack_0000006c + 0x805) * 2 + (int)piVar5,iVar6);
+      bVar14 = *(char *)((int)piVar5 + in_stack_0000006c + 0x1030) + 1;
+      *(byte *)((int)piVar5 + in_stack_0000006c + 0x1030) = bVar14;
+      if (0x10 < bVar14) {
+        MyAssertHandler(0xffffffff82065870,0x38c,0,0xffffffff82000f98,0xffffffff820662c8);
+      }
+      goto LAB_82437258;
+    }
+LAB_82437234:
+    uVar8 = FX_GetMarkContext_EntNum(iVar17);
+    piVar12 = (int *)(((uVar8 & 0xffff) + 5) * 2 + (int)piVar5);
+  }
+  else {
+    if (iVar7 == 2) goto LAB_82437234;
+    if (iVar7 == 1) {
+      uVar4 = FX_GetMarkContext_ModelIndex(iVar17);
+      sVar9 = FX_FindModelHead(piVar5,uVar4,1);
+      if (sVar9 == sVar16) {
+        MyAssertHandler(0xffffffff82065870,0x39d,0,0xffffffff82000f98,0xffffffff820662a0);
+      }
+    }
+    else if (iVar7 == 4) {
+      piVar12 = piVar5 + 2;
+    }
+    else {
+      if (iVar7 != 0) {
+        MyAssertHandler(0xffffffff82065870,0x3ac,0,0xffffffff8206625c,0xffffffff82066274);
+      }
+      piVar12 = (int *)((int)piVar5 + 6);
+    }
+  }
+  FX_LinkMarkIntoList(piVar5,piVar12,iVar6);
+LAB_82437258:
+  if (*(int *)(iVar6 + 4) != -1) {
+    MyAssertHandler(0xffffffff82065870,0x3b3,0,0xffffffff82000f98,0xffffffff82066238);
+  }
+  *(int *)(iVar6 + 4) = *piVar5 + -1;
+  iVar17 = *piVar5;
+  *(short *)(iVar6 + 0x3c) = (short)uVar2;
+  *(char *)(iVar6 + 0x38) = (char)param_2;
+  *(int *)(iVar6 + 8) = iVar17;
+  if ((int)(param_2 & 0xff) != (int)param_2) {
+    MyAssertHandler(0xffffffff82065870,0x3ba,0,0xffffffff82066210,param_2 & 0xff,param_2);
+  }
+  *(short *)(iVar6 + 0x3e) = (short)uVar3;
+  *(short *)(iVar6 + 0x3a) = (short)param_3;
+  if ((int)(param_3 & 0xffff) != (int)param_3) {
+    MyAssertHandler(0xffffffff82065870,0x3be,0,0xffffffff820661e4,param_3 & 0xffff,param_3);
+  }
+  do {
+    uVar8 = *puVar15;
+    if (in_RESERVE != '\0') {
+      uVar1 = storeWordConditionalIndexed((ulonglong)uVar8 - 1,0,lVar11);
+      *puVar15 = uVar1;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)((ulonglong)uVar8 - 1) != 0) {
+    MyAssertHandler(0xffffffff82065870,0x3c0,0,0xffffffff82000f98,0xffffffff82066164);
+  }
+  Sys_LeaveCriticalSection(6);
+  FX_CopyMarkTris(piVar5,param_6,*(undefined2 *)(iVar6 + 0x3c),param_2);
+  FX_CopyMarkPoints(piVar5,param_7,*(undefined2 *)(iVar6 + 0x3e),param_3);
+  piVar5[0x40a] = piVar5[0x40a] + 1;
+  __restgprlr();
+  return;
+}
+
+
+// 82430EF8  FX_GetMarkContext_ModelType  (renderer/tr_types.h:945)
+
+undefined1 FX_GetMarkContext_ModelType(undefined1 *param_1)
+
+{
+  if (param_1 == (undefined1 *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  return *param_1;
 }
 
 
@@ -284,8 +1279,20 @@ void FX_AllocAndConstructMark(void)
 void FX_GetMarkContext_DObjModelIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3b9,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 != '\x03') {
+    MyAssertHandler(0xffffffff82065378,0x3ba,0,0xffffffff82000f98,0xffffffff820653d0);
+    __restgprlr_28(pcVar1[4] & 0x1f);
+    return;
+  }
+  __restgprlr_28(pcVar1[4] & 0x1f);
+  return;
 }
 
 
@@ -294,8 +1301,20 @@ void FX_GetMarkContext_DObjModelIndex(void)
 void FX_GetMarkContext_DObjIsViewmodel(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3c1,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 != '\x03') {
+    MyAssertHandler(0xffffffff82065378,0x3c2,0,0xffffffff82000f98,0xffffffff820653d0);
+    __restgprlr_28((byte)pcVar1[4] >> 7);
+    return;
+  }
+  __restgprlr_28((byte)pcVar1[4] >> 7);
+  return;
 }
 
 
@@ -304,8 +1323,25 @@ void FX_GetMarkContext_DObjIsViewmodel(void)
 void FX_GetMarkContext_ViewmodelClientIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  char cVar2;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3c9,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 != '\x03') {
+    MyAssertHandler(0xffffffff82065378,0x3ca,0,0xffffffff82000f98,0xffffffff820653d0);
+  }
+  cVar2 = FX_GetMarkContext_DObjIsViewmodel(pcVar1);
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82065378,0x3cb,0,0xffffffff82000f98,0xffffffff82065414);
+    __restgprlr_28((byte)pcVar1[4] >> 5 & 3);
+    return;
+  }
+  __restgprlr_28((byte)pcVar1[4] >> 5 & 3);
+  return;
 }
 
 
@@ -345,18 +1381,61 @@ void FX_ImpactMark_Generate_AddEntityBrush(undefined8 param_1,undefined8 param_2
 void FX_GetMarkContext_SurfaceIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x3d2,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 == '\x03') {
+    MyAssertHandler(0xffffffff82065378,0x3d3,0,0xffffffff82000f98,0xffffffff82065448);
+  }
+  __restgprlr_28(pcVar1[4]);
+  return;
 }
 
 
 // 82432ED0  FX_ImpactMark_Generate_AddEntityModel  (EffectsCore/fx_marks.cpp:1030)
 
-void FX_ImpactMark_Generate_AddEntityModel(void)
+void FX_ImpactMark_Generate_AddEntityModel
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  int iVar6;
+  ulonglong uVar5;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  
+  uVar4 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) != 0x7ff) {
+    dVar8 = extraout_f1;
+    Profile_Begin(0xc2);
+    iVar6 = CG_GetEntity(uVar4,param_3);
+    if (((*(uint *)(iVar6 + 0x1c4) & 1) != 0) &&
+       (uVar5 = Com_GetClientDObj(*(undefined4 *)(iVar6 + 0xc4),uVar4), (uVar5 & 0xffffffff) != 0))
+    {
+      dVar7 = (double)DObjGetRadius();
+      fVar1 = *(float *)(iVar6 + 0x1c) - param_4[2];
+      fVar2 = *(float *)(iVar6 + 0x14) - *param_4;
+      fVar3 = *(float *)(iVar6 + 0x18) - param_4[1];
+      if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 <=
+          (float)(dVar7 + dVar8) * (float)(dVar7 + dVar8)) {
+        if ((param_3 & 0xffff) != (param_3 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff82065870,0x42c,0,0xffffffff82065b00,0xffffffff82065b18,param_3);
+        }
+        R_MarkFragments_AddDObj(param_2,uVar5,iVar6,param_3 & 0xffff);
+      }
+    }
+    Profile_EndInternal(0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -365,8 +1444,24 @@ void FX_ImpactMark_Generate_AddEntityModel(void)
 void FX_MarkContext_DecrementDObjModelIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  int iVar2;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x42d,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 != '\x03') {
+    MyAssertHandler(0xffffffff82065378,0x42e,0,0xffffffff82000f98,0xffffffff820653d0);
+  }
+  iVar2 = FX_GetMarkContext_DObjModelIndex(pcVar1);
+  if (iVar2 < 1) {
+    MyAssertHandler(0xffffffff82065378,0x42f,0,0xffffffff82000f98,0xffffffff8206551c);
+  }
+  pcVar1[4] = pcVar1[4] + -1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -375,18 +1470,60 @@ void FX_MarkContext_DecrementDObjModelIndex(void)
 void FX_GetMarkContext_ModelIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x435,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((*pcVar1 != '\0') && (*pcVar1 != '\x01')) {
+    MyAssertHandler(0xffffffff82065378,0x436,0,0xffffffff82000f98,0xffffffff82065550);
+  }
+  __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
+  return;
 }
 
 
 // 82432FE0  FX_ImpactMark_Generate_AddViewmodel  (EffectsCore/fx_marks.cpp:1080)
 
-void FX_ImpactMark_Generate_AddViewmodel(void)
+void FX_ImpactMark_Generate_AddViewmodel
+               (undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  undefined8 uVar5;
+  int *piVar6;
+  int iVar7;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  
+  uVar5 = __savegprlr_28();
+  dVar9 = extraout_f1;
+  Profile_Begin(0xc2);
+  if (param_5 != 0) {
+    MyAssertHandler(0xffffffff82065870,0x44a,0,0xffffffff82000f98,0xffffffff82065b44);
+  }
+  piVar6 = (int *)CG_GetLocalClientViewModelHand(uVar5,0);
+  iVar1 = *piVar6;
+  iVar7 = CG_GetLocalClientGlobals(uVar5);
+  if (iVar1 != 0) {
+    dVar8 = (double)DObjGetRadius(iVar1);
+    fVar2 = *(float *)(iVar7 + 0x106fc4) - param_3[2];
+    fVar3 = *(float *)(iVar7 + 0x106fbc) - *param_3;
+    fVar4 = *(float *)(iVar7 + 0x106fc0) - param_3[1];
+    if (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 <=
+        (float)(dVar8 + dVar9) * (float)(dVar8 + dVar9)) {
+      R_MarkFragments_AddViewModelDObj(param_2,iVar1,iVar7 + 0x106fa8);
+    }
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -395,18 +1532,45 @@ void FX_ImpactMark_Generate_AddViewmodel(void)
 void FX_GetMarkContext_EntNum(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x445,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((*pcVar1 != '\x03') && (*pcVar1 != '\x02')) {
+    MyAssertHandler(0xffffffff82065378,0x446,0,0xffffffff82000f98,0xffffffff820655e0);
+  }
+  __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
+  return;
 }
 
 
 // 82431418  FX_SetMarkContext_EntNum  (renderer/tr_types.h:1099)
 
-void FX_SetMarkContext_EntNum(void)
+void FX_SetMarkContext_EntNum(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char *pcVar2;
+  ulonglong uVar1;
+  
+  pcVar2 = (char *)__savegprlr_27();
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x44c,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((*pcVar2 != '\x03') && (*pcVar2 != '\x02')) {
+    MyAssertHandler(0xffffffff82065378,0x44d,0,0xffffffff82000f98,0xffffffff820655e0);
+  }
+  *(short *)(pcVar2 + 2) = (short)param_2;
+  uVar1 = FX_GetMarkContext_EntNum(pcVar2);
+  if ((param_2 & 0xffff) != (uVar1 & 0xffff)) {
+    MyAssertHandler(0xffffffff82065378,0x450,0,0xffffffff8206566c,0xffffffff82065680,
+                    param_2 & 0xffff);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -415,8 +1579,18 @@ void FX_SetMarkContext_EntNum(void)
 void FX_GetMarkContext_GlassPieceIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82065378,0x455,0,0xffffffff82000f98,0xffffffff820653c8);
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*pcVar1 != '\x04') {
+    MyAssertHandler(0xffffffff82065378,0x456,0,0xffffffff82000f98,0xffffffff820656b0);
+  }
+  __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
+  return;
 }
 
 
@@ -436,63 +1610,265 @@ void FX_ImpactMark_Generate_Callback
 
 // 824373F0  FX_ImpactMark_Generate  (EffectsCore/fx_marks.cpp:1155)
 
-void FX_ImpactMark_Generate(void)
+void FX_ImpactMark_Generate
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined1 param_5,undefined8 param_6,undefined8 param_7,undefined4 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  longlong lVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  undefined4 in_stack_0000005c;
+  undefined1 in_stack_00000067;
+  char in_stack_0000006f;
+  undefined4 in_stack_00000074;
+  undefined4 local_e70;
+  undefined4 local_e6c;
+  float local_e68;
+  undefined4 local_e64;
+  undefined1 local_e60;
+  undefined4 local_e5c;
+  undefined1 auStack_e50 [3664];
+  
+  uVar1 = __savegprlr_23();
+  dVar4 = extraout_f1;
+  lVar2 = FX_GetSystem(param_2);
+  local_e68 = (float)dVar4;
+  local_e70 = (undefined4)param_2;
+  local_e6c = (undefined4)param_4;
+  local_e5c = in_stack_00000074;
+  local_e64 = param_8;
+  local_e60 = param_5;
+  if ((*(char *)(DAT_8332cc18 + 0xc) != '\0') &&
+     (((iVar3 = (int)param_3, iVar3 != 1 || (*(char *)(DAT_8332cc3c + 0xc) != '\0')) ||
+      (*(char *)(DAT_8332cb9c + 0xc) != '\0')))) {
+    R_MarkFragments_Begin
+              (uVar1,param_3,param_7,lVar2 + 0x16c,param_4,in_stack_00000067,in_stack_00000074);
+    if (*(char *)(DAT_8332cc3c + 0xc) != '\0') {
+      if (iVar3 == 1) {
+        if (in_stack_0000006f == '\0') {
+          FX_ImpactMark_Generate_AddEntityModel(dVar4,param_2,uVar1,in_stack_0000005c,param_6);
+        }
+        else {
+          FX_ImpactMark_Generate_AddViewmodel(param_2,uVar1,param_6);
+        }
+      }
+      else {
+        if (iVar3 != 0) {
+          MyAssertHandler(0xffffffff82065870,0x4a9,0,0xffffffff8206635c,0xffffffff82066378,param_3);
+        }
+        FX_ImpactMark_Generate_AddEntityBrush(dVar4,param_2,uVar1,in_stack_0000005c,param_6);
+      }
+    }
+    Sys_EnterCriticalSection(7);
+    R_MarkFragments_Go(uVar1,0xffffffff82437388,&local_e70,0xff,auStack_e50,0x2fd,0xffffffff8332cc70
+                      );
+    Sys_LeaveCriticalSection(7);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
 // 82437588  FX_ImpactMark  (EffectsCore/fx_marks.cpp:1220)
 
-void FX_ImpactMark(undefined8 param_1,double param_2)
+void FX_ImpactMark(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                  undefined8 param_9,undefined8 param_10)
 
 {
-  int iVar1;
-  undefined8 in_r8;
-  double dVar2;
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  double extraout_f1;
+  double dVar4;
+  char in_stack_00000067;
   undefined1 auStack_4590 [12];
   undefined1 auStack_4584 [12];
-  undefined1 auStack_4578 [17784];
+  undefined1 auStack_4578 [24];
+  undefined1 *local_4560;
+  undefined1 *local_455c;
+  undefined4 local_4558;
+  undefined4 local_4554;
+  undefined4 local_4550;
+  float local_454c;
+  float local_4548;
+  undefined4 local_44c0;
+  undefined4 local_44bc;
+  undefined4 local_44b8;
+  float local_44b4;
+  float local_44b0;
+  undefined1 *local_44ac;
+  undefined1 *local_44a8;
+  undefined1 auStack_4070 [8192];
+  undefined1 auStack_2070 [8304];
   
-  dVar2 = (double)__savegprlr_22();
-  iVar1 = FX_GetMarksSystem();
-  if (((*(char *)(DAT_8332cc18 + 0xc) != '\0') && (*(char *)(iVar1 + 0x1036) == '\0')) &&
+  uVar1 = __savegprlr_22();
+  dVar4 = extraout_f1;
+  iVar2 = FX_GetMarksSystem();
+  if (((*(char *)(DAT_8332cc18 + 0xc) != '\0') && (*(char *)(iVar2 + 0x1036) == '\0')) &&
      (0.10000000149011612 <= param_2)) {
     if (param_2 <= 0.0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(param_2,0xffffffff82065870,0x4d9,0,0xffffffff820663d8,0xffffffff820663ec,
                       param_2);
     }
-    UnitQuatToAxis(in_r8,auStack_4590);
+    UnitQuatToAxis(param_8,auStack_4590);
     RotatePointAroundVector
-              ((double)(float)(dVar2 * 57.2957763671875),auStack_4578,auStack_4590,auStack_4584);
-                    /* WARNING: Subroutine does not return */
+              ((double)(float)(dVar4 * 57.2957763671875),auStack_4578,auStack_4590,auStack_4584);
     Vec3Cross(auStack_4590,auStack_4578,auStack_4584);
+    local_4560 = auStack_4070;
+    local_455c = auStack_2070;
+    puVar3 = (undefined4 *)param_7;
+    local_4558 = *puVar3;
+    local_4554 = puVar3[1];
+    local_4548 = (float)(param_2 * param_2);
+    dVar4 = (double)local_4548;
+    local_4550 = puVar3[2];
+    local_454c = (float)param_2;
+    R_SetupSphereStaticGeo(&local_4560);
+    local_44ac = auStack_4070;
+    local_44a8 = auStack_2070;
+    local_44c0 = *puVar3;
+    local_44bc = puVar3[1];
+    local_44b8 = puVar3[2];
+    local_44b4 = (float)param_2;
+    local_44b0 = (float)dVar4;
+    Profile_Begin(0xc0);
+    if (in_stack_00000067 == '\0') {
+      FX_ImpactMark_Generate
+                (param_2,&local_44c0,uVar1,0,param_4,param_6,param_7,auStack_4590,param_10);
+    }
+    Profile_EndInternal(0);
+    if ((*(char *)(DAT_8332cb9c + 0xc) != '\0') || (*(char *)(DAT_8332cc3c + 0xc) != '\0')) {
+      Profile_Begin(0xc1);
+      FX_ImpactMark_Generate
+                (param_2,&local_44c0,uVar1,1,param_5,param_6,param_7,auStack_4590,param_10);
+      Profile_EndInternal(0);
+    }
   }
   __restgprlr_22();
   return;
 }
 
 
-// 824377C8  FX_CreateImpactMark  (EffectsCore/fx_marks.cpp:1290)
+// 824330D8  FX_BeginMarks  (EffectsCore/fx_marks.cpp:1275)
 
-void FX_CreateImpactMark(void)
+void FX_BeginMarks(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int *piVar1;
+  int iVar2;
+  
+  piVar1 = (int *)FX_GetMarksSystem();
+  iVar2 = (int)(param_2 + 1);
+  if (iVar2 < *piVar1) {
+    FX_FreeRewoundMarks(piVar1,param_2 + 1);
+  }
+  *piVar1 = iVar2;
+  return;
+}
+
+
+// 824377C8  FX_CreateImpactMark  (EffectsCore/fx_marks.cpp:1290)
+
+void FX_CreateImpactMark(undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,
+                        undefined8 param_5,ulonglong param_6,undefined8 param_7,int param_8)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined1 auStack_90 [8];
+  float local_88;
+  float local_84;
+  float local_70;
+  float local_6c;
+  int local_60;
+  
+  uVar2 = __savegprlr_23();
+  if (DAT_833340d0 == 0) {
+    Profile_Begin(0xbf);
+    if (((param_6 & 0xff) == 0) ||
+       (iVar3 = FX_GetMarksSystem(uVar2), *(byte *)(iVar3 + param_8 + 0x1030) < 0x10)) {
+      FX_SetupVisualState(0,param_2,0,param_4);
+      iVar1 = (int)((param_4 & 0xffffffff) << 2);
+      local_84 = (*(float *)(local_60 + 0x54) * *(float *)(&DAT_82066b30 + iVar1) +
+                 *(float *)(local_60 + 0x3c)) * local_70 +
+                 (*(float *)(local_60 + 0x24) * *(float *)(&DAT_82066b30 + iVar1) +
+                 *(float *)(local_60 + 0xc)) * local_6c;
+      FX_EvaluateVisualState(0x3ff0000000000000,&local_70);
+      iVar3 = (int)param_2;
+      iVar1 = ((int)((uint)*(ushort *)(&DAT_82066b1e + iVar1) * (uint)*(byte *)(iVar3 + 0xb1)) >>
+              0x10) * 8;
+      puVar4 = (undefined4 *)(iVar1 + *(int *)(iVar3 + 0xbc));
+      FX_ImpactMark((double)local_88,(double)local_84,uVar2,puVar4[1],*puVar4,
+                    *(undefined1 *)(iVar3 + 0xfb),param_3 + 0x10,param_3,iVar1,auStack_90);
+    }
+    Profile_EndInternal(0);
+  }
+  __restgprlr_23();
+  return;
+}
+
+
+// 82433130  FX_MarkEntDetachAll  (EffectsCore/fx_marks.cpp:1330)
+
+void FX_MarkEntDetachAll(undefined8 param_1,longlong param_2)
+
+{
+  ushort uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  
+  __savegprlr_25();
+  iVar4 = FX_GetMarksSystem();
+  iVar2 = (int)((param_2 + 5U & 0xffffffff) << 1);
+  uVar1 = *(ushort *)(iVar2 + iVar4);
+  while (uVar3 = (ulonglong)uVar1, uVar3 != 0xffff) {
+    if (0x1ff < uVar3) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar3,0x200);
+    }
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    FX_FreeMark(iVar4,uVar3 * 0x40 + (ulonglong)*(uint *)(iVar4 + 0x101c));
+    uVar1 = *(ushort *)(iVar2 + iVar4);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
 // 824331F0  FX_MarkGlassDetachAll  (EffectsCore/fx_marks.cpp:1338)
 
-void FX_MarkGlassDetachAll(void)
+void FX_MarkGlassDetachAll(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  
   __savegprlr_26();
+  iVar2 = FX_GetMarksSystem();
+  uVar1 = *(ushort *)(iVar2 + 8);
+  while (uVar3 = (uint)uVar1, uVar3 != 0xffff) {
+    if (0x1ff < uVar3) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar3,0x200);
+    }
+    iVar4 = uVar3 * 0x40 + *(int *)(iVar2 + 0x101c);
+    uVar1 = *(ushort *)(iVar4 + 2);
+    uVar3 = FX_GetMarkContext_GlassPieceIndex(iVar4 + 0x30);
+    if ((uVar3 & 0xffff) == param_2) {
+      FX_FreeMark(iVar2,iVar4);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -509,29 +1885,24 @@ void FX_MarkEntDetachAllOfType(undefined8 param_1,longlong param_2,uint param_3)
   __savegprlr_21();
   iVar3 = FX_GetMarksSystem();
   uVar1 = *(ushort *)((int)((param_2 + 5U & 0xffffffff) << 1) + iVar3);
-  while( true ) {
-    uVar2 = (uint)uVar1;
-    if (uVar2 == 0xffff) {
-      __restgprlr_21();
-      return;
-    }
+  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
     if (0x1ff < uVar2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar2,0x200);
     }
     if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
     }
     iVar4 = uVar2 * 0x40 + *(int *)(iVar3 + 0x101c);
     uVar1 = *(ushort *)(iVar4 + 2);
-    if ((byte *)(iVar4 + 0x30) == (byte *)0x0) break;
+    if ((byte *)(iVar4 + 0x30) == (byte *)0x0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+    }
     if (*(byte *)(iVar4 + 0x30) == param_3) {
       FX_FreeMark(iVar3,iVar4);
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  __restgprlr_21();
+  return;
 }
 
 
@@ -578,31 +1949,309 @@ void FX_MarkEntUpdateBegin
 
 // 82433428  FX_MarkEntDetachModel  (EffectsCore/fx_marks.cpp:1408)
 
-void FX_MarkEntDetachModel(void)
+void FX_MarkEntDetachModel(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_18();
+  uVar1 = *(ushort *)((int)((param_2 + 5U & 0xffffffff) << 1) + iVar3);
+  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
+    if (0x1ff < uVar2) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar2,0x200);
+    }
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    iVar6 = uVar2 * 0x40 + *(int *)(iVar3 + 0x101c);
+    pcVar5 = (char *)(iVar6 + 0x30);
+    uVar1 = *(ushort *)(iVar6 + 2);
+    if (pcVar5 == (char *)0x0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+    }
+    if (*pcVar5 == '\x03') {
+      iVar4 = FX_GetMarkContext_DObjModelIndex(pcVar5);
+      if (iVar4 == param_3) {
+        if (*(int *)(iVar6 + 4) == -1) {
+          MyAssertHandler(0xffffffff82065870,0x594,0,0xffffffff82000f98,0xffffffff82065b60);
+        }
+        FX_FreeMark(iVar3,iVar6);
+        if (*(int *)(iVar6 + 4) != -1) {
+          MyAssertHandler(0xffffffff82065870,0x596,0,0xffffffff82000f98,0xffffffff82065b80);
+        }
+      }
+      else if (param_3 < iVar4) {
+        FX_MarkContext_DecrementDObjModelIndex(pcVar5);
+      }
+    }
+  }
+  __restgprlr_18();
+  return;
 }
 
 
 // 824335A0  FX_MarkEntUpdateEndDObj  (EffectsCore/fx_marks.cpp:1441)
 
-void FX_MarkEntUpdateEndDObj(void)
+void FX_MarkEntUpdateEndDObj
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  int *piVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  char *pcVar11;
+  int iVar12;
+  
+  piVar4 = (int *)__savegprlr();
+  iVar5 = FX_GetMarksSystem(param_2);
+  iVar2 = piVar4[0x40];
+  iVar6 = DObjGetNumModels(param_4);
+  lVar10 = 0;
+  lVar9 = 0;
+  lVar8 = 0;
+  if (iVar2 != 0) {
+    while ((int)lVar10 != iVar6) {
+      iVar12 = *piVar4;
+      iVar7 = DObjGetModel(param_4,lVar10);
+      if ((iVar7 == iVar12) &&
+         (iVar12 = piVar4[0x20], iVar7 = DObjGetModelParentBoneName(param_4,lVar10), iVar7 == iVar12
+         )) {
+        lVar10 = lVar10 + 1;
+      }
+      else {
+        FX_MarkEntDetachModel(iVar5,param_3,lVar8 - lVar9);
+        lVar9 = lVar9 + 1;
+      }
+      lVar8 = lVar8 + 1;
+      piVar4 = piVar4 + 1;
+      if ((int)lVar8 == iVar2) {
+        __restgprlr();
+        return;
+      }
+    }
+    if ((int)lVar8 != iVar2) {
+      do {
+        uVar1 = *(ushort *)((int)((param_3 + 5U & 0xffffffff) << 1) + iVar5);
+        iVar6 = (int)lVar8 - (int)lVar9;
+        while (uVar3 = (uint)uVar1, uVar3 != 0xffff) {
+          if (0x1ff < uVar3) {
+            MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar3,0x200);
+          }
+          if (iVar5 == 0) {
+            MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+          }
+          iVar12 = uVar3 * 0x40 + *(int *)(iVar5 + 0x101c);
+          pcVar11 = (char *)(iVar12 + 0x30);
+          uVar1 = *(ushort *)(iVar12 + 2);
+          if (pcVar11 == (char *)0x0) {
+            MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+          }
+          if (*pcVar11 == '\x03') {
+            iVar7 = FX_GetMarkContext_DObjModelIndex(pcVar11);
+            if (iVar7 == iVar6) {
+              if (*(int *)(iVar12 + 4) == -1) {
+                MyAssertHandler(0xffffffff82065870,0x594,0,0xffffffff82000f98,0xffffffff82065b60);
+              }
+              FX_FreeMark(iVar5,iVar12);
+              if (*(int *)(iVar12 + 4) != -1) {
+                MyAssertHandler(0xffffffff82065870,0x596,0,0xffffffff82000f98,0xffffffff82065b80);
+              }
+            }
+            else if (iVar6 < iVar7) {
+              FX_MarkContext_DecrementDObjModelIndex(pcVar11);
+            }
+          }
+        }
+        lVar8 = lVar8 + 1;
+        lVar9 = lVar9 + 1;
+      } while ((int)lVar8 != iVar2);
+    }
+  }
+  __restgprlr();
+  return;
+}
+
+
+// 824337D8  FX_MarkEntUpdateEnd  (EffectsCore/fx_marks.cpp:1482)
+
+void FX_MarkEntUpdateEnd(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                        ulonglong param_5,ulonglong param_6)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if ((*(char *)(iVar1 + 0x104) != '\0') &&
+     (((param_5 & 0xff) == 0 || ((ulonglong)*(ushort *)(iVar1 + 0x106) != (param_6 & 0xffff))))) {
+    FX_MarkEntDetachAllOfType(param_2,param_3,2);
+  }
+  if (*(int *)(iVar1 + 0x100) != 0) {
+    if ((param_4 & 0xffffffff) != 0) {
+      FX_MarkEntUpdateEndDObj(iVar1,param_2,param_3,param_4);
+      __restgprlr_28();
+      return;
+    }
+    FX_MarkEntDetachAllOfType(param_2,param_3,3);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82433878  FX_MoveMarkBetweenLists  (EffectsCore/fx_marks.cpp:1500)
+
+void FX_MoveMarkBetweenLists
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  short *psVar1;
+  ulonglong uVar2;
+  short sVar6;
+  short *psVar4;
+  int iVar5;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x5e1,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x5e2,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x5e3,0,0xffffffff82000f98,0xffffffff82065bc8);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x5e4,0,0xffffffff82000f98,0xffffffff82065bbc);
+  }
+  sVar6 = FX_MarkToHandle(uVar2,param_2);
+  psVar1 = (short *)param_2;
+  if (psVar1[1] != -1) {
+    psVar4 = (short *)FX_MarkFromHandle(uVar2);
+    *psVar4 = *psVar1;
+  }
+  if (*psVar1 == -1) {
+    if (*(short *)param_3 != sVar6) {
+      uVar3 = va(0xffffffff82065950);
+      MyAssertHandler(0xffffffff82065870,0x5f4,0,0xffffffff820011f4,0xffffffff82065ba0,uVar3);
+    }
+    *(short *)param_3 = psVar1[1];
+  }
+  else {
+    iVar5 = FX_MarkFromHandle(uVar2);
+    *(short *)(iVar5 + 2) = psVar1[1];
+  }
+  FX_LinkMarkIntoList(uVar2,param_4,param_2);
+  __restgprlr_26();
+  return;
 }
 
 
 // 824339E0  FX_TransferDObjMarksFromEntToEnt  (EffectsCore/fx_marks.cpp:1533)
 
-void FX_TransferDObjMarksFromEntToEnt(void)
+void FX_TransferDObjMarksFromEntToEnt
+               (undefined8 param_1,longlong param_2,ulonglong param_3,uint param_4,ulonglong param_5
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar5;
+  ulonglong uVar4;
+  int iVar6;
+  longlong lVar7;
+  int iVar8;
+  uint uVar9;
+  char *pcVar10;
+  int local_a0;
+  
+  uVar2 = __savegprlr();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x603,0,0xffffffff82000f98,0xffffffff82065c4c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x604,0,0xffffffff82000f98,0xffffffff82065c44);
+  }
+  uVar3 = FX_GetMarksSystem(uVar2);
+  iVar5 = DObjGetNumModels(param_3);
+  local_a0 = 0;
+  if (0 < iVar5) {
+    do {
+      uVar4 = DObjGetModel(param_3,local_a0);
+      if ((uVar4 & 0xffffffff) == (param_5 & 0xffffffff)) break;
+      local_a0 = local_a0 + 1;
+    } while (local_a0 < iVar5);
+  }
+  if (local_a0 != iVar5) {
+    lVar7 = (param_2 + 5U & 0x7fffffff) * 2;
+    iVar5 = (int)uVar3;
+    uVar1 = *(ushort *)((int)lVar7 + iVar5);
+    while (uVar9 = (uint)uVar1, uVar9 != 0xffff) {
+      if (0x1ff < uVar9) {
+        MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar9,0x200);
+      }
+      if ((uVar3 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+      }
+      iVar8 = uVar9 * 0x40 + *(int *)(iVar5 + 0x101c);
+      pcVar10 = (char *)(iVar8 + 0x30);
+      uVar1 = *(ushort *)(iVar8 + 2);
+      if (pcVar10 == (char *)0x0) {
+        MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+      }
+      if ((*pcVar10 == '\x03') &&
+         (iVar6 = FX_GetMarkContext_DObjModelIndex(pcVar10), iVar6 == local_a0)) {
+        FX_MoveMarkBetweenLists
+                  (uVar3,iVar8,lVar7 + uVar3,((ulonglong)param_4 + 5 & 0x7fffffff) * 2 + uVar3);
+        if (pcVar10 == (char *)0x0) {
+          MyAssertHandler(0xffffffff82065378,0x3f8,0,0xffffffff82000f98,0xffffffff820653c8);
+        }
+        *(byte *)(iVar8 + 0x34) = *(byte *)(iVar8 + 0x34) & 0xe0;
+        iVar6 = FX_GetMarkContext_DObjModelIndex(pcVar10);
+        if (iVar6 != 0) {
+          MyAssertHandler(0xffffffff82065378,0x3fd,0,0xffffffff8206548c,0xffffffff820654a8,0);
+        }
+        FX_SetMarkContext_EntNum(pcVar10,param_4 & 0xffff);
+        uVar9 = (uint)*(ushort *)(iVar8 + 0x3c);
+        do {
+          if (0x7ff < uVar9) {
+            MyAssertHandler(0xffffffff82065788,0xc6,0,0xffffffff820657cc,uVar9,0x800);
+          }
+          iVar6 = uVar9 * 0x18 + *(int *)(iVar5 + 0x1020);
+          *(char *)(iVar6 + 0xc) = *pcVar10;
+          uVar9 = (uint)*(ushort *)(iVar6 + 0x14);
+          *(undefined1 *)(iVar6 + 0x10) = *(undefined1 *)(iVar8 + 0x34);
+          if (pcVar10 == (char *)0x0) {
+            MyAssertHandler(0xffffffff82065378,0x445,0,0xffffffff82000f98,0xffffffff820653c8);
+            MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+          }
+          if ((*pcVar10 != '\x03') && (*pcVar10 != '\x02')) {
+            MyAssertHandler(0xffffffff82065378,0x446,0,0xffffffff82000f98,0xffffffff820655e0);
+          }
+          FX_SetMarkContext_EntNum(iVar6 + 0xc,*(undefined2 *)(iVar8 + 0x32));
+          *(undefined1 *)(iVar6 + 0xd) = *(undefined1 *)(iVar8 + 0x31);
+        } while (uVar9 != 0xffff);
+      }
+    }
+    __restgprlr();
+    return;
+  }
+  Com_PrintWarning(0xe,0xffffffff82065bd8,*(undefined4 *)param_5);
+  __restgprlr();
+  return;
 }
 
 
@@ -620,8 +2269,22 @@ undefined8 FX_GetMarkViewmodelClientIndex(void)
 void FX_ClearViewmodelMarks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  
   __savegprlr_28();
+  iVar3 = FX_GetMarksSystem();
+  uVar1 = *(ushort *)(iVar3 + 0x100a);
+  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
+    if (0x1ff < uVar2) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,uVar2,0x200);
+    }
+    uVar1 = *(ushort *)(uVar2 * 0x40 + *(int *)(iVar3 + 0x101c) + 2);
+    FX_FreeMark(iVar3);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -665,33 +2328,381 @@ ulonglong FX_ExpandMarkVerts_GetColor(ulonglong param_1,int param_2,byte *param_
 }
 
 
-// 824350C0  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1759)
+// 82434B98  FX_ExpandMarkVert_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1681)
 
-void FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void FX_ExpandMarkVert_NoTransform<GfxWorldVertex>
+               (undefined8 param_1,float *param_2,undefined8 param_3,longlong param_4,
+               longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  int iVar1;
+  float *pfVar2;
+  float *pfVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs39 [16];
+  float local_68;
+  float local_64;
+  float local_60;
+  
+  __savegprlr_26();
+  pfVar2 = (float *)__savefpr_28();
+  pfVar3 = (float *)param_5;
+  iVar1 = (int)param_4;
+  dVar6 = (double)(*pfVar3 - *(float *)(iVar1 + 0xc));
+  dVar5 = (double)(pfVar3[1] - *(float *)(iVar1 + 0x10));
+  dVar4 = (double)(pfVar3[2] - *(float *)(iVar1 + 0x14));
+  dVar7 = extraout_f1;
+  Vec3Cross(param_4 + 0x1c,param_5 + 0x14,&local_68);
+  *pfVar2 = *pfVar3;
+  pfVar2[1] = pfVar3[1];
+  pfVar2[2] = pfVar3[2];
+  pfVar2[3] = -1.0;
+  pfVar2[4] = *param_2;
+  pfVar2[5] = (float)((double)(float)((double)*(float *)(iVar1 + 0x24) * dVar4 +
+                                     (double)(float)((double)*(float *)(iVar1 + 0x20) * dVar5 +
+                                                    (double)(float)((double)*(float *)(iVar1 + 0x1c)
+                                                                   * dVar6))) * dVar7 + 0.5);
+  pfVar2[6] = (float)((double)(float)((double)local_60 * dVar4 +
+                                     (double)(float)((double)local_64 * dVar5 +
+                                                    (double)(float)((double)local_68 * dVar6))) *
+                      dVar7 + 0.5);
+  pfVar2[7] = pfVar3[3];
+  pfVar2[8] = pfVar3[4];
+  altv207_13(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82434D20  FX_ExpandMarkVert_Transform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1705)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FX_ExpandMarkVert_Transform<GfxWorldVertex>(void)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong in_r6;
+  longlong in_r7;
+  float *pfVar3;
+  undefined8 in_r8;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs43 [16];
+  float local_78;
+  float local_74;
+  float local_70;
+  undefined1 auStack_68 [16];
+  undefined1 local_58 [16];
+  undefined1 local_48 [72];
+  
+  iVar2 = __savegprlr_27();
+  pfVar3 = (float *)in_r7;
+  iVar1 = (int)in_r6;
+  local_78 = *pfVar3 - *(float *)(iVar1 + 0xc);
+  local_74 = pfVar3[1] - *(float *)(iVar1 + 0x10);
+  local_70 = pfVar3[2] - *(float *)(iVar1 + 0x14);
+  MatrixTransformVector(&local_78,in_r8,local_58);
+  MatrixTransformVector(in_r6 + 0x1c,in_r8,&local_78);
+  MatrixTransformVector(in_r7 + 0x14,in_r8,auStack_68);
+  Vec3Cross(&local_78,auStack_68,local_48);
+  MatrixTransformVector43(in_r7,in_r8,iVar2);
+  *(undefined4 *)(iVar2 + 0xc) = 0xbf800000;
+  altv300_21(in_vs32,in_vs39);
+  altv300_23(in_vs43,in_vs40);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82434EF0  FX_ExpandMarkVert_Glass<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1733)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void FX_ExpandMarkVert_Glass<GfxWorldVertex>
+               (undefined8 param_1,float *param_2,float *param_3,undefined8 param_4,
+               undefined8 param_5,longlong param_6,float *param_7)
+
+{
+  float *pfVar1;
+  double extraout_f1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs43 [16];
+  float local_78;
+  float local_74;
+  float local_70;
+  undefined1 local_68 [104];
+  
+  __savegprlr_26();
+  pfVar1 = (float *)__savefpr_28();
+  local_78 = (float)((double)param_7[5] * extraout_f1);
+  local_74 = (float)((double)param_7[6] * extraout_f1);
+  local_70 = (float)((double)param_7[7] * extraout_f1);
+  Vec3Cross(param_6 + 0x1c,&local_78,local_68);
+  *pfVar1 = *param_3 + *param_7;
+  pfVar1[1] = param_3[1] + param_7[1];
+  pfVar1[2] = param_3[2] + param_7[2];
+  pfVar1[3] = -1.0;
+  pfVar1[4] = *param_2;
+  altv300_23(in_vs43,in_vs40);
+  altv300_21(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 824350C0  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1759)
+
+void FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  double dVar8;
+  uint local_90 [36];
+  
+  piVar3 = (int *)__savegprlr_17();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x6ea,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  uVar2 = R_MarkMeshVertIter_Begin(param_3);
+  iVar1 = (int)param_2;
+  local_90[0] = *(uint *)(iVar1 + 0x28);
+  uVar7 = (ulonglong)*(ushort *)(iVar1 + 0x3a);
+  if ((ulonglong)*(byte *)(iVar1 + 0x37) != 0) {
+    uVar5 = (ulonglong)*(byte *)(iVar1 + 0x37) * 0x7d;
+    iVar4 = *piVar3 - *(int *)(iVar1 + 8);
+    if (iVar4 < (int)uVar5) {
+      trapWord(6,uVar5,0);
+      uVar6 = (local_90[0] >> 0x18) * iVar4;
+      local_90[0] = CONCAT13((char)((int)uVar6 / (int)uVar5),(undefined3)local_90[0]);
+      trapWord(5,uVar5 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+               0xffff);
+    }
+  }
+  if ((double)*(float *)(iVar1 + 0x18) < 0.10000000149011612) {
+    MyAssertHandler(0xffffffff82065870,0x6f1,0,0xffffffff82065e64,0xffffffff82065e7c,
+                    (double)*(float *)(iVar1 + 0x18));
+  }
+  uVar6 = (uint)*(ushort *)(iVar1 + 0x3e);
+  dVar8 = (double)(0.5 / *(float *)(iVar1 + 0x18));
+  do {
+    if (uVar6 == 0xffff) {
+      MyAssertHandler(0xffffffff82065870,0x6f8,0,0xffffffff82000f98,0xffffffff82065e1c);
+    }
+    if (0xbff < uVar6) {
+      MyAssertHandler(0xffffffff82065788,0xdf,0,0xffffffff82065808,uVar6,0xc00);
+    }
+    if (piVar3 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82065788,0xe0,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    uVar6 = (uint)*(ushort *)(uVar6 * 0x44 + piVar3[0x409] + 0x40);
+    if ((int)uVar7 < 3) {
+      uVar5 = uVar7;
+      if ((int)uVar7 < 1) {
+        MyAssertHandler(0xffffffff82065870,0x6fe,0,0xffffffff82065e4c,0xffffffff82065e3c,uVar7);
+      }
+    }
+    else {
+      uVar5 = 2;
+    }
+    uVar7 = uVar7 - uVar5;
+    FX_ExpandMarkVert_NoTransform<GfxWorldVertex>(dVar8,uVar2,local_90);
+    if (1 < (int)uVar5) {
+      uVar2 = R_MarkMeshVertIter_Next(uVar2);
+      FX_ExpandMarkVert_NoTransform<GfxWorldVertex>(dVar8,uVar2,local_90);
+    }
+    if (0 < (int)uVar7) {
+      uVar2 = R_MarkMeshVertIter_Next(uVar2);
+    }
+  } while ((int)uVar7 != 0);
+  R_MarkMeshVertIter_End(uVar2);
+  if (uVar6 != 0xffff) {
+    MyAssertHandler(0xffffffff82065870,0x713,0,0xffffffff82065c7c,0xffffffff82065c94);
+  }
+  __restgprlr_17();
+  return;
 }
 
 
 // 82435348  FX_ExpandMarkVerts_Transform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1817)
 
-void FX_ExpandMarkVerts_Transform<GfxWorldVertex>(void)
+void FX_ExpandMarkVerts_Transform<GfxWorldVertex>
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  int *piVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  double dVar8;
+  uint local_a0 [40];
+  
+  piVar2 = (int *)__savegprlr_16();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x724,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  uVar1 = R_MarkMeshVertIter_Begin(param_3);
+  iVar4 = (int)param_2;
+  if ((double)*(float *)(iVar4 + 0x18) < 0.10000000149011612) {
+    MyAssertHandler(0xffffffff82065870,0x728,0,0xffffffff82065e64,0xffffffff82065e7c,
+                    (double)*(float *)(iVar4 + 0x18));
+  }
+  local_a0[0] = *(uint *)(iVar4 + 0x28);
+  uVar6 = (uint)*(ushort *)(iVar4 + 0x3e);
+  uVar7 = (ulonglong)*(ushort *)(iVar4 + 0x3a);
+  dVar8 = (double)(0.5 / *(float *)(iVar4 + 0x18));
+  if ((ulonglong)*(byte *)(iVar4 + 0x37) != 0) {
+    uVar5 = (ulonglong)*(byte *)(iVar4 + 0x37) * 0x7d;
+    iVar4 = *piVar2 - *(int *)(iVar4 + 8);
+    if (iVar4 < (int)uVar5) {
+      trapWord(6,uVar5,0);
+      uVar3 = (local_a0[0] >> 0x18) * iVar4;
+      local_a0[0] = CONCAT13((char)((int)uVar3 / (int)uVar5),(undefined3)local_a0[0]);
+      trapWord(5,uVar5 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
+               0xffff);
+    }
+  }
+  do {
+    if (uVar6 == 0xffff) {
+      MyAssertHandler(0xffffffff82065870,0x732,0,0xffffffff82000f98,0xffffffff82065e1c);
+    }
+    if (0xbff < uVar6) {
+      MyAssertHandler(0xffffffff82065788,0xdf,0,0xffffffff82065808,uVar6,0xc00);
+    }
+    if (piVar2 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82065788,0xe0,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    uVar6 = (uint)*(ushort *)(uVar6 * 0x44 + piVar2[0x409] + 0x40);
+    if ((int)uVar7 < 3) {
+      uVar5 = uVar7;
+      if ((int)uVar7 < 1) {
+        MyAssertHandler(0xffffffff82065870,0x738,0,0xffffffff82065e4c,0xffffffff82065e3c,uVar7);
+      }
+    }
+    else {
+      uVar5 = 2;
+    }
+    uVar7 = uVar7 - uVar5;
+    FX_ExpandMarkVert_Transform<GfxWorldVertex>(dVar8,uVar1,local_a0);
+    if (1 < (int)uVar5) {
+      uVar1 = R_MarkMeshVertIter_Next(uVar1);
+      FX_ExpandMarkVert_Transform<GfxWorldVertex>(dVar8,uVar1,local_a0);
+    }
+    if (0 < (int)uVar7) {
+      uVar1 = R_MarkMeshVertIter_Next(uVar1);
+    }
+  } while ((int)uVar7 != 0);
+  R_MarkMeshVertIter_End(uVar1);
+  if (uVar6 != 0xffff) {
+    MyAssertHandler(0xffffffff82065870,0x74d,0,0xffffffff82065c7c,0xffffffff82065c94);
+  }
+  __restgprlr_16();
+  return;
 }
 
 
 // 824355D8  FX_ExpandMarkVerts_Glass<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1876)
 
-void FX_ExpandMarkVerts_Glass<GfxWorldVertex>(void)
+void FX_ExpandMarkVerts_Glass<GfxWorldVertex>
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  int iVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  undefined8 extraout_f1;
+  undefined8 uVar8;
+  double dVar9;
+  uint local_a0 [40];
+  
+  piVar3 = (int *)__savegprlr_16();
+  uVar8 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x75f,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  uVar2 = R_MarkMeshVertIter_Begin(param_3);
+  iVar1 = (int)param_2;
+  local_a0[0] = *(uint *)(iVar1 + 0x28);
+  uVar7 = (ulonglong)*(ushort *)(iVar1 + 0x3a);
+  if ((ulonglong)*(byte *)(iVar1 + 0x37) != 0) {
+    uVar5 = (ulonglong)*(byte *)(iVar1 + 0x37) * 0x7d;
+    iVar4 = *piVar3 - *(int *)(iVar1 + 8);
+    if (iVar4 < (int)uVar5) {
+      trapWord(6,uVar5,0);
+      uVar6 = (local_a0[0] >> 0x18) * iVar4;
+      local_a0[0] = CONCAT13((char)((int)uVar6 / (int)uVar5),(undefined3)local_a0[0]);
+      trapWord(5,uVar5 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+               0xffff);
+    }
+  }
+  if ((double)*(float *)(iVar1 + 0x18) < 0.10000000149011612) {
+    MyAssertHandler(0xffffffff82065870,0x766,0,0xffffffff82065e64,0xffffffff82065e7c,
+                    (double)*(float *)(iVar1 + 0x18));
+  }
+  uVar6 = (uint)*(ushort *)(iVar1 + 0x3e);
+  dVar9 = (double)(0.5 / *(float *)(iVar1 + 0x18));
+  do {
+    if (uVar6 == 0xffff) {
+      MyAssertHandler(0xffffffff82065870,0x76d,0,0xffffffff82000f98,0xffffffff82065e1c);
+    }
+    if (0xbff < uVar6) {
+      MyAssertHandler(0xffffffff82065788,0xdf,0,0xffffffff82065808,uVar6,0xc00);
+    }
+    if (piVar3 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82065788,0xe0,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    uVar6 = (uint)*(ushort *)(uVar6 * 0x44 + piVar3[0x409] + 0x40);
+    if ((int)uVar7 < 3) {
+      uVar5 = uVar7;
+      if ((int)uVar7 < 1) {
+        MyAssertHandler(0xffffffff82065870,0x772,0,0xffffffff82065e4c,0xffffffff82065e3c,uVar7);
+      }
+    }
+    else {
+      uVar5 = 2;
+    }
+    uVar7 = uVar7 - uVar5;
+    FX_ExpandMarkVert_Glass<GfxWorldVertex>(uVar8,dVar9,uVar2,local_a0,param_5);
+    if (1 < (int)uVar5) {
+      uVar2 = R_MarkMeshVertIter_Next(uVar2);
+      FX_ExpandMarkVert_Glass<GfxWorldVertex>(uVar8,dVar9,uVar2,local_a0,param_5);
+    }
+    if (0 < (int)uVar7) {
+      uVar2 = R_MarkMeshVertIter_Next(uVar2);
+    }
+  } while ((int)uVar7 != 0);
+  R_MarkMeshVertIter_End(uVar2);
+  if (uVar6 != 0xffff) {
+    MyAssertHandler(0xffffffff82065870,0x787,0,0xffffffff82065c7c,0xffffffff82065c94);
+  }
+  __restgprlr_16();
+  return;
 }
 
 
@@ -705,33 +2716,257 @@ void FX_AddMarkTrisToScene(undefined4 *param_1)
 }
 
 
-// 82433FD8  FX_DrawMarkTris  (EffectsCore/fx_marks.cpp:1999)
+// 82433E58  FX_EmitMarkTri  (EffectsCore/fx_marks.cpp:1948)
 
-void FX_DrawMarkTris(void)
+void FX_EmitMarkTri(undefined8 param_1,short *param_2,short param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 local_50;
+  
+  iVar1 = __savegprlr_24();
+  if (*(char *)(iVar1 + 0x1037) == '\0') {
+    puVar3 = (undefined4 *)(*(int *)(param_4 + 0xc) * 2 + *(int *)(param_4 + 0x10));
+    local_50 = CONCAT22(*param_2 + param_3,param_2[1] + param_3);
+    if (((uint)puVar3 & 3) != 0) {
+      MyAssertHandler(0xffffffff82065870,0x7af,0,0xffffffff82000f98,0xffffffff82065c54);
+    }
+    *puVar3 = local_50;
+    *(undefined1 *)(iVar1 + 0x1037) = 1;
+    *(short *)(iVar1 + 0x1034) = param_2[2] + param_3;
+    *(int *)(param_4 + 0xc) = *(int *)(param_4 + 0xc) + 3;
+    __restgprlr_24();
+    return;
+  }
+  iVar2 = *(int *)(param_4 + 0xc) * 2 + *(int *)(param_4 + 0x10);
+  puVar3 = (undefined4 *)(iVar2 - 2);
+  local_50 = CONCAT22(*(undefined2 *)(iVar1 + 0x1034),*param_2 + param_3);
+  if (((uint)puVar3 & 3) != 0) {
+    MyAssertHandler(0xffffffff82065870,0x7bb,0,0xffffffff82000f98,0xffffffff82065c54);
+  }
+  *puVar3 = local_50;
+  puVar3 = (undefined4 *)(iVar2 + 2);
+  local_50 = CONCAT22(param_2[1] + param_3,param_2[2] + param_3);
+  if (((uint)puVar3 & 3) != 0) {
+    MyAssertHandler(0xffffffff82065870,0x7c2,0,0xffffffff82000f98,0xffffffff82065c54);
+  }
+  *puVar3 = local_50;
+  *(undefined1 *)(iVar1 + 0x1037) = 0;
+  *(int *)(param_4 + 0xc) = *(int *)(param_4 + 0xc) + 3;
+  __restgprlr_24();
+  return;
+}
+
+
+// 82433FD8  FX_DrawMarkTris  (EffectsCore/fx_marks.cpp:1999)
+
+void FX_DrawMarkTris(undefined8 param_1,ulonglong param_2,undefined2 param_3,undefined4 param_4,
+                    longlong param_5,short param_6,char param_7,char param_8)
+
+{
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined1 *puVar6;
+  longlong lVar7;
+  byte *pbVar8;
+  byte *pbVar9;
+  undefined1 *puVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  int iVar13;
+  int iVar14;
+  uint uVar15;
+  longlong lVar16;
+  undefined4 local_a4;
+  byte local_a0 [2];
+  short local_9e;
+  byte bStack_9c;
+  char local_9b;
+  char local_9a;
+  
+  iVar4 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x7d6,0,0xffffffff82000f98,0xffffffff82065774);
+  }
+  iVar3 = (int)param_2;
+  uVar12 = (uint)*(ushort *)(iVar3 + 0x3c);
+  uVar11 = (ulonglong)*(byte *)(iVar3 + 0x38);
+  local_a4 = (byte *)(iVar3 + 0x32);
+  puVar5 = (undefined4 *)param_5;
+  *puVar5 = *(undefined4 *)(iVar3 + 0x2c);
+  puVar5[1] = 0xffffffff;
+  *(undefined2 *)(puVar5 + 2) = 0xffff;
+  *(undefined1 *)((int)puVar5 + 10) = 0xff;
+  puVar5[3] = 0;
+  puVar5[4] = param_4;
+  do {
+    if (0x7ff < uVar12) {
+      MyAssertHandler(0xffffffff82065788,0xc6,0,0xffffffff820657cc,uVar12,0x800);
+    }
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82065788,199,0,&DAT_82000f98,0xffffffff8206577c);
+    }
+    bVar1 = local_a0[0];
+    puVar6 = (undefined1 *)((int)&local_a4 + 3);
+    iVar13 = uVar12 * 0x18 + *(int *)(iVar4 + 0x1020);
+    lVar16 = 7;
+    puVar10 = (undefined1 *)(iVar13 + 0xb);
+    uVar12 = (uint)*(ushort *)(iVar13 + 0x14);
+    do {
+      puVar10 = puVar10 + 1;
+      puVar6 = puVar6 + 1;
+      *puVar6 = *puVar10;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
+    if ((byte *)(iVar3 + 0x30) == (byte *)0x0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,&DAT_82000f98,0xffffffff820653c8);
+    }
+    if (bVar1 != *(byte *)(iVar3 + 0x30)) {
+      MyAssertHandler(0xffffffff82065870,0x7eb,0,&DAT_82000f98,
+                      "FX_GetMarkContext_ModelType( &context ) == FX_GetMarkContext_ModelType( &mark->context )"
+                     );
+    }
+    pbVar9 = (byte *)&local_9e;
+    pbVar8 = local_a4;
+    do {
+      bVar1 = *pbVar9;
+      bVar2 = *pbVar8;
+      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      pbVar9 = pbVar9 + 1;
+      pbVar8 = pbVar8 + 1;
+    } while (pbVar9 != &bStack_9c);
+    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+      MyAssertHandler(0xffffffff82065870,0x7ec,0,&DAT_82000f98,0xffffffff82065cb0);
+    }
+    if (param_6 != 0) {
+      local_9e = param_6;
+    }
+    if (param_7 != -1) {
+      local_9a = param_7;
+    }
+    if (param_8 != '\0') {
+      local_9b = param_8;
+    }
+    if ((int)uVar11 < (int)(uint)*(byte *)(iVar13 + 0x13)) {
+      MyAssertHandler(0xffffffff82065870,0x7f6,0,0xffffffff82065d24,uVar11);
+    }
+    if (*(char *)(iVar13 + 0x13) == '\0') {
+      MyAssertHandler(0xffffffff82065870,0x7f7,0,0xffffffff82065d60,0xffffffff82065d48);
+    }
+    pbVar8 = local_a0;
+    uVar11 = uVar11 - *(byte *)(iVar13 + 0x13);
+    lVar16 = param_5 + 4;
+    do {
+      lVar7 = (ulonglong)*(byte *)lVar16 - (ulonglong)*pbVar8;
+      if (lVar7 != 0) break;
+      lVar16 = lVar16 + 1;
+      pbVar8 = pbVar8 + 1;
+    } while ((int)lVar16 != (int)puVar5 + 0xb);
+    if ((int)lVar7 != 0) {
+      if (puVar5[3] != 0) {
+        R_AddMarkSurf(*puVar5,param_5 + 4,puVar5[4]);
+        iVar14 = puVar5[3];
+        puVar5[3] = 0;
+        puVar5[4] = iVar14 * 2 + puVar5[4];
+      }
+      puVar10 = (undefined1 *)((int)&local_a4 + 3);
+      lVar16 = param_5 + 3;
+      lVar7 = 7;
+      do {
+        puVar10 = puVar10 + 1;
+        lVar16 = lVar16 + 1;
+        *(undefined1 *)lVar16 = *puVar10;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+    }
+    uVar15 = 0;
+    iVar14 = iVar13;
+    do {
+      FX_EmitMarkTri(iVar4,iVar14,param_3,param_5);
+      uVar15 = uVar15 + 1;
+      iVar14 = iVar14 + 6;
+    } while (uVar15 != *(byte *)(iVar13 + 0x13));
+    if ((int)uVar11 == 0) {
+      if (uVar12 != 0xffff) {
+        MyAssertHandler(0xffffffff82065870,0x80f,0,0xffffffff82065c7c,0xffffffff82065c94);
+      }
+      if (puVar5[3] == 0) {
+        MyAssertHandler(0xffffffff82065870,0x811,0,&DAT_82000f98,0xffffffff82065c68);
+      }
+      __restgprlr();
+      return;
+    }
+  } while( true );
 }
 
 
 // 82434398  FX_GenerateMarkVertsForMark_Begin  (EffectsCore/fx_marks.cpp:2088)
 
-void FX_GenerateMarkVertsForMark_Begin(void)
+void FX_GenerateMarkVertsForMark_Begin
+               (undefined8 param_1,undefined8 param_2,uint *param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  longlong lVar5;
+  uint local_60 [24];
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  iVar2 = (int)param_2;
+  lVar5 = (ulonglong)*(byte *)(iVar2 + 0x38) * 3 + (ulonglong)*param_3;
+  cVar4 = R_ReserveMarkMeshVertsAndIndices
+                    (*(undefined2 *)(iVar2 + 0x3a),param_4,
+                     (lVar5 + 1U & 0xfffffffe) - ((ulonglong)*param_3 + 1 & 0xfffffffe),local_60);
+  if (cVar4 == '\0') {
+    FX_FreeMark(puVar3,param_2);
+    __restgprlr_23(0);
+    return;
+  }
+  uVar1 = *param_3;
+  *param_3 = (uint)lVar5;
+  if (*(int *)(iVar2 + 4) == -1) {
+    MyAssertHandler(0xffffffff82065870,0x846,0,0xffffffff82000f98,0xffffffff82065b60);
+  }
+  *(undefined4 *)(iVar2 + 4) = *puVar3;
+  FX_DrawMarkTris(puVar3,param_2,*(undefined2 *)param_4,
+                  (ulonglong)local_60[0] + ((ulonglong)uVar1 & 1) * -2,param_5,param_6,param_7,
+                  param_8);
+  __restgprlr_23(1);
+  return;
 }
 
 
 // 82435880  FX_GenerateMarkVertsForMark_FinishNonAnimated  (EffectsCore/fx_marks.cpp:2130)
 
-void FX_GenerateMarkVertsForMark_FinishNonAnimated(void)
+void FX_GenerateMarkVertsForMark_FinishNonAnimated
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_27();
+  lVar3 = param_4 + 4;
+  if (lVar3 == 0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((*(char *)lVar3 != '\0') && (*(char *)lVar3 != '\x01')) {
+    MyAssertHandler(0xffffffff82065870,0x859,0,0xffffffff82065e94,0xffffffff82065ea8);
+  }
+  puVar1 = (undefined4 *)param_4;
+  R_AddMarkSurf(*puVar1,lVar3,puVar1[4],puVar1[3]);
+  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>(uVar2,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -749,15 +2984,12 @@ void FX_GenerateMarkVertsForMark_FinishAnimated
   uVar2 = __savegprlr_24();
   lVar3 = param_4 + 4;
   if (lVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
   }
   if ((*(char *)lVar3 != '\x02') && (*(char *)lVar3 != '\x03')) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x870,0,0xffffffff82065e94,0xffffffff82065f08);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x871,0,0xffffffff82000f98,0xffffffff82065ef8);
   }
   puVar1 = (undefined4 *)param_4;
@@ -770,31 +3002,111 @@ void FX_GenerateMarkVertsForMark_FinishAnimated
 
 // 82435A10  FX_GenerateMarkVertsForMark_FinishGlass  (EffectsCore/fx_marks.cpp:2178)
 
-void FX_GenerateMarkVertsForMark_FinishGlass(void)
+void FX_GenerateMarkVertsForMark_FinishGlass
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined8 extraout_f1;
+  undefined8 uVar4;
+  
+  uVar2 = __savegprlr_26();
+  lVar3 = param_4 + 4;
+  uVar4 = extraout_f1;
+  if (lVar3 == 0) {
+    MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if (*(char *)lVar3 != '\x04') {
+    MyAssertHandler(0xffffffff82065870,0x889,0,0xffffffff82065e94,0xffffffff82065f54);
+  }
+  puVar1 = (undefined4 *)param_4;
+  R_AddMarkSurf(*puVar1,lVar3,puVar1[4],puVar1[3]);
+  FX_ExpandMarkVerts_Glass<GfxWorldVertex>(uVar4,uVar2,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 824344A0  FX_GenerateMarkVertsForMark_MatrixFromPlacement  (EffectsCore/fx_marks.cpp:2199)
 
-void FX_GenerateMarkVertsForMark_MatrixFromPlacement(void)
+/* WARNING: Removing unreachable block (ram,0x82434574) */
+
+void FX_GenerateMarkVertsForMark_MatrixFromPlacement
+               (undefined8 param_1,float *param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
   __savegprlr_27();
+  pfVar3 = (float *)__savefpr_24();
+  dVar9 = (double)*pfVar3;
+  dVar11 = (double)pfVar3[1];
+  dVar12 = (double)pfVar3[2];
+  dVar10 = (double)pfVar3[3];
+  dVar8 = (double)pfVar3[4];
+  dVar7 = (double)pfVar3[5];
+  dVar6 = (double)pfVar3[6];
+  if ((((((uint)*pfVar3 & 0x7f800000) == 0x7f800000) ||
+       (((uint)pfVar3[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)pfVar3[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar3[3] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+  }
+  dVar5 = (double)(float)(dVar11 * 2.0);
+  dVar4 = (double)(float)(dVar9 * 2.0);
+  fVar1 = (float)((double)(float)(dVar12 * 2.0) * dVar12);
+  fVar2 = (float)((double)(float)(dVar12 * 2.0) * dVar10);
+  param_3[1] = fVar2 + (float)(dVar4 * dVar11);
+  param_3[2] = (float)(dVar4 * dVar12) - (float)(dVar5 * dVar10);
+  *param_3 = 1.0 - (fVar1 + (float)(dVar5 * dVar11));
+  param_3[5] = (float)(dVar5 * dVar12) + (float)(dVar4 * dVar10);
+  param_3[3] = (float)(dVar4 * dVar11) - fVar2;
+  param_3[4] = 1.0 - (fVar1 + (float)(dVar4 * dVar9));
+  param_3[6] = (float)(dVar5 * dVar10) + (float)(dVar4 * dVar12);
+  param_3[7] = (float)(dVar5 * dVar12) - (float)(dVar4 * dVar10);
+  param_3[8] = 1.0 - ((float)(dVar5 * dVar11) + (float)(dVar4 * dVar9));
+  param_3[9] = (float)dVar8;
+  param_3[10] = (float)dVar7;
+  param_3[0xb] = (float)dVar6;
+  fVar1 = *param_2;
+  param_3[9] = (float)(dVar8 + (double)fVar1);
+  param_3[10] = param_2[1] + param_3[10];
+  param_3[0xb] = param_2[2] + param_3[0xb];
+  __restfpr_24((double)fVar1,dVar8);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82434670  FX_GenerateMarkVertsForMark_MatrixFromScaledPlacement  (EffectsCore/fx_marks.cpp:2219)
 
-void FX_GenerateMarkVertsForMark_MatrixFromScaledPlacement(void)
+void FX_GenerateMarkVertsForMark_MatrixFromScaledPlacement
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((double)*(float *)(iVar1 + 0x1c) != 1.0) {
+    MyAssertHandler(0xffffffff82065870,0x8ac,0,0xffffffff82065ddc,0xffffffff82065df8,
+                    (double)*(float *)(iVar1 + 0x1c));
+  }
+  FX_GenerateMarkVertsForMark_MatrixFromPlacement(iVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -847,117 +3159,243 @@ void FX_GenerateMarkVertsForMark_MatrixFromAnim
   
   iVar13 = __savegprlr_21();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x8d1,0,0xffffffff82000f98,0xffffffff8200260c);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x8d2,0,0xffffffff82000f98,0xffffffff82065e14);
   }
   bVar1 = *(byte *)(iVar13 + 0x31);
   uVar12 = FX_GetMarkContext_DObjModelIndex(iVar13 + 0x30);
   pfVar14 = (float *)param_3;
+  if (((uint)*pfVar14 & 0x7f800000) == 0x7f800000) {
+LAB_824347e4:
+    MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+  }
+  else {
+    if (((uint)pfVar14[1] & 0x7f800000) == 0x7f800000) goto LAB_824347e4;
+    if (((uint)pfVar14[2] & 0x7f800000) == 0x7f800000) goto LAB_824347e4;
+    if (((uint)pfVar14[3] & 0x7f800000) == 0x7f800000) goto LAB_824347e4;
+  }
+  if (((uint)pfVar14[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar2 = pfVar14[2];
+  fVar3 = pfVar14[7];
+  fVar4 = pfVar14[1];
+  fVar8 = fVar4 * fVar3;
+  fVar9 = *pfVar14 * fVar3;
+  local_ac = pfVar14[4] + *param_4;
+  local_a8 = param_4[1] + pfVar14[5];
+  fVar5 = pfVar14[3];
+  fVar6 = fVar2 * fVar2 * fVar3;
+  dVar15 = 1.0;
+  fVar7 = *pfVar14 * fVar9;
+  local_c4 = fVar5 * fVar2 * fVar3;
+  local_a4 = param_4[2] + pfVar14[6];
+  local_bc = fVar2 * fVar8 + fVar5 * fVar9;
+  local_cc = local_c4 + fVar4 * fVar9;
+  local_c4 = fVar4 * fVar9 - local_c4;
+  local_c8 = fVar2 * fVar9 - fVar5 * fVar8;
+  local_b8 = fVar5 * fVar8 + fVar2 * fVar9;
+  local_d0 = 1.0 - (fVar6 + fVar4 * fVar8);
+  local_c0 = 1.0 - (fVar6 + fVar7);
+  local_b4 = fVar2 * fVar8 - fVar5 * fVar9;
+  local_b0 = 1.0 - (fVar4 * fVar8 + fVar7);
+  DObjGetModel(param_2,uVar12);
+  iVar13 = XModelGetBasePose();
+  pfVar14 = (float *)(iVar13 + (uint)bVar1 * 0x20);
   if (((uint)*pfVar14 & 0x7f800000) != 0x7f800000) {
     if (((uint)pfVar14[1] & 0x7f800000) != 0x7f800000) {
       if (((uint)pfVar14[2] & 0x7f800000) != 0x7f800000) {
-        if (((uint)pfVar14[3] & 0x7f800000) != 0x7f800000) {
-          if (((uint)pfVar14[7] & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
-          }
-          fVar2 = pfVar14[2];
-          fVar3 = pfVar14[7];
-          fVar4 = pfVar14[1];
-          fVar8 = fVar4 * fVar3;
-          fVar9 = *pfVar14 * fVar3;
-          local_ac = pfVar14[4] + *param_4;
-          local_a8 = param_4[1] + pfVar14[5];
-          fVar5 = pfVar14[3];
-          fVar6 = fVar2 * fVar2 * fVar3;
-          dVar15 = 1.0;
-          fVar7 = *pfVar14 * fVar9;
-          local_c4 = fVar5 * fVar2 * fVar3;
-          local_a4 = param_4[2] + pfVar14[6];
-          local_bc = fVar2 * fVar8 + fVar5 * fVar9;
-          local_cc = local_c4 + fVar4 * fVar9;
-          local_c4 = fVar4 * fVar9 - local_c4;
-          local_c8 = fVar2 * fVar9 - fVar5 * fVar8;
-          local_b8 = fVar5 * fVar8 + fVar2 * fVar9;
-          local_d0 = 1.0 - (fVar6 + fVar4 * fVar8);
-          local_c0 = 1.0 - (fVar6 + fVar7);
-          local_b4 = fVar2 * fVar8 - fVar5 * fVar9;
-          local_b0 = 1.0 - (fVar4 * fVar8 + fVar7);
-          DObjGetModel(param_2,uVar12);
-          iVar13 = XModelGetBasePose();
-          pfVar14 = (float *)(iVar13 + (uint)bVar1 * 0x20);
-          if (((uint)*pfVar14 & 0x7f800000) != 0x7f800000) {
-            if (((uint)pfVar14[1] & 0x7f800000) != 0x7f800000) {
-              if (((uint)pfVar14[2] & 0x7f800000) != 0x7f800000) {
-                if (((uint)pfVar14[3] & 0x7f800000) != 0x7f800000) {
-                  if (((uint)pfVar14[7] & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
-                    MyAssertHandler(0xffffffff820656f0,0x29b,0,0xffffffff82000f98,0xffffffff820159d4
-                                   );
-                  }
-                  fVar2 = pfVar14[7];
-                  fVar3 = pfVar14[1];
-                  fVar9 = fVar3 * fVar2;
-                  fVar10 = *pfVar14 * fVar2;
-                  fVar4 = pfVar14[2];
-                  fVar5 = pfVar14[3];
-                  fVar6 = pfVar14[6];
-                  fVar7 = pfVar14[5];
-                  fVar8 = pfVar14[4];
-                  fVar11 = *pfVar14 * fVar10;
-                  local_9c = fVar5 * fVar4 * fVar2;
-                  fVar2 = fVar4 * fVar4 * fVar2;
-                  local_94 = local_9c + fVar3 * fVar10;
-                  local_9c = fVar3 * fVar10 - local_9c;
-                  local_98 = fVar5 * fVar9 + fVar4 * fVar10;
-                  local_88 = fVar4 * fVar10 - fVar5 * fVar9;
-                  local_84 = fVar4 * fVar9 + fVar5 * fVar10;
-                  local_80 = (float)(dVar15 - (double)(fVar3 * fVar9 + fVar11));
-                  local_8c = fVar4 * fVar9 - fVar5 * fVar10;
-                  local_a0 = (float)(dVar15 - (double)(fVar2 + fVar3 * fVar9));
-                  local_90 = (float)(dVar15 - (double)(fVar2 + fVar11));
-                  local_7c = -(fVar8 * local_a0 + fVar6 * local_88 + fVar7 * local_94);
-                  local_78 = -(fVar7 * local_90 + fVar8 * local_9c + fVar6 * local_84);
-                  local_74 = -(fVar7 * local_8c + fVar8 * local_98 + fVar6 * local_80);
-                  MatrixMultiply43(&local_a0,&local_d0,param_5);
-                  __restgprlr_21();
-                  return;
-                }
-              }
-            }
-          }
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff820656f0,0x29a,0,0xffffffff82000f98,0xffffffff820159f0);
-        }
+        if (((uint)pfVar14[3] & 0x7f800000) != 0x7f800000) goto LAB_82434994;
       }
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+  MyAssertHandler(0xffffffff820656f0,0x29a,0,0xffffffff82000f98,0xffffffff820159f0);
+LAB_82434994:
+  if (((uint)pfVar14[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff820656f0,0x29b,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar2 = pfVar14[7];
+  fVar3 = pfVar14[1];
+  fVar9 = fVar3 * fVar2;
+  fVar10 = *pfVar14 * fVar2;
+  fVar4 = pfVar14[2];
+  fVar5 = pfVar14[3];
+  fVar6 = pfVar14[6];
+  fVar7 = pfVar14[5];
+  fVar8 = pfVar14[4];
+  fVar11 = *pfVar14 * fVar10;
+  local_9c = fVar5 * fVar4 * fVar2;
+  fVar2 = fVar4 * fVar4 * fVar2;
+  local_94 = local_9c + fVar3 * fVar10;
+  local_9c = fVar3 * fVar10 - local_9c;
+  local_98 = fVar5 * fVar9 + fVar4 * fVar10;
+  local_88 = fVar4 * fVar10 - fVar5 * fVar9;
+  local_84 = fVar4 * fVar9 + fVar5 * fVar10;
+  local_80 = (float)(dVar15 - (double)(fVar3 * fVar9 + fVar11));
+  local_8c = fVar4 * fVar9 - fVar5 * fVar10;
+  local_a0 = (float)(dVar15 - (double)(fVar2 + fVar3 * fVar9));
+  local_90 = (float)(dVar15 - (double)(fVar2 + fVar11));
+  local_7c = -(fVar8 * local_a0 + fVar6 * local_88 + fVar7 * local_94);
+  local_78 = -(fVar7 * local_90 + fVar8 * local_9c + fVar6 * local_84);
+  local_74 = -(fVar7 * local_8c + fVar8 * local_98 + fVar6 * local_80);
+  MatrixMultiply43(&local_a0,&local_d0,param_5);
+  __restgprlr_21();
+  return;
 }
 
 
 // 82435AD0  FX_GenerateMarkVertsForList_EntDObj  (EffectsCore/fx_marks.cpp:2279)
 
-void FX_GenerateMarkVertsForList_EntDObj(void)
+void FX_GenerateMarkVertsForList_EntDObj
+               (undefined8 param_1,ulonglong param_2,uint param_3,undefined4 param_4,
+               ulonglong param_5,ulonglong param_6,undefined1 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  char cVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  uint in_stack_00000054;
+  int in_stack_0000005c;
+  undefined2 local_100 [2];
+  char *local_fc;
+  undefined1 auStack_f0 [32];
+  undefined1 auStack_d0 [208];
+  
+  iVar1 = __savegprlr();
+  local_fc = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp";
+  if ((param_5 & 0xffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x8f2,0,0xffffffff82000f98,0xffffffff82065ff4);
+  }
+  if ((param_6 & 0xff) == 0xff) {
+    MyAssertHandler(0xffffffff82065870,0x8f3,0,0xffffffff82000f98,0xffffffff82065fb8);
+  }
+  param_2 = param_2 & 0xffff;
+  iVar4 = -1;
+  lVar5 = -1;
+  local_100[0] = 0;
+  if (param_2 != 0xffff) {
+    do {
+      if (0x1ff < param_2) {
+        MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
+      }
+      if (iVar1 == 0) {
+        MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+      }
+      lVar8 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c);
+      lVar6 = lVar8 + 0x30;
+      if (lVar6 == 0) {
+        MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+      }
+      if (*(char *)lVar6 == '\x03') {
+        iVar2 = FX_GetMarkContext_DObjModelIndex(lVar6);
+        if (iVar2 != iVar4) {
+          lVar5 = FX_GetDobjModelGlobalBoneBase(param_8);
+          iVar4 = iVar2;
+        }
+        if ((int)lVar5 < 0) {
+          MyAssertHandler(local_fc,0x906,0,0xffffffff82065f94,0xffffffff82065f74,lVar5);
+        }
+        uVar7 = (ulonglong)*(byte *)((int)lVar8 + 0x31) + lVar5;
+        if (((*(uint *)((int)&DAT_82992400 + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c)) &
+             *(uint *)(((int)uVar7 >> 5) * 4 + in_stack_0000005c)) == 0) &&
+           (iVar2 = DObjSkelIsBoneUpToDate(param_8,uVar7), iVar2 != 0)) {
+          cVar3 = FX_GenerateMarkVertsForMark_Begin
+                            (iVar1,lVar8,param_4,local_100,auStack_f0,param_5,(char)param_6,param_7)
+          ;
+          if (cVar3 == '\0') break;
+          FX_GenerateMarkVertsForMark_MatrixFromAnim
+                    (lVar8,param_8,(uVar7 & 0x7ffffff) * 0x20 + (ulonglong)in_stack_00000054,
+                     (ulonglong)param_3 + 0x98,auStack_d0);
+          FX_GenerateMarkVertsForMark_FinishAnimated(iVar1,lVar8,local_100[0],auStack_f0,auStack_d0)
+          ;
+        }
+      }
+      param_2 = (ulonglong)*(ushort *)((int)lVar8 + 2);
+    } while (param_2 != 0xffff);
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82435D50  FX_GenerateMarkVertsForList_EntXModel  (EffectsCore/fx_marks.cpp:2329)
 
-void FX_GenerateMarkVertsForList_EntXModel(void)
+void FX_GenerateMarkVertsForList_EntXModel
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
+               ulonglong param_5,undefined8 param_6,ulonglong param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  char cVar4;
+  longlong lVar5;
+  longlong lVar6;
+  double dVar7;
+  undefined2 local_110 [8];
+  undefined1 auStack_100 [32];
+  uint auStack_e0 [8];
+  undefined1 auStack_c0 [192];
+  
+  iVar2 = __savegprlr_16();
+  if ((param_4 & 0xffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x927,0,0xffffffff82000f98,0xffffffff82065ff4);
+  }
+  if ((param_5 & 0xff) == 0xff) {
+    MyAssertHandler(0xffffffff82065870,0x928,0,0xffffffff82000f98,0xffffffff82065fb8);
+  }
+  dVar7 = (double)*(float *)((int)param_8 + 0x1c);
+  if (dVar7 != 1.0) {
+    MyAssertHandler(0xffffffff82065870,0x8ac,0,0xffffffff82065ddc,0xffffffff82065df8,dVar7);
+  }
+  FX_GenerateMarkVertsForMark_MatrixFromPlacement(param_8,0xffffffff82179fd8,auStack_c0);
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x92b,0,0xffffffff82000f98,0xffffffff8200260c);
+  }
+  DObjGetHidePartBits(param_7,auStack_e0);
+  param_2 = param_2 & 0xffff;
+  local_110[0] = 0;
+  do {
+    if (param_2 == 0xffff) {
+      __restgprlr_16(1);
+      return;
+    }
+    if (0x1ff < param_2) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
+    }
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    lVar6 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar2 + 0x101c);
+    lVar5 = lVar6 + 0x30;
+    if (lVar5 == 0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+    }
+    if (*(char *)lVar5 == '\x03') {
+      iVar3 = FX_GetMarkContext_DObjModelIndex(lVar5);
+      if (iVar3 != 0) {
+        MyAssertHandler(0xffffffff82065870,0x93a,0,0xffffffff82000f98,0xffffffff82066020);
+      }
+      bVar1 = *(byte *)((int)lVar6 + 0x31);
+      if (((&DAT_82992400)[bVar1 & 0x1f] & auStack_e0[(int)(uint)bVar1 >> 5]) == 0) {
+        cVar4 = FX_GenerateMarkVertsForMark_Begin
+                          (iVar2,lVar6,param_3,local_110,auStack_100,param_4,param_5,param_6);
+        if (cVar4 == '\0') {
+          __restgprlr_16(0);
+          return;
+        }
+        FX_GenerateMarkVertsForMark_FinishAnimated(iVar2,lVar6,local_110[0],auStack_100,auStack_c0);
+      }
+    }
+    param_2 = (ulonglong)*(ushort *)((int)lVar6 + 2);
+  } while( true );
 }
 
 
@@ -977,27 +3415,26 @@ void FX_GenerateMarkVertsForList_EntBrush
   
   iVar1 = __savegprlr_20();
   if ((param_5 & 0xff) == 0xff) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065870,0x951,0,0xffffffff82000f98,0xffffffff82066058);
   }
   FX_GenerateMarkVertsForMark_MatrixFromPlacement(param_4,0xffffffff82179fd8,auStack_a0);
   param_2 = param_2 & 0xffff;
   local_d0[0] = 0;
-  while( true ) {
+  do {
     if (param_2 == 0xffff) {
       __restgprlr_20(1);
       return;
     }
     if (0x1ff < param_2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
     }
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
     }
     lVar3 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c);
-    if (lVar3 + 0x30 == 0) break;
+    if (lVar3 + 0x30 == 0) {
+      MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+    }
     if (*(char *)(lVar3 + 0x30) == '\x02') {
       cVar2 = FX_GenerateMarkVertsForMark_Begin
                         (iVar1,lVar3,param_3,local_d0,auStack_c0,0,param_5,param_6);
@@ -1008,9 +3445,44 @@ void FX_GenerateMarkVertsForList_EntBrush
       FX_GenerateMarkVertsForMark_FinishAnimated(iVar1,lVar3,local_d0[0],auStack_c0,auStack_a0);
     }
     param_2 = (ulonglong)*(ushort *)((int)lVar3 + 2);
+  } while( true );
+}
+
+
+// 82436180  FX_GenerateMarkVertsForList_WorldXModel  (EffectsCore/fx_marks.cpp:2406)
+
+void FX_GenerateMarkVertsForList_WorldXModel
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  char cVar2;
+  longlong lVar3;
+  undefined2 local_70 [8];
+  undefined1 auStack_60 [96];
+  
+  iVar1 = __savegprlr_25();
+  param_2 = param_2 & 0xffff;
+  local_70[0] = 0;
+  while( true ) {
+    if (param_2 == 0xffff) {
+      __restgprlr_25(1);
+      return;
+    }
+    if (0x1ff < param_2) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
+    }
+    if (iVar1 == 0) {
+      MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
+    }
+    lVar3 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c);
+    cVar2 = FX_GenerateMarkVertsForMark_Begin(iVar1,lVar3,param_3,local_70,auStack_60,0,0xff,0);
+    if (cVar2 == '\0') break;
+    FX_GenerateMarkVertsForMark_FinishNonAnimated(iVar1,lVar3,local_70[0],auStack_60);
+    param_2 = (ulonglong)*(ushort *)((int)lVar3 + 2);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+  __restgprlr_25(0);
+  return;
 }
 
 
@@ -1047,17 +3519,14 @@ void FX_GenerateMarkVertsForList_Glass
     dVar10 = 1.0;
     do {
       if (0x1ff < param_2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
       }
       if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
       }
       lVar5 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c);
       uVar3 = FX_GetMarkContext_GlassPieceIndex(lVar5 + 0x30);
       if (0x3ff < uVar3) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82065870,0x992,0,0xffffffff82066090,uVar3,0x400);
       }
       pcVar2 = (char *)R_GetSceneGlass(uVar3);
@@ -1158,14 +3627,15 @@ void FX_GenerateMarkVertsForList_WorldBrush
   iVar1 = __savegprlr_24();
   param_2 = param_2 & 0xffff;
   local_70[0] = 0;
-  while( true ) {
+  do {
     if (param_2 == 0xffff) {
       __restgprlr_24(1);
       return;
     }
-    if (0x1ff < param_2) break;
+    if (0x1ff < param_2) {
+      MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
+    }
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065788,0xae,0,0xffffffff82000f98,0xffffffff8206577c);
     }
     lVar3 = param_2 * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c);
@@ -1180,9 +3650,7 @@ void FX_GenerateMarkVertsForList_WorldBrush
       FX_GenerateMarkVertsForMark_FinishNonAnimated(iVar1,lVar3,local_70[0],auStack_60);
     }
     param_2 = (ulonglong)*(ushort *)((int)lVar3 + 2);
-  }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82065788,0xad,0,0xffffffff8206573c,param_2,0x200);
+  } while( true );
 }
 
 
@@ -1219,18 +3687,65 @@ void FX_FinishGeneratingMarkVerts(int param_1)
 void FX_GenerateMarkVertsForEntXModel(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  short sVar1;
+  int iVar2;
+  longlong in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
+  
+  iVar2 = __savegprlr_26();
+  sVar1 = *(short *)((int)((in_r6 + 5U & 0xffffffff) << 1) + iVar2);
+  if (sVar1 != -1) {
+    Profile_Begin(0xc5);
+    FX_GenerateMarkVertsForList_EntXModel
+              (iVar2,sVar1,in_r7,in_r8,in_r9,in_r10,in_stack_0000005c,in_stack_00000054);
+    Profile_EndInternal(0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 82436640  FX_GenerateMarkVertsForEntDObj_internal  (EffectsCore/fx_marks.cpp:2544)
 
-void FX_GenerateMarkVertsForEntDObj_internal(void)
+void FX_GenerateMarkVertsForEntDObj_internal
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  short in_stack_00000056;
+  undefined1 auStack_70 [112];
+  
+  uVar1 = __savegprlr_23();
+  if ((param_8 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x9f5,0,0xffffffff82000f98,0xffffffff820660d4);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0x9f6,0,0xffffffff82000f98,0xffffffff8206577c);
+  }
+  if (in_stack_00000056 != -1) {
+    Profile_Begin(0xc5);
+    DObjLock(param_8);
+    uVar2 = CL_GetSkelTimeStamp();
+    iVar3 = DObjSkelExists(param_8,uVar2);
+    if (iVar3 != 0) {
+      I_dmaGetDObjSkel(param_8);
+      DObjGetHidePartBits(param_8,auStack_70);
+      FX_GenerateMarkVertsForList_EntDObj
+                (uVar1,in_stack_00000056,param_2,param_4,param_5,param_6,param_7,param_8);
+    }
+    DObjUnlock(param_8);
+    Profile_EndInternal(0);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1319,6 +3834,16 @@ void std___Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const
 }
 
 
+// 82436758  FX_GenerateMarkVertsForEntDObj  (EffectsCore/fx_marks.cpp:2588)
+
+void FX_GenerateMarkVertsForEntDObj(void)
+
+{
+  FX_GenerateMarkVertsForEntDObj_internal();
+  return;
+}
+
+
 // 824367A0  FX_GenerateMarkVertsForViewmodelDObj  (EffectsCore/fx_marks.cpp:2597)
 
 void FX_GenerateMarkVertsForViewmodelDObj(void)
@@ -1334,8 +3859,73 @@ void FX_GenerateMarkVertsForViewmodelDObj(void)
 void FX_GenerateMarkVertsForEntBrush(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  short sVar1;
+  int iVar2;
+  longlong in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  ulonglong in_r9;
+  
+  iVar2 = __savegprlr_27();
+  if ((in_r9 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82065870,0xa31,0,0xffffffff82000f98,0xffffffff8202a89c);
+  }
+  sVar1 = *(short *)((int)((in_r6 + 5U & 0xffffffff) << 1) + iVar2);
+  if (sVar1 != -1) {
+    Profile_Begin(0xc5);
+    FX_GenerateMarkVertsForList_EntBrush(iVar2,sVar1,in_r7,in_r9,in_r8,0);
+    Profile_EndInternal(0);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 82436880  FX_GenerateMarkVertsForStaticModels  (EffectsCore/fx_marks.cpp:2625)
+
+void FX_GenerateMarkVertsForStaticModels(void)
+
+{
+  int iVar1;
+  int iVar2;
+  short sVar4;
+  uint uVar3;
+  int in_r7;
+  undefined8 in_r8;
+  short sVar5;
+  short *psVar6;
+  
+  iVar2 = __savegprlr_23();
+  if ((*(char *)(DAT_8332cc18 + 0xc) == '\0') || (*(char *)(DAT_8332cb9c + 0xc) == '\0')) {
+    MyAssertHandler(0xffffffff82065870,0xa49,0,0xffffffff82000f98,0xffffffff8206611c);
+  }
+  Profile_Begin(0xc4);
+  iVar1 = *(int *)(iVar2 + 0x101c);
+  sVar5 = 0;
+  sVar4 = FX_MarkToHandle(iVar2);
+  if (sVar4 != 0) {
+    MyAssertHandler(0xffffffff82065870,0xa54,0,0xffffffff82000f98,0xffffffff820660e0);
+  }
+  psVar6 = *(short **)(iVar2 + 0x101c);
+  if (psVar6 != (short *)(iVar1 + 0x8000)) {
+    do {
+      if ((*(int *)(psVar6 + 2) != -1) && (*psVar6 == -1)) {
+        if (psVar6 == (short *)0xffffffd0) {
+          MyAssertHandler(0xffffffff82065378,0x3b2,0,0xffffffff82000f98,0xffffffff820653c8);
+        }
+        if ((*(char *)(psVar6 + 0x18) == '\x01') &&
+           (uVar3 = FX_GetMarkContext_ModelIndex(psVar6 + 0x18),
+           *(char *)((uVar3 & 0xffff) + in_r7) != '\0')) {
+          FX_GenerateMarkVertsForList_WorldXModel(iVar2,sVar5,in_r8);
+        }
+      }
+      psVar6 = psVar6 + 0x20;
+      sVar5 = sVar5 + 1;
+    } while (psVar6 != (short *)(iVar1 + 0x8000));
+  }
+  Profile_EndInternal(0);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1437,7 +4027,6 @@ void FX_GenerateMarkVertsForGlass(undefined8 param_1)
   if (*(char *)(DAT_8332cc18 + 0xc) != '\0') {
     cVar3 = R_BeginMarkMeshVerts();
     if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82065870,0xa8d,0,0xffffffff82000f98,0xffffffff8206615c);
     }
     iVar2 = FX_GetMarksSystem(param_1);
@@ -1458,11 +4047,50 @@ void FX_GenerateMarkVertsForGlass(undefined8 param_1)
 
 // 82438468  std::_Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>(void)
+void std___Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined2 *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  undefined2 uStack_42;
+  undefined1 local_40 [64];
+  
+  lVar1 = __savegprlr_28();
+  lVar4 = param_2 - lVar1;
+  if (1 < (int)lVar4 / 0xe) {
+    param_2 = param_2 + -0xe;
+    do {
+      puVar2 = &uStack_42;
+      lVar3 = param_2 + -2;
+      lVar5 = 7;
+      do {
+        lVar3 = lVar3 + 2;
+        puVar2 = puVar2 + 1;
+        *puVar2 = *(undefined2 *)lVar3;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      lVar3 = lVar1 + -2;
+      lVar5 = param_2 + -2;
+      lVar6 = 7;
+      do {
+        lVar3 = lVar3 + 2;
+        lVar5 = lVar5 + 2;
+        *(undefined2 *)lVar5 = *(undefined2 *)lVar3;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      std___Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+                (lVar1,0,((int)lVar4 + -0xe) / 0xe,local_40,param_3);
+      param_2 = param_2 + -0xe;
+      lVar4 = (param_2 - lVar1) + 0xe;
+    } while (1 < (int)lVar4 / 0xe);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1471,8 +4099,41 @@ void std___Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_con
 void FX_GenerateDynMarkVertsCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  undefined4 local_40;
+  int local_3c;
+  int local_38 [14];
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if ((*(char *)(puVar3 + 0xe) != '\0') &&
+     ((*(char *)((int)puVar3 + 0x39) != '\0' || (*(char *)((int)puVar3 + 0x3a) != '\0')))) {
+    uVar1 = puVar3[0xb];
+    iVar2 = puVar3[0xc];
+    cVar4 = R_BeginMarkMeshVerts();
+    if (cVar4 == '\0') {
+      MyAssertHandler(0xffffffff82065870,0xac7,0,0xffffffff82000f98,0xffffffff8206615c);
+    }
+    *(undefined1 *)(iVar2 + 0x1037) = 0;
+    local_40 = 0;
+    if ((*(char *)((int)puVar3 + 0x39) != '\0') && (puVar3[6] != 0)) {
+      FX_GenerateMarkVertsForStaticModels
+                (iVar2,(ulonglong)uVar1 + 0xd4,puVar3[0xd],puVar3[6],*puVar3,&local_40);
+    }
+    if (*(char *)((int)puVar3 + 0x3a) != '\0') {
+      R_GenerateMarkVertsForDynamicModels(iVar2,(ulonglong)uVar1 + 0xd4,puVar3,&local_40,0);
+    }
+    if (*(char *)(iVar2 + 0x1037) != '\0') {
+      local_3c = (uint)*(ushort *)(iVar2 + 0x1034) << 0x10;
+      R_ReserveMarkMeshIndices(0,local_38);
+      *(int *)(local_38[0] + -4) = local_3c;
+    }
+    R_EndMarkMeshVerts();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1481,8 +4142,67 @@ void FX_GenerateDynMarkVertsCmd(void)
 void FX_GenerateMarkVertsCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint *puVar5;
+  char cVar6;
+  longlong lVar7;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte in_cr0;
+  int local_40;
+  int local_3c [15];
+  
+  puVar5 = (uint *)__savegprlr_26();
+  if (*(char *)(DAT_8332cc18 + 0xc) != '\0') {
+    cVar6 = R_BeginMarkMeshVerts();
+    if (cVar6 == '\0') {
+      MyAssertHandler(0xffffffff82065870,0xb06,0,0xffffffff82000f98,0xffffffff8206615c);
+    }
+    uVar1 = *puVar5;
+    uVar2 = puVar5[4];
+    uVar3 = puVar5[5];
+    Profile_Begin(0xc6);
+    lVar7 = ((ulonglong)uVar3 & 0x3fffffff) * 4 + -0x7cccd3e8;
+    do {
+      puVar5 = (uint *)lVar7;
+      uVar3 = *puVar5;
+      if (in_RESERVE != '\0') {
+        uVar4 = storeWordConditionalIndexed((ulonglong)uVar3 + 1,0,lVar7);
+        *puVar5 = uVar4;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if ((int)((ulonglong)uVar3 + 1) != 1) {
+      MyAssertHandler(0xffffffff82065870,0xb12,0,0xffffffff82000f98,0xffffffff820661a4,in_MSR);
+    }
+    *(undefined1 *)(uVar2 + 0x1037) = 0;
+    local_40 = 0;
+    FX_GenerateMarkVertsForList_WorldBrush
+              (uVar2,*(undefined2 *)(uVar2 + 6),(ulonglong)uVar1 + 0xd4,&local_40);
+    if (*(char *)(uVar2 + 0x1037) != '\0') {
+      local_40 = (uint)*(ushort *)(uVar2 + 0x1034) << 0x10;
+      R_ReserveMarkMeshIndices(0,local_3c);
+      *(int *)(local_3c[0] + -4) = local_40;
+    }
+    do {
+      uVar1 = *puVar5;
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar7);
+        *puVar5 = uVar2;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if ((int)((ulonglong)uVar1 - 1) != 0) {
+      MyAssertHandler(0xffffffff82065870,0xb1d,0,0xffffffff82000f98,0xffffffff82066164);
+    }
+    R_EndMarkMeshVerts();
+    Profile_EndInternal(0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1605,22 +4325,470 @@ void std___Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkT
 
 // 82437C78  std::_Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>(void)
+void std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  undefined2 *puVar3;
+  longlong lVar4;
+  undefined2 *puVar5;
+  longlong lVar6;
+  undefined2 uStack_42;
+  undefined2 local_40 [32];
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_42;
+    lVar4 = param_2 + -2;
+    lVar6 = 7;
+    do {
+      lVar4 = lVar4 + 2;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined2 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined2 *)(iVar1 + -2);
+    lVar4 = param_2 + -2;
+    lVar6 = 7;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 2;
+      *(undefined2 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_42;
+    puVar3 = (undefined2 *)(iVar1 + -2);
+    lVar4 = 7;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  cVar2 = (*param_4)(param_3,param_2);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_42;
+    lVar4 = param_3 + -2;
+    lVar6 = 7;
+    do {
+      lVar4 = lVar4 + 2;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined2 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar4 = param_2 + -2;
+    param_3 = param_3 + -2;
+    lVar6 = 7;
+    do {
+      lVar4 = lVar4 + 2;
+      param_3 = param_3 + 2;
+      *(undefined2 *)param_3 = *(undefined2 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_42;
+    lVar4 = param_2 + -2;
+    lVar6 = 7;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 2;
+      *(undefined2 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_42;
+    lVar4 = param_2 + -2;
+    lVar6 = 7;
+    do {
+      lVar4 = lVar4 + 2;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined2 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined2 *)(iVar1 + -2);
+    param_2 = param_2 + -2;
+    lVar4 = 7;
+    do {
+      puVar5 = puVar5 + 1;
+      param_2 = param_2 + 2;
+      *(undefined2 *)param_2 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    puVar5 = &uStack_42;
+    puVar3 = (undefined2 *)(iVar1 + -2);
+    lVar4 = 7;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82437DF0  std::_Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+
+void std___Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  longlong lVar2;
+  uint uVar4;
+  longlong lVar3;
+  longlong lVar5;
+  
+  lVar2 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar2) / 0xe;
+  if (0x28 < iVar1) {
+    uVar4 = iVar1 + 1;
+    lVar3 = (longlong)((int)uVar4 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 7) != 0);
+    lVar5 = lVar3 * 0xe + lVar2;
+    std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+              (lVar2,lVar5,lVar3 * 0x1c + lVar2);
+    std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+              (param_2 + lVar3 * -0xe,param_2,lVar3 * 0xe + param_2,param_4);
+    lVar2 = param_3 + lVar3 * -0xe;
+    std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+              (param_3 + lVar3 * -0x1c,lVar2,param_3,param_4);
+    std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+              (lVar5,param_2,lVar2,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+            (lVar2,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82437FF8  std::_Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  undefined2 *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  undefined2 uStack_c2;
+  undefined2 local_c0 [7];
+  undefined2 uStack_b2;
+  undefined2 local_b0 [7];
+  undefined2 uStack_a2;
+  undefined2 local_a0 [7];
+  undefined2 uStack_92;
+  undefined2 local_90 [7];
+  undefined2 uStack_82;
+  undefined2 local_80 [7];
+  undefined2 uStack_72;
+  undefined2 local_70 [7];
+  undefined2 uStack_62;
+  undefined2 local_60 [48];
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  uVar2 = ((int)param_3 - (int)param_2) / 0xe;
+  uVar13 = ((longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0)) * 0xe +
+           param_2;
+  std___Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
+            (param_2,uVar13,param_3 - 0xe);
+  uVar8 = uVar13 + 0xe;
+  if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+    do {
+      uVar14 = uVar13 - 0xe;
+      cVar4 = (*param_4)(uVar14,uVar13);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar14), cVar4 != '\0')) break;
+      uVar13 = uVar14;
+    } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+  }
+  uVar14 = uVar13;
+  uVar10 = uVar8;
+  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar4 = (*param_4)(uVar8,uVar13);
+      uVar10 = uVar8;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar8), cVar4 != '\0')) break;
+      uVar8 = uVar8 + 0xe;
+      uVar10 = uVar8;
+    } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar9 = uVar8;
+    uVar11 = uVar10;
+    if ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar4 = (*param_4)(uVar13,uVar10);
+        uVar9 = uVar8;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar10,uVar13);
+          uVar11 = uVar10;
+          if (cVar4 != '\0') break;
+          puVar7 = &uStack_c2;
+          uVar9 = uVar8 + 0xe;
+          lVar5 = uVar8 - 2;
+          lVar15 = 7;
+          do {
+            lVar5 = lVar5 + 2;
+            puVar7 = puVar7 + 1;
+            *puVar7 = *(undefined2 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar10 - 2;
+          lVar15 = uVar8 - 2;
+          lVar16 = 7;
+          do {
+            lVar5 = lVar5 + 2;
+            lVar15 = lVar15 + 2;
+            *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar7 = &uStack_c2;
+          lVar5 = uVar10 - 2;
+          lVar15 = 7;
+          do {
+            puVar7 = puVar7 + 1;
+            lVar5 = lVar5 + 2;
+            *(undefined2 *)lVar5 = *puVar7;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar10 = uVar10 + 0xe;
+        uVar8 = uVar9;
+        uVar11 = uVar10;
+      } while ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar12 = uVar13;
+    uVar8 = uVar14;
+    if ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+      do {
+        uVar10 = uVar8 - 0xe;
+        cVar4 = (*param_4)(uVar10,uVar13);
+        uVar12 = uVar13;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar13,uVar10);
+          if (cVar4 != '\0') break;
+          uVar12 = uVar13 - 0xe;
+          puVar7 = &uStack_b2;
+          lVar5 = uVar13 - 0x10;
+          lVar15 = 7;
+          do {
+            lVar5 = lVar5 + 2;
+            puVar7 = puVar7 + 1;
+            *puVar7 = *(undefined2 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar8 - 0x10;
+          lVar15 = uVar13 - 0x10;
+          lVar16 = 7;
+          do {
+            lVar5 = lVar5 + 2;
+            lVar15 = lVar15 + 2;
+            *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar7 = &uStack_b2;
+          lVar5 = uVar8 - 0x10;
+          lVar15 = 7;
+          do {
+            puVar7 = puVar7 + 1;
+            lVar5 = lVar5 + 2;
+            *(undefined2 *)lVar5 = *puVar7;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar14 = uVar14 - 0xe;
+        uVar13 = uVar12;
+        uVar8 = uVar10;
+      } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+      bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    if (bVar1) {
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = (int)uVar12;
+        puVar3[1] = (int)uVar9;
+        __restgprlr_23(puVar3);
+        return;
+      }
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        puVar7 = &uStack_a2;
+        lVar5 = uVar12 - 2;
+        lVar15 = 7;
+        do {
+          lVar5 = lVar5 + 2;
+          puVar7 = puVar7 + 1;
+          *puVar7 = *(undefined2 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar9 - 2;
+        lVar15 = uVar12 - 2;
+        lVar16 = 7;
+        do {
+          lVar5 = lVar5 + 2;
+          lVar15 = lVar15 + 2;
+          *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar7 = &uStack_a2;
+        lVar5 = uVar9 - 2;
+        lVar15 = 7;
+        do {
+          puVar7 = puVar7 + 1;
+          lVar5 = lVar5 + 2;
+          *(undefined2 *)lVar5 = *puVar7;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      puVar7 = &uStack_92;
+      uVar8 = uVar9 + 0xe;
+      lVar15 = 7;
+      uVar13 = uVar12 + 0xe;
+      uVar10 = uVar11 + 0xe;
+      lVar5 = uVar12 - 2;
+      do {
+        lVar5 = lVar5 + 2;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *(undefined2 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar11 - 2;
+      lVar15 = uVar12 - 2;
+      lVar16 = 7;
+      do {
+        lVar5 = lVar5 + 2;
+        lVar15 = lVar15 + 2;
+        *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar7 = &uStack_92;
+      lVar5 = uVar11 - 2;
+      lVar15 = 7;
+      do {
+        puVar7 = puVar7 + 1;
+        lVar5 = lVar5 + 2;
+        *(undefined2 *)lVar5 = *puVar7;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+    }
+    else if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+      uVar6 = uVar14 - 0xe;
+      uVar13 = uVar12 - 0xe;
+      if ((uVar6 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+        puVar7 = &uStack_82;
+        lVar5 = uVar14 - 0x10;
+        lVar15 = 7;
+        do {
+          lVar5 = lVar5 + 2;
+          puVar7 = puVar7 + 1;
+          *puVar7 = *(undefined2 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar12 - 0x10;
+        lVar15 = uVar14 - 0x10;
+        lVar16 = 7;
+        do {
+          lVar5 = lVar5 + 2;
+          lVar15 = lVar15 + 2;
+          *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar7 = &uStack_82;
+        lVar5 = uVar12 - 0x10;
+        lVar15 = 7;
+        do {
+          puVar7 = puVar7 + 1;
+          lVar5 = lVar5 + 2;
+          *(undefined2 *)lVar5 = *puVar7;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      uVar8 = uVar9 - 0xe;
+      puVar7 = &uStack_72;
+      lVar5 = uVar12 - 0x10;
+      lVar15 = 7;
+      do {
+        lVar5 = lVar5 + 2;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *(undefined2 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar9 - 0x10;
+      lVar15 = uVar12 - 0x10;
+      lVar16 = 7;
+      do {
+        lVar5 = lVar5 + 2;
+        lVar15 = lVar15 + 2;
+        *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar7 = &uStack_72;
+      lVar5 = uVar9 - 0x10;
+      lVar15 = 7;
+      do {
+        puVar7 = puVar7 + 1;
+        lVar5 = lVar5 + 2;
+        *(undefined2 *)lVar5 = *puVar7;
+        lVar15 = lVar15 + -1;
+        uVar14 = uVar6;
+        uVar10 = uVar11;
+      } while (lVar15 != 0);
+    }
+    else {
+      puVar7 = &uStack_62;
+      lVar5 = uVar11 - 2;
+      lVar15 = 7;
+      do {
+        lVar5 = lVar5 + 2;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *(undefined2 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar14 - 0x10;
+      lVar15 = uVar11 - 2;
+      lVar16 = 7;
+      do {
+        lVar5 = lVar5 + 2;
+        lVar15 = lVar15 + 2;
+        *(undefined2 *)lVar15 = *(undefined2 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar7 = &uStack_62;
+      lVar5 = uVar14 - 0x10;
+      lVar15 = 7;
+      do {
+        puVar7 = puVar7 + 1;
+        lVar5 = lVar5 + 2;
+        *(undefined2 *)lVar5 = *puVar7;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      uVar14 = uVar14 - 0xe;
+      uVar8 = uVar9;
+      uVar10 = uVar11 + 0xe;
+      uVar13 = uVar12;
+    }
+  } while( true );
 }
 
 

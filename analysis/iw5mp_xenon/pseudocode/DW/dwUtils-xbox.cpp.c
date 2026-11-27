@@ -5,8 +5,58 @@
 void dwGetLobbyService(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char cVar6;
+  int iVar5;
+  ulonglong uVar4;
+  
+  uVar3 = __savegprlr_28();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821ad2fc,0x18,0,0xffffffff82031880,uVar3,4);
+  }
+  cVar6 = Live_UserIsGuest(uVar3);
+  if (cVar6 != '\0') {
+    __restgprlr_28(0);
+    return;
+  }
+  iVar2 = (int)uVar3 * 0x1c;
+  if (*(int *)(&DAT_844f5f00 + iVar2) == 0) {
+    iVar5 = bdMemory__allocate(300);
+    if (iVar5 == 0) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = bdLobbyService__bdLobbyService();
+    }
+    *(int *)(&DAT_844f5f00 + iVar2) = (int)uVar4;
+    if ((uVar4 & 0xffffffff) != 0) {
+      if ((uVar3 & 0xffffffff) < 4) {
+        bVar1 = (int)uVar3 != 0;
+        if (uVar3 == 1 && bVar1) {
+          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f222c);
+        }
+        else if (uVar3 == 2 && bVar1) {
+          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2224);
+        }
+        else if (bVar1) {
+          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2230);
+        }
+        else {
+          bdLobbyService__registerEventHandler(uVar4,0xffffffff844f2228);
+        }
+      }
+      else if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff821ad2fc,0x3b,0,0xffffffff821ad2d0);
+      }
+    }
+  }
+  if (*(int *)(&DAT_844f5f00 + iVar2) == 0) {
+    MyAssertHandler(0xffffffff821ad2fc,0x41,0,0xffffffff82000f98,0xffffffff821ad2a4);
+  }
+  __restgprlr_28(*(undefined4 *)(&DAT_844f5f00 + iVar2));
+  return;
 }
 
 
@@ -33,7 +83,6 @@ void dwResetLogonAttempts(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad2fc,0x54,0,0xffffffff82031880,param_1,4);
   }
   DAT_844f6955 = 0;
@@ -49,7 +98,6 @@ undefined4 dwGetNumLogonAttemps(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad2fc,0x5e,0,0xffffffff82031880,param_1,4);
   }
   return (&DAT_844f5f14)[(int)param_1 * 7];
@@ -62,7 +110,6 @@ void dwSetLogonStatus(ulonglong param_1,undefined4 param_2)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad2fc,0x66,0,0xffffffff82031880,param_1,4);
   }
   (&DAT_844f5f04)[(int)param_1 * 7] = param_2;
@@ -75,8 +122,28 @@ void dwSetLogonStatus(ulonglong param_1,undefined4 param_2)
 void dwLobbyPump(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_28();
+  (&DAT_844f5f04)[(int)uVar1 * 7] = 0;
+  uVar2 = dwGetLobbyService();
+  if ((uVar2 & 0xffffffff) != 0) {
+    bdLobbyService__pump();
+    iVar3 = bdLobbyService__getStatus(uVar2);
+    if (iVar3 == 2) {
+      (&DAT_844f5f04)[(int)uVar1 * 7] = 8;
+      LiveAntiCheat_Pump(uVar1);
+      LiveRegionInfo_Pump(uVar1);
+      iVar3 = dwGetContentStreaming(uVar1);
+      if (iVar3 != 0) {
+        bdContentStreamingBase__pump();
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -89,7 +156,6 @@ void dwGetStorage(void)
   
   uVar1 = dwGetLobbyService();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad2fc,0x90,0,0xffffffff82000f98,0xffffffff821ad33c);
   }
   bdLobbyService__getStorage(uVar1);
@@ -288,6 +354,26 @@ undefined8 dwGetTagService(void)
   }
   else {
     uVar2 = bdLobbyService__getTags(uVar1);
+  }
+  return uVar2;
+}
+
+
+// 826F2E68  dwGetProfiles  (DW/dwUtils-xbox.cpp:302)
+
+undefined8 dwGetProfiles(void)
+
+{
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = dwGetLobbyService();
+  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
+    uVar2 = 0;
+  }
+  else {
+    uVar2 = bdLobbyService__getProfiles(uVar1);
   }
   return uVar2;
 }

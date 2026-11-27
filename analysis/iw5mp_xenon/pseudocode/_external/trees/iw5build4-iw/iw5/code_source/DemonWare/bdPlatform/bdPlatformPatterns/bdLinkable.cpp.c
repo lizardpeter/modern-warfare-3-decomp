@@ -91,6 +91,25 @@ undefined4 bdLinkable__getNext(int param_1)
 }
 
 
+// 828F4DB8  bdLinkable::find  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformpatterns/bdlinkable.cpp:82)
+
+bool bdLinkable__find(int param_1,int param_2)
+
+{
+  bool bVar1;
+  
+  bVar1 = false;
+  do {
+    if (param_1 == 0) {
+      return bVar1;
+    }
+    bVar1 = param_2 == param_1;
+    param_1 = *(int *)(param_1 + 8);
+  } while (!bVar1);
+  return bVar1;
+}
+
+
 // 828F4E48  bdLinkable::`scalar_deleting_destructor'  (line unknown)
 
 char * bdLinkable___scalar_deleting_destructor_(char *param_1,ulonglong param_2)

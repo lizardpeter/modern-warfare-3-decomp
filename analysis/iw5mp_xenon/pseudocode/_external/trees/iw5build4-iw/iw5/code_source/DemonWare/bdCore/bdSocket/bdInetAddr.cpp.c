@@ -52,11 +52,33 @@ void bdInetAddr__set(undefined4 *param_1,undefined4 *param_2)
 }
 
 
+// 828F6E30  bdInetAddr::isValid  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:109)
+
+bool bdInetAddr__isValid(int *param_1)
+
+{
+  int local_20 [4];
+  
+  bdInAddr__bdInAddr(local_20);
+  return local_20[0] != *param_1;
+}
+
+
 // 828F6E78  bdInetAddr::toUInt32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:127)
 
 undefined4 bdInetAddr__toUInt32(undefined4 *param_1)
 
 {
   return *param_1;
+}
+
+
+// 828F6E80  bdInetAddr::getInAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:143)
+
+void bdInetAddr__getInAddr(undefined4 *param_1,undefined4 *param_2)
+
+{
+  *param_1 = *param_2;
+  return;
 }
 

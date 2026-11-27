@@ -15,6 +15,32 @@
 ; 828F4CC0  bdPlatformTiming::getElapsedTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformtiming/bdplatformtiming-xbox.cpp:21)
   828F4CC0  7D8802A6             mfspr r12,LR
   828F4CC4  480219F5             bl 0x829166b8
+  828F4CC8  9421FF80             stwu r1,-0x80(r1)
+  828F4CCC  3FE08489             lis r31,-0x7b77
+  828F4CD0  3D608489             lis r11,-0x7b77
+  828F4CD4  7C7D1B78             or r29,r3,r3
+  828F4CD8  3BCB5D60             addi r30,r11,0x5d60
+  828F4CDC  7C9C2378             or r28,r4,r4
+  828F4CE0  897F5D68             lbz r11,0x5d68(r31)
+  828F4CE4  280B0000             cmplwi r11,0x0
+  828F4CE8  40820014             bne 0x828f4cfc
+  828F4CEC  7FC3F378             or r3,r30,r30
+  828F4CF0  4BFB63D1             bl 0x828ab0c0
+  828F4CF4  39600001             li r11,0x1
+  828F4CF8  997F5D68             stb r11,0x5d68(r31)
+LAB_828f4cfc:
+  828F4CFC  7C7DE050             subf r3,r29,r28
+  828F4D00  48021A31             bl 0x82916730
+  828F4D04  C81E0000             lfd f0,0x0(r30)
+  828F4D08  FC00069C             fcfid f0,f0
+  828F4D0C  FDA00818             frsp f13,f1
+  828F4D10  FC000018             frsp f0,f0
+  828F4D14  EC2D0024             fdivs f1,f13,f0
+  828F4D18  38210080             addi r1,r1,0x80
+  828F4D1C  480219EC             b 0x82916708
 
 ; 828F4D20  bdPlatformTiming::sleep  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformtiming/bdplatformtiming-xbox.cpp:38)
   828F4D20  4BFAE150             b 0x828a2e70
+
+; 828F4D28  bdPlatformTiming::getLoResTimeStamp  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformtiming/bdplatformtiming-xbox.cpp:43)
+  828F4D28  4BFB43E0             b 0x828a9108

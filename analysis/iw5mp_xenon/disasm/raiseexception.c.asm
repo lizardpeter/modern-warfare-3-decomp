@@ -3,3 +3,40 @@
 ; 828A97A0  RaiseException  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/raiseexception.c:62)
   828A97A0  7D8802A6             mfspr r12,LR
   828A97A4  4806CF15             bl 0x829166b8
+  828A97A8  9421FF30             stwu r1,-0xd0(r1)
+  828A97AC  7C7D1B78             or r29,r3,r3
+  828A97B0  7C9C2378             or r28,r4,r4
+  828A97B4  7CBF2B78             or r31,r5,r5
+  828A97B8  7CDE3378             or r30,r6,r6
+  828A97BC  7DAD6B78             or r13,r13,r13
+  828A97C0  3D40828B             lis r10,-0x7d75
+  828A97C4  93A10050             stw r29,0x50(r1)
+  828A97C8  39600000             li r11,0x0
+  828A97CC  578907FE             rlwinm r9,r28,0x0,0x1f,0x1f
+  828A97D0  394A97A0             subi r10,r10,0x6860
+  828A97D4  91610058             stw r11,0x58(r1)
+  828A97D8  91210054             stw r9,0x54(r1)
+  828A97DC  2B1E0000             cmplwi cr6,r30,0x0
+  828A97E0  9141005C             stw r10,0x5c(r1)
+  828A97E4  419A0034             beq cr6,0x828a9818
+  828A97E8  7FEBFB78             or r11,r31,r31
+  828A97EC  2B1F000F             cmplwi cr6,r31,0xf
+  828A97F0  40990008             ble cr6,0x828a97f8
+  828A97F4  3960000F             li r11,0xf
+LAB_828a97f8:
+  828A97F8  91610060             stw r11,0x60(r1)
+  828A97FC  2B0B0000             cmplwi cr6,r11,0x0
+  828A9800  419A001C             beq cr6,0x828a981c
+  828A9804  7FC4F378             or r4,r30,r30
+  828A9808  38610064             addi r3,r1,0x64
+  828A980C  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  828A9810  4806D5D9             bl 0x82916de8
+  828A9814  48000008             b 0x828a981c
+LAB_828a9818:
+  828A9818  91610060             stw r11,0x60(r1)
+LAB_828a981c:
+  828A981C  38610050             addi r3,r1,0x50
+  828A9820  480986A5             bl 0x82941ec4
+  828A9824  7DCE7378             or r14,r14,r14
+  828A9828  382100D0             addi r1,r1,0xd0
+  828A982C  4806CEDC             b 0x82916708

@@ -58,7 +58,6 @@ void EntUnlink_Internal(undefined8 param_1,ulonglong param_2)
   puVar4 = (undefined4 *)__savegprlr_21();
   piVar1 = (int *)puVar4[0x85];
   if (piVar1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x36,0,0xffffffff82000f98,0xffffffff8207f818);
   }
   puVar4[2] = puVar4[2] ^ 2;
@@ -80,7 +79,6 @@ void EntUnlink_Internal(undefined8 param_1,ulonglong param_2)
   }
   iVar2 = *piVar1;
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x70,0,0xffffffff82000f98,0xffffffff8200114c);
   }
   puVar3 = *(undefined4 **)(iVar2 + 0x218);
@@ -88,12 +86,10 @@ void EntUnlink_Internal(undefined8 param_1,ulonglong param_2)
     do {
       puVar7 = puVar3;
       if (puVar7[0x85] == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8207f820,0x76,0,0xffffffff82000f98,0xffffffff8207f800);
       }
       puVar3 = *(undefined4 **)(puVar7[0x85] + 4);
       if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8207f820,0x79,0,0xffffffff82000f98,0xffffffff8207f810);
       }
     } while (puVar3 != puVar4);
@@ -135,23 +131,145 @@ LAB_824b673c:
 }
 
 
-// 824B86D8  G_EntLinkTo  (game/linkto.cpp:270)
+// 824B6878  EntLinkTo_Internal  (game/linkto.cpp:175)
 
-void G_EntLinkTo(void)
+void EntLinkTo_Internal(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar5;
+  int *piVar6;
+  int iVar7;
+  undefined8 uVar4;
+  undefined4 uVar8;
+  int iVar9;
+  ulonglong uVar10;
+  
+  uVar3 = __savegprlr_24();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0xb4,0,0xffffffff82000f98,0xffffffff8200114c);
+  }
+  iVar2 = (int)uVar3;
+  if ((*(uint *)(iVar2 + 0x184) & 0x1000) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0xb5,0,0xffffffff82000f98,0xffffffff82078158);
+  }
+  if (*(int *)(iVar2 + 0x214) != 0) {
+    EntUnlink_Internal(uVar3,1);
+  }
+  if (*(int *)(iVar2 + 0x214) != 0) {
+    MyAssertHandler(0xffffffff8207f820,0xba,0,0xffffffff82000f98,0xffffffff8207f8c4);
+  }
+  uVar10 = param_2;
+  if ((param_3 & 0xffffffff) == 0) {
+    iVar5 = -1;
+  }
+  else {
+    iVar5 = SV_DObjExists(param_2);
+    if ((iVar5 == 0) || (iVar5 = SV_DObjGetBoneIndex(param_2,param_3), iVar5 < 0)) {
+LAB_824b6960:
+      __restgprlr_24(0);
+      return;
+    }
+  }
+  while( true ) {
+    if ((uVar10 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8207f820,0xcd,0,0xffffffff82000f98,0xffffffff8207f8b8);
+    }
+    if ((uVar10 & 0xffffffff) == (uVar3 & 0xffffffff)) goto LAB_824b6960;
+    puVar1 = *(uint **)((int)uVar10 + 0x214);
+    if (puVar1 == (uint *)0x0) break;
+    uVar10 = (ulonglong)*puVar1;
+  }
+  piVar6 = (int *)MT_Alloc(0x70,0x12);
+  iVar9 = (int)param_2;
+  *piVar6 = iVar9;
+  *(undefined1 *)((int)piVar6 + 10) = 0;
+  *(undefined2 *)(piVar6 + 2) = 0;
+  if (((param_3 & 0xffffffff) != 0) && (iVar7 = SL_IsLowercaseString(param_3), iVar7 == 0)) {
+    uVar4 = SL_ConvertToString(param_3);
+    MyAssertHandler(0xffffffff8207f820,0xd9,0,0xffffffff8207f85c,0xffffffff8207f888,uVar4);
+  }
+  Scr_SetString(piVar6 + 2,param_3);
+  iVar7 = *(int *)(iVar9 + 0x218);
+  piVar6[3] = iVar5;
+  piVar6[1] = iVar7;
+  memset(piVar6 + 4,0,0x30);
+  *(int *)(iVar9 + 0x218) = iVar2;
+  *(int **)(iVar2 + 0x214) = piVar6;
+  memset(piVar6 + 0x10,0,0x30);
+  iVar5 = *(int *)(iVar2 + 0x158);
+  if (iVar5 != 0) {
+    *(uint *)(iVar5 + 0x14) = *(uint *)(iVar5 + 0x14) & 0xfffffffd;
+    iVar2 = *(int *)(iVar2 + 0x158);
+    if ((*(uint *)(iVar2 + 0x14) & 4) == 0) {
+      if (*(int *)(iVar2 + 4) == 0) {
+        uVar8 = 1;
+      }
+      else {
+        if (*(int *)(iVar2 + 4) != 8) goto LAB_824b6ab0;
+        uVar8 = 9;
+      }
+      *(undefined4 *)(iVar2 + 4) = uVar8;
+    }
+  }
+LAB_824b6ab0:
+  UpdateLinkInfoForClients(uVar3);
+  __restgprlr_24(1);
+  return;
+}
+
+
+// 824B86D8  G_EntLinkTo  (game/linkto.cpp:270)
+
+void G_EntLinkTo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  Profile_Begin(0xf6);
+  iVar2 = EntLinkTo_Internal(uVar1,param_2,param_3);
+  if (iVar2 == 0) {
+    Profile_EndInternal();
+    __restgprlr_29(0);
+    return;
+  }
+  G_CalcTagAxis(uVar1,0);
+  Profile_EndInternal(0);
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824B6AC8  G_EntLinkToWithOffset  (game/linkto.cpp:287)
 
-void G_EntLinkToWithOffset(void)
+void G_EntLinkToWithOffset
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_27();
+  Profile_Begin(0xf6);
+  iVar2 = EntLinkTo_Internal(iVar1,param_2,param_3);
+  if (iVar2 == 0) {
+    Profile_EndInternal();
+    __restgprlr_27(0);
+    return;
+  }
+  iVar1 = *(int *)(iVar1 + 0x214);
+  AnglesToAxis(param_5,iVar1 + 0x10);
+  *(undefined4 *)(iVar1 + 0x34) = *param_4;
+  *(undefined4 *)(iVar1 + 0x38) = param_4[1];
+  *(undefined4 *)(iVar1 + 0x3c) = param_4[2];
+  Profile_EndInternal(0);
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -217,11 +335,46 @@ undefined8 G_EntIsLinkedToAncestor(int param_1,int param_2)
 
 // 824B6C38  G_UpdateTagInfo  (game/linkto.cpp:351)
 
-void G_UpdateTagInfo(void)
+void G_UpdateTagInfo(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_29();
+  Profile_Begin(0xf8);
+  puVar1 = *(undefined4 **)(iVar2 + 0x214);
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8207f820,0x166,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  if (*(short *)(puVar1 + 2) == 0) {
+    if (puVar1[3] == -1) goto LAB_824b6d2c;
+    puVar1[3] = 0xffffffff;
+  }
+  else {
+    if ((param_2 == 0) || (iVar3 = SV_DObjGetBoneIndex(*puVar1), iVar3 < 0)) {
+      if (puVar1[3] != -1) {
+        puVar1[3] = 0xffffffff;
+        UpdateLinkInfoForClients(iVar2);
+      }
+      Profile_Begin(0xf7);
+      if (*(int *)(iVar2 + 0x214) != 0) {
+        EntUnlink_Internal(iVar2,0);
+      }
+      Profile_EndInternal(0);
+      Profile_EndInternal(0);
+      __restgprlr_29();
+      return;
+    }
+    if (puVar1[3] == iVar3) goto LAB_824b6d2c;
+    puVar1[3] = iVar3;
+  }
+  UpdateLinkInfoForClients(iVar2);
+LAB_824b6d2c:
+  Profile_EndInternal(0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -281,141 +434,169 @@ void G_CalcTagParentAxis(undefined8 param_1,longlong param_2)
   Profile_Begin(0x134);
   piVar5 = *(int **)(iVar12 + 0x214);
   if (piVar5 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x1aa,0,0xffffffff82000f98,0xffffffff8207f818);
   }
   iVar6 = *piVar5;
   if (iVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x1ac,0,0xffffffff82000f98,0xffffffff8200114c);
   }
-  if ((*(uint *)(iVar6 + 0x138) & 0x7f800000) != 0x7f800000) {
-    if ((*(uint *)(iVar6 + 0x13c) & 0x7f800000) != 0x7f800000) {
-      if ((*(uint *)(iVar6 + 0x140) & 0x7f800000) != 0x7f800000) {
-        if ((*(uint *)(iVar6 + 0x144) & 0x7f800000) != 0x7f800000) {
-          if ((*(uint *)(iVar6 + 0x148) & 0x7f800000) != 0x7f800000) {
-            if ((*(uint *)(iVar6 + 0x14c) & 0x7f800000) != 0x7f800000) {
-              puVar11 = (uint *)param_2;
-              if ((-1 < piVar5[3]) &&
-                 ((*(int *)(iVar12 + 0x158) == 0 ||
-                  (*(char *)(*(int *)(iVar12 + 0x158) + 0x3678) == '\0')))) {
-                AnglesToAxis(iVar6 + 0x144,auStack_80);
-                local_5c = *(undefined4 *)(iVar6 + 0x138);
-                local_58 = *(undefined4 *)(iVar6 + 0x13c);
-                local_54 = *(undefined4 *)(iVar6 + 0x140);
-                G_DObjCalcBone(iVar6,piVar5[3]);
-                iVar12 = SV_DObjGetMatrixArray(iVar6);
-                pfVar13 = (float *)(iVar12 + piVar5[3] * 0x20);
-                if (((uint)*pfVar13 & 0x7f800000) != 0x7f800000) {
-                  if (((uint)pfVar13[1] & 0x7f800000) != 0x7f800000) {
-                    if (((uint)pfVar13[2] & 0x7f800000) != 0x7f800000) {
-                      if (((uint)pfVar13[3] & 0x7f800000) != 0x7f800000) {
-                        if (((uint)pfVar13[7] & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
-                          MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,
-                                          0xffffffff820159d4);
-                        }
-                        fVar1 = pfVar13[2];
-                        fVar2 = pfVar13[7];
-                        fVar3 = pfVar13[1];
-                        fVar9 = fVar3 * fVar2;
-                        fVar10 = *pfVar13 * fVar2;
-                        fVar4 = pfVar13[3];
-                        fVar7 = fVar1 * fVar1 * fVar2;
-                        fVar8 = *pfVar13 * fVar10;
-                        local_a4 = fVar4 * fVar1 * fVar2;
-                        local_9c = fVar1 * fVar9 + fVar4 * fVar10;
-                        local_a8 = fVar1 * fVar10 - fVar4 * fVar9;
-                        local_ac = local_a4 + fVar3 * fVar10;
-                        local_a4 = fVar3 * fVar10 - local_a4;
-                        local_98 = fVar4 * fVar9 + fVar1 * fVar10;
-                        local_b0 = 1.0 - (fVar7 + fVar3 * fVar9);
-                        local_a0 = 1.0 - (fVar7 + fVar8);
-                        local_90 = 1.0 - (fVar3 * fVar9 + fVar8);
-                        local_94 = fVar1 * fVar9 - fVar4 * fVar10;
-                        MatrixMultiply(&local_b0,auStack_80,param_2);
-                        MatrixTransformVector43(pfVar13 + 4,auStack_80,param_2 + 0x24);
-                        goto LAB_824b710c;
-                      }
-                    }
-                  }
-                }
-                    /* WARNING: Subroutine does not return */
-                MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
-              }
-              AnglesToAxis(iVar6 + 0x144,param_2);
-              puVar11[9] = *(uint *)(iVar6 + 0x138);
-              puVar11[10] = *(uint *)(iVar6 + 0x13c);
-              puVar11[0xb] = *(uint *)(iVar6 + 0x140);
-LAB_824b710c:
-              if ((*puVar11 & 0x7f800000) != 0x7f800000) {
-                if ((puVar11[1] & 0x7f800000) != 0x7f800000) {
-                  if ((puVar11[2] & 0x7f800000) != 0x7f800000) {
-                    if ((puVar11[3] & 0x7f800000) != 0x7f800000) {
-                      if ((puVar11[4] & 0x7f800000) != 0x7f800000) {
-                        if ((puVar11[5] & 0x7f800000) != 0x7f800000) {
-                          if ((puVar11[6] & 0x7f800000) != 0x7f800000) {
-                            if ((puVar11[7] & 0x7f800000) != 0x7f800000) {
-                              if ((puVar11[8] & 0x7f800000) != 0x7f800000) {
-                                if ((puVar11[9] & 0x7f800000) != 0x7f800000) {
-                                  if ((puVar11[10] & 0x7f800000) != 0x7f800000) {
-                                    if ((puVar11[0xb] & 0x7f800000) != 0x7f800000) {
-                                      Profile_EndInternal(0);
-                                      __restgprlr_24();
-                                      return;
-                                    }
-                                  }
-                                }
-                    /* WARNING: Subroutine does not return */
-                                MyAssertHandler(0xffffffff8207f820,0x1c8,0,0xffffffff82000f98,
-                                                0xffffffff8207f8d8);
-                              }
-                            }
-                          }
-                    /* WARNING: Subroutine does not return */
-                          MyAssertHandler(0xffffffff8207f820,0x1c7,0,0xffffffff82000f98,
-                                          0xffffffff8207f938);
-                        }
-                      }
-                    }
-                    /* WARNING: Subroutine does not return */
-                    MyAssertHandler(0xffffffff8207f820,0x1c6,0,0xffffffff82000f98,0xffffffff8207f998
-                                   );
-                  }
-                }
-              }
-                    /* WARNING: Subroutine does not return */
-              MyAssertHandler(0xffffffff8207f820,0x1c5,0,0xffffffff82000f98,0xffffffff8207f9f8);
-            }
-          }
-        }
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8207f820,0x1af,0,0xffffffff82000f98,0xffffffff8207fa58);
-      }
+  if ((*(uint *)(iVar6 + 0x138) & 0x7f800000) == 0x7f800000) {
+LAB_824b6e78:
+    MyAssertHandler(0xffffffff8207f820,0x1ae,0,0xffffffff82000f98,0xffffffff8207fad0);
+  }
+  else {
+    if ((*(uint *)(iVar6 + 0x13c) & 0x7f800000) == 0x7f800000) goto LAB_824b6e78;
+    if ((*(uint *)(iVar6 + 0x140) & 0x7f800000) == 0x7f800000) goto LAB_824b6e78;
+  }
+  if ((*(uint *)(iVar6 + 0x144) & 0x7f800000) == 0x7f800000) {
+LAB_824b6ee0:
+    MyAssertHandler(0xffffffff8207f820,0x1af,0,0xffffffff82000f98,0xffffffff8207fa58);
+  }
+  else {
+    if ((*(uint *)(iVar6 + 0x148) & 0x7f800000) == 0x7f800000) goto LAB_824b6ee0;
+    if ((*(uint *)(iVar6 + 0x14c) & 0x7f800000) == 0x7f800000) goto LAB_824b6ee0;
+  }
+  puVar11 = (uint *)param_2;
+  if ((piVar5[3] < 0) ||
+     ((*(int *)(iVar12 + 0x158) != 0 && (*(char *)(*(int *)(iVar12 + 0x158) + 0x3678) != '\0')))) {
+    AnglesToAxis(iVar6 + 0x144,param_2);
+    puVar11[9] = *(uint *)(iVar6 + 0x138);
+    puVar11[10] = *(uint *)(iVar6 + 0x13c);
+    puVar11[0xb] = *(uint *)(iVar6 + 0x140);
+  }
+  else {
+    AnglesToAxis(iVar6 + 0x144,auStack_80);
+    local_5c = *(undefined4 *)(iVar6 + 0x138);
+    local_58 = *(undefined4 *)(iVar6 + 0x13c);
+    local_54 = *(undefined4 *)(iVar6 + 0x140);
+    G_DObjCalcBone(iVar6,piVar5[3]);
+    iVar12 = SV_DObjGetMatrixArray(iVar6);
+    pfVar13 = (float *)(iVar12 + piVar5[3] * 0x20);
+    if (((uint)*pfVar13 & 0x7f800000) == 0x7f800000) {
+LAB_824b6fcc:
+      MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+    }
+    else {
+      if (((uint)pfVar13[1] & 0x7f800000) == 0x7f800000) goto LAB_824b6fcc;
+      if (((uint)pfVar13[2] & 0x7f800000) == 0x7f800000) goto LAB_824b6fcc;
+      if (((uint)pfVar13[3] & 0x7f800000) == 0x7f800000) goto LAB_824b6fcc;
+    }
+    if (((uint)pfVar13[7] & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+    }
+    fVar1 = pfVar13[2];
+    fVar2 = pfVar13[7];
+    fVar3 = pfVar13[1];
+    fVar9 = fVar3 * fVar2;
+    fVar10 = *pfVar13 * fVar2;
+    fVar4 = pfVar13[3];
+    fVar7 = fVar1 * fVar1 * fVar2;
+    fVar8 = *pfVar13 * fVar10;
+    local_a4 = fVar4 * fVar1 * fVar2;
+    local_9c = fVar1 * fVar9 + fVar4 * fVar10;
+    local_a8 = fVar1 * fVar10 - fVar4 * fVar9;
+    local_ac = local_a4 + fVar3 * fVar10;
+    local_a4 = fVar3 * fVar10 - local_a4;
+    local_98 = fVar4 * fVar9 + fVar1 * fVar10;
+    local_b0 = 1.0 - (fVar7 + fVar3 * fVar9);
+    local_a0 = 1.0 - (fVar7 + fVar8);
+    local_90 = 1.0 - (fVar3 * fVar9 + fVar8);
+    local_94 = fVar1 * fVar9 - fVar4 * fVar10;
+    MatrixMultiply(&local_b0,auStack_80,param_2);
+    MatrixTransformVector43(pfVar13 + 4,auStack_80,param_2 + 0x24);
+  }
+  if ((*puVar11 & 0x7f800000) == 0x7f800000) {
+LAB_824b7154:
+    MyAssertHandler(0xffffffff8207f820,0x1c5,0,0xffffffff82000f98,0xffffffff8207f9f8);
+  }
+  else {
+    if ((puVar11[1] & 0x7f800000) == 0x7f800000) goto LAB_824b7154;
+    if ((puVar11[2] & 0x7f800000) == 0x7f800000) goto LAB_824b7154;
+  }
+  if ((puVar11[3] & 0x7f800000) == 0x7f800000) {
+LAB_824b71b8:
+    MyAssertHandler(0xffffffff8207f820,0x1c6,0,0xffffffff82000f98,0xffffffff8207f998);
+  }
+  else {
+    if ((puVar11[4] & 0x7f800000) == 0x7f800000) goto LAB_824b71b8;
+    if ((puVar11[5] & 0x7f800000) == 0x7f800000) goto LAB_824b71b8;
+  }
+  if ((puVar11[6] & 0x7f800000) == 0x7f800000) {
+LAB_824b721c:
+    MyAssertHandler(0xffffffff8207f820,0x1c7,0,0xffffffff82000f98,0xffffffff8207f938);
+  }
+  else {
+    if ((puVar11[7] & 0x7f800000) == 0x7f800000) goto LAB_824b721c;
+    if ((puVar11[8] & 0x7f800000) == 0x7f800000) goto LAB_824b721c;
+  }
+  if ((puVar11[9] & 0x7f800000) != 0x7f800000) {
+    if ((puVar11[10] & 0x7f800000) != 0x7f800000) {
+      if ((puVar11[0xb] & 0x7f800000) != 0x7f800000) goto LAB_824b729c;
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8207f820,0x1ae,0,0xffffffff82000f98,0xffffffff8207fad0);
+  MyAssertHandler(0xffffffff8207f820,0x1c8,0,0xffffffff82000f98,0xffffffff8207f8d8);
+LAB_824b729c:
+  Profile_EndInternal(0);
+  __restgprlr_24();
+  return;
 }
 
 
 // 824B72B0  G_CalcTagParentRelAxis  (game/linkto.cpp:463)
 
-void G_CalcTagParentRelAxis(void)
+void G_CalcTagParentRelAxis(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  undefined1 auStack_50 [80];
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = *(uint *)(iVar2 + 0x214);
+  if ((ulonglong)uVar1 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x1d4,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  G_CalcTagParentAxis(iVar2,auStack_50);
+  MatrixMultiply43((ulonglong)uVar1 + 0x40,auStack_50,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 824B7318  G_CalcTagAxis  (game/linkto.cpp:476)
 
-void G_CalcTagAxis(void)
+void G_CalcTagAxis(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  undefined1 auStack_b0 [36];
+  undefined4 local_8c;
+  undefined4 local_88;
+  undefined4 local_84;
+  undefined1 auStack_80 [48];
+  undefined1 auStack_50 [80];
+  
+  iVar1 = __savegprlr_29();
+  G_CalcTagParentAxis(iVar1,auStack_50);
+  AnglesToAxis(iVar1 + 0x144,auStack_b0);
+  uVar2 = (ulonglong)*(uint *)(iVar1 + 0x214);
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x1e7,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  if (param_2 != 0) {
+    MatrixTranspose();
+    MatrixMultiply(auStack_b0,auStack_80,uVar2 + 0x10);
+    __restgprlr_29();
+    return;
+  }
+  MatrixInverseOrthogonal43(auStack_50,auStack_80);
+  local_8c = *(undefined4 *)(iVar1 + 0x138);
+  local_88 = *(undefined4 *)(iVar1 + 0x13c);
+  local_84 = *(undefined4 *)(iVar1 + 0x140);
+  MatrixMultiply43(auStack_b0,auStack_80,uVar2 + 0x10);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -430,21 +611,74 @@ undefined8 G_VerifyLinkedMoveTarget(void)
 
 // 824B73D8  G_CalcFixedLinkTargetAxis  (game/linkto.cpp:530)
 
-void G_CalcFixedLinkTargetAxis(void)
+void G_CalcFixedLinkTargetAxis(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  undefined1 auStack_50 [80];
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = *(uint *)(iVar2 + 0x214);
+  if ((ulonglong)uVar1 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x217,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  G_CalcTagParentAxis(iVar2,auStack_50);
+  MatrixMultiply43((ulonglong)uVar1 + 0x10,auStack_50,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 824B7440  G_SetFixedLinkNonPlayer  (game/linkto.cpp:543)
 
-void G_SetFixedLinkNonPlayer(void)
+void G_SetFixedLinkNonPlayer(undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  double dVar4;
+  undefined1 auStack_a0 [36];
+  undefined4 local_7c;
+  undefined4 local_78;
+  undefined4 local_74;
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x223,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar2 + 0x158) != 0) {
+    MyAssertHandler(0xffffffff8207f820,0x224,0,0xffffffff82000f98,0xffffffff82078070);
+  }
+  uVar1 = *(uint *)(iVar2 + 0x214);
+  if ((ulonglong)uVar1 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x217,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  G_CalcTagParentAxis(iVar2,auStack_70);
+  MatrixMultiply43((ulonglong)uVar1 + 0x10,auStack_70,auStack_a0);
+  *(undefined4 *)(iVar2 + 0x138) = local_7c;
+  *(undefined4 *)(iVar2 + 0x13c) = local_78;
+  *(undefined4 *)(iVar2 + 0x140) = local_74;
+  if (param_2 == 0) {
+    AxisToAngles(auStack_a0,iVar2 + 0x144);
+  }
+  else {
+    if (param_2 != 1) {
+      MyAssertHandler(0xffffffff8207f820,0x233,0,0xffffffff82000f98,0xffffffff8207fb48);
+    }
+    dVar4 = (double)vectoyaw(auStack_a0);
+    *(float *)(iVar2 + 0x148) = (float)dVar4;
+  }
+  if ((param_4 & 0xffffffff) != 0) {
+    puVar3 = (undefined4 *)param_4;
+    *puVar3 = local_7c;
+    puVar3[1] = local_78;
+    puVar3[2] = local_74;
+  }
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -454,7 +688,6 @@ void G_DefaultViewAngleClampGoal(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x241,0,0xffffffff82000f98,0xffffffff82078304);
   }
   *(undefined4 *)(param_1 + 0x10) = 0xc3340000;
@@ -471,7 +704,6 @@ void G_SnapToViewAngleClampGoal(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207f820,0x24f,0,0xffffffff82000f98,0xffffffff82078304);
   }
   param_1[2] = param_1[4];
@@ -572,11 +804,57 @@ void LerpViewClamp(int param_1)
 
 // 824B7850  G_UpdateViewAngleClamp  (game/linkto.cpp:696)
 
-void G_UpdateViewAngleClamp(void)
+void G_UpdateViewAngleClamp(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8207f820,699,0,0xffffffff82000f98,0xffffffff820386a4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8207f820,700,0,0xffffffff82000f98,0xffffffff8207fb70);
+  }
+  dVar4 = (double)CalcLerpFraction((double)*(float *)(iVar3 + 0x36bc),
+                                   (double)*(float *)(iVar3 + 14000),
+                                   (double)*(float *)(iVar3 + 0x36b4),
+                                   (double)*(float *)(iVar3 + 0x36b8));
+  dVar5 = 0.5;
+  *(float *)(iVar3 + 0x3688) =
+       (float)((double)(float)((double)*(float *)(iVar3 + 0x3690) -
+                              (double)*(float *)(iVar3 + 0x3680)) * dVar4 +
+              (double)*(float *)(iVar3 + 0x3680));
+  *(float *)(iVar3 + 0x368c) =
+       (float)((double)(float)((double)*(float *)(iVar3 + 0x3694) -
+                              (double)*(float *)(iVar3 + 0x3684)) * dVar4 +
+              (double)*(float *)(iVar3 + 0x3684));
+  fVar1 = (float)((double)(float)((double)*(float *)(iVar3 + 0x36a8) -
+                                 (double)*(float *)(iVar3 + 0x3698)) * dVar4 +
+                 (double)*(float *)(iVar3 + 0x3698));
+  *(float *)(iVar3 + 0x36a0) = fVar1;
+  *(float *)(iVar3 + 0x36a4) =
+       (float)((double)(float)((double)*(float *)(iVar3 + 0x36ac) -
+                              (double)*(float *)(iVar3 + 0x369c)) * dVar4 +
+              (double)*(float *)(iVar3 + 0x369c));
+  fVar2 = (fVar1 - *(float *)(iVar3 + 0x3688)) * 0.5;
+  *(float *)(iVar3 + 0x180) = fVar2;
+  fVar1 = fVar1 + *(float *)param_2;
+  *(float *)(iVar3 + 0x178) = fVar1;
+  dVar4 = (double)AngleNormalize360((double)(fVar1 - fVar2));
+  *(float *)(iVar3 + 0x178) = (float)dVar4;
+  fVar1 = (float)((double)(*(float *)(iVar3 + 0x36a4) - *(float *)(iVar3 + 0x368c)) * dVar5);
+  *(float *)(iVar3 + 0x184) = fVar1;
+  fVar2 = ((float *)param_2)[1] + *(float *)(iVar3 + 0x36a4);
+  *(float *)(iVar3 + 0x17c) = fVar2;
+  dVar4 = (double)AngleNormalize360((double)(fVar2 - fVar1));
+  *(float *)(iVar3 + 0x17c) = (float)dVar4;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -613,8 +891,66 @@ void G_ApplyGroundReferenceFrame(float *param_1,undefined4 *param_2,undefined4 *
 void G_InitPlayerLinkAngles(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined1 auStack_90 [16];
+  undefined4 local_80;
+  undefined4 local_7c;
+  undefined4 local_78;
+  undefined4 local_74;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined4 local_64;
+  undefined4 local_60;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined4 local_30;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x305,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar2 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x306,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  if (*(int *)(iVar2 + 0x214) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x307,0,0xffffffff82000f98,0xffffffff8207f044);
+  }
+  if (**(int **)(iVar2 + 0x214) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x308,0,0xffffffff82000f98,0xffffffff82073978);
+  }
+  G_CalcTagParentAxis(iVar2,&local_50);
+  iVar1 = *(int *)(iVar2 + 0x158);
+  local_80 = local_50;
+  local_7c = local_4c;
+  local_78 = local_48;
+  local_74 = local_44;
+  local_70 = local_40;
+  local_6c = local_3c;
+  local_68 = local_38;
+  local_64 = local_34;
+  local_60 = local_30;
+  if (*(char *)(iVar1 + 0x3677) != '\0') {
+    AxisToAngles(&local_80,iVar1 + 0x1c0);
+    G_UpdateViewAngleClamp
+              ((ulonglong)*(uint *)(iVar2 + 0x158),(ulonglong)*(uint *)(iVar2 + 0x158) + 0x1c0);
+    __restgprlr_29();
+    return;
+  }
+  *(undefined4 *)(iVar1 + 0x1c0) = 0;
+  *(undefined4 *)(iVar1 + 0x1c4) = 0;
+  *(undefined4 *)(iVar1 + 0x1c8) = 0;
+  AxisToAngles(&local_80,auStack_90);
+  G_UpdateViewAngleClamp(*(undefined4 *)(iVar2 + 0x158),auStack_90);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -623,28 +959,321 @@ void G_InitPlayerLinkAngles(void)
 void G_GeneralLink(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x214) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x324,0,0xffffffff82000f98,0xffffffff8207f044);
+  }
+  if (*(int *)(iVar1 + 0x158) != 0) {
+    MyAssertHandler(0xffffffff8207f820,0x325,0,0xffffffff82000f98,0xffffffff82078070);
+  }
+  G_SetFixedLinkNonPlayer(iVar1,0,0x811,0);
+  G_SetOrigin(iVar1,iVar1 + 0x138);
+  G_SetAngle(iVar1,iVar1 + 0x144);
+  *(undefined4 *)(iVar1 + 0xc) = 1;
+  *(undefined4 *)(iVar1 + 0x24) = 0;
+  *(undefined4 *)(iVar1 + 0x28) = 0;
+  *(undefined4 *)(iVar1 + 0x2c) = 0;
+  *(undefined4 *)(iVar1 + 0x10) = 0;
+  *(undefined4 *)(iVar1 + 0x14) = 0;
+  *(undefined4 *)(iVar1 + 0x30) = 1;
+  *(undefined4 *)(iVar1 + 0x48) = 0;
+  *(undefined4 *)(iVar1 + 0x4c) = 0;
+  *(undefined4 *)(iVar1 + 0x50) = 0;
+  *(undefined4 *)(iVar1 + 0x34) = 0;
+  *(undefined4 *)(iVar1 + 0x38) = 0;
+  SV_LinkEntity(iVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 824B7CE0  SetPlayerFixedLinkViewAngles  (game/linkto.cpp:832)
 
-void SetPlayerFixedLinkViewAngles(void)
+void SetPlayerFixedLinkViewAngles(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  float *pfVar3;
+  int iVar4;
+  float *pfVar5;
+  longlong lVar6;
+  float *pfVar7;
+  undefined8 extraout_f1;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  undefined8 uVar12;
+  double dVar13;
+  float fStack_174;
+  float local_170;
+  float local_16c;
+  undefined4 local_168;
+  undefined4 local_160;
+  undefined4 local_15c;
+  undefined4 local_158;
+  undefined4 local_154;
+  undefined4 local_150;
+  undefined4 local_14c;
+  undefined4 local_148;
+  undefined4 local_140;
+  undefined4 local_13c;
+  undefined4 local_138;
+  undefined4 local_134;
+  undefined1 auStack_130 [16];
+  undefined1 auStack_120 [16];
+  undefined1 auStack_110 [16];
+  undefined1 auStack_100 [16];
+  undefined1 auStack_f0 [16];
+  undefined1 auStack_e0 [48];
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
   __savegprlr_27();
+  iVar4 = __savefpr_28();
+  uVar12 = extraout_f1;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x352,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar4 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x353,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  iVar2 = *(int *)(iVar4 + 0x158);
+  AxisToAngles(param_2,&local_150);
+  G_UpdateViewAngleClamp(iVar2,&local_150);
+  AxisToQuat(param_2,auStack_130);
+  if ((*(uint *)(iVar2 + 0x14) & 1) != 0) {
+    QuatLerp(uVar12,iVar4 + 0x1c4,auStack_130);
+    QuatToAxis(auStack_120,auStack_e0);
+    AxisToAngles(auStack_e0,&local_170);
+    *(float *)(iVar2 + 0x1c0) = local_170;
+    *(float *)(iVar2 + 0x1c4) = local_16c;
+    pfVar5 = &fStack_174;
+    dVar11 = 0.5;
+    *(undefined4 *)(iVar2 + 0x1c8) = local_168;
+    pfVar7 = (float *)(iVar2 + 0x154);
+    dVar10 = 360.0;
+    lVar6 = 2;
+    dVar13 = 0.0027777778450399637;
+    do {
+      pfVar5 = pfVar5 + 1;
+      dVar9 = (double)(float)((double)(*pfVar5 - pfVar7[1]) * dVar13);
+      dVar8 = floor((double)(float)(dVar9 + dVar11));
+      pfVar3 = pfVar7 + 1;
+      lVar6 = lVar6 + -1;
+      fVar1 = (float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar10);
+      pfVar7[-0x3d] = pfVar7[-0x3d] + fVar1;
+      pfVar7 = pfVar7 + 1;
+      *pfVar7 = *pfVar3 + fVar1;
+    } while (lVar6 != 0);
+    __restfpr_28();
+    __restgprlr_27();
+    return;
+  }
+  if (*(char *)(iVar2 + 0x3674) == '\0') {
+    *(undefined1 *)(iVar2 + 0x3674) = 1;
+    QuatInverse(auStack_130,iVar2 + 0x3664);
+    local_160 = 0;
+    local_15c = 0;
+    local_158 = 0;
+    local_154 = 0x3f800000;
+  }
+  else {
+    QuatMultiply(iVar2 + 0x3664,auStack_130,&local_160);
+    QuatInverse(auStack_130,iVar2 + 0x3664);
+    local_134 = 0x3f800000;
+    local_140 = 0;
+    local_13c = 0;
+    local_138 = 0;
+    QuatLerp((double)*(float *)(iVar2 + 0x367c),&local_140,&local_160);
+  }
+  AnglesToAxis(iVar2 + 0x158,auStack_e0);
+  AxisToQuat(auStack_e0,auStack_120);
+  QuatMultiply(auStack_120,&local_160,auStack_f0);
+  QuatToAxis(auStack_f0,auStack_80);
+  AxisToAngles(auStack_80,&local_170);
+  if ((*(float *)(iVar2 + 0x158) < -90.0) && (70.0 < *(float *)(DAT_829c5478 + 0xc))) {
+    local_16c = local_16c + 180.0;
+    local_170 = (local_170 - 180.0) * -1.0;
+  }
+  pfVar5 = &fStack_174;
+  pfVar7 = (float *)(iVar2 + 0x154);
+  dVar11 = 0.5;
+  lVar6 = 2;
+  dVar10 = 360.0;
+  dVar13 = 0.0027777778450399637;
+  do {
+    pfVar5 = pfVar5 + 1;
+    dVar9 = (double)(float)((double)(*pfVar5 - pfVar7[1]) * dVar13);
+    dVar8 = floor((double)(float)(dVar9 + dVar11));
+    pfVar3 = pfVar7 + 1;
+    lVar6 = lVar6 + -1;
+    fVar1 = (float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar10);
+    pfVar7[-0x3d] = pfVar7[-0x3d] + fVar1;
+    pfVar7 = pfVar7 + 1;
+    *pfVar7 = *pfVar3 + fVar1;
+  } while (lVar6 != 0);
+  if (*(char *)(*(int *)(iVar4 + 0x158) + 0x3677) != '\0') {
+    *(undefined4 *)(iVar2 + 0x1c0) = local_150;
+    *(undefined4 *)(iVar2 + 0x1c4) = local_14c;
+    *(undefined4 *)(iVar2 + 0x1c8) = local_148;
+    __restfpr_28();
+    __restgprlr_27();
+    return;
+  }
+  AnglesToAxis(iVar2 + 0x1c0,auStack_b0);
+  AxisToQuat(auStack_b0,auStack_100);
+  QuatMultiply(auStack_100,&local_160,auStack_110);
+  QuatToAxis(auStack_110,auStack_b0);
+  AxisToAngles(auStack_b0,iVar2 + 0x1c0);
+  __restfpr_28();
+  __restgprlr_27();
+  return;
 }
 
 
 // 824B8088  SetPlayerFixedLinkOrigin  (game/linkto.cpp:941)
 
-void SetPlayerFixedLinkOrigin(void)
+void SetPlayerFixedLinkOrigin(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  float fVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  double dVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_e8;
+  float local_e4;
+  float local_e0;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  undefined4 local_c8;
+  undefined4 local_c4;
+  undefined4 local_c0;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  undefined4 uStack_a4;
+  undefined1 local_a0 [12];
+  float local_94;
+  float local_90;
+  float local_8c;
+  undefined4 local_80;
+  float *local_7c;
+  float *local_78;
+  undefined1 *local_74;
+  undefined1 local_70;
+  undefined1 local_6f;
+  undefined1 local_6e;
+  undefined4 local_6c;
+  undefined4 local_64;
+  undefined4 local_60;
+  code *local_5c;
+  
   __savegprlr_28();
+  puVar4 = (undefined4 *)__savefpr_27();
+  dVar13 = extraout_f1;
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8207f820,0x3b8,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (puVar4[0x56] == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x3b9,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  iVar1 = puVar4[0x56];
+  fVar3 = (float)(longlong)(DAT_83580fac + 0x32) * 0.001 - (float)puVar4[0x78];
+  dVar12 = (double)((float)puVar4[0x6e] * fVar3 + (float)puVar4[0x6b]);
+  dVar11 = (double)((float)puVar4[0x6f] * fVar3 + (float)puVar4[0x6c]);
+  dVar10 = (double)((float)puVar4[0x70] * fVar3 + (float)puVar4[0x6d]);
+  if (*(char *)(iVar1 + 0x3675) == '\0') {
+    iVar2 = (int)param_2;
+    if (*(char *)(iVar1 + 0x3676) == '\0') {
+      local_e8 = (float)((double)(float)((double)*(float *)(iVar2 + 0x24) - dVar12) * dVar13 +
+                        dVar12);
+      local_e4 = (float)((double)(float)((double)*(float *)(iVar2 + 0x28) - dVar11) * dVar13 +
+                        dVar11);
+      local_e0 = (float)((double)(float)((double)*(float *)(iVar2 + 0x2c) - dVar10) * dVar13 +
+                        dVar10);
+    }
+    else {
+      puVar5 = &uStack_a4;
+      local_b8 = *(float *)(iVar2 + 0x24) - (float)puVar4[0x4e];
+      local_b4 = *(float *)(iVar2 + 0x28) - (float)puVar4[0x4f];
+      puVar6 = puVar4 + 0x40;
+      local_b0 = *(float *)(iVar2 + 0x2c) - (float)puVar4[0x50];
+      lVar7 = 6;
+      do {
+        puVar6 = puVar6 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *puVar6;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      dVar9 = 0.0;
+      if (local_94 < 0.0) {
+        MyAssertHandler(0xffffffff82073e28,0x353,0,0xffffffff82000f98,0xffffffff8200ca58);
+      }
+      if ((double)local_90 < dVar9) {
+        MyAssertHandler(0xffffffff82073e28,0x354,0,0xffffffff82000f98,0xffffffff8200ca3c);
+      }
+      dVar8 = (double)local_8c;
+      if (dVar8 < dVar9) {
+        MyAssertHandler(0xffffffff82073e28,0x355,0,0xffffffff82000f98,0xffffffff8200ca20);
+        dVar8 = (double)local_8c;
+      }
+      local_64 = *puVar4;
+      local_60 = puVar4[99];
+      local_78 = &local_b8;
+      local_74 = local_a0;
+      local_80 = 0x3f800000;
+      local_70 = 0;
+      dVar9 = (double)local_94;
+      if ((float)((double)local_94 - (double)local_90) < 0.0) {
+        dVar9 = (double)local_90;
+      }
+      local_94 = (float)dVar9;
+      local_90 = (float)dVar9;
+      local_6f = 0;
+      local_6e = 0;
+      local_6c = 0;
+      local_5c = PM_ClipVelocity;
+      if ((float)(dVar9 - dVar8) < 0.0) {
+        dVar9 = dVar8;
+      }
+      local_8c = (float)dVar9;
+      local_7c = (float *)(puVar4 + 0x4e);
+      G_StepSlideMove(&local_80);
+      local_e8 = (float)((double)(float)((double)(float)puVar4[0x4e] - dVar12) * dVar13 + dVar12);
+      local_e4 = (float)((double)(float)((double)(float)puVar4[0x4f] - dVar11) * dVar13 + dVar11);
+      local_e0 = (float)((double)(float)((double)(float)puVar4[0x50] - dVar10) * dVar13 + dVar10);
+    }
+  }
+  else {
+    local_c0 = *(undefined4 *)(iVar1 + 0x168);
+    local_c8 = 0;
+    local_c4 = 0;
+    MatrixTransformVector43(&local_c8,param_2,&local_d8);
+    local_d0 = local_d0 - *(float *)(iVar1 + 0x168);
+    local_e8 = (float)((double)(float)((double)local_d8 - dVar12) * dVar13 + dVar12);
+    local_e4 = (float)((double)(float)((double)local_d4 - dVar11) * dVar13 + dVar11);
+    local_e0 = (float)((double)(float)((double)local_d0 - dVar10) * dVar13 + dVar10);
+  }
+  G_SetOrigin(puVar4,&local_e8);
+  puVar4[3] = 1;
+  __restfpr_27();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -653,8 +1282,49 @@ void SetPlayerFixedLinkOrigin(void)
 void G_SetFixedLinkPlayer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined1 auStack_a0 [48];
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_27();
+  if (*(int *)(iVar3 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8207f820,0x3e1,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  iVar1 = *(int *)(iVar3 + 0x158);
+  if (((*(uint *)(iVar1 + 0x14) & 4) != 0) && (*(int *)(iVar1 + 4) == 1)) {
+    MyAssertHandler(0xffffffff8207f820,0x3e4,0,0xffffffff82000f98,0xffffffff8207fbd8);
+  }
+  if (((*(uint *)(iVar1 + 0x14) & 4) != 0) && (*(int *)(iVar1 + 4) == 9)) {
+    MyAssertHandler(0xffffffff8207f820,0x3e5,0,0xffffffff82000f98,0xffffffff8207fb88);
+  }
+  iVar2 = *(int *)(iVar3 + 0x214);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8207f820,1000,0,0xffffffff82000f98,0xffffffff8207f818);
+  }
+  if ((*(uint *)(iVar1 + 0x14) & 2) == 0) {
+    G_CalcTagParentAxis(iVar3,auStack_a0);
+  }
+  else {
+    G_CalcTagParentAxis(iVar3,auStack_70);
+    MatrixMultiply43(iVar2 + 0x10,auStack_70,auStack_a0);
+  }
+  if (*(char *)(iVar2 + 10) == '\0') {
+    uVar4 = 0x3ff0000000000000;
+  }
+  else {
+    uVar4 = CalcLerpFraction((double)*(float *)(iVar3 + 0x1e0),(double)*(float *)(iVar3 + 0x1d8),
+                             (double)*(float *)(iVar3 + 0x1dc),(double)*(float *)(iVar3 + 0x1e4));
+  }
+  SetPlayerFixedLinkViewAngles(uVar4,iVar3,auStack_a0);
+  if ((*(uint *)(iVar1 + 0x14) & 4) == 0) {
+    SetPlayerFixedLinkOrigin(uVar4,iVar3,auStack_a0);
+    SV_LinkEntity(iVar3);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -679,7 +1349,6 @@ void G_TransferLinkedEntities(undefined8 param_1,undefined8 param_2)
     }
     iVar1 = *(int *)(iVar3 + 0x218);
     if (*(int *)(iVar1 + 0x214) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207f820,0x414,0,0xffffffff82000f98,0xffffffff8207fc28);
     }
     *(undefined4 *)(iVar3 + 0x218) = *(undefined4 *)(*(int *)(iVar1 + 0x214) + 4);
@@ -690,7 +1359,6 @@ void G_TransferLinkedEntities(undefined8 param_1,undefined8 param_2)
     Profile_Begin(0xf8);
     puVar2 = *(undefined4 **)(iVar1 + 0x214);
     if (puVar2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207f820,0x166,0,0xffffffff82000f98,0xffffffff8207f818);
     }
     if (*(short *)(puVar2 + 2) == 0) {

@@ -2,40 +2,156 @@
 
 // 828F72B8  bdBytePacker::appendBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:20)
 
-void bdBytePacker__appendBuffer(void)
+void bdBytePacker__appendBuffer
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,uint *param_4,
+               ulonglong param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar2 = __savegprlr_23();
+  *param_4 = (int)param_3 + (size_t)param_6;
+  lVar3 = 1;
+  if ((iVar2 != 0) && ((param_5 & 0xffffffff) != 0)) {
+    if (param_2 < param_3) {
+      MyAssertHandler(0xffffffff8220adc8,0x1e,0,0xffffffff820011f4,0xffffffff8220ad88,
+                      0xffffffff8220ad94);
+    }
+    uVar1 = *param_4;
+    if (param_2 < uVar1) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8220ad60,0xffffffff8220adc8,0xffffffff8220ad6c,
+                   0x24,0xffffffff8220ad38,param_6);
+    }
+    if ((param_2 < param_3) || (lVar3 = 1, param_2 < uVar1)) {
+      lVar3 = 0;
+    }
+    if (lVar3 != 0) {
+      memmove((void *)(iVar2 + (int)param_3),(void *)param_5,(size_t)param_6);
+    }
+  }
+  __restgprlr_23(lVar3);
+  return;
 }
 
 
 // 828F74C8  bdBytePacker::appendEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:55)
 
-void bdBytePacker__appendEncodedUInt16(void)
+void bdBytePacker__appendEncodedUInt16
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar2;
+  byte local_40;
+  undefined1 local_3f;
+  undefined1 local_3e [62];
+  
+  uVar1 = __savegprlr_27();
+  if ((param_5 & 0xffff) < 0x80) {
+    local_3e[0] = (char)param_5;
+    uVar1 = bdBytePacker__appendBuffer(uVar1,param_2,param_3,param_4,local_3e,1);
+  }
+  else {
+    if (0x7fff < (param_5 & 0xffff)) {
+      MyAssertHandler(0xffffffff8220adc8,0x3a,0,0xffffffff820011f4,0xffffffff8220ae90,
+                      0xffffffff8220aea0);
+    }
+    local_40 = (byte)(param_5 >> 8) | 0x80;
+    cVar2 = bdBytePacker__appendBuffer(uVar1,param_2,param_3,param_4,&local_40,1);
+    if (cVar2 != '\0') {
+      local_3f = (char)param_5;
+      cVar2 = bdBytePacker__appendBuffer(uVar1,param_2,*(undefined4 *)param_4,param_4,&local_3f,1);
+      uVar1 = 1;
+      if (cVar2 != '\0') goto LAB_828f75c0;
+    }
+    uVar1 = 0;
+  }
+LAB_828f75c0:
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
 // 828F73C0  bdBytePacker::removeBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:89)
 
-void bdBytePacker__removeBuffer(void)
+void bdBytePacker__removeBuffer
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,uint *param_4,
+               ulonglong param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  longlong lVar2;
+  
+  iVar1 = __savegprlr_23();
+  *param_4 = (int)param_3 + (size_t)param_6;
+  lVar2 = 1;
+  if (((param_5 & 0xffffffff) == 0) || (iVar1 == 0)) goto LAB_828f74bc;
+  if (param_2 < param_3) {
+    MyAssertHandler(0xffffffff8220adc8,100,0,0xffffffff820011f4,0xffffffff8220ad88,
+                    0xffffffff8220ae60);
+  }
+  if (param_2 < *param_4) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220ad60,0xffffffff8220adc8,0xffffffff8220ae44,0x6a,
+                 0xffffffff8220ae1c,param_6);
+LAB_828f74a0:
+    lVar2 = 0;
+  }
+  else {
+    lVar2 = 1;
+    if (param_2 < param_3) goto LAB_828f74a0;
+  }
+  if (lVar2 != 0) {
+    memmove((void *)param_5,(void *)(iVar1 + (int)param_3),(size_t)param_6);
+  }
+LAB_828f74bc:
+  __restgprlr_23(lVar2);
+  return;
 }
 
 
 // 828F75C8  bdBytePacker::removeEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:125)
 
-void bdBytePacker__removeEncodedUInt16(void)
+void bdBytePacker__removeEncodedUInt16
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ushort *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar2;
+  ushort uVar3;
+  ushort uVar4;
+  bool bVar5;
+  byte local_40;
+  byte local_3f [63];
+  
+  uVar1 = __savegprlr_26();
+  uVar3 = 0;
+  cVar2 = bdBytePacker__removeBuffer();
+  if (cVar2 != '\0') {
+    uVar3 = (ushort)local_40;
+  }
+  bVar5 = cVar2 != '\0';
+  if (uVar3 < 0x80) goto LAB_828f7678;
+  uVar4 = 0;
+  if (bVar5) {
+    cVar2 = bdBytePacker__removeBuffer(uVar1,param_2,*(undefined4 *)param_4,param_4,local_3f,1);
+    if (cVar2 != '\0') {
+      uVar4 = (ushort)local_3f[0];
+    }
+    bVar5 = true;
+    if (cVar2 == '\0') goto LAB_828f765c;
+  }
+  else {
+LAB_828f765c:
+    bVar5 = false;
+  }
+  uVar3 = (uVar3 & 0x7f) * 0x100 + uVar4;
+LAB_828f7678:
+  *param_5 = uVar3;
+  __restgprlr_26(bVar5);
+  return;
 }
 

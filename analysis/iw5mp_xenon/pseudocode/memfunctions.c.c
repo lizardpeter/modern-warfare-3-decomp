@@ -2,40 +2,269 @@
 
 // 828A8AB8  XMemSet128  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/memfunctions.c:83)
 
-void XMemSet128(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XMemSet128(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 in_r0;
+  longlong lVar2;
+  longlong lVar3;
+  int iVar5;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  
+  lVar2 = __savegprlr_28();
+  uVar6 = (param_3 & 0xffffffff) >> 7;
+  iVar5 = (int)(param_2 & 0xff);
+  if (iVar5 == 0) {
+    lVar3 = lVar2;
+    if (uVar6 != 0) {
+      do {
+        dataCacheBlockClearToZero(lVar3);
+        uVar6 = uVar6 - 1;
+        lVar3 = lVar3 + 0x80;
+      } while (uVar6 != 0);
+      __restgprlr_28(lVar2);
+      return;
+    }
+  }
+  else {
+    uVar7 = (ulonglong)(uVar6 != 0);
+    auVar8 = vectorSplatImmediateSignedByte(4);
+    loadVectorForShiftLeft(in_r0,param_2 & 0xff);
+    uVar4 = 0;
+    auVar9 = loadVectorForShiftLeft(in_r0,(longlong)(iVar5 >> 4));
+    vectorShiftLeftIntegerByte(auVar9,auVar8);
+    if (uVar7 != 0) {
+      uVar1 = 0;
+      do {
+        dataCacheBlockClearToZero((uVar1 & 0xffffff80) + lVar2);
+        uVar4 = uVar4 + 1;
+        uVar1 = (uVar4 & 0xffffffff) << 7;
+        uVar7 = uVar7 - 1;
+      } while (uVar7 != 0);
+    }
+    if (uVar6 != 0) {
+      if (1 < uVar6) {
+        dataCacheBlockClearToZero(lVar2 + 0x80);
+      }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+  }
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
 // 828A8BE0  XMemCpy128  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/memfunctions.c:188)
 
-void XMemCpy128(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XMemCpy128(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  longlong lVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs43 [16];
+  undefined1 auVar6 [16];
+  
+  lVar1 = __savegprlr_26();
+  uVar3 = param_3;
+  if (0x3ff < (param_3 & 0xffffffff)) {
+    uVar3 = 0x400;
+  }
+  uVar2 = param_3;
+  if (0x7f < (param_3 & 0xffffffff)) {
+    uVar2 = 0x80;
+  }
+  lVar5 = 0;
+  if ((uVar3 & 0xffffffff) != 0) {
+    lVar4 = ((uVar3 - 1 & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar5 + param_2);
+      lVar5 = lVar5 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  lVar5 = 0;
+  if ((uVar2 & 0xffffffff) != 0) {
+    lVar4 = ((uVar2 - 1 & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockClearToZero(lVar5 + lVar1);
+      lVar5 = lVar5 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  if (0x7f < (param_3 & 0xffffffff)) {
+    if (0x400 < (param_3 & 0xffffffff)) {
+      dataCacheBlockTouch(param_2 + 0x400);
+    }
+    if (0x100 < (param_3 & 0xffffffff)) {
+      dataCacheBlockClearToZero(lVar1 + 0x80);
+    }
+    altv207_13(in_vs32,in_vs43);
+    auVar6 = altv207_13(in_vs43,in_vs37);
+    altv207_13(in_vs43,auVar6);
+    altv207_13(in_vs43,in_vs38);
+    altv207_13(in_vs43,in_vs39);
+    altv207_13(in_vs43,in_vs40);
+    altv207_13(in_vs43,in_vs41);
+    altv207_13(in_vs43,in_vs35);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  __restgprlr_26(lVar1);
+  return;
 }
 
 
 // 828A8E00  XMemCpy  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/memfunctions.c:295)
 
-void XMemCpy(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XMemCpy(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined8 in_r0;
+  longlong lVar2;
+  undefined8 *puVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs59 [16];
+  undefined1 in_vs60 [16];
+  
+  lVar2 = __savegprlr_26();
+  if (0xf < (param_3 & 0xffffffff)) {
+    uVar6 = (ulonglong)(uint)((int)-lVar2 >> 4) & 7;
+    uVar4 = param_3;
+    if (0x3ff < (param_3 & 0xffffffff)) {
+      uVar4 = 0x400;
+    }
+    lVar7 = 0;
+    if ((uVar4 & 0xffffffff) != 0) {
+      lVar5 = ((uVar4 - 1 & 0xffffffff) >> 7) + 1;
+      do {
+        dataCacheBlockTouch(lVar7 + param_2);
+        lVar7 = lVar7 + 0x80;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+    }
+    if ((-lVar2 & 0xfU) != 0) {
+      altv207_13(in_vs32,in_vs60);
+      altv207_13(in_vs60,in_vs59);
+      loadVectorForShiftLeft(in_r0,param_2);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    uVar4 = (param_3 & 0xffffffff) >> 4;
+    if (uVar4 < uVar6) {
+      uVar6 = uVar4;
+    }
+    uVar6 = param_3 + uVar6 * -0x10 & 0xffffff80;
+    if (0x7f < uVar6) {
+      uVar6 = 0x80;
+    }
+    uVar4 = 0;
+    if (uVar6 != 0) {
+      do {
+        dataCacheBlockClearToZero(uVar4 + lVar2 + 0x7f);
+        uVar4 = uVar4 + 0x80;
+      } while ((uVar4 & 0xffffffff) < uVar6);
+    }
+    loadVectorForShiftLeft(in_r0,param_2);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  lVar7 = lVar2;
+  if ((7 < (param_3 & 0xffffffff)) && ((param_2 & 7) == 0)) {
+    puVar3 = (undefined8 *)param_2;
+    lVar7 = lVar2 + 8;
+    param_2 = param_2 + 8;
+    param_3 = param_3 - 8;
+    *(undefined8 *)lVar2 = *puVar3;
+  }
+  if (((param_2 & 3) == 0) && (3 < (param_3 & 0xffffffff))) {
+    uVar6 = (param_3 & 0xffffffff) >> 2;
+    blkmov(lVar7,param_2,param_3 & 0xfffffffc);
+    lVar7 = (param_3 & 0xfffffffc) + lVar7;
+    param_2 = (param_3 & 0xfffffffc) + param_2;
+    do {
+      uVar6 = uVar6 - 1;
+      param_3 = param_3 - 4;
+    } while (uVar6 != 0);
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar1 = (int)lVar7;
+    uVar6 = (ulonglong)DAT_829a8548;
+    do {
+      param_3 = param_3 - uVar6;
+      *(undefined1 *)lVar7 = ((undefined1 *)lVar7)[(int)param_2 - iVar1];
+      lVar7 = lVar7 + 1;
+    } while (param_3 != 0);
+    __restgprlr_26(lVar2);
+    return;
+  }
+  __restgprlr_26(lVar2);
+  return;
 }
 
 
 // 828A8D30  XMemCpyStreaming_WriteCombined  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/memfunctions.c:600)
 
-void XMemCpyStreaming_WriteCombined(void)
+void XMemCpyStreaming_WriteCombined(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  void *pvVar4;
+  longlong lVar5;
+  
+  lVar3 = __savegprlr_27();
+  uVar2 = -lVar3 & 0x7f;
+  if ((param_3 & 0xffffffff) < 0x100) {
+    pvVar4 = memcpy((void *)lVar3,(void *)param_2,(size_t)param_3);
+    __restgprlr_27(pvVar4);
+    return;
+  }
+  lVar5 = lVar3;
+  if (uVar2 != 0) {
+    memcpy((void *)lVar3,(void *)param_2,(size_t)uVar2);
+    lVar5 = uVar2 + lVar3;
+    param_2 = uVar2 + param_2;
+    param_3 = param_3 - uVar2;
+  }
+  if ((param_2 & 0xf) == 0) {
+    XMemCpyStreaming128_Writecombined_Helper(lVar5,param_2,param_3 & 0xffffff80);
+  }
+  else {
+    XMemCpyStreaming_Unaligned_Writecombined_Helper();
+  }
+  iVar1 = (int)(param_3 & 0xffffff80);
+  if ((param_3 & 0x7f) != 0) {
+    memcpy((void *)(iVar1 + (int)lVar5),(void *)(iVar1 + (int)param_2),(size_t)(param_3 & 0x7f));
+  }
+  __restgprlr_27(lVar3);
+  return;
 }
 

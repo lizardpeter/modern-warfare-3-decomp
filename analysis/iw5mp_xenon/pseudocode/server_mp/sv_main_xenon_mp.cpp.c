@@ -6,7 +6,6 @@ longlong SV_Live_GetTeamRankEntry(ulonglong param_1)
 
 {
   if (0x11 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160028,0x1e,0,0xffffffff82014c1c,param_1,0x12);
   }
   return (param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7c0e1a50;
@@ -18,8 +17,20 @@ longlong SV_Live_GetTeamRankEntry(ulonglong param_1)
 void SV_Live_ClearTeamRankEntry(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_29();
+  if (0x11 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82160028,0x27,0,0xffffffff82014c1c,uVar2,0x12);
+    MyAssertHandler(0xffffffff82160028,0x1e,0,0xffffffff82014c1c,uVar2,0x12);
+  }
+  iVar1 = (int)uVar2;
+  (&DAT_83f1e5b0)[iVar1 * 3] = 0;
+  (&DAT_83f1e5b8)[iVar1 * 3] = 0;
+  (&DAT_83f1e5c0)[iVar1 * 3] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -28,8 +39,25 @@ void SV_Live_ClearTeamRankEntry(void)
 void SV_Live_ClearAllTeamRanks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  undefined8 *puVar2;
+  
   __savegprlr_26();
+  puVar2 = &DAT_83f1e5b0;
+  uVar1 = 0;
+  do {
+    if (0x11 < (uVar1 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82160028,0x27,0,0xffffffff82014c1c,uVar1,0x12);
+      MyAssertHandler(0xffffffff82160028,0x1e,0,0xffffffff82014c1c,uVar1,0x12);
+    }
+    *puVar2 = 0;
+    puVar2[1] = 0;
+    uVar1 = uVar1 + 1;
+    puVar2[2] = 0;
+    puVar2 = puVar2 + 3;
+  } while ((int)puVar2 < -0x7c0e18a0);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -38,8 +66,15 @@ void SV_Live_ClearAllTeamRanks(void)
 void SV_Live_HasTeamRankStatsAvailable(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (0x11 < uVar1) {
+    MyAssertHandler(0xffffffff82160028,0x3a,0,0xffffffff82014c1c,uVar1,0x12);
+    MyAssertHandler(0xffffffff82160028,0x1e,0,0xffffffff82014c1c,uVar1,0x12);
+  }
+  __restgprlr_29(*(undefined1 *)(&DAT_83f1e5b0 + uVar1 * 3));
+  return;
 }
 
 
@@ -55,5 +90,65 @@ bool SV_Live_ShouldReportTeamRanks(void)
   }
   cVar1 = Live_IsInLiveGame();
   return cVar1 != '\0';
+}
+
+
+// 8257B490  SV_Live_ScrSetPlayerTeamRank  (server_mp/sv_main_xenon_mp.cpp:78)
+
+void SV_Live_ScrSetPlayerTeamRank(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  char cVar5;
+  int iVar3;
+  longlong lVar2;
+  char *pcVar4;
+  bool bVar6;
+  
+  uVar1 = __savegprlr_27();
+  cVar5 = Sys_IsServerThread();
+  if ((cVar5 == '\0') && (DAT_83f1e160 != 0)) {
+    MyAssertHandler(0xffffffff82160028,0x52,0,0xffffffff82000f98,0xffffffff821601a0);
+  }
+  if (0x11 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82160028,0x53,0,0xffffffff82014c1c,uVar1,0x12);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82160028,0x54,0,0xffffffff82022304,0xffffffff82160194,param_2);
+  }
+  if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
+    cVar5 = Live_IsInLiveGame();
+    bVar6 = cVar5 != '\0';
+  }
+  else {
+    bVar6 = false;
+  }
+  if (bVar6) {
+    iVar3 = SV_IsTestClient(uVar1);
+    if (iVar3 != 0) {
+      Com_Printf(0xf,0xffffffff8216015c,uVar1);
+      __restgprlr_27();
+      return;
+    }
+    lVar2 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,uVar1);
+    if (lVar2 == 0) {
+      Com_PrintError(0xf,0xffffffff82160128,uVar1);
+      __restgprlr_27();
+      return;
+    }
+    pcVar4 = (char *)SV_Live_GetTeamRankEntry(uVar1);
+    if (*pcVar4 != '\0') {
+      Com_PrintError(0xf,0xffffffff821600ec,uVar1);
+      Scr_Error(0xffffffff821600a8);
+    }
+    *(int *)(pcVar4 + 4) = (int)param_2;
+    *(int *)(pcVar4 + 8) = (int)param_3;
+    *(longlong *)(pcVar4 + 0x10) = lVar2;
+    sync(1);
+    *pcVar4 = '\x01';
+    Com_Printf(0xf,0xffffffff82160074,uVar1,param_2,param_3);
+  }
+  __restgprlr_27();
+  return;
 }
 

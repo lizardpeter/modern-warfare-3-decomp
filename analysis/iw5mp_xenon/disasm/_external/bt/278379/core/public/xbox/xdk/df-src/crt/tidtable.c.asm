@@ -106,6 +106,61 @@ LAB_8291ca1c:
 ; 8291CA58  _getptd_noexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:291)
   8291CA58  7D8802A6             mfspr r12,LR
   8291CA5C  4BFF9C61             bl 0x829166bc
+  8291CA60  9421FF90             stwu r1,-0x70(r1)
+  8291CA64  4BF862D5             bl 0x828a2d38
+  8291CA68  3FC0829B             lis r30,-0x7d65
+  8291CA6C  7C7D1B78             or r29,r3,r3
+  8291CA70  807E03E0             lwz r3,0x3e0(r30)
+  8291CA74  48025861             bl 0x829422d4
+  8291CA78  7C7F1B79             or. r31,r3,r3
+  8291CA7C  4082008C             bne 0x8291cb08
+  8291CA80  38800001             li r4,0x1
+  8291CA84  807E03E0             lwz r3,0x3e0(r30)
+  8291CA88  4802585D             bl 0x829422e4
+  8291CA8C  2C030000             cmpwi r3,0x0
+  8291CA90  41820088             beq 0x8291cb18
+  8291CA94  388000C4             li r4,0xc4
+  8291CA98  38600001             li r3,0x1
+  8291CA9C  4800557D             bl 0x82922018
+  8291CAA0  7C7F1B79             or. r31,r3,r3
+  8291CAA4  807E03E0             lwz r3,0x3e0(r30)
+  8291CAA8  41820054             beq 0x8291cafc
+  8291CAAC  7FE4FB78             or r4,r31,r31
+  8291CAB0  48025835             bl 0x829422e4
+  8291CAB4  2C030000             cmpwi r3,0x0
+  8291CAB8  41820034             beq 0x8291caec
+  8291CABC  3D608221             lis r11,-0x7ddf
+  8291CAC0  39400000             li r10,0x0
+  8291CAC4  396B5760             addi r11,r11,0x5760
+  8291CAC8  39200001             li r9,0x1
+  8291CACC  915F0008             stw r10,0x8(r31)
+  8291CAD0  917F005C             stw r11,0x5c(r31)
+  8291CAD4  913F0014             stw r9,0x14(r31)
+  8291CAD8  4BF8C701             bl 0x828a91d8
+  8291CADC  3960FFFF             li r11,-0x1
+  8291CAE0  907F0000             stw r3,0x0(r31)
+  8291CAE4  917F0004             stw r11,0x4(r31)
+  8291CAE8  48000030             b 0x8291cb18
+LAB_8291caec:
+  8291CAEC  7FE3FB78             or r3,r31,r31
+  8291CAF0  4BD32179             bl 0x8264ec68
+  8291CAF4  3BE00000             li r31,0x0
+  8291CAF8  48000020             b 0x8291cb18
+LAB_8291cafc:
+  8291CAFC  38800000             li r4,0x0
+  8291CB00  480257E5             bl 0x829422e4
+  8291CB04  48000014             b 0x8291cb18
+LAB_8291cb08:
+  8291CB08  397FFFFF             subi r11,r31,0x1
+  8291CB0C  216B0000             subfic r11,r11,0x0
+  8291CB10  7D6B5910             subfe r11,r11,r11
+  8291CB14  7D7FF838             and r31,r11,r31
+LAB_8291cb18:
+  8291CB18  7FA3EB78             or r3,r29,r29
+  8291CB1C  4BF8F315             bl 0x828abe30
+  8291CB20  7FE3FB78             or r3,r31,r31
+  8291CB24  38210070             addi r1,r1,0x70
+  8291CB28  4BFF9BE4             b 0x8291670c
 
 ; 8291CB30  _getptd  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:376)
   8291CB30  7D8802A6             mfspr r12,LR

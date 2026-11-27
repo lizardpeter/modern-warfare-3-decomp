@@ -60,26 +60,23 @@ void XAnim_GetTimeIndex<unsigned_char>
   }
   pbVar4 = (byte *)(uVar8 + param_2);
   if ((uint)fVar3 < (uint)*(byte *)(uVar8 + param_2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82186f8c,0x6b,0,0xffffffff82000f98,0xffffffff8218704c);
   }
-  if ((uint)fVar3 < (uint)pbVar4[1]) {
-    bVar1 = *pbVar4;
-    fVar3 = pfVar5[1];
-    bVar2 = pbVar4[1];
-    *param_4 = uVar8;
-    fVar3 = (fVar3 - (float)bVar1) / (float)(longlong)(int)((uint)bVar2 - (uint)bVar1);
-    dVar10 = (double)fVar3;
-    *param_5 = fVar3;
-    if ((0.0 <= dVar10) && (dVar10 <= 1.0)) {
-      __restgprlr_24();
-      return;
-    }
-                    /* WARNING: Subroutine does not return */
+  if ((uint)pbVar4[1] <= (uint)fVar3) {
+    MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+  }
+  bVar1 = *pbVar4;
+  fVar3 = pfVar5[1];
+  bVar2 = pbVar4[1];
+  *param_4 = uVar8;
+  fVar3 = (fVar3 - (float)bVar1) / (float)(longlong)(int)((uint)bVar2 - (uint)bVar1);
+  dVar10 = (double)fVar3;
+  *param_5 = fVar3;
+  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
     MyAssertHandler(0xffffffff82186f8c,0x70,1,0xffffffff82186ff0,dVar10,0,0x3ff0000000000000);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -132,26 +129,23 @@ void XAnim_GetTimeIndex<unsigned_short>
   }
   puVar7 = (ushort *)(uVar8 * 2 + param_2);
   if ((uint)fVar3 < (uint)*puVar7) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82186f8c,0x6b,0,0xffffffff82000f98,0xffffffff8218704c);
   }
-  if ((uint)fVar3 < (uint)puVar7[1]) {
-    uVar1 = *puVar7;
-    fVar3 = pfVar4[1];
-    uVar2 = puVar7[1];
-    *param_4 = uVar8;
-    fVar3 = (fVar3 - (float)uVar1) / (float)(longlong)(int)((uint)uVar2 - (uint)uVar1);
-    dVar10 = (double)fVar3;
-    *param_5 = fVar3;
-    if ((0.0 <= dVar10) && (dVar10 <= 1.0)) {
-      __restgprlr_24();
-      return;
-    }
-                    /* WARNING: Subroutine does not return */
+  if ((uint)puVar7[1] <= (uint)fVar3) {
+    MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+  }
+  uVar1 = *puVar7;
+  fVar3 = pfVar4[1];
+  uVar2 = puVar7[1];
+  *param_4 = uVar8;
+  fVar3 = (fVar3 - (float)uVar1) / (float)(longlong)(int)((uint)uVar2 - (uint)uVar1);
+  dVar10 = (double)fVar3;
+  *param_5 = fVar3;
+  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
     MyAssertHandler(0xffffffff82186f8c,0x70,1,0xffffffff82186ff0,dVar10,0,0x3ff0000000000000);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -187,13 +181,51 @@ undefined8 IsInfoAdditive(int param_1)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82186f8c,0x8b,0,0xffffffff82000f98,0xffffffff82021a7c);
   }
   if ((*(short *)(param_1 + 0x12) != 0) || (uVar1 = 1, (*(ushort *)(param_1 + 0x1c) & 0x10) == 0)) {
     uVar1 = 0;
   }
   return uVar1;
+}
+
+
+// 8262A320  XAnimClearRotTransArray  (xanim/xanim_calc.cpp:145)
+
+void XAnimClearRotTransArray(undefined8 param_1,longlong param_2,int param_3)
+
+{
+  float *pfVar1;
+  int iVar2;
+  uint uVar3;
+  double dVar4;
+  
+  iVar2 = __savegprlr_24();
+  uVar3 = 0;
+  if (*(char *)(iVar2 + 10) != '\0') {
+    dVar4 = 0.0;
+    param_2 = param_2 + 0x18;
+    do {
+      if (0xbf < uVar3) {
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if ((*(uint *)(((uVar3 >> 5) + 0x2406) * 4 + param_3) & (&DAT_82992400)[uVar3 & 0x1f]) == 0) {
+        pfVar1 = (float *)param_2;
+        pfVar1[-6] = (float)dVar4;
+        pfVar1[-5] = (float)dVar4;
+        pfVar1[-4] = (float)dVar4;
+        pfVar1[-3] = (float)dVar4;
+        pfVar1[1] = (float)dVar4;
+        pfVar1[-2] = (float)dVar4;
+        pfVar1[-1] = (float)dVar4;
+        *pfVar1 = (float)dVar4;
+      }
+      uVar3 = uVar3 + 1;
+      param_2 = param_2 + 0x20;
+    } while ((int)uVar3 < (int)(uint)*(byte *)(iVar2 + 10));
+  }
+  __restgprlr_24();
+  return;
 }
 
 
@@ -280,11 +312,117 @@ void XAnimMovePastFrameIndices(uint param_1,int *param_2,int *param_3,int param_
 
 // 8262A3F8  XAnimCalcNonLoopEnd  (xanim/xanim_calc.cpp:278)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XAnimCalcNonLoopEnd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr();
+  __savefpr_28();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8262BFD0  XAnimCalcParts<unsigned_char>  (xanim/xanim_calc.cpp:756)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnimCalcParts<unsigned_char>
+               (undefined8 param_1,double param_2,undefined8 param_3,int param_4,undefined8 param_5,
+               undefined8 param_6,int param_7,int param_8)
+
+{
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  double extraout_f1;
+  double dVar6;
+  
+  __savegprlr();
+  iVar3 = __savefpr_28();
+  dVar6 = extraout_f1;
+  if (*(short *)(iVar3 + 0xe) == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x305,0,0xffffffff82000f98,0xffffffff8218717c);
+  }
+  if (dVar6 < 0.0) {
+    MyAssertHandler(dVar6,0xffffffff82186f8c,0x306,0,0xffffffff82028794,0xffffffff82185f94,dVar6);
+  }
+  if (1.0 <= dVar6) {
+    MyAssertHandler(dVar6,0xffffffff82186f8c,0x307,0,0xffffffff82028794,0xffffffff82185f84,dVar6);
+  }
+  bVar1 = *(byte *)(iVar3 + 0x11);
+  uVar4 = 0;
+  if (bVar1 != 0) {
+    do {
+      bVar2 = *(byte *)(uVar4 + param_4);
+      uVar5 = (uint)bVar2;
+      if (0xbf < uVar5) {
+        MyAssertHandler(0xffffffff82186f8c,0x321,0,0xffffffff821870d0,uVar5,0xc0);
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar5 & 0x1f]) == 0) {
+        iVar3 = (uint)bVar2 * 0x20 + param_7;
+        *(float *)(iVar3 + 0xc) = (float)((double)*(float *)(iVar3 + 0xc) + param_2);
+      }
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < bVar1);
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8262D830  XAnimCalcParts<unsigned_short>  (xanim/xanim_calc.cpp:756)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnimCalcParts<unsigned_short>
+               (undefined8 param_1,double param_2,undefined8 param_3,int param_4,undefined8 param_5,
+               undefined8 param_6,int param_7,int param_8)
+
+{
+  byte bVar1;
+  byte bVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  double extraout_f1;
+  double dVar6;
+  
+  __savegprlr();
+  iVar3 = __savefpr_28();
+  dVar6 = extraout_f1;
+  if (*(short *)(iVar3 + 0xe) == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x305,0,0xffffffff82000f98,0xffffffff8218717c);
+  }
+  if (dVar6 < 0.0) {
+    MyAssertHandler(dVar6,0xffffffff82186f8c,0x306,0,0xffffffff82028794,0xffffffff82185f94,dVar6);
+  }
+  if (1.0 <= dVar6) {
+    MyAssertHandler(dVar6,0xffffffff82186f8c,0x307,0,0xffffffff82028794,0xffffffff82185f84,dVar6);
+  }
+  uVar4 = 0;
+  bVar1 = *(byte *)(iVar3 + 0x11);
+  if (bVar1 != 0) {
+    do {
+      bVar2 = *(byte *)(uVar4 + param_4);
+      uVar5 = (uint)bVar2;
+      if (0xbf < uVar5) {
+        MyAssertHandler(0xffffffff82186f8c,0x321,0,0xffffffff821870d0,uVar5,0xc0);
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar5 & 0x1f]) == 0) {
+        iVar3 = (uint)bVar2 * 0x20 + param_7;
+        *(float *)(iVar3 + 0xc) = (float)((double)*(float *)(iVar3 + 0xc) + param_2);
+      }
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < bVar1);
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -325,8 +463,76 @@ void Short4LerpAsVec4(double param_1,short *param_2,short *param_3,undefined8 pa
 void XAnimCalcLeaf(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar8;
+  uint *puVar9;
+  undefined8 uVar7;
+  int in_r6;
+  undefined8 extraout_f1;
+  undefined8 uVar10;
+  double dVar11;
+  double dVar12;
+  
+  iVar8 = __savegprlr();
+  uVar10 = extraout_f1;
+  if (*(char *)(iVar8 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82186f8c,0x48b,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  iVar1 = *(int *)(iVar8 + 0x1c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x48f,0,0xffffffff82000f98,0xffffffff8213fd58);
+  }
+  if (*(short *)(iVar8 + 0x12) == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x491,0,0xffffffff82000f98,0xffffffff82185e44);
+  }
+  puVar9 = (uint *)SL_ConvertToString(*(undefined2 *)(iVar8 + 0x12));
+  if ((*(short *)(iVar8 + 0x12) != 0) && (puVar9 == (uint *)0x0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x495,0,0xffffffff82000f98,0xffffffff82187190);
+  }
+  dVar12 = (double)*(float *)(iVar8 + 0x20);
+  uVar2 = puVar9[3];
+  uVar3 = puVar9[2];
+  uVar4 = puVar9[1];
+  uVar5 = puVar9[4];
+  uVar6 = puVar9[5];
+  *(uint *)(in_r6 + 0x9000) = *puVar9 & ~*(uint *)(in_r6 + 0x9018) | *(uint *)(in_r6 + 0x9000);
+  *(uint *)(in_r6 + 0x9004) = uVar4 & ~*(uint *)(in_r6 + 0x901c) | *(uint *)(in_r6 + 0x9004);
+  *(uint *)(in_r6 + 0x9008) = uVar3 & ~*(uint *)(in_r6 + 0x9020) | *(uint *)(in_r6 + 0x9008);
+  *(uint *)(in_r6 + 0x900c) = uVar2 & ~*(uint *)(in_r6 + 0x9024) | *(uint *)(in_r6 + 0x900c);
+  *(uint *)(in_r6 + 0x9010) = uVar5 & ~*(uint *)(in_r6 + 0x9028) | *(uint *)(in_r6 + 0x9010);
+  *(uint *)(in_r6 + 0x9014) = uVar6 & ~*(uint *)(in_r6 + 0x902c) | *(uint *)(in_r6 + 0x9014);
+  if (dVar12 < 0.0) {
+    MyAssertHandler(dVar12,0xffffffff82186f8c,0x49b,0,0xffffffff82028794,0xffffffff82185f94,dVar12);
+  }
+  dVar11 = 1.0;
+  if ((*(byte *)(iVar1 + 0x10) & 1) == 0) {
+    if (dVar12 <= 1.0) goto LAB_8262f880;
+  }
+  else if (dVar12 < 1.0) goto LAB_8262f880;
+  uVar7 = va(dVar12,0xffffffff82186d78,dVar12);
+  MyAssertHandler(0xffffffff82186f8c,0x49d,0,0xffffffff820011f4,0xffffffff82186d3c,uVar7);
+LAB_8262f880:
+  if ((dVar12 != dVar11) && (*(ushort *)(iVar1 + 0xe) != 0)) {
+    if (0xff < *(ushort *)(iVar1 + 0xe)) {
+      XAnimCalcParts<unsigned_short>(dVar12,uVar10,iVar1,(int)puVar9 + 0x19);
+      __restgprlr();
+      return;
+    }
+    XAnimCalcParts<unsigned_char>();
+    __restgprlr();
+    return;
+  }
+  if ((*(byte *)(iVar1 + 0x10) & 1) != 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x4a1,0,0xffffffff82000f98,0xffffffff82185fe4);
+  }
+  XAnimCalcNonLoopEnd(uVar10,iVar1,(int)puVar9 + 0x19);
+  __restgprlr();
+  return;
 }
 
 
@@ -347,6 +553,178 @@ longlong XAnimGetCalcBuffer(longlong param_1,int param_2,uint *param_3)
   }
   *param_3 = uVar2;
   return ((ulonglong)uVar1 & 0x7ffffff) * 0x20 + param_1;
+}
+
+
+// 8262B778  XAnimScaleRotTransArray  (xanim/xanim_calc.cpp:1222)
+
+void XAnimScaleRotTransArray(undefined8 param_1,int param_2,longlong param_3)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  uint uVar4;
+  double dVar5;
+  double dVar6;
+  
+  iVar3 = __savegprlr_24();
+  uVar4 = 0;
+  if (0 < iVar3) {
+    dVar5 = 1.0;
+    dVar6 = 0.0;
+    param_3 = param_3 + 0x18;
+    do {
+      if (0xbf < uVar4) {
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if (((*(uint *)(((uVar4 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar4 & 0x1f]) == 0)
+         && (pfVar2 = (float *)param_3, (double)pfVar2[1] != dVar6)) {
+        fVar1 = (float)(dVar5 / (double)pfVar2[1]);
+        pfVar2[-6] = pfVar2[-6] * fVar1;
+        pfVar2[-5] = pfVar2[-5] * fVar1;
+        pfVar2[-4] = pfVar2[-4] * fVar1;
+        pfVar2[-3] = pfVar2[-3] * fVar1;
+        pfVar2[-2] = pfVar2[-2] * fVar1;
+        pfVar2[-1] = pfVar2[-1] * fVar1;
+        *pfVar2 = *pfVar2 * fVar1;
+      }
+      uVar4 = uVar4 + 1;
+      param_3 = param_3 + 0x20;
+    } while ((int)uVar4 < iVar3);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 8262B8A0  XAnimNormalizeRotScaleTransArray  (xanim/xanim_calc.cpp:1242)
+
+void XAnimNormalizeRotScaleTransArray
+               (undefined8 param_1,int param_2,undefined8 param_3,longlong param_4)
+
+{
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  uint uVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  iVar3 = __savegprlr_24();
+  uVar4 = 0;
+  if (0 < iVar3) {
+    dVar6 = 0.0;
+    param_4 = param_4 + 0x18;
+    dVar7 = extraout_f1;
+    do {
+      if (0xbf < uVar4) {
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if ((*(uint *)(((uVar4 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar4 & 0x1f]) == 0) {
+        pfVar2 = (float *)param_4;
+        if ((double)(pfVar2[-5] * pfVar2[-5] +
+                    pfVar2[-4] * pfVar2[-4] + pfVar2[-6] * pfVar2[-6] + pfVar2[-3] * pfVar2[-3]) !=
+            dVar6) {
+          dVar5 = (double)I_rsqrt();
+          fVar1 = (float)(dVar5 * dVar7);
+          pfVar2[-6] = pfVar2[-6] * fVar1;
+          pfVar2[-5] = pfVar2[-5] * fVar1;
+          pfVar2[-4] = pfVar2[-4] * fVar1;
+          pfVar2[-3] = pfVar2[-3] * fVar1;
+        }
+        if ((double)pfVar2[1] != dVar6) {
+          fVar1 = (float)(dVar7 / (double)pfVar2[1]);
+          pfVar2[-2] = pfVar2[-2] * fVar1;
+          pfVar2[-1] = pfVar2[-1] * fVar1;
+          *pfVar2 = *pfVar2 * fVar1;
+          pfVar2[1] = (float)dVar7;
+        }
+      }
+      uVar4 = uVar4 + 1;
+      param_4 = param_4 + 0x20;
+    } while ((int)uVar4 < iVar3);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 8262B9F8  XAnimMadRotTransArray  (xanim/xanim_calc.cpp:1262)
+
+void XAnimMadRotTransArray
+               (undefined8 param_1,int param_2,undefined8 param_3,longlong param_4,longlong param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float *pfVar8;
+  int iVar9;
+  float *pfVar10;
+  int iVar11;
+  uint uVar12;
+  longlong lVar13;
+  double extraout_f1;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  
+  iVar11 = __savegprlr_22();
+  uVar12 = 0;
+  if (0 < iVar11) {
+    lVar13 = param_5 + 0x18;
+    iVar9 = ((int)param_5 - (int)param_4) + -4;
+    dVar15 = 0.0;
+    param_4 = param_4 + 4;
+    dVar16 = extraout_f1;
+    do {
+      if (0xbf < uVar12) {
+        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      }
+      if ((*(uint *)(((uVar12 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar12 & 0x1f]) == 0)
+      {
+        pfVar8 = (float *)param_4;
+        pfVar10 = (float *)lVar13;
+        if ((double)(pfVar8[1] * pfVar8[1] +
+                    pfVar8[2] * pfVar8[2] + *pfVar8 * *pfVar8 + pfVar8[-1] * pfVar8[-1]) != dVar15)
+        {
+          dVar14 = (double)I_rsqrt();
+          fVar1 = (float)(dVar14 * dVar16);
+          fVar2 = pfVar10[-5];
+          fVar3 = pfVar10[-4];
+          fVar4 = pfVar10[-3];
+          fVar5 = *pfVar8;
+          fVar6 = pfVar8[1];
+          fVar7 = pfVar8[2];
+          *(float *)((int)pfVar8 + iVar9) = pfVar8[-1] * fVar1 + *(float *)((int)pfVar8 + iVar9);
+          pfVar10[-5] = fVar1 * fVar5 + fVar2;
+          pfVar10[-4] = fVar6 * fVar1 + fVar3;
+          pfVar10[-3] = fVar7 * fVar1 + fVar4;
+        }
+        if ((double)pfVar8[6] != dVar15) {
+          fVar1 = (float)(dVar16 / (double)pfVar8[6]);
+          fVar2 = pfVar8[4];
+          fVar3 = pfVar8[5];
+          pfVar10[-2] = pfVar8[3] * fVar1 + pfVar10[-2];
+          pfVar10[-1] = fVar2 * fVar1 + pfVar10[-1];
+          *pfVar10 = fVar1 * fVar3 + *pfVar10;
+          pfVar10[1] = (float)((double)pfVar10[1] + dVar16);
+        }
+      }
+      uVar12 = uVar12 + 1;
+      param_4 = param_4 + 0x20;
+      lVar13 = lVar13 + 0x20;
+    } while ((int)uVar12 < iVar11);
+  }
+  __restgprlr_22();
+  return;
 }
 
 
@@ -385,7 +763,6 @@ void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,
     dVar12 = extraout_f1;
     do {
       if (0xbf < uVar6) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
       }
       if ((*(uint *)((uVar6 >> 3 & 0x1ffffffc) + param_5 + 0x9018) & (&DAT_82992400)[uVar6 & 0x1f])
@@ -431,52 +808,994 @@ void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,
 }
 
 
-// 8262FF88  DObjCalcAnim  (xanim/xanim_calc.cpp:1540)
+// 8262F940  XAnimCalc  (xanim/xanim_calc.cpp:1325)
 
-void DObjCalcAnim(void)
+void XAnimCalc(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+              ulonglong param_5,longlong param_6,ulonglong param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int *piVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  int *piVar5;
+  int iVar6;
+  char cVar8;
+  int iVar7;
+  ulonglong uVar9;
+  short sVar10;
+  undefined8 extraout_f1;
+  undefined8 uVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  uint in_stack_00000044;
+  
   __savegprlr();
+  piVar5 = (int *)__savefpr_28();
+  piVar1 = (int *)*piVar5;
+  in_stack_00000044 = (uint)param_7;
+  uVar11 = extraout_f1;
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82186f8c,0x543,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x544,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  iVar6 = (int)param_2;
+  if (*(int **)(iVar6 + 0x18) != piVar1) {
+    MyAssertHandler(0xffffffff82186f8c,0x549,0,0xffffffff82000f98,0xffffffff82185e74);
+  }
+  if (*(char *)(iVar6 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82186f8c,0x54b,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if (*(short *)(iVar6 + 0x12) != 0) {
+    if ((param_4 & 0xff) != 0) {
+      XAnimClearRotTransArray(piVar5,param_8,param_6);
+    }
+    XAnimCalcLeaf(uVar11,param_2);
+    __restfpr_28();
+    __restgprlr();
+    return;
+  }
+  sVar10 = *(short *)(iVar6 + 0xc);
+  if (sVar10 != 0) {
+    dVar12 = 0.0;
+    do {
+      iVar6 = GetAnimInfo(sVar10);
+      if (iVar6 == 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x562,0,0xffffffff82000f98,0xffffffff82187230);
+      }
+      if (*(int **)(iVar6 + 0x18) != piVar1) {
+        MyAssertHandler(0xffffffff82186f8c,0x565,0,0xffffffff82000f98,0xffffffff8218723c);
+      }
+      if (*(char *)(iVar6 + 0x14) == '\0') {
+        MyAssertHandler(0xffffffff82186f8c,0x567,0,0xffffffff82000f98,0xffffffff82187254);
+      }
+      dVar13 = (double)*(float *)(iVar6 + 0x34);
+      if (dVar13 != dVar12) {
+        cVar8 = IsInfoAdditive(iVar6);
+        if ((cVar8 == '\0') && (sVar10 != 0)) {
+          sVar10 = *(short *)(iVar6 + 10);
+          bVar3 = false;
+          uVar9 = 0;
+          bVar4 = false;
+          goto joined_r0x8262fba8;
+        }
+        break;
+      }
+      sVar10 = *(short *)(iVar6 + 10);
+    } while (sVar10 != 0);
+  }
+  if ((param_4 & 0xff) != 0) {
+    XAnimClearRotTransArray(piVar5,param_8,param_6);
+    __restfpr_28();
+    __restgprlr();
+    return;
+  }
+LAB_8262ff74:
+  __restfpr_28();
+  __restgprlr();
+  return;
+joined_r0x8262fba8:
+  if (sVar10 == 0) goto LAB_8262fd24;
+  iVar7 = GetAnimInfo(sVar10);
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff82186f8c,0x589,0,0xffffffff82000f98,0xffffffff821871f4);
+  }
+  if (*(int **)(iVar7 + 0x18) != piVar1) {
+    MyAssertHandler(0xffffffff82186f8c,0x58c,0,0xffffffff82000f98,0xffffffff82187200);
+  }
+  if (*(char *)(iVar7 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82186f8c,0x58e,0,0xffffffff82000f98,0xffffffff8218721c);
+  }
+  dVar14 = (double)*(float *)(iVar7 + 0x34);
+  if (dVar14 != dVar12) {
+    if ((*(short *)(iVar7 + 0x12) != 0) || (bVar2 = true, (*(ushort *)(iVar7 + 0x1c) & 0x10) == 0))
+    {
+      bVar2 = false;
+    }
+    if (bVar2) goto LAB_8262fd24;
+    if (!bVar3) {
+      bVar3 = true;
+      uVar9 = param_8;
+      if ((param_4 & 0xff) == 0) {
+        uVar9 = XAnimGetCalcBuffer(param_6,piVar5,&stack0x00000044);
+        if ((uVar9 & 0xffffffff) == 0) goto LAB_8262ff74;
+        param_7 = (ulonglong)in_stack_00000044;
+        bVar4 = true;
+      }
+      XAnimCalc(dVar13,piVar5,iVar6);
+    }
+    if ((uVar9 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82186f8c,0x5b4,0,0xffffffff82000f98,0xffffffff821871e8);
+    }
+    XAnimCalc(dVar14,piVar5,iVar7);
+  }
+  sVar10 = *(short *)(iVar7 + 10);
+  goto joined_r0x8262fba8;
+LAB_8262fd24:
+  if (bVar3) {
+    if ((param_5 & 0xff) == 0) {
+      if ((param_4 & 0xff) == 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x5bb,0,0xffffffff82000f98,0xffffffff821871d4);
+      }
+      XAnimScaleRotTransArray(*(undefined1 *)((int)piVar5 + 10),param_6,param_8);
+    }
+    else if ((param_4 & 0xff) == 0) {
+      XAnimMadRotTransArray(uVar11,*(undefined1 *)((int)piVar5 + 10),param_6);
+    }
+    else {
+      XAnimNormalizeRotScaleTransArray();
+    }
+  }
+  else {
+    XAnimCalc(uVar11,piVar5,iVar6);
+  }
+  if (sVar10 != 0) {
+    if (!bVar4) {
+      uVar9 = (param_7 & 0x7ffffff) * 0x20 + param_6;
+      if (0x480 < (int)((uint)*(byte *)((int)piVar5 + 10) + (int)param_7)) {
+        Com_PrintWarning(0x13,0xffffffff82186fcc);
+        DObjDisplayAnim(piVar5,0xffffffff820068af);
+        __restfpr_28();
+        __restgprlr();
+        return;
+      }
+      if ((uVar9 & 0xffffffff) == 0) goto LAB_8262ff74;
+    }
+    bVar3 = false;
+    do {
+      iVar6 = GetAnimInfo(sVar10);
+      if (iVar6 == 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x5e3,0,0xffffffff82000f98,0xffffffff821871f4);
+      }
+      if (*(int **)(iVar6 + 0x18) != piVar1) {
+        MyAssertHandler(0xffffffff82186f8c,0x5e6,0,0xffffffff82000f98,0xffffffff82187200);
+      }
+      if (*(char *)(iVar6 + 0x14) == '\0') {
+        MyAssertHandler(0xffffffff82186f8c,0x5e8,0,0xffffffff82000f98,0xffffffff8218721c);
+      }
+      if ((*(short *)(iVar6 + 0x12) != 0) || (bVar4 = true, (*(ushort *)(iVar6 + 0x1c) & 0x10) == 0)
+         ) {
+        bVar4 = false;
+      }
+      if (!bVar4) {
+        MyAssertHandler(0xffffffff82186f8c,0x5eb,0,0xffffffff82000f98,0xffffffff821871b4);
+      }
+      if ((double)*(float *)(iVar6 + 0x34) != dVar12) {
+        XAnimCalc(piVar5,iVar6);
+        bVar3 = true;
+      }
+      sVar10 = *(short *)(iVar6 + 10);
+    } while (sVar10 != 0);
+    if (bVar3) {
+      XAnimApplyAdditives(uVar11,param_8,uVar9);
+    }
+  }
+  goto LAB_8262ff74;
+}
+
+
+// 8262FF88  DObjCalcAnim  (xanim/xanim_calc.cpp:1540)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void DObjCalcAnim(undefined8 param_1,uint *param_2,longlong param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  bool bVar4;
+  int iVar5;
+  uint *puVar8;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  int iVar9;
+  uint *puVar10;
+  float *pfVar11;
+  uint uVar12;
+  int *piVar13;
+  longlong lVar14;
+  longlong lVar15;
+  uint uVar16;
+  uint *puVar17;
+  uint *puVar18;
+  float *pfVar19;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte bVar20;
+  double dVar21;
+  double dVar22;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs46 [16];
+  undefined1 in_vs60 [16];
+  
+  puVar8 = (uint *)__savegprlr();
+  Profile_Begin(0x130);
+  if (puVar8 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82186f8c,0x619,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  puVar10 = puVar8 + 5;
+  bVar20 = (puVar10 == (uint *)0x0) << 1;
+  if (puVar10 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82186f8c,0x61c,0,0xffffffff82000f98,0xffffffff82185264);
+  }
+  iVar5 = (int)param_3;
+  param_3 = param_3 + 0x9000;
+  puVar18 = (uint *)param_3;
+  *puVar18 = *param_2;
+  *(uint *)(iVar5 + 0x9004) = param_2[1];
+  *(uint *)(iVar5 + 0x9008) = param_2[2];
+  iVar9 = 0;
+  *(uint *)(iVar5 + 0x900c) = param_2[3];
+  *(uint *)(iVar5 + 0x9010) = param_2[4];
+  *(uint *)(iVar5 + 0x9014) = param_2[5];
+  uVar12 = *(uint *)(iVar5 + 0x900c);
+  uVar16 = *(uint *)(iVar5 + 0x9010);
+  uVar1 = *(uint *)(iVar5 + 0x9014);
+  uVar2 = *puVar18;
+  uVar3 = *(uint *)(iVar5 + 0x9004);
+  *(uint *)(iVar5 + 0x9008) = ~*(uint *)(iVar5 + 0x9008);
+  *(uint *)(iVar5 + 0x900c) = ~uVar12;
+  *(uint *)(iVar5 + 0x9010) = ~uVar16;
+  *(uint *)(iVar5 + 0x9014) = ~uVar1;
+  *(uint *)(iVar5 + 0x9004) = ~uVar3;
+  *puVar18 = ~uVar2;
+  uVar2 = *(uint *)(iVar5 + 0x9008);
+  *puVar18 = *puVar18 | *puVar10;
+  *(uint *)(iVar5 + 0x9004) = puVar8[6] | ~uVar3;
+  *(uint *)(iVar5 + 0x9008) = puVar8[7] | uVar2;
+  *(uint *)(iVar5 + 0x900c) = ~uVar12 | puVar8[8];
+  *(uint *)(iVar5 + 0x9010) = puVar8[9] | ~uVar16;
+  *(uint *)(iVar5 + 0x9014) = ~uVar1 | puVar8[10];
+  do {
+    if (*(int *)param_3 != -1) {
+      bVar4 = false;
+      goto LAB_82630144;
+    }
+    iVar9 = iVar9 + 1;
+    param_3 = param_3 + 4;
+  } while (iVar9 < 6);
+  bVar4 = true;
+LAB_82630144:
+  if (!bVar4) {
+    uVar12 = puVar8[0x1e];
+    uVar16 = 0;
+    if (*(char *)((int)puVar8 + 10) != '\0') {
+      puVar17 = (uint *)(uVar12 + 8);
+      do {
+        if (0xbf < uVar16) {
+          MyAssertHandler(0xffffffff821858f8,0x42,0,&DAT_82000f98,0xffffffff82185940);
+        }
+        if ((*(uint *)((uVar16 >> 3 & 0x1ffffffc) + (int)puVar10) & (&DAT_82992400)[uVar16 & 0x1f])
+            != 0) {
+          if (((((puVar17[-2] & 0x7f800000) == 0x7f800000) ||
+               ((puVar17[-1] & 0x7f800000) == 0x7f800000)) ||
+              ((*puVar17 & 0x7f800000) == 0x7f800000)) || ((puVar17[1] & 0x7f800000) == 0x7f800000))
+          {
+            MyAssertHandler(0xffffffff82186f8c,0x635,0,&DAT_82000f98,0xffffffff82187380);
+          }
+          if ((((puVar17[2] & 0x7f800000) == 0x7f800000) ||
+              ((puVar17[3] & 0x7f800000) == 0x7f800000)) ||
+             ((puVar17[4] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff82186f8c,0x636,0,&DAT_82000f98,0xffffffff82187400);
+          }
+        }
+        uVar16 = uVar16 + 1;
+        puVar17 = puVar17 + 8;
+      } while ((int)uVar16 < (int)(uint)*(byte *)((int)puVar8 + 10));
+    }
+    if ((uVar12 & 0xf) != 0) {
+      MyAssertHandler(0xffffffff82186f8c,0x63c,0,&DAT_82000f98,0xffffffff82187354);
+    }
+    *puVar10 = *puVar10 | *param_2;
+    dVar21 = 1.0;
+    puVar8[6] = puVar8[6] | param_2[1];
+    puVar8[7] = puVar8[7] | param_2[2];
+    puVar8[8] = param_2[3] | puVar8[8];
+    puVar8[9] = puVar8[9] | param_2[4];
+    puVar8[10] = puVar8[10] | param_2[5];
+    *(uint *)(iVar5 + 0x9024) = *(uint *)(iVar5 + 0x900c);
+    *(uint *)(iVar5 + 0x9018) = *puVar18;
+    *(uint *)(iVar5 + 0x901c) = *(uint *)(iVar5 + 0x9004);
+    *(uint *)(iVar5 + 0x9020) = *(uint *)(iVar5 + 0x9008);
+    *(uint *)(iVar5 + 0x9028) = *(uint *)(iVar5 + 0x9010);
+    *(uint *)(iVar5 + 0x902c) = *(uint *)(iVar5 + 0x9014);
+    uVar12 = *puVar8;
+    if (((ulonglong)uVar12 != 0) && (*(short *)(uVar12 + 0x10) != 0)) {
+      lVar14 = (ulonglong)uVar12 + 8;
+      do {
+        puVar18 = (uint *)lVar14;
+        if (in_RESERVE != '\0') {
+          uVar16 = storeWordConditionalIndexed((ulonglong)*puVar18 + 1,0,lVar14);
+          *puVar18 = uVar16;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+      if (*(int *)(uVar12 + 0xc) != 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x64a,0,&DAT_82000f98,0xffffffff8218733c,0x901c,
+                        *(int *)(uVar12 + 0xc),in_MSR);
+      }
+      *(uint *)(iVar5 + 0x902c) = *(uint *)(iVar5 + 0x902c) | DAT_8299247c;
+      uVar6 = GetAnimInfo(*(undefined2 *)(uVar12 + 0x10));
+      if ((uVar6 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x650,0,&DAT_82000f98,0xffffffff82021a7c);
+      }
+      XAnimCalc(dVar21,puVar8,uVar6);
+      if (*(int *)(uVar12 + 0xc) != 0) {
+        MyAssertHandler(0xffffffff82186f8c,0x654,0,&DAT_82000f98,0xffffffff8218733c);
+      }
+      do {
+        if (in_RESERVE != '\0') {
+          uVar12 = storeWordConditionalIndexed((ulonglong)*puVar18 - 1,0,lVar14);
+          *puVar18 = uVar12;
+          bVar20 = 2;
+        }
+      } while (!(bool)(bVar20 >> 1 & 1));
+    }
+    piVar13 = (int *)puVar8[0x26];
+    uVar12 = 0;
+    pfVar11 = (float *)puVar8[0x1e];
+    if (piVar13 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82186f8c,0x661,0,&DAT_82000f98,0xffffffff82185950);
+    }
+    lVar14 = 0;
+    if (*(char *)((int)puVar8 + 9) != '\0') {
+      dVar22 = 0.0;
+      do {
+        iVar9 = *piVar13;
+        uVar6 = (ulonglong)*(byte *)(iVar9 + 5);
+        if (*(byte *)(iVar9 + 5) != 0) {
+          pfVar19 = pfVar11 + 6;
+          do {
+            if (0xbf < uVar12) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                              ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+            }
+            if ((*(uint *)(((uVar12 >> 5) + 0x2400) * 4 + iVar5) & (&DAT_82992400)[uVar12 & 0x1f])
+                == 0) {
+              *pfVar11 = (float)dVar22;
+              pfVar19[-5] = (float)dVar22;
+              pfVar19[-4] = (float)dVar22;
+              pfVar19[-3] = (float)dVar21;
+              pfVar19[-2] = (float)dVar22;
+              pfVar19[-1] = (float)dVar22;
+              *pfVar19 = (float)dVar22;
+              pfVar19[1] = (float)dVar22;
+            }
+            else {
+              if (0xbf < uVar12) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                                ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+              }
+              if ((puVar10[uVar12 >> 5] & (&DAT_82992400)[uVar12 & 0x1f]) != 0) {
+                if ((int)(uint)*(byte *)((int)puVar8 + 10) <= (int)uVar12) {
+                  uVar7 = va(0xffffffff82187268,lVar14,*(undefined4 *)*piVar13);
+                  MyAssertHandler(0xffffffff82186f8c,0x66f,0,0xffffffff820011f4,
+                                  "boneIndex < obj->numBones",uVar7);
+                }
+                if ((((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
+                     (((uint)pfVar19[-5] & 0x7f800000) == 0x7f800000)) ||
+                    (((uint)pfVar19[-4] & 0x7f800000) == 0x7f800000)) ||
+                   (((uint)pfVar19[-3] & 0x7f800000) == 0x7f800000)) {
+                  uVar7 = va(0xffffffff82187268,lVar14,*(undefined4 *)*piVar13);
+                  MyAssertHandler(0xffffffff82186f8c,0x670,0,0xffffffff820011f4,0xffffffff82187278,
+                                  uVar7);
+                }
+                if (((((uint)pfVar19[-2] & 0x7f800000) == 0x7f800000) ||
+                    (((uint)pfVar19[-1] & 0x7f800000) == 0x7f800000)) ||
+                   (((uint)*pfVar19 & 0x7f800000) == 0x7f800000)) {
+                  uVar7 = va(0xffffffff82187268,lVar14,*(undefined4 *)*piVar13);
+                  MyAssertHandler(0xffffffff82186f8c,0x671,0,0xffffffff820011f4,0xffffffff821872e8,
+                                  uVar7);
+                }
+              }
+            }
+            uVar6 = uVar6 - 1;
+            pfVar11 = pfVar11 + 8;
+            pfVar19 = pfVar19 + 8;
+            uVar12 = uVar12 + 1;
+          } while (uVar6 != 0);
+        }
+        lVar15 = (ulonglong)*(byte *)(iVar9 + 4) - (ulonglong)*(byte *)(iVar9 + 5);
+        if (lVar15 != 0) {
+          pfVar19 = pfVar11 + 6;
+          do {
+            if (0xbf < uVar12) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                              ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+            }
+            if ((*(uint *)(((uVar12 >> 5) + 0x2400) * 4 + iVar5) & (&DAT_82992400)[uVar12 & 0x1f])
+                == 0) {
+              altv300_21(in_vs32,in_vs60);
+              altv300_21(in_vs32,in_vs46);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+              halt_baddata();
+            }
+            if (0xbf < uVar12) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                              ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+            }
+            if ((puVar10[uVar12 >> 5] & (&DAT_82992400)[uVar12 & 0x1f]) != 0) {
+              if (((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
+                  (((uint)pfVar19[-5] & 0x7f800000) == 0x7f800000)) ||
+                 ((((uint)pfVar19[-4] & 0x7f800000) == 0x7f800000 ||
+                  (((uint)pfVar19[-3] & 0x7f800000) == 0x7f800000)))) {
+                uVar7 = va(0xffffffff82187268,lVar14,*(undefined4 *)*piVar13);
+                MyAssertHandler(0xffffffff82186f8c,0x68a,0,0xffffffff820011f4,0xffffffff82187278,
+                                uVar7);
+              }
+              if (((((uint)pfVar19[-2] & 0x7f800000) == 0x7f800000) ||
+                  (((uint)pfVar19[-1] & 0x7f800000) == 0x7f800000)) ||
+                 (((uint)*pfVar19 & 0x7f800000) == 0x7f800000)) {
+                uVar7 = va(0xffffffff82187268,lVar14,*(undefined4 *)*piVar13);
+                MyAssertHandler(0xffffffff82186f8c,0x68b,0,0xffffffff820011f4,0xffffffff821872e8,
+                                uVar7);
+              }
+            }
+            lVar15 = lVar15 + -1;
+            pfVar11 = pfVar11 + 8;
+            pfVar19 = pfVar19 + 8;
+            uVar12 = uVar12 + 1;
+          } while (lVar15 != 0);
+        }
+        lVar14 = lVar14 + 1;
+        piVar13 = piVar13 + 1;
+      } while ((int)lVar14 < (int)(uint)*(byte *)((int)puVar8 + 9));
+    }
+  }
+  Profile_EndInternal(0);
+  __restgprlr();
+  return;
+}
+
+
+// 826298F0  XAnim_CalcRotDeltaDuring<unsigned_char>  (xanim/xanim_calc.cpp:1705)
+
+void XAnim_CalcRotDeltaDuring<unsigned_char>
+               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+
+{
+  short *psVar1;
+  int iVar3;
+  longlong lVar2;
+  double extraout_f1;
+  double dVar4;
+  float local_50 [2];
+  ulonglong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  iVar3 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6ac,0,0xffffffff82000f98,0xffffffff8218706c);
+  }
+  psVar1 = *(short **)(iVar3 + 4);
+  if (psVar1 != (short *)0x0) {
+    if (*psVar1 == 0) {
+      *param_4 = (float)(longlong)psVar1[2];
+      local_48 = (ulonglong)psVar1[3];
+      param_4[1] = (float)(longlong)local_48;
+      __restgprlr_29();
+      return;
+    }
+    local_40 = (float)dVar4;
+    local_3c = (float)((double)(longlong)param_3 * dVar4);
+    local_38 = (int)((double)(longlong)param_3 * dVar4);
+    local_48 = (ulonglong)local_38;
+    XAnim_GetTimeIndex<unsigned_char>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
+    lVar2 = (local_48 >> 0x20 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(psVar1 + 2);
+    Short2LerpAsVec2((double)local_50[0],lVar2,lVar2 + 4);
+    __restgprlr_29();
+    return;
+  }
+  *param_4 = 0.0;
+  param_4[1] = 32767.0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82629C78  XAnim_CalcRotDeltaDuring<unsigned_short>  (xanim/xanim_calc.cpp:1705)
 
-void XAnim_CalcRotDeltaDuring<unsigned_short>(void)
+void XAnim_CalcRotDeltaDuring<unsigned_short>
+               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  short *psVar1;
+  int iVar3;
+  longlong lVar2;
+  double extraout_f1;
+  double dVar4;
+  float local_50 [2];
+  ulonglong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  iVar3 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6ac,0,0xffffffff82000f98,0xffffffff8218706c);
+  }
+  psVar1 = *(short **)(iVar3 + 4);
+  if (psVar1 != (short *)0x0) {
+    if (*psVar1 == 0) {
+      *param_4 = (float)(longlong)psVar1[2];
+      local_48 = (ulonglong)psVar1[3];
+      param_4[1] = (float)(longlong)local_48;
+      __restgprlr_29();
+      return;
+    }
+    local_40 = (float)dVar4;
+    local_3c = (float)((double)(longlong)param_3 * dVar4);
+    local_38 = (int)((double)(longlong)param_3 * dVar4);
+    local_48 = (ulonglong)local_38;
+    XAnim_GetTimeIndex<unsigned_short>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
+    lVar2 = (local_48 >> 0x20 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(psVar1 + 2);
+    Short2LerpAsVec2((double)local_50[0],lVar2,lVar2 + 4);
+    __restgprlr_29();
+    return;
+  }
+  *param_4 = 0.0;
+  param_4[1] = 32767.0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8262A000  XAnim_CalcRotDelta3DDuring<unsigned_char>  (xanim/xanim_calc.cpp:1741)
 
-void XAnim_CalcRotDelta3DDuring<unsigned_char>(void)
+void XAnim_CalcRotDelta3DDuring<unsigned_char>
+               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  short *psVar1;
+  int iVar3;
+  longlong lVar2;
+  double extraout_f1;
+  double dVar4;
+  float local_50 [2];
+  ulonglong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  iVar3 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6d0,0,0xffffffff82000f98,0xffffffff8218706c);
+  }
+  psVar1 = *(short **)(iVar3 + 8);
+  if (psVar1 != (short *)0x0) {
+    if (*psVar1 == 0) {
+      *param_4 = (float)(longlong)psVar1[2];
+      param_4[1] = (float)(longlong)psVar1[3];
+      param_4[2] = (float)(longlong)psVar1[4];
+      local_48 = (ulonglong)psVar1[5];
+      param_4[3] = (float)(longlong)local_48;
+      __restgprlr_29();
+      return;
+    }
+    local_40 = (float)dVar4;
+    local_3c = (float)((double)(longlong)param_3 * dVar4);
+    local_38 = (int)((double)(longlong)param_3 * dVar4);
+    local_48 = (ulonglong)local_38;
+    XAnim_GetTimeIndex<unsigned_char>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
+    lVar2 = (local_48 >> 0x20 & 0x1fffffff) * 8 + (ulonglong)*(uint *)(psVar1 + 2);
+    Short4LerpAsVec4((double)local_50[0],lVar2,lVar2 + 8);
+    __restgprlr_29();
+    return;
+  }
+  *param_4 = 0.0;
+  param_4[1] = 0.0;
+  param_4[2] = 0.0;
+  param_4[3] = 32767.0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 8262A190  XAnim_CalcRotDelta3DDuring<unsigned_short>  (xanim/xanim_calc.cpp:1741)
+
+void XAnim_CalcRotDelta3DDuring<unsigned_short>
+               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+
+{
+  short *psVar1;
+  int iVar3;
+  longlong lVar2;
+  double extraout_f1;
+  double dVar4;
+  float local_50 [2];
+  ulonglong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  iVar3 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6d0,0,0xffffffff82000f98,0xffffffff8218706c);
+  }
+  psVar1 = *(short **)(iVar3 + 8);
+  if (psVar1 != (short *)0x0) {
+    if (*psVar1 == 0) {
+      *param_4 = (float)(longlong)psVar1[2];
+      param_4[1] = (float)(longlong)psVar1[3];
+      param_4[2] = (float)(longlong)psVar1[4];
+      local_48 = (ulonglong)psVar1[5];
+      param_4[3] = (float)(longlong)local_48;
+      __restgprlr_29();
+      return;
+    }
+    local_40 = (float)dVar4;
+    local_3c = (float)((double)(longlong)param_3 * dVar4);
+    local_38 = (int)((double)(longlong)param_3 * dVar4);
+    local_48 = (ulonglong)local_38;
+    XAnim_GetTimeIndex<unsigned_short>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
+    lVar2 = (local_48 >> 0x20 & 0x1fffffff) * 8 + (ulonglong)*(uint *)(psVar1 + 2);
+    Short4LerpAsVec4((double)local_50[0],lVar2,lVar2 + 8);
+    __restgprlr_29();
+    return;
+  }
+  *param_4 = 0.0;
+  param_4[1] = 0.0;
+  param_4[2] = 0.0;
+  param_4[3] = 32767.0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 82629A40  XAnim_CalcPosDeltaDuring<unsigned_char>  (xanim/xanim_calc.cpp:1783)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnim_CalcPosDeltaDuring<unsigned_char>(undefined8 param_1,undefined8 param_2,int param_3)
+
+{
+  short *psVar1;
+  undefined8 in_r0;
+  undefined4 *puVar2;
+  ulonglong uVar3;
+  double extraout_f1;
+  double dVar4;
+  undefined1 in_vs32 [16];
+  undefined1 auVar5 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  uint local_50 [2];
+  longlong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6fa,0,0xffffffff82000f98,0xffffffff8218708c);
+  }
+  psVar1 = (short *)*puVar2;
+  if (psVar1 == (short *)0x0) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  if (*psVar1 == 0) {
+    altv300_21(in_vs32,in_vs43);
+    altv300_23(in_vs42,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  local_40 = (float)dVar4;
+  local_3c = (float)((double)(longlong)param_3 * dVar4);
+  local_38 = (int)((double)(longlong)param_3 * dVar4);
+  local_48 = (longlong)local_38;
+  XAnim_GetTimeIndex<unsigned_char>(&local_40,psVar1 + 0x10,*psVar1,local_50,&local_48);
+  auVar5 = ZEXT416(0);
+  auVar5 = auVar5 | auVar5 << 0x20 | auVar5 << 0x40 | auVar5 << 0x60;
+  uVar3 = (ulonglong)local_50[0] + 1;
+  if (*(char *)(psVar1 + 1) != '\0') {
+    altv207_13(auVar5,in_vs42);
+    altv207_13(auVar5,in_vs41);
+    altv207_13(in_vs42,in_vs38);
+    altv207_13(in_vs41,in_vs38);
+    loadVectorForShiftLeft
+              (in_r0,(ulonglong)local_50[0] + ((ulonglong)local_50[0] & 0x7fffffff) * 2 +
+                     (ulonglong)*(uint *)(psVar1 + 0xe));
+    loadVectorForShiftLeft
+              (in_r0,uVar3 + (uVar3 & 0x7fffffff) * 2 + (ulonglong)*(uint *)(psVar1 + 0xe));
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  altv300_21(auVar5,in_vs42);
+  altv300_21(auVar5,in_vs41);
+  altv300_23(in_vs38,in_vs42);
+  altv300_23(in_vs38,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82629DC8  XAnim_CalcPosDeltaDuring<unsigned_short>  (xanim/xanim_calc.cpp:1783)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnim_CalcPosDeltaDuring<unsigned_short>(undefined8 param_1,undefined8 param_2,int param_3)
+
+{
+  short *psVar1;
+  undefined8 in_r0;
+  undefined4 *puVar2;
+  ulonglong uVar3;
+  double extraout_f1;
+  double dVar4;
+  undefined1 in_vs32 [16];
+  undefined1 auVar5 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  uint local_50 [2];
+  longlong local_48;
+  float local_40;
+  float local_3c;
+  int local_38;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  dVar4 = extraout_f1;
+  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler(0xffffffff82186f8c,0x6fa,0,0xffffffff82000f98,0xffffffff8218708c);
+  }
+  psVar1 = (short *)*puVar2;
+  if (psVar1 == (short *)0x0) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  if (*psVar1 == 0) {
+    altv300_21(in_vs32,in_vs43);
+    altv300_23(in_vs42,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  local_40 = (float)dVar4;
+  local_3c = (float)((double)(longlong)param_3 * dVar4);
+  local_38 = (int)((double)(longlong)param_3 * dVar4);
+  local_48 = (longlong)local_38;
+  XAnim_GetTimeIndex<unsigned_short>(&local_40,psVar1 + 0x10,*psVar1,local_50,&local_48);
+  auVar5 = ZEXT416(0);
+  auVar5 = auVar5 | auVar5 << 0x20 | auVar5 << 0x40 | auVar5 << 0x60;
+  uVar3 = (ulonglong)local_50[0] + 1;
+  if (*(char *)(psVar1 + 1) != '\0') {
+    altv207_13(auVar5,in_vs42);
+    altv207_13(auVar5,in_vs41);
+    altv207_13(in_vs42,in_vs38);
+    altv207_13(in_vs41,in_vs38);
+    loadVectorForShiftLeft
+              (in_r0,(ulonglong)local_50[0] + ((ulonglong)local_50[0] & 0x7fffffff) * 2 +
+                     (ulonglong)*(uint *)(psVar1 + 0xe));
+    loadVectorForShiftLeft
+              (in_r0,uVar3 + (uVar3 & 0x7fffffff) * 2 + (ulonglong)*(uint *)(psVar1 + 0xe));
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  altv300_21(auVar5,in_vs42);
+  altv300_21(auVar5,in_vs41);
+  altv300_23(in_vs38,in_vs42);
+  altv300_23(in_vs38,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82629258  XAnim_CalcRotDeltaEntire  (xanim/xanim_calc.cpp:1841)
+
+void XAnim_CalcRotDeltaEntire(int param_1,float *param_2)
+
+{
+  ushort *puVar1;
+  
+  puVar1 = *(ushort **)(param_1 + 4);
+  if (puVar1 != (ushort *)0x0) {
+    if (*puVar1 == 0) {
+      puVar1 = puVar1 + 2;
+    }
+    else {
+      puVar1 = (ushort *)((uint)*puVar1 * 4 + *(int *)(puVar1 + 2));
+    }
+    *param_2 = (float)(longlong)(short)*puVar1;
+    param_2[1] = (float)(longlong)(short)puVar1[1];
+    return;
+  }
+  *param_2 = 0.0;
+  param_2[1] = 32767.0;
+  return;
+}
+
+
+// 826292E0  XAnim_CalcRotDelta3DEntire  (xanim/xanim_calc.cpp:1864)
+
+void XAnim_CalcRotDelta3DEntire(int param_1,float *param_2)
+
+{
+  ushort *puVar1;
+  
+  puVar1 = *(ushort **)(param_1 + 8);
+  if (puVar1 != (ushort *)0x0) {
+    if (*puVar1 == 0) {
+      puVar1 = puVar1 + 2;
+    }
+    else {
+      puVar1 = (ushort *)((uint)*puVar1 * 8 + *(int *)(puVar1 + 2));
+    }
+    *param_2 = (float)(longlong)(short)*puVar1;
+    param_2[1] = (float)(longlong)(short)puVar1[1];
+    param_2[2] = (float)(longlong)(short)puVar1[2];
+    param_2[3] = (float)(longlong)(short)puVar1[3];
+    return;
+  }
+  *param_2 = 0.0;
+  param_2[1] = 0.0;
+  param_2[2] = 0.0;
+  param_2[3] = 32767.0;
+  return;
+}
+
+
+// 826293A8  XAnim_CalcPosDeltaEntire  (xanim/xanim_calc.cpp:1892)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnim_CalcPosDeltaEntire(undefined4 *param_1)
+
+{
+  ushort *puVar1;
+  undefined8 in_r0;
+  undefined1 in_vs32 [16];
+  undefined1 auVar2 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  
+  puVar1 = (ushort *)*param_1;
+  if (puVar1 == (ushort *)0x0) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  if ((ulonglong)*puVar1 == 0) {
+    altv300_21(in_vs32,in_vs43);
+    altv300_23(in_vs42,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  auVar2 = ZEXT416(0);
+  auVar2 = auVar2 | auVar2 << 0x20 | auVar2 << 0x40 | auVar2 << 0x60;
+  if (*(char *)(puVar1 + 1) != '\0') {
+    altv207_13(in_vs41,in_vs38);
+    altv207_13(auVar2,in_vs41);
+    loadVectorForShiftLeft(in_r0,(ulonglong)*puVar1 * 3 + (ulonglong)*(uint *)(puVar1 + 0xe));
+    altv207_13(auVar2,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  altv300_23(in_vs39,in_vs41);
+  altv300_21(auVar2,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8262BD48  XAnim_CalcDeltaForTime  (xanim/xanim_calc.cpp:1941)
 
-void XAnim_CalcDeltaForTime(void)
+void XAnim_CalcDeltaForTime
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  bool bVar2;
+  int iVar4;
+  undefined8 uVar3;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  
+  iVar4 = __savegprlr_28();
+  dVar5 = 1.0;
+  dVar6 = extraout_f1;
+  if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
+    MyAssertHandler(extraout_f1,0xffffffff82186f8c,0x79a,0,0xffffffff82187110,extraout_f1,0,
+                    0x3ff0000000000000);
+  }
+  uVar1 = *(undefined4 *)(iVar4 + 0x54);
+  if ((dVar6 == dVar5) || (bVar2 = false, *(ushort *)(iVar4 + 0xe) == 0)) {
+    bVar2 = true;
+  }
+  if (bVar2) {
+    uVar3 = XAnim_CalcRotDeltaEntire(uVar1,param_3);
+    XAnim_CalcPosDeltaEntire(uVar3,param_4);
+    __restgprlr_28();
+    return;
+  }
+  if (*(ushort *)(iVar4 + 0xe) < 0x100) {
+    XAnim_CalcRotDeltaDuring<unsigned_char>();
+    XAnim_CalcPosDeltaDuring<unsigned_char>(dVar6,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  XAnim_CalcRotDeltaDuring<unsigned_short>(dVar6,uVar1);
+  XAnim_CalcPosDeltaDuring<unsigned_short>(dVar6,uVar1);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8262BE88  XAnim_CalcDelta3DForTime  (xanim/xanim_calc.cpp:1974)
 
-void XAnim_CalcDelta3DForTime(void)
+void XAnim_CalcDelta3DForTime
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  bool bVar2;
+  int iVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  
+  iVar3 = __savegprlr_28();
+  dVar4 = 1.0;
+  dVar5 = extraout_f1;
+  if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
+    MyAssertHandler(extraout_f1,0xffffffff82186f8c,0x7bb,0,0xffffffff82187110,extraout_f1,0,
+                    0x3ff0000000000000);
+  }
+  uVar1 = *(undefined4 *)(iVar3 + 0x54);
+  if ((dVar5 == dVar4) || (bVar2 = false, *(ushort *)(iVar3 + 0xe) == 0)) {
+    bVar2 = true;
+  }
+  if (bVar2) {
+    XAnim_CalcRotDelta3DEntire(uVar1,param_3);
+    XAnim_CalcPosDeltaEntire(uVar1,param_4);
+    __restgprlr_28();
+    return;
+  }
+  if (*(ushort *)(iVar3 + 0xe) < 0x100) {
+    XAnim_CalcRotDelta3DDuring<unsigned_char>();
+    XAnim_CalcPosDeltaDuring<unsigned_char>(dVar5,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  XAnim_CalcRotDelta3DDuring<unsigned_short>(dVar5,uVar1);
+  XAnim_CalcPosDeltaDuring<unsigned_short>(dVar5,uVar1);
+  __restgprlr_28();
+  return;
 }
 

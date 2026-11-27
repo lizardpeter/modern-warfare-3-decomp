@@ -40,6 +40,45 @@ int DevGui_GetScreenXPad(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 8240B030  DevGui_GetScreenYPad  (devgui/devgui_util.cpp:60)
+
+int DevGui_GetScreenYPad(undefined8 param_1,undefined8 param_2)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)ScrPlace_ApplyX(0,param_1,param_2,1);
+  dVar1 = floor((double)(float)(dVar1 + 0.5));
+  return (int)dVar1;
+}
+
+
+// 8240B080  DevGui_GetScreenWidth  (devgui/devgui_util.cpp:72)
+
+int DevGui_GetScreenWidth(undefined8 param_1,undefined8 param_2)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)ScrPlace_ApplyX(0,param_1,param_2,3);
+  dVar1 = floor((double)(float)(dVar1 + 0.5));
+  return (int)dVar1;
+}
+
+
+// 8240B0D0  DevGui_GetScreenHeight  (devgui/devgui_util.cpp:93)
+
+int DevGui_GetScreenHeight(undefined8 param_1,undefined8 param_2)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)ScrPlace_ApplyY(0,param_1,param_2,3);
+  dVar1 = floor((double)(float)(dVar1 + 0.5));
+  return (int)dVar1;
+}
+
+
 // 8240B120  DevGui_DrawBox  (devgui/devgui_util.cpp:114)
 
 void DevGui_DrawBox(undefined8 param_1,int param_2,int param_3,int param_4)
@@ -49,17 +88,28 @@ void DevGui_DrawBox(undefined8 param_1,int param_2,int param_3,int param_4)
   
   iVar1 = __savegprlr_25();
   if (param_3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f810,0x74,0,0xffffffff82000f98,0xffffffff8200fdb4);
   }
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f810,0x75,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
   R_AddCmdDrawStretchPic
             ((double)(longlong)iVar1,(double)(longlong)param_2,(double)(longlong)param_3,
              (double)(longlong)param_4,0,0,0);
   __restgprlr_25();
+  return;
+}
+
+
+// 8240B2A0  DevGui_DrawBoxCentered  (devgui/devgui_util.cpp:134)
+
+void DevGui_DrawBoxCentered(longlong param_1,longlong param_2,uint param_3,uint param_4)
+
+{
+  DevGui_DrawBox(param_1 - ((longlong)((int)param_3 >> 1) +
+                           (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0)),
+                 param_2 - ((longlong)((int)param_4 >> 1) +
+                           (ulonglong)((int)param_4 < 0 && (param_4 & 1) != 0)));
   return;
 }
 
@@ -105,12 +155,12 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   int local_64;
   
   uVar3 = __savegprlr_24();
-  if ((float)(longlong)(int)param_3 < 8.0) {
-                    /* WARNING: Subroutine does not return */
+  dVar19 = 8.0;
+  dVar11 = extraout_f1;
+  if ((double)(longlong)(int)param_3 < 8.0) {
     MyAssertHandler(0xffffffff8205f810,0x98,0,0xffffffff82000f98,0xffffffff8205f874);
   }
-  if ((float)(longlong)(int)param_4 < 8.0) {
-                    /* WARNING: Subroutine does not return */
+  if ((double)(longlong)(int)param_4 < dVar19) {
     MyAssertHandler(0xffffffff8205f810,0x99,0,0xffffffff82000f98,0xffffffff8205f854);
   }
   pbVar4 = (byte *)param_6;
@@ -118,11 +168,10 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   local_90 = (float)*pbVar4 * 0.003921569;
   local_8c = (float)pbVar4[1] * 0.003921569;
   local_84 = (float)pbVar4[3] * 0.003921569;
-  dVar17 = extraout_f1;
   DevGui_DrawBox(uVar3,param_2,param_3,param_4,param_6);
-  dVar18 = (double)(float)((double)local_90 * dVar17);
-  dVar16 = (double)(float)((double)local_8c * dVar17);
-  dVar15 = (double)(float)((double)local_88 * dVar17);
+  dVar18 = (double)(float)((double)local_90 * dVar11);
+  dVar16 = (double)(float)((double)local_8c * dVar11);
+  dVar15 = (double)(float)((double)local_88 * dVar11);
   iVar10 = (int)uVar3;
   iVar2 = (int)param_2;
   iVar9 = iVar2 + (int)param_4;
@@ -131,9 +180,9 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   dVar20 = 1.0;
   iVar6 = iVar9 + -4;
   dVar19 = 0.0;
-  dVar11 = dVar20;
+  dVar17 = dVar20;
   if ((float)(dVar18 - 1.0) < 0.0) {
-    dVar11 = dVar18;
+    dVar17 = dVar18;
   }
   dVar14 = dVar20;
   if ((float)(dVar16 - 1.0) < 0.0) {
@@ -145,19 +194,19 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   }
   dVar12 = dVar19;
   if (-dVar18 < 0.0) {
-    dVar12 = dVar11;
+    dVar12 = dVar17;
   }
   local_90 = (float)dVar12;
-  dVar11 = dVar19;
+  dVar17 = dVar19;
   if (-dVar16 < 0.0) {
-    dVar11 = dVar14;
+    dVar17 = dVar14;
   }
-  local_8c = (float)dVar11;
-  dVar11 = dVar19;
+  local_8c = (float)dVar17;
+  dVar17 = dVar19;
   if (-dVar15 < 0.0) {
-    dVar11 = dVar13;
+    dVar17 = dVar13;
   }
-  local_88 = (float)dVar11;
+  local_88 = (float)dVar17;
   local_80 = iVar10;
   local_7c = iVar2;
   local_78 = iVar8;
@@ -168,13 +217,13 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   local_64 = iVar9;
   DevGui_DrawQuad(&local_80,&local_90);
   iVar1 = iVar10 + (int)param_3;
-  dVar18 = (double)(float)((double)local_90 * dVar17);
-  dVar16 = (double)(float)((double)local_8c * dVar17);
-  dVar15 = (double)(float)((double)local_88 * dVar17);
+  dVar18 = (double)(float)((double)local_90 * dVar11);
+  dVar16 = (double)(float)((double)local_8c * dVar11);
+  dVar15 = (double)(float)((double)local_88 * dVar11);
   iVar5 = iVar1 + -4;
-  dVar11 = dVar20;
+  dVar17 = dVar20;
   if ((float)(dVar18 - dVar20) < 0.0) {
-    dVar11 = dVar18;
+    dVar17 = dVar18;
   }
   dVar14 = dVar20;
   if ((float)(dVar16 - dVar20) < 0.0) {
@@ -186,19 +235,19 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   }
   dVar12 = dVar19;
   if (-dVar18 < 0.0) {
-    dVar12 = dVar11;
+    dVar12 = dVar17;
   }
   local_90 = (float)dVar12;
-  dVar11 = dVar19;
+  dVar17 = dVar19;
   if (-dVar16 < 0.0) {
-    dVar11 = dVar14;
+    dVar17 = dVar14;
   }
-  local_8c = (float)dVar11;
-  dVar11 = dVar19;
+  local_8c = (float)dVar17;
+  dVar17 = dVar19;
   if (-dVar15 < 0.0) {
-    dVar11 = dVar13;
+    dVar17 = dVar13;
   }
-  local_88 = (float)dVar11;
+  local_88 = (float)dVar17;
   local_80 = iVar10;
   local_7c = iVar2;
   local_78 = iVar1;
@@ -208,12 +257,12 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   local_68 = iVar8;
   local_64 = iVar7;
   DevGui_DrawQuad(&local_80,&local_90);
-  dVar15 = (double)(float)((double)local_90 * dVar17);
-  dVar18 = (double)(float)((double)local_8c * dVar17);
-  dVar16 = (double)(float)((double)local_88 * dVar17);
-  dVar11 = dVar20;
+  dVar15 = (double)(float)((double)local_90 * dVar11);
+  dVar18 = (double)(float)((double)local_8c * dVar11);
+  dVar16 = (double)(float)((double)local_88 * dVar11);
+  dVar17 = dVar20;
   if ((float)(dVar15 - dVar20) < 0.0) {
-    dVar11 = dVar15;
+    dVar17 = dVar15;
   }
   dVar14 = dVar20;
   if ((float)(dVar18 - dVar20) < 0.0) {
@@ -225,19 +274,19 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   }
   dVar12 = dVar19;
   if (-dVar15 < 0.0) {
-    dVar12 = dVar11;
+    dVar12 = dVar17;
   }
   local_90 = (float)dVar12;
-  dVar11 = dVar19;
+  dVar17 = dVar19;
   if (-dVar18 < 0.0) {
-    dVar11 = dVar14;
+    dVar17 = dVar14;
   }
-  local_8c = (float)dVar11;
-  dVar11 = dVar19;
+  local_8c = (float)dVar17;
+  dVar17 = dVar19;
   if (-dVar16 < 0.0) {
-    dVar11 = dVar13;
+    dVar17 = dVar13;
   }
-  local_88 = (float)dVar11;
+  local_88 = (float)dVar17;
   local_80 = iVar10;
   local_7c = iVar9;
   local_78 = iVar8;
@@ -247,9 +296,9 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
   local_68 = iVar1;
   local_64 = iVar9;
   DevGui_DrawQuad(&local_80,&local_90);
-  dVar16 = (double)(float)((double)local_90 * dVar17);
-  dVar15 = (double)(float)((double)local_8c * dVar17);
-  dVar17 = (double)(float)((double)local_88 * dVar17);
+  dVar16 = (double)(float)((double)local_90 * dVar11);
+  dVar15 = (double)(float)((double)local_8c * dVar11);
+  dVar17 = (double)(float)((double)local_88 * dVar11);
   dVar11 = dVar20;
   if ((float)(dVar16 - dVar20) < 0.0) {
     dVar11 = dVar16;
@@ -289,23 +338,143 @@ void DevGui_DrawBevelBox(undefined8 param_1,undefined8 param_2,undefined8 param_
 }
 
 
-// 8240B900  DevGui_DrawFont  (devgui/devgui_util.cpp:286)
+// 8240B648  DevGui_DrawLine  (devgui/devgui_util.cpp:243)
 
-void DevGui_DrawFont(void)
+void DevGui_DrawLine(undefined8 param_1,float *param_2,uint param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
   __savegprlr_28();
+  pfVar8 = (float *)__savefpr_27();
+  fVar1 = *param_2;
+  fVar2 = *pfVar8;
+  fVar6 = fVar1 - fVar2;
+  fVar3 = param_2[1];
+  fVar4 = pfVar8[1];
+  dVar15 = 1.0;
+  dVar14 = 0.5;
+  fVar5 = fVar2;
+  if (fVar1 - fVar2 < 0.0) {
+    fVar5 = fVar1;
+  }
+  if (fVar2 - fVar1 < 0.0) {
+    fVar2 = fVar1;
+  }
+  fVar1 = fVar4;
+  if (fVar3 - fVar4 < 0.0) {
+    fVar1 = fVar3;
+  }
+  fVar7 = fVar4;
+  if (fVar4 - fVar3 < 0.0) {
+    fVar7 = fVar3;
+  }
+  fVar3 = (fVar3 - fVar4) * (fVar3 - fVar4) + fVar6 * fVar6;
+  dVar10 = (double)SQRT(fVar3);
+  dVar12 = (double)((fVar2 - fVar5) * 0.5 + fVar5);
+  dVar11 = (double)((fVar7 - fVar1) * 0.5 + fVar1);
+  dVar13 = (double)SQRT(fVar3);
+  dVar9 = dVar15;
+  if (-dVar10 < 0.0) {
+    dVar9 = dVar10;
+  }
+  dVar9 = acos((double)((float)(1.0 / dVar9) * fVar6));
+  fVar1 = (float)dVar9 * 57.295776;
+  if (param_2[1] < pfVar8[1]) {
+    fVar1 = -fVar1;
+  }
+  for (; fVar1 < 0.0; fVar1 = fVar1 + 360.0) {
+  }
+  R_AddCmdDrawStretchPicRotateXY
+            (-(double)(float)(dVar13 * dVar14 - dVar12),
+             (double)(float)(dVar11 - (double)(longlong)
+                                              (int)(((int)param_3 >> 1) +
+                                                   (uint)((int)param_3 < 0 && (param_3 & 1) != 0))),
+             dVar13,(double)(longlong)(int)param_3,0,0,dVar15,dVar15);
+  __restfpr_27();
+  __restgprlr_28();
+  return;
+}
+
+
+// 8240B900  DevGui_DrawFont  (devgui/devgui_util.cpp:286)
+
+void DevGui_DrawFont(undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_28();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205f810,0x122,0,0xffffffff82000f98,0xffffffff82013b1c);
+  }
+  if (*(char *)param_4 != '\0') {
+    iVar2 = R_TextHeight(DAT_82aa2964);
+    R_AddCmdDrawText((double)(longlong)iVar1,(double)(longlong)(iVar2 + param_2),0x3ff0000000000000,
+                     0x3ff0000000000000,0,param_4,0x7fffffff,DAT_82aa2964);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8240BA48  DevGui_DrawFontCentered  (devgui/devgui_util.cpp:306)
 
-void DevGui_DrawFontCentered(void)
+void DevGui_DrawFontCentered
+               (undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  lVar1 = __savegprlr_27();
+  if (((param_4 & 0xffffffff) == 0) || (*(char *)param_4 == '\0')) {
+    MyAssertHandler(0xffffffff8205f810,0x133,0,0xffffffff82000f98,0xffffffff8205f894);
+  }
+  uVar2 = R_TextWidth(param_4,0,DAT_82aa2964);
+  uVar3 = R_TextHeight(DAT_82aa2964);
+  DevGui_DrawFont(lVar1 - ((longlong)((int)uVar2 >> 1) +
+                          (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0)),
+                  param_2 - ((longlong)((int)uVar3 >> 1) +
+                            (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0)),param_3,param_4);
+  __restgprlr_27();
+  return;
+}
+
+
+// 8240B820  DevGui_GetFontWidth  (devgui/devgui_util.cpp:320)
+
+void DevGui_GetFontWidth(undefined8 param_1)
+
+{
+  R_TextWidth(param_1,0,DAT_82aa2964);
+  return;
+}
+
+
+// 8240B838  DevGui_GetFontHeight  (devgui/devgui_util.cpp:333)
+
+void DevGui_GetFontHeight(void)
+
+{
+  R_TextHeight(DAT_82aa2964);
+  return;
 }
 
 

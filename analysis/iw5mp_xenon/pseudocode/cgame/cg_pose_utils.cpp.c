@@ -6,7 +6,6 @@ void CG_UsedDObjCalcPose(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82021670,0xf,0,0xffffffff82000f98,0xffffffff82013bec);
   }
   if (*(char *)(param_1 + 3) == '\0') {
@@ -22,8 +21,9 @@ void CG_CullIn(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82021670,0x18,0,0xffffffff82000f98,0xffffffff82013bec);
+    uRam00000003 = 2;
+    return;
   }
   *(undefined1 *)(param_1 + 3) = 2;
   return;

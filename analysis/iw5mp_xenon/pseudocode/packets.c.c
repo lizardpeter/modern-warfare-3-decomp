@@ -50,21 +50,84 @@ int PacketProcessorRetireContext(undefined4 *param_1,undefined4 *param_2)
 
 // 828C17D0  PacketProcessorSubmit  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:117)
 
-void PacketProcessorSubmit(void)
+void PacketProcessorSubmit(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined8 uVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  puVar1 = (undefined4 *)*puVar2;
+  uVar3 = 0;
+  if (puVar1 == (undefined4 *)0x0) {
+    uVar3 = 0xffffffff8007007a;
+  }
+  else {
+    if (puVar1 == (undefined4 *)puVar2[1]) {
+      puVar2[1] = 0;
+    }
+    *puVar2 = puVar1[1];
+    puVar1[1] = 0;
+    XMemSet(puVar1,0,8);
+    param_2[1] = 0;
+    *param_2 = 0x103;
+    *puVar1 = param_2;
+    puVar1[1] = 0;
+    if (puVar2[3] == 0) {
+      puVar2[2] = puVar1;
+    }
+    else {
+      *(undefined4 **)(puVar2[3] + 4) = puVar1;
+    }
+    puVar2[3] = puVar1;
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 828C1958  PacketProcessorCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:219)
 
-void PacketProcessorCreate(void)
+void PacketProcessorCreate(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  
+  iVar1 = __savegprlr_27();
+  uVar5 = 0;
+  piVar2 = (int *)XMemAlloc(0x14,0x618a8005);
+  if (piVar2 != (int *)0x0) {
+    iVar4 = iVar1 << 3;
+    iVar3 = XMemAlloc(iVar4,0x618a0003);
+    piVar2[4] = iVar3;
+    if (iVar3 != 0) {
+      for (; iVar1 != 0; iVar1 = iVar1 + -1) {
+        iVar4 = iVar4 + -8;
+        iVar3 = piVar2[4] + iVar4;
+        *(undefined4 *)(iVar3 + 4) = 0;
+        if (piVar2[1] == 0) {
+          *piVar2 = iVar3;
+        }
+        else {
+          *(int *)(piVar2[1] + 4) = iVar3;
+        }
+        piVar2[1] = iVar3;
+      }
+      goto LAB_828c199c;
+    }
+  }
+  uVar5 = 0xffffffff8007000e;
+  PacketProcessorDestroy(piVar2);
+  piVar2 = (int *)0x0;
+LAB_828c199c:
+  *param_2 = piVar2;
+  __restgprlr_27(uVar5);
+  return;
 }
 
 

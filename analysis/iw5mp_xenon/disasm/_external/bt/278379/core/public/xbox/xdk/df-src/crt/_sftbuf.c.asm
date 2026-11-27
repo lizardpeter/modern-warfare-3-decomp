@@ -3,6 +3,69 @@
 ; 82921E68  _stbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_sftbuf.c:59)
   82921E68  7D8802A6             mfspr r12,LR
   82921E6C  4BFF4851             bl 0x829166bc
+  82921E70  9421FF90             stwu r1,-0x70(r1)
+  82921E74  7C7F1B78             or r31,r3,r3
+  82921E78  480004D1             bl 0x82922348
+  82921E7C  480063F5             bl 0x82928270
+  82921E80  2C030000             cmpwi r3,0x0
+  82921E84  418200C4             beq 0x82921f48
+  82921E88  4BFF9061             bl 0x8291aee8
+  82921E8C  39630020             addi r11,r3,0x20
+  82921E90  7F1F5840             cmplw cr6,r31,r11
+  82921E94  409A000C             bne cr6,0x82921ea0
+  82921E98  39400000             li r10,0x0
+  82921E9C  48000018             b 0x82921eb4
+LAB_82921ea0:
+  82921EA0  4BFF9049             bl 0x8291aee8
+  82921EA4  39630040             addi r11,r3,0x40
+  82921EA8  7F1F5840             cmplw cr6,r31,r11
+  82921EAC  409A009C             bne cr6,0x82921f48
+  82921EB0  39400001             li r10,0x1
+LAB_82921eb4:
+  82921EB4  3D208489             lis r9,-0x7b77
+  82921EB8  81695DF8             lwz r11,0x5df8(r9)
+  82921EBC  396B0001             addi r11,r11,0x1
+  82921EC0  91695DF8             stw r11,0x5df8(r9)
+  82921EC4  817F000C             lwz r11,0xc(r31)
+  82921EC8  716B010C             andi. r11,r11,0x10c
+  82921ECC  2C0B0000             cmpwi r11,0x0
+  82921ED0  40820078             bne 0x82921f48
+  82921ED4  3D608489             lis r11,-0x7b77
+  82921ED8  555D103A             rlwinm r29,r10,0x2,0x0,0x1d
+  82921EDC  3BCB5E0C             addi r30,r11,0x5e0c
+  82921EE0  7D7DF02E             lwzx r11,r29,r30
+  82921EE4  2B0B0000             cmplwi cr6,r11,0x0
+  82921EE8  409A0034             bne cr6,0x82921f1c
+  82921EEC  38601000             li r3,0x1000
+  82921EF0  4BD2CD09             bl 0x8264ebf8
+  82921EF4  7C7DF12E             stwx r3,r29,r30
+  82921EF8  28030000             cmplwi r3,0x0
+  82921EFC  40820020             bne 0x82921f1c
+  82921F00  39400002             li r10,0x2
+  82921F04  397F0014             addi r11,r31,0x14
+  82921F08  915F0018             stw r10,0x18(r31)
+  82921F0C  917F0008             stw r11,0x8(r31)
+  82921F10  917F0000             stw r11,0x0(r31)
+  82921F14  915F0004             stw r10,0x4(r31)
+  82921F18  4800001C             b 0x82921f34
+LAB_82921f1c:
+  82921F1C  7D5DF02E             lwzx r10,r29,r30
+  82921F20  39601000             li r11,0x1000
+  82921F24  917F0018             stw r11,0x18(r31)
+  82921F28  917F0004             stw r11,0x4(r31)
+  82921F2C  915F0008             stw r10,0x8(r31)
+  82921F30  915F0000             stw r10,0x0(r31)
+LAB_82921f34:
+  82921F34  817F000C             lwz r11,0xc(r31)
+  82921F38  38600001             li r3,0x1
+  82921F3C  616B1102             ori r11,r11,0x1102
+  82921F40  917F000C             stw r11,0xc(r31)
+  82921F44  48000008             b 0x82921f4c
+LAB_82921f48:
+  82921F48  38600000             li r3,0x0
+LAB_82921f4c:
+  82921F4C  38210070             addi r1,r1,0x70
+  82921F50  4BFF47BC             b 0x8291670c
 
 ; 82921F58  _ftbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_sftbuf.c:138)
   82921F58  7D8802A6             mfspr r12,LR

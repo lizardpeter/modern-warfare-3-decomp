@@ -2,31 +2,139 @@
 
 // 823079D8  SetNew  (cgame/cg_unlocks.cpp:35)
 
-void SetNew(void)
+void SetNew(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+           undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  undefined1 auStack_40 [64];
+  
+  uVar2 = __savegprlr_27();
+  *(undefined1 *)param_4 = 0;
+  uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+  StructuredData_InitializeLookup(uVar3,auStack_40);
+  StructuredData_LookupWithString(auStack_40,param_2);
+  iVar4 = StructuredData_GetLookupState(auStack_40);
+  if (iVar4 == 0) {
+    StructuredData_LookupWithString(auStack_40,param_3);
+    iVar4 = StructuredData_GetLookupState(auStack_40);
+    if (iVar4 == 2) {
+      iVar4 = StructuredData_GetLookupError();
+      Com_sprintf(param_4,param_5,0xffffffff82026358,param_3,param_2,(&PTR_DAT_82992d38)[iVar4]);
+      __restgprlr_27(0);
+      return;
+    }
+    iVar4 = StructuredData_GetLookupState(auStack_40);
+    if ((iVar4 == 1) && (iVar4 = StructuredData_GetLookupResultType(auStack_40), iVar4 == 1)) {
+      iVar4 = StructuredData_SetBool(auStack_40,uVar2,1);
+      if ((iVar4 == 0) || (bVar1 = false, iVar4 == 1)) {
+        bVar1 = true;
+      }
+      if (!bVar1) {
+        Com_sprintf(param_4,param_5,0xffffffff8202631c,param_2,
+                    (&PTR_s_Value_changed_82992d4c)[iVar4]);
+        __restgprlr_27(0);
+        return;
+      }
+      __restgprlr_27(iVar4 == 0);
+      return;
+    }
+  }
+  Com_sprintf(param_4,param_5,0xffffffff820262e4,param_2);
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 82307B48  SetNew_LocalClient  (cgame/cg_unlocks.cpp:78)
 
-void SetNew_LocalClient(void)
+void SetNew_LocalClient(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined1 auStack_430 [16];
+  char local_420 [1056];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_430,uVar2);
+  if (cVar3 == '\0') {
+    Com_Printf(0xe,0xffffffff820263b0);
+    __restgprlr_29();
+    return;
+  }
+  cVar3 = SetNew(auStack_430,param_2,param_3,local_420,0x400);
+  if (local_420[0] != '\0') {
+    Com_Error(1,local_420);
+  }
+  if (cVar3 != '\0') {
+    CL_ControllerIndexFromClientNum(uVar1);
+    LiveStorage_StatsWriteNeeded();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82307BE8  SetWeaponPartNew  (cgame/cg_unlocks.cpp:99)
 
-void SetWeaponPartNew(void)
+void SetWeaponPartNew(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                     undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  undefined1 auStack_50 [80];
+  
+  uVar2 = __savegprlr_26();
+  *(undefined1 *)param_5 = 0;
+  uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+  StructuredData_InitializeLookup(uVar3,auStack_50);
+  StructuredData_LookupWithString(auStack_50,param_2);
+  iVar4 = StructuredData_GetLookupState(auStack_50);
+  if (iVar4 == 0) {
+    StructuredData_LookupWithString(auStack_50,param_3);
+    iVar4 = StructuredData_GetLookupState(auStack_50);
+    if (iVar4 == 2) {
+LAB_82307c68:
+      iVar4 = StructuredData_GetLookupError();
+      Com_sprintf(param_5,param_6,0xffffffff82026438,param_3,param_4,param_2,
+                  (&PTR_DAT_82992d38)[iVar4]);
+      __restgprlr_26(0);
+      return;
+    }
+    iVar4 = StructuredData_GetLookupState(auStack_50);
+    if (iVar4 == 0) {
+      StructuredData_LookupWithString(auStack_50,param_4);
+      iVar4 = StructuredData_GetLookupState(auStack_50);
+      if (iVar4 == 2) goto LAB_82307c68;
+      iVar4 = StructuredData_GetLookupState(auStack_50);
+      if ((iVar4 == 1) && (iVar4 = StructuredData_GetLookupResultType(auStack_50), iVar4 == 1)) {
+        iVar4 = StructuredData_SetBool(auStack_50,uVar2,1);
+        if ((iVar4 == 0) || (bVar1 = false, iVar4 == 1)) {
+          bVar1 = true;
+        }
+        if (!bVar1) {
+          Com_sprintf(param_5,param_6,0xffffffff8202631c,param_2,
+                      (&PTR_s_Value_changed_82992d4c)[iVar4]);
+          __restgprlr_26(0);
+          return;
+        }
+        __restgprlr_26(iVar4 == 0);
+        return;
+      }
+    }
+  }
+  Com_sprintf(param_5,param_6,0xffffffff820263f0,param_2);
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -73,51 +181,229 @@ void SetWeaponPartNew_FullName
 
 // 82307E58  SetWeaponPartNew_LocalClient  (cgame/cg_unlocks.cpp:176)
 
-void SetWeaponPartNew_LocalClient(void)
+void SetWeaponPartNew_LocalClient(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined1 auStack_430 [16];
+  char local_420 [1056];
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_430,uVar2);
+  if (cVar3 == '\0') {
+    Com_Printf(0xe,0xffffffff820263b0);
+    __restgprlr_29();
+    return;
+  }
+  cVar3 = SetWeaponPartNew_FullName(auStack_430,param_2,param_3,local_420,0x400);
+  if (local_420[0] != '\0') {
+    Com_Error(1,local_420);
+  }
+  if (cVar3 != '\0') {
+    CL_ControllerIndexFromClientNum(uVar1);
+    LiveStorage_StatsWriteNeeded();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 82307EF8  GetChallengeTier  (cgame/cg_unlocks.cpp:198)
 
-void GetChallengeTier(void)
+void GetChallengeTier(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  longlong lVar7;
+  undefined4 local_40;
+  undefined4 local_3c [15];
+  
+  iVar3 = __savegprlr_26();
+  uVar2 = I_strncmp(iVar3,0xffffffff820264d0,5);
+  if ((int)uVar2 == 0) {
+    cVar1 = *(char *)(iVar3 + 5);
+    iVar4 = 5;
+    if (cVar1 != '\0') {
+      while (cVar1 != '_') {
+        if (5 < iVar4) {
+          uVar2 = (uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x7fffffff) << 1;
+        }
+        iVar4 = iVar4 + 1;
+        uVar2 = ((longlong)cVar1 + uVar2) - 0x30;
+        cVar1 = *(char *)(iVar4 + iVar3);
+        if (cVar1 == '\0') {
+          __restgprlr_26();
+          return;
+        }
+      }
+    }
+  }
+  else {
+    StringTable_GetAsset(0xffffffff820264b8,&local_40);
+    iVar4 = StringTable_GetRowCount(local_40);
+    lVar7 = 0;
+    if (0 < iVar4) {
+      do {
+        pcVar5 = (char *)StringTable_GetColumnValueForRow(local_40,lVar7,0);
+        iVar6 = atoi(pcVar5);
+        pcVar5 = (char *)StringTable_GetColumnValueForRow(local_40,lVar7,4);
+        if (*pcVar5 != '\0') {
+          StringTable_GetAsset(pcVar5,local_3c);
+          pcVar5 = (char *)StringTable_Lookup(local_3c[0],0,iVar3,0);
+          if (*pcVar5 != '\0') {
+            __restgprlr_26(iVar6);
+            return;
+          }
+        }
+        lVar7 = lVar7 + 1;
+      } while ((int)lVar7 < iVar4);
+    }
+    Com_sprintf(param_2,param_3,0xffffffff82026480,iVar3);
+    uVar2 = 0;
+  }
+  __restgprlr_26(uVar2);
+  return;
 }
 
 
 // 82308040  SetChallengeTierNew  (cgame/cg_unlocks.cpp:245)
 
-void SetChallengeTierNew(void)
+void SetChallengeTierNew(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  undefined1 auStack_40 [64];
+  
+  uVar2 = __savegprlr_27();
+  *(char *)param_3 = '\0';
+  uVar3 = GetChallengeTier(param_2,param_3,param_4);
+  if (*(char *)param_3 == '\0') {
+    if ((uVar2 & 0xffffffff) != 0) {
+      Com_Printf(0xe,0xffffffff820265d4,uVar3,param_2);
+    }
+    uVar4 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
+    StructuredData_InitializeLookup(uVar4,auStack_40);
+    StructuredData_LookupWithString(auStack_40,0xffffffff820265c0);
+    iVar5 = StructuredData_GetLookupState(auStack_40);
+    if (iVar5 == 0) {
+      StructuredData_LookupWithInt(auStack_40,uVar3);
+      iVar5 = StructuredData_GetLookupState(auStack_40);
+      if (iVar5 == 2) {
+        iVar5 = StructuredData_GetLookupError();
+        Com_sprintf(param_3,param_4,0xffffffff82026570,uVar3,(&PTR_DAT_82992d38)[iVar5]);
+        __restgprlr_27(0);
+        return;
+      }
+      iVar5 = StructuredData_GetLookupState(auStack_40);
+      if ((iVar5 == 1) && (iVar5 = StructuredData_GetLookupResultType(auStack_40), iVar5 == 1)) {
+        iVar5 = StructuredData_SetBool(auStack_40,uVar2,1);
+        if ((iVar5 == 0) || (bVar1 = false, iVar5 == 1)) {
+          bVar1 = true;
+        }
+        if (!bVar1) {
+          Com_sprintf(param_3,param_4,0xffffffff82026520,(&PTR_s_Value_changed_82992d4c)[iVar5]);
+          __restgprlr_27(0);
+          return;
+        }
+        __restgprlr_27(iVar5 == 0);
+        return;
+      }
+    }
+    Com_sprintf(param_3,param_4,0xffffffff820264d8);
+  }
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 823081E8  SetChallengeTierNew_LocalClient  (cgame/cg_unlocks.cpp:295)
+
+void SetChallengeTierNew_LocalClient(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  undefined1 auStack_430 [16];
+  char local_420 [1032];
+  
+  uVar1 = CL_ControllerIndexFromClientNum();
+  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_430,uVar1);
+  if (cVar2 == '\0') {
+    Com_Printf(0xe,0xffffffff82026610);
+  }
+  else {
+    cVar2 = SetChallengeTierNew(auStack_430,param_2,local_420,0x400);
+    if (local_420[0] != '\0') {
+      Com_Error(1,local_420);
+    }
+    if (cVar2 != '\0') {
+      CL_ControllerIndexFromClientNum(param_1);
+      LiveStorage_StatsWriteNeeded();
+    }
+  }
+  return;
 }
 
 
 // 82308298  MarkItemForceUnlocked  (cgame/cg_unlocks.cpp:316)
 
-void MarkItemForceUnlocked(void)
+void MarkItemForceUnlocked
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  
   __savegprlr_28();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  LiveStorage_SetPlayerCardItemFieldByName(uVar1,param_3,param_2,param_4,param_5,1);
+  __restgprlr_28();
+  return;
 }
 
 
 // 823082D8  MarkProfileItem  (cgame/cg_unlocks.cpp:329)
 
-void MarkProfileItem(void)
+void MarkProfileItem(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                    undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_26();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = LiveStorage_GetActiveStatsSource();
+  if (iVar3 != 0) {
+    SetNew_LocalClient(uVar1,0xffffffff820266ac,param_4);
+    __restgprlr_26();
+    return;
+  }
+  StringTable_GetAsset(param_2,local_40);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff82026658,0x15a,0,0xffffffff82000f98,0xffffffff82026698);
+  }
+  uVar1 = StringTable_LookupRowNumForValue(local_40[0],param_5,param_4);
+  if (-1 < (int)uVar1) {
+    GamerProfile_SetBit(uVar2,uVar1,param_3);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -260,8 +546,156 @@ LAB_823085c4:
 void CG_CheckForUnlockErrors(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  char cVar2;
+  char cVar3;
+  bool bVar4;
+  undefined4 uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  char *pcVar8;
+  char *pcVar9;
+  char *pcVar10;
+  char *pcVar11;
+  longlong lVar12;
+  longlong lVar13;
+  longlong lVar14;
+  int iVar15;
+  undefined4 local_4a8;
+  char *local_4a4;
+  char local_4a0 [1184];
+  
   __savegprlr();
+  StringTable_GetAsset(0xffffffff82026898,&local_4a8);
+  uVar6 = StringTable_GetRowCount(local_4a8);
+  iVar7 = (int)uVar6;
+  if (0xa00 < iVar7) {
+    Com_Error(1,0xffffffff82026858,uVar6,0xa00);
+  }
+  bVar4 = false;
+  if ((*(int *)(DAT_8365e118 + 0xc) != 0) && (0 < iVar7)) {
+    local_4a4 = "featureNew";
+    lVar12 = 0;
+    do {
+      uVar5 = local_4a8;
+      pcVar8 = (char *)StringTable_GetColumnValueForRow(local_4a8,lVar12,0);
+      pcVar9 = (char *)StringTable_GetColumnValueForRow(uVar5,lVar12,1);
+      local_4a0[0] = '\0';
+      pcVar11 = "feature";
+      pcVar10 = pcVar9;
+      do {
+        cVar2 = *pcVar10;
+        cVar3 = *pcVar11;
+        if (cVar2 == '\0') break;
+        pcVar10 = pcVar10 + 1;
+        pcVar11 = pcVar11 + 1;
+      } while (cVar2 == cVar3);
+      pcVar11 = "weapon";
+      pcVar10 = pcVar9;
+      if (cVar2 == cVar3) {
+        SetNew(0,local_4a4,pcVar8,local_4a0,0x400);
+      }
+      else {
+        do {
+          cVar2 = *pcVar10;
+          cVar3 = *pcVar11;
+          if (cVar2 == '\0') break;
+          pcVar11 = pcVar11 + 1;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar2 == cVar3);
+        pcVar11 = "perk";
+        pcVar10 = pcVar9;
+        if (cVar2 == cVar3) {
+          SetNew(0,0xffffffff8202679c,pcVar8,local_4a0,0x400);
+        }
+        else {
+          do {
+            cVar2 = *pcVar10;
+            cVar3 = *pcVar11;
+            if (cVar2 == '\0') break;
+            pcVar11 = pcVar11 + 1;
+            pcVar10 = pcVar10 + 1;
+          } while (cVar2 == cVar3);
+          pcVar11 = "challenge";
+          pcVar10 = pcVar9;
+          if (cVar2 == cVar3) {
+            SetNew(0,0xffffffff8202678c,pcVar8,local_4a0,0x400);
+          }
+          else {
+            do {
+              cVar2 = *pcVar10;
+              cVar3 = *pcVar11;
+              if (cVar2 == '\0') break;
+              pcVar11 = pcVar11 + 1;
+              pcVar10 = pcVar10 + 1;
+            } while (cVar2 == cVar3);
+            pcVar11 = "weaponAttachment";
+            pcVar10 = pcVar9;
+            if (cVar2 == cVar3) {
+              SetChallengeTierNew(0,pcVar8,local_4a0,0x400);
+            }
+            else {
+              do {
+                cVar2 = *pcVar10;
+                cVar3 = *pcVar11;
+                if (cVar2 == '\0') break;
+                pcVar11 = pcVar11 + 1;
+                pcVar10 = pcVar10 + 1;
+              } while (cVar2 == cVar3);
+              uVar6 = 0xffffffff8202675c;
+              pcVar11 = "weaponCamo";
+              if (cVar2 != cVar3) {
+                do {
+                  cVar2 = *pcVar9;
+                  cVar3 = *pcVar11;
+                  if (cVar2 == '\0') break;
+                  pcVar9 = pcVar9 + 1;
+                  pcVar11 = pcVar11 + 1;
+                } while (cVar2 == cVar3);
+                if (cVar2 != cVar3) goto LAB_82308950;
+                uVar6 = 0xffffffff82026748;
+              }
+              SetWeaponPartNew_FullName(0,uVar6,pcVar8,local_4a0,0x400);
+            }
+          }
+        }
+      }
+LAB_82308950:
+      bVar1 = local_4a0[0] == '\0';
+      if (!bVar1) {
+        Com_PrintError(0xe,0xffffffff82026700,pcVar8,lVar12,local_4a0);
+      }
+      lVar13 = lVar12 + 1;
+      lVar14 = lVar13;
+      iVar15 = (int)lVar13;
+      while (iVar15 < iVar7) {
+        pcVar10 = (char *)StringTable_GetColumnValueForRow(uVar5,lVar14,0);
+        pcVar11 = pcVar8;
+        do {
+          cVar2 = *pcVar11;
+          cVar3 = *pcVar10;
+          if (cVar2 == '\0') break;
+          pcVar11 = pcVar11 + 1;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar2 == cVar3);
+        if (cVar2 == cVar3) {
+          Com_PrintError(0xe,0xffffffff820266b8,pcVar8,lVar12,lVar14);
+          bVar1 = false;
+        }
+        lVar14 = lVar14 + 1;
+        iVar15 = (int)lVar14;
+      }
+      if (!bVar1) {
+        bVar4 = true;
+      }
+      lVar12 = lVar13;
+    } while ((int)lVar13 < iVar7);
+  }
+  if (bVar4) {
+    Com_Error(1,0xffffffff820267b8);
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -270,8 +704,56 @@ void CG_CheckForUnlockErrors(void)
 void CG_InitItemsUnlocked(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  undefined4 uVar5;
+  char cVar7;
+  int iVar6;
+  ulonglong uVar8;
+  undefined4 local_40 [2];
+  undefined4 local_38 [14];
+  
+  uVar3 = __savegprlr_27();
+  CG_CheckForUnlockErrors();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82026298,0x47f,0,0xffffffff820011a8,uVar3,4);
+  }
+  iVar1 = (int)uVar3 * 0x1e4;
+  memset(&DAT_82b3e55d + iVar1,0,0x140);
+  uVar8 = 0;
+  *(int *)(&DAT_82b3e6c8 + iVar1) = (int)uVar3;
+  (&DAT_82b3e69e)[iVar1] = 1;
+  *(undefined4 *)(&DAT_82b3e6c0 + iVar1) = 0;
+  (&DAT_82b3e69d)[iVar1] = 1;
+  uVar4 = CL_ControllerIndexFromClientNum(uVar3);
+  *(int *)(&DAT_82b3e6cc + iVar1) = (int)uVar4;
+  LiveStorage_GetPlayerUnlockDataBuffer(local_38,uVar4);
+  *(undefined4 *)(&DAT_82b3e6c4 + iVar1) = local_38[0];
+  uVar5 = LiveStorage_GetActiveStatsSource(*(undefined4 *)(&DAT_82b3e6cc + iVar1));
+  *(undefined4 *)(&DAT_82b3e6d0 + iVar1) = uVar5;
+  cVar7 = LiveStorage_PersistentDataEnabled();
+  if (cVar7 != '\0') {
+    StringTable_GetAsset(0xffffffff82026898,local_40);
+    iVar6 = StringTable_GetRowCount(local_40[0]);
+    if (0xa00 < iVar6) {
+      MyAssertHandler(0xffffffff82026658,0x1e4,0,0xffffffff82000f98,0xffffffff820268ac);
+    }
+    if (0 < iVar6) {
+      do {
+        cVar7 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar3,local_40[0],uVar8);
+        if (cVar7 != '\0') {
+          iVar2 = (int)((uVar8 & 0xffffffff) >> 3) + iVar1;
+          (&DAT_82b3e4f0)[iVar2 + 0x6d] =
+               (byte)(1 << ((uint)uVar8 & 7)) | (&DAT_82b3e4f0)[iVar2 + 0x6d];
+        }
+        uVar8 = uVar8 + 1;
+      } while ((int)uVar8 < iVar6);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -280,8 +762,110 @@ void CG_InitItemsUnlocked(void)
 void CG_FindItemsUnlockedLastGame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  char cVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char cVar8;
+  int iVar6;
+  char *pcVar7;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char *pcVar9;
+  char *pcVar10;
+  ulonglong uVar11;
+  undefined4 local_90 [36];
+  
+  uVar3 = __savegprlr_17();
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82026298,0x47f,0,0xffffffff820011a8,uVar3,4);
+  }
+  iVar2 = (int)uVar3 * 0x1e4;
+  if ((&DAT_82b3e69e)[iVar2] != '\0') {
+    (&DAT_82b3e69e)[iVar2] = 0;
+    if (*(int *)(&DAT_82b3e6c0 + iVar2) != 0) {
+      MyAssertHandler(0xffffffff82026658,0x1fe,0,0xffffffff82000f98,0xffffffff8202698c);
+    }
+    if ((&DAT_82b3e69d)[iVar2] == '\0') {
+      MyAssertHandler(0xffffffff82026658,0x200,0,0xffffffff82000f98,0xffffffff82026974);
+    }
+    cVar8 = LiveStorage_PersistentDataEnabled();
+    if (cVar8 != '\0') {
+      CL_ControllerIndexFromClientNum(uVar3);
+      cVar8 = LiveStorage_DoWeHaveStats();
+      if (cVar8 != '\0') {
+        StringTable_GetAsset(0xffffffff82026898,local_90);
+        iVar6 = StringTable_GetRowCount(local_90[0]);
+        if (0xa00 < iVar6) {
+          MyAssertHandler(0xffffffff82026658,0x20b,0,0xffffffff82000f98,0xffffffff820268ac);
+        }
+        uVar11 = 0;
+        if (0 < iVar6) {
+          do {
+            cVar8 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar3,local_90[0],uVar11);
+            if (cVar8 != '\0') {
+              if (((1 << ((uint)uVar11 & 7) &
+                   (uint)(byte)(&DAT_82b3e4f0)[(int)((uVar11 & 0xffffffff) >> 3) + iVar2 + 0x6d]) ==
+                   0) && (*(int *)(&DAT_82b3e6c0 + iVar2) < 0x10)) {
+                *(short *)(&DAT_82b3e4f0 + (*(int *)(&DAT_82b3e6c0 + iVar2) + 0xd8) * 2 + iVar2) =
+                     (short)uVar11;
+                *(int *)(&DAT_82b3e6c0 + iVar2) = *(int *)(&DAT_82b3e6c0 + iVar2) + 1;
+              }
+              pcVar7 = (char *)StringTable_GetColumnValueForRow(local_90[0],uVar11,1);
+              pcVar9 = "title";
+              pcVar10 = pcVar7;
+              do {
+                cVar8 = *pcVar10;
+                cVar1 = *pcVar9;
+                if (cVar8 == '\0') break;
+                pcVar10 = pcVar10 + 1;
+                pcVar9 = pcVar9 + 1;
+              } while (cVar8 == cVar1);
+              pcVar9 = "icon";
+              pcVar10 = pcVar7;
+              if (cVar8 == cVar1) {
+                uVar4 = StringTable_GetColumnValueForRow(local_90[0],uVar11,0);
+                uVar5 = CL_ControllerIndexFromClientNum(uVar3);
+                LiveStorage_SetPlayerCardItemFieldByName
+                          (uVar5,0xffffffff820268e8,0xffffffff820268f8,uVar4,0,1);
+              }
+              else {
+                do {
+                  cVar8 = *pcVar10;
+                  cVar1 = *pcVar9;
+                  if (cVar8 == '\0') break;
+                  pcVar9 = pcVar9 + 1;
+                  pcVar10 = pcVar10 + 1;
+                } while (cVar8 == cVar1);
+                pcVar9 = "profileFeature";
+                if (cVar8 == cVar1) {
+                  uVar4 = StringTable_GetColumnValueForRow(local_90[0],uVar11,0);
+                  uVar5 = CL_ControllerIndexFromClientNum(uVar3);
+                  LiveStorage_SetPlayerCardItemFieldByName
+                            (uVar5,0xffffffff82026918,0xffffffff82026928,uVar4,0,1);
+                }
+                else {
+                  do {
+                    cVar8 = *pcVar7;
+                    cVar1 = *pcVar9;
+                    if (cVar8 == '\0') break;
+                    pcVar7 = pcVar7 + 1;
+                    pcVar9 = pcVar9 + 1;
+                  } while (cVar8 == cVar1);
+                  if (cVar8 == cVar1) {
+                    uVar4 = StringTable_GetColumnValueForRow(local_90[0],uVar11,0);
+                    MarkProfileItem(uVar3,0xffffffff82026958,0xffffffff82026950,uVar4,0);
+                  }
+                }
+              }
+            }
+            uVar11 = uVar11 + 1;
+          } while ((int)uVar11 < iVar6);
+        }
+      }
+    }
+  }
+  __restgprlr_17();
+  return;
 }
 
 
@@ -290,7 +874,252 @@ void CG_FindItemsUnlockedLastGame(void)
 void CG_MarkUnlockedItemsNew(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar1;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  int iVar6;
+  char cVar10;
+  undefined8 uVar5;
+  int iVar7;
+  int iVar8;
+  char *pcVar9;
+  undefined8 uVar11;
+  char *pcVar12;
+  char *pcVar13;
+  undefined4 local_f0;
+  int local_ec;
+  uint local_e8;
+  undefined1 *local_e4;
+  char *local_e0;
+  char *local_dc;
+  char *local_d8;
+  char *local_d4;
+  char *local_d0;
+  char *local_cc;
+  char *local_c8;
+  char *local_c4;
+  char *local_c0;
+  char *local_bc;
+  char *local_b8;
+  char *local_b4;
+  char *local_b0;
+  char *local_a8 [2];
+  int local_a0;
+  
+  uVar4 = __savegprlr();
+  iVar6 = (int)uVar4;
+  if (3 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82026298,0x47f,0,0xffffffff820011a8,uVar4,4);
+  }
+  iVar2 = iVar6 * 0x1e4;
+  local_e4 = &DAT_82b3e4f0 + iVar2;
+  if ((&DAT_82b3e69d)[iVar2] == '\0') {
+    Com_Printf(0xe,0xffffffff82026bd8);
+    __restgprlr();
+    return;
+  }
+  (&DAT_82b3e69d)[iVar2] = 0;
+  cVar10 = LiveStorage_PersistentDataEnabled();
+  if (cVar10 == '\0') {
+    Com_Printf(0xe,0xffffffff82026b78);
+    __restgprlr();
+    return;
+  }
+  CL_ControllerIndexFromClientNum(uVar4);
+  cVar10 = LiveStorage_DoWeHaveStats();
+  if (cVar10 == '\0') {
+    Com_Printf(0x10,0xffffffff82026b30);
+    __restgprlr();
+    return;
+  }
+  if (*(char *)(DAT_836108a4 + 0xc) != '\0') {
+    Com_Printf(0xe,0xffffffff82026ae0);
+    __restgprlr();
+    return;
+  }
+  if (*(char *)(DAT_83633888 + 0xc) != '\0') {
+    Com_Printf(0xe,0xffffffff82026a98);
+    __restgprlr();
+    return;
+  }
+  uVar5 = CL_ControllerIndexFromClientNum(uVar4);
+  local_ec = (int)uVar5;
+  StringTable_GetAsset(0xffffffff82026898,&local_f0);
+  iVar7 = StringTable_GetRowCount(local_f0);
+  local_e0 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp";
+  local_a0 = iVar7;
+  if (0xa00 < iVar7) {
+    MyAssertHandler(0xffffffff82026658,0x266,0,0xffffffff82000f98,0xffffffff820268ac);
+  }
+  iVar8 = LiveStorage_GetActiveStatsSource(uVar5);
+  LiveStorage_GetPlayerUnlockDataBuffer(local_a8,*(undefined4 *)(&DAT_82b3e6cc + iVar2));
+  if (iVar8 != *(int *)(&DAT_82b3e6d0 + iVar2) ||
+      ((int)uVar5 != *(int *)(&DAT_82b3e6cc + iVar2) ||
+      (iVar6 != *(int *)(&DAT_82b3e6c8 + iVar2) || local_a8[0] != *(char **)(&DAT_82b3e6c4 + iVar2))
+      )) {
+    Com_Error(1,0xffffffff82026a08);
+    __restgprlr();
+    return;
+  }
+  local_e8 = 0;
+  if (0 < iVar7) {
+    local_c4 = "title";
+    local_c8 = "iconNew";
+    local_cc = "mp/cardIconTable.csv";
+    local_d0 = "icon";
+    local_dc = "weaponNew";
+    local_a8[0] = "camoNew";
+    local_b0 = "attachmentNew";
+    local_b4 = "weaponAttachment";
+    local_b8 = "challenge";
+    local_bc = "titleNew";
+    local_c0 = "mp/cardTitleTable.csv";
+    local_d4 = "unlockNew";
+    local_d8 = "profileFeature";
+    do {
+      uVar3 = local_e8;
+      if (((1 << (local_e8 & 7) & (uint)(byte)local_e4[(local_e8 >> 3) + 0x6d]) == 0) &&
+         (cVar10 = LiveStorage_IsItemUnlockedFromTable_LocalClient(iVar6,local_f0,local_e8),
+         cVar10 != '\0')) {
+        uVar5 = StringTable_GetColumnValueForRow(local_f0,uVar3,0);
+        pcVar9 = (char *)StringTable_GetColumnValueForRow(local_f0,uVar3,1);
+        pcVar12 = "feature";
+        pcVar13 = pcVar9;
+        if (*(char *)(DAT_84253bb8 + 0xc) != '\0') {
+          cVar10 = LiveStorage_IsItemUnlockedFromTable_LocalClient(iVar6,local_f0,uVar3);
+          uVar11 = 0xffffffff82003cf8;
+          if (cVar10 == '\0') {
+            uVar11 = 0xffffffff82003cf0;
+          }
+          uVar11 = va(0xffffffff820269b0,uVar5,0xffffffff82003cf0,uVar11);
+          MyAssertHandler(local_e0,0x29a,0,0xffffffff820011f4,0xffffffff820269bc,uVar11);
+        }
+        do {
+          cVar10 = *pcVar13;
+          cVar1 = *pcVar12;
+          if (cVar10 == '\0') break;
+          pcVar12 = pcVar12 + 1;
+          pcVar13 = pcVar13 + 1;
+        } while (cVar10 == cVar1);
+        pcVar12 = "weapon";
+        pcVar13 = pcVar9;
+        if (cVar10 == cVar1) {
+          SetNew_LocalClient(iVar6,0xffffffff820266ac,uVar5);
+        }
+        else {
+          do {
+            cVar10 = *pcVar13;
+            cVar1 = *pcVar12;
+            if (cVar10 == '\0') break;
+            pcVar12 = pcVar12 + 1;
+            pcVar13 = pcVar13 + 1;
+          } while (cVar10 == cVar1);
+          pcVar12 = "perk";
+          pcVar13 = pcVar9;
+          if (cVar10 == cVar1) {
+            SetNew_LocalClient(iVar6,local_dc,uVar5);
+          }
+          else {
+            do {
+              cVar10 = *pcVar13;
+              cVar1 = *pcVar12;
+              if (cVar10 == '\0') break;
+              pcVar12 = pcVar12 + 1;
+              pcVar13 = pcVar13 + 1;
+            } while (cVar10 == cVar1);
+            pcVar12 = local_d8;
+            pcVar13 = pcVar9;
+            if (cVar10 == cVar1) {
+              SetNew_LocalClient(iVar6,0xffffffff8202678c,uVar5);
+            }
+            else {
+              do {
+                cVar10 = *pcVar13;
+                cVar1 = *pcVar12;
+                if (cVar10 == '\0') break;
+                pcVar12 = pcVar12 + 1;
+                pcVar13 = pcVar13 + 1;
+              } while (cVar10 == cVar1);
+              pcVar12 = local_d0;
+              pcVar13 = pcVar9;
+              if (cVar10 == cVar1) {
+                MarkProfileItem(iVar6,0xffffffff82026958,local_d4,uVar5,0);
+              }
+              else {
+                do {
+                  cVar10 = *pcVar13;
+                  cVar1 = *pcVar12;
+                  if (cVar10 == '\0') break;
+                  pcVar12 = pcVar12 + 1;
+                  pcVar13 = pcVar13 + 1;
+                } while (cVar10 == cVar1);
+                pcVar12 = local_c4;
+                pcVar13 = pcVar9;
+                if (cVar10 == cVar1) {
+                  LiveStorage_SetPlayerCardItemFieldByName(local_ec,local_c8,local_cc,uVar5,0,1);
+                }
+                else {
+                  do {
+                    cVar10 = *pcVar13;
+                    cVar1 = *pcVar12;
+                    if (cVar10 == '\0') break;
+                    pcVar12 = pcVar12 + 1;
+                    pcVar13 = pcVar13 + 1;
+                  } while (cVar10 == cVar1);
+                  pcVar12 = local_b8;
+                  pcVar13 = pcVar9;
+                  if (cVar10 == cVar1) {
+                    LiveStorage_SetPlayerCardItemFieldByName(local_ec,local_bc,local_c0,uVar5,0,1);
+                  }
+                  else {
+                    do {
+                      cVar10 = *pcVar13;
+                      cVar1 = *pcVar12;
+                      if (cVar10 == '\0') break;
+                      pcVar12 = pcVar12 + 1;
+                      pcVar13 = pcVar13 + 1;
+                    } while (cVar10 == cVar1);
+                    pcVar12 = local_b4;
+                    pcVar13 = pcVar9;
+                    if (cVar10 == cVar1) {
+                      SetChallengeTierNew_LocalClient(iVar6,uVar5);
+                    }
+                    else {
+                      do {
+                        cVar10 = *pcVar13;
+                        cVar1 = *pcVar12;
+                        if (cVar10 == '\0') break;
+                        pcVar12 = pcVar12 + 1;
+                        pcVar13 = pcVar13 + 1;
+                      } while (cVar10 == cVar1);
+                      pcVar12 = local_b0;
+                      pcVar13 = "weaponCamo";
+                      if (cVar10 != cVar1) {
+                        do {
+                          cVar10 = *pcVar9;
+                          cVar1 = *pcVar13;
+                          if (cVar10 == '\0') break;
+                          pcVar9 = pcVar9 + 1;
+                          pcVar13 = pcVar13 + 1;
+                        } while (cVar10 == cVar1);
+                        pcVar12 = local_a8[0];
+                        if (cVar10 != cVar1) goto LAB_8230957c;
+                      }
+                      SetWeaponPartNew_LocalClient(iVar6,pcVar12,uVar5);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+LAB_8230957c:
+      local_e8 = uVar3 + 1;
+    } while ((int)local_e8 < local_a0);
+  }
+  __restgprlr();
+  return;
 }
 

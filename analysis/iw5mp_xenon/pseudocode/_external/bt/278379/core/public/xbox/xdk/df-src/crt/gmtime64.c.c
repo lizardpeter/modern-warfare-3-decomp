@@ -5,7 +5,99 @@
 errno_t _gmtime64_s(tm *_Tm,__time64_t *_Time)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(_Tm,_Time);
+  bool bVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  errno_t eVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  int *piVar11;
+  int iVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  int iVar15;
+  
+  uVar5 = (ulonglong)(int)_Time;
+  piVar3 = (int *)__savegprlr_28(_Tm);
+  bVar1 = false;
+  if ((piVar3 == (int *)0x0) || (memset(piVar3,0xff,0x24), (uVar5 & 0xffffffff) == 0)) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar2 = 0x16;
+    goto LAB_8292366c;
+  }
+  lVar9 = *(longlong *)uVar5;
+  if ((lVar9 < -0xa8c0) || (0x7934126cf < lVar9)) {
+    piVar3 = _errno();
+    uVar2 = 0x16;
+    *piVar3 = 0x16;
+    goto LAB_8292366c;
+  }
+  iVar15 = (int)(lVar9 / 0x1e13380);
+  lVar13 = (longlong)iVar15;
+  uVar14 = lVar13 + 0x46;
+  uVar10 = lVar13 + 0x45;
+  iVar7 = (int)uVar10;
+  lVar9 = lVar9 + ((longlong)
+                   (int)(((iVar15 + 0x171) / 400 - iVar7 / 100) +
+                         (iVar7 >> 2) + (uint)(iVar7 < 0 && (uVar10 & 3) != 0) + -0x11) +
+                  (longlong)iVar15 * 0x16d) * -0x15180;
+  if (lVar9 < 0) {
+    uVar14 = uVar10;
+    if (((uVar10 == ((longlong)(iVar7 >> 2) + (ulonglong)(iVar7 < 0 && (uVar10 & 3) != 0) &
+                    0x3fffffff) << 2) && (uVar10 != (longlong)(iVar7 / 100) * 100)) ||
+       (lVar6 = lVar9 + 0x1e13380, lVar13 + 0x7b1 == (longlong)((int)(lVar13 + 0x7b1) / 400) * 400))
+    {
+      lVar9 = lVar9 + 0x1e28500;
+LAB_82923580:
+      bVar1 = true;
+      lVar6 = lVar9;
+    }
+  }
+  else {
+    iVar7 = (int)uVar14;
+    if (((uVar14 == ((longlong)(iVar7 >> 2) + (ulonglong)(iVar7 < 0 && (uVar14 & 3) != 0) &
+                    0x3fffffff) << 2) && (uVar14 != (longlong)(iVar7 / 100) * 100)) ||
+       (lVar6 = lVar9, lVar13 + 0x7b2 == (longlong)((int)(lVar13 + 0x7b2) / 400) * 400))
+    goto LAB_82923580;
+  }
+  piVar3[5] = (int)uVar14;
+  iVar7 = (int)(lVar6 / 0x15180);
+  piVar3[7] = iVar7;
+  lVar6 = lVar6 + (longlong)iVar7 * -0x15180;
+  if (bVar1) {
+    puVar8 = &DAT_829b08c0;
+  }
+  else {
+    puVar8 = (undefined4 *)&DAT_829b08f4;
+  }
+  piVar11 = puVar8 + 1;
+  iVar15 = 1;
+  iVar7 = puVar8[1];
+  while (iVar7 < piVar3[7]) {
+    piVar11 = piVar11 + 1;
+    iVar15 = iVar15 + 1;
+    iVar7 = *piVar11;
+  }
+  piVar3[4] = iVar15 + -1;
+  iVar12 = (int)(lVar6 / 0xe10);
+  lVar6 = lVar6 + (longlong)iVar12 * -0xe10;
+  uVar2 = 0;
+  iVar7 = (int)(lVar6 / 0x3c);
+  piVar3[3] = piVar3[7] - puVar8[iVar15 + -1];
+  lVar9 = *(longlong *)uVar5;
+  piVar3[2] = iVar12;
+  piVar3[1] = iVar7;
+  *piVar3 = (int)lVar6 + iVar7 * -0x3c;
+  piVar3[8] = 0;
+  piVar3[6] = ((int)(lVar9 / 0x15180) + 4) % 7;
+LAB_8292366c:
+  eVar4 = __restgprlr_28(uVar2);
+  return eVar4;
 }
 

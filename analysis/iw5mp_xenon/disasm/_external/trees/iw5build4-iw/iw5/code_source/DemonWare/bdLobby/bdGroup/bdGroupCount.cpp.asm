@@ -44,6 +44,34 @@
 ; 828FD640  bdGroupCount::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdgroup/bdgroupcount.cpp:24)
   828FD640  7D8802A6             mfspr r12,LR
   828FD644  48019079             bl 0x829166bc
+  828FD648  3BE1FF90             subi r31,r1,0x70
+  828FD64C  9421FF90             stwu r1,-0x70(r1)
+  828FD650  7C7E1B78             or r30,r3,r3
+  828FD654  909F008C             stw r4,0x8c(r31)
+  828FD658  7C9D2378             or r29,r4,r4
+  828FD65C  38830004             addi r4,r3,0x4
+  828FD660  807D0000             lwz r3,0x0(r29)
+  828FD664  4BFF866D             bl 0x828f5cd0
+  828FD668  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828FD66C  314BFFFF             subic r10,r11,0x1
+  828FD670  7D6A5910             subfe r11,r10,r11
+  828FD674  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828FD678  4182001C             beq 0x828fd694
+  828FD67C  389E0008             addi r4,r30,0x8
+  828FD680  807D0000             lwz r3,0x0(r29)
+  828FD684  4BFF864D             bl 0x828f5cd0
+  828FD688  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828FD68C  39600001             li r11,0x1
+  828FD690  40820008             bne 0x828fd698
+LAB_828fd694:
+  828FD694  39600000             li r11,0x0
+LAB_828fd698:
+  828FD698  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  828FD69C  7FA3EB78             or r3,r29,r29
+  828FD6A0  4BA66D61             bl 0x82364400
+  828FD6A4  7FC3F378             or r3,r30,r30
+  828FD6A8  383F0070             addi r1,r31,0x70
+  828FD6AC  48019060             b 0x8291670c
 
 ; 828FD5E0  bdGroupCount::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdgroup/bdgroupcount.cpp:32)
   828FD5E0  3860000C             li r3,0xc

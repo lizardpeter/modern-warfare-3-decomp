@@ -9,3 +9,38 @@ void TRACK_g_memtrack(void)
   return;
 }
 
+
+// 8247D1D0  G_track_init  (game/g_mem_track.cpp:76)
+
+void G_track_init(void)
+
+{
+  DAT_8367aa78 = "g_main";
+  TRACK_g_main();
+  DAT_8367aa78 = "g_svcmds";
+  TRACK_g_svcmds();
+  DAT_8367aa78 = "g_utils";
+  TRACK_g_utils();
+  DAT_8367aa78 = "bg_weapons";
+  TRACK_bg_weapons();
+  DAT_8367aa78 = "bg_weapons_load_obj";
+  TRACK_bg_weapons_load_obj();
+  DAT_8367aa78 = "g_combat";
+  TRACK_g_combat();
+  DAT_8367aa78 = "g_scr_main";
+  TRACK_g_scr_main();
+  DAT_8367aa78 = "g_mover";
+  TRACK_g_mover();
+  DAT_8367aa78 = "g_hudelem";
+  TRACK_g_hudelem();
+  DAT_8367aa78 = "turret";
+  TRACK_turret();
+  DAT_8367aa78 = "vehicle";
+  TRACK_vehicle();
+  DAT_8367aa78 = "vehicle_path";
+  TRACK_vehicle_path();
+  DAT_8367aa78 = "bg_animation_mp";
+  TRACK_bg_animation_mp();
+  return;
+}
+

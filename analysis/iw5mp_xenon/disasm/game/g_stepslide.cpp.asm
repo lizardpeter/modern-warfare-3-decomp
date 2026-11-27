@@ -287,6 +287,67 @@ LAB_824ac580:
   824AC608  7FE4FB78             or r4,r31,r31
   824AC60C  7FC3F378             or r3,r30,r30
   824AC610  4BDCB6D9             bl 0x82277ce8
+  824AC614  C1A10094             lfs f13,0x94(r1)
+  824AC618  ED6D0372             fmuls f11,f13,f13
+  824AC61C  C1810098             lfs f12,0x98(r1)
+  824AC620  C0010090             lfs f0,0x90(r1)
+  824AC624  815D0008             lwz r10,0x8(r29)
+  824AC628  C0E10050             lfs f7,0x50(r1)
+  824AC62C  39600000             li r11,0x0
+  824AC630  C0A10054             lfs f5,0x54(r1)
+  824AC634  392100E8             addi r9,r1,0xe8
+  824AC638  C0610058             lfs f3,0x58(r1)
+  824AC63C  C12A0000             lfs f9,0x0(r10)
+  824AC640  C0CA0004             lfs f6,0x4(r10)
+  824AC644  C08A0008             lfs f4,0x8(r10)
+  824AC648  ED4C5B3A             fmadds f10,f12,f12,f11
+  824AC64C  ED00503A             fmadds f8,f0,f0,f10
+  824AC650  EC40402C             fsqrts f2,f8
+  824AC654  FC201050             fneg f1,f2
+  824AC658  FD6117AE             fsel f11,f1,f30,f2
+  824AC65C  ED5E5824             fdivs f10,f30,f11
+  824AC660  EC0002B2             fmuls f0,f0,f10
+  824AC664  D0010090             stfs f0,0x90(r1)
+  824AC668  EDAD02B2             fmuls f13,f13,f10
+  824AC66C  D1A10094             stfs f13,0x94(r1)
+  824AC670  ED8C02B2             fmuls f12,f12,f10
+  824AC674  D1810098             stfs f12,0x98(r1)
+  824AC678  ED290032             fmuls f9,f9,f0
+  824AC67C  ED0001F2             fmuls f8,f0,f7
+  824AC680  ECE64B7A             fmadds f7,f6,f13,f9
+  824AC684  ECCD417A             fmadds f6,f13,f5,f8
+  824AC688  ECA43B3A             fmadds f5,f4,f12,f7
+  824AC68C  EC8C30FA             fmadds f4,f12,f3,f6
+  824AC690  ED600172             fmuls f11,f0,f5
+  824AC694  D1610060             stfs f11,0x60(r1)
+  824AC698  ED4D0172             fmuls f10,f13,f5
+  824AC69C  D1410064             stfs f10,0x64(r1)
+  824AC6A0  ED2C0172             fmuls f9,f12,f5
+  824AC6A4  D1210068             stfs f9,0x68(r1)
+  824AC6A8  EC600132             fmuls f3,f0,f4
+  824AC6AC  D0610070             stfs f3,0x70(r1)
+  824AC6B0  EC4D0132             fmuls f2,f13,f4
+  824AC6B4  D0410074             stfs f2,0x74(r1)
+  824AC6B8  EC2C0132             fmuls f1,f12,f4
+  824AC6BC  D0210078             stfs f1,0x78(r1)
+LAB_824ac6c0:
+  824AC6C0  7F0BD800             cmpw cr6,r11,r27
+  824AC6C4  419A002C             beq cr6,0x824ac6f0
+  824AC6C8  7F0BD000             cmpw cr6,r11,r26
+  824AC6CC  419A0024             beq cr6,0x824ac6f0
+  824AC6D0  C009FFFC             lfs f0,-0x4(r9)
+  824AC6D4  EDA002B2             fmuls f13,f0,f10
+  824AC6D8  C189FFF8             lfs f12,-0x8(r9)
+  824AC6DC  C1090000             lfs f8,0x0(r9)
+  824AC6E0  ECEC6AFA             fmadds f7,f12,f11,f13
+  824AC6E4  ECC83A7A             fmadds f6,f8,f9,f7
+  824AC6E8  FF06F800             fcmpu cr6,f6,f31
+  824AC6EC  41980100             blt cr6,0x824ac7ec
+LAB_824ac6f0:
+  824AC6F0  396B0001             addi r11,r11,0x1
+  824AC6F4  3929000C             addi r9,r9,0xc
+  824AC6F8  7F0BE000             cmpw cr6,r11,r28
+  824AC6FC  4198FFC4             blt cr6,0x824ac6c0
 LAB_824ac700:
   824AC700  3B5A0001             addi r26,r26,0x1
   824AC704  3BFF000C             addi r31,r31,0xc
@@ -354,6 +415,15 @@ LAB_824ac7c8:
   824AC7E0  3981FFB8             subi r12,r1,0x48
   824AC7E4  48469FFD             bl 0x829167e0
   824AC7E8  48469F10             b 0x829166f8
+LAB_824ac7ec:
+  824AC7EC  D3AA0000             stfs f29,0x0(r10)
+  824AC7F0  38600001             li r3,0x1
+  824AC7F4  D3AA0004             stfs f29,0x4(r10)
+  824AC7F8  D3AA0008             stfs f29,0x8(r10)
+  824AC7FC  38210190             addi r1,r1,0x190
+  824AC800  3981FFB8             subi r12,r1,0x48
+  824AC804  48469FDD             bl 0x829167e0
+  824AC808  48469EF0             b 0x829166f8
 
 ; 824AC810  G_StepSlideMove  (game/g_stepslide.cpp:185)
   824AC810  7D8802A6             mfspr r12,LR

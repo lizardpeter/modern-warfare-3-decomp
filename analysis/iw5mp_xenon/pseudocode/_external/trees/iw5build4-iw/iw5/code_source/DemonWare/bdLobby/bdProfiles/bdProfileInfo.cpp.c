@@ -34,11 +34,21 @@ void bdProfileInfo__serialize(void)
 
 // 8290BDF0  bdProfileInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdprofiles/bdprofileinfo.cpp:28)
 
-void bdProfileInfo__deserialize(void)
+void bdProfileInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  ulonglong uVar2;
+  
+  lVar1 = __savegprlr_29();
+  uVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  if ((uVar2 & 0xff) == 0) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff82210a90,0xffffffff82210ac0,0xffffffff82210aa0,0x20,
+                 0xffffffff8220b3c8);
+  }
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

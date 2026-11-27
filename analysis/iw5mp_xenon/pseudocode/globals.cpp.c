@@ -84,8 +84,74 @@ void XAudioSetDebugPrintLevel(void)
 void XAudioLock(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  longlong lVar4;
+  int in_r13;
+  
+  uVar2 = __savegprlr_29();
+  uVar1 = DAT_848958e4;
+  if (0x20001 < (uVar2 & 0xffffffff)) {
+    if (uVar2 - 0x20002 == 0) {
+      lVar4 = RtlTryEnterCriticalSection(0xffffffff829afeb4);
+      __restgprlr_29(-(ulonglong)(lVar4 == 0) & 0xffffffff80004004);
+      return;
+    }
+    if ((uVar2 - 0x20002 & 0xffffffff) == 1) {
+      RtlLeaveCriticalSection(0xffffffff829afeb4);
+      __restgprlr_29(0);
+      return;
+    }
+LAB_828ce0e4:
+    __restgprlr_29(0xffffffff80070057);
+    return;
+  }
+  if ((uVar2 & 0xffffffff) == 0x20001) {
+    RtlEnterCriticalSection(0xffffffff829afeb4);
+    __restgprlr_29(0);
+    return;
+  }
+  uVar2 = uVar2 - 0x10001;
+  if (uVar2 == 0) {
+    uVar3 = KeRaiseIrqlToDpcLevel();
+    if ((DAT_848958dc != 0) && (in_r13 == DAT_848958e0)) goto LAB_828ce0a0;
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+  }
+  else {
+    if ((uVar2 & 0xffffffff) != 1) {
+      if ((uVar2 & 0xffffffff) == 2) {
+        uVar2 = (ulonglong)DAT_848958dc;
+        if ((DAT_848958dc != 0) && (in_r13 == DAT_848958e0)) {
+          DAT_848958dc = (uint)(uVar2 - 1);
+          if (uVar2 - 1 == 0) {
+            DAT_848958e0 = 0;
+            DAT_848958e4 = 0;
+            KeReleaseSpinLockFromRaisedIrql();
+            KfLowerIrql(uVar1);
+          }
+        }
+        __restgprlr_29(0);
+        return;
+      }
+      goto LAB_828ce0e4;
+    }
+    uVar3 = KeRaiseIrqlToDpcLevel();
+    if ((DAT_848958dc != 0) && (in_r13 == DAT_848958e0)) goto LAB_828ce0a0;
+    cVar5 = KeTryToAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    if (cVar5 == '\0') {
+      KfLowerIrql(uVar3);
+      __restgprlr_29(0xffffffff80004004);
+      return;
+    }
+  }
+  DAT_848958e4 = (undefined1)uVar3;
+  DAT_848958e0 = in_r13;
+LAB_828ce0a0:
+  DAT_848958dc = DAT_848958dc + 1;
+  __restgprlr_29(0);
+  return;
 }
 
 

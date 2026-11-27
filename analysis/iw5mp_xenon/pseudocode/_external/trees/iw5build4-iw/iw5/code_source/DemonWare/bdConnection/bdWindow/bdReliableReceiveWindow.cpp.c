@@ -27,6 +27,20 @@ int bdReliableReceiveWindow__bdReliableReceiveWindow(int param_1)
 }
 
 
+// 82935200  bdReliableReceiveWindow::~bdReliableReceiveWindow  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:26)
+
+void bdReliableReceiveWindow___bdReliableReceiveWindow(longlong param_1)
+
+{
+  undefined4 uStack00000014;
+  
+  uStack00000014 = (undefined4)param_1;
+  bdReference<bdSAckChunk>___bdReference<bdSAckChunk>(param_1 + 0x218);
+  _eh_vector_destructor_iterator_(param_1 + 0xc,4,0x80,0xffffffff82930ab8);
+  return;
+}
+
+
 // 82935948  bdReliableReceiveWindow::add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:30)
 
 void bdReliableReceiveWindow__add(undefined8 param_1,undefined8 param_2)
@@ -53,7 +67,6 @@ void bdReliableReceiveWindow__add(undefined8 param_1,undefined8 param_2)
   piVar9 = (int *)param_2;
   uVar13 = 1;
   if (*piVar9 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82218b60,0x22,0,0xffffffff820011f4,0xffffffff82218ddc,
                     0xffffffff82218dec);
   }
@@ -106,6 +119,50 @@ LAB_82935b48:
   bdReliableReceiveWindow__calculateAck(puVar1);
   bdReference<bdDataChunk>___bdReference<bdDataChunk>(param_2);
   __restgprlr_25(uVar13);
+  return;
+}
+
+
+// 82934FF0  bdReference<bdDataChunk>::operator=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.inl:68)
+
+void bdReference<bdDataChunk>__operator_(uint *param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar1 = *param_1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar4 = (ulonglong)uVar1 + 4;
+    do {
+      puVar5 = (uint *)lVar4;
+      if (in_RESERVE != '\0') {
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar3;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if ((*(int *)(uVar1 + 4) == 0) && (puVar2 = (undefined4 *)*param_1, puVar2 != (undefined4 *)0x0)
+       ) {
+      (**(code **)*puVar2)(puVar2,1);
+    }
+  }
+  *param_1 = (uint)param_2;
+  if ((param_2 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(param_2 + 4);
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,param_2 + 4);
+        *puVar5 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
   return;
 }
 
@@ -240,12 +297,197 @@ void bdReliableReceiveWindow__getDataToSend(int param_1,undefined8 param_2)
 }
 
 
+// 82935358  bdReliableReceiveWindow::getNextToRead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:105)
+
+void bdReliableReceiveWindow__getNextToRead(undefined8 param_1,longlong param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar5;
+  longlong lVar3;
+  undefined2 uVar6;
+  char cVar7;
+  undefined8 uVar4;
+  longlong lVar8;
+  longlong lVar9;
+  undefined1 local_40 [4];
+  undefined1 auStack_3c [60];
+  
+  puVar5 = (undefined4 *)__savegprlr_27();
+  *puVar5 = 0;
+  lVar9 = param_2 + 8;
+  lVar3 = bdSequenceNumber__getValue(lVar9);
+  bdSequenceNumber__bdSequenceNumber(local_40,1);
+  bdSequenceNumber__operator_(auStack_3c,lVar9,local_40);
+  lVar3 = ((lVar3 + 1U & 0x7f) + 3) * 4;
+  lVar8 = lVar3 + param_2;
+  iVar2 = (int)param_2;
+  iVar1 = *(int *)((int)lVar3 + iVar2);
+  if (iVar1 != 0) {
+    uVar6 = bdDataChunk__getSequenceNumber();
+    bdSequenceNumber__bdSequenceNumber(local_40,lVar9,uVar6,0x10);
+    cVar7 = bdSequenceNumber__operator__(auStack_3c,local_40);
+    if (cVar7 == '\0') {
+      bdSequenceNumber__getValue(local_40);
+      uVar4 = bdSequenceNumber__getValue(auStack_3c);
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82218b00,0xffffffff82218b60,0xffffffff82218be8,
+                   0x86,0xffffffff82218bc4,uVar4);
+    }
+    else {
+      bdReference<bdDataChunk>__operator_(puVar5,lVar8);
+      bdReference<bdDataChunk>__operator_(lVar8,0);
+      *(int *)lVar9 = iVar1;
+      lVar3 = (**(code **)(*(int *)*puVar5 + 0x10))();
+      lVar3 = (ulonglong)*(uint *)(iVar2 + 0x214) - lVar3;
+      *(int *)(iVar2 + 0x214) = (int)lVar3;
+      if (*(int *)(iVar2 + 0x218) == 0) {
+        bdLogMessage(2,0xffffffff8220a58c,0xffffffff82218b00,0xffffffff82218b60,0xffffffff82218be8,
+                     0x81,0xffffffff82218c10);
+      }
+      else {
+        bdSAckChunk__setWindowCredit
+                  (*(int *)(iVar2 + 0x218),(ulonglong)*(uint *)(iVar2 + 0x210) - lVar3);
+      }
+    }
+  }
+  __restgprlr_27(puVar5);
+  return;
+}
+
+
 // 82935548  bdReliableReceiveWindow::calculateAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:142)
 
 void bdReliableReceiveWindow__calculateAck(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  int iVar1;
+  int iVar4;
+  char cVar12;
+  undefined4 *puVar5;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  uint uVar7;
+  undefined4 uVar8;
+  short sVar9;
+  short sVar10;
+  undefined2 uVar11;
+  undefined1 *puVar13;
+  undefined4 *puVar14;
+  undefined1 local_b0 [4];
+  undefined1 local_ac [4];
+  undefined1 auStack_a8 [4];
+  undefined1 auStack_a4 [4];
+  undefined1 auStack_a0 [4];
+  undefined1 auStack_9c [4];
+  undefined1 local_98 [4];
+  undefined1 auStack_94 [4];
+  undefined1 auStack_90 [4];
+  undefined1 auStack_8c [4];
+  undefined1 auStack_88 [4];
+  undefined1 auStack_84 [4];
+  undefined1 auStack_80 [4];
+  undefined1 auStack_7c [4];
+  int local_78 [30];
+  undefined1 *puVar6;
+  
+  iVar4 = __savegprlr_19();
+  puVar5 = (undefined4 *)(iVar4 + 8);
+  puVar14 = (undefined4 *)(iVar4 + 4);
+  cVar12 = bdSequenceNumber__operator>(puVar14,puVar5);
+  if (cVar12 == '\0') {
+    bdSequenceNumber__bdSequenceNumber(local_ac,1);
+    puVar13 = local_ac;
+    puVar6 = auStack_9c;
+  }
+  else {
+    bdSequenceNumber__bdSequenceNumber(auStack_a8,1);
+    puVar13 = auStack_a8;
+    puVar6 = local_98;
+    puVar5 = puVar14;
+  }
+  puVar5 = (undefined4 *)bdSequenceNumber__operator_(puVar6,puVar5,puVar13);
+  uVar8 = *puVar5;
+  while ((cVar12 = bdSequenceNumber__operator<_(local_b0,iVar4), cVar12 != '\0' &&
+         (uVar7 = bdSequenceNumber__getValue(local_b0),
+         *(int *)(((uVar7 & 0x7f) + 3) * 4 + iVar4) != 0))) {
+    *puVar14 = uVar8;
+    bdSequenceNumber__operator__(local_98,local_b0,0);
+  }
+  uVar2 = bdSequenceNumber__bdSequenceNumber(local_98,0xffffffffffffffff);
+  cVar12 = bdSequenceNumber__operator__(puVar14,uVar2);
+  if (cVar12 != '\0') {
+    uVar3 = bdMemory__allocate(0x28);
+    if ((uVar3 & 0xffffffff) == 0) {
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = bdSAckChunk__bdSAckChunk
+                        (uVar3,(ulonglong)*(uint *)(iVar4 + 0x210) -
+                               (ulonglong)*(uint *)(iVar4 + 0x214),0);
+    }
+    puVar5 = (undefined4 *)(iVar4 + 0x218);
+    bdReference<bdSAckChunk>__operator_(puVar5,uVar2);
+    local_78[0] = 0;
+    bdSequenceNumber__bdSequenceNumber(auStack_a8,1);
+    bdSequenceNumber__operator_(local_98,puVar14,auStack_a8);
+    cVar12 = bdSequenceNumber__operator<_(local_b0,iVar4);
+    while (cVar12 != '\0') {
+      uVar7 = bdSequenceNumber__getValue(local_b0);
+      if (*(int *)(((uVar7 & 0x7f) + 3) * 4 + iVar4) == 0) {
+        if (local_78[0] != 0) {
+          bdSequenceNumber__bdSequenceNumber(auStack_a4,1);
+          uVar2 = bdSequenceNumber__operator_(auStack_90,local_b0,auStack_a4);
+          bdSequenceNumber__operator_(auStack_8c,uVar2,puVar14);
+          uVar8 = bdSequenceNumber__getValue();
+          bdSAckChunk__addGap(*puVar5,local_78);
+          bdSequenceNumber__bdSequenceNumber(auStack_a0,local_78[0]);
+          bdSequenceNumber__operator_(auStack_88,puVar14,auStack_a0);
+          uVar2 = bdSequenceNumber__getValue();
+          bdSequenceNumber__bdSequenceNumber(local_98,uVar2);
+          bdSequenceNumber__bdSequenceNumber(auStack_9c,uVar8);
+          bdSequenceNumber__operator_(auStack_84,puVar14,auStack_9c);
+          uVar2 = bdSequenceNumber__getValue();
+          bdSequenceNumber__bdSequenceNumber(auStack_a8,uVar2);
+          while (cVar12 = bdSequenceNumber__operator<(local_ac,auStack_a8), cVar12 != '\0') {
+            uVar7 = bdSequenceNumber__getValue(local_ac);
+            iVar1 = (uVar7 + (((int)uVar7 >> 7) + (uint)((int)uVar7 < 0 && (uVar7 & 0x7f) != 0) &
+                             0x1ffffff) * -0x80 + 3) * 4;
+            if (*(int *)(iVar1 + iVar4) == 0) {
+              MyAssertHandler(0xffffffff82218b60,0xc6,0,0xffffffff820011f4,0xffffffff82218c74,
+                              0xffffffff82218c60);
+            }
+            uVar8 = *(undefined4 *)(iVar1 + iVar4);
+            sVar9 = bdSequenceNumber__getValue(local_ac);
+            sVar10 = bdDataChunk__getSequenceNumber(uVar8);
+            if (sVar10 != sVar9) {
+              MyAssertHandler(0xffffffff82218b60,200,0,0xffffffff820011f4,0xffffffff82218ca8,
+                              0xffffffff82218c90);
+            }
+            bdSequenceNumber__operator__(auStack_80,local_ac,0);
+          }
+          local_78[0] = 0;
+        }
+      }
+      else if (local_78[0] == 0) {
+        bdSequenceNumber__operator_(auStack_94,local_b0,puVar14);
+        local_78[0] = bdSequenceNumber__getValue();
+      }
+      bdSequenceNumber__operator__(auStack_7c,local_b0,0);
+      cVar12 = bdSequenceNumber__operator<_(local_b0,iVar4);
+    }
+    if (local_78[0] != 0) {
+      bdSequenceNumber__bdSequenceNumber(local_98,1);
+      uVar2 = bdSequenceNumber__operator_(auStack_7c,local_b0,local_98);
+      bdSequenceNumber__operator_(auStack_80,uVar2,puVar14);
+      bdSequenceNumber__getValue();
+      bdSAckChunk__addGap(*puVar5,local_78);
+    }
+    uVar8 = *puVar5;
+    uVar11 = bdSequenceNumber__getValue(puVar14);
+    bdSAckChunk__setCumulativeAck(uVar8,uVar11);
+  }
+  __restgprlr_19();
+  return;
 }
 

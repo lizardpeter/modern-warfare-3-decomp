@@ -133,27 +133,177 @@ void vp8_yv12_extend_frame_borders(void)
 void vp8_yv12_extend_frame_borders_yonly(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  uint uVar2;
+  size_t _Size;
+  int *piVar3;
+  int *piVar4;
+  ulonglong uVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  void *pvVar8;
+  void *pvVar9;
+  void *_Dst;
+  size_t _Size_00;
+  
+  piVar3 = (int *)__savegprlr_23();
+  iVar1 = piVar3[6];
+  _Size_00 = piVar3[10];
+  pvVar8 = (void *)(*piVar3 + iVar1);
+  uVar2 = piVar3[1];
+  uVar5 = (ulonglong)uVar2;
+  _Size = piVar3[2];
+  pvVar9 = (void *)(iVar1 - _Size_00);
+  piVar4 = piVar3;
+  if (0 < (int)uVar2) {
+    pbVar6 = (byte *)((int)pvVar8 + (-1 - _Size));
+    pbVar7 = (byte *)(iVar1 - _Size);
+    do {
+      pbVar7 = pbVar7 + _Size;
+      vpx_memset(pvVar9,(uint)*pbVar7,_Size_00);
+      pbVar6 = pbVar6 + _Size;
+      piVar4 = vpx_memset(pvVar8,(uint)*pbVar6,_Size_00);
+      uVar5 = uVar5 - 1;
+      pvVar9 = (void *)((int)pvVar9 + _Size);
+      pvVar8 = (void *)((int)pvVar8 + _Size);
+    } while (uVar5 != 0);
+  }
+  pvVar9 = (void *)(piVar3[6] - _Size_00);
+  pvVar8 = (void *)((uVar2 - 1) * _Size + (int)pvVar9);
+  _Dst = (void *)((int)pvVar9 - _Size * _Size_00);
+  if (0 < (int)_Size_00) {
+    iVar1 = _Size - (int)_Dst;
+    do {
+      vpx_memcpy(_Dst,pvVar9,_Size);
+      piVar4 = vpx_memcpy((void *)((int)pvVar8 + iVar1 + (int)_Dst),pvVar8,_Size);
+      _Size_00 = _Size_00 - 1;
+      _Dst = (void *)((int)_Dst + _Size);
+    } while (_Size_00 != 0);
+  }
+  __restgprlr_23(piVar4);
+  return;
 }
 
 
 // 82841B78  vp8_yv12_copy_frame  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:229)
 
-void vp8_yv12_copy_frame(void)
+void vp8_yv12_copy_frame(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  size_t *psVar2;
+  size_t sVar3;
+  void *pvVar4;
+  void *pvVar5;
+  int iVar6;
+  
+  psVar2 = (size_t *)__savegprlr_27();
+  pvVar5 = (void *)psVar2[6];
+  iVar1 = (int)param_2;
+  pvVar4 = *(void **)(iVar1 + 0x18);
+  iVar6 = 0;
+  if (0 < (int)psVar2[1]) {
+    do {
+      vpx_memcpy(pvVar4,pvVar5,*psVar2);
+      iVar6 = iVar6 + 1;
+      pvVar4 = (void *)((int)pvVar4 + *(int *)(iVar1 + 8));
+      pvVar5 = (void *)((int)pvVar5 + psVar2[2]);
+    } while (iVar6 < (int)psVar2[1]);
+  }
+  sVar3 = psVar2[4];
+  iVar6 = 0;
+  pvVar5 = (void *)psVar2[7];
+  pvVar4 = *(void **)(iVar1 + 0x1c);
+  if (0 < (int)sVar3) {
+    do {
+      vpx_memcpy(pvVar4,pvVar5,psVar2[3]);
+      iVar6 = iVar6 + 1;
+      sVar3 = psVar2[4];
+      pvVar5 = (void *)(psVar2[5] + (int)pvVar5);
+      pvVar4 = (void *)(*(int *)(iVar1 + 0x14) + (int)pvVar4);
+    } while (iVar6 < (int)sVar3);
+  }
+  pvVar5 = (void *)psVar2[8];
+  iVar6 = 0;
+  pvVar4 = *(void **)(iVar1 + 0x20);
+  if (0 < (int)sVar3) {
+    do {
+      vpx_memcpy(pvVar4,pvVar5,psVar2[3]);
+      iVar6 = iVar6 + 1;
+      pvVar4 = (void *)(*(int *)(iVar1 + 0x14) + (int)pvVar4);
+      pvVar5 = (void *)(psVar2[5] + (int)pvVar5);
+    } while (iVar6 < (int)psVar2[4]);
+  }
+  (*DAT_84897348)(param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82841C80  vp8_yv12_copy_frame_yonly  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:268)
 
-void vp8_yv12_copy_frame_yonly(void)
+void vp8_yv12_copy_frame_yonly(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  size_t _Size;
+  size_t *psVar2;
+  size_t *psVar3;
+  ulonglong uVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  void *pvVar7;
+  void *pvVar8;
+  void *_Dst;
+  int iVar9;
+  size_t _Size_00;
+  
+  psVar2 = (size_t *)__savegprlr_23();
+  pvVar8 = (void *)psVar2[6];
+  pvVar7 = (void *)param_2[6];
+  iVar9 = 0;
+  psVar3 = psVar2;
+  if (0 < (int)psVar2[1]) {
+    do {
+      psVar3 = vpx_memcpy(pvVar7,pvVar8,*psVar2);
+      iVar9 = iVar9 + 1;
+      pvVar7 = (void *)((int)pvVar7 + param_2[2]);
+      pvVar8 = (void *)((int)pvVar8 + psVar2[2]);
+    } while (iVar9 < (int)psVar2[1]);
+  }
+  iVar9 = param_2[6];
+  _Size_00 = param_2[10];
+  pvVar8 = (void *)(*param_2 + iVar9);
+  uVar1 = param_2[1];
+  uVar4 = (ulonglong)uVar1;
+  _Size = param_2[2];
+  pvVar7 = (void *)(iVar9 - _Size_00);
+  if (0 < (int)uVar1) {
+    pbVar5 = (byte *)((int)pvVar8 + (-1 - _Size));
+    pbVar6 = (byte *)(iVar9 - _Size);
+    do {
+      pbVar6 = pbVar6 + _Size;
+      vpx_memset(pvVar7,(uint)*pbVar6,_Size_00);
+      pbVar5 = pbVar5 + _Size;
+      psVar3 = vpx_memset(pvVar8,(uint)*pbVar5,_Size_00);
+      uVar4 = uVar4 - 1;
+      pvVar7 = (void *)((int)pvVar7 + _Size);
+      pvVar8 = (void *)((int)pvVar8 + _Size);
+    } while (uVar4 != 0);
+  }
+  pvVar7 = (void *)(param_2[6] - _Size_00);
+  pvVar8 = (void *)((uVar1 - 1) * _Size + (int)pvVar7);
+  _Dst = (void *)((int)pvVar7 - _Size * _Size_00);
+  if (0 < (int)_Size_00) {
+    iVar9 = _Size - (int)_Dst;
+    do {
+      vpx_memcpy(_Dst,pvVar7,_Size);
+      psVar3 = vpx_memcpy((void *)((int)pvVar8 + iVar9 + (int)_Dst),pvVar8,_Size);
+      _Size_00 = _Size_00 - 1;
+      _Dst = (void *)((int)_Dst + _Size);
+    } while (_Size_00 != 0);
+  }
+  __restgprlr_23(psVar3);
+  return;
 }
 

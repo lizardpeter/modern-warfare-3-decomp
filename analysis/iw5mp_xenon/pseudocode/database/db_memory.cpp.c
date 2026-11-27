@@ -27,7 +27,6 @@ void DB_AllocXZoneMemoryInternal(undefined8 param_1,longlong param_2,ulonglong p
   do {
     if ((ulonglong)*(uint *)(iVar2 + (int)puVar9) == (param_3 & 0xffffffff)) {
       if (*(int *)lVar7 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8205af40,0x5e,0,0xffffffff8205af10,*(int *)lVar7,0);
       }
       uVar8 = (uVar5 + *puVar9 & ~uVar5) + uVar8;
@@ -42,7 +41,6 @@ void DB_AllocXZoneMemoryInternal(undefined8 param_1,longlong param_2,ulonglong p
                        *(undefined4 *)(&DAT_82967430 + iVar3),*(undefined4 *)(&DAT_82967434 + iVar3)
                       );
     if ((uVar8 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8205af40,0x66,0,0xffffffff82000f98,0xffffffff8205af0c);
     }
     lVar7 = 7;
@@ -50,7 +48,6 @@ void DB_AllocXZoneMemoryInternal(undefined8 param_1,longlong param_2,ulonglong p
       if ((ulonglong)*(uint *)((int)puVar4 + iVar2) == (param_3 & 0xffffffff)) {
         puVar9 = (uint *)param_2;
         if (*puVar9 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8205af40,0x6c,0,0xffffffff8205af10,*puVar9,0);
         }
         uVar1 = *puVar4;
@@ -86,11 +83,26 @@ void DB_AllocXZoneMemory(undefined8 param_1,undefined8 param_2,int param_3)
 
 // 823EC870  DB_Alloc  (database/db_memory.cpp:159)
 
-void DB_Alloc(void)
+void DB_Alloc(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205af40,0xa2,0,0xffffffff82000f98,0xffffffff82036204);
+  }
+  uVar2 = (ulonglong)DAT_82cc6d48;
+  uVar3 = (ulonglong)DAT_82cc6d4c + (param_2 - 1U) & ~(param_2 - 1U);
+  uVar1 = uVar3 + uVar1;
+  DAT_82cc6d4c = (uint)uVar1;
+  if ((ulonglong)DAT_82cc6d44 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205af40,0xa8,0,0xffffffff8205af84,0xffffffff8205afa4);
+  }
+  __restgprlr_29(uVar2 + uVar3);
+  return;
 }
 
 

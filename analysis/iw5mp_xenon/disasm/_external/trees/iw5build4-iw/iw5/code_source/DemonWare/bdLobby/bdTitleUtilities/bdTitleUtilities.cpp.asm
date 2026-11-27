@@ -6,9 +6,84 @@
   828FF3C0  91630004             stw r11,0x4(r3)
   828FF3C4  4E800020             blr
 
+; 828FF3C8  bdTitleUtilities::~bdTitleUtilities  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:27)
+  828FF3C8  4E800020             blr
+
 ; 828FF3E0  bdTitleUtilities::getServerTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:147)
   828FF3E0  7D8802A6             mfspr r12,LR
   828FF3E4  480172D1             bl 0x829166b4
+  828FF3E8  3BE1FF70             subi r31,r1,0x90
+  828FF3EC  9421FF70             stwu r1,-0x90(r1)
+  828FF3F0  7C7D1B78             or r29,r3,r3
+  828FF3F4  907F00A4             stw r3,0xa4(r31)
+  828FF3F8  7C9C2378             or r28,r4,r4
+  828FF3FC  7CBB2B78             or r27,r5,r5
+  828FF400  3BC00000             li r30,0x0
+  828FF404  93DF0054             stw r30,0x54(r31)
+  828FF408  93C30000             stw r30,0x0(r3)
+  828FF40C  39600001             li r11,0x1
+  828FF410  3860002C             li r3,0x2c
+  828FF414  917F0054             stw r11,0x54(r31)
+  828FF418  4BFF5C31             bl 0x828f5048
+  828FF41C  907F0058             stw r3,0x58(r31)
+  828FF420  28030000             cmplwi r3,0x0
+  828FF424  41820014             beq 0x828ff438
+  828FF428  38A00001             li r5,0x1
+  828FF42C  38800040             li r4,0x40
+  828FF430  480137A9             bl 0x82912bd8
+  828FF434  48000008             b 0x828ff43c
+LAB_828ff438:
+  828FF438  7FC3F378             or r3,r30,r30
+LAB_828ff43c:
+  828FF43C  907F0050             stw r3,0x50(r31)
+  828FF440  2B030000             cmplwi cr6,r3,0x0
+  828FF444  419A0028             beq cr6,0x828ff46c
+  828FF448  39630004             addi r11,r3,0x4
+LAB_828ff44c:
+  828FF44C  7D2000A6             mfmsr r9
+  828FF450  7DA10164             mtmsrd r13,1
+  828FF454  7D405828             lwarx r10,0,r11
+  828FF458  394A0001             addi r10,r10,0x1
+  828FF45C  7D40592D             stwcx. r10,0,r11
+  828FF460  7D210164             mtmsrd r9,1
+  828FF464  4082FFE8             bne 0x828ff44c
+  828FF468  81630004             lwz r11,0x4(r3)
+LAB_828ff46c:
+  828FF46C  38A00006             li r5,0x6
+  828FF470  3880000C             li r4,0xc
+  828FF474  387F0050             addi r3,r31,0x50
+  828FF478  48000671             bl 0x828ffae8
+  828FF47C  38BF0050             addi r5,r31,0x50
+  828FF480  7FA4EB78             or r4,r29,r29
+  828FF484  807C0000             lwz r3,0x0(r28)
+  828FF488  48001CB1             bl 0x82901138
+  828FF48C  7C6A1B79             or. r10,r3,r3
+  828FF490  4182003C             beq 0x828ff4cc
+  828FF494  3D008221             lis r8,-0x7ddf
+  828FF498  3D608221             lis r11,-0x7ddf
+  828FF49C  3CC08221             lis r6,-0x7ddf
+  828FF4A0  3CA08221             lis r5,-0x7ddf
+  828FF4A4  3C808221             lis r4,-0x7ddf
+  828FF4A8  38E8D2E8             subi r7,r8,0x2d18
+  828FF4AC  392BC90C             subi r9,r11,0x36f4
+  828FF4B0  38C6D288             subi r6,r6,0x2d78
+  828FF4B4  38A5D250             subi r5,r5,0x2db0
+  828FF4B8  3884A424             subi r4,r4,0x5bdc
+  828FF4BC  3900009D             li r8,0x9d
+  828FF4C0  38600001             li r3,0x1
+  828FF4C4  4BFF564D             bl 0x828f4b10
+  828FF4C8  48000014             b 0x828ff4dc
+LAB_828ff4cc:
+  828FF4CC  38A00001             li r5,0x1
+  828FF4D0  807D0000             lwz r3,0x0(r29)
+  828FF4D4  7F64DB78             or r4,r27,r27
+  828FF4D8  4BFF9E79             bl 0x828f9350
+LAB_828ff4dc:
+  828FF4DC  387F0050             addi r3,r31,0x50
+  828FF4E0  4BFFDB29             bl 0x828fd008
+  828FF4E4  7FA3EB78             or r3,r29,r29
+  828FF4E8  383F0090             addi r1,r31,0x90
+  828FF4EC  48017218             b 0x82916704
 
 ; 828FF588  bdTitleUtilities::getUserNames  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtitleutilities.cpp:218)
   828FF588  7D8802A6             mfspr r12,LR

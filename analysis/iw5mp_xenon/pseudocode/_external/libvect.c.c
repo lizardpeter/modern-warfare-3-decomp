@@ -103,10 +103,136 @@ void ScaleVector(double param_1,int param_2,longlong param_3,undefined8 param_4,
 
 // 828C9238  FindMaxValueFlt  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/libvect.c:334)
 
-void FindMaxValueFlt(void)
+void FindMaxValueFlt(undefined8 param_1,int param_2,int *param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int local_30;
+  
+  piVar2 = (int *)__savegprlr_29();
+  local_30 = *piVar2;
+  iVar7 = 0;
+  iVar6 = 0;
+  iVar5 = 1;
+  iVar8 = local_30;
+  if (local_30 < 0) {
+    iVar4 = 2;
+    piVar3 = piVar2 + 3;
+    iVar7 = 0;
+    do {
+      if (param_2 < iVar4 + 3) break;
+      iVar1 = piVar3[-2];
+      if (local_30 < iVar1) {
+        local_30 = iVar1;
+        iVar6 = iVar5;
+      }
+      if (iVar1 < iVar8) {
+        iVar8 = iVar1;
+        iVar7 = iVar5;
+      }
+      iVar1 = piVar3[-1];
+      if (local_30 < iVar1) {
+        local_30 = iVar1;
+        iVar6 = iVar4;
+      }
+      if (iVar1 < iVar8) {
+        iVar8 = iVar1;
+        iVar7 = iVar4;
+      }
+      iVar1 = *piVar3;
+      if (local_30 < iVar1) {
+        iVar6 = iVar4 + 1;
+        local_30 = iVar1;
+      }
+      if (iVar1 < iVar8) {
+        iVar7 = iVar4 + 1;
+        iVar8 = iVar1;
+      }
+      iVar1 = piVar3[1];
+      if (local_30 < iVar1) {
+        iVar6 = iVar4 + 2;
+        local_30 = iVar1;
+      }
+      if (iVar1 < iVar8) {
+        iVar7 = iVar4 + 2;
+        iVar8 = iVar1;
+      }
+      iVar5 = iVar5 + 4;
+      piVar3 = piVar3 + 4;
+      iVar4 = iVar4 + 4;
+    } while (local_30 < 0);
+    if (local_30 < 0) {
+      piVar3 = piVar2 + iVar5;
+      do {
+        if (param_2 <= iVar5) break;
+        iVar4 = *piVar3;
+        if (local_30 < iVar4) {
+          local_30 = iVar4;
+          iVar6 = iVar5;
+        }
+        if (iVar4 < iVar8) {
+          iVar8 = iVar4;
+          iVar7 = iVar5;
+        }
+        iVar5 = iVar5 + 1;
+        piVar3 = piVar3 + 1;
+      } while (local_30 < 0);
+    }
+  }
+  if (iVar5 + 4 <= param_2) {
+    piVar3 = piVar2 + iVar5 + 2;
+    iVar4 = iVar5;
+    iVar1 = iVar5 + 4;
+    do {
+      iVar5 = iVar1;
+      if (local_30 < piVar3[-2]) {
+        local_30 = piVar3[-2];
+        iVar6 = iVar4;
+      }
+      if (local_30 < piVar3[-1]) {
+        iVar6 = iVar4 + 1;
+        local_30 = piVar3[-1];
+      }
+      if (local_30 < *piVar3) {
+        iVar6 = iVar4 + 2;
+        local_30 = *piVar3;
+      }
+      if (local_30 < piVar3[1]) {
+        iVar6 = iVar4 + 3;
+        local_30 = piVar3[1];
+      }
+      piVar3 = piVar3 + 4;
+      iVar4 = iVar5;
+      iVar1 = iVar5 + 4;
+    } while (iVar5 + 4 <= param_2);
+  }
+  if (iVar5 < param_2) {
+    param_2 = param_2 - iVar5;
+    piVar2 = piVar2 + iVar5;
+    do {
+      if (local_30 < *piVar2) {
+        local_30 = *piVar2;
+        iVar6 = iVar5;
+      }
+      iVar5 = iVar5 + 1;
+      piVar2 = piVar2 + 1;
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  if (local_30 < 0) {
+    iVar6 = iVar7;
+    local_30 = iVar8;
+  }
+  *param_3 = iVar6;
+  *param_4 = local_30;
+  __restgprlr_29();
+  return;
 }
 

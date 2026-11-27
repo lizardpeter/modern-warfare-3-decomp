@@ -12,13 +12,73 @@ void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>___bdHashMap<bdString,b
 }
 
 
+// 8290E0A0  bdHTTPWrapperBase::bdHTTPWrapperBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:44)
+
+void bdHTTPWrapperBase__bdHTTPWrapperBase(void)
+
+{
+  undefined4 *puVar2;
+  ulonglong uVar1;
+  undefined4 uVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  bdRunnable__bdRunnable();
+  puVar2[2] = 0xffffffff;
+  *puVar2 = &PTR_bdHTTPWrapperBase___scalar_deleting_destructor__82211588;
+  *(undefined1 *)(puVar2 + 4) = 1;
+  *(undefined1 *)((int)puVar2 + 0x11) = 0;
+  bdMutex__bdMutex(puVar2 + 5);
+  puVar2[7] = 0;
+  puVar2[8] = 0;
+  puVar2[9] = 0;
+  uVar1 = bdMemory__allocate(4);
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdSemaphore__bdSemaphore(uVar1,0,1);
+  }
+  puVar2[6] = uVar3;
+  __restgprlr_29(puVar2);
+  return;
+}
+
+
 // 8290F278  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
 
 void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  int iVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_26();
+  if (puVar3[6] != 0) {
+    MyAssertHandler(0xffffffff8220d568,0x31,0,0xffffffff820011f4,0xffffffff8220d5bc,
+                    0xffffffff8220d678);
+  }
+  uVar4 = 0;
+  if (puVar3[1] != 0) {
+    iVar5 = 0;
+    do {
+      iVar2 = *(int *)(puVar3[4] + iVar5);
+      while (iVar2 != 0) {
+        iVar1 = *(int *)(iVar2 + 0x10);
+        bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node___Node(iVar2);
+        bdMemory__deallocate(iVar2);
+        iVar2 = iVar1;
+      }
+      uVar4 = uVar4 + 1;
+      *(undefined4 *)(puVar3[4] + iVar5) = 0;
+      iVar5 = iVar5 + 4;
+    } while (uVar4 < (uint)puVar3[1]);
+  }
+  *puVar3 = 0;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -49,11 +109,71 @@ void bdString__operator_delete(void)
 
 // 8290EF78  bdArray<bdString>::operator=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:54)
 
-void bdArray<bdString>__operator_(void)
+void bdArray<bdString>__operator_(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint *puVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  uint uVar6;
+  undefined8 uVar5;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  
+  uVar4 = __savegprlr_27();
+  if ((uVar4 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    puVar2 = (uint *)param_2;
+    uVar1 = puVar2[2];
+    uVar10 = (ulonglong)uVar1;
+    puVar3 = (uint *)uVar4;
+    if (puVar3[1] < uVar10) {
+      bdArray<bdString>__clear();
+      uVar6 = bdArray<bdString>__uninitializedCopy(uVar4,param_2);
+      *puVar3 = uVar6;
+      puVar3[1] = puVar2[1];
+    }
+    else {
+      uVar9 = 0;
+      if (uVar10 <= puVar3[2]) {
+        if (uVar10 != 0) {
+          lVar7 = 0;
+          do {
+            uVar5 = bdArray<bdString>__operator__(param_2,uVar9);
+            bdString__operator_(lVar7 + (ulonglong)*puVar3,uVar5);
+            uVar9 = uVar9 + 1;
+            lVar7 = lVar7 + 4;
+          } while ((uVar9 & 0xffffffff) < uVar10);
+        }
+        lVar8 = ((ulonglong)uVar1 & 0x3fffffff) * 4 + (ulonglong)*puVar3;
+        for (lVar7 = puVar3[2] - uVar10; lVar7 != 0; lVar7 = lVar7 + -1) {
+          bdString___bdString(lVar8);
+          lVar8 = lVar8 + 4;
+        }
+        puVar3[2] = uVar1;
+        bdArray<bdString>__decreaseCapacity(uVar4,0);
+        goto LAB_8290f0b4;
+      }
+      if (puVar3[2] != 0) {
+        lVar7 = 0;
+        do {
+          uVar5 = bdArray<bdString>__operator__(param_2,uVar9);
+          bdString__operator_(lVar7 + (ulonglong)*puVar3,uVar5);
+          uVar9 = uVar9 + 1;
+          lVar7 = lVar7 + 4;
+        } while ((uVar9 & 0xffffffff) < (ulonglong)puVar3[2]);
+      }
+      lVar7 = ((ulonglong)puVar3[2] & 0x3fffffff) * 4;
+      bdArray<bdString>__copyConstructArrayArray
+                (uVar4,lVar7 + (ulonglong)*puVar3,(ulonglong)*puVar2 + lVar7,uVar10 - puVar3[2]);
+    }
+    puVar3[2] = uVar1;
+  }
+LAB_8290f0b4:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -83,11 +203,21 @@ undefined8 bdHTTPWrapperBase__isOkayToStart(int param_1)
 
 // 8290F0C0  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::get  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:72)
 
-void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__get(void)
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__get
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_29();
+  lVar2 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__getIterator();
+  if (lVar2 != 0) {
+    bdArray<bdString>__operator_(param_3,lVar2);
+    bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__releaseIterator(uVar1,lVar2);
+  }
+  __restgprlr_29(lVar2 != 0);
+  return;
 }
 
 
@@ -117,11 +247,85 @@ void bdHTTPWrapperBase__finalize(int param_1)
 
 // 8290E030  bdHashingClass::getHash<bdString>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.h:88)
 
-void bdHashingClass__getHash<bdString>(void)
+void bdHashingClass__getHash<bdString>(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char *pcVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  
   __savegprlr_28();
+  lVar5 = 0;
+  iVar6 = 0;
+  uVar3 = bdString__getLength(param_2);
+  iVar4 = bdString__getBuffer(param_2);
+  uVar2 = uVar3 & 0xffffffff;
+  while (uVar2 != 0) {
+    pcVar1 = (char *)(iVar4 + iVar6);
+    iVar6 = iVar6 + 1;
+    lVar5 = (longlong)*pcVar1 + lVar5 * 0x1f;
+    uVar3 = uVar3 - 1;
+    uVar2 = uVar3;
+  }
+  __restgprlr_28(lVar5);
+  return;
+}
+
+
+// 8290F118  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
+
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__put
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  int *piVar4;
+  ulonglong uVar2;
+  char cVar6;
+  undefined4 uVar5;
+  undefined8 uVar3;
+  ulonglong uVar7;
+  
+  piVar4 = (int *)__savegprlr_25();
+  if (piVar4[6] != 0) {
+    MyAssertHandler(0xffffffff8220d568,0x5b,0,0xffffffff820011f4,0xffffffff8220d5bc,
+                    0xffffffff8220d5d0);
+  }
+  uVar2 = bdHashingClass__getHash<bdString>(piVar4 + 5,param_2);
+  uVar7 = (ulonglong)(uint)piVar4[1] - 1 & uVar2;
+  iVar1 = *(int *)((int)((uVar7 & 0xffffffff) << 2) + piVar4[4]);
+  do {
+    if (iVar1 == 0) {
+      if ((uint)piVar4[3] < *piVar4 + 1U) {
+        bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__resize(piVar4,piVar4[1] << 1);
+        uVar7 = (ulonglong)(uint)piVar4[1] - 1 & uVar2;
+      }
+      *piVar4 = *piVar4 + 1;
+      uVar2 = bdMemory__allocate(0x14);
+      if ((uVar2 & 0xffffffff) == 0) {
+        uVar5 = 0;
+      }
+      else {
+        uVar5 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node__Node
+                          (uVar2,param_2,param_3,
+                           *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + piVar4[4]));
+      }
+      uVar3 = 1;
+      *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + piVar4[4]) = uVar5;
+LAB_8290f244:
+      __restgprlr_25(uVar3);
+      return;
+    }
+    cVar6 = bdString__operator__(param_2,iVar1 + 0xc);
+    if (cVar6 != '\0') {
+      uVar3 = 0;
+      goto LAB_8290f244;
+    }
+    iVar1 = *(int *)(iVar1 + 0x10);
+  } while( true );
 }
 
 
@@ -131,7 +335,6 @@ longlong bdArray<bdString>__operator__(uint *param_1,ulonglong param_2)
 
 {
   if ((ulonglong)param_1[2] <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82211100,0x68,0,0xffffffff820011f4,0xffffffff821b6d14,
                     0xffffffff821b6d24);
   }
@@ -141,11 +344,24 @@ longlong bdArray<bdString>__operator__(uint *param_1,ulonglong param_2)
 
 // 8290E2F8  bdHTTPWrapperBase::startAsyncOperation  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:111)
 
-void bdHTTPWrapperBase__startAsyncOperation(void)
+void bdHTTPWrapperBase__startAsyncOperation(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  bdMutex__lock(iVar2 + 0x14);
+  bVar1 = *(char *)(iVar2 + 0x11) == '\0';
+  if (bVar1) {
+    *(undefined4 *)(iVar2 + 0x24) = param_2;
+    *(undefined4 *)(iVar2 + 0x20) = 1;
+    Sys_SignalPendingHTTPOperation(*(undefined4 *)(iVar2 + 8));
+    bdSemaphore__release(*(undefined4 *)(iVar2 + 0x18));
+  }
+  bdMutex__unlock(iVar2 + 0x14);
+  __restgprlr_28(bVar1);
+  return;
 }
 
 
@@ -155,7 +371,6 @@ longlong bdArray<bdString>__operator__(uint *param_1,ulonglong param_2)
 
 {
   if ((ulonglong)param_1[2] <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82211100,0x70,0,0xffffffff820011f4,0xffffffff821b6d14,
                     0xffffffff821b6d24);
   }
@@ -165,21 +380,211 @@ longlong bdArray<bdString>__operator__(uint *param_1,ulonglong param_2)
 
 // 8290EC60  bdArray<bdString>::increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:137)
 
-void bdArray<bdString>__increaseCapacity(void)
+void bdArray<bdString>__increaseCapacity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint *puVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  puVar1 = (uint *)__savegprlr_27();
+  uVar2 = (ulonglong)puVar1[1];
+  if ((param_2 & 0xffffffff) <= uVar2) {
+    param_2 = uVar2;
+  }
+  uVar2 = uVar2 + param_2;
+  uVar3 = 0;
+  if (uVar2 != 0) {
+    uVar3 = bdMemory__allocate((uVar2 & 0x3fffffff) << 2);
+    bdArray<bdString>__copyConstructArrayArray(puVar1,uVar3,*puVar1,puVar1[2]);
+  }
+  uVar4 = (ulonglong)*puVar1;
+  for (uVar5 = (ulonglong)puVar1[2]; uVar5 != 0; uVar5 = uVar5 - 1) {
+    bdString___bdString(uVar4);
+    uVar4 = uVar4 + 4;
+  }
+  bdMemory__deallocate(*puVar1);
+  *puVar1 = (uint)uVar3;
+  puVar1[1] = (uint)uVar2;
+  __restgprlr_27();
+  return;
+}
+
+
+// 8290EEF8  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::Node::Node  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.h:142)
+
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node__Node
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  puVar1[1] = *(undefined4 *)((int)param_3 + 4);
+  puVar1[2] = *(undefined4 *)((int)param_3 + 8);
+  uVar2 = bdArray<bdString>__uninitializedCopy(puVar1,param_3);
+  *puVar1 = uVar2;
+  bdString__bdString(puVar1 + 3,param_2);
+  puVar1[4] = param_4;
+  __restgprlr_28(puVar1);
+  return;
+}
+
+
+// 8290ED48  bdArray<bdString>::decreaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:170)
+
+void bdArray<bdString>__decreaseCapacity(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  uint *puVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  
+  puVar2 = (uint *)__savegprlr_28();
+  uVar3 = (ulonglong)puVar2[1];
+  if (((ulonglong)puVar2[2] & 0x3fffffff) << 2 < uVar3) {
+    uVar4 = uVar3 - puVar2[2];
+    if ((param_2 & 0xffffffff) <= (uVar4 & 0xffffffff)) {
+      uVar4 = param_2;
+    }
+    uVar1 = (ulonglong)(puVar2[1] >> 1);
+    if ((uVar4 & 0xffffffff) <= uVar1) {
+      uVar4 = uVar1;
+    }
+    uVar3 = uVar3 - uVar4;
+    uVar5 = 0;
+    puVar2[1] = (uint)uVar3;
+    if (uVar3 != 0) {
+      uVar5 = bdMemory__allocate((uVar3 & 0x3fffffff) << 2);
+      bdArray<bdString>__copyConstructArrayArray(puVar2,uVar5,*puVar2,puVar2[2]);
+    }
+    uVar4 = (ulonglong)*puVar2;
+    for (uVar3 = (ulonglong)puVar2[2]; uVar3 != 0; uVar3 = uVar3 - 1) {
+      bdString___bdString(uVar4);
+      uVar4 = uVar4 + 4;
+    }
+    bdMemory__deallocate(*puVar2);
+    *puVar2 = (uint)uVar5;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 8290F448  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:198)
+
+int bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__remove(char *_Filename)
+
+{
+  int iVar1;
+  int *piVar3;
+  uint uVar4;
+  char cVar6;
+  undefined8 uVar2;
+  int iVar5;
+  undefined8 in_r4;
+  undefined8 in_r5;
+  int iVar7;
+  
+  piVar3 = (int *)__savegprlr_26(_Filename);
+  uVar4 = bdHashingClass__getHash<bdString>(piVar3 + 5);
+  iVar1 = (piVar3[1] - 1U & uVar4) * 4;
+  iVar5 = *(int *)(piVar3[4] + iVar1);
+  iVar7 = 0;
+  if (piVar3[6] != 0) {
+    MyAssertHandler(0xffffffff8220d568,0xce,0,0xffffffff820011f4,0xffffffff8220d5bc,
+                    0xffffffff8220d7c8);
+  }
+  do {
+    if (iVar5 == 0) {
+      uVar2 = 0;
+LAB_8290f4e8:
+      iVar5 = __restgprlr_26(uVar2);
+      return iVar5;
+    }
+    cVar6 = bdString__operator__(in_r4,iVar5 + 0xc);
+    if (cVar6 != '\0') {
+      if (iVar7 == 0) {
+        *(undefined4 *)(piVar3[4] + iVar1) = *(undefined4 *)(iVar5 + 0x10);
+      }
+      else {
+        *(undefined4 *)(iVar7 + 0x10) = *(undefined4 *)(iVar5 + 0x10);
+      }
+      bdArray<bdString>__operator_(in_r5,iVar5);
+      bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node___Node(iVar5);
+      bdMemory__deallocate(iVar5);
+      uVar2 = 1;
+      *piVar3 = *piVar3 + -1;
+      goto LAB_8290f4e8;
+    }
+    iVar7 = iVar5;
+    iVar5 = *(int *)(iVar5 + 0x10);
+  } while( true );
 }
 
 
 // 8290FA78  bdHTTPWrapperBase::parseURL  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:200)
 
-void bdHTTPWrapperBase__parseURL(void)
+void bdHTTPWrapperBase__parseURL
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,uint *param_4,int *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char *pcVar2;
+  int iVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  char *_Str;
+  
+  uVar1 = __savegprlr_26();
+  _Str = (char *)param_2;
+  pcVar2 = strchr(_Str,0x2f);
+  *param_4 = (uint)pcVar2;
+  if (pcVar2 == (char *)0x0) {
+    uVar1 = 0xee;
+LAB_8290fb98:
+    uVar4 = 0xffffffff82211c90;
+  }
+  else {
+    pcVar2 = strchr(_Str,0x3a);
+    if ((longlong)(int)pcVar2 != 0) {
+      iVar3 = atoi(pcVar2 + 1);
+      uVar5 = (longlong)(int)pcVar2 - 1;
+      *param_5 = iVar3;
+      if (((uVar5 & 0xffffffff) < (param_2 & 0xffffffff)) ||
+         ((ulonglong)*param_4 < (uVar5 & 0xffffffff))) {
+        uVar1 = 0x104;
+      }
+      else {
+        if (iVar3 != 0) goto LAB_8290fb08;
+        uVar1 = 0x10a;
+      }
+      goto LAB_8290fb98;
+    }
+    iVar3 = strncmp(_Str,"https://",8);
+    *param_5 = (-(uint)(iVar3 != 0) & 0xfffffe95) + 0x1bb;
+    uVar5 = (ulonglong)*param_4 - 1;
+LAB_8290fb08:
+    uVar5 = (uVar5 - param_2) + 2;
+    if ((-1 < (longlong)uVar5) && ((uVar5 & 0xffffffff) < 0x181)) {
+      bdStrlcpy(param_3,param_2);
+      uVar1 = bdHTTPWrapperBase__serverNameToIP(uVar1,param_3);
+      goto LAB_8290fbc8;
+    }
+    uVar4 = 0xffffffff82211ce4;
+    uVar1 = 0x115;
+  }
+  bdLogMessage(2,0xffffffff8220a58c,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211c70,uVar1,
+               uVar4,param_2);
+  uVar1 = 0;
+LAB_8290fbc8:
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
@@ -188,8 +593,37 @@ void bdHTTPWrapperBase__parseURL(void)
 void bdArray<bdString>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  puVar1 = (uint *)__savegprlr_29();
+  uVar2 = (ulonglong)*puVar1;
+  for (uVar3 = (ulonglong)puVar1[2]; uVar3 != 0; uVar3 = uVar3 - 1) {
+    bdString___bdString(uVar2);
+    uVar2 = uVar2 + 4;
+  }
+  bdMemory__deallocate(*puVar1);
+  *puVar1 = 0;
+  puVar1[2] = 0;
+  puVar1[1] = 0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 8290EE00  bdArray<bdString>::pushBack  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:288)
+
+void bdArray<bdString>__pushBack(uint *param_1,undefined8 param_2)
+
+{
+  if (param_1[2] == param_1[1]) {
+    bdArray<bdString>__increaseCapacity(param_1,1);
+  }
+  bdArray<bdString>__copyConstructObjectObject
+            (param_1,((ulonglong)param_1[2] & 0x3fffffff) * 4 + (ulonglong)*param_1,param_2);
+  param_1[2] = param_1[2] + 1;
+  return;
 }
 
 
@@ -233,13 +667,60 @@ undefined1 bdHTTPWrapperBase__initPump(int param_1)
 }
 
 
-// 8290EA98  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:325)
+// 8290F548  bdHTTPWrapperBase::serverNameToIP  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:317)
 
-void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__getIterator(void)
+/* WARNING: Removing unreachable block (ram,0x8290f5c4) */
+/* WARNING: Removing unreachable block (ram,0x8290f594) */
+/* WARNING: Removing unreachable block (ram,0x8290f5c8) */
+
+void bdHTTPWrapperBase__serverNameToIP(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined1 auStack_40 [8];
+  undefined1 local_38 [56];
+  
+  iVar1 = __savegprlr_29();
+  bdString__bdString(auStack_40);
+  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__get
+            (*(undefined4 *)(iVar1 + 0xc),auStack_40,local_38);
+  bdStrlcpy(param_2,0xffffffff820068af,1);
+  bdLogMessage(2,0xffffffff8220a58c,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211a08,0x154,
+               0xffffffff82211a2c);
+  bdArray<bdString>__clear(local_38);
+  bdString___bdString(auStack_40);
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 8290EA98  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:325)
+
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__getIterator
+               (undefined8 param_1,undefined8 param_2)
+
+{
+  int *piVar1;
+  uint uVar2;
+  char cVar4;
+  int iVar3;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (*piVar1 != 0) {
+    uVar2 = bdHashingClass__getHash<bdString>(piVar1 + 5);
+    for (iVar3 = *(int *)((piVar1[1] - 1U & uVar2) * 4 + piVar1[4]); iVar3 != 0;
+        iVar3 = *(int *)(iVar3 + 0x10)) {
+      cVar4 = bdString__operator__(param_2,iVar3 + 0xc);
+      if (cVar4 != '\0') {
+        piVar1[6] = piVar1[6] + 1;
+        goto LAB_8290eb00;
+      }
+    }
+  }
+  iVar3 = 0;
+LAB_8290eb00:
+  __restgprlr_29(iVar3);
+  return;
 }
 
 
@@ -255,6 +736,37 @@ int bdLSPEnumerator__bdLSPEnumerator(int param_1)
   *(undefined4 *)(param_1 + 0x40) = 0;
   *(undefined1 *)(param_1 + 0x44) = 0;
   return param_1;
+}
+
+
+// 8290F740  bdLSPEnumerator::~bdLSPEnumerator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:363)
+
+void bdLSPEnumerator___bdLSPEnumerator(int param_1)
+
+{
+  int iStack00000014;
+  
+  iStack00000014 = param_1;
+  bdLSPEnumerator__cleanupEnumHandle();
+  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__clear(param_1);
+  bdMemory__deallocate(*(undefined4 *)(param_1 + 0x10));
+  return;
+}
+
+
+// 8290E4D0  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::releaseIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:368)
+
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__releaseIterator(int param_1,int param_2)
+
+{
+  if (param_2 != 0) {
+    if (*(int *)(param_1 + 0x18) == 0) {
+      MyAssertHandler(0xffffffff8220d568,0x174,0,0xffffffff820011f4,0xffffffff8220d500,
+                      0xffffffff8220d518);
+    }
+    *(int *)(param_1 + 0x18) = *(int *)(param_1 + 0x18) + -1;
+  }
+  return;
 }
 
 
@@ -296,8 +808,26 @@ void bdLSPEnumerator__cancelTasks(int param_1)
 void bdLSPEnumerator__decRefCount(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (*(char *)(iVar1 + 0x38) != '\0') {
+    DAT_84895da8 = DAT_84895da8 + -1;
+    if (DAT_84895da8 == 0) {
+      if (DAT_84895da4 == 0) {
+        MyAssertHandler(0xffffffff822116a8,0x195,0,0xffffffff82000f98,0xffffffff82211698);
+      }
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211648,
+                   0x196,0xffffffff82211668);
+      bdMemory__deallocate(DAT_84895da4);
+      DAT_84895da4 = 0;
+      DAT_84895dac = 0;
+      DAT_84895da8 = 0;
+    }
+    *(undefined1 *)(iVar1 + 0x38) = 0;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -367,11 +897,30 @@ LAB_8290ea14:
 
 // 8290E640  bdArray<bdString>::copyConstructArrayArray  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:466)
 
-void bdArray<bdString>__copyConstructArrayArray(void)
+void bdArray<bdString>__copyConstructArrayArray
+               (undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar2 = (int)param_4;
+  uVar1 = (undefined4)((ulonglong)param_4 >> 0x20);
   __savegprlr_28();
+  if (iVar2 != 0) {
+    param_3 = param_3 - param_2;
+    lVar3 = CONCAT44(uVar1,iVar2);
+    do {
+      if ((param_2 & 0xffffffff) != 0) {
+        bdString__bdString(param_2,param_3 + param_2);
+      }
+      lVar3 = lVar3 + -1;
+      param_2 = param_2 + 4;
+    } while (lVar3 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -401,23 +950,224 @@ void * bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__createMap
 }
 
 
+// 8290E550  bdArray<bdString>::copyConstructObjectObject  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:499)
+
+void bdArray<bdString>__copyConstructObjectObject
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  undefined4 uStack0000001c;
+  
+  uStack0000001c = (undefined4)param_2;
+  if ((param_2 & 0xffffffff) != 0) {
+    bdString__bdString(param_2,param_3);
+  }
+  return;
+}
+
+
 // 8290FBD0  bdLSPEnumerator::pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:500)
 
 void bdLSPEnumerator__pump(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined8 uVar4;
+  
+  iVar3 = __savegprlr_26();
+  if (*(char *)(iVar3 + 0x44) == '\0') {
+    if (DAT_84895dac == '\0') {
+      if (*(int *)(iVar3 + 0x40) == 0) {
+        if (DAT_84895dad != '\0') {
+          bdLSPEnumerator__start();
+          uVar1 = 0;
+          DAT_84895dad = '\0';
+          goto LAB_8290fd74;
+        }
+      }
+      else if (*(int *)(iVar3 + 0x1c) != 0x3e5) {
+        uVar2 = XGetOverlappedResult(iVar3 + 0x1c,0xffffffff84895db0,0);
+        if ((uVar2 & 0xffffffff) == 0) {
+          bdLogMessage(uVar2,0xffffffff8220b6f8,0xffffffff82211690,0xffffffff822116a8,
+                       0xffffffff82211e5c,0x210,0xffffffff82211e34);
+          if (DAT_84895db0 == 0) {
+            uVar4 = 0xffffffff82211de8;
+            uVar1 = 0x215;
+            goto LAB_8290fd10;
+          }
+        }
+        else {
+          if ((uVar2 & 0xffffffff) == 0x12) {
+            uVar1 = 0x21a;
+            uVar4 = 0xffffffff82211dd0;
+          }
+          else {
+            uVar1 = 0x21e;
+            uVar4 = 0xffffffff82211d88;
+          }
+LAB_8290fd10:
+          bdLogMessage(2,0xffffffff8220a58c,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211e5c
+                       ,uVar1,uVar4);
+        }
+        DAT_84895dac = '\x01';
+        goto LAB_8290fd60;
+      }
+      uVar1 = 0;
+      goto LAB_8290fd74;
+    }
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211e5c,0x225
+                 ,0xffffffff82211d28);
+LAB_8290fd60:
+    bdLSPEnumerator__parseResultsBuffer(iVar3);
+    bdLSPEnumerator__cleanupEnumHandle(iVar3);
+  }
+  uVar1 = 1;
+LAB_8290fd74:
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
 // 8290E6C0  bdArray<bdString>::uninitializedCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:515)
 
-void bdArray<bdString>__uninitializedCopy(void)
+void bdArray<bdString>__uninitializedCopy(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = 0;
+  if (param_2[1] != 0) {
+    uVar2 = bdMemory__allocate(param_2[1] << 2);
+    bdArray<bdString>__copyConstructArrayArray(uVar1,uVar2,*param_2,param_2[2]);
+  }
+  __restgprlr_29(uVar2);
+  return;
+}
+
+
+// 8290F330  bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
+
+void bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__resize
+               (undefined8 param_1,undefined8 param_2)
+
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar5;
+  ulonglong uVar4;
+  void *_Dst;
+  int *piVar6;
+  ulonglong uVar7;
+  
+  puVar5 = (undefined4 *)__savegprlr_26();
+  piVar1 = (int *)puVar5[4];
+  uVar7 = (ulonglong)(uint)puVar5[1];
+  uVar4 = bdBitOperations__nextPowerOf2(param_2);
+  if ((ulonglong)(uint)puVar5[1] < (uVar4 & 0xffffffff)) {
+    puVar5[1] = (int)uVar4;
+    puVar5[3] = (int)(longlong)((float)puVar5[2] * (float)(uVar4 & 0xffffffff));
+    _Dst = (void *)bdMemory__allocate((uVar4 & 0x3fffffff) << 2);
+    puVar5[4] = _Dst;
+    *puVar5 = 0;
+    memset(_Dst,0,puVar5[1] << 2);
+    piVar6 = piVar1;
+    for (; uVar7 != 0; uVar7 = uVar7 - 1) {
+      iVar3 = *piVar6;
+      while (iVar3 != 0) {
+        bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__put(puVar5,iVar3 + 0xc,iVar3);
+        iVar2 = *(int *)(iVar3 + 0x10);
+        bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__Node___Node(iVar3);
+        bdMemory__deallocate(iVar3);
+        iVar3 = iVar2;
+      }
+      piVar6 = piVar6 + 1;
+    }
+    bdMemory__deallocate(piVar1);
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 8290F7C0  bdLSPEnumerator::parseResultsBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:559)
+
+void bdLSPEnumerator__parseResultsBuffer(void)
+
+{
+  undefined4 uVar1;
+  int *_Filename;
+  uint uVar3;
+  undefined8 uVar2;
+  char cVar4;
+  uint uVar5;
+  int iVar6;
+  undefined1 local_c0;
+  undefined1 uStack_bf;
+  undefined1 uStack_be;
+  undefined1 uStack_bd;
+  undefined1 auStack_bc [4];
+  undefined1 auStack_b8 [4];
+  undefined1 auStack_b4 [4];
+  undefined1 local_b0 [16];
+  undefined1 auStack_a0 [160];
+  
+  _Filename = (int *)__savegprlr_17();
+  uVar5 = 0;
+  if (DAT_84895db0 != 0) {
+    iVar6 = 0;
+    do {
+      bdString__bdString(auStack_bc,iVar6 + DAT_84895da4 + 8);
+      uVar1 = *(undefined4 *)(iVar6 + DAT_84895da4);
+      uStack_bf = (undefined1)((uint)uVar1 >> 0x10);
+      local_c0 = (undefined1)((uint)uVar1 >> 0x18);
+      uStack_bd = (undefined1)uVar1;
+      uStack_be = (undefined1)((uint)uVar1 >> 8);
+      bdSnprintf(auStack_a0,0x11,0xffffffff82211b28,local_c0,uStack_bf,uStack_be,uStack_bd);
+      uVar3 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__remove((char *)_Filename);
+      if ((uVar3 & 0xff) == 0) {
+        uVar2 = bdString__bdString(auStack_b8,auStack_a0);
+        bdArray<bdString>__pushBack(local_b0,uVar2);
+        bdString___bdString(auStack_b8);
+        bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211b58,
+                     0x23c,0xffffffff82211b38,iVar6 + DAT_84895da4 + 8);
+        cVar4 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__put
+                          (_Filename,auStack_bc,local_b0);
+        if (cVar4 == '\0') {
+          uVar2 = 0x240;
+LAB_8290f978:
+          bdLogMessage(2,0xffffffff8220a58c,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211b58
+                       ,uVar2,0xffffffff82211b80);
+        }
+      }
+      else {
+        uVar2 = bdString__bdString(auStack_b4,auStack_a0);
+        bdArray<bdString>__pushBack(local_b0,uVar2);
+        bdString___bdString(auStack_b4);
+        bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82211690,0xffffffff822116a8,0xffffffff82211b58,
+                     0x247,0xffffffff82211b38,iVar6 + DAT_84895da4 + 8);
+        cVar4 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>__put
+                          (_Filename,auStack_bc,local_b0);
+        if (cVar4 == '\0') {
+          uVar2 = 0x24b;
+          goto LAB_8290f978;
+        }
+      }
+      bdArray<bdString>__clear(local_b0);
+      bdString___bdString(auStack_bc);
+      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 0xd0;
+    } while (uVar5 < DAT_84895db0);
+  }
+  if (0 < *_Filename) {
+    *(undefined1 *)(_Filename + 0x11) = 1;
+  }
+  __restgprlr_17();
+  return;
 }
 
 

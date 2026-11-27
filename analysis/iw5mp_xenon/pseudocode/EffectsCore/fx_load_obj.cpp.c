@@ -9,7 +9,6 @@ void FX_Register_FastFile(undefined8 param_1)
   
   iVar1 = I_strncmp(param_1,0xffffffff82026dc4,3);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82065300,0x657,0,0xffffffff82065348,0xffffffff82065358,param_1);
   }
   DB_FindXAssetHeader(0x1d,param_1,1);

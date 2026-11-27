@@ -50,6 +50,37 @@ void Float4x4InfinitePerspectiveMatrix(void)
 }
 
 
+// 824158C8  CreateClipMatrix  (EffectsCore/fx_beam.cpp:147)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void CreateClipMatrix(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  double dVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs40 [16];
+  undefined1 auStack_80 [128];
+  
+  __savegprlr_26();
+  dVar1 = 0.0;
+  if (*(float *)(DAT_82a3d5f8 + 0x10) <= 0.0) {
+    MyAssertHandler(0xffffffff82060ef8,0x97,0,0xffffffff82000f98,0xffffffff82060ecc);
+  }
+  if ((double)*(float *)(DAT_82a3d5f8 + 0x14) <= dVar1) {
+    MyAssertHandler(0xffffffff82060ef8,0x98,0,0xffffffff82000f98,0xffffffff82060ea0);
+  }
+  Float4x4ForViewer(auStack_80,param_2,param_3);
+  altv207_13(in_vs32,in_vs40);
+  altv207_13(in_vs32,in_vs39);
+  altv207_13(in_vs32,in_vs38);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
 // 82415A98  Vec4HomogenousClipZW  (EffectsCore/fx_beam.cpp:161)
 
 /* WARNING: Control flow encountered bad instruction data */
@@ -80,21 +111,49 @@ void Vec4HomogenousClipBothZ(void)
 
 // 82415C20  FX_GenerateBeam_GetFlatDelta  (EffectsCore/fx_beam.cpp:220)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void FX_GenerateBeam_GetFlatDelta(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  undefined1 in_vs59 [16];
+  undefined1 in_vs60 [16];
+  
   __savegprlr_27();
+  altv207_13(in_vs32,in_vs35);
+  altv207_13(in_vs35,in_vs59);
+  altv207_13(in_vs35,in_vs60);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 82415E00  FX_Beam_GenerateVerts  (EffectsCore/fx_beam.cpp:262)
 
-void FX_Beam_GenerateVerts(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void FX_Beam_GenerateVerts(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined1 in_vs32 [16];
+  undefined1 in_vs43 [16];
+  undefined1 auStack_200 [512];
+  
   __savegprlr();
+  __savefpr_22();
+  __savevmx_119();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82060ef8,0x121,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  if (*(int *)((int)param_2 + 4) == 0) {
+    MyAssertHandler(0xffffffff82060ef8,0x122,0,0xffffffff82000f98,0xffffffff82061200);
+  }
+  CreateClipMatrix(auStack_200,param_2 + 0x18,param_2 + 0x24);
+  altv207_13(in_vs32,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -110,15 +169,34 @@ void XMMatrixInverse(void)
 }
 
 
+// 82416978  FX_Beam_Begin  (EffectsCore/fx_beam.cpp:552)
+
+void FX_Beam_Begin(void)
+
+{
+  DAT_83326580 = 0;
+  return;
+}
+
+
 // 82416990  FX_Beam_Add  (EffectsCore/fx_beam.cpp:558)
 
 void * FX_Beam_Add(void *param_1)
 
 {
   if (DAT_83326580 != 0x30) {
-    param_1 = memcpy((void *)(DAT_83326580 * 0x40 + -0x7ccda680),param_1,0x40);
+    param_1 = memcpy(&DAT_83325980 + DAT_83326580 * 0x40,param_1,0x40);
     DAT_83326580 = DAT_83326580 + 1;
   }
   return param_1;
+}
+
+
+// 824169E8  FX_Beam_GetInfo  (EffectsCore/fx_beam.cpp:568)
+
+undefined8 FX_Beam_GetInfo(void)
+
+{
+  return 0xffffffff83325980;
 }
 

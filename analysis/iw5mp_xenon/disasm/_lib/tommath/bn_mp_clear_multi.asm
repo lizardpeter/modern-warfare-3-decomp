@@ -3,3 +3,54 @@
 ; 8225A338  mp_clear_multi  (line unknown)
   8225A338  7D8802A6             mfspr r12,LR
   8225A33C  486BC381             bl 0x829166bc
+  8225A340  F8810018             std r4,0x18(r1)
+  8225A344  F8A10020             std r5,0x20(r1)
+  8225A348  F8C10028             std r6,0x28(r1)
+  8225A34C  F8E10030             std r7,0x30(r1)
+  8225A350  F9010038             std r8,0x38(r1)
+  8225A354  F9210040             std r9,0x40(r1)
+  8225A358  F9410048             std r10,0x48(r1)
+  8225A35C  9421FF80             stwu r1,-0x80(r1)
+  8225A360  39610050             addi r11,r1,0x50
+  8225A364  90610094             stw r3,0x94(r1)
+  8225A368  39410098             addi r10,r1,0x98
+  8225A36C  7C7F1B78             or r31,r3,r3
+  8225A370  2B030000             cmplwi cr6,r3,0x0
+  8225A374  914B0000             stw r10,0x0(r11)
+  8225A378  419A0078             beq cr6,0x8225a3f0
+  8225A37C  83A10050             lwz r29,0x50(r1)
+  8225A380  3BC00000             li r30,0x0
+LAB_8225a384:
+  8225A384  817F000C             lwz r11,0xc(r31)
+  8225A388  2B0B0000             cmplwi cr6,r11,0x0
+  8225A38C  419A004C             beq cr6,0x8225a3d8
+  8225A390  817F0000             lwz r11,0x0(r31)
+  8225A394  7FCAF378             or r10,r30,r30
+  8225A398  2F0B0000             cmpwi cr6,r11,0x0
+  8225A39C  40990024             ble cr6,0x8225a3c0
+  8225A3A0  7FCBF378             or r11,r30,r30
+LAB_8225a3a4:
+  8225A3A4  813F000C             lwz r9,0xc(r31)
+  8225A3A8  394A0001             addi r10,r10,0x1
+  8225A3AC  7FC9592E             stwx r30,r9,r11
+  8225A3B0  396B0004             addi r11,r11,0x4
+  8225A3B4  811F0000             lwz r8,0x0(r31)
+  8225A3B8  7F0A4000             cmpw cr6,r10,r8
+  8225A3BC  4198FFE8             blt cr6,0x8225a3a4
+LAB_8225a3c0:
+  8225A3C0  807F000C             lwz r3,0xc(r31)
+  8225A3C4  483B957D             bl 0x82613940
+  8225A3C8  93DF000C             stw r30,0xc(r31)
+  8225A3CC  93DF0000             stw r30,0x0(r31)
+  8225A3D0  93DF0004             stw r30,0x4(r31)
+  8225A3D4  93DF0008             stw r30,0x8(r31)
+LAB_8225a3d8:
+  8225A3D8  397D0007             addi r11,r29,0x7
+  8225A3DC  556B0038             rlwinm r11,r11,0x0,0x0,0x1c
+  8225A3E0  3BAB0008             addi r29,r11,0x8
+  8225A3E4  83EB0004             lwz r31,0x4(r11)
+  8225A3E8  2B1F0000             cmplwi cr6,r31,0x0
+  8225A3EC  409AFF98             bne cr6,0x8225a384
+LAB_8225a3f0:
+  8225A3F0  38210080             addi r1,r1,0x80
+  8225A3F4  486BC318             b 0x8291670c

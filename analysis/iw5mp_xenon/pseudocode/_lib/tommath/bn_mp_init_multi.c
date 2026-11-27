@@ -2,10 +2,68 @@
 
 // 8225A1E8  mp_init_multi  (line unknown)
 
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
 void mp_init_multi(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  undefined1 *puVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iVar6 = 0;
+  puVar2 = &stack0x00000018;
+  piVar1 = piVar3;
+  while( true ) {
+    if (piVar1 == (int *)0x0) {
+      __restgprlr_27(0);
+      return;
+    }
+    iVar4 = tom_game_malloc(0x100);
+    piVar1[3] = iVar4;
+    if (iVar4 == 0) break;
+    lVar7 = 0x40;
+    iVar4 = 0;
+    do {
+      *(undefined4 *)(iVar4 + piVar1[3]) = 0;
+      iVar4 = iVar4 + 4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *piVar1 = 0;
+    piVar1[1] = 0x40;
+    iVar6 = iVar6 + 1;
+    piVar1[2] = 0;
+    piVar1 = *(int **)(puVar2 + 4);
+    puVar2 = puVar2 + 8;
+  }
+  puVar2 = &stack0x00000018;
+  while (iVar6 != 0) {
+    iVar6 = iVar6 + -1;
+    if (piVar3[3] != 0) {
+      iVar4 = 0;
+      if (0 < *piVar3) {
+        iVar5 = 0;
+        do {
+          iVar4 = iVar4 + 1;
+          *(undefined4 *)(iVar5 + piVar3[3]) = 0;
+          iVar5 = iVar5 + 4;
+        } while (iVar4 < *piVar3);
+      }
+      tom_game_free(piVar3[3]);
+      piVar3[3] = 0;
+      *piVar3 = 0;
+      piVar3[1] = 0;
+      piVar3[2] = 0;
+    }
+    piVar3 = *(int **)(puVar2 + 4);
+    puVar2 = puVar2 + 8;
+  }
+  __restgprlr_27(0xfffffffffffffffe);
+  return;
 }
 

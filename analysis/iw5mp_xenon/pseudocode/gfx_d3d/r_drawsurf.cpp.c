@@ -14,23 +14,242 @@ void SortSwap<GfxDrawSurf>(undefined8 *param_1,undefined8 *param_2)
 }
 
 
+// 8273B4F0  ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>  (gfx_d3d/r_drawsurf.cpp:58)
+
+void ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(ulonglong *param_1,ulonglong *param_2)
+
+{
+  ulonglong *puVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  ulonglong *puVar4;
+  
+  if (param_2 <= param_1) {
+    return;
+  }
+  do {
+    uVar2 = *param_1;
+    puVar1 = param_1;
+    if (param_1 + 1 <= param_2) {
+      lVar3 = (ulonglong)((uint)((int)param_2 - (int)(param_1 + 1)) >> 3) + 1;
+      puVar4 = param_1 + 1;
+      do {
+        if (uVar2 < *puVar4) {
+          uVar2 = *puVar4;
+          puVar1 = puVar4;
+        }
+        puVar4 = puVar4 + 1;
+        lVar3 = lVar3 + -1;
+      } while (lVar3 != 0);
+    }
+    uVar2 = *puVar1;
+    *puVar1 = *param_2;
+    *param_2 = uVar2;
+    param_2 = param_2 + -1;
+  } while (param_1 < param_2);
+  return;
+}
+
+
+// 8273B718  qsortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>  (gfx_d3d/r_drawsurf.cpp:85)
+
+void qsortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(undefined8 param_1,ulonglong param_2)
+
+{
+  uint uVar1;
+  ulonglong *puVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong *puVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  ulonglong *puVar12;
+  longlong lVar13;
+  uint *puVar14;
+  uint *puVar15;
+  uint *puVar16;
+  uint *puVar17;
+  uint local_124 [32];
+  uint local_a4 [41];
+  
+  uVar3 = __savegprlr_29();
+  if ((int)param_2 < 2) {
+LAB_8273b870:
+    __restgprlr_29();
+    return;
+  }
+  uVar10 = (param_2 & 0x1fffffff) * 8 + uVar3;
+  lVar13 = 0;
+  puVar14 = local_124;
+  puVar16 = local_a4;
+LAB_8273b748:
+  uVar4 = uVar10 - 8;
+LAB_8273b74c:
+  puVar2 = (ulonglong *)uVar3;
+  uVar1 = (uint)uVar4;
+  uVar11 = ((int)(uVar1 - (int)puVar2) >> 3) + 1;
+  if (8 < (int)uVar11) {
+    iVar5 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0);
+    uVar10 = uVar4 + 8;
+    uVar7 = puVar2[iVar5];
+    puVar2[iVar5] = *puVar2;
+    *puVar2 = uVar7;
+    uVar8 = uVar3;
+LAB_8273b78c:
+    uVar8 = uVar8 + 8;
+    puVar9 = (ulonglong *)uVar8;
+    if ((uVar8 & 0xffffffff) <= (uVar4 & 0xffffffff)) goto code_r0x8273b798;
+    goto LAB_8273b7a4;
+  }
+  ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>();
+  puVar17 = puVar16;
+  puVar15 = puVar14;
+  goto LAB_8273b854;
+code_r0x8273b798:
+  if (*puVar9 <= uVar7) goto LAB_8273b78c;
+LAB_8273b7a4:
+  do {
+    uVar6 = uVar10;
+    uVar10 = uVar6 - 8;
+    puVar12 = (ulonglong *)uVar10;
+    if ((uVar10 & 0xffffffff) <= (uVar3 & 0xffffffff)) break;
+  } while (uVar7 <= *puVar12);
+  if ((uVar8 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
+    uVar6 = *puVar9;
+    *puVar9 = *puVar12;
+    *puVar12 = uVar6;
+    goto LAB_8273b78c;
+  }
+  uVar7 = *puVar2;
+  *puVar2 = *puVar12;
+  *puVar12 = uVar7;
+  if ((int)((int)puVar12 + (-8 - (int)puVar2) & 0xfffffff8U) <
+      (int)(uVar1 - (int)puVar9 & 0xfffffff8)) {
+    if ((uVar8 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+      puVar16 = puVar16 + 1;
+      *puVar16 = (uint)puVar9;
+      lVar13 = lVar13 + 1;
+      puVar14 = puVar14 + 1;
+      *puVar14 = uVar1;
+    }
+    puVar17 = puVar16;
+    puVar15 = puVar14;
+    if ((uVar3 & 0xffffffff) < (uVar6 - 0x10 & 0xffffffff)) goto LAB_8273b748;
+  }
+  else {
+    if ((uVar3 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
+      puVar16[1] = (uint)puVar2;
+      lVar13 = lVar13 + 1;
+      puVar14[1] = (int)uVar6 - 0x10;
+      puVar16 = puVar16 + 1;
+      puVar14 = puVar14 + 1;
+    }
+    uVar3 = uVar8;
+    puVar17 = puVar16;
+    puVar15 = puVar14;
+    if ((uVar8 & 0xffffffff) < (uVar4 & 0xffffffff)) goto LAB_8273b74c;
+  }
+LAB_8273b854:
+  lVar13 = lVar13 + -1;
+  puVar16 = puVar17 + -1;
+  puVar14 = puVar15 + -1;
+  if (lVar13 < 0) goto LAB_8273b870;
+  uVar4 = (ulonglong)*puVar15;
+  uVar3 = (ulonglong)*puVar17;
+  goto LAB_8273b74c;
+}
+
+
+// 8273B1B0  R_SortDrawSurfs  (gfx_d3d/r_drawsurf.cpp:227)
+
+void R_SortDrawSurfs(undefined8 param_1,undefined8 param_2)
+
+{
+  Profile_Begin(0x54);
+  qsortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(param_1,param_2);
+  Profile_EndInternal(0);
+  return;
+}
+
+
 // 8273A0F0  R_SetPrimaryLightShadowSurfaces  (gfx_d3d/r_drawsurf.cpp:243)
 
 void R_SetPrimaryLightShadowSurfaces(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  
   __savegprlr_27();
+  uVar6 = 0;
+  uVar2 = 0;
+  if (*(int *)(DAT_8461658c + 0x20) != 0) {
+    iVar1 = 0;
+    do {
+      uVar2 = uVar2 + 1;
+      *(undefined2 *)(*(int *)(DAT_8461658c + 0x224) + iVar1) = 0;
+      iVar1 = iVar1 + 0xc;
+    } while (uVar2 < *(uint *)(DAT_8461658c + 0x20));
+  }
+  if (*(short *)(*(int *)(DAT_8461658c + 0x138) + 0x34) != 0) {
+    lVar4 = 0;
+    lVar5 = 0;
+    iVar3 = 0;
+    iVar1 = DAT_8461658c;
+    do {
+      if ((*(ulonglong *)(*(int *)(iVar1 + 0x288) + iVar3) & 0x1f000000) != 0) {
+        R_ForEachPrimaryLightAffectingSurface
+                  (iVar1,(ulonglong)*(uint *)(iVar1 + 0x27c) + lVar4,
+                   (ulonglong)*(uint *)(iVar1 + 0x280) + lVar5,uVar6,0xffffffff8271df20);
+        iVar1 = DAT_8461658c;
+      }
+      uVar6 = uVar6 + 1;
+      iVar3 = iVar3 + 8;
+      lVar5 = lVar5 + 0x20;
+      lVar4 = lVar4 + 0x18;
+    } while ((uVar6 & 0xffffffff) < (ulonglong)*(ushort *)(*(int *)(iVar1 + 0x138) + 0x34));
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 8273A1C0  R_GetWorldDrawSurf  (gfx_d3d/r_drawsurf.cpp:261)
 
+/* WARNING: Removing unreachable block (ram,0x8273a2c0) */
+
 void R_GetWorldDrawSurf(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  iVar1 = __savegprlr_28();
+  uVar3 = *(ulonglong *)(*(int *)(iVar1 + 0x10) + 8);
+  uVar2 = uVar3 >> 0x35 & 0xf;
+  if ((uVar2 != 0) && (uVar2 != 1)) {
+    MyAssertHandler(0xffffffff821bf568,0x10b,1,0xffffffff82000f98,0xffffffff821bf500);
+  }
+  if ((uVar3 & 0x7f8000) != 0) {
+    MyAssertHandler(0xffffffff821bf568,0x10f,1,0xffffffff82000f98,0xffffffff821bf4b8);
+  }
+  if ((uVar3 & 0x7fff) != 0) {
+    MyAssertHandler(0xffffffff821bf568,0x110,1,0xffffffff82000f98,0xffffffff821bf494);
+  }
+  if ((uVar3 & 0xff00000000000) != 0) {
+    MyAssertHandler(0xffffffff821bf568,0x112,1,0xffffffff82000f98,0xffffffff821bf46c);
+  }
+  __restgprlr_28(uVar3 & 0xfff00fffffffffff | (ulonglong)*(byte *)(iVar1 + 0x16) << 0x2c);
+  return;
 }
 
 
@@ -115,11 +334,105 @@ ulonglong GCD(ulonglong param_1,ulonglong param_2)
 
 // 8273A3F0  R_SwapAdjacentWorldSurfaceRanges  (gfx_d3d/r_drawsurf.cpp:331)
 
-void R_SwapAdjacentWorldSurfaceRanges(void)
+void R_SwapAdjacentWorldSurfaceRanges(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  longlong lVar14;
+  undefined4 uStack_84;
+  undefined4 local_80 [7];
+  undefined4 uStack_64;
+  undefined4 local_60 [24];
+  
+  uVar1 = __savegprlr_26();
+  lVar10 = param_2 - uVar1;
+  lVar9 = param_3 - uVar1;
+  uVar12 = (ulonglong)*(uint *)(DAT_8461658c + 0x27c);
+  uVar11 = (ulonglong)*(uint *)(DAT_8461658c + 0x280);
+  uVar2 = GCD(lVar10,param_3 - param_2);
+  if ((uVar2 & 0xffffffff) != 0) {
+    lVar3 = (uVar1 & 0x7ffffff) * 0x20 + uVar11;
+    lVar4 = (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar12;
+    do {
+      puVar6 = &uStack_84;
+      lVar7 = lVar4 + -4;
+      lVar13 = 6;
+      do {
+        lVar7 = lVar7 + 4;
+        puVar6 = puVar6 + 1;
+        *puVar6 = *(undefined4 *)lVar7;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar6 = &uStack_64;
+      lVar7 = lVar3 + -4;
+      lVar13 = 8;
+      do {
+        lVar7 = lVar7 + 4;
+        puVar6 = puVar6 + 1;
+        *puVar6 = *(undefined4 *)lVar7;
+        lVar13 = lVar13 + -1;
+        uVar5 = uVar1;
+      } while (lVar13 != 0);
+      while ((uVar8 = uVar5 + lVar10, (uVar8 & 0xffffffff) < (param_3 & 0xffffffff) ||
+             (uVar8 = uVar8 - lVar9, (uVar8 & 0xffffffff) != (uVar1 & 0xffffffff)))) {
+        lVar7 = (uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar12 + -4;
+        lVar13 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar12 + -4;
+        lVar14 = 6;
+        do {
+          lVar7 = lVar7 + 4;
+          lVar13 = lVar13 + 4;
+          *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
+          lVar14 = lVar14 + -1;
+        } while (lVar14 != 0);
+        lVar7 = (uVar8 & 0x7ffffff) * 0x20 + uVar11 + -4;
+        lVar13 = (uVar5 & 0x7ffffff) * 0x20 + uVar11 + -4;
+        lVar14 = 8;
+        do {
+          lVar7 = lVar7 + 4;
+          lVar13 = lVar13 + 4;
+          *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
+          lVar14 = lVar14 + -1;
+          uVar5 = uVar8;
+        } while (lVar14 != 0);
+      }
+      puVar6 = &uStack_84;
+      lVar13 = 6;
+      lVar7 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar12 + -4;
+      do {
+        puVar6 = puVar6 + 1;
+        lVar7 = lVar7 + 4;
+        *(undefined4 *)lVar7 = *puVar6;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar6 = &uStack_64;
+      lVar7 = (uVar5 & 0x7ffffff) * 0x20 + uVar11 + -4;
+      lVar13 = 8;
+      do {
+        puVar6 = puVar6 + 1;
+        lVar7 = lVar7 + 4;
+        *(undefined4 *)lVar7 = *puVar6;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      uVar2 = uVar2 - 1;
+      uVar1 = uVar1 + 1;
+      lVar4 = lVar4 + 0x18;
+      lVar3 = lVar3 + 0x20;
+    } while (uVar2 != 0);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -371,8 +684,63 @@ void R_SortWorldModelSurfaces(void)
 void R_UpdateStaticModelFirstMaterialSkinIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  undefined4 uVar1;
+  ulonglong uVar2;
+  int iVar4;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  undefined4 *puVar6;
+  uint uVar7;
+  int iVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int iVar12;
+  uint uVar13;
+  
+  iVar4 = __savegprlr_17();
+  uVar1 = *(undefined4 *)(iVar4 + 0x1c);
+  puVar5 = (undefined4 *)XModelGetSkins(uVar1,0);
+  iVar12 = 0;
+  uVar9 = 0;
+  uVar10 = 0xffffffffffffffff;
+  uVar3 = XModelGetNumLods(uVar1);
+  uVar11 = 0;
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar6 = (undefined4 *)XModelGetSkins(uVar1,uVar11);
+      if (puVar5 != puVar6) {
+        MyAssertHandler(0xffffffff821bf568,0x230,0,0xffffffff82000f98,0xffffffff821bf5ac);
+      }
+      uVar7 = XModelGetSurfCount(uVar1,uVar11);
+      if (0x10 < uVar7) {
+        MyAssertHandler(0xffffffff821bf568,0x233,0,0xffffffff821bf5d8,uVar7,0x10);
+      }
+      uVar13 = 0;
+      puVar6 = puVar5;
+      if (uVar7 != 0) {
+        do {
+          iVar8 = Material_FromHandle(*puVar6);
+          uVar2 = *(ulonglong *)(iVar8 + 8) >> 0x1d;
+          if ((uVar2 & 0xfff) < (uVar10 & 0xffffffff)) {
+            uVar10 = uVar2 & 0xfff;
+            uVar9 = uVar13 + iVar12;
+          }
+          uVar13 = uVar13 + 1;
+          puVar6 = puVar6 + 1;
+        } while (uVar13 < uVar7);
+      }
+      uVar11 = uVar11 + 1;
+      puVar5 = puVar5 + uVar7;
+      iVar12 = uVar7 + iVar12;
+    } while ((uVar11 & 0xffffffff) < (uVar3 & 0xffffffff));
+  }
+  if (uVar9 != (uVar9 & 0xff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar9,uVar9 & 0xff);
+  }
+  *(char *)(iVar4 + 0x27) = (char)uVar9;
+  __restgprlr_17();
+  return;
 }
 
 
@@ -622,12 +990,12 @@ void R_SortWorldSurfaces(void)
   
   pvVar4 = (void *)__savegprlr_24();
   if (DAT_8461658c == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821bf568,0x2e3,0,0xffffffff82000f98,0xffffffff821b9c84);
+    pvVar4 = (void *)MyAssertHandler(0xffffffff821bf568,0x2e3,0,0xffffffff82000f98,
+                                     0xffffffff821b9c84);
   }
   if (*(short *)(*(int *)(DAT_8461658c + 0x138) + 0x36) != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821bf568,0x2e4,0,0xffffffff821bf608,0xffffffff821bf638);
+    pvVar4 = (void *)MyAssertHandler(0xffffffff821bf568,0x2e4,0,0xffffffff821bf608,
+                                     0xffffffff821bf638);
   }
   iVar10 = *(int *)(DAT_8461658c + 0x27c);
   uVar1 = *(uint *)(DAT_8461658c + 0x10);
@@ -731,6 +1099,94 @@ void std___Push_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_cons
 }
 
 
+// 8273B560  std::_Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+
+void std___Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+               (undefined8 param_1,ulonglong param_2,uint param_3,longlong param_4,code *param_5)
+
+{
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  char cVar4;
+  longlong lVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  
+  lVar2 = __savegprlr_25();
+  uVar8 = (param_2 + 1 & 0x7fffffff) << 1;
+  uVar6 = (uint)uVar8;
+  uVar7 = param_2;
+  while (uVar9 = uVar8, (int)uVar6 < (int)param_3) {
+    lVar3 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2;
+    cVar4 = (*param_5)(lVar3,lVar3 + -0x18);
+    if (cVar4 != '\0') {
+      uVar9 = uVar9 - 1;
+    }
+    lVar3 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+    lVar5 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+    lVar10 = 6;
+    do {
+      lVar3 = lVar3 + 4;
+      lVar5 = lVar5 + 4;
+      *(undefined4 *)lVar5 = *(undefined4 *)lVar3;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
+    uVar6 = (uint)uVar8;
+    uVar7 = uVar9;
+  }
+  if (uVar6 == param_3) {
+    lVar3 = ((ulonglong)param_3 + ((ulonglong)param_3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 +
+            -0x1c;
+    lVar5 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+    lVar10 = 6;
+    do {
+      lVar3 = lVar3 + 4;
+      lVar5 = lVar5 + 4;
+      *(undefined4 *)lVar5 = *(undefined4 *)lVar3;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    uVar7 = (ulonglong)param_3 - 1;
+  }
+  iVar1 = (int)uVar7;
+  uVar6 = iVar1 - 1;
+  uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+  while (uVar9 = uVar8, (int)param_2 < iVar1) {
+    lVar3 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2;
+    cVar4 = (*param_5)(lVar3,param_4);
+    if (cVar4 == '\0') break;
+    lVar3 = lVar3 + -4;
+    lVar10 = 6;
+    lVar5 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+    do {
+      lVar3 = lVar3 + 4;
+      lVar5 = lVar5 + 4;
+      *(undefined4 *)lVar5 = *(undefined4 *)lVar3;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    iVar1 = (int)uVar9;
+    uVar6 = iVar1 - 1;
+    uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+    uVar7 = uVar9;
+  }
+  param_4 = param_4 + -4;
+  lVar3 = 6;
+  lVar2 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+  do {
+    param_4 = param_4 + 4;
+    lVar2 = lVar2 + 4;
+    *(undefined4 *)lVar2 = *(undefined4 *)param_4;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  __restgprlr_25();
+  return;
+}
+
+
 // 8273B878  std::_Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
 void std___Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
@@ -820,11 +1276,50 @@ void std___Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_cons
 
 // 8273C1E8  std::_Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>(void)
+void std___Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  undefined4 uStack_44;
+  undefined1 local_40 [64];
+  
+  lVar1 = __savegprlr_28();
+  lVar4 = param_2 - lVar1;
+  if (1 < (int)lVar4 / 0x18) {
+    param_2 = param_2 + -0x18;
+    do {
+      puVar2 = &uStack_44;
+      lVar3 = param_2 + -4;
+      lVar5 = 6;
+      do {
+        lVar3 = lVar3 + 4;
+        puVar2 = puVar2 + 1;
+        *puVar2 = *(undefined4 *)lVar3;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      lVar3 = lVar1 + -4;
+      lVar5 = param_2 + -4;
+      lVar6 = 6;
+      do {
+        lVar3 = lVar3 + 4;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *(undefined4 *)lVar3;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      std___Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+                (lVar1,0,((int)lVar4 + -0x18) / 0x18,local_40,param_3);
+      param_2 = param_2 + -0x18;
+      lVar4 = (param_2 - lVar1) + 0x18;
+    } while (1 < (int)lVar4 / 0x18);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -928,22 +1423,473 @@ void std___Insertion_sort1<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSu
 
 // 8273B9E0  std::_Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>(void)
+void std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 uStack_44;
+  undefined4 local_40 [16];
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined4 *)(iVar1 + -4);
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 4;
+      *(undefined4 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_44;
+    puVar3 = (undefined4 *)(iVar1 + -4);
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  cVar2 = (*param_4)(param_3,param_2);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_3 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    lVar4 = param_2 + -4;
+    param_3 = param_3 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      param_3 = param_3 + 4;
+      *(undefined4 *)param_3 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      lVar4 = lVar4 + 4;
+      *(undefined4 *)lVar4 = *puVar5;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  cVar2 = (*param_4)(param_2,iVar1);
+  if (cVar2 != '\0') {
+    puVar5 = &uStack_44;
+    lVar4 = param_2 + -4;
+    lVar6 = 6;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    puVar5 = (undefined4 *)(iVar1 + -4);
+    param_2 = param_2 + -4;
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      param_2 = param_2 + 4;
+      *(undefined4 *)param_2 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    puVar5 = &uStack_44;
+    puVar3 = (undefined4 *)(iVar1 + -4);
+    lVar4 = 6;
+    do {
+      puVar5 = puVar5 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar5;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 8273BB58  std::_Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+
+void std___Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar3) / 0x18;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff;
+    uVar4 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xfffffff;
+    lVar6 = uVar2 * 8 + lVar3;
+    std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
+    std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -8;
+    std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
+    std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8273BD70  std::_Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  undefined4 uStack_134;
+  undefined4 local_130 [7];
+  undefined4 uStack_114;
+  undefined4 local_110 [7];
+  undefined4 uStack_f4;
+  undefined4 local_f0 [7];
+  undefined4 uStack_d4;
+  undefined4 local_d0 [7];
+  undefined4 uStack_b4;
+  undefined4 local_b0 [7];
+  undefined4 uStack_94;
+  undefined4 local_90 [7];
+  undefined4 uStack_74;
+  undefined4 local_70 [28];
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  uVar2 = ((int)param_3 - (int)param_2) / 0x18;
+  uVar6 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  uVar13 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + param_2;
+  std___Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
+            (param_2,uVar13,param_3 - 0x18);
+  uVar6 = uVar13 + 0x18;
+  if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+    do {
+      uVar14 = uVar13 - 0x18;
+      cVar4 = (*param_4)(uVar14,uVar13);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar14), cVar4 != '\0')) break;
+      uVar13 = uVar14;
+    } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+  }
+  uVar14 = uVar13;
+  uVar10 = uVar6;
+  if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar4 = (*param_4)(uVar6,uVar13);
+      uVar10 = uVar6;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar13,uVar6), cVar4 != '\0')) break;
+      uVar6 = uVar6 + 0x18;
+      uVar10 = uVar6;
+    } while ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar9 = uVar6;
+    uVar11 = uVar10;
+    if ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar4 = (*param_4)(uVar13,uVar10);
+        uVar9 = uVar6;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar10,uVar13);
+          uVar11 = uVar10;
+          if (cVar4 != '\0') break;
+          puVar8 = &uStack_114;
+          uVar9 = uVar6 + 0x18;
+          lVar5 = uVar6 - 4;
+          lVar15 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined4 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar10 - 4;
+          lVar15 = uVar6 - 4;
+          lVar16 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            lVar15 = lVar15 + 4;
+            *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar8 = &uStack_114;
+          lVar5 = uVar10 - 4;
+          lVar15 = 6;
+          do {
+            puVar8 = puVar8 + 1;
+            lVar5 = lVar5 + 4;
+            *(undefined4 *)lVar5 = *puVar8;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar10 = uVar10 + 0x18;
+        uVar6 = uVar9;
+        uVar11 = uVar10;
+      } while ((uVar10 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar12 = uVar13;
+    uVar6 = uVar14;
+    if ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+      do {
+        uVar10 = uVar6 - 0x18;
+        cVar4 = (*param_4)(uVar10,uVar13);
+        uVar12 = uVar13;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar13,uVar10);
+          if (cVar4 != '\0') break;
+          uVar12 = uVar13 - 0x18;
+          puVar8 = &uStack_94;
+          lVar5 = uVar13 - 0x1c;
+          lVar15 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *(undefined4 *)lVar5;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          lVar5 = uVar6 - 0x1c;
+          lVar15 = uVar13 - 0x1c;
+          lVar16 = 6;
+          do {
+            lVar5 = lVar5 + 4;
+            lVar15 = lVar15 + 4;
+            *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+            lVar16 = lVar16 + -1;
+          } while (lVar16 != 0);
+          puVar8 = &uStack_94;
+          lVar5 = uVar6 - 0x1c;
+          lVar15 = 6;
+          do {
+            puVar8 = puVar8 + 1;
+            lVar5 = lVar5 + 4;
+            *(undefined4 *)lVar5 = *puVar8;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+        }
+        uVar14 = uVar14 - 0x18;
+        uVar13 = uVar12;
+        uVar6 = uVar10;
+      } while ((param_2 & 0xffffffff) < (uVar14 & 0xffffffff));
+      bVar1 = (uVar14 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    if (bVar1) {
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = (int)uVar12;
+        puVar3[1] = (int)uVar9;
+        __restgprlr_23(puVar3);
+        return;
+      }
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        puVar8 = &uStack_d4;
+        lVar5 = uVar12 - 4;
+        lVar15 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined4 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar9 - 4;
+        lVar15 = uVar12 - 4;
+        lVar16 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          lVar15 = lVar15 + 4;
+          *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar8 = &uStack_d4;
+        lVar5 = uVar9 - 4;
+        lVar15 = 6;
+        do {
+          puVar8 = puVar8 + 1;
+          lVar5 = lVar5 + 4;
+          *(undefined4 *)lVar5 = *puVar8;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      puVar8 = &uStack_134;
+      uVar6 = uVar9 + 0x18;
+      lVar15 = 6;
+      uVar13 = uVar12 + 0x18;
+      uVar10 = uVar11 + 0x18;
+      lVar5 = uVar12 - 4;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar11 - 4;
+      lVar15 = uVar12 - 4;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_134;
+      lVar5 = uVar11 - 4;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+    }
+    else if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+      uVar7 = uVar14 - 0x18;
+      uVar13 = uVar12 - 0x18;
+      if ((uVar7 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+        puVar8 = &uStack_f4;
+        lVar5 = uVar14 - 0x1c;
+        lVar15 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined4 *)lVar5;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        lVar5 = uVar12 - 0x1c;
+        lVar15 = uVar14 - 0x1c;
+        lVar16 = 6;
+        do {
+          lVar5 = lVar5 + 4;
+          lVar15 = lVar15 + 4;
+          *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        puVar8 = &uStack_f4;
+        lVar5 = uVar12 - 0x1c;
+        lVar15 = 6;
+        do {
+          puVar8 = puVar8 + 1;
+          lVar5 = lVar5 + 4;
+          *(undefined4 *)lVar5 = *puVar8;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      uVar6 = uVar9 - 0x18;
+      puVar8 = &uStack_b4;
+      lVar5 = uVar12 - 0x1c;
+      lVar15 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar9 - 0x1c;
+      lVar15 = uVar12 - 0x1c;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_b4;
+      lVar5 = uVar9 - 0x1c;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+        uVar14 = uVar7;
+        uVar10 = uVar11;
+      } while (lVar15 != 0);
+    }
+    else {
+      puVar8 = &uStack_74;
+      lVar5 = uVar11 - 4;
+      lVar15 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        puVar8 = puVar8 + 1;
+        *puVar8 = *(undefined4 *)lVar5;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      lVar5 = uVar14 - 0x1c;
+      lVar15 = uVar11 - 4;
+      lVar16 = 6;
+      do {
+        lVar5 = lVar5 + 4;
+        lVar15 = lVar15 + 4;
+        *(undefined4 *)lVar15 = *(undefined4 *)lVar5;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar8 = &uStack_74;
+      lVar5 = uVar14 - 0x1c;
+      lVar15 = 6;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = *puVar8;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      uVar14 = uVar14 - 0x18;
+      uVar6 = uVar9;
+      uVar10 = uVar11 + 0x18;
+      uVar13 = uVar12;
+    }
+  } while( true );
 }
 
 

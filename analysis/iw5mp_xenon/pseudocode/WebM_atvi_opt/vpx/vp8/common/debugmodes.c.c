@@ -2,10 +2,168 @@
 
 // 82811448  vp8_print_modes_and_motion_vectors  (WebM_atvi_opt/vpx/vp8/common/debugmodes.c:21)
 
-void vp8_print_modes_and_motion_vectors(void)
+void vp8_print_modes_and_motion_vectors
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  FILE *_File;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  
+  lVar6 = __savegprlr_19();
+  _File = fopen("mvs.stt","a");
+  fprintf(_File,"Mb Modes for Frame %d\n",param_4);
+  iVar9 = (int)param_2;
+  iVar7 = (int)param_3;
+  if (0 < iVar9) {
+    uVar10 = param_2;
+    lVar11 = lVar6;
+    do {
+      if (0 < iVar7) {
+        lVar12 = lVar11 + -0x98;
+        lVar11 = param_3 * 0x98 + lVar11;
+        uVar14 = param_3;
+        do {
+          lVar12 = lVar12 + 0x98;
+          fprintf(_File,"%2d ",(ulonglong)*(uint *)lVar12);
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+      fprintf(_File,"\n");
+      uVar10 = uVar10 - 1;
+      lVar11 = lVar11 + 0x98;
+    } while (uVar10 != 0);
+  }
+  fprintf(_File,"\n");
+  fprintf(_File,"Mb mv ref for Frame %d\n",param_4);
+  if (0 < iVar9) {
+    lVar11 = lVar6 + 8;
+    uVar10 = param_2;
+    do {
+      if (0 < iVar7) {
+        lVar12 = lVar11 + -0x98;
+        lVar11 = lVar11 + param_3 * 0x98;
+        uVar14 = param_3;
+        do {
+          lVar12 = lVar12 + 0x98;
+          fprintf(_File,"%2d ",(ulonglong)*(uint *)lVar12);
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+      fprintf(_File,"\n");
+      uVar10 = uVar10 - 1;
+      lVar11 = lVar11 + 0x98;
+    } while (uVar10 != 0);
+  }
+  fprintf(_File,"\n");
+  fprintf(_File,"UV Modes for Frame %d\n",param_4);
+  if (0 < iVar9) {
+    lVar11 = lVar6 + 4;
+    uVar10 = param_2;
+    do {
+      if (0 < iVar7) {
+        lVar12 = lVar11 + -0x98;
+        lVar11 = lVar11 + param_3 * 0x98;
+        uVar14 = param_3;
+        do {
+          lVar12 = lVar12 + 0x98;
+          fprintf(_File,"%2d ",(ulonglong)*(uint *)lVar12);
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+      lVar11 = lVar11 + 0x98;
+      fprintf(_File,"\n");
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
+  }
+  fprintf(_File,"\n");
+  fprintf(_File,"Mbs for Frame %d\n",param_4);
+  iVar5 = (int)((param_2 & 0xffffffff) << 2);
+  uVar13 = 0;
+  iVar3 = (int)lVar6;
+  if (0 < iVar5) {
+    iVar4 = (int)((param_3 & 0xffffffff) << 2);
+    do {
+      uVar15 = 0;
+      if (0 < iVar4) {
+        do {
+          iVar8 = ((int)uVar15 >> 2) + ((int)uVar13 >> 2) * (iVar7 + 1);
+          if (*(int *)(iVar8 * 0x98 + iVar3) == 4) {
+            fprintf(_File,"%2d ",
+                    (ulonglong)
+                    *(uint *)(((uVar13 & 3) * 4 + (uVar15 & 3) + iVar8 * 0x13 + 3) * 8 + iVar3));
+          }
+          else {
+            fprintf(_File,"xx ");
+          }
+          uVar15 = uVar15 + 1;
+        } while ((int)uVar15 < iVar4);
+      }
+      fprintf(_File,"\n");
+      uVar13 = uVar13 + 1;
+    } while ((int)uVar13 < iVar5);
+  }
+  fprintf(_File,"\n");
+  fprintf(_File,"MVs for Frame %d\n",param_4);
+  if (0 < iVar9) {
+    lVar6 = lVar6 + 0xc;
+    do {
+      if (0 < iVar7) {
+        lVar11 = lVar6 + -0x96;
+        lVar6 = lVar6 + param_3 * 0x98;
+        uVar10 = param_3;
+        do {
+          uVar1 = *(ushort *)((int)lVar11 + 0x96);
+          lVar11 = lVar11 + 0x98;
+          uVar2 = *(ushort *)lVar11;
+          fprintf(_File,"%5d:%-5d",
+                  (longlong)((int)(short)uVar1 >> 1) +
+                  (ulonglong)((short)uVar1 < 0 && (uVar1 & 1) != 0),
+                  (longlong)((int)(short)uVar2 >> 1) +
+                  (ulonglong)((short)uVar2 < 0 && (uVar2 & 1) != 0));
+          uVar10 = uVar10 - 1;
+        } while (uVar10 != 0);
+      }
+      lVar6 = lVar6 + 0x98;
+      fprintf(_File,"\n");
+      param_2 = param_2 - 1;
+    } while (param_2 != 0);
+  }
+  fprintf(_File,"\n");
+  fprintf(_File,"MVs for Frame %d\n",param_4);
+  uVar13 = 0;
+  if (0 < iVar5) {
+    iVar9 = (int)((param_3 & 0xffffffff) << 2);
+    do {
+      uVar15 = 0;
+      if (0 < iVar9) {
+        do {
+          iVar4 = ((((int)uVar15 >> 2) + ((int)uVar13 >> 2) * (iVar7 + 1)) * 0x13 +
+                  (uVar15 & 3) + (uVar13 & 3) * 4) * 8 + iVar3;
+          fprintf(_File,"%3d:%-3d ",*(undefined2 *)(iVar4 + 0x1c),*(undefined2 *)(iVar4 + 0x1e));
+          uVar15 = uVar15 + 1;
+        } while ((int)uVar15 < iVar9);
+      }
+      fprintf(_File,"\n");
+      uVar13 = uVar13 + 1;
+    } while ((int)uVar13 < iVar5);
+  }
+  fprintf(_File,"\n");
+  iVar7 = fclose(_File);
+  __restgprlr_19(iVar7);
+  return;
 }
 

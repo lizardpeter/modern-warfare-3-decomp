@@ -2,10 +2,80 @@
 
 // 828A27F0  XMemSet  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xmemset.c:31)
 
-void XMemSet(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XMemSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 in_r0;
+  longlong lVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  
+  lVar1 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) < 0x10) {
+    iVar5 = 0;
+    if ((param_3 & 0xffffffff) != 0) {
+      do {
+        *(char *)(iVar5 + (int)lVar1) = (char)param_2;
+        iVar5 = iVar5 + 1;
+        param_3 = param_3 - 1;
+      } while (param_3 != 0);
+    }
+    __restgprlr_29(lVar1);
+    return;
+  }
+  auVar6 = vectorSplatImmediateSignedByte(4);
+  loadVectorForShiftLeft(in_r0,param_2);
+  auVar7 = loadVectorForShiftLeft(in_r0,(longlong)((int)param_2 >> 4));
+  uVar3 = (ulonglong)(uint)((int)-lVar1 >> 4) & 7;
+  vectorShiftLeftIntegerByte(auVar7,auVar6);
+  if ((-lVar1 & 0xfU) == 0) {
+    uVar2 = (param_3 & 0xffffffff) >> 4;
+    if (uVar2 < uVar3) {
+      uVar3 = uVar2;
+    }
+    if (uVar3 != 0) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    uVar3 = (param_3 & 0xffffffff) >> 7;
+    uVar2 = uVar3;
+    if ((param_2 & 0xff) == 0) {
+      for (; uVar2 != 0; uVar2 = uVar2 - 1) {
+        dataCacheBlockClearToZero(lVar1);
+        lVar1 = lVar1 + 0x80;
+      }
+    }
+    else {
+      if (3 < uVar3) {
+        uVar2 = 4;
+      }
+      uVar4 = 0;
+      for (; uVar2 != 0; uVar2 = uVar2 - 1) {
+        dataCacheBlockClearToZero((uVar4 & 0x1ffffff) * 0x80 + lVar1);
+        uVar4 = uVar4 + 1;
+      }
+      if (uVar3 != 0) {
+        if (4 < uVar3) {
+          dataCacheBlockClearToZero(lVar1 + 0x200);
+        }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+        halt_baddata();
+      }
+    }
+    if ((param_3 + uVar3 * -0x80 & 0xffffffff) < 0x10) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 

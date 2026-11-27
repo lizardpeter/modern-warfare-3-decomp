@@ -13,3 +13,12 @@ void _CallSettingFrame(code *param_1)
   return;
 }
 
+
+// 8292A58C  _JumpToContinuation  (<external>/bt/278379/vctools/crt/xb/xbox/handlers.asm:71)
+
+void _JumpToContinuation(void)
+
+{
+  return;
+}
+

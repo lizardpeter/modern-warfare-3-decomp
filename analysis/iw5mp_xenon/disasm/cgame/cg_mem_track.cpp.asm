@@ -6,3 +6,75 @@
   822DC608  396B68AF             addi r11,r11,0x68af
   822DC60C  916AAA78             stw r11,-0x5588(r10)
   822DC610  4E800020             blr
+
+; 822DC618  CG_track_init  (cgame/cg_mem_track.cpp:71)
+  822DC618  7D8802A6             mfspr r12,LR
+  822DC61C  9181FFF8             stw r12,-0x8(r1)
+  822DC620  FBE1FFF0             std r31,-0x10(r1)
+  822DC624  9421FFA0             stwu r1,-0x60(r1)
+  822DC628  3D608202             lis r11,-0x7dfe
+  822DC62C  3FE08368             lis r31,-0x7c98
+  822DC630  396BE304             subi r11,r11,0x1cfc
+  822DC634  917FAA78             stw r11,-0x5588(r31)
+  822DC638  4BFFB979             bl 0x822d7fb0
+  822DC63C  3D608202             lis r11,-0x7dfe
+  822DC640  396BE2F4             subi r11,r11,0x1d0c
+  822DC644  917FAA78             stw r11,-0x5588(r31)
+  822DC648  4BFC9359             bl 0x822a59a0
+  822DC64C  3D608202             lis r11,-0x7dfe
+  822DC650  396BE2EC             subi r11,r11,0x1d14
+  822DC654  917FAA78             stw r11,-0x5588(r31)
+  822DC658  4BFDE031             bl 0x822ba688
+  822DC65C  3D608202             lis r11,-0x7dfe
+  822DC660  396BE2D4             subi r11,r11,0x1d2c
+  822DC664  917FAA78             stw r11,-0x5588(r31)
+  822DC668  4BFCFEE1             bl 0x822ac548
+  822DC66C  3D608202             lis r11,-0x7dfe
+  822DC670  396BE2C8             subi r11,r11,0x1d38
+  822DC674  917FAA78             stw r11,-0x5588(r31)
+  822DC678  48014FA9             bl 0x822f1620
+  822DC67C  3D608202             lis r11,-0x7dfe
+  822DC680  396BE2B8             subi r11,r11,0x1d48
+  822DC684  917FAA78             stw r11,-0x5588(r31)
+  822DC688  4BFCAEC1             bl 0x822a7548
+  822DC68C  3D608202             lis r11,-0x7dfe
+  822DC690  396BE2B0             subi r11,r11,0x1d50
+  822DC694  917FAA78             stw r11,-0x5588(r31)
+  822DC698  4802D5C1             bl 0x82309c58
+  822DC69C  3D608202             lis r11,-0x7dfe
+  822DC6A0  396BE2A0             subi r11,r11,0x1d60
+  822DC6A4  917FAA78             stw r11,-0x5588(r31)
+  822DC6A8  4BFF8A11             bl 0x822d50b8
+  822DC6AC  3D608202             lis r11,-0x7dfe
+  822DC6B0  396BE294             subi r11,r11,0x1d6c
+  822DC6B4  917FAA78             stw r11,-0x5588(r31)
+  822DC6B8  4BFF30A9             bl 0x822cf760
+  822DC6BC  3D608202             lis r11,-0x7dfe
+  822DC6C0  396BE284             subi r11,r11,0x1d7c
+  822DC6C4  917FAA78             stw r11,-0x5588(r31)
+  822DC6C8  483DDA19             bl 0x826ba0e0
+  822DC6CC  3D608202             lis r11,-0x7dfe
+  822DC6D0  396BE278             subi r11,r11,0x1d88
+  822DC6D4  917FAA78             stw r11,-0x5588(r31)
+  822DC6D8  483DBF91             bl 0x826b8668
+  822DC6DC  3D608202             lis r11,-0x7dfe
+  822DC6E0  396BE26C             subi r11,r11,0x1d94
+  822DC6E4  917FAA78             stw r11,-0x5588(r31)
+  822DC6E8  480105F9             bl 0x822ecce0
+  822DC6EC  3D608202             lis r11,-0x7dfe
+  822DC6F0  396BE258             subi r11,r11,0x1da8
+  822DC6F4  917FAA78             stw r11,-0x5588(r31)
+  822DC6F8  48002BE9             bl 0x822df2e0
+  822DC6FC  3D608202             lis r11,-0x7dfe
+  822DC700  396BE24C             subi r11,r11,0x1db4
+  822DC704  917FAA78             stw r11,-0x5588(r31)
+  822DC708  4BF84BC9             bl 0x822612d0
+  822DC70C  3D608202             lis r11,-0x7dfe
+  822DC710  396BE240             subi r11,r11,0x1dc0
+  822DC714  917FAA78             stw r11,-0x5588(r31)
+  822DC718  4BF888B1             bl 0x82264fc8
+  822DC71C  38210060             addi r1,r1,0x60
+  822DC720  8181FFF8             lwz r12,-0x8(r1)
+  822DC724  7D8803A6             mtspr LR,r12
+  822DC728  EBE1FFF0             ld r31,-0x10(r1)
+  822DC72C  4E800020             blr

@@ -63,6 +63,108 @@ void bdMessage___bdMessage(undefined4 *param_1)
 }
 
 
+// 82937F18  bdMessage::getType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:45)
+
+undefined1 bdMessage__getType(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 8);
+}
+
+
+// 829381D0  bdMessage::getPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:51)
+
+void bdMessage__getPayload(undefined8 param_1,longlong param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  uint *puVar5;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar5 = (uint *)__savegprlr_28();
+  if (*(int *)((int)param_2 + 0xc) == 0) {
+    uVar3 = bdMemory__allocate(0x24);
+    bVar1 = (uVar3 & 0xffffffff) == 0;
+    in_cr0 = bVar1 << 1;
+    if (bVar1) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = bdBitBuffer__bdBitBuffer(uVar3,0,*(undefined1 *)((int)param_2 + 0x10));
+    }
+    bdReference<bdBitBuffer>__operator_(param_2 + 0xc,uVar4);
+  }
+  uVar2 = *(uint *)(param_2 + 0xc);
+  *puVar5 = uVar2;
+  if ((ulonglong)uVar2 != 0) {
+    lVar6 = (ulonglong)uVar2 + 4;
+    do {
+      puVar7 = (uint *)lVar6;
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+        *puVar7 = uVar2;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  __restgprlr_28(puVar5);
+  return;
+}
+
+
+// 829382A0  bdMessage::hasPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:61)
+
+bool bdMessage__hasPayload(int param_1)
+
+{
+  return *(int *)(param_1 + 0xc) != 0;
+}
+
+
+// 829382B0  bdMessage::getUnencryptedPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:72)
+
+void bdMessage__getUnencryptedPayload(uint *param_1,int param_2)
+
+{
+  uint uVar1;
+  longlong lVar2;
+  uint *puVar3;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar1 = *(uint *)(param_2 + 0x14);
+  *param_1 = uVar1;
+  if ((ulonglong)uVar1 == 0) {
+    return;
+  }
+  lVar2 = (ulonglong)uVar1 + 4;
+  do {
+    puVar3 = (uint *)lVar2;
+    if (in_RESERVE != '\0') {
+      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar2);
+      *puVar3 = uVar1;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  return;
+}
+
+
+// 829382E8  bdMessage::hasUnencryptedPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:77)
+
+bool bdMessage__hasUnencryptedPayload(int param_1)
+
+{
+  return *(int *)(param_1 + 0x14) != 0;
+}
+
+
 // 829382F8  bdMessage::`scalar_deleting_destructor'  (line unknown)
 
 undefined8 bdMessage___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)

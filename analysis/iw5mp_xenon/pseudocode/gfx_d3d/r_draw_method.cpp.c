@@ -235,7 +235,6 @@ void R_UpdateDrawMethod(undefined8 param_1,int param_2)
   
   iVar1 = __savegprlr_22();
   if (0xfd < *(uint *)(param_2 + 0x1b0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be428,0xe0,0,0xffffffff821be3d0,0xffffffff821be3f8);
   }
   uVar6 = 0;
@@ -246,14 +245,12 @@ void R_UpdateDrawMethod(undefined8 param_1,int param_2)
       if ((*(char *)(param_2 + 0x924) != '\0') &&
          (iVar2 = Com_BitCheckAssert(iVar1 + 0x1524,uVar6,0x20), iVar2 != 0)) {
         if (uVar7 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821be428,0xe7,0,0xffffffff82000f98,0xffffffff821be384);
         }
         uVar7 = uVar7 + 3;
       }
       if (uVar7 == 5) {
         if (*piVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821be428,0xed,0,0xffffffff82000f98,0xffffffff821be3a8);
         }
         if (*(int *)(*piVar5 + 0xc) != 0) {

@@ -12,6 +12,16 @@ undefined4 bdTrulyRandomImpl__getRandomUInt(void)
 }
 
 
+// 8293CF90  bdTrulyRandomImpl::getRandomUByte8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdtrulyrandom.cpp:31)
+
+void bdTrulyRandomImpl__getRandomUByte8(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  bdGetRandomUChar8(param_2,param_3);
+  return;
+}
+
+
 // 8293CFA0  bdTrulyRandomImpl::bdTrulyRandomImpl  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdtrulyrandom.cpp:38)
 
 void bdTrulyRandomImpl__bdTrulyRandomImpl(void)

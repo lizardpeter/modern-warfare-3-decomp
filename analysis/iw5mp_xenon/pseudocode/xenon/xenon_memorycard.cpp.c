@@ -21,6 +21,16 @@ int _dynamic_initializer_for__memoryCardGlob__(void)
 }
 
 
+// 8264EEF8  TRACK_xenon_memorycard  (xenon/xenon_memorycard.cpp:98)
+
+void TRACK_xenon_memorycard(void)
+
+{
+  track_static_alloc_internal(0xffffffff8425cd60,0x1b10,0xffffffff8218ee84,10);
+  return;
+}
+
+
 // 8264EF18  MemCard_SetUseDevDrive  (xenon/xenon_memorycard.cpp:109)
 
 void MemCard_SetUseDevDrive(undefined1 param_1)
@@ -58,15 +68,25 @@ DWORD GetContextFileSize(HANDLE param_1)
     uVar3 = 0xffffffff8218ef04;
   }
   else {
-    if (param_1 != (HANDLE)0xffffffff) {
-      DVar1 = GetFileSize(param_1,(LPDWORD)0x0);
-      return DVar1;
-    }
+    if (param_1 != (HANDLE)0xffffffff) goto LAB_8264efbc;
     uVar2 = 0x83;
     uVar3 = 0xffffffff8218eee0;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff8218ee98,uVar2,0,0xffffffff82000f98,uVar3);
+LAB_8264efbc:
+  DVar1 = GetFileSize(param_1,(LPDWORD)0x0);
+  return DVar1;
+}
+
+
+// 8264EFE0  Memcard_InitializeSystem  (xenon/xenon_memorycard.cpp:140)
+
+void Memcard_InitializeSystem(void)
+
+{
+  memset(&DAT_8425cd60,0,0x1b10);
+  TaskManager_ConstructTaskSet(0xffffffff8425cd60,0xffffffff8218ef10);
+  return;
 }
 
 
@@ -125,11 +145,9 @@ void Memcard_SelectSaveDevice(undefined8 param_1,ulonglong param_2,undefined8 pa
   in_stack_0000001f = (byte)param_2;
   cVar7 = Sys_IsMainThread();
   if (cVar7 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0xba,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   if (((int)uVar2 < 0) || (3 < (int)uVar2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0xbb,0,0xffffffff82039774,0xffffffff82057314,uVar2);
   }
   if ((param_2 & 0xff) == 0) {
@@ -155,7 +173,6 @@ void Memcard_SelectSaveDevice(undefined8 param_1,ulonglong param_2,undefined8 pa
     local_738 = 0;
     iVar5 = Sys_IsUpdateScreenThread();
     if (iVar5 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218ee98,0xe1,0,0xffffffff82000f98,0xffffffff8218f4a8);
     }
     iVar5 = Sys_IsUpdateScreenThread();
@@ -189,19 +206,16 @@ void Memcard_SelectSaveDevice(undefined8 param_1,ulonglong param_2,undefined8 pa
             pCVar6 = (LPCSTR)SEH_LocalizeTextMessage(0xffffffff8218f430,0xffffffff8218f450,0);
             iVar4 = MultiByteToWideChar(0xfde9,0,pCVar6,-1,aWStack_710,0x20);
             if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8218ee98,0x121,0,0xffffffff82000f98,0xffffffff8218f424);
             }
             pCVar6 = (LPCSTR)SEH_LocalizeTextMessage(0xffffffff8218f404,0xffffffff8218f450,0);
             iVar4 = MultiByteToWideChar(0xfde9,0,pCVar6,-1,aWStack_350,0x180);
             if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8218ee98,0x123,0,0xffffffff82000f98,0xffffffff8218f424);
             }
             pCVar6 = (LPCSTR)SEH_LocalizeTextMessage(0xffffffff8218f3f8,0xffffffff8218f400,0);
             iVar4 = MultiByteToWideChar(0xfde9,0,pCVar6,-1,aWStack_690,0x20);
             if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8218ee98,0x125,0,0xffffffff82000f98,0xffffffff8218f424);
             }
             local_768[0] = aWStack_690;
@@ -219,14 +233,13 @@ void Memcard_SelectSaveDevice(undefined8 param_1,ulonglong param_2,undefined8 pa
           }
           R_EndRemoteScreenUpdate();
           if ((iVar5 == 0) && (local_770 == 0)) {
-            if (local_76c != 0) {
-              Memcard_ClearLostSaveDeviceID(uVar2);
-              Memcard_SetSelectedDevice(uVar2,local_76c);
-              __restgprlr_24(1);
-              return;
+            if (local_76c == 0) {
+              MyAssertHandler(0xffffffff8218ee98,0x142,0,0xffffffff82000f98,0xffffffff8218ef2c);
             }
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff8218ee98,0x142,0,0xffffffff82000f98,0xffffffff8218ef2c);
+            Memcard_ClearLostSaveDeviceID(uVar2);
+            Memcard_SetSelectedDevice(uVar2,local_76c);
+            __restgprlr_24(1);
+            return;
           }
           goto LAB_82651140;
         }
@@ -250,18 +263,57 @@ LAB_82651140:
 void Memcard_UnselectSaveDevice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar3;
+  int iVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x151,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x152,0,0xffffffff82039774,0xffffffff82057314,iVar1);
+  }
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar2 = Memcard_GetSelectedDeviceID(iVar1);
+  if (iVar2 != 0) {
+    (&DAT_8425a0a0)[iVar1] = 0;
+    XSetLaunchData(0xffffffff84259cc8,1000);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8264F068  Memcard_SetSelectedDevice  (xenon/xenon_memorycard.cpp:350)
 
-void Memcard_SetSelectedDevice(void)
+void Memcard_SetSelectedDevice(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x15f,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x160,0,0xffffffff82039774,0xffffffff82057314,iVar1);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x162,0,0xffffffff82000f98,0xffffffff8218ef2c);
+  }
+  if ((ulonglong)(uint)(&DAT_8425a0a0)[iVar1] != (param_2 & 0xffffffff)) {
+    (&DAT_8425a0a0)[iVar1] = (int)param_2;
+    XSetLaunchData(0xffffffff84259cc8,1000);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -274,14 +326,12 @@ undefined4 Memcard_GetSelectedDeviceID(int param_1)
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0x16e,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if ((-1 < param_1) && (param_1 < 4)) {
-    return (&DAT_8425a0a0)[param_1];
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x16f,0,0xffffffff82039774,0xffffffff82057314,param_1);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8218ee98,0x16f,0,0xffffffff82039774,0xffffffff82057314,param_1);
+  return (&DAT_8425a0a0)[param_1];
 }
 
 
@@ -294,14 +344,12 @@ undefined4 Memcard_GetLostDeviceID(int param_1)
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0x177,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if ((-1 < param_1) && (param_1 < 4)) {
-    return (&DAT_8425cd38)[param_1];
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x178,0,0xffffffff82039774,0xffffffff82057314,param_1);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8218ee98,0x178,0,0xffffffff82039774,0xffffffff82057314,param_1);
+  return (&DAT_8425cd38)[param_1];
 }
 
 
@@ -310,8 +358,71 @@ undefined4 Memcard_GetLostDeviceID(int param_1)
 void Memcard_ClearLostSaveDeviceID(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x181,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x182,0,0xffffffff82039774,0xffffffff82057314,iVar1);
+  }
+  (&DAT_8425cd38)[iVar1] = 0;
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1ae,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar1 = Memcard_GetLostDeviceID(iVar1);
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x187,1,0xffffffff82000f98,0xffffffff8218f1c0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 82650BC0  Memcard_RememberLostSaveDeviceID  (xenon/xenon_memorycard.cpp:396)
+
+void Memcard_RememberLostSaveDeviceID(void)
+
+{
+  int iVar1;
+  char cVar4;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = __savegprlr_28();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x18d,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x18e,0,0xffffffff82039774,0xffffffff82057314,iVar1);
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar2 = Memcard_GetSelectedDeviceID(iVar1);
+  if (iVar2 == 0) {
+    cVar4 = Memcard_HasLostSelectedSaveDevice();
+    if (cVar4 == '\0') {
+      MyAssertHandler(0xffffffff8218ee98,0x193,0,0xffffffff82000f98,0xffffffff8218f258);
+    }
+    Com_PrintWarning(0x10,0xffffffff8218f1f8,iVar1);
+    __restgprlr_28();
+    return;
+  }
+  uVar3 = Memcard_GetSelectedDeviceID(iVar1);
+  (&DAT_8425cd38)[iVar1] = uVar3;
+  cVar4 = Memcard_HasLostSelectedSaveDevice(iVar1);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x19a,1,0xffffffff82000f98,0xffffffff8218f258);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -325,7 +436,6 @@ bool Memcard_IsDeviceSelected(undefined8 param_1)
   
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   lVar1 = Memcard_GetSelectedDeviceID(param_1);
@@ -343,7 +453,6 @@ bool Memcard_HasLostSelectedSaveDevice(undefined8 param_1)
   
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218ee98,0x1ae,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   lVar1 = Memcard_GetLostDeviceID(param_1);
@@ -353,11 +462,90 @@ bool Memcard_HasLostSelectedSaveDevice(undefined8 param_1)
 
 // 8264F380  Memcard_IsDeviceAvailable  (xenon/xenon_memorycard.cpp:445)
 
-void Memcard_IsDeviceAvailable(void)
+void Memcard_IsDeviceAvailable(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  ulonglong uVar2;
+  undefined1 auStack_90 [16];
+  ulonglong local_80;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x1c3,0,0xffffffff82000f98,0xffffffff8218ef4c);
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1c5,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (((int)uVar1 < 0) || (3 < (int)uVar1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x1c6,0,0xffffffff82039774,0xffffffff82057314,uVar1);
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar3 = Memcard_GetSelectedDeviceID(uVar1);
+  if (iVar3 == 0) {
+    cVar4 = Memcard_HasLostSelectedSaveDevice(uVar1);
+    if (cVar4 != '\0') {
+      *(undefined1 *)param_3 = 1;
+    }
+    __restgprlr_26(0);
+    return;
+  }
+  R_BeginRemoteScreenUpdate();
+  if (param_2 == 0) {
+    uVar1 = Memcard_GetSelectedDeviceID(uVar1);
+    iVar3 = XContentGetDeviceState(uVar1,0);
+  }
+  else {
+    uVar1 = Memcard_GetSelectedDeviceID(uVar1);
+    iVar3 = XContentGetDeviceData(uVar1,auStack_90);
+    if ((iVar3 == 0) && (uVar2 = XContentCalculateSize(param_2,0), local_80 < uVar2)) {
+      *(undefined1 *)param_3 = 1;
+      R_EndRemoteScreenUpdate();
+      __restgprlr_26(0);
+      return;
+    }
+  }
+  R_EndRemoteScreenUpdate();
+  __restgprlr_26(iVar3 == 0);
+  return;
+}
+
+
+// 8264F510  Memcard_GetDeviceState  (xenon/xenon_memorycard.cpp:499)
+
+void Memcard_GetDeviceState(void)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1f6,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar3 = Memcard_GetSelectedDeviceID(uVar1);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x1f7,0,0xffffffff82000f98,0xffffffff8218ef58);
+  }
+  TaskManager_GetOpenTaskSlot(0xffffffff8425cd60,uVar1,1);
+  uVar2 = TaskManager_TaskToXOverlapped();
+  uVar1 = Memcard_GetSelectedDeviceID(uVar1);
+  XContentGetDeviceState(uVar1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -366,8 +554,73 @@ void Memcard_IsDeviceAvailable(void)
 void Memcard_CheckForStorageDeviceChange(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar2;
+  int iVar1;
+  longlong lVar3;
+  
   __savegprlr_28();
+  lVar3 = 0;
+  do {
+    cVar2 = GamerProfile_IsProfileLoggedIn(lVar3);
+    if (cVar2 != '\0') {
+      cVar2 = Sys_IsMainThread();
+      if (cVar2 == '\0') {
+        MyAssertHandler(0xffffffff8218ee98,0x1a4,0,0xffffffff82000f98,0xffffffff82010b48);
+      }
+      iVar1 = Memcard_GetSelectedDeviceID(lVar3);
+      if (iVar1 != 0) {
+        Memcard_GetDeviceState(lVar3);
+      }
+    }
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar3 < 4);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82650D18  Memcard_CheckAvailableOverlapped  (xenon/xenon_memorycard.cpp:536)
+
+void Memcard_CheckAvailableOverlapped(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  uint uVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_26();
+  iVar4 = iVar1 * 0xa0;
+  piVar2 = (int *)TaskManager_TaskToXOverlapped(iVar4 + -0x7bda3298);
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8218ee98,0x21e,0,0xffffffff82000f98,0xffffffff8218f3c0);
+  }
+  if ((&DAT_8425cdfc)[iVar4] == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x220,0,0xffffffff82000f98,0xffffffff8218f38c);
+  }
+  if ((&DAT_8425cdf8)[iVar1 * 0x28] != 1) {
+    MyAssertHandler(0xffffffff8218ee98,0x221,0,0xffffffff82000f98,0xffffffff8218f340);
+  }
+  if (3 < (byte)(&DAT_8425cdfd)[iVar4]) {
+    MyAssertHandler(0xffffffff8218ee98,0x222,0,0xffffffff8218f2d0,(&DAT_8425cdfd)[iVar4],4);
+  }
+  if (*piVar2 == 0x3e5) {
+    __restgprlr_26(0);
+    return;
+  }
+  XGetOverlappedResult(piVar2,0,0);
+  uVar3 = XGetOverlappedExtendedError(piVar2);
+  if ((uVar3 & 0xffff) == 0x48f) {
+    Memcard_RememberLostSaveDeviceID((&DAT_8425cdfd)[iVar4]);
+    Memcard_UnselectSaveDevice((&DAT_8425cdfd)[iVar4]);
+  }
+  else if (uVar3 != 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x22c,0,0xffffffff82000f98,0xffffffff8218f290);
+  }
+  TaskManager_TaskFromXOverlapped(0xffffffff8425cd60,piVar2);
+  TaskManager_ClearTask();
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -376,8 +629,30 @@ void Memcard_CheckForStorageDeviceChange(void)
 void Memcard_CheckOngoingTasks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  longlong lVar2;
+  int *piVar3;
+  
   __savegprlr_26();
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 != '\0') {
+    lVar2 = 0;
+    piVar3 = &DAT_8425cdf8;
+    do {
+      if (*(char *)(piVar3 + 1) != '\0') {
+        if (*piVar3 == 1) {
+          Memcard_CheckAvailableOverlapped(lVar2);
+        }
+        else if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff8218ee98,0x253,0,0xffffffff8218f3e0);
+        }
+      }
+      piVar3 = piVar3 + 0x28;
+      lVar2 = lVar2 + 1;
+    } while ((int)piVar3 < -0x7bda1e08);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -411,53 +686,512 @@ void ClearMemcardError(undefined4 *param_1)
 }
 
 
-// 8264F820  Memcard_OpenFile  (xenon/xenon_memorycard.cpp:677)
+// 8264F6B8  MemCard_OpenFromHDD  (xenon/xenon_memorycard.cpp:637)
 
-void Memcard_OpenFile(void)
+void MemCard_OpenFromHDD(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  undefined4 *puVar1;
+  char *pcVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar6;
+  ulonglong uVar5;
+  uint local_40 [16];
+  
+  pcVar2 = (char *)__savegprlr_27();
+  iVar3 = (int)param_2;
+  if ((iVar3 != 0) && (iVar3 != 1)) {
+    MyAssertHandler(0xffffffff8218ee98,0x282,0,0xffffffff82000f98,0xffffffff8218efa0);
+  }
+  pcVar6 = pcVar2;
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8218ee98,0x283,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  do {
+    cVar4 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar4 != '\0');
+  if ((char *)0x3f < pcVar6 + (-1 - (int)pcVar2)) {
+    MyAssertHandler(0xffffffff8218ee98,0x284,0,0xffffffff82000f98,0xffffffff8218ef84);
+  }
+  cVar4 = FS_IsUsingRemotePCSharing();
+  if (cVar4 == '\0') {
+    iVar3 = FS_FOpenFileByMode(pcVar2,local_40,param_2 != 0);
+  }
+  else {
+    if (iVar3 != 0) {
+      uVar5 = FS_FOpenFileWriteRemote(pcVar2,0);
+      iVar3 = -(uint)(uVar5 == 0);
+      goto LAB_8264f7c8;
+    }
+    iVar3 = FS_FOpenFileReadRemote(pcVar2,0,local_40);
+  }
+  uVar5 = (ulonglong)local_40[0];
+LAB_8264f7c8:
+  puVar1 = (undefined4 *)param_3;
+  if (iVar3 < 0) {
+    if ((param_3 & 0xffffffff) != 0) {
+      puVar1[1] = 0;
+      *(undefined1 *)puVar1 = 1;
+      puVar1[2] = PTR_s_GAME_SAVE_UNABLE_TO_ACCESS_DEVIC_829959b4;
+      __restgprlr_27(uVar5);
+      return;
+    }
+  }
+  else if ((param_3 & 0xffffffff) != 0) {
+    *puVar1 = 0;
+    puVar1[1] = 0;
+    puVar1[2] = 0;
+  }
+  __restgprlr_27(uVar5);
+  return;
+}
+
+
+// 8264F820  Memcard_OpenFile  (xenon/xenon_memorycard.cpp:677)
+
+void Memcard_OpenFile(undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4,
+                     undefined8 param_5,ulonglong param_6)
+
+{
+  bool bVar1;
+  char cVar2;
+  undefined4 *puVar4;
+  longlong lVar3;
+  char *lpMultiByteStr;
+  HANDLE pvVar5;
+  int *piVar6;
+  ulonglong uVar7;
+  char *pcVar10;
+  longlong lVar8;
+  longlong lVar9;
+  int iVar11;
+  int iVar12;
+  DWORD dwFlagsAndAttributes;
+  DWORD dwCreationDisposition;
+  DWORD dwDesiredAccess;
+  undefined8 uVar13;
+  undefined1 auStack_2e0 [16];
+  undefined4 local_2d0;
+  undefined4 local_2cc;
+  WCHAR aWStack_2c8 [128];
+  undefined1 auStack_1c8 [56];
+  CHAR aCStack_190 [400];
+  
+  puVar4 = (undefined4 *)__savegprlr_17();
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x2b3,0,0xffffffff82000f98,0xffffffff8218ef2c);
+  }
+  lVar3 = Sys_Milliseconds();
+  Sys_EnterCriticalSection(0x27);
+  *puVar4 = 0xffffffff;
+  iVar12 = 0;
+  piVar6 = &DAT_8425e16c;
+  uVar7 = 0;
+  while (*piVar6 != 0) {
+    uVar7 = uVar7 + 0x38;
+    iVar12 = iVar12 + 1;
+    piVar6 = piVar6 + 0xe;
+    if ((uVar7 & 0xffffffff) == 0x700) {
+      Sys_LeaveCriticalSection(0x27);
+      Com_Printf(0x10,0xffffffff8218f118);
+LAB_8264f8dc:
+      __restgprlr_17(2);
+      return;
+    }
+  }
+  if (((int)param_5 < 0) || (3 < (int)param_5)) {
+    MyAssertHandler(0xffffffff8218ee98,0x2c9,0,0xffffffff82039774,0xffffffff82057314,param_5);
+  }
+  memset(&local_2d0,0,0x134);
+  iVar11 = (int)param_4;
+  lVar8 = param_2;
+  if ((param_4 & 0xffffffff) < 6) {
+    bVar1 = iVar11 != 0;
+    if (param_4 == 1 && bVar1) {
+      uVar13 = 0x12;
+      dwDesiredAccess = 0x40000000;
+      dwCreationDisposition = 1;
+      dwFlagsAndAttributes = 0x80;
+      lpMultiByteStr = (char *)SEH_LocalizeTextMessage(param_3,0xffffffff8218f100,0);
+      pcVar10 = lpMultiByteStr;
+      do {
+        cVar2 = *pcVar10;
+        pcVar10 = pcVar10 + 1;
+      } while (cVar2 != '\0');
+    }
+    else {
+      if (param_4 == 2 && bVar1) {
+        uVar13 = 0x83;
+        dwDesiredAccess = 0x80000000;
+        dwCreationDisposition = 3;
+        dwFlagsAndAttributes = 0x60000000;
+        goto LAB_8264fad4;
+      }
+      if (param_4 == 3 && bVar1) goto LAB_8264fa44;
+      if (param_4 == 4 && bVar1) {
+        uVar13 = 0x82;
+        dwDesiredAccess = 0x40000000;
+        dwCreationDisposition = 1;
+        dwFlagsAndAttributes = 0x60000080;
+        param_5 = 0xff;
+        lpMultiByteStr = (char *)SEH_LocalizeTextMessage(param_3,0xffffffff8218f100,0);
+        pcVar10 = lpMultiByteStr;
+        do {
+          cVar2 = *pcVar10;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar2 != '\0');
+      }
+      else {
+        if (!bVar1) {
+          uVar13 = 0x13;
+          dwDesiredAccess = 0x80000000;
+          dwCreationDisposition = 3;
+          dwFlagsAndAttributes = 0x80;
+          goto LAB_8264fad4;
+        }
+        uVar13 = 0x83;
+        dwDesiredAccess = 0x80000000;
+        dwCreationDisposition = 3;
+        dwFlagsAndAttributes = 0x80;
+        param_5 = 0xff;
+        lpMultiByteStr = (char *)SEH_LocalizeTextMessage(param_3,0xffffffff8218f100,0);
+        pcVar10 = lpMultiByteStr;
+        do {
+          cVar2 = *pcVar10;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar2 != '\0');
+      }
+    }
+  }
+  else {
+LAB_8264fa44:
+    if (iVar11 != 3) {
+      MyAssertHandler(0xffffffff8218ee98,0x302,0,0xffffffff8218f0b0,0xffffffff8218f0c8,param_4);
+    }
+    uVar13 = 0x82;
+    dwDesiredAccess = 0x40000000;
+    dwCreationDisposition = 1;
+    dwFlagsAndAttributes = 0x80;
+    lpMultiByteStr = (char *)SEH_LocalizeTextMessage(param_3,0xffffffff8218f09c,0);
+    pcVar10 = lpMultiByteStr;
+    do {
+      cVar2 = *pcVar10;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar2 != '\0');
+  }
+  MultiByteToWideChar(0xfde9,0,lpMultiByteStr,(int)(pcVar10 + (-1 - (int)lpMultiByteStr)),
+                      aWStack_2c8,0x80);
+LAB_8264fad4:
+  do {
+    pcVar10 = (char *)lVar8;
+    lVar8 = lVar8 + 1;
+  } while (*pcVar10 != '\0');
+  lVar9 = param_2;
+  if (0x29 < ((lVar8 - param_2) - 1U & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8218ee98,0x30d,0,0xffffffff82000f98,0xffffffff8218f068);
+  }
+  do {
+    pcVar10 = (char *)lVar9;
+    lVar9 = lVar9 + 1;
+  } while (*pcVar10 != '\0');
+  if (0xff < ((lVar9 - param_2) - 1U & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8218ee98,0x30e,0,0xffffffff82000f98,0xffffffff8218f040);
+  }
+  I_strncpyz(auStack_1c8,param_2,0x2a);
+  local_2cc = 1;
+  local_2d0 = (int)param_6;
+  Com_sprintf(auStack_2e0,9,0xffffffff8218f038,iVar12);
+  uVar7 = XContentCreate(param_5,auStack_2e0,&local_2d0,uVar13,0,0,0);
+  lVar8 = param_2;
+  if ((uVar7 & 0xffffffff) == 0) {
+    do {
+      pcVar10 = (char *)lVar8;
+      lVar8 = lVar8 + 1;
+    } while (*pcVar10 != '\0');
+    if (0xff < ((lVar8 - param_2) - 1U & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8218ee98,0x331,0,0xffffffff82000f98,0xffffffff8218f040);
+    }
+    Com_sprintf(aCStack_190,0x109,0xffffffff8217a788,auStack_2e0,param_2);
+    pvVar5 = CreateFileA(aCStack_190,dwDesiredAccess,0,(LPSECURITY_ATTRIBUTES)0x0,
+                         dwCreationDisposition,dwFlagsAndAttributes,(HANDLE)0x0);
+    if (pvVar5 != (HANDLE)0xffffffff) {
+      iVar11 = iVar12 * 0x38;
+      (&DAT_8425e16c)[iVar12 * 0xe] = pvVar5;
+      *(int *)(&DAT_8425e170 + iVar11) = (int)param_5;
+      *(int *)(&DAT_8425e174 + iVar11) = (int)param_6;
+      I_strncpyz(&DAT_8425e178 + iVar11,param_2,0x2a);
+      Sys_LeaveCriticalSection(0x27);
+      lVar8 = Sys_Milliseconds();
+      Com_Printf(0x10,0xffffffff8218efd8,auStack_2e0,lVar8 - lVar3);
+      *puVar4 = pvVar5;
+      __restgprlr_17(0);
+      return;
+    }
+    Sys_LeaveCriticalSection(0x27);
+    XContentClose(auStack_2e0,0);
+    __restgprlr_17(2);
+    return;
+  }
+  Sys_LeaveCriticalSection(0x27);
+  lVar8 = Sys_Milliseconds();
+  Com_Printf(0x10,0xffffffff8218eff8,uVar7,auStack_2e0,lVar8 - lVar3);
+  if ((uVar7 & 0xffffffff) == 0x570) {
+    if ((iVar11 == 2) || (iVar11 == 3)) {
+      XContentDelete(param_5,&local_2d0,0);
+    }
+    __restgprlr_17(1);
+    return;
+  }
+  goto LAB_8264f8dc;
+}
+
+
+// 8264FD28  Memcard_GetOpenError  (xenon/xenon_memorycard.cpp:845)
+
+undefined8 Memcard_GetOpenError(void)
+
+{
+  return 0xffffffff8425cd54;
 }
 
 
 // 8264FD38  OpenContextFile  (xenon/xenon_memorycard.cpp:859)
 
-void OpenContextFile(void)
+void OpenContextFile(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar4;
+  undefined8 uVar2;
+  int iVar3;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_26();
+  cVar4 = Sys_IsMainThread();
+  if ((cVar4 == '\0') && (cVar4 = Sys_IsServerThread(), cVar4 == '\0')) {
+    MyAssertHandler(0xffffffff8218ee98,0x361,0,0xffffffff82000f98,0xffffffff8218f13c);
+  }
+  if (DAT_8425e168 != '\0') {
+    MemCard_OpenFromHDD(uVar1,param_3,0xffffffff8425cd54);
+    __restgprlr_26();
+    return;
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x36a,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (((int)param_4 < 0) || (3 < (int)param_4)) {
+    MyAssertHandler(0xffffffff8218ee98,0x36c,0,0xffffffff82039774,0xffffffff82057314,param_4);
+  }
+  cVar4 = Memcard_IsDeviceSelected(param_4);
+  if (cVar4 == '\0') {
+    DAT_8425cd54 = CONCAT13(1,DAT_8425cd54._1_3_);
+    DAT_8425cd58 = 0;
+    DAT_8425cd5c = PTR_s_GAME_SAVE_UNABLE_TO_ACCESS_DEVIC_829959b4;
+    __restgprlr_26(0);
+    return;
+  }
+  cVar4 = Memcard_IsDeviceSelected(param_4);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x374,0,0xffffffff82000f98,0xffffffff8218ef58);
+  }
+  uVar2 = Memcard_GetSelectedDeviceID(param_4);
+  iVar3 = Memcard_OpenFile(local_40,uVar1,param_2,param_3,param_4,uVar2);
+  if (iVar3 != 0) {
+    DAT_8425cd54 = CONCAT13(1,DAT_8425cd54._1_3_);
+    DAT_8425cd58 = (uint)(iVar3 == 1);
+    DAT_8425cd5c = PTR_s_GAME_SAVE_UNABLE_TO_ACCESS_DEVIC_829959b4;
+    __restgprlr_26(0);
+    return;
+  }
+  DAT_8425cd54 = 0;
+  DAT_8425cd58 = 0;
+  DAT_8425cd5c = (undefined *)0x0;
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x37f,0,0xffffffff82000f98,0xffffffff8218ef04);
+  }
+  __restgprlr_26(local_40[0]);
+  return;
 }
 
 
 // 8264FF50  MemCard_ReadFromHDD  (xenon/xenon_memorycard.cpp:906)
 
-void MemCard_ReadFromHDD(void)
+void MemCard_ReadFromHDD(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x38d,0,0xffffffff82000f98,0xffffffff82033c0c);
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x38e,0,0xffffffff82000f98,0xffffffff8218ef04);
+  }
+  if ((int)param_3 < 1) {
+    MyAssertHandler(0xffffffff8218ee98,0x38f,0,0xffffffff82000f98,0xffffffff8218f168);
+  }
+  puVar1 = (undefined4 *)param_4;
+  if ((param_2 & 0xffffffff) == 0) {
+    iVar3 = FS_Seek(uVar2,param_3,0);
+    if (iVar3 == 0) {
+      if ((param_4 & 0xffffffff) != 0) {
+        *puVar1 = 0;
+        puVar1[1] = 0;
+        puVar1[2] = 0;
+      }
+    }
+    else if ((param_4 & 0xffffffff) != 0) {
+      puVar1[1] = 0;
+      *(undefined1 *)puVar1 = 1;
+      puVar1[2] = PTR_s_GAME_SAVE_UNABLE_TO_READ_FROM_DE_829959bc;
+      __restgprlr_26(param_3);
+      return;
+    }
+  }
+  else {
+    param_3 = FS_Read(param_2,param_3,uVar2);
+    if ((int)param_3 == 0) {
+      if ((param_4 & 0xffffffff) != 0) {
+        puVar1[1] = 0;
+        *(undefined1 *)puVar1 = 1;
+        puVar1[2] = PTR_s_GAME_SAVE_UNABLE_TO_READ_FROM_DE_829959bc;
+        __restgprlr_26();
+        return;
+      }
+    }
+    else if ((param_4 & 0xffffffff) != 0) {
+      *puVar1 = 0;
+      puVar1[1] = 0;
+      puVar1[2] = 0;
+      __restgprlr_26();
+      return;
+    }
+  }
+  __restgprlr_26(param_3);
+  return;
 }
 
 
 // 826500C0  ReadFromMemoryCard  (xenon/xenon_memorycard.cpp:943)
 
-void ReadFromMemoryCard(void)
+void ReadFromMemoryCard(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  int iVar3;
+  DWORD DVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  longlong lVar7;
+  HANDLE hFile;
+  uint local_40 [16];
+  
+  uVar2 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x3b3,0,0xffffffff82000f98,0xffffffff82033c0c);
+  }
+  hFile = (HANDLE)uVar2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar5 = 0x3b4;
+    uVar6 = 0xffffffff8218ef04;
+  }
+  else {
+    if (hFile != (HANDLE)0xffffffff) goto LAB_8265014c;
+    uVar5 = 0x3b5;
+    uVar6 = 0xffffffff8218eee0;
+  }
+  MyAssertHandler(0xffffffff8218ee98,uVar5,0,0xffffffff82000f98,uVar6);
+LAB_8265014c:
+  if (DAT_8425e168 != '\0') {
+    MemCard_ReadFromHDD(uVar2,param_2,param_3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    DVar4 = SetFilePointer(hFile,(DWORD)param_3,(PLONG)0x0,1);
+    lVar7 = -(longlong)(int)DVar4 + -1;
+    iVar3 = (int)lVar7 + (-(uint)(lVar7 == 0) - ((int)-(longlong)(int)DVar4 + -2));
+  }
+  else {
+    iVar3 = ReadFile(hFile,(LPVOID)param_2,(DWORD)param_3,local_40,(LPOVERLAPPED)0x0);
+    param_3 = (ulonglong)local_40[0];
+  }
+  puVar1 = (undefined4 *)param_4;
+  if (iVar3 == 0) {
+    if ((param_4 & 0xffffffff) != 0) {
+      puVar1[1] = 0;
+      *(undefined1 *)puVar1 = 1;
+      puVar1[2] = PTR_s_GAME_SAVE_UNABLE_TO_ACCESS_DEVIC_829959b4;
+    }
+    __restgprlr_26(0xffffffffffffffff);
+    return;
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    if ((param_4 & 0xffffffff) != 0) {
+      puVar1[1] = 0;
+      *(undefined1 *)puVar1 = 1;
+      puVar1[2] = PTR_s_GAME_SAVE_UNABLE_TO_READ_FROM_DE_829959bc;
+    }
+    __restgprlr_26(0);
+    return;
+  }
+  if ((param_4 & 0xffffffff) != 0) {
+    *puVar1 = 0;
+    puVar1[1] = 0;
+    puVar1[2] = 0;
+  }
+  __restgprlr_26(param_3);
+  return;
 }
 
 
 // 82650258  MemCard_WriteToHDD  (xenon/xenon_memorycard.cpp:987)
 
-void MemCard_WriteToHDD(void)
+void MemCard_WriteToHDD(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_26();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x3de,0,0xffffffff82000f98,0xffffffff8218ef04);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x3df,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  if ((int)param_3 < 1) {
+    MyAssertHandler(0xffffffff8218ee98,0x3e0,0,0xffffffff82000f98,0xffffffff820589cc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x3e1,0,0xffffffff82000f98,0xffffffff82033c0c);
+  }
+  iVar3 = FS_Write(param_2,param_3,uVar2);
+  puVar1 = (undefined4 *)param_4;
+  if (iVar3 == (int)param_3) {
+    if ((param_4 & 0xffffffff) != 0) {
+      *puVar1 = 0;
+      puVar1[1] = 0;
+      puVar1[2] = 0;
+    }
+  }
+  else if ((param_4 & 0xffffffff) != 0) {
+    puVar1[1] = 0;
+    *(undefined1 *)puVar1 = 1;
+    puVar1[2] = PTR_s_GAME_SAVE_INSUFFICIENT_FREE_DISK_829959b8;
+    __restgprlr_26();
+    return;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -488,21 +1222,119 @@ void MemCard_SetDefaultOverlappedParams(undefined4 *param_1)
 
 // 826503B8  WriteToMemoryCardFile  (xenon/xenon_memorycard.cpp:1036)
 
-void WriteToMemoryCardFile(void)
+void WriteToMemoryCardFile(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  char cVar3;
+  BOOL BVar2;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  uint local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  cVar3 = Sys_IsMainThread();
+  if ((cVar3 == '\0') && (cVar3 = Sys_IsServerThread(), cVar3 == '\0')) {
+    MyAssertHandler(0xffffffff8218ee98,0x410,0,0xffffffff82000f98,0xffffffff8218f13c);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar4 = 0x414;
+    uVar5 = 0xffffffff8218ef04;
+  }
+  else {
+    if ((HANDLE)uVar1 != (HANDLE)0xffffffff) goto LAB_82650458;
+    uVar4 = 0x415;
+    uVar5 = 0xffffffff8218eee0;
+  }
+  MyAssertHandler(0xffffffff8218ee98,uVar4,0,0xffffffff82000f98,uVar5);
+LAB_82650458:
+  if (DAT_8425e168 != '\0') {
+    MemCard_WriteToHDD(uVar1,param_2,param_3,0xffffffff8425cd48);
+    __restgprlr_27();
+    return;
+  }
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x41e,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  BVar2 = WriteFile((HANDLE)uVar1,(LPCVOID)param_2,(DWORD)param_3,local_40,(LPOVERLAPPED)0x0);
+  if (BVar2 == 0) {
+    DAT_8425cd48 = CONCAT13(1,DAT_8425cd48._1_3_);
+    DAT_8425cd4c = 0;
+    DAT_8425cd50 = PTR_s_GAME_SAVE_UNABLE_TO_ACCESS_DEVIC_829959b4;
+    __restgprlr_27();
+    return;
+  }
+  if ((ulonglong)local_40[0] != (param_3 & 0xffffffff)) {
+    DAT_8425cd4c = 0;
+    DAT_8425cd48 = CONCAT13(1,DAT_8425cd48._1_3_);
+    DAT_8425cd50 = PTR_s_GAME_SAVE_INSUFFICIENT_FREE_DISK_829959b8;
+    __restgprlr_27();
+    return;
+  }
+  DAT_8425cd48 = 0;
+  DAT_8425cd4c = 0;
+  DAT_8425cd50 = (undefined *)0x0;
+  __restgprlr_27();
+  return;
 }
 
 
 // 82650560  WriteToMemoryCardFileAsync  (xenon/xenon_memorycard.cpp:1079)
 
-void WriteToMemoryCardFileAsync(void)
+void WriteToMemoryCardFileAsync
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,LPOVERLAPPED param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  char cVar4;
+  BOOL BVar2;
+  DWORD DVar3;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  DWORD aDStack_40 [16];
+  
+  uVar1 = __savegprlr_26();
+  cVar4 = Sys_IsMainThread();
+  if ((cVar4 == '\0') && (cVar4 = Sys_IsServerThread(), cVar4 == '\0')) {
+    MyAssertHandler(0xffffffff8218ee98,0x43c,0,0xffffffff82000f98,0xffffffff8218f13c);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar5 = 0x440;
+    uVar6 = 0xffffffff8218ef04;
+  }
+  else {
+    if ((HANDLE)uVar1 != (HANDLE)0xffffffff) goto LAB_82650604;
+    uVar5 = 0x441;
+    uVar6 = 0xffffffff8218eee0;
+  }
+  MyAssertHandler(0xffffffff8218ee98,uVar5,0,0xffffffff82000f98,uVar6);
+LAB_82650604:
+  if (DAT_8425e168 != '\0') {
+    MemCard_WriteToHDD(uVar1,param_2,param_3,0xffffffff8425cd48);
+    __restgprlr_26();
+    return;
+  }
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8218ee98,0x44a,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  BVar2 = WriteFile((HANDLE)uVar1,(LPCVOID)param_2,(DWORD)param_3,aDStack_40,param_4);
+  if (BVar2 == 0) {
+    DVar3 = GetLastError();
+    if (DVar3 != 0x3e5) {
+      DAT_8425cd48 = CONCAT13(1,DAT_8425cd48._1_3_);
+      DAT_8425cd4c = 0;
+      DAT_8425cd50 = PTR_s_GAME_SAVE_INSUFFICIENT_FREE_DISK_829959b8;
+      __restgprlr_26();
+      return;
+    }
+  }
+  DAT_8425cd48 = 0;
+  DAT_8425cd4c = 0;
+  DAT_8425cd50 = (undefined *)0x0;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -520,7 +1352,6 @@ void CloseContextFile(HANDLE param_1)
   
   if (param_1 != (HANDLE)0x0) {
     if (param_1 == (HANDLE)0xffffffff) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218ee98,0x46a,0,0xffffffff82000f98,0xffffffff8218eee0);
     }
     CloseHandle(param_1);
@@ -578,67 +1409,64 @@ void DeleteContextFile(void)
     uVar11 = 0xffffffff8218ef04;
   }
   else {
-    if (hObject != (HANDLE)0xffffffff) {
-      Sys_EnterCriticalSection(0x27);
-      iVar7 = 0;
-      uVar9 = 0;
-      piVar10 = &DAT_8425e16c;
-      while ((HANDLE)*piVar10 != hObject) {
-        uVar9 = uVar9 + 0x38;
-        iVar7 = iVar7 + 1;
-        piVar10 = piVar10 + 0xe;
-        if (0x6ff < uVar9) {
-          Sys_LeaveCriticalSection(0x27);
-          __restgprlr_24();
-          return;
-        }
-      }
-      iVar12 = iVar7 * 0x38;
-      uVar1 = *(undefined4 *)(iVar12 + -0x7bda1e90);
-      uVar2 = *(undefined4 *)(&DAT_8425e174 + iVar12);
-      if (hObject != (HANDLE)0x0) {
-        if (hObject == (HANDLE)0xffffffff) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff8218ee98,0x46a,0,0xffffffff82000f98,0xffffffff8218eee0);
-        }
-        CloseHandle(hObject);
-        Sys_EnterCriticalSection(0x27);
-        iVar6 = 0;
-        uVar8 = 0;
-        piVar10 = &DAT_8425e16c;
-        do {
-          if ((HANDLE)*piVar10 == hObject) {
-            (&DAT_8425e16c)[iVar6 * 0xe] = 0;
-            Com_sprintf(auStack_190,9,0xffffffff8218f038);
-            lVar3 = Sys_Milliseconds();
-            XContentClose(auStack_190,0);
-            lVar4 = Sys_Milliseconds();
-            Com_Printf(0x10,0xffffffff8218f174,auStack_190,lVar4 - lVar3);
-            break;
-          }
-          uVar8 = uVar8 + 0x38;
-          iVar6 = iVar6 + 1;
-          piVar10 = piVar10 + 0xe;
-        } while ((uVar8 & 0xffffffff) < 0x700);
-        Sys_LeaveCriticalSection(0x27);
-      }
-      if ((&DAT_8425e16c)[iVar7 * 0xe] == 0) {
-        memset(&local_180,0,0x134);
-        I_strncpyz(auStack_78,iVar12 + -0x7bda1e88,0x2a);
-        local_17c = 1;
-        local_180 = uVar2;
-        XContentDelete(uVar1,&local_180,0);
-        Sys_LeaveCriticalSection(0x27);
-        __restgprlr_24();
-        return;
-      }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218ee98,0x499,0,0xffffffff82000f98,0xffffffff8218f198);
-    }
+    if (hObject != (HANDLE)0xffffffff) goto LAB_82650840;
     uVar5 = 0x48b;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff8218ee98,uVar5,0,0xffffffff82000f98,uVar11);
+LAB_82650840:
+  Sys_EnterCriticalSection(0x27);
+  iVar7 = 0;
+  uVar9 = 0;
+  piVar10 = &DAT_8425e16c;
+  while ((HANDLE)*piVar10 != hObject) {
+    uVar9 = uVar9 + 0x38;
+    iVar7 = iVar7 + 1;
+    piVar10 = piVar10 + 0xe;
+    if (0x6ff < uVar9) {
+      Sys_LeaveCriticalSection(0x27);
+      __restgprlr_24();
+      return;
+    }
+  }
+  iVar12 = iVar7 * 0x38;
+  uVar1 = *(undefined4 *)(&DAT_8425e170 + iVar12);
+  uVar2 = *(undefined4 *)(&DAT_8425e174 + iVar12);
+  if (hObject != (HANDLE)0x0) {
+    if (hObject == (HANDLE)0xffffffff) {
+      MyAssertHandler(0xffffffff8218ee98,0x46a,0,0xffffffff82000f98,0xffffffff8218eee0);
+    }
+    CloseHandle(hObject);
+    Sys_EnterCriticalSection(0x27);
+    iVar6 = 0;
+    uVar8 = 0;
+    piVar10 = &DAT_8425e16c;
+    do {
+      if ((HANDLE)*piVar10 == hObject) {
+        (&DAT_8425e16c)[iVar6 * 0xe] = 0;
+        Com_sprintf(auStack_190,9,0xffffffff8218f038);
+        lVar3 = Sys_Milliseconds();
+        XContentClose(auStack_190,0);
+        lVar4 = Sys_Milliseconds();
+        Com_Printf(0x10,0xffffffff8218f174,auStack_190,lVar4 - lVar3);
+        break;
+      }
+      uVar8 = uVar8 + 0x38;
+      iVar6 = iVar6 + 1;
+      piVar10 = piVar10 + 0xe;
+    } while ((uVar8 & 0xffffffff) < 0x700);
+    Sys_LeaveCriticalSection(0x27);
+  }
+  if ((&DAT_8425e16c)[iVar7 * 0xe] != 0) {
+    MyAssertHandler(0xffffffff8218ee98,0x499,0,0xffffffff82000f98,0xffffffff8218f198);
+  }
+  memset(&local_180,0,0x134);
+  I_strncpyz(auStack_78,&DAT_8425e178 + iVar12,0x2a);
+  local_17c = 1;
+  local_180 = uVar2;
+  XContentDelete(uVar1,&local_180,0);
+  Sys_LeaveCriticalSection(0x27);
+  __restgprlr_24();
+  return;
 }
 
 

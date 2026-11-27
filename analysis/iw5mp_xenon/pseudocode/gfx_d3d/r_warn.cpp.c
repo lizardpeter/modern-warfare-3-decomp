@@ -5,8 +5,38 @@
 void R_UpdateFrameRate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  longlong lVar2;
+  
   __savegprlr_29();
+  if (DAT_847eec24 == DAT_84617abc) {
+    __restgprlr_29((double)DAT_847eec20);
+    return;
+  }
+  if (DAT_847eec24 == 0) {
+    DAT_847eec1c = Sys_Milliseconds();
+    DAT_847eec24 = DAT_84617abc;
+    __restgprlr_29((double)DAT_847eec20);
+    return;
+  }
+  if (DAT_847eec24 + 1 != DAT_84617abc) {
+LAB_82788f64:
+    DAT_847eec20 = 0.0;
+    DAT_847eec24 = DAT_84617abc;
+    __restgprlr_29();
+    return;
+  }
+  lVar1 = Sys_Milliseconds();
+  lVar2 = lVar1 - (ulonglong)DAT_847eec1c;
+  DAT_847eec1c = (uint)lVar1;
+  if (lVar2 == 0) {
+    lVar2 = 1;
+  }
+  else if ((int)lVar2 < 0) goto LAB_82788f64;
+  DAT_847eec24 = DAT_84617abc;
+  DAT_847eec20 = 1000.0 / (float)(longlong)(int)lVar2;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -51,7 +81,6 @@ void R_WarnOncePerFrame(int param_1,undefined8 param_2,undefined8 param_3,undefi
   uStack00000048 = param_8;
   iStack00000014 = param_1;
   if (DAT_847eec28 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d3b70,0xe0,0,0xffffffff82000f98,0xffffffff821d3bb0);
   }
   dVar1 = (double)R_UpdateFrameRate();

@@ -3,6 +3,20 @@
 ; 828A9FD0  XInputGetCapabilities  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:28)
   828A9FD0  7D8802A6             mfspr r12,LR
   828A9FD4  4806C6E9             bl 0x829166bc
+  828A9FD8  9421FF90             stwu r1,-0x70(r1)
+  828A9FDC  7C7F1B78             or r31,r3,r3
+  828A9FE0  7C9E2378             or r30,r4,r4
+  828A9FE4  7CBD2B78             or r29,r5,r5
+  828A9FE8  7DAD6B78             or r13,r13,r13
+  828A9FEC  7FA5EB78             or r5,r29,r29
+  828A9FF0  7FC4F378             or r4,r30,r30
+  828A9FF4  7FE3FB78             or r3,r31,r31
+  828A9FF8  4809749D             bl 0x82941494
+  828A9FFC  7C7F1B78             or r31,r3,r3
+  828AA000  7DCE7378             or r14,r14,r14
+  828AA004  7FE3FB78             or r3,r31,r31
+  828AA008  38210070             addi r1,r1,0x70
+  828AA00C  4806C700             b 0x8291670c
 
 ; 828AA010  XInputGetState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:64)
   828AA010  7D8802A6             mfspr r12,LR
@@ -88,6 +102,27 @@ LAB_828aa104:
 ; 828AA148  XInputGetKeystrokeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:129)
   828AA148  7D8802A6             mfspr r12,LR
   828AA14C  4806C571             bl 0x829166bc
+  828AA150  9421FF90             stwu r1,-0x70(r1)
+  828AA154  7C7F1B78             or r31,r3,r3
+  828AA158  7C9E2378             or r30,r4,r4
+  828AA15C  7CBD2B78             or r29,r5,r5
+  828AA160  7DAD6B78             or r13,r13,r13
+  828AA164  817F0000             lwz r11,0x0(r31)
+  828AA168  2B0B00FF             cmplwi cr6,r11,0xff
+  828AA16C  409A0010             bne cr6,0x828aa17c
+  828AA170  39600000             li r11,0x0
+  828AA174  67DE4000             oris r30,r30,0x4000
+  828AA178  917F0000             stw r11,0x0(r31)
+LAB_828aa17c:
+  828AA17C  7FA5EB78             or r5,r29,r29
+  828AA180  7FC4F378             or r4,r30,r30
+  828AA184  7FE3FB78             or r3,r31,r31
+  828AA188  4809733D             bl 0x829414c4
+  828AA18C  7C7F1B78             or r31,r3,r3
+  828AA190  7DCE7378             or r14,r14,r14
+  828AA194  7FE3FB78             or r3,r31,r31
+  828AA198  38210070             addi r1,r1,0x70
+  828AA19C  4806C570             b 0x8291670c
 
 ; 828AA1A0  XInputGetKeystroke  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:150)
   828AA1A0  7D8802A6             mfspr r12,LR

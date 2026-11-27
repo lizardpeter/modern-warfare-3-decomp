@@ -1,5 +1,5 @@
-2026-11-27 06:19:36 INFO  Decompile.java> shard 5: 1000 ok, 0 failed, 4s  
-2026-11-27 06:19:40 INFO  Decompile.java> shard 5: 2000 ok, 0 failed, 8s  
-2026-11-27 06:19:43 INFO  Decompile.java> shard 5: 3000 ok, 0 failed, 12s  
-2026-11-27 06:19:47 INFO  Decompile.java> shard 5: 4000 ok, 0 failed, 15s  
-2026-11-27 06:19:48 INFO  Decompile.java> shard 5 done: 4346 ok, 0 failed  
+2026-11-27 06:27:00 INFO  Decompile.java> shard 5: 1000 ok, 0 failed, 7s  
+2026-11-27 06:27:06 INFO  Decompile.java> shard 5: 2000 ok, 0 failed, 13s  
+2026-11-27 06:27:45 INFO  Decompile.java> shard 5: 3000 ok, 0 failed, 53s  
+2026-11-27 06:27:52 INFO  Decompile.java> shard 5: 4000 ok, 0 failed, 60s  
+2026-11-27 06:27:56 INFO  Decompile.java> shard 5 done: 4938 ok, 0 failed  

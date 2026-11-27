@@ -59,6 +59,12 @@ LAB_823a082c:
   823A0854  38A00000             li r5,0x0
   823A0858  38800036             li r4,0x36
   823A085C  48233CA5             bl 0x825d4500
+  823A0860  39600000             li r11,0x0
+  823A0864  917F0014             stw r11,0x14(r31)
+  823A0868  817F0010             lwz r11,0x10(r31)
+  823A086C  917F0018             stw r11,0x18(r31)
+  823A0870  38210090             addi r1,r1,0x90
+  823A0874  48575E88             b 0x829166fc
 LAB_823a0878:
   823A0878  39600000             li r11,0x0
   823A087C  93DF0018             stw r30,0x18(r31)
@@ -183,6 +189,16 @@ LAB_823a09a0:
   823A0A2C  38A00000             li r5,0x0
   823A0A30  38800071             li r4,0x71
   823A0A34  48233ACD             bl 0x825d4500
+  823A0A38  3D0082B6             lis r8,-0x7d4a
+  823A0A3C  38E8CD00             subi r7,r8,0x3300
+  823A0A40  81670008             lwz r11,0x8(r7)
+  823A0A44  7D6BFA14             add r11,r11,r31
+  823A0A48  91670008             stw r11,0x8(r7)
+  823A0A4C  38210060             addi r1,r1,0x60
+  823A0A50  8181FFF8             lwz r12,-0x8(r1)
+  823A0A54  7D8803A6             mtspr LR,r12
+  823A0A58  EBE1FFF0             ld r31,-0x10(r1)
+  823A0A5C  4E800020             blr
 LAB_823a0a60:
   823A0A60  3D6082B6             lis r11,-0x7d4a
   823A0A64  394BCD00             subi r10,r11,0x3300
@@ -260,6 +276,54 @@ LAB_823a0adc:
 ; 823A0B60  SaveBuffer_Stream  (database/assetbuf.cpp:149)
   823A0B60  7D8802A6             mfspr r12,LR
   823A0B64  48575B51             bl 0x829166b4
+  823A0B68  9421FF80             stwu r1,-0x80(r1)
+  823A0B6C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  823A0B70  7C9C2378             or r28,r4,r4
+  823A0B74  7CBF2B78             or r31,r5,r5
+  823A0B78  7CDB3378             or r27,r6,r6
+  823A0B7C  2B0B0000             cmplwi cr6,r11,0x0
+  823A0B80  419A0090             beq cr6,0x823a0c10
+  823A0B84  3D6082B6             lis r11,-0x7d4a
+  823A0B88  2F050000             cmpwi cr6,r5,0x0
+  823A0B8C  3BCBCD00             subi r30,r11,0x3300
+  823A0B90  419A0078             beq cr6,0x823a0c08
+  823A0B94  83BE0008             lwz r29,0x8(r30)
+  823A0B98  41990028             bgt cr6,0x823a0bc0
+  823A0B9C  3D608206             lis r11,-0x7dfa
+  823A0BA0  3D408200             lis r10,-0x7e00
+  823A0BA4  3D208206             lis r9,-0x7dfa
+  823A0BA8  38EB89CC             subi r7,r11,0x7634
+  823A0BAC  38CA0F98             addi r6,r10,0xf98
+  823A0BB0  38698888             subi r3,r9,0x7778
+  823A0BB4  38A00000             li r5,0x0
+  823A0BB8  3880009E             li r4,0x9e
+  823A0BBC  48233945             bl 0x825d4500
+LAB_823a0bc0:
+  823A0BC0  817E0000             lwz r11,0x0(r30)
+  823A0BC4  80DE0004             lwz r6,0x4(r30)
+  823A0BC8  7D6BE850             subf r11,r11,r29
+  823A0BCC  7D6BFA14             add r11,r11,r31
+  823A0BD0  7F0B3000             cmpw cr6,r11,r6
+  823A0BD4  40990018             ble cr6,0x823a0bec
+  823A0BD8  3D608206             lis r11,-0x7dfa
+  823A0BDC  7FE5FB78             or r5,r31,r31
+  823A0BE0  388B8998             subi r4,r11,0x7668
+  823A0BE4  38600000             li r3,0x0
+  823A0BE8  48159781             bl 0x824fa368
+LAB_823a0bec:
+  823A0BEC  7FE5FB78             or r5,r31,r31
+  823A0BF0  7F84E378             or r4,r28,r28
+  823A0BF4  7FA3EB78             or r3,r29,r29
+  823A0BF8  48575D69             bl 0x82916960
+  823A0BFC  93BB0000             stw r29,0x0(r27)
+  823A0C00  7FE3FB78             or r3,r31,r31
+  823A0C04  4BFFFDF5             bl 0x823a09f8
+LAB_823a0c08:
+  823A0C08  7D7CFA14             add r11,r28,r31
+  823A0C0C  917E000C             stw r11,0xc(r30)
+LAB_823a0c10:
+  823A0C10  38210080             addi r1,r1,0x80
+  823A0C14  48575AF0             b 0x82916704
 
 ; 823A0C18  LoadBuffer_Stream  (database/assetbuf.cpp:173)
   823A0C18  7D8802A6             mfspr r12,LR
@@ -547,6 +611,58 @@ LAB_823a18bc:
 ; 823A0CB8  SwapPointerMapChild  (database/assetbuf.cpp:242)
   823A0CB8  7D8802A6             mfspr r12,LR
   823A0CBC  48575A01             bl 0x829166bc
+  823A0CC0  9421FF90             stwu r1,-0x70(r1)
+  823A0CC4  7C7F1B78             or r31,r3,r3
+  823A0CC8  7C9E2378             or r30,r4,r4
+  823A0CCC  7CBD2B78             or r29,r5,r5
+  823A0CD0  2B030000             cmplwi cr6,r3,0x0
+  823A0CD4  419A0068             beq cr6,0x823a0d3c
+  823A0CD8  480008A1             bl 0x823a1578
+  823A0CDC  7F03F040             cmplw cr6,r3,r30
+  823A0CE0  7FE3FB78             or r3,r31,r31
+  823A0CE4  409A0014             bne cr6,0x823a0cf8
+  823A0CE8  7FA4EB78             or r4,r29,r29
+  823A0CEC  480009AD             bl 0x823a1698
+  823A0CF0  38210070             addi r1,r1,0x70
+  823A0CF4  48575A18             b 0x8291670c
+LAB_823a0cf8:
+  823A0CF8  48000A31             bl 0x823a1728
+  823A0CFC  7F03F040             cmplw cr6,r3,r30
+  823A0D00  419A0028             beq cr6,0x823a0d28
+  823A0D04  3D608206             lis r11,-0x7dfa
+  823A0D08  3D408200             lis r10,-0x7e00
+  823A0D0C  3D208206             lis r9,-0x7dfa
+  823A0D10  38EB8A08             subi r7,r11,0x75f8
+  823A0D14  38CA0F98             addi r6,r10,0xf98
+  823A0D18  38698888             subi r3,r9,0x7778
+  823A0D1C  38A00000             li r5,0x0
+  823A0D20  388000FB             li r4,0xfb
+  823A0D24  482337DD             bl 0x825d4500
+LAB_823a0d28:
+  823A0D28  7FA4EB78             or r4,r29,r29
+  823A0D2C  7FE3FB78             or r3,r31,r31
+  823A0D30  48000B19             bl 0x823a1848
+  823A0D34  38210070             addi r1,r1,0x70
+  823A0D38  485759D4             b 0x8291670c
+LAB_823a0d3c:
+  823A0D3C  3D6082B6             lis r11,-0x7d4a
+  823A0D40  3BEBCD00             subi r31,r11,0x3300
+  823A0D44  817F0014             lwz r11,0x14(r31)
+  823A0D48  7F0BF040             cmplw cr6,r11,r30
+  823A0D4C  419A0028             beq cr6,0x823a0d74
+  823A0D50  3D608206             lis r11,-0x7dfa
+  823A0D54  3D408200             lis r10,-0x7e00
+  823A0D58  3D208206             lis r9,-0x7dfa
+  823A0D5C  38EB89E0             subi r7,r11,0x7620
+  823A0D60  38CA0F98             addi r6,r10,0xf98
+  823A0D64  38698888             subi r3,r9,0x7778
+  823A0D68  38A00000             li r5,0x0
+  823A0D6C  38800101             li r4,0x101
+  823A0D70  48233791             bl 0x825d4500
+LAB_823a0d74:
+  823A0D74  93BF0014             stw r29,0x14(r31)
+  823A0D78  38210070             addi r1,r1,0x70
+  823A0D7C  48575990             b 0x8291670c
 
 ; 823A0D80  InsertPointerMapEntry  (database/assetbuf.cpp:264)
   823A0D80  7D8802A6             mfspr r12,LR
@@ -917,6 +1033,7 @@ LAB_823a1254:
   823A12A8  38A00000             li r5,0x0
   823A12AC  38800197             li r4,0x197
   823A12B0  48233251             bl 0x825d4500
+  823A12B4  815C0010             lwz r10,0x10(r28)
 LAB_823a12b8:
   823A12B8  817C0014             lwz r11,0x14(r28)
   823A12BC  2B0B0000             cmplwi cr6,r11,0x0
@@ -1027,6 +1144,7 @@ LAB_823a13d0:
   823A1428  38A00000             li r5,0x0
   823A142C  388001C9             li r4,0x1c9
   823A1430  482330D1             bl 0x825d4500
+  823A1434  48000010             b 0x823a1444
 LAB_823a1438:
   823A1438  7FC4F378             or r4,r30,r30
   823A143C  7FE3FB78             or r3,r31,r31

@@ -5,8 +5,17 @@
 void Scr_IsInOpcodeMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_83c4baf4 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x20,0,0xffffffff82000f98,0xffffffff821509e8);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x21,0,0xffffffff82000f98,0xffffffff82002114);
+  }
+  __restgprlr_28(-(uVar1 - DAT_83c4baf4 < (ulonglong)DAT_83700ffc) & 1);
+  return;
 }
 
 
@@ -34,11 +43,60 @@ undefined8 Scr_IsIdentifier(char *param_1)
 
 // 82537098  Scr_GetFunctionHandle  (script/scr_main.cpp:60)
 
-void Scr_GetFunctionHandle(void)
+void Scr_GetFunctionHandle(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar1;
+  char *pcVar5;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar6;
+  char *pcVar7;
+  longlong lVar8;
+  int iStack_3c;
+  
+  pcVar5 = (char *)__savegprlr_26();
+  pcVar7 = pcVar5;
+  if (DAT_83700fc4 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x49,0,0xffffffff82000f98,0xffffffff82150a60);
+  }
+  do {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0x3f < pcVar7 + (-1 - (int)pcVar5)) {
+    MyAssertHandler(0xffffffff82150a00,0x4b,0,0xffffffff82000f98,0xffffffff82150a40);
+  }
+  uVar2 = Scr_CreateCanonicalFilename(pcVar5);
+  uVar3 = FindVariable(DAT_83700fc4,uVar2);
+  SL_RemoveRefToString(uVar2);
+  if ((uVar3 & 0xffffffff) != 0) {
+    uVar3 = FindObject(DAT_83700fc4,uVar3);
+    if ((uVar3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82150a00,0x58,0,0xffffffff82000f98,0xffffffff8209a984);
+    }
+    uVar4 = SL_FindLowercaseString(param_2);
+    if (((uVar4 & 0xffffffff) != 0) &&
+       (uVar4 = FindVariable(uVar3,uVar4), (uVar4 & 0xffffffff) != 0)) {
+      uVar3 = Scr_EvalVariable(uVar3,uVar4);
+      iStack_3c = (int)uVar3;
+      if ((iStack_3c != 7) && (iStack_3c != 0xe)) {
+        MyAssertHandler(0xffffffff82150a00,0x6d,0,0xffffffff82000f98,0xffffffff8214e70c);
+      }
+      iVar6 = Scr_IsInOpcodeMemory(uVar3 >> 0x20);
+      if (iVar6 != 0) {
+        lVar8 = (uVar3 >> 0x20) - (ulonglong)DAT_83c4baf4;
+        if (lVar8 == 0) {
+          MyAssertHandler(0xffffffff82150a00,0x7a,0,0xffffffff82000f98,0xffffffff82012420);
+        }
+        __restgprlr_26(lVar8);
+        return;
+      }
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -88,11 +146,9 @@ void SL_GetCanonicalString(void)
   
   pcVar7 = (char *)__savegprlr_24();
   if (pcVar7 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82150a00,0xab,0,0xffffffff82000f98,0xffffffff8202e030);
   }
   if (DAT_83700ff4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82150a00,0xac,0,0xffffffff82000f98,0xffffffff82150530);
   }
   lVar6 = Scr_CanonicalStringGetHashCode(pcVar7,local_50);
@@ -162,13 +218,41 @@ void SL_ResetLocalCanonicalString(void)
 }
 
 
+// 825374A0  Scr_InitProgramHunkUser  (script/scr_main.cpp:260)
+
+void Scr_InitProgramHunkUser(void)
+
+{
+  __savegprlr_29();
+  if (DAT_83c4bae8 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x105,0,0xffffffff82000f98,0xffffffff82150b28);
+  }
+  DAT_83c4bae8 = Hunk_UserCreate(0x180000,0xffffffff82150b0c,1,7);
+  if (DAT_83c4baec != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x108,0,0xffffffff82000f98,0xffffffff82150ae8);
+  }
+  DAT_83c4baec = Hunk_UserCreate(0x40000,0xffffffff82150ac4,1,7);
+  __restgprlr_29();
+  return;
+}
+
+
 // 82537558  Scr_ShutdownProgramHunkUser  (script/scr_main.cpp:270)
 
 void Scr_ShutdownProgramHunkUser(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  if (DAT_83c4bae8 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x10f,0,0xffffffff82000f98,0xffffffff82150b0c);
+  }
+  if (DAT_83c4baec == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x110,0,0xffffffff82000f98,0xffffffff82150ac4);
+  }
+  DAT_83c4baec = 0;
+  DAT_83c4bae8 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -177,8 +261,98 @@ void Scr_ShutdownProgramHunkUser(void)
 void Scr_BeginLoadScripts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  void *pvVar3;
+  ulonglong uVar2;
+  undefined1 auStack_40 [64];
+  
   __savegprlr_26();
+  DAT_83c6fb14 = "<script compile variable>";
+  LargeLocalReset();
+  MT_Reset();
+  if (DAT_83701002 != '\0') {
+    MyAssertHandler(0xffffffff82150a00,0x131,0,0xffffffff82000f98,0xffffffff82150b64);
+  }
+  DAT_83701002 = 1;
+  Scr_InitOpcodeLookup();
+  DAT_8382d8d8 = 0;
+  Scr_InitDebuggerMain();
+  if (DAT_83700fc0 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x140,0,0xffffffff82000f98,0xffffffff82150b44);
+  }
+  DAT_83700fc0 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  pvVar3 = memset(&DAT_841852f8,0,0x280);
+  DAT_83ca44c4 = '\x01' - (DAT_83c4ba96 == '\0');
+  if (DAT_83700fc4 != 0) {
+    pvVar3 = (void *)MyAssertHandler(0xffffffff82150a00,0x156,0,0xffffffff82000f98,
+                                     0xffffffff82150e4c);
+  }
+  DAT_83700fc4 = Scr_AllocArray(pvVar3);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc4 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83700fc8 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x15d,0,0xffffffff82000f98,0xffffffff82150e30);
+  }
+  DAT_83700fc8 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc8 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83700fcc != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x165,0,0xffffffff82000f98,0xffffffff82150e10);
+  }
+  DAT_83700fcc = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fcc + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83700fd0 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x16c,0,0xffffffff82000f98,0xffffffff82150df4);
+  }
+  DAT_83700fd0 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fd0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83700fd4 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x173,0,0xffffffff82000f98,0xffffffff82150dd8);
+  }
+  DAT_83700fd4 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fd4 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bae8 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x17b,0,0xffffffff82000f98,0xffffffff82150b0c);
+  }
+  TempMemoryReset(DAT_83c4bae8);
+  uVar2 = TempMalloc(0);
+  DAT_83c4baf4 = (undefined4)uVar2;
+  DAT_83700ffc = 0;
+  DAT_83c4baf0 = 0;
+  if ((uVar2 & 0x1f) != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x186,0,0xffffffff82150d88,0xffffffff82150db0,uVar2);
+  }
+  SL_BeginLoadScripts();
+  Scr_InitEvaluate();
+  DAT_83c4ba90 = 0;
+  DAT_83700fb8 = 0;
+  Scr_ClearErrorMessage();
+  DAT_83700ba0 = 0;
+  Scr_SetLoadedImpureScript(0);
+  Scr_BeginLoadAnimTrees(1);
+  memset(&DAT_837011e8,0,0x710);
+  memset(&DAT_837018f8,0,0xc2c);
+  Scr_GetFunction(0,auStack_40);
+  Scr_GetMethod(0,auStack_40);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -187,8 +361,60 @@ void Scr_BeginLoadScripts(void)
 void Scr_BeginLoadScriptsRemote(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_29();
+  if (DAT_83701002 != '\0') {
+    MyAssertHandler(0xffffffff82150a00,0x1b6,0,0xffffffff82000f98,0xffffffff82150b64);
+  }
+  DAT_83701002 = 1;
+  Scr_InitOpcodeLookup();
+  Scr_InitDebuggerMain();
+  if (DAT_83700fc0 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x1c2,0,0xffffffff82000f98,0xffffffff82150b44);
+  }
+  DAT_83700fc0 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 825376A8  Scr_BeginLoadAnimTrees  (script/scr_main.cpp:461)
+
+void Scr_BeginLoadAnimTrees(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_27();
+  DAT_83c6fb14 = "<script compile variable>";
+  if (DAT_83700fb0 != '\0') {
+    MyAssertHandler(0xffffffff82150a00,0x1d2,0,0xffffffff82000f98,0xffffffff82150b9c);
+  }
+  DAT_83700fb0 = 1;
+  *(undefined4 *)(&DAT_83700fa4 + (int)((uVar2 & 0xffffffff) << 2)) = 0;
+  *(undefined4 *)(&DAT_83700ba4 + (int)((uVar2 & 0xffffffff) << 9)) = 0;
+  if (DAT_83700b98 != 0) {
+    MyAssertHandler(0xffffffff82150a00,0x1da,0,0xffffffff82000f98,0xffffffff82150b84);
+  }
+  DAT_83700b98 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700b98 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+    DAT_83700b9c = 0;
+    DAT_83700fe8 = 0;
+    __restgprlr_27();
+    return;
+  }
+  DAT_83700b9c = 0;
+  DAT_83700fe8 = 0;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -220,7 +446,6 @@ int Scr_ScanFile(int param_1,int param_2)
   else if (cVar2 == '\0') {
     if (DAT_83700fdc == '\0') {
       if (DAT_83700fe0 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82150a00,0x202,0,0xffffffff82000f98,0xffffffff82150bd8);
       }
       DAT_83700fdc = '\x01';
@@ -236,11 +461,94 @@ int Scr_ScanFile(int param_1,int param_2)
 
 // 825378C8  Scr_LoadScriptInternal  (script/scr_main.cpp:525)
 
-void Scr_LoadScriptInternal(void)
+void Scr_LoadScriptInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  char cVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  char *pcVar11;
+  undefined8 uVar6;
+  int iVar12;
+  ulonglong uVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  char *pcVar13;
+  undefined4 local_c0 [4];
+  undefined1 auStack_b0 [176];
+  
+  pcVar11 = (char *)__savegprlr_19();
+  pcVar13 = pcVar11;
+  if (DAT_83701002 == '\0') {
+    MyAssertHandler(0xffffffff82150a00,0x222,0,0xffffffff82000f98,0xffffffff82150c08);
+  }
+  do {
+    cVar1 = *pcVar13;
+    pcVar13 = pcVar13 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0x3f < pcVar13 + (-1 - (int)pcVar11)) {
+    MyAssertHandler(0xffffffff82150a00,0x223,0,0xffffffff82000f98,0xffffffff82150a40);
+  }
+  Hunk_CheckTempMemoryHighClear();
+  uVar6 = Scr_CreateCanonicalFilename(pcVar11);
+  iVar12 = FindVariable(DAT_83700fc0,uVar6);
+  if (iVar12 == 0) {
+    uVar8 = GetNewVariable(DAT_83700fc0,uVar6);
+    SL_RemoveRefToString(uVar6);
+    uVar9 = SL_ConvertToString(uVar6);
+    Com_sprintf(auStack_b0,0x40,0xffffffff8214ffe0,uVar9);
+    uVar5 = DAT_8382d8d4;
+    ProfLoad_Begin(0xffffffff82150bf4);
+    uVar9 = TempMalloc(0);
+    uVar10 = SL_ConvertToString(uVar6);
+    iVar12 = Scr_AddSourceBuffer(uVar10,auStack_b0,uVar9,1);
+    ProfLoad_End();
+    uVar2 = DAT_83700ba0;
+    if (iVar12 != 0) {
+      DAT_83700fbc = 0;
+      DAT_83700ba0 = 0;
+      Scr_InitAllocNode();
+      uVar4 = DAT_8382d8d0;
+      uVar3 = DAT_83700ff0;
+      DAT_83700fdc = 0;
+      DAT_83700fd8 = &DAT_82150bf0;
+      DAT_8382d8d0 = auStack_b0;
+      DAT_83700ff0 = (undefined4)uVar6;
+      DAT_83700fe0 = iVar12;
+      ScriptParse(local_c0,0);
+      DAT_83700fe0 = 0;
+      Scr_CheckUsedSize(pcVar11);
+      uVar9 = GetVariable(DAT_83700fc4,uVar6);
+      uVar9 = Scr_GetObject2(DAT_83700fc4,uVar9);
+      uVar10 = GetVariable(DAT_83700fc8,uVar6);
+      uVar10 = Scr_GetObject2(DAT_83700fc8,uVar10);
+      ProfLoad_Begin(0xffffffff8214f438);
+      ScriptCompile(local_c0[0],uVar9,uVar10,uVar8,param_2,param_3,uVar6);
+      ProfLoad_End();
+      RemoveVariable(DAT_83700fc8,uVar6);
+      DAT_83700ba0 = uVar2;
+      DAT_83700ff0 = uVar3;
+      DAT_8382d8d0 = (undefined1 *)uVar4;
+      DAT_8382d8d4 = uVar5;
+      Hunk_CheckTempMemoryHighClear();
+      __restgprlr_19(uVar9);
+      return;
+    }
+  }
+  else {
+    SL_RemoveRefToString(uVar6);
+    uVar7 = FindVariable(DAT_83700fc4,uVar6);
+    if ((uVar7 & 0xffffffff) != 0) {
+      FindObject(DAT_83700fc4,uVar7);
+      __restgprlr_19();
+      return;
+    }
+  }
+  __restgprlr_19(0);
+  return;
 }
 
 
@@ -269,11 +577,9 @@ void Scr_PostCompileScripts(void)
   
   iVar1 = TempMalloc(0);
   if (DAT_83700ffc != iVar1 - DAT_83c4baf4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82150a00,0x2c7,0,0xffffffff82000f98,0xffffffff82150c48);
   }
   if (DAT_83700ba0 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82150a00,0x2ca,0,0xffffffff82000f98,0xffffffff82150c28);
   }
   return;
@@ -316,13 +622,211 @@ longlong Scr_CompareFunctions(undefined4 *param_1,undefined4 *param_2)
 }
 
 
+// 82537CD8  Scr_SortFunctionList  (script/scr_main.cpp:739)
+
+void Scr_SortFunctionList(void)
+
+{
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
+  uint uVar4;
+  char *pcVar5;
+  undefined1 *puVar6;
+  char *pcVar7;
+  char *pcVar8;
+  undefined4 *puVar9;
+  
+  __savegprlr_23();
+  qsort(&DAT_8382d8dc,DAT_8382d8d8,0xc,Scr_CompareFunctions);
+  pcVar5 = (char *)0x0;
+  puVar6 = (undefined1 *)0x0;
+  pcVar8 = (char *)0x0;
+  uVar4 = 0;
+  if (DAT_8382d8d8 != 0) {
+    puVar9 = &DAT_8382d8d4;
+    do {
+      pcVar3 = (char *)puVar9[2];
+      pcVar2 = pcVar3;
+      pcVar7 = pcVar8;
+      if (pcVar3 != pcVar5) {
+        do {
+          cVar1 = *pcVar2;
+          pcVar2 = pcVar2 + 1;
+        } while (cVar1 != '\0');
+        pcVar7 = pcVar2 + ((int)pcVar8 - (int)pcVar3);
+        if ((char *)0x30000 < pcVar7) {
+          Com_Error(1,0xffffffff82150ca8);
+        }
+        pcVar5 = (char *)puVar9[2];
+        puVar6 = &DAT_8384b8dc + (int)pcVar8;
+        pcVar3 = pcVar5 + -1;
+        pcVar8 = pcVar8 + -0x7c7b4725;
+        do {
+          pcVar3 = pcVar3 + 1;
+          cVar1 = *pcVar3;
+          pcVar8 = pcVar8 + 1;
+          *pcVar8 = cVar1;
+        } while (cVar1 != '\0');
+      }
+      puVar9[2] = puVar6;
+      pcVar8 = (char *)puVar9[3];
+      do {
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar1 != '\0');
+      pcVar8 = pcVar8 + ((int)pcVar7 - (int)puVar9[3]);
+      if ((char *)0x30000 < pcVar8) {
+        Com_Error(1,0xffffffff82150ca8);
+      }
+      pcVar3 = (char *)(puVar9[3] + -1);
+      pcVar2 = pcVar7 + -0x7c7b4725;
+      do {
+        pcVar3 = pcVar3 + 1;
+        cVar1 = *pcVar3;
+        pcVar2 = pcVar2 + 1;
+        *pcVar2 = cVar1;
+      } while (cVar1 != '\0');
+      uVar4 = uVar4 + 1;
+      puVar9 = puVar9 + 3;
+      *puVar9 = &DAT_8384b8dc + (int)pcVar7;
+    } while (uVar4 < DAT_8382d8d8);
+  }
+  __restgprlr_23();
+  return;
+}
+
+
 // 82537E40  Scr_EndLoadScripts  (script/scr_main.cpp:790)
 
 void Scr_EndLoadScripts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_26();
+  Scr_SortFunctionList();
+  Scr_EndLoadEvaluate();
+  SL_EndLoadScripts();
+  SL_ShutdownSystem(2);
+  Scr_InitDebugger();
+  DAT_83701002 = 0;
+  if (DAT_83700fc0 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x332,0,0xffffffff82000f98,0xffffffff82150d40);
+  }
+  ClearObject(DAT_83700fc0);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fc0);
+  DAT_83700fc0 = 0;
+  if (DAT_83700fc4 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x342,0,0xffffffff82000f98,0xffffffff82150a60);
+  }
+  ClearObject(DAT_83700fc4);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc4 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fc4);
+  DAT_83700fc4 = 0;
+  if (DAT_83700fc8 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x34b,0,0xffffffff82000f98,0xffffffff82150d24);
+  }
+  ClearObject(DAT_83700fc8);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fc8 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fc8);
+  DAT_83700fc8 = 0;
+  if (DAT_83700fcc == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x355,0,0xffffffff82000f98,0xffffffff82150d08);
+  }
+  ClearObject(DAT_83700fcc);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fcc + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fcc);
+  DAT_83700fcc = 0;
+  if (DAT_83700fd0 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x35e,0,0xffffffff82000f98,0xffffffff82150cec);
+  }
+  ClearObject(DAT_83700fd0);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fd0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fd0);
+  DAT_83700fd0 = 0;
+  if (DAT_83700fd4 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x367,0,0xffffffff82000f98,0xffffffff82150cd0);
+  }
+  ClearObject(DAT_83700fd4);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700fd4 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700fd4);
+  DAT_83700fd4 = 0;
+  MT_Reset();
+  __restgprlr_26();
+  return;
+}
+
+
+// 82538100  Scr_PrecacheAnimTrees  (script/scr_main.cpp:891)
+
+void Scr_PrecacheAnimTrees(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  
+  uVar2 = __savegprlr_27();
+  iVar1 = (int)((param_2 & 0xffffffff) << 2);
+  uVar3 = 1;
+  if (*(int *)(&DAT_83700fa4 + iVar1) != 0) {
+    do {
+      Scr_LoadAnimTreeAtIndex(uVar3,uVar2,param_2);
+      uVar3 = uVar3 + 1;
+    } while ((uVar3 & 0xffffffff) <= (ulonglong)*(uint *)(&DAT_83700fa4 + iVar1));
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 82538160  Scr_EndLoadAnimTrees  (script/scr_main.cpp:900)
+
+void Scr_EndLoadAnimTrees(void)
+
+{
+  int iVar1;
+  
+  if (DAT_83700b98 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x385,0,0xffffffff82000f98,0xffffffff82150d5c);
+  }
+  ClearObject(DAT_83700b98);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83700b98 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(DAT_83700b98);
+  DAT_83700b98 = 0;
+  if (DAT_83700b9c != 0) {
+    RemoveRefToObject();
+  }
+  SL_ShutdownSystem(2);
+  if ((DAT_83c4baf4 != 0) && (DAT_83c4baf0 == 0)) {
+    DAT_83c4baf0 = TempMalloc(0);
+  }
+  DAT_83700fb0 = 0;
+  DAT_83c6fb14 = 0;
+  return;
 }
 
 
@@ -331,7 +835,40 @@ void Scr_EndLoadScripts(void)
 void Scr_FreeScripts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  
+  cVar1 = __savegprlr_28();
+  if (cVar1 != '\x01') {
+    MyAssertHandler(0xffffffff82150a00,0x3a6,0,0xffffffff82000f98,0xffffffff82150d74);
+  }
+  Hunk_CheckTempMemoryClear();
+  if (DAT_83701002 != '\0') {
+    DAT_83701002 = '\0';
+    Scr_EndLoadScripts();
+  }
+  if (DAT_83700fb0 != '\0') {
+    DAT_83700fb0 = '\0';
+    Scr_EndLoadAnimTrees();
+  }
+  Scr_ShutdownDebugger();
+  Scr_ShutdownDebuggerMain();
+  Scr_ShutdownEvaluate();
+  SL_ShutdownSystem(1);
+  Scr_ShutdownOpcodeLookup();
+  if (DAT_83c4bae8 == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x3c5,0,0xffffffff82000f98,0xffffffff82150b0c);
+  }
+  Hunk_UserReset(DAT_83c4bae8);
+  DAT_83700ff4 = 0;
+  if (DAT_83c4baec == 0) {
+    MyAssertHandler(0xffffffff82150a00,0x3cb,0,0xffffffff82000f98,0xffffffff82150ac4);
+  }
+  Hunk_UserReset(DAT_83c4baec);
+  DAT_83c4baf4 = 0;
+  DAT_83700ffc = 0;
+  DAT_83c4bae4 = 0;
+  DAT_83c4baf0 = 0;
+  __restgprlr_28();
+  return;
 }
 

@@ -2,11 +2,27 @@
 
 // 82359840  CL_DrawEstrangedClientName  (client_mp/cl_voice_debug.cpp:36)
 
-void CL_DrawEstrangedClientName(void)
+void CL_DrawEstrangedClientName
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CL_GetClientName(param_2,param_3,auStack_60,0x40);
+  if (iVar2 == 0) {
+    Com_sprintf(auStack_60,0x40,0xffffffff820385f8,param_3);
+  }
+  lVar3 = (longlong)*(int *)(DAT_82b3fa34 + 0xc) * (longlong)(param_4 + 1);
+  CL_DrawText((double)*(float *)(DAT_82b3f858 + 0xc),
+              (double)((float)(longlong)(int)lVar3 + *(float *)(DAT_82b3f858 + 0x10)),
+              (double)*(float *)(DAT_82b3fa30 + 0xc),(double)*(float *)(DAT_82b3fa30 + 0xc),uVar1,
+              auStack_60,0x7fffffff,DAT_82a39350,lVar3,DAT_82b3fa30,1,1);
+  __restgprlr_29();
+  return;
 }
 
 

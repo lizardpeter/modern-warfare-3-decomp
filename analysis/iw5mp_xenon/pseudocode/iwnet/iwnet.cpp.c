@@ -6,10 +6,69 @@ void IWNet_CloseTask(char *param_1)
 
 {
   if (*param_1 != '\x01') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a82dc,0x7f,0,0xffffffff82000f98,0xffffffff821a8318);
+    *param_1 = '\0';
+    return;
   }
   *param_1 = '\0';
+  return;
+}
+
+
+// 826E2130  IWNet_CancelTask  (iwnet/iwnet.cpp:133)
+
+void IWNet_CancelTask(void)
+
+{
+  char *pcVar1;
+  char cVar2;
+  
+  pcVar1 = (char *)__savegprlr_29();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff821a82dc,0x86,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  if (*pcVar1 == '\0') {
+    MyAssertHandler(0xffffffff821a82dc,0x87,0,0xffffffff82000f98,0xffffffff821a8340);
+  }
+  cVar2 = IWNet_Storage_IsStorageCommand(pcVar1);
+  if (cVar2 != '\0') {
+    IWNet_Storage_Cancel(*(undefined4 *)(pcVar1 + 0xc));
+  }
+  Com_Printf(0x19,0xffffffff821a832c,*(undefined4 *)(pcVar1 + 4));
+  IWNet_CloseTask(pcVar1);
+  __restgprlr_29();
+  return;
+}
+
+
+// 826E21E0  IWNet_CancelStorageTask  (iwnet/iwnet.cpp:154)
+
+void IWNet_CancelStorageTask(void)
+
+{
+  int iVar1;
+  char cVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  char *pcVar5;
+  
+  iVar1 = __savegprlr_28();
+  uVar3 = 0;
+  pcVar5 = &DAT_844cf278;
+  lVar4 = 0x18;
+  do {
+    if (((*pcVar5 != '\0') && (cVar2 = IWNet_Storage_IsStorageCommand(pcVar5), cVar2 != '\0')) &&
+       (*(int *)(pcVar5 + 0xc) == iVar1)) {
+      IWNet_CancelTask(pcVar5);
+      uVar3 = uVar3 + 1;
+    }
+    lVar4 = lVar4 + -1;
+    pcVar5 = pcVar5 + 0x1c;
+  } while (lVar4 != 0);
+  if ((uVar3 & 0xffffffff) != 1) {
+    MyAssertHandler(0xffffffff821a82dc,0xa8,0,0xffffffff821a834c,0xffffffff821a8364,uVar3);
+  }
+  __restgprlr_28();
   return;
 }
 
@@ -30,11 +89,9 @@ void IWNet_CancelCommand(void)
   do {
     if ((*(int *)(pcVar4 + 4) == iVar1) && (*pcVar4 != '\0')) {
       if (pcVar4 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821a82dc,0x86,0,0xffffffff82000f98,0xffffffff8200b0fc);
       }
       if (*pcVar4 == '\0') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821a82dc,0x87,0,0xffffffff82000f98,0xffffffff821a8340);
       }
       cVar2 = IWNet_Storage_IsStorageCommand(pcVar4);
@@ -46,11 +103,9 @@ void IWNet_CancelCommand(void)
     }
     lVar3 = lVar3 + -1;
     pcVar4 = pcVar4 + 0x1c;
-    if (lVar3 == 0) {
-      __restgprlr_24();
-      return;
-    }
-  } while( true );
+  } while (lVar3 != 0);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -75,13 +130,96 @@ undefined8 IWNet_IsCommandActive(int param_1)
 }
 
 
+// 826E23B0  IWNet_UtilFindWriter  (iwnet/iwnet.cpp:196)
+
+int IWNet_UtilFindWriter(int *param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = param_1[1];
+  while( true ) {
+    if (iVar1 == 0) {
+      return 0;
+    }
+    if (param_2 == *param_1) break;
+    iVar1 = param_1[3];
+    param_1 = param_1 + 2;
+  }
+  return iVar1;
+}
+
+
+// 826E23E8  IWNet_GetCommandSlotByIndex  (iwnet/iwnet.cpp:207)
+
+longlong IWNet_GetCommandSlotByIndex(longlong param_1)
+
+{
+  if ((int)param_1 < 0) {
+    MyAssertHandler(0xffffffff821a82dc,0xd0,0,0xffffffff8200aef4,0xffffffff820127c0,param_1);
+  }
+  if ((int)param_1 < 0x18) {
+    return param_1 * 0x1c + -0x7bb30d88;
+  }
+  return 0;
+}
+
+
 // 826E2470  IWNet_GetCommandIndex  (iwnet/iwnet.cpp:216)
 
 void IWNet_GetCommandIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  iVar1 = (iVar1 + 0x7bb30d88) / 0x1c;
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff821a82dc,0xd9,0,0xffffffff82000f98,0xffffffff821a83c4);
+  }
+  if (0x17 < iVar1) {
+    MyAssertHandler(0xffffffff821a82dc,0xda,0,0xffffffff82000f98,0xffffffff821a8378);
+  }
+  __restgprlr_29(iVar1);
+  return;
+}
+
+
+// 826E24F0  IWNet_GetActiveCmdCount  (iwnet/iwnet.cpp:224)
+
+longlong IWNet_GetActiveCmdCount(void)
+
+{
+  longlong lVar1;
+  char *pcVar2;
+  longlong lVar3;
+  
+  lVar1 = 0;
+  pcVar2 = &DAT_844cf294;
+  lVar3 = 4;
+  do {
+    if (pcVar2[-0x1c] != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    if (*pcVar2 != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    if (pcVar2[0x1c] != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    if (pcVar2[0x38] != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    if (pcVar2[0x54] != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    if (pcVar2[0x70] != '\0') {
+      lVar1 = lVar1 + 1;
+    }
+    pcVar2 = pcVar2 + 0xa8;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  return lVar1;
 }
 
 
@@ -105,11 +243,56 @@ char * IWNet_FindFreeCommand(void)
 
 // 826E25A8  IWNet_AddCommand  (iwnet/iwnet.cpp:256)
 
-void IWNet_AddCommand(void)
+void IWNet_AddCommand(undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar2;
+  undefined8 uVar1;
+  char *pcVar3;
+  char *pcVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  
+  uVar2 = __savegprlr_28();
+  pcVar4 = &DAT_844cf278;
+  do {
+    if (*pcVar4 == '\0') {
+      pcVar3 = pcVar4 + -4;
+      lVar6 = 7;
+      do {
+        pcVar3 = pcVar3 + 4;
+        pcVar3[0] = '\0';
+        pcVar3[1] = '\0';
+        pcVar3[2] = '\0';
+        pcVar3[3] = '\0';
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      *(undefined4 *)(pcVar4 + 4) = param_2;
+      *(undefined4 *)(pcVar4 + 0x10) = uVar2;
+      *pcVar4 = '\x01';
+      pcVar4[2] = '\0';
+      pcVar4[3] = '\0';
+      if ((param_3 & 0xffffffff) != 0) {
+        *(undefined4 *)(pcVar4 + 0xc) = *(undefined4 *)param_3;
+      }
+      __restgprlr_28(1);
+      return;
+    }
+    pcVar4 = pcVar4 + 0x1c;
+  } while ((int)pcVar4 < -0x7bb30ae8);
+  uVar1 = IWNet_GetActiveCmdCount();
+  Com_PrintError(0x19,0xffffffff821a83f0,uVar1);
+  lVar6 = 0;
+  if (0 < (int)uVar1) {
+    puVar5 = &DAT_844cf260;
+    do {
+      puVar5 = puVar5 + 7;
+      Com_Printf(0x19,0xffffffff821a83e0,lVar6,*puVar5);
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < (int)uVar1);
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -153,12 +336,55 @@ void IWNet_Init_Internal(void)
 }
 
 
+// 826E2748  IWNet_Init  (iwnet/iwnet.cpp:487)
+
+void IWNet_Init(void)
+
+{
+  return;
+}
+
+
+// 826E2750  IWNet_Frame  (iwnet/iwnet.cpp:513)
+
+void IWNet_Frame(void)
+
+{
+  return;
+}
+
+
 // 826E2758  IWNet_CancelTasksForController  (iwnet/iwnet.cpp:562)
 
 void IWNet_CancelTasksForController(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  ulonglong uVar1;
+  char *pcVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  bool bVar6;
+  
+  iVar2 = __savegprlr_26();
+  uVar4 = 0xffffffff844cf278;
+  uVar5 = 0;
+  while( true ) {
+    if ((int)uVar5 < 0) {
+      MyAssertHandler(0xffffffff821a82dc,0xd0,0,0xffffffff8200aef4,0xffffffff820127c0,uVar5);
+    }
+    uVar1 = uVar5 & 0xffffffff;
+    bVar6 = uVar5 < 0x18;
+    uVar5 = uVar5 + 1;
+    uVar1 = -((uVar1 >> 0x1f) + (ulonglong)bVar6) & uVar4;
+    uVar4 = uVar4 + 0x1c;
+    if ((uVar1 & 0xffffffff) == 0) break;
+    pcVar3 = (char *)uVar1;
+    if ((*pcVar3 != '\0') && (*(int *)(pcVar3 + 0x10) == iVar2)) {
+      IWNet_CancelTask();
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 

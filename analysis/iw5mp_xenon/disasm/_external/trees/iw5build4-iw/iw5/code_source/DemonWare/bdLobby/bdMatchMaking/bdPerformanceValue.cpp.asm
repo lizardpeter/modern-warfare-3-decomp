@@ -50,6 +50,53 @@
 ; 82905A58  bdPerformanceValue::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdperformancevalue.cpp:31)
   82905A58  7D8802A6             mfspr r12,LR
   82905A5C  48010C5D             bl 0x829166b8
+  82905A60  3BE1FF70             subi r31,r1,0x90
+  82905A64  9421FF70             stwu r1,-0x90(r1)
+  82905A68  7C7D1B78             or r29,r3,r3
+  82905A6C  909F00AC             stw r4,0xac(r31)
+  82905A70  7C9C2378             or r28,r4,r4
+  82905A74  3BC00000             li r30,0x0
+  82905A78  80640000             lwz r3,0x0(r4)
+  82905A7C  389F0050             addi r4,r31,0x50
+  82905A80  FBDF0050             std r30,0x50(r31)
+  82905A84  4BFF031D             bl 0x828f5da0
+  82905A88  E97F0050             ld r11,0x50(r31)
+  82905A8C  546A063F             rlwinm. r10,r3,0x0,0x18,0x1f
+  82905A90  FBDF0058             std r30,0x58(r31)
+  82905A94  F97D0008             std r11,0x8(r29)
+  82905A98  4182001C             beq 0x82905ab4
+  82905A9C  389F0058             addi r4,r31,0x58
+  82905AA0  807C0000             lwz r3,0x0(r28)
+  82905AA4  4BFF0295             bl 0x828f5d38
+  82905AA8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82905AAC  39600001             li r11,0x1
+  82905AB0  40820008             bne 0x82905ab8
+LAB_82905ab4:
+  82905AB4  7FCBF378             or r11,r30,r30
+LAB_82905ab8:
+  82905AB8  E95F0058             ld r10,0x58(r31)
+  82905ABC  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  82905AC0  F95D0010             std r10,0x10(r29)
+  82905AC4  40820038             bne 0x82905afc
+  82905AC8  3D008221             lis r8,-0x7ddf
+  82905ACC  3D608221             lis r11,-0x7ddf
+  82905AD0  3D408221             lis r10,-0x7ddf
+  82905AD4  3CA0821B             lis r5,-0x7de5
+  82905AD8  3C808221             lis r4,-0x7ddf
+  82905ADC  38C8F0E0             subi r6,r8,0xf20
+  82905AE0  392BB3C8             subi r9,r11,0x4c38
+  82905AE4  38EAF0C0             subi r7,r10,0xf40
+  82905AE8  38A5D3C4             subi r5,r5,0x2c3c
+  82905AEC  3884A58C             subi r4,r4,0x5a74
+  82905AF0  3900002A             li r8,0x2a
+  82905AF4  38600002             li r3,0x2
+  82905AF8  4BFEF019             bl 0x828f4b10
+LAB_82905afc:
+  82905AFC  7F83E378             or r3,r28,r28
+  82905B00  4BA5E901             bl 0x82364400
+  82905B04  7FC3F378             or r3,r30,r30
+  82905B08  383F0090             addi r1,r31,0x90
+  82905B0C  48010BFC             b 0x82916708
 
 ; 829059F0  bdPerformanceValue::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdperformancevalue.cpp:48)
   829059F0  38600018             li r3,0x18

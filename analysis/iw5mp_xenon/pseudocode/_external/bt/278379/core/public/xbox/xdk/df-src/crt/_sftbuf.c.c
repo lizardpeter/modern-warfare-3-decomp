@@ -5,8 +5,55 @@
 int _stbuf(FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_File);
+  char *pcVar1;
+  FILE *_File_00;
+  int iVar3;
+  FILE *pFVar4;
+  void *pvVar5;
+  undefined8 uVar2;
+  
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  iVar3 = _fileno(_File_00);
+  iVar3 = _isatty(iVar3);
+  if (iVar3 != 0) {
+    pFVar4 = __iob_func();
+    if (_File_00 == pFVar4 + 1) {
+      iVar3 = 0;
+    }
+    else {
+      pFVar4 = __iob_func();
+      if (_File_00 != pFVar4 + 2) goto LAB_82921f48;
+      iVar3 = 1;
+    }
+    DAT_84895df8 = DAT_84895df8 + 1;
+    if ((_File_00->_flag & 0x10cU) == 0) {
+      if ((&DAT_84895e0c)[iVar3] == 0) {
+        pvVar5 = malloc(0x1000);
+        (&DAT_84895e0c)[iVar3] = pvVar5;
+        if (pvVar5 != (void *)0x0) goto LAB_82921f1c;
+        _File_00->_bufsiz = 2;
+        _File_00->_base = (char *)&_File_00->_charbuf;
+        _File_00->_ptr = (char *)&_File_00->_charbuf;
+        _File_00->_cnt = 2;
+      }
+      else {
+LAB_82921f1c:
+        pcVar1 = (char *)(&DAT_84895e0c)[iVar3];
+        _File_00->_bufsiz = 0x1000;
+        _File_00->_cnt = 0x1000;
+        _File_00->_base = pcVar1;
+        _File_00->_ptr = pcVar1;
+      }
+      uVar2 = 1;
+      _File_00->_flag = _File_00->_flag | 0x1102;
+      goto LAB_82921f4c;
+    }
+  }
+LAB_82921f48:
+  uVar2 = 0;
+LAB_82921f4c:
+  iVar3 = __restgprlr_29(uVar2);
+  return iVar3;
 }
 
 

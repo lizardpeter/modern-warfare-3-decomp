@@ -59,6 +59,18 @@ undefined8 Sys_GetCurrentUser(void)
 }
 
 
+// 826566D0  Sys_SnapVector  (xenon/xenon_shared.cpp:82)
+
+void Sys_SnapVector(float *param_1)
+
+{
+  *param_1 = (float)(longlong)(int)*param_1;
+  param_1[1] = (float)(longlong)(int)param_1[1];
+  param_1[2] = (float)(longlong)(int)param_1[2];
+  return;
+}
+
+
 // 82656750  Sys_GetTimeAsSeconds  (xenon/xenon_shared.cpp:114)
 
 ulonglong Sys_GetTimeAsSeconds(void)
@@ -88,7 +100,6 @@ ulonglong Sys_GetTimeAsSeconds(void)
   uVar2 = (ulonglong)(local_50 - lVar1) / 10000000;
   local_50._0_4_ = (int)(uVar2 >> 0x20);
   if (local_50._0_4_ != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190a38,0x90,0,0xffffffff82000f98,0xffffffff82190a7c);
   }
   return uVar2 & 0xffffffff;

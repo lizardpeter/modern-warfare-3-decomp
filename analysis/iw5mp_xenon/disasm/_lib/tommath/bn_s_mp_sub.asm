@@ -3,3 +3,98 @@
 ; 82259D00  s_mp_sub  (line unknown)
   82259D00  7D8802A6             mfspr r12,LR
   82259D04  486BC9B1             bl 0x829166b4
+  82259D08  9421FF80             stwu r1,-0x80(r1)
+  82259D0C  83630000             lwz r27,0x0(r3)
+  82259D10  7C7D1B78             or r29,r3,r3
+  82259D14  81650004             lwz r11,0x4(r5)
+  82259D18  7C9C2378             or r28,r4,r4
+  82259D1C  83C40000             lwz r30,0x0(r4)
+  82259D20  7CBF2B78             or r31,r5,r5
+  82259D24  7F0BD800             cmpw cr6,r11,r27
+  82259D28  40980018             bge cr6,0x82259d40
+  82259D2C  7F64DB78             or r4,r27,r27
+  82259D30  7CA32B78             or r3,r5,r5
+  82259D34  4800028D             bl 0x82259fc0
+  82259D38  2F030000             cmpwi cr6,r3,0x0
+  82259D3C  409A0114             bne cr6,0x82259e50
+LAB_82259d40:
+  82259D40  80BF0000             lwz r5,0x0(r31)
+  82259D44  39200000             li r9,0x0
+  82259D48  937F0000             stw r27,0x0(r31)
+  82259D4C  38C00000             li r6,0x0
+  82259D50  815D000C             lwz r10,0xc(r29)
+  82259D54  2F1E0000             cmpwi cr6,r30,0x0
+  82259D58  811C000C             lwz r8,0xc(r28)
+  82259D5C  817F000C             lwz r11,0xc(r31)
+  82259D60  40990040             ble cr6,0x82259da0
+  82259D64  7FC903A6             mtspr CTR,r30
+  82259D68  7FC6F378             or r6,r30,r30
+  82259D6C  3908FFFC             subi r8,r8,0x4
+LAB_82259d70:
+  82259D70  808A0000             lwz r4,0x0(r10)
+  82259D74  394A0004             addi r10,r10,0x4
+  82259D78  84E80004             lwzu r7,0x4(r8)
+  82259D7C  7C672050             subf r3,r7,r4
+  82259D80  7D291850             subf r9,r9,r3
+  82259D84  5527003E             rlwinm r7,r9,0x0,0x0,0x1f
+  82259D88  912B0000             stw r9,0x0(r11)
+  82259D8C  54E4013E             rlwinm r4,r7,0x0,0x4,0x1f
+  82259D90  54E90FFE             rlwinm r9,r7,0x1,0x1f,0x1f
+  82259D94  908B0000             stw r4,0x0(r11)
+  82259D98  396B0004             addi r11,r11,0x4
+  82259D9C  4200FFD4             bdnz 0x82259d70
+LAB_82259da0:
+  82259DA0  7F06D800             cmpw cr6,r6,r27
+  82259DA4  40980034             bge cr6,0x82259dd8
+  82259DA8  7D06D850             subf r8,r6,r27
+  82259DAC  7D4B5050             subf r10,r11,r10
+  82259DB0  7D0903A6             mtspr CTR,r8
+LAB_82259db4:
+  82259DB4  7D0A582E             lwzx r8,r10,r11
+  82259DB8  7CE94050             subf r7,r9,r8
+  82259DBC  54E6003E             rlwinm r6,r7,0x0,0x0,0x1f
+  82259DC0  90EB0000             stw r7,0x0(r11)
+  82259DC4  54E90FFE             rlwinm r9,r7,0x1,0x1f,0x1f
+  82259DC8  54C4013E             rlwinm r4,r6,0x0,0x4,0x1f
+  82259DCC  908B0000             stw r4,0x0(r11)
+  82259DD0  396B0004             addi r11,r11,0x4
+  82259DD4  4200FFE0             bdnz 0x82259db4
+LAB_82259dd8:
+  82259DD8  815F0000             lwz r10,0x0(r31)
+  82259DDC  7F0A2800             cmpw cr6,r10,r5
+  82259DE0  40980020             bge cr6,0x82259e00
+  82259DE4  7D4A2851             subf. r10,r10,r5
+  82259DE8  396BFFFC             subi r11,r11,0x4
+  82259DEC  39200000             li r9,0x0
+  82259DF0  41820010             beq 0x82259e00
+  82259DF4  7D4903A6             mtspr CTR,r10
+LAB_82259df8:
+  82259DF8  952B0004             stwu r9,0x4(r11)
+  82259DFC  4200FFFC             bdnz 0x82259df8
+LAB_82259e00:
+  82259E00  817F0000             lwz r11,0x0(r31)
+  82259E04  2F0B0000             cmpwi cr6,r11,0x0
+  82259E08  40990034             ble cr6,0x82259e3c
+  82259E0C  813F000C             lwz r9,0xc(r31)
+LAB_82259e10:
+  82259E10  817F0000             lwz r11,0x0(r31)
+  82259E14  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  82259E18  7D4A4A14             add r10,r10,r9
+  82259E1C  810AFFFC             lwz r8,-0x4(r10)
+  82259E20  2B080000             cmplwi cr6,r8,0x0
+  82259E24  409A0018             bne cr6,0x82259e3c
+  82259E28  396BFFFF             subi r11,r11,0x1
+  82259E2C  556A003E             rlwinm r10,r11,0x0,0x0,0x1f
+  82259E30  917F0000             stw r11,0x0(r31)
+  82259E34  2F0A0000             cmpwi cr6,r10,0x0
+  82259E38  4199FFD8             bgt cr6,0x82259e10
+LAB_82259e3c:
+  82259E3C  817F0000             lwz r11,0x0(r31)
+  82259E40  2F0B0000             cmpwi cr6,r11,0x0
+  82259E44  409A0008             bne cr6,0x82259e4c
+  82259E48  917F0008             stw r11,0x8(r31)
+LAB_82259e4c:
+  82259E4C  38600000             li r3,0x0
+LAB_82259e50:
+  82259E50  38210080             addi r1,r1,0x80
+  82259E54  486BC8B0             b 0x82916704

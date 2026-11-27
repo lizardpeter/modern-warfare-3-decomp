@@ -3,3 +3,20 @@
 ; 828B4F00  XapiFormatObjectAttributes  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapiformatobjectattributes.c:47)
   828B4F00  7D8802A6             mfspr r12,LR
   828B4F04  480617B9             bl 0x829166bc
+  828B4F08  9421FF90             stwu r1,-0x70(r1)
+  828B4F0C  7C7F1B78             or r31,r3,r3
+  828B4F10  7C9E2378             or r30,r4,r4
+  828B4F14  7CBD2B78             or r29,r5,r5
+  828B4F18  7DAD6B78             or r13,r13,r13
+  828B4F1C  7FA4EB78             or r4,r29,r29
+  828B4F20  7FC3F378             or r3,r30,r30
+  828B4F24  4808CDD1             bl 0x82941cf4
+  828B4F28  3960FFFC             li r11,-0x4
+  828B4F2C  39400080             li r10,0x80
+  828B4F30  93DF0004             stw r30,0x4(r31)
+  828B4F34  917F0000             stw r11,0x0(r31)
+  828B4F38  915F0008             stw r10,0x8(r31)
+  828B4F3C  7DCE7378             or r14,r14,r14
+  828B4F40  7FE3FB78             or r3,r31,r31
+  828B4F44  38210070             addi r1,r1,0x70
+  828B4F48  480617C4             b 0x8291670c

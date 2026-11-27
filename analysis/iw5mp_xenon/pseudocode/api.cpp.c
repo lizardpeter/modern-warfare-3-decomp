@@ -30,81 +30,233 @@ undefined8 XAudioVoice_Release(int *param_1)
 
 // 828CD5D8  XAudioVoice_SetEffectParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:62)
 
-void XAudioVoice_SetEffectParam(void)
+void XAudioVoice_SetEffectParam
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_26();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(*piVar2 + 0x20))(piVar2,param_2,param_3,param_4,param_5);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
 // 828CD648  XAudioVoice_SetVoiceOutput  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:68)
 
-void XAudioVoice_SetVoiceOutput(void)
+void XAudioVoice_SetVoiceOutput(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(*piVar2 + 0x24))(piVar2,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CD6A0  XAudioVoice_SetVoiceOutputVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:74)
 
-void XAudioVoice_SetVoiceOutputVolume(void)
+void XAudioVoice_SetVoiceOutputVolume(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(*piVar2 + 0x28))(piVar2,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828CD6F8  XAudioVoice_GetVoiceState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:86)
+
+void XAudioVoice_GetVoiceState(undefined8 param_1,undefined8 param_2)
+
+{
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(*piVar2 + 0x30))(piVar2,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CD750  XAudioSourceVoice_SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:114)
 
-void XAudioSourceVoice_SubmitPacket(void)
+void XAudioSourceVoice_SubmitPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x1c))(*(int **)(iVar2 + 0x4c),param_2,param_3);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_28(uVar1);
+  return;
+}
+
+
+// 828CD7B0  XAudioSourceVoice_FlushPackets  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:120)
+
+undefined8 XAudioSourceVoice_FlushPackets(undefined8 param_1)
+
+{
+  undefined8 uVar1;
+  
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = XAUDIO__CSourceVoice__FlushPackets(param_1);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  return uVar1;
 }
 
 
 // 828CD808  XAudioSourceVoice_Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:138)
 
-void XAudioSourceVoice_Start(void)
+void XAudioSourceVoice_Start(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = XAUDIO__CSourceVoice__Start(uVar1,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CD850  XAudioSourceVoice_Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:144)
 
-void XAudioSourceVoice_Stop(void)
+void XAudioSourceVoice_Stop(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(*piVar2 + 0x3c))(piVar2,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828CD8A8  XAudioSourceVoice_Discontinuity  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:150)
+
+undefined8 XAudioSourceVoice_Discontinuity(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x38))();
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  return uVar1;
+}
+
+
+// 828CD910  XAudioSourceVoice_GetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:156)
+
+void XAudioSourceVoice_GetPacketPosition(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x3c))(*(int **)(iVar2 + 0x4c),param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CD968  XAudioSourceVoice_SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:162)
 
-void XAudioSourceVoice_SetPacketPosition(void)
+void XAudioSourceVoice_SetPacketPosition(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x40))(*(int **)(iVar2 + 0x4c),param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828CD9C0  XAudioSourceVoice_SetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:174)
+
+void XAudioSourceVoice_SetPacketLoopCount(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x48))(*(int **)(iVar2 + 0x4c),param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828CDA18  XAudioSourceVoice_GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:186)
+
+void XAudioSourceVoice_GetStreamPosition(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x50))(*(int **)(iVar2 + 0x4c),param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CDA70  XAudioSourceVoice_GetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:192)
 
-void XAudioSourceVoice_GetVolume(void)
+void XAudioSourceVoice_GetVolume(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  *param_2 = *(undefined4 *)(iVar1 + 0x8c);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -134,6 +286,48 @@ undefined8 XAudioSourceVoice_SetPitch(undefined8 param_1,int param_2)
   uVar1 = (**(code **)(**(int **)(param_2 + 0x4c) + 0x60))(param_1);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
   return uVar1;
+}
+
+
+// 828CDD80  XAudioInitialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:274)
+
+void XAudioInitialize(undefined8 param_1)
+
+{
+  XAudioInitializeEx(param_1,0);
+  return;
+}
+
+
+// 828CDBA0  XAudioInitializeEx  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:301)
+
+void XAudioInitializeEx(undefined8 param_1,undefined8 param_2)
+
+{
+  ulonglong uVar1;
+  undefined **ppuVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  if (DAT_84895944 != (int *)0x0) {
+    (**(code **)(*DAT_84895944 + 4))();
+    RtlLeaveCriticalSection(0xffffffff829afeb4);
+    __restgprlr_29(0);
+    return;
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar1 = ZEXT48(&stack0x00000000) - 0x30;
+  }
+  ppuVar3 = &PTR_XHVInitializeXAudio_82960344;
+  do {
+    if (*ppuVar3 != (undefined *)0x0) break;
+    ppuVar3 = ppuVar3 + 1;
+  } while (ppuVar3 < &PTR_XAudioInitializeInternal_82960348);
+  uVar2 = (*(code *)*ppuVar3)(ppuVar3,0xffffffff82960348,uVar1,param_2);
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -169,22 +363,62 @@ undefined8 XAudioShutDown(void)
 }
 
 
-// 828CDD88  XAudioCreateSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:660)
+// 828CDCF8  XAudioRegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:576)
 
-void XAudioCreateSourceVoice(void)
+undefined8 XAudioRegisterEffects(undefined8 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  if ((DAT_84895944 == 0) || (*(int *)(DAT_84895944 + 0x3c) == 0)) {
+    RtlLeaveCriticalSection(0xffffffff829afeb4);
+    uVar1 = 0xffffffff80004005;
+  }
+  else {
+    uVar1 = XAudioEffectManager_RegisterEffects(*(int *)(DAT_84895944 + 0x3c),param_1);
+    RtlLeaveCriticalSection(0xffffffff829afeb4);
+  }
+  return uVar1;
+}
+
+
+// 828CDD88  XAudioCreateSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:660)
+
+void XAudioCreateSourceVoice(undefined8 param_1,undefined4 *param_2)
+
+{
+  undefined8 uVar1;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = XAUDIO__CSourceVoice__CreateObject(uVar1,0,local_30);
+  if (-1 < (int)uVar1) {
+    *param_2 = local_30[0];
+  }
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 828CDDE8  XAudioCreateSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:727)
 
-void XAudioCreateSubmixVoice(void)
+void XAudioCreateSubmixVoice(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(0xffffffff829afeb4);
+  uVar1 = XAUDIO__CSubmixVoice__CreateObject(uVar1,0,local_30);
+  if (-1 < (int)uVar1) {
+    *param_2 = local_30[0];
+  }
+  RtlLeaveCriticalSection(0xffffffff829afeb4);
+  __restgprlr_29(uVar1);
+  return;
 }
 

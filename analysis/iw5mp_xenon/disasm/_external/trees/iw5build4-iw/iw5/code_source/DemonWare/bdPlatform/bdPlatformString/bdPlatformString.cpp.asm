@@ -41,3 +41,57 @@ LAB_828f4f0c:
 ; 828F4F18  bdDelimSubstr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:45)
   828F4F18  7D8802A6             mfspr r12,LR
   828F4F1C  480217A1             bl 0x829166bc
+  828F4F20  9421FF10             stwu r1,-0xf0(r1)
+  828F4F24  90610104             stw r3,0x104(r1)
+  828F4F28  7CBE2B78             or r30,r5,r5
+  828F4F2C  9081010C             stw r4,0x10c(r1)
+  828F4F30  3BA00001             li r29,0x1
+LAB_828f4f34:
+  828F4F34  39600008             li r11,0x8
+  828F4F38  39410088             addi r10,r1,0x88
+  828F4F3C  39200000             li r9,0x0
+  828F4F40  7D6903A6             mtspr CTR,r11
+LAB_828f4f44:
+  828F4F44  F92A0009             stdu r9,0x8(r10)
+  828F4F48  4200FFFC             bdnz 0x828f4f44
+  828F4F4C  38E1010C             addi r7,r1,0x10c
+  828F4F50  8061010C             lwz r3,0x10c(r1)
+  828F4F54  38C00040             li r6,0x40
+  828F4F58  38A10090             addi r5,r1,0x90
+  828F4F5C  7FC4F378             or r4,r30,r30
+  828F4F60  4BFFFF31             bl 0x828f4e90
+  828F4F64  3163FFFF             subic r11,r3,0x1
+  828F4F68  2B030040             cmplwi cr6,r3,0x40
+  828F4F6C  7FEB1910             subfe r31,r11,r3
+  828F4F70  40980058             bge cr6,0x828f4fc8
+  828F4F74  57EB063F             rlwinm. r11,r31,0x0,0x18,0x1f
+  828F4F78  41820050             beq 0x828f4fc8
+  828F4F7C  39600008             li r11,0x8
+  828F4F80  39410048             addi r10,r1,0x48
+  828F4F84  39200000             li r9,0x0
+  828F4F88  7D6903A6             mtspr CTR,r11
+LAB_828f4f8c:
+  828F4F8C  F92A0009             stdu r9,0x8(r10)
+  828F4F90  4200FFFC             bdnz 0x828f4f8c
+  828F4F94  38E10104             addi r7,r1,0x104
+  828F4F98  80610104             lwz r3,0x104(r1)
+  828F4F9C  38C00040             li r6,0x40
+  828F4FA0  38A10050             addi r5,r1,0x50
+  828F4FA4  7FC4F378             or r4,r30,r30
+  828F4FA8  4BFFFEE9             bl 0x828f4e90
+  828F4FAC  2B030040             cmplwi cr6,r3,0x40
+  828F4FB0  40980018             bge cr6,0x828f4fc8
+  828F4FB4  38810050             addi r4,r1,0x50
+  828F4FB8  38610090             addi r3,r1,0x90
+  828F4FBC  48027EC5             bl 0x8291ce80
+  828F4FC0  7C6B0034             cntlzw r11,r3
+  828F4FC4  557DDFFE             rlwinm r29,r11,0x1b,0x1f,0x1f
+LAB_828f4fc8:
+  828F4FC8  57AB063F             rlwinm. r11,r29,0x0,0x18,0x1f
+  828F4FCC  4182000C             beq 0x828f4fd8
+  828F4FD0  57EB063F             rlwinm. r11,r31,0x0,0x18,0x1f
+  828F4FD4  4082FF60             bne 0x828f4f34
+LAB_828f4fd8:
+  828F4FD8  7FA3EB78             or r3,r29,r29
+  828F4FDC  382100F0             addi r1,r1,0xf0
+  828F4FE0  4802172C             b 0x8291670c

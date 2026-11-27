@@ -6,7 +6,6 @@ void Vehicle_Register_FastFile(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0478,0x2b8,0,0xffffffff82000f98,0xffffffff82021a74);
   }
   DB_FindXAssetHeader(0x2a,param_1,1);
@@ -19,7 +18,15 @@ void Vehicle_Register_FastFile(ulonglong param_1)
 void Vehicle_Register(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0478,0x2c1,0,0xffffffff82000f98,0xffffffff82021a74);
+    MyAssertHandler(0xffffffff821a0478,0x2b8,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  DB_FindXAssetHeader(0x2a,uVar1,1);
+  __restgprlr_28();
+  return;
 }
 

@@ -3,6 +3,61 @@
 ; 82912BD8  bdTaskByteBuffer::bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:44)
   82912BD8  7D8802A6             mfspr r12,LR
   82912BDC  48003AE1             bl 0x829166bc
+  82912BE0  3BE1FF90             subi r31,r1,0x70
+  82912BE4  9421FF90             stwu r1,-0x70(r1)
+  82912BE8  7C9D2378             or r29,r4,r4
+  82912BEC  907F0084             stw r3,0x84(r31)
+  82912BF0  38800000             li r4,0x0
+  82912BF4  7C7E1B78             or r30,r3,r3
+  82912BF8  4BFE7631             bl 0x828fa228
+  82912BFC  3D408221             lis r10,-0x7ddf
+  82912C00  39600000             li r11,0x0
+  82912C04  394A2DC4             addi r10,r10,0x2dc4
+  82912C08  917E001C             stw r11,0x1c(r30)
+  82912C0C  7FC3F378             or r3,r30,r30
+  82912C10  915E0000             stw r10,0x0(r30)
+  82912C14  7FA4EB78             or r4,r29,r29
+  82912C18  917E0020             stw r11,0x20(r30)
+  82912C1C  917E0024             stw r11,0x24(r30)
+  82912C20  917E0028             stw r11,0x28(r30)
+  82912C24  4BFFFF35             bl 0x82912b58
+  82912C28  7FC3F378             or r3,r30,r30
+  82912C2C  383F0070             addi r1,r31,0x70
+  82912C30  48003ADC             b 0x8291670c
+
+; 82912CB8  bdTaskByteBuffer::bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:54)
+  82912CB8  7D8802A6             mfspr r12,LR
+  82912CBC  480039FD             bl 0x829166b8
+  82912CC0  3BE1FF80             subi r31,r1,0x80
+  82912CC4  9421FF80             stwu r1,-0x80(r1)
+  82912CC8  7C9D2378             or r29,r4,r4
+  82912CCC  907F0094             stw r3,0x94(r31)
+  82912CD0  7CBC2B78             or r28,r5,r5
+  82912CD4  38A00000             li r5,0x0
+  82912CD8  38800000             li r4,0x0
+  82912CDC  7C7E1B78             or r30,r3,r3
+  82912CE0  4BFFD621             bl 0x82910300
+  82912CE4  3D408221             lis r10,-0x7ddf
+  82912CE8  39600000             li r11,0x0
+  82912CEC  394A2DC4             addi r10,r10,0x2dc4
+  82912CF0  917E001C             stw r11,0x1c(r30)
+  82912CF4  2B1D0000             cmplwi cr6,r29,0x0
+  82912CF8  915E0000             stw r10,0x0(r30)
+  82912CFC  917E0020             stw r11,0x20(r30)
+  82912D00  917E0024             stw r11,0x24(r30)
+  82912D04  917E0028             stw r11,0x28(r30)
+  82912D08  419A0020             beq cr6,0x82912d28
+  82912D0C  7F84E378             or r4,r28,r28
+  82912D10  7FC3F378             or r3,r30,r30
+  82912D14  4BFFFE45             bl 0x82912b58
+  82912D18  7F85E378             or r5,r28,r28
+  82912D1C  7FA4EB78             or r4,r29,r29
+  82912D20  807E000C             lwz r3,0xc(r30)
+  82912D24  48003C3D             bl 0x82916960
+LAB_82912d28:
+  82912D28  7FC3F378             or r3,r30,r30
+  82912D2C  383F0080             addi r1,r31,0x80
+  82912D30  480039D8             b 0x82916708
 
 ; 82912AB8  bdTaskByteBuffer::~bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:63)
   82912AB8  7D8802A6             mfspr r12,LR
@@ -56,6 +111,40 @@ LAB_82912af8:
 LAB_82912da0:
   82912DA0  80830008             lwz r4,0x8(r3)
   82912DA4  4BFFFDB4             b 0x82912b58
+
+; 82912A10  bdTaskByteBuffer::setHeaderSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:94)
+  82912A10  7D8802A6             mfspr r12,LR
+  82912A14  9181FFF8             stw r12,-0x8(r1)
+  82912A18  FBC1FFE8             std r30,-0x18(r1)
+  82912A1C  FBE1FFF0             std r31,-0x10(r1)
+  82912A20  9421FF90             stwu r1,-0x70(r1)
+  82912A24  7C7E1B78             or r30,r3,r3
+  82912A28  7C9F2378             or r31,r4,r4
+  82912A2C  2B040005             cmplwi cr6,r4,0x5
+  82912A30  40990034             ble cr6,0x82912a64
+  82912A34  3CA08221             lis r5,-0x7ddf
+  82912A38  3D608221             lis r11,-0x7ddf
+  82912A3C  3D408221             lis r10,-0x7ddf
+  82912A40  3D208200             lis r9,-0x7e00
+  82912A44  38652D60             addi r3,r5,0x2d60
+  82912A48  390B2D48             addi r8,r11,0x2d48
+  82912A4C  38EA2D30             addi r7,r10,0x2d30
+  82912A50  38C911F4             addi r6,r9,0x11f4
+  82912A54  38A00000             li r5,0x0
+  82912A58  3880005F             li r4,0x5f
+  82912A5C  4BCC1AA5             bl 0x825d4500
+  82912A60  2B1F0005             cmplwi cr6,r31,0x5
+LAB_82912a64:
+  82912A64  41980008             blt cr6,0x82912a6c
+  82912A68  3BE00005             li r31,0x5
+LAB_82912a6c:
+  82912A6C  93FE0024             stw r31,0x24(r30)
+  82912A70  38210070             addi r1,r1,0x70
+  82912A74  8181FFF8             lwz r12,-0x8(r1)
+  82912A78  7D8803A6             mtspr LR,r12
+  82912A7C  EBC1FFE8             ld r30,-0x18(r1)
+  82912A80  EBE1FFF0             ld r31,-0x10(r1)
+  82912A84  4E800020             blr
 
 ; 82912A88  bdTaskByteBuffer::getHeaderStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:100)
   82912A88  8163001C             lwz r11,0x1c(r3)

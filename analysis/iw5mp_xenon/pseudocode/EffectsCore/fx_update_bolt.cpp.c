@@ -17,41 +17,213 @@ uint FX_GetBoltTemporalBits(undefined8 param_1,int param_2)
 
 // 824494B8  FXI_FreePool_Generic<FxBolt>  (EffectsCore/fx_pool.h:25)
 
-void FXI_FreePool_Generic<FxBolt>(void)
+void FXI_FreePool_Generic<FxBolt>(undefined8 param_1,uint *param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  uint *puVar3;
+  
+  puVar3 = (uint *)__savegprlr_27();
+  uVar2 = (int)puVar3 - param_3 >> 5;
+  if (0xfe < uVar2) {
+    MyAssertHandler(0xffffffff82067c08,0x25,0,0xffffffff82067c80,uVar2,0xff);
+  }
+  uVar1 = *param_2;
+  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+    MyAssertHandler(0xffffffff82067c08,0x28,0,0xffffffff82000f98,0xffffffff82067c48);
+  }
+  *puVar3 = uVar1;
+  *param_2 = uVar2;
+  __restgprlr_27();
+  return;
+}
+
+
+// 82449418  FX_UpdateBoltSceneStatus  (EffectsCore/fx_update_bolt.cpp:44)
+
+void FX_UpdateBoltSceneStatus(undefined8 param_1,int param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  
+  uVar1 = __savegprlr_29();
+  if (0x801 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82069940,0x31,0,0xffffffff82016cd8,param_3,0x802);
+  }
+  if ((((int)param_3 < 0x7fe) && (iVar2 = CG_GetEntity(uVar1,param_3), *(int *)(iVar2 + 200) == 1))
+     && (cVar3 = R_IsEntInScene(*(undefined4 *)(iVar2 + 0xc4)), cVar3 == '\0')) {
+    *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) | 0x2000;
+    __restgprlr_29();
+    return;
+  }
+  *(uint *)(param_2 + 4) = *(uint *)(param_2 + 4) & 0xffffdfff;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82449548  FXIW_StopBoltedEffectRequested  (EffectsCore/fx_update_bolt.cpp:70)
 
-void FXIW_StopBoltedEffectRequested(void)
+void FXIW_StopBoltedEffectRequested(undefined8 param_1,longlong param_2,int param_3,uint *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  byte bVar1;
+  int iVar2;
+  uint uVar3;
+  uint *puVar4;
+  int iVar6;
+  undefined8 uVar5;
+  int iVar7;
+  
+  iVar6 = __savegprlr_19();
+  iVar7 = 0;
+  if (0 < param_3) {
+    param_2 = param_2 + 8;
+    do {
+      puVar4 = (uint *)param_2;
+      if (*param_4 == puVar4[-2]) {
+        bVar1 = *(byte *)((int)param_4 + 0x26);
+        if (iVar6 == 0) {
+          MyAssertHandler(0xffffffff82060828,0x93,0,0xffffffff82000f98,0xffffffff82038694);
+        }
+        iVar2 = *(int *)(iVar6 + 0x18);
+        if (0xfe < bVar1) {
+          uVar5 = va(0xffffffff82060820,iVar2,bVar1);
+          MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar5);
+        }
+        uVar3 = *(uint *)((uint)bVar1 * 0x20 + iVar2);
+        if (uVar3 >> 0x14 == puVar4[-1]) {
+          if ((uVar3 >> 8 & 0x7ff) == *puVar4) {
+            __restgprlr_19(1);
+            return;
+          }
+        }
+      }
+      iVar7 = iVar7 + 1;
+      param_2 = param_2 + 0xc;
+    } while (iVar7 < param_3);
+  }
+  __restgprlr_19(0);
+  return;
 }
 
 
 // 82449660  FXW_UpdateEffectBolt  (EffectsCore/fx_update_bolt.cpp:95)
 
-void FXW_UpdateEffectBolt(void)
+void FXW_UpdateEffectBolt(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  undefined1 uVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  uint *puVar7;
+  int iVar8;
+  char cVar9;
+  uint uVar10;
+  uint *puVar11;
+  longlong lVar12;
+  undefined1 auStack_80 [16];
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined1 auStack_54 [84];
+  
+  iVar6 = __savegprlr_28();
+  iVar5 = (int)param_2;
+  if (*(char *)(iVar5 + 0x26) == -1) {
+    MyAssertHandler(0xffffffff82069940,0x66,0,0xffffffff82000f98,0xffffffff8206998c);
+  }
+  uVar2 = *(undefined1 *)(iVar5 + 0x26);
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82060828,0x9a,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  puVar7 = (uint *)FX_PoolFromHandle_Generic<FxBolt>(*(undefined4 *)(iVar6 + 0x18),uVar2);
+  if (*puVar7 >> 0x14 != 0xfff) {
+    uVar3 = *(undefined4 *)(iVar6 + 0x98);
+    FX_UpdateBoltSceneStatus(uVar3,param_2);
+    if (*puVar7 >> 0x14 < 0x7fe) {
+      iVar8 = CG_GetEntity(uVar3);
+      uVar10 = *(uint *)(iVar8 + 0xcc) >> 1 & 1;
+    }
+    else {
+      uVar10 = 0;
+    }
+    uVar4 = *puVar7;
+    bVar1 = (uVar4 & 0x80) != 0;
+    if (bVar1) {
+      *puVar7 = uVar10 << 0x13 | *puVar7 & 0xfff7ff7f;
+    }
+    if (bVar1 || (uVar4 >> 0x13 & 1) == uVar10) {
+      cVar9 = FX_GetBoneOrientation(uVar3,*puVar7 >> 0x14,*puVar7 >> 8 & 0x7ff,&local_60);
+      if (cVar9 != '\0') {
+        local_70 = local_60;
+        local_6c = local_5c;
+        local_68 = local_58;
+        AxisToQuat(auStack_54,auStack_80);
+        FX_SpatialFrameMultiply(puVar7 + 1,auStack_80,param_2 + 0x50);
+        __restgprlr_28();
+        return;
+      }
+    }
+    FXW_PreventRewind(iVar6,param_2);
+    FXW_StopEffect(iVar6,param_2);
+    puVar11 = puVar7 + -1;
+    *(undefined1 *)(iVar5 + 0x26) = 0xff;
+    lVar12 = 8;
+    do {
+      puVar11 = puVar11 + 1;
+      *puVar11 = 0;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    FXI_FreePool_Generic<FxBolt>(puVar7,iVar6 + 0x28,*(undefined4 *)(iVar6 + 0x18));
+    *(int *)(iVar6 + 0x238) = *(int *)(iVar6 + 0x238) + -1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82449828  FXW_UpdatePass4ProcessStopBoltedEffectRequests  (EffectsCore/fx_update_bolt.cpp:145)
 
-void FXW_UpdatePass4ProcessStopBoltedEffectRequests(void)
+void FXW_UpdatePass4ProcessStopBoltedEffectRequests(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  
+  iVar3 = __savegprlr_27();
+  iVar1 = *(int *)(param_2 + 0x30);
+  uVar2 = *(undefined4 *)(param_2 + 0x1c);
+  if (((*(uint *)(iVar3 + 0xb4) & 1) == 0) && (iVar1 != 0)) {
+    uVar6 = *(uint *)(iVar3 + 0x68);
+    if (uVar6 != *(uint *)(iVar3 + 0x6c)) {
+      do {
+        iVar4 = FX_EffectFromHandle(iVar3,*(undefined2 *)
+                                           ((uVar6 & 0x3ff) * 2 + *(int *)(iVar3 + 0x74)));
+        if ((*(char *)(iVar4 + 0x26) != -1) &&
+           (iVar5 = FXIW_StopBoltedEffectRequested(iVar3,uVar2,iVar1,iVar4), iVar5 != 0)) {
+          FXW_PreventRewind(iVar3,iVar4);
+          FXW_StopEffect(iVar3,iVar4);
+        }
+        uVar6 = uVar6 + 1;
+      } while (uVar6 != *(uint *)(iVar3 + 0x6c));
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 

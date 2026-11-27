@@ -5,8 +5,32 @@
 void NellyInitVocalFry(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar3;
+  undefined8 uVar1;
+  undefined4 *puVar4;
+  ulonglong uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3 != (undefined4 *)0x0) {
+    *puVar3 = 0;
+    puVar4 = (undefined4 *)(*DAT_848958c0)(1,0xc);
+    if (puVar4 != (undefined4 *)0x0) {
+      *puVar3 = puVar4;
+      uVar2 = (*DAT_848958c0)(0xd,4);
+      puVar4[2] = (int)uVar2;
+      if ((uVar2 & 0xffffffff) != 0) {
+        puVar4[1] = 0;
+        *puVar4 = 0x447a0000;
+        (*DAT_848958c8)(uVar2,0,0x34);
+        uVar1 = 0;
+        goto LAB_828c83f0;
+      }
+    }
+  }
+  uVar1 = 1;
+LAB_828c83f0:
+  __restgprlr_29(uVar1);
+  return;
 }
 
 

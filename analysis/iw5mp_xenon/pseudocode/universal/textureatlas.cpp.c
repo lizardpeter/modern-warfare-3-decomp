@@ -30,7 +30,6 @@ void TextureAtlas_GetCoords_ByIndex_Pow2Bits
   uVar1 = 1 << (param_2 & 0x3f);
   uVar2 = 1 << (param_3 & 0x3f);
   if (((longlong)(int)uVar2 * (longlong)(int)uVar1 & 0xffffffffU) <= (uVar3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x1a,0,0xffffffff82184158,uVar3);
   }
   *param_5 = 1.0 / (float)uVar1;
@@ -55,25 +54,20 @@ void TextureAtlas_GetCoords_ByIndex_Pow2
   
   uVar3 = __savegprlr_22();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x27,0,0xffffffff82000f98,0xffffffff82184268);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x28,0,0xffffffff82000f98,0xffffffff82184254);
   }
   if ((param_2 - 1 & param_2 & 0xffffffff) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x29,0,0xffffffff82000f98,0xffffffff82184238);
   }
   if ((param_3 - 1 & param_3 & 0xffffffff) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x2a,0,0xffffffff82000f98,0xffffffff8218421c);
   }
   uVar1 = 1 << ((uint)param_2 & 0x3f);
   uVar2 = 1 << ((uint)param_3 & 0x3f);
   if (((longlong)(int)uVar2 * (longlong)(int)uVar1 & 0xffffffffU) <= (uVar3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x2b,0,0xffffffff821841c0,uVar3);
   }
   trapWord(6,param_2,0);
@@ -88,11 +82,32 @@ void TextureAtlas_GetCoords_ByIndex_Pow2
 
 // 82613318  TextureAtlas_GetCoords_ByIndex  (universal/textureatlas.cpp:52)
 
-void TextureAtlas_GetCoords_ByIndex(void)
+void TextureAtlas_GetCoords_ByIndex
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4,float *param_5
+               ,float *param_6,float *param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82184110,0x38,0,0xffffffff82000f98,0xffffffff821842d4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82184110,0x39,0,0xffffffff82000f98,0xffffffff821842c4);
+  }
+  if (((longlong)(int)param_2 * (longlong)(int)param_3 & 0xffffffffU) <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82184110,0x3a,0,0xffffffff82184280,uVar1);
+  }
+  trapWord(6,param_2,0);
+  trapWord(6,param_2,0);
+  *param_5 = 1.0 / (float)(param_2 & 0xffffffff);
+  *param_7 = 1.0 / (float)(param_3 & 0xffffffff);
+  *param_4 = (float)(uVar1 - (longlong)(int)((uVar1 & 0xffffffff) / (param_2 & 0xffffffff)) *
+                             (longlong)(int)param_2 & 0xffffffff) * *param_5;
+  *param_6 = (float)((uVar1 & 0xffffffff) / (param_2 & 0xffffffff)) * *param_7;
+  __restgprlr_23();
+  return;
 }
 
 
@@ -107,7 +122,6 @@ void TextureAtlas_GetCoords_ByPercent
   
   dVar1 = (double)__savegprlr_25();
   if (dVar1 < 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82184110,0x46,0,0xffffffff82000f98,0xffffffff821842e4);
   }
   if (dVar1 < 1.0) {

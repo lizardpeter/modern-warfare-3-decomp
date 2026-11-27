@@ -3,6 +3,89 @@
 ; 82450BE8  FXW_UpdatePass0Worker  (EffectsCore/fx_update_worker.cpp:20)
   82450BE8  7D8802A6             mfspr r12,LR
   82450BEC  484C5AC9             bl 0x829166b4
+  82450BF0  9421FF80             stwu r1,-0x80(r1)
+  82450BF4  81230000             lwz r9,0x0(r3)
+  82450BF8  3D608207             lis r11,-0x7df9
+  82450BFC  3D408200             lis r10,-0x7e00
+  82450C00  7C7F1B78             or r31,r3,r3
+  82450C04  2B090000             cmplwi cr6,r9,0x0
+  82450C08  3BABADF0             subi r29,r11,0x5210
+  82450C0C  3B8A0F98             addi r28,r10,0xf98
+  82450C10  409A0020             bne cr6,0x82450c30
+  82450C14  3D608207             lis r11,-0x7df9
+  82450C18  7F86E378             or r6,r28,r28
+  82450C1C  38EBADE0             subi r7,r11,0x5220
+  82450C20  7FA3EB78             or r3,r29,r29
+  82450C24  38A00000             li r5,0x0
+  82450C28  3880001F             li r4,0x1f
+  82450C2C  481838D5             bl 0x825d4500
+LAB_82450c30:
+  82450C30  817F0018             lwz r11,0x18(r31)
+  82450C34  2B0B0000             cmplwi cr6,r11,0x0
+  82450C38  409A0020             bne cr6,0x82450c58
+  82450C3C  3D608207             lis r11,-0x7df9
+  82450C40  7F86E378             or r6,r28,r28
+  82450C44  38EBADCC             subi r7,r11,0x5234
+  82450C48  7FA3EB78             or r3,r29,r29
+  82450C4C  38A00000             li r5,0x0
+  82450C50  38800020             li r4,0x20
+  82450C54  481838AD             bl 0x825d4500
+LAB_82450c58:
+  82450C58  83DF0000             lwz r30,0x0(r31)
+  82450C5C  837F0018             lwz r27,0x18(r31)
+  82450C60  817E00B4             lwz r11,0xb4(r30)
+  82450C64  556A07FE             rlwinm r10,r11,0x0,0x1f,0x1f
+  82450C68  2B0A0000             cmplwi cr6,r10,0x0
+  82450C6C  419A0020             beq cr6,0x82450c8c
+  82450C70  3D608207             lis r11,-0x7df9
+  82450C74  7F86E378             or r6,r28,r28
+  82450C78  38EBA9B4             subi r7,r11,0x564c
+  82450C7C  7FA3EB78             or r3,r29,r29
+  82450C80  38A00000             li r5,0x0
+  82450C84  38800025             li r4,0x25
+  82450C88  48183879             bl 0x825d4500
+LAB_82450c8c:
+  82450C8C  2B1B0000             cmplwi cr6,r27,0x0
+  82450C90  409A0020             bne cr6,0x82450cb0
+  82450C94  3D608207             lis r11,-0x7df9
+  82450C98  7F86E378             or r6,r28,r28
+  82450C9C  38EBA028             subi r7,r11,0x5fd8
+  82450CA0  7FA3EB78             or r3,r29,r29
+  82450CA4  38A00000             li r5,0x0
+  82450CA8  38800026             li r4,0x26
+  82450CAC  48183855             bl 0x825d4500
+LAB_82450cb0:
+  82450CB0  A17B0000             lhz r11,0x0(r27)
+  82450CB4  2B0BFFFF             cmplwi cr6,r11,0xffff
+  82450CB8  409A0020             bne cr6,0x82450cd8
+  82450CBC  3D608207             lis r11,-0x7df9
+  82450CC0  7F86E378             or r6,r28,r28
+  82450CC4  38EBAD98             subi r7,r11,0x5268
+  82450CC8  7FA3EB78             or r3,r29,r29
+  82450CCC  38A00000             li r5,0x0
+  82450CD0  38800034             li r4,0x34
+  82450CD4  4818382D             bl 0x825d4500
+LAB_82450cd8:
+  82450CD8  38C00000             li r6,0x0
+  82450CDC  809F0020             lwz r4,0x20(r31)
+  82450CE0  7F65DB78             or r5,r27,r27
+  82450CE4  80FF001C             lwz r7,0x1c(r31)
+  82450CE8  7FC3F378             or r3,r30,r30
+  82450CEC  4BFFAD0D             bl 0x8244b9f8
+  82450CF0  817E00D0             lwz r11,0xd0(r30)
+  82450CF4  7C7D1B78             or r29,r3,r3
+  82450CF8  2F0B0000             cmpwi cr6,r11,0x0
+  82450CFC  4099000C             ble cr6,0x82450d08
+  82450D00  7FC3F378             or r3,r30,r30
+  82450D04  4BFFE035             bl 0x8244ed38
+LAB_82450d08:
+  82450D08  7FA5EB78             or r5,r29,r29
+  82450D0C  80DF001C             lwz r6,0x1c(r31)
+  82450D10  7F64DB78             or r4,r27,r27
+  82450D14  7FC3F378             or r3,r30,r30
+  82450D18  4BFFAE69             bl 0x8244bb80
+  82450D1C  38210080             addi r1,r1,0x80
+  82450D20  484C59E4             b 0x82916704
 
 ; 82450D28  FXW_UpdatePass0Internal  (EffectsCore/fx_update_worker.cpp:102)
   82450D28  7D8802A6             mfspr r12,LR

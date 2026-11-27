@@ -3,3 +3,53 @@
 ; 82924B98  _fcloseall  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/closeall.c:43)
   82924B98  7D8802A6             mfspr r12,LR
   82924B9C  4BFF1B15             bl 0x829166b0
+  82924BA0  3BE1FF70             subi r31,r1,0x90
+  82924BA4  9421FF70             stwu r1,-0x90(r1)
+  82924BA8  3B400000             li r26,0x0
+  82924BAC  38600001             li r3,0x1
+  82924BB0  935F0050             stw r26,0x50(r31)
+  82924BB4  4BFFFC25             bl 0x829247d8
+  82924BB8  7D084378             or r8,r8,r8
+  82924BBC  3B800003             li r28,0x3
+  82924BC0  3FA08489             lis r29,-0x7b77
+  82924BC4  3F608489             lis r27,-0x7b77
+LAB_82924bc8:
+  82924BC8  939F0054             stw r28,0x54(r31)
+  82924BCC  817B7EC4             lwz r11,0x7ec4(r27)
+  82924BD0  7F1C5800             cmpw cr6,r28,r11
+  82924BD4  4098006C             bge cr6,0x82924c40
+  82924BD8  817D7EC0             lwz r11,0x7ec0(r29)
+  82924BDC  579E103A             rlwinm r30,r28,0x2,0x0,0x1d
+  82924BE0  7D5E582E             lwzx r10,r30,r11
+  82924BE4  2B0A0000             cmplwi cr6,r10,0x0
+  82924BE8  419A004C             beq cr6,0x82924c34
+  82924BEC  5543003E             rlwinm r3,r10,0x0,0x0,0x1f
+  82924BF0  8163000C             lwz r11,0xc(r3)
+  82924BF4  716B0083             andi. r11,r11,0x83
+  82924BF8  2C0B0000             cmpwi r11,0x0
+  82924BFC  41820018             beq 0x82924c14
+  82924C00  4BFF4B41             bl 0x82919740
+  82924C04  2F03FFFF             cmpwi cr6,r3,-0x1
+  82924C08  419A000C             beq cr6,0x82924c14
+  82924C0C  3B5A0001             addi r26,r26,0x1
+  82924C10  935F0050             stw r26,0x50(r31)
+LAB_82924c14:
+  82924C14  2F1C0014             cmpwi cr6,r28,0x14
+  82924C18  4198001C             blt cr6,0x82924c34
+  82924C1C  817D7EC0             lwz r11,0x7ec0(r29)
+  82924C20  7C7E582E             lwzx r3,r30,r11
+  82924C24  4BD2A045             bl 0x8264ec68
+  82924C28  817D7EC0             lwz r11,0x7ec0(r29)
+  82924C2C  39400000             li r10,0x0
+  82924C30  7D5E592E             stwx r10,r30,r11
+LAB_82924c34:
+  82924C34  7D084378             or r8,r8,r8
+  82924C38  3B9C0001             addi r28,r28,0x1
+  82924C3C  4BFFFF8C             b 0x82924bc8
+LAB_82924c40:
+  82924C40  7D084378             or r8,r8,r8
+  82924C44  399F0090             addi r12,r31,0x90
+  82924C48  48000011             bl 0x82924c58
+  82924C4C  807F0050             lwz r3,0x50(r31)
+  82924C50  383F0090             addi r1,r31,0x90
+  82924C54  4BFF1AAC             b 0x82916700

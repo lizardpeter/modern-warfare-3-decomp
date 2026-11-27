@@ -25,11 +25,25 @@ void bdUserInfo___bdUserInfo(undefined4 *param_1)
 
 // 828FF880  bdUserInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bduserinfo.cpp:22)
 
-void bdUserInfo__deserialize(void)
+void bdUserInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  char cVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,lVar1 + 8);
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readString(*(undefined4 *)param_2,lVar1 + 0x10,0x40);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_828ff8d0;
+  }
+  uVar3 = 0;
+LAB_828ff8d0:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 

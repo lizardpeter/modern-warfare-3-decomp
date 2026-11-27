@@ -3,3 +3,24 @@
 ; 828A96E8  CreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createthread.c:109)
   828A96E8  7D8802A6             mfspr r12,LR
   828A96EC  4806CFC5             bl 0x829166b0
+  828A96F0  9421FF70             stwu r1,-0x90(r1)
+  828A96F4  7C7F1B78             or r31,r3,r3
+  828A96F8  7C9E2378             or r30,r4,r4
+  828A96FC  7CBD2B78             or r29,r5,r5
+  828A9700  7CDC3378             or r28,r6,r6
+  828A9704  7CFB3B78             or r27,r7,r7
+  828A9708  7D1A4378             or r26,r8,r8
+  828A970C  7DAD6B78             or r13,r13,r13
+  828A9710  7F49D378             or r9,r26,r26
+  828A9714  3900FFFF             li r8,-0x1
+  828A9718  7F67DB78             or r7,r27,r27
+  828A971C  7F86E378             or r6,r28,r28
+  828A9720  7FA5EB78             or r5,r29,r29
+  828A9724  7FC4F378             or r4,r30,r30
+  828A9728  7FE3FB78             or r3,r31,r31
+  828A972C  4800B8A5             bl 0x828b4fd0
+  828A9730  7C7F1B78             or r31,r3,r3
+  828A9734  7DCE7378             or r14,r14,r14
+  828A9738  7FE3FB78             or r3,r31,r31
+  828A973C  38210090             addi r1,r1,0x90
+  828A9740  4806CFC0             b 0x82916700

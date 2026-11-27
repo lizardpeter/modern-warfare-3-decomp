@@ -2,10 +2,92 @@
 
 // 82257618  mp_add_d  (line unknown)
 
-void mp_add_d(void)
+void mp_add_d(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  uint *puVar5;
+  uint uVar7;
+  uint uVar8;
+  ulonglong uVar6;
+  longlong lVar9;
+  uint *puVar10;
+  
+  piVar4 = (int *)__savegprlr_29();
+  puVar2 = (uint *)param_3;
+  if ((*piVar4 + 1 <= (int)puVar2[1]) || (uVar3 = mp_grow(param_3), (int)uVar3 == 0)) {
+    if ((piVar4[2] == 1) &&
+       ((1 < *piVar4 || ((param_2 & 0xffffffff) <= (ulonglong)*(uint *)piVar4[3])))) {
+      piVar4[2] = 0;
+      uVar3 = mp_sub_d(piVar4,param_2,param_3);
+      puVar2[2] = 1;
+      piVar4[2] = 1;
+      mp_clamp(param_3);
+      __restgprlr_29(uVar3);
+      return;
+    }
+    uVar1 = *puVar2;
+    puVar10 = (uint *)puVar2[3];
+    puVar2[2] = 0;
+    puVar5 = (uint *)piVar4[3];
+    if (piVar4[2] == 0) {
+      uVar8 = *puVar5;
+      lVar9 = 1;
+      uVar7 = (uint)(uVar8 + param_2);
+      *puVar10 = uVar7;
+      uVar6 = (uVar8 + param_2 & 0xffffffff) >> 0x1c;
+      uVar8 = (uint)uVar6;
+      *puVar10 = uVar7 & 0xfffffff;
+      puVar10 = puVar10 + 1;
+      if (1 < *piVar4) {
+        do {
+          puVar5 = puVar5 + 1;
+          uVar8 = *puVar5;
+          lVar9 = lVar9 + 1;
+          uVar7 = (uint)(uVar8 + uVar6);
+          *puVar10 = uVar7;
+          uVar6 = (uVar8 + uVar6 & 0xffffffff) >> 0x1c;
+          uVar8 = (uint)uVar6;
+          *puVar10 = uVar7 & 0xfffffff;
+          puVar10 = puVar10 + 1;
+        } while ((int)lVar9 < *piVar4);
+      }
+      *puVar10 = uVar8;
+      lVar9 = lVar9 + 1;
+      *puVar2 = *piVar4 + 1;
+    }
+    else {
+      lVar9 = 1;
+      *puVar2 = 1;
+      if (*piVar4 == 1) {
+        *puVar10 = (uint)param_2 - *(int *)piVar4[3];
+      }
+      else {
+        *puVar10 = (uint)param_2;
+      }
+    }
+    if ((int)lVar9 < (int)uVar1) {
+      for (lVar9 = (ulonglong)uVar1 - lVar9; lVar9 != 0; lVar9 = lVar9 + -1) {
+        puVar10 = puVar10 + 1;
+        *puVar10 = 0;
+      }
+    }
+    if (0 < (int)*puVar2) {
+      do {
+        uVar1 = *puVar2;
+        if (*(int *)(uVar1 * 4 + puVar2[3] + -4) != 0) break;
+        *puVar2 = uVar1 - 1;
+      } while (0 < (int)(uVar1 - 1));
+    }
+    if (*puVar2 == 0) {
+      puVar2[2] = 0;
+    }
+    uVar3 = 0;
+  }
+  __restgprlr_29(uVar3);
+  return;
 }
 

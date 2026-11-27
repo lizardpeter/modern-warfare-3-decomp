@@ -2,11 +2,17 @@
 
 // 828A5480  NtAllocateVirtualMemoryWrapper  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:181)
 
-void NtAllocateVirtualMemoryWrapper(void)
+void NtAllocateVirtualMemoryWrapper
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  uVar1 = NtAllocateVirtualMemory(uVar1,param_2,param_3 | 0x20000000,param_4,param_5);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -265,12 +271,63 @@ LAB_828a7528:
 void RtlDestroyHeap(void)
 
 {
+  uint *puVar1;
+  uint *puVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint *local_30;
+  undefined4 local_2c [9];
+  undefined4 local_8;
+  
+  iVar5 = __savegprlr_28();
+  if (iVar5 != 0) {
+    if ((*(uint *)(iVar5 + 0x14) & 0x40000) != 0) {
+      uVar6 = KeGetCurrentProcessType();
+      if (*(byte *)(iVar5 + 0x17b) != uVar6) {
                     /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+        KeBugCheckEx(0xf4,iVar5,local_8,0x521,0);
+      }
+    }
+    puVar1 = *(uint **)(iVar5 + 0x58);
+    while ((uint *)(iVar5 + 0x58) != puVar1) {
+      puVar2 = (uint *)*puVar1;
+      local_2c[0] = 0;
+      local_30 = puVar1;
+      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)(iVar5 + 0x590));
+      puVar1 = puVar2;
+    }
+    if ((*(uint *)(iVar5 + 0x14) & 1) == 0) {
+      *(undefined4 *)(iVar5 + 0x580) = 0;
+    }
+    puVar1 = *(uint **)(iVar5 + 0x48);
+    *(undefined4 *)(iVar5 + 0x48) = 0;
+    while (puVar1 != (uint *)0x0) {
+      puVar2 = (uint *)*puVar1;
+      local_2c[0] = 0;
+      local_30 = puVar1;
+      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)(iVar5 + 0x590));
+      puVar1 = puVar2;
+    }
+    uVar3 = *(undefined4 *)(iVar5 + 0x590);
+    uVar6 = 0x40;
+    do {
+      uVar6 = uVar6 + 0xff & 0xff;
+      iVar4 = *(int *)((uVar6 + 0x18) * 4 + iVar5);
+      if (iVar4 != 0) {
+        RtlpDestroyHeapSegment(iVar4,uVar3);
+      }
+    } while (uVar6 != 0);
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 828A7548  RtlAllocateHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:1482)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void RtlAllocateHeap(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
@@ -336,7 +393,7 @@ void RtlAllocateHeap(undefined8 param_1,ulonglong param_2,ulonglong param_3)
           sRam00000020 = ((short)iVar21 - (short)param_3) + -0x30;
           uRam00000025 = 0xb;
           puRam00000004 = *(undefined4 **)(iVar3 + 0x5c);
-          iRam00000018 = iVar21;
+          _DAT_00000018 = iVar21;
           iRam0000001c = iVar21;
           *puRam00000004 = 0;
           *(undefined4 *)(iVar3 + 0x5c) = 0;
@@ -600,6 +657,303 @@ LAB_828a7db4:
 }
 
 
+// 828A8148  RtlReAllocateHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:3162)
+
+void RtlReAllocateHeap(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  byte bVar1;
+  ushort uVar2;
+  undefined4 *puVar3;
+  uint *puVar4;
+  ushort *puVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  void *pvVar10;
+  int iVar11;
+  ulonglong uVar9;
+  undefined8 *puVar12;
+  void *_Src;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  int iVar18;
+  ulonglong uVar19;
+  int iVar20;
+  longlong lVar21;
+  ushort *puVar23;
+  longlong lVar22;
+  void *pvStack00000024;
+  undefined1 local_e8 [16];
+  undefined1 local_d8 [24];
+  undefined1 local_c0 [184];
+  undefined4 local_8;
+  
+  uVar7 = __savegprlr_19();
+  iVar11 = (int)uVar7;
+  _Src = (void *)param_3;
+  uVar8 = uVar7;
+  if (((*(uint *)(iVar11 + 0x14) & 0x40000) != 0) &&
+     (uVar8 = KeGetCurrentProcessType(), (uint)*(byte *)(iVar11 + 0x17b) != (uint)uVar8)) {
+                    /* WARNING: Subroutine does not return */
+    KeBugCheckEx(0xf4,uVar7,local_8,0xc7e,param_3);
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    uVar13 = (ulonglong)*(uint *)(iVar11 + 0x18);
+    uVar16 = uVar13 | param_2;
+    if ((param_4 & 0xffffffff) < 0x80000000) {
+      uVar14 = param_4;
+      if ((param_4 & 0xffffffff) == 0) {
+        uVar14 = 1;
+      }
+      uVar19 = uVar13 | param_2 & 0xffffffff;
+      uVar14 = *(uint *)(iVar11 + 0x50) + uVar14 & (ulonglong)*(uint *)(iVar11 + 0x54);
+      if ((((uVar19 & 0x3fffff00) != 0 || (uVar19 & 0x3c000100) != 0) ||
+          (*(int *)(iVar11 + 0x17c) != 0)) || ((*(byte *)((int)_Src + -0xb) & 2) != 0)) {
+        uVar14 = uVar14 + 0x10;
+      }
+      if (((uVar13 | param_2 & 0xffffffff) & 1) == 0) {
+        uVar8 = RtlEnterCriticalSection(*(undefined4 *)(iVar11 + 0x580));
+        uVar16 = uVar16 ^ 1;
+      }
+      lVar21 = param_3 - 0x10;
+      puVar23 = (ushort *)lVar21;
+      bVar1 = *(byte *)((int)_Src + -0xb);
+      pvStack00000024 = _Src;
+      if ((bVar1 & 1) != 0) {
+        uVar2 = *puVar23;
+        uVar13 = (ulonglong)uVar2;
+        if ((bVar1 & 8) == 0) {
+          uVar19 = uVar13 * 0x10 - (ulonglong)*(byte *)((int)_Src + -10);
+        }
+        else {
+          uVar14 = uVar14 + 0x1001f & 0xffff0000;
+          uVar19 = (*(uint *)((int)_Src + -0x18) - uVar13) - 0x30;
+          uVar13 = (ulonglong)(*(uint *)((int)_Src + -0x18) >> 4);
+        }
+        iVar18 = (int)uVar14;
+        iVar20 = (int)uVar19;
+        uVar14 = (uVar14 & 0xffffffff) >> 4;
+        uVar9 = param_3;
+        uVar17 = uVar16;
+        if (uVar13 < uVar14) {
+          if (((bVar1 & 8) == 0) &&
+             (uVar8 = RtlpGrowBlockInPlace(uVar7,uVar16,lVar21,param_4,uVar14),
+             (uVar8 & 0xffffffff) != 0)) goto LAB_828a88d4;
+          if ((uVar16 & 0x10) == 0) {
+            uVar17 = uVar16 << 0x20 | uVar16 & 0xc003ffff;
+            if ((*(byte *)((int)_Src + -0xb) & 2) == 0) {
+              if ((ulonglong)*(byte *)((int)_Src + -9) != 0) {
+                uVar17 = (ulonglong)*(byte *)((int)_Src + -9) << 0x12 | uVar17;
+              }
+            }
+            else {
+              uVar17 = ((ulonglong)*(byte *)((int)_Src + -0xb) & 0xe0) << 4 | 0x100 |
+                       (uVar16 & 0xc003ffff) << 0x20 | uVar16 & 0xc003f1ff;
+              iVar11 = RtlpGetExtraStuffPointer(lVar21);
+              uVar2 = *(ushort *)(iVar11 + 2);
+              if (((ulonglong)uVar2 != 0) && ((uVar2 & 0x8000) == 0)) {
+                uVar17 = ((ulonglong)uVar2 & 0x3fff) << 0x12 | uVar17;
+              }
+            }
+            uVar9 = RtlAllocateHeap(uVar7,uVar17 << 0x20 | uVar17 & 0xfffffff7,param_4);
+            pvStack00000024 = (void *)uVar9;
+            uVar8 = 0;
+            if (uVar9 != 0) {
+              if ((*(byte *)((int)pvStack00000024 + -0xb) & 2) != 0) {
+                puVar12 = (undefined8 *)RtlpGetExtraStuffPointer(uVar9 - 0x10);
+                if ((*(byte *)((int)_Src + -0xb) & 2) == 0) {
+                  *puVar12 = 0;
+                  puVar12[1] = 0;
+                }
+                else {
+                  iVar11 = RtlpGetExtraStuffPointer(lVar21);
+                  *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)(iVar11 + 4);
+                }
+              }
+              uVar8 = param_4;
+              if ((uVar19 & 0xffffffff) <= (param_4 & 0xffffffff)) {
+                uVar8 = uVar19;
+              }
+              memmove(pvStack00000024,_Src,(size_t)uVar8);
+              if (((uVar19 & 0xffffffff) < (param_4 & 0xffffffff)) && ((uVar17 & 8) != 0)) {
+                memset((void *)((int)pvStack00000024 + iVar20),0,(int)param_4 - iVar20);
+              }
+              uVar8 = RtlFreeHeap(uVar7,uVar17,param_3);
+            }
+            goto LAB_828a88d4;
+          }
+          pvStack00000024 = (void *)0x0;
+        }
+        else {
+          if (uVar14 + 1 == uVar13) {
+            iVar18 = iVar18 + 0x10;
+            uVar14 = uVar14 + 1;
+          }
+          if ((bVar1 & 8) == 0) {
+            if ((bVar1 & 2) == 0) {
+              *(char *)((int)_Src + -10) = (char)iVar18 - (char)param_4;
+            }
+            else {
+              iVar6 = (int)(uVar14 << 4);
+              *(undefined8 *)((int)puVar23 + iVar6 + -0x10) =
+                   *(undefined8 *)(puVar23 + (uint)uVar2 * 8 + -8);
+              *(undefined8 *)((int)puVar23 + iVar6 + -8) =
+                   *(undefined8 *)(puVar23 + (uint)uVar2 * 8 + -4);
+              *(char *)((int)_Src + -10) = (char)iVar18 - (char)param_4;
+            }
+          }
+          else {
+            *puVar23 = ((short)iVar18 - (short)param_4) - 0x30;
+          }
+          if (((uVar19 & 0xffffffff) < (param_4 & 0xffffffff)) && ((uVar16 & 8) != 0)) {
+            pvVar10 = memset((void *)(iVar20 + (int)_Src),0,(int)param_4 - iVar20);
+            uVar8 = (ulonglong)(int)pvVar10;
+          }
+          if (uVar14 != uVar13) {
+            bVar1 = *(byte *)((int)_Src + -0xb);
+            if ((bVar1 & 8) == 0) {
+              lVar21 = (uVar14 & 0xfffffff) * 0x10 + lVar21;
+              puVar5 = (ushort *)lVar21;
+              *(byte *)((int)puVar5 + 5) = bVar1 & 0xfe;
+              puVar5[1] = (ushort)uVar14;
+              *(undefined1 *)(puVar5 + 2) = *(undefined1 *)((int)_Src + -0xc);
+              uVar16 = *puVar23 - uVar14;
+              *puVar23 = (ushort)uVar14;
+              *(byte *)((int)_Src + -0xb) = *(byte *)((int)_Src + -0xb) & 0xef;
+              uVar2 = (ushort)uVar16;
+              if ((bVar1 & 0x10) == 0) {
+                lVar22 = (uVar16 & 0xfffffff) * 0x10 + lVar21;
+                puVar23 = (ushort *)lVar22;
+                if ((*(byte *)((int)puVar23 + 5) & 1) != 0) {
+                  *puVar5 = uVar2;
+                  puVar23[1] = uVar2;
+                  *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar5 + 5) & 0xf8;
+                  if ((uVar16 & 0xffff) < 0x80) goto LAB_828a84d8;
+                  for (puVar15 = *(uint **)(iVar11 + 0x180);
+                      ((uVar7 + 0x180 & 0xffffffff) != ZEXT48(puVar15) &&
+                      ((ulonglong)*(ushort *)(puVar15 + -2) < (uVar16 & 0xffff)));
+                      puVar15 = (uint *)*puVar15) {
+                  }
+                  goto LAB_828a8510;
+                }
+                *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar23 + 5);
+                puVar15 = *(uint **)(puVar23 + 6);
+                puVar4 = *(uint **)(puVar23 + 4);
+                if (((ulonglong)*puVar15 == (ulonglong)puVar4[1]) &&
+                   ((ulonglong)*puVar15 == (lVar22 + 8U & 0xffffffff))) {
+                  *puVar15 = (uint)puVar4;
+                  puVar4[1] = (uint)puVar15;
+                  if ((puVar4 == puVar15) && (uVar2 = *puVar23, uVar2 < 0x80)) {
+                    iVar18 = ((uVar2 >> 5) + 0x58) * 4;
+                    *(uint *)(iVar18 + iVar11) = *(uint *)(iVar18 + iVar11) ^ 1 << (uVar2 & 0x1f);
+                  }
+                }
+                if ((*(byte *)((int)puVar23 + 5) & 4) != 0) {
+                  uVar8 = (ulonglong)*puVar23 * 0x10 - 0x18;
+                  if (((*(byte *)((int)puVar23 + 5) & 2) != 0) && (4 < (uVar8 & 0xffffffff))) {
+                    uVar8 = (ulonglong)*puVar23 * 0x10 - 0x1c;
+                  }
+                  uVar8 = RtlCompareMemoryUlong(lVar22 + 0x18,uVar8,0xfffffffffeeefeee);
+                }
+                *(uint *)(iVar11 + 0x30) = *(int *)(iVar11 + 0x30) - (uint)*puVar23;
+                uVar16 = *puVar23 + uVar16;
+                if (0xf000 < (uVar16 & 0xffffffff)) {
+                  uVar8 = RtlpInsertFreeBlock(uVar7,lVar21);
+                  goto LAB_828a88d4;
+                }
+                uVar13 = uVar16 & 0xffff;
+                *puVar5 = (ushort)uVar16;
+                if ((*(byte *)((int)puVar5 + 5) & 0x10) == 0) {
+                  *(ushort *)((int)puVar5 + (int)((uVar16 & 0xffffffff) << 4) + 2) = (ushort)uVar16;
+                }
+                else {
+                  *(ushort **)(*(int *)((*(byte *)(puVar5 + 2) + 0x18) * 4 + iVar11) + 0x40) =
+                       puVar5;
+                }
+                *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar5 + 5) & 0xf8;
+                if (uVar13 < 0x80) {
+                  uVar7 = (uVar13 + 0x30) * 8 + uVar7;
+                  puVar15 = (uint *)uVar7;
+                  if ((ulonglong)*puVar15 == (uVar7 & 0xffffffff)) {
+                    iVar18 = ((*puVar5 >> 5) + 0x58) * 4;
+                    *(uint *)(iVar18 + iVar11) = *(uint *)(iVar18 + iVar11) | 1 << (*puVar5 & 0x1f);
+                  }
+                }
+                else {
+                  for (puVar15 = *(uint **)(iVar11 + 0x180);
+                      ((uVar7 + 0x180 & 0xffffffff) != ZEXT48(puVar15) &&
+                      (*(ushort *)(puVar15 + -2) < uVar13)); puVar15 = (uint *)*puVar15) {
+                  }
+                }
+                puVar3 = (undefined4 *)puVar15[1];
+                *(uint **)(puVar5 + 4) = puVar15;
+                *(undefined4 **)(puVar5 + 6) = puVar3;
+                *puVar3 = puVar5 + 4;
+                puVar15[1] = (uint)(puVar5 + 4);
+                iVar18 = (int)uVar16 + *(int *)(iVar11 + 0x30);
+              }
+              else {
+                *(ushort **)(*(int *)((*(byte *)(puVar5 + 2) + 0x18) * 4 + iVar11) + 0x40) = puVar5;
+                *puVar5 = uVar2;
+                *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar5 + 5) & 0xf8;
+                if ((uVar16 & 0xffff) < 0x80) {
+LAB_828a84d8:
+                  uVar7 = ((uVar16 & 0xffff) + 0x30) * 8 + uVar7;
+                  puVar15 = (uint *)uVar7;
+                  if ((ulonglong)*puVar15 == (uVar7 & 0xffffffff)) {
+                    iVar18 = ((*puVar5 >> 5) + 0x58) * 4;
+                    *(uint *)(iVar18 + iVar11) = *(uint *)(iVar18 + iVar11) | 1 << (*puVar5 & 0x1f);
+                  }
+                }
+                else {
+                  for (puVar15 = *(uint **)(iVar11 + 0x180);
+                      ((uVar7 + 0x180 & 0xffffffff) != ZEXT48(puVar15) &&
+                      ((ulonglong)*(ushort *)(puVar15 + -2) < (uVar16 & 0xffff)));
+                      puVar15 = (uint *)*puVar15) {
+                  }
+                }
+LAB_828a8510:
+                puVar3 = (undefined4 *)puVar15[1];
+                *(uint **)(puVar5 + 4) = puVar15;
+                *(undefined4 **)(puVar5 + 6) = puVar3;
+                *puVar3 = puVar5 + 4;
+                puVar15[1] = (uint)(puVar5 + 4);
+                iVar18 = (int)uVar16 + *(int *)(iVar11 + 0x30);
+              }
+              *(int *)(iVar11 + 0x30) = iVar18;
+            }
+            else {
+              uVar8 = NtFreeVirtualMemory(local_d8,local_e8,0x8000,*(undefined4 *)(iVar11 + 0x590));
+              if (-1 < (int)uVar8) {
+                *(int *)((int)_Src + -0x18) =
+                     *(int *)((int)_Src + -0x18) - ((int)(uVar13 << 4) - iVar18);
+              }
+            }
+          }
+LAB_828a88d4:
+          uVar16 = uVar17;
+          if ((uVar9 & 0xffffffff) != 0) goto LAB_828a8908;
+        }
+        if ((uVar16 & 4) != 0) {
+          uVar8 = RtlRaiseException(local_c0);
+        }
+      }
+LAB_828a8908:
+      FUN_828a8960(uVar8);
+      goto LAB_828a8938;
+    }
+  }
+  pvStack00000024 = (void *)0x0;
+LAB_828a8938:
+  __restgprlr_19(pvStack00000024);
+  return;
+}
+
+
 // 828A61E8  RtlpGrowBlockInPlace  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:3895)
 
 void RtlpGrowBlockInPlace
@@ -820,11 +1174,94 @@ LAB_828a6768:
 
 // 828A7E48  RtlFreeHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:4424)
 
-void RtlFreeHeap(void)
+void RtlFreeHeap(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  int iVar5;
+  uint uVar6;
+  ushort *puVar7;
+  int *piVar8;
+  undefined1 local_50 [8];
+  uint local_48;
+  undefined1 local_40 [56];
+  undefined4 local_8;
+  
+  iVar5 = __savegprlr_26();
+  local_48 = 1;
+  if (((*(uint *)(iVar5 + 0x14) & 0x40000) != 0) &&
+     (uVar6 = KeGetCurrentProcessType(), *(byte *)(iVar5 + 0x17b) != uVar6)) {
                     /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+    KeBugCheckEx(0xf4,iVar5,local_8,0x1162,param_3);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    local_48 = 1;
+    goto LAB_828a80c8;
+  }
+  bVar4 = (((ulonglong)*(uint *)(iVar5 + 0x18) | param_2 & 0xffffffff) & 1) == 0;
+  if (bVar4) {
+    RtlEnterCriticalSection(*(undefined4 *)(iVar5 + 0x580));
+  }
+  iVar2 = (int)param_3;
+  if ((*(byte *)(iVar2 + -0xb) & 8) == 0) {
+    uVar6 = (uint)*(ushort *)(param_3 - 0x10);
+    puVar7 = (ushort *)RtlpCoalesceFreeBlocks(iVar5,param_3 - 0x10,local_50,0);
+    if (uVar6 < 0x80) {
+      *(byte *)((int)puVar7 + 5) = *(byte *)((int)puVar7 + 5) & 0x10;
+      piVar8 = (int *)((uVar6 + 0x30) * 8 + iVar5);
+      if ((int *)*piVar8 == piVar8) {
+        iVar2 = ((*puVar7 >> 5) + 0x58) * 4;
+        *(uint *)(iVar2 + iVar5) = 1 << (*puVar7 & 0x1f) | *(uint *)(iVar2 + iVar5);
+      }
+      puVar1 = (undefined4 *)piVar8[1];
+      *(int **)(puVar7 + 4) = piVar8;
+      *(undefined4 **)(puVar7 + 6) = puVar1;
+      *puVar1 = puVar7 + 4;
+      piVar8[1] = (int)(puVar7 + 4);
+      iVar2 = *(int *)(iVar5 + 0x30);
+LAB_828a8040:
+      *(uint *)(iVar5 + 0x30) = iVar2 + uVar6;
+    }
+    else if ((uVar6 < *(uint *)(iVar5 + 0x28)) ||
+            (*(int *)(iVar5 + 0x30) + uVar6 < *(uint *)(iVar5 + 0x2c))) {
+      if (uVar6 < 0xf001) {
+        *(byte *)((int)puVar7 + 5) = *(byte *)((int)puVar7 + 5) & 0x10;
+        for (piVar8 = *(int **)(iVar5 + 0x180); (int *)(iVar5 + 0x180) != piVar8;
+            piVar8 = (int *)*piVar8) {
+          if (uVar6 <= *(ushort *)(piVar8 + -2)) break;
+        }
+        puVar1 = (undefined4 *)piVar8[1];
+        *(int **)(puVar7 + 4) = piVar8;
+        *(undefined4 **)(puVar7 + 6) = puVar1;
+        *puVar1 = puVar7 + 4;
+        piVar8[1] = (int)(puVar7 + 4);
+        iVar2 = *(int *)(iVar5 + 0x30);
+        goto LAB_828a8040;
+      }
+      RtlpInsertFreeBlock(iVar5);
+    }
+    else {
+      RtlpDeCommitFreeBlock(iVar5);
+    }
+  }
+  else {
+    iVar3 = *(int *)(iVar2 + -0x30);
+    piVar8 = *(int **)(iVar2 + -0x2c);
+    *piVar8 = iVar3;
+    *(int **)(iVar3 + 4) = piVar8;
+    if (bVar4) {
+      RtlLeaveCriticalSection(*(undefined4 *)(iVar5 + 0x580));
+    }
+    iVar5 = NtFreeVirtualMemory(local_40,local_50,0x8000,*(undefined4 *)(iVar5 + 0x590));
+    local_48 = -(iVar5 >> 0x1f) - 1U & 1;
+  }
+  FUN_828a80f8();
+LAB_828a80c8:
+  __restgprlr_26(local_48);
+  return;
 }
 
 
@@ -936,21 +1373,204 @@ LAB_828a568c:
 
 // 828A56B8  RtlpInsertUnCommittedPages  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:5791)
 
-void RtlpInsertUnCommittedPages(void)
+void RtlpInsertUnCommittedPages(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  undefined4 uVar6;
+  undefined4 *puVar7;
+  
+  iVar2 = __savegprlr_28();
+  uVar6 = (undefined4)param_2;
+  uVar4 = (uint)param_3;
+  puVar3 = *(undefined4 **)(iVar2 + 0x38);
+  puVar1 = (undefined4 *)(iVar2 + 0x38);
+  do {
+    puVar7 = puVar3;
+    if (puVar7 == (undefined4 *)0x0) {
+LAB_828a5760:
+      puVar3 = (undefined4 *)RtlpCreateUnCommittedRange(iVar2);
+      if (puVar3 != (undefined4 *)0x0) {
+        puVar3[2] = uVar4;
+        puVar3[1] = uVar6;
+        *puVar3 = *puVar1;
+        *puVar1 = puVar3;
+        *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + 1;
+        if (*(uint *)(iVar2 + 0x1c) <= uVar4) {
+          *(uint *)(iVar2 + 0x1c) = uVar4;
+        }
+      }
+LAB_828a57a0:
+      __restgprlr_28();
+      return;
+    }
+    uVar6 = (undefined4)param_2;
+    uVar4 = (uint)param_3;
+    uVar5 = (ulonglong)(uint)puVar7[1];
+    if ((param_2 & 0xffffffff) < uVar5) {
+      if ((param_2 + param_3 & 0xffffffff) == uVar5) {
+        uVar4 = puVar7[2];
+        puVar7[1] = uVar6;
+        uVar6 = (undefined4)(param_3 + uVar4);
+        puVar7[2] = uVar6;
+        if ((ulonglong)*(uint *)(iVar2 + 0x1c) < (param_3 + uVar4 & 0xffffffff)) {
+          *(undefined4 *)(iVar2 + 0x1c) = uVar6;
+        }
+        goto LAB_828a57a0;
+      }
+      goto LAB_828a5760;
+    }
+    if (((uint)puVar7[2] + uVar5 & 0xffffffff) == (param_2 & 0xffffffff)) {
+      param_3 = (uint)puVar7[2] + param_3;
+      *puVar1 = *puVar7;
+      *puVar7 = *(undefined4 *)(*(int *)(iVar2 + 0x18) + 0x4c);
+      *(undefined4 **)(*(int *)(iVar2 + 0x18) + 0x4c) = puVar7;
+      puVar7[1] = 0;
+      puVar7[2] = 0;
+      *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + -1;
+      param_2 = uVar5;
+      puVar7 = puVar1;
+      if ((ulonglong)*(uint *)(iVar2 + 0x1c) < (param_3 & 0xffffffff)) {
+        *(int *)(iVar2 + 0x1c) = (int)param_3;
+      }
+    }
+    uVar6 = (undefined4)param_2;
+    uVar4 = (uint)param_3;
+    puVar3 = (undefined4 *)*puVar7;
+    puVar1 = puVar7;
+  } while( true );
 }
 
 
 // 828A57E0  RtlpFindAndCommitPages  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:5993)
 
-void RtlpFindAndCommitPages(void)
+void RtlpFindAndCommitPages
+               (undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  uint *puVar6;
+  int iVar7;
+  uint *puVar8;
+  ushort uVar9;
+  ushort *puVar10;
+  ushort *puVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ushort *local_60 [24];
+  
+  iVar7 = __savegprlr_23();
+  iVar5 = (int)param_2;
+  if ((ulonglong)*(uint *)(iVar5 + 0x38) != 0) {
+    puVar8 = (uint *)param_3;
+    uVar12 = param_2 + 0x38U;
+    uVar13 = 0;
+    uVar14 = (ulonglong)*(uint *)(iVar5 + 0x38);
+    do {
+      puVar6 = (uint *)uVar14;
+      if ((*puVar8 <= puVar6[2]) &&
+         (((param_4 & 0xffffffff) == 0 || ((ulonglong)puVar6[1] == (param_4 & 0xffffffff))))) {
+        local_60[0] = (ushort *)puVar6[1];
+        if (*(code **)(iVar7 + 0x584) == (code *)0x0) {
+          iVar7 = NtAllocateVirtualMemory
+                            (local_60,param_3,0x60001000,4,*(undefined4 *)(iVar7 + 0x590));
+        }
+        else {
+          iVar7 = (**(code **)(iVar7 + 0x584))(iVar7,local_60,param_3);
+        }
+        if (-1 < iVar7) {
+          *(uint *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) - (uint)*(ushort *)puVar8;
+          if (*(uint *)(iVar5 + 0x1c) == puVar6[2]) {
+            *(undefined4 *)(iVar5 + 0x1c) = 0;
+          }
+          puVar11 = *(ushort **)(iVar5 + 0x40);
+          if (((*(byte *)((int)puVar11 + 5) & 0x10) != 0) &&
+             (puVar11 + (uint)*puVar11 * 8 == (ushort *)puVar6[1])) goto LAB_828a5974;
+          if (uVar13 == 0) {
+            puVar11 = *(ushort **)(iVar5 + 0x28);
+          }
+          else {
+            puVar11 = (ushort *)(*(int *)((int)uVar13 + 8) + *(int *)((int)uVar13 + 4));
+          }
+          if ((*(byte *)((int)puVar11 + 5) & 0x10) != 0) goto LAB_828a5974;
+          puVar10 = puVar11;
+          goto LAB_828a5934;
+        }
+        break;
+      }
+      uVar12 = uVar14;
+      uVar13 = uVar14;
+      uVar14 = (ulonglong)*puVar6;
+    } while ((ulonglong)*puVar6 != 0);
+  }
+LAB_828a5854:
+  puVar11 = (ushort *)0x0;
+  goto LAB_828a585c;
+  while (puVar10 = puVar11, (*(byte *)((int)puVar11 + 5) & 0x10) == 0) {
+LAB_828a5934:
+    puVar11 = puVar10 + (uint)*puVar10 * 8;
+    if ((*(ushort **)(iVar5 + 0x2c) <= puVar11) || (*puVar11 == 0)) {
+      bVar1 = puVar11 != local_60[0];
+      puVar11 = puVar10;
+      if (bVar1) goto LAB_828a5854;
+      break;
+    }
+  }
+LAB_828a5974:
+  *(byte *)((int)puVar11 + 5) = *(byte *)((int)puVar11 + 5) & 0xef;
+  uVar2 = puVar6[2];
+  puVar6[1] = puVar6[1] + *puVar8;
+  uVar3 = *puVar8;
+  puVar6[2] = (uint)((ulonglong)uVar2 - (ulonglong)uVar3);
+  if ((ulonglong)uVar2 - (ulonglong)uVar3 == 0) {
+    if (puVar6[1] == *(uint *)(iVar5 + 0x2c)) {
+      *(undefined1 *)((int)local_60[0] + 5) = 0x10;
+      *(ushort **)(iVar5 + 0x40) = local_60[0];
+    }
+    else {
+      *(undefined1 *)((int)local_60[0] + 5) = 0;
+      *(undefined4 *)(iVar5 + 0x40) = *(undefined4 *)(iVar5 + 0x28);
+    }
+    *(uint *)uVar12 = *puVar6;
+    *puVar6 = *(uint *)(*(int *)(iVar5 + 0x18) + 0x4c);
+    *(uint **)(*(int *)(iVar5 + 0x18) + 0x4c) = puVar6;
+    puVar6[1] = 0;
+    puVar6[2] = 0;
+    *(int *)(iVar5 + 0x34) = *(int *)(iVar5 + 0x34) + -1;
+  }
+  else {
+    *(undefined1 *)((int)local_60[0] + 5) = 0x10;
+    *(ushort **)(iVar5 + 0x40) = local_60[0];
+  }
+  *(undefined1 *)(local_60[0] + 2) = *(undefined1 *)(puVar11 + 2);
+  uVar2 = *puVar8;
+  uVar9 = (ushort)(uVar2 >> 4);
+  *local_60[0] = uVar9;
+  local_60[0][1] = *puVar11;
+  if ((*(byte *)((int)local_60[0] + 5) & 0x10) == 0) {
+    local_60[0][(uVar2 >> 4 & 0xffff) * 8 + 1] = uVar9;
+  }
+  puVar11 = local_60[0];
+  if (*(int *)(iVar5 + 0x1c) == 0) {
+    for (puVar4 = (undefined4 *)*(undefined4 *)(param_2 + 0x38U); puVar4 != (undefined4 *)0x0;
+        puVar4 = (undefined4 *)*puVar4) {
+      if (*(uint *)(iVar5 + 0x1c) <= (uint)puVar4[2]) {
+        *(undefined4 *)(iVar5 + 0x1c) = puVar4[2];
+      }
+    }
+  }
+LAB_828a585c:
+  __restgprlr_23(puVar11);
+  return;
 }
 
 
@@ -1062,11 +1682,90 @@ undefined8 RtlpDestroyHeapSegment(int param_1,undefined8 param_2)
 
 // 828A69A0  RtlpExtendHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:6582)
 
-void RtlpExtendHeap(void)
+void RtlpExtendHeap(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar3;
+  longlong lVar1;
+  ulonglong uVar2;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  uint local_40;
+  int local_3c;
+  uint local_38;
+  uint local_34 [13];
+  
+  iVar3 = __savegprlr_27();
+  uVar5 = 0x40;
+  uVar6 = 0;
+  uVar2 = (param_2 + 0xffffU & 0xffffffff) >> 0x10;
+  local_38 = (uint)(uVar2 << 0x10);
+  do {
+    local_3c = *(int *)((uVar6 + 0x18) * 4 + iVar3);
+    if (local_3c == 0) {
+      if (uVar5 == 0x40) {
+        uVar5 = uVar6;
+      }
+    }
+    else if ((uVar2 <= *(uint *)(local_3c + 0x30)) && (local_38 <= *(uint *)(local_3c + 0x1c))) {
+      lVar1 = RtlpFindAndCommitPages(iVar3,local_3c,&local_38,0);
+      if (lVar1 != 0) {
+        local_38 = local_38 >> 4;
+        uVar2 = RtlpCoalesceFreeBlocks(iVar3,lVar1,&local_38,0);
+        RtlpInsertFreeBlock(iVar3,uVar2,local_38);
+        goto LAB_828a6be4;
+      }
+    }
+    uVar6 = uVar6 + 1 & 0xff;
+  } while (uVar6 < 0x40);
+  if ((uVar5 != 0x40) && ((*(uint *)(iVar3 + 0x14) & 2) != 0)) {
+    uVar2 = param_2 + 0x10000;
+    uVar6 = (uint)uVar2;
+    local_3c = 0;
+    local_40 = uVar6;
+    if ((uVar2 & 0xffffffff) <= (ulonglong)*(uint *)(iVar3 + 0x20)) {
+      local_40 = *(uint *)(iVar3 + 0x20);
+    }
+    iVar4 = NtAllocateVirtualMemory(&local_3c,&local_40,0x60002000,4,*(undefined4 *)(iVar3 + 0x590))
+    ;
+    if (iVar4 < 0) {
+      do {
+        if ((ulonglong)local_40 == (uVar2 & 0xffffffff)) break;
+        local_40 = local_40 >> 1;
+        if ((ulonglong)local_40 < (uVar2 & 0xffffffff)) {
+          local_40 = uVar6;
+        }
+        iVar4 = NtAllocateVirtualMemory
+                          (&local_3c,&local_40,0x60002000,4,*(undefined4 *)(iVar3 + 0x590));
+      } while (iVar4 < 0);
+      if (iVar4 < 0) goto LAB_828a6bdc;
+    }
+    *(uint *)(iVar3 + 0x20) = *(int *)(iVar3 + 0x20) + local_40;
+    local_34[0] = uVar6;
+    if ((uVar2 & 0xffffffff) <= (ulonglong)*(uint *)(iVar3 + 0x24)) {
+      local_34[0] = *(uint *)(iVar3 + 0x24);
+    }
+    lVar1 = NtAllocateVirtualMemory(&local_3c,local_34,0x60001000,4,*(undefined4 *)(iVar3 + 0x590));
+    if (-1 < lVar1) {
+      iVar4 = RtlpInitializeHeapSegment
+                        (iVar3,local_3c,uVar5,0,local_3c,local_34[0] + local_3c,local_40 + local_3c)
+      ;
+      if (iVar4 == 0) {
+        lVar1 = -0x3fffffe9;
+      }
+      if (-1 < (int)lVar1) {
+        uVar2 = (ulonglong)*(uint *)(local_3c + 0x28);
+        goto LAB_828a6be4;
+      }
+    }
+    NtFreeVirtualMemory(&local_3c,&local_40,0x8000,*(undefined4 *)(iVar3 + 0x590));
+  }
+LAB_828a6bdc:
+  uVar2 = 0;
+LAB_828a6be4:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
@@ -1221,13 +1920,231 @@ void RtlpCoalesceFreeBlocks(undefined8 param_1,ulonglong param_2,uint *param_3,u
 }
 
 
-// 828A5F20  RtlpInsertFreeBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:7409)
+// 828A6BF0  RtlpDeCommitFreeBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:7084)
 
-void RtlpInsertFreeBlock(void)
+void RtlpDeCommitFreeBlock(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 uVar1;
+  int iVar2;
+  uint uVar3;
+  ushort *puVar4;
+  ushort *puVar5;
+  int iVar6;
+  undefined4 *puVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int *piVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  uint uVar16;
+  uint local_80;
+  uint local_7c [31];
+  
+  iVar6 = __savegprlr_19();
+  if (*(int *)(iVar6 + 0x584) == 0) {
+    puVar4 = (ushort *)param_2;
+    uVar9 = param_2 + 0xffff & 0xffff0000;
+    local_7c[0] = (uint)uVar9;
+    uVar14 = 0;
+    uVar15 = (int)(local_7c[0] - (int)puVar4) >> 4 & 0xffff;
+    iVar2 = *(int *)((*(byte *)(puVar4 + 2) + 0x18) * 4 + iVar6);
+    if (uVar15 == 1) {
+      uVar9 = uVar9 + 0x10000;
+      uVar15 = 0x1001;
+      local_7c[0] = (uint)uVar9;
+    }
+    else if (((ulonglong)puVar4[1] != 0) && (uVar9 == (param_2 & 0xffffffff))) {
+      uVar14 = param_2 + (ulonglong)puVar4[1] * -0x10;
+    }
+    uVar13 = 0;
+    uVar10 = (param_3 & 0xfffffff) * 0x10 + param_2;
+    uVar11 = uVar10 & 0xffff0000;
+    uVar3 = (int)uVar10 - (int)uVar11 >> 4;
+    uVar16 = uVar3 & 0xffff;
+    if (uVar16 == 1) {
+      uVar16 = 0x1001;
+      uVar11 = uVar11 - 0x10000;
+    }
+    else if (((uVar3 & 0xffff) == 0) && ((*(byte *)((int)puVar4 + 5) & 0x10) == 0)) {
+      uVar13 = uVar10;
+    }
+    puVar5 = (ushort *)((int)uVar10 + uVar16 * -0x10);
+    local_80 = (int)uVar11 - (int)uVar9;
+    if ((uVar11 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+      local_80 = 0;
+    }
+    if ((local_80 != 0) &&
+       (puVar7 = (undefined4 *)RtlpCreateUnCommittedRange(iVar2), puVar7 != (undefined4 *)0x0)) {
+      iVar8 = NtFreeVirtualMemory(local_7c,&local_80,0x4000,*(undefined4 *)(iVar6 + 0x590));
+      *puVar7 = *(undefined4 *)(*(int *)(iVar2 + 0x18) + 0x4c);
+      *(undefined4 **)(*(int *)(iVar2 + 0x18) + 0x4c) = puVar7;
+      puVar7[1] = 0;
+      puVar7[2] = 0;
+      if (-1 < iVar8) {
+        RtlpInsertUnCommittedPages(iVar2,local_7c[0],local_80);
+        *(uint *)(iVar2 + 0x30) = (local_80 >> 0x10) + *(int *)(iVar2 + 0x30);
+        if (uVar15 == 0) {
+          if ((uVar14 & 0xffffffff) == 0) {
+            if ((local_7c[0] <= *(uint *)(iVar2 + 0x40)) &&
+               (*(uint *)(iVar2 + 0x40) < local_80 + local_7c[0])) {
+              *(undefined4 *)(iVar2 + 0x40) = *(undefined4 *)(iVar2 + 0x28);
+            }
+          }
+          else {
+            iVar8 = (int)uVar14;
+            *(byte *)(iVar8 + 5) = *(byte *)(iVar8 + 5) | 0x10;
+            *(int *)(iVar2 + 0x40) = iVar8;
+          }
+        }
+        else {
+          *puVar4 = (ushort)uVar15;
+          *(undefined1 *)((int)puVar4 + 5) = 0x10;
+          *(uint *)(iVar6 + 0x30) = uVar15 + *(int *)(iVar6 + 0x30);
+          *(ushort **)(iVar2 + 0x40) = puVar4;
+          *(byte *)((int)puVar4 + 5) = *(byte *)((int)puVar4 + 5) & 0xf8;
+          if (uVar15 < 0x80) {
+            piVar12 = (int *)((uVar15 + 0x30) * 8 + iVar6);
+            if ((int *)*piVar12 == piVar12) {
+              iVar8 = ((*puVar4 >> 5) + 0x58) * 4;
+              *(uint *)(iVar8 + iVar6) = 1 << (*puVar4 & 0x1f) | *(uint *)(iVar8 + iVar6);
+            }
+          }
+          else {
+            for (piVar12 = *(int **)(iVar6 + 0x180);
+                ((int *)(iVar6 + 0x180) != piVar12 && (*(ushort *)(piVar12 + -2) < uVar15));
+                piVar12 = (int *)*piVar12) {
+            }
+          }
+          puVar7 = (undefined4 *)piVar12[1];
+          *(int **)(puVar4 + 4) = piVar12;
+          *(undefined4 **)(puVar4 + 6) = puVar7;
+          *puVar7 = puVar4 + 4;
+          piVar12[1] = (int)(puVar4 + 4);
+        }
+        if (uVar16 == 0) {
+          if ((uVar13 & 0xffffffff) != 0) {
+            *(undefined2 *)((int)uVar13 + 2) = 0;
+          }
+        }
+        else {
+          puVar5[1] = 0;
+          uVar1 = *(undefined1 *)(iVar2 + 4);
+          *(undefined1 *)((int)puVar5 + 5) = 0;
+          *(undefined1 *)(puVar5 + 2) = uVar1;
+          *puVar5 = (ushort)uVar16;
+          puVar5[uVar16 * 8 + 1] = (ushort)uVar16;
+          *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar5 + 5) & 0xf8;
+          if (uVar16 < 0x80) {
+            piVar12 = (int *)((uVar16 + 0x30) * 8 + iVar6);
+            if ((int *)*piVar12 == piVar12) {
+              iVar2 = ((*puVar5 >> 5) + 0x58) * 4;
+              *(uint *)(iVar2 + iVar6) = 1 << (*puVar5 & 0x1f) | *(uint *)(iVar2 + iVar6);
+            }
+          }
+          else {
+            for (piVar12 = *(int **)(iVar6 + 0x180);
+                ((int *)(iVar6 + 0x180) != piVar12 && (*(ushort *)(piVar12 + -2) < uVar16));
+                piVar12 = (int *)*piVar12) {
+            }
+          }
+          puVar7 = (undefined4 *)piVar12[1];
+          *(int **)(puVar5 + 4) = piVar12;
+          *(undefined4 **)(puVar5 + 6) = puVar7;
+          *puVar7 = puVar5 + 4;
+          piVar12[1] = (int)(puVar5 + 4);
+          *(uint *)(iVar6 + 0x30) = uVar16 + *(int *)(iVar6 + 0x30);
+        }
+        goto LAB_828a6f4c;
+      }
+    }
+  }
+  RtlpInsertFreeBlock(iVar6,param_2,param_3);
+LAB_828a6f4c:
+  __restgprlr_19();
+  return;
+}
+
+
+// 828A5F20  RtlpInsertFreeBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:7409)
+
+void RtlpInsertFreeBlock(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  byte bVar1;
+  byte bVar2;
+  uint *puVar3;
+  int iVar4;
+  int iVar5;
+  undefined2 *puVar6;
+  ulonglong uVar7;
+  int iVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  undefined2 uVar11;
+  ulonglong uVar12;
+  uint *puVar13;
+  
+  lVar9 = __savegprlr_28();
+  iVar4 = (int)param_2;
+  bVar1 = *(byte *)(iVar4 + 4);
+  iVar5 = (int)lVar9;
+  uVar10 = (ulonglong)*(ushort *)(iVar4 + 2);
+  bVar2 = *(byte *)(iVar4 + 5);
+  iVar4 = *(int *)((bVar1 + 0x18) * 4 + iVar5);
+  *(int *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) + (int)param_3;
+  do {
+    uVar11 = (undefined2)uVar10;
+    puVar6 = (undefined2 *)param_2;
+    if ((param_3 & 0xffffffff) == 0) {
+      if ((bVar2 & 0x10) == 0) {
+        puVar6[1] = uVar11;
+      }
+      break;
+    }
+    if ((param_3 & 0xffffffff) < 0xf001) {
+      uVar10 = param_3 & 0xffff;
+      *(byte *)((int)puVar6 + 5) = bVar2;
+    }
+    else {
+      uVar10 = 0xfffffffffffff000;
+      if ((param_3 & 0xffffffff) == 0xf001) {
+        uVar10 = 0xffffffffffffeff0;
+      }
+      *(undefined1 *)((int)puVar6 + 5) = 0;
+    }
+    uVar7 = uVar10 & 0xffff;
+    puVar6[1] = uVar11;
+    *(byte *)(puVar6 + 2) = bVar1;
+    *puVar6 = (short)uVar10;
+    *(byte *)((int)puVar6 + 5) = *(byte *)((int)puVar6 + 5) & 0xf8;
+    if (uVar7 < 0x80) {
+      uVar12 = (uVar7 + 0x30) * 8 + lVar9;
+      puVar13 = (uint *)uVar12;
+      if ((ulonglong)*puVar13 == (uVar12 & 0xffffffff)) {
+        iVar8 = ((int)(uVar7 >> 5) + 0x58) * 4;
+        *(uint *)(iVar8 + iVar5) = 1 << ((uint)uVar7 & 0x1f) | *(uint *)(iVar8 + iVar5);
+      }
+    }
+    else {
+      for (puVar13 = *(uint **)(iVar5 + 0x180);
+          ((lVar9 + 0x180U & 0xffffffff) != ZEXT48(puVar13) && (*(ushort *)(puVar13 + -2) < uVar7));
+          puVar13 = (uint *)*puVar13) {
+      }
+    }
+    puVar3 = (uint *)puVar13[1];
+    *(uint **)(puVar6 + 4) = puVar13;
+    param_3 = param_3 - uVar7;
+    *(uint **)(puVar6 + 6) = puVar3;
+    param_2 = (uVar10 & 0xffff) * 0x10 + param_2;
+    *puVar3 = (uint)(puVar6 + 4);
+    puVar13[1] = (uint)(puVar6 + 4);
+  } while ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar4 + 0x2c));
+  __restgprlr_28();
+  return;
 }
 
 

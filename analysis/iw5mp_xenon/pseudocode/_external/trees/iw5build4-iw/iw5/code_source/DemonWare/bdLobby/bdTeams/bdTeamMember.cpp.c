@@ -27,11 +27,47 @@ void bdTeamMember___bdTeamMember(undefined4 *param_1)
 
 // 82909558  bdTeamMember::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteammember.cpp:26)
 
-void bdTeamMember__deserialize(void)
+void bdTeamMember__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  bdByteBuffer__readUInt64(*puVar4,lVar2 + 8);
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 0x10);
+  if (cVar3 == '\0') {
+LAB_829095b0:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 0x18,0x40);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_829095b0;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBool(*puVar4,lVar2 + 0x58);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_829095d4;
+  }
+  else {
+LAB_829095d4:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUByte8(*puVar4,lVar2 + 0x59);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_829095fc;
+  }
+  uVar5 = 0;
+LAB_829095fc:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

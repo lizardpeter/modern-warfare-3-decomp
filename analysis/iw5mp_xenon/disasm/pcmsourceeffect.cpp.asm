@@ -11,6 +11,33 @@
 ; 828ED498  XAudioCreatePCMSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:72)
   828ED498  7D8802A6             mfspr r12,LR
   828ED49C  48029221             bl 0x829166bc
+  828ED4A0  9421FF90             stwu r1,-0x70(r1)
+  828ED4A4  81640000             lwz r11,0x0(r4)
+  828ED4A8  7C9F2378             or r31,r4,r4
+  828ED4AC  7C7E1B78             or r30,r3,r3
+  828ED4B0  38800114             li r4,0x114
+  828ED4B4  7FE3FB78             or r3,r31,r31
+  828ED4B8  7CBD2B78             or r29,r5,r5
+  828ED4BC  814B0014             lwz r10,0x14(r11)
+  828ED4C0  7D4903A6             mtspr CTR,r10
+  828ED4C4  4E800421             bctrl
+  828ED4C8  2B030000             cmplwi cr6,r3,0x0
+  828ED4CC  419A002C             beq cr6,0x828ed4f8
+  828ED4D0  7FE5FB78             or r5,r31,r31
+  828ED4D4  7FC4F378             or r4,r30,r30
+  828ED4D8  4BFFFEA9             bl 0x828ed380
+  828ED4DC  7C6B1B78             or r11,r3,r3
+  828ED4E0  2B030000             cmplwi cr6,r3,0x0
+  828ED4E4  419A0014             beq cr6,0x828ed4f8
+  828ED4E8  38600000             li r3,0x0
+  828ED4EC  917D0000             stw r11,0x0(r29)
+  828ED4F0  38210070             addi r1,r1,0x70
+  828ED4F4  48029218             b 0x8291670c
+LAB_828ed4f8:
+  828ED4F8  3C608007             lis r3,-0x7ff9
+  828ED4FC  6063000E             ori r3,r3,0xe
+  828ED500  38210070             addi r1,r1,0x70
+  828ED504  48029208             b 0x8291670c
 
 ; 828EC830  XAUDIO::CPCMSourceEffect::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:99)
   828EC830  81230008             lwz r9,0x8(r3)
@@ -59,6 +86,72 @@ LAB_828ec880:
 ; 828ED380  XAUDIO::CPCMSourceEffect::CPCMSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:116)
   828ED380  7D8802A6             mfspr r12,LR
   828ED384  48029331             bl 0x829166b4
+  828ED388  9421FF70             stwu r1,-0x90(r1)
+  828ED38C  3BA30004             addi r29,r3,0x4
+  828ED390  7C7F1B78             or r31,r3,r3
+  828ED394  7FA3EB78             or r3,r29,r29
+  828ED398  7C9C2378             or r28,r4,r4
+  828ED39C  7CBB2B78             or r27,r5,r5
+  828ED3A0  4BFE61A1             bl 0x828d3540
+  828ED3A4  3D608220             lis r11,-0x7de0
+  828ED3A8  3D408220             lis r10,-0x7de0
+  828ED3AC  3D208220             lis r9,-0x7de0
+  828ED3B0  3BDF00B8             addi r30,r31,0xb8
+  828ED3B4  390B7E68             addi r8,r11,0x7e68
+  828ED3B8  38EA7E40             addi r7,r10,0x7e40
+  828ED3BC  38C97DE0             addi r6,r9,0x7de0
+  828ED3C0  911F0000             stw r8,0x0(r31)
+  828ED3C4  38A0004C             li r5,0x4c
+  828ED3C8  90FF0004             stw r7,0x4(r31)
+  828ED3CC  38800000             li r4,0x0
+  828ED3D0  90DF0010             stw r6,0x10(r31)
+  828ED3D4  7FC3F378             or r3,r30,r30
+  828ED3D8  48029429             bl 0x82916800
+  828ED3DC  39600000             li r11,0x0
+  828ED3E0  7F65DB78             or r5,r27,r27
+  828ED3E4  917F0104             stw r11,0x104(r31)
+  828ED3E8  7F84E378             or r4,r28,r28
+  828ED3EC  917F0110             stw r11,0x110(r31)
+  828ED3F0  7FA3EB78             or r3,r29,r29
+  828ED3F4  4BFE5EDD             bl 0x828d32d0
+  828ED3F8  3C800000             lis r4,0x0
+  828ED3FC  C01F0074             lfs f0,0x74(r31)
+  828ED400  891C0045             lbz r8,0x45(r28)
+  828ED404  608BBB80             ori r11,r4,0xbb80
+  828ED408  88DF0038             lbz r6,0x38(r31)
+  828ED40C  3C608220             lis r3,-0x7de0
+  828ED410  38A00010             li r5,0x10
+  828ED414  39437EE0             addi r10,r3,0x7ee0
+  828ED418  911F010C             stw r8,0x10c(r31)
+  828ED41C  39200001             li r9,0x1
+  828ED420  809F003C             lwz r4,0x3c(r31)
+  828ED424  811F0108             lwz r8,0x108(r31)
+  828ED428  61070001             ori r7,r8,0x1
+  828ED42C  F8810050             std r4,0x50(r1)
+  828ED430  C9A10050             lfd f13,0x50(r1)
+  828ED434  FD806E9C             fcfid f12,f13
+  828ED438  887F0034             lbz r3,0x34(r31)
+  828ED43C  FD606018             frsp f11,f12
+  828ED440  98DF00C5             stb r6,0xc5(r31)
+  828ED444  54E6003E             rlwinm r6,r7,0x0,0x0,0x1f
+  828ED448  987F00C4             stb r3,0xc4(r31)
+  828ED44C  90FF0108             stw r7,0x108(r31)
+  828ED450  ED4B0032             fmuls f10,f11,f0
+  828ED454  FD20565E             fctidz f9,f10
+  828ED458  7D3E2FAE             stfiwx f9,r30,r5
+  828ED45C  60C50002             ori r5,r6,0x2
+  828ED460  917F00D8             stw r11,0xd8(r31)
+  828ED464  90BF0108             stw r5,0x108(r31)
+  828ED468  889F00C5             lbz r4,0xc5(r31)
+  828ED46C  887F00C4             lbz r3,0xc4(r31)
+  828ED470  546B103E             rlwinm r11,r3,0x2,0x0,0x1f
+  828ED474  7D4B502E             lwzx r10,r11,r10
+  828ED478  7D0A21D6             mullw r8,r10,r4
+  828ED47C  B13F006E             sth r9,0x6e(r31)
+  828ED480  7FE3FB78             or r3,r31,r31
+  828ED484  B11F006C             sth r8,0x6c(r31)
+  828ED488  38210090             addi r1,r1,0x90
+  828ED48C  48029278             b 0x82916704
 
 ; 828EC8C0  XAUDIO::CPCMSourceEffect::SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:119)
   828EC8C0  38630010             addi r3,r3,0x10
@@ -126,6 +219,59 @@ LAB_828ec880:
 ; 828ECF68  XAUDIO::CPCMSourceEffect::SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:167)
   828ECF68  7D8802A6             mfspr r12,LR
   828ECF6C  48029749             bl 0x829166b4
+  828ECF70  9421FF80             stwu r1,-0x80(r1)
+  828ECF74  7C7E1B78             or r30,r3,r3
+  828ECF78  7C9B2378             or r27,r4,r4
+  828ECF7C  48055269             bl 0x829421e4
+  828ECF80  3D608489             lis r11,-0x7b77
+  828ECF84  7C7C1B78             or r28,r3,r3
+  828ECF88  3BEB58D8             addi r31,r11,0x58d8
+  828ECF8C  7DBD6B78             or r29,r13,r13
+  828ECF90  817F0004             lwz r11,0x4(r31)
+  828ECF94  2F0B0000             cmpwi cr6,r11,0x0
+  828ECF98  419A0010             beq cr6,0x828ecfa8
+  828ECF9C  815F0008             lwz r10,0x8(r31)
+  828ECFA0  7F0D5040             cmplw cr6,r13,r10
+  828ECFA4  419A0018             beq cr6,0x828ecfbc
+LAB_828ecfa8:
+  828ECFA8  7FE3FB78             or r3,r31,r31
+  828ECFAC  48054A09             bl 0x829419b4
+  828ECFB0  817F0004             lwz r11,0x4(r31)
+  828ECFB4  93BF0008             stw r29,0x8(r31)
+  828ECFB8  9B9F000C             stb r28,0xc(r31)
+LAB_828ecfbc:
+  828ECFBC  396B0001             addi r11,r11,0x1
+  828ECFC0  39200001             li r9,0x1
+  828ECFC4  917F0004             stw r11,0x4(r31)
+  828ECFC8  7DAA6B78             or r10,r13,r13
+  828ECFCC  811B0000             lwz r8,0x0(r27)
+  828ECFD0  A0FE006C             lhz r7,0x6c(r30)
+  828ECFD4  7CC83B96             divwu r6,r8,r7
+  828ECFD8  913E0110             stw r9,0x110(r30)
+  828ECFDC  0CC70000             twllei r7,0x0
+  828ECFE0  90DE0078             stw r6,0x78(r30)
+  828ECFE4  817F0004             lwz r11,0x4(r31)
+  828ECFE8  2F0B0000             cmpwi cr6,r11,0x0
+  828ECFEC  419A0040             beq cr6,0x828ed02c
+  828ECFF0  813F0008             lwz r9,0x8(r31)
+  828ECFF4  7F0D4840             cmplw cr6,r13,r9
+  828ECFF8  409A0034             bne cr6,0x828ed02c
+  828ECFFC  356BFFFF             subic. r11,r11,0x1
+  828ED000  917F0004             stw r11,0x4(r31)
+  828ED004  40820028             bne 0x828ed02c
+  828ED008  39400000             li r10,0x0
+  828ED00C  8BDF000C             lbz r30,0xc(r31)
+  828ED010  39600000             li r11,0x0
+  828ED014  915F0008             stw r10,0x8(r31)
+  828ED018  7FE3FB78             or r3,r31,r31
+  828ED01C  997F000C             stb r11,0xc(r31)
+  828ED020  48054985             bl 0x829419a4
+  828ED024  7FC3F378             or r3,r30,r30
+  828ED028  480551CD             bl 0x829421f4
+LAB_828ed02c:
+  828ED02C  38600000             li r3,0x0
+  828ED030  38210080             addi r1,r1,0x80
+  828ED034  480296D0             b 0x82916704
 
 ; 828EC978  XAUDIO::CPCMSourceEffect::GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:177)
   828EC978  816300A8             lwz r11,0xa8(r3)
@@ -163,14 +309,222 @@ LAB_828ecbbc:
 ; 828ED038  XAUDIO::CPCMSourceEffect::Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:184)
   828ED038  7D8802A6             mfspr r12,LR
   828ED03C  4802967D             bl 0x829166b8
+  828ED040  9421FF80             stwu r1,-0x80(r1)
+  828ED044  3BC30010             addi r30,r3,0x10
+  828ED048  4805519D             bl 0x829421e4
+  828ED04C  3D608489             lis r11,-0x7b77
+  828ED050  7C7C1B78             or r28,r3,r3
+  828ED054  3BEB58D8             addi r31,r11,0x58d8
+  828ED058  7DBD6B78             or r29,r13,r13
+  828ED05C  817F0004             lwz r11,0x4(r31)
+  828ED060  2F0B0000             cmpwi cr6,r11,0x0
+  828ED064  419A0010             beq cr6,0x828ed074
+  828ED068  815F0008             lwz r10,0x8(r31)
+  828ED06C  7F0D5040             cmplw cr6,r13,r10
+  828ED070  419A0018             beq cr6,0x828ed088
+LAB_828ed074:
+  828ED074  7FE3FB78             or r3,r31,r31
+  828ED078  4805493D             bl 0x829419b4
+  828ED07C  817F0004             lwz r11,0x4(r31)
+  828ED080  93BF0008             stw r29,0x8(r31)
+  828ED084  9B9F000C             stb r28,0xc(r31)
+LAB_828ed088:
+  828ED088  396B0001             addi r11,r11,0x1
+  828ED08C  917F0004             stw r11,0x4(r31)
+  828ED090  895E009C             lbz r10,0x9c(r30)
+  828ED094  554907FE             rlwinm r9,r10,0x0,0x1f,0x1f
+  828ED098  2B090000             cmplwi cr6,r9,0x0
+  828ED09C  409A0010             bne cr6,0x828ed0ac
+  828ED0A0  38A00003             li r5,0x3
+  828ED0A4  38800003             li r4,0x3
+  828ED0A8  48000018             b 0x828ed0c0
+LAB_828ed0ac:
+  828ED0AC  554A077A             rlwinm r10,r10,0x0,0x1d,0x1d
+  828ED0B0  2B0A0000             cmplwi cr6,r10,0x0
+  828ED0B4  419A0024             beq cr6,0x828ed0d8
+  828ED0B8  38A00002             li r5,0x2
+  828ED0BC  38800006             li r4,0x6
+LAB_828ed0c0:
+  828ED0C0  817E0000             lwz r11,0x0(r30)
+  828ED0C4  7FC3F378             or r3,r30,r30
+  828ED0C8  814B0054             lwz r10,0x54(r11)
+  828ED0CC  7D4903A6             mtspr CTR,r10
+  828ED0D0  4E800421             bctrl
+  828ED0D4  817F0004             lwz r11,0x4(r31)
+LAB_828ed0d8:
+  828ED0D8  7DAA6B78             or r10,r13,r13
+  828ED0DC  2F0B0000             cmpwi cr6,r11,0x0
+  828ED0E0  419A0040             beq cr6,0x828ed120
+  828ED0E4  813F0008             lwz r9,0x8(r31)
+  828ED0E8  7F0D4840             cmplw cr6,r13,r9
+  828ED0EC  409A0034             bne cr6,0x828ed120
+  828ED0F0  356BFFFF             subic. r11,r11,0x1
+  828ED0F4  917F0004             stw r11,0x4(r31)
+  828ED0F8  40820028             bne 0x828ed120
+  828ED0FC  39600000             li r11,0x0
+  828ED100  8BDF000C             lbz r30,0xc(r31)
+  828ED104  39400000             li r10,0x0
+  828ED108  997F000C             stb r11,0xc(r31)
+  828ED10C  7FE3FB78             or r3,r31,r31
+  828ED110  915F0008             stw r10,0x8(r31)
+  828ED114  48054891             bl 0x829419a4
+  828ED118  7FC3F378             or r3,r30,r30
+  828ED11C  480550D9             bl 0x829421f4
+LAB_828ed120:
+  828ED120  38600000             li r3,0x0
+  828ED124  38210080             addi r1,r1,0x80
+  828ED128  480295E0             b 0x82916708
 
 ; 828ED130  XAUDIO::CPCMSourceEffect::Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:189)
   828ED130  7D8802A6             mfspr r12,LR
   828ED134  48029581             bl 0x829166b4
+  828ED138  9421FF80             stwu r1,-0x80(r1)
+  828ED13C  7C9B2378             or r27,r4,r4
+  828ED140  3BC30010             addi r30,r3,0x10
+  828ED144  480550A1             bl 0x829421e4
+  828ED148  3D608489             lis r11,-0x7b77
+  828ED14C  7C7C1B78             or r28,r3,r3
+  828ED150  3BEB58D8             addi r31,r11,0x58d8
+  828ED154  7DBD6B78             or r29,r13,r13
+  828ED158  817F0004             lwz r11,0x4(r31)
+  828ED15C  2F0B0000             cmpwi cr6,r11,0x0
+  828ED160  419A0010             beq cr6,0x828ed170
+  828ED164  815F0008             lwz r10,0x8(r31)
+  828ED168  7F0D5040             cmplw cr6,r13,r10
+  828ED16C  419A0018             beq cr6,0x828ed184
+LAB_828ed170:
+  828ED170  7FE3FB78             or r3,r31,r31
+  828ED174  48054841             bl 0x829419b4
+  828ED178  817F0004             lwz r11,0x4(r31)
+  828ED17C  93BF0008             stw r29,0x8(r31)
+  828ED180  9B9F000C             stb r28,0xc(r31)
+LAB_828ed184:
+  828ED184  396B0001             addi r11,r11,0x1
+  828ED188  917F0004             stw r11,0x4(r31)
+  828ED18C  895E009C             lbz r10,0x9c(r30)
+  828ED190  554907FE             rlwinm r9,r10,0x0,0x1f,0x1f
+  828ED194  2B090000             cmplwi cr6,r9,0x0
+  828ED198  419A0078             beq cr6,0x828ed210
+  828ED19C  576907FE             rlwinm r9,r27,0x0,0x1f,0x1f
+  828ED1A0  2B090000             cmplwi cr6,r9,0x0
+  828ED1A4  409A004C             bne cr6,0x828ed1f0
+  828ED1A8  554906FC             rlwinm r9,r10,0x0,0x1b,0x1e
+  828ED1AC  552907B6             rlwinm r9,r9,0x0,0x1e,0x1b
+  828ED1B0  2B090000             cmplwi cr6,r9,0x0
+  828ED1B4  409A003C             bne cr6,0x828ed1f0
+  828ED1B8  554A077A             rlwinm r10,r10,0x0,0x1d,0x1d
+  828ED1BC  2B0A0000             cmplwi cr6,r10,0x0
+  828ED1C0  409A0050             bne cr6,0x828ed210
+  828ED1C4  817E0000             lwz r11,0x0(r30)
+  828ED1C8  38A00004             li r5,0x4
+  828ED1CC  38800004             li r4,0x4
+  828ED1D0  7FC3F378             or r3,r30,r30
+  828ED1D4  814B0054             lwz r10,0x54(r11)
+  828ED1D8  7D4903A6             mtspr CTR,r10
+  828ED1DC  4E800421             bctrl
+  828ED1E0  3D208220             lis r9,-0x7de0
+  828ED1E4  A1697628             lhz r11,0x7628(r9)
+  828ED1E8  B17E009E             sth r11,0x9e(r30)
+  828ED1EC  48000020             b 0x828ed20c
+LAB_828ed1f0:
+  828ED1F0  817E0000             lwz r11,0x0(r30)
+  828ED1F4  38A00000             li r5,0x0
+  828ED1F8  38800057             li r4,0x57
+  828ED1FC  7FC3F378             or r3,r30,r30
+  828ED200  814B0054             lwz r10,0x54(r11)
+  828ED204  7D4903A6             mtspr CTR,r10
+  828ED208  4E800421             bctrl
+LAB_828ed20c:
+  828ED20C  817F0004             lwz r11,0x4(r31)
+LAB_828ed210:
+  828ED210  7DAA6B78             or r10,r13,r13
+  828ED214  2F0B0000             cmpwi cr6,r11,0x0
+  828ED218  419A0040             beq cr6,0x828ed258
+  828ED21C  813F0008             lwz r9,0x8(r31)
+  828ED220  7F0D4840             cmplw cr6,r13,r9
+  828ED224  409A0034             bne cr6,0x828ed258
+  828ED228  356BFFFF             subic. r11,r11,0x1
+  828ED22C  917F0004             stw r11,0x4(r31)
+  828ED230  40820028             bne 0x828ed258
+  828ED234  39600000             li r11,0x0
+  828ED238  8BDF000C             lbz r30,0xc(r31)
+  828ED23C  39400000             li r10,0x0
+  828ED240  997F000C             stb r11,0xc(r31)
+  828ED244  7FE3FB78             or r3,r31,r31
+  828ED248  915F0008             stw r10,0x8(r31)
+  828ED24C  48054759             bl 0x829419a4
+  828ED250  7FC3F378             or r3,r30,r30
+  828ED254  48054FA1             bl 0x829421f4
+LAB_828ed258:
+  828ED258  38600000             li r3,0x0
+  828ED25C  38210080             addi r1,r1,0x80
+  828ED260  480294A4             b 0x82916704
 
 ; 828ED290  XAUDIO::CPCMSourceEffect::Discontinuity  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:194)
   828ED290  7D8802A6             mfspr r12,LR
   828ED294  48029425             bl 0x829166b8
+  828ED298  9421FF80             stwu r1,-0x80(r1)
+  828ED29C  3BA30010             addi r29,r3,0x10
+  828ED2A0  48054F45             bl 0x829421e4
+  828ED2A4  3D608489             lis r11,-0x7b77
+  828ED2A8  7C7C1B78             or r28,r3,r3
+  828ED2AC  3BEB58D8             addi r31,r11,0x58d8
+  828ED2B0  7DBE6B78             or r30,r13,r13
+  828ED2B4  817F0004             lwz r11,0x4(r31)
+  828ED2B8  2F0B0000             cmpwi cr6,r11,0x0
+  828ED2BC  419A0010             beq cr6,0x828ed2cc
+  828ED2C0  811F0008             lwz r8,0x8(r31)
+  828ED2C4  7F0D4040             cmplw cr6,r13,r8
+  828ED2C8  419A001C             beq cr6,0x828ed2e4
+LAB_828ed2cc:
+  828ED2CC  7FE3FB78             or r3,r31,r31
+  828ED2D0  480546E5             bl 0x829419b4
+  828ED2D4  817F0004             lwz r11,0x4(r31)
+  828ED2D8  7FC8F378             or r8,r30,r30
+  828ED2DC  9B9F000C             stb r28,0xc(r31)
+  828ED2E0  93DF0008             stw r30,0x8(r31)
+LAB_828ed2e4:
+  828ED2E4  396B0001             addi r11,r11,0x1
+  828ED2E8  395D0004             addi r10,r29,0x4
+  828ED2EC  917F0004             stw r11,0x4(r31)
+  828ED2F0  813D0004             lwz r9,0x4(r29)
+  828ED2F4  7F0A4840             cmplw cr6,r10,r9
+  828ED2F8  419A0038             beq cr6,0x828ed330
+  828ED2FC  814A0008             lwz r10,0x8(r10)
+  828ED300  7D2A4850             subf r9,r10,r9
+  828ED304  2B090000             cmplwi cr6,r9,0x0
+  828ED308  419A0028             beq cr6,0x828ed330
+  828ED30C  817D0000             lwz r11,0x0(r29)
+  828ED310  38A00008             li r5,0x8
+  828ED314  38800008             li r4,0x8
+  828ED318  7FA3EB78             or r3,r29,r29
+  828ED31C  814B0054             lwz r10,0x54(r11)
+  828ED320  7D4903A6             mtspr CTR,r10
+  828ED324  4E800421             bctrl
+  828ED328  811F0008             lwz r8,0x8(r31)
+  828ED32C  817F0004             lwz r11,0x4(r31)
+LAB_828ed330:
+  828ED330  7DAA6B78             or r10,r13,r13
+  828ED334  2F0B0000             cmpwi cr6,r11,0x0
+  828ED338  419A003C             beq cr6,0x828ed374
+  828ED33C  7F0D4040             cmplw cr6,r13,r8
+  828ED340  409A0034             bne cr6,0x828ed374
+  828ED344  356BFFFF             subic. r11,r11,0x1
+  828ED348  917F0004             stw r11,0x4(r31)
+  828ED34C  40820028             bne 0x828ed374
+  828ED350  39600000             li r11,0x0
+  828ED354  8BDF000C             lbz r30,0xc(r31)
+  828ED358  39400000             li r10,0x0
+  828ED35C  997F000C             stb r11,0xc(r31)
+  828ED360  7FE3FB78             or r3,r31,r31
+  828ED364  915F0008             stw r10,0x8(r31)
+  828ED368  4805463D             bl 0x829419a4
+  828ED36C  7FC3F378             or r3,r30,r30
+  828ED370  48054E85             bl 0x829421f4
+LAB_828ed374:
+  828ED374  38600000             li r3,0x0
+  828ED378  38210080             addi r1,r1,0x80
+  828ED37C  4802938C             b 0x82916708
 
 ; 828EC988  XAUDIO::CPCMSourceEffect::GetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:199)
   828EC988  7D8802A6             mfspr r12,LR
@@ -280,6 +634,56 @@ LAB_828ecad4:
 ; 828ECBD0  XAUDIO::CPCMSourceEffect::SetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:220)
   828ECBD0  7D8802A6             mfspr r12,LR
   828ECBD4  48029AE5             bl 0x829166b8
+  828ECBD8  DBE1FFD0             stfd f31,-0x30(r1)
+  828ECBDC  9421FF80             stwu r1,-0x80(r1)
+  828ECBE0  7C7D1B78             or r29,r3,r3
+  828ECBE4  FFE00890             fmr f31,f1
+  828ECBE8  480555FD             bl 0x829421e4
+  828ECBEC  3D608489             lis r11,-0x7b77
+  828ECBF0  7C7C1B78             or r28,r3,r3
+  828ECBF4  3BEB58D8             addi r31,r11,0x58d8
+  828ECBF8  7DBE6B78             or r30,r13,r13
+  828ECBFC  817F0004             lwz r11,0x4(r31)
+  828ECC00  2F0B0000             cmpwi cr6,r11,0x0
+  828ECC04  419A0010             beq cr6,0x828ecc14
+  828ECC08  815F0008             lwz r10,0x8(r31)
+  828ECC0C  7F0D5040             cmplw cr6,r13,r10
+  828ECC10  419A0018             beq cr6,0x828ecc28
+LAB_828ecc14:
+  828ECC14  7FE3FB78             or r3,r31,r31
+  828ECC18  48054D9D             bl 0x829419b4
+  828ECC1C  817F0004             lwz r11,0x4(r31)
+  828ECC20  93DF0008             stw r30,0x8(r31)
+  828ECC24  9B9F000C             stb r28,0xc(r31)
+LAB_828ecc28:
+  828ECC28  396B0001             addi r11,r11,0x1
+  828ECC2C  7DAA6B78             or r10,r13,r13
+  828ECC30  917F0004             stw r11,0x4(r31)
+  828ECC34  D3FD0070             stfs f31,0x70(r29)
+  828ECC38  D3FD00E0             stfs f31,0xe0(r29)
+  828ECC3C  817F0004             lwz r11,0x4(r31)
+  828ECC40  2F0B0000             cmpwi cr6,r11,0x0
+  828ECC44  419A0040             beq cr6,0x828ecc84
+  828ECC48  813F0008             lwz r9,0x8(r31)
+  828ECC4C  7F0D4840             cmplw cr6,r13,r9
+  828ECC50  409A0034             bne cr6,0x828ecc84
+  828ECC54  356BFFFF             subic. r11,r11,0x1
+  828ECC58  917F0004             stw r11,0x4(r31)
+  828ECC5C  40820028             bne 0x828ecc84
+  828ECC60  39400000             li r10,0x0
+  828ECC64  8BDF000C             lbz r30,0xc(r31)
+  828ECC68  39600000             li r11,0x0
+  828ECC6C  915F0008             stw r10,0x8(r31)
+  828ECC70  7FE3FB78             or r3,r31,r31
+  828ECC74  997F000C             stb r11,0xc(r31)
+  828ECC78  48054D2D             bl 0x829419a4
+  828ECC7C  7FC3F378             or r3,r30,r30
+  828ECC80  48055575             bl 0x829421f4
+LAB_828ecc84:
+  828ECC84  38600000             li r3,0x0
+  828ECC88  38210080             addi r1,r1,0x80
+  828ECC8C  CBE1FFD0             lfd f31,-0x30(r1)
+  828ECC90  48029A78             b 0x82916708
 
 ; 828ECB00  XAUDIO::CPCMSourceEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.h:224)
   828ECB00  90640000             stw r3,0x0(r4)
@@ -296,10 +700,147 @@ LAB_828ecad4:
 ; 828ECC98  XAUDIO::CPCMSourceEffect::SetPitch  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:256)
   828ECC98  7D8802A6             mfspr r12,LR
   828ECC9C  48029A1D             bl 0x829166b8
+  828ECCA0  DBE1FFD0             stfd f31,-0x30(r1)
+  828ECCA4  9421FF70             stwu r1,-0x90(r1)
+  828ECCA8  7C7E1B78             or r30,r3,r3
+  828ECCAC  FFE00890             fmr f31,f1
+  828ECCB0  48055535             bl 0x829421e4
+  828ECCB4  3D608489             lis r11,-0x7b77
+  828ECCB8  7C7C1B78             or r28,r3,r3
+  828ECCBC  3BEB58D8             addi r31,r11,0x58d8
+  828ECCC0  7DBD6B78             or r29,r13,r13
+  828ECCC4  817F0004             lwz r11,0x4(r31)
+  828ECCC8  2F0B0000             cmpwi cr6,r11,0x0
+  828ECCCC  419A0010             beq cr6,0x828eccdc
+  828ECCD0  815F0008             lwz r10,0x8(r31)
+  828ECCD4  7F0D5040             cmplw cr6,r13,r10
+  828ECCD8  419A0018             beq cr6,0x828eccf0
+LAB_828eccdc:
+  828ECCDC  7FE3FB78             or r3,r31,r31
+  828ECCE0  48054CD5             bl 0x829419b4
+  828ECCE4  817F0004             lwz r11,0x4(r31)
+  828ECCE8  93BF0008             stw r29,0x8(r31)
+  828ECCEC  9B9F000C             stb r28,0xc(r31)
+LAB_828eccf0:
+  828ECCF0  396B0001             addi r11,r11,0x1
+  828ECCF4  FC40F890             fmr f2,f31
+  828ECCF8  3D408208             lis r10,-0x7df8
+  828ECCFC  917F0004             stw r11,0x4(r31)
+  828ECD00  C82A2020             lfd f1,0x2020(r10)
+  828ECD04  4802C4AD             bl 0x829191b0
+  828ECD08  80FE003C             lwz r7,0x3c(r30)
+  828ECD0C  FC000818             frsp f0,f1
+  828ECD10  891E0038             lbz r8,0x38(r30)
+  828ECD14  88DE0034             lbz r6,0x34(r30)
+  828ECD18  D01E0074             stfs f0,0x74(r30)
+  828ECD1C  991E00C5             stb r8,0xc5(r30)
+  828ECD20  397E00B8             addi r11,r30,0xb8
+  828ECD24  98DE00C4             stb r6,0xc4(r30)
+  828ECD28  38A00010             li r5,0x10
+  828ECD2C  F8E10050             std r7,0x50(r1)
+  828ECD30  C9A10050             lfd f13,0x50(r1)
+  828ECD34  809E0108             lwz r4,0x108(r30)
+  828ECD38  60830001             ori r3,r4,0x1
+  828ECD3C  FD806E9C             fcfid f12,f13
+  828ECD40  907E0108             stw r3,0x108(r30)
+  828ECD44  7DAA6B78             or r10,r13,r13
+  828ECD48  FD606018             frsp f11,f12
+  828ECD4C  ED4B0032             fmuls f10,f11,f0
+  828ECD50  FD20565E             fctidz f9,f10
+  828ECD54  7D2B2FAE             stfiwx f9,r11,r5
+  828ECD58  817F0004             lwz r11,0x4(r31)
+  828ECD5C  2F0B0000             cmpwi cr6,r11,0x0
+  828ECD60  419A0040             beq cr6,0x828ecda0
+  828ECD64  813F0008             lwz r9,0x8(r31)
+  828ECD68  7F0D4840             cmplw cr6,r13,r9
+  828ECD6C  409A0034             bne cr6,0x828ecda0
+  828ECD70  356BFFFF             subic. r11,r11,0x1
+  828ECD74  917F0004             stw r11,0x4(r31)
+  828ECD78  40820028             bne 0x828ecda0
+  828ECD7C  39400000             li r10,0x0
+  828ECD80  8BDF000C             lbz r30,0xc(r31)
+  828ECD84  39600000             li r11,0x0
+  828ECD88  915F0008             stw r10,0x8(r31)
+  828ECD8C  7FE3FB78             or r3,r31,r31
+  828ECD90  997F000C             stb r11,0xc(r31)
+  828ECD94  48054C11             bl 0x829419a4
+  828ECD98  7FC3F378             or r3,r30,r30
+  828ECD9C  48055459             bl 0x829421f4
+LAB_828ecda0:
+  828ECDA0  38600000             li r3,0x0
+  828ECDA4  38210090             addi r1,r1,0x90
+  828ECDA8  CBE1FFD0             lfd f31,-0x30(r1)
+  828ECDAC  4802995C             b 0x82916708
 
 ; 828ECDB0  XAUDIO::CPCMSourceEffect::SetFrequencyScale  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:292)
   828ECDB0  7D8802A6             mfspr r12,LR
   828ECDB4  48029905             bl 0x829166b8
+  828ECDB8  DBE1FFD0             stfd f31,-0x30(r1)
+  828ECDBC  9421FF70             stwu r1,-0x90(r1)
+  828ECDC0  7C7E1B78             or r30,r3,r3
+  828ECDC4  FFE00890             fmr f31,f1
+  828ECDC8  4805541D             bl 0x829421e4
+  828ECDCC  3D608489             lis r11,-0x7b77
+  828ECDD0  7C7C1B78             or r28,r3,r3
+  828ECDD4  3BEB58D8             addi r31,r11,0x58d8
+  828ECDD8  7DBD6B78             or r29,r13,r13
+  828ECDDC  817F0004             lwz r11,0x4(r31)
+  828ECDE0  2F0B0000             cmpwi cr6,r11,0x0
+  828ECDE4  419A0010             beq cr6,0x828ecdf4
+  828ECDE8  815F0008             lwz r10,0x8(r31)
+  828ECDEC  7F0D5040             cmplw cr6,r13,r10
+  828ECDF0  419A0018             beq cr6,0x828ece08
+LAB_828ecdf4:
+  828ECDF4  7FE3FB78             or r3,r31,r31
+  828ECDF8  48054BBD             bl 0x829419b4
+  828ECDFC  817F0004             lwz r11,0x4(r31)
+  828ECE00  93BF0008             stw r29,0x8(r31)
+  828ECE04  9B9F000C             stb r28,0xc(r31)
+LAB_828ece08:
+  828ECE08  394B0001             addi r10,r11,0x1
+  828ECE0C  397E00B8             addi r11,r30,0xb8
+  828ECE10  915F0004             stw r10,0x4(r31)
+  828ECE14  D3FE0074             stfs f31,0x74(r30)
+  828ECE18  813E003C             lwz r9,0x3c(r30)
+  828ECE1C  38C00010             li r6,0x10
+  828ECE20  F9210050             std r9,0x50(r1)
+  828ECE24  C8010050             lfd f0,0x50(r1)
+  828ECE28  FDA0069C             fcfid f13,f0
+  828ECE2C  891E0038             lbz r8,0x38(r30)
+  828ECE30  88FE0034             lbz r7,0x34(r30)
+  828ECE34  7DAA6B78             or r10,r13,r13
+  828ECE38  98FE00C4             stb r7,0xc4(r30)
+  828ECE3C  FD806818             frsp f12,f13
+  828ECE40  991E00C5             stb r8,0xc5(r30)
+  828ECE44  80BE0108             lwz r5,0x108(r30)
+  828ECE48  60A40001             ori r4,r5,0x1
+  828ECE4C  ED6C07F2             fmuls f11,f12,f31
+  828ECE50  909E0108             stw r4,0x108(r30)
+  828ECE54  FD405E5E             fctidz f10,f11
+  828ECE58  7D4B37AE             stfiwx f10,r11,r6
+  828ECE5C  817F0004             lwz r11,0x4(r31)
+  828ECE60  2F0B0000             cmpwi cr6,r11,0x0
+  828ECE64  419A0040             beq cr6,0x828ecea4
+  828ECE68  813F0008             lwz r9,0x8(r31)
+  828ECE6C  7F0D4840             cmplw cr6,r13,r9
+  828ECE70  409A0034             bne cr6,0x828ecea4
+  828ECE74  356BFFFF             subic. r11,r11,0x1
+  828ECE78  917F0004             stw r11,0x4(r31)
+  828ECE7C  40820028             bne 0x828ecea4
+  828ECE80  39400000             li r10,0x0
+  828ECE84  8BDF000C             lbz r30,0xc(r31)
+  828ECE88  39600000             li r11,0x0
+  828ECE8C  915F0008             stw r10,0x8(r31)
+  828ECE90  7FE3FB78             or r3,r31,r31
+  828ECE94  997F000C             stb r11,0xc(r31)
+  828ECE98  48054B0D             bl 0x829419a4
+  828ECE9C  7FC3F378             or r3,r30,r30
+  828ECEA0  48055355             bl 0x829421f4
+LAB_828ecea4:
+  828ECEA4  38600000             li r3,0x0
+  828ECEA8  38210090             addi r1,r1,0x90
+  828ECEAC  CBE1FFD0             lfd f31,-0x30(r1)
+  828ECEB0  48029858             b 0x82916708
 
 ; 828ED508  XAUDIO::CPCMSourceEffect::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/pcmsourceeffect.cpp:330)
   828ED508  7D8802A6             mfspr r12,LR

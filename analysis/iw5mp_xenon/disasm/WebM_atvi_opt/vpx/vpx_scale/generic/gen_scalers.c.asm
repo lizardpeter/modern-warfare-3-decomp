@@ -623,6 +623,49 @@ LAB_82840098:
 ; 828400A8  vp8cx_vertical_band_5_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:784)
   828400A8  7D8802A6             mfspr r12,LR
   828400AC  480D65F9             bl 0x829166a4
+  828400B0  7C6B1B78             or r11,r3,r3
+  828400B4  3BE00000             li r31,0x0
+  828400B8  2B070000             cmplwi cr6,r7,0x0
+  828400BC  419A0094             beq cr6,0x82840150
+  828400C0  548A083C             rlwinm r10,r4,0x1,0x0,0x1e
+  828400C4  7CE903A6             mtspr CTR,r7
+  828400C8  54C9083C             rlwinm r9,r6,0x1,0x0,0x1e
+  828400CC  549D083C             rlwinm r29,r4,0x1,0x0,0x1e
+  828400D0  7F845214             add r28,r4,r10
+  828400D4  549B103A             rlwinm r27,r4,0x2,0x0,0x1d
+  828400D8  7F032214             add r24,r3,r4
+  828400DC  54DA083C             rlwinm r26,r6,0x1,0x0,0x1e
+  828400E0  7F264A14             add r25,r6,r9
+  828400E4  7C832850             subf r4,r3,r5
+LAB_828400e8:
+  828400E8  7CB8F8AE             lbzx r5,r24,r31
+  828400EC  7D445A14             add r10,r4,r11
+  828400F0  7CFB58AE             lbzx r7,r27,r11
+  828400F4  3BFF0001             addi r31,r31,0x1
+  828400F8  54A3083E             rlwinm r3,r5,0x1,0x0,0x1f
+  828400FC  7D1D58AE             lbzx r8,r29,r11
+  82840100  54FE083E             rlwinm r30,r7,0x1,0x0,0x1f
+  82840104  7D3C58AE             lbzx r9,r28,r11
+  82840108  7C651A14             add r3,r5,r3
+  8284010C  8AEB0000             lbz r23,0x0(r11)
+  82840110  7CA7F214             add r5,r7,r30
+  82840114  7CE34214             add r7,r3,r8
+  82840118  7D094214             add r8,r9,r8
+  8284011C  7D254A14             add r9,r5,r9
+  82840120  38E70002             addi r7,r7,0x2
+  82840124  7EE459AE             stbx r23,r4,r11
+  82840128  38A80001             addi r5,r8,0x1
+  8284012C  38690002             addi r3,r9,0x2
+  82840130  54E9F63E             rlwinm r9,r7,0x1e,0x18,0x1f
+  82840134  54A8FE3E             rlwinm r8,r5,0x1f,0x18,0x1f
+  82840138  5467F63E             rlwinm r7,r3,0x1e,0x18,0x1f
+  8284013C  7D2A31AE             stbx r9,r10,r6
+  82840140  7D0AD1AE             stbx r8,r10,r26
+  82840144  396B0001             addi r11,r11,0x1
+  82840148  7CEAC9AE             stbx r7,r10,r25
+  8284014C  4200FF9C             bdnz 0x828400e8
+LAB_82840150:
+  82840150  480D65A4             b 0x829166f4
 
 ; 82840158  vp8cx_horizontal_line_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:838)
   82840158  2B040000             cmplwi cr6,r4,0x0
@@ -659,6 +702,43 @@ LAB_8284017c:
 ; 828401D0  vp8cx_vertical_band_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:865)
   828401D0  7D8802A6             mfspr r12,LR
   828401D4  480D64DD             bl 0x829166b0
+  828401D8  7C6B1B78             or r11,r3,r3
+  828401DC  39200000             li r9,0x0
+  828401E0  2B070000             cmplwi cr6,r7,0x0
+  828401E4  419A007C             beq cr6,0x82840260
+  828401E8  548A083C             rlwinm r10,r4,0x1,0x0,0x1e
+  828401EC  7CE903A6             mtspr CTR,r7
+  828401F0  549F083C             rlwinm r31,r4,0x1,0x0,0x1e
+  828401F4  7FC45214             add r30,r4,r10
+  828401F8  549D103A             rlwinm r29,r4,0x2,0x0,0x1d
+  828401FC  54DC083C             rlwinm r28,r6,0x1,0x0,0x1e
+  82840200  7F632214             add r27,r3,r4
+  82840204  7D032850             subf r8,r3,r5
+LAB_82840208:
+  82840208  7CFB48AE             lbzx r7,r27,r9
+  8284020C  7D485A14             add r10,r8,r11
+  82840210  7C7E58AE             lbzx r3,r30,r11
+  82840214  39290001             addi r9,r9,0x1
+  82840218  1CA70055             mulli r5,r7,0x55
+  8284021C  88EB0000             lbz r7,0x0(r11)
+  82840220  7C9F58AE             lbzx r4,r31,r11
+  82840224  7F5D58AE             lbzx r26,r29,r11
+  82840228  7CE859AE             stbx r7,r8,r11
+  8284022C  1CE300AB             mulli r7,r3,0xab
+  82840230  1C8400AB             mulli r4,r4,0xab
+  82840234  1C7A0055             mulli r3,r26,0x55
+  82840238  7CA42A14             add r5,r4,r5
+  8284023C  7CE71A14             add r7,r7,r3
+  82840240  38A50080             addi r5,r5,0x80
+  82840244  38870080             addi r4,r7,0x80
+  82840248  54A3C63E             rlwinm r3,r5,0x18,0x18,0x1f
+  8284024C  5487C63E             rlwinm r7,r4,0x18,0x18,0x1f
+  82840250  7C6A31AE             stbx r3,r10,r6
+  82840254  396B0001             addi r11,r11,0x1
+  82840258  7CEAE1AE             stbx r7,r10,r28
+  8284025C  4200FFAC             bdnz 0x82840208
+LAB_82840260:
+  82840260  480D64A0             b 0x82916700
 
 ; 82840268  vp8cx_horizontal_line_2_1_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:916)
   82840268  2B040000             cmplwi cr6,r4,0x0

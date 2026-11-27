@@ -3,7 +3,100 @@
 ; 828B5100  _cinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:137)
   828B5100  7D8802A6             mfspr r12,LR
   828B5104  480615B9             bl 0x829166bc
+  828B5108  9421FF90             stwu r1,-0x70(r1)
+  828B510C  7C7F1B78             or r31,r3,r3
+  828B5110  7DAD6B78             or r13,r13,r13
+  828B5114  3D608221             lis r11,-0x7ddf
+  828B5118  814B4550             lwz r10,0x4550(r11)
+  828B511C  2B0A0000             cmplwi cr6,r10,0x0
+  828B5120  419A0014             beq cr6,0x828b5134
+  828B5124  554B003E             rlwinm r11,r10,0x0,0x0,0x1f
+  828B5128  7FE3FB78             or r3,r31,r31
+  828B512C  7D6903A6             mtspr CTR,r11
+  828B5130  4E800421             bctrl
+LAB_828b5134:
+  828B5134  3D408296             lis r10,-0x7d6a
+  828B5138  3D608296             lis r11,-0x7d6a
+  828B513C  394A0314             addi r10,r10,0x314
+  828B5140  3BAB0320             addi r29,r11,0x320
+  828B5144  7D5F5378             or r31,r10,r10
+  828B5148  3BC00000             li r30,0x0
+  828B514C  7F0AE840             cmplw cr6,r10,r29
+  828B5150  40980044             bge cr6,0x828b5194
+LAB_828b5154:
+  828B5154  2F1E0000             cmpwi cr6,r30,0x0
+  828B5158  409A0030             bne cr6,0x828b5188
+  828B515C  817F0000             lwz r11,0x0(r31)
+  828B5160  2B0B0000             cmplwi cr6,r11,0x0
+  828B5164  419A0010             beq cr6,0x828b5174
+  828B5168  7D6903A6             mtspr CTR,r11
+  828B516C  4E800421             bctrl
+  828B5170  7C7E1B78             or r30,r3,r3
+LAB_828b5174:
+  828B5174  3BFF0004             addi r31,r31,0x4
+  828B5178  7F1FE840             cmplw cr6,r31,r29
+  828B517C  4198FFD8             blt cr6,0x828b5154
+  828B5180  2F1E0000             cmpwi cr6,r30,0x0
+  828B5184  419A0010             beq cr6,0x828b5194
+LAB_828b5188:
+  828B5188  7DCE7378             or r14,r14,r14
+  828B518C  7FC3F378             or r3,r30,r30
+  828B5190  48000050             b 0x828b51e0
+LAB_828b5194:
+  828B5194  3D408296             lis r10,-0x7d6a
+  828B5198  3D608296             lis r11,-0x7d6a
+  828B519C  394A0010             addi r10,r10,0x10
+  828B51A0  3BCB0310             addi r30,r11,0x310
+  828B51A4  7D5F5378             or r31,r10,r10
+  828B51A8  7F0AF040             cmplw cr6,r10,r30
+  828B51AC  4098002C             bge cr6,0x828b51d8
+LAB_828b51b0:
+  828B51B0  817F0000             lwz r11,0x0(r31)
+  828B51B4  2B0B0000             cmplwi cr6,r11,0x0
+  828B51B8  419A0014             beq cr6,0x828b51cc
+  828B51BC  2F0BFFFF             cmpwi cr6,r11,-0x1
+  828B51C0  419A000C             beq cr6,0x828b51cc
+  828B51C4  7D6903A6             mtspr CTR,r11
+  828B51C8  4E800421             bctrl
+LAB_828b51cc:
+  828B51CC  3BFF0004             addi r31,r31,0x4
+  828B51D0  7F1FF040             cmplw cr6,r31,r30
+  828B51D4  4198FFDC             blt cr6,0x828b51b0
+LAB_828b51d8:
+  828B51D8  7DCE7378             or r14,r14,r14
+  828B51DC  38600000             li r3,0x0
+LAB_828b51e0:
+  828B51E0  38210070             addi r1,r1,0x70
+  828B51E4  48061528             b 0x8291670c
 
 ; 828B51E8  rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
   828B51E8  7D8802A6             mfspr r12,LR
   828B51EC  480614D1             bl 0x829166bc
+  828B51F0  9421FF90             stwu r1,-0x70(r1)
+  828B51F4  7DAD6B78             or r13,r13,r13
+  828B51F8  3D408296             lis r10,-0x7d6a
+  828B51FC  3D608296             lis r11,-0x7d6a
+  828B5200  394A0000             addi r10,r10,0x0
+  828B5204  3BCB000C             addi r30,r11,0xc
+  828B5208  7D5F5378             or r31,r10,r10
+  828B520C  3BA00000             li r29,0x0
+  828B5210  7F0AF040             cmplw cr6,r10,r30
+  828B5214  40980030             bge cr6,0x828b5244
+LAB_828b5218:
+  828B5218  2F1D0000             cmpwi cr6,r29,0x0
+  828B521C  409A0028             bne cr6,0x828b5244
+  828B5220  817F0000             lwz r11,0x0(r31)
+  828B5224  2B0B0000             cmplwi cr6,r11,0x0
+  828B5228  419A0010             beq cr6,0x828b5238
+  828B522C  7D6903A6             mtspr CTR,r11
+  828B5230  4E800421             bctrl
+  828B5234  7C7D1B78             or r29,r3,r3
+LAB_828b5238:
+  828B5238  3BFF0004             addi r31,r31,0x4
+  828B523C  7F1FF040             cmplw cr6,r31,r30
+  828B5240  4198FFD8             blt cr6,0x828b5218
+LAB_828b5244:
+  828B5244  7DCE7378             or r14,r14,r14
+  828B5248  7FA3EB78             or r3,r29,r29
+  828B524C  38210070             addi r1,r1,0x70
+  828B5250  480614BC             b 0x8291670c

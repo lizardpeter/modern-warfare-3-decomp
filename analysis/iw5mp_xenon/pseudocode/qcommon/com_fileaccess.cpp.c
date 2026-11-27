@@ -6,18 +6,15 @@ HANDLE FileWrapper_OpenWriteReadBinary(LPCSTR param_1)
 
 {
   HANDLE pvVar1;
-  HANDLE pvVar2;
   
   pvVar1 = CreateFileA(param_1,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x15,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  pvVar2 = (HANDLE)0x0;
-  if (pvVar1 != (HANDLE)0xffffffff) {
-    pvVar2 = pvVar1;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
-  return pvVar2;
+  return pvVar1;
 }
 
 
@@ -27,18 +24,15 @@ HANDLE FileWrapper_OpenReadWriteBinary(LPCSTR param_1)
 
 {
   HANDLE pvVar1;
-  HANDLE pvVar2;
   
   pvVar1 = CreateFileA(param_1,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x1f,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  pvVar2 = (HANDLE)0x0;
-  if (pvVar1 != (HANDLE)0xffffffff) {
-    pvVar2 = pvVar1;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
-  return pvVar2;
+  return pvVar1;
 }
 
 
@@ -48,18 +42,33 @@ HANDLE FileWrapper_OpenReadBinary_Core(LPCSTR param_1,DWORD param_2)
 
 {
   HANDLE pvVar1;
-  HANDLE pvVar2;
   
   pvVar1 = CreateFileA(param_1,0x80000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,param_2,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x29,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  pvVar2 = (HANDLE)0x0;
-  if (pvVar1 != (HANDLE)0xffffffff) {
-    pvVar2 = pvVar1;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
-  return pvVar2;
+  return pvVar1;
+}
+
+
+// 824DAF58  FileWrapper_OpenReadText  (universal/com_files_wrapper_ms.h:59)
+
+HANDLE FileWrapper_OpenReadText(LPCSTR param_1)
+
+{
+  HANDLE pvVar1;
+  
+  pvVar1 = CreateFileA(param_1,0x80000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
+  if (pvVar1 == (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82084db0,0x3f,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  }
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
+  }
+  return pvVar1;
 }
 
 
@@ -69,18 +78,15 @@ HANDLE FileWrapper_OpenWriteBinary(LPCSTR param_1)
 
 {
   HANDLE pvVar1;
-  HANDLE pvVar2;
   
   pvVar1 = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x49,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  pvVar2 = (HANDLE)0x0;
-  if (pvVar1 != (HANDLE)0xffffffff) {
-    pvVar2 = pvVar1;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
-  return pvVar2;
+  return pvVar1;
 }
 
 
@@ -89,18 +95,64 @@ HANDLE FileWrapper_OpenWriteBinary(LPCSTR param_1)
 void FileWrapper_Rotate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  HANDLE pvVar2;
+  LONG LVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  FILETIME local_280 [2];
+  char acStack_270 [256];
+  _WIN32_FIND_DATAA _Stack_170;
+  
+  uVar1 = __savegprlr_28();
+  pvVar2 = FindFirstFileA((LPCSTR)uVar1,&_Stack_170);
+  if (pvVar2 != (HANDLE)0xffffffff) {
+    CloseHandle(pvVar2);
+    lVar6 = 0;
+    lVar4 = -1;
+    local_280[0].dwLowDateTime = 0;
+    local_280[0].dwHighDateTime = 0;
+    do {
+      sprintf(acStack_270,"%s.%03i",uVar1,lVar6);
+      pvVar2 = FindFirstFileA(acStack_270,&_Stack_170);
+      lVar5 = lVar6;
+      if (pvVar2 == (HANDLE)0xffffffff) break;
+      CloseHandle(pvVar2);
+      if (((int)lVar4 == -1) ||
+         (LVar3 = CompareFileTime(local_280,&_Stack_170.ftLastWriteTime), 0 < LVar3)) {
+        local_280[0] = _Stack_170.ftLastWriteTime;
+        lVar4 = lVar6;
+      }
+      lVar6 = lVar6 + 1;
+      lVar5 = lVar4;
+    } while ((int)lVar6 < 0x14);
+    if ((int)lVar5 < 0) {
+      MyAssertHandler(0xffffffff82084db0,0x77,0,0xffffffff82000f98,0xffffffff82084e08);
+    }
+    sprintf(acStack_270,"%s.%03i",uVar1,lVar5);
+    DeleteFileA(acStack_270);
+    pvVar2 = (HANDLE)MoveFileA((LPCSTR)uVar1,acStack_270);
+  }
+  __restgprlr_28(pvVar2);
+  return;
 }
 
 
 // 824DB350  FS_FileRead  (qcommon/com_fileaccess.cpp:99)
 
-void FS_FileRead(void)
+void FS_FileRead(undefined8 param_1,DWORD param_2,HANDLE param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  LPVOID lpBuffer;
+  DWORD local_30 [12];
+  
+  lpBuffer = (LPVOID)__savegprlr_29();
+  ProfLoad_BeginTrackedValue(2);
+  ReadFile(param_3,lpBuffer,param_2,local_30,(LPOVERLAPPED)0x0);
+  ProfLoad_EndTrackedValue(2);
+  __restgprlr_29(local_30[0]);
+  return;
 }
 
 
@@ -122,18 +174,15 @@ HANDLE FileWrapper_OpenWriteText(LPCSTR param_1)
 
 {
   HANDLE pvVar1;
-  HANDLE pvVar2;
   
   pvVar1 = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,2,0,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x84,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  pvVar2 = (HANDLE)0x0;
-  if (pvVar1 != (HANDLE)0xffffffff) {
-    pvVar2 = pvVar1;
+  else if (pvVar1 == (HANDLE)0xffffffff) {
+    return (HANDLE)0x0;
   }
-  return pvVar2;
+  return pvVar1;
 }
 
 
@@ -160,13 +209,14 @@ HANDLE FileWrapper_OpenAppendText(LPCSTR param_1)
   
   hFile = CreateFileA(param_1,0x40000000,0,(LPSECURITY_ATTRIBUTES)0x0,4,0,(HANDLE)0x0);
   if (hFile == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82084db0,0x8f,0,0xffffffff82000f98,0xffffffff8200fdb0);
   }
-  if (hFile == (HANDLE)0xffffffff) {
-    return (HANDLE)0x0;
+  else {
+    if (hFile == (HANDLE)0xffffffff) {
+      return (HANDLE)0x0;
+    }
+    SetFilePointerEx(hFile,(LARGE_INTEGER)0x0,(PLARGE_INTEGER)0x0,2);
   }
-  SetFilePointerEx(hFile,(LARGE_INTEGER)0x0,(PLARGE_INTEGER)0x0,2);
   return hFile;
 }
 
@@ -185,6 +235,39 @@ undefined8 FS_FileOpenReadWriteBinary(undefined8 param_1)
 }
 
 
+// 824DB2A0  FileWrapper_Seek  (universal/com_files_wrapper_ms.h:169)
+
+bool FileWrapper_Seek(HANDLE param_1,uint param_2,ulonglong param_3)
+
+{
+  LARGE_INTEGER liDistanceToMove;
+  undefined8 uVar1;
+  BOOL BVar2;
+  DWORD dwMoveMethod;
+  
+  if ((param_3 & 0xffffffff) == 0) {
+    dwMoveMethod = 1;
+  }
+  else if ((param_3 & 0xffffffff) == 1) {
+    dwMoveMethod = 2;
+  }
+  else {
+    if (2 < (param_3 & 0xffffffff)) {
+      if (DAT_84013128 == 0) {
+        uVar1 = va(0xffffffff82084e24,param_3);
+        MyAssertHandler(0xffffffff82084db0,0xb9,0,uVar1);
+      }
+      return false;
+    }
+    dwMoveMethod = 0;
+  }
+  liDistanceToMove.s.LowPart = 0;
+  liDistanceToMove.s.HighPart = param_2;
+  BVar2 = SetFilePointerEx(param_1,liDistanceToMove,(PLARGE_INTEGER)0x0,dwMoveMethod);
+  return BVar2 == 0;
+}
+
+
 // 824DB470  FS_FileOpenReadBinary  (qcommon/com_fileaccess.cpp:175)
 
 undefined8 FS_FileOpenReadBinary(undefined8 param_1)
@@ -194,6 +277,20 @@ undefined8 FS_FileOpenReadBinary(undefined8 param_1)
   
   ProfLoad_BeginTrackedValue(0);
   uVar1 = FileWrapper_OpenReadBinary_Core(param_1,0);
+  ProfLoad_EndTrackedValue(0);
+  return uVar1;
+}
+
+
+// 824DB4C0  FS_FileOpenReadText  (qcommon/com_fileaccess.cpp:196)
+
+undefined8 FS_FileOpenReadText(undefined8 param_1)
+
+{
+  undefined8 uVar1;
+  
+  ProfLoad_BeginTrackedValue(0);
+  uVar1 = FileWrapper_OpenReadText(param_1);
   ProfLoad_EndTrackedValue(0);
   return uVar1;
 }
@@ -243,11 +340,17 @@ undefined8 FS_FileOpenWriteText(undefined8 param_1)
 
 // 824DB5F0  FS_FileSeek  (qcommon/com_fileaccess.cpp:315)
 
-void FS_FileSeek(void)
+void FS_FileSeek(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  ProfLoad_BeginTrackedValue(1);
+  uVar1 = FileWrapper_Seek(uVar1,param_2,param_3);
+  ProfLoad_EndTrackedValue(1);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 

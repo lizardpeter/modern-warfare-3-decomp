@@ -7,8 +7,22 @@ HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes,SIZE_T dwStackSize,
                    LPDWORD lpThreadId)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(lpThreadAttributes,dwStackSize,lpStartAddress,lpParameter,dwCreationFlags,
-                 lpThreadId);
+  undefined8 uVar1;
+  HANDLE pvVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  lVar7 = (longlong)(int)lpThreadId;
+  lVar6 = (longlong)(int)dwCreationFlags;
+  lVar5 = (longlong)(int)lpParameter;
+  lVar4 = (longlong)(int)lpStartAddress;
+  lVar3 = (longlong)(int)dwStackSize;
+  uVar1 = __savegprlr_26(lpThreadAttributes,lVar3,lVar4,lVar5,lVar6,lVar7);
+  uVar1 = XapipCreateThread(uVar1,lVar3,lVar4,lVar5,lVar6,0xffffffffffffffff,lVar7);
+  pvVar2 = (HANDLE)__restgprlr_26(uVar1);
+  return pvVar2;
 }
 

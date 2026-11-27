@@ -37,11 +37,33 @@ void bdPerformanceValue__serialize(int param_1,undefined8 param_2)
 
 // 82905A58  bdPerformanceValue::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdperformancevalue.cpp:31)
 
-void bdPerformanceValue__deserialize(void)
+void bdPerformanceValue__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  longlong lVar3;
+  undefined1 local_40 [8];
+  undefined1 local_38 [56];
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,local_40);
+  *(undefined8 *)(iVar1 + 8) = 0;
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readInt64(*(undefined4 *)param_2,local_38);
+    lVar3 = 1;
+    if (cVar2 != '\0') goto LAB_82905ab8;
+  }
+  lVar3 = 0;
+LAB_82905ab8:
+  *(undefined8 *)(iVar1 + 0x10) = 0;
+  if (lVar3 == 0) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff821ad3c4,0xffffffff8220f0e0,0xffffffff8220f0c0,0x2a,
+                 0xffffffff8220b3c8);
+  }
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_28(lVar3);
+  return;
 }
 
 

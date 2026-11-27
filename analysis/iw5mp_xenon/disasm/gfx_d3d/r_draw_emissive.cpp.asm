@@ -3,14 +3,152 @@
 ; 82733EC0  R_DrawEmissiveCallback  (gfx_d3d/r_draw_emissive.cpp:182)
   82733EC0  7D8802A6             mfspr r12,LR
   82733EC4  481E27F5             bl 0x829166b8
+  82733EC8  9421FF80             stwu r1,-0x80(r1)
+  82733ECC  83C30000             lwz r30,0x0(r3)
+  82733ED0  7C6B1B78             or r11,r3,r3
+  82733ED4  7C832378             or r3,r4,r4
+  82733ED8  F8810098             std r4,0x98(r1)
+  82733EDC  7C9F2378             or r31,r4,r4
+  82733EE0  838B0004             lwz r28,0x4(r11)
+  82733EE4  809E0920             lwz r4,0x920(r30)
+  82733EE8  4804CBC1             bl 0x82780aa8
+  82733EEC  83A10098             lwz r29,0x98(r1)
+  82733EF0  7FA3EB78             or r3,r29,r29
+  82733EF4  4804E505             bl 0x827823f8
+  82733EF8  389E0170             addi r4,r30,0x170
+  82733EFC  7FE3FB78             or r3,r31,r31
+  82733F00  4804BD91             bl 0x8277fc90
+  82733F04  3D40821C             lis r10,-0x7de4
+  82733F08  3860FFFF             li r3,-0x1
+  82733F0C  388ADD84             subi r4,r10,0x227c
+  82733F10  4816D6C9             bl 0x828a15d8
+  82733F14  813D174C             lwz r9,0x174c(r29)
+  82733F18  2F090027             cmpwi cr6,r9,0x27
+  82733F1C  419A0028             beq cr6,0x82733f44
+  82733F20  3D60821C             lis r11,-0x7de4
+  82733F24  3D408200             lis r10,-0x7e00
+  82733F28  3D20821C             lis r9,-0x7de4
+  82733F2C  38EBDD24             subi r7,r11,0x22dc
+  82733F30  38CA0F98             addi r6,r10,0xf98
+  82733F34  3869DAD0             subi r3,r9,0x2530
+  82733F38  38A00000             li r5,0x0
+  82733F3C  388004EB             li r4,0x4eb
+  82733F40  4BEA05C1             bl 0x825d4500
+LAB_82733f44:
+  82733F44  39600013             li r11,0x13
+  82733F48  7F84E378             or r4,r28,r28
+  82733F4C  917D174C             stw r11,0x174c(r29)
+  82733F50  7FE3FB78             or r3,r31,r31
+  82733F54  4805A9FD             bl 0x8278e950
+  82733F58  7FE3FB78             or r3,r31,r31
+  82733F5C  4BFFFEE5             bl 0x82733e40
+  82733F60  4816D7E1             bl 0x828a1740
+  82733F64  389E0B50             addi r4,r30,0xb50
+  82733F68  7FE3FB78             or r3,r31,r31
+  82733F6C  48067DE5             bl 0x8279bd50
+  82733F70  389E0D48             addi r4,r30,0xd48
+  82733F74  7FE3FB78             or r3,r31,r31
+  82733F78  48067DD9             bl 0x8279bd50
+  82733F7C  389E0F40             addi r4,r30,0xf40
+  82733F80  7FE3FB78             or r3,r31,r31
+  82733F84  48067DCD             bl 0x8279bd50
+  82733F88  389E1138             addi r4,r30,0x1138
+  82733F8C  7FE3FB78             or r3,r31,r31
+  82733F90  48067DC1             bl 0x8279bd50
+  82733F94  389E1330             addi r4,r30,0x1330
+  82733F98  7FE3FB78             or r3,r31,r31
+  82733F9C  48067DB5             bl 0x8279bd50
+  82733FA0  389E1528             addi r4,r30,0x1528
+  82733FA4  7FE3FB78             or r3,r31,r31
+  82733FA8  48067DA9             bl 0x8279bd50
+  82733FAC  389E1720             addi r4,r30,0x1720
+  82733FB0  7FE3FB78             or r3,r31,r31
+  82733FB4  48067D9D             bl 0x8279bd50
+  82733FB8  389E1918             addi r4,r30,0x1918
+  82733FBC  7FE3FB78             or r3,r31,r31
+  82733FC0  48067D91             bl 0x8279bd50
+  82733FC4  389E1B10             addi r4,r30,0x1b10
+  82733FC8  7FE3FB78             or r3,r31,r31
+  82733FCC  48067D85             bl 0x8279bd50
+  82733FD0  389E1D08             addi r4,r30,0x1d08
+  82733FD4  7FE3FB78             or r3,r31,r31
+  82733FD8  48067D79             bl 0x8279bd50
+  82733FDC  389E1F00             addi r4,r30,0x1f00
+  82733FE0  7FE3FB78             or r3,r31,r31
+  82733FE4  48067D6D             bl 0x8279bd50
+  82733FE8  389E20F8             addi r4,r30,0x20f8
+  82733FEC  7FE3FB78             or r3,r31,r31
+  82733FF0  48067D61             bl 0x8279bd50
+  82733FF4  389E0958             addi r4,r30,0x958
+  82733FF8  7FE3FB78             or r3,r31,r31
+  82733FFC  48067D55             bl 0x8279bd50
+  82734000  389E22F0             addi r4,r30,0x22f0
+  82734004  7FE3FB78             or r3,r31,r31
+  82734008  48067D49             bl 0x8279bd50
+  8273400C  389E26E0             addi r4,r30,0x26e0
+  82734010  7FE3FB78             or r3,r31,r31
+  82734014  48067D3D             bl 0x8279bd50
+  82734018  389E24E8             addi r4,r30,0x24e8
+  8273401C  7FE3FB78             or r3,r31,r31
+  82734020  48067D31             bl 0x8279bd50
+  82734024  389E2EC0             addi r4,r30,0x2ec0
+  82734028  7FE3FB78             or r3,r31,r31
+  8273402C  48067D25             bl 0x8279bd50
+  82734030  8061009C             lwz r3,0x9c(r1)
+  82734034  4804BCD5             bl 0x8277fd08
+  82734038  38210080             addi r1,r1,0x80
+  8273403C  481E26CC             b 0x82916708
 
 ; 82734040  R_DrawEmissivePreWeave  (gfx_d3d/r_draw_emissive.cpp:341)
   82734040  7D8802A6             mfspr r12,LR
   82734044  481E2679             bl 0x829166bc
+  82734048  E981F000             ld r12,-0x1000(r1)
+  8273404C  9421E820             stwu r1,-0x17e0(r1)
+  82734050  90810054             stw r4,0x54(r1)
+  82734054  7C7F1B78             or r31,r3,r3
+  82734058  90610050             stw r3,0x50(r1)
+  8273405C  7CBE2B78             or r30,r5,r5
+  82734060  38830330             addi r4,r3,0x330
+  82734064  38A00001             li r5,0x1
+  82734068  38610060             addi r3,r1,0x60
+  8273406C  7CDD3378             or r29,r6,r6
+  82734070  4804DAF9             bl 0x82781b68
+  82734074  38610060             addi r3,r1,0x60
+  82734078  809F0920             lwz r4,0x920(r31)
+  8273407C  4804B29D             bl 0x8277f318
+  82734080  389F0150             addi r4,r31,0x150
+  82734084  38610060             addi r3,r1,0x60
+  82734088  4804AD81             bl 0x8277ee08
+  8273408C  7FC8F378             or r8,r30,r30
+  82734090  7FE7FB78             or r7,r31,r31
+  82734094  38DF0180             addi r6,r31,0x180
+  82734098  38A10060             addi r5,r1,0x60
+  8273409C  38810050             addi r4,r1,0x50
+  827340A0  7FA3EB78             or r3,r29,r29
+  827340A4  4804CB7D             bl 0x82780c20
+  827340A8  382117E0             addi r1,r1,0x17e0
+  827340AC  481E2660             b 0x8291670c
 
 ; 827340B0  R_DrawEmissive  (gfx_d3d/r_draw_emissive.cpp:378)
   827340B0  7D8802A6             mfspr r12,LR
   827340B4  481E2609             bl 0x829166bc
+  827340B8  9421FF90             stwu r1,-0x70(r1)
+  827340BC  3D60821C             lis r11,-0x7de4
+  827340C0  7C7F1B78             or r31,r3,r3
+  827340C4  7C9E2378             or r30,r4,r4
+  827340C8  3860FFFF             li r3,-0x1
+  827340CC  388BDD90             subi r4,r11,0x2270
+  827340D0  7CBD2B78             or r29,r5,r5
+  827340D4  4816D505             bl 0x828a15d8
+  827340D8  3D408273             lis r10,-0x7d8d
+  827340DC  7FA5EB78             or r5,r29,r29
+  827340E0  38CA3EC0             addi r6,r10,0x3ec0
+  827340E4  7FC4F378             or r4,r30,r30
+  827340E8  7FE3FB78             or r3,r31,r31
+  827340EC  4BFFFF55             bl 0x82734040
+  827340F0  4816D651             bl 0x828a1740
+  827340F4  38210070             addi r1,r1,0x70
+  827340F8  481E2614             b 0x8291670c
 
 ; 82733E40  R_EndDrawList  (gfx_d3d/r_rendercmds.h:1265)
   82733E40  7D8802A6             mfspr r12,LR
@@ -31,6 +169,13 @@
   82733E7C  38A00000             li r5,0x0
   82733E80  388004F2             li r4,0x4f2
   82733E84  4BEA067D             bl 0x825d4500
+  82733E88  39000027             li r8,0x27
+  82733E8C  911F174C             stw r8,0x174c(r31)
+  82733E90  38210060             addi r1,r1,0x60
+  82733E94  8181FFF8             lwz r12,-0x8(r1)
+  82733E98  7D8803A6             mtspr LR,r12
+  82733E9C  EBE1FFF0             ld r31,-0x10(r1)
+  82733EA0  4E800020             blr
 LAB_82733ea4:
   82733EA4  39600027             li r11,0x27
   82733EA8  917F174C             stw r11,0x174c(r31)

@@ -2,20 +2,225 @@
 
 // 828B6890  XCOMPRESS::special_decode_verbatim_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decverb.cpp:15)
 
-void XCOMPRESS__special_decode_verbatim_block(void)
+void XCOMPRESS__special_decode_verbatim_block(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined1 uVar1;
+  byte bVar2;
+  short sVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  undefined1 *puVar8;
+  int iVar9;
+  int *piVar11;
+  longlong lVar10;
+  int iVar12;
+  undefined1 *puVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  char cVar18;
+  ulonglong uVar19;
+  char cVar20;
+  uint uVar21;
+  int *piVar22;
+  
+  piVar11 = (int *)__savegprlr_19();
+  iVar9 = (int)param_2;
+  puVar4 = (undefined1 *)piVar11[0xac2];
+  iVar5 = *piVar11;
+  uVar17 = (ulonglong)*(byte *)(piVar11 + 0xbad);
+  uVar21 = piVar11[0xbac];
+  puVar13 = (undefined1 *)piVar11[0xac1];
+  piVar22 = piVar11 + 3;
+  do {
+    iVar12 = (int)param_2;
+    if (iVar9 + param_3 <= iVar12) {
+      *(char *)(piVar11 + 0xbad) = (char)uVar17;
+      piVar11[0xbac] = uVar21;
+      piVar11[0xac1] = (int)puVar13;
+LAB_828b6b44:
+      __restgprlr_19(param_2);
+      return;
+    }
+    sVar3 = *(short *)((int)piVar11 + (uVar21 >> 0x15 & 0x7fe) + 0x18);
+    uVar14 = (ulonglong)sVar3;
+    if (sVar3 < 0) {
+      uVar19 = 0x200000;
+      do {
+        uVar7 = (uint)uVar19;
+        uVar19 = uVar19 >> 1;
+        sVar3 = *(short *)((int)piVar11 +
+                          (int)((((ulonglong)((uVar7 & uVar21) == 0) ^ 1) +
+                                 (uVar14 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0xe3c);
+        uVar14 = (ulonglong)sVar3;
+      } while (sVar3 < 0);
+    }
+    if (puVar4 <= puVar13) {
+      param_2 = -1;
+      goto LAB_828b6b44;
+    }
+    bVar2 = *(byte *)((int)piVar11 + (int)uVar14 + 0xa18);
+    cVar18 = (char)uVar17 - bVar2;
+    uVar21 = uVar21 << (bVar2 & 0x3f);
+    uVar17 = (ulonglong)cVar18;
+    if ((longlong)uVar17 < 1) {
+      puVar8 = puVar13 + 1;
+      uVar1 = *puVar13;
+      puVar13 = puVar13 + 2;
+      uVar17 = (ulonglong)(char)(cVar18 + '\x10');
+      uVar21 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar18 & 0x3fU) | uVar21;
+    }
+    uVar14 = uVar14 - 0x100;
+    if ((longlong)uVar14 < 0) {
+      iVar6 = piVar11[1];
+      *(char *)(iVar5 + iVar12) = (char)uVar14;
+      *(char *)(iVar6 + iVar5 + iVar12) = (char)uVar14;
+      param_2 = param_2 + 1;
+    }
+    else {
+      uVar19 = uVar14 & 7;
+      if ((int)uVar19 == 7) {
+        sVar3 = *(short *)((int)piVar11 + (uVar21 >> 0x17 & 0x1fe) + 0x818);
+        uVar19 = (ulonglong)sVar3;
+        if (sVar3 < 0) {
+          uVar15 = 0x800000;
+          do {
+            uVar7 = (uint)uVar15;
+            uVar15 = uVar15 >> 1;
+            sVar3 = *(short *)((int)piVar11 +
+                              (int)((((ulonglong)((uVar7 & uVar21) == 0) ^ 1) +
+                                     (uVar19 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0x233c);
+            uVar19 = (ulonglong)sVar3;
+          } while (sVar3 < 0);
+        }
+        bVar2 = *(byte *)((int)piVar11 + (int)uVar19 + 0xcb8);
+        cVar18 = (char)uVar17 - bVar2;
+        uVar21 = uVar21 << (bVar2 & 0x3f);
+        uVar17 = (ulonglong)cVar18;
+        if ((longlong)uVar17 < 1) {
+          puVar8 = puVar13 + 1;
+          uVar1 = *puVar13;
+          puVar13 = puVar13 + 2;
+          uVar17 = (ulonglong)(char)(cVar18 + '\x10');
+          uVar21 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar18 & 0x3fU) | uVar21;
+        }
+        uVar19 = uVar19 + 7;
+      }
+      cVar18 = (char)((int)uVar14 >> 3);
+      if (cVar18 < '\x03') {
+        iVar12 = (int)(((longlong)cVar18 & 0xffffffffU) << 2);
+        uVar14 = (ulonglong)*(uint *)(iVar12 + (int)piVar22);
+        if (cVar18 != '\0') {
+          *(int *)(iVar12 + (int)piVar22) = *piVar22;
+          goto LAB_828b6aec;
+        }
+      }
+      else {
+        if (cVar18 < '\x04') {
+          uVar14 = 1;
+        }
+        else {
+          bVar2 = *(byte *)((int)piVar11 + cVar18 + 0x2ee4);
+          cVar20 = (char)uVar17 - bVar2;
+          uVar17 = (ulonglong)cVar20;
+          uVar7 = uVar21 >> (0x20 - bVar2 & 0x3f);
+          uVar21 = uVar21 << (bVar2 & 0x3f);
+          puVar8 = puVar13;
+          if ((longlong)uVar17 < 1) {
+            uVar17 = (ulonglong)(char)(cVar20 + '\x10');
+            uVar21 = (uint)CONCAT11(puVar13[1],*puVar13) << (-(int)cVar20 & 0x3fU) | uVar21;
+            puVar8 = puVar13 + 2;
+            if ((longlong)uVar17 < 1) {
+              uVar17 = (ulonglong)(char)(cVar20 + ' ');
+              uVar21 = (uint)CONCAT11(puVar13[3],puVar13[2]) <<
+                       (-(int)(char)(cVar20 + '\x10') & 0x3fU) | uVar21;
+              puVar8 = puVar13 + 4;
+            }
+          }
+          puVar13 = puVar8;
+          uVar14 = (ulonglong)
+                   *(uint *)((int)(((longlong)cVar18 + 0xbc6U & 0xffffffff) << 2) + (int)piVar11) +
+                   (ulonglong)uVar7;
+        }
+        piVar11[5] = piVar11[4];
+        piVar11[4] = *piVar22;
+LAB_828b6aec:
+        *piVar22 = (int)uVar14;
+      }
+      uVar7 = piVar11[2];
+      lVar10 = uVar19 + 2;
+      lVar16 = param_2 - uVar14;
+      do {
+        iVar12 = (int)param_2;
+        uVar1 = *(undefined1 *)(((uint)lVar16 & uVar7) + iVar5);
+        *(undefined1 *)(iVar5 + iVar12) = uVar1;
+        if (iVar12 < 0x101) {
+          *(undefined1 *)(piVar11[1] + iVar5 + iVar12) = uVar1;
+        }
+        lVar10 = lVar10 + -1;
+        param_2 = param_2 + 1;
+        lVar16 = lVar16 + 1;
+      } while (0 < lVar10);
+    }
+  } while( true );
 }
 
 
 // 828B6B50  XCOMPRESS::fast_decode_verbatim_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decverb.cpp:172)
 
-void XCOMPRESS__fast_decode_verbatim_block(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XCOMPRESS__fast_decode_verbatim_block(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  
+  uVar3 = (uint)param_2;
+  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
+  iVar1 = __savegprlr();
+  param_3 = CONCAT44(uVar2,uVar3) + param_3;
+  if ((int)uVar3 < (int)param_3) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  *(undefined1 *)(iVar1 + 0x2eb4) = *(undefined1 *)(iVar1 + 0x2eb4);
+  *(undefined4 *)(iVar1 + 0x2eb0) = *(undefined4 *)(iVar1 + 0x2eb0);
+  *(undefined4 *)(iVar1 + 0x2b04) = *(undefined4 *)(iVar1 + 0x2b04);
+  *(uint *)(iVar1 + 0x2eb8) = *(uint *)(iVar1 + 8) & uVar3;
+  __restgprlr(CONCAT44(uVar2,uVar3) - param_3);
+  return;
+}
+
+
+// 828B6ED0  XCOMPRESS::decode_verbatim_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decverb.cpp:377)
+
+void XCOMPRESS__decode_verbatim_block(undefined8 param_1,longlong param_2,longlong param_3)
+
+{
+  int iVar2;
+  longlong lVar1;
+  
+  iVar2 = __savegprlr_29();
+  lVar1 = param_2;
+  if ((int)param_2 < 0x101) {
+    lVar1 = 0x101 - param_2;
+    if ((int)param_3 <= (int)(0x101 - param_2)) {
+      lVar1 = param_3;
+    }
+    lVar1 = XCOMPRESS__special_decode_verbatim_block(iVar2,param_2,lVar1);
+    *(int *)(iVar2 + 0x2eb8) = (int)lVar1;
+    param_3 = (param_2 - lVar1) + param_3;
+    if (param_3 < 1) goto LAB_828b6f38;
+  }
+  param_3 = XCOMPRESS__fast_decode_verbatim_block(iVar2,lVar1,param_3);
+LAB_828b6f38:
+  __restgprlr_29(param_3);
+  return;
 }
 

@@ -1094,11 +1094,30 @@ undefined8 DB_SizeofXAsset<AddonMapEnts>(void)
 
 // 823A1DB8  DB_GetXAssetHeaderName  (database/db_assetnames.cpp:801)
 
-void DB_GetXAssetHeaderName(void)
+void DB_GetXAssetHeaderName(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82058e08,0x324,0,0xffffffff82000f98,0xffffffff82058e00);
+  }
+  if ((&PTR_DB_PhysPresetGetName_82967100)[iVar3] == (undefined *)0x0) {
+    MyAssertHandler(0xffffffff82058e08,0x325,0,0xffffffff82000f98,0xffffffff82058de0);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82058e08,0x326,0,0xffffffff82000f98,0xffffffff82058dd0);
+  }
+  uVar1 = (*(code *)(&PTR_DB_PhysPresetGetName_82967100)[iVar3])(param_2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar2 = va(0xffffffff82058dac,(&PTR_s_physpreset_82967050)[iVar3]);
+    MyAssertHandler(0xffffffff82058e08,0x328,0,0xffffffff820011f4,0xffffffff82021a74,uVar2);
+  }
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -1108,7 +1127,6 @@ void DB_GetXAssetName(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058e08,0x32f,0,0xffffffff82000f98,0xffffffff82058e50);
   }
   DB_GetXAssetHeaderName(*param_1,param_1 + 1);
@@ -1118,11 +1136,18 @@ void DB_GetXAssetName(undefined4 *param_1)
 
 // 823A1F20  DB_SetXAssetName  (database/db_assetnames.cpp:821)
 
-void DB_SetXAssetName(void)
+void DB_SetXAssetName(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if ((&PTR_DB_PhysPresetSetName_829671b0)[*piVar1] == (undefined *)0x0) {
+    MyAssertHandler(0xffffffff82058e08,0x336,0,0xffffffff82000f98,0xffffffff82058e58);
+  }
+  (*(code *)(&PTR_DB_PhysPresetSetName_829671b0)[*piVar1])(piVar1 + 1,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1132,7 +1157,6 @@ void DB_GetXAssetTypeSize(int param_1)
 
 {
   if ((&PTR_DB_SizeofXAsset<PhysPreset>_82967260)[param_1] == (undefined *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82058e08,0x33d,0,0xffffffff82000f98,0xffffffff82058e80);
   }
   (*(code *)(&PTR_DB_SizeofXAsset<PhysPreset>_82967260)[param_1])();
@@ -1145,10 +1169,9 @@ void DB_GetXAssetTypeSize(int param_1)
 undefined * DB_GetXAssetTypeName(int param_1)
 
 {
-  if ((-1 < param_1) && (param_1 < 0x2c)) {
-    return (&PTR_s_physpreset_82967050)[param_1];
+  if ((param_1 < 0) || (0x2b < param_1)) {
+    MyAssertHandler(0xffffffff82058e08,0x343,0,0xffffffff82000f98,0xffffffff82058ea0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82058e08,0x343,0,0xffffffff82000f98,0xffffffff82058ea0);
+  return (&PTR_s_physpreset_82967050)[param_1];
 }
 

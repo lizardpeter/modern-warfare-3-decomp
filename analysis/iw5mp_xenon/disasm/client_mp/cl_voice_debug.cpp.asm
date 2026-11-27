@@ -3,6 +3,60 @@
 ; 82359840  CL_DrawEstrangedClientName  (client_mp/cl_voice_debug.cpp:36)
   82359840  7D8802A6             mfspr r12,LR
   82359844  485BCE79             bl 0x829166bc
+  82359848  9421FF20             stwu r1,-0xe0(r1)
+  8235984C  7CBD2B78             or r29,r5,r5
+  82359850  7C7F1B78             or r31,r3,r3
+  82359854  7C832378             or r3,r4,r4
+  82359858  7CDE3378             or r30,r6,r6
+  8235985C  38C00040             li r6,0x40
+  82359860  38A10080             addi r5,r1,0x80
+  82359864  7FA4EB78             or r4,r29,r29
+  82359868  4BFFB8E1             bl 0x82355148
+  8235986C  2F030000             cmpwi cr6,r3,0x0
+  82359870  409A001C             bne cr6,0x8235988c
+  82359874  3D608204             lis r11,-0x7dfc
+  82359878  7FA6EB78             or r6,r29,r29
+  8235987C  38AB85F8             subi r5,r11,0x7a08
+  82359880  38800040             li r4,0x40
+  82359884  38610080             addi r3,r1,0x80
+  82359888  482B2C59             bl 0x8260c4e0
+LAB_8235988c:
+  8235988C  3D6082B4             lis r11,-0x7d4c
+  82359890  3CC08218             lis r6,-0x7de8
+  82359894  38FE0001             addi r7,r30,0x1
+  82359898  38861938             addi r4,r6,0x1938
+  8235989C  3CC082B4             lis r6,-0x7d4c
+  823598A0  816BFA34             lwz r11,-0x5cc(r11)
+  823598A4  38A00080             li r5,0x80
+  823598A8  90810064             stw r4,0x64(r1)
+  823598AC  3C8082A4             lis r4,-0x7d5c
+  823598B0  90A1006C             stw r5,0x6c(r1)
+  823598B4  3C6082B4             lis r3,-0x7d4c
+  823598B8  388483D8             subi r4,r4,0x7c28
+  823598BC  3CA07FFF             lis r5,0x7fff
+  823598C0  816B000C             lwz r11,0xc(r11)
+  823598C4  39400001             li r10,0x1
+  823598C8  39200001             li r9,0x1
+  823598CC  7CEB39D6             mullw r7,r11,r7
+  823598D0  8166F858             lwz r11,-0x7a8(r6)
+  823598D4  80C40F78             lwz r6,0xf78(r4)
+  823598D8  8103FA30             lwz r8,-0x5d0(r3)
+  823598DC  C00B0010             lfs f0,0x10(r11)
+  823598E0  C02B000C             lfs f1,0xc(r11)
+  823598E4  C068000C             lfs f3,0xc(r8)
+  823598E8  FC801890             fmr f4,f3
+  823598EC  7CE407B4             extsw r4,r7
+  823598F0  60A5FFFF             ori r5,r5,0xffff
+  823598F4  F8810070             std r4,0x70(r1)
+  823598F8  C9A10070             lfd f13,0x70(r1)
+  823598FC  FD806E9C             fcfid f12,f13
+  82359900  38810080             addi r4,r1,0x80
+  82359904  FD606018             frsp f11,f12
+  82359908  7FE3FB78             or r3,r31,r31
+  8235990C  EC4B002A             fadds f2,f11,f0
+  82359910  4BFECE61             bl 0x82346770
+  82359914  382100E0             addi r1,r1,0xe0
+  82359918  485BCDF4             b 0x8291670c
 
 ; 82359920  CL_DrawClientsWeCantTalkTo  (client_mp/cl_voice_debug.cpp:57)
   82359920  7D8802A6             mfspr r12,LR

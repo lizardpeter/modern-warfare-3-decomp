@@ -3,7 +3,315 @@
 ; 828B6F40  XCOMPRESS::special_decode_aligned_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:11)
   828B6F40  7D8802A6             mfspr r12,LR
   828B6F44  4805F74D             bl 0x82916690
+  828B6F48  82632B08             lwz r19,0x2b08(r3)
+  828B6F4C  7C6B1B78             or r11,r3,r3
+  828B6F50  83C30000             lwz r30,0x0(r3)
+  828B6F54  7F442A14             add r26,r4,r5
+  828B6F58  89232EB4             lbz r9,0x2eb4(r3)
+  828B6F5C  3AE30E3C             addi r23,r3,0xe3c
+  828B6F60  81432EB0             lwz r10,0x2eb0(r3)
+  828B6F64  3AC3233C             addi r22,r3,0x233c
+  828B6F68  83E32B04             lwz r31,0x2b04(r3)
+  828B6F6C  3AA30018             addi r21,r3,0x18
+  828B6F70  3A830818             addi r20,r3,0x818
+  828B6F74  3B230A18             addi r25,r3,0xa18
+  828B6F78  3B030CB8             addi r24,r3,0xcb8
+  828B6F7C  3B830DB4             addi r28,r3,0xdb4
+  828B6F80  3B630E34             addi r27,r3,0xe34
+  828B6F84  3BA3000C             addi r29,r3,0xc
+  828B6F88  48000308             b 0x828b7290
+LAB_828b6f8c:
+  828B6F8C  55485D7C             rlwinm r8,r10,0xb,0x15,0x1e
+  828B6F90  7CE8AAAE             lhax r7,r8,r21
+  828B6F94  2C070000             cmpwi r7,0x0
+  828B6F98  40800034             bge 0x828b6fcc
+  828B6F9C  3D000020             lis r8,0x20
+LAB_828b6fa0:
+  828B6FA0  7D065038             and r6,r8,r10
+  828B6FA4  54E7083C             rlwinm r7,r7,0x1,0x0,0x1e
+  828B6FA8  7CC60034             cntlzw r6,r6
+  828B6FAC  5508F87E             rlwinm r8,r8,0x1f,0x1,0x1f
+  828B6FB0  54C6D97E             rlwinm r6,r6,0x1b,0x5,0x1f
+  828B6FB4  68C60001             xori r6,r6,0x1
+  828B6FB8  7CE73050             subf r7,r7,r6
+  828B6FBC  54E7083C             rlwinm r7,r7,0x1,0x0,0x1e
+  828B6FC0  7CE7BAAE             lhax r7,r7,r23
+  828B6FC4  2C070000             cmpwi r7,0x0
+  828B6FC8  4180FFD8             blt 0x828b6fa0
+LAB_828b6fcc:
+  828B6FCC  7F1F9840             cmplw cr6,r31,r19
+  828B6FD0  409802DC             bge cr6,0x828b72ac
+  828B6FD4  7D07C8AE             lbzx r8,r7,r25
+  828B6FD8  7D284850             subf r9,r8,r9
+  828B6FDC  7D4A4030             slw r10,r10,r8
+  828B6FE0  7D290774             extsb r9,r9
+  828B6FE4  7D284B79             or. r8,r9,r9
+  828B6FE8  4181002C             bgt 0x828b7014
+  828B6FEC  893F0001             lbz r9,0x1(r31)
+  828B6FF0  7CC800D0             neg r6,r8
+  828B6FF4  88BF0000             lbz r5,0x0(r31)
+  828B6FF8  39080010             addi r8,r8,0x10
+  828B6FFC  5529403E             rlwinm r9,r9,0x8,0x0,0x1f
+  828B7000  3BFF0002             addi r31,r31,0x2
+  828B7004  7D252B78             or r5,r9,r5
+  828B7008  7D090774             extsb r9,r8
+  828B700C  7CA83030             slw r8,r5,r6
+  828B7010  7D0A5378             or r10,r8,r10
+LAB_828b7014:
+  828B7014  34C7FF00             subic. r6,r7,0x100
+  828B7018  40800020             bge 0x828b7038
+  828B701C  810B0004             lwz r8,0x4(r11)
+  828B7020  54C7063E             rlwinm r7,r6,0x0,0x18,0x1f
+  828B7024  7D08F214             add r8,r8,r30
+  828B7028  7CFE21AE             stbx r7,r30,r4
+  828B702C  7CE821AE             stbx r7,r8,r4
+  828B7030  38840001             addi r4,r4,0x1
+  828B7034  4800025C             b 0x828b7290
+LAB_828b7038:
+  828B7038  54C5077E             rlwinm r5,r6,0x0,0x1d,0x1f
+  828B703C  2F050007             cmpwi cr6,r5,0x7
+  828B7040  409A0088             bne cr6,0x828b70c8
+  828B7044  55484DFC             rlwinm r8,r10,0x9,0x17,0x1e
+  828B7048  7D08A2AE             lhax r8,r8,r20
+  828B704C  2C080000             cmpwi r8,0x0
+  828B7050  40800034             bge 0x828b7084
+  828B7054  3CE00080             lis r7,0x80
+LAB_828b7058:
+  828B7058  7CE55038             and r5,r7,r10
+  828B705C  5508083C             rlwinm r8,r8,0x1,0x0,0x1e
+  828B7060  7CA50034             cntlzw r5,r5
+  828B7064  54E7F87E             rlwinm r7,r7,0x1f,0x1,0x1f
+  828B7068  54A5D97E             rlwinm r5,r5,0x1b,0x5,0x1f
+  828B706C  68A50001             xori r5,r5,0x1
+  828B7070  7D082850             subf r8,r8,r5
+  828B7074  5508083C             rlwinm r8,r8,0x1,0x0,0x1e
+  828B7078  7D08B2AE             lhax r8,r8,r22
+  828B707C  2C080000             cmpwi r8,0x0
+  828B7080  4180FFD8             blt 0x828b7058
+LAB_828b7084:
+  828B7084  7CE8C0AE             lbzx r7,r8,r24
+  828B7088  7D274850             subf r9,r7,r9
+  828B708C  7D4A3830             slw r10,r10,r7
+  828B7090  7D290774             extsb r9,r9
+  828B7094  7D274B79             or. r7,r9,r9
+  828B7098  4181002C             bgt 0x828b70c4
+  828B709C  893F0001             lbz r9,0x1(r31)
+  828B70A0  7CA700D0             neg r5,r7
+  828B70A4  887F0000             lbz r3,0x0(r31)
+  828B70A8  38E70010             addi r7,r7,0x10
+  828B70AC  5529403E             rlwinm r9,r9,0x8,0x0,0x1f
+  828B70B0  3BFF0002             addi r31,r31,0x2
+  828B70B4  7D231B78             or r3,r9,r3
+  828B70B8  7CE90774             extsb r9,r7
+  828B70BC  7C672830             slw r7,r3,r5
+  828B70C0  7CEA5378             or r10,r7,r10
+LAB_828b70c4:
+  828B70C4  38A80007             addi r5,r8,0x7
+LAB_828b70c8:
+  828B70C8  7CC81E70             srawi r8,r6,0x3
+  828B70CC  7D060774             extsb r6,r8
+  828B70D0  2F060002             cmpwi cr6,r6,0x2
+  828B70D4  4099016C             ble cr6,0x828b7240
+  828B70D8  7D065A14             add r8,r6,r11
+  828B70DC  88E82EE4             lbz r7,0x2ee4(r8)
+  828B70E0  2B070003             cmplwi cr6,r7,0x3
+  828B70E4  419800DC             blt cr6,0x828b71c0
+  828B70E8  34E7FFFD             subic. r7,r7,0x3
+  828B70EC  41820064             beq 0x828b7150
+  828B70F0  89082EE4             lbz r8,0x2ee4(r8)
+  828B70F4  7D270774             extsb r7,r9
+  828B70F8  7D030774             extsb r3,r8
+  828B70FC  7D094378             or r9,r8,r8
+  828B7100  7D033850             subf r8,r3,r7
+  828B7104  20E90023             subfic r7,r9,0x23
+  828B7108  39080003             addi r8,r8,0x3
+  828B710C  3869FFFD             subi r3,r9,0x3
+  828B7110  7D090774             extsb r9,r8
+  828B7114  7D473C30             srw r7,r10,r7
+  828B7118  7D284B79             or. r8,r9,r9
+  828B711C  7D4A1830             slw r10,r10,r3
+  828B7120  41810034             bgt 0x828b7154
+  828B7124  893F0001             lbz r9,0x1(r31)
+  828B7128  7C6800D0             neg r3,r8
+  828B712C  8A5F0000             lbz r18,0x0(r31)
+  828B7130  39080010             addi r8,r8,0x10
+  828B7134  5529403E             rlwinm r9,r9,0x8,0x0,0x1f
+  828B7138  3BFF0002             addi r31,r31,0x2
+  828B713C  7D329378             or r18,r9,r18
+  828B7140  7D090774             extsb r9,r8
+  828B7144  7E481830             slw r8,r18,r3
+  828B7148  7D0A5378             or r10,r8,r10
+  828B714C  48000008             b 0x828b7154
+LAB_828b7150:
+  828B7150  38E00000             li r7,0x0
+LAB_828b7154:
+  828B7154  55433E7E             rlwinm r3,r10,0x7,0x19,0x1f
+  828B7158  54E81838             rlwinm r8,r7,0x3,0x0,0x1c
+  828B715C  38E60BC6             addi r7,r6,0xbc6
+  828B7160  7D324B78             or r18,r9,r9
+  828B7164  54E9103A             rlwinm r9,r7,0x2,0x0,0x1d
+  828B7168  7CE3E0AE             lbzx r7,r3,r28
+  828B716C  7CE70774             extsb r7,r7
+  828B7170  7D29582E             lwzx r9,r9,r11
+  828B7174  7CC94214             add r6,r9,r8
+  828B7178  7D27D8AE             lbzx r9,r7,r27
+  828B717C  7D099050             subf r8,r9,r18
+  828B7180  7D4A4830             slw r10,r10,r9
+  828B7184  7D090774             extsb r9,r8
+  828B7188  7D284B79             or. r8,r9,r9
+  828B718C  4181002C             bgt 0x828b71b8
+  828B7190  893F0001             lbz r9,0x1(r31)
+  828B7194  7C6800D0             neg r3,r8
+  828B7198  8A5F0000             lbz r18,0x0(r31)
+  828B719C  39080010             addi r8,r8,0x10
+  828B71A0  5529403E             rlwinm r9,r9,0x8,0x0,0x1f
+  828B71A4  3BFF0002             addi r31,r31,0x2
+  828B71A8  7D329378             or r18,r9,r18
+  828B71AC  7D090774             extsb r9,r8
+  828B71B0  7E481830             slw r8,r18,r3
+  828B71B4  7D0A5378             or r10,r8,r10
+LAB_828b71b8:
+  828B71B8  7D063A14             add r8,r6,r7
+  828B71BC  48000070             b 0x828b722c
+LAB_828b71c0:
+  828B71C0  2B070000             cmplwi cr6,r7,0x0
+  828B71C4  419A0064             beq cr6,0x828b7228
+  828B71C8  89082EE4             lbz r8,0x2ee4(r8)
+  828B71CC  7D284850             subf r9,r8,r9
+  828B71D0  7D034378             or r3,r8,r8
+  828B71D4  21080020             subfic r8,r8,0x20
+  828B71D8  7D290774             extsb r9,r9
+  828B71DC  7D474430             srw r7,r10,r8
+  828B71E0  7D284B79             or. r8,r9,r9
+  828B71E4  7D4A1830             slw r10,r10,r3
+  828B71E8  4181002C             bgt 0x828b7214
+  828B71EC  893F0001             lbz r9,0x1(r31)
+  828B71F0  7C6800D0             neg r3,r8
+  828B71F4  8A5F0000             lbz r18,0x0(r31)
+  828B71F8  39080010             addi r8,r8,0x10
+  828B71FC  5529403E             rlwinm r9,r9,0x8,0x0,0x1f
+  828B7200  3BFF0002             addi r31,r31,0x2
+  828B7204  7D329378             or r18,r9,r18
+  828B7208  7D090774             extsb r9,r8
+  828B720C  7E481830             slw r8,r18,r3
+  828B7210  7D0A5378             or r10,r8,r10
+LAB_828b7214:
+  828B7214  39060BC6             addi r8,r6,0xbc6
+  828B7218  5508103A             rlwinm r8,r8,0x2,0x0,0x1d
+  828B721C  7D08582E             lwzx r8,r8,r11
+  828B7220  7D083A14             add r8,r8,r7
+  828B7224  48000008             b 0x828b722c
+LAB_828b7228:
+  828B7228  39000001             li r8,0x1
+LAB_828b722c:
+  828B722C  80FD0004             lwz r7,0x4(r29)
+  828B7230  80DD0000             lwz r6,0x0(r29)
+  828B7234  90FD0008             stw r7,0x8(r29)
+  828B7238  90DD0004             stw r6,0x4(r29)
+  828B723C  48000014             b 0x828b7250
+LAB_828b7240:
+  828B7240  54C7103A             rlwinm r7,r6,0x2,0x0,0x1d
+  828B7244  80DD0000             lwz r6,0x0(r29)
+  828B7248  7D07E82E             lwzx r8,r7,r29
+  828B724C  7CC7E92E             stwx r6,r7,r29
+LAB_828b7250:
+  828B7250  806B0008             lwz r3,0x8(r11)
+  828B7254  38A50002             addi r5,r5,0x2
+  828B7258  911D0000             stw r8,0x0(r29)
+  828B725C  7CE82050             subf r7,r8,r4
+LAB_828b7260:
+  828B7260  7CE81838             and r8,r7,r3
+  828B7264  2F040101             cmpwi cr6,r4,0x101
+  828B7268  7D08F0AE             lbzx r8,r8,r30
+  828B726C  7D1E21AE             stbx r8,r30,r4
+  828B7270  40980010             bge cr6,0x828b7280
+  828B7274  80CB0004             lwz r6,0x4(r11)
+  828B7278  7CC6F214             add r6,r6,r30
+  828B727C  7D0621AE             stbx r8,r6,r4
+LAB_828b7280:
+  828B7280  34A5FFFF             subic. r5,r5,0x1
+  828B7284  38840001             addi r4,r4,0x1
+  828B7288  38E70001             addi r7,r7,0x1
+  828B728C  4181FFD4             bgt 0x828b7260
+LAB_828b7290:
+  828B7290  7F04D000             cmpw cr6,r4,r26
+  828B7294  4198FCF8             blt cr6,0x828b6f8c
+  828B7298  992B2EB4             stb r9,0x2eb4(r11)
+  828B729C  7C832378             or r3,r4,r4
+  828B72A0  914B2EB0             stw r10,0x2eb0(r11)
+  828B72A4  93EB2B04             stw r31,0x2b04(r11)
+LAB_828b72a8:
+  828B72A8  4805F438             b 0x829166e0
+LAB_828b72ac:
+  828B72AC  3860FFFF             li r3,-0x1
+  828B72B0  4BFFFFF8             b 0x828b72a8
 
 ; 828B72B8  XCOMPRESS::fast_decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:160)
   828B72B8  7D8802A6             mfspr r12,LR
   828B72BC  4805F3C5             bl 0x82916680
+  828B72C0  7F842A14             add r28,r4,r5
+  828B72C4  81C32B08             lwz r14,0x2b08(r3)
+  828B72C8  83A30000             lwz r29,0x0(r3)
+  828B72CC  7C6B1B78             or r11,r3,r3
+  828B72D0  89032EB4             lbz r8,0x2eb4(r3)
+  828B72D4  3B432EB4             addi r26,r3,0x2eb4
+  828B72D8  81432EB0             lwz r10,0x2eb0(r3)
+  828B72DC  3B232EB0             addi r25,r3,0x2eb0
+  828B72E0  83C32B04             lwz r30,0x2b04(r3)
+  828B72E4  3B032B04             addi r24,r3,0x2b04
+  828B72E8  3A430E3C             addi r18,r3,0xe3c
+  828B72EC  3A23233C             addi r17,r3,0x233c
+  828B72F0  3A030018             addi r16,r3,0x18
+  828B72F4  39E30818             addi r15,r3,0x818
+  828B72F8  3A830A18             addi r20,r3,0xa18
+  828B72FC  3A630CB8             addi r19,r3,0xcb8
+  828B7300  3AE30DB4             addi r23,r3,0xdb4
+  828B7304  3AC30E34             addi r22,r3,0xe34
+  828B7308  3B63000C             addi r27,r3,0xc
+  828B730C  7F04E000             cmpw cr6,r4,r28
+  828B7310  409803AC             bge cr6,0x828b76bc
+  828B7314  3D208220             lis r9,-0x7de0
+  828B7318  3AA00010             li r21,0x10
+  828B731C  392926A0             addi r9,r9,0x26a0
+LAB_828b76bc:
+  828B76BC  812B0008             lwz r9,0x8(r11)
+  828B76C0  7C7C2050             subf r3,r28,r4
+  828B76C4  991A0000             stb r8,0x0(r26)
+  828B76C8  7D292038             and r9,r9,r4
+  828B76CC  91590000             stw r10,0x0(r25)
+  828B76D0  93D80000             stw r30,0x0(r24)
+  828B76D4  912B2EB8             stw r9,0x2eb8(r11)
+  828B76D8  4805EFF8             b 0x829166d0
+
+; 828B76E8  XCOMPRESS::decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:380)
+  828B76E8  7D8802A6             mfspr r12,LR
+  828B76EC  4805EFD1             bl 0x829166bc
+  828B76F0  9421FF90             stwu r1,-0x70(r1)
+  828B76F4  7C7D1B78             or r29,r3,r3
+  828B76F8  7C9E2378             or r30,r4,r4
+  828B76FC  7CBF2B78             or r31,r5,r5
+  828B7700  2F040101             cmpwi cr6,r4,0x101
+  828B7704  4098003C             bge cr6,0x828b7740
+  828B7708  20A40101             subfic r5,r4,0x101
+  828B770C  7F05F800             cmpw cr6,r5,r31
+  828B7710  41980008             blt cr6,0x828b7718
+  828B7714  7FE5FB78             or r5,r31,r31
+LAB_828b7718:
+  828B7718  7FC4F378             or r4,r30,r30
+  828B771C  7FA3EB78             or r3,r29,r29
+  828B7720  4BFFF821             bl 0x828b6f40
+  828B7724  7D63F050             subf r11,r3,r30
+  828B7728  907D2EB8             stw r3,0x2eb8(r29)
+  828B772C  7C7E1B78             or r30,r3,r3
+  828B7730  7FEBFA15             add. r31,r11,r31
+  828B7734  4181000C             bgt 0x828b7740
+  828B7738  7FE3FB78             or r3,r31,r31
+  828B773C  48000014             b 0x828b7750
+LAB_828b7740:
+  828B7740  7FE5FB78             or r5,r31,r31
+  828B7744  7FC4F378             or r4,r30,r30
+  828B7748  7FA3EB78             or r3,r29,r29
+  828B774C  4BFFFB6D             bl 0x828b72b8
+LAB_828b7750:
+  828B7750  38210070             addi r1,r1,0x70
+  828B7754  4805EFB8             b 0x8291670c

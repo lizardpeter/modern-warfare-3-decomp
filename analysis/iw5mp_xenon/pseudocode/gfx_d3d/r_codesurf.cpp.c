@@ -23,16 +23,13 @@ void R_BeginCodeSurfs(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   uVar8 = __savegprlr_25();
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x48,0,0xffffffff82000f98,0xffffffff821bb550);
   }
   *(undefined4 *)param_3 = 0;
   if (1 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x4b,0,0xffffffff821bb508,param_2,2);
   }
   if ((int)uVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x4c,0,0xffffffff82000f98,0xffffffff821bb4e4);
   }
   lVar9 = (param_2 & 0x3fffffff) * 4 + -0x7b846988;
@@ -52,14 +49,13 @@ void R_BeginCodeSurfs(undefined8 param_1,ulonglong param_2,ulonglong param_3)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar7 = DAT_84628b00;
-  if (uVar1 != 0) {
-    __restgprlr_25(0);
-    return;
-  }
-  iVar6 = (int)param_2;
-  iVar5 = iVar6 * 0x4c;
-  if (DAT_84628b00 != 0) {
+  if (uVar1 == 0) {
+    iVar6 = (int)param_2;
+    iVar5 = iVar6 * 0x4c;
+    if (DAT_84628b00 == 0) {
+      MyAssertHandler(0xffffffff821bb560,0x5b,0,0xffffffff82000f98,0xffffffff821bb4cc,in_MSR);
+    }
+    iVar7 = DAT_84628b00;
     uVar2 = *(undefined4 *)((int)((param_2 + 0x556 & 0xffffffff) << 2) + DAT_84628b00);
     *(int *)(&DAT_845a1664 + iVar5) = iVar6;
     *(undefined4 *)(&DAT_845a162c + iVar5) = uVar2;
@@ -100,8 +96,8 @@ void R_BeginCodeSurfs(undefined8 param_1,ulonglong param_2,ulonglong param_3)
     __restgprlr_25(1);
     return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821bb560,0x5b,0,0xffffffff82000f98,0xffffffff821bb4cc,in_MSR);
+  __restgprlr_25(0);
+  return;
 }
 
 
@@ -110,15 +106,19 @@ void R_BeginCodeSurfs(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 undefined4 Material_GetTechniqueSet(undefined4 *param_1)
 
 {
+  undefined4 uVar1;
+  
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b93c0,0x58,0,0xffffffff82000f98,0xffffffff82020dcc);
   }
   if (param_1[0x11] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b93c0,0x59,0,0xffffffff821bb488,0xffffffff821bb4a8,*param_1);
+    uVar1 = *(undefined4 *)(param_1[0x11] + 8);
   }
-  return *(undefined4 *)(param_1[0x11] + 8);
+  else {
+    uVar1 = *(undefined4 *)(param_1[0x11] + 8);
+  }
+  return uVar1;
 }
 
 
@@ -136,11 +136,106 @@ void __lvx(void)
 
 // 827231F0  R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
-void R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>(void)
+void R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+               (undefined8 param_1,ulonglong param_2,uint param_3,uint param_4,longlong param_5,
+               ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  ulonglong uVar8;
+  uint *puVar10;
+  longlong lVar9;
+  longlong lVar11;
+  
+  puVar7 = (uint *)__savegprlr_26();
+  if ((param_2 & 0xffffffff) != 0) {
+    lVar11 = (param_6 & 0xfffffff) * 0x10 + param_5 + -0x10;
+    do {
+      uVar1 = *puVar7 >> 0x12;
+      if ((param_3 <= uVar1) && (uVar1 < param_4)) {
+        uVar8 = param_6;
+        uVar6 = param_6 & 0xffffffff;
+        for (lVar9 = lVar11; (uVar6 != 0 && (puVar10 = (uint *)lVar9, uVar1 < *puVar10 >> 0x12));
+            lVar9 = lVar9 + -0x10) {
+          uVar8 = uVar8 - 1;
+          puVar10[4] = *puVar10;
+          puVar10[5] = puVar10[1];
+          puVar10[6] = puVar10[2];
+          puVar10[7] = puVar10[3];
+          uVar6 = uVar8;
+        }
+        iVar5 = (int)uVar8 * 0x10;
+        uVar1 = puVar7[1];
+        param_6 = param_6 + 1;
+        uVar2 = puVar7[2];
+        iVar4 = iVar5 + (int)param_5;
+        uVar3 = puVar7[3];
+        lVar11 = lVar11 + 0x10;
+        *(uint *)(iVar5 + (int)param_5) = *puVar7;
+        *(uint *)(iVar4 + 4) = uVar1;
+        *(uint *)(iVar4 + 8) = uVar2;
+        *(uint *)(iVar4 + 0xc) = uVar3;
+      }
+      param_2 = param_2 - 1;
+      puVar7 = puVar7 + 4;
+    } while (param_2 != 0);
+  }
+  __restgprlr_26(param_6);
+  return;
+}
+
+
+// 82723C80  Material_GetTechnique  (gfx_d3d/r_material_inline.h:113)
+
+undefined4 Material_GetTechnique(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = Material_GetTechniqueSet();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  }
+  return *(undefined4 *)((param_2 + 3) * 4 + iVar1);
+}
+
+
+// 827232C0  R_CopySortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:128)
+
+int R_CopySortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+              (uint *param_1,ulonglong param_2,uint param_3,uint param_4,int param_5,int param_6)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *puVar4;
+  
+  if ((param_2 & 0xffffffff) != 0) {
+    puVar4 = (uint *)(param_6 * 0x10 + param_5);
+    do {
+      if ((param_3 <= *param_1 >> 0x12) && (*param_1 >> 0x12 < param_4)) {
+        param_6 = param_6 + 1;
+        uVar1 = param_1[1];
+        uVar2 = param_1[2];
+        uVar3 = param_1[3];
+        *puVar4 = *param_1;
+        puVar4[1] = uVar1;
+        puVar4[2] = uVar2;
+        puVar4[3] = uVar3;
+        puVar4 = puVar4 + 4;
+      }
+      param_2 = param_2 - 1;
+      param_1 = param_1 + 4;
+    } while (param_2 != 0);
+  }
+  return param_6;
 }
 
 
@@ -153,7 +248,6 @@ bool Material_HasTechnique(undefined8 param_1,int param_2)
   
   iVar1 = Material_GetTechniqueSet();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
   }
   return *(int *)((param_2 + 3) * 4 + iVar1) != 0;
@@ -162,31 +256,168 @@ bool Material_HasTechnique(undefined8 param_1,int param_2)
 
 // 82723D68  R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
-void R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>(void)
+void R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined2 uVar1;
+  undefined2 uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  
+  uVar4 = __savegprlr_27();
+  iVar3 = (int)((param_3 & 0xffffffff) << 1);
+  uVar1 = *(undefined2 *)((int)&DAT_84616480 + iVar3);
+  uVar2 = *(undefined2 *)((int)&DAT_84616482 + iVar3);
+  R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>();
+  uVar5 = R_CopySortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>(uVar4,param_2,uVar1,uVar2);
+  R_InsertSortSurfsInRange<GfxSortCodeSurfsInterface,GfxCodeSurf>
+            (uVar4,param_2,uVar2,0x1660,param_4,uVar5);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82722C60  R_EndCodeSurfs  (gfx_d3d/r_codesurf.cpp:158)
 
-void R_EndCodeSurfs(void)
+void R_EndCodeSurfs(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_26();
+  puVar1[0x12] = 0;
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821bb560,0xa8,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  }
+  *(undefined4 *)puVar1[7] = *puVar1;
+  *(undefined4 *)(puVar1[0x11] * 0x5c + DAT_84628b00 + 0x136c) = puVar1[1] << 5;
+  *(undefined4 *)(puVar1[0x11] * 0x5c + DAT_84628b00 + 0x1340) = puVar1[2];
+  *(undefined4 *)((puVar1[0x11] + 0x556) * 4 + DAT_84628b00) = puVar1[3];
+  if (*(int *)(&DAT_847b9678 + puVar1[0x11] * 4) != (int)param_2) {
+    MyAssertHandler(0xffffffff821bb560,0xbc,0,0xffffffff821bb5a8,
+                    *(undefined4 *)(&DAT_847b9678 + puVar1[0x11] * 4),param_2);
+  }
+  *(undefined4 *)(&DAT_847b9678 + puVar1[0x11] * 4) = 0;
+  __restgprlr_26();
+  return;
+}
+
+
+// 82722D70  R_ReserveCodeSurfVerts  (gfx_d3d/r_codesurf.cpp:195)
+
+void R_ReserveCodeSurfVerts(undefined8 param_1,longlong param_2,undefined2 *param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff821bb560,0xc4,0,0xffffffff82000f98,0xffffffff821bb5ec);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x28) < ((ulonglong)*(uint *)(iVar1 + 4) + param_2 & 0xffffffff))
+  {
+    R_WarnOncePerFrame(*(undefined4 *)(iVar1 + 0x38));
+    __restgprlr_29(0);
+    return;
+  }
+  *param_3 = (short)*(uint *)(iVar1 + 4);
+  *(int *)(iVar1 + 4) = (int)param_2 + *(int *)(iVar1 + 4);
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 82722E00  R_ReturnCodeSurfVerts  (gfx_d3d/r_codesurf.cpp:215)
+
+void R_ReturnCodeSurfVerts(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff821bb560,0xd8,0,0xffffffff82000f98,0xffffffff821bb5ec);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 4) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bb560,0xd9,0,0xffffffff821bb608,(ulonglong)*(uint *)(iVar1 + 4),
+                    param_2);
+  }
+  *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) - (int)param_2;
+  __restgprlr_29();
+  return;
+}
+
+
+// 82722E88  R_ReserveCodeSurfIndices  (gfx_d3d/r_codesurf.cpp:226)
+
+void R_ReserveCodeSurfIndices(undefined8 param_1,ulonglong param_2,int *param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff821bb560,0xe3,0,0xffffffff82000f98,0xffffffff821bb5ec);
+  }
+  if ((param_2 & 1) != 0) {
+    MyAssertHandler(0xffffffff821bb560,0xe4,0,0xffffffff82000f98,0xffffffff821bb638);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x2c) < (*(uint *)(iVar1 + 8) + param_2 & 0xffffffff)) {
+    R_WarnOncePerFrame(*(undefined4 *)(iVar1 + 0x3c));
+    __restgprlr_27(0);
+    return;
+  }
+  *param_3 = *(uint *)(iVar1 + 8) * 2 + *(int *)(iVar1 + 0x14);
+  *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + (int)param_2;
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 82722F50  R_ReserveCodeSurfBuffers  (gfx_d3d/r_codesurf.cpp:243)
 
-void R_ReserveCodeSurfBuffers(void)
+void R_ReserveCodeSurfBuffers
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               undefined2 *param_5,int *param_6,uint *param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  
+  iVar1 = __savegprlr_23();
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff821bb560,0xf4,0,0xffffffff82000f98,0xffffffff821bb5ec);
+  }
+  if ((param_3 & 1) != 0) {
+    MyAssertHandler(0xffffffff821bb560,0xf5,0,0xffffffff82000f98,0xffffffff821bb638);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x28) < ((ulonglong)*(uint *)(iVar1 + 4) + param_2 & 0xffffffff))
+  {
+    R_WarnOncePerFrame(*(undefined4 *)(iVar1 + 0x38));
+    __restgprlr_23(0);
+    return;
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x2c) < (*(uint *)(iVar1 + 8) + param_3 & 0xffffffff)) {
+    R_WarnOncePerFrame(*(undefined4 *)(iVar1 + 0x3c));
+    __restgprlr_23(0);
+    return;
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x30) < (param_4 + *(uint *)(iVar1 + 0xc) & 0xffffffff)) {
+    R_WarnOncePerFrame(*(undefined4 *)(iVar1 + 0x40));
+    __restgprlr_23(0);
+    return;
+  }
+  *param_5 = (short)*(uint *)(iVar1 + 4);
+  *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) + (int)param_2;
+  *param_6 = *(int *)(iVar1 + 8) * 2 + *(int *)(iVar1 + 0x14);
+  *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + (int)param_3;
+  if ((param_4 & 0xffffffff) != 0) {
+    *param_7 = *(uint *)(iVar1 + 0xc) & 0xffff;
+    *(int *)(iVar1 + 0xc) = (int)param_4 + *(int *)(iVar1 + 0xc);
+  }
+  __restgprlr_23(1);
+  return;
 }
 
 
@@ -196,7 +427,6 @@ longlong R_GetCodeSurfArgs(int param_1,ulonglong param_2)
 
 {
   if (*(int *)(param_1 + 0x48) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x11d,0,0xffffffff82000f98,0xffffffff821bb5ec);
   }
   return (ulonglong)*(uint *)(param_1 + 0x20) + (param_2 & 0xfffffff) * 0x10;
@@ -235,17 +465,14 @@ void R_AddCodeSurf(undefined8 param_1,undefined8 param_2,uint param_3,ulonglong 
   
   puVar5 = (uint *)__savegprlr_22();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x132,0,0xffffffff82000f98,0xffffffff821bb904);
   }
   if (puVar5[0x12] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x133,0,0xffffffff82000f98,0xffffffff821bb5ec);
   }
   puVar6 = (undefined4 *)Material_FromHandle(param_2);
   puVar7 = (undefined4 *)R_GetSortedMaterial(*(ulonglong *)(puVar6 + 2) >> 0x1d & 0xfff);
   if (puVar7 != puVar6) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x138,0,0xffffffff82000f98,0xffffffff821bb8a8);
   }
   cVar9 = *(char *)((int)puVar6 + 0x41);
@@ -270,7 +497,6 @@ LAB_82723424:
     } while (cVar9 == cVar2);
     if (cVar9 != cVar2) {
       uVar4 = va(0xffffffff821bb88c);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821bb560,0x142,0,0xffffffff820011f4,0xffffffff821bb768,uVar4);
     }
   }
@@ -279,7 +505,6 @@ LAB_82723494:
     cVar9 = Material_HasTechnique(puVar6,DAT_845aa510);
     if ((cVar9 == '\0') || ((*(byte *)(puVar6 + 1) & 2) != 0)) {
       if (DAT_845aa714 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821bb560,0x149,0,0xffffffff82000f98,0xffffffff821bb758);
       }
       if (*(char *)(DAT_845aa714 + 0xc) == '\0') {
@@ -300,7 +525,6 @@ LAB_82723494:
   uVar12 = *(ulonglong *)(puVar6 + 2);
   puVar13 = (uint *)(uVar3 * 0x10 + puVar5[6]);
   if ((uVar12 >> 0x29 & 3) != 3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x15c,1,0xffffffff82000f98,0xffffffff821bb72c);
   }
   puVar13[2] = param_3;
@@ -309,11 +533,9 @@ LAB_82723494:
   puVar13[1] = (uint)((param_4 & 0xffffffff) / 3);
   *puVar13 = *puVar13 & 0xfffcff00 | 0xe;
   if (((param_6 & 0xffffffff) == 0) && ((param_5 & 0xffffffff) != 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x168,0,0xffffffff82000f98,0xffffffff821bb70c);
   }
   if ((ulonglong)puVar5[0xc] <= (param_5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bb560,0x169,0,0xffffffff821bb6c8,param_5);
   }
   uVar8 = truncate_cast<unsigned_short>(param_6);
@@ -328,11 +550,69 @@ LAB_82723634:
 
 // 82723640  R_AddCode3DQuadSurf  (gfx_d3d/r_codesurf.cpp:370)
 
-void R_AddCode3DQuadSurf(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_AddCode3DQuadSurf(undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
+                        ulonglong param_5,float *param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  short sVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs39 [16];
+  undefined4 in_stack_0000006c;
+  undefined4 in_stack_00000074;
+  undefined4 local_d0;
+  undefined1 auStack_cc [4];
+  undefined4 local_c8;
+  float local_c4;
+  float local_c0;
+  float local_b8 [46];
+  
   __savegprlr_26();
+  iVar4 = __savefpr_21();
+  dVar6 = extraout_f1;
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bb560,0x17c);
+  }
+  sVar1 = (short)param_4;
+  local_d0 = CONCAT22(sVar1,sVar1 + 1);
+  uVar2 = local_d0;
+  local_d0 = CONCAT22(sVar1 + 3,sVar1 + 3);
+  uVar3 = local_d0;
+  local_d0 = CONCAT22(sVar1 + 1,sVar1 + 2);
+  puVar5 = (undefined4 *)param_5;
+  *puVar5 = uVar2;
+  puVar5[2] = local_d0;
+  puVar5[1] = uVar3;
+  R_AddCodeSurf(iVar4,in_stack_00000074,param_5,6,0,0,0xffffffff821bb910);
+  dVar6 = (double)(float)(dVar6 * 0.5);
+  dVar7 = (double)(float)(param_2 * 0.5);
+  R_ConvertColorToBytes(in_stack_0000006c,auStack_cc);
+  local_c4 = (float)dVar6;
+  local_c0 = (float)dVar7;
+  iVar4 = *(int *)(iVar4 + 0x10);
+  local_c8 = 0;
+  MatrixTransformVector(&local_c8,param_7,local_b8);
+  altv207_13(in_vs32,in_vs39);
+  *(float *)(((uint)((param_4 & 0xffffffff) << 5) & 0x1fffe0) + iVar4) = *param_6 + local_b8[0];
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82723120  R_CodeSurfVertIter_Begin  (gfx_d3d/r_codesurf.cpp:451)
+
+longlong R_CodeSurfVertIter_Begin(int param_1,ulonglong param_2)
+
+{
+  return (param_2 & 0xffff) * 0x20 + (ulonglong)*(uint *)(param_1 + 0x10);
 }
 
 
@@ -347,11 +627,24 @@ longlong R_CodeSurfArgsIter_Begin(int param_1,ulonglong param_2)
 
 // 82723140  R_CodeSurfAssertLimits  (gfx_d3d/r_codesurf.cpp:469)
 
-void R_CodeSurfAssertLimits(void)
+void R_CodeSurfAssertLimits
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if ((ulonglong)*(uint *)(iVar1 + 0x2c) != (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bb560,0x1d6,0,0xffffffff82000f98,0xffffffff821bb69c);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x28) != (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bb560,0x1d7,0,0xffffffff82000f98,0xffffffff821bb674);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0x24) != (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bb560,0x1d8,0,0xffffffff82000f98,0xffffffff821bb64c);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -366,10 +659,51 @@ undefined4 R_CodeSurfIndexStart(int param_1)
 
 // 827239D8  R_EmitCodeSurfs  (gfx_d3d/r_codesurf.cpp:501)
 
-void R_EmitCodeSurfs(void)
+void R_EmitCodeSurfs(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  ulonglong uVar2;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1[1] != 0) {
+    MyAssertHandler(0xffffffff821bb560,0x1f6,0,0xffffffff82000f98,0xffffffff821bba14);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff821bb560,0x1f7,0,0xffffffff82000f98,0xffffffff821bb9f8);
+  }
+  if (1 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bb560,0x1f8,0,0xffffffff821bb508,param_3,2);
+  }
+  if ((int)param_3 == 0) {
+    uVar2 = (ulonglong)DAT_847b9688;
+    if ((param_2 & 0xffffffff) < uVar2) {
+      MyAssertHandler(0xffffffff821bb560,0x1fc,0,0xffffffff821bb9c4,uVar2,param_2);
+      uVar2 = (ulonglong)DAT_847b9688;
+    }
+    uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
+                      (0xffffffff8476a200,uVar2,*(undefined4 *)(DAT_8461658c + 0x2c),*piVar1);
+    piVar1[1] = (int)uVar2;
+    if ((uVar2 & 0xffffffff) != (ulonglong)DAT_847b9688) {
+      MyAssertHandler(0xffffffff821bb560,0x1fe,0,0xffffffff821bb98c,uVar2);
+    }
+    DAT_847b9688 = 0;
+    __restgprlr_27();
+    return;
+  }
+  uVar2 = (ulonglong)DAT_847b9684;
+  if ((param_2 & 0xffffffff) < uVar2) {
+    MyAssertHandler(0xffffffff821bb560,0x203,0,0xffffffff821bb954,uVar2,param_2);
+    uVar2 = (ulonglong)DAT_847b9684;
+  }
+  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortCodeSurfsInterface,GfxCodeSurf>
+                    (0xffffffff84762200,uVar2,*(undefined4 *)(DAT_8461658c + 0x2c),*piVar1);
+  piVar1[1] = (int)uVar2;
+  if ((uVar2 & 0xffffffff) != (ulonglong)DAT_847b9684) {
+    MyAssertHandler(0xffffffff821bb560,0x205,0,0xffffffff821bb918,uVar2);
+  }
+  DAT_847b9684 = 0;
+  __restgprlr_27();
+  return;
 }
 

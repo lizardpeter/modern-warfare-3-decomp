@@ -2,10 +2,17 @@
 
 // 828B4F00  XapiFormatObjectAttributes  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapiformatobjectattributes.c:47)
 
-void XapiFormatObjectAttributes(void)
+void XapiFormatObjectAttributes(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  RtlInitAnsiString(param_2,param_3);
+  puVar1[1] = (int)param_2;
+  *puVar1 = 0xfffffffc;
+  puVar1[2] = 0x80;
+  __restgprlr_29(puVar1);
+  return;
 }
 

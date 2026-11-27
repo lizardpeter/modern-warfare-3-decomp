@@ -44,12 +44,30 @@ void bdAddr__set(int param_1,undefined8 param_2,undefined2 param_3)
 }
 
 
+// 828F6FD0  bdAddr::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:91)
+
+void bdAddr__getAddress(void)
+
+{
+  return;
+}
+
+
 // 828F6FD8  bdAddr::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:96)
 
 void bdAddr__getAddress(void)
 
 {
   return;
+}
+
+
+// 828F6FE0  bdAddr::getPort  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdaddr.cpp:106)
+
+undefined2 bdAddr__getPort(int param_1)
+
+{
+  return *(undefined2 *)(param_1 + 4);
 }
 
 

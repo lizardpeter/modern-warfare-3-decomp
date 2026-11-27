@@ -30,15 +30,15 @@ Function inventory pending.
 
 | status | functions | reached |
 |---|---:|---|
-| located | 83 | ████████████████████ 100.00% |
-| named | 1,312 | ████████████████████ 99.72% |
-| typed | 28,517 | ███████████████████░ 95.34% |
+| located | 110 | ████████████████████ 100.00% |
+| named | 1,312 | ████████████████████ 99.63% |
+| typed | 28,517 | ███████████████████░ 95.25% |
 | decompiled | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | compiles | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | matches | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | integrated | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 
-29,912 functions known. Reconstructed (decompiled or better): 0.
+29,939 functions known. Reconstructed (decompiled or better): 0.
 
 ## iw5mp_xenon_ship
 

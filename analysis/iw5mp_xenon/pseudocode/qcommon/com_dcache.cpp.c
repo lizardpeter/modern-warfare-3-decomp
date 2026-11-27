@@ -135,33 +135,159 @@ undefined8 DCache_IsCached(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 824D7338  DCache_StreamToCache  (qcommon/com_dcache.cpp:215)
+// 824D7210  DCache_WriteToCache  (qcommon/com_dcache.cpp:157)
 
-void DCache_StreamToCache(void)
+void DCache_WriteToCache(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar5;
+  int iVar4;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_27();
+  cVar5 = DCache_IsHDDPresent();
+  if (cVar5 != '\0') {
+    iVar4 = DCache_IsCachedInternal(uVar2,param_3);
+    if (iVar4 != 1) {
+      if (iVar4 != 2) {
+        if (iVar4 == 3) {
+          Com_PrintWarning(0x10,0xffffffff82083b40);
+          __restgprlr_27(0);
+          return;
+        }
+        Com_PrintError(0x10,0xffffffff82083b60);
+        goto LAB_824d7270;
+      }
+      Com_PrintWarning(0x10,0xffffffff82083b08);
+      DCache_TOC_FlushTOC();
+    }
+    bVar1 = (int)param_2 == 0;
+    if (bVar1) {
+      param_2 = 0x10000000;
+    }
+    uVar3 = DCache_TOC_Allocate(uVar2,param_2,param_3);
+    if ((int)uVar3 != 4) {
+      Com_PrintError(0x10,0xffffffff82083ad8,uVar3);
+      __restgprlr_27(0);
+      return;
+    }
+    if (!bVar1) {
+      cVar5 = DCache_IO_WriteToCache(uVar2,param_3,param_2,param_4);
+      if (cVar5 == '\0') goto LAB_824d7270;
+      DCache_TOC_GetTOC();
+      DCache_IO_SerializeTOC();
+    }
+    __restgprlr_27(1);
+    return;
+  }
+LAB_824d7270:
+  __restgprlr_27(0);
+  return;
+}
+
+
+// 824D7338  DCache_StreamToCache  (qcommon/com_dcache.cpp:215)
+
+void DCache_StreamToCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  
+  uVar1 = __savegprlr_27();
+  cVar2 = DCache_IsHDDPresent();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0xd8,0,0xffffffff82000f98,0xffffffff82083c0c);
+  }
+  DCache_IO_StreamToCache(uVar1,param_2,param_3,param_4,param_5);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824D73B8  DCache_ReadFromCache  (qcommon/com_dcache.cpp:233)
 
-void DCache_ReadFromCache(void)
+void DCache_ReadFromCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 != '\0') {
+    iVar2 = DCache_IsCachedInternal(uVar1,param_3);
+    if (iVar2 == 2) {
+      cVar3 = DCache_IO_ReadFromCache(uVar1,param_3,param_2,param_4);
+      if (cVar3 == '\0') {
+        Com_PrintError(0x10,0xffffffff82083c60,uVar1);
+        DCache_TOC_FlushTOC();
+        __restgprlr_27(0);
+        return;
+      }
+      Com_Printf(0x10,0xffffffff82083c24);
+      __restgprlr_27(1);
+      return;
+    }
+    if ((iVar2 != 3) &&
+       (MyAssertHandler(0xffffffff82083bc8,0xf4,0,0xffffffff82000f98,0xffffffff82083d18), iVar2 != 3
+       )) {
+      Com_PrintError(0x10,0xffffffff82083cb8);
+      __restgprlr_27(0);
+      return;
+    }
+    Com_PrintWarning(0x10,0xffffffff82083b40);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 824D74C8  DCache_GetFileIndex  (qcommon/com_dcache.cpp:271)
 
-void DCache_GetFileIndex(void)
+void DCache_GetFileIndex(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  char cVar3;
+  int iVar2;
+  longlong lVar4;
+  int *piVar5;
+  
+  lVar1 = __savegprlr_28();
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x110,0,0xffffffff82000f98,0xffffffff82083c0c);
+  }
+  iVar2 = DCache_TOC_GetTOC();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x112,0,0xffffffff82000f98,0xffffffff82083d58);
+  }
+  else {
+    lVar4 = 0;
+    if (0 < *(int *)(iVar2 + 0xad08)) {
+      piVar5 = (int *)(iVar2 + 0x10);
+      while ((*(longlong *)(piVar5 + -2) != lVar1 || (*piVar5 != param_2))) {
+        lVar4 = lVar4 + 1;
+        piVar5 = piVar5 + 0x46;
+        if (*(int *)(iVar2 + 0xad08) <= (int)lVar4) {
+          __restgprlr_28(0xffffffffffffffff);
+          return;
+        }
+      }
+      __restgprlr_28(lVar4);
+      return;
+    }
+  }
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
@@ -199,21 +325,90 @@ void DCache_TranscodeEnd(void)
 
 // 824D7628  DCache_UploadDataCallbackTranscode  (qcommon/com_dcache.cpp:312)
 
-void DCache_UploadDataCallbackTranscode(void)
+void DCache_UploadDataCallbackTranscode(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char cVar2;
+  
+  uVar1 = __savegprlr_27();
+  cVar2 = DCache_IsHDDPresent();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x13b,0,0xffffffff82000f98,0xffffffff82083c0c);
+  }
+  if ((ulonglong)DAT_835f15fc < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82083bc8,0x13c,0,0xffffffff82000f98,0xffffffff82083d60);
+  }
+  DCache_Throttle(param_3);
+  Sys_Sleep();
+  WebmTranscode__Step(0xffffffff848764a8,uVar1,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824D76D8  DCache_UploadDataCallback  (qcommon/com_dcache.cpp:328)
 
-void DCache_UploadDataCallback(void)
+void DCache_UploadDataCallback(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar3;
+  int local_40 [16];
+  
+  uVar2 = __savegprlr_26();
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82083bc8,0x149,0,0xffffffff82000f98,0xffffffff82083c0c);
+  }
+  bVar1 = (param_3 & 0xffffffff) == (ulonglong)DAT_835f15fc;
+  if ((ulonglong)DAT_835f15fc < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82083bc8,0x14a,0,0xffffffff82000f98,0xffffffff82083d60);
+    bVar1 = (param_3 & 0xffffffff) == (ulonglong)DAT_835f15fc;
+  }
+  if (bVar1) {
+    Com_Printf(0x10,0xffffffff82083dd0,param_3);
+  }
+  else {
+    if ((ulonglong)DAT_835f15fc < (param_2 + param_3 & 0xffffffff)) {
+      Com_Printf(0x10,0xffffffff82083db0);
+      param_2 = DAT_835f15fc - param_3;
+    }
+    DCache_Throttle(param_3);
+    Sys_Sleep();
+    cVar3 = DCache_IO_ReadFromCacheByOffset
+                      (DAT_835f15f0,DAT_835f1600,param_3,param_2 + param_3,uVar2,local_40);
+    if (cVar3 != '\0') {
+      if (local_40[0] < 1) {
+        MyAssertHandler(0xffffffff82083bc8,0x160,0,0xffffffff82000f98,0xffffffff82083da0);
+      }
+      if (local_40[0] == 0) {
+        DAT_835f1604 = 0;
+        DCache_TOC_FlushTOC();
+      }
+      __restgprlr_26(local_40[0]);
+      return;
+    }
+  }
+  DAT_835f1604 = 0;
+  DCache_TOC_FlushTOC();
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 824D7838  DCache_GetUploadFileInformation  (qcommon/com_dcache.cpp:368)
+
+void DCache_GetUploadFileInformation(undefined8 *param_1,undefined4 *param_2)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = DAT_835f15fc;
+  *param_1 = DAT_835f15f0;
+  *param_2 = uVar1;
+  return;
 }
 
 
@@ -230,11 +425,55 @@ void DCache_ClearStreaming(void)
 
 // 824D7870  DCache_UploadFromCache  (qcommon/com_dcache.cpp:382)
 
-void DCache_UploadFromCache(void)
+void DCache_UploadFromCache
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x17f,0,0xffffffff82000f98,0xffffffff82021a7c);
+  }
+  iVar2 = DCache_TOC_GetTOC();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82083bc8,0x180,0,0xffffffff82000f98,0xffffffff82083e4c);
+  }
+  cVar3 = DCache_IsHDDPresent();
+  if (cVar3 != '\0') {
+    if (DAT_835f1604 == '\0') {
+      DAT_835f15f8 = DCache_GetFileIndex(param_2,param_3);
+      if (DAT_835f15f8 != -1) {
+        iVar2 = DCache_TOC_GetTOC();
+        DAT_835f1600 = (undefined4)param_3;
+        DAT_835f15fc = *(undefined4 *)(iVar2 + DAT_835f15f8 * 0x118 + 0x14);
+        iVar2 = (int)param_4;
+        DAT_835f15f0 = param_2;
+        *(undefined4 *)(iVar2 + 8) = DAT_835f15fc;
+        if (*(char *)(DAT_8484f0cc + 0xc) == '\0') {
+          WebmTranscode__Start(0xffffffff848764a8);
+          *(code **)(iVar2 + 0x28) = DCache_UploadDataCallbackTranscode;
+        }
+        else {
+          *(code **)(iVar2 + 0x28) = DCache_UploadDataCallback;
+        }
+        DAT_835f1610 = Sys_Milliseconds();
+        iVar2 = LiveStorage_CS_WriteFile(uVar1,param_4);
+        if (iVar2 != 0) {
+          DAT_835f1604 = 1;
+          __restgprlr_26(1);
+          return;
+        }
+      }
+    }
+    else {
+      Com_PrintError(0x10,0xffffffff82083df0,param_2,DAT_835f15f0);
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 

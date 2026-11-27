@@ -2,30 +2,227 @@
 
 // 828AB4F8  XapiShowErrorAndWait  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:27)
 
-void XapiShowErrorAndWait(void)
+void XapiShowErrorAndWait(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 in_stack_0000001c;
+  int local_50 [2];
+  undefined4 local_48;
+  undefined4 local_40;
+  undefined1 auStack_3c [8];
+  undefined4 local_34 [13];
+  
+  uVar1 = __savegprlr_29();
+  local_40 = 0;
+  in_stack_0000001c = param_2;
+  memset(auStack_3c,0,0x18);
+  local_48 = 0;
+  iVar2 = NtCreateEvent(local_34,0,1,0);
+  if (-1 < iVar2) {
+    local_50[0] = XamShowMessageBoxUIEx(0xff,0,uVar1,1,&stack0x0000001c,0,1,param_3);
+    if (local_50[0] == 0x3e5) {
+      XGetOverlappedResult(&local_40,local_50,1);
+    }
+    NtClose(local_34[0]);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 828AB5B8  XapiLookupString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:67)
 
-void XapiLookupString(void)
+void XapiLookupString(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  undefined2 *puVar7;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = 0;
+  lVar6 = -0x7ddfe478;
+  do {
+    uVar4 = (ulonglong)*(ushort *)lVar6;
+    lVar6 = lVar6 + 2;
+    if (uVar2 == uVar1) {
+      uVar5 = 0;
+      if (uVar4 != 0) {
+        lVar3 = param_2 + -2;
+        do {
+          if ((param_3 - 1U & 0xffffffff) <= (uVar5 & 0xffffffff)) break;
+          puVar7 = (undefined2 *)lVar6;
+          uVar5 = uVar5 + 1;
+          lVar6 = lVar6 + 2;
+          lVar3 = lVar3 + 2;
+          *(undefined2 *)lVar3 = *puVar7;
+        } while ((uVar5 & 0xffffffff) < uVar4);
+      }
+      *(undefined2 *)((int)((uVar5 & 0xffffffff) << 1) + (int)param_2) = 0;
+    }
+    else {
+      lVar6 = uVar4 * 2 + lVar6;
+    }
+    uVar2 = uVar2 + 1;
+    if (uVar1 < uVar2) {
+      __restgprlr_29();
+      return;
+    }
+  } while( true );
+}
+
+
+// 828AB658  XapiPAL50Incompatible  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:101)
+
+undefined8 XapiPAL50Incompatible(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined1 auStack_2d0 [4];
+  uint local_2cc;
+  uint local_2c8 [2];
+  undefined4 local_2c0 [12];
+  undefined4 local_290 [12];
+  undefined2 local_260;
+  undefined1 auStack_25e [62];
+  undefined2 local_220;
+  undefined1 auStack_21e [518];
+  
+  uVar3 = 0;
+  iVar1 = XexCheckExecutablePrivilege(10);
+  if (((((iVar1 != 0) && (iVar1 = XGetAVPack(), iVar1 != 3)) && (iVar1 != 6)) &&
+      ((iVar1 != 8 && (iVar1 != 4)))) &&
+     ((iVar1 = ExGetXConfigSetting(2,2,&local_2cc,4,auStack_2d0), iVar1 == 0 &&
+      ((local_2cc & 0xff00) == 0x300)))) {
+    iVar1 = ExGetXConfigSetting(3,10,local_2c8,4,auStack_2d0);
+    if (iVar1 == 0) {
+      if (((local_2c8[0] & 0x800000) != 0) || ((local_2c8[0] & 0x400000) == 0)) {
+        uVar2 = XGetLanguage();
+        local_220 = 0;
+        memset(auStack_21e,0,0x1fe);
+        local_260 = 0;
+        memset(auStack_25e,0,0x3e);
+        local_290[0] = 0;
+        local_2c0[0] = 9;
+        local_2c0[1] = 9;
+        local_2c0[2] = 0xd;
+        local_2c0[3] = 0xb;
+        local_2c0[4] = 10;
+        local_2c0[5] = 0x10;
+        local_2c0[6] = 0xc;
+        local_2c0[7] = 0xe;
+        local_2c0[8] = 0x11;
+        local_2c0[9] = 0xf;
+        local_290[2] = 4;
+        local_290[3] = 2;
+        local_290[4] = 1;
+        local_290[1] = 0;
+        local_290[5] = 7;
+        local_290[6] = 3;
+        local_290[7] = 5;
+        local_290[8] = 8;
+        local_290[9] = 6;
+        if (9 < uVar2) {
+          uVar2 = 1;
+        }
+        XapiLookupString(local_2c0[uVar2],&local_220,0x100);
+        XapiLookupString(local_290[uVar2],&local_260,0x20);
+        XapiShowErrorAndWait(&local_220,&local_260,1);
+        uVar3 = 1;
+      }
+    }
+  }
+  return uVar3;
 }
 
 
 // 828AB848  mainCRTStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:209)
 
-void mainCRTStartup(void)
+LONG mainCRTStartup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  int iVar2;
+  _EXCEPTION_POINTERS *ExceptionInfo;
+  LONG LVar3;
+  char **ppcVar4;
+  char cVar5;
+  char *pcVar6;
+  longlong lVar7;
+  char *local_198;
+  char *local_180 [20];
+  char local_130 [304];
+  
   __savegprlr_28();
+  DAT_84897ec8 = 0xffffffff;
+  DAT_84897ecc = 0xffffffff;
+  XapiInitProcess();
+  XapiCallThreadNotifyRoutines(1);
+  iVar2 = XapiPAL50Incompatible();
+  if (iVar2 != 0) {
+    XamTerminateTitle();
+  }
+  iVar2 = _mtinit();
+  rtinit(iVar2);
+  _cinit(1);
+  if (DAT_848957e0 == 0) {
+    ppcVar4 = (char **)0x0;
+    iVar2 = 0;
+  }
+  else {
+    ppcVar4 = local_180;
+    iVar2 = 0;
+    local_198 = GetCommandLineA();
+    if (local_198 != (LPSTR)0x0) {
+      pcVar6 = local_130;
+      while( true ) {
+        cVar5 = *local_198;
+        while( true ) {
+          lVar7 = (longlong)cVar5;
+          if ((lVar7 == 0) || ((cVar5 != ' ' && (cVar5 != '\t')))) break;
+          *pcVar6 = '\0';
+          pcVar6 = pcVar6 + 1;
+          local_198 = local_198 + 1;
+          cVar5 = *local_198;
+        }
+        if (cVar5 == '\0') break;
+        *ppcVar4 = pcVar6;
+        iVar2 = iVar2 + 1;
+        ppcVar4 = ppcVar4 + 1;
+        bVar1 = false;
+        do {
+          if ((int)lVar7 == 0x22) {
+            bVar1 = !bVar1;
+          }
+          else {
+            *pcVar6 = cVar5;
+            pcVar6 = pcVar6 + 1;
+          }
+          local_198 = local_198 + 1;
+          cVar5 = *local_198;
+          lVar7 = (longlong)cVar5;
+        } while ((lVar7 != 0) && ((bVar1 || ((cVar5 != ' ' && (cVar5 != '\t'))))));
+        if ((cVar5 == '\0') || (0x10 < iVar2)) break;
+      }
+      *pcVar6 = '\0';
+    }
+    *ppcVar4 = (char *)0x0;
+    ppcVar4[1] = (char *)0x0;
+    ppcVar4 = local_180;
+  }
+  iVar2 = main(iVar2,ppcVar4,(char **)0x0);
+  _cexit();
+  DbgPrint(0xffffffff822025f8,iVar2);
+  ExceptionInfo = (_EXCEPTION_POINTERS *)XamTerminateTitle();
+  LVar3 = UnhandledExceptionFilter(ExceptionInfo);
+  return LVar3;
 }
 

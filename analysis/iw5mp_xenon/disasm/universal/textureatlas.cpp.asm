@@ -202,6 +202,89 @@ LAB_82613284:
 ; 82613318  TextureAtlas_GetCoords_ByIndex  (universal/textureatlas.cpp:52)
   82613318  7D8802A6             mfspr r12,LR
   8261331C  48303389             bl 0x829166a4
+  82613320  9421FF50             stwu r1,-0xb0(r1)
+  82613324  3D608218             lis r11,-0x7de8
+  82613328  3D408200             lis r10,-0x7e00
+  8261332C  7C7E1B78             or r30,r3,r3
+  82613330  7C9F2378             or r31,r4,r4
+  82613334  7CBD2B78             or r29,r5,r5
+  82613338  7CD83378             or r24,r6,r6
+  8261333C  7CFB3B78             or r27,r7,r7
+  82613340  7D174378             or r23,r8,r8
+  82613344  7D3A4B78             or r26,r9,r9
+  82613348  2B040000             cmplwi cr6,r4,0x0
+  8261334C  3B2B4110             addi r25,r11,0x4110
+  82613350  3B8A0F98             addi r28,r10,0xf98
+  82613354  409A0020             bne cr6,0x82613374
+  82613358  3D608218             lis r11,-0x7de8
+  8261335C  7F86E378             or r6,r28,r28
+  82613360  38EB42D4             addi r7,r11,0x42d4
+  82613364  7F23CB78             or r3,r25,r25
+  82613368  38A00000             li r5,0x0
+  8261336C  38800038             li r4,0x38
+  82613370  4BFC1191             bl 0x825d4500
+LAB_82613374:
+  82613374  2B1D0000             cmplwi cr6,r29,0x0
+  82613378  409A0020             bne cr6,0x82613398
+  8261337C  3D608218             lis r11,-0x7de8
+  82613380  7F86E378             or r6,r28,r28
+  82613384  38EB42C4             addi r7,r11,0x42c4
+  82613388  7F23CB78             or r3,r25,r25
+  8261338C  38A00000             li r5,0x0
+  82613390  38800039             li r4,0x39
+  82613394  4BFC116D             bl 0x825d4500
+LAB_82613398:
+  82613398  7D1FE9D6             mullw r8,r31,r29
+  8261339C  7F1E4040             cmplw cr6,r30,r8
+  826133A0  41980020             blt cr6,0x826133c0
+  826133A4  3D608218             lis r11,-0x7de8
+  826133A8  7F23CB78             or r3,r25,r25
+  826133AC  38CB4280             addi r6,r11,0x4280
+  826133B0  7FC7F378             or r7,r30,r30
+  826133B4  38A00000             li r5,0x0
+  826133B8  3880003A             li r4,0x3a
+  826133BC  4BFC1145             bl 0x825d4500
+LAB_826133c0:
+  826133C0  7D7EFB96             divwu r11,r30,r31
+  826133C4  7BAA0020             rldicl r10,r29,0x0,0x20
+  826133C8  7D2BF9D6             mullw r9,r11,r31
+  826133CC  F9410050             std r10,0x50(r1)
+  826133D0  C8010050             lfd f0,0x50(r1)
+  826133D4  FD20069C             fcfid f9,f0
+  826133D8  7D09F050             subf r8,r9,r30
+  826133DC  FCA04818             frsp f5,f9
+  826133E0  7CFEFB96             divwu r7,r30,r31
+  826133E4  79060020             rldicl r6,r8,0x0,0x20
+  826133E8  78E50020             rldicl r5,r7,0x0,0x20
+  826133EC  F8C10050             std r6,0x50(r1)
+  826133F0  C9A10050             lfd f13,0x50(r1)
+  826133F4  F8A10050             std r5,0x50(r1)
+  826133F8  C9810050             lfd f12,0x50(r1)
+  826133FC  7BE40020             rldicl r4,r31,0x0,0x20
+  82613400  FD006E9C             fcfid f8,f13
+  82613404  F8810050             std r4,0x50(r1)
+  82613408  C9610050             lfd f11,0x50(r1)
+  8261340C  FD405E9C             fcfid f10,f11
+  82613410  3C608200             lis r3,-0x7e00
+  82613414  FCE0669C             fcfid f7,f12
+  82613418  C0030F10             lfs f0,0xf10(r3)
+  8261341C  FCC05018             frsp f6,f10
+  82613420  0CDF0000             twllei r31,0x0
+  82613424  FC804018             frsp f4,f8
+  82613428  0CDF0000             twllei r31,0x0
+  8261342C  EC202824             fdivs f1,f0,f5
+  82613430  FC603818             frsp f3,f7
+  82613434  EC403024             fdivs f2,f0,f6
+  82613438  D05B0000             stfs f2,0x0(r27)
+  8261343C  D03A0000             stfs f1,0x0(r26)
+  82613440  C01B0000             lfs f0,0x0(r27)
+  82613444  EDA40032             fmuls f13,f4,f0
+  82613448  D1B80000             stfs f13,0x0(r24)
+  8261344C  C19A0000             lfs f12,0x0(r26)
+  82613450  ED630332             fmuls f11,f3,f12
+  82613454  D1770000             stfs f11,0x0(r23)
+  82613458  382100B0             addi r1,r1,0xb0
+  8261345C  48303298             b 0x829166f4
 
 ; 82613460  TextureAtlas_GetCoords_ByPercent  (universal/textureatlas.cpp:67)
   82613460  7D8802A6             mfspr r12,LR

@@ -2,11 +2,109 @@
 
 // 82812F30  vp8_short_idct4x4llm_c  (WebM_atvi_opt/vpx/vp8/common/idctllm.c:34)
 
-void vp8_short_idct4x4llm_c(void)
+void vp8_short_idct4x4llm_c(undefined8 param_1,short *param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  short sVar1;
+  short sVar2;
+  short sVar3;
+  short sVar4;
+  short sVar5;
+  short *psVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  
+  psVar6 = (short *)__savegprlr_23();
+  sVar1 = psVar6[4];
+  sVar2 = psVar6[0xc];
+  param_3 = param_3 >> 1;
+  sVar3 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
+  sVar4 = *psVar6 + psVar6[8];
+  sVar5 = *psVar6 - psVar6[8];
+  *param_2 = sVar3 + sVar4;
+  sVar2 = ((short)((uint)(sVar1 * 0x8a8c) >> 0x10) - (short)((uint)(sVar2 * 0x4e7b) >> 0x10)) -
+          sVar2;
+  param_2[param_3 * 3] = sVar4 - sVar3;
+  param_2[param_3] = sVar2 + sVar5;
+  param_2[param_3 * 2] = sVar5 - sVar2;
+  sVar1 = psVar6[0xd];
+  sVar2 = psVar6[5];
+  sVar4 = psVar6[1] + psVar6[9];
+  sVar3 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
+  sVar5 = psVar6[1] - psVar6[9];
+  sVar1 = ((short)((uint)(sVar2 * 0x8a8c) >> 0x10) - (short)((uint)(sVar1 * 0x4e7b) >> 0x10)) -
+          sVar1;
+  param_2[1] = sVar3 + sVar4;
+  param_2[param_3 * 3 + 1] = sVar4 - sVar3;
+  param_2[param_3 + 1] = sVar1 + sVar5;
+  param_2[param_3 * 2 + 1] = sVar5 - sVar1;
+  sVar1 = psVar6[6];
+  sVar2 = psVar6[0xe];
+  sVar3 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
+  sVar4 = psVar6[2] + psVar6[10];
+  sVar5 = psVar6[2] - psVar6[10];
+  sVar2 = ((short)((uint)(sVar1 * 0x8a8c) >> 0x10) - (short)((uint)(sVar2 * 0x4e7b) >> 0x10)) -
+          sVar2;
+  param_2[2] = sVar3 + sVar4;
+  param_2[param_3 * 3 + 2] = sVar4 - sVar3;
+  *(short *)((int)(((longlong)param_3 + 2U & 0xffffffff) << 1) + (int)param_2) = sVar2 + sVar5;
+  param_2[param_3 * 2 + 2] = sVar5 - sVar2;
+  sVar1 = psVar6[0xf];
+  sVar2 = psVar6[7];
+  sVar4 = psVar6[3] + psVar6[0xb];
+  sVar3 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
+  sVar5 = psVar6[3] - psVar6[0xb];
+  sVar1 = ((short)((uint)(sVar2 * 0x8a8c) >> 0x10) - (short)((uint)(sVar1 * 0x4e7b) >> 0x10)) -
+          sVar1;
+  param_2[3] = sVar3 + sVar4;
+  param_2[param_3 * 3 + 3] = sVar4 - sVar3;
+  *(short *)((int)(((longlong)param_3 + 3U & 0xffffffff) << 1) + (int)param_2) = sVar1 + sVar5;
+  param_2[param_3 * 2 + 3] = sVar5 - sVar1;
+  sVar1 = param_2[1];
+  sVar2 = param_2[3];
+  iVar7 = (int)*param_2 + (int)param_2[2];
+  iVar9 = (sVar1 * 0x4e7b >> 0x10) + (sVar2 * 0x8a8c >> 0x10) + (int)sVar1;
+  iVar10 = (int)*param_2 - (int)param_2[2];
+  iVar8 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
+  *param_2 = (short)(iVar9 + iVar7 + 4 >> 3);
+  param_2[3] = (short)((iVar7 - iVar9) + 4 >> 3);
+  param_2[1] = (short)(iVar8 + iVar10 + 4 >> 3);
+  param_2[2] = (short)((iVar10 - iVar8) + 4 >> 3);
+  sVar1 = param_2[param_3 + 3];
+  sVar2 = param_2[param_3 + 1];
+  iVar9 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
+  iVar7 = (int)param_2[param_3 + 2] + (int)param_2[param_3];
+  iVar10 = (int)param_2[param_3] - (int)param_2[param_3 + 2];
+  iVar8 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
+  param_2[param_3] = (short)(iVar9 + iVar7 + 4 >> 3);
+  param_2[param_3 + 3] = (short)((iVar7 - iVar9) + 4 >> 3);
+  param_2[param_3 + 1] = (short)(iVar8 + iVar10 + 4 >> 3);
+  param_2[param_3 + 2] = (short)((iVar10 - iVar8) + 4 >> 3);
+  sVar1 = param_2[param_3 * 2 + 1];
+  sVar2 = param_2[param_3 * 2 + 3];
+  iVar7 = (int)param_2[param_3 * 2 + 2] + (int)param_2[param_3 * 2];
+  iVar9 = (sVar2 * 0x8a8c >> 0x10) + (sVar1 * 0x4e7b >> 0x10) + (int)sVar1;
+  iVar10 = (int)param_2[param_3 * 2] - (int)param_2[param_3 * 2 + 2];
+  iVar8 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
+  param_2[param_3 * 2] = (short)(iVar9 + iVar7 + 4 >> 3);
+  param_2[param_3 * 2 + 3] = (short)((iVar7 - iVar9) + 4 >> 3);
+  param_2[param_3 * 2 + 1] = (short)(iVar8 + iVar10 + 4 >> 3);
+  param_2[param_3 * 2 + 2] = (short)((iVar10 - iVar8) + 4 >> 3);
+  sVar1 = param_2[param_3 * 3 + 3];
+  sVar2 = param_2[param_3 * 3 + 1];
+  iVar10 = (int)param_2[param_3 * 3 + 2] + (int)param_2[param_3 * 3];
+  iVar9 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
+  iVar7 = (int)param_2[param_3 * 3] - (int)param_2[param_3 * 3 + 2];
+  iVar8 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
+  param_2 = param_2 + param_3 * 3;
+  *param_2 = (short)(iVar9 + iVar10 + 4 >> 3);
+  param_2[3] = (short)((iVar10 - iVar9) + 4 >> 3);
+  param_2[1] = (short)(iVar8 + iVar7 + 4 >> 3);
+  param_2[2] = (short)((iVar7 - iVar8) + 4 >> 3);
+  __restgprlr_23();
+  return;
 }
 
 

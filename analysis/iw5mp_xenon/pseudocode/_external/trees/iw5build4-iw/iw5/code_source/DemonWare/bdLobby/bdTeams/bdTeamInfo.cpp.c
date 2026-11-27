@@ -26,11 +26,49 @@ void bdTeamInfo___bdTeamInfo(undefined4 *param_1)
 
 // 82909700  bdTeamInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteaminfo.cpp:26)
 
-void bdTeamInfo__deserialize(void)
+void bdTeamInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 8);
+  if (cVar3 == '\0') {
+LAB_8290974c:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 0x18,0x40);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8290974c;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 0x10);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82909770;
+  }
+  else {
+LAB_82909770:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUByte8(*puVar4,lVar2 + 0x58);
+    lVar2 = 1;
+    if (cVar3 != '\0') goto LAB_82909798;
+  }
+  lVar2 = 0;
+LAB_82909798:
+  if (lVar2 == 0) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff82210014,0xffffffff82210038,0xffffffff82210020,0x21,
+                 0xffffffff8220b3c8);
+  }
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(lVar2);
+  return;
 }
 
 

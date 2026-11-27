@@ -201,6 +201,47 @@ LAB_827c4a8c:
 ; 827C4AA8  h2v2_upsample  (jpeg-6/jdsample.c:263)
   827C4AA8  7D8802A6             mfspr r12,LR
   827C4AAC  48151C09             bl 0x829166b4
+  827C4AB0  9421FF80             stwu r1,-0x80(r1)
+  827C4AB4  8163011C             lwz r11,0x11c(r3)
+  827C4AB8  7C7D1B78             or r29,r3,r3
+  827C4ABC  83660000             lwz r27,0x0(r6)
+  827C4AC0  3B800000             li r28,0x0
+  827C4AC4  2F0B0000             cmpwi cr6,r11,0x0
+  827C4AC8  40990074             ble cr6,0x827c4b3c
+  827C4ACC  7F7EDB78             or r30,r27,r27
+  827C4AD0  7CBF2B78             or r31,r5,r5
+LAB_827c4ad4:
+  827C4AD4  817E0000             lwz r11,0x0(r30)
+  827C4AD8  815D0064             lwz r10,0x64(r29)
+  827C4ADC  811F0000             lwz r8,0x0(r31)
+  827C4AE0  7D2A5A14             add r9,r10,r11
+  827C4AE4  7F0B4840             cmplw cr6,r11,r9
+  827C4AE8  40980020             bge cr6,0x827c4b08
+  827C4AEC  3908FFFF             subi r8,r8,0x1
+LAB_827c4af0:
+  827C4AF0  8D480001             lbzu r10,0x1(r8)
+  827C4AF4  994B0000             stb r10,0x0(r11)
+  827C4AF8  9D4B0001             stbu r10,0x1(r11)
+  827C4AFC  396B0001             addi r11,r11,0x1
+  827C4B00  7F0B4840             cmplw cr6,r11,r9
+  827C4B04  4198FFEC             blt cr6,0x827c4af0
+LAB_827c4b08:
+  827C4B08  38E00001             li r7,0x1
+  827C4B0C  811D0064             lwz r8,0x64(r29)
+  827C4B10  38DC0001             addi r6,r28,0x1
+  827C4B14  7F65DB78             or r5,r27,r27
+  827C4B18  7F84E378             or r4,r28,r28
+  827C4B1C  7F63DB78             or r3,r27,r27
+  827C4B20  48007481             bl 0x827cbfa0
+  827C4B24  817D011C             lwz r11,0x11c(r29)
+  827C4B28  3B9C0002             addi r28,r28,0x2
+  827C4B2C  3BFF0004             addi r31,r31,0x4
+  827C4B30  3BDE0008             addi r30,r30,0x8
+  827C4B34  7F1C5800             cmpw cr6,r28,r11
+  827C4B38  4198FF9C             blt cr6,0x827c4ad4
+LAB_827c4b3c:
+  827C4B3C  38210080             addi r1,r1,0x80
+  827C4B40  48151BC4             b 0x82916704
 
 ; 827C4B48  h2v1_fancy_upsample  (jpeg-6/jdsample.c:306)
   827C4B48  FBE1FFF8             std r31,-0x8(r1)

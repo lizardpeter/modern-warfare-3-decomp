@@ -31,3 +31,32 @@ LAB_826e0488:
 ; 826E04B0  Tracer_Register  (tracers/tracer_load_obj.cpp:275)
   826E04B0  7D8802A6             mfspr r12,LR
   826E04B4  48236205             bl 0x829166b8
+  826E04B8  9421FF80             stwu r1,-0x80(r1)
+  826E04BC  7C7F1B78             or r31,r3,r3
+  826E04C0  2B030000             cmplwi cr6,r3,0x0
+  826E04C4  409A004C             bne cr6,0x826e0510
+  826E04C8  3D608202             lis r11,-0x7dfe
+  826E04CC  3D408200             lis r10,-0x7e00
+  826E04D0  3D20821A             lis r9,-0x7de6
+  826E04D4  3BCB1A74             addi r30,r11,0x1a74
+  826E04D8  3BAA0F98             addi r29,r10,0xf98
+  826E04DC  3B897B20             addi r28,r9,0x7b20
+  826E04E0  7FC7F378             or r7,r30,r30
+  826E04E4  7FA6EB78             or r6,r29,r29
+  826E04E8  7F83E378             or r3,r28,r28
+  826E04EC  38A00000             li r5,0x0
+  826E04F0  38800114             li r4,0x114
+  826E04F4  4BEF400D             bl 0x825d4500
+  826E04F8  7FC7F378             or r7,r30,r30
+  826E04FC  7FA6EB78             or r6,r29,r29
+  826E0500  7F83E378             or r3,r28,r28
+  826E0504  38A00000             li r5,0x0
+  826E0508  38800107             li r4,0x107
+  826E050C  4BEF3FF5             bl 0x825d4500
+LAB_826e0510:
+  826E0510  38A00001             li r5,0x1
+  826E0514  7FE4FB78             or r4,r31,r31
+  826E0518  38600029             li r3,0x29
+  826E051C  4BD0E43D             bl 0x823ee958
+  826E0520  38210080             addi r1,r1,0x80
+  826E0524  482361E4             b 0x82916708

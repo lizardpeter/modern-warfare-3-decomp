@@ -3,6 +3,22 @@
 ; 82912810  bdSessionInvite::bdSessionInvite  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:16)
   82912810  7D8802A6             mfspr r12,LR
   82912814  48003EA9             bl 0x829166bc
+  82912818  3BE1FF90             subi r31,r1,0x70
+  8291281C  9421FF90             stwu r1,-0x70(r1)
+  82912820  7C7E1B78             or r30,r3,r3
+  82912824  907F0084             stw r3,0x84(r31)
+  82912828  4BFEA761             bl 0x828fcf88
+  8291282C  3D608221             lis r11,-0x7ddf
+  82912830  3BA00000             li r29,0x0
+  82912834  396B2BC8             addi r11,r11,0x2bc8
+  82912838  FBBE0008             std r29,0x8(r30)
+  8291283C  387E0050             addi r3,r30,0x50
+  82912840  917E0000             stw r11,0x0(r30)
+  82912844  4BFFFD85             bl 0x829125c8
+  82912848  93BE045C             stw r29,0x45c(r30)
+  8291284C  7FC3F378             or r3,r30,r30
+  82912850  383F0070             addi r1,r31,0x70
+  82912854  48003EB8             b 0x8291670c
 
 ; 82912780  bdSessionInvite::~bdSessionInvite  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:20)
   82912780  7D8802A6             mfspr r12,LR
@@ -30,6 +46,78 @@
 ; 829128D8  bdSessionInvite::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:24)
   829128D8  7D8802A6             mfspr r12,LR
   829128DC  48003DE1             bl 0x829166bc
+  829128E0  3BE1FF80             subi r31,r1,0x80
+  829128E4  9421FF80             stwu r1,-0x80(r1)
+  829128E8  7C7E1B78             or r30,r3,r3
+  829128EC  909F009C             stw r4,0x9c(r31)
+  829128F0  7C9D2378             or r29,r4,r4
+  829128F4  38830008             addi r4,r3,0x8
+  829128F8  807D0000             lwz r3,0x0(r29)
+  829128FC  4BFE34A5             bl 0x828f5da0
+  82912900  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82912904  314BFFFF             subic r10,r11,0x1
+  82912908  7D6A5910             subfe r11,r10,r11
+  8291290C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82912910  41820020             beq 0x82912930
+  82912914  38A00040             li r5,0x40
+  82912918  807D0000             lwz r3,0x0(r29)
+  8291291C  389E0010             addi r4,r30,0x10
+  82912920  4BFE3551             bl 0x828f5e70
+  82912924  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82912928  39600001             li r11,0x1
+  8291292C  40820008             bne 0x82912934
+LAB_82912930:
+  82912930  39600000             li r11,0x0
+LAB_82912934:
+  82912934  39400008             li r10,0x8
+  82912938  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8291293C  915F0050             stw r10,0x50(r31)
+  82912940  41820020             beq 0x82912960
+  82912944  38BF0050             addi r5,r31,0x50
+  82912948  807D0000             lwz r3,0x0(r29)
+  8291294C  389E0054             addi r4,r30,0x54
+  82912950  4BFE35B9             bl 0x828f5f08
+  82912954  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82912958  39600001             li r11,0x1
+  8291295C  40820008             bne 0x82912964
+LAB_82912960:
+  82912960  39600000             li r11,0x0
+LAB_82912964:
+  82912964  39400400             li r10,0x400
+  82912968  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8291296C  38BE045C             addi r5,r30,0x45c
+  82912970  915E045C             stw r10,0x45c(r30)
+  82912974  4182001C             beq 0x82912990
+  82912978  389E005C             addi r4,r30,0x5c
+  8291297C  807D0000             lwz r3,0x0(r29)
+  82912980  4BFE3589             bl 0x828f5f08
+  82912984  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82912988  39600001             li r11,0x1
+  8291298C  40820008             bne 0x82912994
+LAB_82912990:
+  82912990  39600000             li r11,0x0
+LAB_82912994:
+  82912994  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  82912998  40820038             bne 0x829129d0
+  8291299C  3D008221             lis r8,-0x7ddf
+  829129A0  3D608221             lis r11,-0x7ddf
+  829129A4  3D408221             lis r10,-0x7ddf
+  829129A8  3CA08221             lis r5,-0x7ddf
+  829129AC  3C808221             lis r4,-0x7ddf
+  829129B0  38C82C80             addi r6,r8,0x2c80
+  829129B4  392BB3C8             subi r9,r11,0x4c38
+  829129B8  38EA2C60             addi r7,r10,0x2c60
+  829129BC  38A52C50             addi r5,r5,0x2c50
+  829129C0  3884A58C             subi r4,r4,0x5a74
+  829129C4  39000027             li r8,0x27
+  829129C8  38600002             li r3,0x2
+  829129CC  4BFE2145             bl 0x828f4b10
+LAB_829129d0:
+  829129D0  7FA3EB78             or r3,r29,r29
+  829129D4  4BA51A2D             bl 0x82364400
+  829129D8  7FC3F378             or r3,r30,r30
+  829129DC  383F0080             addi r1,r31,0x80
+  829129E0  48003D2C             b 0x8291670c
 
 ; 82912800  bdSessionInvite::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:45)
   82912800  38600460             li r3,0x460

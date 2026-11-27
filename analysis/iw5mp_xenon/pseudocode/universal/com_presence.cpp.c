@@ -23,8 +23,25 @@ undefined8 Live_GetGameTypeCount(void)
 void Live_GetMapIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  
+  uVar1 = __savegprlr_29();
+  pcVar3 = "mp_alpha";
+  iVar4 = 0;
+  do {
+    iVar2 = I_stricmp(uVar1,pcVar3);
+    if (iVar2 == 0) {
+      __restgprlr_29(iVar4);
+      return;
+    }
+    iVar4 = iVar4 + 1;
+    pcVar3 = "mp_alpha" + iVar4 * 0x28;
+  } while ("mp_alpha"[iVar4 * 0x28] != '\0');
+  __restgprlr_29(0xffffffffffffffff);
+  return;
 }
 
 
@@ -35,7 +52,6 @@ undefined4 Live_GetMapSource(int param_1)
 {
   if (((-1 < param_1) && (*(char *)(DAT_8404fa60 + 0xc) == '\0')) && (DAT_82aa1a88 == 0)) {
     if (0x10 < param_1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82176b60,0xc3,0,0xffffffff82046a38,0xffffffff82176ba8,param_1);
     }
     return *(undefined4 *)(&DAT_82176674 + param_1 * 0x28);

@@ -54,11 +54,26 @@ int RedBlackCache_AllocNode(void)
 
 // 8260F230  RedBlackCache_FindOrInsertKey  (universal/redblackcache.cpp:49)
 
-void RedBlackCache_FindOrInsertKey(void)
+void RedBlackCache_FindOrInsertKey(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82182458,0x35,0,0xffffffff82000f98,0xffffffff82182450);
+  }
+  if (*(char *)(iVar1 + 0x54) != '\0') {
+    MyAssertHandler(0xffffffff82182458,0x36,0,0xffffffff82000f98,0xffffffff8218243c);
+  }
+  if (DAT_841ac2c4 != 0) {
+    MyAssertHandler(0xffffffff82182458,0x38,0,0xffffffff82000f98,0xffffffff82182424);
+  }
+  DAT_841ac2c4 = iVar1;
+  RedBlackTree_FindOrInsertKey(iVar1,param_2);
+  DAT_841ac2c4 = 0;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -72,15 +87,12 @@ void RedBlackCache_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
   
   iVar1 = __savegprlr_24();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182458,0x45,0,0xffffffff82000f98,0xffffffff82182450);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182458,0x46,0,0xffffffff82000f98,0xffffffff821824cc);
   }
   if ((param_3 & 0xffffffff) < 0x20) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82182458,0x47,0,0xffffffff82000f98,0xffffffff821824a0);
   }
   RedBlackTree_Init(iVar1,0xffffffff8260f118);

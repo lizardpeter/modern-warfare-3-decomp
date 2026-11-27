@@ -23,6 +23,140 @@
 ; 8293CFE0  bdSequenceNumber::set  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:32)
   8293CFE0  7D8802A6             mfspr r12,LR
   8293CFE4  4BFD96C1             bl 0x829166a4
+  8293CFE8  9421FF60             stwu r1,-0xa0(r1)
+  8293CFEC  3966FFFF             subi r11,r6,0x1
+  8293CFF0  81040000             lwz r8,0x0(r4)
+  8293CFF4  39200002             li r9,0x2
+  8293CFF8  54AA083E             rlwinm r10,r5,0x1,0x0,0x1f
+  8293CFFC  7D3F5830             slw r31,r9,r11
+  8293D000  7D28FBD6             divw r9,r8,r31
+  8293D004  550B083E             rlwinm r11,r8,0x1,0x0,0x1f
+  8293D008  7D29F9D6             mullw r9,r9,r31
+  8293D00C  396BFFFF             subi r11,r11,0x1
+  8293D010  7CE5FBD6             divw r7,r5,r31
+  8293D014  394AFFFF             subi r10,r10,0x1
+  8293D018  7FA94050             subf r29,r9,r8
+  8293D01C  7FE95878             andc r9,r31,r11
+  8293D020  7FEA5078             andc r10,r31,r10
+  8293D024  7CE7F9D6             mullw r7,r7,r31
+  8293D028  3D608222             lis r11,-0x7dde
+  8293D02C  7C781B78             or r24,r3,r3
+  8293D030  7C9B2378             or r27,r4,r4
+  8293D034  7CBE2B78             or r30,r5,r5
+  8293D038  0CDF0000             twllei r31,0x0
+  8293D03C  0CDF0000             twllei r31,0x0
+  8293D040  0CA9FFFF             twlgei r9,-0x1
+  8293D044  7EFD4050             subf r23,r29,r8
+  8293D048  0CAAFFFF             twlgei r10,-0x1
+  8293D04C  7F872850             subf r28,r7,r5
+  8293D050  7F05F800             cmpw cr6,r5,r31
+  8293D054  3B2BAD18             subi r25,r11,0x52e8
+  8293D058  4198002C             blt cr6,0x8293d084
+  8293D05C  3D608222             lis r11,-0x7dde
+  8293D060  3D408222             lis r10,-0x7dde
+  8293D064  3D208200             lis r9,-0x7e00
+  8293D068  390BACE8             subi r8,r11,0x5318
+  8293D06C  38EAACC0             subi r7,r10,0x5340
+  8293D070  38C911F4             addi r6,r9,0x11f4
+  8293D074  7F23CB78             or r3,r25,r25
+  8293D078  38A00000             li r5,0x0
+  8293D07C  38800028             li r4,0x28
+  8293D080  4BC97481             bl 0x825d4500
+LAB_8293d084:
+  8293D084  2F1D0000             cmpwi cr6,r29,0x0
+  8293D088  4098000C             bge cr6,0x8293d094
+  8293D08C  93D80000             stw r30,0x0(r24)
+  8293D090  48000128             b 0x8293d1b8
+LAB_8293d094:
+  8293D094  7F1DE000             cmpw cr6,r29,r28
+  8293D098  409A000C             bne cr6,0x8293d0a4
+  8293D09C  817B0000             lwz r11,0x0(r27)
+  8293D0A0  48000114             b 0x8293d1b4
+LAB_8293d0a4:
+  8293D0A4  40980018             bge cr6,0x8293d0bc
+  8293D0A8  7FEB0E70             srawi r11,r31,0x1
+  8293D0AC  7D5DE050             subf r10,r29,r28
+  8293D0B0  7D6B0194             addze r11,r11
+  8293D0B4  7F0A5800             cmpw cr6,r10,r11
+  8293D0B8  41980020             blt cr6,0x8293d0d8
+LAB_8293d0bc:
+  8293D0BC  7F1DE000             cmpw cr6,r29,r28
+  8293D0C0  40990020             ble cr6,0x8293d0e0
+  8293D0C4  7FEB0E70             srawi r11,r31,0x1
+  8293D0C8  7D5CE850             subf r10,r28,r29
+  8293D0CC  7D6B0194             addze r11,r11
+  8293D0D0  7F0A5800             cmpw cr6,r10,r11
+  8293D0D4  4099000C             ble cr6,0x8293d0e0
+LAB_8293d0d8:
+  8293D0D8  3B400001             li r26,0x1
+  8293D0DC  48000008             b 0x8293d0e4
+LAB_8293d0e0:
+  8293D0E0  3B400000             li r26,0x0
+LAB_8293d0e4:
+  8293D0E4  7F1DE000             cmpw cr6,r29,r28
+  8293D0E8  4098001C             bge cr6,0x8293d104
+  8293D0EC  7FEB0E70             srawi r11,r31,0x1
+  8293D0F0  7D5DE050             subf r10,r29,r28
+  8293D0F4  7D6B0194             addze r11,r11
+  8293D0F8  7F0A5800             cmpw cr6,r10,r11
+  8293D0FC  41990020             bgt cr6,0x8293d11c
+  8293D100  7F1DE000             cmpw cr6,r29,r28
+LAB_8293d104:
+  8293D104  40990020             ble cr6,0x8293d124
+  8293D108  7FEB0E70             srawi r11,r31,0x1
+  8293D10C  7D5CE850             subf r10,r28,r29
+  8293D110  7D6B0194             addze r11,r11
+  8293D114  7F0A5800             cmpw cr6,r10,r11
+  8293D118  4098000C             bge cr6,0x8293d124
+LAB_8293d11c:
+  8293D11C  39600001             li r11,0x1
+  8293D120  48000008             b 0x8293d128
+LAB_8293d124:
+  8293D124  39600000             li r11,0x0
+LAB_8293d128:
+  8293D128  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  8293D12C  3B600000             li r27,0x0
+  8293D130  4082003C             bne 0x8293d16c
+  8293D134  574B063F             rlwinm. r11,r26,0x0,0x18,0x1f
+  8293D138  40820034             bne 0x8293d16c
+  8293D13C  3D008222             lis r8,-0x7dde
+  8293D140  3D608222             lis r11,-0x7dde
+  8293D144  3D408222             lis r10,-0x7dde
+  8293D148  3C808221             lis r4,-0x7ddf
+  8293D14C  38A8AC9C             subi r5,r8,0x5364
+  8293D150  392BAC60             subi r9,r11,0x53a0
+  8293D154  38EAAC48             subi r7,r10,0x53b8
+  8293D158  7F26CB78             or r6,r25,r25
+  8293D15C  3884A424             subi r4,r4,0x5bdc
+  8293D160  39000043             li r8,0x43
+  8293D164  38600001             li r3,0x1
+  8293D168  4BFB79A9             bl 0x828f4b10
+LAB_8293d16c:
+  8293D16C  2B1E0000             cmplwi cr6,r30,0x0
+  8293D170  419A0024             beq cr6,0x8293d194
+  8293D174  7F1DE000             cmpw cr6,r29,r28
+  8293D178  41990030             bgt cr6,0x8293d1a8
+  8293D17C  2B1E0000             cmplwi cr6,r30,0x0
+  8293D180  419A0014             beq cr6,0x8293d194
+  8293D184  7F1DE000             cmpw cr6,r29,r28
+  8293D188  4098000C             bge cr6,0x8293d194
+  8293D18C  3B60FFFF             li r27,-0x1
+  8293D190  48000018             b 0x8293d1a8
+LAB_8293d194:
+  8293D194  574B063F             rlwinm. r11,r26,0x0,0x18,0x1f
+  8293D198  41820010             beq 0x8293d1a8
+  8293D19C  7F1DE000             cmpw cr6,r29,r28
+  8293D1A0  40990008             ble cr6,0x8293d1a8
+  8293D1A4  3B600001             li r27,0x1
+LAB_8293d1a8:
+  8293D1A8  7D7BF9D6             mullw r11,r27,r31
+  8293D1AC  7D6BE214             add r11,r11,r28
+  8293D1B0  7D6BBA14             add r11,r11,r23
+LAB_8293d1b4:
+  8293D1B4  91780000             stw r11,0x0(r24)
+LAB_8293d1b8:
+  8293D1B8  382100A0             addi r1,r1,0xa0
+  8293D1BC  4BFD9538             b 0x829166f4
 
 ; 8293D1C0  bdSequenceNumber::getValue  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:96)
   8293D1C0  80630000             lwz r3,0x0(r3)
@@ -41,6 +175,13 @@
   8293D1E8  91440000             stw r10,0x0(r4)
   8293D1EC  91630000             stw r11,0x0(r3)
   8293D1F0  4E800020             blr
+
+; 8293D1F8  bdSequenceNumber::operator-  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:127)
+  8293D1F8  81640000             lwz r11,0x0(r4)
+  8293D1FC  81450000             lwz r10,0x0(r5)
+  8293D200  7D6A5850             subf r11,r10,r11
+  8293D204  91630000             stw r11,0x0(r3)
+  8293D208  4E800020             blr
 
 ; 8293D210  bdSequenceNumber::operator>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:134)
   8293D210  81630000             lwz r11,0x0(r3)
@@ -61,3 +202,29 @@
   8293D244  7D6B0194             addze r11,r11
   8293D248  556307FE             rlwinm r3,r11,0x0,0x1f,0x1f
   8293D24C  4E800020             blr
+
+; 8293D250  bdSequenceNumber::operator<=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:144)
+  8293D250  81640000             lwz r11,0x0(r4)
+  8293D254  81430000             lwz r10,0x0(r3)
+  8293D258  7D69FE70             srawi r9,r11,0x1f
+  8293D25C  55480FFE             rlwinm r8,r10,0x1,0x1f,0x1f
+  8293D260  7D6A5810             subfc r11,r10,r11
+  8293D264  7D684914             adde r11,r8,r9
+  8293D268  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  8293D26C  4E800020             blr
+
+; 8293D270  bdSequenceNumber::operator==  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:154)
+  8293D270  81630000             lwz r11,0x0(r3)
+  8293D274  81440000             lwz r10,0x0(r4)
+  8293D278  7D6B5050             subf r11,r11,r10
+  8293D27C  7D6B0034             cntlzw r11,r11
+  8293D280  5563DFFE             rlwinm r3,r11,0x1b,0x1f,0x1f
+  8293D284  4E800020             blr
+
+; 8293D288  bdSequenceNumber::operator!=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:159)
+  8293D288  81630000             lwz r11,0x0(r3)
+  8293D28C  81440000             lwz r10,0x0(r4)
+  8293D290  7D6B5050             subf r11,r11,r10
+  8293D294  314BFFFF             subic r10,r11,0x1
+  8293D298  7C6A5910             subfe r3,r10,r11
+  8293D29C  4E800020             blr

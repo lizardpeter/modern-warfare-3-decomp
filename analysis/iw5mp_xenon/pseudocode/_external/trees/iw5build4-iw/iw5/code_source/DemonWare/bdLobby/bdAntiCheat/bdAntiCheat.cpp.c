@@ -10,22 +10,164 @@ void bdAntiCheat__bdAntiCheat(undefined4 *param_1,undefined4 param_2)
 }
 
 
-// 8290DB38  bdAntiCheat::answerChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:27)
+// 8290DB28  bdAntiCheat::~bdAntiCheat  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:23)
 
-void bdAntiCheat__answerChallenges(void)
+void bdAntiCheat___bdAntiCheat(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  return;
+}
+
+
+// 8290DB38  bdAntiCheat::answerChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:27)
+
+void bdAntiCheat__answerChallenges(undefined8 param_1,undefined4 *param_2,undefined8 param_3)
+
+{
+  bool bVar1;
+  bool bVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  char cVar7;
+  uint uVar6;
+  longlong lVar4;
+  uint *puVar8;
+  char in_RESERVE;
+  byte bVar9;
+  undefined1 local_40 [64];
+  
+  puVar5 = (undefined4 *)__savegprlr_27();
+  *puVar5 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar9 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar8 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar3 + 4);
+        *puVar8 = uVar6;
+        bVar9 = 2;
+      }
+    } while (!(bool)(bVar9 >> 1 & 1));
+  }
+  cVar7 = bdAntiCheatResponses__serialize(param_3,uVar3 & 0xffffffff);
+  if (cVar7 != '\0') {
+    uVar6 = bdByteBuffer__write((int)(int *)uVar3,(void *)0x0,0x40);
+    bVar1 = true;
+    if ((uVar6 & 0xff) != 0) goto LAB_8290dc04;
+  }
+  bVar1 = false;
+LAB_8290dc04:
+  bVar2 = false;
+  if (bVar1) {
+    (**(code **)(*(int *)uVar3 + 4))();
+    bdRemoteTaskManager__initTaskBuffer(local_40,0x26,2);
+    cVar7 = bdAntiCheatResponses__serialize(param_3,uVar3 & 0xffffffff);
+    bVar2 = cVar7 != '\0';
+  }
+  if (bVar2) {
+    lVar4 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_40);
+    if (lVar4 != 0) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82211220,0xffffffff822113d8,0xffffffff8221142c,
+                   0x33,0xffffffff8220c90c);
+    }
+  }
+  else {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff82211220,0xffffffff822113d8,0xffffffff8221142c,0x38,
+                 0xffffffff8220c89c);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_40);
+  __restgprlr_27(puVar5);
+  return;
 }
 
 
 // 8290DD88  bdAntiCheat::reportConsoleID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:63)
 
-void bdAntiCheat__reportConsoleID(void)
+void bdAntiCheat__reportConsoleID(undefined8 param_1,undefined4 *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar5;
+  ulonglong uVar3;
+  char cVar6;
+  char cVar7;
+  longlong lVar4;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  uint *puVar10;
+  char in_RESERVE;
+  byte bVar11;
+  undefined1 local_60 [16];
+  undefined1 auStack_50 [4];
+  undefined1 auStack_4c [76];
+  
+  puVar5 = (undefined4 *)__savegprlr_26();
+  *puVar5 = 0;
+  cVar6 = '\x01';
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar11 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x4d,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar3 + 4);
+        *puVar10 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_60,0x26,3);
+  if ((param_3 & 0xffffffff) == 0) {
+    bdConsoleID__bdConsoleID(auStack_50);
+    cVar6 = bdConsoleID__readConsoleID(auStack_50);
+    bVar1 = false;
+    if (cVar6 != '\0') {
+      cVar7 = bdByteBuffer__writeBlob(uVar3 & 0xffffffff,auStack_4c,8);
+      bVar1 = cVar7 != '\0';
+    }
+    bdConsoleID___bdConsoleID(auStack_50);
+  }
+  else {
+    cVar7 = bdByteBuffer__writeBlob(uVar3 & 0xffffffff,param_3 + 4,8);
+    bVar1 = cVar7 != '\0';
+  }
+  if (bVar1) {
+    lVar4 = bdRemoteTaskManager__startTask(*param_2,puVar5,local_60);
+    if (lVar4 != 0) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82211220,0xffffffff822113d8,0xffffffff822114dc,
+                   0x60,0xffffffff8220c90c);
+    }
+  }
+  else {
+    if (cVar6 == '\0') {
+      uVar8 = 0x69;
+      uVar9 = 0xffffffff822114c0;
+    }
+    else {
+      uVar8 = 0x65;
+      uVar9 = 0xffffffff8220c89c;
+    }
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff82211220,0xffffffff822113d8,0xffffffff822114dc,uVar8
+                 ,uVar9);
+  }
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+  __restgprlr_26(puVar5);
+  return;
 }
 

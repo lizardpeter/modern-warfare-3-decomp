@@ -14,13 +14,38 @@ undefined4 * bdMailBody__bdMailBody(undefined4 *param_1)
 }
 
 
-// 82902DB8  bdMailBody::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:31)
+// 82902D40  bdMailBody::~bdMailBody  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:27)
 
-void bdMailBody__deserialize(void)
+void bdMailBody___bdMailBody(undefined4 *param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  *param_1 = &PTR_bdMailBody___scalar_deleting_destructor__8220e4b0;
+  bdTaskResult___bdTaskResult();
+  return;
+}
+
+
+// 82902DB8  bdMailBody::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:31)
+
+void bdMailBody__deserialize(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  char cVar2;
+  undefined8 uVar3;
+  
+  iVar1 = __savegprlr_29();
+  cVar2 = bdByteBuffer__readUInt64(*(undefined4 *)param_2,iVar1 + 0x10);
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readBlob(*(undefined4 *)param_2,*(undefined4 *)(iVar1 + 4),iVar1 + 8);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_82902e08;
+  }
+  uVar3 = 0;
+LAB_82902e08:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 

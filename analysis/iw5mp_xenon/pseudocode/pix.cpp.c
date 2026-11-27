@@ -146,11 +146,26 @@ void D3D__PixDisableVideoPlayback(int param_1)
 
 // 82878D20  D3D::PM4LoadShaderImmediate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pm4code.hpp:143)
 
-void D3D__PM4LoadShaderImmediate(void)
+void D3D__PM4LoadShaderImmediate
+               (undefined8 param_1,void *param_2,ulonglong param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  size_t _Size;
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_27();
+  iVar2 = D3D__CDevice__BeginRingBig(iVar1,param_3 + 3);
+  if (iVar2 != 0) {
+    _Size = (size_t)((param_3 & 0xffffffff) << 2);
+    *(uint *)(iVar2 + 4) = (uint)((param_3 + 1 & 0xffffffff) << 0x10) & 0x3fff0000 | 0xc0002b00;
+    *(undefined4 *)(iVar2 + 8) = param_4;
+    *(uint *)(iVar2 + 0xc) = (uint)param_3 & 0x3fff;
+    memcpy((void *)(iVar2 + 0x10),param_2,_Size);
+    *(size_t *)(iVar1 + 0x30) = _Size + iVar2 + 0xc;
+  }
+  __restgprlr_27(iVar2 != 0);
+  return;
 }
 
 
@@ -171,18 +186,75 @@ longlong D3D__PixTimeSinceVBlank(int param_1)
 void D3D__CodecSetState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  
+  iVar1 = __savegprlr_26();
+  uVar2 = *(uint *)(iVar1 + 0x30);
+  if (*(uint *)(iVar1 + 0x38) < uVar2) {
+    uVar2 = D3D__CDevice__KickOff(iVar1);
+  }
+  *(undefined4 *)(uVar2 + 4) = 0x22100;
+  *(undefined4 *)(uVar2 + 8) = 0xffff;
+  *(undefined4 *)(uVar2 + 0xc) = 0;
+  *(undefined4 *)(uVar2 + 0x10) = 0;
+  *(undefined4 *)(uVar2 + 0x14) = 0x2293;
+  *(undefined4 *)(uVar2 + 0x18) = 0;
+  *(undefined4 *)(uVar2 + 0x1c) = 0x22204;
+  *(undefined4 *)(uVar2 + 0x20) = 0x10000;
+  *(undefined4 *)(uVar2 + 0x24) = 0x10000;
+  *(undefined4 *)(uVar2 + 0x28) = 0x300;
+  *(undefined4 *)(uVar2 + 0x2c) = 0x2312;
+  *(undefined4 *)(uVar2 + 0x30) = 0xffff;
+  *(undefined4 *)(uVar2 + 0x34) = 0x200d;
+  puVar3 = (undefined4 *)(uVar2 + 0x38);
+  *puVar3 = 0;
+  *(undefined4 **)(iVar1 + 0x30) = puVar3;
+  if (*(undefined4 **)(iVar1 + 0x38) < puVar3) {
+    puVar3 = (undefined4 *)D3D__CDevice__KickOff(iVar1);
+  }
+  puVar3[1] = 0x2104;
+  puVar3[2] = 0xffff;
+  puVar3[3] = 0x2202;
+  puVar3[4] = 0;
+  puVar3[5] = 0x2201;
+  puVar3[6] = 0x10001;
+  puVar3[7] = 0x2302;
+  puVar3[8] = 1;
+  puVar3[9] = 0x2200;
+  puVar3[10] = 0;
+  puVar3[0xb] = 0x2208;
+  puVar3[0xc] = 4;
+  puVar3[0xd] = 0x2203;
+  puVar3[0xe] = 0;
+  puVar3[0xf] = 0x2182;
+  puVar3[0x10] = 0xffffffff;
+  *(undefined4 **)(iVar1 + 0x30) = puVar3 + 0x10;
+  __restgprlr_26();
+  return;
 }
 
 
 // 82878DB0  D3D::PM4LoadShaderSQStates  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pm4code.hpp:192)
 
-void D3D__PM4LoadShaderSQStates(void)
+void D3D__PM4LoadShaderSQStates(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = __savegprlr_29();
+  uVar2 = *(uint *)(iVar1 + 0x30);
+  if (*(uint *)(iVar1 + 0x38) < uVar2) {
+    uVar2 = D3D__CDevice__KickOff(iVar1);
+  }
+  *(undefined4 *)(uVar2 + 4) = 0x12180;
+  *(undefined4 *)(uVar2 + 8) = param_2;
+  *(undefined4 *)(uVar2 + 0xc) = param_3;
+  *(undefined4 **)(iVar1 + 0x30) = (undefined4 *)(uVar2 + 0xc);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -237,31 +309,405 @@ void D3D__PM4LoadShaderConstantsImmediate
 
 // 8287A460  D3D::CodecShowFrame  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:292)
 
-void D3D__CodecShowFrame(void)
+void D3D__CodecShowFrame(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+                        ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar7;
+  ulonglong uVar4;
+  undefined4 uVar8;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  char cVar10;
+  uint uVar9;
+  undefined8 *puVar11;
+  undefined8 *puVar12;
+  undefined4 *puVar13;
+  float *pfVar14;
+  int *piVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  longlong lVar18;
+  double dVar19;
+  undefined4 local_2f0;
+  undefined4 local_2ec;
+  undefined4 local_2e8;
+  undefined4 local_2e4;
+  undefined4 local_2e0;
+  undefined4 local_2dc;
+  undefined4 local_2d8;
+  undefined4 local_2d4;
+  float local_2d0;
+  float local_2cc;
+  undefined4 local_2c8;
+  undefined4 local_2c4;
+  undefined4 local_2c0;
+  undefined4 local_2bc;
+  undefined4 local_2b8;
+  undefined4 local_2b4;
+  float local_2b0;
+  float local_2ac;
+  undefined4 local_2a8;
+  undefined4 local_2a4;
+  undefined1 auStack_2a0 [4];
+  undefined1 auStack_29c [12];
+  undefined4 local_290 [2];
+  undefined4 local_288;
+  undefined4 local_284;
+  uint local_264;
+  uint local_260;
+  uint local_258;
+  undefined4 local_240 [2];
+  undefined4 local_238;
+  undefined4 local_234;
+  undefined4 local_230;
+  float local_22c;
+  undefined4 local_228;
+  undefined4 local_224;
+  undefined4 local_220;
+  undefined4 local_21c;
+  undefined4 local_218;
+  undefined4 local_214;
+  undefined4 local_210;
+  undefined4 local_20c;
+  float local_208;
+  float local_204;
+  undefined4 local_200;
+  undefined4 local_1fc;
+  undefined4 local_1f8;
+  undefined4 local_1f4;
+  undefined4 local_1f0;
+  undefined4 local_1ec;
+  float local_1e8;
+  float local_1e4;
+  undefined4 local_1e0;
+  undefined4 local_1dc;
+  undefined4 local_1d8;
+  undefined4 local_1d4;
+  undefined4 local_1d0;
+  undefined4 local_1cc;
+  undefined4 local_1c8;
+  undefined4 local_1c4;
+  undefined4 local_1c0;
+  undefined4 local_1bc;
+  undefined4 local_1b8;
+  undefined4 local_1b4;
+  undefined4 local_1b0;
+  float local_1ac [3];
+  undefined1 local_1a0 [156];
+  undefined4 uStack_104;
+  int local_100 [2];
+  undefined8 uStack_f8;
+  undefined1 local_f0 [32];
+  uint local_d0;
+  undefined8 uStack_b8;
+  undefined1 local_b0 [176];
+  
+  iVar7 = __savegprlr_19();
+  uVar17 = 0;
+  local_290[0] = 0;
+  local_288 = 0;
+  lVar18 = 6;
+  local_284 = 0;
+  puVar11 = &uStack_b8;
+  uVar2 = param_5 + 7 & 0xfffffff8;
+  uVar3 = param_6 + 7 & 0xfffffff8;
+  do {
+    puVar11 = puVar11 + 1;
+    *puVar11 = 0;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  D3D__SetSurfaceHeader(uVar2,uVar3,0x28280106,0,local_290,local_b0,auStack_2a0,auStack_29c);
+  uVar4 = D3DDevice_GetDepthStencilSurface(iVar7);
+  D3DDevice_SetDepthStencilSurface(iVar7,0);
+  uVar16 = 0;
+  puVar13 = &uStack_104;
+  do {
+    uVar8 = D3DDevice_GetRenderTarget(iVar7,uVar16);
+    puVar13 = puVar13 + 1;
+    *puVar13 = uVar8;
+    D3DDevice_SetRenderTarget(iVar7,uVar16,local_b0);
+    uVar16 = uVar16 + 1;
+  } while ((uVar16 & 0xffffffff) < 4);
+  uVar5 = D3DDevice_GetRenderState_HalfPixelOffset(iVar7);
+  D3DDevice_SetRenderState_HalfPixelOffset(iVar7,1);
+  uVar16 = *(ulonglong *)(iVar7 + 0x10);
+  *(short *)(iVar7 + 0x55da) = (short)*(undefined4 *)(iVar7 + 0x55d8) + 1;
+  if (uVar16 != 0) {
+    if ((*(ulonglong *)(iVar7 + 0x28) & uVar16) != 0) {
+      uVar6 = D3D__SetPending_Predicated(iVar7,uVar16,*(undefined4 *)(iVar7 + 0x2940));
+      *(undefined8 *)(iVar7 + 0x10) = uVar6;
+    }
+    if ((*(ulonglong *)(iVar7 + 0x10) & 0xfff) != 0) {
+      D3D__SetPending_RenderStates(iVar7,*(ulonglong *)(iVar7 + 0x10) << 0x34,0x2200,iVar7 + 0x2934)
+      ;
+      *(ulonglong *)(iVar7 + 0x10) = *(ulonglong *)(iVar7 + 0x10) & 0xfffffffffffff000;
+    }
+    if ((*(ulonglong *)(iVar7 + 0x10) & 0x1f000) != 0) {
+      D3D__SetPending_RenderStates
+                (iVar7,(*(ulonglong *)(iVar7 + 0x10) & 0x1f000) << 0x2f,0x2180,iVar7 + 0x2920);
+      *(ulonglong *)(iVar7 + 0x10) = *(ulonglong *)(iVar7 + 0x10) & 0xfffffffffffe0fff;
+    }
+    if ((*(ulonglong *)(iVar7 + 0x10) & 0x3fffc0000000000) != 0) {
+      D3D__SetPending_RenderStates
+                (iVar7,(*(ulonglong *)(iVar7 + 0x10) & 0x3fffc0000000000) << 6,0x2000,iVar7 + 0x2880
+                );
+      *(ulonglong *)(iVar7 + 0x10) = *(ulonglong *)(iVar7 + 0x10) & 0xfc0003ffffffffff;
+    }
+    if ((*(ulonglong *)(iVar7 + 0x10) & 0x3ffffe00000) != 0) {
+      D3D__SetPending_RenderStates
+                (iVar7,(*(ulonglong *)(iVar7 + 0x10) & 0x3ffffe00000) << 0x16,0x2100,iVar7 + 0x28cc)
+      ;
+      *(ulonglong *)(iVar7 + 0x10) = *(ulonglong *)(iVar7 + 0x10) & 0xfffffc00001fffff;
+    }
+  }
+  uVar16 = *(ulonglong *)(iVar7 + 0x18);
+  if ((uVar16 != 0) && ((uVar16 & 0x7ffffc00000000) != 0)) {
+    D3D__SetPending_RenderStates(iVar7,(uVar16 & 0x7ffffc00000000) << 9,0x2280,iVar7 + 0x2964);
+    *(ulonglong *)(iVar7 + 0x18) = *(ulonglong *)(iVar7 + 0x18) & 0xff800003ffffffff;
+  }
+  uVar16 = *(ulonglong *)(iVar7 + 0x20);
+  if ((uVar16 != 0) && ((uVar16 & 0x3fffffffff) != 0)) {
+    D3D__SetPending_RenderStates(iVar7,uVar16 << 0x1a,0x2300,iVar7 + 0x29b8);
+    *(ulonglong *)(iVar7 + 0x20) = *(ulonglong *)(iVar7 + 0x20) & 0xffffffc000000000;
+  }
+  D3D__PM4InvalidateShaderCode(iVar7);
+  cVar10 = D3D__PM4LoadShaderImmediate(iVar7,0xffffffff821f4560,0x18,0);
+  if (cVar10 != '\0') {
+    D3D__PM4LoadShaderConstantsImmediate(iVar7,0xfc,0xffffffff821f4520,4);
+  }
+  cVar10 = D3D__PM4LoadShaderImmediate(iVar7,0xffffffff821f4680,0x1ad,1);
+  if (cVar10 != '\0') {
+    D3D__PM4LoadShaderConstantsImmediate(iVar7,500,0xffffffff821f45c0,0xc);
+  }
+  D3D__PM4LoadShaderSQStates(iVar7,0x10000800,4);
+  D3D__CodecSetState(iVar7);
+  local_22c = (float)((param_2 & 0xffffffff) >> 1);
+  dVar19 = 0.0;
+  local_2cc = (float)(param_6 & 0xffffffff);
+  local_2d0 = (float)(param_5 & 0xffffffff);
+  local_240[0] = 0;
+  local_238 = 0;
+  local_234 = 0;
+  local_2e0 = 0;
+  local_2dc = 0;
+  local_2d8 = 0;
+  local_2d4 = 0x3f800000;
+  local_2c8 = 0;
+  local_2c4 = 0x3f800000;
+  local_2c0 = 0;
+  local_2bc = 0;
+  local_208 = local_2d0 * 0.5 - 1.0;
+  local_2b8 = 0;
+  local_2b4 = 0x3f800000;
+  local_2a8 = 0;
+  local_2a4 = 0x3f800000;
+  local_230 = 0;
+  local_228 = 0x46000000;
+  local_224 = 0x39000000;
+  local_220 = 0;
+  local_21c = 0;
+  local_218 = 0x41800000;
+  local_214 = 0x3d800000;
+  local_210 = 0;
+  local_20c = 0;
+  local_200 = 0x40800000;
+  local_1fc = 0x40800000;
+  local_1f8 = 0x3e800000;
+  local_1f4 = 0x3e800000;
+  local_1f0 = 0;
+  local_1ec = 0;
+  local_1e0 = 0;
+  local_1dc = 0;
+  local_1d8 = 0;
+  local_1d4 = 0;
+  local_1e8 = local_2d0 * 0.125;
+  local_1e4 = 1.0 / local_1e8;
+  local_1d0 = 0x3f800000;
+  local_1cc = 0x3fac8591;
+  local_1c8 = 0xbe0590b3;
+  local_1c4 = 0xbf1bd37a;
+  local_1c0 = 0x3f800000;
+  local_1bc = 0xbf537a70;
+  local_1b8 = 0xbf10b216;
+  local_1b4 = 0x3f321642;
+  local_1b0 = 0x3f800000;
+  local_1ac[0] = 0.0434783;
+  local_1ac[1] = 1.6086956;
+  local_1ac[2] = -0.8260869;
+  local_2b0 = local_2d0;
+  local_2ac = local_2cc;
+  local_204 = local_208;
+  memset(local_1a0,0,0xa0);
+  uVar16 = 0;
+  if ((param_4 & 0xffffffff) != 0) {
+    param_3 = param_3 + -4;
+    pfVar14 = local_1ac;
+    do {
+      pfVar14[3] = (float)dVar19;
+      lVar18 = 6;
+      pfVar14 = pfVar14 + 4;
+      *pfVar14 = (float)(uVar16 & 0xffffffff);
+      puVar11 = (undefined8 *)&local_288;
+      do {
+        puVar12 = puVar11;
+        puVar11 = puVar12 + 1;
+        *puVar11 = 0;
+        lVar18 = lVar18 + -1;
+      } while (lVar18 != 0);
+      *(undefined4 *)(puVar12 + 2) = 0;
+      D3D__SetTextureHeader(3,0x800,4,1,1,0,0x800004a,2);
+      param_3 = param_3 + 4;
+      local_264 = local_264 & 0xfff803ff | 0x24800;
+      local_258 = local_258 & 0xff87ffff;
+      local_260 = local_260 & 0xfff | *(uint *)param_3 & 0xfffff000;
+      D3D__PM4SetTextureFetchConstant(iVar7,uVar16,&local_264);
+      uVar16 = uVar16 + 1;
+    } while ((uVar16 & 0xffffffff) < (param_4 & 0xffffffff));
+  }
+  D3D__PM4FlushFetchConstants(iVar7);
+  D3D__PM4LoadShaderConstantsImmediate(iVar7,0,&local_2e0,4);
+  D3D__PM4LoadShaderConstantsImmediate(iVar7,0x100,local_240,0x14);
+  if (((*(byte *)(iVar7 + 0x2b40) & 0x80) != 0) || ((*(byte *)(iVar7 + 0x2b40) & 0x40) != 0)) {
+    D3D__WaitUntilIdleOrFlushCaches(iVar7);
+  }
+  D3D__PM4Draw(iVar7,8,3);
+  lVar18 = 6;
+  puVar11 = &uStack_f8;
+  do {
+    puVar12 = puVar11;
+    puVar11 = puVar12 + 1;
+    *puVar11 = 0;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  *(undefined4 *)(puVar12 + 2) = 0;
+  D3D__SetTextureHeader
+            (3,*(undefined4 *)(iVar7 + 0x5624),*(undefined4 *)(iVar7 + 0x5628),1,1,0,0x28280106,2);
+  uVar9 = D3D__GetCPUAddress(*(undefined4 *)(iVar7 + 0x562c));
+  local_d0 = local_d0 & 0xfff | uVar9 & 0xfffff000;
+  local_2f0 = 0;
+  local_2ec = 0;
+  local_2e8 = (undefined4)uVar2;
+  local_2e4 = (undefined4)uVar3;
+  D3DDevice_Resolve(dVar19,iVar7,0,&local_2f0,local_f0,0,0,0,0);
+  D3DDevice_SetDepthStencilSurface(iVar7,uVar4);
+  if ((uVar4 & 0xffffffff) != 0) {
+    D3DResource_Release(uVar4);
+  }
+  piVar15 = local_100;
+  do {
+    iVar1 = *piVar15;
+    D3DDevice_SetRenderTarget(iVar7,uVar17,iVar1);
+    if (iVar1 != 0) {
+      D3DResource_Release(iVar1);
+    }
+    uVar17 = uVar17 + 1;
+    piVar15 = piVar15 + 1;
+  } while ((uVar17 & 0xffffffff) < 4);
+  D3DDevice_SetRenderState_HalfPixelOffset(iVar7,uVar5);
+  D3DDevice_BlockUntilIdle(iVar7);
+  __restgprlr_19(1);
+  return;
 }
 
 
 // 828A0EB0  DwordStrcpy  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:381)
 
-void DwordStrcpy(void)
+void DwordStrcpy(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  char *pcVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint *puVar7;
+  
+  uVar3 = __savegprlr_29();
+  if ((uVar3 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar5 = (uint)*(byte *)param_2 << 0x18;
+    if (*(byte *)param_2 != 0) {
+      uVar4 = uVar3 + 4;
+      param_2 = param_2 + 2;
+      uVar6 = uVar5;
+      while( true ) {
+        uVar5 = uVar6;
+        pcVar2 = (char *)param_2;
+        if ((longlong)pcVar2[-1] == 0) break;
+        uVar5 = (uint)(((longlong)pcVar2[-1] & 0xffffU) << 0x10) | uVar5;
+        if ((longlong)*pcVar2 == 0) break;
+        uVar5 = (uint)(((longlong)*pcVar2 & 0xffffffffU) << 8) | uVar5;
+        if ((pcVar2[1] == '\0') ||
+           (uVar5 = uVar5 | (int)pcVar2[1], (param_3 & 0xffffffff) <= (uVar4 & 0xffffffff))) break;
+        bVar1 = pcVar2[2];
+        uVar6 = (uint)bVar1 << 0x18;
+        puVar7 = (uint *)uVar3;
+        if ((bVar1 == 0) || ((longlong)pcVar2[3] == 0)) {
+LAB_828a0fc8:
+          *puVar7 = uVar5;
+          uVar3 = uVar3 + 8;
+          puVar7[1] = uVar6;
+          goto LAB_828a0fc0;
+        }
+        uVar6 = (uint)(((longlong)pcVar2[3] & 0xffffU) << 0x10) | (uint)bVar1 << 0x18;
+        if ((longlong)pcVar2[4] == 0) goto LAB_828a0fc8;
+        uVar6 = (uint)(((longlong)pcVar2[4] & 0xffffffffU) << 8) | uVar6;
+        if ((pcVar2[5] == '\0') ||
+           (uVar6 = uVar6 | (int)pcVar2[5], (param_3 & 0xffffffff) <= (uVar4 + 4 & 0xffffffff)))
+        goto LAB_828a0fc8;
+        param_2 = param_2 + 8;
+        *puVar7 = uVar5;
+        *(uint *)uVar4 = uVar6;
+        uVar3 = uVar3 + 8;
+        uVar4 = uVar4 + 8;
+        bVar1 = pcVar2[6];
+        uVar5 = (uint)bVar1 << 0x18;
+        uVar6 = (uint)bVar1 << 0x18;
+        if (bVar1 == 0) break;
+      }
+    }
+    *(uint *)uVar3 = uVar5;
+    uVar3 = uVar3 + 4;
+  }
+LAB_828a0fc0:
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 82878F00  D3D::PM4SetTextureFetchConstant  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pm4code.hpp:428)
 
-void D3D__PM4SetTextureFetchConstant(void)
+void D3D__PM4SetTextureFetchConstant(undefined8 param_1,int param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  
+  iVar2 = __savegprlr_29();
+  uVar3 = *(uint *)(iVar2 + 0x30);
+  if (*(uint *)(iVar2 + 0x38) < uVar3) {
+    uVar3 = D3D__CDevice__KickOff(iVar2);
+  }
+  *(uint *)(uVar3 + 4) = *(uint *)(iVar2 + 0x32a4) | 0xc0062d00;
+  *(uint *)(uVar3 + 8) = param_2 * 6 & 0x7ffU | 0x10000;
+  *(undefined4 *)(uVar3 + 0xc) = *param_3;
+  uVar1 = param_3[1];
+  *(uint *)(uVar3 + 0x10) =
+       ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1ffff000) | uVar1 & 0xfff;
+  *(undefined4 *)(uVar3 + 0x14) = param_3[2];
+  *(undefined4 *)(uVar3 + 0x18) = param_3[3];
+  *(undefined4 *)(uVar3 + 0x1c) = param_3[4];
+  uVar1 = param_3[5];
+  *(uint *)(uVar3 + 0x20) =
+       ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1ffff000) | uVar1 & 0xfff;
+  *(uint **)(iVar2 + 0x30) = (uint *)(uVar3 + 0x20);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -287,21 +733,85 @@ void D3D__PM4FlushFetchConstants(int param_1)
 
 // 828A0FD8  DwordStrcpyWide  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:455)
 
-void DwordStrcpyWide(void)
+void DwordStrcpyWide(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint *puVar7;
+  
+  uVar3 = __savegprlr_29();
+  if ((uVar3 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    bVar1 = *(byte *)((int)param_2 + 1);
+    uVar5 = (uint)bVar1 << 0x18;
+    if (bVar1 != 0) {
+      uVar4 = uVar3 + 4;
+      param_2 = param_2 + 4;
+      while( true ) {
+        iVar2 = (int)param_2;
+        if (*(byte *)(iVar2 + -1) == 0) break;
+        uVar5 = (uint)*(byte *)(iVar2 + -1) << 0x10 | uVar5;
+        if (*(byte *)(iVar2 + 1) == 0) break;
+        uVar5 = (uint)*(byte *)(iVar2 + 1) << 8 | uVar5;
+        if ((*(byte *)(iVar2 + 3) == 0) ||
+           (uVar5 = uVar5 | *(byte *)(iVar2 + 3), (param_3 & 0xffffffff) <= (uVar4 & 0xffffffff)))
+        break;
+        bVar1 = *(byte *)(iVar2 + 5);
+        uVar6 = (uint)bVar1 << 0x18;
+        puVar7 = (uint *)uVar3;
+        if ((bVar1 == 0) || (*(byte *)(iVar2 + 7) == 0)) {
+LAB_828a10f0:
+          *puVar7 = uVar5;
+          uVar3 = uVar3 + 8;
+          puVar7[1] = uVar6;
+          goto LAB_828a10e8;
+        }
+        uVar6 = (uint)*(byte *)(iVar2 + 7) << 0x10 | (uint)bVar1 << 0x18;
+        if (*(byte *)(iVar2 + 9) == 0) goto LAB_828a10f0;
+        uVar6 = (uint)*(byte *)(iVar2 + 9) << 8 | uVar6;
+        if ((*(byte *)(iVar2 + 0xb) == 0) ||
+           (uVar6 = uVar6 | *(byte *)(iVar2 + 0xb),
+           (param_3 & 0xffffffff) <= (uVar4 + 4 & 0xffffffff))) goto LAB_828a10f0;
+        param_2 = param_2 + 0x10;
+        *puVar7 = uVar5;
+        *(uint *)uVar4 = uVar6;
+        uVar3 = uVar3 + 8;
+        uVar4 = uVar4 + 8;
+        uVar5 = (uint)*(byte *)(iVar2 + 0xd) << 0x18;
+        if (*(byte *)(iVar2 + 0xd) == 0) break;
+      }
+    }
+    *(uint *)uVar3 = uVar5;
+    uVar3 = uVar3 + 4;
+  }
+LAB_828a10e8:
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 82879040  D3D::PM4Draw  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pm4code.hpp:470)
 
-void D3D__PM4Draw(void)
+void D3D__PM4Draw(undefined8 param_1,uint param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = __savegprlr_29();
+  uVar2 = *(uint *)(iVar1 + 0x30);
+  if (*(uint *)(iVar1 + 0x38) < uVar2) {
+    uVar2 = D3D__CDevice__KickOff(iVar1);
+  }
+  *(undefined4 *)(uVar2 + 4) = 0xc0003600;
+  *(uint *)(uVar2 + 8) = (uint)((param_3 & 0xffffffff) << 0x10) | param_2 | 0x80;
+  *(uint **)(iVar1 + 0x30) = (uint *)(uVar2 + 8);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -502,21 +1012,234 @@ void D3D__CodecVideoEncode
 
 // 828A1100  DwordMemcpy  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:536)
 
-void DwordMemcpy(void)
+void DwordMemcpy(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  iVar5 = (int)param_2;
+  if (0xc < (int)param_3) {
+    lVar6 = ((param_3 - 0xdU & 0xffffffff) >> 4) + 1;
+    param_3 = param_3 - (lVar6 * 0x10 & 0xfffffff0U);
+    do {
+      puVar7 = (undefined4 *)param_2;
+      uVar1 = puVar7[1];
+      uVar2 = puVar7[2];
+      uVar3 = puVar7[3];
+      param_2 = param_2 + 0x10;
+      iVar5 = (int)param_2;
+      *puVar4 = *puVar7;
+      puVar4[1] = uVar1;
+      puVar4[2] = uVar2;
+      puVar4[3] = uVar3;
+      puVar4 = puVar4 + 4;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  if (0 < (int)param_3) {
+    iVar5 = iVar5 - (int)puVar4;
+    lVar6 = ((param_3 - 1U & 0xffffffff) >> 2) + 1;
+    do {
+      *puVar4 = *(undefined4 *)(iVar5 + (int)puVar4);
+      puVar4 = puVar4 + 1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  __restgprlr_29(puVar4);
+  return;
 }
 
 
 // 828A11A8  PIXevent_Copy_va_list  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:575)
 
-void PIXevent_Copy_va_list(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void PIXevent_Copy_va_list
+               (undefined8 param_1,undefined8 param_2,uint param_3,ulonglong param_4,
+               longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  bool bVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar6;
+  int iVar7;
+  longlong lVar4;
+  undefined8 uVar5;
+  longlong lVar8;
+  uint *puVar9;
+  char cVar11;
+  uint *puVar10;
+  undefined8 in_r13;
+  uint uVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  undefined4 *puVar17;
+  uint uVar18;
+  undefined1 local_b0 [8];
+  undefined8 local_a8;
+  undefined4 local_a0;
+  undefined4 local_90 [36];
+  ulonglong uVar16;
+  
+  iVar6 = __savegprlr_19();
+  iVar7 = (int)in_r13;
+  if (*(int *)(iVar7 + 0x2b4) != 0) {
+    dataCacheBlockTouch(param_4);
+    cVar11 = *(char *)param_4;
+    uVar14 = 0;
+    uVar13 = 0;
+    uVar12 = 0;
+    uVar15 = param_4;
+    if (cVar11 != '\0') {
+      puVar17 = local_90;
+      lVar4 = param_5;
+      do {
+        if (cVar11 == '%') {
+LAB_828a125c:
+          lVar8 = 2;
+LAB_828a1264:
+          cVar11 = *(char *)((int)uVar15 + -1 + (int)lVar8);
+          if ('X' < cVar11) {
+            if ('s' < cVar11) {
+              if (cVar11 != 'u') {
+                bVar1 = cVar11 == 'x';
+                goto LAB_828a12fc;
+              }
+              goto LAB_828a12e0;
+            }
+            if ((cVar11 == 's') ||
+               (('b' < cVar11 &&
+                (((cVar11 < 'h' || (cVar11 == 'i')) || (('m' < cVar11 && (cVar11 < 'q'))))))))
+            goto LAB_828a12e0;
+LAB_828a1300:
+            lVar8 = lVar8 + 1;
+            goto LAB_828a1264;
+          }
+          if (cVar11 == 'X') goto LAB_828a12e0;
+          if (cVar11 != '\0') {
+            if (cVar11 == '%') {
+              lVar8 = -lVar8;
+              goto LAB_828a12e0;
+            }
+            if (((cVar11 == 'C') || (cVar11 == 'E')) || (cVar11 == 'G')) goto LAB_828a12e0;
+            bVar1 = cVar11 == 'S';
+LAB_828a12fc:
+            if (bVar1) goto LAB_828a12e0;
+            goto LAB_828a1300;
+          }
+          lVar8 = 1 - lVar8;
+LAB_828a12e0:
+          if ((int)lVar8 < 0) {
+            uVar15 = uVar15 - lVar8;
+          }
+          else {
+            uVar15 = lVar8 + uVar15;
+            if ((uVar14 & 0xffffffff) < 8) {
+              cVar11 = *(char *)((int)uVar15 + -1);
+              if ((cVar11 == 's') || (cVar11 == 'S')) {
+                dataCacheBlockTouch(*(ulonglong *)lVar4 & 0xffffffff);
+                *puVar17 = (int)*(ulonglong *)lVar4;
+                if (cVar11 == 'S') {
+                  uVar12 = 1 << (uVar13 & 0x3f) | uVar12;
+                }
+                uVar13 = uVar13 + 1;
+                puVar17 = puVar17 + 1;
+              }
+              uVar14 = uVar14 + 1;
+              lVar4 = lVar4 + 8;
+            }
+          }
+        }
+        else {
+          iVar2 = (int)uVar15;
+          if (*(char *)(iVar2 + 1) == '\0') {
+LAB_828a138c:
+            uVar15 = uVar15 + 1;
+            break;
+          }
+          if (*(char *)(iVar2 + 1) == '%') {
+LAB_828a1258:
+            uVar15 = uVar15 + 1;
+            goto LAB_828a125c;
+          }
+          uVar16 = uVar15;
+          if (*(char *)(iVar2 + 2) == '\0') {
+LAB_828a1388:
+            uVar15 = uVar16 + 1;
+            goto LAB_828a138c;
+          }
+          if (*(char *)(iVar2 + 2) == '%') {
+LAB_828a1254:
+            uVar15 = uVar16 + 1;
+            goto LAB_828a1258;
+          }
+          uVar16 = uVar15 + 1;
+          if (*(char *)(iVar2 + 3) == '\0') goto LAB_828a1388;
+          if (*(char *)(iVar2 + 3) == '%') goto LAB_828a1254;
+          uVar15 = uVar15 + 4;
+        }
+        cVar11 = *(char *)uVar15;
+      } while (cVar11 != '\0');
+    }
+    puVar10 = *(uint **)(iVar7 + 0x2b0);
+    puVar9 = *(uint **)(iVar7 + 0x2b4);
+    if (puVar9 <= puVar10) {
+      do {
+        if (puVar9 == (uint *)0x0) goto LAB_828a14cc;
+        local_a0 = 0;
+        local_a8 = CONCAT44((char *)param_4,(int)param_5);
+        if (_DAT_00000059 == 0) {
+          iVar7 = 0;
+        }
+        else {
+          iVar7 = (**(code **)(_DAT_00000059 + 0x18))(0x50,local_b0);
+        }
+        if (iVar7 == 0) goto LAB_828a14cc;
+        puVar10 = *(uint **)((int)in_r13 + 0x2b0);
+        puVar9 = *(uint **)((int)in_r13 + 0x2b4);
+      } while (puVar9 <= puVar10);
+    }
+    uVar3 = param_4 & 3;
+    uVar16 = TBLr;
+    *puVar10 = (uint)((uVar16 & 0xffffffff) << 7) | (int)uVar3 + iVar6;
+    puVar10[1] = param_3;
+    puVar10[2] = uVar13 << 0x10 | (uint)uVar14;
+    lVar4 = DwordMemcpy(puVar10 + 3,param_5,(uVar14 & 0x1fffffff) << 3);
+    uVar15 = (uVar15 - param_4) + 1 + uVar3;
+    if (0x23 < (uVar15 & 0xffffffff)) {
+      uVar15 = 0x24;
+    }
+    uVar5 = DwordMemcpy(lVar4,param_4 - uVar3,uVar15);
+    iVar7 = (int)in_r13;
+    uVar18 = 0;
+    if (uVar13 != 0) {
+      puVar17 = local_90;
+      do {
+        if ((1 << (uVar18 & 0x3f) & uVar12) == 0) {
+          uVar5 = DwordStrcpy(uVar5,*puVar17,lVar4 + 0x24);
+        }
+        else {
+          uVar5 = DwordStrcpyWide();
+        }
+        iVar7 = (int)in_r13;
+        uVar18 = uVar18 + 1;
+        puVar17 = puVar17 + 1;
+      } while (uVar18 < uVar13);
+    }
+    *(int *)(iVar7 + 0x2b0) = (int)uVar5;
+  }
+LAB_828a14cc:
+  __restgprlr_19();
+  return;
 }
 
 
@@ -796,6 +1519,45 @@ void PIXBeginNamedEvent_Copy_NoVarArgs(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 82878578  D3D::PixEstimateVideoCost  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:850)
+
+void D3D__PixEstimateVideoCost(int param_1,int *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  uVar4 = (longlong)*(int *)(param_1 + 0x5628) * (longlong)*(int *)(param_1 + 0x5624);
+  bVar3 = *(int *)(param_1 + 0x5620) != 0x28280136;
+  if ((uVar4 & 0xffffffff) < 0x151801) {
+    uVar5 = -(ulonglong)(0x7e900 < uVar4) & 1;
+  }
+  else {
+    uVar5 = 2;
+  }
+  if (*param_2 == 0) {
+    fVar1 = 42560.0;
+    fVar2 = *(float *)(&DAT_821f5318 + (int)(((ulonglong)bVar3 * -3 + 3 + uVar5 & 0xffffffff) << 2))
+    ;
+  }
+  else {
+    if (*param_2 != 1) {
+      return;
+    }
+    fVar2 = *(float *)(&DAT_821f5330 + (int)(((ulonglong)bVar3 * -3 + 3 + uVar5 & 0xffffffff) << 2))
+    ;
+    fVar1 = 89600.0;
+  }
+  param_2[2] = 0;
+  param_2[3] = (int)(longlong)(fVar1 * 90.0);
+  param_2[1] = (int)((float)(uVar4 & 0xffffffff) * 1.0850695e-06 * fVar2 * 0.0059999996);
+  return;
+}
+
+
 // 82879250  D3D::FrameDone  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:928)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
@@ -832,41 +1594,388 @@ BOOL D3D__FrameDone(undefined4 param_1)
 
 // 8287B4B0  D3D::BuildVideoRecord  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:954)
 
-void D3D__BuildVideoRecord(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__BuildVideoRecord
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               ulonglong param_5,void *param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  longlong *plVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar13;
+  ulonglong uVar12;
+  ulonglong uVar14;
+  int iVar15;
+  uint uVar16;
+  longlong *plVar18;
+  ulonglong uVar17;
+  int iVar19;
+  undefined4 *puVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  ulonglong uVar23;
+  int iVar24;
+  uint uVar25;
+  ulonglong uVar26;
+  uint uVar27;
+  int *piVar28;
+  longlong lVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  undefined8 local_4a0;
+  undefined8 local_498;
+  float local_490;
+  float fStack_48c;
+  undefined4 local_480;
+  uint local_47c [3];
+  int *local_470;
+  uint local_46c;
+  undefined4 local_468;
+  longlong local_460;
+  longlong local_450;
+  longlong local_448;
+  undefined1 local_440 [28];
+  uint local_424;
+  uint local_420;
+  uint local_418;
+  uint local_400;
+  uint local_3fc;
+  uint local_3f8;
+  uint local_3f4;
+  uint local_3f0;
+  uint local_3ec;
+  int aiStack_3c0 [240];
+  
+  iVar6 = __savegprlr_16();
+  local_480 = 0;
+  memset(local_47c,0,0x18);
+  lVar29 = 6;
+  plVar5 = &local_448;
+  do {
+    plVar18 = plVar5;
+    plVar5 = plVar18 + 1;
+    *plVar5 = 0;
+    lVar29 = lVar29 + -1;
+  } while (lVar29 != 0);
+  *(undefined4 *)(plVar18 + 2) = 0;
+  D3D__SetTextureHeader(3,param_4,param_5,1,1,0,param_3,2);
+  local_424 = local_424 & 0xffff03ff | 0x4800;
+  local_418 = local_418 & 0xff9fffff | 0x200000;
+  uVar7 = D3D__GetCPUAddress(param_2);
+  uVar13 = local_420 & 0xfff | uVar7 & 0xfffff000;
+  if ((local_420 & 0x3f) == 7) {
+    uVar13 = local_420 & 0xfc0 | uVar7 & 0xfffff000 | 0x36;
+  }
+  local_420 = uVar13;
+  memcpy(&local_400,param_6,0x38);
+  if (local_3f0 == 0) {
+    local_3f0 = *(uint *)(iVar6 + 0x5638);
+  }
+  uVar13 = local_3ec;
+  if (local_3ec == 0) {
+    uVar13 = *(uint *)(iVar6 + 0x563c);
+  }
+  uVar21 = (ulonglong)local_400;
+  uVar9 = (ulonglong)local_3f8;
+  if (local_3f8 == local_400) {
+    uVar21 = 0;
+    uVar9 = param_4;
+  }
+  uVar22 = (ulonglong)local_3fc;
+  uVar12 = (ulonglong)local_3f4;
+  if (local_3f4 == local_3fc) {
+    uVar22 = 0;
+    uVar12 = param_5;
+  }
+  dVar30 = 1.0;
+  dVar32 = (double)(1.9 - (float)local_3f0 / (float)*(uint *)(iVar6 + 0x5638));
+  dVar31 = dVar30;
+  if (dVar32 < 1.0) {
+    dVar31 = dVar32;
+  }
+  dVar32 = (double)(1.9 - (float)uVar13 / (float)*(uint *)(iVar6 + 0x563c));
+  if (dVar32 < 1.0) {
+    dVar30 = dVar32;
+  }
+  uVar26 = uVar9 - uVar21;
+  uVar23 = uVar12 - uVar22;
+  iVar8 = (int)uVar26;
+  local_4a0 = (ulonglong)iVar8;
+  dVar31 = ceil((double)(float)((double)(longlong)local_4a0 * dVar31));
+  iVar24 = (int)uVar23;
+  uVar7 = (uint)dVar31;
+  local_4a0 = (ulonglong)(int)uVar7;
+  dVar31 = ceil((double)(float)((double)(longlong)iVar24 * dVar30));
+  uVar17 = (-(ulonglong)(*(int *)(iVar6 + 0x5550) != 0) & 0xf) + 0x23;
+  uVar10 = (-(ulonglong)(*(int *)(iVar6 + 0x5550) != 0) & 9) + 0x13;
+  uVar11 = (uVar17 + uVar7) - 1;
+  trapWord(6,uVar17,0);
+  uVar14 = (longlong)((int)uVar11 / (int)uVar17) + 3U & 0xfffffffc;
+  trapWord(5,uVar17 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if ((int)uVar14 < 0x19) {
+    uVar14 = 0x18;
+  }
+  trapWord(6,uVar10,0);
+  uVar17 = (uVar10 + (uint)(int)dVar31) - 1;
+  uVar11 = (longlong)((int)uVar17 / (int)uVar10) + 3U & 0xfffffffc;
+  trapWord(5,uVar10 & ~(((uVar17 & 0x7fffffff) << 1 | (uVar17 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if ((int)uVar11 < 0x19) {
+    uVar11 = 0x18;
+  }
+  uVar10 = (uVar11 + (uint)(int)dVar31) - 1;
+  uVar17 = (uVar14 + uVar7) - 1;
+  iVar15 = (int)uVar14;
+  iVar3 = iVar15 >> 2;
+  uVar25 = ((int)uVar17 / iVar15) * iVar15;
+  iVar19 = (int)uVar11;
+  iVar4 = iVar19 >> 2;
+  trapWord(6,uVar14,0);
+  trapWord(6,uVar11,0);
+  trapWord(5,uVar14 & ~(((uVar17 & 0x7fffffff) << 1 | (uVar17 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  trapWord(5,uVar11 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  uVar7 = ((int)uVar10 / iVar19) * iVar19;
+  if (iVar8 < (int)uVar25) {
+    trapWord(6,uVar14,0);
+    uVar25 = (iVar8 / iVar15) * iVar15;
+    trapWord(5,uVar14 & ~(((uVar26 & 0x7fffffff) << 1 | (uVar26 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  }
+  if (iVar24 < (int)uVar7) {
+    trapWord(6,uVar11,0);
+    uVar7 = (iVar24 / iVar19) * iVar19;
+    trapWord(5,uVar11 & ~(((uVar23 & 0x7fffffff) << 1 | (uVar23 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  }
+  local_498 = (ulonglong)*(uint *)(iVar6 + 0x563c);
+  trapWord(6,uVar26,0);
+  trapWord(6,uVar23,0);
+  local_4a0 = ((longlong)(int)uVar7 * (longlong)(int)uVar13 & 0xffffffffU) / (uVar23 & 0xffffffff);
+  uVar16 = (int)uVar21 + (int)uVar9;
+  uVar13 = (int)uVar22 + (int)uVar12;
+  dVar31 = (double)(float)((double)local_4a0 / (double)local_498);
+  dVar30 = (double)((float)(((longlong)(int)uVar25 * (longlong)(int)local_3f0 & 0xffffffffU) /
+                           (uVar26 & 0xffffffff)) / (float)*(uint *)(iVar6 + 0x5638));
+  if (*(int *)(iVar6 + 0x5644) == 0) {
+    fVar1 = 4.0;
+    fVar2 = 3.0;
+  }
+  else {
+    fVar1 = 16.0;
+    fVar2 = 9.0;
+  }
+  iVar24 = (int)uVar7 / iVar4;
+  uVar27 = iVar24 * ((int)uVar25 / iVar3);
+  dVar32 = (double)((float)(dVar30 * (double)fVar1) / (float)(dVar31 * (double)fVar2));
+  uVar9 = (((ulonglong)uVar25 & 0x7fffffff) << 1 | (ulonglong)(uVar25 >> 0x1f)) - 1;
+  uVar21 = (longlong)iVar3 & ~uVar9;
+  uVar12 = (longlong)iVar4 &
+           ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1);
+  uVar27 = (uVar27 / 0x2a + 0x400) * 4 + uVar27 * 6;
+  trapWord(6,(longlong)iVar3,0);
+  trapWord(6,(longlong)iVar4,0);
+  trapWord(5,uVar21,0xffff);
+  trapWord(5,uVar12,0xffff);
+  if (uVar27 < 0x4001) {
+    uVar27 = 0x4000;
+  }
+  local_470 = aiStack_3c0;
+  local_480 = 0;
+  local_47c[1] = 0x1000;
+  local_47c[0] = uVar27;
+  if (_DAT_00000059 == 0) {
+    iVar8 = 0;
+  }
+  else {
+    iVar8 = (**(code **)(_DAT_00000059 + 0x18))
+                      (0x5c,&local_480,uVar9,uVar21,iVar24,local_470,uVar12);
+  }
+  piVar28 = local_470;
+  if (iVar8 != 0) {
+    uVar9 = (ulonglong)local_46c;
+    iVar8 = 0;
+    if ((param_7 & 0xffffffff) != 0) {
+      iVar8 = ((uint)LZCOUNT(0x28280136 - (int)param_3) >> 5) + 1;
+    }
+    puVar20 = (undefined4 *)(*local_470 + local_47c[2]);
+    *puVar20 = 0x50697856;
+    puVar20[1] = 0;
+    puVar20[2] = *(undefined4 *)(iVar6 + 0x5550);
+    puVar20[3] = iVar8;
+    puVar20[4] = (int)uVar25 / iVar3 << 1;
+    puVar20[5] = iVar24 << 1;
+    puVar20[6] = (float)dVar30;
+    puVar20[7] = (float)dVar31;
+    puVar20[8] = (float)dVar32;
+    if ((param_7 & 0xffffffff) != 0) {
+      memcpy(puVar20 + 9,(void *)param_7,0x600);
+    }
+    iVar24 = local_47c[2] + 0x1000;
+    if (0x3fff < local_47c[2] + 0x1000) {
+      iVar24 = 0;
+      piVar28 = piVar28 + 1;
+      uVar9 = uVar9 - 1;
+    }
+    local_460 = (longlong)(int)uVar7;
+    local_448 = (longlong)
+                (int)((((int)uVar16 >> 1) + (uint)((int)uVar16 < 0 && (uVar16 & 1) != 0)) -
+                     ((int)uVar25 >> 1));
+    local_450 = (longlong)iVar4;
+    local_4a0 = CONCAT44((float)(longlong)(int)uVar25,(float)local_460);
+    local_498 = CONCAT44((float)local_448,
+                         (float)(longlong)
+                                (int)((((int)uVar13 >> 1) +
+                                      (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0)) -
+                                     ((int)uVar7 >> 1)));
+    _local_490 = CONCAT44((float)(longlong)iVar3,(float)local_450);
+    D3D__CodecVideoEncode
+              (iVar6,iVar24,piVar28,uVar9,((local_47c[2] + uVar27) - 1 & 0x3fff) + 1,local_440,
+               &local_4a0,&local_498);
+  }
+  __restgprlr_16(local_468);
+  return;
 }
 
 
 // 828A1690  PIXBeginNamedEvent_Copy_Int  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:1023)
 
-void PIXBeginNamedEvent_Copy_Int(void)
+void PIXBeginNamedEvent_Copy_Int(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined4 uVar4;
+  int in_r13;
+  
+  uVar3 = __savegprlr_29();
+  if (*(int *)(in_r13 + 0x2b4) != 0) {
+    uVar2 = TBLr;
+    puVar1 = *(uint **)(in_r13 + 0x2b0);
+    if (puVar1 < *(uint **)(in_r13 + 0x2b4)) {
+      *puVar1 = (uint)((uVar2 & 0xffffffff) << 7) | 0x1f;
+      puVar1[1] = (uint)uVar3;
+      puVar1[2] = (uint)param_3;
+      uVar4 = DwordStrcpy(puVar1 + 3,param_2,puVar1 + 0xc);
+      *(undefined4 *)(in_r13 + 0x2b0) = uVar4;
+    }
+    else if (*(uint **)(in_r13 + 0x2b4) != (uint *)0x0) {
+      PIXBeginNamedEvent_Copy_VarArgs_NoOverload(uVar3,param_2,param_3);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 828A1740  PIXEndNamedEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:1182)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 void PIXEndNamedEvent(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined8 in_r13;
+  int iVar5;
+  undefined1 local_40 [8];
+  undefined8 local_38;
+  undefined4 local_30;
+  
   __savegprlr_29();
+  iVar5 = (int)in_r13;
+  if (*(int *)(iVar5 + 0x2b4) != 0) {
+    uVar2 = TBLr;
+    puVar1 = *(undefined4 **)(iVar5 + 0x2b0);
+    puVar4 = *(undefined4 **)(iVar5 + 0x2b4);
+    if (puVar4 <= puVar1) {
+      do {
+        if (puVar4 == (undefined4 *)0x0) goto LAB_828a1810;
+        local_38 = 0;
+        local_30 = 0;
+        if (_DAT_00000059 == 0) {
+          iVar3 = 0;
+        }
+        else {
+          iVar3 = (**(code **)(_DAT_00000059 + 0x18))(0x50,local_40);
+        }
+        iVar5 = (int)in_r13;
+        if (iVar3 == 0) goto LAB_828a1810;
+        puVar1 = *(undefined4 **)(iVar5 + 0x2b0);
+        puVar4 = *(undefined4 **)(iVar5 + 0x2b4);
+        uVar2 = TBLr;
+      } while (puVar4 <= puVar1);
+    }
+    *puVar1 = (int)((uVar2 & 0xffffffff) << 7);
+    *(undefined4 **)(iVar5 + 0x2b0) = puVar1 + 1;
+  }
+LAB_828a1810:
+  __restgprlr_29();
+  return;
 }
 
 
 // 8287BBC0  D3D::PixCaptureVideoFrame  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1204)
 
-void D3D__PixCaptureVideoFrame(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__PixCaptureVideoFrame
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  ulonglong uVar1;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  undefined4 in_stack_00000054;
+  int local_70;
+  undefined1 auStack_6c [20];
+  uint local_58;
+  
+  iVar2 = __savegprlr_23();
+  *(int *)(iVar2 + 0x5620) = (int)param_5;
+  *(int *)(iVar2 + 0x5624) = (int)param_6;
+  *(int *)(iVar2 + 0x5628) = (int)param_7;
+  *(int *)(iVar2 + 0x562c) = (int)param_4;
+  *(int *)(iVar2 + 0x5630) = (int)param_8;
+  *(undefined4 *)(iVar2 + 0x5634) = in_stack_00000054;
+  if ((param_2 & 8) != 0) {
+    VdQueryVideoMode(iVar2 + 0x5638);
+  }
+  if ((*(uint *)(iVar2 + 0x554c) & 0x40000000) != 0) {
+    if (((param_3 & 0xffffffff) == 0) && ((*(byte *)(iVar2 + 0x2b3d) & 2) == 0)) {
+      uVar1 = D3D__BuildVideoRecord(iVar2,param_4,param_5,param_6,param_7,param_8,in_stack_00000054)
+      ;
+    }
+    else {
+      memset(auStack_6c,0,0x18);
+      local_70 = ((int)param_3 == 0 ^ 1) + 4;
+      if (_DAT_00000059 != 0) {
+        (**(code **)(_DAT_00000059 + 0x18))(0x5c,&local_70);
+      }
+      uVar1 = (ulonglong)local_58;
+    }
+    uVar4 = (ulonglong)*(uint *)(iVar2 + 0x30);
+    if (*(uint *)(iVar2 + 0x38) < uVar4) {
+      uVar4 = D3D__CDevice__KickOff(iVar2);
+    }
+    uVar3 = D3D__InsertCallback(iVar2,uVar4,0,0xffffffff82879250,uVar1);
+    *(undefined4 *)(iVar2 + 0x30) = uVar3;
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -909,33 +2018,178 @@ void PIXAddCounter(double param_1,uint param_2)
 }
 
 
-// 828786D0  D3D::GetDrPixCpuCounters  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1279)
+// 828A18F8  PIXAddNamedCounter  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:1254)
 
-void D3D__GetDrPixCpuCounters(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void PIXAddNamedCounter(double param_1,undefined8 param_2,int param_3,undefined8 param_4,
+                       undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
+                       undefined8 param_9)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar4;
+  float fStack00000014;
+  int iStack0000001c;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
+  undefined1 local_50 [32];
+  char local_30 [31];
+  char cStack_11;
+  
+  fStack00000014 = (float)param_1;
+  uVar2 = TBLr;
+  pcVar4 = &stack0x00000000 + -0x30;
+  iVar3 = 0;
+  while (cVar1 = pcVar4[param_3 - (int)local_30], uStack00000020 = param_4, uStack00000028 = param_5
+        , uStack00000030 = param_6, uStack00000038 = param_7, uStack00000040 = param_8,
+        uStack00000048 = param_9, iStack0000001c = param_3, cVar1 != '\0') {
+    if (cVar1 == '%') {
+      iVar3 = RtlVsnprintf(&stack0x00000000 + -0x30,0x1f,param_3,&stack0x00000020);
+      pcVar4 = &stack0x00000000 + iVar3 + -0x30;
+      if (pcVar4 < &stack0x00000000 + -0x30) {
+        pcVar4 = &cStack_11;
+      }
+      break;
+    }
+    iVar3 = iVar3 + 1;
+    *pcVar4 = cVar1;
+    pcVar4 = pcVar4 + 1;
+    if (0x1e < iVar3) break;
+  }
+  *pcVar4 = '\0';
+  if (_DAT_00000059 != 0) {
+    (**(code **)(_DAT_00000059 + 0x18))(0x43,&stack0x00000000 + -0x50);
+  }
+  return;
+}
+
+
+// 828786D0  D3D::GetDrPixCpuCounters  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1279)
+
+void D3D__GetDrPixCpuCounters(undefined8 param_1,code *param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_27();
+  *(uint *)(iVar3 + 0x55cc) =
+       *(uint *)(iVar3 + 0x55cc) & 0xfffffff0 | *(uint *)(iVar3 + 0x3644) & 0xf;
+  iVar1 = ((*(int *)(iVar3 + 0x3b64) - *(int *)(iVar3 + 0x3b60) >> 2) + 1) * 4;
+  *(uint *)(iVar3 + 0x55c8) =
+       (uint)((((ulonglong)*(uint *)(iVar3 + 0x5f20) & 1) << 1 | param_4 & 0xfffffffd) << 8) & 0x300
+       | *(uint *)(iVar3 + 0x55c8) & 0xfffffc1f | 0x10;
+  *(byte *)(iVar3 + 0x55d3) = (byte)(*(uint *)(iVar3 + 0x2f7c) >> 0x17) & 0x7f;
+  *(int *)(iVar3 + 0x55e4) = iVar1;
+  uVar2 = DAT_84890338;
+  *(int *)(iVar3 + 0x55e0) =
+       (*(int *)(iVar3 + 0x30) - *(int *)(iVar3 + 0x560c) >> 2) * 4 +
+       (*(int *)(iVar3 + 0x3b70) - *(int *)(iVar3 + 0x5608)) * iVar1;
+  *(int *)(iVar3 + 0x5608) = *(int *)(iVar3 + 0x3b70);
+  *(int *)(iVar3 + 0x560c) = *(int *)(iVar3 + 0x30);
+  *(undefined4 *)(iVar3 + 22000) = *(undefined4 *)(iVar3 + 0x557c);
+  *(short *)(iVar3 + 0x55de) = (short)uVar2;
+  *(undefined4 *)(iVar3 + 0x55f4) = *(undefined4 *)(iVar3 + 0x5578);
+  (*param_2)(0x44336463,iVar3 + 0x55c8,0x30,param_3);
+  *(uint *)(iVar3 + 0x55c8) = *(uint *)(iVar3 + 0x55c8) & 0xfffff3ff;
+  __restgprlr_27();
+  return;
 }
 
 
 // 828A1A30  PIXSubmitDrPixCounters  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/pix.cpp:1303)
 
-void PIXSubmitDrPixCounters(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void PIXSubmitDrPixCounters(undefined8 param_1,void *param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  uint uVar4;
+  size_t _Size;
+  uint *puVar5;
+  undefined1 *local_b0 [20];
+  uint local_60 [2];
+  size_t local_58;
+  undefined1 auStack_54 [4];
+  uint *local_50;
+  int local_4c;
+  void *local_48;
+  int local_44;
+  undefined4 local_40;
+  
+  local_60[1] = __savegprlr_27();
+  _Size = (size_t)param_3;
+  local_50 = local_60;
+  local_44 = (int)((param_3 + 3U & 0xffffffff) >> 2);
+  iVar1 = local_44 + 3;
+  local_4c = 3;
+  local_60[0] = iVar1 * 0x1000000 | 0x62;
+  local_40 = 0;
+  local_58 = _Size;
+  local_48 = param_2;
+  local_b0[0] = (undefined1 *)register0x0000000c;
+  if (_DAT_00000059 == 0) {
+    iVar3 = 0;
+  }
+  else {
+    iVar3 = (**(code **)(_DAT_00000059 + 0x18))(0x5e,&local_50);
+  }
+  if (iVar3 < 1) {
+    if (iVar3 < 0) {
+      uVar2 = 0;
+    }
+    else {
+      uVar4 = iVar1 * -4 & 0xfffffff0;
+      _RtlCheckStack12();
+      *(undefined1 **)((int)local_b0 + uVar4) = local_b0[0];
+      puVar5 = (uint *)((int)local_60 + uVar4);
+      *puVar5 = local_60[0];
+      *(uint *)((int)local_60 + uVar4 + 4) = local_60[1];
+      *(size_t *)(auStack_54 + (uVar4 - 4)) = local_58;
+      memcpy(auStack_54 + uVar4,param_2,_Size);
+      local_50 = puVar5;
+      local_4c = iVar1;
+      if (_DAT_00000059 == 0) {
+        uVar2 = 0;
+      }
+      else {
+        uVar2 = (**(code **)(_DAT_00000059 + 0x18))(0x43,&local_50);
+      }
+    }
+  }
+  else {
+    uVar2 = 1;
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 828787D8  D3D::GetDrPixCounters  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1334)
 
-void D3D__GetDrPixCounters(void)
+void D3D__GetDrPixCounters(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  D3D__GetDrPixCpuCounters
+            (iVar1,param_2,param_3,(~(ulonglong)*(byte *)(iVar1 + 0x2b3f) & 0xffffffff) >> 2 & 1);
+  *(byte *)(iVar1 + 0x2b3f) = *(byte *)(iVar1 + 0x2b3f) | 4;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -961,8 +2215,51 @@ double D3D__PercentClamp(double param_1)
 void D3D__GetGPUPerfCounters(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  int *piVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (*(int *)(iVar2 + 0x41dc) == *(int *)(iVar2 + 0x55c4)) {
+LAB_8287931c:
+    uVar1 = 1;
+  }
+  else {
+    iVar3 = KeGetCurrentProcessType();
+    if (iVar3 != 2) {
+      if (*(int *)(iVar2 + 0x55b8) == 2) {
+        if ((*(uint *)(iVar2 + 0x55bc) != *(uint *)(iVar2 + 0x55c0)) &&
+           (iVar3 = D3DPerfCounters_IsBusy
+                              (((ulonglong)*(uint *)(iVar2 + 0x55bc) & 0xfffffff) * 0x10 +
+                               (ulonglong)*(uint *)(iVar2 + 0x55b0)), iVar3 == 0)) {
+          memcpy(&DAT_8488ff78,&DAT_84890158,0x1e0);
+          DAT_8488ff70 = DAT_8488ff74;
+          D3DPerfCounters_GetValues
+                    (((ulonglong)*(uint *)(iVar2 + 0x55bc) & 0xfffffff) * 0x10 +
+                     (ulonglong)*(uint *)(iVar2 + 0x55b0),0xffffffff84890158,0,0);
+          iVar3 = *(int *)(iVar2 + 0x55bc);
+          piVar4 = (int *)(*(int *)(iVar2 + 0x55b4) + iVar3 * 8);
+          DAT_8488ff74 = piVar4[1] - *piVar4;
+          if (iVar3 == 3) {
+            iVar3 = 0;
+          }
+          else {
+            iVar3 = iVar3 + 1;
+          }
+          *(int *)(iVar2 + 0x55bc) = iVar3;
+          *(undefined4 *)(iVar2 + 0x55c4) = *(undefined4 *)(iVar2 + 0x41dc);
+          goto LAB_8287931c;
+        }
+      }
+      else if (*(int *)(iVar2 + 0x55b8) == 0) {
+        *(undefined4 *)(iVar2 + 0x55b8) = 1;
+      }
+    }
+    uVar1 = 0;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -1207,6 +2504,195 @@ void D3D__SubmitGeneralCounters(void)
 }
 
 
+// 82879708  D3D::GetCounter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1601)
+
+void D3D__GetCounter(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  byte *pbVar2;
+  longlong lVar3;
+  int iVar5;
+  longlong lVar4;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint uVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  ulonglong local_38;
+  
+  iVar5 = __savegprlr_29();
+  switch(param_2) {
+  case 0:
+    dVar14 = (double)((float)*(uint *)(iVar5 + 0x5574) * *(float *)(iVar5 + 0x5584));
+    goto LAB_82879bb4;
+  case 1:
+    if (*(uint *)(iVar5 + 0x5574) == 0) {
+      dVar14 = NAN;
+    }
+    else {
+      dVar14 = (double)(*(float *)(iVar5 + 0x5580) / (float)*(uint *)(iVar5 + 0x5574));
+    }
+    goto LAB_82879bb4;
+  case 2:
+    uVar7 = *(uint *)(iVar5 + 0x41dc);
+    goto LAB_828797cc;
+  case 3:
+    dVar14 = (double)((float)*(uint *)(iVar5 + 0x5598) / (float)*(uint *)(iVar5 + 0x5574));
+    goto LAB_82879804;
+  case 4:
+    uVar11 = *(uint *)(iVar5 + 0x5574);
+    uVar7 = *(uint *)(iVar5 + 0x559c);
+    goto LAB_82879828;
+  case 5:
+    uVar11 = *(uint *)(iVar5 + 0x5574);
+    uVar7 = (uVar11 - *(int *)(iVar5 + 0x559c)) - *(int *)(iVar5 + 0x5598);
+LAB_82879828:
+    dVar14 = (double)((float)uVar7 / (float)uVar11);
+    goto LAB_82879804;
+  case 6:
+    uVar7 = *(uint *)(iVar5 + 0x55a0);
+    iVar1 = *(int *)(iVar5 + 0x2b10);
+    pbVar2 = (byte *)(((uVar7 + 1 & 7) + 0x10) * 4 + iVar1);
+    uVar9 = (ulonglong)pbVar2[3] << 0x18 | (ulonglong)pbVar2[2] << 0x10 | (ulonglong)pbVar2[1] << 8
+            | (ulonglong)*pbVar2;
+    pbVar2 = (byte *)(((uVar7 - 1 & 7) + 0x10) * 4 + iVar1);
+    uVar8 = (ulonglong)pbVar2[3] << 0x18 | (ulonglong)pbVar2[2] << 0x10 | (ulonglong)pbVar2[1] << 8
+            | (ulonglong)*pbVar2;
+    pbVar2 = (byte *)(((uVar7 & 7) + 0x10) * 4 + iVar1);
+    uVar6 = (ulonglong)pbVar2[3] << 0x18 | (ulonglong)pbVar2[2] << 0x10 | (ulonglong)pbVar2[1] << 8
+            | (ulonglong)*pbVar2;
+    if (((uVar9 == 0) || (*(uint *)(iVar5 + 0x55a0) = uVar7 + 2, uVar6 == 0)) || (uVar8 == 0))
+    break;
+    if (uVar6 <= uVar8) {
+      uVar6 = uVar6 + 0x100000000;
+    }
+    if (uVar9 <= uVar6) {
+      uVar9 = uVar9 + 0x100000000;
+    }
+    dVar14 = (double)__u64tod(uVar9 - uVar6);
+    lVar4 = uVar9 - uVar8;
+LAB_828799d0:
+    dVar12 = (double)__u64tod(lVar4);
+    dVar14 = dVar14 / dVar12;
+LAB_828799dc:
+    dVar14 = (double)(float)dVar14;
+LAB_82879804:
+    dVar14 = (double)D3D__PercentClamp(dVar14);
+    goto LAB_82879bb4;
+  case 7:
+  case 0x12:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    if (iVar5 != 0) {
+      lVar10 = DAT_84890158 - DAT_8488ff78;
+      local_38 = (ulonglong)DAT_8488ff74;
+      lVar4 = DAT_84890160 - DAT_8488ff80;
+      if (param_2 == 7) {
+        lVar4 = lVar4 - local_38;
+      }
+      if (lVar4 != 0) {
+        dVar14 = (double)__u64tod();
+        dVar12 = (double)__u64tod(lVar10);
+        dVar14 = (double)(1.0 - (float)(dVar14 / dVar12));
+        goto LAB_82879804;
+      }
+    }
+    break;
+  case 8:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    if (iVar5 != 0) {
+      lVar4 = DAT_848901d0 - DAT_8488fff0;
+      lVar10 = DAT_8488fff8;
+      lVar3 = DAT_848901d8;
+joined_r0x82879a70:
+      if (lVar4 != 0) {
+        dVar14 = (double)__u64tod(lVar3 - lVar10);
+        goto LAB_828799d0;
+      }
+    }
+    break;
+  case 9:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    if ((iVar5 != 0) && (DAT_848901d0 != DAT_8488fff0)) {
+      dVar14 = (double)__u64tod();
+      dVar12 = (double)__u64tod(DAT_848901d8 - DAT_8488fff8);
+      dVar12 = dVar14 - dVar12;
+      dVar13 = (double)__u64tod(DAT_848901e0 - DAT_84890000);
+      dVar14 = (dVar12 - dVar13) / dVar14;
+      goto LAB_828799dc;
+    }
+    break;
+  case 10:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    if (iVar5 != 0) {
+      lVar4 = DAT_848901d0 - DAT_8488fff0;
+      lVar10 = DAT_84890000;
+      lVar3 = DAT_848901e0;
+      goto joined_r0x82879a70;
+    }
+    break;
+  case 0xb:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    if (iVar5 == 0) break;
+    lVar4 = ((DAT_84890310 - DAT_84890130) - DAT_84890128) + DAT_84890308;
+    goto LAB_82879abc;
+  case 0xc:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    lVar4 = DAT_84890318;
+    lVar10 = DAT_84890138;
+    if (iVar5 == 0) break;
+    goto LAB_82879af0;
+  case 0xd:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    lVar10 = DAT_84890060;
+    lVar4 = DAT_84890240;
+    goto joined_r0x82879b30;
+  case 0xe:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    lVar10 = DAT_8488ffd0;
+    lVar4 = DAT_848901b0;
+joined_r0x82879b30:
+    if (iVar5 != 0) {
+LAB_82879af0:
+      lVar4 = lVar4 - lVar10;
+LAB_82879abc:
+      lVar10 = DAT_84890158 - DAT_8488ff78;
+LAB_82879ac0:
+      dVar14 = (double)D3D__CalculateBandwidth(lVar4,lVar10);
+      goto LAB_82879bb4;
+    }
+    break;
+  case 0xf:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    lVar4 = DAT_84890140;
+    lVar10 = DAT_84890320;
+    goto joined_r0x82879b94;
+  case 0x10:
+    iVar5 = D3D__GetGPUPerfCounters(iVar5);
+    lVar4 = DAT_84890148;
+    lVar10 = DAT_84890328;
+joined_r0x82879b94:
+    if (iVar5 == 0) break;
+    lVar4 = (lVar10 - lVar4) * 2;
+    lVar10 = DAT_84890158 - DAT_8488ff78;
+    goto LAB_82879ac0;
+  case 0x11:
+    uVar7 = *(uint *)(iVar5 + 0x5ca8);
+LAB_828797cc:
+    dVar14 = (double)uVar7;
+    goto LAB_82879bb4;
+  }
+  dVar14 = NAN;
+LAB_82879bb4:
+  __restgprlr_29(dVar14);
+  return;
+}
+
+
 // 82879BC8  D3D::BeginCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1843)
 
 void D3D__BeginCapture(int param_1)
@@ -1239,31 +2725,282 @@ void D3D__BlockUntilIdleCallback(undefined8 param_1)
 
 // 8287C140  D3D::HandleCaptureState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:1884)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 void D3D__HandleCaptureState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  code *pcVar1;
+  undefined8 in_r0;
+  int iVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined4 local_70;
+  int local_6c;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  code *local_48;
+  int local_44;
+  uint local_38;
+  undefined4 local_34;
+  code *local_30;
+  code *local_2c;
+  code *local_28;
+  code *local_24;
+  
+  iVar3 = __savegprlr_29();
+  uVar2 = PIXGetCaptureState();
+  if ((uVar2 & 0x20) != 0) {
+    D3D__SubmitGeneralCounters(iVar3);
+  }
+  if (((*(uint *)(iVar3 + 0x554c) & 0x80000000) != 0) && (*(int *)(iVar3 + 0x5548) == 0)) {
+    local_70 = 0x100037;
+    local_6c = iVar3;
+    PIXAddPixOpWithData(0x900037,0,0);
+    D3D__GPUTimingMarkerFull___GPUTimingMarkerFull(&local_70);
+  }
+  if (*(int *)(iVar3 + 0x5548) != 0) {
+    D3DDevice_BlockUntilIdle(iVar3);
+    (**(code **)(**(int **)(iVar3 + 0x5548) + 0x24))(*(int **)(iVar3 + 0x5548),iVar3 + 0x3b40);
+    D3D__FreeGpuCapture(0xffffffff82859fa0,*(undefined4 *)(iVar3 + 0x5548));
+    *(undefined4 *)(iVar3 + 0x5548) = 0;
+    if ((*(byte *)(iVar3 + 0x2b3d) & 1) != 0) {
+      *(byte *)(iVar3 + 0x2b3d) = *(byte *)(iVar3 + 0x2b3d) & 0xfe;
+      if (*(code **)(iVar3 + 0x3588) != (code *)0x0) {
+        (**(code **)(iVar3 + 0x3588))(0);
+      }
+      DbgPrint(0xffffffff821f53f8);
+      trapWord(0x1f,in_r0,0x16);
+    }
+  }
+  memset(&local_5c,0,0x3c);
+  local_60 = *(undefined4 *)(iVar3 + 0x41dc);
+  local_50 = *(undefined4 *)(iVar3 + 0x5610);
+  *(byte *)(iVar3 + 0x2b40) = *(byte *)(iVar3 + 0x2b40) | 0x20;
+  local_58 = 0;
+  local_5c = 0x5014;
+  local_48 = D3D__BlockUntilIdleCallback;
+  local_28 = D3D__PixTimeSinceVBlank;
+  local_54 = 0x47;
+  local_24 = D3D__PixDecodeVideoFrame;
+  local_30 = D3D__PixEnableVideoPlayback;
+  local_2c = D3D__PixDisableVideoPlayback;
+  local_44 = iVar3;
+  if (_DAT_00000059 == 0) {
+    iVar4 = 0;
+  }
+  else {
+    iVar4 = (**(code **)(_DAT_00000059 + 0x18))(0x52,&local_60);
+  }
+  if (iVar4 == 0) {
+    if (_DAT_00000266 == (int *)0x0) {
+      if (_DAT_00000059 == 0) goto LAB_8287c338;
+      pcVar1 = *(code **)(_DAT_00000059 + 0x18);
+    }
+    else if ((_DAT_00000266 == (int *)0x0) ||
+            (pcVar1 = (code *)*_DAT_00000266, pcVar1 == (code *)0x0)) goto LAB_8287c338;
+    (*pcVar1)(0x2e,*(undefined4 *)(iVar3 + 0x41dc));
+  }
+LAB_8287c338:
+  *(byte *)(iVar3 + 0x2b40) = *(byte *)(iVar3 + 0x2b40) & 0xdf;
+  if ((local_38 & 0x10) != 0) {
+    *(undefined4 *)(iVar3 + 0x5610) = 0;
+    *(undefined4 *)(iVar3 + 0x5614) = 0;
+  }
+  if (*(int *)(iVar3 + 0x5618) != 0) {
+    *(undefined4 *)(iVar3 + 0x5618) = 0;
+    *(undefined4 *)(iVar3 + 0x5610) = 0;
+    *(undefined4 *)(iVar3 + 0x5614) = 0;
+  }
+  *(uint *)(iVar3 + 0x554c) = local_38 << 0x1f | *(uint *)(iVar3 + 0x554c) & 0x7fffffff;
+  if (local_38 << 0x1f != 0) {
+    local_70 = 0x10003c;
+    local_6c = iVar3;
+    PIXAddPixOpWithData(0x90003c,0,0);
+    D3D__GPUTimingMarkerFull___GPUTimingMarkerFull(&local_70);
+  }
+  if ((local_38 & 2) != 0) {
+    D3D__BeginCapture(iVar3);
+  }
+  uVar2 = (ulonglong)local_38;
+  if ((local_38 & 0x20) != 0) {
+    *(undefined1 *)(iVar3 + 0x35e8) = 1;
+  }
+  if ((((local_38 & 0x40) != 0) && (*(undefined1 *)(iVar3 + 0x35e9) = 1, (local_38 & 0x80) != 0)) &&
+     (DAT_829a710c != (code *)0x0)) {
+    (*DAT_829a710c)(DAT_829a7080,0xffffffff821f53c0);
+    uVar2 = (ulonglong)local_38;
+  }
+  *(uint *)(iVar3 + 0x554c) =
+       (uint)((uVar2 >> 2) << 0x1e) & 0x40000000 | *(uint *)(iVar3 + 0x554c) & 0xbfffffff;
+  *(undefined4 *)(iVar3 + 0x5550) = local_34;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82878A70  D3D::CommandHandler  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2100)
 
-void D3D__CommandHandler(void)
+void D3D__CommandHandler(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar2 = 0xffffffff82da0017;
+    goto LAB_82878b2c;
+  }
+  bVar1 = *(byte *)(iVar3 + 4);
+  if (bVar1 < 0x6c) {
+    if (((bVar1 == 0x6b) || (bVar1 == 0x61)) ||
+       ((0x62 < bVar1 && ((bVar1 < 0x65 || ((0x65 < bVar1 && (bVar1 < 0x68)))))))) {
+      uVar2 = 0xffffffff821f5350;
+LAB_82878ae8:
+      RtlSprintf(param_2,uVar2);
+    }
+  }
+  else if (bVar1 == 0x6d) {
+    D3D__XBMProcessCommand(iVar3,param_2,param_3,param_4);
+  }
+  else if (bVar1 == 0x74) {
+    uVar2 = 0xffffffff821f5348;
+    goto LAB_82878ae8;
+  }
+  uVar2 = 0x2da0000;
+LAB_82878b2c:
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 82879C90  D3D::CounterHandler  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2167)
 
-void D3D__CounterHandler(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__CounterHandler(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  int iVar2;
+  uint uVar3;
+  DWORD DVar4;
+  undefined8 uVar5;
+  char *pcVar7;
+  ulonglong uVar6;
+  longlong lVar8;
+  uint uVar9;
+  undefined4 *puVar10;
+  ulonglong local_40 [8];
+  
+  uVar3 = __savegprlr_27();
+  iVar2 = _DAT_000001be;
+  if (((_DAT_000001be == 0) || (*(int *)(_DAT_000001be + 0x3c) == 0)) ||
+     (*(longlong *)(_DAT_000001be + 0x2b00) == 0)) goto LAB_82879f64;
+  uVar6 = param_2;
+  if (uVar3 < 0xe1) {
+    if (uVar3 != 0xe0) {
+      if ((uVar3 == 0) || (uVar3 == 1)) {
+        *(undefined4 *)(_DAT_000001be + 0x55a8) = 0;
+        DAT_84890364 = 0;
+      }
+      else {
+        uVar9 = (uint)param_2;
+        if (uVar3 == 0x10) {
+          DAT_84890364 = DAT_84890364 & ~(1 << (uVar9 & 0x3f));
+          if ((param_2 & 0xffffffff) == 6) {
+            *(undefined4 *)(_DAT_000001be + 0x55a8) = 0;
+          }
+        }
+        else if (uVar3 == 0x11) {
+          DAT_84890364 = 1 << (uVar9 & 0x3f) | DAT_84890364;
+          if ((param_2 & 0xffffffff) == 6) {
+            *(undefined4 *)(_DAT_000001be + 0x55a8) = 1;
+            *(undefined4 *)(iVar2 + 0x55a0) = 0;
+            *(undefined4 *)(iVar2 + 0x55a4) = 0;
+          }
+        }
+        else if (uVar3 == 0x22) {
+          *(uint *)(_DAT_000001be + 0x5cb0) = uVar9;
+        }
+      }
+      goto LAB_82879f64;
+    }
+    if ((*(int *)(_DAT_000001be + 0x5548) == 0) ||
+       (DVar4 = GetCurrentThreadId(), *(DWORD *)(iVar2 + 0x2b08) != DVar4)) goto LAB_82879f64;
+    uVar3 = *(uint *)(iVar2 + 0x30);
+    if (*(uint *)(iVar2 + 0x38) < uVar3) {
+      uVar3 = D3D__CDevice__KickOff(iVar2);
+    }
+    local_40[0] = CONCAT44(uVar3,local_40[0]._4_4_);
+    do {
+      pcVar7 = (char *)uVar6;
+      uVar6 = uVar6 + 1;
+    } while (*pcVar7 != '\0');
+    uVar5 = 0x10015;
+  }
+  else {
+    if (uVar3 == 0xe1) {
+      if ((*(int *)(_DAT_000001be + 0x5548) != 0) &&
+         (DVar4 = GetCurrentThreadId(), *(DWORD *)(iVar2 + 0x2b08) == DVar4)) {
+        uVar3 = *(uint *)(iVar2 + 0x30);
+        if (*(uint *)(iVar2 + 0x38) < uVar3) {
+          uVar3 = D3D__CDevice__KickOff(iVar2);
+        }
+        *(undefined4 *)(uVar3 + 4) = 0x57e;
+        *(undefined4 *)(uVar3 + 8) = 0x10016;
+        *(undefined4 **)(iVar2 + 0x30) = (undefined4 *)(uVar3 + 8);
+      }
+      goto LAB_82879f64;
+    }
+    if (uVar3 != 0xe2) {
+      if (uVar3 == 0xe3) {
+        D3D__PixEstimateVideoCost(_DAT_000001be,param_2);
+      }
+      else if (uVar3 == 0xff) {
+        if ((DAT_84890364 & 1) != 0) {
+          local_40[0] = (ulonglong)*(uint *)(_DAT_000001be + 0x5574);
+          PIXAddCounter((double)((float)local_40[0] * *(float *)(_DAT_000001be + 0x5584) * 1000.0),
+                        0x20000);
+        }
+        lVar8 = 0x11;
+        puVar10 = &DAT_829a6c70;
+        do {
+          if ((puVar10[-2] & DAT_84890364) != 0) {
+            uVar1 = puVar10[-1];
+            D3D__GetCounter(iVar2,*puVar10);
+            PIXAddCounter(uVar1);
+          }
+          lVar8 = lVar8 + -1;
+          puVar10 = puVar10 + 3;
+        } while (lVar8 != 0);
+      }
+      goto LAB_82879f64;
+    }
+    if ((*(int *)(_DAT_000001be + 0x5548) == 0) ||
+       (DVar4 = GetCurrentThreadId(), *(DWORD *)(iVar2 + 0x2b08) != DVar4)) goto LAB_82879f64;
+    uVar3 = *(uint *)(iVar2 + 0x30);
+    if (*(uint *)(iVar2 + 0x38) < uVar3) {
+      uVar3 = D3D__CDevice__KickOff(iVar2);
+    }
+    local_40[0] = CONCAT44(uVar3,local_40[0]._4_4_);
+    do {
+      pcVar7 = (char *)uVar6;
+      uVar6 = uVar6 + 1;
+    } while (*pcVar7 != '\0');
+    uVar5 = 0x1001d;
+  }
+  D3D__CDevice__PutPix
+            (iVar2,local_40,uVar5,param_2,((uVar6 - param_2) - 1 & 0xffffffff) + 4 & 0xffc);
+  *(undefined4 *)(iVar2 + 0x30) = local_40[0]._0_4_;
+LAB_82879f64:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1328,11 +3065,40 @@ void D3D__UninitXBDMInterface(undefined4 param_1)
 
 // 8287A138  D3D::PixCpuAddSmall_Next  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2343)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 void D3D__PixCpuAddSmall_Next(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  int iVar4;
+  undefined8 in_r13;
+  undefined1 local_40 [8];
+  undefined8 local_38;
+  undefined4 local_30;
+  
+  uVar3 = __savegprlr_28();
+  local_38 = 0;
+  local_30 = 0;
+  do {
+    if (_DAT_00000059 == 0) {
+      iVar4 = 0;
+    }
+    else {
+      iVar4 = (**(code **)(_DAT_00000059 + 0x18))(0x50,local_40);
+    }
+    if (iVar4 == 0) goto LAB_8287a1e0;
+    iVar4 = (int)in_r13;
+    puVar1 = *(uint **)(iVar4 + 0x2b0);
+  } while (*(uint **)(iVar4 + 0x2b4) <= puVar1);
+  uVar2 = TBLr;
+  *puVar1 = (uint)((uVar2 & 0xffffffff) << 7) | uVar3;
+  *(uint **)(iVar4 + 0x2b0) = puVar1 + 1;
+LAB_8287a1e0:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1473,23 +3239,102 @@ void D3D__PixGpuAdd(void)
 }
 
 
+// 8287BF28  D3D::QueueShaderWriteback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2585)
+
+void D3D__QueueShaderWriteback(int param_1,uint param_2)
+
+{
+  uint uVar1;
+  
+  uVar1 = *(uint *)(param_1 + 0x30);
+  if (*(uint *)(param_1 + 0x38) < uVar1) {
+    uVar1 = D3D__CDevice__KickOff(param_1);
+  }
+  *(undefined4 *)(uVar1 + 4) = 0xc0025800;
+  *(undefined4 *)(uVar1 + 8) = 0x80000003;
+  *(uint *)(uVar1 + 0xc) = ((param_2 >> 0x14) + 0x200 & 0x1000) + (param_2 & 0x1fffffff);
+  *(undefined4 *)(uVar1 + 0x10) = 0xdeadbeef;
+  *(undefined4 **)(param_1 + 0x30) = (undefined4 *)(uVar1 + 0x10);
+  return;
+}
+
+
 // 8287BFC0  D3D::PixPerFrameMetaData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2601)
 
 void D3D__PixPerFrameMetaData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  ulonglong uVar3;
+  uint local_40 [4];
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x5548) != 0) {
+    uVar3 = 0;
+    puVar2 = (undefined4 *)(iVar1 + 0x318c);
+    do {
+      puVar2 = puVar2 + 1;
+      D3D__PIXMetaRecordRenderTarget(iVar1,uVar3,*puVar2);
+      uVar3 = uVar3 + 1;
+    } while ((uVar3 & 0xffffffff) < 4);
+    local_30 = *(undefined4 *)(iVar1 + 0x3b60);
+    local_2c = *(undefined4 *)(iVar1 + 0x3b64);
+    local_28 = *(undefined4 *)(iVar1 + 0x3b68);
+    local_24 = *(undefined4 *)(iVar1 + 0x5f20);
+    local_40[0] = *(uint *)(iVar1 + 0x30);
+    if (*(uint *)(iVar1 + 0x38) < local_40[0]) {
+      local_40[0] = D3D__CDevice__KickOff(iVar1);
+    }
+    D3D__CDevice__PutPix(iVar1,local_40,0x1000b,&local_30,0x10);
+    *(uint *)(iVar1 + 0x30) = local_40[0];
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8287C070  D3D::PixSyncronizeToPresentationInterval  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2641)
 
-void D3D__PixSyncronizeToPresentationInterval(void)
+void D3D__PixSyncronizeToPresentationInterval(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  
+  iVar1 = __savegprlr_29();
+  if (*(int *)(iVar1 + 0x55b8) == 2) {
+    if (*(int *)(iVar1 + 0x55c0) == 3) {
+      iVar3 = 0;
+    }
+    else {
+      iVar3 = *(int *)(iVar1 + 0x55c0) + 1;
+    }
+    if (iVar3 != *(int *)(iVar1 + 0x55bc)) {
+      iVar3 = iVar3 * 2;
+      if (param_2 == 0) {
+        iVar3 = iVar3 + 1;
+      }
+      uVar2 = *(uint *)(iVar1 + 0x30);
+      if (*(uint *)(iVar1 + 0x38) < uVar2) {
+        uVar2 = D3D__CDevice__KickOff(iVar1);
+      }
+      *(undefined4 *)(uVar2 + 4) = 0xc0025800;
+      *(undefined4 *)(uVar2 + 8) = 0x80000003;
+      uVar4 = *(int *)(iVar1 + 0x55b4) + iVar3 * 4;
+      *(uint *)(uVar2 + 0xc) = ((uVar4 >> 0x14) + 0x200 & 0x1000) + (uVar4 & 0x1fffffff) | 2;
+      *(undefined4 *)(uVar2 + 0x10) = 0xdeadbeef;
+      *(undefined4 **)(iVar1 + 0x30) = (undefined4 *)(uVar2 + 0x10);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1498,8 +3343,42 @@ void D3D__PixSyncronizeToPresentationInterval(void)
 void D3D__PixInitializePerfMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  longlong lVar4;
+  longlong lVar5;
+  
+  iVar2 = __savegprlr_29();
+  if (*(int *)(iVar2 + 0x55ac) == 0) {
+    DAT_84890338 = DAT_84890338 + 1;
+    iVar3 = XMemAlloc(0x7a0,0xffffffffa3800000);
+    if (iVar3 != 0) {
+      *(int *)(iVar2 + 0x55ac) = iVar3;
+      goto LAB_8287a244;
+    }
+LAB_8287a234:
+    uVar1 = 0;
+  }
+  else {
+LAB_8287a244:
+    if (*(int *)(iVar2 + 0x55b0) == 0) {
+      iVar3 = XMemAlloc(0x40,0x24800000);
+      if (iVar3 == 0) goto LAB_8287a234;
+      *(int *)(iVar2 + 0x55b0) = iVar3;
+    }
+    lVar4 = 0;
+    lVar5 = 0;
+    do {
+      D3D__P_CPC(iVar2,1,lVar4 + (ulonglong)*(uint *)(iVar2 + 0x55ac),
+                 (ulonglong)*(uint *)(iVar2 + 0x55b0) + lVar5);
+      lVar5 = lVar5 + 0x10;
+      lVar4 = lVar4 + 0x1e0;
+    } while ((int)lVar5 < 0x40);
+    uVar1 = 1;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -1626,11 +3505,31 @@ LAB_8287c4a0:
 
 // 8287A2B0  D3D::PIXMetaRecordRenderTarget  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2859)
 
-void D3D__PIXMetaRecordRenderTarget(void)
+void D3D__PIXMetaRecordRenderTarget(undefined8 param_1,uint param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  uint local_30 [2];
+  uint local_28;
+  ushort local_24;
+  ushort local_22;
+  
+  iVar2 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) != 0) {
+    uVar1 = *(uint *)((int)param_3 + 0x24);
+    local_28 = param_2 & 7;
+    local_24 = (ushort)(uVar1 >> 0x12) & 0x1fff;
+    local_30[0] = *(uint *)(iVar2 + 0x30);
+    local_22 = (ushort)(uVar1 >> 3) & 0x1fff;
+    if (*(uint *)(iVar2 + 0x38) < local_30[0]) {
+      local_30[0] = D3D__CDevice__KickOff(iVar2);
+    }
+    D3D__CDevice__PutPix(iVar2,local_30,0x10017,&local_28,8);
+    *(uint *)(iVar2 + 0x30) = local_30[0];
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1660,11 +3559,33 @@ ulonglong PIXCaptureGpuFrame(char *param_1)
 
 // 8287A340  D3DDevice_PixBeginNamedEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.cpp:2966)
 
-void D3DDevice_PixBeginNamedEvent(void)
+void D3DDevice_PixBeginNamedEvent
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  uint local_50 [4];
+  undefined1 auStack_40 [31];
+  undefined1 local_21;
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = RtlVsnprintf(auStack_40,0x20,param_3,param_4);
+  if (iVar2 < 0) {
+    iVar2 = 0x1f;
+    local_21 = 0;
+  }
+  local_50[0] = *(uint *)(iVar1 + 0x30);
+  if (*(uint *)(iVar1 + 0x38) < local_50[0]) {
+    local_50[0] = D3D__CDevice__KickOff(iVar1);
+  }
+  D3D__CDevice__PutPix(iVar1,local_50,0x10015,auStack_40,iVar2 + 4U & 0xfffffffc);
+  lVar3 = (ulonglong)*(uint *)(iVar1 + 0x5cac) + 1;
+  *(int *)(iVar1 + 0x5cac) = (int)lVar3;
+  *(uint *)(iVar1 + 0x30) = local_50[0];
+  __restgprlr_29(lVar3);
+  return;
 }
 
 

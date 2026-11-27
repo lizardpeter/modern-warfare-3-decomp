@@ -31,25 +31,21 @@ void FUN_8241007c(void)
         do {
           uVar10 = (uint)*puVar6;
           if (*puVar5 <= uVar10) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar10);
           }
           uVar3 = (uint)*puVar6;
           piVar7 = (int *)((&DAT_835a2948)[uVar4] + uVar10 * 0x60);
           if (*puVar5 <= uVar3) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar3);
           }
           piVar8 = (int *)((&DAT_835a2958)[uVar4] + uVar3 * 0x10);
           if ((*(ushort *)(piVar8 + 1) & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205fe00,0x76b,0,0xffffffff82000f98,0xffffffff82060174);
           }
           if (*piVar7 == 3) {
             if (piVar8[3] == 0) {
               uVar9 = (ulonglong)*puVar6;
               if (*puVar5 <= uVar9) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar9);
               }
               DynEntCl_CreateHinge
@@ -61,7 +57,6 @@ void FUN_8241007c(void)
             if ((*(char *)(iVar2 + 6) != '\0') && (*piVar8 == 0)) {
               uVar9 = (ulonglong)*puVar6;
               if (*puVar5 <= uVar9) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar9);
               }
               iVar2 = DynEntCl_CreatePhysObj

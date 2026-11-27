@@ -2,11 +2,96 @@
 
 // 828D7D48  XAUDIO::CSubmixVoice::CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:41)
 
-void XAUDIO__CSubmixVoice__CreateObject(void)
+void XAUDIO__CSubmixVoice__CreateObject(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int *piVar4;
+  int *in_stack_0000001c;
+  int local_60 [4];
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_28();
+  in_stack_0000001c = param_2;
+  XAUDIO__CSubmixVoice__ConvertInit(uVar1,auStack_50);
+  uVar2 = XAUDIO__CRoutedVoice__GetObjectAdditionalSize(auStack_50,local_60);
+  if (-1 < (int)uVar2) {
+    local_60[0] = local_60[0] + 0x50;
+    uVar2 = XAudioPrepareBatchAllocator(0x61820006,local_60[0],&stack0x0000001c);
+    if (-1 < (int)uVar2) {
+      uVar3 = (**(code **)(*in_stack_0000001c + 0x14))(in_stack_0000001c,0x50);
+      if (((uVar3 & 0xffffffff) == 0) ||
+         (piVar4 = (int *)XAUDIO__CSubmixVoice__CSubmixVoice(uVar3,uVar1,in_stack_0000001c),
+         piVar4 == (int *)0x0)) {
+        uVar2 = 0xffffffff8007000e;
+      }
+      else {
+        uVar2 = XAUDIO__CSubmixVoice__Initialize(piVar4,uVar1);
+        if ((int)uVar2 < 0) {
+          (**(code **)(*piVar4 + 0xc))(piVar4);
+        }
+        else {
+          *param_3 = piVar4;
+        }
+      }
+    }
+  }
+  if (in_stack_0000001c != (int *)0x0) {
+    (**(code **)(*in_stack_0000001c + 4))();
+  }
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 828D7C08  XAUDIO::CSubmixVoice::CSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:125)
+
+void XAUDIO__CSubmixVoice__CSubmixVoice(undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  byte bVar1;
+  undefined4 *puVar2;
+  undefined1 uVar3;
+  int *piVar5;
+  ulonglong uVar4;
+  int in_r13;
+  int iVar6;
+  int iVar7;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  XAUDIO__CRoutedVoice__CRoutedVoice(puVar2,param_3,1);
+  *puVar2 = &PTR_XAUDIO__CSubmixVoice___scalar_deleting_destructor__82207568;
+  bVar1 = *(byte *)(param_2 + 10);
+  *(byte *)(puVar2 + 0x13) = bVar1;
+  iVar7 = (uint)bVar1 * 0x2c + *(int *)(DAT_84895944 + 0x7c);
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  iVar6 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar3;
+  }
+  DAT_848958dc = DAT_848958dc + 1;
+  piVar5 = (int *)(*(int *)(iVar7 + 8) + (int)puVar2);
+  *piVar5 = iVar7;
+  piVar5[1] = *(int *)(iVar7 + 4);
+  *(int **)(iVar7 + 4) = piVar5;
+  *(int **)piVar5[1] = piVar5;
+  uVar3 = DAT_848958e4;
+  uVar4 = (ulonglong)DAT_848958dc;
+  if ((DAT_848958dc != 0) && (iVar6 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
+      DAT_848958e0 = 0;
+      DAT_848958e4 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar3);
+    }
+  }
+  __restgprlr_27(puVar2);
+  return;
 }
 
 
@@ -25,8 +110,67 @@ undefined8 XAUDIO__CVoice__GetVoiceState(int param_1,undefined1 *param_2)
 void XAUDIO__CSubmixVoice___CSubmixVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  int *piVar6;
+  int in_r13;
+  int iVar7;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  *puVar3 = &PTR_XAUDIO__CSubmixVoice___scalar_deleting_destructor__82207568;
+  XAUDIO__CVoice__Stop(puVar3,1);
+  bVar1 = *(byte *)(puVar3 + 0x13);
+  iVar2 = *(int *)(DAT_84895944 + 0x7c);
+  uVar4 = KeRaiseIrqlToDpcLevel();
+  iVar7 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar4;
+  }
+  uVar5 = (ulonglong)DAT_848958dc + 1;
+  DAT_848958dc = (uint)uVar5;
+  piVar6 = (int *)(*(int *)((uint)bVar1 * 0x2c + iVar2 + 8) + (int)puVar3);
+  if ((int *)*piVar6 != piVar6) {
+    ((int *)*piVar6)[1] = piVar6[1];
+    *(int *)piVar6[1] = *piVar6;
+    piVar6[1] = (int)piVar6;
+    *piVar6 = (int)piVar6;
+    uVar5 = (ulonglong)DAT_848958dc;
+  }
+  uVar4 = DAT_848958e4;
+  if (((int)uVar5 != 0) && (iVar7 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar5 - 1);
+    if (uVar5 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar4);
+    }
+  }
+  XAUDIO__CRoutedVoice___CRoutedVoice(puVar3);
+  __restgprlr_27();
+  return;
+}
+
+
+// 828D7A68  XAUDIO::CSubmixVoice::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:190)
+
+undefined8 XAUDIO__CSubmixVoice__Initialize(int param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  undefined1 auStack_40 [40];
+  
+  XAUDIO__CSubmixVoice__ConvertInit(param_2,auStack_40);
+  uVar1 = XAUDIO__CRoutedVoice__Initialize(param_1,auStack_40);
+  if (-1 < (int)uVar1) {
+    XAudioFrameBuffer_Prepare(*(undefined4 *)(param_1 + 0x20),0,3);
+  }
+  return uVar1;
 }
 
 
@@ -57,6 +201,43 @@ undefined8 XAUDIO__CSubmixVoice__Process(int param_1)
     XAudPixIncrementCounter(1,1);
   }
   return uVar1;
+}
+
+
+// 828D7970  XAUDIO::CSubmixVoice::ConvertInit  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:292)
+
+void XAUDIO__CSubmixVoice__ConvertInit(int param_1,undefined1 *param_2)
+
+{
+  undefined4 *puVar1;
+  char cVar2;
+  longlong lVar3;
+  
+  puVar1 = (undefined4 *)(param_2 + -4);
+  lVar3 = 8;
+  do {
+    puVar1 = puVar1 + 1;
+    *puVar1 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  *param_2 = 0;
+  param_2[1] = *(undefined1 *)(param_1 + 1);
+  *(undefined4 *)(param_2 + 4) = 48000;
+  *(undefined4 *)(param_2 + 8) = *(undefined4 *)(param_1 + 0xc);
+  *(undefined4 *)(param_2 + 0x10) = *(undefined4 *)(param_1 + 0x14);
+  *(undefined4 *)(param_2 + 0x14) = *(undefined4 *)(param_1 + 0x18);
+  cVar2 = *(char *)(param_1 + 8);
+  if (cVar2 == '\0') {
+    cVar2 = '\x01';
+  }
+  param_2[0x18] = cVar2;
+  cVar2 = *(char *)(param_1 + 9);
+  if (cVar2 == '\0') {
+    cVar2 = '\x06';
+  }
+  param_2[0x19] = cVar2;
+  *(undefined4 *)(param_2 + 0x1c) = *(undefined4 *)(param_1 + 0x10);
+  return;
 }
 
 

@@ -57,7 +57,7 @@ int _mtinit(void)
   BOOL BVar3;
   
   _init_pointers();
-  iVar1 = mtinitlocks();
+  iVar1 = _mtinitlocks();
   if ((((iVar1 != 0) && (DVar2 = TlsAlloc(), DAT_829b03e0 = DVar2, DVar2 != 0xffffffff)) &&
       (lpTlsValue = calloc(1,0xc4), lpTlsValue != (DWORD *)0x0)) &&
      (BVar3 = TlsSetValue(DVar2,lpTlsValue), BVar3 != 0)) {
@@ -111,8 +111,50 @@ void _initptd(_ptiddata _Ptd,pthreadlocinfo _Locale)
 _ptiddata _getptd_noexit(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  DWORD dwErrCode;
+  LPVOID pvVar1;
+  BOOL BVar2;
+  DWORD *lpTlsValue;
+  DWORD DVar3;
+  _ptiddata p_Var4;
+  ulonglong uVar5;
+  
   __savegprlr_29();
+  dwErrCode = GetLastError();
+  pvVar1 = TlsGetValue(DAT_829b03e0);
+  uVar5 = (ulonglong)(int)pvVar1;
+  if (uVar5 == 0) {
+    BVar2 = TlsSetValue(DAT_829b03e0,(LPVOID)0x1);
+    uVar5 = 0;
+    if (BVar2 != 0) {
+      lpTlsValue = calloc(1,0xc4);
+      uVar5 = (ulonglong)(int)lpTlsValue;
+      if (uVar5 == 0) {
+        TlsSetValue(DAT_829b03e0,(LPVOID)0x0);
+      }
+      else {
+        BVar2 = TlsSetValue(DAT_829b03e0,lpTlsValue);
+        if (BVar2 == 0) {
+          free(lpTlsValue);
+          uVar5 = 0;
+        }
+        else {
+          lpTlsValue[2] = 0;
+          lpTlsValue[0x17] = (DWORD)&DAT_82215760;
+          lpTlsValue[5] = 1;
+          DVar3 = GetCurrentThreadId();
+          *lpTlsValue = DVar3;
+          lpTlsValue[1] = 0xffffffff;
+        }
+      }
+    }
+  }
+  else {
+    uVar5 = -(ulonglong)(uVar5 != 1) & uVar5;
+  }
+  SetLastError(dwErrCode);
+  p_Var4 = (_ptiddata)__restgprlr_29(uVar5);
+  return p_Var4;
 }
 
 

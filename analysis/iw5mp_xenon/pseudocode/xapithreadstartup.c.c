@@ -2,10 +2,20 @@
 
 // 828B5A50  XapiThreadStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapithreadstartup.c:38)
 
-void XapiThreadStartup(void)
+LONG XapiThreadStartup(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  code *pcVar1;
+  undefined4 uVar2;
+  _EXCEPTION_POINTERS *ExceptionInfo;
+  LONG LVar3;
+  
+  pcVar1 = (code *)__savegprlr_29();
+  XapiCallThreadNotifyRoutines(1);
+  uVar2 = (*pcVar1)(param_2);
+  XapiCallThreadNotifyRoutines(0);
+  ExceptionInfo = (_EXCEPTION_POINTERS *)ExTerminateThread(uVar2);
+  LVar3 = UnhandledExceptionFilter(ExceptionInfo);
+  return LVar3;
 }
 

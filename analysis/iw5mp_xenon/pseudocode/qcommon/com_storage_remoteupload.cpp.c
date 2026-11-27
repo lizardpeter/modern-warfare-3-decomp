@@ -14,6 +14,17 @@ int _dynamic_initializer_for__s_remoteConsoleCheckData__(void)
 }
 
 
+// 824F3768  LiveStorage_ResetRemoteConsoleCheckStatus  (qcommon/com_storage_remoteupload.cpp:55)
+
+void LiveStorage_ResetRemoteConsoleCheckStatus(void)
+
+{
+  DAT_8365de38 = 0;
+  DAT_8365de3c = 0;
+  return;
+}
+
+
 // 824F3780  LiveStorage_CheckingRemoteConsoleChallenge  (qcommon/com_storage_remoteupload.cpp:62)
 
 undefined1 LiveStorage_CheckingRemoteConsoleChallenge(void)
@@ -37,8 +48,17 @@ byte LiveStorage_RemoteConsoleDialogDone(void)
 void LiveStorage_ResetRemoteConsoleCheckForController(int param_1)
 
 {
-  (&DAT_8365de38)[param_1] = 0;
+  *(undefined1 *)((int)&DAT_8365de38 + param_1) = 0;
   return;
+}
+
+
+// 824F37C8  LiveStorage_HaveWeCheckedForARemoteConsoleChallenge  (qcommon/com_storage_remoteupload.cpp:82)
+
+undefined1 LiveStorage_HaveWeCheckedForARemoteConsoleChallenge(int param_1)
+
+{
+  return *(undefined1 *)((int)&DAT_8365de38 + param_1);
 }
 
 
@@ -54,7 +74,7 @@ void LiveStorage_CheckForRemoteConsoleChallenge(void)
   ulonglong uVar2;
   
   iVar3 = __savegprlr_25();
-  if (((((&DAT_8365de38)[iVar3] != '\0') || (DAT_8365de3c != '\0')) ||
+  if ((((*(char *)((int)&DAT_8365de38 + iVar3) != '\0') || (DAT_8365de3c != '\0')) ||
       (cVar5 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,3), cVar5 != '\0')) ||
      ((cVar5 = Live_IsUserSignedInToLive(iVar3), cVar5 == '\0' ||
       (iVar4 = dwGetLogOnStatus(iVar3), iVar4 != 2)))) goto LAB_824f3908;
@@ -92,21 +112,70 @@ LAB_824f3908:
 
 // 824F3910  LiveStorage_FileShare_WriteExeToStream  (qcommon/com_storage_remoteupload.cpp:141)
 
-void LiveStorage_FileShare_WriteExeToStream(void)
+void LiveStorage_FileShare_WriteExeToStream(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  void *_Dst;
+  ulonglong uVar1;
+  
+  _Dst = (void *)__savegprlr_29();
+  DAT_8365dfb0 = (uint)param_3;
+  if ((ulonglong)DAT_8365dfb4 == (param_3 & 0xffffffff)) {
+    __restgprlr_29(0);
+    return;
+  }
+  uVar1 = DAT_8365dfb4 - param_3;
+  if ((uVar1 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    param_2 = uVar1;
+  }
+  memcpy(_Dst,(void *)(DAT_8365dfac + DAT_8365dfb0),(size_t)param_2);
+  Com_Printf(0xe,0xffffffff8208af10,param_3,param_2,(ulonglong)DAT_8365dfb0,
+             (ulonglong)DAT_8365dfb4 - (ulonglong)DAT_8365dfb0);
+  __restgprlr_29(param_2);
+  return;
 }
 
 
 // 824F3998  LiveStorage_FileShare_WriteExeToStreamFastFile  (qcommon/com_storage_remoteupload.cpp:158)
 
-void LiveStorage_FileShare_WriteExeToStreamFastFile(void)
+void LiveStorage_FileShare_WriteExeToStreamFastFile
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  LPVOID lpBuffer;
+  BOOL BVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  DWORD local_30 [12];
+  
+  lpBuffer = (LPVOID)__savegprlr_29();
+  uVar3 = (ulonglong)DAT_8365dfb4;
+  DAT_8365dfb0 = (uint)param_3;
+  if (uVar3 == (param_3 & 0xffffffff)) {
+LAB_824f3a5c:
+    __restgprlr_29(0);
+    return;
+  }
+  if ((uVar3 - param_3 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    param_2 = uVar3 - param_3;
+  }
+  uVar2 = param_3;
+  if (DAT_8365dfa8 != (HANDLE)0xffffffff) {
+    local_30[0] = 0;
+    BVar1 = ReadFile(DAT_8365dfa8,lpBuffer,(DWORD)param_2,local_30,(LPOVERLAPPED)0x0);
+    if (BVar1 == 0) {
+      Com_Printf(0xe,0xffffffff8208af5c);
+      goto LAB_824f3a5c;
+    }
+    uVar3 = (ulonglong)DAT_8365dfb4;
+    uVar2 = (ulonglong)DAT_8365dfb0;
+    if ((ulonglong)local_30[0] != (param_2 & 0xffffffff)) {
+      param_2 = (ulonglong)local_30[0];
+    }
+  }
+  Com_Printf(0xe,0xffffffff8208af10,param_3,param_2,uVar2,uVar3 - uVar2);
+  __restgprlr_29(param_2);
+  return;
 }
 
 
@@ -120,7 +189,7 @@ ulonglong LiveStorage_FileShare_ExeWriteFailure(int param_1)
   
   Com_Printf(0xe,0xffffffff8208af84);
   DAT_8365de2c = 0;
-  (&DAT_8365de38)[param_1] = 0;
+  *(undefined1 *)((int)&DAT_8365de38 + param_1) = 0;
   uVar1 = ZEXT48(DAT_8365dfa8);
   DAT_8365de30 = 0;
   DAT_8365de3c = 0;
@@ -139,7 +208,7 @@ ulonglong LiveStorage_FileShare_ExeWriteFailure(int param_1)
 void LiveStorage_FileShare_ExeWriteSetTagsSuccess(int param_1)
 
 {
-  (&DAT_8365de38)[param_1] = 1;
+  *(undefined1 *)((int)&DAT_8365de38 + param_1) = 1;
   DAT_8365de2c = 0;
   DAT_8365de30 = 0;
   DAT_8365de3c = 0;
@@ -150,11 +219,50 @@ void LiveStorage_FileShare_ExeWriteSetTagsSuccess(int param_1)
 
 // 824F3F00  LiveStorage_FileShare_ExeWriteSuccessful  (qcommon/com_storage_remoteupload.cpp:239)
 
-void LiveStorage_FileShare_ExeWriteSuccessful(void)
+void LiveStorage_FileShare_ExeWriteSuccessful(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  BOOL BVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  uVar1 = __savegprlr_27();
+  lVar5 = -0x7c9a2030;
+  if ((DAT_8365e000 & 1) == 0) {
+    DAT_8365e000 = DAT_8365e000 | 1;
+    lVar4 = 1;
+    do {
+      bdTag__bdTag(lVar5);
+      lVar4 = lVar4 + -1;
+      lVar5 = lVar5 + 0x18;
+    } while (-1 < lVar4);
+    atexit(_LiveStorage_FileShare_ExeWriteSuccessful____2____dynamic_atexit_destructor_for__tags__);
+  }
+  Com_Printf(0xe,0xffffffff8208b0ac,param_2);
+  DAT_8365dfd8 = 2;
+  DAT_8365dfe0 = 6;
+  DAT_8365dff0 = 4;
+  DAT_8365dff8 = Live_GetXuid(uVar1);
+  DAT_8365dfc0 = &DAT_8365dfd0;
+  DAT_8365dfc4 = 2;
+  DAT_8365dfcc = LiveStorage_FileShare_ExeWriteFailure;
+  DAT_8365dfc8 = LiveStorage_FileShare_ExeWriteSetTagsSuccess;
+  DAT_8365dfb8 = param_2;
+  LiveStorage_CS_SetTags(uVar1);
+  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,5);
+  if ((uVar2 & 0xffffffff) != 0) {
+    dwDeleteFile(uVar2,0xffffffff8208af08);
+  }
+  uVar2 = ZEXT48(DAT_8365dfa8);
+  if ((DAT_8365dfa8 != (HANDLE)0xffffffff) && (DAT_8365dfa8 != (HANDLE)0x0)) {
+    BVar3 = CloseHandle(DAT_8365dfa8);
+    uVar2 = (ulonglong)BVar3;
+    DAT_8365dfa8 = (HANDLE)0x0;
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
@@ -163,8 +271,92 @@ void LiveStorage_FileShare_ExeWriteSuccessful(void)
 void LiveStorage_UploadExe(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar3;
+  undefined8 uVar2;
+  undefined4 local_70;
+  undefined4 local_6c [3];
+  undefined2 local_60 [2];
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined2 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  code *local_38;
+  code *local_34;
+  code *local_30;
+  
+  uVar1 = __savegprlr_29();
+  cVar3 = Sys_GetTextSection(local_6c,&local_70);
+  if (cVar3 == '\0') {
+    Com_PrintError(0x10,0xffffffff8208b0e4);
+    __restgprlr_29();
+    return;
+  }
+  DAT_8365dfb4 = local_70;
+  DAT_8365dfac = local_6c[0];
+  local_50 = 100;
+  local_60[0] = 100;
+  local_58 = local_70;
+  local_5c = local_6c[0];
+  local_44 = 0;
+  local_40 = 0;
+  uVar2 = Live_GetXuid(uVar1);
+  local_54 = va(0xffffffff8208b0d8,uVar2);
+  local_4c = 0;
+  local_48 = 0;
+  local_38 = LiveStorage_FileShare_WriteExeToStream;
+  local_30 = LiveStorage_FileShare_ExeWriteFailure;
+  local_34 = LiveStorage_FileShare_ExeWriteSuccessful;
+  LiveStorage_CS_WriteFile(uVar1,local_60);
+  DAT_8365de3c = 1;
+  __restgprlr_29();
+  return;
+}
+
+
+// 824F4108  LiveStorage_UploadFfotd  (qcommon/com_storage_remoteupload.cpp:317)
+
+void LiveStorage_UploadFfotd(void)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined2 local_60 [2];
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined2 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  code *local_38;
+  code *local_34;
+  code *local_30;
+  
+  uVar1 = __savegprlr_28();
+  local_50 = 100;
+  local_5c = LiveStorage_GetFFotDBuffer(&local_58);
+  local_44 = 0;
+  local_40 = 0;
+  uVar2 = Live_GetXuid(uVar1);
+  local_54 = va(0xffffffff8208b10c,uVar2);
+  DAT_8365dfb4 = local_58;
+  DAT_8365dfac = local_5c;
+  local_4c = 0;
+  local_48 = 0;
+  local_60[0] = 100;
+  local_34 = LiveStorage_FileShare_ExeWriteSuccessful;
+  local_30 = LiveStorage_FileShare_ExeWriteFailure;
+  local_38 = LiveStorage_FileShare_WriteExeToStream;
+  LiveStorage_CS_WriteFile(uVar1,local_60);
+  DAT_8365de3c = 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -173,8 +365,60 @@ void LiveStorage_UploadExe(void)
 void LiveStorage_UploadFileToCS(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  undefined4 uVar5;
+  undefined2 local_60 [2];
+  undefined *local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined2 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  code *local_38;
+  code *local_34;
+  code *local_30;
+  
+  uVar1 = __savegprlr_28();
+  DAT_8365dec0 = (undefined *)0x0;
+  iVar3 = DB_FindXAssetHeader(0x24,0xffffffff8365de3d,1);
+  iVar4 = DB_IsXAssetDefault(0x24,0xffffffff8365de3d);
+  if (iVar4 == 0) {
+    uVar5 = DB_GetRawFileLen(iVar3);
+    DAT_8365dec0 = *(undefined **)(iVar3 + 0xc);
+    local_5c = DAT_8365dec0;
+    local_58 = uVar5;
+    uVar2 = Live_GetXuid(uVar1);
+    local_54 = va(0xffffffff8208b118,0xffffffff8365de3d,uVar2);
+    DAT_8365dfac = DAT_8365dec0;
+    DAT_8365dfb4 = uVar5;
+  }
+  else {
+    local_58 = 0x80;
+    DAT_8365dfb4 = 0x80;
+    uVar2 = Live_GetXuid(uVar1);
+    local_54 = va(0xffffffff8208b120,0xffffffff8365de3d,uVar2);
+    local_5c = &DAT_8365de3d;
+    DAT_8365dfac = &DAT_8365de3d;
+    DAT_8365dfb4 = local_58;
+  }
+  local_44 = 0;
+  local_40 = 0;
+  local_4c = 0;
+  local_48 = 0;
+  local_50 = 100;
+  local_60[0] = 100;
+  local_38 = LiveStorage_FileShare_WriteExeToStream;
+  local_34 = LiveStorage_FileShare_ExeWriteSuccessful;
+  local_30 = LiveStorage_FileShare_ExeWriteFailure;
+  LiveStorage_CS_WriteFile(uVar1,local_60);
+  DAT_8365de3c = 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -183,8 +427,48 @@ void LiveStorage_UploadFileToCS(void)
 void LiveStorage_UploadFastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined2 local_160 [4];
+  DWORD local_158;
+  undefined4 local_154;
+  undefined2 local_150;
+  undefined4 local_14c;
+  undefined4 local_148;
+  undefined4 local_144;
+  undefined4 local_140;
+  code *local_138;
+  code *local_134;
+  code *local_130;
+  CHAR aCStack_120 [288];
+  
+  uVar1 = __savegprlr_29();
+  DAT_8365dfa8 = (HANDLE)0xffffffff;
+  uVar2 = Sys_DefaultInstallPath();
+  Com_sprintf(aCStack_120,0x100,0xffffffff8208b130,uVar2,0xffffffff8365de3d);
+  DAT_8365dfa8 = CreateFileA(aCStack_120,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,(HANDLE)0x0)
+  ;
+  if (DAT_8365dfa8 != (HANDLE)0xffffffff) {
+    DAT_8365dfb4 = GetFileSize(DAT_8365dfa8,(LPDWORD)0x0);
+    local_150 = 100;
+    local_158 = DAT_8365dfb4;
+    uVar2 = Live_GetXuid(uVar1);
+    local_154 = va(0xffffffff8208b118,0xffffffff8365de3d,uVar2);
+    local_160[0] = 100;
+    local_144 = 0;
+    local_138 = LiveStorage_FileShare_WriteExeToStreamFastFile;
+    local_140 = 0;
+    local_14c = 0;
+    local_148 = 0;
+    local_134 = LiveStorage_FileShare_ExeWriteSuccessful;
+    local_130 = LiveStorage_FileShare_ExeWriteFailure;
+    LiveStorage_CS_WriteFile(uVar1,local_160);
+    DAT_8365de3c = 1;
+    __restgprlr_29(1);
+    return;
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -193,8 +477,80 @@ void LiveStorage_UploadFastFile(void)
 void LiveStorage_DownloadRemoteConsoleChallengeComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  char cVar4;
+  undefined *puVar5;
+  int iVar6;
+  
+  iVar2 = __savegprlr_27();
+  iVar6 = iVar2 * 0xa0;
+  puVar5 = &DAT_8365bc40 + iVar6;
+  if ((&DAT_8365bcd4)[iVar6] == '\0') {
+    MyAssertHandler(0xffffffff8208b018,0x1d9,0,0xffffffff82000f98,0xffffffff82087698);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 4) {
+    MyAssertHandler(0xffffffff8208b018,0x1da,0,0xffffffff82000f98,0xffffffff8208b148);
+  }
+  iVar3 = dwGetLobbyService((&DAT_8365bcd5)[iVar6]);
+  if (iVar3 != 0) {
+    dwGetLobbyService((&DAT_8365bcd5)[iVar6]);
+    iVar3 = bdLobbyService__getStatus();
+    if (iVar3 != 2) {
+      __restgprlr_27(0);
+      return;
+    }
+  }
+  uVar1 = dwFetchFileComplete(puVar5,0xffffffff8365dec8);
+  if ((int)uVar1 != 1) {
+    if ((int)uVar1 == 2) {
+      if (((&DAT_8365bc48)[iVar2 * 0x28] != 0) &&
+         (iVar2 = bdRemoteTask__getErrorCode(), iVar2 == 1000)) {
+        *(undefined1 *)((int)&DAT_8365de38 + (uint)(byte)(&DAT_8365bcd5)[iVar6]) = 1;
+        DAT_8365de3c = 0;
+        TaskManager_ClearTask(puVar5);
+        DAT_8365de2c = 0;
+        DAT_8365de30 = 0;
+        __restgprlr_27(1);
+        return;
+      }
+      DAT_8365de3c = 0;
+      TaskManager_ClearTask(puVar5);
+      uVar1 = 2;
+    }
+    __restgprlr_27(uVar1);
+    return;
+  }
+  DAT_8365dec0 = 0;
+  iVar2 = I_strcmp(0xffffffff8365de3d,0xffffffff8208b140);
+  if (iVar2 == 0) {
+    LiveStorage_UploadExe((&DAT_8365bcd5)[iVar6]);
+    TaskManager_ClearTask(puVar5);
+    __restgprlr_27(1);
+    return;
+  }
+  iVar2 = I_strcmp(0xffffffff8365de3d,0xffffffff8208b138);
+  if (iVar2 != 0) {
+    cVar4 = LiveStorage_UploadFastFile((&DAT_8365bcd5)[iVar6]);
+    if (cVar4 == '\0') {
+      LiveStorage_UploadFileToCS((&DAT_8365bcd5)[iVar6]);
+    }
+    TaskManager_ClearTask(puVar5);
+    __restgprlr_27(1);
+    return;
+  }
+  cVar4 = LiveStorage_DoWeHaveFFotD();
+  if (cVar4 == '\0') {
+    DAT_8365de3c = 0;
+    TaskManager_ClearTask(puVar5);
+    __restgprlr_27(1);
+    return;
+  }
+  LiveStorage_UploadFfotd((&DAT_8365bcd5)[iVar6]);
+  TaskManager_ClearTask(puVar5);
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -203,8 +559,72 @@ void LiveStorage_DownloadRemoteConsoleChallengeComplete(void)
 void LiveStorage_CheckForRemoteConsoleChallengeComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined *puVar4;
+  int iVar5;
+  
+  iVar3 = __savegprlr_27();
+  iVar5 = iVar3 * 0xa0;
+  puVar4 = &DAT_8365bc40 + iVar5;
+  if ((&DAT_8365bcd4)[iVar5] == '\0') {
+    MyAssertHandler(0xffffffff8208b018,0x21b,0,0xffffffff82000f98,0xffffffff82087698);
+  }
+  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 3) {
+    MyAssertHandler(0xffffffff8208b018,0x21c,0,0xffffffff82000f98,0xffffffff8208afd8);
+  }
+  iVar3 = dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
+  if (iVar3 != 0) {
+    dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
+    iVar3 = bdLobbyService__getStatus();
+    if (iVar3 != 2) {
+      __restgprlr_27(0);
+      return;
+    }
+  }
+  uVar1 = dwFetchFileInfoComplete(puVar4,0xffffffff8365dec8);
+  if ((int)uVar1 != 1) {
+    if ((int)uVar1 == 2) {
+      Com_PrintWarning(0x10,0xffffffff8208af9c);
+      *(undefined1 *)((int)&DAT_8365de38 + (uint)(byte)(&DAT_8365bcd5)[iVar5]) = 1;
+      DAT_8365de3c = 0;
+      TaskManager_ClearTask(puVar4);
+      uVar1 = 2;
+    }
+    __restgprlr_27(uVar1);
+    return;
+  }
+  if (DAT_8365dee8 == 0) {
+    *(undefined1 *)((int)&DAT_8365de38 + (uint)(byte)(&DAT_8365bcd5)[iVar5]) = 1;
+    DAT_8365de3c = 0;
+    TaskManager_ClearTask(puVar4);
+    __restgprlr_27(1);
+    return;
+  }
+  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar5],4);
+  if ((uVar2 & 0xffffffff) != 0) {
+    memset(&DAT_8365de3d,0,0x80);
+    DAT_8365df9c = 0x80;
+    DAT_8365dec8 = "RCCheck";
+    DAT_8365dfa0 = &DAT_8365de3d;
+    iVar3 = dwFetchUserFile(uVar2,0xffffffff8365dec8);
+    if (iVar3 != 0) {
+      DAT_8365de3c = 1;
+      TaskManager_ClearTask(puVar4);
+      __restgprlr_27(1);
+      return;
+    }
+    DAT_8365de3c = 0;
+    TaskManager_ClearTask(uVar2);
+    TaskManager_ClearTask(puVar4);
+    __restgprlr_27(1);
+    return;
+  }
+  DAT_8365de3c = 0;
+  TaskManager_ClearTask(puVar4);
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -213,8 +633,33 @@ void LiveStorage_CheckForRemoteConsoleChallengeComplete(void)
 void LiveStorage_CheckForRemoteConsoleDeleteComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  
+  iVar2 = __savegprlr_27();
+  iVar3 = iVar2 * 0xa0;
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff8208b018,599,0,0xffffffff82000f98,0xffffffff82087698);
+  }
+  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 5) {
+    MyAssertHandler(0xffffffff8208b018,600,0,0xffffffff82000f98,0xffffffff8208b068);
+  }
+  iVar2 = dwGetLobbyService((&DAT_8365bcd5)[iVar3]);
+  if (iVar2 != 0) {
+    dwGetLobbyService((&DAT_8365bcd5)[iVar3]);
+    iVar2 = bdLobbyService__getStatus();
+    if (iVar2 != 2) goto LAB_824f3e10;
+  }
+  uVar1 = dwDeleteFileComplete(&DAT_8365bc40 + iVar3);
+  if ((int)uVar1 != 0) {
+    TaskManager_ClearTask(&DAT_8365bc40 + iVar3);
+    __restgprlr_27(uVar1);
+    return;
+  }
+LAB_824f3e10:
+  __restgprlr_27(0);
+  return;
 }
 
 

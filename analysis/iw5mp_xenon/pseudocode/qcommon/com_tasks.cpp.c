@@ -5,8 +5,20 @@
 void TaskManager_AssertTaskSetIsRegistered(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x47,0,0xffffffff82000f98,0xffffffff8208b538);
+  }
+  if ((int *)(&DAT_8365e010)[*piVar1] != piVar1) {
+    MyAssertHandler(0xffffffff8208b558,0x48,0,0xffffffff82000f98,0xffffffff8208b4e8);
+  }
+  if (*(int *)(&DAT_8365e090 + *piVar1 * 4) == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x49,0,0xffffffff82000f98,0xffffffff8208b4a0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -38,7 +50,6 @@ void * TaskManager_ClearTask_Core(int param_1)
   void *pvVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208b558,0x5d,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   *(undefined1 *)(param_1 + 0x94) = 0;
@@ -53,8 +64,31 @@ void * TaskManager_ClearTask_Core(int param_1)
 void TaskManager_ClearOverlappedTasks(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  void *pvVar2;
+  longlong lVar3;
+  int *piVar4;
+  
+  iVar1 = __savegprlr_26();
+  TaskManager_AssertTaskSetIsRegistered();
+  piVar4 = (int *)(iVar1 + 8);
+  lVar3 = 0x20;
+  do {
+    if (piVar4 == (int *)0x0) {
+      MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
+    }
+    TaskManager_CheckTaskIsInRegisteredTaskSet(piVar4);
+    if ((*piVar4 == 2) || (dwClearTask(piVar4), *piVar4 == 2)) {
+      IWNet_Storage_Clear(piVar4 + 10);
+    }
+    *(undefined1 *)(piVar4 + 0x25) = 0;
+    piVar4[0x26] = 0;
+    pvVar2 = memset(piVar4 + 2,0,0x88);
+    lVar3 = lVar3 + -1;
+    piVar4 = piVar4 + 0x28;
+  } while (lVar3 != 0);
+  __restgprlr_26(pvVar2);
+  return;
 }
 
 
@@ -73,7 +107,6 @@ void TaskManager_ClearOverlappedTasksForController(undefined8 param_1,uint param
   do {
     if (*(byte *)((int)piVar1 + 0x95) == param_2) {
       if (piVar1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
       }
       TaskManager_CheckTaskIsInRegisteredTaskSet(piVar1);
@@ -94,11 +127,55 @@ void TaskManager_ClearOverlappedTasksForController(undefined8 param_1,uint param
 
 // 824F56C0  TaskManager_ConstructTaskSet  (qcommon/com_tasks.cpp:129)
 
-void TaskManager_ConstructTaskSet(void)
+void TaskManager_ConstructTaskSet(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
+  int *piVar4;
+  longlong lVar5;
+  undefined1 *puVar6;
+  
+  puVar2 = (uint *)__savegprlr_23();
+  if (*puVar2 != 0) {
+    MyAssertHandler(0xffffffff8208b558,0x83,0,0xffffffff8208b7e8,0xffffffff8208b7c8);
+  }
+  iVar3 = 0;
+  piVar4 = &DAT_8365e010;
+  do {
+    piVar4 = piVar4 + 1;
+    if (*piVar4 == 0) {
+      puVar6 = (undefined1 *)((int)puVar2 + 0x9e);
+      *puVar2 = iVar3 + 1;
+      (&DAT_8365e014)[iVar3] = puVar2;
+      *(undefined4 *)(&DAT_8365e094 + iVar3 * 4) = param_2;
+      lVar5 = 0x20;
+      do {
+        if (*puVar2 == 0) {
+          MyAssertHandler(0xffffffff8208b558,0x92,0,0xffffffff82000f98,0xffffffff8208b730);
+        }
+        uVar1 = *puVar2;
+        *puVar6 = (char)uVar1;
+        if ((uVar1 & 0xff) != *puVar2) {
+          MyAssertHandler(0xffffffff8208b558,0x94,0,0xffffffff8208b7e8,0xffffffff8208b750);
+        }
+        lVar5 = lVar5 + -1;
+        puVar6 = puVar6 + 0xa0;
+      } while (lVar5 != 0);
+      TaskManager_ClearOverlappedTasks(puVar2);
+      DAT_8365e010 = DAT_8365e010 + 1;
+      __restgprlr_23();
+      return;
+    }
+    iVar3 = iVar3 + 1;
+  } while (iVar3 != 0x20);
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0xa0,0,0xffffffff8208b790);
+  }
+  Com_Error(0,0xffffffff8208b790);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -107,18 +184,234 @@ void TaskManager_ConstructTaskSet(void)
 void TaskManager_CancelTask(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 != 1) {
+    if (*piVar2 == 2) {
+      IWNet_CancelStorageTask(piVar2 + 10);
+      __restgprlr_29(1);
+      return;
+    }
+    if (DAT_84013128 == 0) {
+      uVar1 = va(0xffffffff8208b80c);
+      MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar1);
+    }
+    __restgprlr_29(1);
+    return;
+  }
+  if (piVar2[2] != 0) {
+    if (piVar2[6] != 0) {
+      MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+    }
+    if (*(int *)(piVar2[2] + 4) == 0) {
+      MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+    }
+    bdRemoteTask__cancelTask(piVar2[2]);
+    TaskManager_ClearTask(piVar2);
+    __restgprlr_29(1);
+    return;
+  }
+  iVar3 = XGetOverlappedResult(piVar2 + 3,0,0);
+  if (iVar3 == 0x3e4) {
+    iVar3 = XCancelOverlapped(piVar2 + 3);
+    if (iVar3 != 0) {
+      Com_PrintError(0x10,0xffffffff8208b888);
+      __restgprlr_29(0);
+      return;
+    }
+  }
+  else if (iVar3 != 0) {
+    Com_PrintError(0x10,0xffffffff8208b830);
+    __restgprlr_29(0);
+    return;
+  }
+  TaskManager_ClearTask_Core(piVar2);
+  __restgprlr_29(1);
+  return;
 }
 
 
 // 824F59C0  TaskManager_CancelTasks_Core  (qcommon/com_tasks.cpp:236)
 
-void TaskManager_CancelTasks_Core(void)
+void TaskManager_CancelTasks_Core(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  bool bVar1;
+  int iVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  uint uVar5;
+  int *piVar6;
+  int *piVar7;
+  
+  iVar4 = __savegprlr_18();
+  TaskManager_AssertTaskSetIsRegistered();
+  piVar6 = (int *)(iVar4 + 0x10);
+  uVar5 = 0;
+  do {
+    if ((*(char *)(piVar6 + 0x23) != '\0') && (((param_2 & 0xff) != 0 || (piVar6[0x22] == param_3)))
+       ) {
+      piVar7 = piVar6 + -2;
+      if (piVar6[-2] == 1) {
+        if (*piVar6 != 0) {
+          if (piVar6[4] != 0) {
+            MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+          }
+          if (*(int *)(*piVar6 + 4) == 0) {
+            MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+          }
+          bdRemoteTask__cancelTask(*piVar6);
+          TaskManager_ClearTask(piVar7);
+          goto LAB_824f5b7c;
+        }
+        iVar4 = XGetOverlappedResult(piVar6 + 1,0,0);
+        if (iVar4 == 0x3e4) {
+          uVar2 = XCancelOverlapped(piVar6 + 1);
+          if ((uVar2 & 0xffffffff) == 0) {
+            TaskManager_ClearTask_Core(piVar7);
+            goto LAB_824f5b7c;
+          }
+          Com_PrintError(0x10,0xffffffff8208b888,uVar2);
+          bVar1 = false;
+        }
+        else {
+          if (iVar4 == 0) {
+            TaskManager_ClearTask_Core(piVar7);
+            goto LAB_824f5b7c;
+          }
+          Com_PrintError(0x10,0xffffffff8208b830);
+          bVar1 = false;
+        }
+      }
+      else {
+        if (piVar6[-2] == 2) {
+          IWNet_CancelStorageTask(piVar6 + 8);
+        }
+        else if (DAT_84013128 == 0) {
+          uVar3 = va(0xffffffff8208b80c);
+          MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar3);
+        }
+LAB_824f5b7c:
+        bVar1 = true;
+      }
+      if (!bVar1) {
+        __restgprlr_18(0);
+        return;
+      }
+    }
+    uVar5 = uVar5 + 1;
+    piVar6 = piVar6 + 0x28;
+    if (0x1f < uVar5) {
+      __restgprlr_18(1);
+      return;
+    }
+  } while( true );
+}
+
+
+// 824F5BB8  TaskManager_CancelTasksForController_Core  (qcommon/com_tasks.cpp:258)
+
+void TaskManager_CancelTasksForController_Core
+               (undefined8 param_1,ulonglong param_2,int param_3,uint param_4)
+
+{
+  bool bVar1;
+  int iVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  uint uVar5;
+  int *piVar6;
+  int *piVar7;
+  
+  iVar4 = __savegprlr_17();
+  TaskManager_AssertTaskSetIsRegistered();
+  piVar6 = (int *)(iVar4 + 0x98);
+  uVar5 = 0;
+  do {
+    if ((*(char *)(piVar6 + 1) != '\0') &&
+       (((param_2 & 0xff) != 0 || ((*piVar6 == param_3 && (*(byte *)((int)piVar6 + 5) == param_4))))
+       )) {
+      piVar7 = piVar6 + -0x24;
+      if (piVar6[-0x24] == 1) {
+        if (piVar6[-0x22] != 0) {
+          if (piVar6[-0x1e] != 0) {
+            MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+          }
+          if (*(int *)(piVar6[-0x22] + 4) == 0) {
+            MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+          }
+          bdRemoteTask__cancelTask(piVar6[-0x22]);
+          TaskManager_ClearTask(piVar7);
+          goto LAB_824f5d84;
+        }
+        iVar4 = XGetOverlappedResult(piVar6 + -0x21,0,0);
+        if (iVar4 == 0x3e4) {
+          uVar2 = XCancelOverlapped(piVar6 + -0x21);
+          if ((uVar2 & 0xffffffff) == 0) {
+            TaskManager_ClearTask_Core(piVar7);
+            goto LAB_824f5d84;
+          }
+          Com_PrintError(0x10,0xffffffff8208b888,uVar2);
+          bVar1 = false;
+        }
+        else {
+          if (iVar4 == 0) {
+            TaskManager_ClearTask_Core(piVar7);
+            goto LAB_824f5d84;
+          }
+          Com_PrintError(0x10,0xffffffff8208b830);
+          bVar1 = false;
+        }
+      }
+      else {
+        if (piVar6[-0x24] == 2) {
+          IWNet_CancelStorageTask(piVar6 + -0x1a);
+        }
+        else if (DAT_84013128 == 0) {
+          uVar3 = va(0xffffffff8208b80c);
+          MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar3);
+        }
+LAB_824f5d84:
+        bVar1 = true;
+      }
+      if (!bVar1) {
+        __restgprlr_17(0);
+        return;
+      }
+    }
+    uVar5 = uVar5 + 1;
+    piVar6 = piVar6 + 0x28;
+    if (0x1f < uVar5) {
+      __restgprlr_17(1);
+      return;
+    }
+  } while( true );
+}
+
+
+// 824F5DC0  TaskManager_DestructTaskSet_CanFail  (qcommon/com_tasks.cpp:281)
+
+undefined8 TaskManager_DestructTaskSet_CanFail(int *param_1)
+
+{
+  int iVar1;
+  char cVar2;
+  
+  TaskManager_AssertTaskSetIsRegistered();
+  cVar2 = TaskManager_CancelTasks_Core(param_1,1,0);
+  if (cVar2 == '\0') {
+    return 0;
+  }
+  TaskManager_ClearOverlappedTasks(param_1);
+  iVar1 = *param_1;
+  *param_1 = 0;
+  (&DAT_8365e010)[iVar1] = 0;
+  *(undefined4 *)(&DAT_8365e090 + iVar1 * 4) = 0;
+  DAT_8365e010 = DAT_8365e010 + -1;
+  return 1;
 }
 
 
@@ -127,8 +420,23 @@ void TaskManager_CancelTasks_Core(void)
 void TaskManager_DestructTaskSet(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar2;
+  char cVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_27();
+  cVar3 = TaskManager_DestructTaskSet_CanFail();
+  while (cVar3 == '\0') {
+    if (DAT_84013128 == 0) {
+      TaskManager_AssertTaskSetIsRegistered(piVar2);
+      uVar1 = va(0xffffffff8208b928,*(undefined4 *)(&DAT_8365e090 + *piVar2 * 4));
+      MyAssertHandler(0xffffffff8208b558,0x12e,0,uVar1);
+    }
+    Sys_Sleep(100);
+    cVar3 = TaskManager_DestructTaskSet_CanFail(piVar2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -140,7 +448,6 @@ undefined1 TaskManager_CancelTasks(ulonglong param_1,undefined8 param_2)
   undefined1 uVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208b558,0x137,0,0xffffffff82000f98,0xffffffff8208b5e4);
   }
   uVar1 = TaskManager_CancelTasks_Core(param_1,0,param_2);
@@ -150,11 +457,19 @@ undefined1 TaskManager_CancelTasks(ulonglong param_1,undefined8 param_2)
 
 // 824F5F78  TaskManager_CancelTasksForController  (qcommon/com_tasks.cpp:318)
 
-void TaskManager_CancelTasksForController(void)
+void TaskManager_CancelTasksForController(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined1 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x13f,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  }
+  uVar2 = TaskManager_CancelTasksForController_Core(uVar1,0,param_2,param_3);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -163,8 +478,42 @@ void TaskManager_CancelTasksForController(void)
 void TaskManager_DestructAllTaskSets_CanFail(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int *piVar1;
+  char cVar2;
+  int iVar3;
+  byte bVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  
   __savegprlr_26();
+  bVar4 = 1;
+  puVar6 = &DAT_8365e010;
+  lVar5 = 0x20;
+  iVar3 = DAT_8365e010;
+  do {
+    puVar6 = puVar6 + 1;
+    piVar1 = (int *)*puVar6;
+    if (piVar1 != (int *)0x0) {
+      TaskManager_AssertTaskSetIsRegistered(piVar1);
+      cVar2 = TaskManager_CancelTasks_Core(piVar1,1,0);
+      if (cVar2 != '\0') {
+        TaskManager_ClearOverlappedTasks(piVar1);
+        iVar3 = *piVar1;
+        *piVar1 = 0;
+        (&DAT_8365e010)[iVar3] = 0;
+        *(undefined4 *)(&DAT_8365e090 + iVar3 * 4) = 0;
+        DAT_8365e010 = DAT_8365e010 + -1;
+      }
+      bVar4 = -(cVar2 != '\0') & bVar4;
+      iVar3 = DAT_8365e010;
+    }
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  if ((bVar4 != 0) && (iVar3 != 0)) {
+    MyAssertHandler(0xffffffff8208b558,0x158,0,0xffffffff8208b984,0xffffffff8208b9b8);
+  }
+  __restgprlr_26(bVar4);
+  return;
 }
 
 
@@ -207,13 +556,11 @@ void TaskManager_DestructAllTaskSets(void)
     } while (lVar5 != 0);
     if (bVar2) break;
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208b558,0x164,0,0xffffffff8208b9f0);
     }
     Sys_Sleep(100);
   }
   if (iVar4 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208b558,0x158,0,0xffffffff8208b984,0xffffffff8208b9b8);
   }
   __restgprlr_21();
@@ -223,21 +570,62 @@ void TaskManager_DestructAllTaskSets(void)
 
 // 824F4D00  TaskManager_GetOpenTaskSlot_Try  (qcommon/com_tasks.cpp:367)
 
-void TaskManager_GetOpenTaskSlot_Try(void)
+void TaskManager_GetOpenTaskSlot_Try
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  iVar1 = __savegprlr_28();
+  TaskManager_AssertTaskSetIsRegistered();
+  iVar3 = 0;
+  pcVar2 = (char *)(iVar1 + 0x9c);
+  do {
+    if (*pcVar2 == '\0') {
+      puVar4 = (undefined4 *)(iVar3 * 0xa0 + iVar1 + 8);
+      memset(puVar4 + 2,0,0x88);
+      puVar4[0x24] = param_3;
+      if (((int)param_2 < 0) || (3 < (int)param_2)) {
+        MyAssertHandler(0xffffffff8208b558,0x17e,0,0xffffffff82039774,0xffffffff82057314,param_2);
+      }
+      *puVar4 = param_4;
+      *(char *)((int)puVar4 + 0x95) = (char)param_2;
+      *(undefined1 *)(puVar4 + 0x25) = 1;
+      __restgprlr_28(puVar4);
+      return;
+    }
+    iVar3 = iVar3 + 1;
+    pcVar2 = pcVar2 + 0xa0;
+  } while (iVar3 < 0x20);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 824F4DD0  TaskManager_GetOpenTaskSlot_Internal  (qcommon/com_tasks.cpp:396)
 
-void TaskManager_GetOpenTaskSlot_Internal(void)
+void TaskManager_GetOpenTaskSlot_Internal
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = TaskManager_GetOpenTaskSlot_Try();
+  if ((uVar2 & 0xffffffff) == 0) {
+    Session_EmptyGraveYard();
+    uVar2 = TaskManager_GetOpenTaskSlot_Try(uVar1,param_2,param_3,param_4);
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8208b558,0x19b,0,0xffffffff820011f4,0xffffffff82012420,
+                      0xffffffff8208b5a0);
+    }
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -266,8 +654,24 @@ void TaskManager_GetOpenTaskSlot(void)
 void TaskManager_CheckTaskIsInRegisteredTaskSet(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  int iVar2;
+  uint uVar3;
+  
+  uVar3 = __savegprlr_28();
+  bVar1 = *(byte *)(uVar3 + 0x96);
+  if (bVar1 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x1b9,0,0xffffffff82000f98,0xffffffff8208b5ec);
+  }
+  iVar2 = (&DAT_8365e010)[bVar1];
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x1bb,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  }
+  if ((uVar3 < iVar2 + 8U) || (iVar2 + 0x1408U <= uVar3)) {
+    MyAssertHandler(0xffffffff8208b558,0x1be,0,0xffffffff82000f98,0xffffffff8208b5b8);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -277,7 +681,6 @@ void TaskManager_ClearTask(int *param_1)
 
 {
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   TaskManager_CheckTaskIsInRegisteredTaskSet(param_1);
@@ -335,11 +738,28 @@ undefined8 TaskManager_TaskIsInProgress(int param_1,int param_2)
 
 // 824F5098  TaskManager_TaskIsInProgressForController  (qcommon/com_tasks.cpp:514)
 
-void TaskManager_TaskIsInProgressForController(void)
+void TaskManager_TaskIsInProgressForController(undefined8 param_1,int param_2,uint param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  iVar1 = __savegprlr_29();
+  TaskManager_AssertTaskSetIsRegistered();
+  iVar2 = 0;
+  piVar3 = (int *)(iVar1 + 0x98);
+  while (((*(char *)(piVar3 + 1) == '\0' || (*piVar3 != param_2)) ||
+         (*(byte *)((int)piVar3 + 5) != param_3))) {
+    iVar2 = iVar2 + 1;
+    piVar3 = piVar3 + 0x28;
+    if (0x1f < iVar2) {
+      __restgprlr_29(0);
+      return;
+    }
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -378,11 +798,42 @@ longlong TaskManager_CountTasksInProgress(int param_1,int param_2)
 
 // 824F51D8  TaskManager_TaskFromXOverlapped  (qcommon/com_tasks.cpp:557)
 
-void TaskManager_TaskFromXOverlapped(void)
+void TaskManager_TaskFromXOverlapped(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x231,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x232,0,0xffffffff82000f98,0xffffffff8208b66c);
+  }
+  TaskManager_AssertTaskSetIsRegistered(uVar1);
+  uVar3 = 0;
+  uVar2 = uVar1 + 0x14;
+  while (((*(char *)((int)uVar2 + 0x88) == '\0' || (*(int *)((int)uVar2 + -0xc) != 1)) ||
+         ((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)))) {
+    uVar3 = uVar3 + 1;
+    uVar2 = uVar2 + 0xa0;
+    if (0x1f < (int)uVar3) {
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff8208b558,0x245,0,0xffffffff8208b65c);
+      }
+      __restgprlr_28(0);
+      return;
+    }
+  }
+  lVar4 = (uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20;
+  if (*(int *)((int)lVar4 + (int)(uVar1 + 8)) != 1) {
+    MyAssertHandler(0xffffffff8208b558,0x240,0,0xffffffff8208b5fc,0xffffffff8208b624);
+  }
+  __restgprlr_28(lVar4 + uVar1 + 8);
+  return;
 }
 
 
@@ -393,11 +844,9 @@ int * TaskManager_TaskToXOverlapped(int *param_1)
 {
   if (param_1 != (int *)0x0) {
     if (*(char *)(param_1 + 0x25) == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208b558,0x251,0,0xffffffff82000f98,0xffffffff8208b6cc);
     }
     if (*param_1 != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208b558,0x252,0,0xffffffff8208b670,0xffffffff8208b698);
     }
     param_1 = param_1 + 3;
@@ -411,18 +860,40 @@ int * TaskManager_TaskToXOverlapped(int *param_1)
 void TaskManager_TaskToIWNetStorageTaskState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8208b558,0x25b,0,0xffffffff82000f98,0xffffffff8208b720);
+  }
+  if (*(char *)(piVar1 + 0x25) == '\0') {
+    MyAssertHandler(0xffffffff8208b558,0x25c,0,0xffffffff82000f98,0xffffffff8208b6cc);
+  }
+  if (*piVar1 != 2) {
+    MyAssertHandler(0xffffffff8208b558,0x25d,0,0xffffffff8208b670,0xffffffff8208b6e4);
+  }
+  __restgprlr_29(piVar1 + 10);
+  return;
 }
 
 
 // 824F5450  TaskManager_SetTaskData  (qcommon/com_tasks.cpp:623)
 
-void TaskManager_SetTaskData(void)
+void TaskManager_SetTaskData(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x270,0,0xffffffff82000f98,0xffffffff8208b720);
+  }
+  if (*(char *)(iVar1 + 0x94) == '\0') {
+    MyAssertHandler(0xffffffff8208b558,0x271,0,0xffffffff82000f98,0xffffffff8208b6cc);
+  }
+  *(undefined4 *)(iVar1 + 0x98) = param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -431,7 +902,16 @@ void TaskManager_SetTaskData(void)
 void TaskManager_GetTaskData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8208b558,0x278,0,0xffffffff82000f98,0xffffffff8208b720);
+  }
+  if (*(char *)(iVar1 + 0x94) == '\0') {
+    MyAssertHandler(0xffffffff8208b558,0x279,0,0xffffffff82000f98,0xffffffff8208b6cc);
+  }
+  __restgprlr_29(*(undefined4 *)(iVar1 + 0x98));
+  return;
 }
 

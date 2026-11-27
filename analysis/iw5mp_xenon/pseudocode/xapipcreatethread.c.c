@@ -2,10 +2,25 @@
 
 // 828B4FD0  XapipCreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapipcreatethread.c:49)
 
-void XapipCreateThread(void)
+void XapipCreateThread(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                      ulonglong param_5,uint param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  ulonglong uVar2;
+  undefined4 local_40 [16];
+  
   __savegprlr_26();
+  uVar2 = (param_5 & 0xffffffff) >> 2 & 1;
+  if (param_6 != 0xffffffff) {
+    uVar2 = ((ulonglong)(uint)(1 << (param_6 & 0x3f)) & 0xff) << 0x18 | uVar2;
+  }
+  iVar1 = ExCreateThread(local_40,param_2,param_7,0xffffffff828b5a50,param_3,param_4,uVar2);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
+    local_40[0] = 0;
+  }
+  __restgprlr_26(local_40[0]);
+  return;
 }
 

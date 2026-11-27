@@ -2,91 +2,274 @@
 
 // 826C56E8  VehField_ReadOnly  (vehicle/vehicle_script.cpp:43)
 
-void VehField_ReadOnly(void)
+void VehField_ReadOnly(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x2c,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x2d,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  uVar1 = SL_ConvertToString(*(undefined2 *)*(undefined4 *)param_2);
+  va(0xffffffff821a0e64,uVar1);
+  Scr_Error();
+  __restgprlr_29();
+  return;
 }
 
 
 // 826C5778  VehField_GetSpeed  (vehicle/vehicle_script.cpp:52)
 
-void VehField_GetSpeed(void)
+void VehField_GetSpeed(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x35,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x36,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  Scr_AddFloat((double)(*(float *)(iVar1 + 0x2f8) * 0.056818184));
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5800  VehField_GetPathSpeed  (vehicle/vehicle_script.cpp:61)
 
-void VehField_GetPathSpeed(void)
+void VehField_GetPathSpeed(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x3e,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x3f,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  Scr_AddFloat((double)(*(float *)(iVar1 + 0x2fc) * 0.056818184));
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5888  VehField_SetTransmission  (vehicle/vehicle_script.cpp:70)
 
-void VehField_SetTransmission(void)
+void VehField_SetTransmission(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  short sVar3;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x49,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x4a,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  sVar3 = Scr_GetConstString(0);
+  if (sVar3 == DAT_835a0bcc) {
+    *(undefined4 *)(iVar2 + 8) = 0;
+    __restgprlr_28();
+    return;
+  }
+  if (sVar3 == DAT_835a0c16) {
+    *(undefined4 *)(iVar2 + 8) = 1;
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = SL_ConvertToString();
+  va(0xffffffff821a0ed0,uVar1);
+  Scr_Error();
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5968  VehField_GetTransmission  (vehicle/vehicle_script.cpp:95)
 
-void VehField_GetTransmission(void)
+void VehField_GetTransmission(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x60,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x61,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  if (*(int *)(iVar1 + 8) == 0) {
+    Scr_AddConstString(DAT_835a0bcc);
+    __restgprlr_28();
+    return;
+  }
+  Scr_AddConstString(DAT_835a0c16);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5A08  VehField_SetPathDir  (vehicle/vehicle_script.cpp:107)
 
-void VehField_SetPathDir(void)
+void VehField_SetPathDir(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  short sVar3;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x6e,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x6f,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  sVar3 = Scr_GetConstString(0);
+  if (sVar3 == DAT_835a0bcc) {
+    *(undefined4 *)(iVar2 + 200) = 0;
+    __restgprlr_28();
+    return;
+  }
+  if (sVar3 == DAT_835a0c16) {
+    *(undefined4 *)(iVar2 + 200) = 1;
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = SL_ConvertToString();
+  va(0xffffffff821a0f20,uVar1);
+  Scr_Error();
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5AE8  VehField_GetPathDir  (vehicle/vehicle_script.cpp:132)
 
-void VehField_GetPathDir(void)
+void VehField_GetPathDir(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x85,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x86,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  if (*(int *)(iVar1 + 200) == 0) {
+    Scr_AddConstString(DAT_835a0bcc);
+    __restgprlr_28();
+    return;
+  }
+  Scr_AddConstString(DAT_835a0c16);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5B88  VehField_SetPathType  (vehicle/vehicle_script.cpp:144)
 
-void VehField_SetPathType(void)
+void VehField_SetPathType(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar5;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  
+  iVar5 = __savegprlr_28();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x93,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x94,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  uVar1 = Scr_GetConstString(0);
+  if ((uVar1 & 0xffffffff) == (ulonglong)DAT_835a0d30) {
+    *(undefined4 *)(iVar5 + 0x434) = 1;
+    if (*(int *)(iVar5 + 4) == 2) {
+      *(undefined4 *)(iVar5 + 4) = 1;
+      __restgprlr_28();
+      return;
+    }
+  }
+  else if ((uVar1 & 0xffffffff) == (ulonglong)DAT_835a0d32) {
+    if (*(int *)(iVar5 + 0x1f0) == 0) {
+      uVar2 = SL_ConvertToString();
+      va(0xffffffff821a0fa8,uVar2);
+      Scr_Error();
+    }
+    *(undefined4 *)(iVar5 + 0x434) = 0;
+    if (*(int *)(iVar5 + 4) == 1) {
+      *(undefined4 *)(iVar5 + 4) = 2;
+      *(undefined4 *)(iVar5 + 0x3d4) = 0x3f800000;
+      *(undefined4 *)(iVar5 + 0x3d8) = 0;
+      __restgprlr_28();
+      return;
+    }
+  }
+  else {
+    uVar2 = SL_ConvertToString();
+    uVar3 = SL_ConvertToString(DAT_835a0d30);
+    uVar4 = SL_ConvertToString(uVar1);
+    va(0xffffffff821a0f70,uVar4,uVar3,uVar2);
+    Scr_Error();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5CE8  VehField_GetPathType  (vehicle/vehicle_script.cpp:183)
 
-void VehField_GetPathType(void)
+void VehField_GetPathType(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xb8,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xb9,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  if (*(int *)(iVar2 + 0x434) == 0) {
+    Scr_AddConstString(DAT_835a0d32);
+  }
+  else {
+    if (*(int *)(iVar2 + 0x434) == 1) {
+      Scr_AddConstString(DAT_835a0d30);
+      __restgprlr_28();
+      return;
+    }
+    if (DAT_84013128 == 0) {
+      uVar1 = va(0xffffffff821a1008);
+      MyAssertHandler(0xffffffff821a0e88,0xc6,0,uVar1);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -98,7 +281,6 @@ void VehField_SetTopSpeed(int param_1)
   double dVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0xcf,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(param_1 + 0x1f0) == 0) {
@@ -123,7 +305,6 @@ void VehField_GetTopSpeed(int param_1)
   double dVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0xdf,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(param_1 + 0x1f0) == 0) {
@@ -140,21 +321,60 @@ void VehField_GetTopSpeed(int param_1)
 
 // 826C5F08  VehField_SetBrake  (vehicle/vehicle_script.cpp:233)
 
-void VehField_SetBrake(void)
+void VehField_SetBrake(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xec,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xed,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  if (*(int *)(iVar1 + 0x1f0) == 0) {
+    Scr_Error(0xffffffff821a109c);
+  }
+  dVar2 = (double)Scr_GetFloat(0);
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
+    Scr_Error(0xffffffff821a1078);
+  }
+  *(float *)(iVar1 + 0x3d8) = (float)dVar2;
+  __restgprlr_28();
+  return;
 }
 
 
 // 826C5FD8  VehField_SetThrottle  (vehicle/vehicle_script.cpp:252)
 
-void VehField_SetThrottle(void)
+void VehField_SetThrottle(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xff,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x100,0,0xffffffff82000f98,0xffffffff8216da94);
+  }
+  if (*(int *)(iVar1 + 0x1f0) == 0) {
+    Scr_Error(0xffffffff821a1128);
+  }
+  if (*(int *)(iVar1 + 4) != 2) {
+    Scr_Error(0xffffffff821a10e8);
+  }
+  dVar2 = (double)Scr_GetFloat(0);
+  if (dVar2 < 0.0) {
+    Scr_Error(0xffffffff821a10c8);
+  }
+  *(float *)(iVar1 + 0x3d4) = (float)dVar2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -163,8 +383,97 @@ void VehField_SetThrottle(void)
 void VehicleScript_AddFields(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  undefined **ppuVar3;
+  
   __savegprlr_23();
+  ppuVar3 = &PTR_DAT_821a0ab0;
+  iVar2 = 0;
+  do {
+    uVar1 = iVar2 / 0x18;
+    if ((uVar1 & 0xe000) != 0) {
+      MyAssertHandler(0xffffffff821a0e88,0x180,0,0xffffffff82000f98,0xffffffff821a1158);
+    }
+    if (uVar1 != (uVar1 & 0xffff)) {
+      MyAssertHandler(0xffffffff821a0e88,0x181,0,0xffffffff82000f98,0xffffffff821a1188);
+    }
+    Scr_AddClassField(0,*(undefined2 *)*ppuVar3,ppuVar3[1],uVar1 & 0xffff | 0x8000);
+    ppuVar3 = ppuVar3 + 6;
+    iVar2 = iVar2 + 0x18;
+  } while (*ppuVar3 != (undefined *)0x0);
+  __restgprlr_23();
+  return;
+}
+
+
+// 826C6178  VehicleScript_SetField  (vehicle/vehicle_script.cpp:393)
+
+void VehicleScript_SetField(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x18c,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if (7 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a0e88,0x18d,0,0xffffffff82000f98,0xffffffff821a11e0);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x18e,0,0xffffffff82000f98,0xffffffff8206c67c);
+  }
+  lVar3 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7de5f550;
+  iVar1 = (int)lVar3;
+  if (*(code **)(iVar1 + 0x10) != (code *)0x0) {
+    (**(code **)(iVar1 + 0x10))(uVar2,lVar3);
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x198,0,0xffffffff82000f98,0xffffffff821a11d0);
+  }
+  Scr_SetGenericField(uVar2,*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+  __restgprlr_28();
+  return;
+}
+
+
+// 826C6288  VehicleScript_GetField  (vehicle/vehicle_script.cpp:415)
+
+void VehicleScript_GetField(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x1a2,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  if (7 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a0e88,0x1a3,0,0xffffffff82000f98,0xffffffff821a11e0);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x1a4,0,0xffffffff82000f98,0xffffffff8206c67c);
+  }
+  lVar3 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7de5f550;
+  iVar1 = (int)lVar3;
+  if (*(code **)(iVar1 + 0x14) != (code *)0x0) {
+    (**(code **)(iVar1 + 0x14))(uVar2,lVar3);
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x1ae,0,0xffffffff82000f98,0xffffffff821a11d0);
+  }
+  Scr_GetGenericField(uVar2,*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+  __restgprlr_28();
+  return;
 }
 
 
@@ -173,8 +482,60 @@ void VehicleScript_AddFields(void)
 void VehicleScript_GetVehicleEntity(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar4;
+  uint uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  ushort uStack00000014;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_27();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 != 0) {
+    Scr_ObjectError(0xffffffff8206d360);
+    __restgprlr_27(0);
+    return;
+  }
+  uStack00000014 = (ushort)((uint)uVar3 >> 0x10);
+  uVar5 = (uint)uStack00000014;
+  if (0x7ff < uStack00000014) {
+    MyAssertHandler(0xffffffff821a0e88,0x1c3,0,0xffffffff82000f98,0xffffffff821a12f4);
+  }
+  uVar4 = 0xffffffff821a12e8;
+  if ((&DAT_83373684)[uVar5 * 0xa0] == 0x11) {
+    if ((&DAT_833737fa)[uVar5 * 0x140] == 0) {
+      uVar1 = 0xffffffff821a12e8;
+    }
+    else {
+      uVar1 = SL_ConvertToString();
+    }
+    dVar8 = (double)(float)(&DAT_833737c0)[uVar5 * 0xa0];
+    dVar7 = (double)(float)(&DAT_833737bc)[uVar5 * 0xa0];
+    dVar6 = (double)(float)(&DAT_833737b8)[uVar5 * 0xa0];
+    uVar2 = SL_ConvertToString((&DAT_833737f2)[uVar5 * 0x140]);
+    va(dVar6,dVar7,dVar8,0xffffffff821a1298,uVar1,uVar2,dVar6,dVar7,dVar8);
+    Scr_Error();
+  }
+  if ((&DAT_833737f2)[uVar5 * 0x140] != DAT_835a0cd6) {
+    if ((&DAT_833737fa)[uVar5 * 0x140] != 0) {
+      uVar4 = SL_ConvertToString();
+    }
+    dVar8 = (double)(float)(&DAT_833737c0)[uVar5 * 0xa0];
+    dVar7 = (double)(float)(&DAT_833737bc)[uVar5 * 0xa0];
+    dVar6 = (double)(float)(&DAT_833737b8)[uVar5 * 0xa0];
+    uVar1 = SL_ConvertToString((&DAT_833737f2)[uVar5 * 0x140]);
+    va(dVar6,dVar7,dVar8,0xffffffff821a1230,uVar4,uVar1,dVar6,dVar7,dVar8);
+    Scr_Error();
+  }
+  if (*(int *)(&DAT_833737e0 + uVar5 * 0x280) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x1cd,0,0xffffffff82000f98,0xffffffff8200d0e4);
+  }
+  __restgprlr_27(&DAT_83373680 + uVar5 * 0xa0);
+  return;
 }
 
 
@@ -183,8 +544,52 @@ void VehicleScript_GetVehicleEntity(void)
 void VehicleScript_GetSpawnerEntity(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  short sStack00000016;
+  
+  uVar3 = __savegprlr_29();
+  sStack00000016 = (short)uVar3;
+  if (sStack00000016 != 0) {
+    Scr_ObjectError(0xffffffff8206d360);
+  }
+  uVar3 = uVar3 >> 0x10;
+  if (0x7ff < uVar3) {
+    MyAssertHandler(0xffffffff821a0e88,0x1da,0,0xffffffff82000f98,0xffffffff8206d38c);
+  }
+  uVar4 = 0xffffffff821a12e8;
+  if ((&DAT_83373684)[uVar3 * 0xa0] != 0x11) {
+    if ((&DAT_833737fa)[uVar3 * 0x140] == 0) {
+      uVar1 = 0xffffffff821a12e8;
+    }
+    else {
+      uVar1 = SL_ConvertToString();
+    }
+    dVar7 = (double)(float)(&DAT_833737c0)[uVar3 * 0xa0];
+    dVar6 = (double)(float)(&DAT_833737bc)[uVar3 * 0xa0];
+    dVar5 = (double)(float)(&DAT_833737b8)[uVar3 * 0xa0];
+    uVar2 = SL_ConvertToString((&DAT_833737f2)[uVar3 * 0x140]);
+    va(dVar5,dVar6,dVar7,0xffffffff821a1380,uVar1,uVar2,dVar5,dVar6,dVar7);
+    Scr_Error();
+  }
+  if ((&DAT_833737f2)[uVar3 * 0x140] != DAT_835a0cd6) {
+    if ((&DAT_833737fa)[uVar3 * 0x140] != 0) {
+      uVar4 = SL_ConvertToString();
+    }
+    dVar7 = (double)(float)(&DAT_833737c0)[uVar3 * 0xa0];
+    dVar6 = (double)(float)(&DAT_833737bc)[uVar3 * 0xa0];
+    dVar5 = (double)(float)(&DAT_833737b8)[uVar3 * 0xa0];
+    uVar1 = SL_ConvertToString((&DAT_833737f2)[uVar3 * 0x140]);
+    va(dVar5,dVar6,dVar7,0xffffffff821a1310,uVar4,uVar1,dVar5,dVar6,dVar7);
+    Scr_Error();
+  }
+  __restgprlr_29(&DAT_83373680 + uVar3 * 0xa0);
+  return;
 }
 
 
@@ -230,8 +635,46 @@ void VehicleScript_Precache(void)
 void VehicleScript_Spawn(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  
   __savegprlr_26();
+  uVar1 = Scr_GetString(0);
+  uVar2 = Scr_GetConstString(1);
+  uVar3 = Scr_GetConstString(2);
+  Scr_GetVector(3,&local_60);
+  Scr_GetVector(4,&local_50);
+  iVar5 = 0;
+  uVar4 = Scr_GetNumParam();
+  if ((5 < uVar4) && (iVar5 = Scr_GetEntity(5), *(int *)(iVar5 + 0x158) == 0)) {
+    Scr_ParamError(5,0xffffffff8207b78c);
+  }
+  iVar6 = G_Spawn();
+  Scr_SetString(iVar6 + 0x172,DAT_835a0cd6);
+  Scr_SetString(iVar6 + 0x174,DAT_835a0cd6);
+  G_SetModel(iVar6,uVar1);
+  Scr_SetString(iVar6 + 0x17a,uVar2);
+  *(undefined4 *)(iVar6 + 0x138) = local_60;
+  *(undefined4 *)(iVar6 + 0x13c) = local_5c;
+  *(undefined4 *)(iVar6 + 0x140) = local_58;
+  *(undefined4 *)(iVar6 + 0x144) = local_50;
+  *(undefined4 *)(iVar6 + 0x148) = local_4c;
+  *(undefined4 *)(iVar6 + 0x14c) = local_48;
+  uVar1 = SL_ConvertToString(uVar3);
+  Vehicle_Create(iVar6,uVar1,iVar5,0);
+  Scr_AddEntity(iVar6);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -267,18 +710,92 @@ void VehicleScript_GetArray(void)
 void VehicleScript_GetSpawnerArray(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
   __savegprlr_29();
+  iVar1 = Scr_GetNumParam();
+  if (iVar1 != 0) {
+    Scr_Error(0xffffffff821a1450);
+  }
+  Scr_MakeArray();
+  iVar1 = 0;
+  if (0 < DAT_83580b08) {
+    iVar3 = 0;
+    iVar2 = DAT_83580b08;
+    do {
+      if ((*(int *)(iVar3 + DAT_83580b04 + 4) == 0x11) &&
+         (*(char *)(iVar3 + DAT_83580b04 + 0x103) != '\0')) {
+        Scr_AddEntity();
+        Scr_AddArray();
+        iVar2 = DAT_83580b08;
+      }
+      iVar1 = iVar1 + 1;
+      iVar3 = iVar3 + 0x280;
+    } while (iVar1 < iVar2);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 826C69C8  Vehicle_Teleport  (vehicle/vehicle_script.cpp:677)
 
-void Vehicle_Teleport(void)
+void Vehicle_Teleport(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  int *piVar4;
+  int *piVar5;
+  int *piVar6;
+  int *piVar7;
+  
+  piVar2 = (int *)__savegprlr_23();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821a0e88,0x2aa,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar3 = Vehicle_GetServerDef(piVar2[0x84]);
+  iVar1 = *piVar2;
+  piVar7 = piVar2 + 0x35;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x2b0,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) ^ 2;
+  piVar4 = (int *)param_2;
+  *piVar7 = *piVar4;
+  piVar6 = piVar2 + 0x3b;
+  piVar2[0x36] = piVar4[1];
+  piVar2[0x37] = piVar4[2];
+  piVar5 = (int *)param_3;
+  piVar2[0x3b] = *piVar5;
+  piVar2[0x3c] = piVar5[1];
+  piVar2[0x3d] = piVar5[2];
+  VEH_SetPosition(iVar1,param_2,piVar2 + 0x47,param_3);
+  piVar2[0x38] = *piVar4;
+  piVar2[0x39] = piVar4[1];
+  piVar2[0x3a] = piVar4[2];
+  piVar2[0x3e] = *piVar5;
+  piVar2[0x3f] = piVar5[1];
+  piVar2[0x40] = piVar5[2];
+  VEH_ResetWheels(iVar1,piVar7);
+  if ((*(int *)(iVar3 + 4) == 0) || (*(int *)(iVar3 + 4) == 1)) {
+    VEH_GroundPlant(iVar1,piVar7,0);
+  }
+  VEH_SetPosition(iVar1,piVar7,0xffffffff82179fd8,piVar6);
+  piVar2[0x38] = *piVar7;
+  piVar2[0x39] = piVar2[0x36];
+  piVar2[0x3a] = piVar2[0x37];
+  piVar2[0x3e] = *piVar6;
+  piVar2[0x3f] = piVar2[0x3c];
+  piVar2[0x40] = piVar2[0x3d];
+  if (piVar2[0x7c] != 0) {
+    PhysVeh_SetState(piVar2[0x7c],piVar7,piVar6,0xffffffff82179fd8,0xffffffff82179fd8);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -298,7 +815,6 @@ void VehCmd_Teleport(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x2df,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   Scr_GetVector(0,&local_30);
@@ -355,8 +871,62 @@ void VehCmd_AttachPath(void)
 void VehCmd_GetAttachPos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  char cVar5;
+  double dVar6;
+  double dVar7;
+  undefined4 local_210;
+  undefined4 local_20c;
+  undefined4 local_208;
+  undefined4 local_1f8;
+  float local_1f4;
+  undefined4 local_1f0;
+  undefined1 auStack_f0 [16];
+  undefined4 local_e0;
+  undefined4 local_dc;
+  undefined4 local_d8;
+  undefined4 local_d4;
+  float local_d0;
+  undefined4 local_cc;
+  
   __savegprlr_29();
+  iVar3 = VehicleScript_GetVehicleEntity();
+  iVar1 = *(int *)(iVar3 + 0x160);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x327,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar4 = Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x210));
+  uVar2 = VehPathScr_GetNodeIndex(0);
+  cVar5 = VehPath_AttachPathPos(auStack_f0,uVar2);
+  if (cVar5 == '\0') {
+    Scr_Error(0xffffffff821a14b4);
+  }
+  Com_Memcpy(&local_210,iVar1 + 0xd4,0x11c);
+  local_1f4 = local_d0;
+  local_210 = local_e0;
+  local_20c = local_dc;
+  local_208 = local_d8;
+  local_1f8 = local_d4;
+  local_1f0 = local_cc;
+  if (*(int *)(iVar1 + 8) == 1) {
+    dVar7 = (double)((local_d0 + 180.0) * 0.0027777778);
+    dVar6 = floor((double)(float)(dVar7 + 0.5));
+    local_1f4 = (float)(dVar7 - (double)(float)dVar6) * 360.0;
+  }
+  VEH_ResetWheels(iVar3,&local_210);
+  if ((*(int *)(iVar4 + 4) == 0) || (*(int *)(iVar4 + 4) == 1)) {
+    VEH_GroundPlant(iVar3,&local_210,0);
+  }
+  Scr_MakeArray();
+  Scr_AddVector(&local_210);
+  Scr_AddArray();
+  Scr_AddVector(&local_1f8);
+  Scr_AddArray();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -365,8 +935,54 @@ void VehCmd_GetAttachPos(void)
 void VehCmd_StartPath(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  char cVar4;
+  
   __savegprlr_28();
+  iVar2 = VehicleScript_GetVehicleEntity();
+  iVar2 = *(int *)(iVar2 + 0x160);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x35c,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar3 = Scr_GetNumParam();
+  if (iVar3 == 0) {
+    if (0x7fff < *(ushort *)(iVar2 + 0xc)) {
+      Scr_Error(0xffffffff821a1508);
+    }
+  }
+  else {
+    uVar1 = VehPathScr_GetNodeIndex(0);
+    cVar4 = VehPath_AttachPathPos(iVar2 + 0xc,uVar1);
+    if (cVar4 == '\0') {
+      Scr_Error(0xffffffff821a156c);
+    }
+    *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)(iVar2 + 0xd4);
+    *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(iVar2 + 0xd8);
+    *(undefined4 *)(iVar2 + 0x24) = *(undefined4 *)(iVar2 + 0xdc);
+    *(undefined4 *)(iVar2 + 0x28) = *(undefined4 *)(iVar2 + 0xec);
+    *(undefined4 *)(iVar2 + 0x2c) = *(undefined4 *)(iVar2 + 0xf0);
+    *(undefined4 *)(iVar2 + 0x30) = *(undefined4 *)(iVar2 + 0xf4);
+  }
+  VehPath_StartPathPos(iVar2 + 0xc);
+  *(undefined4 *)(iVar2 + 0x2fc) = *(undefined4 *)(iVar2 + 0x2f8);
+  if ((*(int *)(iVar2 + 0x434) != 1) && (*(int *)(iVar2 + 0x1f0) != 0)) {
+    if (*(int *)(iVar2 + 0x434) != 0) {
+      MyAssertHandler(0xffffffff821a0e88,0x37a,0,0xffffffff82000f98,0xffffffff821a14e0);
+    }
+    if (*(int *)(iVar2 + 0x1f0) == 0) {
+      MyAssertHandler(0xffffffff821a0e88,0x37b,0,0xffffffff82000f98,0xffffffff8219ec44);
+    }
+    *(undefined4 *)(iVar2 + 4) = 2;
+    *(undefined4 *)(iVar2 + 0x3d4) = 0x3f800000;
+    *(undefined4 *)(iVar2 + 0x3d8) = 0;
+    __restgprlr_28();
+    return;
+  }
+  *(undefined4 *)(iVar2 + 4) = 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -413,8 +1029,71 @@ void VehCmd_SetWaitSpeed(void)
 void VehCmd_FinishDamage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar7;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  char *pcVar8;
+  undefined2 uVar10;
+  undefined8 uVar6;
+  char cVar11;
+  uint uVar9;
+  undefined8 uVar12;
+  undefined8 uVar13;
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [128];
+  
   __savegprlr_19();
+  uVar2 = VehicleScript_GetVehicleEntity();
+  uVar12 = 0xffffffff834b3180;
+  uVar13 = 0xffffffff834b3180;
+  iVar7 = Scr_GetType(0);
+  if ((iVar7 != 0) && (iVar7 = Scr_GetPointerType(0), iVar7 == 0x16)) {
+    uVar12 = Scr_GetEntity(0);
+  }
+  iVar7 = Scr_GetType(1);
+  if ((iVar7 != 0) && (iVar7 = Scr_GetPointerType(1), iVar7 == 0x16)) {
+    uVar13 = Scr_GetEntity(1);
+  }
+  uVar3 = Scr_GetInt(2);
+  if (0 < (int)uVar3) {
+    uVar4 = Scr_GetInt(3);
+    uVar5 = G_MeansOfDeathFromScriptParam(4);
+    pcVar8 = (char *)Scr_GetString(5);
+    if ((((*pcVar8 != 'a') || (pcVar8[1] != 'l')) || (pcVar8[2] != 't')) ||
+       (bVar1 = true, pcVar8[3] != '_')) {
+      bVar1 = false;
+    }
+    if (bVar1) {
+      pcVar8 = pcVar8 + 4;
+    }
+    Scr_GetVector(6,auStack_90);
+    Scr_GetVector(7,auStack_80);
+    uVar10 = Scr_GetConstString(8);
+    G_GetHitLocationIndexFromString(uVar10);
+    Scr_GetInt(9);
+    uVar6 = Scr_GetInt(10);
+    Scr_GetConstString(0xb);
+    cVar11 = G_GetWeaponForName(pcVar8);
+    if ((cVar11 == '\0') && (uVar9 = Scr_GetConstString(5), uVar9 != DAT_835a0bfa)) {
+      uVar2 = Scr_GetString(5);
+      va(0xffffffff821a1600,uVar2);
+      Scr_Error();
+      __restgprlr_19();
+      return;
+    }
+    if ((int)uVar6 < 0) {
+      va(0xffffffff821a15c8,uVar6);
+      Scr_Error();
+      __restgprlr_19();
+      return;
+    }
+    Vehicle_FinishDamage(uVar2,uVar12,uVar13,auStack_80,auStack_90,uVar3,uVar4,uVar5);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -423,8 +1102,66 @@ void VehCmd_FinishDamage(void)
 void VehCmd_SetSpeedInternal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  uint uVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821a0e88,0x45c,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  iVar1 = puVar2[0x58];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x45f,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar3 = Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x210));
+  *(undefined4 *)(iVar1 + 0x36c) = 1;
+  dVar5 = (double)Scr_GetFloat(0);
+  dVar7 = 17.600000381469727;
+  dVar6 = 0.0;
+  *(float *)(iVar1 + 0x370) = (float)(dVar5 * 17.600000381469727);
+  if ((float)(dVar5 * 17.600000381469727) < 0.0) {
+    Scr_ParamError(0,0xffffffff821a16c8);
+    *(float *)(iVar1 + 0x370) = (float)dVar6;
+  }
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 < 2) {
+    if (dVar6 < (double)*(float *)(iVar1 + 0x374)) goto LAB_826c7410;
+    Scr_Error(0xffffffff821a1680);
+  }
+  else {
+    dVar5 = (double)Scr_GetFloat(1);
+    *(float *)(iVar1 + 0x374) = (float)(dVar5 * dVar7);
+    if (dVar6 < (double)(float)(dVar5 * dVar7)) goto LAB_826c7410;
+    Scr_ParamError(1,0xffffffff821a16ac);
+  }
+  *(float *)(iVar1 + 0x374) = (float)dVar7;
+LAB_826c7410:
+  if (((*(int *)(iVar3 + 4) == 5) && (*(float *)(iVar1 + 0x2f8) < *(float *)(iVar1 + 0x370))) &&
+     (*(float *)(iVar1 + 0x370) < *(float *)(iVar1 + 0x374))) {
+    Com_PrintWarning(0xf,0xffffffff821a1640,*puVar2);
+    *(undefined4 *)(iVar1 + 0x374) = *(undefined4 *)(iVar1 + 0x370);
+  }
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 < 3) {
+    *(float *)(iVar1 + 0x378) = *(float *)(iVar1 + 0x374) * 0.5;
+  }
+  else {
+    dVar5 = (double)Scr_GetFloat(2);
+    *(float *)(iVar1 + 0x378) = (float)(dVar5 * dVar7);
+    if ((double)(float)(dVar5 * dVar7) <= dVar6) {
+      Scr_ParamError(2,0xffffffff821a1624);
+      *(float *)(iVar1 + 0x378) = (float)dVar7;
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -444,8 +1181,55 @@ void VehCmd_SetSpeed(void)
 void VehCmd_SetSpeedImmediate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  int iVar4;
+  int iVar5;
+  float local_30;
+  float local_2c;
+  float local_28;
+  
   __savegprlr_29();
+  iVar4 = VehicleScript_GetVehicleEntity();
+  iVar2 = *(int *)(iVar4 + 0x160);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x4c2,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar5 = Vehicle_GetServerDef(*(undefined4 *)(iVar2 + 0x210));
+  VehCmd_SetSpeedInternal(iVar4);
+  if ((*(int *)(iVar5 + 4) == 5) && (*(int *)(iVar2 + 4) == 4)) {
+    if ((*(float *)(iVar2 + 0x28c) != *(float *)(iVar4 + 0x138)) ||
+       ((*(float *)(iVar2 + 0x290) != *(float *)(iVar4 + 0x13c) ||
+        (*(float *)(iVar2 + 0x294) != *(float *)(iVar4 + 0x140))))) {
+      local_30 = *(float *)(iVar2 + 0x28c) - *(float *)(iVar4 + 0x138);
+      local_2c = *(float *)(iVar2 + 0x290) - *(float *)(iVar4 + 0x13c);
+      local_28 = *(float *)(iVar2 + 0x294) - *(float *)(iVar4 + 0x140);
+      fVar3 = SQRT(local_30 * local_30 + local_28 * local_28 + local_2c * local_2c);
+      fVar1 = 1.0;
+      if (-fVar3 < 0.0) {
+        fVar1 = fVar3;
+      }
+      fVar1 = 1.0 / fVar1;
+      local_30 = fVar1 * local_30;
+      local_2c = local_2c * fVar1;
+      local_28 = local_28 * fVar1;
+      goto LAB_826c7600;
+    }
+  }
+  AngleVectors(iVar4 + 0x144,&local_30,0,0);
+LAB_826c7600:
+  fVar1 = *(float *)(iVar2 + 0x370);
+  *(float *)(iVar2 + 0x2f8) = fVar1;
+  *(float *)(iVar2 + 0x2fc) = fVar1;
+  *(float *)(iVar2 + 0x11c) = fVar1 * local_30;
+  *(float *)(iVar2 + 0x120) = local_2c * fVar1;
+  *(float *)(iVar2 + 0x124) = local_28 * fVar1;
+  if (*(int *)(iVar2 + 0x1f0) != 0) {
+    PhysVeh_SetVelocity(*(int *)(iVar2 + 0x1f0),iVar2 + 0x11c);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -463,7 +1247,6 @@ void VehCmd_RotateYaw(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x4f3,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   iVar2 = Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x210));
@@ -539,11 +1322,11 @@ void VehCmd_GetSteering(void)
   double dVar3;
   
   iVar1 = VehicleScript_GetVehicleEntity();
-  if (*(int *)(iVar1 + 0x160) == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar2 = *(int *)(iVar1 + 0x160);
+  if (iVar2 == 0) {
     MyAssertHandler(0xffffffff821a0e88,0x55d,0,0xffffffff82000f98,0xffffffff82026d30);
   }
-  iVar2 = Vehicle_GetServerDef(*(undefined4 *)(*(int *)(iVar1 + 0x160) + 0x210));
+  iVar2 = Vehicle_GetServerDef(*(undefined4 *)(iVar2 + 0x210));
   dVar3 = 0.0;
   if (0.0 < *(float *)(iVar2 + 0x170)) {
     dVar3 = (double)(*(float *)(iVar1 + 100) / *(float *)(iVar2 + 0x170));
@@ -561,11 +1344,11 @@ void VehCmd_GetThrottle(void)
   int iVar1;
   
   iVar1 = VehicleScript_GetVehicleEntity();
-  if (*(int *)(iVar1 + 0x160) == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar1 = *(int *)(iVar1 + 0x160);
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff821a0e88,0x579,0,0xffffffff82000f98,0xffffffff82026d30);
   }
-  Scr_AddFloat((double)*(float *)(*(int *)(iVar1 + 0x160) + 0x3d4));
+  Scr_AddFloat((double)*(float *)(iVar1 + 0x3d4));
   return;
 }
 
@@ -579,7 +1362,6 @@ void VehCmd_TurnEngineOff(void)
   
   iVar1 = VehicleScript_GetVehicleEntity();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x58e,0,0xffffffff82000f98,0xffffffff82002614);
   }
   *(uint *)(iVar1 + 0x58) = *(uint *)(iVar1 + 0x58) | 0x20;
@@ -596,7 +1378,6 @@ void VehCmd_TurnEngineOn(void)
   
   iVar1 = VehicleScript_GetVehicleEntity();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x5a5,0,0xffffffff82000f98,0xffffffff82002614);
   }
   *(uint *)(iVar1 + 0x58) = *(uint *)(iVar1 + 0x58) & 0xffffffdf;
@@ -622,8 +1403,22 @@ void VehCmd_GetGoalSpeedMPH(void)
 void VehCmd_SetAcceleration(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  double dVar2;
+  
   __savegprlr_29();
+  iVar1 = VehicleScript_GetVehicleEntity();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x5cf,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  iVar1 = *(int *)(iVar1 + 0x160);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x5d2,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  dVar2 = (double)Scr_GetFloat(0);
+  *(float *)(iVar1 + 0x374) = (float)(dVar2 * 17.600000381469727);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -632,8 +1427,22 @@ void VehCmd_SetAcceleration(void)
 void VehCmd_SetDeceleration(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  double dVar2;
+  
   __savegprlr_29();
+  iVar1 = VehicleScript_GetVehicleEntity();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x5e6,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  iVar1 = *(int *)(iVar1 + 0x160);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x5e9,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  dVar2 = (double)Scr_GetFloat(0);
+  *(float *)(iVar1 + 0x378) = (float)(dVar2 * 17.600000381469727);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -737,7 +1546,6 @@ void VehCmd_SetMaxPitchRoll(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x663,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   iVar2 = Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x210));
@@ -942,8 +1750,59 @@ void VehCmd_FreeVehicle(void)
 void VehCmd_GetWheelSurface(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  uint uVar5;
+  
   __savegprlr_28();
+  iVar2 = VehicleScript_GetVehicleEntity();
+  iVar2 = *(int *)(iVar2 + 0x160);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x75d,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  puVar3 = (undefined4 *)Vehicle_GetServerDef(*(undefined4 *)(iVar2 + 0x210));
+  uVar4 = Scr_GetConstString(0);
+  iVar1 = puVar3[1];
+  uVar5 = 0;
+  if (((iVar1 == 2) || (iVar1 == 4)) || (iVar1 == 5)) {
+    va(0xffffffff821a19a0,*puVar3);
+    Scr_Error();
+  }
+  if (uVar4 == DAT_835a0d14) {
+    uVar5 = 0;
+  }
+  else if (uVar4 == DAT_835a0d16) {
+    uVar5 = 1;
+  }
+  else if (uVar4 == DAT_835a0d18) {
+    uVar5 = 2;
+  }
+  else if (uVar4 == DAT_835a0d1a) {
+    uVar5 = 3;
+  }
+  else if (uVar4 == DAT_835a0d1c) {
+    uVar5 = 4;
+  }
+  else if (uVar4 == DAT_835a0d1e) {
+    uVar5 = 5;
+  }
+  else {
+    Scr_ParamError(0,0xffffffff821a1938);
+  }
+  if ((puVar3[1] == 0) && (3 < uVar5)) {
+    Scr_ParamError(0,0xffffffff821a1914);
+  }
+  if (*(int *)((uVar5 + 100) * 4 + iVar2) != 0) {
+    Com_SurfaceTypeToName();
+    Scr_AddString();
+    __restgprlr_28();
+    return;
+  }
+  Scr_AddString(0xffffffff82003484);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -993,8 +1852,22 @@ void VehCmd_SetVehicleLookatText(void)
 void VehCmd_SetVehicleTeam(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined4 uVar2;
+  
   __savegprlr_29();
+  iVar1 = VehicleScript_GetVehicleEntity();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x7c1,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 0x160) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x7c5,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  Scr_GetConstString(0);
+  uVar2 = Com_TeamFromString();
+  *(undefined4 *)(*(int *)(iVar1 + 0x160) + 0x214) = uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1029,7 +1902,6 @@ void VehCmd_SetGoalPos(void)
   iVar2 = VehicleScript_GetVehicleEntity();
   iVar2 = *(int *)(iVar2 + 0x160);
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x7f8,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   iVar3 = Vehicle_GetServerDef(*(undefined4 *)(iVar2 + 0x210));
@@ -1139,8 +2011,97 @@ void VehCmd_ClearTargetYaw(void)
 void VehCmd_HeliSetGoal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  int iVar3;
+  longlong lVar1;
+  double dVar4;
+  undefined1 local_60 [4];
+  float local_5c;
+  undefined1 local_58;
+  float local_54;
+  undefined1 local_50;
+  float local_4c;
+  undefined1 local_48;
+  float local_44;
+  char local_40;
+  char local_3f;
+  char local_3e;
+  char local_3d;
+  char local_3c;
+  undefined1 local_3b;
+  undefined1 local_3a;
+  char local_39;
+  float local_38;
+  undefined1 auStack_34 [52];
+  
   __savegprlr_29();
+  iVar2 = VehicleScript_GetVehicleEntity();
+  iVar2 = *(int *)(iVar2 + 0x160);
+  iVar3 = Vehicle_GetServerDef(*(undefined4 *)(iVar2 + 0x210));
+  if (*(int *)(iVar3 + 4) != 5) {
+    Scr_ObjectError(0xffffffff821a17e8);
+  }
+  Scr_GetVector(0,auStack_34);
+  local_58 = 0;
+  iVar3 = Scr_GetType(1);
+  if (iVar3 != 0) {
+    local_58 = 1;
+    dVar4 = (double)Scr_GetFloat(1);
+    local_54 = (float)dVar4;
+  }
+  local_50 = 0;
+  iVar3 = Scr_GetType(2);
+  if (iVar3 != 0) {
+    local_50 = 1;
+    dVar4 = (double)Scr_GetFloat(2);
+    local_4c = (float)dVar4;
+  }
+  local_48 = 0;
+  iVar3 = Scr_GetType(3);
+  if (iVar3 != 0) {
+    local_48 = 1;
+    dVar4 = (double)Scr_GetFloat(3);
+    local_44 = (float)dVar4;
+  }
+  lVar1 = Scr_GetType(4);
+  local_3a = lVar1 != 0;
+  if ((bool)local_3a) {
+    iVar3 = Scr_GetInt(4);
+    local_3b = 1;
+    if (iVar3 != 0) goto LAB_826c87c4;
+  }
+  local_3b = 0;
+LAB_826c87c4:
+  lVar1 = Scr_GetType(5);
+  local_39 = '\x01' - (lVar1 == 0);
+  dVar4 = (double)Scr_GetFloat(6);
+  local_38 = (float)dVar4;
+  local_60[0] = 0;
+  iVar3 = Scr_GetType(7);
+  if (iVar3 != 0) {
+    local_60[0] = 1;
+    dVar4 = (double)Scr_GetFloat(7);
+    local_5c = (float)dVar4;
+  }
+  lVar1 = Scr_GetInt(8);
+  local_40 = '\x01' - (lVar1 == 0);
+  lVar1 = Scr_GetInt(9);
+  local_3f = '\x01' - (lVar1 == 0);
+  lVar1 = Scr_GetInt(10);
+  local_3e = '\x01' - (lVar1 == 0);
+  lVar1 = Scr_GetInt(0xb);
+  local_3d = '\x01' - (lVar1 == 0);
+  lVar1 = Scr_GetInt(0xc);
+  local_3c = '\x01' - (lVar1 == 0);
+  Heli_PathFromVeh(iVar2 + 0x21c,iVar2);
+  *(undefined4 *)(iVar2 + 0x36c) = 1;
+  *(undefined4 *)(iVar2 + 4) = 4;
+  HeliPath_SetGoal(iVar2 + 0x21c,local_60);
+  *(undefined4 *)(iVar2 + 0x374) = *(undefined4 *)(iVar2 + 0x2a0);
+  *(undefined4 *)(iVar2 + 0x378) = *(undefined4 *)(iVar2 + 0x2a4);
+  *(undefined4 *)(iVar2 + 0x370) = *(undefined4 *)(iVar2 + 0x29c);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1159,7 +2120,6 @@ void VehCmd_SetTurretTargetVec(void)
   iVar2 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar2 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x8c6,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(iVar1 + 4) == 5) {
@@ -1241,7 +2201,6 @@ void VehCmd_ClearTurretTargetEnt(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x90c,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(iVar1 + 4) != 5) {
@@ -1263,8 +2222,114 @@ void VehCmd_ClearTurretTargetEnt(void)
 void VehCmd_CanTurretTargetPoint(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  float fVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  undefined4 *puVar7;
+  undefined4 uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_150;
+  float local_14c;
+  int local_144;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  undefined1 auStack_110 [48];
+  undefined1 auStack_e0 [48];
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
   __savegprlr_27();
+  __savefpr_28();
+  puVar3 = (undefined4 *)VehicleScript_GetVehicleEntity();
+  iVar1 = puVar3[0x58];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0x939,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar4 = Vehicle_GetServerDef(*(undefined4 *)(iVar1 + 0x210));
+  Scr_GetVector(0,&local_140);
+  iVar6 = 0;
+  uVar5 = Scr_GetNumParam();
+  if (1 < uVar5) {
+    iVar6 = Scr_GetInt(1);
+  }
+  uVar8 = 0x7ff;
+  uVar5 = Scr_GetNumParam();
+  if (2 < uVar5) {
+    puVar7 = (undefined4 *)Scr_GetEntity(2);
+    uVar8 = *puVar7;
+  }
+  if (*(int *)(iVar1 + 0x3f8) < 0) {
+    Scr_Error(0xffffffff821a1a80);
+    __restfpr_28();
+    __restgprlr_27();
+    return;
+  }
+  G_DObjGetWorldBoneIndexPos(puVar3,*(int *)(iVar1 + 0x3f8),&local_130);
+  if (*(int *)(iVar1 + 0x3f4) == -1) {
+    AnglesToAxis(iVar1 + 0xec,auStack_110);
+  }
+  else {
+    G_DObjGetWorldBoneIndexMatrix(puVar3,*(int *)(iVar1 + 0x3f4),auStack_110);
+  }
+  local_13c = local_13c - local_12c;
+  local_138 = local_138 - local_128;
+  local_140 = local_140 - local_130;
+  fVar2 = SQRT(local_140 * local_140 + local_138 * local_138 + local_13c * local_13c);
+  local_118 = 1.0;
+  if (-fVar2 < 0.0) {
+    local_118 = fVar2;
+  }
+  local_118 = 1.0 / local_118;
+  local_120 = local_118 * local_140;
+  local_11c = local_13c * local_118;
+  local_118 = local_138 * local_118;
+  vectoangles(&local_120,&local_150);
+  AnglesToAxis(&local_150,auStack_80);
+  MatrixTranspose(auStack_110,auStack_b0);
+  MatrixMultiply(auStack_80,auStack_b0,auStack_e0);
+  AxisToAngles(auStack_e0,&local_150);
+  dVar12 = 0.0027777778450399637;
+  dVar10 = (double)(local_150 * 0.0027777778);
+  dVar11 = 0.5;
+  dVar9 = floor((double)(float)(dVar10 + 0.5));
+  dVar12 = (double)(float)((double)local_14c * dVar12);
+  dVar13 = 360.0;
+  local_150 = (float)(dVar10 - (double)(float)dVar9) * 360.0;
+  dVar9 = floor((double)(float)(dVar12 + dVar11));
+  local_14c = (float)((double)(float)(dVar12 - (double)(float)dVar9) * dVar13);
+  if ((-*(float *)(iVar4 + 0x290) <= local_150) && (local_150 <= *(float *)(iVar4 + 0x294))) {
+    if ((-*(float *)(iVar4 + 0x28c) <= local_14c) && (local_14c <= *(float *)(iVar4 + 0x288))) {
+      if (iVar6 == 0) {
+        Scr_AddInt(1);
+        __restfpr_28();
+        __restgprlr_27();
+        return;
+      }
+      SV_SightTrace(&local_144,&local_130,&local_140,0xffffffff82174a3c,*puVar3,uVar8,0x801);
+      Scr_AddInt(local_144 == 0);
+      __restfpr_28();
+      __restgprlr_27();
+      return;
+    }
+  }
+  Scr_AddInt(0);
+  __restfpr_28();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1280,7 +2345,6 @@ void VehCmd_SetLookAtEnt(void)
   iVar3 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar3 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0x989,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(iVar1 + 4) == 5) {
@@ -1335,8 +2399,223 @@ void VehCmd_SetWeapon(void)
 void VehCmd_FireWeapon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  int iVar10;
+  int iVar11;
+  undefined8 uVar6;
+  uint uVar12;
+  int iVar13;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  ulonglong uVar9;
+  ulonglong uVar14;
+  ushort *puVar15;
+  longlong lVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  int local_5c8;
+  float local_590;
+  float local_58c;
+  float local_588;
+  undefined4 local_584;
+  undefined1 local_580;
+  int local_57c;
+  undefined4 local_578;
+  float local_570;
+  float local_56c;
+  float local_568;
+  undefined4 local_564;
+  undefined1 auStack_560 [16];
+  float local_550;
+  float local_54c;
+  float local_548;
+  float local_52c;
+  float local_528;
+  float local_524;
+  float local_520;
+  float local_51c;
+  float local_518;
+  undefined1 auStack_50c [4];
+  undefined8 local_508;
+  undefined8 local_500;
+  undefined1 auStack_4f8 [8];
+  undefined1 auStack_4f0 [16];
+  float local_4e0;
+  float local_4dc;
+  float local_4d8;
+  undefined1 auStack_4b0 [1200];
+  
   __savegprlr();
+  iVar10 = VehicleScript_GetVehicleEntity();
+  iVar3 = *(int *)(iVar10 + 0x160);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xa06,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar11 = Vehicle_GetServerDef(*(undefined4 *)(iVar3 + 0x210));
+  dVar19 = 0.0;
+  if ((double)(longlong)*(int *)(iVar10 + 0x19c) <= 0.0) {
+    va(0xffffffff821a1a20);
+    Scr_Error();
+  }
+  if (*(char *)(iVar10 + 0xcb) == '\0') {
+    uVar6 = SL_ConvertToString(*(undefined2 *)(iVar10 + 0x17a));
+    va(0xffffffff821a1ba8,uVar6);
+    Scr_Error();
+  }
+  local_584 = *(undefined4 *)(iVar10 + 200);
+  local_580 = 0;
+  uVar12 = BG_GetAlternateWeapon(*(undefined4 *)(iVar10 + 200),0);
+  local_57c = (&DAT_829d84a0)[uVar12 & 0xff];
+  uVar12 = BG_GetAlternateWeapon(*(undefined4 *)(iVar10 + 200),0);
+  local_578 = (&DAT_829d80d8)[uVar12 & 0xff];
+  uVar6 = BG_ADSSpread(local_584,local_580);
+  iVar13 = BG_GetWeaponType(local_584,local_580);
+  if ((iVar13 != 1) && (iVar13 = BG_GetWeaponType(local_584,local_580), iVar13 != 3)) {
+    va(0xffffffff821a1b70);
+    Scr_Error();
+  }
+  dVar20 = 1.0;
+  if ((*(int *)(iVar11 + 4) != 2) && (*(int *)(iVar11 + 4) != 5)) {
+    dVar17 = dVar20;
+    if (*(int *)(iVar3 + 0x3f8) < 0) {
+      uVar7 = SL_ConvertToString(*(undefined2 *)(iVar10 + 0x17a));
+      va(0xffffffff821a1b58,uVar7);
+      Scr_Error();
+      dVar17 = dVar20;
+    }
+    G_DObjGetWorldBoneIndexMatrix(iVar10,*(undefined4 *)(iVar3 + 0x3f8),&local_4e0);
+    uVar12 = Scr_GetNumParam();
+    dVar20 = dVar17;
+    if ((3 < uVar12) && (iVar13 = Scr_GetType(3), dVar20 = dVar17, iVar13 != 0)) {
+      dVar17 = (double)Scr_GetFloat(3);
+    }
+    local_520 = -local_4e0;
+    local_51c = -local_4dc;
+    local_518 = -local_4d8;
+    VEH_JoltBody(dVar17,dVar19,dVar19,iVar10,&local_520);
+  }
+  iVar13 = Scr_GetNumParam();
+  if (((iVar13 == 0) || (iVar13 = Scr_GetType(0), iVar13 == 0)) && (*(int *)(iVar11 + 0x10) != 0)) {
+    iVar11 = 2;
+    uVar14 = -(ulonglong)(*(int *)(iVar3 + 0x30c) != 0) & 2;
+    local_5c8 = ((uint)LZCOUNT(*(int *)(iVar3 + 0x30c)) >> 5 ^ 1) + 0x39;
+  }
+  else {
+    iVar11 = 1;
+    uVar14 = 0;
+    local_5c8 = 0x2a;
+  }
+  uVar7 = 0xffffffffffffffff;
+  lVar16 = 0;
+  if (iVar11 != 0) {
+    puVar15 = (ushort *)(iVar10 + 0x150);
+    do {
+      uVar8 = VEH_GetTagBoneIndex(iVar10,lVar16 + uVar14);
+      if ((int)uVar8 < 0) {
+        MyAssertHandler(0xffffffff821a0e88,0xa52,1,&DAT_82000f98,0xffffffff82185b18);
+      }
+      G_DObjGetWorldBoneIndexMatrix(iVar10,uVar8,&local_550);
+      uVar2 = *puVar15;
+      if (((ulonglong)uVar2 != 0) && ((&DAT_83373503)[(uint)uVar2 * 0x280] == '\0')) {
+        MyAssertHandler(0xffffffff8206b6f8,0x186,0,0xffffffff8206b6b0,0xffffffff8206b6c8,
+                        (ulonglong)uVar2 - 1);
+      }
+      if (((*puVar15 == 0) || (iVar11 != 1)) ||
+         ((*(int *)(iVar3 + 0x314) != 0 || (*(int *)(iVar3 + 0x390) != 0x7ff)))) {
+        local_590 = local_550;
+        local_58c = local_54c;
+        local_588 = local_548;
+      }
+      else {
+        iVar13 = EntHandle__ent(puVar15);
+        if (*(int *)(iVar13 + 0x158) == 0) {
+          MyAssertHandler(0xffffffff821a0e88,0xa5b,0,&DAT_82000f98,0xffffffff8206bbdc);
+        }
+        local_590 = *(float *)(iVar3 + 0x398) - local_52c;
+        local_58c = *(float *)(iVar3 + 0x39c) - local_528;
+        local_588 = *(float *)(iVar3 + 0x3a0) - local_524;
+        dVar18 = (double)SQRT(local_590 * local_590 + local_588 * local_588 + local_58c * local_58c)
+        ;
+        dVar17 = dVar20;
+        if (-dVar18 < 0.0) {
+          dVar17 = dVar18;
+        }
+        fVar1 = (float)(dVar20 / dVar17);
+        local_590 = fVar1 * local_590;
+        local_58c = local_58c * fVar1;
+        local_588 = local_588 * fVar1;
+        vectoangles(&local_550,auStack_560);
+        vectoangles(&local_590,auStack_4f0);
+        AnglesSubtract(auStack_560,auStack_4f0,&local_570);
+        fVar1 = *(float *)(local_57c + 0x3dc);
+        fVar5 = fVar1;
+        if (local_570 - fVar1 < 0.0) {
+          fVar5 = local_570;
+        }
+        fVar4 = -fVar1 - local_570;
+        local_570 = -fVar1;
+        if (fVar4 < 0.0) {
+          local_570 = fVar5;
+        }
+        fVar1 = *(float *)(local_57c + 0x3dc);
+        local_568 = (float)dVar19;
+        fVar5 = fVar1;
+        if (local_56c - fVar1 < 0.0) {
+          fVar5 = local_56c;
+        }
+        fVar4 = -fVar1 - local_56c;
+        local_56c = -fVar1;
+        if (fVar4 < 0.0) {
+          local_56c = fVar5;
+        }
+        AnglesSubtract(auStack_560,&local_570,auStack_560);
+        AngleVectors(auStack_560,&local_590,0,0);
+      }
+      iVar13 = BG_GetWeaponType(local_584,local_580);
+      if (iVar13 == 1) {
+        uVar7 = Bullet_Fire(uVar6,iVar10);
+      }
+      else {
+        uVar12 = Scr_GetNumParam();
+        if ((1 < uVar12) && (iVar13 = Scr_GetType(1), iVar13 != 0)) {
+          local_508 = 0;
+          local_500 = 0x1000000;
+          Scr_GetEntity(1);
+          uVar12 = Scr_GetNumParam();
+          if ((uVar12 < 3) || (iVar13 = Scr_GetType(2), iVar13 == 0)) {
+            local_508 = CONCAT44((float)dVar19,(float)dVar19);
+          }
+          else {
+            Scr_GetVector(2,auStack_50c);
+          }
+        }
+        uVar9 = Weapon_RocketLauncher_Fire(uVar6,iVar10,*(undefined4 *)(iVar10 + 200));
+        if ((uVar9 & 0xffffffff) == 0) {
+          MyAssertHandler(0xffffffff821a0e88,0xaa2,0,&DAT_82000f98,0xffffffff8207539c);
+        }
+        Scr_AddEntity(uVar9);
+      }
+      lVar16 = lVar16 + 1;
+    } while ((int)lVar16 < iVar11);
+    if (((int)uVar7 != -1) && ((local_5c8 != 0x2a || (iVar11 != 1)))) {
+      MyAssertHandler(0xffffffff821a0e88,0xab0,0,&DAT_82000f98,0xffffffff821a1b00);
+    }
+  }
+  FireWeapon_SendClientEvent(iVar10,local_5c8,uVar7);
+  BG_GetWeaponName(*(undefined4 *)(iVar10 + 200),auStack_4b0,0x400);
+  Scr_AddString();
+  Scr_Notify(iVar10,DAT_835a0c9e,1);
+  BG_GetFireTime(local_584,local_580,0,&local_564,auStack_4f8);
+  *(undefined4 *)(iVar3 + 0x308) = local_564;
+  *(uint *)(iVar3 + 0x30c) = (uint)(*(int *)(iVar3 + 0x30c) == 0);
+  __restgprlr();
+  return;
 }
 
 
@@ -1380,7 +2659,6 @@ void VehCmd_IsTurretReady(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0xafa,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   if (*(int *)(iVar1 + 4) != 5) {
@@ -1403,7 +2681,6 @@ void VehCmd_VehicleDriveTo(void)
   iVar1 = VehicleScript_GetVehicleEntity();
   iVar1 = *(int *)(iVar1 + 0x160);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a0e88,0xb1c,0,0xffffffff82000f98,0xffffffff82026d30);
   }
   Scr_GetVector(0,iVar1 + 0x3b0);
@@ -1425,8 +2702,29 @@ void VehCmd_VehicleDriveTo(void)
 void VehCmd_DoSpawn(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  
   __savegprlr_29();
+  uVar1 = VehicleScript_GetSpawnerEntity();
+  uVar4 = 0;
+  iVar2 = Scr_GetNumParam();
+  if (iVar2 != 0) {
+    uVar4 = Scr_GetConstString(0);
+  }
+  iVar2 = 0;
+  uVar3 = Scr_GetNumParam();
+  if (((1 < uVar3) && (iVar2 = Scr_GetEntity(1), iVar2 != 0)) && (*(int *)(iVar2 + 0x158) == 0)) {
+    Scr_ParamError(1,0xffffffff821a1c14);
+  }
+  iVar2 = Vehicle_DoSpawn(uVar1,uVar4,iVar2);
+  if (iVar2 != 0) {
+    Scr_AddEntity();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1449,8 +2747,41 @@ void VehCmd_IsPhysVeh(void)
 void VehPhysCmd_Crash(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar2;
+  uint uVar5;
+  
   __savegprlr_29();
+  iVar3 = VehicleScript_GetVehicleEntity();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xb81,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar3 + 0x160) == 0) {
+    MyAssertHandler(0xffffffff821a0e88,0xb82,0,0xffffffff82000f98,0xffffffff8200d0e4);
+  }
+  iVar1 = *(int *)(iVar3 + 0x160);
+  if (*(int *)(iVar1 + 0x1f0) == 0) {
+    Scr_ObjectError(0xffffffff821a1c38);
+  }
+  iVar4 = Scr_GetNumParam();
+  if ((iVar4 == 0) || (iVar4 = Scr_GetInt(0), iVar4 == 0)) {
+    PhysVeh_RemoveStability(*(undefined4 *)(iVar1 + 0x1f0));
+  }
+  else {
+    PhysVeh_Crash(*(undefined4 *)(iVar1 + 0x1f0));
+  }
+  uVar2 = G_rand();
+  uVar5 = *(uint *)(iVar3 + 0x58) | 0x4000000;
+  if (uVar2 == ((longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) &
+               0x7fffffff) * 2) {
+    uVar5 = *(uint *)(iVar3 + 0x58) | 0x8000000;
+  }
+  *(uint *)(iVar3 + 0x58) = uVar5;
+  *(undefined4 *)(iVar1 + 4) = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1598,7 +2929,55 @@ void VehPhysCmd_SetConveyorBelt(void)
 void VehicleScript_GetMethod(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  uint uVar5;
+  int iVar6;
+  int *piVar7;
+  char *pcVar8;
+  char *pcVar9;
+  longlong lVar10;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  if (puVar4 == (undefined4 *)0x0) {
+    lVar10 = 0x3d;
+    puVar4 = (undefined4 *)&UNK_821a0b7c;
+    do {
+      puVar3 = puVar4 + 4;
+      puVar4 = puVar4 + 3;
+      Scr_RegisterFunction(*puVar3,0,*puVar4);
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    __restgprlr_29(0);
+    return;
+  }
+  piVar7 = &DAT_821a0b88;
+  iVar6 = 0;
+  uVar5 = 0;
+  do {
+    pcVar8 = (&PTR_s_attach_8298e238)[*piVar7 + -0x8000];
+    pcVar9 = (char *)*puVar4;
+    do {
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar8;
+      if (cVar1 == '\0') break;
+      pcVar9 = pcVar9 + 1;
+      pcVar8 = pcVar8 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      *puVar4 = (&PTR_s_attach_8298e238)[(&DAT_821a0b88)[iVar6 * 3] + -0x8000];
+      __restgprlr_29((&DAT_821a0b88)[iVar6 * 3]);
+      return;
+    }
+    uVar5 = uVar5 + 0xc;
+    iVar6 = iVar6 + 1;
+    piVar7 = piVar7 + 3;
+    if (0x2db < uVar5) {
+      __restgprlr_29(0);
+      return;
+    }
+  } while( true );
 }
 

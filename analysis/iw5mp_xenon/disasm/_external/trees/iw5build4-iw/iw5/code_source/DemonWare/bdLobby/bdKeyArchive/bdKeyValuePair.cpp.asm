@@ -25,6 +25,34 @@
 ; 8290A938  bdKeyValuePair::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyvaluepair.cpp:21)
   8290A938  7D8802A6             mfspr r12,LR
   8290A93C  4800BD81             bl 0x829166bc
+  8290A940  3BE1FF90             subi r31,r1,0x70
+  8290A944  9421FF90             stwu r1,-0x70(r1)
+  8290A948  7C7E1B78             or r30,r3,r3
+  8290A94C  909F008C             stw r4,0x8c(r31)
+  8290A950  7C9D2378             or r29,r4,r4
+  8290A954  38830006             addi r4,r3,0x6
+  8290A958  807D0000             lwz r3,0x0(r29)
+  8290A95C  4BFEB2A5             bl 0x828f5c00
+  8290A960  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8290A964  314BFFFF             subic r10,r11,0x1
+  8290A968  7D6A5910             subfe r11,r10,r11
+  8290A96C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290A970  4182001C             beq 0x8290a98c
+  8290A974  389E0008             addi r4,r30,0x8
+  8290A978  807D0000             lwz r3,0x0(r29)
+  8290A97C  4BFEB3BD             bl 0x828f5d38
+  8290A980  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290A984  39600001             li r11,0x1
+  8290A988  40820008             bne 0x8290a990
+LAB_8290a98c:
+  8290A98C  39600000             li r11,0x0
+LAB_8290a990:
+  8290A990  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  8290A994  7FA3EB78             or r3,r29,r29
+  8290A998  4BA59A69             bl 0x82364400
+  8290A99C  7FC3F378             or r3,r30,r30
+  8290A9A0  383F0070             addi r1,r31,0x70
+  8290A9A4  4800BD68             b 0x8291670c
 
 ; 8290A8D8  bdKeyValuePair::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyvaluepair.cpp:30)
   8290A8D8  38600010             li r3,0x10

@@ -2,11 +2,123 @@
 
 // 828C4030  nciDecodeVoicePropSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:179)
 
-void nciDecodeVoicePropSase3200(void)
+void nciDecodeVoicePropSase3200(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  int *piVar5;
+  undefined8 uVar4;
+  longlong lVar6;
+  int iVar7;
+  longlong lVar8;
+  undefined4 local_a0;
+  undefined4 local_90 [12];
+  undefined4 local_60 [24];
+  
+  piVar5 = (int *)__savegprlr_29();
+  if ((piVar5 == (int *)0x0) || (*piVar5 != 0xface)) {
+    uVar4 = 0x17d4;
+  }
+  else if (*(char *)(piVar5 + 3) == '\v') {
+    if ((param_2 & 0xffffffff) == 0) {
+      uVar4 = 0x181a;
+    }
+    else {
+      piVar2 = (int *)param_2;
+      if (piVar2[2] == 0) {
+        uVar4 = 0x17f2;
+      }
+      else if (*piVar2 == 0) {
+        uVar4 = 0x17ed;
+      }
+      else if (*(ushort *)((int)piVar2 + 0xe) < *(ushort *)(piVar2 + 3)) {
+        if (*(ushort *)((int)piVar2 + 0x12) < *(ushort *)(piVar2 + 3)) {
+          if (*(byte *)(piVar2 + 4) < 8) {
+            if (*(byte *)(piVar2 + 5) < 8) {
+              piVar5[7] = (int)piVar2;
+              NellyDecodeSase3200(piVar5[4],*piVar2,param_2 + 4,piVar2[2],
+                                  *(undefined2 *)(piVar2 + 3),param_2 + 0xe,param_2 + 0x10,local_90)
+              ;
+              if ((param_3 & 0xffffffff) != 0) {
+                *(undefined4 *)param_3 = local_a0;
+                lVar6 = param_3 + 0x30;
+                iVar7 = 0;
+                lVar8 = 0xc;
+                do {
+                  puVar3 = (undefined4 *)((int)local_60 + iVar7);
+                  uVar1 = *(undefined4 *)((int)local_90 + iVar7);
+                  iVar7 = iVar7 + 4;
+                  *(undefined4 *)((int)lVar6 + -0x2c) = *puVar3;
+                  lVar6 = lVar6 + 4;
+                  *(undefined4 *)lVar6 = uVar1;
+                  lVar8 = lVar8 + -1;
+                } while (lVar8 != 0);
+              }
+              uVar4 = 0;
+            }
+            else {
+              uVar4 = 0x17fc;
+            }
+          }
+          else {
+            uVar4 = 0x17f7;
+          }
+        }
+        else {
+          uVar4 = 0x1806;
+        }
+      }
+      else {
+        uVar4 = 0x1801;
+      }
+    }
+  }
+  else {
+    uVar4 = 0x17e3;
+  }
+  __restgprlr_29(uVar4);
+  return;
+}
+
+
+// 828C4188  nciDecode1by1  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:240)
+
+void nciDecode1by1(undefined8 param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  longlong lVar3;
+  LARGE_INTEGER local_30;
+  LARGE_INTEGER local_28 [5];
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  QueryPerformanceCounter(&local_30);
+  uVar1 = nciDecodeVoicePropSase3200(*puVar2,*param_2,*param_3);
+  QueryPerformanceCounter(local_28);
+  lVar3 = (longlong)local_28[0] - (longlong)local_30;
+  if (lVar3 < DAT_84895898) {
+    DAT_84895898 = lVar3;
+  }
+  if (DAT_848958a8 < lVar3) {
+    DAT_848958a8 = lVar3;
+  }
+  DAT_848958b0 = DAT_848958b0 + lVar3;
+  DAT_848958bc = DAT_848958bc + 1;
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828C4220  nciDecodeNeedsInput  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/ncisasedec3200.c:268)
+
+undefined8 nciDecodeNeedsInput(int param_1,undefined1 *param_2)
+
+{
+  *param_2 = (char)*(undefined2 *)(*(int *)(param_1 + 0x10) + 0x5c);
+  return 0;
 }
 
 
@@ -62,7 +174,38 @@ undefined8 nciInitDecodeSase3200(undefined4 *param_1)
 void nciFreeDecodeSase3200(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3 == (undefined4 *)0x0) {
+    uVar2 = 0x181a;
+  }
+  else {
+    piVar1 = (int *)*puVar3;
+    if ((piVar1 == (int *)0x0) || (*piVar1 != 0xface)) {
+      uVar2 = 0x17d4;
+    }
+    else if (*(char *)(piVar1 + 3) == '\v') {
+      *piVar1 = 0;
+      NellyFreeDecodeSase3200(piVar1 + 4);
+      if (piVar1[9] != 0) {
+        (*DAT_848958c4)();
+        piVar1[9] = 0;
+      }
+      if (piVar1[10] != 0) {
+        (*DAT_848958c4)();
+        piVar1[10] = 0;
+      }
+      (*DAT_848958c4)(piVar1);
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = 0x17e3;
+    }
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 

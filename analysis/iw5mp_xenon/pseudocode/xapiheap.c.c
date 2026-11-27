@@ -5,8 +5,34 @@
 HANDLE HeapCreate(DWORD flOptions,SIZE_T dwInitialSize,SIZE_T dwMaximumSize)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(flOptions,dwInitialSize,dwMaximumSize);
+  ulonglong uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  HANDLE pvVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  
+  uVar6 = (ulonglong)(int)dwMaximumSize;
+  uVar5 = (ulonglong)(int)dwInitialSize;
+  uVar1 = __savegprlr_29(flOptions);
+  uVar2 = uVar1 & 5 | 0x1000;
+  if ((uVar6 & 0xffffffff) < 0x10000) {
+    if ((uVar6 & 0xffffffff) == 0) {
+      uVar2 = uVar1 & 5 | 0x1002;
+      goto LAB_828a8a28;
+    }
+    uVar6 = 0x10000;
+  }
+  if ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+    uVar6 = uVar5;
+  }
+LAB_828a8a28:
+  lVar3 = RtlCreateHeap(uVar2,0,uVar6,uVar5,0,0);
+  if (lVar3 == 0) {
+    SetLastError(8);
+  }
+  pvVar4 = (HANDLE)__restgprlr_29(lVar3);
+  return pvVar4;
 }
 
 

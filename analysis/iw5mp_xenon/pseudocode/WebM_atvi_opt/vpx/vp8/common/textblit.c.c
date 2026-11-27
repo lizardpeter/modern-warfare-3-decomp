@@ -2,11 +2,123 @@
 
 // 8281B538  vp8_blit_text  (WebM_atvi_opt/vpx/vp8/common/textblit.c:19)
 
-void vp8_blit_text(void)
+void vp8_blit_text(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar8;
+  int local_1b0 [66];
+  longlong local_a8;
+  ulonglong local_a0;
+  
+  lVar4 = __savegprlr();
+  local_a0 = param_3;
+  local_1b0[2] = 0x8020;
+  local_1b0[3] = 0xafabea;
+  local_1b0[4] = 0xd7ec0;
+  local_1b0[5] = 0x1111111;
+  local_1b0[6] = 0x1855740;
+  local_1b0[7] = 0x18000;
+  local_1b0[8] = 0x45c0;
+  local_1b0[9] = 0x74400;
+  local_1b0[10] = 0x51140;
+  local_1b0[0xb] = 0x23880;
+  local_1b0[0xc] = 0xc4000;
+  local_1b0[0xd] = 0x21080;
+  local_1b0[0xe] = 0x80000;
+  local_1b0[0xf] = 0x111110;
+  local_1b0[0x10] = 0xe9d72e;
+  local_1b0[0x11] = 0x87e40;
+  local_1b0[0x12] = 0x12ad732;
+  local_1b0[0x13] = 0xaad62a;
+  local_1b0[0x14] = 0x4f94c4;
+  local_1b0[0x15] = 0x4d6b7;
+  local_1b0[0x16] = 0x456aa;
+  local_1b0[0x17] = 0x3e8423;
+  local_1b0[1] = 0x5c00;
+  local_1b0[0] = 0;
+  local_1b0[0x18] = 0xaad6aa;
+  local_1b0[0x19] = 0xaad6a2;
+  local_1b0[0x1a] = 0x2800;
+  local_1b0[0x1b] = 0x2a00;
+  local_a8 = lVar4;
+  local_1b0[0x1c] = 0x8a880;
+  local_1b0[0x1d] = 0x52940;
+  local_1b0[0x1e] = 0x22a20;
+  local_1b0[0x1f] = 0x15422;
+  local_1b0[0x20] = 0x6ad62e;
+  local_1b0[0x21] = 0x1e4a53e;
+  local_1b0[0x22] = 0xaad6bf;
+  local_1b0[0x23] = 0x8c62e;
+  local_1b0[0x24] = 0xe8c63f;
+  local_1b0[0x25] = 0x118d6bf;
+  local_1b0[0x26] = 0x1094bf;
+  local_1b0[0x27] = 0xcac62e;
+  local_1b0[0x28] = 0x1f2109f;
+  local_1b0[0x29] = 0x118fe31;
+  local_1b0[0x2a] = 0xf8c628;
+  local_1b0[0x2b] = 0x8a89f;
+  local_1b0[0x2c] = 0x108421f;
+  local_1b0[0x2d] = 0x1f1105f;
+  local_1b0[0x2e] = 0x1f4105f;
+  local_1b0[0x2f] = 0xe8c62e;
+  local_1b0[0x30] = 0x2294bf;
+  local_1b0[0x31] = 0x164c62e;
+  local_1b0[0x32] = 0x12694bf;
+  local_1b0[0x33] = 0x8ad6a2;
+  local_1b0[0x34] = 0x10fc21;
+  local_1b0[0x35] = 0x1f8421f;
+  local_1b0[0x36] = 0x744107;
+  local_1b0[0x37] = 0xf8220f;
+  local_1b0[0x38] = 0x1151151;
+  local_1b0[0x39] = 0x117041;
+  local_1b0[0x3a] = 0x119d731;
+  local_1b0[0x3b] = 0x47e0;
+  local_1b0[0x3c] = 0x1041041;
+  local_1b0[0x3d] = 0xfc400;
+  local_1b0[0x3e] = 0x10440;
+  local_1b0[0x3f] = 0x1084210;
+  local_1b0[0x40] = 0x820;
+  if (*(char *)lVar4 != '\0') {
+    do {
+      cVar1 = *(char *)lVar4;
+      if ((cVar1 < '[') && ('\x1f' < cVar1)) {
+        iVar7 = local_1b0[cVar1 + -0x20];
+      }
+      else if ((cVar1 < '{') && ('`' < cVar1)) {
+        iVar7 = local_1b0[cVar1 + -0x40];
+      }
+      else {
+        iVar7 = 0;
+      }
+      iVar6 = 6;
+      iVar3 = (int)param_2;
+      lVar8 = 7;
+      uVar5 = 0x1e;
+      do {
+        uVar2 = iVar7 >> (uVar5 & 0x3f);
+        *(char *)(iVar6 + iVar3) = -((uVar2 & 1) != 0);
+        *(char *)(iVar3 + (int)param_3 + iVar6) = -((uVar2 & 2) != 0);
+        *(char *)((int)((param_3 & 0xffffffff) << 1) + iVar3 + iVar6) = -((uVar2 & 4) != 0);
+        *(char *)((int)param_3 + (int)((param_3 & 0xffffffff) << 1) + iVar3 + iVar6) =
+             -((uVar2 & 8) != 0);
+        uVar5 = uVar5 - 5;
+        *(char *)((int)((param_3 & 0xffffffff) << 2) + iVar3 + iVar6) = -((uVar2 & 0x10) != 0);
+        iVar6 = iVar6 + -1;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      lVar4 = lVar4 + 1;
+      param_2 = param_2 + 7;
+    } while (*(char *)lVar4 != '\0');
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -23,10 +135,94 @@ void plot(int param_1,int param_2,int param_3,int param_4)
 
 // 8281B978  vp8_blit_line  (WebM_atvi_opt/vpx/vp8/common/textblit.c:66)
 
-void vp8_blit_line(void)
+void vp8_blit_line(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,int param_5
+                  ,longlong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint uVar11;
+  uint uVar13;
+  longlong lVar12;
+  longlong lVar14;
+  longlong lVar15;
+  ulonglong uVar16;
+  
+  lVar5 = __savegprlr_29();
+  uVar13 = (int)param_2 - (int)lVar5;
+  uVar11 = (int)param_4 - (int)param_3;
+  uVar2 = (int)uVar13 >> 0x1f;
+  uVar3 = (int)uVar11 >> 0x1f;
+  bVar1 = (int)((uVar11 ^ uVar3) - uVar3) <= (int)((uVar13 ^ uVar2) - uVar2);
+  lVar12 = lVar5;
+  lVar7 = param_2;
+  if (!bVar1) {
+    lVar12 = param_3;
+    lVar7 = param_4;
+    param_3 = lVar5;
+    param_4 = param_2;
+  }
+  lVar5 = lVar12;
+  lVar10 = param_3;
+  if ((int)lVar7 < (int)lVar12) {
+    lVar5 = lVar7;
+    lVar7 = lVar12;
+    lVar10 = param_4;
+    param_4 = param_3;
+  }
+  uVar16 = lVar7 - lVar5;
+  uVar9 = (ulonglong)((int)(param_4 - lVar10) >> 0x1f);
+  lVar12 = (longlong)((int)uVar16 >> 1) + (ulonglong)((int)uVar16 < 0 && (uVar16 & 1) != 0);
+  lVar14 = (param_4 - lVar10 ^ uVar9) - uVar9;
+  lVar15 = 1;
+  if ((int)param_4 <= (int)lVar10) {
+    lVar15 = -1;
+  }
+  iVar6 = (int)lVar5;
+  iVar8 = (int)param_6;
+  if (bVar1) {
+    if (iVar6 <= (int)lVar7) {
+      lVar7 = uVar16 + 1;
+      iVar6 = (int)lVar10 * iVar8;
+      do {
+        iVar4 = iVar6 + (int)lVar5;
+        lVar12 = lVar12 - lVar14;
+        *(byte *)(iVar4 + param_5) = ~*(byte *)(iVar4 + param_5);
+        if (lVar12 < 0) {
+          iVar6 = (int)lVar15 * iVar8 + iVar6;
+          lVar12 = lVar12 + uVar16;
+        }
+        lVar5 = lVar5 + 1;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+    }
+  }
+  else if (iVar6 <= (int)lVar7) {
+    lVar5 = uVar16 + 1;
+    lVar7 = (longlong)iVar6 * (longlong)iVar8;
+    do {
+      iVar6 = (int)lVar7 + (int)lVar10;
+      lVar12 = lVar12 - lVar14;
+      *(byte *)(iVar6 + param_5) = ~*(byte *)(iVar6 + param_5);
+      if (lVar12 < 0) {
+        lVar10 = lVar15 + lVar10;
+        lVar12 = lVar12 + uVar16;
+      }
+      lVar7 = lVar7 + param_6;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    __restgprlr_29();
+    return;
+  }
+  __restgprlr_29();
+  return;
 }
 

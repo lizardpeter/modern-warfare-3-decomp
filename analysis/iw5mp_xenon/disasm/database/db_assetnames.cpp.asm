@@ -549,6 +549,74 @@
 ; 823A1DB8  DB_GetXAssetHeaderName  (database/db_assetnames.cpp:801)
   823A1DB8  7D8802A6             mfspr r12,LR
   823A1DBC  485748F9             bl 0x829166b4
+  823A1DC0  9421FF80             stwu r1,-0x80(r1)
+  823A1DC4  3D608206             lis r11,-0x7dfa
+  823A1DC8  3D408200             lis r10,-0x7e00
+  823A1DCC  7C7E1B78             or r30,r3,r3
+  823A1DD0  7C9F2378             or r31,r4,r4
+  823A1DD4  2B040000             cmplwi cr6,r4,0x0
+  823A1DD8  3B8B8E08             subi r28,r11,0x71f8
+  823A1DDC  3BAA0F98             addi r29,r10,0xf98
+  823A1DE0  409A0020             bne cr6,0x823a1e00
+  823A1DE4  3D608206             lis r11,-0x7dfa
+  823A1DE8  7FA6EB78             or r6,r29,r29
+  823A1DEC  38EB8E00             subi r7,r11,0x7200
+  823A1DF0  7F83E378             or r3,r28,r28
+  823A1DF4  38A00000             li r5,0x0
+  823A1DF8  38800324             li r4,0x324
+  823A1DFC  48232705             bl 0x825d4500
+LAB_823a1e00:
+  823A1E00  3D608296             lis r11,-0x7d6a
+  823A1E04  57DE103A             rlwinm r30,r30,0x2,0x0,0x1d
+  823A1E08  3B6B7100             addi r27,r11,0x7100
+  823A1E0C  7D5ED82E             lwzx r10,r30,r27
+  823A1E10  2B0A0000             cmplwi cr6,r10,0x0
+  823A1E14  409A0020             bne cr6,0x823a1e34
+  823A1E18  3D608206             lis r11,-0x7dfa
+  823A1E1C  7FA6EB78             or r6,r29,r29
+  823A1E20  38EB8DE0             subi r7,r11,0x7220
+  823A1E24  7F83E378             or r3,r28,r28
+  823A1E28  38A00000             li r5,0x0
+  823A1E2C  38800325             li r4,0x325
+  823A1E30  482326D1             bl 0x825d4500
+LAB_823a1e34:
+  823A1E34  817F0000             lwz r11,0x0(r31)
+  823A1E38  2B0B0000             cmplwi cr6,r11,0x0
+  823A1E3C  409A0020             bne cr6,0x823a1e5c
+  823A1E40  3D608206             lis r11,-0x7dfa
+  823A1E44  7FA6EB78             or r6,r29,r29
+  823A1E48  38EB8DD0             subi r7,r11,0x7230
+  823A1E4C  7F83E378             or r3,r28,r28
+  823A1E50  38A00000             li r5,0x0
+  823A1E54  38800326             li r4,0x326
+  823A1E58  482326A9             bl 0x825d4500
+LAB_823a1e5c:
+  823A1E5C  7D7ED82E             lwzx r11,r30,r27
+  823A1E60  7FE3FB78             or r3,r31,r31
+  823A1E64  7D6903A6             mtspr CTR,r11
+  823A1E68  4E800421             bctrl
+  823A1E6C  7C7F1B78             or r31,r3,r3
+  823A1E70  2B030000             cmplwi cr6,r3,0x0
+  823A1E74  409A0040             bne cr6,0x823a1eb4
+  823A1E78  3D608296             lis r11,-0x7d6a
+  823A1E7C  3D408206             lis r10,-0x7dfa
+  823A1E80  392B7050             addi r9,r11,0x7050
+  823A1E84  386A8DAC             subi r3,r10,0x7254
+  823A1E88  7C9E482E             lwzx r4,r30,r9
+  823A1E8C  4826A7ED             bl 0x8260c678
+  823A1E90  3CE08202             lis r7,-0x7dfe
+  823A1E94  3CC08200             lis r6,-0x7e00
+  823A1E98  7C681B78             or r8,r3,r3
+  823A1E9C  38E71A74             addi r7,r7,0x1a74
+  823A1EA0  38C611F4             addi r6,r6,0x11f4
+  823A1EA4  38A00000             li r5,0x0
+  823A1EA8  38800328             li r4,0x328
+  823A1EAC  7F83E378             or r3,r28,r28
+  823A1EB0  48232651             bl 0x825d4500
+LAB_823a1eb4:
+  823A1EB4  7FE3FB78             or r3,r31,r31
+  823A1EB8  38210080             addi r1,r1,0x80
+  823A1EBC  48574848             b 0x82916704
 
 ; 823A1EC0  DB_GetXAssetName  (database/db_assetnames.cpp:814)
   823A1EC0  7D8802A6             mfspr r12,LR
@@ -580,6 +648,35 @@ LAB_823a1f00:
 ; 823A1F20  DB_SetXAssetName  (database/db_assetnames.cpp:821)
   823A1F20  7D8802A6             mfspr r12,LR
   823A1F24  48574799             bl 0x829166bc
+  823A1F28  9421FF90             stwu r1,-0x70(r1)
+  823A1F2C  81430000             lwz r10,0x0(r3)
+  823A1F30  3D608296             lis r11,-0x7d6a
+  823A1F34  7C7F1B78             or r31,r3,r3
+  823A1F38  3BCB71B0             addi r30,r11,0x71b0
+  823A1F3C  5549103A             rlwinm r9,r10,0x2,0x0,0x1d
+  823A1F40  7C9D2378             or r29,r4,r4
+  823A1F44  7D09F02E             lwzx r8,r9,r30
+  823A1F48  2B080000             cmplwi cr6,r8,0x0
+  823A1F4C  409A0028             bne cr6,0x823a1f74
+  823A1F50  3D608206             lis r11,-0x7dfa
+  823A1F54  3D408200             lis r10,-0x7e00
+  823A1F58  3D208206             lis r9,-0x7dfa
+  823A1F5C  38EB8E58             subi r7,r11,0x71a8
+  823A1F60  38CA0F98             addi r6,r10,0xf98
+  823A1F64  38698E08             subi r3,r9,0x71f8
+  823A1F68  38A00000             li r5,0x0
+  823A1F6C  38800336             li r4,0x336
+  823A1F70  48232591             bl 0x825d4500
+LAB_823a1f74:
+  823A1F74  817F0000             lwz r11,0x0(r31)
+  823A1F78  7FA4EB78             or r4,r29,r29
+  823A1F7C  387F0004             addi r3,r31,0x4
+  823A1F80  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  823A1F84  7D2AF02E             lwzx r9,r10,r30
+  823A1F88  7D2903A6             mtspr CTR,r9
+  823A1F8C  4E800421             bctrl
+  823A1F90  38210070             addi r1,r1,0x70
+  823A1F94  48574778             b 0x8291670c
 
 ; 823A1F98  DB_GetXAssetTypeSize  (database/db_assetnames.cpp:828)
   823A1F98  7D8802A6             mfspr r12,LR

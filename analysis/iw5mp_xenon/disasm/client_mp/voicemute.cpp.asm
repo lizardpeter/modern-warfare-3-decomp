@@ -50,18 +50,276 @@ LAB_823a0228:
 ; 823A0248  VoiceMute_FindUserIndex  (client_mp/voicemute.cpp:79)
   823A0248  7D8802A6             mfspr r12,LR
   823A024C  48576471             bl 0x829166bc
+  823A0250  9421FF90             stwu r1,-0x70(r1)
+  823A0254  3D608206             lis r11,-0x7dfa
+  823A0258  7C7D1B78             or r29,r3,r3
+  823A025C  2B230000             cmpldi cr6,r3,0x0
+  823A0260  3BCB85D0             subi r30,r11,0x7a30
+  823A0264  409A0024             bne cr6,0x823a0288
+  823A0268  3D608206             lis r11,-0x7dfa
+  823A026C  3D408200             lis r10,-0x7e00
+  823A0270  38EB865C             subi r7,r11,0x79a4
+  823A0274  38CA0F98             addi r6,r10,0xf98
+  823A0278  7FC3F378             or r3,r30,r30
+  823A027C  38A00000             li r5,0x0
+  823A0280  38800055             li r4,0x55
+  823A0284  4823427D             bl 0x825d4500
+LAB_823a0288:
+  823A0288  3D6082B6             lis r11,-0x7d4a
+  823A028C  3BEBC8F8             subi r31,r11,0x3708
+  823A0290  896BC8F8             lbz r11,-0x3708(r11)
+  823A0294  7D685B78             or r8,r11,r11
+  823A0298  2B0B0080             cmplwi cr6,r11,0x80
+  823A029C  40990028             ble cr6,0x823a02c4
+  823A02A0  3D608206             lis r11,-0x7dfa
+  823A02A4  3D408206             lis r10,-0x7dfa
+  823A02A8  38EB863C             subi r7,r11,0x79c4
+  823A02AC  38CA861C             subi r6,r10,0x79e4
+  823A02B0  7FC3F378             or r3,r30,r30
+  823A02B4  38A00000             li r5,0x0
+  823A02B8  38800059             li r4,0x59
+  823A02BC  48234245             bl 0x825d4500
+  823A02C0  897F0000             lbz r11,0x0(r31)
+LAB_823a02c4:
+  823A02C4  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  823A02C8  346BFFFF             subic. r3,r11,0x1
+  823A02CC  41800028             blt 0x823a02f4
+  823A02D0  546A1838             rlwinm r10,r3,0x3,0x0,0x1c
+  823A02D4  397F0008             addi r11,r31,0x8
+  823A02D8  7D6A5A14             add r11,r10,r11
+LAB_823a02dc:
+  823A02DC  E94B0000             ld r10,0x0(r11)
+  823A02E0  7F2AE840             cmpld cr6,r10,r29
+  823A02E4  419A0014             beq cr6,0x823a02f8
+  823A02E8  3463FFFF             subic. r3,r3,0x1
+  823A02EC  396BFFF8             subi r11,r11,0x8
+  823A02F0  4080FFEC             bge 0x823a02dc
+LAB_823a02f4:
+  823A02F4  38600080             li r3,0x80
+LAB_823a02f8:
+  823A02F8  38210070             addi r1,r1,0x70
+  823A02FC  48576410             b 0x8291670c
 
 ; 823A0300  VoiceMute_ObliterateUser  (client_mp/voicemute.cpp:107)
   823A0300  7D8802A6             mfspr r12,LR
   823A0304  485763AD             bl 0x829166b0
+  823A0308  9421FF70             stwu r1,-0x90(r1)
+  823A030C  3D608206             lis r11,-0x7dfa
+  823A0310  3D408200             lis r10,-0x7e00
+  823A0314  3D208206             lis r9,-0x7dfa
+  823A0318  7C7E1B78             or r30,r3,r3
+  823A031C  2B030080             cmplwi cr6,r3,0x80
+  823A0320  3B8B85D0             subi r28,r11,0x7a30
+  823A0324  3B4A0F98             addi r26,r10,0xf98
+  823A0328  3B6986B8             subi r27,r9,0x7948
+  823A032C  409A001C             bne cr6,0x823a0348
+  823A0330  7F67DB78             or r7,r27,r27
+  823A0334  7F46D378             or r6,r26,r26
+  823A0338  7F83E378             or r3,r28,r28
+  823A033C  38A00000             li r5,0x0
+  823A0340  3880006E             li r4,0x6e
+  823A0344  482341BD             bl 0x825d4500
+LAB_823a0348:
+  823A0348  3D4082B6             lis r10,-0x7d4a
+  823A034C  3D608206             lis r11,-0x7dfa
+  823A0350  3BEAC8F8             subi r31,r10,0x3708
+  823A0354  3BAB861C             subi r29,r11,0x79e4
+  823A0358  896AC8F8             lbz r11,-0x3708(r10)
+  823A035C  7D685B78             or r8,r11,r11
+  823A0360  7F0BF040             cmplw cr6,r11,r30
+  823A0364  41990024             bgt cr6,0x823a0388
+  823A0368  3D608206             lis r11,-0x7dfa
+  823A036C  7FA6EB78             or r6,r29,r29
+  823A0370  38EB8694             subi r7,r11,0x796c
+  823A0374  7F83E378             or r3,r28,r28
+  823A0378  38A00000             li r5,0x0
+  823A037C  38800072             li r4,0x72
+  823A0380  48234181             bl 0x825d4500
+  823A0384  897F0000             lbz r11,0x0(r31)
+LAB_823a0388:
+  823A0388  5568063E             rlwinm r8,r11,0x0,0x18,0x1f
+  823A038C  2B080080             cmplwi cr6,r8,0x80
+  823A0390  40990024             ble cr6,0x823a03b4
+  823A0394  3D608206             lis r11,-0x7dfa
+  823A0398  7FA6EB78             or r6,r29,r29
+  823A039C  38EB863C             subi r7,r11,0x79c4
+  823A03A0  7F83E378             or r3,r28,r28
+  823A03A4  38A00000             li r5,0x0
+  823A03A8  38800073             li r4,0x73
+  823A03AC  48234155             bl 0x825d4500
+  823A03B0  897F0000             lbz r11,0x0(r31)
+LAB_823a03b4:
+  823A03B4  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  823A03B8  57C91838             rlwinm r9,r30,0x3,0x0,0x1c
+  823A03BC  7D7E5850             subf r11,r30,r11
+  823A03C0  391F0010             addi r8,r31,0x10
+  823A03C4  38EBFFFF             subi r7,r11,0x1
+  823A03C8  57CB1838             rlwinm r11,r30,0x3,0x0,0x1c
+  823A03CC  395F0008             addi r10,r31,0x8
+  823A03D0  54E51838             rlwinm r5,r7,0x3,0x0,0x1c
+  823A03D4  7C894214             add r4,r9,r8
+  823A03D8  7C6B5214             add r3,r11,r10
+  823A03DC  485764C5             bl 0x829168a0
+  823A03E0  897F0000             lbz r11,0x0(r31)
+  823A03E4  2B1E0080             cmplwi cr6,r30,0x80
+  823A03E8  38CB00FF             addi r6,r11,0xff
+  823A03EC  54CB063E             rlwinm r11,r6,0x0,0x18,0x1f
+  823A03F0  997F0000             stb r11,0x0(r31)
+  823A03F4  409A0020             bne cr6,0x823a0414
+  823A03F8  7F67DB78             or r7,r27,r27
+  823A03FC  7F46D378             or r6,r26,r26
+  823A0400  7F83E378             or r3,r28,r28
+  823A0404  38A00000             li r5,0x0
+  823A0408  3880007A             li r4,0x7a
+  823A040C  482340F5             bl 0x825d4500
+  823A0410  897F0000             lbz r11,0x0(r31)
+LAB_823a0414:
+  823A0414  556B1D78             rlwinm r11,r11,0x3,0x15,0x1c
+  823A0418  395F0008             addi r10,r31,0x8
+  823A041C  7FEB5215             add. r31,r11,r10
+  823A0420  40820030             bne 0x823a0450
+  823A0424  3D608206             lis r11,-0x7dfa
+  823A0428  7F46D378             or r6,r26,r26
+  823A042C  38EB8614             subi r7,r11,0x79ec
+  823A0430  7F83E378             or r3,r28,r28
+  823A0434  38A00000             li r5,0x0
+  823A0438  38800046             li r4,0x46
+  823A043C  482340C5             bl 0x825d4500
+  823A0440  39400000             li r10,0x0
+  823A0444  F95F0000             std r10,0x0(r31)
+  823A0448  38210090             addi r1,r1,0x90
+  823A044C  485762B4             b 0x82916700
+LAB_823a0450:
+  823A0450  39600000             li r11,0x0
+  823A0454  F97F0000             std r11,0x0(r31)
+  823A0458  38210090             addi r1,r1,0x90
+  823A045C  485762A4             b 0x82916700
 
 ; 823A0460  VoiceMute_InsertUser  (client_mp/voicemute.cpp:131)
   823A0460  7D8802A6             mfspr r12,LR
   823A0464  48576251             bl 0x829166b4
+  823A0468  9421FF80             stwu r1,-0x80(r1)
+  823A046C  3D608206             lis r11,-0x7dfa
+  823A0470  3D408200             lis r10,-0x7e00
+  823A0474  7C7D1B78             or r29,r3,r3
+  823A0478  2B230000             cmpldi cr6,r3,0x0
+  823A047C  3B8B85D0             subi r28,r11,0x7a30
+  823A0480  3B6A0F98             addi r27,r10,0xf98
+  823A0484  409A0020             bne cr6,0x823a04a4
+  823A0488  3D608206             lis r11,-0x7dfa
+  823A048C  7F66DB78             or r6,r27,r27
+  823A0490  38EB865C             subi r7,r11,0x79a4
+  823A0494  7F83E378             or r3,r28,r28
+  823A0498  38A00000             li r5,0x0
+  823A049C  38800086             li r4,0x86
+  823A04A0  48234061             bl 0x825d4500
+LAB_823a04a4:
+  823A04A4  3D6082B6             lis r11,-0x7d4a
+  823A04A8  3BEBC8F8             subi r31,r11,0x3708
+  823A04AC  896BC8F8             lbz r11,-0x3708(r11)
+  823A04B0  7D675B78             or r7,r11,r11
+  823A04B4  2B0B0080             cmplwi cr6,r11,0x80
+  823A04B8  41980024             blt cr6,0x823a04dc
+  823A04BC  3D608206             lis r11,-0x7dfa
+  823A04C0  7F83E378             or r3,r28,r28
+  823A04C4  38CB86E0             subi r6,r11,0x7920
+  823A04C8  39000080             li r8,0x80
+  823A04CC  38A00000             li r5,0x0
+  823A04D0  3880008A             li r4,0x8a
+  823A04D4  4823402D             bl 0x825d4500
+  823A04D8  897F0000             lbz r11,0x0(r31)
+LAB_823a04dc:
+  823A04DC  556A1D78             rlwinm r10,r11,0x3,0x15,0x1c
+  823A04E0  397F0008             addi r11,r31,0x8
+  823A04E4  7FCA5A15             add. r30,r10,r11
+  823A04E8  40820020             bne 0x823a0508
+  823A04EC  3D608206             lis r11,-0x7dfa
+  823A04F0  7F66DB78             or r6,r27,r27
+  823A04F4  38EB8614             subi r7,r11,0x79ec
+  823A04F8  7F83E378             or r3,r28,r28
+  823A04FC  38A00000             li r5,0x0
+  823A0500  38800046             li r4,0x46
+  823A0504  48233FFD             bl 0x825d4500
+LAB_823a0508:
+  823A0508  FBBE0000             std r29,0x0(r30)
+  823A050C  897F0000             lbz r11,0x0(r31)
+  823A0510  396B0001             addi r11,r11,0x1
+  823A0514  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  823A0518  997F0000             stb r11,0x0(r31)
+  823A051C  7D685B78             or r8,r11,r11
+  823A0520  2B0B0080             cmplwi cr6,r11,0x80
+  823A0524  40990024             ble cr6,0x823a0548
+  823A0528  3D608206             lis r11,-0x7dfa
+  823A052C  3D408206             lis r10,-0x7dfa
+  823A0530  38EB863C             subi r7,r11,0x79c4
+  823A0534  38CA861C             subi r6,r10,0x79e4
+  823A0538  7F83E378             or r3,r28,r28
+  823A053C  38A00001             li r5,0x1
+  823A0540  3880008F             li r4,0x8f
+  823A0544  48233FBD             bl 0x825d4500
+LAB_823a0548:
+  823A0548  38210080             addi r1,r1,0x80
+  823A054C  485761B8             b 0x82916704
 
 ; 823A0550  VoiceMute_AddUser  (client_mp/voicemute.cpp:151)
   823A0550  7D8802A6             mfspr r12,LR
   823A0554  48576165             bl 0x829166b8
+  823A0558  9421FF80             stwu r1,-0x80(r1)
+  823A055C  3D608206             lis r11,-0x7dfa
+  823A0560  3D408200             lis r10,-0x7e00
+  823A0564  7C7C1B78             or r28,r3,r3
+  823A0568  2B230000             cmpldi cr6,r3,0x0
+  823A056C  3BEB85D0             subi r31,r11,0x7a30
+  823A0570  3BCA0F98             addi r30,r10,0xf98
+  823A0574  409A0020             bne cr6,0x823a0594
+  823A0578  3D608206             lis r11,-0x7dfa
+  823A057C  7FC6F378             or r6,r30,r30
+  823A0580  38EB865C             subi r7,r11,0x79a4
+  823A0584  7FE3FB78             or r3,r31,r31
+  823A0588  38A00000             li r5,0x0
+  823A058C  3880009A             li r4,0x9a
+  823A0590  48233F71             bl 0x825d4500
+LAB_823a0594:
+  823A0594  3FA082B6             lis r29,-0x7d4a
+  823A0598  891DC8F8             lbz r8,-0x3708(r29)
+  823A059C  2B080080             cmplwi cr6,r8,0x80
+  823A05A0  40990024             ble cr6,0x823a05c4
+  823A05A4  3D608206             lis r11,-0x7dfa
+  823A05A8  3D408206             lis r10,-0x7dfa
+  823A05AC  38EB863C             subi r7,r11,0x79c4
+  823A05B0  38CA861C             subi r6,r10,0x79e4
+  823A05B4  7FE3FB78             or r3,r31,r31
+  823A05B8  38A00000             li r5,0x0
+  823A05BC  3880009E             li r4,0x9e
+  823A05C0  48233F41             bl 0x825d4500
+LAB_823a05c4:
+  823A05C4  7F83E378             or r3,r28,r28
+  823A05C8  4BFFFC81             bl 0x823a0248
+  823A05CC  2B030080             cmplwi cr6,r3,0x80
+  823A05D0  419A0020             beq cr6,0x823a05f0
+  823A05D4  3D608206             lis r11,-0x7dfa
+  823A05D8  7FC6F378             or r6,r30,r30
+  823A05DC  38EB8750             subi r7,r11,0x78b0
+  823A05E0  7FE3FB78             or r3,r31,r31
+  823A05E4  38A00000             li r5,0x0
+  823A05E8  388000A1             li r4,0xa1
+  823A05EC  48233F15             bl 0x825d4500
+LAB_823a05f0:
+  823A05F0  897DC8F8             lbz r11,-0x3708(r29)
+  823A05F4  2B0B0080             cmplwi cr6,r11,0x80
+  823A05F8  409A000C             bne cr6,0x823a0604
+  823A05FC  38600000             li r3,0x0
+  823A0600  4BFFFD01             bl 0x823a0300
+LAB_823a0604:
+  823A0604  7F83E378             or r3,r28,r28
+  823A0608  4BFFFE59             bl 0x823a0460
+  823A060C  3D608206             lis r11,-0x7dfa
+  823A0610  7F85E378             or r5,r28,r28
+  823A0614  388B872C             subi r4,r11,0x78d4
+  823A0618  3860000E             li r3,0xe
+  823A061C  48156165             bl 0x824f6780
+  823A0620  38210080             addi r1,r1,0x80
+  823A0624  485760E4             b 0x82916708
 
 ; 823A0628  VoiceMute_RemoveUser  (client_mp/voicemute.cpp:176)
   823A0628  7D8802A6             mfspr r12,LR
@@ -101,3 +359,59 @@ LAB_823a0690:
 ; 823A06A8  VoiceMute_QueryAndRefreshUserStatus  (client_mp/voicemute.cpp:195)
   823A06A8  7D8802A6             mfspr r12,LR
   823A06AC  48576009             bl 0x829166b4
+  823A06B0  9421FF80             stwu r1,-0x80(r1)
+  823A06B4  3D608206             lis r11,-0x7dfa
+  823A06B8  3D408200             lis r10,-0x7e00
+  823A06BC  7C7B1B78             or r27,r3,r3
+  823A06C0  2B230000             cmpldi cr6,r3,0x0
+  823A06C4  3BAB85D0             subi r29,r11,0x7a30
+  823A06C8  3B8A0F98             addi r28,r10,0xf98
+  823A06CC  409A0020             bne cr6,0x823a06ec
+  823A06D0  3D608206             lis r11,-0x7dfa
+  823A06D4  7F86E378             or r6,r28,r28
+  823A06D8  38EB865C             subi r7,r11,0x79a4
+  823A06DC  7FA3EB78             or r3,r29,r29
+  823A06E0  38A00000             li r5,0x0
+  823A06E4  388000C7             li r4,0xc7
+  823A06E8  48233E19             bl 0x825d4500
+LAB_823a06ec:
+  823A06EC  7F63DB78             or r3,r27,r27
+  823A06F0  4BFFFB59             bl 0x823a0248
+  823A06F4  7C7E1B78             or r30,r3,r3
+  823A06F8  2B030080             cmplwi cr6,r3,0x80
+  823A06FC  409A0010             bne cr6,0x823a070c
+  823A0700  38600000             li r3,0x0
+  823A0704  38210080             addi r1,r1,0x80
+  823A0708  48575FFC             b 0x82916704
+LAB_823a070c:
+  823A070C  3FE082B6             lis r31,-0x7d4a
+  823A0710  897FC8F8             lbz r11,-0x3708(r31)
+  823A0714  7D6A5B78             or r10,r11,r11
+  823A0718  7F0BF040             cmplw cr6,r11,r30
+  823A071C  41990024             bgt cr6,0x823a0740
+  823A0720  3D608206             lis r11,-0x7dfa
+  823A0724  7F86E378             or r6,r28,r28
+  823A0728  38EB87D8             subi r7,r11,0x7828
+  823A072C  7FA3EB78             or r3,r29,r29
+  823A0730  38A00001             li r5,0x1
+  823A0734  388000D2             li r4,0xd2
+  823A0738  48233DC9             bl 0x825d4500
+  823A073C  897FC8F8             lbz r11,-0x3708(r31)
+LAB_823a0740:
+  823A0740  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  823A0744  7D5E5850             subf r10,r30,r11
+  823A0748  2B0A0012             cmplwi cr6,r10,0x12
+  823A074C  40990028             ble cr6,0x823a0774
+  823A0750  7FC3F378             or r3,r30,r30
+  823A0754  4BFFFBAD             bl 0x823a0300
+  823A0758  7F63DB78             or r3,r27,r27
+  823A075C  4BFFFD05             bl 0x823a0460
+  823A0760  3D608206             lis r11,-0x7dfa
+  823A0764  7F65DB78             or r5,r27,r27
+  823A0768  388B87B0             subi r4,r11,0x7850
+  823A076C  3860000E             li r3,0xe
+  823A0770  48156011             bl 0x824f6780
+LAB_823a0774:
+  823A0774  38600001             li r3,0x1
+  823A0778  38210080             addi r1,r1,0x80
+  823A077C  48575F88             b 0x82916704

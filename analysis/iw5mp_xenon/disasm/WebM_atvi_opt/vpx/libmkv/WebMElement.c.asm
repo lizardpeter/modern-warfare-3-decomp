@@ -51,6 +51,54 @@
 ; 8280F448  writeSimpleBlock  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:43)
   8280F448  7D8802A6             mfspr r12,LR
   8280F44C  48107271             bl 0x829166bc
+  8280F450  9421FF80             stwu r1,-0x80(r1)
+  8280F454  21660000             subfic r11,r6,0x0
+  8280F458  9881009F             stb r4,0x9f(r1)
+  8280F45C  7D3D4B78             or r29,r9,r9
+  8280F460  B0A100A6             sth r5,0xa6(r1)
+  8280F464  7D2A5110             subfe r9,r10,r10
+  8280F468  38C00080             li r6,0x80
+  8280F46C  54E50E3C             rlwinm r5,r7,0x1,0x18,0x1e
+  8280F470  7D243038             and r4,r9,r6
+  8280F474  7C7E1B78             or r30,r3,r3
+  8280F478  5503063E             rlwinm r3,r8,0x0,0x18,0x1f
+  8280F47C  7CAB2378             or r11,r5,r4
+  8280F480  7D5F5378             or r31,r10,r10
+  8280F484  7D691B78             or r9,r11,r3
+  8280F488  394A0004             addi r10,r10,0x4
+  8280F48C  99210050             stb r9,0x50(r1)
+  8280F490  7FC3F378             or r3,r30,r30
+  8280F494  91410054             stw r10,0x54(r1)
+  8280F498  388000A3             li r4,0xa3
+  8280F49C  4BFFF97D             bl 0x8280ee18
+  8280F4A0  81010054             lwz r8,0x54(r1)
+  8280F4A4  7FC3F378             or r3,r30,r30
+  8280F4A8  65071000             oris r7,r8,0x1000
+  8280F4AC  38A00004             li r5,0x4
+  8280F4B0  90E10054             stw r7,0x54(r1)
+  8280F4B4  38810054             addi r4,r1,0x54
+  8280F4B8  4BFF4139             bl 0x828035f0
+  8280F4BC  8961009F             lbz r11,0x9f(r1)
+  8280F4C0  7FC3F378             or r3,r30,r30
+  8280F4C4  616A0080             ori r10,r11,0x80
+  8280F4C8  38A00001             li r5,0x1
+  8280F4CC  9941009F             stb r10,0x9f(r1)
+  8280F4D0  3881009F             addi r4,r1,0x9f
+  8280F4D4  4BFF40D5             bl 0x828035a8
+  8280F4D8  7FC3F378             or r3,r30,r30
+  8280F4DC  38A00002             li r5,0x2
+  8280F4E0  388100A6             addi r4,r1,0xa6
+  8280F4E4  4BFF410D             bl 0x828035f0
+  8280F4E8  7FC3F378             or r3,r30,r30
+  8280F4EC  38A00001             li r5,0x1
+  8280F4F0  38810050             addi r4,r1,0x50
+  8280F4F4  4BFF40B5             bl 0x828035a8
+  8280F4F8  7FE5FB78             or r5,r31,r31
+  8280F4FC  7FA4EB78             or r4,r29,r29
+  8280F500  7FC3F378             or r3,r30,r30
+  8280F504  4BFF40A5             bl 0x828035a8
+  8280F508  38210080             addi r1,r1,0x80
+  8280F50C  48107200             b 0x8291670c
 
 ; 8280F510  generateTrackID  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:58)
   8280F510  7D8802A6             mfspr r12,LR
@@ -79,6 +127,76 @@
 ; 8280F568  writeVideoTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:72)
   8280F568  7D8802A6             mfspr r12,LR
   8280F56C  48107145             bl 0x829166b0
+  8280F570  DBE1FFC0             stfd f31,-0x40(r1)
+  8280F574  9421FF60             stwu r1,-0xa0(r1)
+  8280F578  7C9F2378             or r31,r4,r4
+  8280F57C  FFE00890             fmr f31,f1
+  8280F580  38A000AE             li r5,0xae
+  8280F584  38810058             addi r4,r1,0x58
+  8280F588  7C7E1B78             or r30,r3,r3
+  8280F58C  7CDD3378             or r29,r6,r6
+  8280F590  7CFC3B78             or r28,r7,r7
+  8280F594  7D1B4378             or r27,r8,r8
+  8280F598  4BFF4161             bl 0x828036f8
+  8280F59C  7FC3F378             or r3,r30,r30
+  8280F5A0  7FE5FB78             or r5,r31,r31
+  8280F5A4  388000D7             li r4,0xd7
+  8280F5A8  4BFFF999             bl 0x8280ef40
+  8280F5AC  38600000             li r3,0x0
+  8280F5B0  48109291             bl 0x82918840
+  8280F5B4  7BEB0020             rldicl r11,r31,0x0,0x20
+  8280F5B8  7F4359D2             mulld r26,r3,r11
+  8280F5BC  48108E95             bl 0x82918450
+  8280F5C0  787F07C6             rldicr r31,r3,0x20,0x1f
+  8280F5C4  48108E8D             bl 0x82918450
+  8280F5C8  7C6B07B4             extsw r11,r3
+  8280F5CC  574A003E             rlwinm r10,r26,0x0,0x0,0x1f
+  8280F5D0  7D6BFA14             add r11,r11,r31
+  8280F5D4  7FC3F378             or r3,r30,r30
+  8280F5D8  5569003E             rlwinm r9,r11,0x0,0x0,0x1f
+  8280F5DC  388073C5             li r4,0x73c5
+  8280F5E0  7D255278             xor r5,r9,r10
+  8280F5E4  4BFFF95D             bl 0x8280ef40
+  8280F5E8  3D00821E             lis r8,-0x7de2
+  8280F5EC  3C800025             lis r4,0x25
+  8280F5F0  7FC3F378             or r3,r30,r30
+  8280F5F4  38A86540             addi r5,r8,0x6540
+  8280F5F8  60848688             ori r4,r4,0x8688
+  8280F5FC  4BFFFC25             bl 0x8280f220
+  8280F600  7FC3F378             or r3,r30,r30
+  8280F604  38A00001             li r5,0x1
+  8280F608  38800083             li r4,0x83
+  8280F60C  4BFFF935             bl 0x8280ef40
+  8280F610  7FC3F378             or r3,r30,r30
+  8280F614  7FA5EB78             or r5,r29,r29
+  8280F618  38800086             li r4,0x86
+  8280F61C  4BFFFC05             bl 0x8280f220
+  8280F620  7FC3F378             or r3,r30,r30
+  8280F624  38A000E0             li r5,0xe0
+  8280F628  38810050             addi r4,r1,0x50
+  8280F62C  4BFF40CD             bl 0x828036f8
+  8280F630  7FC3F378             or r3,r30,r30
+  8280F634  7F85E378             or r5,r28,r28
+  8280F638  388000B0             li r4,0xb0
+  8280F63C  4BFFF905             bl 0x8280ef40
+  8280F640  7FC3F378             or r3,r30,r30
+  8280F644  7F65DB78             or r5,r27,r27
+  8280F648  388000BA             li r4,0xba
+  8280F64C  4BFFF8F5             bl 0x8280ef40
+  8280F650  3C800023             lis r4,0x23
+  8280F654  7FC3F378             or r3,r30,r30
+  8280F658  FC20F890             fmr f1,f31
+  8280F65C  608483E3             ori r4,r4,0x83e3
+  8280F660  4BFFFAC1             bl 0x8280f120
+  8280F664  7FC3F378             or r3,r30,r30
+  8280F668  38810050             addi r4,r1,0x50
+  8280F66C  4BFF4105             bl 0x82803770
+  8280F670  38810058             addi r4,r1,0x58
+  8280F674  7FC3F378             or r3,r30,r30
+  8280F678  4BFF40F9             bl 0x82803770
+  8280F67C  382100A0             addi r1,r1,0xa0
+  8280F680  CBE1FFC0             lfd f31,-0x40(r1)
+  8280F684  4810707C             b 0x82916700
 
 ; 8280F688  writeAudioTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:96)
   8280F688  7D8802A6             mfspr r12,LR
@@ -158,6 +276,42 @@
 ; 8280F7B0  writeSegmentInformation  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:123)
   8280F7B0  7D8802A6             mfspr r12,LR
   8280F7B4  48106F09             bl 0x829166bc
+  8280F7B8  DBE1FFD8             stfd f31,-0x28(r1)
+  8280F7BC  9421FF80             stwu r1,-0x80(r1)
+  8280F7C0  7CBD2B78             or r29,r5,r5
+  8280F7C4  FFE00890             fmr f31,f1
+  8280F7C8  3CA01549             lis r5,0x1549
+  8280F7CC  7C7F1B78             or r31,r3,r3
+  8280F7D0  60A5A966             ori r5,r5,0xa966
+  8280F7D4  7C9E2378             or r30,r4,r4
+  8280F7D8  4BFF3F21             bl 0x828036f8
+  8280F7DC  3C80002A             lis r4,0x2a
+  8280F7E0  7FE3FB78             or r3,r31,r31
+  8280F7E4  7FA5EB78             or r5,r29,r29
+  8280F7E8  6084D7B1             ori r4,r4,0xd7b1
+  8280F7EC  4BFFF755             bl 0x8280ef40
+  8280F7F0  3D608202             lis r11,-0x7dfe
+  8280F7F4  7FE3FB78             or r3,r31,r31
+  8280F7F8  38804489             li r4,0x4489
+  8280F7FC  C80B6088             lfd f0,0x6088(r11)
+  8280F800  FC3F0032             fmul f1,f31,f0
+  8280F804  4BFFF91D             bl 0x8280f120
+  8280F808  3D40821E             lis r10,-0x7de2
+  8280F80C  7FE3FB78             or r3,r31,r31
+  8280F810  38AA6568             addi r5,r10,0x6568
+  8280F814  38804D80             li r4,0x4d80
+  8280F818  4BFFFA09             bl 0x8280f220
+  8280F81C  3D20821E             lis r9,-0x7de2
+  8280F820  7FE3FB78             or r3,r31,r31
+  8280F824  38A9654C             addi r5,r9,0x654c
+  8280F828  38805741             li r4,0x5741
+  8280F82C  4BFFF9F5             bl 0x8280f220
+  8280F830  7FC4F378             or r4,r30,r30
+  8280F834  7FE3FB78             or r3,r31,r31
+  8280F838  4BFF3F39             bl 0x82803770
+  8280F83C  38210080             addi r1,r1,0x80
+  8280F840  CBE1FFD8             lfd f31,-0x28(r1)
+  8280F844  48106EC8             b 0x8291670c
 
 ; 8280F388  time  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/time.inl:128)
   8280F388  481094B8             b 0x82918840

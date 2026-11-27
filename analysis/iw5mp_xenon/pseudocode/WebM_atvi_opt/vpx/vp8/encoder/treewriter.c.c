@@ -21,7 +21,7 @@ void cost(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong par
       uVar4 = uVar5;
     }
     if (cVar1 < '\x01') {
-      *(int *)(iVar2 + cVar1 * -4) = *(int *)(&DAT_821ea840 + uVar4 * 4) + param_5;
+      *(int *)(iVar2 + cVar1 * -4) = (&DAT_821ea840)[uVar4] + param_5;
     }
     else {
       cost(iVar2,param_2,param_3);
@@ -30,6 +30,16 @@ void cost(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong par
     uVar3 = param_4 & 1;
   } while ((int)uVar3 != 0);
   __restgprlr_25();
+  return;
+}
+
+
+// 8283C6C0  vp8_cost_tokens  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.c:41)
+
+void vp8_cost_tokens(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  cost(param_1,param_3,param_2,0,0);
   return;
 }
 

@@ -3,6 +3,85 @@
 ; 828C3C58  nciEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:150)
   828C3C58  7D8802A6             mfspr r12,LR
   828C3C5C  48052A5D             bl 0x829166b8
+  828C3C60  9421FEF0             stwu r1,-0x110(r1)
+  828C3C64  7C7C1B78             or r28,r3,r3
+  828C3C68  7C9F2378             or r31,r4,r4
+  828C3C6C  2B040000             cmplwi cr6,r4,0x0
+  828C3C70  409A000C             bne cr6,0x828c3c7c
+  828C3C74  3860181A             li r3,0x181a
+  828C3C78  480000F4             b 0x828c3d6c
+LAB_828c3c7c:
+  828C3C7C  817F0008             lwz r11,0x8(r31)
+  828C3C80  2B0B0000             cmplwi cr6,r11,0x0
+  828C3C84  409A000C             bne cr6,0x828c3c90
+  828C3C88  386017F2             li r3,0x17f2
+  828C3C8C  480000E0             b 0x828c3d6c
+LAB_828c3c90:
+  828C3C90  807F0000             lwz r3,0x0(r31)
+  828C3C94  2B030000             cmplwi cr6,r3,0x0
+  828C3C98  409A000C             bne cr6,0x828c3ca4
+  828C3C9C  386017ED             li r3,0x17ed
+  828C3CA0  480000CC             b 0x828c3d6c
+LAB_828c3ca4:
+  828C3CA4  A15F000E             lhz r10,0xe(r31)
+  828C3CA8  A17F000C             lhz r11,0xc(r31)
+  828C3CAC  7F0A5840             cmplw cr6,r10,r11
+  828C3CB0  4198000C             blt cr6,0x828c3cbc
+  828C3CB4  38601801             li r3,0x1801
+  828C3CB8  480000B4             b 0x828c3d6c
+LAB_828c3cbc:
+  828C3CBC  A15F0012             lhz r10,0x12(r31)
+  828C3CC0  3BBF0012             addi r29,r31,0x12
+  828C3CC4  7F0A5840             cmplw cr6,r10,r11
+  828C3CC8  4198000C             blt cr6,0x828c3cd4
+  828C3CCC  38601806             li r3,0x1806
+  828C3CD0  4800009C             b 0x828c3d6c
+LAB_828c3cd4:
+  828C3CD4  897F0010             lbz r11,0x10(r31)
+  828C3CD8  2B0B0007             cmplwi cr6,r11,0x7
+  828C3CDC  4099000C             ble cr6,0x828c3ce8
+  828C3CE0  386017F7             li r3,0x17f7
+  828C3CE4  48000088             b 0x828c3d6c
+LAB_828c3ce8:
+  828C3CE8  897F0014             lbz r11,0x14(r31)
+  828C3CEC  3BDF0014             addi r30,r31,0x14
+  828C3CF0  2B0B0007             cmplwi cr6,r11,0x7
+  828C3CF4  4099000C             ble cr6,0x828c3d00
+  828C3CF8  386017FC             li r3,0x17fc
+  828C3CFC  48000070             b 0x828c3d6c
+LAB_828c3d00:
+  828C3D00  2B1C0000             cmplwi cr6,r28,0x0
+  828C3D04  419A0064             beq cr6,0x828c3d68
+  828C3D08  817C0000             lwz r11,0x0(r28)
+  828C3D0C  2B0BFACE             cmplwi cr6,r11,0xface
+  828C3D10  409A0058             bne cr6,0x828c3d68
+  828C3D14  897C000C             lbz r11,0xc(r28)
+  828C3D18  2B0B000A             cmplwi cr6,r11,0xa
+  828C3D1C  419A000C             beq cr6,0x828c3d28
+  828C3D20  386017DE             li r3,0x17de
+  828C3D24  48000048             b 0x828c3d6c
+LAB_828c3d28:
+  828C3D28  38A10050             addi r5,r1,0x50
+  828C3D2C  809C0010             lwz r4,0x10(r28)
+  828C3D30  48002F11             bl 0x828c6c40
+  828C3D34  38A10050             addi r5,r1,0x50
+  828C3D38  386100A0             addi r3,r1,0xa0
+  828C3D3C  809C0010             lwz r4,0x10(r28)
+  828C3D40  48002779             bl 0x828c64b8
+  828C3D44  39000000             li r8,0x0
+  828C3D48  7FC6F378             or r6,r30,r30
+  828C3D4C  A0FF000C             lhz r7,0xc(r31)
+  828C3D50  7FA5EB78             or r5,r29,r29
+  828C3D54  809F0008             lwz r4,0x8(r31)
+  828C3D58  386100A0             addi r3,r1,0xa0
+  828C3D5C  480026F5             bl 0x828c6450
+  828C3D60  38600000             li r3,0x0
+  828C3D64  48000008             b 0x828c3d6c
+LAB_828c3d68:
+  828C3D68  386017D4             li r3,0x17d4
+LAB_828c3d6c:
+  828C3D6C  38210110             addi r1,r1,0x110
+  828C3D70  48052998             b 0x82916708
 
 ; 828C3D78  nciEncode1by1  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:191)
   828C3D78  7D8802A6             mfspr r12,LR
@@ -144,6 +223,58 @@ LAB_828c3fec:
 ; 828C3E20  nciFreeEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:345)
   828C3E20  7D8802A6             mfspr r12,LR
   828C3E24  48052895             bl 0x829166b8
+  828C3E28  9421FF80             stwu r1,-0x80(r1)
+  828C3E2C  7C7C1B78             or r28,r3,r3
+  828C3E30  2B030000             cmplwi cr6,r3,0x0
+  828C3E34  409A000C             bne cr6,0x828c3e40
+  828C3E38  3860181A             li r3,0x181a
+  828C3E3C  4800009C             b 0x828c3ed8
+LAB_828c3e40:
+  828C3E40  83FC0000             lwz r31,0x0(r28)
+  828C3E44  2B1F0000             cmplwi cr6,r31,0x0
+  828C3E48  419A008C             beq cr6,0x828c3ed4
+  828C3E4C  817F0000             lwz r11,0x0(r31)
+  828C3E50  2B0BFACE             cmplwi cr6,r11,0xface
+  828C3E54  409A0080             bne cr6,0x828c3ed4
+  828C3E58  897F000C             lbz r11,0xc(r31)
+  828C3E5C  2B0B000A             cmplwi cr6,r11,0xa
+  828C3E60  419A000C             beq cr6,0x828c3e6c
+  828C3E64  386017E3             li r3,0x17e3
+  828C3E68  48000070             b 0x828c3ed8
+LAB_828c3e6c:
+  828C3E6C  3BA00000             li r29,0x0
+  828C3E70  387F0010             addi r3,r31,0x10
+  828C3E74  93BF0000             stw r29,0x0(r31)
+  828C3E78  48002809             bl 0x828c6680
+  828C3E7C  807F0024             lwz r3,0x24(r31)
+  828C3E80  3FC08489             lis r30,-0x7b77
+  828C3E84  2B030000             cmplwi cr6,r3,0x0
+  828C3E88  419A0014             beq cr6,0x828c3e9c
+  828C3E8C  817E58C4             lwz r11,0x58c4(r30)
+  828C3E90  7D6903A6             mtspr CTR,r11
+  828C3E94  4E800421             bctrl
+  828C3E98  93BF0024             stw r29,0x24(r31)
+LAB_828c3e9c:
+  828C3E9C  807F0028             lwz r3,0x28(r31)
+  828C3EA0  2B030000             cmplwi cr6,r3,0x0
+  828C3EA4  419A0014             beq cr6,0x828c3eb8
+  828C3EA8  817E58C4             lwz r11,0x58c4(r30)
+  828C3EAC  7D6903A6             mtspr CTR,r11
+  828C3EB0  4E800421             bctrl
+  828C3EB4  93BF0028             stw r29,0x28(r31)
+LAB_828c3eb8:
+  828C3EB8  817E58C4             lwz r11,0x58c4(r30)
+  828C3EBC  7FE3FB78             or r3,r31,r31
+  828C3EC0  7D6903A6             mtspr CTR,r11
+  828C3EC4  4E800421             bctrl
+  828C3EC8  38600000             li r3,0x0
+  828C3ECC  93BC0000             stw r29,0x0(r28)
+  828C3ED0  48000008             b 0x828c3ed8
+LAB_828c3ed4:
+  828C3ED4  386017D4             li r3,0x17d4
+LAB_828c3ed8:
+  828C3ED8  38210080             addi r1,r1,0x80
+  828C3EDC  4805282C             b 0x82916708
 
 ; 828C3EE0  nciFreeEncode  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:379)
   828C3EE0  4BFFFF40             b 0x828c3e20

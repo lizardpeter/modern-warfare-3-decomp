@@ -2,11 +2,60 @@
 
 // 825DFEB0  AngleVectors  (universal/com_math_anglevectors.cpp:12)
 
-void AngleVectors(void)
+void AngleVectors(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float *pfVar1;
+  float *pfVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
   __savegprlr_28();
+  pfVar1 = (float *)__savefpr_26();
+  dVar5 = 0.01745329238474369;
+  dVar7 = (double)(pfVar1[1] * 0.017453292);
+  dVar3 = sin(dVar7);
+  dVar9 = (double)(float)dVar3;
+  dVar3 = cos(dVar7);
+  dVar8 = (double)(float)dVar3;
+  dVar4 = (double)(float)((double)*pfVar1 * dVar5);
+  dVar3 = sin(dVar4);
+  dVar7 = (double)(float)dVar3;
+  dVar3 = cos(dVar4);
+  dVar3 = (double)(float)dVar3;
+  if ((param_2 & 0xffffffff) != 0) {
+    pfVar2 = (float *)param_2;
+    *pfVar2 = (float)(dVar3 * dVar8);
+    pfVar2[1] = (float)(dVar3 * dVar9);
+    pfVar2[2] = (float)-dVar7;
+  }
+  if (((param_3 & 0xffffffff) != 0) || ((param_4 & 0xffffffff) != 0)) {
+    dVar5 = (double)(float)((double)pfVar1[2] * dVar5);
+    dVar4 = sin(dVar5);
+    dVar6 = (double)(float)dVar4;
+    dVar4 = cos(dVar5);
+    dVar4 = (double)(float)dVar4;
+    if ((param_3 & 0xffffffff) != 0) {
+      pfVar1 = (float *)param_3;
+      pfVar1[2] = (float)(dVar6 * dVar3) * -1.0;
+      *pfVar1 = (float)(dVar4 * dVar9 - (double)(float)((double)(float)(dVar6 * dVar7) * dVar8));
+      pfVar1[1] = (float)(dVar4 * dVar8) * -1.0 - (float)((double)(float)(dVar6 * dVar7) * dVar9);
+    }
+    if ((param_4 & 0xffffffff) != 0) {
+      pfVar1 = (float *)param_4;
+      pfVar1[2] = (float)(dVar4 * dVar3);
+      *pfVar1 = (float)((double)(float)(dVar4 * dVar7) * dVar8 + (double)(float)(dVar6 * dVar9));
+      pfVar1[1] = (float)((double)(float)(dVar4 * dVar7) * dVar9 - (double)(float)(dVar6 * dVar8));
+    }
+  }
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 

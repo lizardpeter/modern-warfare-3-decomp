@@ -42,8 +42,41 @@ int _dynamic_initializer_for__s_FacebookAccounts__(void)
 void Facebook_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  uint *puVar4;
+  uint *puVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  puVar5 = &DAT_8451de38;
+  do {
+    uVar1 = *puVar5;
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
+        do {
+          puVar4 = (uint *)((ulonglong)uVar1 + 4);
+          if (in_RESERVE != '\0') {
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar4 = uVar3;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = (undefined4 *)*puVar5;
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
+          }
+        }
+      }
+      *puVar5 = 0;
+    }
+    puVar5 = puVar5 + 1;
+  } while ((int)puVar5 < -0x7bae21b8);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -52,8 +85,54 @@ void Facebook_Shutdown(void)
 void Facebook_UserSignedOut(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined4 local_40 [16];
+  
+  iVar3 = __savegprlr_26();
+  if ((int *)(&DAT_8451de38)[iVar3] != (int *)0x0) {
+    iVar4 = (**(code **)(*(int *)(&DAT_8451de38)[iVar3] + 4))();
+    if (iVar4 == 1) {
+      bdRemoteTask__cancelTask((&DAT_8451de38)[iVar3]);
+      cVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_40);
+      if ((cVar5 != '\0') && (uVar1 = UI_GetClientDC(local_40[0]), (uVar1 & 0xffffffff) != 0)) {
+        if ((&DAT_8451dbe8)[iVar3] == 1) {
+          Menus_CloseByName(uVar1,0xffffffff821b03cc);
+          Menus_CloseByName(uVar1,0xffffffff821b054c);
+          uVar2 = UI_SafeTranslateString(0xffffffff821b0530);
+          Dvar_SetString(DAT_8451dbcc,uVar2);
+        }
+        else {
+          if ((&DAT_8451dbe8)[iVar3] != 2) goto LAB_826fc664;
+          Menus_CloseByName(uVar1,0xffffffff821b0510);
+          uVar2 = UI_SafeTranslateString(0xffffffff821b0530);
+          Dvar_SetString(DAT_8451dbcc,uVar2);
+        }
+        Menus_OpenByName(uVar1,0xffffffff821b03a8);
+      }
+    }
+  }
+LAB_826fc664:
+  (&DAT_8451c42c)[iVar3] = 0;
+  (&DAT_8451dbc4)[iVar3] = 0;
+  (&DAT_8451c430)[iVar3] = 0;
+  (&DAT_8451dbe4)[iVar3] = 0;
+  (&DAT_8451c434)[iVar3] = 0;
+  (&DAT_8451c418)[iVar3] = 0;
+  (&DAT_8451dbb4)[iVar3] = 0;
+  (&DAT_8451dbe8)[iVar3] = 0;
+  (&DAT_8451dbd4)[iVar3] = 0;
+  DAT_842536f8 = 0;
+  DAT_84253898 = 0;
+  DAT_84253800 = 0;
+  Dvar_SetString(DAT_8451c428,0xffffffff820068af);
+  Dvar_SetString(DAT_8451dbc8,0xffffffff820068af);
+  Dvar_SetString(DAT_8451dbb0,0xffffffff820068af);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -93,8 +172,33 @@ void Facebook_CreatePassword_Asterisks(void)
 void Facebook_UserKeyboard(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  LPCSTR lpMultiByteStr;
+  int iVar3;
+  longlong lVar2;
+  CHAR aCStack_a0 [160];
+  
   __savegprlr_29();
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  lpMultiByteStr = (LPCSTR)UI_SafeTranslateString(0xffffffff821b0270);
+  MultiByteToWideChar(0xfde9,0,lpMultiByteStr,-1,&DAT_84253898,0x40);
+  DAT_84253916 = 0;
+  I_strncpyz(0xffffffff84253800,*(undefined4 *)(DAT_8451c428 + 0xc),0x80);
+  I_strncpyz(aCStack_a0,*(undefined4 *)(DAT_8451c428 + 0xc),0x80);
+  iVar3 = MultiByteToWideChar(0xfde9,0,aCStack_a0,-1,(LPWSTR)&DAT_8451de48,0x80);
+  DAT_8451df46 = 0;
+  lVar2 = Language_IsAsian(iVar3);
+  iVar3 = XShowKeyboardUI(uVar1,(-(lVar2 != 0) & 0x3eU) + 2,0xffffffff8451de48,0xffffffff84253898,0,
+                          0xffffffff842536f8,0x7f,0xffffffff84253cac);
+  if (iVar3 != 0x3e5) {
+    Com_Printf(0x10,0xffffffff82172d44);
+    __restgprlr_29();
+    return;
+  }
+  DAT_8451dbd1 = 1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -110,8 +214,7 @@ void Facebook_UserKeyboardComplete(void)
   if (iVar1 != 0x3e4) {
     if (iVar1 == 0) {
       DAT_8451dbd1 = 0;
-      iVar1 = WideCharToMultiByte(0,0,(LPCWSTR)&DAT_842536f8,-1,aCStack_410,0x400,(LPCSTR)0x0,
-                                  (LPBOOL)0x0);
+      iVar1 = WideCharToMultiByte(0,0,&DAT_842536f8,-1,aCStack_410,0x400,(LPCSTR)0x0,(LPBOOL)0x0);
       if ((longlong)iVar1 + -1 < 0) {
         Com_PrintError(0xd,0xffffffff821b0288);
         return;
@@ -130,8 +233,33 @@ void Facebook_UserKeyboardComplete(void)
 void Facebook_PasswordKeyboard(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  LPCSTR lpMultiByteStr;
+  int iVar3;
+  longlong lVar2;
+  CHAR aCStack_a0 [160];
+  
   __savegprlr_29();
+  Cmd_LocalClientNum();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  lpMultiByteStr = (LPCSTR)UI_SafeTranslateString(0xffffffff821b02d4);
+  MultiByteToWideChar(0xfde9,0,lpMultiByteStr,-1,&DAT_84253898,0x40);
+  DAT_84253916 = 0;
+  I_strncpyz(0xffffffff84253800,*(undefined4 *)(DAT_8451dbc8 + 0xc),0x80);
+  I_strncpyz(aCStack_a0,*(undefined4 *)(DAT_8451dbc8 + 0xc),0x80);
+  iVar3 = MultiByteToWideChar(0xfde9,0,aCStack_a0,-1,(LPWSTR)&DAT_8451df48,0x80);
+  DAT_8451e046 = 0;
+  lVar2 = Language_IsAsian(iVar3);
+  iVar3 = XShowKeyboardUI(uVar1,(-(ulonglong)(lVar2 != 0) & 0xffffffc0) + 0x80,0xffffffff8451df48,
+                          0xffffffff84253898,0,0xffffffff842536f8,0x7f,0xffffffff84253cac);
+  if (iVar3 != 0x3e5) {
+    Com_Printf(0x10,0xffffffff82172d44);
+    __restgprlr_29();
+    return;
+  }
+  DAT_8451dbd0 = 1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -147,8 +275,7 @@ void Facebook_PasswordKeyboardComplete(void)
   if (iVar1 != 0x3e4) {
     if (iVar1 == 0) {
       DAT_8451dbd0 = 0;
-      iVar1 = WideCharToMultiByte(0,0,(LPCWSTR)&DAT_842536f8,-1,aCStack_110,0xff,(LPCSTR)0x0,
-                                  (LPBOOL)0x0);
+      iVar1 = WideCharToMultiByte(0,0,&DAT_842536f8,-1,aCStack_110,0xff,(LPCSTR)0x0,(LPBOOL)0x0);
       if ((longlong)iVar1 + -1 < 0) {
         Com_PrintError(0xd,0xffffffff821b0288);
         return;
@@ -168,8 +295,29 @@ void Facebook_PasswordKeyboardComplete(void)
 void Facebook_SocialConfigComplete_Callback(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int *piVar4;
+  
   __savegprlr_28();
+  piVar4 = &DAT_8451dbb4;
+  piVar3 = (int *)(DAT_84545c84 + 0xc);
+  iVar2 = DAT_84545c84;
+  do {
+    if (*piVar3 < 0) {
+      *piVar4 = *piVar3;
+    }
+    else {
+      piVar3 = (int *)(iVar2 + 0xc);
+      iVar1 = Sys_Milliseconds();
+      iVar2 = DAT_84545c84;
+      *piVar4 = iVar1 + *piVar3;
+    }
+    piVar4 = piVar4 + 1;
+  } while ((int)piVar4 < -0x7bae243c);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -337,8 +485,24 @@ ulonglong Facebook_IsChecking(int param_1)
 void Facebook_RetryCheckingIfRegistered(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = DAT_84546d80;
+  iVar4 = DAT_84545cd8;
+  iVar3 = (&DAT_8451dbd4)[iVar2];
+  (&DAT_8451dbd4)[iVar2] = iVar3 + 1;
+  iVar3 = Live_GenerateTimeToRetryInSeconds
+                    ((longlong)(*(int *)(iVar4 + 0xc) / 1000) * (longlong)(iVar3 + 1),
+                     *(int *)(iVar1 + 0xc) / 1000);
+  iVar4 = Sys_Milliseconds();
+  (&DAT_8451c418)[iVar2] = 0;
+  (&DAT_8451dbb4)[iVar2] = iVar4 + iVar3 * 1000;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -542,8 +706,50 @@ LAB_826fcde0:
 void Facebook_XenonAgeVerification_Update(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  void *pvVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  
+  iVar2 = __savegprlr_26();
+  if ((&DAT_8451c430)[iVar2] == '\0') {
+    iVar3 = iVar2 * 0x1c;
+    if ((&DAT_8451dbc4)[iVar2] == '\0') {
+      puVar5 = (undefined4 *)(iVar3 + -0x7bae3c5c);
+      lVar6 = 7;
+      do {
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      memset(&DAT_8451c438 + iVar2 * 0x5de,0,0x5de);
+      iVar3 = _XAccountGetUserInfo(iVar2,0x5de,&DAT_8451c438 + iVar2 * 0x5de,&DAT_8451c3a8 + iVar3);
+      if (iVar3 == 0x3e5) {
+        (&DAT_8451dbc4)[iVar2] = 1;
+      }
+    }
+    else if (*(int *)(&DAT_8451c3a8 + iVar3) != 0x3e5) {
+      iVar1 = iVar2 * 0x5de;
+      if (*(int *)(&DAT_8451c3c0 + iVar3) == 0) {
+        iVar3 = XGetLocale();
+        if ((((iVar3 == 0x15) || (iVar3 = XGetLocale(), iVar3 == 0x1f)) &&
+            (0xd < (byte)(&DAT_8451c473)[iVar1])) || (0xc < (byte)(&DAT_8451c473)[iVar1])) {
+          (&DAT_8451c42c)[iVar2] = 1;
+        }
+        (&DAT_8451c430)[iVar2] = 1;
+        pvVar4 = memset(&DAT_8451c438 + iVar1,0,0x5de);
+        __restgprlr_26(pvVar4);
+        return;
+      }
+      (&DAT_8451dbc4)[iVar2] = 0;
+      __restgprlr_26();
+      return;
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -740,7 +946,6 @@ undefined1 * Facebook_GetUsersName(uint param_1)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b04c8,0x3b9,0,0xffffffff82031880,param_1,4);
   }
   if ((&DAT_8451c434)[param_1] != '\0') {
@@ -756,7 +961,6 @@ undefined8 Facebook_GetUsersID(uint param_1)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b04c8,0x3c4,0,0xffffffff82031880,param_1,4);
   }
   if ((&DAT_8451c434)[param_1] != '\0') {
@@ -790,7 +994,44 @@ void _dynamic_atexit_destructor_for__s_FacebookAccounts__(void)
 void _dynamic_atexit_destructor_for__g_DWFacebookTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  lVar6 = 3;
+  puVar7 = (uint *)&DAT_8451de48;
+  do {
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
+        }
+        *puVar7 = 0;
+      }
+    }
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
+  __restgprlr_29();
+  return;
 }
 

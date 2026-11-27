@@ -5,8 +5,115 @@
 void start_pass_fdctmgr(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  int *piVar5;
+  int *piVar6;
+  undefined4 uVar7;
+  float *pfVar8;
+  short *psVar9;
+  double *pdVar10;
+  int *piVar11;
+  ushort *puVar12;
+  int iVar13;
+  int *piVar14;
+  longlong lVar15;
+  double dVar16;
+  
+  piVar5 = (int *)__savegprlr_23();
+  iVar1 = piVar5[0x58];
+  iVar13 = 0;
+  piVar6 = piVar5;
+  if (0 < piVar5[0x11]) {
+    piVar14 = (int *)(piVar5[0x13] + 0x10);
+    dVar16 = 8.0;
+    do {
+      iVar2 = *piVar14;
+      if (((iVar2 < 0) || (3 < iVar2)) || (piVar5[iVar2 + 0x14] == 0)) {
+        *(undefined4 *)(*piVar5 + 0x14) = 0x34;
+        *(int *)(*piVar5 + 0x18) = iVar2;
+        piVar6 = (int *)(**(code **)*piVar5)(piVar5);
+      }
+      uVar3 = piVar5[0x30];
+      iVar4 = piVar5[iVar2 + 0x14];
+      if (uVar3 == 0) {
+        iVar2 = (iVar2 + 3) * 4;
+        if (*(int *)(iVar2 + iVar1) == 0) {
+          piVar6 = (int *)(**(code **)piVar5[1])(piVar5,1,0x100);
+          *(int **)(iVar2 + iVar1) = piVar6;
+        }
+        puVar12 = (ushort *)(iVar4 + -2);
+        piVar11 = (int *)(*(int *)(iVar2 + iVar1) + -4);
+        lVar15 = 0x40;
+        do {
+          puVar12 = puVar12 + 1;
+          piVar11 = piVar11 + 1;
+          *piVar11 = (uint)*puVar12 << 3;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      else if (uVar3 == 1) {
+        iVar2 = (iVar2 + 3) * 4;
+        if (*(int *)(iVar2 + iVar1) == 0) {
+          uVar7 = (**(code **)piVar5[1])(piVar5,1,0x100);
+          *(undefined4 *)(iVar2 + iVar1) = uVar7;
+        }
+        psVar9 = (short *)&UNK_821d936a;
+        piVar11 = (int *)(*(int *)(iVar2 + iVar1) + -4);
+        lVar15 = 0x10;
+        puVar12 = (ushort *)(iVar4 + 4);
+        do {
+          piVar11[1] = (int)((uint)puVar12[-2] * (int)psVar9[3] + 0x400) >> 0xb;
+          psVar9 = psVar9 + 4;
+          piVar11[2] = (int)((uint)puVar12[-1] * (int)*psVar9 + 0x400) >> 0xb;
+          piVar11[3] = (int)((int)*(short *)((int)&DAT_821d9370 + -iVar4 + (int)puVar12) *
+                             (uint)*puVar12 + 0x400) >> 0xb;
+          piVar6 = (int *)((int)*(short *)((int)&DAT_821d9372 + -iVar4 + (int)puVar12) *
+                           (uint)puVar12[1] + 0x400);
+          puVar12 = puVar12 + 4;
+          piVar11 = piVar11 + 4;
+          *piVar11 = (int)piVar6 >> 0xb;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      else if (uVar3 < 3) {
+        iVar2 = (iVar2 + 8) * 4;
+        if (*(int *)(iVar2 + iVar1) == 0) {
+          uVar7 = (**(code **)piVar5[1])(piVar5,1,0x100);
+          *(undefined4 *)(iVar2 + iVar1) = uVar7;
+        }
+        pfVar8 = (float *)(*(int *)(iVar2 + iVar1) + -4);
+        pdVar10 = (double *)&UNK_821d93e8;
+        puVar12 = (ushort *)(iVar4 + -2);
+        lVar15 = 8;
+        do {
+          pfVar8[1] = (float)(1.0 / ((double)puVar12[1] * pdVar10[1] * dVar16));
+          pfVar8[2] = (float)(1.0 / ((double)puVar12[2] * pdVar10[1] * 1.387039845 * dVar16));
+          pfVar8[3] = (float)(1.0 / ((double)puVar12[3] * pdVar10[1] * 1.306562965 * dVar16));
+          pfVar8[4] = (float)(1.0 / ((double)puVar12[4] * pdVar10[1] * 1.175875602 * dVar16));
+          pfVar8[5] = (float)(1.0 / ((double)puVar12[5] * pdVar10[1] * 1.0 * dVar16));
+          piVar6 = (int *)(uint)puVar12[6];
+          pfVar8[6] = (float)(1.0 / ((double)piVar6 * pdVar10[1] * 0.785694958 * dVar16));
+          pfVar8[7] = (float)(1.0 / ((double)puVar12[7] * pdVar10[1] * 0.5411961 * dVar16));
+          puVar12 = puVar12 + 8;
+          pdVar10 = pdVar10 + 1;
+          pfVar8 = pfVar8 + 8;
+          *pfVar8 = (float)(1.0 / ((double)*puVar12 * *pdVar10 * 0.275899379 * dVar16));
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+      }
+      else {
+        *(undefined4 *)(*piVar5 + 0x14) = 0x30;
+        piVar6 = (int *)(**(code **)*piVar5)(piVar5);
+      }
+      iVar13 = iVar13 + 1;
+      piVar14 = piVar14 + 0x15;
+    } while (iVar13 < piVar5[0x11]);
+  }
+  __restgprlr_23(piVar6);
+  return;
 }
 
 

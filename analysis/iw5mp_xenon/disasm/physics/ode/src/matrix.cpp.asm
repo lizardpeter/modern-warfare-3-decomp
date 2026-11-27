@@ -22,6 +22,7 @@ LAB_82696cbc:
   82696CD4  38A00000             li r5,0x0
   82696CD8  3880001F             li r4,0x1f
   82696CDC  4BF3D825             bl 0x825d4500
+  82696CE0  2F1F0000             cmpwi cr6,r31,0x0
 LAB_82696ce4:
   82696CE4  40990020             ble cr6,0x82696d04
   82696CE8  397EFFFC             subi r11,r30,0x4
@@ -40,13 +41,388 @@ LAB_82696d04:
   82696D14  EBE1FFF0             ld r31,-0x10(r1)
   82696D18  4E800020             blr
 
+; 82696D20  dSetValue  (physics/ode/src/matrix.cpp:40)
+  82696D20  7D8802A6             mfspr r12,LR
+  82696D24  9181FFF8             stw r12,-0x8(r1)
+  82696D28  FBC1FFE8             std r30,-0x18(r1)
+  82696D2C  FBE1FFF0             std r31,-0x10(r1)
+  82696D30  DBE1FFE0             stfd f31,-0x20(r1)
+  82696D34  9421FF90             stwu r1,-0x70(r1)
+  82696D38  7C7F1B78             or r31,r3,r3
+  82696D3C  FFE00890             fmr f31,f1
+  82696D40  7C9E2378             or r30,r4,r4
+  82696D44  2B030000             cmplwi cr6,r3,0x0
+  82696D48  419A000C             beq cr6,0x82696d54
+  82696D4C  2F040000             cmpwi cr6,r4,0x0
+  82696D50  4098002C             bge cr6,0x82696d7c
+LAB_82696d54:
+  82696D54  3D60821A             lis r11,-0x7de6
+  82696D58  3D408200             lis r10,-0x7e00
+  82696D5C  3D20821A             lis r9,-0x7de6
+  82696D60  38EB9B18             subi r7,r11,0x64e8
+  82696D64  38CA0F98             addi r6,r10,0xf98
+  82696D68  38699AD0             subi r3,r9,0x6530
+  82696D6C  38A00000             li r5,0x0
+  82696D70  38800029             li r4,0x29
+  82696D74  4BF3D78D             bl 0x825d4500
+  82696D78  2F1E0000             cmpwi cr6,r30,0x0
+LAB_82696d7c:
+  82696D7C  40990020             ble cr6,0x82696d9c
+  82696D80  D3FF0000             stfs f31,0x0(r31)
+  82696D84  57CB103A             rlwinm r11,r30,0x2,0x0,0x1d
+  82696D88  7FE4FB78             or r4,r31,r31
+  82696D8C  396BFFFF             subi r11,r11,0x1
+  82696D90  387F0004             addi r3,r31,0x4
+  82696D94  5565003A             rlwinm r5,r11,0x0,0x0,0x1d
+  82696D98  48280051             bl 0x82916de8
+LAB_82696d9c:
+  82696D9C  38210070             addi r1,r1,0x70
+  82696DA0  8181FFF8             lwz r12,-0x8(r1)
+  82696DA4  7D8803A6             mtspr LR,r12
+  82696DA8  CBE1FFE0             lfd f31,-0x20(r1)
+  82696DAC  EBC1FFE8             ld r30,-0x18(r1)
+  82696DB0  EBE1FFF0             ld r31,-0x10(r1)
+  82696DB4  4E800020             blr
+
 ; 82696DB8  dFactorCholesky3  (physics/ode/src/matrix.cpp:55)
   82696DB8  7D8802A6             mfspr r12,LR
   82696DBC  4827F8E9             bl 0x829166a4
+  82696DC0  DBC1FFA0             stfd f30,-0x60(r1)
+  82696DC4  DBE1FFA8             stfd f31,-0x58(r1)
+  82696DC8  9421FF40             stwu r1,-0xc0(r1)
+  82696DCC  3D60821A             lis r11,-0x7de6
+  82696DD0  3D408200             lis r10,-0x7e00
+  82696DD4  7C7F1B78             or r31,r3,r3
+  82696DD8  2B030000             cmplwi cr6,r3,0x0
+  82696DDC  3B0B9AD0             subi r24,r11,0x6530
+  82696DE0  3AEA0F98             addi r23,r10,0xf98
+  82696DE4  409A0020             bne cr6,0x82696e04
+  82696DE8  3D608207             lis r11,-0x7df9
+  82696DEC  7EE6BB78             or r6,r23,r23
+  82696DF0  38EB55B8             addi r7,r11,0x55b8
+  82696DF4  7F03C378             or r3,r24,r24
+  82696DF8  38A00000             li r5,0x0
+  82696DFC  3880003F             li r4,0x3f
+  82696E00  4BF3D701             bl 0x825d4500
+LAB_82696e04:
+  82696E04  39610050             addi r11,r1,0x50
+  82696E08  3D408200             lis r10,-0x7e00
+  82696E0C  3D208200             lis r9,-0x7e00
+  82696E10  3B4BFFFC             subi r26,r11,0x4
+  82696E14  3D60821A             lis r11,-0x7de6
+  82696E18  7FFDFB78             or r29,r31,r31
+  82696E1C  C3CA0F10             lfs f30,0xf10(r10)
+  82696E20  3BC00000             li r30,0x0
+  82696E24  C3E913F8             lfs f31,0x13f8(r9)
+  82696E28  3B600000             li r27,0x0
+  82696E2C  7FFCFB78             or r28,r31,r31
+  82696E30  3B2B9B24             subi r25,r11,0x64dc
+LAB_82696e34:
+  82696E34  7F9FE378             or r31,r28,r28
+  82696E38  39400000             li r10,0x0
+  82696E3C  2F1E0000             cmpwi cr6,r30,0x0
+  82696E40  40990058             ble cr6,0x82696e98
+  82696E44  39610050             addi r11,r1,0x50
+  82696E48  7F69DB78             or r9,r27,r27
+  82696E4C  390BFFFC             subi r8,r11,0x4
+LAB_82696e50:
+  82696E50  C01F0000             lfs f0,0x0(r31)
+  82696E54  7FABEB78             or r11,r29,r29
+  82696E58  2F0A0000             cmpwi cr6,r10,0x0
+  82696E5C  419A001C             beq cr6,0x82696e78
+  82696E60  7D4903A6             mtspr CTR,r10
+LAB_82696e64:
+  82696E64  7DA95C2E             lfsx f13,r9,r11
+  82696E68  C18B0000             lfs f12,0x0(r11)
+  82696E6C  396B0004             addi r11,r11,0x4
+  82696E70  EC0D033C             fnmsubs f0,f13,f12,f0
+  82696E74  4200FFF0             bdnz 0x82696e64
+LAB_82696e78:
+  82696E78  C5A80004             lfsu f13,0x4(r8)
+  82696E7C  394A0001             addi r10,r10,0x1
+  82696E80  EC0D0032             fmuls f0,f13,f0
+  82696E84  D01F0000             stfs f0,0x0(r31)
+  82696E88  39290010             addi r9,r9,0x10
+  82696E8C  3BFF0004             addi r31,r31,0x4
+  82696E90  7F0AF000             cmpw cr6,r10,r30
+  82696E94  4198FFBC             blt cr6,0x82696e50
+LAB_82696e98:
+  82696E98  C01F0000             lfs f0,0x0(r31)
+  82696E9C  2F1E0000             cmpwi cr6,r30,0x0
+  82696EA0  419A0018             beq cr6,0x82696eb8
+  82696EA4  7FC903A6             mtspr CTR,r30
+  82696EA8  397DFFFC             subi r11,r29,0x4
+LAB_82696eac:
+  82696EAC  C5AB0004             lfsu f13,0x4(r11)
+  82696EB0  EC0D037C             fnmsubs f0,f13,f13,f0
+  82696EB4  4200FFF8             bdnz 0x82696eac
+LAB_82696eb8:
+  82696EB8  FF00F800             fcmpu cr6,f0,f31
+  82696EBC  40990064             ble cr6,0x82696f20
+  82696EC0  EC00002C             fsqrts f0,f0
+  82696EC4  D01F0000             stfs f0,0x0(r31)
+  82696EC8  FF00F800             fcmpu cr6,f0,f31
+  82696ECC  4199001C             bgt cr6,0x82696ee8
+  82696ED0  7F27CB78             or r7,r25,r25
+  82696ED4  7EE6BB78             or r6,r23,r23
+  82696ED8  7F03C378             or r3,r24,r24
+  82696EDC  38A00000             li r5,0x0
+  82696EE0  38800059             li r4,0x59
+  82696EE4  4BF3D61D             bl 0x825d4500
+LAB_82696ee8:
+  82696EE8  C01F0000             lfs f0,0x0(r31)
+  82696EEC  3BDE0001             addi r30,r30,0x1
+  82696EF0  EDBE0024             fdivs f13,f30,f0
+  82696EF4  D5BA0004             stfsu f13,0x4(r26)
+  82696EF8  3BBD0010             addi r29,r29,0x10
+  82696EFC  3B7BFFF0             subi r27,r27,0x10
+  82696F00  3B9C0010             addi r28,r28,0x10
+  82696F04  2F1E0003             cmpwi cr6,r30,0x3
+  82696F08  4198FF2C             blt cr6,0x82696e34
+  82696F0C  38600001             li r3,0x1
+  82696F10  382100C0             addi r1,r1,0xc0
+  82696F14  CBC1FFA0             lfd f30,-0x60(r1)
+  82696F18  CBE1FFA8             lfd f31,-0x58(r1)
+  82696F1C  4827F7D8             b 0x829166f4
+LAB_82696f20:
+  82696F20  38600000             li r3,0x0
+  82696F24  382100C0             addi r1,r1,0xc0
+  82696F28  CBC1FFA0             lfd f30,-0x60(r1)
+  82696F2C  CBE1FFA8             lfd f31,-0x58(r1)
+  82696F30  4827F7C4             b 0x829166f4
+
+; 82696F38  dSolveCholesky3  (physics/ode/src/matrix.cpp:102)
+  82696F38  7D8802A6             mfspr r12,LR
+  82696F3C  4827F761             bl 0x8291669c
+  82696F40  DBC1FF90             stfd f30,-0x70(r1)
+  82696F44  DBE1FF98             stfd f31,-0x68(r1)
+  82696F48  9421FF30             stwu r1,-0xd0(r1)
+  82696F4C  3D60821A             lis r11,-0x7de6
+  82696F50  3D408200             lis r10,-0x7e00
+  82696F54  7C7D1B78             or r29,r3,r3
+  82696F58  7C982378             or r24,r4,r4
+  82696F5C  2B030000             cmplwi cr6,r3,0x0
+  82696F60  3ACB9AD0             subi r22,r11,0x6530
+  82696F64  3AAA0F98             addi r21,r10,0xf98
+  82696F68  419A000C             beq cr6,0x82696f74
+  82696F6C  2B040000             cmplwi cr6,r4,0x0
+  82696F70  409A0020             bne cr6,0x82696f90
+LAB_82696f74:
+  82696F74  3D60821A             lis r11,-0x7de6
+  82696F78  7EA6AB78             or r6,r21,r21
+  82696F7C  38EB9B5C             subi r7,r11,0x64a4
+  82696F80  7EC3B378             or r3,r22,r22
+  82696F84  38A00000             li r5,0x0
+  82696F88  3880006D             li r4,0x6d
+  82696F8C  4BF3D575             bl 0x825d4500
+LAB_82696f90:
+  82696F90  39610050             addi r11,r1,0x50
+  82696F94  3D408200             lis r10,-0x7e00
+  82696F98  7F6BC050             subf r27,r11,r24
+  82696F9C  3D60821A             lis r11,-0x7de6
+  82696FA0  3BC00000             li r30,0x0
+  82696FA4  3BE00000             li r31,0x0
+  82696FA8  C3EA13F8             lfs f31,0x13f8(r10)
+  82696FAC  3B9DFFEC             subi r28,r29,0x14
+  82696FB0  3B4B9B48             subi r26,r11,0x64b8
+LAB_82696fb4:
+  82696FB4  FC00F890             fmr f0,f31
+  82696FB8  39600000             li r11,0x0
+  82696FBC  FDA0F890             fmr f13,f31
+  82696FC0  2F1E0002             cmpwi cr6,r30,0x2
+  82696FC4  FD60F890             fmr f11,f31
+  82696FC8  4198003C             blt cr6,0x82697004
+  82696FCC  3941004C             addi r10,r1,0x4c
+  82696FD0  391EFFFF             subi r8,r30,0x1
+LAB_82696fd4:
+  82696FD4  7D3F5A14             add r9,r31,r11
+  82696FD8  C14A0004             lfs f10,0x4(r10)
+  82696FDC  396B0002             addi r11,r11,0x2
+  82696FE0  C58A0008             lfsu f12,0x8(r10)
+  82696FE4  5529103A             rlwinm r9,r9,0x2,0x0,0x1d
+  82696FE8  7F0B4000             cmpw cr6,r11,r8
+  82696FEC  7D29EA14             add r9,r9,r29
+  82696FF0  C1290000             lfs f9,0x0(r9)
+  82696FF4  C1090004             lfs f8,0x4(r9)
+  82696FF8  EC0A027A             fmadds f0,f10,f9,f0
+  82696FFC  EDA86B3A             fmadds f13,f8,f12,f13
+  82697000  4198FFD4             blt cr6,0x82696fd4
+LAB_82697004:
+  82697004  7F0BF000             cmpw cr6,r11,r30
+  82697008  40980020             bge cr6,0x82697028
+  8269700C  7D5F5A14             add r10,r31,r11
+  82697010  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  82697014  5548103A             rlwinm r8,r10,0x2,0x0,0x1d
+  82697018  38E10050             addi r7,r1,0x50
+  8269701C  7D88EC2E             lfsx f12,r8,r29
+  82697020  7D693C2E             lfsx f11,r9,r7
+  82697024  ED6C02F2             fmuls f11,f12,f11
+LAB_82697028:
+  82697028  EC0D002A             fadds f0,f13,f0
+  8269702C  C1BC0014             lfs f13,0x14(r28)
+  82697030  FF0DF800             fcmpu cr6,f13,f31
+  82697034  EFC0582A             fadds f30,f0,f11
+  82697038  409A001C             bne cr6,0x82697054
+  8269703C  7F47D378             or r7,r26,r26
+  82697040  7EA6AB78             or r6,r21,r21
+  82697044  7EC3B378             or r3,r22,r22
+  82697048  38A00000             li r5,0x0
+  8269704C  38800075             li r4,0x75
+  82697050  4BF3D4B1             bl 0x825d4500
+LAB_82697054:
+  82697054  39610050             addi r11,r1,0x50
+  82697058  C41C0014             lfsu f0,0x14(r28)
+  8269705C  3BDE0001             addi r30,r30,0x1
+  82697060  7D7F5A14             add r11,r31,r11
+  82697064  3BFF0004             addi r31,r31,0x4
+  82697068  2F1F000C             cmpwi cr6,r31,0xc
+  8269706C  7DBB5C2E             lfsx f13,r27,r11
+  82697070  ED8DF028             fsubs f12,f13,f30
+  82697074  ED6C0024             fdivs f11,f12,f0
+  82697078  D16B0000             stfs f11,0x0(r11)
+  8269707C  4198FF38             blt cr6,0x82696fb4
+  82697080  39610058             addi r11,r1,0x58
+  82697084  3BE00003             li r31,0x3
+  82697088  3B4BFFF4             subi r26,r11,0xc
+  8269708C  3D60821A             lis r11,-0x7de6
+  82697090  3B9D003C             addi r28,r29,0x3c
+  82697094  3BC0000C             li r30,0xc
+  82697098  3B600000             li r27,0x0
+  8269709C  3B38FFFC             subi r25,r24,0x4
+  826970A0  3AEB9B34             subi r23,r11,0x64cc
+LAB_826970a4:
+  826970A4  FC00F890             fmr f0,f31
+  826970A8  7FEBFB78             or r11,r31,r31
+  826970AC  FDA0F890             fmr f13,f31
+  826970B0  2F1F0003             cmpwi cr6,r31,0x3
+  826970B4  FFC0F890             fmr f30,f31
+  826970B8  40980084             bge cr6,0x8269713c
+  826970BC  2F1B0002             cmpwi cr6,r27,0x2
+  826970C0  41980050             blt cr6,0x82697110
+  826970C4  215F0001             subfic r10,r31,0x1
+  826970C8  7D7FF214             add r11,r31,r30
+  826970CC  554AF87E             rlwinm r10,r10,0x1f,0x1,0x1f
+  826970D0  392BFFFB             subi r9,r11,0x5
+  826970D4  396A0001             addi r11,r10,0x1
+  826970D8  7D5EC214             add r10,r30,r24
+  826970DC  5528103A             rlwinm r8,r9,0x2,0x0,0x1d
+  826970E0  5569083C             rlwinm r9,r11,0x1,0x0,0x1e
+  826970E4  38EAFFFC             subi r7,r10,0x4
+  826970E8  7D6903A6             mtspr CTR,r11
+  826970EC  7D48EA14             add r10,r8,r29
+  826970F0  7D69FA14             add r11,r9,r31
+LAB_826970f4:
+  826970F4  C16A0010             lfs f11,0x10(r10)
+  826970F8  C1470004             lfs f10,0x4(r7)
+  826970FC  EC0B02BA             fmadds f0,f11,f10,f0
+  82697100  C58A0020             lfsu f12,0x20(r10)
+  82697104  C5670008             lfsu f11,0x8(r7)
+  82697108  EDAC6AFA             fmadds f13,f12,f11,f13
+  8269710C  4200FFE8             bdnz 0x826970f4
+LAB_82697110:
+  82697110  2F0B0003             cmpwi cr6,r11,0x3
+  82697114  40980020             bge cr6,0x82697134
+  82697118  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  8269711C  7D5F5A14             add r10,r31,r11
+  82697120  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  82697124  7D8BC42E             lfsx f12,r11,r24
+  82697128  7D2AEA14             add r9,r10,r29
+  8269712C  C169FFFC             lfs f11,-0x4(r9)
+  82697130  EFCB0332             fmuls f30,f11,f12
+LAB_82697134:
+  82697134  EC0D002A             fadds f0,f13,f0
+  82697138  EFC0F02A             fadds f30,f0,f30
+LAB_8269713c:
+  8269713C  C01CFFEC             lfs f0,-0x14(r28)
+  82697140  FF00F800             fcmpu cr6,f0,f31
+  82697144  409A001C             bne cr6,0x82697160
+  82697148  7EE7BB78             or r7,r23,r23
+  8269714C  7EA6AB78             or r6,r21,r21
+  82697150  7EC3B378             or r3,r22,r22
+  82697154  38A00000             li r5,0x0
+  82697158  3880007D             li r4,0x7d
+  8269715C  4BF3D3A5             bl 0x825d4500
+LAB_82697160:
+  82697160  7C1AF42E             lfsx f0,r26,r30
+  82697164  3BFFFFFF             subi r31,r31,0x1
+  82697168  EDA0F028             fsubs f13,f0,f30
+  8269716C  C41CFFEC             lfsu f0,-0x14(r28)
+  82697170  357FFFFF             subic. r11,r31,0x1
+  82697174  3B7B0001             addi r27,r27,0x1
+  82697178  ED8D0024             fdivs f12,f13,f0
+  8269717C  7D99F52E             stfsx f12,r25,r30
+  82697180  3BDEFFFC             subi r30,r30,0x4
+  82697184  4080FF20             bge 0x826970a4
+  82697188  382100D0             addi r1,r1,0xd0
+  8269718C  CBC1FF90             lfd f30,-0x70(r1)
+  82697190  CBE1FF98             lfd f31,-0x68(r1)
+  82697194  4827F558             b 0x829166ec
 
 ; 82697198  dInvertPDMatrix3  (physics/ode/src/matrix.cpp:132)
   82697198  7D8802A6             mfspr r12,LR
   8269719C  4827F51D             bl 0x829166b8
+  826971A0  DBE1FFD0             stfd f31,-0x30(r1)
+  826971A4  9421FF40             stwu r1,-0xc0(r1)
+  826971A8  7C7E1B78             or r30,r3,r3
+  826971AC  7C9F2378             or r31,r4,r4
+  826971B0  2B030000             cmplwi cr6,r3,0x0
+  826971B4  419A000C             beq cr6,0x826971c0
+  826971B8  2B040000             cmplwi cr6,r4,0x0
+  826971BC  409A0028             bne cr6,0x826971e4
+LAB_826971c0:
+  826971C0  3D60821A             lis r11,-0x7de6
+  826971C4  3D408200             lis r10,-0x7e00
+  826971C8  3D20821A             lis r9,-0x7de6
+  826971CC  38EB9B64             subi r7,r11,0x649c
+  826971D0  38CA0F98             addi r6,r10,0xf98
+  826971D4  38699AD0             subi r3,r9,0x6530
+  826971D8  38A00000             li r5,0x0
+  826971DC  3880008C             li r4,0x8c
+  826971E0  4BF3D321             bl 0x825d4500
+LAB_826971e4:
+  826971E4  38A00030             li r5,0x30
+  826971E8  7FC4F378             or r4,r30,r30
+  826971EC  38610060             addi r3,r1,0x60
+  826971F0  4827F771             bl 0x82916960
+  826971F4  38610060             addi r3,r1,0x60
+  826971F8  4BFFFBC1             bl 0x82696db8
+  826971FC  2F030000             cmpwi cr6,r3,0x0
+  82697200  409A0010             bne cr6,0x82697210
+  82697204  382100C0             addi r1,r1,0xc0
+  82697208  CBE1FFD0             lfd f31,-0x30(r1)
+  8269720C  4827F4FC             b 0x82916708
+LAB_82697210:
+  82697210  3880000C             li r4,0xc
+  82697214  7FE3FB78             or r3,r31,r31
+  82697218  4BFFFA79             bl 0x82696c90
+  8269721C  39610050             addi r11,r1,0x50
+  82697220  3BFF001C             addi r31,r31,0x1c
+  82697224  3B8BFFFC             subi r28,r11,0x4
+  82697228  3D608200             lis r11,-0x7e00
+  8269722C  3BC00003             li r30,0x3
+  82697230  3BA00000             li r29,0x0
+  82697234  C3EB0F10             lfs f31,0xf10(r11)
+LAB_82697238:
+  82697238  39610050             addi r11,r1,0x50
+  8269723C  38810050             addi r4,r1,0x50
+  82697240  38610060             addi r3,r1,0x60
+  82697244  93AB0000             stw r29,0x0(r11)
+  82697248  93AB0004             stw r29,0x4(r11)
+  8269724C  93AB0008             stw r29,0x8(r11)
+  82697250  D7FC0004             stfsu f31,0x4(r28)
+  82697254  4BFFFCE5             bl 0x82696f38
+  82697258  C0010050             lfs f0,0x50(r1)
+  8269725C  C1A10054             lfs f13,0x54(r1)
+  82697260  37DEFFFF             subic. r30,r30,0x1
+  82697264  D01FFFE4             stfs f0,-0x1c(r31)
+  82697268  C1810058             lfs f12,0x58(r1)
+  8269726C  D1BFFFF4             stfs f13,-0xc(r31)
+  82697270  D59F0004             stfsu f12,0x4(r31)
+  82697274  4082FFC4             bne 0x82697238
+  82697278  38600001             li r3,0x1
+  8269727C  382100C0             addi r1,r1,0xc0
+  82697280  CBE1FFD0             lfd f31,-0x30(r1)
+  82697284  4827F484             b 0x82916708
 
 ; 82697288  dIsPositiveDefinite3  (physics/ode/src/matrix.cpp:161)
   82697288  7D8802A6             mfspr r12,LR

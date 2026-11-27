@@ -3,6 +3,51 @@
 ; 828B8598  NetDll_WSAStartup_Override  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:62)
   828B8598  7D8802A6             mfspr r12,LR
   828B859C  4805E121             bl 0x829166bc
+  828B85A0  9421FF80             stwu r1,-0x80(r1)
+  828B85A4  39600000             li r11,0x0
+  828B85A8  7C7F1B78             or r31,r3,r3
+  828B85AC  91610050             stw r11,0x50(r1)
+  828B85B0  7C9E2378             or r30,r4,r4
+  828B85B4  7CBD2B78             or r29,r5,r5
+  828B85B8  48088DCD             bl 0x82941384
+  828B85BC  3D60200A             lis r11,0x200a
+  828B85C0  616B3200             ori r11,r11,0x3200
+  828B85C4  7F035840             cmplw cr6,r3,r11
+  828B85C8  41980044             blt cr6,0x828b860c
+  828B85CC  3D608220             lis r11,-0x7de0
+  828B85D0  38810054             addi r4,r1,0x54
+  828B85D4  386B1A78             addi r3,r11,0x1a78
+  828B85D8  4808959D             bl 0x82941b74
+  828B85DC  2C030000             cmpwi r3,0x0
+  828B85E0  4180002C             blt 0x828b860c
+  828B85E4  38A10050             addi r5,r1,0x50
+  828B85E8  80610054             lwz r3,0x54(r1)
+  828B85EC  38800024             li r4,0x24
+  828B85F0  48089575             bl 0x82941b64
+  828B85F4  546B0FFE             rlwinm r11,r3,0x1,0x1f,0x1f
+  828B85F8  81410050             lwz r10,0x50(r1)
+  828B85FC  396BFFFF             subi r11,r11,0x1
+  828B8600  7D6B5038             and r11,r11,r10
+  828B8604  91610050             stw r11,0x50(r1)
+  828B8608  48000008             b 0x828b8610
+LAB_828b860c:
+  828B860C  81610050             lwz r11,0x50(r1)
+LAB_828b8610:
+  828B8610  2B0B0000             cmplwi cr6,r11,0x0
+  828B8614  7FA5EB78             or r5,r29,r29
+  828B8618  7FC4F378             or r4,r30,r30
+  828B861C  7FE3FB78             or r3,r31,r31
+  828B8620  419A0018             beq cr6,0x828b8638
+  828B8624  3CC02050             lis r6,0x2050
+  828B8628  7D6903A6             mtspr CTR,r11
+  828B862C  60C61400             ori r6,r6,0x1400
+  828B8630  4E800421             bctrl
+  828B8634  48000008             b 0x828b863c
+LAB_828b8638:
+  828B8638  4808911D             bl 0x82941754
+LAB_828b863c:
+  828B863C  38210080             addi r1,r1,0x80
+  828B8640  4805E0CC             b 0x8291670c
 
 ; 828B8648  WSAStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:163)
   828B8648  7C852378             or r5,r4,r4
@@ -120,8 +165,14 @@
 ; 828B87B0  WSAGetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
   828B87B0  480890A4             b 0x82941854
 
+; 828B87B8  WSACreateEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
+  828B87B8  480890AC             b 0x82941864
+
 ; 828B87C0  WSACloseEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
   828B87C0  480890B4             b 0x82941874
+
+; 828B87C8  WSAResetEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
+  828B87C8  480890BC             b 0x82941884
 
 ; 828B87D0  __WSAFDIsSet  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
   828B87D0  480890C4             b 0x82941894

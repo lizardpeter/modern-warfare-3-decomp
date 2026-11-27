@@ -2,11 +2,49 @@
 
 // 8288BE90  D3D::DEBUG_ADDLOG  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:491)
 
-void D3D__DEBUG_ADDLOG(void)
+void D3D__DEBUG_ADDLOG(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  int in_r13;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar3 = __savegprlr_29();
+  do {
+    uVar2 = DAT_84895388;
+    uVar4 = DAT_84895388 + 4;
+    do {
+      uVar5 = (ulonglong)DAT_84895388;
+      if (DAT_84895388 != uVar2) {
+        if (in_RESERVE != '\0') {
+          DAT_84895388 = storeWordConditionalIndexed(uVar5,0,0xffffffff84895388);
+          in_cr0 = 2;
+        }
+        break;
+      }
+      if (in_RESERVE != '\0') {
+        DAT_84895388 = storeWordConditionalIndexed((ulonglong)uVar4 & 0xfff,0,0xffffffff84895388);
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (uVar5 == uVar2) {
+      uVar5 = TBLr;
+      iVar1 = uVar2 * 4;
+      *(uint *)(&DAT_84891388 + iVar1) =
+           (uint)*(byte *)(in_r13 + 0x10c) + (int)((uVar5 & 0xffffffff) << 4);
+      *(undefined4 *)(&DAT_8489138c + iVar1) = uVar3;
+      *(undefined4 *)(&DAT_84891390 + iVar1) = param_2;
+      *(undefined4 *)(&DAT_84891394 + iVar1) = param_3;
+      sync(1);
+      __restgprlr_29();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -57,11 +95,91 @@ void D3D__UnlockL2(int param_1)
 
 // 8288C588  D3D::XpsConfigureForWork  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:574)
 
-void D3D__XpsConfigureForWork(void)
+void D3D__XpsConfigureForWork(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  uint uVar10;
+  uint *puVar11;
+  longlong lVar12;
+  longlong lVar13;
+  uint local_60;
+  int local_5c;
+  undefined1 auStack_50 [80];
+  
+  iVar3 = __savegprlr_26();
+  D3D__LockL2(param_2,param_3);
+  uVar10 = 0;
+  uVar6 = 0;
+  uVar5 = 0;
+  lVar12 = 6;
+  do {
+    if (((uint)(0x1000000 << (uVar5 & 0x3f)) & param_3) != 0) {
+      uVar6 = uVar6 + 1;
+    }
+    uVar5 = uVar5 + 1;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  *(uint *)((int)param_2 + 0x38) = (uint)param_3 & 0x3f000000;
+  uVar8 = 0x40000;
+  if ((param_3 & 1) == 0) {
+    uVar8 = 0x20000;
+  }
+  trapWord(6,uVar6,0);
+  puVar7 = *(undefined4 **)(iVar3 + 0x2f48);
+  uVar5 = 0;
+  lVar12 = 0x7f100000;
+  lVar13 = 6;
+  puVar9 = (undefined4 *)(iVar3 + 0x2cd0);
+  do {
+    if (((uint)(0x1000000 << (uVar5 & 0x3f)) & param_3) != 0) {
+      uVar2 = (undefined4)lVar12;
+      *puVar9 = uVar2;
+      puVar9[-1] = 0;
+      lVar12 = lVar12 + (uVar8 / (uVar6 & 0xffffffff) & 0xffffff80);
+      puVar9[-2] = uVar2;
+      puVar9[1] = (int)lVar12;
+      *puVar7 = 0xc0025800;
+      puVar7[1] = 3;
+      puVar7[2] = puVar9[2];
+      puVar7[3] = puVar9[-2] & 0xfffffffc | puVar9[-1] & 3;
+      puVar7 = puVar7 + 4;
+    }
+    uVar5 = uVar5 + 1;
+    puVar9 = puVar9 + 0x1b;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar5 = *(uint *)(iVar3 + 0x2f48);
+  local_5c = ((uVar5 >> 0x14) + 0x200 & 0x1000) + (uVar5 & 0x1fffffff);
+  local_60 = (int)((int)puVar7 - uVar5) >> 2 & 0xffffffU | 0x81000000;
+  D3D__CDevice__AddCallsToPrimaryBuffer(iVar3,&local_60,1);
+  puVar11 = (uint *)(iVar3 + 0x2cc8);
+  do {
+    if (((uint)(0x1000000 << (uVar10 & 0x3f)) & param_3) != 0) {
+      uVar5 = puVar11[1];
+      uVar1 = *puVar11;
+      D3D__CBlocker__CBlocker(auStack_50,iVar3,0);
+      do {
+        iVar4 = D3D__CBlocker__Check(auStack_50);
+        if (iVar4 == 0) break;
+      } while (*(uint *)puVar11[5] != (uVar1 & 0xfffffffc | uVar5 & 3));
+      D3D__CBlocker___CBlocker(auStack_50);
+    }
+    uVar10 = uVar10 + 1;
+    puVar11 = puVar11 + 0x1b;
+    if (5 < uVar10) {
+      __restgprlr_26();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -129,8 +247,44 @@ void D3D__UpdatePredicationSelect(int param_1)
 void D3D__WaitForXpsIdle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int *piVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  uint *puVar7;
+  undefined1 auStack_40 [64];
+  
   __savegprlr_28();
+  iVar4 = KeGetCurrentProcessType();
+  if (iVar4 == 2) {
+    piVar1 = (int *)&DAT_000001bf;
+  }
+  else {
+    piVar1 = (int *)&DAT_000001be;
+  }
+  iVar4 = *piVar1;
+  lVar6 = 6;
+  puVar7 = (uint *)(iVar4 + 0x2ccc);
+  do {
+    if (puVar7[1] != 0) {
+      uVar2 = puVar7[-1];
+      uVar3 = *puVar7;
+      D3D__CBlocker__CBlocker(auStack_40,iVar4,0);
+      do {
+        iVar5 = D3D__CBlocker__Check(auStack_40);
+        if (iVar5 == 0) break;
+      } while (*(uint *)puVar7[4] != (uVar3 & 3 | uVar2 & 0xfffffffc));
+      D3D__CBlocker___CBlocker(auStack_40);
+    }
+    lVar6 = lVar6 + -1;
+    puVar7 = puVar7 + 0x1b;
+    if (lVar6 == 0) {
+      __restgprlr_28();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -194,21 +348,132 @@ void D3D__XpsVisibilityPatch(uint *param_1)
 
 // 8288C848  D3D::XpsQueryPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:841)
 
-void D3D__XpsQueryPatch(void)
+void D3D__XpsQueryPatch(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  int iVar2;
+  uint uVar3;
+  uint *puVar4;
+  ushort *puVar5;
+  ulonglong uVar6;
+  int iVar7;
+  uint *puVar8;
+  int iVar9;
+  uint uVar10;
+  longlong lVar11;
+  
+  iVar7 = __savegprlr_26();
+  iVar2 = *(int *)(iVar7 + 4);
+  do {
+    uVar3 = *(uint *)param_2;
+    for (param_2 = param_2 + 4; puVar8 = (uint *)param_2, (param_2 & 0xffffffff) < (ulonglong)uVar3;
+        param_2 = param_2 + 8) {
+      puVar4 = (uint *)puVar8[1];
+      uVar6 = (ulonglong)*puVar8 & 0xfffffffc;
+      lVar11 = uVar6 - 0x40000000;
+      dataCacheBlockFlush(lVar11);
+      if ((*puVar8 & 1) == 0) {
+        iVar9 = iVar2 + -1;
+        puVar5 = (ushort *)lVar11;
+        uVar10 = 0;
+        puVar8 = (uint *)(iVar9 * 0x10 + iVar7 + 0xc);
+        do {
+          uVar10 = uVar10 << 2;
+          if ((((puVar8[-1] < (puVar5[1] + 1) * 8) && ((uint)*puVar5 << 3 < puVar8[1])) &&
+              (*puVar8 < (puVar5[3] + 1) * 8)) && ((uint)puVar5[2] << 3 < puVar8[2])) {
+            uVar10 = uVar10 | 3;
+          }
+          bVar1 = iVar9 != 0;
+          iVar9 = iVar9 + -1;
+          puVar8 = puVar8 + -4;
+        } while (bVar1);
+      }
+      else {
+        iVar9 = (int)uVar6;
+        uVar10 = -(uint)(((((ulonglong)*(byte *)(iVar9 + -0x3fffffed) << 0x18 |
+                            (ulonglong)*(byte *)(iVar9 + -0x3fffffee) << 0x10 |
+                            (ulonglong)*(byte *)(iVar9 + -0x3fffffef) << 8 |
+                           (ulonglong)*(byte *)(iVar9 + -0x3ffffff0)) -
+                          ((ulonglong)*(byte *)(iVar9 + -0x3fffffcd) << 0x18 |
+                           (ulonglong)*(byte *)(iVar9 + -0x3fffffce) << 0x10 |
+                           (ulonglong)*(byte *)(iVar9 + -0x3fffffcf) << 8 |
+                          (ulonglong)*(byte *)(iVar9 + -0x3fffffd0))) -
+                         ((ulonglong)*(byte *)(iVar9 + -0x3fffffc9) << 0x18 |
+                          (ulonglong)*(byte *)(iVar9 + -0x3fffffca) << 0x10 |
+                          (ulonglong)*(byte *)(iVar9 + -0x3fffffcb) << 8 |
+                         (ulonglong)*(byte *)(iVar9 + -0x3fffffcc))) +
+                         ((ulonglong)*(byte *)(iVar9 + -0x3fffffe9) << 0x18 |
+                          (ulonglong)*(byte *)(iVar9 + -0x3fffffea) << 0x10 |
+                          (ulonglong)*(byte *)(iVar9 + -0x3fffffeb) << 8 |
+                         (ulonglong)*(byte *)(iVar9 + -0x3fffffec)) != 0);
+      }
+      *puVar4 = uVar10;
+      dataCacheBlockFlush(((ulonglong)((uint)puVar4 >> 0x14) + 0x200 & 0x1000) +
+                          (ZEXT48(puVar4) & 0x1fffffff) + -0x40000000);
+    }
+    param_2 = (ulonglong)*puVar8;
+  } while (param_2 != 0xc0000000);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8288C9A0  D3D::XpsAutoPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:938)
 
-void D3D__XpsAutoPatch(void)
+void D3D__XpsAutoPatch(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  int iVar2;
+  uint uVar3;
+  ushort *puVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  uint *puVar9;
+  ulonglong uVar10;
+  longlong lVar12;
+  uint *puVar11;
+  
+  iVar5 = __savegprlr_26();
+  iVar2 = *(int *)(iVar5 + 4);
+  do {
+    uVar3 = *(uint *)param_2;
+    uVar10 = param_2 + 4;
+    puVar11 = (uint *)uVar10;
+    if ((uVar10 & 0xffffffff) < (ulonglong)uVar3) {
+      iVar6 = iVar2 + -1;
+      lVar12 = param_2 + 0xc;
+      do {
+        puVar4 = (ushort *)lVar12;
+        uVar7 = 0;
+        puVar11 = (uint *)*(uint *)uVar10;
+        puVar9 = (uint *)(iVar6 * 0x10 + iVar5 + 0xc);
+        iVar8 = iVar6;
+        do {
+          uVar7 = uVar7 << 2;
+          if ((((puVar9[-1] < (puVar4[-1] + 1) * 8) && ((uint)puVar4[-2] << 3 < puVar9[1])) &&
+              (*puVar9 < (puVar4[1] + 1) * 8)) && ((uint)*puVar4 << 3 < puVar9[2])) {
+            uVar7 = uVar7 | 3;
+          }
+          bVar1 = iVar8 != 0;
+          iVar8 = iVar8 + -1;
+          puVar9 = puVar9 + -4;
+        } while (bVar1);
+        *puVar11 = uVar7;
+        dataCacheBlockFlush(((ulonglong)((uint)puVar11 >> 0x14) + 0x200 & 0x1000) +
+                            (ZEXT48(puVar11) & 0x1fffffff) + -0x40000000);
+        uVar10 = uVar10 + 0x10;
+        puVar11 = (uint *)uVar10;
+        lVar12 = lVar12 + 0x10;
+      } while ((uVar10 & 0xffffffff) < (ulonglong)uVar3);
+    }
+    param_2 = (ulonglong)*puVar11;
+  } while (param_2 != 0xc0000000);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -274,11 +539,58 @@ void D3D__AutoPatch(undefined8 param_1,ulonglong param_2,int param_3)
 
 // 8288CAB0  D3D::TilingPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:1091)
 
-void D3D__TilingPatch(void)
+void D3D__TilingPatch(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  
+  uVar4 = __savegprlr_29();
+  D3D__AutoPatch(uVar4,param_2,0);
+  do {
+    uVar1 = *(uint *)param_3;
+    uVar8 = param_3;
+LAB_8288cb58:
+    uVar8 = uVar8 + 4;
+    uVar2 = *(uint *)uVar8;
+    param_3 = (ulonglong)uVar2;
+    if ((uVar8 & 0xffffffff) < (ulonglong)uVar1) {
+      uVar5 = 0;
+      if ((uVar2 & 1) != 0) break;
+      goto LAB_8288cb40;
+    }
+    if (param_3 == 0xc0000000) {
+      __restgprlr_29();
+      return;
+    }
+  } while( true );
+  uVar2 = uVar2 & 0xfffffffe;
+  if (uVar2 != 0) {
+    uVar6 = 0;
+    if (*(uint *)(uVar2 + 0x7c) != 0) {
+      iVar7 = 0;
+      do {
+        iVar3 = *(int *)(iVar7 + *(int *)(uVar2 + 0x84));
+        if (iVar3 != 0) {
+          uVar5 = (ulonglong)*(uint *)(iVar3 + 0x78);
+        }
+        uVar6 = uVar6 + 1;
+        iVar7 = iVar7 + 8;
+        param_3 = uVar5;
+      } while (uVar6 < *(uint *)(uVar2 + 0x7c));
+LAB_8288cb40:
+      if (param_3 != 0) {
+        D3D__AutoPatch(uVar4,param_3,1);
+      }
+    }
+  }
+  goto LAB_8288cb58;
 }
 
 
@@ -436,11 +748,70 @@ LAB_8288cdb8:
 
 // 8288C198  D3D::DispatchCompletion  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:1396)
 
-void D3D__DispatchCompletion(void)
+void D3D__DispatchCompletion(undefined8 param_1,int param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  int iVar4;
+  uint uVar5;
+  int *piVar6;
+  undefined4 *puVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  
+  puVar3 = (undefined4 *)__savegprlr_26();
+  puVar7 = puVar3 + 0x11;
+  uVar2 = KfAcquireSpinLock(puVar7);
+  uVar8 = (ulonglong)*param_3;
+  D3D__DEBUG_ADDLOG(0xfffffffffffffffe,uVar8,0);
+  if (uVar8 == 0xc0000000) {
+    puVar3[9] = param_3;
+    puVar3[0xe] = puVar3[0xe] & ~(0x1000000 << (*(uint *)(param_2 + 4) & 0x3f));
+    uVar5 = puVar3[0xf];
+    puVar3[0xf] = (int)((ulonglong)uVar5 - 1);
+    if ((ulonglong)uVar5 - 1 == 0) {
+      iVar4 = KeGetCurrentProcessType();
+      if (iVar4 == 2) {
+        piVar6 = (int *)&DAT_000001bf;
+      }
+      else {
+        piVar6 = (int *)&DAT_000001be;
+      }
+      uVar5 = 0;
+      piVar6 = (int *)(*piVar6 + 0x2d18);
+      lVar9 = 6;
+      do {
+        uVar1 = 0x1000000 << (uVar5 & 0x3f);
+        if ((puVar3[0xe] & uVar1) != 0) {
+          *piVar6 = *piVar6 + 1;
+          puVar3[0xe] = puVar3[0xe] & ~uVar1;
+        }
+        uVar5 = uVar5 + 1;
+        piVar6 = piVar6 + 0x1b;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      if (puVar3[0x12] == 0) {
+        iVar4 = puVar3[0x10];
+        D3D__DEBUG_ADDLOG(0xffffffffffff0001,iVar4,0);
+        puVar3[0x10] = iVar4 + -1;
+      }
+    }
+    KfReleaseSpinLock(puVar7,uVar2);
+    D3D__WaitForXpsIdle(puVar3);
+    D3D__UnlockL2(puVar3);
+    sync(1);
+    *puVar3 = 0;
+    D3D__DEBUG_ADDLOG(0xffffffffffffffff,0,0);
+    lVar9 = 0;
+  }
+  else {
+    KfReleaseSpinLock(puVar7,uVar2);
+    lVar9 = uVar8 + 4;
+  }
+  __restgprlr_26(lVar9);
+  return;
 }
 
 
@@ -630,8 +1001,87 @@ LAB_8288d1c4:
 void D3D__WorkerThread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  uint uVar2;
+  int *piVar3;
+  uint uVar4;
+  bool bVar5;
+  uint *puVar6;
+  int iVar7;
+  uint uVar8;
+  longlong lVar9;
+  uint *puVar10;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte in_cr0;
+  undefined8 local_60 [12];
+  
+  puVar6 = (uint *)__savegprlr_23();
+  PIXNameThread(0xffffffff821f8284);
+  XSetThreadProcessor(0xfffffffffffffffe,puVar6[1]);
+  while( true ) {
+    uVar1 = *puVar6;
+    uVar2 = puVar6[0x16];
+    local_60[0] = 0xfffffffffffb6c20;
+    uVar8 = -(uint)(*(uint *)(uVar1 + 0x178) == puVar6[1]) & (uint)local_60;
+    if (uVar2 == puVar6[0x15]) {
+      lVar9 = (ulonglong)uVar1 + 0x2c;
+      do {
+        puVar10 = (uint *)lVar9;
+        if (in_RESERVE != '\0') {
+          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
+          *puVar10 = uVar4;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      iVar7 = KeWaitForSingleObject(puVar6 + 0xf,3,1,0,uVar8,uVar2,local_60,in_MSR);
+      do {
+        if (in_RESERVE != '\0') {
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 - 1,0,lVar9);
+          *puVar10 = uVar2;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      while (iVar7 == 0x102) {
+        iVar7 = KeGetCurrentProcessType();
+        if (iVar7 == 2) {
+          piVar3 = (int *)&DAT_000001bf;
+        }
+        else {
+          piVar3 = (int *)&DAT_000001be;
+        }
+        iVar7 = *piVar3;
+        RtlEnterCriticalSection(iVar7 + 0x3b88);
+        bVar5 = (*(byte *)(iVar7 + 0x2b3e) & 2) == 0;
+        in_cr0 = bVar5 << 1;
+        if (!bVar5) {
+          D3DDevice_SynchronizeToPresentationInterval(iVar7);
+          D3DDevice_Swap(iVar7,iVar7 + 0x3b24,0);
+        }
+        RtlLeaveCriticalSection(iVar7 + 0x3b88);
+        do {
+          if (in_RESERVE != '\0') {
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
+            *puVar10 = uVar2;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        iVar7 = KeWaitForSingleObject(puVar6 + 0xf,3,1,0,uVar8);
+        do {
+          if (in_RESERVE != '\0') {
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 - 1,0,lVar9);
+            *puVar10 = uVar2;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+      }
+    }
+    KeResetEvent(puVar6 + 0xf);
+    if (*(int *)(uVar1 + 4) == 0) break;
+    D3D__DispatchWorker(puVar6);
+  }
+  __restgprlr_23(0);
+  return;
 }
 
 
@@ -684,13 +1134,55 @@ void D3D__WorkerDpc(undefined8 param_1)
 }
 
 
-// 8288D3E8  D3D::KickOffOnWorkerQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:2121)
+// 8288C450  D3D::PixCaptureWorkerDpc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:1879)
 
-void D3D__KickOffOnWorkerQueue(void)
+void D3D__PixCaptureWorkerDpc(undefined4 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int iVar2;
+  
+  iVar2 = KeGetCurrentProcessType();
+  if (iVar2 == 2) {
+    piVar1 = (int *)&DAT_000001bf;
+  }
+  else {
+    piVar1 = (int *)&DAT_000001be;
+  }
+  iVar2 = *(int *)(*piVar1 + 0x2cbc) * 0x6c + *piVar1;
+  *(undefined4 *)(((*(uint *)(iVar2 + 0x2d14) & 3) + 0x17) * 4 + iVar2 + 0x2cc0) = param_1;
+  *(int *)(iVar2 + 0x2d14) = *(int *)(iVar2 + 0x2d14) + 1;
+  KeSetEvent(iVar2 + 0x2cfc,1,0);
+  return;
+}
+
+
+// 8288D3E8  D3D::KickOffOnWorkerQueue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:2121)
+
+void D3D__KickOffOnWorkerQueue
+               (undefined8 param_1,uint param_2,uint param_3,undefined8 param_4,uint param_5)
+
+{
+  int iVar1;
+  int iVar3;
+  uint *puVar4;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_27();
+  D3D__CRingAllocList__Initialize(param_4,iVar3,0x80);
+  iVar1 = (int)param_4;
+  puVar4 = *(uint **)(iVar1 + 0xc);
+  if (*(uint **)(iVar1 + 0x10) < puVar4 + 2) {
+    puVar4 = (uint *)D3D__CRingAllocList__MakeSpace(param_4);
+  }
+  puVar4[1] = param_2;
+  *puVar4 = param_3 | param_5;
+  *(uint **)(iVar1 + 0xc) = puVar4 + 2;
+  D3D__CRingAllocList__Finalize(param_4);
+  uVar2 = D3D__CRingAllocList__GetFirstChunk(param_4);
+  KeInsertQueueDpc(*(int *)(iVar3 + 0x2cbc) * 0x6c + iVar3 + 0x2ce0,uVar2,0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -699,8 +1191,86 @@ void D3D__KickOffOnWorkerQueue(void)
 void D3D__InitializeXps(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  HANDLE pvVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  longlong lVar9;
+  undefined4 local_60 [24];
+  
+  iVar2 = __savegprlr_23();
+  if ((*(uint *)(iVar2 + 0x5f20) & 0x100) == 0) {
+    DAT_84890338 = DAT_84890338 + 1;
+    iVar3 = XMemAlloc(200,0xffffffffb5800000);
+    *(int *)(iVar2 + 0x2f48) = iVar3;
+    if (iVar3 == 0) {
+LAB_8288d4d0:
+      uVar1 = 0;
+      goto LAB_8288d63c;
+    }
+    iVar3 = 0;
+    *(undefined4 *)(iVar2 + 0x2b88) = 0;
+    uVar6 = 0;
+    lVar9 = 6;
+    do {
+      if ((0x1000000 << (uVar6 & 0x3f) & *(uint *)(iVar2 + 0x5f20)) != 0) {
+        iVar3 = iVar3 + 1;
+      }
+      uVar6 = uVar6 + 1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    *(undefined4 *)(iVar2 + 0x2b98) = 0xc0000000;
+    uVar6 = 0xffffffff;
+    *(int *)(iVar2 + 0x2b6c) = iVar3;
+    *(undefined4 *)(iVar2 + 0x2b70) = 0;
+    *(undefined4 *)(iVar2 + 0x2b48) = *(undefined4 *)(iVar2 + 0x3b58);
+    *(undefined4 *)(iVar2 + 0x2b50) = *(undefined4 *)(iVar2 + 0x3b5c);
+    if ((*(uint *)(iVar2 + 0x5f20) & 0x4000000) != 0) {
+      uVar6 = 2;
+      *(undefined4 *)(iVar2 + 0x2cbc) = 2;
+    }
+    uVar8 = 0;
+    uVar7 = 0x7f000000;
+    iVar3 = iVar2 + 0x2d04;
+    do {
+      if ((0x1000000 << (uVar8 & 0x3f) & *(uint *)(iVar2 + 0x5f20)) != 0) {
+        if ((int)uVar6 < 0) {
+          *(uint *)(iVar2 + 0x2cbc) = uVar8;
+          uVar6 = uVar8;
+        }
+        *(uint *)(iVar3 + -0x40) = uVar8;
+        *(uint *)(iVar3 + -0x28) = uVar7;
+        *(int *)(iVar3 + -0x44) = iVar2 + 0x2b44;
+        *(uint *)(iVar3 + -0x2c) = uVar7 + 0x41000000 | 2;
+        *(undefined1 *)(iVar3 + -8) = 0;
+        *(undefined4 *)(iVar3 + -4) = 0;
+        *(int *)iVar3 = iVar3;
+        *(int *)(iVar3 + 4) = iVar3;
+        KeInitializeDpc(iVar3 + -0x24,0xffffffff8288c398,(LPVOID)(iVar3 + -0x44));
+        *(char *)(iVar3 + -0x21) = (char)uVar8 + '\x01';
+        pvVar4 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0x10000,D3D__WorkerThread,
+                              (LPVOID)(iVar3 + -0x44),0,(LPDWORD)(iVar3 + 0xc));
+        *(HANDLE *)(iVar3 + 8) = pvVar4;
+        if (pvVar4 == (HANDLE)0x0) goto LAB_8288d4d0;
+        iVar5 = ObReferenceObjectByHandle(pvVar4,0x1b,local_60);
+        if (-1 < iVar5) {
+          KeSetBasePriorityThread(local_60[0],0x11);
+          ObDereferenceObject(local_60[0]);
+        }
+      }
+      uVar7 = uVar7 + 0x80;
+      uVar8 = uVar8 + 1;
+      iVar3 = iVar3 + 0x6c;
+    } while (uVar7 < 0x7f000300);
+  }
+  uVar1 = 1;
+LAB_8288d63c:
+  __restgprlr_23(uVar1);
+  return;
 }
 
 
@@ -709,17 +1279,111 @@ void D3D__InitializeXps(void)
 void D3D__UninitializeXps(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  BOOL BVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  
+  iVar1 = __savegprlr_28();
+  *(undefined4 *)(iVar1 + 0x2b48) = 0;
+  XMemFree(*(undefined4 *)(iVar1 + 0x2f48),0xffffffffb1800000);
+  iVar4 = iVar1 + 0x2cfc;
+  lVar3 = 6;
+  do {
+    if (*(int *)(iVar4 + 0x10) != 0) {
+      KeSetEvent(iVar4,1,0);
+    }
+    lVar3 = lVar3 + -1;
+    iVar4 = iVar4 + 0x6c;
+  } while (lVar3 != 0);
+  puVar5 = (undefined4 *)(iVar1 + 0x2d0c);
+  lVar3 = 6;
+  do {
+    BVar2 = 0;
+    if ((HANDLE)*puVar5 != (HANDLE)0x0) {
+      WaitForSingleObject((HANDLE)*puVar5,0xffffffff);
+      BVar2 = CloseHandle((HANDLE)*puVar5);
+    }
+    lVar3 = lVar3 + -1;
+    puVar5 = puVar5 + 0x1b;
+  } while (lVar3 != 0);
+  *(undefined4 *)(iVar1 + 0x2b6c) = 0;
+  *(undefined4 *)(iVar1 + 0x2b70) = 0;
+  __restgprlr_28(BVar2);
+  return;
 }
 
 
 // 8288D648  D3D::IssueSampleCountQuery  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xps.cpp:2456)
 
-void D3D__IssueSampleCountQuery(void)
+void D3D__IssueSampleCountQuery(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  int *piVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  
+  iVar2 = __savegprlr_27();
+  uVar3 = *(uint *)(iVar2 + 0x30);
+  if (*(uint *)(iVar2 + 0x38) < uVar3) {
+    uVar3 = D3D__CDevice__KickOff(iVar2);
+  }
+  *(undefined4 *)(uVar3 + 4) = 0x2208;
+  *(undefined4 *)(uVar3 + 8) = 6;
+  *(undefined4 *)(uVar3 + 0xc) = 0x12000;
+  *(undefined4 *)(uVar3 + 0x10) = 0x20000;
+  *(undefined4 *)(uVar3 + 0x14) = 0;
+  uVar5 = (ulonglong)*(uint *)((int)param_2 + 0x94);
+  if (uVar5 < 2) {
+    uVar5 = (ulonglong)*(uint *)((int)param_2 + 0x1c) + (param_3 & 0x7ffffff) * 0x20;
+    *(undefined4 *)(uVar3 + 0x18) = 0x2325;
+    piVar4 = (int *)(uVar3 + 0x1c);
+    *piVar4 = ((int)((uVar5 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar5 & 0x1fffffff);
+  }
+  else {
+    *(undefined4 *)(uVar3 + 0x18) = 0xc0006100;
+    piVar4 = (int *)(uVar3 + 0x1c);
+    *piVar4 = 0;
+    if (uVar5 != 0) {
+      uVar3 = 0;
+      param_2 = param_2 + 0x1c;
+      do {
+        uVar1 = *(uint *)param_2;
+        piVar4[1] = -0x3fffa000;
+        uVar6 = (ulonglong)uVar1 + (param_3 & 0x7ffffff) * 0x20;
+        piVar4[2] = 3 << (uVar3 & 0x3f);
+        piVar4[3] = -0x3ffed2ff;
+        piVar4[4] = 0x40325;
+        piVar4 = piVar4 + 5;
+        *piVar4 = ((int)((uVar6 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
+                  ((uint)uVar6 & 0x1fffffff);
+        *(int **)(iVar2 + 0x30) = piVar4;
+        if (*(int **)(iVar2 + 0x38) < piVar4) {
+          piVar4 = (int *)D3D__CDevice__KickOff(iVar2);
+        }
+        uVar5 = uVar5 - 1;
+        param_2 = param_2 + 4;
+        uVar3 = uVar3 + 2;
+      } while (uVar5 != 0);
+    }
+    piVar4[1] = -0x3fffa000;
+    piVar4[2] = *(int *)(iVar2 + 0x329c);
+    piVar4[3] = -0x3fff9f00;
+    piVar4 = piVar4 + 4;
+    *piVar4 = *(int *)(iVar2 + 0x32a0);
+  }
+  piVar4[1] = -0x3fffa500;
+  piVar4[2] = 0x15;
+  *(int **)(iVar2 + 0x30) = piVar4 + 2;
+  uVar5 = *(ulonglong *)(iVar2 + 0x10);
+  *(ulonglong *)(iVar2 + 0x10) = uVar5 | 8;
+  *(ulonglong *)(iVar2 + 0x10) = uVar5 | 0x200000000000008;
+  *(ulonglong *)(iVar2 + 0x10) = uVar5 | 0x300000000000008;
+  __restgprlr_27();
+  return;
 }
 

@@ -3,3 +3,57 @@
 ; 82929748  calloc_impl  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/calloc_impl.c:21)
   82929748  7D8802A6             mfspr r12,LR
   8292974C  4BFECF6D             bl 0x829166b8
+  82929750  9421FF80             stwu r1,-0x80(r1)
+  82929754  7CBC2B78             or r28,r5,r5
+  82929758  3BC0F000             li r30,-0x1000
+  8292975C  2B030000             cmplwi cr6,r3,0x0
+  82929760  419A002C             beq cr6,0x8292978c
+  82929764  7D7E1B96             divwu r11,r30,r3
+  82929768  0CC30000             twllei r3,0x0
+  8292976C  7F0B2040             cmplw cr6,r11,r4
+  82929770  4098001C             bge cr6,0x8292978c
+  82929774  4BFF660D             bl 0x8291fd80
+  82929778  7C6B1B78             or r11,r3,r3
+  8292977C  3940000C             li r10,0xc
+  82929780  38600000             li r3,0x0
+  82929784  914B0000             stw r10,0x0(r11)
+  82929788  4800007C             b 0x82929804
+LAB_8292978c:
+  8292978C  7FE321D7             mullw. r31,r3,r4
+  82929790  40820008             bne 0x82929798
+  82929794  3BE00001             li r31,0x1
+LAB_82929798:
+  82929798  3FA08489             lis r29,-0x7b77
+LAB_8292979c:
+  8292979C  38600000             li r3,0x0
+  829297A0  7F1FF040             cmplw cr6,r31,r30
+  829297A4  4199001C             bgt cr6,0x829297c0
+  829297A8  4BF8A5C9             bl 0x828b3d70
+  829297AC  38800008             li r4,0x8
+  829297B0  7FE5FB78             or r5,r31,r31
+  829297B4  4BF7DD95             bl 0x828a7548
+  829297B8  28030000             cmplwi r3,0x0
+  829297BC  40820048             bne 0x82929804
+LAB_829297c0:
+  829297C0  817D6064             lwz r11,0x6064(r29)
+  829297C4  2F0B0000             cmpwi cr6,r11,0x0
+  829297C8  419A002C             beq cr6,0x829297f4
+  829297CC  7FE3FB78             or r3,r31,r31
+  829297D0  4BFFB159             bl 0x82924928
+  829297D4  2C030000             cmpwi r3,0x0
+  829297D8  4082FFC4             bne 0x8292979c
+  829297DC  2B1C0000             cmplwi cr6,r28,0x0
+  829297E0  419A000C             beq cr6,0x829297ec
+  829297E4  3960000C             li r11,0xc
+  829297E8  917C0000             stw r11,0x0(r28)
+LAB_829297ec:
+  829297EC  38600000             li r3,0x0
+  829297F0  48000014             b 0x82929804
+LAB_829297f4:
+  829297F4  2B1C0000             cmplwi cr6,r28,0x0
+  829297F8  419A000C             beq cr6,0x82929804
+  829297FC  3960000C             li r11,0xc
+  82929800  917C0000             stw r11,0x0(r28)
+LAB_82929804:
+  82929804  38210080             addi r1,r1,0x80
+  82929808  4BFECF00             b 0x82916708

@@ -43,8 +43,8 @@ void CL_ControllerInserted(int param_1)
   if ((-1 < param_1) && (param_1 < 4)) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff820343f0,0x5b,0,0xffffffff82000f98,0xffffffff8203443c);
+  return;
 }
 
 
@@ -53,12 +53,11 @@ void CL_ControllerInserted(int param_1)
 void CL_ControllerRemoved(undefined8 param_1)
 
 {
-  if ((-1 < (int)param_1) && ((int)param_1 < 4)) {
-    IN_GamepadsReset(param_1);
-    return;
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler(0xffffffff820343f0,0x61,0,0xffffffff82000f98,0xffffffff8203443c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820343f0,0x61,0,0xffffffff82000f98,0xffffffff8203443c);
+  IN_GamepadsReset(param_1);
+  return;
 }
 
 
@@ -71,23 +70,153 @@ void CL_GlobalServers_f(void)
 }
 
 
-// 8234CB80  CL_SetServerInfoByAddress  (client_mp/cl_main_xenon_mp.cpp:115)
+// 8234BF00  CL_ServerStatusResponse  (client_mp/cl_main_xenon_mp.cpp:111)
 
-void CL_SetServerInfoByAddress(void)
+void CL_ServerStatusResponse(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  return;
+}
+
+
+// 8234CB80  CL_SetServerInfoByAddress  (client_mp/cl_main_xenon_mp.cpp:115)
+
+void CL_SetServerInfoByAddress
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined2 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char *pcVar3;
+  undefined *puVar4;
+  undefined1 auStack_c0 [192];
+  
   __savegprlr();
+  uVar1 = Info_ValueForKey(param_3);
+  StringToXNAddr(uVar1,auStack_c0);
+  puVar4 = &DAT_82aa1c7c;
+  do {
+    iVar2 = NET_CompareXNAddr(auStack_c0);
+    if ((iVar2 != 0) && (puVar4 != (undefined *)0x24)) {
+      if ((param_3 & 0xffffffff) != 0) {
+        Info_ValueForKey(param_3,0xffffffff820344c0);
+        uVar1 = StringToInt64();
+        *(undefined8 *)(puVar4 + 0x10) = uVar1;
+        uVar1 = Info_ValueForKey(param_3,0xffffffff820344b8);
+        StringToInt128(uVar1,puVar4);
+        uVar1 = Info_ValueForKey(param_3,"xnaddr");
+        StringToXNAddr(uVar1,puVar4 + -0x24);
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82014e8c);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x35] = (char)iVar2;
+        uVar1 = Info_ValueForKey(param_3,0xffffffff820344a4);
+        I_strncpyz(puVar4 + 0x44,uVar1,0x20);
+        uVar1 = Info_ValueForKey(param_3,0xffffffff82010974);
+        I_strncpyz(puVar4 + 100,uVar1,0x20);
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82022f7c);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x36] = (char)iVar2;
+        uVar1 = Info_ValueForKey(param_3,0xffffffff8203449c);
+        I_strncpyz(puVar4 + 0x84,uVar1,0x18);
+        uVar1 = Info_ValueForKey(param_3,0xffffffff820337c4);
+        I_strncpyz(puVar4 + 0x9c,uVar1,0x10);
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034494);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x34] = (char)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff8203448c);
+        iVar2 = atoi(pcVar3);
+        *(short *)(puVar4 + 0x3e) = (short)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034484);
+        iVar2 = atoi(pcVar3);
+        *(short *)(puVar4 + 0x40) = (short)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034480);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x38] = (char)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff8203447c);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x39] = (char)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034478);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x3a] = (char)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034474);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x3b] = (char)iVar2;
+        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034470);
+        iVar2 = atoi(pcVar3);
+        puVar4[0x3c] = (char)iVar2;
+      }
+      *(undefined2 *)(puVar4 + 0x42) = param_4;
+    }
+    puVar4 = puVar4 + 0xd0;
+  } while ((int)puVar4 < -0x7d55d684);
+  __restgprlr();
+  return;
 }
 
 
 // 8234BF08  CL_SetServerInfo  (client_mp/cl_main_xenon_mp.cpp:131)
 
-void CL_SetServerInfo(void)
+void CL_SetServerInfo(undefined8 param_1,ulonglong param_2,undefined2 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  char *pcVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 != 0) {
+    if ((param_2 & 0xffffffff) != 0) {
+      Info_ValueForKey(param_2,0xffffffff820344c0);
+      uVar1 = StringToInt64();
+      *(undefined8 *)(iVar2 + 0x34) = uVar1;
+      uVar1 = Info_ValueForKey(param_2,0xffffffff820344b8);
+      StringToInt128(uVar1,iVar2 + 0x24);
+      uVar1 = Info_ValueForKey(param_2,0xffffffff820344b0);
+      StringToXNAddr(uVar1,iVar2);
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82014e8c);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x59) = (char)iVar4;
+      uVar1 = Info_ValueForKey(param_2,0xffffffff820344a4);
+      I_strncpyz(iVar2 + 0x68,uVar1,0x20);
+      uVar1 = Info_ValueForKey(param_2,0xffffffff82010974);
+      I_strncpyz(iVar2 + 0x88,uVar1,0x20);
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82022f7c);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x5a) = (char)iVar4;
+      uVar1 = Info_ValueForKey(param_2,0xffffffff8203449c);
+      I_strncpyz(iVar2 + 0xa8,uVar1,0x18);
+      uVar1 = Info_ValueForKey(param_2,0xffffffff820337c4);
+      I_strncpyz(iVar2 + 0xc0,uVar1,0x10);
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034494);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x58) = (char)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff8203448c);
+      iVar4 = atoi(pcVar3);
+      *(short *)(iVar2 + 0x62) = (short)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034484);
+      iVar4 = atoi(pcVar3);
+      *(short *)(iVar2 + 100) = (short)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034480);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x5c) = (char)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff8203447c);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x5d) = (char)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034478);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x5e) = (char)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034474);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x5f) = (char)iVar4;
+      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034470);
+      iVar4 = atoi(pcVar3);
+      *(char *)(iVar2 + 0x60) = (char)iVar4;
+    }
+    *(undefined2 *)(iVar2 + 0x66) = param_3;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -201,28 +330,28 @@ void CL_ServerInfoPacket(undefined8 param_1,undefined8 param_2,undefined8 param_
     DAT_82aa1c50 = iVar8 + 1;
     Info_ValueForKey(uVar5,0xffffffff820344c0);
     uVar4 = StringToInt64();
-    iVar8 = iVar8 * 0xd0;
-    *(undefined8 *)(&DAT_82aa1c8c + iVar8) = uVar4;
+    iVar9 = iVar8 * 0xd0;
+    (&DAT_82aa1c8c)[iVar8 * 0x1a] = uVar4;
     uVar4 = Info_ValueForKey(uVar5,0xffffffff820344b8);
-    StringToInt128(uVar4,&DAT_82aa1c7c + iVar8);
+    StringToInt128(uVar4,&DAT_82aa1c7c + iVar9);
     uVar4 = Info_ValueForKey(uVar5,0xffffffff820344b0);
-    StringToXNAddr(uVar4,&DAT_82aa1c58 + iVar8);
+    StringToXNAddr(uVar4,&DAT_82aa1c58 + iVar9);
     pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034730);
-    iVar9 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c94 + iVar8) = iVar9;
+    iVar8 = atoi(pcVar7);
+    *(int *)(&DAT_82aa1c94 + iVar9) = iVar8;
     pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034728);
-    iVar9 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c98 + iVar8) = iVar9;
+    iVar8 = atoi(pcVar7);
+    *(int *)(&DAT_82aa1c98 + iVar9) = iVar8;
     pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034720);
-    iVar9 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c9c + iVar8) = iVar9;
+    iVar8 = atoi(pcVar7);
+    *(int *)(&DAT_82aa1c9c + iVar9) = iVar8;
     pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034718);
-    iVar9 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1ca0 + iVar8) = iVar9;
+    iVar8 = atoi(pcVar7);
+    *(int *)(&DAT_82aa1ca0 + iVar9) = iVar8;
     Info_ValueForKey(uVar5,0xffffffff82034710);
     uVar4 = StringToInt64();
-    *(undefined8 *)(&DAT_82aa1ca8 + iVar8) = uVar4;
-    CL_SetServerInfo(&DAT_82aa1c58 + iVar8,uVar5,1);
+    *(undefined8 *)(&DAT_82aa1ca8 + iVar9) = uVar4;
+    CL_SetServerInfo(&DAT_82aa1c58 + iVar9,uVar5,1);
     uVar4 = MSG_ReadString(param_3,auStack_460,0x400);
     I_strncpyz(acStack_861 + 1,uVar4,0x400);
     pcVar7 = acStack_861 + 1;
@@ -245,11 +374,130 @@ LAB_8234d208:
 
 // 8234C0F8  CL_Connect  (client_mp/cl_main_xenon_mp.cpp:306)
 
-void CL_Connect(void)
+void CL_Connect(undefined8 param_1,ulonglong param_2,undefined8 param_3,uint param_4,uint param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  bool bVar1;
+  ulonglong uVar2;
+  int iVar3;
+  byte *pbVar4;
+  char cVar7;
+  int iVar5;
+  undefined2 uVar6;
+  undefined8 uVar8;
+  byte *pbVar9;
+  longlong lVar10;
+  longlong lVar11;
+  uint *puVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  undefined2 local_b0 [2];
+  undefined4 local_ac;
+  undefined *local_a8;
+  char *local_a4;
+  
+  uVar2 = __savegprlr();
+  local_a4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp";
+  local_a8 = &DAT_82000f98;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820343f0,0x13c,0,0xffffffff82000f98,0xffffffff82034334);
+  }
+  Com_Printf(0xe,0xffffffff820344e8,uVar2);
+  local_ac = 0;
+  if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
+    Live_CheckPlayerIsSignedIn(uVar2);
+  }
+  CCS_ClearConstantConfigStrings();
+  SND_StopSounds(0);
+  CL_AllocatePerLocalClientMemory(1);
+  iVar3 = CL_GetLocalClientConnection(uVar2);
+  *(undefined1 *)(iVar3 + 0x28) = 0;
+  SV_KillLocalServer();
+  local_b0[0] = 0;
+  DAT_82b3eca4 = 0;
+  SV_Frame(0);
+  Con_Close(uVar2);
+  pbVar4 = (byte *)Xenon_GetXNAddr();
+  lVar11 = param_2 + 8;
+  pbVar9 = pbVar4 + 0x24;
+  do {
+    lVar10 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)lVar11;
+    if (lVar10 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    lVar11 = lVar11 + 1;
+  } while (pbVar4 != pbVar9);
+  if ((int)lVar10 == 0) {
+    uVar8 = 0xffffffff8202c774;
+  }
+  else {
+    uVar8 = 0xffffffff820342f8;
+  }
+  I_strncpyz(0xffffffff82aa1b08,uVar8,0x100);
+  bVar1 = true;
+  uVar13 = 0;
+  uVar14 = uVar2;
+  if (0 < DAT_82aa1ae8) {
+    puVar12 = &DAT_82b3e544;
+    do {
+      cVar7 = CL_IsLocalClientActive(uVar13);
+      if (cVar7 != '\0') {
+        CL_Disconnect(uVar13);
+        CL_SetLocalClientActive(uVar13,1);
+        iVar3 = CL_GetLocalClientConnection(uVar13);
+        iVar5 = CL_GetLocalClientGlobals(uVar13);
+        if (3 < (uVar13 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar13,4);
+          MyAssertHandler(0xffffffff8202c1d8,0x4b5,0,0xffffffff82024a10,uVar13,4);
+        }
+        puVar12[2] = 3;
+        Live_SetCurrentGametype();
+        uVar8 = CL_ControllerIndexFromClientNum(uVar13);
+        if (bVar1) {
+          bVar1 = false;
+          if (DAT_844c7870 != 0) {
+            MyAssertHandler(local_a4,0x17c,0,local_a8,0xffffffff82030408);
+          }
+          cVar7 = Session_StartClient(0xffffffff844c7860,uVar8,0x20,param_2,param_3,
+                                      (ulonglong)param_4 - (ulonglong)param_5);
+          if (cVar7 == '\0') {
+            Com_Error(1,0xffffffff8203252c);
+          }
+          cVar7 = Xenon_RegisterRemoteXenon(param_2,&local_ac,local_b0);
+          if (cVar7 == '\0') {
+            Com_Error(1,0xffffffff8203252c);
+          }
+        }
+        else {
+          R_BeginRemoteScreenUpdate();
+          LiveStorage_SaveStats(uVar13);
+          R_EndRemoteScreenUpdate();
+        }
+        *(undefined4 *)(iVar3 + 0x10) = 4;
+        *(undefined4 *)(iVar3 + 0x14) = local_ac;
+        if (*(short *)(iVar3 + 0x18) == 0) {
+          uVar6 = BigShort(local_b0[0]);
+          *(undefined2 *)(iVar3 + 0x18) = uVar6;
+        }
+        uVar6 = BigShort(*(undefined2 *)(iVar3 + 0x18));
+        Com_Printf(0xe,0xffffffff820344c8,0xffffffff82aa1b08,*(undefined1 *)(iVar3 + 0x14),
+                   *(undefined1 *)(iVar3 + 0x15),*(undefined1 *)(iVar3 + 0x16),
+                   *(undefined1 *)(iVar3 + 0x17),uVar6);
+        UI_CloseAll(uVar13);
+        *puVar12 = *puVar12 & 1;
+        *(undefined4 *)(iVar3 + 0x20) = 0xfffe7961;
+        *(undefined4 *)(iVar3 + 0x24) = 0;
+        uVar14 = uVar2 & 0xffffffff;
+        *(undefined4 *)(iVar5 + 4) = 0;
+      }
+      uVar13 = uVar13 + 1;
+      puVar12 = puVar12 + 0x79;
+    } while ((int)uVar13 < DAT_82aa1ae8);
+  }
+  DAT_82aa30e0 = 0;
+  memcpy(&DAT_844c7874,(void *)param_2,0x3c);
+  UI_CloseAll(uVar14);
+  __restgprlr();
+  return;
 }
 
 
@@ -387,8 +635,32 @@ void CL_UpdateGamerProfile(void)
 void CL_Live_JoinParty(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
   __savegprlr_28();
+  iVar4 = Cmd_Argc();
+  if (iVar4 < 4) {
+    Com_Printf(0,0xffffffff82034590);
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = Cmd_LocalClientNum();
+  uVar2 = Cmd_Argv(1);
+  uVar3 = Cmd_Argv(2);
+  Cmd_Argv(3);
+  DAT_8425a060 = StringToInt64();
+  StringToInt128(uVar3,0xffffffff8425a08c);
+  StringToXNAddr(uVar2,0xffffffff8425a068);
+  DAT_8425a054 = 2;
+  DAT_8425a09c = 1;
+  CL_ControllerIndexFromClientNum(uVar1);
+  DAT_8425a058 = Live_GetXuid();
+  Live_StartConfirmAcceptInvitation();
+  __restgprlr_28();
+  return;
 }
 
 

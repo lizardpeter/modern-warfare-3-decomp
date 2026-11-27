@@ -2,10 +2,172 @@
 
 // 82256610  der_decode_choice  (line unknown)
 
-void der_decode_choice(void)
+void der_decode_choice(undefined8 param_1,uint *param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  byte *pbVar4;
+  int iVar5;
+  undefined4 uVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  longlong lVar9;
+  byte *pbVar10;
+  ulonglong uVar11;
+  uint local_60;
+  undefined4 local_5c [23];
+  
+  pbVar4 = (byte *)__savegprlr_23();
+  if (1 < *param_2) {
+    if ((param_4 & 0xffffffff) != 0) {
+      lVar9 = param_3 + -0x14;
+      uVar11 = param_4;
+      do {
+        lVar9 = lVar9 + 0x20;
+        *(undefined4 *)lVar9 = 0;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
+    }
+    uVar11 = 0;
+    if ((param_4 & 0xffffffff) != 0) {
+      lVar9 = param_3 + 4;
+      do {
+        puVar2 = (undefined4 *)lVar9;
+        uVar6 = puVar2[1];
+        puVar1 = (uint *)*puVar2;
+        iVar3 = (int)param_3;
+        local_5c[0] = uVar6;
+        switch(puVar2[-1]) {
+        case 2:
+          iVar5 = der_decode_integer(pbVar4,*param_2,puVar1);
+          if (iVar5 == 0) {
+            iVar5 = der_length_integer(puVar1,&local_60);
+            goto LAB_822569a8;
+          }
+          break;
+        case 3:
+          if (((1 < *param_2) && ((*pbVar4 & 0x1f) == 2)) &&
+             (uVar7 = (ulonglong)pbVar4[1], uVar7 + 2 <= (ulonglong)*param_2)) {
+            uVar8 = 0;
+            if (uVar7 != 0) {
+              pbVar10 = pbVar4 + 1;
+              uVar8 = 0;
+              do {
+                pbVar10 = pbVar10 + 1;
+                uVar8 = uVar8 << 8 | (uint)*pbVar10;
+                uVar7 = uVar7 - 1;
+              } while (uVar7 != 0);
+            }
+            *puVar1 = uVar8;
+            iVar5 = der_length_short_integer(uVar6,&local_60);
+            goto LAB_822569a8;
+          }
+          break;
+        case 4:
+          iVar5 = der_decode_bit_string(pbVar4,*param_2,puVar1,local_5c);
+          if ((iVar5 == 0) &&
+             (uVar6 = local_5c[0], iVar5 = der_length_bit_string(local_5c[0],&local_60), iVar5 == 0)
+             ) {
+            iVar3 = (int)((uVar11 & 0xffffffff) << 5) + iVar3;
+            *param_2 = local_60;
+            *(undefined4 *)(iVar3 + 0xc) = 1;
+            *(undefined4 *)(iVar3 + 8) = uVar6;
+            __restgprlr_23();
+            return;
+          }
+          break;
+        case 5:
+          iVar5 = der_decode_octet_string(pbVar4,*param_2,puVar1,local_5c);
+          if ((iVar5 == 0) &&
+             (uVar6 = local_5c[0], iVar5 = der_length_octet_string(local_5c[0],&local_60),
+             iVar5 == 0)) {
+            iVar3 = (int)((uVar11 & 0xffffffff) << 5) + iVar3;
+            *param_2 = local_60;
+            *(undefined4 *)(iVar3 + 0xc) = 1;
+            *(undefined4 *)(iVar3 + 8) = uVar6;
+            __restgprlr_23();
+            return;
+          }
+          break;
+        case 6:
+          if (((*param_2 == 2) && (pbVar4[(int)uVar11] == 5)) && ((pbVar4 + (int)uVar11)[1] == 0)) {
+            *param_2 = 2;
+            *(undefined4 *)((int)((uVar11 & 0xffffffff) << 5) + iVar3 + 0xc) = 1;
+            __restgprlr_23(0);
+            return;
+          }
+          break;
+        case 7:
+          iVar5 = der_decode_object_identifier(pbVar4,*param_2,puVar1,local_5c);
+          if (iVar5 == 0) {
+            uVar6 = local_5c[0];
+            iVar5 = der_length_object_identifier(puVar1,local_5c[0],&local_60);
+joined_r0x82256954:
+            if (iVar5 == 0) {
+              iVar3 = (int)((uVar11 & 0xffffffff) << 5) + iVar3;
+              *param_2 = local_60;
+              *(undefined4 *)(iVar3 + 0xc) = 1;
+              *(undefined4 *)(iVar3 + 8) = uVar6;
+              __restgprlr_23(0);
+              return;
+            }
+          }
+          break;
+        case 8:
+          iVar5 = der_decode_ia5_string(pbVar4,*param_2,puVar1,local_5c);
+          if (iVar5 == 0) {
+            uVar6 = local_5c[0];
+            iVar5 = der_length_ia5_string(puVar1,local_5c[0],&local_60);
+            goto joined_r0x82256954;
+          }
+          break;
+        case 9:
+          iVar5 = der_decode_printable_string(pbVar4,*param_2,puVar1,local_5c);
+          if (iVar5 == 0) {
+            uVar6 = local_5c[0];
+            iVar5 = der_length_printable_string(puVar1,local_5c[0],&local_60);
+            goto joined_r0x82256954;
+          }
+          break;
+        case 10:
+          iVar5 = der_decode_utf8_string(pbVar4,*param_2,puVar1,local_5c);
+          if (iVar5 == 0) {
+            uVar6 = local_5c[0];
+            iVar5 = der_length_utf8_string(puVar1,local_5c[0],&local_60);
+            goto joined_r0x82256954;
+          }
+          break;
+        case 0xb:
+          local_60 = *param_2;
+          iVar5 = der_decode_utctime(pbVar4,&local_60,puVar1);
+LAB_822569a8:
+          if (iVar5 == 0) {
+            *param_2 = local_60;
+            *(undefined4 *)((int)((uVar11 & 0xffffffff) << 5) + iVar3 + 0xc) = 1;
+            __restgprlr_23(0);
+            return;
+          }
+          break;
+        default:
+          __restgprlr_23(0x10);
+          return;
+        case 0xd:
+        case 0xe:
+        case 0xf:
+          iVar5 = der_decode_sequence_ex(pbVar4,*param_2,puVar1,uVar6,1);
+          if (iVar5 == 0) {
+            iVar5 = der_length_sequence(puVar1,uVar6,&local_60);
+            goto LAB_822569a8;
+          }
+        }
+        uVar11 = uVar11 + 1;
+        lVar9 = lVar9 + 0x20;
+      } while ((uVar11 & 0xffffffff) < (param_4 & 0xffffffff));
+    }
+  }
+  __restgprlr_23(7);
+  return;
 }
 

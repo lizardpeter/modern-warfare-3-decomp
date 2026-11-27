@@ -3,6 +3,101 @@
 ; 826F2740  dwGetLobbyService  (DW/dwUtils-xbox.cpp:23)
   826F2740  7D8802A6             mfspr r12,LR
   826F2744  48223F75             bl 0x829166b8
+  826F2748  9421FF80             stwu r1,-0x80(r1)
+  826F274C  3D60821B             lis r11,-0x7de5
+  826F2750  7C7F1B78             or r31,r3,r3
+  826F2754  2B030004             cmplwi cr6,r3,0x4
+  826F2758  3B8BD2FC             subi r28,r11,0x2d04
+  826F275C  41980024             blt cr6,0x826f2780
+  826F2760  3D608203             lis r11,-0x7dfd
+  826F2764  7F83E378             or r3,r28,r28
+  826F2768  38CB1880             addi r6,r11,0x1880
+  826F276C  39000004             li r8,0x4
+  826F2770  7FE7FB78             or r7,r31,r31
+  826F2774  38A00000             li r5,0x0
+  826F2778  38800018             li r4,0x18
+  826F277C  4BEE1D85             bl 0x825d4500
+LAB_826f2780:
+  826F2780  7FE3FB78             or r3,r31,r31
+  826F2784  4BF5712D             bl 0x826498b0
+  826F2788  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  826F278C  2B0B0000             cmplwi cr6,r11,0x0
+  826F2790  419A0010             beq cr6,0x826f27a0
+  826F2794  38600000             li r3,0x0
+  826F2798  38210080             addi r1,r1,0x80
+  826F279C  48223F6C             b 0x82916708
+LAB_826f27a0:
+  826F27A0  3D60844F             lis r11,-0x7bb1
+  826F27A4  1FBF001C             mulli r29,r31,0x1c
+  826F27A8  3BCB5F00             addi r30,r11,0x5f00
+  826F27AC  7D5DF02E             lwzx r10,r29,r30
+  826F27B0  2B0A0000             cmplwi cr6,r10,0x0
+  826F27B4  409A00B0             bne cr6,0x826f2864
+  826F27B8  3860012C             li r3,0x12c
+  826F27BC  4820288D             bl 0x828f5048
+  826F27C0  2B030000             cmplwi cr6,r3,0x0
+  826F27C4  419A000C             beq cr6,0x826f27d0
+  826F27C8  48207DF1             bl 0x828fa5b8
+  826F27CC  48000008             b 0x826f27d4
+LAB_826f27d0:
+  826F27D0  38600000             li r3,0x0
+LAB_826f27d4:
+  826F27D4  7C7DF12E             stwx r3,r29,r30
+  826F27D8  2B030000             cmplwi cr6,r3,0x0
+  826F27DC  419A0088             beq cr6,0x826f2864
+  826F27E0  2B1F0003             cmplwi cr6,r31,0x3
+  826F27E4  41990058             bgt cr6,0x826f283c
+  826F27E8  7FE903A6             mtspr CTR,r31
+  826F27EC  2F1F0000             cmpwi cr6,r31,0x0
+  826F27F0  405A001C             bdzf 4*cr6+eq,0x826f280c
+  826F27F4  405A0028             bdzf 4*cr6+eq,0x826f281c
+  826F27F8  409A0034             bne cr6,0x826f282c
+  826F27FC  3D60844F             lis r11,-0x7bb1
+  826F2800  388B2228             addi r4,r11,0x2228
+  826F2804  482077DD             bl 0x828f9fe0
+  826F2808  4800005C             b 0x826f2864
+LAB_826f280c:
+  826F280C  3D60844F             lis r11,-0x7bb1
+  826F2810  388B222C             addi r4,r11,0x222c
+  826F2814  482077CD             bl 0x828f9fe0
+  826F2818  4800004C             b 0x826f2864
+LAB_826f281c:
+  826F281C  3D60844F             lis r11,-0x7bb1
+  826F2820  388B2224             addi r4,r11,0x2224
+  826F2824  482077BD             bl 0x828f9fe0
+  826F2828  4800003C             b 0x826f2864
+LAB_826f282c:
+  826F282C  3D60844F             lis r11,-0x7bb1
+  826F2830  388B2230             addi r4,r11,0x2230
+  826F2834  482077AD             bl 0x828f9fe0
+  826F2838  4800002C             b 0x826f2864
+LAB_826f283c:
+  826F283C  3D608401             lis r11,-0x7bff
+  826F2840  816B3128             lwz r11,0x3128(r11)
+  826F2844  2F0B0000             cmpwi cr6,r11,0x0
+  826F2848  409A001C             bne cr6,0x826f2864
+  826F284C  3D60821B             lis r11,-0x7de5
+  826F2850  7F83E378             or r3,r28,r28
+  826F2854  38CBD2D0             subi r6,r11,0x2d30
+  826F2858  38A00000             li r5,0x0
+  826F285C  3880003B             li r4,0x3b
+  826F2860  4BEE1CA1             bl 0x825d4500
+LAB_826f2864:
+  826F2864  7D7DF02E             lwzx r11,r29,r30
+  826F2868  2B0B0000             cmplwi cr6,r11,0x0
+  826F286C  409A0024             bne cr6,0x826f2890
+  826F2870  3D60821B             lis r11,-0x7de5
+  826F2874  3D408200             lis r10,-0x7e00
+  826F2878  38EBD2A4             subi r7,r11,0x2d5c
+  826F287C  38CA0F98             addi r6,r10,0xf98
+  826F2880  7F83E378             or r3,r28,r28
+  826F2884  38A00000             li r5,0x0
+  826F2888  38800041             li r4,0x41
+  826F288C  4BEE1C75             bl 0x825d4500
+LAB_826f2890:
+  826F2890  7C7DF02E             lwzx r3,r29,r30
+  826F2894  38210080             addi r1,r1,0x80
+  826F2898  48223E70             b 0x82916708
 
 ; 826F28A0  dwLobbyServiceCleanup  (DW/dwUtils-xbox.cpp:72)
   826F28A0  7D8802A6             mfspr r12,LR
@@ -132,6 +227,37 @@ LAB_826f2a38:
 ; 826F2FA0  dwLobbyPump  (DW/dwUtils-xbox.cpp:109)
   826F2FA0  7D8802A6             mfspr r12,LR
   826F2FA4  48223715             bl 0x829166b8
+  826F2FA8  9421FF80             stwu r1,-0x80(r1)
+  826F2FAC  3D60844F             lis r11,-0x7bb1
+  826F2FB0  1FC3001C             mulli r30,r3,0x1c
+  826F2FB4  396B5F00             addi r11,r11,0x5f00
+  826F2FB8  39400000             li r10,0x0
+  826F2FBC  3BAB0004             addi r29,r11,0x4
+  826F2FC0  7C7F1B78             or r31,r3,r3
+  826F2FC4  7D5EE92E             stwx r10,r30,r29
+  826F2FC8  4BFFF779             bl 0x826f2740
+  826F2FCC  7C7C1B78             or r28,r3,r3
+  826F2FD0  2B030000             cmplwi cr6,r3,0x0
+  826F2FD4  419A0044             beq cr6,0x826f3018
+  826F2FD8  48208DA1             bl 0x828fbd78
+  826F2FDC  7F83E378             or r3,r28,r28
+  826F2FE0  482073D1             bl 0x828fa3b0
+  826F2FE4  2F030002             cmpwi cr6,r3,0x2
+  826F2FE8  409A0030             bne cr6,0x826f3018
+  826F2FEC  39600008             li r11,0x8
+  826F2FF0  7FE3FB78             or r3,r31,r31
+  826F2FF4  7D7EE92E             stwx r11,r30,r29
+  826F2FF8  4801E471             bl 0x82711468
+  826F2FFC  7FE3FB78             or r3,r31,r31
+  826F3000  4BFFA6F9             bl 0x826ed6f8
+  826F3004  7FE3FB78             or r3,r31,r31
+  826F3008  4BFFFDB1             bl 0x826f2db8
+  826F300C  2B030000             cmplwi cr6,r3,0x0
+  826F3010  419A0008             beq cr6,0x826f3018
+  826F3014  4820C035             bl 0x828ff048
+LAB_826f3018:
+  826F3018  38210080             addi r1,r1,0x80
+  826F301C  482236EC             b 0x82916708
 
 ; 826F2A68  dwGetStorage  (DW/dwUtils-xbox.cpp:142)
   826F2A68  7D8802A6             mfspr r12,LR
@@ -424,6 +550,33 @@ LAB_826f2e4c:
   826F2E58  EBC1FFE8             ld r30,-0x18(r1)
   826F2E5C  EBE1FFF0             ld r31,-0x10(r1)
   826F2E60  4E800020             blr
+
+; 826F2E68  dwGetProfiles  (DW/dwUtils-xbox.cpp:302)
+  826F2E68  7D8802A6             mfspr r12,LR
+  826F2E6C  9181FFF8             stw r12,-0x8(r1)
+  826F2E70  FBC1FFE8             std r30,-0x18(r1)
+  826F2E74  FBE1FFF0             std r31,-0x10(r1)
+  826F2E78  9421FF90             stwu r1,-0x70(r1)
+  826F2E7C  3BC00000             li r30,0x0
+  826F2E80  4BFFF8C1             bl 0x826f2740
+  826F2E84  7C7F1B78             or r31,r3,r3
+  826F2E88  2B030000             cmplwi cr6,r3,0x0
+  826F2E8C  419A001C             beq cr6,0x826f2ea8
+  826F2E90  48207521             bl 0x828fa3b0
+  826F2E94  2F030002             cmpwi cr6,r3,0x2
+  826F2E98  409A0010             bne cr6,0x826f2ea8
+  826F2E9C  7FE3FB78             or r3,r31,r31
+  826F2EA0  48209321             bl 0x828fc1c0
+  826F2EA4  48000008             b 0x826f2eac
+LAB_826f2ea8:
+  826F2EA8  7FC3F378             or r3,r30,r30
+LAB_826f2eac:
+  826F2EAC  38210070             addi r1,r1,0x70
+  826F2EB0  8181FFF8             lwz r12,-0x8(r1)
+  826F2EB4  7D8803A6             mtspr LR,r12
+  826F2EB8  EBC1FFE8             ld r30,-0x18(r1)
+  826F2EBC  EBE1FFF0             ld r31,-0x10(r1)
+  826F2EC0  4E800020             blr
 
 ; 826F2EC8  dwGetOnlineUserID  (DW/dwUtils-xbox.cpp:316)
   826F2EC8  7D8802A6             mfspr r12,LR

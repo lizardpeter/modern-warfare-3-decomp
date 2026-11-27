@@ -31,6 +31,64 @@
 ; 82909270  bdSubscriptionInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:25)
   82909270  7D8802A6             mfspr r12,LR
   82909274  4800D449             bl 0x829166bc
+  82909278  3BE1FF90             subi r31,r1,0x70
+  8290927C  9421FF90             stwu r1,-0x70(r1)
+  82909280  7C7E1B78             or r30,r3,r3
+  82909284  909F008C             stw r4,0x8c(r31)
+  82909288  7C9D2378             or r29,r4,r4
+  8290928C  38830008             addi r4,r3,0x8
+  82909290  807D0000             lwz r3,0x0(r29)
+  82909294  4BFECB0D             bl 0x828f5da0
+  82909298  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290929C  4182001C             beq 0x829092b8
+  829092A0  389E0010             addi r4,r30,0x10
+  829092A4  807D0000             lwz r3,0x0(r29)
+  829092A8  4BFECA29             bl 0x828f5cd0
+  829092AC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829092B0  39600001             li r11,0x1
+  829092B4  40820008             bne 0x829092bc
+LAB_829092b8:
+  829092B8  39600000             li r11,0x0
+LAB_829092bc:
+  829092BC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  829092C0  4182001C             beq 0x829092dc
+  829092C4  389E0014             addi r4,r30,0x14
+  829092C8  807D0000             lwz r3,0x0(r29)
+  829092CC  4BFECA05             bl 0x828f5cd0
+  829092D0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829092D4  39600001             li r11,0x1
+  829092D8  40820008             bne 0x829092e0
+LAB_829092dc:
+  829092DC  39600000             li r11,0x0
+LAB_829092e0:
+  829092E0  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  829092E4  4182001C             beq 0x82909300
+  829092E8  389E0018             addi r4,r30,0x18
+  829092EC  807D0000             lwz r3,0x0(r29)
+  829092F0  4BFEC979             bl 0x828f5c68
+  829092F4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829092F8  39600001             li r11,0x1
+  829092FC  40820008             bne 0x82909304
+LAB_82909300:
+  82909300  39600000             li r11,0x0
+LAB_82909304:
+  82909304  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82909308  4182001C             beq 0x82909324
+  8290930C  389E001C             addi r4,r30,0x1c
+  82909310  807D0000             lwz r3,0x0(r29)
+  82909314  4BFEC80D             bl 0x828f5b20
+  82909318  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290931C  39600001             li r11,0x1
+  82909320  40820008             bne 0x82909328
+LAB_82909324:
+  82909324  39600000             li r11,0x0
+LAB_82909328:
+  82909328  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  8290932C  7FA3EB78             or r3,r29,r29
+  82909330  4BA5B0D1             bl 0x82364400
+  82909334  7FC3F378             or r3,r30,r30
+  82909338  383F0070             addi r1,r31,0x70
+  8290933C  4800D3D0             b 0x8291670c
 
 ; 82909208  bdSubscriptionInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:37)
   82909208  38600020             li r3,0x20

@@ -2,11 +2,29 @@
 
 // 826EBD90  dwRecordEventHandleTaskError  (DW/dwRecordEvent.cpp:14)
 
-void dwRecordEventHandleTaskError(void)
+void dwRecordEventHandleTaskError(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 auStack_70 [112];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0xf,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ac0bc);
+  dwLobbyErrorCodeToString(param_2,auStack_70,0x40);
+  if ((int)param_2 != 2) {
+    Com_PrintError(0x10,0xffffffff821ac080,*(undefined4 *)(iVar1 + 0x90),param_2);
+    if ((int)param_2 == 1) {
+      MyAssertHandler(0xffffffff821ac0dc,0x22,0,0xffffffff82000f98,0xffffffff821ac060);
+    }
+    __restgprlr_28(2);
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821ac000,*(undefined4 *)(iVar1 + 0x90),2,auStack_70);
+  __restgprlr_28(2);
+  return;
 }
 
 
@@ -29,11 +47,9 @@ void dwRecordEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3,undef
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0x2c,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0x2d,0,0xffffffff82000f98,0xffffffff820889e0);
   }
   if ((int)param_4 == 0) {
@@ -42,62 +58,128 @@ void dwRecordEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3,undef
     uVar6 = 0x2e;
   }
   else {
-    if ((int)param_4 < 4) {
-      iVar3 = dwGetLogOnStatus(*(undefined1 *)(iVar2 + 0x95));
-      if (iVar3 != 2) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac220);
-        __restgprlr_24(0);
-        return;
-      }
-      uVar1 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
-      if (((uVar1 & 0xffffffff) == 0) || (cVar5 = bdLobbyService__isConnected(), cVar5 == '\0')) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac120);
-        __restgprlr_24(0);
-        return;
-      }
-      cVar5 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_58);
-      if (cVar5 == '\0') {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac1d8);
-        __restgprlr_24(0);
-        return;
-      }
-      uVar1 = bdLobbyService__getEventLog(uVar1);
-      if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff821ac0dc,0x4b,0,0xffffffff82000f98,0xffffffff821ac1cc);
-      }
-      piVar4 = (int *)bdEventLog__recordEventBin(auStack_60,uVar1,param_2,param_3,param_4,param_5);
-      iVar3 = *piVar4;
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_60);
-      if (iVar3 == 0) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac180,param_3);
-        __restgprlr_24(0);
-        return;
-      }
-      bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
-      __restgprlr_24(1);
-      return;
-    }
+    if ((int)param_4 < 4) goto LAB_826ebf38;
     uVar8 = 0xffffffff821ac288;
     uVar7 = 0xffffffff821ac268;
     uVar6 = 0x2f;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff821ac0dc,uVar6,0,0xffffffff820011f4,uVar7,uVar8);
+LAB_826ebf38:
+  iVar3 = dwGetLogOnStatus(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 != 2) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac220);
+    __restgprlr_24(0);
+    return;
+  }
+  uVar1 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
+  if (((uVar1 & 0xffffffff) == 0) || (cVar5 = bdLobbyService__isConnected(), cVar5 == '\0')) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac120);
+    __restgprlr_24(0);
+    return;
+  }
+  cVar5 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_58);
+  if (cVar5 == '\0') {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac1d8);
+    __restgprlr_24(0);
+    return;
+  }
+  uVar1 = bdLobbyService__getEventLog(uVar1);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x4b,0,0xffffffff82000f98,0xffffffff821ac1cc);
+  }
+  piVar4 = (int *)bdEventLog__recordEventBin(auStack_60,uVar1,param_2,param_3,param_4,param_5);
+  iVar3 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_60);
+  if (iVar3 == 0) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac180,param_3);
+    __restgprlr_24(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+  __restgprlr_24(1);
+  return;
 }
 
 
 // 826EC098  dwRecordStringEvent  (DW/dwRecordEvent.cpp:90)
 
-void dwRecordStringEvent(void)
+void dwRecordStringEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar3;
+  int iVar4;
+  ulonglong uVar1;
+  char cVar6;
+  ulonglong uVar2;
+  int *piVar5;
+  char *pcVar7;
+  undefined1 auStack_50 [8];
+  undefined1 auStack_48 [72];
+  
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x5d,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x5e,0,0xffffffff82000f98,0xffffffff8202e030);
+  }
+  if (((int)param_3 < 1) || (5 < (int)param_3)) {
+    MyAssertHandler(0xffffffff821ac0dc,0x5f,0,0xffffffff820011f4,0xffffffff821ac3c8,
+                    0xffffffff821ac418);
+  }
+  iVar4 = dwGetLogOnStatus(*(undefined1 *)(iVar3 + 0x95));
+  if (iVar4 != 2) {
+    TaskManager_ClearTask(iVar3);
+    Com_Printf(0x10,0xffffffff821ac220);
+    __restgprlr_26(0);
+    return;
+  }
+  uVar1 = dwGetLobbyService(*(undefined1 *)(iVar3 + 0x95));
+  if (((uVar1 & 0xffffffff) == 0) || (cVar6 = bdLobbyService__isConnected(), cVar6 == '\0')) {
+    TaskManager_ClearTask(iVar3);
+    Com_Printf(0x10,0xffffffff821ac120);
+    __restgprlr_26(0);
+    return;
+  }
+  cVar6 = dwGetOnlineUserID(*(undefined1 *)(iVar3 + 0x95),auStack_48);
+  if (cVar6 == '\0') {
+    TaskManager_ClearTask(iVar3);
+    Com_Printf(0x10,0xffffffff821ac1d8);
+    __restgprlr_26(0);
+    return;
+  }
+  uVar2 = bdLobbyService__getEventLog(uVar1);
+  uVar1 = param_2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x7b,0,0xffffffff82000f98,0xffffffff821ac1cc);
+  }
+  do {
+    pcVar7 = (char *)uVar1;
+    uVar1 = uVar1 + 1;
+  } while (*pcVar7 != '\0');
+  piVar5 = (int *)bdEventLog__recordEvent
+                            (auStack_50,uVar2,param_2,((uVar1 - param_2) - 1 & 0xffffffff) + 1,
+                             param_3,0);
+  iVar4 = *piVar5;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
+  if (iVar4 != 0) {
+    bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar4);
+    __restgprlr_26(1);
+    return;
+  }
+  TaskManager_ClearTask(iVar3);
+  uVar1 = param_2;
+  do {
+    pcVar7 = (char *)uVar1;
+    uVar1 = uVar1 + 1;
+  } while (*pcVar7 != '\0');
+  Com_Printf(0x10,0xffffffff821ac378,param_2,(uVar1 - param_2) - 1 & 0xffffffff);
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -120,11 +202,9 @@ void dwRecordEvents(undefined8 param_1,undefined8 param_2,ulonglong param_3,unde
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0x8d,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0x8e,0,0xffffffff82000f98,0xffffffff821ac48c);
   }
   if ((int)param_5 == 0) {
@@ -133,53 +213,50 @@ void dwRecordEvents(undefined8 param_1,undefined8 param_2,ulonglong param_3,unde
     uVar6 = 0x8f;
   }
   else {
-    if ((int)param_5 < 4) {
-      iVar3 = dwGetLogOnStatus(*(undefined1 *)(iVar2 + 0x95));
-      if (iVar3 != 2) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac220);
-        __restgprlr_24(0);
-        return;
-      }
-      uVar1 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
-      if (((uVar1 & 0xffffffff) == 0) || (cVar5 = bdLobbyService__isConnected(), cVar5 == '\0')) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac120);
-        __restgprlr_24(0);
-        return;
-      }
-      cVar5 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_58);
-      if (cVar5 == '\0') {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac1d8);
-        __restgprlr_24(0);
-        return;
-      }
-      uVar1 = bdLobbyService__getEventLog(uVar1);
-      if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff821ac0dc,0xac,0,0xffffffff82000f98,0xffffffff821ac1cc);
-      }
-      piVar4 = (int *)bdEventLog__recordEventsBin
-                                (auStack_60,uVar1,param_3,param_4,param_2,param_5,0);
-      iVar3 = *piVar4;
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_60);
-      if (iVar3 == 0) {
-        TaskManager_ClearTask(iVar2);
-        Com_Printf(0x10,0xffffffff821ac180,param_4);
-        __restgprlr_24(0);
-        return;
-      }
-      bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
-      __restgprlr_24(1);
-      return;
-    }
+    if ((int)param_5 < 4) goto LAB_826ec3a8;
     uVar8 = 0xffffffff821ac288;
     uVar7 = 0xffffffff821ac268;
     uVar6 = 0x90;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff821ac0dc,uVar6,0,0xffffffff820011f4,uVar7,uVar8);
+LAB_826ec3a8:
+  iVar3 = dwGetLogOnStatus(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 != 2) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac220);
+    __restgprlr_24(0);
+    return;
+  }
+  uVar1 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
+  if (((uVar1 & 0xffffffff) == 0) || (cVar5 = bdLobbyService__isConnected(), cVar5 == '\0')) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac120);
+    __restgprlr_24(0);
+    return;
+  }
+  cVar5 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_58);
+  if (cVar5 == '\0') {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac1d8);
+    __restgprlr_24(0);
+    return;
+  }
+  uVar1 = bdLobbyService__getEventLog(uVar1);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0xac,0,0xffffffff82000f98,0xffffffff821ac1cc);
+  }
+  piVar4 = (int *)bdEventLog__recordEventsBin(auStack_60,uVar1,param_3,param_4,param_2,param_5,0);
+  iVar3 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_60);
+  if (iVar3 == 0) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac180,param_4);
+    __restgprlr_24(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+  __restgprlr_24(1);
+  return;
 }
 
 
@@ -200,19 +277,15 @@ void dwRecordStringEvents
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0xbf,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0xc0,0,0xffffffff82000f98,0xffffffff821ac4e4);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0xc1,0,0xffffffff82000f98,0xffffffff821ac4dc);
   }
   if (((int)param_5 < 1) || (5 < (int)param_5)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0xc2,0,0xffffffff820011f4,0xffffffff821ac3c8,
                     0xffffffff821ac418);
   }
@@ -239,7 +312,6 @@ void dwRecordStringEvents
   }
   uVar1 = bdLobbyService__getEventLog(uVar1);
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ac0dc,0xde,0,0xffffffff82000f98,0xffffffff821ac1cc);
   }
   piVar4 = (int *)bdEventLog__recordEvents(auStack_60,uVar1,param_3,param_4,param_2,param_5,0);
@@ -262,8 +334,104 @@ void dwRecordStringEvents
 void dwRecordEventComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0xee,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0xef,0,0xffffffff82000f98,0xffffffff821ac530);
+  }
+  uVar4 = 0;
+  iVar3 = dwGetTitleUtilities(*(undefined1 *)(iVar2 + 0x95));
+  if ((iVar3 != 0) && (*(int *)(iVar2 + 8) != 0)) {
+    dwLobbyPump(*(undefined1 *)(iVar2 + 0x95));
+    uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 4))();
+    if (((int)uVar1 == 2) &&
+       (uVar4 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar2 + 8)), (int)uVar4 != 0)) {
+      dwRecordEventHandleTaskError(iVar2,uVar4);
+      __restgprlr_29();
+      return;
+    }
+    dwTaskStatusConvert(uVar1,uVar4);
+    __restgprlr_29();
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821ac4f0);
+  __restgprlr_29(2);
+  return;
+}
+
+
+// 826EC858  dwSetTagsEventRecord  (DW/dwRecordEvent.cpp:275)
+
+void dwSetTagsEventRecord(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  int iVar2;
+  int iVar3;
+  char cVar5;
+  ulonglong uVar1;
+  int *piVar4;
+  undefined1 auStack_90 [8];
+  undefined1 auStack_88 [8];
+  undefined1 auStack_80 [128];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x116,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x117,0,0xffffffff82000f98,0xffffffff821ac598);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x118,0,0xffffffff82000f98,0xffffffff821ac590);
+  }
+  iVar3 = dwGetLogOnStatus(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 != 2) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac220);
+    __restgprlr_26(0);
+    return;
+  }
+  iVar3 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
+  if (iVar3 == 0) {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac548);
+    __restgprlr_26(0);
+    return;
+  }
+  cVar5 = dwGetOnlineUserID(*(undefined1 *)(iVar2 + 0x95),auStack_88);
+  if (cVar5 == '\0') {
+    TaskManager_ClearTask(iVar2);
+    Com_Printf(0x10,0xffffffff821ac1d8);
+    __restgprlr_26(0);
+    return;
+  }
+  uVar1 = dwGetTagService(*(undefined1 *)(iVar2 + 0x95));
+  if ((uVar1 & 0xffffffff) == 0) {
+    dwRecordEventHandleTaskError(iVar2,2);
+    __restgprlr_26(0);
+    return;
+  }
+  piVar4 = (int *)bdTags__setTagsForEntityID
+                            (auStack_90,uVar1,2,*(undefined8 *)((int)param_4 + 8),param_3,param_2);
+  iVar3 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_90);
+  if (iVar3 == 0) {
+    Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ac0bc);
+    dwLobbyErrorCodeToString(5,auStack_80,0x40);
+    Com_PrintError(0x10,0xffffffff821ac080,*(undefined4 *)(iVar2 + 0x90),5,auStack_80);
+    __restgprlr_26(0);
+    return;
+  }
+  bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -272,7 +440,35 @@ void dwRecordEventComplete(void)
 void dwRecordEventSetTagsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x14c,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ac0dc,0x14d,0,0xffffffff82000f98,0xffffffff821ac530);
+  }
+  uVar4 = 0;
+  iVar3 = dwGetLobbyService(*(undefined1 *)(iVar2 + 0x95));
+  if ((iVar3 != 0) && (*(int *)(iVar2 + 8) != 0)) {
+    dwLobbyPump(*(undefined1 *)(iVar2 + 0x95));
+    uVar1 = (**(code **)(**(int **)(iVar2 + 8) + 4))();
+    if (((int)uVar1 == 2) &&
+       (uVar4 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar2 + 8)), (int)uVar4 != 0)) {
+      dwRecordEventHandleTaskError(iVar2,uVar4);
+      __restgprlr_29();
+      return;
+    }
+    dwTaskStatusConvert(uVar1,uVar4);
+    __restgprlr_29();
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821ac5a4);
+  __restgprlr_29(2);
+  return;
 }
 

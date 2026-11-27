@@ -27,11 +27,64 @@ void R_DoesSceneLightHaveShadowMap(longlong param_1,undefined8 param_2)
 
 // 82735938  R_SetLightColor  (gfx_d3d/r_draw_shadowablelight.cpp:40)
 
-void R_SetLightColor(void)
+void R_SetLightColor(undefined8 param_1,float *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
   __savegprlr_28();
+  iVar4 = __savefpr_26();
+  if (*(int *)(iVar4 + 0x16fc) != 1) {
+    MyAssertHandler(0xffffffff821be6a0,0x2e,0,0xffffffff821be65c,0xffffffff821be678);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821be6a0,0x2f,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  }
+  fVar1 = *(float *)(DAT_845aa6f4 + 0xc);
+  fVar2 = *(float *)(DAT_845aa5e8 + 0xc);
+  if (*(char *)(iVar4 + 0x1751) != '\0') {
+    fVar1 = *param_2 * fVar1;
+    fVar2 = param_2[1] * fVar2;
+  }
+  if (*(char *)(iVar4 + 0x1753) != '\0') {
+    fVar1 = param_2[2] * fVar1;
+    fVar2 = param_2[3] * fVar2;
+  }
+  iVar3 = (int)param_3;
+  dVar10 = (double)(*(float *)(iVar3 + 8) * fVar1);
+  dVar9 = (double)(*(float *)(iVar3 + 0xc) * fVar1);
+  dVar8 = (double)(*(float *)(iVar3 + 4) * fVar2);
+  dVar7 = (double)(*(float *)(iVar3 + 8) * fVar2);
+  dVar6 = (double)(*(float *)(iVar3 + 0xc) * fVar2);
+  dVar5 = (double)GammaToLinear_Srgb((double)(*(float *)(iVar3 + 4) * fVar1));
+  dVar10 = (double)GammaToLinear_Srgb(dVar10);
+  dVar9 = (double)GammaToLinear_Srgb(dVar9);
+  dVar8 = (double)GammaToLinear_Srgb(dVar8);
+  dVar7 = (double)GammaToLinear_Srgb(dVar7);
+  dVar6 = (double)GammaToLinear_Srgb(dVar6);
+  *(float *)(iVar4 + 0xe14) = (float)dVar10;
+  *(float *)(iVar4 + 0xe18) = (float)dVar9;
+  *(float *)(iVar4 + 0xe10) = (float)dVar5;
+  dVar5 = 1.0;
+  *(undefined4 *)(iVar4 + 0xe1c) = 0x3f800000;
+  R_DirtyCodeConstant(iVar4,1);
+  *(float *)(iVar4 + 0xe20) = (float)dVar8;
+  *(float *)(iVar4 + 0xe24) = (float)dVar7;
+  *(float *)(iVar4 + 0xe28) = (float)dVar6;
+  *(float *)(iVar4 + 0xe2c) = (float)dVar5;
+  R_DirtyCodeConstant(iVar4,2);
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -43,90 +96,83 @@ void R_SetLightProperties
                ulonglong param_10)
 
 {
-  float fVar1;
+  byte bVar1;
   float fVar2;
   float fVar3;
-  undefined4 uVar4;
+  float fVar4;
   undefined4 uVar5;
-  int iVar6;
-  int iVar8;
-  undefined8 uVar7;
-  char *pcVar9;
-  byte bVar10;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar9;
+  undefined8 uVar8;
+  char *pcVar10;
   double extraout_f1;
   double dVar11;
   double dVar12;
   
-  iVar8 = __savegprlr_20();
-  if (*(int *)(iVar8 + 0x16fc) != 1) {
-                    /* WARNING: Subroutine does not return */
+  iVar9 = __savegprlr_20();
+  dVar11 = extraout_f1;
+  if (*(int *)(iVar9 + 0x16fc) != 1) {
     MyAssertHandler(0xffffffff821be6a0,0x5a,0,0xffffffff821be65c,0xffffffff821be678);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be6a0,0x5b,0,0xffffffff82000f98,0xffffffff8207d5a0);
   }
-  pcVar9 = (char *)param_5;
-  if ((*pcVar9 != '\x03') && (*pcVar9 != '\x02')) {
-                    /* WARNING: Subroutine does not return */
+  pcVar10 = (char *)param_5;
+  if ((*pcVar10 != '\x03') && (*pcVar10 != '\x02')) {
     MyAssertHandler(0xffffffff821be6a0,0x5c,0,0xffffffff82000f98,0xffffffff821be760);
   }
-  if ((double)*(float *)(pcVar9 + 0x34) <= 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if ((double)*(float *)(pcVar10 + 0x34) <= 0.0) {
     MyAssertHandler(0xffffffff821be6a0,0x5d,0,0xffffffff821be728,0xffffffff821be744,
-                    (double)*(float *)(pcVar9 + 0x34));
+                    (double)*(float *)(pcVar10 + 0x34));
   }
-  *(undefined4 *)(iVar8 + 0x1354) = *(undefined4 *)(param_6 + 4);
-  bVar10 = *(byte *)(param_6 + 8);
-  if ((bVar10 & 7) == 0) {
-    uVar7 = va(0xffffffff821be5d8,0xd);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar7);
+  *(undefined4 *)(iVar9 + 0x1354) = *(undefined4 *)(param_6 + 4);
+  bVar1 = *(byte *)(param_6 + 8);
+  if ((bVar1 & 7) == 0) {
+    uVar8 = va(0xffffffff821be5d8,0xd,bVar1);
+    MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar8);
   }
-  *(byte *)(iVar8 + 0x13a5) = bVar10;
+  *(byte *)(iVar9 + 0x13a5) = bVar1;
   if (*(int *)(param_6 + 0xc) != 0) {
-    *(int *)(iVar8 + 0x1358) = *(int *)(param_6 + 0xc);
-    bVar10 = *(byte *)(param_6 + 0x10);
-    if ((bVar10 & 7) == 0) {
-      uVar7 = va(0xffffffff821be5d8,0xe);
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar7);
+    *(int *)(iVar9 + 0x1358) = *(int *)(param_6 + 0xc);
+    bVar1 = *(byte *)(param_6 + 0x10);
+    if ((bVar1 & 7) == 0) {
+      uVar8 = va(0xffffffff821be5d8,0xe,bVar1);
+      MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar8);
     }
-    *(byte *)(iVar8 + 0x13a6) = bVar10;
+    *(byte *)(iVar9 + 0x13a6) = bVar1;
   }
-  fVar1 = *(float *)(pcVar9 + 0x28);
-  fVar2 = *(float *)(pcVar9 + 0x2c);
-  fVar3 = *(float *)(pcVar9 + 0x30);
+  fVar2 = *(float *)(pcVar10 + 0x28);
+  fVar3 = *(float *)(pcVar10 + 0x2c);
+  fVar4 = *(float *)(pcVar10 + 0x30);
   dVar12 = 1.0;
-  *(float *)(iVar8 + 0xe0c) = 1.0 / *(float *)(pcVar9 + 0x34);
-  *(float *)(iVar8 + 0xe00) = fVar1 - *(float *)(iVar8 + 0x1540);
-  *(float *)(iVar8 + 0xe04) = fVar2 - *(float *)(iVar8 + 0x1544);
-  *(float *)(iVar8 + 0xe08) = fVar3 - *(float *)(iVar8 + 0x1548);
-  dVar11 = extraout_f1;
-  R_DirtyCodeConstant(iVar8,0,bVar10);
-  uVar4 = *(undefined4 *)(pcVar9 + 0x18);
-  uVar5 = *(undefined4 *)(pcVar9 + 0x14);
-  *(undefined4 *)(iVar8 + 0xe30) = *(undefined4 *)(pcVar9 + 0x10);
-  *(undefined4 *)(iVar8 + 0xe34) = uVar5;
-  *(undefined4 *)(iVar8 + 0xe38) = uVar4;
-  *(float *)(iVar8 + 0xe3c) = (float)((double)(param_10 & 0xffffffff) + param_2);
-  R_DirtyCodeConstant(iVar8,3);
-  R_SetLightColor(iVar8,param_4,param_5);
-  if ((*pcVar9 == '\x02') || (param_7 == 0)) {
-    if ((double)*(float *)(pcVar9 + 0x3c) <= (double)*(float *)(pcVar9 + 0x38)) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821be6a0,0x7b,0,0xffffffff821be6f0,(double)*(float *)(pcVar9 + 0x3c)
-                      ,(double)*(float *)(pcVar9 + 0x38));
+  *(float *)(iVar9 + 0xe0c) = 1.0 / *(float *)(pcVar10 + 0x34);
+  *(float *)(iVar9 + 0xe00) = fVar2 - *(float *)(iVar9 + 0x1540);
+  *(float *)(iVar9 + 0xe04) = fVar3 - *(float *)(iVar9 + 0x1544);
+  *(float *)(iVar9 + 0xe08) = fVar4 - *(float *)(iVar9 + 0x1548);
+  R_DirtyCodeConstant(iVar9,0);
+  uVar5 = *(undefined4 *)(pcVar10 + 0x18);
+  uVar6 = *(undefined4 *)(pcVar10 + 0x14);
+  *(undefined4 *)(iVar9 + 0xe30) = *(undefined4 *)(pcVar10 + 0x10);
+  *(undefined4 *)(iVar9 + 0xe34) = uVar6;
+  *(undefined4 *)(iVar9 + 0xe38) = uVar5;
+  *(float *)(iVar9 + 0xe3c) = (float)((double)(param_10 & 0xffffffff) + param_2);
+  R_DirtyCodeConstant(iVar9,3);
+  R_SetLightColor(iVar9,param_4,param_5);
+  if ((*pcVar10 == '\x02') || (param_7 == 0)) {
+    if ((double)*(float *)(pcVar10 + 0x3c) <= (double)*(float *)(pcVar10 + 0x38)) {
+      MyAssertHandler(0xffffffff821be6a0,0x7b,0,0xffffffff821be6f0,
+                      (double)*(float *)(pcVar10 + 0x3c),(double)*(float *)(pcVar10 + 0x38));
     }
-    iVar6 = *(int *)(pcVar9 + 0x40);
-    fVar2 = *(float *)(pcVar9 + 0x38);
-    fVar1 = *(float *)(pcVar9 + 0x3c);
-    *(float *)(iVar8 + 0xe4c) = (float)dVar11;
-    fVar1 = (float)(dVar12 / (double)(fVar1 - fVar2));
-    *(float *)(iVar8 + 0xe40) = fVar1;
-    *(float *)(iVar8 + 0xe44) = -(fVar2 * fVar1);
-    *(float *)(iVar8 + 0xe48) = (float)(longlong)iVar6;
-    R_DirtyCodeConstant(iVar8,4);
+    iVar7 = *(int *)(pcVar10 + 0x40);
+    fVar3 = *(float *)(pcVar10 + 0x38);
+    fVar2 = *(float *)(pcVar10 + 0x3c);
+    *(float *)(iVar9 + 0xe4c) = (float)dVar11;
+    fVar2 = (float)(dVar12 / (double)(fVar2 - fVar3));
+    *(float *)(iVar9 + 0xe40) = fVar2;
+    *(float *)(iVar9 + 0xe44) = -(fVar3 * fVar2);
+    *(float *)(iVar9 + 0xe48) = (float)(longlong)iVar7;
+    R_DirtyCodeConstant(iVar9,4);
   }
   __restgprlr_20();
   return;
@@ -135,11 +181,35 @@ void R_SetLightProperties
 
 // 82735DC8  R_SetDirLightProperties  (gfx_d3d/r_draw_shadowablelight.cpp:133)
 
-void R_SetDirLightProperties(void)
+void R_SetDirLightProperties(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  char *pcVar4;
+  
+  iVar3 = __savegprlr_27();
+  if (*(int *)(iVar3 + 0x16fc) != 1) {
+    MyAssertHandler(0xffffffff821be6a0,0x86,0,0xffffffff821be65c,0xffffffff821be678);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821be6a0,0x87,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  }
+  pcVar4 = (char *)param_3;
+  if (*pcVar4 != '\x01') {
+    MyAssertHandler(0xffffffff821be6a0,0x88,0,0xffffffff82000f98,0xffffffff821be7ac);
+  }
+  uVar1 = *(undefined4 *)(pcVar4 + 0x18);
+  uVar2 = *(undefined4 *)(pcVar4 + 0x14);
+  *(undefined4 *)(iVar3 + 0xe00) = *(undefined4 *)(pcVar4 + 0x10);
+  *(undefined4 *)(iVar3 + 0xe04) = uVar2;
+  *(undefined4 *)(iVar3 + 0xe08) = uVar1;
+  *(undefined4 *)(iVar3 + 0xe0c) = 0;
+  R_DirtyCodeConstant(iVar3,0);
+  R_SetLightColor(iVar3,param_2,param_3);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -168,7 +238,6 @@ void R_SetSceneLight(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulon
   
   iVar4 = __savegprlr_22();
   if (0xfc < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be6a0,0xac,0,0xffffffff821be820,param_2,0xfd);
   }
   uVar8 = param_3 & 0xff;
@@ -222,7 +291,6 @@ LAB_82736284:
   *(undefined4 *)(iVar4 + 0x1748) = uVar11;
   *(char *)(iVar4 + 0x1753) = (char)param_4;
   if ((ulonglong)*(uint *)((int)param_5 + 0x1b0) <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be6a0,0xd0,0,0xffffffff821be288,param_2);
   }
   uVar8 = (ulonglong)*(uint *)(iVar4 + 0x13ec);
@@ -264,7 +332,6 @@ LAB_827360c0:
   dVar16 = dVar15;
   if (bVar13) {
     if (3 < *(uint *)(pcVar10 + 0x44)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821be6a0,0xff,0,0xffffffff821be7d0,*(uint *)(pcVar10 + 0x44),4);
     }
     lVar6 = (ulonglong)*(uint *)(pcVar10 + 0x44) * 0x1d0 + uVar8;
@@ -281,6 +348,38 @@ LAB_827360c0:
   }
   R_SetLightProperties(dVar15,dVar16,iVar4,lVar7,lVar9,iVar5,uVar12);
   __restgprlr_22();
+  return;
+}
+
+
+// 82736298  R_SetDrawSurfsSceneLight  (gfx_d3d/r_draw_shadowablelight.cpp:291)
+
+void R_SetDrawSurfsSceneLight(undefined8 param_1,ulonglong param_2,longlong param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) != 0) {
+    uVar1 = *(uint *)(iVar2 + 0x13ec);
+    if ((ulonglong)*(uint *)((int)param_3 + 0x1b0) <= (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff821be6a0,0x12f,0,0xffffffff821be288,param_2);
+    }
+    iVar3 = Com_BitCheckAssert((ulonglong)uVar1 + 0x1524,param_2,0x20);
+    if (iVar3 != 0) {
+      R_SetSceneLight(iVar2,param_2,0,0,param_3);
+      __restgprlr_28();
+      return;
+    }
+    lVar4 = (param_2 + 0x1d00) * 0x4c + (ulonglong)uVar1;
+    R_SetLightProperties
+              (0,iVar2,param_3 + 0x26c,lVar4,*(undefined4 *)((int)lVar4 + 0x48),1,param_2 + 0x1d00,
+               0xffffffff82000000,1);
+  }
+  __restgprlr_28();
   return;
 }
 

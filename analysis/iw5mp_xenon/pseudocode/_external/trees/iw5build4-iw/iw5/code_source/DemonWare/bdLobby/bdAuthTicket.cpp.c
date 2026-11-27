@@ -36,11 +36,197 @@ void bdAuthTicket___bdAuthTicket(void)
 
 // 82901F70  bdAuthTicket::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdauthticket.cpp:35)
 
-void bdAuthTicket__serialize(void)
+void bdAuthTicket__serialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 *puVar1;
+  int iVar2;
+  char cVar3;
+  undefined1 *puVar4;
+  bool bVar5;
+  int iVar6;
+  longlong lVar7;
+  undefined1 local_80 [4];
+  undefined1 local_7c [4];
+  undefined1 auStack_78 [4];
+  undefined1 auStack_74 [4];
+  undefined1 auStack_70 [4];
+  undefined1 auStack_6c [4];
+  undefined1 auStack_68 [4];
+  undefined1 local_64 [12];
+  undefined1 auStack_58 [8];
+  undefined1 auStack_50 [8];
+  undefined1 auStack_48 [8];
+  undefined1 local_40;
+  undefined1 local_3f;
+  undefined1 local_3e;
+  undefined1 local_3d;
+  
+  iVar2 = __savegprlr_28();
+  iVar6 = 0;
+  puVar4 = auStack_70;
+  lVar7 = 4;
+  do {
+    puVar1 = (undefined1 *)(iVar6 + iVar2);
+    iVar6 = iVar6 + 1;
+    puVar4 = puVar4 + -1;
+    *puVar4 = *puVar1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_74,4);
+  if (cVar3 == '\0') {
+LAB_82902018:
+    bVar5 = false;
+  }
+  else {
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,local_80,1);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902018;
+  }
+  if (bVar5) {
+    iVar6 = 0;
+    puVar4 = auStack_6c;
+    lVar7 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar6 + iVar2 + 8);
+      iVar6 = iVar6 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_70,4);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902070;
+  }
+  else {
+LAB_82902070:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    iVar6 = 0;
+    puVar4 = auStack_68;
+    lVar7 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar6 + iVar2 + 0xc);
+      iVar6 = iVar6 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_6c,4);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_829020c8;
+  }
+  else {
+LAB_829020c8:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    iVar6 = 0;
+    puVar4 = local_64;
+    lVar7 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar6 + iVar2 + 0x10);
+      iVar6 = iVar6 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_68,4);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902120;
+  }
+  else {
+LAB_82902120:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    iVar6 = 0;
+    puVar4 = auStack_50;
+    lVar7 = 8;
+    do {
+      puVar1 = (undefined1 *)(iVar6 + iVar2 + 0x18);
+      iVar6 = iVar6 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_58,8);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902178;
+  }
+  else {
+LAB_82902178:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    iVar6 = 0;
+    puVar4 = auStack_48;
+    lVar7 = 8;
+    do {
+      puVar1 = (undefined1 *)(iVar6 + iVar2 + 0x20);
+      iVar6 = iVar6 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,auStack_50,8);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_829021d0;
+  }
+  else {
+LAB_829021d0:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,iVar2 + 0x28,0x40);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902204;
+  }
+  else {
+LAB_82902204:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,iVar2 + 0x68,0x18);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_82902238;
+  }
+  else {
+LAB_82902238:
+    bVar5 = false;
+  }
+  if (bVar5) {
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,iVar2 + 0x80,3);
+    bVar5 = true;
+    if (cVar3 == '\0') goto LAB_8290226c;
+  }
+  else {
+LAB_8290226c:
+    bVar5 = false;
+  }
+  bdHashTiger192__bdHashTiger192(auStack_78);
+  bdHashTiger192__hash(auStack_78,param_2,0x79,&local_40,local_64);
+  *(undefined1 *)(iVar2 + 0x83) = local_40;
+  *(undefined1 *)(iVar2 + 0x84) = local_3f;
+  *(undefined1 *)(iVar2 + 0x85) = local_3e;
+  *(undefined1 *)(iVar2 + 0x86) = local_3d;
+  if (bVar5) {
+    cVar3 = bdBytePacker__appendBuffer(param_2,0x80,0,local_7c,iVar2 + 0x83,4);
+    bVar5 = true;
+    if (cVar3 != '\0') goto LAB_829022f4;
+  }
+  bVar5 = false;
+LAB_829022f4:
+  MyAssertHandler(0xffffffff8220e158,0x40,0,0xffffffff820011f4,0xffffffff8220e11c,0xffffffff8220e12c
+                 );
+  if (!bVar5) {
+    MyAssertHandler(0xffffffff8220e158,0x41,0,0xffffffff820011f4,0xffffffff82012420,
+                    0xffffffff8220e0fc);
+  }
+  bdHashTiger192___bdHashTiger192(auStack_78);
+  __restgprlr_28();
+  return;
 }
 
 

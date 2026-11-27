@@ -29,11 +29,64 @@ undefined1 vp8_signed_char_clamp_up(int param_1)
 
 // 82814BE0  vp8_filter_mask  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:67)
 
-void vp8_filter_mask(void)
+void vp8_filter_mask(undefined8 param_1,char param_2,ulonglong param_3,ulonglong param_4,
+                    ulonglong param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar2;
+  ulonglong uVar1;
+  ulonglong uVar3;
+  uint uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  byte in_stack_00000057;
+  byte in_stack_0000005f;
+  
+  cVar2 = __savegprlr_27();
+  uVar6 = (ulonglong)cVar2;
+  uVar1 = (param_3 & 0xff) - (param_4 & 0xff);
+  param_5 = param_5 & 0xff;
+  uVar12 = (ulonglong)((int)uVar1 >> 0x1f);
+  uVar3 = (param_4 & 0xff) - param_5;
+  uVar12 = (uVar1 ^ uVar12) - uVar12;
+  uVar1 = param_5 - (param_6 & 0xff);
+  param_8 = param_8 & 0xff;
+  uVar10 = (ulonglong)((int)uVar3 >> 0x1f);
+  uVar10 = (uVar3 ^ uVar10) - uVar10;
+  uVar3 = param_8 - (param_7 & 0xff);
+  uVar11 = in_stack_00000057 - param_8;
+  uVar8 = (ulonglong)((int)uVar1 >> 0x1f);
+  uVar8 = (uVar1 ^ uVar8) - uVar8;
+  uVar1 = (ulonglong)in_stack_0000005f - (ulonglong)in_stack_00000057;
+  uVar13 = (ulonglong)((int)uVar3 >> 0x1f);
+  uVar13 = (uVar3 ^ uVar13) - uVar13;
+  uVar5 = (int)param_5 - (int)param_8;
+  uVar9 = (ulonglong)((int)uVar11 >> 0x1f);
+  uVar9 = (uVar11 ^ uVar9) - uVar9;
+  uVar3 = (ulonglong)((int)uVar1 >> 0x1f);
+  uVar3 = (uVar1 ^ uVar3) - uVar3;
+  uVar4 = (int)uVar5 >> 0x1f;
+  uVar11 = (param_6 & 0xff) - (param_7 & 0xff);
+  uVar4 = (uVar5 ^ uVar4) - uVar4;
+  uVar1 = (ulonglong)((int)uVar11 >> 0x1f);
+  uVar7 = ((longlong)param_2 & 0x7fffffffU) * 2 + uVar6;
+  uVar1 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) +
+          ((uVar11 ^ uVar1) - uVar1 & 0x7fffffff) * 2;
+  __restgprlr_27(~(-((char)((~(uVar1 ^ uVar7) & 0xffffffff) >> 0x1f) + (uVar1 <= uVar7) & 1U) |
+                  -((char)((~(uVar3 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar3 <= uVar6) & 1U) |
+                  -((char)((~(uVar9 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar9 <= uVar6) & 1U) |
+                  -((char)((~(uVar13 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar13 <= uVar6) & 1U) |
+                  -((char)((~(uVar8 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar8 <= uVar6) & 1U) |
+                  -((char)((~(uVar10 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar10 <= uVar6) & 1U) |
+                  -((char)((~(uVar12 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar12 <= uVar6) & 1U)));
+  return;
 }
 
 
@@ -60,43 +113,603 @@ byte vp8_hevmask(char param_1,ulonglong param_2,ulonglong param_3,ulonglong para
 }
 
 
-// 82815110  vp8_loop_filter_horizontal_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:144)
+// 82814DF8  vp8_filter  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:91)
 
-void vp8_loop_filter_horizontal_edge_c(void)
+void vp8_filter(undefined8 param_1,byte param_2,byte *param_3,byte *param_4,byte *param_5,
+               byte *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  byte bVar2;
+  ulonglong uVar3;
+  byte bVar4;
+  longlong lVar5;
+  int iVar6;
+  char cVar7;
+  byte bVar10;
+  ulonglong uVar8;
+  int iVar9;
+  char cVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  
+  bVar4 = __savegprlr_25();
+  bVar1 = *param_3;
+  bVar2 = *param_6;
+  uVar13 = (longlong)(char)(bVar1 ^ 0x80) - (longlong)(char)(bVar2 ^ 0x80);
+  uVar3 = ((~(uVar13 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar13) & 1;
+  bVar10 = ((char)((~uVar13 & 0xffffffff) >> 0x1f) + (uVar13 < 0x80) & 1U) - 1;
+  uVar8 = (longlong)(char)(*param_5 ^ 0x80) - (longlong)(char)(*param_4 ^ 0x80);
+  uVar8 = (((longlong)(char)(((char)uVar3 - 1U & (byte)uVar13 | (byte)(uVar3 << 7)) & bVar10) |
+           ~(longlong)(char)bVar10 & 0x7fU) & (longlong)(char)param_2) +
+          uVar8 + (uVar8 & 0x7fffffff) * 2;
+  uVar3 = ((~(uVar8 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar8) & 1;
+  bVar10 = ((char)((~uVar8 & 0xffffffff) >> 0x1f) + (uVar8 < 0x80) & 1U) - 1;
+  iVar6 = (int)(char)((((char)uVar3 - 1U & (byte)uVar8 | (byte)(uVar3 << 7)) & bVar10 |
+                      ~bVar10 & 0x7f) & bVar4);
+  iVar9 = iVar6 + 4;
+  if (iVar9 < 0x80) {
+    cVar11 = (char)iVar9;
+  }
+  else {
+    cVar11 = '\x7f';
+  }
+  iVar6 = iVar6 + 3;
+  cVar7 = '\x7f';
+  if (iVar6 < 0x80) {
+    cVar7 = (char)iVar6;
+  }
+  uVar13 = (longlong)(char)(*param_5 ^ 0x80) - (longlong)(cVar11 >> 3);
+  uVar3 = ((~(uVar13 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar13) & 1;
+  bVar4 = ((char)((~uVar13 & 0xffffffff) >> 0x1f) + (uVar13 < 0x80) & 1U) - 1;
+  uVar8 = (longlong)((int)cVar7 >> 3) + (longlong)(char)(*param_4 ^ 0x80);
+  *param_5 = (((char)uVar3 - 1U & (byte)uVar13 | (byte)(uVar3 << 7)) & bVar4 | ~bVar4 & 0x7f) ^ 0x80
+  ;
+  bVar4 = ((char)((~uVar8 & 0xffffffff) >> 0x1f) + (uVar8 < 0x80) & 1U) - 1;
+  uVar3 = ((~(uVar8 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar8) & 1;
+  lVar5 = (longlong)(char)((char)((cVar11 >> 3) + '\x01') >> 1 & ~param_2);
+  uVar12 = (char)(bVar2 ^ 0x80) - lVar5;
+  *param_4 = (bVar4 & ((char)uVar3 - 1U & (byte)uVar8 | (byte)(uVar3 << 7)) | ~bVar4 & 0x7f) ^ 0x80;
+  uVar3 = ((~(uVar12 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar12) & 1;
+  bVar2 = ((char)((~uVar12 & 0xffffffff) >> 0x1f) + (uVar12 < 0x80) & 1U) - 1;
+  uVar13 = lVar5 + (char)(bVar1 ^ 0x80);
+  uVar8 = ((~(uVar13 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar13) & 1;
+  bVar1 = ((char)((~uVar13 & 0xffffffff) >> 0x1f) + (uVar13 < 0x80) & 1U) - 1;
+  *param_6 = (bVar2 & ((char)uVar3 - 1U & (byte)uVar12 | (byte)(uVar3 << 7)) | ~bVar2 & 0x7f) ^ 0x80
+  ;
+  *param_3 = (bVar1 & ((char)uVar8 - 1U & (byte)uVar13 | (byte)(uVar8 << 7)) | ~bVar1 & 0x7f) ^ 0x80
+  ;
+  __restgprlr_25();
+  return;
+}
+
+
+// 82815110  vp8_loop_filter_horizontal_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:144)
+
+void vp8_loop_filter_horizontal_edge_c
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4,
+               longlong param_5,ulonglong param_6)
+
+{
+  byte bVar1;
+  int iVar2;
+  byte *pbVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  uint uVar11;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  ulonglong uVar23;
+  ulonglong uVar24;
+  ulonglong uVar25;
+  longlong lVar26;
+  int iVar27;
+  longlong lVar28;
+  
+  lVar4 = __savegprlr();
+  lVar26 = param_2 + (param_2 & 0x7fffffff) * 2;
+  iVar2 = (int)param_5 - (int)lVar4;
+  iVar27 = 0;
+  lVar28 = lVar4 - param_2;
+  lVar12 = lVar4 - lVar26;
+  uVar16 = param_3 - param_5;
+  uVar15 = param_4 - param_5;
+  while( true ) {
+    lVar6 = lVar4 + (param_2 & 0x7fffffff) * -2;
+    uVar25 = (ulonglong)*(byte *)lVar28;
+    pbVar3 = (byte *)lVar4;
+    uVar24 = (ulonglong)pbVar3[(int)param_2];
+    uVar5 = (ulonglong)(char)pbVar3[iVar2];
+    uVar22 = (ulonglong)*pbVar3;
+    bVar1 = *(byte *)lVar6;
+    uVar21 = (ulonglong)bVar1;
+    uVar11 = (uint)bVar1 - (uint)pbVar3[(int)param_2];
+    uVar18 = (ulonglong)((int)(uVar21 - uVar25) >> 0x1f);
+    uVar18 = (uVar21 - uVar25 ^ uVar18) - uVar18;
+    uVar14 = (ulonglong)(char)pbVar3[(int)uVar15 + iVar2];
+    uVar7 = (ulonglong)((int)(uVar24 - uVar22) >> 0x1f);
+    uVar15 = (ulonglong)pbVar3[-(int)((param_2 & 0xffffffff) << 2)] - (ulonglong)*(byte *)lVar12;
+    uVar7 = (uVar24 - uVar22 ^ uVar7) - uVar7;
+    uVar17 = (ulonglong)pbVar3[(int)lVar26] - (ulonglong)pbVar3[(int)(param_2 & 0x7fffffff) * 2];
+    uVar8 = (int)uVar11 >> 0x1f;
+    uVar8 = (uVar11 ^ uVar8) - uVar8;
+    uVar13 = ((longlong)(char)pbVar3[(int)uVar16 + iVar2] & 0x7fffffffU) * 2 + uVar14;
+    uVar16 = (ulonglong)((int)(uVar25 - uVar22) >> 0x1f);
+    uVar20 = pbVar3[(int)(param_2 & 0x7fffffff) * 2] - uVar24;
+    uVar9 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0) +
+            ((uVar25 - uVar22 ^ uVar16) - uVar16 & 0x7fffffff) * 2;
+    uVar16 = *(byte *)lVar12 - uVar21;
+    uVar10 = (ulonglong)((int)uVar15 >> 0x1f);
+    uVar10 = (uVar15 ^ uVar10) - uVar10;
+    uVar19 = (ulonglong)((int)uVar17 >> 0x1f);
+    uVar19 = (uVar17 ^ uVar19) - uVar19;
+    uVar23 = (ulonglong)((int)uVar20 >> 0x1f);
+    uVar23 = (uVar20 ^ uVar23) - uVar23;
+    uVar15 = (ulonglong)((int)uVar16 >> 0x1f);
+    uVar15 = (uVar16 ^ uVar15) - uVar15;
+    uVar16 = (ulonglong)((int)(uVar24 - uVar22) >> 0x1f);
+    uVar16 = (uVar24 - uVar22 ^ uVar16) - uVar16;
+    uVar17 = (ulonglong)((int)(uVar21 - uVar25) >> 0x1f);
+    uVar17 = (uVar21 - uVar25 ^ uVar17) - uVar17;
+    vp8_filter(~(-(((~(uVar9 ^ uVar13) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar9 <= uVar13) & 1) |
+                 -(((~(uVar10 ^ uVar14) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar10 <= uVar14) & 1)
+                 | -(((~(uVar19 ^ uVar14) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar19 <= uVar14) & 1
+                    ) | -(((~(uVar23 ^ uVar14) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar23 <= uVar14) & 1) |
+                 -(((~(uVar15 ^ uVar14) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar15 <= uVar14) & 1)
+                 | -(((~(uVar16 ^ uVar14) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar16 <= uVar14) & 1
+                    ) | -(((~(uVar17 ^ uVar14) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar17 <= uVar14) & 1)),
+               -(((~(uVar18 ^ uVar5) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar18 <= uVar5) & 1) |
+               -(((~(uVar7 ^ uVar5) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar7 <= uVar5) & 1),lVar6,
+               lVar28,lVar4,lVar4 + param_2);
+    lVar4 = lVar4 + 1;
+    iVar27 = iVar27 + 1;
+    lVar28 = lVar28 + 1;
+    lVar12 = lVar4 - lVar26;
+    if ((int)((param_6 & 0xffffffff) << 3) <= iVar27) break;
+    uVar16 = param_3 - param_5 & 0xffffffff;
+    uVar15 = param_4 - param_5 & 0xffffffff;
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82815398  vp8_loop_filter_vertical_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:176)
 
-void vp8_loop_filter_vertical_edge_c(void)
+void vp8_loop_filter_vertical_edge_c
+               (undefined8 param_1,longlong param_2,int param_3,int param_4,longlong param_5,
+               ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte *pbVar1;
+  int iVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  uint uVar6;
+  ulonglong uVar5;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  int iVar22;
+  char *pcVar23;
+  
+  lVar3 = __savegprlr();
+  iVar22 = 0;
+  lVar3 = lVar3 + -2;
+  iVar2 = (int)param_5;
+  do {
+    pbVar1 = (byte *)lVar3;
+    uVar4 = (ulonglong)pbVar1[3];
+    uVar20 = (ulonglong)pbVar1[2];
+    pcVar23 = (char *)param_5;
+    uVar19 = (ulonglong)*pbVar1;
+    uVar8 = (ulonglong)*pcVar23;
+    uVar18 = (ulonglong)pbVar1[1];
+    uVar7 = (ulonglong)((int)(uVar4 - uVar20) >> 0x1f);
+    uVar7 = (uVar4 - uVar20 ^ uVar7) - uVar7;
+    uVar15 = (uint)*pbVar1 - (uint)pbVar1[3];
+    uVar11 = (ulonglong)pcVar23[param_4 - iVar2];
+    uVar12 = (ulonglong)((int)(uVar19 - uVar18) >> 0x1f);
+    uVar12 = (uVar19 - uVar18 ^ uVar12) - uVar12;
+    uVar10 = ((longlong)pcVar23[param_3 - iVar2] & 0x7fffffffU) * 2 + uVar11;
+    uVar6 = (int)uVar15 >> 0x1f;
+    uVar13 = (ulonglong)pbVar1[-2] - (ulonglong)pbVar1[-1];
+    uVar6 = (uVar15 ^ uVar6) - uVar6;
+    uVar5 = (ulonglong)((int)(uVar18 - uVar20) >> 0x1f);
+    uVar14 = (ulonglong)pbVar1[5] - (ulonglong)pbVar1[4];
+    uVar16 = pbVar1[-1] - uVar19;
+    uVar9 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) +
+            ((uVar18 - uVar20 ^ uVar5) - uVar5 & 0x7fffffff) * 2;
+    uVar5 = pbVar1[4] - uVar4;
+    uVar17 = (ulonglong)((int)uVar14 >> 0x1f);
+    uVar17 = (uVar14 ^ uVar17) - uVar17;
+    uVar14 = (ulonglong)((int)uVar13 >> 0x1f);
+    uVar14 = (uVar13 ^ uVar14) - uVar14;
+    uVar13 = (ulonglong)((int)uVar5 >> 0x1f);
+    uVar13 = (uVar5 ^ uVar13) - uVar13;
+    uVar21 = (ulonglong)((int)uVar16 >> 0x1f);
+    uVar21 = (uVar16 ^ uVar21) - uVar21;
+    uVar5 = (ulonglong)((int)(uVar4 - uVar20) >> 0x1f);
+    uVar5 = (uVar4 - uVar20 ^ uVar5) - uVar5;
+    uVar4 = (ulonglong)((int)(uVar19 - uVar18) >> 0x1f);
+    uVar4 = (uVar19 - uVar18 ^ uVar4) - uVar4;
+    vp8_filter(~(-(((~(uVar9 ^ uVar10) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar9 <= uVar10) & 1) |
+                 -(((~(uVar17 ^ uVar11) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar17 <= uVar11) & 1)
+                 | -(((~(uVar14 ^ uVar11) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar14 <= uVar11) & 1
+                    ) | -(((~(uVar13 ^ uVar11) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar13 <= uVar11) & 1) |
+                 -(((~(uVar21 ^ uVar11) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar21 <= uVar11) & 1)
+                 | -(((~(uVar5 ^ uVar11) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar5 <= uVar11) & 1)
+                | -(((~(uVar4 ^ uVar11) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar4 <= uVar11) & 1)),
+               -(((~(uVar7 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar7 <= uVar8) & 1) |
+               -(((~(uVar12 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar12 <= uVar8) & 1),
+               lVar3,lVar3 + 1,lVar3 + 2,lVar3 + 3);
+    iVar22 = iVar22 + 1;
+    lVar3 = lVar3 + param_2;
+    param_5 = param_5 + 1;
+  } while (iVar22 < (int)((param_6 & 0xffffffff) << 3));
+  __restgprlr();
+  return;
+}
+
+
+// 828155E0  vp8_mbfilter  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:200)
+
+void vp8_mbfilter(undefined8 param_1,byte param_2,byte *param_3,byte *param_4,byte *param_5,
+                 byte *param_6,byte *param_7,byte *param_8)
+
+{
+  byte bVar1;
+  byte bVar2;
+  byte bVar3;
+  ulonglong uVar4;
+  byte bVar5;
+  int iVar7;
+  char cVar8;
+  ulonglong uVar6;
+  byte bVar12;
+  ulonglong uVar9;
+  int iVar11;
+  char cVar13;
+  ulonglong uVar10;
+  byte bVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  
+  bVar5 = __savegprlr_17();
+  bVar14 = *param_4;
+  bVar1 = *param_7;
+  bVar2 = *param_3;
+  bVar3 = *param_8;
+  uVar17 = (longlong)(char)(bVar14 ^ 0x80) - (longlong)(char)(bVar1 ^ 0x80);
+  uVar4 = ((~(uVar17 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar17) & 1;
+  bVar12 = ((char)((~uVar17 & 0xffffffff) >> 0x1f) + (uVar17 < 0x80) & 1U) - 1;
+  uVar9 = (longlong)(char)(*param_6 ^ 0x80) - (longlong)(char)(*param_5 ^ 0x80);
+  uVar9 = ((longlong)(char)(((char)uVar4 - 1U & (byte)uVar17 | (byte)(uVar4 << 7)) & bVar12) |
+          ~(longlong)(char)bVar12 & 0x7fU) + uVar9 + (uVar9 & 0x7fffffff) * 2;
+  uVar4 = ((~(uVar9 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar9) & 1;
+  bVar12 = ((char)((~uVar9 & 0xffffffff) >> 0x1f) + (uVar9 < 0x80) & 1U) - 1;
+  bVar5 = (((char)uVar4 - 1U & (byte)uVar9 | (byte)(uVar4 << 7)) & bVar12 | ~bVar12 & 0x7f) & bVar5;
+  iVar7 = (int)(char)(param_2 & bVar5);
+  iVar11 = iVar7 + 4;
+  if (iVar11 < 0x80) {
+    cVar13 = (char)iVar11;
+  }
+  else {
+    cVar13 = '\x7f';
+  }
+  iVar7 = iVar7 + 3;
+  cVar8 = '\x7f';
+  if (iVar7 < 0x80) {
+    cVar8 = (char)iVar7;
+  }
+  bVar5 = bVar5 & ~param_2;
+  uVar15 = (longlong)(char)(*param_6 ^ 0x80) - (longlong)((int)cVar13 >> 3);
+  uVar17 = (ulonglong)(char)bVar5;
+  uVar4 = ((~(uVar15 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar15) & 1;
+  uVar10 = (longlong)((int)cVar8 >> 3) + (longlong)(char)(*param_5 ^ 0x80);
+  iVar7 = (char)bVar5 * 0x1b + 0x3f >> 7;
+  uVar6 = (ulonglong)iVar7;
+  bVar12 = ((char)((~uVar15 & 0xffffffff) >> 0x1f) + (uVar15 < 0x80) & 1U) - 1;
+  uVar9 = ((~(uVar6 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar6) & 1;
+  bVar5 = ((char)((~uVar6 & 0xffffffff) >> 0x1f) + (uVar6 < 0x80) & 1U) - 1;
+  lVar16 = (longlong)
+           (char)(((char)uVar9 - 1U & (byte)iVar7 | (byte)(uVar9 << 7)) & bVar5 | ~bVar5 & 0x7f);
+  uVar9 = ((~(uVar10 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar10) & 1;
+  bVar5 = ((char)((~uVar10 & 0xffffffff) >> 0x1f) + (uVar10 < 0x80) & 1U) - 1;
+  uVar15 = ((longlong)(char)(((char)uVar4 - 1U & (byte)uVar15 | (byte)(uVar4 << 7)) & bVar12) |
+           ~(longlong)(char)bVar12 & 0x7fU) - lVar16;
+  uVar6 = ((longlong)(char)(((char)uVar9 - 1U & (byte)uVar10 | (byte)(uVar9 << 7)) & bVar5) |
+          ~(longlong)(char)bVar5 & 0x7fU) + lVar16;
+  uVar4 = ((~(uVar15 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar15) & 1;
+  uVar9 = ((~(uVar6 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar6) & 1;
+  bVar5 = ((char)((~uVar15 & 0xffffffff) >> 0x1f) + (uVar15 < 0x80) & 1U) - 1;
+  bVar12 = ((char)((~uVar6 & 0xffffffff) >> 0x1f) + (uVar6 < 0x80) & 1U) - 1;
+  iVar7 = (int)((uVar17 + (uVar17 & 0x1fffffff) * 8 & 0xffffffff) << 1) + 0x3f >> 7;
+  uVar10 = (ulonglong)iVar7;
+  *param_6 = (((char)uVar4 - 1U & (byte)uVar15 | (byte)(uVar4 << 7)) & bVar5 | ~bVar5 & 0x7f) ^ 0x80
+  ;
+  *param_5 = (((char)uVar9 - 1U & (byte)uVar6 | (byte)(uVar9 << 7)) & bVar12 | ~bVar12 & 0x7f) ^
+             0x80;
+  uVar4 = ((~(uVar10 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar10) & 1;
+  bVar5 = ((char)((~uVar10 & 0xffffffff) >> 0x1f) + (uVar10 < 0x80) & 1U) - 1;
+  lVar16 = (longlong)
+           (char)(((char)uVar4 - 1U & (byte)iVar7 | (byte)(uVar4 << 7)) & bVar5 | ~bVar5 & 0x7f);
+  uVar10 = (char)(bVar1 ^ 0x80) - lVar16;
+  uVar6 = lVar16 + (char)(bVar14 ^ 0x80);
+  uVar4 = ((~(uVar10 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar10) & 1;
+  bVar14 = ((char)((~uVar10 & 0xffffffff) >> 0x1f) + (uVar10 < 0x80) & 1U) - 1;
+  uVar9 = ((~(uVar6 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar6) & 1;
+  bVar1 = ((char)((~uVar6 & 0xffffffff) >> 0x1f) + (uVar6 < 0x80) & 1U) - 1;
+  iVar7 = (int)(uVar17 + 7) + (int)((uVar17 + 7 & 0xffffffff) << 3) >> 7;
+  uVar17 = (ulonglong)iVar7;
+  *param_7 = (((char)uVar4 - 1U & (byte)uVar10 | (byte)(uVar4 << 7)) & bVar14 | ~bVar14 & 0x7f) ^
+             0x80;
+  *param_4 = (((char)uVar9 - 1U & (byte)uVar6 | (byte)(uVar9 << 7)) & bVar1 | ~bVar1 & 0x7f) ^ 0x80;
+  uVar4 = ((~(uVar17 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar17) & 1;
+  bVar14 = ((char)((~uVar17 & 0xffffffff) >> 0x1f) + (uVar17 < 0x80) & 1U) - 1;
+  lVar16 = (longlong)
+           (char)(((char)uVar4 - 1U & (byte)iVar7 | (byte)(uVar4 << 7)) & bVar14 | ~bVar14 & 0x7f);
+  uVar17 = (char)(bVar3 ^ 0x80) - lVar16;
+  uVar6 = (char)(bVar2 ^ 0x80) + lVar16;
+  uVar4 = ((~(uVar17 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar17) & 1;
+  uVar9 = ((~(uVar6 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar6) & 1;
+  bVar14 = ((char)((~uVar17 & 0xffffffff) >> 0x1f) + (uVar17 < 0x80) & 1U) - 1;
+  bVar1 = ((char)((~uVar6 & 0xffffffff) >> 0x1f) + (uVar6 < 0x80) & 1U) - 1;
+  *param_8 = (bVar14 & ((char)uVar4 - 1U & (byte)uVar17 | (byte)(uVar4 << 7)) | ~bVar14 & 0x7f) ^
+             0x80;
+  *param_3 = (bVar1 & ((char)uVar9 - 1U & (byte)uVar6 | (byte)(uVar9 << 7)) | ~bVar1 & 0x7f) ^ 0x80;
+  __restgprlr_17();
+  return;
 }
 
 
 // 82815BF8  vp8_mbloop_filter_horizontal_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:262)
 
-void vp8_mbloop_filter_horizontal_edge_c(void)
+void vp8_mbloop_filter_horizontal_edge_c
+               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4,
+               longlong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  int iVar2;
+  byte *pbVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  ulonglong uVar23;
+  longlong lVar24;
+  longlong lVar25;
+  int iVar26;
+  longlong lVar27;
+  
+  lVar4 = __savegprlr();
+  iVar26 = 0;
+  lVar25 = (param_2 & 0x7fffffff) * 2;
+  lVar24 = param_2 + (param_2 & 0x7fffffff) * 2;
+  lVar27 = lVar4 - param_2;
+  iVar2 = (int)param_5 - (int)lVar4;
+  uVar7 = param_3 - param_5;
+  uVar5 = param_4 - param_5;
+  while( true ) {
+    lVar8 = lVar4 + (param_2 & 0x7fffffff) * -2;
+    uVar23 = (ulonglong)*(byte *)lVar27;
+    pbVar3 = (byte *)lVar4;
+    uVar22 = (ulonglong)pbVar3[(int)param_2];
+    uVar6 = (ulonglong)(char)pbVar3[iVar2];
+    uVar21 = (ulonglong)*pbVar3;
+    bVar1 = *(byte *)lVar8;
+    uVar18 = (ulonglong)bVar1;
+    lVar19 = lVar4 - lVar24;
+    uVar16 = (ulonglong)((int)(uVar18 - uVar23) >> 0x1f);
+    uVar12 = (ulonglong)(char)pbVar3[(int)uVar5 + iVar2];
+    uVar13 = (ulonglong)*(byte *)lVar19;
+    uVar11 = (uint)bVar1 - (uint)pbVar3[(int)param_2];
+    uVar16 = (uVar18 - uVar23 ^ uVar16) - uVar16;
+    uVar5 = ((longlong)(char)pbVar3[(int)uVar7 + iVar2] & 0x7fffffffU) * 2 + uVar12;
+    uVar9 = (ulonglong)((int)(uVar22 - uVar21) >> 0x1f);
+    uVar14 = pbVar3[-(int)((param_2 & 0xffffffff) << 2)] - uVar13;
+    uVar9 = (uVar22 - uVar21 ^ uVar9) - uVar9;
+    uVar10 = (int)uVar11 >> 0x1f;
+    uVar10 = (uVar11 ^ uVar10) - uVar10;
+    uVar7 = (ulonglong)((int)(uVar23 - uVar21) >> 0x1f);
+    uVar13 = uVar13 - uVar18;
+    uVar7 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0) +
+            ((uVar23 - uVar21 ^ uVar7) - uVar7 & 0x7fffffff) * 2;
+    uVar20 = (ulonglong)((int)uVar14 >> 0x1f);
+    uVar15 = pbVar3[(int)lVar25] - uVar22;
+    uVar20 = (uVar14 ^ uVar20) - uVar20;
+    uVar17 = (ulonglong)pbVar3[(int)lVar24] - (ulonglong)pbVar3[(int)lVar25];
+    uVar14 = (ulonglong)((int)uVar17 >> 0x1f);
+    uVar14 = (uVar17 ^ uVar14) - uVar14;
+    uVar17 = (ulonglong)((int)uVar15 >> 0x1f);
+    uVar17 = (uVar15 ^ uVar17) - uVar17;
+    uVar15 = (ulonglong)((int)uVar13 >> 0x1f);
+    uVar15 = (uVar13 ^ uVar15) - uVar15;
+    uVar13 = (ulonglong)((int)(uVar22 - uVar21) >> 0x1f);
+    uVar13 = (uVar22 - uVar21 ^ uVar13) - uVar13;
+    uVar21 = (ulonglong)((int)(uVar18 - uVar23) >> 0x1f);
+    uVar21 = (uVar18 - uVar23 ^ uVar21) - uVar21;
+    vp8_mbfilter(~(-(((~(uVar7 ^ uVar5) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar7 <= uVar5) & 1) |
+                   -(((~(uVar20 ^ uVar12) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar20 <= uVar12) & 1
+                    ) | -(((~(uVar14 ^ uVar12) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar14 <= uVar12) & 1) |
+                   -(((~(uVar17 ^ uVar12) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar17 <= uVar12) & 1
+                    ) | -(((~(uVar15 ^ uVar12) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar15 <= uVar12) & 1) |
+                   -(((~(uVar13 ^ uVar12) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar13 <= uVar12) & 1
+                    ) | -(((~(uVar21 ^ uVar12) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar21 <= uVar12) & 1)),
+                 -(((~(uVar16 ^ uVar6) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar16 <= uVar6) & 1) |
+                 (ulonglong)
+                 (byte)-((char)((~(uVar9 ^ uVar6) & 0xffffffff) >> 0x1f) + (uVar9 <= uVar6) & 1U),
+                 lVar19,lVar8,lVar27,lVar4,lVar4 + param_2,lVar25 + lVar4);
+    iVar26 = iVar26 + 1;
+    lVar4 = lVar4 + 1;
+    lVar27 = lVar27 + 1;
+    if ((int)((param_6 & 0xffffffff) << 3) <= iVar26) break;
+    uVar7 = param_3 - param_5 & 0xffffffff;
+    uVar5 = param_4 - param_5 & 0xffffffff;
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82815E88  vp8_mbloop_filter_vertical_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:297)
 
-void vp8_mbloop_filter_vertical_edge_c(void)
+void vp8_mbloop_filter_vertical_edge_c
+               (undefined8 param_1,longlong param_2,int param_3,int param_4,longlong param_5,
+               ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte *pbVar1;
+  int iVar2;
+  longlong lVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  uint uVar15;
+  ulonglong uVar14;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  int iVar21;
+  char *pcVar22;
+  
+  lVar3 = __savegprlr();
+  iVar21 = 0;
+  lVar3 = lVar3 + -3;
+  iVar2 = (int)param_5;
+  do {
+    pbVar1 = (byte *)lVar3;
+    uVar20 = (ulonglong)pbVar1[4];
+    uVar19 = (ulonglong)pbVar1[3];
+    pcVar22 = (char *)param_5;
+    uVar18 = (ulonglong)pbVar1[1];
+    uVar9 = (ulonglong)*pcVar22;
+    uVar17 = (ulonglong)pbVar1[2];
+    uVar7 = (ulonglong)((int)(uVar20 - uVar19) >> 0x1f);
+    uVar7 = (uVar20 - uVar19 ^ uVar7) - uVar7;
+    uVar10 = (ulonglong)pcVar22[param_4 - iVar2];
+    uVar15 = (uint)pbVar1[1] - (uint)pbVar1[4];
+    uVar13 = (ulonglong)pbVar1[6] - (ulonglong)pbVar1[5];
+    uVar5 = (ulonglong)(uint)((int)(uVar18 - uVar17) >> 0x1f);
+    uVar8 = ((longlong)pcVar22[param_3 - iVar2] & 0x7fffffffU) * 2 + uVar10;
+    uVar5 = (uVar18 - uVar17 ^ uVar5) - uVar5;
+    uVar16 = pbVar1[5] - uVar20;
+    uVar4 = (int)uVar15 >> 0x1f;
+    uVar4 = (uVar15 ^ uVar4) - uVar4;
+    uVar11 = (ulonglong)((int)(uVar17 - uVar19) >> 0x1f);
+    uVar11 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) +
+             ((uVar17 - uVar19 ^ uVar11) - uVar11 & 0x7fffffff) * 2;
+    uVar6 = (ulonglong)((int)uVar13 >> 0x1f);
+    uVar6 = (uVar13 ^ uVar6) - uVar6;
+    uVar12 = *pbVar1 - uVar18;
+    uVar14 = (ulonglong)pbVar1[-1] - (ulonglong)*pbVar1;
+    uVar13 = (ulonglong)((int)uVar14 >> 0x1f);
+    uVar13 = (uVar14 ^ uVar13) - uVar13;
+    uVar14 = (ulonglong)((int)uVar16 >> 0x1f);
+    uVar14 = (uVar16 ^ uVar14) - uVar14;
+    uVar16 = (ulonglong)((int)uVar12 >> 0x1f);
+    uVar16 = (uVar12 ^ uVar16) - uVar16;
+    uVar12 = (ulonglong)((int)(uVar20 - uVar19) >> 0x1f);
+    uVar12 = (uVar20 - uVar19 ^ uVar12) - uVar12;
+    uVar19 = (ulonglong)((int)(uVar18 - uVar17) >> 0x1f);
+    uVar19 = (uVar18 - uVar17 ^ uVar19) - uVar19;
+    vp8_mbfilter(~(-(((~(uVar11 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar11 <= uVar8) & 1)
+                   | -(((~(uVar6 ^ uVar10) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar6 <= uVar10) & 1
+                      ) | -(((~(uVar13 ^ uVar10) & 0xffffffff) >> 0x1f) +
+                            (ulonglong)(uVar13 <= uVar10) & 1) |
+                   -(((~(uVar14 ^ uVar10) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar14 <= uVar10) & 1
+                    ) | -(((~(uVar16 ^ uVar10) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar16 <= uVar10) & 1) |
+                   -(((~(uVar12 ^ uVar10) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar12 <= uVar10) & 1
+                    ) | -(((~(uVar19 ^ uVar10) & 0xffffffff) >> 0x1f) +
+                          (ulonglong)(uVar19 <= uVar10) & 1)),
+                 (ulonglong)
+                 (byte)-((char)((~(uVar7 ^ uVar9) & 0xffffffff) >> 0x1f) + (uVar7 <= uVar9) & 1U) |
+                 -(((~(uVar5 ^ uVar9) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar5 <= uVar9) & 1),
+                 lVar3,lVar3 + 1,lVar3 + 2,lVar3 + 3,lVar3 + 4,lVar3 + 5);
+    iVar21 = iVar21 + 1;
+    lVar3 = lVar3 + param_2;
+    param_5 = param_5 + 1;
+  } while (iVar21 < (int)((param_6 & 0xffffffff) << 3));
+  __restgprlr();
+  return;
 }
 
 
@@ -127,21 +740,103 @@ char vp8_simple_filter_mask
 
 // 82816150  vp8_simple_filter  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:330)
 
-void vp8_simple_filter(void)
+void vp8_simple_filter(undefined8 param_1,char *param_2,byte *param_3,byte *param_4,char *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  ulonglong uVar2;
+  byte bVar3;
+  ulonglong uVar4;
+  char cVar5;
+  int iVar6;
+  byte bVar9;
+  ulonglong uVar7;
+  int iVar8;
+  
+  bVar3 = __savegprlr_29();
+  bVar1 = *param_3;
+  uVar4 = ((longlong)*param_2 ^ 0xffffffffffffff80U) - ((longlong)*param_5 ^ 0xffffffffffffff80U);
+  uVar2 = ((~(uVar4 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar4) & 1;
+  bVar9 = ((char)((~uVar4 & 0xffffffff) >> 0x1f) + (uVar4 < 0x80) & 1U) - 1;
+  uVar7 = (longlong)(char)(*param_4 ^ 0x80) - (longlong)(char)(bVar1 ^ 0x80);
+  uVar4 = ((longlong)(char)(((char)uVar2 - 1U & (byte)uVar4 | (byte)(uVar2 << 7)) & bVar9) |
+          ~(longlong)(char)bVar9 & 0x7fU) + uVar7 + (uVar7 & 0x7fffffff) * 2;
+  uVar2 = ((~(uVar4 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar4) & 1;
+  bVar9 = ((char)((~uVar4 & 0xffffffff) >> 0x1f) + (uVar4 < 0x80) & 1U) - 1;
+  iVar8 = (int)(char)((((char)uVar2 - 1U & (byte)uVar4 | (byte)(uVar2 << 7)) & bVar9 | ~bVar9 & 0x7f
+                      ) & bVar3);
+  iVar6 = iVar8 + 4;
+  if (iVar6 < 0x80) {
+    cVar5 = (char)iVar6;
+  }
+  else {
+    cVar5 = '\x7f';
+  }
+  uVar4 = (longlong)(char)(*param_4 ^ 0x80) - (longlong)((int)cVar5 >> 3);
+  iVar8 = iVar8 + 3;
+  uVar2 = ((~(uVar4 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar4) & 1;
+  bVar3 = ((char)((~uVar4 & 0xffffffff) >> 0x1f) + (uVar4 < 0x80) & 1U) - 1;
+  *param_4 = (bVar3 & ((char)uVar2 - 1U & (byte)uVar4 | (byte)(uVar2 << 7)) | ~bVar3 & 0x7f) ^ 0x80;
+  cVar5 = '\x7f';
+  if (iVar8 < 0x80) {
+    cVar5 = (char)iVar8;
+  }
+  uVar4 = (longlong)((int)cVar5 >> 3) + (longlong)(char)(bVar1 ^ 0x80);
+  uVar2 = ((~(uVar4 ^ 0xffffffffffffff80) & 0xffffffff) >> 0x1f) +
+          (ulonglong)(0xffffffffffffff7f < uVar4) & 1;
+  bVar1 = ((char)((~uVar4 & 0xffffffff) >> 0x1f) + (uVar4 < 0x80) & 1U) - 1;
+  *param_3 = (bVar1 & ((char)uVar2 - 1U & (byte)uVar4 | (byte)(uVar2 << 7)) | ~bVar1 & 0x7f) ^ 0x80;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82816370  vp8_loop_filter_simple_horizontal_edge_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter_filters.c:363)
 
-void vp8_loop_filter_simple_horizontal_edge_c(void)
+void vp8_loop_filter_simple_horizontal_edge_c
+               (undefined8 param_1,ulonglong param_2,int param_3,int param_4,undefined8 param_5,
+               ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  longlong lVar2;
+  uint uVar4;
+  ulonglong uVar3;
+  longlong lVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  longlong lVar10;
+  byte *pbVar11;
+  
+  lVar2 = __savegprlr_23();
+  iVar9 = 0;
+  lVar10 = lVar2 - param_2;
+  iVar1 = param_4 - (int)lVar2;
+  do {
+    lVar5 = lVar2 + (param_2 & 0x7fffffff) * -2;
+    pbVar11 = (byte *)lVar2;
+    uVar6 = (ulonglong)*(byte *)lVar10 - (ulonglong)*pbVar11;
+    uVar7 = (uint)*(byte *)lVar5 - (uint)pbVar11[(int)param_2];
+    uVar4 = (int)uVar7 >> 0x1f;
+    uVar8 = ((longlong)(char)pbVar11[(param_3 - param_4) + iVar1] & 0x7fffffffU) * 2 +
+            (longlong)(char)pbVar11[iVar1];
+    uVar4 = (uVar7 ^ uVar4) - uVar4;
+    uVar3 = (ulonglong)((int)uVar6 >> 0x1f);
+    uVar3 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) +
+            ((uVar6 ^ uVar3) - uVar3 & 0x7fffffff) * 2;
+    vp8_simple_filter(-(((uVar3 & 0xffffffff) >> 0x1f) + (longlong)((int)uVar8 >> 0x1f) +
+                       (ulonglong)(uVar3 <= uVar8)),lVar5,lVar10,lVar2,lVar2 + param_2);
+    iVar9 = iVar9 + 1;
+    lVar2 = lVar2 + 1;
+    lVar10 = lVar10 + 1;
+  } while (iVar9 < (int)((param_6 & 0xffffffff) << 3));
+  __restgprlr_23();
+  return;
 }
 
 

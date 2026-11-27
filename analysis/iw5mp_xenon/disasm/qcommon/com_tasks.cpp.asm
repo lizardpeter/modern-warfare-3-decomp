@@ -3,6 +3,54 @@
 ; 824F4B58  TaskManager_AssertTaskSetIsRegistered  (qcommon/com_tasks.cpp:70)
   824F4B58  7D8802A6             mfspr r12,LR
   824F4B5C  48421B5D             bl 0x829166b8
+  824F4B60  9421FF80             stwu r1,-0x80(r1)
+  824F4B64  81230000             lwz r9,0x0(r3)
+  824F4B68  3D608209             lis r11,-0x7df7
+  824F4B6C  3D408200             lis r10,-0x7e00
+  824F4B70  7C7F1B78             or r31,r3,r3
+  824F4B74  2B090000             cmplwi cr6,r9,0x0
+  824F4B78  3BABB558             subi r29,r11,0x4aa8
+  824F4B7C  3B8A0F98             addi r28,r10,0xf98
+  824F4B80  409A0020             bne cr6,0x824f4ba0
+  824F4B84  3D608209             lis r11,-0x7df7
+  824F4B88  7F86E378             or r6,r28,r28
+  824F4B8C  38EBB538             subi r7,r11,0x4ac8
+  824F4B90  7FA3EB78             or r3,r29,r29
+  824F4B94  38A00000             li r5,0x0
+  824F4B98  38800047             li r4,0x47
+  824F4B9C  480DF965             bl 0x825d4500
+LAB_824f4ba0:
+  824F4BA0  815F0000             lwz r10,0x0(r31)
+  824F4BA4  3D608366             lis r11,-0x7c9a
+  824F4BA8  3BCBE010             subi r30,r11,0x1ff0
+  824F4BAC  5549103A             rlwinm r9,r10,0x2,0x0,0x1d
+  824F4BB0  7D09F02E             lwzx r8,r9,r30
+  824F4BB4  7F08F840             cmplw cr6,r8,r31
+  824F4BB8  419A0020             beq cr6,0x824f4bd8
+  824F4BBC  3D608209             lis r11,-0x7df7
+  824F4BC0  7F86E378             or r6,r28,r28
+  824F4BC4  38EBB4E8             subi r7,r11,0x4b18
+  824F4BC8  7FA3EB78             or r3,r29,r29
+  824F4BCC  38A00000             li r5,0x0
+  824F4BD0  38800048             li r4,0x48
+  824F4BD4  480DF92D             bl 0x825d4500
+LAB_824f4bd8:
+  824F4BD8  817F0000             lwz r11,0x0(r31)
+  824F4BDC  395E0080             addi r10,r30,0x80
+  824F4BE0  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  824F4BE4  7D09502E             lwzx r8,r9,r10
+  824F4BE8  2B080000             cmplwi cr6,r8,0x0
+  824F4BEC  409A0020             bne cr6,0x824f4c0c
+  824F4BF0  3D608209             lis r11,-0x7df7
+  824F4BF4  7F86E378             or r6,r28,r28
+  824F4BF8  38EBB4A0             subi r7,r11,0x4b60
+  824F4BFC  7FA3EB78             or r3,r29,r29
+  824F4C00  38A00000             li r5,0x0
+  824F4C04  38800049             li r4,0x49
+  824F4C08  480DF8F9             bl 0x825d4500
+LAB_824f4c0c:
+  824F4C0C  38210080             addi r1,r1,0x80
+  824F4C10  48421AF8             b 0x82916708
 
 ; 824F4C18  TaskManager_GetTaskSetListFromSet  (qcommon/com_tasks.cpp:78)
   824F4C18  7D8802A6             mfspr r12,LR
@@ -71,6 +119,54 @@ LAB_824f4cd0:
 ; 824F5548  TaskManager_ClearOverlappedTasks  (qcommon/com_tasks.cpp:106)
   824F5548  7D8802A6             mfspr r12,LR
   824F554C  48421165             bl 0x829166b0
+  824F5550  9421FF70             stwu r1,-0x90(r1)
+  824F5554  7C7F1B78             or r31,r3,r3
+  824F5558  4BFFF601             bl 0x824f4b58
+  824F555C  3D208209             lis r9,-0x7df7
+  824F5560  3D408200             lis r10,-0x7e00
+  824F5564  3D608209             lis r11,-0x7df7
+  824F5568  3BFF0008             addi r31,r31,0x8
+  824F556C  3BC00020             li r30,0x20
+  824F5570  3BA00000             li r29,0x0
+  824F5574  3B89B558             subi r28,r9,0x4aa8
+  824F5578  3B6A0F98             addi r27,r10,0xf98
+  824F557C  3B4BB598             subi r26,r11,0x4a68
+LAB_824f5580:
+  824F5580  2B1F0000             cmplwi cr6,r31,0x0
+  824F5584  409A001C             bne cr6,0x824f55a0
+  824F5588  7F47D378             or r7,r26,r26
+  824F558C  7F66DB78             or r6,r27,r27
+  824F5590  7F83E378             or r3,r28,r28
+  824F5594  38A00000             li r5,0x0
+  824F5598  388001C6             li r4,0x1c6
+  824F559C  480DEF65             bl 0x825d4500
+LAB_824f55a0:
+  824F55A0  7FE3FB78             or r3,r31,r31
+  824F55A4  4BFFF8C5             bl 0x824f4e68
+  824F55A8  817F0000             lwz r11,0x0(r31)
+  824F55AC  2F0B0002             cmpwi cr6,r11,0x2
+  824F55B0  419A0018             beq cr6,0x824f55c8
+  824F55B4  7FE3FB78             or r3,r31,r31
+  824F55B8  481FCE39             bl 0x826f23f0
+  824F55BC  817F0000             lwz r11,0x0(r31)
+  824F55C0  2F0B0002             cmpwi cr6,r11,0x2
+  824F55C4  409A000C             bne cr6,0x824f55d0
+LAB_824f55c8:
+  824F55C8  387F0028             addi r3,r31,0x28
+  824F55CC  481EE4AD             bl 0x826e3a78
+LAB_824f55d0:
+  824F55D0  397F0094             addi r11,r31,0x94
+  824F55D4  9BBF0094             stb r29,0x94(r31)
+  824F55D8  38A00088             li r5,0x88
+  824F55DC  93BF0098             stw r29,0x98(r31)
+  824F55E0  38800000             li r4,0x0
+  824F55E4  386BFF74             subi r3,r11,0x8c
+  824F55E8  48421219             bl 0x82916800
+  824F55EC  37DEFFFF             subic. r30,r30,0x1
+  824F55F0  3BFF00A0             addi r31,r31,0xa0
+  824F55F4  4082FF8C             bne 0x824f5580
+  824F55F8  38210090             addi r1,r1,0x90
+  824F55FC  48421104             b 0x82916700
 
 ; 824F5600  TaskManager_ClearOverlappedTasksForController  (qcommon/com_tasks.cpp:117)
   824F5600  7D8802A6             mfspr r12,LR
@@ -130,18 +226,586 @@ LAB_824f56ac:
 ; 824F56C0  TaskManager_ConstructTaskSet  (qcommon/com_tasks.cpp:129)
   824F56C0  7D8802A6             mfspr r12,LR
   824F56C4  48420FE1             bl 0x829166a4
+  824F56C8  9421FF60             stwu r1,-0xa0(r1)
+  824F56CC  81030000             lwz r8,0x0(r3)
+  824F56D0  3D608209             lis r11,-0x7df7
+  824F56D4  3D408209             lis r10,-0x7df7
+  824F56D8  7C7F1B78             or r31,r3,r3
+  824F56DC  7C9E2378             or r30,r4,r4
+  824F56E0  2B080000             cmplwi cr6,r8,0x0
+  824F56E4  3B0BB558             subi r24,r11,0x4aa8
+  824F56E8  3AEAB7E8             subi r23,r10,0x4818
+  824F56EC  419A0020             beq cr6,0x824f570c
+  824F56F0  3D608209             lis r11,-0x7df7
+  824F56F4  7EE6BB78             or r6,r23,r23
+  824F56F8  38EBB7C8             subi r7,r11,0x4838
+  824F56FC  7F03C378             or r3,r24,r24
+  824F5700  38A00000             li r5,0x0
+  824F5704  38800083             li r4,0x83
+  824F5708  480DEDF9             bl 0x825d4500
+LAB_824f570c:
+  824F570C  3D408366             lis r10,-0x7c9a
+  824F5710  39600000             li r11,0x0
+  824F5714  3B2AE010             subi r25,r10,0x1ff0
+  824F5718  39590004             addi r10,r25,0x4
+LAB_824f571c:
+  824F571C  812A0000             lwz r9,0x0(r10)
+  824F5720  2B090000             cmplwi cr6,r9,0x0
+  824F5724  419A0054             beq cr6,0x824f5778
+  824F5728  396B0001             addi r11,r11,0x1
+  824F572C  394A0004             addi r10,r10,0x4
+  824F5730  2B0B0020             cmplwi cr6,r11,0x20
+  824F5734  409AFFE8             bne cr6,0x824f571c
+  824F5738  3D408401             lis r10,-0x7bff
+  824F573C  3D608209             lis r11,-0x7df7
+  824F5740  3BEBB790             subi r31,r11,0x4870
+  824F5744  816A3128             lwz r11,0x3128(r10)
+  824F5748  2F0B0000             cmpwi cr6,r11,0x0
+  824F574C  409A0018             bne cr6,0x824f5764
+  824F5750  7FE6FB78             or r6,r31,r31
+  824F5754  7F03C378             or r3,r24,r24
+  824F5758  38A00000             li r5,0x0
+  824F575C  388000A0             li r4,0xa0
+  824F5760  480DEDA1             bl 0x825d4500
+LAB_824f5764:
+  824F5764  7FE4FB78             or r4,r31,r31
+  824F5768  38600000             li r3,0x0
+  824F576C  48004BFD             bl 0x824fa368
+  824F5770  382100A0             addi r1,r1,0xa0
+  824F5774  48420F80             b 0x829166f4
+LAB_824f5778:
+  824F5778  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  824F577C  39390004             addi r9,r25,0x4
+  824F5780  39190084             addi r8,r25,0x84
+  824F5784  38EB0001             addi r7,r11,0x1
+  824F5788  3D608209             lis r11,-0x7df7
+  824F578C  3BBF009E             addi r29,r31,0x9e
+  824F5790  90FF0000             stw r7,0x0(r31)
+  824F5794  7FEA492E             stwx r31,r10,r9
+  824F5798  3D208209             lis r9,-0x7df7
+  824F579C  7FCA412E             stwx r30,r10,r8
+  824F57A0  3D408200             lis r10,-0x7e00
+  824F57A4  3B400020             li r26,0x20
+  824F57A8  3BCBB750             subi r30,r11,0x48b0
+  824F57AC  3B8A0F98             addi r28,r10,0xf98
+  824F57B0  3B69B730             subi r27,r9,0x48d0
+LAB_824f57b4:
+  824F57B4  817F0000             lwz r11,0x0(r31)
+  824F57B8  2B0B0000             cmplwi cr6,r11,0x0
+  824F57BC  409A001C             bne cr6,0x824f57d8
+  824F57C0  7F67DB78             or r7,r27,r27
+  824F57C4  7F86E378             or r6,r28,r28
+  824F57C8  7F03C378             or r3,r24,r24
+  824F57CC  38A00000             li r5,0x0
+  824F57D0  38800092             li r4,0x92
+  824F57D4  480DED2D             bl 0x825d4500
+LAB_824f57d8:
+  824F57D8  817F0000             lwz r11,0x0(r31)
+  824F57DC  556A063E             rlwinm r10,r11,0x0,0x18,0x1f
+  824F57E0  995D0000             stb r10,0x0(r29)
+  824F57E4  811F0000             lwz r8,0x0(r31)
+  824F57E8  7F0A4040             cmplw cr6,r10,r8
+  824F57EC  419A001C             beq cr6,0x824f5808
+  824F57F0  7FC7F378             or r7,r30,r30
+  824F57F4  7EE6BB78             or r6,r23,r23
+  824F57F8  7F03C378             or r3,r24,r24
+  824F57FC  38A00000             li r5,0x0
+  824F5800  38800094             li r4,0x94
+  824F5804  480DECFD             bl 0x825d4500
+LAB_824f5808:
+  824F5808  375AFFFF             subic. r26,r26,0x1
+  824F580C  3BBD00A0             addi r29,r29,0xa0
+  824F5810  4082FFA4             bne 0x824f57b4
+  824F5814  7FE3FB78             or r3,r31,r31
+  824F5818  4BFFFD31             bl 0x824f5548
+  824F581C  81790000             lwz r11,0x0(r25)
+  824F5820  396B0001             addi r11,r11,0x1
+  824F5824  91790000             stw r11,0x0(r25)
+  824F5828  382100A0             addi r1,r1,0xa0
+  824F582C  48420EC8             b 0x829166f4
 
 ; 824F5830  TaskManager_CancelTask  (qcommon/com_tasks.cpp:166)
   824F5830  7D8802A6             mfspr r12,LR
   824F5834  48420E89             bl 0x829166bc
+  824F5838  9421FF90             stwu r1,-0x70(r1)
+  824F583C  80830000             lwz r4,0x0(r3)
+  824F5840  7C7F1B78             or r31,r3,r3
+  824F5844  2F040001             cmpwi cr6,r4,0x1
+  824F5848  409A0118             bne cr6,0x824f5960
+  824F584C  81630008             lwz r11,0x8(r3)
+  824F5850  2F0B0000             cmpwi cr6,r11,0x0
+  824F5854  419A0084             beq cr6,0x824f58d8
+  824F5858  81230018             lwz r9,0x18(r3)
+  824F585C  3D608209             lis r11,-0x7df7
+  824F5860  3D408200             lis r10,-0x7e00
+  824F5864  2B090000             cmplwi cr6,r9,0x0
+  824F5868  3BCBB558             subi r30,r11,0x4aa8
+  824F586C  3BAA0F98             addi r29,r10,0xf98
+  824F5870  419A0020             beq cr6,0x824f5890
+  824F5874  3D608209             lis r11,-0x7df7
+  824F5878  7FA6EB78             or r6,r29,r29
+  824F587C  38EBB900             subi r7,r11,0x4700
+  824F5880  7FC3F378             or r3,r30,r30
+  824F5884  38A00000             li r5,0x0
+  824F5888  388000B9             li r4,0xb9
+  824F588C  480DEC75             bl 0x825d4500
+LAB_824f5890:
+  824F5890  817F0008             lwz r11,0x8(r31)
+  824F5894  814B0004             lwz r10,0x4(r11)
+  824F5898  2F0A0000             cmpwi cr6,r10,0x0
+  824F589C  409A0020             bne cr6,0x824f58bc
+  824F58A0  3D608209             lis r11,-0x7df7
+  824F58A4  7FA6EB78             or r6,r29,r29
+  824F58A8  38EBB8D8             subi r7,r11,0x4728
+  824F58AC  7FC3F378             or r3,r30,r30
+  824F58B0  38A00000             li r5,0x0
+  824F58B4  388000BA             li r4,0xba
+  824F58B8  480DEC49             bl 0x825d4500
+LAB_824f58bc:
+  824F58BC  807F0008             lwz r3,0x8(r31)
+  824F58C0  48403A69             bl 0x828f9328
+  824F58C4  7FE3FB78             or r3,r31,r31
+  824F58C8  4BFFF659             bl 0x824f4f20
+  824F58CC  38600001             li r3,0x1
+  824F58D0  38210070             addi r1,r1,0x70
+  824F58D4  48420E38             b 0x8291670c
+LAB_824f58d8:
+  824F58D8  3BDF000C             addi r30,r31,0xc
+  824F58DC  38A00000             li r5,0x0
+  824F58E0  38800000             li r4,0x0
+  824F58E4  7FC3F378             or r3,r30,r30
+  824F58E8  483AF181             bl 0x828a4a68
+  824F58EC  7C651B78             or r5,r3,r3
+  824F58F0  2B0303E4             cmplwi cr6,r3,0x3e4
+  824F58F4  409A0034             bne cr6,0x824f5928
+  824F58F8  7FC3F378             or r3,r30,r30
+  824F58FC  483AF755             bl 0x828a5050
+  824F5900  7C651B78             or r5,r3,r3
+  824F5904  2B030000             cmplwi cr6,r3,0x0
+  824F5908  419A0028             beq cr6,0x824f5930
+  824F590C  3D608209             lis r11,-0x7df7
+  824F5910  38600010             li r3,0x10
+  824F5914  388BB888             subi r4,r11,0x4778
+  824F5918  48001249             bl 0x824f6b60
+  824F591C  38600000             li r3,0x0
+  824F5920  38210070             addi r1,r1,0x70
+  824F5924  48420DE8             b 0x8291670c
+LAB_824f5928:
+  824F5928  2B050000             cmplwi cr6,r5,0x0
+  824F592C  409A0018             bne cr6,0x824f5944
+LAB_824f5930:
+  824F5930  7FE3FB78             or r3,r31,r31
+  824F5934  4BFFF35D             bl 0x824f4c90
+  824F5938  38600001             li r3,0x1
+  824F593C  38210070             addi r1,r1,0x70
+  824F5940  48420DCC             b 0x8291670c
+LAB_824f5944:
+  824F5944  3D608209             lis r11,-0x7df7
+  824F5948  38600010             li r3,0x10
+  824F594C  388BB830             subi r4,r11,0x47d0
+  824F5950  48001211             bl 0x824f6b60
+  824F5954  38600000             li r3,0x0
+  824F5958  38210070             addi r1,r1,0x70
+  824F595C  48420DB0             b 0x8291670c
+LAB_824f5960:
+  824F5960  2F040002             cmpwi cr6,r4,0x2
+  824F5964  409A0018             bne cr6,0x824f597c
+  824F5968  387F0028             addi r3,r31,0x28
+  824F596C  481EC875             bl 0x826e21e0
+  824F5970  38600001             li r3,0x1
+  824F5974  38210070             addi r1,r1,0x70
+  824F5978  48420D94             b 0x8291670c
+LAB_824f597c:
+  824F597C  3D608401             lis r11,-0x7bff
+  824F5980  816B3128             lwz r11,0x3128(r11)
+  824F5984  2F0B0000             cmpwi cr6,r11,0x0
+  824F5988  409A0028             bne cr6,0x824f59b0
+  824F598C  3D608209             lis r11,-0x7df7
+  824F5990  386BB80C             subi r3,r11,0x47f4
+  824F5994  48116CE5             bl 0x8260c678
+  824F5998  3D408209             lis r10,-0x7df7
+  824F599C  7C661B78             or r6,r3,r3
+  824F59A0  386AB558             subi r3,r10,0x4aa8
+  824F59A4  38A00000             li r5,0x0
+  824F59A8  388000E4             li r4,0xe4
+  824F59AC  480DEB55             bl 0x825d4500
+LAB_824f59b0:
+  824F59B0  38600001             li r3,0x1
+  824F59B4  38210070             addi r1,r1,0x70
+  824F59B8  48420D54             b 0x8291670c
 
 ; 824F59C0  TaskManager_CancelTasks_Core  (qcommon/com_tasks.cpp:236)
   824F59C0  7D8802A6             mfspr r12,LR
   824F59C4  48420CCD             bl 0x82916690
+  824F59C8  9421FF30             stwu r1,-0xd0(r1)
+  824F59CC  7C7F1B78             or r31,r3,r3
+  824F59D0  7C922378             or r18,r4,r4
+  824F59D4  7CB32B78             or r19,r5,r5
+  824F59D8  4BFFF181             bl 0x824f4b58
+  824F59DC  397F0008             addi r11,r31,0x8
+  824F59E0  3CA08209             lis r5,-0x7df7
+  824F59E4  3BAB0008             addi r29,r11,0x8
+  824F59E8  3CC08209             lis r6,-0x7df7
+  824F59EC  3CE08209             lis r7,-0x7df7
+  824F59F0  3D008209             lis r8,-0x7df7
+  824F59F4  3D208209             lis r9,-0x7df7
+  824F59F8  3D408200             lis r10,-0x7e00
+  824F59FC  3D608209             lis r11,-0x7df7
+  824F5A00  3A800000             li r20,0x0
+  824F5A04  3EA08401             lis r21,-0x7bff
+  824F5A08  3B05B80C             subi r24,r5,0x47f4
+  824F5A0C  3B46B830             subi r26,r6,0x47d0
+  824F5A10  3B27B888             subi r25,r7,0x4778
+  824F5A14  3AE8B8D8             subi r23,r8,0x4728
+  824F5A18  3B89B558             subi r28,r9,0x4aa8
+  824F5A1C  3B6A0F98             addi r27,r10,0xf98
+  824F5A20  3ACBB900             subi r22,r11,0x4700
+LAB_824f5a24:
+  824F5A24  897D008C             lbz r11,0x8c(r29)
+  824F5A28  2B0B0000             cmplwi cr6,r11,0x0
+  824F5A2C  419A0160             beq cr6,0x824f5b8c
+  824F5A30  564B063E             rlwinm r11,r18,0x0,0x18,0x1f
+  824F5A34  2B0B0000             cmplwi cr6,r11,0x0
+  824F5A38  409A0010             bne cr6,0x824f5a48
+  824F5A3C  817D0088             lwz r11,0x88(r29)
+  824F5A40  7F0B9800             cmpw cr6,r11,r19
+  824F5A44  409A0148             bne cr6,0x824f5b8c
+LAB_824f5a48:
+  824F5A48  809DFFF8             lwz r4,-0x8(r29)
+  824F5A4C  3BDDFFF8             subi r30,r29,0x8
+  824F5A50  2F040001             cmpwi cr6,r4,0x1
+  824F5A54  409A00EC             bne cr6,0x824f5b40
+  824F5A58  817D0000             lwz r11,0x0(r29)
+  824F5A5C  2F0B0000             cmpwi cr6,r11,0x0
+  824F5A60  419A0064             beq cr6,0x824f5ac4
+  824F5A64  817D0010             lwz r11,0x10(r29)
+  824F5A68  2B0B0000             cmplwi cr6,r11,0x0
+  824F5A6C  419A001C             beq cr6,0x824f5a88
+  824F5A70  7EC7B378             or r7,r22,r22
+  824F5A74  7F66DB78             or r6,r27,r27
+  824F5A78  7F83E378             or r3,r28,r28
+  824F5A7C  38A00000             li r5,0x0
+  824F5A80  388000B9             li r4,0xb9
+  824F5A84  480DEA7D             bl 0x825d4500
+LAB_824f5a88:
+  824F5A88  817D0000             lwz r11,0x0(r29)
+  824F5A8C  814B0004             lwz r10,0x4(r11)
+  824F5A90  2F0A0000             cmpwi cr6,r10,0x0
+  824F5A94  409A001C             bne cr6,0x824f5ab0
+  824F5A98  7EE7BB78             or r7,r23,r23
+  824F5A9C  7F66DB78             or r6,r27,r27
+  824F5AA0  7F83E378             or r3,r28,r28
+  824F5AA4  38A00000             li r5,0x0
+  824F5AA8  388000BA             li r4,0xba
+  824F5AAC  480DEA55             bl 0x825d4500
+LAB_824f5ab0:
+  824F5AB0  807D0000             lwz r3,0x0(r29)
+  824F5AB4  48403875             bl 0x828f9328
+  824F5AB8  7FC3F378             or r3,r30,r30
+  824F5ABC  4BFFF465             bl 0x824f4f20
+  824F5AC0  480000BC             b 0x824f5b7c
+LAB_824f5ac4:
+  824F5AC4  3BFD0004             addi r31,r29,0x4
+  824F5AC8  38A00000             li r5,0x0
+  824F5ACC  38800000             li r4,0x0
+  824F5AD0  7FE3FB78             or r3,r31,r31
+  824F5AD4  483AEF95             bl 0x828a4a68
+  824F5AD8  7C651B78             or r5,r3,r3
+  824F5ADC  2B0303E4             cmplwi cr6,r3,0x3e4
+  824F5AE0  409A0038             bne cr6,0x824f5b18
+  824F5AE4  7FE3FB78             or r3,r31,r31
+  824F5AE8  483AF569             bl 0x828a5050
+  824F5AEC  7C651B78             or r5,r3,r3
+  824F5AF0  2B030000             cmplwi cr6,r3,0x0
+  824F5AF4  409A0010             bne cr6,0x824f5b04
+  824F5AF8  7FC3F378             or r3,r30,r30
+  824F5AFC  4BFFF195             bl 0x824f4c90
+  824F5B00  4800007C             b 0x824f5b7c
+LAB_824f5b04:
+  824F5B04  7F24CB78             or r4,r25,r25
+  824F5B08  38600010             li r3,0x10
+  824F5B0C  48001055             bl 0x824f6b60
+  824F5B10  39600000             li r11,0x0
+  824F5B14  4800006C             b 0x824f5b80
+LAB_824f5b18:
+  824F5B18  2B050000             cmplwi cr6,r5,0x0
+  824F5B1C  409A0010             bne cr6,0x824f5b2c
+  824F5B20  7FC3F378             or r3,r30,r30
+  824F5B24  4BFFF16D             bl 0x824f4c90
+  824F5B28  48000054             b 0x824f5b7c
+LAB_824f5b2c:
+  824F5B2C  7F44D378             or r4,r26,r26
+  824F5B30  38600010             li r3,0x10
+  824F5B34  4800102D             bl 0x824f6b60
+  824F5B38  39600000             li r11,0x0
+  824F5B3C  48000044             b 0x824f5b80
+LAB_824f5b40:
+  824F5B40  2F040002             cmpwi cr6,r4,0x2
+  824F5B44  409A0010             bne cr6,0x824f5b54
+  824F5B48  387D0020             addi r3,r29,0x20
+  824F5B4C  481EC695             bl 0x826e21e0
+  824F5B50  4800002C             b 0x824f5b7c
+LAB_824f5b54:
+  824F5B54  81753128             lwz r11,0x3128(r21)
+  824F5B58  2F0B0000             cmpwi cr6,r11,0x0
+  824F5B5C  409A0020             bne cr6,0x824f5b7c
+  824F5B60  7F03C378             or r3,r24,r24
+  824F5B64  48116B15             bl 0x8260c678
+  824F5B68  7C661B78             or r6,r3,r3
+  824F5B6C  38A00000             li r5,0x0
+  824F5B70  388000E4             li r4,0xe4
+  824F5B74  7F83E378             or r3,r28,r28
+  824F5B78  480DE989             bl 0x825d4500
+LAB_824f5b7c:
+  824F5B7C  39600001             li r11,0x1
+LAB_824f5b80:
+  824F5B80  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  824F5B84  2B0B0000             cmplwi cr6,r11,0x0
+  824F5B88  419A0020             beq cr6,0x824f5ba8
+LAB_824f5b8c:
+  824F5B8C  3A940001             addi r20,r20,0x1
+  824F5B90  3BBD00A0             addi r29,r29,0xa0
+  824F5B94  2B140020             cmplwi cr6,r20,0x20
+  824F5B98  4198FE8C             blt cr6,0x824f5a24
+  824F5B9C  38600001             li r3,0x1
+  824F5BA0  382100D0             addi r1,r1,0xd0
+  824F5BA4  48420B3C             b 0x829166e0
+LAB_824f5ba8:
+  824F5BA8  38600000             li r3,0x0
+  824F5BAC  382100D0             addi r1,r1,0xd0
+  824F5BB0  48420B30             b 0x829166e0
+
+; 824F5BB8  TaskManager_CancelTasksForController_Core  (qcommon/com_tasks.cpp:258)
+  824F5BB8  7D8802A6             mfspr r12,LR
+  824F5BBC  48420AD1             bl 0x8291668c
+  824F5BC0  9421FF30             stwu r1,-0xd0(r1)
+  824F5BC4  7C7F1B78             or r31,r3,r3
+  824F5BC8  7C912378             or r17,r4,r4
+  824F5BCC  7CB32B78             or r19,r5,r5
+  824F5BD0  7CD23378             or r18,r6,r6
+  824F5BD4  4BFFEF85             bl 0x824f4b58
+  824F5BD8  397F0008             addi r11,r31,0x8
+  824F5BDC  3CA08209             lis r5,-0x7df7
+  824F5BE0  3BAB0090             addi r29,r11,0x90
+  824F5BE4  3CC08209             lis r6,-0x7df7
+  824F5BE8  3CE08209             lis r7,-0x7df7
+  824F5BEC  3D008209             lis r8,-0x7df7
+  824F5BF0  3D208209             lis r9,-0x7df7
+  824F5BF4  3D408200             lis r10,-0x7e00
+  824F5BF8  3D608209             lis r11,-0x7df7
+  824F5BFC  3A800000             li r20,0x0
+  824F5C00  3EA08401             lis r21,-0x7bff
+  824F5C04  3B05B80C             subi r24,r5,0x47f4
+  824F5C08  3B46B830             subi r26,r6,0x47d0
+  824F5C0C  3B27B888             subi r25,r7,0x4778
+  824F5C10  3AE8B8D8             subi r23,r8,0x4728
+  824F5C14  3B89B558             subi r28,r9,0x4aa8
+  824F5C18  3B6A0F98             addi r27,r10,0xf98
+  824F5C1C  3ACBB900             subi r22,r11,0x4700
+LAB_824f5c20:
+  824F5C20  897D0004             lbz r11,0x4(r29)
+  824F5C24  2B0B0000             cmplwi cr6,r11,0x0
+  824F5C28  419A016C             beq cr6,0x824f5d94
+  824F5C2C  562B063E             rlwinm r11,r17,0x0,0x18,0x1f
+  824F5C30  2B0B0000             cmplwi cr6,r11,0x0
+  824F5C34  409A001C             bne cr6,0x824f5c50
+  824F5C38  817D0000             lwz r11,0x0(r29)
+  824F5C3C  7F0B9800             cmpw cr6,r11,r19
+  824F5C40  409A0154             bne cr6,0x824f5d94
+  824F5C44  897D0005             lbz r11,0x5(r29)
+  824F5C48  7F0B9000             cmpw cr6,r11,r18
+  824F5C4C  409A0148             bne cr6,0x824f5d94
+LAB_824f5c50:
+  824F5C50  809DFF70             lwz r4,-0x90(r29)
+  824F5C54  3BDDFF70             subi r30,r29,0x90
+  824F5C58  2F040001             cmpwi cr6,r4,0x1
+  824F5C5C  409A00EC             bne cr6,0x824f5d48
+  824F5C60  817DFF78             lwz r11,-0x88(r29)
+  824F5C64  2F0B0000             cmpwi cr6,r11,0x0
+  824F5C68  419A0064             beq cr6,0x824f5ccc
+  824F5C6C  817DFF88             lwz r11,-0x78(r29)
+  824F5C70  2B0B0000             cmplwi cr6,r11,0x0
+  824F5C74  419A001C             beq cr6,0x824f5c90
+  824F5C78  7EC7B378             or r7,r22,r22
+  824F5C7C  7F66DB78             or r6,r27,r27
+  824F5C80  7F83E378             or r3,r28,r28
+  824F5C84  38A00000             li r5,0x0
+  824F5C88  388000B9             li r4,0xb9
+  824F5C8C  480DE875             bl 0x825d4500
+LAB_824f5c90:
+  824F5C90  817DFF78             lwz r11,-0x88(r29)
+  824F5C94  814B0004             lwz r10,0x4(r11)
+  824F5C98  2F0A0000             cmpwi cr6,r10,0x0
+  824F5C9C  409A001C             bne cr6,0x824f5cb8
+  824F5CA0  7EE7BB78             or r7,r23,r23
+  824F5CA4  7F66DB78             or r6,r27,r27
+  824F5CA8  7F83E378             or r3,r28,r28
+  824F5CAC  38A00000             li r5,0x0
+  824F5CB0  388000BA             li r4,0xba
+  824F5CB4  480DE84D             bl 0x825d4500
+LAB_824f5cb8:
+  824F5CB8  807DFF78             lwz r3,-0x88(r29)
+  824F5CBC  4840366D             bl 0x828f9328
+  824F5CC0  7FC3F378             or r3,r30,r30
+  824F5CC4  4BFFF25D             bl 0x824f4f20
+  824F5CC8  480000BC             b 0x824f5d84
+LAB_824f5ccc:
+  824F5CCC  3BFDFF7C             subi r31,r29,0x84
+  824F5CD0  38A00000             li r5,0x0
+  824F5CD4  38800000             li r4,0x0
+  824F5CD8  7FE3FB78             or r3,r31,r31
+  824F5CDC  483AED8D             bl 0x828a4a68
+  824F5CE0  7C651B78             or r5,r3,r3
+  824F5CE4  2B0303E4             cmplwi cr6,r3,0x3e4
+  824F5CE8  409A0038             bne cr6,0x824f5d20
+  824F5CEC  7FE3FB78             or r3,r31,r31
+  824F5CF0  483AF361             bl 0x828a5050
+  824F5CF4  7C651B78             or r5,r3,r3
+  824F5CF8  2B030000             cmplwi cr6,r3,0x0
+  824F5CFC  409A0010             bne cr6,0x824f5d0c
+  824F5D00  7FC3F378             or r3,r30,r30
+  824F5D04  4BFFEF8D             bl 0x824f4c90
+  824F5D08  4800007C             b 0x824f5d84
+LAB_824f5d0c:
+  824F5D0C  7F24CB78             or r4,r25,r25
+  824F5D10  38600010             li r3,0x10
+  824F5D14  48000E4D             bl 0x824f6b60
+  824F5D18  39600000             li r11,0x0
+  824F5D1C  4800006C             b 0x824f5d88
+LAB_824f5d20:
+  824F5D20  2B050000             cmplwi cr6,r5,0x0
+  824F5D24  409A0010             bne cr6,0x824f5d34
+  824F5D28  7FC3F378             or r3,r30,r30
+  824F5D2C  4BFFEF65             bl 0x824f4c90
+  824F5D30  48000054             b 0x824f5d84
+LAB_824f5d34:
+  824F5D34  7F44D378             or r4,r26,r26
+  824F5D38  38600010             li r3,0x10
+  824F5D3C  48000E25             bl 0x824f6b60
+  824F5D40  39600000             li r11,0x0
+  824F5D44  48000044             b 0x824f5d88
+LAB_824f5d48:
+  824F5D48  2F040002             cmpwi cr6,r4,0x2
+  824F5D4C  409A0010             bne cr6,0x824f5d5c
+  824F5D50  387DFF98             subi r3,r29,0x68
+  824F5D54  481EC48D             bl 0x826e21e0
+  824F5D58  4800002C             b 0x824f5d84
+LAB_824f5d5c:
+  824F5D5C  81753128             lwz r11,0x3128(r21)
+  824F5D60  2F0B0000             cmpwi cr6,r11,0x0
+  824F5D64  409A0020             bne cr6,0x824f5d84
+  824F5D68  7F03C378             or r3,r24,r24
+  824F5D6C  4811690D             bl 0x8260c678
+  824F5D70  7C661B78             or r6,r3,r3
+  824F5D74  38A00000             li r5,0x0
+  824F5D78  388000E4             li r4,0xe4
+  824F5D7C  7F83E378             or r3,r28,r28
+  824F5D80  480DE781             bl 0x825d4500
+LAB_824f5d84:
+  824F5D84  39600001             li r11,0x1
+LAB_824f5d88:
+  824F5D88  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  824F5D8C  2B0B0000             cmplwi cr6,r11,0x0
+  824F5D90  419A0020             beq cr6,0x824f5db0
+LAB_824f5d94:
+  824F5D94  3A940001             addi r20,r20,0x1
+  824F5D98  3BBD00A0             addi r29,r29,0xa0
+  824F5D9C  2B140020             cmplwi cr6,r20,0x20
+  824F5DA0  4198FE80             blt cr6,0x824f5c20
+  824F5DA4  38600001             li r3,0x1
+  824F5DA8  382100D0             addi r1,r1,0xd0
+  824F5DAC  48420930             b 0x829166dc
+LAB_824f5db0:
+  824F5DB0  38600000             li r3,0x0
+  824F5DB4  382100D0             addi r1,r1,0xd0
+  824F5DB8  48420924             b 0x829166dc
+
+; 824F5DC0  TaskManager_DestructTaskSet_CanFail  (qcommon/com_tasks.cpp:281)
+  824F5DC0  7D8802A6             mfspr r12,LR
+  824F5DC4  9181FFF8             stw r12,-0x8(r1)
+  824F5DC8  FBE1FFF0             std r31,-0x10(r1)
+  824F5DCC  9421FFA0             stwu r1,-0x60(r1)
+  824F5DD0  7C7F1B78             or r31,r3,r3
+  824F5DD4  4BFFED85             bl 0x824f4b58
+  824F5DD8  38A00000             li r5,0x0
+  824F5DDC  38800001             li r4,0x1
+  824F5DE0  7FE3FB78             or r3,r31,r31
+  824F5DE4  4BFFFBDD             bl 0x824f59c0
+  824F5DE8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  824F5DEC  2B0B0000             cmplwi cr6,r11,0x0
+  824F5DF0  409A001C             bne cr6,0x824f5e0c
+  824F5DF4  38600000             li r3,0x0
+  824F5DF8  38210060             addi r1,r1,0x60
+  824F5DFC  8181FFF8             lwz r12,-0x8(r1)
+  824F5E00  7D8803A6             mtspr LR,r12
+  824F5E04  EBE1FFF0             ld r31,-0x10(r1)
+  824F5E08  4E800020             blr
+LAB_824f5e0c:
+  824F5E0C  7FE3FB78             or r3,r31,r31
+  824F5E10  4BFFF739             bl 0x824f5548
+  824F5E14  3D208366             lis r9,-0x7c9a
+  824F5E18  80FF0000             lwz r7,0x0(r31)
+  824F5E1C  39400000             li r10,0x0
+  824F5E20  3969E010             subi r11,r9,0x1ff0
+  824F5E24  54E6103A             rlwinm r6,r7,0x2,0x0,0x1d
+  824F5E28  915F0000             stw r10,0x0(r31)
+  824F5E2C  390B0080             addi r8,r11,0x80
+  824F5E30  38600001             li r3,0x1
+  824F5E34  7D46592E             stwx r10,r6,r11
+  824F5E38  7D46412E             stwx r10,r6,r8
+  824F5E3C  8169E010             lwz r11,-0x1ff0(r9)
+  824F5E40  396BFFFF             subi r11,r11,0x1
+  824F5E44  9169E010             stw r11,-0x1ff0(r9)
+  824F5E48  38210060             addi r1,r1,0x60
+  824F5E4C  8181FFF8             lwz r12,-0x8(r1)
+  824F5E50  7D8803A6             mtspr LR,r12
+  824F5E54  EBE1FFF0             ld r31,-0x10(r1)
+  824F5E58  4E800020             blr
 
 ; 824F5E60  TaskManager_DestructTaskSet  (qcommon/com_tasks.cpp:299)
   824F5E60  7D8802A6             mfspr r12,LR
   824F5E64  48420851             bl 0x829166b4
+  824F5E68  9421FF80             stwu r1,-0x80(r1)
+  824F5E6C  7C7C1B78             or r28,r3,r3
+  824F5E70  4BFFFF51             bl 0x824f5dc0
+  824F5E74  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  824F5E78  2B0B0000             cmplwi cr6,r11,0x0
+  824F5E7C  409A007C             bne cr6,0x824f5ef8
+  824F5E80  3D208366             lis r9,-0x7c9a
+  824F5E84  3D408209             lis r10,-0x7df7
+  824F5E88  3D608209             lis r11,-0x7df7
+  824F5E8C  3F608401             lis r27,-0x7bff
+  824F5E90  3BE9E010             subi r31,r9,0x1ff0
+  824F5E94  3BCAB558             subi r30,r10,0x4aa8
+  824F5E98  3BABB928             subi r29,r11,0x46d8
+LAB_824f5e9c:
+  824F5E9C  817B3128             lwz r11,0x3128(r27)
+  824F5EA0  2F0B0000             cmpwi cr6,r11,0x0
+  824F5EA4  409A0038             bne cr6,0x824f5edc
+  824F5EA8  7F83E378             or r3,r28,r28
+  824F5EAC  4BFFECAD             bl 0x824f4b58
+  824F5EB0  815C0000             lwz r10,0x0(r28)
+  824F5EB4  397F0080             addi r11,r31,0x80
+  824F5EB8  5549103A             rlwinm r9,r10,0x2,0x0,0x1d
+  824F5EBC  7FA3EB78             or r3,r29,r29
+  824F5EC0  7C89582E             lwzx r4,r9,r11
+  824F5EC4  481167B5             bl 0x8260c678
+  824F5EC8  7C661B78             or r6,r3,r3
+  824F5ECC  38A00000             li r5,0x0
+  824F5ED0  3880012E             li r4,0x12e
+  824F5ED4  7FC3F378             or r3,r30,r30
+  824F5ED8  480DE629             bl 0x825d4500
+LAB_824f5edc:
+  824F5EDC  38600064             li r3,0x64
+  824F5EE0  48023561             bl 0x82519440
+  824F5EE4  7F83E378             or r3,r28,r28
+  824F5EE8  4BFFFED9             bl 0x824f5dc0
+  824F5EEC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  824F5EF0  2B0B0000             cmplwi cr6,r11,0x0
+  824F5EF4  419AFFA8             beq cr6,0x824f5e9c
+LAB_824f5ef8:
+  824F5EF8  38210080             addi r1,r1,0x80
+  824F5EFC  48420808             b 0x82916704
 
 ; 824F5F00  TaskManager_CancelTasks  (qcommon/com_tasks.cpp:310)
   824F5F00  7D8802A6             mfspr r12,LR
@@ -178,10 +842,98 @@ LAB_824f5f48:
 ; 824F5F78  TaskManager_CancelTasksForController  (qcommon/com_tasks.cpp:318)
   824F5F78  7D8802A6             mfspr r12,LR
   824F5F7C  48420741             bl 0x829166bc
+  824F5F80  9421FF90             stwu r1,-0x70(r1)
+  824F5F84  7C7F1B78             or r31,r3,r3
+  824F5F88  7C9E2378             or r30,r4,r4
+  824F5F8C  7CBD2B78             or r29,r5,r5
+  824F5F90  2B030000             cmplwi cr6,r3,0x0
+  824F5F94  409A0028             bne cr6,0x824f5fbc
+  824F5F98  3D608209             lis r11,-0x7df7
+  824F5F9C  3D408200             lis r10,-0x7e00
+  824F5FA0  3D208209             lis r9,-0x7df7
+  824F5FA4  38EBB5E4             subi r7,r11,0x4a1c
+  824F5FA8  38CA0F98             addi r6,r10,0xf98
+  824F5FAC  3869B558             subi r3,r9,0x4aa8
+  824F5FB0  38A00000             li r5,0x0
+  824F5FB4  3880013F             li r4,0x13f
+  824F5FB8  480DE549             bl 0x825d4500
+LAB_824f5fbc:
+  824F5FBC  7FA6EB78             or r6,r29,r29
+  824F5FC0  7FC5F378             or r5,r30,r30
+  824F5FC4  38800000             li r4,0x0
+  824F5FC8  7FE3FB78             or r3,r31,r31
+  824F5FCC  4BFFFBED             bl 0x824f5bb8
+  824F5FD0  5463063E             rlwinm r3,r3,0x0,0x18,0x1f
+  824F5FD4  38210070             addi r1,r1,0x70
+  824F5FD8  48420734             b 0x8291670c
 
 ; 824F5FE0  TaskManager_DestructAllTaskSets_CanFail  (qcommon/com_tasks.cpp:327)
   824F5FE0  7D8802A6             mfspr r12,LR
   824F5FE4  484206CD             bl 0x829166b0
+  824F5FE8  9421FF70             stwu r1,-0x90(r1)
+  824F5FEC  3D608366             lis r11,-0x7c9a
+  824F5FF0  3B400001             li r26,0x1
+  824F5FF4  3BEBE010             subi r31,r11,0x1ff0
+  824F5FF8  3B600020             li r27,0x20
+  824F5FFC  3B9F0004             addi r28,r31,0x4
+  824F6000  3BA00000             li r29,0x0
+  824F6004  811F0000             lwz r8,0x0(r31)
+LAB_824f6008:
+  824F6008  83DC0000             lwz r30,0x0(r28)
+  824F600C  2B1E0000             cmplwi cr6,r30,0x0
+  824F6010  419A0074             beq cr6,0x824f6084
+  824F6014  7FC3F378             or r3,r30,r30
+  824F6018  4BFFEB41             bl 0x824f4b58
+  824F601C  38A00000             li r5,0x0
+  824F6020  38800001             li r4,0x1
+  824F6024  7FC3F378             or r3,r30,r30
+  824F6028  4BFFF999             bl 0x824f59c0
+  824F602C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  824F6030  2B0B0000             cmplwi cr6,r11,0x0
+  824F6034  409A0010             bne cr6,0x824f6044
+  824F6038  811F0000             lwz r8,0x0(r31)
+  824F603C  7FAAEB78             or r10,r29,r29
+  824F6040  48000034             b 0x824f6074
+LAB_824f6044:
+  824F6044  7FC3F378             or r3,r30,r30
+  824F6048  4BFFF501             bl 0x824f5548
+  824F604C  813E0000             lwz r9,0x0(r30)
+  824F6050  397F0080             addi r11,r31,0x80
+  824F6054  93BE0000             stw r29,0x0(r30)
+  824F6058  5528103A             rlwinm r8,r9,0x2,0x0,0x1d
+  824F605C  39400001             li r10,0x1
+  824F6060  7FA8F92E             stwx r29,r8,r31
+  824F6064  7FA8592E             stwx r29,r8,r11
+  824F6068  817F0000             lwz r11,0x0(r31)
+  824F606C  390BFFFF             subi r8,r11,0x1
+  824F6070  911F0000             stw r8,0x0(r31)
+LAB_824f6074:
+  824F6074  554B063E             rlwinm r11,r10,0x0,0x18,0x1f
+  824F6078  214B0000             subfic r10,r11,0x0
+  824F607C  7CE94910             subfe r7,r9,r9
+  824F6080  7CFAD038             and r26,r7,r26
+LAB_824f6084:
+  824F6084  377BFFFF             subic. r27,r27,0x1
+  824F6088  3B9C0004             addi r28,r28,0x4
+  824F608C  4082FF7C             bne 0x824f6008
+  824F6090  574B063E             rlwinm r11,r26,0x0,0x18,0x1f
+  824F6094  2B0B0000             cmplwi cr6,r11,0x0
+  824F6098  419A0030             beq cr6,0x824f60c8
+  824F609C  2B080000             cmplwi cr6,r8,0x0
+  824F60A0  419A0028             beq cr6,0x824f60c8
+  824F60A4  3D608209             lis r11,-0x7df7
+  824F60A8  3D408209             lis r10,-0x7df7
+  824F60AC  3D208209             lis r9,-0x7df7
+  824F60B0  38EBB9B8             subi r7,r11,0x4648
+  824F60B4  38CAB984             subi r6,r10,0x467c
+  824F60B8  3869B558             subi r3,r9,0x4aa8
+  824F60BC  38A00000             li r5,0x0
+  824F60C0  38800158             li r4,0x158
+  824F60C4  480DE43D             bl 0x825d4500
+LAB_824f60c8:
+  824F60C8  7F43D378             or r3,r26,r26
+  824F60CC  38210090             addi r1,r1,0x90
+  824F60D0  48420630             b 0x82916700
 
 ; 824F60D8  TaskManager_DestructAllTaskSets  (qcommon/com_tasks.cpp:353)
   824F60D8  7D8802A6             mfspr r12,LR
@@ -276,10 +1028,96 @@ LAB_824f620c:
 ; 824F4D00  TaskManager_GetOpenTaskSlot_Try  (qcommon/com_tasks.cpp:367)
   824F4D00  7D8802A6             mfspr r12,LR
   824F4D04  484219B5             bl 0x829166b8
+  824F4D08  9421FF80             stwu r1,-0x80(r1)
+  824F4D0C  7C7F1B78             or r31,r3,r3
+  824F4D10  7C9E2378             or r30,r4,r4
+  824F4D14  7CBD2B78             or r29,r5,r5
+  824F4D18  7CDC3378             or r28,r6,r6
+  824F4D1C  4BFFFE3D             bl 0x824f4b58
+  824F4D20  393F0008             addi r9,r31,0x8
+  824F4D24  39600000             li r11,0x0
+  824F4D28  39490094             addi r10,r9,0x94
+LAB_824f4d2c:
+  824F4D2C  88EA0000             lbz r7,0x0(r10)
+  824F4D30  2B070000             cmplwi cr6,r7,0x0
+  824F4D34  419A0020             beq cr6,0x824f4d54
+  824F4D38  396B0001             addi r11,r11,0x1
+  824F4D3C  394A00A0             addi r10,r10,0xa0
+  824F4D40  2F0B0020             cmpwi cr6,r11,0x20
+  824F4D44  4198FFE8             blt cr6,0x824f4d2c
+  824F4D48  38600000             li r3,0x0
+  824F4D4C  38210080             addi r1,r1,0x80
+  824F4D50  484219B8             b 0x82916708
+LAB_824f4d54:
+  824F4D54  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  824F4D58  38A00088             li r5,0x88
+  824F4D5C  7D6B5214             add r11,r11,r10
+  824F4D60  38800000             li r4,0x0
+  824F4D64  556B2834             rlwinm r11,r11,0x5,0x0,0x1a
+  824F4D68  7FEB4A14             add r31,r11,r9
+  824F4D6C  387F0008             addi r3,r31,0x8
+  824F4D70  48421A91             bl 0x82916800
+  824F4D74  93BF0090             stw r29,0x90(r31)
+  824F4D78  2F1E0000             cmpwi cr6,r30,0x0
+  824F4D7C  4198000C             blt cr6,0x824f4d88
+  824F4D80  2F1E0004             cmpwi cr6,r30,0x4
+  824F4D84  4198002C             blt cr6,0x824f4db0
+LAB_824f4d88:
+  824F4D88  3D608205             lis r11,-0x7dfb
+  824F4D8C  3D408204             lis r10,-0x7dfc
+  824F4D90  3D208209             lis r9,-0x7df7
+  824F4D94  38EB7314             addi r7,r11,0x7314
+  824F4D98  38CA9774             subi r6,r10,0x688c
+  824F4D9C  3869B558             subi r3,r9,0x4aa8
+  824F4DA0  7FC8F378             or r8,r30,r30
+  824F4DA4  38A00000             li r5,0x0
+  824F4DA8  3880017E             li r4,0x17e
+  824F4DAC  480DF755             bl 0x825d4500
+LAB_824f4db0:
+  824F4DB0  39400001             li r10,0x1
+  824F4DB4  939F0000             stw r28,0x0(r31)
+  824F4DB8  9BDF0095             stb r30,0x95(r31)
+  824F4DBC  7FE3FB78             or r3,r31,r31
+  824F4DC0  995F0094             stb r10,0x94(r31)
+  824F4DC4  38210080             addi r1,r1,0x80
+  824F4DC8  48421940             b 0x82916708
 
 ; 824F4DD0  TaskManager_GetOpenTaskSlot_Internal  (qcommon/com_tasks.cpp:396)
   824F4DD0  7D8802A6             mfspr r12,LR
   824F4DD4  484218E5             bl 0x829166b8
+  824F4DD8  9421FF80             stwu r1,-0x80(r1)
+  824F4DDC  7C7F1B78             or r31,r3,r3
+  824F4DE0  7C9E2378             or r30,r4,r4
+  824F4DE4  7CBD2B78             or r29,r5,r5
+  824F4DE8  7CDC3378             or r28,r6,r6
+  824F4DEC  4BFFFF15             bl 0x824f4d00
+  824F4DF0  2B030000             cmplwi cr6,r3,0x0
+  824F4DF4  409A0058             bne cr6,0x824f4e4c
+  824F4DF8  481E5AC1             bl 0x826da8b8
+  824F4DFC  7F86E378             or r6,r28,r28
+  824F4E00  7FA5EB78             or r5,r29,r29
+  824F4E04  7FC4F378             or r4,r30,r30
+  824F4E08  7FE3FB78             or r3,r31,r31
+  824F4E0C  4BFFFEF5             bl 0x824f4d00
+  824F4E10  7C7F1B78             or r31,r3,r3
+  824F4E14  2B030000             cmplwi cr6,r3,0x0
+  824F4E18  409A0030             bne cr6,0x824f4e48
+  824F4E1C  3CA08209             lis r5,-0x7df7
+  824F4E20  3D608209             lis r11,-0x7df7
+  824F4E24  3D408201             lis r10,-0x7dff
+  824F4E28  3D208200             lis r9,-0x7e00
+  824F4E2C  3865B558             subi r3,r5,0x4aa8
+  824F4E30  390BB5A0             subi r8,r11,0x4a60
+  824F4E34  38EA2420             addi r7,r10,0x2420
+  824F4E38  38C911F4             addi r6,r9,0x11f4
+  824F4E3C  38A00000             li r5,0x0
+  824F4E40  3880019B             li r4,0x19b
+  824F4E44  480DF6BD             bl 0x825d4500
+LAB_824f4e48:
+  824F4E48  7FE3FB78             or r3,r31,r31
+LAB_824f4e4c:
+  824F4E4C  38210080             addi r1,r1,0x80
+  824F4E50  484218B8             b 0x82916708
 
 ; 824F4E58  TaskManager_GetOpenTaskSlotForIwNetStorage  (qcommon/com_tasks.cpp:419)
   824F4E58  38C00002             li r6,0x2
@@ -292,6 +1130,54 @@ LAB_824f620c:
 ; 824F4E68  TaskManager_CheckTaskIsInRegisteredTaskSet  (qcommon/com_tasks.cpp:433)
   824F4E68  7D8802A6             mfspr r12,LR
   824F4E6C  4842184D             bl 0x829166b8
+  824F4E70  9421FF80             stwu r1,-0x80(r1)
+  824F4E74  8BE30096             lbz r31,0x96(r3)
+  824F4E78  3D608209             lis r11,-0x7df7
+  824F4E7C  3D408200             lis r10,-0x7e00
+  824F4E80  7C7E1B78             or r30,r3,r3
+  824F4E84  3BABB558             subi r29,r11,0x4aa8
+  824F4E88  2B1F0000             cmplwi cr6,r31,0x0
+  824F4E8C  3B8A0F98             addi r28,r10,0xf98
+  824F4E90  409A0020             bne cr6,0x824f4eb0
+  824F4E94  3D608209             lis r11,-0x7df7
+  824F4E98  7F86E378             or r6,r28,r28
+  824F4E9C  38EBB5EC             subi r7,r11,0x4a14
+  824F4EA0  7FA3EB78             or r3,r29,r29
+  824F4EA4  38A00000             li r5,0x0
+  824F4EA8  388001B9             li r4,0x1b9
+  824F4EAC  480DF655             bl 0x825d4500
+LAB_824f4eb0:
+  824F4EB0  3D608366             lis r11,-0x7c9a
+  824F4EB4  57EA103A             rlwinm r10,r31,0x2,0x0,0x1d
+  824F4EB8  392BE010             subi r9,r11,0x1ff0
+  824F4EBC  7FEA482E             lwzx r31,r10,r9
+  824F4EC0  2B1F0000             cmplwi cr6,r31,0x0
+  824F4EC4  409A0020             bne cr6,0x824f4ee4
+  824F4EC8  3D608209             lis r11,-0x7df7
+  824F4ECC  7F86E378             or r6,r28,r28
+  824F4ED0  38EBB5E4             subi r7,r11,0x4a1c
+  824F4ED4  7FA3EB78             or r3,r29,r29
+  824F4ED8  38A00000             li r5,0x0
+  824F4EDC  388001BB             li r4,0x1bb
+  824F4EE0  480DF621             bl 0x825d4500
+LAB_824f4ee4:
+  824F4EE4  397F0008             addi r11,r31,0x8
+  824F4EE8  7F1E5840             cmplw cr6,r30,r11
+  824F4EEC  41980010             blt cr6,0x824f4efc
+  824F4EF0  397F1408             addi r11,r31,0x1408
+  824F4EF4  7F1E5840             cmplw cr6,r30,r11
+  824F4EF8  41980020             blt cr6,0x824f4f18
+LAB_824f4efc:
+  824F4EFC  3D608209             lis r11,-0x7df7
+  824F4F00  7F86E378             or r6,r28,r28
+  824F4F04  38EBB5B8             subi r7,r11,0x4a48
+  824F4F08  7FA3EB78             or r3,r29,r29
+  824F4F0C  38A00000             li r5,0x0
+  824F4F10  388001BE             li r4,0x1be
+  824F4F14  480DF5ED             bl 0x825d4500
+LAB_824f4f18:
+  824F4F18  38210080             addi r1,r1,0x80
+  824F4F1C  484217EC             b 0x82916708
 
 ; 824F4F20  TaskManager_ClearTask  (qcommon/com_tasks.cpp:453)
   824F4F20  7D8802A6             mfspr r12,LR
@@ -404,6 +1290,36 @@ LAB_824f5090:
 ; 824F5098  TaskManager_TaskIsInProgressForController  (qcommon/com_tasks.cpp:514)
   824F5098  7D8802A6             mfspr r12,LR
   824F509C  48421621             bl 0x829166bc
+  824F50A0  9421FF90             stwu r1,-0x70(r1)
+  824F50A4  7C7F1B78             or r31,r3,r3
+  824F50A8  7C9E2378             or r30,r4,r4
+  824F50AC  7CBD2B78             or r29,r5,r5
+  824F50B0  4BFFFAA9             bl 0x824f4b58
+  824F50B4  397F0008             addi r11,r31,0x8
+  824F50B8  39400000             li r10,0x0
+  824F50BC  396B0090             addi r11,r11,0x90
+LAB_824f50c0:
+  824F50C0  890B0004             lbz r8,0x4(r11)
+  824F50C4  2B080000             cmplwi cr6,r8,0x0
+  824F50C8  419A001C             beq cr6,0x824f50e4
+  824F50CC  812B0000             lwz r9,0x0(r11)
+  824F50D0  7F09F000             cmpw cr6,r9,r30
+  824F50D4  409A0010             bne cr6,0x824f50e4
+  824F50D8  890B0005             lbz r8,0x5(r11)
+  824F50DC  7F08E800             cmpw cr6,r8,r29
+  824F50E0  419A0020             beq cr6,0x824f5100
+LAB_824f50e4:
+  824F50E4  394A0001             addi r10,r10,0x1
+  824F50E8  396B00A0             addi r11,r11,0xa0
+  824F50EC  2F0A0020             cmpwi cr6,r10,0x20
+  824F50F0  4198FFD0             blt cr6,0x824f50c0
+  824F50F4  38600000             li r3,0x0
+  824F50F8  38210070             addi r1,r1,0x70
+  824F50FC  48421610             b 0x8291670c
+LAB_824f5100:
+  824F5100  38600001             li r3,0x1
+  824F5104  38210070             addi r1,r1,0x70
+  824F5108  48421604             b 0x8291670c
 
 ; 824F5110  TaskManager_CountTasksInProgress  (qcommon/com_tasks.cpp:534)
   824F5110  7D8802A6             mfspr r12,LR
@@ -464,6 +1380,86 @@ LAB_824f51b4:
 ; 824F51D8  TaskManager_TaskFromXOverlapped  (qcommon/com_tasks.cpp:557)
   824F51D8  7D8802A6             mfspr r12,LR
   824F51DC  484214DD             bl 0x829166b8
+  824F51E0  9421FF80             stwu r1,-0x80(r1)
+  824F51E4  3D608209             lis r11,-0x7df7
+  824F51E8  3D408200             lis r10,-0x7e00
+  824F51EC  7C7F1B78             or r31,r3,r3
+  824F51F0  7C9D2378             or r29,r4,r4
+  824F51F4  2B030000             cmplwi cr6,r3,0x0
+  824F51F8  3B8BB558             subi r28,r11,0x4aa8
+  824F51FC  3BCA0F98             addi r30,r10,0xf98
+  824F5200  409A0020             bne cr6,0x824f5220
+  824F5204  3D608209             lis r11,-0x7df7
+  824F5208  7FC6F378             or r6,r30,r30
+  824F520C  38EBB5E4             subi r7,r11,0x4a1c
+  824F5210  7F83E378             or r3,r28,r28
+  824F5214  38A00000             li r5,0x0
+  824F5218  38800231             li r4,0x231
+  824F521C  480DF2E5             bl 0x825d4500
+LAB_824f5220:
+  824F5220  2B1D0000             cmplwi cr6,r29,0x0
+  824F5224  409A0020             bne cr6,0x824f5244
+  824F5228  3D608209             lis r11,-0x7df7
+  824F522C  7FC6F378             or r6,r30,r30
+  824F5230  38EBB66C             subi r7,r11,0x4994
+  824F5234  7F83E378             or r3,r28,r28
+  824F5238  38A00000             li r5,0x0
+  824F523C  38800232             li r4,0x232
+  824F5240  480DF2C1             bl 0x825d4500
+LAB_824f5244:
+  824F5244  7FE3FB78             or r3,r31,r31
+  824F5248  4BFFF911             bl 0x824f4b58
+  824F524C  393F0008             addi r9,r31,0x8
+  824F5250  39600000             li r11,0x0
+  824F5254  3949000C             addi r10,r9,0xc
+LAB_824f5258:
+  824F5258  890A0088             lbz r8,0x88(r10)
+  824F525C  2B080000             cmplwi cr6,r8,0x0
+  824F5260  419A0018             beq cr6,0x824f5278
+  824F5264  810AFFF4             lwz r8,-0xc(r10)
+  824F5268  2F080001             cmpwi cr6,r8,0x1
+  824F526C  409A000C             bne cr6,0x824f5278
+  824F5270  7F0AE840             cmplw cr6,r10,r29
+  824F5274  419A0048             beq cr6,0x824f52bc
+LAB_824f5278:
+  824F5278  396B0001             addi r11,r11,0x1
+  824F527C  394A00A0             addi r10,r10,0xa0
+  824F5280  2F0B0020             cmpwi cr6,r11,0x20
+  824F5284  4198FFD4             blt cr6,0x824f5258
+  824F5288  3D608401             lis r11,-0x7bff
+  824F528C  816B3128             lwz r11,0x3128(r11)
+  824F5290  2F0B0000             cmpwi cr6,r11,0x0
+  824F5294  409A001C             bne cr6,0x824f52b0
+  824F5298  3D608209             lis r11,-0x7df7
+  824F529C  7F83E378             or r3,r28,r28
+  824F52A0  38CBB65C             subi r6,r11,0x49a4
+  824F52A4  38A00000             li r5,0x0
+  824F52A8  38800245             li r4,0x245
+  824F52AC  480DF255             bl 0x825d4500
+LAB_824f52b0:
+  824F52B0  38600000             li r3,0x0
+  824F52B4  38210080             addi r1,r1,0x80
+  824F52B8  48421450             b 0x82916708
+LAB_824f52bc:
+  824F52BC  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  824F52C0  7D6B5214             add r11,r11,r10
+  824F52C4  556B2834             rlwinm r11,r11,0x5,0x0,0x1a
+  824F52C8  7FEB4A14             add r31,r11,r9
+  824F52CC  7D0B482E             lwzx r8,r11,r9
+  824F52D0  2F080001             cmpwi cr6,r8,0x1
+  824F52D4  419A0024             beq cr6,0x824f52f8
+  824F52D8  3D608209             lis r11,-0x7df7
+  824F52DC  3D408209             lis r10,-0x7df7
+  824F52E0  38EBB624             subi r7,r11,0x49dc
+  824F52E4  38CAB5FC             subi r6,r10,0x4a04
+  824F52E8  7F83E378             or r3,r28,r28
+  824F52EC  38A00000             li r5,0x0
+  824F52F0  38800240             li r4,0x240
+  824F52F4  480DF20D             bl 0x825d4500
+LAB_824f52f8:
+  824F52F8  7FE3FB78             or r3,r31,r31
+  824F52FC  38210080             addi r1,r1,0x80
+  824F5300  48421408             b 0x82916708
 
 ; 824F5308  TaskManager_TaskToXOverlapped  (qcommon/com_tasks.cpp:589)
   824F5308  7D8802A6             mfspr r12,LR
@@ -512,11 +1508,114 @@ LAB_824f538c:
 ; 824F53A8  TaskManager_TaskToIWNetStorageTaskState  (qcommon/com_tasks.cpp:602)
   824F53A8  7D8802A6             mfspr r12,LR
   824F53AC  48421311             bl 0x829166bc
+  824F53B0  9421FF90             stwu r1,-0x70(r1)
+  824F53B4  3D608209             lis r11,-0x7df7
+  824F53B8  3D408200             lis r10,-0x7e00
+  824F53BC  7C7F1B78             or r31,r3,r3
+  824F53C0  2B030000             cmplwi cr6,r3,0x0
+  824F53C4  3BCBB558             subi r30,r11,0x4aa8
+  824F53C8  3BAA0F98             addi r29,r10,0xf98
+  824F53CC  409A0020             bne cr6,0x824f53ec
+  824F53D0  3D608209             lis r11,-0x7df7
+  824F53D4  7FA6EB78             or r6,r29,r29
+  824F53D8  38EBB720             subi r7,r11,0x48e0
+  824F53DC  7FC3F378             or r3,r30,r30
+  824F53E0  38A00000             li r5,0x0
+  824F53E4  3880025B             li r4,0x25b
+  824F53E8  480DF119             bl 0x825d4500
+LAB_824f53ec:
+  824F53EC  897F0094             lbz r11,0x94(r31)
+  824F53F0  2B0B0000             cmplwi cr6,r11,0x0
+  824F53F4  409A0020             bne cr6,0x824f5414
+  824F53F8  3D608209             lis r11,-0x7df7
+  824F53FC  7FA6EB78             or r6,r29,r29
+  824F5400  38EBB6CC             subi r7,r11,0x4934
+  824F5404  7FC3F378             or r3,r30,r30
+  824F5408  38A00000             li r5,0x0
+  824F540C  3880025C             li r4,0x25c
+  824F5410  480DF0F1             bl 0x825d4500
+LAB_824f5414:
+  824F5414  811F0000             lwz r8,0x0(r31)
+  824F5418  2F080002             cmpwi cr6,r8,0x2
+  824F541C  419A0024             beq cr6,0x824f5440
+  824F5420  3D608209             lis r11,-0x7df7
+  824F5424  3D408209             lis r10,-0x7df7
+  824F5428  38EBB6E4             subi r7,r11,0x491c
+  824F542C  38CAB670             subi r6,r10,0x4990
+  824F5430  7FC3F378             or r3,r30,r30
+  824F5434  38A00000             li r5,0x0
+  824F5438  3880025D             li r4,0x25d
+  824F543C  480DF0C5             bl 0x825d4500
+LAB_824f5440:
+  824F5440  387F0028             addi r3,r31,0x28
+  824F5444  38210070             addi r1,r1,0x70
+  824F5448  484212C4             b 0x8291670c
 
 ; 824F5450  TaskManager_SetTaskData  (qcommon/com_tasks.cpp:623)
   824F5450  7D8802A6             mfspr r12,LR
   824F5454  48421265             bl 0x829166b8
+  824F5458  9421FF80             stwu r1,-0x80(r1)
+  824F545C  3D608209             lis r11,-0x7df7
+  824F5460  3D408200             lis r10,-0x7e00
+  824F5464  7C7F1B78             or r31,r3,r3
+  824F5468  7C9C2378             or r28,r4,r4
+  824F546C  2B030000             cmplwi cr6,r3,0x0
+  824F5470  3BCBB558             subi r30,r11,0x4aa8
+  824F5474  3BAA0F98             addi r29,r10,0xf98
+  824F5478  409A0020             bne cr6,0x824f5498
+  824F547C  3D608209             lis r11,-0x7df7
+  824F5480  7FA6EB78             or r6,r29,r29
+  824F5484  38EBB720             subi r7,r11,0x48e0
+  824F5488  7FC3F378             or r3,r30,r30
+  824F548C  38A00000             li r5,0x0
+  824F5490  38800270             li r4,0x270
+  824F5494  480DF06D             bl 0x825d4500
+LAB_824f5498:
+  824F5498  897F0094             lbz r11,0x94(r31)
+  824F549C  2B0B0000             cmplwi cr6,r11,0x0
+  824F54A0  409A0020             bne cr6,0x824f54c0
+  824F54A4  3D608209             lis r11,-0x7df7
+  824F54A8  7FA6EB78             or r6,r29,r29
+  824F54AC  38EBB6CC             subi r7,r11,0x4934
+  824F54B0  7FC3F378             or r3,r30,r30
+  824F54B4  38A00000             li r5,0x0
+  824F54B8  38800271             li r4,0x271
+  824F54BC  480DF045             bl 0x825d4500
+LAB_824f54c0:
+  824F54C0  939F0098             stw r28,0x98(r31)
+  824F54C4  38210080             addi r1,r1,0x80
+  824F54C8  48421240             b 0x82916708
 
 ; 824F54D0  TaskManager_GetTaskData  (qcommon/com_tasks.cpp:631)
   824F54D0  7D8802A6             mfspr r12,LR
   824F54D4  484211E9             bl 0x829166bc
+  824F54D8  9421FF90             stwu r1,-0x70(r1)
+  824F54DC  3D608209             lis r11,-0x7df7
+  824F54E0  3D408200             lis r10,-0x7e00
+  824F54E4  7C7F1B78             or r31,r3,r3
+  824F54E8  2B030000             cmplwi cr6,r3,0x0
+  824F54EC  3BCBB558             subi r30,r11,0x4aa8
+  824F54F0  3BAA0F98             addi r29,r10,0xf98
+  824F54F4  409A0020             bne cr6,0x824f5514
+  824F54F8  3D608209             lis r11,-0x7df7
+  824F54FC  7FA6EB78             or r6,r29,r29
+  824F5500  38EBB720             subi r7,r11,0x48e0
+  824F5504  7FC3F378             or r3,r30,r30
+  824F5508  38A00000             li r5,0x0
+  824F550C  38800278             li r4,0x278
+  824F5510  480DEFF1             bl 0x825d4500
+LAB_824f5514:
+  824F5514  897F0094             lbz r11,0x94(r31)
+  824F5518  2B0B0000             cmplwi cr6,r11,0x0
+  824F551C  409A0020             bne cr6,0x824f553c
+  824F5520  3D608209             lis r11,-0x7df7
+  824F5524  7FA6EB78             or r6,r29,r29
+  824F5528  38EBB6CC             subi r7,r11,0x4934
+  824F552C  7FC3F378             or r3,r30,r30
+  824F5530  38A00000             li r5,0x0
+  824F5534  38800279             li r4,0x279
+  824F5538  480DEFC9             bl 0x825d4500
+LAB_824f553c:
+  824F553C  807F0098             lwz r3,0x98(r31)
+  824F5540  38210070             addi r1,r1,0x70
+  824F5544  484211C8             b 0x8291670c

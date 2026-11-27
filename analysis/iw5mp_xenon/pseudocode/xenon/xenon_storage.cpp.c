@@ -71,21 +71,44 @@ bool LiveStorage_IsStatsValidUser(undefined8 param_1)
 
 // 82656960  GetStatsFilename  (xenon/xenon_storage.cpp:211)
 
-void GetStatsFilename(void)
+void GetStatsFilename(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char *pcVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) < 0x1a) {
+    MyAssertHandler(0xffffffff82190b08,0xd5,0,0xffffffff82190ab0,param_3,0x1a);
+  }
+  pcVar2 = (char *)Live_GetLocalClientOfflineXuidString(uVar1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82190b08,0xd7,0,0xffffffff82000f98,0xffffffff82190aa0);
+  }
+  if (*pcVar2 == '\0') {
+    MyAssertHandler(0xffffffff82190b08,0xd8,0,0xffffffff82000f98,0xffffffff82190a90);
+  }
+  Com_sprintf(param_2,param_3,0xffffffff8200e440,0xffffffff8208aba8,pcVar2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82656A30  GetStatsFileDescription  (xenon/xenon_storage.cpp:222)
 
-void GetStatsFileDescription(void)
+void GetStatsFileDescription(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_3 & 0xffffffff) < 0x15) {
+    MyAssertHandler(0xffffffff82190b08,0xdf,0,0xffffffff82190b64,param_3,0x14);
+  }
+  uVar1 = Live_GetLocalClientName(uVar1);
+  Com_sprintf(param_2,param_3,0xffffffff82190b4c,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -94,8 +117,101 @@ void GetStatsFileDescription(void)
 void LiveStorage_ReadStats(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar8;
+  int iVar6;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  char *pcVar7;
+  ulonglong uVar5;
+  int iVar9;
+  char local_30c0 [8];
+  undefined4 local_30b8;
+  undefined1 auStack_30b0 [48];
+  undefined1 auStack_3080 [64];
+  int local_3040;
+  undefined1 auStack_303c [12348];
+  
+  uVar1 = __savegprlr_26();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  ClosePopupGettingData(0);
+  cVar8 = LiveStorage_MaySetPersistentData_ControllerIndex(uVar1);
+  if (cVar8 != '\0') {
+    cVar8 = Live_IsSignedIn(uVar1);
+    if (cVar8 == '\0') {
+      iVar6 = (int)uVar1 * 0x9238;
+      (&DAT_8363c8d5)[iVar6] = 1;
+      (&DAT_8363c8d8)[iVar6] = 1;
+      (&DAT_8363c8d9)[iVar6] = 0;
+      Com_Printf(0x10,0xffffffff82190d88,uVar1);
+      LiveStorage_ResetStats(uVar1,1);
+      __restgprlr_26();
+      return;
+    }
+    UI_BeginReadingDeviceUI(uVar2);
+    iVar9 = (int)uVar1 * 0x9238;
+    (&DAT_8363c8d5)[iVar9] = 1;
+    (&DAT_8363c8d8)[iVar9] = 1;
+    iVar6 = LiveStorage_IsStatsValidUser(uVar1);
+    if ((iVar6 == 0) || (cVar8 = Memcard_SelectSaveDevice(uVar1,0,0x3005), cVar8 == '\0')) {
+      Com_Printf(0x10,0xffffffff82190b98,uVar1);
+      (&DAT_8363c8d9)[iVar9] = 0;
+      UI_EndReadingSaveDeviceUI(uVar2);
+    }
+    else {
+      (&DAT_8363c8d9)[iVar9] = 1;
+      GetStatsFilename(uVar1,auStack_30b0,0x21);
+      uVar3 = Live_GetLocalClientName(uVar1);
+      Com_sprintf(auStack_3080,0x40,0xffffffff82190b4c,uVar3);
+      uVar4 = OpenContextFile(auStack_30b0,auStack_3080,0,uVar1);
+      pcVar7 = (char *)Memcard_GetOpenError();
+      if (*pcVar7 == '\0') {
+        uVar5 = ReadFromMemoryCard(uVar4,&local_3040,0x3005,local_30c0);
+        CloseContextFile(uVar4);
+        if ((3 < (uVar5 & 0xffffffff)) && (local_3040 != 2)) {
+          Com_Printf(0x10,0xffffffff82190cb8,local_3040,2,uVar1);
+          UI_EndReadingSaveDeviceUI(uVar2);
+          LiveStorage_ResetStatsWithConfirmation(uVar1,1,2);
+          __restgprlr_26();
+          return;
+        }
+        if (local_30c0[0] == '\0') {
+          if ((uVar5 & 0xffffffff) == 0x3005) {
+            Com_Memcpy(&DAT_836398d5 + iVar9,auStack_303c,0x3000);
+            Com_Printf(0x10,0xffffffff82190c78,0x3005,auStack_30b0,uVar1);
+            LiveStorage_FinalizeStatsRead(uVar1,1,0);
+            UI_EndReadingSaveDeviceUI(uVar2);
+            __restgprlr_26();
+            return;
+          }
+          Com_Printf(0x10,0xffffffff82190bd8,uVar5,auStack_30b0,0x3005,uVar1);
+        }
+        else {
+          Com_Printf(0x10,0xffffffff82190c30,local_30b8,auStack_30b0,uVar1);
+        }
+        UI_EndReadingSaveDeviceUI(uVar2);
+        LiveStorage_ResetStatsWithConfirmation(uVar1,1,0);
+        __restgprlr_26();
+        return;
+      }
+      iVar6 = Memcard_GetOpenError();
+      Com_Printf(0x10,0xffffffff82190d30,auStack_30b0,uVar1,*(undefined4 *)(iVar6 + 8));
+      if ((uVar4 & 0xffffffff) != 0) {
+        MyAssertHandler(0xffffffff82190b08,0x128,0,0xffffffff82000f98,0xffffffff82190d20);
+      }
+      UI_EndReadingSaveDeviceUI(uVar2);
+      iVar6 = Memcard_GetOpenError();
+      if (*(int *)(iVar6 + 4) != 0) {
+        LiveStorage_ResetStatsWithConfirmation(uVar1,1,0);
+        __restgprlr_26();
+        return;
+      }
+    }
+    LiveStorage_ResetStats(uVar1,1);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -104,8 +220,100 @@ void LiveStorage_ReadStats(void)
 void LiveStorage_WriteStats_Thread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  int iVar2;
+  HANDLE hEvent;
+  longlong lVar3;
+  char *pcVar7;
+  undefined8 uVar4;
+  int iVar8;
+  longlong lVar5;
+  BOOL BVar9;
+  longlong lVar6;
+  int iVar10;
+  HANDLE local_130;
+  char *local_12c;
+  char *local_128;
+  char *local_124;
+  char *local_120;
+  DWORD local_11c;
+  char *local_118;
+  undefined1 auStack_110 [48];
+  undefined1 auStack_e0 [224];
+  
   __savegprlr();
+  Sys_InitThread(0xb);
+  local_128 = "offlineXuid[0]";
+  local_12c = "offlineXuid";
+  local_118 = "controllerStatData[controllerIndex].writeStatsBufferInUse";
+  local_120 = "Failed to write stats into file \"%s\" for controller %i";
+  local_124 = "Unable to open stats file \"%s\" for write for controller %i (error: %s)\n";
+  do {
+    if (DAT_8427b398 == (HANDLE)0x0) {
+      MyAssertHandler(0xffffffff82190b08,0x176,0,0xffffffff82000f98,0xffffffff82190db8);
+    }
+    WaitForSingleObject(DAT_8427b398,0xffffffff);
+    Sys_EnterCriticalSection(0x24);
+    lVar3 = Sys_Milliseconds();
+    iVar2 = DAT_836368c8;
+    iVar10 = DAT_836368c8 * 0x9238;
+    uVar1 = *(undefined4 *)(&DAT_8363f8e4 + iVar10);
+    pcVar7 = (char *)Live_GetLocalClientOfflineXuidString(DAT_836368c8);
+    if (pcVar7 == (char *)0x0) {
+      MyAssertHandler(0xffffffff82190b08,0xd7,0,0xffffffff82000f98,local_12c);
+    }
+    if (*pcVar7 == '\0') {
+      MyAssertHandler(0xffffffff82190b08,0xd8,0,0xffffffff82000f98,local_128);
+    }
+    Com_sprintf(auStack_110,0x21,0xffffffff8200e440,0xffffffff8208aba8,pcVar7);
+    uVar4 = Live_GetLocalClientName(iVar2);
+    Com_sprintf(auStack_e0,0x40,0xffffffff82190b4c,uVar4);
+    Memcard_OpenFile(&local_130,auStack_110,auStack_e0,1,iVar2,uVar1);
+    if (local_130 == (HANDLE)0xffffffff) {
+      iVar8 = Memcard_GetOpenError();
+      Com_Printf(0x10,local_124,auStack_110,iVar2,*(undefined4 *)(iVar8 + 8));
+    }
+    else {
+      lVar5 = Sys_Milliseconds();
+      BVar9 = WriteFile(local_130,&DAT_8363c8dc + iVar10,0x3005,&local_11c,(LPOVERLAPPED)0x0);
+      CloseContextFile(local_130);
+      if (BVar9 == 0) {
+        Com_Printf(0x10,local_120,auStack_110,iVar2);
+      }
+      else {
+        if (local_11c != 0x3005) {
+          MyAssertHandler(0xffffffff82190b08,0x197,0,0xffffffff82190e24,0xffffffff82190dd0);
+        }
+        lVar6 = Sys_Milliseconds();
+        Com_Printf(0x10,0xffffffff82190e40,auStack_110,iVar2,lVar5 - lVar3,lVar6 - lVar3);
+      }
+    }
+    sync(1);
+    if ((&DAT_8363c8da)[iVar10] == '\0') {
+      MyAssertHandler(0xffffffff82190b08,0x19e,0,0xffffffff82000f98,local_118);
+    }
+    hEvent = DAT_8427b398;
+    (&DAT_8363c8da)[iVar10] = 0;
+    ResetEvent(hEvent);
+    Sys_LeaveCriticalSection(0x24);
+  } while( true );
+}
+
+
+// 826570B0  LiveStorage_InitWriteStatsThread  (xenon/xenon_storage.cpp:425)
+
+HANDLE LiveStorage_InitWriteStatsThread(void)
+
+{
+  HANDLE pvVar1;
+  
+  if (DAT_8427b398 != (HANDLE)0x0) {
+    MyAssertHandler(0xffffffff82190b08,0x1aa,0,0xffffffff82000f98,0xffffffff82190f4c);
+  }
+  DAT_8427b398 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
+  pvVar1 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0,LiveStorage_WriteStats_Thread,(LPVOID)0x0,0,
+                        (LPDWORD)0x0);
+  return pvVar1;
 }
 
 
@@ -161,8 +369,36 @@ undefined8 LiveStorage_LocalClientOfflineProfileCanSave(undefined8 param_1)
 void LiveStorage_CheckForLostDevice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char cVar3;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82190b08,0x1e9,0,0xffffffff82031880,uVar1,4);
+  }
+  iVar2 = (int)uVar1 * 0x9238;
+  if (((&DAT_8363c8d9)[iVar2] != '\0') &&
+     (cVar3 = Memcard_HasLostSelectedSaveDevice(uVar1), cVar3 != '\0')) {
+    (&DAT_8363c8d9)[iVar2] = 0;
+    Com_Printf(0x10,0xffffffff821910a4,uVar1);
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    cVar3 = CL_IsLocalClientActive();
+    if ((cVar3 != '\0') && (cVar3 = LiveStorage_ShouldReadOfflineStats(uVar1), cVar3 != '\0')) {
+      iVar2 = LiveStorage_GetActiveStatsSource(uVar1);
+      if (iVar2 != 1) {
+        MyAssertHandler(0xffffffff82190b08,0x1f9,0,0xffffffff82000f98,0xffffffff82191060);
+      }
+      if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
+         (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) &&
+          (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 == 0)))) {
+        MyAssertHandler(0xffffffff82190b08,0x1fb,0,0xffffffff82000f98,0xffffffff82190fe0);
+      }
+      Com_Error(1,0xffffffff8208baf8);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -222,19 +458,19 @@ void LiveStorage_WriteStats(void)
       *(undefined4 *)(&DAT_8363f8e4 + iVar8) = uVar3;
       (&DAT_8363c8d7)[iVar8] = 0;
       (&DAT_8363c8d8)[iVar8] = 0;
-      if (hHandle != (HANDLE)0x0) {
-        DVar5 = WaitForSingleObject(hHandle,0);
-        while (DVar5 == 0) {
-          Sys_Sleep(1);
-          DVar5 = WaitForSingleObject(DAT_8427b398,0);
-        }
-        DAT_836368c8 = (int)uVar1;
-        BVar6 = SetEvent(DAT_8427b398);
-        __restgprlr_24(BVar6);
-        return;
+      if (hHandle == (HANDLE)0x0) {
+        MyAssertHandler(0xffffffff82190b08,0x25c,0,0xffffffff82000f98,0xffffffff82190db8);
+        hHandle = DAT_8427b398;
       }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82190b08,0x25c,0,0xffffffff82000f98,0xffffffff82190db8);
+      DVar5 = WaitForSingleObject(hHandle,0);
+      while (DVar5 == 0) {
+        Sys_Sleep(1);
+        DVar5 = WaitForSingleObject(DAT_8427b398,0);
+      }
+      DAT_836368c8 = (int)uVar1;
+      BVar6 = SetEvent(DAT_8427b398);
+      __restgprlr_24(BVar6);
+      return;
     }
     (&DAT_8363c8d7)[iVar8] = 0;
     Com_Printf(0x10,0xffffffff821910e4);
@@ -253,8 +489,30 @@ void LiveStorage_WriteStats(void)
 void LiveStorage_SplitScreenReselectSaveDevice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char cVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  cVar3 = Live_IsSignedIn();
+  if (cVar3 != '\0') {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+    UI_BeginReadingDeviceUI();
+    cVar3 = Memcard_SelectSaveDevice(uVar1,1,0x3005);
+    UI_EndReadingSaveDeviceUI(uVar2);
+    if (cVar3 != '\0') {
+      cVar3 = LiveStorage_ShouldReadOnlineStats(uVar1);
+      if ((cVar3 != '\0') && (cVar3 = LiveStorage_DoWeHaveStatsForSource(uVar1,0), cVar3 == '\0')) {
+        LiveStorage_DownloadStats(uVar1);
+      }
+      cVar3 = LiveStorage_ShouldReadOfflineStats(uVar1);
+      if (cVar3 != '\0') {
+        LiveStorage_ReadStats(uVar1);
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -286,15 +544,12 @@ void Xenon_StorageBuildServerPath
   
   uVar1 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190b08,0x29f,0,0xffffffff82000f98,0xffffffff8208e528);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190b08,0x2a0,0,0xffffffff82000f98,0xffffffff821912c0);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82190b08,0x2a1,0,0xffffffff82000f98,0xffffffff821912ac);
   }
   MultiByteToWideChar(0xfde9,0,(LPCSTR)param_2,-1,aWStack_240,0x100);

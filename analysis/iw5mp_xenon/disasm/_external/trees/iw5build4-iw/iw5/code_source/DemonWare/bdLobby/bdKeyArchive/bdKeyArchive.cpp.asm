@@ -4,6 +4,11 @@
   8290A280  90830000             stw r4,0x0(r3)
   8290A284  4E800020             blr
 
+; 8290A288  bdKeyArchive::~bdKeyArchive  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyarchive.cpp:23)
+  8290A288  39600000             li r11,0x0
+  8290A28C  91630000             stw r11,0x0(r3)
+  8290A290  4E800020             blr
+
 ; 8290A2A0  bdKeyArchive::write  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyarchive.cpp:31)
   8290A2A0  7D8802A6             mfspr r12,LR
   8290A2A4  4800C3FD             bl 0x829166a0

@@ -3,6 +3,12 @@
 ; 82951AB8  ReadBPLossless  (line unknown)
   82951AB8  7D8802A6             mfspr r12,LR
   82951ABC  4BFC4BD5             bl 0x82916690
+  82951AC0  1000038C             vspltisw v0,0x0
+  82951AC4  3921FE80             subi r9,r1,0x180
+  82951AC8  81640008             lwz r11,0x8(r4)
+  82951ACC  80A40004             lwz r5,0x4(r4)
+  82951AD0  81440000             lwz r10,0x0(r4)
+  82951AD4  2B0B0004             cmplwi cr6,r11,0x4
 
 ; 82952470  readlossy  (line unknown)
   82952470  7D8802A6             mfspr r12,LR
@@ -384,3 +390,12 @@ LAB_8295297c:
 ; 82952990  ReadBPLossyWithMotion  (line unknown)
   82952990  7D8802A6             mfspr r12,LR
   82952994  4BFC3CF9             bl 0x8291668c
+  82952998  9421FEF0             stwu r1,-0x110(r1)
+  8295299C  1000038C             vspltisw v0,0x0
+  829529A0  39610050             addi r11,r1,0x50
+  829529A4  7C9D2378             or r29,r4,r4
+  829529A8  7CA42B78             or r4,r5,r5
+  829529AC  7C7F1B78             or r31,r3,r3
+  829529B0  7CC53378             or r5,r6,r6
+  829529B4  38610050             addi r3,r1,0x50
+  829529B8  7CFE3B78             or r30,r7,r7

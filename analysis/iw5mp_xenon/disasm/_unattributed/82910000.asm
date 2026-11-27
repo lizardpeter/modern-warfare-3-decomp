@@ -59,6 +59,14 @@ LAB_8291981c:
   82919B58  9421FF90             stwu r1,-0x70(r1)
   82919B5C  83DF00BC             lwz r30,0xbc(r31)
   82919B60  4800001C             b 0x82919b7c
+
+; 82919B64  FUN_82919b64  (line unknown)
+  82919B64  FBE1FFF8             std r31,-0x8(r1)
+  82919B68  3BECFF70             subi r31,r12,0x90
+  82919B6C  FBC1FFF0             std r30,-0x10(r1)
+  82919B70  7D8802A6             mfspr r12,LR
+  82919B74  9181FFE8             stw r12,-0x18(r1)
+  82919B78  9421FF90             stwu r1,-0x70(r1)
 LAB_82919b7c:
   82919B7C  7FC3F378             or r3,r30,r30
   82919B80  480015A1             bl 0x8291b120
@@ -78,6 +86,14 @@ LAB_82919b7c:
   82919CC0  9421FF90             stwu r1,-0x70(r1)
   82919CC4  839F0054             lwz r28,0x54(r31)
   82919CC8  4800001C             b 0x82919ce4
+
+; 82919CCC  FUN_82919ccc  (line unknown)
+  82919CCC  FBE1FFF8             std r31,-0x8(r1)
+  82919CD0  3BECFF60             subi r31,r12,0xa0
+  82919CD4  FB81FFF0             std r28,-0x10(r1)
+  82919CD8  7D8802A6             mfspr r12,LR
+  82919CDC  9181FFE8             stw r12,-0x18(r1)
+  82919CE0  9421FF90             stwu r1,-0x70(r1)
 LAB_82919ce4:
   82919CE4  7F83E378             or r3,r28,r28
   82919CE8  48001439             bl 0x8291b120
@@ -118,6 +134,20 @@ LAB_8291aca4:
   8291ACB4  7D8803A6             mtspr LR,r12
   8291ACB8  4E800020             blr
 
+; 8291AEB8  FUN_8291aeb8  (line unknown)
+  8291AEB8  FBE1FFF8             std r31,-0x8(r1)
+  8291AEBC  3BECFF80             subi r31,r12,0x80
+  8291AEC0  7D8802A6             mfspr r12,LR
+  8291AEC4  9181FFF0             stw r12,-0x10(r1)
+  8291AEC8  9421FFA0             stwu r1,-0x60(r1)
+  8291AECC  807F0058             lwz r3,0x58(r31)
+  8291AED0  48000251             bl 0x8291b120
+  8291AED4  80210000             lwz r1,0x0(r1)
+  8291AED8  EBE1FFF8             ld r31,-0x8(r1)
+  8291AEDC  8181FFF0             lwz r12,-0x10(r1)
+  8291AEE0  7D8803A6             mtspr LR,r12
+  8291AEE4  4E800020             blr
+
 ; 8291B6BC  FUN_8291b6bc  (line unknown)
   8291B6BC  7D8802A6             mfspr r12,LR
   8291B6C0  9181FFF8             stw r12,-0x8(r1)
@@ -141,6 +171,15 @@ LAB_8291aca4:
   8291B700  839F0050             lwz r28,0x50(r31)
   8291B704  3BAB7EC0             addi r29,r11,0x7ec0
   8291B708  48000020             b 0x8291b728
+
+; 8291B70C  FUN_8291b70c  (line unknown)
+  8291B70C  FBE1FFF8             std r31,-0x8(r1)
+  8291B710  3BECFF70             subi r31,r12,0x90
+  8291B714  FBA1FFF0             std r29,-0x10(r1)
+  8291B718  FB81FFE8             std r28,-0x18(r1)
+  8291B71C  7D8802A6             mfspr r12,LR
+  8291B720  9181FFE0             stw r12,-0x20(r1)
+  8291B724  9421FF90             stwu r1,-0x70(r1)
 LAB_8291b728:
   8291B728  817D0000             lwz r11,0x0(r29)
   8291B72C  578A103A             rlwinm r10,r28,0x2,0x0,0x1d
@@ -197,6 +236,14 @@ LAB_8291b84c:
   8291BBD8  9421FF90             stwu r1,-0x70(r1)
   8291BBDC  83DF00C4             lwz r30,0xc4(r31)
   8291BBE0  4800001C             b 0x8291bbfc
+
+; 8291BBE4  FUN_8291bbe4  (line unknown)
+  8291BBE4  FBE1FFF8             std r31,-0x8(r1)
+  8291BBE8  3BECFF70             subi r31,r12,0x90
+  8291BBEC  FBC1FFF0             std r30,-0x10(r1)
+  8291BBF0  7D8802A6             mfspr r12,LR
+  8291BBF4  9181FFE8             stw r12,-0x18(r1)
+  8291BBF8  9421FF90             stwu r1,-0x70(r1)
 LAB_8291bbfc:
   8291BBFC  7FC3F378             or r3,r30,r30
   8291BC00  4BFFF521             bl 0x8291b120
@@ -216,6 +263,14 @@ LAB_8291bbfc:
   8291BDB0  9421FF90             stwu r1,-0x70(r1)
   8291BDB4  83DF0094             lwz r30,0x94(r31)
   8291BDB8  4800001C             b 0x8291bdd4
+
+; 8291BDBC  FUN_8291bdbc  (line unknown)
+  8291BDBC  FBE1FFF8             std r31,-0x8(r1)
+  8291BDC0  3BECFF80             subi r31,r12,0x80
+  8291BDC4  FBC1FFF0             std r30,-0x10(r1)
+  8291BDC8  7D8802A6             mfspr r12,LR
+  8291BDCC  9181FFE8             stw r12,-0x18(r1)
+  8291BDD0  9421FF90             stwu r1,-0x70(r1)
 LAB_8291bdd4:
   8291BDD4  7FC3F378             or r3,r30,r30
   8291BDD8  4BFFF349             bl 0x8291b120
@@ -346,6 +401,17 @@ LAB_8291da24:
   8291DAF0  839F00B4             lwz r28,0xb4(r31)
   8291DAF4  83BF00A4             lwz r29,0xa4(r31)
   8291DAF8  48000028             b 0x8291db20
+
+; 8291DAFC  FUN_8291dafc  (line unknown)
+  8291DAFC  FBE1FFF8             std r31,-0x8(r1)
+  8291DB00  3BECFF70             subi r31,r12,0x90
+  8291DB04  FBC1FFF0             std r30,-0x10(r1)
+  8291DB08  FBA1FFE8             std r29,-0x18(r1)
+  8291DB0C  FB81FFE0             std r28,-0x20(r1)
+  8291DB10  FB61FFD8             std r27,-0x28(r1)
+  8291DB14  7D8802A6             mfspr r12,LR
+  8291DB18  9181FFD0             stw r12,-0x30(r1)
+  8291DB1C  9421FF80             stwu r1,-0x80(r1)
 LAB_8291db20:
   8291DB20  817F0050             lwz r11,0x50(r31)
   8291DB24  2F0B0000             cmpwi cr6,r11,0x0
@@ -379,6 +445,16 @@ LAB_8291db40:
   8291DC14  83DF00A4             lwz r30,0xa4(r31)
   8291DC18  839F0050             lwz r28,0x50(r31)
   8291DC1C  48000024             b 0x8291dc40
+
+; 8291DC20  FUN_8291dc20  (line unknown)
+  8291DC20  FBE1FFF8             std r31,-0x8(r1)
+  8291DC24  3BECFF70             subi r31,r12,0x90
+  8291DC28  FBC1FFF0             std r30,-0x10(r1)
+  8291DC2C  FBA1FFE8             std r29,-0x18(r1)
+  8291DC30  FB81FFE0             std r28,-0x20(r1)
+  8291DC34  7D8802A6             mfspr r12,LR
+  8291DC38  9181FFD8             stw r12,-0x28(r1)
+  8291DC3C  9421FF80             stwu r1,-0x80(r1)
 LAB_8291dc40:
   8291DC40  817F0054             lwz r11,0x54(r31)
   8291DC44  2F0B0000             cmpwi cr6,r11,0x0

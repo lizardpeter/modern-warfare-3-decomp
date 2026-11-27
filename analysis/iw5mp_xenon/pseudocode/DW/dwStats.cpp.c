@@ -23,11 +23,34 @@ int _dynamic_initializer_for__s_performanceValue__(void)
 
 // 826EDA18  dwWriteStats  (DW/dwStats.cpp:24)
 
-void dwWriteStats(void)
+void dwWriteStats(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int *piVar4;
+  undefined1 auStack_30 [48];
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 != 0) {
+    iVar3 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+    if (iVar3 != 0) {
+      uVar1 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+      piVar4 = (int *)bdStats__writeStats(auStack_30,uVar1,param_2,param_3);
+      iVar3 = *piVar4;
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+      if (iVar3 != 0) {
+        bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+        __restgprlr_29();
+        return;
+      }
+      TaskManager_ClearTask(iVar2);
+      dwConnectionErrorHandler(6);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -36,8 +59,35 @@ void dwWriteStats(void)
 void dwWriteStatsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetStats(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_PrintError(0x10,0xffffffff821ac95c,uVar2,auStack_60);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821ac934);
+  __restgprlr_29(2);
+  return;
 }
 
 
@@ -75,13 +125,173 @@ void dwReadStatsByUser(int param_1,undefined8 param_2,undefined8 param_3)
 }
 
 
-// 826EDD78  dwReadStatsForUsers  (DW/dwStats.cpp:154)
+// 826EDC40  dwReadStatsByLeaderboardIDs  (DW/dwStats.cpp:109)
 
-void dwReadStatsForUsers(void)
+void dwReadStatsByLeaderboardIDs(int param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int *piVar4;
+  undefined1 auStack_20 [8];
+  
+  if (param_1 != 0) {
+    iVar3 = dwGetStats(*(undefined1 *)(param_1 + 0x95));
+    if (iVar3 != 0) {
+      uVar2 = dwGetStats(*(undefined1 *)(param_1 + 0x95));
+      puVar1 = *(undefined4 **)(param_1 + 0x98);
+      piVar4 = (int *)bdStats__readStatsByLeaderboardIDs
+                                (auStack_20,uVar2,param_2,puVar1 + 1,puVar1 + 0x1a,*puVar1);
+      iVar3 = *piVar4;
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_20);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(param_1);
+        dwConnectionErrorHandler(7);
+      }
+      else {
+        bdReference<bdRemoteTask>__operator_(param_1 + 8,iVar3);
+      }
+    }
+  }
+  return;
+}
+
+
+// 826EDCF0  dwReadStatsByRank  (DW/dwStats.cpp:136)
+
+void dwReadStatsByRank(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int *piVar4;
+  undefined1 auStack_30 [48];
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 != 0) {
+    iVar3 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+    if (iVar3 != 0) {
+      uVar1 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+      piVar4 = (int *)bdStats__readStatsByRank
+                                (auStack_30,uVar1,param_2,param_3 & 0xffffffff,
+                                 *(undefined4 *)(iVar2 + 0x98),param_4);
+      iVar3 = *piVar4;
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+      if (iVar3 != 0) {
+        bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826EDD78  dwReadStatsForUsers  (DW/dwStats.cpp:154)
+
+void dwReadStatsForUsers(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        )
+
+{
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int *piVar4;
+  undefined1 auStack_30 [48];
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 != 0) {
+    iVar3 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+    if (iVar3 != 0) {
+      uVar1 = dwGetStats(*(undefined1 *)(iVar2 + 0x95));
+      piVar4 = (int *)bdStats__readStatsByEntityID
+                                (auStack_30,uVar1,param_2,param_3,param_4,
+                                 *(undefined4 *)(iVar2 + 0x98));
+      iVar3 = *piVar4;
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_30);
+      if (iVar3 != 0) {
+        bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+        __restgprlr_28();
+        return;
+      }
+      TaskManager_ClearTask(iVar2);
+      dwConnectionErrorHandler(8);
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826EDE18  dwReadStatsComplete  (DW/dwStats.cpp:177)
+
+void dwReadStatsComplete(void)
+
+{
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined4 uVar5;
+  undefined1 auStack_70 [112];
+  
+  iVar3 = __savegprlr_28();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetStats(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar1 == 2) {
+        iVar4 = *(int *)(iVar3 + 0x98);
+        uVar5 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar3 + 8));
+        *(undefined4 *)(iVar4 + 0x3b60) = uVar5;
+        uVar5 = bdRemoteTask__getTotalNumResults(*(undefined4 *)(iVar3 + 8));
+        *(undefined4 *)(iVar4 + 0x3b64) = uVar5;
+      }
+      if ((int)uVar2 != 0) {
+        dwLobbyErrorCodeToString(uVar2,auStack_70,0x40);
+        Com_PrintError(0x19,0xffffffff821a9ed8,uVar2,auStack_70);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_28();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821a9eb0);
+  __restgprlr_28(2);
+  return;
+}
+
+
+// 826EDF08  dwReadStatsByLeaderboardIDsComplete  (DW/dwStats.cpp:212)
+
+undefined8 dwReadStatsByLeaderboardIDsComplete(int param_1)
+
+{
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [72];
+  
+  if (((param_1 == 0) || (*(int *)(param_1 + 8) == 0)) ||
+     (iVar3 = dwGetStats(*(undefined1 *)(param_1 + 0x95)), iVar3 == 0)) {
+    Com_Printf(0x10,0xffffffff821a9eb0);
+    uVar1 = 2;
+  }
+  else {
+    dwLobbyPump(*(undefined1 *)(param_1 + 0x95));
+    uVar1 = (**(code **)(**(int **)(param_1 + 8) + 4))();
+    uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(param_1 + 8));
+    if ((int)uVar2 != 0) {
+      dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+      Com_PrintError(0x19,0xffffffff821a9ed8,uVar2,auStack_60);
+    }
+    uVar1 = dwTaskStatusConvert(uVar1,uVar2);
+  }
+  return uVar1;
 }
 
 
@@ -115,13 +325,79 @@ void dwDeleteStats(int param_1,undefined8 param_2)
 }
 
 
-// 826EE178  dwFetchPerformanceValues  (DW/dwStats.cpp:303)
+// 826EE080  dwDeleteStatsComplete  (DW/dwStats.cpp:263)
 
-void dwFetchPerformanceValues(void)
+void dwDeleteStatsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetStats(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_PrintError(0x19,0xffffffff821ac9bc,uVar2,auStack_60);
+        Live_ThrowError(1,0xffffffff82084b1c);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821ac994);
+  __restgprlr_29(2);
+  return;
+}
+
+
+// 826EE178  dwFetchPerformanceValues  (DW/dwStats.cpp:303)
+
+void dwFetchPerformanceValues
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int *piVar4;
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 != 0) {
+    iVar3 = dwGetMatchmaking(*(undefined1 *)(iVar2 + 0x95));
+    if (iVar3 != 0) {
+      uVar1 = dwGetMatchmaking(*(undefined1 *)(iVar2 + 0x95));
+      if (0x12 < (int)param_3) {
+        MyAssertHandler(0xffffffff821ac9e0,0x133,0,0xffffffff82000f98,0xffffffff821aca1c);
+      }
+      piVar4 = (int *)bdMatchMaking__getPerformanceValues
+                                (auStack_40,uVar1,param_2,param_3,param_4,0xffffffff844f67a0);
+      iVar3 = *piVar4;
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_40);
+      if (iVar3 != 0) {
+        bdReference<bdRemoteTask>__operator_(iVar2 + 8,iVar3);
+        __restgprlr_27();
+        return;
+      }
+      TaskManager_ClearTask(iVar2);
+      dwConnectionErrorHandler(0xb);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -151,7 +427,6 @@ void dwFetchPerformanceValuesComplete(undefined8 param_1,longlong param_2,int *p
         iVar5 = *param_3;
         iVar6 = bdRemoteTask__getNumResults(*(undefined4 *)(iVar4 + 8));
         if (iVar5 < iVar6) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821ac9e0,0x153,0,0xffffffff82000f98,0xffffffff821acac8);
         }
         memset((void *)param_2,0,iVar5 << 4);
@@ -226,7 +501,6 @@ void dwWritePerformanceStats
         puVar9 = puVar9 + 0x18;
       } while (-1 < lVar8);
       if (0x36 < iVar5) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821ac9e0,0x18a,0,0xffffffff82000f98,0xffffffff821acae4);
       }
       if (0 < iVar5) {
@@ -273,8 +547,61 @@ void dwWritePerformanceStats
 void dwWritePerformanceStatsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetMatchmaking(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Live_ShutdownDueToTerminalError(*(undefined1 *)(iVar3 + 0x95));
+        Com_PrintError(0x19,0xffffffff821acb3c,uVar2,auStack_60);
+        Live_ThrowError(1,0xffffffff82084b1c);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821acb08);
+  __restgprlr_29(2);
+  return;
+}
+
+
+// 826ED958  NamedStatsResult::NamedStatsResult  (DW/dwStats.cpp:457)
+
+undefined4 * NamedStatsResult__NamedStatsResult(undefined4 *param_1)
+
+{
+  bdTaskResult__bdTaskResult();
+  *(undefined8 *)(param_1 + 2) = 0;
+  *param_1 = &PTR_NamedStatsResult___scalar_deleting_destructor__821ac928;
+  *(undefined8 *)(param_1 + 4) = 0;
+  *(undefined8 *)(param_1 + 6) = 0;
+  return param_1;
+}
+
+
+// 826ED9A8  NamedStatsResult::~NamedStatsResult  (DW/dwStats.cpp:461)
+
+void NamedStatsResult___NamedStatsResult(undefined4 *param_1)
+
+{
+  *param_1 = &PTR_NamedStatsResult___scalar_deleting_destructor__821ac928;
+  bdTaskResult___bdTaskResult();
+  return;
 }
 
 
@@ -332,11 +659,51 @@ undefined8 NamedStatsResult__sizeOf(void)
 
 // 826EE6E0  dwReadExternalTitleStats  (DW/dwStats.cpp:486)
 
-void dwReadExternalTitleStats(void)
+void dwReadExternalTitleStats
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 auStack_40 [64];
+  
+  iVar3 = __savegprlr_26();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac9e0,0x1e7,0,0xffffffff82000f98,0xffffffff821acc04);
+  }
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ac9e0,0x1e8,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821acbd0);
+    __restgprlr_26();
+    return;
+  }
+  if (iVar3 == 0) {
+    Com_Printf(0x10,0xffffffff821acba8);
+    __restgprlr_26();
+    return;
+  }
+  uVar2 = dwGetStats(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821acb6c);
+    __restgprlr_26();
+    return;
+  }
+  piVar4 = (int *)bdStats__readExternalTitleStats(auStack_40,uVar2,param_2,param_3,param_4);
+  iVar1 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_40);
+  if (iVar1 != 0) {
+    bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+    __restgprlr_26();
+    return;
+  }
+  TaskManager_ClearTask(iVar3);
+  dwConnectionErrorHandler(0x14);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -345,8 +712,84 @@ void dwReadExternalTitleStats(void)
 void dwReadExternalTitleStatsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 != 0) {
+    if (*(int **)(iVar3 + 8) != (int *)0x0) {
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_Printf(0x10,0xffffffff821acc4c,uVar2,auStack_60);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821acc10);
+  __restgprlr_29(2);
+  return;
+}
+
+
+// 826EE8E8  dwReadExternalTitleNamedStats  (DW/dwStats.cpp:562)
+
+void dwReadExternalTitleNamedStats
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6)
+
+{
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined1 auStack_50 [80];
+  
+  iVar3 = __savegprlr_24();
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ac9e0,0x233,0,0xffffffff82000f98,0xffffffff821acd1c);
+  }
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ac9e0,0x234,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821acce8);
+    __restgprlr_24();
+    return;
+  }
+  if (iVar3 == 0) {
+    Com_Printf(0x10,0xffffffff821accbc);
+    __restgprlr_24();
+    return;
+  }
+  uVar2 = dwGetStats(*(undefined1 *)(iVar3 + 0x95));
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_Printf(0x10,0xffffffff821acc78);
+    __restgprlr_24();
+    return;
+  }
+  piVar4 = (int *)bdStats__readExternalTitleNamedStats
+                            (auStack_50,uVar2,param_2,param_3,param_4,param_5,param_6);
+  iVar1 = *piVar4;
+  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_50);
+  if (iVar1 != 0) {
+    bdReference<bdRemoteTask>__operator_(iVar3 + 8,iVar1);
+    __restgprlr_24();
+    return;
+  }
+  TaskManager_ClearTask(iVar3);
+  dwConnectionErrorHandler(0x15);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -355,8 +798,32 @@ void dwReadExternalTitleStatsComplete(void)
 void dwReadExternalTitleNamedStatsComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 != 0) {
+    if (*(int **)(iVar3 + 8) != (int *)0x0) {
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_Printf(0x10,0xffffffff821acd68,uVar2,auStack_60);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821acd28);
+  __restgprlr_29(2);
+  return;
 }
 
 

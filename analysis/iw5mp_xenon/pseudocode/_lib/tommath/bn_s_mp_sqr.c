@@ -2,10 +2,104 @@
 
 // 8225AE60  s_mp_sqr  (line unknown)
 
-void s_mp_sqr(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void s_mp_sqr(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  uint *puVar6;
+  undefined8 uVar4;
+  longlong lVar5;
+  ulonglong uVar7;
+  int iVar8;
+  longlong lVar9;
+  int iVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  undefined4 local_60;
+  undefined4 local_5c;
+  uint local_58;
+  uint local_54;
+  undefined4 local_4c;
+  uint local_48;
+  uint local_44;
+  
+  puVar6 = (uint *)__savegprlr_26();
+  uVar1 = *puVar6;
+  lVar15 = ((ulonglong)uVar1 & 0x7fffffff) * 2 + 1;
+  uVar4 = mp_init_size(&local_60,lVar15);
+  if ((int)uVar4 == 0) {
+    if (0 < (int)uVar1) {
+      lVar5 = 1;
+      iVar8 = 0;
+      uVar7 = (ulonglong)local_54;
+      uVar14 = (ulonglong)uVar1;
+      do {
+        lVar13 = uVar7 + 4;
+        uVar11 = (ulonglong)*(uint *)(puVar6[3] + iVar8) * (ulonglong)*(uint *)(puVar6[3] + iVar8) +
+                 (ulonglong)*(uint *)uVar7;
+        *(uint *)uVar7 = (uint)uVar11 & 0xfffffff;
+        uVar11 = uVar11 >> 0x1c & 0xffffffff;
+        uVar3 = *(uint *)(puVar6[3] + iVar8);
+        if ((int)lVar5 < (int)uVar1) {
+          lVar9 = (ulonglong)uVar1 - lVar5;
+          iVar10 = iVar8;
+          do {
+            iVar10 = iVar10 + 4;
+            uVar11 = (ulonglong)*(uint *)(puVar6[3] + iVar10) * (ulonglong)uVar3 * 2 +
+                     (ulonglong)*(uint *)lVar13 + uVar11;
+            *(uint *)lVar13 = (uint)uVar11 & 0xfffffff;
+            lVar13 = lVar13 + 4;
+            uVar11 = uVar11 >> 0x1c & 0xffffffff;
+            lVar9 = lVar9 + -1;
+          } while (lVar9 != 0);
+        }
+        if (uVar11 != 0) {
+          lVar13 = lVar13 + -4;
+          do {
+            uVar12 = *(uint *)((int)lVar13 + 4) + uVar11;
+            uVar11 = uVar12 >> 0x1c;
+            lVar13 = lVar13 + 4;
+            *(uint *)lVar13 = (uint)uVar12 & 0xfffffff;
+          } while (uVar11 != 0);
+        }
+        uVar14 = uVar14 - 1;
+        iVar8 = iVar8 + 4;
+        uVar7 = uVar7 + 8;
+        lVar5 = lVar5 + 1;
+      } while (uVar14 != 0);
+    }
+    if (0 < (int)lVar15) {
+      lVar5 = (lVar15 * 4 & 0xfffffffcU) + (ulonglong)local_54;
+      do {
+        lVar5 = lVar5 + -4;
+        if (*(int *)lVar5 != 0) break;
+        lVar15 = lVar15 + -1;
+      } while (0 < lVar15);
+    }
+    uVar2 = param_2[1];
+    uVar1 = param_2[2];
+    local_48 = -(uint)(lVar15 != 0) & local_58;
+    uVar3 = param_2[3];
+    local_4c = local_5c;
+    local_44 = local_54;
+    param_2[3] = local_54;
+    param_2[2] = local_48;
+    param_2[1] = local_5c;
+    *param_2 = local_60;
+    local_5c = uVar2;
+    local_58 = uVar1;
+    local_54 = uVar3;
+    mp_clear(&local_60);
+    uVar4 = 0;
+  }
+  __restgprlr_26(uVar4);
+  return;
 }
 

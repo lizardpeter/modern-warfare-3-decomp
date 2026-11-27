@@ -19,6 +19,12 @@
   828FD8F4  EBE1FFF0             ld r31,-0x10(r1)
   828FD8F8  4E800020             blr
 
+; 828FD900  bdEventLogID::~bdEventLogID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:17)
+  828FD900  3D608221             lis r11,-0x7ddf
+  828FD904  396BCAF0             subi r11,r11,0x3510
+  828FD908  91630000             stw r11,0x0(r3)
+  828FD90C  4BFFF68C             b 0x828fcf98
+
 ; 828FD910  bdEventLogID::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:22)
   828FD910  7C6B1B78             or r11,r3,r3
   828FD914  7C832378             or r3,r4,r4
@@ -28,6 +34,22 @@
 ; 828FD988  bdEventLogID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:27)
   828FD988  7D8802A6             mfspr r12,LR
   828FD98C  48018D31             bl 0x829166bc
+  828FD990  3BE1FF90             subi r31,r1,0x70
+  828FD994  9421FF90             stwu r1,-0x70(r1)
+  828FD998  7C9E2378             or r30,r4,r4
+  828FD99C  909F008C             stw r4,0x8c(r31)
+  828FD9A0  38830008             addi r4,r3,0x8
+  828FD9A4  807E0000             lwz r3,0x0(r30)
+  828FD9A8  4BFF83F9             bl 0x828f5da0
+  828FD9AC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828FD9B0  314BFFFF             subic r10,r11,0x1
+  828FD9B4  7D6A5910             subfe r11,r10,r11
+  828FD9B8  557D063E             rlwinm r29,r11,0x0,0x18,0x1f
+  828FD9BC  7FC3F378             or r3,r30,r30
+  828FD9C0  4BA66A41             bl 0x82364400
+  828FD9C4  7FA3EB78             or r3,r29,r29
+  828FD9C8  383F0070             addi r1,r31,0x70
+  828FD9CC  48018D40             b 0x8291670c
 
 ; 828FD920  bdEventLogID::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlogid.cpp:35)
   828FD920  38600010             li r3,0x10

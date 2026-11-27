@@ -3,10 +3,79 @@
 ; 824DCC10  Com_LoadInfoString_FastFile  (qcommon/com_loadutils.cpp:50)
   824DCC10  7D8802A6             mfspr r12,LR
   824DCC14  48439AA1             bl 0x829166b4
+  824DCC18  9421FF80             stwu r1,-0x80(r1)
+  824DCC1C  7C9B2378             or r27,r4,r4
+  824DCC20  7C7D1B78             or r29,r3,r3
+  824DCC24  7CBF2B78             or r31,r5,r5
+  824DCC28  7C641B78             or r4,r3,r3
+  824DCC2C  38A00001             li r5,0x1
+  824DCC30  38600024             li r3,0x24
+  824DCC34  7CDE3378             or r30,r6,r6
+  824DCC38  4BF11D21             bl 0x823ee958
+  824DCC3C  7C7C1B78             or r28,r3,r3
+  824DCC40  7FA4EB78             or r4,r29,r29
+  824DCC44  38600024             li r3,0x24
+  824DCC48  4BF12149             bl 0x823eed90
+  824DCC4C  2F030000             cmpwi cr6,r3,0x0
+  824DCC50  419A001C             beq cr6,0x824dcc6c
+  824DCC54  3D608208             lis r11,-0x7df8
+  824DCC58  7FA6EB78             or r6,r29,r29
+  824DCC5C  388B52CC             addi r4,r11,0x52cc
+  824DCC60  7F65DB78             or r5,r27,r27
+  824DCC64  38600001             li r3,0x1
+  824DCC68  4801D701             bl 0x824fa368
+LAB_824dcc6c:
+  824DCC6C  38A02000             li r5,0x2000
+  824DCC70  7FC4F378             or r4,r30,r30
+  824DCC74  7F83E378             or r3,r28,r28
+  824DCC78  4BF19361             bl 0x823f5fd8
+  824DCC7C  7FEBFB78             or r11,r31,r31
+LAB_824dcc80:
+  824DCC80  894B0000             lbz r10,0x0(r11)
+  824DCC84  396B0001             addi r11,r11,0x1
+  824DCC88  2B0A0000             cmplwi cr6,r10,0x0
+  824DCC8C  409AFFF4             bne cr6,0x824dcc80
+  824DCC90  7D7F5850             subf r11,r31,r11
+  824DCC94  7FE4FB78             or r4,r31,r31
+  824DCC98  396BFFFF             subi r11,r11,0x1
+  824DCC9C  7FC3F378             or r3,r30,r30
+  824DCCA0  557F003E             rlwinm r31,r11,0x0,0x0,0x1f
+  824DCCA4  7FE5FB78             or r5,r31,r31
+  824DCCA8  4843AD39             bl 0x829179e0
+  824DCCAC  2F030000             cmpwi cr6,r3,0x0
+  824DCCB0  419A001C             beq cr6,0x824dcccc
+  824DCCB4  3D608208             lis r11,-0x7df8
+  824DCCB8  7F66DB78             or r6,r27,r27
+  824DCCBC  388B52AC             addi r4,r11,0x52ac
+  824DCCC0  7FA5EB78             or r5,r29,r29
+  824DCCC4  38600001             li r3,0x1
+  824DCCC8  4801D6A1             bl 0x824fa368
+LAB_824dcccc:
+  824DCCCC  7C7FF214             add r3,r31,r30
+  824DCCD0  38210080             addi r1,r1,0x80
+  824DCCD4  48439A30             b 0x82916704
 
 ; 824DCCD8  Com_LoadInfoString  (qcommon/com_loadutils.cpp:69)
   824DCCD8  7D8802A6             mfspr r12,LR
   824DCCDC  484399E1             bl 0x829166bc
+  824DCCE0  9421FF90             stwu r1,-0x70(r1)
+  824DCCE4  7C7E1B78             or r30,r3,r3
+  824DCCE8  7C9D2378             or r29,r4,r4
+  824DCCEC  4BFFFF25             bl 0x824dcc10
+  824DCCF0  7C7F1B78             or r31,r3,r3
+  824DCCF4  4813008D             bl 0x8260cd80
+  824DCCF8  2F030000             cmpwi cr6,r3,0x0
+  824DCCFC  409A001C             bne cr6,0x824dcd18
+  824DCD00  3D608208             lis r11,-0x7df8
+  824DCD04  7FA6EB78             or r6,r29,r29
+  824DCD08  388B52EC             addi r4,r11,0x52ec
+  824DCD0C  7FC5F378             or r5,r30,r30
+  824DCD10  38600001             li r3,0x1
+  824DCD14  4801D655             bl 0x824fa368
+LAB_824dcd18:
+  824DCD18  7FE3FB78             or r3,r31,r31
+  824DCD1C  38210070             addi r1,r1,0x70
+  824DCD20  484399EC             b 0x8291670c
 
 ; 824DCD28  Com_LoadRawTextFile_FastFile  (qcommon/com_loadutils.cpp:112)
   824DCD28  4BF19530             b 0x823f6258

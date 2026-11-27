@@ -56,8 +56,82 @@ void alloc_funny_pointers(void)
 void make_funny_pointers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar12;
+  longlong lVar11;
+  undefined4 *puVar14;
+  longlong lVar13;
+  undefined4 *puVar15;
+  int iVar16;
+  int *piVar17;
+  uint uVar18;
+  
+  iVar9 = __savegprlr_23();
+  iVar16 = 0;
+  iVar1 = *(int *)(iVar9 + 0x18c);
+  iVar2 = *(int *)(iVar9 + 0x120);
+  if (0 < *(int *)(iVar9 + 0x2c)) {
+    iVar10 = 0;
+    piVar17 = (int *)(*(int *)(iVar9 + 0xcc) + 0xc);
+    do {
+      uVar12 = *piVar17 * piVar17[6];
+      uVar3 = *(uint *)(iVar9 + 0x120);
+      iVar4 = *(int *)(iVar1 + 8 + iVar10);
+      puVar5 = *(undefined4 **)(iVar10 + *(int *)(iVar1 + 0x38));
+      puVar15 = *(undefined4 **)(iVar10 + *(int *)(iVar1 + 0x3c));
+      uVar18 = (int)uVar12 / (int)uVar3;
+      trapWord(6,(ulonglong)uVar3,0);
+      lVar11 = (longlong)(iVar2 + 2) * (longlong)(int)uVar18;
+      trapWord(5,(ulonglong)uVar3 &
+                 ~((((ulonglong)uVar12 & 0x7fffffff) << 1 | (ulonglong)(uVar12 >> 0x1f)) - 1),0xffff
+              );
+      if (0 < lVar11) {
+        puVar14 = puVar15;
+        do {
+          uVar6 = *(undefined4 *)((iVar4 - (int)puVar15) + (int)puVar14);
+          *puVar14 = uVar6;
+          *(undefined4 *)(((int)puVar5 - (int)puVar15) + (int)puVar14) = uVar6;
+          puVar14 = puVar14 + 1;
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
+      }
+      lVar11 = ((ulonglong)uVar18 & 0x7fffffff) << 1;
+      lVar13 = 0;
+      if (0 < (int)lVar11) {
+        do {
+          iVar7 = (int)(((longlong)(int)uVar18 * (longlong)iVar2 + lVar13 & 0xffffffffU) << 2);
+          iVar8 = (int)(((longlong)(iVar2 + -2) * (longlong)(int)uVar18 + lVar13 & 0xffffffffU) << 2
+                       );
+          lVar13 = lVar13 + 1;
+          *(undefined4 *)(iVar8 + (int)puVar15) = *(undefined4 *)(iVar7 + iVar4);
+          *(undefined4 *)(iVar7 + (int)puVar15) = *(undefined4 *)(iVar8 + iVar4);
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
+      }
+      if (0 < (int)uVar18) {
+        puVar15 = puVar5 + -(uVar18 + 1 & 0x3fffffff);
+        do {
+          puVar15 = puVar15 + 1;
+          *puVar15 = *puVar5;
+          uVar18 = uVar18 - 1;
+        } while (uVar18 != 0);
+      }
+      iVar16 = iVar16 + 1;
+      iVar10 = iVar10 + 4;
+      piVar17 = piVar17 + 0x15;
+    } while (iVar16 < *(int *)(iVar9 + 0x2c));
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -330,10 +404,59 @@ void process_data_crank_post(int param_1,undefined8 param_2,undefined8 param_3,u
 
 // 827BFC70  jinit_d_main_controller  (jpeg-6/jdmainct.c:477)
 
-void jinit_d_main_controller(void)
+void jinit_d_main_controller(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int *piVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  undefined4 uVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  int *piVar9;
+  
+  piVar3 = (int *)__savegprlr_27();
+  puVar4 = (undefined4 *)(**(code **)piVar3[1])(piVar3,1,0x50);
+  piVar3[99] = (int)puVar4;
+  *puVar4 = start_pass_main;
+  if ((param_2 & 0xff) != 0) {
+    *(undefined4 *)(*piVar3 + 0x14) = 4;
+    (**(code **)*piVar3)(piVar3);
+  }
+  if (*(char *)(piVar3[0x6a] + 8) == '\0') {
+    iVar7 = piVar3[0x48];
+  }
+  else {
+    if (piVar3[0x48] < 2) {
+      *(undefined4 *)(*piVar3 + 0x14) = 0x2f;
+      (**(code **)*piVar3)(piVar3);
+    }
+    alloc_funny_pointers(piVar3);
+    iVar7 = piVar3[0x48] + 2;
+  }
+  iVar8 = 0;
+  if (0 < piVar3[0xb]) {
+    piVar9 = (int *)(piVar3[0x33] + -0x38);
+    puVar4 = puVar4 + 1;
+    do {
+      piVar2 = piVar9 + 0x17;
+      uVar1 = piVar3[0x48];
+      uVar6 = piVar9[0x11] * *piVar2;
+      piVar9 = piVar9 + 0x15;
+      trapWord(6,(ulonglong)uVar1,0);
+      trapWord(5,(ulonglong)uVar1 &
+                 ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),0xffff);
+      uVar5 = (**(code **)(piVar3[1] + 8))
+                        (piVar3,1,(longlong)*piVar9 * (longlong)*piVar2,
+                         (longlong)((int)uVar6 / (int)uVar1) * (longlong)iVar7);
+      iVar8 = iVar8 + 1;
+      puVar4 = puVar4 + 1;
+      *puVar4 = uVar5;
+    } while (iVar8 < piVar3[0xb]);
+  }
+  __restgprlr_27();
+  return;
 }
 

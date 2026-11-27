@@ -5,7 +5,60 @@
 int _commit(int _FileHandle)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(_FileHandle);
+  uint _Filehandle;
+  int *piVar2;
+  ulonglong uVar1;
+  HANDLE hFile;
+  BOOL BVar3;
+  ulong *puVar4;
+  int iVar5;
+  uint uStack00000014;
+  uint local_40;
+  
+  _Filehandle = __savegprlr_27(_FileHandle);
+  uStack00000014 = _Filehandle;
+  if (_Filehandle == 0xfffffffe) {
+    piVar2 = _errno();
+    uVar1 = 0xffffffffffffffff;
+    *piVar2 = 9;
+    goto LAB_82924d98;
+  }
+  if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
+    iVar5 = (_Filehandle & 0x1f) * 0x48;
+    if ((*(byte *)(iVar5 + (&DAT_84897dc0)[(int)_Filehandle >> 5] + 4) & 1) != 0) {
+      __lock_fhandle(_Filehandle);
+      if ((*(byte *)(iVar5 + (&DAT_84897dc0)[(int)_Filehandle >> 5] + 4) & 1) == 0) {
+LAB_82924d74:
+        piVar2 = _errno();
+        *piVar2 = 9;
+        local_40 = 0xffffffff;
+      }
+      else {
+        hFile = (HANDLE)_get_osfhandle(_Filehandle);
+        BVar3 = FlushFileBuffers(hFile);
+        if (BVar3 == 0) {
+          local_40 = GetLastError();
+        }
+        else {
+          local_40 = 0;
+        }
+        if (local_40 != 0) {
+          puVar4 = __doserrno();
+          *puVar4 = local_40;
+          goto LAB_82924d74;
+        }
+      }
+      FUN_82924dc0();
+      uVar1 = (ulonglong)local_40;
+      goto LAB_82924d98;
+    }
+  }
+  piVar2 = _errno();
+  *piVar2 = 9;
+  _invalid_parameter_noinfo();
+  uVar1 = 0xffffffffffffffff;
+LAB_82924d98:
+  iVar5 = __restgprlr_27(uVar1);
+  return iVar5;
 }
 

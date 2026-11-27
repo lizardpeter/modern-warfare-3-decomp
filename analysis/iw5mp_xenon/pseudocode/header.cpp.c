@@ -94,31 +94,46 @@ LAB_8289eb88:
 
 // 8289ECE0  XGSetTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:607)
 
-void XGSetTextureHeader(void)
+void XGSetTextureHeader(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                       undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  XGRAPHICS__SetBaseTextureHeader(uVar1,param_2,1,param_3,param_4,param_5,2,0);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8289ED50  XGSetLineTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:681)
 
-void XGSetLineTextureHeader(void)
+void XGSetLineTextureHeader
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  XGRAPHICS__SetBaseTextureHeader(uVar1,1,1,param_2,param_3,param_4,0,0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8289EDB8  XGSetCubeTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:731)
 
-void XGSetCubeTextureHeader(void)
+void XGSetCubeTextureHeader
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  XGRAPHICS__SetBaseTextureHeader(uVar1,uVar1,6,param_2,param_3,param_4,2,0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -127,28 +142,66 @@ void XGSetCubeTextureHeader(void)
 void XGSetVolumeTextureHeader(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_26();
+  XGRAPHICS__SetBaseTextureHeader();
+  __restgprlr_26();
+  return;
 }
 
 
 // 8289E9B0  XGSetVertexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:918)
 
-void XGSetVertexBufferHeader(void)
+void XGSetVertexBufferHeader
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,uint param_4,uint *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  void *pvVar2;
+  
+  uVar1 = __savegprlr_28();
+  pvVar2 = memset(param_5,0,0x20);
+  *param_5 = 1;
+  if ((param_2 & 4) != 0) {
+    *param_5 = 0x200001;
+  }
+  if ((param_2 & 0x200) != 0) {
+    *param_5 = *param_5 | 0x400000;
+  }
+  param_5[1] = 1;
+  param_5[5] = 0xffff0000;
+  param_5[6] = param_4 | 3;
+  param_5[7] = uVar1 & 0x3fffffc | param_5[7] & 0x8000000 | 0x10000002;
+  __restgprlr_28(pvVar2);
+  return;
 }
 
 
 // 8289EA48  XGSetIndexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:968)
 
-void XGSetIndexBufferHeader(void)
+void XGSetIndexBufferHeader
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               uint param_5,uint *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  void *pvVar2;
+  
+  uVar1 = __savegprlr_27();
+  pvVar2 = memset(param_6,0,0x20);
+  param_6[7] = uVar1;
+  param_6[1] = 1;
+  *param_6 = 2;
+  if ((param_2 & 4) != 0) {
+    *param_6 = 0x200002;
+  }
+  if ((param_2 & 0x200) != 0) {
+    *param_6 = *param_6 | 0x400000;
+  }
+  param_6[6] = param_5;
+  param_6[5] = 0xffff0000;
+  *param_6 = (uint)((param_3 & 0xffffffff) << 0x1d) | *param_6;
+  __restgprlr_27(pvVar2);
+  return;
 }
 
 

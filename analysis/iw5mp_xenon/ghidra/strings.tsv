@@ -143,6 +143,7 @@ va	type	value
 820023B8	string	aaGlob->autoMeleeState == AIM_MELEE_STATE_UPDATING
 820023F4	string	arcLength > 0.0f
 8200240C	string	color
+82002414	string	Pri: %i
 8200241C	string	Ent: %i
 82002424	string	Dist: %.2f
 82002430	string	Speed: %.2f
@@ -1760,6 +1761,7 @@ va	type	value
 820101D0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp
 8201020C	string	%s  (blur) = %g
 82010220	string	(blur >= I_fmin( scrBlur->start, scrBlur->end ) && blur <= I_fmax( scrBlur->start, scrBlur->end ))
+82010284	string	%s  (t) = %g
 82010294	string	(t >= 0 && t < 1)
 820102A8	string	scrBlur->timeEnd - scrBlur->timeStart > 0.0f
 820102D8	string	scrBlur->timeStart <= scrBlur->timeEnd
@@ -1777,6 +1779,7 @@ va	type	value
 82010420	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_camerashake.cpp
 82010464	string	i == MAX_CAMERA_SHAKE
 8201047C	string	duration > 0
+8201048C	string	p > 0.0f
 820104A8	string	Unable to add %s at [%.2f, %.2f, %.2f]-> Too many client ent sounds.  Reduce sounds or increase MAX_CLIENT_ENT_SOUNDS (%d). 
 82010528	string	Unexpected text '%s' when trying to find '%s' in map's effect file 
 8201056C	string	Expected 6 floats instead of '%s' 
@@ -1797,6 +1800,7 @@ va	type	value
 82010730	string	ent = createOneshotEffect( 
 8201074C	string	Unexpected data after parsing '%s' map's effect file 
 82010788	string	Expected 'ent = createLoopSound();' or 'ent = createOneshotEffect' instead of '%s' in map's effect file 
+820107F8	string	main()
 82010800	string	#include common_scripts\\_createfx;
 82010824	string	#include common_scripts\\utility;
 82010848	string	//_createfx generated. Do not touch!!
@@ -1969,6 +1973,7 @@ va	type	value
 82012390	string	scaledRect
 820123A0	string	mtlIndex doesn't index LOC_SEL_MTL_MASK  %i not in [0, %i)
 820123DC	string	cg_hudSplitscreenCompassElementScale
+82012408	string	%.1fm
 82012410	string	resultSize > 0
 82012420	string	result
 82012430	string	s_compassScramblers
@@ -2003,6 +2008,8 @@ va	type	value
 8201293C	string	graphic_x1y1
 8201294C	string	pScaledRect
 82012958	string	clientIndex doesn't index MAX_CLIENTS  %i not in [0, %i)
+82012994	string	h > 0.0f
+820129A0	string	w > 0.0f
 820129AC	string	missile->ownerNum doesn't index MAX_CLIENTS  %i not in [0, %i)
 820129EC	string	plane->ownerNum doesn't index MAX_CLIENTS  %i not in [0, %i)
 82012A2C	string	ownerNum doesn't index MAX_CLIENTS  %i not in [0, %i)
@@ -2102,26 +2109,38 @@ va	type	value
 82013478	string	num child0 vars: %d/%d
 82013490	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_debug.cpp
 820134D4	string	frameTimesUSec
+820134E4	string	 g-host
 820134EC	string	 cg ms/frame
 820134FC	string	party_hostname->current.string
 8201351C	string	party_hostname
+8201352C	string	 teams
 82013534	string	 effect
+8201353C	string	% 6d / % 6d / % 6d / % 6d
 82013558	string	 used DObjs
+82013564	string	%i/%i
 8201356C	string	 phys ms/fr
+82013578	string	(%i-%i) %3.1f
 82013590	string	(!budget is %g!) %i
+820135A4	string	-Level-
 820135AC	string	 free bsp surfs
+820135BC	string	 prim
 820135C4	string	 raw fx tris
 820135D4	string	 raw geo tris
 820135E4	string	 shadow tris
 820135F4	string	 view tris
 82013600	string	 min lighting cache
 82013614	string	 free skin cache
+82013628	string	%iK/%iK
 82013630	string	-Scene-
 82013638	string	 legacy free
 82013648	string	 free mem ship
+82013658	string	%3.1f
 82013664	string	 server
+82013674	string	(%.2f) %.2f
 82013680	string	 wall clock
 8201368C	string	 sv ms/frame
+8201369C	string	(%.0f-%.0f) %.2f
+820136B0	string	(%i-%i) %1.2f
 820136CC	string	(%i-%i, %i) %i
 820136E4	string	 viewpos
 820136F0	string	(%.1f %.1f %.1f) %.1f
@@ -2129,6 +2148,8 @@ va	type	value
 8201372C	string	-Snapshot-
 82013738	string	 server time
 82013748	string	xenon mem (%g)      
+82013760	string	%s (%g)      
+82013774	string	(%.0f %.0f %.0f) 
 82013788	string	 stats
 82013798	string	 (not fetched)
 820137A8	string	offline
@@ -2136,6 +2157,7 @@ va	type	value
 820137B8	string	 backing out
 820137C8	string	 host
 820137D0	string	missing
+820137E0	string	%s %i%s 
 820137EC	string	invalid info
 820137FC	string	no handle
 82013808	string	no key
@@ -2158,6 +2180,7 @@ va	type	value
 820139E8	string	%2i %s(%s)^7 %s -> %s p%s%i ^7v^3%04.2f ^7rv^3%04.2f ^7dst^3%5i ^7pit^3%04.2f ^7slv^3%.2f(%.1f)
 82013A4C	string	CPU: ^3%%%i ^7kHz: ^3%i ^7Master: ^5%i (%.2f)
 82013A7C	string	Listing Active Sounds of Type: %s
+82013AA0	string	snd_khz
 82013AB8	string	drawMaterialType doesn't index ARRAY_COUNT( traceMasks )  %i not in [0, %i)
 82013B04	string	drawMaterialType != 0
 82013B24	string	ConstDvar_GetBool( player_debugHealth, PLAYER_DEBUG_HEALTH )
@@ -2177,11 +2200,15 @@ va	type	value
 82013CA8	string	^6%s(%c) : %i, %i ^7Rocket: ^5%s ^3
 82013CD0	string	^7Weapon: ^2%s^7 - ^5%s ^7Select: ^2%s ^7Hands: ^5%s ^7Goggles: ^5%s ^7Knife: ^5%s ^7ADS: ^5%.2f ^7-^5 %.0f^7fov ^7ViewAngles: (^5%.2f, %.2f, %.2f^7)  ^7LinkAngles: (^5%.2f, %.2f, %.2f^7)  ^7delta_angles: (^5%.2f, %.2f, %.2f^7)  velocity: ^5%0005.1f^7 : (^5%.2f, %.2f, %.2f^7)  ^7---Anims--- ^3
 82013E00	string	%s: %s All those moments will be lost in time, like tears in rain.
+82013E58	string	^%cEF_SOFT 
 82013E64	string	^%cEF_COMPASS_PING 
+82013E78	string	^%cEF_TALK 
 82013E84	string	^%cEF_VOTED 
 82013E94	string	^%cEF_TIMED_OBJECT 
 82013EA8	string	^%cEF_JAMMING 
 82013EB8	string	^%cEF_VEHICLE_ACTIVE 
+82013ED0	string	^%cEF_NEW 
+82013EDC	string	^%cEF_ADS 
 82013EE8	string	^%cEF_DEAD 
 82013EF4	string	^%cEF_MANTLE 
 82013F04	string	^%cEF_LASER_SIGHT 
@@ -2204,6 +2231,7 @@ va	type	value
 82014074	string	^%cPOF_AUTOSPOT_OVERLAY 
 82014090	string	^%cPOF_ADS_THIRD_PERSON_TOGGLE 
 820140B0	string	^%cPOF_COMPASS_PING 
+820140C8	string	^%cPOF_AC130 
 820140D8	string	^%cPOF_SPEC_ALLOW_FREELOOK 
 820140F4	string	^%cPOF_SPEC_ALLOW_CYCLE 
 82014110	string	^%cPOF_PLAYER 
@@ -2230,6 +2258,7 @@ va	type	value
 82014350	string	^%cPWF_TRIGGER_LEFT_FIRE 
 8201436C	string	^%cPWF_DISABLE_WEAPONS 
 82014384	string	^%cPWF_USING_NIGHTVISION 
+820143A0	string	^%cPWF_NO_ADS 
 820143B0	string	^%cPWF_ENEMY_FIRE 
 820143C4	string	^%cPWF_FRIENDLY_FIRE 
 820143DC	string	^%cPWF_HOLDING_BREATH 
@@ -2257,7 +2286,9 @@ va	type	value
 820145B8	string	^%cPMF_MANTLE 
 820145C8	string	^%cPMF_PRONE 
 820145D8	string	Client View of Flags
+820145F8	string	 %-20s -%s%3.0f%%  %4i^7/%4i   ^7%4i,%3.0f%%^7 
 82014628	string	--------------------------------------- 
+82014654	string	 %-20s -%3.0f%%  %4i        ^7%4i,%3.0f%%^7 
 82014688	string	=============================================================== 
 820146CC	string	           (current)                   (max witnessed) 
 82014704	string	Entity Counts
@@ -2347,12 +2378,14 @@ va	type	value
 8201513B	string	 Players
 82015144	string	Corpses
 8201514C	string	Invisible Ents
+8201515C	string	Items
 82015164	string	Missiles
 82015174	string	%s: %.1fx%.1fb (%.1f fields), max %ix%.1fb (%i f)
 820151A8	string	Missing handler for snapshot entity type %i
 820151D4	string	Events
 820151DC	string	Vehicle Collmap
 820151EF	string	oPing
+82015220	string	Ents: %3i/%3i/%3i
 82015234	string	kbps: %3i
 82015244	string	killcam: %3i
 82015258	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp
@@ -3274,6 +3307,8 @@ va	type	value
 8201DC10	string	es->events[eventIndex] not in [EV_GRENADE_EXPLODE, EV_CUSTOM_EXPLODE_NOMARKS]  %i not in [%i, %i]
 8201DC74	string	Restarting smoke grenade at time %i at ( %f, %f, %f ) 
 8201DCAC	string	Playing smoke grenades at time %i 
+8201DCD0	string	ui_mp/hud_480.txt
+8201DCE4	string	ui_mp/hud_720.txt
 8201DCF8	string	%s  (viewParms->width) = %g
 8201DD14	string	((viewParms->width == 0.5f) || (viewParms->width == 1.0f))
 8201DD50	string	viewParms
@@ -3296,6 +3331,7 @@ va	type	value
 8201DEE4	string	(bgs == &cgameGlob->bgs)
 8201DF00	string	Init effects system
 8201DF14	string	!I_strnicmp( cgs->mapname, "maps/", 5 )
+8201DF3C	string	maps/
 8201DF44	string	MP_MAPDIFFERSFROMSERVERDEV
 8201DF60	string	checksum == cl->mapcrc
 8201DF78	string	checksum is %d, mapcrc is %d
@@ -3334,9 +3370,11 @@ va	type	value
 8201E284	string	VehicleClient
 8201E294	string	cg_glass
 8201E2A0	string	cg_localents
+8201E2B0	string	cg_view
 8201E2B8	string	CG_CollWorld
 8201E2C8	string	cg_predict
 8201E2D4	string	cg_compassfriendlies
+8201E2EC	string	cg_draw
 8201E2F4	string	cg_camerashake
 8201E304	string	cg_main
 8201E30C	string	Synchronous
@@ -3482,6 +3520,7 @@ va	type	value
 8201F668	string	currentIndex
 8201F678	string	modPrvAnimBlendModeNames
 8201F694	string	mpDefaultDrawBoneOptions
+8201F6B0	string	g_mdlprv
 8201F6C8	string	Distance to Model: %.0f
 8201F6E0	string	Focus Move
 8201F6EC	string	Model Rotate (with camera)
@@ -3514,6 +3553,8 @@ va	type	value
 8201F94C	string	modPrvLoadToAnim %s,
 8201F964	string	modPrvLoadFromAnim %s,
 8201F97C	string	modPrvLoadModel %s,
+8201F990	string	#DVARS,
+8201F998	string	#ANIMS,
 8201F9A0	string	#MODELS,
 8201F9AC	string	%.2f %.2f %.2f %.2f %.2f %.2f
 8201F9CC	string	#ERROR-NotInGame
@@ -3667,11 +3708,13 @@ va	type	value
 82020E6C	string	PLATFORM_DEMO_DVR_FAST_MOTION
 82020E8C	string	PLATFORM_DEMO_DVR_PLAY
 82020EA4	string	PLATFORM_DEMO_DVR_SLOW_MOTION
+82020EC4	string	%.1fx
 82020ECC	string	PLATFORM_DEMO_DVR_JUMP_BACK
 82020EEC	string	PLATFORM_DEMO_DVR_CHANGE_CAMERA
 82020F0C	string	AfffMENU_DEMO_DVR_FIRST_PERSON
 82020F2C	string	MENU_DEMO_DVR_THIRD_PERSON
 82020F48	string	MENU_DEMO_DVR_FREE_CAMERA
+82020F74	string	%02i:%02i
 82020F80	string	PLATFORM_DEMO_DVR_TOGGLE_CONTROLS_HUD
 82020FA8	string	PLATFORM_DEMO_DVR_SWITCH_PLAYERS
 82020FCC	string	PLATFORM_DEMO_DVR_FREECAMERA_CHANGE_HEIGHT
@@ -3774,6 +3817,7 @@ va	type	value
 82021E0C	string	rumbleName[0]
 82021E1D	string	Can't play rumble asset '%s' because it is not registered.
 82021E58	string	Rumble: Low %.3f, High %.3f 
+82021E78	string	%.4f %.4f 
 82021E84	string	knotCount <= MAX_RUMBLE_GRAPH_KNOTS  %i, %i
 82021EB0	string	RUMBLEGRAPHFILE  %d 
 82021EC8	string	rumble\\%s
@@ -4020,11 +4064,13 @@ va	type	value
 82024458	string	===== CL_CGameNeedsServerCommand ===== 
 82024480	string	CG_GetLocalClientGlobals( localClientNum )->nextSnap
 820244B8	string	nesting == cmd_args.nesting
+820248F0	string	 {%f, %f}, 
 820248FC	string	duration >= 0
 82024910	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp
 82024954	string	%s  (clientUIActives[client].migrationState) = %i
 82024988	string	((state == CMSTATE_INACTIVE) || (state == CMSTATE_OLDHOSTLEAVING) || (clientUIActives[client].migrationState != CMSTATE_INACTIVE))
 82024A10	string	client doesn't index STATIC_MAX_LOCAL_CLIENTS  %i not in [0, %i)
+82024A54	string	J_Spine4
 82024A60	string	tag_weapon_left
 82024A70	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_snapshot_mp.cpp
 82024AB8	string	CG_TransferDObjMarksToScriptMover(): couldn't transfer from ent #%i to script_mover ent #%i.  The script mover has null xmodel. 
@@ -4050,7 +4096,9 @@ va	type	value
 82024F48	string	%s_default
 82024F54	string	collision_default
 82024F68	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp
+82024FA8	string	pszType
 82024FB0	string	whizby
+82024FB8	string	%s_%02d
 82024FD0	string	whizbySoundRight
 82024FE4	string	whizbySoundLeft
 82024FF4	string	classes
@@ -4150,8 +4198,11 @@ va	type	value
 820257A8	string	DevSoundMixer is now Active, with all %i channel volumes set to 0. 
 820257EC	string	DevSoundMixer MuteCommand() 
 8202580C	string	MasterPriority
+8202581C	string	dsm%d_fM
 82025828	string	Slave
+82025830	string	dsm%d_sPct
 8202583C	string	Master
+82025844	string	dsm%d_mPct
 82025850	string	Volume
 82025858	string	dsm%d_vol
 82025868	string	devSoundMixer_Data.mixerGroupCount doesn't index SNDMIXGUI_MAX_GROUPS  %i not in [0, %i)
@@ -4234,6 +4285,7 @@ va	type	value
 82026438	string	Could not look up "%s" "%s" entry of "%s" array in playerdata.def: %s
 82026480	string	Could not determine challenge tier for challenge "%s" 
 820264B8	string	mp/challengeTable.csv
+820264D0	string	tier_
 820264D8	string	Expected "challengeTierNew" to be an array of bools in playerdata.def
 82026520	string	Could not set element of "challengeTierNew" playerdata array to true: %s
 82026570	string	Could not look up entry %i of "challengeTierNew" array in playerdata.def: %s
@@ -4673,6 +4725,7 @@ va	type	value
 8202AB78	string	knownHitClientEntity->nextState.number == knownHitClientNum  %i, %i
 8202ABBC	string	knownHitClientNum doesn't index MAX_CLIENTS  %i not in [0, %i)
 8202ABFC	string	!IS_NAN((end)[0]) && !IS_NAN((end)[1]) && !IS_NAN((end)[2])
+8202AC38	string	!IS_NAN(up)
 8202AC44	string	!IS_NAN(right)
 8202AC54	string	!IS_NAN(aimOffset)
 8202AC68	string	!IS_NAN(spread)
@@ -4705,6 +4758,7 @@ va	type	value
 8202B0C8	string	!CG_IsPlayerEntityNumber( &cgameGlob->predictedPlayerState, cent->nextState.number ) && !Com_OnSameTeam( cgameGlob->bgs.clientinfo[cgameGlob->predictedPlayerState.clientNum].team, cgameGlob->bgs.clientinfo[ cent->nextState.clientNum ].team )
 8202B1BC	string	ps->otherFlags & POF_THERMAL_VISION_OVERLAY_FOF
 8202B1EC	string	%i %i %i %X 
+8202B200	string	52.61.79.6d.65.4c.6f.76.65.73.53.61.72.61.68 
 8202B238	string	%.0f %.0f %.0f %.0f : %.0f %i %i [%i] 
 8202B280	string	Weapon "%s" has invalid missile cone height settings.  Zero height is invalid. 
 8202B2D0	string	Weapon "%s" has invalid missile cone height settings.  No sound is available to play. 
@@ -5077,6 +5131,7 @@ va	type	value
 8202EC40	string	-%s %i %i 
 8202EC4C	string	mainmenu
 8202EC58	string	Discarding input from controller %i since the mapped client (%i) isn't active 
+8202ECA8	string	devgui 
 8202ECB0	string	devgui
 8202ECB8	string	unbindallaxis
 8202ECC8	string	bindaxis
@@ -5379,6 +5434,7 @@ va	type	value
 82030D6C	string	%s_load
 82030D74	string	mp/didyouknow.csv
 82030D88	string	didyouknow
+82030D94	string	%4i: %s 
 82030DA0	string	-------------------------------------- 
 82030DC8	string	User info settings: 
 82030DE0	string	Server: %s 
@@ -5862,6 +5918,7 @@ va	type	value
 820348F4	string	MP_MIGRATION_SENDING
 8203490C	string	MP_MIGRATION_EVALUATING
 82034924	string	%s  new host %s, nat type %i, avg ping %i
+82034950	string	%s %s
 82034958	string	!msg.overflowed
 82034968	string	!NET_IsLocalAddress( to )
 82034988	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_migration.cpp
@@ -6311,6 +6368,7 @@ va	type	value
 82039A78	string	Keymap entry #%i has unhandled type '%i'. 
 82039AA4	string	keyMapCount <= KEYPAIRS_PER_BANK
 82039AC8	string	keyPairs
+82039AD4	string	keyMap
 82039AE0	string	Error reading controller #%i's profile.  Keypair #%i has type %i different from the keymap entry's type %i. 
 82039B50	string	KeyPairStringValuesAreValid( mapEntry->stringIndex, mapEntry->stringMaxSize )
 82039BA0	string	Keymap Entry %i has an invalid type of '%i'.
@@ -6388,6 +6446,7 @@ va	type	value
 8203A6E4	string	settingName
 8203A6F0	string	index doesn't index ARRAY_COUNT( g_profileDataFields )  %i not in [0, %i)
 8203A740	string	Controller #%i^7   %s^7 LocalClient       - #%i^7 isProfileLoggedIn - %s^7 ^7 errorOnRead       - %s^7 gpadRumble        - %s^7 invertPitch       - %s^7 autoAim           - %s^7 viewSensitivity   - %.2f^7 gpadDeflectL      - %.2f^7 gpadDeflectR      - %.2f^7 gamma             - %.2f^7 blacklevel        - %.2f^7 snd_volume        - %.2f^7 safeAreaAdjust_h  - %.2f^7 safeAreaAdjust_v  - %.2f^7 playTimeSP        - %i^7 playTimeMP        - %i^7 playTimeSO        - %i^7 percentCompleteSP - %i^7 percentCompleteMP - %i^7 percentCompleteSO - %i^7 hasEverPlayed_MM  - %s^7 hasEverPlayed_SP  - %s^7 hasEverPlayed_SO  - %s^7 hasEverPlayed_MP  - %s^7 ^7 "%s"^7 "%s"^7 
+8203A9D8	string	^2yes
 8203A9E0	string	^2-ACTIVE-
 8203A9EC	string	(not active)
 8203AA00	string	*byteIndex doesn't index g_profileDataFields[dataIndex].size  %i not in [0, %i)
@@ -6636,6 +6695,7 @@ va	type	value
 8203D8C0	string	Session_GetLocalVoiceConnectivity( party->session ) & (1 << partyHost->hostNum)
 8203D910	string	partyHost
 8203D91C	string	party->session
+8203D92C	string	%ipha
 8203D934	string	!party->backingOut
 8203D948	string	!Party_IsMemberIndexAway( party, hostNum )
 8203D974	string	Party_IsRunning( party )
@@ -6855,6 +6915,7 @@ va	type	value
 820413E0	string	Discarding doqos request from '%s' - we are the host 
 82041418	string	Discarding doqos request from '%s' - we are not in a party 
 82041454	string	PartyClient - SendQoSResults - Sending %i QoS results to host 
+82041494	string	%iqosres
 820414A0	string	Should not have changed state yet
 820414C8	string	Migrating the party (%i) over so clientNum %i (%s) is the new host instead of client %i. AreWeHost is %i 
 82041534	string	pa_joinfailed
@@ -7316,6 +7377,11 @@ va	type	value
 8204641C	string	canthear
 82046428	string	psack
 82046438	string	party
+820464A8	string	naxis:
+820464B0	string	%i,%i 
+820464B8	string	 axis:
+820464C0	string	teams(%i:%i)
+820464D0	string	(%i:%i)
 820464D8	string	%i: %i %i 
 820464E4	string	  %i: %i %i 
 820464F4	string	PrintTeams: 
@@ -8369,6 +8435,7 @@ va	type	value
 82056C50	string	Error Occurred whilst checking string %s. 
 82056C7C	string	viewportY + viewportHeight <= renderTargetHeight
 82056CB0	string	viewportX + viewportWidth <= renderTargetWidth
+82056CE0	string	%g + %g > %i
 82056CF0	string	%s  (viewportHeight) = %g
 82056D0C	string	(viewportHeight > 0)
 82056D24	string	%s  (viewportWidth) = %g
@@ -8641,6 +8708,8 @@ va	type	value
 82059538	string	Fastfile for zone '%s' is out of date (version %d, expecting %d)
 82059580	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp
 820595C8	string	file->memoryBuffer
+820595DE	string	ffu100
+820595E9	string	Wff0100
 820595F4	string	loadedBytesInternal >= 0
 82059618	string	db_imageIndex doesn't index db_imageCount  %i not in [0, %i)
 82059658	string	!R_HasDeviceOwnership()
@@ -8854,6 +8923,7 @@ va	type	value
 8205BE68	string	Could not find asset. type: %s, name: '%s'
 8205BE94	string	IsPowerOf2( allocFlags )
 8205BEB0	string	zoneInfoCount < ARRAY_COUNT( g_zoneInfo )
+8205BEDC	string	dev_%s
 8205BEE4	string	Loading fastfile %s 
 8205BEFC	string	!g_zoneInfoCount
 8205BF10	string	Max zone count exceeded
@@ -8993,6 +9063,7 @@ va	type	value
 8205D1B0	string	!(baseInfo->size & 4095)
 8205D1CC	string	(!(*((uint *)g_streamBuffer + offset)))
 8205D1F4	string	!(sizeReduction & 4095)
+8205D20C	string	!(size & 4095)
 8205D21C	string	!(reinterpret_cast< int >( writePos ) & 15)
 8205D248	string	!success || finish
 8205D25C	string	g_streamFileOffset == DB_GetLoadOffset() - DB_GetLoadAvailIn()
@@ -9052,7 +9123,10 @@ va	type	value
 8205DB30	string	images[imageIndex] doesn't index IMAGE_POOL_SIZE  %i not in [0, %i)
 8205DB78	string	g_stream2.sortCount doesn't index ARRAY_COUNT( g_stream2.sort )  %i not in [0, %i)
 8205DBCC	string	imageCount
+8205DBD8	string	DXT5A
 8205DBE0	string	GPUTEXTUREFORMAT_#%d
+8205DBF8	string	DXT3A
+8205DC08	string	DXT4_5
 8205DC10	string	DXT2_3
 8205DC24	string	8_8_8_8
 8205DC30	string	( mapType > MAPTYPE_INVALID1 ) && ( mapType < MAPTYPE_COUNT )
@@ -9097,6 +9171,8 @@ va	type	value
 8205E108	string	 Uncached Images: %d 
 8205E120	string	%4d : %8d/%8d bytes : %s : %s : %s
 8205E144	string	 : %s %s %dx%d %d %d
+8205E15C	string	Always
+8205E164	string	*Always
 8205E16C	string	InUse
 8205E174	string	NotInUse
 8205E180	string	Cached Images: %d 
@@ -9184,6 +9260,7 @@ va	type	value
 8205ED54	string	Color background for the devgui
 8205ED74	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp
 8205EDB0	string	handle not in [1, ARRAY_COUNT( devguiGlob.menus )]  %i not in [%i, %i]
+8205EDF8	string	menu1
 8205EE00	string	menu0
 8205EE08	string	DevGui_CompareMenus( nextMenu, menu ) != 0
 8205EE34	string	Too many devgui entries (more than %i)
@@ -9212,6 +9289,7 @@ va	type	value
 8205F1F8	string	menu->childType == DEV_CHILD_MENU
 8205F21C	string	%s  (path + pathLen) = %s
 8205F238	string	(pathLen + labelLen <= 120)
+8205F254	string	%i: %s
 8205F260	string	hsv[2] not in [0.0f, 1.0f]  %g not in [%g, %g]
 8205F290	string	hsv[1] not in [0.0f, 1.0f]  %g not in [%g, %g]
 8205F2C0	string	hsv[0] not in [0.0f, 1.0f]  %g not in [%g, %g]
@@ -9421,6 +9499,7 @@ va	type	value
 82061390	string	FX_GetElemChild( draw->system, draw->elemHandle ) != FX_HANDLE_NONE
 820613D4	string	!FX_ElemDefHasBoltedEmitter( draw->elemDef )
 82061404	string	Distance: %.2f
+82061414	string	Ent# %i
 8206141C	string	Tag: %s
 82061428	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_debug3D.cpp
 82061470	string	elemDef->elemType == FX_ELEM_TYPE_SPOT_LIGHT
@@ -9527,6 +9606,7 @@ va	type	value
 820626F0	string	Toggle whether or not glass breaks when shot
 82062720	string	glass_spam
 8206272C	string	Toggle extra spam to help repro glass asserts
+8206275C	string	fx_debug3D
 82062768	string	Turn on effect system debug information, <int> parameter is culling distance
 820627B8	string	fx_alphaThreshold
 820627D0	string	Don't draw billboard sprites, oriented sprites or tails with alpha below this threshold (0-256).
@@ -9568,6 +9648,7 @@ va	type	value
 82062CD0	string	fx_cull_elem_spawn
 82062CE4	string	fx_draw_omniLight
 82062CF8	string	fx_draw_spotLight
+82062D0C	string	fx_draw
 82062D14	string	Toggles drawing of effects after processing
 82062D40	string	fx_enable
 82062D4C	string	Toggles all effects processing
@@ -9605,6 +9686,7 @@ va	type	value
 820633D8	string	work->edgeCount doesn't index ARRAY_COUNT( work->edges )  %i not in [0, %i)
 82063424	string	i1 doesn't index work->ptCount  %i not in [0, %i)
 82063458	string	i0 doesn't index work->ptCount  %i not in [0, %i)
+8206348C	string	i0 != i1
 82063498	string	loops[loopIter]
 820634A8	string	edge->next
 820634B8	string	work->ptCount doesn't index ARRAY_COUNT( work->pts )  %i not in [0, %i)
@@ -9719,6 +9801,7 @@ va	type	value
 8206462C	string	priorIndex < borderCount - 2
 82064650	string	shard->loopCount doesn't index ARRAY_COUNT( shard->loops )  %i not in [0, %i)
 820646A0	string	loop->parentLoopIndex == USHRT_MAX || loop->parentLoopIndex < loopIter
+820646E8	string	i0 < i1
 820646F0	string	edgeIter != shard->loops[parentIndex].firstEdge
 82064720	string	shard->loops[parentIndex].parentLoopIndex == USHRT_MAX
 82064758	string	parentIndex < childIndex
@@ -9833,6 +9916,7 @@ va	type	value
 82065BC8	string	listHeadFrom
 82065BD8	string	FX_TransferDObjMarksFromEntToEnt(): couldn't find a match for destination model "%s" in the source dobj. 
 82065C44	string	modelTo
+82065C4C	string	objFrom
 82065C54	string	!((uint)pIndex & 3)
 82065C68	string	outSurf->indexCount
 82065C7C	string	%s  (groupHandle) = %i
@@ -10117,6 +10201,7 @@ va	type	value
 820695C4	string	localSystem->numUpdateElement == 0
 820695E8	string	localSystem->numSpawnElementRequest == 0
 82069618	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp
+8206965C	string	fx surfs
 82069668	string	(throughWithEffectRequest[requestIndex]->status & FX_STATUS_REF_COUNT_MASK) != 0
 820696BC	string	FX_GetElemChild( localSystem, elemHandle ) == FX_HANDLE_NONE
 82069700	string	FX_GetNextElemInEffect( localSystem, elemHandle ) == FX_HANDLE_NONE
@@ -10173,7 +10258,9 @@ va	type	value
 8206A0FC	string	t1 not in [0.0f, 1.0f]  %g not in [%g, %g]
 8206A128	string	t0 not in [0.0f, 1.0f]  %g not in [%g, %g]
 8206A158	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp
+8206A1A4	string	%s  (t1) = %g
 8206A1B4	string	(t1 >= 0.0f && t1 <= 1.0f)
+8206A1D0	string	%s  (t0) = %g
 8206A1E0	string	(t0 >= 0.0f && t0 <= 1.0f)
 8206A200	string	%s  (va( "%i for %g on %i intervals", endIndex, t1, intervalCount )) = %i
 8206A24C	string	(endIndex >= 0 && endIndex < intervalCount)
@@ -10186,6 +10273,7 @@ va	type	value
 8206A378	string	update
 8206A380	string	posLocal
 8206A38C	string	msecUpdateEnd - msecUpdateBegin > 0
+8206A3B0	string	[%g, %g]
 8206A3BC	string	msecLifeSpan >= 0
 8206A3D0	string	elemDefIndex doesn't index def->elemDefCountLooping + def->elemDefCountOneShot + def->elemDefCountEmission  %i not in [0, %i)
 8206A450	string	update->msecUpdateBegin <= update->msecUpdateEnd  %i, %i
@@ -10244,6 +10332,7 @@ va	type	value
 8206AE8C	string	fxWorldPtr == &fxWorld
 8206AEA8	string	time0 <= intermediateTime && intermediateTime <= time1 && time0 != time1
 8206AEF8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\FxCurve.h
+8206AF38	string	%g, %g, %g
 8206AF44	string	master->keys
 8206AF54	string	%s  (master->dimensionCount) = %i
 8206AF78	string	(master->dimensionCount > 0)
@@ -10290,6 +10379,7 @@ va	type	value
 8206B5FC	string	bp.methodOfDeath != MOD_EXPLOSIVE_BULLET
 8206B628	string	br.hitClientNum == CLIENTNUM_NONE || shotCount == 1
 8206B660	string	BG_GetWeaponType( wp->weapon, wp->isAlternate ) == WEAPTYPE_BULLET
+8206B6A4	string	wp->weapDef
 8206B6B0	string	%s  (number - 1) = %i
 8206B6C8	string	(!number || g_entities[number - 1].r.isInUse)
 8206B6F8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h
@@ -10370,6 +10460,7 @@ va	type	value
 8206C61C	string	pField
 8206C624	string	!((f - fields) & ENTFIELD_MASK)
 8206C644	string	(f - fields) == (unsigned short)( f - fields )
+8206C674	string	f->ofs
 8206C67C	string	offset >= 0
 8206C688	string	static_cast<unsigned int>( offset ) < ARRAY_COUNT( fields ) - 1
 8206C6C8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp
@@ -10440,10 +10531,12 @@ va	type	value
 8206D750	string	USAGE: <player> SetAimSpreadMovementScale( <movement scale> ) 
 8206D790	string	%c %i
 8206D798	string	(menuIndex >= 0) && (menuIndex < MAX_SCRIPT_MENUS)
+8206D7CC	string	%c %i 1
 8206D7D4	string	%c %i %i %i
 8206D7E0	string	Sending splash open for splash %s to clientNum %i in slot %i 
 8206D820	string	Invalid slot number specified for ShowHudSplash
 8206D850	string	Too many parameters for SetWeaponAmmoStock(), expecting 2.
+8206D88C	string	%c %s "%s"
 8206D898	string	server dvar '%s' cannot be set as a client dvar
 8206D8C8	string	%s is an invalid dvar name
 8206D8E4	string	Client Dvar Value
@@ -10452,6 +10545,7 @@ va	type	value
 8206D994	string	%c %g %g %g
 8206D9A0	string	SetWhizbySpreads: must have 3 parameters. 
 8206D9CC	string	SetWhizbyRadii: must have 3 parameters. 
+8206D9F8	string	%c %i %g %g
 8206DA04	string	SetVolMod: '%s' is an unknown volmod.
 8206DA30	string	USAGE: player SetVolMod("volmod", value, fadetime = 0); fadetime is in sec 
 8206DA7C	string	SetChannelVolume: '%g' is an an invalid volume.
@@ -10475,6 +10569,9 @@ va	type	value
 8206DFFC	string	nightvision
 8206E008	string	Unknown weapon inventory type "%s".
 8206E030	string	Expected inventory types.  Use GetWeaponsListAll() if you just want all weapons.
+8206E084	string	%c "%s" 0
+8206E090	string	%c "%s" %i
+8206E09C	string	JKLMN
 8206E0A8	string	USAGE: <player> VisionSet*ForPlayer( <visionset name>, <transition time> ) 
 8206E0F4	string	%c %i %f %i %i
 8206E104	string	Blur value must be greater than 0
@@ -11037,11 +11134,13 @@ va	type	value
 82073674	string	ent->item
 820736A0	string	%i %s
 820736A8	string	targetname "%s"
+820736B8	string	model "%s"
 820736C4	string	hidden from all clients (SVF_NOCLIENT)
 820736EC	string	hidden from all clients (clientMask)
 82073714	string	hidden from some clients
 82073730	string	willNeverChange - not archived
 82073750	string	ground %i
+8207375C	string	?333?333?333?
 8207376C	string	classname "%s"
 8207379C	string	eType != ET_MISSILE
 820737B0	string	eType != ET_ITEM
@@ -11089,6 +11188,8 @@ va	type	value
 82073C8C	string	g_combat
 82073C98	string	bg_weapons_load_obj
 82073CAC	string	bg_weapons
+82073CB8	string	g_utils
+82073CC0	string	g_svcmds
 82073CCC	string	g_main
 82073CD4	string	self->r.contents == 0
 82073CEC	string	self->s.index.primaryLight == primaryLightIndex  %i, %i
@@ -11332,6 +11433,7 @@ va	type	value
 82076FC4	string	lookup
 82076FCC	string	resultType == LOOKUP_RESULT_STRING  %i, %i
 82076FF8	string	Too many arguments. See log.
+82077018	string	%s: "%s" %s
 82077024	string	Not enough arguments. See log.
 82077048	string	Unable to create new channel.  Maximum number of channels exeeded.
 8207708C	string	illegal call to createprintchannel()
@@ -11356,6 +11458,7 @@ va	type	value
 82077460	string	GetDvar( <dvar>, <default> ) takes either one or two parameters
 820774A0	string	GetDvarInt( <dvar>, <default> ) takes either one or two parameters
 820774E8	string	GetDvarFloat( <dvar>, <default> ) takes either one or two parameters
+82077530	string	(%f, %f, %f)
 82077540	string	GetDvarVector: Dvar %s '%s' isn't parsable as a vector 
 82077578	string	0.0 0.0 0.0
 82077584	string	getWeaponModel: weapon '%s' does not have a world model 
@@ -11508,6 +11611,7 @@ va	type	value
 82078ED0	string	precacheString must be called before any wait statements in the gametype or level script 
 82078F30	string	precacheRumble must be called before any wait statements in the level script 
 82078F80	string	USAGE: AmbientPlay(<alias>, <fadeTime>, <volumeScale>, <isExclusive>); 
+82078FC8	string	t\\%i\\n\\%s\\s\\%i
 82078FD8	string	outputConfigStringIndex == CS_AMBIENT || outputConfigStringIndex == CS_AMBIENT + 1
 8207902C	string	freeTrack != SND_TRACK_NONE
 82079048	string	n\\%s\\t\\%i\\v\\%i\\e\\%i
@@ -11554,6 +11658,7 @@ va	type	value
 82079744	string	tag '%s' does not exist on entity with model '%s'
 82079778	string	cannot play fx on entity with no model
 820797A0	string	effect id %i is invalid 
+820797BC	string	%08x%03d%s
 820797C8	string	cannot use " characters in tag names 
 820797F0	string	cannot stop-fx-on-tag on entity with no model
 82079820	string	Inner radius is outside the outer radius
@@ -11723,6 +11828,8 @@ va	type	value
 8207B614	string	codescripts/struct
 8207B628	string	codescripts/delete
 8207B63C	string	%s is too long. Max length is %i 
+8207B660	string	[%s]%s^7
+8207B66C	string	[^3%s^7]%s^7
 8207B684	string	bad escape character (%i) present in string
 8207B6B0	string	non-localized %s strings are not allowed to have letters in them: "%s"
 8207B6F8	string	WARNING: Non-localized %s string is not allowed to have letters in it. Must be changed over to a localized string: "%s" 
@@ -11939,6 +12046,7 @@ va	type	value
 8207DCEC	string	vehicle node is read-only
 8207DD08	string	bad class num %u
 8207DD1C	string	Bad filter address: %s 
+8207DD34	string	%i.%i.%i.%i 
 8207DD44	string	IP filter list is full 
 8207DD5C	string	Usage:  addip <ip-mask> 
 8207DD78	string	Removed. 
@@ -12119,6 +12227,7 @@ va	type	value
 8207F4A4	string	numWeaponAttachments < MAX_WEAPON_ATTACHMENTS
 8207F4D8	string	tanHalfFovY > 0
 8207F4E8	string	tanHalfFovX > 0
+8207F4F8	string	viewFOV > 0
 8207F508	string	shieldHolder->client->ps.otherFlags & POF_SHIELD_ATTACHED_TO_WORLD_MODEL
 8207F554	string	shieldHolder->client
 8207F56C	string	shieldHolder
@@ -12477,6 +12586,7 @@ va	type	value
 820813D8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp
 82081414	string	type == PITCH || type == YAW
 82081434	string	target->client
+82081444	string	eyePos
 82081450	string	turret->convergenceHeightPercent not in [0.f, 1.f]  %g not in [%g, %g]
 82081498	string	enemy
 820814A0	string	activator
@@ -12557,6 +12667,7 @@ va	type	value
 82081FD4	string	(deltaLenSq > 0.0f)
 82081FE8	string	Vec3IsNormalized( trace->normal )
 8208200C	string	tw->offset[2] >= 0
+82082028	string	(t >= 0)
 82082034	string	%s  (tw->delta2DLenSq) = %g
 82082050	string	(tw->delta2DLenSq > 0.0f)
 82082070	string	I_fabs( ( tw->radius + tw->offset[2] ) - tw->radiusOffset[2] ) < EQUAL_EPSILON
@@ -12601,12 +12712,14 @@ va	type	value
 82082590	string	!IS_NAN((plane->normal)[0]) && !IS_NAN((plane->normal)[1]) && !IS_NAN((plane->normal)[2])
 820825F0	string	!IS_NAN((tw->offset)[0]) && !IS_NAN((tw->offset)[1]) && !IS_NAN((tw->offset)[2])
 82082644	string	!IS_NAN(dist)
+82082654	string	!IS_NAN(d1)
 82082660	string	!IS_NAN((tw->extents.end)[0]) && !IS_NAN((tw->extents.end)[1]) && !IS_NAN((tw->extents.end)[2])
 820826C0	string	!IS_NAN((tw->extents.start)[0]) && !IS_NAN((tw->extents.start)[1]) && !IS_NAN((tw->extents.start)[2])
 82082728	string	tw->info
 82082734	string	leaf->leafBrushNode
 82082748	string	totalHalfHeight >= 0
 82082760	string	enterFrac not in [0.0f, trace->fraction]  %g not in [%g, %g]
+820827A0	string	!IS_NAN(d2)
 820827AC	string	!IS_NAN(delta)
 820827BC	string	delta > 0
 820827C8	string	delta < 0
@@ -12709,6 +12822,7 @@ va	type	value
 82083494	string	%s is not a string-based dvar 
 820834B4	string	%s doesn't exist 
 820834C8	string	vstr <variablename> : execute a variable command 
+820834FC	string	^3%s 
 82083504	string	bufLength >= 2
 82083514	string	start >= 0
 82083520	string	letter != '\\0'
@@ -12848,13 +12962,16 @@ va	type	value
 82084C80	string	fileData
 82084C8C	string	storageTasks.tasks[slot].active
 82084CAC	string	fileFetchOverlappedIO
+82084CC4	string	ffotd-%s.%i.ff
 82084CD8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp
 82084D18	string	Unable to retrieve FFotD: %d 
+82084D38	string	No FFotD 
 82084D44	string	Insufficient space for FFotD 
 82084D64	string	FFotD was %i bytes 
 82084D78	string	storageTasks.tasks[slot].type == TASK_GETTINGFFOTD
 82084DB0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h
 82084E08	string	bestToReplace >= 0
+82084E1C	string	%s.%03i
 82084E24	string	Bad origin %i in FS_Seek
 82084E40	string	matchtype
 82084E4C	string	localplayers
@@ -12870,6 +12987,7 @@ va	type	value
 82084F58	string	online/mp
 82084F64	string	%s: %u 
 82084F6C	string	    %s: %u 
+82084F78	string	    %d: %u 
 82084F84	string	Minimum interval to wait before getting new group counts
 82084FC0	string	groupDownloadInterval
 82084FD8	string	groupUploadInterval
@@ -13099,7 +13217,6 @@ va	type	value
 8208727C	string	littlebird_support
 82087290	string	remote_mortar
 820872A0	string	airdrop_remote_tank
-820872B4	string	ac130
 820872BC	string	helicopter_flares
 820872D0	string	airdrop_juggernaut
 820872E4	string	osprey_gunner
@@ -13271,6 +13388,7 @@ va	type	value
 82088E6C	string	Not saving stats: menu_resetstats_warning is up (cont %i) 
 82088EA8	string	menu_resetstats_warning
 82088EC0	string	 ================================= 
+82088EE4	string	 "%s" 
 82088EEC	string	itemsUnlockedLastGame (%i): 
 82088F0C	string	 itemsUnlockedLastGameDirty = %s 
 82088F48	string	unlocked
@@ -13486,6 +13604,7 @@ va	type	value
 8208B118	string	%s_%lld
 8208B120	string	%s_error_%lld
 8208B130	string	%s\\%s
+8208B138	string	ffotd
 8208B148	string	storageTasks.tasks[ slot ].type == TASK_REMOTECHALLENGEDOWNLOAD
 8208B188	string	Beginning stats upload for controller %i 
 8208B1B4	string	dwUpdateFile failed, will retry. 
@@ -13550,6 +13669,8 @@ va	type	value
 8208BBF4	string	console_mp.log
 8208BC04	string	menu_
 8208BC0C	string	Build %s. Logfile opened on %s 
+8208BC2C	string	'%s' 
+8208BC34	string	[%10i] 
 8208BC3C	string	!Con_IsNotifyChannel( channel )
 8208BC5C	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp
 8208BC9C	string	0123456789ABCDEF
@@ -13573,6 +13694,7 @@ va	type	value
 8208BEC8	string	Com_AllocEvent not implemented
 8208BEE8	string	Com_FreeEvent not implemented
 8208BF08	string	netmsg->targetLocalNetID doesn't index NS_MAXCLIENTS  %i not in [0, %i)
+8208BF50	string	netmsg
 8208BF58	string	freeze <seconds> 
 8208BF74	string	bug%d
 8208BF80	string	stringtable_debug
@@ -13653,6 +13775,7 @@ va	type	value
 8208C7DC	string	exec autoexec_console_dev_mp.cfg
 8208C800	string	exec autoexec_dev_mp.cfg
 8208C81C	string	exec default_mp.cfg 
+8208C834	string	ui_mp
 8208C83C	string	patch_ui_mp
 8208C848	string	patch_mp
 8208C854	string	development_mp
@@ -13724,12 +13847,16 @@ va	type	value
 8208CFD0	string	com_attractmode
 8208CFE0	string	Run attract mode
 8208CFF4	string	end $init %d ms 
+8208D008	string	$init2
+8208D010	string	$init
 8208D018	string	begin $init 
+8208D028	string	$hunk
 8208D030	string	%s %s build %s %s 
 8208D044	string	Failed init after: %s
 8208D05C	string	post screen
 8208D068	string	pre frame
 8208D074	string	sec_base > 0
+8208D084	string	msec > 0
 8208D094	string	max fps spin: %d
 8208D0A8	string	minMsec > 0
 8208D0B4	string	minMsec >= 0
@@ -13794,6 +13921,8 @@ va	type	value
 8208D9E0	string	dobjModels
 8208D9EC	string	(unsigned)handle < ARRAY_COUNT( serverObjMap )
 8208DA1C	string	!Com_GetServerDObjForEntnum( handle )
+8208DA44	string	info2
+8208DA4C	string	info1
 8208DA54	string	latched: "%s" 
 8208DA64	string	"%s" is: "%s^7" default: "%s^7" 
 8208DA88	string	unhandled case %i
@@ -13827,6 +13956,7 @@ va	type	value
 8208DE90	string	set %s "%s" 
 8208DEA0	string	 %s "%s" 
 8208DEBC	string	 %i total dvars 
+8208DED0	string	      %s "%s" 
 8208DEE0	string	      %s "%s" -- latched "%s" 
 8208DF00	string	=============================== END DVAR DUMP ===================================== 
 8208DF58	string	 %i total dvars %i dvar indexes 
@@ -13877,6 +14007,7 @@ va	type	value
 8208E534	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp
 8208E570	string	GRAPH_FLOAT_FILE
 8208E584	string	^7GraphFloat_SaveToFile: Successfully saved file [%s\\%s]. 
+8208E5C0	string	%s  %d 
 8208E5C8	string	GraphFloat_SaveToFile: Could not save file [%s]. 
 8208E5FC	string	Fraction: %.3f, Value: %.3f
 8208E618	string	devguiPath
@@ -13975,6 +14106,7 @@ va	type	value
 8208EDA4	string	snd_driver
 8208EDB4	string	statmonitor
 8208EDC0	string	cl_cgame
+8208EDCC	string	cl_srcn
 8208EDD4	string	xenon_input
 8208EDE0	string	cl_parse
 8208EDEC	string	cl_keys
@@ -13982,7 +14114,9 @@ va	type	value
 8208EE00	string	cl_console
 8208EE0C	string	cl_main
 8208EE14	string	memfile
+8208EE1C	string	zutil
 8208EE24	string	sv_init
+8208EE2C	string	sv_game
 8208EE34	string	com_memory
 8208EE40	string	scr_animtree
 8208EE50	string	memtrack
@@ -14009,6 +14143,7 @@ va	type	value
 8208EF6C	string	xenon_remote
 8208EF7C	string	scr_evaluate
 8208EF8C	string	scr_debugger
+8208EF9C	string	scr_vm
 8208EFA4	string	scr_variable
 8208EFB4	string	scr_stringlist
 8208EFC4	string	scr_memorytree
@@ -14076,6 +14211,7 @@ va	type	value
 8208F794	string	esField[0].bits == MSG_FIELD_ETYPE
 8208F7B8	string	strcmp( esField[0].name, "eType" ) == 0
 8208F7E0	string	eType
+8208F7E8	string	%3i: #%-3i 
 8208F7F4	string	number < (1u << GENTITYNUM_BITS)
 8208F818	string	to[inuse].type == HE_TYPE_FREE
 8208F838	string	%s  (from[i].alignOrg) = %i
@@ -14093,6 +14229,7 @@ va	type	value
 8208FA84	string	nextChanged == %i, lc == %i
 8208FAA0	string	nextChanged <= lc
 8208FAB4	string	nextChanged == %i, lastChanged == %i
+8208FADC	string	lc >= 0
 8208FAE4	string	%3i: playerstate 
 8208FAF8	string	Huffman Took %d Milliseconds 
 8208FB18	string	Error in the msg_mp_*.h file, see log!
@@ -14198,8 +14335,10 @@ va	type	value
 8209091C	string	%08x%08x%08x%08x
 82090930	string	%8x%8x
 82090938	string	strlen( str ) == 16
+8209094C	string	%8x%8x%8x%8x
 82090960	string	XNKIDToString: buffer passed is not big enough. Was %i bytes, require %i. 
 820909AC	string	%08x%08x%08x%08x%08x%08x%08x%08x%08x
+820909D4	string	%8x%8x%8x%8x%8x%8x%8x%8x%8x
 820909F4	string	IWIWg_tabComplete
 82090A08	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp
 82090A54	string	IPResult
@@ -14273,6 +14412,7 @@ va	type	value
 820915AC	string	Client #%i force-disconnected due to error.
 820915D8	string	!g_rdbgInitializedLogBuffer
 820915F4	string	!g_rdbgInitializedSockets
+82091610	string	~~%02i
 82091618	string	msgType < RDBG_MSGCOUNT
 82091630	string	rank_comm1
 8209163C	string	rank_gen1
@@ -14339,6 +14479,7 @@ va	type	value
 820921C8	string	Microsoft error: buffer size not large enough, %i > %i 
 82092200	string	buffer used in PastTitle_GetPrestigeForPlayer() for titleID: %x, xuid %llx: %i of %i bytes 
 82092260	string	Microsoft error: Unable to create stats enumerator by xuid ( xuid = %llx ): %llx 
+820922B4	string	pastLB
 820922C0	string	Get past title leaderboard data already in progress, earlying out (cont %i) 
 82092310	string	controllerIndex < MAX_GPAD_COUNT
 82092338	string	Cannot force past title read since the system is already reading data for past titles or it is waiting to award tokens from read data. Try again later. 
@@ -14733,6 +14874,7 @@ va	type	value
 820994D8	string	g_entityStateNetFieldList[ET_EVENTS].array
 82099504	string	g_netFieldList[NET_FIELD_TYPE_ENTITY_STATE].array
 82099538	string	kbitmask
+82099544	string	msgHuff
 82099550	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp
 82099598	string	etype < ET_EVENTS
 820995AC	string	WARNING: Empty reliable command 
@@ -14807,6 +14949,7 @@ va	type	value
 8209A36C	string	^^ client state delta for client %i - %i bits 
 8209A3A0	string	Hudelem write delta %d/%d type %x client %d field %d (%s) from %x to %x bits%s %d 
 8209A3F4	string	*fromF != *toF
+8209A404	string	(est)
 8209A40C	string	(lc+1 >= 0 && lc+1 <= static_cast<int>( numFields ))
 8209A444	string	sending current hudelems 
 8209A460	string	sending archived hudelems 
@@ -14825,6 +14968,7 @@ va	type	value
 8209A698	string	Sending player stats changes - bit 1 to say it changed, %i bits for which changed 
 8209A6EC	string	lastChanged <= lc
 8209A700	string	field %s changed but wasn't sent to the client 
+8209A738	string	lc >= -1
 8209A744	string	Writing byte for number of fields changed (%i) 
 8209A774	string	PS field %d %s changed, %x to %x, %d bits%s 
 8209A7A8	string	%s (%i): Prediction mismatch. Time ( %i ). Setting origin from ( %.2f, %.2f, %.2f ) to ( %.2f, %.2f, %.2f ) (%.2f away) 
@@ -15036,7 +15180,6 @@ va	type	value
 8209BDB0	string	prefetchsound
 8209BDC0	string	playsoundatviewheight
 8209BDD8	string	playsound
-8209BDE4	string	useby
 8209BDEC	string	getdebugeye
 8209BDF8	string	getshootatpos
 8209BE08	string	getcentroid
@@ -49213,6 +49356,7 @@ va	type	value
 8214FF88	string	newValue->type == VAR_POINTER
 8214FFA8	string	oldValue.type == VAR_INTEGER
 8214FFC8	string	Scr_ScriptList::Init3
+8214FFE0	string	%s.gsc
 8214FFE8	string	scriptdebugger/help.txt
 82150000	string	MAX_SCRIPT_WINDOW_NAMES exceeded
 82150024	string	CreateBreakpointElement
@@ -49418,12 +49562,15 @@ va	type	value
 82151908	string	(file '%s'%s, line %d) 
 82151920	string	 (savegame)
 8215192C	string	filename
+82151938	string	%s%s %d %s %d 
 82151948	string	(savegame)
+82151954	string	%s%s %d %s 
 82151960	string	%s%s  
 82151968	string	%s // %s%s, line %d
 8215197C	string	%s%s %d
 82151984	string	scrParserPub.sourceBufferLookupLen > 0
 821519AC	string	<removed thread> 
+821519C8	string	@ %d 
 821519D0	string	<frozen thread> 
 821519E4	string	<removed thread>
 821519F8	string	<frozen thread>
@@ -49709,6 +49856,7 @@ va	type	value
 821540B8	string	num == count
 821540C8	string	pInfo->varDebugType
 821540E0	string	pInfo->varDebugType doesn't index VAR_DEBUG_TYPE_COUNT  %i not in [0, %i)
+8215412C	string	%s %d 
 82154134	string	!summary
 82154140	string	type: %s, count: %d 
 82154158	string	type count file line source col 
@@ -49779,6 +49927,11 @@ va	type	value
 82154A88	string	var usage: %d, endon usage: %d 
 82154AA8	string	selves: 
 82154AB4	string	level  
+82154ABC	string	anim  
+82154AC4	string	%c%i  
+82154ACC	string	s%i  
+82154AD4	string	a%i  
+82154ADC	string	%d:%i  
 82154AE4	string	 count: %d, var usage: %d, endon usage: %d 
 82154B10	string	Cannot dump script threads: out of memory 
 82154B3C	string	Scr_DumpScriptThreads
@@ -49819,6 +49972,8 @@ va	type	value
 82155120	string	scrVmDebugPub
 82155130	string	g_script_error
 82155140	string	g_script_large_local_mark
+8215515C	string	scrVmPub
+82155168	string	scrVmGlob
 82155174	string	loading_sre_fatal
 82155188	string	Loading errors prevent level from loading.
 821551B4	string	pix_profile_script
@@ -50057,6 +50212,7 @@ va	type	value
 8215A8C8	string	SV_ArchiveEnabled()
 8215A8E0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../qcommon/cmd.h
 8215A928	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../universal/com_structureddatadef.h
+8215A988	string	maps/mp/
 8215A998	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp
 8215A9DC	string	Player %s is not on the server 
 8215A9FC	string	sv_maxclients->current.integer <= svs.clientCount
@@ -50076,6 +50232,10 @@ va	type	value
 8215AC10	string	Can't kick an inactive client in slot %i 
 8215AC3C	string	EXE_TRANSMITERROR
 8215AC50	string	Usage: %s <client number> <optional reason> 
+8215AC98	string	%32s 
+8215ACB0	string	CNCT 
+8215ACB8	string	ZMBI 
+8215ACC0	string	%i > %i
 8215ACC8	string	--- ----- ---- -------------------------------- --------------- ------- --------------------- ----- ----- 
 8215AD38	string	num score ping guid                             name            lastmsg address               qport rate 
 8215ADA4	string	map: %s 
@@ -50179,6 +50339,7 @@ va	type	value
 8215BB9C	string	v|CS %4i: %s 
 8215BBB0	string	Unable to open file '%s' for config string writing. File name may be larger than allowed system size. 
 8215BC18	string	Finished writing config strings to file '%s' (%i mec) 
+8215BC50	string	%i,"%s" 
 8215BC6C	string	devOutput/cs_360_%s_%s.csv
 8215BC88	string	Starting writing config strings to file 
 8215BCB4	string	nextConstConfigStringNumber != configStringNum
@@ -50232,6 +50393,7 @@ va	type	value
 8215C668	string	cl->currCmdIndex - insertCmdIndex >= 0
 8215C690	string	insertCmdIndex - cl->beginCmdIndex >= 0
 8215C6B8	string	svs.packetBackupMask
+8215C6D0	string	###!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!### 
 8215C6F8	string	Encountered corrupt user command. This means the client's write key and the server read key for the net message were different 
 8215C778	string	Problem occured with client #%i:'%s' 
 8215C7A0	string	Server game time: %i 
@@ -50246,6 +50408,7 @@ va	type	value
 8215C878	string	angles[2] = %i(%f) 
 8215C88C	string	rightmove = %i 
 8215C89C	string	forwardmove = %i 
+8215C8B0	string	zombie
 8215C8B8	string	clientloading
 8215C8C8	string	unknown(%i)
 8215C8D4	string	state: %s 
@@ -50277,8 +50440,10 @@ va	type	value
 8215CBC8	string	key ^= cl->messageAcknowledge: %i 
 8215CBF0	string	key ^= Com_HashKey(cl->reliableCommandInfo[cl->reliableAcknowledge&(MAX_RELIABLE_COMMANDS-1)].cmd,32): %i 
 8215CC5C	string	rateDelayed: %i 
+8215CC70	string	key: %i 
 8215CC7C	string	key ^= cmd->serverTime: %i 
 8215CC99	string	Corrupted network messaging detected
+8215CCC0	string	######################################## 
 8215CCEC	string	BG_ValidateWeaponNumber( ps->weapCommon.weapon )
 8215CD20	string	cmdCount > MAX_PACKET_USERCMDS 
 8215CD40	string	cmdCount > MAX_PACKET_USERCMDS
@@ -50726,6 +50891,7 @@ va	type	value
 8216192C	string	!IS_NAN( angles[clientNum][0] )
 8216194C	string	!IS_NAN( angles[clientNum][1] )
 8216196C	string	!IS_NAN( angles[clientNum][2] )
+8216198C	string	%i < %i
 82161994	string	(progress <= 1)
 821619A4	string	(progress >= 0)
 821619B4	string	%s  (progress) = %g
@@ -50884,6 +51050,7 @@ va	type	value
 8216368C	string	(field >= 0 && field < 353)
 821636A8	string	analyzeEntityType == ANALYZE_DATATYPE_ENTITYTYPE_HUDELEM
 821636E4	string	(bits > 0)
+821636F0	string	 %i,  // %i 
 82163700	string	  Huffman data: 
 82163714	string	Total overhead if hudelem used %i bit skip markers: %i 
 82163750	string	Total overhead if hudelem used %i bit skip markers with one bit for a single field jump: %i  
@@ -50922,6 +51089,7 @@ va	type	value
 82163D6C	string	%i: %i times 
 82163D7C	string	  Movement Dir deltas: (delta: times) 
 82163DA4	string	%i (%s): %u
+82163DB0	string	 (%i%%%s)
 82163DBC	string	 (marked as NEVER_CHANGES and it changed!)
 82163DE8	string	 [estimated]
 82163DF8	string	Avg Snapshot size: %i bytes, std deviation: %i bytes, max snapshot size: %i bytes 
@@ -50938,7 +51106,9 @@ va	type	value
 82163FFC	string	Bits used per entity type: (format: bitsUsed - entityType) 
 82164038	string	Total data sent: %i 
 82164050	string	mp_entityStats.txt
+82164064	string	#%2i-%16s: %5i|%5i|%5i| %3i%%| %3i%%|%2i|%4i%%|%3i| %5i|
 821640A0	string	  OutOfBand Messages: %5i|%5i|%5i| %3i%%| %3i%%|%2i|%4i%%|%3i| %5i|
+821640E8	string	              Totals:%6i|%5i|%5i| %3i%%| %3i%%|%2i|%4i%%|%3i|%6i|
 82164130	string	              Source|   bps|  max|  min|frag%%|drop%%|ak|huff%%|p/s|   bps|
 82164180	string	                    | Sent To                                   | From |
 821641CC	string	Server Network Profile:
@@ -51062,6 +51232,7 @@ va	type	value
 8216544C	string	GetMapVoteMapImage called with non integer data! 
 82165480	string	playlist( %s ) = %i 
 82165498	string	ERROR: Unknown playlist field '%s' 
+821654BC	string	nojip
 821654C4	string	partyteams
 821654D0	string	rounds
 821654D8	string	Error: Must use a string as the name of a playlist field, not a %s 
@@ -51199,6 +51370,7 @@ va	type	value
 82166ED8	string	running NOT on a %s (%s); result is (%s) 
 82166F04	string	Unknown datatype %i in LogicalNot() 
 82166F2C	string	Error: You cannot ! a '%s' (%s) 
+82166F50	string	~%i = %i 
 82166F5C	string	Error: You cannot ~ a '%s' (%s) 
 82166F80	string	%i << %i = %i 
 82166F90	string	%i >> %i = %i 
@@ -51227,6 +51399,7 @@ va	type	value
 82167280	string	data2->dataType doesn't index NUM_INTERNAL_DATATYPES  %i not in [0, %i)
 821672C8	string	data1->dataType doesn't index NUM_INTERNAL_DATATYPES  %i not in [0, %i)
 82167310	string	op doesn't index NUM_OPERATORS  %i not in [0, %i)
+82167344	string	data1
 82167350	string	data->dataType != VAL_STRING || data->internals.stringVal.string
 82167398	string	data->dataType doesn't index NUM_INTERNAL_DATATYPES  %i not in [0, %i)
 821673E0	string	finalList[operand].dataType doesn't index NUM_INTERNAL_DATATYPES  %i not in [0, %i)
@@ -51832,6 +52005,8 @@ va	type	value
 8216BAC0	string	ui_scrollbar_arrow_dwn_a
 8216BADC	string	ui_scrollbar
 8216BAEC	string	uiContext
+8216BAF8	string	%s.%i
+8216BB00	string	%s.%i.%i
 8216BB0C	string	GetMenuBuffer_FastFile
 8216BB24	string	menu file not found: %s, using default 
 8216BB4C	string	.menu
@@ -51868,6 +52043,7 @@ va	type	value
 8216C0B8	string	count < 0
 8216C0C4	string	group_icon
 8216C0D0	string	party_inactive
+8216C0E0	string	box_x
 8216C0E8	string	box_empty
 8216C0F4	string	box_check
 8216C128	string	listPtr
@@ -52147,6 +52323,7 @@ va	type	value
 8216E328	string	recipe
 8216E330	string	Playlist error: line %i: Stray 'recipe' line outside of gametype block 
 8216E378	string	Playlist error: line %i: Expected delta recipe index after 'recipe' command 
+8216E3C8	string	abbrv
 8216E3D0	string	Playlist error: line %i: Expected %s name after abbrv command 
 8216E410	string	Playlist error: line %i: Stray 'script' line outside of gametype block 
 8216E458	string	Playlist error: line %i: Expected script name after script command 
@@ -52488,6 +52665,7 @@ va	type	value
 82171EC0	string	setBackgroundVideo: no closing parenthesis found 
 82171EF4	string	setBackgroundVideo: no opening parenthesis found 
 82171F28	string	outLen > 0
+82171F34	string	outBuf
 82171F3C	string	_splitscreen
 82171F4C	string	newEntitlement
 82171F5C	string	setPastTitleRank: no closing parenthesis found 
@@ -52520,6 +52698,7 @@ va	type	value
 821723C0	string	(item->type == 13)
 821723D4	string	<dvarStrList or dvarFloatList not set>
 82172400	string	enumIndex >= 0 && enumIndex < enumDvar->domain.enumeration.stringCount
+82172448	string	%s %i:%i
 82172454	string	<not an enum dvar>
 82172468	string	<dvarEnumList not set>
 82172480	string	%s  (current) = %i
@@ -52529,6 +52708,7 @@ va	type	value
 82172530	string	ui_sliderSteps->current.value > 0
 82172558	string	UISCRIPT - Calling action() - Item is '%s', parent menu is '%s' 
 8217259C	string	 %i menus total 
+821725B0	string	%i. %s 
 821725B8	string	Currently loaded UI menus (CG menus not included): 
 821725EC	string	isDvarField
 821725F8	string	%s  (xAlignMode) = %i
@@ -52538,6 +52718,7 @@ va	type	value
 82172664	string	rect != textRect
 82172678	string	subtitleGlowColor
 82172690	string	Argument "%s" given for FAKE_INTRO_SECONDS is outside the acceptible range of (%d,%d). 
+821726E8	string	%02d:%02d:%02d
 821726F8	string	Argument "%d" seconds for FAKE_INTRO_TIME is invalid. 
 82172730	string	Argument "%d" minutes for FAKE_INTRO_TIME is invalid. 
 82172768	string	Argument "%d" hours for FAKE_INTRO_TIME is invalid. 
@@ -52555,6 +52736,7 @@ va	type	value
 821728A8	string	+reload
 821728B0	string	+sprint
 821728B8	string	%s %s %s
+821728C4	string	KEY_OR
 821728CC	string	%s  (bindCount) = %i
 821728E4	string	(bindCount == 2)
 821728F8	string	(alignment == 0)
@@ -52651,6 +52833,7 @@ va	type	value
 821737CC	string	window '%s' has focus when it shouldn't 
 821737F8	string	!(Window_GetDynamicFlags( dc->localClientNum, &dc->Menus[i]->window ) & WINDOWDYNAMIC_HASFOCUS)
 82173858	string	Could not find menu '%s' 
+82173874	string	%s(%s)
 8217387C	string	FAKE_INTRO_TIME
 8217388C	string	FAKE_INTRO_SECONDS
 821738A0	string	No end token to match begin token in string '%s'
@@ -52753,6 +52936,7 @@ va	type	value
 82174704	string	Publics by Value
 82174718	string	%x:%x %xH %s %s
 82174728	string	 Preferred load address is %x  
+82174758	string	%s\\*.map
 82174768	string	%s:    
 82174770	string	%s        ...%s, line %i
 8217478C	string	%s        ...%s, addr 0x%08X
@@ -52763,6 +52947,7 @@ va	type	value
 82174814	string	15:14:44
 82174820	string	 (mychanges)
 82174830	string	Expression:     %s  Module:    %s File:    %s Line:    %d  
+8217486C	string	<xenon>
 82174878	string	ASSERTEND --------------------------------------------------------------------- 
 821748D0	string	ASSERTBEGIN ------------------------------------------------------------------- 
 82174928	string	ASSERTEND - ( Recursive assert ) ----------------------------------------------  
@@ -52812,6 +52997,7 @@ va	type	value
 82174FE0	string	mapName
 82174FE8	string	RFS_User
 82174FF4	string	Failed to open %s (remoteDir="%s") 
+82175018	string	(none)
 82175020	string	maps/mp/%s.d3dbsp
 82175034	string	Remote sharing test failed, turning off. 
 82175060	string	RFS_Test
@@ -52850,9 +53036,14 @@ va	type	value
 821754D4	string	out != in2
 821754E0	string	out != in1
 821754EC	string	!((uint)out & 15)
+82175500	string	!((uint)in2 & 15)
+82175514	string	!((uint)in1 & 15)
+82175528	string	!((uint)in & 15)
 82175540	string	!((uint)dst & 15)
 82175554	string	!((uint)mat & 15)
+82175568	string	!((uint)vec & 15)
 8217557C	string	magSqr > 0.0f
+82175598	string	zFar > zNear  %g, %g
 821755B0	string	zNear > 0.0f  %g, %g
 821755C8	string	zNear > 0
 821755D4	string	depth != 0
@@ -53151,6 +53342,7 @@ va	type	value
 821784CC	string	Error at argument %d: %s 
 821784E8	string	finalStringIndex
 821784FC	string	unknown result type: %i 
+82178518	string	"%f" 
 82178520	string	"%s" 
 8217852C	string	StructuredData_GetLookupState( lookup ) == LOOKUP_FINISHED
 82178568	string	StructuredData_GetLookupState( lookup ) != LOOKUP_ERROR
@@ -53247,6 +53439,7 @@ va	type	value
 82179640	string	compareSettings->lookup.type->u.indexedArrayIndex doesn't index compareSettings->lookup.def->indexedArrayCount  %i not in [0, %i)
 821796C4	string	compareSettings->validation != VALIDATION_NONE  %i, %i
 821796FC	string	compareSettings->lookup.type->type == DATA_INDEXED_ARRAY
+82179738	string	[%i %s]
 82179740	string	lookupEnumedArrayData->enumIndex doesn't index compareSettings->lookup.def->enumCount  %i not in [0, %i)
 821797AC	string	lookupEnumedArrayData->elementSize > 0
 821797D8	string	compareSettings->lookup.type->u.enumedArrayIndex doesn't index compareSettings->lookup.def->enumedArrayCount  %i not in [0, %i)
@@ -53305,6 +53498,7 @@ va	type	value
 8217A824	string	Unable to find signed in user to call XContentCreate() with.
 8217A864	string	Xbox 360 Error %llx while trying to call XContentCreate()
 8217A8A0	string	Mounting %s as drive '%s' 
+8217A8BC	string	dlc%i
 8217A8C4	string	Found a content pack 
 8217A8DC	string	Couldn't get free content pack index
 8217A904	string	Found %i content packages! 
@@ -53446,6 +53640,7 @@ va	type	value
 8217BF40	string	z >= 0.0f && z <= max
 8217BF58	string	y >= 0.0f && y <= max
 8217BF70	string	x >= 0.0f && x <= max
+8217BF88	string	max > 0.0f
 8217BF94	string	w >= min && w <= max
 8217BFAC	string	((flags & (1 << 8)) || CanKeepStringPointer( value ))
 8217BFE4	string	Dvar_RegisterString null value for '%s' 
@@ -53488,6 +53683,7 @@ va	type	value
 8217C640	string	g_saveBuffer
 8217C650	string	g_zipMemory
 8217C660	string	Memfile routine expected streamMode "%s", but is "%s" instead.  Possible race with thread "%s".
+8217C6C0	string	err == Z_OK
 8217C6D0	string	segmentStart + static_cast< int >( sizeof( int ) ) <= memFile->bufferSize
 8217C71C	string	!memFile->memoryOverflow
 8217C738	string	((index >= 0) && (index < SAVE_SEGMENT_COUNT))
@@ -54174,6 +54370,7 @@ va	type	value
 82181790	string	UngetToken called twice
 821817A8	string	data_p
 821817B0	string	MatchToken: got '%s', expected '%s' 
+82181D88	string	value1
 82181D90	string	g_traceThreadInfo
 82181DA4	string	g_com_error
 82181DB0	string	va_info
@@ -54196,6 +54393,7 @@ va	type	value
 82181F7D	string	Info_RemoveKey_Big: oversize infostring
 82181FA9	string	Info string length exceeded key: '%s' value: '%s' Info string: %s 
 82181FF1	string	Info buffer length exceeded, not including key/value pair in response 
+82182038	string	\\%s\\%s
 82182041	string	Can't use keys with a " key: '%s' value: '%s'
 82182071	string	Can't use keys with a semicolon key: '%s' value: '%s'
 821820A9	string	Can't use keys with a \\ key: '%s' value: '%s'
@@ -54346,14 +54544,20 @@ va	type	value
 82183CE4	string	!strcmp( dest->raw.name, src->raw.name )
 82183D10	string	'%s' '%s'
 82183D1C	string	<PACKED FILE>
+82183D2C	string	%s\\%sm
+82183D34	string	%s\\%sdm
+82183D3C	string	%s\\%sd
 82183D44	string	Loading %s from disc, not from the update drive 
 82183D78	string	update:\\%s
+82183D84	string	!dir[0]
 82183D8C	string	handle.handle
+82183D9C	string	%s%d.pak
 82183DA8	string	imagefile
 82183DB4	string	%s  (user) = %i
 82183DC4	string	(user == PACKFILE_USER_IMAGE)
 82183DE4	string	packfile
 82183DF0	string	streamFile->handle.handle
+82183E0C	string	%s\\%s.xma
 82183E18	string	fileName->packed.offset
 82183E30	string	fileName->fileIndex doesn't index ARRAY_COUNT( g_streamFile )  %i not in [0, %i)
 82183E84	string	nodlight
@@ -54507,6 +54711,7 @@ va	type	value
 82184FC4	string	trace->modelIndex == modelIdx
 82184FE4	string	(trace->fraction >= 0.0f && trace->fraction <= 1.0f)
 8218501C	string	hitT >= 0
+82185028	string	hitT < 3
 82185034	string	(results->fraction >= 0.0f && results->fraction <= 1.0f)
 82185070	string	results->modelIndex == i
 8218508C	string	%s  (trace.fraction) = %g
@@ -54642,6 +54847,7 @@ va	type	value
 8218627C	string	info->animParent.children == anim->animParent.children
 821862B4	string	childInfo->inuse
 821862C8	string	%s  (next) = %i
+821862D8	string	(next < 4096)
 821862E8	string	exceeded maximum number of anim info
 82186310	string	(childInfoIndex && (childInfoIndex < 4096))
 8218633C	string	%s  (childInfoIndex) = %i
@@ -54784,6 +54990,7 @@ va	type	value
 82187750	string	*childIndex >= offset
 82187768	string	childIndex
 82187774	string	name,radius,numLods,lodDist,lodPixels720p,1PixelDist720p 
+821877B0	string	%s,%.1f,%d,%.1f,%.1f,%.1f 
 821877CC	string	lodDist > 0.0f
 821877DC	string	xmodel->numLods > 0
 821877F0	string	xmodel->name
@@ -54911,6 +55118,7 @@ va	type	value
 82188CD4	string	masteringMap
 82188CE4	string	!xaGlob.voice[index]
 82188CFC	string	SUCCEEDED( hr )
+82188D0C	string	!voice
 82188D18	string	(knotCount > 1 && knotCount < 16)
 82188D40	string	knots[0][0] == 0.0f && knots[0][1] == 1.0f && knots[knotCount - 1][0] == 1.0f && knots[knotCount - 1][1] == 0.0f
 82188DB8	string	SND_IsAliasChannel3D( SNDALIASFLAGS_GET_CHANNEL( chaninfo->alias0->flags ) )
@@ -54942,6 +55150,7 @@ va	type	value
 82189494	string	(q > 0)
 8218949C	string	%s  (freq) = %g
 821894AC	string	(freq >= 0 && freq <= 20000)
+821894CC	string	+ %s 
 821894D4	string	 %i %i %s %f Hz %f dB %f q 
 821894F0	string	Current EQ Settings ---------------  lerp = %.2f 
 82189524	string	g_snd.entchannel_count <= maxcount
@@ -55003,6 +55212,7 @@ va	type	value
 8218A058	string	g_snd.chaninfo[SND_FIRST_STREAM_CHANNEL + ambientPrimary].alias0
 8218A09C	string	%s  (totalSamples) = %i
 8218A0B4	string	(totalSamples > 0)
+8218A0C8	string	%s  (hr) = %i
 8218A0D8	string	((index >= 0 && index < 0 + 8) || (index >= (0 + 8) && index < (0 + 8) + 32))
 8218A128	string	streamReadInfo->totalWaveLength > streamReadInfo->dataOffset
 8218A168	string	Error %d calling sourceVoice->Start for stream sound '%s' from alias '%s'. 
@@ -55181,6 +55391,7 @@ va	type	value
 8218C198	string	Since the active profile signed out, we are going to send them back to the main menu 
 8218C1F0	string	XUserGetSigninState( controllerIndex ) >= eXUserSigninState_SignedInLocally
 8218C23C	string	GamerProfile_LogInProfile took %ims 
+8218C264	string	newXuid
 8218C26C	string	Live_UserSignedIn - Null XUID. Aborting 
 8218C298	string	Content_FindContentPacks took %ims 
 8218C2C0	string	Since controller %i signed in while in a game, we are going to send them back to the main menu 
@@ -55225,6 +55436,7 @@ va	type	value
 8218CA90	string	Party %i has avg ping %i, min ping %i, upload speed is %u bits/sec. 
 8218CAD8	string	The remote host has disabled QoS listening! 
 8218CB08	string	data->qosSessionIds[result] != NULL
+8218CB2C	string	qos->cxnqos > 0
 8218CB3C	string	qos != NULL
 8218CB48	string	%s  (data->qosIndex) = %i
 8218CB64	string	(data->qosIndex >= 0 && data->qosIndex < 1)
@@ -55711,6 +55923,7 @@ va	type	value
 82192AA4	string	poly2 != result
 82192AB4	string	poly1 != result
 82192AC4	string	poly2
+82192ACC	string	poly1
 82192AD4	string	maxCount >= poly1Count + poly2Count + 1
 82192AFC	string	poly2Count > 2
 82192B0C	string	poly1Count > 2
@@ -55836,6 +56049,7 @@ va	type	value
 82193E7C	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp
 82193EBC	string	((uintptr_t)body & 15) == 0
 82193ED8	string	body->world
+82193EE4	string	phys_go
 82193EEC	string	phys_stop
 82193EF8	string	Pool_FreeCount( &physGeneralPool.geomPool ) == PHYS_GENERAL_GEOM_POOL_COUNT  %i, %i
 82193F50	string	Pool_FreeCount( &physGeneralPool.bodyPool ) == ARRAY_COUNT( physGeneralPool.bodies )  %i, %i
@@ -56174,7 +56388,11 @@ va	type	value
 821976F4	string	invalid operation for geom in locked space
 82197720	string	g->gflags & GEOM_PLACEABLE
 8219773C	string	geom must be placeable
+82197754	string	g->body
+82197764	string	g->pos
 82197780	string	geomClass not in [dFirstUserClass, dLastUserClass]  %i not in [%i, %i]
+821977C8	string	!newBody
+821977D4	string	newBody
 821977DC	string	g->body || dGeomIsSpace( g )
 821977FC	string	sizeof( this->user_data ) >= size  %i, %i
 82197828	string	class_num not in [dFirstUserClass, dLastUserClass]  %i not in [%i, %i]
@@ -56216,8 +56434,16 @@ va	type	value
 82197DB4	string	g1 && g2 && callback
 82197DF8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp
 82197E44	string	lx >= 0 && ly >= 0 && lz >= 0
+82197E70	string	%s  (lz) = %g
+82197E80	string	(lz > 0)
+82197E8C	string	%s  (ly) = %g
+82197E9C	string	(ly > 0)
+82197EA8	string	%s  (lx) = %g
+82197EB8	string	(lx > 0)
+82197EC4	string	newBox
 82197ECC	string	lx > 0 && ly > 0 && lz > 0
 82197EE8	string	g->type == dBoxClass
+82197F00	string	maxc > 0
 82197F0C	string	skip >= (int)sizeof( dContactGeom )  %i, %i
 82197F38	string	!IS_NAN((con->pos)[0]) && !IS_NAN((con->pos)[1]) && !IS_NAN((con->pos)[2])
 82197F88	string	!IS_NAN((contact[0].pos)[0]) && !IS_NAN((contact[0].pos)[1]) && !IS_NAN((contact[0].pos)[2])
@@ -56239,6 +56465,7 @@ va	type	value
 82198258	string	GeomTransform encapsulated object must not be in a space
 82198294	string	o1->type == dGeomTransformClass
 821982B4	string	skip >= (int)sizeof( dContactGeom )
+821982D8	string	tr->obj
 821982E0	string	geom->type == dGeomTransformClass
 82198308	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_internal.h
 82198360	string	Index doesn't index Flags & NUMC_MASK  %i not in [0, %i)
@@ -56247,6 +56474,8 @@ va	type	value
 821983D0	string	fDepth < MAXVALUE
 821983E8	string	!IS_NAN((vNormal)[0]) && !IS_NAN((vNormal)[1]) && !IS_NAN((vNormal)[2])
 82198430	string	vNormal
+82198438	string	!IS_NAN(fR)
+82198444	string	!IS_NAN(fp0)
 82198458	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp
 821984AC	string	vNormal[0] != 0 || vNormal[1] != 0 || vNormal[2] != 0
 821984E4	string	normal: (%f, %f, %f) bestaxis: %i
@@ -56277,6 +56506,9 @@ va	type	value
 8219899C	string	!IS_NAN((pb)[0]) && !IS_NAN((pb)[1]) && !IS_NAN((pb)[2])
 821989D8	string	!IS_NAN((pa)[0]) && !IS_NAN((pa)[1]) && !IS_NAN((pa)[2])
 82198A18	string	!IS_NAN((b->tacc)[0]) && !IS_NAN((b->tacc)[1]) && !IS_NAN((b->tacc)[2])
+82198A60	string	!IS_NAN(fz)
+82198A6C	string	!IS_NAN(fy)
+82198A78	string	!IS_NAN(fx)
 82198A88	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp
 82198ACC	string	limit_err != FLT_MAX
 82198AE4	string	!IS_NAN((ax1)[0]) && !IS_NAN((ax1)[1]) && !IS_NAN((ax1)[2])
@@ -56353,8 +56585,11 @@ va	type	value
 82199B24	string	*cc > REAL(0.0)
 82199B34	string	L[ i * nskip + i ]
 82199B48	string	L[i * nskip + i ]
+82199B5C	string	L && b
 82199B64	string	A && Ainv
+82199B70	string	odeGlob
 82199B78	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp
+82199BBC	string	obj->tome
 82199BC8	string	non-distinct body pointers in joint
 82199BEC	string	bad body pointer in joint
 82199C08	string	bad body pointer in joint node of body list (1)
@@ -56372,6 +56607,9 @@ va	type	value
 82199D90	string	b->world->bodyCount
 82199DA4	string	b->world
 82199DB0	string	b->world->allowDelete
+82199DC8	string	!IS_NAN(z)
+82199DD4	string	!IS_NAN(y)
+82199DE0	string	!IS_NAN(x)
 82199DF0	string	!IS_NAN((b->info.R + 8)[0]) && !IS_NAN((b->info.R + 8)[1]) && !IS_NAN((b->info.R + 8)[2])
 82199E50	string	!IS_NAN((b->info.R + 4)[0]) && !IS_NAN((b->info.R + 4)[1]) && !IS_NAN((b->info.R + 4)[2])
 82199EB0	string	!IS_NAN((b->info.R)[0]) && !IS_NAN((b->info.R)[1]) && !IS_NAN((b->info.R)[2])
@@ -56379,8 +56617,12 @@ va	type	value
 82199F50	string	!IS_NAN((R + 8)[0]) && !IS_NAN((R + 8)[1]) && !IS_NAN((R + 8)[2])
 82199F98	string	!IS_NAN((R + 4)[0]) && !IS_NAN((R + 4)[1]) && !IS_NAN((R + 4)[2])
 82199FDC	string	!IS_NAN((R)[0]) && !IS_NAN((R)[1]) && !IS_NAN((R)[2])
+8219A014	string	b && R
 8219A020	string	!IS_NAN((quat)[0]) && !IS_NAN((quat)[1]) && !IS_NAN((quat)[2]) && !IS_NAN((quat)[3])
 8219A078	string	inertia must be positive definite
+8219A0A4	string	!IS_NAN(pz)
+8219A0B0	string	!IS_NAN(py)
+8219A0BC	string	!IS_NAN(px)
 8219A0C8	string	joint->world == world
 8219A0E0	string	joint & world mismatch. world: %i %i
 8219A108	string	surfParms
@@ -56400,6 +56642,10 @@ va	type	value
 8219A2DC	string	bad world argument
 8219A2F0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp
 8219A338	string	ODE: vector has zero size
+8219A354	string	!IS_NAN(k)
+8219A360	string	%s  (n[2]) = %g
+8219A370	string	(a > 0)
+8219A378	string	n && p && q
 8219A388	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp
 8219A3D8	string	body == rows[index].body1
 8219A3F4	string	rows[index].body2 < 0
@@ -56437,10 +56683,12 @@ va	type	value
 8219AA60	string	jointCount doesn't index ISLAND_MAX_JOINT_COUNT  %i not in [0, %i)
 8219AAA8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp
 8219AAF0	string	ODE: zero length vector
+8219AB08	string	qa && qb && qc
 8219AB18	string	q && R
 8219AB20	string	(_R(0,0) - (_R(1,1) + _R(2,2))) + 1 >= 0  %g, %g
 8219AB54	string	(_R(2,2) - (_R(0,0) + _R(1,1))) + 1 >= 0  %g, %g
 8219AB88	string	(_R(1,1) - (_R(2,2) + _R(0,0))) + 1 >= 0  %g, %g
+8219ABBC	string	w && q && dq
 8219ABCC	string	((bb->tag == 0) || (bb->tag == -1))
 8219ABF0	string	%s  (bb->tag) = %i
 8219AC04	string	((n->joint->tag == 0) || (n->joint->tag == -1))
@@ -56777,6 +57025,7 @@ va	type	value
 8219E58C	string	veh->ent->classname == scr_const.script_vehicle
 8219E5BC	string	veh->ent->vehicle
 8219E5D0	string	Vehicle/Accel graph/%s
+8219E5E8	string	veh->ent
 8219E5F4	string	vehIndex doesn't index MAX_VEHICLES  %i not in [0, %i)
 8219E62C	string	No %s for [%s] 
 8219E63C	string	No tag %s for [%s] 
@@ -56824,6 +57073,7 @@ va	type	value
 8219EBF4	string	veh->pathSpeed >= 0.0f
 8219EC0C	string	veh->manualSpeed >= 0.0f
 8219EC28	string	veh->pathPos.speed >= 0.0f
+8219EC44	string	veh->physVeh
 8219EC59	string	VEH_LinkCommonChecks: Trying to use vehicle without a bone [tag_player] 
 8219ECA5	string	VEH_LinkCommonChecks: Vehicle already has an owner 
 8219ECDD	string	VEH_LinkCommonChecks: Player already has an owner 
@@ -56988,6 +57238,7 @@ va	type	value
 821A04C8	string	VehPath_SetScriptVariable: bad case %d
 821A04F0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp
 821A0534	string	!(node->flags & VN_FLAG_NOTIFY)
+821A0554	string	lookXYZ
 821A0560	string	cnode->length != 0.0f
 821A0578	string	count < s_numNodes
 821A058C	string	nodeIdx doesn't index s_numNodes  %i not in [0, %i)
@@ -57128,6 +57379,7 @@ va	type	value
 821A2268	string	dwReadStatsByRank() failed. 
 821A2288	string	getting starting at rank %i 
 821A22A8	string	!lb->isUpdating
+821A22B8	string	lb->lbDef
 821A22C8	string	dwGetOnlineUserID() failed, probably called before NP logon has completed 
 821A2314	string	%s  (userIndex) = %i
 821A232C	string	(userIndex > 0)
@@ -57139,6 +57391,7 @@ va	type	value
 821A23F0	string	readStatsOverlappedIO->data
 821A2410	string	readStatsOverlappedIO->type == LB_TASK_READLB || readStatsOverlappedIO->type == LB_TASK_READLB_BYPLAYER || readStatsOverlappedIO->type == LB_TASK_READLB_BYRANK
 821A24B0	string	readStatsOverlappedIO->active
+821A24D0	string	LB: %i 
 821A24D8	string	Failed to cache leaderboards for controllerIndex: %i 
 821A2510	string	readStatsOverlappedIO->type == LB_TASK_READLB_CACHE
 821A2544	string	popup_gettinglb
@@ -57194,10 +57447,15 @@ va	type	value
 821A2D28	string	dw_leaderboard_write_active
 821A2D48	string	Not uploading leaderboard stats: local controller index %i not signed in to DemonWare. 
 821A2DA0	string	Not uploading leaderboard stats: local controller index %i not signed in to live. 
+821A2DF4	string	lbCol
 821A2DFC	string	column doesn't index lbDef->columnCount  %i not in [0, %i)
 821A2E38	string	colName
+821A2E48	string	%.2f%s
 821A2E50	string	MENU_SECONDS_ABBREVIATION
+821A2E6C	string	%02i%s %02i%s
 821A2E7C	string	%i%s %02i%s %02i%s
+821A2E90	string	%04.1f%s
+821A2E9C	string	%02i%s %04.1f%s
 821A2EAC	string	%02i%s %02i%s %04.1f%s
 821A2EC4	string	%i%s %02i%s %02i%s %04.1f%s
 821A2EE0	string	text == lbGlob.feederText
@@ -57344,6 +57602,7 @@ va	type	value
 821A3B1C	string	game type
 821A3B28	string	game mode
 821A3B34	string	unknown context %i
+821A3B48	string	: %i 
 821A3B50	string	match mu
 821A3B5C	string	match sigma
 821A3B68	string	most slots needed on a team
@@ -57354,6 +57613,7 @@ va	type	value
 821A3BC4	string	match language
 821A3BD4	string	match affiliate score
 821A3BEC	string	unknown property %x (%i)
+821A3C08	string	: %s 
 821A3C10	string	results_matchmaking time: %d num_results: %d
 821A3C40	string	Matchmaking returned %i results at time %i 
 821A3C6C	string	Error searching for session - error %x 
@@ -58481,6 +58741,7 @@ va	type	value
 821B066C	string	popup_facebook_authenticate
 821B0688	string	MENU_FACEBOOK_UNREGISTER_OK
 821B06A8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp
+821B06E8	string	xbox360
 821B06F0	string	column doesn't index FACEBOOK_FRIEND_FEEDER_COL_MAX  %i not in [0, %i)
 821B0738	string	row doesn't index MAX_FACEBOOK_FRIENDS  %i not in [0, %i)
 821B0784	string	Facebook: We can't find the user we just had selected
@@ -58535,6 +58796,7 @@ va	type	value
 821B10A4	string	Social Config Fatal Error: Expecting ['mp','sp'] on line %d 
 821B10E8	string	Social Config Fatal Error: Missing '#endif' before '#ifdef' on line %d 
 821B1130	string	Social Config Fatal Error: Mismatched '#endif' on line %d. 
+821B116C	string	app_id
 821B1174	string	Social Config Error: Expecting an app id number on line %d 
 821B11B0	string	Social Config Error: Expecting a permission string on line %d 
 821B11F0	string	Social Config Error: Expecting a dvar string on line %d 
@@ -58543,6 +58805,8 @@ va	type	value
 821B12AC	string	Social Config Error: Expecting a dvar value on line %d 
 821B12E4	string	Social Config Error: Didn't recognize '%s' on line %d 
 821B131C	string	permissions
+821B1328	string	#endif
+821B1330	string	#ifdef
 821B1338	string	social
 821B1340	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_config.cpp
 821B1388	string	Maximum social config callbacks reached, increase MAX_SOCIAL_CONFIG_COMPLETE_CALLBACKS if more are needed
@@ -59214,15 +59478,20 @@ va	type	value
 821B8C8C	string	%s,"%s" %s %s,%s,%s %d,%d,%s,%s
 821B8CAC	string	%08x %08x 
 821B8CB8	string	%d too big
+821B8CCC	string	$%8.8x : 
+821B8CD8	string	%2.2x 
 821B8CE4	string	$%16.16lx (%lld) 
 821B8CF8	string	%s,%d: %08x
 821B8D04	string	Can't find: %s
 821B8D14	string	%s,%s: %08x %08x
+821B8D28	string	What?
 821B8D38	string	s_remoteConsoleManager.remoteconsolecmd == NULL
 821B8D70	string	pattern_in
 821B8D7C	string	CWD: '%s' 
 821B8D88	string	Pattern: '%s' 
 821B8D9C	string	Done! F:%d, D:%d, S:%lld
+821B8DB8	string	%lld 
+821B8DC0	string	%4.4d "%s" 
 821B8E78	string	Exceeded R_BSPSURF_DATA_LIMIT_TOTAL %d >= %d 
 821B8EA8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_add_bsp.cpp
 821B8EE8	string	surfIndex == mergeState->surfIndex  %i, %i
@@ -59265,6 +59534,7 @@ va	type	value
 821B97B0	string	partitionIndex == 0 || partitionIndex == 1
 821B97DC	string	buildList->surfDataPos <= buildList->surfDataEnd
 821B9810	string	useShadowMap doesn't index 2  %i not in [0, %i)
+821B9840	string	surfs
 821B9848	string	visDataRef.fields.surfIndex == surfIndex
 821B9874	string	surfCount
 821B9880	string	usedCount == smodelCount
@@ -59286,6 +59556,7 @@ va	type	value
 821B9C34	string	rgp.world == NULL
 821B9C48	string	(uint)rgp.world->modelCount <= g_addonMapEnts->numSubModels
 821B9C84	string	rgp.world
+821B9C90	string	!rgp.world
 821B9CD0	string	(!in->canUseShadowMap || in->cosHalfFovOuter > 0.0f && in->cosHalfFovOuter < 1.0f)
 821B9D24	string	%s  (in->cosHalfFovOuter) = %g
 821B9D48	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp
@@ -59294,6 +59565,7 @@ va	type	value
 821B9E4C	string	bspSurfIter->current <= bspSurfIter->end
 821B9E78	string	drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex  %i, %i
 821B9EE8	string	bspSurfIndex doesn't index g_worldDpvs->staticSurfaceCount  %i not in [0, %i)
+821B9FDC	string	gfxBuf
 821B9FE5	string	Physical buffer allocation failed on %i bytes
 821BA018	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp
 821BA058	string	%s  (sizeInBytes) = %i
@@ -59356,6 +59628,7 @@ va	type	value
 821BAA7C	string	GetFileSize failed (%i)
 821BAA94	string	Zero file size
 821BAAA4	string	Open failed
+821BAAB0	string	outPtr
 821BAAB8	string	BinkOpen: '%s' 
 821BAAC8	string	BinkOpen: %s
 821BAAD8	string	%s\\%s.bik
@@ -59427,6 +59700,7 @@ va	type	value
 821BB89C	string	$default3d
 821BB8A8	string	R_GetSortedMaterial( (uint)material->info.drawSurf.fields.materialSortedIndex ) == material
 821BB904	string	indexCount
+821BB910	string	(code)
 821BB918	string	codeSurfList->count == scene.codeEmissiveSurfCount  %i, %i
 821BB954	string	scene.codeEmissiveSurfCount <= codeSurfLimit  %i, %i
 821BB98C	string	codeSurfList->count == scene.codeTransSurfCount  %i, %i
@@ -59487,6 +59761,7 @@ va	type	value
 821BC2FC	string	(sceneEnt->cull.state == CULL_STATE_SKINNED_PENDING)
 821BC334	string	localSceneEnt
 821BC430	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h
+821BC484	string	dpvsGlob
 821BC490	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp
 821BC4D0	string	vertexCount < ARRAY_COUNT( delta )
 821BC4F4	string	dpvsGlob.nearPlane
@@ -59859,6 +60134,7 @@ va	type	value
 821C07BC	string	Allow glow.
 821C07C8	string	r_distortion
 821C07D8	string	Enable distortion
+821C07EC	string	r_blur
 821C07F4	string	Dev tweak to blur the screen
 821C0814	string	sm_projStepSize
 821C0824	string	sm_forceLinear
@@ -59972,6 +60248,7 @@ va	type	value
 821C1840	string	Use screen-space bounding box of portals rather than the actual shape of the portal projected onto the screen
 821C18B0	string	Helps cull geometry by angles of portals that are acute when projected onto the screen, value is the cosine of the angle
 821C192C	string	r_portalBevels
+821C193C	string	r_skipPvs
 821C1948	string	Skipt the determination of what is in the potentially visible set (disables most drawing)
 821C19A4	string	r_lockPvs
 821C19B0	string	Lock the viewpoint used for determining what is visible to the current position and direction
@@ -60012,6 +60289,7 @@ va	type	value
 821C1D88	string	r_clear
 821C1D90	string	Controls how the color buffer is cleared
 821C1DC0	string	Enable v-sync before drawing the next frame to avoid 'tearing' artifacts.
+821C1E0C	string	r_vsync
 821C1E14	string	Process command buffer in a separate thread
 821C1E40	string	r_cmdbuf_worker
 821C1E50	string	r_smp_worker_thread2
@@ -60105,7 +60383,9 @@ va	type	value
 821C2C88	string	r_polygonOffsetScale
 821C2CA0	string	r_fog_depthhack_scale
 821C2CB8	string	Fog color scale for viewmodel (< 0 disabled) [SP Only]
+821C2CF0	string	r_fog
 821C2CF8	string	Set to 0 to disable fog
+821C2D10	string	r_zfar
 821C2D18	string	Change the distance at which culling fog reaches 100% opacity; 0 is off
 821C2D60	string	Viewmodel near clip plane
 821C2D7C	string	r_znear_depthhack
@@ -60245,7 +60525,9 @@ va	type	value
 821C4004	string	rgp.identityNormalMapImage
 821C4020	string	$identitynormalmap
 821C4034	string	rgp.grayImage
+821C4044	string	$gray
 821C404C	string	rgp.blackImage
+821C405C	string	$black
 821C4064	string	rgp.whiteImage
 821C4078	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h
 821C40BC	string	*fence
@@ -60392,6 +60674,7 @@ va	type	value
 821C5A78	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp
 821C5AB8	string	Secondary ring buffer
 821C5AD0	string	Primary ring buffer
+821C5AE4	string	d3dpp
 821C5AEC	string	com_wideScreen
 821C5AFF	string	9(unitScaleValue >= 0 && unitScaleValue < 1 + 0.5f / 65535)
 821C5B3C	string	%s  (unitScaleValue) = %g
@@ -60607,6 +60890,7 @@ va	type	value
 821C7AF4	string	$point
 821C7AFC	string	$glare_blind
 821C7B0C	string	$additive
+821C7DB0	string	s_builtInMaterials
 821C7DC4	string	Material_Alloc
 821C7DD4	string	loadDef == &mtlShader->prog.loadDef
 821C7DF8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp
@@ -60664,6 +60948,7 @@ va	type	value
 821C89F4	string	techSet[0]
 821C8A00	string	mtl0:%s
 821C8A08	string	comparison
+821C8A14	string	mtl0 != mtl1
 821C8A38	string	mtlSortIndex == rgp.materialCount || R_GetSortedMaterial( mtlSortIndex )->info.sortKey > sortKey
 821C8A9D	string	Exceeded limit of %d sorted materials.
 821C8AC4	string	sortedMaterialKeys[sortedIndex] == sortKey
@@ -60673,7 +60958,7 @@ va	type	value
 821C8BBC	string	%s  (feature->name) = %s
 821C8BD8	string	featureIndex != featureCount
 821C8BF8	string	techSetName
-821C8C04	string	(null)
+821C8C05	string	null)
 821C8C0C	string	%i: %s:%s -> %s:%s
 821C8C20	string	techSet->techniques[techTypeIter] != NULL || techSet->remappedTechniqueSet->techniques[techTypeIter] == NULL
 821C8C90	string	techSet->remappedTechniqueSet
@@ -60702,9 +60987,11 @@ va	type	value
 821C8DB8	string	r_image_wavelet
 821C8DC8	string	r_image
 821C8DD0	string	r_font
+821C8DD8	string	r_dpvs
 821C8DE0	string	r_debug
 821C8DE8	string	r_buffers
 821C8DF4	string	rb_query
+821C8E00	string	rb_sky
 821C8EAC	string	mesh->vertSize
 821C8EBC	string	baseVertex
 821C8EC8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp
@@ -60726,6 +61013,9 @@ va	type	value
 821C924C	string	current total       %4.1f MB 
 821C926C	string	current geo total   %4.1f MB 
 821C928C	string	current inst total  %4.1f MB 
+821C92AC	string	  %4i  
+821C92B4	string	              
+821C92C4	string	        
 821C92D0	string	   SM#  instKB   DE#   geoKB  name 
 821C92F4	string	DE# is the number of dyn entity instances 
 821C9320	string	instKB is static model instance usage 
@@ -60798,6 +61088,7 @@ va	type	value
 821CA22C	string	gfxBuf.skinnedCacheLockAddr
 821CA248	string	baseSurf->skinnedCachedOffset >= 0
 821CA26C	string	skinCmd->surfCount
+821CA280	string	skinCmd
 821CA3D0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h
 821CA410	string	timerFrameHistory->frameCount <= PERF_TIMER_MAX_COUNT
 821CA448	string	timerFrameHistory->frameCount >= PERF_TIMER_MIN_AGREGGATION_COUNT + 1
@@ -60816,6 +61107,7 @@ va	type	value
 821CA658	string	orange
 821CA660	string	yellow
 821CA698	string	----------------------  
+821CA6B4	string	  %3.0f%%: %s 
 821CA6C4	string	 ---- PIXEL COST KEY ---- 
 821CA6E0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pointlights.cpp
 821CA724	string	basisIndex == GFX_LIGHTGRID_SAMPLE_COUNT
@@ -60912,7 +61204,9 @@ va	type	value
 821CBA74	string	(height >= 0)
 821CBA84	string	(width >= 0)
 821CBA94	string	%s  (y) = %i
+821CBAA4	string	(y >= 0)
 821CBAB0	string	%s  (x) = %i
+821CBAC0	string	(x >= 0)
 821CBACC	string	r_envMapMaxIntensity->current.value > 0.0f
 821CBAF8	string	normal fog disabled in fast file.  Remove 'ignore_tech,normal_fog' from the level csv if you don't want to consistently use sunDirFog. 
 821CBB80	string	dfog disabled in fast file.  Remove 'ignore_tech,dfog' from the level csv if you want to use sunDirFog. 
@@ -60959,6 +61253,7 @@ va	type	value
 821CC1A0	string	dx.singleSampleDepthStencilSurface
 821CC1C4	string	renderTarget->image
 821CC1D8	string	renderTargetId doesn't index R_RENDERTARGET_COUNT  %i not in [0, %i)
+821CC220	string	picmip
 821CC228	string	renderTarget->surface.color
 821CC248	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateRenderTarget( width, height, format, D3DMULTISAMPLE_NONE, 0, 0, &renderTarget->surface.color, &surfaceParameters ) failed: %s 
 821CC324	string	gfxRenderTargets[R_RENDERTARGET_SCENE].surface.color
@@ -61116,6 +61411,10 @@ va	type	value
 821CE070	string	sceneParms.primaryLights[sunPrimaryLightIndex].type == GFX_LIGHT_TYPE_DIR
 821CE264	string	cubeShotGlob
 821CE274	string	cubemapShotAxis
+821CE284	string	%s  (n1) = %g
+821CE294	string	(n1 != 0)
+821CE2A0	string	%s  (n0) = %g
+821CE2B0	string	(n0 != 0)
 821CE2BC	string	(rowIndex < gfxMetrics.cubemapShotRes)
 821CE2E4	string	(rowIndex >= 0)
 821CE2F4	string	%s  (rowIndex) = %i
@@ -61179,6 +61478,8 @@ va	type	value
 821CED20	string	material->stateBitsEntry[context.state->techType] doesn't index material->stateBitsCount  %i not in [0, %i)
 821CED8C	string	material->stateBitsEntry[context.state->techType] != 0xff
 821CEDC8	string	Bug 135001 condition detected!  Please bug this to Wade.Brainerd@activision.com.      material=%s passIndex=%d techType=%d
+821CEE44	string	%s%8.8x
+821CEE4C	string	%2.2x
 821CEE54	string	%s/shadercache%d/
 821CEE68	string	Material_CacheShader: Failed to open '%s' 
 821CEE98	string	r_sun_fx_position
@@ -61355,7 +61656,10 @@ va	type	value
 821D1170	string	!state->scissorX
 821D1188	string	worldMatrixAlternateIndex not in [0, CONST_SRC_CODE_WORLD_MATRIX_ALTERNATE_COUNT]  %i not in [0, %i]
 821D11F0	string	source->viewParms3D
+821D1204	string	mtx->m[2][3] + mtx->m[3][3] != 0
+821D1228	string	%s  (mtx->m[1][3]) = %g
 821D1240	string	(I_fabs( mtx->m[1][3] ) < 1.0e-5f * (mtx->m[2][3] + mtx->m[3][3]))
+821D1284	string	%s  (mtx->m[0][3]) = %g
 821D12A0	string	(I_fabs( mtx->m[0][3] ) < 1.0e-5f * (mtx->m[2][3] + mtx->m[3][3]))
 821D12E4	string	!source->useHeroLighting
 821D1300	string	!source->materialTime
@@ -61413,6 +61717,7 @@ va	type	value
 821D2750	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp
 821D2790	string	(*pos != '\\\\' || *pos == '/')
 821D27B0	string	^3nonsolid^7
+821D27C0	string	^1default^7
 821D27DC	string	%s  (tanSum) = %g
 821D27F0	string	(tanSum != 0)
 821D2800	string	%s  (sinSum) = %g
@@ -61523,6 +61828,8 @@ va	type	value
 821D3BB0	string	r_warningRepeatDelay
 821D3BC8	string	Number of seconds after displaying a "per-frame" warning before it will display again
 821D3CE0	string	waterGlob
+821D3CEC	string	!IS_NAN(H0X[0])
+821D3CFC	string	!IS_NAN(H0Y[0])
 821D3D0C	string	!IS_NAN(sinReal)
 821D3D20	string	!IS_NAN(sinImag)
 821D3D34	string	!IS_NAN(HX[vecKIndex])
@@ -61530,10 +61837,14 @@ va	type	value
 821D3D64	string	%s  (vecKCount) = %i
 821D3D7C	string	(vecKCount <= (64 * 64))
 821D3DA4	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp
+821D3DE4	string	!((uint)M & 3)
+821D3DF4	string	!((uint)H & 15)
 821D3E04	string	fftIndex >= 0
 821D3E14	string	fftIndex < HCOUNT
 821D3E28	string	water->M == water->N
 821D3E44	string	!((uint)pixels & 15)
+821D3E5C	string	!((uint)HY & 15)
+821D3E70	string	!((uint)HX & 15)
 821D3E84	string	%s  (g_waterLock) = %i
 821D3E9C	string	(g_waterLock == 1)
 821D3EB4	string	stream tabulation
@@ -61595,6 +61906,7 @@ va	type	value
 821D43B0	string	wait %s
 821D4500	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_xsurface.cpp
 821D4544	string	bufferSize >= 16
+821D4698	string	cloudSurfIter->current == cloudSurfIter->mark
 821D46C8	string	codeSurfIter->current == codeSurfIter->mark
 821D46F4	string	sparkSurfIter->current == sparkSurfIter->mark
 821D4724	string	gfxCmdBufInput
@@ -61738,6 +62050,7 @@ va	type	value
 821D5E0C	string	Resolve Distortion
 821D5E20	string	Resolve FloatZ
 821D5E30	string	trans fx
+821D5E3C	string	opaque1
 821D5E44	string	lightmap
 821D5E50	string	opaque
 821D5E58	string	trans prepass
@@ -61754,11 +62067,27 @@ va	type	value
 821D6088	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_drawprofile.cpp
 821D60D0	string	charLimit <= ARRAY_COUNT( label )
 821D60F4	string	profSettings == NULL || profSettings->infoCount == rowCount
+821D6130	string	  MaxH
+821D613C	string	   ApH
+821D6148	string	  AvH
+821D6154	string	  Hit
+821D6160	string	    Max
+821D616C	string	   Min
+821D6174	string	 AvTot
 821D6180	string	  Tally
+821D618C	string	 MaxSlf
+821D6194	string	 AvSlf
 821D61A0	string	 Total
+821D61A8	string	  Self
 821D61B0	string	Probe Name
+821D61BC	string	      
+821D61C4	string	%5.0f
+821D61CC	string	%5.1f
+821D61D8	string	%7.2f
 821D61E0	string	%6.2f
 821D61E8	string	global->sequence
+821D6204	string	%5.2f%%
+821D620C	string	%5.2f
 821D6214	string	FX PPU TOTAL
 821D6224	string	profDrawInfo->probeIndex == PROF2_BLANK
 821D624C	string	profSettings->infoCount > 0
@@ -61777,6 +62106,7 @@ va	type	value
 821D6510	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.h
 821D6558	string	renderTargetId == R_RENDERTARGET_RESOLVED_SCENE || renderTargetId == R_RENDERTARGET_POST_EFFECT_0 || renderTargetId == R_RENDERTARGET_POST_EFFECT_1 || renderTargetId == R_RENDERTARGET_RESOLVED_SCENE_GAMMA || renderTargetId == R_RENDERTARGET_POST_EFFECT_0_GAMMA || renderTargetId == R_RENDERTARGET_POST_EFFECT_1_GAMMA
 821D6698	string	radiusY
+821D66A0	string	radiusX
 821D66A8	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp
 821D66F0	string	%s  (halfTapCount) = %i
 821D6708	string	(halfTapCount > 0 && halfTapCount <= 8)
@@ -61873,6 +62203,7 @@ va	type	value
 821D7A20	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp
 821D7B0C	string	key: %d
 821D7B14	string	light: %d%s
+821D7B20	string	 (sm)
 821D7B28	string	!state->pixTechnique
 821D7B40	string	!state->pixMaterial
 821D7B54	string	!state->pixCombine
@@ -61974,6 +62305,7 @@ va	type	value
 821D90DC	string	cloud[2].flags & GFX_PARTICLE_CLOUD_FLAG_SPARK
 821D910C	string	cloud[1].flags & GFX_PARTICLE_CLOUD_FLAG_SPARK
 821D9140	string	cloudSurf.fields.cloudDataIndex doesn't index data->cloudDataCount  %i not in [0, %i)
+821D9198	string	XMSkin$
 821D91A0	string	data->skinnedCacheVb
 821D91B8	string	skinnedCachedOffset >= 0
 821D91D4	string	XSurfaceIsSkinned( xsurf )
@@ -62235,6 +62567,7 @@ va	type	value
 821DC418	string	author
 821DC420	string	mp/onlinevault_metadata.def
 821DC440	string	[CL_Demo_SaveScreenshot] Cannot save screenshot if you are not playing a demo. 
+821DC490	string	%s.jpg
 821DC498	string	[CL_Demo_SaveScreenshot] Failed to write, LiveStorage_CS_IsAvailable = false 
 821DC4E8	string	[CL_Demo_SaveClip] Cannot save screenshot if you are not playing a demo. 
 821DC534	string	MENU_DEMO_TOTAL_DURATION_LESS_THAN_ONE
@@ -62262,6 +62595,8 @@ va	type	value
 821DC974	string	CL_Demo_SeekFile( 0x%x, %d, %d ) = %d 
 821DC99C	string	CL_Demo_SeekFile( <memory>, %d, %d ) = 0 
 821DC9C8	string	Bad origin %i in CL_Demo_SeekFile
+821DC9EC	string	%c%04x_%08x
+821DC9F8	string	size > 1+4+1+8
 821DCA08	string	size >= 1+4+1+8
 821DCA18	string	i doesn't index CLIENT_DEMO_ENUM_MAX_DEVICE_COUNT  %i not in [0, %i)
 821DCA60	string	index < MAX_CLIENT_DEMO_ENUM_COUNT
@@ -62292,6 +62627,7 @@ va	type	value
 821DD008	string	cls.nextNoDeltaEntity == snap->numEntities
 821DD034	string	ent.number >= 0
 821DD044	string	noDeltaEntState
+821DD054	string	oldSnap
 821DD05C	string	cls.noDeltaSnapshot.snapFlags & SNAPFLAG_BASELINE
 821DD090	string	oldSnap->snapFlags & SNAPFLAG_BASELINE
 821DD0B8	string	snap->snapFlags & SNAPFLAG_BASELINE
@@ -62464,6 +62800,7 @@ va	type	value
 821DF2B8	string	LISTXXXXmovi
 821DF2C8	string	AVI == NULL
 821DF300	string	</rdf:Bag></dc:subject></rdf:Description> </rdf:RDF></x:xmpmeta><?xpacket end='w'?> 
+821DF358	string	<rdf:li>%s</rdf:li> 
 821DF370	string	<rdf:Description rdf:about=''xmlns:dc='http://purl.org/dc/elements/1.1/'><dc:subject><rdf:Bag> 
 821DF3D0	string	</rdf:Bag></MPRI:Regions></rdf:Description></MP:RegionInfo></rdf:Description> 
 821DF420	string	<rdf:li><rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><MPReg:Rectangle xmlns:MPReg="http://ns.microsoft.com/photo/1.2/t/Region#">%f, %f, %f, %f</MPReg:Rectangle><MPReg:PersonDisplayName xmlns:MPReg="http://ns.microsoft.com/photo/1.2/t/Region#">%s</MPReg:PersonDisplayName></rdf:Description></rdf:li> 
@@ -62472,6 +62809,8 @@ va	type	value
 821DF740	string	http://ns.adobe.com/xap/1.0/
 821DF76B	string	`huffman:%.2f
 821DF77C	string	quant:%.2f
+821DF788	string	dct:%.2f
+821DF794	string	copy:%.2f
 821DF7A0	string	(uint(v) & 7) == 0
 821DF7B4	string	(uint(u) & 7) == 0
 821DF7C8	string	(uint(y) & 7) == 0
@@ -62580,7 +62919,9 @@ va	type	value
 821E1B6C	string	no IDAT
 821E1B74	string	first not IHDR
 821E1B84	string	not BMP
+821E1B8C	string	BMP RLE
 821E1B94	string	bad masks
+821E1BA0	string	bad bpp
 821E1BA8	string	monochrome
 821E1BB4	string	bad BMP
 821E1BBC	string	unknown BMP
@@ -62758,6 +63099,7 @@ va	type	value
 821E55D0	string	reinterpret_cast<const byte*>((toReadPtr)) < reinterpret_cast<const byte*>((writePtr)) || reinterpret_cast<const byte*>((toReadPtr))+((length)) > reinterpret_cast<const byte*>((writePtr))+((length))
 821E5698	string	reinterpret_cast<const byte*>((toReadPtr)) >= reinterpret_cast<const byte*>((toBuf)) && reinterpret_cast<const byte*>((toReadPtr))+((length)) <= reinterpret_cast<const byte*>((toBuf))+((size))
 821E575C	string	Memcpy to (writePtr) exceeded bounds of part->data
+821E5790	string	toBuf
 821E5798	string	fromBuf
 821E57A0	string	reinterpret_cast<const byte*>((&matchRules->data[offset])) < reinterpret_cast<const byte*>((writePtr)) || reinterpret_cast<const byte*>((&matchRules->data[offset]))+((length)) > reinterpret_cast<const byte*>((writePtr))+((length))
 821E5888	string	Memcpy from (&matchRules->data[offset]) exceeded bounds of matchRules->data
@@ -62847,11 +63189,14 @@ va	type	value
 821E6EC8	string	Cannot change width or height after initialization
 821E6EFC	string	Cannot increase lag_in_frames
 821E6F1C	string	Conflicting flags.
+821E6FCC	string	%3d:%-3d 
+821E6FD8	string	%5d:%-5d
 821E6FE4	string	MVs for Frame %d 
 821E6FFC	string	Mbs for Frame %d 
 821E7010	string	UV Modes for Frame %d 
 821E7028	string	Mb mv ref for Frame %d 
 821E7048	string	Mb Modes for Frame %d 
+821E7060	string	mvs.stt
 821EB9C4	string	Failed to allocate cpi->en_thread_data
 821EB9EC	string	Failed to allocate cpi->mb_row_ei
 821EBA10	string	Failed to allocate cpi->h_event_mbrencoding
@@ -62926,6 +63271,7 @@ va	type	value
 821EE5E0	string	gametype_raw
 821EE5F8	string	isThumbnailLoaded
 821EE60C	string	isEmptySlot
+821EE618	string	isFilm
 821EE620	string	filetypeIcon
 821EE630	string	localizedDesc
 821EE640	string	localizedName
@@ -62982,6 +63328,7 @@ va	type	value
 821EF028	string	ambdist1
 821EF034	string	Names
 821EF03C	string	Targets
+821EF044	string	g_snd
 821EF04C	string	^5SND_DEBUG_ALIAS (%s): %s 
 821EF068	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp
 821EF0A0	string	occlusionIndex doesn't index MAX_SOUND_OCCLUSION  %i not in [0, %i)
@@ -63300,6 +63647,7 @@ va	type	value
 821F2C6C	string	Scales the volume of Bink videos.
 821F2C90	string	The amout of time in milliseconds for all audio to fade in at the start of a level
 821F2CE4	string	snd_levelFadeTime
+821F2CF8	string	snd_draw3D
 821F2D04	string	Draw the position and info of world sounds
 821F2D30	string	snd_enableEq
 821F2D40	string	Enable equalization filter
@@ -63436,6 +63784,7 @@ va	type	value
 821F6A90	string	so that the game logic can continue and allow us to do a PIX capture of the next frame.  There's a chance that the resulting PIX file will be able to reproduce the problem.  With D3D__NullHardware enabled there will be no more screen updates.  
 821F6B88	string	 Breaking into the debugger.  The GPU is hung and can't be recovered without doing a cold boot.  We will now enable 'D3D__NullHardware' 
 821F6C18	string	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+821F6C6C	string	xbdm.xex
 821F6C78	string	PIX!ResourceError Texture Tracking error: %s
 821F6CA8	string	Texture Tracking error: %s
 821F6CC4	string	D3DCollectorThrottleEvent
@@ -63463,7 +63812,7 @@ va	type	value
 821FA240	string	PIX!{CaptureFileCreationEnded}
 821FA31F	string	XPIX was waiting for a semaphore to be signaled, but gave up. 
 821FCC74	string	Failed to save texture capture.  
-821FCC99	string	?C;GKPTj]X`PIX Resource Collector
+821FCCA4	string	PIX Resource Collector
 821FD7CA	string	> >,>8sHsHsHsHsHsHsHsHsHsHsHsHsHsHsHsH>D
 821FD8E6	string	<$uTuTuTuTuTuTuTuTuTuTuTuTuT<0<<<H<T<`
 821FF712	string	> >,>8sHsHsHsHsHsHsHsHsHsHsHsHsHsHsHsH>D
@@ -63676,11 +64025,19 @@ va	type	value
 8220AEC8	string	FullType
 8220AEE0	string	MultiByteString
 8220AEF0	string	RangeFloat32
+8220AF00	string	Float64
 8220AF08	string	Float32
 8220AF10	string	RangeUInt32
 8220AF1C	string	RangedInt32
+8220AF28	string	UInt64
+8220AF30	string	Int64
+8220AF38	string	UInt32
 8220AF40	string	Int32
+8220AF48	string	UInt16
 8220AF50	string	Int16
+8220AF58	string	WChar16
+8220AF60	string	Char8
+8220AF68	string	UChar8
 8220AF78	string	NoType
 8220AF80	string	bdFastArray<T>::operator[], rangecheck failed
 8220AFB0	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdFastArray.inl
@@ -63694,6 +64051,7 @@ va	type	value
 8220B230	string	(((align) & ((align)-1)) == 0)
 8220B250	string	bdAlignedOffsetMalloc, alignment must a power of 2.
 8220B288	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp
+8220B2E4	string	v != 0
 8220B2F0	string	bdBitOperations::highBitNumber, no bits set, so cannot find highest.
 8220B338	string	c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBitOperations.cpp
 8220B3AB	string	xbdStatsInfo::deserialize
@@ -63727,7 +64085,7 @@ va	type	value
 8220BD5C	string	Connected to MatchMaking Service.
 8220BE70	string	bdLobbyService::onDisconnect
 8220BE90	string	Disconnected from MatchMaking Service.
-8220BF32	string	 PFailed to read challenges.
+8220BF34	string	Failed to read challenges.
 8220BF50	string	Failed to read sessionID for session invite.
 8220BF80	string	bdLobbyService::handlePushMessage
 8220BFA4	string	Failed to read session invite.
@@ -63942,6 +64300,7 @@ va	type	value
 82211C70	string	bdHTTPWrapperBase::parseURL
 82211C90	string	URL was not of expected form. expected: proto://serverName:port/resource actual: %s
 82211CE4	string	URL host greater than BD_MAX_SERVER_HOST_SIZE. ('%s')
+82211D1C	string	https://
 82211D28	string	Title Servers successfully enumerated already parsing previously obtained results buffer.
 82211D88	string	Failed to enumerate servers, HTTP access will not be available. 0x%0x.
 82211DD0	string	No more files ???
@@ -64017,6 +64376,7 @@ va	type	value
 82213068	string	Attempting to start HTTP delete operation before previous is completed
 82213100	string	Destination URL was not of expected form (%s)
 82213130	string	bdHTTPWrapper::startCopy
+8221314C	string	http://
 82213158	string	Attempting to start HTTP COPY operation before previous is completed
 822133E6	string	A(bdConsoleID::serialize
 82213400	string	Console ID has value of 0
@@ -64102,6 +64462,7 @@ va	type	value
 82214518	string	DW_Free called before heap initialized
 82214540	string	bdHeap::quit
 822147C0	string	e+000
+822147C8	unicode	(null)
 822148B0	unicode	HH:mm:ss
 822148C4	unicode	dddd, MMMM dd, yyyy
 822148EC	unicode	MM/dd/yy
@@ -64166,6 +64527,10 @@ va	type	value
 82215580	unicode	R6008 - not enough space for arguments 
 822155D0	unicode	R6002 - floating point support not loaded 
 822156D8	string	_nextafter
+822160F0	string	1#QNAN
+822160F8	string	1#INF
+82216100	string	1#IND
+82216108	string	1#SNAN
 82216110	string	bdNet/net
 8221611C	string	bdNetImpl::sendAll
 82216130	string	Failed to flush all connections in the connection store
@@ -64443,8 +64808,6 @@ va	type	value
 8221D970	string	LibTomMath
 8221D988	string	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/
 8221D9CC	string	tiger
-822A05BF	string	pHgaL
-824ABD00	string	|c*.H
 82992330	string	<unknown>
 829951A0	string	BACK_IN_THE_FIGHT
 829951C3	string	xTOO_BIG_TO_FAIL

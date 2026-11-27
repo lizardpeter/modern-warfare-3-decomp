@@ -10,7 +10,6 @@ void bdByteBuffer___bdByteBuffer(undefined4 *param_1)
   *param_1 = &PTR_bdByteBuffer___scalar_deleting_destructor__8220a620;
   puStack00000014 = param_1;
   if ((param_1[3] != 0) && (*(char *)((int)param_1 + 0x1a) == '\0')) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220a498,0x11,0,0xffffffff820011f4,0xffffffff8220a5cc,
                     0xffffffff8220a5f0);
   }
@@ -22,6 +21,15 @@ void bdByteBuffer___bdByteBuffer(undefined4 *param_1)
   param_1[5] = 0;
   bdReferencable___bdReferencable(param_1);
   return;
+}
+
+
+// 828F5130  bdByteBuffer::getDataSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:29)
+
+longlong bdByteBuffer__getDataSize(int param_1)
+
+{
+  return (ulonglong)*(uint *)(param_1 + 0x14) - (ulonglong)*(uint *)(param_1 + 0xc);
 }
 
 
@@ -66,7 +74,6 @@ int bdByteBuffer__write(int _Filehandle,void *_Buf,uint _MaxCharCount)
             (ulonglong)*(uint *)(_Filehandle + 0xc);
     if ((uVar2 & 0xffffffff) < (ulonglong)_MaxCharCount) {
       if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8220a498,0x44,0,0xffffffff8220a4f0,_Buf);
       }
     }
@@ -100,11 +107,41 @@ longlong bdStrnlen(longlong param_1,longlong param_2)
 
 // 828F65B0  bdByteBuffer::writeArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:74)
 
-void bdByteBuffer__writeArrayStart(void)
+void bdByteBuffer__writeArrayStart
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 uVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar5;
+  
+  iVar3 = __savegprlr_28();
+  uVar1 = *(undefined1 *)(iVar3 + 0x18);
+  *(undefined1 *)(iVar3 + 0x18) = 0;
+  *(undefined1 *)(iVar3 + 0x19) = uVar1;
+  cVar4 = bdByteBuffer__writeUByte8(iVar3,(param_2 & 0xff) + 100 & 0xff);
+  *(undefined1 *)(iVar3 + 0x18) = 1;
+  if (cVar4 == '\0') {
+LAB_828f6610:
+    bVar2 = false;
+  }
+  else {
+    cVar4 = bdByteBuffer__writeUInt32(iVar3,(longlong)(int)param_3 * (longlong)param_4);
+    bVar2 = true;
+    if (cVar4 == '\0') goto LAB_828f6610;
+  }
+  *(undefined1 *)(iVar3 + 0x18) = 0;
+  if (bVar2) {
+    cVar4 = bdByteBuffer__writeUInt32(iVar3,param_3);
+    uVar5 = 1;
+    if (cVar4 != '\0') goto LAB_828f663c;
+  }
+  uVar5 = 0;
+LAB_828f663c:
+  __restgprlr_28(uVar5);
+  return;
 }
 
 
@@ -120,11 +157,64 @@ void bdByteBuffer__writeArrayEnd(int param_1)
 
 // 828F6648  bdByteBuffer::readArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:96)
 
-void bdByteBuffer__readArrayStart(void)
+void bdByteBuffer__readArrayStart(undefined8 param_1,uint param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 uVar1;
+  bool bVar2;
+  int iVar4;
+  ulonglong uVar3;
+  char cVar5;
+  byte local_40 [4];
+  undefined1 auStack_3c [60];
+  
+  iVar4 = __savegprlr_27();
+  uVar1 = *(undefined1 *)(iVar4 + 0x18);
+  *(undefined1 *)(iVar4 + 0x18) = 0;
+  *(undefined1 *)(iVar4 + 0x19) = uVar1;
+  uVar3 = bdByteBuffer__readUByte8(iVar4,local_40);
+  if ((uVar3 & 0xff) == 0) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff821ad3c8,0xffffffff8220a498,0xffffffff8220a828,0x6b,
+                 0xffffffff8220a848);
+    *(undefined4 *)param_3 = 0;
+    goto LAB_828f6780;
+  }
+  if (local_40[0] - 100 != (param_2 & 0xff)) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff821ad3c4,0xffffffff8220a498,0xffffffff8220a828,0x72,
+                 0xffffffff8220a7f4);
+    uVar3 = 0;
+  }
+  if ((uVar3 & 0xff) == 0) goto LAB_828f6780;
+  *(undefined1 *)(iVar4 + 0x18) = 0;
+  cVar5 = bdByteBuffer__readUByte8(iVar4,local_40);
+  if (cVar5 == '\0') {
+LAB_828f6754:
+    bVar2 = false;
+  }
+  else {
+    cVar5 = bdByteBuffer__readUInt32(iVar4,auStack_3c);
+    bVar2 = true;
+    if (cVar5 == '\0') goto LAB_828f6754;
+  }
+  if (bVar2) {
+    cVar5 = bdByteBuffer__readUInt32(iVar4,param_3);
+    uVar3 = 1;
+    if (cVar5 != '\0') goto LAB_828f6780;
+  }
+  uVar3 = 0;
+LAB_828f6780:
+  __restgprlr_27(uVar3);
+  return;
+}
+
+
+// 828F5228  bdByteBuffer::readArrayEnd  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:131)
+
+void bdByteBuffer__readArrayEnd(int param_1)
+
+{
+  *(undefined1 *)(param_1 + 0x18) = *(undefined1 *)(param_1 + 0x19);
+  return;
 }
 
 
@@ -361,6 +451,35 @@ void bdByteBuffer__read<short>(int param_1,int param_2)
 }
 
 
+// 828F5400  bdByteBuffer::read<unsigned_short>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
+
+void bdByteBuffer__read<unsigned_short>(int param_1,int param_2)
+
+{
+  undefined1 *puVar1;
+  uint uVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined1 local_20 [16];
+  
+  uVar2 = bdByteBuffer__read(param_1,local_20,2);
+  if ((uVar2 & 0xff) == 1) {
+    iVar4 = 0;
+    puVar3 = (undefined1 *)(param_2 + 2);
+    lVar5 = 2;
+    do {
+      puVar1 = local_20 + iVar4;
+      iVar4 = iVar4 + 1;
+      puVar3 = puVar3 + -1;
+      *puVar3 = *puVar1;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+  }
+  return;
+}
+
+
 // 828F5468  bdByteBuffer::read<int>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
 
 void bdByteBuffer__read<int>(int param_1,int param_2)
@@ -465,6 +584,35 @@ void bdByteBuffer__read<unsigned___int64>(int param_1,int param_2)
     iVar4 = 0;
     puVar3 = (undefined1 *)(param_2 + 8);
     lVar5 = 8;
+    do {
+      puVar1 = local_20 + iVar4;
+      iVar4 = iVar4 + 1;
+      puVar3 = puVar3 + -1;
+      *puVar3 = *puVar1;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+  }
+  return;
+}
+
+
+// 828F5608  bdByteBuffer::read<float>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
+
+void bdByteBuffer__read<float>(int param_1,int param_2)
+
+{
+  undefined1 *puVar1;
+  uint uVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined1 local_20 [16];
+  
+  uVar2 = bdByteBuffer__read(param_1,local_20,4);
+  if ((uVar2 & 0xff) == 1) {
+    iVar4 = 0;
+    puVar3 = (undefined1 *)(param_2 + 4);
+    lVar5 = 4;
     do {
       puVar1 = local_20 + iVar4;
       iVar4 = iVar4 + 1;
@@ -596,21 +744,98 @@ undefined8 bdByteBuffer__writeUInt64(int param_1,longlong param_2)
 
 // 828F6370  bdByteBuffer::writeString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:303)
 
-void bdByteBuffer__writeString(void)
+void bdByteBuffer__writeString(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int _Filehandle;
+  longlong lVar2;
+  uint uVar4;
+  ulonglong uVar3;
+  uint _MaxCharCount;
+  undefined1 local_40;
+  undefined1 local_3f [63];
+  
+  _Filehandle = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    lVar2 = bdByteBuffer__writeNAN();
+    goto LAB_828f648c;
+  }
+  uVar4 = 1;
+  local_40 = 0x10;
+  if (*(char *)(_Filehandle + 0x18) != '\0') {
+    uVar4 = bdByteBuffer__write(_Filehandle,&local_40,1);
+  }
+  uVar3 = bdStrnlen(param_2,param_3);
+  bVar1 = (param_3 & 0xffffffff) <= (uVar3 & 0xffffffff);
+  if (bVar1) {
+    _MaxCharCount = (int)param_3 - 1;
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220a528,0xffffffff8220a498,0xffffffff8220a7a0,0x14c
+                 ,0xffffffff8220a7bc);
+  }
+  else {
+    _MaxCharCount = (int)uVar3 + 1;
+  }
+  if ((uVar4 & 0xff) == 0) {
+LAB_828f6444:
+    lVar2 = 0;
+  }
+  else {
+    uVar4 = bdByteBuffer__write(_Filehandle,(void *)param_2,_MaxCharCount);
+    lVar2 = 1;
+    if ((uVar4 & 0xff) == 0) goto LAB_828f6444;
+  }
+  if (bVar1) {
+    if (lVar2 != 0) {
+      local_3f[0] = 0;
+      uVar4 = bdByteBuffer__write(_Filehandle,local_3f,1);
+      lVar2 = 1;
+      if ((uVar4 & 0xff) != 0) goto LAB_828f648c;
+    }
+    lVar2 = 0;
+  }
+LAB_828f648c:
+  __restgprlr_27(lVar2);
+  return;
 }
 
 
 // 828F6498  bdByteBuffer::writeBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:348)
 
-void bdByteBuffer__writeBlob(void)
+void bdByteBuffer__writeBlob(undefined8 param_1,void *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int _Filehandle;
+  uint uVar2;
+  char cVar3;
+  undefined8 uVar4;
+  undefined1 local_30 [48];
+  
+  _Filehandle = __savegprlr_29();
+  local_30[0] = 0x13;
+  uVar2 = 1;
+  if (*(char *)(_Filehandle + 0x18) != '\0') {
+    uVar2 = bdByteBuffer__write(_Filehandle,local_30,1);
+  }
+  if ((uVar2 & 0xff) == 0) {
+LAB_828f64f8:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__writeUInt32(_Filehandle,param_3);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_828f64f8;
+  }
+  if (bVar1) {
+    uVar2 = bdByteBuffer__write(_Filehandle,param_2,(uint)param_3);
+    uVar4 = 1;
+    if ((uVar2 & 0xff) != 0) goto LAB_828f6524;
+  }
+  uVar4 = 0;
+LAB_828f6524:
+  __restgprlr_29(uVar4);
+  return;
 }
 
 
@@ -619,8 +844,51 @@ void bdByteBuffer__writeBlob(void)
 int bdByteBuffer__read(int _FileHandle,void *_DstBuf,uint _MaxCharCount)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_FileHandle,_DstBuf,_MaxCharCount);
+  int iVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  undefined1 auStack_30 [48];
+  
+  uVar3 = (ulonglong)(int)_MaxCharCount;
+  lVar2 = (longlong)(int)_DstBuf;
+  iVar1 = __savegprlr_29(_FileHandle,lVar2);
+  uVar5 = 0;
+  uVar4 = ((ulonglong)*(uint *)(iVar1 + 0xc) + (ulonglong)*(uint *)(iVar1 + 8)) -
+          (ulonglong)*(uint *)(iVar1 + 0x10);
+  if ((uVar4 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220a528,0xffffffff8220a498,0xffffffff8220a538,0x170
+                 ,0xffffffff8220a54c);
+  }
+  else {
+    uVar5 = bdBytePacker__removeBuffer
+                      ((ulonglong)*(uint *)(iVar1 + 0x10),uVar4,0,auStack_30,lVar2,uVar3);
+    *(int *)(iVar1 + 0x10) = (int)uVar3 + *(int *)(iVar1 + 0x10);
+  }
+  iVar1 = __restgprlr_29(uVar5);
+  return iVar1;
+}
+
+
+// 828F5B20  bdByteBuffer::readBool  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:374)
+
+void bdByteBuffer__readBool(undefined8 param_1,char *param_2)
+
+{
+  char cVar2;
+  uint uVar1;
+  char local_20 [8];
+  
+  cVar2 = bdByteBuffer__readDataType(param_1,1);
+  if (cVar2 != '\0') {
+    local_20[0] = '\0';
+    uVar1 = bdByteBuffer__read((int)param_1,local_20,1);
+    if ((uVar1 & 0xff) != 0) {
+      *param_2 = '\x01' - (local_20[0] == '\0');
+    }
+  }
+  return;
 }
 
 
@@ -642,6 +910,37 @@ undefined8 bdByteBuffer__readUByte8(undefined8 param_1,undefined1 *param_2)
     if ((uVar1 & 0xff) != 0) {
       return 1;
     }
+  }
+  return 0;
+}
+
+
+// 828F5B98  bdByteBuffer::readInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:422)
+
+undefined8 bdByteBuffer__readInt16(undefined8 param_1,undefined8 param_2)
+
+{
+  char cVar1;
+  
+  cVar1 = bdByteBuffer__readDataType(param_1,5);
+  if ((cVar1 != '\0') && (cVar1 = bdByteBuffer__read<short>(param_1,param_2), cVar1 != '\0')) {
+    return 1;
+  }
+  return 0;
+}
+
+
+// 828F5C00  bdByteBuffer::readUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:430)
+
+undefined8 bdByteBuffer__readUInt16(undefined8 param_1,undefined8 param_2)
+
+{
+  char cVar1;
+  
+  cVar1 = bdByteBuffer__readDataType(param_1,6);
+  if ((cVar1 != '\0') &&
+     (cVar1 = bdByteBuffer__read<unsigned_short>(param_1,param_2), cVar1 != '\0')) {
+    return 1;
   }
   return 0;
 }
@@ -709,23 +1008,86 @@ undefined8 bdByteBuffer__readUInt64(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 828F5E70  bdByteBuffer::readString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:512)
+// 828F5E08  bdByteBuffer::readFloat32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:466)
 
-void bdByteBuffer__readString(void)
+undefined8 bdByteBuffer__readFloat32(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  
+  cVar1 = bdByteBuffer__readDataType(param_1,0xd);
+  if ((cVar1 != '\0') && (cVar1 = bdByteBuffer__read<float>(param_1,param_2), cVar1 != '\0')) {
+    return 1;
+  }
+  return 0;
+}
+
+
+// 828F5E70  bdByteBuffer::readString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:512)
+
+void bdByteBuffer__readString(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  char cVar3;
+  uint uVar2;
+  ulonglong uVar4;
+  char local_40 [64];
+  
+  uVar1 = __savegprlr_27();
+  cVar3 = bdByteBuffer__readDataType(uVar1,0x10);
+  if ((cVar3 != '\0') && ((param_2 & 0xffffffff) != 0)) {
+    uVar4 = 0;
+    do {
+      local_40[0] = '\0';
+      uVar2 = bdByteBuffer__read((int)uVar1,local_40,1);
+      if ((uVar4 & 0xffffffff) < (param_3 & 0xffffffff)) {
+        *(char *)((int)uVar4 + (int)param_2) = local_40[0];
+      }
+      if (((uVar2 & 0xff) != 0) && (local_40[0] != '\0')) {
+        uVar4 = uVar4 + 1;
+      }
+    } while (((uVar2 & 0xff) != 0) && (local_40[0] != '\0'));
+    if ((param_3 & 0xffffffff) != 0) {
+      *(undefined1 *)((int)param_2 + (int)param_3 + -1) = 0;
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 828F5F08  bdByteBuffer::readBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:553)
 
-void bdByteBuffer__readBlob(void)
+void bdByteBuffer__readBlob(undefined8 param_1,ulonglong param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  uint local_40 [16];
+  
+  uVar2 = __savegprlr_27();
+  uVar3 = bdByteBuffer__readDataType(uVar2,0x13);
+  if ((uVar3 & 0xff) != 0) {
+    local_40[0] = 0;
+    uVar3 = bdByteBuffer__readUInt32(uVar2,local_40);
+    uVar1 = local_40[0];
+    if (((uVar3 & 0xff) != 0) && ((param_2 & 0xffffffff) != 0)) {
+      uVar3 = *param_3;
+      if (local_40[0] <= *param_3) {
+        uVar3 = local_40[0];
+      }
+      uVar3 = bdByteBuffer__read((int)uVar2,(void *)param_2,uVar3);
+      if (*param_3 < uVar1) {
+        bdLogMessage(1,0xffffffff8220a424,0xffffffff8220a528,0xffffffff8220a498,0xffffffff8220a750,
+                     0x238,0xffffffff8220a768,uVar1);
+      }
+    }
+    *param_3 = uVar1;
+  }
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
@@ -765,11 +1127,34 @@ void bdByteBuffer__readAndAllocateBlob(undefined8 param_1,undefined4 *param_2,ui
 
 // 828F52D8  bdByteBuffer::readDataType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:659)
 
-void bdByteBuffer__readDataType(void)
+void bdByteBuffer__readDataType(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  int _FileHandle;
+  uint uVar2;
+  byte local_90 [16];
+  undefined1 auStack_80 [48];
+  undefined1 auStack_50 [80];
+  
+  _FileHandle = __savegprlr_29();
+  uVar2 = 1;
+  if (*(char *)(_FileHandle + 0x18) != '\0') {
+    local_90[0] = 0;
+    uVar2 = bdByteBuffer__read(_FileHandle,local_90,1);
+    bVar1 = local_90[0];
+    if ((uVar2 & 0xff) != 0) {
+      uVar2 = (uint)((uint)param_2 == (uint)local_90[0]);
+      if (uVar2 == 0) {
+        bdBitBuffer__typeToString(param_2,auStack_50,0x28);
+        bdBitBuffer__typeToString(bVar1,auStack_80,0x28);
+        bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220a528,0xffffffff8220a498,0xffffffff8220a5b0,
+                     0x2a5,0xffffffff8220a594,auStack_50);
+      }
+    }
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

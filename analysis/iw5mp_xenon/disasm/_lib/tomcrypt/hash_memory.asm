@@ -3,3 +3,75 @@
 ; 8225F5B8  hash_memory  (line unknown)
   8225F5B8  7D8802A6             mfspr r12,LR
   8225F5BC  486B70E9             bl 0x829166a4
+  8225F5C0  9421FF60             stwu r1,-0xa0(r1)
+  8225F5C4  7C992378             or r25,r4,r4
+  8225F5C8  7CB82B78             or r24,r5,r5
+  8225F5CC  7CD73378             or r23,r6,r6
+  8225F5D0  7CFA3B78             or r26,r7,r7
+  8225F5D4  2F030000             cmpwi cr6,r3,0x0
+  8225F5D8  41980024             blt cr6,0x8225f5fc
+  8225F5DC  2F030020             cmpwi cr6,r3,0x20
+  8225F5E0  4098001C             bge cr6,0x8225f5fc
+  8225F5E4  3D608489             lis r11,-0x7b77
+  8225F5E8  1FE30068             mulli r31,r3,0x68
+  8225F5EC  3BAB6148             addi r29,r11,0x6148
+  8225F5F0  7D7FE82E             lwzx r11,r31,r29
+  8225F5F4  2B0B0000             cmplwi cr6,r11,0x0
+  8225F5F8  409A0010             bne cr6,0x8225f608
+LAB_8225f5fc:
+  8225F5FC  3860000B             li r3,0xb
+  8225F600  382100A0             addi r1,r1,0xa0
+  8225F604  486B70F0             b 0x829166f4
+LAB_8225f608:
+  8225F608  3B7D0008             addi r27,r29,0x8
+  8225F60C  815A0000             lwz r10,0x0(r26)
+  8225F610  7D7FD82E             lwzx r11,r31,r27
+  8225F614  7F0A5840             cmplw cr6,r10,r11
+  8225F618  40980014             bge cr6,0x8225f62c
+  8225F61C  917A0000             stw r11,0x0(r26)
+  8225F620  38600006             li r3,0x6
+  8225F624  382100A0             addi r1,r1,0xa0
+  8225F628  486B70CC             b 0x829166f4
+LAB_8225f62c:
+  8225F62C  38600070             li r3,0x70
+  8225F630  483B4051             bl 0x82613680
+  8225F634  7C7C1B78             or r28,r3,r3
+  8225F638  2B030000             cmplwi cr6,r3,0x0
+  8225F63C  409A0010             bne cr6,0x8225f64c
+  8225F640  3860000D             li r3,0xd
+  8225F644  382100A0             addi r1,r1,0xa0
+  8225F648  486B70AC             b 0x829166f4
+LAB_8225f64c:
+  8225F64C  397D0054             addi r11,r29,0x54
+  8225F650  7F83E378             or r3,r28,r28
+  8225F654  7D5F582E             lwzx r10,r31,r11
+  8225F658  7D4903A6             mtspr CTR,r10
+  8225F65C  4E800421             bctrl
+  8225F660  7C7E1B78             or r30,r3,r3
+  8225F664  2F030000             cmpwi cr6,r3,0x0
+  8225F668  409A0050             bne cr6,0x8225f6b8
+  8225F66C  397D0058             addi r11,r29,0x58
+  8225F670  7F05C378             or r5,r24,r24
+  8225F674  7F24CB78             or r4,r25,r25
+  8225F678  7F83E378             or r3,r28,r28
+  8225F67C  7D5F582E             lwzx r10,r31,r11
+  8225F680  7D4903A6             mtspr CTR,r10
+  8225F684  4E800421             bctrl
+  8225F688  7C7E1B78             or r30,r3,r3
+  8225F68C  2F030000             cmpwi cr6,r3,0x0
+  8225F690  409A0028             bne cr6,0x8225f6b8
+  8225F694  397D005C             addi r11,r29,0x5c
+  8225F698  7EE4BB78             or r4,r23,r23
+  8225F69C  7F83E378             or r3,r28,r28
+  8225F6A0  7D5F582E             lwzx r10,r31,r11
+  8225F6A4  7D4903A6             mtspr CTR,r10
+  8225F6A8  4E800421             bctrl
+  8225F6AC  7D3FD82E             lwzx r9,r31,r27
+  8225F6B0  7C7E1B78             or r30,r3,r3
+  8225F6B4  913A0000             stw r9,0x0(r26)
+LAB_8225f6b8:
+  8225F6B8  7F83E378             or r3,r28,r28
+  8225F6BC  483B4285             bl 0x82613940
+  8225F6C0  7FC3F378             or r3,r30,r30
+  8225F6C4  382100A0             addi r1,r1,0xa0
+  8225F6C8  486B702C             b 0x829166f4

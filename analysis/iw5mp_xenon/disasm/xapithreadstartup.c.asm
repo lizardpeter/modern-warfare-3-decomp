@@ -3,3 +3,25 @@
 ; 828B5A50  XapiThreadStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapithreadstartup.c:38)
   828B5A50  7D8802A6             mfspr r12,LR
   828B5A54  48060C69             bl 0x829166bc
+  828B5A58  3BE1FF80             subi r31,r1,0x80
+  828B5A5C  9421FF80             stwu r1,-0x80(r1)
+  828B5A60  7C7E1B78             or r30,r3,r3
+  828B5A64  7C9D2378             or r29,r4,r4
+  828B5A68  7DAD6B78             or r13,r13,r13
+  828B5A6C  39600000             li r11,0x0
+  828B5A70  917F0050             stw r11,0x50(r31)
+  828B5A74  7D084378             or r8,r8,r8
+  828B5A78  7D084378             or r8,r8,r8
+  828B5A7C  38600001             li r3,0x1
+  828B5A80  4BFFF7D9             bl 0x828b5258
+  828B5A84  7FA3EB78             or r3,r29,r29
+  828B5A88  7FC903A6             mtspr CTR,r30
+  828B5A8C  4E800421             bctrl
+  828B5A90  907F0050             stw r3,0x50(r31)
+  828B5A94  38600000             li r3,0x0
+  828B5A98  4BFFF7C1             bl 0x828b5258
+  828B5A9C  7D084378             or r8,r8,r8
+  828B5AA0  7D084378             or r8,r8,r8
+  828B5AA4  7D084378             or r8,r8,r8
+  828B5AA8  807F0050             lwz r3,0x50(r31)
+  828B5AAC  4808C729             bl 0x829421d4

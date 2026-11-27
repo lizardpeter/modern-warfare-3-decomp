@@ -61,7 +61,39 @@ LAB_829259fc:
 long _lseek_nolock(int _FileHandle,long _Offset,int _Origin)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_FileHandle,_Offset,_Origin);
+  int iVar1;
+  uint _FileHandle_00;
+  HANDLE hFile;
+  int *piVar2;
+  DWORD DVar3;
+  ulong uVar4;
+  long lVar5;
+  
+  _FileHandle_00 = __savegprlr_29(_FileHandle);
+  hFile = (HANDLE)_get_osfhandle(_FileHandle_00);
+  if (hFile == (HANDLE)0xffffffff) {
+    piVar2 = _errno();
+    DVar3 = 0xffffffff;
+    *piVar2 = 9;
+  }
+  else {
+    DVar3 = SetFilePointer(hFile,_Offset,(PLONG)0x0,_Origin);
+    if (DVar3 == 0xffffffff) {
+      uVar4 = GetLastError();
+    }
+    else {
+      uVar4 = 0;
+    }
+    if (uVar4 == 0) {
+      iVar1 = (&DAT_84897dc0)[(int)_FileHandle_00 >> 5] + (_FileHandle_00 & 0x1f) * 0x48;
+      *(byte *)(iVar1 + 4) = *(byte *)(iVar1 + 4) & 0xfd;
+    }
+    else {
+      _dosmaperr(uVar4);
+      DVar3 = 0xffffffff;
+    }
+  }
+  lVar5 = __restgprlr_29(DVar3);
+  return lVar5;
 }
 

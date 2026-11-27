@@ -16,7 +16,6 @@ void Migration_Init(void)
 
 {
   if (DAT_83689bec != (undefined *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f010,0x23,0,0xffffffff82000f98,0xffffffff8208f050);
   }
   DAT_83689bf0 = 0x180000;

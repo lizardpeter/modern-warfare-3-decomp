@@ -161,11 +161,213 @@ LAB_82841a98:
 ; 82841AA0  vp8_yv12_extend_frame_borders_yonly  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:154)
   82841AA0  7D8802A6             mfspr r12,LR
   82841AA4  480D4C01             bl 0x829166a4
+  82841AA8  9421FF60             stwu r1,-0xa0(r1)
+  82841AAC  81630018             lwz r11,0x18(r3)
+  82841AB0  7C7A1B78             or r26,r3,r3
+  82841AB4  81430000             lwz r10,0x0(r3)
+  82841AB8  83C30028             lwz r30,0x28(r3)
+  82841ABC  7D4A5A14             add r10,r10,r11
+  82841AC0  82E30004             lwz r23,0x4(r3)
+  82841AC4  83E30008             lwz r31,0x8(r3)
+  82841AC8  7F9E5850             subf r28,r30,r11
+  82841ACC  394AFFFF             subi r10,r10,0x1
+  82841AD0  2F170000             cmpwi cr6,r23,0x0
+  82841AD4  3B6A0001             addi r27,r10,0x1
+  82841AD8  40990040             ble cr6,0x82841b18
+  82841ADC  7EFDBB78             or r29,r23,r23
+  82841AE0  7F1F5050             subf r24,r31,r10
+  82841AE4  7F3F5850             subf r25,r31,r11
+LAB_82841ae8:
+  82841AE8  7FC5F378             or r5,r30,r30
+  82841AEC  7C99F8EE             lbzux r4,r25,r31
+  82841AF0  7F83E378             or r3,r28,r28
+  82841AF4  4BFFCF3D             bl 0x8283ea30
+  82841AF8  7FC5F378             or r5,r30,r30
+  82841AFC  7F63DB78             or r3,r27,r27
+  82841B00  7C98F8EE             lbzux r4,r24,r31
+  82841B04  4BFFCF2D             bl 0x8283ea30
+  82841B08  37BDFFFF             subic. r29,r29,0x1
+  82841B0C  7F9CFA14             add r28,r28,r31
+  82841B10  7F7BFA14             add r27,r27,r31
+  82841B14  4082FFD4             bne 0x82841ae8
+LAB_82841b18:
+  82841B18  817A0018             lwz r11,0x18(r26)
+  82841B1C  3957FFFF             subi r10,r23,0x1
+  82841B20  7D3FF1D6             mullw r9,r31,r30
+  82841B24  7F9E5850             subf r28,r30,r11
+  82841B28  7D6AF9D6             mullw r11,r10,r31
+  82841B2C  7F6BE214             add r27,r11,r28
+  82841B30  7FA9E050             subf r29,r9,r28
+  82841B34  7D7BFA14             add r11,r27,r31
+  82841B38  2F1E0000             cmpwi cr6,r30,0x0
+  82841B3C  40990034             ble cr6,0x82841b70
+  82841B40  7F5D5850             subf r26,r29,r11
+LAB_82841b44:
+  82841B44  7FE5FB78             or r5,r31,r31
+  82841B48  7F84E378             or r4,r28,r28
+  82841B4C  7FA3EB78             or r3,r29,r29
+  82841B50  4BFFCED9             bl 0x8283ea28
+  82841B54  7FE5FB78             or r5,r31,r31
+  82841B58  7F64DB78             or r4,r27,r27
+  82841B5C  7C7AEA14             add r3,r26,r29
+  82841B60  4BFFCEC9             bl 0x8283ea28
+  82841B64  37DEFFFF             subic. r30,r30,0x1
+  82841B68  7FBDFA14             add r29,r29,r31
+  82841B6C  4082FFD8             bne 0x82841b44
+LAB_82841b70:
+  82841B70  382100A0             addi r1,r1,0xa0
+  82841B74  480D4B80             b 0x829166f4
 
 ; 82841B78  vp8_yv12_copy_frame  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:229)
   82841B78  7D8802A6             mfspr r12,LR
   82841B7C  480D4B39             bl 0x829166b4
+  82841B80  9421FF80             stwu r1,-0x80(r1)
+  82841B84  81630004             lwz r11,0x4(r3)
+  82841B88  7C7F1B78             or r31,r3,r3
+  82841B8C  83830018             lwz r28,0x18(r3)
+  82841B90  7C9E2378             or r30,r4,r4
+  82841B94  83640018             lwz r27,0x18(r4)
+  82841B98  3BA00000             li r29,0x0
+  82841B9C  2F0B0000             cmpwi cr6,r11,0x0
+  82841BA0  40990034             ble cr6,0x82841bd4
+LAB_82841ba4:
+  82841BA4  7F84E378             or r4,r28,r28
+  82841BA8  80BF0000             lwz r5,0x0(r31)
+  82841BAC  7F63DB78             or r3,r27,r27
+  82841BB0  4BFFCE79             bl 0x8283ea28
+  82841BB4  817E0008             lwz r11,0x8(r30)
+  82841BB8  815F0008             lwz r10,0x8(r31)
+  82841BBC  3BBD0001             addi r29,r29,0x1
+  82841BC0  7F7B5A14             add r27,r27,r11
+  82841BC4  7F9C5214             add r28,r28,r10
+  82841BC8  817F0004             lwz r11,0x4(r31)
+  82841BCC  7F1D5800             cmpw cr6,r29,r11
+  82841BD0  4198FFD4             blt cr6,0x82841ba4
+LAB_82841bd4:
+  82841BD4  817F0010             lwz r11,0x10(r31)
+  82841BD8  3BA00000             li r29,0x0
+  82841BDC  839F001C             lwz r28,0x1c(r31)
+  82841BE0  837E001C             lwz r27,0x1c(r30)
+  82841BE4  2F0B0000             cmpwi cr6,r11,0x0
+  82841BE8  40990034             ble cr6,0x82841c1c
+LAB_82841bec:
+  82841BEC  7F84E378             or r4,r28,r28
+  82841BF0  80BF000C             lwz r5,0xc(r31)
+  82841BF4  7F63DB78             or r3,r27,r27
+  82841BF8  4BFFCE31             bl 0x8283ea28
+  82841BFC  813F0014             lwz r9,0x14(r31)
+  82841C00  815E0014             lwz r10,0x14(r30)
+  82841C04  3BBD0001             addi r29,r29,0x1
+  82841C08  817F0010             lwz r11,0x10(r31)
+  82841C0C  7F89E214             add r28,r9,r28
+  82841C10  7F6ADA14             add r27,r10,r27
+  82841C14  7F1D5800             cmpw cr6,r29,r11
+  82841C18  4198FFD4             blt cr6,0x82841bec
+LAB_82841c1c:
+  82841C1C  839F0020             lwz r28,0x20(r31)
+  82841C20  3BA00000             li r29,0x0
+  82841C24  837E0020             lwz r27,0x20(r30)
+  82841C28  2F0B0000             cmpwi cr6,r11,0x0
+  82841C2C  40990034             ble cr6,0x82841c60
+LAB_82841c30:
+  82841C30  7F84E378             or r4,r28,r28
+  82841C34  80BF000C             lwz r5,0xc(r31)
+  82841C38  7F63DB78             or r3,r27,r27
+  82841C3C  4BFFCDED             bl 0x8283ea28
+  82841C40  817E0014             lwz r11,0x14(r30)
+  82841C44  815F0014             lwz r10,0x14(r31)
+  82841C48  3BBD0001             addi r29,r29,0x1
+  82841C4C  7F6BDA14             add r27,r11,r27
+  82841C50  7F8AE214             add r28,r10,r28
+  82841C54  817F0010             lwz r11,0x10(r31)
+  82841C58  7F1D5800             cmpw cr6,r29,r11
+  82841C5C  4198FFD4             blt cr6,0x82841c30
+LAB_82841c60:
+  82841C60  3D608489             lis r11,-0x7b77
+  82841C64  7FC3F378             or r3,r30,r30
+  82841C68  814B7348             lwz r10,0x7348(r11)
+  82841C6C  7D4903A6             mtspr CTR,r10
+  82841C70  4E800421             bctrl
+  82841C74  38210080             addi r1,r1,0x80
+  82841C78  480D4A8C             b 0x82916704
 
 ; 82841C80  vp8_yv12_copy_frame_yonly  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:268)
   82841C80  7D8802A6             mfspr r12,LR
   82841C84  480D4A21             bl 0x829166a4
+  82841C88  9421FF60             stwu r1,-0xa0(r1)
+  82841C8C  81630004             lwz r11,0x4(r3)
+  82841C90  7C7F1B78             or r31,r3,r3
+  82841C94  83A30018             lwz r29,0x18(r3)
+  82841C98  7C9C2378             or r28,r4,r4
+  82841C9C  83640018             lwz r27,0x18(r4)
+  82841CA0  3BC00000             li r30,0x0
+  82841CA4  2F0B0000             cmpwi cr6,r11,0x0
+  82841CA8  40990034             ble cr6,0x82841cdc
+LAB_82841cac:
+  82841CAC  7FA4EB78             or r4,r29,r29
+  82841CB0  80BF0000             lwz r5,0x0(r31)
+  82841CB4  7F63DB78             or r3,r27,r27
+  82841CB8  4BFFCD71             bl 0x8283ea28
+  82841CBC  817C0008             lwz r11,0x8(r28)
+  82841CC0  815F0008             lwz r10,0x8(r31)
+  82841CC4  3BDE0001             addi r30,r30,0x1
+  82841CC8  7F7B5A14             add r27,r27,r11
+  82841CCC  7FBD5214             add r29,r29,r10
+  82841CD0  817F0004             lwz r11,0x4(r31)
+  82841CD4  7F1E5800             cmpw cr6,r30,r11
+  82841CD8  4198FFD4             blt cr6,0x82841cac
+LAB_82841cdc:
+  82841CDC  817C0018             lwz r11,0x18(r28)
+  82841CE0  815C0000             lwz r10,0x0(r28)
+  82841CE4  83DC0028             lwz r30,0x28(r28)
+  82841CE8  7D4A5A14             add r10,r10,r11
+  82841CEC  82FC0004             lwz r23,0x4(r28)
+  82841CF0  83FC0008             lwz r31,0x8(r28)
+  82841CF4  7F7E5850             subf r27,r30,r11
+  82841CF8  394AFFFF             subi r10,r10,0x1
+  82841CFC  2F170000             cmpwi cr6,r23,0x0
+  82841D00  3B4A0001             addi r26,r10,0x1
+  82841D04  40990040             ble cr6,0x82841d44
+  82841D08  7EFDBB78             or r29,r23,r23
+  82841D0C  7F1F5050             subf r24,r31,r10
+  82841D10  7F3F5850             subf r25,r31,r11
+LAB_82841d14:
+  82841D14  7FC5F378             or r5,r30,r30
+  82841D18  7C99F8EE             lbzux r4,r25,r31
+  82841D1C  7F63DB78             or r3,r27,r27
+  82841D20  4BFFCD11             bl 0x8283ea30
+  82841D24  7FC5F378             or r5,r30,r30
+  82841D28  7F43D378             or r3,r26,r26
+  82841D2C  7C98F8EE             lbzux r4,r24,r31
+  82841D30  4BFFCD01             bl 0x8283ea30
+  82841D34  37BDFFFF             subic. r29,r29,0x1
+  82841D38  7F7BFA14             add r27,r27,r31
+  82841D3C  7F5AFA14             add r26,r26,r31
+  82841D40  4082FFD4             bne 0x82841d14
+LAB_82841d44:
+  82841D44  817C0018             lwz r11,0x18(r28)
+  82841D48  3957FFFF             subi r10,r23,0x1
+  82841D4C  7D3FF1D6             mullw r9,r31,r30
+  82841D50  7F9E5850             subf r28,r30,r11
+  82841D54  7D6AF9D6             mullw r11,r10,r31
+  82841D58  7F6BE214             add r27,r11,r28
+  82841D5C  7FA9E050             subf r29,r9,r28
+  82841D60  7D7BFA14             add r11,r27,r31
+  82841D64  2F1E0000             cmpwi cr6,r30,0x0
+  82841D68  40990034             ble cr6,0x82841d9c
+  82841D6C  7F5D5850             subf r26,r29,r11
+LAB_82841d70:
+  82841D70  7FE5FB78             or r5,r31,r31
+  82841D74  7F84E378             or r4,r28,r28
+  82841D78  7FA3EB78             or r3,r29,r29
+  82841D7C  4BFFCCAD             bl 0x8283ea28
+  82841D80  7FE5FB78             or r5,r31,r31
+  82841D84  7F64DB78             or r4,r27,r27
+  82841D88  7C7AEA14             add r3,r26,r29
+  82841D8C  4BFFCC9D             bl 0x8283ea28
+  82841D90  37DEFFFF             subic. r30,r30,0x1
+  82841D94  7FBDFA14             add r29,r29,r31
+  82841D98  4082FFD8             bne 0x82841d70
+LAB_82841d9c:
+  82841D9C  382100A0             addi r1,r1,0xa0
+  82841DA0  480D4954             b 0x829166f4

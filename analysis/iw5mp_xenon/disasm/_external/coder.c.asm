@@ -3,3 +3,38 @@
 ; 828C64B8  NellyQuantSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/coder.c:92)
   828C64B8  7D8802A6             mfspr r12,LR
   828C64BC  480501F9             bl 0x829166b4
+  828C64C0  9421FF80             stwu r1,-0x80(r1)
+  828C64C4  39650008             addi r11,r5,0x8
+  828C64C8  C065000C             lfs f3,0xc(r5)
+  828C64CC  C0450004             lfs f2,0x4(r5)
+  828C64D0  7C7E1B78             or r30,r3,r3
+  828C64D4  C0240038             lfs f1,0x38(r4)
+  828C64D8  7C9B2378             or r27,r4,r4
+  828C64DC  7CBF2B78             or r31,r5,r5
+  828C64E0  3BA50004             addi r29,r5,0x4
+  828C64E4  3B8B0004             addi r28,r11,0x4
+  828C64E8  48001A89             bl 0x828c7f70
+  828C64EC  907E0004             stw r3,0x4(r30)
+  828C64F0  7F86E378             or r6,r28,r28
+  828C64F4  7FA5EB78             or r5,r29,r29
+  828C64F8  C03B0038             lfs f1,0x38(r27)
+  828C64FC  48001AF5             bl 0x828c7ff0
+  828C6500  C03F0008             lfs f1,0x8(r31)
+  828C6504  4800197D             bl 0x828c7e80
+  828C6508  907E0008             stw r3,0x8(r30)
+  828C650C  48001A15             bl 0x828c7f20
+  828C6510  D03F0008             stfs f1,0x8(r31)
+  828C6514  C03F0010             lfs f1,0x10(r31)
+  828C6518  48001911             bl 0x828c7e28
+  828C651C  907E0000             stw r3,0x0(r30)
+  828C6520  38A0000C             li r5,0xc
+  828C6524  C03F000C             lfs f1,0xc(r31)
+  828C6528  389E000C             addi r4,r30,0xc
+  828C652C  387F0014             addi r3,r31,0x14
+  828C6530  48001689             bl 0x828c7bb8
+  828C6534  C01F000C             lfs f0,0xc(r31)
+  828C6538  D01B0038             stfs f0,0x38(r27)
+  828C653C  C01F0008             lfs f0,0x8(r31)
+  828C6540  D01B003C             stfs f0,0x3c(r27)
+  828C6544  38210080             addi r1,r1,0x80
+  828C6548  480501BC             b 0x82916704

@@ -7,7 +7,33 @@
 int _fcloseall(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  FILE *_File;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int local_40;
+  
   __savegprlr_26();
+  iVar3 = 0;
+  local_40 = 0;
+  _lock(1);
+  for (iVar4 = 3; iVar4 < DAT_84897ec4; iVar4 = iVar4 + 1) {
+    iVar1 = iVar4 * 4;
+    _File = *(FILE **)(iVar1 + DAT_84897ec0);
+    if (_File != (FILE *)0x0) {
+      if (((_File->_flag & 0x83U) != 0) && (iVar2 = fclose(_File), iVar2 != -1)) {
+        iVar3 = iVar3 + 1;
+        local_40 = iVar3;
+      }
+      if (0x13 < iVar4) {
+        free(*(void **)(iVar1 + DAT_84897ec0));
+        *(undefined4 *)(iVar1 + DAT_84897ec0) = 0;
+      }
+    }
+  }
+  FUN_82924c58();
+  iVar3 = __restgprlr_26(local_40);
+  return iVar3;
 }
 

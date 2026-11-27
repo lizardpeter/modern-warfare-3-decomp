@@ -73,12 +73,10 @@ void XAnimLoadAnimTree(undefined8 param_1,ulonglong param_2)
   
   piVar1 = (int *)__savegprlr_25();
   if (piVar1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874a8,0x33,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   if (*piVar1 != 0) {
     if (*(short *)(*piVar1 + 0x10) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821874a8,0x38,0,0xffffffff82000f98,0xffffffff82186358);
     }
     MemFile_ReadData(param_2,2,&local_50);
@@ -93,11 +91,9 @@ void XAnimLoadAnimTree(undefined8 param_1,ulonglong param_2)
       uVar3 = Scr_ReadString(param_2);
       puVar2[2] = uVar3;
       if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82187460,0xd5,0,0xffffffff82000f98,0xffffffff82001348);
       }
       if (*(int *)((int)param_2 + 0x20) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82187460,0xd6,0,0xffffffff82000f98,0xffffffff82001330);
       }
       (**(code **)((int)param_2 + 0x20))(param_2,0x20,puVar2 + 0x10);
@@ -121,34 +117,29 @@ void XAnimSaveAnimTree_r(undefined8 param_1,undefined8 param_2,undefined8 param_
   
   uVar2 = __savegprlr_25();
   if ((uVar2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874a8,0x49,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   iVar3 = GetAnimInfo(param_3);
-  if (iVar3 != 0) {
-    if (*(char *)(iVar3 + 0x14) == '\0') {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821874a8,0x4e,0,0xffffffff82000f98,0xffffffff82185e68);
-    }
-    local_50[0] = *(undefined2 *)(iVar3 + 0x10);
-    MemFile_WriteData(param_2,2,local_50);
-    XAnimSaveAnimInfo(iVar3,param_2);
-    sVar1 = *(short *)(iVar3 + 0xc);
-    while( true ) {
-      if (sVar1 == 0) {
-        __restgprlr_25();
-        return;
-      }
-      iVar3 = GetAnimInfo(sVar1);
-      if (iVar3 == 0) break;
-      XAnimSaveAnimTree_r(uVar2,param_2,sVar1);
-      sVar1 = *(short *)(iVar3 + 10);
-    }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821874a8,0x57,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821874a8,0x4c,0,0xffffffff82000f98,0xffffffff82021a7c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821874a8,0x4c,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if (*(char *)(iVar3 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff821874a8,0x4e,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  local_50[0] = *(undefined2 *)(iVar3 + 0x10);
+  MemFile_WriteData(param_2,2,local_50);
+  XAnimSaveAnimInfo(iVar3,param_2);
+  sVar1 = *(short *)(iVar3 + 0xc);
+  while (sVar1 != 0) {
+    iVar3 = GetAnimInfo(sVar1);
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff821874a8,0x57,0,0xffffffff82000f98,0xffffffff82021a7c);
+    }
+    XAnimSaveAnimTree_r(uVar2,param_2,sVar1);
+    sVar1 = *(short *)(iVar3 + 10);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -161,7 +152,6 @@ void XAnimSaveAnimTree(int *param_1,undefined8 param_2)
   undefined2 local_20 [4];
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874a8,0x61,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   iVar1 = *param_1;

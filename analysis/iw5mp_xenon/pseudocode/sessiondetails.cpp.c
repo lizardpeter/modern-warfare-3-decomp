@@ -20,10 +20,66 @@ void SetExtendedError(uint param_1,uint *param_2,uint *param_3,int param_4)
 
 // 828BADF0  XSessionGetDetails  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessiondetails.cpp:45)
 
-void XSessionGetDetails(void)
+void XSessionGetDetails(undefined8 param_1,uint *param_2,undefined4 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int local_60 [4];
+  int local_50;
+  uint *local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  
+  uVar1 = __savegprlr_27();
+  local_60[0] = 0;
+  uVar2 = XamGetSystemVersion();
+  if (uVar2 < 0x200ce900) {
+    uVar2 = 0x65b;
+    RtlSetLastError(0xffffffff8007065b);
+    if ((param_4 & 0xffffffff) == 0) goto LAB_828baf04;
+    uVar4 = 0x8007065b;
+  }
+  else {
+    if (0x7f < *param_2) {
+      uVar2 = XamSessionRefObjByHandle(uVar1,local_60);
+      if (uVar2 == 0) {
+        local_44 = 0;
+        local_40 = 0;
+        local_50 = local_60[0];
+        local_3c = 0;
+        local_4c = param_2;
+        local_48 = param_3;
+        iVar3 = XMsgStartIORequest(0xfb,0xb001d,param_4,&local_50,0x18);
+        if (iVar3 < 0) {
+          uVar2 = 0x65b;
+        }
+        else if ((param_4 & 0xffffffff) == 0) {
+          iVar3 = RtlGetLastError();
+          uVar2 = iVar3 >> 0x1f & 0x65b;
+        }
+        else {
+          uVar2 = 0x3e5;
+        }
+      }
+      goto LAB_828baf04;
+    }
+    *param_2 = 0x80;
+    uVar2 = 0x7a;
+    RtlSetLastError(0xffffffff8007007a);
+    if ((param_4 & 0xffffffff) == 0) goto LAB_828baf04;
+    uVar4 = 0x8007007a;
+  }
+  *(undefined4 *)((int)param_4 + 0x18) = uVar4;
+LAB_828baf04:
+  if (local_60[0] != 0) {
+    ObDereferenceObject();
+  }
+  __restgprlr_27(uVar2);
+  return;
 }
 

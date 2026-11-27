@@ -18,21 +18,53 @@ void vp8_update_mode_context(int param_1,int param_2,uint param_3,undefined4 par
 
 // 82821630  vp8_encode_intra4x4block  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:51)
 
-void vp8_encode_intra4x4block(void)
+void vp8_encode_intra4x4block
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  iVar1 = (int)param_4;
+  vp8_predict_intra4x4(param_4,param_5,*(undefined4 *)(iVar1 + 8));
+  (*(code *)piVar2[0x31])(param_3,param_4,0x10);
+  (**(code **)(param_2 + 0xbfc4))(*(undefined4 *)param_3,((undefined4 *)param_3)[1],0x20);
+  (**(code **)(param_2 + 0xbfd0))(param_3,param_4);
+  vp8_inverse_transform_b(*piVar2,param_4,0x20);
+  (**(code **)(*piVar2 + 0x20))
+            (*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0xc),
+             (ulonglong)**(uint **)(iVar1 + 0x24) + (ulonglong)*(uint *)(iVar1 + 0x28),
+             *(undefined4 *)(iVar1 + 0x2c));
+  __restgprlr_28();
+  return;
 }
 
 
 // 828216F8  vp8_encode_intra4x4block_rd  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:66)
 
-void vp8_encode_intra4x4block_rd(void)
+void vp8_encode_intra4x4block_rd
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  iVar1 = (int)param_4;
+  vp8_predict_intra4x4(param_4,param_5,*(undefined4 *)(iVar1 + 8));
+  (*(code *)piVar2[0x31])(param_3,param_4,0x10);
+  (**(code **)(param_2 + 0xbfc4))(*(undefined4 *)param_3,((undefined4 *)param_3)[1],0x20);
+  (**(code **)(param_2 + 0xbfd0))(param_3,param_4);
+  (**(code **)(*piVar2 + 4))(*(undefined4 *)(iVar1 + 4),*(undefined4 *)(iVar1 + 0xc),0x20);
+  (**(code **)(*piVar2 + 0x20))
+            (*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0xc),
+             (ulonglong)**(uint **)(iVar1 + 0x24) + (ulonglong)*(uint *)(iVar1 + 0x28),
+             *(undefined4 *)(iVar1 + 0x2c));
+  __restgprlr_28();
+  return;
 }
 
 
@@ -75,40 +107,146 @@ void vp8_encode_intra4x4mby(undefined8 param_1,longlong param_2)
 
 // 828218B0  vp8_encode_intra16x16mby  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:99)
 
-void vp8_encode_intra16x16mby(void)
+void vp8_encode_intra16x16mby(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  
+  piVar3 = (int *)__savegprlr_29();
+  lVar5 = param_2 + 0xb30;
+  (*DAT_848979f4)(lVar5);
+  iVar2 = (int)param_2;
+  (*(code *)piVar3[0x32])
+            (param_2,*(undefined4 *)(iVar2 + 0xb08),param_2 + 0xe50,*(undefined4 *)(iVar2 + 0xaf8));
+  vp8_transform_intra_mby(param_2);
+  vp8_quantize_mby(param_2);
+  vp8_inverse_transform_mby(*piVar3,lVar5);
+  (**(code **)(*piVar3 + 0x30))(*piVar3 + 0x14,lVar5);
+  param_2 = param_2 + 0x1660;
+  lVar5 = 0x10;
+  do {
+    uVar1 = **(uint **)(iVar2 + 0x1c70);
+    puVar4 = (undefined4 *)param_2;
+    if ((uVar1 < 4) && (uVar1 != 0)) {
+      if (uVar1 == 1) {
+        *puVar4 = 2;
+      }
+      else if (uVar1 == 2) {
+        *puVar4 = 3;
+      }
+      else {
+        *puVar4 = 1;
+      }
+    }
+    else {
+      *puVar4 = 0;
+    }
+    lVar5 = lVar5 + -1;
+    param_2 = param_2 + 0x3c;
+  } while (lVar5 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 828219A0  vp8_encode_intra16x16mbyrd  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:152)
 
-void vp8_encode_intra16x16mbyrd(void)
+void vp8_encode_intra16x16mbyrd(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  
+  piVar3 = (int *)__savegprlr_29();
+  lVar5 = param_2 + 0xb30;
+  (*DAT_848979f4)(lVar5);
+  iVar2 = (int)param_2;
+  (*(code *)piVar3[0x32])
+            (param_2,*(undefined4 *)(iVar2 + 0xb08),param_2 + 0xe50,*(undefined4 *)(iVar2 + 0xaf8));
+  vp8_transform_intra_mby(param_2);
+  vp8_quantize_mby(param_2);
+  vp8_inverse_transform_mby(*piVar3,lVar5);
+  (**(code **)(*piVar3 + 0x30))(*piVar3 + 0x14,lVar5);
+  param_2 = param_2 + 0x1660;
+  lVar5 = 0x10;
+  do {
+    uVar1 = **(uint **)(iVar2 + 0x1c70);
+    puVar4 = (undefined4 *)param_2;
+    if ((uVar1 < 4) && (uVar1 != 0)) {
+      if (uVar1 == 1) {
+        *puVar4 = 2;
+      }
+      else if (uVar1 == 2) {
+        *puVar4 = 3;
+      }
+      else {
+        *puVar4 = 1;
+      }
+    }
+    else {
+      *puVar4 = 0;
+    }
+    lVar5 = lVar5 + -1;
+    param_2 = param_2 + 0x3c;
+  } while (lVar5 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82821A90  vp8_encode_intra16x16mbuv  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:197)
 
-void vp8_encode_intra16x16mbuv(void)
+void vp8_encode_intra16x16mbuv(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint *puVar2;
+  longlong lVar3;
+  
+  puVar2 = (uint *)__savegprlr_29();
+  lVar3 = param_2 + 0xb30;
+  vp8_build_intra_predictors_mbuv(lVar3);
+  iVar1 = (int)param_2;
+  (*(code *)puVar2[0x33])
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
+             *(undefined4 *)(iVar1 + 0xb04));
+  vp8_transform_mbuv(param_2);
+  vp8_quantize_mbuv(param_2);
+  vp8_inverse_transform_mbuv(*puVar2,lVar3);
+  vp8_recon_intra_mbuv((ulonglong)*puVar2 + 0x14,lVar3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82821B08  vp8_encode_intra16x16mbuvrd  (WebM_atvi_opt/vpx/vp8/encoder/encodeintra.c:221)
 
-void vp8_encode_intra16x16mbuvrd(void)
+void vp8_encode_intra16x16mbuvrd(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint *puVar2;
+  longlong lVar3;
+  
+  puVar2 = (uint *)__savegprlr_29();
+  lVar3 = param_2 + 0xb30;
+  vp8_build_intra_predictors_mbuv(lVar3);
+  iVar1 = (int)param_2;
+  (*(code *)puVar2[0x33])
+            (param_2,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),param_2 + 0xe50,
+             *(undefined4 *)(iVar1 + 0xb04));
+  vp8_transform_mbuv(param_2);
+  vp8_quantize_mbuv(param_2);
+  vp8_inverse_transform_mbuv(*puVar2,lVar3);
+  vp8_recon_intra_mbuv((ulonglong)*puVar2 + 0x14,lVar3);
+  __restgprlr_29();
+  return;
 }
 

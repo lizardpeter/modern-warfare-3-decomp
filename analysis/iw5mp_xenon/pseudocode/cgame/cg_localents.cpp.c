@@ -16,8 +16,27 @@ void TRACK_cg_localents(void)
 void CG_InitLocalEntities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_29();
+  memset(&DAT_82a22e50 + iVar2 * 0x3200,0,0x3200);
+  iVar1 = iVar2 * 100;
+  iVar3 = 0;
+  *(undefined **)(&DAT_82a2f664 + iVar1) = &DAT_82a2f660 + iVar1;
+  *(undefined **)(&DAT_82a2f660 + iVar1) = &DAT_82a2f660 + iVar1;
+  *(undefined **)(&DAT_82a2f650 + iVar2 * 4) = &DAT_82a22e50 + iVar2 * 0x3200;
+  lVar4 = 0x7f;
+  do {
+    iVar1 = (iVar2 * 0x80 + iVar3) * 100;
+    iVar3 = iVar3 + 1;
+    *(undefined **)(&DAT_82a22e54 + iVar1) = &DAT_82a22eb4 + iVar1;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -47,6 +66,7 @@ void CG_AllocLocalEntity(void)
   int iVar2;
   ulonglong uVar3;
   int iVar4;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   
@@ -59,7 +79,6 @@ void CG_AllocLocalEntity(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if ((int)(uVar3 + 1) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018c10,0x46,0,0xffffffff82000f98,0xffffffff82018bd8);
   }
   iVar4 = iVar2 * 4;
@@ -83,8 +102,7 @@ void CG_AllocLocalEntity(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if ((int)(uVar3 - 1) != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82018c10,0x5a,0,0xffffffff82000f98,0xffffffff82018ba4);
+    MyAssertHandler(0xffffffff82018c10,0x5a,0,0xffffffff82000f98,0xffffffff82018ba4,in_MSR);
   }
   __restgprlr_24(_Dst);
   return;
@@ -93,11 +111,83 @@ void CG_AllocLocalEntity(void)
 
 // 822D5358  CG_AddMovingTracer  (cgame/cg_localents.cpp:96)
 
-void CG_AddMovingTracer(void)
+void CG_AddMovingTracer(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_68;
+  float local_64;
+  float local_60;
+  
   __savegprlr_28();
+  iVar2 = __savefpr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82018c10,0x6a,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018c10,0x6b,0,0xffffffff82000f98,0xffffffff82018d78);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 8) != 0) {
+    MyAssertHandler(0xffffffff82018c10,0x6c,0,0xffffffff82000f98,0xffffffff82018d58);
+  }
+  BG_EvaluateTrajectory(param_2 + 0xc,*(undefined4 *)(iVar2 + 0x6b98c),&local_78);
+  if ((((*(uint *)(iVar1 + 0x24) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar1 + 0x28) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar1 + 0x2c) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82018c10,0x6f,0,0xffffffff82000f98,0xffffffff82018cf8);
+  }
+  dVar5 = (double)*(float *)(iVar1 + 0x24);
+  dVar4 = (double)*(float *)(iVar1 + 0x2c);
+  dVar7 = 0.0;
+  dVar3 = (double)SQRT((float)(dVar4 * dVar4 +
+                              (double)(float)(dVar5 * dVar5 +
+                                             (double)(*(float *)(iVar1 + 0x28) *
+                                                     *(float *)(iVar1 + 0x28)))));
+  dVar9 = 1.0;
+  if (-dVar3 < 0.0) {
+    dVar9 = dVar3;
+  }
+  dVar3 = (double)(float)(1.0 / dVar9);
+  dVar6 = (double)(float)(dVar5 * dVar3);
+  dVar5 = (double)(float)((double)*(float *)(iVar1 + 0x28) * dVar3);
+  dVar3 = (double)(float)(dVar4 * dVar3);
+  dVar8 = (double)(float)((double)(local_70 - *(float *)(iVar1 + 0x20)) * dVar3 +
+                         (double)(float)((double)(local_74 - *(float *)(iVar1 + 0x1c)) * dVar5 +
+                                        (double)(float)((double)(local_78 - *(float *)(iVar1 + 0x18)
+                                                                ) * dVar6)));
+  if (dVar8 < 0.0) {
+    MyAssertHandler(dVar8,dVar9,dVar4,0xffffffff82018c10,0x74,1,0xffffffff82018cbc,
+                    0xffffffff82018cd8,dVar8);
+  }
+  dVar9 = (double)(float)((double)*(float *)(iVar1 + 0x38) - dVar8);
+  if (dVar9 <= dVar7) {
+    MyAssertHandler(dVar9,0xffffffff82018c10,0x76,1,0xffffffff82018c88,0xffffffff82018ca4,dVar9);
+  }
+  if ((float)((double)*(float *)(iVar1 + 0x3c) - dVar9) < 0.0) {
+    dVar9 = (double)*(float *)(iVar1 + 0x3c);
+  }
+  if (dVar9 <= dVar7) {
+    MyAssertHandler(dVar9,0xffffffff82018c10,0x78,1,0xffffffff82018c54,0xffffffff82018c70,dVar9);
+  }
+  local_68 = (float)(dVar6 * dVar9 + (double)local_78);
+  local_64 = (float)(dVar5 * dVar9 + (double)local_74);
+  local_60 = (float)(dVar3 * dVar9 + (double)local_70);
+  Tracer_Draw(&local_78,&local_68,param_2 + 0x34,*(char *)(iVar2 + 0x108038) != '\0');
+  __restfpr_27();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -119,7 +209,72 @@ ulonglong CG_ShouldFreeLocalEntity(int param_1,ulonglong param_2)
 void CG_AddLocalEntityTracerBeams(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  int *piVar1;
+  uint uVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar4 = __savegprlr_17();
+  Profile_Begin(0x11);
+  do {
+    uVar6 = (ulonglong)DAT_82a22e48;
+    if (in_RESERVE != '\0') {
+      DAT_82a22e48 = storeWordConditionalIndexed(uVar6 + 1,0,0xffffffff82a22e48);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)(uVar6 + 1) != 1) {
+    MyAssertHandler(0xffffffff82018c10,0xa8,0,0xffffffff82000f98,0xffffffff82018bd8);
+  }
+  iVar5 = CG_GetLocalClientGlobals(iVar4);
+  uVar2 = *(uint *)(iVar5 + 0x6b98c);
+  piVar3 = *(int **)(&DAT_82a2f660 + iVar4 * 100);
+  while (piVar3 != (int *)(&DAT_82a2f660 + iVar4 * 100)) {
+    piVar1 = (int *)*piVar3;
+    if (piVar3[2] != 0) {
+      MyAssertHandler(0xffffffff82018c10,0xb3,0,0xffffffff82018da0,0xffffffff82018d7c);
+    }
+    if (piVar3[3] != 2) {
+      MyAssertHandler(0xffffffff82018c10,0xb4,0,0xffffffff82018dd8,0xffffffff82018db8);
+    }
+    if ((int)uVar2 < piVar3[0xc]) {
+      uVar6 = ((~(ulonglong)(piVar3[4] ^ uVar2) & 0xffffffff) >> 0x1f) +
+              (ulonglong)((uint)piVar3[4] <= uVar2) & 1;
+    }
+    else {
+      uVar6 = 1;
+    }
+    if (uVar6 == 0) {
+      CG_AddMovingTracer(iVar5,piVar3);
+      piVar3 = piVar1;
+    }
+    else {
+      if (*piVar3 == 0) {
+        Com_Error(1,0xffffffff82018b84);
+      }
+      *(int *)(*piVar3 + 4) = piVar3[1];
+      *(int *)piVar3[1] = *piVar3;
+      piVar3[1] = *(int *)(&DAT_82a2f650 + iVar4 * 4);
+      *(int **)(&DAT_82a2f650 + iVar4 * 4) = piVar3;
+      piVar3 = piVar1;
+    }
+  }
+  do {
+    uVar6 = (ulonglong)DAT_82a22e48;
+    if (in_RESERVE != '\0') {
+      DAT_82a22e48 = storeWordConditionalIndexed(uVar6 - 1,0,0xffffffff82a22e48);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)(uVar6 - 1) != 0) {
+    MyAssertHandler(0xffffffff82018c10,0xbe,0,0xffffffff82000f98,0xffffffff82018ba4);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_17();
+  return;
 }
 

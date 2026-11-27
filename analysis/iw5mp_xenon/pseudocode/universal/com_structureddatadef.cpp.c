@@ -26,7 +26,6 @@ void StructuredData_GetDataVersion(int param_1)
   undefined4 local_20 [4];
   
   if (*(uint *)(param_1 + 4) < 8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x3a,0,0xffffffff821772b0,*(uint *)(param_1 + 4),8);
   }
   local_20[0] = 0;
@@ -43,7 +42,6 @@ void StructuredData_GetDataFormatChecksum(int param_1)
   undefined4 local_20 [4];
   
   if (*(uint *)(param_1 + 4) < 8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x44,0,0xffffffff821772b0,*(uint *)(param_1 + 4),8);
   }
   local_20[0] = 0;
@@ -58,7 +56,6 @@ void StructuredData_SetDataVersion(undefined4 *param_1,int *param_2)
 
 {
   if ((uint)param_2[1] < 8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x4c,0,0xffffffff821772b0,param_2[1],8);
   }
   *(char *)*param_2 = (char)*param_1;
@@ -75,51 +72,298 @@ void StructuredData_SetDataVersion(undefined4 *param_1,int *param_2)
 
 // 825E7C88  StructuredData_InitializeLookup  (universal/com_structureddatadef.cpp:93)
 
-void StructuredData_InitializeLookup(void)
+void StructuredData_InitializeLookup(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x5e,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x5f,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  piVar2 = (int *)param_2;
+  *piVar2 = iVar1;
+  piVar2[2] = 0;
+  piVar2[1] = iVar1 + 0x28;
+  piVar2[3] = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E7D18  StructuredData_LookupWithInt  (universal/com_structureddatadef.cpp:105)
 
-void StructuredData_LookupWithInt(void)
+void StructuredData_LookupWithInt(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x6c,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (piVar2[3] != 0) {
+    MyAssertHandler(0xffffffff82177260,0x6d,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (piVar2[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6e,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  switch(*(undefined4 *)piVar2[1]) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 8:
+  case 9:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x79,0,0xffffffff8217734c);
+    }
+  case 5:
+  case 7:
+    piVar2[3] = 1;
+    __restgprlr_28();
+    return;
+  case 6:
+    break;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x93,0,0xffffffff821772dc);
+    }
+    __restgprlr_28();
+    return;
+  }
+  if (*(uint *)(*piVar2 + 0x18) <= (uint)((undefined4 *)piVar2[1])[1]) {
+    MyAssertHandler(0xffffffff82177260,0x80,0,0xffffffff821772e8);
+  }
+  piVar3 = (int *)(*(int *)(piVar2[1] + 4) * 0x10 + *(int *)(*piVar2 + 0x1c));
+  if ((-1 < param_2) && (param_2 < *piVar3)) {
+    if (piVar3[1] != 2) {
+      iVar1 = piVar3[3];
+      piVar2[1] = (int)(piVar3 + 1);
+      piVar2[2] = iVar1 * param_2 + piVar2[2];
+      __restgprlr_28();
+      return;
+    }
+    iVar1 = piVar3[3];
+    piVar2[1] = (int)(piVar3 + 1);
+    piVar2[2] = iVar1 * param_2 + piVar2[2] * 8;
+    __restgprlr_28();
+    return;
+  }
+  piVar2[3] = 2;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E7F28  LookupStructProperty  (universal/com_structureddatadef.cpp:153)
 
-void LookupStructProperty(void)
+void LookupStructProperty(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  byte bVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  byte *pbVar11;
+  ulonglong uVar12;
+  int *piVar13;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x9f,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (piVar3[3] != 0) {
+    MyAssertHandler(0xffffffff82177260,0xa0,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (piVar3[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0xa1,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  if (*(int *)piVar3[1] != 5) {
+    MyAssertHandler(0xffffffff82177260,0xa2,0,0xffffffff82000f98,0xffffffff82177440);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0xa3,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  if (*(uint *)(*piVar3 + 0x10) <= *(uint *)(piVar3[1] + 4)) {
+    MyAssertHandler(0xffffffff82177260,0xa5,0,0xffffffff821773e8);
+  }
+  iVar4 = *(int *)(piVar3[1] + 4) * 0x10;
+  piVar13 = (int *)(iVar4 + *(int *)(*piVar3 + 0x14));
+  iVar4 = *(int *)(iVar4 + *(int *)(*piVar3 + 0x14));
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff82177260,0xa8,0,0xffffffff821773bc,iVar4,0);
+  }
+  iVar4 = 0;
+  if (0 < *piVar13) {
+    iVar5 = *piVar13;
+    do {
+      uVar10 = iVar5 + iVar4;
+      iVar9 = ((int)uVar10 >> 1) + (uint)((int)uVar10 < 0 && (uVar10 & 1) != 0);
+      iVar7 = iVar9 * 0x14;
+      iVar6 = piVar13[1] + iVar7;
+      pbVar11 = *(byte **)(piVar13[1] + iVar7);
+      uVar12 = param_2;
+      do {
+        bVar1 = *(byte *)uVar12;
+        bVar2 = *pbVar11;
+        iVar8 = (uint)bVar1 - (uint)bVar2;
+        if (bVar1 == 0) break;
+        uVar12 = uVar12 + 1;
+        pbVar11 = pbVar11 + 1;
+      } while ((uint)bVar1 == (uint)bVar2);
+      if (-1 < iVar8) {
+        if (iVar8 < 1) {
+          piVar3[1] = iVar6 + 4;
+          if (*(int *)(iVar6 + 4) != 2) {
+            iVar4 = StructuredData_ByteOffset(piVar13[1] + iVar7);
+            piVar3[2] = iVar4 + piVar3[2];
+            __restgprlr_28();
+            return;
+          }
+          piVar3[2] = *(int *)(piVar13[1] + iVar7 + 0xc) + piVar3[2] * 8;
+          __restgprlr_28();
+          return;
+        }
+        iVar4 = iVar9 + 1;
+        iVar9 = iVar5;
+      }
+      iVar5 = iVar9;
+    } while (iVar4 < iVar9);
+  }
+  piVar3[3] = 3;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E8160  LookupStructPropertyByIndex  (universal/com_structureddatadef.cpp:202)
 
-void LookupStructPropertyByIndex(void)
+void LookupStructPropertyByIndex(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  longlong lVar4;
+  int *piVar5;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0xcd,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (piVar2[3] != 0) {
+    MyAssertHandler(0xffffffff82177260,0xce,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (piVar2[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0xcf,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  if (*(int *)piVar2[1] != 5) {
+    MyAssertHandler(0xffffffff82177260,0xd0,0,0xffffffff82000f98,0xffffffff82177440);
+  }
+  if (*(uint *)(*piVar2 + 0x10) <= *(uint *)(piVar2[1] + 4)) {
+    MyAssertHandler(0xffffffff82177260,0xd2,0,0xffffffff821773e8);
+  }
+  iVar3 = *(int *)(piVar2[1] + 4) * 0x10;
+  piVar5 = (int *)(iVar3 + *(int *)(*piVar2 + 0x14));
+  iVar3 = *(int *)(iVar3 + *(int *)(*piVar2 + 0x14));
+  if (iVar3 < 0) {
+    MyAssertHandler(0xffffffff82177260,0xd5,0,0xffffffff821773bc,iVar3,0);
+  }
+  if ((-1 < (int)param_2) && ((int)param_2 < *piVar5)) {
+    lVar4 = (param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4;
+    iVar1 = (int)lVar4;
+    iVar3 = piVar5[1] + iVar1;
+    piVar2[1] = iVar3 + 4;
+    if (*(int *)(iVar3 + 4) == 2) {
+      piVar2[2] = *(int *)(piVar5[1] + iVar1 + 0xc) + piVar2[2] * 8;
+      __restgprlr_28();
+      return;
+    }
+    iVar3 = StructuredData_ByteOffset((ulonglong)(uint)piVar5[1] + lVar4);
+    piVar2[2] = iVar3 + piVar2[2];
+    __restgprlr_28();
+    return;
+  }
+  piVar2[3] = 3;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E8320  LookupEnumEntryFromString  (universal/com_structureddatadef.cpp:230)
 
-void LookupEnumEntryFromString(void)
+void LookupEnumEntryFromString(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  byte bVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  byte *pbVar9;
+  ulonglong uVar10;
+  
+  piVar3 = (int *)__savegprlr_27();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0xeb,0,0xffffffff82000f98,0xffffffff82177488);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0xec,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0xed,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  if (*piVar3 < 0) {
+    MyAssertHandler(0xffffffff82177260,0xef,0,0xffffffff82177464,*piVar3,0);
+  }
+  iVar4 = 0;
+  if (0 < *piVar3) {
+    iVar5 = *piVar3;
+    do {
+      uVar8 = iVar5 + iVar4;
+      iVar6 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+      pbVar9 = *(byte **)(iVar6 * 8 + piVar3[2]);
+      uVar10 = param_2;
+      do {
+        bVar1 = *(byte *)uVar10;
+        bVar2 = *pbVar9;
+        iVar7 = (uint)bVar1 - (uint)bVar2;
+        if (bVar1 == 0) break;
+        uVar10 = uVar10 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while ((uint)bVar1 == (uint)bVar2);
+      if (-1 < iVar7) {
+        if (iVar7 < 1) {
+          *(int *)param_3 = iVar6;
+          __restgprlr_27(1);
+          return;
+        }
+        iVar4 = iVar6 + 1;
+        iVar6 = iVar5;
+      }
+      iVar5 = iVar6;
+    } while (iVar4 < iVar6);
+  }
+  *(int *)param_3 = 0;
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -151,41 +395,223 @@ longlong LookupEnumEntryFromIndex(int *param_1,uint param_2)
 
 // 825E84C0  LookupEnumArray  (universal/com_structureddatadef.cpp:287)
 
-void LookupEnumArray(void)
+void LookupEnumArray(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ushort uVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  char cVar5;
+  uint *puVar6;
+  int *piVar7;
+  uint local_40 [16];
+  
+  piVar4 = (int *)__savegprlr_27();
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x125,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (piVar4[3] != 0) {
+    MyAssertHandler(0xffffffff82177260,0x126,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (piVar4[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0x127,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  if (*(int *)piVar4[1] != 7) {
+    MyAssertHandler(0xffffffff82177260,0x128,0,0xffffffff82000f98,0xffffffff82177590);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x129,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  if (*(uint *)(*piVar4 + 0x20) <= *(uint *)(piVar4[1] + 4)) {
+    MyAssertHandler(0xffffffff82177260,299,0,0xffffffff82177530);
+  }
+  iVar2 = *(int *)(*piVar4 + 0x24);
+  iVar3 = *(int *)(piVar4[1] + 4) * 0x10;
+  piVar7 = (int *)(iVar3 + iVar2);
+  if (*(uint *)(*piVar4 + 8) <= *(uint *)(iVar3 + iVar2)) {
+    MyAssertHandler(0xffffffff82177260,0x12e,0,0xffffffff821774d8);
+  }
+  puVar6 = (uint *)(*piVar7 * 0xc + *(int *)(*piVar4 + 0xc));
+  cVar5 = LookupEnumEntryFromString(puVar6,param_2,local_40);
+  if (cVar5 == '\0') {
+    piVar4[3] = 4;
+    __restgprlr_27();
+    return;
+  }
+  if (*puVar6 <= local_40[0]) {
+    MyAssertHandler(0xffffffff82177260,0x137,0,0xffffffff82177490,local_40[0]);
+  }
+  uVar1 = *(ushort *)(local_40[0] * 8 + puVar6[2] + 4);
+  if (piVar7[1] == 2) {
+    iVar2 = piVar7[3];
+    piVar4[1] = (int)(piVar7 + 1);
+    piVar4[2] = iVar2 * (uint)uVar1 + piVar4[2] * 8;
+    __restgprlr_27();
+    return;
+  }
+  iVar2 = piVar7[3];
+  piVar4[1] = (int)(piVar7 + 1);
+  piVar4[2] = iVar2 * (uint)uVar1 + piVar4[2];
+  __restgprlr_27();
+  return;
 }
 
 
 // 825E86F8  LookupEnumArrayByIndex  (universal/com_structureddatadef.cpp:323)
 
-void LookupEnumArrayByIndex(void)
+void LookupEnumArrayByIndex(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int *piVar4;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x147,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (piVar3[3] != 0) {
+    MyAssertHandler(0xffffffff82177260,0x148,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (piVar3[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0x149,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  if (*(int *)piVar3[1] != 7) {
+    MyAssertHandler(0xffffffff82177260,0x14a,0,0xffffffff82000f98,0xffffffff82177590);
+  }
+  if (*(uint *)(*piVar3 + 0x20) <= *(uint *)(piVar3[1] + 4)) {
+    MyAssertHandler(0xffffffff82177260,0x14c,0,0xffffffff82177530);
+  }
+  iVar1 = *(int *)(*piVar3 + 0x24);
+  iVar2 = *(int *)(piVar3[1] + 4) * 0x10;
+  piVar4 = (int *)(iVar2 + iVar1);
+  if (*(uint *)(*piVar3 + 8) <= *(uint *)(iVar2 + iVar1)) {
+    MyAssertHandler(0xffffffff82177260,0x14f,0,0xffffffff821774d8);
+  }
+  if (-1 < param_2) {
+    if (param_2 < *(int *)(*piVar4 * 0xc + *(int *)(*piVar3 + 0xc))) {
+      iVar1 = piVar4[3];
+      if (piVar4[1] == 2) {
+        piVar3[1] = (int)(piVar4 + 1);
+        piVar3[2] = iVar1 * param_2 + piVar3[2] * 8;
+        __restgprlr_28();
+        return;
+      }
+      piVar3[1] = (int)(piVar4 + 1);
+      piVar3[2] = iVar1 * param_2 + piVar3[2];
+      __restgprlr_28();
+      return;
+    }
+  }
+  piVar3[3] = 2;
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E88B8  StructuredData_LookupWithString  (universal/com_structureddatadef.cpp:353)
 
-void StructuredData_LookupWithString(void)
+void StructuredData_LookupWithString(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x162,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    MyAssertHandler(0xffffffff82177260,0x163,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (*(int *)(iVar1 + 4) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x164,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  switch(**(undefined4 **)(iVar1 + 4)) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 8:
+  case 9:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x16f,0,0xffffffff821775b8);
+    }
+switchD_825e8974_caseD_5:
+    LookupStructProperty(iVar1,param_2);
+    __restgprlr_28();
+    return;
+  case 5:
+    goto switchD_825e8974_caseD_5;
+  case 6:
+    *(undefined4 *)(iVar1 + 0xc) = 1;
+    __restgprlr_28();
+    return;
+  case 7:
+    LookupEnumArray(iVar1,param_2);
+    __restgprlr_28();
+    return;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x17d,0,0xffffffff821772dc);
+    }
+    __restgprlr_28();
+    return;
+  }
 }
 
 
 // 825E8A30  StructuredData_LookupWithIntStringType  (universal/com_structureddatadef.cpp:387)
 
-void StructuredData_LookupWithIntStringType(void)
+void StructuredData_LookupWithIntStringType(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x184,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    MyAssertHandler(0xffffffff82177260,0x185,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (*(int *)(iVar1 + 4) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x186,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  switch(**(undefined4 **)(iVar1 + 4)) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 8:
+  case 9:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x191,0,0xffffffff821775b8);
+    }
+switchD_825e8aec_caseD_5:
+    LookupStructPropertyByIndex(iVar1,param_2);
+    __restgprlr_28();
+    return;
+  case 5:
+    goto switchD_825e8aec_caseD_5;
+  case 6:
+    *(undefined4 *)(iVar1 + 0xc) = 1;
+    __restgprlr_28();
+    return;
+  case 7:
+    LookupEnumArrayByIndex(iVar1,param_2);
+    __restgprlr_28();
+    return;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x1a1,0,0xffffffff821772dc);
+    }
+    __restgprlr_28();
+    return;
+  }
 }
 
 
@@ -194,8 +620,41 @@ void StructuredData_LookupWithIntStringType(void)
 void StructuredData_GetLookupState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x1a8,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (*(int *)(iVar1 + 0xc) == 0) {
+    if (*(int *)(iVar1 + 4) == 0) {
+      MyAssertHandler(0xffffffff82177260,0x1ac,0,0xffffffff82000f98,0xffffffff82177388);
+    }
+    switch(**(undefined4 **)(iVar1 + 4)) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 8:
+    case 9:
+      goto switchD_825e8c50_caseD_0;
+    case 5:
+    case 6:
+    case 7:
+      __restgprlr_29(0);
+      return;
+    default:
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff82177260,0x1c0,0,0xffffffff821772dc);
+      }
+switchD_825e8c50_caseD_0:
+      __restgprlr_29(1);
+      return;
+    }
+  }
+  __restgprlr_29(2);
+  return;
 }
 
 
@@ -205,7 +664,6 @@ undefined4 StructuredData_GetLookupError(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x1c7,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
   return *(undefined4 *)(param_1 + 0xc);
@@ -217,8 +675,41 @@ undefined4 StructuredData_GetLookupError(int param_1)
 void StructuredData_GetLookupExpectedType(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x1cc,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    MyAssertHandler(0xffffffff82177260,0x1cd,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (*(int *)(iVar1 + 4) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x1ce,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  switch(**(undefined4 **)(iVar1 + 4)) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 8:
+  case 9:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x1d9,0,0xffffffff821775f8);
+    }
+  case 5:
+  case 7:
+    __restgprlr_29(1);
+    return;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x1e3,0,0xffffffff821772dc);
+    }
+  case 6:
+    __restgprlr_29(0);
+    return;
+  }
 }
 
 
@@ -227,58 +718,278 @@ void StructuredData_GetLookupExpectedType(void)
 void StructuredData_GetLookupResultType(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x1e9,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if (*(int *)(iVar1 + 0xc) != 0) {
+    MyAssertHandler(0xffffffff82177260,0x1ea,0,0xffffffff82000f98,0xffffffff82177398);
+  }
+  if (*(int *)(iVar1 + 4) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x1eb,0,0xffffffff82000f98,0xffffffff82177388);
+  }
+  switch(**(undefined4 **)(iVar1 + 4)) {
+  case 2:
+    __restgprlr_29(1);
+    return;
+  case 3:
+  case 4:
+    __restgprlr_29(2);
+    return;
+  case 5:
+  case 6:
+  case 7:
+    if (DAT_84013128 != 0) goto switchD_825e8f24_caseD_0;
+    MyAssertHandler(0xffffffff82177260,0x203,0,0xffffffff82177658);
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x206,0,0xffffffff8217763c);
+    }
+  case 0:
+  case 1:
+switchD_825e8f24_caseD_0:
+    __restgprlr_29(0);
+    return;
+  case 8:
+    __restgprlr_29(3);
+    return;
+  case 9:
+    __restgprlr_29(4);
+    return;
+  }
+}
+
+
+// 825E8FD8  LookupStructuredDataByValist  (universal/com_structureddatadef.cpp:525)
+
+void LookupStructuredDataByValist(undefined8 param_1,longlong param_2)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_27();
+  do {
+    iVar3 = StructuredData_GetLookupState(uVar2);
+    if (iVar3 == 2) {
+      MyAssertHandler(0xffffffff82177260,0x211,0,0xffffffff82000f98,0xffffffff821776a0);
+    }
+    else if (iVar3 == 1) {
+      __restgprlr_27();
+      return;
+    }
+    uVar1 = param_2 + 7U & 0xfffffff8;
+    param_2 = uVar1 + 8;
+    StructuredData_LookupWithString(uVar2,*(undefined4 *)((int)uVar1 + 4));
+  } while( true );
 }
 
 
 // 825EC570  StructuredData_VardicGetLookupByVaList  (universal/com_structureddatadef.cpp:539)
 
-void StructuredData_VardicGetLookupByVaList(void)
+void StructuredData_VardicGetLookupByVaList
+               (undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  float fVar4;
+  undefined1 uVar6;
+  undefined2 uVar5;
+  double dVar7;
+  undefined1 auStack_30 [48];
+  
+  uVar2 = __savegprlr_29();
+  StructuredData_InitializeLookup(uVar2,auStack_30);
+  LookupStructuredDataByValist(auStack_30,param_4);
+  uVar3 = StructuredData_GetLookupResultType(auStack_30);
+  if (4 < (uVar3 & 0xffffffff)) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x234,0,0xffffffff821785a0);
+    }
+    __restgprlr_29();
+    return;
+  }
+  bVar1 = (int)uVar3 != 0;
+  if (uVar3 == 1 && bVar1) {
+    uVar6 = StructuredData_GetBool(auStack_30,param_2);
+    *(undefined1 *)param_3 = uVar6;
+    __restgprlr_29();
+    return;
+  }
+  if (uVar3 == 2 && bVar1) {
+    fVar4 = (float)StructuredData_GetString(auStack_30,param_2);
+    *param_3 = fVar4;
+    __restgprlr_29();
+    return;
+  }
+  if (uVar3 != 3 || !bVar1) {
+    if (!bVar1) {
+      fVar4 = (float)StructuredData_GetInt(auStack_30,param_2);
+      *param_3 = fVar4;
+      __restgprlr_29();
+      return;
+    }
+    uVar5 = StructuredData_GetShort(auStack_30,param_2);
+    *(undefined2 *)param_3 = uVar5;
+    __restgprlr_29();
+    return;
+  }
+  dVar7 = (double)StructuredData_GetFloat(auStack_30,param_2);
+  *param_3 = (float)dVar7;
+  __restgprlr_29();
+  return;
 }
 
 
 // 825EC670  StructuredData_VardicSetLookupByVaList  (universal/com_structureddatadef.cpp:571)
 
-void StructuredData_VardicSetLookupByVaList(void)
+void StructuredData_VardicSetLookupByVaList
+               (undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  undefined1 auStack_30 [48];
+  
+  uVar2 = __savegprlr_29();
+  StructuredData_InitializeLookup(uVar2,auStack_30);
+  LookupStructuredDataByValist(auStack_30,param_4);
+  uVar3 = StructuredData_GetLookupResultType(auStack_30);
+  if (4 < (uVar3 & 0xffffffff)) {
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x254,0,0xffffffff821785c0);
+    }
+    __restgprlr_29(0);
+    return;
+  }
+  bVar1 = (int)uVar3 != 0;
+  if (uVar3 == 1 && bVar1) {
+    StructuredData_SetBool_FlagModified(auStack_30,param_2,0,*(undefined1 *)param_3);
+    __restgprlr_29(1);
+    return;
+  }
+  if (uVar3 == 2 && bVar1) {
+    StructuredData_SetString_FlagModified(auStack_30,param_2,0,*param_3);
+    __restgprlr_29(1);
+    return;
+  }
+  if (uVar3 != 3 || !bVar1) {
+    if (!bVar1) {
+      StructuredData_SetInt_FlagModified(auStack_30,param_2,0,*param_3);
+      __restgprlr_29(1);
+      return;
+    }
+    StructuredData_SetShort_FlagModified(auStack_30,param_2,0,*(undefined2 *)param_3);
+    __restgprlr_29(1);
+    return;
+  }
+  StructuredData_SetFloat_FlagModified((double)*param_3,auStack_30,param_2,0);
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 825E9060  StructuredData_GetMaxStringSize  (universal/com_structureddatadef.cpp:603)
+
+longlong StructuredData_GetMaxStringSize(int param_1)
+
+{
+  int iVar3;
+  undefined8 uVar1;
+  longlong lVar2;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x25c,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar3 = StructuredData_GetLookupState(param_1);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupState(param_1);
+    MyAssertHandler(0xffffffff82177260,0x25d,0,0xffffffff82177708,uVar1,1);
+  }
+  iVar3 = StructuredData_GetLookupResultType(param_1);
+  if (iVar3 != 2) {
+    uVar1 = StructuredData_GetLookupResultType(param_1);
+    MyAssertHandler(0xffffffff82177260,0x25e,0,0xffffffff821776b8,uVar1,2);
+  }
+  if (**(int **)(param_1 + 4) == 3) {
+    lVar2 = (ulonglong)(uint)(*(int **)(param_1 + 4))[1] - 1;
+  }
+  else {
+    lVar2 = 0;
+  }
+  return lVar2;
 }
 
 
 // 825E9150  StructuredData_GetIntAtOffset  (universal/com_structureddatadef.cpp:618)
 
-void StructuredData_GetIntAtOffset(void)
+void StructuredData_GetIntAtOffset(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 *puVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff82177260,0x26d,0,0xffffffff82000f98,0xffffffff8217777c);
+  }
+  if (((ulonglong)(uint)param_3[1] - 4 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x26e,0,0xffffffff8217774c,param_2,
+                    (ulonglong)(uint)param_3[1] - 4);
+  }
+  puVar1 = (undefined1 *)(*param_3 + (int)param_2);
+  __restgprlr_29(CONCAT31(CONCAT21(CONCAT11(puVar1[3],puVar1[2]),puVar1[1]),*puVar1));
+  return;
 }
 
 
 // 825E9200  StructuredData_GetByteAtOffset  (universal/com_structureddatadef.cpp:635)
 
-void StructuredData_GetByteAtOffset(void)
+void StructuredData_GetByteAtOffset(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (*piVar1 != 1) {
+    MyAssertHandler(0xffffffff82177260,0x27c,0,0xffffffff82000f98,0xffffffff821777b8);
+  }
+  if (((ulonglong)(uint)param_3[1] - 1 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x27d,0,0xffffffff82177794,param_2,
+                    (ulonglong)(uint)param_3[1] - 1);
+    __restgprlr_29(*(undefined1 *)(*param_3 + (int)param_2));
+    return;
+  }
+  __restgprlr_29(*(undefined1 *)(*param_3 + (int)param_2));
+  return;
 }
 
 
 // 825E9298  StructuredData_GetBoolAtOffset  (universal/com_structureddatadef.cpp:644)
 
-void StructuredData_GetBoolAtOffset(void)
+void StructuredData_GetBoolAtOffset(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 2) {
+    MyAssertHandler(0xffffffff82177260,0x285,0,0xffffffff82000f98,0xffffffff821777f8);
+  }
+  uVar1 = (param_2 & 0xffffffff) >> 3;
+  if (((ulonglong)(uint)param_3[1] - 1 & 0xffffffff) < uVar1) {
+    MyAssertHandler(0xffffffff82177260,0x28d,0,0xffffffff821777d0,uVar1,
+                    (ulonglong)(uint)param_3[1] - 1);
+  }
+  __restgprlr_28(((uint)*(byte *)(*param_3 + (int)uVar1) & 1 << ((uint)param_2 & 7)) != 0);
+  return;
 }
 
 
@@ -308,21 +1019,41 @@ longlong StructuredData_GetEnumEntryAtIndex(uint *param_1,uint param_2)
   Com_PrintWarning(1,0xffffffff82177810);
   uVar2 = LookupEnumEntryFromIndex(param_1,0);
 LAB_825e93c8:
-  if ((uVar2 & 0xffffffff) < (ulonglong)*param_1) {
-    return (uVar2 & 0x1fffffff) * 8 + (ulonglong)param_1[2];
+  if ((ulonglong)*param_1 <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x29e,0,0xffffffff82177490,uVar2);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82177260,0x29e,0,0xffffffff82177490,uVar2);
+  return (uVar2 & 0x1fffffff) * 8 + (ulonglong)param_1[2];
 }
 
 
 // 825E9418  StructuredData_GetEnumEntryAtOffset  (universal/com_structureddatadef.cpp:676)
 
-void StructuredData_GetEnumEntryAtOffset(void)
+void StructuredData_GetEnumEntryAtOffset
+               (undefined8 param_1,int param_2,ulonglong param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 uVar1;
+  undefined1 uVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  
+  iVar4 = __savegprlr_27();
+  if (((ulonglong)(uint)param_4[1] - 2 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x2a9,0,0xffffffff821778a4,param_3,
+                    (ulonglong)(uint)param_4[1] - 2);
+  }
+  puVar3 = (undefined1 *)(*param_4 + (int)param_3);
+  uVar1 = puVar3[1];
+  uVar2 = *puVar3;
+  if (*(uint *)(iVar4 + 8) <= *(uint *)(param_2 + 4)) {
+    MyAssertHandler(0xffffffff82177260,0x2af,0,0xffffffff82177860);
+  }
+  StructuredData_GetEnumEntryAtIndex
+            (((ulonglong)*(uint *)(param_2 + 4) +
+              ((ulonglong)*(uint *)(param_2 + 4) & 0x7fffffff) * 2 & 0x3fffffff) * 4 +
+             (ulonglong)*(uint *)(iVar4 + 0xc),CONCAT11(uVar1,uVar2));
+  __restgprlr_27();
+  return;
 }
 
 
@@ -340,81 +1071,282 @@ undefined4 StructuredData_GetEnumValueAtOffset(void)
 
 // 825E9500  StructuredData_GetStringAtOffset  (universal/com_structureddatadef.cpp:707)
 
-void StructuredData_GetStringAtOffset(void)
+void StructuredData_GetStringAtOffset(undefined8 param_1,ulonglong param_2,uint *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  longlong lVar1;
+  uint uVar3;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != 3) {
+    MyAssertHandler(0xffffffff82177260,0x2c7,0,0xffffffff82000f98,0xffffffff82177980);
+  }
+  if (((ulonglong)param_3[1] - (ulonglong)(uint)piVar2[1] & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x2c8,0,0xffffffff82177944,param_2);
+  }
+  uVar3 = 0;
+  lVar1 = *param_3 + param_2;
+  if (piVar2[1] != 0) {
+    do {
+      if (*(char *)(uVar3 + (int)lVar1) == '\0') goto LAB_825e95c8;
+      uVar3 = uVar3 + 1;
+    } while (uVar3 < (uint)piVar2[1]);
+  }
+  Com_PrintWarning(1,0xffffffff821778e0,param_2);
+  lVar1 = -0x7dff9751;
+LAB_825e95c8:
+  __restgprlr_28(lVar1);
+  return;
 }
 
 
 // 825E95D0  StructuredData_GetFloatAtOffset  (universal/com_structureddatadef.cpp:727)
 
-void StructuredData_GetFloatAtOffset(void)
+void StructuredData_GetFloatAtOffset(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 *puVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 != 8) {
+    MyAssertHandler(0xffffffff82177260,0x2da,0,0xffffffff82000f98,0xffffffff821779d0);
+  }
+  if (((ulonglong)(uint)param_3[1] - 4 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x2db,0,0xffffffff8217799c,param_2,
+                    (ulonglong)(uint)param_3[1] - 4);
+  }
+  puVar1 = (undefined1 *)(*param_3 + (int)param_2);
+  __restgprlr_29((double)(float)CONCAT31(CONCAT21(CONCAT11(puVar1[3],puVar1[2]),puVar1[1]),*puVar1))
+  ;
+  return;
 }
 
 
 // 825E9688  StructuredData_GetShortAtOffset  (universal/com_structureddatadef.cpp:744)
 
-void StructuredData_GetShortAtOffset(void)
+void StructuredData_GetShortAtOffset(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 *puVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if (*piVar2 != 9) {
+    MyAssertHandler(0xffffffff82177260,0x2eb,0,0xffffffff82000f98,0xffffffff82177a20);
+  }
+  if (((ulonglong)(uint)param_3[1] - 2 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82177260,0x2ec,0,0xffffffff821779ec,param_2,
+                    (ulonglong)(uint)param_3[1] - 2);
+  }
+  puVar1 = (undefined1 *)(*param_3 + (int)param_2);
+  __restgprlr_29(CONCAT11(puVar1[1],*puVar1));
+  return;
 }
 
 
 // 825E9728  StructuredData_GetInt  (universal/com_structureddatadef.cpp:759)
 
-void StructuredData_GetInt(void)
+void StructuredData_GetInt(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined1 uVar4;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x2f8,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar3 = StructuredData_GetLookupState(piVar2);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupState(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x2f9,0,0xffffffff82177708,uVar1,1);
+  }
+  iVar3 = StructuredData_GetLookupResultType(piVar2);
+  if (iVar3 != 0) {
+    uVar1 = StructuredData_GetLookupResultType(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x2fa,0,0xffffffff82177a68,uVar1,0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x2fb,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x2fc,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(*piVar2 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x2fd,0,0xffffffff82177a3c);
+  }
+  if (*(int *)piVar2[1] == 0) {
+    StructuredData_GetIntAtOffset();
+    __restgprlr_28();
+    return;
+  }
+  uVar4 = StructuredData_GetByteAtOffset((int *)piVar2[1],piVar2[2],param_2);
+  __restgprlr_28(uVar4);
+  return;
 }
 
 
 // 825E9890  StructuredData_GetBool  (universal/com_structureddatadef.cpp:775)
 
-void StructuredData_GetBool(void)
+void StructuredData_GetBool(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x308,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar3 = StructuredData_GetLookupState(piVar2);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupState(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x309,0,0xffffffff82177708,uVar1,1);
+  }
+  iVar3 = StructuredData_GetLookupResultType(piVar2);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupResultType(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x30a,0,0xffffffff82177ab8,uVar1,1);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x30b,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x30c,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(*piVar2 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x30d,0,0xffffffff82177a3c);
+  }
+  StructuredData_GetBoolAtOffset(piVar2[1],piVar2[2],param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E99D8  StructuredData_GetString  (universal/com_structureddatadef.cpp:788)
 
-void StructuredData_GetString(void)
+void StructuredData_GetString(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x315,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar4 = StructuredData_GetLookupState(piVar3);
+  if (iVar4 != 1) {
+    uVar2 = StructuredData_GetLookupState(piVar3);
+    MyAssertHandler(0xffffffff82177260,0x316,0,0xffffffff82177708,uVar2,1);
+  }
+  iVar4 = StructuredData_GetLookupResultType(piVar3);
+  if (iVar4 != 2) {
+    uVar2 = StructuredData_GetLookupResultType(piVar3);
+    MyAssertHandler(0xffffffff82177260,0x317,0,0xffffffff821776b8,uVar2,2);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x318,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x319,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(*piVar3 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x31a,0,0xffffffff82177a3c);
+  }
+  piVar1 = (int *)piVar3[1];
+  if (*piVar1 == 4) {
+    puVar5 = (undefined4 *)StructuredData_GetEnumEntryAtOffset(*piVar3,piVar1,piVar3[2],param_2);
+    __restgprlr_28(*puVar5);
+    return;
+  }
+  StructuredData_GetStringAtOffset(piVar1,piVar3[2],param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E9B50  StructuredData_GetFloat  (universal/com_structureddatadef.cpp:804)
 
-void StructuredData_GetFloat(void)
+void StructuredData_GetFloat(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x325,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar3 = StructuredData_GetLookupState(piVar2);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupState(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x326,0,0xffffffff82177708,uVar1,1);
+  }
+  iVar3 = StructuredData_GetLookupResultType(piVar2);
+  if (iVar3 != 3) {
+    uVar1 = StructuredData_GetLookupResultType(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x327,0,0xffffffff82177b08,uVar1,3);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x328,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x329,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(*piVar2 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x32a,0,0xffffffff82177a3c);
+  }
+  StructuredData_GetFloatAtOffset(piVar2[1],piVar2[2],param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825E9C98  StructuredData_GetShort  (universal/com_structureddatadef.cpp:817)
 
-void StructuredData_GetShort(void)
+void StructuredData_GetShort(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x332,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar3 = StructuredData_GetLookupState(piVar2);
+  if (iVar3 != 1) {
+    uVar1 = StructuredData_GetLookupState(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x333,0,0xffffffff82177708,uVar1,1);
+  }
+  iVar3 = StructuredData_GetLookupResultType(piVar2);
+  if (iVar3 != 4) {
+    uVar1 = StructuredData_GetLookupResultType(piVar2);
+    MyAssertHandler(0xffffffff82177260,0x334,0,0xffffffff82177b58,uVar1,4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x335,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x336,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(*piVar2 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x337,0,0xffffffff82177a3c);
+  }
+  StructuredData_GetShortAtOffset(piVar2[1],piVar2[2],param_2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -457,23 +1389,19 @@ void StructuredData_SetInt_FlagModified
   
   piVar2 = (int *)__savegprlr_25();
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x34e,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
   iVar3 = StructuredData_GetLookupState(piVar2);
   if (iVar3 != 1) {
     uVar1 = StructuredData_GetLookupState(piVar2);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x34f,0,0xffffffff82177708,uVar1,1);
   }
   piVar8 = (int *)param_2;
   if ((param_2 & 0xffffffff) != 0) {
     if (*piVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x353,0,0xffffffff82000f98,0xffffffff820878e8);
     }
     if ((uint)piVar8[1] < *(uint *)(*piVar2 + 0x30)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x354,0,0xffffffff82177a3c);
     }
   }
@@ -486,7 +1414,6 @@ void StructuredData_SetInt_FlagModified
   if (*(int *)piVar2[1] == 0) {
     if ((param_2 & 0xffffffff) != 0) {
       if (((ulonglong)(uint)piVar8[1] - 4 & 0xffffffff) < (ulonglong)(uint)piVar2[2]) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82177260,0x360,0,0xffffffff82177bf0,(ulonglong)(uint)piVar2[2],
                         (ulonglong)(uint)piVar8[1] - 4);
       }
@@ -500,7 +1427,6 @@ void StructuredData_SetInt_FlagModified
   }
   else {
     if (*(int *)piVar2[1] != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x36b,0,0xffffffff82000f98,0xffffffff82177bd0);
     }
     if (((int)param_4 < 0) || (0xff < (int)param_4)) {
@@ -509,7 +1435,6 @@ void StructuredData_SetInt_FlagModified
     }
     if ((param_2 & 0xffffffff) != 0) {
       if (((ulonglong)(uint)piVar8[1] - 1 & 0xffffffff) < (ulonglong)(uint)piVar2[2]) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82177260,0x372,0,0xffffffff82177ba4,(ulonglong)(uint)piVar2[2],
                         (ulonglong)(uint)piVar8[1] - 1);
       }
@@ -523,11 +1448,67 @@ void StructuredData_SetInt_FlagModified
 
 // 825EA0C0  StructuredData_SetBool_FlagModified  (universal/com_structureddatadef.cpp:892)
 
-void StructuredData_SetBool_FlagModified(void)
+void StructuredData_SetBool_FlagModified
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  int *piVar5;
+  uint uVar6;
+  
+  piVar3 = (int *)__savegprlr_26();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x381,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar4 = StructuredData_GetLookupState(piVar3);
+  if (iVar4 != 1) {
+    uVar2 = StructuredData_GetLookupState(piVar3);
+    MyAssertHandler(0xffffffff82177260,0x382,0,0xffffffff82177708,uVar2,1);
+  }
+  piVar5 = (int *)param_2;
+  if ((param_2 & 0xffffffff) != 0) {
+    if (*piVar5 == 0) {
+      MyAssertHandler(0xffffffff82177260,0x386,0,0xffffffff82000f98,0xffffffff820878e8);
+    }
+    if ((uint)piVar5[1] < *(uint *)(*piVar3 + 0x30)) {
+      MyAssertHandler(0xffffffff82177260,0x387,0,0xffffffff82177a3c);
+    }
+  }
+  iVar4 = StructuredData_GetLookupResultType(piVar3);
+  if (iVar4 == 1) {
+    if ((param_2 & 0xffffffff) != 0) {
+      uVar6 = piVar3[2];
+      uVar1 = uVar6 >> 3;
+      if (piVar5[1] - 1U < uVar1) {
+        MyAssertHandler(0xffffffff82177260,0x394,0,0xffffffff821777d0,uVar1,piVar5[1] + -1);
+      }
+      iVar4 = *piVar5;
+      uVar6 = 1 << (uVar6 & 7);
+      if ((param_4 & 0xff) == 0) {
+        uVar6 = ~uVar6 & 0xff & (uint)*(byte *)(iVar4 + uVar1);
+      }
+      else {
+        uVar6 = (uint)*(byte *)(iVar4 + uVar1) | uVar6 & 0xff;
+      }
+      if (*(byte *)(iVar4 + uVar1) != uVar6) {
+        *(char *)(iVar4 + uVar1) = (char)uVar6;
+        if ((param_3 & 0xffffffff) != 0) {
+          iVar4 = (int)uVar1 >> 3;
+          *(byte *)(iVar4 + (int)param_3) =
+               (byte)(1 << (uVar1 + iVar4 * -8 & 0x3f)) | *(byte *)(iVar4 + (int)param_3);
+        }
+        __restgprlr_26(0);
+        return;
+      }
+    }
+    __restgprlr_26(1);
+    return;
+  }
+  __restgprlr_26(2);
+  return;
 }
 
 
@@ -537,160 +1518,318 @@ void StructuredData_SetString_FlagModified
                (undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
 
 {
-  bool bVar1;
-  byte bVar2;
-  ulonglong uVar3;
-  int *piVar5;
-  int iVar6;
-  undefined8 uVar4;
-  char cVar7;
+  ushort uVar1;
+  bool bVar2;
+  byte bVar3;
+  ulonglong uVar4;
+  int *piVar6;
+  int iVar7;
+  undefined8 uVar5;
   char cVar8;
-  int *piVar9;
-  int iVar10;
+  char cVar9;
+  int *piVar10;
   int iVar11;
-  char *pcVar13;
-  longlong lVar12;
-  uint uVar14;
-  uint *puVar16;
-  ulonglong uVar15;
+  int iVar12;
+  char *pcVar14;
+  longlong lVar13;
+  uint uVar15;
+  uint *puVar17;
+  ulonglong uVar16;
   uint local_50 [20];
   
-  piVar5 = (int *)__savegprlr_24();
-  if (piVar5 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
+  piVar6 = (int *)__savegprlr_24();
+  if (piVar6 == (int *)0x0) {
     MyAssertHandler(0xffffffff82177260,0x3a1,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
-  iVar6 = StructuredData_GetLookupState(piVar5);
-  if (iVar6 != 1) {
-    uVar4 = StructuredData_GetLookupState(piVar5);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82177260,0x3a2,0,0xffffffff82177708,uVar4,1);
+  iVar7 = StructuredData_GetLookupState(piVar6);
+  if (iVar7 != 1) {
+    uVar5 = StructuredData_GetLookupState(piVar6);
+    MyAssertHandler(0xffffffff82177260,0x3a2,0,0xffffffff82177708,uVar5,1);
   }
-  piVar9 = (int *)param_2;
+  piVar10 = (int *)param_2;
   if ((param_2 & 0xffffffff) != 0) {
-    if (*piVar9 == 0) {
-                    /* WARNING: Subroutine does not return */
+    if (*piVar10 == 0) {
       MyAssertHandler(0xffffffff82177260,0x3a6,0,0xffffffff82000f98,0xffffffff820878e8);
     }
-    if ((uint)piVar9[1] < *(uint *)(*piVar5 + 0x30)) {
-                    /* WARNING: Subroutine does not return */
+    if ((uint)piVar10[1] < *(uint *)(*piVar6 + 0x30)) {
       MyAssertHandler(0xffffffff82177260,0x3a7,0,0xffffffff82177a3c);
     }
   }
-  iVar6 = StructuredData_GetLookupResultType(piVar5);
-  if (iVar6 != 2) {
+  iVar7 = StructuredData_GetLookupResultType(piVar6);
+  if (iVar7 != 2) {
     __restgprlr_24(2);
     return;
   }
-  bVar1 = false;
-  iVar6 = *(int *)piVar5[1];
-  if (iVar6 == 4) {
-    if (*(uint *)(*piVar5 + 8) <= (uint)((int *)piVar5[1])[1]) {
-                    /* WARNING: Subroutine does not return */
+  bVar2 = false;
+  iVar7 = *(int *)piVar6[1];
+  if (iVar7 == 4) {
+    if (*(uint *)(*piVar6 + 8) <= (uint)((int *)piVar6[1])[1]) {
       MyAssertHandler(0xffffffff82177260,0x3b5,0,0xffffffff82177d38);
     }
-    puVar16 = (uint *)(*(int *)(piVar5[1] + 4) * 0xc + *(int *)(*piVar5 + 0xc));
-    cVar7 = LookupEnumEntryFromString(puVar16,param_4,local_50);
-    if (cVar7 == '\0') {
+    puVar17 = (uint *)(*(int *)(piVar6[1] + 4) * 0xc + *(int *)(*piVar6 + 0xc));
+    cVar8 = LookupEnumEntryFromString(puVar17,param_4,local_50);
+    if (cVar8 == '\0') {
       __restgprlr_24(5);
       return;
     }
     if ((param_2 & 0xffffffff) != 0) {
-      if (*puVar16 <= local_50[0]) {
-                    /* WARNING: Subroutine does not return */
+      if (*puVar17 <= local_50[0]) {
         MyAssertHandler(0xffffffff82177260,0x3bc,0,0xffffffff82177490,local_50[0]);
       }
-      if (((ulonglong)(uint)piVar9[1] - 2 & 0xffffffff) < (ulonglong)(uint)piVar5[2]) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82177260,0x3bf,0,0xffffffff82177cf0,(ulonglong)(uint)piVar5[2],
-                        (ulonglong)(uint)piVar9[1] - 2);
+      uVar1 = *(ushort *)(local_50[0] * 8 + puVar17[2] + 4);
+      if (((ulonglong)(uint)piVar10[1] - 2 & 0xffffffff) < (ulonglong)(uint)piVar6[2]) {
+        MyAssertHandler(0xffffffff82177260,0x3bf,0,0xffffffff82177cf0,(ulonglong)(uint)piVar6[2],
+                        (ulonglong)(uint)piVar10[1] - 2);
       }
-      cVar7 = ModifyByte(*piVar9,param_3,piVar5[2],
-                         *(ushort *)(local_50[0] * 8 + puVar16[2] + 4) & 0xff);
-      cVar8 = ModifyByte(*piVar9);
-      __restgprlr_24(cVar8 == '\0' && cVar7 == '\0');
+      cVar8 = ModifyByte(*piVar10,param_3,piVar6[2],uVar1 & 0xff);
+      cVar9 = ModifyByte(*piVar10);
+      __restgprlr_24(cVar9 == '\0' && cVar8 == '\0');
       return;
     }
   }
   else {
-    lVar12 = param_4;
-    if (iVar6 != 3) {
-                    /* WARNING: Subroutine does not return */
+    lVar13 = param_4;
+    if (iVar7 != 3) {
       MyAssertHandler(0xffffffff82177260,0x3cb,0,0xffffffff82000f98,0xffffffff82177ccc);
     }
     do {
-      pcVar13 = (char *)lVar12;
-      lVar12 = lVar12 + 1;
-    } while (*pcVar13 != '\0');
-    uVar15 = ((lVar12 - param_4) - 1U & 0xffffffff) + 1;
-    iVar6 = (int)uVar15;
-    if (*(char *)(iVar6 + (int)param_4 + -1) != '\0') {
-                    /* WARNING: Subroutine does not return */
+      pcVar14 = (char *)lVar13;
+      lVar13 = lVar13 + 1;
+    } while (*pcVar14 != '\0');
+    uVar16 = ((lVar13 - param_4) - 1U & 0xffffffff) + 1;
+    iVar7 = (int)uVar16;
+    if (*(char *)(iVar7 + (int)param_4 + -1) != '\0') {
       MyAssertHandler(0xffffffff82177260,0x3ce,0,0xffffffff82000f98,0xffffffff82177cac);
     }
-    if ((ulonglong)*(uint *)(piVar5[1] + 4) < (uVar15 & 0xffffffff)) {
+    if ((ulonglong)*(uint *)(piVar6[1] + 4) < (uVar16 & 0xffffffff)) {
       __restgprlr_24(4);
       return;
     }
     if ((param_2 & 0xffffffff) != 0) {
-      if (((ulonglong)(uint)piVar9[1] - (ulonglong)*(uint *)(piVar5[1] + 4) & 0xffffffff) <
-          (ulonglong)(uint)piVar5[2]) {
-                    /* WARNING: Subroutine does not return */
+      if (((ulonglong)(uint)piVar10[1] - (ulonglong)*(uint *)(piVar6[1] + 4) & 0xffffffff) <
+          (ulonglong)(uint)piVar6[2]) {
         MyAssertHandler(0xffffffff82177260,0x3d4,0,0xffffffff82177c60);
       }
-      iVar10 = 0;
-      bVar1 = false;
-      uVar3 = uVar15 & 0xffffffff;
-      while (uVar3 != 0) {
-        uVar14 = iVar10 + piVar5[2];
-        cVar7 = *(char *)(iVar10 + (int)param_4);
-        if (*(char *)(*piVar9 + uVar14) == cVar7) {
-          bVar2 = 0;
+      iVar11 = 0;
+      bVar2 = false;
+      uVar4 = uVar16 & 0xffffffff;
+      while (uVar4 != 0) {
+        uVar15 = iVar11 + piVar6[2];
+        cVar8 = *(char *)(iVar11 + (int)param_4);
+        if (*(char *)(*piVar10 + uVar15) == cVar8) {
+          bVar3 = 0;
         }
         else {
-          *(char *)(*piVar9 + uVar14) = cVar7;
+          *(char *)(*piVar10 + uVar15) = cVar8;
           if ((param_3 & 0xffffffff) != 0) {
-            iVar11 = ((int)uVar14 >> 3) + (uint)((int)uVar14 < 0 && (uVar14 & 7) != 0);
-            *(byte *)(iVar11 + (int)param_3) =
-                 (byte)(1 << (uVar14 + (((int)uVar14 >> 3) +
-                                       (uint)((int)uVar14 < 0 && (uVar14 & 7) != 0)) * -8 & 0x3f)) |
-                 *(byte *)(iVar11 + (int)param_3);
+            iVar12 = ((int)uVar15 >> 3) + (uint)((int)uVar15 < 0 && (uVar15 & 7) != 0);
+            *(byte *)(iVar12 + (int)param_3) =
+                 (byte)(1 << (uVar15 + (((int)uVar15 >> 3) +
+                                       (uint)((int)uVar15 < 0 && (uVar15 & 7) != 0)) * -8 & 0x3f)) |
+                 *(byte *)(iVar12 + (int)param_3);
           }
-          bVar2 = 1;
+          bVar3 = 1;
         }
-        iVar10 = iVar10 + 1;
-        bVar1 = (bool)(bVar2 | bVar1);
-        uVar15 = uVar15 - 1;
-        uVar3 = uVar15;
+        iVar11 = iVar11 + 1;
+        bVar2 = (bool)(bVar3 | bVar2);
+        uVar16 = uVar16 - 1;
+        uVar4 = uVar16;
       }
-      if (*(char *)(*piVar9 + iVar6 + piVar5[2] + -1) != '\0') {
-                    /* WARNING: Subroutine does not return */
+      if (*(char *)(*piVar10 + iVar7 + piVar6[2] + -1) != '\0') {
         MyAssertHandler(0xffffffff82177260,0x3d9,0,0xffffffff82000f98,0xffffffff82177c28);
       }
     }
   }
-  __restgprlr_24(!bVar1);
+  __restgprlr_24(!bVar2);
   return;
 }
 
 
 // 825EA698  StructuredData_SetFloat_FlagModified  (universal/com_structureddatadef.cpp:994)
 
-void StructuredData_SetFloat_FlagModified(void)
+void StructuredData_SetFloat_FlagModified(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  int *piVar2;
+  bool bVar3;
+  byte bVar4;
+  byte bVar5;
+  byte bVar6;
+  byte bVar7;
+  int iVar9;
+  int iVar10;
+  undefined8 uVar8;
+  int iVar11;
+  uint uVar12;
+  double extraout_f1;
+  
+  iVar9 = __savegprlr_27();
+  fVar1 = (float)extraout_f1;
+  if (iVar9 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x3e6,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar10 = StructuredData_GetLookupState(iVar9);
+  if (iVar10 != 1) {
+    uVar8 = StructuredData_GetLookupState(iVar9);
+    MyAssertHandler(0xffffffff82177260,999,0,0xffffffff82177708,uVar8,1);
+  }
+  if (**(int **)(iVar9 + 4) != 8) {
+    MyAssertHandler(0xffffffff82177260,1000,0,0xffffffff82000f98,0xffffffff82177dc8);
+  }
+  iVar10 = StructuredData_GetLookupResultType(iVar9);
+  if (iVar10 != 3) {
+    __restgprlr_27(2);
+    return;
+  }
+  bVar3 = false;
+  if ((param_2 & 0xffffffff) != 0) {
+    piVar2 = (int *)param_2;
+    if (((ulonglong)(uint)piVar2[1] - 4 & 0xffffffff) < (ulonglong)*(uint *)(iVar9 + 8)) {
+      MyAssertHandler(0xffffffff82177260,0x3f0,0,0xffffffff82177d8c,(ulonglong)*(uint *)(iVar9 + 8),
+                      (ulonglong)(uint)piVar2[1] - 4);
+    }
+    uVar12 = *(uint *)(iVar9 + 8);
+    iVar10 = (int)param_3;
+    if ((uint)*(byte *)(*piVar2 + uVar12) == ((uint)fVar1 & 0xff)) {
+      bVar4 = 0;
+    }
+    else {
+      *(char *)(*piVar2 + uVar12) = SUB41(fVar1,0);
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar11 = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0);
+        *(byte *)(iVar11 + iVar10) =
+             (byte)(1 << (uVar12 + (((int)uVar12 >> 3) +
+                                   (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0)) * -8 & 0x3f)) |
+             *(byte *)(iVar11 + iVar10);
+      }
+      bVar4 = 1;
+    }
+    uVar12 = *(int *)(iVar9 + 8) + 1;
+    if ((uint)*(byte *)(*piVar2 + uVar12) == ((int)fVar1 >> 8 & 0xffU)) {
+      bVar5 = 0;
+    }
+    else {
+      *(char *)(*piVar2 + uVar12) = (char)((uint)fVar1 >> 8);
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar11 = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0);
+        *(byte *)(iVar11 + iVar10) =
+             (byte)(1 << (uVar12 + (((int)uVar12 >> 3) +
+                                   (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0)) * -8 & 0x3f)) |
+             *(byte *)(iVar11 + iVar10);
+      }
+      bVar5 = 1;
+    }
+    uVar12 = *(int *)(iVar9 + 8) + 2;
+    if ((uint)*(byte *)(*piVar2 + uVar12) == ((int)fVar1 >> 0x10 & 0xffU)) {
+      bVar6 = 0;
+    }
+    else {
+      *(char *)(*piVar2 + uVar12) = (char)((uint)fVar1 >> 0x10);
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar11 = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0);
+        *(byte *)(iVar11 + iVar10) =
+             (byte)(1 << (uVar12 + (((int)uVar12 >> 3) +
+                                   (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0)) * -8 & 0x3f)) |
+             *(byte *)(iVar11 + iVar10);
+      }
+      bVar6 = 1;
+    }
+    uVar12 = *(int *)(iVar9 + 8) + 3;
+    if ((uint)*(byte *)(*piVar2 + uVar12) == ((int)fVar1 >> 0x18 & 0xffU)) {
+      bVar7 = 0;
+    }
+    else {
+      *(char *)(*piVar2 + uVar12) = (char)((uint)fVar1 >> 0x18);
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar9 = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0);
+        *(byte *)(iVar9 + iVar10) =
+             (byte)(1 << (uVar12 + (((int)uVar12 >> 3) +
+                                   (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0)) * -8 & 0x3f)) |
+             *(byte *)(iVar9 + iVar10);
+      }
+      bVar7 = 1;
+    }
+    bVar3 = (bool)(bVar7 | bVar6 | bVar5 | bVar4);
+  }
+  __restgprlr_27(!bVar3);
+  return;
 }
 
 
 // 825EA960  StructuredData_SetShort_FlagModified  (universal/com_structureddatadef.cpp:1025)
 
-void StructuredData_SetShort_FlagModified(void)
+void StructuredData_SetShort_FlagModified
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar1;
+  bool bVar2;
+  byte bVar3;
+  byte bVar4;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar5;
+  int iVar8;
+  uint uVar9;
+  
+  iVar6 = __savegprlr_26();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x404,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar7 = StructuredData_GetLookupState(iVar6);
+  if (iVar7 != 1) {
+    uVar5 = StructuredData_GetLookupState(iVar6);
+    MyAssertHandler(0xffffffff82177260,0x405,0,0xffffffff82177708,uVar5,1);
+  }
+  if (**(int **)(iVar6 + 4) != 9) {
+    MyAssertHandler(0xffffffff82177260,0x406,0,0xffffffff82000f98,0xffffffff82177e28);
+  }
+  iVar7 = StructuredData_GetLookupResultType(iVar6);
+  if (iVar7 != 4) {
+    __restgprlr_26(2);
+    return;
+  }
+  bVar2 = false;
+  if ((param_2 & 0xffffffff) != 0) {
+    piVar1 = (int *)param_2;
+    if (((ulonglong)(uint)piVar1[1] - 2 & 0xffffffff) < (ulonglong)*(uint *)(iVar6 + 8)) {
+      MyAssertHandler(0xffffffff82177260,0x40e,0,0xffffffff82177dec,(ulonglong)*(uint *)(iVar6 + 8),
+                      (ulonglong)(uint)piVar1[1] - 2);
+    }
+    uVar9 = *(uint *)(iVar6 + 8);
+    iVar7 = (int)param_3;
+    if ((ulonglong)*(byte *)(*piVar1 + uVar9) == (param_4 & 0xff)) {
+      bVar3 = 0;
+    }
+    else {
+      *(char *)(*piVar1 + uVar9) = (char)param_4;
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar8 = ((int)uVar9 >> 3) + (uint)((int)uVar9 < 0 && (uVar9 & 7) != 0);
+        *(byte *)(iVar8 + iVar7) =
+             (byte)(1 << (uVar9 + (((int)uVar9 >> 3) + (uint)((int)uVar9 < 0 && (uVar9 & 7) != 0)) *
+                                  -8 & 0x3f)) | *(byte *)(iVar8 + iVar7);
+      }
+      bVar3 = 1;
+    }
+    uVar9 = *(int *)(iVar6 + 8) + 1;
+    if ((ushort)*(byte *)(*piVar1 + uVar9) == ((short)param_4 >> 8 & 0xffU)) {
+      bVar4 = 0;
+    }
+    else {
+      *(char *)(*piVar1 + uVar9) = (char)(param_4 >> 8);
+      if ((param_3 & 0xffffffff) != 0) {
+        iVar6 = ((int)uVar9 >> 3) + (uint)((int)uVar9 < 0 && (uVar9 & 7) != 0);
+        *(byte *)(iVar6 + iVar7) =
+             (byte)(1 << (uVar9 + (((int)uVar9 >> 3) + (uint)((int)uVar9 < 0 && (uVar9 & 7) != 0)) *
+                                  -8 & 0x3f)) | *(byte *)(iVar6 + iVar7);
+      }
+      bVar4 = 1;
+    }
+    bVar2 = (bool)(bVar4 | bVar3);
+  }
+  __restgprlr_26(!bVar2);
+  return;
 }
 
 
@@ -714,23 +1853,114 @@ void StructuredData_SetBool(undefined8 param_1,undefined8 param_2,undefined8 par
 }
 
 
+// 825EAB70  StructuredData_SetString  (universal/com_structureddatadef.cpp:1062)
+
+void StructuredData_SetString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  StructuredData_SetString_FlagModified(param_1,param_2,0,param_3);
+  return;
+}
+
+
+// 825EAB80  StructuredData_SetFloat  (universal/com_structureddatadef.cpp:1068)
+
+void StructuredData_SetFloat(undefined8 param_1,undefined8 param_2)
+
+{
+  StructuredData_SetFloat_FlagModified(param_1,param_2,0);
+  return;
+}
+
+
+// 825EAB88  StructuredData_SetShort  (universal/com_structureddatadef.cpp:1074)
+
+void StructuredData_SetShort(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  StructuredData_SetShort_FlagModified(param_1,param_2,0,param_3);
+  return;
+}
+
+
 // 825EAB98  StructuredData_GetLookupDataSize  (universal/com_structureddatadef.cpp:1080)
 
 void StructuredData_GetLookupDataSize(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int *piVar4;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  piVar4 = (int *)__savegprlr_28();
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x43b,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  uVar2 = StructuredData_GetTypeSize(*piVar4,piVar4[1]);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x43d,0,0xffffffff82000f98,0xffffffff82177eb8);
+  }
+  uVar1 = *(uint *)(*piVar4 + 0x30);
+  lVar3 = StructuredData_GetByteOffset(piVar4[2],piVar4[1]);
+  if ((ulonglong)uVar1 < (lVar3 + uVar2 & 0xffffffff)) {
+    lVar3 = StructuredData_GetByteOffset(piVar4[2],piVar4[1]);
+    MyAssertHandler(0xffffffff82177260,0x43e,0,0xffffffff82177e50,lVar3 + uVar2,(ulonglong)uVar1);
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 825EAC68  StructuredData_ClearStructOrArray  (universal/com_structureddatadef.cpp:1093)
 
-void StructuredData_ClearStructOrArray(void)
+void StructuredData_ClearStructOrArray(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  int *piVar5;
+  uint uVar6;
+  
+  piVar3 = (int *)__savegprlr_27();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x44a,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  iVar4 = StructuredData_GetLookupState(piVar3);
+  if (iVar4 == 1) {
+    uVar2 = StructuredData_GetLookupState(piVar3);
+    MyAssertHandler(0xffffffff82177260,1099,0,0xffffffff82177ec8,uVar2,1);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x44c,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  piVar5 = (int *)param_2;
+  if (*piVar5 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x44d,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)piVar5[1] < *(uint *)(*piVar3 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x44e,0,0xffffffff82177a3c);
+  }
+  iVar4 = StructuredData_GetLookupDataSize(piVar3);
+  uVar6 = piVar3[2];
+  if ((int)uVar6 < (int)(uVar6 + iVar4)) {
+    iVar4 = (uVar6 + iVar4) - uVar6;
+    do {
+      if ((*(char *)(*piVar5 + uVar6) != '\0') &&
+         (*(undefined1 *)(*piVar5 + uVar6) = 0, (param_3 & 0xffffffff) != 0)) {
+        iVar1 = ((int)uVar6 >> 3) + (uint)((int)uVar6 < 0 && (uVar6 & 7) != 0);
+        *(byte *)(iVar1 + (int)param_3) =
+             (byte)(1 << (uVar6 + (((int)uVar6 >> 3) + (uint)((int)uVar6 < 0 && (uVar6 & 7) != 0)) *
+                                  -8 & 0x3f)) | *(byte *)(iVar1 + (int)param_3);
+      }
+      uVar6 = uVar6 + 1;
+      iVar4 = iVar4 + -1;
+    } while (iVar4 != 0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -750,26 +1980,21 @@ void StructuredData_AnyBoolTrueInArray_r
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x461,0,0xffffffff82000f98,0xffffffff8206070c);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x462,0,0xffffffff82000f98,0xffffffff820928bc);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x463,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   if (*(int *)param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x464,0,0xffffffff82000f98,0xffffffff820878e8);
   }
   piVar4 = (int *)param_2;
   iVar5 = *piVar4;
   if (iVar5 == 6) {
     if (*(uint *)(iVar2 + 0x18) <= (uint)piVar4[1]) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x468,0,0xffffffff82086a48);
     }
     piVar4 = (int *)(piVar4[1] * 0x10 + *(int *)(iVar2 + 0x1c));
@@ -790,7 +2015,6 @@ void StructuredData_AnyBoolTrueInArray_r
   else {
     if (iVar5 != 7) {
       if (iVar5 != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82177260,0x489,0,0xffffffff82177f0c,iVar5,2);
       }
       StructuredData_GetBoolAtOffset(param_2,param_3,param_4);
@@ -798,12 +2022,10 @@ void StructuredData_AnyBoolTrueInArray_r
       return;
     }
     if (*(uint *)(iVar2 + 0x20) <= (uint)piVar4[1]) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x477,0,0xffffffff820869f8);
     }
     piVar6 = (int *)(piVar4[1] * 0x10 + *(int *)(iVar2 + 0x24));
     if (*(uint *)(iVar2 + 8) <= *(uint *)(piVar4[1] * 0x10 + *(int *)(iVar2 + 0x24))) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x47a,0,0xffffffff820869a8);
     }
     iVar5 = *piVar6;
@@ -847,29 +2069,23 @@ void StructuredData_AnyBoolTrueInArray(undefined8 param_1,ulonglong param_2,ulon
   
   piVar2 = (int *)__savegprlr_25();
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x494,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
   iVar3 = StructuredData_GetLookupState(piVar2);
   if (iVar3 == 2) {
     uVar1 = StructuredData_GetLookupState(piVar2);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x495,0,0xffffffff82177fe8,uVar1,2);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x496,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   if (*(int *)param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x497,0,0xffffffff82000f98,0xffffffff820878e8);
   }
   if ((uint)((int *)param_2)[1] < *(uint *)(*piVar2 + 0x30)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x498,0,0xffffffff82177a3c);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x499,0,0xffffffff82000f98,0xffffffff82012420);
   }
   piVar5 = (int *)piVar2[1];
@@ -878,26 +2094,24 @@ void StructuredData_AnyBoolTrueInArray(undefined8 param_1,ulonglong param_2,ulon
       iVar3 = *piVar5;
       if (iVar3 != 6) break;
       if (*(uint *)(*piVar2 + 0x18) <= (uint)piVar5[1]) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82177260,0x4a1,0,0xffffffff82177f30);
       }
       piVar5 = (int *)(piVar5[1] * 0x10 + *(int *)(*piVar2 + 0x1c) + 4);
     }
-    if (iVar3 != 7) {
-      if (iVar3 == 2) {
-        uVar4 = StructuredData_AnyBoolTrueInArray_r(*piVar2,piVar2[1],piVar2[2],param_2);
-        *(undefined1 *)param_3 = uVar4;
-        __restgprlr_25(1);
-        return;
-      }
-      __restgprlr_25(0);
-      return;
+    if (iVar3 != 7) break;
+    if (*(uint *)(*piVar2 + 0x20) <= (uint)piVar5[1]) {
+      MyAssertHandler(0xffffffff82177260,0x4a7,0,0xffffffff82177f90);
     }
-    if (*(uint *)(*piVar2 + 0x20) <= (uint)piVar5[1]) break;
     piVar5 = (int *)(piVar5[1] * 0x10 + *(int *)(*piVar2 + 0x24) + 4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82177260,0x4a7,0,0xffffffff82177f90);
+  if (iVar3 == 2) {
+    uVar4 = StructuredData_AnyBoolTrueInArray_r(*piVar2,piVar2[1],piVar2[2],param_2);
+    *(undefined1 *)param_3 = uVar4;
+    __restgprlr_25(1);
+    return;
+  }
+  __restgprlr_25(0);
+  return;
 }
 
 
@@ -932,7 +2146,6 @@ void StructuredData_TranslateDefinition_r
   
   lVar5 = __savegprlr_22();
   if (*(int *)((int)param_5 + 4) != *(int *)((int)param_6 + 4)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x4ce,0,0xffffffff8217829c);
   }
   iVar8 = StructuredData_GetLookupState(param_3);
@@ -940,7 +2153,6 @@ void StructuredData_TranslateDefinition_r
     uVar6 = StructuredData_GetLookupState(param_4);
     iVar9 = (int)uVar6;
     if (iVar9 == 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x4e5,0,0xffffffff82000f98,0xffffffff8217827c);
     }
     if (iVar8 == iVar9) {
@@ -951,7 +2163,6 @@ void StructuredData_TranslateDefinition_r
         if (iVar8 == iVar9) {
           if (3 < (uVar7 & 0xffffffff)) {
             if (iVar9 != 4) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x52c,0,0xffffffff82178248,uVar7,4);
             }
             uVar6 = StructuredData_GetShort(param_3,param_5);
@@ -986,7 +2197,6 @@ void StructuredData_TranslateDefinition_r
       }
       else {
         if (iVar9 != 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82177260,0x542,0,0xffffffff82178218,uVar6,0);
         }
         piVar3 = (int *)param_3;
@@ -996,7 +2206,6 @@ void StructuredData_TranslateDefinition_r
         if (iVar8 == *(int *)piVar3[1]) {
           if (iVar8 == 5) {
             if (*(uint *)(*piVar4 + 0x10) <= (uint)piVar2[1]) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x556,0,0xffffffff82178028);
             }
             uVar10 = 0;
@@ -1025,14 +2234,14 @@ void StructuredData_TranslateDefinition_r
           }
           else if (iVar8 == 6) {
             if (*(uint *)(*piVar4 + 0x18) <= (uint)piVar2[1]) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x56b,0,0xffffffff821780f0);
             }
+            iVar8 = *(int *)(piVar4[1] + 4);
+            iVar9 = *(int *)(*piVar4 + 0x1c);
             if (*(uint *)(*piVar3 + 0x18) <= *(uint *)(piVar3[1] + 4)) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x56e,0,0xffffffff82178088);
             }
-            uVar10 = *(uint *)(*(int *)(piVar4[1] + 4) * 0x10 + *(int *)(*piVar4 + 0x1c));
+            uVar10 = *(uint *)(iVar8 * 0x10 + iVar9);
             uVar11 = *(uint *)(*(int *)(piVar3[1] + 4) * 0x10 + *(int *)(*piVar3 + 0x1c));
             if ((int)uVar10 < (int)uVar11) {
               uVar11 = uVar10;
@@ -1060,13 +2269,11 @@ void StructuredData_TranslateDefinition_r
           }
           else if (iVar8 == 7) {
             if (*(uint *)(*piVar4 + 0x20) <= (uint)piVar2[1]) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x59a,0,0xffffffff821781b0);
             }
             iVar8 = *(int *)(*piVar4 + 0x24);
             iVar9 = *(int *)(piVar4[1] + 4) * 0x10;
             if (*(uint *)(*piVar4 + 8) <= *(uint *)(iVar9 + iVar8)) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82177260,0x59d,0,0xffffffff82178158);
             }
             uVar10 = 0;
@@ -1095,8 +2302,9 @@ void StructuredData_TranslateDefinition_r
             }
           }
           else if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82177260,0x5b3,0,0xffffffff821772dc);
+            __restgprlr_22();
+            return;
           }
         }
       }
@@ -1109,11 +2317,152 @@ void StructuredData_TranslateDefinition_r
 
 // 825EB848  StructuredData_TranslateDefinition  (universal/com_structureddatadef.cpp:1470)
 
-void StructuredData_TranslateDefinition(void)
+void StructuredData_TranslateDefinition(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  undefined1 auStack_60 [8];
+  undefined1 auStack_58 [8];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  LargeLocal__LargeLocal(auStack_60,0x2ffc);
+  uVar2 = LargeLocal__GetBuf(auStack_60);
+  puVar1 = (undefined4 *)param_3;
+  if (0x2ffc < (uint)puVar1[1]) {
+    Com_PrintError(0xe,0xffffffff82178308,puVar1[1],0x2ffc);
+    LargeLocal___LargeLocal(auStack_60);
+    __restgprlr_28(0);
+    return;
+  }
+  Com_Printf(0xe,0xffffffff821782d0,*puVar3,*(undefined4 *)param_2);
+  memcpy((void *)uVar2,(void *)*puVar1,puVar1[1]);
+  memset((void *)*puVar1,0,puVar1[1]);
+  StructuredData_MakeBuffer(auStack_58,uVar2,puVar1[1]);
+  StructuredData_InitializeLookup(puVar3,auStack_40);
+  StructuredData_InitializeLookup(param_2,auStack_50);
+  StructuredData_TranslateDefinition_r
+            (0,0xffffffff821782c8,auStack_40,auStack_50,auStack_58,param_3);
+  LargeLocal___LargeLocal(auStack_60);
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 825EC7A0  StructuredData_UpdateVersion  (universal/com_structureddatadef.cpp:1501)
+
+void StructuredData_UpdateVersion(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int *piVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar5;
+  undefined8 uVar4;
+  int iVar6;
+  char cVar7;
+  undefined8 uVar8;
+  int *piVar9;
+  undefined8 uVar10;
+  int iVar11;
+  ulonglong uVar12;
+  int iVar13;
+  bool bVar14;
+  undefined4 local_70 [28];
+  
+  puVar5 = (undefined4 *)__savegprlr_21();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x5e5,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (puVar5[1] == 0) {
+    MyAssertHandler(0xffffffff82177260,0x5e6,0,0xffffffff82000f98,0xffffffff82178960);
+  }
+  puVar3 = (undefined4 *)param_2;
+  piVar1 = (int *)puVar5[2];
+  if ((uint)puVar3[1] < 8) {
+    MyAssertHandler(0xffffffff82177260,0x3a,0,0xffffffff821772b0,puVar3[1],8);
+  }
+  local_70[0] = 0;
+  uVar4 = StructuredData_GetIntAtOffset(local_70,0,param_2);
+  if ((uint)puVar3[1] < 8) {
+    MyAssertHandler(0xffffffff82177260,0x44,0,0xffffffff821772b0,puVar3[1],8);
+  }
+  local_70[0] = 0;
+  iVar6 = StructuredData_GetIntAtOffset(local_70,4,param_2);
+  bVar14 = *(int *)(DAT_8365e118 + 0xc) == 0;
+  if ((uint)puVar3[1] < (uint)piVar1[0xc]) {
+    Com_Error(1,0xffffffff82178430,*puVar5);
+  }
+  iVar11 = (int)uVar4;
+  if (iVar11 == *piVar1) {
+    if ((bVar14) || (iVar6 == piVar1[1])) goto LAB_825ecaec;
+    Com_PrintError(0xe,0xffffffff821788f8);
+  }
+  if ((param_3 & 0xffffffff) == 0) goto LAB_825ec9a0;
+  piVar9 = (int *)param_3;
+  if (iVar11 != *piVar9) {
+    Com_PrintError(0xe,0xffffffff82178788,*piVar9,uVar4);
+    if (iVar11 == *piVar9) goto LAB_825ec9a0;
+    uVar8 = 0x61c;
+    uVar10 = 0xffffffff82178760;
+LAB_825ec990:
+    MyAssertHandler(0xffffffff82177260,uVar8,0,0xffffffff82000f98,uVar10);
+LAB_825ec9a0:
+    uVar12 = 1;
+    if (1 < (uint)puVar5[1]) {
+      iVar13 = 0x34;
+      do {
+        uVar2 = puVar5[2];
+        if (*(int *)(iVar13 + uVar2) == iVar11) {
+          if ((bVar14) || (*(int *)(iVar13 + uVar2 + 4) == iVar6)) {
+            param_3 = uVar12 * 0x34 + (ulonglong)uVar2;
+            if (param_3 != 0) goto LAB_825eca5c;
+            break;
+          }
+          Com_PrintError(0xe,0xffffffff82178700,uVar4);
+        }
+        uVar12 = uVar12 + 1;
+        iVar13 = iVar13 + 0x34;
+      } while ((uVar12 & 0xffffffff) < (ulonglong)(uint)puVar5[1]);
+    }
+    Com_PrintWarning(0xe,0xffffffff82178690,uVar4,*piVar1);
+    memset((void *)*puVar3,0,puVar3[1]);
+    StructuredData_SetDataVersion(piVar1,param_2);
+    __restgprlr_21(0);
+    return;
+  }
+  if (bVar14) {
+LAB_825eca64:
+    if (*(int *)((int)param_3 + 4) != iVar6) {
+      Com_PrintWarning(0xe,0xffffffff82178638,uVar4);
+    }
+  }
+  else {
+    if (iVar6 != piVar9[1]) {
+      Com_PrintError(0xe,0xffffffff82178850,uVar4);
+      if (iVar6 == piVar9[1]) goto LAB_825ec9a0;
+      uVar8 = 0x615;
+      uVar10 = 0xffffffff8217881c;
+      goto LAB_825ec990;
+    }
+LAB_825eca5c:
+    if (bVar14) goto LAB_825eca64;
+  }
+  cVar7 = StructuredData_TranslateDefinition(param_3,piVar1,param_2);
+  if (cVar7 == '\0') {
+    Com_PrintWarning(0xe,0xffffffff821785e0,uVar4,*piVar1);
+    memset((void *)*puVar3,0,puVar3[1]);
+    StructuredData_SetDataVersion(piVar1,param_2);
+    __restgprlr_21(0);
+    return;
+  }
+  StructuredData_SetDataVersion(piVar1,param_2);
+LAB_825ecaec:
+  __restgprlr_21(1);
+  return;
 }
 
 
@@ -1193,7 +2542,6 @@ void StructuredData_PrintAllData_r
   case 5:
     Com_Printf(0xe,0xffffffff8216caa0,local_90,param_3);
     if (*(uint *)(iVar1 + 0x10) <= (uint)puVar2[1]) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x679,0,0xffffffff82086aa0);
     }
     iVar7 = 0;
@@ -1208,7 +2556,6 @@ void StructuredData_PrintAllData_r
         }
         else {
           if (iVar11 == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82177200,0x6f,0,0xffffffff82000f98,0xffffffff820858c4);
           }
           lVar12 = StructuredData_GetByteOffset(*(undefined4 *)(iVar11 + 0xc),iVar11 + 4);
@@ -1226,7 +2573,6 @@ void StructuredData_PrintAllData_r
   case 6:
     Com_Printf(0xe,0xffffffff8216caa0,local_90,param_3);
     if (*(uint *)(iVar1 + 0x18) <= (uint)puVar2[1]) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x68b,0,0xffffffff82086a48);
     }
     piVar8 = (int *)(*(int *)(iVar1 + 0x1c) + puVar2[1] * 0x10);
@@ -1249,12 +2595,10 @@ void StructuredData_PrintAllData_r
   case 7:
     Com_Printf(0xe,0xffffffff8216caa0,local_90,param_3);
     if (*(uint *)(iVar1 + 0x20) <= (uint)puVar2[1]) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x69f,0,0xffffffff820869f8);
     }
     piVar8 = (int *)(*(int *)(iVar1 + 0x24) + puVar2[1] * 0x10);
     if (*(uint *)(iVar1 + 8) <= *(uint *)(*(int *)(iVar1 + 0x24) + puVar2[1] * 0x10)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82177260,0x6a2,0,0xffffffff820869a8);
     }
     piVar10 = (int *)(*piVar8 * 0xc + *(int *)(iVar1 + 0xc));
@@ -1293,21 +2637,54 @@ void StructuredData_PrintAllData_r
 
 // 825EBEA0  StructuredData_PrintAllData  (universal/com_structureddatadef.cpp:1715)
 
-void StructuredData_PrintAllData(void)
+void StructuredData_PrintAllData(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6b4,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6b5,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6b6,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  if ((uint)((int *)param_2)[1] < *(uint *)(iVar1 + 0x30)) {
+    MyAssertHandler(0xffffffff82177260,0x6b7,0,0xffffffff82178408);
+  }
+  StructuredData_PrintAllData_r(iVar1,iVar1 + 0x28,0xffffffff821782c8,1,0,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825EBF90  StructuredDataDef_GetAsset  (universal/com_structureddatadef.cpp:1734)
 
-void StructuredDataDef_GetAsset(void)
+void StructuredDataDef_GetAsset(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = StructuredDataDef_LoadDef();
+  if (*(int *)(iVar2 + 4) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6cb,0,0xffffffff82000f98,0xffffffff82178484);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x6cc,0,0xffffffff82000f98,0xffffffff82178474);
+  }
+  iVar2 = *(int *)(iVar2 + 8);
+  uVar3 = (ulonglong)*(uint *)(iVar2 + 0x30);
+  if ((param_2 & 0xffffffff) < uVar3) {
+    Com_Error(1,0xffffffff82178430,uVar1,uVar3,param_2);
+  }
+  __restgprlr_27(iVar2);
+  return;
 }
 
 
@@ -1344,15 +2721,12 @@ void StructuredData_NavigateFromCmd
   
   uVar1 = __savegprlr_25();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x6ec,0,0xffffffff82000f98,0xffffffff8206070c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x6ed,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x6ee,0,0xffffffff82000f98,0xffffffff82178994);
   }
   iVar2 = (*param_2)();
@@ -1395,11 +2769,9 @@ void StructuredData_NavigateByStrings
   
   uVar2 = __savegprlr_24();
   if ((uVar2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x708,0,0xffffffff82000f98,0xffffffff82076fc4);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82177260,0x709,0,0xffffffff82000f98,0xffffffff821784e8);
   }
   lVar4 = -1;
@@ -1413,7 +2785,6 @@ void StructuredData_NavigateByStrings
         return;
       }
       if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82177260,0x717,0,0xffffffff82000f98,0xffffffff82076f64);
       }
       lVar4 = lVar4 + 1;
@@ -1444,10 +2815,78 @@ void StructuredData_NavigateByStrings
 
 // 825EC228  StructuredData_PrintLookup  (universal/com_structureddatadef.cpp:1845)
 
-void StructuredData_PrintLookup(void)
+void StructuredData_PrintLookup(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar2;
+  int iVar3;
+  ulonglong uVar1;
+  char cVar5;
+  undefined2 uVar4;
+  undefined8 uVar6;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82177260,0x738,0,0xffffffff82000f98,0xffffffff82076fc4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82177260,0x739,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (*(int *)param_2 == 0) {
+    MyAssertHandler(0xffffffff82177260,0x73a,0,0xffffffff82000f98,0xffffffff820878e8);
+  }
+  iVar3 = StructuredData_GetLookupState(puVar2);
+  if (iVar3 == 2) {
+    MyAssertHandler(0xffffffff82177260,0x73c,0,0xffffffff82000f98,0xffffffff82178568);
+  }
+  iVar3 = StructuredData_GetLookupState(puVar2);
+  if (iVar3 == 0) {
+    StructuredData_PrintAllData_r(*puVar2,puVar2[1],0xffffffff821782c8,1,puVar2[2],param_2);
+    __restgprlr_28();
+    return;
+  }
+  iVar3 = StructuredData_GetLookupState(puVar2);
+  if (iVar3 != 1) {
+    MyAssertHandler(0xffffffff82177260,0x744,0,0xffffffff82000f98,0xffffffff8217852c);
+  }
+  uVar1 = StructuredData_GetLookupResultType(puVar2);
+  if (4 < (uVar1 & 0xffffffff)) {
+    Com_PrintError(0x10,0xffffffff821784fc);
+    __restgprlr_28();
+    return;
+  }
+  if ((int)uVar1 == 0) {
+    uVar6 = StructuredData_GetInt(puVar2,param_2);
+    Com_Printf(0x10,0xffffffff82178528,uVar6);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar1 != 1) {
+    if (uVar1 == 2) {
+      uVar6 = StructuredData_GetString(puVar2,param_2);
+      Com_Printf(0x10,0xffffffff82178520,uVar6);
+      __restgprlr_28();
+      return;
+    }
+    if (uVar1 != 3) {
+      uVar4 = StructuredData_GetShort(puVar2,param_2);
+      Com_Printf(0x10,0xffffffff82178518,uVar4);
+      __restgprlr_28();
+      return;
+    }
+    uVar6 = StructuredData_GetFloat(puVar2,param_2);
+    Com_Printf(0x10,0xffffffff82178518,uVar6);
+    __restgprlr_28();
+    return;
+  }
+  cVar5 = StructuredData_GetBool(puVar2,param_2);
+  if (cVar5 != '\0') {
+    Com_Printf(0x10,0xffffffff82004d30,0xffffffff82003cf8);
+    __restgprlr_28();
+    return;
+  }
+  Com_Printf(0x10,0xffffffff82004d30,0xffffffff82003cf0);
+  __restgprlr_28();
+  return;
 }
 

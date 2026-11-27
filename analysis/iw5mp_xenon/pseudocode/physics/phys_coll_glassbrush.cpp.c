@@ -25,3 +25,646 @@ double Phys_PenetrationIntoPlane(double param_1,int param_2,int param_3,float *p
   return dVar4;
 }
 
+
+// 8266AAD0  Phys_GetGlassWinding  (physics/phys_coll_glassbrush.cpp:32)
+
+void Phys_GetGlassWinding
+               (undefined8 param_1,int *param_2,float *param_3,undefined8 param_4,longlong param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  uint uVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  float *pfVar15;
+  int iVar16;
+  ulonglong uVar17;
+  float *pfVar18;
+  ulonglong uVar19;
+  float *pfVar20;
+  float *pfVar21;
+  longlong lVar22;
+  longlong lVar23;
+  double extraout_f1;
+  
+  uVar17 = __savegprlr_28();
+  fVar1 = (float)((double)*param_3 * extraout_f1);
+  fVar2 = (float)((double)param_3[1] * extraout_f1);
+  fVar3 = (float)((double)param_3[2] * extraout_f1);
+  pfVar21 = (float *)param_5;
+  if ((uVar17 & 0xffffffff) == 0) {
+    uVar10 = param_2[1];
+    uVar17 = (ulonglong)uVar10;
+    uVar19 = 0;
+    if (3 < (int)uVar10) {
+      iVar11 = *param_2;
+      lVar22 = param_5 + 0x14;
+      do {
+        pfVar15 = (float *)lVar22;
+        pfVar20 = (float *)((int)pfVar15 + iVar11 + (-0x14 - (int)pfVar21));
+        pfVar18 = (float *)((int)pfVar15 + iVar11 + (4 - (int)pfVar21));
+        uVar19 = uVar19 + 4;
+        fVar4 = pfVar20[1];
+        fVar5 = pfVar20[2];
+        pfVar15[-5] = *pfVar20 + fVar1;
+        fVar6 = pfVar20[3];
+        fVar7 = pfVar20[4];
+        fVar8 = pfVar20[5];
+        iVar12 = iVar11 + (0x10 - (int)pfVar21);
+        pfVar15[-4] = fVar4 + fVar2;
+        pfVar15[-3] = fVar5 + fVar3;
+        pfVar15[-2] = fVar6 + fVar1;
+        fVar4 = *pfVar18;
+        pfVar15[-1] = fVar7 + fVar2;
+        fVar5 = pfVar18[1];
+        *pfVar15 = fVar8 + fVar3;
+        fVar6 = pfVar18[2];
+        pfVar15[1] = fVar4 + fVar1;
+        fVar7 = *(float *)((int)pfVar15 + iVar11 + (0x10 - (int)pfVar21));
+        pfVar15[2] = fVar5 + fVar2;
+        fVar4 = *(float *)((int)pfVar15 + iVar12 + 4);
+        fVar5 = *(float *)((int)pfVar15 + iVar12 + 8);
+        pfVar15[3] = fVar6 + fVar3;
+        pfVar15[4] = fVar7 + fVar1;
+        pfVar15[5] = fVar4 + fVar2;
+        pfVar15[6] = fVar5 + fVar3;
+        lVar22 = lVar22 + 0x30;
+      } while ((uVar19 & 0xffffffff) < (uVar17 - 3 & 0xffffffff));
+    }
+    if ((uVar19 & 0xffffffff) < (ulonglong)uVar10) {
+      iVar11 = *param_2;
+      lVar22 = uVar17 - uVar19;
+      lVar23 = (uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_5 + 8;
+      do {
+        pfVar15 = (float *)lVar23;
+        pfVar18 = (float *)((int)pfVar15 + iVar11 + (-8 - (int)pfVar21));
+        fVar4 = pfVar18[1];
+        fVar5 = pfVar18[2];
+        pfVar15[-2] = *pfVar18 + fVar1;
+        pfVar15[-1] = fVar4 + fVar2;
+        *pfVar15 = fVar5 + fVar3;
+        lVar23 = lVar23 + 0xc;
+        lVar22 = lVar22 + -1;
+      } while (lVar22 != 0);
+      __restgprlr_28();
+      return;
+    }
+  }
+  else if ((uVar17 & 0xffffffff) == 1) {
+    uVar10 = param_2[1];
+    uVar17 = (ulonglong)uVar10;
+    uVar19 = 0;
+    if (3 < (int)uVar10) {
+      iVar11 = *param_2;
+      lVar22 = param_5 + -4;
+      do {
+        lVar23 = uVar17 - uVar19;
+        uVar19 = uVar19 + 4;
+        iVar12 = (int)lVar23 * 0xc + iVar11;
+        iVar14 = (int)(((lVar23 - 2U) + (lVar23 - 2U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        iVar13 = iVar14 + iVar11;
+        fVar8 = *(float *)(iVar14 + iVar11);
+        fVar4 = *(float *)(iVar12 + -8);
+        fVar5 = *(float *)(iVar12 + -4);
+        fVar6 = *(float *)(iVar13 + 4);
+        fVar7 = *(float *)(iVar13 + 8);
+        iVar16 = (int)(((lVar23 - 3U) + (lVar23 - 3U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        iVar14 = iVar16 + iVar11;
+        iVar13 = (int)lVar22;
+        *(float *)(iVar13 + 4) = *(float *)(iVar12 + -0xc) - fVar1;
+        *(float *)(iVar13 + 8) = fVar4 - fVar2;
+        *(float *)(iVar13 + 0xc) = fVar5 - fVar3;
+        *(float *)(iVar13 + 0x10) = fVar8 - fVar1;
+        fVar4 = *(float *)(iVar14 + 4);
+        fVar5 = *(float *)(iVar14 + 8);
+        iVar14 = (int)(((lVar23 - 4U) + (lVar23 - 4U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        iVar12 = iVar14 + iVar11;
+        fVar8 = *(float *)(iVar16 + iVar11);
+        *(float *)(iVar13 + 0x14) = fVar6 - fVar2;
+        *(float *)(iVar13 + 0x18) = fVar7 - fVar3;
+        *(float *)(iVar13 + 0x1c) = fVar8 - fVar1;
+        fVar7 = *(float *)(iVar14 + iVar11);
+        fVar6 = *(float *)(iVar12 + 4);
+        *(float *)(iVar13 + 0x20) = fVar4 - fVar2;
+        fVar4 = *(float *)(iVar12 + 8);
+        *(float *)(iVar13 + 0x24) = fVar5 - fVar3;
+        *(float *)(iVar13 + 0x28) = fVar7 - fVar1;
+        *(float *)(iVar13 + 0x2c) = fVar6 - fVar2;
+        lVar22 = lVar22 + 0x30;
+        *(float *)lVar22 = fVar4 - fVar3;
+      } while ((uVar19 & 0xffffffff) < (uVar17 - 3 & 0xffffffff));
+    }
+    if ((uVar19 & 0xffffffff) < (ulonglong)uVar10) {
+      iVar11 = *param_2;
+      lVar23 = uVar17 - uVar19;
+      lVar22 = (uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_5 + -4;
+      do {
+        iVar12 = (int)uVar19;
+        uVar19 = uVar19 + 1;
+        pfVar21 = (float *)(((uVar10 - iVar12) + -1) * 0xc + iVar11);
+        fVar4 = pfVar21[1];
+        fVar5 = pfVar21[2];
+        *(float *)((int)lVar22 + 4) = *pfVar21 - fVar1;
+        *(float *)((int)lVar22 + 8) = fVar4 - fVar2;
+        lVar22 = lVar22 + 0xc;
+        *(float *)lVar22 = fVar5 - fVar3;
+        lVar23 = lVar23 + -1;
+      } while (lVar23 != 0);
+      __restgprlr_28();
+      return;
+    }
+  }
+  else {
+    uVar17 = uVar17 - 2;
+    uVar19 = uVar17;
+    if (uVar17 == 0) {
+      uVar19 = (ulonglong)(uint)param_2[1];
+    }
+    pfVar15 = (float *)((int)uVar17 * 0xc + *param_2);
+    pfVar18 = (float *)(((int)uVar19 + -1) * 0xc + *param_2);
+    uVar17 = 4;
+    fVar4 = pfVar15[1];
+    fVar5 = pfVar18[1];
+    fVar6 = pfVar15[2];
+    fVar7 = pfVar18[2];
+    fVar8 = *pfVar15;
+    *pfVar21 = *pfVar18 - fVar1;
+    pfVar21[1] = fVar5 - fVar2;
+    pfVar21[2] = fVar7 - fVar3;
+    fVar5 = pfVar18[1];
+    pfVar21[3] = fVar8 - fVar1;
+    pfVar21[4] = fVar4 - fVar2;
+    pfVar21[5] = fVar6 - fVar3;
+    fVar7 = *pfVar18;
+    fVar9 = pfVar18[2];
+    pfVar21[6] = fVar8 + fVar1;
+    pfVar21[7] = fVar4 + fVar2;
+    pfVar21[8] = fVar6 + fVar3;
+    pfVar21[9] = fVar7 + fVar1;
+    pfVar21[10] = fVar5 + fVar2;
+    pfVar21[0xb] = fVar9 + fVar3;
+  }
+  __restgprlr_28(uVar17);
+  return;
+}
+
+
+// 8266AE90  Phys_CollideGlassWithBrush  (physics/phys_coll_glassbrush.cpp:66)
+
+void Phys_CollideGlassWithBrush
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  ushort uVar5;
+  int *piVar6;
+  bool bVar7;
+  int iVar8;
+  float fVar9;
+  ulonglong uVar10;
+  undefined8 uVar11;
+  ushort *puVar12;
+  ulonglong uVar13;
+  int iVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  undefined4 *puVar18;
+  float *pfVar19;
+  ulonglong uVar20;
+  longlong lVar21;
+  uint uVar24;
+  float *pfVar25;
+  ulonglong uVar22;
+  longlong lVar23;
+  ulonglong uVar26;
+  ulonglong uVar27;
+  int iVar28;
+  uint uVar30;
+  ulonglong uVar29;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  double dVar38;
+  double dVar39;
+  uint local_294c;
+  float local_28c0 [521];
+  int local_209c [12];
+  int local_206c [499];
+  float afStack_18a0 [768];
+  undefined1 local_ca0 [3232];
+  
+  uVar10 = ZEXT48(&stack0x00000000);
+  __savegprlr_20();
+  uVar11 = __savefpr_26();
+  iVar14 = (int)param_3;
+  piVar6 = *(int **)(iVar14 + 0x88);
+  uVar30 = piVar6[3];
+  dVar38 = (double)(*(float *)(iVar14 + 0x40) * 0.03125);
+  dVar37 = (double)(*(float *)(iVar14 + 0x44) * 0.03125);
+  local_294c = 0;
+  dVar36 = (double)(*(float *)(iVar14 + 0x48) * 0.03125);
+  dVar35 = (double)(*(float *)(iVar14 + 0x4c) * 0.03125);
+  dVar34 = (double)(*(float *)(iVar14 + 0x50) * 0.03125);
+  dVar33 = (double)(*(float *)(iVar14 + 0x54) * 0.03125);
+  iVar28 = (uint)*(ushort *)(piVar6[1] * 0x20 + *(int *)(*piVar6 + 0x38) + 0xe) * 4 +
+           *(int *)(*piVar6 + 0x40);
+  do {
+    uVar27 = LZCOUNT(uVar30);
+    if (0x20 < uVar27) {
+      MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar27,0x21);
+    }
+    iVar8 = (int)(uVar27 << 2);
+    fVar2 = *(float *)(iVar14 + 0x38);
+    fVar3 = *(float *)(iVar14 + 0x3c);
+    uVar24 = local_294c + 1;
+    uVar30 = uVar30 & ~*(uint *)((int)&DAT_82992400 + iVar8);
+    dVar32 = (double)(longlong)(int)*(short *)(iVar8 + iVar28);
+    dVar31 = (double)(longlong)(int)*(short *)(iVar8 + iVar28 + 2);
+    afStack_18a0[local_294c * 3] =
+         (float)(dVar31 * dVar35 + (double)(float)(dVar32 * dVar38)) + *(float *)(iVar14 + 0x34);
+    afStack_18a0[local_294c * 3 + 1] =
+         (float)(dVar34 * dVar31 + (double)(float)(dVar37 * dVar32)) + fVar2;
+    afStack_18a0[local_294c * 3 + 2] =
+         (float)(dVar33 * dVar31 + (double)(float)(dVar36 * dVar32)) + fVar3;
+    local_294c = uVar24;
+  } while (uVar30 != 0);
+  uVar27 = 0;
+  CM_BuildAxialPlanes(uVar11,uVar10 - 0x2920);
+  dVar34 = (double)(float)piVar6[2];
+  dVar33 = -3.4028234663852886e+38;
+  param_3 = param_3 + 0x58;
+  uVar15 = 0;
+  lVar17 = uVar10 - 0x2918;
+  dVar36 = 3.4028234663852886e+38;
+  dVar35 = 0.0;
+  do {
+    pfVar19 = (float *)lVar17;
+    uVar30 = 0;
+    dVar37 = dVar36;
+    pfVar25 = afStack_18a0 + 2;
+    do {
+      dVar38 = (double)((*pfVar25 * *pfVar19 + pfVar25[-2] * pfVar19[-2] + pfVar19[-1] * pfVar25[-1]
+                        ) - (float)(ABS((double)(*(float *)(iVar14 + 0x60) * *pfVar19 +
+                                                *(float *)(iVar14 + 0x58) * pfVar19[-2] +
+                                                *(float *)(iVar14 + 0x5c) * pfVar19[-1])) * dVar34 +
+                                   (double)pfVar19[1]));
+      if (dVar38 < dVar37) {
+        dVar37 = dVar38;
+      }
+      uVar30 = uVar30 + 1;
+      pfVar25 = pfVar25 + 3;
+    } while (uVar30 != uVar24);
+    if ((dVar33 < dVar37) && (uVar27 = uVar15, dVar33 = dVar37, 0.0 <= dVar37)) goto LAB_8266b95c;
+    uVar15 = uVar15 + 1;
+    lVar17 = lVar17 + 0x10;
+  } while ((uVar15 & 0xffffffff) < 6);
+  puVar12 = (ushort *)param_2;
+  uVar5 = *puVar12;
+  uVar15 = 6;
+  uVar26 = (ulonglong)uVar5 + 6;
+  if (6 < uVar26) {
+    puVar18 = *(undefined4 **)(puVar12 + 2);
+    do {
+      pfVar19 = (float *)*puVar18;
+      uVar30 = 0;
+      dVar37 = dVar36;
+      pfVar25 = afStack_18a0 + 2;
+      do {
+        dVar38 = (double)((*pfVar25 * pfVar19[2] + pfVar25[-2] * *pfVar19 + pfVar25[-1] * pfVar19[1]
+                          ) - (float)(ABS((double)(*(float *)(iVar14 + 0x60) * pfVar19[2] +
+                                                  *(float *)(iVar14 + 0x58) * *pfVar19 +
+                                                  *(float *)(iVar14 + 0x5c) * pfVar19[1])) * dVar34
+                                     + (double)pfVar19[3]));
+        if (dVar38 < dVar37) {
+          dVar37 = dVar38;
+        }
+        uVar30 = uVar30 + 1;
+        pfVar25 = pfVar25 + 3;
+      } while (uVar30 != uVar24);
+      if ((dVar33 < dVar37) && (uVar27 = uVar15, dVar33 = dVar37, 0.0 <= dVar37)) goto LAB_8266b95c;
+      uVar15 = uVar15 + 1;
+      puVar18 = puVar18 + 2;
+    } while ((uVar15 & 0xffffffff) < uVar26);
+  }
+  uVar15 = 0;
+  uVar29 = 0;
+  if (uVar26 != 0) {
+    lVar17 = uVar10 - 0x20a0;
+    do {
+      *(undefined4 *)lVar17 =
+           local_ca0 + (int)((uVar15 + (uVar15 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+      Phys_GetWindingForBrushFace2(uVar11,param_2,uVar29,lVar17,0x100 - uVar15,uVar10 - 0x2920);
+      uVar22 = (ulonglong)(uint)((undefined4 *)lVar17)[1];
+      if ((uVar22 != 0) && (uVar15 = uVar22 + uVar15, 0x100 < (uVar15 & 0xffffffff))) {
+        MyAssertHandler(0xffffffff82193808,0xaa,0,0xffffffff821937d0,uVar15,0x100);
+      }
+      uVar29 = uVar29 + 1;
+      lVar17 = lVar17 + 8;
+    } while ((uVar29 & 0xffffffff) < uVar26);
+    if ((uVar15 & 0xffffffff) != 0) {
+      fVar2 = *(float *)(iVar14 + 0x34);
+      uVar22 = 0;
+      dVar32 = (double)(*(float *)(iVar14 + 0x38) * *(float *)(iVar14 + 0x5c) +
+                       fVar2 * *(float *)param_3);
+      dVar31 = (double)(*(float *)(iVar14 + 0x38) * -*(float *)(iVar14 + 0x5c) +
+                       fVar2 * -*(float *)param_3);
+      dVar38 = (double)(float)((double)*(float *)(iVar14 + 0x3c) * (double)*(float *)(iVar14 + 0x60)
+                              + dVar32);
+      dVar37 = (double)(float)((double)*(float *)(iVar14 + 0x3c) *
+                               -(double)*(float *)(iVar14 + 0x60) + dVar31);
+      uVar29 = 0;
+      if (uVar24 != 0) {
+        iVar14 = 0;
+        lVar17 = uVar10 - 0x2898;
+        dVar39 = 1.0;
+        do {
+          Vec3Cross(dVar37,dVar38,dVar31,dVar32,param_3,uVar10 - 0x2948,lVar17 + -8);
+          pfVar19 = (float *)lVar17;
+          fVar2 = pfVar19[-1];
+          fVar3 = pfVar19[-2];
+          fVar4 = *pfVar19;
+          uVar29 = (ulonglong)uVar24;
+          uVar22 = uVar22 + 1;
+          dVar38 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+          dVar37 = dVar39;
+          if (-dVar38 < 0.0) {
+            dVar37 = dVar38;
+          }
+          fVar1 = (float)(dVar39 / dVar37);
+          dVar38 = (double)(fVar3 * fVar1);
+          pfVar19[-2] = fVar3 * fVar1;
+          pfVar19[-1] = fVar2 * fVar1;
+          dVar32 = (double)(fVar4 * fVar1);
+          *pfVar19 = fVar4 * fVar1;
+          iVar28 = iVar14 + 4;
+          dVar31 = (double)*(float *)((int)afStack_18a0 + iVar14 + 8);
+          dVar37 = (double)*(float *)((int)afStack_18a0 + iVar14);
+          iVar14 = iVar14 + 0xc;
+          pfVar19[1] = (float)(dVar31 * dVar32 +
+                              (double)(fVar2 * fVar1 * *(float *)((int)afStack_18a0 + iVar28) +
+                                      (float)(dVar38 * dVar37)));
+          lVar17 = lVar17 + 0x10;
+        } while ((uVar22 & 0xffffffff) != uVar29);
+      }
+      uVar13 = uVar29 + 2;
+      uVar22 = 0;
+      bVar7 = false;
+      uVar16 = 0;
+      if ((uVar13 & 0xffffffff) != 0) {
+        lVar17 = uVar10 - 0x28b4;
+        do {
+          pfVar19 = (float *)lVar17;
+          uVar20 = 0;
+          lVar23 = uVar10 - 0xc98;
+          dVar37 = dVar36;
+          do {
+            pfVar25 = (float *)lVar23;
+            dVar38 = (double)((pfVar19[-1] * *pfVar25 +
+                              pfVar19[-2] * pfVar25[-1] + pfVar25[-2] * pfVar19[-3]) - *pfVar19);
+            if (dVar38 < dVar37) {
+              dVar37 = dVar38;
+            }
+            uVar20 = uVar20 + 1;
+            lVar23 = lVar23 + 0xc;
+          } while ((uVar20 & 0xffffffff) != (uVar15 & 0xffffffff));
+          if (dVar33 < dVar37) {
+            if (dVar35 <= dVar37) goto LAB_8266b95c;
+            bVar7 = true;
+            uVar22 = uVar16;
+            dVar33 = dVar37;
+          }
+          uVar16 = uVar16 + 1;
+          lVar17 = lVar17 + 0x10;
+        } while ((uVar16 & 0xffffffff) < (uVar13 & 0xffffffff));
+      }
+      if ((bVar7) ||
+         (lVar17 = (uVar27 & 0x1fffffff) * 8, *(int *)((int)local_209c + (int)lVar17) == 0)) {
+        uVar15 = 0;
+        fVar2 = 2.0;
+        if (3 < (uint)uVar26) {
+          lVar17 = uVar10 - 0x2910;
+          iVar14 = -0x30;
+          do {
+            pfVar19 = (float *)lVar17;
+            if (*(int *)((int)local_206c + iVar14) != 0) {
+              if ((uVar15 & 0xffffffff) < 6) {
+                pfVar25 = pfVar19 + -4;
+              }
+              else {
+                pfVar25 = *(float **)(*(int *)(puVar12 + 2) + iVar14);
+              }
+              iVar28 = (int)((uVar22 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar28 + 8) * pfVar25[2] +
+                      *(float *)((int)local_28c0 + iVar28 + 4) * pfVar25[1] +
+                      *(float *)((int)local_28c0 + iVar28) * *pfVar25;
+              if (fVar3 < fVar2) {
+                uVar27 = uVar15;
+                fVar2 = fVar3;
+              }
+            }
+            if (*(int *)((int)local_206c + iVar14 + 8) != 0) {
+              pfVar25 = pfVar19;
+              if (5 < (uVar15 + 1 & 0xffffffff)) {
+                pfVar25 = *(float **)(*(int *)(puVar12 + 2) + iVar14 + 8);
+              }
+              iVar28 = (int)((uVar22 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar28 + 8) * pfVar25[2] +
+                      *(float *)((int)local_28c0 + iVar28 + 4) * pfVar25[1] +
+                      *(float *)((int)local_28c0 + iVar28) * *pfVar25;
+              if (fVar3 < fVar2) {
+                uVar27 = uVar15 + 1;
+                fVar2 = fVar3;
+              }
+            }
+            if (*(int *)((int)local_206c + iVar14 + 0x10) != 0) {
+              if ((uVar15 & 0xffffffff) < 4) {
+                pfVar25 = pfVar19 + 4;
+              }
+              else {
+                pfVar25 = *(float **)(*(int *)(puVar12 + 2) + iVar14 + 0x10);
+              }
+              iVar28 = (int)((uVar22 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar28 + 8) * pfVar25[2] +
+                      *(float *)((int)local_28c0 + iVar28 + 4) * pfVar25[1] +
+                      *(float *)((int)local_28c0 + iVar28) * *pfVar25;
+              if (fVar3 < fVar2) {
+                uVar27 = uVar15 + 2;
+                fVar2 = fVar3;
+              }
+            }
+            if (*(int *)((int)local_206c + iVar14 + 0x18) != 0) {
+              if ((uVar15 + 3 & 0xffffffff) < 6) {
+                pfVar19 = pfVar19 + 8;
+              }
+              else {
+                pfVar19 = *(float **)(*(int *)(puVar12 + 2) + iVar14 + 0x18);
+              }
+              iVar28 = (int)((uVar22 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar28 + 8) * pfVar19[2] +
+                      *(float *)((int)local_28c0 + iVar28 + 4) * pfVar19[1] +
+                      *(float *)((int)local_28c0 + iVar28) * *pfVar19;
+              if (fVar3 < fVar2) {
+                uVar27 = uVar15 + 3;
+                fVar2 = fVar3;
+              }
+            }
+            uVar15 = uVar15 + 4;
+            iVar14 = iVar14 + 0x20;
+            lVar17 = lVar17 + 0x40;
+          } while ((uVar15 & 0xffffffff) < (ulonglong)uVar5 + 3);
+        }
+        if ((uVar15 & 0xffffffff) < uVar26) {
+          lVar21 = uVar26 - uVar15;
+          lVar17 = (uVar15 & 0xfffffff) * 0x10 + (uVar10 - 0x2920);
+          lVar23 = (uVar15 - 6 & 0x1fffffff) << 3;
+          do {
+            pfVar19 = (float *)lVar17;
+            if (*(int *)((int)local_206c + (int)lVar23) != 0) {
+              if (5 < (uVar15 & 0xffffffff)) {
+                pfVar19 = *(float **)(*(int *)(puVar12 + 2) + (int)lVar23);
+              }
+              iVar14 = (int)((uVar22 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar14 + 8) * pfVar19[2] +
+                      *(float *)((int)local_28c0 + iVar14 + 4) * pfVar19[1] +
+                      *(float *)((int)local_28c0 + iVar14) * *pfVar19;
+              if (fVar3 < fVar2) {
+                uVar27 = uVar15;
+                fVar2 = fVar3;
+              }
+            }
+            uVar15 = uVar15 + 1;
+            lVar23 = lVar23 + 8;
+            lVar17 = lVar17 + 0x10;
+            lVar21 = lVar21 + -1;
+          } while (lVar21 != 0);
+        }
+        lVar23 = (uVar27 & 0x1fffffff) * 8;
+        if (*(int *)((int)local_209c + (int)lVar23) == 0) {
+          MyAssertHandler(0xffffffff82193808,0xe5,0,0xffffffff82000f98,0xffffffff821937ac);
+        }
+        Phys_GetGlassWinding(dVar34,uVar22,uVar10 - 0x2950,param_3);
+        uVar11 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar27);
+        uVar15 = (uVar22 & 0xfffffff) * 0x10 + (uVar10 - 0x28c0);
+        lVar23 = lVar23 + (uVar10 - 0x20a0);
+        lVar17 = uVar10 - 0x2950;
+        uVar10 = uVar15;
+      }
+      else {
+        if ((uVar27 & 0xffffffff) < 6) {
+          uVar15 = (uVar27 & 0xfffffff) * 0x10 + (uVar10 - 0x2920);
+        }
+        else {
+          uVar15 = (ulonglong)
+                   *(uint *)((int)((uVar27 - 6 & 0xffffffff) << 3) + *(int *)(puVar12 + 2));
+        }
+        uVar26 = 0;
+        fVar2 = 2.0;
+        pfVar19 = (float *)uVar15;
+        if (3 < (int)uVar13) {
+          fVar3 = pfVar19[1];
+          fVar4 = *pfVar19;
+          lVar23 = uVar10 - 0x28b8;
+          fVar1 = pfVar19[2];
+          do {
+            pfVar25 = (float *)lVar23;
+            fVar9 = *pfVar25 * fVar1 + pfVar25[-2] * fVar4 + pfVar25[-1] * fVar3;
+            if (fVar9 < fVar2) {
+              uVar22 = uVar26;
+              fVar2 = fVar9;
+            }
+            fVar9 = pfVar25[4] * fVar1 + pfVar25[2] * fVar4 + pfVar25[3] * fVar3;
+            if (fVar9 < fVar2) {
+              uVar22 = uVar26 + 1;
+              fVar2 = fVar9;
+            }
+            fVar9 = pfVar25[8] * fVar1 + pfVar25[6] * fVar4 + pfVar25[7] * fVar3;
+            if (fVar9 < fVar2) {
+              uVar22 = uVar26 + 2;
+              fVar2 = fVar9;
+            }
+            fVar9 = pfVar25[0xc] * fVar1 + pfVar25[10] * fVar4 + pfVar25[0xb] * fVar3;
+            if (fVar9 < fVar2) {
+              uVar22 = uVar26 + 3;
+              fVar2 = fVar9;
+            }
+            uVar26 = uVar26 + 4;
+            lVar23 = lVar23 + 0x40;
+          } while ((uVar26 & 0xffffffff) < (uVar29 - 1 & 0xffffffff));
+        }
+        if ((uVar26 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+          lVar23 = uVar13 - uVar26;
+          lVar21 = (uVar26 & 0xfffffff) * 0x10 + (uVar10 - 0x28b8);
+          do {
+            pfVar25 = (float *)lVar21;
+            fVar3 = *pfVar25 * pfVar19[2] + pfVar25[-2] * *pfVar19 + pfVar25[-1] * pfVar19[1];
+            if (fVar3 < fVar2) {
+              uVar22 = uVar26;
+              fVar2 = fVar3;
+            }
+            uVar26 = uVar26 + 1;
+            lVar21 = lVar21 + 0x10;
+            lVar23 = lVar23 + -1;
+          } while (lVar23 != 0);
+        }
+        Phys_GetGlassWinding(dVar34,uVar22,uVar10 - 0x2950,param_3,uVar13,uVar10 - 0x12a0);
+        uVar11 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar27);
+        lVar23 = uVar10 - 0x2950;
+        lVar17 = lVar17 + (uVar10 - 0x20a0);
+        uVar10 = uVar10 - 0x2938;
+      }
+      Phys_ProjectFaceOntoFaceAndClip(uVar15,lVar17,lVar23,uVar11,param_4,uVar10);
+    }
+  }
+LAB_8266b95c:
+  __restfpr_26();
+  __restgprlr_20();
+  return;
+}
+
+
+// 8266B970  Phys_CollideGlassWithTriangleList  (physics/phys_coll_glassbrush.cpp:275)
+
+void Phys_CollideGlassWithTriangleList
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,void *param_4,
+               undefined8 param_5,undefined8 param_6)
+
+{
+  undefined8 uVar1;
+  undefined1 auStack_e0 [4];
+  undefined4 local_dc;
+  undefined4 local_b0;
+  float local_58;
+  float local_54;
+  undefined4 local_50;
+  
+  uVar1 = __savegprlr_26();
+  memcpy(auStack_e0,param_4,0xa8);
+  local_b0 = 5;
+  local_dc = 3;
+  local_58 = *(float *)((*(int **)((int)param_4 + 0x88))[1] * 0x20 +
+                        *(int *)(**(int **)((int)param_4 + 0x88) + 0x34) + 0x1c) * 0.5;
+  local_50 = 0x3f000000;
+  local_54 = local_58;
+  Phys_CollideCylinderWithTriangleList(uVar1,param_2,param_3,auStack_e0,param_5,param_6);
+  __restgprlr_26();
+  return;
+}
+

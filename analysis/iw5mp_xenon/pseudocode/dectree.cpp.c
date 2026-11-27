@@ -316,3 +316,33 @@ bool XCOMPRESS__read_main_and_secondary_trees(int param_1)
   return false;
 }
 
+
+// 828B7E38  XCOMPRESS::read_aligned_offset_tree  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/dectree.cpp:356)
+
+void XCOMPRESS__read_aligned_offset_tree(void)
+
+{
+  int iVar1;
+  undefined1 uVar2;
+  char cVar3;
+  bool bVar4;
+  int iVar5;
+  
+  iVar1 = __savegprlr_29();
+  iVar5 = 0;
+  do {
+    uVar2 = XCOMPRESS__getbits(iVar1,3);
+    *(undefined1 *)(iVar1 + 0xe34 + iVar5) = uVar2;
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 8);
+  if (*(char *)(iVar1 + 0x2eb7) == '\0') {
+    cVar3 = XCOMPRESS__make_table_8bit(iVar1,iVar1 + 0xe34,iVar1 + 0xdb4);
+    bVar4 = cVar3 != '\0';
+  }
+  else {
+    bVar4 = false;
+  }
+  __restgprlr_29(bVar4);
+  return;
+}
+

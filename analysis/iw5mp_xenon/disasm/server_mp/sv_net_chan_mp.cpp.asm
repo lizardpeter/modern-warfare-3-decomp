@@ -19,10 +19,165 @@
 ; 8257DAE8  SV_Netchan_TransmitNextFragment  (server_mp/sv_net_chan_mp.cpp:102)
   8257DAE8  7D8802A6             mfspr r12,LR
   8257DAEC  48398BC9             bl 0x829166b4
+  8257DAF0  9421FF80             stwu r1,-0x80(r1)
+  8257DAF4  7C7E1B78             or r30,r3,r3
+  8257DAF8  83640034             lwz r27,0x34(r4)
+  8257DAFC  7C832378             or r3,r4,r4
+  8257DB00  83A40038             lwz r29,0x38(r4)
+  8257DB04  7C9F2378             or r31,r4,r4
+  8257DB08  4BF8CE99             bl 0x8250a9a0
+  8257DB0C  817F0030             lwz r11,0x30(r31)
+  8257DB10  7C7C1B78             or r28,r3,r3
+  8257DB14  2F0B0000             cmpwi cr6,r11,0x0
+  8257DB18  409A003C             bne cr6,0x8257db54
+  8257DB1C  3D6083D1             lis r11,-0x7c2f
+  8257DB20  815F0000             lwz r10,0x0(r31)
+  8257DB24  3D200021             lis r9,0x21
+  8257DB28  390BB580             subi r8,r11,0x4a80
+  8257DB2C  61272AA8             ori r7,r9,0x2aa8
+  8257DB30  38A03380             li r5,0x3380
+  8257DB34  38800000             li r4,0x0
+  8257DB38  7D68382E             lwzx r11,r8,r7
+  8257DB3C  7D465838             and r6,r10,r11
+  8257DB40  1D663380             mulli r11,r6,0x3380
+  8257DB44  7C6BF214             add r3,r11,r30
+  8257DB48  3C630003             addis r3,r3,0x3
+  8257DB4C  38635300             addi r3,r3,0x5300
+  8257DB50  480690D1             bl 0x825e6c20
+LAB_8257db54:
+  8257DB54  578B063E             rlwinm r11,r28,0x0,0x18,0x1f
+  8257DB58  2B0B0000             cmplwi cr6,r11,0x0
+  8257DB5C  409A0010             bne cr6,0x8257db6c
+  8257DB60  817F0010             lwz r11,0x10(r31)
+  8257DB64  2F0B0000             cmpwi cr6,r11,0x0
+  8257DB68  409A0090             bne cr6,0x8257dbf8
+LAB_8257db6c:
+  8257DB6C  811F0038             lwz r8,0x38(r31)
+  8257DB70  7F1D4000             cmpw cr6,r29,r8
+  8257DB74  419A0024             beq cr6,0x8257db98
+  8257DB78  3D608216             lis r11,-0x7dea
+  8257DB7C  3D408216             lis r10,-0x7dea
+  8257DB80  38CB0D68             addi r6,r11,0xd68
+  8257DB84  386A0D20             addi r3,r10,0xd20
+  8257DB88  7FA7EB78             or r7,r29,r29
+  8257DB8C  38A00000             li r5,0x0
+  8257DB90  38800079             li r4,0x79
+  8257DB94  4805696D             bl 0x825d4500
+LAB_8257db98:
+  8257DB98  817F0034             lwz r11,0x34(r31)
+  8257DB9C  7FFB5851             subf. r31,r27,r11
+  8257DBA0  41810018             bgt 0x8257dbb8
+  8257DBA4  3D608216             lis r11,-0x7dea
+  8257DBA8  7FE5FB78             or r5,r31,r31
+  8257DBAC  388B0CC8             addi r4,r11,0xcc8
+  8257DBB0  3860000F             li r3,0xf
+  8257DBB4  4BF790CD             bl 0x824f6c80
+LAB_8257dbb8:
+  8257DBB8  3D6083CF             lis r11,-0x7c31
+  8257DBBC  3D400000             lis r10,0x0
+  8257DBC0  3D200000             lis r9,0x0
+  8257DBC4  390BD708             subi r8,r11,0x28f8
+  8257DBC8  6147EE10             ori r7,r10,0xee10
+  8257DBCC  6126EE68             ori r6,r9,0xee68
+  8257DBD0  3CA00000             lis r5,0x0
+  8257DBD4  3C800000             lis r4,0x0
+  8257DBD8  60A9EE10             ori r9,r5,0xee10
+  8257DBDC  7D68382E             lwzx r11,r8,r7
+  8257DBE0  6087EE68             ori r7,r4,0xee68
+  8257DBE4  7D48302E             lwzx r10,r8,r6
+  8257DBE8  7D6BFA14             add r11,r11,r31
+  8257DBEC  7D4AFA14             add r10,r10,r31
+  8257DBF0  7D68492E             stwx r11,r8,r9
+  8257DBF4  7D48392E             stwx r10,r8,r7
+LAB_8257dbf8:
+  8257DBF8  7F83E378             or r3,r28,r28
+  8257DBFC  38210080             addi r1,r1,0x80
+  8257DC00  48398B04             b 0x82916704
 
 ; 8257DC08  SV_Netchan_Transmit  (server_mp/sv_net_chan_mp.cpp:145)
   8257DC08  7D8802A6             mfspr r12,LR
   8257DC0C  48398AAD             bl 0x829166b8
+  8257DC10  9421FF80             stwu r1,-0x80(r1)
+  8257DC14  7CBD2B78             or r29,r5,r5
+  8257DC18  3BC30018             addi r30,r3,0x18
+  8257DC1C  7C7F1B78             or r31,r3,r3
+  8257DC20  7C852378             or r5,r4,r4
+  8257DC24  7FA4EB78             or r4,r29,r29
+  8257DC28  7FC3F378             or r3,r30,r30
+  8257DC2C  4BF8CF75             bl 0x8250aba0
+  8257DC30  817F0048             lwz r11,0x48(r31)
+  8257DC34  7C7C1B78             or r28,r3,r3
+  8257DC38  2F0B0000             cmpwi cr6,r11,0x0
+  8257DC3C  409A003C             bne cr6,0x8257dc78
+  8257DC40  3D6083D1             lis r11,-0x7c2f
+  8257DC44  815E0000             lwz r10,0x0(r30)
+  8257DC48  3D200021             lis r9,0x21
+  8257DC4C  390BB580             subi r8,r11,0x4a80
+  8257DC50  61272AA8             ori r7,r9,0x2aa8
+  8257DC54  38A03380             li r5,0x3380
+  8257DC58  38800000             li r4,0x0
+  8257DC5C  7D68382E             lwzx r11,r8,r7
+  8257DC60  7D665038             and r6,r11,r10
+  8257DC64  1D663380             mulli r11,r6,0x3380
+  8257DC68  7C6BFA14             add r3,r11,r31
+  8257DC6C  3C630003             addis r3,r3,0x3
+  8257DC70  38635300             addi r3,r3,0x5300
+  8257DC74  48068FAD             bl 0x825e6c20
+LAB_8257dc78:
+  8257DC78  3D6083CF             lis r11,-0x7c31
+  8257DC7C  816BD680             lwz r11,-0x2980(r11)
+  8257DC80  814B000C             lwz r10,0xc(r11)
+  8257DC84  7F1D5000             cmpw cr6,r29,r10
+  8257DC88  4099000C             ble cr6,0x8257dc94
+  8257DC8C  39600001             li r11,0x1
+  8257DC90  917F0014             stw r11,0x14(r31)
+LAB_8257dc94:
+  8257DC94  578B063E             rlwinm r11,r28,0x0,0x18,0x1f
+  8257DC98  2B0B0000             cmplwi cr6,r11,0x0
+  8257DC9C  409A0010             bne cr6,0x8257dcac
+  8257DCA0  817F0028             lwz r11,0x28(r31)
+  8257DCA4  2F0B0000             cmpwi cr6,r11,0x0
+  8257DCA8  409A0084             bne cr6,0x8257dd2c
+LAB_8257dcac:
+  8257DCAC  817F0048             lwz r11,0x48(r31)
+  8257DCB0  2F0B0000             cmpwi cr6,r11,0x0
+  8257DCB4  419A0018             beq cr6,0x8257dccc
+  8257DCB8  817F004C             lwz r11,0x4c(r31)
+  8257DCBC  815F0050             lwz r10,0x50(r31)
+  8257DCC0  7D6A5850             subf r11,r10,r11
+  8257DCC4  7FEBEA14             add r31,r11,r29
+  8257DCC8  48000008             b 0x8257dcd0
+LAB_8257dccc:
+  8257DCCC  7FBFEB78             or r31,r29,r29
+LAB_8257dcd0:
+  8257DCD0  2F1F0000             cmpwi cr6,r31,0x0
+  8257DCD4  41990018             bgt cr6,0x8257dcec
+  8257DCD8  3D608216             lis r11,-0x7dea
+  8257DCDC  7FE5FB78             or r5,r31,r31
+  8257DCE0  388B0CC8             addi r4,r11,0xcc8
+  8257DCE4  3860000F             li r3,0xf
+  8257DCE8  4BF78F99             bl 0x824f6c80
+LAB_8257dcec:
+  8257DCEC  3D6083CF             lis r11,-0x7c31
+  8257DCF0  3D400000             lis r10,0x0
+  8257DCF4  3D200000             lis r9,0x0
+  8257DCF8  390BD708             subi r8,r11,0x28f8
+  8257DCFC  6147EE10             ori r7,r10,0xee10
+  8257DD00  6126EE68             ori r6,r9,0xee68
+  8257DD04  3CA00000             lis r5,0x0
+  8257DD08  3C800000             lis r4,0x0
+  8257DD0C  60A9EE10             ori r9,r5,0xee10
+  8257DD10  7D68382E             lwzx r11,r8,r7
+  8257DD14  6087EE68             ori r7,r4,0xee68
+  8257DD18  7D48302E             lwzx r10,r8,r6
+  8257DD1C  7D6BFA14             add r11,r11,r31
+  8257DD20  7D4AFA14             add r10,r10,r31
+  8257DD24  7D68492E             stwx r11,r8,r9
+  8257DD28  7D48392E             stwx r10,r8,r7
+LAB_8257dd2c:
+  8257DD2C  7F83E378             or r3,r28,r28
+  8257DD30  38210080             addi r1,r1,0x80
+  8257DD34  483989D4             b 0x82916708
 
 ; 8257DD38  SV_Netchan_AddOOBProfilePacket  (server_mp/sv_net_chan_mp.cpp:187)
   8257DD38  7D8802A6             mfspr r12,LR
@@ -57,10 +212,117 @@ LAB_8257dd8c:
 ; 8257DDA8  SV_Netchan_SendOOBPacket  (server_mp/sv_net_chan_mp.cpp:203)
   8257DDA8  7D8802A6             mfspr r12,LR
   8257DDAC  48398909             bl 0x829166b4
+  8257DDB0  9421FF80             stwu r1,-0x80(r1)
+  8257DDB4  81640000             lwz r11,0x0(r4)
+  8257DDB8  7C7E1B78             or r30,r3,r3
+  8257DDBC  7C9D2378             or r29,r4,r4
+  8257DDC0  7CBC2B78             or r28,r5,r5
+  8257DDC4  7CDB3378             or r27,r6,r6
+  8257DDC8  2F0BFFFF             cmpwi cr6,r11,-0x1
+  8257DDCC  419A0014             beq cr6,0x8257dde0
+  8257DDD0  3D608216             lis r11,-0x7dea
+  8257DDD4  3860000F             li r3,0xf
+  8257DDD8  388B0D94             addi r4,r11,0xd94
+  8257DDDC  4BF789A5             bl 0x824f6780
+LAB_8257dde0:
+  8257DDE0  3D6083D1             lis r11,-0x7c2f
+  8257DDE4  3BEBB580             subi r31,r11,0x4a80
+  8257DDE8  3D7F0021             addis r11,r31,0x21
+  8257DDEC  386B1EC8             addi r3,r11,0x1ec8
+  8257DDF0  4BF8C261             bl 0x8250a050
+  8257DDF4  7F86E378             or r6,r28,r28
+  8257DDF8  7F67DB78             or r7,r27,r27
+  8257DDFC  7FA5EB78             or r5,r29,r29
+  8257DE00  7FC4F378             or r4,r30,r30
+  8257DE04  38600004             li r3,0x4
+  8257DE08  4BF8E2C9             bl 0x8250c0d0
+  8257DE0C  3D60836C             lis r11,-0x7c94
+  8257DE10  816B939C             lwz r11,-0x6c64(r11)
+  8257DE14  814B000C             lwz r10,0xc(r11)
+  8257DE18  2F0A0000             cmpwi cr6,r10,0x0
+  8257DE1C  419A0024             beq cr6,0x8257de40
+  8257DE20  3D7F0021             addis r11,r31,0x21
+  8257DE24  386B1EC8             addi r3,r11,0x1ec8
+  8257DE28  4BF8C229             bl 0x8250a050
+  8257DE2C  3D7F0021             addis r11,r31,0x21
+  8257DE30  38A00000             li r5,0x0
+  8257DE34  7FC4F378             or r4,r30,r30
+  8257DE38  386B1EC8             addi r3,r11,0x1ec8
+  8257DE3C  4BF8C2F5             bl 0x8250a130
+LAB_8257de40:
+  8257DE40  38210080             addi r1,r1,0x80
+  8257DE44  483988C0             b 0x82916704
 
 ; 8257DE48  SV_Netchan_UpdateProfileStats  (server_mp/sv_net_chan_mp.cpp:224)
   8257DE48  7D8802A6             mfspr r12,LR
   8257DE4C  4839886D             bl 0x829166b8
+  8257DE50  9421FF80             stwu r1,-0x80(r1)
+  8257DE54  3D6083D1             lis r11,-0x7c2f
+  8257DE58  3D400020             lis r10,0x20
+  8257DE5C  3BCBB580             subi r30,r11,0x4a80
+  8257DE60  61495E94             ori r9,r10,0x5e94
+  8257DE64  7D7E482E             lwzx r11,r30,r9
+  8257DE68  2B0B0000             cmplwi cr6,r11,0x0
+  8257DE6C  419A00D8             beq cr6,0x8257df44
+  8257DE70  3D60836C             lis r11,-0x7c94
+  8257DE74  816B939C             lwz r11,-0x6c64(r11)
+  8257DE78  814B000C             lwz r10,0xc(r11)
+  8257DE7C  2F0A0000             cmpwi cr6,r10,0x0
+  8257DE80  419A00C4             beq cr6,0x8257df44
+  8257DE84  3D7E0021             addis r11,r30,0x21
+  8257DE88  386B1EC8             addi r3,r11,0x1ec8
+  8257DE8C  4BF8C47D             bl 0x8250a308
+  8257DE90  3D7E0021             addis r11,r30,0x21
+  8257DE94  386B21B8             addi r3,r11,0x21b8
+  8257DE98  4BF8C471             bl 0x8250a308
+  8257DE9C  3D6083D1             lis r11,-0x7c2f
+  8257DEA0  3D400020             lis r10,0x20
+  8257DEA4  61495E90             ori r9,r10,0x5e90
+  8257DEA8  814BB55C             lwz r10,-0x4aa4(r11)
+  8257DEAC  7D7E482E             lwzx r11,r30,r9
+  8257DEB0  810A000C             lwz r8,0xc(r10)
+  8257DEB4  7F085800             cmpw cr6,r8,r11
+  8257DEB8  40990034             ble cr6,0x8257deec
+  8257DEBC  3D608216             lis r11,-0x7dea
+  8257DEC0  3D408200             lis r10,-0x7e00
+  8257DEC4  3D208216             lis r9,-0x7dea
+  8257DEC8  38EBA9FC             subi r7,r11,0x5604
+  8257DECC  38CA0F98             addi r6,r10,0xf98
+  8257DED0  38690D20             addi r3,r9,0xd20
+  8257DED4  38A00000             li r5,0x0
+  8257DED8  388000ED             li r4,0xed
+  8257DEDC  48056625             bl 0x825d4500
+  8257DEE0  3D000020             lis r8,0x20
+  8257DEE4  61075E90             ori r7,r8,0x5e90
+  8257DEE8  7D7E382E             lwzx r11,r30,r7
+LAB_8257deec:
+  8257DEEC  3D400020             lis r10,0x20
+  8257DEF0  3BA00000             li r29,0x0
+  8257DEF4  61495E94             ori r9,r10,0x5e94
+  8257DEF8  2F0B0000             cmpwi cr6,r11,0x0
+  8257DEFC  7FFE482E             lwzx r31,r30,r9
+  8257DF00  40990044             ble cr6,0x8257df44
+  8257DF04  3D400006             lis r10,0x6
+  8257DF08  615C8B00             ori r28,r10,0x8b00
+LAB_8257df0c:
+  8257DF0C  815F0000             lwz r10,0x0(r31)
+  8257DF10  2F0A0000             cmpwi cr6,r10,0x0
+  8257DF14  419A0020             beq cr6,0x8257df34
+  8257DF18  387F005C             addi r3,r31,0x5c
+  8257DF1C  4BF8C3ED             bl 0x8250a308
+  8257DF20  387F034C             addi r3,r31,0x34c
+  8257DF24  4BF8C3E5             bl 0x8250a308
+  8257DF28  3D600020             lis r11,0x20
+  8257DF2C  616A5E90             ori r10,r11,0x5e90
+  8257DF30  7D7E502E             lwzx r11,r30,r10
+LAB_8257df34:
+  8257DF34  3BBD0001             addi r29,r29,0x1
+  8257DF38  7FFFE214             add r31,r31,r28
+  8257DF3C  7F1D5800             cmpw cr6,r29,r11
+  8257DF40  4198FFCC             blt cr6,0x8257df0c
+LAB_8257df44:
+  8257DF44  38210080             addi r1,r1,0x80
+  8257DF48  483987C0             b 0x82916708
 
 ; 8257DF50  SV_NetChan_GetClientAddress  (server_mp/sv_net_chan_mp.cpp:256)
   8257DF50  7D8802A6             mfspr r12,LR

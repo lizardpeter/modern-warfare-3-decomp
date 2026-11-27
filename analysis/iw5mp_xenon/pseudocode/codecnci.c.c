@@ -231,10 +231,126 @@ undefined8 NCIDecoderDestroy(longlong param_1)
 
 // 828C1490  NCIDecoderProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:680)
 
-void NCIDecoderProcess(void)
+void NCIDecoderProcess(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ushort uVar1;
+  int *piVar2;
+  int iVar3;
+  short sVar6;
+  int iVar4;
+  int *piVar5;
+  int *piVar7;
+  uint uVar8;
+  undefined8 uVar9;
+  int iVar10;
+  int *piVar11;
+  int *piVar12;
+  void *_Src;
+  uint uVar13;
+  longlong lVar14;
+  char local_320 [4];
+  int *local_31c;
+  undefined4 local_318 [2];
+  int local_310 [4];
+  undefined1 auStack_300 [768];
+  
+  iVar3 = __savegprlr_17();
+  piVar11 = (int *)(iVar3 + 0x1c);
+  piVar5 = *(int **)(*(int *)(iVar3 + 4) + 8);
+  lVar14 = 2;
+  iVar10 = 0;
+  local_318[0] = 0;
+  uVar9 = 1;
+  piVar12 = local_310;
+  piVar7 = (int *)(iVar3 + 8);
+  do {
+    if (*piVar7 == 0) {
+      *piVar12 = 0;
+    }
+    else {
+      if (piVar7[2] == 1) {
+        *piVar12 = *(int *)(*piVar7 + 8);
+      }
+      else {
+        *piVar12 = 0;
+      }
+      if (*piVar12 != 0) {
+        iVar10 = iVar10 + 1;
+      }
+    }
+    piVar7 = piVar7 + 1;
+    piVar12 = piVar12 + 1;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  local_31c = piVar11;
+  if ((piVar5 != (int *)0x0) && (iVar10 != 0)) {
+    uVar9 = 0;
+    while ((((param_2 & 0xffffffff) != 0 && (param_2 = param_2 - 1, piVar5 != (int *)0x0)) &&
+           (iVar10 != 0))) {
+      memcpy((void *)(iVar3 + 0x2c0),(void *)(*(int *)(*piVar5 + 8) + *(int *)(*piVar5 + 4)),
+             *(size_t *)(*(int *)(iVar3 + 0x18) + 0x18));
+      _Src = (void *)(iVar3 + 0x40);
+      *(undefined2 *)(iVar3 + 0x20) = 0;
+      *piVar11 = (int)_Src;
+      *(undefined2 *)(iVar3 + 0x2a) = 0;
+      *(undefined1 *)(iVar3 + 0x2c) = 0;
+      do {
+        sVar6 = nciDecode1by1((undefined4 *)(iVar3 + 0x34),&local_31c,local_318);
+        if (sVar6 != 0) break;
+        uVar1 = *(ushort *)(iVar3 + 0x20);
+        *(undefined2 *)(iVar3 + 0x20) = 0;
+        *piVar11 = (uint)uVar1 * 2 + *piVar11;
+        nciDecodeNeedsInput(*(undefined4 *)(iVar3 + 0x34),local_320);
+      } while (local_320[0] == '\0');
+      if (sVar6 != 0) break;
+      uVar1 = *(ushort *)(iVar3 + 0x2a);
+      *(undefined2 *)(iVar3 + 0x20) = 0xa0;
+      memcpy(auStack_300,_Src,0x140);
+      XHVResamplerProcess(iVar3 + 0x2d0,_Src,auStack_300,0xa0,1);
+      piVar12 = local_310;
+      lVar14 = 2;
+      piVar7 = (int *)(iVar3 + 8);
+      do {
+        piVar2 = (int *)*piVar12;
+        if (piVar2 != (int *)0x0) {
+          uVar13 = ((uint)*(ushort *)(iVar3 + 0x20) * 16000) / 8000 << 1;
+          if ((uint)(*(int *)(*piVar2 + 0xc) - *(int *)(*piVar2 + 4)) <= uVar13) {
+            uVar13 = *(int *)(*piVar2 + 0xc) - *(int *)(*piVar2 + 4);
+          }
+          memcpy((void *)(*(int *)(*piVar2 + 8) + *(int *)(*piVar2 + 4)),_Src,uVar13);
+          iVar4 = *piVar2;
+          uVar13 = *(int *)(iVar4 + 4) + uVar13;
+          uVar8 = *(uint *)(iVar4 + 0xc);
+          if (uVar13 < *(uint *)(iVar4 + 0xc)) {
+            uVar8 = uVar13;
+          }
+          *(uint *)(iVar4 + 4) = uVar8;
+          if (uVar8 == *(uint *)(*piVar2 + 0xc)) {
+            iVar4 = PacketProcessorRetireContext(*piVar7,piVar2);
+            *piVar12 = iVar4;
+            if (iVar4 == 0) {
+              iVar10 = iVar10 + -1;
+            }
+          }
+        }
+        lVar14 = lVar14 + -1;
+        piVar7 = piVar7 + 1;
+        piVar12 = piVar12 + 1;
+      } while (lVar14 != 0);
+      iVar4 = *piVar5;
+      uVar8 = (uint)uVar1 + *(int *)(iVar4 + 4);
+      uVar13 = *(uint *)(iVar4 + 0xc);
+      if (uVar8 < *(uint *)(iVar4 + 0xc)) {
+        uVar13 = uVar8;
+      }
+      *(uint *)(iVar4 + 4) = uVar13;
+      if (uVar13 == *(uint *)(*piVar5 + 0xc)) {
+        piVar5 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4),piVar5);
+      }
+    }
+  }
+  __restgprlr_17(uVar9);
+  return;
 }
 

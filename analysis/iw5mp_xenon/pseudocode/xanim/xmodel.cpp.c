@@ -6,10 +6,18 @@ void XModelBad(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x3b,0,0xffffffff82000f98,0xffffffff8205ce78);
   }
   DB_IsXAssetDefault(4,*param_1);
+  return;
+}
+
+
+// 826310F0  TRACK_xmodel  (xanim/xmodel.cpp:77)
+
+void TRACK_xmodel(void)
+
+{
   return;
 }
 
@@ -97,21 +105,418 @@ undefined4 XModelGetMemUsage(int param_1)
 
 // 82632E38  XModelTraceLine  (xanim/xmodel.cpp:440)
 
-void XModelTraceLine(void)
+void XModelTraceLine(undefined8 param_1,float *param_2,float *param_3,float *param_4,uint param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  float *pfVar3;
+  ulonglong uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  float fVar12;
+  longlong lVar13;
+  int iVar15;
+  ulonglong uVar14;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_124;
+  int local_120 [2];
+  float local_118;
+  float local_114;
+  float local_110;
+  undefined1 auStack_100 [64];
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  
+  pfVar3 = (float *)__savegprlr();
+  if (0x7f < *(byte *)((int)pfVar3 + 0xe2)) {
+    __restgprlr(0xffffffffffffffff);
+    return;
+  }
+  if (*(char *)(pfVar3 + 0x38) != '\0') {
+    MyAssertHandler(0xffffffff821874ec,0x1dd,0,0xffffffff82187878,0xffffffff82187890,*pfVar3);
+  }
+  local_c0 = *param_3;
+  local_bc = param_3[1];
+  uVar7 = 0xffffffffffffffff;
+  local_b8 = param_3[2];
+  local_b0 = *param_4;
+  local_ac = param_4[1];
+  local_a8 = param_4[2];
+  CM_CalcTraceExtents(auStack_100);
+  local_118 = local_b0 - local_c0;
+  local_114 = local_ac - local_bc;
+  local_124 = *param_2;
+  local_110 = local_a8 - local_b8;
+  fVar12 = 0.0;
+  uVar1 = XModelGetSurfaces(pfVar3,local_120,*(undefined1 *)((int)pfVar3 + 0xe2));
+  uVar8 = 0;
+  if ((uVar1 & 0xffffffff) != 0) {
+    iVar6 = 0;
+    uVar14 = uVar1;
+    do {
+      iVar9 = iVar6 + local_120[0];
+      iVar4 = XSurfaceGetVertListCount(iVar9);
+      lVar13 = 0;
+      if (0 < iVar4) {
+        iVar10 = 0;
+        iVar11 = (int)fVar12 * 0x24;
+        do {
+          if ((int)pfVar3[0x3a] <= (int)fVar12) {
+            uVar2 = va(0xffffffff8218756c,fVar12,pfVar3[0x3a],uVar8,lVar13);
+            MyAssertHandler(0xffffffff821874ec,0x1f9,0,0xffffffff820011f4,0xffffffff8218757c,uVar2);
+          }
+          iVar15 = iVar11 + (int)pfVar3[0x39];
+          if (((*(uint *)(iVar15 + 0x1c) & param_5) != 0) &&
+             (iVar5 = CM_TraceBox((double)local_124,auStack_100,iVar15), iVar5 == 0)) {
+            if (*(int *)(*(int *)(iVar9 + 0x44) + iVar10 + 8) == 0) {
+              XSurfaceTraceLineVerts(iVar9,lVar13,&local_c0,&local_118,&local_130);
+            }
+            else {
+              XSurfaceTraceLineTree();
+            }
+            if (*param_2 != local_124) {
+              uVar7 = (ulonglong)*(uint *)(iVar15 + 0x18);
+              *param_2 = local_124;
+              param_2[1] = local_130;
+              param_2[2] = local_12c;
+              param_2[3] = local_128;
+              *(undefined1 *)((int)param_2 + 0x2f) = 0;
+              *(undefined1 *)((int)param_2 + 0x2e) = 0;
+              param_2[4] = *(float *)(iVar15 + 0x20);
+              param_2[5] = *(float *)(iVar15 + 0x1c);
+              if (*(int *)(DAT_8365e118 + 0xc) != 0) {
+                param_2[6] = *pfVar3;
+              }
+            }
+          }
+          lVar13 = lVar13 + 1;
+          iVar10 = iVar10 + 0xc;
+          fVar12 = (float)((int)fVar12 + 1);
+          iVar11 = iVar11 + 0x24;
+        } while ((int)lVar13 < iVar4);
+        uVar14 = uVar1 & 0xffffffff;
+      }
+      uVar8 = uVar8 + 1;
+      iVar6 = iVar6 + 0x80;
+    } while ((uVar8 & 0xffffffff) < (uVar14 & 0xffffffff));
+  }
+  if (fVar12 != pfVar3[0x3a]) {
+    MyAssertHandler(0xffffffff821874ec,0x217,0,0xffffffff82187528,0xffffffff82187544,fVar12);
+  }
+  __restgprlr(uVar7);
+  return;
 }
 
 
 // 82633108  XModelTraceLineAnimated  (xanim/xmodel.cpp:616)
 
-void XModelTraceLineAnimated(void)
+void XModelTraceLineAnimated
+               (undefined8 param_1,ulonglong param_2,int param_3,float *param_4,int param_5,
+               float *param_6,float *param_7,uint param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  bool bVar10;
+  int iVar12;
+  undefined8 uVar11;
+  int iVar13;
+  uint uVar14;
+  int iVar15;
+  int iVar16;
+  float fVar17;
+  longlong lVar18;
+  int iVar19;
+  float *pfVar20;
+  float *pfVar21;
+  double dVar22;
+  uint local_230;
+  int local_22c;
+  undefined4 local_220;
+  float local_210;
+  float local_20c;
+  float local_208;
+  float local_204;
+  float local_200;
+  float local_1fc;
+  int local_1f8;
+  undefined *local_1f4;
+  float local_1f0;
+  int local_1ec;
+  float local_1e8;
+  uint local_1e4;
+  int local_1e0;
+  float local_1dc;
+  float local_1d8;
+  float local_1d4;
+  float local_1d0;
+  float local_1cc;
+  undefined4 *local_1c8;
+  float local_1c4;
+  float local_1c0;
+  float local_1bc;
+  float local_1b8;
+  float local_1b4;
+  float local_1b0;
+  float local_1ac;
+  float local_1a8;
+  float local_1a4;
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_194;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_174;
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_164;
+  float local_160;
+  float local_15c;
+  float local_158;
+  float local_154;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_144;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_134;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_124;
+  undefined1 auStack_120 [64];
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  uint auStack_c0 [48];
+  
+  iVar12 = __savegprlr();
+  pfVar5 = *(float **)(*(int *)(iVar12 + 0x98) + (int)((param_2 & 0xffffffff) << 2));
+  if (*(byte *)((int)pfVar5 + 0xe2) < 0x80) {
+    local_220 = 0xffffffff;
+    local_1f8 = XModelGetBasePose(pfVar5);
+    DObjGetHidePartBits(iVar12,auStack_c0);
+    local_204 = *param_4;
+    fVar17 = 0.0;
+    local_1e4 = XModelGetSurfaces(pfVar5,&local_1e0,*(undefined1 *)((int)pfVar5 + 0xe2));
+    local_230 = 0;
+    if (local_1e4 != 0) {
+      local_22c = 0;
+      dVar22 = 1.0;
+      local_1f4 = &DAT_83660000;
+      local_1c8 = &DAT_82992400;
+      uVar14 = local_1e4;
+      do {
+        iVar12 = local_22c + local_1e0;
+        local_1ec = XSurfaceGetVertListCount(iVar12);
+        lVar18 = 0;
+        if (0 < local_1ec) {
+          iVar15 = 0;
+          iVar16 = (int)fVar17 * 0x24;
+          do {
+            if ((int)pfVar5[0x3a] <= (int)fVar17) {
+              uVar11 = va(0xffffffff8218756c,fVar17,pfVar5[0x3a],local_230,lVar18);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",
+                              0x2b1,0,0xffffffff820011f4,0xffffffff8218757c,uVar11);
+            }
+            iVar19 = (int)pfVar5[0x39] + iVar16;
+            if (((*(uint *)(iVar19 + 0x1c) & param_8) != 0) &&
+               (uVar14 = *(int *)(iVar19 + 0x18) + param_3,
+               (local_1c8[uVar14 & 0x1f] & auStack_c0[(int)uVar14 >> 5]) == 0)) {
+              iVar13 = *(int *)(iVar19 + 0x18) * 0x20;
+              pfVar20 = (float *)(iVar13 + param_5);
+              pfVar21 = (float *)(iVar13 + local_1f8);
+              fVar1 = *pfVar21;
+              if (((*pfVar20 == fVar1) &&
+                  (((pfVar20[1] == pfVar21[1] && (pfVar20[2] == pfVar21[2])) &&
+                   (pfVar20[3] == pfVar21[3])))) &&
+                 (((pfVar20[4] == pfVar21[4] && (pfVar20[5] == pfVar21[5])) &&
+                  (pfVar20[6] == pfVar21[6])))) {
+                local_e0 = *param_6;
+                bVar10 = false;
+                local_dc = param_6[1];
+                local_d8 = param_6[2];
+                local_d0 = *param_7;
+                local_cc = param_7[1];
+                local_c8 = param_7[2];
+              }
+              else {
+                local_1cc = fVar1;
+                if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) ||
+                    (local_1f0 = pfVar21[1], ((uint)local_1f0 & 0x7f800000) == 0x7f800000)) ||
+                   ((local_1dc = pfVar21[2], ((uint)local_1dc & 0x7f800000) == 0x7f800000 ||
+                    (local_1e8 = pfVar21[3], ((uint)local_1e8 & 0x7f800000) == 0x7f800000)))) {
+                  MyAssertHandler(0xffffffff82184800,0x26d,0,0xffffffff82000f98,
+                                  "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                                 );
+                }
+                local_1d8 = pfVar21[7];
+                if (((uint)local_1d8 & 0x7f800000) == 0x7f800000) {
+                  MyAssertHandler(0xffffffff82184800,0x26e,0,0xffffffff82000f98,
+                                  "!IS_NAN(mat->transWeight)");
+                }
+                fVar1 = pfVar21[2];
+                fVar2 = pfVar21[7];
+                fVar3 = pfVar21[1];
+                fVar8 = fVar3 * fVar2;
+                fVar9 = *pfVar21 * fVar2;
+                fVar4 = pfVar21[3];
+                fVar6 = fVar1 * fVar1 * fVar2;
+                fVar7 = *pfVar21 * fVar9;
+                local_174 = fVar4 * fVar1 * fVar2;
+                local_16c = fVar1 * fVar8 - fVar4 * fVar9;
+                local_17c = fVar3 * fVar9 - local_174;
+                local_174 = local_174 + fVar3 * fVar9;
+                local_178 = fVar4 * fVar8 + fVar1 * fVar9;
+                local_168 = fVar1 * fVar9 - fVar4 * fVar8;
+                local_180 = (float)(dVar22 - (double)(fVar6 + fVar3 * fVar8));
+                local_170 = (float)(dVar22 - (double)(fVar6 + fVar7));
+                local_164 = fVar1 * fVar8 + fVar4 * fVar9;
+                local_160 = (float)(dVar22 - (double)(fVar3 * fVar8 + fVar7));
+                local_15c = -(pfVar21[5] * local_174 +
+                             pfVar21[4] * local_180 + pfVar21[6] * local_168);
+                local_158 = -(pfVar21[4] * local_17c +
+                             pfVar21[6] * local_164 + pfVar21[5] * local_170);
+                local_154 = -(pfVar21[4] * local_178 +
+                             pfVar21[6] * local_160 + pfVar21[5] * local_16c);
+                local_200 = *pfVar20;
+                if ((((((uint)local_200 & 0x7f800000) == 0x7f800000) ||
+                     (local_1d0 = pfVar20[1], ((uint)local_1d0 & 0x7f800000) == 0x7f800000)) ||
+                    (local_1c4 = pfVar20[2], ((uint)local_1c4 & 0x7f800000) == 0x7f800000)) ||
+                   (local_1d4 = pfVar20[3], ((uint)local_1d4 & 0x7f800000) == 0x7f800000)) {
+                  MyAssertHandler(0xffffffff82184800,0x205,0,0xffffffff82000f98,
+                                  "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                                 );
+                }
+                local_1fc = pfVar20[7];
+                if (((uint)local_1fc & 0x7f800000) == 0x7f800000) {
+                  MyAssertHandler(0xffffffff82184800,0x206,0,0xffffffff82000f98,
+                                  "!IS_NAN(mat->transWeight)");
+                }
+                fVar1 = pfVar20[2];
+                fVar2 = pfVar20[7];
+                fVar3 = pfVar20[1];
+                fVar8 = fVar3 * fVar2;
+                fVar9 = *pfVar20 * fVar2;
+                fVar4 = pfVar20[3];
+                fVar6 = fVar1 * fVar1 * fVar2;
+                fVar7 = *pfVar20 * fVar9;
+                local_14c = fVar4 * fVar1 * fVar2;
+                local_144 = fVar3 * fVar9 - local_14c;
+                local_13c = fVar1 * fVar8 + fVar4 * fVar9;
+                local_138 = fVar4 * fVar8 + fVar1 * fVar9;
+                local_134 = fVar1 * fVar8 - fVar4 * fVar9;
+                local_148 = fVar1 * fVar9 - fVar4 * fVar8;
+                local_150 = (float)(dVar22 - (double)(fVar6 + fVar3 * fVar8));
+                local_140 = (float)(dVar22 - (double)(fVar6 + fVar7));
+                local_14c = local_14c + fVar3 * fVar9;
+                local_130 = (float)(dVar22 - (double)(fVar3 * fVar8 + fVar7));
+                local_12c = pfVar20[4];
+                local_128 = pfVar20[5];
+                local_124 = pfVar20[6];
+                MatrixMultiply43(&local_180,&local_150,&local_1c0);
+                bVar10 = true;
+                fVar1 = param_6[2] - local_194;
+                fVar2 = param_7[2] - local_194;
+                fVar3 = *param_6 - local_19c;
+                fVar4 = *param_7 - local_19c;
+                fVar6 = param_6[1] - local_198;
+                fVar7 = param_7[1] - local_198;
+                local_d8 = local_1a4 * fVar6 + local_1a8 * fVar3 + local_1a0 * fVar1;
+                local_d0 = local_1bc * fVar7 + local_1c0 * fVar4 + local_1b8 * fVar2;
+                local_e0 = local_1bc * fVar6 + local_1c0 * fVar3 + local_1b8 * fVar1;
+                local_dc = local_1b0 * fVar6 + local_1b4 * fVar3 + local_1ac * fVar1;
+                local_cc = local_1b0 * fVar7 + local_1b4 * fVar4 + local_1ac * fVar2;
+                local_c8 = local_1a4 * fVar7 + local_1a8 * fVar4 + local_1a0 * fVar2;
+              }
+              CM_CalcTraceExtents(auStack_120);
+              iVar13 = CM_TraceBox((double)*param_4,auStack_120,iVar19);
+              if (iVar13 == 0) {
+                local_188 = local_c8 - local_d8;
+                local_18c = local_cc - local_dc;
+                local_190 = local_d0 - local_e0;
+                if (*(int *)(*(int *)(iVar12 + 0x44) + iVar15 + 8) == 0) {
+                  XSurfaceTraceLineVerts(iVar12,lVar18,&local_e0,&local_190,&local_210);
+                }
+                else {
+                  XSurfaceTraceLineTree();
+                }
+                if (*param_4 != local_204) {
+                  local_220 = *(undefined4 *)(iVar19 + 0x18);
+                  *param_4 = local_204;
+                  if (bVar10) {
+                    param_4[1] = local_20c * local_1b4 +
+                                 local_210 * local_1c0 + local_208 * local_1a8;
+                    param_4[2] = local_20c * local_1b0 +
+                                 local_1bc * local_210 + local_208 * local_1a4;
+                    param_4[3] = local_20c * local_1ac +
+                                 local_1b8 * local_210 + local_208 * local_1a0;
+                  }
+                  else {
+                    param_4[1] = local_210;
+                    param_4[2] = local_20c;
+                    param_4[3] = local_208;
+                  }
+                  *(undefined1 *)((int)param_4 + 0x2f) = 0;
+                  *(undefined1 *)((int)param_4 + 0x2e) = 0;
+                  param_4[4] = *(float *)(iVar19 + 0x20);
+                  param_4[5] = *(float *)(iVar19 + 0x1c);
+                  if (*(int *)(*(int *)(local_1f4 + -0x1ee8) + 0xc) != 0) {
+                    param_4[6] = *pfVar5;
+                  }
+                }
+              }
+            }
+            lVar18 = lVar18 + 1;
+            iVar15 = iVar15 + 0xc;
+            fVar17 = (float)((int)fVar17 + 1);
+            iVar16 = iVar16 + 0x24;
+            uVar14 = local_1e4;
+          } while ((int)lVar18 < local_1ec);
+        }
+        local_230 = local_230 + 1;
+        local_22c = local_22c + 0x80;
+      } while (local_230 < uVar14);
+    }
+    if (fVar17 != pfVar5[0x3a]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x2f4,0,
+                      0xffffffff82187528,0xffffffff82187544,fVar17);
+    }
+    __restgprlr(local_220);
+    return;
+  }
+  __restgprlr(0xffffffffffffffff);
+  return;
 }
 
 
@@ -155,7 +560,6 @@ void XModelTraceLineAnimatedPartBits
           do {
             if (*(int *)(iVar7 + 0xe8) <= iVar13) {
               uVar6 = va(0xffffffff8218756c,iVar13,*(int *)(iVar7 + 0xe8),uVar10,lVar11);
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821874ec,0x38a,0,0xffffffff820011f4,0xffffffff8218757c,uVar6
                              );
             }
@@ -178,7 +582,6 @@ void XModelTraceLineAnimatedPartBits
       } while ((uVar10 & 0xffffffff) < (uVar5 & 0xffffffff));
     }
     if (iVar13 != *(int *)(iVar7 + 0xe8)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821874ec,0x399,0,0xffffffff82187528,0xffffffff82187544,iVar13);
     }
   }
@@ -189,11 +592,66 @@ void XModelTraceLineAnimatedPartBits
 
 // 826312F0  XSurfaceVisitTrianglesInAabb_ConvertAabb  (xanim/xmodel.cpp:948)
 
-void XSurfaceVisitTrianglesInAabb_ConvertAabb(void)
+void XSurfaceVisitTrianglesInAabb_ConvertAabb
+               (undefined8 param_1,float *param_2,float *param_3,undefined4 *param_4,
+               undefined4 *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float *pfVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  undefined8 uVar17;
+  undefined8 uVar18;
+  
   __savegprlr_28();
+  pfVar1 = (float *)__savefpr_24();
+  dVar9 = (double)(float)((double)*param_2 + (double)*pfVar1);
+  dVar3 = (double)(param_2[1] + pfVar1[1]);
+  dVar2 = (double)(param_2[2] + pfVar1[2]);
+  dVar6 = (double)pfVar1[3];
+  dVar10 = (double)(param_3[1] + pfVar1[1]);
+  dVar8 = (double)(param_3[2] + pfVar1[2]);
+  dVar7 = (double)pfVar1[4];
+  dVar5 = (double)pfVar1[5];
+  dVar4 = (double)(float)(dVar6 * dVar9);
+  uVar18 = 0x412e848000000000;
+  uVar17 = 0xc12e848000000000;
+  dVar13 = (double)(float)(dVar6 * (double)(float)((double)*param_3 + (double)*pfVar1));
+  dVar16 = 0.5;
+  dVar15 = (double)(float)(dVar7 * dVar3);
+  dVar14 = (double)(float)(dVar5 * dVar2);
+  dVar12 = (double)(float)(dVar7 * dVar10);
+  dVar11 = (double)(float)(dVar5 * dVar8);
+  dVar2 = (double)ClampFloat((double)(float)(dVar4 - 0.5),0xc12e848000000000,0x412e848000000000,
+                             dVar2,(double)*param_3,dVar3,dVar4,dVar5,dVar6,dVar7,dVar8,dVar9,dVar10
+                            );
+  *param_4 = (int)(longlong)dVar2;
+  dVar2 = (double)ClampFloat((double)(float)(dVar15 - dVar16),uVar17,uVar18);
+  param_4[1] = (int)(longlong)dVar2;
+  dVar2 = (double)ClampFloat((double)(float)(dVar14 - dVar16),uVar17,uVar18);
+  param_4[2] = (int)(longlong)dVar2;
+  dVar2 = (double)ClampFloat((double)(float)(dVar13 + dVar16),uVar17,uVar18);
+  *param_5 = (int)(longlong)dVar2;
+  dVar2 = (double)ClampFloat((double)(float)(dVar12 + dVar16),uVar17,uVar18);
+  param_5[1] = (int)(longlong)dVar2;
+  dVar2 = (double)ClampFloat((double)(float)(dVar11 + dVar16),uVar17,uVar18);
+  param_5[2] = (int)(longlong)dVar2;
+  __restfpr_24();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -240,7 +698,6 @@ void PrefetchArray<unsigned_char>(ulonglong param_1,ulonglong param_2)
   ulonglong uVar3;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x3f3,0,0xffffffff82000f98,0xffffffff82187868);
   }
   uVar3 = param_1 & 0xffffff80;
@@ -267,7 +724,6 @@ void PrefetchArray<unsigned_short>(ulonglong param_1,ulonglong param_2)
   ulonglong uVar3;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x3f3,0,0xffffffff82000f98,0xffffffff82187868);
   }
   uVar3 = param_1 & 0xffffff80;
@@ -294,7 +750,6 @@ void PrefetchArray<XSurfaceCollisionLeaf>(ulonglong param_1,ulonglong param_2)
   ulonglong uVar3;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x3f3,0,0xffffffff82000f98,0xffffffff82187868);
   }
   uVar3 = param_1 & 0xffffff80;
@@ -321,7 +776,6 @@ void PrefetchArray<XSurfaceCollisionNode>(ulonglong param_1,ulonglong param_2)
   ulonglong uVar3;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x3f3,0,0xffffffff82000f98,0xffffffff82187868);
   }
   uVar3 = param_1 & 0xffffff80;
@@ -340,11 +794,20 @@ void PrefetchArray<XSurfaceCollisionNode>(ulonglong param_1,ulonglong param_2)
 
 // 82631550  XSurfaceVisitTrianglesInAabb_ProcessVertices  (xanim/xmodel.cpp:1055)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XSurfaceVisitTrianglesInAabb_ProcessVertices(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(uint *)(iVar1 + 0x2c) & 0x20) != 0) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -353,8 +816,55 @@ void XSurfaceVisitTrianglesInAabb_ProcessVertices(void)
 void XSurfaceVisitTrianglesInAabb_ProcessTriangles(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar6;
+  int iVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  ushort *puVar11;
+  
+  iVar4 = __savegprlr_28();
+  iVar7 = *(int *)(iVar4 + 0x48);
+  iVar10 = 0;
+  iVar9 = *(int *)((iVar7 + 0x10f) * 8 + iVar4);
+  iVar2 = *(int *)(iVar7 * 8 + iVar4 + 0x87c);
+  *(uint *)(iVar4 + 0x48) = iVar7 + 1U & 3;
+  puVar11 = (ushort *)(*(int *)(iVar4 + 0x1c) + iVar9 * 6);
+  if (iVar2 != 0) {
+    do {
+      iVar7 = 0;
+      do {
+        uVar1 = *puVar11;
+        uVar8 = (longlong)(int)(uint)uVar1 * (longlong)*(int *)(iVar4 + 0x34) +
+                (ulonglong)*(uint *)(iVar4 + 0x20) & 0xffffff80;
+        lVar6 = 1;
+        do {
+          dataCacheBlockTouch(uVar8);
+          uVar8 = uVar8 + 0x80;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
+        puVar11 = puVar11 + 1;
+        iVar9 = *(int *)(iVar4 + 0x54) * 3 + iVar7;
+        iVar7 = iVar7 + 1;
+        *(ushort *)((iVar9 + 0x44c) * 2 + iVar4) = uVar1;
+      } while (iVar7 != 3);
+      uVar3 = *(int *)(iVar4 + 0x54) + 1U & 3;
+      *(uint *)(iVar4 + 0x54) = uVar3;
+      if ((*(uint *)(iVar4 + 0x50) == uVar3) &&
+         (cVar5 = XSurfaceVisitTrianglesInAabb_ProcessVertices(iVar4), cVar5 == '\0')) {
+        __restgprlr_28(0);
+        return;
+      }
+      iVar10 = iVar10 + 1;
+    } while (iVar10 != iVar2);
+  }
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -456,7 +966,6 @@ void XSurfaceVisitTrianglesInAabb_ProcessNode(void)
             piVar6[0xf] = uVar4;
             if (piVar6[0xe] == uVar4) {
               uVar5 = va(0xffffffff821878a8,0x100);
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821874ec,0x50e,0,0xffffffff820011f4,0xffffffff82187950,uVar5
                              );
             }
@@ -518,18 +1027,15 @@ void XSurfaceVisitTrianglesInAabb
   
   iVar2 = __savegprlr_24();
   if ((*(byte *)(iVar2 + 1) & 0x40) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x51c,0,0xffffffff82000f98,0xffffffff821879d4);
   }
   if ((ulonglong)*(uint *)(iVar2 + 0x40) <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x523,0,0xffffffff8218798c,0xffffffff821879a8,param_2);
   }
   iVar1 = *(int *)(*(int *)(iVar2 + 0x44) +
                    (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + 8);
   local_8e8 = iVar1;
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x526,0,0xffffffff82000f98,0xffffffff82187980);
   }
   PrefetchArray<XSurfaceCollisionNode>(*(undefined4 *)(iVar1 + 0x1c),1);
@@ -584,11 +1090,58 @@ LAB_82633f94:
 
 // 82631808  XSurfaceTraceLine_Leaf  (xanim/xmodel.cpp:1410)
 
-void XSurfaceTraceLine_Leaf(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XSurfaceTraceLine_Leaf
+               (undefined8 param_1,int param_2,ulonglong param_3,longlong param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  longlong lVar1;
+  longlong lVar3;
+  double dVar4;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs37 [16];
+  undefined1 in_vs58 [16];
+  undefined1 in_vs59 [16];
+  undefined1 in_vs60 [16];
+  
+  iVar2 = __savegprlr_23();
+  dVar4 = (double)*(float *)(param_5 + 0xc);
+  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
+    MyAssertHandler(0xffffffff821874ec,0x5b2,0,0xffffffff8202ba4c,0xffffffff821875cc,dVar4);
+  }
+  if ((*(byte *)(iVar2 + 1) & 0x40) != 0) {
+    MyAssertHandler(0xffffffff821874ec,0x5b8,0,0xffffffff82000f98,0xffffffff821875a4);
+  }
+  if ((*(byte *)(iVar2 + 1) & 0x20) != 0) {
+    XSurfaceGetVert0Size(iVar2);
+    altv300_21(in_vs59,in_vs37);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  if ((int)param_3 != (int)(param_3 + param_4)) {
+    lVar3 = (param_3 + param_4) - param_3;
+    lVar1 = (param_3 & 0x7fffffff) << 1;
+    do {
+      if (*(ushort *)(*(int *)(param_2 + 0x24) + (int)lVar1) < 0x8000) {
+        iVar2 = 1;
+      }
+      else {
+        iVar2 = 2;
+      }
+      if (iVar2 != 0) {
+        altv207_13(in_vs60,in_vs58);
+        altv207_13(in_vs32,in_vs60);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+        halt_baddata();
+      }
+      lVar3 = lVar3 + -1;
+      lVar1 = lVar1 + 2;
+    } while (lVar3 != 0);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -620,7 +1173,6 @@ void XSurfaceTraceLine_r(undefined8 param_1,undefined8 param_2,ulonglong param_3
   
   uVar3 = __savegprlr_22();
   if ((ulonglong)*(uint *)((int)param_2 + 0x18) <= (param_3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x68a,0,0xffffffff82000f98,0xffffffff82187604);
   }
   lVar6 = (ulonglong)*(uint *)((int)param_2 + 0x1c) + (param_3 & 0xfffffff) * 0x10;
@@ -695,7 +1247,6 @@ void XSurfaceTraceLineTree(undefined8 param_1,ulonglong param_2,float *param_3,f
   CM_CalcTraceExtents(auStack_c0);
   if (*(int *)(*(int *)(iVar1 + 0x44) +
                (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x6ba,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   auVar3 = altv300_21(in_vs32,in_vs63);
@@ -709,11 +1260,39 @@ void XSurfaceTraceLineTree(undefined8 param_1,ulonglong param_2,float *param_3,f
 
 // 82631FB8  XSurfaceTraceLineVerts  (xanim/xmodel.cpp:1747)
 
-void XSurfaceTraceLineVerts(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XSurfaceTraceLineVerts
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  double dVar2;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs55 [16];
+  undefined1 in_vs59 [16];
+  undefined1 in_vs60 [16];
+  
   __savegprlr_19();
+  iVar1 = __savevmx_123();
+  dVar2 = (double)*(float *)(param_5 + 0xc);
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
+    MyAssertHandler(0xffffffff821874ec,0x708,0,0xffffffff8202ba4c,0xffffffff821875cc,dVar2);
+  }
+  if ((*(byte *)(iVar1 + 1) & 0x40) != 0) {
+    MyAssertHandler(0xffffffff821874ec,0x70e,0,0xffffffff82000f98,0xffffffff821875a4);
+  }
+  if (*(short *)(*(int *)(iVar1 + 0x44) +
+                 (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + 6) == 0) {
+    MyAssertHandler(0xffffffff821874ec,0x716,0,0xffffffff82187634,0xffffffff82187648,0,
+                    *(undefined4 *)(iVar1 + 0xc));
+  }
+  altv300_21(in_vs32,in_vs55);
+  altv300_21(in_vs32,in_vs60);
+  altv300_21(in_vs32,in_vs59);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -743,44 +1322,63 @@ void XModelGetBoneIndex(undefined8 param_1,ulonglong param_2,longlong param_3,ul
   
   iVar1 = __savegprlr_25();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x7ed,0,0xffffffff82000f98,0xffffffff8207e3ec);
   }
   uVar4 = (ulonglong)*(byte *)(iVar1 + 4);
   puVar2 = *(ushort **)(iVar1 + 0x24);
-  if (uVar4 < 0xc0) {
-    uVar3 = 0;
-    if (uVar4 != 0) {
-      do {
-        if ((param_2 & 0xffffffff) == (ulonglong)*puVar2) {
-          uVar3 = uVar3 + param_3;
-          *(undefined1 *)param_4 = (char)uVar3;
-          if ((uVar3 & 0xff) == (uVar3 & 0xffffffff)) {
-            __restgprlr_25(1);
-            return;
-          }
-                    /* WARNING: Subroutine does not return */
+  if (0xbf < uVar4) {
+    MyAssertHandler(0xffffffff821874ec,0x7f2,0,0xffffffff82000f98,0xffffffff8218767c);
+  }
+  uVar3 = 0;
+  if (uVar4 != 0) {
+    do {
+      if ((param_2 & 0xffffffff) == (ulonglong)*puVar2) {
+        uVar3 = uVar3 + param_3;
+        *(undefined1 *)param_4 = (char)uVar3;
+        if ((uVar3 & 0xff) != (uVar3 & 0xffffffff)) {
           MyAssertHandler(0xffffffff821874ec,0x7f9,0,0xffffffff82000f98,0xffffffff82187658);
         }
-        uVar3 = uVar3 + 1;
-        puVar2 = puVar2 + 1;
-      } while ((uVar3 & 0xffffffff) < uVar4);
-    }
-    __restgprlr_25(0);
-    return;
+        __restgprlr_25(1);
+        return;
+      }
+      uVar3 = uVar3 + 1;
+      puVar2 = puVar2 + 1;
+    } while ((uVar3 & 0xffffffff) < uVar4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821874ec,0x7f2,0,0xffffffff82000f98,0xffffffff8218767c);
+  __restgprlr_25(0);
+  return;
 }
 
 
 // 82632678  XModelHasParentBone  (xanim/xmodel.cpp:2051)
 
-void XModelHasParentBone(void)
+/* WARNING: Removing unreachable block (ram,0x826326f8) */
+
+void XModelHasParentBone(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_26();
+  uVar1 = param_3 & 0xff;
+  if (uVar1 != (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821874ec,0x808,0,0xffffffff82000f98,0xffffffff821876d4);
+  }
+  if (*(char *)(iVar2 + 5) == '\0') {
+    MyAssertHandler(0xffffffff821874ec,0x809,0,0xffffffff82000f98,0xffffffff821876bc);
+  }
+  while( true ) {
+    if ((param_2 & 0xff) == uVar1) {
+      __restgprlr_26(1);
+      return;
+    }
+    if (uVar1 < *(byte *)(iVar2 + 5)) break;
+    uVar1 = uVar1 - *(byte *)((*(int *)(iVar2 + 0x28) - (uint)*(byte *)(iVar2 + 5)) + (int)uVar1) &
+            0xff;
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -790,7 +1388,7 @@ void XModelGetNextChildBoneIndex
                (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-  bool bVar1;
+  ulonglong uVar1;
   int iVar2;
   int iVar3;
   byte *pbVar4;
@@ -799,52 +1397,46 @@ void XModelGetNextChildBoneIndex
   
   iVar2 = __savegprlr_24();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x820,0,0xffffffff82000f98,0xffffffff82187768);
   }
   pbVar4 = (byte *)param_4;
   if ((ulonglong)*pbVar4 < (param_3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x821,0,0xffffffff82000f98,0xffffffff82187750);
   }
   uVar5 = (ulonglong)*(byte *)(iVar2 + 4);
   if (uVar5 <= (param_2 & 0xff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x825,0,0xffffffff82000f98,0xffffffff82187738);
   }
   if (0xbf < uVar5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821874ec,0x826,0,0xffffffff82000f98,0xffffffff8218767c);
   }
   if ((ulonglong)*pbVar4 == 0xfe) {
     uVar6 = 0;
-    bVar1 = uVar5 != 0;
   }
   else {
     uVar6 = (*pbVar4 - param_3) + 1;
-    bVar1 = (uVar6 & 0xffffffff) < uVar5;
-    if (uVar5 < (uVar6 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821874ec,0x82d,0,0xffffffff82000f98,0xffffffff8218771c);
+    uVar1 = uVar6 & 0xffffffff;
+    if (uVar1 <= uVar5) goto joined_r0x8263286c;
+    MyAssertHandler(0xffffffff821874ec,0x82d,0,0xffffffff82000f98,0xffffffff8218771c);
+  }
+  uVar1 = uVar6 & 0xffffffff;
+joined_r0x8263286c:
+  while( true ) {
+    if (uVar5 <= uVar1) {
+      __restgprlr_24(0);
+      return;
     }
+    iVar3 = XModelHasParentBone(iVar2,param_2,uVar6);
+    if (iVar3 != 0) break;
+    uVar6 = uVar6 + 1;
+    uVar1 = uVar6 & 0xffffffff;
   }
-  if (bVar1) {
-    do {
-      iVar3 = XModelHasParentBone(iVar2,param_2,uVar6);
-      if (iVar3 != 0) {
-        uVar6 = uVar6 + param_3;
-        *pbVar4 = (byte)uVar6;
-        if ((uVar6 & 0xff) != (uVar6 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff821874ec,0x834,0,0xffffffff82000f98,0xffffffff821876f4);
-        }
-        __restgprlr_24(1);
-        return;
-      }
-      uVar6 = uVar6 + 1;
-    } while ((uVar6 & 0xffffffff) < uVar5);
+  uVar6 = uVar6 + param_3;
+  *pbVar4 = (byte)uVar6;
+  if ((uVar6 & 0xff) != (uVar6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821874ec,0x834,0,0xffffffff82000f98,0xffffffff821876f4);
   }
-  __restgprlr_24(0);
+  __restgprlr_24(1);
   return;
 }
 
@@ -871,11 +1463,49 @@ void XModelWriteInfoHeader(undefined8 param_1)
 
 // 82632950  XModelWriteInfo  (xanim/xmodel.cpp:2125)
 
-void XModelWriteInfo(void)
+void XModelWriteInfo(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  undefined4 uVar2;
+  int *piVar3;
+  char *pcVar4;
+  double dVar5;
+  double dVar6;
+  char local_1040 [4160];
+  
+  piVar3 = (int *)__savegprlr_27();
+  if ((DAT_8421bfb0 & 1) == 0) {
+    DAT_8421bfb0 = DAT_8421bfb0 | 1;
+    dVar5 = tan(22.5);
+    DAT_8421bfac = 720.0 / (float)dVar5;
+  }
+  uVar2 = *param_2;
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821874ec,0x85a,0,0xffffffff82000f98,0xffffffff82058d74);
+  }
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff821874ec,0x85b,0,0xffffffff82000f98,0xffffffff821877f0);
+  }
+  if (*(char *)((int)piVar3 + 0xe1) < '\x01') {
+    MyAssertHandler(0xffffffff821874ec,0x85c,0,0xffffffff82000f98,0xffffffff821877dc);
+  }
+  dVar5 = (double)(float)(piVar3 + *(char *)((int)piVar3 + 0xe1) * 10)[6];
+  if (dVar5 <= 0.0) {
+    MyAssertHandler(0xffffffff821874ec,0x860,0,0xffffffff82000f98,0xffffffff821877cc);
+  }
+  dVar6 = (double)(float)piVar3[0x3d];
+  Com_sprintf(dVar6,dVar5,local_1040,0x1000,0xffffffff821877b0,*piVar3,dVar6,
+              *(undefined1 *)((int)piVar3 + 0xe1),dVar5,
+              (double)((float)(dVar6 / dVar5) * DAT_8421bfac));
+  pcVar4 = local_1040;
+  do {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  FS_Write(local_1040,pcVar4 + (-1 - (int)local_1040),uVar2);
+  __restgprlr_27();
+  return;
 }
 
 

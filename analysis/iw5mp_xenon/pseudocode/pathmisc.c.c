@@ -56,8 +56,29 @@ void TitleTerminateNotification(void)
 void XUnmountUtilityDriveInternal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  if (DAT_848954c8 == 0) {
+    if (DAT_848954c4 != 0) {
+      UnmountDrives();
+    }
+  }
+  else {
+    KeEnterCriticalRegion();
+    if (DAT_848954c0 != 0) {
+      DAT_848954c0 = 0;
+      ExRegisterTitleTerminateNotification(0xffffffff829a8500,0);
+    }
+    RtlEnterCriticalSection(0xffffffff829a84c4);
+    DAT_848954d8 = 2;
+    KeSetEvent(0xffffffff829a84e0,1,0);
+    KeWaitForSingleObject(0xffffffff829a84f0,3,1,0,0);
+    KeResetEvent(0xffffffff829a84f0);
+    RtlLeaveCriticalSection(0xffffffff829a84c4);
+    KeLeaveCriticalRegion();
+  }
+  DAT_848954c4 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -78,6 +99,45 @@ undefined8 VerifyCachePartitionData(longlong param_1)
     uVar2 = 0;
   }
   return uVar2;
+}
+
+
+// 828A3668  WriteCachePartitionData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:509)
+
+void WriteCachePartitionData(void)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  undefined4 local_470 [2];
+  undefined1 local_468 [8];
+  undefined1 auStack_460 [8];
+  undefined4 local_458;
+  undefined *local_454;
+  undefined4 local_450;
+  undefined1 auStack_440 [32];
+  undefined1 local_420;
+  undefined1 auStack_41f [1055];
+  
+  lVar1 = __savegprlr_29();
+  local_420 = 0;
+  memset(auStack_41f,0,0x3ff);
+  local_458 = 0;
+  local_450 = 0x40;
+  local_454 = &DAT_82201b7c;
+  lVar2 = NtCreateFile(local_470,0xffffffffc0100000,&local_458,auStack_460,0,4,1,1);
+  if (-1 < lVar2) {
+    XeCryptSha(lVar1 + 0x22c,0x58,0,0,0,0,auStack_440,0x14);
+    XeKeysConsolePrivateKeySign(auStack_440,lVar1 + 4);
+    lVar2 = NtReadFile(local_470[0],0,0,0,auStack_460,&local_420,0x400,local_468);
+    if (-1 < lVar2) {
+      memcpy(&local_420,(void *)lVar1,0x284);
+      lVar2 = NtWriteFile(local_470[0],0,0,0,auStack_460,&local_420,0x400,local_468);
+    }
+    NtClose(local_470[0]);
+  }
+  __restgprlr_29(lVar2);
+  return;
 }
 
 
@@ -115,21 +175,116 @@ void CommitSuicide(int param_1)
 
 // 828A38A0  PrepareStfVolume  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:685)
 
-void PrepareStfVolume(void)
+void PrepareStfVolume(undefined8 param_1,int param_2,longlong param_3,undefined8 param_4,
+                     undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  void *_Dst;
+  longlong lVar2;
+  int *piVar3;
+  uint uVar4;
+  code *local_e0;
+  void *local_dc;
+  undefined1 auStack_d8 [8];
+  undefined1 auStack_d0 [8];
+  undefined4 local_c8;
+  undefined1 *local_c4;
+  undefined4 local_c0;
+  longlong local_b0 [2];
+  int local_a0;
+  int local_9c;
+  undefined1 auStack_90 [144];
+  
+  uVar1 = __savegprlr_23();
+  RtlSnprintf(auStack_90,0x40,0xffffffff82201b34,uVar1);
+  RtlInitAnsiString(auStack_d8,auStack_90);
+  _Dst = (void *)param_3;
+  memset(_Dst,0,0x58);
+  local_c4 = auStack_d8;
+  local_c8 = 0;
+  local_c0 = 0x40;
+  lVar2 = NtCreateFile(param_3 + 0x18,0xffffffffc0000000,&local_c8,auStack_d0,0,0x80,0,1);
+  piVar3 = (int *)(param_3 + 0x18);
+  if (-1 < lVar2) {
+    uVar4 = *(uint *)(param_2 + 4);
+    if (uVar4 < 5) {
+      uVar4 = 5;
+    }
+    *(int *)param_4 = uVar4 << 0xc;
+    lVar2 = NtAllocateVirtualMemory(param_3 + 0x40,param_4,0x903000,4,1);
+    if (-1 < lVar2) {
+      lVar2 = NtQueryVolumeInformationFile(*piVar3,auStack_d0,local_b0,0x18,3);
+      if (-1 < lVar2) {
+        RtlSnprintf(param_5,0x40,0xffffffff82201b6c,uVar1);
+        RtlInitAnsiString(param_3,param_5);
+        *(char *)((int)_Dst + 0x50) = (char)uVar4;
+        *(undefined1 *)((int)_Dst + 0x52) = 1;
+        *(undefined1 *)((int)_Dst + 0x51) = 1;
+        *(undefined8 *)((int)_Dst + 8) = 0x1000;
+        *(ulonglong *)((int)_Dst + 0x10) =
+             ((longlong)local_a0 * (longlong)local_9c & 0xffffffffU) * local_b0[0] + -0x1000;
+        memcpy((void *)((int)_Dst + 0x1c),(void *)(((int)uVar1 + 0x10) * 0x24 + param_2),0x24);
+        lVar2 = (**(code **)(*(int *)(param_2 + 0x298) + 8))(param_3,0x58);
+        if (lVar2 < 0) {
+          memset((void *)((int)_Dst + 0x1c),0,0x24);
+          lVar2 = (**(code **)(*(int *)(param_2 + 0x298) + 8))(param_3,0x58);
+          if (lVar2 < 0) goto LAB_828a3aac;
+        }
+        if (*(char *)(*(int *)(param_2 + 0x298) + 1) != '\0') {
+          local_e0 = CommitSuicide;
+          local_dc = _Dst;
+          (**(code **)(*(int *)(param_2 + 0x298) + 0xc))
+                    (*(undefined4 *)((int)_Dst + 0x48),8,&local_e0);
+        }
+        if (-1 < (int)lVar2) goto LAB_828a3ae0;
+      }
+    }
+  }
+LAB_828a3aac:
+  if (*piVar3 != 0) {
+    NtClose();
+  }
+  if (*(int *)((int)_Dst + 0x40) != 0) {
+    NtFreeVirtualMemory(param_3 + 0x40,param_4,0x8000,1);
+  }
+LAB_828a3ae0:
+  __restgprlr_23(lVar2);
+  return;
 }
 
 
 // 828A3AF0  FlushStfDrive  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:829)
 
-void FlushStfDrive(void)
+void FlushStfDrive(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 auStack_30 [48];
+  
+  iVar3 = __savegprlr_28();
+  KeEnterCriticalRegion();
+  iVar1 = (int)param_2;
+  iVar2 = (int)param_3;
+  (**(code **)(*(int *)(iVar1 + 0x298) + 0xc))(*(undefined4 *)(iVar2 + 0x48),0,0);
+  iVar4 = (**(code **)(*(int *)(iVar1 + 0x298) + 0xc))(*(undefined4 *)(iVar2 + 0x48),2,0);
+  if (-1 < iVar4) {
+    param_3 = param_3 + 0x1c;
+    iVar4 = (**(code **)(*(int *)(iVar1 + 0x298) + 0xc))(*(undefined4 *)(iVar2 + 0x48),3,param_3);
+    if (-1 < iVar4) {
+      (**(code **)(*(int *)(iVar1 + 0x298) + 0xc))(*(undefined4 *)(iVar2 + 0x48),4,param_3);
+      memcpy((void *)((iVar3 + 0x10) * 0x24 + iVar1),(void *)param_3,0x24);
+      WriteCachePartitionData(param_2 + 0x14);
+      NtFlushBuffersFile(*(undefined4 *)(iVar2 + 0x18),auStack_30);
+    }
+  }
+  (**(code **)(*(int *)(iVar1 + 0x298) + 0xc))(*(undefined4 *)(iVar2 + 0x48),1,0);
+  KeLeaveCriticalRegion();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -256,11 +411,72 @@ longlong XapiValidateDiskPartitionEx(undefined4 param_1,int param_2)
 
 // 828A3CB8  ValidateFatxPartition  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1156)
 
-void ValidateFatxPartition(void)
+void ValidateFatxPartition(undefined8 param_1,undefined8 param_2,int param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined1 auStack_70 [8];
+  undefined1 auStack_68 [8];
+  undefined1 local_60;
+  undefined1 auStack_5f [95];
+  
+  iVar2 = __savegprlr_27();
+  local_60 = 0;
+  memset(auStack_5f,0,0x29);
+  RtlSnprintf(&local_60,0x2a,0xffffffff82201b34,param_2);
+  RtlInitAnsiString(auStack_70,&local_60);
+  RtlSnprintf(&local_60,0x2a,0xffffffff82201b50,param_2);
+  RtlInitAnsiString(auStack_68,&local_60);
+  if (param_3 == 0) {
+LAB_828a3d80:
+    iVar3 = XapiValidateDiskPartitionEx(auStack_68,param_4);
+    if (-1 < iVar3) {
+LAB_828a3dd4:
+      uVar1 = 0;
+      goto LAB_828a3ddc;
+    }
+    iVar3 = XapiFormatFATVolumeEx(auStack_70,param_4);
+    if (-1 < iVar3) {
+      memset((void *)((int)param_2 * 0x24 + iVar2 + 0x22c),0,0x24);
+      iVar2 = XapiValidateDiskPartitionEx(auStack_68,param_4);
+      if (-1 < iVar2) goto LAB_828a3dd4;
+    }
+  }
+  else {
+    memset((void *)((int)param_2 * 0x24 + iVar2 + 0x22c),0,0x24);
+    iVar3 = XapiFormatFATVolumeEx(auStack_70,param_4);
+    if (-1 < iVar3) goto LAB_828a3d80;
+  }
+  uVar1 = RtlNtStatusToDosError();
+LAB_828a3ddc:
+  __restgprlr_27(uVar1);
+  return;
+}
+
+
+// 828A3DE8  MountDrive  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1236)
+
+void MountDrive(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               uint *param_5)
+
+{
+  undefined8 uVar1;
+  undefined1 auStack_c0 [8];
+  undefined1 auStack_b8 [8];
+  undefined1 auStack_b0 [64];
+  undefined1 auStack_70 [112];
+  
+  uVar1 = __savegprlr_27();
+  RtlSnprintf(auStack_b0,0x40,uVar1,param_2);
+  RtlInitAnsiString(auStack_c0,auStack_b0);
+  RtlSnprintf(auStack_70,0x40,param_3,param_4);
+  RtlInitAnsiString(auStack_b8,auStack_70);
+  uVar1 = ObCreateSymbolicLink(auStack_c0,auStack_b8);
+  *param_5 = (uint)uVar1 >> 0x1f ^ 1;
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -296,21 +512,273 @@ void UnmountDrives(void)
 
 // 828A3F70  MountDrives  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1320)
 
-void MountDrives(void)
+void MountDrives(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  longlong lVar1;
+  
+  iVar2 = __savegprlr_27();
+  lVar1 = MountDrive(0xffffffff82201b18,0,param_2,param_3,0xffffffff848954cc);
+  if (-1 < lVar1) {
+    if (iVar2 != 0) {
+      lVar1 = MountDrive(0xffffffff82201b24,0,param_2,0,0xffffffff848954d0);
+      if (lVar1 < 0) goto LAB_828a4008;
+      lVar1 = MountDrive(0xffffffff82201b24,1,param_2,1,0xffffffff848954d4);
+    }
+    if (-1 < (int)lVar1) goto LAB_828a400c;
+  }
+LAB_828a4008:
+  UnmountDrives();
+LAB_828a400c:
+  __restgprlr_27(lVar1);
+  return;
+}
+
+
+// 828A4438  XMountUtilityDriveFileSystem  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1395)
+
+void XMountUtilityDriveFileSystem
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               byte *param_5)
+
+{
+  bool bVar1;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar6;
+  int *piVar7;
+  byte *pbVar8;
+  uint *puVar9;
+  ulonglong uVar10;
+  int local_4c0 [4];
+  undefined8 local_4b0;
+  undefined4 local_4a8 [2];
+  undefined1 local_4a0 [8];
+  undefined4 local_498;
+  undefined *local_494;
+  undefined4 local_490;
+  undefined1 auStack_488 [8];
+  undefined4 local_480;
+  byte local_253 [71];
+  int local_20c;
+  int local_208;
+  uint local_204 [129];
+  
+  uVar4 = __savegprlr_18();
+  local_480 = local_480 & 0xffffff;
+  memset((void *)((int)&local_480 + 1),0,0x3ff);
+  local_4c0[0] = 0;
+  local_4b0 = 0;
+  local_4c0[1] = 0;
+  local_4c0[2] = 0xffffffff;
+  if (((DAT_848954c4 != 0) || (0xff000 < (param_4 & 0xffffffff))) || ((param_3 & 0x1ff) != 0)) {
+    lVar3 = 0x57;
+    goto LAB_828a48dc;
+  }
+  iVar5 = XexCheckExecutablePrivilege(0x17);
+  bVar1 = iVar5 != 0;
+  local_498 = 0;
+  local_490 = 0x40;
+  local_494 = &DAT_82201b7c;
+  uVar2 = NtCreateFile(local_4c0 + 2,0xffffffffc0100000,&local_498,auStack_488,0,4,1,1);
+  if (-1 < (int)uVar2) {
+    local_4b0 = 0x800;
+    uVar2 = NtReadFile(local_4c0[2],0,0,0,auStack_488,&local_480,0x400,&local_4b0);
+    NtClose(local_4c0[2]);
+    if (-1 < (int)uVar2) {
+      if (((local_480 != 0x4a6f7368) || (iVar5 = VerifyCachePartitionData(&local_480), iVar5 == 0))
+         || (local_20c != 1)) {
+        local_480 = 0x4a6f7368;
+        local_20c = 1;
+        param_2 = param_2 | 0xf;
+        local_204[1] = 0;
+      }
+      if (bVar1) {
+        pbVar8 = local_253;
+        iVar5 = 0;
+        lVar3 = 2;
+        do {
+          if (*(uint *)((int)local_204 + iVar5) == uVar4) {
+            if (*param_5 < 0xf0) {
+              uVar6 = -(uint)(*pbVar8 < 0xf0) & 1;
+            }
+            else {
+              uVar6 = -((*pbVar8 < 0xf0) - 1);
+            }
+            if (uVar6 == 0) goto LAB_828a4620;
+          }
+          else {
+LAB_828a4620:
+            *(undefined4 *)((int)local_4c0 + iVar5) = 1;
+          }
+          *(uint *)((int)local_204 + iVar5) = uVar4;
+          pbVar8 = pbVar8 + 0x24;
+          iVar5 = iVar5 + 4;
+          lVar3 = lVar3 + -1;
+        } while (lVar3 != 0);
+        uVar2 = 0;
+      }
+      else {
+        uVar2 = 0;
+        puVar9 = local_204;
+        do {
+          if (*puVar9 == uVar4) break;
+          uVar2 = uVar2 + 1;
+          puVar9 = puVar9 + 1;
+        } while ((uVar2 & 0xffffffff) < 2);
+        if ((uVar2 & 0xffffffff) == 2) {
+          uVar2 = (ulonglong)(local_208 == 0);
+        }
+        else {
+          if (*param_5 < 0xf0) {
+            uVar6 = -(uint)(local_253[(int)uVar2 * 0x24] < 0xf0) & 1;
+          }
+          else {
+            uVar6 = -((local_253[(int)uVar2 * 0x24] < 0xf0) - 1);
+          }
+          if (uVar6 != 0) goto LAB_828a46c4;
+        }
+        *(undefined4 *)((int)local_4c0 + (int)((uVar2 & 0xffffffff) << 2)) = 1;
+      }
+LAB_828a46c4:
+      iVar5 = (int)((uVar2 & 0xffffffff) << 2);
+      *(uint *)((int)local_204 + iVar5) = uVar4;
+      local_208 = (int)uVar2;
+      WriteCachePartitionData(&local_480);
+      if ((param_2 & 0xf) != 0) {
+        if (bVar1) {
+          uVar6 = 0;
+          piVar7 = local_4c0;
+          lVar3 = 2;
+          do {
+            if (((uint)(1 << (uVar6 & 0x3f)) & param_2) != 0) {
+              *piVar7 = 1;
+            }
+            uVar6 = uVar6 + 1;
+            piVar7 = piVar7 + 1;
+            lVar3 = lVar3 + -1;
+          } while (lVar3 != 0);
+        }
+        else {
+          *(undefined4 *)((int)local_4c0 + (int)((uVar2 & 0xffffffff) << 2)) = 1;
+        }
+      }
+      if (bVar1 == 0) {
+        lVar3 = ValidateFatxPartition
+                          (&local_480,uVar2,
+                           *(undefined4 *)((int)local_4c0 + (int)((uVar2 & 0xffffffff) << 2)),
+                           param_3);
+        if (lVar3 != 0) goto LAB_828a48dc;
+      }
+      else {
+        uVar10 = 0;
+        piVar7 = local_4c0;
+        do {
+          if ((*(uint *)((int)local_204 + iVar5) == uVar4) &&
+             (lVar3 = ValidateFatxPartition(&local_480,uVar10,*piVar7,param_3), lVar3 != 0))
+          goto LAB_828a48dc;
+          uVar10 = uVar10 + 1;
+          piVar7 = piVar7 + 1;
+        } while ((uVar10 & 0xffffffff) < 2);
+      }
+      iVar5 = XexCheckExecutablePrivilege(0xb);
+      if (iVar5 == 0) {
+        KeEnterCriticalRegion();
+        RtlEnterCriticalSection(0xffffffff829a84c4);
+        DAT_848954dc = (uint)param_4 >> 0xc;
+        DAT_848954d8 = 0;
+        DAT_848954e0 = (int)uVar2;
+        DAT_848954e4 = (uint)bVar1;
+        DAT_84895770 = param_5;
+        memcpy(&DAT_848954ec,&local_480,0x284);
+        iVar5 = XamTaskSchedule(0xffffffff828a41f8,0xffffffff848954d8,local_4a0,local_4a8);
+        if (-1 < iVar5) {
+          XamTaskCloseHandle(local_4a8[0]);
+          KeWaitForSingleObject(0xffffffff829a84f0,3,1,0,0);
+          KeResetEvent(0xffffffff829a84f0);
+        }
+        uVar2 = (ulonglong)DAT_848954e8;
+        RtlLeaveCriticalSection(0xffffffff829a84c4);
+        KeLeaveCriticalRegion();
+      }
+      else {
+        uVar2 = MountDrives(bVar1,0xffffffff82201b50,uVar2);
+      }
+      if ((int)uVar2 < 0) {
+        UnmountDrives();
+      }
+      else {
+        uVar4 = 0;
+        piVar7 = local_4c0;
+        do {
+          if (*piVar7 != 0) {
+            InternalFlush();
+            break;
+          }
+          uVar4 = uVar4 + 1;
+          piVar7 = piVar7 + 1;
+        } while (uVar4 < 2);
+        DAT_848954c4 = 1;
+      }
+    }
+  }
+  lVar3 = RtlNtStatusToDosError(uVar2);
+LAB_828a48dc:
+  __restgprlr_18(lVar3);
+  return;
+}
+
+
+// 828A48E8  XMountUtilityDriveInternal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1744)
+
+void XMountUtilityDriveInternal
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  uVar1 = XMountUtilityDriveFileSystem
+                    (uVar1,-(param_2 != 0) & 0xf,param_3,param_4,0xffffffff829a8524);
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 828A4948  XMountUtilityDrive  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1765)
 
-void XMountUtilityDrive(void)
+void XMountUtilityDrive(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = XapiGetCurrentTitleId();
+  uVar1 = XMountUtilityDriveInternal(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 828A4990  XUnmountUtilityDrive  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/pathmisc.c:1806)
+
+undefined8 XUnmountUtilityDrive(void)
+
+{
+  undefined8 uVar1;
+  
+  if (DAT_848954c4 == 0) {
+    uVar1 = 0x10d0;
+  }
+  else {
+    XUnmountUtilityDriveInternal();
+    uVar1 = 0;
+  }
+  return uVar1;
 }
 
 
@@ -319,8 +787,25 @@ void XMountUtilityDrive(void)
 void InternalFlush(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined4 uVar2;
+  
   __savegprlr_29();
+  uVar2 = 0;
+  iVar1 = XexCheckExecutablePrivilege(0xb);
+  if (iVar1 == 0) {
+    KeEnterCriticalRegion();
+    RtlEnterCriticalSection(0xffffffff829a84c4);
+    DAT_848954d8 = 1;
+    KeSetEvent(0xffffffff829a84e0,1,0);
+    KeWaitForSingleObject(0xffffffff829a84f0,3,1,0,0);
+    KeResetEvent(0xffffffff829a84f0);
+    uVar2 = DAT_848954e8;
+    RtlLeaveCriticalSection(0xffffffff829a84c4);
+    KeLeaveCriticalRegion();
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

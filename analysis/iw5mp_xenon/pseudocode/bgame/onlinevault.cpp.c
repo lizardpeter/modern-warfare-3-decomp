@@ -12,11 +12,37 @@ void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 // 82842F28  OnlineVault_Notify  (bgame/onlinevault.cpp:165)
 
-void OnlineVault_Notify(void)
+void OnlineVault_Notify(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  char cVar3;
+  undefined **ppuVar4;
+  
+  uVar1 = __savegprlr_29();
+  if (4 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821ee130,0xa6,0,0xffffffff821ee590,param_2,5);
+  }
+  uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+  UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+  uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
+  if (param_3 == 0) {
+    ppuVar4 = &PTR_s_MENU_VAULT_COPY_FAILED_821ee108;
+  }
+  else {
+    ppuVar4 = &PTR_s_MENU_VAULT_COPY_SUCCESS_821ee104;
+  }
+  uVar2 = UI_SafeTranslateString(*(undefined4 *)((int)((param_2 & 0xffffffff) << 3) + (int)ppuVar4))
+  ;
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
+  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
+  if (cVar3 == '\0') {
+    UI_OpenMenu(uVar1,0xffffffff821e2738);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -27,7 +53,6 @@ undefined4 * OnlineVaultUI_GetHead(int param_1)
 {
   if (DAT_8487cdc8 != 0) {
     if (((int)DAT_8487cdc8 < 1) || (0x80 < DAT_8487cdc8)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ee130,0xbb,0,0xffffffff821ee170,DAT_8487cdc8,1,0x80);
     }
     if ((&DAT_8487cd98)[DAT_8487cdc8 * 0x10] == param_1) {
@@ -200,8 +225,32 @@ LAB_82841fb0:
 void OnlineVaultUI_PopMenu(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  char cVar4;
+  
+  uVar2 = __savegprlr_29();
+  iVar1 = DAT_8487cdc8;
+  if (DAT_8487cdc8 == 0) {
+    Com_PrintError(0xd,0xffffffff821ee240);
+    __restgprlr_29();
+    return;
+  }
+  if ((&DAT_8487cd98)[DAT_8487cdc8 * 0x10] != (int)uVar2) {
+    MyAssertHandler(0xffffffff821ee130,0x114,0,0xffffffff82000f98,0xffffffff821ee210);
+  }
+  DAT_8487cdc8 = DAT_8487cdc8 + -1;
+  UI_CloseMenu(0,&DAT_8487cdb0 + iVar1 * 0x10);
+  if (0 < DAT_8487cdc8) {
+    lVar3 = OnlineVaultUI_GetHead(uVar2);
+    cVar4 = Menu_IsMenuOpenAndVisible(0,lVar3 + 0x20);
+    if (cVar4 == '\0') {
+      UI_OpenMenu(0,lVar3 + 0x20);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -211,29 +260,31 @@ void OnlineVaultUI_ClearStack(void)
 
 {
   int iVar1;
-  longlong lVar2;
-  char cVar3;
-  int iVar4;
+  int iVar2;
+  longlong lVar3;
+  char cVar4;
   
   __savegprlr_25();
-  while (0 < DAT_8487cdc8) {
-    iVar4 = DAT_8487cdc8 * 0x40;
-    iVar1 = (&DAT_8487cd98)[DAT_8487cdc8 * 0x10];
-    if (DAT_8487cdc8 == 0) {
+  iVar2 = DAT_8487cdc8;
+  while (DAT_8487cdc8 = iVar2, 0 < iVar2) {
+    iVar1 = (&DAT_8487cd98)[iVar2 * 0x10];
+    if (iVar2 == 0) {
       Com_PrintError(0xd,0xffffffff821ee240);
+      iVar2 = DAT_8487cdc8;
     }
     else {
-      if ((&DAT_8487cd98)[DAT_8487cdc8 * 0x10] != iVar1) {
-                    /* WARNING: Subroutine does not return */
+      if ((&DAT_8487cd98)[iVar2 * 0x10] != iVar1) {
         MyAssertHandler(0xffffffff821ee130,0x114,0,0xffffffff82000f98,0xffffffff821ee210);
       }
       DAT_8487cdc8 = DAT_8487cdc8 + -1;
-      UI_CloseMenu(0,iVar4 + -0x7b783250);
+      UI_CloseMenu(0,&DAT_8487cdb0 + iVar2 * 0x10);
       if (DAT_8487cdc8 < 1) break;
-      lVar2 = OnlineVaultUI_GetHead(iVar1);
-      cVar3 = Menu_IsMenuOpenAndVisible(0,lVar2 + 0x20);
-      if (cVar3 == '\0') {
-        UI_OpenMenu(0,lVar2 + 0x20);
+      lVar3 = OnlineVaultUI_GetHead(iVar1);
+      cVar4 = Menu_IsMenuOpenAndVisible(0,lVar3 + 0x20);
+      iVar2 = DAT_8487cdc8;
+      if (cVar4 == '\0') {
+        UI_OpenMenu(0,lVar3 + 0x20);
+        iVar2 = DAT_8487cdc8;
       }
     }
   }
@@ -280,10 +331,9 @@ undefined4 GetPlayerMaxFileSlots(undefined8 param_1)
     }
     if (uVar2 != 0xffffffff) {
       if (2 < uVar2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821ee130,0x14e,0,0xffffffff821ee288,uVar2,3);
       }
-      return *(undefined4 *)(*(int *)(&DAT_84546cf8 + uVar2 * 4) + 0xc);
+      return *(undefined4 *)((&DAT_84546cf8)[uVar2] + 0xc);
     }
   }
   return 0;
@@ -292,11 +342,48 @@ undefined4 GetPlayerMaxFileSlots(undefined8 param_1)
 
 // 82842388  GetFileslotDescriptor  (bgame/onlinevault.cpp:344)
 
-void GetFileslotDescriptor(void)
+void GetFileslotDescriptor(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  ushort *puVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int local_30;
+  int local_2c;
+  
   __savegprlr_28();
+  iVar1 = OnlineVault_GetPrivateData();
+  if (iVar1 != 0) {
+    iVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    iVar4 = 0;
+    for (puVar3 = (ushort *)(iVar1 + 0x78);
+        (iVar4 < *(int *)(iVar1 + 0x4bb0) && (*puVar3 != param_2)); puVar3 = puVar3 + 0x3c8) {
+      iVar4 = iVar4 + 1;
+    }
+    if (iVar4 != *(int *)(iVar1 + 0x4bb0)) {
+      iVar1 = iVar4 * 0x790 + iVar1;
+      iVar6 = iVar1 + 0x10;
+      iVar5 = iVar1 + 0x280;
+      iVar4 = *(int *)(iVar1 + 0x480);
+      if ((iVar5 == 0) && (iVar4 != 0)) {
+        MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+      }
+      local_30 = iVar5;
+      local_2c = iVar4;
+      if (*(int *)(iVar1 + 0x480) == *(int *)(iVar2 + 0x30)) {
+        iVar1 = StructuredData_GetVersion(iVar2);
+        iVar2 = StructuredData_GetDataVersion(&local_30);
+        if (iVar2 == iVar1) goto LAB_82842470;
+      }
+    }
+  }
+  iVar6 = 0;
+LAB_82842470:
+  __restgprlr_28(iVar6);
+  return;
 }
 
 
@@ -399,7 +486,6 @@ LAB_82842630:
       return;
     }
     if (local_450[0] == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ee130,0x1bc,0,0xffffffff82000f98,0xffffffff821ee360);
     }
     String_Parse(param_2,auStack_440,0x400);
@@ -484,8 +570,27 @@ void OnlineVault_AbortOperation(undefined8 param_1)
 void OnlineVault_AbortOperationForAllControllers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar2;
+  int iVar1;
+  longlong lVar3;
+  
   __savegprlr_29();
+  lVar3 = 0;
+  do {
+    cVar2 = LiveStorage_CS_IsAvailable(lVar3);
+    if (((cVar2 != '\0') && (iVar1 = dwGetLogOnStatus(lVar3), iVar1 == 2)) &&
+       (cVar2 = OnlineVault_CanAbort(lVar3), cVar2 != '\0')) {
+      DAT_8487cf4f = 1;
+      dwCSAbortOperation(lVar3);
+      if (DAT_848764b4 != '\0') {
+        WebmTranscode__End(0xffffffff848764a8);
+      }
+      DCache_ClearStreaming();
+    }
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar3 < 4);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -520,11 +625,30 @@ void OnlineVault_CloseProgressIndicatorMenu(undefined8 param_1)
 
 // 82842968  OnlineVault_CloseFeederMenu  (bgame/onlinevault.cpp:551)
 
-void OnlineVault_CloseFeederMenu(void)
+void OnlineVault_CloseFeederMenu(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_27();
+  uVar2 = CL_ControllerIndexFromClientNum();
+  iVar3 = OnlineVaultUI_GetHead();
+  if (iVar3 != 0) {
+    UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+    if ((*(int *)(iVar3 + 0x18) == 2) || (*(int *)(iVar3 + 0x18) == 3)) {
+      UI_CloseMenu(uVar1,PTR_s_vault_confirmOverwrite_829a62bc);
+    }
+    if (param_2 == 0) {
+      OnlineVaultUI_PopMenu(uVar2);
+      __restgprlr_27();
+      return;
+    }
+    OnlineVaultUI_ClearStack();
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -551,38 +675,211 @@ bool OnlineVault_IsRestricted(void)
 void OnlineVault_FeederGetCount(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined *puVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_29();
+  iVar4 = OnlineVault_GetPrivateData();
+  if ((iVar4 != 0) &&
+     (cVar5 = Commerce_SubscriptionAcquired(uVar2), puVar1 = PTR_s_popup_vault_fetching_829a63b0,
+     cVar5 != '\0')) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+    cVar5 = Menu_IsMenuOpenAndVisible(uVar3,puVar1);
+    puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+    if (cVar5 != '\0') {
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_CloseMenu(uVar3,puVar1);
+    }
+    GetPlayerMaxFileSlots(uVar2);
+    __restgprlr_29();
+    return;
+  }
+  puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar3,puVar1);
+  puVar1 = PTR_s_popup_vault_fetching_829a63b0;
+  if (cVar5 == '\0') {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_OpenMenu(uVar2,puVar1);
+  }
+  __restgprlr_29(0);
+  return;
+}
+
+
+// 82842AD0  OnlineVault_GetTypeIconName  (bgame/onlinevault.cpp:610)
+
+undefined8 OnlineVault_GetTypeIconName(longlong param_1,undefined4 *param_2)
+
+{
+  bool bVar1;
+  
+  if ((param_1 - 1U & 0xffffffff) < 5) {
+    bVar1 = (int)(param_1 - 1U) != 0;
+    if (param_1 == 2 && bVar1) {
+      *param_2 = "menu_mp_lobby_icon_clip";
+      return 1;
+    }
+    if (param_1 == 3 && bVar1) {
+      *param_2 = "menu_mp_lobby_icon_screenshot";
+      return 1;
+    }
+    if (param_1 != 4 || !bVar1) {
+      if (!bVar1) {
+        *param_2 = "menu_mp_lobby_icon_film";
+        return 1;
+      }
+      *param_2 = "menu_mp_lobby_icon_customgamemode";
+      return 1;
+    }
+  }
+  *param_2 = &DAT_820068af;
+  return 0;
 }
 
 
 // 82845298  OnlineVault_FeederItemText  (bgame/onlinevault.cpp:636)
 
-void OnlineVault_FeederItemText(void)
+void OnlineVault_FeederItemText
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined4 *param_4,
+               int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  int *piVar6;
+  char cVar8;
+  undefined4 uVar7;
+  ulonglong uVar3;
+  int iVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  longlong local_60;
+  undefined1 auStack_58 [4];
+  undefined4 local_54;
+  
+  uVar1 = __savegprlr_26();
+  dVar11 = extraout_f1;
+  iVar4 = GetFileslotDescriptor();
+  if ((param_3 & 0xffffffff) == 0) {
+    va(0xffffffff82013b64,param_2 + 1);
+    __restgprlr_26();
+    return;
+  }
+  if ((param_3 & 0xffffffff) == 1) {
+    if (iVar4 == 0) {
+      UI_SafeTranslateString(0xffffffff821eeca8);
+      __restgprlr_26();
+      return;
+    }
+    OnlineVault_FeederGetData(uVar1,0xffffffff821ee640,param_2,auStack_58);
+    dVar10 = (double)*(float *)(param_5 + 0x11c);
+    uVar7 = *(undefined4 *)(param_5 + 0x10c);
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    uVar1 = ScrPlace_GetViewPlacement();
+    uVar3 = UI_GetFontHandle(dVar10,uVar1,uVar7);
+    if ((uVar3 & 0xffffffff) != 0) {
+      UI_TextWidth((double)*(float *)(param_5 + 0x11c),0xffffffff820185bc,0,uVar3);
+      local_60 = (longlong)(int)dVar11;
+      UI_TruncateEscapeCharacterTextWithEllipsis((double)*(float *)(param_5 + 0x11c),local_54,uVar3)
+      ;
+      __restgprlr_26();
+      return;
+    }
+    __restgprlr_26(local_54);
+    return;
+  }
+  if ((param_3 & 0xffffffff) < 3) {
+    CL_LocalClientNumFromControllerIndex(uVar1);
+    uVar2 = UI_GetClientDC();
+    puVar5 = (undefined4 *)Menu_GetTopOfStack(uVar2,0);
+    if ((puVar5 != (undefined4 *)0x0) && (*(int *)*puVar5 != 0)) {
+      piVar6 = (int *)OnlineVaultUI_GetHead(uVar1);
+      iVar9 = -1;
+      if (piVar6 != (int *)0x0) {
+        iVar9 = *piVar6;
+      }
+      if (iVar9 == (int)param_2) goto LAB_8284532c;
+    }
+    if ((iVar4 != 0) &&
+       (cVar8 = OnlineVault_GetTypeIconName(*(undefined2 *)(iVar4 + 0x26a),&local_60), cVar8 != '\0'
+       )) {
+      uVar7 = Material_RegisterHandle(local_60._0_4_,7);
+      *param_4 = uVar7;
+      __restgprlr_26(0xffffffff820068af);
+      return;
+    }
+  }
+LAB_8284532c:
+  __restgprlr_26(0xffffffff820068af);
+  return;
 }
 
 
 // 82842B58  OnlineVault_FeederItemEnabled  (bgame/onlinevault.cpp:699)
 
-void OnlineVault_FeederItemEnabled(void)
+void OnlineVault_FeederItemEnabled(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar3 = OnlineVaultUI_GetHead();
+  if (iVar3 != 0) {
+    if ((*(int *)(iVar3 + 0x18) == 2) || (*(int *)(iVar3 + 0x18) == 3)) {
+      lVar2 = OnlineVault_GetPrivateData(uVar1);
+      __restgprlr_29(lVar2 != 0);
+      return;
+    }
+    iVar4 = GetFileslotDescriptor(uVar1,param_2);
+    if ((iVar4 != 0) &&
+       ((*(uint *)(iVar3 + 0x1c) == 0 ||
+        ((uint)*(ushort *)(iVar4 + 0x26a) == *(uint *)(iVar3 + 0x1c))))) {
+      __restgprlr_29(1);
+      return;
+    }
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82842BF0  OnlineVault_FeederOverrideCursorPos  (bgame/onlinevault.cpp:724)
 
-void OnlineVault_FeederOverrideCursorPos(void)
+void OnlineVault_FeederOverrideCursorPos(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int *piVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_29();
+  piVar2 = (int *)OnlineVaultUI_GetHead();
+  if (piVar2 == (int *)0x0) goto LAB_82842c58;
+  iVar3 = GetPlayerMaxFileSlots(uVar1);
+  if (iVar3 == 0) {
+    iVar3 = 0;
+LAB_82842c3c:
+    *piVar2 = iVar3;
+  }
+  else if (iVar3 <= *piVar2) {
+    iVar3 = iVar3 + -1;
+    goto LAB_82842c3c;
+  }
+  iVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
+  *(int *)((iVar3 + 0x5f) * 4 + param_2) = *piVar2;
+LAB_82842c58:
+  __restgprlr_29();
+  return;
 }
 
 
@@ -604,23 +901,361 @@ void OnlineVault_FeederSelection(undefined8 param_1,undefined4 param_2)
 }
 
 
-// 82843010  OnlineVault_FeederGetData  (bgame/onlinevault.cpp:762)
+// 82845480  OnlineVault_FeederGetDataForSelectedIndex  (bgame/onlinevault.cpp:751)
 
-void OnlineVault_FeederGetData(void)
+void OnlineVault_FeederGetDataForSelectedIndex
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  uVar1 = __savegprlr_29();
+  piVar2 = (int *)OnlineVaultUI_GetHead();
+  if ((piVar2 != (int *)0x0) && (-1 < *piVar2)) {
+    OnlineVault_FeederGetData(uVar1,param_2,*piVar2,param_3);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82843010  OnlineVault_FeederGetData  (bgame/onlinevault.cpp:762)
+
+void OnlineVault_FeederGetData
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  longlong lVar2;
+  longlong lVar6;
+  longlong *plVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  char **ppcVar10;
+  ulonglong *puVar12;
+  ulonglong uVar11;
+  undefined1 auStack_4b0 [8];
+  undefined4 local_4a8 [2];
+  char *local_4a0 [4];
+  char *local_490;
+  undefined1 auStack_480 [4];
+  undefined4 local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  uint local_470;
+  uint local_46c;
+  undefined1 auStack_450 [1104];
+  
+  uVar1 = __savegprlr_23();
+  local_4a0[0] = "name";
+  local_4a0[1] = "desc";
+  local_4a0[3] = "duration";
+  local_490 = "createTime";
+  local_4a0[2] = "author";
+  Operand_SetString(param_4,0xffffffff820068af);
+  iVar3 = GetFileslotDescriptor(uVar1,param_3);
+  iVar4 = I_stricmp(param_2,0xffffffff821ee640);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) goto LAB_82843754;
+    uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+    uVar8 = 0;
+    cVar5 = StructuredData_GetData<bool>(uVar1,auStack_4b0,0xffffffff821dc408);
+    if (((cVar5 == '\0') && (*(short *)(iVar3 + 0x26a) == 5)) &&
+       (uVar9 = 0, *(int *)(iVar3 + 0x26c) != 0)) {
+      puVar12 = (ulonglong *)(iVar3 + 0x488);
+      do {
+        if (puVar12[-1] == 0) {
+          BG_MatchRulesData_GetGameTypeFromIndex(*puVar12 & 0xffffffff);
+          uVar8 = UI_GetCustomizedGameTypeDefaultDisplayName();
+        }
+        uVar9 = uVar9 + 1;
+        puVar12 = puVar12 + 3;
+      } while (uVar9 < *(uint *)(iVar3 + 0x26c));
+      if ((uVar8 & 0xffffffff) != 0) goto LAB_82843164;
+    }
+    uVar8 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,0xffffffff82021a74);
+LAB_82843164:
+    Operand_SetString(param_4,uVar8);
+    __restgprlr_23();
+    return;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821ee630);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) goto LAB_82843754;
+    uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+    uVar8 = 0;
+    cVar5 = StructuredData_GetData<bool>(uVar1,auStack_4b0,0xffffffff821dc3f8);
+    if (((cVar5 == '\0') && (*(short *)(iVar3 + 0x26a) == 5)) &&
+       (uVar9 = 0, *(int *)(iVar3 + 0x26c) != 0)) {
+      puVar12 = (ulonglong *)(iVar3 + 0x488);
+      do {
+        if (puVar12[-1] == 0) {
+          BG_MatchRulesData_GetGameTypeFromIndex(*puVar12 & 0xffffffff);
+          uVar8 = UI_GetCustomizedGameTypeDefaultDisplayDesc();
+        }
+        uVar9 = uVar9 + 1;
+        puVar12 = puVar12 + 3;
+      } while (uVar9 < *(uint *)(iVar3 + 0x26c));
+      if ((uVar8 & 0xffffffff) != 0) goto LAB_82843250;
+    }
+    uVar8 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,0xffffffff82132868);
+LAB_82843250:
+    Operand_SetString(param_4,uVar8);
+    __restgprlr_23();
+    return;
+  }
+  uVar9 = 0;
+  ppcVar10 = local_4a0;
+  do {
+    iVar4 = I_stricmp(param_2,*ppcVar10);
+    if (iVar4 == 0) {
+      if (iVar3 != 0) {
+        uVar1 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+        StructuredData_MakeBuffer(auStack_4b0,iVar3 + 0x270,*(undefined4 *)(iVar3 + 0x470));
+        iVar3 = I_stricmp(param_2,0xffffffff82003578);
+        if (iVar3 == 0) {
+          uVar1 = StructuredData_GetData<int>(uVar1,auStack_4b0,local_4a0[uVar9]);
+          CL_Demo_GetDuration(auStack_450,0x400,uVar1);
+          Operand_SetString(param_4,auStack_450);
+          __restgprlr_23();
+          return;
+        }
+        iVar3 = I_stricmp(param_2,0xffffffff821dc3ec);
+        if (iVar3 == 0) {
+          lVar6 = StructuredData_GetData<int>();
+          cVar5 = LiveStorage_IsTimeSynced();
+          if (cVar5 != '\0') {
+            lVar2 = LiveStorage_GetUTCOffset();
+            lVar6 = lVar2 + lVar6;
+          }
+          Com_RealTime(lVar6,auStack_480);
+          Com_sprintf(auStack_450,0x400,0xffffffff821dedbc,(ulonglong)local_470 + 1,local_474,
+                      (ulonglong)local_46c + 0x76c,local_478,local_47c);
+          Operand_SetString(param_4,auStack_450);
+          __restgprlr_23();
+          return;
+        }
+        uVar1 = StructuredData_GetData<char_const_*>(uVar1,auStack_4b0,local_4a0[uVar9]);
+        Operand_SetString(param_4,uVar1);
+        __restgprlr_23();
+        return;
+      }
+      goto LAB_82843754;
+    }
+    uVar9 = uVar9 + 1;
+    ppcVar10 = ppcVar10 + 1;
+  } while (uVar9 < 5);
+  iVar4 = I_stricmp(param_2,0xffffffff821ee620);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) &&
+       (cVar5 = OnlineVault_GetTypeIconName(*(undefined2 *)(iVar3 + 0x26a),local_4a8), cVar5 != '\0'
+       )) {
+      Operand_SetString(param_4,local_4a8[0]);
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843754;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff8216f884);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 3)) {
+      Operand_SetBool(param_4,1);
+      __restgprlr_23();
+      return;
+    }
+LAB_82843448:
+    Operand_SetBool(param_4,0);
+    __restgprlr_23();
+    return;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821ee618);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 1)) {
+      Operand_SetBool(param_4,1);
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843448;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff8216f87c);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 2)) {
+      Operand_SetBool(param_4,1);
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843448;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821dec38);
+  if (iVar4 == 0) {
+    if ((iVar3 != 0) && (*(short *)(iVar3 + 0x26a) == 5)) {
+      Operand_SetBool(param_4,1);
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843448;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821ee60c);
+  if (iVar4 == 0) {
+    if (iVar3 == 0) {
+LAB_82843580:
+      Operand_SetBool(param_4,1);
+      __restgprlr_23();
+      return;
+    }
+LAB_82843540:
+    Operand_SetBool(param_4,0);
+    __restgprlr_23();
+    return;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821ee5f8);
+  if (iVar4 == 0) {
+    cVar5 = UI_ScreenshotIsFinishedLoading(1);
+    if (cVar5 != '\0') goto LAB_82843580;
+    goto LAB_82843540;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff8216f894);
+  if (iVar4 == 0) {
+    if (iVar3 != 0) {
+      uVar1 = va(0xffffffff821ee5f0,*(undefined8 *)(iVar3 + 8));
+      Operand_SetString(param_4,uVar1);
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843754;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff8216faec);
+  if (iVar4 == 0) {
+    if (iVar3 != 0) {
+      Operand_SetInt(param_4,*(undefined4 *)(iVar3 + 0x474));
+      __restgprlr_23();
+      return;
+    }
+    goto LAB_82843754;
+  }
+  iVar4 = I_stricmp(param_2,0xffffffff821dee34);
+  if ((iVar4 == 0) || (iVar4 = I_stricmp(param_2,0xffffffff82043710), iVar4 == 0)) {
+    iVar4 = 1;
+  }
+  else {
+    iVar4 = I_stricmp(param_2,0xffffffff820337c4);
+    if (iVar4 == 0) {
+      iVar4 = 0;
+    }
+    else {
+      iVar4 = I_stricmp(param_2,0xffffffff821ee5e0);
+      if (iVar4 != 0) goto LAB_82843754;
+      iVar4 = 9;
+    }
+  }
+  if (iVar3 == 0) goto LAB_82843754;
+  uVar8 = (ulonglong)*(uint *)(iVar3 + 0x26c);
+  uVar11 = 0;
+  if (uVar8 != 0) {
+    plVar7 = (longlong *)(iVar3 + 0x480);
+    do {
+      if (*plVar7 == (longlong)iVar4) break;
+      uVar11 = uVar11 + 1;
+      plVar7 = plVar7 + 3;
+    } while ((uVar11 & 0xffffffff) < uVar8);
+  }
+  if (uVar8 <= (uVar11 & 0xffffffff)) goto LAB_82843754;
+  if (iVar4 == 0) {
+    UI_UpdateGameTypesList();
+    uVar8 = *(ulonglong *)
+             ((int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3 + 0x488);
+    if (*(short *)(iVar3 + 0x26a) == 5) {
+      uVar8 = BG_MatchRulesData_GetGameTypeFromIndex();
+    }
+    else {
+      iVar3 = (int)uVar8;
+      if ((iVar3 < 0) || (DAT_83f7aed4 <= iVar3)) goto LAB_82843748;
+      uVar8 = (uVar8 & 0xffffffff) * 0x6c - 0x7c085128;
+    }
+    if (((uVar8 & 0xffffffff) != 0) && (*(char *)uVar8 != '\0')) {
+      uVar1 = UI_GetGameTypeDisplayName();
+      Operand_SetString(param_4,uVar1);
+      __restgprlr_23();
+      return;
+    }
+LAB_82843748:
+    uVar8 = 0xffffffff820068af;
+  }
+  else {
+    if (iVar4 == 1) {
+      iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3;
+      if (*(ulonglong *)(iVar3 + 0x488) < (ulonglong)(longlong)DAT_83f7df64) {
+        iVar4 = I_stricmp(param_2,0xffffffff821dee34);
+        lVar6 = (*(ulonglong *)(iVar3 + 0x488) & 0xffffffff) * 0xa78;
+        if (iVar4 == 0) {
+          Operand_SetString(param_4,lVar6 + -0x7c082048);
+          __restgprlr_23();
+          return;
+        }
+        uVar1 = UI_GetMapDisplayName(lVar6 + -0x7c082078);
+        Operand_SetString(param_4,uVar1);
+        __restgprlr_23();
+        return;
+      }
+      goto LAB_82843754;
+    }
+    if (iVar4 != 9) goto LAB_82843754;
+    UI_UpdateGameTypesList();
+    uVar8 = *(ulonglong *)
+             ((int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3 + 0x488);
+    if (*(short *)(iVar3 + 0x26a) == 5) {
+      uVar8 = BG_MatchRulesData_GetGameTypeFromIndex();
+    }
+    else {
+      iVar3 = (int)uVar8;
+      if ((iVar3 < 0) || (DAT_83f7aed4 <= iVar3)) goto LAB_82843748;
+      uVar8 = (uVar8 & 0xffffffff) * 0x6c - 0x7c085128;
+    }
+    if (((uVar8 & 0xffffffff) == 0) || (*(char *)uVar8 == '\0')) goto LAB_82843748;
+  }
+  Operand_SetString(param_4,uVar8);
+LAB_82843754:
+  __restgprlr_23();
+  return;
 }
 
 
 // 82843868  OnlineVault_CanRenderClip  (bgame/onlinevault.cpp:1068)
 
-void OnlineVault_CanRenderClip(void)
+void OnlineVault_CanRenderClip(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  undefined1 auStack_30 [48];
+  
+  uVar1 = __savegprlr_28();
+  Operand_SetBool(param_2,0);
+  piVar3 = (int *)OnlineVaultUI_GetHead(uVar1);
+  if (((piVar3 != (int *)0x0) && (-1 < *piVar3)) &&
+     (iVar4 = GetFileslotDescriptor(uVar1), iVar4 != 0)) {
+    uVar2 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+    StructuredData_MakeBuffer(auStack_30,iVar4 + 0x270,*(undefined4 *)(iVar4 + 0x470));
+    iVar4 = StructuredData_GetData<int>(uVar2,auStack_30,0xffffffff82003578);
+    uVar5 = Commerce_LocalEliteSubscription(uVar1);
+    if (2 < uVar5) {
+      MyAssertHandler(0xffffffff821ee130,0x444,0,0xffffffff821ee650,uVar5,3);
+    }
+    if (iVar4 < *(int *)((&DAT_84546d88)[uVar5] + 0xc) * 1000) {
+      Operand_SetBool(param_2,1);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -641,11 +1276,63 @@ void OnlineVault_Refresh(void)
 
 // 828454C8  OnlineVault_FeederSelectedItem_Load  (bgame/onlinevault.cpp:1117)
 
-void OnlineVault_FeederSelectedItem_Load(void)
+void OnlineVault_FeederSelectedItem_Load(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar3;
+  uint uVar8;
+  undefined8 uVar9;
+  
+  uVar2 = __savegprlr_28();
+  iVar4 = OnlineVaultUI_GetHead();
+  piVar5 = (int *)OnlineVaultUI_GetHead(uVar2);
+  if ((((piVar5 == (int *)0x0) || (iVar7 = *piVar5, iVar7 < 0)) ||
+      (iVar6 = OnlineVault_FeederItemEnabled(uVar2,iVar7), iVar6 == 0)) ||
+     (iVar7 = GetFileslotDescriptor(uVar2,iVar7), iVar7 == 0)) goto LAB_82845628;
+  uVar8 = (uint)*(ushort *)(iVar7 + 0x26a);
+  if (uVar8 - 1 < 5) {
+    if (uVar8 == 2) {
+      Com_Printf(0x10,0xffffffff821eed18);
+      OnlineVault_TheaterFile_Load(uVar2,param_2);
+    }
+    else if (uVar8 == 3) {
+      Com_Printf(0x10,0xffffffff821eecf8);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_OpenMenu(uVar3,0xffffffff8216f794);
+      uVar1 = *(undefined4 *)(iVar7 + 0x18);
+      uVar9 = *(undefined8 *)(iVar7 + 8);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+      UI_ScreenshotDownload(uVar3,uVar9,uVar1);
+    }
+    else {
+      if (uVar8 == 4) goto LAB_828455f4;
+      if (uVar8 == 1) {
+        Com_Printf(0x10,0xffffffff821eed30);
+        OnlineVault_TheaterFile_Load(uVar2,0);
+      }
+      else {
+        Com_Printf(0x10,0xffffffff821eece0);
+        OnlineVault_CustomGameMode_Load(uVar2);
+      }
+    }
+  }
+  else {
+LAB_828455f4:
+    Com_Printf(0x10,0xffffffff821eecb4);
+  }
+  if ((*(int *)(iVar4 + 0x18) == 1) || (*(int *)(iVar4 + 0x18) == 5)) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    OnlineVault_CloseFeederMenu(uVar2,0);
+  }
+LAB_82845628:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -654,8 +1341,47 @@ void OnlineVault_FeederSelectedItem_Load(void)
 void OnlineVault_FeederSelectedItem_TrySave(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined *puVar1;
+  undefined8 uVar2;
+  uint *puVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  
+  uVar2 = __savegprlr_27();
+  puVar3 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar3 == (uint *)0x0) {
+    uVar6 = 0xffffffffffffffff;
+  }
+  else {
+    uVar6 = (ulonglong)*puVar3;
+    if (-1 < (int)*puVar3) goto LAB_828457e4;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x48d,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_828457e4:
+  iVar4 = OnlineVaultUI_GetHead(uVar2);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x48f,0,0xffffffff82000f98,0xffffffff8206f294);
+  }
+  if ((*(int *)(iVar4 + 0x18) != 2) && (*(int *)(iVar4 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x491,0,0xffffffff82000f98,0xffffffff821eee18);
+  }
+  iVar5 = GetFileslotDescriptor(uVar2,uVar6);
+  puVar1 = PTR_s_vault_confirmOverwrite_829a62bc;
+  if (iVar5 != 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex();
+    UI_OpenMenu(uVar2,puVar1);
+    __restgprlr_27();
+    return;
+  }
+  if (*(int *)(iVar4 + 0x18) == 3) {
+    OnlineVault_ExecuteCopy();
+    __restgprlr_27();
+    return;
+  }
+  OnlineVault_ExecuteSave(uVar2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -664,8 +1390,25 @@ void OnlineVault_FeederSelectedItem_TrySave(void)
 void OnlineVault_FeederSelectedItem_Save(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = OnlineVaultUI_GetHead();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x4a0,0,0xffffffff82000f98,0xffffffff8206f294);
+  }
+  if ((*(int *)(iVar2 + 0x18) != 2) && (*(int *)(iVar2 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x4a2,0,0xffffffff82000f98,0xffffffff821eee18);
+  }
+  if (*(int *)(iVar2 + 0x18) == 3) {
+    OnlineVault_ExecuteCopy();
+    __restgprlr_28();
+    return;
+  }
+  OnlineVault_ExecuteSave(uVar1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -674,8 +1417,30 @@ void OnlineVault_FeederSelectedItem_Save(void)
 void OnlineVault_ExecuteCopyComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  Com_Printf(0xd,0xffffffff821ee6a0);
+  uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -684,8 +1449,29 @@ void OnlineVault_ExecuteCopyComplete(void)
 void OnlineVault_ExecuteCopyFailed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -715,8 +1501,115 @@ int _dynamic_initializer_for__s_copiedFileID__(void)
 void OnlineVault_ExecuteCopy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined *puVar1;
+  int iVar5;
+  int iVar6;
+  uint *puVar7;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar8;
+  char cVar9;
+  undefined8 uVar4;
+  undefined8 *puVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined2 local_58;
+  int local_54;
+  undefined2 local_50;
+  int local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  int local_40;
+  undefined *local_3c;
+  code *local_38;
+  code *local_34;
+  
+  iVar5 = __savegprlr_28();
+  if ((1 < DAT_8487cdc8) && ((&DAT_8487cda8)[DAT_8487cdc8 * 0x10] == 3)) {
+    if (*(int *)(&DAT_8487cde8 + (DAT_8487cdc8 + -2) * 0x40) == 4) goto LAB_82843b50;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x4c2,0,0xffffffff82000f98,0xffffffff821ee8c0);
+LAB_82843b50:
+  puVar10 = &uStack_68;
+  lVar12 = 6;
+  do {
+    puVar10 = puVar10 + 1;
+    *puVar10 = 0;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  iVar6 = OnlineVaultUI_GetHead(iVar5);
+  if ((iVar6 == 0) || (iVar6 = OnlineVaultUI_GetHead(iVar5), *(int *)(iVar6 + 0x18) != 3)) {
+    MyAssertHandler(0xffffffff821ee130,0x4c7,0,0xffffffff82000f98,0xffffffff821ee850);
+  }
+  puVar7 = (uint *)OnlineVaultUI_GetHead(iVar5);
+  uVar11 = 0xffffffffffffffff;
+  if (puVar7 != (uint *)0x0) {
+    uVar11 = (ulonglong)*puVar7;
+  }
+  uVar2 = GetPlayerMaxFileSlots(iVar5);
+  if ((uVar2 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+    uVar3 = GetPlayerMaxFileSlots(iVar5);
+    MyAssertHandler(0xffffffff821ee130,0x4c9,0,0xffffffff821ee7f8,uVar11,uVar3);
+  }
+  local_58 = (undefined2)uVar11;
+  OnlineVaultUI_PopMenu(iVar5);
+  iVar6 = OnlineVaultUI_GetHead(iVar5);
+  if ((iVar6 == 0) || (iVar6 = OnlineVaultUI_GetHead(iVar5), *(int *)(iVar6 + 0x18) != 4)) {
+    MyAssertHandler(0xffffffff821ee130,0x4cf,0,0xffffffff82000f98,0xffffffff821ee780);
+  }
+  puVar7 = (uint *)OnlineVaultUI_GetHead(iVar5);
+  uVar11 = 0xffffffffffffffff;
+  if (puVar7 != (uint *)0x0) {
+    uVar11 = (ulonglong)*puVar7;
+  }
+  uVar2 = GetPlayerMaxFileSlots(iVar5);
+  if ((uVar2 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+    uVar3 = GetPlayerMaxFileSlots(iVar5);
+    MyAssertHandler(0xffffffff821ee130,0x4d1,0,0xffffffff821ee728,uVar11,uVar3);
+  }
+  iVar6 = GetFileslotDescriptor(iVar5,uVar11);
+  if ((iVar6 == 0) ||
+     (iVar8 = OnlineVaultUI_GetHead(iVar5),
+     *(longlong *)(iVar6 + 0x20) != *(longlong *)(iVar8 + 0x10))) {
+    MyAssertHandler(0xffffffff821ee130,0x4d4,0,0xffffffff82000f98,0xffffffff821ee6c8);
+  }
+  if (3 < iVar5) {
+    MyAssertHandler(0xffffffff821ee130,0x4d5,0,0xffffffff82000f98,0xffffffff82092310);
+  }
+  local_50 = *(undefined2 *)(iVar6 + 0x26a);
+  local_54 = iVar6 + 0x6a;
+  local_4c = iVar6 + 0x270;
+  local_60 = *(undefined8 *)(iVar6 + 8);
+  local_40 = iVar6 + 0x478;
+  local_48 = *(undefined4 *)(iVar6 + 0x470);
+  local_3c = &DAT_8487cf58 + iVar5 * 0x10;
+  local_44 = *(undefined4 *)(iVar6 + 0x26c);
+  local_38 = OnlineVault_ExecuteCopyComplete;
+  local_34 = OnlineVault_ExecuteCopyFailed;
+  uVar3 = CL_LocalClientNumFromControllerIndex(iVar5);
+  cVar9 = Menu_IsMenuOpenAndVisible(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar9 == '\0') {
+    uVar3 = UI_GetClientDC(uVar3);
+    Menus_OpenByName(uVar3,puVar1);
+  }
+  iVar6 = LiveStorage_CS_CopyFromOtherUser(iVar5,&local_60);
+  if (iVar6 == 0) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(iVar5);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar4 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar4);
+    uVar4 = UI_SafeTranslateString("MENU_VAULT_COPY_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar4);
+    cVar9 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+    if (cVar9 == '\0') {
+      UI_OpenMenu(uVar3,0xffffffff821e2738);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -725,8 +1618,55 @@ void OnlineVault_ExecuteCopy(void)
 void OnlineVault_ExecuteSave(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = OnlineVaultUI_GetHead();
+  puVar3 = (uint *)OnlineVaultUI_GetHead(uVar1);
+  uVar4 = 0xffffffffffffffff;
+  if (puVar3 != (uint *)0x0) {
+    uVar4 = (ulonglong)*puVar3;
+  }
+  if (iVar2 != 0) {
+    if (((int)uVar4 < 0) || ((*(int *)(iVar2 + 0x18) != 2 && (*(int *)(iVar2 + 0x18) != 3)))) {
+      MyAssertHandler(0xffffffff821ee130,0x4f0,0,0xffffffff82000f98,0xffffffff821eeddc);
+    }
+    iVar2 = *(int *)(iVar2 + 0x1c);
+    if (iVar2 - 1U < 5) {
+      if (iVar2 == 2) {
+        Com_Printf(0x10,0xffffffff821eedac);
+        CL_Demo_SaveClip(uVar1,uVar4);
+        __restgprlr_29();
+        return;
+      }
+      if (iVar2 == 3) {
+        Com_Printf(0x10,0xffffffff821eed8c);
+        CL_Demo_SaveScreenshot(uVar1,uVar4);
+        __restgprlr_29();
+        return;
+      }
+      if (iVar2 != 4) {
+        if (iVar2 == 1) {
+          Com_Printf(0x10,0xffffffff821eedc4);
+          CL_Demo_SaveFilm(uVar1,uVar4);
+          __restgprlr_29();
+          return;
+        }
+        Com_Printf(0x10,0xffffffff821eed74);
+        OnlineVault_CustomGameMode_Save(uVar1);
+        uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
+        OnlineVault_CloseFeederMenu(uVar1,0);
+        __restgprlr_29();
+        return;
+      }
+    }
+    Com_Printf(0x10,0xffffffff821eed48);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -735,8 +1675,29 @@ void OnlineVault_ExecuteSave(void)
 void EditMetaDataComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -745,28 +1706,172 @@ void EditMetaDataComplete(void)
 void EditMetaDataFailed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  Com_PrintError(0x10,0xffffffff821ee978,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82843FA8  EditMetaData  (bgame/onlinevault.cpp:1315)
 
-void EditMetaData(void)
+void EditMetaData(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  int iVar6;
+  char cVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  undefined1 auStack_3b0 [16];
+  undefined1 local_3a0 [8];
+  undefined8 local_398;
+  undefined *local_390;
+  undefined4 uStack_38c;
+  undefined4 local_388;
+  undefined1 *puStack_384;
+  undefined8 local_380;
+  undefined1 auStack_370 [792];
+  undefined1 auStack_58 [88];
+  
+  uVar2 = __savegprlr_23();
+  puVar9 = auStack_370;
+  lVar8 = 0x20;
+  do {
+    bdTag__bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 0x18;
+  } while (-1 < lVar8);
+  iVar4 = OnlineVault_FeederItemEnabled(uVar2,param_2);
+  if (iVar4 == 0) {
+    Com_PrintError(0x10,0xffffffff821eea08,param_2);
+    puVar9 = auStack_58;
+    lVar8 = 0x20;
+    do {
+      puVar9 = puVar9 + -0x18;
+      bdTag___bdTag(puVar9);
+      lVar8 = lVar8 + -1;
+    } while (-1 < lVar8);
+    __restgprlr_23();
+    return;
+  }
+  iVar4 = GetFileslotDescriptor(uVar2,param_2);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x530,0,0xffffffff82000f98,0xffffffff821ee510);
+  }
+  iVar5 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  if (*(int *)(iVar5 + 0x30) != *(int *)(iVar4 + 0x470)) {
+    MyAssertHandler(0xffffffff821ee130,0x533,0,0xffffffff82000f98,0xffffffff821ee9e0);
+  }
+  memcpy(&DAT_8487ce50,(void *)(iVar4 + 0x270),*(size_t *)(iVar4 + 0x470));
+  if (0x21 < *(uint *)(iVar4 + 0x26c)) {
+    MyAssertHandler(0xffffffff821ee130,0x535,0,0xffffffff82000f98,0xffffffff821ee9b0);
+  }
+  memcpy(auStack_370,(void *)(iVar4 + 0x478),*(int *)(iVar4 + 0x26c) * 0x18);
+  StructuredData_MakeBuffer(auStack_3b0,0xffffffff8487ce50,*(undefined4 *)(iVar4 + 0x470));
+  bVar1 = false;
+  uVar3 = StructuredData_GetData<char_const_*>(iVar5,auStack_3b0,0xffffffff82021a74);
+  if (((param_3 & 0xffffffff) != 0) && (iVar6 = I_strncmp(uVar3,param_3,0x40), iVar6 != 0)) {
+    bVar1 = true;
+    StructuredData_SetData<char_const_*>(iVar5,auStack_3b0,param_3,0xffffffff82021a74);
+    StructuredData_SetData<bool>(iVar5,auStack_3b0,1,0xffffffff821dc408);
+  }
+  uVar3 = StructuredData_GetData<char_const_*>(iVar5,auStack_3b0,0xffffffff82132868);
+  if (((param_4 & 0xffffffff) == 0) || (iVar6 = I_strncmp(uVar3,param_4,0x40), iVar6 == 0)) {
+    if (!bVar1) {
+      puVar9 = auStack_58;
+      lVar8 = 0x20;
+      do {
+        puVar9 = puVar9 + -0x18;
+        bdTag___bdTag(puVar9);
+        lVar8 = lVar8 + -1;
+      } while (-1 < lVar8);
+      __restgprlr_23();
+      return;
+    }
+  }
+  else {
+    StructuredData_SetData<char_const_*>(iVar5,auStack_3b0,param_4,0xffffffff82132868);
+    StructuredData_SetData<bool>(iVar5,auStack_3b0,1,0xffffffff821dc3f8);
+  }
+  local_398 = 0;
+  _local_390 = CONCAT44(&DAT_8487ce50,*(undefined4 *)(iVar5 + 0x30));
+  _local_388 = CONCAT44(*(undefined4 *)(iVar4 + 0x26c),auStack_370);
+  local_380 = 0x82843e3882843ee8;
+  CL_LocalClientNumFromControllerIndex(uVar2);
+  OnlineVault_OpenProgressIndicatorMenu();
+  iVar4 = LiveStorage_CS_UploadSummaryMetadata(uVar2,local_3a0);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+    uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+    uVar3 = UI_SafeTranslateString("MENU_VAULT_EDIT_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+    cVar7 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+    if (cVar7 == '\0') {
+      UI_OpenMenu(uVar2,0xffffffff821e2738);
+    }
+  }
+  puVar9 = auStack_58;
+  lVar8 = 0x20;
+  do {
+    puVar9 = puVar9 + -0x18;
+    bdTag___bdTag(puVar9);
+    lVar8 = lVar8 + -1;
+  } while (-1 < lVar8);
+  __restgprlr_23();
+  return;
 }
 
 
 // 82844330  OnlineVault_EditMetaData  (bgame/onlinevault.cpp:1377)
 
-void OnlineVault_EditMetaData(void)
+void OnlineVault_EditMetaData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  uint *puVar2;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_28();
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar3 = 0xffffffffffffffff;
+  }
+  else {
+    uVar3 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_8284438c;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x563,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_8284438c:
+  EditMetaData(uVar1,uVar3,param_2,param_3);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -775,21 +1880,27 @@ void OnlineVault_EditMetaData(void)
 void OnlineVault_FeederSelectedItem_Rename(undefined8 param_1)
 
 {
-  int *piVar2;
+  uint *puVar2;
   int iVar3;
   undefined8 uVar1;
+  ulonglong uVar4;
   
-  piVar2 = (int *)OnlineVaultUI_GetHead();
-  if ((piVar2 != (int *)0x0) && (-1 < *piVar2)) {
-    iVar3 = OnlineVault_FeederItemEnabled(param_1,*piVar2);
-    if (iVar3 != 0) {
-      uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-      UI_OpenMenu(uVar1,0xffffffff821ee488);
-    }
-    return;
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar4 = 0xffffffffffffffff;
   }
-                    /* WARNING: Subroutine does not return */
+  else {
+    uVar4 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_82842d3c;
+  }
   MyAssertHandler(0xffffffff821ee130,0x56b,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82842d3c:
+  iVar3 = OnlineVault_FeederItemEnabled(param_1,uVar4);
+  if (iVar3 != 0) {
+    uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+    UI_OpenMenu(uVar1,0xffffffff821ee488);
+  }
+  return;
 }
 
 
@@ -798,8 +1909,29 @@ void OnlineVault_FeederSelectedItem_Rename(undefined8 param_1)
 void DeleteSuccess(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -808,8 +1940,29 @@ void DeleteSuccess(void)
 void DeleteFailed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -818,48 +1971,53 @@ void DeleteFailed(void)
 void OnlineVault_FeederSelectedItem_Delete(undefined8 param_1)
 
 {
-  int *piVar3;
+  uint *puVar3;
   int iVar4;
-  int iVar5;
   undefined8 uVar1;
   undefined8 uVar2;
-  char cVar6;
+  char cVar5;
+  ulonglong uVar6;
   undefined8 local_30;
   code *local_28;
   
-  piVar3 = (int *)OnlineVaultUI_GetHead();
-  if ((piVar3 != (int *)0x0) && (iVar5 = *piVar3, -1 < iVar5)) {
-    iVar4 = OnlineVault_FeederItemEnabled(param_1,iVar5);
-    if (iVar4 != 0) {
-      iVar4 = GetFileslotDescriptor(param_1,iVar5);
+  puVar3 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar3 == (uint *)0x0) {
+    uVar6 = 0xffffffffffffffff;
+  }
+  else {
+    uVar6 = (ulonglong)*puVar3;
+    if (-1 < (int)*puVar3) goto LAB_82844564;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x588,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82844564:
+  iVar4 = OnlineVault_FeederItemEnabled(param_1,uVar6);
+  if (iVar4 != 0) {
+    iVar4 = GetFileslotDescriptor(param_1,uVar6);
+    if (iVar4 == 0) {
+      Com_PrintError(0xd,0xffffffff821ee520);
+    }
+    else {
+      local_30 = uVar6 << 0x30;
+      local_30 = CONCAT44(local_30._0_4_,DeleteSuccess);
+      local_28 = DeleteFailed;
+      CL_LocalClientNumFromControllerIndex(param_1);
+      OnlineVault_OpenProgressIndicatorMenu();
+      iVar4 = LiveStorage_CS_RemoveFile(param_1,&local_30);
       if (iVar4 == 0) {
-        Com_PrintError(0xd,0xffffffff821ee520);
-      }
-      else {
-        local_30 = (ulonglong)(ushort)iVar5 << 0x30;
-        local_30 = CONCAT44(local_30._0_4_,DeleteSuccess);
-        local_28 = DeleteFailed;
-        CL_LocalClientNumFromControllerIndex(param_1);
-        OnlineVault_OpenProgressIndicatorMenu();
-        iVar5 = LiveStorage_CS_RemoveFile(param_1,&local_30);
-        if (iVar5 == 0) {
-          uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-          UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
-          uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
-          Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
-          uVar2 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
-          Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
-          cVar6 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
-          if (cVar6 == '\0') {
-            UI_OpenMenu(uVar1,0xffffffff821e2738);
-          }
+        uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+        UI_CloseMenu(uVar1,PTR_s_vault_task_in_progress_829a63b4);
+        uVar2 = UI_SafeTranslateString(0xffffffff821ee578);
+        Dvar_SetFromStringByName(0xffffffff821e2764,uVar2);
+        uVar2 = UI_SafeTranslateString("MENU_VAULT_DEL_FAILED");
+        Dvar_SetFromStringByName(0xffffffff821e274c,uVar2);
+        cVar5 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff821e2738);
+        if (cVar5 == '\0') {
+          UI_OpenMenu(uVar1,0xffffffff821e2738);
         }
       }
     }
-    return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821ee130,0x588,0,0xffffffff82000f98,0xffffffff821ee498);
+  return;
 }
 
 
@@ -890,8 +2048,7 @@ void OnlineVault_CustomGameMode_LoadSuccess(undefined8 param_1,longlong param_2)
   iVar8 = GameStateInfo_Get();
   iVar2 = (int)param_2;
   if (*(int *)(iVar2 + 0x79c) != *(int *)(iVar8 + 8)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821ee130,0x5ab,0,0xffffffff82000f98,0xffffffff821eeae8);
+    MyAssertHandler(0xffffffff821ee130,0x5ab,0,0xffffffff82000f98);
   }
   bVar13 = 1;
   uVar14 = 0;
@@ -913,7 +2070,6 @@ void OnlineVault_CustomGameMode_LoadSuccess(undefined8 param_1,longlong param_2)
   uVar5 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
   local_6c = *(int *)(iVar2 + 0x478);
   if ((param_2 + 0x278 == 0) && (local_6c != 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
   }
   local_70 = (undefined4)(param_2 + 0x278);
@@ -921,53 +2077,52 @@ void OnlineVault_CustomGameMode_LoadSuccess(undefined8 param_1,longlong param_2)
   lVar6 = Com_BlockChecksumKey32(*(undefined4 *)(iVar8 + 8),*(undefined4 *)(iVar2 + 0x798),0);
   uVar7 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
   local_68[0] = *(int *)(iVar8 + 8);
-  if (local_68[0] != 0) {
-    local_68[1] = 0xc00;
-    iVar9 = StructuredData_GetDataVersion(local_68);
-    iVar10 = StructuredData_GetVersion(uVar7);
-    if (((bool)(lVar6 == lVar12 & uVar1 != uVar14 & bVar13)) &&
-       ((iVar9 == iVar10 ||
-        (cVar11 = UpdateMatchRulesDataFromOldDef
-                            (*(undefined4 *)(iVar8 + 8),*(undefined4 *)(iVar2 + 0x798)),
-        cVar11 != '\0')))) {
-      cVar11 = StructuredData_GetData<bool>(uVar5,&local_70,0xffffffff821dc408);
-      if (cVar11 == '\0') {
-        uVar5 = 0xffffffff820068af;
-      }
-      else {
-        uVar5 = StructuredData_GetData<char_const_*>(uVar5,&local_70,0xffffffff82021a74);
-      }
-      StructuredData_SetData<char_const_*>(uVar7,local_68,uVar5,0xffffffff821e29b0);
-      MatchRulesChanged(*(undefined4 *)(iVar8 + 8));
-      *(undefined4 *)(iVar8 + 4) = 1;
-      Com_Printf(0x10,0xffffffff821eea40);
-      uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
-      UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
-      uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
-      Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
-      uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_SUCCESS");
-      Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
-      cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+  if (local_68[0] == 0) {
+    MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  }
+  local_68[1] = 0xc00;
+  iVar9 = StructuredData_GetDataVersion(local_68);
+  iVar10 = StructuredData_GetVersion(uVar7);
+  if (((bool)(lVar6 == lVar12 & uVar1 != uVar14 & bVar13)) &&
+     ((iVar9 == iVar10 ||
+      (cVar11 = UpdateMatchRulesDataFromOldDef
+                          (*(undefined4 *)(iVar8 + 8),*(undefined4 *)(iVar2 + 0x798)),
+      cVar11 != '\0')))) {
+    cVar11 = StructuredData_GetData<bool>(uVar5,&local_70,0xffffffff821dc408);
+    if (cVar11 == '\0') {
+      uVar5 = 0xffffffff820068af;
     }
     else {
-      Com_PrintError(0x10,0xffffffff821eea98);
-      InitializeMatchRules(*(undefined4 *)(iVar8 + 8));
-      uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
-      UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
-      uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
-      Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
-      uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
-      Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
-      cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+      uVar5 = StructuredData_GetData<char_const_*>(uVar5,&local_70,0xffffffff82021a74);
     }
-    if (cVar11 == '\0') {
-      UI_OpenMenu(uVar3,0xffffffff821e2738);
-    }
-    __restgprlr_22();
-    return;
+    StructuredData_SetData<char_const_*>(uVar7,local_68,uVar5,0xffffffff821e29b0);
+    MatchRulesChanged(*(undefined4 *)(iVar8 + 8));
+    *(undefined4 *)(iVar8 + 4) = 1;
+    Com_Printf(0x10,0xffffffff821eea40);
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
+    uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_SUCCESS");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
+    cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821e2648,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  else {
+    Com_PrintError(0x10,0xffffffff821eea98);
+    InitializeMatchRules(*(undefined4 *)(iVar8 + 8));
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar5 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar5);
+    uVar5 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar5);
+    cVar11 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+  }
+  if (cVar11 == '\0') {
+    UI_OpenMenu(uVar3,0xffffffff821e2738);
+  }
+  __restgprlr_22();
+  return;
 }
 
 
@@ -1003,8 +2158,87 @@ void OnlineVault_CustomGameMode_LoadFailed(undefined8 param_1)
 void OnlineVault_CustomGameMode_Load(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined *puVar1;
+  undefined8 uVar2;
+  char cVar7;
+  int iVar4;
+  uint *puVar5;
+  int iVar6;
+  undefined8 uVar3;
+  undefined8 *puVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  undefined8 uStack_68;
+  undefined8 local_60;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  undefined1 local_48;
+  code *local_3c;
+  code *local_38;
+  
+  uVar2 = __savegprlr_27();
+  cVar7 = LiveStorage_CS_IsInited();
+  if (cVar7 == '\0') {
+    LiveStorage_CS_Init(uVar2);
+  }
+  cVar7 = LiveStorage_CS_IsAvailable(uVar2);
+  if (cVar7 == '\0') {
+    Com_PrintError(0x10,0xffffffff821eeb68);
+    __restgprlr_27();
+    return;
+  }
+  iVar4 = GameStateInfo_Get();
+  if (*(int *)(iVar4 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x605,0,0xffffffff82000f98,0xffffffff82042524);
+  }
+  puVar8 = &uStack_68;
+  lVar10 = 6;
+  do {
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  puVar5 = (uint *)OnlineVaultUI_GetHead(uVar2);
+  if (puVar5 == (uint *)0x0) {
+    uVar9 = 0xffffffffffffffff;
+  }
+  else {
+    uVar9 = (ulonglong)*puVar5;
+    if (-1 < (int)*puVar5) goto LAB_82844bbc;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x60a,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82844bbc:
+  iVar6 = GetFileslotDescriptor(uVar2,uVar9);
+  local_60 = *(undefined8 *)(iVar6 + 8);
+  local_58 = *(undefined4 *)(iVar6 + 0x18);
+  local_54 = *(undefined4 *)(iVar4 + 8);
+  local_50 = 0xc00;
+  local_3c = OnlineVault_CustomGameMode_LoadSuccess;
+  local_38 = OnlineVault_CustomGameMode_LoadFailed;
+  local_48 = 0;
+  uVar3 = CL_LocalClientNumFromControllerIndex(uVar2);
+  cVar7 = Menu_IsMenuOpenAndVisible(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar7 == '\0') {
+    uVar3 = UI_GetClientDC(uVar3);
+    Menus_OpenByName(uVar3,puVar1);
+  }
+  iVar4 = LiveStorage_CS_ReadFile(uVar2,&local_60);
+  if (iVar4 == 0) {
+    uVar2 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+    uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+    uVar3 = UI_SafeTranslateString("MENU_CGM_LOAD_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+    cVar7 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+    if (cVar7 == '\0') {
+      UI_OpenMenu(uVar2,0xffffffff821e2738);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1013,8 +2247,30 @@ void OnlineVault_CustomGameMode_Load(void)
 void OnlineVault_CustomGameMode_SaveSucceeded(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_SUCCESS");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  Com_Printf(0x10,0xffffffff821eebc0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1023,18 +2279,225 @@ void OnlineVault_CustomGameMode_SaveSucceeded(void)
 void OnlineVault_CustomGameMode_SaveFailed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined1 *puVar4;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar2,PTR_s_vault_task_in_progress_829a63b4);
+  uVar3 = UI_SafeTranslateString(0xffffffff821ee578);
+  Dvar_SetFromStringByName(0xffffffff821e2764,uVar3);
+  uVar3 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
+  Dvar_SetFromStringByName(0xffffffff821e274c,uVar3);
+  cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff821e2738);
+  if (cVar5 == '\0') {
+    UI_OpenMenu(uVar2,0xffffffff821e2738);
+  }
+  puVar4 = (undefined1 *)LiveStorage_CS_GetPrivateData(uVar1);
+  if (puVar4 != (undefined1 *)0x0) {
+    *puVar4 = 0;
+  }
+  Com_PrintError(0x10,0xffffffff821eebf4);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82844E60  OnlineVault_CustomGameMode_Save  (bgame/onlinevault.cpp:1582)
+
+void OnlineVault_CustomGameMode_Save(void)
+
+{
+  undefined *puVar1;
+  undefined8 *puVar2;
+  undefined8 uVar3;
+  char cVar9;
+  uint *puVar5;
+  int iVar6;
+  undefined8 uVar4;
+  int iVar7;
+  char *pcVar8;
+  undefined1 uVar10;
+  undefined8 uVar11;
+  undefined8 *puVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  undefined1 *puVar15;
+  undefined *local_4a0;
+  undefined4 local_49c;
+  undefined8 local_498;
+  undefined2 local_490 [2];
+  undefined4 uStack_48c;
+  undefined4 local_488;
+  undefined1 *local_484;
+  undefined2 local_480;
+  undefined *local_47c;
+  undefined4 local_478;
+  undefined4 local_474;
+  undefined1 *local_470;
+  code *local_464;
+  code *local_460;
+  undefined1 auStack_450 [256];
+  undefined1 auStack_350 [792];
+  undefined1 auStack_38 [56];
+  
+  uVar3 = __savegprlr_26();
+  puVar15 = auStack_350;
+  lVar13 = 0x20;
+  do {
+    bdTag__bdTag(puVar15);
+    lVar13 = lVar13 + -1;
+    puVar15 = puVar15 + 0x18;
+  } while (-1 < lVar13);
+  cVar9 = LiveStorage_CS_IsInited(uVar3);
+  if (cVar9 == '\0') {
+    LiveStorage_CS_Init(uVar3);
+  }
+  cVar9 = LiveStorage_CS_IsAvailable(uVar3);
+  if (cVar9 == '\0') {
+    Com_PrintError(0x10,0xffffffff821eec50);
+    puVar15 = auStack_38;
+    lVar13 = 0x20;
+    do {
+      puVar15 = puVar15 + -0x18;
+      bdTag___bdTag(puVar15);
+      lVar13 = lVar13 + -1;
+    } while (-1 < lVar13);
+    __restgprlr_26();
+    return;
+  }
+  puVar5 = (uint *)OnlineVaultUI_GetHead(uVar3);
+  if (puVar5 == (uint *)0x0) {
+    uVar14 = 0xffffffffffffffff;
+  }
+  else {
+    uVar14 = (ulonglong)*puVar5;
+    if (-1 < (int)*puVar5) goto LAB_82844f40;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x63f,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82844f40:
+  iVar6 = GameStateInfo_Get();
+  if (*(int *)(iVar6 + 4) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x641,0,0xffffffff82000f98,0xffffffff821eec38);
+  }
+  if (*(int *)(iVar6 + 8) == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x642,0,0xffffffff82000f98,0xffffffff82042524);
+  }
+  lVar13 = 6;
+  puVar2 = &local_498;
+  do {
+    puVar12 = puVar2;
+    puVar2 = puVar12 + 1;
+    *puVar2 = 0;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  *(undefined4 *)(puVar12 + 2) = 0;
+  uVar4 = CL_GetUsernameForLocalClient(uVar3);
+  Com_sprintf(auStack_450,0x100,0xffffffff821eec28,uVar4,uVar14);
+  local_484 = auStack_450;
+  local_490[0] = (undefined2)uVar14;
+  local_480 = 5;
+  iVar7 = StructuredDataDef_GetAsset(0xffffffff821dc420,0xff);
+  memset(&DAT_8487ce50,0,0xff);
+  local_4a0 = &DAT_8487ce50;
+  local_49c = 0xff;
+  StructuredData_SetDataVersion(iVar7,&local_4a0);
+  uVar4 = CL_GetUsernameForLocalClient(uVar3);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar4,0xffffffff821dc418);
+  uVar4 = BG_MatchRulesData_GetGameType(*(undefined4 *)(iVar6 + 8));
+  pcVar8 = (char *)BG_MatchRulesData_GetRecipeName(*(undefined4 *)(iVar6 + 8));
+  if ((pcVar8 == (char *)0x0) || (uVar11 = 1, *pcVar8 == '\0')) {
+    uVar11 = 0;
+  }
+  StructuredData_SetData<bool>(iVar7,&local_4a0,uVar11,0xffffffff821dc408);
+  uVar11 = GetLocalizedMatchRulesName(pcVar8,uVar4);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar11,0xffffffff82021a74);
+  StructuredData_SetData<bool>(iVar7,&local_4a0,0,0xffffffff821dc3f8);
+  uVar4 = UI_GetCustomizedGameTypeDefaultDisplayDesc(uVar4);
+  StructuredData_SetData<char_const_*>(iVar7,&local_4a0,uVar4,0xffffffff82132868);
+  StructuredData_SetData<int>
+            (iVar7,&local_4a0,*(undefined4 *)(*(int *)(iVar6 + 8) + 0xc04),0xffffffff821eeadc);
+  local_47c = &DAT_8487ce50;
+  local_478 = *(undefined4 *)(iVar7 + 0x30);
+  local_498._0_4_ = 0;
+  uVar4 = Live_GetXuid(uVar3);
+  LiveStorage_CS_AddTag(3,uVar4,&local_498,auStack_350,0x21);
+  uVar10 = BG_MatchRulesData_GetGameTypeIndex(*(undefined4 *)(iVar6 + 8));
+  LiveStorage_CS_AddTag(0,uVar10,&local_498,auStack_350,0x21);
+  local_470 = auStack_350;
+  local_474 = local_498._0_4_;
+  iVar7 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+  local_488 = *(undefined4 *)(iVar7 + 0x30);
+  uStack_48c = *(undefined4 *)(iVar6 + 8);
+  local_464 = OnlineVault_CustomGameMode_SaveSucceeded;
+  local_460 = OnlineVault_CustomGameMode_SaveFailed;
+  uVar4 = CL_LocalClientNumFromControllerIndex(uVar3);
+  cVar9 = Menu_IsMenuOpenAndVisible(uVar4,PTR_s_vault_task_in_progress_829a63b4);
+  puVar1 = PTR_s_vault_task_in_progress_829a63b4;
+  if (cVar9 == '\0') {
+    uVar4 = UI_GetClientDC(uVar4);
+    Menus_OpenByName(uVar4,puVar1);
+  }
+  iVar6 = LiveStorage_CS_WriteFile(uVar3,local_490);
+  if (iVar6 == 0) {
+    uVar3 = CL_LocalClientNumFromControllerIndex(uVar3);
+    UI_CloseMenu(uVar3,PTR_s_vault_task_in_progress_829a63b4);
+    uVar4 = UI_SafeTranslateString(0xffffffff821ee578);
+    Dvar_SetFromStringByName(0xffffffff821e2764,uVar4);
+    uVar4 = UI_SafeTranslateString("MENU_CGM_SAVE_FAILED");
+    Dvar_SetFromStringByName(0xffffffff821e274c,uVar4);
+    cVar9 = Menu_IsMenuOpenAndVisible(uVar3,0xffffffff821e2738);
+    if (cVar9 == '\0') {
+      UI_OpenMenu(uVar3,0xffffffff821e2738);
+    }
+  }
+  puVar15 = auStack_38;
+  lVar13 = 0x20;
+  do {
+    puVar15 = puVar15 + -0x18;
+    bdTag___bdTag(puVar15);
+    lVar13 = lVar13 + -1;
+  } while (-1 < lVar13);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82842D80  OnlineVault_TheaterFile_Load  (bgame/onlinevault.cpp:1658)
 
-void OnlineVault_TheaterFile_Load(void)
+void OnlineVault_TheaterFile_Load(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  uint *puVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  uVar1 = __savegprlr_27();
+  puVar2 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar2 == (uint *)0x0) {
+    uVar4 = 0xffffffffffffffff;
+  }
+  else {
+    uVar4 = (ulonglong)*puVar2;
+    if (-1 < (int)*puVar2) goto LAB_82842de0;
+  }
+  MyAssertHandler(0xffffffff821ee130,0x67c,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82842de0:
+  iVar3 = GetFileslotDescriptor(uVar1,uVar4);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821ee130,0x67f,0,0xffffffff82000f98,0xffffffff821ee510);
+  }
+  if ((*(short *)(iVar3 + 0x26a) != 1) && (*(short *)(iVar3 + 0x26a) != 2)) {
+    MyAssertHandler(0xffffffff821ee130,0x680,0,0xffffffff82000f98,0xffffffff821ee4b0);
+  }
+  CL_Demo_DownloadFile
+            (uVar1,iVar3 + 0x6a,*(undefined8 *)(iVar3 + 8),*(undefined4 *)(iVar3 + 0x18),param_2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1043,26 +2506,31 @@ void OnlineVault_TheaterFile_Load(void)
 void OnlineVault_FeederSelectedItem_FacebookUploadPhoto(undefined8 param_1)
 
 {
-  int *piVar1;
+  uint *puVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
   
-  piVar1 = (int *)OnlineVaultUI_GetHead();
-  if ((piVar1 != (int *)0x0) && (iVar3 = *piVar1, -1 < iVar3)) {
-    iVar2 = OnlineVault_FeederItemEnabled(param_1,iVar3);
-    if (iVar2 != 0) {
-      iVar3 = GetFileslotDescriptor(param_1,iVar3);
-      if (iVar3 == 0) {
-        Com_PrintError(0xd,0xffffffff821ee520);
-      }
-      else {
-        Facebook_PostScreenshot(param_1,*(undefined8 *)(iVar3 + 8));
-      }
-    }
-    return;
+  puVar1 = (uint *)OnlineVaultUI_GetHead();
+  if (puVar1 == (uint *)0x0) {
+    uVar3 = 0xffffffffffffffff;
   }
-                    /* WARNING: Subroutine does not return */
+  else {
+    uVar3 = (ulonglong)*puVar1;
+    if (-1 < (int)*puVar1) goto LAB_82842ec4;
+  }
   MyAssertHandler(0xffffffff821ee130,0x68d,0,0xffffffff82000f98,0xffffffff821ee498);
+LAB_82842ec4:
+  iVar2 = OnlineVault_FeederItemEnabled(param_1,uVar3);
+  if (iVar2 != 0) {
+    iVar2 = GetFileslotDescriptor(param_1,uVar3);
+    if (iVar2 == 0) {
+      Com_PrintError(0xd,0xffffffff821ee520);
+    }
+    else {
+      Facebook_PostScreenshot(param_1,*(undefined8 *)(iVar2 + 8));
+    }
+  }
+  return;
 }
 
 

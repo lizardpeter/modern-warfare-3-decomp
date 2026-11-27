@@ -5,8 +5,74 @@
 void bdNetImpl__stop(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_28();
+  iVar4 = iVar2 + 0x30;
+  bdConnectionStore__startShutdown(iVar4,0);
+  bdStopwatch__bdStopwatch(auStack_40);
+  bdStopwatch__start(auStack_40);
+  dVar7 = 1.0;
+  do {
+    iVar3 = bdConnectionStore__getStatus(iVar4);
+    if (iVar3 != 0) {
+      bdNetImpl__receiveAll(iVar2);
+      bdConnectionStore__dispatchAll(iVar4);
+      bdNetImpl__sendAll(iVar2);
+    }
+    dVar6 = (double)bdStopwatch__getElapsedTimeInSeconds(auStack_40);
+    bVar5 = dVar7 < dVar6;
+    if (bVar5) {
+      bdConnectionStore__startShutdown(iVar4,1);
+    }
+    bdPlatformTiming__sleep(0x14);
+  } while (!bVar5 && iVar3 != 0);
+  if (*(int **)(iVar2 + 0x78) != (int *)0x0) {
+    (**(code **)(**(int **)(iVar2 + 0x78) + 8))();
+    puVar1 = *(undefined4 **)(iVar2 + 0x78);
+    if (puVar1 != (undefined4 *)0x0) {
+      (**(code **)*puVar1)(puVar1,1);
+    }
+    *(undefined4 *)(iVar2 + 0x78) = 0;
+  }
+  if (*(int **)(iVar2 + 0xc) != (int *)0x0) {
+    (**(code **)(**(int **)(iVar2 + 0xc) + 0x18))();
+    puVar1 = *(undefined4 **)(iVar2 + 0xc);
+    if (puVar1 != (undefined4 *)0x0) {
+      (**(code **)*puVar1)(puVar1,1);
+    }
+    *(undefined4 *)(iVar2 + 0xc) = 0;
+  }
+  bdMutex__lock(iVar2 + 0x184);
+  memset((void *)(iVar2 + 0x80),0,0x100);
+  *(undefined4 *)(iVar2 + 0x180) = 0;
+  bdMutex__unlock(iVar2 + 0x184);
+  *(undefined4 *)(iVar2 + 0x7c) = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 8292BEE8  bdNetImpl::sendAll  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:149)
+
+ulonglong bdNetImpl__sendAll(longlong param_1)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = bdConnectionStore__flushAll(param_1 + 0x30);
+  if ((uVar1 & 0xff) == 0) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff82216110,0xffffffff82216168,0xffffffff8221611c,0x99,
+                 0xffffffff82216130);
+  }
+  return uVar1;
 }
 
 
@@ -28,11 +94,44 @@ ulonglong bdNetImpl__receiveAll(longlong param_1)
 
 // 8292BFC8  bdNetImpl::registerSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:199)
 
-void bdNetImpl__registerSecureAddr(void)
+void bdNetImpl__registerSecureAddr(undefined8 param_1,int *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  int *piVar4;
+  uint uVar5;
+  
+  iVar2 = __savegprlr_28();
+  bdMutex__lock(iVar2 + 0x184);
+  bVar3 = false;
+  uVar5 = 0;
+  if (*(int *)(iVar2 + 0x180) != 0) {
+    piVar4 = (int *)(iVar2 + 0x80);
+    do {
+      if (*piVar4 == *param_2) {
+        iVar1 = uVar5 * 8 + iVar2;
+        bVar3 = true;
+        *(short *)(iVar1 + 0x84) = *(short *)(iVar1 + 0x84) + 1;
+        if ((param_3 & 0xff) != 0) {
+          *(undefined1 *)(iVar1 + 0x86) = 1;
+        }
+        break;
+      }
+      uVar5 = uVar5 + 1;
+      piVar4 = piVar4 + 2;
+    } while (uVar5 < *(uint *)(iVar2 + 0x180));
+  }
+  if ((!bVar3) && (*(uint *)(iVar2 + 0x180) < 0x20)) {
+    *(int *)((*(uint *)(iVar2 + 0x180) + 0x10) * 8 + iVar2) = *param_2;
+    *(undefined2 *)(*(int *)(iVar2 + 0x180) * 8 + iVar2 + 0x84) = 1;
+    *(char *)(*(int *)(iVar2 + 0x180) * 8 + iVar2 + 0x86) = (char)param_3;
+    *(int *)(iVar2 + 0x180) = *(int *)(iVar2 + 0x180) + 1;
+  }
+  bdMutex__unlock(iVar2 + 0x184);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -41,18 +140,82 @@ void bdNetImpl__registerSecureAddr(void)
 void bdArray<bdInetAddr>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  puVar1 = (uint *)__savegprlr_29();
+  uVar2 = (ulonglong)*puVar1;
+  for (uVar3 = (ulonglong)puVar1[2]; uVar3 != 0; uVar3 = uVar3 - 1) {
+    bdInetAddr___bdInetAddr(uVar2);
+    uVar2 = uVar2 + 4;
+  }
+  bdMemory__deallocate(*puVar1);
+  *puVar1 = 0;
+  puVar1[2] = 0;
+  puVar1[1] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8292C0B8  bdNetImpl::unregisterSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:229)
 
-void bdNetImpl__unregisterSecureAddr(void)
+void bdNetImpl__unregisterSecureAddr(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  int iVar5;
+  longlong lVar4;
+  short sVar6;
+  int *piVar7;
+  uint uVar8;
+  undefined4 *puVar9;
+  
+  iVar5 = __savegprlr_27();
+  bdMutex__lock(iVar5 + 0x184);
+  bVar3 = false;
+  uVar8 = 0;
+  if (*(int *)(iVar5 + 0x180) != 0) {
+    piVar7 = (int *)(iVar5 + 0x80);
+    do {
+      if (*piVar7 == *param_2) {
+        iVar1 = uVar8 * 8 + iVar5;
+        sVar6 = *(short *)(iVar1 + 0x84) + -1;
+        *(short *)(iVar1 + 0x84) = sVar6;
+        if ((sVar6 < 1) && (*(char *)(iVar1 + 0x86) == '\0')) {
+          bVar3 = true;
+          if (uVar8 != *(int *)(iVar5 + 0x180) - 1U) {
+            iVar1 = (*(int *)(iVar5 + 0x180) + 0xf) * 8;
+            iVar2 = (uVar8 + 0x10) * 8;
+            *(undefined4 *)(iVar2 + iVar5) = *(undefined4 *)(iVar1 + iVar5);
+            *(undefined4 *)(iVar2 + iVar5 + 4) = *(undefined4 *)(iVar1 + iVar5 + 4);
+          }
+          puVar9 = (undefined4 *)((*(int *)(iVar5 + 0x180) + 0xf) * 8 + iVar5);
+          *puVar9 = 0;
+          puVar9[1] = 0;
+          *(int *)(iVar5 + 0x180) = *(int *)(iVar5 + 0x180) + -1;
+        }
+        break;
+      }
+      uVar8 = uVar8 + 1;
+      piVar7 = piVar7 + 2;
+    } while (uVar8 < *(uint *)(iVar5 + 0x180));
+  }
+  if (bVar3) {
+    bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82216110,0xffffffff82216168,0xffffffff82216254,0x101
+                 ,0xffffffff82216240,*param_2);
+    lVar4 = XNetUnregisterInAddr(*param_2);
+    if (lVar4 != 0) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82216110,0xffffffff82216168,0xffffffff82216254,
+                   0x105,0xffffffff8221620c);
+    }
+  }
+  bdMutex__unlock(iVar5 + 0x184);
+  __restgprlr_27();
+  return;
 }
 
 

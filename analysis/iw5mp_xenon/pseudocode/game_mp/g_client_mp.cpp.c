@@ -2,11 +2,118 @@
 
 // 8245A728  SetClientViewAngle  (game_mp/g_client_mp.cpp:26)
 
-void SetClientViewAngle(void)
+void SetClientViewAngle(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  float afStack_33b0 [3256];
+  undefined1 *local_d0;
+  longlong local_80;
+  float local_78 [30];
+  
   __savegprlr_29();
+  iVar3 = __savefpr_24();
+  iVar5 = *(int *)(iVar3 + 0x158);
+  dVar11 = (double)*param_2;
+  dVar10 = (double)param_2[1];
+  dVar9 = (double)param_2[2];
+  local_78[0] = *param_2;
+  dVar13 = 360.0;
+  dVar14 = 0.5;
+  dVar15 = 0.0027777778450399637;
+  local_78[1] = param_2[1];
+  local_78[2] = param_2[2];
+  local_d0 = (undefined1 *)register0x0000000c;
+  if ((*(uint *)(iVar5 + 0xc) & 1) == 0) goto LAB_8245a8cc;
+  if ((*(uint *)(iVar5 + 0xf8) & 0x3800) != 0) goto LAB_8245a8cc;
+  dVar7 = (double)AngleDelta((double)*(float *)(iVar5 + 0x1ac),dVar10);
+  dVar8 = (double)(float)(dVar7 * dVar15);
+  dVar7 = floor((double)(float)(dVar8 + dVar14));
+  iVar5 = DAT_829c7d44;
+  dVar12 = 0.0;
+  fVar2 = *(float *)(DAT_829c7d44 + 0xc);
+  fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
+  if ((fVar2 < fVar1) || (fVar1 < -fVar2)) {
+    if (fVar1 <= fVar2) {
+      fVar2 = fVar2 + fVar1;
+    }
+    else {
+      fVar2 = fVar1 - fVar2;
+    }
+    iVar6 = *(int *)(iVar3 + 0x158);
+    *(float *)(iVar6 + 100) = *(float *)(iVar6 + 100) + fVar2;
+    if (fVar2 <= 0.0) {
+      fVar1 = *(float *)(iVar6 + 0x1ac) + *(float *)(iVar5 + 0xc);
+    }
+    else {
+      fVar1 = *(float *)(iVar6 + 0x1ac) - *(float *)(iVar5 + 0xc);
+    }
+    dVar10 = (double)AngleNormalize360((double)fVar1);
+    local_78[1] = (float)dVar10;
+  }
+  dVar7 = (double)AngleDelta((double)*(float *)(*(int *)(iVar3 + 0x158) + 0x1b4),dVar11);
+  dVar8 = (double)(float)(dVar7 * dVar15);
+  dVar7 = floor((double)(float)(dVar8 + dVar14));
+  fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
+  if (45.0 < fVar1) {
+LAB_8245a87c:
+    fVar1 = fVar1 - 45.0;
+  }
+  else {
+    if (-45.0 <= fVar1) goto LAB_8245a8cc;
+    if (45.0 < fVar1) goto LAB_8245a87c;
+    fVar1 = fVar1 + 45.0;
+  }
+  iVar5 = *(int *)(iVar3 + 0x158);
+  *(float *)(iVar5 + 0x60) = (float)((double)*(float *)(iVar5 + 0x60) + (double)fVar1);
+  if ((double)fVar1 <= dVar12) {
+    fVar1 = *(float *)(iVar5 + 0x1b4) + 45.0;
+  }
+  else {
+    fVar1 = *(float *)(iVar5 + 0x1b4) - 45.0;
+  }
+  dVar7 = (double)(float)((double)fVar1 * dVar15);
+  dVar11 = floor((double)(float)(dVar7 + dVar14));
+  local_78[0] = (float)((double)(float)(dVar7 - (double)(float)dVar11) * dVar13);
+  dVar11 = (double)local_78[0];
+LAB_8245a8cc:
+  iVar5 = *(int *)(iVar3 + 0x158);
+  iVar6 = 0x3338;
+  dVar7 = 0.0054931640625;
+  do {
+    local_80 = (longlong)*(int *)(iVar6 + iVar5);
+    dVar12 = (double)(float)(-(double)(float)((double)local_80 * dVar7 -
+                                             (double)*(float *)((int)afStack_33b0 + iVar6)) * dVar15
+                            );
+    dVar8 = floor((double)(float)(dVar12 + dVar14));
+    iVar5 = *(int *)(iVar3 + 0x158);
+    iVar4 = iVar6 + iVar5;
+    iVar6 = iVar6 + 4;
+    *(float *)(iVar4 + -0x32d8) = (float)((double)(float)(dVar12 - (double)(float)dVar8) * dVar13);
+  } while (iVar6 < 0x3344);
+  *(float *)(iVar3 + 0x148) = (float)dVar10;
+  *(float *)(iVar3 + 0x144) = (float)dVar11;
+  *(float *)(iVar3 + 0x14c) = (float)dVar9;
+  *(float *)(iVar5 + 0x158) = (float)dVar11;
+  *(undefined4 *)(iVar5 + 0x15c) = *(undefined4 *)(iVar3 + 0x148);
+  *(undefined4 *)(iVar5 + 0x160) = *(undefined4 *)(iVar3 + 0x14c);
+  __restfpr_24();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -18,7 +125,6 @@ void SetClientOrigin(int param_1,undefined4 *param_2)
   int iVar1;
   
   if (*(int *)(param_1 + 0x158) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x5e,0,0xffffffff82000f98,0xffffffff8206b9fc);
   }
   iVar1 = *(int *)(param_1 + 0x158);
@@ -38,11 +144,34 @@ void SetClientOrigin(int param_1,undefined4 *param_2)
 
 // 8245AA48  G_GetPlayerEyePosition  (game_mp/g_client_mp.cpp:111)
 
-void G_GetPlayerEyePosition(void)
+void G_GetPlayerEyePosition(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
+    BG_GetPlayerEyePosition(iVar1,param_2,DAT_83580fac);
+  }
+  else {
+    if (*(int *)(iVar1 + 0x1b8) == 0) {
+      MyAssertHandler(0xffffffff8206c6c8,0x74,0,0xffffffff82000f98,0xffffffff820272c4);
+    }
+    if (*(int *)(iVar1 + 0x1bc) == 0x7ff) {
+      MyAssertHandler(0xffffffff8206c6c8,0x75,0,0xffffffff82000f98,0xffffffff82001fb4);
+    }
+    iVar1 = G_DObjGetWorldTagPos
+                      (((ulonglong)*(uint *)(iVar1 + 0x1bc) +
+                        ((ulonglong)*(uint *)(iVar1 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
+                       -0x7cc8c980,DAT_835a0c60,param_2);
+    if (iVar1 == 0) {
+      Com_Error(1,0xffffffff8206c710);
+      __restgprlr_28();
+      return;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -58,7 +187,6 @@ void G_GetPlayerViewOrigin(int param_1,undefined8 param_2)
   }
   else {
     if (*(int *)(param_1 + 0x1d8) == 0x7ff) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c6c8,0x89,0,0xffffffff82000f98,0xffffffff82028920);
     }
     iVar1 = G_DObjGetWorldTagPos
@@ -75,11 +203,71 @@ void G_GetPlayerViewOrigin(int param_1,undefined8 param_2)
 
 // 8245AC10  G_GetPlayerViewDirection  (game_mp/g_client_mp.cpp:152)
 
-void G_GetPlayerViewDirection(void)
+void G_GetPlayerViewDirection
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x99,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x9a,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  }
+  BG_GetPlayerViewDirection(*(undefined4 *)(iVar1 + 0x158),param_2,param_3,param_4);
+  __restgprlr_26();
+  return;
+}
+
+
+// 8245ACA8  G_GetNextClient  (game_mp/g_client_mp.cpp:164)
+
+void G_GetNextClient(undefined8 param_1,int param_2,int param_3,uint param_4,int param_5)
+
+{
+  uint uVar1;
+  int *piVar2;
+  int iVar3;
+  int *piVar4;
+  
+  uVar1 = __savegprlr_23();
+  if (0xf < (int)param_4) {
+    MyAssertHandler(0xffffffff8206c6c8,0xa9,0,0xffffffff82000f98,0xffffffff8206c85c);
+  }
+  if (param_5 < -1) {
+    MyAssertHandler(0xffffffff8206c6c8,0xaa,0,0xffffffff82000f98,0xffffffff8206c838);
+  }
+  if (uVar1 == 0) {
+    iVar3 = 0;
+  }
+  else {
+    if (uVar1 < DAT_83580b00) {
+      MyAssertHandler(0xffffffff8206c6c8,0xae,0,0xffffffff82000f98,0xffffffff8206c81c);
+    }
+    if (DAT_83580fa4 * 0x3980 + DAT_83580b00 <= uVar1) {
+      MyAssertHandler(0xffffffff8206c6c8,0xaf,0,0xffffffff82000f98,0xffffffff8206c7ec);
+    }
+    if (uVar1 != ((int)(uVar1 - DAT_83580b00) / 0x3980) * 0x3980 + DAT_83580b00) {
+      MyAssertHandler(0xffffffff8206c6c8,0xb0,0,0xffffffff82000f98,0xffffffff8206c7ac);
+    }
+    iVar3 = (int)(uVar1 - DAT_83580b00) / 0x3980 + 1;
+  }
+  if (iVar3 < DAT_83580fa4) {
+    piVar4 = (int *)(iVar3 * 0x3980 + DAT_83580b00 + 0x3300);
+    do {
+      if ((((iVar3 != param_5) && (piVar2 = piVar4 + -0xcc0, piVar4[0xb] == param_2)) &&
+          (*piVar4 == param_3)) && ((1 << (piVar4[0x35] & 0x3fU) & param_4) != 0))
+      goto LAB_8245ae4c;
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 0xe60;
+    } while (iVar3 < DAT_83580fa4);
+  }
+  piVar2 = (int *)0x0;
+LAB_8245ae4c:
+  __restgprlr_23(piVar2);
+  return;
 }
 
 
@@ -100,7 +288,6 @@ void ClientUserinfoChanged(void)
   uVar3 = __savegprlr_25();
   iVar1 = (&DAT_833737d8)[uVar3 * 0xa0];
   if (0x11 < uVar3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0xe5,0,0xffffffff82014c1c,uVar3,0x12);
   }
   SV_GetUserinfo(uVar3,auStack_840,0x400);
@@ -176,26 +363,24 @@ void ClientUserinfoChanged(void)
     *(int *)(iVar1 + 0x34ac) = iVar4;
   }
   if (0x11 < uVar3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x124,0,0xffffffff82014c1c,uVar3,0x12);
   }
   iVar4 = uVar3 * 0x590;
-  if (*(int *)(&DAT_83539a90 + iVar4) == 0) {
-                    /* WARNING: Subroutine does not return */
+  if ((&DAT_83539a90)[uVar3 * 0x164] == 0) {
     MyAssertHandler(0xffffffff8206c6c8,0x126,0,0xffffffff82000f98,0xffffffff8202b76c);
   }
   if (*(uint *)(&DAT_83539a98 + iVar4) != uVar3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x128,0,0xffffffff82000f98,0xffffffff8206c8b8);
   }
   if (*(char *)(iVar1 + 0x3414) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x129,0,0xffffffff82000f98,0xffffffff8206c898);
   }
   I_strncpyz(&DAT_83539a9c + iVar4,iVar1 + 0x3414,0x20);
   if ((&DAT_83539a9c)[iVar4] == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,299,0,0xffffffff82000f98,0xffffffff8206c884);
+    *(undefined4 *)(&DAT_83539abc + iVar4) = *(undefined4 *)(iVar1 + 0x33d4);
+    __restgprlr_25();
+    return;
   }
   *(undefined4 *)(&DAT_83539abc + iVar4) = *(undefined4 *)(iVar1 + 0x33d4);
   __restgprlr_25();
@@ -205,11 +390,88 @@ void ClientUserinfoChanged(void)
 
 // 8245B248  ClientConnect  (game_mp/g_client_mp.cpp:321)
 
-void ClientConnect(void)
+void ClientConnect(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  char cVar1;
+  char cVar2;
+  uint uVar3;
+  void *_Dst;
+  undefined4 uVar4;
+  char *pcVar5;
+  int iVar6;
+  char *pcVar7;
+  undefined4 *puVar8;
+  undefined1 auStack_450 [1104];
+  
+  uVar3 = __savegprlr_23();
+  if ((param_2 & 0xffff) == 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x149,0,0xffffffff82000f98,0xffffffff8206ca10);
+  }
+  _Dst = (void *)(uVar3 * 0x3980 + DAT_83580b00);
+  iVar6 = uVar3 * 0x280;
+  puVar8 = &DAT_83373680 + uVar3 * 0xa0;
+  memset(_Dst,0,0x3980);
+  if (0x11 < uVar3) {
+    MyAssertHandler(0xffffffff8206c6c8,0x152,0,0xffffffff82014c1c,uVar3,0x12);
+  }
+  uVar4 = (&DAT_83539fa8)[uVar3 * 0x164];
+  memset(&DAT_83539a90 + uVar3 * 0x164,0,0x590);
+  (&DAT_83539fa8)[uVar3 * 0x164] = uVar4;
+  *(uint *)(&DAT_83539a98 + uVar3 * 0x590) = uVar3;
+  (&DAT_83539a90)[uVar3 * 0x164] = 1;
+  *(undefined4 *)(&DAT_83539a94 + uVar3 * 0x590) = 1;
+  *(undefined4 *)((int)_Dst + 0x332c) = 1;
+  *(short *)((int)_Dst + 0x3328) = (short)param_2;
+  *(undefined4 *)((int)_Dst + 0x33d4) = 3;
+  *(undefined4 *)((int)_Dst + 0x3300) = 2;
+  *(undefined4 *)((int)_Dst + 0x35fc) = 0xffffffff;
+  *(undefined4 *)((int)_Dst + 0x3304) = 0xffffffff;
+  *(undefined4 *)((int)_Dst + 0x3308) = 0xffffffff;
+  *(uint *)((int)_Dst + 0x330c) = uVar3;
+  G_InitGentity(puVar8);
+  (&DAT_833737d8)[uVar3 * 0xa0] = _Dst;
+  *(uint *)(&DAT_83373710 + iVar6) = uVar3;
+  (&DAT_833737ed)[iVar6] = 0;
+  *(uint *)((int)_Dst + 0x33d0) = uVar3;
+  *(uint *)((int)_Dst + 0x150) = uVar3;
+  *(undefined4 *)((int)_Dst + 0x33c0) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0xa8) = 0xffffffff;
+  *(undefined4 *)((int)_Dst + 0x228) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0xac) = 0x7ff;
+  uVar4 = SV_GetVoiceConnectivityBits(uVar3);
+  *(undefined4 *)((int)_Dst + 0x344c) = uVar4;
+  if (*(int *)((int)_Dst + 0xf8) != 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x17c,0,0xffffffff82000f98,0xffffffff8206c9fc);
+  }
+  if ((&DAT_83373782)[iVar6] != '\0') {
+    MyAssertHandler(0xffffffff8206c6c8,0x17d,0,0xffffffff82000f98,0xffffffff8206c9ec);
+  }
+  ClientUserinfoChanged(uVar3);
+  SV_GetUserinfo(uVar3,auStack_450,0x400);
+  if (*(int *)((int)_Dst + 0x3388) == 0) {
+    pcVar5 = (char *)Info_ValueForKey(auStack_450,0xffffffff82032c34);
+    if ((**(char **)(DAT_83373600 + 0xc) != '\0') &&
+       (iVar6 = I_stricmp(*(char **)(DAT_83373600 + 0xc),0xffffffff82003484), iVar6 != 0)) {
+      pcVar7 = *(char **)(DAT_83373600 + 0xc);
+      do {
+        cVar1 = *pcVar7;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
+        pcVar7 = pcVar7 + 1;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 != cVar2) {
+        G_FreeEntity(puVar8);
+        __restgprlr_23(0xffffffff8206c9d4);
+        return;
+      }
+    }
+  }
+  Scr_PlayerConnect(puVar8);
+  CalculateRanks();
+  __restgprlr_23(0);
+  return;
 }
 
 
@@ -246,11 +508,141 @@ void ClientMigrate(ulonglong param_1)
 
 // 8245B598  ClientSpawn  (game_mp/g_client_mp.cpp:457)
 
-void ClientSpawn(void)
+void ClientSpawn(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  int iVar1;
+  int *_Dst;
+  uint uVar2;
+  int iVar3;
+  int *piVar5;
+  int iVar6;
+  int *piVar7;
+  undefined8 uVar4;
+  int *piVar8;
+  longlong lVar9;
+  undefined1 auStack_380 [896];
+  
+  piVar5 = (int *)__savegprlr_17();
+  _Dst = (int *)piVar5[0x56];
+  iVar1 = (int)(piVar5 + 0x1f323260) / 0x280;
+  if (_Dst != (int *)(iVar1 * 0x3980 + DAT_83580b00)) {
+    MyAssertHandler(0xffffffff8206c6c8,0x1d4,0,0xffffffff82000f98,0xffffffff8206cb08);
+  }
+  if (*(char *)((int)piVar5 + 0x103) == '\0') {
+    MyAssertHandler(0xffffffff8206c6c8,0x1d5,0,0xffffffff82000f98,0xffffffff8206caf8);
+  }
+  if (((_Dst[4] & 0x1000U) != 0) && ((_Dst[0x3e] & 0x3800U) != 0)) {
+    if (_Dst[0x54] != *piVar5) {
+      MyAssertHandler(0xffffffff8206c6c8,0x1da,0,0xffffffff82000f98,0xffffffff8206c018);
+    }
+    if (_Dst[0x6f] == 0x7ff) {
+      MyAssertHandler(0xffffffff8206c6c8,0x1db,0,0xffffffff82000f98,0xffffffff8206bfe8);
+    }
+    iVar6 = EntHandle__isDefined
+                      (((ulonglong)(uint)_Dst[0x6f] + ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4
+                       & 0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04 + 0x150);
+    if (iVar6 == 0) {
+      MyAssertHandler(0xffffffff8206c6c8,0x1dc,0,0xffffffff82000f98,0xffffffff8206cab0);
+    }
+    piVar7 = (int *)EntHandle__ent(((ulonglong)(uint)_Dst[0x6f] +
+                                    ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4 & 0x1ffffff) *
+                                   0x80 + (ulonglong)DAT_83580b04 + 0x150);
+    if (piVar7 != piVar5) {
+      MyAssertHandler(0xffffffff8206c6c8,0x1dd,0,0xffffffff82000f98,0xffffffff8206ca68);
+    }
+    G_ClientStopUsingTurret
+              (((ulonglong)(uint)_Dst[0x6f] + ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4 &
+               0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04);
+  }
+  uVar2 = _Dst[0x2b];
+  if (uVar2 != 0x7ff) {
+    EntHandle__setEnt(((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
+                      (ulonglong)DAT_83580b04 + 0x150,0);
+  }
+  G_EntUnlink(piVar5);
+  if (*(char *)(piVar5 + 0x40) != '\0') {
+    SV_UnlinkEntity(piVar5);
+  }
+  piVar5[0x20] = 0x7ff;
+  Scr_SetString((int)piVar5 + 0x172,DAT_835a0c02);
+  Scr_SetString(piVar5 + 0x5d,DAT_835a0c02);
+  *(undefined1 *)((int)piVar5 + 0x16b) = 0;
+  piVar5[99] = 0x2810011;
+  *(byte *)((int)piVar5 + 0x102) = *(byte *)((int)piVar5 + 0x102) | 1;
+  G_SetClientContents(piVar5);
+  *(undefined1 *)((int)piVar5 + 0x16d) = 0xb;
+  piVar8 = piVar5 + 0x40;
+  piVar5[0x61] = 0x1000;
+  piVar7 = (int *)0x8200c29c;
+  lVar9 = 6;
+  do {
+    piVar7 = piVar7 + 1;
+    piVar8 = piVar8 + 1;
+    *piVar8 = *piVar7;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  uVar2 = _Dst[0x3e];
+  memcpy(auStack_380,_Dst + 0xcc0,0x2f8);
+  iVar6 = _Dst[0x6a];
+  iVar3 = _Dst[0xdd4];
+  Scr_FreeClientFields(_Dst);
+  memset(_Dst,0,0x3980);
+  G_DefaultViewAngleClampGoal(_Dst + 0xda0);
+  G_SnapToViewAngleClampGoal(_Dst + 0xda0);
+  memcpy(_Dst + 0xcc0,auStack_380,0x2f8);
+  _Dst[0xdd4] = iVar3;
+  _Dst[0x3e] = uVar2 & 0x82;
+  _Dst[0xd7f] = -1;
+  _Dst[0x6a] = iVar6 + 1;
+  piVar8 = _Dst + 0xccc;
+  _Dst[0xcf4] = iVar1;
+  _Dst[0x54] = iVar1;
+  _Dst[0x6f] = 0x7ff;
+  _Dst[0x76] = 0x7ff;
+  _Dst[0x69] = _Dst[0xceb];
+  SV_GetUsercmd(((int)_Dst - DAT_83580b00) / 0x3980,piVar8);
+  _Dst[0x5b] = 0;
+  _Dst[0xe1] = 0;
+  _Dst[0xe2] = 0;
+  _Dst[0xf] = 0;
+  _Dst[0x5a] = 0x42700000;
+  _Dst[0x10] = 0;
+  _Dst[0x15d] = 0x40c00000;
+  _Dst[0x59] = 0x3c;
+  _Dst[0x15e] = 0x3fe66666;
+  _Dst[0xe] = 0x7ff;
+  _Dst[0xe3] = 0x3f800000;
+  _Dst[0x2b] = 0x7ff;
+  _Dst[0x158] = 0x3f800000;
+  _Dst[0xccd] = _Dst[0xccd] & 0xfffffcff;
+  _Dst[0x3e] = _Dst[0x3e] ^ 2;
+  G_SetOrigin(piVar5,param_2);
+  piVar7 = (int *)param_2;
+  _Dst[7] = *piVar7;
+  _Dst[8] = piVar7[1];
+  _Dst[9] = piVar7[2];
+  _Dst[3] = _Dst[3] | 0x400;
+  SetClientViewAngle(piVar5,param_3);
+  _Dst[0xd94] = *(int *)(DAT_8353fed8 + 0xc) * 1000 + DAT_83580fac;
+  if (_Dst[0xd84] != 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x247,0,0xffffffff82000f98,0xffffffff8206ca44);
+  }
+  if (_Dst[0xd85] != 0) {
+    MyAssertHandler(0xffffffff8206c6c8,0x248,0,0xffffffff82000f98,0xffffffff8206ca24);
+  }
+  _Dst[0xd82] = _Dst[0xccd];
+  DAT_83580b20 = 1;
+  piVar5[0x1a] = DAT_83580fac;
+  uVar4 = va(0xffffffff8206ca20,0x6a);
+  SV_GameSendServerCommand(iVar1,1,uVar4);
+  *piVar8 = DAT_83580fac;
+  *_Dst = DAT_83580fac + -100;
+  ClientEndFrame(piVar5);
+  ClientThink_real(piVar5,piVar8);
+  DAT_83580b20 = 0;
+  __restgprlr_17();
+  return;
 }
 
 
@@ -275,7 +667,6 @@ void ClientDisconnect(void)
   piVar7 = &DAT_83373680 + iVar1 * 0xa0;
   iVar8 = iVar1 * 0x3980 + DAT_83580b00;
   if ((&DAT_83373783)[iVar1 * 0x280] == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x273,0,0xffffffff82000f98,0xffffffff8206caf8);
   }
   iVar2 = Scr_IsSystemActive(1);
@@ -303,11 +694,9 @@ void ClientDisconnect(void)
   }
   if (((*(uint *)(iVar8 + 0x10) & 0x1000) != 0) && ((*(uint *)(iVar8 + 0xf8) & 0x3800) != 0)) {
     if (*(int *)(iVar8 + 0x150) != *piVar7) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c6c8,0x28d,0,0xffffffff82000f98,0xffffffff8206c018);
     }
     if (*(int *)(iVar8 + 0x1bc) == 0x7ff) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c6c8,0x28e,0,0xffffffff82000f98,0xffffffff8206bfe8);
     }
     iVar2 = EntHandle__isDefined
@@ -315,14 +704,12 @@ void ClientDisconnect(void)
                         ((ulonglong)*(uint *)(iVar8 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
                        (ulonglong)DAT_83580b04 + 0x150);
     if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c6c8,0x28f,0,0xffffffff82000f98,0xffffffff8206cab0);
     }
     piVar3 = (int *)EntHandle__ent(((ulonglong)*(uint *)(iVar8 + 0x1bc) +
                                     ((ulonglong)*(uint *)(iVar8 + 0x1bc) & 0x3fffffff) * 4 &
                                    0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04 + 0x150);
     if (piVar3 != piVar7) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c6c8,0x290,0,0xffffffff82000f98,0xffffffff8206ca68);
     }
     G_ClientStopUsingTurret
@@ -331,7 +718,6 @@ void ClientDisconnect(void)
                (ulonglong)DAT_83580b04);
   }
   if ((&DAT_833737d8)[iVar1 * 0xa0] != iVar8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x295,0,0xffffffff82000f98,0xffffffff8206cb30);
   }
   HudElem_ClientDisconnect(piVar7);
@@ -345,7 +731,6 @@ void ClientDisconnect(void)
   pvVar4 = memset((void *)(iVar8 + 0x33d0),0,0xe0);
   CalculateRanks(pvVar4);
   if ((&DAT_833737d8)[iVar1 * 0xa0] != iVar8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c6c8,0x2a7,0,0xffffffff82000f98,0xffffffff8206cb30);
   }
   __restgprlr_22();
@@ -355,30 +740,183 @@ void ClientDisconnect(void)
 
 // 8245BD30  G_GetNonPVSPlayerInfo  (game_mp/g_client_mp.cpp:690)
 
-void G_GetNonPVSPlayerInfo(void)
+void G_GetNonPVSPlayerInfo(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  uint *puVar2;
+  float fVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  int iVar10;
+  longlong lVar11;
+  longlong lVar12;
+  
+  uVar5 = __savegprlr_23();
+  iVar6 = *(int *)((int)uVar5 + 0x158);
+  iVar10 = *(int *)(iVar6 + 0x33d4);
+  if (iVar10 != 3) {
+    if ((((&DAT_83580fd0)[iVar10] != '\0') || (*(int *)(iVar6 + 0x34b4) != 0)) ||
+       (bVar4 = false, *(char *)(DAT_8353ff20 + 0xc) != '\0')) {
+      bVar4 = true;
+    }
+    if ((iVar10 != 0) || (bVar4)) {
+      lVar11 = 0;
+      if ((int)param_3 != 0x7ff) {
+        lVar11 = param_3 + 1;
+      }
+      lVar12 = 0;
+      do {
+        iVar6 = (int)(lVar12 + lVar11);
+        uVar7 = iVar6 / 0x12 + (iVar6 >> 0x1f);
+        uVar9 = (longlong)(int)uVar7 + (ulonglong)(uVar7 >> 0x1f);
+        uVar9 = lVar12 + lVar11 + (uVar9 + (uVar9 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
+        uVar9 = (uVar9 + (uVar9 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 - 0x7cc8c980;
+        puVar2 = (uint *)uVar9;
+        if (((*(char *)((int)puVar2 + 0x103) != '\0') && (uVar7 = puVar2[0x56], uVar7 != 0)) &&
+           ((*(int *)(uVar7 + 0x3300) == 0 &&
+            ((((*(int *)(uVar7 + 0x33d4) == iVar10 || (bVar4)) &&
+              ((uVar5 & 0xffffffff) != (uVar9 & 0xffffffff))) &&
+             (iVar6 = SV_inSnapshot(param_2,*puVar2), iVar6 == 0)))))) {
+          fVar1 = 1.0;
+          iVar6 = (int)(((float)puVar2[0x4e] - *(float *)param_2) + 0.5);
+          iVar10 = (int)(((float)puVar2[0x4f] - ((float *)param_2)[1]) + 0.5);
+          if (iVar6 < 0x401) {
+            fVar3 = fVar1;
+            if (iVar6 < -0x3fe) {
+              fVar3 = -1022.0 / (float)(longlong)iVar6;
+            }
+          }
+          else {
+            fVar3 = 1024.0 / (float)(longlong)iVar6;
+          }
+          if (iVar10 < 0x401) {
+            if (iVar10 < -0x3fe) {
+              fVar1 = -1022.0 / (float)(longlong)iVar10;
+            }
+          }
+          else {
+            fVar1 = 1024.0 / (float)(longlong)iVar10;
+          }
+          if ((fVar3 < 1.0) || (fVar1 < 1.0)) {
+            if (fVar1 <= fVar3) {
+              if (fVar1 < fVar3) {
+                iVar6 = (int)((float)(longlong)iVar6 * fVar1);
+              }
+            }
+            else {
+              iVar10 = (int)((float)(longlong)iVar10 * fVar3);
+            }
+          }
+          if (iVar6 < 0x401) {
+            if (iVar6 < -0x3fe) {
+              iVar6 = -0x3fe;
+            }
+          }
+          else {
+            iVar6 = 0x400;
+          }
+          if (iVar10 < 0x401) {
+            if (iVar10 < -0x3fe) {
+              iVar10 = -0x3fe;
+            }
+          }
+          else {
+            iVar10 = 0x400;
+          }
+          uVar8 = iVar10 + 2;
+          uVar7 = iVar6 + 2;
+          __restgprlr_23((((int)uVar8 >> 2) + (uint)((int)uVar8 < 0 && (uVar8 & 3) != 0) + 0xff &
+                         0x1ff) << 0xf |
+                         (((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) + 0xff &
+                         0x1ff) << 6 | (int)((float)puVar2[0x52] * 0.7111111) << 0x18 |
+                         *puVar2 & 0x3f);
+          return;
+        }
+        lVar12 = lVar12 + 1;
+      } while ((int)lVar12 < 0x12);
+    }
+  }
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 8245C068  ClientSetEntUnusable  (game_mp/g_client_mp.cpp:874)
 
-void ClientSetEntUnusable(void)
+void ClientSetEntUnusable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_28();
+  param_2 = param_2 & 0xffff;
+  if (0x7ff < param_2) {
+    MyAssertHandler(0xffffffff8206c6c8,0x36b,0,0xffffffff8206cbac,param_2,0x800);
+  }
+  uVar1 = param_2 >> 5;
+  if (0x3f < uVar1) {
+    MyAssertHandler(0xffffffff8206c6c8,0x36c,0,0xffffffff8206cb50,uVar1,0x40);
+  }
+  iVar2 = ((int)uVar1 + 0xd38) * 4;
+  *(uint *)(iVar2 + iVar3) =
+       1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU) | *(uint *)(iVar2 + iVar3);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8245C110  ClientSetEntUsable  (game_mp/g_client_mp.cpp:883)
 
-void ClientSetEntUsable(void)
+void ClientSetEntUsable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_28();
+  param_2 = param_2 & 0xffff;
+  if (0x7ff < param_2) {
+    MyAssertHandler(0xffffffff8206c6c8,0x374,0,0xffffffff8206cbac,param_2,0x800);
+  }
+  uVar1 = param_2 >> 5;
+  if (0x3f < uVar1) {
+    MyAssertHandler(0xffffffff8206c6c8,0x375,0,0xffffffff8206cb50,uVar1,0x40);
+  }
+  iVar2 = ((int)uVar1 + 0xd38) * 4;
+  *(uint *)(iVar2 + iVar3) =
+       *(uint *)(iVar2 + iVar3) & ~(1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU));
+  __restgprlr_28();
+  return;
+}
+
+
+// 8245C1B8  ClientMayUseEnt  (game_mp/g_client_mp.cpp:892)
+
+void ClientMayUseEnt(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_28();
+  param_2 = param_2 & 0xffff;
+  if (0x7ff < param_2) {
+    MyAssertHandler(0xffffffff8206c6c8,0x37d,0,0xffffffff8206cbac,param_2,0x800);
+  }
+  uVar1 = param_2 >> 5;
+  if (0x3f < uVar1) {
+    MyAssertHandler(0xffffffff8206c6c8,0x37e,0,0xffffffff8206cb50,uVar1,0x40);
+  }
+  __restgprlr_28((1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU) &
+                 *(uint *)(((int)uVar1 + 0xd38) * 4 + iVar2)) == 0);
+  return;
 }
 

@@ -50,3 +50,44 @@ LAB_829197bc:
 ; 82919698  _fclose_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fclose.c:85)
   82919698  7D8802A6             mfspr r12,LR
   8291969C  4BFFD021             bl 0x829166bc
+  829196A0  9421FF90             stwu r1,-0x70(r1)
+  829196A4  7C7F1B78             or r31,r3,r3
+  829196A8  3BC0FFFF             li r30,-0x1
+  829196AC  2B030000             cmplwi cr6,r3,0x0
+  829196B0  409A001C             bne cr6,0x829196cc
+  829196B4  480066CD             bl 0x8291fd80
+  829196B8  39600016             li r11,0x16
+  829196BC  91630000             stw r11,0x0(r3)
+  829196C0  48006551             bl 0x8291fc10
+  829196C4  3860FFFF             li r3,-0x1
+  829196C8  48000064             b 0x8291972c
+LAB_829196cc:
+  829196CC  817F000C             lwz r11,0xc(r31)
+  829196D0  3BA00000             li r29,0x0
+  829196D4  716B0083             andi. r11,r11,0x83
+  829196D8  2C0B0000             cmpwi r11,0x0
+  829196DC  41820048             beq 0x82919724
+  829196E0  7FE3FB78             or r3,r31,r31
+  829196E4  48001D9D             bl 0x8291b480
+  829196E8  7C7E1B78             or r30,r3,r3
+  829196EC  7FE3FB78             or r3,r31,r31
+  829196F0  48008C99             bl 0x82922388
+  829196F4  7FE3FB78             or r3,r31,r31
+  829196F8  48008C51             bl 0x82922348
+  829196FC  48008AED             bl 0x829221e8
+  82919700  2C030000             cmpwi r3,0x0
+  82919704  4080000C             bge 0x82919710
+  82919708  3BC0FFFF             li r30,-0x1
+  8291970C  48000018             b 0x82919724
+LAB_82919710:
+  82919710  807F001C             lwz r3,0x1c(r31)
+  82919714  2B030000             cmplwi cr6,r3,0x0
+  82919718  419A000C             beq cr6,0x82919724
+  8291971C  4BD3554D             bl 0x8264ec68
+  82919720  93BF001C             stw r29,0x1c(r31)
+LAB_82919724:
+  82919724  7FC3F378             or r3,r30,r30
+  82919728  93BF000C             stw r29,0xc(r31)
+LAB_8291972c:
+  8291972C  38210070             addi r1,r1,0x70
+  82919730  4BFFCFDC             b 0x8291670c

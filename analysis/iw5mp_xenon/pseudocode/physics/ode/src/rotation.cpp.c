@@ -6,7 +6,6 @@ void dRSetIdentity(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0x36,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
   *param_1 = 0x3f800000;
@@ -32,14 +31,15 @@ void dRFromAxisAndAngle(undefined8 param_1,undefined8 param_2,undefined8 param_3
 {
   ulonglong uVar1;
   undefined8 extraout_f1;
+  undefined8 uVar2;
   undefined1 auStack_40 [48];
   
   uVar1 = __savefpr_28();
+  uVar2 = extraout_f1;
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0x3e,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
-  dQFromAxisAndAngle(extraout_f1,param_2,param_3,param_4,auStack_40);
+  dQFromAxisAndAngle(uVar2,param_2,param_3,param_4,auStack_40);
   dRfromQ(uVar1,auStack_40);
   __restfpr_28();
   return;
@@ -52,7 +52,7 @@ void dRFromEulerAngles(undefined8 param_1,double param_2,double param_3)
 
 {
   float *pfVar1;
-  double _X;
+  double extraout_f1;
   double dVar2;
   double dVar3;
   double dVar4;
@@ -61,12 +61,11 @@ void dRFromEulerAngles(undefined8 param_1,double param_2,double param_3)
   double dVar7;
   
   pfVar1 = (float *)__savefpr_26();
+  dVar3 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0x48,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
-  dVar3 = _X;
-  dVar2 = sin(_X);
+  dVar2 = sin(dVar3);
   dVar5 = (double)(float)dVar2;
   dVar3 = cos(dVar3);
   dVar7 = (double)(float)dVar3;
@@ -112,17 +111,16 @@ void dRFrom2Axes(undefined8 param_1,double param_2,double param_3,double param_4
   double dVar11;
   
   pfVar5 = (float *)__savefpr_26();
+  dVar7 = extraout_f1;
   if (pfVar5 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0x5f,0,0xffffffff82000f98,0xffffffff8205f3e8);
   }
   fVar1 = SQRT((float)(param_3 * param_3 +
-                      (double)(float)(extraout_f1 * extraout_f1 + (double)(float)(param_2 * param_2)
-                                     )));
+                      (double)(float)(dVar7 * dVar7 + (double)(float)(param_2 * param_2))));
   if (0.0 < fVar1) {
     dVar9 = (double)(1.0 / fVar1);
     dVar6 = (double)(float)(dVar9 * param_2);
-    dVar11 = (double)(float)(dVar9 * extraout_f1);
+    dVar11 = (double)(float)(dVar9 * dVar7);
     dVar10 = (double)(float)(dVar9 * param_3);
     dVar8 = (double)(float)(dVar10 * param_6 +
                            (double)(float)(dVar11 * param_4 + (double)(float)(dVar6 * param_5)));
@@ -132,18 +130,18 @@ void dRFrom2Axes(undefined8 param_1,double param_2,double param_3,double param_4
     fVar4 = SQRT(fVar2 * fVar2 + fVar3 * fVar3 + fVar1 * fVar1);
     if (0.0 < fVar4) {
       fVar4 = 1.0 / fVar4;
-      *pfVar5 = (float)(dVar9 * extraout_f1);
+      *pfVar5 = (float)(dVar9 * dVar7);
       pfVar5[4] = (float)(dVar9 * param_2);
       pfVar5[8] = (float)(dVar9 * param_3);
-      dVar7 = (double)(fVar4 * fVar3);
+      dVar9 = (double)(fVar4 * fVar3);
       pfVar5[1] = fVar4 * fVar3;
-      dVar9 = (double)(fVar4 * fVar1);
+      dVar8 = (double)(fVar4 * fVar1);
       pfVar5[5] = fVar4 * fVar1;
-      dVar8 = (double)(fVar4 * fVar2);
+      dVar7 = (double)(fVar4 * fVar2);
       pfVar5[9] = fVar4 * fVar2;
-      pfVar5[10] = (float)(dVar11 * dVar9 - (double)(float)(dVar6 * dVar7));
-      pfVar5[2] = (float)(dVar6 * dVar8 - (double)(float)(dVar10 * dVar9));
-      pfVar5[6] = (float)(dVar10 * dVar7 - (double)(float)(dVar11 * dVar8));
+      pfVar5[10] = (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar9));
+      pfVar5[2] = (float)(dVar6 * dVar7 - (double)(float)(dVar10 * dVar8));
+      pfVar5[6] = (float)(dVar10 * dVar9 - (double)(float)(dVar11 * dVar7));
       goto LAB_826a03a0;
     }
   }
@@ -193,7 +191,6 @@ void dQSetIdentity(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0x9e,0,0xffffffff82000f98,0xffffffff8213494c);
   }
   *param_1 = 0x3f800000;
@@ -217,13 +214,12 @@ void dQFromAxisAndAngle(undefined8 param_1,double param_2,double param_3,double 
   double dVar4;
   
   pfVar1 = (float *)__savefpr_27();
+  dVar4 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219aaa8,0xa9,0,0xffffffff82000f98,0xffffffff8213494c);
   }
   dVar3 = (double)(float)(param_3 * param_3 +
-                         (double)(float)(extraout_f1 * extraout_f1 +
-                                        (double)(float)(param_2 * param_2)));
+                         (double)(float)(dVar4 * dVar4 + (double)(float)(param_2 * param_2)));
   if (dVar3 <= 0.0) {
     pfVar1[1] = 0.0;
     pfVar1[2] = 0.0;
@@ -232,7 +228,6 @@ void dQFromAxisAndAngle(undefined8 param_1,double param_2,double param_3,double 
   }
   else {
     _X = (double)(float)(param_4 * 0.5);
-    dVar4 = extraout_f1;
     dVar2 = cos(_X);
     *pfVar1 = (float)dVar2;
     dVar2 = sin(_X);
@@ -248,41 +243,117 @@ void dQFromAxisAndAngle(undefined8 param_1,double param_2,double param_3,double 
 
 // 826A05D0  dQMultiply0  (physics/ode/src/rotation.cpp:189)
 
-void dQMultiply0(void)
+void dQMultiply0(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xbe,0,0xffffffff82000f98,0xffffffff8219ab08);
+  }
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
+  *pfVar3 = -(pfVar1[3] * pfVar2[3] -
+             -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
+  pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
+               (*pfVar1 * pfVar2[1] + pfVar1[1] * *pfVar2 + pfVar1[3] * pfVar2[2]));
+  pfVar3[2] = -(pfVar1[3] * pfVar2[1] -
+               (*pfVar1 * pfVar2[2] + pfVar1[2] * *pfVar2 + pfVar1[1] * pfVar2[3]));
+  pfVar3[3] = -(pfVar1[1] * pfVar2[2] -
+               (*pfVar1 * pfVar2[3] + pfVar1[3] * *pfVar2 + pfVar1[2] * pfVar2[1]));
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A0700  dQMultiply1  (physics/ode/src/rotation.cpp:199)
 
-void dQMultiply1(void)
+void dQMultiply1(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,200,0,0xffffffff82000f98,0xffffffff8219ab08);
+  }
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
+  *pfVar3 = *pfVar2 * *pfVar1 +
+            pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
+  pfVar3[1] = pfVar2[3] * pfVar1[2] +
+              -(pfVar2[2] * pfVar1[3] - (pfVar1[1] * *pfVar2 - pfVar2[1] * *pfVar1));
+  pfVar3[2] = pfVar2[1] * pfVar1[3] +
+              -(pfVar2[3] * pfVar1[1] - (pfVar1[2] * *pfVar2 - pfVar2[2] * *pfVar1));
+  pfVar3[3] = pfVar1[1] * pfVar2[2] +
+              -(pfVar1[2] * pfVar2[1] - (*pfVar2 * pfVar1[3] - pfVar2[3] * *pfVar1));
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A0830  dQMultiply2  (physics/ode/src/rotation.cpp:209)
 
-void dQMultiply2(void)
+void dQMultiply2(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xd2,0,0xffffffff82000f98,0xffffffff8219ab08);
+  }
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
+  *pfVar3 = *pfVar2 * *pfVar1 +
+            pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
+  pfVar3[1] = pfVar2[3] * pfVar1[2] +
+              -(pfVar2[2] * pfVar1[3] - (pfVar2[1] * *pfVar1 - pfVar1[1] * *pfVar2));
+  pfVar3[2] = pfVar2[1] * pfVar1[3] +
+              -(pfVar2[3] * pfVar1[1] - (pfVar2[2] * *pfVar1 - pfVar1[2] * *pfVar2));
+  pfVar3[3] = pfVar1[1] * pfVar2[2] +
+              -(pfVar1[2] * pfVar2[1] - (pfVar2[3] * *pfVar1 - *pfVar2 * pfVar1[3]));
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A0960  dQMultiply3  (physics/ode/src/rotation.cpp:219)
 
-void dQMultiply3(void)
+void dQMultiply3(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar3 = (float *)__savegprlr_29();
+  if (((pfVar3 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0xdc,0,0xffffffff82000f98,0xffffffff8219ab08);
+  }
+  pfVar1 = (float *)param_3;
+  pfVar2 = (float *)param_2;
+  *pfVar3 = -(pfVar1[3] * pfVar2[3] -
+             -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
+  pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
+               (pfVar1[3] * pfVar2[2] - (pfVar1[1] * *pfVar2 + *pfVar1 * pfVar2[1])));
+  pfVar3[2] = -(pfVar1[3] * pfVar2[1] -
+               (pfVar1[1] * pfVar2[3] - (pfVar1[2] * *pfVar2 + *pfVar1 * pfVar2[2])));
+  pfVar3[3] = -(pfVar1[1] * pfVar2[2] -
+               (pfVar1[2] * pfVar2[1] - (pfVar1[3] * *pfVar2 + *pfVar1 * pfVar2[3])));
+  __restgprlr_29();
+  return;
 }
 
 
@@ -299,50 +370,138 @@ void dRfromQ(float *param_1,float *param_2)
   float fVar6;
   float fVar7;
   
-  if ((param_2 != (float *)0x0) && (param_1 != (float *)0x0)) {
-    fVar5 = param_2[2] * param_2[2] * 2.0;
-    fVar6 = param_2[3] * param_2[3] * 2.0;
-    fVar7 = 1.0 - param_2[1] * param_2[1] * 2.0;
-    *param_1 = (1.0 - fVar5) - fVar6;
-    param_1[1] = (param_2[2] * param_2[1] - *param_2 * param_2[3]) * 2.0;
-    param_1[2] = (param_2[1] * param_2[3] + param_2[2] * *param_2) * 2.0;
-    fVar1 = param_2[2];
-    fVar2 = param_2[1];
-    fVar3 = *param_2;
-    fVar4 = param_2[3];
-    param_1[5] = fVar7 - fVar6;
-    param_1[4] = (fVar1 * fVar2 + fVar3 * fVar4) * 2.0;
-    param_1[6] = (param_2[2] * param_2[3] - param_2[1] * *param_2) * 2.0;
-    param_1[8] = (param_2[1] * param_2[3] - param_2[2] * *param_2) * 2.0;
-    fVar1 = param_2[1];
-    fVar2 = *param_2;
-    fVar3 = param_2[2];
-    fVar4 = param_2[3];
-    param_1[10] = fVar7 - fVar5;
-    param_1[9] = (fVar1 * fVar2 + fVar3 * fVar4) * 2.0;
-    return;
+  if ((param_2 == (float *)0x0) || (param_1 == (float *)0x0)) {
+    MyAssertHandler(0xffffffff8219aaa8,0xeb,0,0xffffffff82000f98,0xffffffff8219ab18);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8219aaa8,0xeb,0,0xffffffff82000f98,0xffffffff8219ab18);
+  fVar5 = param_2[2] * param_2[2] * 2.0;
+  fVar6 = param_2[3] * param_2[3] * 2.0;
+  fVar7 = 1.0 - param_2[1] * param_2[1] * 2.0;
+  *param_1 = (1.0 - fVar5) - fVar6;
+  param_1[1] = (param_2[2] * param_2[1] - *param_2 * param_2[3]) * 2.0;
+  param_1[2] = (param_2[1] * param_2[3] + param_2[2] * *param_2) * 2.0;
+  fVar1 = param_2[2];
+  fVar2 = param_2[1];
+  fVar3 = *param_2;
+  fVar4 = param_2[3];
+  param_1[5] = fVar7 - fVar6;
+  param_1[4] = (fVar1 * fVar2 + fVar3 * fVar4) * 2.0;
+  param_1[6] = (param_2[2] * param_2[3] - param_2[1] * *param_2) * 2.0;
+  param_1[8] = (param_2[1] * param_2[3] - param_2[2] * *param_2) * 2.0;
+  fVar1 = param_2[1];
+  fVar2 = *param_2;
+  fVar3 = param_2[2];
+  fVar4 = param_2[3];
+  param_1[10] = fVar7 - fVar5;
+  param_1[9] = (fVar1 * fVar2 + fVar3 * fVar4) * 2.0;
+  return;
 }
 
 
 // 826A0C10  dQfromR  (physics/ode/src/rotation.cpp:253)
 
-void dQfromR(void)
+void dQfromR(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float fVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  
+  pfVar6 = (float *)__savegprlr_29();
+  if ((pfVar6 == (float *)0x0) || ((param_2 & 0xffffffff) == 0)) {
+    MyAssertHandler(0xffffffff8219aaa8,0x100,0,0xffffffff82000f98,0xffffffff8219ab18);
+  }
+  pfVar4 = (float *)param_2;
+  fVar1 = pfVar4[10];
+  fVar2 = pfVar4[5];
+  fVar5 = fVar2 + fVar1;
+  fVar3 = *pfVar4;
+  if (0.0 <= fVar3 + fVar5) {
+    fVar1 = SQRT(fVar3 + fVar5 + 1.0);
+    *pfVar6 = fVar1 * 0.5;
+    fVar1 = (1.0 / fVar1) * 0.5;
+    pfVar6[1] = (pfVar4[9] - pfVar4[6]) * fVar1;
+    pfVar6[2] = (pfVar4[2] - pfVar4[8]) * fVar1;
+    pfVar6[3] = (pfVar4[4] - pfVar4[1]) * fVar1;
+    __restgprlr_29();
+    return;
+  }
+  if (fVar2 <= fVar3) {
+    if (fVar1 <= fVar3) {
+      dVar8 = 1.0;
+      if ((fVar3 - fVar5) + 1.0 < 0.0) {
+        MyAssertHandler(0xffffffff8219aaa8,0x11a,0,0xffffffff8219ab20,
+                        (double)((fVar3 - fVar5) + 1.0),0);
+      }
+      dVar7 = (double)SQRT((float)((double)(*pfVar4 - (pfVar4[5] + pfVar4[10])) + dVar8));
+      pfVar6[1] = (float)(dVar7 * 0.5);
+      fVar3 = (float)(dVar8 / dVar7) * 0.5;
+      pfVar6[2] = (pfVar4[4] + pfVar4[1]) * fVar3;
+      pfVar6[3] = (pfVar4[8] + pfVar4[2]) * fVar3;
+      fVar1 = pfVar4[9];
+      fVar2 = pfVar4[6];
+      goto LAB_826a0f38;
+    }
+  }
+  else if (fVar1 <= fVar2) {
+    dVar8 = 1.0;
+    if ((fVar2 - (fVar3 + fVar1)) + 1.0 < 0.0) {
+      MyAssertHandler(0xffffffff8219aaa8,0x124,0,0xffffffff8219ab88,
+                      (double)((fVar2 - (fVar3 + fVar1)) + 1.0),0);
+    }
+    dVar7 = (double)SQRT((float)((double)(pfVar4[5] - (pfVar4[10] + *pfVar4)) + dVar8));
+    pfVar6[2] = (float)(dVar7 * 0.5);
+    fVar3 = (float)(dVar8 / dVar7) * 0.5;
+    pfVar6[3] = (pfVar4[9] + pfVar4[6]) * fVar3;
+    pfVar6[1] = (pfVar4[4] + pfVar4[1]) * fVar3;
+    fVar1 = pfVar4[2];
+    fVar2 = pfVar4[8];
+    goto LAB_826a0f38;
+  }
+  dVar8 = 1.0;
+  if ((fVar1 - (fVar3 + fVar2)) + 1.0 < 0.0) {
+    MyAssertHandler(0xffffffff8219aaa8,0x12e,0,0xffffffff8219ab54,
+                    (double)((fVar1 - (fVar3 + fVar2)) + 1.0),0);
+  }
+  dVar7 = (double)SQRT((float)((double)(pfVar4[10] - (pfVar4[5] + *pfVar4)) + dVar8));
+  pfVar6[3] = (float)(dVar7 * 0.5);
+  fVar3 = (float)(dVar8 / dVar7) * 0.5;
+  pfVar6[1] = (pfVar4[8] + pfVar4[2]) * fVar3;
+  pfVar6[2] = (pfVar4[9] + pfVar4[6]) * fVar3;
+  fVar1 = pfVar4[4];
+  fVar2 = pfVar4[1];
+LAB_826a0f38:
+  *pfVar6 = (fVar1 - fVar2) * fVar3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 826A0F50  dDQfromW  (physics/ode/src/rotation.cpp:315)
 
-void dDQfromW(void)
+void dDQfromW(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  
+  pfVar2 = (float *)__savegprlr_29();
+  if ((((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) == 0)) || (pfVar2 == (float *)0x0))
+  {
+    MyAssertHandler(0xffffffff8219aaa8,0x13c,0,0xffffffff82000f98,0xffffffff8219abbc);
+  }
+  pfVar1 = (float *)param_3;
+  pfVar3 = (float *)param_2;
+  *pfVar2 = -(pfVar1[3] * pfVar3[2] - -(pfVar1[2] * pfVar3[1] - -(pfVar1[1] * *pfVar3))) * 0.5;
+  pfVar2[1] = -(pfVar1[2] * pfVar3[2] - (pfVar1[3] * pfVar3[1] + *pfVar3 * *pfVar1)) * 0.5;
+  pfVar2[2] = (pfVar3[1] * *pfVar1 + (pfVar1[1] * pfVar3[2] - pfVar1[3] * *pfVar3)) * 0.5;
+  pfVar2[3] = (pfVar3[2] * *pfVar1 + (pfVar1[2] * *pfVar3 - pfVar1[1] * pfVar3[1])) * 0.5;
+  __restgprlr_29();
+  return;
 }
 

@@ -60,8 +60,88 @@ void D3D__Hang__Out(undefined4 *param_1,undefined8 param_2,undefined8 param_3,un
 void D3D__HangStateDump(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  char cVar1;
+  bool bVar2;
+  int iVar5;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  char *pcVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined **ppuVar10;
+  undefined4 *puVar11;
+  uint *puVar12;
+  char local_120 [288];
+  
+  iVar5 = __savegprlr_23();
+  uVar3 = (**(code **)(iVar5 + 4))(0x5d0);
+  bVar2 = false;
+  D3D__Hang__Out(iVar5,0xffffffff821f57ac,0xffffffff821f57c0,uVar3);
+  lVar8 = 0xb;
+  ppuVar10 = &PTR_DAT_829a6d44;
+  do {
+    if ((ZEXT48(ppuVar10[-1]) & uVar3) != 0) {
+      if (bVar2) {
+        D3D__Hang__Out(iVar5,0xffffffff820044d4);
+      }
+      D3D__Hang__Out(iVar5,*ppuVar10);
+      bVar2 = true;
+    }
+    lVar8 = lVar8 + -1;
+    ppuVar10 = ppuVar10 + 2;
+  } while (lVar8 != 0);
+  if (!bVar2) {
+    D3D__Hang__Out(iVar5,0xffffffff821f5798);
+  }
+  D3D__Hang__Out(iVar5,0xffffffff821f5794);
+  (**(code **)(iVar5 + 8))(0xf11,0);
+  Sleep(1);
+  uVar4 = (**(code **)(iVar5 + 4))(0xf12);
+  D3D__Hang__Out(iVar5,0xffffffff821f5780,0xffffffff821f576c,uVar4);
+  lVar8 = 0x1e;
+  puVar11 = (undefined4 *)0x829a6d94;
+  do {
+    uVar4 = (**(code **)(iVar5 + 4))(puVar11[1]);
+    puVar11 = puVar11 + 2;
+    D3D__Hang__Out(iVar5,0xffffffff821f5780,*puVar11,uVar4);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  puVar12 = &DAT_829a6e98;
+  lVar8 = 5;
+  do {
+    D3D__Hang__Out(iVar5,0xffffffff820044d8);
+    uVar3 = 0;
+    if (*puVar12 != 0) {
+      do {
+        RtlSprintf(local_120,0xffffffff821f5758,puVar12[1],uVar3);
+        uVar9 = uVar3 + 8;
+        while( true ) {
+          uVar6 = (ulonglong)*puVar12;
+          if ((uVar9 & 0xffffffff) < (ulonglong)*puVar12) {
+            uVar6 = uVar9;
+          }
+          if ((uVar6 & 0xffffffff) <= (uVar3 & 0xffffffff)) break;
+          (**(code **)(iVar5 + 8))(puVar12[-4],(int)uVar3 << (puVar12[-1] & 0x3f) | puVar12[-2]);
+          Sleep(1);
+          uVar4 = (**(code **)(iVar5 + 4))(puVar12[-3]);
+          pcVar7 = local_120;
+          do {
+            cVar1 = *pcVar7;
+            pcVar7 = pcVar7 + 1;
+          } while (cVar1 != '\0');
+          RtlSprintf(pcVar7 + (int)(local_120 + (-1 - (int)local_120)),0xffffffff821f5764,uVar4);
+          uVar3 = uVar3 + 1;
+        }
+        D3D__Hang__Out(iVar5,0xffffffff82004d30,local_120);
+        uVar3 = uVar9;
+      } while ((uVar9 & 0xffffffff) < (ulonglong)*puVar12);
+    }
+    lVar8 = lVar8 + -1;
+    puVar12 = puVar12 + 6;
+  } while (lVar8 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -141,6 +221,143 @@ LAB_8287cc14:
 }
 
 
+// 8287CCF0  D3D::HangRecognizer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:354)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void D3D__HangRecognizer(undefined8 param_1,undefined4 param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  bool bVar1;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  uint uVar9;
+  undefined8 uVar10;
+  undefined4 local_90;
+  code *local_8c;
+  code *local_88;
+  uint local_80 [32];
+  
+  iVar6 = __savegprlr_19();
+  local_88 = (code *)param_4;
+  local_8c = (code *)param_3;
+  uVar10 = 1;
+  if (((param_3 & 0xffffffff) == 0) || ((param_4 & 0xffffffff) == 0)) {
+    local_8c = D3D__ReadMMRegUlong;
+    local_88 = D3D__WriteMMRegUlong;
+    uVar10 = 0;
+  }
+  uVar7 = (*local_8c)(0x5d0);
+  (*local_8c)(0xf26);
+  iVar8 = (*local_8c)(0x1c0);
+  uVar2 = (*local_8c)(0x57b);
+  uVar3 = (*local_8c)(0x57c);
+  uVar4 = (*local_8c)(0x57d);
+  uVar5 = (*local_8c)(0x57a);
+  (*local_88)(0xc80,0xc);
+  uVar9 = (*local_8c)(0xc81);
+  local_80[0] = (*local_8c)(0xc81);
+  local_80[1] = (*local_8c)(0xc81);
+  local_80[2] = (*local_8c)(0xc81);
+  local_80[3] = (*local_8c)(0xc81);
+  local_90 = param_2;
+  if (iVar6 != 0) {
+    D3D__Hang__Out(&local_90,0xffffffff821f69c0);
+    D3D__Hang__Out(&local_90,0xffffffff821f6994,0x5014,0,0xffffffff820386ac,_DAT_0000015c,
+                   *(undefined4 *)(iVar6 + 0x41dc));
+    D3D__Hang__Out(&local_90,0xffffffff821f6964,iVar6,*(undefined4 *)(iVar6 + 0x2b10),
+                   *(undefined4 *)(iVar6 + 0x2b14));
+    D3D__Hang__Out(&local_90,0xffffffff821f6940,*(undefined4 *)(iVar6 + 0x2b1c),
+                   **(undefined4 **)(iVar6 + 0x2b10));
+  }
+  if (((uVar7 == 0x80050110) && ((uVar3 & 0xffffffff) != 0xbadf00d)) && (iVar8 != 0)) {
+    D3D__Hang__Out(&local_90,0xffffffff821f68a0,uVar3,uVar4);
+    goto LAB_8287d150;
+  }
+  uVar3 = uVar5 & 0xf8000000;
+  if (uVar3 == 0x8000000) {
+    if ((iVar6 != 0) && (*(int *)(iVar6 + 0x5f30) != 0)) {
+      D3D__Hang__Out(&local_90,0xffffffff821f67f0,
+                     *(undefined8 *)
+                      (((uint)((uVar5 & 0xffffffff) << 4) & 0x3f0) + *(int *)(iVar6 + 0x5f30) + 8));
+      goto LAB_8287d150;
+    }
+    uVar10 = 0xffffffff821f6750;
+    goto LAB_8287d148;
+  }
+  if (uVar3 == 0x10000000) {
+    if (iVar6 == 0) goto LAB_8287d150;
+    uVar10 = 0xffffffff821f66a8;
+LAB_8287cf64:
+    uVar2 = uVar5 & 0xffffffff0000003f | 0xd1230000;
+  }
+  else {
+    if (uVar3 == 0x18000000) {
+      if (iVar6 == 0) goto LAB_8287d150;
+      uVar10 = 0xffffffff821f6628;
+      goto LAB_8287cf64;
+    }
+    if ((uVar5 & 0xc0000000) == 0x80000000) {
+      D3D__Hang__Out(&local_90,0xffffffff821f6590,(uVar5 & 0x3fffffff) << 2);
+      uVar10 = 0xffffffff821f6528;
+LAB_8287d148:
+      D3D__Hang__Out(&local_90,uVar10);
+      goto LAB_8287d150;
+    }
+    if ((uVar5 & 0xc0000000) != 0xc0000000) {
+      D3D__HangStateDump(&local_90);
+      bVar1 = (uVar7 & 0x7ffbf0e0) == 0x4010000;
+      if (bVar1) {
+        D3D__Hang__Out(&local_90,0xffffffff821f6418);
+        D3D__Hang__Out(&local_90,0xffffffff821f6380);
+      }
+      if ((((uVar9 & 0x20) != 0) && ((uVar9 & 0x7c0) == 0)) &&
+         ((*(uint *)((int)local_80 + (uVar9 >> 0xb & 0xc)) & 0x7f00000) == 0x200000)) {
+        D3D__Hang__Out(&local_90,0xffffffff821f62f8);
+        D3D__Hang__Out(&local_90,0xffffffff821f6248);
+        bVar1 = true;
+      }
+      if ((uVar7 & 0x7ffbf0e0) == 0) {
+        D3D__Hang__Out(&local_90,0xffffffff821f61b8);
+        D3D__Hang__Out(&local_90,0xffffffff821f6120);
+        D3D__Hang__Out(&local_90,0xffffffff821f60f0);
+        bVar1 = true;
+      }
+      if ((uVar7 & 0x400020) == 0x400020) {
+        D3D__Hang__Out(&local_90,0xffffffff821f6058);
+        D3D__Hang__Out(&local_90,0xffffffff821f6024);
+        D3D__Hang__Out(&local_90,0xffffffff821f5fec);
+        D3D__Hang__Out(&local_90,0xffffffff821f5f50);
+        D3D__Hang__Out(&local_90,0xffffffff821f5eb0);
+        D3D__Hang__Out(&local_90,0xffffffff821f5df8);
+        bVar1 = true;
+      }
+      if ((uVar2 & 0xffffffff) != 0) {
+        D3D__HangCommandBufferDump(&local_90,uVar2,uVar10);
+      }
+      if (bVar1) {
+        uVar10 = 0xffffffff821f5d68;
+      }
+      else {
+        uVar10 = 0xffffffff821f5cd8;
+      }
+      goto LAB_8287d148;
+    }
+    uVar2 = (uVar5 & 0x3fffffff) << 2;
+    uVar10 = 0xffffffff821f64a0;
+  }
+  D3D__Hang__Out(&local_90,uVar10,uVar2);
+LAB_8287d150:
+  __restgprlr_19();
+  return;
+}
+
+
 // 8287CAA0  D3D::CrashDump  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:614)
 
 void D3D__CrashDump(int param_1)
@@ -151,5 +368,29 @@ void D3D__CrashDump(int param_1)
   *(undefined4 *)(param_1 + 0x2b84) = 0;
   PIXCaptureGpuFrame(0xffffffff821f57cc);
   return;
+}
+
+
+// 8287D160  D3D::DebugGpuDeadlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:658)
+
+bool D3D__DebugGpuDeadlock(int param_1)
+
+{
+  bool bVar1;
+  undefined8 in_r0;
+  
+  DbgPrint(0xffffffff821f6c18);
+  D3D__HangRecognizer(param_1,*(undefined4 *)(param_1 + 0x3588),0,0);
+  if (*(int *)(param_1 + 0x3588) == 0) {
+    DbgPrint(0xffffffff821f6b88);
+    DbgPrint(0xffffffff821f6a90);
+    DbgPrint(0xffffffff821f69e0);
+    trapWord(0x1f,in_r0,0x16);
+  }
+  bVar1 = DAT_8489036c == 0;
+  if (bVar1) {
+    D3D__CrashDump(param_1);
+  }
+  return bVar1;
 }
 

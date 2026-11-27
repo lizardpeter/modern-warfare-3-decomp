@@ -45,18 +45,193 @@ LAB_826135dc:
 ; 826135F0  tom_game_mem_end  (universal/tomcrypt_mem.cpp:62)
   826135F0  7D8802A6             mfspr r12,LR
   826135F4  483030C1             bl 0x829166b4
+  826135F8  9421FF80             stwu r1,-0x80(r1)
+  826135FC  83ED0000             lwz r31,0x0(r13)
+  82613600  3BC00100             li r30,0x100
+  82613604  3D608200             lis r11,-0x7e00
+  82613608  3D408218             lis r10,-0x7de8
+  8261360C  3B6B0F98             addi r27,r11,0xf98
+  82613610  3B8A4340             addi r28,r10,0x4340
+  82613614  7D7FF02E             lwzx r11,r31,r30
+  82613618  2B0B0000             cmplwi cr6,r11,0x0
+  8261361C  409A0020             bne cr6,0x8261363c
+  82613620  3D608218             lis r11,-0x7de8
+  82613624  7F66DB78             or r6,r27,r27
+  82613628  38EB43A4             addi r7,r11,0x43a4
+  8261362C  7F83E378             or r3,r28,r28
+  82613630  38A00000             li r5,0x0
+  82613634  3880003F             li r4,0x3f
+  82613638  4BFC0EC9             bl 0x825d4500
+LAB_8261363c:
+  8261363C  39600100             li r11,0x100
+  82613640  3BAB0004             addi r29,r11,0x4
+  82613644  7D7FE82E             lwzx r11,r31,r29
+  82613648  2B0B0000             cmplwi cr6,r11,0x0
+  8261364C  409A0020             bne cr6,0x8261366c
+  82613650  3D608218             lis r11,-0x7de8
+  82613654  7F66DB78             or r6,r27,r27
+  82613658  38EB4388             addi r7,r11,0x4388
+  8261365C  7F83E378             or r3,r28,r28
+  82613660  38A00000             li r5,0x0
+  82613664  38800040             li r4,0x40
+  82613668  4BFC0E99             bl 0x825d4500
+LAB_8261366c:
+  8261366C  39600000             li r11,0x0
+  82613670  7D7FF12E             stwx r11,r31,r30
+  82613674  7D7FE92E             stwx r11,r31,r29
+  82613678  38210080             addi r1,r1,0x80
+  8261367C  48303088             b 0x82916704
 
 ; 82613680  tom_game_malloc  (universal/tomcrypt_mem.cpp:74)
   82613680  7D8802A6             mfspr r12,LR
   82613684  48303035             bl 0x829166b8
+  82613688  9421FF80             stwu r1,-0x80(r1)
+  8261368C  83CD0000             lwz r30,0x0(r13)
+  82613690  3BA00100             li r29,0x100
+  82613694  3D608218             lis r11,-0x7de8
+  82613698  7C7F1B78             or r31,r3,r3
+  8261369C  3B8B4340             addi r28,r11,0x4340
+  826136A0  7D7EE82E             lwzx r11,r30,r29
+  826136A4  2B0B0000             cmplwi cr6,r11,0x0
+  826136A8  409A0024             bne cr6,0x826136cc
+  826136AC  3D608218             lis r11,-0x7de8
+  826136B0  3D408200             lis r10,-0x7e00
+  826136B4  38EB43E0             addi r7,r11,0x43e0
+  826136B8  38CA0F98             addi r6,r10,0xf98
+  826136BC  7F83E378             or r3,r28,r28
+  826136C0  38A00000             li r5,0x0
+  826136C4  3880004C             li r4,0x4c
+  826136C8  4BFC0E39             bl 0x825d4500
+LAB_826136cc:
+  826136CC  39400100             li r10,0x100
+  826136D0  7D7EE82E             lwzx r11,r30,r29
+  826136D4  392A0004             addi r9,r10,0x4
+  826136D8  7D4BFA14             add r10,r11,r31
+  826136DC  394A0004             addi r10,r10,0x4
+  826136E0  7D1E482E             lwzx r8,r30,r9
+  826136E4  7F0A4040             cmplw cr6,r10,r8
+  826136E8  40990038             ble cr6,0x82613720
+  826136EC  3D608401             lis r11,-0x7bff
+  826136F0  816B3128             lwz r11,0x3128(r11)
+  826136F4  2F0B0000             cmpwi cr6,r11,0x0
+  826136F8  409A001C             bne cr6,0x82613714
+  826136FC  3D608218             lis r11,-0x7de8
+  82613700  7F83E378             or r3,r28,r28
+  82613704  38CB43C0             addi r6,r11,0x43c0
+  82613708  38A00000             li r5,0x0
+  8261370C  3880004F             li r4,0x4f
+  82613710  4BFC0DF1             bl 0x825d4500
+LAB_82613714:
+  82613714  38600000             li r3,0x0
+  82613718  38210080             addi r1,r1,0x80
+  8261371C  48302FEC             b 0x82916708
+LAB_82613720:
+  82613720  57E8C63E             rlwinm r8,r31,0x18,0x18,0x1f
+  82613724  7D5EE92E             stwx r10,r30,r29
+  82613728  57E7863E             rlwinm r7,r31,0x10,0x18,0x1f
+  8261372C  9BEB0000             stb r31,0x0(r11)
+  82613730  57E6463E             rlwinm r6,r31,0x8,0x18,0x1f
+  82613734  990B0001             stb r8,0x1(r11)
+  82613738  98EB0002             stb r7,0x2(r11)
+  8261373C  386B0004             addi r3,r11,0x4
+  82613740  98CB0003             stb r6,0x3(r11)
+  82613744  38210080             addi r1,r1,0x80
+  82613748  48302FC0             b 0x82916708
 
 ; 82613750  tom_game_free_internal  (universal/tomcrypt_mem.cpp:92)
   82613750  7D8802A6             mfspr r12,LR
   82613754  48302F69             bl 0x829166bc
+  82613758  9421FF90             stwu r1,-0x70(r1)
+  8261375C  83CD0000             lwz r30,0x0(r13)
+  82613760  3BA00100             li r29,0x100
+  82613764  7C7F1B78             or r31,r3,r3
+  82613768  7D7DF02E             lwzx r11,r29,r30
+  8261376C  2B0B0000             cmplwi cr6,r11,0x0
+  82613770  409A0028             bne cr6,0x82613798
+  82613774  3D608218             lis r11,-0x7de8
+  82613778  3D408200             lis r10,-0x7e00
+  8261377C  3D208218             lis r9,-0x7de8
+  82613780  38EB43E0             addi r7,r11,0x43e0
+  82613784  38CA0F98             addi r6,r10,0xf98
+  82613788  38694340             addi r3,r9,0x4340
+  8261378C  38A00000             li r5,0x0
+  82613790  38800060             li r4,0x60
+  82613794  4BFC0D6D             bl 0x825d4500
+LAB_82613798:
+  82613798  897FFFFF             lbz r11,-0x1(r31)
+  8261379C  895FFFFE             lbz r10,-0x2(r31)
+  826137A0  556B403E             rlwinm r11,r11,0x8,0x0,0x1f
+  826137A4  891FFFFD             lbz r8,-0x3(r31)
+  826137A8  893FFFFC             lbz r9,-0x4(r31)
+  826137AC  7D4B5214             add r10,r11,r10
+  826137B0  7D7DF02E             lwzx r11,r29,r30
+  826137B4  554A402E             rlwinm r10,r10,0x8,0x0,0x17
+  826137B8  7D0A4214             add r8,r10,r8
+  826137BC  550A402E             rlwinm r10,r8,0x8,0x0,0x17
+  826137C0  7D4A4A14             add r10,r10,r9
+  826137C4  7CEAFA14             add r7,r10,r31
+  826137C8  7F075840             cmplw cr6,r7,r11
+  826137CC  409A001C             bne cr6,0x826137e8
+  826137D0  7D6A5850             subf r11,r10,r11
+  826137D4  38600001             li r3,0x1
+  826137D8  396BFFFC             subi r11,r11,0x4
+  826137DC  7D7DF12E             stwx r11,r29,r30
+  826137E0  38210070             addi r1,r1,0x70
+  826137E4  48302F28             b 0x8291670c
+LAB_826137e8:
+  826137E8  38600000             li r3,0x0
+  826137EC  38210070             addi r1,r1,0x70
+  826137F0  48302F1C             b 0x8291670c
 
 ; 826137F8  tom_game_realloc  (universal/tomcrypt_mem.cpp:110)
   826137F8  7D8802A6             mfspr r12,LR
   826137FC  48302EC1             bl 0x829166bc
+  82613800  9421FF90             stwu r1,-0x70(r1)
+  82613804  7C7F1B78             or r31,r3,r3
+  82613808  7C9E2378             or r30,r4,r4
+  8261380C  4BFFFF45             bl 0x82613750
+  82613810  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82613814  2B0B0000             cmplwi cr6,r11,0x0
+  82613818  419A0014             beq cr6,0x8261382c
+  8261381C  7FC3F378             or r3,r30,r30
+  82613820  4BFFFE61             bl 0x82613680
+  82613824  38210070             addi r1,r1,0x70
+  82613828  48302EE4             b 0x8291670c
+LAB_8261382c:
+  8261382C  816D0000             lwz r11,0x0(r13)
+  82613830  39400100             li r10,0x100
+  82613834  7D2A582E             lwzx r9,r10,r11
+  82613838  2B090000             cmplwi cr6,r9,0x0
+  8261383C  409A0028             bne cr6,0x82613864
+  82613840  3D608218             lis r11,-0x7de8
+  82613844  3D408200             lis r10,-0x7e00
+  82613848  3D208218             lis r9,-0x7de8
+  8261384C  38EB43E0             addi r7,r11,0x43e0
+  82613850  38CA0F98             addi r6,r10,0xf98
+  82613854  38694340             addi r3,r9,0x4340
+  82613858  38A00000             li r5,0x0
+  8261385C  38800079             li r4,0x79
+  82613860  4BFC0CA1             bl 0x825d4500
+LAB_82613864:
+  82613864  895FFFFF             lbz r10,-0x1(r31)
+  82613868  7FC3F378             or r3,r30,r30
+  8261386C  897FFFFE             lbz r11,-0x2(r31)
+  82613870  5549403E             rlwinm r9,r10,0x8,0x0,0x1f
+  82613874  891FFFFD             lbz r8,-0x3(r31)
+  82613878  895FFFFC             lbz r10,-0x4(r31)
+  8261387C  7D295A14             add r9,r9,r11
+  82613880  552B402E             rlwinm r11,r9,0x8,0x0,0x17
+  82613884  7D0B4214             add r8,r11,r8
+  82613888  550B402E             rlwinm r11,r8,0x8,0x0,0x17
+  8261388C  7FCB5214             add r30,r11,r10
+  82613890  4BFFFDF1             bl 0x82613680
+  82613894  7FC5F378             or r5,r30,r30
+  82613898  7FE4FB78             or r4,r31,r31
+  8261389C  7C7D1B78             or r29,r3,r3
+  826138A0  483030C1             bl 0x82916960
+  826138A4  7FA3EB78             or r3,r29,r29
+  826138A8  38210070             addi r1,r1,0x70
+  826138AC  48302E60             b 0x8291670c
 
 ; 826138B0  tom_game_calloc  (universal/tomcrypt_mem.cpp:131)
   826138B0  7D8802A6             mfspr r12,LR

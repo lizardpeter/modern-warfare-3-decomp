@@ -2,11 +2,60 @@
 
 // 827B0200  jpeg_CreateCompress  (jpeg-6/jcapimin.c:31)
 
-void jpeg_CreateCompress(void)
+void jpeg_CreateCompress(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int *_Dst;
+  int *piVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  
+  _Dst = (int *)__savegprlr_27();
+  _Dst[1] = 0;
+  if (param_2 != 0x3e) {
+    *(undefined4 *)(*_Dst + 0x14) = 0xc;
+    *(undefined4 *)(*_Dst + 0x18) = 0x3e;
+    *(int *)(*_Dst + 0x1c) = param_2;
+    (**(code **)*_Dst)();
+  }
+  if ((param_3 & 0xffffffff) != 0x170) {
+    *(undefined4 *)(*_Dst + 0x14) = 0x15;
+    *(undefined4 *)(*_Dst + 0x18) = 0x170;
+    *(int *)(*_Dst + 0x1c) = (int)param_3;
+    (**(code **)*_Dst)(_Dst);
+  }
+  iVar1 = *_Dst;
+  iVar2 = _Dst[3];
+  uVar4 = *(undefined8 *)(_Dst + 6);
+  memset(_Dst,0,0x170);
+  *_Dst = iVar1;
+  _Dst[3] = iVar2;
+  *(undefined8 *)(_Dst + 6) = uVar4;
+  *(undefined1 *)(_Dst + 4) = 0;
+  jinit_memory_mgr(_Dst);
+  _Dst[2] = 0;
+  _Dst[8] = 0;
+  piVar3 = _Dst + 0x1b;
+  _Dst[0x13] = 0;
+  _Dst[0x14] = 0;
+  _Dst[0x15] = 0;
+  lVar5 = 4;
+  _Dst[0x16] = 0;
+  _Dst[0x17] = 0;
+  do {
+    piVar3[-3] = 0;
+    piVar3 = piVar3 + 1;
+    *piVar3 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  _Dst[0x5a] = 0;
+  _Dst[5] = 100;
+  _Dst[0xe] = 0x3ff00000;
+  _Dst[0xf] = 0;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -51,28 +100,111 @@ void jpeg_suppress_tables(int param_1,undefined1 param_2)
 void jpeg_finish_compress(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  int *piVar3;
+  char cVar4;
+  uint uVar5;
+  code *pcVar6;
+  
+  piVar3 = (int *)__savegprlr_29();
+  iVar1 = piVar3[5];
+  if ((iVar1 == 0x65) || (iVar1 == 0x66)) {
+    if ((uint)piVar3[0x36] < (uint)piVar3[10]) {
+      *(undefined4 *)(*piVar3 + 0x14) = 0x43;
+      (**(code **)*piVar3)(piVar3);
+    }
+    pcVar6 = *(code **)(piVar3[0x51] + 8);
+  }
+  else {
+    if (iVar1 == 0x67) goto LAB_827b0440;
+    *(undefined4 *)(*piVar3 + 0x14) = 0x14;
+    *(int *)(*piVar3 + 0x18) = piVar3[5];
+    pcVar6 = *(code **)*piVar3;
+  }
+  (*pcVar6)(piVar3);
+LAB_827b0440:
+  puVar2 = (undefined4 *)piVar3[0x51];
+  cVar4 = *(char *)((int)puVar2 + 0xd);
+  while (cVar4 == '\0') {
+    (*(code *)*puVar2)(piVar3);
+    uVar5 = 0;
+    if (piVar3[0x3a] != 0) {
+      do {
+        if (piVar3[2] != 0) {
+          *(uint *)(piVar3[2] + 4) = uVar5;
+          *(int *)(piVar3[2] + 8) = piVar3[0x3a];
+          (**(code **)piVar3[2])(piVar3);
+        }
+        cVar4 = (**(code **)(piVar3[0x54] + 4))(piVar3,0);
+        if (cVar4 == '\0') {
+          *(undefined4 *)(*piVar3 + 0x14) = 0x18;
+          (**(code **)*piVar3)(piVar3);
+        }
+        uVar5 = uVar5 + 1;
+      } while (uVar5 < (uint)piVar3[0x3a]);
+    }
+    (**(code **)(piVar3[0x51] + 8))(piVar3);
+    puVar2 = (undefined4 *)piVar3[0x51];
+    cVar4 = *(char *)((int)puVar2 + 0xd);
+  }
+  (**(code **)(piVar3[0x55] + 0xc))(piVar3);
+  (**(code **)(piVar3[8] + 0x10))(piVar3);
+  jpeg_abort(piVar3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 827B0558  jpeg_write_marker  (jpeg-6/jcapimin.c:200)
 
-void jpeg_write_marker(void)
+void jpeg_write_marker(undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  code *pcVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_27();
+  if ((piVar3[0x36] != 0) ||
+     (((iVar1 = piVar3[5], iVar1 != 0x65 && (iVar1 != 0x66)) && (iVar1 != 0x67)))) {
+    *(undefined4 *)(*piVar3 + 0x14) = 0x14;
+    *(int *)(*piVar3 + 0x18) = piVar3[5];
+    (**(code **)*piVar3)(piVar3);
+  }
+  (**(code **)(piVar3[0x55] + 0x14))(piVar3,param_2,param_4);
+  pcVar2 = *(code **)(piVar3[0x55] + 0x18);
+  if ((param_4 & 0xffffffff) != 0) {
+    param_3 = param_3 + -1;
+    do {
+      param_3 = param_3 + 1;
+      param_4 = param_4 - 1;
+      (*pcVar2)(piVar3,*(undefined1 *)param_3);
+    } while ((param_4 & 0xffffffff) != 0);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 827B0620  jpeg_write_m_header  (jpeg-6/jcapimin.c:221)
 
-void jpeg_write_m_header(void)
+void jpeg_write_m_header(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if ((piVar2[0x36] != 0) ||
+     (((iVar1 = piVar2[5], iVar1 != 0x65 && (iVar1 != 0x66)) && (iVar1 != 0x67)))) {
+    *(undefined4 *)(*piVar2 + 0x14) = 0x14;
+    *(int *)(*piVar2 + 0x18) = piVar2[5];
+    (**(code **)*piVar2)(piVar2);
+  }
+  (**(code **)(piVar2[0x55] + 0x14))(piVar2,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 

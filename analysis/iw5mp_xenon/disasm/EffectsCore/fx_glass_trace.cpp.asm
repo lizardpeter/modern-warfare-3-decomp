@@ -3,6 +3,125 @@
 ; 8242E9A0  Glass_DoesEdgeLoopContainPoint  (EffectsCore/fx_glass_trace.cpp:36)
   8242E9A0  7D8802A6             mfspr r12,LR
   8242E9A4  484E7D19             bl 0x829166bc
+  8242E9A8  54AB103A             rlwinm r11,r5,0x2,0x0,0x1d
+  8242E9AC  81270004             lwz r9,0x4(r7)
+  8242E9B0  7C6A1B78             or r10,r3,r3
+  8242E9B4  7D6B2214             add r11,r11,r4
+  8242E9B8  38600000             li r3,0x0
+  8242E9BC  396BFFFC             subi r11,r11,0x4
+LAB_8242e9c0:
+  8242E9C0  A10B0002             lhz r8,0x2(r11)
+  8242E9C4  7D080734             extsh r8,r8
+  8242E9C8  7F084800             cmpw cr6,r8,r9
+  8242E9CC  A10A0002             lhz r8,0x2(r10)
+  8242E9D0  7D080734             extsh r8,r8
+  8242E9D4  41990050             bgt cr6,0x8242ea24
+  8242E9D8  7F084800             cmpw cr6,r8,r9
+  8242E9DC  40990090             ble cr6,0x8242ea6c
+  8242E9E0  A3EB0000             lhz r31,0x0(r11)
+  8242E9E4  A16B0002             lhz r11,0x2(r11)
+  8242E9E8  A3CA0000             lhz r30,0x0(r10)
+  8242E9EC  7FFF0734             extsh r31,r31
+  8242E9F0  7D6B0734             extsh r11,r11
+  8242E9F4  83A70000             lwz r29,0x0(r7)
+  8242E9F8  7FDE0734             extsh r30,r30
+  8242E9FC  7D0B4050             subf r8,r11,r8
+  8242EA00  7FDFF050             subf r30,r31,r30
+  8242EA04  7FFFE850             subf r31,r31,r29
+  8242EA08  7D6B4850             subf r11,r11,r9
+  8242EA0C  7D1F41D6             mullw r8,r31,r8
+  8242EA10  7D6BF1D6             mullw r11,r11,r30
+  8242EA14  7F0B4000             cmpw cr6,r11,r8
+  8242EA18  40990054             ble cr6,0x8242ea6c
+  8242EA1C  38C6FFFF             subi r6,r6,0x1
+  8242EA20  4800004C             b 0x8242ea6c
+LAB_8242ea24:
+  8242EA24  7F084800             cmpw cr6,r8,r9
+  8242EA28  41990044             bgt cr6,0x8242ea6c
+  8242EA2C  A3EB0000             lhz r31,0x0(r11)
+  8242EA30  A16B0002             lhz r11,0x2(r11)
+  8242EA34  A3CA0000             lhz r30,0x0(r10)
+  8242EA38  7FFF0734             extsh r31,r31
+  8242EA3C  7D6B0734             extsh r11,r11
+  8242EA40  83A70000             lwz r29,0x0(r7)
+  8242EA44  7FDE0734             extsh r30,r30
+  8242EA48  7D0B4050             subf r8,r11,r8
+  8242EA4C  7FDFF050             subf r30,r31,r30
+  8242EA50  7FFFE850             subf r31,r31,r29
+  8242EA54  7D6B4850             subf r11,r11,r9
+  8242EA58  7D1F41D6             mullw r8,r31,r8
+  8242EA5C  7D6BF1D6             mullw r11,r11,r30
+  8242EA60  7F0B4000             cmpw cr6,r11,r8
+  8242EA64  40980008             bge cr6,0x8242ea6c
+  8242EA68  38C60001             addi r6,r6,0x1
+LAB_8242ea6c:
+  8242EA6C  7F032840             cmplw cr6,r3,r5
+  8242EA70  419A0018             beq cr6,0x8242ea88
+  8242EA74  7D4B5378             or r11,r10,r10
+  8242EA78  7C8A2378             or r10,r4,r4
+  8242EA7C  38630001             addi r3,r3,0x1
+  8242EA80  38840004             addi r4,r4,0x4
+  8242EA84  4BFFFF3C             b 0x8242e9c0
+LAB_8242ea88:
+  8242EA88  7D6600D0             neg r11,r6
+  8242EA8C  7D6A3078             andc r10,r11,r6
+  8242EA90  55430FFE             rlwinm r3,r10,0x1,0x1f,0x1f
+  8242EA94  484E7C78             b 0x8291670c
+
+; 8242F040  Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>  (EffectsCore/fx_glass_api.h:80)
+  8242F040  7D8802A6             mfspr r12,LR
+  8242F044  484E7655             bl 0x82916698
+  8242F048  9421FF40             stwu r1,-0xc0(r1)
+  8242F04C  82830010             lwz r20,0x10(r3)
+  8242F050  7C7C1B78             or r28,r3,r3
+  8242F054  7C9A2378             or r26,r4,r4
+  8242F058  7CB92B78             or r25,r5,r5
+  8242F05C  3B000000             li r24,0x0
+  8242F060  2B140000             cmplwi cr6,r20,0x0
+  8242F064  419A0094             beq cr6,0x8242f0f8
+  8242F068  3D208299             lis r9,-0x7d67
+  8242F06C  3D408200             lis r10,-0x7e00
+  8242F070  3D608206             lis r11,-0x7dfa
+  8242F074  3AA00000             li r21,0x0
+  8242F078  3B692400             addi r27,r9,0x2400
+  8242F07C  3AEA3018             addi r23,r10,0x3018
+  8242F080  3ACBCBD0             subi r22,r11,0x3430
+LAB_8242f084:
+  8242F084  817C0044             lwz r11,0x44(r28)
+  8242F088  7FF5582E             lwzx r31,r21,r11
+  8242F08C  2B1F0000             cmplwi cr6,r31,0x0
+  8242F090  419A0058             beq cr6,0x8242f0e8
+  8242F094  571D2834             rlwinm r29,r24,0x5,0x0,0x1a
+LAB_8242f098:
+  8242F098  7FFE0034             cntlzw r30,r31
+  8242F09C  2B1E0021             cmplwi cr6,r30,0x21
+  8242F0A0  41980020             blt cr6,0x8242f0c0
+  8242F0A4  7EC6B378             or r6,r22,r22
+  8242F0A8  7EE3BB78             or r3,r23,r23
+  8242F0AC  39000021             li r8,0x21
+  8242F0B0  7FC7F378             or r7,r30,r30
+  8242F0B4  38A00000             li r5,0x0
+  8242F0B8  38800475             li r4,0x475
+  8242F0BC  481A5445             bl 0x825d4500
+LAB_8242f0c0:
+  8242F0C0  57CB103A             rlwinm r11,r30,0x2,0x0,0x1d
+  8242F0C4  7F2903A6             mtspr CTR,r25
+  8242F0C8  7FA5F378             or r5,r29,r30
+  8242F0CC  7F44D378             or r4,r26,r26
+  8242F0D0  7F83E378             or r3,r28,r28
+  8242F0D4  7D4BD82E             lwzx r10,r11,r27
+  8242F0D8  7FFF5078             andc r31,r31,r10
+  8242F0DC  4E800421             bctrl
+  8242F0E0  2B1F0000             cmplwi cr6,r31,0x0
+  8242F0E4  409AFFB4             bne cr6,0x8242f098
+LAB_8242f0e8:
+  8242F0E8  3B180001             addi r24,r24,0x1
+  8242F0EC  3AB50004             addi r21,r21,0x4
+  8242F0F0  7F18A040             cmplw cr6,r24,r20
+  8242F0F4  4198FF90             blt cr6,0x8242f084
+LAB_8242f0f8:
+  8242F0F8  382100C0             addi r1,r1,0xc0
+  8242F0FC  484E75EC             b 0x829166e8
 
 ; 8242EA98  Glass_DoesPieceContainPoint  (EffectsCore/fx_glass_trace.cpp:85)
   8242EA98  7D8802A6             mfspr r12,LR
@@ -285,6 +404,108 @@ LAB_8242ee9c:
 ; 8242EEB0  Glass_TraceLine  (EffectsCore/fx_glass_trace.cpp:195)
   8242EEB0  7D8802A6             mfspr r12,LR
   8242EEB4  484E7801             bl 0x829166b4
+  8242EEB8  9421FE60             stwu r1,-0x1a0(r1)
+  8242EEBC  7C7D1B78             or r29,r3,r3
+  8242EEC0  38600000             li r3,0x0
+  8242EEC4  7C9F2378             or r31,r4,r4
+  8242EEC8  7CBE2B78             or r30,r5,r5
+  8242EECC  7CDB3378             or r27,r6,r6
+  8242EED0  4835B1B1             bl 0x8278a080
+  8242EED4  2F030000             cmpwi cr6,r3,0x0
+  8242EED8  419A0028             beq cr6,0x8242ef00
+  8242EEDC  3D608201             lis r11,-0x7dff
+  8242EEE0  3D408200             lis r10,-0x7e00
+  8242EEE4  3D208206             lis r9,-0x7dfa
+  8242EEE8  38EB7618             addi r7,r11,0x7618
+  8242EEEC  38CA0F98             addi r6,r10,0xf98
+  8242EEF0  38694F40             addi r3,r9,0x4f40
+  8242EEF4  38A00000             li r5,0x0
+  8242EEF8  388000CB             li r4,0xcb
+  8242EEFC  481A5605             bl 0x825d4500
+LAB_8242ef00:
+  8242EF00  3D608333             lis r11,-0x7ccd
+  8242EF04  816BCC14             lwz r11,-0x33ec(r11)
+  8242EF08  894B000C             lbz r10,0xc(r11)
+  8242EF0C  2B0A0000             cmplwi cr6,r10,0x0
+  8242EF10  419A0124             beq cr6,0x8242f034
+  8242EF14  C1BF0004             lfs f13,0x4(r31)
+  8242EF18  3D608200             lis r11,-0x7e00
+  8242EF1C  C19E0004             lfs f12,0x4(r30)
+  8242EF20  3B800000             li r28,0x0
+  8242EF24  ED6C6828             fsubs f11,f12,f13
+  8242EF28  C15F0008             lfs f10,0x8(r31)
+  8242EF2C  C13E0008             lfs f9,0x8(r30)
+  8242EF30  9381007C             stw r28,0x7c(r1)
+  8242EF34  ED095028             fsubs f8,f9,f10
+  8242EF38  C0FF0000             lfs f7,0x0(r31)
+  8242EF3C  C0DE0000             lfs f6,0x0(r30)
+  8242EF40  3D408243             lis r10,-0x7dbd
+  8242EF44  ECA63828             fsubs f5,f6,f7
+  8242EF48  D1A10064             stfs f13,0x64(r1)
+  8242EF4C  C00B0F10             lfs f0,0xf10(r11)
+  8242EF50  38810060             addi r4,r1,0x60
+  8242EF54  D1410068             stfs f10,0x68(r1)
+  8242EF58  38AAEC20             subi r5,r10,0x13e0
+  8242EF5C  D0E10060             stfs f7,0x60(r1)
+  8242EF60  7FA3EB78             or r3,r29,r29
+  8242EF64  EC8B02F2             fmuls f4,f11,f11
+  8242EF68  EC68223A             fmadds f3,f8,f8,f4
+  8242EF6C  EC45197A             fmadds f2,f5,f5,f3
+  8242EF70  EC20102C             fsqrts f1,f2
+  8242EF74  D0210078             stfs f1,0x78(r1)
+  8242EF78  FDA00850             fneg f13,f1
+  8242EF7C  FD8D082E             fsel f12,f13,f0,f1
+  8242EF80  ED406024             fdivs f10,f0,f12
+  8242EF84  ED2A0172             fmuls f9,f10,f5
+  8242EF88  D121006C             stfs f9,0x6c(r1)
+  8242EF8C  ECEB02B2             fmuls f7,f11,f10
+  8242EF90  D0E10070             stfs f7,0x70(r1)
+  8242EF94  ECC802B2             fmuls f6,f8,f10
+  8242EF98  D0C10074             stfs f6,0x74(r1)
+  8242EF9C  480000A5             bl 0x8242f040
+  8242EFA0  8121007C             lwz r9,0x7c(r1)
+  8242EFA4  2B090000             cmplwi cr6,r9,0x0
+  8242EFA8  419A0084             beq cr6,0x8242f02c
+  8242EFAC  3BC10084             addi r30,r1,0x84
+LAB_8242efb0:
+  8242EFB0  809E0000             lwz r4,0x0(r30)
+  8242EFB4  817D0038             lwz r11,0x38(r29)
+  8242EFB8  548A2834             rlwinm r10,r4,0x5,0x0,0x1a
+  8242EFBC  7D6A5A14             add r11,r10,r11
+  8242EFC0  A16B001A             lhz r11,0x1a(r11)
+  8242EFC4  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  8242EFC8  2B0A0000             cmplwi cr6,r10,0x0
+  8242EFCC  419A004C             beq cr6,0x8242f018
+  8242EFD0  C01E0004             lfs f0,0x4(r30)
+  8242EFD4  7F67DB78             or r7,r27,r27
+  8242EFD8  C1BF0000             lfs f13,0x0(r31)
+  8242EFDC  38C1006C             addi r6,r1,0x6c
+  8242EFE0  C19F0004             lfs f12,0x4(r31)
+  8242EFE4  38A10050             addi r5,r1,0x50
+  8242EFE8  C161006C             lfs f11,0x6c(r1)
+  8242EFEC  7FA3EB78             or r3,r29,r29
+  8242EFF0  C15F0008             lfs f10,0x8(r31)
+  8242EFF4  ED206AFA             fmadds f9,f0,f11,f13
+  8242EFF8  C1010070             lfs f8,0x70(r1)
+  8242EFFC  C0E10074             lfs f7,0x74(r1)
+  8242F000  ECC8603A             fmadds f6,f8,f0,f12
+  8242F004  ECA7503A             fmadds f5,f7,f0,f10
+  8242F008  D1210050             stfs f9,0x50(r1)
+  8242F00C  D0C10054             stfs f6,0x54(r1)
+  8242F010  D0A10058             stfs f5,0x58(r1)
+  8242F014  4BFF7565             bl 0x82426578
+LAB_8242f018:
+  8242F018  8161007C             lwz r11,0x7c(r1)
+  8242F01C  3B9C0001             addi r28,r28,0x1
+  8242F020  3BDE0030             addi r30,r30,0x30
+  8242F024  7F1C5840             cmplw cr6,r28,r11
+  8242F028  4198FF88             blt cr6,0x8242efb0
+LAB_8242f02c:
+  8242F02C  7FA3EB78             or r3,r29,r29
+  8242F030  4BFEF3A1             bl 0x8241e3d0
+LAB_8242f034:
+  8242F034  382101A0             addi r1,r1,0x1a0
+  8242F038  484E76CC             b 0x82916704
 
 ; 8242F100  std::_Push_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   8242F100  7D8802A6             mfspr r12,LR
@@ -524,6 +745,41 @@ LAB_8242f458:
 ; 8242FAA8  std::_Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   8242FAA8  7D8802A6             mfspr r12,LR
   8242FAAC  484E6C09             bl 0x829166b4
+  8242FAB0  9421FF50             stwu r1,-0xb0(r1)
+  8242FAB4  3B800030             li r28,0x30
+  8242FAB8  7FA32050             subf r29,r3,r4
+  8242FABC  7C7E1B78             or r30,r3,r3
+  8242FAC0  7D7DE3D6             divw r11,r29,r28
+  8242FAC4  7CBB2B78             or r27,r5,r5
+  8242FAC8  2F0B0001             cmpwi cr6,r11,0x1
+  8242FACC  40990060             ble cr6,0x8242fb2c
+  8242FAD0  3BE4FFD0             subi r31,r4,0x30
+LAB_8242fad4:
+  8242FAD4  38610050             addi r3,r1,0x50
+  8242FAD8  38A00030             li r5,0x30
+  8242FADC  7FE4FB78             or r4,r31,r31
+  8242FAE0  484E6E81             bl 0x82916960
+  8242FAE4  38A00030             li r5,0x30
+  8242FAE8  7FC4F378             or r4,r30,r30
+  8242FAEC  7FE3FB78             or r3,r31,r31
+  8242FAF0  484E6E71             bl 0x82916960
+  8242FAF4  397DFFD0             subi r11,r29,0x30
+  8242FAF8  7F67DB78             or r7,r27,r27
+  8242FAFC  38C10050             addi r6,r1,0x50
+  8242FB00  7CABE3D6             divw r5,r11,r28
+  8242FB04  38800000             li r4,0x0
+  8242FB08  7FC3F378             or r3,r30,r30
+  8242FB0C  4BFFF6AD             bl 0x8242f1b8
+  8242FB10  3BFFFFD0             subi r31,r31,0x30
+  8242FB14  7D7EF850             subf r11,r30,r31
+  8242FB18  396B0030             addi r11,r11,0x30
+  8242FB1C  7D4BE3D6             divw r10,r11,r28
+  8242FB20  7D7D5B78             or r29,r11,r11
+  8242FB24  2F0A0001             cmpwi cr6,r10,0x1
+  8242FB28  4199FFAC             bgt cr6,0x8242fad4
+LAB_8242fb2c:
+  8242FB2C  382100B0             addi r1,r1,0xb0
+  8242FB30  484E6BD4             b 0x82916704
 
 ; 8242F628  std::_Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&),FxGlassTraceHit>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   8242F628  7D8802A6             mfspr r12,LR
@@ -605,10 +861,123 @@ LAB_8242f72c:
 ; 8242F460  std::_Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   8242F460  7D8802A6             mfspr r12,LR
   8242F464  484E7255             bl 0x829166b8
+  8242F468  9421FF50             stwu r1,-0xb0(r1)
+  8242F46C  7C9F2378             or r31,r4,r4
+  8242F470  7CC903A6             mtspr CTR,r6
+  8242F474  7C7E1B78             or r30,r3,r3
+  8242F478  7C641B78             or r4,r3,r3
+  8242F47C  7FE3FB78             or r3,r31,r31
+  8242F480  7CBC2B78             or r28,r5,r5
+  8242F484  7CDD3378             or r29,r6,r6
+  8242F488  4E800421             bctrl
+  8242F48C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8242F490  2B0B0000             cmplwi cr6,r11,0x0
+  8242F494  419A0034             beq cr6,0x8242f4c8
+  8242F498  38610050             addi r3,r1,0x50
+  8242F49C  38A00030             li r5,0x30
+  8242F4A0  7FE4FB78             or r4,r31,r31
+  8242F4A4  484E74BD             bl 0x82916960
+  8242F4A8  38A00030             li r5,0x30
+  8242F4AC  7FC4F378             or r4,r30,r30
+  8242F4B0  7FE3FB78             or r3,r31,r31
+  8242F4B4  484E74AD             bl 0x82916960
+  8242F4B8  38810050             addi r4,r1,0x50
+  8242F4BC  38A00030             li r5,0x30
+  8242F4C0  7FC3F378             or r3,r30,r30
+  8242F4C4  484E749D             bl 0x82916960
+LAB_8242f4c8:
+  8242F4C8  7FE4FB78             or r4,r31,r31
+  8242F4CC  7FA903A6             mtspr CTR,r29
+  8242F4D0  7F83E378             or r3,r28,r28
+  8242F4D4  4E800421             bctrl
+  8242F4D8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8242F4DC  2B0B0000             cmplwi cr6,r11,0x0
+  8242F4E0  419A0034             beq cr6,0x8242f514
+  8242F4E4  38610050             addi r3,r1,0x50
+  8242F4E8  38A00030             li r5,0x30
+  8242F4EC  7F84E378             or r4,r28,r28
+  8242F4F0  484E7471             bl 0x82916960
+  8242F4F4  38A00030             li r5,0x30
+  8242F4F8  7FE4FB78             or r4,r31,r31
+  8242F4FC  7F83E378             or r3,r28,r28
+  8242F500  484E7461             bl 0x82916960
+  8242F504  38810050             addi r4,r1,0x50
+  8242F508  38A00030             li r5,0x30
+  8242F50C  7FE3FB78             or r3,r31,r31
+  8242F510  484E7451             bl 0x82916960
+LAB_8242f514:
+  8242F514  7FC4F378             or r4,r30,r30
+  8242F518  7FA903A6             mtspr CTR,r29
+  8242F51C  7FE3FB78             or r3,r31,r31
+  8242F520  4E800421             bctrl
+  8242F524  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8242F528  2B0B0000             cmplwi cr6,r11,0x0
+  8242F52C  419A0034             beq cr6,0x8242f560
+  8242F530  38610050             addi r3,r1,0x50
+  8242F534  38A00030             li r5,0x30
+  8242F538  7FE4FB78             or r4,r31,r31
+  8242F53C  484E7425             bl 0x82916960
+  8242F540  38A00030             li r5,0x30
+  8242F544  7FC4F378             or r4,r30,r30
+  8242F548  7FE3FB78             or r3,r31,r31
+  8242F54C  484E7415             bl 0x82916960
+  8242F550  38810050             addi r4,r1,0x50
+  8242F554  38A00030             li r5,0x30
+  8242F558  7FC3F378             or r3,r30,r30
+  8242F55C  484E7405             bl 0x82916960
+LAB_8242f560:
+  8242F560  382100B0             addi r1,r1,0xb0
+  8242F564  484E71A4             b 0x82916708
 
 ; 8242F568  std::_Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   8242F568  7D8802A6             mfspr r12,LR
   8242F56C  484E7145             bl 0x829166b0
+  8242F570  9421FF70             stwu r1,-0x90(r1)
+  8242F574  7D632850             subf r11,r3,r5
+  8242F578  39400030             li r10,0x30
+  8242F57C  7C9E2378             or r30,r4,r4
+  8242F580  7D6B53D6             divw r11,r11,r10
+  8242F584  7CBC2B78             or r28,r5,r5
+  8242F588  7CDD3378             or r29,r6,r6
+  8242F58C  2F0B0028             cmpwi cr6,r11,0x28
+  8242F590  40990080             ble cr6,0x8242f610
+  8242F594  396B0001             addi r11,r11,0x1
+  8242F598  7D6A1E70             srawi r10,r11,0x3
+  8242F59C  7D6A0194             addze r11,r10
+  8242F5A0  556A083C             rlwinm r10,r11,0x1,0x0,0x1e
+  8242F5A4  5569083C             rlwinm r9,r11,0x1,0x0,0x1e
+  8242F5A8  7D0B5214             add r8,r11,r10
+  8242F5AC  7CEB4A14             add r7,r11,r9
+  8242F5B0  551F2036             rlwinm r31,r8,0x4,0x0,0x1b
+  8242F5B4  54FA2834             rlwinm r26,r7,0x5,0x0,0x1a
+  8242F5B8  7F7F1A14             add r27,r31,r3
+  8242F5BC  7CBA1A14             add r5,r26,r3
+  8242F5C0  7F64DB78             or r4,r27,r27
+  8242F5C4  4BFFFE9D             bl 0x8242f460
+  8242F5C8  7FA6EB78             or r6,r29,r29
+  8242F5CC  7CBFF214             add r5,r31,r30
+  8242F5D0  7FC4F378             or r4,r30,r30
+  8242F5D4  7C7FF050             subf r3,r31,r30
+  8242F5D8  4BFFFE89             bl 0x8242f460
+  8242F5DC  7FFFE050             subf r31,r31,r28
+  8242F5E0  7FA6EB78             or r6,r29,r29
+  8242F5E4  7FE4FB78             or r4,r31,r31
+  8242F5E8  7F85E378             or r5,r28,r28
+  8242F5EC  7C7AE050             subf r3,r26,r28
+  8242F5F0  4BFFFE71             bl 0x8242f460
+  8242F5F4  7FA6EB78             or r6,r29,r29
+  8242F5F8  7FE5FB78             or r5,r31,r31
+  8242F5FC  7F63DB78             or r3,r27,r27
+  8242F600  7FC4F378             or r4,r30,r30
+  8242F604  4BFFFE5D             bl 0x8242f460
+  8242F608  38210090             addi r1,r1,0x90
+  8242F60C  484E70F4             b 0x82916700
+LAB_8242f610:
+  8242F610  7F85E378             or r5,r28,r28
+  8242F614  7FC4F378             or r4,r30,r30
+  8242F618  4BFFFE49             bl 0x8242f460
+  8242F61C  38210090             addi r1,r1,0x90
+  8242F620  484E70E0             b 0x82916700
 
 ; 8242F738  std::_Unguarded_partition<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   8242F738  7D8802A6             mfspr r12,LR

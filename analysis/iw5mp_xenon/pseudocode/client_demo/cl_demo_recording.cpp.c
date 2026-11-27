@@ -2,11 +2,36 @@
 
 // 827DDDF0  CL_Demo_WriteGameState  (client_demo/cl_demo_recording.cpp:39)
 
-void CL_Demo_WriteGameState(void)
+void CL_Demo_WriteGameState
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_26();
+  iVar3 = CL_GetLocalClientConnection();
+  iVar4 = CL_GetLocalClientGlobals(uVar1);
+  MSG_WriteLong(param_2,*(undefined4 *)(iVar3 + 0x130));
+  MSG_WriteByte(param_2,0);
+  MSG_WriteLong(param_2,*(undefined4 *)(iVar3 + 0x2013c));
+  MSG_WriteString(param_2,param_3);
+  MSG_WriteLong(param_2,*(undefined4 *)(iVar4 + 0x350c));
+  MSG_WriteString(param_2,param_4);
+  uVar2 = CCS_GetChecksum();
+  MSG_WriteLong(param_2,uVar2);
+  CL_Demo_WriteConfigStrings(uVar1,param_2,0);
+  MSG_WriteByte(param_2,6);
+  MSG_WriteLong(param_2,*(undefined4 *)(iVar3 + 4));
+  MSG_WriteLong(param_2,*(undefined4 *)(iVar3 + 300));
+  MSG_WriteByte(param_2,6);
+  if (*(int *)((int)param_2 + 0x14) < 4) {
+    MyAssertHandler(0xffffffff821de698,0x51,0,0xffffffff82000f98,0xffffffff821de6e4);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -96,7 +121,6 @@ void CL_Demo_StartRecord(void)
              *(ulonglong *)(piVar7 + 2) < (ulonglong)(lVar17 * ((int)lVar14 + 1)))) {
             iVar9 = piVar7[4];
             if ((iVar9 < 0) || (0x32 < iVar9)) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821de698,0xb7,0,0xffffffff821de8c0,iVar9,0,0x32);
             }
             if (piVar7[4] < 1) {
@@ -119,7 +143,6 @@ void CL_Demo_StartRecord(void)
           lVar17 = CL_Demo_GetMaximumFinalDemoSize(lVar17);
           if ((ulonglong)(lVar17 * (int)(lVar14 + 1)) < uVar15) {
             if (*piVar8 < 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821de698,0xcc,0,0xffffffff82000f98,0xffffffff821de7a4);
             }
             if (*piVar8 < 0) {
@@ -222,43 +245,155 @@ undefined1 CL_Demo_IsWaitingForUncompressedSnapshot(void)
 }
 
 
-// 827DE560  CL_Demo_WriteRawMessage  (client_demo/cl_demo_recording.cpp:339)
+// 827DE500  CL_Demo_ReceivedUncompressedSnapshot  (client_demo/cl_demo_recording.cpp:316)
 
-void CL_Demo_WriteRawMessage(void)
+void CL_Demo_ReceivedUncompressedSnapshot(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = CL_GetLocalClientConnection();
+  if ((iVar1 != 0) && (*(char *)(iVar1 + 0x54224) != '\0')) {
+    *(char *)(iVar1 + 0x54224) = '\0';
+    *(undefined4 *)(iVar1 + 0x4327c) = param_2;
+  }
+  return;
+}
+
+
+// 827DE560  CL_Demo_WriteRawMessage  (client_demo/cl_demo_recording.cpp:339)
+
+void CL_Demo_WriteRawMessage
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               int param_5)
+
+{
+  code *pcVar1;
+  undefined4 in_stack_00000024;
+  int in_stack_00000034;
+  undefined1 local_30 [48];
+  
+  pcVar1 = (code *)__savegprlr_29();
+  local_30[0] = 2;
+  in_stack_00000024 = param_3;
+  in_stack_00000034 = param_5;
+  (*pcVar1)(local_30,1,param_2);
+  (*pcVar1)(&stack0x00000024,4,param_2);
+  if (in_stack_00000034 < 0) {
+    MyAssertHandler(0xffffffff821de698,0x15d,0,0xffffffff82000f98,0xffffffff821de57c);
+  }
+  (*pcVar1)(&stack0x00000034,4,param_2);
+  (*pcVar1)(param_4,in_stack_00000034,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 827DE610  CL_Demo_WriteClientArchive  (client_demo/cl_demo_recording.cpp:362)
 
-void CL_Demo_WriteClientArchive(void)
+void CL_Demo_WriteClientArchive
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  code *pcVar1;
+  undefined4 in_stack_00000024;
+  undefined1 local_30 [48];
+  
+  pcVar1 = (code *)__savegprlr_29();
+  local_30[0] = 1;
+  in_stack_00000024 = param_3;
+  (*pcVar1)(local_30,1,param_2);
+  (*pcVar1)(&stack0x00000024,4,param_2);
+  (*pcVar1)(param_4 + 4,0xc,param_2);
+  (*pcVar1)(param_4 + 0x10,0xc,param_2);
+  (*pcVar1)(param_4 + 0x20,4,param_2);
+  (*pcVar1)(param_4 + 0x1c,4,param_2);
+  (*pcVar1)(param_4,4,param_2);
+  (*pcVar1)(param_4 + 0x24,0xc,param_2);
+  (*pcVar1)(param_4 + 0x30,4,param_2);
+  if (*(int *)((int)param_4 + 0x30) != 0) {
+    (*pcVar1)(param_4 + 0x34,8,param_2);
+    (*pcVar1)(param_4 + 0x3c,4,param_2);
+  }
+  (*pcVar1)(param_4 + 0x40,0x48,param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 827DE738  CL_Demo_WriteClientArchive  (client_demo/cl_demo_recording.cpp:398)
 
-void CL_Demo_WriteClientArchive(void)
+void CL_Demo_WriteClientArchive
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,longlong param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  code *pcVar1;
+  undefined8 *puVar2;
+  longlong lVar3;
+  double extraout_f1;
+  undefined4 in_stack_00000024;
+  float in_stack_0000003c;
+  undefined1 local_80 [8];
+  undefined8 uStack_78;
+  undefined1 local_70 [112];
+  
+  pcVar1 = (code *)__savegprlr_28();
+  in_stack_0000003c = (float)extraout_f1;
+  local_80[0] = 1;
+  in_stack_00000024 = param_3;
+  (*pcVar1)(local_80,1,param_2);
+  (*pcVar1)(&stack0x00000024,4,param_2);
+  (*pcVar1)(param_4 + 0x1c,0xc,param_2);
+  (*pcVar1)(param_4 + 0x28,0xc,param_2);
+  (*pcVar1)(param_4 + 0xf4,4,param_2);
+  (*pcVar1)(param_4 + 0x18,4,param_2);
+  (*pcVar1)(param_4,4,param_2);
+  (*pcVar1)(param_4 + 0x158,0xc,param_2);
+  (*pcVar1)(param_4 + 0x208,4,param_2);
+  if (*(int *)((int)param_4 + 0x208) != 0) {
+    (*pcVar1)(param_5,4,param_2);
+    (*pcVar1)(&stack0x0000003c,4,param_2);
+  }
+  puVar2 = &uStack_78;
+  lVar3 = 9;
+  do {
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  (*pcVar1)(local_70,0x48,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 827DE880  CL_Demo_WriteAllClientArchives  (client_demo/cl_demo_recording.cpp:438)
 
-void CL_Demo_WriteAllClientArchives(void)
+void CL_Demo_WriteAllClientArchives(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CL_GetLocalClientConnection(param_2);
+  iVar3 = CL_GetLocalClientGlobals(param_2);
+  iVar5 = *(int *)(iVar2 + 0x44200);
+  if (iVar5 != *(int *)(iVar3 + 0xd3fc)) {
+    do {
+      CL_Demo_WriteClientArchive(uVar1,param_2,iVar5,iVar5 * 0x88 + iVar3 + 0x4bfc);
+      uVar4 = iVar5 + 1;
+      iVar5 = uVar4 + (((int)uVar4 >> 8) + (uint)((int)uVar4 < 0 && (uVar4 & 0xff) != 0) & 0xffffff)
+                      * -0x100;
+    } while (iVar5 != *(int *)(iVar3 + 0xd3fc));
+  }
+  *(int *)(iVar2 + 0x44200) = iVar5;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -267,28 +402,121 @@ void CL_Demo_WriteAllClientArchives(void)
 void CL_Demo_UpdateRuntimeFooterInformation(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CL_GetLocalClientConnection();
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  iVar4 = CL_IsCgameInitialized(uVar1);
+  if (iVar4 != 0) {
+    *(undefined4 *)(iVar2 + 0x434a8) = *(undefined4 *)(iVar3 + 0x76ab8);
+    *(undefined4 *)(iVar2 + 0x434ac) = *(undefined4 *)(iVar3 + 0x76abc);
+    *(undefined4 *)(iVar2 + 0x434b0) = *(undefined4 *)(iVar3 + 0x76ac0);
+    *(undefined4 *)(iVar2 + 0x434b4) = *(undefined4 *)(iVar3 + 0x76ac4);
+    iVar3 = *(int *)(iVar3 + 0x3334) * 0x590 + iVar3;
+    if (*(int *)(iVar3 + 0x100b88) != 0) {
+      iVar3 = *(int *)(iVar3 + 0x100bb4);
+      if ((*(int *)(iVar2 + 0x434a4) != iVar3) && (iVar3 != 3)) {
+        *(int *)(iVar2 + 0x434a4) = iVar3;
+      }
+      iVar3 = UI_GetOurClientScore(uVar1);
+      if (iVar3 != 0) {
+        *(undefined4 *)(iVar2 + 0x434c0) = *(undefined4 *)(iVar3 + 4);
+        *(undefined4 *)(iVar2 + 0x434b8) = *(undefined4 *)(iVar3 + 0x14);
+        *(undefined4 *)(iVar2 + 0x434bc) = *(undefined4 *)(iVar3 + 0xc);
+      }
+      iVar3 = UI_GetScoreAtRank(uVar1,1);
+      if (iVar3 != 0) {
+        *(undefined4 *)(iVar2 + 0x434c4) = *(undefined4 *)(iVar3 + 4);
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 827DEA38  CL_Demo_PlayerConnected  (client_demo/cl_demo_recording.cpp:510)
 
-void CL_Demo_PlayerConnected(void)
+void CL_Demo_PlayerConnected(undefined8 param_1,uint param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  int *piVar7;
+  
+  uVar2 = __savegprlr_28();
+  iVar3 = CL_GetLocalClientConnection();
+  iVar4 = CL_GetLocalClientGlobals(uVar2);
+  piVar7 = (int *)(iVar3 + 0x43890);
+  iVar1 = *piVar7;
+  if (iVar1 < 0x28) {
+    iVar5 = 0;
+    if (0 < iVar1) {
+      piVar6 = (int *)(iVar3 + 0x434e4);
+      do {
+        if (((*(longlong *)(piVar6 + -3) == param_3) && (*piVar6 < 1)) &&
+           (*(byte *)((int)piVar6 + -0x13) == param_2)) goto LAB_827deb48;
+        iVar5 = iVar5 + 1;
+        piVar6 = piVar6 + 6;
+      } while (iVar5 < *piVar7);
+    }
+    iVar5 = iVar1 * 0x18 + iVar3;
+    *(char *)((iVar1 + 0x2cde) * 0x18 + iVar3) = (char)iVar1;
+    *(char *)(iVar5 + 0x434d1) = (char)param_2;
+    *(undefined4 *)(iVar5 + 0x434e0) = *(undefined4 *)(iVar4 + 0x3404);
+    *(longlong *)(iVar5 + 0x434d8) = param_3;
+    if ((param_2 & 0xff) != param_2) {
+      MyAssertHandler(0xffffffff821de698,0x21b,0,0xffffffff82000f98,0xffffffff821de9e0);
+    }
+    *piVar7 = *piVar7 + 1;
+  }
+LAB_827deb48:
+  __restgprlr_28();
+  return;
 }
 
 
 // 827DEB50  CL_Demo_PlayerDisconnected  (client_demo/cl_demo_recording.cpp:554)
 
-void CL_Demo_PlayerDisconnected(void)
+void CL_Demo_PlayerDisconnected(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  byte *pbVar5;
+  uint uVar6;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CL_GetLocalClientConnection();
+  iVar3 = CL_GetLocalClientGlobals(uVar1);
+  uVar6 = 0xffffffff;
+  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x43890);
+  if (0 < (int)*(uint *)(iVar2 + 0x43890)) {
+    pbVar5 = (byte *)(iVar2 + 0x434d0);
+    do {
+      if (pbVar5[1] == param_2) {
+        uVar6 = (uint)*pbVar5;
+      }
+      pbVar5 = pbVar5 + 0x18;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
+    if (uVar6 != 0xffffffff) goto LAB_827debe0;
+  }
+  MyAssertHandler(0xffffffff821de698,0x23c,0,0xffffffff82000f98,0xffffffff821dea28);
+LAB_827debe0:
+  *(undefined4 *)(uVar6 * 0x18 + iVar2 + 0x434e4) = *(undefined4 *)(iVar3 + 0x3404);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -378,10 +606,29 @@ LAB_827dec5c:
 
 // 827DED68  CL_Demo_AddBookmark  (client_demo/cl_demo_recording.cpp:654)
 
-void CL_Demo_AddBookmark(void)
+void CL_Demo_AddBookmark(undefined8 param_1,undefined4 param_2,uint param_3,uint param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  
   __savegprlr_28();
+  iVar3 = CL_GetLocalClientConnection();
+  piVar4 = (int *)(iVar3 + 0x441f8);
+  iVar1 = *piVar4;
+  if (iVar1 < 300) {
+    iVar2 = iVar1 * 8 + iVar3;
+    *(char *)((iVar1 + 0x8713) * 8 + iVar3) = (char)param_3;
+    *(undefined4 *)(iVar2 + 0x4389c) = param_2;
+    *(char *)(iVar2 + 0x43899) = (char)param_4;
+    if (((param_3 & 0xff) != param_3) || ((param_4 & 0xff) != param_4)) {
+      MyAssertHandler(0xffffffff821de698,0x29c,0,0xffffffff82000f98,0xffffffff821dea40);
+    }
+    *piVar4 = *piVar4 + 1;
+  }
+  __restgprlr_28();
+  return;
 }
 

@@ -3,15 +3,271 @@
 ; 828F72B8  bdBytePacker::appendBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:20)
   828F72B8  7D8802A6             mfspr r12,LR
   828F72BC  4801F3E9             bl 0x829166a4
+  828F72C0  9421FF60             stwu r1,-0xa0(r1)
+  828F72C4  7D654214             add r11,r5,r8
+  828F72C8  7C781B78             or r24,r3,r3
+  828F72CC  7C9F2378             or r31,r4,r4
+  828F72D0  91660000             stw r11,0x0(r6)
+  828F72D4  7CBC2B78             or r28,r5,r5
+  828F72D8  7CDD3378             or r29,r6,r6
+  828F72DC  7CF73B78             or r23,r7,r7
+  828F72E0  7D194378             or r25,r8,r8
+  828F72E4  3BC00001             li r30,0x1
+  828F72E8  2B030000             cmplwi cr6,r3,0x0
+  828F72EC  419A00C8             beq cr6,0x828f73b4
+  828F72F0  2B070000             cmplwi cr6,r7,0x0
+  828F72F4  419A00C0             beq cr6,0x828f73b4
+  828F72F8  3BC0FFFF             li r30,-0x1
+  828F72FC  7D652010             subfc r11,r5,r4
+  828F7300  3D408221             lis r10,-0x7ddf
+  828F7304  7D7E0190             subfze r11,r30
+  828F7308  3B4AADC8             subi r26,r10,0x5238
+  828F730C  557B063F             rlwinm. r27,r11,0x0,0x18,0x1f
+  828F7310  4082002C             bne 0x828f733c
+  828F7314  3D608221             lis r11,-0x7ddf
+  828F7318  3D408221             lis r10,-0x7ddf
+  828F731C  3D208200             lis r9,-0x7e00
+  828F7320  390BAD94             subi r8,r11,0x526c
+  828F7324  38EAAD88             subi r7,r10,0x5278
+  828F7328  38C911F4             addi r6,r9,0x11f4
+  828F732C  7F43D378             or r3,r26,r26
+  828F7330  38A00000             li r5,0x0
+  828F7334  3880001E             li r4,0x1e
+  828F7338  4BCDD1C9             bl 0x825d4500
+LAB_828f733c:
+  828F733C  817D0000             lwz r11,0x0(r29)
+  828F7340  7D6BF810             subfc r11,r11,r31
+  828F7344  7D7E0190             subfze r11,r30
+  828F7348  557F063F             rlwinm. r31,r11,0x0,0x18,0x1f
+  828F734C  40820038             bne 0x828f7384
+  828F7350  3D408221             lis r10,-0x7ddf
+  828F7354  3D008221             lis r8,-0x7ddf
+  828F7358  3D608221             lis r11,-0x7ddf
+  828F735C  3C808221             lis r4,-0x7ddf
+  828F7360  38EAAD6C             subi r7,r10,0x5294
+  828F7364  38A8AD60             subi r5,r8,0x52a0
+  828F7368  392BAD38             subi r9,r11,0x52c8
+  828F736C  7F46D378             or r6,r26,r26
+  828F7370  3884A424             subi r4,r4,0x5bdc
+  828F7374  7F2ACB78             or r10,r25,r25
+  828F7378  39000024             li r8,0x24
+  828F737C  38600001             li r3,0x1
+  828F7380  4BFFD791             bl 0x828f4b10
+LAB_828f7384:
+  828F7384  2B1B0000             cmplwi cr6,r27,0x0
+  828F7388  419A0010             beq cr6,0x828f7398
+  828F738C  2B1F0000             cmplwi cr6,r31,0x0
+  828F7390  39600001             li r11,0x1
+  828F7394  409A0008             bne cr6,0x828f739c
+LAB_828f7398:
+  828F7398  39600000             li r11,0x0
+LAB_828f739c:
+  828F739C  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  828F73A0  41820014             beq 0x828f73b4
+  828F73A4  7F25CB78             or r5,r25,r25
+  828F73A8  7EE4BB78             or r4,r23,r23
+  828F73AC  7C78E214             add r3,r24,r28
+  828F73B0  4801F4F1             bl 0x829168a0
+LAB_828f73b4:
+  828F73B4  7FC3F378             or r3,r30,r30
+  828F73B8  382100A0             addi r1,r1,0xa0
+  828F73BC  4801F338             b 0x829166f4
 
 ; 828F74C8  bdBytePacker::appendEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:55)
   828F74C8  7D8802A6             mfspr r12,LR
   828F74CC  4801F1E9             bl 0x829166b4
+  828F74D0  9421FF70             stwu r1,-0x90(r1)
+  828F74D4  54EB043E             rlwinm r11,r7,0x0,0x10,0x1f
+  828F74D8  7C7D1B78             or r29,r3,r3
+  828F74DC  7C9C2378             or r28,r4,r4
+  828F74E0  7CBB2B78             or r27,r5,r5
+  828F74E4  7CDE3378             or r30,r6,r6
+  828F74E8  7CFF3B78             or r31,r7,r7
+  828F74EC  2B0B007F             cmplwi cr6,r11,0x7f
+  828F74F0  409900B0             ble cr6,0x828f75a0
+  828F74F4  2B0B8000             cmplwi cr6,r11,0x8000
+  828F74F8  41980030             blt cr6,0x828f7528
+  828F74FC  3CA08221             lis r5,-0x7ddf
+  828F7500  3D608221             lis r11,-0x7ddf
+  828F7504  3D408221             lis r10,-0x7ddf
+  828F7508  3D208200             lis r9,-0x7e00
+  828F750C  3865ADC8             subi r3,r5,0x5238
+  828F7510  390BAEA0             subi r8,r11,0x5160
+  828F7514  38EAAE90             subi r7,r10,0x5170
+  828F7518  38C911F4             addi r6,r9,0x11f4
+  828F751C  38A00000             li r5,0x0
+  828F7520  3880003A             li r4,0x3a
+  828F7524  4BCDCFDD             bl 0x825d4500
+LAB_828f7528:
+  828F7528  57EBC63E             rlwinm r11,r31,0x18,0x18,0x1f
+  828F752C  39000001             li r8,0x1
+  828F7530  616B0080             ori r11,r11,0x80
+  828F7534  38E10050             addi r7,r1,0x50
+  828F7538  99610050             stb r11,0x50(r1)
+  828F753C  7FC6F378             or r6,r30,r30
+  828F7540  7F65DB78             or r5,r27,r27
+  828F7544  7F84E378             or r4,r28,r28
+  828F7548  7FA3EB78             or r3,r29,r29
+  828F754C  57FF063E             rlwinm r31,r31,0x0,0x18,0x1f
+  828F7550  4BFFFD69             bl 0x828f72b8
+  828F7554  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828F7558  314BFFFF             subic r10,r11,0x1
+  828F755C  7D6A5910             subfe r11,r10,r11
+  828F7560  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828F7564  41820030             beq 0x828f7594
+  828F7568  9BE10051             stb r31,0x51(r1)
+  828F756C  39000001             li r8,0x1
+  828F7570  38E10051             addi r7,r1,0x51
+  828F7574  80BE0000             lwz r5,0x0(r30)
+  828F7578  7FC6F378             or r6,r30,r30
+  828F757C  7F84E378             or r4,r28,r28
+  828F7580  7FA3EB78             or r3,r29,r29
+  828F7584  4BFFFD35             bl 0x828f72b8
+  828F7588  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F758C  39600001             li r11,0x1
+  828F7590  40820008             bne 0x828f7598
+LAB_828f7594:
+  828F7594  39600000             li r11,0x0
+LAB_828f7598:
+  828F7598  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F759C  48000024             b 0x828f75c0
+LAB_828f75a0:
+  828F75A0  9BE10052             stb r31,0x52(r1)
+  828F75A4  39000001             li r8,0x1
+  828F75A8  38E10052             addi r7,r1,0x52
+  828F75AC  7FC6F378             or r6,r30,r30
+  828F75B0  7F65DB78             or r5,r27,r27
+  828F75B4  7F84E378             or r4,r28,r28
+  828F75B8  7FA3EB78             or r3,r29,r29
+  828F75BC  4BFFFCFD             bl 0x828f72b8
+LAB_828f75c0:
+  828F75C0  38210090             addi r1,r1,0x90
+  828F75C4  4801F140             b 0x82916704
 
 ; 828F73C0  bdBytePacker::removeBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:89)
   828F73C0  7D8802A6             mfspr r12,LR
   828F73C4  4801F2E1             bl 0x829166a4
+  828F73C8  9421FF60             stwu r1,-0xa0(r1)
+  828F73CC  7D654214             add r11,r5,r8
+  828F73D0  7C771B78             or r23,r3,r3
+  828F73D4  7C9F2378             or r31,r4,r4
+  828F73D8  91660000             stw r11,0x0(r6)
+  828F73DC  7CBC2B78             or r28,r5,r5
+  828F73E0  7CDD3378             or r29,r6,r6
+  828F73E4  7CF83B78             or r24,r7,r7
+  828F73E8  7D194378             or r25,r8,r8
+  828F73EC  3BC00001             li r30,0x1
+  828F73F0  2B070000             cmplwi cr6,r7,0x0
+  828F73F4  419A00C8             beq cr6,0x828f74bc
+  828F73F8  2B030000             cmplwi cr6,r3,0x0
+  828F73FC  419A00C0             beq cr6,0x828f74bc
+  828F7400  3BC0FFFF             li r30,-0x1
+  828F7404  7D652010             subfc r11,r5,r4
+  828F7408  3D408221             lis r10,-0x7ddf
+  828F740C  7D7E0190             subfze r11,r30
+  828F7410  3B4AADC8             subi r26,r10,0x5238
+  828F7414  557B063F             rlwinm. r27,r11,0x0,0x18,0x1f
+  828F7418  4082002C             bne 0x828f7444
+  828F741C  3D608221             lis r11,-0x7ddf
+  828F7420  3D408221             lis r10,-0x7ddf
+  828F7424  3D208200             lis r9,-0x7e00
+  828F7428  390BAE60             subi r8,r11,0x51a0
+  828F742C  38EAAD88             subi r7,r10,0x5278
+  828F7430  38C911F4             addi r6,r9,0x11f4
+  828F7434  7F43D378             or r3,r26,r26
+  828F7438  38A00000             li r5,0x0
+  828F743C  38800064             li r4,0x64
+  828F7440  4BCDD0C1             bl 0x825d4500
+LAB_828f7444:
+  828F7444  817D0000             lwz r11,0x0(r29)
+  828F7448  7D6BF810             subfc r11,r11,r31
+  828F744C  7D7E0190             subfze r11,r30
+  828F7450  557F063F             rlwinm. r31,r11,0x0,0x18,0x1f
+  828F7454  40820038             bne 0x828f748c
+  828F7458  3D408221             lis r10,-0x7ddf
+  828F745C  3D008221             lis r8,-0x7ddf
+  828F7460  3D608221             lis r11,-0x7ddf
+  828F7464  3C808221             lis r4,-0x7ddf
+  828F7468  38EAAE44             subi r7,r10,0x51bc
+  828F746C  38A8AD60             subi r5,r8,0x52a0
+  828F7470  392BAE1C             subi r9,r11,0x51e4
+  828F7474  7F46D378             or r6,r26,r26
+  828F7478  3884A424             subi r4,r4,0x5bdc
+  828F747C  7F2ACB78             or r10,r25,r25
+  828F7480  3900006A             li r8,0x6a
+  828F7484  38600001             li r3,0x1
+  828F7488  4BFFD689             bl 0x828f4b10
+LAB_828f748c:
+  828F748C  2B1F0000             cmplwi cr6,r31,0x0
+  828F7490  419A0010             beq cr6,0x828f74a0
+  828F7494  2B1B0000             cmplwi cr6,r27,0x0
+  828F7498  39600001             li r11,0x1
+  828F749C  409A0008             bne cr6,0x828f74a4
+LAB_828f74a0:
+  828F74A0  39600000             li r11,0x0
+LAB_828f74a4:
+  828F74A4  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  828F74A8  41820014             beq 0x828f74bc
+  828F74AC  7F25CB78             or r5,r25,r25
+  828F74B0  7C97E214             add r4,r23,r28
+  828F74B4  7F03C378             or r3,r24,r24
+  828F74B8  4801F3E9             bl 0x829168a0
+LAB_828f74bc:
+  828F74BC  7FC3F378             or r3,r30,r30
+  828F74C0  382100A0             addi r1,r1,0xa0
+  828F74C4  4801F230             b 0x829166f4
 
 ; 828F75C8  bdBytePacker::removeEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:125)
   828F75C8  7D8802A6             mfspr r12,LR
   828F75CC  4801F0E5             bl 0x829166b0
+  828F75D0  9421FF70             stwu r1,-0x90(r1)
+  828F75D4  7CFA3B78             or r26,r7,r7
+  828F75D8  39000001             li r8,0x1
+  828F75DC  38E10050             addi r7,r1,0x50
+  828F75E0  7C7D1B78             or r29,r3,r3
+  828F75E4  7C9C2378             or r28,r4,r4
+  828F75E8  7CDE3378             or r30,r6,r6
+  828F75EC  3BE00000             li r31,0x0
+  828F75F0  4BFFFDD1             bl 0x828f73c0
+  828F75F4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F75F8  41820008             beq 0x828f7600
+  828F75FC  8BE10050             lbz r31,0x50(r1)
+LAB_828f7600:
+  828F7600  312BFFFF             subic r9,r11,0x1
+  828F7604  57EA063E             rlwinm r10,r31,0x0,0x18,0x1f
+  828F7608  7D695910             subfe r11,r9,r11
+  828F760C  2B0A0080             cmplwi cr6,r10,0x80
+  828F7610  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F7614  41980060             blt cr6,0x828f7674
+  828F7618  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F761C  555B067E             rlwinm r27,r10,0x0,0x19,0x1f
+  828F7620  3BE00000             li r31,0x0
+  828F7624  41820038             beq 0x828f765c
+  828F7628  39000001             li r8,0x1
+  828F762C  80BE0000             lwz r5,0x0(r30)
+  828F7630  38E10051             addi r7,r1,0x51
+  828F7634  7FC6F378             or r6,r30,r30
+  828F7638  7F84E378             or r4,r28,r28
+  828F763C  7FA3EB78             or r3,r29,r29
+  828F7640  4BFFFD81             bl 0x828f73c0
+  828F7644  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F7648  41820008             beq 0x828f7650
+  828F764C  8BE10051             lbz r31,0x51(r1)
+LAB_828f7650:
+  828F7650  2B0B0000             cmplwi cr6,r11,0x0
+  828F7654  39200001             li r9,0x1
+  828F7658  409A0008             bne cr6,0x828f7660
+LAB_828f765c:
+  828F765C  39200000             li r9,0x0
+LAB_828f7660:
+  828F7660  576A442E             rlwinm r10,r27,0x8,0x10,0x17
+  828F7664  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  828F7668  5523063E             rlwinm r3,r9,0x0,0x18,0x1f
+  828F766C  7D6A5A14             add r11,r10,r11
+  828F7670  48000008             b 0x828f7678
+LAB_828f7674:
+  828F7674  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+LAB_828f7678:
+  828F7678  B17A0000             sth r11,0x0(r26)
+  828F767C  38210090             addi r1,r1,0x90
+  828F7680  4801F080             b 0x82916700

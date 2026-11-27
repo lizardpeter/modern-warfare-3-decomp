@@ -12,20 +12,144 @@ void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 // 8277A210  Material_BuildCacheFileName  (gfx_d3d/r_shader_cache_utils.cpp:11)
 
-void Material_BuildCacheFileName(void)
+void Material_BuildCacheFileName
+               (undefined8 param_1,char *param_2,undefined8 param_3,undefined8 param_4,
+               longlong param_5,longlong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  char cVar1;
+  char *pcVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  char *pcVar6;
+  char *pcVar7;
+  char *pcVar8;
+  char local_150 [16];
+  char local_140 [320];
+  
+  uVar3 = __savegprlr_26();
+  uVar4 = Com_BlockChecksumKey32(param_3,param_4,0);
+  sprintf(local_140,"%s/shadercache%d/",uVar3,2);
+  param_7 = param_7 & 0xff;
+  if (param_7 != 0) {
+    _mkdir(local_140);
+  }
+  pcVar2 = local_140;
+  do {
+    pcVar7 = pcVar2;
+    pcVar2 = pcVar7 + 1;
+  } while (*pcVar7 != '\0');
+  do {
+    cVar1 = *(char *)param_5;
+    param_5 = param_5 + 1;
+    *pcVar7 = cVar1;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  pcVar7 = "/";
+  pcVar2 = local_140;
+  do {
+    pcVar8 = pcVar2;
+    pcVar6 = pcVar7;
+    pcVar2 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  do {
+    cVar1 = *pcVar6;
+    *pcVar8 = cVar1;
+    pcVar8 = pcVar8 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 != '\0');
+  if (param_7 != 0) {
+    _mkdir(local_140);
+  }
+  pcVar2 = local_140;
+  do {
+    pcVar6 = pcVar2;
+    pcVar2 = pcVar6 + 1;
+  } while (*pcVar6 != '\0');
+  do {
+    cVar1 = *(char *)param_6;
+    param_6 = param_6 + 1;
+    *pcVar6 = cVar1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 != '\0');
+  pcVar2 = local_140;
+  do {
+    pcVar8 = pcVar2;
+    pcVar6 = pcVar7;
+    pcVar2 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  do {
+    cVar1 = *pcVar6;
+    *pcVar8 = cVar1;
+    pcVar8 = pcVar8 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 != '\0');
+  if (param_7 != 0) {
+    _mkdir(local_140);
+  }
+  sprintf(local_150,"%2.2x",uVar4 & 0xff);
+  pcVar6 = local_150;
+  pcVar2 = local_140;
+  do {
+    pcVar8 = pcVar2;
+    pcVar2 = pcVar8 + 1;
+  } while (*pcVar8 != '\0');
+  do {
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
+    *pcVar8 = cVar1;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  pcVar2 = local_140;
+  do {
+    pcVar6 = pcVar2;
+    pcVar2 = pcVar6 + 1;
+  } while (*pcVar6 != '\0');
+  do {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+    *pcVar6 = cVar1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 != '\0');
+  if (param_7 != 0) {
+    _mkdir(local_140);
+  }
+  iVar5 = sprintf(param_2,"%s%8.8x",local_140,uVar4);
+  __restgprlr_26(iVar5);
+  return;
 }
 
 
 // 8277A418  Material_CacheShader  (gfx_d3d/r_shader_cache_utils.cpp:38)
 
-void Material_CacheShader(void)
+void Material_CacheShader
+               (undefined8 param_1,size_t param_2,undefined8 param_3,void *param_4,size_t param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  size_t sVar1;
+  void *_Str;
+  FILE *_File;
+  int iVar2;
+  size_t in_stack_0000001c;
+  size_t in_stack_00000034;
+  
+  sVar1 = param_2;
+  _Str = (void *)__savegprlr_28();
+  in_stack_0000001c = sVar1;
+  in_stack_00000034 = param_5;
+  _File = fopen((char *)param_3,"wb");
+  if (_File == (FILE *)0x0) {
+    iVar2 = printf("Material_CacheShader: Failed to open \'%s\'\n",param_3);
+    __restgprlr_28(iVar2);
+    return;
+  }
+  fwrite(&stack0x0000001c,4,1,_File);
+  fwrite(_Str,1,in_stack_0000001c,_File);
+  fwrite(&stack0x00000034,4,1,_File);
+  fwrite(param_4,1,in_stack_00000034,_File);
+  iVar2 = fclose(_File);
+  __restgprlr_28(iVar2);
+  return;
 }
 

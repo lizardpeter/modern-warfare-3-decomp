@@ -24,27 +24,79 @@ int LiveTracker_GetColType(undefined8 param_1)
   int local_20 [4];
   
   StringTable_GetAsset(0xffffffff821b83ac,local_20);
-  if (local_20[0] == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821b8368,0x5d,0,0xffffffff82000f98,0xffffffff820362e8);
+  if ((local_20[0] != 0) ||
+     (MyAssertHandler(0xffffffff821b8368,0x5d,0,0xffffffff82000f98,0xffffffff820362e8),
+     local_20[0] != 0)) {
+    uVar1 = va(0xffffffff82013b64,param_1);
+    _Str = (char *)StringTable_Lookup(local_20[0],0,uVar1,2);
+    if ((_Str != (char *)0x0) &&
+       (((*_Str != '\0' && (iVar2 = atoi(_Str), -1 < iVar2)) && (iVar2 < 4)))) {
+      return iVar2;
+    }
   }
-  uVar1 = va(0xffffffff82013b64,param_1);
-  _Str = (char *)StringTable_Lookup(local_20[0],0,uVar1,2);
-  if ((((_Str == (char *)0x0) || (*_Str == '\0')) || (iVar2 = atoi(_Str), iVar2 < 0)) || (3 < iVar2)
-     ) {
-    iVar2 = -1;
-  }
-  return iVar2;
+  return -1;
 }
 
 
 // 82714550  LiveTracker_SetItem  (online/live_tracker.cpp:117)
 
-void LiveTracker_SetItem(void)
+void LiveTracker_SetItem(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  int iVar5;
+  
+  uVar2 = __savegprlr_27();
+  if (0x95 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b8368,0x76,0,0xffffffff821b8474,param_2,0x96);
+  }
+  if (0x5f < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821b8368,0x77,0,0xffffffff821b8434,uVar2,0x60);
+  }
+  if ((((-1 < (int)param_2) && ((int)param_2 < 0x96)) && (-1 < (int)uVar2)) && ((int)uVar2 < 0x60))
+  {
+    lVar3 = LiveTracker_GetColType(param_2);
+    if ((lVar3 + 1U & 0xffffffff) < 5) {
+      if ((int)(lVar3 + 1U) == 0) goto LAB_827146f4;
+      iVar5 = (int)param_4;
+      if ((lVar3 == 0) || (lVar3 == 1)) {
+        iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+        *(int *)((int)&DAT_84584f50 + iVar1) = iVar5;
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 1;
+      }
+      else if (lVar3 == 2) {
+        iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 2;
+        *(int *)((int)&DAT_84584f50 + iVar1) = *(int *)((int)&DAT_84584f50 + iVar1) + iVar5;
+      }
+      else {
+        iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+        uVar4 = (ulonglong)*(uint *)((int)&DAT_84584f50 + iVar1);
+        if ((int)*(uint *)((int)&DAT_84584f50 + iVar1) < iVar5) {
+          uVar4 = param_4;
+        }
+        *(int *)((int)&DAT_84584f50 + iVar1) = (int)uVar4;
+        *(undefined4 *)((int)&DAT_84584f54 + iVar1) = 3;
+      }
+    }
+    iVar5 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+    *(short *)((int)&DAT_84584f40 + iVar5) = (short)param_2;
+    *(undefined8 *)((int)&DAT_84584f48 + iVar5) = param_3;
+    if (DAT_84585840 == '\0') {
+      DAT_84585844 = Sys_Milliseconds();
+    }
+    DAT_84585840 = 1;
+    Com_Printf(0x10,0xffffffff821b8400,param_2,param_4,param_3);
+    __restgprlr_27(1);
+    return;
+  }
+LAB_827146f4:
+  Com_Printf(0x10,0xffffffff821b83c4,param_2,param_4,param_3);
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -58,15 +110,13 @@ uint LiveTracker_GetColumnByName(undefined8 param_1)
   int local_20 [2];
   
   StringTable_GetAsset(0xffffffff821b83ac,local_20);
-  if (local_20[0] == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821b8368,0xa8,0,0xffffffff82000f98,0xffffffff820362e8);
-  }
-  _Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0);
-  if ((_Str != (char *)0x0) && (*_Str != '\0')) {
+  if ((((local_20[0] != 0) ||
+       (MyAssertHandler(0xffffffff821b8368,0xa8,0,0xffffffff82000f98,0xffffffff820362e8),
+       local_20[0] != 0)) &&
+      (_Str = (char *)StringTable_Lookup(local_20[0],1,param_1,0), _Str != (char *)0x0)) &&
+     (*_Str != '\0')) {
     uVar1 = atoi(_Str);
     if (0x95 < uVar1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b8368,0xb5,0,0xffffffff821b8474,uVar1,0x96);
     }
     if ((-1 < (int)uVar1) && ((int)uVar1 < 0x96)) {
@@ -79,21 +129,95 @@ uint LiveTracker_GetColumnByName(undefined8 param_1)
 
 // 82714810  LiveTracker_WriteByID  (online/live_tracker.cpp:194)
 
-void LiveTracker_WriteByID(void)
+void LiveTracker_WriteByID(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  longlong lVar2;
+  undefined8 uVar3;
+  int iVar4;
+  longlong *plVar5;
+  longlong lVar6;
+  
+  lVar1 = __savegprlr_27();
+  if (param_2 == 0) {
+    Com_PrintError(0x10,0xffffffff821b84fc);
+    __restgprlr_27(0);
+    return;
+  }
+  lVar6 = -1;
+  lVar2 = 0;
+  plVar5 = &DAT_84584f48;
+  do {
+    if ((*plVar5 == param_2) && ((int)*(short *)(plVar5 + -1) == (int)lVar1)) {
+      uVar3 = LiveTracker_SetItem(lVar2,lVar1,param_2,param_3);
+      if ((int)uVar3 != 0) goto LAB_827148ec;
+      break;
+    }
+    if (((int)lVar6 == -1) && (*plVar5 == 0)) {
+      lVar6 = lVar2;
+    }
+    plVar5 = plVar5 + 3;
+    lVar2 = lVar2 + 1;
+  } while ((int)plVar5 < -0x7ba7a7b8);
+  if ((int)lVar6 == -1) {
+    Com_PrintError(0x10,0xffffffff821b84b0,lVar1,param_3,param_2);
+    __restgprlr_27(0);
+    return;
+  }
+  uVar3 = LiveTracker_SetItem(lVar6,lVar1,param_2);
+  if ((int)uVar3 != 0) {
+LAB_827148ec:
+    if ((int)lVar1 < 0x95) {
+      iVar4 = LiveTracker_GetColType(lVar1 + 1);
+      if (iVar4 == 0) {
+        uVar3 = LiveStorage_GetUTC();
+        uVar3 = LiveTracker_WriteByID(lVar1 + 1,param_2,uVar3);
+      }
+    }
+  }
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 82714950  LiveTracker_WriteByName  (online/live_tracker.cpp:249)
 
-void LiveTracker_WriteByName(void)
+void LiveTracker_WriteByName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  char *_Str;
+  uint uVar2;
+  int local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  StringTable_GetAsset(0xffffffff821b83ac,local_40);
+  if (local_40[0] == 0) {
+    MyAssertHandler(0xffffffff821b8368,0x100,0,0xffffffff82000f98,0xffffffff820362e8);
+    if (local_40[0] == 0) goto LAB_82714a84;
+  }
+  _Str = (char *)StringTable_Lookup(local_40[0],1,uVar1,0);
+  if (_Str == (char *)0x0) {
+    MyAssertHandler(0xffffffff821b8368,0x109,0,0xffffffff82000f98,0xffffffff821b8528);
+  }
+  if (*_Str == '\0') {
+    MyAssertHandler(0xffffffff821b8368,0x10a,0,0xffffffff82000f98,0xffffffff821b851c);
+  }
+  if (*_Str != '\0') {
+    uVar2 = atoi(_Str);
+    if (0x95 < uVar2) {
+      MyAssertHandler(0xffffffff821b8368,0x110,0,0xffffffff821b8474,uVar2,0x96);
+    }
+    if ((-1 < (int)uVar2) && ((int)uVar2 < 0x96)) {
+      LiveTracker_WriteByID(uVar2,param_2,param_3);
+      __restgprlr_27();
+      return;
+    }
+  }
+LAB_82714a84:
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -172,11 +296,35 @@ LAB_82714bd4:
 
 // 82714C08  LiveTracker_WriteForUserAndHost  (online/live_tracker.cpp:306)
 
-void LiveTracker_WriteForUserAndHost(void)
+void LiveTracker_WriteForUserAndHost
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  
+  uVar2 = __savegprlr_27();
+  bVar1 = false;
+  cVar4 = Live_IsSignedIn();
+  if (cVar4 != '\0') {
+    uVar2 = Live_GetXuid(uVar2);
+    iVar3 = LiveTracker_WriteByID(param_2,uVar2,param_4);
+    if (iVar3 == 0) {
+      bVar1 = true;
+    }
+  }
+  Lobby_GetPartyData();
+  Party_HostNum();
+  iVar3 = Lobby_GetMember();
+  if ((*(longlong *)(iVar3 + 0x128) != 0) &&
+     (iVar3 = LiveTracker_WriteByID(param_3,*(longlong *)(iVar3 + 0x128),param_4), iVar3 == 0)) {
+    __restgprlr_27(0);
+    return;
+  }
+  __restgprlr_27(!bVar1);
+  return;
 }
 
 
@@ -232,8 +380,9 @@ void LiveTracker_Process(void)
            iVar7 * 0x98) = uVar2;
           if (3 < uVar3) {
             if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff821b8368,0x197,0,0xffffffff821b8534);
+              __restgprlr_20();
+              return;
             }
             goto LAB_82714e9c;
           }
@@ -385,8 +534,22 @@ void LiveTracker_Init(void)
 void trackerTask_s__trackerTask_s(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  lVar2 = 0x17;
+  puVar3 = puVar1;
+  do {
+    bdStatsInfo__bdStatsInfo(puVar3);
+    *puVar3 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    memset(puVar3 + 0x1c,0,0x28);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0x26;
+  } while (-1 < lVar2);
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
@@ -395,7 +558,19 @@ void trackerTask_s__trackerTask_s(void)
 void _dynamic_atexit_destructor_for__s_trackerTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  undefined4 *puVar2;
+  
   __savegprlr_29();
+  lVar1 = 0x17;
+  puVar2 = &DAT_84586688;
+  do {
+    puVar2 = puVar2 + -0x26;
+    *puVar2 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    bdStatsInfo___bdStatsInfo(puVar2);
+    lVar1 = lVar1 + -1;
+  } while (-1 < lVar1);
+  __restgprlr_29();
+  return;
 }
 

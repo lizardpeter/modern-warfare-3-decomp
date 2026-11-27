@@ -11,7 +11,6 @@ void R_StageContainsPoint(int param_1,float *param_2)
   float local_28;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cfbd4,0x2f,0,0xffffffff82000f98,0xffffffff821cfc14);
   }
   iVar1 = param_1 * 0x14 + DAT_835a291c;
@@ -28,17 +27,76 @@ void R_StageContainsPoint(int param_1,float *param_2)
 void R_GetStageIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float *pfVar1;
+  int iVar2;
+  uint uVar3;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  pfVar1 = (float *)__savegprlr_26();
+  uVar3 = 1;
+  if (1 < DAT_835a2920) {
+    do {
+      if (uVar3 == 0) {
+        MyAssertHandler(0xffffffff821cfbd4,0x2f,0,0xffffffff82000f98,0xffffffff821cfc14);
+      }
+      iVar2 = uVar3 * 0x14 + DAT_835a291c;
+      local_50 = *pfVar1 - *(float *)(iVar2 + 4);
+      local_4c = pfVar1[1] - *(float *)(iVar2 + 8);
+      local_48 = pfVar1[2] - *(float *)(iVar2 + 0xc);
+      iVar2 = CM_TestStageTriggerContainsPoint(*(undefined2 *)(iVar2 + 0x10),&local_50);
+      if (iVar2 != 0) {
+        __restgprlr_26(uVar3);
+        return;
+      }
+      uVar3 = uVar3 + 1;
+    } while (uVar3 < DAT_835a2920);
+  }
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 8277C7B8  R_GetStageByIndex  (gfx_d3d/r_stages.cpp:150)
+
+longlong R_GetStageByIndex(ulonglong param_1)
+
+{
+  if ((ulonglong)DAT_835a2920 <= (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821cfbd4,0x97,0,0xffffffff821cfc30,param_1);
+  }
+  return (param_1 + (param_1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + (ulonglong)DAT_835a291c;
 }
 
 
 // 8277C830  R_UpdateActiveStage  (gfx_d3d/r_stages.cpp:158)
 
-void R_UpdateActiveStage(void)
+void R_UpdateActiveStage(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  
+  iVar1 = __savegprlr_29();
+  *(undefined1 *)(iVar1 + 0x14) = 1;
+  if (DAT_835a2920 == '\0') {
+    MyAssertHandler(0xffffffff821cfbd4,0xad,0,0xffffffff82000f98,0xffffffff821cfc6c);
+  }
+  iVar2 = R_GetStageIndex(param_2);
+  puVar3 = (undefined4 *)(iVar1 + -4);
+  lVar5 = 5;
+  puVar4 = (undefined4 *)(iVar2 * 0x14 + DAT_835a291c + -4);
+  do {
+    puVar4 = puVar4 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *puVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  __restgprlr_29();
+  return;
 }
 

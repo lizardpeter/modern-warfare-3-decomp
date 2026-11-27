@@ -5,8 +5,36 @@
 int _cinit(int param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(param_1);
+  code *pcVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  uVar2 = __savegprlr_29(param_1);
+  fpmath(uVar2);
+  puVar4 = &DAT_82960314;
+  uVar2 = 0;
+  do {
+    if ((int)uVar2 != 0) goto LAB_828b51e0;
+    if ((code *)*puVar4 != (code *)0x0) {
+      uVar2 = (*(code *)*puVar4)();
+    }
+    puVar4 = puVar4 + 1;
+  } while (puVar4 < (undefined4 *)0x82960320);
+  if ((int)uVar2 == 0) {
+    puVar4 = &DAT_82960010;
+    do {
+      pcVar1 = (code *)*puVar4;
+      if ((pcVar1 != (code *)0x0) && (pcVar1 != (code *)0xffffffff)) {
+        (*pcVar1)();
+      }
+      puVar4 = puVar4 + 1;
+    } while (puVar4 < (undefined4 *)0x82960310);
+    uVar2 = 0;
+  }
+LAB_828b51e0:
+  iVar3 = __restgprlr_29(uVar2);
+  return iVar3;
 }
 
 
@@ -18,7 +46,20 @@ int _cinit(int param_1)
 void __cdecl rtinit(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  
   __savegprlr_29();
+  puVar2 = &DAT_82960000;
+  uVar1 = 0;
+  do {
+    if ((int)uVar1 != 0) break;
+    if ((code *)*puVar2 != (code *)0x0) {
+      uVar1 = (*(code *)*puVar2)();
+    }
+    puVar2 = puVar2 + 1;
+  } while (puVar2 < (undefined4 *)0x8296000c);
+  __restgprlr_29(uVar1);
+  return;
 }
 

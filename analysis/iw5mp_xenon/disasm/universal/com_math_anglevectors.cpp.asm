@@ -3,6 +3,85 @@
 ; 825DFEB0  AngleVectors  (universal/com_math_anglevectors.cpp:12)
   825DFEB0  7D8802A6             mfspr r12,LR
   825DFEB4  48336805             bl 0x829166b8
+  825DFEB8  3981FFD8             subi r12,r1,0x28
+  825DFEBC  483368D5             bl 0x82916790
+  825DFEC0  9421FF50             stwu r1,-0xb0(r1)
+  825DFEC4  3D608200             lis r11,-0x7e00
+  825DFEC8  C0030004             lfs f0,0x4(r3)
+  825DFECC  7C7F1B78             or r31,r3,r3
+  825DFED0  7C9E2378             or r30,r4,r4
+  825DFED4  7CBD2B78             or r29,r5,r5
+  825DFED8  7CDC3378             or r28,r6,r6
+  825DFEDC  C3AB201C             lfs f29,0x201c(r11)
+  825DFEE0  EFC00772             fmuls f30,f0,f29
+  825DFEE4  FC20F090             fmr f1,f30
+  825DFEE8  48337021             bl 0x82916f08
+  825DFEEC  FFE00818             frsp f31,f1
+  825DFEF0  FC20F090             fmr f1,f30
+  825DFEF4  483370F5             bl 0x82916fe8
+  825DFEF8  C1BF0000             lfs f13,0x0(r31)
+  825DFEFC  FFC00818             frsp f30,f1
+  825DFF00  EF8D0772             fmuls f28,f13,f29
+  825DFF04  FC20E090             fmr f1,f28
+  825DFF08  48337001             bl 0x82916f08
+  825DFF0C  FF600818             frsp f27,f1
+  825DFF10  FC20E090             fmr f1,f28
+  825DFF14  483370D5             bl 0x82916fe8
+  825DFF18  FF800818             frsp f28,f1
+  825DFF1C  2B1E0000             cmplwi cr6,r30,0x0
+  825DFF20  419A001C             beq cr6,0x825dff3c
+  825DFF24  EC1C07B2             fmuls f0,f28,f30
+  825DFF28  D01E0000             stfs f0,0x0(r30)
+  825DFF2C  EDBC07F2             fmuls f13,f28,f31
+  825DFF30  D1BE0004             stfs f13,0x4(r30)
+  825DFF34  FD80D850             fneg f12,f27
+  825DFF38  D19E0008             stfs f12,0x8(r30)
+LAB_825dff3c:
+  825DFF3C  2B1D0000             cmplwi cr6,r29,0x0
+  825DFF40  409A000C             bne cr6,0x825dff4c
+  825DFF44  2B1C0000             cmplwi cr6,r28,0x0
+  825DFF48  419A008C             beq cr6,0x825dffd4
+LAB_825dff4c:
+  825DFF4C  C01F0008             lfs f0,0x8(r31)
+  825DFF50  EF400772             fmuls f26,f0,f29
+  825DFF54  FC20D090             fmr f1,f26
+  825DFF58  48336FB1             bl 0x82916f08
+  825DFF5C  FFA00818             frsp f29,f1
+  825DFF60  FC20D090             fmr f1,f26
+  825DFF64  48337085             bl 0x82916fe8
+  825DFF68  FC000818             frsp f0,f1
+  825DFF6C  2B1D0000             cmplwi cr6,r29,0x0
+  825DFF70  419A0038             beq cr6,0x825dffa8
+  825DFF74  ED9D06F2             fmuls f12,f29,f27
+  825DFF78  3D608200             lis r11,-0x7e00
+  825DFF7C  ED6007B2             fmuls f11,f0,f30
+  825DFF80  ED5D0732             fmuls f10,f29,f28
+  825DFF84  C1AB139C             lfs f13,0x139c(r11)
+  825DFF88  ED2C07B2             fmuls f9,f12,f30
+  825DFF8C  ED0C07F2             fmuls f8,f12,f31
+  825DFF90  ECEA0372             fmuls f7,f10,f13
+  825DFF94  D0FD0008             stfs f7,0x8(r29)
+  825DFF98  ECC04FF8             fmsubs f6,f0,f31,f9
+  825DFF9C  D0DD0000             stfs f6,0x0(r29)
+  825DFFA0  ECAB4378             fmsubs f5,f11,f13,f8
+  825DFFA4  D0BD0004             stfs f5,0x4(r29)
+LAB_825dffa8:
+  825DFFA8  2B1C0000             cmplwi cr6,r28,0x0
+  825DFFAC  419A0028             beq cr6,0x825dffd4
+  825DFFB0  EDA006F2             fmuls f13,f0,f27
+  825DFFB4  ED9D07F2             fmuls f12,f29,f31
+  825DFFB8  ED7D07B2             fmuls f11,f29,f30
+  825DFFBC  ED400732             fmuls f10,f0,f28
+  825DFFC0  D15C0008             stfs f10,0x8(r28)
+  825DFFC4  ED2D67BA             fmadds f9,f13,f30,f12
+  825DFFC8  D13C0000             stfs f9,0x0(r28)
+  825DFFCC  ED0D5FF8             fmsubs f8,f13,f31,f11
+  825DFFD0  D11C0004             stfs f8,0x4(r28)
+LAB_825dffd4:
+  825DFFD4  382100B0             addi r1,r1,0xb0
+  825DFFD8  3981FFD8             subi r12,r1,0x28
+  825DFFDC  48336801             bl 0x829167dc
+  825DFFE0  48336728             b 0x82916708
 
 ; 825DFFE8  AnglesToAxis  (universal/com_math_anglevectors.cpp:106)
   825DFFE8  7D8802A6             mfspr r12,LR

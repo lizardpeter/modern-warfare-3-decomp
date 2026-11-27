@@ -2,11 +2,72 @@
 
 // 82487FC0  G_BounceCorpse  (game_mp/g_player_corpse_mp.cpp:36)
 
-void G_BounceCorpse(void)
+void G_BounceCorpse(undefined8 param_1,int param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  char cVar6;
+  uint uVar5;
+  undefined1 *puVar7;
+  int *piVar8;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [12];
+  undefined1 auStack_54 [12];
+  undefined1 local_48 [72];
+  
+  iVar4 = __savegprlr_27();
+  piVar8 = (int *)(iVar4 + 0xc);
+  cVar6 = Com_IsRagdollTrajectory(piVar8);
+  *(undefined4 *)(iVar4 + 0x24) = 0;
+  *(undefined4 *)(iVar4 + 0x28) = 0;
+  *(undefined4 *)(iVar4 + 0x2c) = 0;
+  iVar1 = (int)param_3;
+  if ((*(char *)(iVar1 + 0x2e) == '\0') && (*(float *)(iVar1 + 0xc) <= 0.0)) {
+    fVar2 = *(float *)(iVar1 + 4) + *(float *)(iVar4 + 0x138);
+    *(float *)(iVar4 + 0x138) = fVar2;
+    *(float *)(iVar4 + 0x13c) = *(float *)(iVar1 + 8) + *(float *)(iVar4 + 0x13c);
+    *(float *)(iVar4 + 0x140) = *(float *)(iVar1 + 0xc) + *(float *)(iVar4 + 0x140);
+    *(float *)(iVar4 + 0x18) = fVar2;
+    *(undefined4 *)(iVar4 + 0x1c) = *(undefined4 *)(iVar4 + 0x13c);
+    *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x140);
+    if ((*piVar8 != 5) && (cVar6 == '\0')) {
+      MyAssertHandler(0xffffffff82075a48,0x54,0,0xffffffff82000f98,0xffffffff82075a94);
+    }
+    *(undefined4 *)(iVar4 + 0x10) = DAT_83580fac;
+    __restgprlr_27();
+    return;
+  }
+  *(undefined1 *)(param_2 + 0x59c) = 0;
+  *piVar8 = (-(uint)(cVar6 != '\0') & 0xb) + 1;
+  *(undefined4 *)(iVar4 + 0x2c) = 0;
+  *(undefined4 *)(iVar4 + 0x24) = 0;
+  *(undefined4 *)(iVar4 + 0x28) = 0;
+  *(undefined4 *)(iVar4 + 0x18) = *param_4;
+  *(undefined4 *)(iVar4 + 0x1c) = param_4[1];
+  *(undefined4 *)(iVar4 + 0x20) = param_4[2];
+  *(undefined4 *)(iVar4 + 0x10) = 0;
+  *(undefined4 *)(iVar4 + 0x14) = 0;
+  uVar5 = Trace_GetEntityHitId(param_3);
+  *(uint *)(iVar4 + 0x80) = uVar5 & 0xffff;
+  iVar3 = ((uVar5 & 0xffff) + (uVar5 & 0xffff) * 4) * 0x80;
+  *(uint *)(&DAT_83373804 + iVar3) = *(uint *)(&DAT_83373804 + iVar3) | 0x100000;
+  if (*(char *)(iVar1 + 0x2e) == '\0') {
+    AngleVectors(iVar4 + 0x144,&stack0x00000000 + -0x60,0,0);
+    Vec3Cross(&stack0x00000000 + -0x48,&stack0x00000000 + -0x60,&stack0x00000000 + -0x54);
+    Vec3Cross(&stack0x00000000 + -0x54,&stack0x00000000 + -0x48,&stack0x00000000 + -0x60);
+    AxisToAngles(&stack0x00000000 + -0x60,&stack0x00000000 + -0x70);
+    puVar7 = &stack0x00000000 + -0x70;
+  }
+  else {
+    puVar7 = (undefined1 *)(iVar4 + 0x144);
+  }
+  G_SetAngle(iVar4,puVar7);
+  SV_LinkEntity(iVar4);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -27,11 +88,10 @@ longlong G_GetPlayerCorpseIndex(int *param_1)
     piVar2 = piVar2 + 0x168;
     lVar1 = lVar1 + 1;
   } while ((int)piVar2 < -0x7ca629f4);
-  if (DAT_84013128 != 0) {
-    return 0;
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82075a48,0x6c,0,0xffffffff82075ac8);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82075a48,0x6c,0,0xffffffff82075ac8);
+  return 0;
 }
 
 
@@ -40,8 +100,68 @@ longlong G_GetPlayerCorpseIndex(int *param_1)
 void G_GetFreePlayerCorpseIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar7;
+  longlong lVar5;
+  longlong lVar6;
+  int *piVar8;
+  longlong lVar9;
+  double dVar10;
+  double dVar11;
+  
   __savegprlr_29();
+  dVar11 = -1.0;
+  iVar7 = G_Find(0,0x172,DAT_835a0c02);
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff82075a48,0x83,0,0xffffffff82000f98,0xffffffff82002614);
+  }
+  lVar5 = 0;
+  piVar8 = &DAT_8359a90c;
+  lVar9 = 0;
+  do {
+    lVar6 = lVar5;
+    if (*piVar8 == -1) goto LAB_82488368;
+    iVar1 = *piVar8 * 0x280 + DAT_83580b04;
+    fVar4 = *(float *)(iVar7 + 0x20) - *(float *)(iVar1 + 0x140);
+    fVar2 = *(float *)(iVar7 + 0x18) - *(float *)(iVar1 + 0x138);
+    fVar3 = *(float *)(iVar7 + 0x1c) - *(float *)(iVar1 + 0x13c);
+    dVar10 = (double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
+    lVar6 = lVar9;
+    if (dVar11 < dVar10) {
+      lVar6 = lVar5;
+      dVar11 = dVar10;
+    }
+    piVar8 = piVar8 + 0x168;
+    lVar5 = lVar5 + 1;
+    lVar9 = lVar6;
+  } while ((int)piVar8 < -0x7ca629f4);
+  G_FreeEntity((&DAT_8359a90c)[(int)lVar6 * 0x168] * 0x280 + DAT_83580b04);
+  (&DAT_8359a90c)[(int)lVar6 * 0x168] = 0xffffffff;
+LAB_82488368:
+  __restgprlr_29(lVar6);
+  return;
+}
+
+
+// 82488378  PlayerCorpse_Free  (game_mp/g_player_corpse_mp.cpp:160)
+
+void PlayerCorpse_Free(int *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = G_GetPlayerCorpseIndex();
+  if ((&DAT_8359a90c)[iVar1 * 0x168] == *param_1) {
+    (&DAT_8359a90c)[iVar1 * 0x168] = 0xffffffff;
+  }
+  else {
+    MyAssertHandler(0xffffffff82075a48,0xa5,0,0xffffffff82000f98,0xffffffff82075b00);
+    (&DAT_8359a90c)[iVar1 * 0x168] = 0xffffffff;
+  }
+  return;
 }
 
 
@@ -127,7 +247,6 @@ void G_RunCorpseMove(void)
   piVar15 = (int *)(iVar5 + 0xc);
   cVar10 = Com_IsRagdollTrajectory(piVar15);
   if (*(int *)(iVar5 + 4) != 2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82075a48,0xe5,0,0xffffffff82000f98,0xffffffff82075bc4);
   }
   iVar6 = G_GetPlayerCorpseIndex(iVar5);
@@ -157,7 +276,6 @@ void G_RunCorpseMove(void)
     uVar12 = 0xf9;
     uVar13 = 0xffffffff82075a94;
 LAB_82488628:
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82075a48,uVar12,0,0xffffffff82000f98,uVar13);
   }
   BG_EvaluateTrajectory(piVar15,DAT_83580fac,&local_160);
@@ -201,12 +319,10 @@ LAB_82488628:
     dVar20 = (double)(fVar1 * local_100);
   }
   if (*(int *)(iVar5 + 0x18c) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82075a48,0x113,0,0xffffffff82000f98,0xffffffff82075b7c);
   }
   uVar2 = *(uint *)(iVar5 + 0x18c);
   if ((*(uint *)(iVar5 + 0x11c) & uVar2) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82075a48,0x117,0,0xffffffff82000f98,0xffffffff82071434);
   }
   iVar16 = iVar5 + 0x150;
@@ -339,8 +455,33 @@ LAB_82488b48:
 void G_RunCorpseAnimate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  
+  iVar3 = __savegprlr_28();
+  iVar4 = G_GetPlayerCorpseIndex();
+  if (iVar4 < 0) {
+    MyAssertHandler(0xffffffff82075a48,0x177,0,0xffffffff82000f98,0xffffffff82075c0c);
+  }
+  if (7 < iVar4) {
+    MyAssertHandler(0xffffffff82075a48,0x178,0,0xffffffff82000f98,0xffffffff82075be8);
+  }
+  iVar4 = iVar4 * 0x5a0;
+  uVar1 = Com_GetServerDObjForEnt(iVar3);
+  BG_UpdatePlayerDObj(0xffffffffffffffff,uVar1,iVar3,&DAT_8359a914 + iVar4,0);
+  uVar2 = Com_GetServerDObjForEnt(iVar3);
+  G_UpdateTagInfoOfChildren(iVar3,uVar2 != 0);
+  if ((uVar2 & 0xffffffff) != 0) {
+    *(undefined4 *)(&DAT_8359ad3c + iVar4) = *(undefined4 *)(iVar3 + 0xd0);
+    *(undefined4 *)(&DAT_8359ad40 + iVar4) = *(undefined4 *)(iVar3 + 0xd4);
+    *(undefined4 *)(&DAT_8359ad44 + iVar4) = *(undefined4 *)(iVar3 + 0x58);
+    *(undefined4 *)(&DAT_8359ad48 + iVar4) = *(undefined4 *)(iVar3 + 0x5c);
+    BG_PlayerAnimation(0xffffffffffffffff,iVar3,&DAT_8359a914 + iVar4,iVar3 + 0x138);
+  }
+  __restgprlr_28();
+  return;
 }
 
 

@@ -9,6 +9,94 @@
   822A551C  38800070             li r4,0x70
   822A5520  4825D280             b 0x825027a0
 
+; 822A5528  CG_Blur  (cgame/cg_blur.cpp:46)
+  822A5528  7D8802A6             mfspr r12,LR
+  822A552C  48671181             bl 0x829166ac
+  822A5530  DBC1FFB0             stfd f30,-0x50(r1)
+  822A5534  DBE1FFB8             stfd f31,-0x48(r1)
+  822A5538  9421FF60             stwu r1,-0xa0(r1)
+  822A553C  7C7F1B78             or r31,r3,r3
+  822A5540  FFC00890             fmr f30,f1
+  822A5544  7C9C2378             or r28,r4,r4
+  822A5548  7CDA3378             or r26,r6,r6
+  822A554C  7CFE3B78             or r30,r7,r7
+  822A5550  4BFBBBB1             bl 0x82261100
+  822A5554  3D608201             lis r11,-0x7dff
+  822A5558  7C7B1B78             or r27,r3,r3
+  822A555C  2F1C0000             cmpwi cr6,r28,0x0
+  822A5560  3BAB01D0             addi r29,r11,0x1d0
+  822A5564  40980024             bge cr6,0x822a5588
+  822A5568  3D608201             lis r11,-0x7dff
+  822A556C  3D408200             lis r10,-0x7e00
+  822A5570  38EB01C4             addi r7,r11,0x1c4
+  822A5574  38CA0F98             addi r6,r10,0xf98
+  822A5578  7FA3EB78             or r3,r29,r29
+  822A557C  38A00000             li r5,0x0
+  822A5580  38800034             li r4,0x34
+  822A5584  4832EF7D             bl 0x825d4500
+LAB_822a5588:
+  822A5588  3D608200             lis r11,-0x7e00
+  822A558C  C3EB13F8             lfs f31,0x13f8(r11)
+  822A5590  FF1EF800             fcmpu cr6,f30,f31
+  822A5594  40980030             bge cr6,0x822a55c4
+  822A5598  DBC10038             stfd f30,0x38(r1)
+  822A559C  E9010038             ld r8,0x38(r1)
+  822A55A0  3D608201             lis r11,-0x7dff
+  822A55A4  FC20F090             fmr f1,f30
+  822A55A8  3D408201             lis r10,-0x7dff
+  822A55AC  38EB01B4             addi r7,r11,0x1b4
+  822A55B0  38CA01A0             addi r6,r10,0x1a0
+  822A55B4  7FA3EB78             or r3,r29,r29
+  822A55B8  38A00000             li r5,0x0
+  822A55BC  38800035             li r4,0x35
+  822A55C0  4832EF41             bl 0x825d4500
+LAB_822a55c4:
+  822A55C4  3F3B0007             addis r25,r27,0x7
+  822A55C8  3B39BA0C             subi r25,r25,0x45f4
+  822A55CC  C0390000             lfs f1,0x0(r25)
+  822A55D0  FF01F800             fcmpu cr6,f1,f31
+  822A55D4  4098002C             bge cr6,0x822a5600
+  822A55D8  D8210038             stfd f1,0x38(r1)
+  822A55DC  E9010038             ld r8,0x38(r1)
+  822A55E0  3D608201             lis r11,-0x7dff
+  822A55E4  3D408201             lis r10,-0x7dff
+  822A55E8  38EB017C             addi r7,r11,0x17c
+  822A55EC  38CA0154             addi r6,r10,0x154
+  822A55F0  7FA3EB78             or r3,r29,r29
+  822A55F4  38A00000             li r5,0x0
+  822A55F8  38800036             li r4,0x36
+  822A55FC  4832EF05             bl 0x825d4500
+LAB_822a5600:
+  822A5600  3D60829E             lis r11,-0x7d62
+  822A5604  1D5F001C             mulli r10,r31,0x1c
+  822A5608  396B8AA0             subi r11,r11,0x7560
+  822A560C  7FEA5A14             add r31,r10,r11
+  822A5610  7D4A582E             lwzx r10,r10,r11
+  822A5614  7F1E5000             cmpw cr6,r30,r10
+  822A5618  41980040             blt cr6,0x822a5658
+  822A561C  2F1A0001             cmpwi cr6,r26,0x1
+  822A5620  409A000C             bne cr6,0x822a562c
+  822A5624  483B0FAD             bl 0x826565d0
+  822A5628  48000010             b 0x822a5638
+LAB_822a562c:
+  822A562C  3D600006             lis r11,0x6
+  822A5630  616AB98C             ori r10,r11,0xb98c
+  822A5634  7C7B502E             lwzx r3,r27,r10
+LAB_822a5638:
+  822A5638  7D63E214             add r11,r3,r28
+  822A563C  907F0008             stw r3,0x8(r31)
+  822A5640  917F000C             stw r11,0xc(r31)
+  822A5644  C0190000             lfs f0,0x0(r25)
+  822A5648  D01F0010             stfs f0,0x10(r31)
+  822A564C  935F0004             stw r26,0x4(r31)
+  822A5650  D3DF0014             stfs f30,0x14(r31)
+  822A5654  93DF0000             stw r30,0x0(r31)
+LAB_822a5658:
+  822A5658  382100A0             addi r1,r1,0xa0
+  822A565C  CBC1FFB0             lfd f30,-0x50(r1)
+  822A5660  CBE1FFB8             lfd f31,-0x48(r1)
+  822A5664  48671098             b 0x829166fc
+
 ; 822A5668  CG_ClearBlur  (cgame/cg_blur.cpp:70)
   822A5668  3D60829E             lis r11,-0x7d62
   822A566C  1D23001C             mulli r9,r3,0x1c
@@ -58,6 +146,157 @@ LAB_822a5700:
   822A5710  7D8803A6             mtspr LR,r12
   822A5714  EBE1FFF0             ld r31,-0x10(r1)
   822A5718  4E800020             blr
+
+; 822A5720  CG_ScreenBlur  (cgame/cg_blur.cpp:100)
+  822A5720  7D8802A6             mfspr r12,LR
+  822A5724  48670F95             bl 0x829166b8
+  822A5728  DBC1FFC8             stfd f30,-0x38(r1)
+  822A572C  DBE1FFD0             stfd f31,-0x30(r1)
+  822A5730  9421FF70             stwu r1,-0x90(r1)
+  822A5734  7C7F1B78             or r31,r3,r3
+  822A5738  4BFBB9C9             bl 0x82261100
+  822A573C  3D60829E             lis r11,-0x7d62
+  822A5740  1D5F001C             mulli r10,r31,0x1c
+  822A5744  396B8AA0             subi r11,r11,0x7560
+  822A5748  3D200006             lis r9,0x6
+  822A574C  7FEA5A14             add r31,r10,r11
+  822A5750  6128B98C             ori r8,r9,0xb98c
+  822A5754  80FF0004             lwz r7,0x4(r31)
+  822A5758  7D63402E             lwzx r11,r3,r8
+  822A575C  2F070001             cmpwi cr6,r7,0x1
+  822A5760  409A0010             bne cr6,0x822a5770
+  822A5764  483B0E6D             bl 0x826565d0
+  822A5768  7C7D1B78             or r29,r3,r3
+  822A576C  48000008             b 0x822a5774
+LAB_822a5770:
+  822A5770  7D7D5B78             or r29,r11,r11
+LAB_822a5774:
+  822A5774  813F0008             lwz r9,0x8(r31)
+  822A5778  2F090000             cmpwi cr6,r9,0x0
+  822A577C  419A01B8             beq cr6,0x822a5934
+  822A5780  3D608201             lis r11,-0x7dff
+  822A5784  3D408200             lis r10,-0x7e00
+  822A5788  7F09E800             cmpw cr6,r9,r29
+  822A578C  3B8B01D0             addi r28,r11,0x1d0
+  822A5790  3BCA0F98             addi r30,r10,0xf98
+  822A5794  40990020             ble cr6,0x822a57b4
+  822A5798  3D608201             lis r11,-0x7dff
+  822A579C  7FC6F378             or r6,r30,r30
+  822A57A0  38EB0300             addi r7,r11,0x300
+  822A57A4  7F83E378             or r3,r28,r28
+  822A57A8  38A00000             li r5,0x0
+  822A57AC  38800072             li r4,0x72
+  822A57B0  4832ED51             bl 0x825d4500
+LAB_822a57b4:
+  822A57B4  817F0008             lwz r11,0x8(r31)
+  822A57B8  815F000C             lwz r10,0xc(r31)
+  822A57BC  7F0B5000             cmpw cr6,r11,r10
+  822A57C0  40990020             ble cr6,0x822a57e0
+  822A57C4  3D608201             lis r11,-0x7dff
+  822A57C8  7FC6F378             or r6,r30,r30
+  822A57CC  38EB02D8             addi r7,r11,0x2d8
+  822A57D0  7F83E378             or r3,r28,r28
+  822A57D4  38A00000             li r5,0x0
+  822A57D8  38800073             li r4,0x73
+  822A57DC  4832ED25             bl 0x825d4500
+LAB_822a57e0:
+  822A57E0  817F000C             lwz r11,0xc(r31)
+  822A57E4  7F1D5800             cmpw cr6,r29,r11
+  822A57E8  409800E0             bge cr6,0x822a58c8
+  822A57EC  815F0008             lwz r10,0x8(r31)
+  822A57F0  3D208200             lis r9,-0x7e00
+  822A57F4  7D0A5850             subf r8,r10,r11
+  822A57F8  7D0707B4             extsw r7,r8
+  822A57FC  C3C913F8             lfs f30,0x13f8(r9)
+  822A5800  F8E10050             std r7,0x50(r1)
+  822A5804  C8010050             lfd f0,0x50(r1)
+  822A5808  FDA0069C             fcfid f13,f0
+  822A580C  FD806818             frsp f12,f13
+  822A5810  FF0CF000             fcmpu cr6,f12,f30
+  822A5814  41990020             bgt cr6,0x822a5834
+  822A5818  3D608201             lis r11,-0x7dff
+  822A581C  7FC6F378             or r6,r30,r30
+  822A5820  38EB02A8             addi r7,r11,0x2a8
+  822A5824  7F83E378             or r3,r28,r28
+  822A5828  38A00000             li r5,0x0
+  822A582C  38800077             li r4,0x77
+  822A5830  4832ECD1             bl 0x825d4500
+LAB_822a5834:
+  822A5834  817F0008             lwz r11,0x8(r31)
+  822A5838  815F000C             lwz r10,0xc(r31)
+  822A583C  7D2BE850             subf r9,r11,r29
+  822A5840  7D0B5050             subf r8,r11,r10
+  822A5844  7D2707B4             extsw r7,r9
+  822A5848  7D0607B4             extsw r6,r8
+  822A584C  F8E10050             std r7,0x50(r1)
+  822A5850  C8010050             lfd f0,0x50(r1)
+  822A5854  F8C10050             std r6,0x50(r1)
+  822A5858  C9A10050             lfd f13,0x50(r1)
+  822A585C  FD80069C             fcfid f12,f0
+  822A5860  FD606E9C             fcfid f11,f13
+  822A5864  FD406018             frsp f10,f12
+  822A5868  FD205818             frsp f9,f11
+  822A586C  EFEA4824             fdivs f31,f10,f9
+  822A5870  FF1FF000             fcmpu cr6,f31,f30
+  822A5874  41980014             blt cr6,0x822a5888
+  822A5878  3D608200             lis r11,-0x7e00
+  822A587C  C00B0F10             lfs f0,0xf10(r11)
+  822A5880  FF1F0000             fcmpu cr6,f31,f0
+  822A5884  41980030             blt cr6,0x822a58b4
+LAB_822a5888:
+  822A5888  DBE10038             stfd f31,0x38(r1)
+  822A588C  E9010038             ld r8,0x38(r1)
+  822A5890  3D608201             lis r11,-0x7dff
+  822A5894  FC20F890             fmr f1,f31
+  822A5898  3D408201             lis r10,-0x7dff
+  822A589C  38EB0294             addi r7,r11,0x294
+  822A58A0  38CA0284             addi r6,r10,0x284
+  822A58A4  7F83E378             or r3,r28,r28
+  822A58A8  38A00000             li r5,0x0
+  822A58AC  38800079             li r4,0x79
+  822A58B0  4832EC51             bl 0x825d4500
+LAB_822a58b4:
+  822A58B4  C1BF0010             lfs f13,0x10(r31)
+  822A58B8  C01F0014             lfs f0,0x14(r31)
+  822A58BC  ED806828             fsubs f12,f0,f13
+  822A58C0  EFEC6FFA             fmadds f31,f12,f31,f13
+  822A58C4  4800001C             b 0x822a58e0
+LAB_822a58c8:
+  822A58C8  39600000             li r11,0x0
+  822A58CC  C01F0014             lfs f0,0x14(r31)
+  822A58D0  FFE00090             fmr f31,f0
+  822A58D4  917F0008             stw r11,0x8(r31)
+  822A58D8  917F000C             stw r11,0xc(r31)
+  822A58DC  917F0000             stw r11,0x0(r31)
+LAB_822a58e0:
+  822A58E0  C1BF0010             lfs f13,0x10(r31)
+  822A58E4  ED806828             fsubs f12,f0,f13
+  822A58E8  FD6C036E             fsel f11,f12,f13,f0
+  822A58EC  FF1F5800             fcmpu cr6,f31,f11
+  822A58F0  41980014             blt cr6,0x822a5904
+  822A58F4  ED8D0028             fsubs f12,f13,f0
+  822A58F8  FD6C036E             fsel f11,f12,f13,f0
+  822A58FC  FF1F5800             fcmpu cr6,f31,f11
+  822A5900  40990030             ble cr6,0x822a5930
+LAB_822a5904:
+  822A5904  DBE10038             stfd f31,0x38(r1)
+  822A5908  3D608201             lis r11,-0x7dff
+  822A590C  3D408201             lis r10,-0x7dff
+  822A5910  FC20F890             fmr f1,f31
+  822A5914  38EB0220             addi r7,r11,0x220
+  822A5918  38CA020C             addi r6,r10,0x20c
+  822A591C  7F83E378             or r3,r28,r28
+  822A5920  38A00000             li r5,0x0
+  822A5924  38800085             li r4,0x85
+  822A5928  E9010038             ld r8,0x38(r1)
+  822A592C  4832EBD5             bl 0x825d4500
+LAB_822a5930:
+  822A5930  D3FF0018             stfs f31,0x18(r31)
+LAB_822a5934:
+  822A5934  38210090             addi r1,r1,0x90
+  822A5938  CBC1FFC8             lfd f30,-0x38(r1)
+  822A593C  CBE1FFD0             lfd f31,-0x30(r1)
+  822A5940  48670DC8             b 0x82916708
 
 ; 822A5948  CG_BlurGetData  (cgame/cg_blur.cpp:139)
   822A5948  3D60829E             lis r11,-0x7d62

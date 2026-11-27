@@ -85,7 +85,6 @@ void WriteFloat(double param_1,undefined8 param_2,undefined8 param_3)
   
   fStack00000014 = (float)param_1;
   if (((uint)(float)param_1 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151f68,0x5b,0,0xffffffff82000f98,0xffffffff82151fac);
   }
   MemFile_WriteData(param_3,4,&stack0x00000014);
@@ -95,11 +94,31 @@ void WriteFloat(double param_1,undefined8 param_2,undefined8 param_3)
 
 // 8253FB50  WriteVector  (script/scr_readwrite.cpp:97)
 
-void WriteVector(void)
+void WriteVector(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float *pfVar2;
+  float *pfVar3;
+  undefined8 uVar1;
+  
+  pfVar2 = (float *)__savegprlr_28();
+  pfVar3 = pfVar2;
+  if (pfVar2 == (float *)0x0) {
+    pfVar3 = (float *)MyAssertHandler(0xffffffff82151f68,0x62,0,0xffffffff82000f98,
+                                      0xffffffff8201d92c);
+  }
+  if (((uint)*pfVar2 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar2[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar2[2] & 0x7f800000) != 0x7f800000) goto LAB_8253fc00;
+    }
+  }
+  pfVar3 = (float *)MyAssertHandler(0xffffffff82151f68,100,0,0xffffffff82000f98,0xffffffff82151fb8);
+LAB_8253fc00:
+  uVar1 = WriteFloat((double)*pfVar2,pfVar3,param_2);
+  uVar1 = WriteFloat((double)pfVar2[1],uVar1,param_2);
+  WriteFloat((double)pfVar2[2],uVar1,param_2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -108,18 +127,65 @@ void WriteVector(void)
 void Scr_ReadVec3(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  uint local_50;
+  uint local_4c;
+  uint local_48;
+  uint local_44;
+  
+  uVar1 = __savegprlr_27();
+  MemFile_ReadData(uVar1,4,&local_50);
+  local_4c = local_50;
+  if ((local_50 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82151ec8,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  }
+  local_48 = local_50;
+  MemFile_ReadData(uVar1,4,&local_50);
+  local_4c = local_50;
+  if ((local_50 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82151ec8,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  }
+  local_44 = local_50;
+  MemFile_ReadData(uVar1,4,&local_50);
+  local_4c = local_50;
+  if ((local_50 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82151ec8,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  }
+  local_4c = local_48;
+  if ((local_48 & 0x7f800000) != 0x7f800000) {
+    local_4c = local_44;
+    if (((local_44 & 0x7f800000) != 0x7f800000) &&
+       (local_4c = local_50, (local_50 & 0x7f800000) != 0x7f800000)) goto LAB_8253fd94;
+  }
+  MyAssertHandler(0xffffffff82151f68,0x73,0,0xffffffff82000f98,0xffffffff82151fb8);
+LAB_8253fd94:
+  Scr_AllocVector(&local_48);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253FDA8  WriteCodepos  (script/scr_readwrite.cpp:121)
 
-void WriteCodepos(void)
+void WriteCodepos(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82151f68,0x7c,0,0xffffffff82000f98,0xffffffff82002114);
+  }
+  iVar2 = Scr_IsInOpcodeMemory(uVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82151f68,0x83,0,0xffffffff82000f98,0xffffffff82151ff0);
+  }
+  local_30[0] = (int)uVar1 - DAT_83c4baf4;
+  MemFile_WriteData(param_2,4,local_30);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -128,8 +194,23 @@ void WriteCodepos(void)
 void Scr_ReadCodepos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  MemFile_ReadData(uVar1,4,local_30);
+  if ((int)local_30[0] < 0) {
+    MyAssertHandler(0xffffffff82151f68,0xad,0,0xffffffff82000f98,0xffffffff8206c67c);
+  }
+  uVar3 = (ulonglong)DAT_83c4baf4;
+  iVar2 = Scr_IsInOpcodeMemory(uVar3 + local_30[0]);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82151f68,0xb6,0,0xffffffff82000f98,0xffffffff82151ff0);
+  }
+  __restgprlr_29(uVar3 + local_30[0]);
+  return;
 }
 
 
@@ -151,40 +232,169 @@ longlong ChildVariableValue__GetName(int param_1)
 
 {
   if (*(short *)(param_1 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151f10,0xc5,0,0xffffffff82000f98,0xffffffff82151f58);
   }
   return (ulonglong)*(ushort *)(param_1 + 10) * 0x100 + (ulonglong)*(byte *)(param_1 + 7);
 }
 
 
-// 8253FFB0  WriteId  (script/scr_readwrite.cpp:261)
+// 8253FF10  Scr_CheckIdHistory  (script/scr_readwrite.cpp:236)
 
-void WriteId(void)
+longlong Scr_CheckIdHistory(uint param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  uint uVar2;
+  ushort *puVar3;
+  
+  lVar1 = 1;
+  uVar2 = DAT_8387b8ec + 1;
+  if (uVar2 < 0x10) {
+    puVar3 = &DAT_8387b8f4 + uVar2;
+    do {
+      if (param_1 == *puVar3 + 1) {
+        return lVar1;
+      }
+      if (param_1 == *puVar3) goto LAB_8253ffa4;
+      uVar2 = uVar2 + 1;
+      puVar3 = puVar3 + 1;
+      lVar1 = lVar1 + 2;
+    } while (uVar2 < 0x10);
+  }
+  puVar3 = &DAT_8387b8f4;
+  uVar2 = 0;
+  while( true ) {
+    if (param_1 == *puVar3 + 1) {
+      return lVar1;
+    }
+    if (param_1 == *puVar3) break;
+    uVar2 = uVar2 + 1;
+    puVar3 = puVar3 + 1;
+    lVar1 = lVar1 + 2;
+    if (DAT_8387b8ec < uVar2) {
+      return 0;
+    }
+  }
+LAB_8253ffa4:
+  return lVar1 + 1;
+}
+
+
+// 8253FFB0  WriteId  (script/scr_readwrite.cpp:261)
+
+/* WARNING: Removing unreachable block (ram,0x8254006c) */
+
+void WriteId(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  undefined2 uVar1;
+  undefined2 *puVar2;
+  int iVar4;
+  ulonglong uVar3;
+  undefined2 local_40 [32];
+  
+  iVar4 = __savegprlr_27();
+  if ((*(short *)(&DAT_83c4baf8 + iVar4 * 2) == 0) && (iVar4 != 0)) {
+    MyAssertHandler(0xffffffff82151f68,0x10a,0,0xffffffff82000f98,0xffffffff82152064);
+  }
+  if ((param_2 & 0xfffffff8) != 0) {
+    MyAssertHandler(0xffffffff82151f68,0x10b,0,0xffffffff8215203c,0xffffffff82152050);
+  }
+  uVar1 = *(undefined2 *)(&DAT_83c4baf8 + iVar4 * 2);
+  uVar3 = Scr_CheckIdHistory(uVar1);
+  uVar3 = (uVar3 & 0x1fffffff) << 3;
+  uVar3 = -(ulonglong)(uVar3 < 0x100) & uVar3;
+  local_40[0] = CONCAT11((char)uVar3 + (char)param_2,(undefined1)local_40[0]);
+  MemFile_WriteData(param_3,1,local_40);
+  if (uVar3 == 0) {
+    local_40[0] = uVar1;
+    MemFile_WriteData(param_3,2,local_40);
+  }
+  puVar2 = &DAT_8387b8f4 + DAT_8387b8ec;
+  DAT_8387b8ec = DAT_8387b8ec - 1 & 0xf;
+  *puVar2 = uVar1;
+  __restgprlr_27();
+  return;
 }
 
 
 // 825400F0  Scr_ReadId  (script/scr_readwrite.cpp:286)
 
-void Scr_ReadId(void)
+void Scr_ReadId(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  short local_40 [32];
+  
+  uVar2 = __savegprlr_27();
+  uVar4 = (param_2 & 0xffffffff) >> 3;
+  if (uVar4 == 0) {
+    MemFile_ReadData(uVar2,2,local_40);
+    uVar3 = (ulonglong)DAT_8387b8ec;
+    uVar4 = (ulonglong)local_40[0];
+  }
+  else {
+    uVar3 = (ulonglong)DAT_8387b8ec;
+    uVar4 = (ulonglong)
+            *(ushort *)
+             ((int)&DAT_8387b8f4 + ((uint)(((uVar4 + 1 >> 1) + uVar3 & 0xffffffff) << 1) & 0x1e)) +
+            (uVar4 & 1);
+  }
+  if ((uVar4 & 0xffffffff) == 0) {
+    uVar5 = 0;
+  }
+  else {
+    iVar1 = (int)((uVar4 & 0xffffffff) << 1);
+    uVar5 = (ulonglong)*(ushort *)(&DAT_83c5daf8 + iVar1);
+    if (uVar5 == 0) {
+      uVar5 = AllocObject();
+      *(short *)(&DAT_83c5daf8 + iVar1) = (short)uVar5;
+    }
+    AddRefToObject(uVar5);
+    uVar3 = (ulonglong)DAT_8387b8ec;
+  }
+  DAT_8387b8ec = (int)uVar3 - 1U & 0xf;
+  *(short *)((int)&DAT_8387b8f4 + (int)(uVar3 << 1)) = (short)uVar4;
+  __restgprlr_27(uVar5);
+  return;
 }
 
 
 // 825401C0  WriteStack  (script/scr_readwrite.cpp:320)
 
-void WriteStack(void)
+void WriteStack(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 uVar1;
+  undefined4 *puVar2;
+  short sVar3;
+  undefined1 *puVar4;
+  short local_30 [24];
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82151f68,0x146,0,0xffffffff82000f98,0xffffffff82152084);
+  }
+  sVar3 = *(short *)(puVar2 + 1);
+  local_30[0] = sVar3;
+  MemFile_WriteData(param_2,2,local_30);
+  WriteCodepos(*puVar2,param_2);
+  WriteId(*(undefined2 *)(puVar2 + 2),0,param_2);
+  local_30[0] = CONCAT11(*(undefined1 *)((int)puVar2 + 10),(undefined1)local_30[0]);
+  MemFile_WriteData(param_2,1,local_30);
+  puVar4 = (undefined1 *)((int)puVar2 + 0xb);
+  for (; sVar3 != 0; sVar3 = sVar3 + -1) {
+    uVar1 = *puVar4;
+    puVar2 = (undefined4 *)(puVar4 + 1);
+    puVar4 = puVar4 + 5;
+    DoSaveEntryInternal(uVar1,*puVar2,param_2);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -211,7 +421,6 @@ void Scr_ReadStack(void)
   uVar6 = (uint)local_60[0];
   uVar7 = uVar6 * 5 + 0xb;
   if (uVar7 != (uVar7 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151f68,0x167,0,0xffffffff82000f98,0xffffffff82152090);
   }
   piVar3 = (int *)MT_Alloc(uVar7,1);
@@ -220,7 +429,6 @@ void Scr_ReadStack(void)
   *(short *)((int)piVar3 + 6) = (short)uVar7;
   iVar4 = Scr_ReadCodepos(uVar2);
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151f68,0x172,0,0xffffffff82000f98,0xffffffff8214f64c);
   }
   *piVar3 = iVar4;
@@ -246,8 +454,55 @@ void Scr_ReadStack(void)
 void AddSaveStackInternal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 uVar1;
+  ushort uVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
+  short sVar6;
+  undefined1 *puVar7;
+  
+  iVar5 = __savegprlr_29();
+  uVar2 = *(ushort *)(iVar5 + 8);
+  if ((uVar2 != 0) && (iVar4 = (uint)uVar2 * 2, *(short *)(&DAT_83c4baf8 + iVar4) == 0)) {
+    DAT_83c4bad6 = DAT_83c4bad6 + 1;
+    *(ushort *)(&DAT_83c4baf8 + iVar4) = DAT_83c4bad6;
+    *(ushort *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = uVar2;
+  }
+  puVar7 = (undefined1 *)(iVar5 + 0xb);
+  for (sVar6 = *(short *)(iVar5 + 4); sVar6 != 0; sVar6 = sVar6 + -1) {
+    uVar1 = *puVar7;
+    puVar3 = (undefined4 *)(puVar7 + 1);
+    puVar7 = puVar7 + 5;
+    AddSaveEntryInternal(uVar1,*puVar3);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82541918  AddSaveEntryInternal  (script/scr_readwrite.cpp:421)
+
+void AddSaveEntryInternal(int param_1,int param_2)
+
+{
+  if (param_1 != 1) {
+    if (param_1 != 0xc) {
+      return;
+    }
+    AddSaveStackInternal(param_2);
+    return;
+  }
+  if (param_2 == 0) {
+    return;
+  }
+  if (*(short *)(&DAT_83c4baf8 + param_2 * 2) != 0) {
+    return;
+  }
+  DAT_83c4bad6 = DAT_83c4bad6 + 1;
+  *(ushort *)(&DAT_83c4baf8 + param_2 * 2) = DAT_83c4bad6;
+  *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)param_2;
+  return;
 }
 
 
@@ -294,8 +549,8 @@ void AddSaveEntry(int param_1,undefined8 param_2)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82151f68,0x1c2,0,0xffffffff8214e810);
+  return;
 }
 
 
@@ -314,18 +569,125 @@ void AddSaveEntry(undefined4 *param_1)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82151f68,0x1c2,0,0xffffffff8214e810);
+  return;
 }
 
 
 // 825419F8  DoSaveEntry  (script/scr_readwrite.cpp:463)
 
-void DoSaveEntry(void)
+void DoSaveEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  uint local_40 [2];
+  undefined8 local_38;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82151f68,0x1d2,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  uVar2 = MemFile_GetUsedSize(param_4);
+  ProfMem_Begin(0xffffffff8215249c,uVar2);
+  uVar2 = MemFile_GetUsedSize(param_4);
+  ProfMem_Begin(0xffffffff82152488,uVar2);
+  DoSaveEntryInternal(puVar3[1],*puVar3,param_4);
+  MemFile_GetUsedSize(param_4);
+  ProfMem_End();
+  if ((param_3 & 0xff) == 0) {
+    uVar2 = MemFile_GetUsedSize(param_4);
+    ProfMem_Begin(0xffffffff8215247c,uVar2);
+    if ((param_2 & 0xff000000) != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x1dd,0,0xffffffff8214eed0,0xffffffff82152464,param_2);
+    }
+    local_40[0] = CONCAT13((char)param_2,local_40[0]._1_3_);
+    MemFile_WriteData(param_4,1,local_40);
+    local_40[0] = CONCAT13((char)(param_2 >> 8),local_40[0]._1_3_);
+    MemFile_WriteData(param_4,1,local_40);
+    local_40[0] = CONCAT13((char)(param_2 >> 0x10),local_40[0]._1_3_);
+    MemFile_WriteData(param_4,1,local_40);
+    MemFile_GetUsedSize(param_4);
+    ProfMem_End();
+    MemFile_GetUsedSize(param_4);
+    ProfMem_End();
+    __restgprlr_27();
+    return;
+  }
+  uVar2 = Scr_GetArrayIndexValue(param_2);
+  local_38._4_4_ = (int)uVar2;
+  local_38._0_4_ = (uint)((ulonglong)uVar2 >> 0x20);
+  uVar1 = local_38._0_4_;
+  local_38 = uVar2;
+  if (local_38._4_4_ == 1) {
+    WriteId(uVar1,5,param_4);
+  }
+  else {
+    if (local_38._4_4_ == 2) {
+      uVar2 = MemFile_GetUsedSize(param_4);
+      ProfMem_Begin(0xffffffff82152450,uVar2);
+      local_40[0] = CONCAT13(4,local_40[0]._1_3_);
+      MemFile_WriteData(param_4,1,local_40);
+      uVar2 = SL_ConvertToString(local_38._0_4_ & 0xffff);
+      MemFile_WriteCString(param_4,uVar2);
+      MemFile_GetUsedSize(param_4);
+      ProfMem_End();
+      MemFile_GetUsedSize(param_4);
+      ProfMem_End();
+      __restgprlr_27();
+      return;
+    }
+    if (local_38._4_4_ == 6) {
+      if (local_38._0_4_ == 0) {
+        local_40[0] = local_40[0] & 0xffffff;
+        MemFile_WriteData(param_4,1,local_40);
+        MemFile_GetUsedSize(param_4);
+        ProfMem_End();
+        __restgprlr_27();
+        return;
+      }
+      if ((-0x81 < (int)local_38._0_4_) && ((int)local_38._0_4_ < 0x80)) {
+        local_40[0] = CONCAT13(1,local_40[0]._1_3_);
+        MemFile_WriteData(param_4,1,local_40);
+        local_40[0] = CONCAT13((char)((ulonglong)uVar2 >> 0x20),local_40[0]._1_3_);
+        MemFile_WriteData(param_4,1,local_40);
+        MemFile_GetUsedSize(param_4);
+        ProfMem_End();
+        __restgprlr_27();
+        return;
+      }
+      if ((-0x8001 < (int)local_38._0_4_) && ((int)local_38._0_4_ < 0x8000)) {
+        local_40[0] = CONCAT13(2,local_40[0]._1_3_);
+        MemFile_WriteData(param_4,1,local_40);
+        local_40[0] = CONCAT22((short)((ulonglong)uVar2 >> 0x20),local_40[0]._2_2_);
+        MemFile_WriteData(param_4,2,local_40);
+        MemFile_GetUsedSize(param_4);
+        ProfMem_End();
+        __restgprlr_27();
+        return;
+      }
+      local_40[0] = CONCAT13(3,local_40[0]._1_3_);
+      MemFile_WriteData(param_4,1,local_40);
+      local_40[0] = uVar1;
+      MemFile_WriteData(param_4,4,local_40);
+      MemFile_GetUsedSize(param_4);
+      ProfMem_End();
+      __restgprlr_27();
+      return;
+    }
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82151f68,0x20c,1,0xffffffff821520c4);
+      MemFile_GetUsedSize(param_4);
+      ProfMem_End();
+      __restgprlr_27();
+      return;
+    }
+  }
+  MemFile_GetUsedSize(param_4);
+  ProfMem_End();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -351,7 +713,6 @@ void Scr_DoLoadEntryInternal(float *param_1,undefined8 param_2)
     default:
       if (DAT_84013128 == 0) {
         uVar1 = va(0xffffffff821520b4);
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151f68,0x256,1,uVar1);
       }
       break;
@@ -379,7 +740,6 @@ void Scr_DoLoadEntryInternal(float *param_1,undefined8 param_2)
     case 9:
       fVar2 = (float)Scr_ReadCodepos(param_2);
       if (fVar2 == 0.0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151f68,0x24e,0,0xffffffff82000f98,0xffffffff8214f64c);
       }
       *param_1 = fVar2;
@@ -448,7 +808,6 @@ ulonglong Scr_DoLoadEntry(undefined8 param_1,char param_2,undefined8 param_3)
     }
     else {
       if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82151f68,0x27c,1,0xffffffff821520c4);
       }
       uVar2 = 0;
@@ -463,8 +822,85 @@ ulonglong Scr_DoLoadEntry(undefined8 param_1,char param_2,undefined8 param_3)
 void AddSaveObjectChildren(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  byte bVar1;
+  ushort uVar2;
+  uint uVar3;
+  uint uVar5;
+  char cVar7;
+  int iVar6;
+  undefined8 uVar4;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  int iVar11;
+  int local_80;
+  int iStack_7c;
+  
+  uVar5 = __savegprlr_19();
+  cVar7 = IsValid(&DAT_838fba80 + uVar5 * 4);
+  if (cVar7 == '\0') {
+    MyAssertHandler(0xffffffff82151f68,0x28e,0,0xffffffff82000f98,0xffffffff82152220);
+  }
+  bVar1 = *(byte *)((int)&DAT_838fba84 + uVar5 * 8 + 3);
+  uVar10 = (uint)bVar1;
+  iVar11 = (uVar5 & 1) * 0xc800;
+  for (iVar6 = FindLastSibling(uVar5); iVar6 != 0; iVar6 = FindPrevSibling(iVar11,iVar6)) {
+    iVar8 = iVar6 + iVar11;
+    iVar9 = iVar8 * 0x10;
+    cVar7 = IsValid(&DAT_83987a80 + iVar8 * 4);
+    if (cVar7 == '\0') {
+      MyAssertHandler(0xffffffff82151f68,0x297,0,0xffffffff82000f98,0xffffffff821522bc);
+    }
+    if (bVar1 == 0x17) {
+      if (*(short *)(&DAT_83987a88 + iVar9) == 0) {
+        MyAssertHandler(0xffffffff82151f10,0xc5,0,0xffffffff82000f98,0xffffffff82151f58);
+      }
+      uVar4 = Scr_GetArrayIndexValue
+                        ((ulonglong)*(ushort *)(&DAT_83987a8a + iVar9) * 0x100 +
+                         (ulonglong)(byte)(&DAT_83987a87)[iVar9]);
+      iStack_7c = (int)uVar4;
+      if (((iStack_7c == 1) && (local_80 = (int)((ulonglong)uVar4 >> 0x20), local_80 != 0)) &&
+         (*(short *)(&DAT_83c4baf8 + local_80 * 2) == 0)) {
+        DAT_83c4bad6 = DAT_83c4bad6 + 1;
+        *(ushort *)(&DAT_83c4baf8 + local_80 * 2) = DAT_83c4bad6;
+        *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)((ulonglong)uVar4 >> 0x20);
+      }
+    }
+    iVar8 = (&DAT_83987a80)[iVar8 * 4];
+    if ((&DAT_83987a86)[iVar9] == '\x01') {
+      if ((iVar8 != 0) && (*(short *)(&DAT_83c4baf8 + iVar8 * 2) == 0)) {
+        DAT_83c4bad6 = DAT_83c4bad6 + 1;
+        *(ushort *)(&DAT_83c4baf8 + iVar8 * 2) = DAT_83c4bad6;
+        *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)iVar8;
+      }
+    }
+    else if ((&DAT_83987a86)[iVar9] == '\f') {
+      AddSaveStackInternal();
+    }
+  }
+  if (uVar10 - 0x10 < 6) {
+    if (((uVar10 != 0x10) && (uVar10 != 0x11)) && (uVar10 != 0x12)) {
+      if (uVar10 == 0x13) {
+        uVar10 = (&DAT_838fba84)[uVar5 * 2];
+        uVar3 = uVar10 >> 8 & 0xffff;
+        if ((uVar3 != 0) && (iVar6 = uVar3 * 2, *(short *)(&DAT_83c4baf8 + iVar6) == 0)) {
+          DAT_83c4bad6 = DAT_83c4bad6 + 1;
+          *(ushort *)(&DAT_83c4baf8 + iVar6) = DAT_83c4bad6;
+          *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)(uVar10 >> 8);
+        }
+      }
+      else if (uVar10 == 0x14) goto LAB_82542024;
+    }
+    uVar2 = (&DAT_838fba82)[uVar5 * 4];
+    if ((uVar2 != 0) && (iVar6 = (uint)uVar2 * 2, *(short *)(&DAT_83c4baf8 + iVar6) == 0)) {
+      DAT_83c4bad6 = DAT_83c4bad6 + 1;
+      *(ushort *)(&DAT_83c4baf8 + iVar6) = DAT_83c4bad6;
+      *(ushort *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = uVar2;
+    }
+  }
+LAB_82542024:
+  __restgprlr_19();
+  return;
 }
 
 
@@ -491,8 +927,32 @@ void AddSaveObjectInternal(int param_1)
 void AddSaveObject(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  undefined2 *puVar5;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = DAT_83c4bad6;
+  uVar3 = (uint)DAT_83c4bad6;
+  uVar4 = uVar3;
+  if ((iVar2 != 0) && (*(short *)(&DAT_83c4baf8 + iVar2 * 2) == 0)) {
+    DAT_83c4bad6 = DAT_83c4bad6 + 1;
+    *(ushort *)(&DAT_83c4baf8 + iVar2 * 2) = DAT_83c4bad6;
+    *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)iVar2;
+    uVar4 = (uint)DAT_83c4bad6;
+  }
+  if (uVar1 < uVar4) {
+    puVar5 = (undefined2 *)(&DAT_83c5daf8 + uVar3 * 2);
+    do {
+      puVar5 = puVar5 + 1;
+      uVar3 = uVar3 + 1;
+      AddSaveObjectChildren(*puVar5);
+    } while ((int)uVar3 < (int)(uint)DAT_83c4bad6);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -519,52 +979,49 @@ void DoSaveObjectInfo(undefined8 param_1,undefined8 param_2)
   uint local_6c;
   
   uVar5 = __savegprlr_20();
-  iVar9 = uVar5 * 8;
-  cVar7 = IsValid(&DAT_838fba80 + iVar9);
+  cVar7 = IsValid(&DAT_838fba80 + uVar5 * 4);
   if (cVar7 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151f68,0x2ef,0,0xffffffff82000f98,0xffffffff82152220);
   }
-  bVar1 = (&DAT_838fba87)[iVar9];
+  bVar1 = *(byte *)((int)&DAT_838fba84 + uVar5 * 8 + 3);
   uVar10 = (uint)bVar1;
   if (uVar10 - 0x10 < 7) {
     if (uVar10 == 0x11) {
       uVar3 = MemFile_GetUsedSize(param_2);
       ProfMem_Begin(0xffffffff821524a8,uVar3);
-      WriteId(*(undefined2 *)(&DAT_838fba82 + iVar9),2,param_2);
-      uVar3 = SL_ConvertToString(*(uint *)(&DAT_838fba84 + iVar9) >> 8 & 0xffff);
+      WriteId((&DAT_838fba82)[uVar5 * 4],2,param_2);
+      uVar3 = SL_ConvertToString((uint)(&DAT_838fba84)[uVar5 * 2] >> 8 & 0xffff);
       MemFile_WriteCString(param_2,uVar3);
       MemFile_GetUsedSize(param_2);
       ProfMem_End();
       goto LAB_825422b4;
     }
     if (uVar10 == 0x12) {
-      WriteId(*(undefined2 *)(&DAT_838fba82 + iVar9),3,param_2);
-      local_70 = *(uint *)(&DAT_838fba84 + iVar9) >> 8;
+      WriteId((&DAT_838fba82)[uVar5 * 4],3,param_2);
+      local_70 = (uint)(&DAT_838fba84)[uVar5 * 2] >> 8;
       uVar3 = 4;
     }
     else {
       if (uVar10 == 0x13) {
-        WriteId(*(undefined2 *)(&DAT_838fba82 + iVar9),4,param_2);
-        WriteId(*(uint *)(&DAT_838fba84 + iVar9) >> 8 & 0xffff,0,param_2);
+        WriteId((&DAT_838fba82)[uVar5 * 4],4,param_2);
+        WriteId((uint)(&DAT_838fba84)[uVar5 * 2] >> 8 & 0xffff,0,param_2);
         goto LAB_825422b4;
       }
       if (uVar10 == 0x14) goto LAB_8254229c;
       if (uVar10 == 0x15) {
-        WriteId(*(undefined2 *)(&DAT_838fba82 + iVar9),5,param_2);
+        WriteId((&DAT_838fba82)[uVar5 * 4],5,param_2);
         goto LAB_825422b4;
       }
       if (uVar10 == 0x10) {
-        WriteId(*(undefined2 *)(&DAT_838fba82 + iVar9),1,param_2);
+        WriteId((&DAT_838fba82)[uVar5 * 4],1,param_2);
         goto LAB_825422b4;
       }
       local_70 = CONCAT13(0xb0,local_70._1_3_);
       MemFile_WriteData(param_2,1,&local_70);
-      local_70 = CONCAT22(*(undefined2 *)(&DAT_838fba82 + iVar9),local_70._2_2_);
+      local_70 = CONCAT22((&DAT_838fba82)[uVar5 * 4],local_70._2_2_);
       MemFile_WriteData(param_2,2,&local_70);
       uVar3 = 2;
-      local_70 = CONCAT22((short)((uint)*(undefined4 *)(&DAT_838fba84 + iVar9) >> 8),local_70._2_2_)
-      ;
+      local_70 = CONCAT22((short)((uint)(&DAT_838fba84)[uVar5 * 2] >> 8),local_70._2_2_);
     }
   }
   else {
@@ -584,44 +1041,39 @@ LAB_825422b4:
   }
   local_70 = CONCAT22(sVar11,local_70._2_2_);
   MemFile_WriteData(param_2,2,&local_70);
-  iVar6 = FindLastSibling(uVar5);
-  while( true ) {
-    if (iVar6 == 0) {
-      MemFile_GetUsedSize(param_2);
-      ProfMem_End();
-      if (DAT_83c4ba96 != '\0') {
-        uVar2 = *(ushort *)(&DAT_83727338 + uVar5 * 2);
-        while( true ) {
-          uVar12 = 0;
-          if ((uVar2 == 0) || (uVar12 = 1, uVar2 == 1)) break;
-          local_70 = CONCAT13(2,local_70._1_3_);
-          MemFile_WriteData(param_2,1,&local_70);
-          local_70 = *(uint *)(&DAT_83703328 + ((uint)uVar2 << 2));
-          uVar2 = *(ushort *)(&DAT_83739710 + ((uint)uVar2 << 1));
-          MemFile_WriteData(param_2,4,&local_70);
-        }
-        local_70 = CONCAT13(uVar12,local_70._1_3_);
-        MemFile_WriteData(param_2,1,&local_70);
-      }
-      __restgprlr_20();
-      return;
-    }
+  for (iVar6 = FindLastSibling(uVar5); iVar6 != 0; iVar6 = FindPrevSibling(iVar9,iVar6)) {
     iVar8 = (iVar6 + iVar9) * 0x10;
-    cVar7 = IsValid(&DAT_83987a80 + iVar8);
-    if (cVar7 == '\0') break;
+    cVar7 = IsValid(&DAT_83987a80 + (iVar6 + iVar9) * 4);
+    if (cVar7 == '\0') {
+      MyAssertHandler(0xffffffff82151f68,0x32b,0,0xffffffff82000f98,0xffffffff821522bc);
+    }
     if (*(short *)(&DAT_83987a88 + iVar8) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82151f10,0xc5,0,0xffffffff82000f98,0xffffffff82151f58);
     }
-    local_70 = *(uint *)(&DAT_83987a80 + iVar8);
+    local_70 = (&DAT_83987a80)[(iVar6 + iVar9) * 4];
     local_6c = (uint)(byte)(&DAT_83987a86)[iVar8];
     DoSaveEntry(&local_70,
                 (ulonglong)*(ushort *)(&DAT_83987a8a + iVar8) * 0x100 +
                 (ulonglong)(byte)(&DAT_83987a87)[iVar8],bVar1 == 0x17,param_2);
-    iVar6 = FindPrevSibling(iVar9,iVar6);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82151f68,0x32b,0,0xffffffff82000f98,0xffffffff821522bc);
+  MemFile_GetUsedSize(param_2);
+  ProfMem_End();
+  if (DAT_83c4ba96 != '\0') {
+    uVar2 = *(ushort *)(&DAT_83727338 + uVar5 * 2);
+    while( true ) {
+      uVar12 = 0;
+      if ((uVar2 == 0) || (uVar12 = 1, uVar2 == 1)) break;
+      local_70 = CONCAT13(2,local_70._1_3_);
+      MemFile_WriteData(param_2,1,&local_70);
+      local_70 = *(uint *)(&DAT_83703328 + ((uint)uVar2 << 2));
+      uVar2 = *(ushort *)(&DAT_83739710 + ((uint)uVar2 << 1));
+      MemFile_WriteData(param_2,4,&local_70);
+    }
+    local_70 = CONCAT13(uVar12,local_70._1_3_);
+    MemFile_WriteData(param_2,1,&local_70);
+  }
+  __restgprlr_20();
+  return;
 }
 
 
@@ -636,12 +1088,39 @@ undefined2 Scr_ConvertObjectToSave(int param_1)
   if (param_1 != 0) {
     AddSaveObject(param_1);
     if (*(short *)(&DAT_83c4baf8 + param_1 * 2) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82151f68,0x359,0,0xffffffff82000f98,0xffffffff821524bc);
     }
     uVar1 = *(undefined2 *)(&DAT_83c4baf8 + param_1 * 2);
   }
   return uVar1;
+}
+
+
+// 82540790  Scr_ConvertObjectFromLoad  (script/scr_readwrite.cpp:863)
+
+void Scr_ConvertObjectFromLoad(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    __restgprlr_29();
+    return;
+  }
+  uVar2 = (uint)*(ushort *)(&DAT_83c5daf8 + iVar1 * 2);
+  if (uVar2 == 0) {
+    uVar2 = AllocObject();
+    *(short *)(&DAT_83c5daf8 + iVar1 * 2) = (short)uVar2;
+  }
+  AddRefToObject(uVar2);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (uVar2 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -658,7 +1137,6 @@ undefined2 Scr_ConvertThreadToSave(ushort param_1)
   else {
     AddSaveObject(param_1);
     if (*(short *)(&DAT_83c4baf8 + (uint)param_1 * 2) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82151f68,0x37e,0,0xffffffff82000f98,0xffffffff821524d4);
     }
     uVar1 = *(undefined2 *)(&DAT_83c4baf8 + (uint)param_1 * 2);
@@ -672,18 +1150,377 @@ undefined2 Scr_ConvertThreadToSave(ushort param_1)
 void Scr_ConvertThreadFromLoad(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ushort uVar2;
+  uint uVar3;
+  
+  uVar2 = __savegprlr_29();
+  if (uVar2 == 0) {
+    __restgprlr_29(0);
+    return;
+  }
+  if (*(short *)(&DAT_83c5daf8 + (uint)uVar2 * 2) == 0) {
+    MyAssertHandler(0xffffffff82151f68,0x388,0,0xffffffff82000f98,0xffffffff821520d0);
+  }
+  uVar3 = (uint)*(ushort *)(&DAT_83c5daf8 + (uint)uVar2 * 2);
+  DAT_83c6fb18 = DAT_83c6fb18 + 1;
+  AddRefToObject(uVar3);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (uVar3 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 825408E0  Scr_DoLoadObjectInfo  (script/scr_readwrite.cpp:923)
 
-void Scr_DoLoadObjectInfo(void)
+/* WARNING: Removing unreachable block (ram,0x82540b70) */
+
+void Scr_DoLoadObjectInfo(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  ushort *puVar1;
+  undefined1 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  uint uVar6;
+  char cVar11;
+  undefined2 uVar10;
+  uint uVar7;
+  int iVar8;
+  undefined8 uVar5;
+  int iVar9;
+  ulonglong uVar12;
+  ushort uVar13;
+  uint uVar14;
+  int local_80 [2];
+  undefined8 local_78;
+  
+  uVar6 = __savegprlr_19();
+  cVar11 = IsValid(&DAT_838fba80 + uVar6 * 4);
+  if (cVar11 == '\0') {
+    MyAssertHandler(0xffffffff82151f68,0x3aa,0,0xffffffff82000f98,0xffffffff82152220);
+  }
+  MemFile_ReadData(param_2,1,local_80);
+  uVar14 = local_80[0]._0_1_ & 7;
+  if (uVar14 - 1 < 5) {
+    if (uVar14 == 2) {
+      uVar14 = 0x11;
+      uVar10 = Scr_ReadId(param_2);
+      uVar7 = (&DAT_838fba84)[uVar6 * 2];
+      (&DAT_838fba82)[uVar6 * 4] = uVar10;
+      if ((uVar7 & 0xffffff00) != 0) {
+        MyAssertHandler(0xffffffff82151f68,0x3b9,0,0xffffffff82000f98,0xffffffff821521ec);
+      }
+      uVar7 = Scr_ReadString(param_2);
+      (&DAT_838fba84)[uVar6 * 2] = (uVar7 & 0xffff) << 8 | (&DAT_838fba84)[uVar6 * 2];
+    }
+    else if (uVar14 == 3) {
+      uVar14 = 0x12;
+      uVar10 = Scr_ReadId(param_2);
+      uVar7 = (&DAT_838fba84)[uVar6 * 2];
+      (&DAT_838fba82)[uVar6 * 4] = uVar10;
+      if ((uVar7 & 0xffffff00) != 0) {
+        MyAssertHandler(0xffffffff82151f68,0x3c1,0,0xffffffff82000f98,0xffffffff821521bc);
+      }
+      MemFile_ReadData(param_2,4,local_80);
+      (&DAT_838fba84)[uVar6 * 2] = local_80[0] << 8 | (&DAT_838fba84)[uVar6 * 2];
+    }
+    else if (uVar14 == 4) {
+      uVar14 = 0x13;
+      uVar10 = Scr_ReadId(param_2);
+      (&DAT_838fba82)[uVar6 * 4] = uVar10;
+      MemFile_ReadData(param_2,1,local_80);
+      uVar2 = local_80[0]._0_1_;
+      if (((&DAT_838fba84)[uVar6 * 2] & 0xffffff00) != 0) {
+        MyAssertHandler(0xffffffff82151f68,0x3ca,0,0xffffffff82000f98,0xffffffff82152184);
+      }
+      iVar8 = Scr_ReadId(param_2,uVar2);
+      (&DAT_838fba84)[uVar6 * 2] = iVar8 << 8 | (&DAT_838fba84)[uVar6 * 2];
+    }
+    else if (uVar14 == 1) {
+      uVar14 = 0x10;
+      uVar10 = Scr_ReadId(param_2);
+      (&DAT_838fba82)[uVar6 * 4] = uVar10;
+    }
+    else {
+      uVar14 = 0x15;
+      uVar10 = Scr_ReadId(param_2);
+      (&DAT_838fba82)[uVar6 * 4] = uVar10;
+    }
+  }
+  else {
+    uVar14 = (uint)(local_80[0]._0_1_ >> 3);
+    if (uVar14 == 0x16) {
+      MemFile_ReadData(param_2,2,local_80);
+      uVar7 = (&DAT_838fba84)[uVar6 * 2];
+      (&DAT_838fba82)[uVar6 * 4] = local_80[0]._0_2_;
+      if ((uVar7 & 0xffffff00) != 0) {
+        MyAssertHandler(0xffffffff82151f68,0x3d9,0,0xffffffff82000f98,0xffffffff82152154);
+      }
+      MemFile_ReadData(param_2,2,local_80);
+      (&DAT_838fba84)[uVar6 * 2] = (int)(short)local_80[0]._0_2_ << 8 | (&DAT_838fba84)[uVar6 * 2];
+    }
+    else if (uVar14 == 0x17) {
+      (&DAT_838fba82)[uVar6 * 4] = 0;
+    }
+  }
+  *(undefined1 *)((int)&DAT_838fba84 + uVar6 * 8 + 3) = 0;
+  (&DAT_838fba84)[uVar6 * 2] = uVar14 | (&DAT_838fba84)[uVar6 * 2];
+  MemFile_ReadData(param_2,2,local_80);
+  uVar12 = (ulonglong)local_80[0]._0_2_;
+  if (local_80[0]._0_2_ != 0) {
+    do {
+      uVar5 = Scr_DoLoadEntry(local_80,uVar14 == 0x17,param_2);
+      iVar9 = GetVariable(uVar6,uVar5);
+      iVar9 = iVar9 + (uVar6 & 1) * 0xc800;
+      iVar8 = iVar9 * 0x10;
+      if (uVar14 == 0x17) {
+        uVar5 = Scr_GetArrayIndexValue(uVar5);
+        local_78._0_4_ = (undefined4)((ulonglong)uVar5 >> 0x20);
+        uVar3 = local_78._0_4_;
+        local_78._4_4_ = (undefined4)uVar5;
+        uVar4 = local_78._4_4_;
+        local_78 = uVar5;
+        RemoveRefToValue(uVar4,uVar3);
+      }
+      if ((&DAT_83987a86)[iVar8] != '\0') {
+        MyAssertHandler(0xffffffff82151f68,0x3f7,0,0xffffffff82000f98,0xffffffff82152118);
+      }
+      uVar12 = uVar12 - 1;
+      (&DAT_83987a86)[iVar8] = (char)local_80[1];
+      (&DAT_83987a80)[iVar9 * 4] = local_80[0];
+    } while (uVar12 != 0);
+  }
+  if (DAT_83c4ba96 != '\0') {
+    if (*(short *)(&DAT_83727338 + uVar6 * 2) != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x405,0,0xffffffff82000f98,0xffffffff821520fc);
+    }
+    MemFile_ReadData(param_2,1,local_80);
+    uVar13 = (ushort)local_80[0]._0_1_;
+    uVar14 = DAT_83727328;
+    puVar1 = (ushort *)(&DAT_83727338 + uVar6 * 2);
+    while ((DAT_83727328 = uVar14, local_80[0]._0_1_ != 0 && (uVar13 = 1, local_80[0]._0_1_ != 1)))
+    {
+      if (uVar14 == 0) {
+        MyAssertHandler(0xffffffff82151f68,0x412,0,0xffffffff82000f98,0xffffffff821520f0);
+      }
+      iVar8 = uVar14 * 2;
+      DAT_83727328 = (uint)*(ushort *)(&DAT_83739710 + iVar8);
+      MemFile_ReadData(param_2,4,&local_78);
+      *(ushort *)(&DAT_83739710 + iVar8) = 0;
+      *puVar1 = (ushort)uVar14;
+      *(undefined4 *)(&DAT_83703328 + uVar14 * 4) = local_78._0_4_;
+      MemFile_ReadData(param_2,1,local_80);
+      uVar13 = 0;
+      uVar14 = DAT_83727328;
+      puVar1 = (ushort *)(&DAT_83739710 + iVar8);
+    }
+    *puVar1 = uVar13;
+  }
+  __restgprlr_19();
+  return;
+}
+
+
+// 82542990  Scr_SavePre  (script/scr_readwrite.cpp:1059)
+
+void Scr_SavePre(void)
+
+{
+  uint uVar1;
+  ushort uVar2;
+  int iVar11;
+  char cVar16;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  undefined4 *puVar12;
+  undefined8 uVar6;
+  int *piVar13;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  int iVar14;
+  ulonglong uVar9;
+  short sVar15;
+  ulonglong uVar10;
+  uint uVar17;
+  undefined2 *puVar18;
+  longlong lVar19;
+  uint uVar20;
+  
+  iVar11 = __savegprlr();
+  Com_Memset(0xffffffff83c4baf8,0,0x12000);
+  Com_Memset(0xffffffff83c5daf8,0,0x12000);
+  DAT_83c4bad6 = 0;
+  DAT_83c4bad8 = 0;
+  if (DAT_83c4babc != 0) {
+    if ((&DAT_83987a86)[DAT_83c4babc * 0x10] == '\x01') {
+      AddSaveObject((&DAT_83987a80)[DAT_83c4babc * 4]);
+    }
+    else if (((&DAT_83987a86)[DAT_83c4babc * 0x10] == '\f') && (DAT_84013128 == 0)) {
+      MyAssertHandler(0xffffffff82151f68,0x1c2,0,0xffffffff8214e810);
+    }
+  }
+  if (iVar11 != 0) {
+    if (DAT_83c4baa8 == 0) {
+      MyAssertHandler(0xffffffff82151f68,0x445,0,0xffffffff82000f98,0xffffffff82152658);
+    }
+    cVar16 = CheckReferences();
+    if (cVar16 == '\0') {
+      MyAssertHandler(0xffffffff82151f68,0x448,0,0xffffffff82000f98,0xffffffff82152408);
+    }
+    Scr_RemoveDebuggerRefs();
+    AddSaveObject(DAT_83c4bab8);
+    AddSaveObject(DAT_83c4bac0);
+    AddSaveObject(DAT_83c4bac4);
+    lVar19 = 6;
+    puVar18 = (undefined2 *)((int)&PTR_s_debugger_string_82990294 + 2);
+    do {
+      puVar18 = puVar18 + 6;
+      AddSaveObject(*puVar18);
+      uVar2 = DAT_83c4bad6;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
+    uVar17 = (uint)DAT_83c4bad6;
+    uVar1 = DAT_83c4baa8 & 1;
+    for (uVar3 = FindFirstSibling(); (uVar3 & 0xffffffff) != 0;
+        uVar3 = FindNextSibling((longlong)(int)uVar1 * 0xc800,uVar3)) {
+      uVar4 = FindObject(DAT_83c4baa8,uVar3);
+      lVar19 = (longlong)(int)((uint)uVar4 & 1) * 0xc800;
+      for (uVar5 = FindFirstSibling(); (uVar5 & 0xffffffff) != 0;
+          uVar5 = FindNextSibling(lVar19,uVar5)) {
+        iVar11 = GetValueType(lVar19,uVar5);
+        if (iVar11 != 0) {
+          iVar11 = GetValueType(lVar19,uVar5);
+          if (iVar11 != 0xc) {
+            MyAssertHandler(0xffffffff82151f68,0x463,0,0xffffffff82000f98,0xffffffff82152614);
+          }
+          puVar12 = (undefined4 *)GetVariableValueAddress(uVar4,uVar5);
+          AddSaveStackInternal(*puVar12);
+          iVar11 = GetVariableKeyObject(lVar19,uVar5);
+          if (iVar11 == 0) {
+            MyAssertHandler(0xffffffff82151f68,0x469,0,0xffffffff82000f98,0xffffffff82152648);
+          }
+          else if (*(short *)(&DAT_83c4baf8 + iVar11 * 2) == 0) {
+            DAT_83c4bad6 = DAT_83c4bad6 + 1;
+            *(ushort *)(&DAT_83c4baf8 + iVar11 * 2) = DAT_83c4bad6;
+            *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)iVar11;
+          }
+        }
+      }
+    }
+    uVar1 = DAT_83c4baac & 1;
+    for (uVar3 = FindFirstSibling(); (uVar3 & 0xffffffff) != 0;
+        uVar3 = FindNextSibling((longlong)(int)uVar1 * 0xc800,uVar3)) {
+      uVar4 = FindObject(DAT_83c4baac,uVar3);
+      iVar11 = ((uint)uVar4 & 1) * 0xc800;
+      for (uVar5 = FindFirstSibling(); (uVar5 & 0xffffffff) != 0;
+          uVar5 = FindNextSibling(iVar11,uVar5)) {
+        iVar14 = ((int)uVar5 + iVar11) * 0x10;
+        if ((&DAT_83987a86)[iVar14] != '\x01') {
+          MyAssertHandler(0xffffffff82151f68,0x478,0,0xffffffff82000f98,0xffffffff82152590);
+        }
+        if (*(short *)(&DAT_83987a88 + iVar14) == 0) {
+          MyAssertHandler(0xffffffff82151f10,0xc5,0,0xffffffff82000f98,0xffffffff82151f58);
+        }
+        uVar20 = (uint)*(ushort *)(&DAT_83987a8a + iVar14) * 0x100 +
+                 (uint)(byte)(&DAT_83987a87)[iVar14];
+        if (0xffff < uVar20 - 0x10000) {
+          MyAssertHandler(0xffffffff82151f68,0x47a,0,0xffffffff82000f98,0xffffffff821525e8);
+        }
+        if (((uVar20 & 0xffff) != 0) &&
+           (iVar14 = (uVar20 & 0xffff) * 2, *(short *)(&DAT_83c4baf8 + iVar14) == 0)) {
+          DAT_83c4bad6 = DAT_83c4bad6 + 1;
+          *(ushort *)(&DAT_83c4baf8 + iVar14) = DAT_83c4bad6;
+          *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)uVar20;
+        }
+        uVar6 = FindObjectVariable(uVar4);
+        piVar13 = (int *)GetVariableValueAddress(uVar4,uVar6);
+        iVar14 = *piVar13;
+        if ((iVar14 != 0) && (*(short *)(&DAT_83c4baf8 + iVar14 * 2) == 0)) {
+          DAT_83c4bad6 = DAT_83c4bad6 + 1;
+          *(ushort *)(&DAT_83c4baf8 + iVar14 * 2) = DAT_83c4bad6;
+          *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)iVar14;
+        }
+      }
+    }
+    uVar1 = DAT_83c4bab0 & 1;
+    for (uVar3 = FindFirstSibling(); (uVar3 & 0xffffffff) != 0;
+        uVar3 = FindNextSibling((longlong)(int)uVar1 * 0xc800,uVar3)) {
+      uVar4 = FindObject(DAT_83c4bab0,uVar3);
+      for (uVar5 = FindFirstSibling(); (uVar5 & 0xffffffff) != 0;
+          uVar5 = FindNextSibling((longlong)(int)((uint)uVar4 & 1) * 0xc800,uVar5)) {
+        uVar7 = FindObject(uVar4,uVar5);
+        lVar19 = (longlong)(int)((uint)uVar7 & 1) * 0xc800;
+        for (uVar8 = FindFirstSibling(); (uVar8 & 0xffffffff) != 0;
+            uVar8 = FindNextSibling(lVar19,uVar8)) {
+          iVar11 = GetVariableKeyObject(lVar19,uVar8);
+          if (iVar11 == 0) {
+            MyAssertHandler(0xffffffff82151f68,0x492,0,0xffffffff82000f98,0xffffffff82152648);
+          }
+          else if (*(short *)(&DAT_83c4baf8 + iVar11 * 2) == 0) {
+            DAT_83c4bad6 = DAT_83c4bad6 + 1;
+            *(ushort *)(&DAT_83c4baf8 + iVar11 * 2) = DAT_83c4bad6;
+            *(short *)(&DAT_83c5daf8 + (uint)DAT_83c4bad6 * 2) = (short)iVar11;
+          }
+          iVar14 = GetValueType(lVar19,uVar8);
+          uVar10 = uVar7;
+          uVar9 = uVar8;
+          if (iVar14 == 0xc) {
+LAB_82542fc4:
+            puVar12 = (undefined4 *)GetVariableValueAddress(uVar10,uVar9);
+            AddSaveStackInternal(*puVar12);
+          }
+          else {
+            Scr_GetSelf(iVar11);
+            uVar6 = GetStartLocalId();
+            uVar9 = FindObjectVariable(DAT_83c4bab4,uVar6);
+            if ((uVar9 & 0xffffffff) != 0) {
+              sVar15 = Scr_GetThreadNotifyName(uVar6);
+              if (sVar15 != 0) {
+                MyAssertHandler(0xffffffff82151f68,0x4a2,0,0xffffffff82000f98,0xffffffff82152504);
+              }
+              iVar11 = GetValueType((longlong)(int)(DAT_83c4bab4 & 1) * 0xc800,uVar9);
+              if (iVar11 != 0xc) {
+                MyAssertHandler(0xffffffff82151f68,0x4a3,0,0xffffffff82000f98,0xffffffff82152538);
+              }
+              uVar10 = (ulonglong)DAT_83c4bab4;
+              goto LAB_82542fc4;
+            }
+          }
+        }
+      }
+    }
+    if (uVar2 < DAT_83c4bad6) {
+      puVar18 = (undefined2 *)(&DAT_83c5daf8 + uVar17 * 2);
+      do {
+        puVar18 = puVar18 + 1;
+        uVar17 = uVar17 + 1;
+        AddSaveObjectChildren(*puVar18);
+      } while ((int)uVar17 < (int)(uint)DAT_83c4bad6);
+    }
+  }
+  __restgprlr();
+  return;
+}
+
+
+// 825425C8  Scr_SavePre2  (script/scr_readwrite.cpp:1206)
+
+void Scr_SavePre2(int param_1)
+
+{
+  DAT_83c4bad8 = DAT_83c4bad6;
+  if (param_1 != 0) {
+    AddSaveObject(DAT_83c4baa8);
+    AddSaveObject(DAT_83c4baac);
+    AddSaveObject(DAT_83c4bab0);
+    AddSaveObject(DAT_83c4bab4);
+  }
+  return;
 }
 
 
@@ -701,8 +1538,33 @@ void WriteGameEntry(undefined8 param_1)
   else {
     local_20[0] = 1;
     MemFile_WriteData(param_1,1,local_20);
-    DoSaveEntryInternal((&DAT_83987a86)[DAT_83c4babc * 0x10],
-                        *(undefined4 *)(&DAT_83987a80 + DAT_83c4babc * 0x10),param_1);
+    DoSaveEntryInternal((&DAT_83987a86)[DAT_83c4babc * 0x10],(&DAT_83987a80)[DAT_83c4babc * 4],
+                        param_1);
+  }
+  return;
+}
+
+
+// 82540D90  Scr_ReadGameEntry  (script/scr_readwrite.cpp:1233)
+
+void Scr_ReadGameEntry(undefined8 param_1)
+
+{
+  int iVar1;
+  char local_30 [8];
+  undefined4 local_28;
+  undefined1 uStack_21;
+  
+  if (DAT_83c4babc != 0) {
+    MyAssertHandler(0xffffffff82151f68,0x4d4,0,0xffffffff82000f98,0xffffffff82152238);
+  }
+  MemFile_ReadData(param_1,1,local_30);
+  if (local_30[0] != '\0') {
+    DAT_83c4babc = AllocValue(0);
+    Scr_DoLoadEntryInternal(&local_28,param_1);
+    iVar1 = DAT_83c4babc;
+    (&DAT_83987a86)[DAT_83c4babc * 0x10] = uStack_21;
+    (&DAT_83987a80)[iVar1 * 4] = local_28;
   }
   return;
 }
@@ -710,21 +1572,292 @@ void WriteGameEntry(undefined8 param_1)
 
 // 825426C0  Scr_SavePost  (script/scr_readwrite.cpp:1251)
 
-void Scr_SavePost(void)
+void Scr_SavePost(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  undefined2 *puVar4;
+  uint uVar6;
+  longlong lVar5;
+  uint local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  memset(&DAT_8387b8f4,0,0x20);
+  DAT_8387b8ec = 0;
+  if (param_2 != 0) {
+    local_40[0] = DAT_83c4baa4;
+    MemFile_WriteData(uVar1,4,local_40);
+  }
+  local_40[0] = CONCAT22(DAT_83c4bad6,local_40[0]._2_2_);
+  MemFile_WriteData(uVar1,2,local_40);
+  local_40[0] = CONCAT22(DAT_83c4bad8,local_40[0]._2_2_);
+  MemFile_WriteData(uVar1,2,local_40);
+  uVar2 = MemFile_GetUsedSize(uVar1);
+  ProfMem_Begin(0xffffffff821524f0,uVar2);
+  uVar6 = 1;
+  uVar3 = 0;
+  if (DAT_83c4bad8 != 0) {
+    puVar4 = (undefined2 *)&DAT_83c5daf8;
+    do {
+      puVar4 = puVar4 + 1;
+      DoSaveObjectInfo(*puVar4,uVar1);
+      uVar3 = (uint)DAT_83c4bad8;
+      uVar6 = uVar6 + 1;
+    } while (uVar6 <= uVar3);
+  }
+  uVar3 = uVar3 + 1;
+  if (uVar3 <= DAT_83c4bad6) {
+    puVar4 = (undefined2 *)(uVar3 * 2 + -0x7c3a250a);
+    do {
+      puVar4 = puVar4 + 1;
+      DoSaveObjectInfo(*puVar4,uVar1);
+      uVar3 = uVar3 + 1;
+    } while (uVar3 <= DAT_83c4bad6);
+  }
+  MemFile_GetUsedSize(uVar1);
+  ProfMem_End();
+  if (DAT_83c4babc == 0) {
+    local_40[0] = local_40[0] & 0xffffff;
+    MemFile_WriteData(uVar1,1,local_40);
+  }
+  else {
+    local_40[0] = CONCAT13(1,local_40[0]._1_3_);
+    MemFile_WriteData(uVar1,1,local_40);
+    DoSaveEntryInternal((&DAT_83987a86)[DAT_83c4babc * 0x10],(&DAT_83987a80)[DAT_83c4babc * 4],uVar1
+                       );
+  }
+  if (param_2 != 0) {
+    WriteId(DAT_83c4bab8,0,uVar1);
+    WriteId(DAT_83c4bac0,0,uVar1);
+    WriteId(DAT_83c4bac4,0,uVar1);
+    lVar5 = 6;
+    puVar4 = (undefined2 *)((int)&PTR_s_debugger_string_82990294 + 2);
+    do {
+      puVar4 = puVar4 + 6;
+      WriteId(*puVar4,0,uVar1);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    WriteId(DAT_83c4baa8,0,uVar1);
+    WriteId(DAT_83c4baac,0,uVar1);
+    WriteId(DAT_83c4bab0,0,uVar1);
+    WriteId(DAT_83c4bab4,0,uVar1);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82540E60  Scr_SaveShutdown  (script/scr_readwrite.cpp:1293)
 
-void Scr_SaveShutdown(void)
+void Scr_SaveShutdown(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  bool bVar2;
+  char cVar3;
+  char cVar4;
+  short *psVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  int iVar8;
+  
+  cVar3 = __savegprlr_18();
+  bVar2 = false;
+  if (DAT_83c4ba8c != 0) {
+    psVar5 = &DAT_83c4bafa;
+    puVar7 = &DAT_838fba8c;
+    iVar8 = 4;
+    lVar6 = 0x8fff;
+    do {
+      if (*(char *)((int)puVar7 + 3) != '\x19') {
+        cVar4 = IsValid(puVar7 + -1);
+        if (cVar4 == '\0') {
+          MyAssertHandler(0xffffffff82151f68,0x51e,0,0xffffffff82000f98,0xffffffff821522bc);
+        }
+        iVar1 = *(int *)(iVar8 + DAT_83c4ba8c);
+        if (iVar1 == 0) {
+          MyAssertHandler(0xffffffff82151f68,0x520,0,0xffffffff82000f98,0xffffffff82002114);
+        }
+        if ((*psVar5 == 0) && (*(char *)((int)puVar7 + 3) != '\x17')) {
+          if (!bVar2) {
+            bVar2 = true;
+            Com_Printf(0x17,0xffffffff821522d4);
+          }
+          Scr_PrintPrevCodePos(0x17,iVar1,0,1);
+        }
+      }
+      lVar6 = lVar6 + -1;
+      puVar7 = puVar7 + 2;
+      iVar8 = iVar8 + 4;
+      psVar5 = psVar5 + 1;
+    } while (lVar6 != 0);
+  }
+  if (param_2 != 0) {
+    Scr_AddDebuggerRefs();
+  }
+  if (bVar2) {
+    Com_Printf(0x17,0xffffffff82151b9c);
+    if (cVar3 != '\0') {
+      Com_Error(1,0xffffffff82152278);
+      __restgprlr_18();
+      return;
+    }
+    Com_Printf(0x17,0xffffffff8215224c);
+  }
+  __restgprlr_18();
+  return;
+}
+
+
+// 82540FF8  Scr_LoadPre  (script/scr_readwrite.cpp:1345)
+
+void Scr_LoadPre(undefined8 param_1,int param_2)
+
+{
+  bool bVar1;
+  int iVar2;
+  undefined1 uVar3;
+  undefined8 uVar4;
+  ulonglong uVar5;
+  int iVar6;
+  ushort uVar7;
+  longlong lVar8;
+  uint uVar9;
+  ushort *puVar10;
+  undefined4 local_60 [24];
+  
+  uVar4 = __savegprlr_22();
+  MT_Reset();
+  if (DAT_83c6fb14 != (char *)0x0) {
+    MyAssertHandler(0xffffffff82151f68,0x54a,0,0xffffffff82000f98,0xffffffff821523f0);
+  }
+  DAT_83c6fb14 = "<save game variable>";
+  memset(&DAT_83c73500,0,0x24000);
+  if (param_2 != 0) {
+    MemFile_ReadData(uVar4,4,local_60);
+    DAT_83c4baa4 = local_60[0];
+  }
+  MemFile_ReadData(uVar4,2,local_60);
+  DAT_83c4bad6 = local_60[0]._0_2_;
+  MemFile_ReadData(uVar4,2,local_60);
+  DAT_83c4bad8 = local_60[0]._0_2_;
+  Com_Memset(0xffffffff83c5daf8,0,0x12000);
+  memset(&DAT_8387b8f4,0,0x20);
+  uVar9 = 1;
+  DAT_8387b8ec = 0;
+  if (DAT_83c4bad6 != 0) {
+    puVar10 = &DAT_83c5dafa;
+    do {
+      uVar5 = (ulonglong)*puVar10;
+      if (uVar5 == 0) {
+        uVar5 = AllocObject();
+        *puVar10 = (ushort)uVar5;
+      }
+      Scr_DoLoadObjectInfo(uVar5,uVar4);
+      uVar9 = uVar9 + 1;
+      puVar10 = puVar10 + 1;
+    } while (uVar9 <= DAT_83c4bad6);
+  }
+  Scr_ReadGameEntry(uVar4);
+  if (param_2 != 0) {
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4bab8 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x56e,0,0xffffffff82000f98,0xffffffff821523c4);
+    }
+    DAT_83c4bab8 = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4bab8 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4bac0 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x576,0,0xffffffff82000f98,0xffffffff821523b0);
+    }
+    DAT_83c4bac0 = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4bac0 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4bac4 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x57e,0,0xffffffff82000f98,0xffffffff82152398);
+    }
+    DAT_83c4bac4 = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4bac4 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    lVar8 = 6;
+    puVar10 = &DAT_829902a2;
+    do {
+      iVar6 = GetArraySize(*puVar10);
+      if (iVar6 != 0) {
+        MyAssertHandler(0xffffffff82151f68,0x587,0,0xffffffff82000f98,0xffffffff82152364);
+      }
+      if (DAT_83c4ba8c != 0) {
+        iVar6 = (*puVar10 + 0x44000) * 2;
+        *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + -1;
+      }
+      RemoveRefToObject(*puVar10);
+      MemFile_ReadData(uVar4,1,local_60);
+      uVar7 = Scr_ReadId(uVar4,local_60[0]._0_1_);
+      iVar6 = DAT_83c4ba8c;
+      bVar1 = DAT_83c4ba8c != 0;
+      *puVar10 = uVar7;
+      if (bVar1) {
+        iVar2 = (uVar7 + 0x44000) * 2;
+        *(short *)(iVar2 + iVar6) = *(short *)(iVar2 + iVar6) + 1;
+      }
+      lVar8 = lVar8 + -1;
+      puVar10 = puVar10 + 6;
+    } while (lVar8 != 0);
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4baa8 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x597,0,0xffffffff82000f98,0xffffffff8215234c);
+    }
+    DAT_83c4baa8 = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4baa8 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4baac != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x59f,0,0xffffffff82000f98,0xffffffff82152334);
+    }
+    DAT_83c4baac = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4baac + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    MemFile_ReadData(uVar4,1,local_60);
+    uVar3 = local_60[0]._0_1_;
+    if (DAT_83c4bab0 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x5a7,0,0xffffffff82000f98,0xffffffff82152318);
+    }
+    DAT_83c4bab0 = Scr_ReadId(uVar4,uVar3);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4bab0 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+    MemFile_ReadData(uVar4,1,local_60);
+    if (DAT_83c4bab4 != 0) {
+      MyAssertHandler(0xffffffff82151f68,0x5af,0,0xffffffff82000f98,0xffffffff821522fc);
+    }
+    DAT_83c4bab4 = Scr_ReadId(uVar4,local_60[0]._0_1_);
+    if (DAT_83c4ba8c != 0) {
+      iVar6 = (DAT_83c4bab4 + 0x44000) * 2;
+      *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + 1;
+    }
+  }
+  __restgprlr_22();
+  return;
 }
 
 
@@ -733,18 +1866,117 @@ void Scr_SaveShutdown(void)
 void Scr_LoadShutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  undefined2 *puVar3;
+  uint uVar4;
+  
+  iVar1 = __savegprlr_28();
+  uVar4 = 1;
+  if (DAT_83c4bad6 != 0) {
+    puVar3 = (undefined2 *)&DAT_83c5daf8;
+    do {
+      puVar3 = puVar3 + 1;
+      RemoveRefToObject(*puVar3);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 <= DAT_83c4bad6);
+  }
+  if (iVar1 != 0) {
+    Scr_InitDebuggerSystem();
+  }
+  DAT_83c6fb14 = 0;
+  if ((iVar1 != 0) && (cVar2 = CheckReferences(), cVar2 == '\0')) {
+    MyAssertHandler(0xffffffff82151f68,0x5e7,0,0xffffffff82000f98,0xffffffff82152408);
+  }
+  MT_Reset();
+  __restgprlr_28();
+  return;
 }
 
 
 // 825415E8  DoSaveEntryInternal  (script/scr_readwrite.cpp:1519)
 
-void DoSaveEntryInternal(void)
+void DoSaveEntryInternal(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined1 local_30 [4];
+  float local_2c [11];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) != (uVar1 & 0xff)) {
+    MyAssertHandler(0xffffffff82151f68,0x5f0,0,0xffffffff82000f98,0xffffffff82152434);
+  }
+  if ((uVar1 & 0xffffffff) == 1) {
+    uVar2 = MemFile_GetUsedSize(param_3);
+    ProfMem_Begin(0xffffffff8215242c,uVar2);
+    WriteId(param_2,1,param_3);
+    MemFile_GetUsedSize(param_3);
+    ProfMem_End();
+    __restgprlr_28();
+    return;
+  }
+  uVar2 = MemFile_GetUsedSize(param_3);
+  ProfMem_Begin(0xffffffff820928bc,uVar2);
+  local_30[0] = (undefined1)((uVar1 & 0xffffffff) << 3);
+  MemFile_WriteData(param_3,1,local_30);
+  MemFile_GetUsedSize(param_3);
+  uVar2 = ProfMem_End();
+  switch((int)uVar1) {
+  case 0:
+  case 8:
+    goto switchD_825416d0_caseD_0;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82151f68,0x61c,0,0xffffffff8215241c);
+    }
+switchD_825416d0_caseD_0:
+    __restgprlr_28();
+    return;
+  case 2:
+  case 3:
+    uVar2 = SL_ConvertToString(param_2 & 0xffff);
+    MemFile_WriteCString(param_3,uVar2);
+    __restgprlr_28();
+    return;
+  case 4:
+    WriteVector(param_2,param_3);
+    __restgprlr_28();
+    return;
+  case 5:
+    WriteFloat((double)(float)param_2,uVar2,param_3);
+    __restgprlr_28();
+    return;
+  case 6:
+  case 10:
+  case 0xb:
+  case 0xd:
+    local_2c[0] = (float)param_2;
+    MemFile_WriteData(param_3,4,local_2c);
+    __restgprlr_28();
+    return;
+  case 7:
+  case 9:
+    WriteCodepos(param_2,param_3);
+    __restgprlr_28();
+    return;
+  case 0xc:
+    WriteStack(param_2,param_3);
+    __restgprlr_28();
+    return;
+  }
+}
+
+
+// 825417C8  Scr_SaveSource  (script/scr_readwrite.cpp:1571)
+
+void Scr_SaveSource(undefined8 param_1)
+
+{
+  MemFile_WriteData(param_1,1,0xffffffff83c4ba96);
+  MemFile_WriteData(param_1,1,0xffffffff83c4ba97);
+  return;
 }
 
 

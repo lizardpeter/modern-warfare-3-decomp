@@ -3,6 +3,59 @@
 ; 82917708  vscan_fn  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:42)
   82917708  7D8802A6             mfspr r12,LR
   8291770C  4BFFEFA9             bl 0x829166b4
+  82917710  9421FF60             stwu r1,-0xa0(r1)
+  82917714  7C7D1B78             or r29,r3,r3
+  82917718  7C9F2378             or r31,r4,r4
+  8291771C  7CBE2B78             or r30,r5,r5
+  82917720  39600000             li r11,0x0
+  82917724  38A0001C             li r5,0x1c
+  82917728  38800000             li r4,0x0
+  8291772C  91610050             stw r11,0x50(r1)
+  82917730  38610054             addi r3,r1,0x54
+  82917734  7CDC3378             or r28,r6,r6
+  82917738  7CFB3B78             or r27,r7,r7
+  8291773C  4BFFF0C5             bl 0x82916800
+  82917740  2B1F0000             cmplwi cr6,r31,0x0
+  82917744  409A001C             bne cr6,0x82917760
+LAB_82917748:
+  82917748  48008639             bl 0x8291fd80
+  8291774C  39600016             li r11,0x16
+  82917750  91630000             stw r11,0x0(r3)
+  82917754  480084BD             bl 0x8291fc10
+  82917758  3860FFFF             li r3,-0x1
+  8291775C  4800006C             b 0x829177c8
+LAB_82917760:
+  82917760  2B1E0000             cmplwi cr6,r30,0x0
+  82917764  419AFFE4             beq cr6,0x82917748
+  82917768  7FEBFB78             or r11,r31,r31
+LAB_8291776c:
+  8291776C  894B0000             lbz r10,0x0(r11)
+  82917770  396B0001             addi r11,r11,0x1
+  82917774  2B0A0000             cmplwi cr6,r10,0x0
+  82917778  409AFFF4             bne cr6,0x8291776c
+  8291777C  7D5F5850             subf r10,r31,r11
+  82917780  93E10058             stw r31,0x58(r1)
+  82917784  3D607FFF             lis r11,0x7fff
+  82917788  93E10050             stw r31,0x50(r1)
+  8291778C  394AFFFF             subi r10,r10,0x1
+  82917790  616BFFFF             ori r11,r11,0xffff
+  82917794  39200049             li r9,0x49
+  82917798  554A003E             rlwinm r10,r10,0x0,0x0,0x1f
+  8291779C  91610054             stw r11,0x54(r1)
+  829177A0  9121005C             stw r9,0x5c(r1)
+  829177A4  7F0A5840             cmplw cr6,r10,r11
+  829177A8  41990008             bgt cr6,0x829177b0
+  829177AC  91410054             stw r10,0x54(r1)
+LAB_829177b0:
+  829177B0  7F66DB78             or r6,r27,r27
+  829177B4  7FA903A6             mtspr CTR,r29
+  829177B8  7F85E378             or r5,r28,r28
+  829177BC  7FC4F378             or r4,r30,r30
+  829177C0  38610050             addi r3,r1,0x50
+  829177C4  4E800421             bctrl
+LAB_829177c8:
+  829177C8  382100A0             addi r1,r1,0xa0
+  829177CC  4BFFEF38             b 0x82916704
 
 ; 829177D0  sscanf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:157)
   829177D0  7D8802A6             mfspr r12,LR

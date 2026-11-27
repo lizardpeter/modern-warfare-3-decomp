@@ -18,6 +18,13 @@
   826E20E8  38A00000             li r5,0x0
   826E20EC  3880007F             li r4,0x7f
   826E20F0  4BEF2411             bl 0x825d4500
+  826E20F4  39000000             li r8,0x0
+  826E20F8  991F0000             stb r8,0x0(r31)
+  826E20FC  38210060             addi r1,r1,0x60
+  826E2100  8181FFF8             lwz r12,-0x8(r1)
+  826E2104  7D8803A6             mtspr LR,r12
+  826E2108  EBE1FFF0             ld r31,-0x10(r1)
+  826E210C  4E800020             blr
 LAB_826e2110:
   826E2110  39600000             li r11,0x0
   826E2114  997F0000             stb r11,0x0(r31)
@@ -26,6 +33,98 @@ LAB_826e2110:
   826E2120  7D8803A6             mtspr LR,r12
   826E2124  EBE1FFF0             ld r31,-0x10(r1)
   826E2128  4E800020             blr
+
+; 826E2130  IWNet_CancelTask  (iwnet/iwnet.cpp:133)
+  826E2130  7D8802A6             mfspr r12,LR
+  826E2134  48234589             bl 0x829166bc
+  826E2138  9421FF90             stwu r1,-0x70(r1)
+  826E213C  3D60821B             lis r11,-0x7de5
+  826E2140  3D408200             lis r10,-0x7e00
+  826E2144  7C7F1B78             or r31,r3,r3
+  826E2148  2B030000             cmplwi cr6,r3,0x0
+  826E214C  3BCB82DC             subi r30,r11,0x7d24
+  826E2150  3BAA0F98             addi r29,r10,0xf98
+  826E2154  409A0020             bne cr6,0x826e2174
+  826E2158  3D608201             lis r11,-0x7dff
+  826E215C  7FA6EB78             or r6,r29,r29
+  826E2160  38EBB0FC             subi r7,r11,0x4f04
+  826E2164  7FC3F378             or r3,r30,r30
+  826E2168  38A00000             li r5,0x0
+  826E216C  38800086             li r4,0x86
+  826E2170  4BEF2391             bl 0x825d4500
+LAB_826e2174:
+  826E2174  897F0000             lbz r11,0x0(r31)
+  826E2178  2B0B0000             cmplwi cr6,r11,0x0
+  826E217C  409A0020             bne cr6,0x826e219c
+  826E2180  3D60821B             lis r11,-0x7de5
+  826E2184  7FA6EB78             or r6,r29,r29
+  826E2188  38EB8340             subi r7,r11,0x7cc0
+  826E218C  7FC3F378             or r3,r30,r30
+  826E2190  38A00000             li r5,0x0
+  826E2194  38800087             li r4,0x87
+  826E2198  4BEF2369             bl 0x825d4500
+LAB_826e219c:
+  826E219C  7FE3FB78             or r3,r31,r31
+  826E21A0  48000BD1             bl 0x826e2d70
+  826E21A4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  826E21A8  2B0B0000             cmplwi cr6,r11,0x0
+  826E21AC  419A000C             beq cr6,0x826e21b8
+  826E21B0  807F000C             lwz r3,0xc(r31)
+  826E21B4  4800185D             bl 0x826e3a10
+LAB_826e21b8:
+  826E21B8  3D60821B             lis r11,-0x7de5
+  826E21BC  80BF0004             lwz r5,0x4(r31)
+  826E21C0  38600019             li r3,0x19
+  826E21C4  388B832C             subi r4,r11,0x7cd4
+  826E21C8  4BE145B9             bl 0x824f6780
+  826E21CC  7FE3FB78             or r3,r31,r31
+  826E21D0  4BFFFEE1             bl 0x826e20b0
+  826E21D4  38210070             addi r1,r1,0x70
+  826E21D8  48234534             b 0x8291670c
+
+; 826E21E0  IWNet_CancelStorageTask  (iwnet/iwnet.cpp:154)
+  826E21E0  7D8802A6             mfspr r12,LR
+  826E21E4  482344D5             bl 0x829166b8
+  826E21E8  9421FF80             stwu r1,-0x80(r1)
+  826E21EC  3D60844D             lis r11,-0x7bb3
+  826E21F0  7C7C1B78             or r28,r3,r3
+  826E21F4  3BA00000             li r29,0x0
+  826E21F8  3BEBF278             subi r31,r11,0xd88
+  826E21FC  3BC00018             li r30,0x18
+LAB_826e2200:
+  826E2200  897F0000             lbz r11,0x0(r31)
+  826E2204  2B0B0000             cmplwi cr6,r11,0x0
+  826E2208  419A0030             beq cr6,0x826e2238
+  826E220C  7FE3FB78             or r3,r31,r31
+  826E2210  48000B61             bl 0x826e2d70
+  826E2214  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  826E2218  2B0B0000             cmplwi cr6,r11,0x0
+  826E221C  419A001C             beq cr6,0x826e2238
+  826E2220  817F000C             lwz r11,0xc(r31)
+  826E2224  7F0BE040             cmplw cr6,r11,r28
+  826E2228  409A0010             bne cr6,0x826e2238
+  826E222C  7FE3FB78             or r3,r31,r31
+  826E2230  4BFFFF01             bl 0x826e2130
+  826E2234  3BBD0001             addi r29,r29,0x1
+LAB_826e2238:
+  826E2238  37DEFFFF             subic. r30,r30,0x1
+  826E223C  3BFF001C             addi r31,r31,0x1c
+  826E2240  4082FFC0             bne 0x826e2200
+  826E2244  2B1D0001             cmplwi cr6,r29,0x1
+  826E2248  419A002C             beq cr6,0x826e2274
+  826E224C  3D60821B             lis r11,-0x7de5
+  826E2250  3D40821B             lis r10,-0x7de5
+  826E2254  3D20821B             lis r9,-0x7de5
+  826E2258  38EB8364             subi r7,r11,0x7c9c
+  826E225C  38CA834C             subi r6,r10,0x7cb4
+  826E2260  386982DC             subi r3,r9,0x7d24
+  826E2264  7FA8EB78             or r8,r29,r29
+  826E2268  38A00000             li r5,0x0
+  826E226C  388000A8             li r4,0xa8
+  826E2270  4BEF2291             bl 0x825d4500
+LAB_826e2274:
+  826E2274  38210080             addi r1,r1,0x80
+  826E2278  48234490             b 0x82916708
 
 ; 826E2280  IWNet_CancelCommand  (iwnet/iwnet.cpp:174)
   826E2280  7D8802A6             mfspr r12,LR
@@ -114,9 +213,138 @@ LAB_826e23a4:
   826E23A4  38600001             li r3,0x1
   826E23A8  4E800020             blr
 
+; 826E23B0  IWNet_UtilFindWriter  (iwnet/iwnet.cpp:196)
+  826E23B0  7C6B1B78             or r11,r3,r3
+  826E23B4  80630004             lwz r3,0x4(r3)
+  826E23B8  2B030000             cmplwi cr6,r3,0x0
+  826E23BC  419A0020             beq cr6,0x826e23dc
+LAB_826e23c0:
+  826E23C0  814B0000             lwz r10,0x0(r11)
+  826E23C4  7F045000             cmpw cr6,r4,r10
+  826E23C8  4D9A0020             beqlr cr6
+  826E23CC  396B0008             addi r11,r11,0x8
+  826E23D0  806B0004             lwz r3,0x4(r11)
+  826E23D4  2B030000             cmplwi cr6,r3,0x0
+  826E23D8  409AFFE8             bne cr6,0x826e23c0
+LAB_826e23dc:
+  826E23DC  38600000             li r3,0x0
+  826E23E0  4E800020             blr
+
+; 826E23E8  IWNet_GetCommandSlotByIndex  (iwnet/iwnet.cpp:207)
+  826E23E8  7D8802A6             mfspr r12,LR
+  826E23EC  9181FFF8             stw r12,-0x8(r1)
+  826E23F0  FBE1FFF0             std r31,-0x10(r1)
+  826E23F4  9421FFA0             stwu r1,-0x60(r1)
+  826E23F8  7C7F1B78             or r31,r3,r3
+  826E23FC  2F030000             cmpwi cr6,r3,0x0
+  826E2400  4098002C             bge cr6,0x826e242c
+  826E2404  3D608201             lis r11,-0x7dff
+  826E2408  3D408201             lis r10,-0x7dff
+  826E240C  3D20821B             lis r9,-0x7de5
+  826E2410  38EB27C0             addi r7,r11,0x27c0
+  826E2414  38CAAEF4             subi r6,r10,0x510c
+  826E2418  386982DC             subi r3,r9,0x7d24
+  826E241C  7FE8FB78             or r8,r31,r31
+  826E2420  38A00000             li r5,0x0
+  826E2424  388000D0             li r4,0xd0
+  826E2428  4BEF20D9             bl 0x825d4500
+LAB_826e242c:
+  826E242C  2F1F0018             cmpwi cr6,r31,0x18
+  826E2430  40980028             bge cr6,0x826e2458
+  826E2434  3D60844D             lis r11,-0x7bb3
+  826E2438  1D5F001C             mulli r10,r31,0x1c
+  826E243C  396BF278             subi r11,r11,0xd88
+  826E2440  7C6A5A14             add r3,r10,r11
+  826E2444  38210060             addi r1,r1,0x60
+  826E2448  8181FFF8             lwz r12,-0x8(r1)
+  826E244C  7D8803A6             mtspr LR,r12
+  826E2450  EBE1FFF0             ld r31,-0x10(r1)
+  826E2454  4E800020             blr
+LAB_826e2458:
+  826E2458  38600000             li r3,0x0
+  826E245C  38210060             addi r1,r1,0x60
+  826E2460  8181FFF8             lwz r12,-0x8(r1)
+  826E2464  7D8803A6             mtspr LR,r12
+  826E2468  EBE1FFF0             ld r31,-0x10(r1)
+  826E246C  4E800020             blr
+
 ; 826E2470  IWNet_GetCommandIndex  (iwnet/iwnet.cpp:216)
   826E2470  7D8802A6             mfspr r12,LR
   826E2474  48234249             bl 0x829166bc
+  826E2478  9421FF90             stwu r1,-0x70(r1)
+  826E247C  3D60844D             lis r11,-0x7bb3
+  826E2480  3920001C             li r9,0x1c
+  826E2484  390BF278             subi r8,r11,0xd88
+  826E2488  3D60821B             lis r11,-0x7de5
+  826E248C  7CE81850             subf r7,r8,r3
+  826E2490  3D408200             lis r10,-0x7e00
+  826E2494  7FE74BD7             divw. r31,r7,r9
+  826E2498  3BCB82DC             subi r30,r11,0x7d24
+  826E249C  3BAA0F98             addi r29,r10,0xf98
+  826E24A0  40800020             bge 0x826e24c0
+  826E24A4  3D60821B             lis r11,-0x7de5
+  826E24A8  7FA6EB78             or r6,r29,r29
+  826E24AC  38EB83C4             subi r7,r11,0x7c3c
+  826E24B0  7FC3F378             or r3,r30,r30
+  826E24B4  38A00000             li r5,0x0
+  826E24B8  388000D9             li r4,0xd9
+  826E24BC  4BEF2045             bl 0x825d4500
+LAB_826e24c0:
+  826E24C0  2F1F0018             cmpwi cr6,r31,0x18
+  826E24C4  41980020             blt cr6,0x826e24e4
+  826E24C8  3D60821B             lis r11,-0x7de5
+  826E24CC  7FA6EB78             or r6,r29,r29
+  826E24D0  38EB8378             subi r7,r11,0x7c88
+  826E24D4  7FC3F378             or r3,r30,r30
+  826E24D8  38A00000             li r5,0x0
+  826E24DC  388000DA             li r4,0xda
+  826E24E0  4BEF2021             bl 0x825d4500
+LAB_826e24e4:
+  826E24E4  7FE3FB78             or r3,r31,r31
+  826E24E8  38210070             addi r1,r1,0x70
+  826E24EC  48234220             b 0x8291670c
+
+; 826E24F0  IWNet_GetActiveCmdCount  (iwnet/iwnet.cpp:224)
+  826E24F0  3D60844D             lis r11,-0x7bb3
+  826E24F4  39400004             li r10,0x4
+  826E24F8  396BF278             subi r11,r11,0xd88
+  826E24FC  38600000             li r3,0x0
+  826E2500  396B001C             addi r11,r11,0x1c
+  826E2504  7D4903A6             mtspr CTR,r10
+LAB_826e2508:
+  826E2508  892BFFE4             lbz r9,-0x1c(r11)
+  826E250C  2B090000             cmplwi cr6,r9,0x0
+  826E2510  419A0008             beq cr6,0x826e2518
+  826E2514  38630001             addi r3,r3,0x1
+LAB_826e2518:
+  826E2518  892B0000             lbz r9,0x0(r11)
+  826E251C  2B090000             cmplwi cr6,r9,0x0
+  826E2520  419A0008             beq cr6,0x826e2528
+  826E2524  38630001             addi r3,r3,0x1
+LAB_826e2528:
+  826E2528  892B001C             lbz r9,0x1c(r11)
+  826E252C  2B090000             cmplwi cr6,r9,0x0
+  826E2530  419A0008             beq cr6,0x826e2538
+  826E2534  38630001             addi r3,r3,0x1
+LAB_826e2538:
+  826E2538  892B0038             lbz r9,0x38(r11)
+  826E253C  2B090000             cmplwi cr6,r9,0x0
+  826E2540  419A0008             beq cr6,0x826e2548
+  826E2544  38630001             addi r3,r3,0x1
+LAB_826e2548:
+  826E2548  892B0054             lbz r9,0x54(r11)
+  826E254C  2B090000             cmplwi cr6,r9,0x0
+  826E2550  419A0008             beq cr6,0x826e2558
+  826E2554  38630001             addi r3,r3,0x1
+LAB_826e2558:
+  826E2558  892B0070             lbz r9,0x70(r11)
+  826E255C  2B090000             cmplwi cr6,r9,0x0
+  826E2560  419A0008             beq cr6,0x826e2568
+  826E2564  38630001             addi r3,r3,0x1
+LAB_826e2568:
+  826E2568  396B00A8             addi r11,r11,0xa8
+  826E256C  4200FF9C             bdnz 0x826e2508
+  826E2570  4E800020             blr
 
 ; 826E2578  IWNet_FindFreeCommand  (iwnet/iwnet.cpp:241)
   826E2578  3D60844D             lis r11,-0x7bb3
@@ -136,6 +364,65 @@ LAB_826e2584:
 ; 826E25A8  IWNet_AddCommand  (iwnet/iwnet.cpp:256)
   826E25A8  7D8802A6             mfspr r12,LR
   826E25AC  4823410D             bl 0x829166b8
+  826E25B0  9421FF80             stwu r1,-0x80(r1)
+  826E25B4  3D60844D             lis r11,-0x7bb3
+  826E25B8  3BCBF278             subi r30,r11,0xd88
+  826E25BC  7FCBF378             or r11,r30,r30
+LAB_826e25c0:
+  826E25C0  894B0000             lbz r10,0x0(r11)
+  826E25C4  2B0A0000             cmplwi cr6,r10,0x0
+  826E25C8  419A0074             beq cr6,0x826e263c
+  826E25CC  396B001C             addi r11,r11,0x1c
+  826E25D0  395E02A0             addi r10,r30,0x2a0
+  826E25D4  7F0B5000             cmpw cr6,r11,r10
+  826E25D8  4198FFE8             blt cr6,0x826e25c0
+  826E25DC  4BFFFF15             bl 0x826e24f0
+  826E25E0  3D60821B             lis r11,-0x7de5
+  826E25E4  7C7C1B78             or r28,r3,r3
+  826E25E8  7C651B78             or r5,r3,r3
+  826E25EC  388B83F0             subi r4,r11,0x7c10
+  826E25F0  38600019             li r3,0x19
+  826E25F4  4BE1456D             bl 0x824f6b60
+  826E25F8  3BE00000             li r31,0x0
+  826E25FC  2F1C0000             cmpwi cr6,r28,0x0
+  826E2600  40990030             ble cr6,0x826e2630
+  826E2604  3D60821B             lis r11,-0x7de5
+  826E2608  3BDEFFE8             subi r30,r30,0x18
+  826E260C  3BAB83E0             subi r29,r11,0x7c20
+LAB_826e2610:
+  826E2610  7FA4EB78             or r4,r29,r29
+  826E2614  84DE001C             lwzu r6,0x1c(r30)
+  826E2618  7FE5FB78             or r5,r31,r31
+  826E261C  38600019             li r3,0x19
+  826E2620  4BE14161             bl 0x824f6780
+  826E2624  3BFF0001             addi r31,r31,0x1
+  826E2628  7F1FE000             cmpw cr6,r31,r28
+  826E262C  4198FFE4             blt cr6,0x826e2610
+LAB_826e2630:
+  826E2630  38600000             li r3,0x0
+  826E2634  38210080             addi r1,r1,0x80
+  826E2638  482340D0             b 0x82916708
+LAB_826e263c:
+  826E263C  39200007             li r9,0x7
+  826E2640  39000000             li r8,0x0
+  826E2644  394BFFFC             subi r10,r11,0x4
+  826E2648  7D2903A6             mtspr CTR,r9
+LAB_826e264c:
+  826E264C  950A0004             stwu r8,0x4(r10)
+  826E2650  4200FFFC             bdnz 0x826e264c
+  826E2654  39400001             li r10,0x1
+  826E2658  908B0004             stw r4,0x4(r11)
+  826E265C  906B0010             stw r3,0x10(r11)
+  826E2660  2B050000             cmplwi cr6,r5,0x0
+  826E2664  994B0000             stb r10,0x0(r11)
+  826E2668  B10B0002             sth r8,0x2(r11)
+  826E266C  419A000C             beq cr6,0x826e2678
+  826E2670  81450000             lwz r10,0x0(r5)
+  826E2674  914B000C             stw r10,0xc(r11)
+LAB_826e2678:
+  826E2678  38600001             li r3,0x1
+  826E267C  38210080             addi r1,r1,0x80
+  826E2680  48234088             b 0x82916708
 
 ; 826E2688  IWNet_DNSResolved  (iwnet/iwnet.cpp:302)
   826E2688  38600001             li r3,0x1
@@ -190,6 +477,55 @@ LAB_826e2584:
   826E273C  7D8803A6             mtspr LR,r12
   826E2740  4E800020             blr
 
+; 826E2748  IWNet_Init  (iwnet/iwnet.cpp:487)
+  826E2748  4E800020             blr
+
+; 826E2750  IWNet_Frame  (iwnet/iwnet.cpp:513)
+  826E2750  4E800020             blr
+
 ; 826E2758  IWNet_CancelTasksForController  (iwnet/iwnet.cpp:562)
   826E2758  7D8802A6             mfspr r12,LR
   826E275C  48233F55             bl 0x829166b0
+  826E2760  9421FF70             stwu r1,-0x90(r1)
+  826E2764  3D60844D             lis r11,-0x7bb3
+  826E2768  3D20821B             lis r9,-0x7de5
+  826E276C  3BCBF278             subi r30,r11,0xd88
+  826E2770  3D408201             lis r10,-0x7dff
+  826E2774  3D608201             lis r11,-0x7dff
+  826E2778  7C7A1B78             or r26,r3,r3
+  826E277C  3BE00000             li r31,0x0
+  826E2780  3BA982DC             subi r29,r9,0x7d24
+  826E2784  3B8AAEF4             subi r28,r10,0x510c
+  826E2788  3B6B27C0             addi r27,r11,0x27c0
+LAB_826e278c:
+  826E278C  2F1F0000             cmpwi cr6,r31,0x0
+  826E2790  40980020             bge cr6,0x826e27b0
+  826E2794  7F67DB78             or r7,r27,r27
+  826E2798  7F86E378             or r6,r28,r28
+  826E279C  7FA3EB78             or r3,r29,r29
+  826E27A0  7FE8FB78             or r8,r31,r31
+  826E27A4  38A00000             li r5,0x0
+  826E27A8  388000D0             li r4,0xd0
+  826E27AC  4BEF1D55             bl 0x825d4500
+LAB_826e27b0:
+  826E27B0  39600018             li r11,0x18
+  826E27B4  57EA0FFE             rlwinm r10,r31,0x1,0x1f,0x1f
+  826E27B8  7D2BF810             subfc r9,r11,r31
+  826E27BC  55680FFE             rlwinm r8,r11,0x1,0x1f,0x1f
+  826E27C0  3BFF0001             addi r31,r31,0x1
+  826E27C4  7CEA4110             subfe r7,r10,r8
+  826E27C8  7CE3F038             and r3,r7,r30
+  826E27CC  3BDE001C             addi r30,r30,0x1c
+  826E27D0  2B030000             cmplwi cr6,r3,0x0
+  826E27D4  419A0024             beq cr6,0x826e27f8
+  826E27D8  89630000             lbz r11,0x0(r3)
+  826E27DC  2B0B0000             cmplwi cr6,r11,0x0
+  826E27E0  419AFFAC             beq cr6,0x826e278c
+  826E27E4  81630010             lwz r11,0x10(r3)
+  826E27E8  7F0BD000             cmpw cr6,r11,r26
+  826E27EC  409AFFA0             bne cr6,0x826e278c
+  826E27F0  4BFFF941             bl 0x826e2130
+  826E27F4  4BFFFF98             b 0x826e278c
+LAB_826e27f8:
+  826E27F8  38210090             addi r1,r1,0x90
+  826E27FC  48233F04             b 0x82916700

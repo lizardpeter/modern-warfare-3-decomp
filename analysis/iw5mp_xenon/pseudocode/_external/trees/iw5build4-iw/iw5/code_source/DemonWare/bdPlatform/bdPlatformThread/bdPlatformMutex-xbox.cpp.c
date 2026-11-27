@@ -36,8 +36,8 @@ HANDLE bdPlatformMutex__createMutex(void)
     uVar3 = 0x2c;
     uVar4 = 0xffffffff82216640;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff822165d8,uVar3,0,uVar4);
+  return pvVar1;
 }
 
 
@@ -52,15 +52,16 @@ void bdPlatformMutex__lock(undefined4 *param_1)
   
   DVar1 = WaitForSingleObject((HANDLE)*param_1,0xffffffff);
   if (DVar1 == 0x80) {
-    if (DAT_84013128 == 0) {
-      uVar2 = 0x4b;
-      uVar3 = 0xffffffff822166a0;
-LAB_8292ceac:
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff822165d8,uVar2,0,uVar3);
+    if (DAT_84013128 != 0) {
+      return;
     }
+    uVar2 = 0x4b;
+    uVar3 = 0xffffffff822166a0;
   }
-  else if (DVar1 != 0) {
+  else {
+    if (DVar1 == 0) {
+      return;
+    }
     if (DVar1 == 0x102) {
       if (DAT_84013128 != 0) {
         return;
@@ -82,8 +83,8 @@ LAB_8292ceac:
       uVar2 = 0x67;
       uVar3 = 0xffffffff82216670;
     }
-    goto LAB_8292ceac;
   }
+  MyAssertHandler(0xffffffff822165d8,uVar2,0,uVar3);
   return;
 }
 
@@ -99,26 +100,25 @@ void bdPlatformMutex__unlock(undefined4 *param_1)
   undefined8 uVar4;
   
   BVar1 = ReleaseMutex((HANDLE)*param_1);
-  if (BVar1 != 0) {
-    return;
-  }
-  DVar2 = GetLastError();
-  if (DVar2 == 0x120) {
-    if (DAT_84013128 != 0) {
-      return;
+  if (BVar1 == 0) {
+    DVar2 = GetLastError();
+    if (DVar2 == 0x120) {
+      if (DAT_84013128 != 0) {
+        return;
+      }
+      uVar3 = 0x76;
+      uVar4 = 0xffffffff822166b0;
     }
-    uVar3 = 0x76;
-    uVar4 = 0xffffffff822166b0;
-  }
-  else {
-    if (DAT_84013128 != 0) {
-      return;
+    else {
+      if (DAT_84013128 != 0) {
+        return;
+      }
+      uVar3 = 0x7d;
+      uVar4 = 0xffffffff82216670;
     }
-    uVar3 = 0x7d;
-    uVar4 = 0xffffffff82216670;
+    MyAssertHandler(0xffffffff822165d8,uVar3,0,uVar4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff822165d8,uVar3,0,uVar4);
+  return;
 }
 
 
@@ -131,7 +131,6 @@ void bdPlatformMutex__destroy(undefined4 *param_1)
   
   BVar1 = CloseHandle((HANDLE)*param_1);
   if ((BVar1 == 0) && (DAT_84013128 == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff822165d8,0x91,0,0xffffffff822166bc);
   }
   return;

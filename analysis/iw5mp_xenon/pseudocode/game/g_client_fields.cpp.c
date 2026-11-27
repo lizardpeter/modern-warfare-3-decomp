@@ -5,8 +5,37 @@
 void ClientScr_SetRadarMode(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar4;
+  short sVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined4 uVar6;
+  
+  iVar4 = __savegprlr_29();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x20,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  sVar5 = Scr_GetConstString(0);
+  if (sVar5 == DAT_835a0d7c) {
+    uVar6 = 0;
+  }
+  else {
+    if (sVar5 != DAT_835a0d7e) {
+      uVar1 = SL_ConvertToString();
+      uVar2 = SL_ConvertToString(DAT_835a0d7c);
+      uVar3 = SL_ConvertToString(sVar5);
+      va(0xffffffff8206c2b0,uVar3,uVar2,uVar1);
+      Scr_Error();
+      __restgprlr_29();
+      return;
+    }
+    uVar6 = 1;
+  }
+  *(undefined4 *)(iVar4 + 0x34c4) = uVar6;
+  ClientUserinfoChanged((iVar4 - DAT_83580b00) / 0x3980);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -18,7 +47,6 @@ void ClientScr_GetRadarMode(int param_1)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x35,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   if (*(int *)(param_1 + 0x34c4) == 0) {
@@ -29,7 +57,6 @@ void ClientScr_GetRadarMode(int param_1)
   }
   else if (DAT_84013128 == 0) {
     uVar1 = va(0xffffffff8206c334);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x3c,0,uVar1);
   }
   return;
@@ -41,8 +68,54 @@ void ClientScr_GetRadarMode(int param_1)
 void ClientScr_SetSessionTeam(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  short sVar3;
+  char cVar4;
+  undefined8 uVar1;
+  undefined4 uVar5;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x44,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  sVar3 = Scr_GetConstString(0);
+  if (sVar3 == DAT_835a0b94) {
+    uVar5 = 1;
+  }
+  else if (sVar3 == DAT_835a0b8c) {
+    uVar5 = 2;
+  }
+  else if (sVar3 == DAT_835a0d72) {
+    uVar5 = 3;
+  }
+  else {
+    if (sVar3 != DAT_835a0bfa) {
+      uVar1 = SL_ConvertToString(sVar3);
+      va(0xffffffff8206c350,uVar1);
+      Scr_Error();
+      __restgprlr_27();
+      return;
+    }
+    uVar5 = 0;
+  }
+  if (0x11 < (iVar2 - DAT_83580b00) / 0x3980) {
+    Scr_Error(0xffffffff8206c3cc);
+    __restgprlr_27();
+    return;
+  }
+  cVar4 = SV_HasAssignedTeam(*(undefined4 *)(iVar2 + 0x33d0));
+  if (cVar4 == '\0') {
+    *(undefined4 *)(iVar2 + 0x33d4) = uVar5;
+    ClientUserinfoChanged((iVar2 - DAT_83580b00) / 0x3980);
+    CalculateRanks();
+    __restgprlr_27();
+    return;
+  }
+  uVar1 = SL_ConvertToString(sVar3);
+  va(0xffffffff8206c3a4,uVar1);
+  Scr_Error();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -54,20 +127,19 @@ void ClientScr_GetSessionTeam(int param_1)
   uint uVar1;
   undefined2 uVar2;
   
-  if (param_1 != 0) {
-    uVar1 = *(uint *)(param_1 + 0x33d4);
-    if (uVar1 < 4) {
-      uVar2 = DAT_835a0bfa;
-      if (((uVar1 != 0) && (uVar2 = DAT_835a0b94, uVar1 != 1)) && (uVar2 = DAT_835a0d72, uVar1 == 2)
-         ) {
-        uVar2 = DAT_835a0b8c;
-      }
-      Scr_AddConstString(uVar2);
-    }
-    return;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x73,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8206c2e8,0x73,0,0xffffffff82000f98,0xffffffff8206c32c);
+  uVar1 = *(uint *)(param_1 + 0x33d4);
+  if (uVar1 < 4) {
+    uVar2 = DAT_835a0bfa;
+    if (((uVar1 != 0) && (uVar2 = DAT_835a0b94, uVar1 != 1)) && (uVar2 = DAT_835a0d72, uVar1 == 2))
+    {
+      uVar2 = DAT_835a0b8c;
+    }
+    Scr_AddConstString(uVar2);
+  }
+  return;
 }
 
 
@@ -76,8 +148,44 @@ void ClientScr_GetSessionTeam(int param_1)
 void ClientScr_SetSessionState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  short sVar3;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x90,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if (*(int *)(iVar2 + 0x332c) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x91,0,0xffffffff82000f98,0xffffffff8206c45c);
+  }
+  sVar3 = Scr_GetConstString(0);
+  if (sVar3 == DAT_835a0d70) {
+    *(undefined4 *)(iVar2 + 0x3300) = 0;
+    __restgprlr_29();
+    return;
+  }
+  if (sVar3 == DAT_835a0bac) {
+    *(undefined4 *)(iVar2 + 0x3300) = 1;
+    __restgprlr_29();
+    return;
+  }
+  if (sVar3 == DAT_835a0d72) {
+    *(undefined4 *)(iVar2 + 0x3300) = 2;
+    __restgprlr_29();
+    return;
+  }
+  if (sVar3 == DAT_835a0d64) {
+    *(undefined4 *)(iVar2 + 0x3300) = 3;
+    *(uint *)(iVar2 + 0xf8) = *(uint *)(iVar2 + 0xf8) ^ 2;
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = SL_ConvertToString();
+  va(0xffffffff8206c400,uVar1);
+  Scr_Error();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -86,8 +194,37 @@ void ClientScr_SetSessionState(void)
 void ClientScr_GetSessionState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0xb2,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if (*(int *)(iVar2 + 0x332c) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0xb3,0,0xffffffff82000f98,0xffffffff8206c45c);
+  }
+  uVar1 = *(uint *)(iVar2 + 0x3300);
+  if (uVar1 < 4) {
+    if (uVar1 == 1) {
+      Scr_AddConstString(DAT_835a0bac);
+      __restgprlr_29();
+      return;
+    }
+    if (uVar1 == 2) {
+      Scr_AddConstString(DAT_835a0d72);
+      __restgprlr_29();
+      return;
+    }
+    if (uVar1 == 0) {
+      Scr_AddConstString(DAT_835a0d70);
+      __restgprlr_29();
+      return;
+    }
+    Scr_AddConstString(DAT_835a0d64);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -99,7 +236,6 @@ void ClientScr_SetMaxHealth(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0xd0,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   iVar1 = Scr_GetInt(0);
@@ -138,7 +274,6 @@ void ClientScr_SetForceSpectatorClient(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0xf9,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   iVar1 = Scr_GetInt(0);
@@ -158,7 +293,6 @@ void ClientScr_SetKillCamEntity(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x10e,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   iVar1 = Scr_GetInt(0);
@@ -178,7 +312,6 @@ void ClientScr_SetKillCamLookAtEntity(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x11d,0,0xffffffff82000f98,0xffffffff8206c550);
   }
   iVar1 = Scr_GetInt(0);
@@ -198,7 +331,6 @@ void ClientScr_SetStatusIcon(int param_1)
   undefined4 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x131,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   Scr_GetString(0);
@@ -213,8 +345,30 @@ void ClientScr_SetStatusIcon(int param_1)
 void ClientScr_GetStatusIcon(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  longlong lVar2;
+  undefined1 auStack_420 [1056];
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x13f,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if ((*(int *)(iVar1 + 0x3310) < 0) || (8 < *(int *)(iVar1 + 0x3310))) {
+    MyAssertHandler(0xffffffff8206c2e8,0x141,0,0xffffffff82000f98,0xffffffff8206c558);
+  }
+  if (*(uint *)(iVar1 + 0x3310) == 0) {
+    Scr_AddString(0xffffffff820068af);
+    __restgprlr_29();
+    return;
+  }
+  lVar2 = (ulonglong)*(uint *)(iVar1 + 0x3310) + 0xe02;
+  if (0xeea < (int)lVar2) {
+    MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  }
+  SV_GetConfigstring(lVar2,auStack_420,0x400);
+  Scr_AddString(auStack_420);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -226,7 +380,6 @@ void ClientScr_SetHeadIcon(int param_1)
   undefined4 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x15a,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   param_1 = param_1 - DAT_83580b00;
@@ -247,7 +400,6 @@ void ClientScr_GetHeadIcon(int param_1)
   undefined1 auStack_420 [1032];
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x16c,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   uVar1 = *(uint *)(&DAT_83373714 + ((param_1 - DAT_83580b00) / 0x3980) * 0x280);
@@ -259,7 +411,6 @@ void ClientScr_GetHeadIcon(int param_1)
       return;
     }
     if (0xeea < (int)((ulonglong)uVar1 + 0xe0a)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
     }
     SV_GetConfigstring((ulonglong)uVar1 + 0xe0a,auStack_420,0x400);
@@ -280,7 +431,6 @@ void ClientScr_SetHeadIconTeam(int param_1)
   undefined8 uVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x186,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   iVar1 = ((param_1 - DAT_83580b00) / 0x3980) * 0x280;
@@ -316,18 +466,16 @@ void ClientScr_GetHeadIconTeam(int param_1)
   int iVar1;
   undefined2 uVar2;
   
-  if (param_1 != 0) {
-    iVar1 = *(int *)(&DAT_83373718 + ((param_1 - DAT_83580b00) / 0x3980) * 0x280);
-    uVar2 = DAT_835a0b94;
-    if (((iVar1 != 1) && (uVar2 = DAT_835a0b8c, iVar1 != 2)) && (uVar2 = DAT_835a0d72, iVar1 != 3))
-    {
-      uVar2 = DAT_835a0bfa;
-    }
-    Scr_AddConstString(uVar2);
-    return;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x1a1,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8206c2e8,0x1a1,0,0xffffffff82000f98,0xffffffff8206c32c);
+  iVar1 = *(int *)(&DAT_83373718 + ((param_1 - DAT_83580b00) / 0x3980) * 0x280);
+  uVar2 = DAT_835a0b94;
+  if (((iVar1 != 1) && (uVar2 = DAT_835a0b8c, iVar1 != 2)) && (uVar2 = DAT_835a0d72, iVar1 != 3)) {
+    uVar2 = DAT_835a0bfa;
+  }
+  Scr_AddConstString(uVar2);
+  return;
 }
 
 
@@ -339,7 +487,6 @@ void ClientScr_SetArchiveTime(int param_1)
   double dVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x1b9,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   dVar1 = (double)Scr_GetFloat(0);
@@ -366,7 +513,6 @@ void ClientScr_SetPSOffsetTime(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x1d1,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   iVar1 = Scr_GetInt(0);
@@ -393,7 +539,6 @@ void ClientScr_GetName(int param_1)
   undefined *puVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206c2e8,0x1e6,0,0xffffffff82000f98,0xffffffff8206c32c);
   }
   if ((*(char *)(param_1 + 0x3450) == '\0') || (*(int *)(param_1 + 0x3464) != 0)) {
@@ -416,11 +561,24 @@ void ClientScr_GetName(int param_1)
 
 // 8245A3B0  ClientScr_ReadOnly  (game/g_client_fields.cpp:514)
 
-void ClientScr_ReadOnly(void)
+void ClientScr_ReadOnly(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x203,0,0xffffffff82000f98,0xffffffff8206c32c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x204,0,0xffffffff82000f98,0xffffffff8206c61c);
+  }
+  uVar1 = SL_ConvertToString(*(undefined2 *)*(undefined4 *)param_2);
+  va(0xffffffff8206c5fc,uVar1);
+  Scr_Error();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -429,7 +587,96 @@ void ClientScr_ReadOnly(void)
 void GScr_AddFieldsForClient(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  undefined **ppuVar3;
+  
   __savegprlr_23();
+  ppuVar3 = &PTR_DAT_8206c040;
+  iVar2 = 0;
+  do {
+    uVar1 = iVar2 / 0x18;
+    if ((uVar1 & 0xe000) != 0) {
+      MyAssertHandler(0xffffffff8206c2e8,0x381,0,0xffffffff82000f98,0xffffffff8206c624);
+    }
+    if (uVar1 != (uVar1 & 0xffff)) {
+      MyAssertHandler(0xffffffff8206c2e8,0x382,0,0xffffffff82000f98,0xffffffff8206c644);
+    }
+    Scr_AddClassField(0,*(undefined2 *)*ppuVar3,ppuVar3[1],uVar1 & 0xffff | 0x6000);
+    ppuVar3 = ppuVar3 + 6;
+    iVar2 = iVar2 + 0x18;
+  } while (*ppuVar3 != (undefined *)0x0);
+  __restgprlr_23();
+  return;
+}
+
+
+// 8245A508  Scr_SetClientField  (game/g_client_fields.cpp:910)
+
+void Scr_SetClientField(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x391,0,0xffffffff82000f98,0xffffffff820386a4);
+  }
+  if (0x15 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206c2e8,0x392,0,0xffffffff82000f98,0xffffffff8206c688);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x393,0,0xffffffff82000f98,0xffffffff8206c67c);
+  }
+  lVar3 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7df93fc0;
+  iVar1 = (int)lVar3;
+  if (*(code **)(iVar1 + 0x10) != (code *)0x0) {
+    (**(code **)(iVar1 + 0x10))(uVar2,lVar3);
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x39d,0,0xffffffff82000f98,0xffffffff8206c674);
+  }
+  Scr_SetGenericField(uVar2,*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+  __restgprlr_28();
+  return;
+}
+
+
+// 8245A618  Scr_GetClientField  (game/g_client_fields.cpp:936)
+
+void Scr_GetClientField(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x3ab,0,0xffffffff82000f98,0xffffffff820386a4);
+  }
+  if (0x15 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206c2e8,0x3ac,0,0xffffffff82000f98,0xffffffff8206c688);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x3ad,0,0xffffffff82000f98,0xffffffff8206c67c);
+  }
+  lVar3 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7df93fc0;
+  iVar1 = (int)lVar3;
+  if (*(code **)(iVar1 + 0x14) != (code *)0x0) {
+    (**(code **)(iVar1 + 0x14))(uVar2,lVar3);
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar1 + 8) == 0) {
+    MyAssertHandler(0xffffffff8206c2e8,0x3b7,0,0xffffffff82000f98,0xffffffff8206c674);
+  }
+  Scr_GetGenericField(uVar2,*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
+  __restgprlr_28();
+  return;
 }
 

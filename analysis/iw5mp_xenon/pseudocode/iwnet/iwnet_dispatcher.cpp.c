@@ -44,21 +44,100 @@ longlong IWNet_GetSendInterval(byte param_1)
 
 // 826E29F0  IWNet_WriteCommandHeader  (iwnet/iwnet_dispatcher.cpp:63)
 
-void IWNet_WriteCommandHeader(void)
+void IWNet_WriteCommandHeader(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar2;
+  undefined8 uVar1;
+  short sVar3;
+  
+  uVar2 = __savegprlr_28();
+  *(uint *)((int)param_2 + 8) = uVar2;
+  uVar1 = IWNet_GetCommandIndex(param_2);
+  if (((uint)uVar1 & 0xff) != (uint)uVar1) {
+    MyAssertHandler(0xffffffff821a8568,0x45,0,0xffffffff821a85b0,0xffffffff821a85c8,uVar1);
+  }
+  MSG_WriteByte(param_3,uVar2 & 0xff);
+  MSG_WriteByte(param_3,uVar1);
+  MSG_WriteByte(param_3,0);
+  sVar3 = DAT_844cf51c + 1;
+  DAT_844cf51c = sVar3;
+  *(short *)((int)param_2 + 2) = sVar3;
+  MSG_WriteShort(param_3,sVar3);
+  __restgprlr_28();
+  return;
+}
+
+
+// 826E2AA0  IWNet_WriteAndSendCommand  (iwnet/iwnet_dispatcher.cpp:83)
+
+void IWNet_WriteAndSendCommand(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  char cVar2;
+  
+  uVar1 = __savegprlr_29();
+  cVar2 = IWNet_Storage_IsStorageCommand(param_2);
+  if (cVar2 != '\0') {
+    if (*(char *)(DAT_844cf274 + 0xc) != '\0') {
+      Com_Printf(0x19,0xffffffff821a8614);
+    }
+    IWNet_Storage_WriteCommand(uVar1,param_2,param_3);
+    if (*(char *)(DAT_844cf544 + 0xc) == '\0') {
+      LSP_SendStoragePacket(param_3);
+    }
+    __restgprlr_29(1);
+    return;
+  }
+  Com_Error(1,0xffffffff821a85f8,*(undefined4 *)((int)param_2 + 4));
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 826E2B48  IWNet_SendCommand  (iwnet/iwnet_dispatcher.cpp:173)
 
-void IWNet_SendCommand(void)
+void IWNet_SendCommand(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  char *pcVar5;
+  undefined1 auStack_540 [48];
+  undefined1 auStack_510 [1296];
+  
+  iVar2 = __savegprlr_29();
+  pcVar5 = (char *)param_2;
+  if (*pcVar5 == '\0') {
+    MyAssertHandler(0xffffffff821a8568,0xb2,0,0xffffffff82000f98,0xffffffff821a8340);
+  }
+  if (*(int *)(pcVar5 + 0x14) <= iVar2) {
+    uVar1 = *(undefined4 *)(pcVar5 + 0x10);
+    cVar4 = Live_IsSignedIn(uVar1);
+    if (cVar4 == '\0') {
+      Com_PrintError(0x19,0xffffffff821a8630,uVar1);
+      IWNet_CancelTask(param_2);
+    }
+    else {
+      if (*(int *)(pcVar5 + 0x14) != 0) {
+        pcVar5[0x18] = pcVar5[0x18] + '\x01';
+      }
+      MSG_Init(auStack_540,auStack_510,0x4f0);
+      MSG_WriteByte(auStack_540,5);
+      cVar4 = IWNet_WriteAndSendCommand(uVar1,param_2,auStack_540);
+      if (cVar4 != '\0') {
+        iVar3 = IWNet_GetSendInterval(pcVar5[0x18]);
+        *(int *)(pcVar5 + 0x14) = iVar3 + iVar2;
+        __restgprlr_29(1);
+        return;
+      }
+    }
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -67,7 +146,51 @@ void IWNet_SendCommand(void)
 void IWNet_SendCommands(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  char cVar5;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  longlong lVar6;
+  undefined1 auStack_550 [48];
+  undefined1 auStack_520 [1312];
+  
   __savegprlr_27();
+  cVar5 = LSP_Connected();
+  if (cVar5 != '\0') {
+    iVar2 = Sys_Milliseconds();
+    pcVar3 = (char *)IWNet_GetCommandSlotByIndex(0);
+    lVar6 = 1;
+    while (pcVar3 != (char *)0x0) {
+      if (*pcVar3 != '\0') {
+        if (*(int *)(pcVar3 + 0x14) <= iVar2) {
+          uVar1 = *(undefined4 *)(pcVar3 + 0x10);
+          cVar5 = Live_IsSignedIn(uVar1);
+          if (cVar5 == '\0') {
+            Com_PrintError(0x19,0xffffffff821a8630,uVar1);
+            IWNet_CancelTask(pcVar3);
+          }
+          else {
+            if (*(int *)(pcVar3 + 0x14) != 0) {
+              pcVar3[0x18] = pcVar3[0x18] + '\x01';
+            }
+            MSG_Init(auStack_550,auStack_520,0x4f0);
+            MSG_WriteByte(auStack_550,5);
+            cVar5 = IWNet_WriteAndSendCommand(uVar1,pcVar3,auStack_550);
+            if (cVar5 != '\0') {
+              iVar4 = IWNet_GetSendInterval(pcVar3[0x18]);
+              *(int *)(pcVar3 + 0x14) = iVar4 + iVar2;
+            }
+          }
+        }
+        cVar5 = LSP_Connected();
+        if (cVar5 == '\0') break;
+      }
+      pcVar3 = (char *)IWNet_GetCommandSlotByIndex(lVar6);
+      lVar6 = lVar6 + 1;
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 

@@ -12,6 +12,35 @@ LAB_828bdfc0:
 ; 828BE088  XHVOutputEffectCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:70)
   828BE088  7D8802A6             mfspr r12,LR
   828BE08C  48058631             bl 0x829166bc
+  828BE090  9421FF90             stwu r1,-0x70(r1)
+  828BE094  81440000             lwz r10,0x0(r4)
+  828BE098  7C8B2378             or r11,r4,r4
+  828BE09C  7C7F1B78             or r31,r3,r3
+  828BE0A0  7D635B78             or r3,r11,r11
+  828BE0A4  3880181C             li r4,0x181c
+  828BE0A8  7CBD2B78             or r29,r5,r5
+  828BE0AC  816A0014             lwz r11,0x14(r10)
+  828BE0B0  3BC00000             li r30,0x0
+  828BE0B4  7D6903A6             mtspr CTR,r11
+  828BE0B8  4E800421             bctrl
+  828BE0BC  28030000             cmplwi r3,0x0
+  828BE0C0  4082001C             bne 0x828be0dc
+  828BE0C4  3FC08007             lis r30,-0x7ff9
+  828BE0C8  63DE000E             ori r30,r30,0xe
+LAB_828be0cc:
+  828BE0CC  907D0000             stw r3,0x0(r29)
+  828BE0D0  7FC3F378             or r3,r30,r30
+  828BE0D4  38210070             addi r1,r1,0x70
+  828BE0D8  48058634             b 0x8291670c
+LAB_828be0dc:
+  828BE0DC  3D60829B             lis r11,-0x7d65
+  828BE0E0  39400001             li r10,0x1
+  828BE0E4  396BF934             subi r11,r11,0x6cc
+  828BE0E8  91430004             stw r10,0x4(r3)
+  828BE0EC  91630000             stw r11,0x0(r3)
+  828BE0F0  817F0004             lwz r11,0x4(r31)
+  828BE0F4  91630008             stw r11,0x8(r3)
+  828BE0F8  4BFFFFD4             b 0x828be0cc
 
 ; 828BDFC8  XHVOutputEffectAddRef  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:107)
   828BDFC8  39630004             addi r11,r3,0x4

@@ -3,6 +3,42 @@
 ; 8291CEE0  vscprintf_helper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:394)
   8291CEE0  7D8802A6             mfspr r12,LR
   8291CEE4  4BFF97D1             bl 0x829166b4
+  8291CEE8  9421FF60             stwu r1,-0xa0(r1)
+  8291CEEC  7C7D1B78             or r29,r3,r3
+  8291CEF0  7C9F2378             or r31,r4,r4
+  8291CEF4  7CBC2B78             or r28,r5,r5
+  8291CEF8  3BC00000             li r30,0x0
+  8291CEFC  38A0001C             li r5,0x1c
+  8291CF00  38800000             li r4,0x0
+  8291CF04  93C10050             stw r30,0x50(r1)
+  8291CF08  38610054             addi r3,r1,0x54
+  8291CF0C  7CDB3378             or r27,r6,r6
+  8291CF10  4BFF98F1             bl 0x82916800
+  8291CF14  2B1F0000             cmplwi cr6,r31,0x0
+  8291CF18  409A001C             bne cr6,0x8291cf34
+  8291CF1C  48002E65             bl 0x8291fd80
+  8291CF20  39600016             li r11,0x16
+  8291CF24  91630000             stw r11,0x0(r3)
+  8291CF28  48002CE9             bl 0x8291fc10
+  8291CF2C  3860FFFF             li r3,-0x1
+  8291CF30  48000038             b 0x8291cf68
+LAB_8291cf34:
+  8291CF34  3D607FFF             lis r11,0x7fff
+  8291CF38  93C10058             stw r30,0x58(r1)
+  8291CF3C  39400042             li r10,0x42
+  8291CF40  93C10050             stw r30,0x50(r1)
+  8291CF44  616BFFFF             ori r11,r11,0xffff
+  8291CF48  7FA903A6             mtspr CTR,r29
+  8291CF4C  9141005C             stw r10,0x5c(r1)
+  8291CF50  7F66DB78             or r6,r27,r27
+  8291CF54  91610054             stw r11,0x54(r1)
+  8291CF58  7F85E378             or r5,r28,r28
+  8291CF5C  7FE4FB78             or r4,r31,r31
+  8291CF60  38610050             addi r3,r1,0x50
+  8291CF64  4E800421             bctrl
+LAB_8291cf68:
+  8291CF68  382100A0             addi r1,r1,0xa0
+  8291CF6C  4BFF9798             b 0x82916704
 
 ; 8291CF70  _vscprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:413)
   8291CF70  3D608292             lis r11,-0x7d6e

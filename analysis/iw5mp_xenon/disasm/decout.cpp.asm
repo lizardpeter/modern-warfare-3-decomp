@@ -3,3 +3,51 @@
 ; 828B7758  XCOMPRESS::copy_data_to_output  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decout.cpp:12)
   828B7758  7D8802A6             mfspr r12,LR
   828B775C  4805EF5D             bl 0x829166b8
+  828B7760  9421FF80             stwu r1,-0x80(r1)
+  828B7764  83E32B0C             lwz r31,0x2b0c(r3)
+  828B7768  7C9D2378             or r29,r4,r4
+  828B776C  7C7E1B78             or r30,r3,r3
+  828B7770  7CA42B78             or r4,r5,r5
+  828B7774  2B1F0000             cmplwi cr6,r31,0x0
+  828B7778  419A007C             beq cr6,0x828b77f4
+  828B777C  81632EBC             lwz r11,0x2ebc(r3)
+  828B7780  2B0B0000             cmplwi cr6,r11,0x0
+  828B7784  419A0014             beq cr6,0x828b7798
+  828B7788  81632EC4             lwz r11,0x2ec4(r3)
+  828B778C  3B800001             li r28,0x1
+  828B7790  2B0B8000             cmplwi cr6,r11,0x8000
+  828B7794  41980008             blt cr6,0x828b779c
+LAB_828b7798:
+  828B7798  3B800000             li r28,0x0
+LAB_828b779c:
+  828B779C  897E2FE4             lbz r11,0x2fe4(r30)
+  828B77A0  7FA5EB78             or r5,r29,r29
+  828B77A4  280B0000             cmplwi r11,0x0
+  828B77A8  41820010             beq 0x828b77b8
+  828B77AC  2F1C0000             cmpwi cr6,r28,0x0
+  828B77B0  419A004C             beq cr6,0x828b77fc
+  828B77B4  83FE2FE8             lwz r31,0x2fe8(r30)
+LAB_828b77b8:
+  828B77B8  7FE3FB78             or r3,r31,r31
+  828B77BC  4BFF1645             bl 0x828a8e00
+LAB_828b77c0:
+  828B77C0  2F1C0000             cmpwi cr6,r28,0x0
+  828B77C4  419A0030             beq cr6,0x828b77f4
+  828B77C8  7FA5EB78             or r5,r29,r29
+  828B77CC  7FE4FB78             or r4,r31,r31
+  828B77D0  7FC3F378             or r3,r30,r30
+  828B77D4  4BFFE8DD             bl 0x828b60b0
+  828B77D8  897E2FE4             lbz r11,0x2fe4(r30)
+  828B77DC  280B0000             cmplwi r11,0x0
+  828B77E0  41820014             beq 0x828b77f4
+  828B77E4  7FA5EB78             or r5,r29,r29
+  828B77E8  807E2B0C             lwz r3,0x2b0c(r30)
+  828B77EC  7FE4FB78             or r4,r31,r31
+  828B77F0  4BFF1541             bl 0x828a8d30
+LAB_828b77f4:
+  828B77F4  38210080             addi r1,r1,0x80
+  828B77F8  4805EF10             b 0x82916708
+LAB_828b77fc:
+  828B77FC  7FE3FB78             or r3,r31,r31
+  828B7800  4BFF1531             bl 0x828a8d30
+  828B7804  4BFFFFBC             b 0x828b77c0

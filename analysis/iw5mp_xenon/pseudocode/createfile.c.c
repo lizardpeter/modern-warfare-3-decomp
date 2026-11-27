@@ -7,8 +7,88 @@ HANDLE CreateFileA(LPCSTR lpFileName,DWORD dwDesiredAccess,DWORD dwShareMode,
                   DWORD dwFlagsAndAttributes,HANDLE hTemplateFile)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(lpFileName,dwDesiredAccess,dwShareMode,lpSecurityAttributes,dwCreationDisposition,
-                 dwFlagsAndAttributes,hTemplateFile);
+  bool bVar1;
+  int iVar4;
+  ulonglong uVar2;
+  longlong lVar3;
+  DWORD DVar5;
+  HANDLE pvVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined8 uVar9;
+  uint local_60 [2];
+  ushort local_58 [4];
+  undefined1 auStack_50 [4];
+  int local_4c;
+  undefined4 local_48;
+  ushort *local_44;
+  undefined4 local_40;
+  
+  uVar8 = (ulonglong)(int)dwFlagsAndAttributes;
+  uVar7 = (ulonglong)(int)dwCreationDisposition;
+  lVar3 = (longlong)(int)dwShareMode;
+  uVar2 = (ulonglong)(int)dwDesiredAccess;
+  iVar4 = __savegprlr_26(lpFileName,uVar2,lVar3,lpSecurityAttributes,uVar7,uVar8,hTemplateFile);
+  if ((uVar7 & 0xffffffff) == 1) {
+    uVar9 = 2;
+LAB_828a2fa4:
+    RtlInitAnsiString(local_58,iVar4);
+    if ((local_58[0] < 2) || (bVar1 = true, *(char *)((uint)local_58[0] + iVar4 + -1) != '\\')) {
+      bVar1 = false;
+    }
+    local_48 = 0xfffffffd;
+    local_44 = local_58;
+    local_40 = 0x40;
+    if ((uVar8 & 0x4000000) != 0) {
+      uVar2 = uVar2 | 0x10000;
+    }
+    lVar3 = (**(code **)(PTR_DAT_829a8580 + 0xc))
+                      (local_60,uVar2 | 0x100080,&local_48,auStack_50,0,uVar8 & 0x7fa7,lVar3,uVar9);
+    if (-1 < lVar3) {
+      if ((((uVar7 & 0xffffffff) == 2) && (local_4c == 3)) ||
+         (((uVar7 & 0xffffffff) == 4 && (local_4c == 1)))) {
+        DVar5 = 0xb7;
+      }
+      else {
+        DVar5 = 0;
+      }
+      SetLastError(DVar5);
+      uVar2 = (ulonglong)local_60[0];
+      goto LAB_828a3110;
+    }
+    RtlSetLastNTError(lVar3);
+    if ((int)lVar3 == -0x3fffffcb) {
+      DVar5 = 0x50;
+    }
+    else {
+      if ((int)lVar3 != -0x3fffff46) goto LAB_828a2f7c;
+      DVar5 = 3;
+      if (!bVar1) {
+        DVar5 = 5;
+      }
+    }
+    SetLastError(DVar5);
+  }
+  else {
+    if ((uVar7 & 0xffffffff) == 2) {
+      uVar9 = 5;
+      goto LAB_828a2fa4;
+    }
+    if ((uVar7 & 0xffffffff) == 3) {
+      uVar9 = 1;
+      goto LAB_828a2fa4;
+    }
+    if ((uVar7 & 0xffffffff) == 4) {
+      uVar9 = 3;
+      goto LAB_828a2fa4;
+    }
+    if (((uVar7 & 0xffffffff) == 5) && (uVar9 = 4, (uVar2 & 0x40000000) != 0)) goto LAB_828a2fa4;
+    RtlSetLastNTError(0xffffffffc000000d);
+  }
+LAB_828a2f7c:
+  uVar2 = 0xffffffffffffffff;
+LAB_828a3110:
+  pvVar6 = (HANDLE)__restgprlr_26(uVar2);
+  return pvVar6;
 }
 

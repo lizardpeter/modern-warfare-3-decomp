@@ -66,6 +66,44 @@ void XAUDIO__CSourceEffect___CSourceEffect(undefined4 *param_1)
 }
 
 
+// 828D32D0  XAUDIO::CSourceEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
+
+void XAUDIO__CSourceEffect__Initialize(int param_1,int param_2,undefined8 param_3)
+
+{
+  *(undefined4 *)(param_1 + 0xac) = *(undefined4 *)(param_2 + 0x48);
+  *(undefined4 *)(param_1 + 0xb0) = *(undefined4 *)(param_2 + 0x4c);
+  XAUDIO__CSourceStream__Initialize
+            (param_1 + 0xc,param_2 + 8,*(undefined1 *)(param_2 + 0x44),
+             *(undefined1 *)(param_2 + 0x45),param_3);
+  return;
+}
+
+
+// 828D3698  XAUDIO::CSourceEffect::CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
+
+void XAUDIO__CSourceEffect__CompletePacket(undefined8 param_1,undefined8 param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = XAUDIO__CSourceStream__CompletePacket();
+  if ((iVar2 != 0) && (*(code **)(iVar1 + 0xa0) != (code *)0x0)) {
+    local_30 = *(undefined4 *)(iVar1 + -4);
+    local_2c = *(undefined4 *)(iVar2 + 0x24);
+    local_28 = param_3;
+    (**(code **)(iVar1 + 0xa0))(&local_30);
+  }
+  __restgprlr_29(iVar2);
+  return;
+}
+
+
 // 828D3300  XAUDIO::CSourceEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
 
 undefined8 XAUDIO__CSourceEffect__GetParam(int param_1,char param_2,char param_3,uint *param_4)

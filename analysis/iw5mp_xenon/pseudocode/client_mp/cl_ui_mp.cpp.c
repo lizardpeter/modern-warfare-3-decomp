@@ -2,11 +2,23 @@
 
 // 82354570  CL_GetClientState  (client_mp/cl_ui_mp.cpp:32)
 
-void CL_GetClientState(void)
+void CL_GetClientState(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CL_GetLocalClientConnection();
+  ((undefined4 *)param_2)[1] = *(undefined4 *)(iVar2 + 0x24);
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  *(undefined4 *)param_2 = (&DAT_82b3e54c)[(int)uVar1 * 0x79];
+  I_strncpyz(param_2 + 8,0xffffffff82aa1b08,0x400);
+  I_strncpyz(param_2 + 0x408,iVar2 + 0x28,0x400);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -16,7 +28,6 @@ void CL_SetDisplayHUDWithKeycatchUI(ulonglong param_1,undefined1 param_2)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,param_1,4);
   }
   (&DAT_82b3e548)[(int)param_1 * 0x1e4] = param_2;
@@ -33,7 +44,6 @@ bool CL_AllowPopup(ulonglong param_1)
   char cVar2;
   
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
   }
   iVar1 = (&DAT_82b3e54c)[(int)param_1 * 0x79];
@@ -87,11 +97,60 @@ undefined8 LAN_WaitServerResponse(void)
 
 // 82354778  LAN_GetServerInfo  (client_mp/cl_ui_mp.cpp:161)
 
-void LAN_GetServerInfo(void)
+void LAN_GetServerInfo(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar2;
+  undefined8 uVar1;
+  undefined1 local_430 [1072];
+  
+  iVar2 = __savegprlr_28();
+  local_430[0] = 0;
+  if (((iVar2 == 0) && (-1 < (int)param_2)) && ((int)param_2 < 0x10)) {
+    param_2 = param_2 * 0xd0;
+    if (param_2 + -0x7d55e3a8 != 0) {
+      if ((param_3 & 0xffffffff) != 0) {
+        *(undefined1 *)param_3 = 0;
+        Info_SetValueForKey(local_430,0xffffffff820344a4,param_2 + -0x7d55e340);
+        Info_SetValueForKey(local_430,0xffffffff82010974,param_2 + -0x7d55e320);
+        iVar2 = (int)(param_2 + -0x7d55e3a8);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x59));
+        Info_SetValueForKey(local_430,0xffffffff82014e8c,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x5a));
+        Info_SetValueForKey(local_430,0xffffffff82022f7c,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined2 *)(iVar2 + 0x66));
+        Info_SetValueForKey(local_430,0xffffffff82031bf4,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined2 *)(iVar2 + 0x62));
+        Info_SetValueForKey(local_430,0xffffffff8203448c,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined2 *)(iVar2 + 100));
+        Info_SetValueForKey(local_430,0xffffffff82034484,uVar1);
+        Info_SetValueForKey(local_430,0xffffffff8203449c,param_2 + -0x7d55e300);
+        Info_SetValueForKey(local_430,0xffffffff820337c4,param_2 + -0x7d55e2e8);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x58));
+        Info_SetValueForKey(local_430,0xffffffff82034494,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x5c));
+        Info_SetValueForKey(local_430,0xffffffff82034480,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x5d));
+        Info_SetValueForKey(local_430,0xffffffff8203447c,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x5e));
+        Info_SetValueForKey(local_430,0xffffffff82034478,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x5f));
+        Info_SetValueForKey(local_430,0xffffffff82034474,uVar1);
+        uVar1 = va(0xffffffff8200c28c,*(undefined1 *)(iVar2 + 0x60));
+        Info_SetValueForKey(local_430,0xffffffff82034470,uVar1);
+        I_strncpyz(param_3,local_430,param_4);
+        __restgprlr_28();
+        return;
+      }
+      goto LAB_823549c4;
+    }
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    *(undefined1 *)param_3 = 0;
+  }
+LAB_823549c4:
+  __restgprlr_28();
+  return;
 }
 
 
@@ -121,11 +180,30 @@ longlong LAN_GetServerPtr(int param_1,longlong param_2)
 
 // 82354A50  LAN_CleanHostname  (client_mp/cl_ui_mp.cpp:301)
 
-void LAN_CleanHostname(void)
+void LAN_CleanHostname(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  byte *pbVar2;
+  int iVar3;
+  undefined1 *puVar4;
+  
+  pbVar2 = (byte *)__savegprlr_29();
+  puVar4 = (undefined1 *)param_2;
+  bVar1 = *pbVar2;
+  while (bVar1 != 0) {
+    iVar3 = isalpha((uint)bVar1);
+    if (iVar3 != 0) {
+      *(byte *)param_2 = bVar1;
+      param_2 = param_2 + 1;
+    }
+    puVar4 = (undefined1 *)param_2;
+    pbVar2 = pbVar2 + 1;
+    bVar1 = *pbVar2;
+  }
+  *puVar4 = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -150,11 +228,79 @@ void LAN_CompareHostname(undefined8 param_1,undefined8 param_2)
 
 // 82354B10  LAN_CompareServers  (client_mp/cl_ui_mp.cpp:333)
 
-void LAN_CompareServers(void)
+void LAN_CompareServers(undefined8 param_1,ulonglong param_2,int param_3,int param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int iVar5;
+  longlong lVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined1 *puVar6;
+  undefined1 *puVar7;
+  
+  iVar5 = __savegprlr_28();
+  if (((iVar5 == 0) && (-1 < param_4)) && (param_4 < 0x10)) {
+    puVar6 = &DAT_82aa1c58 + param_4 * 0xd0;
+LAB_82354b5c:
+    if ((param_5 < 0) || (0xf < param_5)) goto LAB_82354b7c;
+    puVar7 = &DAT_82aa1c58 + param_5 * 0xd0;
+  }
+  else {
+    puVar6 = (undefined1 *)0x0;
+    if (iVar5 == 0) goto LAB_82354b5c;
+LAB_82354b7c:
+    puVar7 = (undefined1 *)0x0;
+  }
+  if ((puVar6 == (undefined1 *)0x0) || (puVar7 == (undefined1 *)0x0)) {
+    lVar2 = 0;
+    goto LAB_82354c80;
+  }
+  lVar2 = 0;
+  if ((param_2 & 0xffffffff) < 5) {
+    bVar1 = (int)param_2 != 0;
+    if (param_2 == 1 && bVar1) {
+      uVar3 = UI_GetMapDisplayName(puVar7 + 0x88);
+      uVar4 = UI_GetMapDisplayName(puVar6 + 0x88);
+      lVar2 = I_stricmp(uVar4,uVar3);
+      iVar5 = (int)lVar2;
+      goto joined_r0x82354c28;
+    }
+    if (param_2 == 2 && bVar1) {
+      lVar2 = (ulonglong)(byte)puVar6[0x59] - (ulonglong)(byte)puVar7[0x59];
+      if (lVar2 != 0) goto LAB_82354c68;
+LAB_82354c2c:
+      param_3 = 0;
+    }
+    else {
+      if (param_2 == 3 && bVar1) {
+        uVar3 = UI_GetGameTypeDisplayName(puVar7 + 0xc0);
+        uVar4 = UI_GetGameTypeDisplayName(puVar6 + 0xc0);
+        lVar2 = I_stricmp(uVar4,uVar3);
+        iVar5 = (int)lVar2;
+joined_r0x82354c28:
+        if (iVar5 != 0) goto LAB_82354c68;
+        goto LAB_82354c2c;
+      }
+      if (!bVar1) {
+        lVar2 = LAN_CompareHostname(puVar6 + 0x68,puVar7 + 0x68);
+        iVar5 = (int)lVar2;
+        goto joined_r0x82354c28;
+      }
+    }
+    lVar2 = (longlong)*(short *)(puVar6 + 0x66) - (longlong)*(short *)(puVar7 + 0x66);
+    if ((lVar2 == 0) && (lVar2 = I_stricmp(puVar6 + 0xc0,puVar7 + 0xc0), (int)lVar2 == 0)) {
+      lVar2 = LAN_CompareHostname(puVar6 + 0x68,puVar7 + 0x68);
+    }
+  }
+LAB_82354c68:
+  if (param_3 != 0) {
+    __restgprlr_28(-lVar2);
+    return;
+  }
+LAB_82354c80:
+  __restgprlr_28(lVar2);
+  return;
 }
 
 
@@ -362,7 +508,6 @@ bool CL_LocalClientIsInGame(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
   }
   return (&DAT_82b3e54c)[(int)param_1 * 0x79] == 10;
@@ -390,5 +535,25 @@ undefined8 CL_ShutdownUI(void)
     DAT_82aa1c14 = 0;
   }
   return uVar1;
+}
+
+
+// 82355240  CL_InitUI  (client_mp/cl_ui_mp.cpp:678)
+
+void CL_InitUI(void)
+
+{
+  longlong lVar1;
+  
+  UI_ScreenshotInit();
+  lVar1 = 0;
+  do {
+    UI_Init(lVar1);
+    lVar1 = lVar1 + 1;
+  } while ((int)lVar1 < 4);
+  R_PopRemoteScreenUpdate();
+  DAT_82aa1c14 = 1;
+  R_PushRemoteScreenUpdate();
+  return;
 }
 

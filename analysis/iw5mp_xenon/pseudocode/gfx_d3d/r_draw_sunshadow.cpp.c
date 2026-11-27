@@ -33,7 +33,6 @@ void R_DrawSunShadowMapCallback(undefined8 param_1,undefined8 param_2)
   if (iVar5 == DAT_84616688) {
     R_GPU_BeginTimer(uVar8 + 1);
     if (iVar5 != DAT_84616688) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821bef90,0x4b,0,0xffffffff82000f98,0xffffffff821befd8);
     }
     R_ClearScreen(0,iVar5,0xb0,0xffffffff821cfd24);
@@ -42,37 +41,64 @@ void R_DrawSunShadowMapCallback(undefined8 param_1,undefined8 param_2)
   }
   R_HW_EnableScissor(param_2,puVar7);
   iStack00000018 = (int)((ulonglong)param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) == 0x27) {
-    *(uint *)(iStack00000018 + 0x174c) = uVar1 + 0x11;
-    R_DrawSurfs_Unsorted(param_2,(ulonglong)uVar2);
-    R_EndDrawList(param_2);
-    if (iVar5 == DAT_84616688) {
-      R_GPU_BeginTimer(uVar8 + 1);
-      if (*(int *)(DAT_845aa590 + 0xc) == 1) {
-        puVar7 = &local_70;
-        local_70 = 0;
-        local_6c = 0;
-        local_68 = uVar3;
-        local_64 = uVar3;
-      }
-      R_ResolveShadowmap(iStack0000001c,puVar7,0,(longlong)(int)uVar3 * (longlong)(int)uVar1);
-      R_GPU_EndTimer();
-    }
-    R_HW_DisableScissor(iStack0000001c);
-    __restgprlr_22();
-    return;
+  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
+    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  *(uint *)(iStack00000018 + 0x174c) = uVar1 + 0x11;
+  R_DrawSurfs_Unsorted(param_2,(ulonglong)uVar2);
+  R_EndDrawList(param_2);
+  if (iVar5 == DAT_84616688) {
+    R_GPU_BeginTimer(uVar8 + 1);
+    if (*(int *)(DAT_845aa590 + 0xc) == 1) {
+      puVar7 = &local_70;
+      local_70 = 0;
+      local_6c = 0;
+      local_68 = uVar3;
+      local_64 = uVar3;
+    }
+    R_ResolveShadowmap(iStack0000001c,puVar7,0,(longlong)(int)uVar3 * (longlong)(int)uVar1);
+    R_GPU_EndTimer();
+  }
+  R_HW_DisableScissor(iStack0000001c);
+  __restgprlr_22();
+  return;
 }
 
 
 // 82737D00  R_DrawSunShadowMap  (gfx_d3d/r_draw_sunshadow.cpp:162)
 
-void R_DrawSunShadowMap(void)
+void R_DrawSunShadowMap(undefined8 param_1,undefined4 param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 local_17c0;
+  int local_17bc;
+  undefined4 local_17b8;
+  undefined4 local_17b4;
+  undefined4 local_17b0;
+  uint local_17ac;
+  undefined1 auStack_17a0 [6048];
+  
+  iVar3 = __savegprlr_26();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821befec);
+  R_InitCmdBufSourceState(auStack_17a0,iVar3 + 0x330,0);
+  uVar1 = *(undefined4 *)(iVar3 + 0x93c);
+  uVar2 = *(undefined4 *)(iVar3 + 0x938);
+  R_SetRenderTargetSize(auStack_17a0,uVar1);
+  R_SetViewportValues(auStack_17a0,0,0,uVar2,uVar2);
+  local_17ac = *(uint *)(iVar3 + 0x91c);
+  local_17c0 = (undefined4)param_3;
+  lVar4 = param_3 * 0x160 + (ulonglong)local_17ac;
+  local_17bc = (int)lVar4 + 0x2450;
+  local_17b8 = param_2;
+  local_17b4 = uVar2;
+  local_17b0 = uVar1;
+  R_DrawCall(0xffffffff82737b68,&local_17c0,auStack_17a0,iVar3 + 0x180,lVar4 + 0x2460,param_4);
+  PIXEndNamedEvent();
+  __restgprlr_26();
+  return;
 }
 

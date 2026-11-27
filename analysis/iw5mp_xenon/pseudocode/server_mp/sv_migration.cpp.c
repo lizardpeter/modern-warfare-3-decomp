@@ -70,8 +70,41 @@ ulonglong GetBlocksPerFrame(void)
 void SV_MigrationSave(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  int iVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  
   __savegprlr_29();
+  iVar5 = SaveMemory_GetSaveHandle(0);
+  uVar2 = SaveMemory_GetMemoryFile();
+  uVar3 = Migration_GetBuffer();
+  uVar4 = Migration_GetBufferSize();
+  MemFile_InitForWriting(uVar2,uVar4,uVar3,0,1);
+  G_SaveState(uVar2,0,0,1);
+  MemFile_StartSegment(uVar2,0xffffffffffffffff);
+  SaveMemory_CreateHeaderInternal
+            (0xffffffff8216023c,0xffffffff8216023c,0xffffffff820068af,DAT_83d0b548,0,0,0,
+             DAT_83f1eaac);
+  uVar1 = *(undefined4 *)(iVar5 + 8);
+  uVar2 = MemFile_GetUsedSize(uVar2);
+  Com_Printf(0xf,0xffffffff8216020c,uVar2,uVar1);
+  __restgprlr_29();
+  return;
+}
+
+
+// 8257B828  SV_MigrationInit  (server_mp/sv_migration.cpp:251)
+
+void * SV_MigrationInit(void)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_83f1e760,0,0x3ac);
+  DAT_83f1ea94 = 0xffffffff;
+  return pvVar1;
 }
 
 
@@ -80,8 +113,43 @@ void SV_MigrationSave(void)
 void SV_MigrationRegisterDvars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  DAT_83f1eb14 = Dvar_RegisterInt(0xffffffff821603fc,0,0,0x20,0,0xffffffff82160418);
+  DAT_83f1eb10 = Dvar_RegisterInt(0xffffffff821603e4,500,0,0x7fffffff,0,0xffffffff821603b8);
+  DAT_83f1eb20 = Dvar_RegisterInt(0xffffffff8216034c,5,0,0x7fffffff,0,0xffffffff82160360);
+  DAT_83f1eb18 = Dvar_RegisterInt(0xffffffff821602ec,30000,0,0x7fffffff,0,0xffffffff82160308);
+  DAT_83f1eb0c = Dvar_RegisterBool(0xffffffff821602a8,1,0,0xffffffff821602c0);
+  DAT_83f1eb1c = Dvar_RegisterInt(0xffffffff82160248,100,0,0x7fffffff,0,0xffffffff82160268);
+  __restgprlr_29();
+  return;
+}
+
+
+// 8257B980  ClientRemoteAddr  (server_mp/sv_migration.cpp:286)
+
+void ClientRemoteAddr(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  if ((ulonglong)DAT_83f11410 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82160480,0x11f,0,0xffffffff8215b44c,param_2);
+  }
+  iVar5 = (int)param_2 * 0x68b00 + DAT_83f11414;
+  uVar1 = *(undefined4 *)(iVar5 + 0x2c);
+  uVar2 = *(undefined4 *)(iVar5 + 0x30);
+  uVar3 = *(undefined4 *)(iVar5 + 0x34);
+  *puVar4 = *(undefined4 *)(iVar5 + 0x28);
+  puVar4[1] = uVar1;
+  puVar4[2] = uVar2;
+  puVar4[3] = uVar3;
+  __restgprlr_29(puVar4);
+  return;
 }
 
 
@@ -93,7 +161,6 @@ ulonglong IsClientConnected(ulonglong param_1)
   uint uVar1;
   
   if ((ulonglong)DAT_83f11410 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x126,0,0xffffffff8215b44c,param_1);
   }
   uVar1 = *(uint *)((int)param_1 * 0x68b00 + DAT_83f11414);
@@ -103,11 +170,34 @@ ulonglong IsClientConnected(ulonglong param_1)
 
 // 8257BAC0  SendToClient  (server_mp/sv_migration.cpp:300)
 
-void SendToClient(void)
+void SendToClient(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  char cVar5;
+  undefined8 *puVar4;
+  undefined1 auStack_50 [80];
+  
+  uVar2 = __savegprlr_26();
+  if (DAT_83f11410 <= uVar2) {
+    MyAssertHandler(0xffffffff82160480,0x12d,0,0xffffffff8215b44c,uVar2);
+  }
+  iVar1 = DAT_83f1eb10;
+  (&DAT_83f1e768)[uVar2 * 6] = (&DAT_83f1e768)[uVar2 * 6] + 1;
+  iVar1 = *(int *)(iVar1 + 0xc);
+  iVar3 = Sys_Milliseconds();
+  *(int *)(&DAT_83f1e76c + uVar2 * 0x18) = iVar3 + iVar1;
+  cVar5 = IsClientConnected(uVar2);
+  if (cVar5 != '\0') {
+    puVar4 = (undefined8 *)ClientRemoteAddr(auStack_50,uVar2);
+    NET_OutOfBandData(4,*puVar4,puVar4[1],param_2,param_3);
+    __restgprlr_26();
+    return;
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -116,14 +206,13 @@ void SendToClient(void)
 undefined8 SV_ShouldAskPartyMembersToFollowUs(uint param_1)
 
 {
-  if ((param_1 & 2) == 0) {
-    return 0;
+  if ((param_1 & 2) != 0) {
+    if ((param_1 & 1) == 0) {
+      MyAssertHandler(0xffffffff82160480,0x17d,0,0xffffffff82000f98,0xffffffff821604c8);
+    }
+    return 1;
   }
-  if ((param_1 & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82160480,0x17d,0,0xffffffff82000f98,0xffffffff821604c8);
-  }
-  return 1;
+  return 0;
 }
 
 
@@ -139,7 +228,6 @@ void SendStartMessage(uint param_1)
   undefined1 auStack_500 [1256];
   
   if (DAT_83f11410 <= param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x18a,0,0xffffffff8215b44c,param_1);
   }
   MSG_Init(auStack_530,auStack_500,0x4e1);
@@ -154,21 +242,91 @@ void SendStartMessage(uint param_1)
 
 // 8257BCE8  CreateBlock  (server_mp/sv_migration.cpp:407)
 
-void CreateBlock(void)
+void CreateBlock(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  iVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82160480,0x198,0,0xffffffff82000f98,0xffffffff821604f4);
+  }
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff82160480,0x199,0,0xffffffff82000f98,0xffffffff821604e4);
+  }
+  piVar2 = (int *)param_2;
+  *piVar2 = iVar1;
+  if (DAT_83f1ea98 < (iVar1 + 1) * 0x4b0) {
+    iVar1 = DAT_83f1ea98 / 0x4b0 + (DAT_83f1ea98 >> 0x1f);
+    piVar2[1] = DAT_83f1ea98 + (iVar1 - (iVar1 >> 0x1f)) * -0x4b0;
+  }
+  else {
+    piVar2[1] = 0x4b0;
+  }
+  piVar2[2] = 0;
+  if (piVar2[1] == 0) {
+    *piVar2 = -1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8257BDC8  SendBlock  (server_mp/sv_migration.cpp:424)
 
-void SendBlock(void)
+void SendBlock(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined8 uVar4;
+  char cVar6;
+  int iVar5;
+  uint *puVar7;
+  int local_550 [2];
+  undefined4 local_548;
+  undefined4 local_53c;
+  undefined1 auStack_520 [1312];
+  
+  uVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82160480,0x1ad,0,0xffffffff82000f98,0xffffffff821604f4);
+  }
+  puVar7 = (uint *)param_2;
+  if ((int)*puVar7 < 0) {
+    MyAssertHandler(0xffffffff82160480,0x1ae,0,0xffffffff82000f98,0xffffffff82160590);
+  }
+  if (((int)puVar7[1] < 1) || (0x4b0 < (int)puVar7[1])) {
+    MyAssertHandler(0xffffffff82160480,0x1af,0,0xffffffff8216054c,0xffffffff82160564);
+  }
+  if (DAT_83f1ea98 <= (int)(*puVar7 * 0x4b0)) {
+    MyAssertHandler(0xffffffff82160480,0x1b0,0,0xffffffff82000f98,0xffffffff82160514);
+  }
+  lVar3 = Migration_GetBuffer();
+  MSG_Init(local_550,auStack_520,0x4e1);
+  MSG_WriteString(local_550,0xffffffff820347c4);
+  MSG_WriteShort(local_550,*puVar7);
+  MSG_WriteShort(local_550,puVar7[1]);
+  lVar3 = (ulonglong)*puVar7 * 0x4b0 + lVar3;
+  MSG_WriteData(local_550,lVar3,puVar7[1]);
+  uVar4 = SaveMemory_ComputeAdlerChecksum(lVar3,puVar7[1]);
+  MSG_WriteLong(local_550,uVar4);
+  if (local_550[0] != 0) {
+    MyAssertHandler(0xffffffff82160480,0x1bd,0,0xffffffff82000f98,0xffffffff82034958);
+  }
+  cVar6 = SendToClient(uVar2,local_548,local_53c);
+  if (cVar6 != '\0') {
+    Com_Printf(0x19,0xffffffff821604fc,*puVar7,uVar2);
+    iVar1 = *(int *)(DAT_83f1eb10 + 0xc);
+    iVar5 = Sys_Milliseconds();
+    puVar7[2] = iVar5 + iVar1;
+    __restgprlr_26(1);
+    return;
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -182,45 +340,40 @@ void SendSave(void)
   int *piVar3;
   
   __savegprlr_21();
-  iVar1 = SaveMemory_GetSaveHandle(0);
+  iVar2 = SaveMemory_GetSaveHandle(0);
   DAT_83f1e760 = 3;
   SaveMemory_GetMemoryFile();
   DAT_83f1ea98 = MemFile_GetUsedSize();
-  if (DAT_83f1ea98 != *(int *)(iVar1 + 0x45c)) {
-                    /* WARNING: Subroutine does not return */
+  if (DAT_83f1ea98 != *(int *)(iVar2 + 0x45c)) {
     MyAssertHandler(0xffffffff82160480,0x1d1,0,0xffffffff82000f98,0xffffffff821605a0);
   }
   DAT_83f1eaa0 = 0;
   DAT_83f1ea9c = 0;
-  while( true ) {
-    iVar1 = DAT_83f1ea9c;
+  do {
+    iVar2 = DAT_83f1ea9c;
     piVar3 = &DAT_83f1e914 + DAT_83f1ea9c * 3;
     if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82160480,0x198,0,0xffffffff82000f98,0xffffffff821604f4);
     }
-    if (DAT_83f1ea9c < 0) break;
-    iVar2 = DAT_83f1ea9c + 1;
-    *piVar3 = DAT_83f1ea9c;
-    if (DAT_83f1ea98 < iVar2 * 0x4b0) {
-      iVar2 = DAT_83f1ea98 / 0x4b0 + (DAT_83f1ea98 >> 0x1f);
-      (&DAT_83f1e918)[iVar1 * 3] = DAT_83f1ea98 + (iVar2 - (iVar2 >> 0x1f)) * -0x4b0;
+    if (iVar2 < 0) {
+      MyAssertHandler(0xffffffff82160480,0x199,0,0xffffffff82000f98,0xffffffff821604e4);
+    }
+    *piVar3 = iVar2;
+    if (DAT_83f1ea98 < (iVar2 + 1) * 0x4b0) {
+      iVar1 = DAT_83f1ea98 / 0x4b0 + (DAT_83f1ea98 >> 0x1f);
+      (&DAT_83f1e918)[iVar2 * 3] = DAT_83f1ea98 + (iVar1 - (iVar1 >> 0x1f)) * -0x4b0;
     }
     else {
-      (&DAT_83f1e918)[iVar1 * 3] = 0x4b0;
+      (&DAT_83f1e918)[iVar2 * 3] = 0x4b0;
     }
-    (&DAT_83f1e91c)[iVar1 * 3] = 0;
-    if ((&DAT_83f1e918)[iVar1 * 3] == 0) {
+    (&DAT_83f1e91c)[iVar2 * 3] = 0;
+    if ((&DAT_83f1e918)[iVar2 * 3] == 0) {
       *piVar3 = -1;
     }
     DAT_83f1ea9c = DAT_83f1ea9c + 1;
-    if (0x1f < DAT_83f1ea9c) {
-      __restgprlr_21();
-      return;
-    }
-  }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82160480,0x199,0,0xffffffff82000f98,0xffffffff821604e4);
+  } while (DAT_83f1ea9c < 0x20);
+  __restgprlr_21();
+  return;
 }
 
 
@@ -229,8 +382,41 @@ void SendSave(void)
 void SendMigrateTo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined8 *puVar4;
+  undefined8 uVar5;
+  int local_170 [2];
+  undefined4 local_168;
+  undefined4 local_15c;
+  undefined1 auStack_140 [16];
+  undefined1 auStack_130 [304];
+  
+  uVar1 = __savegprlr_28();
+  if ((ulonglong)DAT_83f11410 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82160480,0x1df,0,0xffffffff8215b44c,uVar1);
+  }
+  iVar3 = Lobby_GetMember(DAT_83f1ea94);
+  uVar5 = *(undefined8 *)(iVar3 + 0x128);
+  MSG_Init(local_170,auStack_130,0x100);
+  uVar2 = va(0xffffffff82053998,0);
+  MSG_WriteString(local_170,uVar2);
+  iVar3 = Lobby_GetPartyData();
+  MSG_WriteBits(local_170,*(undefined4 *)(iVar3 + 0x14),2);
+  uVar2 = Session_HostNum(0xffffffff844c7860);
+  MSG_WriteBits(local_170,uVar2,5);
+  MSG_WriteBits(local_170,DAT_83f1ea94,5);
+  MSG_WriteBits(local_170,DAT_83f1eaf8,2);
+  MSG_WriteBits(local_170,1,1);
+  MSG_WriteInt64(local_170,uVar5);
+  if (local_170[0] != 0) {
+    MyAssertHandler(0xffffffff82160480,0x1eb,0,0xffffffff82000f98,0xffffffff8203c280);
+  }
+  puVar4 = (undefined8 *)ClientRemoteAddr(auStack_140,uVar1);
+  NET_OutOfBandData(4,*puVar4,puVar4[1],local_168,local_15c);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -252,7 +438,6 @@ void SendHeader(undefined8 param_1)
   MSG_WriteString(local_530,0xffffffff820347b4);
   MSG_WriteData(local_530,uVar1,0x480);
   if (local_530[0] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x202,0,0xffffffff82000f98,0xffffffff82034958);
   }
   SendToClient(param_1,local_528,local_51c);
@@ -266,7 +451,7 @@ void NewHostPicked(void)
 
 {
   DAT_83f1eb04 = 2;
-  DAT_83f1eb08 = *(int *)(&DAT_83f1e770 + DAT_83f1ea94 * 0x18) << 5 | DAT_83f1ea94;
+  DAT_83f1eb08 = (&DAT_83f1e770)[DAT_83f1ea94 * 6] << 5 | DAT_83f1ea94;
   (&DAT_83f1e768)[DAT_83f1ea94 * 6] = 0;
   SendHeader(DAT_83f1ea94);
   return;
@@ -278,8 +463,101 @@ void NewHostPicked(void)
 void PickNewHost(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  uint uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  undefined8 *puVar4;
+  uint uVar6;
+  longlong lVar7;
+  int iVar8;
+  uint *puVar10;
+  undefined8 uVar9;
+  uint uVar12;
+  longlong lVar11;
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [144];
+  
   __savegprlr_17();
+  if (DAT_83f1eaa4 == '\0') {
+    MyAssertHandler(0xffffffff82160480,0x21f,0,0xffffffff82000f98,0xffffffff821607a0);
+  }
+  uVar6 = 0xffffffff;
+  iVar8 = 0;
+  DAT_83f1ea94 = 0xffffffff;
+  lVar7 = 0;
+  uVar12 = 0;
+  if (0 < DAT_83f11410) {
+    puVar10 = &DAT_83f1e774;
+    do {
+      uVar2 = DAT_83f1ea94;
+      if ((puVar10[-4] != 0) &&
+         (cVar5 = Session_IsHost(0xffffffff844c7860,uVar12), uVar2 = DAT_83f1ea94,
+         uVar6 = DAT_83f1ea94, cVar5 == '\0')) {
+        lVar7 = lVar7 + 1;
+        if (puVar10[-4] != 2) {
+          MyAssertHandler(0xffffffff82160480,0x235,0,0xffffffff82000f98,0xffffffff821606c0);
+        }
+        if ((int)*puVar10 < 0) {
+          MyAssertHandler(0xffffffff82160480,0x237,0,0xffffffff821606f8,*puVar10,0);
+        }
+        uVar6 = puVar10[-1];
+        iVar1 = (int)uVar6 >> (*puVar10 & 0x3f);
+        uVar3 = Lobby_GetPartyData();
+        uVar3 = Party_GetMemberName(uVar3,uVar12);
+        Com_Printf(0x19,0xffffffff82160738,uVar12,uVar3,uVar6,iVar1);
+        uVar2 = DAT_83f1ea94;
+        uVar6 = DAT_83f1ea94;
+        if ((iVar8 < iVar1) && (uVar2 = uVar12, iVar8 = iVar1, uVar6 = uVar12, iVar1 < 1)) {
+          MyAssertHandler(0xffffffff82160480,0x23e,0,0xffffffff8216076c,iVar1,1);
+        }
+      }
+      DAT_83f1ea94 = uVar2;
+      uVar12 = uVar12 + 1;
+      puVar10 = puVar10 + 6;
+    } while ((int)uVar12 < DAT_83f11410);
+    if (uVar6 != 0xffffffff) {
+      if (iVar8 < 1) {
+        MyAssertHandler(0xffffffff82160480,0x265,0,0xffffffff821605cc,iVar8,1);
+        uVar6 = DAT_83f1ea94;
+      }
+      DAT_83f1eb04 = 2;
+      DAT_83f1eb08 = (&DAT_83f1e770)[uVar6 * 6] << 5 | uVar6;
+      (&DAT_83f1e768)[uVar6 * 6] = 0;
+      SendHeader(DAT_83f1ea94);
+      __restgprlr_17();
+      return;
+    }
+  }
+  if ((DAT_83f1eaf8 & 2) == 0) {
+    uVar9 = 0xffffffff82030fc8;
+    uVar3 = 0xffffffff82160678;
+  }
+  else {
+    uVar9 = 0xffffffff82030f8c;
+    uVar3 = 0xffffffff82160698;
+  }
+  Com_Printf(0x19,0xffffffff82160600,lVar7,uVar9);
+  lVar7 = 0;
+  if (0 < DAT_83f11410) {
+    lVar11 = 0;
+    do {
+      cVar5 = IsClientConnected(lVar7);
+      if ((cVar5 != '\0') && (cVar5 = Session_IsHost(0xffffffff844c7860,lVar7), cVar5 == '\0')) {
+        puVar4 = (undefined8 *)ClientRemoteAddr(auStack_a0,lVar7);
+        NET_OutOfBandPrint(4,*puVar4,puVar4[1],uVar3);
+        puVar4 = (undefined8 *)ClientRemoteAddr(auStack_90,lVar7);
+        NET_OutOfBandPrint(4,*puVar4,puVar4[1],uVar3);
+        SV_DropClient(lVar11 + (ulonglong)DAT_83f11414,uVar9,0);
+      }
+      lVar7 = lVar7 + 1;
+      lVar11 = lVar11 + 0x68b00;
+    } while ((int)lVar7 < DAT_83f11410);
+  }
+  DAT_83f1eaf8 = DAT_83f1eaf8 | 1;
+  SV_MatchEnd();
+  __restgprlr_17();
+  return;
 }
 
 
@@ -295,11 +573,24 @@ uint SV_MigrationLimitReached(void)
 
 // 8257C6F0  SV_MigrationRemoveClient  (server_mp/sv_migration.cpp:647)
 
-void SV_MigrationRemoveClient(void)
+void SV_MigrationRemoveClient(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82160480,0x28a,0,0xffffffff82000f98,0xffffffff820386a4);
+  }
+  if (1 < *piVar2) {
+    MyAssertHandler(0xffffffff82160480,0x28b,0,0xffffffff82000f98,0xffffffff821607b4);
+  }
+  iVar1 = ((int)piVar2 - DAT_83f11414) / 0x68b00;
+  SV_Live_ClearTeamRankEntry(iVar1);
+  SV_Live_RemoveClient(iVar1,param_2,param_3 & 0xff,1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -320,15 +611,12 @@ void SV_MigrationStart(undefined8 param_1,ulonglong param_2)
   
   uVar1 = __savegprlr_20();
   if (DAT_83f1eaa4 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x29c,0,0xffffffff82000f98,0xffffffff821608b8);
   }
   if (DAT_83666174 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x29d,0,0xffffffff82000f98,0xffffffff8201dfb4);
   }
   if (*(char *)(DAT_83666174 + 0xc) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82160480,0x29e,0,0xffffffff82000f98,0xffffffff8215b840);
   }
   uVar5 = (uint)param_2;
@@ -341,87 +629,86 @@ void SV_MigrationStart(undefined8 param_1,ulonglong param_2)
   }
   if (DAT_83f1eaac < *(int *)(DAT_83f1eb20 + 0xc)) {
     iVar3 = SV_CountRealClients();
-    if (iVar3 < 2) {
-      Com_Printf(0xf,0xffffffff8216084c);
-      Cbuf_AddCall(0,0xffffffff825692a8);
-      SV_MatchEnd();
+    if (1 < iVar3) {
+      if ((uVar1 & 0xffffffff) == 0) {
+        DAT_83f1eab4 = 0;
+      }
+      else {
+        I_strncpyz(0xffffffff83f1eab4,uVar1,0x40);
+      }
+      DAT_83f1eaac = DAT_83f1eaac + 1;
+      iVar3 = 0;
+      DAT_83f1eaa4 = 1;
+      DAT_83f1eaf8 = uVar5;
+      piVar8 = DAT_83f11414;
+      if (0 < DAT_83f11410) {
+        do {
+          if (*piVar8 == 5) {
+            if (*(short *)((int)piVar8 + 0x352ce) != 0x3ff) {
+              MyAssertHandler(0xffffffff82160480,0x2ca,0,0xffffffff820011f4,0xffffffff82160810,
+                              0xffffffff821607d8);
+            }
+          }
+          else {
+            if (1 < *piVar8) {
+              SV_DropClient(piVar8,0xffffffff82030fac,1);
+            }
+            SV_MigrationRemoveClient(piVar8,0xffffffff82030fac,0);
+          }
+          iVar3 = iVar3 + 1;
+          piVar8 = piVar8 + 0x1a2c0;
+        } while (iVar3 < DAT_83f11410);
+      }
+      Migration_Init();
+      G_PrepareMigration();
+      SV_MigrationSave();
+      lVar7 = 0;
+      if (0 < DAT_83f11410) {
+        puVar9 = &DAT_83f1e768;
+        do {
+          cVar6 = IsClientConnected(lVar7);
+          if (cVar6 == '\0') {
+            puVar9[-1] = 0;
+          }
+          else {
+            *puVar9 = 0;
+            uVar4 = Sys_Milliseconds();
+            puVar9[4] = uVar4;
+            SendStartMessage(lVar7);
+          }
+          lVar7 = lVar7 + 1;
+          puVar9 = puVar9 + 6;
+        } while ((int)lVar7 < DAT_83f11410);
+      }
+      DAT_83f1e760 = 1;
+      DAT_83f1ea94 = 0xffffffff;
+      iVar3 = *(int *)(DAT_83f1eb14 + 0xc);
+      if (iVar3 < 1) {
+        uVar5 = Live_GetUploadSpeed();
+        iVar3 = (int)((((int)uVar5 >> 3) + (uint)((int)uVar5 < 0 && (uVar5 & 7) != 0)) * 0x32) /
+                1200000;
+        if (iVar3 < 0x20) {
+          if (iVar3 < 2) {
+            iVar3 = 1;
+          }
+        }
+        else {
+          iVar3 = 0x20;
+        }
+        Com_Printf(0xf,0xffffffff821601f4,iVar3);
+      }
+      DAT_83f1eaa8 = iVar3;
+      SV_SetGameEndTime(0);
+      uVar2 = va(0xffffffff82023800,0,0,0,0x3ff0000000000000);
+      SV_SetConfigstring(0xe88,uVar2);
+      DAT_83f1eb00 = 0;
+      DAT_83f1eb04 = 1;
       __restgprlr_20();
       return;
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      DAT_83f1eab4 = 0;
-    }
-    else {
-      I_strncpyz(0xffffffff83f1eab4,uVar1,0x40);
-    }
-    DAT_83f1eaac = DAT_83f1eaac + 1;
-    iVar3 = 0;
-    DAT_83f1eaa4 = 1;
-    DAT_83f1eaf8 = uVar5;
-    piVar8 = DAT_83f11414;
-    if (0 < DAT_83f11410) {
-      do {
-        if (*piVar8 == 5) {
-          if (*(short *)((int)piVar8 + 0x352ce) != 0x3ff) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff82160480,0x2ca,0,0xffffffff820011f4,0xffffffff82160810,
-                            0xffffffff821607d8);
-          }
-        }
-        else {
-          if (1 < *piVar8) {
-            SV_DropClient(piVar8,0xffffffff82030fac,1);
-          }
-          SV_MigrationRemoveClient(piVar8,0xffffffff82030fac,0);
-        }
-        iVar3 = iVar3 + 1;
-        piVar8 = piVar8 + 0x1a2c0;
-      } while (iVar3 < DAT_83f11410);
-    }
-    Migration_Init();
-    G_PrepareMigration();
-    SV_MigrationSave();
-    lVar7 = 0;
-    if (0 < DAT_83f11410) {
-      puVar9 = &DAT_83f1e768;
-      do {
-        cVar6 = IsClientConnected(lVar7);
-        if (cVar6 == '\0') {
-          puVar9[-1] = 0;
-        }
-        else {
-          *puVar9 = 0;
-          uVar4 = Sys_Milliseconds();
-          puVar9[4] = uVar4;
-          SendStartMessage(lVar7);
-        }
-        lVar7 = lVar7 + 1;
-        puVar9 = puVar9 + 6;
-      } while ((int)lVar7 < DAT_83f11410);
-    }
-    DAT_83f1e760 = 1;
-    DAT_83f1ea94 = 0xffffffff;
-    iVar3 = *(int *)(DAT_83f1eb14 + 0xc);
-    if (iVar3 < 1) {
-      uVar5 = Live_GetUploadSpeed();
-      iVar3 = (int)((((int)uVar5 >> 3) + (uint)((int)uVar5 < 0 && (uVar5 & 7) != 0)) * 0x32) /
-              1200000;
-      if (iVar3 < 0x20) {
-        if (iVar3 < 2) {
-          iVar3 = 1;
-        }
-      }
-      else {
-        iVar3 = 0x20;
-      }
-      Com_Printf(0xf,0xffffffff821601f4,iVar3);
-    }
-    DAT_83f1eaa8 = iVar3;
-    SV_SetGameEndTime(0);
-    uVar2 = va(0xffffffff82023800,0,0,0,0x3ff0000000000000);
-    SV_SetConfigstring(0xe88,uVar2);
-    DAT_83f1eb00 = 0;
-    DAT_83f1eb04 = 1;
+    Com_Printf(0xf,0xffffffff8216084c);
+    Cbuf_AddCall(0,0xffffffff825692a8);
+    SV_MatchEnd();
     __restgprlr_20();
     return;
   }
@@ -438,8 +725,38 @@ void SV_MigrationStart(undefined8 param_1,ulonglong param_2)
 void HasTimedOut(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  uint uVar4;
+  char cVar5;
+  undefined8 uVar2;
+  longlong lVar3;
+  
+  uVar4 = __savegprlr_28();
+  if (0x11 < uVar4) {
+    MyAssertHandler(0xffffffff82160480,0x2f9,0,0xffffffff82014c1c,uVar4,0x12);
+  }
+  cVar5 = IsClientConnected(uVar4);
+  if (cVar5 == '\0') {
+    uVar2 = Sys_Milliseconds();
+    Com_Printf(0x19,0xffffffff82160900,uVar2,uVar4);
+    __restgprlr_28(1);
+    return;
+  }
+  if (((DAT_83f1e760 != 3) && (DAT_83f1e760 != 4)) &&
+     ((DAT_83f1e760 != 2 || (DAT_83f1ea94 == uVar4)))) {
+    lVar3 = Sys_Milliseconds();
+    if ((longlong)((ulonglong)*(uint *)(&DAT_83f1e76c + uVar4 * 0x18) - lVar3) < 0) {
+      uVar1 = (&DAT_83f1e768)[uVar4 * 6];
+      uVar2 = Sys_Milliseconds();
+      Com_Printf(0x19,0xffffffff821608cc,uVar2,uVar4,uVar1,5);
+    }
+    lVar3 = Sys_Milliseconds();
+    __restgprlr_28(((ulonglong)*(uint *)(&DAT_83f1e76c + uVar4 * 0x18) - lVar3 & 0xffffffff) >> 0x1f
+                  );
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -448,8 +765,58 @@ void HasTimedOut(void)
 void TimedOut(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  int *piVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  
+  uVar3 = __savegprlr_28();
+  if (0x11 < uVar3) {
+    MyAssertHandler(0xffffffff82160480,0x319,0,0xffffffff82014c1c,uVar3,0x12);
+  }
+  piVar2 = &DAT_83f1e764 + uVar3 * 6;
+  if ((&DAT_83f1e764)[uVar3 * 6] == 0) {
+    MyAssertHandler(0xffffffff82160480,0x31c,0,0xffffffff82000f98,0xffffffff8216096c);
+  }
+  if (4 < (int)(&DAT_83f1e768)[uVar3 * 6]) {
+    *piVar2 = 0;
+  }
+  uVar4 = (ulonglong)DAT_83f1e760 - 1;
+  if ((uVar4 & 0xffffffff) < 4) {
+    bVar1 = (int)uVar4 != 0;
+    if ((ulonglong)DAT_83f1e760 == 2 && bVar1) {
+      if (uVar3 == DAT_83f1ea94) {
+        if (*piVar2 != 0) {
+          SendHeader();
+          __restgprlr_28();
+          return;
+        }
+        DAT_83f1e760 = 1;
+        PickNewHost();
+        __restgprlr_28();
+        return;
+      }
+    }
+    else if (uVar4 == 2 && bVar1) {
+      if (uVar3 == DAT_83f1ea94) {
+        *piVar2 = 0;
+        DAT_83f1e760 = 1;
+        PickNewHost();
+        __restgprlr_28();
+        return;
+      }
+    }
+    else if ((!bVar1) && (*piVar2 == 1)) {
+      SendStartMessage(uVar3);
+      __restgprlr_28();
+      return;
+    }
+  }
+  else if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82160480,0x349,0,0xffffffff82160928);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -458,8 +825,24 @@ void TimedOut(void)
 void CheckTimeouts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  int *piVar2;
+  longlong lVar3;
+  
   __savegprlr_29();
+  lVar3 = 0;
+  if (0 < DAT_83f11410) {
+    piVar2 = &DAT_83f1e764;
+    do {
+      if ((*piVar2 != 0) && (cVar1 = HasTimedOut(lVar3), cVar1 != '\0')) {
+        TimedOut(lVar3);
+      }
+      lVar3 = lVar3 + 1;
+      piVar2 = piVar2 + 6;
+    } while ((int)lVar3 < DAT_83f11410);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -516,7 +899,6 @@ void SendMigrateToMessages(void)
            (((DAT_83f1eaf8 & 1) == 0 ||
             (cVar6 = Session_IsHost(0xffffffff844c7860,lVar3), cVar6 == '\0')))) {
           if (*piVar8 != 2) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82160480,0x380,0,0xffffffff821609e0,*piVar8,2);
           }
           uVar1 = piVar8[5];
@@ -557,8 +939,66 @@ LAB_8257d044:
 void SendFrame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  char cVar4;
+  ulonglong uVar2;
+  int iVar3;
+  uint uVar6;
+  ulonglong uVar5;
+  uint uVar7;
+  int iVar8;
+  bool bVar9;
+  double dVar10;
+  
   __savegprlr_27();
+  iVar3 = 0;
+  bVar9 = true;
+  if (DAT_83f1eaa8 < 1) {
+    MyAssertHandler(0xffffffff82160480,0x3b5,0,0xffffffff82000f98,0xffffffff82160a74);
+  }
+  uVar6 = DAT_83f1eaa0;
+  uVar7 = DAT_83f1eaa0;
+  if (DAT_83f1eaa0 < DAT_83f1eaa0 + 0x20) {
+    do {
+      if (DAT_83f1eaa8 <= iVar3) break;
+      iVar8 = (uVar6 & 0x1f) + (uVar6 & 0x1f) * 2;
+      if (-1 < (int)(&DAT_83f1e914)[iVar8]) {
+        bVar9 = false;
+        lVar1 = Sys_Milliseconds();
+        uVar7 = DAT_83f1eaa0;
+        if ((longlong)((ulonglong)(uint)(&DAT_83f1e91c)[iVar8] - lVar1) < 1) {
+          cVar4 = SendBlock(DAT_83f1ea94,&DAT_83f1e914 + iVar8);
+          uVar7 = DAT_83f1eaa0;
+          if (cVar4 == '\0') break;
+          iVar3 = iVar3 + 1;
+        }
+      }
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < uVar7 + 0x20);
+  }
+  uVar6 = DAT_83f1ea9c * 100;
+  iVar3 = (DAT_83f1ea98 + 0x4af) / 0x4b0;
+  uVar2 = (ulonglong)iVar3;
+  uVar5 = uVar2 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1);
+  DAT_83f1eaa0 = uVar7 + 1;
+  DAT_83f1eb08 = (int)uVar6 / iVar3 << 5 | DAT_83f1ea94;
+  trapWord(6,uVar2,0);
+  DAT_83f1eb04 = 3;
+  trapWord(5,uVar5,0xffff);
+  if (bVar9) {
+    dVar10 = (double)(longlong)DAT_83f1ea98;
+    iVar3 = Sys_Milliseconds(uVar2,uVar5);
+    iVar3 = iVar3 - DAT_83f1eafc;
+    lVar1 = Sys_Milliseconds();
+    Com_Printf(0x19,0xffffffff82160a44,DAT_83f1ea98,lVar1 - (ulonglong)DAT_83f1eafc,
+               (double)(float)(dVar10 / (double)((float)(longlong)iVar3 * 0.001)));
+    DAT_83f1e760 = 4;
+    iVar3 = Sys_Milliseconds();
+    DAT_83f1eaf4 = iVar3 + 2000;
+    SendMigrateToMessages();
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -567,8 +1007,43 @@ void SendFrame(void)
 void BroadcastVerboseState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  char cVar4;
+  undefined8 *puVar3;
+  longlong lVar5;
+  int *piVar6;
+  undefined1 auStack_550 [8];
+  undefined4 local_548;
+  undefined4 local_53c;
+  undefined1 auStack_520 [16];
+  undefined1 auStack_510 [1296];
+  
   __savegprlr_29();
+  iVar1 = *(int *)(DAT_83f1eb1c + 0xc);
+  iVar2 = Sys_Milliseconds();
+  if (iVar1 <= iVar2 - DAT_83f1eb00) {
+    MSG_Init(auStack_550,auStack_510,0x4e1);
+    MSG_WriteString(auStack_550,0xffffffff82004d78);
+    MSG_WriteByte(auStack_550,DAT_83f1eb04);
+    MSG_WriteLong(auStack_550,DAT_83f1eb08);
+    DAT_83f1eb00 = Sys_Milliseconds();
+    lVar5 = 0;
+    if (0 < DAT_83f11410) {
+      piVar6 = &DAT_83f1e764;
+      do {
+        cVar4 = IsClientConnected(lVar5);
+        if ((cVar4 != '\0') && (*piVar6 != 0)) {
+          puVar3 = (undefined8 *)ClientRemoteAddr(auStack_520,lVar5);
+          NET_OutOfBandData(4,*puVar3,puVar3[1],local_548,local_53c);
+        }
+        lVar5 = lVar5 + 1;
+        piVar6 = piVar6 + 6;
+      } while ((int)lVar5 < DAT_83f11410);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -600,7 +1075,6 @@ void SV_MigrationFrame(void)
   if (DAT_83f1eaa4 != '\0') {
     cVar3 = Sys_IsServerThread();
     if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82160480,0x41c,0,0xffffffff82000f98,0xffffffff8206beac);
     }
     BroadcastVerboseState();
@@ -632,12 +1106,10 @@ void HandleRatingMsg(undefined8 param_1,undefined8 param_2)
   ulonglong uVar1;
   undefined8 uVar2;
   int iVar5;
-  int iVar6;
-  int *piVar7;
-  longlong lVar8;
+  int *piVar6;
+  longlong lVar7;
   
   iVar3 = __savegprlr_20();
-  iVar6 = iVar3 * 0x18;
   if ((&DAT_83f1e764)[iVar3 * 6] != 1) {
     Com_Printf(0x19,0xffffffff82160ba8,0xffffffff82034e14,iVar3);
     __restgprlr_20();
@@ -645,30 +1117,30 @@ void HandleRatingMsg(undefined8 param_1,undefined8 param_2)
   }
   (&DAT_83f1e764)[iVar3 * 6] = 2;
   uVar4 = MSG_ReadLong(param_2);
-  *(undefined4 *)(&DAT_83f1e770 + iVar6) = uVar4;
-  *(undefined4 *)(&DAT_83f1e774 + iVar6) = 0;
+  (&DAT_83f1e770)[iVar3 * 6] = uVar4;
+  (&DAT_83f1e774)[iVar3 * 6] = 0;
   uVar1 = MSG_ReadLong(param_2);
-  uVar4 = *(undefined4 *)(&DAT_83f1e770 + iVar6);
+  uVar4 = (&DAT_83f1e770)[iVar3 * 6];
   uVar2 = Lobby_GetPartyData();
   uVar2 = Party_GetMemberName(uVar2,iVar3);
   Com_Printf(0x19,0xffffffff82160b50,0xffffffff82034e14,iVar3,uVar2,uVar4,uVar1);
-  if (((int)uVar1 != -1) && (lVar8 = 0, 0 < DAT_83f11410)) {
+  if (((int)uVar1 != -1) && (lVar7 = 0, 0 < DAT_83f11410)) {
     iVar5 = 0;
-    piVar7 = &DAT_83f1e764;
+    piVar6 = &DAT_83f1e764;
     do {
-      if ((*piVar7 != 0) && (((uint)(1 << ((uint)lVar8 & 0x3f)) & uVar1) == 0)) {
+      if ((*piVar6 != 0) && (((uint)(1 << ((uint)lVar7 & 0x3f)) & uVar1) == 0)) {
         if (*(int *)(iVar5 + DAT_83f11414) < 5) {
-          Com_Printf(0x19,0xffffffff82160a90,iVar3,lVar8,lVar8);
+          Com_Printf(0x19,0xffffffff82160a90,iVar3,lVar7,lVar7);
         }
         else {
-          Com_Printf(0x19,0xffffffff82160af8,iVar3,lVar8);
-          *(int *)(&DAT_83f1e774 + iVar6) = *(int *)(&DAT_83f1e774 + iVar6) + 1;
+          Com_Printf(0x19,0xffffffff82160af8,iVar3,lVar7);
+          (&DAT_83f1e774)[iVar3 * 6] = (&DAT_83f1e774)[iVar3 * 6] + 1;
         }
       }
-      lVar8 = lVar8 + 1;
-      piVar7 = piVar7 + 6;
+      lVar7 = lVar7 + 1;
+      piVar6 = piVar6 + 6;
       iVar5 = iVar5 + 0x68b00;
-    } while ((int)lVar8 < DAT_83f11410);
+    } while ((int)lVar7 < DAT_83f11410);
   }
   __restgprlr_20();
   return;
@@ -695,11 +1167,45 @@ int * FindBlock(int param_1)
 
 // 8257D650  HandleSaveAckMsg  (server_mp/sv_migration.cpp:1167)
 
-void HandleSaveAckMsg(void)
+void HandleSaveAckMsg(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  int *piVar3;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == DAT_83f1ea94) {
+    if (((&DAT_83f1e764)[iVar2 * 6] == 2) && (DAT_83f1e760 == 3)) {
+      uVar1 = MSG_ReadShort(param_2);
+      piVar3 = &DAT_83f1e914;
+      while( true ) {
+        if (*piVar3 == (int)uVar1) break;
+        piVar3 = piVar3 + 3;
+        if (-0x7c0e156d < (int)piVar3) {
+          Com_Printf(0x19,0xffffffff82160bfc,uVar1);
+          __restgprlr_29();
+          return;
+        }
+      }
+      if (*piVar3 != (int)uVar1) {
+        MyAssertHandler(0xffffffff82160480,0x4a2,0,0xffffffff82000f98,0xffffffff82160be4);
+      }
+      Com_Printf(0x19,0xffffffff82160bcc,uVar1);
+      if (DAT_83f1ea9c * 0x4b0 < DAT_83f1ea98) {
+        CreateBlock(DAT_83f1ea9c,piVar3);
+        DAT_83f1ea9c = DAT_83f1ea9c + 1;
+        __restgprlr_29();
+        return;
+      }
+      *piVar3 = -1;
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x19,0xffffffff82160ba8,0xffffffff82034bd8,iVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -740,12 +1246,81 @@ void HandleMigrateToAckMsg(int param_1)
 }
 
 
+// 8257D898  SV_MigrationPacket  (server_mp/sv_migration.cpp:1240)
+
+void SV_MigrationPacket(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  int iVar2;
+  int iVar3;
+  undefined **ppuVar5;
+  int iVar6;
+  undefined1 uStack00000024;
+  undefined1 uStack00000025;
+  undefined1 uStack00000026;
+  
+  uVar1 = __savegprlr_23();
+  cVar4 = Sys_IsServerThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82160480,0x4de,0,0xffffffff82000f98,0xffffffff8206beac);
+  }
+  iVar3 = 0;
+  ppuVar5 = &PTR_s_mrate_821601cc;
+  iVar6 = 0;
+  while (iVar2 = I_stricmp(uVar1,*ppuVar5), iVar2 != 0) {
+    iVar3 = iVar3 + 1;
+    iVar6 = iVar3 * 8;
+    ppuVar5 = &PTR_s_mrate_821601cc + iVar3 * 2;
+    if (*(&PTR_s_mrate_821601cc)[iVar3 * 2] == '\0') {
+      __restgprlr_23(0);
+      return;
+    }
+  }
+  if (*(int *)((int)&PTR_HandleRatingMsg_821601d0 + iVar6) == 0) {
+    MyAssertHandler(0xffffffff82160480,0x4e6,0,0xffffffff82000f98,0xffffffff82034cd8);
+  }
+  iVar3 = SV_FindClientByAddress(param_2,param_3,0);
+  if (iVar3 != 0) {
+    (**(code **)((int)&PTR_HandleRatingMsg_821601d0 + iVar6))
+              ((iVar3 - DAT_83f11414) / 0x68b00,param_4);
+    __restgprlr_23(1);
+    return;
+  }
+  uStack00000026 = (undefined1)(param_2 >> 8);
+  uStack00000025 = (undefined1)(param_2 >> 0x10);
+  uStack00000024 = (undefined1)(param_2 >> 0x18);
+  Com_Printf(0x19,0xffffffff82160c98,uVar1,uStack00000024,uStack00000025,uStack00000026,
+             param_2 & 0xff);
+  __restgprlr_23(1);
+  return;
+}
+
+
 // 8257DA08  SV_MigrationEnd  (server_mp/sv_migration.cpp:1276)
 
 void SV_MigrationEnd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  
   __savegprlr_29();
+  if (DAT_83f1eaa4 == '\0') {
+    MyAssertHandler(0xffffffff82160480,0x501,0,0xffffffff82000f98,0xffffffff821607a0);
+  }
+  cVar1 = Sys_IsMainThread();
+  if (cVar1 == '\0') {
+    MyAssertHandler(0xffffffff82160480,0x502,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  DAT_83f1eb00 = 0;
+  DAT_83f1eb04 = 0;
+  DAT_83f1e760 = 0;
+  DAT_83f1eaa4 = 0;
+  DAT_83f1eab4 = 0;
+  DAT_83f1eaf8 = 0;
+  Migration_Shutdown();
+  __restgprlr_29();
+  return;
 }
 

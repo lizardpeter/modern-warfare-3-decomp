@@ -26,33 +26,187 @@ void XAUDIO__CRoutedVoice__GetObjectAdditionalSize(int param_1,int *param_2)
 }
 
 
+// 828EE8C8  XAUDIO::CRoutedVoice::CRoutedVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:113)
+
+undefined4 * XAUDIO__CRoutedVoice__CRoutedVoice(undefined4 *param_1)
+
+{
+  XAUDIO__CVoice__CVoice();
+  *param_1 = &PTR_XAUDIO__CRoutedVoice___scalar_deleting_destructor__82207fd0;
+  return param_1;
+}
+
+
 // 828EECE0  XAUDIO::CRoutedVoice::~CRoutedVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:136)
 
 void XAUDIO__CRoutedVoice___CRoutedVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  int iVar4;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  *puVar2 = &PTR_XAUDIO__CRoutedVoice___scalar_deleting_destructor__82207fd0;
+  XAUDIO__CVoice__Stop(puVar2,1);
+  XAUDIO__CRoutedVoice__DetachOutputVoices(puVar2);
+  uVar3 = 0;
+  if (*(char *)(puVar2 + 0x11) != '\0') {
+    iVar4 = 0;
+    do {
+      piVar1 = *(int **)(puVar2[0x12] + iVar4 + 4);
+      if (piVar1 != (int *)0x0) {
+        (**(code **)(*piVar1 + 4))();
+        *(undefined4 *)(puVar2[0x12] + iVar4 + 4) = 0;
+      }
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 0xc;
+    } while (uVar3 < *(byte *)(puVar2 + 0x11));
+  }
+  XAUDIO__CVoice___CVoice(puVar2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 828EEA10  XAUDIO::CRoutedVoice::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:185)
 
-void XAUDIO__CRoutedVoice__Initialize(void)
+void XAUDIO__CRoutedVoice__Initialize(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int iVar2;
+  longlong lVar3;
+  uint uVar4;
+  undefined1 local_40 [8];
+  longlong local_38;
+  
+  piVar1 = (int *)__savegprlr_28();
+  *(undefined1 *)(piVar1 + 0x11) = *(undefined1 *)(param_2 + 0x18);
+  iVar2 = XAUDIO__CVoice__Initialize();
+  if (-1 < iVar2) {
+    uVar4 = 0;
+    if ((ulonglong)*(byte *)(piVar1 + 0x11) != 0) {
+      iVar2 = (**(code **)(*(int *)piVar1[2] + 0x14))
+                        ((int *)piVar1[2],(ulonglong)*(byte *)(piVar1 + 0x11) * 0xc);
+      piVar1[0x12] = iVar2;
+      if (iVar2 == 0) {
+        __restgprlr_28(0xffffffff8007000e);
+        return;
+      }
+      iVar2 = 0;
+    }
+    if (*(char *)(piVar1 + 0x11) != '\0') {
+      local_38 = (ulonglong)*(byte *)(param_2 + 0x19) << 0x38;
+      if (*(char *)(piVar1 + 0x11) != '\0') {
+        lVar3 = 0;
+        do {
+          if (iVar2 < 0) goto LAB_828eeb0c;
+          iVar2 = XAUDIO__CVoice__CreateEffect
+                            (piVar1,(ulonglong)(uint)piVar1[0x12] + lVar3 + 4,local_40,0xff);
+          uVar4 = uVar4 + 1;
+          lVar3 = lVar3 + 0xc;
+        } while (uVar4 < *(byte *)(piVar1 + 0x11));
+      }
+    }
+    if (-1 < iVar2) {
+      (**(code **)(*piVar1 + 0x24))(piVar1,*(undefined4 *)(param_2 + 0x1c));
+    }
+  }
+LAB_828eeb0c:
+  __restgprlr_28();
+  return;
 }
 
 
 // 828EED80  XAUDIO::CRoutedVoice::SetVoiceOutput  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:258)
 
-void XAUDIO__CRoutedVoice__SetVoiceOutput(void)
+void XAUDIO__CRoutedVoice__SetVoiceOutput(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  byte *pbVar2;
+  byte bVar3;
+  undefined8 uVar4;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  iVar1 = __savegprlr_26();
+  uVar4 = 0;
+  XAUDIO__CRoutedVoice__DetachOutputVoices();
+  if ((param_2 & 0xffffffff) == 0) {
+    if ((*(char *)(iVar1 + 0x44) != '\0') &&
+       (uVar4 = XAUDIO__CRoutedVoice__AttachOutputVoice(iVar1,0,*(undefined4 *)(iVar1 + 0x48)),
+       -1 < (int)uVar4)) {
+      *(undefined1 *)(iVar1 + 0x45) = 1;
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    pbVar2 = (byte *)param_2;
+    uVar5 = 0;
+    bVar3 = 0;
+    if (*pbVar2 != 0) {
+      lVar6 = 0;
+      lVar7 = 0;
+      do {
+        if ((int)uVar4 < 0) goto LAB_828eee0c;
+        uVar4 = XAUDIO__CRoutedVoice__AttachOutputVoice
+                          (iVar1,(ulonglong)*(uint *)(pbVar2 + 4) + lVar6,
+                           (ulonglong)*(uint *)(iVar1 + 0x48) + lVar7);
+        bVar3 = *pbVar2;
+        uVar5 = uVar5 + 1;
+        lVar7 = lVar7 + 0xc;
+        lVar6 = lVar6 + 8;
+      } while (uVar5 < bVar3);
+      if ((int)uVar4 < 0) goto LAB_828eee0c;
+    }
+    *(byte *)(iVar1 + 0x45) = bVar3;
+  }
+LAB_828eee0c:
+  __restgprlr_26(uVar4);
+  return;
+}
+
+
+// 828EEB28  XAUDIO::CRoutedVoice::AttachOutputVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:331)
+
+void XAUDIO__CRoutedVoice__AttachOutputVoice(undefined8 param_1,ulonglong param_2,int *param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  ulonglong uVar4;
+  undefined1 uStack_30;
+  undefined1 local_2f;
+  undefined1 auStack_28 [40];
+  
+  iVar1 = __savegprlr_29();
+  piVar3 = (int *)param_2;
+  if ((param_2 & 0xffffffff) == 0) {
+    piVar3 = &DAT_8220802c;
+  }
+  if (*piVar3 == 0) {
+    *param_3 = *(int *)(DAT_84895944 + 0x40);
+  }
+  else {
+    *param_3 = *piVar3;
+  }
+  (**(code **)(*(int *)*param_3 + 4))();
+  uVar4 = (ulonglong)(uint)piVar3[1];
+  if (uVar4 == 0) {
+    iVar2 = (**(code **)(*(int *)*param_3 + 0x40))((int *)*param_3,&uStack_30);
+    if (iVar2 < 0) goto LAB_828eebe0;
+    uVar4 = XAudioGetDefaultChannelMap(*(undefined1 *)(iVar1 + 0x35),local_2f,auStack_28);
+  }
+  (**(code **)(*(int *)param_3[1] + 0x28))((int *)param_3[1],uVar4);
+LAB_828eebe0:
+  __restgprlr_29();
+  return;
 }
 
 
@@ -61,28 +215,89 @@ void XAUDIO__CRoutedVoice__SetVoiceOutput(void)
 void XAUDIO__CRoutedVoice__DetachOutputVoices(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  
+  iVar1 = __savegprlr_28();
+  uVar2 = 0;
+  if (*(char *)(iVar1 + 0x45) != '\0') {
+    iVar3 = 0;
+    do {
+      (**(code **)(**(int **)(*(int *)(iVar1 + 0x48) + iVar3) + 8))();
+      uVar2 = uVar2 + 1;
+      iVar3 = iVar3 + 0xc;
+    } while (uVar2 < *(byte *)(iVar1 + 0x45));
+  }
+  *(undefined1 *)(iVar1 + 0x45) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 828EEC48  XAUDIO::CRoutedVoice::SetVoiceOutputVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:452)
 
-void XAUDIO__CRoutedVoice__SetVoiceOutputVolume(void)
+void XAUDIO__CRoutedVoice__SetVoiceOutputVolume(undefined8 param_1,byte *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  
+  iVar3 = __savegprlr_27();
+  bVar1 = *(byte *)(iVar3 + 0x3d);
+  uVar6 = 0;
+  iVar4 = 0;
+  if (*param_2 != 0) {
+    iVar5 = 0;
+    do {
+      if (iVar4 < 0) break;
+      piVar2 = *(int **)((uint)*(byte *)(*(int *)(param_2 + 4) + iVar5) * 0xc +
+                         *(int *)(iVar3 + 0x48) + 4);
+      iVar4 = (**(code **)(*piVar2 + 0x38))
+                        (piVar2,*(undefined4 *)((byte *)(*(int *)(param_2 + 4) + iVar5) + 4),
+                         ~bVar1 & 1);
+      uVar6 = uVar6 + 1;
+      iVar5 = iVar5 + 8;
+    } while (uVar6 < *param_2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 828EEE48  XAUDIO::CRoutedVoice::ProcessEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routedvoice.cpp:496)
 
-void XAUDIO__CRoutedVoice__ProcessEffects(void)
+void XAUDIO__CRoutedVoice__ProcessEffects(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint uVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_28();
+  iVar4 = XAUDIO__CVoice__ProcessEffects();
+  uVar5 = 0;
+  if (*(char *)(iVar3 + 0x45) != '\0') {
+    iVar6 = 0;
+    do {
+      if (iVar4 < 0) break;
+      piVar1 = *(int **)(*(int *)(iVar3 + 0x48) + iVar6);
+      uVar2 = (**(code **)(*piVar1 + 0x48))(piVar1);
+      piVar1 = *(int **)(*(int *)(iVar3 + 0x48) + iVar6 + 4);
+      iVar4 = (**(code **)(*piVar1 + 0x18))(piVar1,*param_2,uVar2);
+      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 0xc;
+    } while (uVar5 < *(byte *)(iVar3 + 0x45));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -102,8 +317,73 @@ void XAUDIO__CRoutedVoice__SetVoiceFormat(int *param_1,undefined8 param_2,undefi
 void XAUDIO__CRoutedVoice__OnStartVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  int in_r13;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  char local_40 [64];
+  
+  piVar3 = (int *)__savegprlr_27();
+  uVar2 = 0;
+  uVar8 = 0;
+  if (*(char *)((int)piVar3 + 0x45) != '\0') {
+    iVar7 = 0;
+    do {
+      if ((int)uVar2 < 0) goto LAB_828ef1fc;
+      piVar1 = *(int **)(piVar3[0x12] + iVar7);
+      piVar1[10] = piVar1[10] + 1;
+      uVar2 = (**(code **)(*piVar1 + 0x38))();
+      uVar8 = uVar8 + 1;
+      iVar7 = iVar7 + 0xc;
+    } while (uVar8 < *(byte *)((int)piVar3 + 0x45));
+    if ((int)uVar2 < 0) goto LAB_828ef1fc;
+  }
+  iVar7 = DAT_84895944;
+  (**(code **)(*piVar3 + 0x34))(piVar3,local_40);
+  if (local_40[0] == '\0') {
+    iVar7 = iVar7 + 0x50;
+LAB_828ef138:
+    if (iVar7 != 0) {
+      uVar4 = KeRaiseIrqlToDpcLevel();
+      iVar6 = in_r13;
+      if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+        KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+        DAT_848958e0 = in_r13;
+        DAT_848958e4 = uVar4;
+      }
+      DAT_848958dc = DAT_848958dc + 1;
+      iVar7 = *(int *)(iVar7 + 0x28);
+      piVar3 = (int *)(*(int *)(iVar7 + 8) + (int)piVar3);
+      *piVar3 = iVar7;
+      piVar3[1] = *(int *)(iVar7 + 4);
+      *(int **)(iVar7 + 4) = piVar3;
+      *(int **)piVar3[1] = piVar3;
+      uVar4 = DAT_848958e4;
+      uVar5 = (ulonglong)DAT_848958dc;
+      if ((DAT_848958dc != 0) && (iVar6 == DAT_848958e0)) {
+        DAT_848958dc = (uint)(uVar5 - 1);
+        if (uVar5 - 1 == 0) {
+          DAT_848958e0 = 0;
+          DAT_848958e4 = 0;
+          KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+          KfLowerIrql(uVar4);
+        }
+      }
+    }
+  }
+  else if (local_40[0] == '\x01') {
+    iVar7 = (uint)*(byte *)(piVar3 + 0x13) * 0x2c + *(int *)(iVar7 + 0x7c);
+    goto LAB_828ef138;
+  }
+  uVar2 = 0;
+LAB_828ef1fc:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
@@ -112,8 +392,66 @@ void XAUDIO__CRoutedVoice__OnStartVoice(void)
 void XAUDIO__CRoutedVoice__OnStopVoice(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int *piVar2;
+  int iVar3;
+  undefined1 uVar5;
+  int iVar4;
+  ulonglong uVar6;
+  undefined4 *puVar7;
+  int in_r13;
+  uint uVar8;
+  int iVar9;
+  
+  iVar3 = __savegprlr_28();
+  uVar5 = KeRaiseIrqlToDpcLevel();
+  iVar4 = in_r13;
+  if ((DAT_848958dc == 0) || (in_r13 != DAT_848958e0)) {
+    KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    DAT_848958e0 = in_r13;
+    DAT_848958e4 = uVar5;
+  }
+  uVar6 = (ulonglong)DAT_848958dc + 1;
+  puVar7 = (undefined4 *)(iVar3 + 0x18);
+  DAT_848958dc = (uint)uVar6;
+  if (*(undefined4 **)(iVar3 + 0x18) != puVar7) {
+    (*(undefined4 **)(iVar3 + 0x18))[1] = *(undefined4 *)(iVar3 + 0x1c);
+    **(undefined4 **)(iVar3 + 0x1c) = *puVar7;
+    *(undefined4 **)(iVar3 + 0x1c) = puVar7;
+    *puVar7 = puVar7;
+    uVar6 = (ulonglong)DAT_848958dc;
+  }
+  uVar5 = DAT_848958e4;
+  if (((int)uVar6 != 0) && (iVar4 == DAT_848958e0)) {
+    DAT_848958dc = (uint)(uVar6 - 1);
+    if (uVar6 - 1 == 0) {
+      DAT_848958e4 = 0;
+      DAT_848958e0 = 0;
+      KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
+      KfLowerIrql(uVar5);
+    }
+  }
+  iVar4 = 0;
+  uVar8 = 0;
+  if (*(char *)(iVar3 + 0x45) != '\0') {
+    iVar9 = 0;
+    do {
+      if (iVar4 < 0) break;
+      piVar2 = *(int **)(*(int *)(iVar3 + 0x48) + iVar9);
+      uVar1 = piVar2[10];
+      piVar2[10] = (int)((ulonglong)uVar1 - 1);
+      if ((ulonglong)uVar1 - 1 == 0) {
+        iVar4 = (**(code **)(*piVar2 + 0x3c))(piVar2,0);
+      }
+      else {
+        iVar4 = 0;
+      }
+      uVar8 = uVar8 + 1;
+      iVar9 = iVar9 + 0xc;
+    } while (uVar8 < *(byte *)(iVar3 + 0x45));
+  }
+  __restgprlr_28();
+  return;
 }
 
 

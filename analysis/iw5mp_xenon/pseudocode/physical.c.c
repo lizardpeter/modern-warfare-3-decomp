@@ -2,21 +2,46 @@
 
 // 828A9AF8  XPhysicalAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:33)
 
-void XPhysicalAlloc(void)
+void XPhysicalAlloc(undefined8 param_1,longlong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  longlong lVar2;
+  
+  lVar1 = __savegprlr_28();
+  if (DAT_84895774 != 0) {
+    param_4 = param_4 << 0x20 | param_4 & 0xdfffffff;
+  }
+  if ((int)param_2 == -1) {
+    param_2 = 0;
+    lVar2 = -1;
+  }
+  else {
+    lVar2 = lVar1 + param_2 + -1;
+    param_3 = 0;
+  }
+  lVar1 = MmAllocatePhysicalMemoryEx(0,lVar1,param_4,param_2,lVar2,param_3);
+  if (lVar1 == 0) {
+    SetLastError(8);
+  }
+  __restgprlr_28(lVar1);
+  return;
 }
 
 
 // 828A9B88  XPhysicalProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:131)
 
-void XPhysicalProtect(void)
+void XPhysicalProtect(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) != 0) {
+    MmSetAddressProtect(uVar1,param_2,param_3);
+  }
+  __restgprlr_29();
+  return;
 }
 
 

@@ -21,11 +21,25 @@ void bdStreamSocket___bdStreamSocket(void)
 
 // 8292D5D8  bdStreamSocket::create  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:26)
 
-void bdStreamSocket__create(void)
+void bdStreamSocket__create(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  longlong lVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (*piVar2 != -1) {
+    MyAssertHandler(0xffffffff82216920,0x1c,0,0xffffffff820011f4,0xffffffff822168dc,
+                    0xffffffff822168f0);
+  }
+  lVar1 = bdPlatformStreamSocket__create(param_2);
+  *piVar2 = (int)lVar1;
+  if ((int)lVar1 == -1) {
+    MyAssertHandler(0xffffffff82216920,0x21,0,0xffffffff820011f4,0xffffffff82216894,
+                    0xffffffff822168a8);
+  }
+  __restgprlr_28((lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0)));
+  return;
 }
 
 
@@ -34,8 +48,24 @@ void bdStreamSocket__create(void)
 int bdStreamSocket__connect(SOCKET s,sockaddr *name,int namelen)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(s,name,namelen);
+  SOCKET *pSVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined4 uStack0000001c;
+  undefined1 auStack_30 [48];
+  
+  lVar5 = (longlong)(int)name;
+  pSVar2 = (SOCKET *)__savegprlr_28(s,lVar5,namelen);
+  uStack0000001c = (undefined4)lVar5;
+  uVar1 = bdAddr__getAddress(lVar5);
+  puVar3 = (undefined4 *)bdInetAddr__getInAddr(auStack_30,uVar1);
+  iVar4 = bdAddr__getPort(lVar5);
+  iVar4 = bdPlatformStreamSocket__connect(*pSVar2,(sockaddr *)*puVar3,iVar4);
+  bdInetAddr___bdInetAddr(lVar5);
+  iVar4 = __restgprlr_28(iVar4);
+  return iVar4;
 }
 
 

@@ -2,31 +2,73 @@
 
 // 8240BC70  QuatTransform  (universal/com_quat_inline.h:18)
 
-void QuatTransform(void)
+void QuatTransform(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  float *pfVar6;
+  
+  pfVar5 = (float *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205f978,0x13,0,0xffffffff82000f98,0xffffffff8205f9cc);
+  }
+  fVar1 = pfVar5[2];
+  fVar2 = *pfVar5;
+  fVar3 = pfVar5[1];
+  fVar4 = pfVar5[3];
+  pfVar5 = (float *)param_2;
+  pfVar6 = (float *)param_3;
+  *pfVar6 = ((fVar4 * fVar3 + fVar1 * fVar2) * pfVar5[2] +
+            (-(fVar1 * fVar1) + -(fVar3 * fVar3)) * *pfVar5 +
+            (fVar3 * fVar2 - fVar4 * fVar1) * pfVar5[1]) * 2.0 + *pfVar5;
+  pfVar6[1] = ((fVar1 * fVar3 - fVar4 * fVar2) * pfVar5[2] +
+              (fVar4 * fVar1 + fVar3 * fVar2) * *pfVar5 +
+              (-(fVar1 * fVar1) + -(fVar2 * fVar2)) * pfVar5[1]) * 2.0 + pfVar5[1];
+  pfVar6[2] = ((fVar1 * fVar3 + fVar4 * fVar2) * pfVar5[1] +
+              (fVar1 * fVar2 - fVar4 * fVar3) * *pfVar5 +
+              (-(fVar3 * fVar3) + -(fVar2 * fVar2)) * pfVar5[2]) * 2.0 + pfVar5[2];
+  __restgprlr_29();
+  return;
 }
 
 
 // 8240BAF0  DynEnt_GetClientPose  (DynEntity/dynentity_load_obj.h:67)
 
-void DynEnt_GetClientPose(void)
+void DynEnt_GetClientPose(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)((param_2 & 0xffffffff) << 1)) <=
+      (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar1);
+  }
+  __restgprlr_29((ulonglong)*(uint *)((int)&DAT_835a2950 + (int)((param_2 & 0xffffffff) << 2)) +
+                 (uVar1 & 0x7ffffff) * 0x20);
+  return;
 }
 
 
 // 8240BB60  DynEnt_GetClientEntity  (DynEntity/dynentity_load_obj.h:74)
 
-void DynEnt_GetClientEntity(void)
+void DynEnt_GetClientEntity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)((param_2 & 0xffffffff) << 1)) <=
+      (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar1);
+  }
+  __restgprlr_29((ulonglong)*(uint *)((int)&DAT_835a2958 + (int)((param_2 & 0xffffffff) << 2)) +
+                 (uVar1 & 0xfffffff) * 0x10);
+  return;
 }
 
 
@@ -67,21 +109,86 @@ void DynEntCl_RegisterDvars(void)
 
 // 8240BBD0  DynEnt_GetEntityColl  (DynEntity/dynentity_load_obj.h:92)
 
-void DynEnt_GetEntityColl(void)
+void DynEnt_GetEntityColl(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if (1 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205f8a8,0x5d,0,0xffffffff8205f93c,uVar1,2);
+  }
+  if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)((uVar1 & 0xffffffff) << 1)) <=
+      (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8205f8a8,0x5e,0,0xffffffff8205f8f8,param_2);
+  }
+  __restgprlr_28((ulonglong)*(uint *)(&DAT_835a2960 + (int)((uVar1 & 0xffffffff) << 2)) +
+                 (param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4);
+  return;
 }
 
 
 // 8240C000  DynEntCl_UpdateBModelWorldBounds  (DynEntity/DynEntity_client.cpp:109)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void DynEntCl_UpdateBModelWorldBounds(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_27();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8240C1A8  DynEntCl_LinkModel  (DynEntity/DynEntity_client.cpp:132)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void DynEntCl_LinkModel(void)
+
+{
+  __savegprlr_27();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8240C408  DynEntCl_LinkBrush  (DynEntity/DynEntity_client.cpp:172)
+
+void DynEntCl_LinkBrush(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  float *pfVar3;
+  int iVar4;
+  double dVar5;
+  float local_30;
+  float local_2c;
+  float local_28;
+  float local_24;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = DynEnt_GetEntityDef(uVar1,1);
+  if (DAT_835a2946 <= uVar1) {
+    MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar1);
+  }
+  iVar4 = uVar1 * 0x20 + DAT_835a2954;
+  if (*(int *)(iVar2 + 0x20) != 0) {
+    MyAssertHandler(0xffffffff8205fe00,0xb6,0,0xffffffff82000f98,0xffffffff8205dc90);
+  }
+  dVar5 = (double)DynEntCl_UpdateBModelWorldBounds(iVar2,iVar4);
+  *(float *)(iVar4 + 0x1c) = (float)dVar5;
+  pfVar3 = (float *)R_GetBrushModel(*(undefined2 *)(iVar2 + 0x24));
+  local_30 = *pfVar3 - pfVar3[3];
+  local_2c = pfVar3[1] - pfVar3[4];
+  local_28 = pfVar3[3] + *pfVar3;
+  local_24 = pfVar3[4] + pfVar3[1];
+  DynEnt_LinkEntity(1,uVar1,&local_30,&local_28);
+  R_LinkDynEnt(uVar1,1,pfVar3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -90,18 +197,273 @@ void DynEntCl_UpdateBModelWorldBounds(void)
 void DynEntCl_InitEntities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  int iVar2;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar3;
+  undefined2 *puVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  undefined4 *puVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined4 *puVar12;
+  undefined4 *puVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  
+  iVar4 = __savegprlr();
+  iVar5 = CL_GetFirstActiveLocalClient();
+  if (iVar4 == iVar5) {
+    Hinge_Init();
+    uVar11 = 0;
+    do {
+      DynEnt_ClearCollWorld(uVar11);
+      uVar3 = DynEnt_GetEntityCount(uVar11);
+      uVar14 = 0;
+      if ((uVar3 & 0xffffffff) != 0) {
+        iVar10 = 0;
+        iVar4 = 0;
+        iVar5 = 0;
+        do {
+          iVar7 = (int)((uVar11 & 0x7fffffff) << 1);
+          if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar7) <= (uVar14 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar14);
+          }
+          iVar2 = (int)((uVar11 & 0x3fffffff) << 2);
+          puVar12 = (undefined4 *)(*(int *)((int)&DAT_835a2948 + iVar2) + iVar5);
+          if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar7) <= (uVar14 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar14);
+          }
+          iVar1 = *(int *)((int)&DAT_835a2950 + iVar2);
+          if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar7) <= (uVar14 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar14);
+          }
+          puVar13 = (undefined4 *)(iVar10 + *(int *)((int)&DAT_835a2958 + iVar2));
+          puVar6 = (undefined2 *)DynEnt_GetEntityColl(uVar11,uVar14);
+          puVar8 = (undefined4 *)(iVar1 + iVar4 + -4);
+          lVar15 = 7;
+          puVar9 = puVar12;
+          do {
+            puVar9 = puVar9 + 1;
+            puVar8 = puVar8 + 1;
+            *puVar8 = *puVar9;
+            lVar15 = lVar15 + -1;
+          } while (lVar15 != 0);
+          *puVar13 = 0;
+          puVar13[3] = 0;
+          *(undefined2 *)(puVar13 + 1) = 2;
+          puVar13[2] = puVar12[0xc];
+          iVar7 = DynEnt_GetEntityProps(*puVar12);
+          if (*(char *)(iVar7 + 4) != '\0') {
+            *(ushort *)(puVar13 + 1) = *(ushort *)(puVar13 + 1) | 1;
+          }
+          puVar6[1] = 0;
+          *puVar6 = 0;
+          if ((uVar11 & 0xffffffff) == 0) {
+            DynEntCl_LinkModel(uVar14);
+          }
+          else {
+            if ((uVar11 & 0xffffffff) != 1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_client.cpp"
+                              ,0xf9,0,"%s\n\t(drawType) = %i","(drawType == DYNENT_DRAW_BRUSH)",
+                              uVar11);
+            }
+            DynEntCl_LinkBrush(uVar14);
+          }
+          uVar14 = uVar14 + 1;
+          puVar13[3] = 0;
+          iVar5 = iVar5 + 0x60;
+          iVar4 = iVar4 + 0x20;
+          iVar10 = iVar10 + 0x10;
+        } while ((uVar14 & 0xffffffff) < (uVar3 & 0xffffffff));
+      }
+      uVar11 = uVar11 + 1;
+    } while ((uVar11 & 0xffffffff) < 2);
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 8240C728  DynEntCl_UpdatePoseFromHinge  (DynEntity/DynEntity_client.cpp:260)
 
-void DynEntCl_UpdatePoseFromHinge(void)
+void DynEntCl_UpdatePoseFromHinge(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float *pfVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x108,0,0xffffffff82000f98,0xffffffff8205feac);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x109,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  iVar3 = (int)param_2;
+  if (*(int *)(iVar3 + 0x34) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x10a,0,0xffffffff82000f98,0xffffffff8205fe8c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x10b,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  pfVar1 = *(float **)(iVar3 + 0x34);
+  local_50 = *(float *)(iVar3 + 0x14) - *pfVar1;
+  local_4c = *(float *)(iVar3 + 0x18) - pfVar1[1];
+  local_48 = *(float *)(iVar3 + 0x1c) - pfVar1[2];
+  QuatTransform((ulonglong)*(uint *)(iVar4 + 0xc) + 4,&local_50,&local_40);
+  pfVar1 = *(float **)(iVar3 + 0x34);
+  uVar2 = *(uint *)(iVar4 + 0xc);
+  iVar4 = (int)param_3;
+  *(float *)(iVar4 + 0x10) = *pfVar1 + local_40;
+  *(float *)(iVar4 + 0x14) = pfVar1[1] + local_3c;
+  *(float *)(iVar4 + 0x18) = pfVar1[2] + local_38;
+  QuatMultiply(param_2 + 4,(ulonglong)uVar2 + 4,param_3);
+  __restgprlr_27();
+  return;
+}
+
+
+// 8240C880  DynEntCl_ProcessEntities  (DynEntity/DynEntity_client.cpp:281)
+
+void DynEntCl_ProcessEntities(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  char cVar4;
+  int iVar3;
+  undefined8 uVar5;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
+  longlong lVar9;
+  int iVar10;
+  int iVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  int *piVar14;
+  char in_RESERVE;
+  byte in_cr0;
+  undefined8 uVar15;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  
+  __savegprlr();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205fee4);
+  Profile_Begin(0x189);
+  uVar15 = 0x3f847ae140000000;
+  lVar6 = 0;
+  do {
+    iVar7 = (int)lVar6;
+    if (iVar7 == 0) {
+      lVar13 = 0;
+    }
+    else {
+      if (iVar7 != 1) {
+        MyAssertHandler(0xffffffff8205fe00,0x12f,0,0xffffffff82000f98,0xffffffff8205febc);
+      }
+      lVar13 = 1;
+    }
+    uVar2 = DynEnt_GetEntityCount(lVar6);
+    uVar12 = 0;
+    if ((uVar2 & 0xffffffff) != 0) {
+      lVar9 = 0;
+      iVar10 = 0;
+      iVar8 = 0;
+      do {
+        iVar11 = (int)(lVar13 << 1);
+        if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar11) <= (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar12);
+        }
+        iVar3 = (int)(lVar13 << 2);
+        piVar14 = (int *)(*(int *)((int)&DAT_835a2958 + iVar3) + iVar8);
+        if (((*(ushort *)(piVar14 + 1) & 1) == 0) || (*piVar14 == 0)) {
+          if (piVar14[3] != 0) {
+            if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar11) <= (uVar12 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar12);
+            }
+            iVar1 = *(int *)((int)&DAT_835a2950 + iVar3);
+            if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar11) <= (uVar12 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar12);
+            }
+            DynEntCl_UpdatePoseFromHinge
+                      (piVar14,(ulonglong)*(uint *)((int)&DAT_835a2948 + iVar3) + lVar9,
+                       iVar1 + iVar10);
+            cVar4 = Hinge_IsAsleep(piVar14[3]);
+            if (cVar4 != '\0') {
+              Hinge_Destroy(piVar14[3]);
+              piVar14[3] = 0;
+            }
+            if (iVar7 == 0) goto LAB_8240cb48;
+            if (iVar7 != 1) {
+              uVar5 = 0x16f;
+              goto LAB_8240cb28;
+            }
+LAB_8240cb3c:
+            DynEntCl_LinkBrush(uVar12);
+          }
+        }
+        else {
+          if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + iVar11) <= (uVar12 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar12);
+          }
+          iVar11 = *(int *)((int)&DAT_835a2950 + iVar3) + iVar10;
+          Phys_ObjGetInterpolatedState(0,*piVar14,&local_b8,iVar11);
+          cVar4 = Phys_ObjIsAsleep(*piVar14);
+          if (cVar4 != '\0') {
+            Phys_ObjDestroy(0,*piVar14);
+            *piVar14 = 0;
+            do {
+              if (in_RESERVE != '\0') {
+                DAT_8427b8f0 = storeWordConditionalIndexed((ulonglong)DAT_8427b8f0 - 1,0,0x8427b8f0)
+                ;
+                in_cr0 = 2;
+              }
+            } while (!(bool)(in_cr0 >> 1 & 1));
+          }
+          iVar3 = VecNCompareCustomEpsilon(uVar15,&local_b8,(undefined4 *)(iVar11 + 0x10));
+          if (iVar3 == 0) {
+            *(undefined4 *)(iVar11 + 0x10) = local_b8;
+            *(undefined4 *)(iVar11 + 0x14) = local_b4;
+            *(undefined4 *)(iVar11 + 0x18) = local_b0;
+            if (iVar7 != 0) {
+              if (iVar7 != 1) {
+                uVar5 = 0x154;
+LAB_8240cb28:
+                MyAssertHandler(0xffffffff8205fe00,uVar5,0,0xffffffff82000f98,0xffffffff8205febc);
+              }
+              goto LAB_8240cb3c;
+            }
+LAB_8240cb48:
+            DynEntCl_LinkModel(uVar12);
+          }
+        }
+        uVar12 = uVar12 + 1;
+        iVar8 = iVar8 + 0x10;
+        iVar10 = iVar10 + 0x20;
+        lVar9 = lVar9 + 0x60;
+      } while ((uVar12 & 0xffffffff) < (uVar2 & 0xffffffff));
+    }
+    lVar6 = lVar6 + 1;
+    if (1 < (int)lVar6) {
+      Profile_EndInternal(0);
+      PIXEndNamedEvent();
+      __restgprlr();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -110,8 +472,83 @@ void DynEntCl_UpdatePoseFromHinge(void)
 void DynEntCl_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  int iVar3;
+  ulonglong uVar1;
+  ulonglong uVar4;
+  int *piVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar2 = __savegprlr_23();
+  iVar3 = CL_GetLocalClientActiveCount();
+  if ((iVar3 != 0) && (iVar3 = CL_GetFirstActiveLocalClient(), iVar2 == iVar3)) {
+    uVar1 = DynEnt_GetEntityCount(0);
+    uVar4 = 0;
+    if ((uVar1 & 0xffffffff) != 0) {
+      iVar2 = 0;
+      do {
+        if ((ulonglong)DAT_835a2944 <= (uVar4 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar4);
+        }
+        piVar5 = (int *)(iVar2 + DAT_835a2958);
+        if (((*(ushort *)(piVar5 + 1) & 1) == 0) || (*piVar5 == 0)) {
+          if (piVar5[3] != 0) {
+            Hinge_Destroy();
+            piVar5[3] = 0;
+          }
+        }
+        else {
+          Phys_ObjDestroy(0);
+          *piVar5 = 0;
+          do {
+            if (in_RESERVE != '\0') {
+              DAT_8427b8f0 = storeWordConditionalIndexed
+                                       ((ulonglong)DAT_8427b8f0 - 1,0,0xffffffff8427b8f0);
+              in_cr0 = 2;
+            }
+          } while (!(bool)(in_cr0 >> 1 & 1));
+          *(ushort *)(piVar5 + 1) = *(ushort *)(piVar5 + 1) & 0xfffe;
+        }
+        uVar4 = uVar4 + 1;
+        iVar2 = iVar2 + 0x10;
+      } while ((uVar4 & 0xffffffff) < (uVar1 & 0xffffffff));
+    }
+    uVar1 = DynEnt_GetEntityCount(1);
+    uVar4 = 0;
+    if ((uVar1 & 0xffffffff) != 0) {
+      iVar2 = 0;
+      do {
+        if ((ulonglong)DAT_835a2946 <= (uVar4 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar4);
+        }
+        piVar5 = (int *)(iVar2 + DAT_835a295c);
+        if (((*(ushort *)(piVar5 + 1) & 1) == 0) || (*piVar5 == 0)) {
+          if (piVar5[3] != 0) {
+            Hinge_Destroy();
+            piVar5[3] = 0;
+          }
+        }
+        else {
+          Phys_ObjDestroy(0);
+          *piVar5 = 0;
+          do {
+            if (in_RESERVE != '\0') {
+              DAT_8427b8f0 = storeWordConditionalIndexed
+                                       ((ulonglong)DAT_8427b8f0 - 1,0,0xffffffff8427b8f0);
+              in_cr0 = 2;
+            }
+          } while (!(bool)(in_cr0 >> 1 & 1));
+          *(ushort *)(piVar5 + 1) = *(ushort *)(piVar5 + 1) & 0xfffe;
+        }
+        uVar4 = uVar4 + 1;
+        iVar2 = iVar2 + 0x10;
+      } while ((uVar4 & 0xffffffff) < (uVar1 & 0xffffffff));
+    }
+    Hinge_AssertAllFree();
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -126,23 +563,439 @@ void DynEntCl_UnlinkEntity(undefined8 param_1,undefined8 param_2)
 }
 
 
-// 8240D2A0  DynEntCl_PointTrace  (DynEntity/DynEntity_client.cpp:566)
+// 8240CDC0  DynEntCl_PointTrace_r  (DynEntity/DynEntity_client.cpp:462)
 
-void DynEntCl_PointTrace(void)
+void DynEntCl_PointTrace_r
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort uVar1;
+  uint uVar2;
+  float *pfVar3;
+  ulonglong uVar4;
+  float *pfVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  float *pfVar9;
+  uint uVar10;
+  int iVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float local_e0 [4];
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  
+  __savegprlr();
+  uVar4 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x1de,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x1df,0,0xffffffff82000f98,0xffffffff8202ba8c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x1e0,0,0xffffffff82000f98,0xffffffff8202ba88);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x1e1,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar9 = (float *)param_6;
+  dVar15 = 1.0;
+  if (1.0 < (double)*pfVar9) {
+    MyAssertHandler(0xffffffff8205fe00,0x1e2,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar9
+                   );
+  }
+  pfVar5 = (float *)param_4;
+  local_e0[0] = *pfVar5;
+  uVar2 = *(uint *)((int)param_2 + 100);
+  local_e0[1] = pfVar5[1];
+  local_e0[2] = pfVar5[2];
+  local_e0[3] = pfVar5[3];
+  if ((param_3 & 0xffffffff) != 0) {
+    dVar17 = 0.0;
+    do {
+      pfVar5 = (float *)DynEnt_GetCollSector(uVar4,param_3);
+      if (((uint)pfVar5[3] & *(uint *)((int)param_2 + 100)) == 0) break;
+      uVar10 = (uint)*(ushort *)(pfVar5 + 4);
+      if (uVar10 != 0) {
+        do {
+          uVar10 = uVar10 - 1;
+          iVar6 = DynEnt_GetEntityColl(uVar4,uVar10);
+          iVar8 = (int)((uVar4 & 0x7fffffff) << 1);
+          if (*(ushort *)((int)&DAT_835a2944 + iVar8) <= uVar10) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar10);
+          }
+          iVar12 = (int)((uVar4 & 0x3fffffff) << 2);
+          iVar11 = *(int *)((int)&DAT_835a2958 + iVar12) + uVar10 * 0x10;
+          if ((*(ushort *)(iVar11 + 4) & 2) == 0) {
+            MyAssertHandler(0xffffffff8205fe00,500,0,&DAT_82000f98,
+                            "dynEntClient->flags & DYNENT_CL_VISIBLE");
+          }
+          if ((*(ushort *)(iVar11 + 4) & 1) != 0) {
+            if (*(ushort *)((int)&DAT_835a2944 + iVar8) <= uVar10) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar10);
+            }
+            iVar11 = *(int *)((int)&DAT_835a2948 + iVar12) + uVar10 * 0x60;
+            uVar7 = DynEnt_GetContents(iVar11);
+            if ((uVar7 & uVar2) != 0) {
+              if (*(ushort *)((int)&DAT_835a2944 + iVar8) <= uVar10) {
+                MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar10);
+              }
+              iVar12 = *(int *)((int)&DAT_835a2950 + iVar12) + uVar10 * 0x20;
+              iVar8 = CM_TraceSphere((double)*(float *)(iVar12 + 0x1c),(double)*pfVar9,param_2,
+                                     iVar12 + 0x10);
+              if (iVar8 == 0) {
+                if ((int)uVar4 == 0) {
+                  DynEnt_PointTraceToModel(iVar11,iVar12,param_2,param_6);
+                }
+                else {
+                  if ((int)uVar4 != 1) {
+                    MyAssertHandler(0xffffffff8205fe00,0x209,0,0xffffffff8205fe6c,0xffffffff8205fe4c
+                                    ,uVar4);
+                  }
+                  DynEnt_PointTraceToBrush(iVar11,iVar12,param_2,param_6);
+                }
+                if ((double)*pfVar9 == dVar17) goto LAB_8240d28c;
+              }
+            }
+          }
+          uVar10 = (uint)*(ushort *)(iVar6 + 2);
+        } while (uVar10 != 0);
+      }
+      pfVar3 = (float *)param_5;
+      dVar13 = (double)(local_e0[*(ushort *)(pfVar5 + 1)] - *pfVar5);
+      dVar16 = (double)(pfVar3[*(ushort *)(pfVar5 + 1)] - *pfVar5);
+      if ((double)(float)(dVar16 * dVar13) < dVar17) {
+        if (*pfVar9 <= local_e0[3]) break;
+        dVar13 = (double)(float)(dVar13 / (double)(float)(dVar13 - dVar16));
+        if (dVar13 < dVar17) {
+          MyAssertHandler(0xffffffff8205fe00,0x21e,0,&DAT_82000f98,"frac >= 0.0f");
+        }
+        if (dVar15 < dVar13) {
+          MyAssertHandler(0xffffffff8205fe00,0x21f,0,&DAT_82000f98,"frac <= 1.0f");
+        }
+        dVar14 = dVar15;
+        if (dVar16 < 0.0) {
+          dVar14 = dVar17;
+        }
+        local_d0 = (float)((double)(float)((double)*pfVar3 - (double)local_e0[0]) * dVar13 +
+                          (double)local_e0[0]);
+        local_cc = (float)((double)(float)((double)pfVar3[1] - (double)local_e0[1]) * dVar13 +
+                          (double)local_e0[1]);
+        local_c8 = (float)((double)(float)((double)pfVar3[2] - (double)local_e0[2]) * dVar13 +
+                          (double)local_e0[2]);
+        local_c4 = (float)((double)(float)((double)pfVar3[3] - (double)local_e0[3]) * dVar13 +
+                          (double)local_e0[3]);
+        DynEntCl_PointTrace_r
+                  (uVar4,param_2,
+                   *(undefined2 *)
+                    ((int)(((ulonglong)(uint)(int)dVar14 + 4 & 0xffffffff) << 1) + (int)pfVar5),
+                   local_e0,&local_d0,param_6);
+        if ((double)*pfVar9 == dVar17) break;
+        uVar1 = *(ushort *)
+                 ((int)((5 - (ulonglong)(uint)(int)dVar14 & 0xffffffff) << 1) + (int)pfVar5);
+        local_e0[0] = local_d0;
+        local_e0[1] = local_cc;
+        local_e0[2] = local_c8;
+        local_e0[3] = local_c4;
+      }
+      else {
+        if ((float)(dVar16 - dVar13) < 0.0) {
+          dVar13 = dVar16;
+        }
+        dVar16 = dVar15;
+        if (dVar13 < 0.0) {
+          dVar16 = dVar17;
+        }
+        uVar1 = *(ushort *)((5 - (int)dVar16) * 2 + (int)pfVar5);
+      }
+      param_3 = (ulonglong)uVar1;
+    } while (param_3 != 0);
+  }
+LAB_8240d28c:
+  __restfpr_28();
+  __restgprlr();
+  return;
+}
+
+
+// 8240D2A0  DynEntCl_PointTrace  (DynEntity/DynEntity_client.cpp:566)
+
+void DynEntCl_PointTrace(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  float *pfVar2;
+  double dVar3;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  float local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  
+  iVar1 = __savegprlr_28();
+  Profile_Begin(0x18e);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x23c,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x23d,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar2 = (float *)param_2;
+  if (1.0 < (double)*pfVar2) {
+    MyAssertHandler(0xffffffff8205fe00,0x23e,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar2
+                   );
+  }
+  dVar3 = 0.0;
+  if (*pfVar2 != 0.0) {
+    local_40 = *(undefined4 *)(iVar1 + 0x40);
+    local_3c = *(undefined4 *)(iVar1 + 0x44);
+    local_38 = *(undefined4 *)(iVar1 + 0x48);
+    local_50 = *(undefined4 *)(iVar1 + 0x50);
+    local_4c = *(undefined4 *)(iVar1 + 0x54);
+    local_48 = *(undefined4 *)(iVar1 + 0x58);
+    local_34 = 0;
+    local_44 = *pfVar2;
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205ff30);
+    DynEntCl_PointTrace_r(1,iVar1,1,&local_40,&local_50,param_2);
+    PIXEndNamedEvent();
+    if ((double)*pfVar2 != dVar3) {
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205ff20);
+      DynEntCl_PointTrace_r(0,iVar1,1,&local_40,&local_50,param_2);
+      PIXEndNamedEvent();
+    }
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
+}
+
+
+// 8240D428  DynEntCl_ClipMoveTrace_r  (DynEntity/DynEntity_client.cpp:613)
+
+void DynEntCl_ClipMoveTrace_r
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
+
+{
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  float *pfVar6;
+  float fVar7;
+  int iVar8;
+  float *pfVar9;
+  float *pfVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float local_d0 [4];
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  
+  __savegprlr_16();
+  iVar8 = __savefpr_28();
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x280,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x281,0,0xffffffff82000f98,0xffffffff8202ba8c);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x282,0,0xffffffff82000f98,0xffffffff8202ba88);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x283,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar10 = (float *)param_5;
+  dVar15 = 1.0;
+  if (1.0 < (double)*pfVar10) {
+    MyAssertHandler(0xffffffff8205fe00,0x284,0,0xffffffff8202ba4c,0xffffffff8202ba6c,
+                    (double)*pfVar10);
+  }
+  pfVar9 = (float *)param_3;
+  local_d0[0] = *pfVar9;
+  local_d0[1] = pfVar9[1];
+  local_d0[2] = pfVar9[2];
+  local_d0[3] = pfVar9[3];
+  if ((param_2 & 0xffffffff) != 0) {
+    dVar16 = 0.0;
+    do {
+      pfVar9 = (float *)DynEnt_GetCollSector(1,param_2);
+      if (((uint)pfVar9[3] & *(uint *)(iVar8 + 0x98)) == 0) break;
+      uVar2 = *(ushort *)(pfVar9 + 4);
+      while ((ulonglong)uVar2 != 0) {
+        uVar12 = (ulonglong)uVar2 - 1;
+        if ((ulonglong)DAT_835a2946 <= (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x5e,0,0xffffffff8205f8f8,uVar12);
+        }
+        iVar3 = (int)((uVar12 + (uVar12 & 0x3fffffff) * 4 & 0xffffffff) << 2) + DAT_835a2964;
+        if ((ulonglong)DAT_835a2946 <= (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar12);
+        }
+        if ((*(ushort *)((int)((uVar12 & 0xffffffff) << 4) + DAT_835a295c + 4) & 2) == 0) {
+          MyAssertHandler(0xffffffff8205fe00,0x297,0,0xffffffff82000f98,0xffffffff8205fef8);
+        }
+        if ((ulonglong)DAT_835a2946 <= (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar12);
+        }
+        uVar11 = (ulonglong)DAT_835a294c;
+        if ((ulonglong)DAT_835a2946 <= (uVar12 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar12);
+        }
+        DynEnt_ClipMoveTraceToBrush
+                  ((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + uVar11,
+                   (uVar12 & 0x7ffffff) * 0x20 + (ulonglong)DAT_835a2954,iVar8,param_5);
+        if ((double)*pfVar10 == dVar16) goto LAB_8240d8bc;
+        uVar2 = *(ushort *)(iVar3 + 2);
+      }
+      uVar2 = *(ushort *)(pfVar9 + 1);
+      pfVar6 = (float *)param_4;
+      fVar4 = local_d0[uVar2] - *pfVar9;
+      fVar5 = pfVar6[uVar2] - *pfVar9;
+      fVar1 = *(float *)((uVar2 + 6) * 4 + iVar8);
+      dVar14 = (double)(fVar5 - fVar4);
+      fVar7 = fVar4;
+      if (dVar14 < 0.0) {
+        fVar7 = fVar5;
+      }
+      if (fVar7 < fVar1) {
+        fVar7 = fVar4;
+        if (fVar4 - fVar5 < 0.0) {
+          fVar7 = fVar5;
+        }
+        if (-fVar1 < fVar7) {
+          dVar13 = (double)local_d0[3];
+          if ((double)*pfVar10 <= dVar13) break;
+          if (dVar14 == dVar16) {
+            uVar12 = 0;
+            dVar14 = dVar16;
+            dVar17 = dVar15;
+          }
+          else {
+            dVar17 = dVar15;
+            fVar5 = -fVar4;
+            if (dVar14 < 0.0) {
+              dVar17 = dVar16;
+              fVar5 = fVar4;
+            }
+            uVar12 = (ulonglong)(uint)(int)dVar17;
+            dVar17 = (double)((fVar5 + fVar1) * (float)(dVar15 / ABS(dVar14)));
+            dVar14 = (double)((fVar5 - fVar1) * (float)(dVar15 / ABS(dVar14)));
+            if (dVar17 < dVar16) {
+              MyAssertHandler(0xffffffff8205fe00,0x2cb,0,0xffffffff82000f98,0xffffffff8202ba18);
+              dVar13 = (double)local_d0[3];
+            }
+          }
+          if ((float)(dVar15 - dVar17) < 0.0) {
+            dVar17 = dVar15;
+          }
+          local_c0 = (float)((double)(float)((double)*pfVar6 - (double)local_d0[0]) * dVar17 +
+                            (double)local_d0[0]);
+          local_bc = (float)((double)(float)((double)pfVar6[1] - (double)local_d0[1]) * dVar17 +
+                            (double)local_d0[1]);
+          local_b8 = (float)((double)(float)((double)pfVar6[2] - (double)local_d0[2]) * dVar17 +
+                            (double)local_d0[2]);
+          local_b4 = (float)((double)(float)((double)pfVar6[3] - dVar13) * dVar17 + dVar13);
+          DynEntCl_ClipMoveTrace_r
+                    (iVar8,*(undefined2 *)((int)((uVar12 + 4 & 0xffffffff) << 1) + (int)pfVar9),
+                     local_d0,&local_c0,param_5);
+          if ((double)*pfVar10 == dVar16) break;
+          if (dVar15 < dVar14) {
+            MyAssertHandler(0xffffffff8205fe00,0x2d7,0,0xffffffff82000f98,0xffffffff8205ff40);
+          }
+          if (dVar14 < 0.0) {
+            dVar14 = dVar16;
+          }
+          local_d0[1] = (float)((double)(float)((double)pfVar6[1] - (double)local_d0[1]) * dVar14 +
+                               (double)local_d0[1]);
+          local_d0[2] = (float)((double)(float)((double)pfVar6[2] - (double)local_d0[2]) * dVar14 +
+                               (double)local_d0[2]);
+          local_d0[3] = (float)((double)(float)((double)pfVar6[3] - (double)local_d0[3]) * dVar14 +
+                               (double)local_d0[3]);
+          local_d0[0] = (float)((double)(float)((double)*pfVar6 - (double)local_d0[0]) * dVar14 +
+                               (double)local_d0[0]);
+          param_2 = (ulonglong)*(ushort *)((int)((5 - uVar12 & 0xffffffff) << 1) + (int)pfVar9);
+        }
+        else {
+          param_2 = (ulonglong)*(ushort *)((int)pfVar9 + 10);
+        }
+      }
+      else {
+        param_2 = (ulonglong)*(ushort *)(pfVar9 + 2);
+      }
+    } while (param_2 != 0);
+  }
+LAB_8240d8bc:
+  __restfpr_28();
+  __restgprlr_16();
+  return;
 }
 
 
 // 8240D8E0  DynEntCl_ClipMoveTrace  (DynEntity/DynEntity_client.cpp:744)
 
-void DynEntCl_ClipMoveTrace(void)
+void DynEntCl_ClipMoveTrace(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  int iVar2;
+  double dVar3;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  iVar2 = __savegprlr_28();
+  Profile_Begin(399);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x2ee,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x2ef,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  dVar3 = (double)*(float *)param_2;
+  if (1.0 < dVar3) {
+    MyAssertHandler(0xffffffff8205fe00,0x2f0,0,0xffffffff8202ba4c,0xffffffff8202ba6c,dVar3);
+  }
+  fVar1 = *(float *)param_2;
+  if (fVar1 != 0.0) {
+    local_50 = *(undefined4 *)(iVar2 + 0x70);
+    local_4c = *(undefined4 *)(iVar2 + 0x74);
+    local_48 = *(undefined4 *)(iVar2 + 0x78);
+    local_40 = *(undefined4 *)(iVar2 + 0x80);
+    local_3c = *(undefined4 *)(iVar2 + 0x84);
+    local_38 = *(undefined4 *)(iVar2 + 0x88);
+    local_44 = 0;
+    local_34 = fVar1;
+    DynEntCl_ClipMoveTrace_r(iVar2,1,&local_50,&local_40,param_2);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -166,7 +1019,6 @@ void DynEntCl_SphereEntities_r(undefined8 param_1,ulonglong param_2,ulonglong pa
   
   uVar7 = __savegprlr_15();
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x313,0,0xffffffff82000f98,0xffffffff8205ff7c);
   }
   if ((param_2 & 0xffffffff) != 0) {
@@ -181,26 +1033,23 @@ void DynEntCl_SphereEntities_r(undefined8 param_1,ulonglong param_2,ulonglong pa
           iVar9 = DynEnt_GetEntityColl(uVar7,uVar12);
           iVar2 = (int)((uVar7 & 0x7fffffff) << 1);
           if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar12);
           }
           iVar3 = (int)((uVar7 & 0x3fffffff) << 2);
           iVar4 = *(int *)((int)&DAT_835a2958 + iVar3) + uVar12 * 0x10;
           if ((*(ushort *)(iVar4 + 4) & 2) == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205fe00,0x322,0,0xffffffff82000f98,0xffffffff8205fef8);
           }
           if ((*(ushort *)(iVar4 + 4) & 1) != 0) {
             if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar12);
             }
+            iVar4 = *(int *)((int)&DAT_835a2948 + iVar3);
             if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar12);
             }
             cVar10 = DynEnt_EntityInSphere
-                               (*(int *)((int)&DAT_835a2948 + iVar3) + uVar12 * 0x60,
+                               (iVar4 + uVar12 * 0x60,
                                 *(int *)((int)&DAT_835a2950 + iVar3) + uVar12 * 0x20,param_3);
             if (cVar10 != '\0') {
               if (*(int *)(iVar1 + 0x20) == *(int *)(iVar1 + 0x1c)) {
@@ -259,7 +1108,6 @@ void DynEntCl_CylinderEntities_r(undefined8 param_1,ulonglong param_2,ulonglong 
   
   uVar7 = __savegprlr_15();
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x361,0,0xffffffff82000f98,0xffffffff8205ff7c);
   }
   if ((param_2 & 0xffffffff) != 0) {
@@ -274,26 +1122,23 @@ void DynEntCl_CylinderEntities_r(undefined8 param_1,ulonglong param_2,ulonglong 
           iVar9 = DynEnt_GetEntityColl(uVar7,uVar12);
           iVar2 = (int)((uVar7 & 0x7fffffff) << 1);
           if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar12);
           }
           iVar3 = (int)((uVar7 & 0x3fffffff) << 2);
           iVar4 = *(int *)((int)&DAT_835a2958 + iVar3) + uVar12 * 0x10;
           if ((*(ushort *)(iVar4 + 4) & 2) == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8205fe00,0x370,0,0xffffffff82000f98,0xffffffff8205fef8);
           }
           if ((*(ushort *)(iVar4 + 4) & 1) != 0) {
             if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar12);
             }
+            iVar4 = *(int *)((int)&DAT_835a2948 + iVar3);
             if (*(ushort *)((int)&DAT_835a2944 + iVar2) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar12);
             }
             cVar10 = DynEnt_EntityInCylinder
-                               (*(int *)((int)&DAT_835a2948 + iVar3) + uVar12 * 0x60,
+                               (iVar4 + uVar12 * 0x60,
                                 *(int *)((int)&DAT_835a2950 + iVar3) + uVar12 * 0x20,param_3);
             if (cVar10 != '\0') {
               if (*(int *)(iVar1 + 0x20) == *(int *)(iVar1 + 0x1c)) {
@@ -336,23 +1181,155 @@ LAB_8240df04:
 }
 
 
-// 8240E0F0  DynEntCl_CreatePhysObj  (DynEntity/DynEntity_client.cpp:994)
+// 8240DF10  DynEntCl_SphereEntities  (DynEntity/DynEntity_client.cpp:935)
 
-void DynEntCl_CreatePhysObj(void)
+void DynEntCl_SphereEntities
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined4 param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  double extraout_f1;
+  double dVar2;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  float local_64;
+  float local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  
+  uVar1 = __savegprlr_26();
+  dVar2 = extraout_f1;
+  Profile_Begin(400);
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3ac,0,0xffffffff8205ffc4,0xffffffff8205ffe0,param_5);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3ad,0,0xffffffff82000f98,0xffffffff8205ffb8);
+  }
+  local_70 = *param_2;
+  local_6c = param_2[1];
+  local_64 = (float)(dVar2 * dVar2);
+  local_68 = param_2[2];
+  local_58 = (undefined4)param_6;
+  local_60 = (float)dVar2;
+  local_54 = (undefined4)param_5;
+  local_50 = 0;
+  local_5c = param_4;
+  DynEntCl_SphereEntities_r(uVar1,1,&local_70);
+  Profile_EndInternal(0);
+  __restgprlr_26(local_50);
+  return;
+}
+
+
+// 8240E000  DynEntCl_CylinderEntities  (DynEntity/DynEntity_client.cpp:964)
+
+void DynEntCl_CylinderEntities
+               (undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined4 param_4,
+               ulonglong param_5,ulonglong param_6)
+
+{
+  undefined8 uVar1;
+  double extraout_f1;
+  double dVar2;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  float local_64;
+  float local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  
+  uVar1 = __savegprlr_26();
+  dVar2 = extraout_f1;
+  Profile_Begin(0x191);
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3c9,0,0xffffffff8205ffc4,0xffffffff8205ffe0,param_5);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3ca,0,0xffffffff82000f98,0xffffffff8205ffb8);
+  }
+  local_70 = *param_2;
+  local_6c = param_2[1];
+  local_64 = (float)(dVar2 * dVar2);
+  local_68 = param_2[2];
+  local_58 = (undefined4)param_6;
+  local_60 = (float)dVar2;
+  local_54 = (undefined4)param_5;
+  local_50 = 0;
+  local_5c = param_4;
+  DynEntCl_CylinderEntities_r(uVar1,1,&local_70);
+  Profile_EndInternal(0);
+  __restgprlr_26(local_50);
+  return;
+}
+
+
+// 8240E0F0  DynEntCl_CreatePhysObj  (DynEntity/DynEntity_client.cpp:994)
+
+void DynEntCl_CreatePhysObj(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3e5,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x3e6,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  iVar3 = DynEnt_GetEntityProps(*puVar2);
+  if (*(char *)(iVar3 + 6) == '\0') {
+    MyAssertHandler(0xffffffff8205fe00,999,0,0xffffffff82000f98,0xffffffff82060048);
+  }
+  if (puVar2[0xb] == 0) {
+    MyAssertHandler(0xffffffff8205fe00,1000,0,0xffffffff82000f98,0xffffffff82060030);
+  }
+  uVar1 = Phys_ObjCreate(0,param_2 + 0x10,param_2,0xffffffff82179fd8,puVar2[0xb]);
+  if ((int)uVar1 == 0) {
+    Com_PrintWarning(1,0xffffffff8205fff8);
+    __restgprlr_28(0);
+    return;
+  }
+  DynEnt_SetPhysObjCollision(puVar2,uVar1,0);
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 8240E218  DynEntCl_PlayEventFx  (DynEntity/DynEntity_client.cpp:1025)
 
-void DynEntCl_PlayEventFx(void)
+void DynEntCl_PlayEventFx(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_26();
+  lVar4 = 0;
+  if (0 < DAT_82aa1ae8) {
+    do {
+      cVar3 = CL_IsLocalClientActive(lVar4);
+      if (cVar3 != '\0') {
+        iVar2 = CG_GetLocalClientGlobals(lVar4);
+        FX_PlayOrientedEffect(lVar4,uVar1,*(undefined4 *)(iVar2 + 0x6b98c),param_2,param_3);
+      }
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < DAT_82aa1ae8);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -384,17 +1361,14 @@ void DynEntCl_PlayImpactEffects
   
   uVar3 = __savegprlr_24();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x422,0,0xffffffff82000f98,0xffffffff8206008c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x423,0,0xffffffff82000f98,0xffffffff82060080);
   }
   uVar2 = (ulonglong)(uint)((int)param_3 >> 0x14);
   uVar1 = uVar2 & 0x1f;
   if (0x1e < uVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x426,0,0xffffffff8202ae30,uVar1,0x1f);
   }
   iVar4 = CG_GetEntity(uVar3,param_2);
@@ -471,75 +1445,67 @@ void DynEntCl_Damage(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulon
   
   uVar2 = __savegprlr_25();
   if ((uVar2 & 0xffffffff) == 0xffff) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x475,0,0xffffffff82000f98,0xffffffff82060154);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x476,0,0xffffffff82000f98,0xffffffff8206008c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x477,0,0xffffffff82000f98,0xffffffff8206014c);
   }
   if ((int)param_5 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x478,0,0xffffffff82060128,0xffffffff8206013c,param_5);
   }
   puVar3 = (undefined4 *)DynEnt_GetEntityDef(uVar2,param_2);
   if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)((param_2 & 0xffffffff) << 1)) <=
       (uVar2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar2);
   }
   piVar1 = (int *)(*(int *)((int)&DAT_835a2958 + (int)((param_2 & 0xffffffff) << 2)) +
                   (int)uVar2 * 0x10);
   iVar4 = DynEnt_GetEntityProps(*puVar3);
   if (*(char *)(iVar4 + 7) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x47d,0,0xffffffff82000f98,0xffffffff820600f0);
   }
   if ((*(ushort *)(piVar1 + 1) & 3) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x47e,0,0xffffffff82000f98,0xffffffff820600b0);
   }
-  if (0 < piVar1[2]) {
-    lVar5 = (ulonglong)(uint)piVar1[2] -
-            (ulonglong)(uint)(int)(*(float *)(DAT_8331aadc + 0xc) * (float)(longlong)(int)param_5);
-    bVar6 = (lVar5 == 0) << 1;
-    piVar1[2] = (int)lVar5;
-    if (lVar5 < 1) {
-      *(ushort *)(piVar1 + 1) = *(ushort *)(piVar1 + 1) & 0xfffc;
-      if (*piVar1 == 0) {
-        if (piVar1[3] != 0) {
-          Hinge_Destroy();
-          piVar1[3] = 0;
-        }
-      }
-      else {
-        Phys_ObjDestroy(0);
-        *piVar1 = 0;
-        do {
-          if (in_RESERVE != '\0') {
-            DAT_8427b8f0 = storeWordConditionalIndexed
-                                     ((ulonglong)DAT_8427b8f0 - 1,0,0xffffffff8427b8f0);
-            bVar6 = 2;
-          }
-        } while (!(bool)(bVar6 >> 1 & 1));
-      }
-      DynEnt_UnlinkEntity(param_2,uVar2);
-      R_UnlinkDynEnt(uVar2,param_2);
-      if (puVar3[10] != 0) {
-        lVar5 = DynEnt_GetClientPose(uVar2,param_2);
-        UnitQuatToAxis(lVar5,auStack_70);
-        DynEntCl_PlayEventFx(puVar3[10],lVar5 + 0x10,auStack_70);
+  if (piVar1[2] < 1) {
+    MyAssertHandler(0xffffffff8205fe00,0x480,0,0xffffffff82000f98,0xffffffff82060094);
+  }
+  lVar5 = (ulonglong)(uint)piVar1[2] -
+          (ulonglong)(uint)(int)(*(float *)(DAT_8331aadc + 0xc) * (float)(longlong)(int)param_5);
+  bVar6 = (lVar5 == 0) << 1;
+  piVar1[2] = (int)lVar5;
+  if (lVar5 < 1) {
+    *(ushort *)(piVar1 + 1) = *(ushort *)(piVar1 + 1) & 0xfffc;
+    if (*piVar1 == 0) {
+      if (piVar1[3] != 0) {
+        Hinge_Destroy();
+        piVar1[3] = 0;
       }
     }
-    __restgprlr_25();
-    return;
+    else {
+      Phys_ObjDestroy(0);
+      *piVar1 = 0;
+      do {
+        if (in_RESERVE != '\0') {
+          DAT_8427b8f0 = storeWordConditionalIndexed
+                                   ((ulonglong)DAT_8427b8f0 - 1,0,0xffffffff8427b8f0);
+          bVar6 = 2;
+        }
+      } while (!(bool)(bVar6 >> 1 & 1));
+    }
+    DynEnt_UnlinkEntity(param_2,uVar2);
+    R_UnlinkDynEnt(uVar2,param_2);
+    if (puVar3[10] != 0) {
+      lVar5 = DynEnt_GetClientPose(uVar2,param_2);
+      UnitQuatToAxis(lVar5,auStack_70);
+      DynEntCl_PlayEventFx(puVar3[10],lVar5 + 0x10,auStack_70);
+    }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8205fe00,0x480,0,0xffffffff82000f98,0xffffffff82060094);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -596,7 +1562,6 @@ void DynEntCl_EntityImpactEvent
     if (cVar6 != '\0') {
       iVar5 = CG_GetEntity(param_2,*(undefined2 *)(iVar4 + 0x20));
       if (iVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8205fe00,0x4d0,0,0xffffffff82000f98,0xffffffff82002118);
       }
       if ((*(int *)(iVar5 + 0x10) != -1) && (*(int *)(iVar5 + 0x10) != 0)) {
@@ -622,12 +1587,10 @@ void DynEntCl_EntityImpactEvent
         }
         uVar3 = Com_GetClientDObj(*(undefined4 *)(iVar5 + 0xc4),param_2);
         if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8205fe00,0x4e6,0,0xffffffff82000f98,0xffffffff820040b4);
         }
         iVar4 = DObjGetPhysPreset(uVar3);
         if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8205fe00,0x4e9,0,0xffffffff82000f98,0xffffffff82025024);
         }
         Phys_ObjBulletImpact
@@ -679,11 +1642,64 @@ void DynEntCl_GetStartingCenterOfMassForHinge(int param_1,float *param_2)
 
 // 8240EB08  DynEntCl_CreateHinge  (DynEntity/DynEntity_client.cpp:1312)
 
-void DynEntCl_CreateHinge(void)
+void DynEntCl_CreateHinge(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined1 auStack_70 [16];
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  undefined1 auStack_50 [80];
+  double _X;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x526,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if (*(int *)(iVar2 + 0x34) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x527,0,0xffffffff82000f98,0xffffffff8205fe8c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x528,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  QuatInverse(iVar2 + 4,auStack_50);
+  QuatMultiply(auStack_50,param_2,&local_60);
+  dVar4 = (double)local_54;
+  dVar6 = 1.0;
+  dVar5 = dVar6;
+  if ((float)(dVar4 - 1.0) < 0.0) {
+    dVar5 = dVar4;
+  }
+  _X = -1.0;
+  if ((float)(-1.0 - dVar4) < 0.0) {
+    _X = dVar5;
+  }
+  dVar5 = acos(_X);
+  iVar1 = *(int *)(iVar2 + 0x34);
+  dVar5 = (double)((float)dVar5 * 2.0 * 57.295776);
+  if (*(float *)(iVar1 + 0x14) * local_58 +
+      *(float *)(iVar1 + 0x10) * local_5c + *(float *)(iVar1 + 0xc) * local_60 < 0.0) {
+    dVar5 = -dVar5;
+  }
+  for (; (double)(float)((double)*(float *)(iVar1 + 0x20) + dVar6) < dVar5;
+      dVar5 = (double)(float)(dVar5 - 360.0)) {
+  }
+  for (; dVar5 < (double)(float)((double)*(float *)(iVar1 + 0x1c) - dVar6);
+      dVar5 = (double)(float)(dVar5 + 360.0)) {
+  }
+  DynEntCl_GetStartingCenterOfMassForHinge(iVar2,auStack_70);
+  uVar3 = Hinge_Create(dVar5,*(undefined4 *)(iVar2 + 0x34),*(undefined4 *)(iVar2 + 0x2c),auStack_70)
+  ;
+  *(undefined4 *)(param_3 + 0xc) = uVar3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -740,15 +1756,12 @@ void DynEntCl_DynEntImpactEvent
   
   uVar3 = __savegprlr_20();
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x549,0,0xffffffff82000f98,0xffffffff8202bebc);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x54a,0,0xffffffff82000f98,0xffffffff8202a874);
   }
   if ((int)param_5 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205fe00,0x54b,0,0xffffffff82060128,0xffffffff8206019c,param_5);
   }
   cVar8 = DynEntCl_EventNeedsProcessed(uVar3,param_2);
@@ -784,7 +1797,6 @@ void DynEntCl_DynEntImpactEvent
       piVar4 = (int *)DynEnt_GetEntityDef(sVar7,local_170[0]);
       piVar5 = (int *)DynEnt_GetClientEntity(sVar7,local_170[0]);
       if ((*(ushort *)(piVar5 + 1) & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8205fe00,0x56e,0,0xffffffff82000f98,0xffffffff82060174);
       }
       local_154 = pfVar10[1] - pfVar9[1];
@@ -861,11 +1873,76 @@ LAB_8240f07c:
 
 // 8240F0C0  DynEntCl_MeleeEvent  (DynEntity/DynEntity_client.cpp:1456)
 
-void DynEntCl_MeleeEvent(void)
+void DynEntCl_MeleeEvent(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar4;
+  ulonglong uVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80;
+  float local_7c;
+  float local_78;
+  
+  uVar3 = __savegprlr_23();
+  cVar6 = DynEntCl_EventNeedsProcessed();
+  if ((cVar6 != '\0') && (iVar5 = CG_GetEntity(uVar3,param_2), *(char *)(iVar5 + 399) != '\0')) {
+    uVar4 = BG_GetMeleeDamage(*(undefined4 *)(iVar5 + 0x18c),param_3);
+    CG_CalcEyePoint(uVar3,param_2,&local_c0);
+    cVar6 = CG_GetViewDirection(uVar3,param_2,&local_b0,&local_a0,&local_90);
+    if (cVar6 != '\0') {
+      if (DAT_829c7cb8 == 0) {
+        MyAssertHandler(0xffffffff8205fe00,0x5cb,0,0xffffffff82000f98,0xffffffff82007a6c);
+      }
+      if (DAT_829c7dec == 0) {
+        MyAssertHandler(0xffffffff8205fe00,0x5cc,0,0xffffffff82000f98,0xffffffff82007a58);
+      }
+      if (DAT_829c5484 == 0) {
+        MyAssertHandler(0xffffffff8205fe00,0x5cd,0,0xffffffff82000f98,0xffffffff820079f4);
+      }
+      dVar9 = (double)*(float *)(DAT_829c5484 + 0xc);
+      uVar7 = 0;
+      pfVar8 = (float *)&DAT_820601b0;
+      dVar11 = (double)*(float *)(DAT_829c7cb8 + 0xc);
+      dVar10 = (double)*(float *)(DAT_829c7dec + 0xc);
+      do {
+        fVar1 = (float)((double)pfVar8[-1] * dVar10);
+        fVar2 = (float)((double)*pfVar8 * dVar9);
+        local_80 = local_90 * fVar2 +
+                   local_a0 * fVar1 + (float)((double)local_b0 * dVar11 + (double)local_c0);
+        local_7c = local_8c * fVar2 +
+                   local_9c * fVar1 + (float)((double)local_ac * dVar11 + (double)local_bc);
+        local_78 = local_88 * fVar2 +
+                   local_98 * fVar1 + (float)((double)local_a8 * dVar11 + (double)local_b8);
+        cVar6 = DynEntCl_DynEntImpactEvent
+                          (uVar3,*(undefined4 *)(iVar5 + 0xc4),&local_c0,&local_80,uVar4,1,param_3);
+        if (cVar6 != '\0') break;
+        uVar7 = uVar7 + 8;
+        pfVar8 = pfVar8 + 2;
+      } while ((uVar7 & 0xffffffff) < 0x28);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -880,31 +1957,559 @@ bool DynEntCl_CompareDynEntsForExplosion(float *param_1,float *param_2)
 
 // 8240F2F0  DynEntCl_GetClosestEntities  (DynEntity/DynEntity_client.cpp:1519)
 
-void DynEntCl_GetClosestEntities(void)
+void DynEntCl_GetClosestEntities
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+               ulonglong param_5,int param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  float *pfVar10;
+  uint uVar11;
+  int iVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  double dVar18;
+  
   __savegprlr();
+  lVar13 = -0x80f0;
+  uVar8 = _RtlCheckStack12();
+  lVar13 = ZEXT48(&stack0x00000000) + lVar13;
+  *(BADSPACEBASE **)(int)lVar13 = register0x0000000c;
+  iVar3 = DAT_8331aacc;
+  if (param_6 != 0) {
+    iVar3 = DAT_8331aad4;
+  }
+  uVar14 = (ulonglong)*(uint *)(iVar3 + 0xc);
+  if ((param_5 & 0xff) == 0) {
+    uVar9 = DynEntCl_SphereEntities();
+    if (uVar14 < (uVar9 & 0xffffffff)) {
+      if ((uVar9 & 0xffffffff) != 0) {
+        lVar15 = lVar13 + 0x48;
+        iVar3 = (int)((uVar8 & 0xffffffff) << 1);
+        iVar7 = (int)((uVar8 & 0xffffffff) << 2);
+        uVar8 = uVar9;
+        lVar16 = param_4;
+        do {
+          uVar1 = *(ushort *)lVar16;
+          uVar11 = (uint)uVar1;
+          uVar2 = *(ushort *)((int)&DAT_835a2944 + iVar3);
+          *(ushort *)((int)lVar15 + 0xc) = uVar1;
+          if (uVar2 <= uVar11) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
+          }
+          if ((*(ushort *)(*(int *)((int)&DAT_835a2958 + iVar7) + uVar11 * 0x10 + 4) & 1) == 0) {
+            MyAssertHandler(0xffffffff8205fe00,0x607,0,0xffffffff82000f98,0xffffffff82060174);
+          }
+          uVar11 = (uint)*(ushort *)lVar16;
+          if (*(ushort *)((int)&DAT_835a2944 + iVar3) <= uVar11) {
+            MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar11);
+          }
+          pfVar10 = (float *)param_2;
+          uVar8 = uVar8 - 1;
+          iVar12 = uVar11 * 0x20 + *(int *)((int)&DAT_835a2950 + iVar7);
+          lVar16 = lVar16 + 2;
+          fVar4 = *pfVar10 - *(float *)(iVar12 + 0x10);
+          fVar5 = pfVar10[2] - *(float *)(iVar12 + 0x18);
+          fVar6 = pfVar10[1] - *(float *)(iVar12 + 0x14);
+          lVar15 = lVar15 + 8;
+          *(float *)lVar15 = fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4;
+        } while (uVar8 != 0);
+      }
+LAB_8240f5d0:
+      lVar15 = (uVar9 & 0x1fffffff) * 8 + lVar13 + 0x50;
+      std___Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                (lVar13 + 0x50,lVar15,(int)lVar15 - ((int)lVar13 + 0x50) >> 3,0xffffffff8240f2d0);
+      if (uVar14 != 0) {
+        lVar13 = lVar13 + 0x4c;
+        param_4 = param_4 + -2;
+        uVar8 = uVar14;
+        do {
+          lVar13 = lVar13 + 8;
+          param_4 = param_4 + 2;
+          *(undefined2 *)param_4 = *(undefined2 *)lVar13;
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
+      }
+      __restgprlr(uVar14);
+      return;
+    }
+  }
+  else {
+    uVar9 = DynEntCl_CylinderEntities(uVar8,param_2);
+    if (uVar14 < (uVar9 & 0xffffffff)) {
+      if ((uVar9 & 0xffffffff) != 0) {
+        lVar15 = lVar13 + 0x48;
+        iVar3 = (int)((uVar8 & 0xffffffff) << 1);
+        iVar7 = (int)((uVar8 & 0xffffffff) << 2);
+        uVar8 = uVar9;
+        lVar16 = param_4;
+        do {
+          uVar1 = *(ushort *)lVar16;
+          uVar11 = (uint)uVar1;
+          uVar2 = *(ushort *)((int)&DAT_835a2944 + iVar3);
+          *(ushort *)((int)lVar15 + 0xc) = uVar1;
+          if (uVar2 <= uVar11) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar11);
+          }
+          if ((*(ushort *)(*(int *)((int)&DAT_835a2958 + iVar7) + uVar11 * 0x10 + 4) & 1) == 0) {
+            MyAssertHandler(0xffffffff8205fe00,0x61b,0,0xffffffff82000f98,0xffffffff82060174);
+          }
+          uVar17 = (ulonglong)*(ushort *)lVar16;
+          if (*(ushort *)((int)&DAT_835a2944 + iVar3) <= uVar17) {
+            MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar17);
+          }
+          dVar18 = (double)Vec2DistanceSq(uVar17 * 0x20 +
+                                          (ulonglong)*(uint *)((int)&DAT_835a2950 + iVar7) + 0x10,
+                                          param_2);
+          lVar15 = lVar15 + 8;
+          *(float *)lVar15 = (float)dVar18;
+          uVar8 = uVar8 - 1;
+          lVar16 = lVar16 + 2;
+        } while (uVar8 != 0);
+      }
+      goto LAB_8240f5d0;
+    }
+  }
+  __restgprlr(uVar9);
+  return;
 }
 
 
 // 8240F628  DynEntCl_ExplosionEvent  (DynEntity/DynEntity_client.cpp:1586)
 
-void DynEntCl_ExplosionEvent(void)
+void DynEntCl_ExplosionEvent
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,undefined8 param_7,undefined8 param_8,
+               float *param_9,undefined8 param_10,undefined8 param_11)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar7;
+  char cVar11;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  float *pfVar12;
+  uint uVar13;
+  ushort *puVar14;
+  ushort *puVar15;
+  int *piVar16;
+  char *pcVar17;
+  uint uVar18;
+  int *piVar19;
+  char in_RESERVE;
+  byte in_cr0;
+  double extraout_f1;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  int in_stack_00000054;
+  int in_stack_0000005c;
+  float local_2160;
+  float local_215c;
+  float local_2158;
+  float local_2150;
+  float local_214c;
+  float local_2148;
+  char *local_2144;
+  undefined *local_2140;
+  longlong local_2138;
+  longlong local_2130 [2];
+  longlong local_2120;
+  ushort local_2110 [4232];
+  int iVar6;
+  
   __savegprlr();
+  uVar7 = __savefpr_18();
+  pcVar17 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_client.cpp";
+  local_2144 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_client.cpp";
+  local_2140 = &DAT_82000f98;
+  dVar30 = extraout_f1;
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x648,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  dVar32 = 0.0;
+  if (dVar30 < 0.0) {
+    MyAssertHandler(0xffffffff8205fe00,0x649,0,0xffffffff82000f98,0xffffffff82060250);
+  }
+  if (param_2 < dVar30) {
+    MyAssertHandler(0xffffffff8205fe00,0x64a,0,0xffffffff82000f98,0xffffffff82060234);
+  }
+  if ((int)param_11 < 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x64b,0,0xffffffff82060204,0xffffffff8206021c,param_11);
+  }
+  if (in_stack_00000054 < 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x64c,0,0xffffffff820601d4,0xffffffff820601ec);
+  }
+  cVar11 = DynEntCl_EventNeedsProcessed(uVar7,0x7ff);
+  if ((cVar11 != '\0') && (param_2 != dVar32)) {
+    dVar36 = 1.0;
+    dVar29 = dVar32;
+    if ((float)(dVar30 * dVar30) < (float)(param_2 * param_2)) {
+      dVar29 = (double)(1.0 / (float)(dVar30 - param_2));
+    }
+    iVar5 = DAT_8331aae8;
+    iVar6 = DAT_8331aad0;
+    iVar9 = DAT_8331aad8;
+    iVar10 = DAT_8331aac0;
+    if (in_stack_0000005c != 0) {
+      iVar5 = DAT_8331aac8;
+      iVar6 = DAT_8331aabc;
+      iVar9 = DAT_8331aae0;
+      iVar10 = DAT_8331aac4;
+    }
+    dVar34 = (double)*(float *)(iVar9 + 0xc);
+    dVar31 = (double)*(float *)(iVar10 + 0xc);
+    dVar28 = (double)*(float *)(iVar5 + 0xc);
+    dVar35 = (double)*(float *)(iVar6 + 0xc);
+    uVar7 = 0xbff0000000000000;
+    dVar27 = (double)(float)(param_2 + 64.0);
+    dVar33 = 60.0;
+    uVar13 = 0;
+    puVar14 = &DAT_835a2944;
+    do {
+      uVar8 = DynEntCl_GetClosestEntities(dVar27,uVar13,param_6);
+      if ((uVar8 & 0xffffffff) != 0) {
+        puVar15 = local_2110;
+        do {
+          uVar18 = (uint)*puVar15;
+          if (*puVar14 <= uVar18) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar18);
+          }
+          piVar16 = (int *)((&DAT_835a2958)[uVar13] + uVar18 * 0x10);
+          if ((*(ushort *)(piVar16 + 1) & 1) == 0) {
+            MyAssertHandler(pcVar17,0x672,0,local_2140,0xffffffff82060174);
+          }
+          uVar18 = (uint)*puVar15;
+          if (*puVar14 <= uVar18) {
+            MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar18);
+          }
+          iVar10 = (&DAT_835a2950)[uVar13] + uVar18 * 0x20;
+          if ((param_5 & 0xff) == 0) {
+            dVar20 = (double)DynEnt_GetSphereDist();
+          }
+          else {
+            dVar20 = (double)DynEnt_GetCylinderDist(iVar10,param_6);
+          }
+          if (dVar20 < param_2) {
+            dVar24 = dVar36;
+            if ((dVar30 < dVar20) &&
+               (dVar24 = (double)(float)((double)(float)(dVar20 - param_2) * dVar29), dVar24 < 0.0))
+            {
+              dVar24 = dVar32;
+            }
+            uVar18 = (uint)*puVar15;
+            if (*puVar14 <= uVar18) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar18);
+            }
+            dVar25 = (double)*param_9;
+            piVar19 = (int *)((&DAT_835a2948)[uVar13] + uVar18 * 0x60);
+            dVar20 = (double)(float)((double)(float)((double)(float)((double)*(float *)(piVar19[0xb]
+                                                                                       + 0x18) *
+                                                                    dVar24) * dVar31) * param_3);
+            if (((dVar25 == 0.0) && (param_9[1] == 0.0)) && (param_9[2] == 0.0)) {
+              if (dVar28 <= dVar20) {
+                pfVar12 = (float *)param_6;
+                dVar26 = (double)(*(float *)(iVar10 + 0x10) - *pfVar12);
+                dVar23 = (double)(*(float *)(iVar10 + 0x14) - pfVar12[1]);
+                dVar25 = (double)(*(float *)(iVar10 + 0x18) - pfVar12[2]);
+                if ((param_5 & 0xff) != 0) {
+                  dVar25 = dVar32;
+                }
+                dVar22 = (double)SQRT((float)(dVar25 * dVar25 +
+                                             (double)(float)(dVar26 * dVar26 +
+                                                            (double)(float)(dVar23 * dVar23))));
+                dVar21 = dVar36;
+                if (-dVar22 < 0.0) {
+                  dVar21 = dVar22;
+                }
+                dVar21 = (double)(float)(dVar36 / dVar21);
+                fVar3 = (float)(dVar21 * dVar23);
+                fVar2 = (float)(dVar21 * dVar25 + dVar34);
+                fVar4 = (float)(dVar21 * dVar26);
+                dVar23 = (double)SQRT(fVar2 * fVar2 + fVar4 * fVar4 + fVar3 * fVar3);
+                dVar25 = dVar36;
+                if (-dVar23 < 0.0) {
+                  dVar25 = dVar23;
+                }
+                fVar1 = (float)(dVar36 / dVar25);
+                dVar25 = (double)(fVar1 * fVar4);
+                fVar3 = fVar1 * fVar3;
+                fVar1 = fVar1 * fVar2;
+                goto LAB_8240fa4c;
+              }
+            }
+            else {
+              fVar3 = param_9[1];
+              fVar1 = param_9[2];
+LAB_8240fa4c:
+              if (dVar32 < dVar20) {
+                local_2150 = (float)(dVar25 * dVar20);
+                local_214c = (float)((double)fVar3 * dVar20);
+                local_2148 = (float)((double)fVar1 * dVar20);
+                if (*piVar19 == 3) {
+                  if (piVar16[3] == 0) {
+                    DynEntCl_CreateHinge(piVar19,iVar10,piVar16);
+                  }
+                  if (piVar16[3] != 0) {
+                    Hinge_GetCenterOfMass(piVar16[3],&local_2160);
+                    local_2150 = (float)((double)local_2150 * dVar33);
+                    local_214c = (float)((double)local_214c * dVar33);
+                    local_2148 = (float)((double)local_2148 * dVar33);
+                    Hinge_AddForce(piVar16[3],&local_2160,&local_2150);
+                  }
+                }
+                else {
+                  iVar9 = DynEnt_GetEntityProps();
+                  if (*(char *)(iVar9 + 6) != '\0') {
+                    iVar9 = *piVar16;
+                    if (iVar9 == 0) {
+                      iVar10 = DynEntCl_CreatePhysObj(piVar19,iVar10);
+                      *piVar16 = iVar10;
+                      if (iVar10 != 0) {
+                        do {
+                          if (in_RESERVE != '\0') {
+                            DAT_8427b8f0 = storeWordConditionalIndexed
+                                                     ((ulonglong)DAT_8427b8f0 + 1,0,
+                                                      0xffffffff8427b8f0);
+                            in_cr0 = 2;
+                          }
+                        } while (!(bool)(in_cr0 >> 1 & 1));
+                        iVar9 = *piVar16;
+                        if (iVar9 != 0) goto LAB_8240fb40;
+                      }
+                    }
+                    else {
+LAB_8240fb40:
+                      Phys_ObjGetCenterOfMass(iVar9,&local_2160);
+                      dVar20 = (double)flrand(uVar7,dVar36);
+                      local_2160 = (float)(dVar20 * dVar35 + (double)local_2160);
+                      dVar20 = (double)flrand(uVar7,dVar36);
+                      local_215c = (float)(dVar20 * dVar35 + (double)local_215c);
+                      dVar20 = (double)flrand(uVar7,dVar36);
+                      local_2158 = (float)(dVar20 * dVar35 + (double)local_2158);
+                      Phys_ObjAddImpulse(0,*piVar16,&local_2160,&local_2150);
+                    }
+                  }
+                }
+              }
+            }
+            iVar10 = DynEnt_GetEntityProps(*piVar19);
+            if (*(char *)(iVar10 + 7) != '\0') {
+              local_2120 = (longlong)in_stack_00000054;
+              local_2138 = (longlong)((int)param_11 - in_stack_00000054);
+              iVar10 = (int)((double)local_2138 * dVar24 + (double)local_2120);
+              local_2130[0] = (longlong)iVar10;
+              if (iVar10 != 0) {
+                DynEntCl_Damage(*puVar15,uVar13,&local_2160,local_2130);
+              }
+            }
+          }
+          uVar8 = uVar8 - 1;
+          in_cr0 = (uVar8 == 0) << 1;
+          puVar15 = puVar15 + 1;
+          pcVar17 = local_2144;
+        } while (uVar8 != 0);
+      }
+      uVar13 = uVar13 + 1;
+      puVar14 = puVar14 + 1;
+    } while (uVar13 < 2);
+  }
+  __restfpr_18();
+  __restgprlr();
+  return;
 }
 
 
 // 8240FC48  DynEntCl_JitterEvent  (DynEntity/DynEntity_client.cpp:1744)
 
-void DynEntCl_JitterEvent(void)
+void DynEntCl_JitterEvent
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  ushort uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  ulonglong uVar4;
+  int iVar5;
+  uint uVar7;
+  uint uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ushort *puVar11;
+  int iVar12;
+  longlong lVar13;
+  ushort *puVar14;
+  ulonglong uVar15;
+  undefined4 *puVar16;
+  longlong lVar17;
+  int *piVar18;
+  ulonglong uVar19;
+  char in_RESERVE;
+  byte in_cr0;
+  double extraout_f1;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  
   __savegprlr();
+  __savefpr_27();
+  lVar9 = -0xa110;
+  uVar3 = _RtlCheckStack12();
+  lVar9 = ZEXT48(&stack0x00000000) + lVar9;
+  *(BADSPACEBASE **)(int)lVar9 = register0x0000000c;
+  dVar21 = extraout_f1;
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205fe00,0x6da,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  dVar22 = 0.0;
+  if (dVar21 < 0.0) {
+    MyAssertHandler(0xffffffff8205fe00,0x6db,0,0xffffffff82000f98,0xffffffff82060250);
+  }
+  if (param_2 < dVar21) {
+    MyAssertHandler(0xffffffff8205fe00,0x6dc,0,0xffffffff82000f98,0xffffffff82060234);
+  }
+  cVar6 = DynEntCl_EventNeedsProcessed(uVar3,0x7ff);
+  if ((cVar6 != '\0') && (param_2 != dVar22)) {
+    dVar22 = (double)(float)(param_2 + 64.0);
+    uVar10 = 0;
+    iVar12 = 0;
+    puVar11 = &DAT_835a2944;
+    do {
+      uVar4 = DynEntCl_CylinderEntities(dVar22,uVar10,param_6);
+      if ((ulonglong)*(uint *)(DAT_8331aacc + 0xc) < (uVar4 & 0xffffffff)) {
+        if ((uVar4 & 0xffffffff) != 0) {
+          lVar13 = lVar9 + 0x2048;
+          lVar17 = lVar9 + 0x50;
+          uVar15 = uVar4;
+          do {
+            uVar1 = *(ushort *)lVar17;
+            uVar8 = (uint)uVar1;
+            uVar2 = *puVar11;
+            *(ushort *)((int)lVar13 + 0xc) = uVar1;
+            if (uVar2 <= uVar8) {
+              MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar8);
+            }
+            if ((*(ushort *)(*(int *)((int)&DAT_835a2958 + iVar12) + uVar8 * 0x10 + 4) & 1) == 0) {
+              MyAssertHandler(0xffffffff8205fe00,0x6f0,0,0xffffffff82000f98,0xffffffff82060174);
+            }
+            uVar19 = (ulonglong)*(ushort *)lVar17;
+            if (*puVar11 <= uVar19) {
+              MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar19);
+            }
+            dVar20 = (double)Vec2DistanceSq(uVar19 * 0x20 +
+                                            (ulonglong)*(uint *)((int)&DAT_835a2950 + iVar12) + 0x10
+                                            ,param_6);
+            lVar13 = lVar13 + 8;
+            *(float *)lVar13 = (float)dVar20;
+            uVar15 = uVar15 - 1;
+            in_cr0 = (uVar15 == 0) << 1;
+            lVar17 = lVar17 + 2;
+          } while (uVar15 != 0);
+        }
+        lVar13 = (uVar4 & 0x1fffffff) * 8 + lVar9 + 0x2050;
+        std___Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                  (lVar9 + 0x2050,lVar13,(int)lVar13 - ((int)lVar9 + 0x2050) >> 3,0xffffffff8240f2d0
+                  );
+        uVar4 = (ulonglong)*(uint *)(DAT_8331aacc + 0xc);
+        if (uVar4 != 0) {
+          lVar17 = lVar9 + 0x4e;
+          lVar13 = lVar9 + 0x204c;
+          uVar15 = uVar4;
+          do {
+            lVar13 = lVar13 + 8;
+            lVar17 = lVar17 + 2;
+            *(undefined2 *)lVar17 = *(undefined2 *)lVar13;
+            uVar15 = uVar15 - 1;
+          } while (uVar15 != 0);
+          goto LAB_8240fec8;
+        }
+      }
+      else {
+LAB_8240fec8:
+        if ((uVar4 & 0xffffffff) != 0) {
+          lVar13 = lVar9 + 0x50;
+          do {
+            puVar14 = (ushort *)lVar13;
+            uVar8 = (uint)*puVar14;
+            if (*puVar11 <= uVar8) {
+              MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar8);
+            }
+            uVar7 = (uint)*puVar14;
+            puVar16 = (undefined4 *)(*(int *)((int)&DAT_835a2948 + iVar12) + uVar8 * 0x60);
+            if (*puVar11 <= uVar7) {
+              MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar7);
+            }
+            piVar18 = (int *)(*(int *)((int)&DAT_835a2958 + iVar12) + uVar7 * 0x10);
+            if ((*(ushort *)(piVar18 + 1) & 1) == 0) {
+              MyAssertHandler(0xffffffff8205fe00,0x703,0,0xffffffff82000f98,0xffffffff82060174);
+            }
+            iVar5 = DynEnt_GetEntityProps(*puVar16);
+            if ((*(char *)(iVar5 + 6) != '\0') && (*piVar18 == 0)) {
+              uVar15 = (ulonglong)*puVar14;
+              if (*puVar11 <= uVar15) {
+                MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar15);
+              }
+              iVar5 = DynEntCl_CreatePhysObj
+                                (puVar16,(ulonglong)*(uint *)((int)&DAT_835a2950 + iVar12) +
+                                         uVar15 * 0x20);
+              *piVar18 = iVar5;
+              if (iVar5 != 0) {
+                do {
+                  if (in_RESERVE != '\0') {
+                    DAT_8427b8f0 = storeWordConditionalIndexed
+                                             ((ulonglong)DAT_8427b8f0 + 1,0,0xffffffff8427b8f0);
+                    in_cr0 = 2;
+                  }
+                } while (!(bool)(in_cr0 >> 1 & 1));
+              }
+            }
+            uVar4 = uVar4 - 1;
+            in_cr0 = (uVar4 == 0) << 1;
+            lVar13 = lVar13 + 2;
+          } while (uVar4 != 0);
+        }
+      }
+      uVar10 = uVar10 + 1;
+      puVar11 = puVar11 + 1;
+      iVar12 = iVar12 + 4;
+    } while ((uVar10 & 0xffffffff) < 2);
+    Phys_AddJitterRegion(dVar21,param_2,param_3,param_4,0,param_6);
+  }
+  __restfpr_27();
+  __restgprlr();
+  return;
 }
 
 
@@ -913,8 +2518,93 @@ void DynEntCl_JitterEvent(void)
 void DynEntCl_WakeUpAroundPlayer(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  ulonglong uVar1;
+  uint uVar3;
+  uint uVar4;
+  ushort *puVar5;
+  ushort *puVar6;
+  int *piVar7;
+  int *piVar8;
+  uint uVar10;
+  ulonglong uVar9;
+  char in_RESERVE;
+  byte in_cr0;
+  double dVar11;
+  undefined4 uStack_20a0;
+  undefined4 uStack_209c;
+  undefined4 uStack_2098;
+  ushort auStack_2090 [4168];
+  
   __savegprlr_17();
+  dVar11 = (double)*(float *)(DAT_8427b8b8 + 0xc);
+  if (dVar11 != 0.0) {
+    iVar2 = CG_GetLocalClientGlobals();
+    uStack_20a0 = *(undefined4 *)(iVar2 + 0x1c);
+    uStack_209c = *(undefined4 *)(iVar2 + 0x20);
+    uVar4 = 0;
+    uStack_2098 = *(undefined4 *)(iVar2 + 0x24);
+    puVar5 = &DAT_835a2944;
+    do {
+      uVar1 = DynEntCl_GetClosestEntities(dVar11,uVar4,&uStack_20a0);
+      if ((uVar1 & 0xffffffff) != 0) {
+        puVar6 = auStack_2090;
+        do {
+          uVar10 = (uint)*puVar6;
+          if (*puVar5 <= uVar10) {
+            MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar10);
+          }
+          uVar3 = (uint)*puVar6;
+          piVar7 = (int *)((&DAT_835a2948)[uVar4] + uVar10 * 0x60);
+          if (*puVar5 <= uVar3) {
+            MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,uVar3);
+          }
+          piVar8 = (int *)((&DAT_835a2958)[uVar4] + uVar3 * 0x10);
+          if ((*(ushort *)(piVar8 + 1) & 1) == 0) {
+            MyAssertHandler(0xffffffff8205fe00,0x76b,0,0xffffffff82000f98,0xffffffff82060174);
+          }
+          if (*piVar7 == 3) {
+            if (piVar8[3] == 0) {
+              uVar9 = (ulonglong)*puVar6;
+              if (*puVar5 <= uVar9) {
+                MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar9);
+              }
+              DynEntCl_CreateHinge
+                        (piVar7,(ulonglong)(uint)(&DAT_835a2950)[uVar4] + uVar9 * 0x20,piVar8);
+            }
+          }
+          else {
+            iVar2 = DynEnt_GetEntityProps();
+            if ((*(char *)(iVar2 + 6) != '\0') && (*piVar8 == 0)) {
+              uVar9 = (ulonglong)*puVar6;
+              if (*puVar5 <= uVar9) {
+                MyAssertHandler(0xffffffff8205f8a8,0x44,0,0xffffffff8205cca8,uVar9);
+              }
+              iVar2 = DynEntCl_CreatePhysObj
+                                (piVar7,(ulonglong)(uint)(&DAT_835a2950)[uVar4] + uVar9 * 0x20);
+              *piVar8 = iVar2;
+              if (iVar2 != 0) {
+                do {
+                  if (in_RESERVE != '\0') {
+                    DAT_8427b8f0 = storeWordConditionalIndexed
+                                             ((ulonglong)DAT_8427b8f0 + 1,0,0xffffffff8427b8f0);
+                    in_cr0 = 2;
+                  }
+                } while (!(bool)(in_cr0 >> 1 & 1));
+              }
+            }
+          }
+          uVar1 = uVar1 - 1;
+          in_cr0 = (uVar1 == 0) << 1;
+          puVar6 = puVar6 + 1;
+        } while (uVar1 != 0);
+      }
+      uVar4 = uVar4 + 1;
+      puVar5 = puVar5 + 1;
+    } while (uVar4 < 2);
+  }
+  __restgprlr_17();
+  return;
 }
 
 
@@ -1030,6 +2720,103 @@ void std___Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(D
 }
 
 
+// 824104B8  std::_Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+
+void std___Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  char cVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  undefined8 local_50 [10];
+  
+  lVar4 = __savegprlr_24();
+  iVar2 = (int)lVar4;
+  uVar1 = param_2 - iVar2 >> 3;
+  uVar10 = (longlong)(param_2 - iVar2 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar10) {
+    uVar8 = (uVar10 + 1 & 0x7fffffff) << 1;
+    lVar7 = (uVar10 & 0x1fffffff) * 8 + lVar4;
+    do {
+      lVar7 = lVar7 + -8;
+      local_50[0] = *(undefined8 *)lVar7;
+      uVar8 = uVar8 - 2;
+      uVar10 = uVar10 - 1;
+      iVar9 = (int)uVar8;
+      uVar13 = uVar8;
+      uVar11 = uVar10;
+      while (uVar12 = uVar13, iVar9 < (int)uVar1) {
+        lVar5 = (uVar12 & 0x1fffffff) * 8 + lVar4;
+        cVar6 = (*(code *)param_3)(lVar5,lVar5 + -8);
+        if (cVar6 != '\0') {
+          uVar12 = uVar12 - 1;
+        }
+        iVar9 = (int)((uVar12 & 0xffffffff) << 3);
+        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
+        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + iVar2);
+        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + iVar2 + 4);
+        iVar9 = (int)uVar13;
+        uVar11 = uVar12;
+      }
+      if ((uint)uVar12 == uVar1) {
+        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
+        iVar9 = uVar1 * 8 + iVar2;
+        uVar11 = (longlong)(int)uVar1 - 1;
+        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + -8);
+        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + -4);
+      }
+      std___Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                (lVar4,uVar11,uVar10,local_50,param_3);
+    } while (0 < (int)uVar10);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 82410AD8  std::_Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+
+void std___Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  undefined8 *puVar3;
+  undefined8 local_30 [6];
+  
+  lVar1 = __savegprlr_29();
+  lVar2 = param_2 - lVar1;
+  if (8 < (int)((uint)lVar2 & 0xfffffff8)) {
+    param_2 = param_2 + -8;
+    do {
+      puVar3 = (undefined8 *)param_2;
+      local_30[0] = *puVar3;
+      *(undefined4 *)puVar3 = *(undefined4 *)lVar1;
+      *(undefined4 *)((int)puVar3 + 4) = ((undefined4 *)lVar1)[1];
+      std___Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                (lVar1,0,(int)lVar2 + -8 >> 3,local_30,param_3);
+      param_2 = param_2 + -8;
+      lVar2 = (param_2 - lVar1) + 8;
+    } while (8 < (int)((uint)lVar2 & 0xfffffff8));
+  }
+  __restgprlr_29();
+  return;
+}
+
+
 // 82410728  std::_Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
 void std___Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>
@@ -1091,32 +2878,292 @@ void std___Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_c
 // 824105C0  std::_Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
 void std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
-               (void)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  char cVar2;
+  undefined8 *puVar3;
+  undefined8 *puVar4;
+  undefined8 uVar5;
+  
+  puVar1 = (undefined8 *)__savegprlr_28();
+  cVar2 = (*param_4)(param_2,puVar1);
+  puVar3 = (undefined8 *)param_2;
+  if (cVar2 != '\0') {
+    uVar5 = *puVar3;
+    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
+    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
+    *puVar1 = uVar5;
+  }
+  cVar2 = (*param_4)(param_3,param_2);
+  if (cVar2 != '\0') {
+    puVar4 = (undefined8 *)param_3;
+    uVar5 = *puVar4;
+    *(undefined4 *)puVar4 = *(undefined4 *)puVar3;
+    *(undefined4 *)((int)puVar4 + 4) = *(undefined4 *)((int)puVar3 + 4);
+    *puVar3 = uVar5;
+  }
+  cVar2 = (*param_4)(param_2,puVar1);
+  if (cVar2 != '\0') {
+    uVar5 = *puVar3;
+    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
+    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
+    *puVar1 = uVar5;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82410680  std::_Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
 void std___Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 3;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x1fffffff;
+    uVar4 = uVar4 & 0xfffffff;
+    lVar6 = uVar2 * 8 + lVar3;
+    std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
+    std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -8;
+    std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
+    std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82410828  std::_Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  undefined8 uVar5;
+  int iVar7;
+  ulonglong uVar6;
+  ulonglong uVar8;
+  undefined8 *puVar9;
+  undefined8 *puVar10;
+  undefined8 *puVar12;
+  ulonglong uVar11;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  iVar7 = (int)param_3 - (int)param_2;
+  uVar2 = iVar7 >> 3;
+  uVar15 = ((longlong)(iVar7 >> 4) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x1fffffff) *
+           8 + param_2;
+  std___Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+            (param_2,uVar15,param_3 - 8);
+  uVar8 = uVar15 + 8;
+  if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+    do {
+      uVar13 = uVar15 - 8;
+      cVar4 = (*param_4)(uVar13,uVar15);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar13), cVar4 != '\0')) break;
+      uVar15 = uVar13;
+    } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
+  }
+  uVar11 = uVar8;
+  uVar13 = uVar15;
+  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar4 = (*param_4)(uVar8,uVar15);
+      uVar11 = uVar8;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar8), cVar4 != '\0')) break;
+      uVar8 = uVar8 + 8;
+      uVar11 = uVar8;
+    } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar6 = uVar8;
+    if ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar4 = (*param_4)(uVar13,uVar11);
+        uVar8 = uVar6;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar11,uVar13);
+          if (cVar4 != '\0') break;
+          puVar12 = (undefined8 *)uVar11;
+          uVar8 = uVar6 + 8;
+          puVar9 = (undefined8 *)uVar6;
+          uVar5 = *puVar9;
+          *(undefined4 *)puVar9 = *(undefined4 *)puVar12;
+          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)puVar12 + 4);
+          *puVar12 = uVar5;
+        }
+        uVar11 = uVar11 + 8;
+        uVar6 = uVar8;
+      } while ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar6 = uVar15;
+    if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+      do {
+        uVar14 = uVar6 - 8;
+        cVar4 = (*param_4)(uVar14,uVar13);
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar13,uVar14);
+          if (cVar4 != '\0') break;
+          uVar13 = uVar13 - 8;
+          puVar9 = (undefined8 *)uVar13;
+          uVar5 = *puVar9;
+          *(undefined4 *)puVar9 = *(undefined4 *)(undefined8 *)uVar14;
+          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar6 + -4);
+          *(undefined8 *)uVar14 = uVar5;
+        }
+        uVar15 = uVar15 - 8;
+        uVar6 = uVar14;
+      } while ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff));
+      bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar9 = (undefined8 *)uVar11;
+    puVar12 = (undefined8 *)uVar13;
+    if (bVar1) {
+      puVar10 = (undefined8 *)uVar8;
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = puVar12;
+        puVar3[1] = puVar10;
+        __restgprlr_23(puVar3);
+        return;
+      }
+      if ((uVar8 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar5 = *puVar12;
+        *(undefined4 *)puVar12 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar10 + 4);
+        *puVar10 = uVar5;
+      }
+      uVar8 = uVar8 + 8;
+      uVar5 = *puVar12;
+      *(undefined4 *)puVar12 = *(undefined4 *)puVar9;
+      *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar9 + 4);
+      *puVar9 = uVar5;
+      uVar11 = uVar11 + 8;
+      uVar13 = uVar13 + 8;
+    }
+    else {
+      uVar6 = uVar15 - 8;
+      puVar10 = (undefined8 *)uVar6;
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar13 = uVar13 - 8;
+        puVar9 = (undefined8 *)uVar13;
+        if ((uVar6 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+          uVar5 = *puVar10;
+          *(undefined4 *)puVar10 = *(undefined4 *)puVar9;
+          *(undefined4 *)((int)puVar10 + 4) = *(undefined4 *)((int)puVar12 + -4);
+          *puVar9 = uVar5;
+        }
+        uVar8 = uVar8 - 8;
+        puVar10 = (undefined8 *)uVar8;
+        uVar5 = *puVar9;
+        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar12 + -4) = *(undefined4 *)((int)puVar10 + 4);
+        *puVar10 = uVar5;
+        uVar15 = uVar6;
+      }
+      else {
+        uVar5 = *puVar9;
+        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar15 + -4);
+        *puVar10 = uVar5;
+        uVar15 = uVar6;
+        uVar11 = uVar11 + 8;
+      }
+    }
+  } while( true );
+}
+
+
+// 82410B58  std::_Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+
+void std___Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 3;
+    if (iVar2 < 0x21) {
+LAB_82410c10:
+      if (1 < iVar2) {
+        std___Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>
+                  (uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                    (uVar1,param_2,param_4,0,0);
+        }
+        std___Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                  (uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_82410c10;
+    }
+    std___Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+              (&local_40,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffff8) < (int)((int)param_2 - local_3c & 0xfffffff8)) {
+      std___Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>
+                (uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 

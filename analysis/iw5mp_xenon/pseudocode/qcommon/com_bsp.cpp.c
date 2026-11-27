@@ -2,11 +2,60 @@
 
 // 824D67D8  Com_CanPrimaryLightAffectPoint  (qcommon/com_bsp.cpp:18)
 
-void Com_CanPrimaryLightAffectPoint(void)
+void Com_CanPrimaryLightAffectPoint(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  char *pcVar9;
+  undefined8 uVar8;
+  
+  pcVar9 = (char *)__savegprlr_28();
+  if (pcVar9 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82083994,0x18,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  }
+  if ((*pcVar9 != '\x02') && (*pcVar9 != '\x03')) {
+    MyAssertHandler(0xffffffff82083994,0x19,0,0xffffffff82083930,0xffffffff82083948);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82083994,0x1a,0,0xffffffff82000f98,0xffffffff8206e8a0);
+  }
+  pfVar4 = (float *)param_2;
+  fVar3 = *(float *)(pcVar9 + 0x2c) - pfVar4[1];
+  fVar5 = *(float *)(pcVar9 + 0x30) - pfVar4[2];
+  fVar6 = *(float *)(pcVar9 + 0x28) - *pfVar4;
+  fVar7 = fVar6 * fVar6 + fVar5 * fVar5 + fVar3 * fVar3;
+  if (*(float *)(pcVar9 + 0x34) * *(float *)(pcVar9 + 0x34) <= fVar7) {
+LAB_824d68b8:
+    __restgprlr_28(0);
+    return;
+  }
+  if (*pcVar9 != '\x03') {
+    fVar1 = *(float *)(pcVar9 + 0x38);
+    fVar2 = *(float *)(pcVar9 + 0x44);
+    if (-fVar1 < fVar2) {
+      fVar3 = *(float *)(pcVar9 + 0x18) * fVar5 +
+              *(float *)(pcVar9 + 0x14) * fVar3 + *(float *)(pcVar9 + 0x10) * fVar6;
+      if ((fVar2 != 1.0) &&
+         (fVar1 = fVar1 * fVar2 - SQRT(-(fVar1 * fVar1 - 1.0) * -(fVar2 * fVar2 - 1.0)),
+         fVar1 <= 0.0)) {
+        __restgprlr_28(fVar3 <= fVar1 * *(float *)(pcVar9 + 0x34));
+        return;
+      }
+      if (fVar3 <= 0.0) goto LAB_824d68b8;
+      uVar8 = 0;
+      if (fVar3 * fVar3 < fVar1 * fVar1 * fVar7) goto LAB_824d693c;
+    }
+  }
+  uVar8 = 1;
+LAB_824d693c:
+  __restgprlr_28(uVar8);
+  return;
 }
 
 
@@ -23,7 +72,6 @@ uint Com_FindClosestPrimaryLight(float *param_1)
   float *pfVar6;
   
   if (DAT_835f15dc == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083994,0x40,0,0xffffffff82000f98,0xffffffff82015af4);
   }
   uVar3 = 0;
@@ -92,8 +140,9 @@ void Com_UnloadWorld(int param_1)
 
 {
   if (*(int *)(param_1 + 4) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82083994,0x5a,0,0xffffffff82000f98,0xffffffff820839d4);
+    *(undefined4 *)(param_1 + 4) = 0;
+    return;
   }
   *(undefined4 *)(param_1 + 4) = 0;
   return;

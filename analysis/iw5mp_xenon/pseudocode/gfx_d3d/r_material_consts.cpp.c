@@ -2,21 +2,99 @@
 
 // 82755920  R_RegisterShaderConst  (gfx_d3d/r_material_consts.cpp:11)
 
-void R_RegisterShaderConst(void)
+void R_RegisterShaderConst(undefined8 param_1,undefined4 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar2;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (uint *)param_3;
+  if (0xf < *puVar2) {
+    MyAssertHandler(0xffffffff821c81a8,0xe,1,0xffffffff821c81f0,*puVar2,0x10);
+  }
+  uVar5 = (ulonglong)*puVar2;
+  if (uVar5 != 0) {
+    lVar4 = (uVar5 + 2 & 0x7fffffff) * 2 + param_3;
+    lVar3 = (uVar5 + 10 & 0x3fffffff) * 4 + param_3;
+    do {
+      if (*(ushort *)((int)lVar4 + -2) <= uVar1) break;
+      lVar4 = lVar4 + -2;
+      uVar5 = uVar5 - 1;
+      ((undefined2 *)lVar4)[1] = *(undefined2 *)lVar4;
+      *(undefined4 *)(lVar3 + -4) = *(undefined4 *)((int)lVar3 + -8);
+      lVar3 = lVar3 + -4;
+    } while (uVar5 != 0);
+  }
+  *(short *)((int)((uVar5 + 2 & 0xffffffff) << 1) + (int)puVar2) = (short)uVar1;
+  *(undefined4 *)((int)((uVar5 + 9 & 0xffffffff) << 2) + (int)puVar2) = param_2;
+  *puVar2 = *puVar2 + 1;
+  __restgprlr_29();
+  return;
 }
 
 
 // 827559E0  R_GetPixelLiteralConsts  (gfx_d3d/r_material_consts.cpp:31)
 
-void R_GetPixelLiteralConsts(void)
+void R_GetPixelLiteralConsts(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ushort uVar1;
+  int iVar2;
+  ushort *puVar3;
+  undefined4 *puVar5;
+  undefined8 uVar4;
+  ulonglong uVar6;
+  ushort *puVar7;
+  int *piVar8;
+  
+  puVar5 = (undefined4 *)__savegprlr_23();
+  *(undefined4 *)param_3 = 0;
+  uVar6 = (ulonglong)*(byte *)(param_2 + 0x62);
+  if (uVar6 != 0) {
+    iVar2 = ((uint)*(byte *)(param_2 + 0x61) + (uint)*(byte *)(param_2 + 0x60)) * 8;
+    puVar7 = (ushort *)(iVar2 + *(int *)(param_2 + 0x68));
+    uVar1 = *(ushort *)(iVar2 + *(int *)(param_2 + 0x68));
+    while (uVar1 < 7) {
+      uVar6 = uVar6 - 1;
+      puVar7 = puVar7 + 4;
+      if (uVar6 == 0) goto LAB_82755b30;
+      uVar1 = *puVar7;
+    }
+    piVar8 = (int *)puVar5[0x13];
+    while (uVar1 == 7) {
+      if (*piVar8 != *(int *)(puVar7 + 2)) {
+        do {
+          piVar8 = piVar8 + 8;
+          if (piVar8 == (int *)((uint)*(byte *)((int)puVar5 + 0x3e) * 0x20 + puVar5[0x13])) {
+            uVar4 = va(0xffffffff821c823c,*puVar5);
+            MyAssertHandler(0xffffffff821c81a8,0x3a,0,0xffffffff820011f4,0xffffffff821c8270,uVar4);
+          }
+        } while (*piVar8 != *(int *)(puVar7 + 2));
+      }
+      R_RegisterShaderConst(puVar7[1],piVar8 + 4,param_3);
+      uVar6 = uVar6 - 1;
+      puVar7 = puVar7 + 4;
+      if (uVar6 == 0) goto LAB_82755b30;
+      uVar1 = *puVar7;
+    }
+    if (uVar1 == 8) {
+      puVar7 = puVar7 + -2;
+      do {
+        R_RegisterShaderConst(puVar7[3],*(undefined4 *)(puVar7 + 4),param_3);
+        uVar6 = uVar6 - 1;
+        if (uVar6 == 0) break;
+        puVar3 = puVar7 + 6;
+        puVar7 = puVar7 + 4;
+      } while (*puVar3 == 8);
+    }
+  }
+LAB_82755b30:
+  __restgprlr_23();
+  return;
 }
 
 
@@ -50,19 +128,18 @@ void R_GetPixelConsts(undefined8 param_1,longlong param_2,undefined8 param_3)
       dVar6 = 3.4028234663852886e+38;
       puVar4 = puVar4 + -3;
       do {
-        if (*(int *)(&DAT_821c8480 + (uint)puVar4[5] * 4) != 2) {
-                    /* WARNING: Subroutine does not return */
+        if ((&DAT_821c8480)[puVar4[5]] != 2) {
           MyAssertHandler(0xffffffff821c81a8,100,0,0xffffffff821c82f0,0xffffffff821c82a8,puVar4[5]);
         }
         if (*(char *)((int)puVar4 + 0xd) != '\x01') {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821c81a8,0x66,0,0xffffffff821c8338,0xffffffff821c8314);
         }
-        if ((double)*(float *)((uint)puVar4[5] * 0x10 + (int)param_2) == dVar6) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff821c81a8,0x68,0,0xffffffff821c82f0,0xffffffff821c8360);
+        uVar1 = puVar4[5];
+        if ((double)*(float *)((uint)uVar1 * 0x10 + (int)param_2) == dVar6) {
+          MyAssertHandler(0xffffffff821c81a8,0x68,0,0xffffffff821c82f0,0xffffffff821c8360,
+                          (ulonglong)uVar1);
         }
-        R_RegisterShaderConst(puVar4[4],(ulonglong)puVar4[5] * 0x10 + param_2,param_3);
+        R_RegisterShaderConst(puVar4[4],(ulonglong)uVar1 * 0x10 + param_2,param_3);
         uVar5 = uVar5 - 1;
       } while ((uVar5 != 0) && (puVar2 = puVar4 + 7, puVar4 = puVar4 + 4, *puVar2 == 6));
     }
@@ -80,18 +157,18 @@ void R_ComparePixelConsts(undefined8 param_1,longlong param_2)
 {
   float fVar1;
   float fVar2;
-  ushort uVar3;
-  int iVar4;
-  uint uVar5;
-  ushort *puVar6;
-  int iVar8;
-  longlong lVar7;
-  ulonglong uVar9;
-  int iVar10;
-  ushort *puVar11;
-  int iVar12;
-  uint *puVar13;
-  int iVar14;
+  int iVar3;
+  uint uVar4;
+  int iVar6;
+  longlong lVar5;
+  ushort *puVar7;
+  ushort uVar10;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar11;
+  uint *puVar12;
+  int iVar13;
+  ushort *puVar14;
   int *piVar15;
   ulonglong uVar16;
   uint local_540 [4];
@@ -102,79 +179,79 @@ void R_ComparePixelConsts(undefined8 param_1,longlong param_2)
   int local_4a8 [18];
   ushort local_460 [560];
   
-  iVar8 = __savegprlr_21();
-  iVar12 = (int)param_2;
-  iVar10 = (int)local_540 - iVar12;
-  iVar14 = 0;
-  puVar13 = &local_530;
+  iVar6 = __savegprlr_21();
+  iVar11 = (int)param_2;
+  iVar9 = (int)local_540 - iVar11;
+  iVar13 = 0;
+  puVar12 = &local_530;
   do {
     piVar15 = (int *)param_2;
-    iVar4 = *piVar15;
-    *puVar13 = 0;
-    *(undefined4 *)(iVar10 + (int)piVar15) = 0;
-    uVar16 = (ulonglong)*(byte *)(iVar4 + 0x62);
-    puVar11 = (ushort *)
-              (((uint)*(byte *)(iVar4 + 0x61) + (uint)*(byte *)(iVar4 + 0x60)) * 8 +
-              *(int *)(iVar4 + 0x68));
+    iVar3 = *piVar15;
+    *puVar12 = 0;
+    *(undefined4 *)(iVar9 + (int)piVar15) = 0;
+    puVar7 = *(ushort **)(iVar3 + 0x68);
+    uVar16 = (ulonglong)*(byte *)(iVar3 + 0x62);
+    puVar14 = puVar7 + ((uint)*(byte *)(iVar3 + 0x61) + (uint)*(byte *)(iVar3 + 0x60)) * 4;
     if (uVar16 != 0) {
-      uVar3 = *puVar11;
-      while (uVar3 < 6) {
+      uVar10 = *puVar14;
+      while (uVar10 < 6) {
         uVar16 = uVar16 - 1;
-        puVar11 = puVar11 + 4;
+        puVar14 = puVar14 + 4;
         if (uVar16 == 0) goto LAB_82755dac;
-        uVar3 = *puVar11;
+        uVar10 = *puVar14;
       }
-      if (uVar3 == 6) {
-        puVar11 = puVar11 + -2;
+      if (uVar10 == 6) {
+        uVar10 = 6;
+        puVar14 = puVar14 + -2;
         do {
-          uVar5 = *(uint *)(iVar10 + (int)piVar15);
-          if (0xff < uVar5) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff821c81a8,0x93,0,0xffffffff821c8380,uVar5,0x100);
+          uVar4 = *(uint *)(iVar9 + (int)piVar15);
+          if (0xff < uVar4) {
+            MyAssertHandler(0xffffffff821c81a8,0x93,0,0xffffffff821c8380,uVar4,0x100,puVar7,uVar10);
           }
-          uVar3 = puVar11[4];
+          uVar10 = puVar14[4];
+          puVar7 = local_460;
           uVar16 = uVar16 - 1;
-          *(uint *)(iVar10 + (int)piVar15) = uVar5 + 1;
-          local_460[uVar5 + iVar14] = uVar3;
+          *(uint *)(iVar9 + (int)piVar15) = uVar4 + 1;
+          puVar7[uVar4 + iVar13] = uVar10;
           if (uVar16 == 0) goto LAB_82755dac;
-          puVar6 = puVar11 + 6;
-          puVar11 = puVar11 + 4;
-        } while (*puVar6 == 6);
+          uVar10 = puVar14[6];
+          puVar14 = puVar14 + 4;
+        } while (uVar10 == 6);
       }
-      R_GetPixelLiteralConsts(*(undefined4 *)((iVar8 - iVar12) + (int)piVar15),*piVar15,puVar13);
+      R_GetPixelLiteralConsts(*(undefined4 *)((iVar6 - iVar11) + (int)piVar15),*piVar15,puVar12);
     }
 LAB_82755dac:
-    iVar14 = iVar14 + 0x100;
-    puVar13 = puVar13 + 0x19;
+    iVar13 = iVar13 + 0x100;
+    puVar12 = puVar12 + 0x19;
     param_2 = param_2 + 4;
-  } while (iVar14 < 0x200);
+  } while (iVar13 < 0x200);
   uVar16 = (ulonglong)local_540[0];
-  lVar7 = uVar16 - local_540[1];
-  if (lVar7 == 0) {
-    uVar9 = 0;
+  lVar5 = uVar16 - local_540[1];
+  if (lVar5 == 0) {
+    uVar8 = 0;
     if (uVar16 != 0) {
-      puVar11 = local_460;
+      puVar7 = local_460;
       do {
-        lVar7 = (ulonglong)*puVar11 - (ulonglong)puVar11[0x100];
-        if (lVar7 != 0) goto LAB_82755e84;
-        uVar9 = uVar9 + 1;
-        puVar11 = puVar11 + 1;
-      } while ((uVar9 & 0xffffffff) < uVar16);
+        lVar5 = (ulonglong)*puVar7 - (ulonglong)puVar7[0x100];
+        if (lVar5 != 0) goto LAB_82755e84;
+        uVar8 = uVar8 + 1;
+        puVar7 = puVar7 + 1;
+      } while ((uVar8 & 0xffffffff) < uVar16);
     }
     uVar16 = (ulonglong)local_530;
-    lVar7 = uVar16 - local_4cc;
-    if (lVar7 == 0) {
-      uVar9 = 0;
+    lVar5 = uVar16 - local_4cc;
+    if (lVar5 == 0) {
+      uVar8 = 0;
       if (uVar16 != 0) {
-        iVar10 = 0;
-        puVar11 = local_52c;
+        iVar9 = 0;
+        puVar7 = local_52c;
         do {
-          lVar7 = (ulonglong)*puVar11 - (ulonglong)puVar11[0x32];
-          if (lVar7 != 0) goto LAB_82755e84;
-          iVar12 = 0;
+          lVar5 = (ulonglong)*puVar7 - (ulonglong)puVar7[0x32];
+          if (lVar5 != 0) goto LAB_82755e84;
+          iVar11 = 0;
           do {
-            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar10) + iVar12);
-            fVar2 = *(float *)(*(int *)((int)local_50c + iVar10) + iVar12);
+            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar9) + iVar11);
+            fVar2 = *(float *)(*(int *)((int)local_50c + iVar9) + iVar11);
             if (fVar2 < fVar1) {
               __restgprlr_21(0xffffffffffffffff);
               return;
@@ -183,18 +260,18 @@ LAB_82755dac:
               __restgprlr_21(1);
               return;
             }
-            iVar12 = iVar12 + 4;
-          } while (iVar12 < 0x10);
-          uVar9 = uVar9 + 1;
-          puVar11 = puVar11 + 1;
-          iVar10 = iVar10 + 4;
-        } while ((uVar9 & 0xffffffff) < uVar16);
+            iVar11 = iVar11 + 4;
+          } while (iVar11 < 0x10);
+          uVar8 = uVar8 + 1;
+          puVar7 = puVar7 + 1;
+          iVar9 = iVar9 + 4;
+        } while ((uVar8 & 0xffffffff) < uVar16);
       }
-      lVar7 = 0;
+      lVar5 = 0;
     }
   }
 LAB_82755e84:
-  __restgprlr_21(lVar7);
+  __restgprlr_21(lVar5);
   return;
 }
 

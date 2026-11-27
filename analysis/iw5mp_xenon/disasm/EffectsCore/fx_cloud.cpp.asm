@@ -161,6 +161,96 @@ LAB_82416f8c:
 ; 82416FA8  FX_DrawElem_Cloud_PopulateGfxParticleCloud  (EffectsCore/fx_cloud.cpp:82)
   82416FA8  7D8802A6             mfspr r12,LR
   82416FAC  484FF70D             bl 0x829166b8
+  82416FB0  9421FF80             stwu r1,-0x80(r1)
+  82416FB4  549C063E             rlwinm r28,r4,0x0,0x18,0x1f
+  82416FB8  7C7F1B78             or r31,r3,r3
+  82416FBC  7CBE2B78             or r30,r5,r5
+  82416FC0  2B1C0004             cmplwi cr6,r28,0x4
+  82416FC4  409A0070             bne cr6,0x82417034
+  82416FC8  81630008             lwz r11,0x8(r3)
+  82416FCC  39230064             addi r9,r3,0x64
+  82416FD0  38E30014             addi r7,r3,0x14
+  82416FD4  C0430050             lfs f2,0x50(r3)
+  82416FD8  390B0008             addi r8,r11,0x8
+  82416FDC  C023004C             lfs f1,0x4c(r3)
+  82416FE0  80830048             lwz r4,0x48(r3)
+  82416FE4  8063000C             lwz r3,0xc(r3)
+  82416FE8  48038D41             bl 0x8244fd28
+  82416FEC  C1BF0068             lfs f13,0x68(r31)
+  82416FF0  3D608200             lis r11,-0x7e00
+  82416FF4  ED8D0372             fmuls f12,f13,f13
+  82416FF8  C17F0064             lfs f11,0x64(r31)
+  82416FFC  C15F006C             lfs f10,0x6c(r31)
+  82417000  C00B0F10             lfs f0,0xf10(r11)
+  82417004  ED2B62FA             fmadds f9,f11,f11,f12
+  82417008  ED0A4ABA             fmadds f8,f10,f10,f9
+  8241700C  ECE0402C             fsqrts f7,f8
+  82417010  FCC03850             fneg f6,f7
+  82417014  FCA6382E             fsel f5,f6,f0,f7
+  82417018  EC802824             fdivs f4,f0,f5
+  8241701C  EC6B0132             fmuls f3,f11,f4
+  82417020  D07F0064             stfs f3,0x64(r31)
+  82417024  EC4D0132             fmuls f2,f13,f4
+  82417028  D05F0068             stfs f2,0x68(r31)
+  8241702C  EC2A0132             fmuls f1,f10,f4
+  82417030  D03F006C             stfs f1,0x6c(r31)
+LAB_82417034:
+  82417034  386000B9             li r3,0xb9
+  82417038  4BE49DB9             bl 0x82260df0
+  8241703C  38BF0070             addi r5,r31,0x70
+  82417040  387F0088             addi r3,r31,0x88
+  82417044  C03F004C             lfs f1,0x4c(r31)
+  82417048  48032BE9             bl 0x82449c30
+  8241704C  38600000             li r3,0x0
+  82417050  4BE49EC9             bl 0x82260f18
+  82417054  7FC4F378             or r4,r30,r30
+  82417058  7FE3FB78             or r3,r31,r31
+  8241705C  48032DF5             bl 0x82449e50
+  82417060  817F0070             lwz r11,0x70(r31)
+  82417064  2B1C0004             cmplwi cr6,r28,0x4
+  82417068  917E002C             stw r11,0x2c(r30)
+  8241706C  C01F007C             lfs f0,0x7c(r31)
+  82417070  D01E0030             stfs f0,0x30(r30)
+  82417074  409A0044             bne cr6,0x824170b8
+  82417078  C01F0080             lfs f0,0x80(r31)
+  8241707C  39600000             li r11,0x0
+  82417080  D01E0034             stfs f0,0x34(r30)
+  82417084  C1BF0064             lfs f13,0x64(r31)
+  82417088  C19F0058             lfs f12,0x58(r31)
+  8241708C  ED6C6828             fsubs f11,f12,f13
+  82417090  D17E0020             stfs f11,0x20(r30)
+  82417094  C15F005C             lfs f10,0x5c(r31)
+  82417098  C13F0068             lfs f9,0x68(r31)
+  8241709C  ED0A4828             fsubs f8,f10,f9
+  824170A0  D11E0024             stfs f8,0x24(r30)
+  824170A4  C0FF0060             lfs f7,0x60(r31)
+  824170A8  C0DF006C             lfs f6,0x6c(r31)
+  824170AC  ECA73028             fsubs f5,f7,f6
+  824170B0  D0BE0028             stfs f5,0x28(r30)
+  824170B4  48000028             b 0x824170dc
+LAB_824170b8:
+  824170B8  C01F007C             lfs f0,0x7c(r31)
+  824170BC  39600004             li r11,0x4
+  824170C0  D01E0034             stfs f0,0x34(r30)
+  824170C4  C1BF0058             lfs f13,0x58(r31)
+  824170C8  D1BE0020             stfs f13,0x20(r30)
+  824170CC  C19F005C             lfs f12,0x5c(r31)
+  824170D0  D19E0024             stfs f12,0x24(r30)
+  824170D4  C17F0060             lfs f11,0x60(r31)
+  824170D8  D17E0028             stfs f11,0x28(r30)
+LAB_824170dc:
+  824170DC  917E0038             stw r11,0x38(r30)
+  824170E0  817F000C             lwz r11,0xc(r31)
+  824170E4  815E0038             lwz r10,0x38(r30)
+  824170E8  812B0000             lwz r9,0x0(r11)
+  824170EC  7D28EE70             srawi r8,r9,0x1d
+  824170F0  550707BE             rlwinm r7,r8,0x0,0x1e,0x1f
+  824170F4  7CE65378             or r6,r7,r10
+  824170F8  90DE0038             stw r6,0x38(r30)
+  824170FC  C01F0050             lfs f0,0x50(r31)
+  82417100  D01E003C             stfs f0,0x3c(r30)
+  82417104  38210080             addi r1,r1,0x80
+  82417108  484FF600             b 0x82916708
 
 ; 824177B0  FX_PoolFromHandle_Generic<FxSparkCloud>  (EffectsCore/fx_system_handle.h:83)
   824177B0  7D8802A6             mfspr r12,LR
@@ -206,6 +296,117 @@ LAB_82417834:
   82417848  EBC1FFE8             ld r30,-0x18(r1)
   8241784C  EBE1FFF0             ld r31,-0x10(r1)
   82417850  4E800020             blr
+
+; 82416C00  Byte4Lerp  (universal/com_color.h:91)
+  82416C00  7D8802A6             mfspr r12,LR
+  82416C04  484FFAB9             bl 0x829166bc
+  82416C08  9421FF80             stwu r1,-0x80(r1)
+  82416C0C  3D608201             lis r11,-0x7dff
+  82416C10  3D408200             lis r10,-0x7e00
+  82416C14  7C7F1B78             or r31,r3,r3
+  82416C18  7C9E2378             or r30,r4,r4
+  82416C1C  7CDD3378             or r29,r6,r6
+  82416C20  C00B5134             lfs f0,0x5134(r11)
+  82416C24  C1AA0F18             lfs f13,0xf18(r10)
+  82416C28  EC21683A             fmadds f1,f1,f0,f13
+  82416C2C  484FF935             bl 0x82916560
+  82416C30  FC000818             frsp f0,f1
+  82416C34  891E0000             lbz r8,0x0(r30)
+  82416C38  893F0000             lbz r9,0x0(r31)
+  82416C3C  FDA0001E             fctiwz f13,f0
+  82416C40  D9A10050             stfd f13,0x50(r1)
+  82416C44  80E10054             lwz r7,0x54(r1)
+  82416C48  21670100             subfic r11,r7,0x100
+  82416C4C  7D2959D6             mullw r9,r9,r11
+  82416C50  7D4839D6             mullw r10,r8,r7
+  82416C54  7CC95214             add r6,r9,r10
+  82416C58  7CC54670             srawi r5,r6,0x8
+  82416C5C  98BD0000             stb r5,0x0(r29)
+  82416C60  887E0001             lbz r3,0x1(r30)
+  82416C64  895F0001             lbz r10,0x1(r31)
+  82416C68  7D2A59D6             mullw r9,r10,r11
+  82416C6C  7D4339D6             mullw r10,r3,r7
+  82416C70  7D295214             add r9,r9,r10
+  82416C74  7D284670             srawi r8,r9,0x8
+  82416C78  991D0001             stb r8,0x1(r29)
+  82416C7C  889F0002             lbz r4,0x2(r31)
+  82416C80  88BE0002             lbz r5,0x2(r30)
+  82416C84  7D4539D6             mullw r10,r5,r7
+  82416C88  7D2459D6             mullw r9,r4,r11
+  82416C8C  7C695214             add r3,r9,r10
+  82416C90  7C6A4670             srawi r10,r3,0x8
+  82416C94  995D0002             stb r10,0x2(r29)
+  82416C98  88DF0003             lbz r6,0x3(r31)
+  82416C9C  891E0003             lbz r8,0x3(r30)
+  82416CA0  7D4839D6             mullw r10,r8,r7
+  82416CA4  7D6659D6             mullw r11,r6,r11
+  82416CA8  7CAB5214             add r5,r11,r10
+  82416CAC  7CA44670             srawi r4,r5,0x8
+  82416CB0  989D0003             stb r4,0x3(r29)
+  82416CB4  38210080             addi r1,r1,0x80
+  82416CB8  484FFA54             b 0x8291670c
+
+; 82417110  FX_DrawElem_Cloud_PopulateGfxParticleSparkCloudFromUpdate  (EffectsCore/fx_cloud.cpp:123)
+  82417110  7D8802A6             mfspr r12,LR
+  82417114  484FF5A9             bl 0x829166bc
+  82417118  9421FEA0             stwu r1,-0x160(r1)
+  8241711C  81640004             lwz r11,0x4(r4)
+  82417120  7C9F2378             or r31,r4,r4
+  82417124  90610050             stw r3,0x50(r1)
+  82417128  38840010             addi r4,r4,0x10
+  8241712C  90A10058             stw r5,0x58(r1)
+  82417130  38610064             addi r3,r1,0x64
+  82417134  38A00030             li r5,0x30
+  82417138  7CDE3378             or r30,r6,r6
+  8241713C  91610054             stw r11,0x54(r1)
+  82417140  7CFD3B78             or r29,r7,r7
+  82417144  812B0000             lwz r9,0x0(r11)
+  82417148  815F0008             lwz r10,0x8(r31)
+  8241714C  554A402E             rlwinm r10,r10,0x8,0x0,0x17
+  82417150  81690030             lwz r11,0x30(r9)
+  82417154  7D0A5A14             add r8,r10,r11
+  82417158  9101005C             stw r8,0x5c(r1)
+  8241715C  484FF805             bl 0x82916960
+  82417160  3CE08200             lis r7,-0x7e00
+  82417164  80BF0040             lwz r5,0x40(r31)
+  82417168  C1BF005C             lfs f13,0x5c(r31)
+  8241716C  39600000             li r11,0x0
+  82417170  C19F0060             lfs f12,0x60(r31)
+  82417174  B3C100FC             sth r30,0xfc(r1)
+  82417178  C17F0048             lfs f11,0x48(r31)
+  8241717C  EC2C0372             fmuls f1,f12,f13
+  82417180  C15F006C             lfs f10,0x6c(r31)
+  82417184  91610094             stw r11,0x94(r1)
+  82417188  C00713F8             lfs f0,0x13f8(r7)
+  8241718C  90A10098             stw r5,0x98(r1)
+  82417190  C13F0070             lfs f9,0x70(r31)
+  82417194  916100F8             stw r11,0xf8(r1)
+  82417198  C11F0074             lfs f8,0x74(r31)
+  8241719C  38E100D8             addi r7,r1,0xd8
+  824171A0  D02100A4             stfs f1,0xa4(r1)
+  824171A4  80810054             lwz r4,0x54(r1)
+  824171A8  D161009C             stfs f11,0x9c(r1)
+  824171AC  8061005C             lwz r3,0x5c(r1)
+  824171B0  D14100A8             stfs f10,0xa8(r1)
+  824171B4  D1A100A0             stfs f13,0xa0(r1)
+  824171B8  D12100AC             stfs f9,0xac(r1)
+  824171BC  D00100B4             stfs f0,0xb4(r1)
+  824171C0  D10100B0             stfs f8,0xb0(r1)
+  824171C4  D00100B8             stfs f0,0xb8(r1)
+  824171C8  D00100BC             stfs f0,0xbc(r1)
+  824171CC  48032775             bl 0x82449940
+  824171D0  388100C0             addi r4,r1,0xc0
+  824171D4  386100D8             addi r3,r1,0xd8
+  824171D8  48032821             bl 0x824499f8
+  824171DC  388100C0             addi r4,r1,0xc0
+  824171E0  386100D8             addi r3,r1,0xd8
+  824171E4  480328F5             bl 0x82449ad8
+  824171E8  7FA5EB78             or r5,r29,r29
+  824171EC  38800005             li r4,0x5
+  824171F0  38610050             addi r3,r1,0x50
+  824171F4  4BFFFDB5             bl 0x82416fa8
+  824171F8  38210160             addi r1,r1,0x160
+  824171FC  484FF510             b 0x8291670c
 
 ; 82417200  FX_DrawElem_Cloud_AddGfxParticleCloud  (EffectsCore/fx_cloud.cpp:149)
   82417200  7D8802A6             mfspr r12,LR
@@ -261,6 +462,36 @@ LAB_824172a8:
   824172BC  EBE1FFF0             ld r31,-0x10(r1)
   824172C0  4E800020             blr
 
+; 82417858  FX_SparkCloudFromHandle_Const  (EffectsCore/fx_system_handle.h:174)
+  82417858  7D8802A6             mfspr r12,LR
+  8241785C  9181FFF8             stw r12,-0x8(r1)
+  82417860  FBC1FFE8             std r30,-0x18(r1)
+  82417864  FBE1FFF0             std r31,-0x10(r1)
+  82417868  9421FF90             stwu r1,-0x70(r1)
+  8241786C  7C7F1B78             or r31,r3,r3
+  82417870  7C9E2378             or r30,r4,r4
+  82417874  2B030000             cmplwi cr6,r3,0x0
+  82417878  409A0028             bne cr6,0x824178a0
+  8241787C  3D608204             lis r11,-0x7dfc
+  82417880  3D408200             lis r10,-0x7e00
+  82417884  3D208206             lis r9,-0x7dfa
+  82417888  38EB8694             subi r7,r11,0x796c
+  8241788C  38CA0F98             addi r6,r10,0xf98
+  82417890  38690828             addi r3,r9,0x828
+  82417894  38A00000             li r5,0x0
+  82417898  388000AF             li r4,0xaf
+  8241789C  481BCC65             bl 0x825d4500
+LAB_824178a0:
+  824178A0  7FC4F378             or r4,r30,r30
+  824178A4  807F0034             lwz r3,0x34(r31)
+  824178A8  4BFFFF09             bl 0x824177b0
+  824178AC  38210070             addi r1,r1,0x70
+  824178B0  8181FFF8             lwz r12,-0x8(r1)
+  824178B4  7D8803A6             mtspr LR,r12
+  824178B8  EBC1FFE8             ld r30,-0x18(r1)
+  824178BC  EBE1FFF0             ld r31,-0x10(r1)
+  824178C0  4E800020             blr
+
 ; 824172C8  FX_DrawElem_Cloud  (EffectsCore/fx_cloud.cpp:179)
   824172C8  7D8802A6             mfspr r12,LR
   824172CC  9181FFF8             stw r12,-0x8(r1)
@@ -299,11 +530,350 @@ LAB_82417334:
 ; 82417348  FX_Cloud_LerpSparkGfxParticleCloud  (EffectsCore/fx_cloud.cpp:195)
   82417348  7D8802A6             mfspr r12,LR
   8241734C  484FF371             bl 0x829166bc
+  82417350  DBE1FFD8             stfd f31,-0x28(r1)
+  82417354  9421FF80             stwu r1,-0x80(r1)
+  82417358  C0030010             lfs f0,0x10(r3)
+  8241735C  7C7E1B78             or r30,r3,r3
+  82417360  C1A40010             lfs f13,0x10(r4)
+  82417364  7C9D2378             or r29,r4,r4
+  82417368  ED8D0028             fsubs f12,f13,f0
+  8241736C  7CDF3378             or r31,r6,r6
+  82417370  FFE00890             fmr f31,f1
+  82417374  39660010             addi r11,r6,0x10
+  82417378  ED6C007A             fmadds f11,f12,f1,f0
+  8241737C  D1660010             stfs f11,0x10(r6)
+  82417380  C1430014             lfs f10,0x14(r3)
+  82417384  C1240014             lfs f9,0x14(r4)
+  82417388  ED095028             fsubs f8,f9,f10
+  8241738C  ECE8507A             fmadds f7,f8,f1,f10
+  82417390  D0E60014             stfs f7,0x14(r6)
+  82417394  C0C30018             lfs f6,0x18(r3)
+  82417398  C0A40018             lfs f5,0x18(r4)
+  8241739C  EC853028             fsubs f4,f5,f6
+  824173A0  EC64307A             fmadds f3,f4,f1,f6
+  824173A4  D0660018             stfs f3,0x18(r6)
+  824173A8  481C4609             bl 0x825db9b0
+  824173AC  C05E001C             lfs f2,0x1c(r30)
+  824173B0  C01D001C             lfs f0,0x1c(r29)
+  824173B4  38DF002C             addi r6,r31,0x2c
+  824173B8  EDA01028             fsubs f13,f0,f2
+  824173BC  389D002C             addi r4,r29,0x2c
+  824173C0  387E002C             addi r3,r30,0x2c
+  824173C4  FC20F890             fmr f1,f31
+  824173C8  ED8D17FA             fmadds f12,f13,f31,f2
+  824173CC  D19F001C             stfs f12,0x1c(r31)
+  824173D0  C17F0010             lfs f11,0x10(r31)
+  824173D4  D17F0020             stfs f11,0x20(r31)
+  824173D8  C15F0014             lfs f10,0x14(r31)
+  824173DC  D15F0024             stfs f10,0x24(r31)
+  824173E0  C13F0018             lfs f9,0x18(r31)
+  824173E4  D13F0028             stfs f9,0x28(r31)
+  824173E8  4BFFF819             bl 0x82416c00
+  824173EC  C11E0030             lfs f8,0x30(r30)
+  824173F0  C0FD0030             lfs f7,0x30(r29)
+  824173F4  ECC74028             fsubs f6,f7,f8
+  824173F8  ECA647FA             fmadds f5,f6,f31,f8
+  824173FC  D0BF0030             stfs f5,0x30(r31)
+  82417400  C09E0034             lfs f4,0x34(r30)
+  82417404  C07D0034             lfs f3,0x34(r29)
+  82417408  EC432028             fsubs f2,f3,f4
+  8241740C  EC2227FA             fmadds f1,f2,f31,f4
+  82417410  D03F0034             stfs f1,0x34(r31)
+  82417414  817E0038             lwz r11,0x38(r30)
+  82417418  917F0038             stw r11,0x38(r31)
+  8241741C  C01E003C             lfs f0,0x3c(r30)
+  82417420  C1BD003C             lfs f13,0x3c(r29)
+  82417424  ED8D0028             fsubs f12,f13,f0
+  82417428  ED6C07FA             fmadds f11,f12,f31,f0
+  8241742C  D17F003C             stfs f11,0x3c(r31)
+  82417430  38210080             addi r1,r1,0x80
+  82417434  CBE1FFD8             lfd f31,-0x28(r1)
+  82417438  484FF2D4             b 0x8291670c
+
+; 82417440  FX_DrawElem_SparkCloud_GetClouds  (EffectsCore/fx_cloud.cpp:209)
+  82417440  7D8802A6             mfspr r12,LR
+  82417444  484FF255             bl 0x82916698
+  82417448  DBE1FF90             stfd f31,-0x70(r1)
+  8241744C  9421FEF0             stwu r1,-0x110(r1)
+  82417450  7C9D2378             or r29,r4,r4
+  82417454  7CBF2B78             or r31,r5,r5
+  82417458  38A10060             addi r5,r1,0x60
+  8241745C  38800005             li r4,0x5
+  82417460  7C7B1B78             or r27,r3,r3
+  82417464  4BFFFB45             bl 0x82416fa8
+  82417468  38810060             addi r4,r1,0x60
+  8241746C  38A00040             li r5,0x40
+  82417470  7FE3FB78             or r3,r31,r31
+  82417474  484FF4ED             bl 0x82916960
+  82417478  817D0004             lwz r11,0x4(r29)
+  8241747C  3ADF0040             addi r22,r31,0x40
+  82417480  C19B0080             lfs f12,0x80(r27)
+  82417484  3BEBFFFF             subi r31,r11,0x1
+  82417488  3D408201             lis r10,-0x7dff
+  8241748C  3D208200             lis r9,-0x7e00
+  82417490  57EB3572             rlwinm r11,r31,0x6,0x15,0x19
+  82417494  3D008206             lis r8,-0x7dfa
+  82417498  7D6BEA14             add r11,r11,r29
+  8241749C  C00AC7C0             lfs f0,-0x3840(r10)
+  824174A0  3D408206             lis r10,-0x7dfa
+  824174A4  C1A94214             lfs f13,0x4214(r9)
+  824174A8  3BCB0010             addi r30,r11,0x10
+  824174AC  3D608206             lis r11,-0x7dfa
+  824174B0  ED6C0032             fmuls f11,f12,f0
+  824174B4  3D208200             lis r9,-0x7e00
+  824174B8  ED4C0372             fmuls f10,f12,f13
+  824174BC  D1610050             stfs f11,0x50(r1)
+  824174C0  3B810060             addi r28,r1,0x60
+  824174C4  D1410054             stfs f10,0x54(r1)
+  824174C8  3B410050             addi r26,r1,0x50
+  824174CC  3AE00002             li r23,0x2
+  824174D0  3AAB1330             addi r21,r11,0x1330
+  824174D4  3B2A12B0             addi r25,r10,0x12b0
+  824174D8  3B090F98             addi r24,r9,0xf98
+  824174DC  3A881378             addi r20,r8,0x1378
+LAB_824174e0:
+  824174E0  817D0004             lwz r11,0x4(r29)
+  824174E4  2B0B0000             cmplwi cr6,r11,0x0
+  824174E8  4199001C             bgt cr6,0x82417504
+  824174EC  7E87A378             or r7,r20,r20
+  824174F0  7F06C378             or r6,r24,r24
+  824174F4  7F23CB78             or r3,r25,r25
+  824174F8  38A00000             li r5,0x0
+  824174FC  388000EE             li r4,0xee
+  82417500  481BD001             bl 0x825d4500
+LAB_82417504:
+  82417504  C01A0000             lfs f0,0x0(r26)
+  82417508  C1BB0050             lfs f13,0x50(r27)
+  8241750C  EFED0028             fsubs f31,f13,f0
+  82417510  C01E003C             lfs f0,0x3c(r30)
+  82417514  FF00F800             fcmpu cr6,f0,f31
+  82417518  40990030             ble cr6,0x82417548
+  8241751C  815D0000             lwz r10,0x0(r29)
+LAB_82417520:
+  82417520  7F1F5040             cmplw cr6,r31,r10
+  82417524  419A0024             beq cr6,0x82417548
+  82417528  3BFFFFFF             subi r31,r31,0x1
+  8241752C  7FDCF378             or r28,r30,r30
+  82417530  57EB3572             rlwinm r11,r31,0x6,0x15,0x19
+  82417534  7D6BEA14             add r11,r11,r29
+  82417538  3BCB0010             addi r30,r11,0x10
+  8241753C  C00B004C             lfs f0,0x4c(r11)
+  82417540  FF00F800             fcmpu cr6,f0,f31
+  82417544  4199FFDC             bgt cr6,0x82417520
+LAB_82417548:
+  82417548  817D0000             lwz r11,0x0(r29)
+  8241754C  7F1F5840             cmplw cr6,r31,r11
+  82417550  419A0060             beq cr6,0x824175b0
+  82417554  C1BC003C             lfs f13,0x3c(r28)
+  82417558  FF006800             fcmpu cr6,f0,f13
+  8241755C  419A0054             beq cr6,0x824175b0
+  82417560  FF00F800             fcmpu cr6,f0,f31
+  82417564  4199000C             bgt cr6,0x82417570
+  82417568  FF0DF800             fcmpu cr6,f13,f31
+  8241756C  4199001C             bgt cr6,0x82417588
+LAB_82417570:
+  82417570  7EA7AB78             or r7,r21,r21
+  82417574  7F06C378             or r6,r24,r24
+  82417578  7F23CB78             or r3,r25,r25
+  8241757C  38A00000             li r5,0x0
+  82417580  388000FE             li r4,0xfe
+  82417584  481BCF7D             bl 0x825d4500
+LAB_82417588:
+  82417588  C01E003C             lfs f0,0x3c(r30)
+  8241758C  38C10060             addi r6,r1,0x60
+  82417590  C1BC003C             lfs f13,0x3c(r28)
+  82417594  ED9F0028             fsubs f12,f31,f0
+  82417598  ED6D0028             fsubs f11,f13,f0
+  8241759C  7F84E378             or r4,r28,r28
+  824175A0  7FC3F378             or r3,r30,r30
+  824175A4  EC2C5824             fdivs f1,f12,f11
+  824175A8  4BFFFDA1             bl 0x82417348
+  824175AC  48000014             b 0x824175c0
+LAB_824175b0:
+  824175B0  38610060             addi r3,r1,0x60
+  824175B4  38A00040             li r5,0x40
+  824175B8  7FC4F378             or r4,r30,r30
+  824175BC  484FF3A5             bl 0x82916960
+LAB_824175c0:
+  824175C0  38810060             addi r4,r1,0x60
+  824175C4  38A00040             li r5,0x40
+  824175C8  7EC3B378             or r3,r22,r22
+  824175CC  484FF395             bl 0x82916960
+  824175D0  36F7FFFF             subic. r23,r23,0x1
+  824175D4  3B5A0004             addi r26,r26,0x4
+  824175D8  3AD60040             addi r22,r22,0x40
+  824175DC  4082FF04             bne 0x824174e0
+  824175E0  38210110             addi r1,r1,0x110
+  824175E4  CBE1FF90             lfd f31,-0x70(r1)
+  824175E8  484FF100             b 0x829166e8
+
+; 824175F0  FX_DrawElem_SparkCloud_DoDraw  (EffectsCore/fx_cloud.cpp:274)
+  824175F0  7D8802A6             mfspr r12,LR
+  824175F4  484FF0C9             bl 0x829166bc
+  824175F8  9421FF90             stwu r1,-0x70(r1)
+  824175FC  81630000             lwz r11,0x0(r3)
+  82417600  7C7F1B78             or r31,r3,r3
+  82417604  7C9D2378             or r29,r4,r4
+  82417608  39400003             li r10,0x3
+  8241760C  38CB0058             addi r6,r11,0x58
+LAB_82417610:
+  82417610  7CE000A6             mfmsr r7
+  82417614  7DA10164             mtmsrd r13,1
+  82417618  7D203028             lwarx r9,0,r6
+  8241761C  7D0A4A14             add r8,r10,r9
+  82417620  7D00312D             stwcx. r8,0,r6
+  82417624  7CE10164             mtmsrd r7,1
+  82417628  4082FFE8             bne 0x82417610
+  8241762C  809F0048             lwz r4,0x48(r31)
+  82417630  807F000C             lwz r3,0xc(r31)
+  82417634  4BFFCC6D             bl 0x824142a0
+  82417638  7C7E1B78             or r30,r3,r3
+  8241763C  2B030000             cmplwi cr6,r3,0x0
+  82417640  409A0028             bne cr6,0x82417668
+  82417644  3D608206             lis r11,-0x7dfa
+  82417648  3D408200             lis r10,-0x7e00
+  8241764C  3D208206             lis r9,-0x7dfa
+  82417650  38EB12F4             addi r7,r11,0x12f4
+  82417654  38CA0F98             addi r6,r10,0xf98
+  82417658  386912B0             addi r3,r9,0x12b0
+  8241765C  38A00000             li r5,0x0
+  82417660  3880011B             li r4,0x11b
+  82417664  481BCE9D             bl 0x825d4500
+LAB_82417668:
+  82417668  7FC3F378             or r3,r30,r30
+  8241766C  4835689D             bl 0x8276df08
+  82417670  7C651B78             or r5,r3,r3
+  82417674  2B030000             cmplwi cr6,r3,0x0
+  82417678  419A0010             beq cr6,0x82417688
+  8241767C  7FA4EB78             or r4,r29,r29
+  82417680  7FE3FB78             or r3,r31,r31
+  82417684  4BFFFDBD             bl 0x82417440
+LAB_82417688:
+  82417688  38210070             addi r1,r1,0x70
+  8241768C  484FF080             b 0x8291670c
 
 ; 82416CC0  FX_GetElemChild  (EffectsCore/fx_system.h:293)
   82416CC0  7D8802A6             mfspr r12,LR
   82416CC4  484FF9F5             bl 0x829166b8
+  82416CC8  9421FF80             stwu r1,-0x80(r1)
+  82416CCC  549CECFE             rlwinm r28,r4,0x1d,0x13,0x1f
+  82416CD0  3D608206             lis r11,-0x7dfa
+  82416CD4  7C7D1B78             or r29,r3,r3
+  82416CD8  2B1C0800             cmplwi cr6,r28,0x800
+  82416CDC  3BCB0900             addi r30,r11,0x900
+  82416CE0  41980024             blt cr6,0x82416d04
+  82416CE4  3D608206             lis r11,-0x7dfa
+  82416CE8  7FC3F378             or r3,r30,r30
+  82416CEC  38CB0898             addi r6,r11,0x898
+  82416CF0  39000800             li r8,0x800
+  82416CF4  7F87E378             or r7,r28,r28
+  82416CF8  38A00000             li r5,0x0
+  82416CFC  38800126             li r4,0x126
+  82416D00  481BD801             bl 0x825d4500
+LAB_82416d04:
+  82416D04  3D608200             lis r11,-0x7e00
+  82416D08  2B1D0000             cmplwi cr6,r29,0x0
+  82416D0C  3BEB0F98             addi r31,r11,0xf98
+  82416D10  409A0020             bne cr6,0x82416d30
+  82416D14  3D608204             lis r11,-0x7dfc
+  82416D18  7FE6FB78             or r6,r31,r31
+  82416D1C  38EB8694             subi r7,r11,0x796c
+  82416D20  7FC3F378             or r3,r30,r30
+  82416D24  38A00000             li r5,0x0
+  82416D28  38800127             li r4,0x127
+  82416D2C  481BD7D5             bl 0x825d4500
+LAB_82416d30:
+  82416D30  817D0040             lwz r11,0x40(r29)
+  82416D34  2B0B0000             cmplwi cr6,r11,0x0
+  82416D38  409A0020             bne cr6,0x82416d58
+  82416D3C  3D608206             lis r11,-0x7dfa
+  82416D40  7FE6FB78             or r6,r31,r31
+  82416D44  38EB1210             addi r7,r11,0x1210
+  82416D48  7FC3F378             or r3,r30,r30
+  82416D4C  38A00000             li r5,0x0
+  82416D50  38800128             li r4,0x128
+  82416D54  481BD7AD             bl 0x825d4500
+LAB_82416d58:
+  82416D58  817D0040             lwz r11,0x40(r29)
+  82416D5C  578A083C             rlwinm r10,r28,0x1,0x0,0x1e
+  82416D60  7C6A5A2E             lhzx r3,r10,r11
+  82416D64  38210080             addi r1,r1,0x80
+  82416D68  484FF9A0             b 0x82916708
 
 ; 82417690  FX_DrawElem_SparkCloud  (EffectsCore/fx_cloud.cpp:295)
   82417690  7D8802A6             mfspr r12,LR
   82417694  484FF029             bl 0x829166bc
+  82417698  9421FF90             stwu r1,-0x70(r1)
+  8241769C  8163000C             lwz r11,0xc(r3)
+  824176A0  7C7F1B78             or r31,r3,r3
+  824176A4  814B0000             lwz r10,0x0(r11)
+  824176A8  55490000             rlwinm r9,r10,0x0,0x0,0x0
+  824176AC  2F090000             cmpwi cr6,r9,0x0
+  824176B0  419A0014             beq cr6,0x824176c4
+  824176B4  816B00E0             lwz r11,0xe0(r11)
+  824176B8  2B0B0000             cmplwi cr6,r11,0x0
+  824176BC  39600001             li r11,0x1
+  824176C0  409A0008             bne cr6,0x824176c8
+LAB_824176c4:
+  824176C4  39600000             li r11,0x0
+LAB_824176c8:
+  824176C8  5569063E             rlwinm r9,r11,0x0,0x18,0x1f
+  824176CC  3D608206             lis r11,-0x7dfa
+  824176D0  3D408200             lis r10,-0x7e00
+  824176D4  2B090000             cmplwi cr6,r9,0x0
+  824176D8  3BCB12B0             addi r30,r11,0x12b0
+  824176DC  3BAA0F98             addi r29,r10,0xf98
+  824176E0  419A0020             beq cr6,0x82417700
+  824176E4  3D608206             lis r11,-0x7dfa
+  824176E8  7FA6EB78             or r6,r29,r29
+  824176EC  38EB13D4             addi r7,r11,0x13d4
+  824176F0  7FC3F378             or r3,r30,r30
+  824176F4  38A00000             li r5,0x0
+  824176F8  3880012E             li r4,0x12e
+  824176FC  481BCE05             bl 0x825d4500
+LAB_82417700:
+  82417700  807F0000             lwz r3,0x0(r31)
+  82417704  A09F00AC             lhz r4,0xac(r31)
+  82417708  4BFFF5B9             bl 0x82416cc0
+  8241770C  546B043E             rlwinm r11,r3,0x0,0x10,0x1f
+  82417710  2B0BFFFF             cmplwi cr6,r11,0xffff
+  82417714  409A0020             bne cr6,0x82417734
+  82417718  3D608206             lis r11,-0x7dfa
+  8241771C  7FA6EB78             or r6,r29,r29
+  82417720  38EB1390             addi r7,r11,0x1390
+  82417724  7FC3F378             or r3,r30,r30
+  82417728  38A00000             li r5,0x0
+  8241772C  3880012F             li r4,0x12f
+  82417730  481BCDD1             bl 0x825d4500
+LAB_82417734:
+  82417734  817F0008             lwz r11,0x8(r31)
+  82417738  38A00000             li r5,0x0
+  8241773C  7FE3FB78             or r3,r31,r31
+  82417740  808B0004             lwz r4,0x4(r11)
+  82417744  48001D7D             bl 0x824194c0
+  82417748  817F0008             lwz r11,0x8(r31)
+  8241774C  7FE3FB78             or r3,r31,r31
+  82417750  388B0014             addi r4,r11,0x14
+  82417754  48001E15             bl 0x82419568
+  82417758  7FE3FB78             or r3,r31,r31
+  8241775C  48001E5D             bl 0x824195b8
+  82417760  7FE3FB78             or r3,r31,r31
+  82417764  4BFFF735             bl 0x82416e98
+  82417768  546A063E             rlwinm r10,r3,0x0,0x18,0x1f
+  8241776C  2B0A0000             cmplwi cr6,r10,0x0
+  82417770  419A0034             beq cr6,0x824177a4
+  82417774  A09F00AC             lhz r4,0xac(r31)
+  82417778  807F0000             lwz r3,0x0(r31)
+  8241777C  4BFFF545             bl 0x82416cc0
+  82417780  7C641B78             or r4,r3,r3
+  82417784  807F0000             lwz r3,0x0(r31)
+  82417788  480000D1             bl 0x82417858
+  8241778C  81630004             lwz r11,0x4(r3)
+  82417790  7C641B78             or r4,r3,r3
+  82417794  2B0B0000             cmplwi cr6,r11,0x0
+  82417798  4099000C             ble cr6,0x824177a4
+  8241779C  7FE3FB78             or r3,r31,r31
+  824177A0  4BFFFE51             bl 0x824175f0
+LAB_824177a4:
+  824177A4  38210070             addi r1,r1,0x70
+  824177A8  484FEF64             b 0x8291670c

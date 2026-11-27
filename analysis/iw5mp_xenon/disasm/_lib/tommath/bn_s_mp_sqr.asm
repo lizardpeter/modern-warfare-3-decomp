@@ -3,3 +3,132 @@
 ; 8225AE60  s_mp_sqr  (line unknown)
   8225AE60  7D8802A6             mfspr r12,LR
   8225AE64  486BB84D             bl 0x829166b0
+  8225AE68  9421FF50             stwu r1,-0xb0(r1)
+  8225AE6C  83A30000             lwz r29,0x0(r3)
+  8225AE70  7C7F1B78             or r31,r3,r3
+  8225AE74  7C9A2378             or r26,r4,r4
+  8225AE78  57AB083C             rlwinm r11,r29,0x1,0x0,0x1e
+  8225AE7C  38610050             addi r3,r1,0x50
+  8225AE80  3BCB0001             addi r30,r11,0x1
+  8225AE84  7FC4F378             or r4,r30,r30
+  8225AE88  48002039             bl 0x8225cec0
+  8225AE8C  2F030000             cmpwi cr6,r3,0x0
+  8225AE90  409A01AC             bne cr6,0x8225b03c
+  8225AE94  8361005C             lwz r27,0x5c(r1)
+  8225AE98  2F1D0000             cmpwi cr6,r29,0x0
+  8225AE9C  93C10050             stw r30,0x50(r1)
+  8225AEA0  409900DC             ble cr6,0x8225af7c
+  8225AEA4  38600001             li r3,0x1
+  8225AEA8  38A00000             li r5,0x0
+  8225AEAC  7F64DB78             or r4,r27,r27
+  8225AEB0  7FBCEB78             or r28,r29,r29
+LAB_8225aeb4:
+  8225AEB4  813F000C             lwz r9,0xc(r31)
+  8225AEB8  39640004             addi r11,r4,0x4
+  8225AEBC  81440000             lwz r10,0x0(r4)
+  8225AEC0  7F03E800             cmpw cr6,r3,r29
+  8225AEC4  7D09282E             lwzx r8,r9,r5
+  8225AEC8  7D2841D2             mulld r9,r8,r8
+  8225AECC  7D495214             add r10,r9,r10
+  8225AED0  5547013E             rlwinm r7,r10,0x0,0x4,0x1f
+  8225AED4  79462702             rldicl r6,r10,0x24,0x1c
+  8225AED8  90E40000             stw r7,0x0(r4)
+  8225AEDC  813F000C             lwz r9,0xc(r31)
+  8225AEE0  54CA003E             rlwinm r10,r6,0x0,0x0,0x1f
+  8225AEE4  7D29282E             lwzx r9,r9,r5
+  8225AEE8  40980050             bge cr6,0x8225af38
+  8225AEEC  7D03E850             subf r8,r3,r29
+  8225AEF0  79260020             rldicl r6,r9,0x0,0x20
+  8225AEF4  39250004             addi r9,r5,0x4
+  8225AEF8  7D0903A6             mtspr CTR,r8
+LAB_8225aefc:
+  8225AEFC  811F000C             lwz r8,0xc(r31)
+  8225AF00  79470020             rldicl r7,r10,0x0,0x20
+  8225AF04  814B0000             lwz r10,0x0(r11)
+  8225AF08  7D08482E             lwzx r8,r8,r9
+  8225AF0C  39290004             addi r9,r9,0x4
+  8225AF10  7D0831D2             mulld r8,r8,r6
+  8225AF14  79080FA4             rldicr r8,r8,0x1,0x3e
+  8225AF18  7D485214             add r10,r8,r10
+  8225AF1C  7D4A3A14             add r10,r10,r7
+  8225AF20  5547013E             rlwinm r7,r10,0x0,0x4,0x1f
+  8225AF24  794A2702             rldicl r10,r10,0x24,0x1c
+  8225AF28  90EB0000             stw r7,0x0(r11)
+  8225AF2C  396B0004             addi r11,r11,0x4
+  8225AF30  554A003E             rlwinm r10,r10,0x0,0x0,0x1f
+  8225AF34  4200FFC8             bdnz 0x8225aefc
+LAB_8225af38:
+  8225AF38  2B0A0000             cmplwi cr6,r10,0x0
+  8225AF3C  419A002C             beq cr6,0x8225af68
+  8225AF40  396BFFFC             subi r11,r11,0x4
+LAB_8225af44:
+  8225AF44  812B0004             lwz r9,0x4(r11)
+  8225AF48  794A0020             rldicl r10,r10,0x0,0x20
+  8225AF4C  7D495214             add r10,r9,r10
+  8225AF50  79482702             rldicl r8,r10,0x24,0x1c
+  8225AF54  5547013E             rlwinm r7,r10,0x0,0x4,0x1f
+  8225AF58  550A003E             rlwinm r10,r8,0x0,0x0,0x1f
+  8225AF5C  94EB0004             stwu r7,0x4(r11)
+  8225AF60  2B0A0000             cmplwi cr6,r10,0x0
+  8225AF64  409AFFE0             bne cr6,0x8225af44
+LAB_8225af68:
+  8225AF68  379CFFFF             subic. r28,r28,0x1
+  8225AF6C  38A50004             addi r5,r5,0x4
+  8225AF70  38840008             addi r4,r4,0x8
+  8225AF74  38630001             addi r3,r3,0x1
+  8225AF78  4082FF3C             bne 0x8225aeb4
+LAB_8225af7c:
+  8225AF7C  2F1E0000             cmpwi cr6,r30,0x0
+  8225AF80  4099002C             ble cr6,0x8225afac
+  8225AF84  57CB103A             rlwinm r11,r30,0x2,0x0,0x1d
+  8225AF88  7D6BDA14             add r11,r11,r27
+  8225AF8C  396BFFFC             subi r11,r11,0x4
+LAB_8225af90:
+  8225AF90  814B0000             lwz r10,0x0(r11)
+  8225AF94  2B0A0000             cmplwi cr6,r10,0x0
+  8225AF98  409A0010             bne cr6,0x8225afa8
+  8225AF9C  37DEFFFF             subic. r30,r30,0x1
+  8225AFA0  396BFFFC             subi r11,r11,0x4
+  8225AFA4  4181FFEC             bgt 0x8225af90
+LAB_8225afa8:
+  8225AFA8  93C10050             stw r30,0x50(r1)
+LAB_8225afac:
+  8225AFAC  217E0000             subfic r11,r30,0x0
+  8225AFB0  81210058             lwz r9,0x58(r1)
+  8225AFB4  39010050             addi r8,r1,0x50
+  8225AFB8  80BA0004             lwz r5,0x4(r26)
+  8225AFBC  7CCA5110             subfe r6,r10,r10
+  8225AFC0  817A0008             lwz r11,0x8(r26)
+  8225AFC4  38810060             addi r4,r1,0x60
+  8225AFC8  80FA0000             lwz r7,0x0(r26)
+  8225AFCC  7CCA4838             and r10,r6,r9
+  8225AFD0  813A000C             lwz r9,0xc(r26)
+  8225AFD4  38C10060             addi r6,r1,0x60
+  8225AFD8  91410058             stw r10,0x58(r1)
+  8225AFDC  39410050             addi r10,r1,0x50
+  8225AFE0  83E80000             lwz r31,0x0(r8)
+  8225AFE4  38610050             addi r3,r1,0x50
+  8225AFE8  83C8000C             lwz r30,0xc(r8)
+  8225AFEC  83A80004             lwz r29,0x4(r8)
+  8225AFF0  81080008             lwz r8,0x8(r8)
+  8225AFF4  90AA0004             stw r5,0x4(r10)
+  8225AFF8  93E40000             stw r31,0x0(r4)
+  8225AFFC  93A40004             stw r29,0x4(r4)
+  8225B000  91040008             stw r8,0x8(r4)
+  8225B004  93C4000C             stw r30,0xc(r4)
+  8225B008  916A0008             stw r11,0x8(r10)
+  8225B00C  80A60000             lwz r5,0x0(r6)
+  8225B010  80860004             lwz r4,0x4(r6)
+  8225B014  81660008             lwz r11,0x8(r6)
+  8225B018  90EA0000             stw r7,0x0(r10)
+  8225B01C  80E6000C             lwz r7,0xc(r6)
+  8225B020  912A000C             stw r9,0xc(r10)
+  8225B024  90FA000C             stw r7,0xc(r26)
+  8225B028  917A0008             stw r11,0x8(r26)
+  8225B02C  909A0004             stw r4,0x4(r26)
+  8225B030  90BA0000             stw r5,0x0(r26)
+  8225B034  4BFFE61D             bl 0x82259650
+  8225B038  38600000             li r3,0x0
+LAB_8225b03c:
+  8225B03C  382100B0             addi r1,r1,0xb0
+  8225B040  486BB6C0             b 0x82916700

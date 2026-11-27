@@ -17,23 +17,19 @@ void FX_StopBoltedEffects
   uVar2 = __savegprlr_22();
   iVar3 = FX_GetSystem();
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82068db8,0x2c,0,0xffffffff82000f98,0xffffffff82038694);
   }
   if ((*(uint *)(iVar3 + 0xb4) & 0x10) != 0) {
     iVar1 = *(int *)(iVar3 + 0xb8);
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82068db8,0x33,0,0xffffffff82000f98,0xffffffff82024288);
     }
     puVar7 = (uint *)(iVar1 + 0x34d80);
     if ((*puVar7 != 0) && (*puVar7 != 1)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82068db8,0x34,0,0xffffffff82000f98,0xffffffff82068d7c);
     }
     puVar6 = (uint *)(iVar1 + 0x34e3c);
     if (0xff < (int)*puVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82068db8,0x35,0,0xffffffff82000f98,0xffffffff82068d30);
     }
     if (0xff < (int)*puVar6) {
@@ -73,13 +69,11 @@ void FX_WaitKillAllEffects(void)
   uVar2 = __savegprlr_25();
   iVar3 = FX_GetSystem();
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82068db8,0x52,0,0xffffffff82000f98,0xffffffff82038694);
   }
   if ((*(uint *)(iVar3 + 0xb4) & 0x10) != 0) {
     iVar1 = *(int *)(iVar3 + 0xb8);
     if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82068db8,0x58,0,0xffffffff82000f98,0xffffffff82024288);
     }
     FX_WaitEnterWriteSystemLock(*(undefined4 *)(iVar3 + 0xb0));
@@ -113,7 +107,6 @@ void FX_WaitKillAllEffects(void)
         iVar4 = FX_EffectFromHandle(iVar3,*(undefined2 *)
                                            ((uVar7 & 0x3ff) * 2 + *(int *)(iVar3 + 0x74)));
         if ((*(uint *)(iVar4 + 4) & 0x1fff) != (uint)(*(ushort *)(iVar4 + 0x24) >> 0xf)) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82068db8,0x7b,0,0xffffffff82000f98,0xffffffff82068e00);
         }
         uVar7 = uVar7 + 1;
@@ -129,23 +122,91 @@ void FX_WaitKillAllEffects(void)
 }
 
 
-// 82444908  FX_KillEffectDefNewerThan  (EffectsCore/fx_system_api.cpp:143)
+// 824453C0  FX_KillEffectDef  (EffectsCore/fx_system_api.cpp:137)
 
-void FX_KillEffectDefNewerThan(void)
+void FX_KillEffectDef(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  FX_KillEffectDefNewerThan(param_1,param_2,0xffffffffffffffff);
+  return;
+}
+
+
+// 82444908  FX_KillEffectDefNewerThan  (EffectsCore/fx_system_api.cpp:143)
+
+void FX_KillEffectDefNewerThan(undefined8 param_1,undefined4 param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  uint *puVar4;
+  
   __savegprlr_26();
+  iVar2 = FX_GetSystem();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82068db8,0x95,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  if ((*(uint *)(iVar2 + 0xb4) & 0x10) != 0) {
+    iVar2 = *(int *)(iVar2 + 0xb8);
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82068db8,0x9b,0,0xffffffff82000f98,0xffffffff82024288);
+    }
+    puVar3 = (uint *)(iVar2 + 0x34d80);
+    if ((*puVar3 != 0) && (*puVar3 != 1)) {
+      MyAssertHandler(0xffffffff82068db8,0x9c,0,0xffffffff82000f98,0xffffffff82068d7c);
+    }
+    puVar4 = (uint *)(iVar2 + 0x34e44);
+    if (0x3f < (int)*puVar4) {
+      MyAssertHandler(0xffffffff82068db8,0x9d,0,0xffffffff82000f98,0xffffffff82068e80);
+    }
+    uVar1 = *puVar4;
+    *puVar4 = uVar1 + 1;
+    *(undefined4 *)
+     ((int)((((ulonglong)*puVar3 & 0x3ffffff) * 0x40 + (ulonglong)uVar1 + 0x6130 & 0xffffffff) << 3)
+     + iVar2) = param_2;
+    *(undefined4 *)
+     ((int)((((ulonglong)*puVar3 & 0x3ffffff) * 0x40 + (ulonglong)uVar1 & 0xffffffff) << 3) + iVar2
+     + 0x30984) = 0xffffffff;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 82444A48  FX_ThroughWithEffect  (EffectsCore/fx_system_api.cpp:168)
 
-void FX_ThroughWithEffect(void)
+void FX_ThroughWithEffect(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
   __savegprlr_26();
+  iVar2 = FX_GetSystem();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82068db8,0xae,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  if (((*(uint *)(iVar2 + 0xb4) & 0x10) != 0) && ((param_2 & 0xffffffff) != 0)) {
+    iVar2 = *(int *)(iVar2 + 0xb8);
+    if (iVar2 == 0) {
+      MyAssertHandler(0xffffffff82068db8,0xb4,0,0xffffffff82000f98,0xffffffff82024288);
+    }
+    iVar1 = *(int *)(iVar2 + 0x34d80);
+    if ((iVar1 != 0) && (iVar1 != 1)) {
+      MyAssertHandler(0xffffffff82068db8,0xb5,0,0xffffffff82000f98,0xffffffff82068d7c);
+    }
+    piVar3 = (int *)(iVar2 + 0x34e40);
+    if (0x3ff < *piVar3) {
+      MyAssertHandler(0xffffffff82068db8,0xb6,0,0xffffffff82000f98,0xffffffff82068ec8);
+    }
+    iVar1 = *piVar3;
+    *piVar3 = iVar1 + 1;
+    *(int *)((*(int *)(iVar2 + 0x34d80) * 0x400 + iVar1 + 0xba60) * 4 + iVar2) = (int)param_2;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -164,23 +225,237 @@ uint FX_GetBoneOrientation_IsDObjEntityValid(undefined8 param_1,int param_2)
 }
 
 
-// 82445000  FX_GetSpotLightDobj  (EffectsCore/fx_system_api.cpp:277)
+// 82444BB8  FX_GetBoneOrientation  (EffectsCore/fx_system_api.cpp:206)
 
-void FX_GetSpotLightDobj(void)
+void FX_GetBoneOrientation
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint *puVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  
+  uVar2 = __savegprlr_25();
+  if (0x801 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82068db8,0xd2,0,0xffffffff82016cd8,param_2,0x802);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82068db8,0xd3,0,0xffffffff82000f98,0xffffffff82069090);
+  }
+  if ((int)param_2 < 0x7fe) {
+    iVar4 = CG_GetEntity(uVar2,param_2);
+    uVar6 = *(uint *)(iVar4 + 0x1c4) & 1;
+  }
+  else {
+    uVar6 = 1;
+  }
+  if (uVar6 == 0) goto LAB_82444c60;
+  puVar1 = (uint *)param_4;
+  if ((int)param_3 < 0) {
+    CG_GetDObjOrientation(uVar2,param_2,param_4 + 0xc,param_4);
+    if ((puVar1[3] & 0x7f800000) == 0x7f800000) {
+LAB_82444cd4:
+      MyAssertHandler(0xffffffff82068db8,0xdf,0,0xffffffff82000f98,0xffffffff82069030);
+    }
+    else {
+      if ((puVar1[4] & 0x7f800000) == 0x7f800000) goto LAB_82444cd4;
+      if ((puVar1[5] & 0x7f800000) == 0x7f800000) goto LAB_82444cd4;
+    }
+    if ((puVar1[6] & 0x7f800000) == 0x7f800000) {
+LAB_82444d38:
+      MyAssertHandler(0xffffffff82068db8,0xe0,0,0xffffffff82000f98,0xffffffff82068fd0);
+    }
+    else {
+      if ((puVar1[7] & 0x7f800000) == 0x7f800000) goto LAB_82444d38;
+      if ((puVar1[8] & 0x7f800000) == 0x7f800000) goto LAB_82444d38;
+    }
+    if ((puVar1[9] & 0x7f800000) == 0x7f800000) {
+LAB_82444d9c:
+      MyAssertHandler(0xffffffff82068db8,0xe1,0,0xffffffff82000f98,0xffffffff82068f70);
+    }
+    else {
+      if ((puVar1[10] & 0x7f800000) == 0x7f800000) goto LAB_82444d9c;
+      if ((puVar1[0xb] & 0x7f800000) == 0x7f800000) goto LAB_82444d9c;
+    }
+    if ((*puVar1 & 0x7f800000) != 0x7f800000) {
+      if ((puVar1[1] & 0x7f800000) != 0x7f800000) {
+        if ((puVar1[2] & 0x7f800000) != 0x7f800000) goto LAB_82444ff4;
+      }
+    }
+    uVar2 = 0xe2;
+    uVar5 = 0xffffffff82068f10;
+  }
+  else {
+    uVar3 = Com_GetClientDObj(param_2,uVar2);
+    if (((uVar3 & 0xffffffff) == 0) || (iVar4 = DObjNumBones(), iVar4 <= (int)param_3)) {
+LAB_82444c60:
+      __restgprlr_25(0);
+      return;
+    }
+    uVar2 = CG_GetPose(uVar2,param_2);
+    iVar4 = CG_DObjGetWorldBoneMatrix(uVar2,uVar3,param_3,param_4 + 0xc,param_4);
+    if (iVar4 == 0) goto LAB_82444c60;
+    if ((*puVar1 & 0x7f800000) == 0x7f800000) {
+LAB_82444eac:
+      MyAssertHandler(0xffffffff82068db8,0xfb,0,0xffffffff82000f98,0xffffffff82068f10);
+    }
+    else {
+      if ((puVar1[1] & 0x7f800000) == 0x7f800000) goto LAB_82444eac;
+      if ((puVar1[2] & 0x7f800000) == 0x7f800000) goto LAB_82444eac;
+    }
+    if ((*(uint *)(param_4 + 0xc) & 0x7f800000) == 0x7f800000) {
+LAB_82444f10:
+      MyAssertHandler(0xffffffff82068db8,0xfc,0,0xffffffff82000f98,0xffffffff82069030);
+    }
+    else {
+      if ((puVar1[4] & 0x7f800000) == 0x7f800000) goto LAB_82444f10;
+      if ((puVar1[5] & 0x7f800000) == 0x7f800000) goto LAB_82444f10;
+    }
+    if ((puVar1[6] & 0x7f800000) == 0x7f800000) {
+LAB_82444f74:
+      MyAssertHandler(0xffffffff82068db8,0xfd,0,0xffffffff82000f98,0xffffffff82068fd0);
+    }
+    else {
+      if ((puVar1[7] & 0x7f800000) == 0x7f800000) goto LAB_82444f74;
+      if ((puVar1[8] & 0x7f800000) == 0x7f800000) goto LAB_82444f74;
+    }
+    if ((puVar1[9] & 0x7f800000) != 0x7f800000) {
+      if ((puVar1[10] & 0x7f800000) != 0x7f800000) {
+        if ((puVar1[0xb] & 0x7f800000) != 0x7f800000) goto LAB_82444ff4;
+      }
+    }
+    uVar2 = 0xfe;
+    uVar5 = 0xffffffff82068f70;
+  }
+  MyAssertHandler(0xffffffff82068db8,uVar2,0,0xffffffff82000f98,uVar5);
+LAB_82444ff4:
+  __restgprlr_25(1);
+  return;
+}
+
+
+// 82445000  FX_GetSpotLightDobj  (EffectsCore/fx_system_api.cpp:277)
+
+void FX_GetSpotLightDobj(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = FX_GetSystem();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82068db8,0x124,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82068db8,0x125,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  piVar3 = (int *)param_2;
+  *piVar3 = 0;
+  if (*(int *)(iVar2 + 0x78) == 0) {
+    __restgprlr_27(0);
+    return;
+  }
+  if (*(short *)(iVar2 + 0x84) != 0xfff) {
+    iVar2 = Com_GetClientDObj(*(short *)(iVar2 + 0x84),uVar1);
+    *piVar3 = iVar2;
+  }
+  __restgprlr_27(*piVar3 != 0);
+  return;
 }
 
 
 // 824450C8  FX_GetClientVisibility  (EffectsCore/fx_system_api.cpp:340)
 
-void FX_GetClientVisibility(void)
+void FX_GetClientVisibility(undefined8 param_1,float *param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  undefined8 uVar5;
+  int iVar6;
+  int iVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  
   __savegprlr_29();
+  uVar5 = __savefpr_27();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0,0xffffffff820690d0);
+  iVar6 = FX_GetSystem(uVar5);
+  Sys_EnterCriticalSection(0xf);
+  iVar6 = *(int *)(iVar6 + 0x60);
+  if ((iVar6 != 0) && (*(int *)(iVar6 + 0x1000) != 0)) {
+    Profile_Begin(199);
+    fVar2 = *param_3 - *param_2;
+    fVar3 = param_3[2] - param_2[2];
+    fVar4 = param_3[1] - param_2[1];
+    dVar11 = 1.0;
+    dVar9 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar12 = dVar11;
+    if (-dVar9 < 0.0) {
+      dVar12 = dVar9;
+    }
+    fVar1 = (float)(1.0 / dVar12);
+    dVar14 = (double)(fVar1 * fVar2);
+    dVar13 = (double)(fVar1 * fVar4);
+    dVar12 = (double)(fVar3 * fVar1);
+    if ((double)*(float *)(DAT_8332cc08 + 0xc) <= dVar9) {
+      dVar9 = (double)(float)(dVar9 * 0.5);
+      if (0x100 < *(int *)(iVar6 + 0x1000)) {
+        MyAssertHandler(0xffffffff82068db8,0x18a,0,0xffffffff82069098,
+                        *(undefined4 *)(iVar6 + 0x1000),0x100);
+      }
+      iVar7 = 0;
+      if (0 < *(int *)(iVar6 + 0x1000)) {
+        pfVar8 = (float *)(iVar6 + 8);
+        do {
+          dVar10 = (double)(float)((double)(float)((double)*pfVar8 - (double)param_2[2]) * dVar12 +
+                                  (double)(float)((double)(float)((double)pfVar8[-2] -
+                                                                 (double)*param_2) * dVar14 +
+                                                 (double)(float)((double)(float)((double)pfVar8[-1]
+                                                                                - (double)param_2[1]
+                                                                                ) * dVar13)));
+          if (ABS((double)(float)(dVar10 - dVar9)) <= dVar9) {
+            fVar2 = (float)((double)(float)(dVar13 * dVar10 + (double)param_2[1]) -
+                           (double)pfVar8[-1]);
+            fVar3 = (float)((double)(float)(dVar12 * dVar10 + (double)param_2[2]) - (double)*pfVar8)
+            ;
+            fVar4 = (float)((double)(float)(dVar14 * dVar10 + (double)*param_2) - (double)pfVar8[-2]
+                           );
+            if (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 <
+                (float)*(ushort *)(pfVar8 + 1) * 0.0625 * (float)*(ushort *)(pfVar8 + 1) * 0.0625) {
+              dVar11 = (double)((float)((double)*(ushort *)((int)pfVar8 + 6) * dVar11) *
+                               1.5258789e-05);
+            }
+          }
+          iVar7 = iVar7 + 1;
+          pfVar8 = pfVar8 + 4;
+        } while (iVar7 < *(int *)(iVar6 + 0x1000));
+      }
+    }
+    Profile_EndInternal(0);
+    Sys_LeaveCriticalSection(0xf);
+    PIXEndNamedEvent();
+    __restfpr_27(dVar11);
+    __restgprlr_29();
+    return;
+  }
+  Sys_LeaveCriticalSection(0xf);
+  PIXEndNamedEvent();
+  __restfpr_27(0x3ff0000000000000);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -198,10 +473,21 @@ bool FX_ClientVisibilityTest(void)
 
 // 82445330  FX_AssertAllocatedEffect  (EffectsCore/fx_system_api.cpp:451)
 
-void FX_AssertAllocatedEffect(void)
+void FX_AssertAllocatedEffect(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  
   __savegprlr_28();
+  uVar1 = FX_GetSystem();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82068db8,0x1c7,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  FX_EffectToHandle(uVar1,param_2);
+  if ((*(uint *)((int)param_2 + 4) & 0x1fff) == 0) {
+    MyAssertHandler(0xffffffff82068db8,0x1c9,0,0xffffffff82000f98,0xffffffff820690e4);
+  }
+  __restgprlr_28();
+  return;
 }
 

@@ -23,11 +23,90 @@ void SetSpectatorPersoness(ulonglong param_1)
 
 // 822CEDF8  CG_HandleSpectatorInput  (cgame_mp/cg_gamepad.cpp:37)
 
-void CG_HandleSpectatorInput(void)
+void CG_HandleSpectatorInput(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  char cVar4;
+  bool bVar5;
+  undefined8 uVar6;
+  bool bVar7;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((*(int *)(iVar2 + 4) != 5) && ((*(uint *)(iVar2 + 0x10) & 0x800) == 0)) {
+    MyAssertHandler(0xffffffff82017360,0x2c,0,0xffffffff82000f98,0xffffffff820173a8);
+  }
+  *(uint *)param_2 = *(uint *)param_2 & 0xffffdff9;
+  cVar3 = CL_KeyActiveOrPressed(uVar1,0xe);
+  cVar4 = *(char *)(DAT_82a38270 + 0xc);
+  if (cVar3 == '\0') {
+LAB_822cee9c:
+    bVar5 = false;
+  }
+  else {
+    cVar3 = CL_IsRenderingSplitScreen();
+    bVar5 = true;
+    if (cVar3 != '\0') goto LAB_822cee9c;
+  }
+  if (cVar4 == '\0') {
+LAB_822ceec4:
+    bVar7 = false;
+  }
+  else {
+    cVar4 = CL_IsRenderingSplitScreen();
+    bVar7 = true;
+    if (cVar4 != '\0') goto LAB_822ceec4;
+  }
+  if ((*(uint *)(iVar2 + 0x10) & 0x4000) == 0) {
+    if ((*(uint *)(iVar2 + 0x10) & 0x800) == 0) {
+      if (bVar5) {
+        bVar7 = true;
+      }
+      uVar6 = 0x2000;
+      goto LAB_822cef50;
+    }
+    if (bVar5) {
+      bVar7 = *(int *)(iVar2 + 0x6b9a0) == 0;
+      CG_ResetSpectatorViewAngles(uVar1);
+    }
+  }
+  else {
+    if ((!bVar5) || (*(int *)(iVar2 + 0x6b9a0) == 0)) {
+      uVar6 = 4;
+      goto LAB_822cef50;
+    }
+    bVar7 = false;
+  }
+  uVar6 = 0;
+LAB_822cef50:
+  CL_UpdateCmdButton(uVar1,param_2,0xe,uVar6);
+  bVar5 = false;
+  if (*(char *)(DAT_829c54cc + 0xc) == '\0') {
+    bVar5 = bVar7;
+  }
+  SetSpectatorPersoness(bVar5);
+  if ((*(uint *)(iVar2 + 0x10) & 0x800) == 0) {
+    CL_UpdateCmdButton(uVar1,param_2,0x10,0);
+    CL_UpdateCmdButton(uVar1,param_2,0xf,0);
+  }
+  else {
+    cVar4 = CL_KeyActiveOrPressed(uVar1,0x10);
+    if ((cVar4 != '\0') || (cVar4 = CL_KeyActiveOrPressed(uVar1,0xf), cVar4 != '\0')) {
+      CG_ResetSpectatorViewAngles(uVar1);
+    }
+    CL_UpdateCmdButton(uVar1,param_2,0x10,2);
+    CL_UpdateCmdButton(uVar1,param_2,0xf,0x2000);
+    if ((*(int *)(iVar2 + 0x6b9a0) != 0) && (*(int *)(iVar2 + 0xa04) == 0)) {
+      CL_ClampViewAngle(0xc056800000000000,0x4056800000000000,uVar1,0);
+      __restgprlr_26();
+      return;
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -46,6 +125,22 @@ void CG_HandleSpecialStateInput(undefined8 param_1,undefined8 param_2)
     CG_HandleSpectatorInput(param_1,param_2);
   }
   return;
+}
+
+
+// 822CF0D0  CG_ShouldUpdateViewAngles  (cgame_mp/cg_gamepad.cpp:130)
+
+undefined8 CG_ShouldUpdateViewAngles(undefined8 param_1)
+
+{
+  char cVar2;
+  int iVar1;
+  
+  cVar2 = Key_IsCatcherActive(param_1,0xffffffffffffffff);
+  if ((cVar2 != '\0') && (iVar1 = UI_GetActiveMenu(param_1), iVar1 != 6)) {
+    return 0;
+  }
+  return 1;
 }
 
 
@@ -70,11 +165,36 @@ undefined8 CG_GamepadCheckStartAndBack(undefined8 param_1,int param_2,undefined8
 
 // 822CF1A8  CG_GamepadSpectatorInput  (cgame_mp/cg_gamepad.cpp:158)
 
-void CG_GamepadSpectatorInput(void)
+void CG_GamepadSpectatorInput(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((*(int *)(iVar2 + 4) != 5) && ((*(uint *)(iVar2 + 0x10) & 0x800) == 0)) {
+    MyAssertHandler(0xffffffff82017360,0xa3,0,0xffffffff82000f98,0xffffffff820173a8);
+  }
+  iVar2 = (int)param_2;
+  if (iVar2 == 1) {
+    CL_SpecPrev(uVar1,1);
+    __restgprlr_29(1);
+    return;
+  }
+  if (iVar2 == 2) {
+    CL_SpecNext(uVar1,2);
+    __restgprlr_29(1);
+    return;
+  }
+  if (iVar2 == 4) {
+    CL_ToggleSpec(uVar1,4);
+    __restgprlr_29(1);
+    return;
+  }
+  CG_GamepadCheckStartAndBack(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -96,10 +216,39 @@ undefined8 CG_GamepadKillCamInput(undefined8 param_1,int param_2)
 
 // 822CF2B0  CG_TranslateGamepadButton  (cgame_mp/cg_gamepad.cpp:198)
 
-void CG_TranslateGamepadButton(void)
+void CG_TranslateGamepadButton(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((int)param_2 == 0) {
+    MyAssertHandler(0xffffffff82017360,0xc9,0,0xffffffff82000f98,0xffffffff82017420);
+  }
+  if ((int)param_3 == 0) {
+    MyAssertHandler(0xffffffff82017360,0xca,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  }
+  iVar2 = CL_IsCgameInitialized(uVar1);
+  if (iVar2 != 0) {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    if (*(int *)(iVar2 + 0x7a708) != 0) {
+      if ((int)param_2 == 3) {
+        CL_UseReload(uVar1,3);
+        __restgprlr_27(1);
+        return;
+      }
+      CG_GamepadCheckStartAndBack(uVar1,param_2,param_3);
+      __restgprlr_27();
+      return;
+    }
+    if ((*(int *)(iVar2 + 4) == 5) || ((*(uint *)(iVar2 + 0x10) & 0x800) != 0)) {
+      CG_GamepadSpectatorInput(uVar1,param_2,param_3);
+      __restgprlr_27();
+      return;
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 

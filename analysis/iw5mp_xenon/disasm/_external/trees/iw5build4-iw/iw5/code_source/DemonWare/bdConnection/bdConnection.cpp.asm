@@ -33,9 +33,30 @@
   82930324  EBE1FFF0             ld r31,-0x10(r1)
   82930328  4E800020             blr
 
+; 82930268  bdConnection::getAddress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:19)
+  82930268  81640008             lwz r11,0x8(r4)
+  8293026C  2B0B0000             cmplwi cr6,r11,0x0
+  82930270  91630000             stw r11,0x0(r3)
+  82930274  4D9A0020             beqlr cr6
+  82930278  394B0004             addi r10,r11,0x4
+LAB_8293027c:
+  8293027C  7D0000A6             mfmsr r8
+  82930280  7DA10164             mtmsrd r13,1
+  82930284  7D205028             lwarx r9,0,r10
+  82930288  39290001             addi r9,r9,0x1
+  8293028C  7D20512D             stwcx. r9,0,r10
+  82930290  7D010164             mtmsrd r8,1
+  82930294  4082FFE8             bne 0x8293027c
+  82930298  816B0004             lwz r11,0x4(r11)
+  8293029C  4E800020             blr
+
 ; 82930220  bdConnection::getAddressHandle  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:24)
   82930220  3863000C             addi r3,r3,0xc
   82930224  4E800020             blr
+
+; 829302A0  bdConnection::setAddressHandle  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:29)
+  829302A0  3863000C             addi r3,r3,0xc
+  829302A4  4BFFC664             b 0x8292c908
 
 ; 82930228  bdConnection::getStatus  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdconnection.cpp:34)
   82930228  80630020             lwz r3,0x20(r3)

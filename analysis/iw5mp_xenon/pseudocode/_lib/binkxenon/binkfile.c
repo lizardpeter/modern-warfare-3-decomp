@@ -2,21 +2,85 @@
 
 // 8294BC90  BinkFileReadHeader  (line unknown)
 
-void BinkFileReadHeader(void)
+void BinkFileReadHeader(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  int iVar3;
+  ulonglong uVar2;
+  uint uVar5;
+  ulonglong uVar4;
+  int iVar6;
+  uint local_30 [12];
+  
+  iVar3 = __savegprlr_28();
+  if (*(code **)(iVar3 + 0xf4) != (code *)0x0) {
+    (**(code **)(iVar3 + 0xf4))();
+  }
+  iVar6 = (int)param_2;
+  if ((iVar6 != -1) && ((ulonglong)*(uint *)(iVar3 + 0x58) != (param_2 & 0xffffffff))) {
+    SetFilePointer(*(HANDLE *)(iVar3 + 0x54),*(int *)(iVar3 + 0x7c) + iVar6,(PLONG)0x0,0);
+    *(int *)(iVar3 + 0x58) = iVar6;
+  }
+  ReadFile(*(HANDLE *)(iVar3 + 0x54),(LPVOID)param_3,(DWORD)param_4,local_30,(LPOVERLAPPED)0x0);
+  uVar2 = (ulonglong)local_30[0];
+  if (uVar2 != (param_4 & 0xffffffff)) {
+    *(undefined4 *)(iVar3 + 0x20) = 1;
+  }
+  *(uint *)(iVar3 + 0x58) = *(int *)(iVar3 + 0x58) + local_30[0];
+  *(undefined4 *)(iVar3 + 0x5c) = *(undefined4 *)(iVar3 + 0x58);
+  uVar5 = *(int *)(iVar3 + 0x80) - *(int *)(iVar3 + 0x5c);
+  if (*(uint *)(iVar3 + 0x40) <= uVar5) {
+    uVar5 = *(uint *)(iVar3 + 0x40);
+  }
+  *(uint *)(iVar3 + 0x48) = uVar5;
+  if (*(code **)(iVar3 + 0xfc) != (code *)0x0) {
+    (**(code **)(iVar3 + 0xfc))(iVar3);
+    uVar2 = (ulonglong)local_30[0];
+  }
+  uVar4 = (uVar2 + 3 & 0xffffffff) >> 2;
+  uVar2 = uVar4;
+  while (uVar2 != 0) {
+    puVar1 = (uint *)param_3;
+    uVar4 = uVar4 - 1;
+    *puVar1 = (uint)(byte)*puVar1 << 0x18 | (uint)*(byte *)((int)puVar1 + 2) << 0x10 |
+              (uint)*(byte *)((int)puVar1 + 1) << 8 | (uint)*(byte *)puVar1;
+    param_3 = param_3 + 4;
+    uVar2 = uVar4 & 0xffffffff;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8294BDA0  dosimulate  (line unknown)
 
-void dosimulate(void)
+void dosimulate(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar3 = __savegprlr_28();
+  uVar1 = *(uint *)(iVar3 + 0x84);
+  iVar4 = RADTimerRead();
+  *(int *)(iVar3 + 0x88) =
+       ((int)(((param_2 & 0xffffffff) * 1000) / (ulonglong)uVar1) - iVar4) + *(int *)(iVar3 + 0x88)
+       + param_3;
+  iVar2 = *(int *)(iVar3 + 0x88);
+  while (0 < iVar2) {
+    do {
+      iVar5 = RADTimerRead();
+    } while (iVar5 - iVar4 < *(int *)(iVar3 + 0x88));
+    *(int *)(iVar3 + 0x88) = (iVar4 - iVar5) + *(int *)(iVar3 + 0x88);
+    iVar4 = iVar5;
+    iVar2 = *(int *)(iVar3 + 0x88);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -214,11 +278,33 @@ ulonglong BinkFileGetBufferSize(undefined8 param_1,longlong param_2)
 
 // 8294C1F0  BinkFileSetInfo  (line unknown)
 
-void BinkFileSetInfo(void)
+void BinkFileSetInfo(undefined8 param_1,int param_2,uint param_3,undefined4 param_4,
+                    undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (*(code **)(iVar2 + 0xf4) != (code *)0x0) {
+    (**(code **)(iVar2 + 0xf4))();
+  }
+  param_3 = param_3 & 0xfffe0000;
+  uVar1 = param_2 + 0xfffU & 0xfffff000;
+  *(uint *)(iVar2 + 0x6c) = uVar1;
+  *(uint *)(iVar2 + 0x60) = uVar1;
+  *(uint *)(iVar2 + 0x74) = uVar1;
+  *(uint *)(iVar2 + 0x70) = uVar1 + param_3;
+  *(uint *)(iVar2 + 0x40) = param_3;
+  *(uint *)(iVar2 + 100) = param_3;
+  *(undefined4 *)(iVar2 + 0x4c) = 0;
+  *(undefined4 *)(iVar2 + 0x80) = param_4;
+  *(undefined4 *)(iVar2 + 0x84) = param_5;
+  if (*(code **)(iVar2 + 0xfc) != (code *)0x0) {
+    (**(code **)(iVar2 + 0xfc))(iVar2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -394,10 +480,37 @@ undefined4 BinkFileBGControl(int param_1,ulonglong param_2)
 
 // 8294C610  BinkFileOpen  (line unknown)
 
-void BinkFileOpen(void)
+void BinkFileOpen(undefined8 param_1,LPCSTR param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *_Dst;
+  DWORD DVar1;
+  HANDLE pvVar2;
+  
+  _Dst = (undefined4 *)__savegprlr_29();
+  memset(_Dst,0,0x144);
+  if ((param_3 & 0x800000) == 0) {
+    pvVar2 = CreateFileA(param_2,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x8000080,(HANDLE)0x0);
+    _Dst[0x15] = pvVar2;
+    if (_Dst[0x15] == -1) {
+      __restgprlr_29(0);
+      return;
+    }
+  }
+  else {
+    _Dst[0x15] = param_2;
+    _Dst[0x1e] = 1;
+    DVar1 = SetFilePointer(param_2,0,(PLONG)0x0,1);
+    _Dst[0x1f] = DVar1;
+  }
+  *_Dst = BinkFileReadHeader;
+  _Dst[1] = BinkFileReadFrame;
+  _Dst[2] = BinkFileGetBufferSize;
+  _Dst[3] = BinkFileSetInfo;
+  _Dst[4] = BinkFileIdle;
+  _Dst[5] = BinkFileClose;
+  _Dst[6] = BinkFileBGControl;
+  __restgprlr_29(1);
+  return;
 }
 

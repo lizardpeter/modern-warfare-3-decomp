@@ -12,11 +12,37 @@ void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
 
 // 8249E500  GScr_LoadScriptAndLabel  (game_mp/g_scr_main_mp.cpp:95)
 
-void GScr_LoadScriptAndLabel(void)
+void GScr_LoadScriptAndLabel(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = Scr_LoadScript();
+  if ((iVar3 == 0) && (param_3 != 0)) {
+    Com_Error(1,0xffffffff8207b454,uVar1);
+  }
+  uVar2 = Scr_GetFunctionHandle(uVar1,param_2);
+  if (((int)uVar2 == 0) && (param_3 != 0)) {
+    Com_Error(1,0xffffffff8207b428,param_2,uVar1);
+  }
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 8249E480  BG_Obituary_WeaponIndexForMOD  (bgame/bg_weapons.h:118)
+
+short BG_Obituary_WeaponIndexForMOD(int param_1)
+
+{
+  if (0xf < param_1) {
+    MyAssertHandler(0xffffffff820169a8,0x77,0,0xffffffff82000f98,0xffffffff8207b3bc);
+    return (short)param_1 + 0xf0;
+  }
+  return (short)param_1 + 0xf0;
 }
 
 
@@ -25,8 +51,112 @@ void GScr_LoadScriptAndLabel(void)
 void GScr_LoadGameTypeScript(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined1 auStack_80 [128];
+  
   __savegprlr_26();
+  Com_sprintf(auStack_80,0x40,0xffffffff8207b5bc,*(undefined4 *)(DAT_8353ff5c + 0xc));
+  iVar1 = Scr_LoadScript(auStack_80);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,auStack_80);
+  }
+  iVar1 = Scr_GetFunctionHandle(auStack_80,0xffffffff8207b5b4);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b5b4,auStack_80);
+  }
+  DAT_83599840 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b574);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b574,0xffffffff8207b590);
+  }
+  DAT_83599844 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b558);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b558,0xffffffff8207b590);
+  }
+  DAT_83599848 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b538);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b538,0xffffffff8207b590);
+  }
+  DAT_8359984c = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b51c);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b51c,0xffffffff8207b590);
+  }
+  DAT_83599850 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b500);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b500,0xffffffff8207b590);
+  }
+  DAT_83599854 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b4e4);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b4e4,0xffffffff8207b590);
+  }
+  DAT_83599858 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b4c8);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b4c8,0xffffffff8207b590);
+  }
+  DAT_83599864 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b4a8);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b4a8,0xffffffff8207b590);
+  }
+  DAT_83599868 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b48c);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b48c,0xffffffff8207b590);
+  }
+  DAT_8359986c = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b590);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b590);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b590,0xffffffff8207b470);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b470,0xffffffff8207b590);
+  }
+  DAT_83599870 = iVar1;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -51,18 +181,188 @@ void GScr_LoadLevelScript(void)
 void GScr_LoadScripts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_26();
+  Scr_BeginLoadScripts();
+  iVar1 = Scr_LoadScript(0xffffffff8207b628);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b628);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b628,0xffffffff8207b5b4);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b5b4,0xffffffff8207b628);
+  }
+  DAT_8359a8fc = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b614);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b614);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b614,0xffffffff8207b608);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b608,0xffffffff8207b614);
+  }
+  DAT_8359a900 = iVar1;
+  iVar1 = Scr_LoadScript(0xffffffff8207b614);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b454,0xffffffff8207b614);
+  }
+  iVar1 = Scr_GetFunctionHandle(0xffffffff8207b614,0xffffffff8207b5f8);
+  if (iVar1 == 0) {
+    Com_Error(1,0xffffffff8207b428,0xffffffff8207b5f8,0xffffffff8207b614);
+  }
+  DAT_8359a904 = iVar1;
+  GScr_LoadGameTypeScript();
+  GScr_LoadLevelScript();
+  Scr_PostCompileScripts();
+  GScr_PostLoadScripts();
+  Scr_EndLoadScripts();
+  __restgprlr_26();
+  return;
 }
 
 
 // 8249EB80  Scr_ConstructMessageString  (game_mp/g_scr_main_mp.cpp:269)
 
-void Scr_ConstructMessageString(void)
+void Scr_ConstructMessageString
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined1 *param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  bool bVar1;
+  char cVar2;
+  int iVar3;
+  longlong lVar4;
+  int iVar7;
+  longlong lVar5;
+  undefined8 uVar6;
+  char *pcVar9;
+  longlong lVar8;
+  undefined1 uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  
+  lVar4 = __savegprlr();
+  uVar11 = 0;
+  if (param_2 < (int)lVar4) {
+    *param_4 = 0;
+    __restgprlr();
+    return;
+  }
+  do {
+    iVar7 = Scr_GetType(lVar4);
+    if (iVar7 == 3) {
+      lVar5 = Scr_GetIString(lVar4);
+      lVar8 = lVar5;
+      do {
+        pcVar9 = (char *)lVar8;
+        lVar8 = lVar8 + 1;
+      } while (*pcVar9 != '\0');
+      uVar13 = (lVar8 - lVar5) - 1U & 0xffffffff;
+      Scr_ValidateLocalizedStringRef(lVar4,lVar5,uVar13);
+      if ((param_5 & 0xffffffff) <= (uVar13 + uVar11 + 1 & 0xffffffff)) {
+        uVar6 = va(0xffffffff8207b63c,param_3,param_5);
+        Scr_ParamError(lVar4,uVar6);
+      }
+      if ((uVar11 & 0xffffffff) != 0) {
+        uVar10 = 0x14;
+LAB_8249ee78:
+        param_4[(int)uVar11] = uVar10;
+        uVar11 = uVar11 + 1;
+      }
+    }
+    else {
+      if ((iVar7 == 1) && (iVar7 = Scr_GetPointerType(lVar4), iVar7 == 0x16)) {
+        iVar7 = Scr_GetEntity(lVar4);
+        if (*(int *)(iVar7 + 0x158) == 0) {
+          Scr_ParamError(lVar4,0xffffffff820793f4);
+        }
+        iVar3 = *(int *)(iVar7 + 0x158);
+        if ((*(char *)(iVar3 + 0x3450) == '\0') || (*(int *)(iVar3 + 0x3464) != 0)) {
+          if ((*(char *)(iVar3 + 0x3488) == '\0') || (*(int *)(iVar3 + 0x3464) != 1)) {
+            lVar8 = va(0xffffffff8207b67c,iVar3 + 0x3414);
+            lVar5 = lVar8;
+          }
+          else {
+            lVar8 = va(0xffffffff8207b66c,(ulonglong)*(uint *)(iVar7 + 0x158) + 0x3488,
+                       (ulonglong)*(uint *)(iVar7 + 0x158) + 0x3414);
+            lVar5 = lVar8;
+          }
+        }
+        else {
+          lVar8 = va(0xffffffff8207b660,iVar3 + 0x3450,iVar3 + 0x3414);
+          lVar5 = lVar8;
+        }
+        do {
+          pcVar9 = (char *)lVar8;
+          lVar8 = lVar8 + 1;
+        } while (*pcVar9 != '\0');
+        uVar13 = (lVar8 - lVar5) - 1U & 0xffffffff;
+        bVar1 = (uVar13 + uVar11 + 1 & 0xffffffff) < (param_5 & 0xffffffff);
+      }
+      else {
+        lVar5 = Scr_GetString(lVar4);
+        lVar8 = lVar5;
+        do {
+          pcVar9 = (char *)lVar8;
+          lVar8 = lVar8 + 1;
+        } while (*pcVar9 != '\0');
+        uVar12 = 0;
+        uVar13 = (lVar8 - lVar5) - 1U & 0xffffffff;
+        if (uVar13 != 0) {
+          do {
+            cVar2 = *(char *)((int)uVar12 + (int)lVar5);
+            if (((cVar2 == '\x14') || (cVar2 == '\x15')) || (cVar2 == '\x16')) {
+              uVar6 = va(0xffffffff8207b684);
+              Scr_ParamError(lVar4,uVar6);
+            }
+            iVar7 = isalpha((int)*(char *)((int)uVar12 + (int)lVar5));
+            if (iVar7 != 0) {
+              if (*(char *)(DAT_83f5de0c + 0xc) != '\0') {
+                if (*(char *)(DAT_83f5de04 + 0xc) == '\0') {
+                  Com_PrintWarning(0x11,0xffffffff8207b6f8,param_3,lVar5);
+                }
+                else {
+                  uVar6 = va(0xffffffff8207b6b0,param_3,lVar5);
+                  Scr_LocalizationError(lVar4,uVar6);
+                }
+              }
+              break;
+            }
+            uVar12 = uVar12 + 1;
+          } while ((uVar12 & 0xffffffff) < uVar13);
+        }
+        bVar1 = (uVar13 + uVar11 + 1 & 0xffffffff) < (param_5 & 0xffffffff);
+      }
+      if (!bVar1) {
+        uVar6 = va(0xffffffff8207b63c,param_3,param_5);
+        Scr_ParamError(lVar4,uVar6);
+      }
+      if (uVar13 != 0) {
+        uVar10 = 0x15;
+        goto LAB_8249ee78;
+      }
+    }
+    iVar7 = 0;
+    for (; iVar3 = (int)uVar11, uVar13 != 0; uVar13 = uVar13 - 1) {
+      cVar2 = *(char *)(iVar7 + (int)lVar5);
+      if (((cVar2 == '\x14') || (cVar2 == '\x15')) || (cVar2 == '\x16')) {
+        param_4[iVar3] = 0x2e;
+      }
+      else {
+        param_4[iVar3] = cVar2;
+      }
+      uVar11 = uVar11 + 1;
+      iVar7 = iVar7 + 1;
+    }
+    lVar4 = lVar4 + 1;
+    if (param_2 < (int)lVar4) {
+      param_4[iVar3] = 0;
+      __restgprlr();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -158,11 +458,35 @@ LAB_8249f088:
 
 // 8249F0A0  CleanDvarValue  (game_mp/g_scr_main_mp.cpp:451)
 
-void CleanDvarValue(void)
+void CleanDvarValue(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  char cVar2;
+  char *pcVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_26();
+  pcVar3 = (char *)param_2;
+  iVar4 = 0;
+  if (0 < param_3 + -1) {
+    iVar1 = iVar1 - (int)pcVar3;
+    do {
+      pcVar3 = (char *)param_2;
+      if (pcVar3[iVar1] == '\0') break;
+      cVar2 = I_CleanChar();
+      *pcVar3 = cVar2;
+      if (cVar2 == '\"') {
+        *pcVar3 = '\'';
+      }
+      iVar4 = iVar4 + 1;
+      param_2 = param_2 + 1;
+      pcVar3 = (char *)param_2;
+    } while (iVar4 < (int)(param_3 + -1));
+  }
+  *pcVar3 = '\0';
+  __restgprlr_26();
+  return;
 }
 
 
@@ -227,7 +551,6 @@ void GScr_SpawnPlane(void)
     uVar4 = (*(int *)(iVar3 + 0x158) - DAT_83580b00) / 0x3980;
     *(uint *)(iVar5 + 0x54) = uVar4;
     if (0x11 < uVar4) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207b7e8,0x210,0,0xffffffff8207cad8,uVar4,0x12);
     }
     *(undefined4 *)(iVar5 + 0x5c) = uVar7;
@@ -250,8 +573,39 @@ void GScr_SpawnPlane(void)
 void GScr_SpawnHelicopter(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  
   __savegprlr_27();
+  iVar3 = Scr_GetEntity(0);
+  if (*(int *)(iVar3 + 0x158) == 0) {
+    Scr_ParamError(0,0xffffffff8207b78c);
+  }
+  Scr_GetVector(1,&local_50);
+  Scr_GetVector(2,&local_40);
+  uVar1 = Scr_GetString(3);
+  uVar2 = Scr_GetString(4);
+  iVar4 = G_Spawn();
+  Scr_SetString(iVar4 + 0x172,DAT_835a0cd6);
+  Scr_SetString(iVar4 + 0x174,DAT_835a0cd6);
+  *(undefined4 *)(iVar4 + 0x138) = local_50;
+  *(undefined4 *)(iVar4 + 0x13c) = local_4c;
+  *(undefined4 *)(iVar4 + 0x140) = local_48;
+  *(undefined4 *)(iVar4 + 0x144) = local_40;
+  *(undefined4 *)(iVar4 + 0x148) = local_3c;
+  *(undefined4 *)(iVar4 + 0x14c) = local_38;
+  G_SpawnHelicopter(iVar4,iVar3,uVar1,uVar2);
+  Scr_AddEntity(iVar4);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -313,11 +667,33 @@ void ScrCmd_UseBy(void)
 
 // 8249F2D8  ScrCmd_PlaySoundAtPosInternal  (game_mp/g_scr_main_mp.cpp:648)
 
-void ScrCmd_PlaySoundAtPosInternal(void)
+void ScrCmd_PlaySoundAtPosInternal(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  uint uVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = Com_FindSoundAlias(param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = va(0xffffffff8206ddf8,param_2);
+    Scr_ParamError(0,uVar3);
+  }
+  cVar6 = Com_IsSoundAliasLooping(uVar2);
+  if (cVar6 != '\0') {
+    uVar3 = va(0xffffffff8207b7ac,param_2);
+    Scr_ParamError(0,uVar3);
+  }
+  uVar4 = G_SoundAliasIndex(param_2);
+  iVar5 = G_TempEntity(uVar1,3);
+  *(undefined4 *)(iVar5 + 0xd8) = 0;
+  *(uint *)(iVar5 + 0xa0) = uVar4 & 0xffff;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -330,7 +706,6 @@ void StartScriptPlaySoundOnEnt(undefined8 param_1,int param_2)
   undefined8 uVar2;
   
   if ((param_2 != 3) && (param_2 != 4)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207b7e8,0x2ad,0,0xffffffff82000f98,0xffffffff8207b82c);
   }
   lVar1 = GetEntity(param_1);
@@ -449,7 +824,6 @@ void ScrCmd_PlaySoundToTeam(void)
     do {
       if ((*(char *)((int)puVar10 + 0x103) != '\0') && (puVar10 != puVar7)) {
         if (puVar10[0x56] == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8207b7e8,0x32a,0,0xffffffff82000f98,0xffffffff8206babc);
         }
         if (*(int *)(puVar10[0x56] + 0x33d4) == ((uint)LZCOUNT(uVar8 - uVar5) >> 5) + 1) {
@@ -672,8 +1046,71 @@ void ScrCmd_ShowToPlayer(void)
 void ScrCmd_SetScriptMoverKillCam(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  char **ppcVar5;
+  int iVar6;
+  char *local_70;
+  char *local_6c;
+  char *local_68;
+  char *local_64;
+  char *local_60;
+  undefined4 local_5c;
+  char *local_58;
+  char *local_54;
+  undefined4 local_50 [20];
+  
+  uVar2 = __savegprlr_28();
+  local_70 = "helicopter";
+  local_6c = "airstrike";
+  local_68 = "explosive";
+  local_64 = "fast explosive";
+  local_60 = "rocket";
+  local_5c = 0x8200e074;
+  local_58 = "javelin";
+  local_50[1] = 2;
+  local_54 = "missile";
+  local_50[0] = 1;
+  local_50[2] = 3;
+  local_50[3] = 4;
+  local_50[4] = 5;
+  local_50[5] = 6;
+  local_50[6] = 7;
+  local_50[7] = 8;
+  iVar3 = Scr_GetNumParam();
+  if (iVar3 != 1) {
+    Scr_Error(0xffffffff8207bb38);
+    __restgprlr_28();
+    return;
+  }
+  iVar3 = GetEntity(uVar2);
+  uVar2 = Scr_GetString(0);
+  iVar6 = 0;
+  ppcVar5 = &local_70;
+  do {
+    iVar4 = I_stricmp(uVar2,*ppcVar5);
+    if (iVar4 == 0) break;
+    iVar6 = iVar6 + 1;
+    ppcVar5 = ppcVar5 + 1;
+  } while (iVar6 < 8);
+  if (iVar6 == 8) {
+    va(0xffffffff8207ba70,uVar2);
+    Scr_Error();
+    __restgprlr_28();
+    return;
+  }
+  uVar1 = local_50[iVar6];
+  if (*(int *)(iVar3 + 4) != 6) {
+    Scr_ParamError(0,0xffffffff8207ba30);
+  }
+  if ((*(uint *)(iVar3 + 8) & 0x20000000) != 0) {
+    Scr_Error(0xffffffff8207b9b4);
+  }
+  *(undefined4 *)(iVar3 + 0xb8) = uVar1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -867,8 +1304,36 @@ void GScr_GetMode(void)
 void GScr_LogPrint(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
+  longlong lVar5;
+  char *pcVar6;
+  undefined1 local_420 [1056];
+  
   __savegprlr_29();
+  pcVar6 = (char *)0x0;
+  local_420[0] = 0;
+  iVar2 = Scr_GetNumParam();
+  lVar5 = 0;
+  if (0 < iVar2) {
+    do {
+      pcVar3 = (char *)Scr_GetString(lVar5);
+      pcVar4 = pcVar3;
+      do {
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 != '\0');
+      pcVar6 = pcVar4 + (int)(pcVar6 + (-1 - (int)pcVar3));
+      if (0x3ff < (int)pcVar6) break;
+      I_strncat(local_420,0x400);
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < iVar2);
+  }
+  G_LogPrintf(local_420);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -887,8 +1352,59 @@ void GScr_WorldEntNumber(void)
 void GScr_Obituary(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined4 *puVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar4;
+  undefined4 uVar8;
+  
   __savegprlr_27();
+  Scr_GetString(2);
+  uVar2 = G_GetWeaponForName();
+  uVar3 = G_MeansOfDeathFromScriptParam(3);
+  puVar5 = (undefined4 *)Scr_GetEntity(0);
+  iVar6 = G_TempEntity(0xffffffff82179fd8,0x6c);
+  *(undefined4 *)(iVar6 + 0xd8) = 0;
+  *(undefined4 *)(iVar6 + 0x78) = *puVar5;
+  iVar7 = Scr_GetType(1);
+  if ((iVar7 == 1) && (iVar7 = Scr_GetPointerType(), iVar7 == 0x16)) {
+    puVar5 = (undefined4 *)Scr_GetEntity(1);
+    uVar8 = *puVar5;
+  }
+  else {
+    uVar8 = 0x7fe;
+  }
+  *(undefined4 *)(iVar6 + 0x7c) = uVar8;
+  bVar1 = false;
+  iVar7 = (int)uVar3;
+  if ((((iVar7 == 0xf) || (iVar7 == 8)) || (iVar7 == 9)) ||
+     (((iVar7 == 0xc || (iVar7 == 0xb)) || (iVar7 == 10)))) {
+    bVar1 = true;
+    if (iVar7 == 0xf) {
+      iVar7 = BG_GetWeaponClass(uVar2,0);
+      if (iVar7 == 9) {
+        bVar1 = false;
+      }
+    }
+    else if (iVar7 == 8) {
+      lVar4 = BG_GetWeaponType(uVar2,0);
+      bVar1 = lVar4 != 4;
+    }
+  }
+  if (bVar1) {
+    uVar2 = BG_Obituary_WeaponIndexForMOD(uVar3);
+    *(uint *)(iVar6 + 0xa0) = (uint)uVar2 & 0xff;
+    *(uint *)(iVar6 + 0xd8) = (uint)((ulonglong)uVar2 >> 8) & 0xff;
+    __restgprlr_27();
+    return;
+  }
+  *(undefined4 *)(iVar6 + 0xd8) = 0;
+  *(uint *)(iVar6 + 0xa0) = (uint)uVar2 & 0xff;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -968,8 +1484,59 @@ void GScr_getStartTime(void)
 void GScr_PlaceSpawnPoint(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  double dVar4;
+  double dVar5;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_60 [11];
+  char local_32;
+  
   __savegprlr_29();
+  puVar2 = (undefined4 *)GetEntity();
+  local_88 = (float)puVar2[0x4e];
+  local_84 = (float)puVar2[0x4f];
+  local_80 = (float)puVar2[0x50];
+  local_78 = (float)puVar2[0x4e];
+  local_74 = (float)puVar2[0x4f];
+  dVar5 = 128.0;
+  local_70 = (float)puVar2[0x50] + 128.0;
+  G_TraceCapsule(local_60,&local_88,&local_78,0xffffffff8200c2a0,*puVar2,0x2810011);
+  dVar4 = (double)local_60[0];
+  dVar5 = (double)(float)(dVar4 * dVar5);
+  local_80 = (float)((double)(float)((double)local_70 - (double)local_80) * dVar4 + (double)local_80
+                    );
+  local_88 = (float)((double)(float)((double)local_78 - (double)local_88) * dVar4 + (double)local_88
+                    );
+  local_84 = (float)((double)(float)((double)local_74 - (double)local_84) * dVar4 + (double)local_84
+                    );
+  local_70 = local_80 - 262144.0;
+  local_78 = local_88;
+  local_74 = local_84;
+  G_TraceCapsule(local_60,&local_88,&local_78,0xffffffff8200c2a0,*puVar2,0x2810011);
+  if ((float)(dVar5 + 96.0) < local_60[0] * 512.0) {
+    Com_PrintError(0x17,0xffffffff8207bdc0,*puVar2,(int)local_88,(int)local_84,(int)local_80);
+  }
+  uVar3 = Trace_GetEntityHitId(local_60);
+  puVar2[0x20] = uVar3 & 0xffff;
+  iVar1 = ((uVar3 & 0xffff) + (uVar3 & 0xffff) * 4) * 0x80;
+  local_84 = (local_74 - local_84) * local_60[0] + local_84;
+  *(uint *)(&DAT_83373804 + iVar1) = *(uint *)(&DAT_83373804 + iVar1) | 0x100000;
+  local_80 = (local_70 - local_80) * local_60[0] + local_80;
+  local_88 = (local_78 - local_88) * local_60[0] + local_88;
+  G_TraceCapsule(local_60,&local_88,&local_88,0xffffffff8200c2a0,*puVar2,0x2810011);
+  if (local_32 != '\0') {
+    Com_PrintError(0x17,0xffffffff8207bd84,*puVar2,(int)local_88,(int)local_84,(int)local_80);
+  }
+  G_SetOrigin(puVar2,&local_88);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1001,13 +1568,233 @@ void GScr_MapRestart(void)
 }
 
 
+// 824A0800  FindWayAroundBounds  (game_mp/g_scr_main_mp.cpp:1574)
+
+void FindWayAroundBounds(double param_1,float *param_2,float *param_3,float *param_4,
+                        undefined8 param_5,float *param_6,float *param_7,float *param_8,
+                        float *param_9)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float local_8;
+  
+  fVar1 = *param_3;
+  fVar8 = SQRT(fVar1 * fVar1 + param_3[1] * param_3[1]);
+  if (fVar8 == 0.0) {
+    fVar8 = 1.0;
+  }
+  fVar8 = 1.0 / fVar8;
+  fVar2 = param_4[4];
+  fVar3 = param_4[3];
+  fVar4 = param_3[2];
+  fVar5 = param_4[1];
+  fVar6 = *param_4;
+  fVar7 = fVar8 * param_3[1];
+  fVar1 = fVar1 * fVar8;
+  fVar9 = fVar5 + fVar2 + 30.0;
+  param_6[1] = fVar9;
+  fVar10 = fVar6 + fVar3 + 30.0;
+  *param_6 = fVar10;
+  fVar5 = fVar5 - (fVar2 + 30.0);
+  *param_7 = fVar10;
+  param_7[1] = fVar9;
+  fVar6 = fVar6 - (fVar3 + 30.0);
+  fVar2 = -fVar1;
+  dVar13 = (double)((fVar5 - param_2[1]) * fVar2 + (fVar6 - *param_2) * fVar7);
+  dVar11 = (double)((param_6[1] - param_2[1]) * fVar2 + (*param_6 - *param_2) * fVar7);
+  dVar12 = dVar11;
+  if (dVar11 < dVar13) {
+    *param_7 = fVar6;
+    param_7[1] = fVar5;
+    dVar12 = dVar13;
+  }
+  if (dVar13 < dVar11) {
+    *param_6 = fVar6;
+    param_6[1] = fVar5;
+    dVar11 = dVar13;
+  }
+  dVar13 = (double)((fVar5 - param_2[1]) * fVar2 + (fVar10 - *param_2) * fVar7);
+  if (dVar12 < dVar13) {
+    *param_7 = fVar10;
+    param_7[1] = fVar5;
+    dVar12 = dVar13;
+  }
+  if (dVar13 < dVar11) {
+    *param_6 = fVar10;
+    param_6[1] = fVar5;
+    dVar11 = dVar13;
+  }
+  dVar13 = (double)((fVar9 - param_2[1]) * fVar2 + (fVar6 - *param_2) * fVar7);
+  if (dVar12 < dVar13) {
+    *param_7 = fVar6;
+    param_7[1] = fVar9;
+    dVar12 = dVar13;
+  }
+  if (dVar13 < dVar11) {
+    *param_6 = fVar6;
+    param_6[1] = fVar9;
+    dVar11 = dVar13;
+  }
+  if (dVar12 < param_1) {
+    fVar3 = (float)(param_1 - dVar12);
+    *param_7 = fVar3 * fVar7 + *param_7;
+    param_7[1] = fVar3 * fVar2 + param_7[1];
+    param_7[2] = local_8 * fVar3 + param_7[2];
+    dVar12 = param_1;
+  }
+  param_1 = -param_1;
+  if (param_1 < dVar11) {
+    fVar3 = (float)(param_1 - dVar11);
+    *param_6 = fVar3 * fVar7 + *param_6;
+    param_6[1] = fVar3 * fVar2 + param_6[1];
+    param_6[2] = local_8 * fVar3 + param_6[2];
+    dVar11 = param_1;
+  }
+  param_6[2] = ((*param_6 - *param_2) * fVar1 + (param_6[1] - param_2[1]) * fVar7) * fVar4 * fVar8 +
+               param_2[2];
+  param_7[2] = ((*param_7 - *param_2) * fVar1 + (param_7[1] - param_2[1]) * fVar7) * fVar4 * fVar8 +
+               param_2[2];
+  *param_8 = (float)-dVar11;
+  *param_9 = (float)dVar12;
+  return;
+}
+
+
 // 824A0A48  GScr_SpawnSightTrace  (game_mp/g_scr_main_mp.cpp:1667)
 
 void GScr_SpawnSightTrace(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  float *pfVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float afStack_a8 [4];
+  float afStack_98 [4];
+  float local_88;
+  float local_84;
+  float local_80;
+  undefined1 auStack_70 [112];
+  
   __savegprlr_27();
+  __savefpr_27();
+  Scr_GetVector(1,&local_c8);
+  Scr_GetVector(2,&local_b8);
+  uVar1 = SV_BrushModelSightTrace(0,&local_c8,&local_b8,0xffffffff82174a3c,0,0x801);
+  if ((int)uVar1 == 0) {
+    if (*(float *)(DAT_8353ff44 + 0xc) != 0.0) {
+      G_DebugLineWithDuration(&local_c8,&local_b8,0xffffffff821817f8,0,10);
+    }
+    Scr_AddFloat(0x3ff0000000000000);
+    __restfpr_27();
+    __restgprlr_27();
+    return;
+  }
+  dVar9 = 0.0;
+  if (*(float *)(DAT_8353ff44 + 0xc) != 0.0) {
+    G_DebugLineWithDuration(&local_c8,&local_b8,0xffffffff821817e8,0,10);
+  }
+  local_88 = local_b8 - local_c8;
+  local_84 = local_b4 - local_c4;
+  local_80 = local_b0 - local_c0;
+  CM_GetBrushBoundsForHitNum(uVar1,auStack_70);
+  dVar5 = 64.0;
+  FindWayAroundBounds(0x4050000000000000,&local_c8,&local_88,auStack_70);
+  dVar8 = (double)local_d0;
+  if (dVar8 < dVar9) {
+    MyAssertHandler(dVar8,0xffffffff8207b7e8,0x6ad,0,0xffffffff8207be70,0xffffffff8207be84,dVar8);
+  }
+  dVar6 = (double)local_cc;
+  if (dVar6 < dVar9) {
+    MyAssertHandler(dVar6,0xffffffff8207b7e8,0x6ae,0,0xffffffff8207be4c,0xffffffff8207be60,dVar6);
+  }
+  dVar7 = 200.0;
+  if (dVar8 <= 200.0) {
+    iVar2 = SV_BrushModelSightTrace(uVar1,&local_c8,afStack_a8,0xffffffff82174a3c,0,0x801);
+    if (iVar2 == 0) {
+      if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+        G_DebugLineWithDuration(&local_c8,afStack_a8,0xffffffff821817f8,0,10);
+      }
+      iVar2 = SV_BrushModelSightTrace(uVar1,afStack_a8,&local_b8,0xffffffff82174a3c,0,0x801);
+      if (iVar2 == 0) {
+        if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+          G_DebugLineWithDuration(afStack_a8,&local_b8,0xffffffff821817f8,0,10);
+        }
+        Scr_AddFloat(-(double)((float)(dVar8 - dVar5) * 0.007352941 - 1.0));
+        __restfpr_27();
+        __restgprlr_27();
+        return;
+      }
+      if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+        pfVar4 = &local_b8;
+        pfVar3 = afStack_a8;
+LAB_824a0d10:
+        G_DebugLineWithDuration(pfVar3,pfVar4,0xffffffff821817e8,0,10);
+      }
+    }
+    else if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+      pfVar4 = afStack_a8;
+      pfVar3 = &local_c8;
+      goto LAB_824a0d10;
+    }
+  }
+  if (dVar6 <= dVar7) {
+    iVar2 = SV_BrushModelSightTrace(uVar1,&local_c8,afStack_98,0xffffffff82174a3c,0,0x801);
+    if (iVar2 == 0) {
+      if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+        G_DebugLineWithDuration(&local_c8,afStack_98,0xffffffff821817f8,0,10);
+      }
+      iVar2 = SV_BrushModelSightTrace(uVar1,afStack_98,&local_b8,0xffffffff82174a3c,0,0x801);
+      if (iVar2 == 0) {
+        if ((double)*(float *)(DAT_8353ff44 + 0xc) != dVar9) {
+          G_DebugLineWithDuration(afStack_98,&local_b8,0xffffffff821817f8,0,10);
+        }
+        Scr_AddFloat(-(double)((float)(dVar6 - dVar5) * 0.007352941 - 1.0));
+        __restfpr_27();
+        __restgprlr_27();
+        return;
+      }
+      if ((double)*(float *)(DAT_8353ff44 + 0xc) == dVar9) goto LAB_824a0e20;
+      pfVar4 = &local_b8;
+      pfVar3 = afStack_98;
+    }
+    else {
+      if ((double)*(float *)(DAT_8353ff44 + 0xc) == dVar9) goto LAB_824a0e20;
+      pfVar4 = afStack_98;
+      pfVar3 = &local_c8;
+    }
+    G_DebugLineWithDuration(pfVar3,pfVar4,0xffffffff821817e8,0,10);
+  }
+LAB_824a0e20:
+  Scr_AddFloat(dVar9);
+  __restfpr_27();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1060,8 +1847,53 @@ void GScr_AddTestClient(void)
 void GScr_MakeDvarServerInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  char cVar5;
+  int iVar3;
+  longlong lVar2;
+  undefined1 *puVar4;
+  char *pcVar6;
+  undefined1 auStack_840 [1024];
+  char local_440 [1088];
+  
   __savegprlr_26();
+  uVar1 = Scr_GetString(0);
+  cVar5 = Dvar_IsValidName();
+  if (cVar5 == '\0') {
+    va(0xffffffff8206d8f8,uVar1);
+    Scr_Error();
+  }
+  iVar3 = Scr_GetType(1);
+  if (iVar3 == 3) {
+    lVar2 = Scr_GetNumParam();
+    Scr_ConstructMessageString(1,lVar2 + -1,0xffffffff820773a8,&stack0x00000000 + -0x840,0x400);
+    puVar4 = &stack0x00000000 + -0x840;
+  }
+  else {
+    puVar4 = (undefined1 *)Scr_GetString(1);
+  }
+  pcVar6 = &stack0x00000000 + -0x440;
+  iVar3 = 0;
+  do {
+    if (pcVar6[(int)puVar4 - (int)local_440] == '\0') break;
+    cVar5 = I_CleanChar();
+    *pcVar6 = cVar5;
+    if (cVar5 == '\"') {
+      *pcVar6 = '\'';
+    }
+    iVar3 = iVar3 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (iVar3 < 0x3ff);
+  *pcVar6 = '\0';
+  iVar3 = Dvar_SetFromStringByNameFromSource(uVar1,puVar4,2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8207b7e8,0x74e,0,0xffffffff82000f98,0xffffffff8201ec3c);
+  }
+  if ((*(ushort *)(iVar3 + 8) & 0x10) == 0) {
+    Dvar_AddFlags(iVar3,0x10);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1187,8 +2019,31 @@ void GScr_PrecacheStatusIcon(void)
 void GScr_GetStatusIconIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined1 auStack_430 [1072];
+  
+  pcVar1 = (char *)__savegprlr_27();
+  if (*pcVar1 != '\0') {
+    lVar3 = 0;
+    do {
+      if (0xe7 < (int)lVar3) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      SV_GetConfigstring(lVar3 + 0xe03,auStack_430,0x400);
+      iVar2 = I_stricmp(auStack_430,pcVar1);
+      if (iVar2 == 0) {
+        __restgprlr_27(lVar3 + 1);
+        return;
+      }
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < 8);
+    va(0xffffffff8207bf24,pcVar1);
+    Scr_Error();
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1210,8 +2065,31 @@ void GScr_PrecacheMiniMapIcon(void)
 void GScr_GetMiniMapIconIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char *pcVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined1 auStack_430 [1072];
+  
+  pcVar1 = (char *)__savegprlr_27();
+  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
+    lVar3 = 0;
+    do {
+      if (0xd0 < (int)lVar3) {
+        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      }
+      SV_GetConfigstring(lVar3 + 0xe1a,auStack_430,0x400);
+      iVar2 = I_stricmp(auStack_430,pcVar1);
+      if (iVar2 == 0) {
+        __restgprlr_27(lVar3 + 1);
+        return;
+      }
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < 0xf);
+    va(0xffffffff8207bf58,pcVar1);
+    Scr_Error();
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1275,24 +2153,26 @@ void VisionSetSendToClient(int param_1)
   double dVar5;
   
   if (param_1 == 5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207b7e8,0x891,0,0xffffffff82000f98,0xffffffff8207c070);
   }
-  if (param_1 == 1) {
-    uVar3 = 0x3fd;
-  }
-  else if (param_1 == 2) {
-    uVar3 = 0x3fe;
-  }
-  else if (param_1 == 3) {
-    uVar3 = 0x3ff;
-  }
   else {
-    uVar3 = 0x400;
-    if (param_1 != 4) {
-      uVar3 = 0x3fc;
+    if (param_1 == 1) {
+      uVar3 = 0x3fd;
+      goto LAB_824a15cc;
     }
+    if (param_1 == 2) {
+      uVar3 = 0x3fe;
+      goto LAB_824a15cc;
+    }
+    if (param_1 == 3) {
+      uVar3 = 0x3ff;
+      goto LAB_824a15cc;
+    }
+    uVar3 = 0x400;
+    if (param_1 == 4) goto LAB_824a15cc;
   }
+  uVar3 = 0x3fc;
+LAB_824a15cc:
   iVar4 = 1000;
   iVar2 = Scr_GetNumParam();
   if (iVar2 != 1) {
@@ -1712,8 +2592,47 @@ void GScr_SetClientNameMode(void)
 void GScr_UpdateClientNames(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  char cVar2;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  longlong lVar6;
+  char *pcVar7;
+  undefined1 auStack_50 [80];
+  
   __savegprlr_28();
+  if (DAT_83580fe8 == 0) {
+    Scr_Error(0xffffffff8207c0fc);
+  }
+  lVar6 = 0;
+  if (0 < DAT_83580fa4) {
+    pcVar7 = (char *)(DAT_83580b00 + 0x3414);
+    iVar3 = DAT_83580fa4;
+    do {
+      pcVar5 = pcVar7;
+      pcVar4 = pcVar7 + -0x88;
+      if (*(int *)(pcVar7 + -0xe8) == 2) {
+        do {
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar4;
+          if (cVar1 == '\0') break;
+          pcVar5 = pcVar5 + 1;
+          pcVar4 = pcVar4 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 != cVar2) {
+          I_strncpyz(auStack_50,pcVar7,0x20);
+          I_strncpyz(pcVar7,pcVar7 + -0x88,0x20);
+          ClientUserinfoChanged(lVar6);
+          iVar3 = DAT_83580fa4;
+        }
+      }
+      lVar6 = lVar6 + 1;
+      pcVar7 = pcVar7 + 0x3980;
+    } while ((int)lVar6 < iVar3);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1793,8 +2712,28 @@ void GScr_MatchEnd(void)
 void GScr_SetPlayerTeamRank(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  undefined4 *puVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  iVar3 = Scr_GetNumParam();
+  if (iVar3 != 3) {
+    Scr_ParamError(0,0xffffffff8207c184);
+  }
+  puVar4 = (undefined4 *)Scr_GetEntity(0);
+  uVar1 = Scr_GetInt(1);
+  uVar2 = Scr_GetInt(2);
+  if (puVar4 == (undefined4 *)0x0) {
+    Scr_ParamError(0,0xffffffff8207c150);
+  }
+  if ((int)uVar1 < 0) {
+    Scr_ParamError(1,0xffffffff8207c120);
+  }
+  SV_Live_ScrSetPlayerTeamRank(*puVar4,uVar1,uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1905,8 +2844,37 @@ void GScr_SendMatchData(void)
 void GScr_SetMatchDataID(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  DWORD DVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined1 *local_80 [2];
+  undefined *local_78;
+  undefined4 local_74;
+  longlong local_70 [2];
+  undefined1 auStack_60 [32];
+  undefined1 auStack_40 [64];
+  
   __savegprlr_29();
+  if (DAT_83cfc7c4 == '\0') {
+    Scr_Error(0xffffffff8207c244);
+  }
+  local_80[0] = auStack_40;
+  uVar1 = StructuredDataDef_GetAsset(0xffffffff83cfc7c4,0xe900);
+  local_74 = 0xe900;
+  local_78 = &DAT_83cfc804;
+  I_strncpyz(auStack_40,0xffffffff8207c260,0x20);
+  DVar4 = Sys_MillisecondsRaw();
+  uVar2 = Session_HostNum(0xffffffff844c7860);
+  local_70[0] = Session_GetXuidEvenIfInactive(0xffffffff844c7860,uVar2);
+  local_70[0] = local_70[0] + (int)DVar4;
+  XUIDToString(local_70,auStack_60);
+  uVar2 = Com_BlockChecksumKey32(auStack_60,0x11,0);
+  uVar3 = va(0xffffffff82013b64,uVar2);
+  SV_SetConfigstring(0x3d5,uVar3);
+  LiveStorage_MatchDataSetInternalInt(local_80,1,uVar2,&local_78,0,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1948,8 +2916,66 @@ void GScr_SetClientMatchData(void)
 void GScr_SetMatchClientIP(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined *local_f0;
+  undefined4 local_ec;
+  undefined1 *local_e0;
+  undefined1 *local_dc;
+  undefined1 *local_d8;
+  undefined1 *local_d4;
+  undefined1 auStack_d0 [4];
+  undefined1 local_cc;
+  undefined1 local_cb;
+  undefined1 local_ca;
+  undefined1 local_c9;
+  undefined1 auStack_a0 [32];
+  undefined1 auStack_80 [32];
+  undefined1 auStack_60 [32];
+  undefined1 auStack_40 [64];
+  
   __savegprlr_29();
+  if (DAT_83cfc7c4 == '\0') {
+    Scr_Error(0xffffffff8207c244);
+  }
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 2) {
+    Scr_Error(0xffffffff8206d414);
+    __restgprlr_29();
+    return;
+  }
+  puVar5 = (undefined4 *)Scr_GetEntity(0);
+  uVar2 = Scr_GetInt(1);
+  if (puVar5 == (undefined4 *)0x0) {
+    Scr_ParamError(0,0xffffffff8207c2a0);
+  }
+  uVar1 = *puVar5;
+  uVar3 = Lobby_GetPartyData();
+  Party_GetClientXNAddr(uVar3,uVar1,auStack_d0);
+  local_e0 = auStack_a0;
+  local_dc = auStack_80;
+  local_d8 = auStack_60;
+  local_d4 = auStack_40;
+  I_strncpyz(auStack_a0,0xffffffff8207c298,0x20);
+  uVar2 = va(0xffffffff82013b64,uVar2);
+  I_strncpyz(auStack_80,uVar2,0x20);
+  I_strncpyz(auStack_60,0xffffffff8207c28c,0x20);
+  I_strncpyz(auStack_40,0xffffffff8207c288,0x20);
+  uVar2 = StructuredDataDef_GetAsset(0xffffffff83cfc7c4,0xe900);
+  local_ec = 0xe900;
+  local_f0 = &DAT_83cfc804;
+  LiveStorage_MatchDataSetInternalInt(&local_e0,4,local_cc,&local_f0,0,uVar2);
+  I_strncpyz(auStack_40,0xffffffff8207c284,0x20);
+  LiveStorage_MatchDataSetInternalInt(&local_e0,4,local_cb,&local_f0,0,uVar2);
+  I_strncpyz(auStack_40,0xffffffff8207c280,0x20);
+  LiveStorage_MatchDataSetInternalInt(&local_e0,4,local_ca,&local_f0,0,uVar2);
+  I_strncpyz(auStack_40,0xffffffff8207c27c,0x20);
+  LiveStorage_MatchDataSetInternalInt(&local_e0,4,local_c9,&local_f0,0,uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2060,8 +3086,27 @@ void GScr_SetClientMatchDataDef(void)
 void GScr_GetMatchRulesData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  undefined8 uVar1;
+  int local_30 [12];
+  
   __savegprlr_29();
+  iVar2 = GameStateInfo_Get();
+  if (*(int *)(iVar2 + 4) == 0) {
+    Scr_Error(0xffffffff8207c3d0);
+  }
+  if (*(int *)(iVar2 + 8) == 0) {
+    MyAssertHandler(0xffffffff8207b7e8,0xcae,0,0xffffffff82000f98,0xffffffff82042524);
+  }
+  uVar1 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
+  local_30[0] = *(int *)(iVar2 + 8);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff8207b3d0,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  }
+  local_30[1] = 0xc00;
+  GScr_GetStructuredData(uVar1,local_30,0xffffffff8207c3bc);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2101,8 +3146,32 @@ void GScr_IsUsingOnlineDataOffline(void)
 void GetRestedTime_Internal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar5;
+  uint uVar6;
+  undefined8 uVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  uint local_30 [12];
+  
+  puVar5 = (undefined4 *)__savegprlr_28();
+  uVar6 = SV_GetClientPersistentDataBuffer(*puVar5);
+  uVar1 = SV_GetClientPersistentDataModifiedFlags(*puVar5);
+  if (uVar6 == 0) {
+    MyAssertHandler(0xffffffff8207b7e8,0xcdf,0,0xffffffff82000f98,0xffffffff8201f49c);
+    MyAssertHandler(0xffffffff8207b3d0,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  }
+  local_30[1] = 0x2ffc;
+  local_30[0] = uVar6;
+  lVar2 = Sys_GetTimeAsSeconds();
+  uVar3 = LiveStorage_GetAndResetLastPlayTime(local_30,uVar1);
+  SV_SetClientPersistentDataModified(*puVar5);
+  lVar4 = 0;
+  if ((uVar3 & 0xffffffff) != 0) {
+    lVar4 = lVar2 - uVar3;
+  }
+  __restgprlr_28(lVar4);
+  return;
 }
 
 
@@ -2256,8 +3325,29 @@ void GScr_GetRestedTime(void)
 void GScr_SendClientMatchData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
+  
   __savegprlr_28();
+  if (DAT_83d0b104 != '\0') {
+    iVar4 = 0;
+    lVar3 = 0;
+    iVar2 = DAT_83580b00;
+    iVar1 = DAT_83580b00;
+    do {
+      if (*(int *)(iVar1 + 0x332c) == 2) {
+        SV_SendClientMatchData(lVar3);
+        iVar2 = DAT_83580b00;
+      }
+      iVar4 = iVar4 + 0x3980;
+      lVar3 = lVar3 + 1;
+      iVar1 = iVar4 + iVar2;
+    } while (iVar4 < 0x40b00);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2298,8 +3388,43 @@ void GScr_GetSystemTime(void)
 void GScr_SetTeamForTrigger(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  short sVar5;
+  undefined8 uVar3;
+  
   __savegprlr_29();
+  iVar4 = GetEntity();
+  if ((*(short *)(iVar4 + 0x172) != DAT_835a0c94) && (*(short *)(iVar4 + 0x172) != DAT_835a0c96)) {
+    uVar1 = SL_ConvertToString();
+    uVar2 = SL_ConvertToString(DAT_835a0c94);
+    va(0xffffffff8207c4c4,uVar2,uVar1);
+    Scr_Error();
+  }
+  sVar5 = Scr_GetConstString(0);
+  if (sVar5 == DAT_835a0b8c) {
+    *(undefined1 *)(iVar4 + 0x16e) = 2;
+    __restgprlr_29();
+    return;
+  }
+  if (sVar5 == DAT_835a0b94) {
+    *(undefined1 *)(iVar4 + 0x16e) = 1;
+    __restgprlr_29();
+    return;
+  }
+  if (sVar5 == DAT_835a0bfa) {
+    *(undefined1 *)(iVar4 + 0x16e) = 0;
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = SL_ConvertToString();
+  uVar2 = SL_ConvertToString(DAT_835a0b94);
+  uVar3 = SL_ConvertToString(DAT_835a0b8c);
+  va(0xffffffff8207c488,uVar3,uVar2,uVar1);
+  Scr_Error();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2308,8 +3433,29 @@ void GScr_SetTeamForTrigger(void)
 void GScr_ClientClaimTrigger(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  iVar3 = GetEntity();
+  if (*(int *)(iVar3 + 0x158) == 0) {
+    Scr_Error(0xffffffff8207c53c);
+  }
+  iVar4 = Scr_GetEntity(0);
+  if ((*(short *)(iVar4 + 0x172) != DAT_835a0c94) && (*(short *)(iVar4 + 0x172) != DAT_835a0c96)) {
+    uVar1 = SL_ConvertToString();
+    uVar2 = SL_ConvertToString(DAT_835a0c94);
+    va(0xffffffff8207c500,uVar2,uVar1);
+    Scr_Error();
+  }
+  if ((*(int *)(iVar4 + 0x1b8) == 0x7ff) ||
+     (*(int *)(iVar4 + 0x1b8) == *(int *)(*(int *)(iVar3 + 0x158) + 0x150))) {
+    *(undefined4 *)(iVar4 + 0x1b8) = *(undefined4 *)(*(int *)(iVar3 + 0x158) + 0x150);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2318,8 +3464,28 @@ void GScr_ClientClaimTrigger(void)
 void GScr_ClientReleaseTrigger(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  iVar3 = GetEntity();
+  if (*(int *)(iVar3 + 0x158) == 0) {
+    Scr_Error(0xffffffff8207c5ac);
+  }
+  iVar4 = Scr_GetEntity(0);
+  if ((*(short *)(iVar4 + 0x172) != DAT_835a0c94) && (*(short *)(iVar4 + 0x172) != DAT_835a0c96)) {
+    uVar1 = SL_ConvertToString();
+    uVar2 = SL_ConvertToString(DAT_835a0c94);
+    va(0xffffffff8207c56c,uVar2,uVar1);
+    Scr_Error();
+  }
+  if (*(int *)(iVar4 + 0x1b8) == *(int *)(*(int *)(iVar3 + 0x158) + 0x150)) {
+    *(undefined4 *)(iVar4 + 0x1b8) = 0x7ff;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2755,8 +3921,28 @@ void GScr_GetCorpseAnim(void)
 void ScrCmd_PlayerForceDeathAnim(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar5;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined1 auStack_40 [64];
+  
   __savegprlr_27();
+  iVar5 = GetEntity();
+  if (*(int *)(iVar5 + 0x158) == 0) {
+    Scr_Error(0xffffffff8207b9e0);
+  }
+  uVar1 = Scr_GetEntity(0);
+  uVar2 = G_MeansOfDeathFromScriptParam(1);
+  Scr_GetString(2);
+  uVar3 = G_GetWeaponForName();
+  uVar4 = G_HitLocFromScriptParam(3);
+  Scr_GetVector(4,auStack_40);
+  G_DeathAnimForScript(iVar5,uVar1,uVar2,uVar3,uVar4,auStack_40);
+  Scr_AddInt();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2844,15 +4030,17 @@ void GScr_IncrementCounter(void)
   iVar3 = Scr_GetInt(1);
   if (iVar3 != 0) {
     if (iVar3 < 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8207b7e8,0x108d,0,0xffffffff82000f98,0xffffffff8207c818);
-    }
-    uVar2 = LiveCounter_CounterStringToID(uVar1);
-    if ((int)uVar2 == -1) {
-      Com_PrintError(0x10,0xffffffff8207c7ac,uVar1);
+      Com_PrintError(0x10,0xffffffff8207c7d0);
     }
     else {
-      LiveCounter_IncrementCounterValue(uVar2,iVar3);
+      uVar2 = LiveCounter_CounterStringToID(uVar1);
+      if ((int)uVar2 == -1) {
+        Com_PrintError(0x10,0xffffffff8207c7ac,uVar1);
+      }
+      else {
+        LiveCounter_IncrementCounterValue(uVar2,iVar3);
+      }
     }
   }
   return;
@@ -2890,11 +4078,63 @@ void GScr_GetCounterTotal(void)
 
 // 824A4180  BuiltIn_GetFunction  (game_mp/g_scr_main_mp.cpp:4415)
 
-void BuiltIn_GetFunction(void)
+void BuiltIn_GetFunction(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  char cVar2;
+  undefined **ppuVar3;
+  undefined **ppuVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  int *piVar7;
+  char *pcVar8;
+  char *pcVar9;
+  longlong lVar10;
+  undefined **ppuVar11;
+  uint uVar12;
+  
+  puVar5 = (undefined4 *)__savegprlr_29();
+  if (puVar5 == (undefined4 *)0x0) {
+    lVar10 = 100;
+    ppuVar11 = &PTR_caseD_b_8296a88c;
+    do {
+      ppuVar3 = ppuVar11 + 4;
+      ppuVar4 = ppuVar11 + 5;
+      ppuVar11 = ppuVar11 + 3;
+      Scr_RegisterFunction(*ppuVar3,*ppuVar4,*ppuVar11);
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    __restgprlr_29(0);
+    return;
+  }
+  piVar7 = &DAT_8296a898;
+  iVar6 = 0;
+  uVar12 = 0;
+  do {
+    pcVar8 = (&PTR_s_flash_killed_8298db24)[*piVar7];
+    pcVar9 = (char *)*puVar5;
+    do {
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar8;
+      if (cVar1 == '\0') break;
+      pcVar9 = pcVar9 + 1;
+      pcVar8 = pcVar8 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      *puVar5 = (&PTR_s_flash_killed_8298db24)[(&DAT_8296a898)[iVar6 * 3]];
+      *param_2 = (&DAT_8296a8a0)[iVar6 * 3];
+      __restgprlr_29((&DAT_8296a898)[iVar6 * 3]);
+      return;
+    }
+    uVar12 = uVar12 + 0xc;
+    iVar6 = iVar6 + 1;
+    piVar7 = piVar7 + 3;
+    if (0x4af < uVar12) {
+      __restgprlr_29(0);
+      return;
+    }
+  } while( true );
 }
 
 
@@ -2916,11 +4156,62 @@ void Scr_GetFunction(undefined8 param_1,undefined4 *param_2)
 
 // 824A42E8  BuiltIn_GetMethod  (game_mp/g_scr_main_mp.cpp:4565)
 
-void BuiltIn_GetMethod(void)
+void BuiltIn_GetMethod(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  int *piVar7;
+  char *pcVar8;
+  char *pcVar9;
+  longlong lVar10;
+  uint uVar11;
+  
+  puVar5 = (undefined4 *)__savegprlr_28();
+  if (puVar5 == (undefined4 *)0x0) {
+    lVar10 = 0x24;
+    puVar5 = (undefined4 *)0x8296ad3c;
+    do {
+      puVar3 = puVar5 + 4;
+      puVar4 = puVar5 + 5;
+      puVar5 = puVar5 + 3;
+      Scr_RegisterFunction(*puVar3,*puVar4,*puVar5);
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    __restgprlr_28(0);
+    return;
+  }
+  piVar7 = &DAT_8296ad48;
+  iVar6 = 0;
+  uVar11 = 0;
+  do {
+    pcVar8 = (&PTR_s_attach_8298e238)[*piVar7 + -0x8000];
+    pcVar9 = (char *)*puVar5;
+    do {
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar8;
+      if (cVar1 == '\0') break;
+      pcVar9 = pcVar9 + 1;
+      pcVar8 = pcVar8 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      *puVar5 = (&PTR_s_attach_8298e238)[(&DAT_8296ad48)[iVar6 * 3] + -0x8000];
+      *param_2 = (&DAT_8296ad50)[iVar6 * 3];
+      __restgprlr_28((&DAT_8296ad48)[iVar6 * 3]);
+      return;
+    }
+    uVar11 = uVar11 + 0xc;
+    iVar6 = iVar6 + 1;
+    piVar7 = piVar7 + 3;
+    if (0x1af < uVar11) {
+      __restgprlr_28(0);
+      return;
+    }
+  } while( true );
 }
 
 
@@ -2996,8 +4287,112 @@ void GScr_AddEntity(int param_1)
 void Scr_ParseGameTypeList_FastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  uint uVar6;
+  undefined8 uVar4;
+  char *pcVar7;
+  ulonglong uVar5;
+  int iVar8;
+  char *pcVar9;
+  int iVar10;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  uint local_90;
+  char *local_8c;
+  undefined1 auStack_88 [8];
+  undefined1 auStack_80 [128];
+  
   __savegprlr_19();
+  LargeLocal__LargeLocal(auStack_80,0x800);
+  uVar2 = LargeLocal__GetBuf(auStack_80);
+  LargeLocal__LargeLocal(auStack_88,0x800);
+  uVar3 = LargeLocal__GetBuf(auStack_88);
+  memset(&DAT_8359987c,0,0x1080);
+  iVar10 = 0;
+  uVar6 = DB_ReadRawFile(0xffffffff8207c914,uVar2,0x18000);
+  if ((uVar6 != 0) && (local_90 = uVar6, uVar2 = Com_Parse(&local_90), local_90 != 0)) {
+    puVar11 = &DAT_835998fc;
+    iVar10 = 0;
+    do {
+      if (puVar11 == (undefined4 *)0x8359a97c) {
+        Com_Printf(0x17,0xffffffff8207c830,0x1f);
+        break;
+      }
+      puVar12 = puVar11 + -0x20;
+      I_strncpyz(puVar12,uVar2,0x40);
+      I_strlwr(puVar12);
+      uVar4 = va(0xffffffff8207c870,uVar2);
+      pcVar7 = (char *)DB_ReadRawFile(uVar4,uVar3,0x18000);
+      pcVar9 = pcVar7;
+      if (pcVar7 == (char *)0x0) {
+LAB_824a46a8:
+        uVar4 = va(0xffffffff8207c870,uVar2);
+        Com_PrintWarning(0x17,0xffffffff8207c890,uVar4,uVar2);
+LAB_824a46e8:
+        I_strncpyz(puVar11 + -0x10,puVar12,0x40);
+LAB_824a46f8:
+        *puVar11 = 0;
+      }
+      else {
+        do {
+          cVar1 = *pcVar9;
+          pcVar9 = pcVar9 + 1;
+        } while (cVar1 != '\0');
+        if ((int)(pcVar9 + (-1 - (int)pcVar7)) < 1) goto LAB_824a46a8;
+        if (0x3ff < (int)(pcVar9 + (-1 - (int)pcVar7))) {
+          uVar2 = va(0xffffffff8207c870,uVar2);
+          Com_PrintWarning(0x17,0xffffffff8207c8d8,uVar2);
+          goto LAB_824a46e8;
+        }
+        local_8c = pcVar7;
+        uVar2 = Com_Parse(&local_8c);
+        I_strncpyz(puVar11 + -0x10,uVar2,0x40);
+        uVar5 = Com_Parse(&local_8c);
+        if (((uVar5 & 0xffffffff) == 0) || (iVar8 = I_stricmp(uVar5,0xffffffff82012e2c), iVar8 != 0)
+           ) goto LAB_824a46f8;
+        *puVar11 = 1;
+      }
+      iVar10 = iVar10 + 1;
+      puVar11 = puVar11 + 0x21;
+      uVar2 = Com_Parse(&local_90);
+    } while (local_90 != 0);
+  }
+  DAT_83599878 = iVar10;
+  LargeLocal___LargeLocal(auStack_88);
+  LargeLocal___LargeLocal(auStack_80);
+  __restgprlr_19();
+  return;
+}
+
+
+// 824A4750  Scr_UpdateGameTypeList  (game_mp/g_scr_main_mp.cpp:4930)
+
+void Scr_UpdateGameTypeList(void)
+
+{
+  if (DAT_83599874 == 0) {
+    return;
+  }
+  DAT_83599874 = 0;
+  Scr_ParseGameTypeList_FastFile();
+  return;
+}
+
+
+// 824A4778  Scr_ParseGameTypeList  (game_mp/g_scr_main_mp.cpp:4940)
+
+void Scr_ParseGameTypeList(void)
+
+{
+  ulonglong uVar1;
+  
+  uVar1 = DB_GetLoadedFlags();
+  if ((uVar1 & 2) != 0) {
+    DAT_83599874 = 1;
+  }
+  return;
 }
 
 
@@ -3006,8 +4401,31 @@ void Scr_ParseGameTypeList_FastFile(void)
 void Scr_GetGameTypeNameForScript(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  lVar4 = 0;
+  if (DAT_83599874 != 0) {
+    DAT_83599874 = 0;
+    Scr_ParseGameTypeList_FastFile();
+  }
+  if (0 < DAT_83599878) {
+    lVar3 = -0x7ca66784;
+    do {
+      iVar2 = I_stricmp(lVar3,uVar1);
+      if (iVar2 == 0) {
+        __restgprlr_28(lVar4 * 0x84 + -0x7ca66744);
+        return;
+      }
+      lVar4 = lVar4 + 1;
+      lVar3 = lVar3 + 0x84;
+    } while ((int)lVar4 < DAT_83599878);
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -3029,10 +4447,31 @@ void Scr_LoadGameType(void)
 
 {
   if (DAT_83599840 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207b7e8,0x137f,0,0xffffffff82000f98,0xffffffff8207c938);
   }
   Scr_ExecThread(DAT_83599840,0);
+  Scr_FreeThread();
+  return;
+}
+
+
+// 824A48D8  Scr_StartupGameType  (game_mp/g_scr_main_mp.cpp:4998)
+
+void Scr_StartupGameType(void)
+
+{
+  Scr_ExecThread(DAT_83599844,0);
+  Scr_FreeThread();
+  return;
+}
+
+
+// 824A4910  Scr_PlayerConnect  (game_mp/g_scr_main_mp.cpp:5007)
+
+void Scr_PlayerConnect(undefined8 param_1)
+
+{
+  Scr_ExecEntThread(param_1,DAT_83599848,0);
   Scr_FreeThread();
   return;
 }
@@ -3189,6 +4628,66 @@ void Scr_CodeEndGame(void)
 }
 
 
+// 824A4C70  Scr_PlayerLastStand  (game_mp/g_scr_main_mp.cpp:5109)
+
+void Scr_PlayerLastStand(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+                        ulonglong param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
+
+{
+  ulonglong uVar1;
+  undefined8 uVar2;
+  undefined2 uVar4;
+  longlong lVar3;
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_24();
+  Scr_AddInt(0);
+  Scr_AddInt(in_stack_0000005c);
+  uVar4 = G_GetHitLocationString(in_stack_00000054);
+  Scr_AddConstString(uVar4);
+  if ((param_8 & 0xffffffff) == 0) {
+    Scr_AddUndefined();
+  }
+  else {
+    Scr_AddVector(param_8);
+  }
+  if ((param_7 & 0xff) == 0) {
+    lVar3 = BG_GetWeaponNameComplete(param_6,0,uVar1 - 0x450,0x400);
+  }
+  else {
+    BG_GetWeaponNameComplete(param_6,0,uVar1 - 0x44c,0x3fc);
+    lVar3 = uVar1 - 0x450;
+  }
+  Scr_AddString(lVar3);
+  if (((int)param_5 < 0) || (0xf < (int)param_5)) {
+    Scr_AddString(0xffffffff8207c954);
+  }
+  else {
+    Scr_AddConstString(**(undefined2 **)
+                         ((int)&PTR_DAT_82969440 + (int)((param_5 & 0xffffffff) << 2)));
+  }
+  Scr_AddInt(param_4);
+  if ((param_3 & 0xffffffff) == 0) {
+    Scr_AddUndefined();
+  }
+  else {
+    Scr_AddEntity(param_3);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    Scr_AddUndefined();
+  }
+  else {
+    Scr_AddEntity(param_2);
+  }
+  Scr_ExecEntThread(uVar2,DAT_83599868,9);
+  Scr_FreeThread();
+  __restgprlr_24();
+  return;
+}
+
+
 // 824A4DC0  Scr_PlayerMigrated  (game_mp/g_scr_main_mp.cpp:5147)
 
 void Scr_PlayerMigrated(undefined8 param_1)
@@ -3213,11 +4712,18 @@ void Scr_HostMigration(void)
 
 // 824A4E30  Scr_VoteCalled  (game_mp/g_scr_main_mp.cpp:5165)
 
-void Scr_VoteCalled(void)
+void Scr_VoteCalled(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  Scr_AddString(param_4);
+  Scr_AddString(param_3);
+  Scr_AddString(param_2);
+  Scr_Notify(uVar1,DAT_835a0d60,3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -3246,8 +4752,83 @@ undefined8 Scr_LoadRead(void)
 void Scr_SpawnFX(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  uint uVar3;
+  ulonglong uVar2;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  undefined1 auStack_70 [16];
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_48;
+  float local_44;
+  float local_40;
+  
   __savegprlr_28();
+  uVar3 = Scr_GetNumParam();
+  if ((uVar3 < 2) || (uVar3 = Scr_GetNumParam(), 4 < uVar3)) {
+    Scr_Error(0xffffffff8206e424);
+  }
+  lVar6 = 0;
+  uVar2 = Scr_GetInt(0);
+  iVar4 = Scr_GetNumParam();
+  dVar10 = 1.0;
+  dVar9 = 0.0;
+  if (iVar4 != 3) {
+    if (iVar4 != 4) goto LAB_824a5014;
+    Scr_GetVector(3,&local_48);
+    dVar8 = (double)SQRT(local_40 * local_40 + local_48 * local_48 + local_44 * local_44);
+    dVar7 = dVar10;
+    if (-dVar8 < 0.0) {
+      dVar7 = dVar8;
+    }
+    fVar1 = (float)(dVar10 / dVar7);
+    local_48 = local_48 * fVar1;
+    local_44 = local_44 * fVar1;
+    local_40 = local_40 * fVar1;
+    if (dVar8 == dVar9) {
+      Scr_FxParamError(3,0xffffffff8207c9d8,uVar2);
+    }
+    lVar6 = 1;
+  }
+  Scr_GetVector(2,&local_60);
+  dVar8 = (double)SQRT(local_5c * local_5c + local_58 * local_58 + local_60 * local_60);
+  dVar7 = dVar10;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
+  }
+  fVar1 = (float)(dVar10 / dVar7);
+  local_60 = local_60 * fVar1;
+  local_5c = fVar1 * local_5c;
+  local_58 = local_58 * fVar1;
+  if (dVar8 == dVar9) {
+    Scr_FxParamError(2,0xffffffff8207c9a8,uVar2);
+  }
+  lVar6 = lVar6 + 1;
+LAB_824a5014:
+  Scr_GetVector(1,auStack_70);
+  iVar4 = G_Spawn();
+  iVar5 = (int)(uVar2 & 0xff);
+  *(int *)(iVar4 + 0xd8) = iVar5;
+  *(undefined4 *)(iVar4 + 4) = 8;
+  if (iVar5 != (int)uVar2) {
+    MyAssertHandler(0xffffffff8207b7e8,0x147b,0,0xffffffff8207c988,uVar2 & 0xff,uVar2);
+  }
+  G_SetOrigin(iVar4,auStack_70);
+  Scr_SetFxAngles(lVar6,&local_60,iVar4 + 0x3c);
+  if (*(int *)(iVar4 + 0x74) != 0) {
+    MyAssertHandler(0xffffffff8207b7e8,0x147e,1,0xffffffff8207c95c,0xffffffff8207c974);
+  }
+  SV_LinkEntity(iVar4);
+  Scr_AddEntity(iVar4);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3267,7 +4848,6 @@ void Scr_TriggerFX(void)
   }
   iVar1 = Scr_GetEntity(0);
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8207b7e8,0x1499,0,0xffffffff82000f98,0xffffffff82002614);
   }
   if (*(int *)(iVar1 + 4) != 8) {
@@ -3290,7 +4870,88 @@ void Scr_TriggerFX(void)
 void Scr_PlayLoopedFX(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  uint uVar3;
+  undefined8 uVar2;
+  int iVar4;
+  longlong lVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  undefined1 auStack_78 [24];
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_48;
+  float local_44;
+  float local_40;
+  
   __savegprlr_28();
+  uVar3 = Scr_GetNumParam();
+  if ((uVar3 < 3) || (uVar3 = Scr_GetNumParam(), 6 < uVar3)) {
+    Scr_Error(0xffffffff8206e424);
+  }
+  lVar5 = 0;
+  dVar8 = 0.0;
+  uVar2 = Scr_GetInt(0);
+  iVar4 = Scr_GetNumParam();
+  if (iVar4 != 4) {
+    dVar9 = 1.0;
+    if (iVar4 != 5) {
+      if (iVar4 != 6) goto LAB_824a5328;
+      lVar5 = 1;
+      Scr_GetVector(5,&local_48);
+      dVar7 = (double)SQRT(local_40 * local_40 + local_48 * local_48 + local_44 * local_44);
+      dVar6 = dVar9;
+      if (-dVar7 < 0.0) {
+        dVar6 = dVar7;
+      }
+      fVar1 = (float)(dVar9 / dVar6);
+      local_48 = local_48 * fVar1;
+      local_44 = local_44 * fVar1;
+      local_40 = local_40 * fVar1;
+      if (dVar7 == dVar8) {
+        Scr_FxParamError(5,0xffffffff8207caa4,uVar2);
+      }
+    }
+    Scr_GetVector(4,&local_60);
+    dVar7 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar6 = dVar9;
+    if (-dVar7 < 0.0) {
+      dVar6 = dVar7;
+    }
+    fVar1 = (float)(dVar9 / dVar6);
+    local_60 = local_60 * fVar1;
+    local_5c = local_5c * fVar1;
+    local_58 = local_58 * fVar1;
+    if (dVar7 == dVar8) {
+      Scr_FxParamError(4,0xffffffff8207ca70,uVar2);
+    }
+    lVar5 = lVar5 + 1;
+  }
+  dVar8 = (double)Scr_GetFloat(3);
+LAB_824a5328:
+  Scr_GetVector(2,auStack_78);
+  dVar9 = (double)Scr_GetFloat(1);
+  dVar9 = floor((double)((float)(dVar9 * 1000.0) + 0.5));
+  if ((int)dVar9 < 1) {
+    Scr_FxParamError(1,0xffffffff8207ca40,uVar2);
+  }
+  iVar4 = G_Spawn();
+  uVar3 = (uint)uVar2 & 0xff;
+  *(uint *)(iVar4 + 0xd8) = uVar3;
+  *(undefined4 *)(iVar4 + 4) = 9;
+  if (uVar3 != (uint)uVar2) {
+    MyAssertHandler(0xffffffff8207b7e8,0x14e4,0,0xffffffff82000f98,0xffffffff8207ca28);
+  }
+  G_SetOrigin(iVar4,auStack_78);
+  Scr_SetFxAngles(lVar5,&local_60,iVar4 + 0x3c);
+  *(float *)(iVar4 + 0x54) = (float)dVar8;
+  *(int *)(iVar4 + 0x58) = (int)dVar9;
+  SV_LinkEntity(iVar4);
+  Scr_AddEntity(iVar4);
+  __restgprlr_28();
+  return;
 }
 

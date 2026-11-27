@@ -2,11 +2,84 @@
 
 // 828F1E80  `anonymous_namespace'::i3dl2_to_properties  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room_3dl2_float.cpp:28)
 
-void _anonymous_namespace___i3dl2_to_properties(void)
+void _anonymous_namespace___i3dl2_to_properties(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined4 uStack_3c;
+  
   __savegprlr_29();
+  param_3[0xc] = 5;
+  dVar5 = 0.009999999776482582;
+  param_3[2] = 6;
+  dVar4 = 1.0;
+  param_3[3] = 6;
+  param_3[4] = 0x1b;
+  param_3[5] = 0x1b;
+  param_3[0x14] = 0x42c80000;
+  param_3[0xe] = (float)((double)(longlong)*param_2 * 0.009999999776482582);
+  iVar2 = param_2[1];
+  param_3[9] = 4;
+  param_3[0xb] = 6;
+  param_3[0xf] = (float)((double)(longlong)iVar2 * 0.009999999776482582);
+  if ((float)param_2[4] < 1.0) {
+    param_3[8] = 8;
+    dVar3 = log10((double)(float)param_2[4]);
+    iVar2 = (int)((float)dVar3 * 4.0);
+    if (iVar2 < -8) {
+      iVar2 = 0;
+    }
+    else if (iVar2 < 0) {
+      iVar2 = iVar2 + 8;
+    }
+    else {
+      iVar2 = 8;
+    }
+    param_3[10] = iVar2;
+    param_3[0x12] = param_2[3];
+  }
+  else {
+    param_3[10] = 8;
+    dVar3 = log10((double)(float)param_2[4]);
+    iVar2 = (int)((float)dVar3 * -4.0);
+    if (iVar2 < -8) {
+      iVar2 = 0;
+    }
+    else if (iVar2 < 0) {
+      iVar2 = iVar2 + 8;
+    }
+    else {
+      iVar2 = 8;
+    }
+    param_3[8] = iVar2;
+    param_3[0x12] = (float)param_2[3] * (float)param_2[4];
+  }
+  param_3[0x10] = (float)((double)(longlong)param_2[5] * dVar5);
+  dVar3 = (double)((float)param_2[6] * 1000.0);
+  if (300.0 <= dVar3) {
+    dVar3 = (double)(float)(300.0 - dVar4);
+  }
+  if (dVar3 <= dVar4) {
+    dVar3 = dVar4;
+  }
+  *param_3 = (int)(longlong)dVar3;
+  param_3[0x11] = (float)((double)(longlong)param_2[7] * dVar5);
+  fVar1 = (float)param_2[8] * 1000.0;
+  if (85.0 <= fVar1) {
+    fVar1 = (float)(85.0 - dVar4);
+  }
+  param_3[1] = (int)(longlong)fVar1;
+  uStack_3c = (undefined4)(longlong)((float)param_2[9] * 0.15);
+  param_3[7] = uStack_3c;
+  param_3[6] = uStack_3c;
+  param_3[0x13] = param_2[10];
+  param_3[0xd] = param_2[0xb];
+  __restgprlr_29();
+  return;
 }
 
 

@@ -118,21 +118,123 @@ void rgb_ycc_convert(undefined8 param_1,longlong param_2,int *param_3,ulonglong 
 
 // 827B1698  rgb_gray_convert  (jpeg-6/jccolor.c:189)
 
-void rgb_gray_convert(void)
+void rgb_gray_convert(undefined8 param_1,longlong param_2,int *param_3,ulonglong param_4,
+                     longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  byte *pbVar3;
+  byte *pbVar4;
+  int iVar6;
+  longlong lVar5;
+  int iVar7;
+  byte *pbVar8;
+  ulonglong uVar9;
+  
+  iVar6 = __savegprlr_28();
+  param_5 = param_5 + -1;
+  uVar1 = *(uint *)(iVar6 + 0x24);
+  iVar6 = *(int *)(*(int *)(iVar6 + 0x158) + 8);
+  if (-1 < param_5) {
+    lVar5 = (param_4 & 0x3fffffff) << 2;
+    param_2 = param_2 + -4;
+    do {
+      iVar7 = 0;
+      param_2 = param_2 + 4;
+      iVar2 = *(int *)(*param_3 + (int)lVar5);
+      lVar5 = lVar5 + 4;
+      if ((ulonglong)uVar1 != 0) {
+        pbVar8 = (byte *)(*(int *)param_2 + -3);
+        uVar9 = (ulonglong)uVar1;
+        do {
+          pbVar3 = pbVar8 + 5;
+          pbVar4 = pbVar8 + 4;
+          pbVar8 = pbVar8 + 3;
+          *(char *)(iVar7 + iVar2) =
+               (char)((uint)(*(int *)((*pbVar8 + 0x200) * 4 + iVar6) +
+                             *(int *)((*pbVar4 + 0x100) * 4 + iVar6) +
+                            *(int *)((uint)*pbVar3 * 4 + iVar6)) >> 0x10);
+          iVar7 = iVar7 + 1;
+          uVar9 = uVar9 - 1;
+        } while (uVar9 != 0);
+      }
+      param_5 = param_5 + -1;
+    } while (-1 < param_5);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 827B1738  cmyk_ycck_convert  (jpeg-6/jccolor.c:228)
 
-void cmyk_ycck_convert(void)
+void cmyk_ycck_convert(undefined8 param_1,longlong param_2,int *param_3,ulonglong param_4,
+                      longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  uint uVar1;
+  byte *pbVar2;
+  longlong lVar3;
+  byte *pbVar4;
+  longlong lVar5;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  undefined1 *puVar11;
+  undefined1 *puVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  
+  iVar10 = __savegprlr_18();
+  param_5 = param_5 + -1;
+  uVar1 = *(uint *)(iVar10 + 0x24);
+  iVar10 = *(int *)(*(int *)(iVar10 + 0x158) + 8);
+  if (-1 < param_5) {
+    lVar13 = (param_4 & 0x3fffffff) << 2;
+    param_2 = param_2 + -4;
+    do {
+      param_2 = param_2 + 4;
+      iVar9 = (int)lVar13;
+      puVar12 = *(undefined1 **)(iVar9 + *param_3);
+      lVar13 = lVar13 + 4;
+      if ((ulonglong)uVar1 != 0) {
+        puVar11 = (undefined1 *)(*(int *)param_2 + -1);
+        iVar7 = *(int *)(iVar9 + param_3[3]) - (int)puVar12;
+        iVar8 = *(int *)(iVar9 + param_3[1]) - (int)puVar12;
+        iVar9 = *(int *)(param_3[2] + iVar9) - (int)puVar12;
+        uVar14 = (ulonglong)uVar1;
+        do {
+          pbVar2 = puVar11 + 2;
+          lVar3 = -(ulonglong)(byte)puVar11[1];
+          pbVar4 = puVar11 + 3;
+          puVar11 = puVar11 + 4;
+          lVar5 = -(ulonglong)*pbVar2;
+          lVar6 = -(ulonglong)*pbVar4;
+          puVar12[iVar7] = *puVar11;
+          *puVar12 = (char)((uint)(*(int *)((int)((lVar6 + 0x2ffU & 0xffffffff) << 2) + iVar10) +
+                                   *(int *)((int)((lVar5 + 0x1ffU & 0xffffffff) << 2) + iVar10) +
+                                  *(int *)((int)((lVar3 + 0xffU & 0xffffffff) << 2) + iVar10)) >>
+                           0x10);
+          puVar12[iVar8] =
+               (char)((uint)(*(int *)((int)((lVar6 + 0x5ffU & 0xffffffff) << 2) + iVar10) +
+                             *(int *)((int)((lVar5 + 0x4ffU & 0xffffffff) << 2) + iVar10) +
+                            *(int *)((int)((lVar3 + 0x3ffU & 0xffffffff) << 2) + iVar10)) >> 0x10);
+          puVar12[iVar9] =
+               (char)((uint)(*(int *)((int)((lVar6 + 0x7ffU & 0xffffffff) << 2) + iVar10) +
+                             *(int *)((int)((lVar5 + 0x6ffU & 0xffffffff) << 2) + iVar10) +
+                            *(int *)((int)((lVar3 + 0x5ffU & 0xffffffff) << 2) + iVar10)) >> 0x10);
+          puVar12 = puVar12 + 1;
+          uVar14 = uVar14 - 1;
+        } while (uVar14 != 0);
+      }
+      param_5 = param_5 + -1;
+    } while (-1 < param_5);
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -179,11 +281,54 @@ void grayscale_convert(int param_1,int param_2,int *param_3,int param_4,longlong
 
 // 827B18E8  null_convert  (jpeg-6/jccolor.c:312)
 
-void null_convert(void)
+void null_convert(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
+                 longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined1 *puVar6;
+  int iVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  
+  iVar4 = __savegprlr_29();
+  param_5 = param_5 + -1;
+  iVar1 = *(int *)(iVar4 + 0x44);
+  uVar2 = *(uint *)(iVar4 + 0x24);
+  if (-1 < param_5) {
+    lVar8 = (param_4 & 0x3fffffff) << 2;
+    do {
+      iVar4 = 0;
+      lVar5 = param_3;
+      if (0 < iVar1) {
+        do {
+          iVar7 = 0;
+          iVar3 = *(int *)(*(int *)lVar5 + (int)lVar8);
+          if ((ulonglong)uVar2 != 0) {
+            puVar6 = (undefined1 *)((*(int *)param_2 - iVar1) + iVar4);
+            uVar9 = (ulonglong)uVar2;
+            do {
+              puVar6 = puVar6 + iVar1;
+              *(undefined1 *)(iVar7 + iVar3) = *puVar6;
+              iVar7 = iVar7 + 1;
+              uVar9 = uVar9 - 1;
+            } while (uVar9 != 0);
+          }
+          iVar4 = iVar4 + 1;
+          lVar5 = lVar5 + 4;
+        } while (iVar4 < iVar1);
+      }
+      param_5 = param_5 + -1;
+      param_2 = param_2 + 4;
+      lVar8 = lVar8 + 4;
+    } while (-1 < param_5);
+  }
+  __restgprlr_29();
+  return;
 }
 
 

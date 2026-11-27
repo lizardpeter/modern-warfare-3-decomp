@@ -5,7 +5,80 @@
 double ldexp(double _X,int _Y)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_Y);
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  longlong in_r4;
+  int iVar4;
+  double dVar5;
+  double _Sign;
+  double dVar6;
+  ushort uStack00000010;
+  uint local_40 [2];
+  longlong local_38;
+  
+  dVar5 = (double)__savegprlr_29(_Y);
+  _uStack00000010 = dVar5;
+  uVar1 = ctrlfp(0xf8,0xffffffffc007feff);
+  iVar4 = (int)in_r4;
+  if ((uStack00000010 & 0x7ff0) == 0x7ff0) {
+    iVar3 = sptype(dVar5);
+    if (0 < iVar3) {
+      if (iVar3 < 3) goto LAB_8291c2b4;
+      if (iVar3 == 3) {
+        local_38 = (longlong)iVar4;
+        dVar5 = (double)handle_qnan2(dVar5,(double)local_38,0x19);
+        goto LAB_8291c2c4;
+      }
+    }
+    uVar1 = 8;
+    dVar6 = dVar5 + 1.0;
+  }
+  else {
+    dVar6 = 0.0;
+    if (dVar5 == 0.0) {
+LAB_8291c2b4:
+      ctrlfp(uVar1,0xffffffffc007feff);
+      goto LAB_8291c2c4;
+    }
+    uVar2 = decomp(dVar5,uVar1,local_40);
+    if (iVar4 < 0) {
+      if ((int)local_40[0] < -0x80000000 - iVar4) {
+LAB_8291c270:
+        dVar6 = _Sign * dVar6;
+        uVar1 = 0x12;
+        goto LAB_8291c1ac;
+      }
+LAB_8291c210:
+      in_r4 = (ulonglong)local_40[0] + in_r4;
+      iVar3 = (int)in_r4;
+      if (0xa00 < iVar3) goto LAB_8291c21c;
+      if (iVar3 < 0x401) {
+        if (-0x9fe < iVar3) {
+          if (iVar3 < -0x3fd) {
+            dVar6 = (double)set_exp(uVar2,in_r4 + 0x600);
+            uVar1 = 0x12;
+            goto LAB_8291c1ac;
+          }
+          dVar5 = (double)set_exp();
+          goto LAB_8291c2b4;
+        }
+        goto LAB_8291c270;
+      }
+      dVar6 = (double)set_exp(uVar2,in_r4 + -0x600);
+    }
+    else {
+      if ((int)local_40[0] <= 0x7fffffff - iVar4) goto LAB_8291c210;
+LAB_8291c21c:
+      dVar6 = _copysign(DAT_829b0418,_Sign);
+    }
+    uVar1 = 0x11;
+  }
+LAB_8291c1ac:
+  local_38 = (longlong)iVar4;
+  dVar5 = (double)except2(dVar5,(double)(longlong)iVar4,dVar6,uVar1,0x19);
+LAB_8291c2c4:
+  dVar5 = (double)__restgprlr_29(dVar5);
+  return dVar5;
 }
 

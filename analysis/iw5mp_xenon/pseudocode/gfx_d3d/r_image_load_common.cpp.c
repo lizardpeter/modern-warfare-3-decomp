@@ -13,24 +13,19 @@ void Image_GetMipmapResolution
   
   uVar1 = __savegprlr_25();
   if ((int)(uint)uVar1 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x21,0,0xffffffff821c53cc,0xffffffff821c53e4,uVar1);
   }
   if ((int)(uint)param_2 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x22,0,0xffffffff821c53a0,0xffffffff821c53b8,param_2);
   }
   uVar3 = (uint)param_3;
   if ((int)uVar3 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x23,0,0xffffffff821c537c,0xffffffff821c5390,param_3);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x24,0,0xffffffff82000f98,0xffffffff821c5370);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x25,0,0xffffffff82000f98,0xffffffff821c5364);
   }
   uVar2 = (uint)uVar1 >> (uVar3 & 0x3f);
@@ -44,11 +39,9 @@ void Image_GetMipmapResolution
   }
   *(short *)param_5 = (short)uVar3;
   if (*(short *)param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x29,1,0xffffffff821c533c,0xffffffff821c5354);
   }
   if (*(short *)param_5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x2a,1,0xffffffff821c5310,0xffffffff821c5328);
   }
   __restgprlr_25();
@@ -62,7 +55,6 @@ undefined8 Image_GetPlatformScreenWidth(undefined8 param_1,undefined8 param_2)
 
 {
   if ((int)param_1 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x35,0,0xffffffff821c5444,0xffffffff821c5458,param_1);
   }
   return param_2;
@@ -75,7 +67,6 @@ undefined8 Image_GetPlatformScreenHeight(undefined8 param_1,undefined8 param_2)
 
 {
   if ((int)param_1 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x41,0,0xffffffff821c5444,0xffffffff821c5458,param_1);
   }
   return param_2;
@@ -137,13 +128,11 @@ void Image_TrackTexture(undefined8 param_1,ulonglong param_2,undefined8 param_3,
   }
   else {
     if (uVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821c53f8,0x14b,1,0xffffffff82000f98,0xffffffff821c547c);
     }
     iVar3 = XGSetTextureHeader(param_4,param_5,uVar4,0,param_3,0,0,0xffffffffffffffff);
   }
   if ((*(int *)(iVar2 + 0x3c) != 0) && (*(int *)(iVar2 + 0x3c) != iVar3)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x94,0,0xffffffff82000f98,0xffffffff821c5638);
   }
   *(int *)(iVar2 + 0x3c) = iVar3;
@@ -154,11 +143,40 @@ void Image_TrackTexture(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 827474A8  Image_GetCardMemoryAmount  (gfx_d3d/r_image_load_common.cpp:313)
 
-void Image_GetCardMemoryAmount(void)
+void Image_GetCardMemoryAmount
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined1 auStack_120 [192];
+  undefined1 auStack_60 [96];
+  
+  uVar2 = __savegprlr_28();
+  uVar1 = uVar2 & 0x30000;
+  uVar2 = (uVar2 & 0xffffffff) >> 1 & 1;
+  if (uVar1 == 0x10000) {
+    XGSetCubeTextureHeader(param_3,uVar2,0,param_2,0,0,0xffffffffffffffff,auStack_60);
+    __restgprlr_28();
+    return;
+  }
+  if (uVar1 != 0x20000) {
+    if (uVar1 != 0x30000) {
+      if (uVar1 != 0) {
+        MyAssertHandler(0xffffffff821c53f8,0x14b,1,0xffffffff82000f98,0xffffffff821c547c);
+      }
+      XGSetTextureHeader(param_3,param_4,uVar2,0,param_2,0,0,0xffffffffffffffff);
+      __restgprlr_28();
+      return;
+    }
+    XGSetLineTextureHeader(param_3,uVar2,0,param_2,0,0,0xffffffffffffffff,auStack_120);
+    __restgprlr_28();
+    return;
+  }
+  XGSetVolumeTextureHeader(param_3,param_4,param_5,uVar2,0,param_2,0,0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -205,20 +223,178 @@ void Image_MipLevelBaseAddress
     }
     else {
       if (*(char *)(iVar9 + 0x38) != '\x05') {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821c53f8,0x30e,0,0xffffffff8205d150,0xffffffff821c55cc);
       }
       XGSetCubeTextureHeader(uVar1,0,0,param_3,0,0,0xffffffffffffffff,0);
     }
     lVar5 = (ulonglong)local_70 + lVar5;
   }
-  if ((-1 < (int)lVar5) && ((int)lVar5 < *(int *)(iVar9 + 0x3c))) {
-    __restgprlr_20(lVar5);
+  if (((int)lVar5 < 0) || (*(int *)(iVar9 + 0x3c) <= (int)lVar5)) {
+    uVar8 = va(0xffffffff821c5508,param_5,param_2,param_4,param_5,uVar1,uVar2,uVar3);
+    MyAssertHandler(0xffffffff821c53f8,0x318,0,0xffffffff820011f4,0xffffffff821c54b8,uVar8);
+  }
+  __restgprlr_20(lVar5);
+  return;
+}
+
+
+// 82747850  Image_Upload2D_CopyData_Xbox  (gfx_d3d/r_image_load_common.cpp:801)
+
+void Image_Upload2D_CopyData_Xbox
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
+
+{
+  ushort uVar1;
+  int iVar3;
+  longlong lVar2;
+  void *pvVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  int iVar10;
+  uint local_b0;
+  uint local_ac [3];
+  undefined1 auStack_a0 [52];
+  uint local_6c;
+  
+  iVar3 = __savegprlr_22();
+  if (*(int *)(iVar3 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x32e,0,0xffffffff82000f98,0xffffffff8205d778);
+  }
+  lVar2 = Image_MipLevelBaseAddress(iVar3,iVar3,param_2,param_3,param_4);
+  uVar1 = *(ushort *)(iVar3 + 0x40) >> ((uint)param_4 & 0x3f);
+  uVar5 = lVar2 + (ulonglong)*(uint *)(iVar3 + 0x48);
+  uVar6 = 1;
+  if (1 < uVar1) {
+    uVar6 = (uint)uVar1;
+  }
+  uVar1 = *(ushort *)(iVar3 + 0x42) >> ((uint)param_4 & 0x3f);
+  uVar9 = (ulonglong)uVar1;
+  if (uVar1 < 2) {
+    uVar9 = 1;
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x333,0,0xffffffff82000f98,0xffffffff82181e84);
+  }
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x334,0,0xffffffff82000f98,0xffffffff82012428);
+  }
+  param_2 = param_2 & 0x3f;
+  XGGetBlockDimensions(param_2,&local_b0,local_ac);
+  lVar7 = (ulonglong)(uVar6 - 1) / (ulonglong)local_b0 + 1;
+  trapWord(6,(ulonglong)local_b0,0);
+  trapWord(6,(ulonglong)local_ac[0],0);
+  lVar2 = (uVar9 - 1 & 0xffffffff) / (ulonglong)local_ac[0] + 1;
+  uVar9 = ((longlong)(int)((byte)(&DAT_82013140)[(int)param_2] * local_b0) *
+           (longlong)(int)local_ac[0] & 0xffffffffU) >> 3;
+  XGGetTextureDesc(iVar3,param_4,auStack_a0);
+  iVar8 = (int)lVar7;
+  iVar10 = (int)uVar9;
+  if ((local_6c & 1) == 0) {
+    pvVar4 = memcpy((void *)uVar5,(void *)param_5,(int)lVar2 * iVar8 * iVar10);
+    __restgprlr_22(pvVar4);
     return;
   }
-  uVar8 = va(0xffffffff821c5508,param_5,param_2,param_4,param_5,uVar1,uVar2,uVar3);
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821c53f8,0x318,0,0xffffffff820011f4,0xffffffff821c54b8,uVar8);
+  if ((local_6c & 2) != 0) {
+    XGTileTextureLevel(*(undefined2 *)(iVar3 + 0x40),*(undefined2 *)(iVar3 + 0x42),param_4,param_2,0
+                       ,uVar5,0,param_5);
+    __restgprlr_22();
+    return;
+  }
+  XGTileSurface(uVar5,lVar7,lVar2,0,param_5,(longlong)iVar8 * (longlong)iVar10,0,uVar9);
+  __restgprlr_22();
+  return;
+}
+
+
+// 82747A48  Image_Upload3D_CopyData_Xbox  (gfx_d3d/r_image_load_common.cpp:919)
+
+void Image_Upload3D_CopyData_Xbox
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  byte bVar1;
+  ushort uVar2;
+  uint uVar3;
+  int iVar5;
+  longlong lVar4;
+  ushort uVar6;
+  uint uVar7;
+  uint uVar8;
+  undefined1 auStack_90 [52];
+  uint local_5c;
+  
+  iVar5 = __savegprlr_23();
+  uVar3 = (uint)param_3;
+  uVar2 = *(ushort *)(iVar5 + 0x40) >> (uVar3 & 0x3f);
+  uVar8 = 1;
+  if (1 < uVar2) {
+    uVar8 = (uint)uVar2;
+  }
+  uVar2 = *(ushort *)(iVar5 + 0x42) >> (uVar3 & 0x3f);
+  uVar7 = (uint)uVar2;
+  if (uVar2 < 2) {
+    uVar7 = 1;
+  }
+  uVar2 = *(ushort *)(iVar5 + 0x44) >> (uVar3 & 0x3f);
+  uVar6 = 1;
+  if (1 < uVar2) {
+    uVar6 = uVar2;
+  }
+  lVar4 = Image_MipLevelBaseAddress(iVar5,iVar5,param_2,0,param_3);
+  lVar4 = lVar4 + (ulonglong)*(uint *)(iVar5 + 0x48);
+  bVar1 = (&DAT_82013140)[(int)(param_2 & 0x3f)];
+  XGGetTextureDesc(iVar5,param_3,auStack_90);
+  if ((local_5c & 1) == 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x3ab,0,0xffffffff82000f98,0xffffffff821c55f0);
+  }
+  if ((local_5c & 2) != 0) {
+    XGTileVolumeTextureLevel
+              (*(undefined2 *)(iVar5 + 0x40),*(undefined2 *)(iVar5 + 0x42),
+               *(undefined2 *)(iVar5 + 0x44),param_3,param_2 & 0x3f,0,lVar4);
+    __restgprlr_23();
+    return;
+  }
+  XGTileVolume(lVar4,uVar8,uVar7,uVar6,0,param_4,
+               (longlong)(int)(uint)(bVar1 >> 3) * (longlong)(int)uVar8,
+               (longlong)(int)((bVar1 >> 3) * uVar7) * (longlong)(int)uVar8);
+  __restgprlr_23();
+  return;
+}
+
+
+// 82747BC0  Image_UploadData  (gfx_d3d/r_image_load_common.cpp:957)
+
+void Image_UploadData(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                     undefined8 param_5)
+
+{
+  if (*(char *)(param_1 + 0x38) == '\x04') {
+    Image_Upload3D_CopyData_Xbox(param_1,param_2,param_4,param_5);
+    return;
+  }
+  Image_Upload2D_CopyData_Xbox();
+  return;
+}
+
+
+// 82747BE8  Image_AllocCubePixels_Xbox  (gfx_d3d/r_image_load_common.cpp:1006)
+
+void Image_AllocCubePixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  undefined4 uVar2;
+  
+  uVar1 = XGSetCubeTextureHeader
+                    (*(undefined2 *)(param_1 + 0x40),param_2,0,param_3,0,0,0xffffffffffffffff,
+                     param_1);
+  uVar2 = Image_PhysicalAlloc(uVar1,*(undefined4 *)(param_1 + 0x6c));
+  *(undefined4 *)(param_1 + 0x48) = uVar2;
+  return;
 }
 
 
@@ -272,13 +448,77 @@ void Image_Alloc1DPixels_Xbox(int param_1,undefined8 param_2,undefined8 param_3)
 }
 
 
-// 827481A8  Image_SetupAndLoad  (gfx_d3d/r_image_load_common.cpp:1357)
+// 82748008  Image_Setup  (gfx_d3d/r_image_load_common.cpp:1210)
 
-void Image_SetupAndLoad(void)
+void Image_Setup(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                ulonglong param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar2 = __savegprlr_23();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x4bf,0,0xffffffff82000f98,0xffffffff82058d58);
+  }
+  *(short *)(iVar2 + 0x40) = (short)param_2;
+  *(short *)(iVar2 + 0x42) = (short)param_3;
+  *(short *)(iVar2 + 0x44) = (short)param_4;
+  if (*(int *)(iVar2 + 0x3c) != 0) {
+    MyAssertHandler(0xffffffff821c53f8,0x4c6,0,0xffffffff82000f98,0xffffffff821c56d0);
+  }
+  uVar1 = (uint)param_5 & 0x30000;
+  uVar3 = (param_5 & 0xffffffff) >> 1 & 1;
+  if ((param_5 & 0x30000) == 0) {
+    *(undefined1 *)(iVar2 + 0x38) = 3;
+    Image_Alloc2DPixels_Xbox(iVar2,uVar3,param_6);
+  }
+  else if (uVar1 == 0x10000) {
+    *(undefined1 *)(iVar2 + 0x38) = 5;
+    Image_AllocCubePixels_Xbox(iVar2,uVar3,param_6);
+  }
+  else if (uVar1 == 0x20000) {
+    *(undefined1 *)(iVar2 + 0x38) = 4;
+    Image_Alloc3DPixels_Xbox(iVar2,uVar3,param_6);
+  }
+  else {
+    if (uVar1 != 0x30000) {
+      MyAssertHandler(0xffffffff821c53f8,0x517,1,0xffffffff82000f98,0xffffffff821c5694);
+    }
+    *(undefined1 *)(iVar2 + 0x38) = 2;
+    Image_Alloc1DPixels_Xbox(iVar2,uVar3,param_6);
+  }
+  Image_TrackTexture(iVar2,param_5,param_6,param_2,param_3,param_4);
+  if ((param_5 & 0x10000000) != 0) {
+    *(byte *)(iVar2 + 0x3b) = *(byte *)(iVar2 + 0x3b) | 8;
+    __restgprlr_23();
+    return;
+  }
+  *(byte *)(iVar2 + 0x3b) = *(byte *)(iVar2 + 0x3b) & 0xf7;
+  __restgprlr_23();
+  return;
+}
+
+
+// 827481A8  Image_SetupAndLoad  (gfx_d3d/r_image_load_common.cpp:1357)
+
+void Image_SetupAndLoad(undefined8 param_1,undefined2 param_2,undefined2 param_3,undefined2 param_4,
+                       ulonglong param_5,undefined4 param_6)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_26();
+  Image_Setup();
+  *(undefined4 *)(iVar1 + 0x34) = param_6;
+  *(undefined2 *)(iVar1 + 0x40) = param_2;
+  *(byte *)(iVar1 + 0x46) = (byte)((param_5 & 0xffffffff) >> 1) & 1;
+  *(undefined2 *)(iVar1 + 0x42) = param_3;
+  *(undefined2 *)(iVar1 + 0x44) = param_4;
+  Load_Texture(iVar1);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -288,7 +528,6 @@ ulonglong Image_CubemapFace(ulonglong param_1)
 
 {
   if (5 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c53f8,0x580,0,0xffffffff821c560c,0xffffffff821c5624,param_1);
   }
   return param_1;

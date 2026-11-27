@@ -2,11 +2,44 @@
 
 // 82912BD8  bdTaskByteBuffer::bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:44)
 
-void bdTaskByteBuffer__bdTaskByteBuffer(void)
+void bdTaskByteBuffer__bdTaskByteBuffer(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdByteBuffer__bdByteBuffer(puVar1,0);
+  puVar1[7] = 0;
+  *puVar1 = &PTR_bdTaskByteBuffer___scalar_deleting_destructor__82212dc4;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  bdTaskByteBuffer__setupTaskData(puVar1,param_2);
+  __restgprlr_29(puVar1);
+  return;
+}
+
+
+// 82912CB8  bdTaskByteBuffer::bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:54)
+
+void bdTaskByteBuffer__bdTaskByteBuffer(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  bdByteBuffer__bdByteBuffer(puVar1,0,0);
+  puVar1[7] = 0;
+  *puVar1 = &PTR_bdTaskByteBuffer___scalar_deleting_destructor__82212dc4;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    bdTaskByteBuffer__setupTaskData(puVar1,param_3);
+    memcpy((void *)puVar1[3],(void *)param_2,(size_t)param_3);
+  }
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
@@ -42,6 +75,23 @@ void bdTaskByteBuffer__allocateBuffer(int param_1)
     return;
   }
   bdTaskByteBuffer__setupTaskData(param_1,*(undefined4 *)(param_1 + 8));
+  return;
+}
+
+
+// 82912A10  bdTaskByteBuffer::setHeaderSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:94)
+
+void bdTaskByteBuffer__setHeaderSize(int param_1,uint param_2)
+
+{
+  if (5 < param_2) {
+    MyAssertHandler(0xffffffff82212d60,0x5f,0,0xffffffff820011f4,0xffffffff82212d30,
+                    0xffffffff82212d48);
+  }
+  if (4 < param_2) {
+    param_2 = 5;
+  }
+  *(uint *)(param_1 + 0x24) = param_2;
   return;
 }
 

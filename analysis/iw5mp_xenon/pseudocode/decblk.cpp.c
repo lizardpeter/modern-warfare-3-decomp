@@ -2,10 +2,108 @@
 
 // 828B6248  XCOMPRESS::decode_data  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decblk.cpp:49)
 
-void XCOMPRESS__decode_data(void)
+void XCOMPRESS__decode_data(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  char cVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  
+  puVar2 = (uint *)__savegprlr_26();
+  lVar8 = 0;
+  do {
+    iVar3 = (int)param_2;
+    do {
+      if (iVar3 < 1) {
+        uVar4 = puVar2[0xbae];
+        if (uVar4 == 0) {
+          uVar4 = puVar2[1];
+        }
+        XCOMPRESS__copy_data_to_output(puVar2,lVar8,((ulonglong)uVar4 - lVar8) + (ulonglong)*puVar2)
+        ;
+LAB_828b64ac:
+        __restgprlr_26(lVar8);
+        return;
+      }
+      if (puVar2[0xbb5] == 1) {
+        if (*(char *)((int)puVar2 + 0x2eb6) != '\0') {
+          *(undefined1 *)((int)puVar2 + 0x2eb6) = 0;
+          iVar3 = XCOMPRESS__getbits(puVar2,1);
+          if (iVar3 == 0) {
+            puVar2[0xbaf] = 0;
+          }
+          else {
+            iVar3 = XCOMPRESS__getbits(puVar2,0x10);
+            uVar4 = XCOMPRESS__getbits(puVar2,0x10);
+            puVar2[0xbaf] = uVar4 | iVar3 << 0x10;
+          }
+        }
+        if (puVar2[0xbb4] == 3) {
+          puVar2[0xbb4] = 0;
+          XCOMPRESS__initialise_decoder_bitbuf(puVar2);
+        }
+        uVar4 = XCOMPRESS__getbits(puVar2,3);
+        puVar2[0xbb4] = uVar4;
+        iVar3 = XCOMPRESS__getbits(puVar2,8);
+        iVar5 = XCOMPRESS__getbits(puVar2,8);
+        iVar6 = XCOMPRESS__getbits(puVar2,8);
+        uVar4 = iVar6 + (iVar3 * 0x100 + iVar5) * 0x100;
+        puVar2[0xbb2] = uVar4;
+        puVar2[0xbb3] = uVar4;
+        if (puVar2[0xbb4] == 2) {
+          XCOMPRESS__read_aligned_offset_tree(puVar2);
+        }
+        uVar4 = puVar2[0xbb4];
+        if ((uVar4 == 1) || (uVar4 == 2)) {
+          memcpy(puVar2 + 0xac5,puVar2 + 0x286,(*(byte *)((int)puVar2 + 0x2eb5) + 0x20) * 8);
+          memcpy(puVar2 + 0xb6d,puVar2 + 0x32e,0xf9);
+          XCOMPRESS__read_main_and_secondary_trees(puVar2);
+        }
+        else if ((uVar4 != 3) ||
+                (cVar7 = XCOMPRESS__handle_beginning_of_uncompressed_block(puVar2), cVar7 == '\0'))
+        {
+LAB_828b6374:
+          lVar8 = -1;
+          goto LAB_828b64ac;
+        }
+        puVar2[0xbb5] = 2;
+      }
+      for (; (iVar3 = (int)param_2, 0 < (int)puVar2[0xbb3] && (0 < iVar3));
+          param_2 = param_2 - uVar9) {
+        uVar9 = (ulonglong)puVar2[0xbb3];
+        if (iVar3 <= (int)puVar2[0xbb3]) {
+          uVar9 = param_2;
+        }
+        if ((uVar9 & 0xffffffff) == 0) goto LAB_828b6374;
+        uVar4 = puVar2[0xbb4];
+        uVar1 = puVar2[0xbae];
+        if (uVar4 == 2) {
+          iVar3 = XCOMPRESS__decode_aligned_offset_block(puVar2,uVar1,uVar9);
+        }
+        else if (uVar4 == 1) {
+          iVar3 = XCOMPRESS__decode_verbatim_block(puVar2,uVar1,uVar9);
+        }
+        else if (uVar4 == 3) {
+          iVar3 = XCOMPRESS__decode_uncompressed_block(puVar2,uVar1,uVar9);
+        }
+        else {
+          iVar3 = -1;
+        }
+        if (iVar3 != 0) goto LAB_828b6374;
+        lVar8 = uVar9 + lVar8;
+        puVar2[0xbb3] = puVar2[0xbb3] - (int)uVar9;
+      }
+      if (puVar2[0xbb3] == 0) {
+        puVar2[0xbb5] = 1;
+      }
+    } while (iVar3 != 0);
+    XCOMPRESS__initialise_decoder_bitbuf(puVar2);
+  } while( true );
 }
 

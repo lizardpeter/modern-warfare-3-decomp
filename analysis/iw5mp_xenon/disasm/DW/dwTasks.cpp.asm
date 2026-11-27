@@ -70,3 +70,61 @@ LAB_826f24cc:
 ; 826F2310  dwHandleTaskError  (DW/dwTasks.cpp:35)
   826F2310  7D8802A6             mfspr r12,LR
   826F2314  482243A5             bl 0x829166b8
+  826F2318  9421FF40             stwu r1,-0xc0(r1)
+  826F231C  3D60821B             lis r11,-0x7de5
+  826F2320  3D408200             lis r10,-0x7e00
+  826F2324  7C7F1B78             or r31,r3,r3
+  826F2328  7C9E2378             or r30,r4,r4
+  826F232C  2B030000             cmplwi cr6,r3,0x0
+  826F2330  3BABD1C8             subi r29,r11,0x2e38
+  826F2334  3B8A0F98             addi r28,r10,0xf98
+  826F2338  409A0020             bne cr6,0x826f2358
+  826F233C  3D608209             lis r11,-0x7df7
+  826F2340  7F86E378             or r6,r28,r28
+  826F2344  38EBB598             subi r7,r11,0x4a68
+  826F2348  7FA3EB78             or r3,r29,r29
+  826F234C  38A00000             li r5,0x0
+  826F2350  38800024             li r4,0x24
+  826F2354  4BEE21AD             bl 0x825d4500
+LAB_826f2358:
+  826F2358  3D60821B             lis r11,-0x7de5
+  826F235C  3D40821B             lis r10,-0x7de5
+  826F2360  38ABD1B4             subi r5,r11,0x2e4c
+  826F2364  388AC0B4             subi r4,r10,0x3f4c
+  826F2368  38600010             li r3,0x10
+  826F236C  4BE04415             bl 0x824f6780
+  826F2370  38A00040             li r5,0x40
+  826F2374  38810050             addi r4,r1,0x50
+  826F2378  7FC3F378             or r3,r30,r30
+  826F237C  48000F85             bl 0x826f3300
+  826F2380  80BF0090             lwz r5,0x90(r31)
+  826F2384  2F1E0002             cmpwi cr6,r30,0x2
+  826F2388  38E10050             addi r7,r1,0x50
+  826F238C  38600010             li r3,0x10
+  826F2390  419A0018             beq cr6,0x826f23a8
+  826F2394  3D60821B             lis r11,-0x7de5
+  826F2398  7FC6F378             or r6,r30,r30
+  826F239C  388BD18C             subi r4,r11,0x2e74
+  826F23A0  4BE047C1             bl 0x824f6b60
+  826F23A4  48000014             b 0x826f23b8
+LAB_826f23a8:
+  826F23A8  3D60821B             lis r11,-0x7de5
+  826F23AC  38C00002             li r6,0x2
+  826F23B0  388BD138             subi r4,r11,0x2ec8
+  826F23B4  4BE043CD             bl 0x824f6780
+LAB_826f23b8:
+  826F23B8  7FE3FB78             or r3,r31,r31
+  826F23BC  4BE02B65             bl 0x824f4f20
+  826F23C0  2F1E0001             cmpwi cr6,r30,0x1
+  826F23C4  409A0020             bne cr6,0x826f23e4
+  826F23C8  3D60821B             lis r11,-0x7de5
+  826F23CC  7F86E378             or r6,r28,r28
+  826F23D0  38EBC060             subi r7,r11,0x3fa0
+  826F23D4  7FA3EB78             or r3,r29,r29
+  826F23D8  38A00000             li r5,0x0
+  826F23DC  38800039             li r4,0x39
+  826F23E0  4BEE2121             bl 0x825d4500
+LAB_826f23e4:
+  826F23E4  38600002             li r3,0x2
+  826F23E8  382100C0             addi r1,r1,0xc0
+  826F23EC  4822431C             b 0x82916708

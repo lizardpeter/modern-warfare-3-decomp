@@ -13,11 +13,9 @@ void FXW_KillEffect(undefined8 param_1,ulonglong param_2,ulonglong param_3,undef
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0xe,0,0xffffffff82000f98,0xffffffff82038694);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0xf,0,0xffffffff82000f98,0xffffffff8206823c);
   }
   iVar1 = (int)param_2;
@@ -32,7 +30,6 @@ void FXW_KillEffect(undefined8 param_1,ulonglong param_2,ulonglong param_3,undef
       uVar4 = (ulonglong)*(uint *)(iVar2 + 0x68);
       do {
         if ((int)uVar4 == *(int *)(iVar2 + 0x6c)) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff820681b8,0x21,1,0xffffffff82068208,uVar4);
         }
         uVar5 = (ulonglong)
@@ -66,20 +63,17 @@ void FXIW_EffectNoLongerReferenced(undefined8 param_1,ulonglong param_2)
   
   iVar4 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0x3c,0,0xffffffff82000f98,0xffffffff82067364);
   }
   puVar5 = (undefined4 *)FX_EffectFromHandle(iVar4,*(undefined2 *)((int)param_2 + 0x18));
   uVar1 = FXW_GetEffectStatus(iVar4,puVar5);
   if ((uVar1 & 0x1ff8000) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0x4a,0,0xffffffff82068174,0xffffffff82068188,uVar1);
   }
   uVar6 = uVar1 - 0x8000;
   if ((uVar6 & 0x1fff) == 1) {
     if ((uVar6 & 0x1ff8000) != 0) {
       uVar2 = va(0xffffffff8206816c,*(undefined4 *)*puVar5,uVar6);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820681b8,0x4f,0,0xffffffff820011f4,0xffffffff8206813c,uVar2);
     }
     *(uint *)(iVar4 + 0xb4) = *(uint *)(iVar4 + 0xb4) | 8;
@@ -89,11 +83,9 @@ void FXIW_EffectNoLongerReferenced(undefined8 param_1,ulonglong param_2)
   }
   uVar3 = FXW_GetEffectStatus(iVar4,puVar5);
   if ((uVar3 & 0xffffffff) != (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0x55,0,0xffffffff82000f98,0xffffffff820680e0);
   }
   if ((uVar6 & 0x1fff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820681b8,0x56,0,0xffffffff82067928,0xffffffff820678fc,0);
   }
   FXW_PutEffectStatus(iVar4,puVar5,uVar1 - 0x8001);
@@ -104,10 +96,34 @@ void FXIW_EffectNoLongerReferenced(undefined8 param_1,ulonglong param_2)
 
 // 8243F4B0  FXW_DelRefToEffect  (EffectsCore/fx_spawn_effect_free.cpp:94)
 
-void FXW_DelRefToEffect(void)
+void FXW_DelRefToEffect(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar3;
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820681b8,0x61,0,0xffffffff82000f98,0xffffffff82067364);
+  }
+  uVar1 = FXW_GetEffectStatus(iVar3,param_2);
+  if ((uVar1 & 0x1fff) == 1) {
+    if ((uVar1 & 0x1ff8000) != 0) {
+      uVar2 = va(0xffffffff8206816c,*(undefined4 *)*(undefined4 *)param_2,uVar1);
+      MyAssertHandler(0xffffffff820681b8,0x68,0,0xffffffff820011f4,0xffffffff8206813c,uVar2);
+    }
+    *(uint *)(iVar3 + 0xb4) = *(uint *)(iVar3 + 0xb4) | 8;
+    if ((uVar1 & 0x4000000) == 0) {
+      FXIW_EffectNoLongerReferenced(iVar3,param_2);
+      uVar1 = FXW_GetEffectStatus(iVar3,param_2);
+    }
+  }
+  if ((uVar1 & 0x1fff) == 0) {
+    MyAssertHandler(0xffffffff820681b8,0x71,0,0xffffffff82067928,0xffffffff820678fc);
+  }
+  FXW_PutEffectStatus(iVar3,param_2,uVar1 - 1);
+  __restgprlr_28(uVar1 - 1);
+  return;
 }
 

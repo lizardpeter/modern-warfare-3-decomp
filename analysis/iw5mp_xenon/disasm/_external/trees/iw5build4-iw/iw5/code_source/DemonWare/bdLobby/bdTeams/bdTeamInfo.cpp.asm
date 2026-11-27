@@ -29,6 +29,69 @@
 ; 82909700  bdTeamInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteaminfo.cpp:26)
   82909700  7D8802A6             mfspr r12,LR
   82909704  4800CFB9             bl 0x829166bc
+  82909708  3BE1FF90             subi r31,r1,0x70
+  8290970C  9421FF90             stwu r1,-0x70(r1)
+  82909710  7C7E1B78             or r30,r3,r3
+  82909714  909F008C             stw r4,0x8c(r31)
+  82909718  7C9D2378             or r29,r4,r4
+  8290971C  38830008             addi r4,r3,0x8
+  82909720  807D0000             lwz r3,0x0(r29)
+  82909724  4BFEC67D             bl 0x828f5da0
+  82909728  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290972C  41820020             beq 0x8290974c
+  82909730  38A00040             li r5,0x40
+  82909734  807D0000             lwz r3,0x0(r29)
+  82909738  389E0018             addi r4,r30,0x18
+  8290973C  4BFEC735             bl 0x828f5e70
+  82909740  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82909744  39600001             li r11,0x1
+  82909748  40820008             bne 0x82909750
+LAB_8290974c:
+  8290974C  39600000             li r11,0x0
+LAB_82909750:
+  82909750  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82909754  4182001C             beq 0x82909770
+  82909758  389E0010             addi r4,r30,0x10
+  8290975C  807D0000             lwz r3,0x0(r29)
+  82909760  4BFEC641             bl 0x828f5da0
+  82909764  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82909768  39600001             li r11,0x1
+  8290976C  40820008             bne 0x82909774
+LAB_82909770:
+  82909770  39600000             li r11,0x0
+LAB_82909774:
+  82909774  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82909778  4182001C             beq 0x82909794
+  8290977C  389E0058             addi r4,r30,0x58
+  82909780  807D0000             lwz r3,0x0(r29)
+  82909784  4BFECDAD             bl 0x828f6530
+  82909788  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290978C  39600001             li r11,0x1
+  82909790  40820008             bne 0x82909798
+LAB_82909794:
+  82909794  39600000             li r11,0x0
+LAB_82909798:
+  82909798  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  8290979C  40820038             bne 0x829097d4
+  829097A0  3D008221             lis r8,-0x7ddf
+  829097A4  3D608221             lis r11,-0x7ddf
+  829097A8  3D408221             lis r10,-0x7ddf
+  829097AC  3CA08221             lis r5,-0x7ddf
+  829097B0  3C808221             lis r4,-0x7ddf
+  829097B4  38C80038             addi r6,r8,0x38
+  829097B8  392BB3C8             subi r9,r11,0x4c38
+  829097BC  38EA0020             addi r7,r10,0x20
+  829097C0  38A50014             addi r5,r5,0x14
+  829097C4  3884A58C             subi r4,r4,0x5a74
+  829097C8  39000021             li r8,0x21
+  829097CC  38600002             li r3,0x2
+  829097D0  4BFEB341             bl 0x828f4b10
+LAB_829097d4:
+  829097D4  7FA3EB78             or r3,r29,r29
+  829097D8  4BA5AC29             bl 0x82364400
+  829097DC  7FC3F378             or r3,r30,r30
+  829097E0  383F0070             addi r1,r31,0x70
+  829097E4  4800CF28             b 0x8291670c
 
 ; 82909698  bdTeamInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteaminfo.cpp:39)
   82909698  38600060             li r3,0x60

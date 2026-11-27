@@ -60,7 +60,6 @@ undefined8 GameStateInfo_InPlaylistGame(void)
   if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
     cVar1 = Lobby_IsInLobby();
     if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821e1f38,0x4b,0,0xffffffff820011f4,0xffffffff82032564,
                       0xffffffff821e1f00);
     }
@@ -115,7 +114,6 @@ undefined4 * GameStateInfo_InitAndGetIndex(int param_1,int param_2)
   }
   else {
     if (param_1 != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821e1f38,0x81,0,0xffffffff82000f98,0xffffffff821e1f80);
     }
     puVar1 = &DAT_84876530;
@@ -169,7 +167,6 @@ undefined4 * GameStateInfo_Get(void)
   }
   else {
     if (iVar1 != 1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821e1f38,0x81,0,0xffffffff82000f98,0xffffffff821e1f80);
     }
     puVar2 = &DAT_84876530;
@@ -234,7 +231,6 @@ LAB_827fb864:
         if (0xbff < (int)(uVar5 & 0xffff) + (uVar10 & 0xffff)) {
           Com_PrintError(0x19,0xffffffff8203d3d8);
           if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff821e1f38,0xd8,0,0xffffffff8203d3d8);
           }
           __restgprlr_24(0xffffffffffffffff);
@@ -252,7 +248,6 @@ LAB_827fb864:
       if (*(int *)(*(int *)(iVar6 + 8) + 0xc04) != iVar7) {
         Com_PrintError(0x19,0xffffffff821e2020);
         if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821e1f38,0xe9,0,0xffffffff821e2020);
         }
         __restgprlr_24(0xffffffffffffffff);
@@ -262,7 +257,6 @@ LAB_827fb864:
       uVar2 = BG_MatchRulesData_GetGameTypeFromIndex(uVar2);
       iVar7 = I_strcmp(uVar2,uVar4);
       if (iVar7 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821e1f38,0xed,0,0xffffffff82000f98,0xffffffff821e1fa0);
       }
       MatchRulesChanged(*(undefined4 *)(iVar6 + 8));
@@ -279,10 +273,48 @@ LAB_827fb864:
 
 // 827FB870  SV_SendGameStateInfoMessage  (bgame/bg_gamestateinfo.cpp:245)
 
-void SV_SendGameStateInfoMessage(void)
+void SV_SendGameStateInfoMessage(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [8];
+  undefined4 local_68;
+  undefined4 local_5c;
+  
+  uVar1 = __savegprlr_26();
+  LargeLocal__LargeLocal(auStack_80,0x10000);
+  uVar2 = LargeLocal__GetBuf(auStack_80);
+  uVar3 = MSG_ReadByte(param_3);
+  iVar5 = 0;
+  iVar4 = GameStateInfo_Get();
+  if ((*(int *)(iVar4 + 4) == 0) ||
+     (iVar5 = PartyHost_GetMatchRulesSnapshotDeltaFromDefault(), uVar3 < *(ushort *)(iVar5 + 0xc)))
+  {
+    MSG_Init(auStack_70,uVar2,0x10000);
+    MSG_WriteString(auStack_70,0xffffffff82033d08);
+    MSG_WriteBool(auStack_70,*(int *)(iVar4 + 4) == 1);
+    if (*(int *)(iVar4 + 4) != 0) {
+      if (iVar5 == 0) {
+        MyAssertHandler(0xffffffff821e1f38,0x10a,0,0xffffffff82000f98,0xffffffff8208f468);
+      }
+      MSG_WriteLong(auStack_70,*(undefined4 *)(*(int *)(iVar4 + 8) + 0xc04));
+      uVar2 = BG_MatchRulesData_GetGameTypeIndex(*(undefined4 *)(iVar4 + 8));
+      MSG_WriteShort(auStack_70,uVar2);
+      MSG_WriteShort(auStack_70,*(undefined2 *)(iVar5 + 0xc));
+      MSG_WriteShort(auStack_70,uVar3);
+      iVar5 = uVar3 * 0x4d4 + iVar5;
+      MSG_WriteData(auStack_70,iVar5 + 0x14,*(undefined4 *)(iVar5 + 0x10));
+    }
+    Com_DPrintf(0x19,0xffffffff821e20ec,uVar3,local_5c);
+    NET_OutOfBandData(4,uVar1,param_2,local_68,local_5c);
+  }
+  LargeLocal___LargeLocal(auStack_80);
+  __restgprlr_26();
+  return;
 }
 

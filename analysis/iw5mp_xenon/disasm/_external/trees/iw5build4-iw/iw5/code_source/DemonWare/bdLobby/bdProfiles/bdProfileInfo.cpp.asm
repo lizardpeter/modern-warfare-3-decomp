@@ -31,6 +31,35 @@
 ; 8290BDF0  bdProfileInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdprofiles/bdprofileinfo.cpp:28)
   8290BDF0  7D8802A6             mfspr r12,LR
   8290BDF4  4800A8C9             bl 0x829166bc
+  8290BDF8  3BE1FF90             subi r31,r1,0x70
+  8290BDFC  9421FF90             stwu r1,-0x70(r1)
+  8290BE00  7C9E2378             or r30,r4,r4
+  8290BE04  909F008C             stw r4,0x8c(r31)
+  8290BE08  38830008             addi r4,r3,0x8
+  8290BE0C  807E0000             lwz r3,0x0(r30)
+  8290BE10  4BFE9F91             bl 0x828f5da0
+  8290BE14  7C7D1B78             or r29,r3,r3
+  8290BE18  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BE1C  40820038             bne 0x8290be54
+  8290BE20  3D008221             lis r8,-0x7ddf
+  8290BE24  3D608221             lis r11,-0x7ddf
+  8290BE28  3D408221             lis r10,-0x7ddf
+  8290BE2C  3CA08221             lis r5,-0x7ddf
+  8290BE30  3C808221             lis r4,-0x7ddf
+  8290BE34  38C80AC0             addi r6,r8,0xac0
+  8290BE38  392BB3C8             subi r9,r11,0x4c38
+  8290BE3C  38EA0AA0             addi r7,r10,0xaa0
+  8290BE40  38A50A90             addi r5,r5,0xa90
+  8290BE44  3884A58C             subi r4,r4,0x5a74
+  8290BE48  39000020             li r8,0x20
+  8290BE4C  38600002             li r3,0x2
+  8290BE50  4BFE8CC1             bl 0x828f4b10
+LAB_8290be54:
+  8290BE54  7FC3F378             or r3,r30,r30
+  8290BE58  4BA585A9             bl 0x82364400
+  8290BE5C  7FA3EB78             or r3,r29,r29
+  8290BE60  383F0070             addi r1,r31,0x70
+  8290BE64  4800A8A8             b 0x8291670c
 
 ; 8290BD88  bdProfileInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdprofiles/bdprofileinfo.cpp:38)
   8290BD88  38600010             li r3,0x10

@@ -44,8 +44,83 @@ void VCpSubmitCodecPacket(int param_1,int *param_2)
 void VCpProcessLocal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  ushort uVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int *piVar5;
+  int *piVar6;
+  int iVar7;
+  ushort uVar8;
+  int iVar9;
+  int *piVar10;
+  int *piVar11;
+  
+  iVar9 = __savegprlr_28();
+  piVar11 = (int *)(iVar9 + 0x34);
+  puVar3 = *(undefined4 **)(iVar9 + 0x34);
+  while ((puVar3 != (undefined4 *)0x0 && (*(int *)*puVar3 != 0x103))) {
+    iVar4 = *piVar11;
+    if (iVar4 != 0) {
+      if (iVar4 == *(int *)(iVar9 + 0x38)) {
+        *(undefined4 *)(iVar9 + 0x38) = 0;
+      }
+      *piVar11 = *(int *)(iVar4 + 4);
+      *(undefined4 *)(iVar4 + 4) = 0;
+    }
+    VCpSubmitCodecPacket(iVar9);
+    puVar3 = (undefined4 *)*piVar11;
+  }
+  piVar10 = (int *)(iVar9 + 0x2c);
+  piVar5 = *(int **)(iVar9 + 0x2c);
+  while (piVar5 != (int *)0x0) {
+    piVar6 = (int *)*piVar5;
+    if (*piVar6 == 0x103) break;
+    iVar4 = *piVar10;
+    iVar7 = piVar6[2];
+    if (iVar4 != 0) {
+      if (iVar4 == *(int *)(iVar9 + 0x30)) {
+        *(undefined4 *)(iVar9 + 0x30) = 0;
+      }
+      *piVar10 = *(int *)(iVar4 + 4);
+      *(undefined4 *)(iVar4 + 4) = 0;
+    }
+    if (*piVar6 == 0) {
+      cVar1 = *(char *)(*(int *)(*(int *)(iVar9 + 4) + 4) + 0x8c);
+      if (*(char *)(iVar9 + 0x3c) != cVar1) {
+        *(char *)(iVar9 + 0x3c) = cVar1;
+      }
+      if (0x7ff < *(ushort *)(iVar9 + 0x3e)) {
+        *(undefined2 *)(iVar9 + 0x3e) = 0;
+      }
+      uVar2 = *(ushort *)(iVar7 + -2);
+      uVar8 = (ushort)*(byte *)(iVar9 + 0x3c) << 0xc;
+      *(ushort *)(iVar7 + -2) = uVar8 | uVar2 & 0xfff;
+      *(ushort *)(iVar7 + -2) = (*(ushort *)(iVar9 + 0x3e) & 0x7ff) << 1 | uVar8 | uVar2 & 1;
+      *(short *)(iVar9 + 0x3e) = *(short *)(iVar9 + 0x3e) + 1;
+      *(ushort *)(iVar7 + -2) =
+           (ushort)((*(uint *)(*(int *)(iVar9 + 4) + 0xc4) & 0xf0000) == 0x10000) |
+           *(ushort *)(iVar7 + -2) & 0xfffe;
+      *(undefined4 *)*piVar5 = 0x103;
+      *(undefined4 *)(*piVar5 + 4) = 0;
+      piVar5[1] = 0;
+      if (*(int *)(iVar9 + 0x38) == 0) {
+        *piVar11 = (int)piVar5;
+      }
+      else {
+        *(int **)(*(int *)(iVar9 + 0x38) + 4) = piVar5;
+      }
+      *(int **)(iVar9 + 0x38) = piVar5;
+      *(uint *)(*(int *)(iVar9 + 0x20) + 0x4f4) =
+           1 << (**(uint **)(iVar9 + 4) & 0x3f) | *(uint *)(*(int *)(iVar9 + 0x20) + 0x4f4);
+    }
+    else {
+      VCpSubmitCodecPacket(iVar9);
+    }
+    piVar5 = (int *)*piVar10;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -257,21 +332,107 @@ void VoiceChatStop(int param_1)
 
 // 828BDEB0  VoiceChatCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:891)
 
-void VoiceChatCreate(void)
+void VoiceChatCreate(undefined8 param_1,int param_2,int param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 uVar4;
+  
+  uVar1 = __savegprlr_26();
+  uVar4 = 0;
+  puVar2 = (undefined4 *)XMemAlloc(0x4c,0x618a8011);
+  if (puVar2 != (undefined4 *)0x0) {
+    puVar2[8] = uVar1;
+    puVar2[9] = param_3;
+    puVar2[1] = param_2;
+    puVar2[7] = 2;
+    *puVar2 = &PTR_VoiceChatInitialize_829af90c;
+    puVar2[5] = 10;
+    if (param_3 == 1) {
+      if (*(int *)(param_2 + 0x48) != 0) {
+        (*(code *)PTR_VoiceChatSetOutputVoice_829af92c)(puVar2);
+      }
+    }
+    else {
+      *(undefined1 *)(puVar2 + 0xf) = 0xff;
+    }
+    iVar3 = XMemAlloc(puVar2[5] << 3,0x618a0003);
+    puVar2[10] = iVar3;
+    if (iVar3 != 0) goto LAB_828bdf74;
+  }
+  uVar4 = 0xffffffff8007000e;
+  VoiceChatDestroy(puVar2);
+  puVar2 = (undefined4 *)0x0;
+LAB_828bdf74:
+  *param_4 = puVar2;
+  __restgprlr_26(uVar4);
+  return;
 }
 
 
 // 828BD9B8  VoiceChatInitialize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1000)
 
-void VoiceChatInitialize(void)
+void VoiceChatInitialize(undefined8 param_1,undefined8 param_2,int param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  ulonglong uVar4;
+  uint uVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_27();
+  *(undefined4 *)(iVar3 + 0xc) = param_4;
+  *(int *)(iVar3 + 8) = param_3;
+  uVar4 = -(ulonglong)(*(int *)(iVar3 + 0x24) != 1) & 2;
+  lVar2 = PacketBufferCreate(*(uint *)(*(int *)(param_3 + 0x18) + 0x1c) + uVar4,0x18,
+                             *(undefined4 *)(iVar3 + 0x14),uVar4,(int *)(iVar3 + 0x10));
+  if (-1 < lVar2) {
+    uVar5 = 0;
+    if (*(int *)(iVar3 + 0x14) != 0) {
+      iVar6 = 0;
+      do {
+        iVar1 = *(int *)(iVar3 + 0x10);
+        *(uint *)(iVar6 + *(int *)(iVar3 + 0x28)) =
+             *(int *)(iVar1 + 8) * uVar5 + *(int *)(iVar1 + 4);
+        VCpSubmitCodecPacket(iVar3,iVar6 + *(int *)(iVar3 + 0x28));
+        uVar5 = uVar5 + 1;
+        iVar6 = iVar6 + 8;
+      } while (uVar5 < *(uint *)(iVar3 + 0x14));
+    }
+    if (*(int *)(iVar3 + 0x24) == 1) {
+      lVar2 = JitterBufCreate(*(undefined4 *)(iVar3 + 8),iVar3 + 0x48);
+    }
+  }
+  __restgprlr_27(lVar2);
+  return;
+}
+
+
+// 828BDA90  VoiceChatDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1084)
+
+void VoiceChatDestroy(int param_1)
+
+{
+  if (param_1 != 0) {
+    if (*(int *)(param_1 + 0x24) == 1) {
+      if (*(int *)(param_1 + 0x3c) != 0) {
+        XAudioVoice_Release();
+        *(undefined4 *)(param_1 + 0x3c) = 0;
+      }
+      JitterBufDestroy(*(undefined4 *)(param_1 + 0x48));
+    }
+    if (*(int *)(param_1 + 0x28) != 0) {
+      XMemFree(*(int *)(param_1 + 0x28),0x618a0003);
+      *(undefined4 *)(param_1 + 0x28) = 0;
+    }
+    PacketBufferDestroy(*(undefined4 *)(param_1 + 0x10));
+    XMemFree(param_1,0x618a8011);
+  }
+  return;
 }
 
 
@@ -342,11 +503,115 @@ LAB_828bdc04:
 
 // 828BDC58  VoiceChatSetOutputVoice  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1287)
 
-void VoiceChatSetOutputVoice(void)
+void VoiceChatSetOutputVoice(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 local_c0;
+  undefined1 local_bf;
+  undefined4 local_bc;
+  undefined1 local_b8 [4];
+  undefined4 *local_b4;
+  undefined1 local_b0 [4];
+  undefined1 *local_ac;
+  undefined4 local_a8;
+  undefined1 *local_a4;
+  undefined1 local_a0 [4];
+  undefined1 local_9c;
+  undefined4 local_98;
+  undefined1 local_67;
+  undefined1 local_66;
+  undefined1 local_65;
+  undefined1 local_60;
+  undefined4 local_5c;
+  undefined1 *local_58;
+  undefined4 local_54;
+  code *local_50;
+  undefined4 local_4c;
+  int local_48;
+  
+  iVar1 = __savegprlr_26();
+  uVar2 = 0xffffffff80004001;
+  if (*(int *)(iVar1 + 0x24) != 0) {
+    XMemSet(&local_c0,0,8);
+    local_c0 = 0;
+    local_bf = 0;
+    local_bc = 0x3f800000;
+    XMemSet(local_b0,0,8);
+    local_ac = &local_c0;
+    local_b0[0] = 1;
+    XMemSet(&local_a8,0,8);
+    local_a4 = local_b0;
+    local_a8 = (undefined4)param_2;
+    XMemSet(local_b8,0,8);
+    local_b4 = &local_a8;
+    local_b8[0] = 1;
+    if (*(int *)(iVar1 + 0x3c) == 0) {
+      XMemSet(local_a0,0,0x5c);
+      local_a0[0] = 1;
+      local_58 = local_b8;
+      local_9c = 1;
+      local_50 = VoiceChatXAudioPacketCallback;
+      local_98 = 16000;
+      local_67 = 1;
+      local_66 = 1;
+      local_60 = 0;
+      local_5c = 0;
+      local_54 = 0;
+      local_4c = 0;
+      local_65 = (undefined1)*(undefined4 *)(iVar1 + 0x14);
+      local_48 = iVar1;
+      uVar2 = XAudioCreateSourceVoice(local_a0,iVar1 + 0x3c);
+    }
+    else if ((param_2 & 0xffffffff) != 0) {
+      uVar2 = XAudioVoice_SetVoiceOutput(*(int *)(iVar1 + 0x3c),local_b8);
+    }
+    *(undefined4 *)(iVar1 + 0x40) = 1;
+  }
+  __restgprlr_26(uVar2);
+  return;
+}
+
+
+// 828BDDA0  VoiceChatSubmitPackets  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1402)
+
+void VoiceChatSubmitPackets(undefined8 param_1,longlong param_2,uint *param_3)
+
+{
+  uint uVar1;
+  uint uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  iVar4 = __savegprlr_26();
+  uVar6 = 0;
+  uVar3 = 0;
+  if (*(int *)(iVar4 + 0x24) == 0) {
+    uVar3 = 0xffffffff80004001;
+  }
+  else {
+    uVar1 = *param_3;
+    uVar2 = *(uint *)(*(int *)(*(int *)(iVar4 + 8) + 0x18) + 0x18);
+    *param_3 = 0;
+    uVar7 = (ulonglong)uVar2 + 2;
+    uVar5 = (ulonglong)uVar1 / (uVar7 & 0xffffffff);
+    trapWord(6,uVar7,0);
+    if ((int)uVar5 != 0) {
+      do {
+        uVar3 = JitterBufSubmitPacket(*(undefined4 *)(iVar4 + 0x48),param_2,uVar7);
+        if (((int)uVar3 < 0) || ((int)uVar3 == 1)) break;
+        uVar6 = uVar6 + 1;
+        param_2 = param_2 + uVar7;
+        *param_3 = *param_3 + (int)uVar7;
+      } while ((uVar6 & 0xffffffff) < uVar5);
+    }
+  }
+  __restgprlr_26(uVar3);
+  return;
 }
 
 

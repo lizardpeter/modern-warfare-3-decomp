@@ -13,42 +13,39 @@ void GfxBspSurfIter__SkipToNextDrawGroup(void)
   ulonglong uVar5;
   
   puVar2 = (uint *)__savegprlr_22();
-  uVar6 = (uint)*(ushort *)(*puVar2 + 2);
+  uVar1 = *(ushort *)(*puVar2 + 2);
+  uVar6 = (uint)uVar1;
   if (*(uint *)(DAT_846178cc + 4) <= uVar6) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9e00,0xa3,0,0xffffffff821b9ee8,uVar6);
   }
-  uVar4 = *(ulonglong *)(*(int *)(DAT_846178cc + 0x5c) + (uint)*(ushort *)(*puVar2 + 2) * 8);
+  uVar4 = *(ulonglong *)(*(int *)(DAT_846178cc + 0x5c) + (uint)uVar1 * 8);
   uVar3 = (ulonglong)*(byte *)(*(int *)(DAT_846178cc + 0x50) + uVar6 * 0x18 + 0x16);
   if ((uVar4 >> 0x2c & 0xff) != uVar3) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821b9e00,0xa5,0,0xffffffff821b9e78,uVar4 >> 0x2c & 0xff,uVar3);
+    uVar3 = MyAssertHandler(0xffffffff821b9e00,0xa5,0,0xffffffff821b9e78,uVar4 >> 0x2c & 0xff,uVar3)
+    ;
   }
   do {
     do {
       uVar6 = *puVar2;
       *puVar2 = uVar6 + 4;
       if (puVar2[1] < uVar6 + 4) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff821b9e00,0x85,0,0xffffffff82000f98,0xffffffff821b9e4c);
+        uVar3 = MyAssertHandler(0xffffffff821b9e00,0x85,0,0xffffffff82000f98,0xffffffff821b9e4c);
       }
     } while ((*(ushort *)*puVar2 & 0x8000) == 0);
     if ((ushort *)puVar2[1] < (ushort *)*puVar2) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821b9e00,0x57,0,0xffffffff82000f98,0xffffffff821b9e4c);
+      uVar3 = MyAssertHandler(0xffffffff821b9e00,0x57,0,0xffffffff82000f98,0xffffffff821b9e4c);
     }
     if (*puVar2 == puVar2[1]) break;
     uVar1 = *(ushort *)(*puVar2 + 2);
     uVar6 = (uint)uVar1;
     if (*(uint *)(DAT_846178cc + 4) <= uVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821b9e00,0xa3,0,0xffffffff821b9ee8,uVar6);
     }
     uVar5 = *(ulonglong *)(*(int *)(DAT_846178cc + 0x5c) + (uint)uVar1 * 8);
     uVar3 = (ulonglong)*(byte *)(*(int *)(DAT_846178cc + 0x50) + uVar6 * 0x18 + 0x16);
     if ((uVar5 >> 0x2c & 0xff) != uVar3) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821b9e00,0xa5,0,0xffffffff821b9e78,uVar5 >> 0x2c & 0xff,uVar3);
+      uVar3 = MyAssertHandler(0xffffffff821b9e00,0xa5,0,0xffffffff821b9e78,uVar5 >> 0x2c & 0xff,
+                              uVar3);
     }
   } while (((uVar5 >> 0x1d & 0xfff) << 10 | uVar5 >> 0x2c & 0xff) << 8 ==
            ((uVar4 >> 0x1d & 0xfff) << 10 | uVar4 >> 0x2c & 0xff) << 8);

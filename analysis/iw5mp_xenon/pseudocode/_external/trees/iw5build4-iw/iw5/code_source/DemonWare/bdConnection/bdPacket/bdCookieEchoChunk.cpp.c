@@ -14,6 +14,42 @@ undefined4 * bdCookieEchoChunk__bdCookieEchoChunk(undefined4 *param_1)
 }
 
 
+// 82939A08  bdCookieEchoChunk::bdCookieEchoChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:24)
+
+void bdCookieEchoChunk__bdCookieEchoChunk(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  uint *puVar4;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  bdChunk__bdChunk(puVar2,0xd);
+  puVar2[4] = 0;
+  *puVar2 = &PTR_bdCookieEchoChunk___scalar_deleting_destructor__82219ad0;
+  puVar2[5] = 0;
+  uVar1 = *(uint *)param_2;
+  puVar2[6] = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar3 = (ulonglong)uVar1 + 4;
+    do {
+      puVar4 = (uint *)lVar3;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(puVar2);
+  return;
+}
+
+
 // 829398B0  bdCookieEchoChunk::~bdCookieEchoChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:29)
 
 void bdCookieEchoChunk___bdCookieEchoChunk(undefined4 *param_1)
@@ -44,11 +80,93 @@ bool bdCookieEchoChunk__getCookie(int param_1,undefined8 param_2)
 
 // 82939AC8  bdCookieEchoChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:49)
 
-void bdCookieEchoChunk__serialize(void)
+void bdCookieEchoChunk__serialize(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar5;
+  undefined8 uVar4;
+  char cVar6;
+  uint *puVar7;
+  undefined1 *puVar8;
+  uint uVar9;
+  int iVar11;
+  longlong lVar10;
+  longlong lVar12;
+  undefined1 local_40 [2];
+  ushort local_3e;
+  undefined1 auStack_3c [2];
+  undefined1 auStack_3a [2];
+  uint local_38;
+  uint local_34 [13];
+  
+  iVar5 = __savegprlr_28();
+  local_38 = 0;
+  if ((*(int *)(iVar5 + 0x14) == 0) && (*(int *)(iVar5 + 0x18) == 0)) goto LAB_82939c60;
+  uVar4 = bdChunk__serialize(iVar5,param_2,param_3);
+  local_38 = (uint)uVar4;
+  local_40[0] = (undefined1)*(undefined4 *)(iVar5 + 0x10);
+  cVar6 = bdBytePacker__appendBuffer(param_2,param_3,uVar4,&local_38,local_40,1);
+  if (*(int *)(iVar5 + 0x18) == 0) {
+    local_34[0] = local_38;
+    lVar10 = (ulonglong)local_38 + 2;
+    local_38 = (uint)lVar10;
+    lVar12 = lVar10 + param_2;
+    if ((param_2 & 0xffffffff) == 0) {
+      lVar12 = 0;
+    }
+    local_3e = bdCookie__serialize(*(undefined4 *)(iVar5 + 0x14),lVar12,param_3 - lVar10);
+    local_38 = local_3e + local_38;
+    if (cVar6 == '\0') goto LAB_82939c60;
+    iVar5 = 0;
+    puVar7 = &local_38;
+    lVar12 = 2;
+    do {
+      iVar11 = iVar5 + -2;
+      iVar5 = iVar5 + 1;
+      puVar7 = (uint *)((int)puVar7 + -1);
+      *(undefined1 *)puVar7 = auStack_3c[iVar11];
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    uVar9 = 2;
+    puVar8 = auStack_3a;
+    puVar7 = local_34;
+    uVar1 = local_34[0];
+  }
+  else {
+    uVar1 = *(uint *)(*(int *)(iVar5 + 0x18) + 8);
+    uVar9 = uVar1 & 0xffff;
+    local_3e = (ushort)uVar1;
+    if (cVar6 == '\0') {
+LAB_82939bb4:
+      bVar2 = false;
+    }
+    else {
+      iVar11 = 0;
+      puVar8 = auStack_3a;
+      lVar12 = 2;
+      do {
+        iVar3 = iVar11 + -2;
+        iVar11 = iVar11 + 1;
+        puVar8 = puVar8 + -1;
+        *puVar8 = auStack_3c[iVar3];
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      cVar6 = bdBytePacker__appendBuffer(param_2,param_3,local_38,&local_38,auStack_3c,2);
+      bVar2 = true;
+      if (cVar6 == '\0') goto LAB_82939bb4;
+    }
+    if (!bVar2) goto LAB_82939c60;
+    puVar7 = &local_38;
+    puVar8 = *(undefined1 **)(*(int *)(iVar5 + 0x18) + 0xc);
+    uVar1 = local_38;
+  }
+  bdBytePacker__appendBuffer(param_2,param_3,uVar1,puVar7,puVar8,uVar9);
+LAB_82939c60:
+  __restgprlr_28(local_38);
+  return;
 }
 
 

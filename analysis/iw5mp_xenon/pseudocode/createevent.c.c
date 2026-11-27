@@ -6,7 +6,39 @@ HANDLE CreateEventA(LPSECURITY_ATTRIBUTES lpEventAttributes,BOOL bManualReset,BO
                    LPCSTR lpName)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(lpEventAttributes,bManualReset,bInitialState,lpName);
+  undefined8 uVar1;
+  int iVar2;
+  HANDLE pvVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 local_40 [2];
+  undefined1 auStack_38 [8];
+  undefined1 auStack_30 [48];
+  
+  uVar6 = (ulonglong)(int)lpName;
+  uVar5 = (ulonglong)bInitialState;
+  lVar4 = (longlong)bManualReset;
+  __savegprlr_29(lpEventAttributes,lVar4,uVar5);
+  if ((uVar6 & 0xffffffff) == 0) {
+    uVar1 = 0;
+  }
+  else {
+    uVar1 = XapiFormatObjectAttributes(auStack_30,auStack_38,uVar6);
+  }
+  iVar2 = NtCreateEvent(local_40,uVar1,(int)lVar4 == 0,uVar5 & 0xff);
+  if (iVar2 < 0) {
+    RtlSetLastNTError();
+    local_40[0] = 0;
+  }
+  else {
+    uVar1 = 0xb7;
+    if (iVar2 != 0x40000000) {
+      uVar1 = 0;
+    }
+    RtlSetLastError(uVar1);
+  }
+  pvVar3 = (HANDLE)__restgprlr_29(local_40[0]);
+  return pvVar3;
 }
 

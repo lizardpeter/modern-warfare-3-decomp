@@ -92,14 +92,113 @@ LAB_82715238:
 ; 82715248  MemoryHashInfo::OpenAsCRC32  (online/memory_hash.cpp:240)
   82715248  7D8802A6             mfspr r12,LR
   8271524C  4820146D             bl 0x829166b8
+  82715250  9421FF80             stwu r1,-0x80(r1)
+  82715254  81630000             lwz r11,0x0(r3)
+  82715258  7C7F1B78             or r31,r3,r3
+  8271525C  7C9E2378             or r30,r4,r4
+  82715260  7CBD2B78             or r29,r5,r5
+  82715264  7CDC3378             or r28,r6,r6
+  82715268  2F0B0000             cmpwi cr6,r11,0x0
+  8271526C  419A0028             beq cr6,0x82715294
+  82715270  3D60821C             lis r11,-0x7de4
+  82715274  3D408200             lis r10,-0x7e00
+  82715278  3D20821C             lis r9,-0x7de4
+  8271527C  38EB8ACC             subi r7,r11,0x7534
+  82715280  38CA0F98             addi r6,r10,0xf98
+  82715284  38698A88             subi r3,r9,0x7578
+  82715288  38A00000             li r5,0x0
+  8271528C  388000F2             li r4,0xf2
+  82715290  4BEBF271             bl 0x825d4500
+LAB_82715294:
+  82715294  7D4C42E6             mftb r10,TBLr
+  82715298  39600000             li r11,0x0
+  8271529C  39000001             li r8,0x1
+  827152A0  93DF0004             stw r30,0x4(r31)
+  827152A4  38E02000             li r7,0x2000
+  827152A8  917F001C             stw r11,0x1c(r31)
+  827152AC  915F0018             stw r10,0x18(r31)
+  827152B0  38600001             li r3,0x1
+  827152B4  911F0000             stw r8,0x0(r31)
+  827152B8  917F000C             stw r11,0xc(r31)
+  827152BC  93BF0008             stw r29,0x8(r31)
+  827152C0  90FF0010             stw r7,0x10(r31)
+  827152C4  FB9F0020             std r28,0x20(r31)
+  827152C8  38210080             addi r1,r1,0x80
+  827152CC  4820143C             b 0x82916708
 
 ; 827152D0  MemoryHashInfo::OpenAsCRC32Split  (online/memory_hash.cpp:265)
   827152D0  7D8802A6             mfspr r12,LR
   827152D4  482013E5             bl 0x829166b8
+  827152D8  9421FF80             stwu r1,-0x80(r1)
+  827152DC  81630000             lwz r11,0x0(r3)
+  827152E0  7C7F1B78             or r31,r3,r3
+  827152E4  7C9E2378             or r30,r4,r4
+  827152E8  7CBD2B78             or r29,r5,r5
+  827152EC  7CDC3378             or r28,r6,r6
+  827152F0  2F0B0000             cmpwi cr6,r11,0x0
+  827152F4  419A0028             beq cr6,0x8271531c
+  827152F8  3D60821C             lis r11,-0x7de4
+  827152FC  3D408200             lis r10,-0x7e00
+  82715300  3D20821C             lis r9,-0x7de4
+  82715304  38EB8ACC             subi r7,r11,0x7534
+  82715308  38CA0F98             addi r6,r10,0xf98
+  8271530C  38698A88             subi r3,r9,0x7578
+  82715310  38A00000             li r5,0x0
+  82715314  3880010B             li r4,0x10b
+  82715318  4BEBF1E9             bl 0x825d4500
+LAB_8271531c:
+  8271531C  7D4C42E6             mftb r10,TBLr
+  82715320  39600000             li r11,0x0
+  82715324  39000005             li r8,0x5
+  82715328  93DF0004             stw r30,0x4(r31)
+  8271532C  38E02000             li r7,0x2000
+  82715330  917F001C             stw r11,0x1c(r31)
+  82715334  915F0018             stw r10,0x18(r31)
+  82715338  38600001             li r3,0x1
+  8271533C  911F0000             stw r8,0x0(r31)
+  82715340  917F000C             stw r11,0xc(r31)
+  82715344  93BF0008             stw r29,0x8(r31)
+  82715348  90FF0010             stw r7,0x10(r31)
+  8271534C  FB9F0020             std r28,0x20(r31)
+  82715350  38210080             addi r1,r1,0x80
+  82715354  482013B4             b 0x82916708
 
 ; 82715358  MemoryHashInfo::OpenAsMD4  (online/memory_hash.cpp:290)
   82715358  7D8802A6             mfspr r12,LR
   8271535C  4820135D             bl 0x829166b8
+  82715360  9421FF80             stwu r1,-0x80(r1)
+  82715364  81630000             lwz r11,0x0(r3)
+  82715368  7C7F1B78             or r31,r3,r3
+  8271536C  7C9E2378             or r30,r4,r4
+  82715370  7CBD2B78             or r29,r5,r5
+  82715374  7CDC3378             or r28,r6,r6
+  82715378  2F0B0000             cmpwi cr6,r11,0x0
+  8271537C  419A0028             beq cr6,0x827153a4
+  82715380  3D60821C             lis r11,-0x7de4
+  82715384  3D408200             lis r10,-0x7e00
+  82715388  3D20821C             lis r9,-0x7de4
+  8271538C  38EB8ACC             subi r7,r11,0x7534
+  82715390  38CA0F98             addi r6,r10,0xf98
+  82715394  38698A88             subi r3,r9,0x7578
+  82715398  38A00000             li r5,0x0
+  8271539C  38800124             li r4,0x124
+  827153A0  4BEBF161             bl 0x825d4500
+LAB_827153a4:
+  827153A4  7D4C42E6             mftb r10,TBLr
+  827153A8  39600000             li r11,0x0
+  827153AC  39000002             li r8,0x2
+  827153B0  93DF0004             stw r30,0x4(r31)
+  827153B4  38E00800             li r7,0x800
+  827153B8  917F001C             stw r11,0x1c(r31)
+  827153BC  915F0018             stw r10,0x18(r31)
+  827153C0  38600001             li r3,0x1
+  827153C4  911F0000             stw r8,0x0(r31)
+  827153C8  917F000C             stw r11,0xc(r31)
+  827153CC  93BF0008             stw r29,0x8(r31)
+  827153D0  90FF0010             stw r7,0x10(r31)
+  827153D4  FB9F0020             std r28,0x20(r31)
+  827153D8  38210080             addi r1,r1,0x80
+  827153DC  4820132C             b 0x82916708
 
 ; 827153E0  MemoryHashInfo::OpenAsSHATomCrypt  (online/memory_hash.cpp:315)
   827153E0  7D8802A6             mfspr r12,LR
@@ -130,6 +229,7 @@ LAB_82715238:
   82715444  38A00000             li r5,0x0
   82715448  38800142             li r4,0x142
   8271544C  4BEBF0B5             bl 0x825d4500
+  82715450  807E9B58             lwz r3,-0x64a8(r30)
 LAB_82715454:
   82715454  817F0000             lwz r11,0x0(r31)
   82715458  2F0B0000             cmpwi cr6,r11,0x0
@@ -141,6 +241,7 @@ LAB_82715454:
   82715470  38A00000             li r5,0x0
   82715474  38800146             li r4,0x146
   82715478  4BEBF089             bl 0x825d4500
+  8271547C  807E9B58             lwz r3,-0x64a8(r30)
 LAB_82715480:
   82715480  7D6C42E6             mftb r11,TBLr
   82715484  E94100B8             ld r10,0xb8(r1)
@@ -185,6 +286,10 @@ LAB_8271550c:
   8271551C  38A00000             li r5,0x0
   82715520  3880015B             li r4,0x15b
   82715524  4BEBEFDD             bl 0x825d4500
+  82715528  38600000             li r3,0x0
+  8271552C  937F0000             stw r27,0x0(r31)
+  82715530  38210090             addi r1,r1,0x90
+  82715534  482011C8             b 0x829166fc
 LAB_82715538:
   82715538  38600001             li r3,0x1
   8271553C  38210090             addi r1,r1,0x90
@@ -193,6 +298,43 @@ LAB_82715538:
 ; 82715548  MemoryHashInfo::OpenAs8WayProbe  (online/memory_hash.cpp:362)
   82715548  7D8802A6             mfspr r12,LR
   8271554C  4820116D             bl 0x829166b8
+  82715550  9421FF80             stwu r1,-0x80(r1)
+  82715554  81630000             lwz r11,0x0(r3)
+  82715558  7C7F1B78             or r31,r3,r3
+  8271555C  7C9D2378             or r29,r4,r4
+  82715560  7CBC2B78             or r28,r5,r5
+  82715564  7CDE3378             or r30,r6,r6
+  82715568  2F0B0000             cmpwi cr6,r11,0x0
+  8271556C  419A0028             beq cr6,0x82715594
+  82715570  3D60821C             lis r11,-0x7de4
+  82715574  3D408200             lis r10,-0x7e00
+  82715578  3D20821C             lis r9,-0x7de4
+  8271557C  38EB8ACC             subi r7,r11,0x7534
+  82715580  38CA0F98             addi r6,r10,0xf98
+  82715584  38698A88             subi r3,r9,0x7578
+  82715588  38A00000             li r5,0x0
+  8271558C  3880016C             li r4,0x16c
+  82715590  4BEBEF71             bl 0x825d4500
+LAB_82715594:
+  82715594  7D4C42E6             mftb r10,TBLr
+  82715598  39600000             li r11,0x0
+  8271559C  39000004             li r8,0x4
+  827155A0  93BF0004             stw r29,0x4(r31)
+  827155A4  5787E8FE             rlwinm r7,r28,0x1d,0x3,0x1f
+  827155A8  917F001C             stw r11,0x1c(r31)
+  827155AC  38C02000             li r6,0x2000
+  827155B0  915F0018             stw r10,0x18(r31)
+  827155B4  911F0000             stw r8,0x0(r31)
+  827155B8  38600001             li r3,0x1
+  827155BC  917F000C             stw r11,0xc(r31)
+  827155C0  90FF0008             stw r7,0x8(r31)
+  827155C4  90DF0010             stw r6,0x10(r31)
+  827155C8  FBDF0020             std r30,0x20(r31)
+  827155CC  FBDF0028             std r30,0x28(r31)
+  827155D0  F97F0030             std r11,0x30(r31)
+  827155D4  917F0014             stw r11,0x14(r31)
+  827155D8  38210080             addi r1,r1,0x80
+  827155DC  4820112C             b 0x82916708
 
 ; 827155E0  MemoryHashInfo::Continue  (online/memory_hash.cpp:392)
   827155E0  7D8802A6             mfspr r12,LR
@@ -308,6 +450,7 @@ LAB_82715758:
   82715778  38A00000             li r5,0x0
   8271577C  388001B2             li r4,0x1b2
   82715780  4BEBED81             bl 0x825d4500
+  82715784  817C9B58             lwz r11,-0x64a8(r28)
 LAB_82715788:
   82715788  3D408489             lis r10,-0x7b77
   8271578C  1D2B0068             mulli r9,r11,0x68
@@ -456,3 +599,110 @@ LAB_82715964:
 ; 82715998  MemoryHashInfo::Complete  (online/memory_hash.cpp:503)
   82715998  7D8802A6             mfspr r12,LR
   8271599C  48200D15             bl 0x829166b0
+  827159A0  9421FF50             stwu r1,-0xb0(r1)
+  827159A4  81230000             lwz r9,0x0(r3)
+  827159A8  3D60821C             lis r11,-0x7de4
+  827159AC  3D408200             lis r10,-0x7e00
+  827159B0  7C7F1B78             or r31,r3,r3
+  827159B4  7C9A2378             or r26,r4,r4
+  827159B8  2F090000             cmpwi cr6,r9,0x0
+  827159BC  3B8B8A88             subi r28,r11,0x7578
+  827159C0  3B6A0F98             addi r27,r10,0xf98
+  827159C4  409A0020             bne cr6,0x827159e4
+  827159C8  3D60821C             lis r11,-0x7de4
+  827159CC  7F66DB78             or r6,r27,r27
+  827159D0  38EB8B70             subi r7,r11,0x7490
+  827159D4  7F83E378             or r3,r28,r28
+  827159D8  38A00000             li r5,0x0
+  827159DC  388001FD             li r4,0x1fd
+  827159E0  4BEBEB21             bl 0x825d4500
+LAB_827159e4:
+  827159E4  7D4C42E6             mftb r10,TBLr
+  827159E8  817F0000             lwz r11,0x0(r31)
+  827159EC  91410050             stw r10,0x50(r1)
+  827159F0  396BFFFF             subi r11,r11,0x1
+  827159F4  2B0B0004             cmplwi cr6,r11,0x4
+  827159F8  41990104             bgt cr6,0x82715afc
+  827159FC  7D6903A6             mtspr CTR,r11
+  82715A00  2F0B0000             cmpwi cr6,r11,0x0
+  82715A04  405A0010             bdzf 4*cr6+eq,0x82715a14
+  82715A08  405A0024             bdzf 4*cr6+eq,0x82715a2c
+  82715A0C  405A0014             bdzf 4*cr6+eq,0x82715a20
+  82715A10  409A0004             bne cr6,0x82715a14
+LAB_82715a14:
+  82715A14  E97F0020             ld r11,0x20(r31)
+  82715A18  F97A0000             std r11,0x0(r26)
+  82715A1C  480000E0             b 0x82715afc
+LAB_82715a20:
+  82715A20  E97F0030             ld r11,0x30(r31)
+  82715A24  F97A0000             std r11,0x0(r26)
+  82715A28  480000D4             b 0x82715afc
+LAB_82715a2c:
+  82715A2C  3FC0829A             lis r30,-0x7d66
+  82715A30  3D608489             lis r11,-0x7b77
+  82715A34  3BAB6148             addi r29,r11,0x6148
+  82715A38  817E9B58             lwz r11,-0x64a8(r30)
+  82715A3C  395D0008             addi r10,r29,0x8
+  82715A40  1D2B0068             mulli r9,r11,0x68
+  82715A44  7D09502E             lwzx r8,r9,r10
+  82715A48  2B080014             cmplwi cr6,r8,0x14
+  82715A4C  419A0020             beq cr6,0x82715a6c
+  82715A50  3D60821C             lis r11,-0x7de4
+  82715A54  7F66DB78             or r6,r27,r27
+  82715A58  38EB8B90             subi r7,r11,0x7470
+  82715A5C  7F83E378             or r3,r28,r28
+  82715A60  38A00000             li r5,0x0
+  82715A64  3880020F             li r4,0x20f
+  82715A68  4BEBEA99             bl 0x825d4500
+LAB_82715a6c:
+  82715A6C  38A00014             li r5,0x14
+  82715A70  38800000             li r4,0x0
+  82715A74  38610060             addi r3,r1,0x60
+  82715A78  4BED11A9             bl 0x825e6c20
+  82715A7C  817E9B58             lwz r11,-0x64a8(r30)
+  82715A80  2F0B0000             cmpwi cr6,r11,0x0
+  82715A84  40980024             bge cr6,0x82715aa8
+  82715A88  3D60821C             lis r11,-0x7de4
+  82715A8C  7F66DB78             or r6,r27,r27
+  82715A90  38EB8B00             subi r7,r11,0x7500
+  82715A94  7F83E378             or r3,r28,r28
+  82715A98  38A00000             li r5,0x0
+  82715A9C  38800213             li r4,0x213
+  82715AA0  4BEBEA61             bl 0x825d4500
+  82715AA4  817E9B58             lwz r11,-0x64a8(r30)
+LAB_82715aa8:
+  82715AA8  1D6B0068             mulli r11,r11,0x68
+  82715AAC  395D005C             addi r10,r29,0x5c
+  82715AB0  38810060             addi r4,r1,0x60
+  82715AB4  387F0028             addi r3,r31,0x28
+  82715AB8  7D2B502E             lwzx r9,r11,r10
+  82715ABC  7D2903A6             mtspr CTR,r9
+  82715AC0  4E800421             bctrl
+  82715AC4  2F030000             cmpwi cr6,r3,0x0
+  82715AC8  409A0018             bne cr6,0x82715ae0
+  82715ACC  38A00008             li r5,0x8
+  82715AD0  38810060             addi r4,r1,0x60
+  82715AD4  7F43D378             or r3,r26,r26
+  82715AD8  4BED1089             bl 0x825e6b60
+  82715ADC  48000020             b 0x82715afc
+LAB_82715ae0:
+  82715AE0  3D60821C             lis r11,-0x7de4
+  82715AE4  7F66DB78             or r6,r27,r27
+  82715AE8  38EB8B30             subi r7,r11,0x74d0
+  82715AEC  7F83E378             or r3,r28,r28
+  82715AF0  38A00000             li r5,0x0
+  82715AF4  3880021B             li r4,0x21b
+  82715AF8  4BEBEA09             bl 0x825d4500
+LAB_82715afc:
+  82715AFC  7D6C42E6             mftb r11,TBLr
+  82715B00  91610054             stw r11,0x54(r1)
+  82715B04  813F001C             lwz r9,0x1c(r31)
+  82715B08  39000000             li r8,0x0
+  82715B0C  80E10050             lwz r7,0x50(r1)
+  82715B10  81610054             lwz r11,0x54(r1)
+  82715B14  7D474850             subf r10,r7,r9
+  82715B18  911F0000             stw r8,0x0(r31)
+  82715B1C  7CCA5A14             add r6,r10,r11
+  82715B20  90DF001C             stw r6,0x1c(r31)
+  82715B24  382100B0             addi r1,r1,0xb0
+  82715B28  48200BD8             b 0x82916700

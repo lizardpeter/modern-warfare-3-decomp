@@ -11,13 +11,142 @@ undefined4 * bdContentStreaming__bdContentStreaming(undefined4 *param_1)
 }
 
 
-// 829080E8  bdContentStreaming::uploadUserSummaryMetaData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:96)
+// 82906C90  bdContentStreaming::getFileMetaDataByID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:68)
 
-void bdContentStreaming__uploadUserSummaryMetaData(void)
+void bdContentStreaming__getFileMetaDataByID
+               (undefined8 param_1,int param_2,ulonglong param_3,longlong param_4,undefined8 param_5
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  ulonglong uVar6;
+  char in_RESERVE;
+  byte bVar7;
+  undefined1 local_60 [96];
+  
+  puVar4 = (undefined4 *)__savegprlr_24();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar7 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,param_3 * 9 + 0x45,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar7 = 2;
+      }
+    } while (!(bool)(bVar7 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_60,0x32,1);
+  bdByteBuffer__writeUInt32(uVar3 & 0xffffffff,param_3);
+  if ((param_3 & 0xffffffff) != 0) {
+    param_4 = param_4 + -8;
+    uVar6 = param_3;
+    do {
+      param_4 = param_4 + 8;
+      bdByteBuffer__writeUInt64((int)uVar3,*(undefined8 *)param_4);
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
+  }
+  bdRemoteTaskManager__startTask(*(undefined4 *)(param_2 + 0x20f4),puVar4,local_60);
+  bdRemoteTask__setTaskResult(*puVar4,param_5,param_3);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_60);
+  __restgprlr_24(puVar4);
+  return;
+}
+
+
+// 829080E8  bdContentStreaming::uploadUserSummaryMetaData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:96)
+
+void bdContentStreaming__uploadUserSummaryMetaData
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  uint uVar1;
+  bool bVar2;
+  bool bVar3;
+  uint *puVar5;
+  char cVar8;
+  undefined8 uVar4;
+  int iVar6;
+  uint *puVar7;
+  longlong lVar9;
+  ulonglong uVar10;
+  char in_RESERVE;
+  byte bVar11;
+  uint local_40 [2];
+  undefined1 auStack_38 [56];
+  
+  puVar5 = (uint *)__savegprlr_27();
+  cVar8 = bdContentStreamingBase__initUpload(param_2,0,param_4,0);
+  bVar11 = (cVar8 == '\0') << 1;
+  if (cVar8 == '\0') {
+    *puVar5 = 0;
+  }
+  else {
+    iVar6 = (int)param_2;
+    *(undefined8 *)(iVar6 + 0x20) = param_3;
+    *(undefined1 *)(iVar6 + 0x12c8) = 1;
+    uVar4 = bdContentStreaming___preUploadSummary(local_40,param_2);
+    bdReference<bdRemoteTask>__operator_(param_2 + 0x1a64,uVar4);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_40);
+    iVar6 = (**(code **)(**(int **)(iVar6 + 0x1a64) + 4))();
+    if (iVar6 == 1) {
+      puVar7 = (uint *)bdContentStreamingBase__startUpload(auStack_38,param_2);
+      bVar3 = true;
+      bVar2 = false;
+    }
+    else {
+      uVar10 = (ulonglong)*(uint *)(param_2 + 0x1a64);
+      if (uVar10 != 0) {
+        lVar9 = uVar10 + 4;
+        do {
+          puVar7 = (uint *)lVar9;
+          if (in_RESERVE != '\0') {
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar9);
+            *puVar7 = uVar1;
+            bVar11 = 2;
+          }
+        } while (!(bool)(bVar11 >> 1 & 1));
+      }
+      puVar7 = local_40;
+      bVar3 = false;
+      bVar2 = true;
+    }
+    uVar1 = *puVar7;
+    *puVar5 = uVar1;
+    if ((ulonglong)uVar1 != 0) {
+      lVar9 = (ulonglong)uVar1 + 4;
+      do {
+        puVar7 = (uint *)lVar9;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar9);
+          *puVar7 = uVar1;
+          bVar11 = 2;
+        }
+      } while (!(bool)(bVar11 >> 1 & 1));
+    }
+    if (bVar2) {
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_40);
+    }
+    if (bVar3) {
+      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_38);
+    }
+  }
+  __restgprlr_27(puVar5);
+  return;
 }
 
 
@@ -353,6 +482,163 @@ void bdContentStreaming__copyFromUserStorage
 }
 
 
+// 82908A50  bdContentStreaming::download  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:406)
+
+void bdContentStreaming__download(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  uint *puVar3;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar4;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_40 [64];
+  
+  puVar3 = (uint *)__savegprlr_27();
+  cVar5 = bdContentStreamingBase__initDownload(param_2,0,0);
+  bVar8 = (cVar5 == '\0') << 1;
+  if (cVar5 == '\0') {
+    *puVar3 = 0;
+  }
+  else {
+    uVar2 = bdContentStreaming___preDownloadByFileID
+                      (local_40,param_2,param_3,0x40000000,*(undefined4 *)((int)param_2 + 0xe10));
+    bdReference<bdRemoteTask>__operator_(param_2 + 0x1a64,uVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_40);
+    iVar4 = (**(code **)(**(int **)((int)param_2 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase__startDownload(puVar3,param_2);
+    }
+    else {
+      uVar1 = *(uint *)(param_2 + 0x1a64);
+      *puVar3 = uVar1;
+      if ((ulonglong)uVar1 != 0) {
+        lVar6 = (ulonglong)uVar1 + 4;
+        do {
+          puVar7 = (uint *)lVar6;
+          if (in_RESERVE != '\0') {
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar1;
+            bVar8 = 2;
+          }
+        } while (!(bool)(bVar8 >> 1 & 1));
+      }
+    }
+  }
+  __restgprlr_27(puVar3);
+  return;
+}
+
+
+// 82908B68  bdContentStreaming::download  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:431)
+
+void bdContentStreaming__download
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+
+{
+  uint uVar1;
+  uint *puVar3;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar4;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_40 [64];
+  
+  puVar3 = (uint *)__savegprlr_26();
+  cVar5 = bdContentStreamingBase__initDownload(param_2,param_4,param_5,0,param_6,param_7,param_8);
+  bVar8 = (cVar5 == '\0') << 1;
+  if (cVar5 == '\0') {
+    *puVar3 = 0;
+  }
+  else {
+    uVar2 = bdContentStreaming___preDownloadByFileID
+                      (local_40,param_2,param_3,param_5,*(undefined4 *)((int)param_2 + 0xe10));
+    bdReference<bdRemoteTask>__operator_(param_2 + 0x1a64,uVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_40);
+    iVar4 = (**(code **)(**(int **)((int)param_2 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase__startDownload(puVar3,param_2);
+    }
+    else {
+      uVar1 = *(uint *)(param_2 + 0x1a64);
+      *puVar3 = uVar1;
+      if ((ulonglong)uVar1 != 0) {
+        lVar6 = (ulonglong)uVar1 + 4;
+        do {
+          puVar7 = (uint *)lVar6;
+          if (in_RESERVE != '\0') {
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar1;
+            bVar8 = 2;
+          }
+        } while (!(bool)(bVar8 >> 1 & 1));
+      }
+    }
+  }
+  __restgprlr_26(puVar3);
+  return;
+}
+
+
+// 82908C90  bdContentStreaming::removeFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:568)
+
+void bdContentStreaming__removeFile(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  uint *puVar3;
+  char cVar5;
+  undefined8 uVar2;
+  int iVar4;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte bVar8;
+  undefined1 local_40 [64];
+  
+  puVar3 = (uint *)__savegprlr_27();
+  cVar5 = bdContentStreamingBase__initDelete(param_2);
+  bVar8 = (cVar5 == '\0') << 1;
+  if (cVar5 == '\0') {
+    *puVar3 = 0;
+  }
+  else {
+    uVar2 = bdContentStreaming___preDeleteFile(local_40,param_2,param_3,param_2 + 0x7b0);
+    bdReference<bdRemoteTask>__operator_(param_2 + 0x1a64,uVar2);
+    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(local_40);
+    iVar4 = (**(code **)(**(int **)((int)param_2 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase__startDelete(puVar3,param_2);
+    }
+    else {
+      uVar1 = *(uint *)(param_2 + 0x1a64);
+      *puVar3 = uVar1;
+      if ((ulonglong)uVar1 != 0) {
+        lVar6 = (ulonglong)uVar1 + 4;
+        do {
+          puVar7 = (uint *)lVar6;
+          if (in_RESERVE != '\0') {
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar1;
+            bVar8 = 2;
+          }
+        } while (!(bool)(bVar8 >> 1 & 1));
+      }
+    }
+  }
+  __restgprlr_27(puVar3);
+  return;
+}
+
+
 // 82907030  bdContentStreaming::_preUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:592)
 
 void bdContentStreaming___preUpload
@@ -414,33 +700,265 @@ void bdContentStreaming___preUpload
 }
 
 
-// 82907438  bdContentStreaming::_postUploadFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:655)
+// 82907220  bdContentStreaming::_preUploadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:621)
 
-void bdContentStreaming___postUploadFile(void)
+void bdContentStreaming___preUploadSummary(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  undefined4 *puVar6;
+  ulonglong uVar5;
+  undefined4 uVar7;
+  uint *puVar8;
+  uint uVar9;
+  longlong lVar10;
+  char in_RESERVE;
+  byte bVar11;
+  undefined1 local_40 [64];
+  
+  puVar6 = (undefined4 *)__savegprlr_27();
+  uVar9 = 0;
+  *puVar6 = 0;
+  iVar4 = (int)param_2;
+  uVar2 = *(uint *)(iVar4 + 0x284);
+  uVar3 = *(uint *)(iVar4 + 0xde4);
+  uVar5 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar5 & 0xffffffff) == 0;
+  bVar11 = bVar1 << 1;
+  if (bVar1) {
+    uVar5 = 0;
+  }
+  else {
+    uVar5 = bdTaskByteBuffer__bdTaskByteBuffer
+                      (uVar5,((ulonglong)uVar2 & 0xfffffff) * 0x10 + (ulonglong)uVar3 + 0x5e,1);
+  }
+  uVar7 = (undefined4)uVar5;
+  if ((uVar5 & 0xffffffff) != 0) {
+    do {
+      puVar8 = (uint *)(uVar5 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar5 + 4);
+        *puVar8 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_40,0x32,0x11);
+  bdByteBuffer__writeUInt64(uVar5 & 0xffffffff,*(undefined8 *)(iVar4 + 0x20));
+  bdByteBuffer__writeUInt32(uVar5 & 0xffffffff,*(undefined4 *)(iVar4 + 0x30));
+  bdByteBuffer__writeBlob
+            (uVar5 & 0xffffffff,*(undefined4 *)(iVar4 + 0xde0),*(undefined4 *)(iVar4 + 0xde4));
+  bdByteBuffer__writeArrayStart(uVar5 & 0xffffffff,10,*(int *)(iVar4 + 0x284) << 1,8);
+  if (*(int *)(iVar4 + 0x284) != 0) {
+    lVar10 = param_2 + 0x488;
+    do {
+      bdByteBuffer__writeUInt64(uVar7,*(undefined8 *)((int)lVar10 + 0x10));
+      lVar10 = lVar10 + 0x18;
+      bdByteBuffer__writeUInt64(uVar7,*(undefined8 *)lVar10);
+      uVar9 = uVar9 + 1;
+    } while (uVar9 < *(uint *)(iVar4 + 0x284));
+  }
+  bdByteBuffer__writeArrayEnd(uVar7);
+  if (*(char *)(iVar4 + 0xdea) != '\0') {
+    bdByteBuffer__writeBlob(uVar7,param_2 + 0xdeb,0x20);
+  }
+  bdRemoteTaskManager__startTask(*(undefined4 *)(iVar4 + 0x20f4),puVar6,local_40);
+  bdRemoteTask__setTaskResult(*puVar6,param_2 + 0x7b0,3);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_40);
+  __restgprlr_27(puVar6);
+  return;
+}
+
+
+// 82907438  bdContentStreaming::_postUploadFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:655)
+
+void bdContentStreaming___postUploadFile(undefined8 param_1,longlong param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  undefined4 *puVar7;
+  longlong lVar5;
+  ulonglong uVar6;
+  undefined4 uVar8;
+  longlong lVar9;
+  uint *puVar10;
+  longlong lVar11;
+  uint uVar12;
+  char in_RESERVE;
+  byte bVar13;
+  undefined1 local_50 [80];
+  
+  puVar7 = (undefined4 *)__savegprlr_26();
+  uVar12 = 0;
+  *puVar7 = 0;
+  lVar11 = param_2 + 0x82;
+  if (lVar11 == 0) {
+    lVar9 = 0;
+  }
+  else {
+    lVar9 = bdStrnlen(lVar11,0x80);
+    lVar9 = lVar9 + 2;
+  }
+  iVar4 = (int)param_2;
+  lVar5 = (ulonglong)*(ushort *)(iVar4 + 0xde8) * 0x210 + param_2 + 0x936;
+  if (lVar5 == 0) {
+    lVar5 = 0;
+  }
+  else {
+    lVar5 = bdStrnlen(lVar5,0x80);
+    lVar5 = lVar5 + 2;
+  }
+  uVar2 = *(uint *)(iVar4 + 0x284);
+  uVar3 = *(uint *)(iVar4 + 0xde4);
+  uVar6 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar6 & 0xffffffff) == 0;
+  bVar13 = bVar1 << 1;
+  if (bVar1) {
+    uVar6 = 0;
+  }
+  else {
+    uVar6 = bdTaskByteBuffer__bdTaskByteBuffer
+                      (uVar6,((ulonglong)uVar2 & 0xfffffff) * 0x10 + lVar5 + lVar9 +
+                             (ulonglong)uVar3 + 0x5e,1);
+  }
+  uVar8 = (undefined4)uVar6;
+  if ((uVar6 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar6 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar6 + 4);
+        *puVar10 = uVar2;
+        bVar13 = 2;
+      }
+    } while (!(bool)(bVar13 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,0x32,6);
+  bdByteBuffer__writeString(uVar6 & 0xffffffff,lVar11,0x81);
+  bdByteBuffer__writeUInt16(uVar6 & 0xffffffff,*(undefined2 *)(iVar4 + 0x80));
+  bdByteBuffer__writeUInt16
+            (uVar6 & 0xffffffff,
+             *(undefined2 *)((uint)*(ushort *)(iVar4 + 0xde8) * 0x210 + iVar4 + 0x934));
+  bdByteBuffer__writeString
+            (uVar6 & 0xffffffff,(ulonglong)*(ushort *)(iVar4 + 0xde8) * 0x210 + param_2 + 0x936,0x81
+            );
+  bdByteBuffer__writeUInt32(uVar6 & 0xffffffff,*(undefined4 *)(iVar4 + 0x30));
+  bdByteBuffer__writeUInt16(uVar6 & 0xffffffff,*(undefined2 *)(iVar4 + 0x282));
+  bdByteBuffer__writeBlob
+            (uVar6 & 0xffffffff,*(undefined4 *)(iVar4 + 0xde0),*(undefined4 *)(iVar4 + 0xde4));
+  bdByteBuffer__writeArrayStart(uVar6 & 0xffffffff,10,*(int *)(iVar4 + 0x284) << 1,8);
+  if (*(int *)(iVar4 + 0x284) != 0) {
+    param_2 = param_2 + 0x488;
+    do {
+      bdByteBuffer__writeUInt64(uVar8,*(undefined8 *)((int)param_2 + 0x10));
+      param_2 = param_2 + 0x18;
+      bdByteBuffer__writeUInt64(uVar8,*(undefined8 *)param_2);
+      uVar12 = uVar12 + 1;
+    } while (uVar12 < *(uint *)(iVar4 + 0x284));
+  }
+  bdByteBuffer__writeArrayEnd(uVar8);
+  bdRemoteTaskManager__startTask(*(undefined4 *)(iVar4 + 0x20f4),puVar7,local_50);
+  bdRemoteTask__setTaskResult(*puVar7,*(undefined4 *)(iVar4 + 0x7ac),1);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_26(puVar7);
+  return;
 }
 
 
 // 829076D8  bdContentStreaming::_postUploadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:696)
 
-void bdContentStreaming___postUploadSummary(void)
+void bdContentStreaming___postUploadSummary(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte bVar6;
+  undefined1 local_40 [64];
+  
+  puVar4 = (undefined4 *)__savegprlr_28();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar6 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x4e,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
+      }
+    } while (!(bool)(bVar6 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_40,0x32,0x12);
+  bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,*(undefined8 *)(param_2 + 0x20));
+  bdByteBuffer__writeUInt32(uVar3 & 0xffffffff,*(undefined4 *)(param_2 + 0x30));
+  bdRemoteTaskManager__startTask(*(undefined4 *)(param_2 + 0x20f4),puVar4,local_40);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_40);
+  __restgprlr_28(puVar4);
+  return;
 }
 
 
 // 82907848  bdContentStreaming::_preCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:713)
 
-void bdContentStreaming___preCopy(void)
+void bdContentStreaming___preCopy
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte bVar6;
+  undefined1 local_50 [80];
+  
+  puVar4 = (undefined4 *)__savegprlr_26();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar6 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x4c,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
+      }
+    } while (!(bool)(bVar6 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,0x32,param_4);
+  bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,param_3);
+  bdByteBuffer__writeUInt16(uVar3 & 0xffffffff,*(undefined2 *)((int)param_2 + 0x80));
+  bdRemoteTaskManager__startTask(*(undefined4 *)((int)param_2 + 0x20f4),puVar4,local_50);
+  bdRemoteTask__setTaskResult(*puVar4,param_2 + 0xe24,3);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_26(puVar4);
+  return;
 }
 
 
@@ -545,13 +1063,142 @@ void bdContentStreaming___postCopy(undefined8 param_1,longlong param_2)
 }
 
 
-// 82907E00  bdContentStreaming::_preDownloadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:869)
+// 82907C78  bdContentStreaming::_preDownloadByFileID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:804)
 
-void bdContentStreaming___preDownloadSummary(void)
+void bdContentStreaming___preDownloadByFileID
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte bVar6;
+  undefined1 local_50 [80];
+  
+  puVar4 = (undefined4 *)__savegprlr_25();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar6 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x4e,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
+      }
+    } while (!(bool)(bVar6 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,0x32,9);
+  bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,param_3);
+  bdByteBuffer__writeUInt32(uVar3 & 0xffffffff,param_4);
+  bdRemoteTaskManager__startTask(*(undefined4 *)(param_2 + 0x20f4),puVar4,local_50);
+  bdRemoteTask__setTaskResult(*puVar4,param_5,1);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_25(puVar4);
+  return;
+}
+
+
+// 82907E00  bdContentStreaming::_preDownloadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:869)
+
+void bdContentStreaming___preDownloadSummary(undefined8 param_1,longlong param_2)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte bVar6;
+  undefined1 local_40 [64];
+  
+  puVar4 = (undefined4 *)__savegprlr_28();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar6 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x49,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
+      }
+    } while (!(bool)(bVar6 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_40,0x32,0x13);
+  bdByteBuffer__writeUInt64(uVar3 & 0xffffffff,*(undefined8 *)((int)param_2 + 0x20));
+  bdRemoteTaskManager__startTask(*(undefined4 *)((int)param_2 + 0x20f4),puVar4,local_40);
+  bdRemoteTask__setTaskResult(*puVar4,param_2 + 0x12d0,1);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_40);
+  __restgprlr_28(puVar4);
+  return;
+}
+
+
+// 82907F70  bdContentStreaming::_preDeleteFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:887)
+
+void bdContentStreaming___preDeleteFile
+               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar4;
+  ulonglong uVar3;
+  uint *puVar5;
+  char in_RESERVE;
+  byte bVar6;
+  undefined1 local_50 [80];
+  
+  puVar4 = (undefined4 *)__savegprlr_26();
+  *puVar4 = 0;
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar6 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,0x43,1);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar5 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
+      }
+    } while (!(bool)(bVar6 >> 1 & 1));
+  }
+  bdRemoteTaskManager__initTaskBuffer(local_50,0x32,8);
+  bdByteBuffer__writeUInt16(uVar3 & 0xffffffff,param_3);
+  bdRemoteTaskManager__startTask(*(undefined4 *)(param_2 + 0x20f4),puVar4,local_50);
+  bdRemoteTask__setTaskResult(*puVar4,param_4,2);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_50);
+  __restgprlr_26(puVar4);
+  return;
 }
 
 

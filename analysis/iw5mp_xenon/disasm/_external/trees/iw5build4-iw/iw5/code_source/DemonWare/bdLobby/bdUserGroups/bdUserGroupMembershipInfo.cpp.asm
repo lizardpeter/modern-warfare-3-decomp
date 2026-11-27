@@ -30,6 +30,69 @@
 ; 8290CBB0  bdUserGroupMembershipInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdusergroups/bdusergroupmembershipinfo.cpp:26)
   8290CBB0  7D8802A6             mfspr r12,LR
   8290CBB4  48009B09             bl 0x829166bc
+  8290CBB8  3BE1FF90             subi r31,r1,0x70
+  8290CBBC  9421FF90             stwu r1,-0x70(r1)
+  8290CBC0  7C7E1B78             or r30,r3,r3
+  8290CBC4  909F008C             stw r4,0x8c(r31)
+  8290CBC8  7C9D2378             or r29,r4,r4
+  8290CBCC  38830008             addi r4,r3,0x8
+  8290CBD0  807D0000             lwz r3,0x0(r29)
+  8290CBD4  4BFE91CD             bl 0x828f5da0
+  8290CBD8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290CBDC  41820020             beq 0x8290cbfc
+  8290CBE0  38A00040             li r5,0x40
+  8290CBE4  807D0000             lwz r3,0x0(r29)
+  8290CBE8  389E0010             addi r4,r30,0x10
+  8290CBEC  4BFE9285             bl 0x828f5e70
+  8290CBF0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290CBF4  39600001             li r11,0x1
+  8290CBF8  40820008             bne 0x8290cc00
+LAB_8290cbfc:
+  8290CBFC  39600000             li r11,0x0
+LAB_8290cc00:
+  8290CC00  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290CC04  4182001C             beq 0x8290cc20
+  8290CC08  389E0050             addi r4,r30,0x50
+  8290CC0C  807D0000             lwz r3,0x0(r29)
+  8290CC10  4BFE9191             bl 0x828f5da0
+  8290CC14  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290CC18  39600001             li r11,0x1
+  8290CC1C  40820008             bne 0x8290cc24
+LAB_8290cc20:
+  8290CC20  39600000             li r11,0x0
+LAB_8290cc24:
+  8290CC24  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290CC28  4182001C             beq 0x8290cc44
+  8290CC2C  389E0058             addi r4,r30,0x58
+  8290CC30  807D0000             lwz r3,0x0(r29)
+  8290CC34  4BFE8F65             bl 0x828f5b98
+  8290CC38  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290CC3C  39600001             li r11,0x1
+  8290CC40  40820008             bne 0x8290cc48
+LAB_8290cc44:
+  8290CC44  39600000             li r11,0x0
+LAB_8290cc48:
+  8290CC48  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  8290CC4C  40820038             bne 0x8290cc84
+  8290CC50  3D008221             lis r8,-0x7ddf
+  8290CC54  3D608221             lis r11,-0x7ddf
+  8290CC58  3D408221             lis r10,-0x7ddf
+  8290CC5C  3CA08221             lis r5,-0x7ddf
+  8290CC60  3C808221             lis r4,-0x7ddf
+  8290CC64  38C81010             addi r6,r8,0x1010
+  8290CC68  392BB3C8             subi r9,r11,0x4c38
+  8290CC6C  38EA0FE4             addi r7,r10,0xfe4
+  8290CC70  38A50FD4             addi r5,r5,0xfd4
+  8290CC74  3884A58C             subi r4,r4,0x5a74
+  8290CC78  39000021             li r8,0x21
+  8290CC7C  38600002             li r3,0x2
+  8290CC80  4BFE7E91             bl 0x828f4b10
+LAB_8290cc84:
+  8290CC84  7FA3EB78             or r3,r29,r29
+  8290CC88  4BA57779             bl 0x82364400
+  8290CC8C  7FC3F378             or r3,r30,r30
+  8290CC90  383F0070             addi r1,r31,0x70
+  8290CC94  48009A78             b 0x8291670c
 
 ; 8290CB48  bdUserGroupMembershipInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdusergroups/bdusergroupmembershipinfo.cpp:39)
   8290CB48  38600060             li r3,0x60

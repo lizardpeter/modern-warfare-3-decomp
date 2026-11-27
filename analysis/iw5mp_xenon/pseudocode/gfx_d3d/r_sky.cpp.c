@@ -67,11 +67,14 @@ void R_RegisterSunDvars(void)
 void R_SetSunFlarePosition(undefined8 param_1)
 
 {
-  if ((ulonglong)DAT_8461658c == 0) {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  
+  uVar1 = (ulonglong)DAT_8461658c;
+  if (uVar1 == 0) {
     MyAssertHandler(0xffffffff821cf48c,0x6d,0,0xffffffff82000f98,0xffffffff821b9c84);
+    uVar1 = (ulonglong)DAT_8461658c;
   }
-  AngleVectors(param_1,(ulonglong)DAT_8461658c + 0x1b4,0,0);
+  AngleVectors(param_1,uVar1 + 0x1b4,0,0);
   return;
 }
 
@@ -89,7 +92,6 @@ void R_SetSunFromDvars(undefined1 *param_1)
   double dVar6;
   
   if (param_1 == (undefined1 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821cf48c,0x75,0,0xffffffff82000f98,0xffffffff821bf9fc);
   }
   pcVar1 = *(char **)(DAT_847eeb08 + 0xc);
@@ -154,11 +156,42 @@ void R_SetSunFromDvars(undefined1 *param_1)
 
 // 8277ACB8  R_LoadSunThroughDvars  (gfx_d3d/r_sky.cpp:158)
 
-void R_LoadSunThroughDvars(void)
+void R_LoadSunThroughDvars(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  undefined4 local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821cf48c,0xa3,0,0xffffffff82000f98,0xffffffff821cf4fc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821cf48c,0xa4,0,0xffffffff82000f98,0xffffffff821bf9fc);
+  }
+  uVar2 = va(0xffffffff821cf4f0,uVar1);
+  cVar4 = FS_IsUsingRemotePCSharing();
+  if (cVar4 == '\0') {
+    iVar3 = FS_ReadFile(uVar2,local_30);
+  }
+  else {
+    iVar3 = FS_ReadRemoteFile(uVar2,0,local_30);
+  }
+  if (iVar3 < 0) {
+    Com_Printf(8,0xffffffff821cf4c8,uVar2);
+    __restgprlr_28();
+    return;
+  }
+  iVar3 = Com_LoadDvarsFromBuffer(0xffffffff829a2e80,0x15,local_30[0],uVar2);
+  if (iVar3 != 0) {
+    R_SetSunFromDvars(param_2);
+  }
+  FS_FreeFile(local_30[0]);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -242,6 +275,39 @@ void R_Cmd_SaveSun(void)
   }
   Cmd_Argv(1);
   R_SaveSunFromDvars();
+  return;
+}
+
+
+// 8277AFE8  R_FlushSun  (gfx_d3d/r_sky.cpp:249)
+
+void R_FlushSun(void)
+
+{
+  DAT_8484c754 = 0;
+  DAT_8484c75c = 0;
+  DAT_8484c758 = 0;
+  DAT_8484c778 = 0;
+  DAT_8484c750 = 0;
+  DAT_8484c794 = 0;
+  DAT_8484c764 = 0;
+  DAT_8484c7b0 = 0;
+  DAT_8484c760 = 0;
+  DAT_8484c770 = 0;
+  DAT_8484c774 = 0;
+  DAT_8484c76c = 0;
+  DAT_8484c780 = 0;
+  DAT_8484c77c = 0;
+  DAT_8484c78c = 0;
+  DAT_8484c790 = 0;
+  DAT_8484c788 = 0;
+  DAT_8484c79c = 0;
+  DAT_8484c798 = 0;
+  DAT_8484c7a8 = 0;
+  DAT_8484c7ac = 0;
+  DAT_8484c7a4 = 0;
+  DAT_8484c7b8 = 0;
+  DAT_8484c7b4 = 0;
   return;
 }
 

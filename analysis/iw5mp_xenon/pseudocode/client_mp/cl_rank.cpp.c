@@ -2,11 +2,67 @@
 
 // 82352798  CL_GetRankForXpTable  (client_mp/cl_rank.cpp:21)
 
-void CL_GetRankForXpTable(void)
+void CL_GetRankForXpTable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  longlong lVar1;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int local_60 [24];
+  
+  iVar2 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x1d,0,0xffffffff82000f98,0xffffffff820362f0);
+  }
+  StringTable_GetAsset(param_2,local_60);
+  if (local_60[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0x20,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  lVar1 = StringTable_LookupRowNumForValue(local_60[0],0,0xffffffff820362e0);
+  lVar1 = lVar1 + 1;
+  iVar4 = (int)lVar1;
+  if (iVar4 < 1) {
+    MyAssertHandler(0xffffffff82036300,0x23,0,0xffffffff82000f98,0xffffffff820362d0);
+  }
+  lVar7 = (ulonglong)*(uint *)(local_60[0] + 8) - 1;
+  iVar5 = (int)lVar7;
+  if (iVar5 < iVar4) {
+    MyAssertHandler(0xffffffff82036300,0x25,0,0xffffffff82000f98,0xffffffff820362bc);
+  }
+  uVar6 = iVar5 - iVar4;
+  lVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) + lVar1;
+  if (iVar4 < iVar5) {
+    do {
+      pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,2);
+      iVar4 = atoi(pcVar3);
+      pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,7);
+      iVar5 = atoi(pcVar3);
+      if (iVar5 < iVar4) {
+        MyAssertHandler(0xffffffff82036300,0x30,0,0xffffffff82000f98,0xffffffff820362ac);
+      }
+      if (iVar2 < iVar4) {
+        lVar7 = lVar8 + -1;
+      }
+      else {
+        if (iVar2 < iVar5) break;
+        lVar1 = lVar8 + 1;
+      }
+      uVar6 = (int)lVar7 - (int)lVar1;
+      lVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) + lVar1;
+    } while ((int)lVar1 < (int)lVar7);
+  }
+  if (((int)lVar8 < 0) || (*(int *)(local_60[0] + 8) <= (int)lVar8)) {
+    MyAssertHandler(0xffffffff82036300,0x3b,0,0xffffffff82036278,0xffffffff82036288,lVar8);
+  }
+  pcVar3 = (char *)StringTable_GetColumnValueForRow(local_60[0],lVar8,0);
+  iVar2 = atoi(pcVar3);
+  __restgprlr_23(iVar2);
+  return;
 }
 
 
@@ -32,11 +88,31 @@ void CL_GetRankForXpSO(undefined8 param_1)
 
 // 823529A8  CL_GetXpForRankTable  (client_mp/cl_rank.cpp:78)
 
-void CL_GetXpForRankTable(void)
+void CL_GetXpForRankTable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char *_Str;
+  int iVar2;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x52,0,0xffffffff82000f98,0xffffffff820362f0);
+  }
+  StringTable_GetAsset(param_2,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0x55,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  uVar1 = va(0xffffffff82013b64,uVar1);
+  _Str = (char *)StringTable_Lookup(local_30[0],0,uVar1,2);
+  if (*_Str == '\0') {
+    __restgprlr_28(100000000);
+    return;
+  }
+  iVar2 = atoi(_Str);
+  __restgprlr_28(iVar2);
+  return;
 }
 
 
@@ -62,11 +138,28 @@ void CL_GetXpForRankSO(undefined8 param_1)
 
 // 82352A90  CL_GetRankDataFromTable  (client_mp/cl_rank.cpp:112)
 
-void CL_GetRankDataFromTable(void)
+void CL_GetRankDataFromTable(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int local_40;
+  undefined1 auStack_3c [60];
+  
+  uVar1 = __savegprlr_27();
+  if (0xe < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82036300,0x75,0,0xffffffff82036368,param_2,0xf);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x76,0,0xffffffff82000f98,0xffffffff820362f0);
+  }
+  StringTable_GetAsset(param_3,&local_40);
+  if (local_40 == 0) {
+    MyAssertHandler(0xffffffff82036300,0x79,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar1);
+  StringTable_Lookup(local_40,0,auStack_3c,param_2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -92,11 +185,39 @@ void CL_GetRankDataSO(undefined8 param_1,undefined8 param_2)
 
 // 82352B90  CL_GetRankIcon  (client_mp/cl_rank.cpp:143)
 
-void CL_GetRankIcon(void)
+void CL_GetRankIcon(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined4 uVar2;
+  char cVar3;
+  int local_40;
+  undefined1 auStack_3c [60];
+  
+  uVar1 = __savegprlr_27();
+  if ((int)uVar1 < 0) {
+    MyAssertHandler(0xffffffff82036300,0x94,0,0xffffffff820363e4,0xffffffff820363f4,uVar1);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82036300,0x95,0,0xffffffff820363c0,0xffffffff820363d4,param_2);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x96,0,0xffffffff82000f98,0xffffffff820363b8);
+  }
+  StringTable_GetAsset(0xffffffff820363a0,&local_40);
+  if (local_40 == 0) {
+    MyAssertHandler(0xffffffff82036300,0x9e,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  Com_sprintf(auStack_3c,4,0xffffffff8200c28c,uVar1);
+  uVar1 = StringTable_Lookup(local_40,0,auStack_3c,param_2 + 1);
+  uVar2 = Material_RegisterHandle(uVar1,7);
+  *(undefined4 *)param_3 = uVar2;
+  cVar3 = Material_IsDefault();
+  if (cVar3 != '\0') {
+    *(undefined4 *)param_3 = 0;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -105,8 +226,33 @@ void CL_GetRankIcon(void)
 void CL_GetMaxRankFromFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  char *_Str;
+  int iVar2;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xb4,0,0xffffffff82000f98,0xffffffff820362f0);
+  }
+  StringTable_GetAsset(uVar1,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0xb7,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  _Str = (char *)StringTable_Lookup(local_30[0],0,0xffffffff820362e0,1);
+  iVar2 = atoi(_Str);
+  __restgprlr_29((longlong)iVar2 + 1);
+  return;
+}
+
+
+// 82352D68  CL_GetMaxRankMP  (client_mp/cl_rank.cpp:192)
+
+void CL_GetMaxRankMP(void)
+
+{
+  CL_GetMaxRankFromFile(0xffffffff82036340);
+  return;
 }
 
 
@@ -125,8 +271,35 @@ void CL_GetMaxRankSO(void)
 void CL_GetMaxXPFromFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  char *_Str;
+  int iVar3;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xd1,0,0xffffffff82000f98,0xffffffff820362f0);
+  }
+  StringTable_GetAsset(uVar1,local_30);
+  if (local_30[0] == 0) {
+    MyAssertHandler(0xffffffff82036300,0xd4,0,0xffffffff82000f98,0xffffffff820362e8);
+  }
+  uVar2 = StringTable_Lookup(local_30[0],0,0xffffffff820362e0,1);
+  _Str = (char *)StringTable_Lookup(local_30[0],0,uVar2,7);
+  iVar3 = atoi(_Str);
+  __restgprlr_29(iVar3);
+  return;
+}
+
+
+// 82352E38  CL_GetMaxXPMP  (client_mp/cl_rank.cpp:222)
+
+void CL_GetMaxXPMP(void)
+
+{
+  CL_GetMaxXPFromFile(0xffffffff82036340);
+  return;
 }
 
 
@@ -142,41 +315,183 @@ void CL_GetMaxXPSO(void)
 
 // 82352E58  CL_GetPastTitleRank  (client_mp/cl_rank.cpp:237)
 
-void CL_GetPastTitleRank(void)
+void CL_GetPastTitleRank(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0xef,0,0xffffffff82000f98,0xffffffff82036418);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0xf0,0,0xffffffff82000f98,0xffffffff820268e0);
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar2 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x1442,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036408);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x41560817,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036404);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x4156081c,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036400);
+  if (iVar2 == 0) {
+    GetPastTitleRank(0x415607e6,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 82352F98  CL_GetPastTitlePrestige  (client_mp/cl_rank.cpp:256)
 
-void CL_GetPastTitlePrestige(void)
+void CL_GetPastTitlePrestige(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x102,0,0xffffffff82000f98,0xffffffff82036418);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x103,0,0xffffffff82000f98,0xffffffff820268e0);
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar2 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x1442,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036408);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x41560817,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036404);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x4156081c,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  iVar2 = I_stricmp(param_2,0xffffffff82036400);
+  if (iVar2 == 0) {
+    GetPastTitlePrestigeLevel(0x415607e6,uVar1);
+    __restgprlr_28();
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 823530D8  CL_SetPastTitleRank  (client_mp/cl_rank.cpp:276)
 
-void CL_SetPastTitleRank(void)
+void CL_SetPastTitleRank(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_27();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x116,0,0xffffffff82000f98,0xffffffff82036418);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,0x117,0,0xffffffff82000f98,0xffffffff820268e0);
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar3 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar3 == 0) {
+    uVar2 = 0x1442;
+  }
+  else {
+    iVar3 = I_stricmp(param_2,0xffffffff82036408);
+    if (iVar3 == 0) {
+      uVar2 = 0x41560817;
+    }
+    else {
+      iVar3 = I_stricmp(param_2,0xffffffff82036404);
+      if (iVar3 == 0) {
+        uVar2 = 0x4156081c;
+      }
+      else {
+        iVar3 = I_stricmp(param_2,0xffffffff82036400);
+        if (iVar3 != 0) goto LAB_823531e8;
+        uVar2 = 0x415607e6;
+      }
+    }
+  }
+  SetPastTitleRank(uVar2,param_3,uVar1);
+LAB_823531e8:
+  GamerProfile_UpdateProfilePastTitleData(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
 // 823531F8  CL_SetPastTitlePrestige  (client_mp/cl_rank.cpp:296)
 
-void CL_SetPastTitlePrestige(void)
+void CL_SetPastTitlePrestige(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_27();
+  if (3 < (int)uVar1) {
+    MyAssertHandler(0xffffffff82036300,0x12a,0,0xffffffff82000f98,0xffffffff82036418);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82036300,299,0,0xffffffff82000f98,0xffffffff820268e0);
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  iVar3 = I_stricmp(param_2,0xffffffff8203640c);
+  if (iVar3 == 0) {
+    uVar2 = 0x1442;
+  }
+  else {
+    iVar3 = I_stricmp(param_2,0xffffffff82036408);
+    if (iVar3 == 0) {
+      uVar2 = 0x41560817;
+    }
+    else {
+      iVar3 = I_stricmp(param_2,0xffffffff82036404);
+      if (iVar3 == 0) {
+        uVar2 = 0x4156081c;
+      }
+      else {
+        iVar3 = I_stricmp(param_2,0xffffffff82036400);
+        if (iVar3 != 0) goto LAB_82353308;
+        uVar2 = 0x415607e6;
+      }
+    }
+  }
+  SetPastTitlePrestigeLevel(uVar2,param_3,uVar1);
+LAB_82353308:
+  GamerProfile_UpdateProfilePastTitleData(uVar1);
+  __restgprlr_27();
+  return;
 }
 
 

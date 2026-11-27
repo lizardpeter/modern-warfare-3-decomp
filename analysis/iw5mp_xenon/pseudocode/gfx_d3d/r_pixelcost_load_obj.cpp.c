@@ -5,7 +5,24 @@
 void R_PixelCost_PrintColorCodeKey(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte *pbVar1;
+  longlong lVar2;
+  char *pcVar3;
+  double dVar4;
+  
   __savegprlr_29();
+  Com_Printf(8,0xffffffff821ca6c4);
+  lVar2 = 6;
+  pcVar3 = "ow";
+  dVar4 = 1.5625;
+  do {
+    pbVar1 = (byte *)(pcVar3 + 4);
+    pcVar3 = pcVar3 + 8;
+    Com_Printf(8,0xffffffff821ca6b4,(double)(float)((double)*pbVar1 * dVar4),*(undefined4 *)pcVar3);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  Com_Printf(8,0xffffffff821ca698);
+  __restgprlr_29();
+  return;
 }
 

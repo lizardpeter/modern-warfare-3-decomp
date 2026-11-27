@@ -2,21 +2,48 @@
 
 // 82503B70  MSG_Init  (qcommon/msg.cpp:50)
 
-void MSG_Init(void)
+void MSG_Init(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (DAT_8368c644 == 0) {
+    MSG_InitHuffman();
+  }
+  XMemSet(iVar1,0,0x2c);
+  *(undefined4 *)(iVar1 + 8) = param_2;
+  *(undefined4 *)(iVar1 + 0x10) = param_3;
+  *(undefined4 *)(iVar1 + 4) = 0;
+  *(undefined4 *)(iVar1 + 0xc) = 0;
+  *(undefined4 *)(iVar1 + 0x18) = 0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82503BD0  MSG_InitReadOnly  (qcommon/msg.cpp:78)
 
-void MSG_InitReadOnly(void)
+void MSG_InitReadOnly(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x4f,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  *(int *)(iVar1 + 8) = (int)param_2;
+  *(undefined4 *)(iVar1 + 0x10) = param_3;
+  *(undefined4 *)(iVar1 + 0x14) = param_3;
+  *(undefined4 *)(iVar1 + 0xc) = 0;
+  *(undefined4 *)(iVar1 + 4) = 1;
+  *(undefined4 *)(iVar1 + 0x18) = 0;
+  if (DAT_8368c644 == 0) {
+    MSG_InitHuffman();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -30,11 +57,9 @@ void MSG_InitReadOnlySplit
   
   iVar1 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x6a,0,0xffffffff82000f98,0xffffffff8201f49c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x6b,0,0xffffffff82000f98,0xffffffff8208f0e8);
   }
   if (DAT_8368c644 == 0) {
@@ -119,7 +144,6 @@ void MSG_GetBytes(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
     do {
       iVar4 = (int)param_2;
       if (iVar4 < 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208f068,0x140,0,0xffffffff820174a4,0xffffffff82017494,param_2);
       }
       if (iVar4 < *(int *)(iVar1 + 0x14)) {
@@ -128,7 +152,6 @@ void MSG_GetBytes(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
         }
         else {
           if ((ulonglong)*(uint *)(iVar1 + 0x10) <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8208f068,0x14c,0,0xffffffff82017428,param_2);
           }
           uVar2 = 0;
@@ -136,11 +159,9 @@ void MSG_GetBytes(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
       }
       else {
         if (*(int *)(iVar1 + 0xc) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8208f068,0x144,0,0xffffffff82000f98,0xffffffff82017484);
         }
         if (*(int *)(iVar1 + 0x18) + *(int *)(iVar1 + 0x14) <= iVar4) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8208f068,0x145,0,0xffffffff820174a4,0xffffffff8201745c,param_2);
         }
         uVar2 = *(undefined1 *)((*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 0x14)) + iVar4);
@@ -199,7 +220,6 @@ void MSG_WriteBit0(undefined4 *param_1)
   int iVar1;
   
   if (param_1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0xfe,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   if ((param_1[8] & 7) == 0) {
@@ -226,7 +246,6 @@ void MSG_WriteBit1(undefined4 *param_1)
   int iVar2;
   
   if (param_1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x110,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   uVar1 = param_1[8];
@@ -263,31 +282,106 @@ void MSG_WriteBool(undefined8 param_1,char param_2)
 
 // 82503FD0  MSG_WriteBits  (qcommon/msg.cpp:297)
 
-void MSG_WriteBits(void)
+void MSG_WriteBits(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_27();
+  if (puVar2[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,300,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  if (0x20 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8208f0ac,0x12f,0,0xffffffff82000f98,0xffffffff820174fc);
+  }
+  if (3 < (int)(puVar2[4] - puVar2[5])) {
+    if ((int)param_3 != 0) {
+      do {
+        uVar1 = puVar2[8];
+        if ((uVar1 & 7) == 0) {
+          puVar2[8] = puVar2[5] << 3;
+          *(undefined1 *)(puVar2[2] + puVar2[5]) = 0;
+          puVar2[5] = puVar2[5] + 1;
+        }
+        if ((param_2 & 1) != 0) {
+          *(byte *)(puVar2[2] + ((int)puVar2[8] >> 3)) =
+               (byte)(1 << (uVar1 & 7)) | *(byte *)(puVar2[2] + ((int)puVar2[8] >> 3));
+        }
+        param_2 = (ulonglong)((int)param_2 >> 1);
+        puVar2[8] = puVar2[8] + 1;
+        param_3 = param_3 - 1;
+      } while (param_3 != 0);
+    }
+    __restgprlr_27();
+    return;
+  }
+  *puVar2 = 1;
+  __restgprlr_27();
+  return;
 }
 
 
 // 825040F0  MSG_WriteBitsCompress  (qcommon/msg.cpp:335)
 
-void MSG_WriteBitsCompress(void)
+void MSG_WriteBitsCompress(undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  char cVar2;
+  int iVar3;
+  longlong lVar4;
+  int local_30 [12];
+  
+  cVar2 = __savegprlr_28();
+  if ((cVar2 != '\0') && (iVar3 = 0, lVar4 = param_4, 0 < (int)param_4)) {
+    do {
+      bVar1 = *(byte *)(iVar3 + (int)param_2);
+      iVar3 = iVar3 + 1;
+      (&DAT_8368c648)[bVar1] = (&DAT_8368c648)[bVar1] + 1;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  local_30[0] = 0;
+  if ((int)param_4 == 0) {
+    __restgprlr_28(0);
+    return;
+  }
+  param_2 = param_2 + -1;
+  do {
+    param_2 = param_2 + 1;
+    Huff_offsetTransmit(0xffffffff8368ca48,*(undefined1 *)param_2,param_3,local_30);
+    param_4 = param_4 + -1;
+  } while (param_4 != 0);
+  __restgprlr_28(local_30[0] + 7 >> 3);
+  return;
 }
 
 
 // 825041A0  MSG_ReadBitsCompress  (qcommon/msg.cpp:356)
 
-void MSG_ReadBitsCompress(void)
+void MSG_ReadBitsCompress(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  int local_40;
+  undefined1 local_3c [60];
+  
+  uVar2 = __savegprlr_27();
+  iVar1 = (int)((param_3 & 0xffffffff) << 3);
+  local_40 = 0;
+  lVar3 = param_2;
+  if (0 < iVar1) {
+    do {
+      Huff_offsetReceive(DAT_8368ca50,local_3c,uVar2,&local_40);
+      *(undefined1 *)lVar3 = (char)local_3c._0_4_;
+      lVar3 = lVar3 + 1;
+    } while (local_40 < iVar1);
+  }
+  __restgprlr_27(lVar3 - param_2);
+  return;
 }
 
 
@@ -297,7 +391,6 @@ void MSG_WriteByte(undefined4 *param_1,undefined1 param_2)
 
 {
   if (param_1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x185,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   if ((int)param_1[5] < (int)param_1[4]) {
@@ -313,11 +406,26 @@ void MSG_WriteByte(undefined4 *param_1,undefined1 param_2)
 
 // 825042A8  MSG_WriteData  (qcommon/msg.cpp:409)
 
-void MSG_WriteData(void)
+void MSG_WriteData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  if (puVar1[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x19d,0,0xffffffff82000f98,0xffffffff8208f100);
+  }
+  iVar2 = puVar1[5] + (int)param_3;
+  if (iVar2 <= (int)puVar1[4]) {
+    Com_Memcpy((ulonglong)(uint)puVar1[2] + (ulonglong)(uint)puVar1[5],param_2,param_3);
+    puVar1[5] = iVar2;
+    __restgprlr_28();
+    return;
+  }
+  *puVar1 = 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -329,7 +437,6 @@ void MSG_WriteShort(undefined4 *param_1,undefined2 param_2)
   int iVar1;
   
   if (param_1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x1b3,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   iVar1 = param_1[5] + 2;
@@ -352,7 +459,6 @@ void MSG_WriteLong(undefined4 *param_1,undefined4 param_2)
   int iVar1;
   
   if (param_1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x1d7,0,0xffffffff82000f98,0xffffffff8208f0f0);
   }
   iVar1 = param_1[5] + 4;
@@ -373,7 +479,6 @@ void MSG_WriteFloat(double param_1,undefined8 param_2)
 
 {
   if ((float)param_1 == -NAN) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x201,0,0xffffffff82000f98,0xffffffff8208f110);
   }
   MSG_WriteLong(param_2,(float)param_1);
@@ -383,21 +488,64 @@ void MSG_WriteFloat(double param_1,undefined8 param_2)
 
 // 825044C8  MSG_WriteVec3  (qcommon/msg.cpp:535)
 
-void MSG_WriteVec3(void)
+void MSG_WriteVec3(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  puVar2 = (undefined4 *)__savegprlr_23();
+  lVar4 = 3;
+  do {
+    iVar1 = *(int *)param_2;
+    if (iVar1 == -1) {
+      MyAssertHandler(0xffffffff8208f0ac,0x201,0,0xffffffff82000f98,0xffffffff8208f110);
+    }
+    if (puVar2[1] != 0) {
+      MyAssertHandler(0xffffffff8208f0ac,0x1d7,0,0xffffffff82000f98,0xffffffff8208f0f0);
+    }
+    iVar3 = puVar2[5] + 4;
+    if ((int)puVar2[4] < iVar3) {
+      *puVar2 = 1;
+    }
+    else {
+      *(int *)(puVar2[2] + puVar2[5]) = iVar1;
+      puVar2[5] = iVar3;
+    }
+    lVar4 = lVar4 + -1;
+    param_2 = param_2 + 4;
+  } while (lVar4 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 82504590  MSG_WriteInt64  (qcommon/msg.cpp:551)
 
-void MSG_WriteInt64(void)
+void MSG_WriteInt64(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if (puVar3[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x22b,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  iVar1 = puVar3[5];
+  if (iVar1 + 8 <= (int)puVar3[4]) {
+    uVar2 = LittleLong64(param_2);
+    *(undefined8 *)(puVar3[2] + puVar3[5]) = uVar2;
+    puVar3[5] = iVar1 + 8;
+    __restgprlr_29();
+    return;
+  }
+  *puVar3 = 1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -418,12 +566,10 @@ void MSG_WriteString(undefined8 param_1,ulonglong param_2)
   
   puVar1 = (undefined4 *)__savegprlr_24();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x249,0,0xffffffff82000f98,0xffffffff82012c64);
   }
   uVar3 = param_2;
   if (puVar1[1] != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x24b,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
   do {
@@ -454,20 +600,64 @@ void MSG_WriteString(undefined8 param_1,ulonglong param_2)
   }
   iVar8 = puVar1[1];
   local_450[(int)uVar4] = 0;
-  if (iVar8 == 0) {
-    iVar8 = puVar1[5] + (int)(uVar3 + 1);
-    if ((int)puVar1[4] < iVar8) {
-      *puVar1 = 1;
-      __restgprlr_24();
-      return;
-    }
-    Com_Memcpy((ulonglong)(uint)puVar1[2] + (ulonglong)(uint)puVar1[5],local_450,uVar3 + 1);
-    puVar1[5] = iVar8;
+  if (iVar8 != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x19d,0,0xffffffff82000f98,0xffffffff8208f100);
+  }
+  iVar8 = puVar1[5] + (int)(uVar3 + 1);
+  if ((int)puVar1[4] < iVar8) {
+    *puVar1 = 1;
     __restgprlr_24();
     return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8208f0ac,0x19d,0,0xffffffff82000f98,0xffffffff8208f100);
+  Com_Memcpy((ulonglong)(uint)puVar1[2] + (ulonglong)(uint)puVar1[5],local_450,uVar3 + 1);
+  puVar1[5] = iVar8;
+  __restgprlr_24();
+  return;
+}
+
+
+// 825047A0  MSG_WriteBigString  (qcommon/msg.cpp:629)
+
+void MSG_WriteBigString(undefined8 param_1,ulonglong param_2)
+
+{
+  char cVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  char *pcVar4;
+  int iVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x27f,0,0xffffffff82000f98,0xffffffff82012c64);
+  }
+  if (puVar3[1] != 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x280,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  }
+  iVar5 = puVar3[5];
+  iVar2 = puVar3[4];
+  pcVar4 = (char *)(puVar3[2] + iVar5);
+  while (iVar5 < iVar2) {
+    cVar1 = *(char *)param_2;
+    if (cVar1 == -0x6e) {
+      *pcVar4 = '\'';
+    }
+    else {
+      *pcVar4 = cVar1;
+    }
+    iVar5 = iVar5 + 1;
+    if (cVar1 == '\0') break;
+    pcVar4 = pcVar4 + 1;
+    param_2 = param_2 + 1;
+  }
+  if (iVar5 == iVar2) {
+    *puVar3 = 1;
+    __restgprlr_28();
+    return;
+  }
+  puVar3[5] = iVar5;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -477,7 +667,6 @@ void MSG_WriteAngle(double param_1,int param_2)
 
 {
   if (*(int *)(param_2 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x2a7,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
   MSG_WriteByte(param_2,(int)(param_1 * 0.7111111283302307) & 0xff);
@@ -493,7 +682,6 @@ void MSG_WriteAngle16(double param_1,int param_2)
   double dVar1;
   
   if (*(int *)(param_2 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x2b0,0,0xffffffff82000f98,0xffffffff8208f14c);
   }
   dVar1 = floor((double)(float)(param_1 * 182.04444885253906 + 0.5));
@@ -507,8 +695,26 @@ void MSG_WriteAngle16(double param_1,int param_2)
 void MSG_ReadByte(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  if ((int)puVar3[7] < (int)(puVar3[6] + puVar3[5])) {
+    uVar2 = MSG_GetByte();
+    uVar1 = uVar2 & 0xff;
+    if (((int)uVar2 != (int)uVar1) &&
+       (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+       (int)uVar2 != (int)uVar1)) {
+      MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
+    }
+    puVar3[7] = puVar3[7] + 1;
+    __restgprlr_27(uVar2);
+    return;
+  }
+  *puVar3 = 1;
+  __restgprlr_27(0xffffffffffffffff);
+  return;
 }
 
 
@@ -574,11 +780,46 @@ double MSG_ReadFloat(undefined4 *param_1)
 
 // 82504BA8  MSG_ReadVec3  (qcommon/msg.cpp:832)
 
-void MSG_ReadVec3(void)
+void MSG_ReadVec3(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  longlong lVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  float local_40;
+  float local_3c;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  param_2 = param_2 + -4;
+  lVar2 = 3;
+  dVar5 = -1.0;
+  do {
+    iVar3 = puVar1[7] + 4;
+    if ((int)(puVar1[5] + puVar1[6]) < iVar3) {
+      *puVar1 = 1;
+      dVar4 = dVar5;
+LAB_82504c1c:
+      *puVar1 = 1;
+      dVar5 = dVar4;
+    }
+    else {
+      MSG_GetBytes(puVar1,puVar1[7],&local_40,4);
+      puVar1[7] = iVar3;
+      local_3c = local_40;
+      dVar4 = dVar5;
+      if (local_40 == -NAN) goto LAB_82504c1c;
+      dVar4 = (double)local_40;
+    }
+    param_2 = param_2 + 4;
+    *(float *)param_2 = (float)dVar4;
+    lVar2 = lVar2 + -1;
+    if (lVar2 == 0) {
+      __restgprlr_27();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -607,21 +848,153 @@ undefined8 MSG_ReadInt64(undefined4 *param_1)
 
 // 82504CB8  MSG_ReadString  (qcommon/msg.cpp:867)
 
-void MSG_ReadString(void)
+void MSG_ReadString(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208f0ac,0x367,0,0xffffffff82000f98,0xffffffff820181d4);
+  }
+  uVar6 = 0;
+  do {
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
+      }
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == -1) goto LAB_82504d94;
+    }
+    else {
+      *puVar3 = 1;
+LAB_82504d94:
+      uVar2 = 0;
+    }
+    if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      uVar5 = I_CleanChar((char)uVar2);
+      *(undefined1 *)((int)uVar6 + (int)param_2) = uVar5;
+    }
+    if ((int)uVar2 == 0) {
+      *(undefined1 *)((int)param_2 + (int)param_3 + -1) = 0;
+      __restgprlr_23(param_2);
+      return;
+    }
+    uVar6 = uVar6 + 1;
+  } while( true );
+}
+
+
+// 82504DE0  MSG_ReadBigString  (qcommon/msg.cpp:898)
+
+void MSG_ReadBigString(void)
+
+{
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  char cVar5;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar6;
+  uint uVar7;
+  
+  puVar3 = (undefined4 *)__savegprlr_24();
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff8208f0ac,0x387,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  uVar7 = 0;
+  do {
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
+      }
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == 0x25) {
+        uVar2 = 0x2e;
+      }
+      else if (iVar4 == -1) goto LAB_82504edc;
+    }
+    else {
+      *puVar3 = 1;
+LAB_82504edc:
+      uVar2 = 0;
+    }
+    if (uVar7 < 0x2000) {
+      uVar6 = I_CleanChar((char)uVar2);
+      (&DAT_83689bf8)[uVar7] = uVar6;
+    }
+    if ((int)uVar2 == 0) {
+      DAT_8368bbf7 = 0;
+      __restgprlr_24(0xffffffff83689bf8);
+      return;
+    }
+    uVar7 = uVar7 + 1;
+  } while( true );
 }
 
 
 // 82504F18  MSG_ReadStringLine  (qcommon/msg.cpp:932)
 
-void MSG_ReadStringLine(void)
+void MSG_ReadStringLine(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  undefined4 *puVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  uVar6 = 0;
+  do {
+    if ((int)puVar3[7] < (int)(puVar3[5] + puVar3[6])) {
+      uVar2 = MSG_GetByte(puVar3);
+      uVar1 = uVar2 & 0xff;
+      iVar4 = (int)uVar2;
+      if ((iVar4 != (int)uVar1) &&
+         (MyAssertHandler(0xffffffff8208f0ac,0x2cb,0,0xffffffff8208f15c,uVar2,uVar1),
+         iVar4 != (int)uVar1)) {
+        MyAssertHandler(0xffffffff8208f0ac,0x2d3,0,0xffffffff8208f15c,uVar2,uVar1);
+      }
+      puVar3[7] = puVar3[7] + 1;
+      if (iVar4 == 0x25) {
+        uVar2 = 0x2e;
+      }
+      else if ((iVar4 == 10) || (iVar4 == -1)) goto LAB_82504fec;
+    }
+    else {
+      *puVar3 = 1;
+LAB_82504fec:
+      uVar2 = 0;
+    }
+    if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      uVar5 = I_CleanChar((char)uVar2);
+      *(undefined1 *)((int)uVar6 + (int)param_2) = uVar5;
+    }
+    if ((int)uVar2 == 0) {
+      *(undefined1 *)((int)param_2 + (int)param_3 + -1) = 0;
+      __restgprlr_23(param_2);
+      return;
+    }
+    uVar6 = uVar6 + 1;
+  } while( true );
 }
 
 
@@ -646,7 +1019,6 @@ void MSG_Rewind(int param_1,int param_2)
   int iVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208f0ac,0x3d0,0,0xffffffff82000f98,0xffffffff82004d74);
   }
   iVar1 = *(int *)(param_1 + 0x1c);
@@ -661,21 +1033,101 @@ void MSG_Rewind(int param_1,int param_2)
 
 // 825050F0  MSG_ReadData  (qcommon/msg.cpp:985)
 
-void MSG_ReadData(void)
+void MSG_ReadData(undefined8 param_1,void *param_2,size_t param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  void *pvVar4;
+  undefined4 *puVar5;
+  size_t _Size;
+  int iVar6;
+  
+  puVar3 = (undefined4 *)__savegprlr_27();
+  uVar1 = puVar3[7];
+  uVar2 = puVar3[5];
+  iVar6 = uVar1 + param_3;
+  if (iVar6 <= (int)uVar2) {
+    pvVar4 = memcpy(param_2,(void *)(puVar3[2] + uVar1),param_3);
+    puVar3[7] = iVar6;
+    __restgprlr_27(pvVar4);
+    return;
+  }
+  if (iVar6 <= (int)(puVar3[6] + uVar2)) {
+    puVar5 = puVar3;
+    if (0 < (longlong)((ulonglong)uVar2 - (ulonglong)uVar1)) {
+      _Size = (size_t)((ulonglong)uVar2 - (ulonglong)uVar1);
+      puVar5 = memcpy(param_2,(void *)(puVar3[2] + uVar1),_Size);
+      param_3 = param_3 - _Size;
+      param_2 = (void *)(_Size + (int)param_2);
+    }
+    if (0 < (int)param_3) {
+      puVar5 = memcpy(param_2,(void *)((puVar3[3] - puVar3[5]) + puVar3[7]),param_3);
+    }
+    puVar3[7] = iVar6;
+    __restgprlr_27(puVar5);
+    return;
+  }
+  *puVar3 = 1;
+  pvVar4 = memset(param_2,-1,param_3);
+  __restgprlr_27(pvVar4);
+  return;
 }
 
 
 // 825051C0  MSG_SetDefaultUserCmd  (qcommon/msg.cpp:1041)
 
-void MSG_SetDefaultUserCmd(void)
+void MSG_SetDefaultUserCmd(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float *pfVar1;
+  int iVar2;
+  void *_Dst;
+  uint uVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar2 = __savegprlr_27();
+  _Dst = (void *)param_2;
+  memset(_Dst,0,0x2c);
+  param_2 = param_2 + 4;
+  pfVar5 = (float *)(iVar2 + 0x154);
+  lVar4 = 2;
+  *(undefined4 *)((int)_Dst + 0x14) = *(undefined4 *)(iVar2 + 0x370);
+  *(undefined4 *)((int)_Dst + 0x18) = *(undefined4 *)(iVar2 + 0x364);
+  dVar7 = 0.5;
+  dVar8 = 182.04444885253906;
+  *(short *)((int)_Dst + 0x20) = (short)*(undefined4 *)(iVar2 + 0x4e4);
+  do {
+    pfVar1 = pfVar5 + -0x3d;
+    pfVar5 = pfVar5 + 1;
+    dVar6 = floor((double)(float)((double)(*pfVar5 - *pfVar1) * dVar8 + dVar7));
+    lVar4 = lVar4 + -1;
+    param_2 = param_2 + 4;
+    *(uint *)param_2 = (int)dVar6 & 0xffff;
+  } while (lVar4 != 0);
+  if ((*(uint *)(iVar2 + 0x10) & 0x1000) == 0) goto LAB_825052b8;
+  if ((*(uint *)(iVar2 + 0xf8) & 8) == 0) {
+    if ((*(uint *)(iVar2 + 0xf8) & 4) != 0) {
+      uVar3 = *(uint *)((int)_Dst + 4) | 0x200;
+      goto LAB_82505294;
+    }
+  }
+  else {
+    uVar3 = *(uint *)((int)_Dst + 4) | 0x100;
+LAB_82505294:
+    *(uint *)((int)_Dst + 4) = uVar3;
+  }
+  if (*(float *)(iVar2 + 0x378) != 0.0) {
+    *(uint *)((int)_Dst + 4) = *(uint *)((int)_Dst + 4) | 0x800;
+  }
+LAB_825052b8:
+  __restgprlr_27();
+  return;
 }
 
 

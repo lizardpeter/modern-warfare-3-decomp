@@ -2,11 +2,54 @@
 
 // 82926960  __StateFromControlPc  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:17)
 
-void __StateFromControlPc(void)
+void __StateFromControlPc(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    inconsistency();
+  }
+  uVar1 = *(uint *)(iVar3 + 0x14);
+  if (uVar1 == 0) {
+    inconsistency();
+  }
+  if (*(int *)(iVar3 + 0x18) == 0) {
+    inconsistency();
+  }
+  uVar4 = 0;
+  if (uVar1 != 0) {
+    iVar6 = *(int *)(iVar3 + 0x18);
+    iVar5 = 0;
+    do {
+      if ((param_2 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + iVar6)) {
+        uVar2 = (ulonglong)*(uint *)(uVar4 * 8 + iVar6 + 4);
+        goto LAB_829269e4;
+      }
+      if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar5 + iVar6)) {
+        if (uVar4 == 0) {
+          uVar2 = 0xffffffffffffffff;
+          goto LAB_829269e4;
+        }
+        iVar6 = uVar4 * 8 + iVar6;
+        goto LAB_829269e0;
+      }
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 8;
+    } while (uVar4 < uVar1);
+  }
+  iVar6 = uVar1 * 8 + *(int *)(iVar3 + 0x18);
+LAB_829269e0:
+  uVar2 = (ulonglong)*(uint *)(iVar6 + -4);
+LAB_829269e4:
+  __restgprlr_29(uVar2);
+  return;
 }
 
 

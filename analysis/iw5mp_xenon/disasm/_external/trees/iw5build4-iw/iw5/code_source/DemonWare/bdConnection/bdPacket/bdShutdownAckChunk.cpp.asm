@@ -23,10 +23,108 @@
 ; 8293A738  bdShutdownAckChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdshutdownackchunk.cpp:29)
   8293A738  7D8802A6             mfspr r12,LR
   8293A73C  4BFDBF7D             bl 0x829166b8
+  8293A740  9421FF70             stwu r1,-0x90(r1)
+  8293A744  3BA00000             li r29,0x0
+  8293A748  7C7C1B78             or r28,r3,r3
+  8293A74C  93A10058             stw r29,0x58(r1)
+  8293A750  7C9F2378             or r31,r4,r4
+  8293A754  7CBE2B78             or r30,r5,r5
+  8293A758  48001559             bl 0x8293bcb0
+  8293A75C  817C0010             lwz r11,0x10(r28)
+  8293A760  90610058             stw r3,0x58(r1)
+  8293A764  7C651B78             or r5,r3,r3
+  8293A768  39000001             li r8,0x1
+  8293A76C  38E10050             addi r7,r1,0x50
+  8293A770  38C10058             addi r6,r1,0x58
+  8293A774  99610050             stb r11,0x50(r1)
+  8293A778  7FC4F378             or r4,r30,r30
+  8293A77C  7FE3FB78             or r3,r31,r31
+  8293A780  4BFBCB39             bl 0x828f72b8
+  8293A784  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8293A788  B3A10052             sth r29,0x52(r1)
+  8293A78C  314BFFFF             subic r10,r11,0x1
+  8293A790  7D6A5910             subfe r11,r10,r11
+  8293A794  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8293A798  41820044             beq 0x8293a7dc
+  8293A79C  39200002             li r9,0x2
+  8293A7A0  7FABEB78             or r11,r29,r29
+  8293A7A4  39410056             addi r10,r1,0x56
+  8293A7A8  7D2903A6             mtspr CTR,r9
+LAB_8293a7ac:
+  8293A7AC  39210052             addi r9,r1,0x52
+  8293A7B0  7D2B48AE             lbzx r9,r11,r9
+  8293A7B4  396B0001             addi r11,r11,0x1
+  8293A7B8  9D2AFFFF             stbu r9,-0x1(r10)
+  8293A7BC  4200FFF0             bdnz 0x8293a7ac
+  8293A7C0  39000002             li r8,0x2
+  8293A7C4  80A10058             lwz r5,0x58(r1)
+  8293A7C8  38E10054             addi r7,r1,0x54
+  8293A7CC  38C10058             addi r6,r1,0x58
+  8293A7D0  7FC4F378             or r4,r30,r30
+  8293A7D4  7FE3FB78             or r3,r31,r31
+  8293A7D8  4BFBCAE1             bl 0x828f72b8
+LAB_8293a7dc:
+  8293A7DC  80610058             lwz r3,0x58(r1)
+  8293A7E0  38210090             addi r1,r1,0x90
+  8293A7E4  4BFDBF24             b 0x82916708
 
 ; 8293A7E8  bdShutdownAckChunk::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdshutdownackchunk.cpp:50)
   8293A7E8  7D8802A6             mfspr r12,LR
   8293A7EC  4BFDBEC9             bl 0x829166b4
+  8293A7F0  9421FF70             stwu r1,-0x90(r1)
+  8293A7F4  81660000             lwz r11,0x0(r6)
+  8293A7F8  7CDB3378             or r27,r6,r6
+  8293A7FC  38C10054             addi r6,r1,0x54
+  8293A800  7C7F1B78             or r31,r3,r3
+  8293A804  7C9E2378             or r30,r4,r4
+  8293A808  7CBD2B78             or r29,r5,r5
+  8293A80C  91610054             stw r11,0x54(r1)
+  8293A810  3B800000             li r28,0x0
+  8293A814  480014ED             bl 0x8293bd00
+  8293A818  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A81C  41820038             beq 0x8293a854
+  8293A820  39000001             li r8,0x1
+  8293A824  80A10054             lwz r5,0x54(r1)
+  8293A828  38E10050             addi r7,r1,0x50
+  8293A82C  38C10054             addi r6,r1,0x54
+  8293A830  7FA4EB78             or r4,r29,r29
+  8293A834  7FC3F378             or r3,r30,r30
+  8293A838  4BFBCB89             bl 0x828f73c0
+  8293A83C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A840  41820008             beq 0x8293a848
+  8293A844  8B810050             lbz r28,0x50(r1)
+LAB_8293a848:
+  8293A848  2B0B0000             cmplwi cr6,r11,0x0
+  8293A84C  39600001             li r11,0x1
+  8293A850  409A0008             bne cr6,0x8293a858
+LAB_8293a854:
+  8293A854  39600000             li r11,0x0
+LAB_8293a858:
+  8293A858  578A063E             rlwinm r10,r28,0x0,0x18,0x1f
+  8293A85C  39200000             li r9,0x0
+  8293A860  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8293A864  915F0010             stw r10,0x10(r31)
+  8293A868  B1210052             sth r9,0x52(r1)
+  8293A86C  41820028             beq 0x8293a894
+  8293A870  38E10052             addi r7,r1,0x52
+  8293A874  80A10054             lwz r5,0x54(r1)
+  8293A878  38C10054             addi r6,r1,0x54
+  8293A87C  7FA4EB78             or r4,r29,r29
+  8293A880  7FC3F378             or r3,r30,r30
+  8293A884  4BFBC765             bl 0x828f6fe8
+  8293A888  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A88C  39600001             li r11,0x1
+  8293A890  40820008             bne 0x8293a898
+LAB_8293a894:
+  8293A894  39600000             li r11,0x0
+LAB_8293a898:
+  8293A898  5563063F             rlwinm. r3,r11,0x0,0x18,0x1f
+  8293A89C  4182000C             beq 0x8293a8a8
+  8293A8A0  81610054             lwz r11,0x54(r1)
+  8293A8A4  917B0000             stw r11,0x0(r27)
+LAB_8293a8a8:
+  8293A8A8  38210090             addi r1,r1,0x90
+  8293A8AC  4BFDBE58             b 0x82916704
 
 ; 8293A6E0  bdShutdownAckChunk::`scalar_deleting_destructor'  (line unknown)
   8293A6E0  7D8802A6             mfspr r12,LR

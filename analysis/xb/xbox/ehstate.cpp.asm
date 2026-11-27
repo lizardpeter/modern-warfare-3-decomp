@@ -3,6 +3,60 @@
 ; 82926960  __StateFromControlPc  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:17)
   82926960  7D8802A6             mfspr r12,LR
   82926964  4BFEFD59             bl 0x829166bc
+  82926968  9421FF90             stwu r1,-0x70(r1)
+  8292696C  7C7E1B78             or r30,r3,r3
+  82926970  7C9D2378             or r29,r4,r4
+  82926974  2B030000             cmplwi cr6,r3,0x0
+  82926978  409A0008             bne cr6,0x82926980
+  8292697C  4BFFDF25             bl 0x829248a0
+LAB_82926980:
+  82926980  83FE0014             lwz r31,0x14(r30)
+  82926984  2B1F0000             cmplwi cr6,r31,0x0
+  82926988  409A0008             bne cr6,0x82926990
+  8292698C  4BFFDF15             bl 0x829248a0
+LAB_82926990:
+  82926990  817E0018             lwz r11,0x18(r30)
+  82926994  2B0B0000             cmplwi cr6,r11,0x0
+  82926998  409A0008             bne cr6,0x829269a0
+  8292699C  4BFFDF05             bl 0x829248a0
+LAB_829269a0:
+  829269A0  39400000             li r10,0x0
+  829269A4  2B1F0000             cmplwi cr6,r31,0x0
+  829269A8  419A002C             beq cr6,0x829269d4
+  829269AC  811E0018             lwz r8,0x18(r30)
+  829269B0  39600000             li r11,0x0
+LAB_829269b4:
+  829269B4  7D2B402E             lwzx r9,r11,r8
+  829269B8  7F1D4840             cmplw cr6,r29,r9
+  829269BC  419A0030             beq cr6,0x829269ec
+  829269C0  4198003C             blt cr6,0x829269fc
+  829269C4  394A0001             addi r10,r10,0x1
+  829269C8  396B0008             addi r11,r11,0x8
+  829269CC  7F0AF840             cmplw cr6,r10,r31
+  829269D0  4198FFE4             blt cr6,0x829269b4
+LAB_829269d4:
+  829269D4  815E0018             lwz r10,0x18(r30)
+  829269D8  57EB1838             rlwinm r11,r31,0x3,0x0,0x1c
+  829269DC  7D6B5214             add r11,r11,r10
+LAB_829269e0:
+  829269E0  806BFFFC             lwz r3,-0x4(r11)
+LAB_829269e4:
+  829269E4  38210070             addi r1,r1,0x70
+  829269E8  4BFEFD24             b 0x8291670c
+LAB_829269ec:
+  829269EC  554B1838             rlwinm r11,r10,0x3,0x0,0x1c
+  829269F0  7D6B4214             add r11,r11,r8
+  829269F4  806B0004             lwz r3,0x4(r11)
+  829269F8  4BFFFFEC             b 0x829269e4
+LAB_829269fc:
+  829269FC  2B0A0000             cmplwi cr6,r10,0x0
+  82926A00  409A000C             bne cr6,0x82926a0c
+  82926A04  3860FFFF             li r3,-0x1
+  82926A08  4BFFFFDC             b 0x829269e4
+LAB_82926a0c:
+  82926A0C  554B1838             rlwinm r11,r10,0x3,0x0,0x1c
+  82926A10  7D6B4214             add r11,r11,r8
+  82926A14  4BFFFFCC             b 0x829269e0
 
 ; 82926A18  GetCurrentState  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:53)
   82926A18  8165000C             lwz r11,0xc(r5)

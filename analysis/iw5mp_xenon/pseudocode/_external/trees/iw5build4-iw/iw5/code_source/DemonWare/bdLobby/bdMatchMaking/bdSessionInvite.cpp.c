@@ -5,8 +5,16 @@
 void bdSessionInvite__bdSessionInvite(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdTaskResult__bdTaskResult();
+  *(undefined8 *)(puVar1 + 2) = 0;
+  *puVar1 = &PTR_bdSessionInvite___scalar_deleting_destructor__82212bc8;
+  bdSessionID__bdSessionID(puVar1 + 0x14);
+  puVar1[0x117] = 0;
+  __restgprlr_29(puVar1);
+  return;
 }
 
 
@@ -27,11 +35,52 @@ void bdSessionInvite___bdSessionInvite(undefined4 *param_1)
 
 // 829128D8  bdSessionInvite::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:24)
 
-void bdSessionInvite__deserialize(void)
+void bdSessionInvite__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  undefined1 local_30 [48];
+  
+  iVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,iVar2 + 8);
+  if (cVar3 == '\0') {
+LAB_82912930:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readString(*puVar4,iVar2 + 0x10,0x40);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82912930;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBlob(*puVar4,iVar2 + 0x54,local_30);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82912960;
+  }
+  else {
+LAB_82912960:
+    bVar1 = false;
+  }
+  *(undefined4 *)(iVar2 + 0x45c) = 0x400;
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBlob(*puVar4,iVar2 + 0x5c,iVar2 + 0x45c);
+    lVar5 = 1;
+    if (cVar3 != '\0') goto LAB_82912994;
+  }
+  lVar5 = 0;
+LAB_82912994:
+  if (lVar5 == 0) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff82212c50,0xffffffff82212c80,0xffffffff82212c60,0x27,
+                 0xffffffff8220b3c8);
+  }
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(lVar5);
+  return;
 }
 
 

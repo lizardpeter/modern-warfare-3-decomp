@@ -14,7 +14,6 @@ void StringTable_LookupRowNumForValue(undefined8 param_1,longlong param_2,undefi
   puVar2 = (undefined4 *)__savegprlr_25();
   iVar3 = StringTable_HashString(param_3);
   if (puVar2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82176fa0,0x17,0,0xffffffff82000f98,0xffffffff820362e8);
   }
   if (puVar2[1] != 0) {
@@ -31,7 +30,6 @@ void StringTable_LookupRowNumForValue(undefined8 param_1,longlong param_2,undefi
       }
     }
     if (DAT_83667358 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82176fa0,0x27,0,0xffffffff82000f98,0xffffffff8208bf80);
     }
     if (*(int *)(DAT_83667358 + 0xc) != 0) {
@@ -56,39 +54,34 @@ void StringTable_GetColumnValueForRow(undefined8 param_1,undefined8 param_2,long
   
   puVar3 = (undefined4 *)__savegprlr_25();
   if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82176fa0,0x31,0,0xffffffff82000f98,0xffffffff820362e8);
   }
-  if ((int)param_3 < (int)puVar3[1]) {
-    iVar5 = (int)param_2;
-    if (((iVar5 < (int)puVar3[2]) && (-1 < iVar5)) && (-1 < (int)param_3)) {
-      pcVar2 = *(char **)((int)(((longlong)(int)puVar3[1] * (longlong)iVar5 + param_3 & 0xffffffffU)
-                               << 3) + puVar3[3]);
-      if (pcVar2 != (char *)0x0) {
-        if (*pcVar2 == '\0') {
-          if (DAT_83667358 == 0) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff82176fa0,0x3c,0,0xffffffff82000f98,0xffffffff8208bf80);
-          }
-          if (*(int *)(DAT_83667358 + 0xc) != 0) {
-            iVar1 = puVar3[1];
-            if (iVar1 < 2) {
-              uVar4 = 0xffffffff820068af;
-            }
-            else {
-              uVar4 = (ulonglong)*(uint *)((iVar1 * iVar5 + 1) * 8 + puVar3[3]);
-            }
-            Com_PrintError(0xd,0xffffffff82177040,param_2,param_3,
-                           *(undefined4 *)(iVar1 * iVar5 * 8 + puVar3[3]),uVar4);
-          }
+  if (((((int)param_3 < (int)puVar3[1]) && (iVar5 = (int)param_2, iVar5 < (int)puVar3[2])) &&
+      (-1 < iVar5)) && (-1 < (int)param_3)) {
+    pcVar2 = *(char **)((int)(((longlong)(int)puVar3[1] * (longlong)iVar5 + param_3 & 0xffffffffU)
+                             << 3) + puVar3[3]);
+    if (pcVar2 != (char *)0x0) {
+      if (*pcVar2 == '\0') {
+        if (DAT_83667358 == 0) {
+          MyAssertHandler(0xffffffff82176fa0,0x3c,0,0xffffffff82000f98,0xffffffff8208bf80);
         }
-        __restgprlr_25(pcVar2);
-        return;
+        if (*(int *)(DAT_83667358 + 0xc) != 0) {
+          iVar1 = puVar3[1];
+          if (iVar1 < 2) {
+            uVar4 = 0xffffffff820068af;
+          }
+          else {
+            uVar4 = (ulonglong)*(uint *)((iVar1 * iVar5 + 1) * 8 + puVar3[3]);
+          }
+          Com_PrintError(0xd,0xffffffff82177040,param_2,param_3,
+                         *(undefined4 *)(iVar1 * iVar5 * 8 + puVar3[3]),uVar4);
+        }
       }
+      __restgprlr_25(pcVar2);
+      return;
     }
   }
   if (DAT_83667358 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82176fa0,0x34,0,0xffffffff82000f98,0xffffffff8208bf80);
   }
   if (*(int *)(DAT_83667358 + 0xc) != 0) {
@@ -125,7 +118,6 @@ undefined4 StringTable_GetRowCount(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82176fa0,0x50,0,0xffffffff82000f98,0xffffffff820362e8);
   }
   return *(undefined4 *)(param_1 + 8);
@@ -134,11 +126,49 @@ undefined4 StringTable_GetRowCount(int param_1)
 
 // 825E79F0  StringTable_Checksum  (universal/com_stringtable.cpp:85)
 
-void StringTable_Checksum(void)
+void StringTable_Checksum(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  char *pcVar2;
+  undefined4 *puVar4;
+  undefined8 uVar3;
+  char *pcVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  pcVar2 = (char *)*puVar4;
+  pcVar5 = pcVar2;
+  do {
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  uVar3 = Com_BlockChecksumKey32(pcVar2,pcVar5 + (-1 - (int)pcVar2),param_2);
+  iVar7 = 0;
+  if (0 < (int)puVar4[1]) {
+    iVar6 = puVar4[2];
+    do {
+      iVar8 = 0;
+      if (0 < iVar6) {
+        do {
+          pcVar2 = *(char **)((puVar4[1] * iVar8 + iVar7) * 8 + puVar4[3]);
+          pcVar5 = pcVar2;
+          do {
+            cVar1 = *pcVar5;
+            pcVar5 = pcVar5 + 1;
+          } while (cVar1 != '\0');
+          uVar3 = Com_BlockChecksumKey32(pcVar2,pcVar5 + (-1 - (int)pcVar2),uVar3);
+          iVar6 = puVar4[2];
+          iVar8 = iVar8 + 1;
+        } while (iVar8 < iVar6);
+      }
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < (int)puVar4[1]);
+  }
+  __restgprlr_29();
+  return;
 }
 
 

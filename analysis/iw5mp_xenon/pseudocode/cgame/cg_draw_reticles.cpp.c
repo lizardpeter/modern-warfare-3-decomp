@@ -2,21 +2,89 @@
 
 // 822C0320  CG_CalcCrosshairPosition  (cgame/cg_draw_reticles.cpp:21)
 
-void CG_CalcCrosshairPosition(void)
+void CG_CalcCrosshairPosition(undefined8 param_1,float *param_2,float *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_30;
+  float local_2c;
+  float local_28;
+  
+  iVar3 = __savegprlr_29();
+  local_40 = *(undefined4 *)(iVar3 + 0x797a0);
+  local_3c = *(undefined4 *)(iVar3 + 0x797a4);
+  local_38 = *(undefined4 *)(iVar3 + 0x704e4);
+  AngleVectors(&local_40,&local_30,0,0);
+  fVar2 = *(float *)(iVar3 + 0x6b9dc) * local_28 +
+          *(float *)(iVar3 + 0x6b9d8) * local_2c + *(float *)(iVar3 + 0x6b9d4) * local_30;
+  if (0.0 < fVar2) {
+    fVar1 = *(float *)(iVar3 + 0x6b9c0);
+    if ((0.0 < fVar1) && (0.0 < fVar1)) {
+      *param_2 = ((*(float *)(iVar3 + 0x6b9e8) * local_28 +
+                  *(float *)(iVar3 + 0x6b9e4) * local_2c + *(float *)(iVar3 + 0x6b9e0) * local_30) /
+                 (fVar1 * fVar2)) * -320.0;
+      *param_3 = ((*(float *)(iVar3 + 0x6b9f4) * local_28 +
+                  *(float *)(iVar3 + 0x6b9f0) * local_2c + *(float *)(iVar3 + 0x6b9ec) * local_30) /
+                 (*(float *)(iVar3 + 0x6b9c4) * fVar2)) * -240.0;
+      __restgprlr_29();
+      return;
+    }
+  }
+  *param_2 = 0.0;
+  *param_3 = 0.0;
+  __restgprlr_29();
+  return;
 }
 
 
 // 822C0468  CG_GetWeapReticleZoom  (cgame/cg_draw_reticles.cpp:43)
 
-void CG_GetWeapReticleZoom(void)
+void CG_GetWeapReticleZoom(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  bool bVar2;
+  int iVar4;
+  undefined8 uVar3;
+  uint uVar5;
+  int *piVar6;
+  int iVar7;
+  undefined8 uVar8;
+  double dVar9;
+  
+  iVar4 = __savegprlr_26();
+  uVar3 = BG_GetViewmodelWeapon();
+  if ((iVar4 == 0) || (uVar8 = 1, (*(uint *)(iVar4 + 0x374) & 0x8000) == 0)) {
+    uVar8 = 0;
+  }
+  uVar5 = BG_GetAlternateWeapon(uVar3,uVar8);
+  iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x36,0,0xffffffff82000f98,0xffffffff8200a88c);
+  }
+  piVar6 = (int *)BG_GetOverlay(uVar3,uVar8);
+  iVar7 = BG_GetWeaponClass(uVar3,uVar8);
+  if ((iVar7 != 8) || (bVar2 = true, *(int *)(iVar1 + 0x41c) != 2)) {
+    bVar2 = false;
+  }
+  if (((!bVar2) && (*piVar6 == 0)) && (piVar6[4] == 0)) {
+    if ((param_2 & 0xffffffff) != 0) {
+      *(float *)param_2 = 0.0;
+    }
+    __restgprlr_26(0);
+    return;
+  }
+  dVar9 = (double)CG_GetWeaponZoom(iVar4,uVar3);
+  if ((param_2 & 0xffffffff) != 0) {
+    *(float *)param_2 = (float)dVar9;
+  }
+  __restgprlr_26(0.009999999776482582 < dVar9);
+  return;
 }
 
 
@@ -63,13 +131,141 @@ void CG_DrawFrameOverlay(undefined8 param_1,double param_2,double param_3,double
 }
 
 
-// 822C0A00  CG_GetWeapOverlayMaterial  (cgame/cg_draw_reticles.cpp:183)
+// 822C0720  CG_DrawNightVisionOverlay  (cgame/cg_draw_reticles.cpp:111)
 
-void CG_GetWeapOverlayMaterial(void)
+void CG_DrawNightVisionOverlay(undefined8 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  
+  cVar1 = CG_LookingThroughNightVisionGoggles();
+  if (cVar1 != '\0') {
+    if (DAT_82a3c9f0 == 0) {
+      Com_PrintWarning(0xe,0xffffffff820152a0);
+    }
+    else {
+      ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(0,0,0x4084000000000000,0x407e000000000000,0,0,0x3ff0000000000000);
+    }
+  }
+  return;
+}
+
+
+// 822C07E0  UsingLowResViewPort  (cgame/cg_draw_reticles.cpp:146)
+
+bool UsingLowResViewPort(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x93,0,0xffffffff82000f98,0xffffffff8200144c);
+  }
+  return *(float *)(param_1 + 0x24) <= 480.0;
+}
+
+
+// 822C0858  CG_UpdateScissorViewport  (cgame/cg_draw_reticles.cpp:153)
+
+void CG_UpdateScissorViewport(undefined8 param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82015258,0x9e,0,0xffffffff82000f98,0xffffffff82015314);
+  }
+  if (*(char *)(piVar2 + 0x12c8) != '\0') {
+    MyAssertHandler(0xffffffff82015258,0x9f,0,0xffffffff82000f98,0xffffffff820152f8);
+  }
+  *(undefined1 *)(piVar2 + 0x12c8) = 1;
+  piVar2[0x12c4] = (int)*param_2 + *piVar2;
+  iVar4 = piVar2[0x12c4];
+  piVar2[0x12c5] = (int)param_2[1] + piVar2[1];
+  piVar2[0x12c6] = (int)*param_3;
+  fVar1 = param_3[1];
+  iVar6 = piVar2[0x12c5];
+  piVar2[0x12c7] = (int)fVar1;
+  iVar3 = iVar6 + (int)fVar1;
+  iVar5 = *piVar2;
+  iVar7 = iVar4;
+  if (piVar2[2] + iVar5 <= iVar4) {
+    iVar7 = piVar2[2] + iVar5;
+  }
+  if (iVar5 < iVar7) {
+    iVar5 = iVar7;
+  }
+  piVar2[0x12c4] = iVar5;
+  iVar7 = piVar2[1];
+  iVar8 = piVar2[3] + iVar7;
+  if (iVar6 < piVar2[3] + iVar7) {
+    iVar8 = iVar6;
+  }
+  if (iVar7 < iVar8) {
+    iVar7 = iVar8;
+  }
+  piVar2[0x12c5] = iVar7;
+  iVar6 = *piVar2;
+  iVar8 = piVar2[2] + iVar6;
+  if (piVar2[0x12c6] + iVar4 < piVar2[2] + iVar6) {
+    iVar8 = piVar2[0x12c6] + iVar4;
+  }
+  if (iVar6 < iVar8) {
+    iVar6 = iVar8;
+  }
+  iVar4 = piVar2[1];
+  iVar8 = piVar2[3] + iVar4;
+  if (iVar3 < piVar2[3] + iVar4) {
+    iVar8 = iVar3;
+  }
+  if (iVar4 < iVar8) {
+    iVar4 = iVar8;
+  }
+  piVar2[0x12c6] = iVar6 - iVar5;
+  piVar2[0x12c7] = iVar4 - iVar7;
+  __restgprlr_27();
+  return;
+}
+
+
+// 822C0A00  CG_GetWeapOverlayMaterial  (cgame/cg_draw_reticles.cpp:183)
+
+void CG_GetWeapOverlayMaterial
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  char cVar4;
+  char cVar5;
+  int *piVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_27();
+  cVar4 = UsingLowResViewPort(param_4);
+  cVar5 = CG_IsEMPJammed(uVar1);
+  piVar2 = (int *)BG_GetOverlay(param_2,param_3);
+  if (((cVar4 != '\0') && (*(char *)(DAT_82b3ecb8 + 0xc) != '\0')) &&
+     (480.0 <= *(float *)((int)param_4 + 0x24) * 0.0020833334 * (float)piVar2[8])) {
+    cVar4 = '\0';
+  }
+  if ((cVar5 == '\0') || (iVar3 = piVar2[2], iVar3 == 0)) {
+    if ((cVar4 == '\0') || (iVar3 = piVar2[1], iVar3 == 0)) {
+      iVar3 = *piVar2;
+    }
+  }
+  else if ((cVar4 != '\0') && (piVar2[3] != 0)) {
+    __restgprlr_27(piVar2[3]);
+    return;
+  }
+  __restgprlr_27(iVar3);
+  return;
 }
 
 
@@ -158,8 +354,45 @@ LAB_822c0de8:
 void CG_DrawWeapReticle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar2;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  float local_60;
+  undefined1 auStack_5c [12];
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  float local_44;
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = CG_GetLocalClientGlobals();
+  if ((iVar3 == 0) || (uVar5 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
+    uVar5 = 0;
+  }
+  cVar4 = CG_GetWeapReticleZoom(iVar3,&local_60);
+  if (cVar4 == '\0') {
+    __restgprlr_28(0x3ff0000000000000);
+    return;
+  }
+  uVar2 = BG_GetViewmodelWeapon(iVar3);
+  dVar6 = (double)local_60;
+  local_44 = local_60;
+  dVar7 = 1.0;
+  local_50 = 0x3f800000;
+  local_4c = 0x3f800000;
+  local_48 = 0x3f800000;
+  CG_CalcCrosshairPosition(iVar3,&local_60,auStack_5c);
+  CG_DrawAdsOverlay(uVar1,uVar2,uVar5,&local_50,&local_60);
+  dVar6 = (double)(float)(dVar7 - dVar6);
+  if ((dVar6 < 0.0) || (dVar7 < dVar6)) {
+    MyAssertHandler(dVar6,0xffffffff82015258,0x14d,1,0xffffffff82015320,0xffffffff8201533c,dVar6);
+  }
+  __restgprlr_28(dVar6);
+  return;
 }
 
 
@@ -179,31 +412,27 @@ void CG_CalcCrosshairColor(undefined8 param_1,undefined8 param_2,undefined8 para
   double dVar8;
   
   uVar2 = __savegprlr_24();
+  dVar8 = extraout_f1;
   if (DAT_82a38340 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015258,0x15d,0,0xffffffff82000f98,0xffffffff82015418);
   }
   if (DAT_82a3d44c == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015258,0x15e,0,0xffffffff82000f98,0xffffffff82015400);
   }
-  if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(extraout_f1,0xffffffff82015258,0x15f,0,0xffffffff820153c8,0xffffffff820153dc,
-                    extraout_f1);
+  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+    MyAssertHandler(dVar8,0xffffffff82015258,0x15f,0,0xffffffff820153c8,0xffffffff820153dc,dVar8);
   }
-  dVar8 = extraout_f1;
   iVar3 = CG_GetLocalClientGlobals(uVar2);
   if ((iVar3 == 0) || (uVar7 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
     uVar7 = 0;
   }
   uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 0x370),uVar7);
-  if ((&DAT_829d84a0)[uVar4 & 0xff] == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar5 = (&DAT_829d84a0)[uVar4 & 0xff];
+  if (iVar5 == 0) {
     MyAssertHandler(0xffffffff82015258,0x166,0,0xffffffff82000f98,0xffffffff8200a88c);
   }
   puVar1 = (undefined4 *)param_3;
-  if (*(char *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x770) != '\0') {
+  if (*(char *)(iVar5 + 0x770) != '\0') {
     CL_ControllerIndexFromClientNum(uVar2);
     cVar6 = GamerProfile_IsColorBlind();
     iVar5 = CG_GetLocalClientStaticGlobals(uVar2);
@@ -237,13 +466,116 @@ LAB_822c1130:
 }
 
 
+// 822C1150  CG_DrawTurretCrossHair  (cgame/cg_draw_reticles.cpp:422)
+
+void CG_DrawTurretCrossHair(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  int local_80;
+  int local_7c;
+  longlong local_78;
+  
+  __savegprlr_25();
+  uVar1 = __savefpr_28();
+  if (DAT_82a382d4 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1b5,0,0xffffffff82000f98,0xffffffff82015484);
+  }
+  if (DAT_82a3d69c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1b6,0,0xffffffff82000f98,0xffffffff82015478);
+  }
+  if (DAT_82a3d61c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1b7,0,0xffffffff82000f98,0xffffffff82015468);
+  }
+  if (DAT_82a38340 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1b8,0,0xffffffff82000f98,0xffffffff82015418);
+  }
+  if ((*(char *)(DAT_82a382d4 + 0xc) != '\0') &&
+     ((*(int *)(DAT_82a3d69c + 0xc) == 0 || (*(char *)(DAT_82a3d61c + 0xc) == '\0')))) {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    if ((iVar2 == 0) || (uVar5 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
+      uVar5 = 0;
+    }
+    if (*(int *)(iVar2 + 0x1bc) == 0x7ff) {
+      MyAssertHandler(0xffffffff82015258,0x1c0,0,0xffffffff82000f98,0xffffffff8201542c);
+    }
+    iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x1bc));
+    if (*(int *)(iVar3 + 200) != 0xb) {
+      MyAssertHandler(0xffffffff82015258,0x1c2,0,0xffffffff82000f98,0xffffffff82012a64);
+    }
+    if ((((*(uint *)(iVar3 + 0x18c) & 0xff) != 0) &&
+        (BG_GetCenterReticle(*(uint *)(iVar3 + 0x18c),uVar5,&local_80,&local_7c), local_80 != 0)) &&
+       (0.01 <= *(float *)(DAT_82a38340 + 0xc))) {
+      uVar5 = 0x3ff0000000000000;
+      CG_CalcCrosshairColor(0x3ff0000000000000,uVar1);
+      local_78 = (longlong)local_7c;
+      dVar8 = (double)local_78;
+      cVar4 = CL_IsRenderingSplitScreen();
+      if (cVar4 != '\0') {
+        dVar8 = (double)(float)(dVar8 * 2.0);
+      }
+      dVar7 = (double)(float)(dVar8 * -0.5);
+      dVar6 = (double)CG_GetCrosshairVerticalOffset(iVar2);
+      dVar6 = -(double)(float)(dVar6 * 240.0 - dVar7);
+      ScrPlace_GetActivePlacement(uVar1);
+      CL_DrawStretchPic(dVar7,dVar6,dVar8,dVar8,0,0,uVar5,uVar5);
+    }
+  }
+  __restfpr_28();
+  __restgprlr_25();
+  return;
+}
+
+
 // 822C13F0  CG_DrawVehicleCrossHair  (cgame/cg_draw_reticles.cpp:485)
 
 void CG_DrawVehicleCrossHair(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  int local_70;
+  int local_6c;
+  longlong local_68;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (DAT_82a38340 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1f5,0,0xffffffff82000f98,0xffffffff82015418);
+  }
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    MyAssertHandler(0xffffffff82015258,0x1f6,0,0xffffffff82000f98,0xffffffff820154f8);
+  }
+  iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x1bc));
+  if ((*(int *)(iVar3 + 200) != 0xe) && (*(int *)(iVar3 + 200) != 0xc)) {
+    MyAssertHandler(0xffffffff82015258,0x1fd,0,0xffffffff82000f98,0xffffffff820154a0);
+  }
+  if (*(char *)(iVar3 + 399) != '\0') {
+    BG_GetCenterReticle(*(undefined4 *)(iVar3 + 0x18c),*(uint *)(iVar2 + 0x374) >> 0xf & 1,&local_70
+                        ,&local_6c);
+    if ((local_70 != 0) && (0.01 <= *(float *)(DAT_82a38340 + 0xc))) {
+      uVar6 = 0x3ff0000000000000;
+      CG_CalcCrosshairColor(0x3ff0000000000000,uVar1);
+      local_68 = (longlong)local_6c;
+      dVar5 = (double)local_68;
+      dVar4 = (double)(float)(dVar5 * -0.5);
+      ScrPlace_GetActivePlacement(uVar1);
+      CL_DrawStretchPic(dVar4,dVar4,dVar5,dVar5,0,0,uVar6,uVar6);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -262,53 +594,309 @@ undefined8 CG_IsReticleTurnedOff(void)
 }
 
 
-// 822C1738  CG_DrawAdsAimIndicator  (cgame/cg_draw_reticles.cpp:589)
+// 822C15F0  AllowedToDrawCrosshair  (cgame/cg_draw_reticles.cpp:552)
 
-void CG_DrawAdsAimIndicator(void)
+void AllowedToDrawCrosshair(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar4;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x229,0,0xffffffff82000f98,0xffffffff82015534);
+  }
+  if (DAT_82a3d69c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x22a,0,0xffffffff82000f98,0xffffffff82015478);
+  }
+  if ((*(int *)(DAT_82a3d69c + 0xc) != 0) && (*(char *)(DAT_82a3d61c + 0xc) != '\0'))
+  goto LAB_822c16f8;
+  if (*(char *)(DAT_82a3827c + 0xc) == '\0') {
+LAB_822c16ac:
+    bVar2 = true;
+  }
+  else {
+    cVar4 = UI_ShouldDrawCrosshair();
+    bVar2 = false;
+    if (cVar4 == '\0') goto LAB_822c16ac;
+  }
+  if ((((!bVar2) && (iVar1 = *(int *)(iVar3 + 0x24c), iVar1 != 0xd)) && (iVar1 != 0xe)) &&
+     (iVar1 != 0xf)) {
+    if (iVar1 == 8) {
+      if ((*(int *)(iVar3 + 0x390) == 1) && (*(int *)(iVar3 + 0x268) != 8)) {
+LAB_822c172c:
+        __restgprlr_28(1);
+        return;
+      }
+    }
+    else if (((iVar1 != 1) && (iVar1 != 2)) && ((iVar1 != 3 && ((iVar1 != 4 && (iVar1 != 5))))))
+    goto LAB_822c172c;
+  }
+LAB_822c16f8:
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 822C1738  CG_DrawAdsAimIndicator  (cgame/cg_draw_reticles.cpp:589)
+
+void CG_DrawAdsAimIndicator
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
+
+{
+  undefined8 uVar1;
+  double extraout_f1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  int local_70;
+  int local_6c;
+  longlong local_68;
+  
   __savegprlr_27();
+  uVar1 = __savefpr_27();
+  dVar4 = extraout_f1;
+  if (DAT_82a3836c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x255,0,0xffffffff82000f98,0xffffffff8201554c);
+  }
+  if ((*(char *)(DAT_82a3836c + 0xc) == '\0') && (uVar6 = 0x3ff0000000000000, param_3 < 1.0)) {
+    BG_GetCenterReticle(param_5,param_6,&local_70,&local_6c);
+    if (local_70 != 0) {
+      local_68 = (longlong)local_6c;
+      dVar5 = (double)((float)(1.5 - param_3) * (float)local_68);
+      dVar2 = (double)(float)(dVar5 * 0.5);
+      dVar3 = (double)(float)(param_2 - dVar2);
+      ScrPlace_GetActivePlacement(uVar1);
+      CL_DrawStretchPic((double)(float)(dVar4 - dVar2),dVar3,dVar5,dVar5,0,0,uVar6,uVar6);
+    }
+  }
+  __restfpr_27();
+  __restgprlr_27();
+  return;
 }
 
 
 // 822C1868  CG_TransitionToAds  (cgame/cg_draw_reticles.cpp:628)
 
-void CG_TransitionToAds(void)
+void CG_TransitionToAds(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                       ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined8 uVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  float local_60;
+  float local_5c [23];
+  
+  iVar1 = __savegprlr_26();
+  dVar5 = extraout_f1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x279,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015258,0x27a,0,0xffffffff82000f98,0xffffffff82015644);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015258,0x27b,0,0xffffffff82000f98,0xffffffff82015638);
+  }
+  if ((iVar1 == 0) || (uVar2 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
+    uVar2 = 0;
+  }
+  BG_GetADSCrosshairFracs(param_2,uVar2,&local_60,local_5c);
+  dVar6 = 0.0;
+  dVar4 = 1.0;
+  if (*(int *)(iVar1 + 0x3304) == 0) {
+    dVar3 = (double)local_5c[0];
+    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
+    if (dVar5 <= 0.0) goto LAB_822c1a8c;
+    if (dVar3 == 0.0) {
+      MyAssertHandler(0xffffffff82015258,0x290,0,0xffffffff820155b8,0xffffffff820155d8,dVar3);
+      dVar3 = (double)local_5c[0];
+    }
+  }
+  else {
+    dVar3 = (double)local_60;
+    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
+    if (dVar5 <= 0.0) goto LAB_822c1a8c;
+    if (dVar3 == 0.0) {
+      MyAssertHandler(0xffffffff82015258,0x287,0,0xffffffff820155f8,0xffffffff82015618,dVar3);
+      dVar3 = (double)local_60;
+    }
+  }
+  dVar3 = (double)(float)(dVar5 / dVar3);
+  dVar5 = (double)*(float *)(iVar1 + 0x6b9c4);
+  if (dVar5 == dVar6) {
+    MyAssertHandler(0xffffffff82015258,0x294,0,0xffffffff82015558,0xffffffff82015588,dVar5);
+  }
+  *(float *)param_4 = -(float)(dVar3 * 0.5 - dVar4);
+  dVar5 = (double)BG_ADSAimPitch(param_2,*(uint *)(iVar1 + 0x374) >> 0xf & 1);
+  dVar5 = tan((double)(float)(dVar5 * 0.01745329238474369));
+  *(float *)param_5 = (float)((double)((float)dVar5 / *(float *)(iVar1 + 0x6b9c4)) * dVar3) * 240.0;
+LAB_822c1a8c:
+  __restgprlr_26();
+  return;
 }
 
 
 // 822C1AA0  CG_DrawReticleCenter  (cgame/cg_draw_reticles.cpp:669)
 
-void CG_DrawReticleCenter(void)
+void CG_DrawReticleCenter
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  int local_60;
+  int local_5c;
+  longlong local_58;
+  
   __savegprlr_27();
+  uVar1 = __savefpr_28();
+  dVar7 = extraout_f1;
+  uVar2 = BG_GetAlternateWeapon(param_5,param_6);
+  iVar4 = (&DAT_829d84a0)[uVar2 & 0xff];
+  BG_GetCenterReticle(param_5,param_6,&local_60,&local_5c);
+  if (local_60 != 0) {
+    local_58 = (longlong)local_5c;
+    dVar9 = (double)local_58;
+    iVar3 = BG_GetWeaponType(param_5,param_6);
+    if ((iVar3 == 2) && (*(char *)(iVar4 + 0x779) != '\0')) {
+      iVar4 = CG_GetLocalClientGlobals(uVar1);
+      if (*(int *)(iVar4 + 0x34) != 0) {
+        local_58 = (longlong)(*(int *)(iVar4 + 0x34) % 1000);
+        dVar9 = (double)(float)((double)local_58 * 0.009999999776482582 + dVar9);
+      }
+    }
+    dVar9 = (double)(float)(dVar9 * param_3);
+    cVar5 = CL_IsRenderingSplitScreen();
+    if (cVar5 != '\0') {
+      dVar9 = (double)(float)(dVar9 * 2.0);
+    }
+    dVar8 = (double)(float)(dVar9 * 0.5);
+    dVar6 = (double)(float)(param_2 - dVar8);
+    ScrPlace_GetActivePlacement(uVar1);
+    CL_DrawStretchPic((double)(float)(dVar7 - dVar8),dVar6,dVar9,dVar9,0,0,0x3ff0000000000000);
+  }
+  __restfpr_28();
+  __restgprlr_27();
+  return;
 }
 
 
 // 822C1C20  CG_CalcReticleSpread  (cgame/cg_draw_reticles.cpp:711)
 
-void CG_CalcReticleSpread(void)
+void CG_CalcReticleSpread
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4,
+               undefined8 param_5,float *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  float fVar2;
+  int iVar3;
+  uint uVar4;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar7;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  float local_50;
+  float local_4c;
+  longlong local_48;
+  
+  iVar3 = __savegprlr_26();
+  dVar9 = extraout_f1;
+  uVar4 = BG_GetAlternateWeapon(param_2,param_3);
+  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
+  BG_GetSpreadForWeapon(iVar3,param_2,&local_50,&local_4c);
+  cVar6 = BG_IsThirdPersonMode(iVar3);
+  if ((cVar6 != '\0') && (iVar5 = BG_GetWeaponClass(param_2,param_3), iVar5 == 1)) {
+    if ((iVar3 == 0) || (uVar7 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
+      uVar7 = 0;
+    }
+    dVar8 = (double)BG_ADSSpread(param_2,uVar7);
+    local_50 = (float)((double)(float)(dVar8 - (double)local_50) * (double)*(float *)(iVar3 + 0x378)
+                      + (double)local_50);
+  }
+  dVar9 = tan((double)((float)((double)(*(float *)(iVar3 + 0x37c) * 0.003921569 *
+                                        (local_4c - local_50) + local_50) * dVar9) * 0.017453292));
+  local_48 = (longlong)*(int *)(iVar1 + 0x138);
+  fVar2 = ((float)dVar9 / *(float *)(iVar3 + 0x6b9c4)) * 240.0;
+  if (fVar2 < (float)local_48) {
+    fVar2 = (float)local_48;
+  }
+  *param_6 = -(*(float *)(iVar1 + 0x458) * *param_4 - fVar2);
+  param_6[1] = -(param_4[1] * *(float *)(iVar1 + 0x458) - fVar2);
+  __restgprlr_26();
+  return;
 }
 
 
 // 822C1D88  CG_CalcReticleColor  (cgame/cg_draw_reticles.cpp:737)
 
-void CG_CalcReticleColor(void)
+void CG_CalcReticleColor(undefined8 param_1,double param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined4 *in_r6;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
   __savegprlr_26();
+  puVar4 = (undefined4 *)__savefpr_28();
+  dVar5 = extraout_f1;
+  if (DAT_82a38340 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x2e2,0,0xffffffff82000f98,0xffffffff82015418);
+  }
+  if (DAT_82a3ce20 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x2e3,0,0xffffffff82000f98,0xffffffff820156c0);
+  }
+  dVar6 = 0.0;
+  dVar7 = 1.0;
+  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    MyAssertHandler(dVar5,0xffffffff82015258,0x2e4,0,0xffffffff820153c8,0xffffffff820156a0,dVar5);
+  }
+  *in_r6 = *puVar4;
+  iVar3 = DAT_82a3ce20;
+  iVar2 = DAT_82a38340;
+  in_r6[1] = puVar4[1];
+  in_r6[2] = puVar4[2];
+  fVar1 = (float)((double)(-(float)(param_2 * 0.003921568859368563 - dVar7) *
+                          *(float *)(iVar2 + 0xc)) * dVar5);
+  in_r6[3] = fVar1;
+  if (fVar1 < *(float *)(iVar3 + 0xc)) {
+    in_r6[3] = *(float *)(iVar3 + 0xc);
+  }
+  dVar5 = (double)(float)in_r6[3];
+  if ((dVar5 < dVar6) || (dVar7 < dVar5)) {
+    MyAssertHandler(0xffffffff82015258,0x2eb,1,0xffffffff82015650,0xffffffff8201566c,dVar5);
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -323,12 +911,271 @@ void CG_CalcReticleImageOffset(float *param_1,float *param_2)
 }
 
 
-// 822C2138  CG_UpdateScissorForWeaponDef  (cgame/cg_draw_reticles.cpp:827)
+// 822C1F20  CG_DrawReticleSides  (cgame/cg_draw_reticles.cpp:759)
 
-void CG_UpdateScissorForWeaponDef(void)
+void CG_DrawReticleSides(undefined8 param_1,double param_2,undefined8 param_3,double param_4,
+                        undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  double extraout_f1;
+  undefined8 uVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  int local_b0;
+  int local_ac;
+  float local_a8;
+  float local_a4;
+  undefined8 local_a0;
+  float local_84;
+  
+  __savegprlr_27();
+  uVar1 = __savefpr_23();
+  dVar9 = extraout_f1;
+  BG_GetSideReticle(param_6,param_7,&local_b0,&local_ac);
+  if (local_b0 != 0) {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    uVar4 = CG_DrawWeapReticle(uVar1);
+    CG_CalcReticleColor(uVar4,(double)*(float *)(iVar2 + 0x37c),param_8);
+    if (0.01 <= local_84) {
+      local_a0 = (longlong)local_ac;
+      local_a8 = (float)((double)local_a0 * param_4);
+      dVar12 = (double)local_a8;
+      local_a4 = local_a8;
+      CG_CalcReticleSpread(param_3,iVar2,param_6,param_7,&local_a8);
+      cVar3 = CL_IsRenderingSplitScreen();
+      if (cVar3 != '\0') {
+        dVar12 = (double)(float)(dVar12 * 2.0);
+      }
+      uVar1 = ScrPlace_GetActivePlacement(uVar1);
+      dVar8 = (double)local_a0._4_4_;
+      dVar10 = 0.5;
+      dVar7 = (double)(float)(dVar12 * 0.125);
+      dVar6 = -(double)(float)(dVar12 * 0.5 - dVar9);
+      dVar5 = (double)(float)(dVar12 * 0.125);
+      CG_DrawRotatedPic(dVar6,(double)(float)((double)(float)((double)(float)(param_2 - dVar12) -
+                                                             dVar8) - dVar7),dVar12,dVar12,0);
+      dVar11 = -(double)(float)(dVar12 * dVar10 - param_2);
+      dVar10 = (double)local_a0._0_4_;
+      CG_DrawRotatedPic((double)(float)(dVar10 + dVar9),dVar11,dVar12,dVar12,0x4056800000000000,
+                        uVar1);
+      CG_DrawRotatedPic((double)(float)(dVar6 - dVar5),(double)(float)(dVar8 + param_2),dVar12,
+                        dVar12,0x4066800000000000,uVar1);
+      CG_DrawRotatedPic((double)(float)((double)(float)((double)(float)(dVar9 - dVar12) - dVar10) -
+                                       dVar5),(double)(float)(dVar11 - dVar7),dVar12,dVar12,
+                        0x4070e00000000000,uVar1);
+    }
+  }
+  __restfpr_23();
+  __restgprlr_27();
+  return;
+}
+
+
+// 822C2138  CG_UpdateScissorForWeaponDef  (cgame/cg_draw_reticles.cpp:827)
+
+void CG_UpdateScissorForWeaponDef
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int iVar4;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44 [17];
+  
+  uVar1 = __savegprlr_26();
+  iVar3 = BG_GetOverlay(param_2,param_3);
+  uVar2 = ScrPlace_GetActivePlacement(uVar1);
+  iVar4 = CG_GetWeapOverlayMaterial(uVar1,param_2,param_3,uVar2);
+  if ((iVar4 != 0) && (iVar4 = CG_GetLocalClientGlobals(uVar1), *(int *)(iVar4 + 0x79838) == 0)) {
+    *(undefined4 *)(iVar4 + 0x79840) = 1;
+    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
+      local_50 = *(float *)(iVar3 + 0x14);
+      local_4c = *(float *)(iVar3 + 0x18);
+    }
+    else {
+      local_50 = *(float *)(iVar3 + 0x1c);
+      local_4c = *(float *)(iVar3 + 0x20);
+    }
+    if ((320.0 < local_50) || (240.0 < local_4c)) {
+      local_48 = -(local_50 * 0.5 - *param_4);
+      local_44[0] = -(local_4c * 0.5 - param_4[1]);
+      ScrPlace_ApplyRect(uVar2,&local_48,local_44,&local_50,&local_4c,2,2);
+      CG_UpdateScissorViewport(iVar4 + 0x6b9b0,&local_48,&local_50);
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 822C2270  CG_UpdateWeapReticleScissor  (cgame/cg_draw_reticles.cpp:878)
+
+void CG_UpdateWeapReticleScissor(void)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  char cVar4;
+  float *pfVar5;
+  float local_30;
+  undefined1 auStack_2c [44];
+  
+  uVar1 = __savegprlr_28();
+  iVar3 = CG_GetLocalClientGlobals();
+  if (DAT_82a3836c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x378,0,0xffffffff82000f98,0xffffffff8201554c);
+  }
+  if (DAT_82a3d4a8 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x379,0,0xffffffff82000f98,0xffffffff820156dc);
+  }
+  if (*(int *)(iVar3 + 0x6b9a0) == 0) {
+    if ((*(uint *)(iVar3 + 0xf8) & 0x3800) == 0) {
+      if (((((*(uint *)(iVar3 + 0xf8) & 0x200000) != 0) ||
+           (uVar2 = BG_GetViewmodelWeapon(iVar3), (uVar2 & 0xff) == 0)) ||
+          (cVar4 = CG_GetWeapReticleZoom(iVar3,&local_30), cVar4 == '\0')) || (local_30 < 0.99))
+      goto LAB_822c23b4;
+      CG_CalcCrosshairPosition(iVar3,&local_30,auStack_2c);
+      pfVar5 = &local_30;
+    }
+    else {
+      uVar2 = CG_PlayerTurretWeapon(iVar3,uVar1);
+      if ((uVar2 & 0xff) == 0) goto LAB_822c23b4;
+      pfVar5 = (float *)&DAT_82179fd0;
+    }
+    CG_UpdateScissorForWeaponDef(uVar1,uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1,pfVar5);
+  }
+LAB_822c23b4:
+  __restgprlr_28();
+  return;
+}
+
+
+// 822C23C0  CG_DrawCrosshair  (cgame/cg_draw_reticles.cpp:933)
+
+void CG_DrawCrosshair(void)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar7;
+  char cVar8;
+  byte bVar9;
+  ulonglong uVar3;
+  int *piVar5;
+  int iVar6;
+  undefined8 uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_9c;
+  float local_98 [2];
+  undefined1 auStack_90 [12];
+  float local_84;
+  
+  __savegprlr_24();
+  uVar2 = __savefpr_26();
+  iVar4 = CG_GetLocalClientGlobals();
+  if (DAT_82a3836c == 0) {
+    MyAssertHandler(0xffffffff82015258,0x3b8,0,0xffffffff82000f98);
+  }
+  if (DAT_82a3d4a8 == 0) {
+    MyAssertHandler(0xffffffff82015258,0x3b9,0,0xffffffff82000f98);
+  }
+  cVar7 = CG_IsEMPJammed(uVar2);
+  if (*(int *)(iVar4 + 0x6b9a0) == 0) {
+    cVar8 = BG_IsThirdPersonMode(iVar4);
+    bVar9 = CG_ShouldDrawHud(uVar2);
+    dVar14 = (double)*(float *)(iVar4 + 0x378);
+    dVar12 = 1.0;
+    dVar11 = 0.0;
+    bVar9 = -(cVar7 == '\0') & bVar9;
+    local_98[0] = 0.0;
+    if ((*(uint *)(iVar4 + 0xf8) & 0x3800) == 0) {
+      if ((*(uint *)(iVar4 + 0xf8) & 0x200000) != 0) {
+        CG_DrawVehicleCrossHair(uVar2);
+        __restfpr_26();
+        __restgprlr_24();
+        return;
+      }
+      dVar13 = dVar12;
+      uVar3 = BG_GetViewmodelWeapon(iVar4);
+      if ((uVar3 & 0xff) != 0) {
+        uVar1 = *(uint *)(iVar4 + 0x374) >> 0xf & 1;
+        uVar10 = CG_DrawWeapReticle(uVar2);
+        iVar6 = CG_GetFlashbangedRemainingTime(uVar2);
+        if ((iVar6 == 0) && (bVar9 != 0)) {
+          CG_CalcCrosshairColor(uVar10,uVar2);
+          if ((0.01 <= local_84) &&
+             ((((dVar14 != dVar12 || (*(char *)(DAT_82a3836c + 0xc) == '\0')) || (cVar8 != '\0')) &&
+              (cVar7 = AllowedToDrawCrosshair(iVar4), cVar7 != '\0')))) {
+            CG_CalcCrosshairPosition(iVar4,local_98,&local_9c);
+            dVar15 = (double)local_9c;
+            dVar16 = (double)local_98[0];
+            if (dVar14 != dVar11) {
+              CG_TransitionToAds(dVar14,iVar4,uVar3);
+              dVar13 = 1.0;
+              CG_DrawAdsAimIndicator(dVar16,dVar15,0x3ff0000000000000,uVar2,uVar3,uVar1,auStack_90);
+            }
+            if (((dVar14 != dVar12) || (*(char *)(DAT_82a3836c + 0xc) != '\0')) || (cVar8 != '\0'))
+            {
+              if (*(char *)(DAT_82a3d4a8 + 0xc) == '\0') {
+                dVar14 = (double)CG_GetCrosshairVerticalOffset(iVar4);
+                dVar15 = (double)(float)(dVar14 * -240.0);
+                dVar16 = dVar11;
+              }
+              if (cVar8 == '\0') {
+                dVar12 = dVar13;
+                CG_DrawReticleCenter(dVar16,dVar15,dVar13,uVar2,uVar3,uVar1,auStack_90);
+                dVar13 = dVar12;
+              }
+              else {
+                CG_DrawReticleCenter(dVar16,dVar15,dVar12,uVar2,uVar3,uVar1,auStack_90);
+              }
+              CG_DrawReticleSides(dVar16,dVar15,dVar13,dVar12,uVar2,uVar3,uVar1,auStack_90);
+            }
+          }
+        }
+      }
+    }
+    else {
+      uVar3 = CG_PlayerTurretWeapon(iVar4,uVar2);
+      if (((uVar3 & 0xff) != 0) &&
+         ((piVar5 = (int *)BG_GetOverlay(uVar3,0), *piVar5 != 0 ||
+          ((cVar7 != '\0' && (piVar5[2] != 0)))))) {
+        CG_DrawAdsOverlay(uVar2,uVar3,0,0xffffffff821818b8,0xffffffff82179fd0);
+        __restfpr_26();
+        __restgprlr_24();
+        return;
+      }
+      iVar6 = CG_GetFlashbangedRemainingTime(uVar2);
+      if ((iVar6 == 0) && ((bVar9 != 0 && (*(int *)(iVar4 + 0x1bc) != 0x7ff)))) {
+        CG_DrawTurretCrossHair(uVar2);
+        __restfpr_26();
+        __restgprlr_24();
+        return;
+      }
+    }
+  }
+  __restfpr_26();
+  __restgprlr_24();
+  return;
 }
 

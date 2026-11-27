@@ -2,10 +2,64 @@
 
 // 8225A070  mp_mul_2d  (line unknown)
 
-void mp_mul_2d(void)
+void mp_mul_2d(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int *piVar4;
+  uint uVar5;
+  uint *puVar6;
+  int iVar7;
+  uint uVar8;
+  
+  uVar1 = __savegprlr_29();
+  if (((uVar1 & 0xffffffff) != (param_3 & 0xffffffff)) &&
+     (uVar2 = mp_copy(uVar1,param_3), (int)uVar2 != 0)) goto LAB_8225a1dc;
+  piVar4 = (int *)param_3;
+  uVar8 = (uint)param_2;
+  if (((piVar4[1] < (int)uVar8 / 0x1c + *piVar4 + 1) && (uVar2 = mp_grow(param_3), (int)uVar2 != 0))
+     || ((0x1b < (int)uVar8 && (uVar2 = mp_lshd(param_3,(int)uVar8 / 0x1c), (int)uVar2 != 0))))
+  goto LAB_8225a1dc;
+  param_2 = param_2 + ((longlong)((int)uVar8 / 0x1c + ((int)uVar8 >> 0x1f)) +
+                      (ulonglong)(uVar8 >> 0x1f)) * -0x1c;
+  if (param_2 == 0) {
+LAB_8225a18c:
+    if (0 < *piVar4) {
+      do {
+        iVar7 = *piVar4;
+        if (*(int *)(iVar7 * 4 + piVar4[3] + -4) != 0) break;
+        *piVar4 = iVar7 + -1;
+      } while (0 < iVar7 + -1);
+    }
+  }
+  else {
+    uVar8 = (uint)param_2;
+    uVar5 = 0;
+    iVar7 = 0;
+    if (0 < *piVar4) {
+      puVar6 = (uint *)(piVar4[3] + -4);
+      do {
+        iVar7 = iVar7 + 1;
+        uVar3 = puVar6[1] << (uVar8 & 0x3f) | uVar5;
+        uVar5 = puVar6[1] >> (0x1c - uVar8 & 0x3f) & (1 << (uVar8 & 0x3f)) - 1U;
+        puVar6 = puVar6 + 1;
+        *puVar6 = uVar3 & 0xfffffff;
+      } while (iVar7 < *piVar4);
+      if (uVar5 != 0) {
+        *(uint *)(*piVar4 * 4 + piVar4[3]) = uVar5;
+        *piVar4 = *piVar4 + 1;
+      }
+      goto LAB_8225a18c;
+    }
+  }
+  if (*piVar4 == 0) {
+    piVar4[2] = 0;
+  }
+  uVar2 = 0;
+LAB_8225a1dc:
+  __restgprlr_29(uVar2);
+  return;
 }
 

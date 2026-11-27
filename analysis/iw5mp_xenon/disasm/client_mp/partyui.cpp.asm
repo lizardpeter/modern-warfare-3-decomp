@@ -3,10 +3,265 @@
 ; 823973B8  PartyMember_SortComp  (client_mp/partyui.cpp:120)
   823973B8  7D8802A6             mfspr r12,LR
   823973BC  4857F2FD             bl 0x829166b8
+  823973C0  9421FF80             stwu r1,-0x80(r1)
+  823973C4  3D608205             lis r11,-0x7dfb
+  823973C8  7C7F1B78             or r31,r3,r3
+  823973CC  7C9E2378             or r30,r4,r4
+  823973D0  7CBD2B78             or r29,r5,r5
+  823973D4  2B040012             cmplwi cr6,r4,0x12
+  823973D8  3B8B6A08             addi r28,r11,0x6a08
+  823973DC  41980024             blt cr6,0x82397400
+  823973E0  3D608205             lis r11,-0x7dfb
+  823973E4  7C872378             or r7,r4,r4
+  823973E8  7F83E378             or r3,r28,r28
+  823973EC  38CB69CC             addi r6,r11,0x69cc
+  823973F0  39000012             li r8,0x12
+  823973F4  38A00000             li r5,0x0
+  823973F8  3880007C             li r4,0x7c
+  823973FC  4823D105             bl 0x825d4500
+LAB_82397400:
+  82397400  2B1D0012             cmplwi cr6,r29,0x12
+  82397404  41980024             blt cr6,0x82397428
+  82397408  3D608205             lis r11,-0x7dfb
+  8239740C  7F83E378             or r3,r28,r28
+  82397410  38CB6994             addi r6,r11,0x6994
+  82397414  39000012             li r8,0x12
+  82397418  7FA7EB78             or r7,r29,r29
+  8239741C  38A00000             li r5,0x0
+  82397420  3880007D             li r4,0x7d
+  82397424  4823D0DD             bl 0x825d4500
+LAB_82397428:
+  82397428  7FC4F378             or r4,r30,r30
+  8239742C  7FE3FB78             or r3,r31,r31
+  82397430  4BFDBC71             bl 0x823730a0
+  82397434  7C7C1B78             or r28,r3,r3
+  82397438  7FA4EB78             or r4,r29,r29
+  8239743C  7FE3FB78             or r3,r31,r31
+  82397440  4BFDBC61             bl 0x823730a0
+  82397444  7F1C1800             cmpw cr6,r28,r3
+  82397448  419A0010             beq cr6,0x82397458
+  8239744C  7C63E050             subf r3,r3,r28
+  82397450  38210080             addi r1,r1,0x80
+  82397454  4857F2B4             b 0x82916708
+LAB_82397458:
+  82397458  1D7E0150             mulli r11,r30,0x150
+  8239745C  7D6BFA14             add r11,r11,r31
+  82397460  1D5D0150             mulli r10,r29,0x150
+  82397464  3BCB0058             addi r30,r11,0x58
+  82397468  7D6AFA14             add r11,r10,r31
+  8239746C  7FC3F378             or r3,r30,r30
+  82397470  3BEB0058             addi r31,r11,0x58
+  82397474  4BFD716D             bl 0x8236e5e0
+  82397478  7C7D1B78             or r29,r3,r3
+  8239747C  7FE3FB78             or r3,r31,r31
+  82397480  4BFD7161             bl 0x8236e5e0
+  82397484  7F1D1800             cmpw cr6,r29,r3
+  82397488  419A0010             beq cr6,0x82397498
+  8239748C  7C63E850             subf r3,r3,r29
+  82397490  38210080             addi r1,r1,0x80
+  82397494  4857F274             b 0x82916708
+LAB_82397498:
+  82397498  A17F0114             lhz r11,0x114(r31)
+  8239749C  A15E0114             lhz r10,0x114(r30)
+  823974A0  7C6B5050             subf r3,r11,r10
+  823974A4  38210080             addi r1,r1,0x80
+  823974A8  4857F260             b 0x82916708
+
+; 823974B0  Party_SortDescending  (client_mp/partyui.cpp:147)
+  823974B0  7D8802A6             mfspr r12,LR
+  823974B4  4857F1DD             bl 0x82916690
+  823974B8  9421FF30             stwu r1,-0xd0(r1)
+  823974BC  7C7B1B78             or r27,r3,r3
+  823974C0  7C922378             or r18,r4,r4
+  823974C4  2F050001             cmpwi cr6,r5,0x1
+  823974C8  40990130             ble cr6,0x823975f8
+  823974CC  3D208205             lis r9,-0x7dfb
+  823974D0  3D408205             lis r10,-0x7dfb
+  823974D4  3D608205             lis r11,-0x7dfb
+  823974D8  3AE00000             li r23,0x0
+  823974DC  3B040004             addi r24,r4,0x4
+  823974E0  3AA5FFFF             subi r21,r5,0x1
+  823974E4  3A896994             addi r20,r9,0x6994
+  823974E8  3ACA6A08             addi r22,r10,0x6a08
+  823974EC  3A6B69CC             addi r19,r11,0x69cc
+LAB_823974f0:
+  823974F0  83980000             lwz r28,0x0(r24)
+  823974F4  7EF9BB78             or r25,r23,r23
+  823974F8  2F170000             cmpwi cr6,r23,0x0
+  823974FC  419800E0             blt cr6,0x823975dc
+  82397500  3B580004             addi r26,r24,0x4
+LAB_82397504:
+  82397504  83FAFFF8             lwz r31,-0x8(r26)
+  82397508  2B1F0012             cmplwi cr6,r31,0x12
+  8239750C  41980020             blt cr6,0x8239752c
+  82397510  7E669B78             or r6,r19,r19
+  82397514  7EC3B378             or r3,r22,r22
+  82397518  39000012             li r8,0x12
+  8239751C  7FE7FB78             or r7,r31,r31
+  82397520  38A00000             li r5,0x0
+  82397524  3880007C             li r4,0x7c
+  82397528  4823CFD9             bl 0x825d4500
+LAB_8239752c:
+  8239752C  2B1C0012             cmplwi cr6,r28,0x12
+  82397530  41980020             blt cr6,0x82397550
+  82397534  7E86A378             or r6,r20,r20
+  82397538  7EC3B378             or r3,r22,r22
+  8239753C  39000012             li r8,0x12
+  82397540  7F87E378             or r7,r28,r28
+  82397544  38A00000             li r5,0x0
+  82397548  3880007D             li r4,0x7d
+  8239754C  4823CFB5             bl 0x825d4500
+LAB_82397550:
+  82397550  7FE4FB78             or r4,r31,r31
+  82397554  7F63DB78             or r3,r27,r27
+  82397558  4BFDBB49             bl 0x823730a0
+  8239755C  7C7E1B78             or r30,r3,r3
+  82397560  7F84E378             or r4,r28,r28
+  82397564  7F63DB78             or r3,r27,r27
+  82397568  4BFDBB39             bl 0x823730a0
+  8239756C  7F1E1800             cmpw cr6,r30,r3
+  82397570  419A000C             beq cr6,0x8239757c
+  82397574  7D63F050             subf r11,r3,r30
+  82397578  4800004C             b 0x823975c4
+LAB_8239757c:
+  8239757C  1D7F0150             mulli r11,r31,0x150
+  82397580  7D6BDA14             add r11,r11,r27
+  82397584  1D5C0150             mulli r10,r28,0x150
+  82397588  3BEB0058             addi r31,r11,0x58
+  8239758C  7D6ADA14             add r11,r10,r27
+  82397590  7FE3FB78             or r3,r31,r31
+  82397594  3BCB0058             addi r30,r11,0x58
+  82397598  4BFD7049             bl 0x8236e5e0
+  8239759C  7C7D1B78             or r29,r3,r3
+  823975A0  7FC3F378             or r3,r30,r30
+  823975A4  4BFD703D             bl 0x8236e5e0
+  823975A8  7F1D1800             cmpw cr6,r29,r3
+  823975AC  419A000C             beq cr6,0x823975b8
+  823975B0  7D63E850             subf r11,r3,r29
+  823975B4  48000010             b 0x823975c4
+LAB_823975b8:
+  823975B8  A17E0114             lhz r11,0x114(r30)
+  823975BC  A15F0114             lhz r10,0x114(r31)
+  823975C0  7D6B5050             subf r11,r11,r10
+LAB_823975c4:
+  823975C4  2F0B0000             cmpwi cr6,r11,0x0
+  823975C8  40980014             bge cr6,0x823975dc
+  823975CC  817AFFF8             lwz r11,-0x8(r26)
+  823975D0  3739FFFF             subic. r25,r25,0x1
+  823975D4  957AFFFC             stwu r11,-0x4(r26)
+  823975D8  4080FF2C             bge 0x82397504
+LAB_823975dc:
+  823975DC  39790001             addi r11,r25,0x1
+  823975E0  36B5FFFF             subic. r21,r21,0x1
+  823975E4  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  823975E8  3B180004             addi r24,r24,0x4
+  823975EC  3AF70001             addi r23,r23,0x1
+  823975F0  7F8A912E             stwx r28,r10,r18
+  823975F4  4082FEFC             bne 0x823974f0
+LAB_823975f8:
+  823975F8  382100D0             addi r1,r1,0xd0
+  823975FC  4857F0E4             b 0x829166e0
 
 ; 82397600  PartyUI_GetMemberIndexForSlot  (client_mp/partyui.cpp:169)
   82397600  7D8802A6             mfspr r12,LR
   82397604  4857F0B1             bl 0x829166b4
+  82397608  9421FF80             stwu r1,-0x80(r1)
+  8239760C  7C7E1B78             or r30,r3,r3
+  82397610  7C9D2378             or r29,r4,r4
+  82397614  4BFDBB3D             bl 0x82373150
+  82397618  3D608205             lis r11,-0x7dfb
+  8239761C  7F1D1840             cmplw cr6,r29,r3
+  82397620  3B8B6A08             addi r28,r11,0x6a08
+  82397624  4198002C             blt cr6,0x82397650
+  82397628  7FC3F378             or r3,r30,r30
+  8239762C  4BFDBB25             bl 0x82373150
+  82397630  3D608205             lis r11,-0x7dfb
+  82397634  7C681B78             or r8,r3,r3
+  82397638  38CB6A80             addi r6,r11,0x6a80
+  8239763C  7FA7EB78             or r7,r29,r29
+  82397640  38A00000             li r5,0x0
+  82397644  388000AE             li r4,0xae
+  82397648  7F83E378             or r3,r28,r28
+  8239764C  4823CEB5             bl 0x825d4500
+LAB_82397650:
+  82397650  7FC3F378             or r3,r30,r30
+  82397654  4BFD742D             bl 0x8236ea80
+  82397658  546A063E             rlwinm r10,r3,0x0,0x18,0x1f
+  8239765C  3D608200             lis r11,-0x7e00
+  82397660  2B0A0000             cmplwi cr6,r10,0x0
+  82397664  3B6B0F98             addi r27,r11,0xf98
+  82397668  409A0078             bne cr6,0x823976e0
+  8239766C  3D608425             lis r11,-0x7bdb
+  82397670  816B3BB8             lwz r11,0x3bb8(r11)
+  82397674  894B000C             lbz r10,0xc(r11)
+  82397678  2B0A0000             cmplwi cr6,r10,0x0
+  8239767C  409A0064             bne cr6,0x823976e0
+  82397680  7FC3F378             or r3,r30,r30
+  82397684  4BFD73ED             bl 0x8236ea70
+  82397688  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8239768C  2B0B0000             cmplwi cr6,r11,0x0
+  82397690  409A002C             bne cr6,0x823976bc
+  82397694  3D608205             lis r11,-0x7dfb
+  82397698  3D408204             lis r10,-0x7dfc
+  8239769C  3D208200             lis r9,-0x7e00
+  823976A0  390B6A54             addi r8,r11,0x6a54
+  823976A4  38EAD624             subi r7,r10,0x29dc
+  823976A8  38C911F4             addi r6,r9,0x11f4
+  823976AC  7F83E378             or r3,r28,r28
+  823976B0  38A00000             li r5,0x0
+  823976B4  388000C1             li r4,0xc1
+  823976B8  4823CE49             bl 0x825d4500
+LAB_823976bc:
+  823976BC  3D6082B6             lis r11,-0x7d4a
+  823976C0  38A00012             li r5,0x12
+  823976C4  3BEBC268             subi r31,r11,0x3d98
+  823976C8  7FC3F378             or r3,r30,r30
+  823976CC  7FE4FB78             or r4,r31,r31
+  823976D0  4BFFFDE1             bl 0x823974b0
+  823976D4  57AA103A             rlwinm r10,r29,0x2,0x0,0x1d
+  823976D8  7FEAF82E             lwzx r31,r10,r31
+  823976DC  48000058             b 0x82397734
+LAB_823976e0:
+  823976E0  3BE00000             li r31,0x0
+LAB_823976e4:
+  823976E4  7FE4FB78             or r4,r31,r31
+  823976E8  7FC3F378             or r3,r30,r30
+  823976EC  4BFDB9B5             bl 0x823730a0
+  823976F0  2F030000             cmpwi cr6,r3,0x0
+  823976F4  419A0010             beq cr6,0x82397704
+  823976F8  2F1D0000             cmpwi cr6,r29,0x0
+  823976FC  419A0038             beq cr6,0x82397734
+  82397700  3BBDFFFF             subi r29,r29,0x1
+LAB_82397704:
+  82397704  3BFF0001             addi r31,r31,0x1
+  82397708  2B1F0012             cmplwi cr6,r31,0x12
+  8239770C  4198FFD8             blt cr6,0x823976e4
+  82397710  2F1D0000             cmpwi cr6,r29,0x0
+  82397714  419A0020             beq cr6,0x82397734
+  82397718  3D608205             lis r11,-0x7dfb
+  8239771C  7F66DB78             or r6,r27,r27
+  82397720  38EB6A48             addi r7,r11,0x6a48
+  82397724  7F83E378             or r3,r28,r28
+  82397728  38A00000             li r5,0x0
+  8239772C  388000BD             li r4,0xbd
+  82397730  4823CDD1             bl 0x825d4500
+LAB_82397734:
+  82397734  7FE4FB78             or r4,r31,r31
+  82397738  7FC3F378             or r3,r30,r30
+  8239773C  4BFD7215             bl 0x8236e950
+  82397740  2F030000             cmpwi cr6,r3,0x0
+  82397744  409A0020             bne cr6,0x82397764
+  82397748  3D608204             lis r11,-0x7dfc
+  8239774C  7F66DB78             or r6,r27,r27
+  82397750  38EB2128             addi r7,r11,0x2128
+  82397754  7F83E378             or r3,r28,r28
+  82397758  38A00000             li r5,0x0
+  8239775C  388000C6             li r4,0xc6
+  82397760  4823CDA1             bl 0x825d4500
+LAB_82397764:
+  82397764  7FE3FB78             or r3,r31,r31
+  82397768  38210080             addi r1,r1,0x80
+  8239776C  4857EF98             b 0x82916704
 
 ; 82397770  PartyUI_GetMember  (client_mp/partyui.cpp:204)
   82397770  7D8802A6             mfspr r12,LR
@@ -42,6 +297,31 @@ LAB_823977c8:
 ; 823977E0  PartyUI_ShowTruePlayerInfo  (client_mp/partyui.cpp:217)
   823977E0  7D8802A6             mfspr r12,LR
   823977E4  4857EED9             bl 0x829166bc
+  823977E8  9421FF90             stwu r1,-0x70(r1)
+  823977EC  7C7F1B78             or r31,r3,r3
+  823977F0  7C832378             or r3,r4,r4
+  823977F4  7C9E2378             or r30,r4,r4
+  823977F8  7CBD2B78             or r29,r5,r5
+  823977FC  482AF385             bl 0x82646b80
+  82397800  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397804  2B0B0000             cmplwi cr6,r11,0x0
+  82397808  409A0010             bne cr6,0x82397818
+  8239780C  38600000             li r3,0x0
+  82397810  38210070             addi r1,r1,0x70
+  82397814  4857EEF8             b 0x8291670c
+LAB_82397818:
+  82397818  7FA4EB78             or r4,r29,r29
+  8239781C  7FE3FB78             or r3,r31,r31
+  82397820  4BFFFDE1             bl 0x82397600
+  82397824  7C7D1B78             or r29,r3,r3
+  82397828  7FC3F378             or r3,r30,r30
+  8239782C  482AF41D             bl 0x82646c48
+  82397830  7C641B78             or r4,r3,r3
+  82397834  7FA5EB78             or r5,r29,r29
+  82397838  7FE3FB78             or r3,r31,r31
+  8239783C  4BFDFC55             bl 0x82377490
+  82397840  38210070             addi r1,r1,0x70
+  82397844  4857EEC8             b 0x8291670c
 
 ; 82397848  PartyUI_MemberNameWithClan  (client_mp/partyui.cpp:238)
   82397848  7D8802A6             mfspr r12,LR
@@ -126,18 +406,274 @@ LAB_82397928:
 ; 82397960  PartyUI_MemberStat  (client_mp/partyui.cpp:281)
   82397960  7D8802A6             mfspr r12,LR
   82397964  4857ED55             bl 0x829166b8
+  82397968  9421FF80             stwu r1,-0x80(r1)
+  8239796C  3D608205             lis r11,-0x7dfb
+  82397970  7C7E1B78             or r30,r3,r3
+  82397974  7C9F2378             or r31,r4,r4
+  82397978  2B030000             cmplwi cr6,r3,0x0
+  8239797C  3B8B6A08             addi r28,r11,0x6a08
+  82397980  409A0024             bne cr6,0x823979a4
+  82397984  3D608202             lis r11,-0x7dfe
+  82397988  3D408200             lis r10,-0x7e00
+  8239798C  38EB3010             addi r7,r11,0x3010
+  82397990  38CA0F98             addi r6,r10,0xf98
+  82397994  7F83E378             or r3,r28,r28
+  82397998  38A00000             li r5,0x0
+  8239799C  3880011A             li r4,0x11a
+  823979A0  4823CB61             bl 0x825d4500
+LAB_823979a4:
+  823979A4  3D6082B6             lis r11,-0x7d4a
+  823979A8  2B1F0001             cmplwi cr6,r31,0x1
+  823979AC  3BABC538             subi r29,r11,0x3ac8
+  823979B0  41980068             blt cr6,0x82397a18
+  823979B4  419A0054             beq cr6,0x82397a08
+  823979B8  2B1F0003             cmplwi cr6,r31,0x3
+  823979BC  41980044             blt cr6,0x82397a00
+  823979C0  3D608401             lis r11,-0x7bff
+  823979C4  816B3128             lwz r11,0x3128(r11)
+  823979C8  2F0B0000             cmpwi cr6,r11,0x0
+  823979CC  409A0064             bne cr6,0x82397a30
+  823979D0  3D608205             lis r11,-0x7dfb
+  823979D4  7FE4FB78             or r4,r31,r31
+  823979D8  386B6ACC             addi r3,r11,0x6acc
+  823979DC  48274C9D             bl 0x8260c678
+  823979E0  7C661B78             or r6,r3,r3
+  823979E4  38A00000             li r5,0x0
+  823979E8  38800129             li r4,0x129
+  823979EC  7F83E378             or r3,r28,r28
+  823979F0  4823CB11             bl 0x825d4500
+  823979F4  7FA3EB78             or r3,r29,r29
+  823979F8  38210080             addi r1,r1,0x80
+  823979FC  4857ED0C             b 0x82916708
+LAB_82397a00:
+  82397A00  80DE0118             lwz r6,0x118(r30)
+  82397A04  48000018             b 0x82397a1c
+LAB_82397a08:
+  82397A08  3D608202             lis r11,-0x7dfe
+  82397A0C  386B080C             addi r3,r11,0x80c
+  82397A10  38210080             addi r1,r1,0x80
+  82397A14  4857ECF4             b 0x82916708
+LAB_82397a18:
+  82397A18  A0DE0114             lhz r6,0x114(r30)
+LAB_82397a1c:
+  82397A1C  3D608201             lis r11,-0x7dff
+  82397A20  38800020             li r4,0x20
+  82397A24  38ABC28C             subi r5,r11,0x3d74
+  82397A28  7FA3EB78             or r3,r29,r29
+  82397A2C  48274AB5             bl 0x8260c4e0
+LAB_82397a30:
+  82397A30  7FA3EB78             or r3,r29,r29
+  82397A34  38210080             addi r1,r1,0x80
+  82397A38  4857ECD0             b 0x82916708
+
+; 82397A40  PartyUI_GetEmptyClientStat  (client_mp/partyui.cpp:304)
+  82397A40  7D8802A6             mfspr r12,LR
+  82397A44  9181FFF8             stw r12,-0x8(r1)
+  82397A48  9421FFA0             stwu r1,-0x60(r1)
+  82397A4C  2B040001             cmplwi cr6,r4,0x1
+  82397A50  41980074             blt cr6,0x82397ac4
+  82397A54  419A0058             beq cr6,0x82397aac
+  82397A58  2B040003             cmplwi cr6,r4,0x3
+  82397A5C  41980068             blt cr6,0x82397ac4
+  82397A60  3D608401             lis r11,-0x7bff
+  82397A64  816B3128             lwz r11,0x3128(r11)
+  82397A68  2F0B0000             cmpwi cr6,r11,0x0
+  82397A6C  409A0028             bne cr6,0x82397a94
+  82397A70  3D608205             lis r11,-0x7dfb
+  82397A74  386B6ACC             addi r3,r11,0x6acc
+  82397A78  48274C01             bl 0x8260c678
+  82397A7C  3D408205             lis r10,-0x7dfb
+  82397A80  7C661B78             or r6,r3,r3
+  82397A84  386A6A08             addi r3,r10,0x6a08
+  82397A88  38A00000             li r5,0x0
+  82397A8C  3880013D             li r4,0x13d
+  82397A90  4823CA71             bl 0x825d4500
+LAB_82397a94:
+  82397A94  3D608200             lis r11,-0x7e00
+  82397A98  386B68AF             addi r3,r11,0x68af
+  82397A9C  38210060             addi r1,r1,0x60
+  82397AA0  8181FFF8             lwz r12,-0x8(r1)
+  82397AA4  7D8803A6             mtspr LR,r12
+  82397AA8  4E800020             blr
+LAB_82397aac:
+  82397AAC  3D608202             lis r11,-0x7dfe
+  82397AB0  386B080C             addi r3,r11,0x80c
+  82397AB4  38210060             addi r1,r1,0x60
+  82397AB8  8181FFF8             lwz r12,-0x8(r1)
+  82397ABC  7D8803A6             mtspr LR,r12
+  82397AC0  4E800020             blr
+LAB_82397ac4:
+  82397AC4  3D608203             lis r11,-0x7dfd
+  82397AC8  386B248C             addi r3,r11,0x248c
+  82397ACC  38210060             addi r1,r1,0x60
+  82397AD0  8181FFF8             lwz r12,-0x8(r1)
+  82397AD4  7D8803A6             mtspr LR,r12
+  82397AD8  4E800020             blr
+
+; 82397AE0  MemberRankIcon  (client_mp/partyui.cpp:325)
+  82397AE0  7D8802A6             mfspr r12,LR
+  82397AE4  9181FFF8             stw r12,-0x8(r1)
+  82397AE8  FBC1FFE8             std r30,-0x18(r1)
+  82397AEC  FBE1FFF0             std r31,-0x10(r1)
+  82397AF0  9421FF90             stwu r1,-0x70(r1)
+  82397AF4  7C7F1B78             or r31,r3,r3
+  82397AF8  7C9E2378             or r30,r4,r4
+  82397AFC  2B030000             cmplwi cr6,r3,0x0
+  82397B00  409A0028             bne cr6,0x82397b28
+  82397B04  3D608202             lis r11,-0x7dfe
+  82397B08  3D408200             lis r10,-0x7e00
+  82397B0C  3D208205             lis r9,-0x7dfb
+  82397B10  38EB3010             addi r7,r11,0x3010
+  82397B14  38CA0F98             addi r6,r10,0xf98
+  82397B18  38696A08             addi r3,r9,0x6a08
+  82397B1C  38A00000             li r5,0x0
+  82397B20  38800146             li r4,0x146
+  82397B24  4823C9DD             bl 0x825d4500
+LAB_82397b28:
+  82397B28  7FC5F378             or r5,r30,r30
+  82397B2C  809F0010             lwz r4,0x10(r31)
+  82397B30  807F000C             lwz r3,0xc(r31)
+  82397B34  4BFBB05D             bl 0x82352b90
+  82397B38  38210070             addi r1,r1,0x70
+  82397B3C  8181FFF8             lwz r12,-0x8(r1)
+  82397B40  7D8803A6             mtspr LR,r12
+  82397B44  EBC1FFE8             ld r30,-0x18(r1)
+  82397B48  EBE1FFF0             ld r31,-0x10(r1)
+  82397B4C  4E800020             blr
 
 ; 82397B50  PartyUI_GetMemberXuid  (client_mp/partyui.cpp:332)
   82397B50  7D8802A6             mfspr r12,LR
   82397B54  4857EB65             bl 0x829166b8
+  82397B58  9421FF80             stwu r1,-0x80(r1)
+  82397B5C  7C7F1B78             or r31,r3,r3
+  82397B60  7C832378             or r3,r4,r4
+  82397B64  7C9E2378             or r30,r4,r4
+  82397B68  7CBD2B78             or r29,r5,r5
+  82397B6C  482AF015             bl 0x82646b80
+  82397B70  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397B74  2B0B0000             cmplwi cr6,r11,0x0
+  82397B78  419A007C             beq cr6,0x82397bf4
+  82397B7C  7FA4EB78             or r4,r29,r29
+  82397B80  7FE3FB78             or r3,r31,r31
+  82397B84  4BFFFA7D             bl 0x82397600
+  82397B88  7C7C1B78             or r28,r3,r3
+  82397B8C  7FC3F378             or r3,r30,r30
+  82397B90  482AF0B9             bl 0x82646c48
+  82397B94  7C641B78             or r4,r3,r3
+  82397B98  7F85E378             or r5,r28,r28
+  82397B9C  7FE3FB78             or r3,r31,r31
+  82397BA0  4BFDF8F1             bl 0x82377490
+  82397BA4  2F030000             cmpwi cr6,r3,0x0
+  82397BA8  419A004C             beq cr6,0x82397bf4
+  82397BAC  7FA4EB78             or r4,r29,r29
+  82397BB0  7FE3FB78             or r3,r31,r31
+  82397BB4  4BFFFBBD             bl 0x82397770
+  82397BB8  7C7F1B78             or r31,r3,r3
+  82397BBC  2B030000             cmplwi cr6,r3,0x0
+  82397BC0  409A0028             bne cr6,0x82397be8
+  82397BC4  3D608202             lis r11,-0x7dfe
+  82397BC8  3D408200             lis r10,-0x7e00
+  82397BCC  3D208205             lis r9,-0x7dfb
+  82397BD0  38EB3010             addi r7,r11,0x3010
+  82397BD4  38CA0F98             addi r6,r10,0xf98
+  82397BD8  38696A08             addi r3,r9,0x6a08
+  82397BDC  38A00001             li r5,0x1
+  82397BE0  38800152             li r4,0x152
+  82397BE4  4823C91D             bl 0x825d4500
+LAB_82397be8:
+  82397BE8  E87F0128             ld r3,0x128(r31)
+  82397BEC  38210080             addi r1,r1,0x80
+  82397BF0  4857EB18             b 0x82916708
+LAB_82397bf4:
+  82397BF4  38600000             li r3,0x0
+  82397BF8  38210080             addi r1,r1,0x80
+  82397BFC  4857EB0C             b 0x82916708
 
 ; 82397C00  PartyUI_IsMemberIndexAway  (client_mp/partyui.cpp:350)
   82397C00  7D8802A6             mfspr r12,LR
   82397C04  4857EAB5             bl 0x829166b8
+  82397C08  9421FF80             stwu r1,-0x80(r1)
+  82397C0C  3D608205             lis r11,-0x7dfb
+  82397C10  3D408200             lis r10,-0x7e00
+  82397C14  7C7F1B78             or r31,r3,r3
+  82397C18  7C9C2378             or r28,r4,r4
+  82397C1C  2B030000             cmplwi cr6,r3,0x0
+  82397C20  3BCB6A08             addi r30,r11,0x6a08
+  82397C24  3BAA0F98             addi r29,r10,0xf98
+  82397C28  409A0020             bne cr6,0x82397c48
+  82397C2C  3D608203             lis r11,-0x7dfd
+  82397C30  7FA6EB78             or r6,r29,r29
+  82397C34  38EB21A4             addi r7,r11,0x21a4
+  82397C38  7FC3F378             or r3,r30,r30
+  82397C3C  38A00000             li r5,0x0
+  82397C40  3880015F             li r4,0x15f
+  82397C44  4823C8BD             bl 0x825d4500
+LAB_82397c48:
+  82397C48  817F1EF4             lwz r11,0x1ef4(r31)
+  82397C4C  2F0B0000             cmpwi cr6,r11,0x0
+  82397C50  409A0020             bne cr6,0x82397c70
+  82397C54  3D608204             lis r11,-0x7dfc
+  82397C58  7FA6EB78             or r6,r29,r29
+  82397C5C  38EBB9C8             subi r7,r11,0x4638
+  82397C60  7FC3F378             or r3,r30,r30
+  82397C64  38A00000             li r5,0x0
+  82397C68  38800160             li r4,0x160
+  82397C6C  4823C895             bl 0x825d4500
+LAB_82397c70:
+  82397C70  1D7C0150             mulli r11,r28,0x150
+  82397C74  7D6BFA14             add r11,r11,r31
+  82397C78  894B0058             lbz r10,0x58(r11)
+  82397C7C  2B0A0006             cmplwi cr6,r10,0x6
+  82397C80  409A0010             bne cr6,0x82397c90
+  82397C84  38600001             li r3,0x1
+  82397C88  38210080             addi r1,r1,0x80
+  82397C8C  4857EA7C             b 0x82916708
+LAB_82397c90:
+  82397C90  7F84E378             or r4,r28,r28
+  82397C94  7FE3FB78             or r3,r31,r31
+  82397C98  4BFD69B1             bl 0x8236e648
+  82397C9C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397CA0  7D6A0034             cntlzw r10,r11
+  82397CA4  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
+  82397CA8  38210080             addi r1,r1,0x80
+  82397CAC  4857EA5C             b 0x82916708
 
 ; 82397CB0  PartyUI_IsMemberSlotAway  (client_mp/partyui.cpp:365)
   82397CB0  7D8802A6             mfspr r12,LR
   82397CB4  4857EA05             bl 0x829166b8
+  82397CB8  9421FF80             stwu r1,-0x80(r1)
+  82397CBC  7C7F1B78             or r31,r3,r3
+  82397CC0  7C832378             or r3,r4,r4
+  82397CC4  7C9E2378             or r30,r4,r4
+  82397CC8  7CBD2B78             or r29,r5,r5
+  82397CCC  482AEEB5             bl 0x82646b80
+  82397CD0  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397CD4  2B0B0000             cmplwi cr6,r11,0x0
+  82397CD8  419A0054             beq cr6,0x82397d2c
+  82397CDC  7FA4EB78             or r4,r29,r29
+  82397CE0  7FE3FB78             or r3,r31,r31
+  82397CE4  4BFFF91D             bl 0x82397600
+  82397CE8  7C7C1B78             or r28,r3,r3
+  82397CEC  7FC3F378             or r3,r30,r30
+  82397CF0  482AEF59             bl 0x82646c48
+  82397CF4  7C641B78             or r4,r3,r3
+  82397CF8  7F85E378             or r5,r28,r28
+  82397CFC  7FE3FB78             or r3,r31,r31
+  82397D00  4BFDF791             bl 0x82377490
+  82397D04  2F030000             cmpwi cr6,r3,0x0
+  82397D08  419A0024             beq cr6,0x82397d2c
+  82397D0C  7FA4EB78             or r4,r29,r29
+  82397D10  7FE3FB78             or r3,r31,r31
+  82397D14  4BFFF8ED             bl 0x82397600
+  82397D18  7C641B78             or r4,r3,r3
+  82397D1C  7FE3FB78             or r3,r31,r31
+  82397D20  4BFFFEE1             bl 0x82397c00
+  82397D24  38210080             addi r1,r1,0x80
+  82397D28  4857E9E0             b 0x82916708
+LAB_82397d2c:
+  82397D2C  38600000             li r3,0x0
+  82397D30  38210080             addi r1,r1,0x80
+  82397D34  4857E9D4             b 0x82916708
 
 ; 82397D38  PartyUI_IsMemberXuidAway  (client_mp/partyui.cpp:378)
   82397D38  7D8802A6             mfspr r12,LR
@@ -168,13 +704,142 @@ LAB_82397d6c:
   82397D94  EBE1FFF0             ld r31,-0x10(r1)
   82397D98  4E800020             blr
 
+; 82397DA0  PartyUI_GetMemberName  (client_mp/partyui.cpp:393)
+  82397DA0  7D8802A6             mfspr r12,LR
+  82397DA4  4857E915             bl 0x829166b8
+  82397DA8  9421FF80             stwu r1,-0x80(r1)
+  82397DAC  7C7F1B78             or r31,r3,r3
+  82397DB0  7C832378             or r3,r4,r4
+  82397DB4  7C9E2378             or r30,r4,r4
+  82397DB8  7CBD2B78             or r29,r5,r5
+  82397DBC  482AEDC5             bl 0x82646b80
+  82397DC0  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397DC4  2B0B0000             cmplwi cr6,r11,0x0
+  82397DC8  419A004C             beq cr6,0x82397e14
+  82397DCC  7FA4EB78             or r4,r29,r29
+  82397DD0  7FE3FB78             or r3,r31,r31
+  82397DD4  4BFFF82D             bl 0x82397600
+  82397DD8  7C7C1B78             or r28,r3,r3
+  82397DDC  7FC3F378             or r3,r30,r30
+  82397DE0  482AEE69             bl 0x82646c48
+  82397DE4  7C641B78             or r4,r3,r3
+  82397DE8  7F85E378             or r5,r28,r28
+  82397DEC  7FE3FB78             or r3,r31,r31
+  82397DF0  4BFDF6A1             bl 0x82377490
+  82397DF4  2F030000             cmpwi cr6,r3,0x0
+  82397DF8  419A001C             beq cr6,0x82397e14
+  82397DFC  7FA4EB78             or r4,r29,r29
+  82397E00  7FE3FB78             or r3,r31,r31
+  82397E04  4BFFF96D             bl 0x82397770
+  82397E08  4BFFFA41             bl 0x82397848
+  82397E0C  38210080             addi r1,r1,0x80
+  82397E10  4857E8F8             b 0x82916708
+LAB_82397e14:
+  82397E14  3D608205             lis r11,-0x7dfb
+  82397E18  386B6AEC             addi r3,r11,0x6aec
+  82397E1C  4821412D             bl 0x825abf48
+  82397E20  38210080             addi r1,r1,0x80
+  82397E24  4857E8E4             b 0x82916708
+
 ; 82397E28  PartyUI_GetLocalClientName  (client_mp/partyui.cpp:409)
   82397E28  7D8802A6             mfspr r12,LR
   82397E2C  4857E885             bl 0x829166b0
+  82397E30  9421FF70             stwu r1,-0x90(r1)
+  82397E34  7C9F2378             or r31,r4,r4
+  82397E38  7CBD2B78             or r29,r5,r5
+  82397E3C  4800336D             bl 0x8239b1a8
+  82397E40  7C7A1B78             or r26,r3,r3
+  82397E44  4BFC486D             bl 0x8235c6b0
+  82397E48  7C7E1B78             or r30,r3,r3
+  82397E4C  7F43D378             or r3,r26,r26
+  82397E50  4BFC7AF9             bl 0x8235f948
+  82397E54  7C7B1B78             or r27,r3,r3
+  82397E58  7F43D378             or r3,r26,r26
+  82397E5C  4BFC7C6D             bl 0x8235fac8
+  82397E60  7C7C1B78             or r28,r3,r3
+  82397E64  7F43D378             or r3,r26,r26
+  82397E68  48004B09             bl 0x8239c970
+  82397E6C  897E0000             lbz r11,0x0(r30)
+  82397E70  7C671B78             or r7,r3,r3
+  82397E74  2B0B0000             cmplwi cr6,r11,0x0
+  82397E78  419A0034             beq cr6,0x82397eac
+  82397E7C  576B063E             rlwinm r11,r27,0x0,0x18,0x1f
+  82397E80  2B0B0000             cmplwi cr6,r11,0x0
+  82397E84  409A0028             bne cr6,0x82397eac
+  82397E88  3D608202             lis r11,-0x7dfe
+  82397E8C  7FC6F378             or r6,r30,r30
+  82397E90  38AB23E0             addi r5,r11,0x23e0
+  82397E94  7FA4EB78             or r4,r29,r29
+  82397E98  7FE3FB78             or r3,r31,r31
+  82397E9C  48274645             bl 0x8260c4e0
+  82397EA0  7FE3FB78             or r3,r31,r31
+  82397EA4  38210090             addi r1,r1,0x90
+  82397EA8  4857E858             b 0x82916700
+LAB_82397eac:
+  82397EAC  897C0000             lbz r11,0x0(r28)
+  82397EB0  2B0B0000             cmplwi cr6,r11,0x0
+  82397EB4  419A0034             beq cr6,0x82397ee8
+  82397EB8  576B063E             rlwinm r11,r27,0x0,0x18,0x1f
+  82397EBC  2B0B0001             cmplwi cr6,r11,0x1
+  82397EC0  409A0028             bne cr6,0x82397ee8
+  82397EC4  3D608202             lis r11,-0x7dfe
+  82397EC8  7F86E378             or r6,r28,r28
+  82397ECC  38AB23E8             addi r5,r11,0x23e8
+  82397ED0  7FA4EB78             or r4,r29,r29
+  82397ED4  7FE3FB78             or r3,r31,r31
+  82397ED8  48274609             bl 0x8260c4e0
+  82397EDC  7FE3FB78             or r3,r31,r31
+  82397EE0  38210090             addi r1,r1,0x90
+  82397EE4  4857E81C             b 0x82916700
+LAB_82397ee8:
+  82397EE8  7CE33B78             or r3,r7,r7
+  82397EEC  38210090             addi r1,r1,0x90
+  82397EF0  4857E810             b 0x82916700
 
 ; 82397EF8  PartyUI_GetMemberStat  (client_mp/partyui.cpp:453)
   82397EF8  7D8802A6             mfspr r12,LR
   82397EFC  4857E7B9             bl 0x829166b4
+  82397F00  9421FF80             stwu r1,-0x80(r1)
+  82397F04  7C7F1B78             or r31,r3,r3
+  82397F08  7C832378             or r3,r4,r4
+  82397F0C  7C9E2378             or r30,r4,r4
+  82397F10  7CBD2B78             or r29,r5,r5
+  82397F14  7CDC3378             or r28,r6,r6
+  82397F18  482AEC69             bl 0x82646b80
+  82397F1C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82397F20  2B0B0000             cmplwi cr6,r11,0x0
+  82397F24  419A0050             beq cr6,0x82397f74
+  82397F28  7FA4EB78             or r4,r29,r29
+  82397F2C  7FE3FB78             or r3,r31,r31
+  82397F30  4BFFF6D1             bl 0x82397600
+  82397F34  7C7B1B78             or r27,r3,r3
+  82397F38  7FC3F378             or r3,r30,r30
+  82397F3C  482AED0D             bl 0x82646c48
+  82397F40  7C641B78             or r4,r3,r3
+  82397F44  7F65DB78             or r5,r27,r27
+  82397F48  7FE3FB78             or r3,r31,r31
+  82397F4C  4BFDF545             bl 0x82377490
+  82397F50  2F030000             cmpwi cr6,r3,0x0
+  82397F54  419A0020             beq cr6,0x82397f74
+  82397F58  7FA4EB78             or r4,r29,r29
+  82397F5C  7FE3FB78             or r3,r31,r31
+  82397F60  4BFFF811             bl 0x82397770
+  82397F64  7F84E378             or r4,r28,r28
+  82397F68  4BFFF9F9             bl 0x82397960
+  82397F6C  38210080             addi r1,r1,0x80
+  82397F70  4857E794             b 0x82916704
+LAB_82397f74:
+  82397F74  2F1C0001             cmpwi cr6,r28,0x1
+  82397F78  419A0014             beq cr6,0x82397f8c
+  82397F7C  3D608203             lis r11,-0x7dfd
+  82397F80  386B248C             addi r3,r11,0x248c
+  82397F84  38210080             addi r1,r1,0x80
+  82397F88  4857E77C             b 0x82916704
+LAB_82397f8c:
+  82397F8C  3D608202             lis r11,-0x7dfe
+  82397F90  386B080C             addi r3,r11,0x80c
+  82397F94  38210080             addi r1,r1,0x80
+  82397F98  4857E76C             b 0x82916704
 
 ; 82397FA0  PartyUI_GetMemberSkill  (client_mp/partyui.cpp:472)
   82397FA0  7D8802A6             mfspr r12,LR
@@ -214,26 +879,344 @@ LAB_82397ffc:
 ; 82398020  PartyUI_IsMemberTalking  (client_mp/partyui.cpp:491)
   82398020  7D8802A6             mfspr r12,LR
   82398024  4857E695             bl 0x829166b8
+  82398028  9421FF80             stwu r1,-0x80(r1)
+  8239802C  7C7F1B78             or r31,r3,r3
+  82398030  7C832378             or r3,r4,r4
+  82398034  7C9E2378             or r30,r4,r4
+  82398038  7CBD2B78             or r29,r5,r5
+  8239803C  482AEB45             bl 0x82646b80
+  82398040  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82398044  2B0B0000             cmplwi cr6,r11,0x0
+  82398048  419A0054             beq cr6,0x8239809c
+  8239804C  7FA4EB78             or r4,r29,r29
+  82398050  7FE3FB78             or r3,r31,r31
+  82398054  4BFFF5AD             bl 0x82397600
+  82398058  7C7C1B78             or r28,r3,r3
+  8239805C  7FC3F378             or r3,r30,r30
+  82398060  482AEBE9             bl 0x82646c48
+  82398064  7C641B78             or r4,r3,r3
+  82398068  7F85E378             or r5,r28,r28
+  8239806C  7FE3FB78             or r3,r31,r31
+  82398070  4BFDF421             bl 0x82377490
+  82398074  2F030000             cmpwi cr6,r3,0x0
+  82398078  419A0024             beq cr6,0x8239809c
+  8239807C  7FA4EB78             or r4,r29,r29
+  82398080  7FE3FB78             or r3,r31,r31
+  82398084  4BFFF57D             bl 0x82397600
+  82398088  7C641B78             or r4,r3,r3
+  8239808C  807F0000             lwz r3,0x0(r31)
+  82398090  4BFC0529             bl 0x823585b8
+  82398094  38210080             addi r1,r1,0x80
+  82398098  4857E670             b 0x82916708
+LAB_8239809c:
+  8239809C  38600000             li r3,0x0
+  823980A0  38210080             addi r1,r1,0x80
+  823980A4  4857E664             b 0x82916708
 
 ; 823980A8  PartyUI_IsMemberMuted  (client_mp/partyui.cpp:504)
   823980A8  7D8802A6             mfspr r12,LR
   823980AC  4857E60D             bl 0x829166b8
+  823980B0  9421FF80             stwu r1,-0x80(r1)
+  823980B4  7C7F1B78             or r31,r3,r3
+  823980B8  7C832378             or r3,r4,r4
+  823980BC  7C9E2378             or r30,r4,r4
+  823980C0  7CBD2B78             or r29,r5,r5
+  823980C4  482AEABD             bl 0x82646b80
+  823980C8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  823980CC  2B0B0000             cmplwi cr6,r11,0x0
+  823980D0  419A0054             beq cr6,0x82398124
+  823980D4  7FA4EB78             or r4,r29,r29
+  823980D8  7FE3FB78             or r3,r31,r31
+  823980DC  4BFFF525             bl 0x82397600
+  823980E0  7C7C1B78             or r28,r3,r3
+  823980E4  7FC3F378             or r3,r30,r30
+  823980E8  482AEB61             bl 0x82646c48
+  823980EC  7C641B78             or r4,r3,r3
+  823980F0  7F85E378             or r5,r28,r28
+  823980F4  7FE3FB78             or r3,r31,r31
+  823980F8  4BFDF399             bl 0x82377490
+  823980FC  2F030000             cmpwi cr6,r3,0x0
+  82398100  419A0024             beq cr6,0x82398124
+  82398104  7FA4EB78             or r4,r29,r29
+  82398108  7FE3FB78             or r3,r31,r31
+  8239810C  4BFFF4F5             bl 0x82397600
+  82398110  7C641B78             or r4,r3,r3
+  82398114  807F0000             lwz r3,0x0(r31)
+  82398118  4BFC0749             bl 0x82358860
+  8239811C  38210080             addi r1,r1,0x80
+  82398120  4857E5E8             b 0x82916708
+LAB_82398124:
+  82398124  38600000             li r3,0x0
+  82398128  38210080             addi r1,r1,0x80
+  8239812C  4857E5DC             b 0x82916708
 
 ; 82398130  PartyUI_MemberHasHeadset  (client_mp/partyui.cpp:517)
   82398130  7D8802A6             mfspr r12,LR
   82398134  4857E585             bl 0x829166b8
+  82398138  9421FF80             stwu r1,-0x80(r1)
+  8239813C  7C7F1B78             or r31,r3,r3
+  82398140  7C832378             or r3,r4,r4
+  82398144  7C9E2378             or r30,r4,r4
+  82398148  7CBD2B78             or r29,r5,r5
+  8239814C  482AEA35             bl 0x82646b80
+  82398150  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82398154  2B0B0000             cmplwi cr6,r11,0x0
+  82398158  419A007C             beq cr6,0x823981d4
+  8239815C  7FA4EB78             or r4,r29,r29
+  82398160  7FE3FB78             or r3,r31,r31
+  82398164  4BFFF49D             bl 0x82397600
+  82398168  7C7C1B78             or r28,r3,r3
+  8239816C  7FC3F378             or r3,r30,r30
+  82398170  482AEAD9             bl 0x82646c48
+  82398174  7C641B78             or r4,r3,r3
+  82398178  7F85E378             or r5,r28,r28
+  8239817C  7FE3FB78             or r3,r31,r31
+  82398180  4BFDF311             bl 0x82377490
+  82398184  2F030000             cmpwi cr6,r3,0x0
+  82398188  419A004C             beq cr6,0x823981d4
+  8239818C  7FA4EB78             or r4,r29,r29
+  82398190  7FE3FB78             or r3,r31,r31
+  82398194  4BFFF5DD             bl 0x82397770
+  82398198  7C7F1B78             or r31,r3,r3
+  8239819C  2B030000             cmplwi cr6,r3,0x0
+  823981A0  409A0028             bne cr6,0x823981c8
+  823981A4  3D608202             lis r11,-0x7dfe
+  823981A8  3D408200             lis r10,-0x7e00
+  823981AC  3D208205             lis r9,-0x7dfb
+  823981B0  38EB3010             addi r7,r11,0x3010
+  823981B4  38CA0F98             addi r6,r10,0xf98
+  823981B8  38696A08             addi r3,r9,0x6a08
+  823981BC  38A00001             li r5,0x1
+  823981C0  3880020B             li r4,0x20b
+  823981C4  4823C33D             bl 0x825d4500
+LAB_823981c8:
+  823981C8  887F0051             lbz r3,0x51(r31)
+  823981CC  38210080             addi r1,r1,0x80
+  823981D0  4857E538             b 0x82916708
+LAB_823981d4:
+  823981D4  38600000             li r3,0x0
+  823981D8  38210080             addi r1,r1,0x80
+  823981DC  4857E52C             b 0x82916708
 
 ; 823981E0  PartyUI_MemberRankIcon  (client_mp/partyui.cpp:547)
   823981E0  7D8802A6             mfspr r12,LR
   823981E4  4857E4D1             bl 0x829166b4
+  823981E8  9421FF80             stwu r1,-0x80(r1)
+  823981EC  7C7F1B78             or r31,r3,r3
+  823981F0  7C832378             or r3,r4,r4
+  823981F4  7C9E2378             or r30,r4,r4
+  823981F8  7CBD2B78             or r29,r5,r5
+  823981FC  7CDC3378             or r28,r6,r6
+  82398200  482AE981             bl 0x82646b80
+  82398204  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82398208  2B0B0000             cmplwi cr6,r11,0x0
+  8239820C  419A0050             beq cr6,0x8239825c
+  82398210  7FA4EB78             or r4,r29,r29
+  82398214  7FE3FB78             or r3,r31,r31
+  82398218  4BFFF3E9             bl 0x82397600
+  8239821C  7C7B1B78             or r27,r3,r3
+  82398220  7FC3F378             or r3,r30,r30
+  82398224  482AEA25             bl 0x82646c48
+  82398228  7C641B78             or r4,r3,r3
+  8239822C  7F65DB78             or r5,r27,r27
+  82398230  7FE3FB78             or r3,r31,r31
+  82398234  4BFDF25D             bl 0x82377490
+  82398238  2F030000             cmpwi cr6,r3,0x0
+  8239823C  419A0020             beq cr6,0x8239825c
+  82398240  7FA4EB78             or r4,r29,r29
+  82398244  7FE3FB78             or r3,r31,r31
+  82398248  4BFFF529             bl 0x82397770
+  8239824C  7F84E378             or r4,r28,r28
+  82398250  4BFFF891             bl 0x82397ae0
+  82398254  38210080             addi r1,r1,0x80
+  82398258  4857E4AC             b 0x82916704
+LAB_8239825c:
+  8239825C  39600000             li r11,0x0
+  82398260  917C0000             stw r11,0x0(r28)
+  82398264  38210080             addi r1,r1,0x80
+  82398268  4857E49C             b 0x82916704
 
 ; 82398270  PartyUI_MemberRank  (client_mp/partyui.cpp:556)
   82398270  7D8802A6             mfspr r12,LR
   82398274  4857E445             bl 0x829166b8
+  82398278  9421FF80             stwu r1,-0x80(r1)
+  8239827C  7C7F1B78             or r31,r3,r3
+  82398280  7C832378             or r3,r4,r4
+  82398284  7C9E2378             or r30,r4,r4
+  82398288  7CBD2B78             or r29,r5,r5
+  8239828C  482AE8F5             bl 0x82646b80
+  82398290  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82398294  2B0B0000             cmplwi cr6,r11,0x0
+  82398298  419A0054             beq cr6,0x823982ec
+  8239829C  7FA4EB78             or r4,r29,r29
+  823982A0  7FE3FB78             or r3,r31,r31
+  823982A4  4BFFF35D             bl 0x82397600
+  823982A8  7C7C1B78             or r28,r3,r3
+  823982AC  7FC3F378             or r3,r30,r30
+  823982B0  482AE999             bl 0x82646c48
+  823982B4  7C641B78             or r4,r3,r3
+  823982B8  7F85E378             or r5,r28,r28
+  823982BC  7FE3FB78             or r3,r31,r31
+  823982C0  4BFDF1D1             bl 0x82377490
+  823982C4  2F030000             cmpwi cr6,r3,0x0
+  823982C8  419A0024             beq cr6,0x823982ec
+  823982CC  7FA4EB78             or r4,r29,r29
+  823982D0  7FE3FB78             or r3,r31,r31
+  823982D4  4BFFF49D             bl 0x82397770
+  823982D8  3880000E             li r4,0xe
+  823982DC  8063000C             lwz r3,0xc(r3)
+  823982E0  4BFBA891             bl 0x82352b70
+  823982E4  38210080             addi r1,r1,0x80
+  823982E8  4857E420             b 0x82916708
+LAB_823982ec:
+  823982EC  3D608200             lis r11,-0x7e00
+  823982F0  386B68AF             addi r3,r11,0x68af
+  823982F4  38210080             addi r1,r1,0x80
+  823982F8  4857E410             b 0x82916708
+
+; 82398300  PartyUI_GetLocalClientRank  (client_mp/partyui.cpp:571)
+  82398300  7D8802A6             mfspr r12,LR
+  82398304  4857E3B5             bl 0x829166b8
+  82398308  9421FF80             stwu r1,-0x80(r1)
+  8239830C  7C9C2378             or r28,r4,r4
+  82398310  7CBD2B78             or r29,r5,r5
+  82398314  48002E95             bl 0x8239b1a8
+  82398318  7C7F1B78             or r31,r3,r3
+  8239831C  48152685             bl 0x824ea9a0
+  82398320  7C7E1B78             or r30,r3,r3
+  82398324  2F1C0000             cmpwi cr6,r28,0x0
+  82398328  409A002C             bne cr6,0x82398354
+  8239832C  7FE3FB78             or r3,r31,r31
+  82398330  481526A1             bl 0x824ea9d0
+  82398334  7C641B78             or r4,r3,r3
+  82398338  7FA5EB78             or r5,r29,r29
+  8239833C  7FC3F378             or r3,r30,r30
+  82398340  4BFBA851             bl 0x82352b90
+  82398344  3D608200             lis r11,-0x7e00
+  82398348  386B68AF             addi r3,r11,0x68af
+  8239834C  38210080             addi r1,r1,0x80
+  82398350  4857E3B8             b 0x82916708
+LAB_82398354:
+  82398354  3880000E             li r4,0xe
+  82398358  7FC3F378             or r3,r30,r30
+  8239835C  4BFBA815             bl 0x82352b70
+  82398360  38210080             addi r1,r1,0x80
+  82398364  4857E3A4             b 0x82916708
 
 ; 82398368  PartyUI_GetTeamMemberIndex  (client_mp/partyui.cpp:588)
   82398368  7D8802A6             mfspr r12,LR
   8239836C  4857E349             bl 0x829166b4
+  82398370  9421FF80             stwu r1,-0x80(r1)
+  82398374  3D608205             lis r11,-0x7dfb
+  82398378  7C7F1B78             or r31,r3,r3
+  8239837C  7C9D2378             or r29,r4,r4
+  82398380  7CBE2B78             or r30,r5,r5
+  82398384  2B050012             cmplwi cr6,r5,0x12
+  82398388  3B8B6A08             addi r28,r11,0x6a08
+  8239838C  41980024             blt cr6,0x823983b0
+  82398390  3D608204             lis r11,-0x7dfc
+  82398394  7CA72B78             or r7,r5,r5
+  82398398  7F83E378             or r3,r28,r28
+  8239839C  38CBBA1C             subi r6,r11,0x45e4
+  823983A0  39000012             li r8,0x12
+  823983A4  38A00000             li r5,0x0
+  823983A8  38800251             li r4,0x251
+  823983AC  4823C155             bl 0x825d4500
+LAB_823983b0:
+  823983B0  7FE3FB78             or r3,r31,r31
+  823983B4  4BFD66BD             bl 0x8236ea70
+  823983B8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  823983BC  2B0B0000             cmplwi cr6,r11,0x0
+  823983C0  409A002C             bne cr6,0x823983ec
+  823983C4  3D608205             lis r11,-0x7dfb
+  823983C8  3D408204             lis r10,-0x7dfc
+  823983CC  3D208200             lis r9,-0x7e00
+  823983D0  390B6A54             addi r8,r11,0x6a54
+  823983D4  38EAD624             subi r7,r10,0x29dc
+  823983D8  38C911F4             addi r6,r9,0x11f4
+  823983DC  7F83E378             or r3,r28,r28
+  823983E0  38A00000             li r5,0x0
+  823983E4  38800253             li r4,0x253
+  823983E8  4823C119             bl 0x825d4500
+LAB_823983ec:
+  823983EC  3D6082B6             lis r11,-0x7d4a
+  823983F0  38A00012             li r5,0x12
+  823983F4  3B6BC268             subi r27,r11,0x3d98
+  823983F8  7FE3FB78             or r3,r31,r31
+  823983FC  7F64DB78             or r4,r27,r27
+  82398400  4BFFF0B1             bl 0x823974b0
+  82398404  7F6ADB78             or r10,r27,r27
+  82398408  39200000             li r9,0x0
+  8239840C  39000000             li r8,0x0
+LAB_82398410:
+  82398410  7F09F040             cmplw cr6,r9,r30
+  82398414  41990044             bgt cr6,0x82398458
+  82398418  806A0000             lwz r3,0x0(r10)
+  8239841C  1D630150             mulli r11,r3,0x150
+  82398420  7D6BFA14             add r11,r11,r31
+  82398424  80EB0168             lwz r7,0x168(r11)
+  82398428  7F07E800             cmpw cr6,r7,r29
+  8239842C  409A001C             bne cr6,0x82398448
+  82398430  896B0058             lbz r11,0x58(r11)
+  82398434  2B0B0005             cmplwi cr6,r11,0x5
+  82398438  41980010             blt cr6,0x82398448
+  8239843C  7F1E4840             cmplw cr6,r30,r9
+  82398440  419A0044             beq cr6,0x82398484
+  82398444  39290001             addi r9,r9,0x1
+LAB_82398448:
+  82398448  39080004             addi r8,r8,0x4
+  8239844C  394A0004             addi r10,r10,0x4
+  82398450  2B080048             cmplwi cr6,r8,0x48
+  82398454  4198FFBC             blt cr6,0x82398410
+LAB_82398458:
+  82398458  3D608401             lis r11,-0x7bff
+  8239845C  816B3128             lwz r11,0x3128(r11)
+  82398460  2F0B0000             cmpwi cr6,r11,0x0
+  82398464  409A001C             bne cr6,0x82398480
+  82398468  3D608205             lis r11,-0x7dfb
+  8239846C  7F83E378             or r3,r28,r28
+  82398470  38CB6B00             addi r6,r11,0x6b00
+  82398474  38A00000             li r5,0x0
+  82398478  38800267             li r4,0x267
+  8239847C  4823C085             bl 0x825d4500
+LAB_82398480:
+  82398480  38600000             li r3,0x0
+LAB_82398484:
+  82398484  38210080             addi r1,r1,0x80
+  82398488  4857E27C             b 0x82916704
+
+; 82398490  PartyUI_GetTeamMember  (client_mp/partyui.cpp:621)
+  82398490  7D8802A6             mfspr r12,LR
+  82398494  9181FFF8             stw r12,-0x8(r1)
+  82398498  FBC1FFE8             std r30,-0x18(r1)
+  8239849C  FBE1FFF0             std r31,-0x10(r1)
+  823984A0  9421FF90             stwu r1,-0x70(r1)
+  823984A4  7CA42B78             or r4,r5,r5
+  823984A8  7CC53378             or r5,r6,r6
+  823984AC  7C7E1B78             or r30,r3,r3
+  823984B0  4BFFFEB9             bl 0x82398368
+  823984B4  7C7F1B78             or r31,r3,r3
+  823984B8  2B030012             cmplwi cr6,r3,0x12
+  823984BC  41980028             blt cr6,0x823984e4
+  823984C0  3D608204             lis r11,-0x7dfc
+  823984C4  3D408205             lis r10,-0x7dfb
+  823984C8  38CBB1AC             subi r6,r11,0x4e54
+  823984CC  386A6A08             addi r3,r10,0x6a08
+  823984D0  39000012             li r8,0x12
+  823984D4  7FE7FB78             or r7,r31,r31
+  823984D8  38A00001             li r5,0x1
+  823984DC  38800271             li r4,0x271
+  823984E0  4823C021             bl 0x825d4500
+LAB_823984e4:
+  823984E4  1D7F0150             mulli r11,r31,0x150
+  823984E8  7D6BF214             add r11,r11,r30
+  823984EC  386B0058             addi r3,r11,0x58
+  823984F0  38210070             addi r1,r1,0x70
+  823984F4  8181FFF8             lwz r12,-0x8(r1)
+  823984F8  7D8803A6             mtspr LR,r12
+  823984FC  EBC1FFE8             ld r30,-0x18(r1)
+  82398500  EBE1FFF0             ld r31,-0x10(r1)
+  82398504  4E800020             blr
 
 ; 82398508  PartyUI_GetTeam  (client_mp/partyui.cpp:631)
   82398508  7D8802A6             mfspr r12,LR
@@ -251,6 +1234,161 @@ LAB_82397ffc:
   82398538  7D8803A6             mtspr LR,r12
   8239853C  EBE1FFF0             ld r31,-0x10(r1)
   82398540  4E800020             blr
+
+; 82398548  PartyUI_GetTeamMemberName  (client_mp/partyui.cpp:640)
+  82398548  7D8802A6             mfspr r12,LR
+  8239854C  9181FFF8             stw r12,-0x8(r1)
+  82398550  FBC1FFE8             std r30,-0x18(r1)
+  82398554  FBE1FFF0             std r31,-0x10(r1)
+  82398558  9421FF90             stwu r1,-0x70(r1)
+  8239855C  7CA42B78             or r4,r5,r5
+  82398560  7CC53378             or r5,r6,r6
+  82398564  7C7E1B78             or r30,r3,r3
+  82398568  4BFFFE01             bl 0x82398368
+  8239856C  7C7F1B78             or r31,r3,r3
+  82398570  2B030012             cmplwi cr6,r3,0x12
+  82398574  41980028             blt cr6,0x8239859c
+  82398578  3D608204             lis r11,-0x7dfc
+  8239857C  3D408205             lis r10,-0x7dfb
+  82398580  38CBB1AC             subi r6,r11,0x4e54
+  82398584  386A6A08             addi r3,r10,0x6a08
+  82398588  39000012             li r8,0x12
+  8239858C  7FE7FB78             or r7,r31,r31
+  82398590  38A00001             li r5,0x1
+  82398594  38800271             li r4,0x271
+  82398598  4823BF69             bl 0x825d4500
+LAB_8239859c:
+  8239859C  1D7F0150             mulli r11,r31,0x150
+  823985A0  7D6BF214             add r11,r11,r30
+  823985A4  386B0058             addi r3,r11,0x58
+  823985A8  4BFFF2A1             bl 0x82397848
+  823985AC  38210070             addi r1,r1,0x70
+  823985B0  8181FFF8             lwz r12,-0x8(r1)
+  823985B4  7D8803A6             mtspr LR,r12
+  823985B8  EBC1FFE8             ld r30,-0x18(r1)
+  823985BC  EBE1FFF0             ld r31,-0x10(r1)
+  823985C0  4E800020             blr
+
+; 823985C8  PartyUI_GetTeamMemberStat  (client_mp/partyui.cpp:649)
+  823985C8  7D8802A6             mfspr r12,LR
+  823985CC  4857E0F1             bl 0x829166bc
+  823985D0  9421FF90             stwu r1,-0x70(r1)
+  823985D4  7CA42B78             or r4,r5,r5
+  823985D8  7CC53378             or r5,r6,r6
+  823985DC  7C7E1B78             or r30,r3,r3
+  823985E0  7CFD3B78             or r29,r7,r7
+  823985E4  4BFFFD85             bl 0x82398368
+  823985E8  7C7F1B78             or r31,r3,r3
+  823985EC  2B030012             cmplwi cr6,r3,0x12
+  823985F0  41980028             blt cr6,0x82398618
+  823985F4  3D608204             lis r11,-0x7dfc
+  823985F8  3D408205             lis r10,-0x7dfb
+  823985FC  38CBB1AC             subi r6,r11,0x4e54
+  82398600  386A6A08             addi r3,r10,0x6a08
+  82398604  39000012             li r8,0x12
+  82398608  7FE7FB78             or r7,r31,r31
+  8239860C  38A00001             li r5,0x1
+  82398610  38800271             li r4,0x271
+  82398614  4823BEED             bl 0x825d4500
+LAB_82398618:
+  82398618  1D7F0150             mulli r11,r31,0x150
+  8239861C  7D6BF214             add r11,r11,r30
+  82398620  7FA4EB78             or r4,r29,r29
+  82398624  386B0058             addi r3,r11,0x58
+  82398628  4BFFF339             bl 0x82397960
+  8239862C  38210070             addi r1,r1,0x70
+  82398630  4857E0DC             b 0x8291670c
+
+; 82398638  PartyUI_GetTeamMemberSkill  (client_mp/partyui.cpp:657)
+  82398638  7D8802A6             mfspr r12,LR
+  8239863C  9181FFF8             stw r12,-0x8(r1)
+  82398640  FBC1FFE8             std r30,-0x18(r1)
+  82398644  FBE1FFF0             std r31,-0x10(r1)
+  82398648  9421FF90             stwu r1,-0x70(r1)
+  8239864C  7CA42B78             or r4,r5,r5
+  82398650  7CC53378             or r5,r6,r6
+  82398654  7C7E1B78             or r30,r3,r3
+  82398658  4BFFFD11             bl 0x82398368
+  8239865C  7C7F1B78             or r31,r3,r3
+  82398660  2B030012             cmplwi cr6,r3,0x12
+  82398664  41980028             blt cr6,0x8239868c
+  82398668  3D608204             lis r11,-0x7dfc
+  8239866C  3D408205             lis r10,-0x7dfb
+  82398670  38CBB1AC             subi r6,r11,0x4e54
+  82398674  386A6A08             addi r3,r10,0x6a08
+  82398678  39000012             li r8,0x12
+  8239867C  7FE7FB78             or r7,r31,r31
+  82398680  38A00001             li r5,0x1
+  82398684  38800271             li r4,0x271
+  82398688  4823BE79             bl 0x825d4500
+LAB_8239868c:
+  8239868C  1D7F0150             mulli r11,r31,0x150
+  82398690  7D6BF214             add r11,r11,r30
+  82398694  3D408201             lis r10,-0x7dff
+  82398698  386AC28C             subi r3,r10,0x3d74
+  8239869C  808B0160             lwz r4,0x160(r11)
+  823986A0  48273FD9             bl 0x8260c678
+  823986A4  38210070             addi r1,r1,0x70
+  823986A8  8181FFF8             lwz r12,-0x8(r1)
+  823986AC  7D8803A6             mtspr LR,r12
+  823986B0  EBC1FFE8             ld r30,-0x18(r1)
+  823986B4  EBE1FFF0             ld r31,-0x10(r1)
+  823986B8  4E800020             blr
+
+; 823986C0  PartyUI_GetTeamMemberXuid  (client_mp/partyui.cpp:665)
+  823986C0  7D8802A6             mfspr r12,LR
+  823986C4  9181FFF8             stw r12,-0x8(r1)
+  823986C8  FBC1FFE8             std r30,-0x18(r1)
+  823986CC  FBE1FFF0             std r31,-0x10(r1)
+  823986D0  9421FF90             stwu r1,-0x70(r1)
+  823986D4  7CA42B78             or r4,r5,r5
+  823986D8  7CC53378             or r5,r6,r6
+  823986DC  7C7E1B78             or r30,r3,r3
+  823986E0  4BFFFC89             bl 0x82398368
+  823986E4  7C7F1B78             or r31,r3,r3
+  823986E8  2B030012             cmplwi cr6,r3,0x12
+  823986EC  41980028             blt cr6,0x82398714
+  823986F0  3D608204             lis r11,-0x7dfc
+  823986F4  3D408205             lis r10,-0x7dfb
+  823986F8  38CBB1AC             subi r6,r11,0x4e54
+  823986FC  386A6A08             addi r3,r10,0x6a08
+  82398700  39000012             li r8,0x12
+  82398704  7FE7FB78             or r7,r31,r31
+  82398708  38A00001             li r5,0x1
+  8239870C  38800271             li r4,0x271
+  82398710  4823BDF1             bl 0x825d4500
+LAB_82398714:
+  82398714  1D7F0150             mulli r11,r31,0x150
+  82398718  7D6BF214             add r11,r11,r30
+  8239871C  38600000             li r3,0x0
+  82398720  356B0058             addic. r11,r11,0x58
+  82398724  41820008             beq 0x8239872c
+  82398728  E86B0128             ld r3,0x128(r11)
+LAB_8239872c:
+  8239872C  38210070             addi r1,r1,0x70
+  82398730  8181FFF8             lwz r12,-0x8(r1)
+  82398734  7D8803A6             mtspr LR,r12
+  82398738  EBC1FFE8             ld r30,-0x18(r1)
+  8239873C  EBE1FFF0             ld r31,-0x10(r1)
+  82398740  4E800020             blr
+
+; 82398748  PartyUI_IsTeamMemberTalking  (client_mp/partyui.cpp:678)
+  82398748  7D8802A6             mfspr r12,LR
+  8239874C  9181FFF8             stw r12,-0x8(r1)
+  82398750  FBE1FFF0             std r31,-0x10(r1)
+  82398754  9421FFA0             stwu r1,-0x60(r1)
+  82398758  7CA42B78             or r4,r5,r5
+  8239875C  7CC53378             or r5,r6,r6
+  82398760  7C7F1B78             or r31,r3,r3
+  82398764  4BFFFC05             bl 0x82398368
+  82398768  7C641B78             or r4,r3,r3
+  8239876C  807F0000             lwz r3,0x0(r31)
+  82398770  4BFBFE49             bl 0x823585b8
+  82398774  38210060             addi r1,r1,0x60
+  82398778  8181FFF8             lwz r12,-0x8(r1)
+  8239877C  7D8803A6             mtspr LR,r12
+  82398780  EBE1FFF0             ld r31,-0x10(r1)
+  82398784  4E800020             blr
 
 ; 82398788  PartyUI_IsTeamMemberMuted  (client_mp/partyui.cpp:687)
   82398788  7D8802A6             mfspr r12,LR
@@ -273,14 +1411,275 @@ LAB_82397ffc:
 ; 823987C8  PartyUI_TeamMemberHasHeadset  (client_mp/partyui.cpp:696)
   823987C8  7D8802A6             mfspr r12,LR
   823987CC  4857DEF1             bl 0x829166bc
+  823987D0  9421FF90             stwu r1,-0x70(r1)
+  823987D4  7CA42B78             or r4,r5,r5
+  823987D8  7CC53378             or r5,r6,r6
+  823987DC  7C7E1B78             or r30,r3,r3
+  823987E0  4BFFFB89             bl 0x82398368
+  823987E4  3D608205             lis r11,-0x7dfb
+  823987E8  7C7F1B78             or r31,r3,r3
+  823987EC  2B030012             cmplwi cr6,r3,0x12
+  823987F0  3BAB6A08             addi r29,r11,0x6a08
+  823987F4  41980024             blt cr6,0x82398818
+  823987F8  3D608204             lis r11,-0x7dfc
+  823987FC  7FA3EB78             or r3,r29,r29
+  82398800  38CBB1AC             subi r6,r11,0x4e54
+  82398804  39000012             li r8,0x12
+  82398808  7FE7FB78             or r7,r31,r31
+  8239880C  38A00001             li r5,0x1
+  82398810  38800271             li r4,0x271
+  82398814  4823BCED             bl 0x825d4500
+LAB_82398818:
+  82398818  1D7F0150             mulli r11,r31,0x150
+  8239881C  7D6BF214             add r11,r11,r30
+  82398820  37EB0058             addic. r31,r11,0x58
+  82398824  40820024             bne 0x82398848
+  82398828  3D608202             lis r11,-0x7dfe
+  8239882C  3D408200             lis r10,-0x7e00
+  82398830  38EB3010             addi r7,r11,0x3010
+  82398834  38CA0F98             addi r6,r10,0xf98
+  82398838  7FA3EB78             or r3,r29,r29
+  8239883C  38A00001             li r5,0x1
+  82398840  388002BC             li r4,0x2bc
+  82398844  4823BCBD             bl 0x825d4500
+LAB_82398848:
+  82398848  887F0051             lbz r3,0x51(r31)
+  8239884C  38210070             addi r1,r1,0x70
+  82398850  4857DEBC             b 0x8291670c
+
+; 82398858  PartyUI_TeamMemberRankIcon  (client_mp/partyui.cpp:720)
+  82398858  7D8802A6             mfspr r12,LR
+  8239885C  4857DE5D             bl 0x829166b8
+  82398860  9421FF80             stwu r1,-0x80(r1)
+  82398864  7CA42B78             or r4,r5,r5
+  82398868  7CC53378             or r5,r6,r6
+  8239886C  7C7E1B78             or r30,r3,r3
+  82398870  7CFC3B78             or r28,r7,r7
+  82398874  4BFFFAF5             bl 0x82398368
+  82398878  3D608205             lis r11,-0x7dfb
+  8239887C  7C7F1B78             or r31,r3,r3
+  82398880  2B030012             cmplwi cr6,r3,0x12
+  82398884  3BAB6A08             addi r29,r11,0x6a08
+  82398888  41980024             blt cr6,0x823988ac
+  8239888C  3D608204             lis r11,-0x7dfc
+  82398890  7FA3EB78             or r3,r29,r29
+  82398894  38CBB1AC             subi r6,r11,0x4e54
+  82398898  39000012             li r8,0x12
+  8239889C  7FE7FB78             or r7,r31,r31
+  823988A0  38A00001             li r5,0x1
+  823988A4  38800271             li r4,0x271
+  823988A8  4823BC59             bl 0x825d4500
+LAB_823988ac:
+  823988AC  1D7F0150             mulli r11,r31,0x150
+  823988B0  7D6BF214             add r11,r11,r30
+  823988B4  37EB0058             addic. r31,r11,0x58
+  823988B8  40820024             bne 0x823988dc
+  823988BC  3D608202             lis r11,-0x7dfe
+  823988C0  3D408200             lis r10,-0x7e00
+  823988C4  38EB3010             addi r7,r11,0x3010
+  823988C8  38CA0F98             addi r6,r10,0xf98
+  823988CC  7FA3EB78             or r3,r29,r29
+  823988D0  38A00000             li r5,0x0
+  823988D4  38800146             li r4,0x146
+  823988D8  4823BC29             bl 0x825d4500
+LAB_823988dc:
+  823988DC  7F85E378             or r5,r28,r28
+  823988E0  809F0010             lwz r4,0x10(r31)
+  823988E4  807F000C             lwz r3,0xc(r31)
+  823988E8  4BFBA2A9             bl 0x82352b90
+  823988EC  38210080             addi r1,r1,0x80
+  823988F0  4857DE18             b 0x82916708
+
+; 823988F8  PartyUI_TeamMemberRank  (client_mp/partyui.cpp:726)
+  823988F8  7D8802A6             mfspr r12,LR
+  823988FC  9181FFF8             stw r12,-0x8(r1)
+  82398900  FBC1FFE8             std r30,-0x18(r1)
+  82398904  FBE1FFF0             std r31,-0x10(r1)
+  82398908  9421FF90             stwu r1,-0x70(r1)
+  8239890C  7CA42B78             or r4,r5,r5
+  82398910  7CC53378             or r5,r6,r6
+  82398914  7C7E1B78             or r30,r3,r3
+  82398918  4BFFFA51             bl 0x82398368
+  8239891C  7C7F1B78             or r31,r3,r3
+  82398920  2B030012             cmplwi cr6,r3,0x12
+  82398924  41980028             blt cr6,0x8239894c
+  82398928  3D608204             lis r11,-0x7dfc
+  8239892C  3D408205             lis r10,-0x7dfb
+  82398930  38CBB1AC             subi r6,r11,0x4e54
+  82398934  386A6A08             addi r3,r10,0x6a08
+  82398938  39000012             li r8,0x12
+  8239893C  7FE7FB78             or r7,r31,r31
+  82398940  38A00001             li r5,0x1
+  82398944  38800271             li r4,0x271
+  82398948  4823BBB9             bl 0x825d4500
+LAB_8239894c:
+  8239894C  1D7F0150             mulli r11,r31,0x150
+  82398950  7D6BF214             add r11,r11,r30
+  82398954  3880000E             li r4,0xe
+  82398958  806B0064             lwz r3,0x64(r11)
+  8239895C  4BFBA215             bl 0x82352b70
+  82398960  38210070             addi r1,r1,0x70
+  82398964  8181FFF8             lwz r12,-0x8(r1)
+  82398968  7D8803A6             mtspr LR,r12
+  8239896C  EBC1FFE8             ld r30,-0x18(r1)
+  82398970  EBE1FFF0             ld r31,-0x10(r1)
+  82398974  4E800020             blr
 
 ; 82398978  PartyUI_MemberPartyColor  (client_mp/partyui.cpp:733)
   82398978  7D8802A6             mfspr r12,LR
   8239897C  4857DD41             bl 0x829166bc
+  82398980  9421FF90             stwu r1,-0x70(r1)
+  82398984  81631F30             lwz r11,0x1f30(r3)
+  82398988  7C7F1B78             or r31,r3,r3
+  8239898C  7CDE3378             or r30,r6,r6
+  82398990  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  82398994  2B0A0000             cmplwi cr6,r10,0x0
+  82398998  409A0098             bne cr6,0x82398a30
+  8239899C  7CA42B78             or r4,r5,r5
+  823989A0  4BFFEDD1             bl 0x82397770
+  823989A4  80E3010C             lwz r7,0x10c(r3)
+  823989A8  7C7D1B78             or r29,r3,r3
+  823989AC  2F070000             cmpwi cr6,r7,0x0
+  823989B0  41980080             blt cr6,0x82398a30
+  823989B4  817F1E28             lwz r11,0x1e28(r31)
+  823989B8  7F075800             cmpw cr6,r7,r11
+  823989BC  40980074             bge cr6,0x82398a30
+  823989C0  1D670058             mulli r11,r7,0x58
+  823989C4  7D6BFA14             add r11,r11,r31
+  823989C8  814B1840             lwz r10,0x1840(r11)
+  823989CC  2F0A0001             cmpwi cr6,r10,0x1
+  823989D0  40990060             ble cr6,0x82398a30
+  823989D4  2B070012             cmplwi cr6,r7,0x12
+  823989D8  41980024             blt cr6,0x823989fc
+  823989DC  3D608205             lis r11,-0x7dfb
+  823989E0  3D408205             lis r10,-0x7dfb
+  823989E4  38CB6B28             addi r6,r11,0x6b28
+  823989E8  386A6A08             addi r3,r10,0x6a08
+  823989EC  39000012             li r8,0x12
+  823989F0  38A00000             li r5,0x0
+  823989F4  388002EA             li r4,0x2ea
+  823989F8  4823BB09             bl 0x825d4500
+LAB_823989fc:
+  823989FC  815D010C             lwz r10,0x10c(r29)
+  82398A00  3D208296             lis r9,-0x7d6a
+  82398A04  39696C08             addi r11,r9,0x6c08
+  82398A08  554A2036             rlwinm r10,r10,0x4,0x0,0x1b
+  82398A0C  7D6A5A14             add r11,r10,r11
+  82398A10  C00B0000             lfs f0,0x0(r11)
+  82398A14  D01E0000             stfs f0,0x0(r30)
+  82398A18  C1AB0004             lfs f13,0x4(r11)
+  82398A1C  D1BE0004             stfs f13,0x4(r30)
+  82398A20  C18B0008             lfs f12,0x8(r11)
+  82398A24  D19E0008             stfs f12,0x8(r30)
+  82398A28  C16B000C             lfs f11,0xc(r11)
+  82398A2C  D17E000C             stfs f11,0xc(r30)
+LAB_82398a30:
+  82398A30  38210070             addi r1,r1,0x70
+  82398A34  4857DCD8             b 0x8291670c
 
 ; 82398A38  Party_SetUIPlayerCount  (client_mp/partyui.cpp:754)
   82398A38  7D8802A6             mfspr r12,LR
   82398A3C  4857DC81             bl 0x829166bc
+  82398A40  9421FB30             stwu r1,-0x4d0(r1)
+  82398A44  3D608205             lis r11,-0x7dfb
+  82398A48  3D408200             lis r10,-0x7e00
+  82398A4C  7C7F1B78             or r31,r3,r3
+  82398A50  2B030000             cmplwi cr6,r3,0x0
+  82398A54  3BCB6A08             addi r30,r11,0x6a08
+  82398A58  3BAA0F98             addi r29,r10,0xf98
+  82398A5C  409A0020             bne cr6,0x82398a7c
+  82398A60  3D608203             lis r11,-0x7dfd
+  82398A64  7FA6EB78             or r6,r29,r29
+  82398A68  38EB21A4             addi r7,r11,0x21a4
+  82398A6C  7FC3F378             or r3,r30,r30
+  82398A70  38A00000             li r5,0x0
+  82398A74  388002FC             li r4,0x2fc
+  82398A78  4823BA89             bl 0x825d4500
+LAB_82398a7c:
+  82398A7C  817F1EF4             lwz r11,0x1ef4(r31)
+  82398A80  2F0B0000             cmpwi cr6,r11,0x0
+  82398A84  409A0020             bne cr6,0x82398aa4
+  82398A88  3D608204             lis r11,-0x7dfc
+  82398A8C  7FA6EB78             or r6,r29,r29
+  82398A90  38EBB9C8             subi r7,r11,0x4638
+  82398A94  7FC3F378             or r3,r30,r30
+  82398A98  38A00000             li r5,0x0
+  82398A9C  388002FD             li r4,0x2fd
+  82398AA0  4823BA61             bl 0x825d4500
+LAB_82398aa4:
+  82398AA4  807F0000             lwz r3,0x0(r31)
+  82398AA8  4833A489             bl 0x826d2f30
+  82398AAC  7C7E1B78             or r30,r3,r3
+  82398AB0  7FE3FB78             or r3,r31,r31
+  82398AB4  4BFCBC5D             bl 0x82364710
+  82398AB8  7C7D1B78             or r29,r3,r3
+  82398ABC  2F030001             cmpwi cr6,r3,0x1
+  82398AC0  41990010             bgt cr6,0x82398ad0
+  82398AC4  39600001             li r11,0x1
+  82398AC8  91610050             stw r11,0x50(r1)
+  82398ACC  48000008             b 0x82398ad4
+LAB_82398ad0:
+  82398AD0  93A10050             stw r29,0x50(r1)
+LAB_82398ad4:
+  82398AD4  93C10054             stw r30,0x54(r1)
+  82398AD8  3D608205             lis r11,-0x7dfb
+  82398ADC  386B6B8C             addi r3,r11,0x6b8c
+  82398AE0  48213469             bl 0x825abf48
+  82398AE4  38800002             li r4,0x2
+  82398AE8  38A10050             addi r5,r1,0x50
+  82398AEC  48216965             bl 0x825af450
+  82398AF0  3D4082B6             lis r10,-0x7d4a
+  82398AF4  7C641B78             or r4,r3,r3
+  82398AF8  806A8F68             lwz r3,-0x7098(r10)
+  82398AFC  48268065             bl 0x82600b60
+  82398B00  7FE3FB78             or r3,r31,r31
+  82398B04  4BFCBC0D             bl 0x82364710
+  82398B08  2F030001             cmpwi cr6,r3,0x1
+  82398B0C  38A00001             li r5,0x1
+  82398B10  40990008             ble cr6,0x82398b18
+  82398B14  7C651B78             or r5,r3,r3
+LAB_82398b18:
+  82398B18  39410060             addi r10,r1,0x60
+  82398B1C  39600000             li r11,0x0
+  82398B20  3D208201             lis r9,-0x7dff
+  82398B24  38610090             addi r3,r1,0x90
+  82398B28  38893B64             addi r4,r9,0x3b64
+  82398B2C  F96A0000             std r11,0x0(r10)
+  82398B30  F96A0008             std r11,0x8(r10)
+  82398B34  F96A0010             std r11,0x10(r10)
+  82398B38  F96A0018             std r11,0x18(r10)
+  82398B3C  F96A0020             std r11,0x20(r10)
+  82398B40  4857EDB9             bl 0x829178f8
+  82398B44  39000002             li r8,0x2
+  82398B48  38E10090             addi r7,r1,0x90
+  82398B4C  91010060             stw r8,0x60(r1)
+  82398B50  2F1D0000             cmpwi cr6,r29,0x0
+  82398B54  90E10064             stw r7,0x64(r1)
+  82398B58  7FE3FB78             or r3,r31,r31
+  82398B5C  419A0018             beq cr6,0x82398b74
+  82398B60  4BFD5E79             bl 0x8236e9d8
+  82398B64  7C641B78             or r4,r3,r3
+  82398B68  7FE3FB78             or r3,r31,r31
+  82398B6C  4BFD5F2D             bl 0x8236ea98
+  82398B70  4800000C             b 0x82398b7c
+LAB_82398b74:
+  82398B74  4BFD5E6D             bl 0x8236e9e0
+  82398B78  482AB821             bl 0x82644398
+LAB_82398b7c:
+  82398B7C  90610068             stw r3,0x68(r1)
+  82398B80  3D608205             lis r11,-0x7dfb
+  82398B84  386B6B74             addi r3,r11,0x6b74
+  82398B88  482133C1             bl 0x825abf48
+  82398B8C  38810060             addi r4,r1,0x60
+  82398B90  38A100B0             addi r5,r1,0xb0
+  82398B94  38C00400             li r6,0x400
+  82398B98  482135E9             bl 0x825ac180
+  82398B9C  3D4082B6             lis r10,-0x7d4a
+  82398BA0  388100B0             addi r4,r1,0xb0
+  82398BA4  806A9100             lwz r3,-0x6f00(r10)
+  82398BA8  48267FB9             bl 0x82600b60
+  82398BAC  382104D0             addi r1,r1,0x4d0
+  82398BB0  4857DB5C             b 0x8291670c
 
 ; 82398BB8  Party_OpenPartyUIErrorBox  (client_mp/partyui.cpp:793)
   82398BB8  7D8802A6             mfspr r12,LR
@@ -432,6 +1831,12 @@ LAB_82398da0:
   82398DD0  806B000C             lwz r3,0xc(r11)
   82398DD4  4E800020             blr
 
+; 82398DD8  PartyUI_GetSelectedPlayerListChangedTime  (client_mp/partyui.cpp:851)
+  82398DD8  3D6082B6             lis r11,-0x7d4a
+  82398DDC  816B8F98             lwz r11,-0x7068(r11)
+  82398DE0  806B000C             lwz r3,0xc(r11)
+  82398DE4  4E800020             blr
+
 ; 82398DE8  PartyUI_ShouldShowPrivatePartyHostIcon  (client_mp/partyui.cpp:857)
   82398DE8  7D8802A6             mfspr r12,LR
   82398DEC  9181FFF8             stw r12,-0x8(r1)
@@ -497,6 +1902,70 @@ LAB_82398e84:
 ; 82398EC0  PartyUI_ShowMemberPrivatePartyHostIcon  (client_mp/partyui.cpp:885)
   82398EC0  7D8802A6             mfspr r12,LR
   82398EC4  4857D7F9             bl 0x829166bc
+  82398EC8  9421FF90             stwu r1,-0x70(r1)
+  82398ECC  7C7F1B78             or r31,r3,r3
+  82398ED0  7C9D2378             or r29,r4,r4
+  82398ED4  7CBE2B78             or r30,r5,r5
+  82398ED8  2B030000             cmplwi cr6,r3,0x0
+  82398EDC  409A0028             bne cr6,0x82398f04
+  82398EE0  3D608203             lis r11,-0x7dfd
+  82398EE4  3D408200             lis r10,-0x7e00
+  82398EE8  3D208205             lis r9,-0x7dfb
+  82398EEC  38EB21A4             addi r7,r11,0x21a4
+  82398EF0  38CA0F98             addi r6,r10,0xf98
+  82398EF4  38696A08             addi r3,r9,0x6a08
+  82398EF8  38A00000             li r5,0x0
+  82398EFC  38800376             li r4,0x376
+  82398F00  4823B601             bl 0x825d4500
+LAB_82398f04:
+  82398F04  7FC4F378             or r4,r30,r30
+  82398F08  7FE3FB78             or r3,r31,r31
+  82398F0C  4BFFE6F5             bl 0x82397600
+  82398F10  1D630150             mulli r11,r3,0x150
+  82398F14  7D6BFA14             add r11,r11,r31
+  82398F18  894B0058             lbz r10,0x58(r11)
+  82398F1C  2B0A0006             cmplwi cr6,r10,0x6
+  82398F20  409A0010             bne cr6,0x82398f30
+  82398F24  38600001             li r3,0x1
+  82398F28  38210070             addi r1,r1,0x70
+  82398F2C  4857D7E0             b 0x8291670c
+LAB_82398f30:
+  82398F30  7FC5F378             or r5,r30,r30
+  82398F34  7FA4EB78             or r4,r29,r29
+  82398F38  7FE3FB78             or r3,r31,r31
+  82398F3C  4BFFEC15             bl 0x82397b50
+  82398F40  4BFFFF11             bl 0x82398e50
+  82398F44  38210070             addi r1,r1,0x70
+  82398F48  4857D7C4             b 0x8291670c
+
+; 82398F50  PartyUI_ShowTeamMemberPrivatePartyHostIcon  (client_mp/partyui.cpp:901)
+  82398F50  7D8802A6             mfspr r12,LR
+  82398F54  4857D765             bl 0x829166b8
+  82398F58  9421FF80             stwu r1,-0x80(r1)
+  82398F5C  7C7F1B78             or r31,r3,r3
+  82398F60  7C9E2378             or r30,r4,r4
+  82398F64  7CBD2B78             or r29,r5,r5
+  82398F68  7CDC3378             or r28,r6,r6
+  82398F6C  2B030000             cmplwi cr6,r3,0x0
+  82398F70  409A0028             bne cr6,0x82398f98
+  82398F74  3D608203             lis r11,-0x7dfd
+  82398F78  3D408200             lis r10,-0x7e00
+  82398F7C  3D208205             lis r9,-0x7dfb
+  82398F80  38EB21A4             addi r7,r11,0x21a4
+  82398F84  38CA0F98             addi r6,r10,0xf98
+  82398F88  38696A08             addi r3,r9,0x6a08
+  82398F8C  38A00000             li r5,0x0
+  82398F90  38800386             li r4,0x386
+  82398F94  4823B56D             bl 0x825d4500
+LAB_82398f98:
+  82398F98  7F86E378             or r6,r28,r28
+  82398F9C  7FA5EB78             or r5,r29,r29
+  82398FA0  7FC4F378             or r4,r30,r30
+  82398FA4  7FE3FB78             or r3,r31,r31
+  82398FA8  4BFFF719             bl 0x823986c0
+  82398FAC  4BFFFEA5             bl 0x82398e50
+  82398FB0  38210080             addi r1,r1,0x80
+  82398FB4  4857D754             b 0x82916708
 
 ; 82398FB8  PartyUI_GetSearchTierMs  (client_mp/partyui.cpp:910)
   82398FB8  3D6082B6             lis r11,-0x7d4a
@@ -510,3 +1979,29 @@ LAB_82398e84:
   82398FD8  4D980020             bltlr cr6
   82398FDC  3860015E             li r3,0x15e
   82398FE0  4E800020             blr
+
+; 82398FE8  PartyUI_ShouldShowInviteWarning  (client_mp/partyui.cpp:916)
+  82398FE8  7D8802A6             mfspr r12,LR
+  82398FEC  9181FFF8             stw r12,-0x8(r1)
+  82398FF0  FBC1FFE8             std r30,-0x18(r1)
+  82398FF4  FBE1FFF0             std r31,-0x10(r1)
+  82398FF8  9421FF90             stwu r1,-0x70(r1)
+  82398FFC  7C7F1B78             or r31,r3,r3
+  82399000  4BFD8559             bl 0x82371558
+  82399004  2F030000             cmpwi cr6,r3,0x0
+  82399008  419A0024             beq cr6,0x8239902c
+  8239900C  7FE3FB78             or r3,r31,r31
+  82399010  4BFCB769             bl 0x82364778
+  82399014  7C7E1B78             or r30,r3,r3
+  82399018  7FE3FB78             or r3,r31,r31
+  8239901C  4BFCB675             bl 0x82364690
+  82399020  7D7E1850             subf r11,r30,r3
+  82399024  314BFFFF             subic r10,r11,0x1
+  82399028  7C6A5910             subfe r3,r10,r11
+LAB_8239902c:
+  8239902C  38210070             addi r1,r1,0x70
+  82399030  8181FFF8             lwz r12,-0x8(r1)
+  82399034  7D8803A6             mtspr LR,r12
+  82399038  EBC1FFE8             ld r30,-0x18(r1)
+  8239903C  EBE1FFF0             ld r31,-0x10(r1)
+  82399040  4E800020             blr

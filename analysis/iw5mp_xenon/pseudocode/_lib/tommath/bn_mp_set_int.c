@@ -2,10 +2,52 @@
 
 // 822596D8  mp_set_int  (line unknown)
 
-void mp_set_int(void)
+void mp_set_int(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  ulonglong uVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  undefined4 *puVar5;
+  int iVar6;
+  
+  piVar4 = (int *)__savegprlr_28();
+  piVar4[2] = 0;
+  iVar6 = 0;
+  *piVar4 = 0;
+  if (0 < piVar4[1]) {
+    puVar5 = (undefined4 *)(piVar4[3] + -4);
+    do {
+      iVar6 = iVar6 + 1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+    } while (iVar6 < piVar4[1]);
+  }
+  iVar6 = 0;
+  do {
+    uVar3 = mp_mul_2d(piVar4,4,piVar4);
+    if ((int)uVar3 != 0) goto LAB_822597bc;
+    uVar2 = param_2 & 0xffffffff;
+    iVar6 = iVar6 + 1;
+    param_2 = (param_2 & 0xfffffff) << 4;
+    *(uint *)piVar4[3] = (uint)(uVar2 >> 0x1c) | *(uint *)piVar4[3];
+    iVar1 = *piVar4;
+    *piVar4 = iVar1 + 1;
+  } while (iVar6 < 8);
+  if (0 < iVar1 + 1) {
+    do {
+      iVar6 = *piVar4;
+      if (*(int *)(iVar6 * 4 + piVar4[3] + -4) != 0) break;
+      *piVar4 = iVar6 + -1;
+    } while (0 < iVar6 + -1);
+  }
+  if (*piVar4 == 0) {
+    piVar4[2] = 0;
+  }
+  uVar3 = 0;
+LAB_822597bc:
+  __restgprlr_28(uVar3);
+  return;
 }
 

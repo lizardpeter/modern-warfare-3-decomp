@@ -11,10 +11,74 @@
 ; 8292D5D8  bdStreamSocket::create  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:26)
   8292D5D8  7D8802A6             mfspr r12,LR
   8292D5DC  4BFE90DD             bl 0x829166b8
+  8292D5E0  9421FF80             stwu r1,-0x80(r1)
+  8292D5E4  81230000             lwz r9,0x0(r3)
+  8292D5E8  3D608221             lis r11,-0x7ddf
+  8292D5EC  3D408200             lis r10,-0x7e00
+  8292D5F0  7C7F1B78             or r31,r3,r3
+  8292D5F4  7C9E2378             or r30,r4,r4
+  8292D5F8  2F09FFFF             cmpwi cr6,r9,-0x1
+  8292D5FC  3BAB6920             addi r29,r11,0x6920
+  8292D600  3B8A11F4             addi r28,r10,0x11f4
+  8292D604  419A0028             beq cr6,0x8292d62c
+  8292D608  3D608221             lis r11,-0x7ddf
+  8292D60C  3D408221             lis r10,-0x7ddf
+  8292D610  390B68F0             addi r8,r11,0x68f0
+  8292D614  38EA68DC             addi r7,r10,0x68dc
+  8292D618  7F86E378             or r6,r28,r28
+  8292D61C  7FA3EB78             or r3,r29,r29
+  8292D620  38A00000             li r5,0x0
+  8292D624  3880001C             li r4,0x1c
+  8292D628  4BCA6ED9             bl 0x825d4500
+LAB_8292d62c:
+  8292D62C  7FC3F378             or r3,r30,r30
+  8292D630  4800F1D1             bl 0x8293c800
+  8292D634  39630001             addi r11,r3,0x1
+  8292D638  907F0000             stw r3,0x0(r31)
+  8292D63C  2F03FFFF             cmpwi cr6,r3,-0x1
+  8292D640  314BFFFF             subic r10,r11,0x1
+  8292D644  7FEA5910             subfe r31,r10,r11
+  8292D648  409A0028             bne cr6,0x8292d670
+  8292D64C  3D608221             lis r11,-0x7ddf
+  8292D650  3D408221             lis r10,-0x7ddf
+  8292D654  390B68A8             addi r8,r11,0x68a8
+  8292D658  38EA6894             addi r7,r10,0x6894
+  8292D65C  7F86E378             or r6,r28,r28
+  8292D660  7FA3EB78             or r3,r29,r29
+  8292D664  38A00000             li r5,0x0
+  8292D668  38800021             li r4,0x21
+  8292D66C  4BCA6E95             bl 0x825d4500
+LAB_8292d670:
+  8292D670  7FE3FB78             or r3,r31,r31
+  8292D674  38210080             addi r1,r1,0x80
+  8292D678  4BFE9090             b 0x82916708
 
 ; 8292D688  bdStreamSocket::connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:54)
   8292D688  7D8802A6             mfspr r12,LR
   8292D68C  4BFE902D             bl 0x829166b8
+  8292D690  3BE1FF80             subi r31,r1,0x80
+  8292D694  9421FF80             stwu r1,-0x80(r1)
+  8292D698  7C7D1B78             or r29,r3,r3
+  8292D69C  909F009C             stw r4,0x9c(r31)
+  8292D6A0  7C9E2378             or r30,r4,r4
+  8292D6A4  7C832378             or r3,r4,r4
+  8292D6A8  4BFC9929             bl 0x828f6fd0
+  8292D6AC  7C641B78             or r4,r3,r3
+  8292D6B0  387F0050             addi r3,r31,0x50
+  8292D6B4  4BFC97CD             bl 0x828f6e80
+  8292D6B8  7C7C1B78             or r28,r3,r3
+  8292D6BC  7FC3F378             or r3,r30,r30
+  8292D6C0  4BFC9921             bl 0x828f6fe0
+  8292D6C4  7C651B78             or r5,r3,r3
+  8292D6C8  809C0000             lwz r4,0x0(r28)
+  8292D6CC  807D0000             lwz r3,0x0(r29)
+  8292D6D0  4800F1A1             bl 0x8293c870
+  8292D6D4  7C7D1B78             or r29,r3,r3
+  8292D6D8  7FC3F378             or r3,r30,r30
+  8292D6DC  4BFC96ED             bl 0x828f6dc8
+  8292D6E0  7FA3EB78             or r3,r29,r29
+  8292D6E4  383F0080             addi r1,r31,0x80
+  8292D6E8  4BFE9020             b 0x82916708
 
 ; 8292D718  bdStreamSocket::isWritable  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:69)
   8292D718  39600001             li r11,0x1

@@ -10,6 +10,16 @@ void R_RegisterLightDef_FastFile(undefined8 param_1)
 }
 
 
+// 8274B428  R_RegisterLightDef  (gfx_d3d/r_light.cpp:114)
+
+void R_RegisterLightDef(undefined8 param_1)
+
+{
+  DB_FindXAssetHeader(0x14,param_1,1);
+  return;
+}
+
+
 // 8274B438  R_InitLightDefs  (gfx_d3d/r_light.cpp:120)
 
 void R_InitLightDefs(void)
@@ -31,11 +41,37 @@ void R_ShutdownLightDefs(void)
 
 // 8274B480  R_LightImportanceGreaterEqual  (gfx_d3d/r_light.cpp:155)
 
-void R_LightImportanceGreaterEqual(void)
+void R_LightImportanceGreaterEqual(undefined8 param_1,char *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if ((*pcVar1 != '\x03') && (*pcVar1 != '\x02')) {
+    MyAssertHandler(0xffffffff821c6444,0x9f,1,0xffffffff82000f98,0xffffffff821c63f8);
+  }
+  if ((*param_2 != '\x03') && (*param_2 != '\x02')) {
+    MyAssertHandler(0xffffffff821c6444,0xa0,1,0xffffffff82000f98,0xffffffff821c63a8);
+  }
+  if (*pcVar1 != *param_2) {
+    __restgprlr_28(*pcVar1 == '\x02');
+    return;
+  }
+  __restgprlr_28(((DAT_84617aa8 - *(float *)(pcVar1 + 0x2c)) *
+                  (DAT_84617aa8 - *(float *)(pcVar1 + 0x2c)) +
+                 (DAT_84617aa4 - *(float *)(pcVar1 + 0x28)) *
+                 (DAT_84617aa4 - *(float *)(pcVar1 + 0x28)) +
+                 (DAT_84617aac - *(float *)(pcVar1 + 0x30)) *
+                 (DAT_84617aac - *(float *)(pcVar1 + 0x30))) *
+                 *(float *)(param_2 + 0x34) * *(float *)(param_2 + 0x34) <=
+                 ((DAT_84617aa8 - *(float *)(param_2 + 0x2c)) *
+                  (DAT_84617aa8 - *(float *)(param_2 + 0x2c)) +
+                 (DAT_84617aa4 - *(float *)(param_2 + 0x28)) *
+                 (DAT_84617aa4 - *(float *)(param_2 + 0x28)) +
+                 (DAT_84617aac - *(float *)(param_2 + 0x30)) *
+                 (DAT_84617aac - *(float *)(param_2 + 0x30))) *
+                 *(float *)(pcVar1 + 0x34) * *(float *)(pcVar1 + 0x34));
+  return;
 }
 
 
@@ -58,11 +94,9 @@ void R_MostImportantLights(undefined8 param_1,ulonglong param_2,longlong param_3
   
   lVar3 = __savegprlr_20();
   if ((int)param_2 <= (int)param_3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0xb5,0,0xffffffff82000f98,0xffffffff821c64c4);
   }
   if ((int)param_3 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0xb6,0,0xffffffff82000f98,0xffffffff821c64b4);
   }
 LAB_8274b640:
@@ -74,7 +108,6 @@ LAB_8274b640:
   do {
     iVar9 = (int)uVar8;
     if (iVar9 < (int)param_2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821c6444,0xc3,1,0xffffffff82000f98,0xffffffff821c6484);
     }
     lVar7 = (param_2 & 0x3fffffff) * 4 + lVar3;
@@ -103,7 +136,6 @@ LAB_8274b640:
   } while( true );
 LAB_8274b6f8:
   if (iVar11 != (int)uVar8 + 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0xd9,1,0xffffffff82000f98,0xffffffff821c6490);
   }
   if (iVar11 == (int)uVar5) {
@@ -119,7 +151,6 @@ LAB_8274b6f8:
     return;
   }
   if ((int)uVar5 <= iVar9) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0xe9,1,0xffffffff82000f98,0xffffffff821c64a0);
   }
   if (iVar9 < (int)param_3) {
@@ -136,8 +167,99 @@ LAB_8274b6f8:
 void R_ChooseVisibleDynamicLights(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined1 *puVar1;
+  undefined8 uVar2;
+  int iVar3;
+  uint uVar4;
+  undefined4 *puVar5;
+  int *piVar6;
+  undefined4 *puVar7;
+  longlong lVar8;
+  undefined1 *puVar9;
+  uint uVar10;
+  undefined1 local_150 [76];
+  undefined4 uStack_104;
+  undefined4 local_100 [64];
+  
+  uVar2 = __savegprlr_19();
+  puVar1 = &stack0x00000000 + -0x150;
+  *(BADSPACEBASE **)puVar1 = register0x0000000c;
+  if (1 < DAT_847b96bc) {
+    MyAssertHandler(0xffffffff821c6444,0x105,1,0xffffffff821c65d4,0xffffffff821c65fc,DAT_847b96bc);
+  }
+  if (0x20 < DAT_847b971c) {
+    MyAssertHandler(0xffffffff821c6444,0x106,1,0xffffffff821c6590,0xffffffff821c65b4,DAT_847b971c);
+  }
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x107,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  uVar4 = 0;
+  iVar3 = 0;
+  if (0 < DAT_847b96bc) {
+    puVar5 = (undefined4 *)(&stack0x00000000 + -0x104);
+    puVar9 = &DAT_847b96c4;
+    piVar6 = &DAT_847b9710;
+    do {
+      if (*piVar6 == 0) {
+        if (0x21 < uVar4) {
+          MyAssertHandler(0xffffffff821c6444,0x10f,1,0xffffffff821c6578,0xffffffff821c655c,uVar4);
+        }
+        puVar5 = puVar5 + 1;
+        *puVar5 = puVar9;
+        uVar4 = uVar4 + 1;
+      }
+      iVar3 = iVar3 + 1;
+      piVar6 = piVar6 + 1;
+      puVar9 = puVar9 + 0x4c;
+    } while (iVar3 < DAT_847b96bc);
+  }
+  iVar3 = 0;
+  if (0 < DAT_847b971c) {
+    puVar9 = &DAT_847b9720;
+    puVar5 = (undefined4 *)(puVar1 + uVar4 * 4 + 0x4c);
+    do {
+      if ((&DAT_847ba0a0)[iVar3] == '\0') {
+        if (0x21 < uVar4) {
+          MyAssertHandler(0xffffffff821c6444,0x119,1,0xffffffff821c6578,0xffffffff821c655c,uVar4);
+        }
+        puVar5 = puVar5 + 1;
+        *puVar5 = puVar9;
+        uVar4 = uVar4 + 1;
+      }
+      iVar3 = iVar3 + 1;
+      puVar9 = puVar9 + 0x4c;
+    } while (iVar3 < DAT_847b971c);
+  }
+  uVar10 = DAT_847b96c0;
+  if (4 < DAT_847b96c0) {
+    MyAssertHandler(0xffffffff821c6444,0x120,0,0xffffffff821c6530,0xffffffff821c6548,DAT_847b96c0);
+  }
+  if (uVar10 < uVar4) {
+    R_MostImportantLights(&stack0x00000000 + -0x100,uVar4,uVar10);
+    uVar4 = uVar10;
+  }
+  uVar10 = 0;
+  if (uVar4 != 0) {
+    puVar5 = (undefined4 *)0x847b80b8;
+    lVar8 = 0;
+    puVar7 = (undefined4 *)(&stack0x00000000 + -0x100);
+    do {
+      if (*(char *)*puVar7 != '\x02') {
+        iVar3 = R_AddDynamicSceneLight(uVar2);
+        if (iVar3 != *(int *)(DAT_8461658c + 0x20) + uVar10) {
+          MyAssertHandler(0xffffffff821c6444,0x136,0,0xffffffff821c64e8,iVar3);
+        }
+      }
+      R_InitDrawList(lVar8 + (ulonglong)DAT_84628b00 + 0x1c00,0,0xffffffff821c64dc);
+      uVar10 = uVar10 + 1;
+      puVar5 = puVar5 + 0x802;
+      *puVar5 = 0;
+      puVar7 = puVar7 + 1;
+      lVar8 = lVar8 + 0x1f8;
+    } while (uVar10 < uVar4);
+  }
+  __restgprlr_19(uVar4);
+  return;
 }
 
 
@@ -155,6 +277,29 @@ undefined8 R_BoxInPlanes(int param_1,float *param_2)
     if (0.0 <= (pfVar2[-1] * *param_2 - ABS(pfVar2[-1]) * param_2[3]) + pfVar2[2] +
                (*pfVar2 * param_2[1] - ABS(*pfVar2) * param_2[4]) +
                (pfVar2[1] * param_2[2] - ABS(pfVar2[1]) * param_2[5])) {
+      return 0;
+    }
+    uVar1 = uVar1 + 1;
+    pfVar2 = pfVar2 + 4;
+  } while (uVar1 < 6);
+  return 1;
+}
+
+
+// 8274BB10  R_SphereInPlanes  (gfx_d3d/r_light.cpp:342)
+
+undefined8 R_SphereInPlanes(double param_1,int param_2,float *param_3)
+
+{
+  uint uVar1;
+  float *pfVar2;
+  
+  uVar1 = 0;
+  pfVar2 = (float *)(param_2 + 8);
+  do {
+    if (0.0 < (float)((double)(*pfVar2 * param_3[2] +
+                               pfVar2[-2] * *param_3 + pfVar2[-1] * param_3[1] + pfVar2[1]) -
+                     param_1)) {
       return 0;
     }
     uVar1 = uVar1 + 1;
@@ -210,11 +355,61 @@ void R_CalcPlaneFromPointDir(float *param_1,float *param_2,float *param_3)
 
 // 8274BC38  R_ComputeSpotLightCrossDirs  (gfx_d3d/r_light.cpp:400)
 
-void R_ComputeSpotLightCrossDirs(void)
+void R_ComputeSpotLightCrossDirs(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  uint uVar7;
+  bool bVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  iVar5 = __savegprlr_29();
+  bVar8 = ABS(*(float *)(iVar5 + 0x14)) < ABS(*(float *)(iVar5 + 0x10));
+  uVar7 = (uint)bVar8;
+  if (ABS(*(float *)(iVar5 + 0x18)) < ABS(*(float *)((bVar8 + 4) * 4 + iVar5))) {
+    uVar7 = 2;
+  }
+  dVar11 = 1.0;
+  pfVar6 = (float *)param_2;
+  *pfVar6 = 0.0;
+  pfVar6[1] = 0.0;
+  pfVar6[2] = 0.0;
+  pfVar6[uVar7] = 1.0;
+  Vec3Cross(iVar5 + 0x10,param_2,param_2 + 0xc);
+  fVar2 = pfVar6[4];
+  fVar3 = pfVar6[3];
+  fVar4 = pfVar6[5];
+  dVar10 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar9 = dVar11;
+  if (-dVar10 < 0.0) {
+    dVar9 = dVar10;
+  }
+  fVar1 = (float)(dVar11 / dVar9);
+  pfVar6[3] = fVar3 * fVar1;
+  pfVar6[4] = fVar2 * fVar1;
+  pfVar6[5] = fVar4 * fVar1;
+  Vec3Cross(param_2 + 0xc,iVar5 + 0x10,param_2);
+  fVar2 = pfVar6[1];
+  fVar3 = *pfVar6;
+  fVar4 = pfVar6[2];
+  dVar10 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar9 = dVar11;
+  if (-dVar10 < 0.0) {
+    dVar9 = dVar10;
+  }
+  fVar1 = (float)(dVar11 / dVar9);
+  *pfVar6 = fVar3 * fVar1;
+  pfVar6[1] = fVar2 * fVar1;
+  pfVar6[2] = fVar4 * fVar1;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -242,12 +437,182 @@ double R_CalcPlaneFromCosSinPointDirs
 }
 
 
+// 8274BDD0  R_CalcSpotLightPlanes  (gfx_d3d/r_light.cpp:430)
+
+void R_CalcSpotLightPlanes(undefined8 param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
+  float local_4c;
+  
+  __savegprlr_29();
+  iVar7 = __savefpr_28();
+  dVar11 = (double)(*(float *)(iVar7 + 0x10) * -1.0);
+  dVar10 = (double)(*(float *)(iVar7 + 0x14) * -1.0);
+  dVar9 = (double)(*(float *)(iVar7 + 0x18) * -1.0);
+  *param_2 = (float)(dVar11 * -1.0);
+  param_2[1] = (float)(dVar10 * -1.0);
+  param_2[2] = (float)(dVar9 * -1.0);
+  dVar8 = (double)DAT_847b9714;
+  param_2[3] = -((float)(dVar9 * -1.0) * (float)(dVar9 * dVar8 + (double)*(float *)(iVar7 + 0x30)) +
+                (float)(dVar10 * -1.0) * (float)(dVar8 * dVar10 + (double)*(float *)(iVar7 + 0x2c))
+                + (float)(dVar11 * -1.0) *
+                  (float)(dVar8 * dVar11 + (double)*(float *)(iVar7 + 0x28)));
+  R_ComputeSpotLightCrossDirs(iVar7,&local_60);
+  fVar4 = *(float *)(iVar7 + 0x38);
+  dVar8 = -(double)SQRT(-(fVar4 * fVar4 - 1.0));
+  fVar1 = (float)(dVar8 * dVar10);
+  fVar2 = (float)(dVar8 * dVar11);
+  fVar3 = (float)(dVar8 * dVar9);
+  fVar6 = local_5c * fVar4 + fVar1;
+  param_2[5] = fVar6;
+  fVar5 = local_60 * fVar4 + fVar2;
+  param_2[4] = fVar5;
+  fVar4 = local_58 * fVar4 + fVar3;
+  param_2[6] = fVar4;
+  param_2[7] = -(*(float *)(iVar7 + 0x30) * fVar4 +
+                fVar5 * *(float *)(iVar7 + 0x28) + fVar6 * *(float *)(iVar7 + 0x2c));
+  fVar4 = *(float *)(iVar7 + 0x38);
+  fVar5 = local_54 * fVar4 + fVar2;
+  fVar6 = local_50 * fVar4 + fVar1;
+  param_2[9] = fVar6;
+  fVar4 = local_4c * fVar4 + fVar3;
+  param_2[10] = fVar4;
+  param_2[8] = fVar5;
+  param_2[0xb] = -(fVar4 * *(float *)(iVar7 + 0x30) +
+                  fVar5 * *(float *)(iVar7 + 0x28) + fVar6 * *(float *)(iVar7 + 0x2c));
+  fVar5 = -*(float *)(iVar7 + 0x38);
+  fVar4 = fVar5 * local_60 + fVar2;
+  param_2[0xc] = fVar4;
+  fVar6 = local_5c * fVar5 + fVar1;
+  param_2[0xd] = fVar6;
+  fVar5 = local_58 * fVar5 + fVar3;
+  param_2[0xe] = fVar5;
+  param_2[0xf] = -(fVar5 * *(float *)(iVar7 + 0x30) +
+                  fVar4 * *(float *)(iVar7 + 0x28) + fVar6 * *(float *)(iVar7 + 0x2c));
+  fVar4 = -*(float *)(iVar7 + 0x38);
+  fVar1 = local_50 * fVar4 + fVar1;
+  param_2[0x11] = fVar1;
+  fVar2 = local_54 * fVar4 + fVar2;
+  param_2[0x10] = fVar2;
+  fVar3 = local_4c * fVar4 + fVar3;
+  param_2[0x12] = fVar3;
+  param_2[0x13] =
+       -(fVar3 * *(float *)(iVar7 + 0x30) +
+        fVar2 * *(float *)(iVar7 + 0x28) + fVar1 * *(float *)(iVar7 + 0x2c));
+  fVar1 = *(float *)(iVar7 + 0x28);
+  fVar2 = *(float *)(iVar7 + 0x2c);
+  fVar3 = *(float *)(iVar7 + 0x30);
+  dVar8 = (double)(DAT_847b9718 + DAT_847b9714);
+  param_2[0x14] = (float)dVar11;
+  param_2[0x15] = (float)dVar10;
+  param_2[0x16] = (float)dVar9;
+  param_2[0x17] =
+       -(float)((double)(float)(dVar8 * dVar9 + (double)fVar3) * dVar9 +
+               (double)(float)((double)(float)(dVar8 * dVar10 + (double)fVar2) * dVar10 +
+                              (double)(float)((double)(float)(dVar8 * dVar11 + (double)fVar1) *
+                                             dVar11)));
+  __restfpr_28();
+  __restgprlr_29();
+  return;
+}
+
+
 // 8274BFF0  R_AllowBspOmniLight  (gfx_d3d/r_light.cpp:456)
 
 undefined1 R_AllowBspOmniLight(int param_1,int *param_2)
 
 {
   return *(undefined1 *)(*param_2 + param_1);
+}
+
+
+// 8274C000  R_GetBspOmniLightSurfs  (gfx_d3d/r_light.cpp:470)
+
+void R_GetBspOmniLightSurfs(undefined8 param_1,undefined8 param_2,int param_3,undefined4 param_4)
+
+{
+  int local_38;
+  undefined4 local_30;
+  undefined4 local_2c;
+  
+  __savegprlr_29();
+  R_SphereSurfaces();
+  (&DAT_847ba0c0)[param_3 * 0x802] = 0;
+  if (local_38 != 0) {
+    local_30 = 0x800;
+    local_2c = param_4;
+    R_GetSortedBspSurfListIndirect(param_3 * 0x2008 + -0x7b844f38,local_38,&local_30);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 8274C0A0  R_GetBspSpotLightSurfs  (gfx_d3d/r_light.cpp:504)
+
+void R_GetBspSpotLightSurfs
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               undefined4 param_5,ulonglong param_6)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  int local_c8;
+  undefined *local_c4;
+  int local_c0;
+  int local_bc;
+  undefined4 local_b0;
+  undefined1 auStack_ac [172];
+  
+  uVar2 = __savegprlr_25();
+  if ((param_4 & 0xffffffff) != 0) {
+    MyAssertHandler(0xffffffff821c6444,0x202,0,0xffffffff821c6620,param_4,1);
+  }
+  iVar1 = (int)param_4 * 0x2008;
+  local_c8 = iVar1 + -0x7b844f38;
+  local_c4 = &DAT_847c30e8 + iVar1;
+  local_b0 = *(undefined4 *)(DAT_8461658c + 0x268);
+  R_CalcSpotLightPlanes(uVar2,auStack_ac);
+  if ((param_6 & 0xffffffff) == 0) {
+    uVar2 = 1;
+    local_bc = 0;
+  }
+  else {
+    uVar2 = 2;
+  }
+  R_SphereSurfaces(param_2,param_3,0xffffffff829a2d58,&local_b0,&local_c8,0x400,&local_c0,uVar2);
+  (&DAT_847ba0c0)[(int)param_4 * 0x802] = 0;
+  if (local_c0 != 0) {
+    local_d0 = 0x800;
+    local_cc = param_5;
+    R_GetSortedBspSurfListIndirect(local_c8,local_c0,&local_d0);
+  }
+  *(undefined4 *)(&DAT_847c20e0 + iVar1) = 0;
+  if (local_bc != 0) {
+    local_cc = (undefined4)param_6;
+    local_d0 = 0x600;
+    R_GetSortedBspSurfListIndirect(local_c4,local_bc,&local_d0);
+  }
+  __restgprlr_25();
+  return;
 }
 
 
@@ -259,7 +624,6 @@ undefined1 R_AllowStaticModelOmniLight(int param_1,char *param_2)
   undefined1 uVar1;
   
   if (param_2 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0x23b,0,0xffffffff82000f98,0xffffffff820653c8);
   }
   if (*param_2 == '\0') {
@@ -280,7 +644,6 @@ undefined8 R_AllowStaticModelSpotLight(int param_1,char *param_2)
   undefined8 uVar1;
   
   if (param_2 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c6444,0x24f,0,0xffffffff82000f98,0xffffffff820653c8);
   }
   if ((*param_2 == '\0') && (*(char *)(DAT_846181b0 + param_1) == '\0')) {
@@ -293,13 +656,201 @@ undefined8 R_AllowStaticModelSpotLight(int param_1,char *param_2)
 }
 
 
+// 8274C320  R_CalcBoundingSphereForSpotLight  (gfx_d3d/r_light.cpp:611)
+
+void R_CalcBoundingSphereForSpotLight(undefined8 param_1,char *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  
+  __savegprlr_27();
+  pfVar3 = (float *)__savefpr_18();
+  if (*param_2 != '\x02') {
+    MyAssertHandler(0xffffffff821c6444,0x26b,0,0xffffffff82000f98,0xffffffff821c6798);
+  }
+  dVar5 = (double)DAT_847b9714;
+  dVar4 = (double)DAT_847b9718;
+  if (*(float *)(param_2 + 0x34) < (float)(dVar5 + dVar4)) {
+    MyAssertHandler(0xffffffff821c6444,0x26c,0,0xffffffff82000f98,0xffffffff821c6740);
+    dVar4 = (double)DAT_847b9718;
+    dVar5 = (double)DAT_847b9714;
+  }
+  fVar1 = *(float *)(param_2 + 0x38);
+  dVar13 = (double)(*(float *)(param_2 + 0x10) * -1.0);
+  dVar12 = (double)(*(float *)(param_2 + 0x14) * -1.0);
+  dVar11 = (double)(*(float *)(param_2 + 0x18) * -1.0);
+  dVar6 = 0.0;
+  dVar16 = (double)(float)(dVar5 * dVar13 + (double)*(float *)(param_2 + 0x28));
+  dVar15 = (double)(float)(dVar5 * dVar12 + (double)*(float *)(param_2 + 0x2c));
+  dVar14 = (double)(float)(dVar5 * dVar11 + (double)*(float *)(param_2 + 0x30));
+  fVar2 = SQRT(-(fVar1 * fVar1 - 1.0));
+  dVar17 = (double)((float)((double)(1.0 / fVar1) * dVar5) * fVar2);
+  dVar9 = (double)(float)(dVar4 * dVar13 + dVar16);
+  dVar8 = (double)(float)(dVar4 * dVar12 + dVar15);
+  dVar7 = (double)(float)(dVar4 * dVar11 + dVar14);
+  dVar5 = (double)((float)((double)(float)(dVar5 + dVar4) * (double)(1.0 / fVar1)) * fVar2);
+  if (dVar4 <= 0.0) {
+    MyAssertHandler(0xffffffff821c6444,0x276,0,0xffffffff82000f98,0xffffffff821c6718);
+    dVar4 = (double)DAT_847b9718;
+  }
+  dVar17 = (double)(float)(dVar17 * dVar17);
+  dVar10 = (double)(float)(dVar5 * dVar5);
+  dVar18 = (double)((float)((double)(float)((double)(float)(dVar10 - dVar17) / dVar4) + dVar4) * 0.5
+                   );
+  if (dVar18 <= dVar6) {
+    MyAssertHandler(0xffffffff821c6444,0x27a,0,0xffffffff82000f98,0xffffffff821c66f0);
+    dVar4 = (double)DAT_847b9718;
+  }
+  if (dVar18 < dVar4) {
+    dVar12 = (double)(float)(dVar12 * dVar18 + dVar15);
+    dVar5 = (double)(float)(dVar11 * dVar18 + dVar14);
+    dVar11 = (double)(float)(dVar13 * dVar18 + dVar16);
+    dVar13 = (double)(float)((double)((float)(dVar16 - dVar11) * (float)(dVar16 - dVar11) +
+                                     (float)(dVar14 - dVar5) * (float)(dVar14 - dVar5) +
+                                     (float)(dVar15 - dVar12) * (float)(dVar15 - dVar12)) + dVar17);
+    dVar4 = (double)(float)((double)(float)(dVar10 + (double)((float)(dVar9 - dVar11) *
+                                                              (float)(dVar9 - dVar11) +
+                                                             (float)(dVar7 - dVar5) *
+                                                             (float)(dVar7 - dVar5) +
+                                                             (float)(dVar8 - dVar12) *
+                                                             (float)(dVar8 - dVar12))) - dVar13);
+    if ((dVar4 < (double)(float)(dVar13 * -9.999999747378752e-05)) ||
+       ((double)(float)(dVar13 * 9.999999747378752e-05) < dVar4)) {
+      MyAssertHandler(0xffffffff821c6444,0x286,0,0xffffffff821c6680,dVar4,
+                      (double)(float)(dVar13 * -9.999999747378752e-05),
+                      (double)(float)(dVar13 * 9.999999747378752e-05));
+    }
+    if (dVar13 <= dVar6) {
+      MyAssertHandler(0xffffffff821c6444,0x289,0,0xffffffff82000f98,0xffffffff821c6670);
+    }
+    fVar1 = (float)SQRT(dVar13);
+    *pfVar3 = (float)dVar11;
+    pfVar3[1] = (float)dVar12;
+    pfVar3[2] = (float)dVar5;
+    pfVar3[3] = fVar1;
+    pfVar3[4] = fVar1 * fVar1;
+    __restfpr_18();
+    __restgprlr_27();
+    return;
+  }
+  *pfVar3 = (float)dVar9;
+  pfVar3[1] = (float)dVar8;
+  pfVar3[2] = (float)dVar7;
+  pfVar3[3] = (float)dVar5;
+  pfVar3[4] = (float)dVar10;
+  __restfpr_18();
+  __restgprlr_27();
+  return;
+}
+
+
 // 8274C5F8  R_GetStaticGeoDynamicLightSurfs  (gfx_d3d/r_light.cpp:661)
 
 void R_GetStaticGeoDynamicLightSurfs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  char cVar1;
+  int iVar3;
+  ulonglong uVar2;
+  undefined8 uVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  char *pcVar8;
+  int iVar9;
+  undefined1 local_4920 [16];
+  undefined1 *local_4910;
+  undefined1 *local_490c;
+  undefined4 local_4908;
+  undefined4 local_4904;
+  undefined4 local_4900;
+  float local_48fc;
+  float local_48f8;
+  undefined1 auStack_4870 [2048];
+  undefined1 auStack_4070 [8192];
+  undefined1 auStack_2070 [8304];
+  
+  iVar3 = __savegprlr_19();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x2a1,0,0xffffffff82000f98,0xffffffff821c680c);
+  }
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x2a2,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  if (*(uint *)(iVar3 + 0x1b0) <= *(uint *)(DAT_8461658c + 0x20)) {
+    MyAssertHandler(0xffffffff821c6444,0x2a3,0,0xffffffff82000f98,0xffffffff821c67d0);
+  }
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x2a4,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  DAT_846181b0 = *(undefined4 *)(DAT_8461658c + 0x25c);
+  local_4920[0] = *(undefined1 *)(DAT_845aa7a0 + 0xc);
+  uVar6 = *(uint *)(DAT_8461658c + 0x20);
+  if (uVar6 < *(uint *)(iVar3 + 0x1b0)) {
+    iVar5 = (uVar6 + 0x1d00) * 0x4c;
+    do {
+      pcVar8 = (char *)(iVar5 + DAT_84628b00);
+      iVar9 = uVar6 - *(int *)(DAT_8461658c + 0x20);
+      cVar1 = *(char *)(iVar5 + DAT_84628b00);
+      if ((cVar1 != '\x03') && (cVar1 != '\x02')) {
+        MyAssertHandler(0xffffffff821c6444,0x2ae,0,0xffffffff82000f98,0xffffffff821be760);
+      }
+      iVar7 = iVar9 * 0x1f8 + DAT_84628b00 + 0x1c00;
+      if (cVar1 == '\x02') {
+        R_CalcBoundingSphereForSpotLight(&local_4908,pcVar8);
+      }
+      else {
+        local_48fc = *(float *)(pcVar8 + 0x34);
+        local_4908 = *(undefined4 *)(pcVar8 + 0x28);
+        local_48f8 = local_48fc * local_48fc;
+        local_4904 = *(undefined4 *)(pcVar8 + 0x2c);
+        local_4900 = *(undefined4 *)(pcVar8 + 0x30);
+      }
+      local_4910 = auStack_4070;
+      local_490c = auStack_2070;
+      R_SetupSphereStaticGeo(&local_4910);
+      if (*pcVar8 == '\x03') {
+        R_GetBspOmniLightSurfs(&local_4908,auStack_4070,iVar9,iVar7);
+        uVar4 = 0xffffffff8274c1e8;
+      }
+      else {
+        if (iVar9 != 0) {
+          MyAssertHandler(0xffffffff821c6444,0x2c9,0,0xffffffff82000f98,0xffffffff821c67bc);
+        }
+        R_GetBspSpotLightSurfs
+                  (pcVar8,&local_4908,auStack_4070,iVar9,iVar7,
+                   *(undefined4 *)((iVar9 + 0x8f9) * 4 + DAT_84628b00));
+        R_CalcSpotLightPlanes(pcVar8,0xffffffff846181b4);
+        uVar4 = 0xffffffff8274c268;
+      }
+      uVar2 = R_SphereStaticModels(&local_4908,auStack_2070,uVar4,local_4920,auStack_4870,0x400);
+      if ((uVar2 & 0xffffffff) == 0x400) {
+        R_WarnOncePerFrame(0xd,0x400);
+      }
+      R_AddAllStaticModelSurfacesDynLight(iVar3,uVar6,auStack_4870,uVar2,local_4920[0]);
+      uVar6 = uVar6 + 1;
+      iVar5 = iVar5 + 0x4c;
+    } while (uVar6 < *(uint *)(iVar3 + 0x1b0));
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -308,17 +859,534 @@ void R_GetStaticGeoDynamicLightSurfs(void)
 void R_GetSceneEntDynamicLightSurfs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  float *pfVar14;
+  int iVar15;
+  uint *puVar17;
+  ulonglong uVar16;
+  uint uVar18;
+  uint *puVar19;
+  uint uVar20;
+  undefined4 *puVar21;
+  char *pcVar22;
+  uint uVar23;
+  int iVar24;
+  int *piVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  uint local_230 [4];
+  undefined1 auStack_220 [544];
+  
+  iVar6 = __savegprlr();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x301,0,0xffffffff82000f98,0xffffffff821c680c);
+  }
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x302,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  uVar23 = *(uint *)(iVar6 + 0x1b0);
+  if ((uVar23 < *(int *)(DAT_8461658c + 0x20) + 1U) || (*(int *)(DAT_8461658c + 0x20) + 4U < uVar23)
+     ) {
+    MyAssertHandler(0xffffffff821c6444,0x303,0,0xffffffff821c68a0,uVar23,
+                    (ulonglong)*(uint *)(DAT_8461658c + 0x20) + 1,
+                    (ulonglong)*(uint *)(DAT_8461658c + 0x20) + 4);
+  }
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x304,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  if (3 < *(uint *)(iVar6 + 0x930)) {
+    MyAssertHandler(0xffffffff821c6444,0x307,0,0xffffffff821c6850,*(uint *)(iVar6 + 0x930),4);
+  }
+  iVar7 = FX_GetSpotLightDobj(*(undefined4 *)(iVar6 + 0x930),local_230);
+  uVar23 = *(uint *)(DAT_8461658c + 0x20);
+  if (uVar23 < *(uint *)(iVar6 + 0x1b0)) {
+    iVar11 = (uVar23 + 0x1d00) * 0x4c;
+    do {
+      if (*(char *)(iVar11 + DAT_84628b00) == '\x02') {
+        R_CalcSpotLightPlanes
+                  (iVar11 + DAT_84628b00,
+                   auStack_220 + (uVar23 - *(int *)(DAT_8461658c + 0x20)) * 0x60);
+      }
+      uVar23 = uVar23 + 1;
+      iVar11 = iVar11 + 0x4c;
+    } while (uVar23 < *(uint *)(iVar6 + 0x1b0));
+  }
+  uVar23 = DAT_847c44f0;
+  dVar29 = 0.0;
+  uVar18 = 0;
+  if (DAT_847c44f0 != 0) {
+    puVar19 = &DAT_847c4524;
+    do {
+      if ((&DAT_847d38bc)[uVar18] == '\x01') {
+        if (*puVar19 < 2) {
+          MyAssertHandler(0xffffffff821c6444,0x31e,0,0xffffffff821c6818,*puVar19,2);
+        }
+        uVar20 = *(uint *)(DAT_8461658c + 0x20);
+        if (uVar20 < *(uint *)(iVar6 + 0x1b0)) {
+          iVar11 = (uVar20 + 0x1d00) * 0x4c;
+          do {
+            pcVar22 = (char *)(iVar11 + DAT_84628b00);
+            iVar9 = uVar20 - *(int *)(DAT_8461658c + 0x20);
+            if (*(char *)(iVar11 + DAT_84628b00) == '\x03') {
+              dVar28 = (double)(ABS(*(float *)(pcVar22 + 0x28) - (float)puVar19[1]) -
+                               (float)puVar19[4]);
+              dVar27 = (double)(ABS(*(float *)(pcVar22 + 0x2c) - (float)puVar19[2]) -
+                               (float)puVar19[5]);
+              dVar26 = (double)(ABS(*(float *)(pcVar22 + 0x30) - (float)puVar19[3]) -
+                               (float)puVar19[6]);
+              if (dVar28 < 0.0) {
+                dVar28 = dVar29;
+              }
+              if (dVar27 < 0.0) {
+                dVar27 = dVar29;
+              }
+              if (dVar26 < 0.0) {
+                dVar26 = dVar29;
+              }
+              if ((float)(dVar26 * dVar26 +
+                         (double)(float)(dVar27 * dVar27 + (double)(float)(dVar28 * dVar28))) <=
+                  *(float *)(pcVar22 + 0x34) * *(float *)(pcVar22 + 0x34)) {
+LAB_8274cc38:
+                iVar13 = iVar9 * 0x2008;
+                piVar25 = &DAT_847ba0c0 + iVar9 * 0x802;
+                iVar10 = (&DAT_847ba0c0)[iVar9 * 0x802];
+                iVar8 = R_AddDObjSurfaces(puVar19 + -10,0x1a,piVar25 + (iVar10 + 1) * 2,
+                                          iVar13 + -0x7b843f38);
+                *piVar25 = (iVar8 - (int)(piVar25 + (iVar10 + 1) * 2) >> 3) + *piVar25;
+                if (((*pcVar22 == '\x02') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+                   ((*(char *)(DAT_845aa7ec + 0xc) != '\0' && ((puVar19[0x10] & 1) == 0)))) {
+                  if (iVar9 != 0) {
+                    MyAssertHandler(0xffffffff821c6444,0x34e,0,
+                                    "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
+                                    ,iVar9,1);
+                  }
+                  piVar25 = (int *)(&DAT_847c20e0 + iVar13);
+                  iVar10 = *(int *)(&DAT_847c20e0 + iVar13);
+                  iVar9 = R_AddDObjSurfaces(puVar19 + -10,0x1a,piVar25 + (iVar10 + 1) * 2,
+                                            &DAT_847c40e8 + iVar9 * 0x802);
+                  *piVar25 = (iVar9 - (int)(piVar25 + (iVar10 + 1) * 2) >> 3) + *piVar25;
+                }
+              }
+            }
+            else {
+              if (*(char *)(iVar11 + DAT_84628b00) != '\x02') {
+                MyAssertHandler(0xffffffff821c6444,0x32f,1,&DAT_82000f98,
+                                "light->type == GFX_LIGHT_TYPE_SPOT");
+              }
+              iVar10 = 0;
+              if (0 < iVar7) {
+                puVar17 = local_230;
+                do {
+                  if (puVar19[0x11] == *puVar17) break;
+                  iVar10 = iVar10 + 1;
+                  puVar17 = puVar17 + 1;
+                } while (iVar10 < iVar7);
+              }
+              if (((iVar10 == iVar7) &&
+                  (iVar10 = R_BoxInPlanes(auStack_220 + iVar9 * 0x60,puVar19 + 1), iVar10 != 0)) &&
+                 ((puVar19[0x10] & 0x80) == 0)) goto LAB_8274cc38;
+            }
+            uVar20 = uVar20 + 1;
+            iVar11 = iVar11 + 0x4c;
+          } while (uVar20 < *(uint *)(iVar6 + 0x1b0));
+        }
+      }
+      uVar18 = uVar18 + 1;
+      puVar19 = puVar19 + 0x1e;
+    } while (uVar18 < uVar23);
+  }
+  if (DAT_847ee934 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x35b,0,&DAT_82000f98,0xffffffff821bc830);
+  }
+  uVar23 = DAT_847d46c8;
+  uVar18 = 0;
+  if (DAT_847d46c8 != 0) {
+    pfVar14 = (float *)&DAT_847d46f0;
+    do {
+      if ((&DAT_847e66d4)[uVar18] == '\x01') {
+        uVar20 = *(uint *)(DAT_8461658c + 0x20);
+        if (uVar20 < *(uint *)(iVar6 + 0x1b0)) {
+          iVar7 = (uVar20 + 0x1d00) * 0x4c;
+          do {
+            pcVar22 = (char *)(iVar7 + DAT_84628b00);
+            iVar11 = uVar20 - *(int *)(DAT_8461658c + 0x20);
+            if (*(char *)(iVar7 + DAT_84628b00) == '\x03') {
+              if ((*pfVar14 - *(float *)(pcVar22 + 0x28)) * (*pfVar14 - *(float *)(pcVar22 + 0x28))
+                  + (pfVar14[2] - *(float *)(pcVar22 + 0x30)) *
+                    (pfVar14[2] - *(float *)(pcVar22 + 0x30)) +
+                    (pfVar14[1] - *(float *)(pcVar22 + 0x2c)) *
+                    (pfVar14[1] - *(float *)(pcVar22 + 0x2c)) <=
+                  (pfVar14[5] + *(float *)(pcVar22 + 0x34)) *
+                  (pfVar14[5] + *(float *)(pcVar22 + 0x34))) {
+LAB_8274ce98:
+                iVar8 = iVar11 * 0x2008;
+                piVar25 = &DAT_847ba0c0 + iVar11 * 0x802;
+                iVar9 = (&DAT_847ba0c0)[iVar11 * 0x802];
+                iVar10 = R_AddXModelSurfaces(pfVar14 + -7,pfVar14[-6],0x1a,piVar25 + (iVar9 + 1) * 2
+                                             ,iVar8 + -0x7b843f38);
+                *piVar25 = (iVar10 - (int)(piVar25 + (iVar9 + 1) * 2) >> 3) + *piVar25;
+                if (((*pcVar22 == '\x02') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+                   (*(char *)(DAT_845aa7ec + 0xc) != '\0')) {
+                  if (iVar11 != 0) {
+                    MyAssertHandler(0xffffffff821c6444,900,0,
+                                    "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
+                                    ,iVar11,1);
+                  }
+                  piVar25 = (int *)(&DAT_847c20e0 + iVar8);
+                  iVar9 = *(int *)(&DAT_847c20e0 + iVar8);
+                  iVar11 = R_AddXModelSurfaces(pfVar14 + -7,pfVar14[-6],0x1a,
+                                               piVar25 + (iVar9 + 1) * 2,
+                                               &DAT_847c40e8 + iVar11 * 0x802);
+                  *piVar25 = (iVar11 - (int)(piVar25 + (iVar9 + 1) * 2) >> 3) + *piVar25;
+                }
+              }
+            }
+            else {
+              if (*(char *)(iVar7 + DAT_84628b00) != '\x02') {
+                MyAssertHandler(0xffffffff821c6444,0x375,0,&DAT_82000f98,
+                                "light->type == GFX_LIGHT_TYPE_SPOT");
+              }
+              iVar9 = R_SphereInPlanes((double)pfVar14[5],auStack_220 + iVar11 * 0x60,pfVar14);
+              if (iVar9 != 0) goto LAB_8274ce98;
+            }
+            uVar20 = uVar20 + 1;
+            iVar7 = iVar7 + 0x4c;
+          } while (uVar20 < *(uint *)(iVar6 + 0x1b0));
+        }
+      }
+      uVar18 = uVar18 + 1;
+      pfVar14 = pfVar14 + 0x12;
+    } while (uVar18 < uVar23);
+  }
+  iVar7 = *(int *)(DAT_8461658c + 0x2ac);
+  uVar16 = (ulonglong)DAT_847ee8dc;
+  if (uVar16 != 0) {
+    iVar11 = 0;
+    do {
+      iVar9 = *(int *)(DAT_8461658c + 0x20c) + iVar11;
+      uVar1 = *(ushort *)(iVar9 + 4);
+      uVar23 = (uint)uVar1;
+      if (*(char *)((uint)uVar1 + iVar7) == '\x01') {
+        if (DAT_835a2944 <= uVar23) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x44,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                          ,uVar23);
+        }
+        iVar10 = uVar23 * 0x20 + DAT_835a2950;
+        uVar18 = *(uint *)(DAT_8461658c + 0x20);
+        if (uVar18 < *(uint *)(iVar6 + 0x1b0)) {
+          iVar8 = (uVar18 + 0x1d00) * 0x4c;
+          do {
+            pcVar22 = (char *)(iVar8 + DAT_84628b00);
+            iVar13 = uVar18 - *(int *)(DAT_8461658c + 0x20);
+            if (*(char *)(iVar8 + DAT_84628b00) == '\x03') {
+              fVar2 = *(float *)(iVar10 + 0x14) - *(float *)(pcVar22 + 0x2c);
+              fVar3 = *(float *)(iVar10 + 0x18) - *(float *)(pcVar22 + 0x30);
+              fVar5 = *(float *)(pcVar22 + 0x34) + *(float *)(iVar10 + 0x1c);
+              fVar4 = *(float *)(iVar10 + 0x10) - *(float *)(pcVar22 + 0x28);
+              if (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 <= fVar5 * fVar5) {
+LAB_8274d120:
+                iVar24 = iVar13 * 0x2008;
+                piVar25 = &DAT_847ba0c0 + iVar13 * 0x802;
+                iVar15 = (&DAT_847ba0c0)[iVar13 * 0x802];
+                if (DAT_835a2944 <= uVar1) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                                  ,0x3d,0,
+                                  "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                                  ,uVar23);
+                }
+                iVar12 = R_AddXModelSurfaces(iVar9,*(undefined4 *)
+                                                    ((uint)uVar1 * 0x60 + DAT_835a2948 + 0x20),0x1a,
+                                             piVar25 + (iVar15 + 1) * 2,iVar24 + -0x7b843f38);
+                *piVar25 = (iVar12 - (int)(piVar25 + (iVar15 + 1) * 2) >> 3) + *piVar25;
+                if (((*pcVar22 == '\x02') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+                   (*(char *)(DAT_845aa7ec + 0xc) != '\0')) {
+                  if (iVar13 != 0) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                    ,0x3bc,0,
+                                    "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
+                                    ,iVar13,1);
+                  }
+                  piVar25 = (int *)(&DAT_847c20e0 + iVar24);
+                  iVar15 = *(int *)(&DAT_847c20e0 + iVar24);
+                  if (DAT_835a2944 <= uVar1) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                                    ,0x3d,0,
+                                    "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                                    ,uVar23);
+                  }
+                  iVar13 = R_AddXModelSurfaces(iVar9,*(undefined4 *)
+                                                      ((uint)uVar1 * 0x60 + DAT_835a2948 + 0x20),
+                                               0x1a,piVar25 + (iVar15 + 1) * 2,
+                                               &DAT_847c40e8 + iVar13 * 0x802);
+                  *piVar25 = (iVar13 - (int)(piVar25 + (iVar15 + 1) * 2) >> 3) + *piVar25;
+                }
+              }
+            }
+            else {
+              if (*(char *)(iVar8 + DAT_84628b00) != '\x02') {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                ,0x3ac,0,&DAT_82000f98,"light->type == GFX_LIGHT_TYPE_SPOT");
+              }
+              iVar15 = R_SphereInPlanes((double)*(float *)(iVar10 + 0x1c),
+                                        auStack_220 + iVar13 * 0x60,(float *)(iVar10 + 0x10));
+              if (iVar15 != 0) goto LAB_8274d120;
+            }
+            uVar18 = uVar18 + 1;
+            iVar8 = iVar8 + 0x4c;
+          } while (uVar18 < *(uint *)(iVar6 + 0x1b0));
+        }
+      }
+      uVar16 = uVar16 - 1;
+      iVar11 = iVar11 + 6;
+    } while (uVar16 != 0);
+  }
+  uVar23 = DAT_847e82d4;
+  uVar18 = 0;
+  if (DAT_847e82d4 != 0) {
+    puVar21 = &DAT_847e82e0;
+    do {
+      if ((&DAT_847ed2dc)[uVar18] == '\x01') {
+        pfVar14 = (float *)*puVar21;
+        uVar20 = *(uint *)(DAT_8461658c + 0x20);
+        if (uVar20 < *(uint *)(iVar6 + 0x1b0)) {
+          iVar7 = (uVar20 + 0x1d00) * 0x4c;
+          do {
+            pcVar22 = (char *)(iVar7 + DAT_84628b00);
+            iVar11 = uVar20 - *(int *)(DAT_8461658c + 0x20);
+            if (*(char *)(iVar7 + DAT_84628b00) == '\x03') {
+              dVar28 = (double)(ABS(*(float *)(pcVar22 + 0x28) - *pfVar14) - pfVar14[3]);
+              dVar27 = (double)(ABS(*(float *)(pcVar22 + 0x2c) - pfVar14[1]) - pfVar14[4]);
+              dVar26 = (double)(ABS(*(float *)(pcVar22 + 0x30) - pfVar14[2]) - pfVar14[5]);
+              if (dVar28 < 0.0) {
+                dVar28 = dVar29;
+              }
+              if (dVar27 < 0.0) {
+                dVar27 = dVar29;
+              }
+              if (dVar26 < 0.0) {
+                dVar26 = dVar29;
+              }
+              if ((float)(dVar26 * dVar26 +
+                         (double)(float)(dVar27 * dVar27 + (double)(float)(dVar28 * dVar28))) <=
+                  *(float *)(pcVar22 + 0x34) * *(float *)(pcVar22 + 0x34)) {
+LAB_8274d3e0:
+                iVar8 = iVar11 * 0x2008;
+                piVar25 = &DAT_847ba0c0 + iVar11 * 0x802;
+                iVar9 = (&DAT_847ba0c0)[iVar11 * 0x802];
+                iVar10 = R_AddBModelSurfaces(puVar21 + -1,*puVar21,0x1a,piVar25 + (iVar9 + 1) * 2,
+                                             iVar8 + -0x7b843f38);
+                *piVar25 = (iVar10 - (int)(piVar25 + (iVar9 + 1) * 2) >> 3) + *piVar25;
+                if (((*pcVar22 == '\x02') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+                   (*(char *)(DAT_845aa7ec + 0xc) != '\0')) {
+                  if (iVar11 != 0) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                    ,0x3f2,0,
+                                    "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
+                                    ,iVar11,1);
+                  }
+                  piVar25 = (int *)(&DAT_847c20e0 + iVar8);
+                  iVar9 = *(int *)(&DAT_847c20e0 + iVar8);
+                  iVar11 = R_AddBModelSurfaces(puVar21 + -1,*puVar21,0x1a,piVar25 + (iVar9 + 1) * 2,
+                                               &DAT_847c40e8 + iVar11 * 0x802);
+                  *piVar25 = (iVar11 - (int)(piVar25 + (iVar9 + 1) * 2) >> 3) + *piVar25;
+                }
+              }
+            }
+            else {
+              if (*(char *)(iVar7 + DAT_84628b00) != '\x02') {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                ,0x3e3,0,&DAT_82000f98,"light->type == GFX_LIGHT_TYPE_SPOT");
+              }
+              iVar9 = R_BoxInPlanes(auStack_220 + iVar11 * 0x60,pfVar14);
+              if (iVar9 != 0) goto LAB_8274d3e0;
+            }
+            uVar20 = uVar20 + 1;
+            iVar7 = iVar7 + 0x4c;
+          } while (uVar20 < *(uint *)(iVar6 + 0x1b0));
+        }
+      }
+      uVar18 = uVar18 + 1;
+      puVar21 = puVar21 + 10;
+    } while (uVar18 < uVar23);
+  }
+  iVar7 = *(int *)(DAT_8461658c + 0x2b8);
+  uVar16 = (ulonglong)DAT_847ee8e0;
+  if (uVar16 != 0) {
+    iVar11 = 0;
+    do {
+      iVar9 = *(int *)(DAT_8461658c + 0x210) + iVar11;
+      uVar23 = (uint)*(ushort *)(iVar9 + 2);
+      if (*(char *)((uint)*(ushort *)(iVar9 + 2) + iVar7) == '\x01') {
+        if (DAT_835a2946 <= uVar23) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                          ,uVar23);
+        }
+        pfVar14 = (float *)R_GetBrushModel(*(undefined2 *)(uVar23 * 0x60 + DAT_835a294c + 0x24));
+        uVar23 = *(uint *)(DAT_8461658c + 0x20);
+        if (uVar23 < *(uint *)(iVar6 + 0x1b0)) {
+          iVar10 = (uVar23 + 0x1d00) * 0x4c;
+          do {
+            pcVar22 = (char *)(iVar10 + DAT_84628b00);
+            iVar8 = uVar23 - *(int *)(DAT_8461658c + 0x20);
+            if (*(char *)(iVar10 + DAT_84628b00) == '\x03') {
+              dVar28 = (double)(ABS(*(float *)(pcVar22 + 0x28) - *pfVar14) - pfVar14[3]);
+              dVar27 = (double)(ABS(*(float *)(pcVar22 + 0x2c) - pfVar14[1]) - pfVar14[4]);
+              dVar26 = (double)(ABS(*(float *)(pcVar22 + 0x30) - pfVar14[2]) - pfVar14[5]);
+              if (dVar28 < 0.0) {
+                dVar28 = dVar29;
+              }
+              if (dVar27 < 0.0) {
+                dVar27 = dVar29;
+              }
+              if (dVar26 < 0.0) {
+                dVar26 = dVar29;
+              }
+              if ((float)(dVar26 * dVar26 +
+                         (double)(float)(dVar27 * dVar27 + (double)(float)(dVar28 * dVar28))) <=
+                  *(float *)(pcVar22 + 0x34) * *(float *)(pcVar22 + 0x34)) {
+LAB_8274d674:
+                iVar24 = iVar8 * 0x2008;
+                piVar25 = &DAT_847ba0c0 + iVar8 * 0x802;
+                iVar13 = (&DAT_847ba0c0)[iVar8 * 0x802];
+                iVar15 = R_AddBModelSurfaces(iVar9,pfVar14,0x1a,piVar25 + (iVar13 + 1) * 2,
+                                             iVar24 + -0x7b843f38);
+                *piVar25 = (iVar15 - (int)(piVar25 + (iVar13 + 1) * 2) >> 3) + *piVar25;
+                if (((*pcVar22 == '\x02') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+                   (*(char *)(DAT_845aa7ec + 0xc) != '\0')) {
+                  if (iVar8 != 0) {
+                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                    ,0x429,0,
+                                    "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
+                                    ,iVar8,1);
+                  }
+                  piVar25 = (int *)(&DAT_847c20e0 + iVar24);
+                  iVar13 = *(int *)(&DAT_847c20e0 + iVar24);
+                  iVar8 = R_AddBModelSurfaces(iVar9,pfVar14,0x1a,piVar25 + (iVar13 + 1) * 2,
+                                              &DAT_847c40e8 + iVar8 * 0x802);
+                  *piVar25 = (iVar8 - (int)(piVar25 + (iVar13 + 1) * 2) >> 3) + *piVar25;
+                }
+              }
+            }
+            else {
+              if (*(char *)(iVar10 + DAT_84628b00) != '\x02') {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
+                                ,0x41a,0,&DAT_82000f98,"light->type == GFX_LIGHT_TYPE_SPOT");
+              }
+              iVar13 = R_BoxInPlanes(auStack_220 + iVar8 * 0x60,pfVar14);
+              if (iVar13 != 0) goto LAB_8274d674;
+            }
+            uVar23 = uVar23 + 1;
+            iVar10 = iVar10 + 0x4c;
+          } while (uVar23 < *(uint *)(iVar6 + 0x1b0));
+        }
+      }
+      uVar16 = uVar16 - 1;
+      iVar11 = iVar11 + 4;
+    } while (uVar16 != 0);
+  }
+  __restgprlr();
+  return;
+}
+
+
+// 8274D790  R_GetTechniqueForDynamicLightType  (gfx_d3d/r_light.cpp:1081)
+
+void R_GetTechniqueForDynamicLightType(undefined8 param_1,ulonglong param_2)
+
+{
+  char cVar1;
+  char *pcVar2;
+  int iVar3;
+  
+  pcVar2 = (char *)__savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x43f,0,0xffffffff82000f98,0xffffffff821c680c);
+  }
+  cVar1 = *pcVar2;
+  if (cVar1 != '\x02') {
+    if (cVar1 != '\x03') {
+      MyAssertHandler(0xffffffff821c6444,0x469,0,0xffffffff821c6968,cVar1,3);
+    }
+    __restgprlr_27(0x1a);
+    return;
+  }
+  if (*(int *)(DAT_84628b00 + 0x23e8) != 1) {
+    MyAssertHandler(0xffffffff821c6444,0x45a,0,0xffffffff82000f98,0xffffffff821c6938);
+  }
+  if (((*(char *)((int)param_2 + 0x924) != '\0') && (*(char *)(DAT_845aa710 + 0xc) != '\0')) &&
+     (iVar3 = Com_BitCheckAssert(DAT_84628b00 + 0x1524,*(undefined4 *)(DAT_8461658c + 0x20),0x20),
+     iVar3 != 0)) {
+    if (*(int *)(pcVar2 + 0x48) == 0) {
+      MyAssertHandler(0xffffffff821c6444,0x45e,0,0xffffffff82000f98,0xffffffff821c692c);
+    }
+    __restgprlr_27((*(int *)(*(int *)(pcVar2 + 0x48) + 0xc) != 0) + '\x1b');
+    return;
+  }
+  __restgprlr_27(0x19);
+  return;
 }
 
 
 // 8274D8E0  R_EmitDynamicLightSurfs  (gfx_d3d/r_light.cpp:1136)
 
-void R_EmitDynamicLightSurfs(void)
+void R_EmitDynamicLightSurfs(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  
+  iVar2 = __savegprlr_18();
+  if (DAT_84628b00 == 0) {
+    MyAssertHandler(0xffffffff821c6444,0x479,0,0xffffffff82000f98,0xffffffff821b90d8);
+  }
+  uVar6 = *(uint *)(DAT_8461658c + 0x20);
+  if (uVar6 < *(uint *)(iVar2 + 0x1b0)) {
+    iVar4 = (uVar6 + 0x1d00) * 0x4c;
+    do {
+      iVar5 = uVar6 - *(int *)(DAT_8461658c + 0x20);
+      uVar1 = (&DAT_847ba0c0)[iVar5 * 0x802];
+      iVar7 = iVar4 + DAT_84628b00;
+      R_SortDrawSurfs(&DAT_847ba0c8 + iVar5 * 0x2008,uVar1);
+      iVar8 = iVar5 * 0x1f8 + DAT_84628b00;
+      uVar3 = R_GetTechniqueForDynamicLightType(iVar7,iVar2);
+      *(undefined4 *)(iVar8 + 0x1c50) = uVar3;
+      *(int *)(iVar8 + 0x1c54) = iVar2;
+      *(undefined4 *)(iVar8 + 0x1c58) = *param_2;
+      *(undefined4 *)(iVar8 + 0x1c5c) = param_2[1];
+      *(undefined4 *)(iVar8 + 0x1c60) = param_2[2];
+      *(uint *)(iVar8 + 0x1c64) = uVar6;
+      *(undefined4 *)(iVar8 + 0x1c68) = 1;
+      *(undefined4 *)(iVar8 + 0x1c6c) = 0;
+      R_EmitDrawSurfList(&DAT_847ba0c8 + iVar5 * 0x2008,uVar1,iVar8 + 0x1c00);
+      uVar6 = uVar6 + 1;
+      iVar4 = iVar4 + 0x4c;
+    } while (uVar6 < *(uint *)(iVar2 + 0x1b0));
+  }
+  __restgprlr_18();
+  return;
 }
 

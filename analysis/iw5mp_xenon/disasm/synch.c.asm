@@ -29,11 +29,145 @@ LAB_828ab244:
 ; 828AB258  CreateSemaphoreA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:177)
   828AB258  7D8802A6             mfspr r12,LR
   828AB25C  4806B461             bl 0x829166bc
+  828AB260  9421FF70             stwu r1,-0x90(r1)
+  828AB264  7C9E2378             or r30,r4,r4
+  828AB268  7CBD2B78             or r29,r5,r5
+  828AB26C  7CDF3378             or r31,r6,r6
+  828AB270  7DAD6B78             or r13,r13,r13
+  828AB274  2B1F0000             cmplwi cr6,r31,0x0
+  828AB278  419A001C             beq cr6,0x828ab294
+  828AB27C  7FE5FB78             or r5,r31,r31
+  828AB280  38810058             addi r4,r1,0x58
+  828AB284  38610060             addi r3,r1,0x60
+  828AB288  48009C79             bl 0x828b4f00
+  828AB28C  7C641B78             or r4,r3,r3
+  828AB290  48000008             b 0x828ab298
+LAB_828ab294:
+  828AB294  38800000             li r4,0x0
+LAB_828ab298:
+  828AB298  7FA6EB78             or r6,r29,r29
+  828AB29C  7FC5F378             or r5,r30,r30
+  828AB2A0  38610050             addi r3,r1,0x50
+  828AB2A4  48096D51             bl 0x82941ff4
+  828AB2A8  2C030000             cmpwi r3,0x0
+  828AB2AC  41800028             blt 0x828ab2d4
+  828AB2B0  3D604000             lis r11,0x4000
+  828AB2B4  7F035800             cmpw cr6,r3,r11
+  828AB2B8  386000B7             li r3,0xb7
+  828AB2BC  419A0008             beq cr6,0x828ab2c4
+  828AB2C0  38600000             li r3,0x0
+LAB_828ab2c4:
+  828AB2C4  48000B6D             bl 0x828abe30
+  828AB2C8  7DCE7378             or r14,r14,r14
+  828AB2CC  80610050             lwz r3,0x50(r1)
+  828AB2D0  48000010             b 0x828ab2e0
+LAB_828ab2d4:
+  828AB2D4  48001015             bl 0x828ac2e8
+  828AB2D8  7DCE7378             or r14,r14,r14
+  828AB2DC  38600000             li r3,0x0
+LAB_828ab2e0:
+  828AB2E0  38210090             addi r1,r1,0x90
+  828AB2E4  4806B428             b 0x8291670c
 
 ; 828AB2E8  ReleaseSemaphore  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:299)
   828AB2E8  7D8802A6             mfspr r12,LR
   828AB2EC  4806B3D1             bl 0x829166bc
+  828AB2F0  9421FF90             stwu r1,-0x70(r1)
+  828AB2F4  7C7F1B78             or r31,r3,r3
+  828AB2F8  7C9E2378             or r30,r4,r4
+  828AB2FC  7CBD2B78             or r29,r5,r5
+  828AB300  7DAD6B78             or r13,r13,r13
+  828AB304  7FA5EB78             or r5,r29,r29
+  828AB308  7FC4F378             or r4,r30,r30
+  828AB30C  7FE3FB78             or r3,r31,r31
+  828AB310  48096CF5             bl 0x82942004
+  828AB314  2C030000             cmpwi r3,0x0
+  828AB318  41800010             blt 0x828ab328
+  828AB31C  7DCE7378             or r14,r14,r14
+  828AB320  38600001             li r3,0x1
+  828AB324  48000010             b 0x828ab334
+LAB_828ab328:
+  828AB328  48000FC1             bl 0x828ac2e8
+  828AB32C  7DCE7378             or r14,r14,r14
+  828AB330  38600000             li r3,0x0
+LAB_828ab334:
+  828AB334  38210070             addi r1,r1,0x70
+  828AB338  4806B3D4             b 0x8291670c
 
 ; 828AB408  WaitForMultipleObjects  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:404)
   828AB408  7D8802A6             mfspr r12,LR
   828AB40C  4806B2AD             bl 0x829166b8
+  828AB410  9421FF80             stwu r1,-0x80(r1)
+  828AB414  7C7F1B78             or r31,r3,r3
+  828AB418  7C9E2378             or r30,r4,r4
+  828AB41C  7CBD2B78             or r29,r5,r5
+  828AB420  7CDC3378             or r28,r6,r6
+  828AB424  7DAD6B78             or r13,r13,r13
+  828AB428  38E00000             li r7,0x0
+  828AB42C  7F86E378             or r6,r28,r28
+  828AB430  7FA5EB78             or r5,r29,r29
+  828AB434  7FC4F378             or r4,r30,r30
+  828AB438  7FE3FB78             or r3,r31,r31
+  828AB43C  4BFFFF05             bl 0x828ab340
+  828AB440  7C7F1B78             or r31,r3,r3
+  828AB444  7DCE7378             or r14,r14,r14
+  828AB448  7FE3FB78             or r3,r31,r31
+  828AB44C  38210080             addi r1,r1,0x80
+  828AB450  4806B2B8             b 0x82916708
+
+; 828AB340  WaitForMultipleObjectsEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:486)
+  828AB340  7D8802A6             mfspr r12,LR
+  828AB344  4806B36D             bl 0x829166b0
+  828AB348  9421FE60             stwu r1,-0x1a0(r1)
+  828AB34C  7C7F1B78             or r31,r3,r3
+  828AB350  7C9E2378             or r30,r4,r4
+  828AB354  7CBD2B78             or r29,r5,r5
+  828AB358  7CDC3378             or r28,r6,r6
+  828AB35C  7CFA3B78             or r26,r7,r7
+  828AB360  7DAD6B78             or r13,r13,r13
+  828AB364  2B1F0040             cmplwi cr6,r31,0x40
+  828AB368  4099001C             ble cr6,0x828ab384
+  828AB36C  3C60C000             lis r3,-0x4000
+  828AB370  6063000D             ori r3,r3,0xd
+  828AB374  48000F75             bl 0x828ac2e8
+  828AB378  7DCE7378             or r14,r14,r14
+  828AB37C  3860FFFF             li r3,-0x1
+  828AB380  48000080             b 0x828ab400
+LAB_828ab384:
+  828AB384  57E5103A             rlwinm r5,r31,0x2,0x0,0x1d
+  828AB388  7FC4F378             or r4,r30,r30
+  828AB38C  38610060             addi r3,r1,0x60
+  828AB390  4806B5D1             bl 0x82916960
+  828AB394  7F84E378             or r4,r28,r28
+  828AB398  38610050             addi r3,r1,0x50
+  828AB39C  48009D05             bl 0x828b50a0
+  828AB3A0  7FAB0034             cntlzw r11,r29
+  828AB3A4  7C7E1B78             or r30,r3,r3
+  828AB3A8  575D063E             rlwinm r29,r26,0x0,0x18,0x1f
+  828AB3AC  557CDFFE             rlwinm r28,r11,0x1b,0x1f,0x1f
+  828AB3B0  7FFB0774             extsb r27,r31
+LAB_828ab3b4:
+  828AB3B4  7FC8F378             or r8,r30,r30
+  828AB3B8  7FA7EB78             or r7,r29,r29
+  828AB3BC  38C00001             li r6,0x1
+  828AB3C0  7F85E378             or r5,r28,r28
+  828AB3C4  38810060             addi r4,r1,0x60
+  828AB3C8  7F63DB78             or r3,r27,r27
+  828AB3CC  48096C49             bl 0x82942014
+  828AB3D0  7C7F1B79             or. r31,r3,r3
+  828AB3D4  41800018             blt 0x828ab3ec
+  828AB3D8  2F1A0000             cmpwi cr6,r26,0x0
+  828AB3DC  419A001C             beq cr6,0x828ab3f8
+  828AB3E0  2F1F0101             cmpwi cr6,r31,0x101
+  828AB3E4  419AFFD0             beq cr6,0x828ab3b4
+  828AB3E8  48000010             b 0x828ab3f8
+LAB_828ab3ec:
+  828AB3EC  7FE3FB78             or r3,r31,r31
+  828AB3F0  48000EF9             bl 0x828ac2e8
+  828AB3F4  3BE0FFFF             li r31,-0x1
+LAB_828ab3f8:
+  828AB3F8  7DCE7378             or r14,r14,r14
+  828AB3FC  7FE3FB78             or r3,r31,r31
+LAB_828ab400:
+  828AB400  382101A0             addi r1,r1,0x1a0
+  828AB404  4806B2FC             b 0x82916700

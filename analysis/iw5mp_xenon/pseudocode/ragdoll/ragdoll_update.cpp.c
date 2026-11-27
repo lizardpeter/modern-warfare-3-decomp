@@ -2,11 +2,35 @@
 
 // 826A4848  Ragdoll_QuatMul  (ragdoll/ragdoll_quat.h:13)
 
-void Ragdoll_QuatMul(void)
+void Ragdoll_QuatMul(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  ulonglong uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  
+  uVar4 = __savegprlr_29();
+  if (((uVar4 & 0xffffffff) == (param_3 & 0xffffffff)) ||
+     ((param_2 & 0xffffffff) == (param_3 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff8219bf70,0x11,0,0xffffffff82000f98,0xffffffff8219bfb4);
+  }
+  pfVar3 = (float *)uVar4;
+  fVar1 = pfVar3[3];
+  pfVar5 = (float *)param_2;
+  fVar2 = pfVar5[3];
+  pfVar6 = (float *)param_3;
+  *pfVar6 = -(pfVar3[2] * pfVar5[1] - (pfVar5[2] * pfVar3[1] + *pfVar3 * fVar2 + *pfVar5 * fVar1));
+  pfVar6[1] = -(*pfVar3 * pfVar5[2] - (fVar1 * pfVar5[1] + pfVar3[2] * *pfVar5 + fVar2 * pfVar3[1]))
+  ;
+  pfVar6[2] = -(*pfVar5 * pfVar3[1] - (pfVar5[2] * fVar1 + pfVar3[2] * fVar2 + *pfVar3 * pfVar5[1]))
+  ;
+  pfVar6[3] = -(pfVar3[2] * pfVar5[2] -
+               -(pfVar3[1] * pfVar5[1] - (fVar2 * fVar1 - *pfVar3 * *pfVar5)));
+  __restgprlr_29();
+  return;
 }
 
 
@@ -23,6 +47,34 @@ void Ragdoll_CopyMirrorQuat(undefined4 *param_1,char param_2,undefined4 *param_3
   param_3[1] = param_1[1];
   param_3[2] = param_1[2];
   param_3[3] = param_1[3];
+  return;
+}
+
+
+// 826A4DE0  Ragdoll_CalcPoseForParts  (ragdoll/ragdoll_update.cpp:58)
+
+void Ragdoll_CalcPoseForParts(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  undefined1 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x42,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x43,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjLock(param_2);
+  uVar1 = *(undefined1 *)(iVar3 + 4);
+  *(undefined1 *)(iVar3 + 4) = 0;
+  uVar2 = CG_DObjCalcPose(iVar3,param_2,param_3);
+  *(undefined1 *)(iVar3 + 4) = uVar1;
+  DObjUnlock(param_2);
+  CG_UsedDObjCalcPose(iVar3);
+  __restgprlr_27(uVar2);
   return;
 }
 
@@ -47,7 +99,6 @@ void Ragdoll_QuatInverse(float *param_1,float *param_2)
   {
     uVar1 = va(dVar2,(double)param_1[1],dVar4,dVar3,0xffffffff8200c4fc,dVar2,(double)param_1[1],
                dVar4,dVar3);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bf70,0x57,0,0xffffffff820011f4,0xffffffff8219bfd0,uVar1);
   }
   *param_2 = -*param_1;
@@ -60,11 +111,77 @@ void Ragdoll_QuatInverse(float *param_1,float *param_2)
 
 // 826A4E98  Ragdoll_GetDObjBaseBoneMatrix  (ragdoll/ragdoll_update.cpp:91)
 
-void Ragdoll_GetDObjBaseBoneMatrix(void)
+void Ragdoll_GetDObjBaseBoneMatrix(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetBasePoseMatrix(uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
+}
+
+
+// 826A4EF8  Ragdoll_GetDObjBaseBoneOrigin  (ragdoll/ragdoll_update.cpp:99)
+
+void Ragdoll_GetDObjBaseBoneOrigin
+               (undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  ulonglong uVar1;
+  float *pfVar2;
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_24();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x66,0,0xffffffff82000f98,0xffffffff820040b4);
+    MyAssertHandler(0xffffffff8219bfe8,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetBasePoseMatrix(uVar1,param_4,auStack_70);
+  Vec3Rotate(auStack_60,param_3,param_5);
+  pfVar2 = (float *)param_5;
+  *pfVar2 = *param_2 + *pfVar2;
+  pfVar2[1] = param_2[1] + pfVar2[1];
+  pfVar2[2] = param_2[2] + pfVar2[2];
+  __restgprlr_24(1);
+  return;
+}
+
+
+// 826A4FC8  Ragdoll_GetDObjBaseBoneOriginQuat  (ragdoll/ragdoll_update.cpp:114)
+
+void Ragdoll_GetDObjBaseBoneOriginQuat
+               (undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
+
+{
+  ulonglong uVar1;
+  float *pfVar2;
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_23();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x76,0,0xffffffff82000f98,0xffffffff820040b4);
+    MyAssertHandler(0xffffffff8219bfe8,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  DObjGetBasePoseMatrix(uVar1,param_4,auStack_70);
+  Ragdoll_Mat33ToQuat(param_3,auStack_80);
+  Ragdoll_QuatMul(auStack_80,auStack_70,param_6);
+  Vec3Rotate(auStack_60,param_3,param_5);
+  pfVar2 = (float *)param_5;
+  *pfVar2 = *param_2 + *pfVar2;
+  pfVar2[1] = param_2[1] + pfVar2[1];
+  pfVar2[2] = param_2[2] + pfVar2[2];
+  __restgprlr_23(1);
+  return;
 }
 
 
@@ -96,23 +213,374 @@ void Ragdoll_QuatPointRotate(undefined4 *param_1,undefined8 param_2,undefined4 *
 }
 
 
-// 826A5130  Ragdoll_AnimMatToMat43  (ragdoll/ragdoll_update.cpp:144)
+// 826A50B8  Ragdoll_PoseInvAxis  (ragdoll/ragdoll_update.cpp:133)
 
-void Ragdoll_AnimMatToMat43(void)
+void Ragdoll_PoseInvAxis(ulonglong param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 auStack_40 [40];
+  
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x88,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  AnglesToAxis(param_1 + 0x20,auStack_40);
+  AxisTranspose(auStack_40,param_2);
+  return;
+}
+
+
+// 826A5130  Ragdoll_AnimMatToMat43  (ragdoll/ragdoll_update.cpp:144)
+
+void Ragdoll_AnimMatToMat43(undefined8 param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float *pfVar9;
+  
+  pfVar9 = (float *)__savegprlr_27();
+  if (((uint)*pfVar9 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar9[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar9[2] & 0x7f800000) != 0x7f800000) {
+        if (((uint)pfVar9[3] & 0x7f800000) != 0x7f800000) goto LAB_826a51d4;
+      }
+    }
+  }
+  MyAssertHandler(0xffffffff8219be48,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
+LAB_826a51d4:
+  if (((uint)pfVar9[7] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8219be48,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+  }
+  fVar1 = pfVar9[2];
+  fVar2 = pfVar9[7];
+  fVar3 = pfVar9[1];
+  fVar7 = fVar3 * fVar2;
+  fVar8 = *pfVar9 * fVar2;
+  fVar4 = pfVar9[3];
+  fVar5 = fVar1 * fVar1 * fVar2;
+  fVar6 = *pfVar9 * fVar8;
+  fVar2 = fVar4 * fVar1 * fVar2;
+  param_2[2] = fVar1 * fVar8 - fVar4 * fVar7;
+  param_2[5] = fVar1 * fVar7 + fVar4 * fVar8;
+  param_2[1] = fVar2 + fVar3 * fVar8;
+  param_2[3] = fVar3 * fVar8 - fVar2;
+  param_2[6] = fVar4 * fVar7 + fVar1 * fVar8;
+  *param_2 = 1.0 - (fVar5 + fVar3 * fVar7);
+  param_2[4] = 1.0 - (fVar5 + fVar6);
+  param_2[7] = fVar1 * fVar7 - fVar4 * fVar8;
+  param_2[8] = 1.0 - (fVar3 * fVar7 + fVar6);
+  param_2[9] = pfVar9[4];
+  param_2[10] = pfVar9[5];
+  param_2[0xb] = pfVar9[6];
+  __restgprlr_27();
+  return;
 }
 
 
 // 826A8488  Ragdoll_SnapshotBaseLerpBones  (ragdoll/ragdoll_update.cpp:151)
 
-void Ragdoll_SnapshotBaseLerpBones(void)
+void Ragdoll_SnapshotBaseLerpBones(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte bVar1;
+  byte bVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  int iVar16;
+  int iVar17;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  int iVar18;
+  int *piVar19;
+  float *pfVar20;
+  uint *puVar21;
+  ulonglong uVar22;
+  ulonglong uVar23;
+  float *pfVar24;
+  float *pfVar25;
+  uint *puVar26;
+  float *pfVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  float local_240;
+  float local_23c;
+  float local_238;
+  float local_234;
+  float local_230;
+  float local_22c;
+  float local_228;
+  uint local_224;
+  float local_220;
+  char *local_21c;
+  float local_218;
+  float local_214;
+  float local_210;
+  uint local_200 [8];
+  float local_1e0;
+  float local_1dc;
+  float local_1d8;
+  float local_1d4;
+  float local_1d0;
+  float local_1cc;
+  float local_1c8;
+  float local_1c4;
+  float local_1c0;
+  float local_1bc;
+  float local_1b8;
+  float local_1b4;
+  float local_1b0;
+  float local_1ac;
+  float local_1a8;
+  float local_1a4;
+  longlong local_1a0;
+  longlong local_198;
+  undefined1 auStack_190 [36];
+  float local_16c;
+  float local_168;
+  float local_164;
+  undefined1 auStack_160 [48];
+  undefined1 auStack_130 [48];
+  undefined1 auStack_100 [256];
+  
   __savegprlr();
+  iVar16 = __savefpr_25();
+  iVar17 = Ragdoll_BodyDef();
+  if (iVar17 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0xb4,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  uVar14 = Ragdoll_BodyDObj(iVar16);
+  if (((uVar14 & 0xffffffff) != 0) &&
+     (uVar15 = Ragdoll_BodyPose(iVar16), (uVar15 & 0xffffffff) != 0)) {
+    puVar21 = (uint *)(iVar16 + 0x8fc);
+    local_200[0] = 0;
+    local_200[1] = 0;
+    local_200[2] = 0;
+    local_200[3] = 0;
+    local_200[4] = 0;
+    local_200[5] = 0;
+    local_21c = "boneIdx != parentBoneIdx";
+    uVar22 = (ulonglong)*(uint *)(iVar17 + 0x468);
+    puVar26 = puVar21;
+    for (uVar23 = uVar22; uVar23 != 0; uVar23 = uVar23 - 1) {
+      bVar1 = *(byte *)(puVar26 + 1);
+      uVar7 = *puVar26;
+      uVar9 = bVar1 >> 3 & 0x1ffffffc;
+      uVar8 = *(uint *)(iVar16 + 0x18);
+      *(uint *)((int)local_200 + uVar9) =
+           (&DAT_82992400)[bVar1 & 0x1f] | *(uint *)((int)local_200 + uVar9);
+      if (uVar8 <= uVar7) {
+        MyAssertHandler(0xffffffff8219bfe8,0xd0,0,0xffffffff8219c404,uVar7);
+      }
+      bVar2 = *(byte *)((uVar7 + 0x82) * 0x10 + iVar16);
+      if (bVar1 == bVar2) {
+        MyAssertHandler(0xffffffff8219bfe8,0xd4,0,0xffffffff82000f98,0xffffffff8219c3e8);
+      }
+      uVar7 = bVar2 >> 3 & 0x1ffffffc;
+      puVar26 = puVar26 + 2;
+      *(uint *)((int)local_200 + uVar7) =
+           (&DAT_82992400)[bVar2 & 0x1f] | *(uint *)((int)local_200 + uVar7);
+    }
+    iVar18 = Ragdoll_CalcPoseForParts(uVar15,uVar14,local_200);
+    if (iVar18 != 0) {
+      pfVar20 = (float *)(iVar16 + 0x6fc);
+      param_2 = ((ulonglong)*(uint *)(iVar16 + 0x18) & 0x7ffffff) * 0x20 + param_2;
+      if (uVar22 != 0) {
+        dVar32 = 400.0;
+        piVar19 = (int *)(iVar17 + 0x488);
+        dVar31 = 0.0;
+        dVar34 = 1.0;
+        pfVar24 = (float *)(iVar16 + 0x714);
+        do {
+          dVar33 = dVar34;
+          if (0 < *piVar19) {
+            local_198 = (longlong)*piVar19;
+            local_1a0 = (longlong)*(int *)(iVar16 + 0x108);
+            dVar29 = (double)((float)local_1a0 / (float)local_198);
+            dVar28 = dVar34;
+            if ((float)(dVar29 - dVar34) < 0.0) {
+              dVar28 = dVar29;
+            }
+            dVar33 = dVar31;
+            if (-dVar29 < 0.0) {
+              dVar33 = dVar28;
+            }
+          }
+          uVar7 = *puVar21;
+          bVar1 = *(byte *)(puVar21 + 1);
+          if (*(uint *)(iVar16 + 0x18) <= uVar7) {
+            MyAssertHandler(0xffffffff8219bfe8,0xf8,0,0xffffffff8219c404,uVar7);
+          }
+          iVar17 = Ragdoll_BodyBoneOrientations(iVar16);
+          pfVar25 = (float *)(iVar17 + uVar7 * 0x20);
+          bVar2 = *(byte *)((uVar7 + 0x82) * 0x10 + iVar16);
+          if ((uint)bVar1 == (uint)bVar2) {
+            MyAssertHandler(0xffffffff8219bfe8,0xfd,0,0xffffffff82000f98,local_21c);
+          }
+          iVar17 = (uint)bVar2 * 0x20;
+          pfVar27 = (float *)(iVar17 + iVar18);
+          local_224 = *(uint *)(iVar17 + iVar18);
+          if (((((local_224 & 0x7f800000) == 0x7f800000) ||
+               (local_220 = pfVar27[1], ((uint)local_220 & 0x7f800000) == 0x7f800000)) ||
+              (local_210 = pfVar27[2], ((uint)local_210 & 0x7f800000) == 0x7f800000)) ||
+             (local_214 = pfVar27[3], ((uint)local_214 & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8219be48,0x26d,0,0xffffffff82000f98,0xffffffff820159f0);
+          }
+          local_218 = pfVar27[7];
+          if (((uint)local_218 & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff8219be48,0x26e,0,0xffffffff82000f98,0xffffffff820159d4);
+          }
+          fVar3 = pfVar27[2];
+          fVar4 = pfVar27[7];
+          fVar5 = pfVar27[1];
+          fVar12 = fVar5 * fVar4;
+          fVar13 = *pfVar27 * fVar4;
+          fVar6 = pfVar27[3];
+          fVar10 = fVar3 * fVar3 * fVar4;
+          fVar11 = *pfVar27 * fVar13;
+          local_1c4 = fVar6 * fVar3 * fVar4;
+          local_1c8 = fVar6 * fVar12 + fVar3 * fVar13;
+          local_1b8 = fVar3 * fVar13 - fVar6 * fVar12;
+          local_1cc = fVar5 * fVar13 - local_1c4;
+          local_1c4 = local_1c4 + fVar5 * fVar13;
+          local_1bc = fVar3 * fVar12 - fVar6 * fVar13;
+          local_1d0 = (float)(dVar34 - (double)(fVar10 + fVar5 * fVar12));
+          local_1c0 = (float)(dVar34 - (double)(fVar10 + fVar11));
+          local_1b4 = fVar3 * fVar12 + fVar6 * fVar13;
+          local_1b0 = (float)(dVar34 - (double)(fVar5 * fVar12 + fVar11));
+          local_1ac = -(local_1c4 * pfVar27[5] + pfVar27[4] * local_1d0 + local_1b8 * pfVar27[6]);
+          local_1a8 = -(local_1c0 * pfVar27[5] + pfVar27[4] * local_1cc + local_1b4 * pfVar27[6]);
+          local_1a4 = -(pfVar27[4] * local_1c8 + local_1b0 * pfVar27[6] + local_1bc * pfVar27[5]);
+          Ragdoll_AnimMatToMat43((uint)bVar1 * 0x20 + iVar18,auStack_100);
+          MatrixMultiply43(auStack_100,&local_1d0,auStack_190);
+          AxisToQuat(auStack_190,&local_1e0);
+          dVar28 = (double)local_16c;
+          dVar30 = (double)local_168;
+          dVar29 = (double)local_164;
+          if ((double)SQRT((float)(dVar29 * dVar29 +
+                                  (double)(float)(dVar30 * dVar30 + (double)(float)(dVar28 * dVar28)
+                                                 ))) <= dVar32) {
+            local_240 = (float)((double)(float)((double)pfVar24[-2] - (double)local_1e0) * dVar33 +
+                               (double)local_1e0);
+            local_23c = (float)((double)(float)((double)pfVar24[-1] - (double)local_1dc) * dVar33 +
+                               (double)local_1dc);
+            local_238 = (float)((double)(float)((double)*pfVar24 - (double)local_1d8) * dVar33 +
+                               (double)local_1d8);
+            local_234 = (float)((double)(float)((double)pfVar24[1] - (double)local_1d4) * dVar33 +
+                               (double)local_1d4);
+            Vec4Normalize(&local_240);
+            local_230 = (float)((double)(float)((double)*pfVar20 - dVar28) * dVar33 + dVar28);
+            local_22c = (float)((double)(float)((double)pfVar24[-5] - dVar30) * dVar33 + dVar30);
+            local_228 = (float)((double)(float)((double)pfVar24[-4] - dVar29) * dVar33 + dVar29);
+          }
+          else {
+            local_240 = pfVar24[-2];
+            local_23c = pfVar24[-1];
+            local_238 = *pfVar24;
+            local_234 = pfVar24[1];
+            local_230 = *pfVar20;
+            local_22c = pfVar24[-5];
+            local_228 = pfVar24[-4];
+          }
+          Ragdoll_QuatMul(pfVar25 + 4,&local_240,param_2 + 0x10);
+          QuatToAxis(pfVar25 + 4,auStack_130);
+          AxisTranspose(auStack_130,auStack_160);
+          Vec3Rotate(&local_230,auStack_160,param_2);
+          pfVar27 = (float *)param_2;
+          uVar22 = uVar22 - 1;
+          *pfVar27 = *pfVar25 + *pfVar27;
+          piVar19 = piVar19 + 8;
+          puVar21 = puVar21 + 2;
+          pfVar27[1] = pfVar25[1] + pfVar27[1];
+          pfVar20 = pfVar20 + 8;
+          pfVar27[2] = pfVar25[2] + pfVar27[2];
+          pfVar24 = pfVar24 + 8;
+          param_2 = param_2 + 0x20;
+        } while (uVar22 != 0);
+      }
+      __restfpr_25(1);
+      __restgprlr();
+      return;
+    }
+    Ragdoll_BodyNewState(iVar16,0);
+  }
+  __restfpr_25(0);
+  __restgprlr();
+  return;
+}
+
+
+// 826A4B00  Ragdoll_Mat33ToQuat  (ragdoll/ragdoll_quat.h:174)
+
+void Ragdoll_Mat33ToQuat(float *param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  
+  fVar1 = param_1[4];
+  fVar2 = *param_1;
+  fVar3 = param_1[8];
+  fVar4 = fVar2 + fVar1 + fVar3 + 1.0;
+  if (1e-06 < fVar4) {
+    fVar1 = 0.5 / SQRT(fVar4);
+    *param_2 = (param_1[7] - param_1[5]) * fVar1;
+    param_2[1] = (param_1[2] - param_1[6]) * fVar1;
+    param_2[2] = (param_1[3] - param_1[1]) * fVar1;
+    param_2[3] = 0.25 / fVar1;
+    return;
+  }
+  if ((fVar1 < fVar2) && (fVar3 < fVar2)) {
+    fVar1 = SQRT(((fVar2 + 1.0) - fVar1) - fVar3) * 2.0;
+    *param_2 = fVar1 * 0.25;
+    fVar1 = 1.0 / fVar1;
+    param_2[1] = (param_1[3] + param_1[1]) * fVar1;
+    param_2[2] = (param_1[6] + param_1[2]) * fVar1;
+    param_2[3] = (param_1[5] - param_1[7]) * fVar1;
+    return;
+  }
+  if (fVar3 < fVar1) {
+    fVar4 = param_1[3];
+    fVar5 = param_1[1];
+    fVar2 = SQRT(((fVar1 + 1.0) - fVar2) - fVar3) * 2.0;
+    fVar1 = 1.0 / fVar2;
+    param_2[1] = fVar2 * 0.25;
+    *param_2 = (fVar4 + fVar5) * fVar1;
+    param_2[2] = (param_1[7] + param_1[5]) * fVar1;
+    param_2[3] = (param_1[2] - param_1[6]) * fVar1;
+    return;
+  }
+  fVar4 = SQRT(((fVar3 + 1.0) - fVar2) - fVar1) * 2.0;
+  fVar3 = 1.0 / fVar4;
+  *param_2 = (param_1[6] + param_1[2]) * fVar3;
+  fVar1 = param_1[5];
+  fVar2 = param_1[7];
+  param_2[2] = fVar4 * 0.25;
+  param_2[1] = (fVar2 + fVar1) * fVar3;
+  param_2[3] = (param_1[1] - param_1[3]) * fVar3;
+  return;
 }
 
 
@@ -162,7 +630,6 @@ void Ragdoll_SnapshotBonePositions(undefined8 param_1,ulonglong param_2)
   
   iVar2 = __savegprlr_22();
   if ((iVar2 == 0) || ((param_2 & 0xffffffff) == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,300,0,0xffffffff82000f98,0xffffffff8219c454);
   }
   cVar4 = Ragdoll_BodyHasPhysics(iVar2);
@@ -172,7 +639,6 @@ void Ragdoll_SnapshotBonePositions(undefined8 param_1,ulonglong param_2)
   }
   iVar3 = Ragdoll_BodyDef(iVar2);
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x132,0,0xffffffff82000f98,0xffffffff8206070c);
   }
   iVar5 = 0;
@@ -182,7 +648,6 @@ void Ragdoll_SnapshotBonePositions(undefined8 param_1,ulonglong param_2)
     lVar8 = param_2 + 0x18;
     do {
       if (*piVar7 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8219bfe8,0x13a,0,0xffffffff82000f98,0xffffffff8219c444);
       }
       Phys_ObjGetInterpolatedState(2,*piVar7,lVar8 + -0x18,&local_70);
@@ -214,7 +679,6 @@ bool Ragdoll_BodyIdle(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219b1e4,0x142,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   return *(int *)(param_1 + 0x104) == 5;
@@ -223,21 +687,182 @@ bool Ragdoll_BodyIdle(int param_1)
 
 // 826A8C28  Ragdoll_SnapshotAnimOrientations  (ragdoll/ragdoll_update.cpp:344)
 
-void Ragdoll_SnapshotAnimOrientations(void)
+void Ragdoll_SnapshotAnimOrientations(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  int iVar8;
+  byte *pbVar9;
+  undefined4 *puVar10;
+  float *pfVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint local_50 [20];
+  
+  iVar6 = __savegprlr_26();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x165,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar7 = Ragdoll_BodyDef(iVar6);
+  uVar4 = Ragdoll_BodyDObj(iVar6);
+  uVar5 = Ragdoll_BodyPose(iVar6);
+  if (((iVar7 != 0) && ((uVar4 & 0xffffffff) != 0)) && ((uVar5 & 0xffffffff) != 0)) {
+    uVar1 = *(uint *)(iVar6 + 0x18);
+    uVar13 = (ulonglong)uVar1;
+    iVar7 = iVar6 + 0x81c;
+    local_50[0] = 0;
+    local_50[1] = 0;
+    local_50[2] = 0;
+    local_50[3] = 0;
+    local_50[4] = 0;
+    local_50[5] = 0;
+    if (uVar13 != 0) {
+      pbVar9 = (byte *)(iVar6 + 0x810);
+      uVar14 = uVar13;
+      do {
+        pbVar9 = pbVar9 + 0x10;
+        uVar2 = *pbVar9 >> 3 & 0x1ffffffc;
+        *(uint *)((int)local_50 + uVar2) =
+             (&DAT_82992400)[*pbVar9 & 0x1f] | *(uint *)((int)local_50 + uVar2);
+        uVar14 = uVar14 - 1;
+      } while (uVar14 != 0);
+    }
+    iVar8 = Ragdoll_CalcPoseForParts(uVar5,uVar4,local_50);
+    if (iVar8 != 0) {
+      iVar6 = CG_GetLocalClientGlobals(*(undefined4 *)(iVar6 + 0x14));
+      uVar4 = 0;
+      if (3 < (int)uVar1) {
+        pfVar11 = (float *)(iVar6 + 0x6b9fc);
+        lVar12 = param_2 + -0x18;
+        do {
+          uVar4 = uVar4 + 4;
+          puVar10 = (undefined4 *)((uint)*(byte *)(iVar7 + 4) * 0x20 + iVar8);
+          iVar3 = (int)lVar12;
+          *(undefined4 *)(iVar3 + 0x28) = *puVar10;
+          *(undefined4 *)(iVar3 + 0x2c) = puVar10[1];
+          *(undefined4 *)(iVar3 + 0x30) = puVar10[2];
+          *(undefined4 *)(iVar3 + 0x34) = puVar10[3];
+          *(float *)param_2 = *pfVar11 + (float)puVar10[4];
+          *(float *)(iVar3 + 0x1c) = (float)puVar10[5] + *(float *)(iVar6 + 0x6ba00);
+          *(float *)(iVar3 + 0x20) = (float)puVar10[6] + *(float *)(iVar6 + 0x6ba04);
+          puVar10 = (undefined4 *)((uint)*(byte *)(iVar7 + 0x14) * 0x20 + iVar8);
+          *(undefined4 *)(iVar3 + 0x48) = *puVar10;
+          *(undefined4 *)(iVar3 + 0x4c) = puVar10[1];
+          *(undefined4 *)(iVar3 + 0x50) = puVar10[2];
+          *(undefined4 *)(iVar3 + 0x54) = puVar10[3];
+          *(float *)(iVar3 + 0x38) = *pfVar11 + (float)puVar10[4];
+          *(float *)(iVar3 + 0x3c) = (float)puVar10[5] + *(float *)(iVar6 + 0x6ba00);
+          *(float *)(iVar3 + 0x40) = (float)puVar10[6] + *(float *)(iVar6 + 0x6ba04);
+          puVar10 = (undefined4 *)((uint)*(byte *)(iVar7 + 0x24) * 0x20 + iVar8);
+          *(undefined4 *)(iVar3 + 0x68) = *puVar10;
+          *(undefined4 *)(iVar3 + 0x6c) = puVar10[1];
+          *(undefined4 *)(iVar3 + 0x70) = puVar10[2];
+          *(undefined4 *)(iVar3 + 0x74) = puVar10[3];
+          *(float *)(iVar3 + 0x58) = *pfVar11 + (float)puVar10[4];
+          *(float *)(iVar3 + 0x5c) = (float)puVar10[5] + *(float *)(iVar6 + 0x6ba00);
+          *(float *)(iVar3 + 0x60) = (float)puVar10[6] + *(float *)(iVar6 + 0x6ba04);
+          puVar10 = (undefined4 *)((uint)*(byte *)(iVar7 + 0x34) * 0x20 + iVar8);
+          *(undefined4 *)(iVar3 + 0x88) = *puVar10;
+          *(undefined4 *)(iVar3 + 0x8c) = puVar10[1];
+          *(undefined4 *)(iVar3 + 0x90) = puVar10[2];
+          *(undefined4 *)(iVar3 + 0x94) = puVar10[3];
+          param_2 = param_2 + 0x80;
+          iVar7 = iVar7 + 0x40;
+          *(float *)(iVar3 + 0x78) = *pfVar11 + (float)puVar10[4];
+          *(float *)(iVar3 + 0x7c) = (float)puVar10[5] + *(float *)(iVar6 + 0x6ba00);
+          lVar12 = lVar12 + 0x80;
+          *(float *)lVar12 = (float)puVar10[6] + *(float *)(iVar6 + 0x6ba04);
+        } while ((uVar4 & 0xffffffff) < (uVar13 - 3 & 0xffffffff));
+      }
+      if ((uVar4 & 0xffffffff) < (ulonglong)uVar1) {
+        lVar12 = uVar13 - uVar4;
+        pbVar9 = (byte *)(iVar7 + -0xc);
+        param_2 = param_2 + -0x18;
+        do {
+          pbVar9 = pbVar9 + 0x10;
+          puVar10 = (undefined4 *)((uint)*pbVar9 * 0x20 + iVar8);
+          iVar7 = (int)param_2;
+          *(undefined4 *)(iVar7 + 0x28) = *puVar10;
+          *(undefined4 *)(iVar7 + 0x2c) = puVar10[1];
+          *(undefined4 *)(iVar7 + 0x30) = puVar10[2];
+          *(undefined4 *)(iVar7 + 0x34) = puVar10[3];
+          *(float *)(iVar7 + 0x18) = *(float *)(iVar6 + 0x6b9fc) + (float)puVar10[4];
+          *(float *)(iVar7 + 0x1c) = (float)puVar10[5] + *(float *)(iVar6 + 0x6ba00);
+          param_2 = param_2 + 0x20;
+          *(float *)param_2 = (float)puVar10[6] + *(float *)(iVar6 + 0x6ba04);
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+      }
+      __restgprlr_26(1);
+      return;
+    }
+  }
+  Ragdoll_BodyNewState(iVar6,0);
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 826A52C8  Ragdoll_SetCurrentPoseFromSnapshot  (ragdoll/ragdoll_update.cpp:417)
 
-void Ragdoll_SetCurrentPoseFromSnapshot(void)
+void Ragdoll_SetCurrentPoseFromSnapshot(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  char *pcVar5;
+  int *piVar6;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined4 local_64;
+  undefined1 auStack_60 [96];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1a9,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar3 = Ragdoll_BodyDef(iVar2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1ac,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  iVar4 = 0;
+  if (0 < *(int *)(iVar2 + 0x18)) {
+    piVar6 = (int *)(iVar2 + 0x824);
+    param_2 = param_2 + 0x18;
+    pcVar5 = (char *)(iVar3 + 0x3c);
+    do {
+      if (*pcVar5 == '\0') {
+        puVar1 = (undefined4 *)param_2;
+        local_70 = puVar1[-2];
+        local_6c = puVar1[-1];
+        local_68 = *puVar1;
+        local_64 = puVar1[1];
+      }
+      else {
+        Ragdoll_QuatMul(param_2 + -8,0xffffffff829976fc,&local_70);
+      }
+      if (*piVar6 != 0) {
+        QuatToAxis(&local_70,auStack_60);
+        Phys_ObjSetOrientation(*piVar6,param_2 + -0x18,auStack_60);
+      }
+      iVar4 = iVar4 + 1;
+      piVar6 = piVar6 + 4;
+      pcVar5 = pcVar5 + 0x50;
+      param_2 = param_2 + 0x20;
+    } while (iVar4 < *(int *)(iVar2 + 0x18));
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -246,8 +871,391 @@ void Ragdoll_SetCurrentPoseFromSnapshot(void)
 void Ragdoll_ValidateBodyObj(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  int iVar3;
+  ulonglong uVar1;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  undefined4 *puVar7;
+  char local_40 [64];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1c8,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar3 = Ragdoll_BodyDef(iVar2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1cb,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  uVar1 = Ragdoll_BodyDObj(iVar2);
+  if ((uVar1 & 0xffffffff) == 0) {
+LAB_826a5480:
+    __restgprlr_26(0);
+    return;
+  }
+  iVar5 = 0;
+  if (0 < *(int *)(iVar2 + 0x18)) {
+    piVar6 = (int *)(iVar3 + 0x34);
+    do {
+      local_40[0] = '\0';
+      iVar4 = DObjGetBoneIndex(uVar1,piVar6[-1],local_40);
+      if ((iVar4 == 0) || (local_40[0] == -1)) goto LAB_826a5480;
+      local_40[0] = '\0';
+      if (((*piVar6 != 0) && (iVar4 = DObjGetBoneIndex(uVar1,*piVar6,local_40), iVar4 == 0)) ||
+         (local_40[0] == -1)) goto LAB_826a5480;
+      iVar5 = iVar5 + 1;
+      piVar6 = piVar6 + 0x14;
+    } while (iVar5 < *(int *)(iVar2 + 0x18));
+  }
+  iVar5 = 0;
+  if (0 < *(int *)(iVar2 + 0x1c)) {
+    puVar7 = (undefined4 *)(iVar3 + 0x480);
+    do {
+      local_40[0] = '\0';
+      iVar3 = DObjGetBoneIndex(uVar1,*puVar7,local_40);
+      if ((iVar3 == 0) || (local_40[0] == -1)) goto LAB_826a5480;
+      iVar5 = iVar5 + 1;
+      puVar7 = puVar7 + 8;
+    } while (iVar5 < *(int *)(iVar2 + 0x1c));
+  }
+  __restgprlr_26(1);
+  return;
+}
+
+
+// 826A5578  Ragdoll_CreatePhysObj  (ragdoll/ragdoll_update.cpp:490)
+
+void Ragdoll_CreatePhysObj(undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4)
+
+{
+  char cVar1;
+  undefined4 *puVar2;
+  ulonglong uVar3;
+  int iVar5;
+  ulonglong uVar4;
+  int iVar6;
+  char *pcVar7;
+  char *pcVar8;
+  undefined8 in_MSR;
+  char in_RESERVE;
+  byte in_cr0;
+  double dVar9;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_140;
+  float local_13c;
+  float local_138;
+  undefined4 local_130;
+  undefined4 local_12c;
+  undefined4 local_128;
+  undefined4 local_124;
+  float local_120;
+  float local_11c;
+  float local_118;
+  undefined4 local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  undefined4 local_104;
+  float local_100;
+  float local_fc;
+  float local_f8;
+  float local_f4;
+  undefined4 local_f0;
+  undefined4 local_ec;
+  char *local_e0;
+  undefined4 local_dc;
+  undefined4 local_d8;
+  undefined4 local_d4;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 local_c4;
+  undefined1 auStack_90 [144];
+  
+  uVar3 = __savegprlr_22();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1f9,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1fa,0,0xffffffff82000f98,0xffffffff8219c0ac);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x1fb,0,0xffffffff82000f98,0xffffffff8219c0a4);
+  }
+  iVar5 = Ragdoll_BodyDef(uVar3);
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x200,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  uVar4 = Ragdoll_BodyDObj(uVar3);
+  if ((uVar4 & 0xffffffff) != 0) {
+    if (*(char *)(iVar5 + 1) == '\0') {
+      MyAssertHandler(0xffffffff8219bfe8,0x207,0,0xffffffff82000f98,0xffffffff8219c098);
+    }
+    iVar5 = (int)param_2;
+    if (*(int *)(iVar5 + 0x28) == 0) {
+      MyAssertHandler(0xffffffff8219bfe8,0x208,0,0xffffffff82000f98,0xffffffff8219c07c);
+    }
+    puVar2 = (undefined4 *)param_3;
+    *(undefined1 *)(puVar2 + 1) = 0;
+    *(undefined1 *)((int)puVar2 + 5) = 0;
+    iVar6 = DObjGetBoneIndex(uVar4,*(undefined4 *)(iVar5 + 0x28),param_3 + 4);
+    if ((iVar6 != 0) && (pcVar8 = (char *)(param_3 + 4), *pcVar8 != -1)) {
+      pcVar7 = (char *)(param_3 + 5);
+      if (*(int *)(iVar5 + 0x2c) == 0) {
+        *pcVar7 = '\0';
+      }
+      else {
+        iVar6 = DObjGetBoneIndex(uVar4,*(int *)(iVar5 + 0x2c),param_3 + 5);
+        if ((iVar6 == 0) || (*pcVar8 == -1)) goto LAB_826a570c;
+      }
+      uVar3 = Ragdoll_BodyPose(uVar3);
+      if ((uVar3 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8219bfe8,0x21b,0,0xffffffff82000f98,0xffffffff82013bec);
+      }
+      Ragdoll_PoseInvAxis(uVar3,auStack_90);
+      Ragdoll_GetDObjBaseBoneOriginQuat(uVar4,uVar3 + 0x14,auStack_90,*pcVar8,&local_150,&local_110)
+      ;
+      if (*(char *)(iVar5 + 0x34) == '\0') {
+        local_130 = local_110;
+        local_12c = local_10c;
+        local_128 = local_108;
+        local_124 = local_104;
+      }
+      else {
+        Ragdoll_QuatMul(&local_110,0xffffffff829976fc,&local_130);
+      }
+      cVar1 = *pcVar7;
+      if (cVar1 == '\0') {
+        local_140 = local_150;
+        local_13c = local_14c;
+        local_138 = local_148;
+      }
+      else {
+        Ragdoll_GetDObjBaseBoneOrigin(uVar4,uVar3 + 0x14,auStack_90,cVar1,&local_140);
+      }
+      local_d0 = *(undefined4 *)(iVar5 + 0x40);
+      local_d8 = *(undefined4 *)(iVar5 + 0x3c);
+      dVar9 = 0.0;
+      local_dc = 0x40;
+      local_e0 = "ragdoll_bone";
+      local_d4 = 0;
+      local_c4 = 0;
+      local_cc = 0x3f800000;
+      *puVar2 = *(undefined4 *)(iVar5 + 0x44);
+      local_c8 = 0x3f800000;
+      Vec4Normalize(&local_130);
+      iVar6 = Phys_ObjCreate(2,&local_150,&local_130,0xffffffff82179fd8,&local_e0);
+      puVar2[2] = iVar6;
+      if (iVar6 == 0) {
+        Com_PrintWarning(0xe,0xffffffff8219c054);
+        __restgprlr_22(0);
+        return;
+      }
+      do {
+        if (in_RESERVE != '\0') {
+          DAT_8427b904 = storeWordConditionalIndexed
+                                   ((ulonglong)DAT_8427b904 + 1,0,0xffffffff8427b904);
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      param_4[1] = local_14c;
+      *param_4 = local_150;
+      param_4[2] = local_148;
+      local_11c = (float)dVar9;
+      local_118 = (float)dVar9;
+      local_120 = SQRT((local_140 - local_150) * (local_140 - local_150) +
+                       (local_138 - local_148) * (local_138 - local_148) +
+                       (local_13c - local_14c) * (local_13c - local_14c));
+      puVar2[3] = local_120;
+      iVar6 = *(int *)(iVar5 + 0x4c);
+      local_120 = local_120 * 0.5;
+      if (iVar6 == 1) {
+        local_f0 = *(undefined4 *)(iVar5 + 0x30);
+        local_fc = (float)dVar9;
+        local_f8 = (float)dVar9;
+        local_100 = local_120;
+        local_f4 = local_120;
+        local_ec = local_f0;
+        Phys_ObjAddGeomBox(2,puVar2[2],&local_100,0,0xffffffff82000000,0xffffffff8427b904,in_MSR);
+        __restgprlr_22(1);
+        return;
+      }
+      if (iVar6 == 5) {
+        Phys_ObjAddGeomCylinderDirection((double)*(float *)(iVar5 + 0x30),2,puVar2[2],0);
+        __restgprlr_22(1);
+        return;
+      }
+      if (iVar6 == 6) {
+        Phys_ObjAddGeomCapsule((double)*(float *)(iVar5 + 0x30),2,puVar2[2],0);
+        __restgprlr_22(1);
+        return;
+      }
+      Com_PrintWarning(0xe,0xffffffff8219c030);
+      __restgprlr_22(1);
+      return;
+    }
+  }
+LAB_826a570c:
+  __restgprlr_22(0);
+  return;
+}
+
+
+// 826A59F0  Ragdoll_CreatePhysJoint  (ragdoll/ragdoll_update.cpp:612)
+
+void Ragdoll_CreatePhysJoint(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  byte *pbVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined1 *puVar8;
+  undefined8 uVar9;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  undefined1 auStack_e0 [16];
+  undefined1 auStack_d0 [48];
+  undefined1 auStack_a0 [48];
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_25();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x26e,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x26f,0,0xffffffff82000f98,0xffffffff8219c0f8);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x270,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  pbVar4 = (byte *)param_2;
+  if (*(uint *)(iVar2 + 0x18) <= (uint)*pbVar4) {
+    MyAssertHandler(0xffffffff8219bfe8,0x271,0,0xffffffff8219c0b8);
+  }
+  iVar1 = (uint)*pbVar4 * 0x10 + iVar2;
+  if (*(int *)(iVar1 + 0x81c) == -1) {
+    iVar2 = 0;
+  }
+  else {
+    iVar2 = *(int *)(iVar1 + 0x81c) * 0x10 + iVar2 + 0x81c;
+  }
+  if (*(int *)(iVar1 + 0x824) == 0) {
+    __restgprlr_25();
+    return;
+  }
+  Phys_ObjGetPosition(*(int *)(iVar1 + 0x824),auStack_e0,auStack_a0);
+  AxisTranspose(auStack_a0,auStack_70);
+  uVar9 = 0;
+  if (*(int *)(pbVar4 + 8) == 0) {
+    pbVar4[0xc] = 0;
+    pbVar4[0xd] = 0;
+    pbVar4[0xe] = 0;
+    pbVar4[0xf] = 0;
+    pbVar4[0x10] = 0;
+    pbVar4[0x11] = 0;
+    pbVar4[0x12] = 0;
+    pbVar4[0x13] = 0;
+    pbVar4[0x14] = 0x3f;
+    pbVar4[0x15] = 0x80;
+    pbVar4[0x16] = 0;
+    pbVar4[0x17] = 0;
+    *(int *)(pbVar4 + 8) = *(int *)(pbVar4 + 8) + 1;
+    pbVar4[0x30] = 0xbf;
+    pbVar4[0x31] = 0xc9;
+    pbVar4[0x32] = 0xf;
+    pbVar4[0x33] = 0xdb;
+    pbVar4[0x48] = 0;
+    pbVar4[0x49] = 0;
+    pbVar4[0x4a] = 0;
+    pbVar4[0x4b] = 0;
+    pbVar4[0x3c] = 0x3f;
+    pbVar4[0x3d] = 0xc9;
+    pbVar4[0x3e] = 0xf;
+    pbVar4[0x3f] = 0xdb;
+  }
+  iVar6 = 0;
+  if (0 < *(int *)(pbVar4 + 8)) {
+    puVar8 = auStack_d0;
+    uVar7 = param_2;
+    do {
+      uVar7 = uVar7 + 0xc;
+      Vec3Rotate(uVar7,auStack_70,puVar8);
+      iVar6 = iVar6 + 1;
+      puVar8 = puVar8 + 0xc;
+    } while (iVar6 < *(int *)(pbVar4 + 8));
+  }
+  local_f0 = *(float *)(pbVar4 + 0x48) * 15.0;
+  local_ec = *(float *)(pbVar4 + 0x4c) * 15.0;
+  local_e8 = *(float *)(pbVar4 + 0x50) * 15.0;
+  puVar5 = (undefined4 *)param_3;
+  if (*(int *)(pbVar4 + 4) == 1) {
+    uVar3 = Phys_CreateHinge(uVar9,(double)local_f0,(double)*(float *)(pbVar4 + 0x30),
+                             (double)*(float *)(pbVar4 + 0x3c),2,*(undefined4 *)(iVar1 + 0x824),
+                             *(undefined4 *)(iVar2 + 8),auStack_e0,auStack_d0);
+    *puVar5 = uVar3;
+    puVar5[1] = 0;
+  }
+  else if (*(int *)(pbVar4 + 4) == 2) {
+    uVar3 = Phys_CreateBallAndSocket
+                      (2,*(undefined4 *)(iVar1 + 0x824),*(undefined4 *)(iVar2 + 8),auStack_e0);
+    *puVar5 = uVar3;
+    uVar3 = Phys_CreateAngularMotor
+                      (2,*(undefined4 *)(iVar1 + 0x824),*(undefined4 *)(iVar2 + 8),
+                       *(undefined4 *)(pbVar4 + 8),auStack_d0,0xffffffff82179fd8,&local_f0,
+                       param_2 + 0x30);
+    puVar5[1] = uVar3;
+    __restgprlr_25(1);
+    return;
+  }
+  __restgprlr_25(1);
+  return;
+}
+
+
+// 826A5C80  Ragdoll_CreatePhysJoints  (ragdoll/ragdoll_update.cpp:674)
+
+void Ragdoll_CreatePhysJoints(void)
+
+{
+  int iVar2;
+  ulonglong uVar1;
+  char cVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2a6,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  uVar1 = Ragdoll_BodyDef(iVar2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2a9,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  iVar4 = 0;
+  if (0 < *(int *)(iVar2 + 0x20)) {
+    lVar5 = uVar1 + 0x590;
+    iVar6 = iVar2 + 0x24;
+    do {
+      cVar3 = Ragdoll_CreatePhysJoint(iVar2,lVar5,iVar6);
+      if (cVar3 == '\0') {
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = iVar4 + 1;
+      iVar6 = iVar6 + 8;
+      lVar5 = lVar5 + 0x54;
+    } while (iVar4 < *(int *)(iVar2 + 0x20));
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -256,8 +1264,42 @@ void Ragdoll_ValidateBodyObj(void)
 void Ragdoll_CreatePhysObjs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  ulonglong uVar1;
+  char cVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  undefined1 *puVar7;
+  undefined1 auStack_150 [336];
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2b9,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  uVar1 = Ragdoll_BodyDef(iVar2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,700,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  iVar4 = 0;
+  if (0 < *(int *)(iVar2 + 0x18)) {
+    puVar7 = auStack_150;
+    lVar5 = uVar1 + 8;
+    iVar6 = iVar2 + 0x81c;
+    do {
+      cVar3 = Ragdoll_CreatePhysObj(iVar2,lVar5,iVar6,puVar7);
+      if (cVar3 == '\0') {
+        __restgprlr_27(0);
+        return;
+      }
+      iVar4 = iVar4 + 1;
+      puVar7 = puVar7 + 0xc;
+      iVar6 = iVar6 + 0x10;
+      lVar5 = lVar5 + 0x50;
+    } while (iVar4 < *(int *)(iVar2 + 0x18));
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -266,8 +1308,32 @@ void Ragdoll_CreatePhysObjs(void)
 void Ragdoll_DestroyPhysJoints(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  void *pvVar2;
+  int iVar3;
+  int *piVar4;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2cc,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar3 = 0;
+  if (0 < *(int *)(iVar1 + 0x20)) {
+    piVar4 = (int *)(iVar1 + 0x28);
+    do {
+      if (piVar4[-1] != 0) {
+        Phys_JointDestroy(2);
+      }
+      if (*piVar4 != 0) {
+        Phys_JointDestroy(2);
+      }
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 2;
+    } while (iVar3 < *(int *)(iVar1 + 0x20));
+  }
+  pvVar2 = memset((void *)(iVar1 + 0x24),0,0xe0);
+  __restgprlr_29(pvVar2);
+  return;
 }
 
 
@@ -276,8 +1342,37 @@ void Ragdoll_DestroyPhysJoints(void)
 void Ragdoll_DestroyPhysObjs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2de,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar2 = 0;
+  if (0 < *(int *)(iVar1 + 0x18)) {
+    piVar3 = (int *)(iVar1 + 0x824);
+    do {
+      if (*piVar3 != 0) {
+        Phys_ObjDestroy(2);
+        *piVar3 = 0;
+        do {
+          if (in_RESERVE != '\0') {
+            DAT_8427b904 = storeWordConditionalIndexed
+                                     ((ulonglong)DAT_8427b904 - 1,0,0xffffffff8427b904);
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+      }
+      iVar2 = iVar2 + 1;
+      piVar3 = piVar3 + 4;
+    } while (iVar2 < *(int *)(iVar1 + 0x18));
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -286,18 +1381,185 @@ void Ragdoll_DestroyPhysObjs(void)
 void Ragdoll_SnapshotBaseLerpOffsets(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  undefined1 uVar1;
+  uint uVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar6;
+  int iVar9;
+  uint *puVar10;
+  undefined4 *puVar11;
+  double dVar12;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_184;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_174;
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_164;
+  float local_160;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_144;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_134;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_124;
+  undefined1 auStack_120 [36];
+  undefined4 local_fc;
+  undefined4 local_f8;
+  undefined4 local_f4;
+  undefined1 auStack_f0 [32];
+  undefined1 auStack_d0 [208];
+  
+  iVar7 = __savegprlr_16();
+  if (iVar7 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2fc,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar8 = Ragdoll_BodyDef(iVar7);
+  if (iVar8 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x2ff,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  uVar6 = Ragdoll_BodyDObj(iVar7);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x302,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  puVar10 = (uint *)(iVar7 + 0x8fc);
+  puVar11 = (undefined4 *)(iVar7 + 0x6fc);
+  iVar9 = 0;
+  if (0 < *(int *)(iVar8 + 0x468)) {
+    dVar12 = 1.0;
+    do {
+      uVar2 = *puVar10;
+      if (*(uint *)(iVar7 + 0x18) <= uVar2) {
+        MyAssertHandler(0xffffffff8219bfe8,0x30a,0,0xffffffff8219c104,uVar2);
+      }
+      uVar1 = *(undefined1 *)(puVar10 + 1);
+      if ((uVar6 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8219bfe8,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+      }
+      DObjGetBasePoseMatrix(uVar6,uVar1,auStack_f0);
+      uVar1 = *(undefined1 *)((uVar2 + 0x82) * 0x10 + iVar7);
+      if ((uVar6 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8219bfe8,0x5c,0,0xffffffff82000f98,0xffffffff820040b4);
+      }
+      DObjGetBasePoseMatrix(uVar6,uVar1,&local_190);
+      local_164 = local_190;
+      if (((uint)local_190 & 0x7f800000) == 0x7f800000) {
+LAB_826a6188:
+        MyAssertHandler(0xffffffff8219be48,0x26d,0,0xffffffff82000f98,0xffffffff820159f0);
+      }
+      else {
+        local_16c = local_18c;
+        if (((uint)local_18c & 0x7f800000) == 0x7f800000) goto LAB_826a6188;
+        local_168 = local_188;
+        if (((uint)local_188 & 0x7f800000) == 0x7f800000) goto LAB_826a6188;
+        local_160 = local_184;
+        if (((uint)local_184 & 0x7f800000) == 0x7f800000) goto LAB_826a6188;
+      }
+      local_170 = local_174;
+      if (((uint)local_174 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler(0xffffffff8219be48,0x26e,0,0xffffffff82000f98,0xffffffff820159d4);
+      }
+      fVar5 = local_174 * local_190;
+      fVar3 = local_174 * local_18c;
+      fVar4 = local_188 * local_174 * local_188;
+      local_14c = local_184 * local_174 * local_188;
+      local_144 = local_14c + fVar5 * local_18c;
+      local_13c = local_188 * fVar3 - local_184 * fVar5;
+      local_134 = local_188 * fVar3 + local_184 * fVar5;
+      local_138 = local_188 * fVar5 - local_184 * fVar3;
+      local_148 = local_184 * fVar3 + local_188 * fVar5;
+      local_14c = fVar5 * local_18c - local_14c;
+      local_140 = (float)(dVar12 - (double)(fVar4 + local_190 * fVar5));
+      local_130 = (float)(dVar12 - (double)(fVar3 * local_18c + local_190 * fVar5));
+      local_150 = (float)(dVar12 - (double)(fVar4 + fVar3 * local_18c));
+      local_12c = -(local_180 * local_150 + local_178 * local_138 + local_17c * local_144);
+      local_124 = -(local_180 * local_148 + local_178 * local_130 + local_17c * local_13c);
+      local_128 = -(local_180 * local_14c + local_178 * local_134 + local_17c * local_140);
+      Ragdoll_AnimMatToMat43(auStack_f0,auStack_d0);
+      MatrixMultiply43(auStack_d0,&local_150,auStack_120);
+      AxisToQuat(auStack_120,puVar11 + 4);
+      iVar9 = iVar9 + 1;
+      puVar10 = puVar10 + 2;
+      *puVar11 = local_fc;
+      puVar11[1] = local_f8;
+      puVar11[2] = local_f4;
+      puVar11 = puVar11 + 8;
+    } while (iVar9 < *(int *)(iVar8 + 0x468));
+  }
+  __restgprlr_16();
+  return;
 }
 
 
 // 826A8F68  Ragdoll_BodyCenterOfMass  (ragdoll/ragdoll_update.cpp:796)
 
-void Ragdoll_BodyCenterOfMass(void)
+void Ragdoll_BodyCenterOfMass(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  float *pfVar6;
+  double dVar7;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x324,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  dVar7 = 0.0;
+  *param_2 = 0.0;
+  param_2[1] = 0.0;
+  param_2[2] = 0.0;
+  iVar3 = Ragdoll_BodyDef(iVar2);
+  iVar4 = 0;
+  if (0 < *(int *)(iVar2 + 0x18)) {
+    pfVar6 = (float *)(iVar3 + 0x44);
+    piVar5 = (int *)(iVar2 + 0x824);
+    do {
+      dVar7 = (double)(float)((double)*pfVar6 + dVar7);
+      if (*piVar5 != 0) {
+        Phys_ObjGetCenterOfMass(*piVar5,&local_50);
+        fVar1 = *pfVar6;
+        *param_2 = local_50 * fVar1 + *param_2;
+        param_2[1] = fVar1 * local_4c + param_2[1];
+        param_2[2] = local_48 * fVar1 + param_2[2];
+      }
+      iVar4 = iVar4 + 1;
+      piVar5 = piVar5 + 4;
+      pfVar6 = pfVar6 + 0x14;
+    } while (iVar4 < *(int *)(iVar2 + 0x18));
+  }
+  if (dVar7 <= 1e-06) {
+    Ragdoll_BodyNewState(iVar2,0);
+    __restgprlr_27();
+    return;
+  }
+  fVar1 = (float)(1.0 / dVar7);
+  *param_2 = *param_2 * fVar1;
+  param_2[1] = param_2[1] * fVar1;
+  param_2[2] = fVar1 * param_2[2];
+  __restgprlr_27();
+  return;
 }
 
 
@@ -306,8 +1568,31 @@ void Ragdoll_BodyCenterOfMass(void)
 void Ragdoll_UpdateBodyContactCentroids(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  
+  iVar1 = __savegprlr_29();
+  Ragdoll_BodyCenterOfMass(iVar1,&local_30);
+  iVar2 = 0;
+  *(undefined4 *)(iVar1 + 0x120) = local_30;
+  *(undefined4 *)(iVar1 + 0x124) = local_2c;
+  *(undefined4 *)(iVar1 + 0x128) = local_28;
+  if (0 < *(int *)(iVar1 + 0x18)) {
+    piVar3 = (int *)(iVar1 + 0x824);
+    do {
+      if (*piVar3 != 0) {
+        Phys_ObjSetContactCentroid(*piVar3,&local_30);
+      }
+      iVar2 = iVar2 + 1;
+      piVar3 = piVar3 + 4;
+    } while (iVar2 < *(int *)(iVar1 + 0x18));
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -316,8 +1601,31 @@ void Ragdoll_UpdateBodyContactCentroids(void)
 void Ragdoll_CreateBodyPhysics(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  char cVar2;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x355,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if (piVar1[0x41] < 3) {
+    MyAssertHandler(0xffffffff8219bfe8,0x356,0,0xffffffff82000f98,0xffffffff8219c140);
+  }
+  if (*piVar1 < 1) {
+    MyAssertHandler(0xffffffff8219bfe8,0x357,0,0xffffffff82000f98,0xffffffff8219b3e4);
+  }
+  cVar2 = Ragdoll_CreatePhysObjs(piVar1);
+  if (cVar2 != '\0') {
+    cVar2 = Ragdoll_CreatePhysJoints(piVar1);
+    if (cVar2 != '\0') {
+      __restgprlr_29(1);
+      return;
+    }
+    Ragdoll_DestroyPhysJoints(piVar1);
+  }
+  Ragdoll_DestroyPhysObjs(piVar1);
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -327,7 +1635,6 @@ void Ragdoll_RemoveBodyPhysics(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x36c,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   Ragdoll_DestroyPhysJoints(param_1);
@@ -352,19 +1659,16 @@ void Ragdoll_RebindBody(void)
   
   iVar2 = __savegprlr_24();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x37a,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   cVar5 = Ragdoll_ValidateBodyObj(iVar2);
   if (cVar5 != '\0') {
     uVar1 = Ragdoll_BodyDObj(iVar2);
     if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8219bfe8,0x380,0,0xffffffff82000f98,0xffffffff820040b4);
     }
     iVar3 = Ragdoll_BodyDef(iVar2);
     if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8219bfe8,899,0,0xffffffff82000f98,0xffffffff8206070c);
     }
     *(undefined4 *)(iVar2 + 0x18) = *(undefined4 *)(iVar3 + 4);
@@ -400,21 +1704,142 @@ LAB_826a64c8:
 
 // 826A65E0  Ragdoll_ValidatePrecalcBoneDef  (ragdoll/ragdoll_update.cpp:927)
 
-void Ragdoll_ValidatePrecalcBoneDef(void)
+void Ragdoll_ValidatePrecalcBoneDef(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3a0,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3a1,0,0xffffffff82000f98,0xffffffff8219c0a4);
+  }
+  __restgprlr_29(1e-06 <= ABS(*(float *)((int)param_2 + 0x3c)));
+  return;
 }
 
 
 // 826A6670  Ragdoll_ValidatePrecalcJointDef  (ragdoll/ragdoll_update.cpp:939)
 
-void Ragdoll_ValidatePrecalcJointDef(void)
+void Ragdoll_ValidatePrecalcJointDef(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3ac,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3ad,0,0xffffffff82000f98,0xffffffff82194ed4);
+  }
+  __restgprlr_29(1);
+  return;
+}
+
+
+// 826A66E8  Ragdoll_ClosestPointsTwoSegs  (ragdoll/ragdoll_update.cpp:950)
+
+void Ragdoll_ClosestPointsTwoSegs
+               (undefined8 param_1,float *param_2,ulonglong param_3,ulonglong param_4,float *param_5
+               )
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float fVar14;
+  float fVar15;
+  float fVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float *pfVar21;
+  
+  __savegprlr_25();
+  pfVar21 = (float *)__savefpr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3c0,0,0xffffffff82000f98,0xffffffff8219c174);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x3c1,0,0xffffffff82000f98,0xffffffff8219c170);
+  }
+  fVar1 = pfVar21[1] - param_2[1];
+  fVar2 = pfVar21[4] - pfVar21[1];
+  fVar3 = param_2[4] - param_2[1];
+  fVar4 = *pfVar21 - *param_2;
+  fVar5 = pfVar21[3] - *pfVar21;
+  fVar6 = param_2[3] - *param_2;
+  fVar7 = pfVar21[2] - param_2[2];
+  fVar9 = param_2[5] - param_2[2];
+  fVar8 = pfVar21[5] - pfVar21[2];
+  fVar15 = fVar8 * fVar8 + fVar5 * fVar5 + fVar2 * fVar2;
+  fVar13 = fVar9 * fVar8 + fVar6 * fVar5 + fVar3 * fVar2;
+  fVar14 = fVar7 * fVar8 + fVar4 * fVar5 + fVar1 * fVar2;
+  fVar10 = fVar9 * fVar9 + fVar3 * fVar3 + fVar6 * fVar6;
+  fVar11 = fVar7 * fVar9 + fVar1 * fVar3 + fVar4 * fVar6;
+  fVar12 = 0.0;
+  fVar19 = fVar10 * fVar15 - fVar13 * fVar13;
+  fVar16 = fVar11;
+  fVar17 = fVar12;
+  fVar18 = fVar10;
+  if (1e-06 <= fVar19) {
+    fVar20 = fVar11 * fVar13 - fVar14 * fVar10;
+    if ((0.0 <= fVar20) &&
+       (fVar18 = fVar19, fVar17 = fVar20, fVar16 = fVar11 * fVar15 - fVar14 * fVar13,
+       fVar19 < fVar20)) {
+      fVar18 = fVar10;
+      fVar17 = fVar19;
+      fVar16 = fVar11 + fVar13;
+    }
+  }
+  else {
+    fVar19 = 1.0;
+  }
+  fVar11 = fVar19;
+  if (0.0 <= fVar16) {
+    if (fVar16 <= fVar18) goto LAB_826a68b4;
+    fVar13 = fVar13 - fVar14;
+    fVar16 = fVar18;
+  }
+  else {
+    fVar13 = -fVar14;
+    fVar16 = fVar12;
+  }
+  fVar17 = fVar12;
+  if ((0.0 <= fVar13) && (fVar17 = fVar13, fVar11 = fVar15, fVar15 < fVar13)) {
+    fVar17 = fVar19;
+    fVar11 = fVar19;
+  }
+LAB_826a68b4:
+  fVar10 = fVar12;
+  if (0.0001 <= ABS(fVar17)) {
+    fVar10 = fVar17 / fVar11;
+  }
+  if (0.0001 <= ABS(fVar16)) {
+    fVar12 = fVar16 / fVar18;
+  }
+  *(float *)param_3 = fVar10;
+  *(float *)param_4 = fVar12;
+  param_5[1] = -(fVar3 * fVar12 - (fVar2 * fVar10 + fVar1));
+  *param_5 = -(fVar6 * fVar12 - (fVar5 * fVar10 + fVar4));
+  param_5[2] = -(fVar9 * fVar12 - (fVar8 * fVar10 + fVar7));
+  __restfpr_27();
+  __restgprlr_25();
+  return;
 }
 
 
@@ -437,13 +1862,162 @@ void Ragdoll_GenBoneCapsuleSegment(int param_1,float *param_2)
 }
 
 
+// 826A69A0  Ragdoll_GenBoneCapsuleSegments  (ragdoll/ragdoll_update.cpp:1069)
+
+void Ragdoll_GenBoneCapsuleSegments
+               (undefined8 param_1,byte *param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (*(uint *)(iVar1 + 0x18) <= (uint)*param_2) {
+    MyAssertHandler(0xffffffff8219bfe8,0x42e,0,0xffffffff8219c1b4);
+  }
+  if (*(uint *)(iVar1 + 0x18) <= (uint)param_2[1]) {
+    MyAssertHandler(0xffffffff8219bfe8,0x42f,0,0xffffffff8219c178);
+  }
+  Ragdoll_GenBoneCapsuleSegment((uint)*param_2 * 0x10 + iVar1 + 0x81c,param_3);
+  Ragdoll_GenBoneCapsuleSegment((uint)param_2[1] * 0x10 + iVar1 + 0x81c,param_4);
+  __restgprlr_27();
+  return;
+}
+
+
+// 826A6A50  Ragdoll_AddSelfContact  (ragdoll/ragdoll_update.cpp:1079)
+
+void Ragdoll_AddSelfContact
+               (undefined8 param_1,double param_2,undefined8 param_3,byte *param_4,
+               undefined8 param_5,undefined8 param_6,float *param_7,float *param_8)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  
+  iVar5 = __savegprlr_27();
+  dVar7 = extraout_f1;
+  iVar6 = Ragdoll_BodyDef();
+  fVar1 = param_8[2] - param_7[2];
+  fVar2 = *param_8 - *param_7;
+  fVar3 = param_8[1] - param_7[1];
+  fVar4 = fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1;
+  if (0.002 <= fVar4) {
+    fVar4 = SQRT(fVar4);
+    local_5c = 1.0;
+    if (-fVar4 < 0.0) {
+      local_5c = fVar4;
+    }
+    local_5c = 1.0 / local_5c;
+    dVar8 = (double)(((float)(dVar7 + param_2) - fVar4) * 0.5);
+    local_64 = local_5c * fVar2;
+    local_60 = local_5c * fVar3;
+    local_5c = local_5c * fVar1;
+    if (dVar8 < -1e-06) {
+      MyAssertHandler(0xffffffff8219bfe8,0x449,0,0xffffffff82000f98,0xffffffff8219c1f0);
+    }
+    fVar1 = (float)(dVar7 - dVar8);
+    local_58 = (float)dVar8;
+    local_50 = 0;
+    local_70 = fVar1 * local_64 + *param_7;
+    local_6c = local_60 * fVar1 + param_7[1];
+    local_68 = local_5c * fVar1 + param_7[2];
+    local_54 = *(undefined4 *)((uint)*param_4 * 0x50 + iVar6 + 0x48);
+    Phys_AddCollisionContact
+              (2,&local_70,*(undefined4 *)((uint)param_4[1] * 0x10 + iVar5 + 0x824),
+               *(undefined4 *)((uint)*param_4 * 0x10 + iVar5 + 0x824));
+  }
+  __restgprlr_27();
+  return;
+}
+
+
 // 826A6BD8  Ragdoll_GenerateAllSelfCollisionContacts  (ragdoll/ragdoll_update.cpp:1110)
 
 void Ragdoll_GenerateAllSelfCollisionContacts(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  byte *pbVar5;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  undefined1 auStack_b8 [24];
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_6c;
+  
   __savegprlr_23();
+  puVar4 = &DAT_84436228;
+  do {
+    if (puVar4 == (undefined4 *)0x0) {
+      MyAssertHandler(0xffffffff8219b1e4,0x13b,0,0xffffffff82000f98,0xffffffff82003cbc);
+    }
+    if (((int)puVar4[0x41] < 3) || (bVar1 = true, 4 < (int)puVar4[0x41])) {
+      bVar1 = false;
+    }
+    if (bVar1) {
+      iVar2 = Ragdoll_BodyDef(puVar4);
+      iVar3 = 0;
+      if (0 < *(int *)(iVar2 + 0xec0)) {
+        pbVar5 = (byte *)(iVar2 + 0xec4);
+        do {
+          Ragdoll_GenBoneCapsuleSegments(puVar4,pbVar5,&local_a0,&local_80);
+          Ragdoll_ClosestPointsTwoSegs(&local_a0,&local_80,&local_e0,&local_dc,auStack_b8);
+          local_c4 = (local_90 - local_9c) * local_e0 + local_9c;
+          local_d4 = (local_70 - local_7c) * local_dc + local_7c;
+          local_d0 = (local_6c - local_78) * local_dc + local_78;
+          local_c0 = (local_8c - local_98) * local_e0 + local_98;
+          local_d8 = (local_74 - local_80) * local_dc + local_80;
+          local_c8 = (local_94 - local_a0) * local_e0 + local_a0;
+          if (SQRT((local_d8 - local_c8) * (local_d8 - local_c8) +
+                   (local_d0 - local_c0) * (local_d0 - local_c0) +
+                   (local_d4 - local_c4) * (local_d4 - local_c4)) <=
+              *(float *)((uint)pbVar5[1] * 0x50 + iVar2 + 0x38) * *(float *)(DAT_844361e8 + 0xc) +
+              *(float *)((uint)*pbVar5 * 0x50 + iVar2 + 0x38) * *(float *)(DAT_844361e8 + 0xc)) {
+            Ragdoll_AddSelfContact(puVar4,pbVar5);
+          }
+          iVar3 = iVar3 + 1;
+          pbVar5 = pbVar5 + 2;
+        } while (iVar3 < *(int *)(iVar2 + 0xec0));
+      }
+    }
+    puVar4 = puVar4 + 0x255;
+  } while ((int)puVar4 < -0x7bbb7358);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -452,28 +2026,283 @@ void Ragdoll_GenerateAllSelfCollisionContacts(void)
 void Ragdoll_PullJointsTogether(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar1 = __savegprlr_27();
+  iVar2 = 0;
+  dVar6 = 0.10000000149011612;
+  dVar7 = 0.0;
+  do {
+    iVar2 = iVar2 + 1;
+    iVar3 = 0;
+    dVar8 = dVar7;
+    if (0 < *(int *)(iVar1 + 0x20)) {
+      piVar4 = (int *)(iVar1 + 0x24);
+      do {
+        if ((*piVar4 != 0) && (dVar5 = (double)Phys_PullJointTogether(), dVar8 < dVar5)) {
+          dVar8 = dVar5;
+        }
+        iVar3 = iVar3 + 1;
+        piVar4 = piVar4 + 2;
+      } while (iVar3 < *(int *)(iVar1 + 0x20));
+    }
+  } while ((iVar2 < *(int *)(DAT_844361f8 + 0xc)) && (dVar6 < dVar8));
+  __restgprlr_27();
+  return;
+}
+
+
+// 826A6E98  Ragdoll_GetTorsoPosition  (ragdoll/ragdoll_update.cpp:1343)
+
+void Ragdoll_GetTorsoPosition(ulonglong param_1,undefined4 *param_2)
+
+{
+  char cVar2;
+  undefined4 *puVar1;
+  
+  if (((param_1 & 0xffffffff) == 0) || (cVar2 = Ragdoll_BodyInUse(), cVar2 == '\0')) {
+    MyAssertHandler(0xffffffff8219bfe8,0x542,0,0xffffffff82000f98,0xffffffff8219b364);
+  }
+  puVar1 = (undefined4 *)Ragdoll_BodyBoneOrientations(param_1);
+  *param_2 = *puVar1;
+  param_2[1] = puVar1[1];
+  param_2[2] = puVar1[2];
+  return;
 }
 
 
 // 826A9130  Ragdoll_ExplosionEvent  (ragdoll/ragdoll_update.cpp:1355)
 
-void Ragdoll_ExplosionEvent(void)
+void Ragdoll_ExplosionEvent
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,undefined8 param_7,undefined8 param_8,
+               float *param_9,undefined8 param_10,int param_11)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  char cVar7;
+  float *pfVar8;
+  int *piVar9;
+  int *piVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  undefined8 uVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  float local_128;
+  float local_124;
+  float local_120;
+  float local_118;
+  float local_114;
+  float local_110;
+  float local_108;
+  float local_104;
+  float local_100;
+  
   __savegprlr_19();
+  iVar5 = __savefpr_15();
+  dVar14 = extraout_f1;
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x55d,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  if ((((dVar14 <= param_2) && (dVar12 = 0.0, 0.0 <= dVar14)) && (param_2 != 0.0)) &&
+     (iVar6 = CL_GetFirstActiveLocalClient(), iVar5 == iVar6)) {
+    dVar13 = (double)(float)(dVar14 * dVar14);
+    dVar19 = (double)(float)(param_2 * param_2);
+    dVar26 = 1.0;
+    dVar14 = dVar12;
+    if (dVar13 < dVar19) {
+      dVar14 = (double)(1.0 / (float)(dVar19 - dVar13));
+    }
+    iVar5 = DAT_84448cb0;
+    iVar6 = DAT_84448cb4;
+    if (param_11 != 0) {
+      iVar5 = DAT_8443620c;
+      iVar6 = DAT_8444ab68;
+    }
+    dVar16 = (double)*(float *)(iVar6 + 0xc);
+    dVar15 = (double)*(float *)(iVar5 + 0xc);
+    piVar9 = &DAT_84436240;
+    uVar20 = 0xbff0000000000000;
+    do {
+      piVar10 = piVar9 + -6;
+      cVar7 = Ragdoll_BodyInUse(piVar10);
+      if ((cVar7 != '\0') && (3 < piVar9[0x3b])) {
+        Ragdoll_GetTorsoPosition(piVar10,&local_118);
+        pfVar8 = (float *)param_6;
+        if ((param_5 & 0xff) == 0) {
+          fVar4 = local_118 - *pfVar8;
+          dVar17 = (double)(local_110 - pfVar8[2]);
+          fVar2 = local_114 - pfVar8[1];
+        }
+        else {
+          fVar4 = *pfVar8 - local_118;
+          fVar2 = pfVar8[1] - local_114;
+          dVar17 = dVar12;
+        }
+        if (((double)(fVar2 * fVar2 + (float)(dVar17 * dVar17 + (double)(fVar4 * fVar4))) < dVar19)
+           && ((cVar7 = Ragdoll_BodyIdle(piVar10), cVar7 == '\0' ||
+               (cVar7 = Ragdoll_BodyNewState(piVar10,4), cVar7 != '\0')))) {
+          iVar5 = 0;
+          piVar9[0x3c] = 0;
+          dVar17 = (double)(float)(dVar26 / (double)(longlong)*piVar9);
+          if (0 < *piVar9) {
+            piVar10 = piVar9 + 0x203;
+            do {
+              if (*piVar10 != 0) {
+                dVar18 = param_3;
+                Phys_ObjGetCenterOfMass(*piVar10,&local_128);
+                dVar11 = (double)flrand(uVar20,dVar26);
+                local_128 = (float)(dVar11 + (double)local_128);
+                dVar11 = (double)flrand(uVar20,dVar26);
+                local_124 = (float)(dVar11 + (double)local_124);
+                dVar11 = (double)flrand(uVar20,dVar26);
+                local_120 = (float)(dVar11 + (double)local_120);
+                dVar25 = (double)(local_124 - pfVar8[1]);
+                dVar24 = (double)(local_128 - *pfVar8);
+                dVar11 = (double)(local_120 - pfVar8[2]);
+                dVar22 = (double)(float)(dVar25 * dVar25);
+                dVar21 = (double)(float)(dVar24 * dVar24);
+                dVar23 = (double)(float)((double)(float)(dVar11 * dVar11 + dVar22) + dVar21);
+                if (dVar23 < dVar19) {
+                  if (dVar13 < dVar23) {
+                    if (dVar19 <= dVar13) {
+                      MyAssertHandler(0xffffffff8219bfe8,0x5ab,1,0xffffffff82000f98,
+                                      0xffffffff8219c46c);
+                    }
+                    dVar18 = (double)(float)((double)(float)((double)(float)(dVar19 - dVar23) *
+                                                            dVar14) * param_3);
+                  }
+                  fVar4 = *param_9;
+                  if (((fVar4 == 0.0) && (param_9[1] == 0.0)) && (param_9[2] == 0.0)) {
+                    if ((param_5 & 0xff) != 0) {
+                      dVar11 = dVar12;
+                    }
+                    dVar22 = (double)SQRT((float)((double)(float)(dVar11 * dVar11 + dVar22) + dVar21
+                                                 ));
+                    dVar21 = dVar26;
+                    if (-dVar22 < 0.0) {
+                      dVar21 = dVar22;
+                    }
+                    dVar21 = (double)(float)(dVar26 / dVar21);
+                    fVar4 = (float)(dVar21 * dVar24);
+                    fVar2 = (float)(dVar21 * dVar25);
+                    fVar3 = (float)(dVar21 * dVar11);
+                  }
+                  else {
+                    fVar2 = param_9[1];
+                    fVar3 = param_9[2];
+                  }
+                  fVar3 = (float)((double)fVar3 + dVar16);
+                  local_100 = (float)((double)(float)(dVar18 * dVar17) * dVar15);
+                  dVar18 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
+                  dVar11 = dVar26;
+                  if (-dVar18 < 0.0) {
+                    dVar11 = dVar18;
+                  }
+                  fVar1 = (float)(dVar26 / dVar11);
+                  local_108 = local_100 * fVar1 * fVar4;
+                  local_104 = fVar2 * fVar1 * local_100;
+                  local_100 = local_100 * fVar1 * fVar3;
+                  Phys_ObjAddImpulse(2,*piVar10,&local_128,&local_108);
+                }
+              }
+              iVar5 = iVar5 + 1;
+              piVar10 = piVar10 + 4;
+            } while (iVar5 < *piVar9);
+          }
+        }
+      }
+      piVar9 = piVar9 + 0x255;
+    } while ((int)piVar9 < -0x7bbb7340);
+  }
+  __restfpr_15();
+  __restgprlr_19();
+  return;
 }
 
 
 // 826A9500  Ragdoll_JitterEvent  (ragdoll/ragdoll_update.cpp:1481)
 
-void Ragdoll_JitterEvent(void)
+void Ragdoll_JitterEvent(undefined8 param_1,double param_2,double param_3,double param_4,
+                        undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  int *piVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  float local_70;
+  float local_6c;
+  
   __savegprlr_26();
+  iVar3 = __savefpr_27();
+  dVar8 = extraout_f1;
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x5d2,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  dVar7 = 0.0;
+  if (dVar8 < 0.0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x5d3,0,0xffffffff82000f98,0xffffffff82060250);
+  }
+  if (param_2 < dVar8) {
+    MyAssertHandler(0xffffffff8219bfe8,0x5d4,0,0xffffffff82000f98,0xffffffff82060234);
+  }
+  iVar4 = CL_GetFirstActiveLocalClient();
+  if ((iVar3 == iVar4) && (param_2 != dVar7)) {
+    dVar7 = (double)(float)(param_2 * param_2);
+    piVar6 = &DAT_84436228;
+    do {
+      if (piVar6 == (int *)0x0) {
+        MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
+      }
+      if ((0 < *piVar6) && (3 < piVar6[0x41])) {
+        Ragdoll_GetTorsoPosition(piVar6,&local_70);
+        fVar1 = ((float *)param_6)[1] - local_6c;
+        fVar2 = *(float *)param_6 - local_70;
+        if (((double)(fVar2 * fVar2 + fVar1 * fVar1) < dVar7) &&
+           (cVar5 = Ragdoll_BodyIdle(piVar6), cVar5 != '\0')) {
+          Ragdoll_BodyNewState(piVar6,4);
+        }
+      }
+      piVar6 = piVar6 + 0x255;
+    } while ((int)piVar6 < -0x7bbb7358);
+    Phys_AddJitterRegion
+              (dVar8,dVar7,(double)(float)((double)*(float *)(DAT_844361f4 + 0xc) * param_3),
+               (double)(float)((double)*(float *)(DAT_844361f4 + 0xc) * param_4),2,param_6);
+  }
+  __restfpr_27();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -515,7 +2344,6 @@ void Ragdoll_EstimateInitialVelocities(void)
   
   iVar1 = __savegprlr_25();
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x607,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if (*(int *)(iVar1 + 0x110) != 0) {
@@ -587,8 +2415,136 @@ void Ragdoll_EstimateInitialVelocities(void)
 void Ragdoll_SetInitialVelocities(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  float *pfVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined4 local_58;
+  undefined4 local_54;
+  undefined4 local_50;
+  float local_48;
+  float local_44;
+  float local_40;
+  float local_38;
+  float local_34;
+  float local_30;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x637,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if (*(int *)(iVar1 + 0x944) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x638,0,0xffffffff82000f98,0xffffffff8219c24c);
+  }
+  iVar2 = Ragdoll_BodyDef(iVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x63b,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  if (*(int *)((*(int *)(iVar1 + 0x944) + 0x3c2) * 4 + iVar2) < 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x63c,0,0xffffffff82000f98,0xffffffff8219c218);
+  }
+  local_48 = *(float *)(iVar1 + 0x948) * 0.19999999;
+  local_58 = 0;
+  local_44 = *(float *)(iVar1 + 0x94c) * 0.19999999;
+  local_54 = 0;
+  local_40 = *(float *)(iVar1 + 0x950) * 0.19999999;
+  local_50 = 0;
+  iVar4 = 0;
+  local_30 = 0.8 / (float)(longlong)(*(int *)(iVar1 + 0x18) + -1);
+  local_38 = *(float *)(iVar1 + 0x948) * local_30;
+  local_34 = *(float *)(iVar1 + 0x94c) * local_30;
+  local_30 = *(float *)(iVar1 + 0x950) * local_30;
+  if (0 < *(int *)(iVar1 + 0x18)) {
+    puVar5 = (undefined4 *)(iVar1 + 0x824);
+    do {
+      Phys_ObjSetAngularVelocityRaw(*puVar5,&local_58);
+      pfVar3 = &local_48;
+      if (*(int *)((*(int *)(iVar1 + 0x944) + 0x3c2) * 4 + iVar2) != iVar4) {
+        pfVar3 = &local_38;
+      }
+      Phys_ObjSetVelocity(*puVar5,pfVar3);
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 4;
+    } while (iVar4 < *(int *)(iVar1 + 0x18));
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 826A7370  Ragdoll_FindBoneChildren  (ragdoll/ragdoll_update.cpp:1621)
+
+void Ragdoll_FindBoneChildren(undefined8 param_1,int param_2,longlong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x659,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar2 = 0;
+  iVar4 = 0;
+  if (0 < *(int *)(iVar1 + 0x18)) {
+    param_3 = param_3 + -4;
+    piVar3 = (int *)(iVar1 + 0x81c);
+    do {
+      if (*piVar3 == param_2) {
+        if (iVar2 == 6) {
+          iVar2 = 6;
+          break;
+        }
+        param_3 = param_3 + 4;
+        *(int *)param_3 = iVar4;
+        iVar2 = iVar2 + 1;
+      }
+      iVar4 = iVar4 + 1;
+      piVar3 = piVar3 + 4;
+      if (*(int *)(iVar1 + 0x18) <= iVar4) {
+        __restgprlr_29();
+        return;
+      }
+    } while( true );
+  }
+  __restgprlr_29(iVar2);
+  return;
+}
+
+
+// 826A7418  Ragdoll_BoneTrace  (ragdoll/ragdoll_update.cpp:1645)
+
+void Ragdoll_BoneTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  float *pfVar2;
+  undefined8 uVar1;
+  double dVar3;
+  
+  pfVar2 = (float *)__savegprlr_26();
+  CG_WorldTrace(pfVar2,param_3,param_4,0xffffffff82174a3c,0x2806491);
+  if (*(char *)((int)pfVar2 + 0x2f) == '\0') {
+    dVar3 = 1.0;
+    if (*pfVar2 != 1.0) {
+      CG_WorldTrace(param_2,param_4,param_3,0xffffffff82174a3c,0x2806491);
+      uVar1 = 0;
+      if ((double)*(float *)param_2 != dVar3) goto LAB_826a74dc;
+    }
+  }
+  else {
+    CG_WorldTrace(param_2,param_4,param_3,0xffffffff82174a3c,0x2806491);
+    if (*(char *)((int)(float *)param_2 + 0x2f) != '\0') {
+      __restgprlr_26(0);
+      return;
+    }
+  }
+  uVar1 = 1;
+LAB_826a74dc:
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
@@ -597,8 +2553,112 @@ void Ragdoll_SetInitialVelocities(void)
 void Ragdoll_TunnelTest(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  char cVar6;
+  char *pcVar7;
+  longlong lVar8;
+  float *pfVar9;
+  float *pfVar10;
+  int iVar11;
+  float *pfVar12;
+  uint *puVar13;
+  double dVar14;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_174;
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_160;
+  float local_15c;
+  float local_158;
+  float local_150;
+  float local_14c;
+  float local_148;
+  uint local_120 [8];
+  undefined1 auStack_100 [64];
+  undefined1 auStack_c0 [192];
+  
+  iVar3 = __savegprlr_18();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x69d,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar4 = Ragdoll_BodyDef(iVar3);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x6a0,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  pfVar5 = (float *)Ragdoll_BodyBoneOrientations(iVar3);
+  lVar8 = 0;
+  if (0 < *(int *)(iVar3 + 0x18)) {
+    pfVar9 = (float *)(iVar3 + 0x828);
+    pcVar7 = (char *)(iVar4 + 0x3c);
+    dVar14 = 0.5;
+    pfVar12 = pfVar5 + 6;
+    pfVar10 = pfVar5;
+    do {
+      if (pfVar9[-1] != 0.0) {
+        if (*pcVar7 == '\0') {
+          local_180 = pfVar12[-2];
+          local_17c = pfVar12[-1];
+          local_178 = *pfVar12;
+          local_174 = pfVar12[1];
+        }
+        else {
+          Ragdoll_QuatMul(pfVar12 + -2,0xffffffff829976fc,&local_180);
+        }
+        QuatToAxis(&local_180,&local_150);
+        local_190 = *pfVar10;
+        local_18c = pfVar12[-5];
+        local_188 = pfVar12[-4];
+        iVar4 = Ragdoll_FindBoneChildren(iVar3,lVar8,local_120);
+        if (1 < iVar4) {
+          iVar11 = 0;
+          fVar1 = (float)((double)*pfVar9 * dVar14);
+          local_170 = local_150 * fVar1 + local_190;
+          local_16c = local_14c * fVar1 + local_18c;
+          local_168 = local_148 * fVar1 + local_188;
+          if (0 < iVar4) {
+            puVar13 = local_120;
+            do {
+              uVar2 = *puVar13;
+              if (*(uint *)(iVar3 + 0x18) <= uVar2) {
+                MyAssertHandler(0xffffffff8219bfe8,0x6bc,0,0xffffffff8219c274,uVar2);
+              }
+              cVar6 = Ragdoll_BoneTrace(auStack_c0,auStack_100,&local_170,pfVar5 + uVar2 * 8);
+              if (cVar6 == '\0') goto LAB_826a7760;
+              iVar11 = iVar11 + 1;
+              puVar13 = puVar13 + 1;
+            } while (iVar11 < iVar4);
+          }
+        }
+        fVar1 = *pfVar9;
+        local_160 = local_150 * fVar1 + *pfVar10;
+        local_15c = local_14c * fVar1 + pfVar12[-5];
+        local_158 = local_148 * fVar1 + pfVar12[-4];
+        cVar6 = Ragdoll_BoneTrace(auStack_c0,auStack_100,&local_190,&local_160);
+        if (cVar6 == '\0') {
+LAB_826a7760:
+          __restgprlr_18(0);
+          return;
+        }
+      }
+      lVar8 = lVar8 + 1;
+      pfVar9 = pfVar9 + 4;
+      pcVar7 = pcVar7 + 0x50;
+      pfVar10 = pfVar10 + 8;
+      pfVar12 = pfVar12 + 8;
+    } while ((int)lVar8 < *(int *)(iVar3 + 0x18));
+  }
+  __restgprlr_18(1);
+  return;
 }
 
 
@@ -607,8 +2667,26 @@ void Ragdoll_TunnelTest(void)
 void Ragdoll_PrintTunnelFail(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if (*(char *)(DAT_84436200 + 0xc) != '\0') {
+    iVar3 = Ragdoll_BodyPose();
+    uVar2 = Ragdoll_BodyDObj(uVar1);
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff8219bfe8,0x6df,0,0xffffffff82000f98,0xffffffff82013bec);
+    }
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8219bfe8,0x6e0,0,0xffffffff82000f98,0xffffffff820040b4);
+    }
+    Com_Printf(0x14,0xffffffff8219c2c8,(double)*(float *)(iVar3 + 0x14),
+               (double)*(float *)(iVar3 + 0x18),(double)*(float *)(iVar3 + 0x1c));
+    DObjDisplayAnim(uVar2,0xffffffff8219c2b0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -661,7 +2739,6 @@ void Ragdoll_UpdateVelocityCapture(int param_1)
   char cVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x716,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if (*(int *)(param_1 + 0x10c) < 1) {
@@ -686,8 +2763,73 @@ void Ragdoll_UpdateVelocityCapture(int param_1)
 void Ragdoll_UpdateFriction(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  float *pfVar6;
+  undefined8 uVar7;
+  double dVar8;
+  float local_58;
+  float local_54;
+  float local_50;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x734,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar3 = Ragdoll_BodyDef(iVar2);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x737,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  piVar5 = (int *)(iVar2 + 0x24);
+  iVar4 = 0;
+  fVar1 = 1.0 - (float)(longlong)*(int *)(iVar2 + 0x108) /
+                (float)(longlong)*(int *)(DAT_844361f0 + 0xc);
+  dVar8 = (double)(fVar1 * fVar1 * (float)0x3f666666 + 0.1);
+  if (0 < *(int *)(iVar3 + 0x58c)) {
+    pfVar6 = (float *)(iVar3 + 0x5e0);
+    uVar7 = 0;
+    do {
+      if (pfVar6[-0x13] == 1.4013e-45) {
+        if (*piVar5 != 0) {
+          Phys_SetHingeParams(uVar7,(double)(float)((double)pfVar6[-2] * dVar8),(double)pfVar6[-8],
+                              (double)pfVar6[-5],2);
+        }
+      }
+      else if (pfVar6[-0x13] == 2.8026e-45) {
+        local_58 = (float)((double)pfVar6[-2] * dVar8);
+        local_54 = (float)((double)pfVar6[-1] * dVar8);
+        local_50 = (float)((double)*pfVar6 * dVar8);
+        if (piVar5[1] != 0) {
+          Phys_SetAngularMotorParams
+                    (2,piVar5[1],0xffffffff82179fd8,&local_58,pfVar6 + -8,pfVar6 + -5);
+        }
+      }
+      iVar4 = iVar4 + 1;
+      pfVar6 = pfVar6 + 0x15;
+      piVar5 = piVar5 + 2;
+    } while (iVar4 < *(int *)(iVar3 + 0x58c));
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 826A7A08  Ragdoll_IsBodyRootMoving  (ragdoll/ragdoll_update.cpp:1877)
+
+undefined8 Ragdoll_IsBodyRootMoving(int param_1)
+
+{
+  if ((((*(float *)(param_1 + 0x114) != 0.0) || (*(float *)(param_1 + 0x118) != 0.0)) ||
+      (*(float *)(param_1 + 0x11c) != 0.0)) &&
+     (*(float *)(param_1 + 0x134) * *(float *)(param_1 + 0x134) +
+      *(float *)(param_1 + 300) * *(float *)(param_1 + 300) +
+      *(float *)(param_1 + 0x130) * *(float *)(param_1 + 0x130) < *(float *)(DAT_844361fc + 0xc))) {
+    return 0;
+  }
+  return 1;
 }
 
 
@@ -696,8 +2838,32 @@ void Ragdoll_UpdateFriction(void)
 void Ragdoll_CheckIdle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char cVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_29();
+  cVar2 = Ragdoll_IsBodyRootMoving();
+  if (cVar2 != '\0') {
+LAB_826a7a98:
+    __restgprlr_29(0);
+    return;
+  }
+  if (*(int *)(iVar1 + 0x108) <= *(int *)(DAT_84448cac + 0xc)) {
+    iVar4 = 0;
+    if (0 < *(int *)(iVar1 + 0x18)) {
+      puVar3 = (undefined4 *)(iVar1 + 0x824);
+      do {
+        cVar2 = Phys_ObjIsAsleep(*puVar3);
+        if (cVar2 == '\0') goto LAB_826a7a98;
+        iVar4 = iVar4 + 1;
+        puVar3 = puVar3 + 4;
+      } while (iVar4 < *(int *)(iVar1 + 0x18));
+    }
+  }
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -706,8 +2872,21 @@ void Ragdoll_CheckIdle(void)
 void Ragdoll_EnterDead(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *_Dst;
+  
+  _Dst = (undefined4 *)__savegprlr_28();
+  if (_Dst == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x77d,0,0xffffffff82000f98,0xffffffff82003cbc);
+    MyAssertHandler(0xffffffff8219bfe8,0x36c,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  Ragdoll_DestroyPhysJoints(_Dst);
+  Ragdoll_DestroyPhysObjs(_Dst);
+  uVar1 = *_Dst;
+  memset(_Dst,0,0x954);
+  *_Dst = uVar1;
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -716,18 +2895,100 @@ void Ragdoll_EnterDead(void)
 void Ragdoll_ExitDead(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x78e,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar2 = Ragdoll_BodyDef(iVar1);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x791,0,0xffffffff82000f98,0xffffffff8206070c);
+  }
+  *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)(iVar2 + 4);
+  *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(iVar2 + 0x468);
+  *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(iVar2 + 0x58c);
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826A7C38  Ragdoll_ExitDObjWait  (ragdoll/ragdoll_update.cpp:1948)
 
-void Ragdoll_ExitDObjWait(void)
+void Ragdoll_ExitDObjWait(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  int iVar3;
+  ulonglong uVar1;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  undefined4 *puVar7;
+  int *piVar8;
+  int *piVar9;
+  undefined4 *puVar10;
+  
+  iVar2 = __savegprlr_23();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x7a4,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if (param_3 != 0) {
+    iVar3 = Ragdoll_BodyDef(iVar2);
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff8219bfe8,0x7aa,0,0xffffffff82000f98,0xffffffff8206070c);
+    }
+    uVar1 = Ragdoll_BodyDObj(iVar2);
+    if ((uVar1 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff8219bfe8,0x7ad,0,0xffffffff82000f98,0xffffffff820040b4);
+    }
+    piVar9 = (int *)(iVar2 + 0x81c);
+    iVar5 = 0;
+    if (0 < *(int *)(iVar2 + 0x18)) {
+      piVar8 = (int *)(iVar3 + 0x34);
+      do {
+        iVar4 = piVar8[6];
+        piVar6 = piVar9 + 1;
+        *(undefined1 *)(piVar9 + 1) = 0;
+        *(undefined1 *)((int)piVar9 + 5) = 0;
+        *piVar9 = iVar4;
+        iVar4 = DObjGetBoneIndex(uVar1,piVar8[-1],piVar6);
+        if ((iVar4 == 0) || (*(char *)piVar6 == -1)) goto LAB_826a7d70;
+        if (*piVar8 == -1) {
+          *(undefined1 *)((int)piVar9 + 5) = 0;
+        }
+        else {
+          iVar4 = DObjGetBoneIndex(uVar1,*piVar8,(undefined1 *)((int)piVar9 + 5));
+          if ((iVar4 == 0) || (*(char *)piVar6 == -1)) goto LAB_826a7d70;
+        }
+        iVar5 = iVar5 + 1;
+        piVar9 = piVar9 + 4;
+        piVar8 = piVar8 + 0x14;
+      } while (iVar5 < *(int *)(iVar2 + 0x18));
+    }
+    puVar10 = (undefined4 *)(iVar2 + 0x8fc);
+    iVar5 = 0;
+    if (0 < *(int *)(iVar2 + 0x1c)) {
+      puVar7 = (undefined4 *)(iVar3 + 0x464);
+      do {
+        *(undefined1 *)(puVar10 + 1) = 0;
+        iVar3 = DObjGetBoneIndex(uVar1,puVar7[7],puVar10 + 1);
+        if ((iVar3 == 0) || (*(char *)(puVar10 + 1) == -1)) {
+LAB_826a7d70:
+          __restgprlr_23(0);
+          return;
+        }
+        puVar7 = puVar7 + 8;
+        iVar5 = iVar5 + 1;
+        *puVar10 = *puVar7;
+        puVar10 = puVar10 + 2;
+      } while (iVar5 < *(int *)(iVar2 + 0x1c));
+    }
+    Ragdoll_SnapshotBaseLerpOffsets(iVar2);
+  }
+  __restgprlr_23(1);
+  return;
 }
 
 
@@ -741,7 +3002,6 @@ undefined8 Ragdoll_ExitIdle(ulonglong param_1,undefined8 param_2,int param_3)
   undefined8 uVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x7d6,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if ((param_3 == 0) || (param_3 == 1)) {
@@ -770,8 +3030,26 @@ LAB_826a7ed0:
 void Ragdoll_EnterIdle(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char cVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x7ec,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  cVar3 = Ragdoll_BodyHasPhysics(uVar1);
+  if (cVar3 != '\0') {
+    uVar2 = Ragdoll_BodyBoneOrientations(uVar1);
+    Ragdoll_SnapshotBonePositions(uVar1,uVar2);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x36c,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  Ragdoll_DestroyPhysJoints(uVar1);
+  Ragdoll_DestroyPhysObjs(uVar1);
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -784,7 +3062,6 @@ undefined8 Ragdoll_EnterRunning(ulonglong param_1,int param_2)
   undefined8 uVar2;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x7f9,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   iVar1 = Ragdoll_CountPhysicsBodies();
@@ -812,7 +3089,6 @@ void Ragdoll_UpdateDObjWait(int param_1)
   undefined8 uVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x80b,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if (*(int *)(param_1 + 0x10c) < 4) {
@@ -852,7 +3128,6 @@ void Ragdoll_UpdateRunning(int param_1)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8219bfe8,0x821,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   cVar2 = Ragdoll_CheckIdle(param_1);
@@ -875,21 +3150,117 @@ void Ragdoll_UpdateRunning(int param_1)
 
 // 826A7EF8  Ragdoll_BodyNewState  (ragdoll/ragdoll_update.cpp:2136)
 
-void Ragdoll_BodyNewState(void)
+void Ragdoll_BodyNewState(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  code *pcVar2;
+  int iVar3;
+  char cVar4;
+  uint uVar5;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x85c,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if (5 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8219bfe8,0x85d,0,0xffffffff8219c354,param_2,6);
+  }
+  uVar1 = *(uint *)(iVar3 + 0x104);
+  if (5 < uVar1) {
+    MyAssertHandler(0xffffffff8219bfe8,0x860,0,0xffffffff8219c314,uVar1,6);
+  }
+  uVar5 = (uint)param_2;
+  if (uVar1 != uVar5) {
+    if (((code *)(&PTR_Ragdoll_ExitDead_82997714)[uVar1 * 3] == (code *)0x0) ||
+       (cVar4 = (*(code *)(&PTR_Ragdoll_ExitDead_82997714)[uVar1 * 3])(iVar3,uVar1,param_2),
+       cVar4 != '\0')) {
+      *(uint *)(iVar3 + 0x104) = uVar5;
+      pcVar2 = *(code **)((int)&PTR_Ragdoll_EnterDead_82997710 +
+                         (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+      if ((pcVar2 == (code *)0x0) || (cVar4 = (*pcVar2)(iVar3,uVar1,param_2), cVar4 != '\0')) {
+        *(undefined4 *)(iVar3 + 0x10c) = 0;
+        *(undefined4 *)(iVar3 + 0x108) = 0;
+        goto LAB_826a8040;
+      }
+      if (*(uint *)(iVar3 + 0x104) == uVar5) {
+        *(uint *)(iVar3 + 0x104) = uVar1;
+      }
+    }
+    __restgprlr_28(0);
+    return;
+  }
+LAB_826a8040:
+  __restgprlr_28(1);
+  return;
 }
 
 
 // 826A8050  Ragdoll_BodyUpdate  (ragdoll/ragdoll_update.cpp:2180)
 
-void Ragdoll_BodyUpdate(void)
+void Ragdoll_BodyUpdate(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x888,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  iVar2 = (int)param_2;
+  if (5 < *(uint *)(iVar2 + 0x104)) {
+    MyAssertHandler(0xffffffff8219bfe8,0x889,0,0xffffffff8219c390,*(uint *)(iVar2 + 0x104),6);
+  }
+  *(undefined4 *)(iVar2 + 300) = 0;
+  *(undefined4 *)(iVar2 + 0x130) = 0;
+  *(undefined4 *)(iVar2 + 0x134) = 0;
+  do {
+    iVar1 = *(int *)(iVar2 + 0x104);
+    if (*(code **)(&DAT_82997718 + iVar1 * 0xc) != (code *)0x0) {
+      (**(code **)(&DAT_82997718 + iVar1 * 0xc))(param_2);
+    }
+  } while (iVar1 != *(int *)(iVar2 + 0x104));
+  *(int *)(iVar2 + 0x10c) = *(int *)(iVar2 + 0x10c) + 1;
+  *(int *)(iVar2 + 0x108) = *(int *)(iVar2 + 0x108) + iVar3;
+  __restgprlr_28();
+  return;
+}
+
+
+// 826A8130  Ragdoll_SetUpdateTime  (ragdoll/ragdoll_update.cpp:2210)
+
+void Ragdoll_SetUpdateTime(undefined4 param_1)
+
+{
+  DAT_8444ac10 = param_1;
+  return;
+}
+
+
+// 826A8140  Ragdoll_UpdatePreviousCentroids  (ragdoll/ragdoll_update.cpp:2216)
+
+void Ragdoll_UpdatePreviousCentroids(void)
+
+{
+  undefined4 *puVar1;
+  
+  __savegprlr_27();
+  puVar1 = &DAT_84436340;
+  do {
+    if (puVar1 == (undefined4 *)0x118) {
+      MyAssertHandler(0xffffffff8219b1e4,0x134,0,0xffffffff82000f98,0xffffffff82003cbc);
+    }
+    if (0 < (int)puVar1[-0x46]) {
+      puVar1[-1] = puVar1[2];
+      *puVar1 = puVar1[3];
+      puVar1[1] = puVar1[4];
+    }
+    puVar1 = puVar1 + 0x255;
+  } while ((int)puVar1 < -0x7bbb7240);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -898,8 +3269,37 @@ void Ragdoll_BodyUpdate(void)
 void Ragdoll_RunToTime(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  char cVar2;
+  
   __savegprlr_29();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8219bfe8,0x8ba,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (DAT_84436214 == '\0') {
+    MyAssertHandler(0xffffffff8219bfe8,0x8bb,0,0xffffffff82000f98,0xffffffff8219c3d8);
+  }
+  if (DAT_82a3d69c == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x8bc,0,0xffffffff82000f98,0xffffffff82015478);
+  }
+  if ((*(char *)(DAT_84436220 + 0xc) != '\0') && (*(int *)(DAT_82a3d69c + 0xc) == 0)) {
+    cVar2 = CL_Demo_IsTimeStopped();
+    bVar1 = true;
+    if (cVar2 == '\0') goto LAB_826a82ac;
+  }
+  bVar1 = false;
+LAB_826a82ac:
+  Profile_Begin(0x198);
+  if (bVar1) {
+    DAT_8444ac14 = DAT_8444ac10 + DAT_8444ac14;
+    Phys_SetCollisionCallback(2,0xffffffff826a6bd8);
+    Phys_RunToTimeDelayed(2,DAT_8444ac14);
+  }
+  Profile_EndInternal(0);
+  Ragdoll_UpdatePreviousCentroids();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -908,7 +3308,49 @@ void Ragdoll_RunToTime(void)
 void Ragdoll_Update(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  undefined4 uVar2;
+  undefined8 uVar3;
+  char cVar4;
+  int *piVar5;
+  
+  uVar3 = __savegprlr_28();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8219bfe8,0x8da,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (DAT_84436214 == '\0') {
+    MyAssertHandler(0xffffffff8219bfe8,0x8db,0,0xffffffff82000f98,0xffffffff8219c3d8);
+  }
+  if (DAT_82a3d69c == 0) {
+    MyAssertHandler(0xffffffff8219bfe8,0x8dc,0,0xffffffff82000f98,0xffffffff82015478);
+  }
+  uVar2 = DAT_8444ac10;
+  if ((*(char *)(DAT_84436220 + 0xc) != '\0') && (*(int *)(DAT_82a3d69c + 0xc) == 0)) {
+    cVar4 = CL_Demo_IsTimeStopped();
+    bVar1 = true;
+    if (cVar4 == '\0') goto LAB_826a83f0;
+  }
+  bVar1 = false;
+LAB_826a83f0:
+  if (bVar1) {
+    Profile_Begin(0x198);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217de60);
+    piVar5 = &DAT_84436228;
+    do {
+      if ((piVar5[5] == (int)uVar3) && (0 < *piVar5)) {
+        Ragdoll_BodyUpdate(uVar2,piVar5);
+      }
+      piVar5 = piVar5 + 0x255;
+    } while ((int)piVar5 < -0x7bbb7358);
+    PIXEndNamedEvent();
+    Profile_EndInternal(0);
+  }
+  cVar4 = CL_IsLastActiveLocalClient(uVar3);
+  if (cVar4 != '\0') {
+    Ragdoll_RunToTime();
+  }
+  __restgprlr_28();
+  return;
 }
 

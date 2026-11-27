@@ -48,3 +48,16 @@ void jpeg_alloc_quant_table(int param_1)
   return;
 }
 
+
+// 827B71B8  jpeg_alloc_huff_table  (jpeg-6/jcomapi.c:99)
+
+void jpeg_alloc_huff_table(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = (*(code *)**(undefined4 **)(param_1 + 4))(param_1,0,0x112);
+  *(undefined1 *)(iVar1 + 0x111) = 0;
+  return;
+}
+

@@ -3,3 +3,106 @@
 ; 82927EF0  _fltout2  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfout.c:32)
   82927EF0  7D8802A6             mfspr r12,LR
   82927EF4  4BFEE7C9             bl 0x829166bc
+  82927EF8  9421FF60             stwu r1,-0xa0(r1)
+  82927EFC  F86100B0             std r3,0xb0(r1)
+  82927F00  7C9F2378             or r31,r4,r4
+  82927F04  388100B0             addi r4,r1,0xb0
+  82927F08  38610050             addi r3,r1,0x50
+  82927F0C  7CBE2B78             or r30,r5,r5
+  82927F10  7CDD3378             or r29,r6,r6
+  82927F14  4BFFFEFD             bl 0x82927e10
+  82927F18  A1610058             lhz r11,0x58(r1)
+  82927F1C  38E10060             addi r7,r1,0x60
+  82927F20  38C00000             li r6,0x0
+  82927F24  38A00011             li r5,0x11
+  82927F28  796487E6             rldicr r4,r11,0x30,0x3f
+  82927F2C  E8610050             ld r3,0x50(r1)
+  82927F30  48002869             bl 0x8292a798
+  82927F34  89610062             lbz r11,0x62(r1)
+  82927F38  38A10064             addi r5,r1,0x64
+  82927F3C  A9410060             lha r10,0x60(r1)
+  82927F40  7FA4EB78             or r4,r29,r29
+  82927F44  7D6B0774             extsb r11,r11
+  82927F48  907F0008             stw r3,0x8(r31)
+  82927F4C  915F0004             stw r10,0x4(r31)
+  82927F50  7FC3F378             or r3,r30,r30
+  82927F54  917F0000             stw r11,0x0(r31)
+  82927F58  4BFFFCA1             bl 0x82927bf8
+  82927F5C  2C030000             cmpwi r3,0x0
+  82927F60  40820014             bne 0x82927f74
+  82927F64  93DF000C             stw r30,0xc(r31)
+  82927F68  7FE3FB78             or r3,r31,r31
+  82927F6C  382100A0             addi r1,r1,0xa0
+  82927F70  4BFEE79C             b 0x8291670c
+LAB_82927f74:
+  82927F74  38E00000             li r7,0x0
+  82927F78  38C00000             li r6,0x0
+  82927F7C  38A00000             li r5,0x0
+  82927F80  38800000             li r4,0x0
+  82927F84  38600000             li r3,0x0
+  82927F88  4BFF7D61             bl 0x8291fce8
+
+; 82927E10  __dtold  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfout.c:62)
+  82927E10  A1040000             lhz r8,0x0(r4)
+  82927E14  3D408000             lis r10,-0x8000
+  82927E18  80E40000             lwz r7,0x0(r4)
+  82927E1C  550BE57F             rlwinm. r11,r8,0x1c,0x15,0x1f
+  82927E20  81240004             lwz r9,0x4(r4)
+  82927E24  55060020             rlwinm r6,r8,0x0,0x0,0x10
+  82927E28  54E7033E             rlwinm r7,r7,0x0,0xc,0x1f
+  82927E2C  7D685B78             or r8,r11,r11
+  82927E30  4182001C             beq 0x82927e4c
+  82927E34  2F0B07FF             cmpwi cr6,r11,0x7ff
+  82927E38  419A000C             beq cr6,0x82927e44
+  82927E3C  396B3C00             addi r11,r11,0x3c00
+  82927E40  48000038             b 0x82927e78
+LAB_82927e44:
+  82927E44  39607FFF             li r11,0x7fff
+  82927E48  48000034             b 0x82927e7c
+LAB_82927e4c:
+  82927E4C  2B070000             cmplwi cr6,r7,0x0
+  82927E50  409A0020             bne cr6,0x82927e70
+  82927E54  2B090000             cmplwi cr6,r9,0x0
+  82927E58  409A0018             bne cr6,0x82927e70
+  82927E5C  39600000             li r11,0x0
+  82927E60  B0C30000             sth r6,0x0(r3)
+  82927E64  91630002             stw r11,0x2(r3)
+  82927E68  91630006             stw r11,0x6(r3)
+  82927E6C  4E800020             blr
+LAB_82927e70:
+  82927E70  396B3C01             addi r11,r11,0x3c01
+  82927E74  39400000             li r10,0x0
+LAB_82927e78:
+  82927E78  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+LAB_82927e7c:
+  82927E7C  55285D7E             rlwinm r8,r9,0xb,0x15,0x1f
+  82927E80  54E75828             rlwinm r7,r7,0xb,0x0,0x14
+  82927E84  55295828             rlwinm r9,r9,0xb,0x0,0x14
+  82927E88  7D083B78             or r8,r8,r7
+  82927E8C  91230006             stw r9,0x6(r3)
+  82927E90  7D0A5378             or r10,r8,r10
+  82927E94  55490001             rlwinm. r9,r10,0x0,0x0,0x0
+  82927E98  91430002             stw r10,0x2(r3)
+  82927E9C  40820040             bne 0x82927edc
+LAB_82927ea0:
+  82927EA0  81430006             lwz r10,0x6(r3)
+  82927EA4  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  82927EA8  81230002             lwz r9,0x2(r3)
+  82927EAC  55480FFE             rlwinm r8,r10,0x1,0x1f,0x1f
+  82927EB0  5529083C             rlwinm r9,r9,0x1,0x0,0x1e
+  82927EB4  554A083C             rlwinm r10,r10,0x1,0x0,0x1e
+  82927EB8  7D094B78             or r9,r8,r9
+  82927EBC  3D6B0001             addis r11,r11,0x1
+  82927EC0  91430006             stw r10,0x6(r3)
+  82927EC4  552A003E             rlwinm r10,r9,0x0,0x0,0x1f
+  82927EC8  91230002             stw r9,0x2(r3)
+  82927ECC  396BFFFF             subi r11,r11,0x1
+  82927ED0  554A0001             rlwinm. r10,r10,0x0,0x0,0x0
+  82927ED4  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  82927ED8  4182FFC8             beq 0x82927ea0
+LAB_82927edc:
+  82927EDC  54CA043E             rlwinm r10,r6,0x0,0x10,0x1f
+  82927EE0  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  82927EE4  7D4B5B78             or r11,r10,r11
+  82927EE8  B1630000             sth r11,0x0(r3)
+  82927EEC  4E800020             blr

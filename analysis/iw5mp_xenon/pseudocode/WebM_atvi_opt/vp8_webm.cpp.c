@@ -123,21 +123,98 @@ void Ebml_StartSubElement(int param_1,undefined4 *param_2,undefined8 param_3)
 
 // 82803770  Ebml_EndSubElement  (WebM_atvi_opt/vp8_webm.cpp:119)
 
-void Ebml_EndSubElement(void)
+void Ebml_EndSubElement(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined1 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined1 *puVar4;
+  longlong lVar5;
+  undefined1 auStack_29 [41];
+  
+  iVar3 = __savegprlr_29();
+  uVar2 = *(undefined4 *)(iVar3 + 0x18);
+  lVar5 = 8;
+  puVar4 = auStack_29;
+  *(undefined4 *)(iVar3 + 0x18) = *param_2;
+  do {
+    uVar1 = *puVar4;
+    lVar5 = lVar5 + -1;
+    puVar4 = puVar4 + -1;
+    **(undefined1 **)(iVar3 + 0x18) = uVar1;
+    *(int *)(iVar3 + 0x18) = *(int *)(iVar3 + 0x18) + 1;
+  } while (lVar5 != 0);
+  *(undefined4 *)(iVar3 + 0x18) = uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82803828  write_webm_file_header  (WebM_atvi_opt/vp8_webm.cpp:147)
 
-void write_webm_file_header(void)
+void write_webm_file_header(undefined8 param_1,int param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 uVar2;
+  longlong lVar3;
+  undefined8 uVar4;
+  double dVar5;
+  undefined1 auStack_40 [8];
+  longlong local_38;
+  undefined1 auStack_30 [48];
+  
+  lVar3 = __savegprlr_29();
+  Ebml_StartSubElement(lVar3,auStack_40,0x1a45dfa3);
+  Ebml_SerializeUnsigned(lVar3,0x4286,1);
+  Ebml_SerializeUnsigned(lVar3,0x42f7,1);
+  Ebml_SerializeUnsigned(lVar3,0x42f2,4);
+  Ebml_SerializeUnsigned(lVar3,0x42f3,8);
+  Ebml_SerializeString(lVar3,0x4282,0xffffffff821e64e0);
+  Ebml_SerializeUnsigned(lVar3,0x4287,2);
+  Ebml_SerializeUnsigned(lVar3,0x4285,2);
+  uVar4 = Ebml_EndSubElement(lVar3,auStack_40);
+  Ebml_StartSubElement(uVar4,lVar3 + 0x10,0x18538067);
+  Ebml_StartSubElement(lVar3,auStack_30,0x1654ae6b);
+  Ebml_StartSubElement(lVar3,auStack_40,0xae);
+  Ebml_SerializeUnsigned(lVar3,0xd7,1);
+  Ebml_SerializeUnsigned32(lVar3,0x73c5,1);
+  Ebml_SerializeUnsigned(lVar3,0x83,1);
+  Ebml_SerializeString(lVar3,0x86,0xffffffff821e64d8);
+  local_38 = (longlong)*param_3;
+  iVar1 = *(int *)(param_2 + 0xc);
+  uVar2 = *(undefined4 *)(param_2 + 0x10);
+  dVar5 = (double)(float)((double)(longlong)param_3[1] / (double)local_38);
+  Ebml_StartSubElement(lVar3,&local_38,0xe0);
+  Ebml_SerializeUnsigned(lVar3,0xb0,iVar1);
+  Ebml_SerializeUnsigned(lVar3,0xba,uVar2);
+  if (iVar1 == 0x1e0) {
+    Ebml_SerializeUnsigned(lVar3,0x54b0,4);
+    uVar4 = 3;
+  }
+  else {
+    Ebml_SerializeUnsigned(lVar3,0x54b0,0x10);
+    uVar4 = 9;
+  }
+  Ebml_SerializeUnsigned(lVar3,0x54ba,uVar4);
+  Ebml_SerializeFloat(dVar5,lVar3,0x2383e3);
+  uVar4 = Ebml_EndSubElement(lVar3,&local_38);
+  uVar4 = Ebml_EndSubElement(uVar4,auStack_40);
+  Ebml_StartSubElement(uVar4,auStack_40,0xae);
+  Ebml_SerializeUnsigned(lVar3,0xd7,2);
+  Ebml_SerializeUnsigned32(lVar3,0x73c5,2);
+  Ebml_SerializeUnsigned(lVar3,0x83,2);
+  Ebml_SerializeString(lVar3,0x86,0xffffffff821e64c8);
+  Ebml_StartSubElement(lVar3,&local_38,0xe1);
+  Ebml_SerializeFloat(0x40d7700000000000,lVar3,0xb5);
+  Ebml_SerializeUnsigned(lVar3,0x9f,1);
+  Ebml_SerializeUnsigned(lVar3,0x6264,0x10);
+  uVar4 = Ebml_EndSubElement(lVar3,&local_38);
+  uVar4 = Ebml_EndSubElement(uVar4,auStack_40);
+  Ebml_EndSubElement(uVar4,auStack_30);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -343,6 +420,16 @@ void vp8_FreeGlobals(undefined8 param_1)
 }
 
 
+// 82803F48  vpx_heapInit  (WebM_atvi_opt/vp8_webm.cpp:381)
+
+void vpx_heapInit(undefined4 param_1,undefined8 param_2)
+
+{
+  DAT_8487a868 = create_mspace_with_base(param_1,param_2,0);
+  return;
+}
+
+
 // 82803F78  vpx_malloc  (WebM_atvi_opt/vp8_webm.cpp:385)
 
 void vpx_malloc(undefined8 param_1)
@@ -399,6 +486,202 @@ void _dynamic_initializer_for__vpxInterface__(void)
 
 {
   DAT_8487a898 = vpx_codec_vp8_cx();
+  return;
+}
+
+
+// 82803FE0  vp8_Init  (WebM_atvi_opt/vp8_webm.cpp:427)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void vp8_Init(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 param_4,
+             undefined8 param_5,undefined8 param_6)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_25();
+  stbi_set_allocator(0xffffffff82803f78,0xffffffff82803f88);
+  puVar2 = &DAT_8487a848;
+  lVar3 = 7;
+  do {
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  DAT_8487a870 = 0;
+  DAT_8487a878 = 0;
+  DAT_8487a880 = 0;
+  _DAT_8487a888 = 0;
+  _DAT_8487a890 = 0;
+  memset(&DAT_8487a780,0,0x50);
+  memset(&DAT_8487a7d0,0,0x7c);
+  vp8_AllocSSIM(0xffffffff82803f78,param_2,param_3);
+  vp8_AllocToken(0xffffffff82803f78);
+  vpx_img_alloc(0xffffffff8487a780,0x102,param_2,param_3,1);
+  vpx_codec_enc_config_default(DAT_8487a898,0xffffffff8487a7d0,0);
+  DAT_8487a7dc = (undefined4)param_2;
+  DAT_8487a7d0 = 0;
+  DAT_8487a7d4 = 1;
+  DAT_8487a7d8 = 0;
+  DAT_8487a7e4 = 1;
+  DAT_8487a7f4 = 0;
+  DAT_8487a814 = 200;
+  DAT_8487a81c = 0x23;
+  DAT_8487a7e0 = (undefined4)param_3;
+  DAT_8487a818 = 1;
+  DAT_8487a840 = 1;
+  DAT_8487a844 = 0;
+  DAT_8487a848 = 9999;
+  DAT_8487a86c = 0;
+  DAT_8487a7e8 = param_4;
+  vpx_codec_enc_init_ver(0xffffffff8487a84c,DAT_8487a898,0xffffffff8487a7d0,0,5,param_6,0);
+  DAT_8487a888 = uVar1;
+  write_webm_file_header(0xffffffff8487a870,0xffffffff8487a7d0,0xffffffff8487a7e4);
+  __restgprlr_25(DAT_8487a888);
+  return;
+}
+
+
+// 82804160  vp8_AddFrame  (WebM_atvi_opt/vp8_webm.cpp:466)
+
+void vp8_AddFrame(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                 longlong param_5)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 local_40;
+  uint local_3c;
+  uint local_38;
+  int local_34;
+  int local_30 [12];
+  
+  DAT_8487a888 = __savegprlr_28();
+  param_4 = -(ulonglong)(param_5 != 0) & param_4;
+  uVar1 = stbi_jpeg_load_from_memory_yuv(param_2,param_3,&local_3c,&local_38,&local_34,local_30);
+  if (((((uVar1 & 0xffffffff) != 0) && (local_3c == DAT_8487a78c)) && (local_38 == DAT_8487a790)) &&
+     ((((int)local_3c >> 1) + (uint)((int)local_3c < 0 && (local_3c & 1) != 0) == local_34 &&
+      (((int)local_38 >> 1) + (uint)((int)local_38 < 0 && (local_38 & 1) != 0) == local_30[0])))) {
+    memcpy(DAT_8487a79c,(void *)uVar1,local_3c * local_38 + local_34 * local_30[0] * 2);
+    mspace_free(DAT_8487a868,uVar1);
+    iVar2 = vpx_codec_encode(0xffffffff8487a84c,0xffffffff8487a780,DAT_8487a86c,1,0,1);
+    if (iVar2 == 0) {
+      local_40 = 0;
+      piVar3 = (int *)vpx_codec_get_cx_data(0xffffffff8487a84c,&local_40);
+      while (piVar3 != (int *)0x0) {
+        if (*piVar3 == 0) {
+          write_webm_block(0xffffffff8487a870,0xffffffff8487a7d0,piVar3,param_4,param_5);
+          param_4 = 0;
+        }
+        piVar3 = (int *)vpx_codec_get_cx_data(0xffffffff8487a84c,&local_40);
+      }
+      DAT_8487a86c = DAT_8487a86c + 1;
+      __restgprlr_28(DAT_8487a888);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 828042D8  vp8_End  (WebM_atvi_opt/vp8_webm.cpp:506)
+
+void vp8_End(void)
+
+{
+  bool bVar1;
+  undefined1 uVar2;
+  size_t _Size;
+  ulonglong uVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  int *piVar6;
+  longlong lVar7;
+  uint uVar8;
+  uint uVar9;
+  undefined1 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  puVar4 = (undefined1 *)__savegprlr_26();
+  DAT_8487a888 = puVar4;
+  iVar5 = vpx_codec_encode(0xffffffff8487a84c,0,DAT_8487a86c,1,0,1);
+  if (iVar5 != 0) {
+    stbi_set_allocator(0,0);
+    __restgprlr_26(puVar4);
+    return;
+  }
+  local_48 = 0;
+  piVar6 = (int *)vpx_codec_get_cx_data(0xffffffff8487a84c,&local_48);
+  uVar3 = DAT_8487a878;
+  while (DAT_8487a878 = uVar3, piVar6 != (int *)0x0) {
+    if (*piVar6 == 0) {
+      uVar8 = 0;
+      DAT_8487a878 = (ulonglong)(*(longlong *)(piVar6 + 4) * (longlong)DAT_8487a7e4 * 1000) /
+                     (ulonglong)(longlong)DAT_8487a7e8;
+      trapDoubleWordImmediate(6,(longlong)DAT_8487a7e8,0);
+      if ((longlong)DAT_8487a878 <= (longlong)uVar3) {
+        DAT_8487a878 = uVar3 + 1;
+      }
+      bVar1 = (longlong)(DAT_8487a878 - DAT_8487a88c) < 0x8000;
+      uVar9 = (uint)DAT_8487a878;
+      if (bVar1) {
+        uVar8 = (uVar9 & 0xffff) - (DAT_8487a88c & 0xffff);
+      }
+      if ((!bVar1) || ((piVar6[7] & 1U) != 0)) {
+        if (DAT_8487a890 != 0) {
+          Ebml_EndSubElement(0xffffffff8487a870,0xffffffff8487a884);
+        }
+        DAT_8487a890 = 1;
+        uVar8 = 0;
+        DAT_8487a88c = uVar9;
+        Ebml_StartSubElement(0xffffffff8487a870,0xffffffff8487a884,0x1f43b675);
+        Ebml_SerializeUnsigned(0xffffffff8487a870,0xe7,DAT_8487a88c);
+      }
+      Ebml_WriteID(0xffffffff8487a870,0xa3);
+      lVar7 = 4;
+      puVar4 = (undefined1 *)((int)&local_4c + 3);
+      do {
+        uVar2 = *puVar4;
+        lVar7 = lVar7 + -1;
+        puVar4 = puVar4 + -1;
+        *DAT_8487a888 = uVar2;
+        DAT_8487a888 = DAT_8487a888 + 1;
+      } while (lVar7 != 0);
+      uVar8 = uVar8 & 0xffff;
+      lVar7 = 2;
+      local_4c._3_1_ = (undefined1)uVar8;
+      puVar4 = (undefined1 *)((int)&local_44 + 1);
+      local_4c._2_1_ = (undefined1)(uVar8 >> 8);
+      *DAT_8487a888 = local_50;
+      DAT_8487a888 = DAT_8487a888 + 1;
+      local_44 = (uint)CONCAT11((undefined1)local_4c,local_4c._2_1_) << 0x10;
+      do {
+        uVar2 = *puVar4;
+        lVar7 = lVar7 + -1;
+        puVar4 = puVar4 + -1;
+        *DAT_8487a888 = uVar2;
+        DAT_8487a888 = DAT_8487a888 + 1;
+      } while (lVar7 != 0);
+      *DAT_8487a888 = local_50;
+      DAT_8487a888 = DAT_8487a888 + 1;
+      _Size = piVar6[3];
+      local_4c = uVar8;
+      memcpy(DAT_8487a888,(void *)piVar6[2],_Size);
+      DAT_8487a888 = DAT_8487a888 + _Size;
+    }
+    piVar6 = (int *)vpx_codec_get_cx_data(0xffffffff8487a84c,&local_48);
+    uVar3 = DAT_8487a878;
+  }
+  DAT_8487a86c = DAT_8487a86c + 1;
+  stbi_set_allocator(0,0);
+  __restgprlr_26(DAT_8487a888);
   return;
 }
 

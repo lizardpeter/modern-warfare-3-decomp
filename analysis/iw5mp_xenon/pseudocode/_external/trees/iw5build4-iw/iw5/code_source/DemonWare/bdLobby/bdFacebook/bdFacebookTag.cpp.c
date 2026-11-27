@@ -27,11 +27,37 @@ void bdFacebookTag__serialize(int param_1,undefined8 param_2)
 
 // 8290BC68  bdFacebookTag::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:25)
 
-void bdFacebookTag__deserialize(void)
+void bdFacebookTag__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 8);
+  if (cVar3 == '\0') {
+LAB_8290bcbc:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readUInt16(*puVar4,lVar2 + 0x10);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8290bcbc;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt16(*puVar4,lVar2 + 0x12);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_8290bce4;
+  }
+  uVar5 = 0;
+LAB_8290bce4:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

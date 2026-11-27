@@ -32,7 +32,6 @@ void Session_ResetMinPing(void)
 
 {
   if (DAT_844cb0bc == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x4e,0,0xffffffff82000f98,0xffffffff821a6860);
   }
   DAT_844cb0c0 = 0xffffffff;
@@ -42,13 +41,43 @@ void Session_ResetMinPing(void)
 }
 
 
+// 826DB5C0  Session_ResetFailedSearchCount  (sessions/sessions_common.cpp:87)
+
+void Session_ResetFailedSearchCount(void)
+
+{
+  DAT_844cb0b4 = 0;
+  return;
+}
+
+
 // 826DB5D0  Session_UpdateMinPing  (sessions/sessions_common.cpp:92)
 
 void Session_UpdateMinPing(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  if (DAT_844cb0b8 == 0) {
+    Session_ResetMinPing();
+  }
+  if (DAT_844cb0b0 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x60,0,0xffffffff82000f98,0xffffffff821a6900);
+  }
+  if (DAT_844cb0a8 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x61,0,0xffffffff82000f98,0xffffffff821a68f0);
+  }
+  if (DAT_844cb0bc == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x62,0,0xffffffff82000f98,0xffffffff821a6860);
+  }
+  DAT_844cb0c0 = DAT_844cb0c0 + 1;
+  DAT_844cb0b4 = DAT_844cb0b4 + 1;
+  Com_Printf(0x19,0xffffffff821a6988,DAT_844cb0b8);
+  if (*(int *)(DAT_844cb0b0 + 0xc) <= DAT_844cb0c0) {
+    DAT_844cb0c0 = 0;
+    DAT_844cb0b8 = *(int *)(DAT_844cb0a8 + 0xc) + DAT_844cb0b8;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -70,13 +99,53 @@ undefined4 Session_GetFailedSearchCount(void)
 }
 
 
-// 826DB7E0  Session_NeedToSyncParams  (sessions/sessions_common.cpp:153)
+// 826DB700  Session_ShouldAdvertise  (sessions/sessions_common.cpp:126)
 
-void Session_NeedToSyncParams(void)
+uint Session_ShouldAdvertise(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  char cVar2;
+  
+  cVar2 = CL_AllLocalClientsDisconnected();
+  if (cVar2 != '\0') {
+    cVar2 = Live_CanHostServer(*(undefined4 *)(DAT_82b59048 + 0xc));
+    if (cVar2 == '\0') {
+      return 0;
+    }
+    if (DAT_844cb0ac == 0) {
+      MyAssertHandler(0xffffffff821a6940,0x8f,0,0xffffffff82000f98,0xffffffff821a67f8);
+    }
+    uVar1 = *(uint *)(DAT_844cb0ac + 0xc);
+    if (uVar1 != 0) {
+      return (((int)DAT_844cb0b4 >> 0x1f) - ((int)uVar1 >> 0x1f)) + (uint)(uVar1 <= DAT_844cb0b4) &
+             0xff;
+    }
+  }
+  return 1;
+}
+
+
+// 826DB7E0  Session_NeedToSyncParams  (sessions/sessions_common.cpp:153)
+
+void Session_NeedToSyncParams(undefined8 param_1,ulonglong param_2,int param_3,uint param_4)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x9a,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if ((*(uint *)(iVar1 + 0x68) & 0x10) != 0) {
+    MyAssertHandler(0xffffffff821a6940,0x9c,0,0xffffffff82000f98,0xffffffff821a69b8);
+  }
+  if ((((*(uint *)(iVar1 + 0x68) ^ param_4) & 0xf00) == 0) && (*(int *)(iVar1 + 0x60) == param_3)) {
+    __restgprlr_26(param_2 != *(uint *)(iVar1 + 100));
+    return;
+  }
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -98,23 +167,18 @@ void Session_JoinPotentialHost
   
   uVar1 = __savegprlr_21();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0xb0,0,0xffffffff82000f98,0xffffffff82034334);
   }
   if ((param_6 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0xb1,0,0xffffffff82000f98,0xffffffff821a6b24);
   }
   if ((param_7 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0xb2,0,0xffffffff82000f98,0xffffffff821a6b1c);
   }
   if ((param_8 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0xb3,0,0xffffffff82000f98,0xffffffff821a6b14);
   }
   if (DAT_8424a64c == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
   }
   if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
@@ -127,7 +191,6 @@ void Session_JoinPotentialHost
       uVar5 = uVar5 + 1;
     } while (pbVar6 != abStack_68);
     if ((int)lVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821a6940,0xb9,0,0xffffffff82000f98,0xffffffff82034dc8);
     }
   }
@@ -173,7 +236,6 @@ ulonglong Session_IsHost(ulonglong param_1,undefined8 param_2)
   ulonglong uVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x103,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   iVar2 = Party_GetPartyForSession(param_1);
@@ -196,7 +258,6 @@ undefined8 Session_HostNum(ulonglong param_1)
   undefined8 uVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x119,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   iVar2 = Party_GetPartyForSession(param_1);
@@ -221,7 +282,6 @@ ulonglong Session_AreWeHost(ulonglong param_1)
   undefined1 auStack_30 [24];
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x12d,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   iVar3 = Party_GetPartyForSession(param_1);
@@ -253,7 +313,6 @@ bool Session_HasHostAddress(ulonglong param_1,uint param_2)
   bool bVar3;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x140,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   uVar1 = Session_HostNum(param_1);
@@ -268,6 +327,84 @@ bool Session_HasHostAddress(ulonglong param_1,uint param_2)
 }
 
 
+// 826DBD00  Session_ClearInviteState  (sessions/sessions_common.cpp:338)
+
+void Session_ClearInviteState(void)
+
+{
+  DAT_844cb0a4 = 0;
+  return;
+}
+
+
+// 826DBD10  Session_SetInviteSessionPending  (sessions/sessions_common.cpp:344)
+
+void Session_SetInviteSessionPending(void)
+
+{
+  DAT_844cb0a4 = 1;
+  return;
+}
+
+
+// 826DBD20  Session_GetInviteSessionState  (sessions/sessions_common.cpp:350)
+
+undefined4 Session_GetInviteSessionState(void)
+
+{
+  return DAT_844cb0a4;
+}
+
+
+// 826DBD30  Session_JoinInProgress  (sessions/sessions_common.cpp:356)
+
+void Session_JoinInProgress(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  undefined8 local_30 [6];
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_82aa1ab4 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x167,0,0xffffffff82000f98,0xffffffff82032ae0);
+  }
+  iVar2 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff821a6940,0x169,0,0xffffffff82000f98,0xffffffff82040f3c);
+  }
+  iVar2 = Sys_Milliseconds();
+  if (*(int *)(DAT_82aa1ab4 + 0xc) <= iVar2 - DAT_844cb0c4) {
+    Com_Memcpy(local_30,0xffffffff8425a060,8);
+    cVar3 = Session_SearchSessionByID(uVar1,local_30[0]);
+    if (cVar3 != '\0') {
+      DAT_844cb0c4 = Sys_Milliseconds();
+      DAT_844cb0a4 = 2;
+      __restgprlr_28(1);
+      return;
+    }
+    Com_Printf(0x19,0xffffffff821a6b34);
+    DAT_844cb0a4 = 0;
+    Live_ConfirmAcceptInvitation_Error(0xffffffff821a3efc);
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 826DBE50  Session_IsUserRegisteredInternal  (sessions/sessions_common.cpp:395)
+
+undefined1 Session_IsUserRegisteredInternal(int param_1,uint param_2)
+
+{
+  if (0x11 < param_2) {
+    MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  return *(undefined1 *)(param_2 * 0x10 + param_1 + 0x508);
+}
+
+
 // 826DBEC0  Session_FindRegisteredUserInternal  (sessions/sessions_common.cpp:402)
 
 longlong Session_FindRegisteredUserInternal(int param_1,longlong param_2)
@@ -277,7 +414,6 @@ longlong Session_FindRegisteredUserInternal(int param_1,longlong param_2)
   longlong *plVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x195,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   lVar1 = 0;
@@ -345,16 +481,13 @@ void Session_JoinSession(undefined8 param_1,ulonglong param_2,ulonglong param_3,
   
   uVar2 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x1b8,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   puVar1 = (undefined4 *)param_2;
   if (puVar1[4] == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x1b9,0,0xffffffff82000f98,0xffffffff820583e8);
   }
   if (param_4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x1ba,0,0xffffffff82000f98,0xffffffff8206bbec);
   }
   Session_SanityCheckSession(param_2);
@@ -369,10 +502,9 @@ void Session_JoinSession(undefined8 param_1,ulonglong param_2,ulonglong param_3,
     Com_Printf(0x10,0xffffffff821a6bb8,param_4,uVar5,param_3,*puVar1);
     iVar3 = (int)((param_3 & 0xffffffff) << 4);
     if (*(char *)((int)puVar1 + iVar3 + 0x508) != '\0') {
-      uVar2 = va(0xffffffff821a6b98,
+      uVar5 = va(0xffffffff821a6b98,
                  *(undefined8 *)((int)((param_3 + 0x51 & 0xffffffff) << 4) + (int)puVar1),param_3);
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821a6940,0x1c7,0,0xffffffff820011f4,0xffffffff821a6b64,uVar2);
+      MyAssertHandler(0xffffffff821a6940,0x1c7,0,0xffffffff820011f4,0xffffffff821a6b64,uVar5);
     }
     iVar4 = Session_JoinSession_Platform(uVar2,param_2,param_3,param_4,param_5);
     if (iVar4 != 0) {
@@ -388,11 +520,40 @@ void Session_JoinSession(undefined8 param_1,ulonglong param_2,ulonglong param_3,
 
 // 826DC168  Session_LeaveSession  (sessions/sessions_common.cpp:470)
 
-void Session_LeaveSession(void)
+void Session_LeaveSession(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_26();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821a6940,0x1d7,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (puVar2[4] == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x1d8,0,0xffffffff82000f98,0xffffffff820583e8);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,0x1d9,0,0xffffffff821a58a0,param_2,0x12);
+  }
+  Session_SanityCheckSession(puVar2);
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  iVar1 = (int)((param_2 & 0xffffffff) << 4);
+  if (*(char *)((int)puVar2 + iVar1 + 0x508) != '\0') {
+    Com_Printf(0x10,0xffffffff821a6c10,param_2,
+               *(undefined8 *)((int)((param_2 + 0x51 & 0xffffffff) << 4) + (int)puVar2),*puVar2,
+               puVar2[4]);
+    if (puVar2[4] == 0) {
+      MyAssertHandler(0xffffffff821a6940,0x1e4,0,0xffffffff82000f98,0xffffffff820583e8);
+    }
+    Session_LeaveSession_Platform(puVar2,param_2);
+    *(undefined1 *)((int)puVar2 + iVar1 + 0x508) = 0;
+    Session_SanityCheckSession(puVar2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -401,8 +562,39 @@ void Session_LeaveSession(void)
 void Session_AddNewPlayersToSession(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  char cVar2;
+  char *pcVar3;
+  undefined8 *puVar4;
+  ulonglong uVar5;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a6940,499,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  uVar5 = 0;
+  puVar4 = (undefined8 *)(iVar1 + 0x78);
+  pcVar3 = (char *)(iVar1 + 0x508);
+  do {
+    cVar2 = Session_IsUserRegistered(iVar1,uVar5);
+    if (cVar2 != '\0') {
+      if (0x11 < (uVar5 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,uVar5,0x12);
+      }
+      if (*pcVar3 == '\0') {
+        cVar2 = Session_JoinInProgressForXUID(iVar1,*puVar4);
+        if (cVar2 == '\0') {
+          Session_JoinSession(*(undefined4 *)(iVar1 + 0x4f8),iVar1,uVar5,*puVar4,
+                              *(undefined1 *)((int)puVar4 + 0x32));
+        }
+      }
+    }
+    uVar5 = uVar5 + 1;
+    pcVar3 = pcVar3 + 0x10;
+    puVar4 = puVar4 + 8;
+  } while ((int)uVar5 < 0x12);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -411,8 +603,47 @@ void Session_AddNewPlayersToSession(void)
 void Session_DropOldPlayersFromSession(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 *puVar2;
+  char cVar3;
+  undefined8 uVar1;
+  longlong lVar4;
+  longlong *plVar5;
+  longlong *plVar6;
+  ulonglong uVar7;
+  
+  puVar2 = (undefined4 *)__savegprlr_23();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821a6940,0x209,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  uVar7 = 0;
+  plVar6 = (longlong *)(puVar2 + 0x144);
+  plVar5 = (longlong *)(puVar2 + 0x1e);
+  do {
+    if (0x11 < (uVar7 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff821a6940,0x18c,0,0xffffffff82014c1c,uVar7,0x12);
+    }
+    if (*(char *)(plVar6 + -1) != '\0') {
+      cVar3 = Session_IsUserRegistered(puVar2,uVar7);
+      if (cVar3 == '\0') {
+        Com_Printf(0xe,0xffffffff821a6c50,*plVar6,*puVar2,uVar7);
+      }
+      else {
+        lVar4 = *plVar6;
+        if (*plVar5 == lVar4) goto LAB_826dc4b0;
+        uVar1 = Session_GetXuid(puVar2,uVar7);
+        Com_Printf(0xe,0xffffffff821a6cb0,lVar4,*puVar2,uVar1,uVar7);
+      }
+      Session_LeaveSession(puVar2,uVar7);
+    }
+LAB_826dc4b0:
+    uVar7 = uVar7 + 1;
+    plVar6 = plVar6 + 2;
+    plVar5 = plVar5 + 8;
+    if (0x11 < (int)uVar7) {
+      __restgprlr_23();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -424,7 +655,6 @@ void Session_UpdateInternalUserRegistration(int param_1)
   int iVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x220,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   if ((*(char *)(param_1 + 0x50) != '\0') &&
@@ -442,7 +672,6 @@ undefined4 Session_GetLocalVoiceConnectivity(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x230,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   return *(undefined4 *)(param_1 + 0x4f4);
@@ -451,11 +680,36 @@ undefined4 Session_GetLocalVoiceConnectivity(int param_1)
 
 // 826DC5A8  Session_SetLocalVoiceConnectivity  (sessions/sessions_common.cpp:566)
 
-void Session_SetLocalVoiceConnectivity(void)
+void Session_SetLocalVoiceConnectivity(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar2;
+  undefined8 uVar1;
+  char cVar4;
+  uint uVar3;
+  uint uVar5;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821a6940,0x237,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  uVar5 = (uint)param_2;
+  if (puVar2[0x13d] == uVar5) {
+    __restgprlr_29(0);
+    return;
+  }
+  Com_Printf(0xe,0xffffffff821a6dd4,*puVar2,puVar2[0x13d],param_2);
+  if (uVar5 != 0) {
+    uVar1 = Session_HostNum(puVar2);
+    cVar4 = Session_IsUserRegistered(puVar2,uVar1);
+    if ((cVar4 != '\0') && (uVar3 = Session_HostNum(puVar2), (1 << (uVar3 & 0x3f) & uVar5) == 0)) {
+      MyAssertHandler(0xffffffff821a6940,0x240,0,0xffffffff820011f4,0xffffffff821a6d10,
+                      0xffffffff821a6dac);
+    }
+  }
+  puVar2[0x13d] = uVar5;
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -465,7 +719,6 @@ void Session_RemoveLocalVoiceConnectivity(int param_1,uint param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x249,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   Session_SetLocalVoiceConnectivity(param_1,*(uint *)(param_1 + 0x4f4) & ~param_2);
@@ -479,7 +732,6 @@ void Session_AddLocalVoiceConnectivity(int param_1,ulonglong param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x252,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   Session_SetLocalVoiceConnectivity(param_1,*(uint *)(param_1 + 0x4f4) | param_2);
@@ -489,11 +741,25 @@ void Session_AddLocalVoiceConnectivity(int param_1,ulonglong param_2)
 
 // 826DC778  Session_GetClientVoiceConnectivity  (sessions/sessions_common.cpp:602)
 
-void Session_GetClientVoiceConnectivity(void)
+void Session_GetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x25b,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,0x25c,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  cVar2 = Session_IsUserRegistered(iVar1,param_2);
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821a6940,0x25d,0,0xffffffff82000f98,0xffffffff820369d8);
+  }
+  __restgprlr_28(*(undefined4 *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94));
+  return;
 }
 
 
@@ -514,16 +780,13 @@ void Session_SetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,und
   
   puVar3 = (undefined4 *)__savegprlr_24();
   if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x265,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   if (0x11 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x266,0,0xffffffff82014c1c,param_2,0x12);
   }
   cVar6 = Session_IsUserRegistered(puVar3,param_2);
   if (cVar6 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x267,0,0xffffffff82000f98,0xffffffff820369d8);
   }
   puVar1 = puVar3 + (int)param_2 * 0x10;
@@ -552,19 +815,16 @@ void Session_SetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,und
   }
   Com_Printf(0xe,0xffffffff821a7128,*puVar3,param_2,puVar1[0x25],param_3);
   if (uVar7 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x283,0,0xffffffff820011f4,0xffffffff821a70d8,
                     0xffffffff821a70ec);
   }
   uVar4 = Session_HostNum(puVar3);
   if ((1 << (uVar4 & 0x3f) & uVar7) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x284,0,0xffffffff820011f4,0xffffffff82036ac8,
                     0xffffffff821a70ac);
   }
   iVar5 = Session_HostNum(puVar3);
   if (((int)param_2 == iVar5) && (uVar7 != 0x3ffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x285,0,0xffffffff820011f4,0xffffffff821a7020,
                     0xffffffff821a7080);
   }
@@ -576,41 +836,122 @@ void Session_SetClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,und
 
 // 826DD270  Session_RemoveClientVoiceConnectivity  (sessions/sessions_common.cpp:653)
 
-void Session_RemoveClientVoiceConnectivity(void)
+void Session_RemoveClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x28e,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,0x28f,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  cVar2 = Session_IsUserRegistered(iVar1,param_2);
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821a6940,0x290,0,0xffffffff82000f98,0xffffffff820369d8);
+  }
+  Session_SetClientVoiceConnectivity
+            (iVar1,param_2,
+             (ulonglong)*(uint *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94) & ~param_3);
+  __restgprlr_27();
+  return;
 }
 
 
 // 826DD340  Session_AddClientVoiceConnectivity  (sessions/sessions_common.cpp:664)
 
-void Session_AddClientVoiceConnectivity(void)
+void Session_AddClientVoiceConnectivity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x299,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,0x29a,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  cVar2 = Session_IsUserRegistered(iVar1,param_2);
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821a6940,0x29b,0,0xffffffff82000f98,0xffffffff820369d8);
+  }
+  Session_SetClientVoiceConnectivity
+            (iVar1,param_2,*(uint *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x94) | param_3);
+  __restgprlr_27();
+  return;
 }
 
 
 // 826DC830  Session_GetConnectivityBitsForAddr  (sessions/sessions_common.cpp:676)
 
-void Session_GetConnectivityBitsForAddr(void)
+void Session_GetConnectivityBitsForAddr(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  char cVar4;
+  undefined8 *puVar2;
+  int iVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined1 auStack_50 [80];
+  
+  uVar1 = __savegprlr_26();
+  uVar5 = 0;
+  uVar7 = 0;
+  uVar6 = 1;
+  do {
+    cVar4 = Session_IsUserRegistered(uVar1,uVar7);
+    if (cVar4 != '\0') {
+      puVar2 = (undefined8 *)Session_GetPlayerAddr(auStack_50,uVar1,uVar7);
+      iVar3 = NET_CompareIPAdr(param_2,param_3,*puVar2,puVar2[1]);
+      if (iVar3 != 0) {
+        uVar5 = uVar6 | uVar5;
+      }
+    }
+    uVar7 = uVar7 + 1;
+    uVar6 = (uVar6 & 0x7fffffff) << 1 | uVar6 >> 0x1f;
+  } while ((uVar7 & 0xffffffff) < 0x12);
+  __restgprlr_26(uVar5);
+  return;
 }
 
 
 // 826DC8C0  Session_GetConnectivityBitsForClientAddress  (sessions/sessions_common.cpp:697)
 
-void Session_GetConnectivityBitsForClientAddress(void)
+void Session_GetConnectivityBitsForClientAddress(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char cVar4;
+  undefined8 *puVar3;
+  undefined8 uVar2;
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x2ba,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  if (0x11 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821a6940,699,0,0xffffffff82014c1c,param_2,0x12);
+  }
+  cVar4 = Session_IsUserRegistered(uVar1,param_2);
+  if (cVar4 != '\0') {
+    puVar3 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar1,param_2);
+    uVar2 = Session_GetConnectivityBitsForAddr(uVar1,*puVar3,puVar3[1]);
+    if ((1 << ((uint)param_2 & 0x3f) & (uint)uVar2) == 0) {
+      MyAssertHandler(0xffffffff821a6940,0x2c3,0,0xffffffff82000f98,0xffffffff821a6e14);
+    }
+    __restgprlr_28(uVar2);
+    return;
+  }
+  __restgprlr_28(1 << ((uint)param_2 & 0x3f));
+  return;
 }
 
 
@@ -619,28 +960,101 @@ void Session_GetConnectivityBitsForClientAddress(void)
 void Session_GetConnectivityBitsForLocalClients(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  uVar1 = __savegprlr_28();
+  uVar3 = 0;
+  uVar5 = 0;
+  uVar4 = 1;
+  do {
+    cVar2 = Session_IsUserRegistered(uVar1,uVar5);
+    if ((cVar2 != '\0') && (cVar2 = Session_PlayerHasLoopbackAddr(uVar1,uVar5), cVar2 != '\0')) {
+      uVar3 = uVar4 | uVar3;
+    }
+    uVar5 = uVar5 + 1;
+    uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
+  } while ((uVar5 & 0xffffffff) < 0x12);
+  if ((int)uVar3 == 0) {
+    Com_PrintError(0xe,0xffffffff821a6e40);
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 826DCA48  Session_GetClientNumAtSameAddress  (sessions/sessions_common.cpp:748)
 
-void Session_GetClientNumAtSameAddress(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void Session_GetClientNumAtSameAddress(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar6;
+  undefined8 *puVar4;
+  int iVar5;
+  longlong lVar7;
+  undefined1 auStack_40 [64];
+  
+  uVar3 = __savegprlr_27();
+  cVar6 = Session_IsUserRegistered();
+  if (cVar6 != '\0') {
+    puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar3,param_2);
+    uVar2 = *puVar4;
+    lVar7 = 0;
+    uVar1 = puVar4[1];
+    do {
+      if ((int)param_2 != (int)lVar7) {
+        cVar6 = Session_IsUserRegistered(uVar3,lVar7);
+        if (cVar6 != '\0') {
+          puVar4 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar3,lVar7);
+          iVar5 = NET_CompareIPAdr(uVar2,uVar1,*puVar4,puVar4[1]);
+          if (iVar5 != 0) {
+            __restgprlr_27(lVar7);
+            return;
+          }
+        }
+      }
+      lVar7 = lVar7 + 1;
+    } while ((int)lVar7 < 0x12);
+  }
+  __restgprlr_27(0xffffffffffffffff);
+  return;
 }
 
 
 // 826DCB20  Session_UpdatePartyHostAddress  (sessions/sessions_common.cpp:775)
 
-void Session_UpdatePartyHostAddress(void)
+void Session_UpdatePartyHostAddress(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char cVar4;
+  ulonglong uVar2;
+  undefined8 *puVar3;
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a6940,0x308,0,0xffffffff82000f98,0xffffffff82036a08);
+  }
+  cVar4 = Session_IsUserRegistered(uVar1,param_2);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff821a6940,0x309,0,0xffffffff82000f98,0xffffffff820369d8);
+  }
+  uVar2 = Party_GetPartyForSession(uVar1);
+  if (((uVar2 & 0xffffffff) != 0) && (cVar4 = Party_IsHost(uVar2,param_2), cVar4 != '\0')) {
+    puVar3 = (undefined8 *)Session_GetPlayerAddr(auStack_40,uVar1,param_2);
+    Party_UpdateHostAddr(uVar2,*puVar3,puVar3[1]);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -668,7 +1082,7 @@ void Session_SetPlayerAddr
   char cStack00000026;
   char cStack00000027;
   undefined4 uStack0000002c;
-  undefined4 local_60;
+  undefined1 local_60 [4];
   undefined4 uStack_5c;
   undefined2 local_58;
   undefined2 uStack_56;
@@ -677,11 +1091,9 @@ void Session_SetPlayerAddr
   uVar2 = in_stack_00000020;
   puVar8 = (undefined4 *)__savegprlr_24();
   if (puVar8 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x31e,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   if (0x11 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,799,0,0xffffffff82014c1c,param_2,0x12);
   }
   in_stack_00000020 = (int)((ulonglong)param_3 >> 0x20);
@@ -701,14 +1113,13 @@ void Session_SetPlayerAddr
   uStack_54 = uStack0000002c;
   if ((((in_stack_00000020 != 2) && (cVar10 == '\0')) && (cVar3 == '\0')) &&
      ((cVar4 == '\0' && (cVar5 == '\0')))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x32a,0,0xffffffff820011f4,0xffffffff821a6f40,
                     0xffffffff821a49d8);
   }
-  if ((((cVar10 == '\x7f') && ((cVar3 == '\0' && (cVar4 == '\0')))) && (cVar5 == '\x01')) &&
-     (in_stack_00000020 != 2)) {
+  if (((cVar10 == '\x7f') && (cVar3 == '\0')) &&
+     ((cVar4 == '\0' && ((cVar5 == '\x01' && (in_stack_00000020 != 2)))))) {
     Com_PrintWarning(0xe,0xffffffff821a6ee0);
-    NetAdr_SetType(&local_60,2);
+    NetAdr_SetType(local_60,2);
     local_58 = 0;
   }
   puVar1 = puVar8 + (int)param_2 * 0x10;
@@ -722,7 +1133,7 @@ void Session_SetPlayerAddr
     uVar7 = NET_AdrToString(*(undefined8 *)(puVar1 + 0x21),*(undefined8 *)(puVar1 + 0x23));
     Com_Printf(0xe,0xffffffff821a6ea0,*puVar8,param_2,uVar7,uVar6);
   }
-  puVar1[0x21] = local_60;
+  puVar1[0x21] = uVar2;
   puVar1[0x22] = uStack_5c;
   puVar1[0x23] = CONCAT22(local_58,uStack_56);
   puVar1[0x24] = uStack_54;
@@ -754,11 +1165,9 @@ void Session_UpdateSplitscreenMembersInAddr
   
   puVar3 = (undefined4 *)__savegprlr_25();
   if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x347,0,0xffffffff82000f98,0xffffffff82036a08);
   }
   if (0x11 < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a6940,0x348,0,0xffffffff821a6fe0,param_2,0x12);
   }
   cVar6 = Session_IsUserRegistered(puVar3,param_2);

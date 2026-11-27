@@ -2,21 +2,286 @@
 
 // 8289F068  GetSurfaceLayout  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:39)
 
-void GetSurfaceLayout(void)
+void GetSurfaceLayout(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+                     undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined1 uVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  uint *puVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  uint uVar13;
+  undefined4 uVar14;
+  uint local_90;
+  uint local_8c;
+  int local_88;
+  uint local_84;
+  uint local_80;
+  int local_7c [31];
+  
+  puVar6 = (uint *)__savegprlr_19();
+  iVar2 = (int)param_5;
+  uVar13 = *(uint *)(iVar2 + 0x20) & 0x3f;
+  iVar5 = *(int *)(iVar2 + 0x28) >> 0x1f;
+  uVar9 = (ulonglong)(uint)-iVar5;
+  uVar1 = (&DAT_821f3a09)[(*(uint *)(iVar2 + 0x20) & 0x3f) * 2];
+  uVar4 = *(uint *)(iVar2 + 0x30) >> 9 & 3;
+  uVar3 = *(uint *)(iVar2 + 0x1c) >> 0x1f;
+  D3D__GetTextureDimensions(param_5,&local_84,&local_80,local_7c);
+  lVar8 = (uVar9 - LZCOUNT(local_84 + iVar5 * 2 + -1)) + 0x20;
+  lVar7 = (uVar9 - LZCOUNT(local_80 + iVar5 * 2 + -1)) + 0x20;
+  if ((param_6 & 0xffffffff) != 0) {
+    lVar12 = (uVar9 - LZCOUNT(local_84 + iVar5 * 2 + -1)) + 0x20;
+    lVar10 = (uVar9 - LZCOUNT(local_80 + iVar5 * 2 + -1)) + 0x20;
+    if ((int)lVar10 <= (int)lVar12) {
+      lVar12 = lVar10;
+    }
+    uVar11 = lVar12 - 4;
+    uVar11 = (((uVar11 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar11 == 0) & uVar11;
+    if (((param_6 & 0xffffffff) < (uVar11 & 0xffffffff)) || ((*(uint *)(iVar2 + 0x30) & 0x800) == 0)
+       ) {
+      uVar14 = 0;
+    }
+    else {
+      uVar14 = 1;
+      param_6 = uVar11;
+    }
+    if (uVar4 == 2) {
+      lVar12 = (uVar9 - LZCOUNT(local_7c[0] + iVar5 * 2 + -1)) + 0x20;
+    }
+    else {
+      lVar12 = 0;
+    }
+    uVar11 = lVar8 - param_6;
+    uVar9 = lVar7 - param_6;
+    local_90 = 1 << (-(uint)(uVar11 < 0xffffffff80000000) & (uint)uVar11 & 0x3f);
+    local_8c = 1 << (-(uint)(uVar9 < 0xffffffff80000000) & (uint)uVar9 & 0x3f);
+    local_88 = 1 << (-(uint)(lVar12 - param_6 < 0xffffffff80000000) & (uint)(lVar12 - param_6) &
+                    0x3f);
+    D3D__AlignTextureDimensions(&local_90,&local_8c,&local_88,uVar1,uVar13,uVar4,uVar3);
+    uVar13 = local_90;
+    goto LAB_8289f2a8;
+  }
+  local_90 = 1 << ((uint)lVar8 & 0x3f);
+  local_8c = 1 << ((uint)lVar7 & 0x3f);
+  if ((local_90 < 0x11) || (local_8c < 0x11)) {
+    if ((*(uint *)(iVar2 + 0x30) & 0x800) == 0) goto LAB_8289f14c;
+    uVar14 = 1;
+  }
+  else {
+LAB_8289f14c:
+    local_90 = local_84;
+    uVar14 = 0;
+    local_8c = local_80;
+  }
+  local_88 = 1;
+  D3D__AlignTextureDimensions(&local_90,&local_8c,&local_88,uVar1,uVar13,uVar4,uVar3);
+  uVar13 = *(uint *)(iVar2 + 0x1c) >> 0x11 & 0x3fe0;
+LAB_8289f2a8:
+  if (puVar6 != (uint *)0x0) {
+    *puVar6 = uVar13;
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    *(uint *)param_2 = local_8c;
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    *(uint *)param_3 = uVar3;
+  }
+  if ((param_4 & 0xffffffff) != 0) {
+    *(undefined4 *)param_4 = uVar14;
+  }
+  __restgprlr_19();
+  return;
 }
 
 
 // 8289F2E8  GetTextureDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:137)
 
-void GetTextureDesc(void)
+void GetTextureDesc(undefined8 param_1,ulonglong param_2,int *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *puVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  ulonglong uVar8;
+  uint local_140;
+  uint local_13c;
+  int local_138;
+  int local_134;
+  int local_130;
+  uint local_12c;
+  undefined1 auStack_128 [8];
+  int local_120 [4];
+  int local_110;
+  int local_10c;
+  int local_108;
+  int local_100 [4];
+  int local_f0;
+  int local_ec;
+  int local_e8;
+  int local_e0 [4];
+  int local_d0;
+  int local_c8;
+  int local_c4;
+  uint local_c0 [4];
+  int local_b0;
+  int local_a8;
+  int local_a4;
+  int local_a0 [4];
+  int local_90;
+  int local_88;
+  int local_84;
+  int local_80 [4];
+  int local_70;
+  int local_68;
+  int local_64;
+  int local_60 [4];
+  int local_50;
+  int local_48;
+  
+  puVar4 = (uint *)__savegprlr_26();
+  local_138 = 0;
+  iVar5 = D3DResource_GetType();
+  *param_3 = iVar5;
+  uVar6 = param_2;
+  puVar7 = puVar4;
+  if (iVar5 == 3) {
+    D3DTexture_GetLevelDesc(puVar4,param_2,local_a0);
+    param_3[3] = 1;
+    local_70 = local_90;
+    local_80[0] = local_a0[0];
+    local_10c = local_84;
+    local_48 = local_88;
+LAB_8289f528:
+    param_3[0xe] = local_70;
+    param_3[4] = local_80[0];
+LAB_8289f530:
+    param_3[2] = local_10c;
+LAB_8289f534:
+    param_3[1] = local_48;
+  }
+  else if (iVar5 == 4) {
+    D3DSurface_GetDesc(puVar4,local_c0);
+    param_3[3] = 1;
+    param_3[0xe] = local_b0;
+    param_3[1] = local_a8;
+    param_3[2] = local_a4;
+    param_3[4] = local_c0[0];
+    if ((*puVar4 & 0x40000000) == 0) {
+      bVar1 = (&DAT_82013140)[local_c0[0] & 0x3f];
+      param_3[8] = local_a8;
+      param_3[9] = local_a4;
+      param_3[10] = 1;
+      uVar2 = (uint)(bVar1 >> 3);
+      param_3[7] = (uint)bVar1;
+      param_3[0xb] = uVar2;
+      param_3[5] = (puVar4[6] & 0x3fff) * uVar2;
+      uVar2 = puVar4[0xb];
+      param_3[0xc] = 0;
+      param_3[0xd] = 1;
+      param_3[6] = uVar2;
+      goto LAB_8289f70c;
+    }
+    puVar7 = (uint *)puVar4[6];
+    uVar6 = (ulonglong)(puVar4[7] >> 0x1c);
+  }
+  else if (iVar5 == 0x10) {
+    D3DVolume_GetDesc(puVar4,local_100);
+    param_3[0xe] = 0;
+    param_3[3] = local_e8;
+    param_3[4] = local_100[0];
+    param_3[1] = local_f0;
+    param_3[2] = local_ec;
+    puVar7 = (uint *)puVar4[6];
+    uVar6 = (ulonglong)(puVar4[7] >> 0x1c);
+  }
+  else {
+    if (iVar5 == 0x11) {
+      D3DVolumeTexture_GetLevelDesc(puVar4,param_2,local_120);
+      param_3[0xe] = 0;
+      param_3[3] = local_108;
+      param_3[4] = local_120[0];
+      local_48 = local_110;
+      goto LAB_8289f530;
+    }
+    if (iVar5 != 0x12) {
+      if (iVar5 == 0x13) {
+        D3DArrayTexture_GetLevelDesc(puVar4,param_2,local_80);
+        param_3[3] = 1;
+        local_10c = local_64;
+        local_48 = local_68;
+        goto LAB_8289f528;
+      }
+      if (iVar5 != 0x14) goto LAB_8289f70c;
+      D3DLineTexture_GetLevelDesc(puVar4,param_2,local_60);
+      param_3[2] = 1;
+      param_3[3] = 1;
+      param_3[4] = local_60[0];
+      param_3[0xe] = local_50;
+      goto LAB_8289f534;
+    }
+    D3DCubeTexture_GetLevelDesc(puVar4,param_2,local_e0);
+    param_3[1] = local_c8;
+    param_3[2] = local_c4;
+    param_3[3] = puVar4[9] >> 0x1a;
+    param_3[4] = local_e0[0];
+    param_3[0xe] = local_d0;
+  }
+  bVar1 = (&DAT_82013140)[param_3[4] & 0x3fU];
+  param_3[0xd] = 0;
+  param_3[7] = (uint)bVar1;
+  D3D__BlockSizeOfGpuFormat(param_3[4] & 0x3fU,&local_12c,&local_140);
+  GetSurfaceLayout(&local_134,&local_13c,&local_130,&local_138,puVar7,uVar6);
+  uVar2 = local_140;
+  uVar8 = (ulonglong)local_140;
+  if ((((((uVar6 & 0xffffffff) == 0) && (uVar3 = puVar7[0xc], (uVar3 & 0x600) == 0x200)) &&
+       ((puVar7[7] & 0x80000000) == 0)) &&
+      (((puVar7[8] & 0x400) == 0 && ((uVar3 & 0xfffff000) == 0)))) &&
+     (((uVar3 & 0x800) == 0 && ((puVar7[10] & 0x80000000) == 0)))) {
+    D3D__GetTextureDimensions(puVar7,auStack_128,&local_140,&local_13c);
+    local_13c = (local_140 + uVar2) - 1 & ~(uVar2 - 1);
+  }
+  iVar5 = (int)(((longlong)param_3[7] * (longlong)local_134 & 0xffffffffU) >> 3);
+  param_3[5] = iVar5;
+  param_3[6] = iVar5 * local_13c;
+  if ((((local_130 != 0) || (1 < (param_2 & 0xffffffff))) ||
+      (iVar5 = D3DResource_GetType(puVar7), iVar5 != 3)) &&
+     (iVar5 = D3DResource_GetType(puVar7), iVar5 != 0x11)) {
+    param_3[6] = param_3[6] + 0xfffU & 0xfffff000;
+  }
+  param_3[0xc] = (int)(puVar7[10] << 0xd | puVar7[10] >> 0x13) >> 0x1a;
+  if (local_130 != 0) {
+    param_3[0xd] = param_3[0xd] | 1;
+  }
+  if (local_138 != 0) {
+    param_3[0xd] = param_3[0xd] | 2;
+  }
+  if ((puVar7[10] & 0x80000000) != 0) {
+    param_3[0xd] = param_3[0xd] | 8;
+  }
+  trapWord(6,uVar8,0);
+  trapWord(6,(ulonglong)local_12c,0);
+  param_3[10] = param_3[3];
+  param_3[8] = (int)((((ulonglong)(uint)param_3[1] + (ulonglong)local_12c) - 1 & 0xffffffff) /
+                    (ulonglong)local_12c);
+  param_3[5] = param_3[5] * uVar2;
+  param_3[9] = (int)((((uint)param_3[2] + uVar8) - 1 & 0xffffffff) / uVar8);
+  param_3[0xb] = param_3[7] * local_12c * uVar2 >> 3;
+LAB_8289f70c:
+  __restgprlr_26();
+  return;
 }
 
 
@@ -68,11 +333,76 @@ ulonglong XGGetMipTailBaseLevel(int param_1,int param_2,int param_3)
 
 // 8289F780  XGRAPHICS::GetMipTailLevelOffsetCoords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:519)
 
-void XGRAPHICS__GetMipTailLevelOffsetCoords(void)
+void XGRAPHICS__GetMipTailLevelOffsetCoords
+               (undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4,ulonglong param_5
+               ,undefined8 param_6,int param_7,undefined4 *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar6;
+  undefined8 uVar5;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int local_70;
+  int local_6c;
+  int local_68;
+  undefined4 local_64;
+  undefined4 local_60;
+  undefined4 local_5c;
+  
+  iVar6 = __savegprlr_23();
+  uVar11 = (ulonglong)(param_7 == 0) ^ 1;
+  iVar2 = (int)(uVar11 << 1);
+  lVar9 = (uVar11 - LZCOUNT((iVar6 - iVar2) + -1)) + 0x20;
+  lVar7 = (uVar11 - LZCOUNT((param_2 - iVar2) + -1)) + 0x20;
+  if ((int)lVar7 <= (int)lVar9) {
+    lVar9 = lVar7;
+  }
+  uVar10 = lVar9 - 4;
+  uVar10 = (((uVar10 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar10 == 0) & uVar10;
+  if ((param_4 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+    local_64 = 0;
+    uVar5 = 0;
+    param_8[1] = 0;
+    param_8[2] = 0;
+  }
+  else {
+    if ((param_3 & 0xffffffff) < 2) {
+      lVar9 = 0;
+    }
+    else {
+      lVar9 = (uVar11 - LZCOUNT(((int)param_3 - iVar2) + -1)) + 0x20;
+    }
+    uVar4 = (uint)(lVar9 - uVar10);
+    iVar6 = 1 << ((((int)uVar11 - (int)LZCOUNT((iVar6 - iVar2) + -1)) + 0x20) - (int)uVar10 & 0x3fU)
+    ;
+    iVar2 = 1 << ((((int)uVar11 - (int)LZCOUNT((param_2 - iVar2) + -1)) + 0x20) - (int)uVar10 &
+                 0x3fU);
+    iVar3 = 1 << ((-1 - ((int)uVar4 >> 0x1f)) + (uint)(lVar9 - uVar10 == 0) & uVar4 & 0x3f);
+    bVar1 = (&DAT_821f3a09)[(int)((param_5 & 0xffffffff) << 1)];
+    local_70 = iVar6;
+    local_6c = iVar2;
+    local_68 = iVar3;
+    D3D__AlignTextureDimensions(&local_70,&local_6c,&local_68,bVar1,param_5,1,param_6);
+    uVar11 = ((longlong)local_70 * (longlong)(int)(uint)bVar1 & 0xffffffffU) >> 3;
+    uVar8 = (longlong)(int)uVar11 * (longlong)local_6c;
+    if ((param_3 & 0xffffffff) < 2) {
+      uVar8 = uVar8 + 0xfff & 0xfffff000;
+    }
+    uVar5 = D3D__GetMipTailLevelOffsetCoords
+                      (param_4 - uVar10,iVar6,iVar2,iVar3,uVar11,uVar8,param_5,&local_64);
+    param_8[1] = local_60;
+    param_8[2] = local_5c;
+  }
+  *param_8 = local_64;
+  __restgprlr_23(uVar5);
+  return;
 }
 
 

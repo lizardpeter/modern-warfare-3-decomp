@@ -2,11 +2,126 @@
 
 // 82304910  CG_TriggerVisionSet  (cgame/cg_trigger.cpp:174)
 
-void CG_TriggerVisionSet(void)
+void CG_TriggerVisionSet(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  ulonglong uVar2;
+  int iVar3;
+  char cVar4;
+  int iVar5;
+  char *pcVar6;
+  char *pcVar7;
+  char *pcVar8;
+  uint uVar9;
+  uint uVar10;
+  char *pcVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  
   __savegprlr_19();
+  uVar2 = __savefpr_28();
+  if (0x3ff < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82025c84,0xbc,0,0xffffffff82025c40,uVar2,0x400);
+  }
+  if ((ulonglong)*(uint *)(DAT_835a2918 + 0x24) <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82025c84,0xbd,0,0xffffffff82025be8,uVar2);
+  }
+  uVar10 = (uint)*(ushort *)((int)&DAT_82a75160 + (int)((uVar2 & 0xffffffff) << 1));
+  if (0x1f < uVar10) {
+    MyAssertHandler(0xffffffff82025c84,0xbf,0,0xffffffff82025b90,uVar10,0x20);
+  }
+  iVar5 = uVar10 * 0x84;
+  pcVar11 = &DAT_82a75960 + iVar5;
+  iVar3 = CG_GetLocalClientGlobals(param_2);
+  pcVar8 = (char *)(iVar3 + 0x107ff8);
+  pcVar6 = pcVar11;
+  pcVar7 = pcVar8;
+  do {
+    cVar4 = *pcVar7;
+    cVar1 = *pcVar6;
+    if (cVar4 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar4 == cVar1);
+  dVar17 = 0.5;
+  dVar16 = 255.0;
+  dVar14 = 0.6931471824645996;
+  if (cVar4 != cVar1) {
+    I_strncpyz(pcVar8,pcVar11,0x40);
+    CG_VisionSetStartLerp_To(iVar3 + 0x107060,5,3,pcVar8,0,*(undefined4 *)(iVar3 + 0x6b98c));
+    dVar13 = (double)(float)(dVar14 / (double)*(float *)(&DAT_82a759a4 + iVar5));
+    floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759a8 + iVar5) * dVar16) +
+                         dVar17));
+    floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759ac + iVar5) * dVar16) +
+                         dVar17));
+    floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759b0 + iVar5) * dVar16) +
+                         dVar17));
+    floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c0)[uVar10 * 0x21] * dVar16) +
+                         dVar17));
+    floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c4)[uVar10 * 0x21] * dVar16) +
+                         dVar17));
+    floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c8)[uVar10 * 0x21] * dVar16) +
+                         dVar17));
+    R_SetFog3rdPerson((double)*(float *)(&DAT_82a759a0 + iVar5),dVar13,
+                      (double)*(float *)(&DAT_82a759b4 + iVar5),
+                      (double)(float)(&DAT_82a759d8)[uVar10 * 0x21],
+                      (double)(float)(&DAT_82a759dc)[uVar10 * 0x21],
+                      (double)*(float *)(&DAT_82a759e0 + iVar5),param_2);
+  }
+  cVar4 = CL_Demo_IsThirdPersonCamera(param_2);
+  if ((cVar4 == '\0') && (*(int *)(iVar3 + 0x76ec4) != 0)) {
+    pcVar8 = (char *)(iVar3 + 0x107eb8);
+    pcVar6 = pcVar11;
+    pcVar7 = pcVar8;
+    do {
+      cVar4 = *pcVar7;
+      cVar1 = *pcVar6;
+      if (cVar4 == '\0') break;
+      pcVar7 = pcVar7 + 1;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar4 == cVar1);
+    if (cVar4 != cVar1) {
+      I_strncpyz(pcVar8,pcVar11,0x40);
+      dVar13 = floor((double)(float)((double)(*(float *)(*(int *)(DAT_835a2918 + 0x58) +
+                                                        (int)((uVar2 & 0xffffffff) << 2)) * 1000.0)
+                                    + dVar17));
+      DAT_82a769e8 = (uint)dVar13;
+      uVar9 = -(uint)(*(char *)(iVar3 + 0x108045) == '\0') & DAT_82a769e8;
+      cVar4 = CL_Demo_GetJumpTimeFlag();
+      if ((cVar4 != '\0') || (cVar4 = CL_Demo_CameraModeChanged(), cVar4 != '\0')) {
+        uVar9 = 0;
+      }
+      CG_VisionSetStartLerp_To(iVar3 + 0x107060,0,3,pcVar8,uVar9,*(undefined4 *)(iVar3 + 0x6b98c));
+      dVar15 = (double)(float)(dVar14 / (double)*(float *)(&DAT_82a759a4 + iVar5));
+      dVar14 = floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759a8 + iVar5) *
+                                                    dVar16) + dVar17));
+      dVar13 = floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759ac + iVar5) *
+                                                    dVar16) + dVar17));
+      dVar12 = floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759b0 + iVar5) *
+                                                    dVar16) + dVar17));
+      floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c0)[uVar10 * 0x21] * dVar16)
+                           + dVar17));
+      floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c4)[uVar10 * 0x21] * dVar16)
+                           + dVar17));
+      dVar16 = floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c8)[uVar10 * 0x21] *
+                                                    dVar16) + dVar17));
+      R_SetFogFromServer((double)*(float *)(&DAT_82a759a0 + iVar5),dVar15,
+                         (double)*(float *)(&DAT_82a759b4 + iVar5),
+                         (double)(float)(&DAT_82a759d8)[uVar10 * 0x21],
+                         (double)(float)(&DAT_82a759dc)[uVar10 * 0x21],
+                         (double)*(float *)(&DAT_82a759e0 + iVar5),param_2,(int)dVar16,
+                         (int)dVar14 & 0xff,(int)dVar13 & 0xff,(int)dVar12 & 0xff);
+      R_SwitchFog(param_2,1,*(undefined4 *)(iVar3 + 0x6b98c),uVar9);
+    }
+  }
+  __restfpr_28();
+  __restgprlr_19();
+  return;
 }
 
 
@@ -36,8 +151,8 @@ void CG_SetDefaultVisionAndFogSet(undefined8 param_1,ulonglong param_2)
   uVar7 = (uint)DAT_82a769e4;
   if (uVar7 != 0x20) {
     if (0x1f < uVar7) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82025c84,0x106,0,0xffffffff82025cc8,uVar7,0x20);
+      uVar7 = (uint)DAT_82a769e4;
     }
     iVar5 = uVar7 * 0x84;
     pcVar11 = &DAT_82a75960 + iVar5;
@@ -65,16 +180,16 @@ void CG_SetDefaultVisionAndFogSet(undefined8 param_1,ulonglong param_2)
                            dVar14));
       floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759b0 + iVar5) * dVar15) +
                            dVar14));
-      floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c0 + iVar5) * dVar15) +
+      floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c0)[uVar7 * 0x21] * dVar15) +
                            dVar14));
-      floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c4 + iVar5) * dVar15) +
+      floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c4)[uVar7 * 0x21] * dVar15) +
                            dVar14));
-      floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c8 + iVar5) * dVar15) +
+      floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c8)[uVar7 * 0x21] * dVar15) +
                            dVar14));
       R_SetFog3rdPerson((double)*(float *)(&DAT_82a759a0 + iVar5),dVar12,
                         (double)*(float *)(&DAT_82a759b4 + iVar5),
-                        (double)*(float *)(&DAT_82a759d8 + iVar5),
-                        (double)*(float *)(&DAT_82a759dc + iVar5),
+                        (double)(float)(&DAT_82a759d8)[uVar7 * 0x21],
+                        (double)(float)(&DAT_82a759dc)[uVar7 * 0x21],
                         (double)*(float *)(&DAT_82a759e0 + iVar5),uVar2);
     }
     cVar4 = CL_Demo_IsThirdPersonCamera(uVar2);
@@ -108,16 +223,16 @@ void CG_SetDefaultVisionAndFogSet(undefined8 param_1,ulonglong param_2)
                              dVar14));
         floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759b0 + iVar5) * dVar15) +
                              dVar14));
-        floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c0 + iVar5) * dVar15) +
-                             dVar14));
-        floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c4 + iVar5) * dVar15) +
-                             dVar14));
-        floor((double)(float)((double)(float)((double)*(float *)(&DAT_82a759c8 + iVar5) * dVar15) +
-                             dVar14));
+        floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c0)[uVar7 * 0x21] * dVar15)
+                             + dVar14));
+        floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c4)[uVar7 * 0x21] * dVar15)
+                             + dVar14));
+        floor((double)(float)((double)(float)((double)(float)(&DAT_82a759c8)[uVar7 * 0x21] * dVar15)
+                             + dVar14));
         R_SetFogFromServer((double)*(float *)(&DAT_82a759a0 + iVar5),dVar13,
                            (double)*(float *)(&DAT_82a759b4 + iVar5),
-                           (double)*(float *)(&DAT_82a759d8 + iVar5),
-                           (double)*(float *)(&DAT_82a759dc + iVar5),
+                           (double)(float)(&DAT_82a759d8)[uVar7 * 0x21],
+                           (double)(float)(&DAT_82a759dc)[uVar7 * 0x21],
                            (double)*(float *)(&DAT_82a759e0 + iVar5),uVar2);
         R_SwitchFog(uVar2,1,*(undefined4 *)(iVar3 + 0x6b98c),uVar9);
       }
@@ -193,11 +308,32 @@ char * CG_SkipWhiteSpace(char *param_1)
 
 // 82305370  CG_SkipText  (cgame/cg_trigger.cpp:372)
 
-void CG_SkipText(void)
+void CG_SkipText(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  longlong lVar2;
+  int iVar3;
+  char *pcVar5;
+  longlong lVar4;
+  undefined1 auStack_a0 [160];
+  
+  lVar2 = __savegprlr_29();
+  lVar4 = param_2;
+  do {
+    pcVar5 = (char *)lVar4;
+    lVar4 = lVar4 + 1;
+  } while (*pcVar5 != '\0');
+  uVar1 = (lVar4 - param_2) - 1U & 0xffffffff;
+  iVar3 = I_strncmp(param_2,lVar2,uVar1);
+  if (iVar3 != 0) {
+    I_strncpyz(auStack_a0,lVar2,0x80);
+    Com_PrintError(1,0xffffffff82025d30,auStack_a0,param_2);
+    __restgprlr_29(0);
+    return;
+  }
+  __restgprlr_29(uVar1 + lVar2);
+  return;
 }
 
 
@@ -234,13 +370,63 @@ void CG_SkipRestOfLine(char *param_1)
 }
 
 
-// 823054D0  CG_ParseString  (cgame/cg_trigger.cpp:415)
+// 82305478  CG_MatchLineStartingWith  (cgame/cg_trigger.cpp:406)
 
-void CG_ParseString(void)
+bool CG_MatchLineStartingWith(undefined8 param_1,char *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  
+  pcVar3 = param_2;
+  do {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  iVar2 = I_strncmp(param_2,param_1,pcVar3 + (-1 - (int)param_2));
+  return iVar2 == 0;
+}
+
+
+// 823054D0  CG_ParseString  (cgame/cg_trigger.cpp:415)
+
+void CG_ParseString(undefined8 param_1,int param_2,ulonglong param_3)
+
+{
+  bool bVar1;
+  char cVar2;
+  longlong lVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  undefined1 auStack_a0 [160];
+  
+  lVar3 = __savegprlr_29();
+  pcVar4 = (char *)lVar3;
+  if (*pcVar4 != '\"') {
+    I_strncpyz(auStack_a0,lVar3,0x80);
+    Com_PrintError(1,0xffffffff82010608,auStack_a0);
+  }
+  uVar5 = 0;
+  cVar2 = pcVar4[1];
+  while ((cVar2 != '\"' && (cVar2 != '\0'))) {
+    bVar1 = (uVar5 & 0xffffffff) == (param_3 & 0xffffffff);
+    if ((param_3 & 0xffffffff) <= (uVar5 & 0xffffffff)) goto LAB_8230555c;
+    *(char *)((int)uVar5 + param_2) = cVar2;
+    uVar5 = uVar5 + 1;
+    cVar2 = pcVar4[(int)uVar5 + 1];
+  }
+  bVar1 = (uVar5 & 0xffffffff) == (param_3 & 0xffffffff);
+LAB_8230555c:
+  if (!bVar1) {
+    *(undefined1 *)((int)uVar5 + param_2) = 0;
+    __restgprlr_29(uVar5 + lVar3 + 2);
+    return;
+  }
+  I_strncpyz(auStack_a0,lVar3,0x80);
+  Com_PrintError(1,0xffffffff820105e0,auStack_a0);
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -293,6 +479,36 @@ undefined8 CG_ParseFloatFinish(char *param_1,undefined8 param_2)
 }
 
 
+// 823056D0  CG_ParseBoolFinish  (cgame/cg_trigger.cpp:469)
+
+undefined8 CG_ParseBoolFinish(char *param_1,char *param_2)
+
+{
+  char cVar1;
+  int iVar3;
+  undefined8 uVar2;
+  int local_b0 [4];
+  undefined1 auStack_a0 [136];
+  
+  iVar3 = sscanf(param_1,"%i",local_b0);
+  if (iVar3 == 1) {
+    *param_2 = '\x01' - (local_b0[0] == 0);
+    cVar1 = *param_1;
+    while (((cVar1 != '\n' && (cVar1 != '\r')) && (cVar1 != '\0'))) {
+      param_1 = param_1 + 1;
+      cVar1 = *param_1;
+    }
+    uVar2 = CG_SkipWhiteSpace();
+  }
+  else {
+    I_strncpyz(auStack_a0,param_1,0x80);
+    Com_PrintError(1,0xffffffff82025d74,auStack_a0);
+    uVar2 = 0;
+  }
+  return uVar2;
+}
+
+
 // 82305790  CG_ParseVec3Finish  (cgame/cg_trigger.cpp:485)
 
 undefined8 CG_ParseVec3Finish(char *param_1,longlong param_2)
@@ -324,18 +540,179 @@ undefined8 CG_ParseVec3Finish(char *param_1,longlong param_2)
 void CG_ParseClientVisionSetTriggers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  ulonglong uVar3;
+  char *pcVar5;
+  char cVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  
+  uVar2 = __savegprlr();
+  DAT_82a769e0 = 0;
+  iVar4 = CG_SkipText(uVar2,0xffffffff82025f4c);
+  if (((((iVar4 != 0) && (uVar3 = CG_SkipWhiteSpace(), (uVar3 & 0xffffffff) != 0)) &&
+       (iVar4 = CG_SkipText(uVar3,0xffffffff820107f8), iVar4 != 0)) &&
+      ((uVar3 = CG_SkipWhiteSpace(), (uVar3 & 0xffffffff) != 0 &&
+       (iVar4 = CG_SkipText(uVar3,0xffffffff8200373c), iVar4 != 0)))) &&
+     (pcVar5 = (char *)CG_SkipWhiteSpace(), pcVar5 != (char *)0x0)) {
+    dVar8 = 0.0;
+    dVar9 = 1.0;
+    do {
+      if (*pcVar5 == '\0') break;
+      pcVar5 = (char *)CG_SkipWhiteSpace();
+      iVar4 = I_strncmp(0xffffffff82025d98,pcVar5,0x2b);
+      if (iVar4 == 0) {
+        iVar4 = CG_SkipText(pcVar5,0xffffffff82025d98);
+        if (iVar4 == 0) break;
+        uVar2 = CG_SkipWhiteSpace();
+        if (0x1f < DAT_82a769e0) {
+          MyAssertHandler(0xffffffff82025c84,0x20f,0,
+                          "g_numActiveFogSets doesn\'t index MAX_CLIENT_SIDE_VISION_AND_FOG_SETS_PER_LEVEL\n\t%i not in [0, %i)"
+                          ,DAT_82a769e0,0x20);
+        }
+        uVar1 = DAT_82a769e0;
+        iVar7 = DAT_82a769e0 * 0x84;
+        iVar4 = CG_ParseStringFinish(uVar2,&DAT_82a75960 + iVar7,0x40);
+        if (iVar4 == 0) break;
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp(0xffffffff82025dc4,uVar2,0x10);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,0xffffffff82025dc4);
+        CG_ParseFloatFinish(uVar2,&DAT_82a759a0 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp(0xffffffff82025dd8,uVar2,0x12);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,0xffffffff82025dd8);
+        CG_ParseFloatFinish(uVar2,&DAT_82a759a4 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp(0xffffffff82025dec,uVar2,10);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,0xffffffff82025dec);
+        CG_ParseFloatFinish(uVar2,&DAT_82a759a8 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp("ent.green = ",uVar2,0xc);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,"ent.green = ");
+        CG_ParseFloatFinish(uVar2,&DAT_82a759ac + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp(0xffffffff82025df8,uVar2,0xb);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,0xffffffff82025df8);
+        CG_ParseFloatFinish(uVar2,&DAT_82a759b0 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp("ent.maxOpacity = ",uVar2,0x11);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,"ent.maxOpacity = ");
+        CG_ParseFloatFinish(uVar2,&DAT_82a759b4 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp("ent.transitionTime = ",uVar2,0x15);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,"ent.transitionTime = ");
+        CG_ParseFloatFinish(uVar2,&DAT_82a759b8 + iVar7);
+        uVar2 = CG_SkipWhiteSpace();
+        iVar4 = I_strncmp(0xffffffff82025e04,uVar2,0x14);
+        if (iVar4 != 0) break;
+        uVar2 = CG_SkipText(uVar2,0xffffffff82025e04);
+        pcVar5 = (char *)CG_ParseBoolFinish(uVar2,&DAT_82a759bc + iVar7);
+        if ((&DAT_82a759bc)[iVar7] == '\0') {
+          (&DAT_82a759c0)[uVar1 * 0x21] = (float)dVar9;
+          (&DAT_82a759c4)[uVar1 * 0x21] = (float)dVar9;
+          DAT_82a769e0 = DAT_82a769e0 + 1;
+          (&DAT_82a759c8)[uVar1 * 0x21] = (float)dVar9;
+          (&DAT_82a759d8)[uVar1 * 0x21] = (float)dVar8;
+          (&DAT_82a759dc)[uVar1 * 0x21] = (float)dVar8;
+          (&DAT_82a759cc)[uVar1 * 0x21] = (float)dVar9;
+          (&DAT_82a759d0)[uVar1 * 0x21] = (float)dVar8;
+          (&DAT_82a759d4)[uVar1 * 0x21] = (float)dVar8;
+        }
+        else {
+          uVar2 = CG_SkipWhiteSpace();
+          iVar4 = I_strncmp("ent.sunRed = ",uVar2,0xd);
+          if (iVar4 != 0) break;
+          uVar2 = CG_SkipText(uVar2,"ent.sunRed = ");
+          CG_ParseFloatFinish(uVar2,&DAT_82a759c0 + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e1c);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e1c);
+          CG_ParseFloatFinish(uVar2,&DAT_82a759c4 + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e2c);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e2c);
+          CG_ParseFloatFinish(uVar2,&DAT_82a759c8 + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e3c);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e3c);
+          CG_ParseVec3Finish(uVar2,&DAT_82a759cc + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e4c);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e4c);
+          CG_ParseFloatFinish(uVar2,&DAT_82a759d8 + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e68);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e68);
+          CG_ParseFloatFinish(uVar2,&DAT_82a759dc + uVar1 * 0x21);
+          uVar2 = CG_SkipWhiteSpace();
+          cVar6 = CG_MatchLineStartingWith(uVar2,0xffffffff82025e80);
+          if (cVar6 == '\0') break;
+          uVar2 = CG_SkipText(uVar2,0xffffffff82025e80);
+          pcVar5 = (char *)CG_ParseFloatFinish(uVar2,&DAT_82a759e0 + iVar7);
+          DAT_82a769e0 = DAT_82a769e0 + 1;
+        }
+      }
+      else {
+        cVar6 = *pcVar5;
+        while (((cVar6 != '\n' && (cVar6 != '\r')) && (cVar6 != '\0'))) {
+          pcVar5 = pcVar5 + 1;
+          cVar6 = *pcVar5;
+        }
+        pcVar5 = (char *)CG_SkipWhiteSpace();
+      }
+    } while (pcVar5 != (char *)0x0);
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82304808  Bounds_OverlapOrTouch  (universal/bounds_inline.h:616)
 
-void Bounds_OverlapOrTouch(void)
+void Bounds_OverlapOrTouch(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  float *pfVar4;
+  
+  pfVar3 = (float *)__savegprlr_28();
+  if (pfVar3 == (float *)0x0) {
+    MyAssertHandler(0xffffffff82025b38,0x269,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025b38,0x26a,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar4 = (float *)param_2;
+  fVar1 = 0.0;
+  fVar2 = 1.0;
+  if ((pfVar3[3] + pfVar4[3]) - ABS(*pfVar3 - *pfVar4) < 0.0) {
+    fVar2 = fVar1;
+  }
+  if ((pfVar3[4] + pfVar4[4]) - ABS(pfVar3[1] - pfVar4[1]) < 0.0) {
+    fVar2 = fVar1;
+  }
+  if ((pfVar3[5] + pfVar4[5]) - ABS(pfVar3[2] - pfVar4[2]) < 0.0) {
+    fVar2 = fVar1;
+  }
+  __restgprlr_28(fVar2 != 0.0);
+  return;
 }
 
 
@@ -750,6 +1127,17 @@ LAB_8230682c:
 }
 
 
+// 823068A8  CG_ShutdownClientSideTriggers  (cgame/cg_trigger.cpp:912)
+
+void CG_ShutdownClientSideTriggers(void)
+
+{
+  DAT_82a769e0 = 0;
+  DAT_82963ae4 = 0x400;
+  return;
+}
+
+
 // 823076E8  CG_StartClientSideTriggers  (cgame/cg_trigger.cpp:919)
 
 void CG_StartClientSideTriggers(void)
@@ -777,7 +1165,6 @@ void CG_StartClientSideTriggers(void)
   uVar5 = __savegprlr_21();
   pcVar6 = (char *)Dvar_GetString(0xffffffff82010974);
   if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82025c84,0x3aa,0,0xffffffff82000f98,0xffffffff8201095c);
   }
   DAT_82963ae4 = 0x400;
@@ -905,8 +1292,58 @@ LAB_823078e8:
 void CG_SetDefaultLevelReverb(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  float *pfVar4;
+  float *pfVar5;
+  char cVar6;
+  uint uVar7;
+  float *pfVar8;
+  
   __savegprlr_28();
+  if ((DAT_82963ae4 != 0x400) &&
+     ((cVar6 = SND_EnvironmentEffectsOverridden(), cVar6 == '\0' || (0x3ff < DAT_82963ae4)))) {
+    DAT_82963ae4 = 0x400;
+    DAT_82a769f0 = DAT_82a769f0 ^ 1;
+    uVar7 = (uint)(ushort)(&DAT_82a6bb18)[DAT_82a769ec * 0x25];
+    SND_SetEnvironmentEffects
+              ((double)(float)(&DAT_82a70520)[uVar7 * 0x13],
+               (double)(float)(&DAT_82a70524)[uVar7 * 0x13],1,&DAT_82a704e0 + uVar7 * 0x4c,
+               0xffffffff82a70520,0xffffffff82a70524,(&DAT_82a70528)[uVar7 * 0x13]);
+    SND_DeactivateAllEq(DAT_82a769f0);
+    uVar7 = (uint)(ushort)(&DAT_82a6bb1e)[DAT_82a769ec * 0x25];
+    if ((ushort)(&DAT_82a6bb1e)[DAT_82a769ec * 0x25] < (ushort)(&DAT_82a6bb20)[DAT_82a769ec * 0x25])
+    {
+      pfVar8 = (float *)(uVar7 * 0x18 + -0x7d597134);
+      do {
+        pfVar1 = pfVar8 + 5;
+        pfVar2 = pfVar8 + 1;
+        pfVar3 = pfVar8 + 4;
+        pfVar4 = pfVar8 + 2;
+        pfVar5 = pfVar8 + 3;
+        pfVar8 = pfVar8 + 6;
+        SND_SetEqEntChannel((double)*pfVar1,(double)*pfVar3,(double)*pfVar8,*pfVar2,DAT_82a769f0,
+                            *pfVar4,*pfVar5);
+        uVar7 = uVar7 + 1;
+      } while ((int)uVar7 < (int)(uint)(ushort)(&DAT_82a6bb20)[DAT_82a769ec * 0x25]);
+    }
+    uVar7 = (uint)(ushort)(&DAT_82a6bb1a)[DAT_82a769ec * 0x25];
+    if ((ushort)(&DAT_82a6bb1a)[DAT_82a769ec * 0x25] < (ushort)(&DAT_82a6bb1c)[DAT_82a769ec * 0x25])
+    {
+      pfVar8 = (float *)(&DAT_82a6a6d4 + uVar7 * 5);
+      do {
+        pfVar1 = pfVar8 + 1;
+        pfVar2 = pfVar8 + 2;
+        pfVar3 = pfVar8 + 4;
+        pfVar8 = pfVar8 + 5;
+        SND_SetOcclusionFilter((double)*pfVar2,(double)*pfVar3,(double)*pfVar8,*pfVar1);
+        uVar7 = uVar7 + 1;
+      } while ((int)uVar7 < (int)(uint)(ushort)(&DAT_82a6bb1c)[DAT_82a769ec * 0x25]);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -915,28 +1352,202 @@ void CG_SetDefaultLevelReverb(void)
 void CG_TriggerReverb(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  float *pfVar2;
+  float *pfVar3;
+  float *pfVar4;
+  float *pfVar5;
+  float *pfVar6;
+  uint uVar7;
+  char cVar8;
+  float *pfVar9;
+  
+  uVar7 = __savegprlr_26();
+  if (0x3ff < uVar7) {
+    MyAssertHandler(0xffffffff82025c84,0x41f,0,0xffffffff82025c40,uVar7,0x400);
+  }
+  if (*(uint *)(DAT_835a2918 + 0x24) <= uVar7) {
+    MyAssertHandler(0xffffffff82025c84,0x420,0,0xffffffff82025be8,uVar7);
+  }
+  if ((uVar7 != DAT_82963ae4) && (cVar8 = SND_EnvironmentEffectsOverridden(), cVar8 == '\0')) {
+    iVar1 = (&DAT_82a750e0)[uVar7];
+    DAT_82a769f0 = DAT_82a769f0 ^ 1;
+    DAT_82963ae4 = uVar7;
+    if (-1 < iVar1) {
+      uVar7 = (uint)(ushort)(&DAT_82a6bb18)[iVar1 * 0x25];
+      if ((&DAT_82a6bb18)[iVar1 * 0x25] != 0x100) {
+        SND_SetEnvironmentEffects
+                  ((double)(float)(&DAT_82a70520)[uVar7 * 0x13],
+                   (double)(float)(&DAT_82a70524)[uVar7 * 0x13],1,&DAT_82a704e0 + uVar7 * 0x4c);
+      }
+      SND_DeactivateAllEq(DAT_82a769f0);
+      uVar7 = (uint)(ushort)(&DAT_82a6bb1e)[iVar1 * 0x25];
+      if ((ushort)(&DAT_82a6bb1e)[iVar1 * 0x25] < (ushort)(&DAT_82a6bb20)[iVar1 * 0x25]) {
+        pfVar9 = (float *)(uVar7 * 0x18 + -0x7d597134);
+        do {
+          pfVar2 = pfVar9 + 5;
+          pfVar3 = pfVar9 + 1;
+          pfVar4 = pfVar9 + 4;
+          pfVar5 = pfVar9 + 2;
+          pfVar6 = pfVar9 + 3;
+          pfVar9 = pfVar9 + 6;
+          SND_SetEqEntChannel((double)*pfVar2,(double)*pfVar4,(double)*pfVar9,*pfVar3,DAT_82a769f0,
+                              *pfVar5,*pfVar6);
+          uVar7 = uVar7 + 1;
+        } while ((int)uVar7 < (int)(uint)(ushort)(&DAT_82a6bb20)[iVar1 * 0x25]);
+      }
+      uVar7 = (uint)(ushort)(&DAT_82a6bb1a)[iVar1 * 0x25];
+      if ((ushort)(&DAT_82a6bb1a)[iVar1 * 0x25] < (ushort)(&DAT_82a6bb1c)[iVar1 * 0x25]) {
+        pfVar9 = (float *)(&DAT_82a6a6d4 + uVar7 * 5);
+        do {
+          pfVar2 = pfVar9 + 1;
+          pfVar3 = pfVar9 + 2;
+          pfVar4 = pfVar9 + 4;
+          pfVar9 = pfVar9 + 5;
+          SND_SetOcclusionFilter((double)*pfVar3,(double)*pfVar4,(double)*pfVar9,*pfVar2);
+          uVar7 = uVar7 + 1;
+        } while ((int)uVar7 < (int)(uint)(ushort)(&DAT_82a6bb1c)[iVar1 * 0x25]);
+      }
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 82306C50  CG_FetchPotentialTriggers  (cgame/cg_trigger.cpp:1093)
 
-void CG_FetchPotentialTriggers(void)
+void CG_FetchPotentialTriggers(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  undefined8 uVar1;
+  char cVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar8;
+  int *piVar9;
+  longlong lVar10;
+  int iVar11;
+  int aiStack_104 [65];
+  uint uVar7;
+  
+  uVar1 = __savegprlr_17();
+  uVar4 = 0;
+  aiStack_104[1] = 0;
+  uVar5 = (ulonglong)*(uint *)(DAT_835a2918 + 0x24);
+  uVar7 = 1;
+  do {
+    uVar6 = uVar7 - 1;
+    iVar11 = aiStack_104[uVar7] * 0x1c + *(int *)(DAT_835a2918 + 0x40);
+    uVar3 = (ulonglong)*(ushort *)(iVar11 + 0x18);
+    if (uVar3 < uVar5) {
+      uVar3 = *(ushort *)(iVar11 + 0x1a) + uVar3;
+      if (uVar5 < uVar3) {
+        MyAssertHandler(0xffffffff82025c84,0x468,0,0xffffffff82000f98,0xffffffff82026164);
+      }
+      uVar8 = (ulonglong)*(ushort *)(iVar11 + 0x18);
+      if (uVar8 != uVar3) {
+        lVar10 = (uVar4 & 0x3fffffff) * 4 + param_2 + -4;
+        do {
+          cVar2 = Bounds_OverlapOrTouch(iVar11,uVar1);
+          if (cVar2 != '\0') {
+            if (0x3ff < (uVar4 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff82025c84,0x46d,0,0xffffffff82000f98,0xffffffff8202617c);
+            }
+            lVar10 = lVar10 + 4;
+            *(undefined4 *)lVar10 = (int)uVar8;
+            uVar4 = uVar4 + 1;
+          }
+          uVar8 = uVar8 + 1;
+        } while ((uVar8 & 0xffffffff) != uVar3);
+      }
+    }
+    else {
+      uVar3 = uVar3 - uVar5;
+      uVar8 = *(ushort *)(iVar11 + 0x1a) + uVar3;
+      if ((uVar3 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+        lVar10 = uVar3 * 0x1c;
+        piVar9 = aiStack_104 + uVar6;
+        do {
+          cVar2 = Bounds_OverlapOrTouch((ulonglong)*(uint *)(DAT_835a2918 + 0x40) + lVar10,uVar1);
+          if (cVar2 != '\0') {
+            if (0x1f < uVar6) {
+              MyAssertHandler(0xffffffff82025c84,0x460,0,0xffffffff82026120,uVar6,0x20);
+            }
+            piVar9 = piVar9 + 1;
+            *piVar9 = (int)uVar3;
+            uVar6 = uVar6 + 1;
+          }
+          uVar3 = uVar3 + 1;
+          lVar10 = lVar10 + 0x1c;
+        } while ((uVar3 & 0xffffffff) != (uVar8 & 0xffffffff));
+      }
+    }
+    uVar7 = uVar6;
+  } while (uVar6 != 0);
+  __restgprlr_17(uVar4);
+  return;
 }
 
 
 // 82306DF8  CG_TestTriggerTouch_UnrotatedHull  (cgame/cg_trigger.cpp:1144)
 
-void CG_TestTriggerTouch_UnrotatedHull(void)
+void CG_TestTriggerTouch_UnrotatedHull
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               float *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  uint uVar7;
+  double extraout_f1;
+  double dVar8;
+  
+  iVar4 = __savegprlr_26();
+  dVar8 = extraout_f1;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025b38,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82025b38,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar5 = (float *)param_2;
+  pfVar6 = (float *)param_3;
+  fVar1 = 0.0;
+  fVar2 = fVar1;
+  if (ABS(*pfVar5 - *pfVar6) - (pfVar5[3] + pfVar6[3]) < 0.0) {
+    fVar2 = 1.0;
+  }
+  fVar3 = fVar1;
+  if (ABS(pfVar5[1] - pfVar6[1]) - (pfVar5[4] + pfVar6[4]) < 0.0) {
+    fVar3 = fVar2;
+  }
+  if (ABS(pfVar5[2] - pfVar6[2]) - (pfVar5[5] + pfVar6[5]) < 0.0) {
+    fVar1 = fVar3;
+  }
+  if (fVar1 == 0.0) {
+LAB_82306f0c:
+    __restgprlr_26(0);
+    return;
+  }
+  uVar7 = 0;
+  if (*(ushort *)(pfVar5 + 7) != 0) {
+    do {
+      pfVar6 = (float *)((*(ushort *)((int)pfVar5 + 0x1e) + uVar7) * 0x14 + *(int *)(iVar4 + 0x14));
+      if ((float)((double)pfVar6[4] + dVar8) <=
+          ABS((pfVar6[2] * param_5[2] + pfVar6[1] * param_5[1] + *pfVar6 * *param_5) - pfVar6[3]))
+      goto LAB_82306f0c;
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < *(ushort *)(pfVar5 + 7));
+  }
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -946,59 +1557,61 @@ void CG_TestTriggerTouch_Unrotated
                (undefined8 param_1,int param_2,ulonglong param_3,undefined8 param_4,float *param_5)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
+  int iVar1;
+  float *pfVar2;
+  uint uVar3;
+  uint uVar4;
   float *pfVar5;
-  uint uVar6;
-  uint uVar7;
-  float *pfVar8;
+  double dVar6;
   double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   
-  iVar4 = __savegprlr_22();
-  fVar3 = 0.0;
-  uVar7 = 0;
+  iVar1 = __savegprlr_22();
+  dVar8 = 1.0;
+  dVar9 = 0.0;
+  uVar4 = 0;
+  dVar10 = extraout_f1;
   do {
-    pfVar8 = (float *)((*(ushort *)(param_2 + 6) + uVar7) * 0x20 + *(int *)(iVar4 + 0xc));
-    if (pfVar8 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
+    pfVar5 = (float *)((*(ushort *)(param_2 + 6) + uVar4) * 0x20 + *(int *)(iVar1 + 0xc));
+    if (pfVar5 == (float *)0x0) {
       MyAssertHandler(0xffffffff82025b38,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
     }
     if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82025b38,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
     }
-    pfVar5 = (float *)param_3;
-    fVar1 = fVar3;
-    if (ABS(*pfVar8 - *pfVar5) - (pfVar8[3] + pfVar5[3]) < 0.0) {
-      fVar1 = 1.0;
+    pfVar2 = (float *)param_3;
+    dVar6 = dVar9;
+    if (ABS(*pfVar5 - *pfVar2) - (pfVar5[3] + pfVar2[3]) < 0.0) {
+      dVar6 = dVar8;
     }
-    fVar2 = fVar3;
-    if (ABS(pfVar8[1] - pfVar5[1]) - (pfVar8[4] + pfVar5[4]) < 0.0) {
-      fVar2 = fVar1;
+    dVar7 = dVar9;
+    if (ABS(pfVar5[1] - pfVar2[1]) - (pfVar5[4] + pfVar2[4]) < 0.0) {
+      dVar7 = dVar6;
     }
-    fVar1 = fVar3;
-    if (ABS(pfVar8[2] - pfVar5[2]) - (pfVar8[5] + pfVar5[5]) < 0.0) {
-      fVar1 = fVar2;
+    dVar6 = dVar9;
+    if (ABS(pfVar5[2] - pfVar2[2]) - (pfVar5[5] + pfVar2[5]) < 0.0) {
+      dVar6 = dVar7;
     }
-    if (fVar1 != 0.0) {
-      uVar6 = 0;
-      if (*(ushort *)(pfVar8 + 7) == 0) {
+    if (dVar6 != dVar9) {
+      uVar3 = 0;
+      if (*(ushort *)(pfVar5 + 7) == 0) {
 LAB_82307158:
         __restgprlr_22(1);
         return;
       }
-      while (pfVar5 = (float *)((*(ushort *)((int)pfVar8 + 0x1e) + uVar6) * 0x14 +
-                               *(int *)(iVar4 + 0x14)),
-            ABS((pfVar5[2] * param_5[2] + pfVar5[1] * param_5[1] + *pfVar5 * *param_5) - pfVar5[3])
-            < (float)((double)pfVar5[4] + extraout_f1)) {
-        uVar6 = uVar6 + 1;
-        if (*(ushort *)(pfVar8 + 7) <= uVar6) goto LAB_82307158;
+      while (pfVar2 = (float *)((*(ushort *)((int)pfVar5 + 0x1e) + uVar3) * 0x14 +
+                               *(int *)(iVar1 + 0x14)),
+            ABS((pfVar2[2] * param_5[2] + pfVar2[1] * param_5[1] + *pfVar2 * *param_5) - pfVar2[3])
+            < (float)((double)pfVar2[4] + dVar10)) {
+        uVar3 = uVar3 + 1;
+        if (*(ushort *)(pfVar5 + 7) <= uVar3) goto LAB_82307158;
       }
     }
-    uVar7 = uVar7 + 1;
-    if (uVar7 == *(ushort *)(param_2 + 4)) {
+    uVar4 = uVar4 + 1;
+    if (uVar4 == *(ushort *)(param_2 + 4)) {
       __restgprlr_22(0);
       return;
     }
@@ -1106,11 +1719,32 @@ LAB_82307368:
 
 // 82307378  CG_DrawTriggerStateString  (cgame/cg_trigger.cpp:1262)
 
-void CG_DrawTriggerStateString(void)
+void CG_DrawTriggerStateString(undefined8 param_1,undefined8 param_2,int param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  
   __savegprlr_27();
+  if ((param_4 & 0xff) == 0) {
+    fVar1 = 0.375;
+  }
+  else {
+    fVar1 = 0.29166666;
+  }
+  dVar6 = (double)fVar1;
+  uVar2 = ScrPlace_GetActivePlacement();
+  uVar3 = UI_GetFontHandle(dVar6,uVar2,0);
+  iVar4 = UI_TextWidth(dVar6,param_2,0,uVar3);
+  iVar5 = UI_TextHeight(dVar6,uVar3);
+  UI_DrawText((double)((640.0 - (float)(longlong)iVar4) - 80.0),(double)(longlong)(iVar5 * param_3),
+              dVar6,uVar2,param_2,0x7fffffff,uVar3,0xffffffff82010000,0xffffffff82000000,0,0);
+  __restgprlr_27();
+  return;
 }
 
 

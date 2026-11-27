@@ -164,8 +164,28 @@ intptr_t _get_osfhandle(int _FileHandle)
 int __lock_fhandle(int _Filehandle)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_Filehandle);
+  uint uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  uint uStack00000014;
+  
+  uStack00000014 = __savegprlr_29(_Filehandle);
+  puVar3 = &DAT_84897dc0;
+  iVar2 = (&DAT_84897dc0)[(int)uStack00000014 >> 5] + (uStack00000014 & 0x1f) * 0x48;
+  uVar1 = uStack00000014;
+  if (*(int *)(iVar2 + 8) == 0) {
+    _lock(10);
+    puVar3 = *(undefined4 **)(iVar2 + 8);
+    if (puVar3 == (undefined4 *)0x0) {
+      __crtInitCritSecAndSpinCount(iVar2 + 0xc,4000);
+      puVar3 = (undefined4 *)(*(int *)(iVar2 + 8) + 1);
+      *(undefined4 **)(iVar2 + 8) = puVar3;
+    }
+    uVar1 = FUN_82929ab8();
+  }
+  RtlEnterCriticalSection(puVar3[(int)uVar1 >> 5] + (uVar1 & 0x1f) * 0x48 + 0xc);
+  iVar2 = __restgprlr_29(1);
+  return iVar2;
 }
 
 

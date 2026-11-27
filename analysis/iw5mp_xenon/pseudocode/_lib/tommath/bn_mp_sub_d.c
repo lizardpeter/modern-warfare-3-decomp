@@ -2,10 +2,89 @@
 
 // 82257808  mp_sub_d  (line unknown)
 
-void mp_sub_d(void)
+void mp_sub_d(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  uint *puVar3;
+  uint *puVar5;
+  undefined8 uVar4;
+  uint *puVar6;
+  longlong lVar7;
+  uint *puVar8;
+  
+  puVar5 = (uint *)__savegprlr_29();
+  puVar3 = (uint *)param_3;
+  if (((int)(*puVar5 + 1) <= (int)puVar3[1]) || (uVar4 = mp_grow(param_3), (int)uVar4 == 0)) {
+    if (puVar5[2] == 1) {
+      puVar5[2] = 0;
+      uVar4 = mp_add_d(puVar5,param_2,param_3);
+      puVar3[2] = 1;
+      puVar5[2] = 1;
+      mp_clamp(param_3);
+      __restgprlr_29(uVar4);
+      return;
+    }
+    uVar1 = *puVar5;
+    puVar6 = (uint *)puVar5[3];
+    uVar2 = *puVar3;
+    puVar8 = (uint *)puVar3[3];
+    if (((uVar1 == 1) && ((ulonglong)*puVar6 <= (param_2 & 0xffffffff))) || (uVar1 == 0)) {
+      if (uVar1 == 1) {
+        lVar7 = 1;
+        *puVar8 = (uint)param_2 - *puVar6;
+        puVar8 = puVar8 + 1;
+        *puVar3 = 1;
+        puVar3[2] = 1;
+      }
+      else {
+        lVar7 = 1;
+        *puVar8 = (uint)param_2;
+        puVar8 = puVar8 + 1;
+        *puVar3 = 1;
+        puVar3[2] = 1;
+      }
+    }
+    else {
+      puVar3[2] = 0;
+      lVar7 = 1;
+      *puVar3 = *puVar5;
+      param_2 = *puVar6 - param_2;
+      *puVar8 = (uint)param_2;
+      *puVar8 = (uint)param_2 & 0xfffffff;
+      puVar8 = puVar8 + 1;
+      if (1 < (int)*puVar5) {
+        do {
+          puVar6 = puVar6 + 1;
+          lVar7 = lVar7 + 1;
+          param_2 = (ulonglong)*puVar6 - ((param_2 & 0xffffffff) >> 0x1f);
+          *puVar8 = (uint)param_2;
+          *puVar8 = (uint)param_2 & 0xfffffff;
+          puVar8 = puVar8 + 1;
+        } while ((int)lVar7 < (int)*puVar5);
+      }
+    }
+    if ((int)lVar7 < (int)uVar2) {
+      puVar8 = puVar8 + -1;
+      for (lVar7 = (ulonglong)uVar2 - lVar7; lVar7 != 0; lVar7 = lVar7 + -1) {
+        puVar8 = puVar8 + 1;
+        *puVar8 = 0;
+      }
+    }
+    if (0 < (int)*puVar3) {
+      do {
+        uVar1 = *puVar3;
+        if (*(int *)(uVar1 * 4 + puVar3[3] + -4) != 0) break;
+        *puVar3 = uVar1 - 1;
+      } while (0 < (int)(uVar1 - 1));
+    }
+    if (*puVar3 == 0) {
+      puVar3[2] = 0;
+    }
+    uVar4 = 0;
+  }
+  __restgprlr_29(uVar4);
+  return;
 }
 

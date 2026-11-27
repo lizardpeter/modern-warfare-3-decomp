@@ -2,20 +2,254 @@
 
 // 828B6F40  XCOMPRESS::special_decode_aligned_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:11)
 
-void XCOMPRESS__special_decode_aligned_block(void)
+void XCOMPRESS__special_decode_aligned_block(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined1 uVar1;
+  byte bVar2;
+  short sVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  undefined1 *puVar8;
+  int iVar9;
+  int *piVar10;
+  int iVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  ulonglong uVar16;
+  char cVar17;
+  ulonglong uVar18;
+  char cVar19;
+  uint uVar20;
+  int *piVar21;
+  undefined1 *puVar22;
+  
+  piVar10 = (int *)__savegprlr_18();
+  puVar4 = (undefined1 *)piVar10[0xac2];
+  iVar5 = *piVar10;
+  iVar9 = (int)param_2;
+  uVar18 = (ulonglong)*(byte *)(piVar10 + 0xbad);
+  uVar20 = piVar10[0xbac];
+  puVar22 = (undefined1 *)piVar10[0xac1];
+  piVar21 = piVar10 + 3;
+  do {
+    iVar11 = (int)param_2;
+    if (iVar9 + param_3 <= iVar11) {
+      *(char *)(piVar10 + 0xbad) = (char)uVar18;
+      piVar10[0xbac] = uVar20;
+      piVar10[0xac1] = (int)puVar22;
+LAB_828b72a8:
+      __restgprlr_18(param_2);
+      return;
+    }
+    sVar3 = *(short *)((int)piVar10 + (uVar20 >> 0x15 & 0x7fe) + 0x18);
+    uVar13 = (ulonglong)sVar3;
+    if (sVar3 < 0) {
+      uVar16 = 0x200000;
+      do {
+        uVar7 = (uint)uVar16;
+        uVar16 = uVar16 >> 1;
+        sVar3 = *(short *)((int)piVar10 +
+                          (int)((((ulonglong)((uVar7 & uVar20) == 0) ^ 1) +
+                                 (uVar13 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0xe3c);
+        uVar13 = (ulonglong)sVar3;
+      } while (sVar3 < 0);
+    }
+    if (puVar4 <= puVar22) {
+      param_2 = -1;
+      goto LAB_828b72a8;
+    }
+    bVar2 = *(byte *)((int)piVar10 + (int)uVar13 + 0xa18);
+    cVar19 = (char)uVar18 - bVar2;
+    uVar20 = uVar20 << (bVar2 & 0x3f);
+    uVar18 = (ulonglong)cVar19;
+    if ((longlong)uVar18 < 1) {
+      puVar8 = puVar22 + 1;
+      uVar1 = *puVar22;
+      puVar22 = puVar22 + 2;
+      uVar18 = (ulonglong)(char)(cVar19 + '\x10');
+      uVar20 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar19 & 0x3fU) | uVar20;
+    }
+    uVar13 = uVar13 - 0x100;
+    if ((longlong)uVar13 < 0) {
+      iVar6 = piVar10[1];
+      *(char *)(iVar5 + iVar11) = (char)uVar13;
+      *(char *)(iVar6 + iVar5 + iVar11) = (char)uVar13;
+      param_2 = param_2 + 1;
+    }
+    else {
+      uVar16 = uVar13 & 7;
+      if ((int)uVar16 == 7) {
+        sVar3 = *(short *)((int)piVar10 + (uVar20 >> 0x17 & 0x1fe) + 0x818);
+        uVar16 = (ulonglong)sVar3;
+        if (sVar3 < 0) {
+          uVar14 = 0x800000;
+          do {
+            uVar7 = (uint)uVar14;
+            uVar14 = uVar14 >> 1;
+            sVar3 = *(short *)((int)piVar10 +
+                              (int)((((ulonglong)((uVar7 & uVar20) == 0) ^ 1) +
+                                     (uVar16 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0x233c);
+            uVar16 = (ulonglong)sVar3;
+          } while (sVar3 < 0);
+        }
+        bVar2 = *(byte *)((int)piVar10 + (int)uVar16 + 0xcb8);
+        cVar19 = (char)uVar18 - bVar2;
+        uVar20 = uVar20 << (bVar2 & 0x3f);
+        uVar18 = (ulonglong)cVar19;
+        if ((longlong)uVar18 < 1) {
+          puVar8 = puVar22 + 1;
+          uVar1 = *puVar22;
+          puVar22 = puVar22 + 2;
+          uVar18 = (ulonglong)(char)(cVar19 + '\x10');
+          uVar20 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar19 & 0x3fU) | uVar20;
+        }
+        uVar16 = uVar16 + 7;
+      }
+      cVar17 = (char)uVar18;
+      cVar19 = (char)((int)uVar13 >> 3);
+      uVar13 = (ulonglong)cVar19;
+      if (cVar19 < '\x03') {
+        iVar11 = (int)((uVar13 & 0xffffffff) << 2);
+        uVar13 = (ulonglong)*(uint *)(iVar11 + (int)piVar21);
+        *(int *)(iVar11 + (int)piVar21) = *piVar21;
+      }
+      else {
+        bVar2 = *(byte *)((int)piVar10 + cVar19 + 0x2ee4);
+        if (bVar2 < 3) {
+          if (bVar2 == 0) {
+            uVar13 = 1;
+          }
+          else {
+            bVar2 = *(byte *)((int)piVar10 + cVar19 + 0x2ee4);
+            cVar17 = cVar17 - bVar2;
+            uVar18 = (ulonglong)cVar17;
+            uVar7 = uVar20 >> (0x20 - bVar2 & 0x3f);
+            uVar20 = uVar20 << (bVar2 & 0x3f);
+            if ((longlong)uVar18 < 1) {
+              puVar8 = puVar22 + 1;
+              uVar1 = *puVar22;
+              puVar22 = puVar22 + 2;
+              uVar18 = (ulonglong)(char)(cVar17 + '\x10');
+              uVar20 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar17 & 0x3fU) | uVar20;
+            }
+            uVar13 = (ulonglong)*(uint *)((int)((uVar13 + 0xbc6 & 0xffffffff) << 2) + (int)piVar10)
+                     + (ulonglong)uVar7;
+          }
+        }
+        else {
+          if (bVar2 == 3) {
+            uVar14 = 0;
+          }
+          else {
+            bVar2 = *(byte *)((int)piVar10 + cVar19 + 0x2ee4);
+            cVar19 = cVar17 - bVar2;
+            cVar17 = cVar19 + '\x03';
+            uVar14 = (ulonglong)(uVar20 >> (0x23 - bVar2 & 0x3f));
+            uVar20 = uVar20 << (bVar2 - 3 & 0x3f);
+            if (cVar17 < '\x01') {
+              puVar8 = puVar22 + 1;
+              iVar11 = (int)cVar17;
+              uVar1 = *puVar22;
+              cVar17 = cVar19 + '\x13';
+              puVar22 = puVar22 + 2;
+              uVar20 = (uint)CONCAT11(*puVar8,uVar1) << (-iVar11 & 0x3fU) | uVar20;
+            }
+          }
+          cVar19 = *(char *)((int)piVar10 + (uVar20 >> 0x19) + 0xdb4);
+          bVar2 = *(byte *)((int)piVar10 + cVar19 + 0xe34);
+          cVar17 = cVar17 - bVar2;
+          uVar20 = uVar20 << (bVar2 & 0x3f);
+          uVar18 = (ulonglong)cVar17;
+          if ((longlong)uVar18 < 1) {
+            puVar8 = puVar22 + 1;
+            uVar1 = *puVar22;
+            puVar22 = puVar22 + 2;
+            uVar18 = (ulonglong)(char)(cVar17 + '\x10');
+            uVar20 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar17 & 0x3fU) | uVar20;
+          }
+          uVar13 = (ulonglong)*(uint *)((int)((uVar13 + 0xbc6 & 0xffffffff) << 2) + (int)piVar10) +
+                   (uVar14 & 0x1fffffff) * 8 + (longlong)cVar19;
+        }
+        piVar10[5] = piVar10[4];
+        piVar10[4] = *piVar21;
+      }
+      uVar7 = piVar10[2];
+      lVar12 = uVar16 + 2;
+      *piVar21 = (int)uVar13;
+      lVar15 = param_2 - uVar13;
+      do {
+        iVar11 = (int)param_2;
+        uVar1 = *(undefined1 *)(((uint)lVar15 & uVar7) + iVar5);
+        *(undefined1 *)(iVar5 + iVar11) = uVar1;
+        if (iVar11 < 0x101) {
+          *(undefined1 *)(piVar10[1] + iVar5 + iVar11) = uVar1;
+        }
+        lVar12 = lVar12 + -1;
+        param_2 = param_2 + 1;
+        lVar15 = lVar15 + 1;
+      } while (0 < lVar12);
+    }
+  } while( true );
 }
 
 
 // 828B72B8  XCOMPRESS::fast_decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:160)
 
-void XCOMPRESS__fast_decode_aligned_offset_block(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XCOMPRESS__fast_decode_aligned_offset_block
+               (undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  
+  uVar3 = (uint)param_2;
+  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
+  iVar1 = __savegprlr();
+  param_3 = CONCAT44(uVar2,uVar3) + param_3;
+  if ((int)uVar3 < (int)param_3) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  *(undefined1 *)(iVar1 + 0x2eb4) = *(undefined1 *)(iVar1 + 0x2eb4);
+  *(undefined4 *)(iVar1 + 0x2eb0) = *(undefined4 *)(iVar1 + 0x2eb0);
+  *(undefined4 *)(iVar1 + 0x2b04) = *(undefined4 *)(iVar1 + 0x2b04);
+  *(uint *)(iVar1 + 0x2eb8) = *(uint *)(iVar1 + 8) & uVar3;
+  __restgprlr(CONCAT44(uVar2,uVar3) - param_3);
+  return;
+}
+
+
+// 828B76E8  XCOMPRESS::decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:380)
+
+void XCOMPRESS__decode_aligned_offset_block(undefined8 param_1,longlong param_2,longlong param_3)
+
+{
+  int iVar2;
+  longlong lVar1;
+  
+  iVar2 = __savegprlr_29();
+  lVar1 = param_2;
+  if ((int)param_2 < 0x101) {
+    lVar1 = 0x101 - param_2;
+    if ((int)param_3 <= (int)(0x101 - param_2)) {
+      lVar1 = param_3;
+    }
+    lVar1 = XCOMPRESS__special_decode_aligned_block(iVar2,param_2,lVar1);
+    *(int *)(iVar2 + 0x2eb8) = (int)lVar1;
+    param_3 = (param_2 - lVar1) + param_3;
+    if (param_3 < 1) goto LAB_828b7750;
+  }
+  param_3 = XCOMPRESS__fast_decode_aligned_offset_block(iVar2,lVar1,param_3);
+LAB_828b7750:
+  __restgprlr_29(param_3);
+  return;
 }
 

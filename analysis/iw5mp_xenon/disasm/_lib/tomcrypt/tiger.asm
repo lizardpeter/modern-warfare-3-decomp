@@ -29,10 +29,199 @@
 ; 822609D8  tiger_process  (line unknown)
   822609D8  7D8802A6             mfspr r12,LR
   822609DC  486B5CD9             bl 0x829166b4
+  822609E0  9421FF80             stwu r1,-0x80(r1)
+  822609E4  81630020             lwz r11,0x20(r3)
+  822609E8  7C7F1B78             or r31,r3,r3
+  822609EC  7C9C2378             or r28,r4,r4
+  822609F0  7CBD2B78             or r29,r5,r5
+  822609F4  2B0B0040             cmplwi cr6,r11,0x40
+  822609F8  40990010             ble cr6,0x82260a08
+  822609FC  38600010             li r3,0x10
+  82260A00  38210080             addi r1,r1,0x80
+  82260A04  486B5D00             b 0x82916704
+LAB_82260a08:
+  82260A08  2B1D0000             cmplwi cr6,r29,0x0
+  82260A0C  419A00A8             beq cr6,0x82260ab4
+  82260A10  3B600000             li r27,0x0
+LAB_82260a14:
+  82260A14  817F0020             lwz r11,0x20(r31)
+  82260A18  2B0B0000             cmplwi cr6,r11,0x0
+  82260A1C  409A002C             bne cr6,0x82260a48
+  82260A20  2B1D0040             cmplwi cr6,r29,0x40
+  82260A24  41980024             blt cr6,0x82260a48
+  82260A28  7F84E378             or r4,r28,r28
+  82260A2C  7FE3FB78             or r3,r31,r31
+  82260A30  4BFFEDF1             bl 0x8225f820
+  82260A34  2F030000             cmpwi cr6,r3,0x0
+  82260A38  409A0080             bne cr6,0x82260ab8
+  82260A3C  3B9C0040             addi r28,r28,0x40
+  82260A40  3BBDFFC0             subi r29,r29,0x40
+  82260A44  4800005C             b 0x82260aa0
+LAB_82260a48:
+  82260A48  23CB0040             subfic r30,r11,0x40
+  82260A4C  7F1DF040             cmplw cr6,r29,r30
+  82260A50  40980008             bge cr6,0x82260a58
+  82260A54  7FBEEB78             or r30,r29,r29
+LAB_82260a58:
+  82260A58  7D6BFA14             add r11,r11,r31
+  82260A5C  7FC5F378             or r5,r30,r30
+  82260A60  7F84E378             or r4,r28,r28
+  82260A64  386B0024             addi r3,r11,0x24
+  82260A68  486B5EF9             bl 0x82916960
+  82260A6C  817F0020             lwz r11,0x20(r31)
+  82260A70  7F9EE214             add r28,r30,r28
+  82260A74  7D7E5A14             add r11,r30,r11
+  82260A78  7FBEE850             subf r29,r30,r29
+  82260A7C  917F0020             stw r11,0x20(r31)
+  82260A80  2B0B0040             cmplwi cr6,r11,0x40
+  82260A84  409A0028             bne cr6,0x82260aac
+  82260A88  389F0024             addi r4,r31,0x24
+  82260A8C  7FE3FB78             or r3,r31,r31
+  82260A90  4BFFED91             bl 0x8225f820
+  82260A94  2F030000             cmpwi cr6,r3,0x0
+  82260A98  409A0020             bne cr6,0x82260ab8
+  82260A9C  937F0020             stw r27,0x20(r31)
+LAB_82260aa0:
+  82260AA0  E97F0018             ld r11,0x18(r31)
+  82260AA4  396B0200             addi r11,r11,0x200
+  82260AA8  F97F0018             std r11,0x18(r31)
+LAB_82260aac:
+  82260AAC  2B1D0000             cmplwi cr6,r29,0x0
+  82260AB0  409AFF64             bne cr6,0x82260a14
+LAB_82260ab4:
+  82260AB4  38600000             li r3,0x0
+LAB_82260ab8:
+  82260AB8  38210080             addi r1,r1,0x80
+  82260ABC  486B5C48             b 0x82916704
 
 ; 82260AC0  tiger_done  (line unknown)
   82260AC0  7D8802A6             mfspr r12,LR
   82260AC4  486B5BF9             bl 0x829166bc
+  82260AC8  9421FF90             stwu r1,-0x70(r1)
+  82260ACC  81630020             lwz r11,0x20(r3)
+  82260AD0  7C7F1B78             or r31,r3,r3
+  82260AD4  7C9E2378             or r30,r4,r4
+  82260AD8  2B0B0040             cmplwi cr6,r11,0x40
+  82260ADC  41980010             blt cr6,0x82260aec
+  82260AE0  38600010             li r3,0x10
+  82260AE4  38210070             addi r1,r1,0x70
+  82260AE8  486B5C24             b 0x8291670c
+LAB_82260aec:
+  82260AEC  556A1838             rlwinm r10,r11,0x3,0x0,0x1c
+  82260AF0  7D2BFA14             add r9,r11,r31
+  82260AF4  E97F0018             ld r11,0x18(r31)
+  82260AF8  39000001             li r8,0x1
+  82260AFC  7CEA5A14             add r7,r10,r11
+  82260B00  3BA00000             li r29,0x0
+  82260B04  F8FF0018             std r7,0x18(r31)
+  82260B08  99090024             stb r8,0x24(r9)
+  82260B0C  817F0020             lwz r11,0x20(r31)
+  82260B10  396B0001             addi r11,r11,0x1
+  82260B14  917F0020             stw r11,0x20(r31)
+  82260B18  2B0B0038             cmplwi cr6,r11,0x38
+  82260B1C  40990040             ble cr6,0x82260b5c
+  82260B20  2B0B0040             cmplwi cr6,r11,0x40
+  82260B24  40980028             bge cr6,0x82260b4c
+LAB_82260b28:
+  82260B28  817F0020             lwz r11,0x20(r31)
+  82260B2C  7D7F5A14             add r11,r31,r11
+  82260B30  9BAB0024             stb r29,0x24(r11)
+  82260B34  817F0020             lwz r11,0x20(r31)
+  82260B38  394B0001             addi r10,r11,0x1
+  82260B3C  5549003E             rlwinm r9,r10,0x0,0x0,0x1f
+  82260B40  915F0020             stw r10,0x20(r31)
+  82260B44  2B090040             cmplwi cr6,r9,0x40
+  82260B48  4198FFE0             blt cr6,0x82260b28
+LAB_82260b4c:
+  82260B4C  389F0024             addi r4,r31,0x24
+  82260B50  7FE3FB78             or r3,r31,r31
+  82260B54  4BFFECCD             bl 0x8225f820
+  82260B58  93BF0020             stw r29,0x20(r31)
+LAB_82260b5c:
+  82260B5C  817F0020             lwz r11,0x20(r31)
+  82260B60  2B0B0038             cmplwi cr6,r11,0x38
+  82260B64  40980028             bge cr6,0x82260b8c
+LAB_82260b68:
+  82260B68  817F0020             lwz r11,0x20(r31)
+  82260B6C  7D7F5A14             add r11,r31,r11
+  82260B70  9BAB0024             stb r29,0x24(r11)
+  82260B74  817F0020             lwz r11,0x20(r31)
+  82260B78  394B0001             addi r10,r11,0x1
+  82260B7C  5549003E             rlwinm r9,r10,0x0,0x0,0x1f
+  82260B80  915F0020             stw r10,0x20(r31)
+  82260B84  2B090038             cmplwi cr6,r9,0x38
+  82260B88  4198FFE0             blt cr6,0x82260b68
+LAB_82260b8c:
+  82260B8C  897F0018             lbz r11,0x18(r31)
+  82260B90  389F0024             addi r4,r31,0x24
+  82260B94  895F0019             lbz r10,0x19(r31)
+  82260B98  7FE3FB78             or r3,r31,r31
+  82260B9C  893F001A             lbz r9,0x1a(r31)
+  82260BA0  891F001B             lbz r8,0x1b(r31)
+  82260BA4  88FF001C             lbz r7,0x1c(r31)
+  82260BA8  88DF001D             lbz r6,0x1d(r31)
+  82260BAC  88BF001E             lbz r5,0x1e(r31)
+  82260BB0  EBBF0018             ld r29,0x18(r31)
+  82260BB4  997F0063             stb r11,0x63(r31)
+  82260BB8  995F0062             stb r10,0x62(r31)
+  82260BBC  993F0061             stb r9,0x61(r31)
+  82260BC0  991F0060             stb r8,0x60(r31)
+  82260BC4  98FF005F             stb r7,0x5f(r31)
+  82260BC8  98DF005E             stb r6,0x5e(r31)
+  82260BCC  98BF005D             stb r5,0x5d(r31)
+  82260BD0  9BBF005C             stb r29,0x5c(r31)
+  82260BD4  4BFFEC4D             bl 0x8225f820
+  82260BD8  895F0000             lbz r10,0x0(r31)
+  82260BDC  38600000             li r3,0x0
+  82260BE0  995E0007             stb r10,0x7(r30)
+  82260BE4  893F0001             lbz r9,0x1(r31)
+  82260BE8  993E0006             stb r9,0x6(r30)
+  82260BEC  891F0002             lbz r8,0x2(r31)
+  82260BF0  991E0005             stb r8,0x5(r30)
+  82260BF4  88FF0003             lbz r7,0x3(r31)
+  82260BF8  98FE0004             stb r7,0x4(r30)
+  82260BFC  88DF0004             lbz r6,0x4(r31)
+  82260C00  98DE0003             stb r6,0x3(r30)
+  82260C04  88BF0005             lbz r5,0x5(r31)
+  82260C08  98BE0002             stb r5,0x2(r30)
+  82260C0C  889F0006             lbz r4,0x6(r31)
+  82260C10  989E0001             stb r4,0x1(r30)
+  82260C14  E97F0000             ld r11,0x0(r31)
+  82260C18  997E0000             stb r11,0x0(r30)
+  82260C1C  893F0008             lbz r9,0x8(r31)
+  82260C20  993E000F             stb r9,0xf(r30)
+  82260C24  891F0009             lbz r8,0x9(r31)
+  82260C28  991E000E             stb r8,0xe(r30)
+  82260C2C  88FF000A             lbz r7,0xa(r31)
+  82260C30  98FE000D             stb r7,0xd(r30)
+  82260C34  88DF000B             lbz r6,0xb(r31)
+  82260C38  98DE000C             stb r6,0xc(r30)
+  82260C3C  88BF000C             lbz r5,0xc(r31)
+  82260C40  98BE000B             stb r5,0xb(r30)
+  82260C44  889F000D             lbz r4,0xd(r31)
+  82260C48  989E000A             stb r4,0xa(r30)
+  82260C4C  897F000E             lbz r11,0xe(r31)
+  82260C50  997E0009             stb r11,0x9(r30)
+  82260C54  E95F0008             ld r10,0x8(r31)
+  82260C58  995E0008             stb r10,0x8(r30)
+  82260C5C  891F0010             lbz r8,0x10(r31)
+  82260C60  991E0017             stb r8,0x17(r30)
+  82260C64  88FF0011             lbz r7,0x11(r31)
+  82260C68  98FE0016             stb r7,0x16(r30)
+  82260C6C  88DF0012             lbz r6,0x12(r31)
+  82260C70  98DE0015             stb r6,0x15(r30)
+  82260C74  88BF0013             lbz r5,0x13(r31)
+  82260C78  98BE0014             stb r5,0x14(r30)
+  82260C7C  889F0014             lbz r4,0x14(r31)
+  82260C80  989E0013             stb r4,0x13(r30)
+  82260C84  897F0015             lbz r11,0x15(r31)
+  82260C88  997E0012             stb r11,0x12(r30)
+  82260C8C  895F0016             lbz r10,0x16(r31)
+  82260C90  995E0011             stb r10,0x11(r30)
+  82260C94  E93F0010             ld r9,0x10(r31)
+  82260C98  993E0010             stb r9,0x10(r30)
+  82260C9C  38210070             addi r1,r1,0x70
+  82260CA0  486B5A6C             b 0x8291670c
 
 ; 82260CA8  tiger_test  (line unknown)
   82260CA8  38600002             li r3,0x2

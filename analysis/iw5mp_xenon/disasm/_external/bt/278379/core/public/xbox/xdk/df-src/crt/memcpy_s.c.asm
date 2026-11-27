@@ -3,3 +3,52 @@
 ; 82925770  memcpy_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/memcpy_s.c:47)
   82925770  7D8802A6             mfspr r12,LR
   82925774  4BFF0F49             bl 0x829166bc
+  82925778  9421FF90             stwu r1,-0x70(r1)
+  8292577C  7C9E2378             or r30,r4,r4
+  82925780  7CBD2B78             or r29,r5,r5
+  82925784  7CDF3378             or r31,r6,r6
+  82925788  2B060000             cmplwi cr6,r6,0x0
+  8292578C  409A000C             bne cr6,0x82925798
+LAB_82925790:
+  82925790  38600000             li r3,0x0
+  82925794  48000020             b 0x829257b4
+LAB_82925798:
+  82925798  2B030000             cmplwi cr6,r3,0x0
+  8292579C  409A0020             bne cr6,0x829257bc
+  829257A0  4BFFA5E1             bl 0x8291fd80
+  829257A4  39600016             li r11,0x16
+  829257A8  91630000             stw r11,0x0(r3)
+  829257AC  4BFFA465             bl 0x8291fc10
+LAB_829257b0:
+  829257B0  38600016             li r3,0x16
+LAB_829257b4:
+  829257B4  38210070             addi r1,r1,0x70
+  829257B8  4BFF0F54             b 0x8291670c
+LAB_829257bc:
+  829257BC  2B1D0000             cmplwi cr6,r29,0x0
+  829257C0  419A001C             beq cr6,0x829257dc
+  829257C4  7F1EF840             cmplw cr6,r30,r31
+  829257C8  41980014             blt cr6,0x829257dc
+  829257CC  7FE5FB78             or r5,r31,r31
+  829257D0  7FA4EB78             or r4,r29,r29
+  829257D4  4BFF118D             bl 0x82916960
+  829257D8  4BFFFFB8             b 0x82925790
+LAB_829257dc:
+  829257DC  7FC5F378             or r5,r30,r30
+  829257E0  38800000             li r4,0x0
+  829257E4  4BFF101D             bl 0x82916800
+  829257E8  2B1D0000             cmplwi cr6,r29,0x0
+  829257EC  409A001C             bne cr6,0x82925808
+  829257F0  4BFFA591             bl 0x8291fd80
+  829257F4  3BE00016             li r31,0x16
+LAB_829257f8:
+  829257F8  93E30000             stw r31,0x0(r3)
+  829257FC  4BFFA415             bl 0x8291fc10
+  82925800  7FE3FB78             or r3,r31,r31
+  82925804  4BFFFFB0             b 0x829257b4
+LAB_82925808:
+  82925808  7F1EF840             cmplw cr6,r30,r31
+  8292580C  4098FFA4             bge cr6,0x829257b0
+  82925810  4BFFA571             bl 0x8291fd80
+  82925814  3BE00022             li r31,0x22
+  82925818  4BFFFFE0             b 0x829257f8

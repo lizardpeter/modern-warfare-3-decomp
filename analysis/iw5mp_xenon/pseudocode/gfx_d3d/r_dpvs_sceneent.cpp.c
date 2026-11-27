@@ -5,7 +5,180 @@
 void R_AddCellSceneEntSurfacesInFrustumCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  byte bVar1;
+  byte bVar2;
+  ushort uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int *piVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  uint uVar14;
+  float *pfVar15;
+  float *pfVar16;
+  uint *puVar17;
+  uint uVar18;
+  int iVar19;
+  ulonglong uVar20;
+  int iVar21;
+  double dVar22;
+  undefined *local_b0;
+  int local_ac;
+  ushort local_a8;
+  undefined2 local_a6;
+  int local_a4;
+  int local_a0;
+  uint local_9c;
+  undefined4 local_98;
+  undefined4 *local_94;
+  undefined4 local_90;
+  
+  piVar10 = (int *)__savegprlr_17();
+  uVar18 = DAT_847ee8e8;
+  iVar12 = DAT_8461658c;
+  uVar6 = DAT_84613764 >> 5;
+  puVar17 = (uint *)(DAT_8461658c + 0x34);
+  if (DAT_8461375c <= DAT_847ee8e8) {
+    MyAssertHandler(0xffffffff821bd728,0x8f,0,0xffffffff821bcac0,DAT_847ee8e8);
+  }
+  iVar8 = DAT_847ee90c;
+  iVar7 = DAT_847ee908;
+  uVar14 = piVar10[1];
+  uVar3 = *(ushort *)((int)piVar10 + 10);
+  iVar4 = *piVar10;
+  bVar1 = *(byte *)(piVar10 + 2);
+  bVar2 = *(byte *)((int)piVar10 + 9);
+  iVar5 = (&DAT_847ee910)[uVar18];
+  if (*puVar17 <= uVar14) {
+    MyAssertHandler(0xffffffff821bd728,0x9b,0,0xffffffff821bd6e0,uVar14);
+  }
+  local_a8 = (ushort)bVar1;
+  local_a6 = (undefined2)uVar14;
+  uVar20 = (longlong)(int)uVar6 * (longlong)(int)uVar18;
+  local_a4 = (&DAT_847ee8ec)[uVar3];
+  local_ac = iVar4;
+  if (0xff < (uVar20 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bd728,0xa4,0,0xffffffff821bc9e8,uVar20,0x100);
+  }
+  iVar9 = local_a4;
+  uVar20 = ((ulonglong)uVar14 & 0xffffff) * 0x100 + uVar20;
+  local_98 = 0;
+  local_90 = 0;
+  local_94 = (undefined4 *)((int)((uVar20 & 0xffffffff) << 2) + *(int *)(iVar12 + 0x40));
+  if (uVar6 != 0) {
+    local_90 = *local_94;
+  }
+  uVar18 = (uint)bVar1;
+  local_9c = uVar6;
+  if (uVar18 < bVar2) {
+    MyAssertHandler(0xffffffff821bd728,0xbb,0,0xffffffff82000f98,0xffffffff821bd6c0);
+  }
+  iVar21 = (uint)bVar1 - (uint)bVar2;
+  iVar19 = (uint)bVar2 * 0x10 + iVar4;
+  dVar22 = 0.0;
+LAB_8273231c:
+  do {
+    do {
+      iVar11 = SpuBitArrayIterator__Advance(&local_a0);
+      if (iVar11 == 0) {
+        local_98 = 0;
+        local_90 = 0;
+        local_94 = (undefined4 *)
+                   ((int)((((ulonglong)*puVar17 & 0xffffff) * 0x100 + uVar20 & 0xffffffff) << 2) +
+                   *(int *)(iVar12 + 0x40));
+        local_9c = uVar6;
+        if (uVar6 != 0) {
+          local_90 = *local_94;
+        }
+LAB_82732534:
+        do {
+          do {
+            iVar12 = SpuBitArrayIterator__Advance(&local_a0);
+            if (iVar12 == 0) {
+              __restgprlr_17();
+              return;
+            }
+          } while (*(char *)(local_a0 + iVar9) != '\0');
+          iVar12 = 0;
+          pfVar15 = *(float **)(local_a0 * 4 + iVar5);
+          if (0 < iVar21) {
+            pfVar16 = (float *)(iVar19 + 4);
+            do {
+              if ((double)(pfVar15[1] * *pfVar16 +
+                           pfVar15[2] * pfVar16[1] +
+                           *pfVar15 * pfVar16[-1] +
+                           ABS(*pfVar16) * pfVar15[4] +
+                           ABS(pfVar16[-1]) * pfVar15[3] + ABS(pfVar16[1]) * pfVar15[5] + pfVar16[2]
+                          ) <= dVar22) goto LAB_82732534;
+              iVar12 = iVar12 + 1;
+              pfVar16 = pfVar16 + 4;
+            } while (iVar12 < iVar21);
+          }
+          *(undefined1 *)(local_a0 + local_a4) = 1;
+        } while( true );
+      }
+    } while (*(char *)(local_a0 + iVar9) != '\0');
+    uVar14 = (uint)*(ushort *)(local_a0 * 2 + iVar8);
+    if (uVar14 == 0xffff) {
+      uVar14 = (uint)*(ushort *)(local_a0 * 2 + iVar7);
+      if (uVar14 != 0xffff) {
+        iVar11 = 0;
+        if (0 < iVar21) {
+          pfVar15 = (float *)(iVar19 + 8);
+          do {
+            if ((double)((float)(&DAT_847d46f8)[uVar14 * 0x12] * *pfVar15 +
+                         (float)(&DAT_847d46f0)[uVar14 * 0x12] * pfVar15[-2] +
+                         (float)(&DAT_847d46f4)[uVar14 * 0x12] * pfVar15[-1] +
+                         *(float *)(local_a0 * 4 + iVar5) + pfVar15[1]) <= dVar22)
+            goto LAB_8273231c;
+            iVar11 = iVar11 + 1;
+            pfVar15 = pfVar15 + 4;
+          } while (iVar11 < iVar21);
+        }
+        *(undefined1 *)(local_a0 + local_a4) = 1;
+      }
+      goto LAB_8273231c;
+    }
+    iVar11 = uVar14 * 0x78;
+    iVar13 = 0;
+    if (0 < iVar21) {
+      pfVar15 = (float *)(iVar19 + 8);
+      do {
+        if ((double)(*(float *)(&DAT_847c4520 + iVar11) * *pfVar15 +
+                     *(float *)(&DAT_847c4518 + iVar11) * pfVar15[-2] +
+                     *(float *)(&DAT_847c451c + iVar11) * pfVar15[-1] +
+                     *(float *)(local_a0 * 4 + iVar5) + pfVar15[1]) <= dVar22) goto LAB_8273231c;
+        iVar13 = iVar13 + 1;
+        pfVar15 = pfVar15 + 4;
+      } while (iVar13 < iVar21);
+    }
+    iVar13 = 0;
+    if (uVar18 != 0) {
+      pfVar15 = (float *)(iVar4 + 4);
+      do {
+        if ((double)((float)(&DAT_847c452c)[uVar14 * 0x1e] * *pfVar15 +
+                     (float)(&DAT_847c4530)[uVar14 * 0x1e] * pfVar15[1] +
+                     (float)(&DAT_847c4528)[uVar14 * 0x1e] * pfVar15[-1] +
+                     ABS(*pfVar15) * (float)(&DAT_847c4538)[uVar14 * 0x1e] +
+                     ABS(pfVar15[-1]) * (float)(&DAT_847c4534)[uVar14 * 0x1e] +
+                     ABS(pfVar15[1]) * (float)(&DAT_847c453c)[uVar14 * 0x1e] + pfVar15[2]) <= dVar22
+           ) goto LAB_8273231c;
+        iVar13 = iVar13 + 1;
+        pfVar15 = pfVar15 + 4;
+      } while (iVar13 < (int)uVar18);
+    }
+    local_b0 = &DAT_847c44fc + iVar11;
+    if ((uint)(&DAT_847c4524)[uVar14 * 0x1e] < 2) {
+      R_AddWorkerCmd(4,&local_b0);
+    }
+    else {
+      R_AddEntitySurfacesInFrustumCmd(&local_b0);
+    }
+  } while( true );
 }
 

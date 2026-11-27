@@ -3,9 +3,152 @@
 ; 828D7D48  XAUDIO::CSubmixVoice::CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:41)
   828D7D48  7D8802A6             mfspr r12,LR
   828D7D4C  4803E96D             bl 0x829166b8
+  828D7D50  9421FF50             stwu r1,-0xb0(r1)
+  828D7D54  908100CC             stw r4,0xcc(r1)
+  828D7D58  38810060             addi r4,r1,0x60
+  828D7D5C  7C7D1B78             or r29,r3,r3
+  828D7D60  7CBC2B78             or r28,r5,r5
+  828D7D64  4BFFFC0D             bl 0x828d7970
+  828D7D68  38810050             addi r4,r1,0x50
+  828D7D6C  38610060             addi r3,r1,0x60
+  828D7D70  48016BE9             bl 0x828ee958
+  828D7D74  2F030000             cmpwi cr6,r3,0x0
+  828D7D78  41980010             blt cr6,0x828d7d88
+  828D7D7C  81610050             lwz r11,0x50(r1)
+  828D7D80  394B0050             addi r10,r11,0x50
+  828D7D84  91410050             stw r10,0x50(r1)
+LAB_828d7d88:
+  828D7D88  7C7E1B78             or r30,r3,r3
+  828D7D8C  2F030000             cmpwi cr6,r3,0x0
+  828D7D90  4198009C             blt cr6,0x828d7e2c
+  828D7D94  3C606182             lis r3,0x6182
+  828D7D98  80810050             lwz r4,0x50(r1)
+  828D7D9C  38A100CC             addi r5,r1,0xcc
+  828D7DA0  60630006             ori r3,r3,0x6
+  828D7DA4  48016A75             bl 0x828ee818
+  828D7DA8  7C7E1B78             or r30,r3,r3
+  828D7DAC  2F030000             cmpwi cr6,r3,0x0
+  828D7DB0  4198007C             blt cr6,0x828d7e2c
+  828D7DB4  806100CC             lwz r3,0xcc(r1)
+  828D7DB8  38800050             li r4,0x50
+  828D7DBC  81630000             lwz r11,0x0(r3)
+  828D7DC0  814B0014             lwz r10,0x14(r11)
+  828D7DC4  7D4903A6             mtspr CTR,r10
+  828D7DC8  4E800421             bctrl
+  828D7DCC  2B030000             cmplwi cr6,r3,0x0
+  828D7DD0  419A001C             beq cr6,0x828d7dec
+  828D7DD4  7FA4EB78             or r4,r29,r29
+  828D7DD8  80A100CC             lwz r5,0xcc(r1)
+  828D7DDC  4BFFFE2D             bl 0x828d7c08
+  828D7DE0  7C7F1B78             or r31,r3,r3
+  828D7DE4  2B030000             cmplwi cr6,r3,0x0
+  828D7DE8  409A0010             bne cr6,0x828d7df8
+LAB_828d7dec:
+  828D7DEC  3FC08007             lis r30,-0x7ff9
+  828D7DF0  63DE000E             ori r30,r30,0xe
+  828D7DF4  48000038             b 0x828d7e2c
+LAB_828d7df8:
+  828D7DF8  7FA4EB78             or r4,r29,r29
+  828D7DFC  7FE3FB78             or r3,r31,r31
+  828D7E00  4BFFFC69             bl 0x828d7a68
+  828D7E04  7C7E1B78             or r30,r3,r3
+  828D7E08  2F030000             cmpwi cr6,r3,0x0
+  828D7E0C  4198000C             blt cr6,0x828d7e18
+  828D7E10  93FC0000             stw r31,0x0(r28)
+  828D7E14  48000018             b 0x828d7e2c
+LAB_828d7e18:
+  828D7E18  817F0000             lwz r11,0x0(r31)
+  828D7E1C  7FE3FB78             or r3,r31,r31
+  828D7E20  814B000C             lwz r10,0xc(r11)
+  828D7E24  7D4903A6             mtspr CTR,r10
+  828D7E28  4E800421             bctrl
+LAB_828d7e2c:
+  828D7E2C  806100CC             lwz r3,0xcc(r1)
+  828D7E30  2B030000             cmplwi cr6,r3,0x0
+  828D7E34  419A0014             beq cr6,0x828d7e48
+  828D7E38  81630000             lwz r11,0x0(r3)
+  828D7E3C  814B0004             lwz r10,0x4(r11)
+  828D7E40  7D4903A6             mtspr CTR,r10
+  828D7E44  4E800421             bctrl
+LAB_828d7e48:
+  828D7E48  7FC3F378             or r3,r30,r30
+  828D7E4C  382100B0             addi r1,r1,0xb0
+  828D7E50  4803E8B8             b 0x82916708
 
 ; 828D7C00  XAUDIO::CSubmixVoice::SetVoiceOutput  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.h:90)
   828D7C00  48017180             b 0x828eed80
+
+; 828D7C08  XAUDIO::CSubmixVoice::CSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:125)
+  828D7C08  7D8802A6             mfspr r12,LR
+  828D7C0C  4803EAA9             bl 0x829166b4
+  828D7C10  9421FF80             stwu r1,-0x80(r1)
+  828D7C14  7C9F2378             or r31,r4,r4
+  828D7C18  7CA42B78             or r4,r5,r5
+  828D7C1C  38A00001             li r5,0x1
+  828D7C20  7C7D1B78             or r29,r3,r3
+  828D7C24  48016CA5             bl 0x828ee8c8
+  828D7C28  3D608220             lis r11,-0x7de0
+  828D7C2C  3D208489             lis r9,-0x7b77
+  828D7C30  390B7568             addi r8,r11,0x7568
+  828D7C34  911D0000             stw r8,0x0(r29)
+  828D7C38  88FF000A             lbz r7,0xa(r31)
+  828D7C3C  1D47002C             mulli r10,r7,0x2c
+  828D7C40  98FD004C             stb r7,0x4c(r29)
+  828D7C44  7CE63B78             or r6,r7,r7
+  828D7C48  81695944             lwz r11,0x5944(r9)
+  828D7C4C  816B007C             lwz r11,0x7c(r11)
+  828D7C50  7FCA5A14             add r30,r10,r11
+  828D7C54  4806A591             bl 0x829421e4
+  828D7C58  3D608489             lis r11,-0x7b77
+  828D7C5C  7C7B1B78             or r27,r3,r3
+  828D7C60  3BEB58D8             addi r31,r11,0x58d8
+  828D7C64  7DBC6B78             or r28,r13,r13
+  828D7C68  817F0004             lwz r11,0x4(r31)
+  828D7C6C  2F0B0000             cmpwi cr6,r11,0x0
+  828D7C70  419A0010             beq cr6,0x828d7c80
+  828D7C74  815F0008             lwz r10,0x8(r31)
+  828D7C78  7F0D5040             cmplw cr6,r13,r10
+  828D7C7C  419A0018             beq cr6,0x828d7c94
+LAB_828d7c80:
+  828D7C80  7FE3FB78             or r3,r31,r31
+  828D7C84  48069D31             bl 0x829419b4
+  828D7C88  817F0004             lwz r11,0x4(r31)
+  828D7C8C  939F0008             stw r28,0x8(r31)
+  828D7C90  9B7F000C             stb r27,0xc(r31)
+LAB_828d7c94:
+  828D7C94  396B0001             addi r11,r11,0x1
+  828D7C98  7DAA6B78             or r10,r13,r13
+  828D7C9C  917F0004             stw r11,0x4(r31)
+  828D7CA0  817E0008             lwz r11,0x8(r30)
+  828D7CA4  7D6BEA14             add r11,r11,r29
+  828D7CA8  93CB0000             stw r30,0x0(r11)
+  828D7CAC  813E0004             lwz r9,0x4(r30)
+  828D7CB0  912B0004             stw r9,0x4(r11)
+  828D7CB4  917E0004             stw r11,0x4(r30)
+  828D7CB8  810B0004             lwz r8,0x4(r11)
+  828D7CBC  91680000             stw r11,0x0(r8)
+  828D7CC0  817F0004             lwz r11,0x4(r31)
+  828D7CC4  2F0B0000             cmpwi cr6,r11,0x0
+  828D7CC8  419A0040             beq cr6,0x828d7d08
+  828D7CCC  813F0008             lwz r9,0x8(r31)
+  828D7CD0  7F0D4840             cmplw cr6,r13,r9
+  828D7CD4  409A0034             bne cr6,0x828d7d08
+  828D7CD8  356BFFFF             subic. r11,r11,0x1
+  828D7CDC  917F0004             stw r11,0x4(r31)
+  828D7CE0  40820028             bne 0x828d7d08
+  828D7CE4  39400000             li r10,0x0
+  828D7CE8  8BDF000C             lbz r30,0xc(r31)
+  828D7CEC  39600000             li r11,0x0
+  828D7CF0  915F0008             stw r10,0x8(r31)
+  828D7CF4  7FE3FB78             or r3,r31,r31
+  828D7CF8  997F000C             stb r11,0xc(r31)
+  828D7CFC  48069CA9             bl 0x829419a4
+  828D7D00  7FC3F378             or r3,r30,r30
+  828D7D04  4806A4F1             bl 0x829421f4
+LAB_828d7d08:
+  828D7D08  7FA3EB78             or r3,r29,r29
+  828D7D0C  38210080             addi r1,r1,0x80
+  828D7D10  4803E9F4             b 0x82916704
 
 ; 828D7BE8  XAUDIO::CVoice::GetVoiceState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:153)
   828D7BE8  8963003D             lbz r11,0x3d(r3)
@@ -16,6 +159,106 @@
 ; 828D7AD0  XAUDIO::CSubmixVoice::~CSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:155)
   828D7AD0  7D8802A6             mfspr r12,LR
   828D7AD4  4803EBE1             bl 0x829166b4
+  828D7AD8  9421FF80             stwu r1,-0x80(r1)
+  828D7ADC  3D608220             lis r11,-0x7de0
+  828D7AE0  38800001             li r4,0x1
+  828D7AE4  394B7568             addi r10,r11,0x7568
+  828D7AE8  7C7E1B78             or r30,r3,r3
+  828D7AEC  91430000             stw r10,0x0(r3)
+  828D7AF0  48018009             bl 0x828efaf8
+  828D7AF4  3D208489             lis r9,-0x7b77
+  828D7AF8  891E004C             lbz r8,0x4c(r30)
+  828D7AFC  1D48002C             mulli r10,r8,0x2c
+  828D7B00  81695944             lwz r11,0x5944(r9)
+  828D7B04  816B007C             lwz r11,0x7c(r11)
+  828D7B08  7F6A5A14             add r27,r10,r11
+  828D7B0C  4806A6D9             bl 0x829421e4
+  828D7B10  3D608489             lis r11,-0x7b77
+  828D7B14  7C7C1B78             or r28,r3,r3
+  828D7B18  3BEB58D8             addi r31,r11,0x58d8
+  828D7B1C  7DBD6B78             or r29,r13,r13
+  828D7B20  817F0004             lwz r11,0x4(r31)
+  828D7B24  2F0B0000             cmpwi cr6,r11,0x0
+  828D7B28  419A0010             beq cr6,0x828d7b38
+  828D7B2C  811F0008             lwz r8,0x8(r31)
+  828D7B30  7F0D4040             cmplw cr6,r13,r8
+  828D7B34  419A001C             beq cr6,0x828d7b50
+LAB_828d7b38:
+  828D7B38  7FE3FB78             or r3,r31,r31
+  828D7B3C  48069E79             bl 0x829419b4
+  828D7B40  817F0004             lwz r11,0x4(r31)
+  828D7B44  7FA8EB78             or r8,r29,r29
+  828D7B48  9B9F000C             stb r28,0xc(r31)
+  828D7B4C  93BF0008             stw r29,0x8(r31)
+LAB_828d7b50:
+  828D7B50  394B0001             addi r10,r11,0x1
+  828D7B54  915F0004             stw r10,0x4(r31)
+  828D7B58  817B0008             lwz r11,0x8(r27)
+  828D7B5C  7D6BF214             add r11,r11,r30
+  828D7B60  812B0000             lwz r9,0x0(r11)
+  828D7B64  7F095840             cmplw cr6,r9,r11
+  828D7B68  419A0028             beq cr6,0x828d7b90
+  828D7B6C  814B0004             lwz r10,0x4(r11)
+  828D7B70  91490004             stw r10,0x4(r9)
+  828D7B74  812B0000             lwz r9,0x0(r11)
+  828D7B78  810B0004             lwz r8,0x4(r11)
+  828D7B7C  91280000             stw r9,0x0(r8)
+  828D7B80  916B0004             stw r11,0x4(r11)
+  828D7B84  916B0000             stw r11,0x0(r11)
+  828D7B88  811F0008             lwz r8,0x8(r31)
+  828D7B8C  815F0004             lwz r10,0x4(r31)
+LAB_828d7b90:
+  828D7B90  7DAB6B78             or r11,r13,r13
+  828D7B94  2F0A0000             cmpwi cr6,r10,0x0
+  828D7B98  419A003C             beq cr6,0x828d7bd4
+  828D7B9C  7F0D4040             cmplw cr6,r13,r8
+  828D7BA0  409A0034             bne cr6,0x828d7bd4
+  828D7BA4  356AFFFF             subic. r11,r10,0x1
+  828D7BA8  917F0004             stw r11,0x4(r31)
+  828D7BAC  40820028             bne 0x828d7bd4
+  828D7BB0  39600000             li r11,0x0
+  828D7BB4  8BBF000C             lbz r29,0xc(r31)
+  828D7BB8  39400000             li r10,0x0
+  828D7BBC  997F000C             stb r11,0xc(r31)
+  828D7BC0  7FE3FB78             or r3,r31,r31
+  828D7BC4  915F0008             stw r10,0x8(r31)
+  828D7BC8  48069DDD             bl 0x829419a4
+  828D7BCC  7FA3EB78             or r3,r29,r29
+  828D7BD0  4806A625             bl 0x829421f4
+LAB_828d7bd4:
+  828D7BD4  7FC3F378             or r3,r30,r30
+  828D7BD8  48017109             bl 0x828eece0
+  828D7BDC  38210080             addi r1,r1,0x80
+  828D7BE0  4803EB24             b 0x82916704
+
+; 828D7A68  XAUDIO::CSubmixVoice::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:190)
+  828D7A68  7D8802A6             mfspr r12,LR
+  828D7A6C  9181FFF8             stw r12,-0x8(r1)
+  828D7A70  FBC1FFE8             std r30,-0x18(r1)
+  828D7A74  FBE1FFF0             std r31,-0x10(r1)
+  828D7A78  9421FF70             stwu r1,-0x90(r1)
+  828D7A7C  7C7E1B78             or r30,r3,r3
+  828D7A80  7C832378             or r3,r4,r4
+  828D7A84  38810050             addi r4,r1,0x50
+  828D7A88  4BFFFEE9             bl 0x828d7970
+  828D7A8C  38810050             addi r4,r1,0x50
+  828D7A90  7FC3F378             or r3,r30,r30
+  828D7A94  48016F7D             bl 0x828eea10
+  828D7A98  7C7F1B78             or r31,r3,r3
+  828D7A9C  2F030000             cmpwi cr6,r3,0x0
+  828D7AA0  41980014             blt cr6,0x828d7ab4
+  828D7AA4  38A00003             li r5,0x3
+  828D7AA8  807E0020             lwz r3,0x20(r30)
+  828D7AAC  38800000             li r4,0x0
+  828D7AB0  4BFFA279             bl 0x828d1d28
+LAB_828d7ab4:
+  828D7AB4  7FE3FB78             or r3,r31,r31
+  828D7AB8  38210090             addi r1,r1,0x90
+  828D7ABC  8181FFF8             lwz r12,-0x8(r1)
+  828D7AC0  7D8803A6             mtspr LR,r12
+  828D7AC4  EBC1FFE8             ld r30,-0x18(r1)
+  828D7AC8  EBE1FFF0             ld r31,-0x10(r1)
+  828D7ACC  4E800020             blr
 
 ; 828D7BF8  XAUDIO::CVoice::GetFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/voice.h:205)
   828D7BF8  80630020             lwz r3,0x20(r3)
@@ -52,6 +295,42 @@ LAB_828d7954:
   828D7964  EBC1FFE8             ld r30,-0x18(r1)
   828D7968  EBE1FFF0             ld r31,-0x10(r1)
   828D796C  4E800020             blr
+
+; 828D7970  XAUDIO::CSubmixVoice::ConvertInit  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:292)
+  828D7970  39400008             li r10,0x8
+  828D7974  39200000             li r9,0x0
+  828D7978  3964FFFC             subi r11,r4,0x4
+  828D797C  7D4903A6             mtspr CTR,r10
+LAB_828d7980:
+  828D7980  952B0004             stwu r9,0x4(r11)
+  828D7984  4200FFFC             bdnz 0x828d7980
+  828D7988  99240000             stb r9,0x0(r4)
+  828D798C  3D600000             lis r11,0x0
+  828D7990  89430001             lbz r10,0x1(r3)
+  828D7994  99440001             stb r10,0x1(r4)
+  828D7998  6169BB80             ori r9,r11,0xbb80
+  828D799C  91240004             stw r9,0x4(r4)
+  828D79A0  8103000C             lwz r8,0xc(r3)
+  828D79A4  91040008             stw r8,0x8(r4)
+  828D79A8  80E30014             lwz r7,0x14(r3)
+  828D79AC  90E40010             stw r7,0x10(r4)
+  828D79B0  80C30018             lwz r6,0x18(r3)
+  828D79B4  90C40014             stw r6,0x14(r4)
+  828D79B8  89630008             lbz r11,0x8(r3)
+  828D79BC  2B0B0000             cmplwi cr6,r11,0x0
+  828D79C0  409A0008             bne cr6,0x828d79c8
+  828D79C4  39600001             li r11,0x1
+LAB_828d79c8:
+  828D79C8  99640018             stb r11,0x18(r4)
+  828D79CC  89630009             lbz r11,0x9(r3)
+  828D79D0  2B0B0000             cmplwi cr6,r11,0x0
+  828D79D4  409A0008             bne cr6,0x828d79dc
+  828D79D8  39600006             li r11,0x6
+LAB_828d79dc:
+  828D79DC  99640019             stb r11,0x19(r4)
+  828D79E0  81430010             lwz r10,0x10(r3)
+  828D79E4  9144001C             stw r10,0x1c(r4)
+  828D79E8  4E800020             blr
 
 ; 828D79F0  XAUDIO::CSubmixVoice::SetVoiceFormat  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:360)
   828D79F0  7D8802A6             mfspr r12,LR

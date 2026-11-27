@@ -2,11 +2,67 @@
 
 // 8261A448  GetControlAndDuplicatePartBits  (xanim/dobj_skel.cpp:78)
 
-void GetControlAndDuplicatePartBits(void)
+void GetControlAndDuplicatePartBits
+               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+               longlong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined8 uVar6;
+  int iVar7;
+  uint uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  uint *puVar11;
+  
+  lVar5 = __savegprlr_17();
+  if (lVar5 == -0x14) {
+    MyAssertHandler(0xffffffff8218526c,0x58,0,0xffffffff82000f98,0xffffffff82185264);
+  }
+  iVar4 = (int)param_7;
+  lVar10 = lVar5 + 0x5c;
+  lVar9 = 6;
+  do {
+    puVar11 = (uint *)lVar10;
+    puVar3 = (uint *)param_7;
+    *puVar11 = *(uint *)((param_2 - iVar4) + (int)puVar3) | *puVar11;
+    *(uint *)((param_6 - iVar4) + (int)puVar3) = puVar11[-0xc];
+    *puVar3 = puVar11[-6];
+    *(uint *)((param_5 - iVar4) + (int)puVar3) =
+         ~(*(uint *)((param_3 - iVar4) + (int)puVar3) | *(uint *)((param_4 - iVar4) + (int)puVar3));
+    if ((*(uint *)((param_6 - iVar4) + (int)puVar3) & *(uint *)((param_4 - iVar4) + (int)puVar3)) !=
+        0) {
+      DObjDumpInfo(lVar5);
+      iVar7 = 0;
+      uVar8 = (uint)*(byte *)((int)lVar5 + 10);
+      if (uVar8 != 0) {
+        uVar1 = 0;
+        do {
+          uVar1 = *(uint *)((int)&DAT_82992400 + (uVar1 & 0x7c));
+          iVar2 = (iVar7 >> 5) * 4;
+          if (((*(uint *)(iVar2 + param_6) & uVar1) != 0) &&
+             ((*(uint *)(iVar2 + param_4) & uVar1) != 0)) break;
+          iVar7 = iVar7 + 1;
+          uVar1 = iVar7 * 4;
+        } while (iVar7 < (int)uVar8);
+      }
+      if (DAT_84013128 == 0) {
+        uVar6 = va(0xffffffff82185220);
+        MyAssertHandler(0xffffffff8218526c,0x6e,0,uVar6);
+      }
+    }
+    lVar9 = lVar9 + -1;
+    lVar10 = lVar10 + 4;
+    param_7 = param_7 + 4;
+    if (lVar9 == 0) {
+      __restgprlr_17();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -44,7 +100,6 @@ void CalcSkelDuplicateBones(undefined8 param_1,int param_2,longlong param_3,long
     do {
       uVar6 = *(byte *)((int)param_4 + 1) - 1;
       if ((int)uVar7 <= (int)uVar6) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218526c,0x86,0,0xffffffff82000f98,0xffffffff821852ac);
       }
       lVar3 = ((ulonglong)uVar6 & 0x7ffffff) * 0x20 + (ulonglong)uVar1 + -4;
@@ -67,31 +122,618 @@ void CalcSkelDuplicateBones(undefined8 param_1,int param_2,longlong param_3,long
 
 // 8261A668  CalcSkelRootBonesNoParentOrDuplicate  (xanim/dobj_skel.cpp:142)
 
-void CalcSkelRootBonesNoParentOrDuplicate(void)
+void CalcSkelRootBonesNoParentOrDuplicate
+               (undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 *puVar5;
+  undefined8 uVar4;
+  uint uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  uint uVar9;
+  longlong lVar10;
+  float *pfVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  uint local_ec;
+  
+  puVar5 = (undefined4 *)__savegprlr();
+  uVar6 = (int)param_3 >> 5;
+  iVar1 = *(int *)(param_2 + 100);
+  param_3 = (ulonglong)*(byte *)((int)puVar5 + 5) + param_3;
+  uVar7 = param_3 + ((ulonglong)uVar6 & 0x7ffffff) * -0x20;
+  iVar3 = (int)param_3 + -1 >> 5;
+  local_ec = (uint)uVar7;
+  if ((int)uVar6 <= iVar3) {
+    param_4 = ((ulonglong)uVar6 & 0x3fffffff) * 4 + param_4;
+    dVar13 = 1.0;
+    dVar15 = 2.0;
+    dVar14 = 1e-06;
+    while( true ) {
+      uVar9 = *(uint *)param_4;
+      iVar8 = (int)uVar7;
+      if (0x20 < iVar8) {
+        iVar8 = 0x20;
+      }
+      uVar7 = LZCOUNT(uVar9);
+      if ((int)uVar7 < iVar8) {
+        do {
+          lVar10 = ((ulonglong)uVar6 & 0x7ffffff) * 0x20 + uVar7;
+          if (0x20 < uVar7) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,
+                            "count doesn\'t index 33\n\t%i not in [0, %i)",uVar7,0x21);
+          }
+          uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar7 << 2));
+          if ((uVar2 & uVar9) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xb1,0,0xffffffff82000f98,"bits & boneBit");
+          }
+          uVar9 = uVar9 & ~uVar2;
+          pfVar11 = (float *)((int)lVar10 * 0x20 + iVar1);
+          *(uint *)param_4 = uVar9;
+          dVar12 = (double)(pfVar11[3] * pfVar11[3] +
+                           pfVar11[2] * pfVar11[2] + *pfVar11 * *pfVar11 + pfVar11[1] * pfVar11[1]);
+          if (dVar12 <= dVar14) {
+            pfVar11[3] = (float)dVar13;
+            pfVar11[7] = (float)dVar15;
+          }
+          else {
+            pfVar11[7] = (float)(dVar15 / dVar12);
+          }
+          if (((uint)pfVar11[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
+          }
+          if ((((((uint)*pfVar11 & 0x7f800000) == 0x7f800000) ||
+               (((uint)pfVar11[1] & 0x7f800000) == 0x7f800000)) ||
+              (((uint)pfVar11[2] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar11[3] & 0x7f800000) == 0x7f800000)) {
+            uVar4 = va(0xffffffff821852c4,*puVar5,lVar10);
+            MyAssertHandler(0xffffffff8218526c,0xb7,0,0xffffffff820011f4,0xffffffff821852e0,uVar4);
+          }
+          if (((((uint)pfVar11[4] & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar11[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar11[6] & 0x7f800000) == 0x7f800000)) {
+            uVar4 = va(0xffffffff821852c4,*puVar5,lVar10);
+            MyAssertHandler(0xffffffff8218526c,0xb8,0,0xffffffff820011f4,0xffffffff82185378,uVar4);
+          }
+          uVar7 = LZCOUNT(uVar9);
+        } while ((int)uVar7 < iVar8);
+      }
+      uVar7 = (ulonglong)local_ec;
+      uVar6 = uVar6 + 1;
+      param_4 = param_4 + 4;
+      local_ec = (uint)(uVar7 - 0x20);
+      if (iVar3 < (int)uVar6) break;
+      uVar7 = uVar7 - 0x20 & 0xffffffff;
+    }
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 8261A990  CalcSkelRootBonesWithParent  (xanim/dobj_skel.cpp:191)
 
-void CalcSkelRootBonesWithParent(void)
+void CalcSkelRootBonesWithParent
+               (undefined8 param_1,uint *param_2,ulonglong param_3,ulonglong param_4,int param_5,
+               int param_6,int param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float *pfVar13;
+  uint uVar14;
+  uint uVar15;
+  int iVar16;
+  uint uVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float *pfVar21;
+  int iVar22;
+  longlong lVar23;
+  ulonglong uVar24;
+  float *pfVar25;
+  uint uVar26;
+  ulonglong uVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  uint local_160;
+  uint local_15c;
+  uint local_158;
+  
   __savegprlr();
+  iVar22 = __savefpr_25();
+  lVar23 = *(byte *)(iVar22 + 5) + param_3;
+  uVar27 = (param_3 & 0xffffffff) >> 5;
+  pfVar13 = (float *)param_2[0x19];
+  uVar24 = lVar23 - (param_3 & 0xffffffe0);
+  dVar29 = (double)*(float *)(iVar22 + 8);
+  uVar15 = (int)lVar23 - 1U >> 5;
+  local_15c = (uint)uVar27;
+  local_160 = (uint)uVar24;
+  pfVar25 = pfVar13 + (uint)param_4 * 8;
+  if (uVar27 <= uVar15) {
+    lVar23 = uVar27 << 2;
+    dVar31 = 2.0;
+    dVar30 = 1e-06;
+    dVar32 = 1.0;
+    while( true ) {
+      local_158 = (uint)uVar24;
+      iVar16 = (int)lVar23;
+      uVar26 = *(uint *)(iVar16 + param_5);
+      if (0x20 < (int)local_158) {
+        local_158 = 0x20;
+      }
+      uVar27 = LZCOUNT(uVar26);
+      if (uVar27 < local_158) {
+        uVar17 = (uint)((param_4 & 0xffffffff) << 2) & 0x7c;
+        do {
+          uVar24 = ((ulonglong)local_15c & 0x7ffffff) * 0x20 + uVar27;
+          if (0x20 < uVar27) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",uVar27,0x21);
+          }
+          uVar14 = *(uint *)((int)&DAT_82992400 + (int)(uVar27 << 2));
+          if ((uVar14 & uVar26) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xeb,0,0xffffffff82000f98,"bits & boneBit");
+          }
+          uVar26 = uVar26 & ~uVar14;
+          *(uint *)(iVar16 + param_5) = uVar26;
+          if ((uVar24 & 0xffffffff) <= (param_4 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8218526c,0xef,0,0xffffffff82000f98,"modelParent < boneIndex");
+          }
+          if ((*(uint *)(iVar16 + (int)param_2) & uVar14) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf0,0,0xffffffff82000f98,
+                            "skel->partBits.anim[boneIndexHigh] & boneBit");
+          }
+          if ((param_2[(int)((param_4 & 0xffffffff) >> 5) + 0x12] &
+              *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf1,0,0xffffffff82000f98,
+                            "skel->partBits.skel[modelParent >> 5] & BitShiftMasked( modelParent )")
+            ;
+          }
+          if ((*(uint *)((int)&DAT_82992400 + uVar17) &
+              *(uint *)(((uint)param_4 >> 3 & 0x1ffffffc) + (int)param_2)) == 0) {
+            MyAssertHandler(0xffffffff8218526c,0xf2,0,0xffffffff82000f98,
+                            "skel->partBits.anim[modelParent >> 5] & BitShiftMasked( modelParent )")
+            ;
+          }
+          pfVar21 = (float *)((int)uVar24 * 0x20 + param_2[0x19]);
+          if ((*(uint *)(iVar16 + param_7) & uVar14) == 0) {
+            if ((*(uint *)(iVar16 + param_6) & uVar14) == 0) {
+              fVar1 = pfVar25[3];
+              fVar2 = *pfVar25;
+              fVar3 = *pfVar21;
+              fVar4 = pfVar21[2];
+              fVar5 = pfVar21[3];
+              fVar6 = pfVar21[1];
+              fVar7 = pfVar25[1];
+              fVar8 = pfVar25[2];
+              *pfVar21 = -(fVar8 * fVar6 - (fVar7 * fVar4 + fVar2 * fVar5 + fVar3 * fVar1));
+              pfVar21[3] = -(fVar8 * fVar4 - -(fVar6 * fVar7 - (fVar5 * fVar1 - fVar2 * fVar3)));
+              pfVar21[1] = fVar5 * fVar7 + fVar8 * fVar3 + (fVar6 * fVar1 - fVar2 * fVar4);
+              pfVar21[2] = fVar8 * fVar5 + -(fVar3 * fVar7 - (fVar6 * fVar2 + fVar1 * fVar4));
+            }
+            else {
+              if ((param_2[0x12] & 0x80000000) == 0) {
+                MyAssertHandler(0xffffffff8218526c,0xfe,0,0xffffffff82000f98,
+                                "skel->partBits.skel[0] & HIGH_BIT");
+              }
+              if ((*param_2 & 0x80000000) == 0) {
+                MyAssertHandler(0xffffffff8218526c,0xff,0,0xffffffff82000f98,
+                                "skel->partBits.anim[0] & HIGH_BIT");
+              }
+              fVar1 = *pfVar13;
+              fVar2 = pfVar25[3];
+              fVar3 = pfVar13[3];
+              fVar4 = pfVar25[1];
+              fVar5 = pfVar13[1];
+              fVar6 = *pfVar25;
+              fVar7 = pfVar25[2];
+              fVar8 = pfVar13[2];
+              fVar9 = pfVar21[3];
+              fVar10 = *pfVar21;
+              fVar11 = pfVar21[1];
+              fVar12 = pfVar21[2];
+              fVar18 = fVar8 * fVar4 + -(fVar5 * fVar7 - (fVar6 * fVar3 - fVar1 * fVar2));
+              fVar19 = -(fVar6 * fVar8 - -(fVar5 * fVar2 - (fVar7 * fVar1 + fVar4 * fVar3)));
+              fVar20 = -(fVar8 * fVar2 - (fVar6 * fVar5 + (fVar7 * fVar3 - fVar4 * fVar1)));
+              fVar1 = fVar2 * fVar3 + fVar8 * fVar7 + fVar6 * fVar1 + fVar4 * fVar5;
+              fVar7 = -(fVar12 * fVar19 - (fVar1 * fVar10 + fVar11 * fVar20 + fVar9 * fVar18));
+              *pfVar21 = fVar7;
+              fVar8 = -(fVar12 * fVar20 - -(fVar11 * fVar19 - (fVar9 * fVar1 - fVar10 * fVar18)));
+              pfVar21[3] = fVar8;
+              fVar6 = fVar12 * fVar1 + -(fVar11 * fVar18 - (fVar9 * fVar20 + fVar10 * fVar19));
+              pfVar21[2] = fVar6;
+              fVar5 = fVar12 * fVar18 + fVar11 * fVar1 + (fVar9 * fVar19 - fVar10 * fVar20);
+              pfVar21[1] = fVar5;
+              fVar1 = pfVar13[1];
+              fVar2 = pfVar13[3];
+              fVar3 = pfVar13[2];
+              fVar4 = *pfVar13;
+              pfVar21[3] = -(fVar6 * fVar3 - -(fVar5 * fVar1 - (fVar8 * fVar2 - fVar7 * fVar4)));
+              *pfVar21 = -(fVar5 * fVar3 - (fVar7 * fVar2 + fVar8 * fVar4 + fVar6 * fVar1));
+              pfVar21[1] = fVar8 * fVar1 + fVar7 * fVar3 + (fVar5 * fVar2 - fVar6 * fVar4);
+              pfVar21[2] = fVar8 * fVar3 + -(fVar7 * fVar1 - (fVar5 * fVar4 + fVar6 * fVar2));
+            }
+          }
+          if ((((((uint)*pfVar21 & 0x7f800000) == 0x7f800000) ||
+               (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)) ||
+              (((uint)pfVar21[2] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[3] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x107,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->quat)[0]) && !IS_NAN((childMat->quat)[1]) && !IS_NAN((childMat->quat)[2]) && !IS_NAN((childMat->quat)[3])"
+                           );
+          }
+          if (((((uint)pfVar21[4] & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar21[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[6] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x108,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                           );
+          }
+          dVar28 = (double)(pfVar21[2] * pfVar21[2] +
+                           *pfVar21 * *pfVar21 + pfVar21[1] * pfVar21[1] + pfVar21[3] * pfVar21[3]);
+          if (dVar28 <= dVar30) {
+            pfVar21[3] = (float)dVar32;
+            pfVar21[7] = (float)dVar31;
+          }
+          else {
+            pfVar21[7] = (float)(dVar31 / dVar28);
+          }
+          if (((uint)pfVar21[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
+          }
+          dVar28 = dVar32;
+          if ((*(uint *)(iVar22 + 0xc + iVar16) & uVar14) == 0) {
+            dVar28 = dVar29;
+          }
+          dVar34 = (double)(float)((double)pfVar21[4] * dVar28);
+          dVar33 = (double)(float)((double)pfVar21[5] * dVar28);
+          dVar28 = (double)(float)((double)pfVar21[6] * dVar28);
+          if (((((uint)*pfVar25 & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar25[1] & 0x7f800000) == 0x7f800000)) ||
+             ((((uint)pfVar25[2] & 0x7f800000) == 0x7f800000 ||
+              (((uint)pfVar25[3] & 0x7f800000) == 0x7f800000)))) {
+            MyAssertHandler(0xffffffff82184800,0x205,0,0xffffffff82000f98,
+                            "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                           );
+          }
+          if (((uint)pfVar25[7] & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82184800,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
+          }
+          fVar1 = pfVar25[2];
+          fVar2 = pfVar25[7];
+          fVar3 = pfVar25[1];
+          fVar7 = fVar2 * fVar3;
+          fVar8 = *pfVar25 * fVar2;
+          fVar4 = pfVar25[3];
+          fVar5 = fVar2 * fVar1 * fVar1;
+          fVar6 = *pfVar25 * fVar8;
+          fVar2 = fVar2 * fVar1 * fVar4;
+          fVar9 = (float)(dVar28 * (double)(fVar7 * fVar4 + fVar8 * fVar1) +
+                         (double)(float)(dVar33 * (double)(fVar8 * fVar3 - fVar2) +
+                                        (double)(float)((double)(float)(dVar32 - (double)(fVar5 + 
+                                                  fVar7 * fVar3)) * dVar34))) + pfVar25[4];
+          pfVar21[4] = fVar9;
+          pfVar21[5] = (float)(dVar33 * (double)(float)(dVar32 - (double)(fVar5 + fVar6)) +
+                              (double)(float)((double)(fVar2 + fVar8 * fVar3) * dVar34 +
+                                             (double)(float)(dVar28 * (double)(fVar7 * fVar1 -
+                                                                              fVar8 * fVar4)))) +
+                       pfVar25[5];
+          pfVar21[6] = (float)(dVar33 * (double)(fVar7 * fVar1 + fVar8 * fVar4) +
+                              (double)(float)((double)(fVar8 * fVar1 - fVar7 * fVar4) * dVar34 +
+                                             (double)(float)(dVar28 * (double)(float)(dVar32 - (
+                                                  double)(fVar7 * fVar3 + fVar6))))) + pfVar25[6];
+          if (((((uint)fVar9 & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar21[5] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar21[6] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff8218526c,0x10f,0,0xffffffff82000f98,
+                            "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                           );
+          }
+          uVar27 = LZCOUNT(uVar26);
+        } while (uVar27 < local_158);
+        uVar24 = (ulonglong)local_160;
+      }
+      lVar23 = lVar23 + 4;
+      local_15c = local_15c + 1;
+      local_160 = (uint)(uVar24 - 0x20);
+      if (uVar15 < local_15c) break;
+      uVar24 = uVar24 - 0x20 & 0xffffffff;
+    }
+  }
+  __restfpr_25();
+  __restgprlr();
+  return;
 }
 
 
 // 8261B1D8  CalcSkelNonRootBones  (xanim/dobj_skel.cpp:278)
 
-void CalcSkelNonRootBones(void)
+void CalcSkelNonRootBones
+               (undefined8 param_1,uint *param_2,longlong param_3,int param_4,int param_5,
+               int param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte bVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float *pfVar14;
+  uint uVar15;
+  int iVar16;
+  uint uVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float *pfVar21;
+  float *pfVar22;
+  int iVar23;
+  ulonglong uVar24;
+  int iVar25;
+  int iVar26;
+  uint uVar27;
+  float *pfVar28;
+  longlong lVar29;
+  ulonglong uVar30;
+  int iVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  double dVar38;
+  uint local_170;
+  int local_16c;
+  
   __savegprlr();
+  iVar23 = __savefpr_25();
+  local_170 = (int)param_3 >> 5;
+  dVar33 = (double)*(float *)(iVar23 + 8);
+  iVar16 = ((uint)*(byte *)(iVar23 + 4) - (uint)*(byte *)(iVar23 + 5)) + (int)param_3;
+  pfVar14 = (float *)param_2[0x19];
+  local_16c = iVar16 + local_170 * -0x20;
+  iVar16 = iVar16 + -1 >> 5;
+  if ((int)local_170 <= iVar16) {
+    iVar25 = local_170 << 2;
+    dVar34 = 1e-06;
+    dVar36 = 1.0;
+    dVar35 = 2.0;
+    do {
+      uVar27 = *(uint *)(iVar25 + param_4);
+      iVar26 = local_16c;
+      if (0x20 < local_16c) {
+        iVar26 = 0x20;
+      }
+      uVar30 = LZCOUNT(uVar27);
+      iVar31 = (int)uVar30;
+      while (iVar31 < iVar26) {
+        lVar29 = ((ulonglong)local_170 & 0x7ffffff) * 0x20 + uVar30;
+        if (0x20 < uVar30) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",uVar30,0x21);
+        }
+        uVar15 = *(uint *)((int)&DAT_82992400 + (int)(uVar30 << 2));
+        if ((uVar15 & uVar27) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x145,0,0xffffffff82000f98,"bits & boneBit");
+        }
+        uVar27 = uVar27 & ~uVar15;
+        *(uint *)(iVar25 + param_4) = uVar27;
+        uVar30 = lVar29 - param_3;
+        pfVar22 = pfVar14 + (int)lVar29 * 8;
+        if (((ulonglong)*(byte *)(iVar23 + 4) - (ulonglong)*(byte *)(iVar23 + 5) & 0xffffffff) <=
+            (uVar30 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8218526c,0x14c,0,
+                          "boneOffset doesn\'t index model->numBones - model->numRootBones\n\t%i not in [0, %i)"
+                          ,uVar30);
+        }
+        bVar1 = *(byte *)((int)uVar30 + *(int *)(iVar23 + 0x28));
+        pfVar28 = pfVar22 + (uint)bVar1 * -8;
+        if ((*(uint *)(iVar25 + (int)param_2) & uVar15) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x152,0,0xffffffff82000f98,
+                          "skel->partBits.anim[boneIndexHigh] & boneBit");
+        }
+        uVar24 = lVar29 - (ulonglong)bVar1;
+        iVar31 = (int)uVar24 >> 5;
+        uVar17 = (uint)((uVar24 & 0xffffffff) << 2) & 0x7c;
+        if ((param_2[iVar31 + 0x12] & *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x153,0,0xffffffff82000f98,
+                          "skel->partBits.skel[(boneIndex - parentOffset) >> 5] & BitShiftMasked( boneIndex - parentOffset )"
+                         );
+        }
+        if ((param_2[iVar31] & *(uint *)((int)&DAT_82992400 + uVar17)) == 0) {
+          MyAssertHandler(0xffffffff8218526c,0x154,0,0xffffffff82000f98,
+                          "skel->partBits.anim[(boneIndex - parentOffset) >> 5] & BitShiftMasked( boneIndex - parentOffset )"
+                         );
+        }
+        if ((*(uint *)(iVar25 + param_6) & uVar15) == 0) {
+          if ((*(uint *)(iVar25 + param_5) & uVar15) == 0) {
+            fVar2 = *pfVar28;
+            fVar3 = *pfVar22;
+            fVar4 = pfVar22[3];
+            fVar5 = pfVar22[2];
+            fVar6 = pfVar22[1];
+            fVar7 = pfVar28[3];
+            fVar8 = pfVar28[1];
+            fVar9 = pfVar28[2];
+            pfVar22[3] = -(fVar5 * fVar9 - -(fVar8 * fVar6 - (fVar4 * fVar7 - fVar2 * fVar3)));
+            *pfVar22 = -(fVar6 * fVar9 - (fVar3 * fVar7 + fVar5 * fVar8 + fVar2 * fVar4));
+            pfVar22[1] = fVar8 * fVar4 + fVar9 * fVar3 + (fVar6 * fVar7 - fVar5 * fVar2);
+            pfVar22[2] = fVar9 * fVar4 + -(fVar8 * fVar3 - (fVar5 * fVar7 + fVar6 * fVar2));
+          }
+          else {
+            if ((param_2[0x12] & 0x80000000) == 0) {
+              MyAssertHandler(0xffffffff8218526c,0x15e,0,0xffffffff82000f98,
+                              "skel->partBits.skel[0] & HIGH_BIT");
+            }
+            if ((*param_2 & 0x80000000) == 0) {
+              MyAssertHandler(0xffffffff8218526c,0x15f,0,0xffffffff82000f98,
+                              "skel->partBits.anim[0] & HIGH_BIT");
+            }
+            fVar2 = pfVar14[3];
+            fVar3 = pfVar28[1];
+            fVar4 = pfVar28[3];
+            fVar5 = *pfVar14;
+            fVar6 = pfVar14[2];
+            fVar7 = pfVar28[2];
+            fVar8 = *pfVar28;
+            fVar9 = pfVar14[1];
+            fVar10 = *pfVar22;
+            fVar11 = pfVar22[1];
+            fVar12 = pfVar22[3];
+            fVar13 = pfVar22[2];
+            fVar19 = -(fVar6 * fVar8 - -(fVar9 * fVar4 - (fVar7 * fVar5 + fVar3 * fVar2)));
+            fVar20 = -(fVar6 * fVar4 - (fVar9 * fVar8 + (fVar7 * fVar2 - fVar3 * fVar5)));
+            fVar18 = fVar6 * fVar3 + -(fVar9 * fVar7 - (fVar2 * fVar8 - fVar5 * fVar4));
+            fVar2 = fVar5 * fVar8 + fVar4 * fVar2 + fVar3 * fVar9 + fVar6 * fVar7;
+            fVar6 = fVar13 * fVar2 + -(fVar18 * fVar11 - (fVar20 * fVar12 + fVar19 * fVar10));
+            pfVar22[2] = fVar6;
+            fVar7 = fVar13 * fVar18 + fVar2 * fVar11 + (fVar19 * fVar12 - fVar20 * fVar10);
+            pfVar22[1] = fVar7;
+            fVar8 = -(fVar13 * fVar20 - -(fVar19 * fVar11 - (fVar2 * fVar12 - fVar18 * fVar10)));
+            pfVar22[3] = fVar8;
+            fVar9 = -(fVar13 * fVar19 - (fVar18 * fVar12 + fVar2 * fVar10 + fVar20 * fVar11));
+            *pfVar22 = fVar9;
+            fVar2 = pfVar14[3];
+            fVar3 = pfVar14[1];
+            fVar4 = pfVar14[2];
+            fVar5 = *pfVar14;
+            pfVar22[1] = fVar3 * fVar8 + fVar9 * fVar4 + (fVar7 * fVar2 - fVar6 * fVar5);
+            pfVar22[2] = fVar4 * fVar8 + -(fVar9 * fVar3 - (fVar7 * fVar5 + fVar6 * fVar2));
+            pfVar22[3] = -(fVar6 * fVar4 - -(fVar7 * fVar3 - (fVar2 * fVar8 - fVar9 * fVar5)));
+            *pfVar22 = -(fVar7 * fVar4 - (fVar5 * fVar8 + fVar6 * fVar3 + fVar9 * fVar2));
+          }
+        }
+        if ((((((uint)*pfVar22 & 0x7f800000) == 0x7f800000) ||
+             (((uint)pfVar22[1] & 0x7f800000) == 0x7f800000)) ||
+            (((uint)pfVar22[2] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[3] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x167,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->quat)[0]) && !IS_NAN((childMat->quat)[1]) && !IS_NAN((childMat->quat)[2]) && !IS_NAN((childMat->quat)[3])"
+                         );
+        }
+        if (((((uint)pfVar22[4] & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar22[5] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[6] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x168,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                         );
+        }
+        dVar32 = (double)(*pfVar22 * *pfVar22 +
+                         pfVar22[3] * pfVar22[3] + pfVar22[2] * pfVar22[2] + pfVar22[1] * pfVar22[1]
+                         );
+        if (dVar32 <= dVar34) {
+          pfVar22[3] = (float)dVar36;
+          pfVar22[7] = (float)dVar35;
+        }
+        else {
+          pfVar22[7] = (float)(dVar35 / dVar32);
+        }
+        if (((uint)pfVar22[7] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler(0xffffffff82184800,0x2fa,0,0xffffffff82000f98,"!IS_NAN(mat->transWeight)")
+          ;
+        }
+        iVar31 = (int)uVar30 * 0xc;
+        pfVar21 = (float *)(iVar31 + *(int *)(iVar23 + 0x30));
+        if ((((*(uint *)(iVar31 + *(int *)(iVar23 + 0x30)) & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar21[2] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x16d,0,0xffffffff82000f98,
+                          "!IS_NAN((trans)[0]) && !IS_NAN((trans)[1]) && !IS_NAN((trans)[2])");
+        }
+        dVar32 = dVar36;
+        if ((uVar15 & *(uint *)(iVar23 + 0xc + iVar25)) == 0) {
+          dVar32 = dVar33;
+        }
+        dVar38 = (double)(float)(dVar32 * (double)pfVar22[4] + (double)*pfVar21);
+        dVar37 = (double)(float)(dVar32 * (double)pfVar22[5] + (double)pfVar21[1]);
+        dVar32 = (double)(float)((double)pfVar22[6] * dVar32 + (double)pfVar21[2]);
+        if ((((((uint)*pfVar28 & 0x7f800000) == 0x7f800000) ||
+             (((uint)pfVar28[1] & 0x7f800000) == 0x7f800000)) ||
+            (((uint)pfVar28[2] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar28[3] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff82184800,0x205,0,0xffffffff82000f98,
+                          "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+                         );
+        }
+        if (((uint)pfVar28[7] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler(0xffffffff82184800,0x206,0,0xffffffff82000f98,"!IS_NAN(mat->transWeight)")
+          ;
+        }
+        fVar2 = pfVar28[7];
+        fVar3 = pfVar28[1];
+        fVar6 = fVar2 * fVar3;
+        fVar4 = pfVar28[2];
+        fVar7 = fVar2 * *pfVar28;
+        fVar5 = pfVar28[3];
+        fVar9 = fVar7 * *pfVar28;
+        fVar8 = fVar2 * fVar4 * fVar4;
+        fVar2 = fVar2 * fVar4 * fVar5;
+        fVar10 = (float)(dVar37 * (double)(fVar7 * fVar3 - fVar2) +
+                        (double)(float)((double)(float)(dVar36 - (double)(fVar8 + fVar6 * fVar3)) *
+                                        dVar38 + (double)(float)(dVar32 * (double)(fVar6 * fVar5 +
+                                                                                  fVar7 * fVar4))))
+                 + pfVar28[4];
+        pfVar22[4] = fVar10;
+        pfVar22[5] = (float)(dVar37 * (double)(float)(dVar36 - (double)(fVar8 + fVar9)) +
+                            (double)(float)((double)(fVar2 + fVar7 * fVar3) * dVar38 +
+                                           (double)(float)(dVar32 * (double)(fVar6 * fVar4 -
+                                                                            fVar7 * fVar5)))) +
+                     pfVar28[5];
+        pfVar22[6] = (float)(dVar37 * (double)(fVar6 * fVar4 + fVar7 * fVar5) +
+                            (double)(float)((double)(fVar7 * fVar4 - fVar6 * fVar5) * dVar38 +
+                                           (double)(float)(dVar32 * (double)(float)(dVar36 - (double
+                                                  )(fVar6 * fVar3 + fVar9))))) + pfVar28[6];
+        if (((((uint)fVar10 & 0x7f800000) == 0x7f800000) ||
+            (((uint)pfVar22[5] & 0x7f800000) == 0x7f800000)) ||
+           (((uint)pfVar22[6] & 0x7f800000) == 0x7f800000)) {
+          MyAssertHandler(0xffffffff8218526c,0x173,0,0xffffffff82000f98,
+                          "!IS_NAN((childMat->trans)[0]) && !IS_NAN((childMat->trans)[1]) && !IS_NAN((childMat->trans)[2])"
+                         );
+        }
+        uVar30 = LZCOUNT(uVar27);
+        iVar31 = (int)uVar30;
+      }
+      local_16c = local_16c + -0x20;
+      iVar25 = iVar25 + 4;
+      local_170 = local_170 + 1;
+    } while ((int)local_170 <= iVar16);
+  }
+  __restfpr_25();
+  __restgprlr();
+  return;
 }
 
 
@@ -162,12 +804,10 @@ void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
   iVar3 = __savegprlr_20();
   Profile_Begin(0x131);
   if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218526c,0x1af,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   iVar16 = iVar3 + 0x14;
   if (iVar16 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218526c,0x1b2,0,0xffffffff82000f98,0xffffffff82185264);
   }
   puVar7 = (uint *)param_2;
@@ -190,7 +830,6 @@ void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
       (uVar12 != 0xffffffffffffffff || uVar13 != 0xffffffffffffffff))))) {
     cVar6 = Sys_IsRenderThread();
     if (cVar6 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x1c4,0,0xffffffff82000f98,0xffffffff821858dc);
     }
     cVar6 = Sys_IsMainThread();
@@ -207,12 +846,10 @@ void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
       DObjCalcAnimUseLargeLocal(iVar3,param_2);
     }
     if (*(short *)(iVar3 + 4) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x1da,0,0xffffffff82000f98,0xffffffff82184c00);
     }
     iVar4 = SL_ConvertToString(*(undefined2 *)(iVar3 + 4));
     if ((*(short *)(iVar3 + 4) != 0) && (iVar4 == 0)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x1dc,0,0xffffffff82000f98,0xffffffff821858ac);
     }
     GetControlAndDuplicatePartBits(iVar3,param_2,&local_e0,iVar4,auStack_c0,auStack_80,auStack_a0);
@@ -242,7 +879,6 @@ void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
       } while (iVar4 < (int)(uint)bVar1);
     }
     if (*pcVar5 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x1f8,0,0xffffffff82000f98,0xffffffff821858a4);
     }
     uVar8 = 0;
@@ -256,21 +892,22 @@ void DObjCalcSkel(undefined8 param_1,undefined8 param_2)
           puVar7 = (uint *)(iVar4 + *(int *)(iVar3 + 0x78));
           if ((*puVar7 & 0x7f800000) == 0x7f800000) {
 LAB_8261bf38:
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8218526c,0x1ff,0,0xffffffff82000f98,0xffffffff82185770);
           }
-          if ((puVar7[1] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
-          if ((puVar7[2] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
-          if ((puVar7[3] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
-          iVar14 = iVar4 + *(int *)(iVar3 + 0x78);
-          if ((*(uint *)(iVar14 + 0x10) & 0x7f800000) == 0x7f800000) {
-LAB_8261bfa0:
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff8218526c,0x200,0,0xffffffff82000f98,0xffffffff82185820);
+          else {
+            if ((puVar7[1] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
+            if ((puVar7[2] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
+            if ((puVar7[3] & 0x7f800000) == 0x7f800000) goto LAB_8261bf38;
           }
-          if ((*(uint *)(iVar14 + 0x14) & 0x7f800000) == 0x7f800000) goto LAB_8261bfa0;
-          if ((*(uint *)(iVar14 + 0x18) & 0x7f800000) == 0x7f800000) goto LAB_8261bfa0;
+          iVar14 = iVar4 + *(int *)(iVar3 + 0x78);
+          if ((*(uint *)(iVar14 + 0x10) & 0x7f800000) != 0x7f800000) {
+            if ((*(uint *)(iVar14 + 0x14) & 0x7f800000) != 0x7f800000) {
+              if ((*(uint *)(iVar14 + 0x18) & 0x7f800000) != 0x7f800000) goto LAB_8261bfb8;
+            }
+          }
+          MyAssertHandler(0xffffffff8218526c,0x200,0,0xffffffff82000f98,0xffffffff82185820);
         }
+LAB_8261bfb8:
         uVar8 = uVar8 + 1;
         iVar4 = iVar4 + 0x20;
         uVar9 = (uVar8 & 0xffffffff) >> 3;
@@ -305,16 +942,19 @@ void DObjCalcSkelNoAnim(undefined8 param_1,longlong param_2)
   ulonglong uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  uint *puVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  int *piVar18;
+  undefined4 *puVar15;
+  uint *puVar16;
+  ulonglong uVar17;
+  longlong lVar18;
   int *piVar19;
-  uint uVar20;
-  undefined4 *puVar21;
-  uint *puVar22;
-  undefined4 *puVar23;
-  longlong lVar24;
+  int *piVar20;
+  uint uVar21;
+  float *pfVar22;
+  uint *puVar23;
+  float *pfVar24;
+  longlong lVar25;
+  double dVar26;
+  double dVar27;
   undefined1 in_vs32 [16];
   undefined1 in_vs52 [16];
   undefined1 in_vs62 [16];
@@ -334,20 +974,18 @@ void DObjCalcSkelNoAnim(undefined8 param_1,longlong param_2)
   iVar6 = __savegprlr_15();
   Profile_Begin(0x131);
   if (iVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218526c,0x226,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  puVar22 = (uint *)(iVar6 + 0x14);
-  if (puVar22 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
+  puVar23 = (uint *)(iVar6 + 0x14);
+  if (puVar23 == (uint *)0x0) {
     MyAssertHandler(0xffffffff8218526c,0x229,0,0xffffffff82000f98,0xffffffff82185264);
   }
   puVar9 = (uint *)param_2;
   uVar3 = *puVar9;
-  uVar16 = (ulonglong)*(uint *)(iVar6 + 0x5c) | ~(ulonglong)uVar3;
+  uVar17 = (ulonglong)*(uint *)(iVar6 + 0x5c) | ~(ulonglong)uVar3;
   uVar14 = (ulonglong)*(uint *)(iVar6 + 0x60) | ~(ulonglong)puVar9[1];
   uVar13 = (ulonglong)*(uint *)(iVar6 + 100) | ~(ulonglong)puVar9[2];
-  local_100 = (undefined4)uVar16;
+  local_100 = (undefined4)uVar17;
   local_f8 = (undefined4)uVar13;
   uVar12 = (ulonglong)*(uint *)(iVar6 + 0x68) | ~(ulonglong)puVar9[3];
   local_fc = (undefined4)uVar14;
@@ -360,140 +998,216 @@ void DObjCalcSkelNoAnim(undefined8 param_1,longlong param_2)
       (uVar11 != 0xffffffffffffffff ||
       (uVar12 != 0xffffffffffffffff ||
       (uVar13 != 0xffffffffffffffff ||
-      (uVar14 != 0xffffffffffffffff || uVar16 != 0xffffffffffffffff))))) {
-    puVar21 = &uStack_124;
-    lVar17 = param_2 + -4;
-    lVar24 = 6;
+      (uVar14 != 0xffffffffffffffff || uVar17 != 0xffffffffffffffff))))) {
+    puVar15 = &uStack_124;
+    lVar18 = param_2 + -4;
+    lVar25 = 6;
     do {
-      lVar17 = lVar17 + 4;
-      puVar21 = puVar21 + 1;
-      *puVar21 = *(undefined4 *)lVar17;
-      lVar24 = lVar24 + -1;
-    } while (lVar24 != 0);
+      lVar18 = lVar18 + 4;
+      puVar15 = puVar15 + 1;
+      *puVar15 = *(undefined4 *)lVar18;
+      lVar25 = lVar25 + -1;
+    } while (lVar25 != 0);
     iVar7 = 0;
-    puVar15 = local_120;
-    local_120[0] = ~local_120[0] | *puVar22;
+    puVar16 = local_120;
+    local_120[0] = ~local_120[0] | *puVar23;
     local_120[1] = *(uint *)(iVar6 + 0x18) | ~local_120[1];
     local_120[2] = ~local_120[2] | *(uint *)(iVar6 + 0x1c);
     local_120[3] = ~local_120[3] | *(uint *)(iVar6 + 0x20);
     local_110 = ~local_110 | *(uint *)(iVar6 + 0x24);
     local_10c = ~local_10c | *(uint *)(iVar6 + 0x28);
     do {
-      if (*puVar15 != 0xffffffff) {
+      if (*puVar16 != 0xffffffff) {
         bVar5 = false;
         goto LAB_8261c6bc;
       }
       iVar7 = iVar7 + 1;
-      puVar15 = puVar15 + 1;
+      puVar16 = puVar16 + 1;
     } while (iVar7 < 6);
     bVar5 = true;
 LAB_8261c6bc:
     if (!bVar5) {
-      uVar20 = 0;
-      *puVar22 = uVar3 | *puVar22;
+      uVar21 = 0;
+      *puVar23 = uVar3 | *puVar23;
       *(uint *)(iVar6 + 0x18) = *(uint *)(iVar6 + 0x18) | puVar9[1];
       *(uint *)(iVar6 + 0x1c) = *(uint *)(iVar6 + 0x1c) | puVar9[2];
       *(uint *)(iVar6 + 0x20) = puVar9[3] | *(uint *)(iVar6 + 0x20);
       *(uint *)(iVar6 + 0x24) = *(uint *)(iVar6 + 0x24) | puVar9[4];
       *(uint *)(iVar6 + 0x28) = puVar9[5] | *(uint *)(iVar6 + 0x28);
-      piVar18 = *(int **)(iVar6 + 0x98);
-      puVar21 = *(undefined4 **)(iVar6 + 0x78);
-      if (piVar18 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
+      piVar19 = *(int **)(iVar6 + 0x98);
+      pfVar22 = *(float **)(iVar6 + 0x78);
+      if (piVar19 == (int *)0x0) {
         MyAssertHandler(0xffffffff8218526c,0x248,0,0xffffffff82000f98,0xffffffff82185950);
       }
       iVar7 = 0;
       if (*(char *)(iVar6 + 9) != '\0') {
+        dVar26 = 1.0;
+        dVar27 = 0.0;
         do {
-          iVar4 = *piVar18;
+          iVar4 = *piVar19;
           uVar10 = (ulonglong)*(byte *)(iVar4 + 5);
           if (*(byte *)(iVar4 + 5) != 0) {
-            puVar23 = puVar21 + 6;
+            pfVar24 = pfVar22 + 6;
             do {
-              if (0xbf < uVar20) {
-                    /* WARNING: Subroutine does not return */
+              if (0xbf < uVar21) {
                 MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
               }
-              if ((*(uint *)((int)local_120 + (uVar20 >> 3 & 0x1ffffffc)) &
-                  (&DAT_82992400)[uVar20 & 0x1f]) == 0) {
-                *puVar21 = 0;
-                puVar23[-5] = 0;
-                puVar23[-4] = 0;
-                puVar23[-3] = 0x3f800000;
-                puVar23[-2] = 0;
-                puVar23[-1] = 0;
-                *puVar23 = 0;
-                puVar23[1] = 0;
+              if ((*(uint *)((int)local_120 + (uVar21 >> 3 & 0x1ffffffc)) &
+                  (&DAT_82992400)[uVar21 & 0x1f]) == 0) {
+                *pfVar22 = (float)dVar27;
+                pfVar24[-5] = (float)dVar27;
+                pfVar24[-4] = (float)dVar27;
+                pfVar24[-3] = (float)dVar26;
+                pfVar24[-2] = (float)dVar27;
+                pfVar24[-1] = (float)dVar27;
+                *pfVar24 = (float)dVar27;
+                pfVar24[1] = (float)dVar27;
               }
               uVar10 = uVar10 - 1;
-              puVar21 = puVar21 + 8;
-              puVar23 = puVar23 + 8;
-              uVar20 = uVar20 + 1;
+              pfVar22 = pfVar22 + 8;
+              pfVar24 = pfVar24 + 8;
+              uVar21 = uVar21 + 1;
             } while (uVar10 != 0);
           }
-          for (lVar17 = (ulonglong)*(byte *)(iVar4 + 4) - (ulonglong)*(byte *)(iVar4 + 5);
-              lVar17 != 0; lVar17 = lVar17 + -1) {
-            if (0xbf < uVar20) {
-                    /* WARNING: Subroutine does not return */
+          for (lVar18 = (ulonglong)*(byte *)(iVar4 + 4) - (ulonglong)*(byte *)(iVar4 + 5);
+              lVar18 != 0; lVar18 = lVar18 + -1) {
+            if (0xbf < uVar21) {
               MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
             }
-            if ((*(uint *)((int)local_120 + (uVar20 >> 3 & 0x1ffffffc)) &
-                (&DAT_82992400)[uVar20 & 0x1f]) == 0) {
+            if ((*(uint *)((int)local_120 + (uVar21 >> 3 & 0x1ffffffc)) &
+                (&DAT_82992400)[uVar21 & 0x1f]) == 0) {
               altv300_23(in_vs52,in_vs62);
               altv300_21(in_vs32,in_vs62);
                     /* WARNING: Bad instruction - Truncating control flow here */
               halt_baddata();
             }
-            puVar21 = puVar21 + 8;
-            uVar20 = uVar20 + 1;
+            pfVar22 = pfVar22 + 8;
+            uVar21 = uVar21 + 1;
           }
           iVar7 = iVar7 + 1;
-          piVar18 = piVar18 + 1;
+          piVar19 = piVar19 + 1;
         } while (iVar7 < (int)(uint)*(byte *)(iVar6 + 9));
       }
     }
     if (*(short *)(iVar6 + 4) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x270,0,0xffffffff82000f98,0xffffffff82184c00);
     }
     iVar7 = SL_ConvertToString(*(undefined2 *)(iVar6 + 4));
     if ((*(short *)(iVar6 + 4) != 0) && (iVar7 == 0)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x272,0,0xffffffff82000f98,0xffffffff821858ac);
     }
     GetControlAndDuplicatePartBits(iVar6,param_2,&local_100,iVar7,local_120,auStack_c0,auStack_e0);
-    lVar17 = 0;
+    lVar18 = 0;
     pcVar8 = (char *)(iVar7 + 0x18);
     iVar7 = 0;
     bVar1 = *(byte *)(iVar6 + 9);
-    piVar18 = *(int **)(iVar6 + 0x98);
-    piVar19 = piVar18;
+    piVar19 = *(int **)(iVar6 + 0x98);
+    piVar20 = piVar19;
     if (bVar1 != 0) {
       do {
-        iVar6 = *piVar19;
-        cVar2 = *(char *)((int)piVar18 + iVar7 + (uint)bVar1 * 4);
-        pcVar8 = (char *)CalcSkelDuplicateBones(iVar6,puVar22,lVar17,pcVar8);
+        iVar6 = *piVar20;
+        cVar2 = *(char *)((int)piVar19 + iVar7 + (uint)bVar1 * 4);
+        pcVar8 = (char *)CalcSkelDuplicateBones(iVar6,puVar23,lVar18,pcVar8);
         if (cVar2 == -1) {
           CalcSkelRootBonesNoParentOrDuplicate();
         }
         else {
-          CalcSkelRootBonesWithParent(iVar6,puVar22,lVar17,cVar2,local_120,auStack_c0,auStack_e0);
+          CalcSkelRootBonesWithParent(iVar6,puVar23,lVar18,cVar2,local_120,auStack_c0,auStack_e0);
         }
         CalcSkelNonRootBones
-                  (iVar6,puVar22,(ulonglong)*(byte *)(iVar6 + 5) + lVar17,local_120,auStack_c0,
+                  (iVar6,puVar23,(ulonglong)*(byte *)(iVar6 + 5) + lVar18,local_120,auStack_c0,
                    auStack_e0);
         iVar7 = iVar7 + 1;
-        piVar19 = piVar19 + 1;
-        lVar17 = (ulonglong)*(byte *)(iVar6 + 4) + lVar17;
+        piVar20 = piVar20 + 1;
+        lVar18 = (ulonglong)*(byte *)(iVar6 + 4) + lVar18;
       } while (iVar7 < (int)(uint)bVar1);
     }
     if (*pcVar8 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218526c,0x28c,0,0xffffffff82000f98,0xffffffff821858a4);
     }
   }
   Profile_EndInternal(0);
   __restgprlr_15();
+  return;
+}
+
+
+// 8261BFE8  DObjCalcBaseAnim  (xanim/dobj_skel.cpp:707)
+
+void DObjCalcBaseAnim(undefined8 param_1,ulonglong param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  short *psVar9;
+  longlong lVar10;
+  longlong lVar11;
+  
+  iVar4 = __savegprlr_27();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x2ca,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x2cb,0,0xffffffff82000f98,0xffffffff821858f4);
+  }
+  uVar7 = 0;
+  iVar5 = 0;
+  if (*(char *)(iVar4 + 9) != '\0') {
+    iVar6 = 0;
+    do {
+      iVar1 = *(int *)(iVar6 + *(int *)(iVar4 + 0x98));
+      uVar8 = (ulonglong)*(byte *)(iVar1 + 5);
+      if (*(byte *)(iVar1 + 5) != 0) {
+        lVar10 = param_2 - 8;
+        uVar7 = uVar8 + uVar7;
+        do {
+          *(undefined4 *)param_2 = 0;
+          param_2 = param_2 + 0x20;
+          iVar2 = (int)lVar10;
+          *(undefined4 *)(iVar2 + 0xc) = 0;
+          *(undefined4 *)(iVar2 + 0x10) = 0;
+          *(undefined4 *)(iVar2 + 0x14) = 0x3f800000;
+          *(undefined4 *)(iVar2 + 0x18) = 0;
+          *(undefined4 *)(iVar2 + 0x1c) = 0;
+          lVar10 = lVar10 + 0x20;
+          *(undefined4 *)lVar10 = 0;
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
+      }
+      psVar9 = *(short **)(iVar1 + 0x2c);
+      lVar10 = (ulonglong)*(byte *)(iVar1 + 4) - (ulonglong)*(byte *)(iVar1 + 5);
+      if (lVar10 != 0) {
+        lVar11 = param_2 + 0x18;
+        do {
+          if ((*(uint *)((int)&DAT_82992400 + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c)) &
+              *(uint *)(((int)uVar7 >> 5) * 4 + param_3)) != 0) {
+            *(float *)param_2 = (float)(longlong)*psVar9 * 3.051851e-05;
+            puVar3 = (undefined4 *)lVar11;
+            puVar3[-5] = (float)(longlong)psVar9[1] * 3.051851e-05;
+            puVar3[-4] = (float)(longlong)psVar9[2] * 3.051851e-05;
+            puVar3[-3] = (float)(longlong)psVar9[3] * 3.051851e-05;
+            puVar3[-2] = 0;
+            puVar3[-1] = 0;
+            *puVar3 = 0;
+          }
+          uVar7 = uVar7 + 1;
+          param_2 = param_2 + 0x20;
+          lVar11 = lVar11 + 0x20;
+          psVar9 = psVar9 + 4;
+          lVar10 = lVar10 + -1;
+        } while (lVar10 != 0);
+      }
+      iVar5 = iVar5 + 1;
+      iVar6 = iVar6 + 4;
+    } while (iVar5 < (int)(uint)*(byte *)(iVar4 + 9));
+  }
+  __restgprlr_27();
   return;
 }
 
@@ -509,6 +1223,116 @@ void DObjGetBaseControlAndDuplicatePartBits(uint *param_1,uint *param_2,uint *pa
   param_3[3] = ~(param_1[3] | param_2[3]);
   param_3[4] = ~(param_1[4] | param_2[4]);
   param_3[5] = ~(param_1[5] | param_2[5]);
+  return;
+}
+
+
+// 8261C238  DObjCalcBaseSkel  (xanim/dobj_skel.cpp:765)
+
+void DObjCalcBaseSkel(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  byte bVar1;
+  char cVar2;
+  int *piVar3;
+  uint uVar4;
+  int iVar5;
+  uint *puVar6;
+  uint *puVar7;
+  undefined4 *puVar8;
+  int *piVar9;
+  int iVar10;
+  longlong lVar11;
+  longlong lVar12;
+  uint local_110 [4];
+  uint local_100;
+  uint local_fc;
+  undefined4 uStack_f4;
+  undefined1 local_f0 [28];
+  undefined4 uStack_d4;
+  undefined1 local_d0 [32];
+  uint local_b0 [6];
+  undefined4 local_98 [6];
+  undefined4 local_80 [6];
+  uint local_68 [6];
+  undefined4 local_50;
+  undefined4 local_4c;
+  
+  iVar5 = __savegprlr_24();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x30f,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x310,0,0xffffffff82000f98,0xffffffff821858f4);
+  }
+  local_4c = (undefined4)param_2;
+  lVar11 = 0;
+  puVar8 = &uStack_f4;
+  local_50 = 0;
+  lVar12 = 6;
+  do {
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  puVar8 = &uStack_d4;
+  lVar12 = 6;
+  do {
+    puVar8 = puVar8 + 1;
+    *puVar8 = 0;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  lVar12 = 6;
+  iVar10 = 0;
+  do {
+    uVar4 = *(uint *)(((int)param_3 - (int)local_b0) + (int)local_b0 + iVar10);
+    *(uint *)((int)local_110 + iVar10) = ~uVar4;
+    *(uint *)((int)local_68 + iVar10) = uVar4;
+    *(uint *)((int)local_b0 + iVar10) = uVar4;
+    *(undefined4 *)((int)local_98 + iVar10) = 0;
+    *(undefined4 *)((int)local_80 + iVar10) = 0;
+    lVar12 = lVar12 + -1;
+    iVar10 = iVar10 + 4;
+  } while (lVar12 != 0);
+  DObjCalcBaseAnim(iVar5,param_2,param_3);
+  if (*(short *)(iVar5 + 4) == 0) {
+    MyAssertHandler(0xffffffff8218526c,0x321,0,0xffffffff82000f98,0xffffffff82184c00);
+  }
+  puVar6 = (uint *)SL_ConvertToString(*(undefined2 *)(iVar5 + 4));
+  if ((*(short *)(iVar5 + 4) != 0) && (puVar6 == (uint *)0x0)) {
+    MyAssertHandler(0xffffffff8218526c,0x323,0,0xffffffff82000f98,0xffffffff821858ac);
+  }
+  puVar7 = puVar6 + 6;
+  iVar10 = 0;
+  local_110[0] = ~(local_110[0] | *puVar6);
+  local_110[1] = ~(puVar6[1] | local_110[1]);
+  local_110[2] = ~(puVar6[2] | local_110[2]);
+  local_110[3] = ~(puVar6[3] | local_110[3]);
+  bVar1 = *(byte *)(iVar5 + 9);
+  local_100 = ~(puVar6[4] | local_100);
+  piVar3 = *(int **)(iVar5 + 0x98);
+  local_fc = ~(puVar6[5] | local_fc);
+  piVar9 = piVar3;
+  if (bVar1 != 0) {
+    do {
+      iVar5 = *piVar9;
+      cVar2 = *(char *)((int)piVar3 + iVar10 + (uint)bVar1 * 4);
+      puVar7 = (uint *)CalcSkelDuplicateBones(iVar5,local_b0,lVar11,puVar7);
+      if (cVar2 == -1) {
+        CalcSkelRootBonesNoParentOrDuplicate();
+      }
+      else {
+        CalcSkelRootBonesWithParent(iVar5,local_b0,lVar11,cVar2,local_110,local_d0,local_f0);
+      }
+      CalcSkelNonRootBones
+                (iVar5,local_b0,(ulonglong)*(byte *)(iVar5 + 5) + lVar11,local_110,local_d0,local_f0
+                );
+      iVar10 = iVar10 + 1;
+      piVar9 = piVar9 + 1;
+      lVar11 = (ulonglong)*(byte *)(iVar5 + 4) + lVar11;
+    } while (iVar10 < (int)(uint)bVar1);
+  }
+  __restgprlr_24();
   return;
 }
 

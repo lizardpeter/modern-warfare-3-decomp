@@ -3,3 +3,59 @@
 ; 82257A38  mp_read_unsigned_bin  (line unknown)
   82257A38  7D8802A6             mfspr r12,LR
   82257A3C  486BEC81             bl 0x829166bc
+  82257A40  9421FF90             stwu r1,-0x70(r1)
+  82257A44  81630004             lwz r11,0x4(r3)
+  82257A48  7C7F1B78             or r31,r3,r3
+  82257A4C  7C9E2378             or r30,r4,r4
+  82257A50  7CBD2B78             or r29,r5,r5
+  82257A54  2F0B0002             cmpwi cr6,r11,0x2
+  82257A58  40980014             bge cr6,0x82257a6c
+  82257A5C  38800002             li r4,0x2
+  82257A60  48002561             bl 0x82259fc0
+  82257A64  2F030000             cmpwi cr6,r3,0x0
+  82257A68  409A0098             bne cr6,0x82257b00
+LAB_82257a6c:
+  82257A6C  811F0004             lwz r8,0x4(r31)
+  82257A70  39200000             li r9,0x0
+  82257A74  815F000C             lwz r10,0xc(r31)
+  82257A78  913F0008             stw r9,0x8(r31)
+  82257A7C  7D2B4B78             or r11,r9,r9
+  82257A80  913F0000             stw r9,0x0(r31)
+  82257A84  2F080000             cmpwi cr6,r8,0x0
+  82257A88  4099001C             ble cr6,0x82257aa4
+  82257A8C  394AFFFC             subi r10,r10,0x4
+LAB_82257a90:
+  82257A90  396B0001             addi r11,r11,0x1
+  82257A94  952A0004             stwu r9,0x4(r10)
+  82257A98  811F0004             lwz r8,0x4(r31)
+  82257A9C  7F0B4000             cmpw cr6,r11,r8
+  82257AA0  4198FFF0             blt cr6,0x82257a90
+LAB_82257aa4:
+  82257AA4  2F1D0000             cmpwi cr6,r29,0x0
+  82257AA8  4099004C             ble cr6,0x82257af4
+  82257AAC  3BDEFFFF             subi r30,r30,0x1
+LAB_82257ab0:
+  82257AB0  7FE5FB78             or r5,r31,r31
+  82257AB4  38800008             li r4,0x8
+  82257AB8  7FE3FB78             or r3,r31,r31
+  82257ABC  3BBDFFFF             subi r29,r29,0x1
+  82257AC0  480025B1             bl 0x8225a070
+  82257AC4  2F030000             cmpwi cr6,r3,0x0
+  82257AC8  409A0038             bne cr6,0x82257b00
+  82257ACC  815F000C             lwz r10,0xc(r31)
+  82257AD0  2F1D0000             cmpwi cr6,r29,0x0
+  82257AD4  8D3E0001             lbzu r9,0x1(r30)
+  82257AD8  810A0000             lwz r8,0x0(r10)
+  82257ADC  7D274378             or r7,r9,r8
+  82257AE0  90EA0000             stw r7,0x0(r10)
+  82257AE4  817F0000             lwz r11,0x0(r31)
+  82257AE8  38CB0001             addi r6,r11,0x1
+  82257AEC  90DF0000             stw r6,0x0(r31)
+  82257AF0  4199FFC0             bgt cr6,0x82257ab0
+LAB_82257af4:
+  82257AF4  7FE3FB78             or r3,r31,r31
+  82257AF8  48002479             bl 0x82259f70
+  82257AFC  38600000             li r3,0x0
+LAB_82257b00:
+  82257B00  38210070             addi r1,r1,0x70
+  82257B04  486BEC08             b 0x8291670c

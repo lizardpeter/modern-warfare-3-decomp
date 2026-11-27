@@ -28,6 +28,32 @@
 ; 828FF880  bdUserInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bduserinfo.cpp:22)
   828FF880  7D8802A6             mfspr r12,LR
   828FF884  48016E39             bl 0x829166bc
+  828FF888  3BE1FF90             subi r31,r1,0x70
+  828FF88C  9421FF90             stwu r1,-0x70(r1)
+  828FF890  7C7E1B78             or r30,r3,r3
+  828FF894  909F008C             stw r4,0x8c(r31)
+  828FF898  7C9D2378             or r29,r4,r4
+  828FF89C  38830008             addi r4,r3,0x8
+  828FF8A0  807D0000             lwz r3,0x0(r29)
+  828FF8A4  4BFF64FD             bl 0x828f5da0
+  828FF8A8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828FF8AC  41820020             beq 0x828ff8cc
+  828FF8B0  38A00040             li r5,0x40
+  828FF8B4  807D0000             lwz r3,0x0(r29)
+  828FF8B8  389E0010             addi r4,r30,0x10
+  828FF8BC  4BFF65B5             bl 0x828f5e70
+  828FF8C0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828FF8C4  39600001             li r11,0x1
+  828FF8C8  40820008             bne 0x828ff8d0
+LAB_828ff8cc:
+  828FF8CC  39600000             li r11,0x0
+LAB_828ff8d0:
+  828FF8D0  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  828FF8D4  7FA3EB78             or r3,r29,r29
+  828FF8D8  4BA64B29             bl 0x82364400
+  828FF8DC  7FC3F378             or r3,r30,r30
+  828FF8E0  383F0070             addi r1,r31,0x70
+  828FF8E4  48016E28             b 0x8291670c
 
 ; 828FF818  bdUserInfo::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bduserinfo.cpp:30)
   828FF818  38600050             li r3,0x50

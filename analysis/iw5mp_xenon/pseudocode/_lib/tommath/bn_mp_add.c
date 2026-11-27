@@ -2,10 +2,33 @@
 
 // 82257540  mp_add  (line unknown)
 
-void mp_add(void)
+void mp_add(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = __savegprlr_28();
+  iVar1 = *(int *)(iVar3 + 8);
+  iVar2 = *(int *)((int)param_2 + 8);
+  if (iVar1 == iVar2) {
+    *(int *)(param_3 + 8) = iVar1;
+    s_mp_add();
+    __restgprlr_28();
+    return;
+  }
+  iVar4 = mp_cmp_mag();
+  if (iVar4 == -1) {
+    *(int *)(param_3 + 8) = iVar2;
+    s_mp_sub(param_2,iVar3);
+    __restgprlr_28();
+    return;
+  }
+  *(int *)(param_3 + 8) = iVar1;
+  s_mp_sub(iVar3,param_2);
+  __restgprlr_28();
+  return;
 }
 

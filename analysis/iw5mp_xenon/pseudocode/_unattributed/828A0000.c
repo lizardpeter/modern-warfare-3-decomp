@@ -52,6 +52,21 @@ void FUN_828a80d0(void)
 }
 
 
+// 828A80F8  FUN_828a80f8  (line unknown)
+
+void FUN_828a80f8(void)
+
+{
+  int unaff_r26;
+  int unaff_r30;
+  
+  if (unaff_r26 != 0) {
+    RtlLeaveCriticalSection(*(undefined4 *)(unaff_r30 + 0x580));
+  }
+  return;
+}
+
+
 // 828A8940  FUN_828a8940  (line unknown)
 
 void FUN_828a8940(void)

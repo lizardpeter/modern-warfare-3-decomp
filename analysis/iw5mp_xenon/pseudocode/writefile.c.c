@@ -6,7 +6,64 @@ BOOL WriteFile(HANDLE hFile,LPCVOID lpBuffer,DWORD nNumberOfBytesToWrite,
               LPDWORD lpNumberOfBytesWritten,LPOVERLAPPED lpOverlapped)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(hFile,lpBuffer,nNumberOfBytesToWrite,lpNumberOfBytesWritten,lpOverlapped);
+  undefined4 *puVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  uint uVar4;
+  BOOL BVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  ulonglong uVar10;
+  uint local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  
+  uVar10 = (ulonglong)(int)lpOverlapped;
+  uVar8 = (ulonglong)(int)lpNumberOfBytesWritten;
+  lVar7 = (longlong)(int)nNumberOfBytesToWrite;
+  lVar6 = (longlong)(int)lpBuffer;
+  uVar2 = __savegprlr_27(hFile,lVar6,lVar7);
+  puVar9 = (undefined4 *)uVar8;
+  if ((uVar8 & 0xffffffff) != 0) {
+    *puVar9 = 0;
+  }
+  if ((uVar10 & 0xffffffff) == 0) {
+    uVar3 = NtWriteFile(uVar2,0,0,0,&local_40,lVar6,lVar7,0);
+    if (((uVar3 != 0x103) ||
+        (uVar4 = NtWaitForSingleObjectEx(uVar2,1,0,0), uVar3 = local_40, -1 < (int)uVar4)) &&
+       (uVar4 = uVar3, -1 < (int)uVar3)) {
+LAB_828a3468:
+      *puVar9 = local_3c;
+      goto LAB_828a346c;
+    }
+    if ((uVar4 & 0xc0000000) == 0x80000000) {
+      *puVar9 = local_3c;
+    }
+  }
+  else {
+    puVar1 = (undefined4 *)uVar10;
+    local_34 = puVar1[2];
+    local_38 = puVar1[3];
+    *puVar1 = 0x103;
+    uVar3 = NtWriteFile(uVar2,puVar1[4],0,-(ulonglong)((puVar1[4] & 1) == 0) & uVar10,uVar10,lVar6,
+                        lVar7,&local_38);
+    if (((uVar3 & 0xc0000000) != 0xc0000000) && (uVar3 != 0x103)) {
+      if ((uVar8 & 0xffffffff) != 0) {
+        local_3c = puVar1[1];
+        goto LAB_828a3468;
+      }
+LAB_828a346c:
+      uVar2 = 1;
+      goto LAB_828a34ec;
+    }
+  }
+  RtlSetLastNTError();
+  uVar2 = 0;
+LAB_828a34ec:
+  BVar5 = __restgprlr_27(uVar2);
+  return BVar5;
 }
 

@@ -5,8 +5,43 @@
 void bdSingleton<bdSingletonRegistryImpl>__getInstance(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  char cVar2;
+  
   __savegprlr_29();
+  if (DAT_848960ac == (undefined4 *)0x0) {
+    DAT_848960ac = (undefined4 *)bdMemory__allocate(0x14);
+    if (DAT_848960ac == (undefined4 *)0x0) {
+      DAT_848960ac = (undefined4 *)0x0;
+    }
+    else {
+      *DAT_848960ac = &PTR_bdSingletonRegistryImpl___scalar_deleting_destructor__822122c8;
+      DAT_848960ac[1] = 0;
+      DAT_848960ac[2] = 0;
+      DAT_848960ac[3] = 0;
+      *(undefined1 *)(DAT_848960ac + 4) = 0;
+    }
+    if (DAT_848960ac == (undefined4 *)0x0) {
+      if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff822122d0,0x1d,0,0xffffffff82033c0c);
+      }
+    }
+    else {
+      uVar1 = bdSingleton<bdSingletonRegistryImpl>__getInstance();
+      cVar2 = bdSingletonRegistryImpl__add(uVar1,0xffffffff829102a8);
+      if (cVar2 == '\0') {
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff822122d0,0x14,0,0xffffffff82033c0c);
+        }
+        if (DAT_848960ac != (undefined4 *)0x0) {
+          (**(code **)*DAT_848960ac)(DAT_848960ac,1);
+        }
+        DAT_848960ac = (undefined4 *)0x0;
+      }
+    }
+  }
+  __restgprlr_29(DAT_848960ac);
+  return;
 }
 
 
@@ -29,7 +64,6 @@ undefined4 * bdSingleton<bdNetImpl>__getInstance(void)
     }
     if (DAT_848960a8 == (undefined4 *)0x0) {
       if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff822122d0,0x1d,0,0xffffffff82033c0c);
       }
     }
@@ -38,7 +72,6 @@ undefined4 * bdSingleton<bdNetImpl>__getInstance(void)
       cVar3 = bdSingletonRegistryImpl__add(uVar1,0xffffffff829101f0);
       if (cVar3 == '\0') {
         if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff822122d0,0x14,0,0xffffffff82033c0c);
         }
         if (DAT_848960a8 != (undefined4 *)0x0) {
@@ -52,13 +85,29 @@ undefined4 * bdSingleton<bdNetImpl>__getInstance(void)
 }
 
 
+// 82911320  bdQueue<bdPendingBufferTransfer>::dequeue  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdqueue.inl:19)
+
+void bdQueue<bdPendingBufferTransfer>__dequeue(undefined4 *param_1)
+
+{
+  undefined4 local_20 [4];
+  
+  if (param_1[2] == 0) {
+    MyAssertHandler(0xffffffff822121a8,0x14,0,0xffffffff820011f4,0xffffffff82212168,
+                    0xffffffff822123a0);
+  }
+  local_20[0] = *param_1;
+  bdLinkedList<bdPendingBufferTransfer>__removeAt(param_1,local_20);
+  return;
+}
+
+
 // 82910D38  bdQueue<bdPendingBufferTransfer>::peek  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdqueue.inl:26)
 
 void bdQueue<bdPendingBufferTransfer>__peek(int param_1)
 
 {
   if (*(int *)(param_1 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff822121a8,0x1b,0,0xffffffff820011f4,0xffffffff82212168,
                     0xffffffff82212178);
   }
@@ -69,11 +118,31 @@ void bdQueue<bdPendingBufferTransfer>__peek(int param_1)
 
 // 82910300  bdByteBuffer::bdByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.inl:36)
 
-void bdByteBuffer__bdByteBuffer(void)
+void bdByteBuffer__bdByteBuffer
+               (undefined8 param_1,void *param_2,ulonglong param_3,undefined1 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  void *_Dst;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  puVar1[1] = 0;
+  puVar1[2] = (size_t)param_3;
+  *(undefined1 *)(puVar1 + 6) = param_4;
+  *(undefined1 *)((int)puVar1 + 0x19) = param_4;
+  puVar1[3] = 0;
+  *(undefined1 *)((int)puVar1 + 0x1a) = 0;
+  *puVar1 = &PTR_bdByteBuffer___scalar_deleting_destructor__8220a620;
+  if ((param_3 & 0xffffffff) != 0) {
+    _Dst = (void *)bdMemory__allocate(param_3);
+    puVar1[3] = _Dst;
+    *(undefined1 *)((int)puVar1 + 0x1a) = 1;
+    memcpy(_Dst,param_2,(size_t)param_3);
+  }
+  puVar1[5] = puVar1[3];
+  puVar1[4] = puVar1[3];
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
@@ -82,8 +151,25 @@ void bdByteBuffer__bdByteBuffer(void)
 void bdLinkedList<bdPendingBufferTransfer>__clear(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  
+  piVar3 = (int *)__savegprlr_29();
+  while( true ) {
+    if (*piVar3 == 0) break;
+    iVar1 = *piVar3;
+    iVar2 = *(int *)(iVar1 + 0x14);
+    if (iVar1 != 0) {
+      bdPendingBufferTransfer___bdPendingBufferTransfer(iVar1);
+      bdMemory__deallocate(iVar1);
+    }
+    *piVar3 = iVar2;
+  }
+  piVar3[1] = 0;
+  piVar3[2] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -119,7 +205,6 @@ int bdLinkedList<bdPendingBufferTransfer>__getHead(int *param_1)
 
 {
   if (*param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220d4a8,0x37,0,0xffffffff820011f4,0xffffffff8220d460,
                     0xffffffff8220d470);
   }
@@ -353,23 +438,120 @@ bool bdSingletonRegistryImpl__add(int param_1,undefined4 param_2)
 }
 
 
-// 829109D8  bdFastArray<void_(__cdecl*)(void)>::increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
+// 82910908  bdReference<bdByteBuffer>::operator=<bdTaskByteBuffer>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.h:107)
 
-void bdFastArray<void_(__cdecl*)(void)>__increaseCapacity(void)
+uint * bdReference<bdByteBuffer>__operator_<bdTaskByteBuffer>(uint *param_1,uint *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  if (param_1 != param_2) {
+    uVar1 = *param_1;
+    if ((ulonglong)uVar1 != 0) {
+      lVar4 = (ulonglong)uVar1 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if ((*(int *)(uVar1 + 4) == 0) &&
+         (puVar2 = (undefined4 *)*param_1, puVar2 != (undefined4 *)0x0)) {
+        (**(code **)*puVar2)(puVar2,1);
+      }
+    }
+    uVar1 = *param_2;
+    *param_1 = uVar1;
+    if ((ulonglong)uVar1 != 0) {
+      lVar4 = (ulonglong)uVar1 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+          *puVar5 = uVar1;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+    }
+  }
+  return param_1;
+}
+
+
+// 829109D8  bdFastArray<void_(__cdecl*)(void)>::increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
+
+void bdFastArray<void_(__cdecl*)(void)>__increaseCapacity(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 *puVar1;
+  void *_Dst;
+  ulonglong uVar2;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  uVar2 = (ulonglong)(uint)puVar1[1];
+  if ((param_2 & 0xffffffff) <= uVar2) {
+    param_2 = uVar2;
+  }
+  uVar2 = uVar2 + param_2;
+  _Dst = (void *)0x0;
+  if (uVar2 != 0) {
+    _Dst = (void *)bdMemory__allocate((uVar2 & 0x3fffffff) << 2);
+    if (puVar1[2] != 0) {
+      memcpy(_Dst,(void *)*puVar1,puVar1[2] << 2);
+    }
+  }
+  bdMemory__deallocate(*puVar1);
+  *puVar1 = _Dst;
+  puVar1[1] = (int)uVar2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 829113A8  bdLobbyConnection::bdLobbyConnection  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:134)
 
-void bdLobbyConnection__bdLobbyConnection(void)
+void bdLobbyConnection__bdLobbyConnection
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4,
+               undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  puVar1[1] = 0;
+  *puVar1 = &PTR_bdLobbyConnection___scalar_deleting_destructor__822123d0;
+  puVar1[2] = 0;
+  puVar1[3] = param_3;
+  puVar1[4] = param_4;
+  puVar1[5] = 0;
+  puVar1[7] = 0;
+  *(undefined1 *)(puVar1 + 8) = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  puVar1[0xc] = 0;
+  puVar1[0xd] = 0;
+  puVar1[0xe] = 0;
+  bdStreamSocket__bdStreamSocket(puVar1 + 0xf);
+  puVar1[0x11] = param_5;
+  bdAddr__bdAddr(puVar1 + 0x14);
+  bdStopwatch__bdStopwatch(puVar1 + 0x16);
+  bdStopwatch__bdStopwatch(puVar1 + 0x18);
+  bdStopwatch__bdStopwatch(puVar1 + 0x1a);
+  puVar1[0x14] = *(undefined4 *)param_2;
+  puVar1[0x15] = ((undefined4 *)param_2)[1];
+  bdStreamSocket__create(puVar1 + 0xf,0);
+  bdInetAddr___bdInetAddr(param_2);
+  __restgprlr_27(puVar1);
+  return;
 }
 
 
@@ -392,8 +574,20 @@ void bdSingletonRegistryImpl___bdSingletonRegistryImpl(undefined4 *param_1)
 void bdLobbyConnection___bdLobbyConnection(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  *puVar1 = &PTR_bdLobbyConnection___scalar_deleting_destructor__822123d0;
+  bdStreamSocket__close((int)(puVar1 + 0xf));
+  bdInetAddr___bdInetAddr(puVar1 + 0x14);
+  bdStreamSocket___bdStreamSocket(puVar1 + 0xf);
+  bdLinkedList<bdPendingBufferTransfer>__clear(puVar1 + 0xc);
+  bdReference<bdPendingBufferTransfer>___bdReference<bdPendingBufferTransfer>(puVar1 + 0xb);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(puVar1 + 10);
+  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>(puVar1 + 2);
+  bdReferencable___bdReferencable(puVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -408,11 +602,83 @@ undefined4 bdLobbyConnection__getStatus(int param_1)
 
 // 82911BC8  bdLobbyConnection::sendTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:169)
 
-void bdLobbyConnection__sendTask(void)
+void bdLobbyConnection__sendTask(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar5;
+  undefined8 uVar4;
+  char cVar6;
+  uint *puVar7;
+  undefined1 *puVar8;
+  int iVar9;
+  longlong lVar10;
+  longlong lVar11;
+  char in_RESERVE;
+  undefined1 local_60 [4];
+  undefined1 local_5c [4];
+  uint local_58;
+  undefined1 auStack_54 [4];
+  undefined1 auStack_50 [80];
+  
+  iVar5 = __savegprlr_26();
+  puVar7 = (uint *)param_2;
+  lVar11 = 0;
+  if ((ulonglong)*(uint *)(iVar5 + 0xc) < (param_3 & 0xffffffff)) {
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212778,0xae,
+                 0xffffffff82212794);
+    goto LAB_82911d54;
+  }
+  if ((*(int *)(iVar5 + 0x40) != 2) && (*(int *)(iVar5 + 0x40) != 1)) goto LAB_82911d54;
+  local_58 = (int)param_3 + 1;
+  bdTaskByteBuffer__setHeaderSize(*puVar7,5);
+  uVar4 = bdTaskByteBuffer__getHeaderStart(*puVar7);
+  iVar9 = 0;
+  puVar8 = auStack_50;
+  lVar11 = 4;
+  do {
+    iVar3 = iVar9 + -4;
+    iVar9 = iVar9 + 1;
+    puVar8 = puVar8 + -1;
+    *puVar8 = auStack_54[iVar3];
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  cVar6 = bdBytePacker__appendBuffer(uVar4,5,0,local_5c,auStack_54,4);
+  if (cVar6 == '\0') {
+LAB_82911cec:
+    lVar11 = 0;
+  }
+  else {
+    cVar6 = bdBytePacker__appendBuffer(uVar4,5,0,local_5c,local_60,1);
+    lVar11 = 1;
+    if (cVar6 == '\0') goto LAB_82911cec;
+  }
+  bVar1 = lVar11 == 0;
+  if (!bVar1) {
+    local_58 = *puVar7;
+    if ((ulonglong)local_58 != 0) {
+      lVar10 = (ulonglong)local_58 + 4;
+      do {
+        puVar7 = (uint *)lVar10;
+        if (in_RESERVE != '\0') {
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar10);
+          *puVar7 = uVar2;
+          bVar1 = true;
+        }
+      } while (!bVar1);
+    }
+    bdPendingBufferTransfer__bdPendingBufferTransfer(auStack_50,&local_58,param_3 + 5);
+    bdLinkedList<bdPendingBufferTransfer>__insertAfter
+              (iVar5 + 0x30,*(undefined4 *)(iVar5 + 0x34),auStack_50);
+    bdPendingBufferTransfer___bdPendingBufferTransfer(auStack_50);
+  }
+LAB_82911d54:
+  bdLobbyConnection__pump(iVar5);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(param_2);
+  __restgprlr_26(lVar11);
+  return;
 }
 
 
@@ -471,18 +737,441 @@ void bdFastArray<void_(__cdecl*)(void)>__pushBack(int *param_1,undefined1 *param
 int bdLobbyConnection__send(SOCKET s,char *buf,int len,int flags)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(s,buf,len,flags);
+  bool bVar1;
+  uint uVar2;
+  int *piVar5;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  uint *puVar10;
+  char in_RESERVE;
+  byte bVar11;
+  undefined1 local_40 [4];
+  undefined1 local_3c [60];
+  
+  lVar9 = (longlong)flags;
+  lVar8 = (longlong)len;
+  lVar7 = (longlong)(int)buf;
+  piVar5 = (int *)__savegprlr_27(s,lVar7,lVar8,lVar9);
+  uVar3 = bdMemory__allocate(0x2c);
+  bVar1 = (uVar3 & 0xffffffff) == 0;
+  bVar11 = bVar1 << 1;
+  if (bVar1) {
+    uVar3 = 0;
+  }
+  else {
+    uVar3 = bdTaskByteBuffer__bdTaskByteBuffer(uVar3,lVar7,lVar8,0);
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar3 + 4);
+        *puVar10 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  if ((uVar3 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar3 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar3 + 4);
+        *puVar10 = uVar2;
+        bVar11 = 2;
+      }
+    } while (!(bool)(bVar11 >> 1 & 1));
+  }
+  uVar4 = (**(code **)(*piVar5 + 4))(piVar5,local_40,lVar8,lVar9);
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(local_3c);
+  iVar6 = __restgprlr_27(uVar4);
+  return iVar6;
+}
+
+
+// 82911DC8  bdLobbyConnection::sendRaw  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:315)
+
+void bdLobbyConnection__sendRaw(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  uint *puVar4;
+  char in_RESERVE;
+  byte in_cr0;
+  undefined1 local_50 [16];
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_29();
+  if ((ulonglong)*(uint *)param_2 != 0) {
+    lVar3 = (ulonglong)*(uint *)param_2 + 4;
+    do {
+      puVar4 = (uint *)lVar3;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  bdPendingBufferTransfer__bdPendingBufferTransfer(auStack_40,local_50);
+  bdLinkedList<bdPendingBufferTransfer>__insertAfter
+            (iVar2 + 0x30,*(undefined4 *)(iVar2 + 0x34),auStack_40);
+  bdLobbyConnection__pump(iVar2);
+  bdPendingBufferTransfer___bdPendingBufferTransfer(auStack_40);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82910E48  bdLinkedList<bdPendingBufferTransfer>::insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
-void bdLinkedList<bdPendingBufferTransfer>__insertAfter(void)
+void bdLinkedList<bdPendingBufferTransfer>__insertAfter
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int iVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  int iVar5;
+  
+  piVar4 = (int *)__savegprlr_29();
+  uVar3 = bdMemory__allocate(0x1c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    iVar5 = 0;
+  }
+  else {
+    iVar5 = bdPendingBufferTransfer__bdPendingBufferTransfer(uVar3,param_3);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    *(undefined4 *)(iVar5 + 0x14) = 0;
+    *(int *)(iVar5 + 0x18) = piVar4[1];
+    if (piVar4[1] == 0) {
+      *piVar4 = iVar5;
+    }
+    else {
+      *(int *)(piVar4[1] + 0x14) = iVar5;
+    }
+    piVar4[1] = iVar5;
+  }
+  else {
+    iVar2 = (int)param_2;
+    uVar1 = *(undefined4 *)(iVar2 + 0x14);
+    *(int *)(iVar5 + 0x18) = iVar2;
+    *(undefined4 *)(iVar5 + 0x14) = uVar1;
+    if (*(int *)(iVar2 + 0x14) == 0) {
+      if ((param_2 & 0xffffffff) != (ulonglong)(uint)piVar4[1]) {
+        MyAssertHandler(0xffffffff8220d4a8,0x16b,0,0xffffffff820011f4,0xffffffff8220d61c,
+                        0xffffffff8220d630);
+      }
+      piVar4[1] = iVar5;
+    }
+    else {
+      *(int *)(*(int *)(iVar2 + 0x14) + 0x18) = iVar5;
+    }
+    *(int *)(iVar2 + 0x14) = iVar5;
+  }
+  piVar4[2] = piVar4[2] + 1;
+  __restgprlr_29();
+  return;
+}
+
+
+// 829123F0  bdLobbyConnection::getMessageToDispatch  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:347)
+
+void bdLobbyConnection__getMessageToDispatch
+               (undefined8 param_1,undefined1 *param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  undefined1 local_60 [4];
+  undefined4 local_5c [23];
+  
+  iVar4 = __savegprlr_23();
+  if (*(int *)(iVar4 + 0x40) == 4) {
+    uVar2 = 0;
+  }
+  else {
+    bdLobbyConnection__pump(iVar4);
+    uVar2 = 0;
+    if (((*(int *)(iVar4 + 0x40) == 2) &&
+        (cVar5 = bdLobbyConnection__recvMessageData(iVar4), cVar5 != '\0')) &&
+       (*(int *)(iVar4 + 0x14) == 4)) {
+      uVar2 = 1;
+      uVar3 = bdTaskByteBuffer__getHeaderStart(*(undefined4 *)(iVar4 + 0x28));
+      uVar1 = *(uint *)(iVar4 + 0x24);
+      local_5c[0] = 0;
+      if (*(char *)(iVar4 + 0x20) == '\x01') {
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82211eb8,0x193,0,0xffffffff82212b48);
+        }
+      }
+      else {
+        if ((ulonglong)*(uint *)(*(int *)(iVar4 + 0x28) + 8) != ((ulonglong)uVar1 - 2 & 0xffffffff))
+        {
+          MyAssertHandler(0xffffffff82211eb8,0x19b,0,0xffffffff820011f4,0xffffffff82212b08,
+                          0xffffffff82212b30);
+        }
+        uVar2 = bdBytePacker__removeBuffer(uVar3,(ulonglong)uVar1 - 1,0,local_5c,local_60,1);
+        if ((uVar2 & 0xff) != 0) {
+          *param_2 = local_60[0];
+          bdReference<bdByteBuffer>__operator_<bdTaskByteBuffer>(param_3,(int *)(iVar4 + 0x28));
+        }
+      }
+      *(undefined4 *)(iVar4 + 0x14) = 0;
+    }
+  }
+  __restgprlr_23(uVar2);
+  return;
+}
+
+
+// 82912160  bdLobbyConnection::recvMessageData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:428)
+
+void bdLobbyConnection__recvMessageData(void)
+
+{
+  int _FileHandle;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  bool bVar4;
+  undefined8 uVar5;
+  undefined8 in_r6;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  uint uVar8;
+  
+  _FileHandle = __savegprlr_22();
+  if (*(int *)(_FileHandle + 0x40) == 2) {
+    do {
+      uVar8 = *(uint *)(_FileHandle + 0x14);
+      if (uVar8 == 0) {
+        *(undefined4 *)(_FileHandle + 0x1c) = 0;
+        *(undefined1 *)(_FileHandle + 0x20) = 0;
+        *(undefined4 *)(_FileHandle + 0x24) = 0;
+        bdReference<bdTaskByteBuffer>__operator_(_FileHandle + 0x28,0);
+        bdReference<bdPendingBufferTransfer>__operator_(_FileHandle + 0x2c,0);
+        uVar8 = 0;
+        *(undefined4 *)(_FileHandle + 0x14) = 1;
+LAB_82912260:
+        iVar2 = bdLobbyConnection__recvMessageSize(_FileHandle);
+LAB_8291226c:
+        if (0 < iVar2) {
+          bdStopwatch__reset(_FileHandle + 0x60);
+          bdStopwatch__start(_FileHandle + 0x60);
+        }
+      }
+      else {
+        if (uVar8 == 1) goto LAB_82912260;
+        if (uVar8 < 3) {
+          iVar2 = bdLobbyConnection__recvEncryptType(_FileHandle);
+          goto LAB_8291226c;
+        }
+        if (uVar8 != 3) {
+          bVar4 = true;
+          goto LAB_829123e4;
+        }
+        if (*(int *)(*(int *)(_FileHandle + 0x2c) + 0x10) == 0) {
+          in_r6 = 0xffffffff820011f4;
+          MyAssertHandler(0xffffffff82211eb8,0x1cc,0,0xffffffff820011f4,0xffffffff82212ae8,
+                          0xffffffff82212acc);
+        }
+        iVar2 = bdStreamSocket__recv
+                          (_FileHandle + 0x3c,*(char **)(*(int *)(_FileHandle + 0x2c) + 0xc),
+                           *(int *)(*(int *)(_FileHandle + 0x2c) + 0x10),(int)in_r6);
+        if (0 < iVar2) {
+          iVar3 = bdPendingBufferTransfer__updateTransfer(*(undefined4 *)(_FileHandle + 0x2c),iVar2)
+          ;
+          if (iVar3 == 0) {
+            *(undefined4 *)(_FileHandle + 0x14) = 4;
+          }
+          goto LAB_8291226c;
+        }
+      }
+      if (*(uint *)(_FileHandle + 0x14) == uVar8) {
+        if ((((iVar2 < 1) && (*(uint *)(_FileHandle + 0x14) != 4)) && (iVar2 != -0xb)) &&
+           ((iVar2 != -9 && (iVar2 != -8)))) {
+          if (iVar2 == -6) {
+            uVar7 = 0xffffffff822129fc;
+            uVar5 = 0xffffffff8220a424;
+            uVar6 = 0x1fb;
+            uVar1 = 1;
+LAB_829123c4:
+            bdLogMessage(uVar1,uVar5,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212aa8,uVar6,
+                         uVar7);
+          }
+          else if (iVar2 == -5) {
+            bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82212518,0xffffffff82211eb8,
+                         0xffffffff82212aa8,0x1f6,0xffffffff82212a28);
+            bdLobbyConnection__close(_FileHandle);
+          }
+          else if (iVar2 != -2) {
+            if (iVar2 == 0) {
+              *(undefined4 *)(_FileHandle + 0x40) = 3;
+              bdLobbyConnection__callListenersDisconnect(_FileHandle);
+              *(undefined4 *)(_FileHandle + 0x40) = 4;
+              uVar7 = 0xffffffff82212a5c;
+              uVar5 = 0xffffffff8220b6f8;
+              uVar6 = 0x1f1;
+              uVar1 = 0;
+              goto LAB_829123c4;
+            }
+            bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,
+                         0xffffffff82212aa8,0x208,0xffffffff82212a90,iVar2);
+          }
+        }
+        bVar4 = *(int *)(_FileHandle + 0x40) == 2;
+        goto LAB_829123e4;
+      }
+    } while (*(int *)(_FileHandle + 0x40) == 2);
+  }
+  bVar4 = false;
+LAB_829123e4:
+  __restgprlr_22(bVar4);
+  return;
+}
+
+
+// 82911EA8  bdLobbyConnection::recvMessageSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:529)
+
+void bdLobbyConnection__recvMessageSize(void)
+
+{
+  uint uVar1;
+  int _FileHandle;
+  int iVar2;
+  char *in_r6;
+  int iVar3;
+  undefined4 local_40 [16];
+  
+  _FileHandle = __savegprlr_27();
+  if ((*(int *)(_FileHandle + 0x24) != 0) || (3 < *(uint *)(_FileHandle + 0x1c))) {
+    in_r6 = "%s\n\t%s";
+    MyAssertHandler(0xffffffff82211eb8,0x212,0,0xffffffff820011f4,0xffffffff822128e8,
+                    0xffffffff8221290c);
+  }
+  iVar2 = bdStreamSocket__recv
+                    (_FileHandle + 0x3c,(char *)(*(int *)(_FileHandle + 0x1c) + _FileHandle + 0x18),
+                     4 - *(int *)(_FileHandle + 0x1c),(int)in_r6);
+  if ((0 < iVar2) &&
+     (iVar3 = iVar2 + *(int *)(_FileHandle + 0x1c), *(int *)(_FileHandle + 0x1c) = iVar3, iVar3 == 4
+     )) {
+    local_40[0] = 0;
+    bdBytePacker__removeBasicType<unsigned_int>
+              (_FileHandle + 0x18,4,0,local_40,(uint *)(_FileHandle + 0x24));
+    uVar1 = *(uint *)(_FileHandle + 0x24);
+    if (uVar1 == 0) {
+      *(undefined4 *)(_FileHandle + 0x14) = 0;
+    }
+    else if (*(uint *)(_FileHandle + 0x10) < uVar1) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212888,
+                   0x226,0xffffffff822128ac);
+      bdLobbyConnection__close(_FileHandle);
+      iVar2 = -0xb;
+    }
+    else {
+      *(undefined4 *)(_FileHandle + 0x14) = 2;
+    }
+  }
+  __restgprlr_27(iVar2);
+  return;
+}
+
+
+// 82910A50  bdLobbyConnection::recvEncryptType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:565)
+
+void bdLobbyConnection__recvEncryptType(void)
+
+{
+  uint uVar1;
+  bool bVar2;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  char *buf;
+  int in_r6;
+  uint *puVar7;
+  longlong lVar8;
+  char in_RESERVE;
+  undefined1 local_50 [80];
+  
+  iVar5 = __savegprlr_24();
+  buf = (char *)(iVar5 + 0x20);
+  iVar6 = bdStreamSocket__recv(iVar5 + 0x3c,buf,1,in_r6);
+  if (0 < iVar6) {
+    puVar7 = (uint *)(iVar5 + 0x28);
+    if ((*(int *)(iVar5 + 0x28) != 0) || (*(int *)(iVar5 + 0x2c) != 0)) {
+      MyAssertHandler(0xffffffff82211eb8,0x239,0,0xffffffff820011f4,0xffffffff822120ac,
+                      0xffffffff822120dc);
+    }
+    if (*buf != '\0') {
+      MyAssertHandler(0xffffffff82211eb8,0x23b,0,0xffffffff820011f4,0xffffffff8221207c,
+                      0xffffffff82212094);
+    }
+    lVar8 = 1;
+    if (*buf == '\x01') {
+      lVar8 = 9;
+    }
+    if ((ulonglong)*(uint *)(iVar5 + 0x24) < lVar8 + 1U) {
+      MyAssertHandler(0xffffffff82211eb8,0x24d,0,0xffffffff820011f4,0xffffffff82212048,
+                      0xffffffff82212064);
+    }
+    uVar3 = bdMemory__allocate(0x2c);
+    if ((uVar3 & 0xffffffff) == 0) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = bdTaskByteBuffer__bdTaskByteBuffer
+                        (uVar3,(ulonglong)*(uint *)(iVar5 + 0x24) - (lVar8 + 1U),1);
+    }
+    bdReference<bdTaskByteBuffer>__operator_(puVar7,uVar4);
+    bdTaskByteBuffer__setHeaderSize(*puVar7,lVar8);
+    uVar3 = bdMemory__allocate(0x14);
+    if ((uVar3 & 0xffffffff) == 0) {
+      uVar4 = 0;
+    }
+    else {
+      if ((ulonglong)*puVar7 != 0) {
+        lVar8 = (ulonglong)*puVar7 + 4;
+        bVar2 = false;
+        do {
+          puVar7 = (uint *)lVar8;
+          if (in_RESERVE != '\0') {
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar8);
+            *puVar7 = uVar1;
+            bVar2 = true;
+          }
+        } while (!bVar2);
+      }
+      uVar4 = bdPendingBufferTransfer__bdPendingBufferTransfer
+                        (uVar3,local_50,(ulonglong)*(uint *)(iVar5 + 0x24) - 1);
+    }
+    bdReference<bdPendingBufferTransfer>__operator_(iVar5 + 0x2c,uVar4);
+    *(undefined4 *)(iVar5 + 0x14) = 3;
+  }
+  __restgprlr_24(iVar6);
+  return;
+}
+
+
+// 8290FE08  bdLobbyConnection::getReceiveBufferSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:604)
+
+undefined4 bdLobbyConnection__getReceiveBufferSize(int param_1)
+
+{
+  return *(undefined4 *)(param_1 + 0x10);
 }
 
 
@@ -491,8 +1180,47 @@ void bdLinkedList<bdPendingBufferTransfer>__insertAfter(void)
 int bdLobbyConnection__connect(SOCKET s,sockaddr *name,int namelen)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(s,name,namelen);
+  int iVar2;
+  undefined8 uVar1;
+  sockaddr *name_00;
+  int iVar3;
+  int iVar4;
+  undefined4 local_50 [2];
+  undefined1 auStack_48 [72];
+  
+  iVar2 = __savegprlr_26(s,name,namelen);
+  iVar4 = iVar2 + 0x50;
+  *(undefined4 *)(iVar2 + 0x40) = 1;
+  bdAddr__getAddress(iVar4);
+  uVar1 = bdInetAddr__toUInt32();
+  bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212984,0x28b,
+               0xffffffff82212970,uVar1);
+  bdAddr__getAddress(iVar4);
+  local_50[0] = bdInetAddr__toUInt32();
+  uVar1 = bdSingleton<bdNetImpl>__getInstance();
+  iVar3 = 0;
+  bdNetImpl__registerSecureAddr(uVar1,local_50);
+  name_00 = (sockaddr *)bdAddr__bdAddr(auStack_48,iVar4);
+  iVar3 = bdStreamSocket__connect(iVar2 + 0x3c,name_00,iVar3);
+  if (iVar3 == -2) {
+    bdStopwatch__reset(iVar2 + 0x68);
+    bdStopwatch__start(iVar2 + 0x68);
+  }
+  else {
+    if (iVar3 != 1) {
+      bdLogMessage(0,0xffffffff8220b6f8,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212984,
+                   0x2af,0xffffffff82212928);
+      bdLobbyConnection__close(iVar2);
+      uVar1 = 0;
+      goto LAB_829120f0;
+    }
+    *(undefined4 *)(iVar2 + 0x40) = 2;
+    bdLobbyConnection__callListenersConnect(iVar2,1);
+  }
+  uVar1 = 1;
+LAB_829120f0:
+  iVar2 = __restgprlr_26(uVar1);
+  return iVar2;
 }
 
 
@@ -621,11 +1349,139 @@ void bdLobbyConnection__callListenersDisconnect(longlong param_1)
 
 // 82911848  bdLobbyConnection::pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:761)
 
+/* WARNING: Switch with 1 destination removed at 0x82911a70 */
+
 void bdLobbyConnection__pump(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int _FileHandle;
+  char cVar4;
+  int iVar2;
+  longlong lVar1;
+  bool bVar5;
+  undefined8 in_r6;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  double dVar8;
+  int local_30 [12];
+  int iVar3;
+  
+  _FileHandle = __savegprlr_28();
+  if (*(int *)(_FileHandle + 0x40) == 1) {
+    local_30[0] = 1;
+    cVar4 = bdStreamSocket__isWritable(_FileHandle + 0x3c,local_30);
+    if (cVar4 == '\0') {
+      if (local_30[0] != 1) goto LAB_829118a4;
+LAB_829118f0:
+      dVar8 = (double)bdStopwatch__getElapsedTimeInSeconds(_FileHandle + 0x68);
+      if (dVar8 <= 30.0) goto LAB_82911a34;
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212760,
+                   0x30d,0xffffffff822126f8);
+    }
+    else {
+      if (local_30[0] == 1) {
+        *(undefined4 *)(_FileHandle + 0x40) = 2;
+        bdLobbyConnection__callListenersConnect(_FileHandle,1);
+        goto LAB_82911998;
+      }
+LAB_829118a4:
+      if (local_30[0] == -2) goto LAB_829118f0;
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212760,
+                   0x307,0xffffffff82212728);
+    }
+    bdLobbyConnection__close(_FileHandle);
+    bVar5 = false;
+  }
+  else {
+LAB_82911998:
+    while ((iVar2 = (int)in_r6, *(int *)(_FileHandle + 0x40) == 2 &&
+           (*(int *)(_FileHandle + 0x38) != 0))) {
+      iVar2 = bdQueue<bdPendingBufferTransfer>__peek(_FileHandle + 0x30);
+      iVar3 = bdStreamSocket__send
+                        (_FileHandle + 0x3c,*(char **)(iVar2 + 0xc),*(int *)(iVar2 + 0x10),
+                         (int)in_r6);
+      lVar1 = (longlong)iVar3;
+      if (lVar1 < 1) {
+        if ((lVar1 + 0xbU & 0xffffffff) < 0xb) {
+          uVar7 = 0xffffffff822126b4;
+          uVar6 = 0x32c;
+        }
+        else {
+          uVar6 = 0x350;
+          uVar7 = 0xffffffff82212594;
+        }
+        bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212760,
+                     uVar6,uVar7);
+        bdLobbyConnection__close(_FileHandle);
+        bVar5 = *(int *)(_FileHandle + 0x40) == 2;
+        goto LAB_82911a38;
+      }
+      bdStopwatch__start(_FileHandle + 0x58);
+      iVar2 = bdPendingBufferTransfer__updateTransfer(iVar2,lVar1);
+      if (iVar2 == 0) {
+        bdQueue<bdPendingBufferTransfer>__dequeue(_FileHandle + 0x30);
+      }
+    }
+    dVar8 = (double)bdStopwatch__getElapsedTimeInSeconds(_FileHandle + 0x58);
+    if (40.0 < dVar8) {
+      local_30[0] = 0;
+      bdStreamSocket__send(_FileHandle + 0x3c,(char *)local_30,4,iVar2);
+      bdStopwatch__start(_FileHandle + 0x58);
+    }
+    dVar8 = (double)bdStopwatch__getElapsedTimeInSeconds(_FileHandle + 0x60);
+    if (120.0 < dVar8) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff82212518,0xffffffff82211eb8,0xffffffff82212760,
+                   0x361,0xffffffff822126e0);
+      bdLobbyConnection__close(_FileHandle);
+    }
+LAB_82911a34:
+    bVar5 = true;
+  }
+LAB_82911a38:
+  __restgprlr_28(bVar5);
+  return;
+}
+
+
+// 82910660  bdPendingBufferTransfer::bdPendingBufferTransfer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:881)
+
+void bdPendingBufferTransfer__bdPendingBufferTransfer
+               (undefined8 param_1,undefined8 param_2,uint param_3)
+
+{
+  uint uVar1;
+  undefined4 *puVar2;
+  undefined4 uVar3;
+  uint *puVar4;
+  longlong lVar5;
+  uint *puVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar4 = (uint *)param_2;
+  uVar3 = (undefined4)((ulonglong)param_2 >> 0x20);
+  puVar2 = (undefined4 *)__savegprlr_28();
+  puVar2[1] = 0;
+  *puVar2 = &PTR_bdPendingBufferTransfer___scalar_deleting_destructor__82211f98;
+  uVar1 = *puVar4;
+  puVar2[2] = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar5 = (ulonglong)uVar1 + 4;
+    do {
+      puVar6 = (uint *)lVar5;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+        *puVar6 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  lVar5 = bdTaskByteBuffer__getHeaderStart(*puVar4);
+  puVar2[3] = (int)lVar5;
+  puVar2[4] = -(uint)(lVar5 != 0) & param_3;
+  bdReference<bdTaskByteBuffer>___bdReference<bdTaskByteBuffer>(CONCAT44(uVar3,puVar4));
+  __restgprlr_28(puVar2);
+  return;
 }
 
 
@@ -665,6 +1521,38 @@ bdPendingBufferTransfer__bdPendingBufferTransfer(undefined4 *param_1,uint *param
 }
 
 
+// 82910820  bdPendingBufferTransfer::bdPendingBufferTransfer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:896)
+
+void bdPendingBufferTransfer__bdPendingBufferTransfer(undefined4 *param_1,int param_2)
+
+{
+  uint uVar1;
+  longlong lVar2;
+  uint *puVar3;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  param_1[1] = 0;
+  *param_1 = &PTR_bdPendingBufferTransfer___scalar_deleting_destructor__82211f98;
+  uVar1 = *(uint *)(param_2 + 8);
+  param_1[2] = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar2 = (ulonglong)uVar1 + 4;
+    do {
+      puVar3 = (uint *)lVar2;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar2);
+        *puVar3 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  param_1[3] = *(undefined4 *)(param_2 + 0xc);
+  param_1[4] = *(undefined4 *)(param_2 + 0x10);
+  return;
+}
+
+
 // 82910888  bdPendingBufferTransfer::~bdPendingBufferTransfer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:900)
 
 void bdPendingBufferTransfer___bdPendingBufferTransfer(undefined4 *param_1)
@@ -688,7 +1576,6 @@ void bdPendingBufferTransfer__updateTransfer(int param_1,uint param_2)
   uint uVar1;
   
   if (*(uint *)(param_1 + 0x10) < param_2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82211eb8,0x393,0,0xffffffff820011f4,0xffffffff82211e74,
                     0xffffffff82211e94);
   }

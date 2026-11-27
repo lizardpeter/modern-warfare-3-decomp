@@ -5,8 +5,22 @@
 void R_InitDrawList(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  void *_Dst;
+  char cVar2;
+  void *pvVar1;
+  
+  _Dst = (void *)__savegprlr_29();
+  cVar2 = Sys_IsMainThread2();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff821ca858,0x251,0,0xffffffff82000f98,0xffffffff8205cec4);
+  }
+  pvVar1 = memset(_Dst,0,0x1f8);
+  if (*(int *)((int)_Dst + 100) != 0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff821ca858,0x256,0,0xffffffff82000f98,
+                                     0xffffffff821ca828);
+  }
+  __restgprlr_29(pvVar1);
+  return;
 }
 
 
@@ -22,11 +36,10 @@ void R_EmitDrawSurfList(undefined8 param_1,ulonglong param_2,int param_3)
   
   uVar3 = __savegprlr_25();
   Profile_Begin(0x3c);
-  iVar2 = DAT_84628b00;
   if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca858,0x2b3,0,0xffffffff82000f98,0xffffffff821ca8cc);
   }
+  iVar2 = DAT_84628b00;
   iVar1 = *(int *)(DAT_84628b00 + 0x1544);
   iVar4 = iVar1 + (int)param_2;
   if (iVar4 < 0x4001) {
@@ -39,8 +52,10 @@ void R_EmitDrawSurfList(undefined8 param_1,ulonglong param_2,int param_3)
   else {
     R_WarnOncePerFrame(0x14);
     if (*(int *)(param_3 + 0x20) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ca858,0x2b9,0,0xffffffff82000f98,0xffffffff821ca898);
+      Profile_EndInternal(0);
+      __restgprlr_25();
+      return;
     }
   }
   Profile_EndInternal(0);

@@ -93,6 +93,69 @@
   8240B024  7D8803A6             mtspr LR,r12
   8240B028  4E800020             blr
 
+; 8240B030  DevGui_GetScreenYPad  (devgui/devgui_util.cpp:60)
+  8240B030  7D8802A6             mfspr r12,LR
+  8240B034  9181FFF8             stw r12,-0x8(r1)
+  8240B038  9421FFA0             stwu r1,-0x60(r1)
+  8240B03C  3D608200             lis r11,-0x7e00
+  8240B040  38A00001             li r5,0x1
+  8240B044  C02B13F8             lfs f1,0x13f8(r11)
+  8240B048  4BF8EDE1             bl 0x82399e28
+  8240B04C  3D408200             lis r10,-0x7e00
+  8240B050  C00A0F18             lfs f0,0xf18(r10)
+  8240B054  EC21002A             fadds f1,f1,f0
+  8240B058  4850B509             bl 0x82916560
+  8240B05C  FC000818             frsp f0,f1
+  8240B060  FDA0001E             fctiwz f13,f0
+  8240B064  D9A10050             stfd f13,0x50(r1)
+  8240B068  80610054             lwz r3,0x54(r1)
+  8240B06C  38210060             addi r1,r1,0x60
+  8240B070  8181FFF8             lwz r12,-0x8(r1)
+  8240B074  7D8803A6             mtspr LR,r12
+  8240B078  4E800020             blr
+
+; 8240B080  DevGui_GetScreenWidth  (devgui/devgui_util.cpp:72)
+  8240B080  7D8802A6             mfspr r12,LR
+  8240B084  9181FFF8             stw r12,-0x8(r1)
+  8240B088  9421FFA0             stwu r1,-0x60(r1)
+  8240B08C  3D608200             lis r11,-0x7e00
+  8240B090  38A00003             li r5,0x3
+  8240B094  C02B13F8             lfs f1,0x13f8(r11)
+  8240B098  4BF8ED91             bl 0x82399e28
+  8240B09C  3D408200             lis r10,-0x7e00
+  8240B0A0  C00A0F18             lfs f0,0xf18(r10)
+  8240B0A4  EC21002A             fadds f1,f1,f0
+  8240B0A8  4850B4B9             bl 0x82916560
+  8240B0AC  FC000818             frsp f0,f1
+  8240B0B0  FDA0001E             fctiwz f13,f0
+  8240B0B4  D9A10050             stfd f13,0x50(r1)
+  8240B0B8  80610054             lwz r3,0x54(r1)
+  8240B0BC  38210060             addi r1,r1,0x60
+  8240B0C0  8181FFF8             lwz r12,-0x8(r1)
+  8240B0C4  7D8803A6             mtspr LR,r12
+  8240B0C8  4E800020             blr
+
+; 8240B0D0  DevGui_GetScreenHeight  (devgui/devgui_util.cpp:93)
+  8240B0D0  7D8802A6             mfspr r12,LR
+  8240B0D4  9181FFF8             stw r12,-0x8(r1)
+  8240B0D8  9421FFA0             stwu r1,-0x60(r1)
+  8240B0DC  3D608200             lis r11,-0x7e00
+  8240B0E0  38A00003             li r5,0x3
+  8240B0E4  C02B13F8             lfs f1,0x13f8(r11)
+  8240B0E8  4BF8EF41             bl 0x8239a028
+  8240B0EC  3D408200             lis r10,-0x7e00
+  8240B0F0  C00A0F18             lfs f0,0xf18(r10)
+  8240B0F4  EC21002A             fadds f1,f1,f0
+  8240B0F8  4850B469             bl 0x82916560
+  8240B0FC  FC000818             frsp f0,f1
+  8240B100  FDA0001E             fctiwz f13,f0
+  8240B104  D9A10050             stfd f13,0x50(r1)
+  8240B108  80610054             lwz r3,0x54(r1)
+  8240B10C  38210060             addi r1,r1,0x60
+  8240B110  8181FFF8             lwz r12,-0x8(r1)
+  8240B114  7D8803A6             mtspr LR,r12
+  8240B118  4E800020             blr
+
 ; 8240B120  DevGui_DrawBox  (devgui/devgui_util.cpp:114)
   8240B120  7D8802A6             mfspr r12,LR
   8240B124  4850B589             bl 0x829166ac
@@ -192,6 +255,15 @@ LAB_8240b19c:
   8240B294  382100E0             addi r1,r1,0xe0
   8240B298  CBE1FFB8             lfd f31,-0x48(r1)
   8240B29C  4850B460             b 0x829166fc
+
+; 8240B2A0  DevGui_DrawBoxCentered  (devgui/devgui_util.cpp:134)
+  8240B2A0  7CCB0E70             srawi r11,r6,0x1
+  8240B2A4  7D4B0194             addze r10,r11
+  8240B2A8  7CA90E70             srawi r9,r5,0x1
+  8240B2AC  7C8A2050             subf r4,r10,r4
+  8240B2B0  7D090194             addze r8,r9
+  8240B2B4  7C681850             subf r3,r8,r3
+  8240B2B8  4BFFFE68             b 0x8240b120
 
 ; 8240B2C0  DevGui_DrawBevelBox  (devgui/devgui_util.cpp:148)
   8240B2C0  7D8802A6             mfspr r12,LR
@@ -422,13 +494,271 @@ LAB_8240b378:
   8240B63C  CBE1FFB0             lfd f31,-0x50(r1)
   8240B640  4850B0B8             b 0x829166f8
 
+; 8240B648  DevGui_DrawLine  (devgui/devgui_util.cpp:243)
+  8240B648  7D8802A6             mfspr r12,LR
+  8240B64C  4850B06D             bl 0x829166b8
+  8240B650  3981FFD8             subi r12,r1,0x28
+  8240B654  4850B141             bl 0x82916794
+  8240B658  9421FF10             stwu r1,-0xf0(r1)
+  8240B65C  C0040000             lfs f0,0x0(r4)
+  8240B660  3D608200             lis r11,-0x7e00
+  8240B664  C1A30000             lfs f13,0x0(r3)
+  8240B668  3D408200             lis r10,-0x7e00
+  8240B66C  ED806828             fsubs f12,f0,f13
+  8240B670  C1640004             lfs f11,0x4(r4)
+  8240B674  C1430004             lfs f10,0x4(r3)
+  8240B678  ED206828             fsubs f9,f0,f13
+  8240B67C  ECCD0028             fsubs f6,f13,f0
+  8240B680  7C7D1B78             or r29,r3,r3
+  8240B684  ED0B5028             fsubs f8,f11,f10
+  8240B688  C3EB0F10             lfs f31,0xf10(r11)
+  8240B68C  ECEB5028             fsubs f7,f11,f10
+  8240B690  C3CA0F18             lfs f30,0xf18(r10)
+  8240B694  ECAA5828             fsubs f5,f10,f11
+  8240B698  7C9C2378             or r28,r4,r4
+  8240B69C  7CBE2B78             or r30,r5,r5
+  8240B6A0  7CDF3378             or r31,r6,r6
+  8240B6A4  EC8C0332             fmuls f4,f12,f12
+  8240B6A8  FC69036E             fsel f3,f9,f13,f0
+  8240B6AC  FC26036E             fsel f1,f6,f13,f0
+  8240B6B0  FC475AAE             fsel f2,f7,f10,f11
+  8240B6B4  FC055AAE             fsel f0,f5,f10,f11
+  8240B6B8  EDA8223A             fmadds f13,f8,f8,f4
+  8240B6BC  ED611828             fsubs f11,f1,f3
+  8240B6C0  ED401028             fsubs f10,f0,f2
+  8240B6C4  ED20682C             fsqrts f9,f13
+  8240B6C8  FD004850             fneg f8,f9
+  8240B6CC  EF8B1FBA             fmadds f28,f11,f30,f3
+  8240B6D0  EF6A17BA             fmadds f27,f10,f30,f2
+  8240B6D4  EFA0682C             fsqrts f29,f13
+  8240B6D8  FCE84FEE             fsel f7,f8,f31,f9
+  8240B6DC  ECDF3824             fdivs f6,f31,f7
+  8240B6E0  EC260332             fmuls f1,f6,f12
+  8240B6E4  4850BEFD             bl 0x829175e0
+  8240B6E8  FCA00818             frsp f5,f1
+  8240B6EC  3D208200             lis r9,-0x7e00
+  8240B6F0  C09C0004             lfs f4,0x4(r28)
+  8240B6F4  C07D0004             lfs f3,0x4(r29)
+  8240B6F8  FF041800             fcmpu cr6,f4,f3
+  8240B6FC  C00948EC             lfs f0,0x48ec(r9)
+  8240B700  ED250032             fmuls f9,f5,f0
+  8240B704  40980008             bge cr6,0x8240b70c
+  8240B708  FD204850             fneg f9,f9
+LAB_8240b70c:
+  8240B70C  3D608200             lis r11,-0x7e00
+  8240B710  C0CB13F8             lfs f6,0x13f8(r11)
+  8240B714  FF093000             fcmpu cr6,f9,f6
+  8240B718  40980018             bge cr6,0x8240b730
+  8240B71C  3D608200             lis r11,-0x7e00
+  8240B720  C00B0F14             lfs f0,0xf14(r11)
+LAB_8240b724:
+  8240B724  ED29002A             fadds f9,f9,f0
+  8240B728  FF093000             fcmpu cr6,f9,f6
+  8240B72C  4198FFF8             blt cr6,0x8240b724
+LAB_8240b730:
+  8240B730  7FC807B4             extsw r8,r30
+  8240B734  887F0001             lbz r3,0x1(r31)
+  8240B738  7FCB0E70             srawi r11,r30,0x1
+  8240B73C  889F0000             lbz r4,0x0(r31)
+  8240B740  F9010070             std r8,0x70(r1)
+  8240B744  C8010070             lfd f0,0x70(r1)
+  8240B748  891F0002             lbz r8,0x2(r31)
+  8240B74C  7CCB0194             addze r6,r11
+  8240B750  88BF0003             lbz r5,0x3(r31)
+  8240B754  3CE082AA             lis r7,-0x7d56
+  8240B758  F8610080             std r3,0x80(r1)
+  8240B75C  C9610080             lfd f11,0x80(r1)
+  8240B760  7CCB07B4             extsw r11,r6
+  8240B764  F8810078             std r4,0x78(r1)
+  8240B768  C9810078             lfd f12,0x78(r1)
+  8240B76C  38C71B00             addi r6,r7,0x1b00
+  8240B770  F9010080             std r8,0x80(r1)
+  8240B774  C9010080             lfd f8,0x80(r1)
+  8240B778  F9610078             std r11,0x78(r1)
+  8240B77C  C9410078             lfd f10,0x78(r1)
+  8240B780  F8A10070             std r5,0x70(r1)
+  8240B784  C9A10070             lfd f13,0x70(r1)
+  8240B788  FCE0469C             fcfid f7,f8
+  8240B78C  81660E5C             lwz r11,0xe5c(r6)
+  8240B790  FC805E9C             fcfid f4,f11
+  8240B794  39210090             addi r9,r1,0x90
+  8240B798  FC60669C             fcfid f3,f12
+  8240B79C  9121005C             stw r9,0x5c(r1)
+  8240B7A0  FC406E9C             fcfid f2,f13
+  8240B7A4  91610064             stw r11,0x64(r1)
+  8240B7A8  FC20569C             fcfid f1,f10
+  8240B7AC  3CA08201             lis r5,-0x7dff
+  8240B7B0  FDA03818             frsp f13,f7
+  8240B7B4  FD80069C             fcfid f12,f0
+  8240B7B8  FD602018             frsp f11,f4
+  8240B7BC  FD401818             frsp f10,f3
+  8240B7C0  FC401018             frsp f2,f2
+  8240B7C4  C005F9AC             lfs f0,-0x654(r5)
+  8240B7C8  FD00F890             fmr f8,f31
+  8240B7CC  FCE0F890             fmr f7,f31
+  8240B7D0  FCA03090             fmr f5,f6
+  8240B7D4  FC60E890             fmr f3,f29
+  8240B7D8  FFE00818             frsp f31,f1
+  8240B7DC  EC2D0032             fmuls f1,f13,f0
+  8240B7E0  D0210098             stfs f1,0x98(r1)
+  8240B7E4  FC806018             frsp f4,f12
+  8240B7E8  EDAB0032             fmuls f13,f11,f0
+  8240B7EC  D1A10094             stfs f13,0x94(r1)
+  8240B7F0  ED8A0032             fmuls f12,f10,f0
+  8240B7F4  D1810090             stfs f12,0x90(r1)
+  8240B7F8  ED620032             fmuls f11,f2,f0
+  8240B7FC  D161009C             stfs f11,0x9c(r1)
+  8240B800  EC3DE7BC             fnmsubs f1,f29,f30,f28
+  8240B804  EC5BF828             fsubs f2,f27,f31
+  8240B808  4835C219             bl 0x82767a20
+  8240B80C  382100F0             addi r1,r1,0xf0
+  8240B810  3981FFD8             subi r12,r1,0x28
+  8240B814  4850AFCD             bl 0x829167e0
+  8240B818  4850AEF0             b 0x82916708
+
 ; 8240B900  DevGui_DrawFont  (devgui/devgui_util.cpp:286)
   8240B900  7D8802A6             mfspr r12,LR
   8240B904  4850ADB5             bl 0x829166b8
+  8240B908  9421FF50             stwu r1,-0xb0(r1)
+  8240B90C  7C7D1B78             or r29,r3,r3
+  8240B910  7C9C2378             or r28,r4,r4
+  8240B914  7CBF2B78             or r31,r5,r5
+  8240B918  7CDE3378             or r30,r6,r6
+  8240B91C  2B060000             cmplwi cr6,r6,0x0
+  8240B920  409A0028             bne cr6,0x8240b948
+  8240B924  3D608201             lis r11,-0x7dff
+  8240B928  3D408200             lis r10,-0x7e00
+  8240B92C  3D208206             lis r9,-0x7dfa
+  8240B930  38EB3B1C             addi r7,r11,0x3b1c
+  8240B934  38CA0F98             addi r6,r10,0xf98
+  8240B938  3869F810             subi r3,r9,0x7f0
+  8240B93C  38A00000             li r5,0x0
+  8240B940  38800122             li r4,0x122
+  8240B944  481C8BBD             bl 0x825d4500
+LAB_8240b948:
+  8240B948  897E0000             lbz r11,0x0(r30)
+  8240B94C  2B0B0000             cmplwi cr6,r11,0x0
+  8240B950  419A00F0             beq cr6,0x8240ba40
+  8240B954  88DF0003             lbz r6,0x3(r31)
+  8240B958  3D408201             lis r10,-0x7dff
+  8240B95C  887F0001             lbz r3,0x1(r31)
+  8240B960  3D0082AA             lis r8,-0x7d56
+  8240B964  88BF0000             lbz r5,0x0(r31)
+  8240B968  897F0002             lbz r11,0x2(r31)
+  8240B96C  3BE81B00             addi r31,r8,0x1b00
+  8240B970  F8C10060             std r6,0x60(r1)
+  8240B974  C9A10060             lfd f13,0x60(r1)
+  8240B978  F8610060             std r3,0x60(r1)
+  8240B97C  C9610060             lfd f11,0x60(r1)
+  8240B980  F8A10068             std r5,0x68(r1)
+  8240B984  C9810068             lfd f12,0x68(r1)
+  8240B988  F9610068             std r11,0x68(r1)
+  8240B98C  C9410068             lfd f10,0x68(r1)
+  8240B990  FD005E9C             fcfid f8,f11
+  8240B994  C00AF9AC             lfs f0,-0x654(r10)
+  8240B998  FCE0669C             fcfid f7,f12
+  8240B99C  807F0E64             lwz r3,0xe64(r31)
+  8240B9A0  FCC06E9C             fcfid f6,f13
+  8240B9A4  FD20569C             fcfid f9,f10
+  8240B9A8  FC804018             frsp f4,f8
+  8240B9AC  FC603818             frsp f3,f7
+  8240B9B0  FC403018             frsp f2,f6
+  8240B9B4  FCA04818             frsp f5,f9
+  8240B9B8  EDA40032             fmuls f13,f4,f0
+  8240B9BC  D1A10074             stfs f13,0x74(r1)
+  8240B9C0  ED830032             fmuls f12,f3,f0
+  8240B9C4  D1810070             stfs f12,0x70(r1)
+  8240B9C8  ED620032             fmuls f11,f2,f0
+  8240B9CC  D161007C             stfs f11,0x7c(r1)
+  8240B9D0  EC250032             fmuls f1,f5,f0
+  8240B9D4  D0210078             stfs f1,0x78(r1)
+  8240B9D8  48333C09             bl 0x8273f5e0
+  8240B9DC  7D43E214             add r10,r3,r28
+  8240B9E0  7FA707B4             extsw r7,r29
+  8240B9E4  80BF0E64             lwz r5,0xe64(r31)
+  8240B9E8  7D4807B4             extsw r8,r10
+  8240B9EC  3D208200             lis r9,-0x7e00
+  8240B9F0  F9010068             std r8,0x68(r1)
+  8240B9F4  C9410068             lfd f10,0x68(r1)
+  8240B9F8  F8E10068             std r7,0x68(r1)
+  8240B9FC  C9210068             lfd f9,0x68(r1)
+  8240BA00  FCE0569C             fcfid f7,f10
+  8240BA04  3CC08200             lis r6,-0x7e00
+  8240BA08  FD004E9C             fcfid f8,f9
+  8240BA0C  38600000             li r3,0x0
+  8240BA10  3C807FFF             lis r4,0x7fff
+  8240BA14  C0890F10             lfs f4,0xf10(r9)
+  8240BA18  39610070             addi r11,r1,0x70
+  8240BA1C  9061005C             stw r3,0x5c(r1)
+  8240BA20  6084FFFF             ori r4,r4,0xffff
+  8240BA24  C0A613F8             lfs f5,0x13f8(r6)
+  8240BA28  7FC3F378             or r3,r30,r30
+  8240BA2C  91610054             stw r11,0x54(r1)
+  8240BA30  FC602090             fmr f3,f4
+  8240BA34  FC403818             frsp f2,f7
+  8240BA38  FC204018             frsp f1,f8
+  8240BA3C  4835C595             bl 0x82767fd0
+LAB_8240ba40:
+  8240BA40  382100B0             addi r1,r1,0xb0
+  8240BA44  4850ACC4             b 0x82916708
 
 ; 8240BA48  DevGui_DrawFontCentered  (devgui/devgui_util.cpp:306)
   8240BA48  7D8802A6             mfspr r12,LR
   8240BA4C  4850AC69             bl 0x829166b4
+  8240BA50  9421FF80             stwu r1,-0x80(r1)
+  8240BA54  7C7E1B78             or r30,r3,r3
+  8240BA58  7C9D2378             or r29,r4,r4
+  8240BA5C  7CBC2B78             or r28,r5,r5
+  8240BA60  7CDF3378             or r31,r6,r6
+  8240BA64  2B060000             cmplwi cr6,r6,0x0
+  8240BA68  419A0010             beq cr6,0x8240ba78
+  8240BA6C  89660000             lbz r11,0x0(r6)
+  8240BA70  2B0B0000             cmplwi cr6,r11,0x0
+  8240BA74  409A0028             bne cr6,0x8240ba9c
+LAB_8240ba78:
+  8240BA78  3D608206             lis r11,-0x7dfa
+  8240BA7C  3D408200             lis r10,-0x7e00
+  8240BA80  3D208206             lis r9,-0x7dfa
+  8240BA84  38EBF894             subi r7,r11,0x76c
+  8240BA88  38CA0F98             addi r6,r10,0xf98
+  8240BA8C  3869F810             subi r3,r9,0x7f0
+  8240BA90  38A00000             li r5,0x0
+  8240BA94  38800133             li r4,0x133
+  8240BA98  481C8A69             bl 0x825d4500
+LAB_8240ba9c:
+  8240BA9C  3D6082AA             lis r11,-0x7d56
+  8240BAA0  38800000             li r4,0x0
+  8240BAA4  3B6B1B00             addi r27,r11,0x1b00
+  8240BAA8  7FE3FB78             or r3,r31,r31
+  8240BAAC  80BB0E64             lwz r5,0xe64(r27)
+  8240BAB0  48333B29             bl 0x8273f5d8
+  8240BAB4  7C6A0E70             srawi r10,r3,0x1
+  8240BAB8  807B0E64             lwz r3,0xe64(r27)
+  8240BABC  7D2A0194             addze r9,r10
+  8240BAC0  7FC9F050             subf r30,r9,r30
+  8240BAC4  48333B1D             bl 0x8273f5e0
+  8240BAC8  7C680E70             srawi r8,r3,0x1
+  8240BACC  7FE6FB78             or r6,r31,r31
+  8240BAD0  7CE80194             addze r7,r8
+  8240BAD4  7F85E378             or r5,r28,r28
+  8240BAD8  7C87E850             subf r4,r7,r29
+  8240BADC  7FC3F378             or r3,r30,r30
+  8240BAE0  4BFFFE21             bl 0x8240b900
+  8240BAE4  38210080             addi r1,r1,0x80
+  8240BAE8  4850AC1C             b 0x82916704
+
+; 8240B820  DevGui_GetFontWidth  (devgui/devgui_util.cpp:320)
+  8240B820  3D6082AA             lis r11,-0x7d56
+  8240B824  38800000             li r4,0x0
+  8240B828  394B1B00             addi r10,r11,0x1b00
+  8240B82C  80AA0E64             lwz r5,0xe64(r10)
+  8240B830  48333DA8             b 0x8273f5d8
+
+; 8240B838  DevGui_GetFontHeight  (devgui/devgui_util.cpp:333)
+  8240B838  3D6082AA             lis r11,-0x7d56
+  8240B83C  394B1B00             addi r10,r11,0x1b00
+  8240B840  806A0E64             lwz r3,0xe64(r10)
+  8240B844  48333D9C             b 0x8273f5e0
 
 ; 8240B848  DevGui_GetIntDvarValue  (devgui/devgui_util.cpp:370)
   8240B848  7D8802A6             mfspr r12,LR

@@ -65,11 +65,51 @@ undefined8 CG_ShouldDrawHud(undefined8 param_1)
 
 // 822E6038  CG_FadeHudMenu  (cgame_mp/cg_newDraw_mp.cpp:147)
 
-void CG_FadeHudMenu(void)
+void CG_FadeHudMenu(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  undefined8 uVar4;
+  
+  uVar1 = __savegprlr_28();
+  cVar3 = CG_ShouldDrawHud();
+  if (cVar3 == '\0') {
+    __restgprlr_28(0);
+    return;
+  }
+  uVar4 = 0;
+  if (*(float *)(param_2 + 0xc) == 0.0) {
+    __restgprlr_28(0x3ff0000000000000);
+    return;
+  }
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  iVar2 = CG_FadeColor(*(undefined4 *)(iVar2 + 0x6b98c),param_3,param_4,700);
+  if (iVar2 == 0) {
+    __restgprlr_28(uVar4);
+    return;
+  }
+  __restgprlr_28((double)*(float *)(iVar2 + 0xc));
+  return;
+}
+
+
+// 822E60F0  CG_GetHUDAlphaAmmo  (cgame_mp/cg_newDraw_mp.cpp:168)
+
+void CG_GetHUDAlphaAmmo(void)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CG_GetLocalClientGlobals();
+  dVar3 = floor((double)(*(float *)(DAT_82a4d208 + 0xc) * 1000.0 + 0.5));
+  CG_FadeHudMenu(uVar1,DAT_82a4d208,*(undefined4 *)(iVar2 + 0x79810),(int)dVar3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -109,11 +149,37 @@ undefined4 CG_GetSelectedWeapon(int param_1)
 
 // 822E6218  CG_CheckPlayerForLowAmmoSpecific  (cgame_mp/cg_newDraw_mp.cpp:214)
 
-void CG_CheckPlayerForLowAmmoSpecific(void)
+void CG_CheckPlayerForLowAmmoSpecific(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  iVar1 = __savegprlr_27();
+  if ((iVar1 == 0) || (uVar3 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
+    uVar3 = 0;
+  }
+  if ((param_2 & 0xff) != 0) {
+    iVar2 = BG_GetTotalAmmoReserve(iVar1,param_2,uVar3);
+    if (999 < iVar2) {
+      iVar2 = 999;
+    }
+    iVar1 = BG_GetAmmoPlayerMax(iVar1,param_2,uVar3,0);
+    if (iVar1 < 1000) {
+      if (iVar1 < 0) goto LAB_822e62ec;
+    }
+    else {
+      iVar1 = 999;
+    }
+    uVar3 = 1;
+    if ((float)(longlong)iVar2 <= (float)(longlong)iVar1 * 0.2) goto LAB_822e62f0;
+  }
+LAB_822e62ec:
+  uVar3 = 0;
+LAB_822e62f0:
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
@@ -139,33 +205,127 @@ void CG_CheckPlayerForLowAmmo(int param_1)
 }
 
 
-// 822E6368  CG_CheckPlayerForLowClipSpecific  (cgame_mp/cg_newDraw_mp.cpp:256)
+// 822E5BC0  MemFile_ArchiveFloat  (universal/memfile.h:256)
 
-void CG_CheckPlayerForLowClipSpecific(void)
+void MemFile_ArchiveFloat(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  MemFile_ArchiveData(uVar1,4,param_2);
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82020318,0x102,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  if ((*(uint *)param_2 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff82020318,0x103,0,0xffffffff82000f98,0xffffffff82020364);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 822E6368  CG_CheckPlayerForLowClipSpecific  (cgame_mp/cg_newDraw_mp.cpp:256)
+
+void CG_CheckPlayerForLowClipSpecific
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  
+  uVar2 = __savegprlr_27();
+  uVar3 = BG_GetAlternateWeapon(param_2,param_3);
+  iVar1 = (&DAT_829d84a0)[uVar3 & 0xff];
+  if ((*(char *)(iVar1 + 0x77a) == '\0') &&
+     (iVar4 = BG_GetAmmoInClipForWeapon(uVar2,param_2,param_3,param_4), -1 < iVar4)) {
+    if (999 < iVar4) {
+      iVar4 = 999;
+    }
+    iVar5 = BG_GetClipSize(uVar2,param_2,param_3);
+    if (iVar5 < 1000) {
+      if (iVar5 < 1) goto LAB_822e643c;
+    }
+    else {
+      iVar5 = 999;
+    }
+    uVar2 = 1;
+    if ((float)(longlong)iVar4 <= *(float *)(iVar1 + 0x534) * (float)(longlong)iVar5)
+    goto LAB_822e6440;
+  }
+LAB_822e643c:
+  uVar2 = 0;
+LAB_822e6440:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
 // 822E6448  CG_CheckPlayerForLowClip  (cgame_mp/cg_newDraw_mp.cpp:286)
 
-void CG_CheckPlayerForLowClip(void)
+void CG_CheckPlayerForLowClip(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  uVar3 = BG_GetNumWeapons();
+  if ((*(byte *)(iVar2 + 0x76ecf) < uVar3) &&
+     (iVar4 = BG_PlayerHasWeapon(iVar2,*(undefined4 *)(iVar2 + 0x76ecc)), iVar4 != 0)) {
+    uVar1 = *(undefined4 *)(iVar2 + 0x76ecc);
+  }
+  else {
+    uVar1 = *(undefined4 *)(iVar2 + 0x370);
+  }
+  iVar4 = BG_GetEquippedWeaponIndex(iVar2,uVar1);
+  if (iVar4 < 0) {
+    __restgprlr_29(0);
+    return;
+  }
+  CG_CheckPlayerForLowClipSpecific(iVar2,uVar1,*(undefined1 *)(iVar4 * 0xc + iVar2 + 0x2b2),param_2)
+  ;
+  __restgprlr_29();
+  return;
 }
 
 
 // 822E64E0  CG_DrawPlayerAmmoBackdrop  (cgame_mp/cg_newDraw_mp.cpp:302)
 
-void CG_DrawPlayerAmmoBackdrop(void)
+void CG_DrawPlayerAmmoBackdrop(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
   __savegprlr_26();
+  uVar1 = __savefpr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) && (*(char *)(iVar2 + 0x373) != '\0')) {
+    dVar3 = floor((double)(*(float *)(DAT_82a4d208 + 0xc) * 1000.0 + 0.5));
+    dVar3 = (double)CG_FadeHudMenu(uVar1,DAT_82a4d208,*(undefined4 *)(iVar2 + 0x79810),(int)dVar3);
+    if (dVar3 != 0.0) {
+      CG_CheckPlayerForLowAmmo(iVar2);
+      dVar6 = (double)param_2[3];
+      dVar5 = (double)param_2[2];
+      dVar4 = (double)param_2[1];
+      dVar3 = (double)*param_2;
+      ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawHandlePic(dVar3,dVar4,dVar5,dVar6);
+    }
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -206,7 +366,6 @@ void CG_DrawPlayerAmmoValue
   *(float *)(param_5 + 0xc) = (float)dVar14;
   if (dVar14 == 0.0) goto LAB_822e6c18;
   if (*(int *)(iVar7 + 0x335c) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0x169,0,0xffffffff82000f98,0xffffffff82002858);
   }
   iVar8 = CG_GetEntity(uVar5,*(undefined4 *)(iVar7 + 0x150));
@@ -340,51 +499,221 @@ void CG_DrawPlayerWeaponNameNoFade(undefined8 param_1,float *param_2,undefined8 
 
 // 822E6D48  CG_DrawPlayerWeaponNameBackNoFade  (cgame_mp/cg_newDraw_mp.cpp:494)
 
-void CG_DrawPlayerWeaponNameBackNoFade(void)
+void CG_DrawPlayerWeaponNameBackNoFade(undefined8 param_1,float *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  undefined8 extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  double dVar8;
+  undefined1 auStack_460 [1120];
+  
   __savegprlr_26();
+  uVar1 = __savefpr_28();
+  uVar7 = extraout_f1;
+  iVar3 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar3 + 0xf8) & 0x200000) == 0) &&
+     (uVar2 = CG_GetSelectedWeapon(), (uVar2 & 0xff) != 0)) {
+    CG_GetWeaponDisplayName(uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1,auStack_460,0x400);
+    iVar3 = UI_TextWidth(uVar7,auStack_460,0,param_3);
+    dVar8 = (double)param_2[3];
+    dVar6 = (double)param_2[1];
+    dVar5 = (double)((float)(longlong)iVar3 + 36.0);
+    dVar4 = (double)(float)((double)(param_2[2] + *param_2) - dVar5);
+    ScrPlace_GetActivePlacement(uVar1);
+    UI_DrawHandlePic(dVar4,dVar6,dVar5,dVar8);
+  }
+  __restfpr_28();
+  __restgprlr_26();
+  return;
 }
 
 
 // 822E6E40  CG_DrawPlayerWeaponNameFade  (cgame_mp/cg_newDraw_mp.cpp:524)
 
-void CG_DrawPlayerWeaponNameFade(void)
+void CG_DrawPlayerWeaponNameFade(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  undefined8 extraout_f1;
+  undefined8 uVar3;
+  
+  uVar1 = __savegprlr_27();
+  uVar3 = extraout_f1;
+  iVar2 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) &&
+     (iVar2 = CG_FadeColor(*(undefined4 *)(iVar2 + 0x6b98c),*(undefined4 *)(iVar2 + 0x76ed4),0x708,
+                           700), iVar2 != 0)) {
+    CG_DrawPlayerWeaponNameNoFade(uVar3,uVar1,param_2,param_3);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 822E6EF0  CG_DrawPlayerWeaponNameBackFade  (cgame_mp/cg_newDraw_mp.cpp:549)
 
-void CG_DrawPlayerWeaponNameBackFade(void)
+void CG_DrawPlayerWeaponNameBackFade(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  undefined8 extraout_f1;
+  double dVar3;
+  undefined8 uVar4;
+  
+  uVar1 = __savegprlr_27();
+  uVar4 = extraout_f1;
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    dVar3 = (double)CG_FadeHudMenu(uVar1,DAT_82a4d208,*(undefined4 *)(iVar2 + 0x76ed4),0x708);
+    if (dVar3 != 0.0) {
+      CG_DrawPlayerWeaponNameBackNoFade(uVar4,uVar1,param_2,param_3);
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 822E6FA8  CG_CalcPlayerSprintColor  (cgame_mp/cg_newDraw_mp.cpp:571)
+
+void CG_CalcPlayerSprintColor(undefined8 param_1,undefined8 param_2,float *param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  char cVar7;
+  int iVar6;
+  
+  iVar4 = __savegprlr_28();
+  iVar5 = BG_GetMaxSprintTime(param_2);
+  iVar6 = DAT_82a4d210;
+  if ((*(int *)((int)param_2 + 4) == 8) || (iVar5 == 0)) {
+    *param_3 = *(float *)(DAT_82a4d210 + 0xc);
+    param_3[1] = *(float *)(iVar6 + 0x10);
+    param_3[2] = *(float *)(iVar6 + 0x14);
+    __restgprlr_28();
+    return;
+  }
+  cVar7 = PM_IsSprinting(param_2);
+  if (cVar7 == '\0') {
+    iVar6 = PM_GetSprintLeftLastTime(param_2);
+  }
+  else {
+    iVar6 = PM_GetSprintLeft(param_2,*(undefined4 *)(iVar4 + 0x6b98c));
+  }
+  iVar3 = DAT_82a4d21c;
+  iVar2 = DAT_82a4d210;
+  iVar4 = DAT_82a4d200;
+  if (iVar6 != 0) {
+    fVar1 = (float)(longlong)iVar6 / (float)(longlong)iVar5;
+    *param_3 = (*(float *)(DAT_82a4d210 + 0xc) - *(float *)(DAT_82a4d200 + 0xc)) * fVar1 +
+               *(float *)(DAT_82a4d200 + 0xc);
+    param_3[1] = (*(float *)(iVar2 + 0x10) - *(float *)(iVar4 + 0x10)) * fVar1 +
+                 *(float *)(iVar4 + 0x10);
+    param_3[2] = (*(float *)(iVar2 + 0x14) - *(float *)(iVar4 + 0x14)) * fVar1 +
+                 *(float *)(iVar4 + 0x14);
+    param_3[3] = (*(float *)(iVar2 + 0x18) - *(float *)(iVar4 + 0x18)) * fVar1 +
+                 *(float *)(iVar4 + 0x18);
+    __restgprlr_28();
+    return;
+  }
+  *param_3 = *(float *)(DAT_82a4d21c + 0xc);
+  param_3[1] = *(float *)(iVar3 + 0x10);
+  param_3[2] = *(float *)(iVar3 + 0x14);
+  param_3[3] = *(float *)(iVar3 + 0x18);
+  __restgprlr_28();
+  return;
 }
 
 
 // 822E7108  CG_DrawPlayerSprintBack  (cgame_mp/cg_newDraw_mp.cpp:844)
 
-void CG_DrawPlayerSprintBack(void)
+void CG_DrawPlayerSprintBack(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  
   __savegprlr_26();
+  uVar1 = __savefpr_27();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    dVar3 = floor((double)(*(float *)(DAT_82a4d1ec + 0xc) * 1000.0 + 0.5));
+    dVar3 = (double)CG_FadeHudMenu(uVar1,DAT_82a4d1ec,*(undefined4 *)(iVar2 + 0x79814),(int)dVar3);
+    uVar7 = 0;
+    if (dVar3 != 0.0) {
+      dVar6 = (double)param_2[3];
+      dVar5 = (double)param_2[2];
+      dVar4 = (double)param_2[1];
+      dVar3 = (double)*param_2;
+      ScrPlace_GetActivePlacement(uVar1);
+      CL_DrawStretchPic(dVar3,dVar4,dVar5,dVar6,uVar7,uVar7,0x3ff0000000000000);
+    }
+  }
+  __restfpr_27();
+  __restgprlr_26();
+  return;
 }
 
 
 // 822E7238  CG_DrawPlayerSprintMeter  (cgame_mp/cg_newDraw_mp.cpp:866)
 
-void CG_DrawPlayerSprintMeter(void)
+void CG_DrawPlayerSprintMeter
+               (undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
   __savegprlr_26();
+  uVar1 = __savefpr_25();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+    dVar5 = floor((double)(*(float *)(DAT_82a4d1ec + 0xc) * 1000.0 + 0.5));
+    dVar5 = (double)CG_FadeHudMenu(uVar1,DAT_82a4d1ec,*(undefined4 *)(iVar2 + 0x79814),(int)dVar5);
+    dVar10 = 0.0;
+    if (dVar5 != 0.0) {
+      iVar3 = PM_GetSprintLeft(iVar2,*(undefined4 *)(iVar2 + 0x6b98c));
+      iVar4 = BG_GetMaxSprintTime(iVar2);
+      dVar5 = (double)(float)((double)(longlong)iVar3 / (double)(longlong)iVar4);
+      if (dVar10 < dVar5) {
+        dVar9 = (double)*param_2;
+        dVar8 = (double)(float)((double)param_2[2] * dVar5);
+        dVar7 = (double)param_2[1];
+        dVar6 = (double)param_2[3];
+        CG_CalcPlayerSprintColor(iVar2,iVar2,param_4);
+        ScrPlace_GetActivePlacement(uVar1);
+        CL_DrawStretchPic(dVar9,dVar7,dVar8,dVar6,dVar10,dVar10,dVar5,0x3ff0000000000000);
+      }
+    }
+  }
+  __restfpr_25();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -603,13 +932,104 @@ LAB_822e79c4:
 }
 
 
-// 822E7BF8  CG_BloodOverlayDraw  (cgame_mp/cg_newDraw_mp.cpp:1140)
+// 822E79D8  CG_BloodOverlayIsVisible  (cgame_mp/cg_newDraw_mp.cpp:1080)
 
-void CG_BloodOverlayDraw(void)
+undefined8 CG_BloodOverlayIsVisible(undefined8 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar2;
+  int iVar1;
+  
+  cVar2 = CG_ShouldDrawHud();
+  if ((cVar2 != '\0') && (cVar2 = CG_KillCamEntityEnabled(param_1), cVar2 == '\0')) {
+    iVar1 = CG_GetLocalClientGlobals(param_1);
+    iVar1 = *(int *)(iVar1 + 4);
+    if ((7 < iVar1 - 2U) ||
+       ((iVar1 != 3 && ((iVar1 == 4 || (((iVar1 != 5 && (iVar1 != 6)) && (iVar1 == 7)))))))) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
+// 822E7A80  CG_BloodOverlayUpdate  (cgame_mp/cg_newDraw_mp.cpp:1114)
+
+void CG_BloodOverlayUpdate(double param_1,int param_2)
+
+{
+  float fVar1;
+  float *pfVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
+  if (param_2 == 0) {
+    MyAssertHandler(0xffffffff82020818,0x45e,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  dVar4 = 0.0;
+  dVar5 = 1.0;
+  if ((param_1 < 0.0) || (1.0 < param_1)) {
+    MyAssertHandler(param_1,0xffffffff82020818,0x45f,0,0xffffffff82020868,param_1,0,
+                    0x3ff0000000000000);
+  }
+  dVar3 = dVar4;
+  if ((*(uint *)(param_2 + 0x14) & 4) == 0) {
+    dVar3 = (double)(float)(dVar5 - param_1);
+  }
+  fVar1 = (float)(dVar3 * dVar3);
+  pfVar2 = (float *)(param_2 + 0x76ec0);
+  if ((double)fVar1 < (double)*pfVar2) {
+    if ((double)*(float *)(DAT_82a4d214 + 0xc) <= dVar4) {
+      *pfVar2 = fVar1;
+    }
+    else {
+      *pfVar2 = -(float)((double)((float)(longlong)*(int *)(param_2 + 0x6b988) * 0.001) *
+                         (double)*(float *)(DAT_82a4d214 + 0xc) - (double)*pfVar2);
+    }
+  }
+  if ((double)*pfVar2 < (double)fVar1) {
+    *pfVar2 = fVar1;
+  }
+  return;
+}
+
+
+// 822E7BF8  CG_BloodOverlayDraw  (cgame_mp/cg_newDraw_mp.cpp:1140)
+
+void CG_BloodOverlayDraw(undefined8 param_1,float *param_2,undefined8 param_3,int param_4)
+
+{
+  undefined8 uVar1;
+  char cVar3;
+  int iVar2;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  undefined8 uVar8;
+  
   __savegprlr_27();
+  uVar1 = __savefpr_27();
+  cVar3 = CG_BloodOverlayIsVisible();
+  if (cVar3 != '\0') {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    CG_CalcPlayerHealth();
+    CG_BloodOverlayUpdate();
+    uVar8 = 0;
+    if (*(float *)(iVar2 + 0x76ec0) != 0.0) {
+      *(float *)(param_4 + 0xc) = *(float *)(iVar2 + 0x76ec0);
+      dVar7 = (double)param_2[3];
+      dVar6 = (double)param_2[2];
+      dVar5 = (double)param_2[1];
+      dVar4 = (double)*param_2;
+      ScrPlace_GetActivePlacement(uVar1);
+      CL_DrawStretchPic(dVar4,dVar5,dVar6,dVar7,uVar8,uVar8,0x3ff0000000000000);
+    }
+  }
+  __restfpr_27();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -619,8 +1039,9 @@ void CG_BloodOverlayReset(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0x493,0,0xffffffff82000f98,0xffffffff82002798);
+    uRam00076ec0 = 0;
+    return;
   }
   *(undefined4 *)(param_1 + 0x76ec0) = 0;
   return;
@@ -656,23 +1077,136 @@ undefined8 CG_ServerMaterialName(undefined8 param_1,longlong param_2,int param_3
 }
 
 
+// 822E7E08  CG_ObjectiveIcon  (cgame_mp/cg_newDraw_mp.cpp:1200)
+
+void CG_ObjectiveIcon(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_29();
+  if (((int)param_3 < 0) || ((param_3 & 0xffffffff) != 0)) {
+    MyAssertHandler(0xffffffff82020818,0x4b4,0,0xffffffff82000f98,0xffffffff820208a0);
+  }
+  if (((int)param_2 != 0) &&
+     (iVar2 = CG_ServerMaterialName(uVar1,param_2,auStack_60,0x40), iVar2 != 0)) {
+    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+    Colorblind_GetMaterialByStringTable(uVar1,auStack_60);
+    __restgprlr_29();
+    return;
+  }
+  __restgprlr_29(*(undefined4 *)((int)&DAT_82a388bc + (int)((param_3 & 0xffffffff) << 2)));
+  return;
+}
+
+
+// 822E7EB0  CG_MaterialHandleForIndex  (cgame_mp/cg_newDraw_mp.cpp:1219)
+
+undefined8 CG_MaterialHandleForIndex(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  undefined1 auStack_60 [72];
+  
+  if ((int)param_2 == 0) {
+    MyAssertHandler(0xffffffff82020818,0x4c6,0,0xffffffff82000f98,0xffffffff820208fc);
+  }
+  iVar2 = CG_ServerMaterialName(param_1,param_2,auStack_60,0x40);
+  if (iVar2 == 0) {
+    uVar1 = 0;
+  }
+  else {
+    uVar1 = Material_RegisterHandle(auStack_60,7);
+  }
+  return uVar1;
+}
+
+
 // 822E7F40  CG_UpdateCursorHints  (cgame_mp/cg_newDraw_mp.cpp:1235)
 
 void CG_UpdateCursorHints(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar2 + 0x6b9a0) == 0) {
+    if (*(int *)(iVar2 + 0x1e0) != 0) {
+      *(undefined4 *)(iVar2 + 0x76e8c) = *(undefined4 *)(iVar2 + 0x6b98c);
+      *(undefined4 *)(iVar2 + 0x76e90) = *(undefined4 *)(DAT_82a3d680 + 0xc);
+      *(int *)(iVar2 + 0x76e84) = *(int *)(iVar2 + 0x1e0);
+      *(undefined4 *)(iVar2 + 0x76e94) = *(undefined4 *)(iVar2 + 0x1e4);
+      *(undefined4 *)(iVar2 + 0x76e98) = *(undefined4 *)(iVar2 + 0x1ec);
+      iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x1e8));
+      if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) {
+        *(undefined4 *)(iVar2 + 0x76e88) = *(undefined4 *)(iVar3 + 200);
+        __restgprlr_26();
+        return;
+      }
+      *(undefined4 *)(iVar2 + 0x76e88) = 3;
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 822E8018  CG_GetWeaponUseString  (cgame_mp/cg_newDraw_mp.cpp:1267)
 
-void CG_GetWeaponUseString(void)
+void CG_GetWeaponUseString(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  undefined8 uVar3;
+  undefined1 auStack_130 [304];
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82020818,0x4fc,0,0xffffffff82000f98,0xffffffff820209a0);
+  }
+  iVar4 = CG_GetLocalClientGlobals(uVar2);
+  if (*(int *)(iVar4 + 0x76e84) != 5) {
+    MyAssertHandler(0xffffffff82020818,0x4ff,0,0xffffffff82000f98,0xffffffff82020974);
+  }
+  *(undefined1 *)param_2 = 0;
+  iVar5 = CG_GetEntity(uVar2,*(undefined4 *)(iVar4 + 0x1e8));
+  uVar1 = *(undefined4 *)(iVar5 + 0x18c);
+  uVar6 = BG_GetAlternateWeapon(uVar1,0);
+  if (*(int *)((&DAT_829d84a0)[uVar6 & 0xff] + 0x38) == 0) {
+    UI_GetKeyBindingLocalizedString(uVar2,0xffffffff82020968,auStack_130,0x100);
+    iVar4 = BG_PlayerWeaponCountPrimaryTypes(iVar4);
+    if (iVar4 < 2) {
+      uVar3 = UI_SafeTranslateString(0xffffffff8202094c);
+    }
+    else {
+      uVar3 = UI_SafeTranslateString(0xffffffff82020934);
+    }
+  }
+  else {
+    if ((*(int *)(iVar4 + 0x76e88) == 4) && (iVar4 = BG_GetWeaponClass(uVar1,0), iVar4 != 9)) {
+      uVar3 = UI_SafeTranslateString(0xffffffff82020918);
+      UI_GetKeyBindingLocalizedString(uVar2,0xffffffff82020910,auStack_130,0x100);
+      UI_ReplaceConversionString(uVar3,auStack_130);
+      __restgprlr_27();
+      return;
+    }
+    uVar3 = UI_SafeTranslateString(0xffffffff8202094c);
+    UI_GetKeyBindingLocalizedString(uVar2,0xffffffff82020968,auStack_130,0x100);
+  }
+  CG_GetWeaponDisplayName(uVar1,0,param_2,0x400);
+  UI_ReplaceConversionString(uVar3,auStack_130);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -681,8 +1215,34 @@ void CG_GetWeaponUseString(void)
 void CG_GetUseString(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar3;
+  char *pcVar4;
+  undefined8 uVar2;
+  undefined1 auStack_520 [256];
+  undefined1 auStack_420 [1056];
+  
+  uVar1 = __savegprlr_29();
+  iVar3 = CG_GetLocalClientGlobals();
+  if ((int)*(uint *)(iVar3 + 0x76e94) < 0) {
+    MyAssertHandler(0xffffffff82020818,0x534,0,0xffffffff82000f98,0xffffffff820209c4);
+  }
+  pcVar4 = (char *)CL_GetConfigString((ulonglong)*(uint *)(iVar3 + 0x76e94) + 0xe8b);
+  if ((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) {
+    iVar3 = UI_GetKeyBindingLocalizedString(uVar1,0xffffffff82020968,auStack_520,0x100);
+    if (iVar3 == 0) {
+      uVar2 = UI_SafeTranslateString(0xffffffff820209bc);
+      I_strncpyz(auStack_520,uVar2,0x100);
+    }
+    uVar2 = SEH_LocalizeTextMessage(pcVar4,0xffffffff820209b0,0);
+    uVar2 = UI_ReplaceConversionString(uVar2,auStack_520);
+    UI_ReplaceDirective(uVar1,uVar2,auStack_420,0x400);
+    va(0xffffffff82000f98,auStack_420);
+    __restgprlr_29();
+    return;
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -795,7 +1355,6 @@ void CG_DrawCursorhint(undefined8 param_1,float *param_2,undefined8 param_3,unde
         if (iVar7 != 0) {
           if (iVar7 == 1) goto LAB_822e85ec;
           if (iVar7 != 2) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82020818,0x5d4,0,0xffffffff82000f98,0xffffffff82020a34);
           }
           dVar12 = (double)(float)((double)param_2[2] * dVar19);
@@ -814,7 +1373,6 @@ LAB_822e85ec:
         }
         else {
           if (iVar7 != 2) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82020818,0x5c2,0,0xffffffff82000f98,0xffffffff82020a64);
           }
           dVar12 = (double)(float)((double)param_2[2] * dVar19);
@@ -932,11 +1490,126 @@ LAB_822e8b50:
 
 // 822E8B60  CG_DrawSpectatorControls  (cgame_mp/cg_newDraw_mp.cpp:1616)
 
-void CG_DrawSpectatorControls(void)
+void CG_DrawSpectatorControls(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  float *pfVar1;
+  undefined8 uVar2;
+  char cVar8;
+  int iVar6;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar7;
+  undefined8 uVar5;
+  longlong lVar9;
+  uint uVar10;
+  int iVar11;
+  undefined8 extraout_f1;
+  double dVar12;
+  undefined8 uVar13;
+  char *local_1e0 [8];
+  char *local_1c0 [16];
+  undefined1 auStack_180 [384];
+  
+  uVar2 = __savegprlr_19();
+  if (*(char *)(DAT_82a3d664 + 0xc) != '\0') {
+    uVar13 = extraout_f1;
+    cVar8 = Key_IsCatcherActive(uVar2,0x10);
+    if (cVar8 == '\0') {
+      iVar6 = CG_GetLocalClientGlobals(uVar2);
+      if (*(int *)(iVar6 + 0x335c) == 0) {
+        MyAssertHandler(0xffffffff82020818,0x66e,0,0xffffffff82000f98,0xffffffff82002858);
+      }
+      if ((*(uint *)(iVar6 + 0x10) & 0x6000) != 0) {
+        uVar3 = ScrPlace_GetActivePlacement(uVar2);
+        uVar4 = UI_GetFontHandle(uVar13,uVar3,0);
+        uVar10 = *(uint *)(iVar6 + 0x10);
+        local_1c0[0] = "togglemenu";
+        local_1e0[0] = "PLATFORM_MP_OPEN_MENU";
+        lVar9 = 1;
+        if ((uVar10 & 0x800) == 0) {
+          local_1c0[1] = "";
+          lVar9 = 2;
+          local_1e0[1] = "PLATFORM_FOLLOWSTART";
+        }
+        else {
+          if ((uVar10 & 0x2000) != 0) {
+            local_1c0[1] = "";
+            local_1c0[2] = "";
+            local_1e0[1] = "PLATFORM_FOLLOWNEXTPLAYER";
+            lVar9 = 3;
+            local_1e0[2] = "PLATFORM_FOLLOWPREVPLAYER";
+          }
+          if ((uVar10 & 0x4000) == 0) {
+            cVar8 = CL_IsRenderingSplitScreen();
+            if ((cVar8 == '\0') && (*(char *)(DAT_829c54cc + 0xc) == '\0')) {
+              iVar6 = *(int *)(iVar6 + 0x6b9a0);
+              iVar11 = (int)(lVar9 << 2);
+              *(undefined1 **)((int)local_1c0 + iVar11) = &DAT_820068af;
+              if (iVar6 == 0) {
+                lVar9 = lVar9 + 1;
+                *(char **)((int)local_1e0 + iVar11) = "PLATFORM_THIRDPERSON";
+              }
+              else {
+                lVar9 = lVar9 + 1;
+                *(char **)((int)local_1e0 + iVar11) = "PLATFORM_FIRSTPERSON";
+              }
+            }
+          }
+          else {
+            iVar11 = (int)(lVar9 << 2);
+            *(undefined1 **)((int)local_1c0 + iVar11) = &DAT_820068af;
+            cVar8 = CL_IsRenderingSplitScreen();
+            if (cVar8 == '\0') {
+              if (*(int *)(iVar6 + 0x6b9a0) == 0) {
+                lVar9 = lVar9 + 1;
+                *(char **)((int)local_1e0 + iVar11) = "PLATFORM_FOLLOWSTOP";
+              }
+              else {
+                lVar9 = lVar9 + 1;
+                *(char **)((int)local_1e0 + iVar11) = "PLATFORM_FIRSTPERSON";
+              }
+            }
+            else {
+              lVar9 = lVar9 + 1;
+              *(char **)((int)local_1e0 + iVar11) = "PLATFORM_FOLLOWSTOP";
+            }
+          }
+        }
+        iVar6 = (int)(lVar9 << 2);
+        uVar10 = (int)lVar9 + 1;
+        *(char **)((int)local_1c0 + iVar6) = "togglescores";
+        *(char **)((int)local_1e0 + iVar6) = "PLATFORM_SCOREBOARD";
+        if (7 < uVar10) {
+          MyAssertHandler(0xffffffff82020818,0x6c8,0,0xffffffff82000f98,0xffffffff82020aa8);
+        }
+        iVar6 = UI_TextHeight(uVar13,uVar4);
+        pfVar1 = (float *)param_2;
+        iVar11 = 0;
+        dVar12 = (double)(pfVar1[3] + (float)(longlong)iVar6);
+        if ((int)lVar9 != -1) {
+          iVar6 = 0;
+          do {
+            iVar7 = UI_GetKeyBindingLocalizedString
+                              (uVar2,*(undefined4 *)((int)local_1c0 + iVar6),auStack_180,0x100);
+            if (iVar7 == 0) {
+              uVar5 = UI_SafeTranslateString(0xffffffff82020a9c);
+              I_strncpyz(auStack_180,uVar5,0x100);
+            }
+            uVar5 = UI_SafeTranslateString(*(undefined4 *)((int)local_1e0 + iVar6));
+            uVar5 = UI_ReplaceConversionString(uVar5,auStack_180);
+            UI_DrawWrappedText((double)*pfVar1,
+                               (double)(float)((double)(longlong)iVar11 * dVar12 + (double)pfVar1[1]
+                                              ),uVar13,uVar3,uVar5,param_2,uVar4);
+            iVar11 = iVar11 + 1;
+            iVar6 = iVar6 + 4;
+          } while (iVar11 < (int)uVar10);
+        }
+      }
+    }
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -958,7 +1631,6 @@ void CG_DrawSpectatorFollowing(undefined8 param_1,undefined8 param_2,undefined8 
   iVar4 = CG_GetLocalClientGlobals();
   if ((*(uint *)(iVar4 + 0x10) & 0x800) != 0) {
     if (0x11 < *(uint *)(iVar4 + 0x150)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82020818,0x6f2,0,0xffffffff82004624,*(uint *)(iVar4 + 0x150),0x12);
     }
     iVar4 = CL_GetClientName(uVar2,*(undefined4 *)(iVar4 + 0x150),auStack_80,0x2a);
@@ -980,31 +1652,132 @@ void CG_DrawSpectatorFollowing(undefined8 param_1,undefined8 param_2,undefined8 
 
 // 822E9058  CG_DrawChangeZoomHint  (cgame_mp/cg_newDraw_mp.cpp:1791)
 
-void CG_DrawChangeZoomHint(void)
+void CG_DrawChangeZoomHint(undefined8 param_1,float *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  char cVar5;
+  undefined8 uVar3;
+  undefined8 extraout_f1;
+  double dVar6;
+  double dVar7;
+  undefined8 uVar8;
+  undefined1 auStack_150 [336];
+  
+  uVar1 = __savegprlr_26();
+  if (*(char *)(DAT_82a38398 + 0xc) != '\0') {
+    uVar8 = extraout_f1;
+    iVar4 = CG_GetLocalClientGlobals();
+    uVar2 = BG_GetViewmodelWeapon();
+    if ((((uVar2 & 0xff) != 0) && (*(float *)(iVar4 + 0x378) == 1.0)) &&
+       (cVar5 = BG_CanVariableZoom(uVar2,*(uint *)(iVar4 + 0x374) >> 0xf & 1), cVar5 != '\0')) {
+      UI_GetKeyBindingLocalizedString(uVar1,0xffffffff82020bec,auStack_150,0x100);
+      uVar3 = UI_SafeTranslateString(0xffffffff82020bd4);
+      uVar3 = UI_ReplaceConversionString(uVar3,auStack_150);
+      iVar4 = UI_TextWidth(uVar8,uVar3,0,param_3);
+      dVar6 = floor((double)((float)(longlong)iVar4 * 0.5 + 0.5));
+      dVar7 = (double)param_2[1];
+      dVar6 = (double)(*param_2 - (float)(longlong)(int)dVar6);
+      uVar1 = ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawText(dVar6,dVar7,uVar8,uVar1,uVar3,0x7fffffff,param_3);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 822E91E8  CG_DrawHoldBreathHint  (cgame_mp/cg_newDraw_mp.cpp:1828)
 
-void CG_DrawHoldBreathHint(void)
+void CG_DrawHoldBreathHint(undefined8 param_1,float *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  undefined8 extraout_f1;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  undefined1 auStack_180 [4];
+  uint local_17c;
+  undefined1 auStack_150 [336];
+  
+  uVar1 = __savegprlr_26();
+  if ((((*(char *)(DAT_82a38230 + 0xc) != '\0') &&
+       (uVar7 = extraout_f1, iVar3 = CG_GetLocalClientGlobals(), (*(uint *)(iVar3 + 0x374) & 4) == 0
+       )) && (*(float *)(iVar3 + 0x378) == 1.0)) &&
+     (iVar4 = BG_HasHoldBreathAbility(iVar3), iVar4 != 0)) {
+    uVar2 = CL_GetCurrentCmdNumber(uVar1);
+    CL_GetUserCmd(uVar1,uVar2,auStack_180);
+    if (((local_17c & 0x2000) == 0) && (iVar3 = BG_HoldingBreath(iVar3), iVar3 == 0)) {
+      UI_GetKeyBindingLocalizedString(uVar1,0xffffffff82020c10,auStack_150,0x100);
+      uVar2 = UI_SafeTranslateString(0xffffffff82020bf8);
+      uVar2 = UI_ReplaceConversionString(uVar2,auStack_150);
+      iVar3 = UI_TextWidth(uVar7,uVar2,0,param_3);
+      dVar5 = floor((double)((float)(longlong)iVar3 * 0.5 + 0.5));
+      dVar6 = (double)param_2[1];
+      dVar5 = (double)(*param_2 - (float)(longlong)(int)dVar5);
+      uVar1 = ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawText(dVar5,dVar6,uVar7,uVar1,uVar2,0x7fffffff,param_3);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 822E93A8  CG_DrawMantleHint  (cgame_mp/cg_newDraw_mp.cpp:1868)
 
-void CG_DrawMantleHint(void)
+void CG_DrawMantleHint(undefined8 param_1,float *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  undefined8 uVar8;
+  double dVar9;
+  double dVar10;
+  undefined1 auStack_180 [384];
+  
   __savegprlr_23();
+  uVar1 = __savefpr_27();
+  uVar8 = extraout_f1;
+  if (DAT_82a388c8 == 0) {
+    MyAssertHandler(0xffffffff82020818,0x755,0,0xffffffff82000f98,0xffffffff82020c38);
+  }
+  if (*(char *)(DAT_82a3d5ec + 0xc) != '\0') {
+    iVar4 = CG_GetLocalClientGlobals(uVar1);
+    if ((*(uint *)(iVar4 + 0x238) & 8) != 0) {
+      UI_GetKeyBindingLocalizedString(uVar1,0xffffffff82020c2c,auStack_180,0x100);
+      uVar2 = UI_SafeTranslateString(0xffffffff82020c1c);
+      uVar2 = UI_ReplaceConversionString(uVar2,auStack_180);
+      iVar4 = UI_TextWidth(uVar8,uVar2,0,param_3);
+      dVar7 = (double)(longlong)iVar4;
+      iVar4 = UI_TextHeight(uVar8,param_3);
+      dVar10 = 0.5;
+      dVar6 = -(double)((float)((double)param_2[2] + dVar7) * 0.5 - *param_2);
+      dVar5 = (double)(float)((double)(longlong)iVar4 * 0.5 + (double)param_2[1]);
+      uVar3 = ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawText(dVar6,dVar5,uVar8,uVar3,uVar2,0x7fffffff,param_3);
+      dVar9 = (double)param_2[3];
+      dVar5 = (double)param_2[2];
+      dVar10 = -(double)(float)(dVar9 * dVar10 - (double)param_2[1]);
+      ScrPlace_GetActivePlacement(uVar1);
+      UI_DrawHandlePic((double)(float)(dVar6 + dVar7),dVar10,dVar5,dVar9);
+    }
+  }
+  __restfpr_27();
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1052,15 +1825,13 @@ void CG_DrawInvalidCmdHint
   undefined1 auStack_180 [384];
   
   uVar3 = __savegprlr_21();
+  uVar12 = extraout_f1;
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0x78d,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0x78e,0,0xffffffff82000f98,0xffffffff8200240c);
   }
-  uVar12 = extraout_f1;
   iVar5 = CG_GetLocalClientGlobals(uVar3);
   if ((int)(*(int *)(DAT_82a3829c + 0xc) + *(uint *)(iVar5 + 0x76ea8)) <
       (int)*(uint *)(iVar5 + 0x6b98c)) {
@@ -1069,7 +1840,6 @@ void CG_DrawInvalidCmdHint
   iVar2 = *(int *)(iVar5 + 0x76ea0);
   if (8 < iVar2 - 1U) {
     if (iVar2 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82020818,0x797,0,0xffffffff82000f98,0xffffffff82020c4c);
     }
     __restgprlr_21();
@@ -1129,7 +1899,6 @@ void CG_DrawInvalidCmdHint
 LAB_822e97b8:
   uVar1 = *(uint *)(DAT_82a383c0 + 0xc);
   if ((int)uVar1 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0x7d6,0,0xffffffff82000f98,0xffffffff82020c80);
   }
   uVar7 = (ulonglong)*(uint *)(iVar5 + 0x6b98c) - (ulonglong)*(uint *)(iVar5 + 0x76ea8);
@@ -1153,41 +1922,721 @@ LAB_822e97b8:
 
 // 822E9940  DrawAirburstDistance  (cgame_mp/cg_newDraw_mp.cpp:2025)
 
-void DrawAirburstDistance(void)
+void DrawAirburstDistance
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float *pfVar1;
+  ulonglong uVar2;
+  char cVar4;
+  ulonglong uVar3;
+  ulonglong uVar5;
+  uint uVar6;
+  double dVar7;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  
+  uVar2 = __savegprlr_23();
+  if ((DAT_82a4d22c & 1) == 0) {
+    DAT_82a4d22c = DAT_82a4d22c | 1;
+    DAT_82a4d228 = 0.1;
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82020818,0x7f1,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82020818,0x7f2,0,0xffffffff82000f98,0xffffffff82020dcc);
+  }
+  cVar4 = Material_Is2D(param_5);
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff82020818,0x7f3,0,0xffffffff82000f98,0xffffffff82020db0);
+  }
+  uVar3 = ScrPlace_GetActivePlacement(param_2);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82020818,0x7f6,0,0xffffffff82000f98,0xffffffff8200144c);
+  }
+  uVar6 = 0;
+  uVar8 = 0x3ff0000000000000;
+  uVar9 = 0;
+  do {
+    pfVar1 = (float *)param_3;
+    uVar5 = uVar2 - (((uVar2 & 0xffffffff) / 10) * 10 & 0xfffffffe);
+    uVar2 = (uVar2 & 0xffffffff) / 10;
+    dVar7 = (double)(float)((double)DAT_82a4d228 * (double)(uVar5 & 0xffffffff));
+    CL_DrawStretchPic(-(double)(float)((double)uVar6 * (double)pfVar1[2] - (double)*pfVar1),
+                      (double)pfVar1[1],(double)pfVar1[2],(double)pfVar1[3],dVar7,uVar9,
+                      (double)(float)(dVar7 + (double)DAT_82a4d228),uVar8,uVar3);
+    uVar6 = uVar6 + 1;
+  } while (uVar2 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 822E9B10  CG_DrawAirburstCurrentDistance  (cgame_mp/cg_newDraw_mp.cpp:2069)
 
-void CG_DrawAirburstCurrentDistance(void)
+void CG_DrawAirburstCurrentDistance
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82020818,0x81b,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  DrawAirburstDistance
+            ((longlong)((float)*(uint *)(iVar2 + 0x76e80) * 0.0254) & 0xffffffff,uVar1,param_2,
+             param_3,param_4);
+  __restgprlr_27();
+  return;
 }
 
 
 // 822E9BB0  CG_DrawAirburstMarkDistance  (cgame_mp/cg_newDraw_mp.cpp:2085)
 
-void CG_DrawAirburstMarkDistance(void)
+void CG_DrawAirburstMarkDistance
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82020818,0x82c,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  DrawAirburstDistance
+            ((longlong)((float)*(uint *)(iVar2 + 0x4e8) * 0.0254) & 0xffffffff,uVar1,param_2,param_3
+             ,param_4);
+  __restgprlr_27();
+  return;
 }
 
 
 // 822E9C48  CG_DrawDemoControls  (cgame_mp/cg_newDraw_mp.cpp:2103)
 
-void CG_DrawDemoControls(void)
+void CG_DrawDemoControls(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  char cVar9;
+  int iVar6;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined4 uVar7;
+  undefined8 uVar4;
+  int iVar8;
+  undefined8 uVar5;
+  int iVar10;
+  longlong lVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  undefined8 uVar29;
+  undefined8 uVar30;
+  double dVar31;
+  float local_680;
+  float local_67c;
+  float local_678;
+  float local_674;
+  float local_670;
+  float local_66c;
+  float local_668;
+  float local_664;
+  int local_660 [2];
+  longlong local_658;
+  undefined1 auStack_650 [8];
+  longlong local_648;
+  int local_640;
+  int local_63c;
+  longlong local_638;
+  int local_630;
+  float local_62c;
+  float local_628;
+  undefined4 local_620;
+  undefined4 local_61c;
+  undefined4 local_618;
+  undefined4 local_614;
+  float local_610;
+  float local_60c;
+  undefined4 local_600;
+  undefined4 local_5fc;
+  undefined4 local_5f8;
+  undefined4 local_5f4;
+  int local_5f0 [4];
+  undefined4 local_5e0;
+  undefined4 local_5dc;
+  undefined4 local_5d8;
+  undefined4 local_5d4;
+  undefined4 local_5d0;
+  undefined4 local_5cc;
+  undefined4 local_5c8;
+  undefined4 local_5c4;
+  undefined4 local_5c0;
+  undefined4 local_5bc;
+  undefined4 local_5b8;
+  undefined4 local_5b4;
+  undefined4 local_5b0;
+  undefined4 local_5ac;
+  undefined4 local_5a8;
+  undefined4 local_5a4;
+  undefined4 local_5a0;
+  undefined4 local_59c;
+  undefined4 local_598;
+  undefined4 local_594;
+  undefined4 local_590;
+  undefined4 local_58c;
+  undefined4 local_588;
+  undefined4 local_584;
+  undefined1 auStack_580 [16];
+  undefined1 local_570 [8];
+  undefined8 local_568;
+  undefined8 local_560;
+  undefined8 local_558;
+  undefined8 local_550;
+  undefined1 auStack_540 [16];
+  undefined1 auStack_530 [1328];
+  
   __savegprlr();
+  uVar1 = __savefpr();
+  dVar31 = 1.0;
+  local_5d0 = 0x3e20c49c;
+  local_5cc = 0x3e3126e9;
+  uVar30 = 0;
+  dVar22 = 0.5;
+  local_5c8 = 0x3e24dd2f;
+  local_5c4 = 0x3f800000;
+  local_5a0 = 0x3e591687;
+  local_59c = 0x3e6c8b44;
+  local_598 = 0x3e6147ae;
+  local_594 = 0x3f800000;
+  local_590 = 0;
+  local_58c = 0;
+  local_588 = 0;
+  local_584 = 0x3f800000;
+  local_5c0 = 0x3f800000;
+  local_5bc = 0x3f800000;
+  local_5b8 = 0x3f800000;
+  local_5b4 = 0x3dcccccd;
+  local_600 = 0;
+  local_5fc = 0;
+  local_5f8 = 0;
+  local_5f4 = 0x3f800000;
+  local_620 = 0x3f800000;
+  local_61c = 0x3f800000;
+  local_618 = 0x3f800000;
+  local_614 = 0x3d4ccccd;
+  local_5b0 = 0x3f800000;
+  local_5ac = 0x3f800000;
+  local_5a8 = 0x3f800000;
+  local_5a4 = 0x3f000000;
+  local_5e0 = 0x3f19999a;
+  local_5dc = 0;
+  local_5d8 = 0;
+  local_5d4 = 0x3f800000;
+  cVar9 = CL_Demo_IsPlaying();
+  if (((((cVar9 == '\0') || (cVar9 = CL_Demo_IsPlaybackMemoryAllocated(), cVar9 == '\0')) ||
+       (cVar9 = CL_Demo_IsPauseMenuOpen(uVar1), cVar9 != '\0')) ||
+      ((cVar9 = CL_Demo_IsSaveDialogOpen(uVar1), cVar9 != '\0' ||
+       (cVar9 = CL_Demo_IsErrorDialogOpen(uVar1), cVar9 != '\0')))) ||
+     (cVar9 = CL_Demo_IsDemoHudHidden(), cVar9 != '\0')) goto LAB_822eb6dc;
+  iVar6 = CG_GetLocalClientGlobals(uVar1);
+  uVar2 = ScrPlace_GetActivePlacement(uVar1);
+  uVar3 = UI_GetFontHandle(0x3fd8000000000000,uVar2,3);
+  dVar20 = 10.0;
+  dVar23 = (double)(float)((double)param_2[1] + 10.0);
+  dVar25 = (double)(float)((double)*param_2 + 10.0);
+  dVar19 = 6.0;
+  dVar16 = (double)(float)((double)param_2[2] - 20.0);
+  local_610 = 20.0;
+  dVar21 = (double)(float)((double)param_2[3] - 30.0);
+  dVar15 = 5.0;
+  dVar27 = (double)(float)(dVar23 + 6.0);
+  local_60c = 5.0;
+  dVar28 = (double)(float)(dVar25 + 5.0);
+  dVar26 = (double)(float)(dVar16 - 35.0);
+  dVar18 = (double)(float)(dVar27 + 14.0);
+  CL_DrawStretchPic((double)*param_2,(double)param_2[1],(double)param_2[2],(double)param_2[3],uVar30
+                    ,uVar30,dVar31,dVar31,uVar2);
+  cVar9 = CL_Demo_IsClipPlaying();
+  dVar17 = 3.0;
+  uVar29 = 0x3fd0000000000000;
+  local_62c = 3.0;
+  if (cVar9 == '\0') {
+    cVar9 = CL_Demo_IsFreeCamera(uVar1);
+    local_680 = 1.0;
+    local_67c = 1.0;
+    local_678 = 1.0;
+    local_674 = 1.0;
+    if (cVar9 == '\0') {
+      CL_Demo_GetActivatedColorForButton(3,&local_680);
+    }
+    local_568 = 0;
+    local_560 = 0;
+    local_558 = 0;
+    local_550 = 0;
+    UI_SafeTranslateString(0xffffffff82021020);
+    uVar7 = UI_SafeTranslateString(0xffffffff82020ff8);
+    local_568 = CONCAT44(uVar7,local_568._4_4_);
+    cVar9 = CL_Demo_IsFreeCamera(uVar1);
+    if (cVar9 == '\0') {
+      uVar4 = 0xffffffff82020fa8;
+    }
+    else {
+      uVar4 = 0xffffffff82020fcc;
+    }
+    uVar4 = UI_SafeTranslateString(uVar4);
+    UI_ReplaceConversions(uVar4,local_570,auStack_530,0x400);
+    iVar8 = UI_TextWidth(uVar29,auStack_530,0x7fffffff,uVar3);
+    local_658 = (longlong)iVar8;
+    UI_DrawText((double)((param_2[2] + *param_2) - (float)((double)local_658 + dVar15)),
+                (double)(float)((double)param_2[1] - dVar17),uVar29,uVar2,auStack_530,0x7fffffff,
+                uVar3);
+  }
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020f80);
+  UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  CL_Demo_GetActivatedColorForButton(5,&local_680);
+  UI_DrawText((double)*param_2,(double)(float)((double)param_2[1] - dVar17),uVar29,uVar2,uVar4,
+              0x7fffffff,uVar3);
+  CL_DrawStretchPic(dVar25,dVar23,dVar16,dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+  dVar21 = 8.0;
+  CL_DrawStretchPic(dVar28,dVar27,dVar26,0x4020000000000000,uVar30,uVar30,dVar31,dVar31,uVar2);
+  local_628 = 4.0;
+  CL_DrawStretchPic((double)(float)(dVar28 + 0.699999988079071),
+                    (double)(float)(dVar27 + 0.699999988079071),
+                    (double)(float)(dVar26 - 1.399999976158142),0x4010000000000000,uVar30,uVar30,
+                    dVar31,dVar31,uVar2);
+  CL_Demo_GetStartAndEndTime(uVar1,local_660,&local_630);
+  local_640 = 0;
+  local_63c = 0;
+  CL_Demo_GetConnectionTimeInfoForPlayer(uVar1,&local_640,&local_63c);
+  cVar9 = CL_Demo_IsClipPlaying();
+  if (cVar9 == '\0') {
+    iVar8 = *(int *)(iVar6 + 0x6b98c);
+  }
+  else {
+    iVar8 = CL_Demo_GetClipTime();
+  }
+  iVar12 = local_630 - local_660[0];
+  cVar9 = CL_Demo_IsCompleted();
+  if (cVar9 == '\0') {
+    local_658 = (longlong)(iVar8 - local_660[0]);
+    dVar23 = (double)((float)local_658 / (float)(longlong)iVar12);
+    if (dVar31 < (double)((float)local_658 / (float)(longlong)iVar12)) goto LAB_822ea1fc;
+  }
+  else {
+LAB_822ea1fc:
+    dVar23 = dVar31;
+  }
+  iVar10 = iVar12 / 60000;
+  Com_sprintf(auStack_650,8,0xffffffff82020f74,iVar10,(iVar12 % 60000) / 1000);
+  UI_DrawText((double)(float)((double)(float)(dVar26 + dVar28) + dVar17),
+              (double)(float)(dVar27 + dVar20),uVar29,uVar2,auStack_650,0x7fffffff,uVar3);
+  uVar4 = 0xffffffffffffffff;
+  do {
+    cVar9 = CL_Demo_IsFreeCamera(uVar1);
+    if (cVar9 != '\0') break;
+    uVar4 = CL_Demo_GetNextBookmarkForPlayer(uVar1,uVar4,local_5f0,auStack_540);
+    if (-1 < (int)uVar4) {
+      local_658 = (longlong)iVar12;
+      local_638 = (longlong)(local_5f0[0] - local_660[0]);
+      dVar17 = floor((double)(float)((double)(float)((double)((float)local_638 / (float)local_658) *
+                                                    dVar26) + dVar22));
+      local_648 = (longlong)(int)dVar17;
+      CL_Demo_DrawVerticalLine
+                ((double)(float)((double)(longlong)(int)dVar17 + dVar28),dVar27,dVar31,dVar21,uVar30
+                 ,uVar30,dVar31,dVar31,uVar1);
+    }
+  } while ((int)uVar4 != -1);
+  if ((*(int *)(iVar6 + 0x7a708) == 0) && (cVar9 = CL_Demo_IsClipPlaying(), cVar9 == '\0')) {
+    if (4999 < local_640) {
+      CL_DrawStretchPic(dVar28,dVar27,
+                        (double)(float)(ABS((double)(float)((double)(longlong)
+                                                                    (local_660[0] - local_640) /
+                                                           (double)(longlong)iVar12)) * dVar26),
+                        dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+    if ((local_660[0] < local_63c) && (local_63c <= local_630)) {
+      local_648 = (longlong)(local_63c - local_660[0]);
+      CL_DrawStretchPic((double)(float)(ABS((double)((float)local_648 / (float)(longlong)iVar12)) *
+                                        dVar26 + dVar28),dVar27,
+                        (double)(float)(ABS((double)((float)(longlong)(local_630 - local_63c) /
+                                                    (float)(longlong)iVar12)) * dVar26),dVar21,
+                        uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+  }
+  lVar11 = 0;
+  do {
+    iVar6 = CL_Demo_GetKeyFrameTime(lVar11);
+    if (0 < iVar6) {
+      if (iVar6 < local_660[0]) {
+        iVar6 = local_660[0];
+      }
+      local_648 = (longlong)((iVar6 - local_660[0]) / 1000);
+      dVar17 = floor((double)(float)((double)((float)local_648 / (float)(longlong)(iVar12 / 1000)) *
+                                    dVar26));
+      local_658 = (longlong)(int)dVar17;
+      local_638 = (longlong)(int)dVar17;
+      CL_Demo_DrawVerticalLine
+                ((double)(float)((double)local_638 + dVar28),dVar27,dVar31,dVar21,uVar30,uVar30,
+                 dVar31,dVar31,uVar1);
+    }
+    lVar11 = lVar11 + 1;
+  } while ((int)lVar11 < 0xfa);
+  if (dVar23 == dVar31) {
+    local_660[0] = iVar12 % 60000;
+  }
+  else {
+    iVar10 = (iVar8 - local_660[0]) / 60000;
+    local_660[0] = (iVar8 + iVar10 * -60000) - local_660[0];
+  }
+  Com_sprintf(auStack_650,8,0xffffffff82020f74,iVar10,local_660[0] / 1000);
+  dVar23 = (double)(float)(dVar23 * dVar26 + dVar22);
+  dVar17 = floor(dVar23);
+  CL_Demo_DrawVerticalLine
+            ((double)(float)((double)(longlong)(int)dVar17 + dVar28),
+             (double)(float)(dVar27 - 2.4000000953674316),dVar31,0x4024ccccc0000000,uVar30,uVar30,
+             dVar31,dVar31,uVar1);
+  dVar17 = floor(dVar23);
+  uVar4 = 0x4066800000000000;
+  CG_DrawRotatedPic((double)((float)((double)(longlong)(int)dVar17 + dVar28) - 4.347826),
+                    (double)(float)(dVar27 - dVar19),dVar20,dVar15,0x4066800000000000,uVar2);
+  iVar6 = UI_TextWidth(uVar29,auStack_650,0x7fffffff,uVar3);
+  dVar19 = (double)(longlong)iVar6;
+  dVar17 = floor(dVar23);
+  UI_DrawText(-(double)(float)(dVar19 * dVar22 -
+                              (double)(float)((double)(longlong)(int)dVar17 + dVar28)),
+              (double)(float)(dVar27 - 5.399999618530273),uVar29,uVar2,auStack_650,0x7fffffff,uVar3)
+  ;
+  dVar20 = (double)(float)(dVar16 * 0.23000000417232513);
+  CL_DrawStretchPic(dVar28,dVar18,dVar20,dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+  dVar19 = 16.0;
+  CL_DrawStretchPic(dVar28,dVar18,dVar20,0x4030000000000000,uVar30,uVar30,dVar31,dVar31,uVar2);
+  cVar9 = CL_Demo_IsClipPlaying();
+  dVar17 = 0.3499999940395355;
+  if (cVar9 == '\0') {
+    local_680 = 1.0;
+    local_67c = 1.0;
+    local_678 = 1.0;
+    local_674 = 1.0;
+    CL_Demo_GetActivatedColorForButton(4,&local_680);
+  }
+  else {
+    local_680 = 0.35;
+    local_67c = 0.35;
+    local_678 = 0.35;
+    local_674 = (float)dVar31;
+  }
+  cVar9 = CL_Demo_IsFreeCamera(uVar1);
+  if (cVar9 == '\0') {
+    cVar9 = CL_Demo_IsFollowCamera(uVar1);
+    if (cVar9 == '\0') {
+      uVar5 = 0xffffffff82020f10;
+    }
+    else {
+      uVar5 = 0xffffffff82020f2c;
+    }
+  }
+  else {
+    uVar5 = 0xffffffff82020f48;
+  }
+  uVar5 = UI_SafeTranslateString(uVar5);
+  iVar6 = UI_TextWidth(uVar29,uVar5,0x7fffffff,uVar3);
+  dVar26 = 14.399999618530273;
+  local_638 = CONCAT44((float)(dVar18 + 14.399999618530273),local_638._4_4_);
+  UI_DrawText((double)(float)((double)(float)(dVar20 - (double)(longlong)iVar6) * dVar22 + dVar28),
+              (double)(float)(dVar18 + 14.399999618530273),uVar29,uVar2,uVar5,0x7fffffff,uVar3);
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar5 = UI_SafeTranslateString(0xffffffff82020eec);
+  iVar6 = UI_TextWidth(uVar29,uVar5,0x7fffffff,uVar3);
+  dVar25 = (double)(float)(dVar18 + 35.20000076293945);
+  UI_DrawText((double)(float)((double)(float)(dVar20 - (double)(longlong)iVar6) * dVar22 + dVar28),
+              dVar25,uVar29,uVar2,uVar5,0x7fffffff,uVar3);
+  dVar23 = (double)(float)(dVar16 * dVar17);
+  dVar27 = (double)(float)((double)(float)(dVar20 + dVar15) + dVar28);
+  CL_DrawStretchPic(dVar27,dVar18,dVar23,dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+  CL_DrawStretchPic(dVar27,dVar18,dVar23,dVar19,uVar30,uVar30,dVar31,dVar31,uVar2);
+  dVar20 = (double)(float)(dVar18 + dVar31);
+  local_658 = CONCAT44(0x3e4ccccd,local_658._4_4_);
+  dVar15 = (double)(float)((double)(float)(dVar23 - dVar21) - dVar19);
+  dVar28 = (double)(float)(dVar15 * 0.20000000298023224);
+  cVar9 = CL_Demo_IsClipRecording(dVar15);
+  if ((cVar9 == '\0') && (iVar6 = CL_Demo_GetKeyFrameForJumpBack(uVar1), -1 < iVar6)) {
+    local_670 = 1.0;
+    local_66c = 1.0;
+    local_668 = 1.0;
+    local_664 = 1.0;
+    CL_Demo_GetActivatedColorForButton(6,&local_670);
+  }
+  else {
+    local_670 = (float)dVar17;
+    local_66c = (float)dVar17;
+    local_668 = (float)dVar17;
+    local_664 = (float)dVar31;
+  }
+  dVar15 = (double)(float)(dVar27 + (double)local_628);
+  CG_DrawRotatedPic(dVar15,dVar20,dVar28,dVar26,uVar4,uVar2);
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020ecc);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar28 - (double)(longlong)iVar6) * dVar22 + dVar15),
+              dVar25,uVar29,uVar2,uVar4,0x7fffffff,uVar3,&local_680,(longlong)iVar6,
+              *(undefined1 *)(param_2 + 4),*(undefined1 *)((int)param_2 + 0x11));
+  dVar24 = (double)(float)((double)(float)(dVar28 + dVar27) + dVar21);
+  cVar9 = CL_Demo_IsClipPlaying();
+  dVar15 = 2.0;
+  if ((cVar9 == '\0') && (cVar9 = CL_Demo_IsCompleted(), cVar9 == '\0')) {
+    local_670 = 1.0;
+    local_66c = 1.0;
+    local_668 = 1.0;
+    local_664 = 1.0;
+    CL_Demo_GetActivatedColorForButton(8,&local_670);
+    dVar13 = (double)CL_Demo_GetTimeScale();
+    if (dVar31 <= dVar13) {
+      CL_DrawStretchPic(dVar24,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+    else {
+      uVar4 = CL_Demo_GetTimeScale();
+      Com_sprintf(auStack_650,8,0xffffffff82020ec4,uVar4);
+      UI_DrawText(dVar24,(double)(float)((double)(float)(dVar20 + dVar26) - dVar15),uVar29,uVar2,
+                  auStack_650,0x7fffffff,uVar3);
+    }
+  }
+  else {
+    local_670 = (float)dVar17;
+    local_668 = (float)dVar17;
+    local_664 = (float)dVar31;
+    local_66c = (float)dVar17;
+    CL_DrawStretchPic(dVar24,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+  }
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020ea4);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar28 - (double)(longlong)iVar6) * dVar22 +
+                             (double)(float)((double)(float)(dVar28 + dVar27) + dVar21)),dVar25,
+              uVar29,uVar2,uVar4,0x7fffffff,uVar3);
+  cVar9 = CL_Demo_IsCompleted();
+  if (cVar9 == '\0') {
+    local_670 = 1.0;
+    local_66c = 1.0;
+    local_668 = 1.0;
+    local_664 = 1.0;
+    CL_Demo_GetActivatedColorForButton(0,&local_670);
+  }
+  else {
+    local_670 = (float)dVar17;
+    local_66c = (float)dVar17;
+    local_668 = (float)dVar17;
+    local_664 = (float)dVar31;
+  }
+  dVar24 = (double)((float)(dVar28 * dVar15 + dVar27) + 12.0);
+  cVar9 = CL_Demo_IsCompleted();
+  if (cVar9 == '\0') {
+    cVar9 = CL_Demo_IsPaused();
+    if (cVar9 == '\0') {
+      CL_DrawStretchPic(dVar24,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+    else {
+      CL_DrawStretchPic(dVar24,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+  }
+  else {
+    CL_DrawStretchPic(dVar24,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+  }
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020e8c);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar28 - (double)(longlong)iVar6) * dVar22 + dVar24),
+              dVar25,uVar29,uVar2,uVar4,0x7fffffff,uVar3);
+  dVar24 = (double)(float)(dVar28 * (double)local_62c);
+  dVar13 = (double)(float)((double)(float)(dVar24 + dVar27) + dVar19);
+  cVar9 = CL_Demo_IsClipPlaying();
+  if ((cVar9 == '\0') && (cVar9 = CL_Demo_IsCompleted(), cVar9 == '\0')) {
+    local_670 = 1.0;
+    local_66c = 1.0;
+    local_668 = 1.0;
+    local_664 = 1.0;
+    CL_Demo_GetActivatedColorForButton(9,&local_670);
+    dVar14 = (double)CL_Demo_GetTimeScale();
+    if (dVar14 <= dVar31) {
+      CL_DrawStretchPic(dVar13,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+    }
+    else {
+      uVar4 = CL_Demo_GetTimeScale();
+      Com_sprintf(auStack_650,8,0xffffffff82020ec4,uVar4);
+      UI_DrawText(dVar13,(double)(float)((double)(float)(dVar20 + dVar26) - dVar15),uVar29,uVar2,
+                  auStack_650,0x7fffffff,uVar3);
+    }
+  }
+  else {
+    local_668 = (float)dVar17;
+    local_66c = (float)dVar17;
+    local_670 = (float)dVar17;
+    local_664 = (float)dVar31;
+    CL_DrawStretchPic(dVar13,dVar20,dVar28,dVar26,uVar30,uVar30,dVar31,dVar31,uVar2);
+  }
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020e6c);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar28 - (double)(longlong)iVar6) * dVar22 +
+                             (double)(float)((double)(float)(dVar24 + dVar27) + dVar19)),dVar25,
+              uVar29,uVar2,uVar4,0x7fffffff,uVar3);
+  cVar9 = CL_Demo_IsClipRecording();
+  if ((cVar9 == '\0') && (iVar6 = CL_Demo_GetKeyFrameForJumpForward(uVar1), -1 < iVar6)) {
+    local_670 = 1.0;
+    local_66c = 1.0;
+    local_668 = 1.0;
+    local_664 = 1.0;
+    CL_Demo_GetActivatedColorForButton(7,&local_670);
+  }
+  else {
+    local_670 = (float)dVar17;
+    local_66c = (float)dVar17;
+    local_668 = (float)dVar17;
+    local_664 = (float)dVar31;
+  }
+  dVar24 = (double)(float)(dVar28 * (double)local_628);
+  dVar13 = (double)local_610;
+  CL_DrawStretchPic((double)(float)((double)(float)(dVar24 + dVar27) + dVar13),dVar20,dVar28,dVar26,
+                    uVar30,uVar30,dVar31,dVar31,uVar2);
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020e4c);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar28 - (double)(longlong)iVar6) * dVar22 +
+                             (double)(float)((double)(float)(dVar24 + dVar27) + dVar13)),dVar25,
+              uVar29,uVar2,uVar4,0x7fffffff,uVar3,&local_680,(longlong)iVar6,
+              *(undefined1 *)(param_2 + 4),*(undefined1 *)((int)param_2 + 0x11));
+  dVar20 = (double)(float)((double)(float)(dVar23 + (double)local_60c) + dVar27);
+  dVar23 = (double)(float)(dVar16 * 0.15000000596046448);
+  cVar9 = CL_Demo_IsClipRecording();
+  if (cVar9 == '\0') {
+    CL_DrawStretchPic(dVar20,dVar18,dVar23,dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+    CL_DrawStretchPic(dVar20,dVar18,dVar23,dVar19,uVar30,uVar30,dVar31,dVar31,uVar2);
+  }
+  else {
+    local_670 = 1.0;
+    local_66c = 0.0;
+    local_668 = 0.0;
+    local_664 = 1.0;
+    iVar8 = Sys_Milliseconds();
+    iVar6 = iVar8 / 1000 + (iVar8 >> 0x1f);
+    dVar26 = (double)((float)(longlong)(iVar8 + (iVar6 - (iVar6 >> 0x1f)) * -1000) * 0.002);
+    if (dVar31 <= dVar26) {
+      dVar26 = (double)(float)(dVar15 - dVar26);
+    }
+    local_664 = (float)dVar26;
+    CL_DrawStretchPic(dVar20,dVar18,dVar23,dVar19,uVar30,uVar30,dVar31,dVar31,uVar2);
+  }
+  cVar9 = CL_Demo_IsClipPlaying();
+  if ((cVar9 == '\0') && (cVar9 = CL_Demo_IsCompleted(), cVar9 == '\0')) {
+    local_680 = 1.0;
+    local_67c = 1.0;
+    local_678 = 1.0;
+    local_674 = 1.0;
+    CL_Demo_GetActivatedColorForButton(1,&local_680);
+  }
+  else {
+    local_680 = (float)dVar17;
+    local_67c = (float)dVar17;
+    local_678 = (float)dVar17;
+    local_674 = (float)dVar31;
+  }
+  uVar4 = UI_SafeTranslateString(0xffffffff82020e34);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  dVar15 = (double)local_638._0_4_;
+  UI_DrawText((double)(float)((double)(float)(dVar23 - (double)(longlong)iVar6) * dVar22 + dVar20),
+              dVar15,uVar29,uVar2,uVar4,0x7fffffff,uVar3);
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar4 = UI_SafeTranslateString(0xffffffff82020e18);
+  iVar6 = UI_TextWidth(uVar29,uVar4,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar23 - (double)(longlong)iVar6) * dVar22 + dVar20),
+              dVar25,uVar29,uVar2,uVar4,0x7fffffff,uVar3);
+  dVar26 = (double)(float)(dVar16 * (double)local_658._0_4_);
+  dVar16 = (double)(float)((double)(float)(dVar23 + (double)local_62c) + dVar20);
+  CL_DrawStretchPic(dVar16,dVar18,dVar26,dVar21,uVar30,uVar30,dVar31,dVar31,uVar2);
+  CL_DrawStretchPic(dVar16,dVar18,dVar26,dVar19,uVar30,uVar30,dVar31,dVar31,uVar2);
+  cVar9 = CL_Demo_IsClipRecording();
+  if (cVar9 == '\0') {
+    local_680 = 1.0;
+    local_67c = 1.0;
+    local_678 = 1.0;
+    local_674 = 1.0;
+    CL_Demo_GetActivatedColorForButton(2,&local_680);
+  }
+  else {
+    local_680 = (float)dVar17;
+    local_67c = (float)dVar17;
+    local_678 = (float)dVar17;
+    local_674 = (float)dVar31;
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  cVar9 = Live_CanUserAccessOnlineVault(uVar1,auStack_580);
+  if (cVar9 == '\0') {
+    local_680 = (float)dVar17;
+    local_67c = (float)dVar17;
+    local_678 = (float)dVar17;
+    local_674 = (float)dVar31;
+  }
+  uVar1 = UI_SafeTranslateString(0xffffffff82020dfc);
+  iVar6 = UI_TextWidth(uVar29,uVar1,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar26 - (double)(longlong)iVar6) * dVar22 + dVar16),
+              dVar15,uVar29,uVar2,uVar1,0x7fffffff,uVar3);
+  local_680 = 1.0;
+  local_67c = 1.0;
+  local_678 = 1.0;
+  local_674 = 1.0;
+  uVar1 = UI_SafeTranslateString(0xffffffff82020dd8);
+  iVar6 = UI_TextWidth(uVar29,uVar1,0x7fffffff,uVar3);
+  UI_DrawText((double)(float)((double)(float)(dVar26 - (double)(longlong)iVar6) * dVar22 + dVar16),
+              dVar25,uVar29,uVar2,uVar1,0x7fffffff,uVar3);
+LAB_822eb6dc:
+  __restfpr();
+  __restgprlr();
+  return;
 }
 
 
@@ -1222,16 +2671,15 @@ void CG_DrawTalkerNum(undefined8 param_1,undefined8 param_2,ulonglong param_3,un
   
   __savegprlr_22();
   uVar4 = __savefpr_26();
+  uVar17 = extraout_f1;
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0xa3d,0,0xffffffff82000f98,0xffffffff8200240c);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82020818,0xa3e,0,0xffffffff82000f98,0xffffffff8200fd5c);
   }
   iVar8 = *(int *)(DAT_82a4d1f4 + 0xc);
-  if ((iVar8 != 0) && (uVar17 = extraout_f1, iVar6 = CL_Demo_IsRenderingMovie(uVar4), iVar6 == 0)) {
+  if ((iVar8 != 0) && (iVar6 = CL_Demo_IsRenderingMovie(uVar4), iVar6 == 0)) {
     iVar6 = CG_GetLocalClientGlobals(uVar4);
     iVar7 = UI_GetTalkerClientNum(uVar4,param_2);
     if (-1 < iVar7) {
@@ -1286,12 +2734,487 @@ LAB_822eb9bc:
 }
 
 
-// 822ECA78  CG_ArchiveState  (cgame_mp/cg_newDraw_mp.cpp:2960)
+// 822EB9D0  CG_OwnerDraw  (cgame_mp/cg_newDraw_mp.cpp:2675)
 
-void CG_ArchiveState(void)
+void CG_OwnerDraw(undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5
+                 ,undefined8 param_6,undefined8 param_7,undefined8 param_8,undefined8 param_9,
+                 undefined8 param_10,undefined8 param_11,undefined8 param_12)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  double extraout_f1;
+  double dVar6;
+  undefined8 in_stack_00000020;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  uint in_stack_0000005c;
+  uint in_stack_00000064;
+  int in_stack_0000007c;
+  undefined4 in_stack_00000094;
+  undefined4 in_stack_000000a4;
+  undefined4 in_stack_000000ac;
+  undefined4 in_stack_000000b4;
+  undefined4 in_stack_000000bc;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  undefined1 local_80;
+  byte local_7f;
+  
+  __savegprlr_25();
+  uVar2 = __savefpr_25();
+  dVar6 = extraout_f1;
+  in_stack_00000020 = param_10;
+  in_stack_00000028 = param_11;
+  in_stack_00000030 = param_12;
+  iVar3 = CG_GetPredictedPlayerState();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82020818,0xa7b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  uVar1 = in_stack_00000064;
+  local_90 = (float)dVar6;
+  local_8c = (float)param_2;
+  local_80 = (undefined1)in_stack_0000005c;
+  local_88 = (float)param_3;
+  local_84 = (float)param_4;
+  local_7f = (byte)in_stack_00000064;
+  if ((in_stack_0000005c & 0xff) != in_stack_0000005c) {
+    MyAssertHandler(0xffffffff82020818,0xa86,0,0xffffffff82000f98,0xffffffff82021088);
+  }
+  if (local_7f != uVar1) {
+    MyAssertHandler(0xffffffff82020818,0xa87,0,0xffffffff82000f98,0xffffffff8202106c);
+  }
+  iVar3 = in_stack_0000007c;
+  switch(in_stack_0000007c + -5) {
+  case 0:
+    CG_DrawPlayerAmmoValue(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 1:
+    CG_DrawPlayerAmmoBackdrop(uVar2,&local_90,in_stack_000000a4,in_stack_000000ac);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  default:
+    iVar4 = CG_GetLocalClientGlobals(uVar2);
+    if ((*(int *)(iVar4 + 0x7a708) != 0) && (iVar4 = UI_GetActiveMenu(uVar2), iVar4 != 2))
+    goto switchD_822ebae8_caseD_a2;
+    switch(iVar3 + -0xb4) {
+    case 0:
+      CG_CompassDrawPlayerBack
+                (uVar2,1,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 1:
+      CG_CompassDrawPlayerMap
+                (uVar2,1,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 2:
+      CG_CompassDrawPlayerPointers_MP
+                (uVar2,1,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 3:
+      CG_CompassDrawPlayer(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    default:
+      goto switchD_822ebae8_caseD_a2;
+    case 5:
+      CG_CompassDrawFriendlies(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 6:
+      CG_CompassDrawPlayerMapLocationSelector
+                (uVar2,1,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 7:
+      CG_CompassDrawBorder(uVar2,1,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 8:
+      CG_CompassDrawEnemies(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 9:
+      Compass_TurretDraw(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 10:
+      uVar5 = 1;
+      break;
+    case 0xb:
+      CG_CompassDrawPlanes(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 0xc:
+      Compass_PortableRadarDraw(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    case 0xe:
+      Compass_ScramblerDraw(uVar2,1,&stack0x00000020,&local_90,in_stack_000000a4);
+      __restfpr_25();
+      __restgprlr_25();
+      return;
+    }
+    break;
+  case 0x37:
+    CG_DrawSpectatorFollowing(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x38:
+    CG_DrawSpectatorControls(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x41:
+    CG_DrawChangeZoomHint(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x42:
+    CG_DrawHoldBreathHint(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x43:
+    CG_DrawCursorhint(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4a:
+    CG_DrawPlayerBarHealth(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4b:
+    CG_DrawMantleHint(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4c:
+    CG_DrawPlayerWeaponNameFade(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4d:
+    CG_DrawPlayerWeaponNameBackFade(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4e:
+    CG_DrawPlayerWeaponNameNoFade(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x4f:
+    CG_DrawPlayerWeaponNameBackNoFade(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x55:
+    CG_DrawCenterString(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x5d:
+    CG_DrawPlayerBarHealthBack(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x62:
+    CG_DrawOffHandIcon(param_8,uVar2,&local_90);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 99:
+    CG_DrawOffHandIcon(param_8,uVar2,&local_90);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 100:
+    CG_DrawOffHandAmmo(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x65:
+    CG_DrawOffHandAmmo(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x66:
+    CG_DrawOffHandName(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x67:
+    CG_DrawOffHandName(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x68:
+    CG_DrawOffHandHighlight(param_8,uVar2,&local_90);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x69:
+    CG_DrawOffHandHighlight(param_8,uVar2,&local_90);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x6b:
+    CG_BloodOverlayDraw(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x6c:
+    CG_DrawInvalidCmdHint(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x6d:
+    CG_DrawPlayerSprintMeter(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x6e:
+    CG_DrawPlayerSprintBack(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x6f:
+    CG_DrawPlayerWeaponBackground(uVar2,&local_90,in_stack_000000a4,in_stack_000000ac);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x70:
+    CG_DrawPlayerWeaponAmmoClipGraphic(uVar2,&local_90,in_stack_000000a4,0);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x71:
+    CG_DrawPlayerWeaponIcon(uVar2,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x72:
+    CG_DrawPlayerWeaponAmmoStock(param_8,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x73:
+    CG_DrawPlayerWeaponLowAmmoWarning(param_8,param_5,param_6,uVar2,&local_90,in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x74:
+    CG_DrawPlayerWeaponAmmoClipGraphic(uVar2,&local_90,in_stack_000000a4,1);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x8c:
+    CG_CompassDrawTickertape
+              (param_8,uVar2,0,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4,
+               in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x8d:
+    CG_CompassDrawTickertape
+              (param_8,uVar2,0,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4,
+               in_stack_00000094);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x91:
+    CG_CompassDrawPlayer(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x92:
+    CG_CompassDrawPlayerBack(uVar2,0,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4)
+    ;
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x93:
+    CG_CompassDrawPlayerPointers_MP
+              (uVar2,0,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x96:
+    uVar5 = 0;
+    break;
+  case 0x97:
+    CG_CompassDrawPlanes(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x98:
+    Compass_PortableRadarDraw(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x99:
+    CG_CompassDrawFriendlies(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x9a:
+    CG_CompassDrawPlayerMap(uVar2,0,&stack0x00000020,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x9b:
+    CG_CompassDrawPlayerNorthCoord
+              (uVar2,0,&stack0x00000020,&local_90,in_stack_00000094,in_stack_000000ac,
+               in_stack_000000a4,in_stack_000000b4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x9c:
+    CG_CompassDrawPlayerEastCoord
+              (uVar2,0,&stack0x00000020,&local_90,in_stack_00000094,in_stack_000000ac,
+               in_stack_000000a4,in_stack_000000b4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x9d:
+    CG_CompassDrawPlayerNCoordScroll
+              (uVar2,0,&stack0x00000020,&local_90,in_stack_00000094,in_stack_000000ac,
+               in_stack_000000a4,in_stack_000000b4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0x9e:
+    CG_CompassDrawPlayerECoordScroll
+              (uVar2,0,&stack0x00000020,&local_90,in_stack_00000094,in_stack_000000ac,
+               in_stack_000000a4,in_stack_000000b4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xa0:
+    Compass_TurretDraw(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xa1:
+    CG_CompassDrawSimple(uVar2,&local_90,in_stack_000000ac,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xa2:
+    goto switchD_822ebae8_caseD_a2;
+  case 0xa3:
+    Compass_ScramblerDraw(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xa5:
+    CG_DrawPlayerActionSlotDpad(uVar2,&local_90,in_stack_000000a4,in_stack_000000ac);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xa6:
+  case 0xa7:
+  case 0xa8:
+  case 0xa9:
+    CG_DrawPlayerActionSlot(param_5,param_6,param_8,uVar2,&local_90);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xaa:
+    CG_CompassDrawEnemies(uVar2,0,&stack0x00000020,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xc6:
+  case 199:
+  case 200:
+  case 0xc9:
+    CG_DrawTalkerNum(param_8,uVar2,in_stack_0000007c + -0xcb,&local_90,in_stack_00000094,
+                     in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xcc:
+    CG_DrawAirburstCurrentDistance(uVar2,&local_90,in_stack_000000a4,in_stack_000000ac);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xcd:
+    CG_DrawAirburstMarkDistance(uVar2,&local_90,in_stack_000000a4,in_stack_000000ac);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  case 0xce:
+    CG_DrawDemoControls(uVar2,&local_90,in_stack_000000a4);
+    __restfpr_25();
+    __restgprlr_25();
+    return;
+  }
+  VehicleHud_DrawCompass(uVar2,uVar5,&stack0x00000020,&local_90,in_stack_000000a4);
+switchD_822ebae8_caseD_a2:
+  __restfpr_25();
+  __restgprlr_25();
+  return;
+}
+
+
+// 822ECA78  CG_ArchiveState  (cgame_mp/cg_newDraw_mp.cpp:2960)
+
+void CG_ArchiveState(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_29();
+  lVar2 = CG_GetLocalClientGlobals();
+  CG_ArchiveShellShock(uVar1,param_2);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x7980c);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x79810);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x79808);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x79818);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x79814);
+  MemFile_ArchiveData(param_2,1,lVar2 + 0x10803a);
+  MemFile_ArchiveFloat(param_2,lVar2 + 0x10803c);
+  MemFile_ArchiveData(param_2,1,lVar2 + 0x79860);
+  MemFile_ArchiveData(param_2,4,lVar2 + 0x76ebc);
+  MemFile_ArchiveData(param_2,0x400,lVar2 + 0x765b0);
+  MemFile_ArchiveData(param_2,0x100,lVar2 + 0x769b0);
+  MemFile_ArchiveData(param_2,0x390,lVar2 + 0x1073c0);
+  MemFile_ArchiveData(param_2,0x390,lVar2 + 0x107750);
+  MemFile_ArchiveData(param_2,0x390,lVar2 + 0x107ae0);
+  MemFile_ArchiveData(param_2,0x48,lVar2 + 0x107e70);
+  MemFile_ArchiveData(param_2,0x180,lVar2 + 0x107eb8);
+  MemFile_ArchiveData(param_2,0x80,lVar2 + 0x1080dc);
+  MemFile_ArchiveData(param_2,1,lVar2 + 0x108039);
+  MemFile_ArchiveData(param_2,1,lVar2 + 0x108420);
+  MemFile_ArchiveData(param_2,0xc,lVar2 + 0x108424);
+  MemFile_ArchiveData(param_2,1,lVar2 + 0x108044);
+  __restgprlr_29();
+  return;
 }
 

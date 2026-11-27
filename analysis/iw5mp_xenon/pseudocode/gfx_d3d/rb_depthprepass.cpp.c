@@ -2,60 +2,176 @@
 
 // 8279B918  R_DepthPrepassLitOpaqueSegmentCallback  (gfx_d3d/rb_depthprepass.cpp:164)
 
-void R_DepthPrepassLitOpaqueSegmentCallback(void)
+void R_DepthPrepassLitOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  int iStack00000018;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iVar1 = *piVar3;
+  uVar2 = piVar3[2];
+  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
+  iStack00000018 = (int)(param_2 >> 0x20);
+  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
+    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  }
+  *(uint *)(iStack00000018 + 0x174c) = uVar2;
+  R_HW_EnableScissor(param_2,iVar1 + 0x170);
+  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) +
+                              ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x7fffffff) * 2 & 0x1ffffff) *
+                              0x80 + 0x2f50,piVar3[1],0);
+  R_HW_DisableScissor(param_2 & 0xffffffff);
+  R_EndDrawList(param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8279B9C8  R_DepthPrepassLitOpaqueSegment  (gfx_d3d/rb_depthprepass.cpp:208)
 
-void R_DepthPrepassLitOpaqueSegment(void)
+void R_DepthPrepassLitOpaqueSegment
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int local_17a0;
+  undefined4 local_179c;
+  undefined4 local_1798;
+  undefined1 auStack_1790 [6032];
+  
+  iVar1 = __savegprlr_28();
+  if (0xe < (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821d59a0,0xd4,0,0xffffffff821d59e8,param_4,0xf);
+  }
+  if (*(char *)(iVar1 + 0x918) == '\0') {
+    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821d598c,param_4 != 0);
+    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
+    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
+    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
+    local_1798 = (undefined4)param_4;
+    local_17a0 = iVar1;
+    local_179c = param_2;
+    R_DrawCall(0xffffffff8279b918,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    PIXEndNamedEvent();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8279BA98  R_DepthPrepassLightmapOpaqueSegmentCallback  (gfx_d3d/rb_depthprepass.cpp:247)
 
-void R_DepthPrepassLightmapOpaqueSegmentCallback(void)
+void R_DepthPrepassLightmapOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  int iStack00000018;
+  
+  piVar3 = (int *)__savegprlr_27();
+  iVar1 = *piVar3;
+  uVar2 = piVar3[2];
+  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
+  iStack00000018 = (int)(param_2 >> 0x20);
+  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
+    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  }
+  *(uint *)(iStack00000018 + 0x174c) = uVar2;
+  R_HW_EnableScissor(param_2,iVar1 + 0x170);
+  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) +
+                              ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x7fffffff) * 2 & 0x1ffffff) *
+                              0x80 + 0x2f50,piVar3[1],0);
+  R_HW_DisableScissor(param_2 & 0xffffffff);
+  R_EndDrawList(param_2);
+  __restgprlr_27();
+  return;
 }
 
 
 // 8279BB48  R_DepthPrepassLightmapOpaqueSegment  (gfx_d3d/rb_depthprepass.cpp:291)
 
-void R_DepthPrepassLightmapOpaqueSegment(void)
+void R_DepthPrepassLightmapOpaqueSegment
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int local_17a0;
+  undefined4 local_179c;
+  undefined4 local_1798;
+  undefined1 auStack_1790 [6032];
+  
+  iVar1 = __savegprlr_28();
+  if (0xe < (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821d59a0,0x127,0,0xffffffff821d59e8,param_4,0xf);
+  }
+  if (*(char *)(iVar1 + 0x919) == '\0') {
+    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821d5a34,param_4 - 1);
+    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
+    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
+    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
+    local_1798 = (undefined4)param_4;
+    local_17a0 = iVar1;
+    local_179c = param_2;
+    R_DrawCall(0xffffffff8279ba98,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    PIXEndNamedEvent();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8279BC18  R_DepthPrepassLitTransCallback  (gfx_d3d/rb_depthprepass.cpp:336)
 
-void R_DepthPrepassLitTransCallback(void)
+void R_DepthPrepassLitTransCallback(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int iStack00000018;
+  
+  piVar2 = (int *)__savegprlr_28();
+  iVar1 = *piVar2;
+  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
+  iStack00000018 = (int)(param_2 >> 0x20);
+  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
+    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  }
+  *(undefined4 *)(iStack00000018 + 0x174c) = 0x26;
+  R_HW_EnableScissor(param_2,iVar1 + 0x170);
+  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) + 0x4450,piVar2[1],0);
+  R_HW_DisableScissor(param_2 & 0xffffffff);
+  R_EndDrawList(param_2);
+  __restgprlr_28();
+  return;
 }
 
 
 // 8279BCB8  R_DepthPrepassLitTrans  (gfx_d3d/rb_depthprepass.cpp:374)
 
-void R_DepthPrepassLitTrans(void)
+void R_DepthPrepassLitTrans(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int local_1790;
+  undefined4 local_178c;
+  undefined1 auStack_1780 [6016];
+  
+  iVar1 = __savegprlr_29();
+  if (*(char *)(iVar1 + 0x918) == '\0') {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d5a50);
+    R_InitCmdBufSourceState(auStack_1780,iVar1 + 0x330,1);
+    R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(iVar1 + 0x920));
+    R_SetViewportStruct(auStack_1780,iVar1 + 0x150);
+    local_1790 = iVar1;
+    local_178c = param_2;
+    R_DrawCall(0xffffffff8279bc18,&local_1790,auStack_1780,iVar1 + 0x180,iVar1,param_3);
+    PIXEndNamedEvent();
+  }
+  __restgprlr_29();
+  return;
 }
 

@@ -29,11 +29,36 @@ void dwGetServerTime(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 // 826F2570  dwGetServerTimeComplete  (DW/dwTitleUtilities.cpp:46)
 
-void dwGetServerTimeComplete(void)
+void dwGetServerTimeComplete(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_29();
+  iVar3 = dwGetTitleUtilities();
+  if (((iVar3 != 0) && ((param_2 & 0xffffffff) != 0)) &&
+     (iVar3 = (int)param_2, *(int *)(iVar3 + 8) != 0)) {
+    dwLobbyPump(uVar1);
+    uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+    uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+    if ((int)uVar2 != 0) {
+      TaskManager_ClearTask(param_2);
+      if ((int)uVar2 == 1) {
+        Live_ThrowError(1,0xffffffff821ac97c);
+      }
+      dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+      Com_PrintError(0x10,0xffffffff821ad230,uVar2,auStack_60);
+    }
+    dwTaskStatusConvert(uVar1,uVar2);
+    __restgprlr_29();
+    return;
+  }
+  Com_Printf(0x10,0xffffffff821ad204);
+  __restgprlr_29(2);
+  return;
 }
 
 
@@ -42,7 +67,34 @@ void dwGetServerTimeComplete(void)
 void dwGetTitleUtilitiesComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar3;
+  int iVar4;
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined1 auStack_60 [96];
+  
+  iVar3 = __savegprlr_29();
+  if ((iVar3 != 0) && (*(int *)(iVar3 + 8) != 0)) {
+    iVar4 = dwGetTitleUtilities(*(undefined1 *)(iVar3 + 0x95));
+    if (iVar4 != 0) {
+      dwLobbyPump(*(undefined1 *)(iVar3 + 0x95));
+      uVar1 = (**(code **)(**(int **)(iVar3 + 8) + 4))();
+      uVar2 = bdRemoteTask__getErrorCode(*(undefined4 *)(iVar3 + 8));
+      if ((int)uVar2 != 0) {
+        TaskManager_ClearTask(iVar3);
+        if ((int)uVar2 == 1) {
+          Live_ThrowError(1,0xffffffff821ac97c);
+        }
+        dwLobbyErrorCodeToString(uVar2,auStack_60,0x40);
+        Com_PrintError(0x10,0xffffffff821ad280,uVar2,auStack_60);
+      }
+      dwTaskStatusConvert(uVar1,uVar2);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_Printf(0x10,0xffffffff821ad254);
+  __restgprlr_29(2);
+  return;
 }
 

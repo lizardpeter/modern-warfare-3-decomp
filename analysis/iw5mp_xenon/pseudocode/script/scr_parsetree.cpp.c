@@ -18,16 +18,28 @@ void node_pos(void)
 }
 
 
+// 8253EC08  Scr_InitAllocNodeUser  (script/scr_parsetree.cpp:67)
+
+void Scr_InitAllocNodeUser(void)
+
+{
+  if (DAT_8387b8e8 != 0) {
+    MyAssertHandler(0xffffffff82151d78,0x44,0,0xffffffff82000f98,0xffffffff82151dbc);
+  }
+  DAT_8387b8e8 = Hunk_UserCreate(0x10000,0xffffffff82151d64,0,7);
+  return;
+}
+
+
 // 8253EC80  Scr_ShutdownAllocNodeUser  (script/scr_parsetree.cpp:79)
 
 void Scr_ShutdownAllocNodeUser(void)
 
 {
   if (DAT_8387b8e8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151d78,0x50,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  Hunk_UserDestroy();
+  Hunk_UserDestroy(DAT_8387b8e8);
   DAT_8387b8e8 = 0;
   return;
 }
@@ -41,8 +53,8 @@ void Scr_InitAllocNode(void)
   if (DAT_8387b8e8 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82151d78,0x5d,0,0xffffffff82000f98,0xffffffff82151dd0);
+  return;
 }
 
 
@@ -52,10 +64,9 @@ void Scr_ShutdownAllocNode(void)
 
 {
   if (DAT_8387b8e8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151d78,99,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  Hunk_UserReset();
+  Hunk_UserReset(DAT_8387b8e8);
   return;
 }
 
@@ -68,10 +79,9 @@ void Scr_CheckUsedSize(undefined8 param_1)
   int iVar1;
   
   if (DAT_8387b8e8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151d78,0x6b,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
-  iVar1 = Hunk_UserUsedSize();
+  iVar1 = Hunk_UserUsedSize(DAT_8387b8e8);
   if (0x100000 < iVar1) {
     Com_Error(0,0xffffffff82151de0,param_1);
   }
@@ -85,7 +95,6 @@ void Scr_AllocNode(ulonglong param_1)
 
 {
   if (DAT_8387b8e8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151d78,0x75,0,0xffffffff82000f98,0xffffffff82151dd0);
   }
   Hunk_UserAlloc(DAT_8387b8e8,(param_1 & 0x3fffffff) << 2,4);
@@ -122,11 +131,19 @@ void node1(undefined4 param_1,undefined4 param_2)
 
 // 8253EF08  node2  (script/scr_parsetree.cpp:144)
 
-void node2(void)
+void node2(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined4 *)Scr_AllocNode(3);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -146,51 +163,100 @@ void node2_(undefined4 param_1,undefined4 param_2)
 
 // 8253EF88  node3  (script/scr_parsetree.cpp:167)
 
-void node3(void)
+void node3(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_28();
+  puVar2 = (undefined4 *)Scr_AllocNode(4);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253EFC8  node3_  (script/scr_parsetree.cpp:180)
 
-void node3_(void)
+void node3_(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_29();
+  puVar2 = (undefined4 *)Scr_AllocNode(3);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  __restgprlr_29();
+  return;
 }
 
 
 // 8253F000  node4  (script/scr_parsetree.cpp:192)
 
-void node4(void)
+void node4(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_27();
+  puVar2 = (undefined4 *)Scr_AllocNode(5);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253F048  node4_  (script/scr_parsetree.cpp:206)
 
-void node4_(void)
+void node4_(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_28();
+  puVar2 = (undefined4 *)Scr_AllocNode(4);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253F088  node5  (script/scr_parsetree.cpp:219)
 
-void node5(void)
+void node5(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+          undefined4 param_5,undefined4 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_26();
+  puVar2 = (undefined4 *)Scr_AllocNode(6);
+  *puVar2 = uVar1;
+  puVar2[1] = param_2;
+  puVar2[2] = param_3;
+  puVar2[3] = param_4;
+  puVar2[4] = param_5;
+  puVar2[5] = param_6;
+  __restgprlr_26();
+  return;
 }
 
 
@@ -354,11 +420,26 @@ void Scr_InitParseTreeMemory(void)
 
 {
   if (DAT_8387b8dc != (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82151d78,0x16c,0,0xffffffff82000f98,0xffffffff82151e10);
   }
   DAT_8387b8dc = HeapCreate(0,0x10000,0x10000);
   return;
+}
+
+
+// 8253F3B0  Scr_ShutdownParseTreeMemory  (script/scr_parsetree.cpp:377)
+
+BOOL Scr_ShutdownParseTreeMemory(void)
+
+{
+  BOOL BVar1;
+  
+  BVar1 = 0;
+  if (DAT_8387b8dc != (HANDLE)0x0) {
+    BVar1 = HeapDestroy(DAT_8387b8dc);
+    DAT_8387b8dc = (HANDLE)0x0;
+  }
+  return BVar1;
 }
 
 
@@ -376,11 +457,25 @@ void Scr_ClearDebugExpr(undefined4 *param_1)
 
 // 8253F438  Scr_AllocDebugExpr  (script/scr_parsetree.cpp:413)
 
-void Scr_AllocDebugExpr(void)
+void Scr_AllocDebugExpr(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  uVar1 = __savegprlr_27();
+  if (DAT_8387b8dc == 0) {
+    MyAssertHandler(0xffffffff82151d78,0x1a2,0,0xffffffff82000f98,0xffffffff82151e30);
+  }
+  puVar2 = (undefined4 *)RtlAllocateHeap(DAT_8387b8dc,0,param_2 + 4);
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff82151d78,0x1a4,0,0xffffffff82000f98,0xffffffff82151e20);
+  }
+  *puVar2 = DAT_8387b8e4;
+  DAT_8387b8e4 = puVar2;
+  puVar2[1] = uVar1;
+  __restgprlr_27(puVar2 + 1);
+  return;
 }
 
 
@@ -389,8 +484,43 @@ void Scr_AllocDebugExpr(void)
 void Scr_FreeDebugExpr(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  
+  iVar2 = __savegprlr_26();
+  if (*(int *)(iVar2 + 4) != 0) {
+    DAT_83c734fc = DAT_83c734fc + -1;
+  }
+  piVar3 = *(int **)(iVar2 + 8);
+  if (piVar3 != (int *)0x0) {
+    do {
+      Scr_FreeDebugExprValue(piVar3 + 1);
+      piVar1 = (int *)*piVar3;
+      if (DAT_8387b8dc == 0) {
+        MyAssertHandler(0xffffffff82151d78,0x1cb,0,0xffffffff82000f98,0xffffffff82151e30);
+      }
+      RtlFreeHeap(DAT_8387b8dc,0,piVar3);
+      piVar3 = piVar1;
+    } while (piVar1 != (int *)0x0);
+    __restgprlr_26();
+    return;
+  }
+  MyAssertHandler(0xffffffff82151d78,0x1c2,0,0xffffffff82000f98,0xffffffff82151e20);
+  __restgprlr_26();
+  return;
+}
+
+
+// 8253F5B8  Scr_AddDebugExprRefCount  (script/scr_parsetree.cpp:479)
+
+void Scr_AddDebugExprRefCount(undefined8 param_1,undefined4 *param_2)
+
+{
+  for (; param_2 != (undefined4 *)0x0; param_2 = (undefined4 *)*param_2) {
+    Scr_AddDebugExprValueRefCount(param_1,param_2 + 1);
+  }
+  return;
 }
 
 
@@ -433,50 +563,151 @@ void debugger_node2(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 // 8253F6B0  debugger_node3  (script/scr_parsetree.cpp:546)
 
-void debugger_node3(void)
+void debugger_node3(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x10,0xffffffff82151e70);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  __restgprlr_29();
+  return;
+}
+
+
+// 8253F6F0  debugger_node4  (script/scr_parsetree.cpp:564)
+
+void debugger_node4(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x14,0xffffffff82151e80);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  __restgprlr_28();
+  return;
 }
 
 
 // 8253F738  debugger_node5  (script/scr_parsetree.cpp:583)
 
-void debugger_node5(void)
+void debugger_node5(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5,undefined4 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x18,0xffffffff82151e90);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  *(undefined4 *)(iVar2 + 0x14) = param_6;
+  __restgprlr_27();
+  return;
 }
 
 
 // 8253F788  debugger_node6  (script/scr_parsetree.cpp:603)
 
-void debugger_node6(void)
+void debugger_node6(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                   undefined4 param_5,undefined4 param_6,undefined4 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = Scr_AllocDebugExpr(uVar1,0x1c,0xffffffff82151e90);
+  *(undefined4 *)(iVar2 + 4) = param_2;
+  *(undefined4 *)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = param_4;
+  *(undefined4 *)(iVar2 + 0x10) = param_5;
+  *(undefined4 *)(iVar2 + 0x14) = param_6;
+  *(undefined4 *)(iVar2 + 0x18) = param_7;
+  __restgprlr_26();
+  return;
+}
+
+
+// 8253F7E0  debugger_prepend_node  (script/scr_parsetree.cpp:624)
+
+void debugger_prepend_node(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  uVar2 = __savegprlr_29();
+  iVar1 = *(int *)param_2;
+  iVar3 = Scr_AllocDebugExpr(0,0xc,0xffffffff82151e60);
+  *(undefined4 *)(iVar3 + 4) = uVar2;
+  *(int *)(iVar3 + 8) = iVar1;
+  *(int *)param_2 = iVar3 + 4;
+  __restgprlr_29(param_2);
+  return;
 }
 
 
 // 8253F828  debugger_buffer  (script/scr_parsetree.cpp:645)
 
-void debugger_buffer(void)
+void debugger_buffer(undefined8 param_1,void *param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  void *_Dst;
+  
+  uVar2 = __savegprlr_28();
+  uVar1 = (uint)(param_4 + -1);
+  if ((uVar1 & (uint)param_4) != 0) {
+    MyAssertHandler(0xffffffff82151d78,0x289,0,0xffffffff82000f98,0xffffffff82151eb0);
+  }
+  iVar3 = Scr_AllocDebugExpr(uVar2,param_3 + param_4 + -1 + 8,0xffffffff82151ea0);
+  _Dst = (void *)(iVar3 + uVar1 + 8 & ~uVar1);
+  memcpy(_Dst,param_2,(size_t)param_3);
+  *(void **)(iVar3 + 4) = _Dst;
+  __restgprlr_28(iVar3);
+  return;
 }
 
 
 // 8253F8C0  debugger_string  (script/scr_parsetree.cpp:666)
 
-void debugger_string(void)
+void debugger_string(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char *pcVar5;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_29();
+  lVar4 = param_2;
+  do {
+    pcVar5 = (char *)lVar4;
+    lVar4 = lVar4 + 1;
+  } while (*pcVar5 != '\0');
+  uVar3 = (lVar4 - param_2) - 1;
+  iVar2 = Scr_AllocDebugExpr(uVar1,(uVar3 & 0xffffffff) + 9,0xffffffff82151ea0);
+  memcpy((void *)(iVar2 + 8),(void *)param_2,(int)uVar3 + 1);
+  *(void **)(iVar2 + 4) = (void *)(iVar2 + 8);
+  __restgprlr_29(iVar2);
+  return;
 }
 

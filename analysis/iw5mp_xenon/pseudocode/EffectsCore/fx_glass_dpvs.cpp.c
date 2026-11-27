@@ -20,11 +20,87 @@ bool FX_IsGlassPieceCulledByDpvsPlane
 
 // 8242AE00  Glass_GetPieceDrawFlags  (EffectsCore/fx_glass_dpvs.cpp:91)
 
-void Glass_GetPieceDrawFlags(void)
+void Glass_GetPieceDrawFlags
+               (undefined8 param_1,undefined8 param_2,float *param_3,ulonglong param_4,
+               longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
+  ulonglong uVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_70;
+  float local_6c;
+  float local_68;
+  
   __savegprlr_28();
+  iVar3 = __savefpr_26();
+  dVar8 = (double)(*(float *)(iVar3 + 0x14) - param_3[1]);
+  dVar7 = (double)(*(float *)(iVar3 + 0x18) - param_3[2]);
+  dVar9 = (double)(*(float *)(iVar3 + 0x10) - *param_3);
+  dVar11 = (double)(*(float *)(iVar3 + 0x1c) * *(float *)(iVar3 + 0x1c) -
+                   (float)(extraout_f1 * extraout_f1));
+  dVar6 = (double)(float)(dVar9 * dVar9 +
+                         (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8)));
+  if ((double)(float)(dVar6 * 7.0461542236444075e-06) <= dVar11) {
+    dVar10 = extraout_f1;
+    UnitQuatToNormal(iVar3,&local_70);
+    uVar4 = 0;
+    if ((param_4 & 0xffffffff) != 0) {
+      param_5 = param_5 + 8;
+      do {
+        pfVar2 = (float *)param_5;
+        dVar5 = (double)(float)((double)*pfVar2 * (double)local_68 +
+                               (double)(float)((double)pfVar2[-2] * (double)local_70 +
+                                              (double)(float)((double)pfVar2[-1] * (double)local_6c)
+                                              ));
+        fVar1 = (float)(ABS(dVar5) * dVar10 +
+                       (double)((float)((double)*pfVar2 * (double)*(float *)(iVar3 + 0x18) +
+                                       (double)(float)((double)pfVar2[-1] *
+                                                       (double)*(float *)(iVar3 + 0x14) +
+                                                      (double)(float)((double)pfVar2[-2] *
+                                                                     (double)*(float *)(iVar3 + 0x10
+                                                                                       )))) +
+                               pfVar2[1]));
+        if (ABS(fVar1) * fVar1 < (float)((double)(float)(dVar5 * dVar5) * dVar11 - dVar11))
+        goto LAB_8242ae78;
+        uVar4 = uVar4 + 1;
+        param_5 = param_5 + 0x10;
+      } while ((uVar4 & 0xffffffff) < (param_4 & 0xffffffff));
+    }
+    uVar4 = 3;
+    if (1.0 < (float)(dVar6 - dVar11)) {
+      fVar1 = (float)(dVar6 - dVar11) * 0.0013272297;
+      dVar7 = ABS((double)(float)((double)local_68 * dVar7 +
+                                 (double)(float)((double)local_6c * dVar8 +
+                                                (double)(float)((double)local_70 * dVar9))));
+      if ((float)((double)*(float *)(iVar3 + 0x1c) * dVar7) < fVar1) {
+        uVar4 = 2;
+      }
+      if ((float)((double)(float)(-(double)(float)(dVar7 * dVar7 - dVar6) * dVar10) * dVar10) <
+          fVar1 * fVar1) {
+        uVar4 = uVar4 << 0x20 | uVar4 & 0xfffffffffffffffd;
+      }
+      __restfpr_26(uVar4);
+      __restgprlr_28();
+      return;
+    }
+    __restfpr_26(3);
+    __restgprlr_28();
+    return;
+  }
+LAB_8242ae78:
+  __restfpr_26(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -45,29 +121,28 @@ void FX_AddCellGlassSurfacesInFrustumCmd(void)
   undefined4 *local_64;
   undefined4 local_60;
   
-  iVar4 = __savegprlr_22();
-  iVar3 = DAT_8333cb18;
-  iVar2 = DAT_8333cb10;
-  iVar1 = DAT_8333caf8;
+  iVar5 = __savegprlr_22();
+  iVar1 = DAT_8333cad4;
   if (DAT_8333cad4 != 0) {
     if (DAT_8333cb0c == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82064bd8,0xc1,0,0xffffffff82000f98,0xffffffff82064bc0);
     }
-    local_6c = DAT_8333cad4;
+    iVar4 = DAT_8333cb18;
+    iVar3 = DAT_8333cb10;
+    iVar2 = DAT_8333caf8;
+    local_6c = iVar1;
     local_68 = 0;
-    local_64 = (undefined4 *)((uint)*(ushort *)(iVar4 + 6) * DAT_8333cad4 * 4 + DAT_8333cb0c);
+    local_64 = (undefined4 *)((uint)*(ushort *)(iVar5 + 6) * iVar1 * 4 + DAT_8333cb0c);
     local_60 = *local_64;
-    while (iVar5 = SpuBitArrayIterator__Advance(&local_70), iVar4 = local_70, iVar5 != 0) {
-      if (*(char *)(local_70 + iVar2) == '\0') {
+    while (iVar5 = SpuBitArrayIterator__Advance(&local_70), iVar1 = local_70, iVar5 != 0) {
+      if (*(char *)(local_70 + iVar3) == '\0') {
         bVar6 = Glass_GetPieceDrawFlags
-                          ((double)*(float *)(local_70 * 4 + iVar3),local_70 * 0x20 + iVar1);
+                          ((double)*(float *)(local_70 * 4 + iVar4),local_70 * 0x20 + iVar2);
         if (bVar6 != 0) {
           if (3 < bVar6) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82064bd8,0xde,0,0xffffffff82064ba8,0xffffffff82064b70);
           }
-          *(byte *)(iVar4 + iVar2) = bVar6;
+          *(byte *)(iVar1 + iVar3) = bVar6;
         }
       }
     }
@@ -77,13 +152,61 @@ void FX_AddCellGlassSurfacesInFrustumCmd(void)
 }
 
 
-// 8242AFD8  Glass_LinkPiece_Static  (EffectsCore/fx_glass_dpvs.cpp:278)
+// 8242AFB8  FX_ClearGlassVisData  (EffectsCore/fx_glass_dpvs.cpp:267)
 
-void Glass_LinkPiece_Static(void)
+void FX_ClearGlassVisData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  Com_Memset(DAT_8333cb10,0,DAT_8333cad0 + 0xfU & 0xfffffff0);
+  return;
+}
+
+
+// 8242AFD8  Glass_LinkPiece_Static  (EffectsCore/fx_glass_dpvs.cpp:278)
+
+void Glass_LinkPiece_Static(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  longlong lVar5;
+  float local_50;
+  float local_4c;
+  float local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  float local_30;
+  float local_2c;
+  
+  iVar3 = __savegprlr_29();
+  lVar5 = (ulonglong)*(uint *)(iVar3 + 0x34) + (param_2 & 0x7ffffff) * 0x20;
+  pfVar4 = (float *)(*(int *)(iVar3 + 0x50) + (int)param_2 * 0xc);
+  iVar2 = (int)lVar5;
+  if (((*(float *)(iVar2 + 0x10) != *pfVar4) || (*(float *)(iVar2 + 0x14) != pfVar4[1])) ||
+     (*(float *)(iVar2 + 0x18) != pfVar4[2])) {
+    *pfVar4 = 262144.0;
+    pfVar4[1] = 262144.0;
+    pfVar4[2] = 262144.0;
+    local_40 = *(undefined4 *)(iVar2 + 0x10);
+    local_3c = *(undefined4 *)(iVar2 + 0x14);
+    local_38 = *(undefined4 *)(iVar2 + 0x18);
+    UnitQuatToNormal(lVar5,&local_50);
+    fVar1 = *(float *)(*(int *)(iVar3 + 0x54) + (int)((param_2 & 0xffffffff) << 2));
+    local_34 = SQRT(local_48 * local_48 + local_4c * local_4c) * *(float *)(iVar2 + 0x1c) +
+               ABS(local_50) * fVar1;
+    local_30 = SQRT(local_50 * local_50 + local_48 * local_48) * *(float *)(iVar2 + 0x1c) +
+               ABS(local_4c) * fVar1;
+    local_2c = SQRT(local_50 * local_50 + local_4c * local_4c) * *(float *)(iVar2 + 0x1c) +
+               ABS(local_48) * fVar1;
+    R_FilterThingIntoCells
+              (param_2,&local_40,*(undefined4 *)(iVar3 + 0x48),*(undefined4 *)(iVar3 + 0x10));
+  }
+  __restgprlr_29();
+  return;
 }
 
 

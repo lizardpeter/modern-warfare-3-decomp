@@ -32,15 +32,12 @@ void DB_CreateMaterialStream(undefined8 param_1,int param_2)
   }
   iVar2 = (int)uVar3 * 0x1c;
   if (*(int *)(&DAT_83247b14 + iVar2) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x78,0,0xffffffff82000f98,0xffffffff8205e4d4);
   }
   if (*(short *)(&DAT_83247b08 + iVar2) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x79,0,0xffffffff82000f98,0xffffffff8205e4b0);
   }
   if (*(float *)(&DAT_83247b18 + iVar2) != 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x7a,0,0xffffffff82000f98,0xffffffff8205e48c);
   }
   uVar3 = (ulonglong)*(byte *)(iVar4 + 0x3d);
@@ -119,27 +116,75 @@ undefined8 SpuBitArrayIterator__Advance(int *param_1)
   }
   uVar3 = LZCOUNT(param_1[4]);
   *param_1 = param_1[2] * 0x20 + (int)uVar3;
-  if (uVar3 < 0x21) {
-    uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar3 << 2));
-    if ((uVar2 & param_1[4]) != 0) {
-      param_1[4] = param_1[4] & ~uVar2;
-      return 1;
-    }
-                    /* WARNING: Subroutine does not return */
+  if (0x20 < uVar3) {
+    MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar3,0x21);
+  }
+  uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar3 << 2));
+  if ((uVar2 & param_1[4]) == 0) {
     MyAssertHandler(0xffffffff8205e430,0x82,0,0xffffffff82000f98,0xffffffff8205e478);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar3,0x21);
+  param_1[4] = param_1[4] & ~uVar2;
+  return 1;
 }
 
 
 // 82401220  DB_CloneMaterialStream  (database/db_streaming_tabulate.cpp:151)
 
-void DB_CloneMaterialStream(void)
+void DB_CloneMaterialStream(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  undefined4 auStack_44 [17];
+  
   __savegprlr_29();
+  iVar1 = DB_GetMaterialIndex();
+  iVar2 = DB_GetMaterialIndex(param_2);
+  if (param_3 == 2) {
+    lVar5 = 7;
+    puVar3 = auStack_44;
+    puVar4 = (undefined4 *)(iVar2 * 0x1c + -0x7cdb8504);
+    do {
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar3 = (undefined4 *)(iVar2 * 0x1c + -0x7cdb8504);
+    lVar5 = 7;
+    puVar4 = (undefined4 *)(iVar1 * 0x1c + -0x7cdb8504);
+    do {
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar3 = (undefined4 *)(iVar1 * 0x1c + -0x7cdb8504);
+    puVar4 = auStack_44;
+    lVar5 = 7;
+    do {
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    __restgprlr_29(1);
+    return;
+  }
+  puVar4 = (undefined4 *)(iVar1 * 0x1c + -0x7cdb8504);
+  puVar3 = (undefined4 *)(iVar2 * 0x1c + -0x7cdb8504);
+  lVar5 = 7;
+  do {
+    puVar4 = puVar4 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *puVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -175,11 +220,126 @@ longlong CompareXModelStreamMaterial(ushort *param_1,ushort *param_2)
 
 // 82401388  DB_CreateXModelStream  (database/db_streaming_tabulate.cpp:198)
 
-void DB_CreateXModelStream(void)
+void DB_CreateXModelStream(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  byte bVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar7;
+  ulonglong uVar6;
+  undefined4 uVar8;
+  undefined2 uVar9;
+  uint uVar10;
+  undefined2 *puVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  int iVar14;
+  ulonglong uVar15;
+  int iVar16;
+  uint uVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  
+  iVar7 = __savegprlr_16();
+  if (*(char *)(iVar7 + 0xe1) < '\x01') {
+    MyAssertHandler(0xffffffff8205e4f8,0xd2,0,0xffffffff82000f98,0xffffffff8205e638);
+  }
+  uVar6 = DB_GetXModelIndex(iVar7);
+  iVar5 = (int)uVar6 * 0xc;
+  dVar18 = 0.0;
+  dVar20 = (double)*(float *)(*(char *)(iVar7 + 0xe1) * 0x28 + iVar7 + 0x18);
+  if (dVar20 <= 0.0) {
+    MyAssertHandler(dVar20,0xffffffff8205e4f8,0xd9,0,0xffffffff8205e628,0xffffffff8205e618,dVar20);
+  }
+  dVar19 = 1000000.0;
+  if (1000000.0 < dVar20) {
+    MyAssertHandler(dVar20,0xffffffff8205e4f8,0xda,0,0xffffffff8205e628,0xffffffff8205e600,dVar20);
+  }
+  if (dVar19 <= dVar20) {
+    *(float *)(&DAT_8326ed88 + iVar5) = (float)dVar18;
+  }
+  else {
+    *(float *)(&DAT_8326ed88 + iVar5) = (float)(1.0 / dVar20);
+  }
+  iVar3 = (int)((uVar6 & 0x3fffffff) << 2);
+  *(undefined4 *)(&DAT_83275680 + iVar3) = *(undefined4 *)(iVar7 + 0xf4);
+  bVar1 = *(byte *)(iVar7 + 6);
+  uVar13 = (ulonglong)bVar1;
+  uVar8 = DB_Alloc(uVar13 << 2,4);
+  *(undefined4 *)(&DAT_8326ed84 + iVar5) = uVar8;
+  if (uVar13 != 0) {
+    iVar16 = 0;
+    iVar14 = 0;
+    uVar15 = uVar13;
+    do {
+      uVar9 = DB_GetMaterialIndex(*(undefined4 *)(*(int *)(iVar7 + 0x3c) + iVar16));
+      uVar15 = uVar15 - 1;
+      *(undefined2 *)(iVar16 + *(int *)(&DAT_8326ed84 + iVar5)) = uVar9;
+      iVar4 = iVar16 + *(int *)(&DAT_8326ed84 + iVar5);
+      puVar11 = (undefined2 *)(iVar14 + *(int *)(iVar7 + 0x110));
+      iVar16 = iVar16 + 4;
+      iVar14 = iVar14 + 2;
+      *(undefined2 *)(iVar4 + 2) = *puVar11;
+    } while (uVar15 != 0);
+  }
+  qsort(*(void **)(&DAT_8326ed84 + iVar5),(uint)bVar1,4,CompareXModelStreamMaterial);
+  uVar10 = 0xffffffff;
+  uVar15 = 0;
+  if (uVar13 != 0) {
+    iVar7 = 0;
+    iVar14 = 0;
+    uVar12 = uVar13;
+    do {
+      uVar17 = (uint)*(ushort *)(iVar14 + *(int *)(&DAT_8326ed84 + iVar5));
+      if (uVar10 != uVar17) {
+        if (uVar13 <= (uVar15 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff8205e4f8,0xf8,0,0xffffffff8205e588,uVar15,uVar13);
+        }
+        if (0x165f < uVar17) {
+          MyAssertHandler(0xffffffff8205e4f8,0xf9,0,0xffffffff8205e5c0,uVar17,0x1660);
+        }
+        iVar16 = *(int *)(&DAT_8326ed84 + iVar5);
+        uVar15 = uVar15 + 1;
+        puVar11 = (undefined2 *)(iVar7 + iVar16);
+        iVar7 = iVar7 + 4;
+        *puVar11 = *(undefined2 *)(iVar14 + iVar16);
+        puVar11[1] = *(undefined2 *)(iVar14 + iVar16 + 2);
+        uVar10 = uVar17;
+      }
+      uVar12 = uVar12 - 1;
+      iVar14 = iVar14 + 4;
+    } while (uVar12 != 0);
+  }
+  *(int *)(&DAT_8326ed80 + iVar5) = (int)uVar15;
+  if ((uVar15 & 0xffffffff) == 0) {
+    *(undefined4 *)(&DAT_8326ed84 + iVar5) = 0;
+    __restgprlr_16();
+    return;
+  }
+  if (param_2 != 0) {
+    uVar17 = (uint)((uVar6 & 0xffffffff) >> 3) & 0x1ffffffc;
+    uVar10 = (uint)((uVar6 & 0xffffffff) << 2) & 0x7c;
+    if ((*(uint *)((int)&DAT_83275500 + uVar17) & *(uint *)((int)&DAT_82992400 + uVar10)) != 0) {
+      MyAssertHandler(0xffffffff8205e4f8,0x108,0,0xffffffff82000f98,0xffffffff8205e548);
+    }
+    uVar10 = *(uint *)((int)&DAT_82992400 + uVar10);
+    *(uint *)((int)&DAT_83275500 + uVar17) = *(uint *)((int)&DAT_83275500 + uVar17) | uVar10;
+    uVar10 = ~uVar10;
+    *(uint *)((int)&DAT_83299b80 + uVar17) = *(uint *)((int)&DAT_83299b80 + uVar17) & uVar10;
+    uVar2 = *(uint *)((int)&DAT_83299d00 + uVar17);
+    *(float *)(&DAT_8459e580 + iVar3) = (float)dVar19;
+    *(uint *)((int)&DAT_83299d00 + uVar17) = uVar2 & uVar10;
+    *(uint *)(&DAT_83299a00 + uVar17) = *(uint *)(&DAT_83299a00 + uVar17) & uVar10;
+    *(float *)((int)&DAT_8327db80 + iVar3) = (float)dVar19;
+    *(float *)((int)&DAT_8327fe00 + iVar3) = (float)dVar19;
+    *(float *)(&DAT_83277900 + iVar3) = (float)dVar19;
+  }
+  __restgprlr_16();
+  return;
 }
 
 
@@ -193,8 +353,8 @@ void DB_ReleaseXModelStream(void)
   
   uVar2 = DB_GetXModelIndex();
   uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)(&DAT_83275500 + uVar1) =
-       *(uint *)(&DAT_83275500 + uVar1) &
+  *(uint *)((int)&DAT_83275500 + uVar1) =
+       *(uint *)((int)&DAT_83275500 + uVar1) &
        ~*(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c));
   return;
 }
@@ -202,11 +362,64 @@ void DB_ReleaseXModelStream(void)
 
 // 82401768  DB_CloneXModelStream  (database/db_streaming_tabulate.cpp:291)
 
-void DB_CloneXModelStream(void)
+void DB_CloneXModelStream(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  
   __savegprlr_28();
+  uVar10 = DB_GetXModelIndex();
+  uVar11 = DB_GetXModelIndex(param_2);
+  uVar5 = (uint)uVar11;
+  if (param_3 == 2) {
+    iVar7 = (uint)uVar10 * 0xc;
+    iVar8 = uVar5 * 0xc;
+    iVar9 = (int)((uVar10 & 0xffffffff) << 2);
+    uVar1 = *(undefined4 *)(&DAT_8326ed80 + iVar8);
+    iVar6 = (int)((uVar11 & 0xffffffff) << 2);
+    uVar2 = *(undefined4 *)(&DAT_8326ed84 + iVar8);
+    uVar3 = *(undefined4 *)(&DAT_8326ed88 + iVar8);
+    *(undefined4 *)(&DAT_8326ed80 + iVar8) = *(undefined4 *)(&DAT_8326ed80 + iVar7);
+    *(undefined4 *)(&DAT_8326ed84 + iVar8) = *(undefined4 *)(&DAT_8326ed84 + iVar7);
+    *(undefined4 *)(&DAT_8326ed88 + iVar8) = *(undefined4 *)(&DAT_8326ed88 + iVar7);
+    *(undefined4 *)(&DAT_8326ed80 + iVar7) = uVar1;
+    *(undefined4 *)(&DAT_8326ed84 + iVar7) = uVar2;
+    *(undefined4 *)(&DAT_8326ed88 + iVar7) = uVar3;
+    uVar1 = *(undefined4 *)(&DAT_83275680 + iVar6);
+    *(undefined4 *)(&DAT_83275680 + iVar6) = *(undefined4 *)(&DAT_83275680 + iVar9);
+    *(undefined4 *)(&DAT_83275680 + iVar9) = uVar1;
+    __restgprlr_28(1);
+    return;
+  }
+  if (((*(uint *)((int)&DAT_83275500 + ((uint)uVar10 >> 3 & 0x1ffffffc)) &
+       *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c))) == 0) &&
+     ((*(uint *)((int)&DAT_83275500 + (uVar5 >> 3 & 0x1ffffffc)) &
+      *(uint *)((int)&DAT_82992400 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c))) == 0)) {
+    MyAssertHandler(0xffffffff8205e4f8,0x138,0,0xffffffff82000f98,0xffffffff8205e650);
+  }
+  uVar4 = (uint)((uVar11 & 0xffffffff) >> 3) & 0x1ffffffc;
+  *(uint *)((int)&DAT_83275500 + uVar4) =
+       *(uint *)((int)&DAT_82992400 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c)) |
+       *(uint *)((int)&DAT_83275500 + uVar4);
+  iVar9 = uVar5 * 0xc;
+  iVar6 = (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  *(undefined4 *)(&DAT_8326ed80 + iVar9) = *(undefined4 *)(&DAT_8326ed80 + iVar6);
+  *(undefined4 *)(&DAT_8326ed84 + iVar9) = *(undefined4 *)(&DAT_8326ed84 + iVar6);
+  *(undefined4 *)(&DAT_8326ed88 + iVar9) = *(undefined4 *)(&DAT_8326ed88 + iVar6);
+  *(undefined4 *)(&DAT_83275680 + (int)((uVar11 & 0xffffffff) << 2)) =
+       *(undefined4 *)(&DAT_83275680 + (int)((uVar10 & 0xffffffff) << 2));
+  __restgprlr_28(1);
+  return;
 }
 
 
@@ -221,8 +434,8 @@ void DB_FreeXModelStream(undefined8 param_1)
   
   uVar2 = DB_GetXModelIndex();
   uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)(&DAT_83275500 + uVar1) =
-       *(uint *)(&DAT_83275500 + uVar1) &
+  *(uint *)((int)&DAT_83275500 + uVar1) =
+       *(uint *)((int)&DAT_83275500 + uVar1) &
        ~*(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c));
   iVar3 = DB_GetXModelIndex(param_1);
   *(undefined4 *)(&DAT_8326ed80 + iVar3 * 0xc) = 0;
@@ -236,8 +449,30 @@ void DB_FreeXModelStream(undefined8 param_1)
 void DB_TouchXModel(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  char cVar4;
+  
+  uVar3 = __savegprlr_28();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8205e4f8,0x159,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (DAT_832ee024 != 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x15a,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  }
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x15b,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  uVar3 = DB_GetXModelIndex(uVar3);
+  uVar2 = (uint)((uVar3 & 0xffffffff) >> 3) & 0x1ffffffc;
+  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c));
+  *(uint *)(&DAT_83299a00 + uVar2) = *(uint *)(&DAT_83299a00 + uVar2) | uVar1;
+  *(uint *)((int)&DAT_83299b80 + uVar2) = *(uint *)((int)&DAT_83299b80 + uVar2) | uVar1;
+  *(undefined4 *)((int)&DAT_8327db80 + (int)((uVar3 & 0xffffffff) << 2)) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -246,8 +481,36 @@ void DB_TouchXModel(void)
 void DB_TouchXModelBase(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  char cVar5;
+  
+  uVar4 = __savegprlr_28();
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff8205e4f8,0x169,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (DAT_832ee024 != 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x16a,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  }
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x16b,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  uVar4 = DB_GetXModelIndex(uVar4);
+  uVar2 = (uint)((uVar4 & 0xffffffff) >> 3) & 0x1ffffffc;
+  iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+  *(uint *)((int)&DAT_83299b80 + uVar2) =
+       *(uint *)((int)&DAT_82992400 + ((uint)((uVar4 & 0xffffffff) << 2) & 0x7c)) |
+       *(uint *)((int)&DAT_83299b80 + uVar2);
+  fVar1 = *(float *)((int)&DAT_8327db80 + iVar3);
+  if (500000.0 - fVar1 < 0.0) {
+    fVar1 = 500000.0;
+  }
+  *(float *)((int)&DAT_8327db80 + iVar3) = fVar1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -256,8 +519,29 @@ void DB_TouchXModelBase(void)
 void DB_TouchMaterial(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  char cVar4;
+  
+  uVar3 = __savegprlr_29();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8205e4f8,0x177,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x178,0,0xffffffff82000f98,0xffffffff82020dcc);
+  }
+  uVar3 = DB_GetMaterialIndex(uVar3);
+  uVar1 = (uint)((uVar3 & 0xffffffff) >> 3) & 0x1ffffffc;
+  iVar2 = (int)((uVar3 & 0xffffffff) << 2);
+  *(uint *)(&DAT_83288a80 + uVar1) =
+       *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c)) |
+       *(uint *)(&DAT_83288a80 + uVar1);
+  *(undefined4 *)(&DAT_84587f00 + iVar2) = 0;
+  *(undefined4 *)(&DAT_83288d80 + iVar2) = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -272,7 +556,6 @@ bool DB_CheckSyncStreaming(void)
   
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x1b5,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   bVar3 = true;
@@ -299,6 +582,189 @@ undefined8 DB_UsingClientStream(void)
     iVar1 = iVar1 + 1;
   } while (iVar1 < 0x12);
   return 0;
+}
+
+
+// 82402568  DB_StreamAddViewPos  (database/db_streaming_tabulate.cpp:617)
+
+void DB_StreamAddViewPos(undefined8 param_1,undefined8 param_2,int *param_3)
+
+{
+  byte bVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  ushort uVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  uint uVar14;
+  uint uVar15;
+  float fVar16;
+  float *pfVar17;
+  int iVar18;
+  int iVar19;
+  int iVar20;
+  ulonglong uVar21;
+  longlong lVar22;
+  undefined4 uVar23;
+  float *pfVar24;
+  double extraout_f1;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  int local_4180;
+  uint local_417c;
+  undefined4 local_4178;
+  uint *local_4174;
+  uint local_4170;
+  ulonglong local_4168;
+  longlong local_4160;
+  undefined4 *local_4150;
+  uint *local_414c;
+  float local_4148;
+  float local_4144;
+  float local_4140;
+  float local_413c;
+  float local_4138;
+  uint local_40b0 [2048];
+  undefined4 auStack_20b0 [2092];
+  
+  __savegprlr_16();
+  pfVar17 = (float *)__savefpr_27();
+  dVar25 = 0.0;
+  dVar26 = extraout_f1;
+  if ((double)(float)param_3[6] <= 0.0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x2b1,0,0xffffffff8205e840,0xffffffff8205e860,
+                    (double)(float)param_3[6]);
+  }
+  if (DAT_832ee014 == 0) {
+    fVar2 = 2.0;
+  }
+  else {
+    fVar2 = 1.0;
+  }
+  dVar27 = (double)fVar2;
+  local_4150 = auStack_20b0;
+  local_4148 = *pfVar17;
+  local_414c = local_40b0;
+  local_4144 = pfVar17[1];
+  local_4140 = pfVar17[2];
+  local_4138 = (float)(dVar26 * dVar26);
+  local_413c = (float)dVar26;
+  R_SetupSphereStaticGeo(&local_4150);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e82c);
+  dVar26 = (double)(float)(dVar27 * (double)(float)param_3[6]);
+  local_4178 = 0;
+  local_4170 = 0;
+  local_417c = *DAT_846178cc + 0x1fU >> 5;
+  iVar20 = DAT_846178cc[0x16];
+  iVar10 = *param_3;
+  iVar11 = param_3[2];
+  iVar12 = param_3[1];
+  iVar19 = param_3[3];
+  iVar13 = param_3[4];
+  uVar14 = param_3[5];
+  local_4174 = local_414c;
+  if (local_417c != 0) {
+    local_4170 = *local_414c;
+  }
+  dVar27 = 256.0;
+  while (iVar18 = SpuBitArrayIterator__Advance(&local_4180), iVar18 != 0) {
+    pfVar24 = (float *)(local_4180 * 0x2c + iVar20);
+    if (*(char *)(local_4180 + iVar19) == '\0') {
+      dVar29 = (double)pfVar24[6];
+      dVar28 = (double)SQRT((*pfVar17 - *pfVar24) * (*pfVar17 - *pfVar24) +
+                            (pfVar17[2] - pfVar24[2]) * (pfVar17[2] - pfVar24[2]) +
+                            (pfVar17[1] - pfVar24[1]) * (pfVar17[1] - pfVar24[1]));
+      if (dVar29 == dVar25) {
+        MyAssertHandler(0xffffffff82003018,0xe5,0,0xffffffff82000f98,0xffffffff82003004);
+      }
+      iVar18 = DB_GetXModelIndex(pfVar24[7]);
+      iVar18 = iVar18 * 4;
+      fVar7 = *(float *)(iVar18 + iVar10);
+      fVar2 = (float)((double)(float)((double)(float)((double)(float)(1.0 / dVar29) * dVar28 -
+                                                     (double)*(float *)(iVar18 + iVar11)) + dVar27)
+                     * dVar26);
+      if (fVar2 - fVar7 < 0.0) {
+        fVar7 = fVar2;
+      }
+      *(float *)(iVar18 + iVar10) = fVar7;
+    }
+  }
+  PIXEndNamedEvent();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e81c);
+  dVar26 = (double)(float)(dVar26 * 6.103515625e-05);
+  uVar21 = ((ulonglong)(uint)DAT_846178cc[1] + 0x1f & 0xffffffff) >> 5;
+  iVar20 = DAT_846178cc[0x12];
+  iVar10 = DAT_846178cc[0x15];
+  iVar11 = DAT_846178cc[0x17];
+  memset(local_40b0,0,(size_t)(uVar21 << 2));
+  uVar23 = (undefined4)uVar21;
+  local_4178 = 0;
+  local_4170 = 0;
+  local_4174 = local_4150;
+  local_417c = uVar23;
+  if (uVar21 != 0) {
+    local_4170 = *local_4150;
+  }
+  while (iVar19 = SpuBitArrayIterator__Advance(&local_4180), iVar19 != 0) {
+    uVar9 = *(ushort *)(local_4180 * 2 + iVar20);
+    bVar1 = *(byte *)((uint)uVar9 + iVar13);
+    if (1 < bVar1) {
+      MyAssertHandler(0xffffffff8205e4f8,0x335,0,0xffffffff8205e7ec,0xffffffff8205e7bc,bVar1);
+    }
+    uVar15 = uVar9 >> 3 & 0x1ffffffc;
+    *(uint *)((int)local_40b0 + uVar15) =
+         (&DAT_82992400)[uVar9 & 0x1f] & bVar1 - 1 | *(uint *)((int)local_40b0 + uVar15);
+  }
+  local_4174 = local_40b0;
+  local_4178 = 0;
+  local_4170 = 0;
+  local_417c = uVar23;
+  if (uVar21 != 0) {
+    local_4170 = local_40b0[0];
+  }
+  while (iVar20 = SpuBitArrayIterator__Advance(&local_4180), iVar20 != 0) {
+    fVar2 = pfVar17[1];
+    fVar7 = pfVar17[2];
+    fVar3 = *pfVar17;
+    pfVar24 = (float *)(local_4180 * 0x20 + iVar10);
+    iVar20 = 0;
+    fVar4 = pfVar24[1];
+    fVar5 = pfVar24[2];
+    local_4160 = (longlong)(int)(uint)*(ushort *)(pfVar24 + 6);
+    fVar6 = *pfVar24;
+    uVar21 = *(ulonglong *)(local_4180 * 8 + iVar11) >> 0x1d;
+    lVar22 = ((uVar21 & 0xfff) + (uVar21 & 0xfff) * 2) * 4 + (ulonglong)uVar14;
+    for (uVar21 = (ulonglong)*(ushort *)lVar22; uVar21 != 0; uVar21 = uVar21 - 1) {
+      local_4168 = (ulonglong)*(byte *)((int)pfVar24 + iVar20 + 0x1a);
+      iVar20 = iVar20 + 1;
+      lVar22 = lVar22 + 2;
+      iVar19 = (uint)*(ushort *)lVar22 * 4;
+      fVar8 = *(float *)(iVar19 + iVar12);
+      fVar16 = (float)local_4168 *
+               (float)((double)(float)((double)(SQRT((fVar3 - fVar6) * (fVar3 - fVar6) +
+                                                     (fVar7 - fVar5) * (fVar7 - fVar5) +
+                                                     (fVar2 - fVar4) * (fVar2 - fVar4)) -
+                                               (float)local_4160) + dVar27) * dVar26);
+      if (fVar16 - fVar8 < 0.0) {
+        fVar8 = fVar16;
+      }
+      *(float *)(iVar19 + iVar12) = fVar8;
+    }
+  }
+  PIXEndNamedEvent();
+  __restfpr_27();
+  __restgprlr_16();
+  return;
 }
 
 
@@ -432,21 +898,36 @@ void _dynamic_initializer_for__g_streamBitMask7__(void)
 
 // 82401CF8  DB_StreamCheckPriority  (database/db_streaming_tabulate.cpp:886)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void DB_StreamCheckPriority(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_23();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 82401FD8  DB_StreamCheckPriority2  (database/db_streaming_tabulate.cpp:1011)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void DB_StreamCheckPriority2(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_27();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 824021E8  DB_StreamTabulationTouchWeaponModels  (database/db_streaming_tabulate.cpp:1119)
+
+void DB_StreamTabulationTouchWeaponModels(void)
+
+{
+  return;
 }
 
 
@@ -468,41 +949,690 @@ void DB_StreamClearPriority(void)
 
 // 824029A8  DB_StreamCombineInternal  (database/db_streaming_tabulate.cpp:1214)
 
-void DB_StreamCombineInternal(void)
+void DB_StreamCombineInternal
+               (undefined8 param_1,undefined8 param_2,int param_3,void *param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  float fVar10;
+  int iVar11;
+  int iVar12;
+  int *piVar13;
+  int iVar14;
+  void *pvVar15;
+  ushort *puVar16;
+  undefined *puVar17;
+  ulonglong uVar18;
+  uint uVar20;
+  ulonglong uVar19;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  double dVar38;
+  double dVar39;
+  double dVar40;
+  uint local_140;
+  undefined4 local_13c;
+  undefined4 local_138;
+  undefined4 *local_134;
+  undefined4 local_130;
+  
   __savegprlr();
+  piVar13 = (int *)__savefpr();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e934);
+  if (piVar13[0x13] == 0) {
+    DB_StreamClearPriority(param_2);
+  }
+  PIXEndNamedEvent();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e924);
+  iVar3 = *piVar13;
+  if (piVar13[0x14] == 0) {
+    puVar17 = &DAT_832edd00;
+  }
+  else {
+    puVar17 = &DAT_83306e00;
+  }
+  local_134 = &DAT_83283480;
+  local_138 = 0;
+  dVar26 = 0.5099999904632568;
+  local_13c = 0xb3;
+  dVar25 = (double)(DAT_84618174 * 0.51);
+  local_130 = DAT_83283480;
+  dVar38 = 128.0;
+  dVar31 = 12.0;
+  dVar30 = 0.49000000953674316;
+  dVar29 = 5.0;
+  dVar35 = 0.0010000000474974513;
+  dVar27 = 0.25;
+  dVar37 = 0.5;
+  dVar36 = 1.0;
+  dVar32 = 2.0;
+  dVar28 = 16.0;
+  dVar34 = 0.0;
+  while (iVar14 = SpuBitArrayIterator__Advance(&local_140), uVar6 = local_140, iVar14 != 0) {
+    iVar14 = local_140 * 0x1c;
+    uVar5 = local_140 >> 5;
+    uVar7 = 0x80000000 >> (local_140 & 0x1f);
+    dVar33 = (double)*(float *)(&DAT_83247b18 + iVar14);
+    if (dVar33 == dVar34) {
+      MyAssertHandler(0xffffffff8205e4f8,0x551,0,0xffffffff82000f98,
+                      "materialStream->invMinTexLength");
+    }
+    iVar4 = *(int *)(&DAT_83247b14 + iVar14);
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff8205e4f8,0x554,0,0xffffffff82000f98,"totalImages");
+    }
+    iVar12 = uVar6 * 8;
+    iVar9 = uVar5 * 4;
+    dVar39 = (double)*(float *)(&DAT_8328e700 + iVar12);
+    dVar23 = (double)(float)(dVar39 + (double)((float)(longlong)iVar3 * 3.3333334e-05));
+    if ((float)(dVar28 - dVar23) < 0.0) {
+      dVar23 = dVar28;
+    }
+    iVar8 = (int)param_2;
+    dVar21 = dVar34;
+    if (((&DAT_83282880)[uVar5] & uVar7) == 0) {
+      uVar18 = (ulonglong)*(ushort *)(&DAT_83247b00 + iVar14);
+      if (uVar18 == 0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x55d,0,0xffffffff82000f98,"imageCount");
+      }
+      dVar21 = (double)*(float *)(uVar6 * 4 + param_3);
+      if (dVar21 < 0.0) {
+        dVar21 = dVar34;
+      }
+      uVar20 = *(uint *)(iVar9 + (int)param_4);
+      puVar16 = (ushort *)((uint)*(ushort *)(&DAT_83247b0a + iVar14) * 2 + iVar4);
+      if ((float)((double)(float)(dVar21 + dVar32) - dVar23) < 0.0) {
+        dVar23 = (double)(float)(dVar21 + dVar32);
+      }
+      *(float *)(&DAT_8328e700 + iVar12) = (float)dVar23;
+      *(float *)(uVar6 * 4 + param_3) = (float)dVar23;
+      if ((uVar20 & uVar7) == 0) {
+        if (uVar18 != 0) {
+          dVar40 = dVar34;
+          if ((float)(dVar36 - dVar21) < 0.0) {
+            dVar40 = (double)(float)(dVar21 * dVar37);
+          }
+          do {
+            uVar2 = *puVar16;
+            uVar20 = (uint)uVar2;
+            if (0x14bf < uVar20) {
+              MyAssertHandler(0xffffffff8205e4f8,0x586,0,0xffffffff8205e87c,uVar20,0x14c0);
+            }
+            if ((*(uint *)((int)&DAT_83299e80 + (uVar2 >> 3 & 0x1ffffffc)) &
+                (&DAT_82992400)[uVar20 & 0x1f]) != 0) {
+              MyAssertHandler(0xffffffff8205e4f8,0x589,0,0xffffffff82000f98,0xffffffff8205d7d0);
+            }
+            uVar18 = uVar18 - 1;
+            puVar16 = puVar16 + 1;
+            dVar22 = (double)*(float *)((uint)uVar2 * 4 + iVar8);
+            if ((float)(dVar40 - dVar22) < 0.0) {
+              dVar22 = dVar40;
+            }
+            *(float *)((uint)uVar2 * 4 + iVar8) = (float)dVar22;
+          } while (uVar18 != 0);
+        }
+      }
+      else if (uVar18 != 0) {
+        dVar40 = -0.001500000013038516;
+        do {
+          uVar2 = *puVar16;
+          uVar20 = (uint)uVar2;
+          if (0x14bf < uVar20) {
+            MyAssertHandler(0xffffffff8205e4f8,0x574,0,0xffffffff8205e87c,uVar20,0x14c0);
+          }
+          if ((*(uint *)((int)&DAT_83299e80 + (uVar2 >> 3 & 0x1ffffffc)) &
+              (&DAT_82992400)[uVar20 & 0x1f]) != 0) {
+            MyAssertHandler(0xffffffff8205e4f8,0x577,0,0xffffffff82000f98,0xffffffff8205d7d0);
+          }
+          uVar18 = uVar18 - 1;
+          puVar16 = puVar16 + 1;
+          *(float *)((uint)uVar2 * 4 + iVar8) = (float)dVar40;
+        } while (uVar18 != 0);
+      }
+    }
+    uVar5 = (&DAT_83282b80)[uVar5];
+    dVar40 = (double)*(float *)(uVar6 * 4 + param_5);
+    *(undefined4 *)(uVar6 * 4 + param_5) = 0x44000000;
+    if (dVar40 < 0.0) {
+      dVar40 = dVar34;
+    }
+    if ((uVar5 & uVar7) == 0) {
+      uVar18 = (ulonglong)*(ushort *)(&DAT_83247b02 + iVar14);
+      if (uVar18 == 0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x59a,0,0xffffffff82000f98,"imageCount");
+      }
+      dVar21 = (double)(float)(dVar21 + dVar35);
+      uVar6 = *(uint *)(iVar9 + (int)param_4);
+      puVar16 = (ushort *)((uint)*(ushort *)(&DAT_83247b0c + iVar14) * 2 + iVar4);
+      dVar22 = (double)(float)(dVar40 * dVar27);
+      if ((float)((double)(float)(dVar39 * dVar32) - (double)(float)(dVar40 * dVar27)) < 0.0) {
+        dVar22 = (double)(float)(dVar39 * dVar32);
+      }
+      dVar39 = dVar21;
+      if ((float)(dVar21 - dVar22) < 0.0) {
+        dVar39 = dVar22;
+      }
+      if ((float)(dVar31 - dVar22) < 0.0) {
+        dVar22 = dVar31;
+      }
+      dVar39 = (double)(float)(dVar39 * dVar37 + dVar32);
+      if ((float)(dVar21 - dVar22) < 0.0) {
+        dVar21 = dVar22;
+      }
+      if ((float)(dVar39 - dVar23) < 0.0) {
+        dVar23 = dVar39;
+      }
+      *(float *)(&DAT_8328e700 + iVar12) = (float)dVar23;
+      if ((uVar6 & uVar7) == 0) {
+        dVar23 = (double)(float)((double)(float)(dVar33 * dVar21) * dVar37);
+        while (uVar18 != 0) {
+          uVar2 = *puVar16;
+          uVar19 = (ulonglong)uVar2;
+          if (0x14bf < uVar19) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5c5,0,0xffffffff8205e87c,uVar19,0x14c0);
+          }
+          iVar11 = (int)(uVar19 + 0x14c0);
+          if ((*(uint *)((int)&DAT_83299e80 + ((uint)(uVar19 + 0x14c0 >> 3) & 0x1ffffffc)) &
+              *(uint *)((int)&DAT_82992400 + (iVar11 * 4 & 0x7cU))) != 0) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5c8,0,0xffffffff82000f98,0xffffffff8205d7d0);
+          }
+          iVar11 = iVar11 * 4;
+          if (dVar38 < (double)*(float *)(iVar11 + iVar8)) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5ca,0,0xffffffff82000f98,0xffffffff8205e8bc);
+          }
+          uVar18 = uVar18 - 1;
+          puVar16 = puVar16 + 1;
+          fVar1 = (float)((double)(*(uint *)(puVar17 + (uVar2 >> 3 & 0x1ffffffc)) &
+                                  *(uint *)((int)&DAT_82992400 + (int)((uVar19 & 0x1f) << 2))) *
+                          dVar38 + (double)(float)((double)*(float *)(&DAT_83283780 +
+                                                                     (uint)uVar2 * 4) * dVar23));
+          fVar10 = *(float *)(iVar11 + iVar8);
+          if (fVar1 - *(float *)(iVar11 + iVar8) < 0.0) {
+            fVar10 = fVar1;
+          }
+          *(float *)(iVar11 + iVar8) = fVar10;
+        }
+      }
+      else {
+        for (; uVar18 != 0; uVar18 = uVar18 - 1) {
+          uVar19 = (ulonglong)*puVar16;
+          if (0x14bf < uVar19) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5b1,0,0xffffffff8205e87c,uVar19,0x14c0);
+          }
+          iVar11 = (int)(uVar19 + 0x14c0);
+          if ((*(uint *)((int)&DAT_83299e80 + ((uint)(uVar19 + 0x14c0 >> 3) & 0x1ffffffc)) &
+              *(uint *)((int)&DAT_82992400 + (iVar11 * 4 & 0x7cU))) != 0) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5b4,0,0xffffffff82000f98,0xffffffff8205d7d0);
+          }
+          puVar16 = puVar16 + 1;
+          *(undefined4 *)(iVar11 * 4 + iVar8) = 0xba03126f;
+        }
+      }
+    }
+    if ((*(uint *)(&DAT_83282e80 + iVar9) & uVar7) == 0) {
+      uVar18 = (ulonglong)*(ushort *)(&DAT_83247b04 + iVar14);
+      if (uVar18 == 0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x5d6,0,0xffffffff82000f98,"imageCount");
+      }
+      dVar24 = (double)*(float *)(&DAT_8328e704 + iVar12);
+      dVar23 = dVar21 + dVar35;
+      dVar39 = (double)(float)(dVar24 + (double)((float)(longlong)iVar3 * 6.666667e-05));
+      uVar6 = *(uint *)(iVar9 + (int)param_4);
+      puVar16 = (ushort *)((uint)*(ushort *)(&DAT_83247b0e + iVar14) * 2 + iVar4);
+      dVar22 = (double)(float)(dVar40 * dVar37);
+      if ((float)(dVar24 - (double)(float)(dVar40 * dVar37)) < 0.0) {
+        dVar22 = dVar24;
+      }
+      dVar21 = (double)(float)dVar23;
+      if ((float)((double)(float)dVar23 - dVar22) < 0.0) {
+        dVar21 = dVar22;
+      }
+      if ((float)((double)(float)(dVar21 + dVar36) - dVar39) < 0.0) {
+        dVar39 = (double)(float)(dVar21 + dVar36);
+      }
+      if ((float)(dVar29 - dVar39) < 0.0) {
+        dVar39 = dVar29;
+      }
+      *(float *)(&DAT_8328e704 + iVar12) = (float)dVar39;
+      if ((uVar6 & uVar7) == 0) {
+        dVar23 = (double)(float)(dVar33 * dVar21);
+        while (uVar18 != 0) {
+          uVar2 = *puVar16;
+          uVar19 = (ulonglong)uVar2;
+          if (0x14bf < uVar19) {
+            MyAssertHandler(0xffffffff8205e4f8,0x600,0,0xffffffff8205e87c,uVar19,0x14c0);
+          }
+          iVar12 = (int)(uVar19 + 0x2980);
+          if ((*(uint *)((int)&DAT_83299e80 + ((uint)(uVar19 + 0x2980 >> 3) & 0x1ffffffc)) &
+              *(uint *)((int)&DAT_82992400 + (iVar12 * 4 & 0x7cU))) != 0) {
+            MyAssertHandler(0xffffffff8205e4f8,0x603,0,0xffffffff82000f98,0xffffffff8205d7d0);
+          }
+          iVar12 = iVar12 * 4;
+          if (dVar38 < (double)*(float *)(iVar12 + iVar8)) {
+            MyAssertHandler(0xffffffff8205e4f8,0x605,0,0xffffffff82000f98,0xffffffff8205e8bc);
+          }
+          uVar18 = uVar18 - 1;
+          puVar16 = puVar16 + 1;
+          fVar1 = (float)((double)(*(uint *)(puVar17 + (uVar2 >> 3 & 0x1ffffffc)) &
+                                  *(uint *)((int)&DAT_82992400 + (int)((uVar19 & 0x1f) << 2))) *
+                          dVar38 + (double)(float)((double)*(float *)(&DAT_83283780 +
+                                                                     (uint)uVar2 * 4) * dVar23));
+          fVar10 = *(float *)(iVar12 + iVar8);
+          if (fVar1 - *(float *)(iVar12 + iVar8) < 0.0) {
+            fVar10 = fVar1;
+          }
+          *(float *)(iVar12 + iVar8) = fVar10;
+        }
+      }
+      else {
+        for (; uVar18 != 0; uVar18 = uVar18 - 1) {
+          uVar19 = (ulonglong)*puVar16;
+          if (0x14bf < uVar19) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5ec,0,0xffffffff8205e87c,uVar19,0x14c0);
+          }
+          iVar12 = (int)(uVar19 + 0x2980);
+          if ((*(uint *)((int)&DAT_83299e80 + ((uint)(uVar19 + 0x2980 >> 3) & 0x1ffffffc)) &
+              *(uint *)((int)&DAT_82992400 + (iVar12 * 4 & 0x7cU))) != 0) {
+            MyAssertHandler(0xffffffff8205e4f8,0x5ef,0,0xffffffff82000f98,0xffffffff8205d7d0);
+          }
+          puVar16 = puVar16 + 1;
+          *(undefined4 *)(iVar12 * 4 + iVar8) = 0x3a03126f;
+        }
+      }
+    }
+    if ((*(uint *)(&DAT_83283180 + iVar9) & uVar7) == 0) {
+      uVar18 = (ulonglong)*(ushort *)(&DAT_83247b06 + iVar14);
+      if (uVar18 == 0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x611,0,0xffffffff82000f98,"imageCount");
+      }
+      puVar16 = (ushort *)((uint)*(ushort *)(&DAT_83247b10 + iVar14) * 2 + iVar4);
+      dVar23 = (double)(float)(dVar21 + dVar35);
+      if ((float)((double)(float)(dVar21 + dVar35) - dVar40) < 0.0) {
+        dVar23 = dVar40;
+      }
+      dVar33 = (double)(float)(dVar23 * dVar33);
+      while (uVar18 != 0) {
+        uVar2 = *puVar16;
+        uVar19 = (ulonglong)uVar2;
+        if (0x14bf < uVar19) {
+          MyAssertHandler(0xffffffff8205e4f8,0x625,0,0xffffffff8205e87c,uVar19,0x14c0);
+        }
+        iVar14 = (int)(uVar19 + 0x3e40);
+        if ((*(uint *)((int)&DAT_83299e80 + ((uint)(uVar19 + 0x3e40 >> 3) & 0x1ffffffc)) &
+            *(uint *)((int)&DAT_82992400 + (iVar14 * 4 & 0x7cU))) != 0) {
+          MyAssertHandler(0xffffffff8205e4f8,0x628,0,0xffffffff82000f98,0xffffffff8205d7d0);
+        }
+        iVar14 = iVar14 * 4;
+        if (dVar38 < (double)*(float *)(iVar14 + iVar8)) {
+          MyAssertHandler(0xffffffff8205e4f8,0x62a,0,0xffffffff82000f98,0xffffffff8205e8bc);
+        }
+        uVar18 = uVar18 - 1;
+        puVar16 = puVar16 + 1;
+        dVar39 = (double)(float)((double)*(float *)(&DAT_83283780 + (uint)uVar2 * 4) * dVar33);
+        dVar23 = dVar39 * dVar30;
+        if ((float)(dVar36 - dVar39) < 0.0) {
+          dVar23 = dVar39 - dVar26;
+        }
+        fVar1 = (float)((double)(*(uint *)(puVar17 + (uVar2 >> 3 & 0x1ffffffc)) &
+                                (&DAT_82992400)[uVar2 & 0x1f]) * dVar38 +
+                       (double)(float)((double)(float)dVar23 + dVar25));
+        fVar10 = *(float *)(iVar14 + iVar8);
+        if (fVar1 - *(float *)(iVar14 + iVar8) < 0.0) {
+          fVar10 = fVar1;
+        }
+        *(float *)(iVar14 + iVar8) = fVar10;
+      }
+    }
+  }
+  pvVar15 = memset(param_4,0,0x2cc);
+  PIXEndNamedEvent(pvVar15);
+  __restfpr();
+  __restgprlr();
+  return;
 }
 
 
 // 82402288  DB_StreamCheckAllPriority  (database/db_streaming_tabulate.cpp:1608)
 
+/* WARNING: Removing unreachable block (ram,0x824022cc) */
+
 void DB_StreamCheckAllPriority(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((-1 < DAT_832ee010) &&
+     (iVar2 = DB_StreamCheckPriority(DAT_832ee010,0xffffffff845f4400,uVar1,0xffffffff845f3980),
+     iVar2 != 0)) {
+    DAT_832ee00c = 1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 824033C8  DB_StreamAddAllViewPos  (database/db_streaming_tabulate.cpp:1706)
 
-void DB_StreamAddAllViewPos(void)
+void DB_StreamAddAllViewPos(undefined8 param_1,double param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  double dVar4;
+  
   __savegprlr_27();
+  iVar1 = 0;
+  uVar2 = 0;
+  dVar4 = (double)(float)(param_2 + 1024.0);
+  do {
+    uVar3 = 0;
+    do {
+      if ((&DAT_832ee088)[uVar2 + uVar3] != '\0') {
+        if (iVar1 != 0) {
+          (&DAT_832ee088)[uVar2 + uVar3] = 0;
+        }
+        sync(1);
+        DB_StreamAddViewPos(dVar4,&DAT_832ee0c0 + (uVar2 + uVar3) * 0xc);
+      }
+      uVar3 = uVar3 + 1;
+    } while (uVar3 < 0x12);
+    uVar2 = uVar2 + 0x12;
+    iVar1 = iVar1 + 1;
+  } while (uVar2 < 0x36);
+  __restgprlr_27();
+  return;
+}
+
+
+// 824034A8  DB_StreamModels  (database/db_streaming_tabulate.cpp:1803)
+
+void DB_StreamModels(undefined8 param_1,int param_2,int param_3,int param_4)
+
+{
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  ushort *puVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ushort *puVar11;
+  ulonglong uVar12;
+  ushort *puVar13;
+  uint uVar14;
+  double dVar15;
+  double extraout_f1;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  uint local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 *local_c4;
+  undefined4 local_c0;
+  
+  __savegprlr_16();
+  iVar8 = __savefpr_26();
+  dVar16 = extraout_f1;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e944);
+  local_cc = 0x45;
+  local_c4 = &DAT_83275500;
+  local_c8 = 0;
+  dVar18 = 1.52587890625e-05;
+  dVar19 = 1000000.0;
+  dVar17 = 0.0;
+  local_c0 = DAT_83275500;
+  do {
+    do {
+      iVar9 = SpuBitArrayIterator__Advance(&local_d0);
+      uVar14 = local_d0;
+      if (iVar9 == 0) {
+        PIXEndNamedEvent();
+        __restfpr_26();
+        __restgprlr_16();
+        return;
+      }
+      iVar9 = local_d0 * 0xc;
+      uVar10 = (ulonglong)*(uint *)(&DAT_8326ed80 + iVar9);
+      if (uVar10 == 0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x752,0,0xffffffff82000f98,0xffffffff8205da58);
+      }
+      puVar13 = *(ushort **)(&DAT_8326ed84 + iVar9);
+      if (puVar13 == (ushort *)0x0) {
+        MyAssertHandler(0xffffffff8205e4f8,0x755,0,0xffffffff82000f98,0xffffffff8205da68);
+      }
+      iVar4 = uVar14 * 4;
+      dVar21 = (double)(float)(&DAT_8327db80)[uVar14];
+      if ((float)((double)*(float *)(&DAT_83277900 + iVar4) - (double)(float)(&DAT_8327db80)[uVar14]
+                 ) < 0.0) {
+        dVar21 = (double)*(float *)(&DAT_83277900 + iVar4);
+      }
+      if ((float)((double)*(float *)(iVar4 + param_3) - dVar21) < 0.0) {
+        dVar21 = (double)*(float *)(iVar4 + param_3);
+      }
+    } while (dVar21 == dVar19);
+    iVar3 = *(int *)(&DAT_8326ed88 + iVar9);
+    (&DAT_8327db80)[uVar14] = (float)dVar19;
+    *(float *)(&DAT_83277900 + iVar4) = (float)dVar19;
+    *(float *)(iVar4 + param_3) = (float)dVar19;
+    if (iVar3 != 0) {
+      uVar5 = uVar14 >> 3 & 0x1ffffffc;
+      uVar14 = (&DAT_82992400)[uVar14 & 0x1f];
+      uVar6 = uVar10;
+      puVar7 = puVar13;
+      if ((uVar14 & *(uint *)((int)&DAT_83299b80 + uVar5)) == 0) {
+        dVar20 = (double)((float)(dVar21 - dVar16) * *(float *)(&DAT_8326ed88 + iVar9));
+      }
+      else {
+        *(uint *)((int)&DAT_83299b80 + uVar5) = ~uVar14 & *(uint *)((int)&DAT_83299b80 + uVar5);
+        dVar20 = dVar17;
+        if ((uVar14 & *(uint *)(&DAT_83299a00 + uVar5)) != 0) {
+          *(uint *)(&DAT_83299a00 + uVar5) = ~uVar14 & *(uint *)(&DAT_83299a00 + uVar5);
+          uVar12 = uVar10;
+          puVar11 = puVar13;
+          if (uVar10 == 0) goto LAB_82403740;
+          do {
+            uVar2 = *puVar11;
+            uVar14 = (uint)uVar2;
+            if (0x165f < uVar14) {
+              MyAssertHandler(0xffffffff8205e4f8,0x77d,0,0xffffffff8205da74,uVar14,0x1660);
+            }
+            uVar5 = uVar2 >> 3 & 0x1ffffffc;
+            uVar12 = uVar12 - 1;
+            *(uint *)(uVar5 + param_4) = (&DAT_82992400)[uVar14 & 0x1f] | *(uint *)(uVar5 + param_4)
+            ;
+            puVar11 = puVar11 + 2;
+          } while (uVar12 != 0);
+        }
+      }
+      while (uVar6 != 0) {
+        uVar2 = *puVar7;
+        if (0x165f < uVar2) {
+          MyAssertHandler(0xffffffff8205e4f8,0x791,0,0xffffffff8205da74,uVar2,0x1660);
+        }
+        dVar15 = (double)*(float *)((uint)uVar2 * 4 + iVar8);
+        if ((float)(dVar20 - dVar15) < 0.0) {
+          dVar15 = dVar20;
+        }
+        *(float *)((uint)uVar2 * 4 + iVar8) = (float)dVar15;
+        uVar6 = uVar6 - 1;
+        puVar7 = puVar7 + 2;
+      }
+    }
+LAB_82403740:
+    dVar21 = (double)(float)(dVar21 * dVar18);
+    if (uVar10 != 0) {
+      puVar13 = puVar13 + -1;
+      do {
+        uVar2 = puVar13[1];
+        if (0x165f < uVar2) {
+          MyAssertHandler(0xffffffff8205e4f8,0x7a1,0,0xffffffff8205da74,uVar2,0x1660);
+        }
+        puVar13 = puVar13 + 2;
+        uVar10 = uVar10 - 1;
+        fVar1 = *(float *)((uint)uVar2 * 4 + param_2);
+        if ((float)((double)*puVar13 * dVar21) - fVar1 < 0.0) {
+          fVar1 = (float)((double)*puVar13 * dVar21);
+        }
+        *(float *)((uint)uVar2 * 4 + param_2) = fVar1;
+      } while (uVar10 != 0);
+    }
+  } while( true );
 }
 
 
 // 824037D0  DB_StreamBmodels  (database/db_streaming_tabulate.cpp:1970)
 
-void DB_StreamBmodels(void)
+void DB_StreamBmodels(undefined8 param_1,int param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  byte bVar1;
+  float fVar2;
+  float fVar3;
+  ushort uVar4;
+  int iVar5;
+  int iVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  float *pfVar20;
+  ushort *puVar21;
+  ulonglong *puVar22;
+  longlong lVar23;
+  
+  iVar15 = __savegprlr_18();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e954);
+  uVar18 = (ulonglong)*(uint *)(iVar15 + 0x134);
+  iVar5 = *(int *)(DAT_846178cc + 0x54);
+  iVar6 = *(int *)(DAT_846178cc + 0x5c);
+  if (uVar18 != 0) {
+    puVar21 = (ushort *)(*(int *)(iVar15 + 0x138) + 0x36);
+    pfVar20 = (float *)&DAT_83279b80;
+    do {
+      fVar2 = *pfVar20;
+      if (fVar2 != 1e+06) {
+        uVar17 = (ulonglong)puVar21[-1];
+        *pfVar20 = 1e+06;
+        fVar2 = fVar2 * 6.1035156e-05;
+        if (uVar17 != 0) {
+          puVar22 = (ulonglong *)((uint)*puVar21 * 8 + iVar6);
+          iVar15 = (uint)*puVar21 * 0x20 + iVar5 + 0x1b;
+          do {
+            uVar19 = 0;
+            lVar16 = ((*puVar22 >> 0x1d & 0xfff) + (*puVar22 >> 0x1d & 0xfff) * 2) * 4;
+            lVar23 = lVar16 + param_3;
+            uVar4 = *(ushort *)((int)lVar16 + (int)param_3);
+            if (3 < uVar4) {
+              lVar16 = lVar23;
+              do {
+                iVar10 = (int)uVar19;
+                bVar1 = *(byte *)(iVar15 + 2 + iVar10);
+                uVar19 = uVar19 + 4;
+                iVar11 = (int)lVar16;
+                iVar12 = (uint)*(ushort *)(iVar11 + 2) * 4;
+                iVar13 = (uint)*(ushort *)(iVar11 + 4) * 4;
+                lVar16 = lVar16 + 8;
+                iVar11 = (uint)*(ushort *)(iVar11 + 6) * 4;
+                iVar14 = (uint)*(ushort *)lVar16 * 4;
+                fVar3 = *(float *)(iVar12 + param_2);
+                fVar7 = (float)*(byte *)(iVar15 + -1 + iVar10) * fVar2;
+                fVar8 = (float)*(byte *)(iVar15 + iVar10) * fVar2;
+                fVar9 = (float)*(byte *)(iVar15 + 1 + iVar10) * fVar2;
+                if (fVar7 - fVar3 < 0.0) {
+                  fVar3 = fVar7;
+                }
+                *(float *)(iVar12 + param_2) = fVar3;
+                fVar3 = *(float *)(iVar13 + param_2);
+                if (fVar8 - fVar3 < 0.0) {
+                  fVar3 = fVar8;
+                }
+                *(float *)(iVar13 + param_2) = fVar3;
+                fVar3 = *(float *)(iVar11 + param_2);
+                if (fVar9 - fVar3 < 0.0) {
+                  fVar3 = fVar9;
+                }
+                *(float *)(iVar11 + param_2) = fVar3;
+                fVar3 = *(float *)(iVar14 + param_2);
+                fVar7 = (float)bVar1 * fVar2;
+                if (fVar7 - fVar3 < 0.0) {
+                  fVar3 = fVar7;
+                }
+                *(float *)(iVar14 + param_2) = fVar3;
+              } while ((uVar19 & 0xffffffff) < ((ulonglong)uVar4 - 3 & 0xffffffff));
+            }
+            if ((uVar19 & 0xffffffff) < (ulonglong)(uint)uVar4) {
+              lVar16 = uVar4 - uVar19;
+              lVar23 = (uVar19 & 0x7fffffff) * 2 + lVar23;
+              do {
+                iVar11 = (int)uVar19;
+                uVar19 = uVar19 + 1;
+                lVar23 = lVar23 + 2;
+                iVar14 = (uint)*(ushort *)lVar23 * 4;
+                fVar3 = *(float *)(iVar14 + param_2);
+                fVar7 = (float)*(byte *)(iVar15 + -1 + iVar11) * fVar2;
+                if (fVar7 - fVar3 < 0.0) {
+                  fVar3 = fVar7;
+                }
+                *(float *)(iVar14 + param_2) = fVar3;
+                lVar16 = lVar16 + -1;
+              } while (lVar16 != 0);
+            }
+            uVar17 = uVar17 - 1;
+            iVar15 = iVar15 + 0x20;
+            puVar22 = puVar22 + 1;
+          } while (uVar17 != 0);
+        }
+      }
+      uVar18 = uVar18 - 1;
+      pfVar20 = pfVar20 + 1;
+      puVar21 = puVar21 + 0x1c;
+    } while (uVar18 != 0);
+  }
+  PIXEndNamedEvent();
+  __restgprlr_18();
+  return;
 }
 
 
@@ -511,28 +1641,116 @@ void DB_StreamBmodels(void)
 void DB_StreamGlass(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  float *pfVar5;
+  ulonglong uVar6;
+  int *piVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  
   __savegprlr_23();
+  iVar2 = __savefpr_28();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205e7ac);
+  iVar4 = DAT_8333caf4;
+  uVar6 = (ulonglong)DAT_8333cacc;
+  if (DAT_8332cbd8 == 0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x82c,0,0xffffffff82000f98,0xffffffff8205ce60);
+  }
+  dVar10 = (double)*(float *)(DAT_8332cbd8 + 0xc);
+  if (dVar10 == 0.0) {
+    MyAssertHandler(0xffffffff8205e4f8,0x83c,0,0xffffffff82000f98,0xffffffff8205e798);
+  }
+  if (uVar6 != 0) {
+    piVar7 = (int *)(iVar4 + 0x18);
+    pfVar5 = (float *)&DAT_83282480;
+    dVar9 = 1000000.0;
+    do {
+      dVar11 = (double)*pfVar5;
+      if (dVar11 != dVar9) {
+        iVar4 = *piVar7;
+        dVar12 = (double)(float)((double)(float)piVar7[3] * dVar11);
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff8205e4f8,0x84c,0,0xffffffff82000f98,0xffffffff8205ce4c);
+        }
+        iVar3 = DB_GetMaterialIndex(iVar4);
+        fVar1 = (float)piVar7[4];
+        iVar4 = piVar7[1];
+        dVar8 = (double)*(float *)(iVar3 * 4 + iVar2);
+        if ((float)(dVar12 - dVar8) < 0.0) {
+          dVar8 = dVar12;
+        }
+        *(float *)(iVar3 * 4 + iVar2) = (float)dVar8;
+        dVar11 = (double)(float)((double)(float)((double)fVar1 / dVar10) * dVar11);
+        if (iVar4 == 0) {
+          MyAssertHandler(0xffffffff8205e4f8,0x852,0,0xffffffff82000f98,0xffffffff8205ce30);
+        }
+        iVar4 = DB_GetMaterialIndex(iVar4);
+        dVar12 = (double)*(float *)(iVar4 * 4 + iVar2);
+        if ((float)(dVar11 - dVar12) < 0.0) {
+          dVar12 = dVar11;
+        }
+        *(float *)(iVar4 * 4 + iVar2) = (float)dVar12;
+      }
+      uVar6 = uVar6 - 1;
+      pfVar5 = pfVar5 + 1;
+      piVar7 = piVar7 + 0xb;
+    } while (uVar6 != 0);
+  }
+  PIXEndNamedEvent();
+  __restfpr_28();
+  __restgprlr_23();
+  return;
 }
 
 
 // 82403A18  DB_StreamCombine  (database/db_streaming_tabulate.cpp:2144)
 
-void DB_StreamCombine(void)
+/* WARNING: Removing unreachable block (ram,0x82403a48) */
+
+void DB_StreamCombine(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_27();
+  DB_StreamCombineInternal(uVar1,0xffffffff83232f00,param_2,param_3,param_4);
+  DB_StreamCheckAllPriority(0xffffffff83232f00);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82403A98  DB_StreamStaticModelRelated  (database/db_streaming_tabulate.cpp:2164)
 
-void DB_StreamStaticModelRelated(void)
+void DB_StreamStaticModelRelated
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  int iVar2;
+  double dVar3;
+  
+  iVar2 = __savegprlr_28();
+  if (*(int *)(iVar2 + 0x4c) == 0) {
+    fVar1 = 0.0;
+  }
+  else {
+    fVar1 = 3072.0;
+  }
+  dVar3 = (double)fVar1;
+  if ((param_3 & 0xffffffff) != 0) {
+    DB_StreamAddAllViewPos((double)DAT_84618174,dVar3,param_2,0xffffffff8459e580);
+  }
+  DB_StreamModels(dVar3,param_6,param_2,0xffffffff8459e580,param_5);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -547,11 +1765,10 @@ void DB_StreamTabulationCmd(void)
   
   iVar3 = __savegprlr_25();
   Profile_Begin(0x1b8);
-  iVar2 = DAT_8461658c;
   if (DAT_832ee024 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x8a3,0,0xffffffff82000f98,0xffffffff8205dcb0);
   }
+  iVar2 = DAT_8461658c;
   DAT_832ee024 = 1;
   DB_StreamStaticModelRelated
             (iVar3,0xffffffff84587f00,DAT_8461658c,0xffffffff8458d880,0xffffffff83288a80,
@@ -564,14 +1781,12 @@ void DB_StreamTabulationCmd(void)
   }
   DB_StreamCombine(iVar3,0xffffffff83288d80,0xffffffff83288a80,0xffffffff84587f00);
   if (DAT_832ee024 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205e4f8,0x8d5,0,0xffffffff82000f98,0xffffffff8205e9a0);
   }
   piVar1 = *(int **)(iVar3 + 4);
   DAT_832ee024 = 0;
   if (piVar1 != (int *)0x0) {
     if (*piVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8205e4f8,0x8dc,0,0xffffffff82000f98,0xffffffff8205e98c);
     }
     sync(1);

@@ -801,6 +801,24 @@ float D3DDevice_GetRenderState_LineWidth(int param_1)
 }
 
 
+// 8285EE38  D3DDevice_SetRenderState_Buffer2Frames  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:815)
+
+void D3DDevice_SetRenderState_Buffer2Frames(int param_1,int param_2)
+
+{
+  uint uVar1;
+  
+  if (param_2 == 0) {
+    uVar1 = *(uint *)(param_1 + 0x5f20) & 0xfffffffe;
+  }
+  else {
+    uVar1 = *(uint *)(param_1 + 0x5f20) | 1;
+  }
+  *(uint *)(param_1 + 0x5f20) = uVar1;
+  return;
+}
+
+
 // 8285EE90  D3DDevice_GetRenderState_Buffer2Frames  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:828)
 
 uint D3DDevice_GetRenderState_Buffer2Frames(int param_1)
@@ -1270,6 +1288,36 @@ undefined4 D3DDevice_GetRenderState_ScissorTestEnable(int param_1)
 
 {
   return *(undefined4 *)(param_1 + 0x2f80);
+}
+
+
+// 8285FA98  D3DDevice_SetRenderState_SlopeScaleDepthBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1296)
+
+void D3DDevice_SetRenderState_SlopeScaleDepthBias(int param_1,float param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  param_2 = param_2 * 16.0;
+  if ((param_2 != 0.0) || (iVar2 = 0, *(float *)(param_1 + 0x2a54) != 0.0)) {
+    iVar2 = 1;
+  }
+  uVar1 = *(uint *)(param_1 + 0x2948);
+  *(uint *)(param_1 + 0x2948) = iVar2 << 0xb | uVar1 & 0xfffff7ff;
+  if ((param_2 != 0.0) || (iVar3 = 0, *(float *)(param_1 + 0x2a5c) != 0.0)) {
+    iVar3 = 1;
+  }
+  *(float *)(param_1 + 0x2a50) = param_2;
+  *(float *)(param_1 + 0x2a58) = param_2;
+  *(uint *)(param_1 + 0x2948) = iVar3 << 0xc | iVar2 << 0xb | uVar1 & 0xffffe7ff;
+  uVar4 = *(ulonglong *)(param_1 + 0x20);
+  *(ulonglong *)(param_1 + 0x20) = uVar4 | 0x200000000000;
+  *(ulonglong *)(param_1 + 0x20) = uVar4 | 0x280000000000;
+  *(ulonglong *)(param_1 + 0x10) = *(ulonglong *)(param_1 + 0x10) | 0x40;
+  return;
 }
 
 
@@ -1891,11 +1939,30 @@ uint D3DDevice_GetRenderState_ViewportEnable(int param_1)
 
 // 82860D10  D3DDevice_SetRenderState_HighPrecisionBlendEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1819)
 
-void D3DDevice_SetRenderState_HighPrecisionBlendEnable(void)
+void D3DDevice_SetRenderState_HighPrecisionBlendEnable(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_28();
+  *(int *)(iVar2 + 0x2ff8) = (int)param_2;
+  if (*(int *)(iVar2 + 0x3190) != 0) {
+    uVar1 = *(uint *)(iVar2 + 0x2884);
+    uVar4 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    iVar3 = D3D__IsEDRAMFormat2_10_10_10Bits(uVar4);
+    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != param_2)) {
+      *(uint *)(iVar2 + 0x2884) =
+           uVar1 & 0xfff0ffff |
+           ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar4 + 3) * 0x20000 |
+           (uint)(((uVar4 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x100000000000000;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1910,11 +1977,30 @@ undefined4 D3DDevice_GetRenderState_HighPrecisionBlendEnable(int param_1)
 
 // 82860DE8  D3DDevice_SetRenderState_HighPrecisionBlendEnable1  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1836)
 
-void D3DDevice_SetRenderState_HighPrecisionBlendEnable1(void)
+void D3DDevice_SetRenderState_HighPrecisionBlendEnable1(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_28();
+  *(int *)(iVar2 + 0x2ffc) = (int)param_2;
+  if (*(int *)(iVar2 + 0x3194) != 0) {
+    uVar1 = *(uint *)(iVar2 + 0x288c);
+    uVar4 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    iVar3 = D3D__IsEDRAMFormat2_10_10_10Bits(uVar4);
+    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != param_2)) {
+      *(uint *)(iVar2 + 0x288c) =
+           uVar1 & 0xfff0ffff |
+           ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar4 + 3) * 0x20000 |
+           (uint)(((uVar4 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x40000000000000;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1929,11 +2015,30 @@ undefined4 D3DDevice_GetRenderState_HighPrecisionBlendEnable1(int param_1)
 
 // 82860EC0  D3DDevice_SetRenderState_HighPrecisionBlendEnable2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1853)
 
-void D3DDevice_SetRenderState_HighPrecisionBlendEnable2(void)
+void D3DDevice_SetRenderState_HighPrecisionBlendEnable2(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_28();
+  *(int *)(iVar2 + 0x3000) = (int)param_2;
+  if (*(int *)(iVar2 + 0x3198) != 0) {
+    uVar1 = *(uint *)(iVar2 + 0x2890);
+    uVar4 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    iVar3 = D3D__IsEDRAMFormat2_10_10_10Bits(uVar4);
+    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != param_2)) {
+      *(uint *)(iVar2 + 0x2890) =
+           uVar1 & 0xfff0ffff |
+           ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar4 + 3) * 0x20000 |
+           (uint)(((uVar4 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x20000000000000;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1948,11 +2053,30 @@ undefined4 D3DDevice_GetRenderState_HighPrecisionBlendEnable2(int param_1)
 
 // 82860F98  D3DDevice_SetRenderState_HighPrecisionBlendEnable3  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1870)
 
-void D3DDevice_SetRenderState_HighPrecisionBlendEnable3(void)
+void D3DDevice_SetRenderState_HighPrecisionBlendEnable3(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  iVar2 = __savegprlr_28();
+  *(int *)(iVar2 + 0x3004) = (int)param_2;
+  if (*(int *)(iVar2 + 0x319c) != 0) {
+    uVar1 = *(uint *)(iVar2 + 0x2894);
+    uVar4 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    iVar3 = D3D__IsEDRAMFormat2_10_10_10Bits(uVar4);
+    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != param_2)) {
+      *(uint *)(iVar2 + 0x2894) =
+           uVar1 & 0xfff0ffff |
+           ((uint)((~(param_2 - 1) & 0xffffffff) << 0x10) & ((int)uVar4 + 3) * 0x20000 |
+           (uint)(((uVar4 >> 1) - 3 & param_2 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
+      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x10000000000000;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2033,6 +2157,15 @@ void D3DDevice_SetRenderState_HalfPixelOffset(int param_1,uint param_2)
   *(uint *)(param_1 + 0x29c0) = *(uint *)(param_1 + 0x29c0) & 0xfffffffe | param_2 & 1;
   *(ulonglong *)(param_1 + 0x20) = *(ulonglong *)(param_1 + 0x20) | 0x800000000;
   return;
+}
+
+
+// 82861288  D3DDevice_GetRenderState_HalfPixelOffset  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1966)
+
+uint D3DDevice_GetRenderState_HalfPixelOffset(int param_1)
+
+{
+  return *(uint *)(param_1 + 0x29c0) & 1;
 }
 
 
@@ -2365,11 +2498,45 @@ uint D3DDevice_GetRenderState_PresentImmediateThreshold(int param_1)
 
 // 82861BA0  D3DDevice_SetSamplerState_MinFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2355)
 
-void D3DDevice_SetSamplerState_MinFilter(void)
+void D3DDevice_SetSamplerState_MinFilter(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  
+  iVar8 = __savegprlr_29();
+  iVar4 = iVar8 + (int)param_2;
+  iVar5 = ((int)param_2 + 0x30) * 0x18 + iVar8;
+  uVar2 = *(uint *)(iVar5 + 0x10);
+  uVar9 = (param_3 & 0xffffffff) >> 2;
+  uVar3 = *(uint *)(iVar5 + 0xc);
+  uVar10 = *(uint *)(&DAT_821f3800 + (uint)*(byte *)(iVar4 + 0x2a70) * 4);
+  uVar6 = (uint)((uVar9 & 1) << 0xb);
+  *(uint *)(iVar5 + 0x10) = uVar6 | uVar2 & 0xfffff7ff;
+  uVar9 = ((ulonglong)uVar10 & ~(((ulonglong)(uVar2 >> 10) & 1 | uVar9) - 1) & 0xfffffff) << 4 |
+          uVar9;
+  uVar7 = (uVar9 | param_3 & 0xffffffff) & 3;
+  *(uint *)(iVar5 + 0xc) =
+       (uint)(((uVar9 | param_3 & 0xffffffff) & 0x70) << 0x15) |
+       (uint)(uVar7 << 0x15) | uVar3 & 0xf19fffff;
+  bVar1 = *(byte *)(iVar4 + 0x2a8a);
+  uVar10 = (bVar1 >> 2) - 1;
+  *(uint *)(iVar5 + 0x10) =
+       uVar6 | uVar2 & 0xfffff7fc |
+       ((uint)((uVar7 << 0x14 | (ulonglong)uVar3 & 0x80080000) >> 0x13) & 0xfff & uVar10) +
+       ((uint)bVar1 & ~uVar10) & 3;
+  *(ulonglong *)(iVar8 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar8 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2388,11 +2555,34 @@ uint D3DDevice_GetSamplerState_MinFilter(int param_1,int param_2)
 
 // 82861CF8  D3DDevice_SetSamplerState_MinFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2405)
 
-void D3DDevice_SetSamplerState_MinFilterZ(void)
+void D3DDevice_SetSamplerState_MinFilterZ(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  iVar4 = __savegprlr_29();
+  iVar1 = iVar4 + (int)param_2;
+  uVar6 = (param_3 & 0x7fffffff) << 1;
+  uVar7 = (ulonglong)*(byte *)(iVar1 + 0x2a8a);
+  iVar2 = ((int)param_2 + 0x30) * 0x18 + iVar4;
+  uVar5 = uVar7 & 0xfffffffffffffffd | uVar6;
+  uVar3 = (int)((uVar7 & 0xfffffffd | uVar6) >> 2) - 1;
+  *(uint *)(iVar2 + 0x10) =
+       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
+       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
+               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar3) +
+       ((uint)uVar5 & ~uVar3) & 3;
+  *(char *)(iVar1 + 0x2a8a) = (char)uVar5;
+  *(ulonglong *)(iVar4 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar4 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2407,11 +2597,43 @@ byte D3DDevice_GetSamplerState_MinFilterZ(int param_1,int param_2)
 
 // 82861DE8  D3DDevice_SetSamplerState_MagFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2439)
 
-void D3DDevice_SetSamplerState_MagFilter(void)
+void D3DDevice_SetSamplerState_MagFilter(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  
+  iVar8 = __savegprlr_29();
+  iVar5 = iVar8 + (int)param_2;
+  iVar6 = ((int)param_2 + 0x30) * 0x18 + iVar8;
+  uVar2 = *(uint *)(iVar6 + 0x10);
+  uVar9 = (param_3 & 0xffffffff) >> 2;
+  uVar3 = *(uint *)(iVar6 + 0xc);
+  uVar10 = *(uint *)(&DAT_821f3800 + (uint)*(byte *)(iVar5 + 0x2a70) * 4);
+  uVar7 = (uint)((uVar9 & 1) << 10);
+  *(uint *)(iVar6 + 0x10) = uVar7 | uVar2 & 0xfffffbff;
+  uVar9 = ((ulonglong)uVar10 & ~(((ulonglong)(uVar2 >> 0xb) & 1 | uVar9) - 1) & 0x3ffffff) << 6 |
+          uVar9;
+  uVar4 = ((uVar9 | param_3 & 0xffffffff) & 3) << 0x13 | (ulonglong)uVar3 & 0xfffffffff1e7ffff;
+  *(uint *)(iVar6 + 0xc) = (uint)(((uVar9 | param_3 & 0xffffffff) & 0x1c0) << 0x13) | (uint)uVar4;
+  bVar1 = *(byte *)(iVar5 + 0x2a8a);
+  uVar10 = (bVar1 >> 2) - 1;
+  *(uint *)(iVar6 + 0x10) =
+       uVar7 | uVar2 & 0xfffffbfc |
+       ((uint)((((ulonglong)uVar3 & 0xf1e00000) >> 1 | uVar4 & 0x80080000) >> 0x13) & 0xfff & uVar10
+       ) + ((uint)bVar1 & ~uVar10) & 3;
+  *(ulonglong *)(iVar8 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar8 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2430,11 +2652,32 @@ uint D3DDevice_GetSamplerState_MagFilter(int param_1,int param_2)
 
 // 82861F40  D3DDevice_SetSamplerState_MagFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2490)
 
-void D3DDevice_SetSamplerState_MagFilterZ(void)
+void D3DDevice_SetSamplerState_MagFilterZ(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  
+  iVar5 = __savegprlr_29();
+  iVar1 = iVar5 + (int)param_2;
+  iVar2 = ((int)param_2 + 0x30) * 0x18 + iVar5;
+  uVar3 = (ulonglong)*(byte *)(iVar1 + 0x2a8a) & 0xfffffffe;
+  uVar6 = uVar3 | param_3;
+  uVar4 = (int)((uVar3 | param_3 & 0xffffffff) >> 2) - 1;
+  *(uint *)(iVar2 + 0x10) =
+       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
+       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
+               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar4) +
+       ((uint)uVar6 & ~uVar4) & 3;
+  *(char *)(iVar1 + 0x2a8a) = (char)uVar6;
+  *(ulonglong *)(iVar5 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar5 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2449,11 +2692,20 @@ byte D3DDevice_GetSamplerState_MagFilterZ(int param_1,int param_2)
 
 // 82862028  D3DDevice_SetSamplerState_MipFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2524)
 
-void D3DDevice_SetSamplerState_MipFilter(void)
+void D3DDevice_SetSamplerState_MipFilter(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0xc) =
+       (uint)((param_3 & 0xffffffff) << 0x17) & 0x1800000 | *(uint *)(iVar1 + 0xc) & 0xfe7fffff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2468,11 +2720,35 @@ uint D3DDevice_GetSamplerState_MipFilter(int param_1,int param_2)
 
 // 828620D8  D3DDevice_SetSamplerState_SeparateZFilterEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2555)
 
-void D3DDevice_SetSamplerState_SeparateZFilterEnable(void)
+void D3DDevice_SetSamplerState_SeparateZFilterEnable
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  
+  iVar4 = __savegprlr_29();
+  iVar1 = iVar4 + (int)param_2;
+  uVar6 = (param_3 & 0x3fffffff) << 2;
+  uVar7 = (ulonglong)*(byte *)(iVar1 + 0x2a8a);
+  iVar2 = ((int)param_2 + 0x30) * 0x18 + iVar4;
+  uVar5 = uVar7 & 0xfffffffffffffffb | uVar6;
+  uVar3 = (int)((uVar7 & 0xfffffffb | uVar6) >> 2) - 1;
+  *(uint *)(iVar2 + 0x10) =
+       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
+       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
+               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar3) +
+       ((uint)uVar5 & ~uVar3) & 3;
+  *(char *)(iVar1 + 0x2a8a) = (char)uVar5;
+  *(ulonglong *)(iVar4 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar4 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2487,11 +2763,24 @@ byte D3DDevice_GetSamplerState_SeparateZFilterEnable(int param_1,int param_2)
 
 // 828621C8  D3DDevice_SetSamplerState_MaxAnisotropy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2591)
 
-void D3DDevice_SetSamplerState_MaxAnisotropy(void)
+void D3DDevice_SetSamplerState_MaxAnisotropy(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  if (((*(uint *)(iVar1 + 0x10) & 0x800) != 0) || ((*(uint *)(iVar1 + 0x10) & 0x400) != 0)) {
+    *(uint *)(iVar1 + 0xc) =
+         (*(uint *)(&DAT_821f3800 + (int)((param_3 & 0xffffffff) << 2)) & 7) << 0x19 |
+         *(uint *)(iVar1 + 0xc) & 0xf1ffffff;
+    *(ulonglong *)(iVar2 + 0x18) =
+         0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  }
+  *(char *)(iVar2 + (int)param_2 + 0x2a70) = (char)param_3;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2564,11 +2853,29 @@ float D3DDevice_GetSamplerState_MipMapLodBias(int param_1,int param_2)
 
 // 828624C8  D3DDevice_SetSamplerState_MaxMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2705)
 
-void D3DDevice_SetSamplerState_MaxMipLevel(void)
+void D3DDevice_SetSamplerState_MaxMipLevel(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)((int)((param_2 + 0xc7eU & 0xffffffff) << 2) + iVar2);
+  if (iVar1 != 0) {
+    uVar3 = (ulonglong)(*(uint *)(iVar1 + 0x2c) >> 2) & 0xf;
+    iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+    if (uVar3 <= (param_3 & 0xffffffff)) {
+      uVar3 = param_3;
+    }
+    *(uint *)(iVar1 + 0x10) =
+         (uint)((uVar3 & 0xffffffff) << 2) & 0x3c | *(uint *)(iVar1 + 0x10) & 0xffffffc3;
+    *(ulonglong *)(iVar2 + 0x18) =
+         0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  }
+  *(char *)(iVar2 + (int)param_2 + 0x2fc4) = (char)param_3;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2583,11 +2890,29 @@ undefined1 D3DDevice_GetSamplerState_MaxMipLevel(int param_1,int param_2)
 
 // 828625A0  D3DDevice_SetSamplerState_MinMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2747)
 
-void D3DDevice_SetSamplerState_MinMipLevel(void)
+void D3DDevice_SetSamplerState_MinMipLevel(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)((int)((param_2 + 0xc7eU & 0xffffffff) << 2) + iVar2);
+  if (iVar1 != 0) {
+    uVar3 = (ulonglong)(*(uint *)(iVar1 + 0x2c) >> 6) & 0xf;
+    iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+    if ((param_3 & 0xffffffff) <= uVar3) {
+      uVar3 = param_3;
+    }
+    *(uint *)(iVar1 + 0x10) =
+         (uint)((uVar3 & 0xffffffff) << 6) & 0x3c0 | *(uint *)(iVar1 + 0x10) & 0xfffffc3f;
+    *(ulonglong *)(iVar2 + 0x18) =
+         0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  }
+  *(char *)(iVar2 + (int)param_2 + 0x2fde) = (char)param_3;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2602,11 +2927,19 @@ undefined1 D3DDevice_GetSamplerState_MinMipLevel(int param_1,int param_2)
 
 // 82862678  D3DDevice_SetSamplerState_BorderColor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2789)
 
-void D3DDevice_SetSamplerState_BorderColor(void)
+void D3DDevice_SetSamplerState_BorderColor(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0x14) = *(uint *)(iVar1 + 0x14) & 0xfffffffc | (uint)(param_3 != 0);
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2621,11 +2954,20 @@ longlong D3DDevice_GetSamplerState_BorderColor(int param_1,int param_2)
 
 // 82862740  D3DDevice_SetSamplerState_AddressU  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2824)
 
-void D3DDevice_SetSamplerState_AddressU(void)
+void D3DDevice_SetSamplerState_AddressU(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18;
+  *(uint *)(iVar1 + iVar2) =
+       (uint)((param_3 & 0xffffffff) << 10) & 0x1c00 | *(uint *)(iVar1 + iVar2) & 0xffffe3ff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2640,11 +2982,20 @@ uint D3DDevice_GetSamplerState_AddressU(int param_1,int param_2)
 
 // 828627F0  D3DDevice_SetSamplerState_AddressV  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2855)
 
-void D3DDevice_SetSamplerState_AddressV(void)
+void D3DDevice_SetSamplerState_AddressV(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18;
+  *(uint *)(iVar1 + iVar2) =
+       (uint)((param_3 & 0xffffffff) << 0xd) & 0xe000 | *(uint *)(iVar1 + iVar2) & 0xffff1fff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2659,11 +3010,20 @@ uint D3DDevice_GetSamplerState_AddressV(int param_1,int param_2)
 
 // 828628A0  D3DDevice_SetSamplerState_AddressW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2886)
 
-void D3DDevice_SetSamplerState_AddressW(void)
+void D3DDevice_SetSamplerState_AddressW(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18;
+  *(uint *)(iVar1 + iVar2) =
+       (uint)((param_3 & 0xffffffff) << 0x10) & 0x70000 | *(uint *)(iVar1 + iVar2) & 0xfff8ffff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2678,11 +3038,21 @@ ushort D3DDevice_GetSamplerState_AddressW(int param_1,int param_2)
 
 // 82862950  D3DDevice_SetSamplerState_TrilinearThreshold  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2917)
 
-void D3DDevice_SetSamplerState_TrilinearThreshold(void)
+void D3DDevice_SetSamplerState_TrilinearThreshold
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0x14) =
+       (uint)((param_3 & 0xffffffff) << 3) & 0x18 | *(uint *)(iVar1 + 0x14) & 0xffffffe7;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2697,11 +3067,21 @@ uint D3DDevice_GetSamplerState_TrilinearThreshold(int param_1,int param_2)
 
 // 82862A00  D3DDevice_SetSamplerState_HGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2948)
 
-void D3DDevice_SetSamplerState_HGradientExpBias(void)
+void D3DDevice_SetSamplerState_HGradientExpBias
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0x10) =
+       (uint)((param_3 & 0xffffffff) << 0x16) & 0x7c00000 | *(uint *)(iVar1 + 0x10) & 0xf83fffff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2719,11 +3099,21 @@ int D3DDevice_GetSamplerState_HGradientExpBias(int param_1,int param_2)
 
 // 82862AB8  D3DDevice_SetSamplerState_VGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2979)
 
-void D3DDevice_SetSamplerState_VGradientExpBias(void)
+void D3DDevice_SetSamplerState_VGradientExpBias
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0x10) =
+       (uint)((param_3 & 0xffffffff) << 0x1b) | *(uint *)(iVar1 + 0x10) & 0x7ffffff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2738,11 +3128,21 @@ int D3DDevice_GetSamplerState_VGradientExpBias(int param_1,int param_2)
 
 // 82862B68  D3DDevice_SetSamplerState_WhiteBorderColorW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3010)
 
-void D3DDevice_SetSamplerState_WhiteBorderColorW(void)
+void D3DDevice_SetSamplerState_WhiteBorderColorW
+               (undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 0x14) =
+       (uint)((param_3 & 0xffffffff) << 2) & 4 | *(uint *)(iVar1 + 0x14) & 0xfffffffb;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2757,11 +3157,19 @@ uint D3DDevice_GetSamplerState_WhiteBorderColorW(int param_1,int param_2)
 
 // 82862C18  D3DDevice_SetSamplerState_PointBorderEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3041)
 
-void D3DDevice_SetSamplerState_PointBorderEnable(void)
+void D3DDevice_SetSamplerState_PointBorderEnable(undefined8 param_1,longlong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = ((int)param_2 + 0x30) * 0x18 + iVar2;
+  *(uint *)(iVar1 + 4) = (uint)(param_3 == 0) << 0xb | *(uint *)(iVar1 + 4) & 0xfffff7ff;
+  *(ulonglong *)(iVar2 + 0x18) =
+       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2849,31 +3257,131 @@ void D3DDevice_SetViewportF(undefined8 param_1,float *param_2)
 
 // 82862DD8  D3DDevice_SetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3857)
 
-void D3DDevice_SetStreamSource(void)
+void D3DDevice_SetStreamSource
+               (undefined8 param_1,longlong param_2,ulonglong param_3,longlong param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  uint *puVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 *puVar6;
+  ulonglong uVar7;
+  uint local_40;
+  
+  iVar5 = __savegprlr_26();
+  iVar3 = (int)param_3;
+  if ((param_3 & 0xffffffff) != 0) {
+    iVar1 = *(int *)(iVar3 + 0x1c);
+    uVar7 = (ulonglong)*(uint *)(iVar3 + 0x18) + param_4;
+    *(uint *)((int)((-param_2 + 0xefU & 0xffffffff) << 3) + iVar5) =
+         ((int)((uVar7 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar7 & 0x1fffffff);
+    *(int *)((int)((-param_2 + 0x11U & 0xffffffff) << 3) + iVar5 + 0x6f4) = iVar1 - (int)param_4;
+    *(ulonglong *)(iVar5 + 0x18) = *(ulonglong *)(iVar5 + 0x18) | param_6;
+  }
+  iVar1 = (int)((param_2 + 0xc69U & 0xffffffff) << 2);
+  puVar2 = *(uint **)(iVar1 + iVar5);
+  if (puVar2 != (uint *)0x0) {
+    if (*(uint *)(iVar5 + 0x2b1c) == 0) {
+      if ((*(uint *)(iVar5 + 0x2b20) & *puVar2) != 0) {
+        puVar6 = *(undefined8 **)(iVar5 + 0x35fc);
+        if (*(undefined8 **)(iVar5 + 0x3600) <= puVar6) {
+          puVar6 = (undefined8 *)D3D__MakeBufferResourceSpace(iVar5);
+        }
+        *puVar6 = CONCAT44((uint)puVar2 >> 2 | local_40 & 0x80000000,0xffffffff);
+        *(undefined8 **)(iVar5 + 0x35fc) = puVar6 + 1;
+      }
+    }
+    else {
+      puVar2[2] = *(uint *)(iVar5 + 0x2b1c);
+    }
+  }
+  iVar4 = iVar5 + (int)param_2;
+  *(int *)(iVar1 + iVar5) = iVar3;
+  uVar7 = (param_5 & 0xffffffff) >> 2;
+  *(char *)(iVar4 + 0x31e8) = (char)((param_5 & 0xffffffff) >> 2);
+  if ((uVar7 != 0) && (uVar7 != *(byte *)(iVar4 + 0x2f68))) {
+    *(ulonglong *)(iVar5 + 0x10) = *(ulonglong *)(iVar5 + 0x10) | 0x80000;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 82862F08  D3DDevice_GetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3948)
 
-void D3DDevice_GetStreamSource(void)
+void D3DDevice_GetStreamSource(undefined8 param_1,longlong param_2,int *param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_26();
+  iVar3 = 0;
+  iVar1 = *(int *)((int)((param_2 + 0xc69U & 0xffffffff) << 2) + iVar2);
+  if (iVar1 != 0) {
+    iVar3 = (*(int *)((int)((0xefU - param_2 & 0xffffffff) << 3) + iVar2) -
+            ((*(uint *)(iVar1 + 0x18) >> 0x14) + 0x200 & 0x1000)) -
+            (*(uint *)(iVar1 + 0x18) & 0x1fffffff);
+    D3DResource_AddRef(iVar1);
+  }
+  *param_3 = iVar3;
+  *param_4 = (uint)*(byte *)(iVar2 + (int)param_2 + 0x31e8) << 2;
+  __restgprlr_26(iVar1);
+  return;
+}
+
+
+// 82862F98  D3DDevice_SetIndices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3984)
+
+void D3DDevice_SetIndices(undefined8 param_1,undefined4 param_2)
+
+{
+  uint *puVar1;
+  int iVar2;
+  undefined8 *puVar3;
+  uint local_30;
+  
+  iVar2 = __savegprlr_29();
+  puVar1 = *(uint **)(iVar2 + 0x318c);
+  if (puVar1 != (uint *)0x0) {
+    if (*(uint *)(iVar2 + 0x2b1c) == 0) {
+      if ((*(uint *)(iVar2 + 0x2b20) & *puVar1) != 0) {
+        puVar3 = *(undefined8 **)(iVar2 + 0x35fc);
+        if (*(undefined8 **)(iVar2 + 0x3600) <= puVar3) {
+          puVar3 = (undefined8 *)D3D__MakeBufferResourceSpace(iVar2);
+        }
+        *puVar3 = CONCAT44((uint)puVar1 >> 2 | local_30 & 0x80000000,0xffffffff);
+        *(undefined8 **)(iVar2 + 0x35fc) = puVar3 + 1;
+      }
+    }
+    else {
+      puVar1[2] = *(uint *)(iVar2 + 0x2b1c);
+    }
+  }
+  *(undefined4 *)(iVar2 + 0x318c) = param_2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 82864248  D3DDevice_SetRenderTarget_External  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4024)
 
-void D3DDevice_SetRenderTarget_External(void)
+void D3DDevice_SetRenderTarget_External(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  uint local_30 [12];
+  
+  uVar1 = __savegprlr_29();
+  D3D__TimingMarker__TimingMarker(local_30,0x51,1);
+  D3DDevice_SetRenderTarget(uVar1,param_2,param_3);
+  PIXAddPixOpWithData(local_30[0] | 0x400000,0,0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -3080,11 +3588,164 @@ LAB_82863cc0:
 
 // 82863DD0  D3DDevice_SetDepthStencilSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4164)
 
-void D3DDevice_SetDepthStencilSurface(void)
+void D3DDevice_SetDepthStencilSurface(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  byte bVar7;
+  longlong lVar5;
+  undefined4 uVar6;
+  longlong lVar8;
+  int iVar9;
+  
+  iVar2 = __savegprlr_29();
+  if ((*(byte *)(iVar2 + 0x2b3c) & 0x10) == 0) {
+    if (((((*(byte *)(iVar2 + 0x2b3c) & 0x20) == 0) ||
+         ((*(int *)(iVar2 + 0x32b0) != *(int *)(iVar2 + 0x3190) && (*(int *)(iVar2 + 0x3190) != 0)))
+         ) || ((*(int *)(iVar2 + 0x32b4) != *(int *)(iVar2 + 0x3194) &&
+               (*(int *)(iVar2 + 0x3194) != 0)))) ||
+       ((((*(int *)(iVar2 + 0x32b8) != *(int *)(iVar2 + 0x3198) && (*(int *)(iVar2 + 0x3198) != 0))
+         || ((*(int *)(iVar2 + 0x32bc) != *(int *)(iVar2 + 0x319c) &&
+             (*(int *)(iVar2 + 0x319c) != 0)))) ||
+        ((*(int *)(iVar2 + 0x32c0) != *(int *)(iVar2 + 0x31a0) && (*(int *)(iVar2 + 0x31a0) != 0))))
+       )) {
+      lVar8 = 0;
+    }
+    else {
+      lVar8 = 1;
+    }
+  }
+  else {
+    lVar8 = 1;
+  }
+  iVar9 = (int)param_2;
+  *(int *)(iVar2 + 0x31a0) = iVar9;
+  if ((param_2 & 0xffffffff) == 0) {
+    *(uint *)(iVar2 + 0x2940) = *(uint *)(iVar2 + 0x2940) & 0xfffffff0;
+    *(byte *)(iVar2 + 0x2b3e) = *(byte *)(iVar2 + 0x2b3e) & 0xdf;
+    uVar4 = *(ulonglong *)(iVar2 + 0x10) | 0x100;
+  }
+  else {
+    if (*(int *)(iVar2 + 0x3190) == 0) {
+      D3D__SetSurfaceInfo(iVar2,param_2);
+    }
+    *(undefined4 *)(iVar2 + 0x2888) = *(undefined4 *)(iVar9 + 0x1c);
+    *(undefined4 *)(iVar2 + 0x2940) = *(undefined4 *)(iVar9 + 0x20);
+    *(byte *)(iVar2 + 0x2b3e) =
+         ((byte)*(undefined4 *)(iVar9 + 0x20) & 1) << 5 | *(byte *)(iVar2 + 0x2b3e) & 0xdf;
+    if ((*(byte *)(iVar2 + 0x2b3f) & 0x20) != 0) {
+      if ((*(byte *)(iVar2 + 0x2b3c) & 0x10) == 0) {
+        if ((((*(byte *)(iVar2 + 0x2b3c) & 0x20) == 0) ||
+            ((*(int *)(iVar2 + 0x32b0) != *(int *)(iVar2 + 0x3190) &&
+             (*(int *)(iVar2 + 0x3190) != 0)))) ||
+           (((*(int *)(iVar2 + 0x32b4) != *(int *)(iVar2 + 0x3194) &&
+             (*(int *)(iVar2 + 0x3194) != 0)) ||
+            ((((*(int *)(iVar2 + 0x32b8) != *(int *)(iVar2 + 0x3198) &&
+               (*(int *)(iVar2 + 0x3198) != 0)) ||
+              ((*(int *)(iVar2 + 0x32bc) != *(int *)(iVar2 + 0x319c) &&
+               (*(int *)(iVar2 + 0x319c) != 0)))) ||
+             ((*(int *)(iVar2 + 0x32c0) != *(int *)(iVar2 + 0x31a0) &&
+              (*(int *)(iVar2 + 0x31a0) != 0)))))))) {
+          bVar1 = false;
+        }
+        else {
+          bVar1 = true;
+        }
+      }
+      else {
+        bVar1 = true;
+      }
+      if (bVar1) {
+        *(uint *)(iVar2 + 0x2880) =
+             *(int *)(iVar2 + 0x346c) << 0x12 | *(uint *)(iVar2 + 0x2880) & 0x3ffff;
+      }
+    }
+    uVar4 = *(ulonglong *)(iVar2 + 0x10);
+    *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x80000000000000;
+    *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x80000000000100;
+    uVar4 = uVar4 | 0x80000000020100;
+  }
+  *(ulonglong *)(iVar2 + 0x10) = uVar4;
+  if ((((*(int *)(iVar2 + 0x32a4) == 0) && (bVar7 = *(byte *)(iVar2 + 0x2b3c), (bVar7 & 8) == 0)) &&
+      ((bVar7 & 4) == 0)) && (*(char *)(iVar2 + 0x3093) == '\0')) {
+    if ((bVar7 & 0x10) == 0) {
+      if (((((bVar7 & 0x20) == 0) ||
+           ((*(int *)(iVar2 + 0x32b0) != *(int *)(iVar2 + 0x3190) && (*(int *)(iVar2 + 0x3190) != 0)
+            ))) || ((*(int *)(iVar2 + 0x32b4) != *(int *)(iVar2 + 0x3194) &&
+                    (*(int *)(iVar2 + 0x3194) != 0)))) ||
+         ((((*(int *)(iVar2 + 0x32b8) != *(int *)(iVar2 + 0x3198) && (*(int *)(iVar2 + 0x3198) != 0)
+            ) || ((*(int *)(iVar2 + 0x32bc) != *(int *)(iVar2 + 0x319c) &&
+                  (*(int *)(iVar2 + 0x319c) != 0)))) ||
+          ((*(int *)(iVar2 + 0x32c0) != *(int *)(iVar2 + 0x31a0) && (*(int *)(iVar2 + 0x31a0) != 0))
+          )))) {
+        bVar1 = false;
+      }
+      else {
+        bVar1 = true;
+      }
+    }
+    else {
+      bVar1 = true;
+    }
+    bVar7 = 1;
+    if (bVar1) goto LAB_828640bc;
+  }
+  bVar7 = 0;
+LAB_828640bc:
+  uVar3 = *(uint *)(iVar2 + 0x2f94);
+  *(byte *)(iVar2 + 0x2b3c) = bVar7 | *(byte *)(iVar2 + 0x2b3c) & 0xfe;
+  *(uint *)(iVar2 + 0x2f94) = uVar3;
+  *(uint *)(iVar2 + 0x2934) =
+       (-(uint)(*(int *)(iVar2 + 0x31a0) != 0) & uVar3 & 1) << 1 |
+       *(uint *)(iVar2 + 0x2934) & 0xfffffffd;
+  uVar4 = *(ulonglong *)(iVar2 + 0x10);
+  *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x800;
+  *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x20800;
+  uVar3 = *(uint *)(iVar2 + 0x2f98);
+  *(uint *)(iVar2 + 0x2f98) = uVar3;
+  *(uint *)(iVar2 + 0x2934) =
+       -(uint)(*(int *)(iVar2 + 0x31a0) != 0) & uVar3 & 1 | *(uint *)(iVar2 + 0x2934) & 0xfffffffe;
+  uVar4 = *(ulonglong *)(iVar2 + 0x10);
+  *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x800;
+  *(ulonglong *)(iVar2 + 0x10) = uVar4 | 0x20800;
+  D3D__PIXMetaRecordRenderTarget(iVar2,4,*(undefined4 *)(iVar2 + 0x31a0));
+  if ((*(byte *)(iVar2 + 0x2b3c) & 0x10) == 0) {
+    if (((((*(byte *)(iVar2 + 0x2b3c) & 0x20) == 0) ||
+         ((*(int *)(iVar2 + 0x32b0) != *(int *)(iVar2 + 0x3190) && (*(int *)(iVar2 + 0x3190) != 0)))
+         ) || ((*(int *)(iVar2 + 0x32b4) != *(int *)(iVar2 + 0x3194) &&
+               (*(int *)(iVar2 + 0x3194) != 0)))) ||
+       ((((*(int *)(iVar2 + 0x32b8) != *(int *)(iVar2 + 0x3198) && (*(int *)(iVar2 + 0x3198) != 0))
+         || ((*(int *)(iVar2 + 0x32bc) != *(int *)(iVar2 + 0x319c) &&
+             (*(int *)(iVar2 + 0x319c) != 0)))) ||
+        ((*(int *)(iVar2 + 0x32c0) != *(int *)(iVar2 + 0x31a0) && (*(int *)(iVar2 + 0x31a0) != 0))))
+       )) {
+      lVar5 = 0;
+    }
+    else {
+      lVar5 = 1;
+    }
+  }
+  else {
+    lVar5 = 1;
+  }
+  if (lVar5 != lVar8) {
+    uVar3 = *(uint *)(iVar2 + 0x30);
+    if (*(uint *)(iVar2 + 0x38) < uVar3) {
+      uVar3 = D3D__CDevice__KickOff(iVar2);
+    }
+    *(undefined4 *)(uVar3 + 4) = 0x57e;
+    uVar6 = 0x1002c;
+    if (lVar5 == 0) {
+      uVar6 = 0x1002b;
+    }
+    *(undefined4 *)(uVar3 + 8) = uVar6;
+    *(undefined4 **)(iVar2 + 0x30) = (undefined4 *)(uVar3 + 8);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -3202,10 +3863,24 @@ void * D3DDevice_SetPWLGamma(int param_1,undefined8 param_2,undefined8 param_3)
 
 // 82863298  D3DDevice_SetBlendState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4823)
 
-void D3DDevice_SetBlendState(void)
+void D3DDevice_SetBlendState(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar2 = __savegprlr_29();
+  lVar3 = 0;
+  if ((param_2 & 0xffffffff) != 0) {
+    lVar3 = param_2 + 7;
+  }
+  *(undefined4 *)((int)((lVar3 + 0xa4eU & 0xffffffff) << 2) + iVar2) = param_3;
+  iVar1 = ((int)(lVar3 + 0x20135U) >> 0x10) * 8;
+  *(ulonglong *)(iVar1 + iVar2) =
+       0x8000000000000000U >> (lVar3 + 0x20135U & 0x7f) | *(ulonglong *)(iVar1 + iVar2);
+  *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x20000;
+  __restgprlr_29();
+  return;
 }
 

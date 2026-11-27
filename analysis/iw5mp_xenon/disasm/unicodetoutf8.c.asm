@@ -3,3 +3,95 @@
 ; 828ABE68  UnicodeToUTF8  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/unicodetoutf8.c:32)
   828ABE68  7D8802A6             mfspr r12,LR
   828ABE6C  4806A849             bl 0x829166b4
+  828ABE70  9421FF80             stwu r1,-0x80(r1)
+  828ABE74  7C7B1B78             or r27,r3,r3
+  828ABE78  7C9E2378             or r30,r4,r4
+  828ABE7C  7CBF2B78             or r31,r5,r5
+  828ABE80  7CDC3378             or r28,r6,r6
+  828ABE84  7DAD6B78             or r13,r13,r13
+  828ABE88  3BA00000             li r29,0x0
+  828ABE8C  2F1EFFFF             cmpwi cr6,r30,-0x1
+  828ABE90  409A0010             bne cr6,0x828abea0
+  828ABE94  7F63DB78             or r3,r27,r27
+  828ABE98  4806F441             bl 0x8291b2d8
+  828ABE9C  3BC30001             addi r30,r3,0x1
+LAB_828abea0:
+  828ABEA0  2F1E0000             cmpwi cr6,r30,0x0
+  828ABEA4  409900D8             ble cr6,0x828abf7c
+  828ABEA8  7FC903A6             mtspr CTR,r30
+  828ABEAC  39200001             li r9,0x1
+LAB_828abeb0:
+  828ABEB0  A15B0000             lhz r10,0x0(r27)
+  828ABEB4  7D4B5378             or r11,r10,r10
+  828ABEB8  2B0A007F             cmplwi cr6,r10,0x7f
+  828ABEBC  41990024             bgt cr6,0x828abee0
+  828ABEC0  3BBD0001             addi r29,r29,0x1
+  828ABEC4  7F1DE000             cmpw cr6,r29,r28
+  828ABEC8  419900AC             bgt cr6,0x828abf74
+  828ABECC  2B1F0000             cmplwi cr6,r31,0x0
+  828ABED0  419A00A4             beq cr6,0x828abf74
+  828ABED4  554B063E             rlwinm r11,r10,0x0,0x18,0x1f
+  828ABED8  997F0000             stb r11,0x0(r31)
+  828ABEDC  48000094             b 0x828abf70
+LAB_828abee0:
+  828ABEE0  2B0B07FF             cmplwi cr6,r11,0x7ff
+  828ABEE4  397D0001             addi r11,r29,0x1
+  828ABEE8  41990020             bgt cr6,0x828abf08
+  828ABEEC  7F0BE000             cmpw cr6,r11,r28
+  828ABEF0  41990060             bgt cr6,0x828abf50
+  828ABEF4  2B1F0000             cmplwi cr6,r31,0x0
+  828ABEF8  419A0058             beq cr6,0x828abf50
+  828ABEFC  390000C0             li r8,0xc0
+  828ABF00  5148D6FE             rlwimi r8,r10,0x1a,0x1b,0x1f
+  828ABF04  48000044             b 0x828abf48
+LAB_828abf08:
+  828ABF08  7F0BE000             cmpw cr6,r11,r28
+  828ABF0C  4199001C             bgt cr6,0x828abf28
+  828ABF10  2B1F0000             cmplwi cr6,r31,0x0
+  828ABF14  419A0014             beq cr6,0x828abf28
+  828ABF18  390000E0             li r8,0xe0
+  828ABF1C  5148A73E             rlwimi r8,r10,0x14,0x1c,0x1f
+  828ABF20  991F0000             stb r8,0x0(r31)
+  828ABF24  3BFF0001             addi r31,r31,0x1
+LAB_828abf28:
+  828ABF28  396B0001             addi r11,r11,0x1
+  828ABF2C  7F0BE000             cmpw cr6,r11,r28
+  828ABF30  41990020             bgt cr6,0x828abf50
+  828ABF34  2B1F0000             cmplwi cr6,r31,0x0
+  828ABF38  419A0018             beq cr6,0x828abf50
+  828ABF3C  A15B0000             lhz r10,0x0(r27)
+  828ABF40  39000080             li r8,0x80
+  828ABF44  5148D6BE             rlwimi r8,r10,0x1a,0x1a,0x1f
+LAB_828abf48:
+  828ABF48  991F0000             stb r8,0x0(r31)
+  828ABF4C  3BFF0001             addi r31,r31,0x1
+LAB_828abf50:
+  828ABF50  3BAB0001             addi r29,r11,0x1
+  828ABF54  7F1DE000             cmpw cr6,r29,r28
+  828ABF58  4199001C             bgt cr6,0x828abf74
+  828ABF5C  2B1F0000             cmplwi cr6,r31,0x0
+  828ABF60  419A0014             beq cr6,0x828abf74
+  828ABF64  A17B0000             lhz r11,0x0(r27)
+  828ABF68  512B3832             rlwimi r11,r9,0x7,0x0,0x19
+  828ABF6C  997F0000             stb r11,0x0(r31)
+LAB_828abf70:
+  828ABF70  3BFF0001             addi r31,r31,0x1
+LAB_828abf74:
+  828ABF74  3B7B0002             addi r27,r27,0x2
+  828ABF78  4200FF38             bdnz 0x828abeb0
+LAB_828abf7c:
+  828ABF7C  2F1C0000             cmpwi cr6,r28,0x0
+  828ABF80  419A0020             beq cr6,0x828abfa0
+  828ABF84  7F1CE800             cmpw cr6,r28,r29
+  828ABF88  40980018             bge cr6,0x828abfa0
+  828ABF8C  3860007A             li r3,0x7a
+  828ABF90  4BFFFEA1             bl 0x828abe30
+  828ABF94  7DCE7378             or r14,r14,r14
+  828ABF98  38600000             li r3,0x0
+  828ABF9C  4800000C             b 0x828abfa8
+LAB_828abfa0:
+  828ABFA0  7DCE7378             or r14,r14,r14
+  828ABFA4  7FA3EB78             or r3,r29,r29
+LAB_828abfa8:
+  828ABFA8  38210080             addi r1,r1,0x80
+  828ABFAC  4806A758             b 0x82916704

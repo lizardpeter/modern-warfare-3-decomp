@@ -6,7 +6,6 @@ void dwClearTask(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad1c8,0xd,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   if (*(int *)(param_1 + 8) != 0) {
@@ -25,7 +24,6 @@ undefined8 dwGetTaskStatus(int param_1)
   undefined8 uVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ad1c8,0x18,0,0xffffffff82000f98,0xffffffff8208b598);
   }
   piVar1 = *(int **)(param_1 + 8);
@@ -40,10 +38,29 @@ undefined8 dwGetTaskStatus(int param_1)
 
 // 826F2310  dwHandleTaskError  (DW/dwTasks.cpp:35)
 
-void dwHandleTaskError(void)
+void dwHandleTaskError(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined1 auStack_70 [112];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ad1c8,0x24,0,0xffffffff82000f98,0xffffffff8208b598);
+  }
+  Com_Printf(0x10,0xffffffff821ac0b4,0xffffffff821ad1b4);
+  dwLobbyErrorCodeToString(param_2,auStack_70,0x40);
+  if ((int)param_2 == 2) {
+    Com_Printf(0x10,0xffffffff821ad138,*(undefined4 *)(iVar1 + 0x90),2,auStack_70);
+  }
+  else {
+    Com_PrintError(0x10,0xffffffff821ad18c,*(undefined4 *)(iVar1 + 0x90),param_2);
+  }
+  TaskManager_ClearTask(iVar1);
+  if ((int)param_2 == 1) {
+    MyAssertHandler(0xffffffff821ad1c8,0x39,0,0xffffffff82000f98,0xffffffff821ac060);
+  }
+  __restgprlr_28(2);
+  return;
 }
 

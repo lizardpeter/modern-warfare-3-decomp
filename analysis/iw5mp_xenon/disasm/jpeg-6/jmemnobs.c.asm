@@ -14,6 +14,12 @@
   827C9600  7D4903A6             mtspr CTR,r10
   827C9604  4E800420             bctr
 
+; 827C9608  jpeg_get_large  (jpeg-6/jmemnobs.c:56)
+  827C9608  81630018             lwz r11,0x18(r3)
+  827C960C  7C832378             or r3,r4,r4
+  827C9610  7D6903A6             mtspr CTR,r11
+  827C9614  4E800420             bctr
+
 ; 827C9618  jpeg_free_large  (jpeg-6/jmemnobs.c:62)
   827C9618  8143001C             lwz r10,0x1c(r3)
   827C961C  7C8B2378             or r11,r4,r4
@@ -21,6 +27,23 @@
   827C9624  7D635B78             or r3,r11,r11
   827C9628  7D4903A6             mtspr CTR,r10
   827C962C  4E800420             bctr
+
+; 827C9630  jpeg_mem_available  (jpeg-6/jmemnobs.c:75)
+  827C9630  7CA32B78             or r3,r5,r5
+  827C9634  4E800020             blr
+
+; 827C9638  jpeg_open_backing_store  (jpeg-6/jmemnobs.c:89)
+  827C9638  81630000             lwz r11,0x0(r3)
+  827C963C  39400031             li r10,0x31
+  827C9640  914B0014             stw r10,0x14(r11)
+  827C9644  81230000             lwz r9,0x0(r3)
+  827C9648  81090000             lwz r8,0x0(r9)
+  827C964C  7D0903A6             mtspr CTR,r8
+  827C9650  4E800420             bctr
+
+; 827C9658  jpeg_mem_init  (jpeg-6/jmemnobs.c:101)
+  827C9658  38600000             li r3,0x0
+  827C965C  4E800020             blr
 
 ; 827C9660  jpeg_mem_term  (jpeg-6/jmemnobs.c:107)
   827C9660  4E800020             blr

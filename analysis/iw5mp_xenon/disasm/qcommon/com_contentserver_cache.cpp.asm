@@ -55,6 +55,25 @@ LAB_824d6d7c:
   824D6D7C  38600000             li r3,0x0
   824D6D80  4E800020             blr
 
+; 824D6D88  LiveStorage_CSCache_AddDescriptor  (qcommon/com_contentserver_cache.cpp:69)
+  824D6D88  3D60835F             lis r11,-0x7ca1
+  824D6D8C  816B15EC             lwz r11,0x15ec(r11)
+  824D6D90  2B0B0000             cmplwi cr6,r11,0x0
+  824D6D94  4D9A0020             beqlr cr6
+  824D6D98  786A0022             rldicl r10,r3,0x20,0x20
+  824D6D9C  5469003E             rlwinm r9,r3,0x0,0x0,0x1f
+  824D6DA0  3D0051EB             lis r8,0x51eb
+  824D6DA4  7D474A78             xor r7,r10,r9
+  824D6DA8  6106851F             ori r6,r8,0x851f
+  824D6DAC  38A00790             li r5,0x790
+  824D6DB0  7C673016             mulhwu r3,r7,r6
+  824D6DB4  546AD97E             rlwinm r10,r3,0x1b,0x5,0x1f
+  824D6DB8  1D2A0064             mulli r9,r10,0x64
+  824D6DBC  7D093850             subf r8,r9,r7
+  824D6DC0  1D480790             mulli r10,r8,0x790
+  824D6DC4  7C6A5A14             add r3,r10,r11
+  824D6DC8  4843FB98             b 0x82916960
+
 ; 824D6DD0  LiveStorage_CSCache_GetDescriptor  (qcommon/com_contentserver_cache.cpp:80)
   824D6DD0  7D8802A6             mfspr r12,LR
   824D6DD4  9181FFF8             stw r12,-0x8(r1)
@@ -108,3 +127,46 @@ LAB_824d6e70:
 ; 824D6EB0  AllocContentServerArray<csCacheFileDetails_t>  (qcommon/com_storage_contentserver.h:211)
   824D6EB0  7D8802A6             mfspr r12,LR
   824D6EB4  4843F805             bl 0x829166b8
+  824D6EB8  9421FF80             stwu r1,-0x80(r1)
+  824D6EBC  81630000             lwz r11,0x0(r3)
+  824D6EC0  7C7D1B78             or r29,r3,r3
+  824D6EC4  7C9E2378             or r30,r4,r4
+  824D6EC8  2B0B0000             cmplwi cr6,r11,0x0
+  824D6ECC  419A0010             beq cr6,0x824d6edc
+  824D6ED0  38600001             li r3,0x1
+  824D6ED4  38210080             addi r1,r1,0x80
+  824D6ED8  4843F830             b 0x82916708
+LAB_824d6edc:
+  824D6EDC  1F9E0790             mulli r28,r30,0x790
+  824D6EE0  38C00001             li r6,0x1
+  824D6EE4  38A00004             li r5,0x4
+  824D6EE8  38800008             li r4,0x8
+  824D6EEC  7F83E378             or r3,r28,r28
+  824D6EF0  4812F681             bl 0x82606570
+  824D6EF4  2B030000             cmplwi cr6,r3,0x0
+  824D6EF8  419A004C             beq cr6,0x824d6f44
+  824D6EFC  907D0000             stw r3,0x0(r29)
+  824D6F00  2F1E0000             cmpwi cr6,r30,0x0
+  824D6F04  40990024             ble cr6,0x824d6f28
+  824D6F08  3BE00000             li r31,0x0
+LAB_824d6f0c:
+  824D6F0C  817D0000             lwz r11,0x0(r29)
+  824D6F10  7C6BFA15             add. r3,r11,r31
+  824D6F14  41820008             beq 0x824d6f1c
+  824D6F18  48421BB9             bl 0x828f8ad0
+LAB_824d6f1c:
+  824D6F1C  37DEFFFF             subic. r30,r30,0x1
+  824D6F20  3BFF0790             addi r31,r31,0x790
+  824D6F24  4082FFE8             bne 0x824d6f0c
+LAB_824d6f28:
+  824D6F28  3D40835F             lis r10,-0x7ca1
+  824D6F2C  38600001             li r3,0x1
+  824D6F30  816A15E8             lwz r11,0x15e8(r10)
+  824D6F34  7D6BE214             add r11,r11,r28
+  824D6F38  916A15E8             stw r11,0x15e8(r10)
+  824D6F3C  38210080             addi r1,r1,0x80
+  824D6F40  4843F7C8             b 0x82916708
+LAB_824d6f44:
+  824D6F44  38600000             li r3,0x0
+  824D6F48  38210080             addi r1,r1,0x80
+  824D6F4C  4843F7BC             b 0x82916708

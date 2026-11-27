@@ -126,6 +126,38 @@ LAB_823625e0:
 ; 82362628  Lobby_GetHostData  (client_mp/lobbycommon.cpp:91)
   82362628  7D8802A6             mfspr r12,LR
   8236262C  485B4091             bl 0x829166bc
+  82362630  9421FF90             stwu r1,-0x70(r1)
+  82362634  3D6082B5             lis r11,-0x7d4b
+  82362638  3D408204             lis r10,-0x7dfc
+  8236263C  3BEBC2D0             subi r31,r11,0x3d30
+  82362640  3D608200             lis r11,-0x7e00
+  82362644  3BCAB168             subi r30,r10,0x4e98
+  82362648  3BAB0F98             addi r29,r11,0xf98
+  8236264C  817F1EF4             lwz r11,0x1ef4(r31)
+  82362650  2F0B0000             cmpwi cr6,r11,0x0
+  82362654  409A0020             bne cr6,0x82362674
+  82362658  3D608203             lis r11,-0x7dfd
+  8236265C  7FA6EB78             or r6,r29,r29
+  82362660  38EB2564             addi r7,r11,0x2564
+  82362664  7FC3F378             or r3,r30,r30
+  82362668  38A00000             li r5,0x0
+  8236266C  3880005C             li r4,0x5c
+  82362670  48271E91             bl 0x825d4500
+LAB_82362674:
+  82362674  817F1EEC             lwz r11,0x1eec(r31)
+  82362678  2F0B0000             cmpwi cr6,r11,0x0
+  8236267C  409A0020             bne cr6,0x8236269c
+  82362680  3D608204             lis r11,-0x7dfc
+  82362684  7FA6EB78             or r6,r29,r29
+  82362688  38EBB1EC             subi r7,r11,0x4e14
+  8236268C  7FC3F378             or r3,r30,r30
+  82362690  38A00000             li r5,0x0
+  82362694  3880005D             li r4,0x5d
+  82362698  48271E69             bl 0x825d4500
+LAB_8236269c:
+  8236269C  387F1E90             addi r3,r31,0x1e90
+  823626A0  38210070             addi r1,r1,0x70
+  823626A4  485B4068             b 0x8291670c
 
 ; 823626A8  Lobby_IsLoadingServer  (client_mp/lobbycommon.cpp:99)
   823626A8  3D6082B5             lis r11,-0x7d4b

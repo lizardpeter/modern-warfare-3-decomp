@@ -6,7 +6,31 @@ BOOL ReadFileEx(HANDLE hFile,LPVOID lpBuffer,DWORD nNumberOfBytesToRead,LPOVERLA
                LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(hFile,lpBuffer,nNumberOfBytesToRead,lpOverlapped,lpCompletionRoutine);
+  bool bVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  BOOL BVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  undefined4 local_40;
+  undefined4 local_3c;
+  
+  lVar8 = (longlong)(int)lpCompletionRoutine;
+  lVar7 = (longlong)(int)lpOverlapped;
+  lVar6 = (longlong)(int)nNumberOfBytesToRead;
+  lVar5 = (longlong)(int)lpBuffer;
+  uVar2 = __savegprlr_27(hFile,lVar5,lVar6,lVar7,lVar8);
+  local_3c = *(undefined4 *)((int)lVar7 + 8);
+  local_40 = *(undefined4 *)((int)lVar7 + 0xc);
+  uVar3 = (**(code **)(PTR_DAT_829a8580 + 0x10))
+                    (uVar2,0,0xffffffff828ac329,lVar8,lVar7,lVar5,lVar6,&local_40);
+  bVar1 = (uVar3 & 0xc0000000) != 0xc0000000;
+  if (!bVar1) {
+    XapiSetLastNTError();
+  }
+  BVar4 = __restgprlr_27(bVar1);
+  return BVar4;
 }
 

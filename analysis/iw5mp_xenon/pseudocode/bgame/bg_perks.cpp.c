@@ -5,8 +5,26 @@
 void BG_GetPerkCodeIndexForName(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  undefined **ppuVar4;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    __restgprlr_29(0x32);
+    return;
+  }
+  uVar3 = 0;
+  ppuVar4 = &PTR_s_specialty_bulletaccuracy_829612f0;
+  do {
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
+    if (iVar2 == 0) break;
+    uVar3 = uVar3 + 1;
+    ppuVar4 = ppuVar4 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x32);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
@@ -16,7 +34,6 @@ undefined * BG_GetPerkNameForCodeIndex(uint param_1)
 
 {
   if (0x31 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200b734,0x7e,0,0xffffffff82000f60,param_1,0x32);
   }
   return (&PTR_s_specialty_bulletaccuracy_829612f0)[param_1];
@@ -111,8 +128,25 @@ void Perk_GetSlotIndexName(undefined8 param_1)
 void Perk_GetSlotIndex(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined **ppuVar4;
+  
+  uVar1 = __savegprlr_28();
+  ppuVar4 = &PTR_s_perk1_829613b8;
+  lVar3 = 0;
+  do {
+    iVar2 = I_stricmp(uVar1,*ppuVar4);
+    if (iVar2 == 0) {
+      __restgprlr_28(lVar3);
+      return;
+    }
+    ppuVar4 = ppuVar4 + 1;
+    lVar3 = lVar3 + 1;
+  } while ((int)ppuVar4 < -0x7d69ec24);
+  __restgprlr_28(9);
+  return;
 }
 
 
@@ -127,7 +161,6 @@ bool Perk_GetIndex(undefined8 param_1,int *param_2)
   undefined4 local_20 [2];
   
   if (param_2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200b734,0xdb,0,0xffffffff82000f98,0xffffffff8200c280);
   }
   StringTable_GetAsset(0xffffffff8200afb4,local_20);
@@ -154,7 +187,6 @@ bool Perk_GetName(ulonglong param_1,undefined4 *param_2)
   undefined1 auStack_120 [264];
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8200b734,0xf2,0,0xffffffff82000f98,0xffffffff8200c280);
   }
   Com_sprintf(auStack_120,0x100,0xffffffff8200c28c,param_1);

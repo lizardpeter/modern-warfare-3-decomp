@@ -2,10 +2,30 @@
 
 // 8292D8C0  bdEndpoint::operator==  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdendpoint.cpp:26)
 
-void bdEndpoint__operator__(void)
+void bdEndpoint__operator__(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  
+  piVar1 = (int *)__savegprlr_28();
+  iVar3 = *piVar1;
+  uVar4 = 0;
+  if (iVar3 == 0) {
+    if (*param_2 == 0) {
+      uVar4 = 1;
+    }
+  }
+  else if (*param_2 != 0) {
+    iVar2 = bdCommonAddr__getHash();
+    iVar3 = bdCommonAddr__getHash(iVar3);
+    if ((iVar3 != iVar2) || (uVar4 = 1, *(longlong *)(piVar1 + 1) != *(longlong *)(param_2 + 1))) {
+      uVar4 = 0;
+    }
+  }
+  __restgprlr_28(uVar4);
+  return;
 }
 

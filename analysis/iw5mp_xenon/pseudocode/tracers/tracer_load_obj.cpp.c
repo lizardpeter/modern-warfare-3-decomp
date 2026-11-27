@@ -6,7 +6,6 @@ void Tracer_Register_FastFile(ulonglong param_1)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821a7b20,0x107,0,0xffffffff82000f98,0xffffffff82021a74);
   }
   DB_FindXAssetHeader(0x29,param_1,1);
@@ -19,7 +18,15 @@ void Tracer_Register_FastFile(ulonglong param_1)
 void Tracer_Register(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a7b20,0x114,0,0xffffffff82000f98,0xffffffff82021a74);
+    MyAssertHandler(0xffffffff821a7b20,0x107,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  DB_FindXAssetHeader(0x29,uVar1,1);
+  __restgprlr_28();
+  return;
 }
 

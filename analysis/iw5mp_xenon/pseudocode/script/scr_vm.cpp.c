@@ -9,6 +9,20 @@ void Scr_DumpScriptThreadTime(void)
 }
 
 
+// 825525B8  TRACK_scr_vm  (script/scr_vm.cpp:114)
+
+void TRACK_scr_vm(void)
+
+{
+  track_static_alloc_internal(0xffffffff83c97710,0x2028,0xffffffff82155168,7);
+  track_static_alloc_internal(0xffffffff83ca44a0,0x4328,0xffffffff8215515c,7);
+  track_static_alloc_internal(0xffffffff83ca87c8,0x84,0xffffffff82155140,7);
+  track_static_alloc_internal(0xffffffff83c99740,0xad40,0xffffffff82155130,7);
+  track_static_alloc_internal(0xffffffff83c6fb48,0x27bc4,0xffffffff82155120,0);
+  return;
+}
+
+
 // 82552668  Scr_ClearErrorMessage  (script/scr_vm.cpp:134)
 
 void Scr_ClearErrorMessage(void)
@@ -26,8 +40,44 @@ void Scr_ClearErrorMessage(void)
 void Scr_VM_Init(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  DAT_83c6fb14 = "<script init variable>";
+  DAT_83ca44a4 = &DAT_83ca87c0;
+  DAT_83ca44b0 = &DAT_83ca47c8;
+  DAT_83ca44ac = &DAT_83ca44c8;
+  DAT_83ca44a0 = &DAT_83c97728;
+  DAT_83ca44a8 = 0;
+  DAT_83c4ba98 = 0;
+  DAT_83ca44b4 = 0;
+  DAT_83c4ba9c = 0;
+  DAT_83c97720 = 0;
+  DAT_83c4baa0 = 0;
+  DAT_83ca44b6 = 0;
+  DAT_83ca44bc = 0;
+  DAT_83ca44b8 = 0;
+  DAT_83c4bac8 = AllocValue(0);
+  DAT_83c4bab0 = 0;
+  DAT_83c4babc = 0;
+  DAT_83ca47cc = 7;
+  DAT_83c4baa8 = 0;
+  DAT_83c6fb18 = 0;
+  DAT_83c6fb08 = 0;
+  DAT_83c4baac = 0;
+  DAT_83c4bab4 = 0;
+  DAT_83c4bab8 = 0;
+  DAT_83c4bac0 = 0;
+  DAT_83c4bac4 = 0;
+  DAT_83c97724 = 0;
+  DAT_83c9972c = 0;
+  DAT_83c99730 = 0;
+  DAT_83c99734 = 0;
+  DAT_83c6fb14 = (char *)0x0;
+  DAT_83ca4498 = Dvar_RegisterBool(0xffffffff82155280,0,0,0xffffffff82155250);
+  DAT_83c6fb40 = Dvar_RegisterBool(0xffffffff821551ec,0,0,0xffffffff82155208);
+  DAT_83c6fb44 = Dvar_RegisterBool(0xffffffff821551b4,0,0,0xffffffff821551c8);
+  DAT_83c9973c = Dvar_RegisterBool(0xffffffff82155174,1,0,0xffffffff82155188);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -60,7 +110,6 @@ void Scr_Init(void)
 
 {
   if (DAT_83c4bad4 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0xec,0,0xffffffff82000f98,0xffffffff821552e4);
   }
   Scr_InitClassMap();
@@ -81,11 +130,20 @@ void Scr_Init(void)
 
 // 82552948  Scr_Settings  (script/scr_vm.cpp:260)
 
-void Scr_Settings(void)
+void Scr_Settings(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  
+  lVar1 = __savegprlr_29();
+  if (((int)param_3 != 0) && ((int)lVar1 == 0)) {
+    MyAssertHandler(0xffffffff821552a8,0x105,0,0xffffffff82000f98,0xffffffff821552f8);
+  }
+  DAT_83c4ba96 = '\x01' - (lVar1 == 0);
+  DAT_83c4ba97 = '\x01' - (param_2 == 0);
+  DAT_83ca44b5 = '\x01' - (param_3 == 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -106,13 +164,58 @@ void Scr_Shutdown(void)
 }
 
 
+// 82552A30  Scr_SetLoading  (script/scr_vm.cpp:292)
+
+void Scr_SetLoading(undefined4 param_1)
+
+{
+  DAT_83c97724 = param_1;
+  return;
+}
+
+
 // 82552A40  Scr_ErrorInternal  (script/scr_vm.cpp:298)
 
 void Scr_ErrorInternal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_29();
+  if (DAT_83c4ba9c == 0) {
+    MyAssertHandler(0xffffffff821552a8,299,0,0xffffffff82000f98,0xffffffff82155334);
+  }
+  if ((DAT_83c4ba98 == '\0') && (DAT_83701002 == '\0')) {
+    iVar1 = Sys_IsRemoteDebugServer();
+    if ((((iVar1 == 0) && (DAT_83c4ba96 != '\0')) && (DAT_83c97724 != 0)) &&
+       (*(char *)(DAT_83c9973c + 0xc) != '\0')) {
+      DAT_83ca44b6 = '\x01';
+    }
+    if ((DAT_83ca44a8 != 0) || (DAT_83ca44b4 != '\0')) {
+      Com_PrintMessage(6,0xffffffff82155318,0);
+      Com_PrintMessage(6,DAT_83c4ba9c,0);
+      Com_PrintMessage(6,0xffffffff820044d8,0);
+      if (0x20 < DAT_83c99738) {
+        MyAssertHandler(0xffffffff821552a8,0x158,0,0xffffffff82150880,DAT_83c99738,0x21);
+      }
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(&DAT_83c99740 + DAT_83c99738 * 0x540),-1);
+    }
+  }
+  else if (DAT_83ca44b6 == '\0') goto LAB_82552bb4;
+  Sys_Error(0xffffffff82000f98,DAT_83c4ba9c);
+LAB_82552bb4:
+  __restgprlr_29();
+  return;
+}
+
+
+// 82552BC0  Scr_GetNumScriptThreads  (script/scr_vm.cpp:357)
+
+undefined4 Scr_GetNumScriptThreads(void)
+
+{
+  return DAT_83c6fb08;
 }
 
 
@@ -216,8 +319,23 @@ bool Scr_IsTrue(float *param_1)
 void VM_PrintJumpHistory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_29();
+  Com_Printf(0x17,0xffffffff821510b4);
+  Com_Printf(0x17,0xffffffff8215534c);
+  iVar1 = DAT_83c97704;
+  do {
+    if (iVar1 == 0) {
+      iVar1 = 0x80;
+    }
+    iVar1 = iVar1 + -1;
+    if (*(int *)(&DAT_83c97504 + iVar1 * 4) == 0) break;
+    Scr_PrintPrevCodePos(0x17,*(int *)(&DAT_83c97504 + iVar1 * 4),0,1);
+  } while (iVar1 != DAT_83c97704);
+  Com_Printf(0x17,0xffffffff821510b4);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -239,6 +357,4271 @@ void Scr_MaxScriptVariablesError(void)
 }
 
 
+// 82557DF8  VM_Execute  (script/scr_vm.cpp:493)
+
+void VM_Execute(void)
+
+{
+  HGDIOBJ h;
+  float fVar1;
+  char *pcVar2;
+  int3 *piVar3;
+  int iVar4;
+  int iVar5;
+  ushort uVar6;
+  undefined2 uVar7;
+  uint3 uVar8;
+  char *pcVar9;
+  uint *puVar10;
+  uint uVar11;
+  undefined *puVar12;
+  undefined4 uVar15;
+  int iVar16;
+  undefined8 uVar13;
+  DWORD DVar17;
+  undefined8 uVar14;
+  char cVar19;
+  float fVar18;
+  ulonglong uVar20;
+  ulonglong uVar21;
+  uint *puVar22;
+  uint *puVar23;
+  byte bVar27;
+  longlong lVar24;
+  ulonglong uVar25;
+  int *piVar26;
+  uint uVar28;
+  byte *pbVar30;
+  float *pfVar31;
+  float *pfVar32;
+  ulonglong uVar29;
+  float *pfVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  float *local_360;
+  char local_35c;
+  HGDIOBJ local_358;
+  uint local_354;
+  int local_350;
+  uint *local_340;
+  char *local_32c;
+  undefined8 local_318;
+  char *local_310;
+  char *local_30c;
+  uint local_308;
+  char *local_304;
+  char *local_300;
+  char *local_2fc;
+  char *local_2f8;
+  char *local_2f4;
+  char *local_2f0;
+  undefined4 local_2e8;
+  undefined4 local_2e4;
+  char *local_2e0;
+  char *local_2dc;
+  char *local_2d8;
+  char *local_2d4;
+  char *local_2d0;
+  undefined4 *local_2cc;
+  char *local_2c8;
+  char *local_2c4;
+  char *local_2c0;
+  char *local_2bc;
+  char *local_2b8;
+  char *local_2b4;
+  char *local_2b0;
+  char *local_2ac;
+  char *local_2a8;
+  float local_2a4;
+  char *local_2a0;
+  char *local_29c;
+  char *local_298;
+  char *local_294;
+  char *local_290;
+  char *local_28c;
+  char *local_288;
+  char *local_284;
+  char *local_280;
+  char *local_27c;
+  char *local_278;
+  char *local_274;
+  char *local_270;
+  char *local_26c;
+  char *local_268;
+  char *local_264;
+  char *local_260;
+  undefined *local_25c;
+  char *local_258;
+  char *local_254;
+  char *local_250;
+  char *local_24c;
+  char *local_248;
+  char *local_244;
+  char *local_240;
+  char *local_23c;
+  char *local_238;
+  char *local_234;
+  char *local_230;
+  char *local_22c;
+  char *local_228;
+  undefined **local_224;
+  char *local_220;
+  char *local_21c;
+  char *local_218;
+  char *local_214;
+  char *local_210;
+  char *local_20c;
+  char *local_208;
+  undefined *local_204;
+  char *local_200;
+  undefined *local_1fc;
+  char *local_1f8;
+  char *local_1f4;
+  char *local_1f0;
+  char *local_1ec;
+  char *local_1e8;
+  char *local_1e4;
+  undefined *local_1e0;
+  char *local_1dc;
+  longlong local_1d8;
+  float *local_1d0;
+  float *local_1cc;
+  float local_1c8;
+  float *local_1c4;
+  float *local_1c0;
+  float *local_1bc;
+  float *local_1b8;
+  float *local_1b4;
+  float *local_1b0;
+  float *local_1ac;
+  float *local_1a8;
+  float *local_1a4;
+  float *local_1a0;
+  float *local_19c;
+  float *local_198;
+  float *local_194;
+  float *local_190;
+  float *local_18c;
+  float *local_188;
+  float *local_184;
+  float *local_180;
+  float *local_17c;
+  float *local_178;
+  float *local_174;
+  float *local_170;
+  float *local_16c;
+  float *local_168;
+  float *local_164;
+  float *local_160;
+  float *local_15c;
+  float *local_158;
+  float *local_154;
+  float *local_150;
+  float *local_14c;
+  float *local_148;
+  float *local_144;
+  float *local_140;
+  float *local_13c;
+  float *local_138;
+  float *local_134;
+  uint local_130 [76];
+  
+  __savegprlr();
+  local_130[0] = *(uint *)(&DAT_83c73500 + (int)DAT_83ca4484 * 4);
+  if (local_130[0] != 0) {
+    Profile_BeginScripts();
+  }
+  local_360 = DAT_83ca4480;
+  local_340 = local_130;
+  uVar20 = (ulonglong)DAT_83c99738 + 1;
+  DAT_83c99738 = (uint)uVar20;
+  local_30c = "exceeded maximum number of child0 script variables";
+  local_294 = "scrVmPub.top == fs.top";
+  local_2cc = &DAT_84184f78;
+  local_2f4 = "exceeded maximum number of parent script variables";
+  local_2ac = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\../universal/profile.h";
+  local_2bc = "profileIndex < PROF_SCRIPT_COUNT";
+  local_304 = "exceeded maximum number of child1 script variables";
+  local_298 = "scrVmPub.top->type == VAR_UNDEFINED";
+  local_200 = "scrVarPub.error_index >= 0";
+  local_2f0 = "scrVarPub.error_index >= -1";
+  local_208 = "caught script exception\n";
+  local_210 = "%s is not an object";
+  local_2f8 = "CODE ERROR: unknown opcode %d";
+  local_230 = "cannot create a new local variable in the debugger";
+  local_238 = "unknown object";
+  local_250 = "cannot switch on %s";
+  local_270 = "GetObjectType( tempValue.u.pointerValue ) != VAR_TIME_THREAD";
+  local_248 = "switch index %d out of range";
+  local_278 = "GetObjectType( tempValue.u.pointerValue ) != VAR_NOTIFY_THREAD";
+  local_220 = "first parameter of notify must evaluate to a string";
+  local_280 = "GetObjectType( tempValue.u.pointerValue ) != VAR_THREAD";
+  local_258 = "script";
+  local_288 = "-- must be applied to an int (applied to %s)";
+  local_28c = "++ must be applied to an int (applied to %s)";
+  local_310 = "*local_pos == OP_SetVariableField";
+  local_1e4 = "script runtime error: potential infinite loop in script - killing thread.\n";
+  local_240 = "caseValue";
+  local_2c4 = "potential infinite loop in script";
+  local_218 = "first parameter of endon must evaluate to a string";
+  local_228 = "first parameter of waittill must evaluate to a string";
+  local_260 = "GetObjectType( tempValue.u.pointerValue ) != VAR_DEAD_THREAD";
+  local_268 = "GetObjectType( tempValue.u.pointerValue ) != VAR_CHILD_THREAD";
+  local_23c = "!scrVmPub.debugCode";
+  local_234 = "script runtime warning: potential infinite loop in script %d > %d.\n";
+  local_29c = "EXCEED TIME: %d\n";
+  local_244 = "logScriptTimes";
+  local_2b4 = "fs.top->type == VAR_INTEGER";
+  local_2a0 = "fs.top->type != VAR_UNDEFINED";
+  local_264 = "%s is not a builtin method";
+  local_274 = "%s is not a builtin function";
+  local_2fc = "%s is not a function pointer";
+  dVar37 = 0.0;
+  dVar36 = 20.0;
+  local_1dc = "scrVmPub.inparamcount == 1";
+  dVar35 = 0.5;
+  local_1f4 = "!(scrVarPub.time & ~VAR_NAME_LOW_MASK)";
+  local_1fc = &DAT_837011e8;
+  local_24c = "negative wait is not allowed";
+  local_26c = "builtin: %s";
+  local_214 = "wait is too long";
+  local_224 = &PTR_s_createprintchannel_8298db28;
+  local_254 = "type %s is not a float";
+  local_2c0 = "builtinIndex - SCR_FUNC_BEGIN doesn\'t index SCR_FUNC_COUNT\n\t%i not in [0, %i)";
+  local_2d4 = "Scr_IsInOpcodeMemory( local_pos )";
+  local_2a8 = "function called with too many parameters";
+  local_2d0 = "%s is not an entity";
+  local_25c = &DAT_837018f8;
+  local_21c = "scrVmPub.top == fs.top - 1";
+  local_2b8 = "builtinIndex - SCR_METH_BEGIN doesn\'t index SCR_METH_COUNT\n\t%i not in [0, %i)";
+  local_1ec = "(fs.top - 1)->type == VAR_POINTER";
+  local_2b0 = "fs.top == scrVmPub.top";
+  local_27c = "fieldValueId";
+  local_22c = "%s is not an array index";
+  local_284 = "array index %d out of range";
+  local_1e8 = "fs.top->u.intValue";
+  local_32c = "local_pos";
+  local_204 = &DAT_83c99740;
+  local_2c8 = "fs.top != fs.startTop";
+  local_2d8 = "(fs.top->type == VAR_CODEPOS)";
+  local_2e0 = "%s\n\t(fs.top - fs.startTop) = %i";
+  local_2dc = "(fs.top == fs.startTop)";
+  local_300 = "!scrVmPub.inparamcount";
+  local_1f0 = "!scrVarPub.error_index";
+  local_290 = "%s\n\t(scrVarPub.error_message) = %s";
+  local_1f8 = "(!scrVarPub.error_message)";
+  local_1e0 = &DAT_83ca87c8;
+  local_20c = 
+  "g_script_error_level doesn\'t index ARRAY_COUNT( g_script_error )\n\t%i not in [0, %i)";
+LAB_825582d0:
+  if (0x20 < (uVar20 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821552a8,0x22e,0,local_20c,uVar20,0x21);
+  }
+  uVar15 = LargeLocalGetMark();
+  puVar12 = local_1e0;
+  iVar16 = DAT_83c99738 * 0x540;
+  *(undefined4 *)(local_1e0 + DAT_83c99738 * 4) = uVar15;
+  iVar16 = setjmp(local_204 + iVar16);
+  uVar28 = DAT_83ca8c54;
+  if (iVar16 == 0) {
+    uVar20 = ZEXT48(local_360);
+    pfVar33 = DAT_83ca448c;
+    pfVar32 = local_164;
+switchD_82558444_caseD_82558328:
+    local_164 = pfVar32;
+    if (DAT_83c4ba9c != (undefined *)0x0) {
+      MyAssertHandler(0xffffffff821552a8,0x23b,0,local_290,local_1f8,DAT_83c4ba9c);
+      pfVar33 = DAT_83ca448c;
+    }
+    if (DAT_83c4baa0 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x23c,0,0xffffffff82000f98,local_1f0);
+      pfVar33 = DAT_83ca448c;
+    }
+    if (DAT_83ca44bc != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x23d,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+      pfVar33 = DAT_83ca448c;
+    }
+    if (DAT_83ca44b8 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x23e,0,0xffffffff82000f98,local_300);
+      pfVar33 = DAT_83ca448c;
+    }
+    dataCacheBlockTouch(uVar20 + 0x80);
+    pbVar30 = (byte *)uVar20;
+    uVar28 = (uint)*pbVar30;
+    uVar20 = uVar20 + 1;
+    DAT_83ca4480 = (float *)uVar20;
+    DAT_83ca8c54 = (uint)*pbVar30;
+    local_360 = DAT_83ca4480;
+    pfVar32 = DAT_83ca4480;
+joined_r0x825583fc:
+    DAT_83c6fb14 = pfVar32;
+    if (0xa3 < uVar28) goto switchD_82558444_caseD_82558400;
+    pfVar31 = (float *)uVar20;
+    uVar25 = uVar20;
+    pfVar32 = local_164;
+    switch((&switchD_82558444::switchdataD_82558448)[uVar28]) {
+    case (undefined *)0x82558328:
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82558400:
+      goto switchD_82558444_caseD_82558400;
+    case (undefined *)0x825586d8:
+      if (DAT_83c4ba96 != '\0') {
+        uVar28 = Scr_HitBreakpoint(pfVar33,uVar20,DAT_83ca4484,0);
+        goto LAB_8255871c;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82558700:
+      uVar13 = 1;
+LAB_8255870c:
+      uVar28 = Scr_HitAssignmentBreakpoint(pfVar33,uVar20,DAT_83ca4484,uVar13);
+LAB_8255871c:
+      DAT_83ca8c54 = uVar28;
+      iVar16 = Scr_SkipIntructions();
+      pcVar2 = local_2a8;
+      pfVar33 = DAT_83ca448c;
+      while (pfVar32 = (float *)uVar20, DAT_83ca448c = pfVar33, iVar16 != 0) {
+        switch(uVar28) {
+        case 0:
+          Scr_ExitSkipIntructions();
+          goto LAB_8255dfd0;
+        case 1:
+          Scr_ExitSkipIntructions();
+          local_318 = local_318 & 0xffffffff00000000;
+          goto LAB_8255e138;
+        case 2:
+        case 3:
+        case 0x12:
+        case 0x13:
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x1d:
+        case 0x1e:
+        case 0x1f:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x2b:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xb9f,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xba1,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+            goto switchD_8255876c_caseD_74;
+          }
+          goto LAB_82558a74;
+        case 4:
+        case 5:
+        case 6:
+        case 0x23:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xbb2,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xbb4,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+          uVar20 = uVar20 + 1;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 7:
+        case 8:
+        case 10:
+        case 0xb:
+        case 0xd:
+        case 0xe:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xbbf,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xbc1,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+LAB_82558bf0:
+          uVar20 = uVar20 + 2;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 9:
+        case 0x17:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xba7,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xba9,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+LAB_82558af0:
+          uVar20 = uVar20 + 4;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0xc:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xbc7,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_82558af0;
+          MyAssertHandler(0xffffffff821552a8,0xbc9,0,0xffffffff821561a4,0xffffffff821561ec,
+                          (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          uVar20 = uVar20 + 4;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0xf:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xbcf,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xbd1,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+          DAT_83ca448c[1] = 0.0;
+          uVar20 = (uVar20 + 3 & 0xfffffffc) + 0xc;
+          break;
+        case 0x10:
+        case 0x11:
+        case 0x18:
+        case 0x2d:
+        case 0x3d:
+        case 0x59:
+        case 0x99:
+          break;
+        case 0x19:
+        case 0x1a:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xbe1,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xbe3,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+LAB_82558d78:
+          uVar20 = uVar20 + 3;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x1b:
+          DAT_83ca44a0 = DAT_83ca44a0 + 1;
+          DAT_83ca4488 = DAT_83ca4488 + 1;
+          uVar20 = uVar20 + 2;
+          DAT_83ca4480 = (float *)uVar20;
+          uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar32);
+          *DAT_83ca44a0 = uVar28;
+          break;
+        case 0x1c:
+          bVar27 = *(byte *)pfVar32;
+          uVar20 = uVar20 + 1;
+          DAT_83ca4488 = DAT_83ca4488 - bVar27;
+          DAT_83ca44a0 = DAT_83ca44a0 + -(uint)bVar27;
+          for (; bVar27 != 0; bVar27 = bVar27 - 1) {
+            RemoveNextVariable(DAT_83ca4484);
+          }
+          break;
+        case 0x24:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xc04,0,0xffffffff821561a4,0xffffffff8215638c,
+                            (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33 + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xc06,0,0xffffffff821561a4,0xffffffff821561ec,
+                            (int)(pfVar33 + 0x1f0d6e10) >> 3);
+          }
+          pfVar33 = DAT_83ca448c;
+          uVar20 = uVar20 + 1;
+          DAT_83ca448c[1] = 0.0;
+          pfVar33[-1] = 0.0;
+          goto LAB_825599ec;
+        case 0x25:
+          pfVar33[-1] = 0.0;
+          goto LAB_825599ec;
+        case 0x26:
+        case 0x29:
+        case 0x2a:
+        case 0x2c:
+        case 0x41:
+        case 0x45:
+        case 0x58:
+        case 0x71:
+        case 0x72:
+          goto switchD_8255876c_caseD_26;
+        case 0x27:
+        case 0x46:
+          DAT_83ca44a0 = DAT_83ca44a0 + 1;
+          DAT_83ca4488 = DAT_83ca4488 + 1;
+          uVar20 = uVar20 + 2;
+          DAT_83ca4480 = (float *)uVar20;
+          uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar32);
+          *DAT_83ca44a0 = uVar28;
+          goto switchD_8255876c_caseD_26;
+        case 0x28:
+        case 0x47:
+          uVar20 = uVar20 + 1;
+          goto switchD_8255876c_caseD_26;
+        case 0x2e:
+        case 0x2f:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xc20,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_82558bf0;
+          MyAssertHandler(0xffffffff821552a8,0xc22,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+          uVar20 = uVar20 + 2;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x30:
+        case 0x31:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xc29,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_82558bf0;
+          MyAssertHandler(0xffffffff821552a8,0xc2b,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+          uVar20 = uVar20 + 2;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x32:
+        case 0x33:
+        case 0x34:
+        case 0x35:
+        case 0x36:
+        case 0x7c:
+        case 0x9e:
+          uVar20 = uVar20 + 2;
+          break;
+        case 0x37:
+          DAT_83ca44a0 = DAT_83ca44a0 + 1;
+          DAT_83ca4488 = DAT_83ca4488 + 1;
+          uVar20 = uVar20 + 2;
+          DAT_83ca4480 = (float *)uVar20;
+          uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar32);
+          *DAT_83ca44a0 = uVar28;
+        case 0x38:
+          if (DAT_83ca448c[1] == 9.80909e-45) {
+            MyAssertHandler(0xffffffff821552a8,0xc49,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_CODEPOS)",(int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+          }
+          fVar18 = DAT_83ca448c[1];
+joined_r0x8255906c:
+          pfVar33 = DAT_83ca448c;
+          if (fVar18 != 1.12104e-44) goto LAB_825599ec;
+          break;
+        case 0x39:
+          if (pfVar33[1] == 9.80909e-45) {
+            MyAssertHandler(0xffffffff821552a8,0xc4f,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_CODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+          }
+          fVar18 = DAT_83ca448c[1];
+          uVar20 = uVar20 + 1;
+          goto joined_r0x8255906c;
+        case 0x3a:
+          if (pfVar33[1] == 1.12104e-44) {
+            MyAssertHandler(0xffffffff821552a8,0xc59,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_PRECODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+          }
+          uVar20 = uVar20 + 1;
+          pfVar33 = DAT_83ca448c;
+          if (DAT_83ca448c[1] != 9.80909e-45) goto LAB_825599ec;
+          break;
+        case 0x3b:
+          if (pfVar33[1] == 1.12104e-44) {
+            MyAssertHandler(0xffffffff821552a8,0xc63,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_PRECODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+          }
+          fVar18 = DAT_83ca448c[1];
+          while (fVar18 != 9.80909e-45) {
+            local_1d0 = DAT_83ca448c;
+            RemoveRefToValue(fVar18,*DAT_83ca448c);
+            pfVar33 = DAT_83ca448c + -2;
+            if (DAT_83ca448c[-1] == 1.12104e-44) {
+              pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+              DAT_83ca448c = DAT_83ca448c + -2;
+              MyAssertHandler(0xffffffff821552a8,0xc68,0,0xffffffff821561a4,
+                              "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+              pfVar33 = DAT_83ca448c;
+            }
+            DAT_83ca448c = pfVar33;
+            fVar18 = DAT_83ca448c[1];
+          }
+          break;
+        case 0x3c:
+          if (pfVar33[1] == 9.80909e-45) {
+            MyAssertHandler(0xffffffff821552a8,0xc6d,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_CODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+          }
+          DAT_83ca4480 = pfVar32;
+          if (DAT_83ca448c[1] != 1.12104e-44) {
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,pcVar2,0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+            goto switchD_8255876c_caseD_3f;
+          }
+          if (((48000 < DAT_83c4bacc) || (48000 < DAT_83c4bad0)) ||
+             (0x8380 < (uint)(DAT_83c6fb10 + DAT_83c6fb0c))) {
+            if (DAT_83ca44c4 != '\0') {
+              Scr_DumpScriptThreads(1);
+              Scr_DumpScriptVariablesDefault();
+              pcVar9 = local_30c;
+              if ((DAT_83c4bacc < 0xbb81) && (pcVar9 = local_2f4, 48000 < DAT_83c4bad0)) {
+                pcVar9 = local_304;
+              }
+              if (DAT_83c4ba9c == (undefined *)0x0) {
+                I_strncpyz(0xffffffff83ca8850,pcVar9,0x400);
+                DAT_83c4ba9c = &DAT_83ca8850;
+              }
+              Scr_ErrorInternal();
+            }
+            pcVar9 = local_30c;
+            if ((DAT_83c4bacc < 0xbb81) && (pcVar9 = local_2f4, 48000 < DAT_83c4bad0)) {
+              pcVar9 = local_304;
+            }
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,pcVar9,0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+          }
+          DAT_83ca448c[1] = 9.80909e-45;
+          break;
+        default:
+          DAT_83ca44b6 = 1;
+          uVar13 = va(local_2f8,uVar28);
+          RuntimeError(uVar20,0,uVar13,0);
+          break;
+        case 0x3f:
+        case 0x73:
+        case 0x9f:
+        case 0xa0:
+switchD_8255876c_caseD_3f:
+          uVar20 = uVar20 + 1;
+          break;
+        case 0x40:
+        case 0x43:
+        case 0x44:
+          uVar20 = uVar20 + 2;
+          goto switchD_8255876c_caseD_26;
+        case 0x4a:
+        case 0x4b:
+        case 0x4c:
+        case 0x4d:
+        case 0x4e:
+        case 0x4f:
+          uVar28 = uVar28 - 0x4a;
+          goto LAB_825593bc;
+        case 0x50:
+          uVar28 = (uint)*(byte *)pfVar32;
+          uVar20 = uVar20 + 1;
+LAB_825593bc:
+          uVar20 = uVar20 + 2;
+joined_r0x825593cc:
+          for (; uVar28 != 0; uVar28 = uVar28 - 1) {
+            local_148 = DAT_83ca448c;
+            RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+            DAT_83ca448c = DAT_83ca448c + -2;
+          }
+          pfVar33 = DAT_83ca448c + 3;
+          DAT_83ca448c = DAT_83ca448c + 2;
+          *pfVar33 = 0.0;
+          break;
+        case 0x51:
+        case 0x52:
+        case 0x53:
+        case 0x54:
+        case 0x55:
+        case 0x56:
+          uVar28 = uVar28 - 0x51;
+          goto LAB_82559420;
+        case 0x57:
+          uVar28 = (uint)*(byte *)pfVar32;
+          uVar20 = uVar20 + 1;
+LAB_82559420:
+          uVar20 = uVar20 + 2;
+joined_r0x82559430:
+          for (; uVar28 != 0; uVar28 = uVar28 - 1) {
+            local_140 = DAT_83ca448c;
+            RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+            DAT_83ca448c = DAT_83ca448c + -2;
+          }
+          local_138 = DAT_83ca448c;
+          RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x5a:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xcfa,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xcfc,0,0xffffffff82000f98,
+                            "fs.top <= scrVmPub.maxstack");
+          }
+LAB_825594d0:
+          DAT_83ca448c[1] = 1.12104e-44;
+          break;
+        case 0x5b:
+        case 0x62:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xd02,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_82558d78;
+          MyAssertHandler(0xffffffff821552a8,0xd04,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+          uVar20 = uVar20 + 3;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x5c:
+        case 0x5d:
+        case 99:
+        case 100:
+          uVar20 = uVar20 + 3;
+        case 0x69:
+        case 0x6a:
+          if (pfVar33[1] == 9.80909e-45) {
+            MyAssertHandler(0xffffffff821552a8,0xd12,0,0xffffffff82000f98,
+                            "fs.top->type != VAR_CODEPOS");
+          }
+          fVar18 = DAT_83ca448c[1];
+          while (fVar18 != 1.12104e-44) {
+            local_17c = DAT_83ca448c;
+            RemoveRefToValue(fVar18,*DAT_83ca448c);
+            pfVar32 = DAT_83ca448c + -2;
+            pfVar33 = DAT_83ca448c + -1;
+            DAT_83ca448c = pfVar32;
+            if (*pfVar33 == 9.80909e-45) {
+              MyAssertHandler(0xffffffff821552a8,0xd17,0,0xffffffff82000f98,
+                              "fs.top->type != VAR_CODEPOS");
+            }
+            fVar18 = DAT_83ca448c[1];
+          }
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x5e:
+        case 0x5f:
+        case 0x65:
+        case 0x66:
+          uVar20 = uVar20 + 3;
+          goto LAB_82559654;
+        case 0x60:
+        case 0x61:
+        case 0x67:
+        case 0x68:
+          local_154 = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          uVar20 = uVar20 + 3;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          goto LAB_82559654;
+        case 0x6b:
+        case 0x6c:
+          local_1c4 = pfVar33;
+          goto LAB_8255963c;
+        case 0x6d:
+        case 0x6e:
+          local_1bc = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          local_174 = DAT_83ca448c + -2;
+          DAT_83ca448c = local_174;
+LAB_8255963c:
+          RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+          DAT_83ca448c = DAT_83ca448c + -2;
+LAB_82559654:
+          pbVar30 = (byte *)uVar20;
+          uVar20 = uVar20 + 1;
+          for (uVar25 = (ulonglong)*pbVar30; uVar25 != 0; uVar25 = uVar25 - 1) {
+            local_1b4 = DAT_83ca448c;
+            RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+            DAT_83ca448c = DAT_83ca448c + -2;
+          }
+          pfVar33 = DAT_83ca448c + 3;
+          DAT_83ca448c = DAT_83ca448c + 2;
+          *pfVar33 = 0.0;
+          break;
+        case 0x6f:
+          uVar28 = (uint)*(byte *)pfVar32;
+          uVar20 = uVar20 + 1;
+          goto joined_r0x825593cc;
+        case 0x70:
+          uVar28 = (uint)*(byte *)pfVar32;
+          uVar20 = uVar20 + 1;
+          goto joined_r0x82559430;
+        case 0x74:
+        case 0x75:
+        case 0x76:
+        case 0x8f:
+switchD_8255876c_caseD_74:
+LAB_82558a74:
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0x77:
+        case 0x78:
+          uVar20 = *(ushort *)pfVar32 + uVar20 + 2;
+          goto switchD_8255876c_caseD_26;
+        case 0x79:
+        case 0x7a:
+          uVar20 = *(ushort *)pfVar32 + uVar20 + 2;
+          break;
+        case 0x7b:
+          uVar20 = (uint)*pfVar32 + uVar20 + 4;
+          break;
+        case 0x7d:
+        case 0x7e:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xd52,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xd54,0,0xffffffff82000f98,
+                            "fs.top <= scrVmPub.maxstack");
+          }
+          pfVar33 = DAT_83ca448c;
+          DAT_83ca448c[1] = 0.0;
+          if (*(byte *)pfVar32 != 0x41) {
+            MyAssertHandler(0xffffffff821552a8,0xd56,0,0xffffffff82000f98,local_310);
+            pfVar33 = DAT_83ca448c;
+          }
+          uVar20 = uVar20 + 1;
+          goto LAB_825599ec;
+        case 0x7f:
+        case 0x80:
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x85:
+        case 0x86:
+        case 0x87:
+        case 0x88:
+        case 0x89:
+        case 0x8a:
+        case 0x8b:
+        case 0x8c:
+        case 0x8d:
+        case 0x8e:
+          local_134 = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          pfVar33 = DAT_83ca448c + -1;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          *pfVar33 = 0.0;
+          break;
+        case 0x90:
+          uVar20 = uVar20 + 2;
+        case 0x92:
+        case 0x94:
+        case 0x98:
+          local_1ac = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          DAT_83ca448c = DAT_83ca448c + -2;
+          pfVar33 = DAT_83ca448c;
+          goto LAB_825599ec;
+        case 0x93:
+          local_16c = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          local_1a4 = DAT_83ca448c + -2;
+          pfVar33 = DAT_83ca448c + -1;
+          DAT_83ca448c = local_1a4;
+          RemoveRefToValue(*pfVar33,*local_1a4);
+          pfVar33 = DAT_83ca448c + -2;
+          if (DAT_83ca448c[-1] == 9.80909e-45) {
+            pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+            DAT_83ca448c = DAT_83ca448c + -2;
+            MyAssertHandler(0xffffffff821552a8,0xd86,0,0xffffffff821561a4,
+                            "(fs.top->type != VAR_CODEPOS)",(int)pfVar33 >> 3);
+            pfVar33 = DAT_83ca448c;
+          }
+          DAT_83ca448c = pfVar33;
+          fVar18 = DAT_83ca448c[1];
+          while (pfVar33 = DAT_83ca448c, fVar18 != 1.12104e-44) {
+            local_14c = DAT_83ca448c;
+            RemoveRefToValue(fVar18,*DAT_83ca448c);
+            pfVar33 = DAT_83ca448c + -2;
+            if (DAT_83ca448c[-1] == 9.80909e-45) {
+              pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+              DAT_83ca448c = DAT_83ca448c + -2;
+              MyAssertHandler(0xffffffff821552a8,0xd8b,0,0xffffffff821561a4,
+                              "(fs.top->type != VAR_CODEPOS)",(int)pfVar33 >> 3);
+              pfVar33 = DAT_83ca448c;
+            }
+            DAT_83ca448c = pfVar33;
+            fVar18 = DAT_83ca448c[1];
+          }
+          goto LAB_825599ec;
+        case 0x95:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xd90,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_825594d0;
+          MyAssertHandler(0xffffffff821552a8,0xd92,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+          DAT_83ca448c[1] = 1.12104e-44;
+          break;
+        case 0x96:
+          uVar29 = (uint)*pfVar32 + uVar20 + 6;
+          uVar6 = *(ushort *)((int)((uint)*pfVar32 + uVar20) + 4);
+          uVar25 = (ulonglong)uVar6;
+          DAT_83c9770c = (uint)uVar6;
+          uVar20 = uVar29;
+          if (uVar25 != 0) {
+            do {
+              piVar3 = (int3 *)uVar29;
+              lVar24 = uVar29 + 4;
+              uVar29 = uVar29 + 7;
+              uVar25 = uVar25 - 1;
+              uVar21 = ((int)((uint)(uint3)piVar3[1] << 8) >> 10) + lVar24;
+            } while (uVar25 != 0);
+            DAT_83c9770c = 0;
+            uVar20 = uVar29;
+            if ((*piVar3 == 0 && *(char *)((int)piVar3 + 3) == '\0') &&
+               (uVar20 = uVar21, (uVar21 & 0xffffffff) == 0)) {
+              MyAssertHandler(0xffffffff821552a8,0xda8,0,0xffffffff82000f98,"local_pos");
+            }
+          }
+switchD_8255876c_caseD_26:
+          pfVar33 = DAT_83ca448c;
+LAB_825599ec:
+          local_19c = pfVar33;
+          RemoveRefToValue(pfVar33[1],*pfVar33);
+          DAT_83ca448c = DAT_83ca448c + -2;
+          break;
+        case 0x97:
+          uVar6 = *(ushort *)pfVar32;
+          DAT_83c9770c = (uint)uVar6;
+          uVar20 = ((ulonglong)uVar6 * 8 - (ulonglong)uVar6) + uVar20 + 2;
+          break;
+        case 0x9a:
+          Scr_ExitSkipIntructions();
+          if (-1 < (int)DAT_83c99738) goto LAB_8255efe4;
+          uVar13 = 0xdb7;
+          goto LAB_8255efc4;
+        case 0x9b:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xdbd,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca44a4 < DAT_83ca448c) {
+            MyAssertHandler(0xffffffff821552a8,0xdbf,0,0xffffffff82000f98,
+                            "fs.top <= scrVmPub.maxstack");
+          }
+          DAT_83ca448c[1] = 0.0;
+          uVar20 = uVar20 + 8;
+          break;
+        case 0x9c:
+        case 0x9d:
+          if (pfVar33 < &DAT_83ca47c8) {
+            MyAssertHandler(0xffffffff821552a8,0xdc8,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack"
+                           );
+          }
+          DAT_83ca448c = DAT_83ca448c + 2;
+          if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_82558bf0;
+          MyAssertHandler(0xffffffff821552a8,0xdca,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+          uVar20 = uVar20 + 2;
+          DAT_83ca448c[1] = 0.0;
+          break;
+        case 0xa1:
+          if (DAT_83c4ba96 == '\0') break;
+          uVar28 = Scr_HitBreakpoint(pfVar33,uVar20,DAT_83ca4484,0);
+          goto LAB_82559ba8;
+        case 0xa2:
+          uVar28 = Scr_HitAssignmentBreakpoint(pfVar33,uVar20,DAT_83ca4484,0);
+          goto LAB_82559ba8;
+        case 0xa3:
+          uVar28 = Scr_HitAssignmentBreakpoint(pfVar33,uVar20,DAT_83ca4484,1);
+          goto LAB_82559ba8;
+        }
+        uVar28 = (uint)*(byte *)uVar20;
+        uVar20 = uVar20 + 1;
+        local_360 = (float *)uVar20;
+LAB_82559ba8:
+        DAT_83ca8c54 = uVar28;
+        iVar16 = Scr_SkipIntructions();
+        pfVar33 = DAT_83ca448c;
+      }
+      goto joined_r0x825583fc;
+    case (undefined *)0x82558708:
+      uVar13 = 0;
+      goto LAB_8255870c;
+    case (undefined *)0x82559bd4:
+      local_318 = *(ulonglong *)pfVar33;
+LAB_8255e138:
+      fVar18 = (float)GetSafeParentLocalId(DAT_83ca4484);
+      Scr_KillThread(DAT_83ca4484);
+      DAT_83ca44a0 = DAT_83ca44a0 + -DAT_83ca4488;
+      pfVar33 = DAT_83ca448c + -2;
+      if (DAT_83ca448c[-1] == 1.12104e-44) {
+        pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+        DAT_83ca448c = DAT_83ca448c + -2;
+        MyAssertHandler(0xffffffff821552a8,0x283,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33;
+      fVar1 = DAT_83ca448c[1];
+      while (fVar1 != 9.80909e-45) {
+        local_1a0 = DAT_83ca448c;
+        RemoveRefToValue(fVar1,*DAT_83ca448c);
+        pfVar33 = DAT_83ca448c + -2;
+        if (DAT_83ca448c[-1] == 1.12104e-44) {
+          pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          MyAssertHandler(0xffffffff821552a8,0x288,0,0xffffffff821561a4,
+                          "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+          pfVar33 = DAT_83ca448c;
+        }
+        DAT_83ca448c = pfVar33;
+        fVar1 = DAT_83ca448c[1];
+      }
+      DAT_83ca44a8 = DAT_83ca44a8 + -1;
+      DAT_83ca44ac = DAT_83ca44ac + -6;
+      if (fVar18 != 0.0) {
+        if (DAT_83ca448c[1] != 9.80909e-45) {
+          MyAssertHandler(0xffffffff821552a8,0x294,0,0xffffffff821561a4,local_2d8,
+                          (int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+        }
+        pfVar33 = DAT_83ca448c;
+        *(ulonglong *)DAT_83ca448c = local_318;
+        goto LAB_8255e31c;
+      }
+      if (DAT_83ca448c != DAT_83ca4490) {
+        MyAssertHandler(0xffffffff821552a8,0x28f,0,local_2e0,local_2dc,
+                        (int)DAT_83ca448c - (int)DAT_83ca4490 >> 3);
+      }
+      *(ulonglong *)(DAT_83ca448c + 2) = local_318;
+      goto LAB_8255e260;
+    case (undefined *)0x82559be4:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x299,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x29b,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 0.0;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559c60:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2a0,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2a2,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      pfVar33[0] = 0.0;
+      pfVar33[1] = 8.40779e-45;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559cdc:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2a8,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2aa,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      uVar20 = uVar20 + 1;
+      *(ulonglong *)DAT_83ca448c = (ulonglong)*(byte *)pfVar31 << 0x20 | 6;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559d68:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2b0,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2b2,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 8.40779e-45;
+      uVar20 = uVar20 + 1;
+      *pfVar33 = (float)-(uint)*(byte *)pfVar31;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559df8:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2b9,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,699,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = 8.40779e-45;
+      goto LAB_8255a0b0;
+    case (undefined *)0x82559e70:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2c2,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2c4,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 8.40779e-45;
+      uVar20 = uVar20 + 2;
+      *pfVar33 = (float)-(uint)*(ushort *)pfVar31;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559f14:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2ca,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2cc,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 8.40779e-45;
+      uVar20 = uVar20 + 4;
+      *pfVar33 = *pfVar31;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x82559fc4:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2d2,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2d4,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = 1.4013e-44;
+      goto LAB_8255a0b0;
+    case (undefined *)0x8255a03c:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2d9,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2db,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = 1.54143e-44;
+LAB_8255a0b0:
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = fVar18;
+      uVar20 = uVar20 + 2;
+      *pfVar33 = (float)(uint)*(ushort *)pfVar31;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a0dc:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2e0,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2e2,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      uVar20 = uVar20 + 4;
+      *(ulonglong *)DAT_83ca448c = (ulonglong)(uint)*pfVar31 << 0x20 | 5;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a18c:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2e7,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2e9,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = 2.8026e-45;
+      goto LAB_8255a278;
+    case (undefined *)0x8255a204:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2f5,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2f7,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = 4.2039e-45;
+LAB_8255a278:
+      DAT_83ca448c[1] = fVar18;
+      uVar6 = *(ushort *)pfVar31;
+      uVar20 = uVar20 + 2;
+      SL_AddRefToString(uVar6);
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca448c = (float)(uint)uVar6;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a2ac:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x2fc,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x2fe,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      uVar25 = uVar20 + 3 & 0xfffffffc;
+      DAT_83ca448c[1] = 5.60519e-45;
+      uVar20 = uVar25 + 0xc;
+      *pfVar33 = (float)uVar25;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a33c:
+      local_358 = DAT_83c4bab8;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a348:
+      local_358 = DAT_83c4bac0;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a354:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x30c,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x30e,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      fVar18 = DAT_83ca4484;
+      DAT_83ca448c[1] = 1.4013e-45;
+      fVar18 = (float)Scr_GetSelf(fVar18);
+      *DAT_83ca448c = fVar18;
+      AddRefToObject();
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a3e4:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x315,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x317,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      fVar18 = DAT_83ca4484;
+      DAT_83ca448c[1] = 1.4013e-45;
+      *pfVar33 = fVar18;
+      AddRefToObject(fVar18);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a470:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x31e,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,800,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.4013e-45;
+      *pfVar33 = (float)DAT_83c4bab8;
+      AddRefToObject(DAT_83c4bab8);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a4fc:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x327,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x329,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariableInternal(0,DAT_83c4babc);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a580:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x32e,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x330,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.4013e-45;
+      *pfVar33 = (float)DAT_83c4bac0;
+      AddRefToObject(DAT_83c4bac0);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a60c:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x337,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x339,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.82169e-44;
+      fVar18 = *pfVar31;
+      uVar20 = uVar20 + 4;
+      *pfVar33 = fVar18;
+      pfVar32 = local_164;
+      if (fVar18 == 0.0) {
+        MyAssertHandler(0xffffffff821552a8,0x33c,0,0xffffffff82000f98,local_1e8);
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a6dc:
+      local_35c = '\0';
+      local_350 = 0;
+      local_354 = DAT_83c4babc;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a6f4:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x347,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x349,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.26117e-44;
+      uVar20 = uVar20 + 3;
+      *pfVar33 = (float)(((int)((uint)*(uint3 *)pfVar31 << 8) >> 10) + (int)pfVar31);
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a7a8:
+      DAT_83ca44a0 = DAT_83ca44a0 + 1;
+      DAT_83ca4488 = DAT_83ca4488 + 1;
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      *DAT_83ca44a0 = uVar28;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a7f4:
+      bVar27 = *(byte *)pfVar31;
+      uVar20 = uVar20 + 1;
+      DAT_83ca4488 = DAT_83ca4488 - bVar27;
+      DAT_83ca44a0 = DAT_83ca44a0 + -(uint)bVar27;
+      for (; pfVar32 = local_164, bVar27 != 0; bVar27 = bVar27 - 1) {
+        RemoveNextVariable(DAT_83ca4484);
+        pfVar33 = DAT_83ca448c;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a844:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x36a,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x36c,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,*DAT_83ca44a0);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a8cc:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x371,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x373,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-1]);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a954:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x378,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x37a,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-2]);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255a9dc:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x37f,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x381,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-3]);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255aa64:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x386,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x388,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-4]);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255aaec:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x38d,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x38f,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-5]);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ab74:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x394,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x396,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-(uint)*(byte *)pfVar31]);
+      pfVar33 = DAT_83ca448c;
+      uVar20 = uVar20 + 1;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ac10:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x39c,0,0xffffffff821561a4,0xffffffff8215638c,
+                        (int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x39e,0,0xffffffff821561a4,0xffffffff821561ec,
+                        (int)(pfVar33 + 0x1f0d6e10) >> 3);
+      }
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,DAT_83ca44a0[-(uint)*(byte *)pfVar31]);
+      pfVar33 = DAT_83ca448c;
+      uVar20 = uVar20 + 1;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+    case (undefined *)0x8255aca8:
+      Scr_EvalArray(pfVar33,pfVar33 + -2);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255acc4:
+      DAT_83ca44a0 = DAT_83ca44a0 + 1;
+      DAT_83ca4488 = DAT_83ca4488 + 1;
+      uVar25 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar25;
+      uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      *DAT_83ca44a0 = uVar28;
+switchD_82558444_caseD_8255ad0c:
+      local_354 = *DAT_83ca44a0;
+      local_350 = ((uint)DAT_83ca4484 & 1) * 0xc800;
+    case (undefined *)0x8255ad70:
+switchD_82558444_caseD_8255ad70:
+      uVar13 = Scr_EvalArrayRef(local_350,local_354);
+      local_358 = (HGDIOBJ)uVar13;
+      fVar18 = DAT_83ca448c[1];
+      if (fVar18 == 8.40779e-45) {
+        cVar19 = IsValidArrayIndex(*DAT_83ca448c);
+        if (cVar19 == '\0') {
+          uVar14 = va(local_284,*DAT_83ca448c);
+          if (DAT_83c4ba9c == (undefined *)0x0) {
+            I_strncpyz(0xffffffff83ca8850,uVar14,0x400);
+            DAT_83c4ba9c = &DAT_83ca8850;
+          }
+          Scr_ErrorInternal();
+        }
+        local_354 = GetArrayVariable(uVar13,*DAT_83ca448c);
+      }
+      else if (fVar18 == 2.8026e-45) {
+        local_354 = GetVariable(uVar13,*DAT_83ca448c);
+        SL_RemoveRefToString(*DAT_83ca448c);
+      }
+      else {
+        uVar13 = va(local_22c,(&PTR_s_undefined_829902e8)[(int)fVar18]);
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        local_354 = 0;
+      }
+      local_350 = ((uint)local_358 & 1) * 0xc800;
+      local_35c = '\x01';
+      uVar20 = uVar25;
+      pfVar33 = DAT_83ca448c;
+      if (local_354 != 0) goto LAB_8255db7c;
+      uVar13 = 0x3d7;
+      pcVar2 = local_27c;
+      goto LAB_8255db68;
+    case (undefined *)0x8255ad0c:
+      goto switchD_82558444_caseD_8255ad0c;
+    case (undefined *)0x8255ad34:
+      uVar25 = uVar20 + 1;
+      DAT_83ca4480 = (float *)uVar25;
+      local_350 = ((uint)DAT_83ca4484 & 1) * 0xc800;
+      local_354 = DAT_83ca44a0[-(uint)*(byte *)pfVar31];
+      goto switchD_82558444_caseD_8255ad70;
+    case (undefined *)0x8255ae90:
+      ClearArray(local_350,local_354,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255aeb0:
+      DAT_83ca448c = pfVar33 + 2;
+      pfVar33[3] = 1.4013e-45;
+      fVar18 = (float)Scr_AllocArray();
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca448c = fVar18;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255aed0:
+      if (pfVar33[-1] != 1.4013e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x3e5,0,0xffffffff82000f98,local_1ec);
+        pfVar33 = DAT_83ca448c;
+      }
+      local_358 = (HGDIOBJ)pfVar33[-2];
+      uVar13 = GetArraySize(local_358);
+      uVar13 = GetNewArrayVariable(local_358,uVar13);
+      SetNewVariableValue(local_358,uVar13,DAT_83ca448c);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255af34:
+      goto switchD_82558444_caseD_8255af34;
+    case (undefined *)0x8255af58:
+      local_358 = DAT_83c4bab8;
+      goto LAB_8255af64;
+    case (undefined *)0x8255af60:
+      local_358 = DAT_83c4bac0;
+LAB_8255af64:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x3f6,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x3f8,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar20 = uVar20 + 2;
+      uVar13 = FindVariable(local_358,*(undefined2 *)pfVar31);
+      uVar13 = Scr_EvalVariable(local_358,uVar13);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255aff8:
+      uVar25 = Scr_GetSelf(DAT_83ca4484);
+      local_358 = (HGDIOBJ)uVar25;
+      cVar19 = IsFieldObject();
+      pfVar33 = DAT_83ca448c;
+      if (cVar19 != '\0') goto LAB_8255b024;
+      if (DAT_83ca448c < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x404,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+      }
+      DAT_83ca448c = DAT_83ca448c + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x406,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      local_360 = DAT_83ca4480;
+LAB_8255e3ec:
+      fVar18 = (float)GetObjectType((HGDIOBJ)uVar25);
+      goto LAB_8255e42c;
+    case (undefined *)0x8255b020:
+      uVar25 = ZEXT48(local_358);
+LAB_8255b024:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x40e,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x410,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar20 = uVar20 + 2;
+      uVar13 = Scr_FindVariableField(uVar25,*(undefined2 *)pfVar31);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b0a8:
+      uVar25 = ZEXT48(DAT_83c4bab8);
+      local_358 = DAT_83c4bab8;
+      break;
+    case (undefined *)0x8255b0b4:
+      uVar25 = ZEXT48(DAT_83c4bac0);
+      local_358 = DAT_83c4bac0;
+      break;
+    case (undefined *)0x8255b0c0:
+      uVar25 = Scr_GetSelf(DAT_83ca4484);
+      local_358 = (HGDIOBJ)uVar25;
+      break;
+    case (undefined *)0x8255b0d4:
+      uVar25 = ZEXT48(local_358);
+      break;
+    case (undefined *)0x8255b124:
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      ClearVariableField(local_358,*(undefined2 *)pfVar31,pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b154:
+      DAT_83ca44a0 = DAT_83ca44a0 + 1;
+      DAT_83ca4488 = DAT_83ca4488 + 1;
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca44a0 = uVar28;
+    case (undefined *)0x8255b1a0:
+      if (pfVar33[1] == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x445,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_CODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      pfVar32 = local_164;
+      if (pfVar33[1] != 1.12104e-44) {
+        SetVariableValue(DAT_83ca4484,*DAT_83ca44a0,pfVar33);
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b204:
+      if (pfVar33[1] == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x44e,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_CODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      if (pfVar33[1] == 1.12104e-44) goto LAB_8255b320;
+    case (undefined *)0x8255b244:
+      SetVariableValue(DAT_83ca4484,DAT_83ca44a0[-(uint)*(byte *)pfVar31],pfVar33);
+      uVar20 = uVar20 + 1;
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b27c:
+      if (pfVar33[1] == 1.12104e-44) {
+        MyAssertHandler(0xffffffff821552a8,0x459,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_PRECODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      if (pfVar33[1] == 9.80909e-45) {
+        ClearVariableValue((longlong)(int)((uint)DAT_83ca4484 & 1) * 0xc800,
+                           DAT_83ca44a0[-(uint)*(byte *)pfVar31]);
+        pfVar33 = DAT_83ca448c;
+LAB_8255b320:
+        uVar20 = uVar20 + 1;
+        pfVar32 = local_164;
+      }
+      else {
+        SetVariableValue(DAT_83ca4484,DAT_83ca44a0[-(uint)*(byte *)pfVar31],pfVar33);
+        uVar20 = uVar20 + 1;
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b32c:
+      if (pfVar33[1] == 1.12104e-44) {
+        MyAssertHandler(0xffffffff821552a8,0x465,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_PRECODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      fVar18 = pfVar33[1];
+      pfVar32 = local_164;
+      while (local_164 = pfVar33, pfVar33 = local_164, fVar18 != 9.80909e-45) {
+        RemoveRefToValue(fVar18,*local_164);
+        pfVar33 = DAT_83ca448c + -2;
+        if (DAT_83ca448c[-1] == 1.12104e-44) {
+          pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          MyAssertHandler(0xffffffff821552a8,0x46a,0,0xffffffff821561a4,
+                          "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+          pfVar33 = DAT_83ca448c;
+        }
+        DAT_83ca448c = pfVar33;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+        fVar18 = DAT_83ca448c[1];
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b3cc:
+      if (pfVar33[1] == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x46f,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_CODEPOS)",(int)(pfVar33 + 0x1f0d6e0e) >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      if (pfVar33[1] != 1.12104e-44) {
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,local_2a8,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+        goto switchD_82558444_caseD_8255b4f4;
+      }
+      if (((48000 < DAT_83c4bacc) || (48000 < DAT_83c4bad0)) ||
+         (0x8380 < (uint)(DAT_83c6fb10 + DAT_83c6fb0c))) {
+        if (DAT_83ca44c4 != '\0') {
+          Scr_DumpScriptThreads(1);
+          Scr_DumpScriptVariablesDefault();
+        }
+        pcVar2 = local_30c;
+        if ((DAT_83c4bacc < 0xbb81) && (pcVar2 = local_2f4, 48000 < DAT_83c4bad0)) {
+          pcVar2 = local_304;
+        }
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,pcVar2,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+      }
+      pfVar33[1] = 9.80909e-45;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b4f4:
+switchD_82558444_caseD_8255b4f4:
+      local_35c = '\0';
+      local_354 = *DAT_83ca44a0;
+      local_350 = ((uint)DAT_83ca4484 & 1) * 0xc800;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b524:
+      local_35c = '\0';
+      uVar20 = uVar20 + 1;
+      local_350 = ((uint)DAT_83ca4484 & 1) * 0xc800;
+      local_354 = DAT_83ca44a0[-(uint)*(byte *)pfVar31];
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b568:
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar13 = GetVariable(DAT_83c4bab8,*(undefined2 *)pfVar31);
+      SetVariableValue(DAT_83c4bab8,uVar13,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b5b4:
+      uVar7 = *(undefined2 *)pfVar31;
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar25 = Scr_GetSelf(DAT_83ca4484);
+      local_358 = (HGDIOBJ)uVar25;
+      uVar29 = Scr_GetVariableFieldIndex(uVar25,uVar7);
+      local_350 = ((uint)local_358 & 1) * 0xc800;
+      local_354 = (uint)uVar29;
+      local_35c = '\x01';
+      pfVar33 = DAT_83ca448c;
+LAB_8255b624:
+      if ((uVar29 & 0xffffffff) == 0) {
+        SetVariableFieldValue(local_350,pfVar33);
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      else if ((pfVar33[1] == 0.0) && (local_35c != '\0')) {
+        RemoveVariableValue(uVar25);
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      else {
+        SetVariableValueInternal(local_350,uVar29,pfVar33);
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b618:
+      uVar25 = ZEXT48(local_358);
+      uVar29 = (ulonglong)local_354;
+      goto LAB_8255b624;
+    case (undefined *)0x8255b68c:
+      local_354 = *DAT_83ca44a0;
+LAB_8255b6b4:
+      ClearVariableValue((longlong)(int)((uint)DAT_83ca4484 & 1) * 0xc800);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b698:
+      uVar20 = uVar20 + 1;
+      local_354 = DAT_83ca44a0[-(uint)*(byte *)pfVar31];
+      goto LAB_8255b6b4;
+    case (undefined *)0x8255b6d4:
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar13 = GetVariable(DAT_83c4bac0,*(undefined2 *)pfVar31);
+      SetVariableValue(DAT_83c4bac0,uVar13,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b720:
+      DAT_83ca44a0 = DAT_83ca44a0 + 1;
+      DAT_83ca4488 = DAT_83ca4488 + 1;
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      uVar28 = GetNewVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca44a0 = uVar28;
+switchD_82558444_caseD_8255b76c:
+      SetVariableValue(DAT_83ca4484,*DAT_83ca44a0,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b76c:
+      goto switchD_82558444_caseD_8255b76c;
+    case (undefined *)0x8255b790:
+      if (DAT_83ca44bc != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x4ec,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca44bc = uVar28 - 0x4a;
+      uVar29 = uVar20;
+      goto LAB_8255b7f8;
+    case (undefined *)0x8255b7c4:
+      if (DAT_83ca44bc != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x4f5,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca44bc = (uint)*(byte *)pfVar31;
+      uVar29 = uVar20 + 1;
+LAB_8255b7f8:
+      uVar25 = uVar29 + 2;
+      uVar29 = (ulonglong)*(ushort *)uVar29;
+      if (0x1c3 < (uVar29 - 1 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821552a8,0x4fe,0,local_2c0,uVar29 - 1,0x1c4);
+        pfVar33 = DAT_83ca448c;
+      }
+LAB_8255bf00:
+      if (DAT_83ca44b8 != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x502,0,0xffffffff82000f98,local_300);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca4480 = (float *)uVar25;
+      *DAT_83ca44ac = (uint)DAT_83ca4480;
+      uVar11 = DAT_83ca44bc;
+      iVar16 = (int)((uVar29 + (uVar29 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+      if (*(int *)(&DAT_83c6fb3c + iVar16) != 0) {
+        Scr_HitBuiltinBreakpoint(pfVar33,uVar20,DAT_83ca4484,uVar28,uVar29,DAT_83ca44bc);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca44b0 = pfVar33;
+      iVar5 = DAT_83c97500;
+      DAT_83ca44bc = uVar11;
+      if (*(char *)(DAT_83c6fb44 + 0xc) != '\0') {
+        PIXBeginNamedEvent_Copy_VarArgs
+                  (0,local_26c,*(undefined4 *)((int)local_224 + (int)(uVar29 << 2) + -4));
+      }
+      uVar13 = TBLr;
+      (**(code **)(local_1fc + (int)(uVar29 << 2) + -4))();
+      uVar14 = TBLr;
+      iVar4 = (int)uVar14 - (int)uVar13;
+      if (*(char *)(DAT_83c6fb44 + 0xc) != '\0') {
+        PIXEndNamedEvent();
+      }
+      DAT_83c97500 = iVar4 + iVar5;
+      *(int *)((int)&DAT_83c6fb40 + iVar16) = iVar4 + *(int *)((int)&DAT_83c6fb40 + iVar16);
+      *(int *)((int)&DAT_83c6fb44 + iVar16) = *(int *)((int)&DAT_83c6fb44 + iVar16) + 1;
+      goto LAB_8255c518;
+    case (undefined *)0x8255b848:
+      if (DAT_83ca44bc != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x553,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca44bc = uVar28 - 0x51;
+      uVar29 = uVar20;
+      goto LAB_8255b8b0;
+    case (undefined *)0x8255b87c:
+      if (DAT_83ca44bc != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x55c,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca44bc = (uint)*(byte *)pfVar31;
+      uVar29 = uVar20 + 1;
+LAB_8255b8b0:
+      uVar25 = uVar29 + 2;
+      uVar29 = (ulonglong)*(ushort *)uVar29;
+      if (0x30a < (uVar29 - 0x8000 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821552a8,0x565,0,local_2b8,uVar29 - 0x8000,0x30b);
+        pfVar33 = DAT_83ca448c;
+      }
+      goto LAB_8255c394;
+    case (undefined *)0x8255b908:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x603,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca448c <= DAT_83ca44a4) goto LAB_8255d980;
+      MyAssertHandler(0xffffffff821552a8,0x605,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack");
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.12104e-44;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255b96c:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x60b,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x60d,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      DAT_83ca448c[1] = 1.12104e-44;
+    case (undefined *)0x8255b9cc:
+      if (DAT_83ca44a8 < 0x1f) {
+        uVar13 = Scr_GetSelf(DAT_83ca4484);
+        AddRefToObject();
+        DAT_83ca4484 = (float)AllocFunction(uVar13,DAT_83ca4484);
+        pfVar33 = DAT_83ca448c;
+        uVar8 = *(uint3 *)pfVar31;
+        *DAT_83ca44ac = (uint)((int)pfVar31 + 3);
+        uVar20 = (longlong)((int)((uint)uVar8 << 8) >> 10) + uVar20;
+        goto LAB_8255c2f4;
+      }
+      if (DAT_83c4ba9c == (undefined *)0x0) {
+        I_strncpyz(0xffffffff83ca8850,"script stack overflow (too many embedded function calls)",
+                   0x400);
+        DAT_83c4ba9c = &DAT_83ca8850;
+      }
+      Scr_ErrorInternal();
+      pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255ba5c:
+      if (pfVar33[1] == 1.26117e-44) {
+        if (DAT_83ca44a8 < 0x1f) {
+          uVar13 = Scr_GetSelf(DAT_83ca4484);
+          AddRefToObject();
+          DAT_83ca4484 = (float)AllocFunction(uVar13,DAT_83ca4484);
+          pfVar33 = DAT_83ca448c + -2;
+          *DAT_83ca44ac = (uint)pfVar31;
+          uVar20 = (ulonglong)(uint)*DAT_83ca448c;
+          DAT_83ca448c = pfVar33;
+          goto LAB_8255c2f4;
+        }
+        DAT_83c4baa0 = 1;
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,"script stack overflow (too many embedded function calls)",
+                     0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+      }
+      uVar13 = va(local_2fc,(&PTR_s_undefined_829902e8)[(int)pfVar33[1]]);
+      if (DAT_83c4ba9c == (undefined *)0x0) {
+        I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+        DAT_83c4ba9c = &DAT_83ca8850;
+      }
+      Scr_ErrorInternal();
+      pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255bb20:
+      if (pfVar33[1] == 1.4013e-45) {
+        if (DAT_83ca44a8 < 0x1f) {
+          DAT_83ca4484 = (float)AllocFunction(*pfVar33,DAT_83ca4484);
+          uVar8 = *(uint3 *)pfVar31;
+          *DAT_83ca44ac = (uint)((int)pfVar31 + 3);
+          DAT_83ca448c = DAT_83ca448c + -2;
+          uVar20 = (longlong)((int)((uint)uVar8 << 8) >> 10) + uVar20;
+          pfVar33 = DAT_83ca448c;
+          goto LAB_8255c2f4;
+        }
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,"script stack overflow (too many embedded function calls)",
+                     0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+      }
+LAB_8255e420:
+      fVar18 = pfVar33[1];
+LAB_8255e424:
+      DAT_83c4baa0 = 1;
+      goto LAB_8255e42c;
+    case (undefined *)0x8255ba5c:
+      goto switchD_82558444_caseD_8255ba5c;
+    case (undefined *)0x8255bb20:
+      goto switchD_82558444_caseD_8255bb20;
+    case (undefined *)0x8255bb8c:
+      if (pfVar33[1] != 1.26117e-44) {
+        local_194 = pfVar33;
+        RemoveRefToValue(pfVar33[1],*pfVar33);
+        pfVar33 = DAT_83ca448c + 1;
+        DAT_83ca448c = DAT_83ca448c + -2;
+        uVar13 = va(local_2fc,(&PTR_s_undefined_829902e8)[(int)*pfVar33]);
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+switchD_82558444_caseD_8255bc3c:
+        if (DAT_83ca44a8 < 0x1f) {
+          uVar13 = Scr_GetSelf(DAT_83ca4484);
+          DAT_83ca4484 = (float)AllocThread();
+        }
+        else {
+          do {
+            DAT_83c4baa0 = 1;
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,
+                         "script stack overflow (too many embedded function calls)",0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+switchD_82558444_caseD_8255bc5c:
+          } while (0x1e < DAT_83ca44a8);
+          uVar13 = Scr_GetSelf(DAT_83ca4484);
+          DAT_83ca4484 = (float)AllocChildThread(uVar13,DAT_83ca4484);
+        }
+        AddRefToObject(uVar13);
+        pfVar33 = DAT_83ca448c;
+        DAT_83ca44ac[4] = (uint)DAT_83ca4490;
+        uVar8 = *(uint3 *)pfVar31;
+        bVar27 = *(byte *)((int)pfVar31 + 3);
+        *DAT_83ca44ac = (uint)(pfVar31 + 1);
+        pfVar32 = pfVar33 + (uint)bVar27 * -2;
+        uVar25 = (longlong)((int)((uint)uVar8 << 8) >> 10) + uVar20;
+        goto LAB_8255c2b8;
+      }
+      fVar18 = *pfVar33;
+      DAT_83ca448c = pfVar33 + -2;
+      pfVar32 = pfVar33 + -1;
+      pfVar33 = DAT_83ca448c;
+      if (*pfVar32 != 1.4013e-45) goto LAB_8255e498;
+      if (0x1e < DAT_83ca44a8) goto LAB_8255e468;
+      DAT_83ca4484 = (float)AllocFunction(*DAT_83ca448c,DAT_83ca4484);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      *DAT_83ca44ac = (uint)pfVar31;
+      uVar20 = (ulonglong)(uint)fVar18;
+      pfVar33 = DAT_83ca448c;
+      goto LAB_8255c2f4;
+    case (undefined *)0x8255bc3c:
+      goto switchD_82558444_caseD_8255bc3c;
+    case (undefined *)0x8255bc5c:
+      goto switchD_82558444_caseD_8255bc5c;
+    case (undefined *)0x8255bd10:
+      if (pfVar33[1] != 1.26117e-44) goto LAB_8255bd84;
+      if (DAT_83ca44a8 < 0x1f) {
+        uVar13 = Scr_GetSelf(DAT_83ca4484);
+        DAT_83ca4484 = (float)AllocThread();
+      }
+      else {
+        do {
+          DAT_83c4baa0 = 1;
+          if (DAT_83c4ba9c == (undefined *)0x0) {
+            I_strncpyz(0xffffffff83ca8850,"script stack overflow (too many embedded function calls)"
+                       ,0x400);
+            DAT_83c4ba9c = &DAT_83ca8850;
+          }
+          Scr_ErrorInternal();
+          pfVar33 = DAT_83ca448c;
+LAB_8255bd84:
+          do {
+            uVar13 = va(local_2fc,(&PTR_s_undefined_829902e8)[(int)pfVar33[1]]);
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+            pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255bdc4:
+            if (DAT_83ca44bc != 0) {
+              MyAssertHandler(0xffffffff821552a8,0x6a8,0,0xffffffff82000f98,
+                              "!scrVmPub.outparamcount");
+              pfVar33 = DAT_83ca448c;
+            }
+            uVar25 = uVar20 + 1;
+            DAT_83ca44bc = (uint)*(byte *)uVar20;
+            if (pfVar33[1] == 1.4013e-44) {
+              uVar29 = (ulonglong)(uint)*pfVar33;
+              if (0x1c3 < (uVar29 - 1 & 0xffffffff)) {
+                MyAssertHandler(0xffffffff821552a8,0x6b0,0,local_2c0,uVar29 - 1,0x1c4);
+                pfVar33 = DAT_83ca448c;
+              }
+              DAT_83ca448c = pfVar33 + -2;
+              pfVar33 = DAT_83ca448c;
+              goto LAB_8255bf00;
+            }
+            DAT_83ca4480 = (float *)uVar25;
+            local_13c = pfVar33;
+            RemoveRefToValue(pfVar33[1],*pfVar33);
+            DAT_83ca44b0 = DAT_83ca448c + -2;
+            pfVar33 = DAT_83ca448c + 1;
+            DAT_83ca448c = DAT_83ca44b0;
+            uVar13 = va(local_274,(&PTR_s_undefined_829902e8)[(int)*pfVar33]);
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+            pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255bd3c:
+            uVar20 = uVar25;
+          } while (pfVar33[1] != 1.26117e-44);
+        } while (0x1e < DAT_83ca44a8);
+        uVar13 = Scr_GetSelf(DAT_83ca4484);
+        DAT_83ca4484 = (float)AllocChildThread(uVar13,DAT_83ca4484);
+      }
+      AddRefToObject(uVar13);
+      pfVar33 = DAT_83ca448c + -2;
+      uVar25 = (ulonglong)(uint)*DAT_83ca448c;
+      DAT_83ca44ac[4] = (uint)DAT_83ca4490;
+      bVar27 = *(byte *)uVar20;
+      *DAT_83ca44ac = (uint)((byte *)uVar20 + 1);
+      pfVar32 = pfVar33 + (uint)bVar27 * -2;
+      DAT_83ca448c = pfVar33;
+      goto LAB_8255c2b8;
+    case (undefined *)0x8255bd3c:
+      goto switchD_82558444_caseD_8255bd3c;
+    case (undefined *)0x8255bdc4:
+      goto switchD_82558444_caseD_8255bdc4;
+    case (undefined *)0x8255c040:
+      if (pfVar33[1] != 1.4013e-45) goto LAB_8255e498;
+      if (DAT_83ca44a8 < 0x1f) {
+        DAT_83ca4484 = (float)AllocThread(*pfVar33);
+        goto LAB_8255c088;
+      }
+      goto LAB_8255e468;
+    case (undefined *)0x8255c064:
+      if (pfVar33[1] != 1.4013e-45) goto LAB_8255e498;
+      if (0x1e < DAT_83ca44a8) goto LAB_8255e468;
+      DAT_83ca4484 = (float)AllocChildThread(*pfVar33,DAT_83ca4484);
+LAB_8255c088:
+      DAT_83ca448c = DAT_83ca448c + -2;
+      DAT_83ca44ac[4] = (uint)DAT_83ca4490;
+      uVar8 = *(uint3 *)pfVar31;
+      bVar27 = *(byte *)((int)pfVar31 + 3);
+      *DAT_83ca44ac = (uint)(pfVar31 + 1);
+      pfVar32 = DAT_83ca448c + (uint)bVar27 * -2;
+      uVar25 = (longlong)((int)((uint)uVar8 << 8) >> 10) + uVar20;
+      pfVar33 = DAT_83ca448c;
+      goto LAB_8255c2b8;
+    case (undefined *)0x8255c0e8:
+      fVar18 = pfVar33[1];
+      if (fVar18 != 1.26117e-44) goto LAB_8255c130;
+      fVar18 = *pfVar33;
+      DAT_83ca448c = pfVar33 + -2;
+      pfVar32 = pfVar33 + -1;
+      pfVar33 = DAT_83ca448c;
+      if (*pfVar32 != 1.4013e-45) goto LAB_8255e498;
+      if (0x1e < DAT_83ca44a8) goto LAB_8255e468;
+      DAT_83ca4484 = (float)AllocThread(*DAT_83ca448c);
+      goto LAB_8255c280;
+    case (undefined *)0x8255c124:
+      goto switchD_82558444_caseD_8255c124;
+    case (undefined *)0x8255c188:
+      goto switchD_82558444_caseD_8255c188;
+    case (undefined *)0x8255c6c4:
+      goto switchD_82558444_caseD_8255c6c4;
+    case (undefined *)0x8255c8cc:
+      goto switchD_82558444_caseD_8255c8cc;
+    case (undefined *)0x8255c9a4:
+      local_1c0 = pfVar33;
+      RemoveRefToValue(pfVar33[1],*pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255c9c4:
+      local_358 = (HGDIOBJ)Scr_EvalFieldObject(DAT_83c4bac8,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255c9e4:
+      local_358 = (HGDIOBJ)Scr_EvalVariableObject
+                                     (DAT_83ca4484,DAT_83ca44a0[-(uint)*(byte *)pfVar31]);
+      uVar20 = uVar20 + 1;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ca10:
+      if (pfVar33[1] == 8.40779e-45) {
+        *pfVar33 = (float)(uint)(*pfVar33 != 0.0);
+      }
+      else {
+        Scr_CastBool_NonInteger(pfVar33);
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ca3c:
+      Scr_EvalBoolNot(pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ca48:
+      Scr_EvalBoolComplement(pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ca54:
+      iVar16 = Scr_IsTrue(pfVar33);
+      if (DAT_83ca448c[1] == 0.0) {
+        MyAssertHandler(0xffffffff821552a8,0x766,0,0xffffffff82000f98,local_2a0);
+      }
+      uVar20 = uVar20 + 2;
+      pfVar33 = DAT_83ca448c;
+      if (iVar16 != 0) goto LAB_8255db7c;
+      uVar20 = *(ushort *)pfVar31 + uVar20;
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255cac4:
+      iVar16 = Scr_IsTrue(pfVar33);
+      if (DAT_83ca448c[1] == 0.0) {
+        MyAssertHandler(0xffffffff821552a8,0x772,0,0xffffffff82000f98,local_2a0);
+      }
+      uVar20 = uVar20 + 2;
+      pfVar33 = DAT_83ca448c;
+      if (iVar16 == 0) goto LAB_8255db7c;
+      uVar20 = *(ushort *)pfVar31 + uVar20;
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255cb34:
+      if (pfVar33[1] == 8.40779e-45) {
+        fVar18 = (float)(uint)(*pfVar33 != 0.0);
+        *pfVar33 = fVar18;
+      }
+      else {
+        fVar18 = (float)Scr_CastBool_NonInteger(pfVar33);
+        pfVar33 = DAT_83ca448c;
+      }
+      if (pfVar33[1] != 8.40779e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x77e,0,0xffffffff82000f98,local_2b4);
+        pfVar33 = DAT_83ca448c;
+      }
+      uVar20 = uVar20 + 2;
+      if (fVar18 != 0.0) goto LAB_8255db7c;
+      uVar20 = *(ushort *)pfVar31 + uVar20;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255cbc0:
+      if (pfVar33[1] == 8.40779e-45) {
+        fVar18 = (float)(uint)(*pfVar33 != 0.0);
+        *pfVar33 = fVar18;
+      }
+      else {
+        fVar18 = (float)Scr_CastBool_NonInteger(pfVar33);
+        pfVar33 = DAT_83ca448c;
+      }
+      if (pfVar33[1] != 8.40779e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x78a,0,0xffffffff82000f98,local_2b4);
+        pfVar33 = DAT_83ca448c;
+      }
+      uVar20 = uVar20 + 2;
+      if (fVar18 == 0.0) goto LAB_8255db7c;
+      uVar20 = *(ushort *)pfVar31 + uVar20;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255cc4c:
+      uVar20 = (uint)*pfVar31 + uVar20 + 4;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255cc84:
+      if (((48000 < DAT_83c4bacc) || (48000 < DAT_83c4bad0)) ||
+         (0x8380 < (uint)(DAT_83c6fb10 + DAT_83c6fb0c))) {
+        if (DAT_83ca44c4 != '\0') {
+          Scr_DumpScriptThreads(1);
+          Scr_DumpScriptVariablesDefault();
+        }
+        pcVar2 = local_30c;
+        if ((DAT_83c4bacc < 0xbb81) && (pcVar2 = local_2f4, 48000 < DAT_83c4bad0)) {
+          pcVar2 = local_304;
+        }
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,pcVar2,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+      }
+      iVar16 = Sys_Milliseconds();
+      if (((int)(iVar16 - DAT_83c97728) < 5000) || (*(char *)(DAT_83c6fb40 + 0xc) != '\0')) {
+        *(float **)(&DAT_83c97504 + DAT_83c97704 * 4) = pfVar31;
+        DAT_83c97704 = DAT_83c97704 + 1 & 0x7f;
+        uVar20 = (uVar20 - *(ushort *)pfVar31) + 2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      else {
+        if (DAT_83ca4498 == 0) {
+          MyAssertHandler(0xffffffff821552a8,0x7b7,0,0xffffffff82000f98,local_244);
+        }
+        if (*(char *)(DAT_83ca4498 + 0xc) != '\0') {
+          uVar13 = Sys_Milliseconds();
+          Com_Printf(0x17,local_29c,uVar13);
+        }
+        if ((DAT_83c97724 == 0) && (iVar16 = IsDebuggerConnected(), iVar16 == 0)) {
+          DAT_83ca4480 = pfVar31;
+          VM_PrintJumpHistory();
+          if (DAT_83ca44c4 != '\0') {
+            if (DAT_83ca44b4 != '\0') {
+              MyAssertHandler(0xffffffff821552a8,0x7e4,0,0xffffffff82000f98,local_23c);
+            }
+            Scr_DumpScriptThreads(1);
+            Scr_DumpScriptVariablesDefault();
+            if (DAT_83c4ba9c == (undefined *)0x0) {
+              I_strncpyz(0xffffffff83ca8850,local_2c4,0x400);
+              DAT_83c4ba9c = &DAT_83ca8850;
+            }
+            Scr_ErrorInternal();
+          }
+          if (DAT_83ca44b5 == '\0') {
+            Com_PrintError(0x17,local_1e4);
+            Scr_PrintPrevCodePos(0x17,uVar20,0,1);
+            Scr_ResetTimeout();
+            pcVar9 = local_2c8;
+            pcVar2 = local_2d8;
+            uVar20 = (ulonglong)(uint)DAT_83ca4484;
+            while( true ) {
+              uVar20 = GetSafeParentLocalId(uVar20);
+              Scr_KillThread(DAT_83ca4484);
+              DAT_83ca44a0 = DAT_83ca44a0 + -DAT_83ca4488;
+              if (DAT_83ca448c[1] == 1.12104e-44) {
+                MyAssertHandler(0xffffffff821552a8,0x9d3,0,0xffffffff821561a4,
+                                "(fs.top->type != VAR_PRECODEPOS)",
+                                (int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+              }
+              fVar18 = DAT_83ca448c[1];
+              while (fVar18 != 9.80909e-45) {
+                local_1b8 = DAT_83ca448c;
+                RemoveRefToValue(fVar18,*DAT_83ca448c);
+                pfVar33 = DAT_83ca448c + -2;
+                if (DAT_83ca448c[-1] == 1.12104e-44) {
+                  pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+                  DAT_83ca448c = DAT_83ca448c + -2;
+                  MyAssertHandler(0xffffffff821552a8,0x9d8,0,0xffffffff821561a4,
+                                  "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+                  pfVar33 = DAT_83ca448c;
+                }
+                DAT_83ca448c = pfVar33;
+                fVar18 = DAT_83ca448c[1];
+              }
+              DAT_83ca44a8 = DAT_83ca44a8 + -1;
+              DAT_83ca44ac = DAT_83ca44ac + -6;
+              if ((uVar20 & 0xffffffff) == 0) break;
+              if (DAT_83ca448c == DAT_83ca4490) {
+                MyAssertHandler(0xffffffff821552a8,0x9e3,0,0xffffffff82000f98,pcVar9);
+              }
+              RemoveRefToObject(DAT_83ca4484);
+              if (DAT_83ca448c[1] != 9.80909e-45) {
+                MyAssertHandler(0xffffffff821552a8,0x9e7,0,0xffffffff821561a4,pcVar2,
+                                (int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+              }
+              if (*DAT_83ca44ac == 0) {
+                MyAssertHandler(0xffffffff821552a8,0x9ea,0,0xffffffff82000f98,"local_pos");
+              }
+              DAT_83ca4488 = DAT_83ca44ac[2];
+              DAT_83ca448c = DAT_83ca448c + -2;
+              DAT_83ca4484 = (float)uVar20;
+            }
+            if (DAT_83ca448c == DAT_83ca4490) goto LAB_8255c868;
+            MyAssertHandler(0xffffffff821552a8,0x9df,0,local_2e0,local_2dc,
+                            (int)DAT_83ca448c - (int)DAT_83ca4490 >> 3);
+            DAT_83ca4490[3] = 0.0;
+            goto LAB_8255e260;
+          }
+          Scr_DumpScriptThreads(1);
+          Scr_DumpScriptVariablesDefault();
+          DAT_83ca44b6 = 1;
+          if (DAT_83c4ba9c == (undefined *)0x0) {
+            I_strncpyz(0xffffffff83ca8850,local_2c4,0x400);
+            DAT_83c4ba9c = &DAT_83ca8850;
+          }
+          Scr_ErrorInternal();
+          pfVar33 = DAT_83ca448c;
+          goto switchD_82558444_caseD_8255d080;
+        }
+        if ((DAT_83ca44b5 != '\0') && (iVar16 = IsDebuggerConnected(), iVar16 == 0)) {
+          DAT_83ca44c4 = '\x01';
+        }
+        lVar24 = Sys_Milliseconds();
+        Com_PrintWarning(0x17,local_234,lVar24 - (ulonglong)DAT_83c97728,5000);
+        Scr_PrintPrevCodePos(0x17,uVar20,0,1);
+        uVar20 = (uVar20 - *(ushort *)pfVar31) + 2;
+        Scr_ResetTimeout();
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d080:
+switchD_82558444_caseD_8255d080:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x801,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x803,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar13 = Scr_EvalVariableField(local_350,local_354);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      if (pfVar33[1] == 8.40779e-45) {
+        *pfVar33 = (float)((int)*pfVar33 + 1);
+        if (*(byte *)pfVar31 != 0x41) {
+          MyAssertHandler(0xffffffff821552a8,0x808,0,0xffffffff82000f98,local_310);
+          pfVar33 = DAT_83ca448c;
+        }
+        uVar20 = uVar20 + 1;
+        SetVariableFieldValue(local_350,local_354,pfVar33);
+        DAT_83ca448c = DAT_83ca448c + -2;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      else {
+        uVar13 = va(local_28c,(&PTR_s_undefined_829902e8)[(int)pfVar33[1]]);
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+LAB_8255d280:
+        if (pfVar33 < &DAT_83ca47c8) {
+          MyAssertHandler(0xffffffff821552a8,0x810,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+          pfVar33 = DAT_83ca448c;
+        }
+        DAT_83ca448c = pfVar33 + 2;
+        if (DAT_83ca44a4 < DAT_83ca448c) {
+          MyAssertHandler(0xffffffff821552a8,0x812,0,0xffffffff82000f98,
+                          "fs.top <= scrVmPub.maxstack");
+        }
+        uVar13 = Scr_EvalVariableField(local_350,local_354);
+        pfVar33 = DAT_83ca448c;
+        *(undefined8 *)DAT_83ca448c = uVar13;
+        if (pfVar33[1] == 8.40779e-45) {
+          *pfVar33 = (float)((int)*pfVar33 + -1);
+          if (*(byte *)pfVar31 != 0x41) {
+            MyAssertHandler(0xffffffff821552a8,0x817,0,0xffffffff82000f98,local_310);
+            pfVar33 = DAT_83ca448c;
+          }
+          uVar20 = uVar20 + 1;
+          SetVariableFieldValue(local_350,local_354,pfVar33);
+          DAT_83ca448c = DAT_83ca448c + -2;
+          pfVar33 = DAT_83ca448c;
+          pfVar32 = local_164;
+        }
+        else {
+          uVar13 = va(local_288,(&PTR_s_undefined_829902e8)[(int)pfVar33[1]]);
+          if (DAT_83c4ba9c == (undefined *)0x0) {
+            I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+            DAT_83c4ba9c = &DAT_83ca8850;
+          }
+          Scr_ErrorInternal();
+          pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255d384:
+          Scr_EvalOr(pfVar33 + -2,pfVar33);
+          DAT_83ca448c = DAT_83ca448c + -2;
+          pfVar33 = DAT_83ca448c;
+          pfVar32 = local_164;
+        }
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d274:
+      goto LAB_8255d280;
+    case (undefined *)0x8255d384:
+      goto switchD_82558444_caseD_8255d384;
+    case (undefined *)0x8255d3a0:
+      Scr_EvalExOr(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d3bc:
+      Scr_EvalAnd(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d3d8:
+      Scr_EvalEquality(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d3f4:
+      Scr_EvalInequality(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d410:
+      Scr_EvalLess(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d42c:
+      Scr_EvalGreater(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d448:
+      Scr_EvalLessEqual(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d464:
+      Scr_EvalGreaterEqual(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d480:
+      Scr_EvalShiftLeft(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d49c:
+      Scr_EvalShiftRight(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d4b8:
+      Scr_EvalPlus(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d4d4:
+      Scr_EvalMinus(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d4f0:
+      Scr_EvalMultiply(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d50c:
+      Scr_EvalDivide(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d528:
+      Scr_EvalMod(pfVar33 + -2,pfVar33);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d544:
+      Scr_EvalSizeValue(pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d550:
+      uVar20 = uVar20 + 2;
+      DAT_83ca4480 = (float *)uVar20;
+      local_360 = DAT_83ca4480;
+    case (undefined *)0x8255d55c:
+      iVar16 = Scr_IsInOpcodeMemory(uVar20);
+      if (iVar16 == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x869,0,0xffffffff82000f98,local_2d4);
+      }
+      pfVar33 = DAT_83ca448c;
+      if (DAT_83ca448c[1] != 1.4013e-45) goto LAB_8255e498;
+      cVar19 = IsFieldObject(*DAT_83ca448c);
+      if (cVar19 != '\0') {
+        h = (HGDIOBJ)*DAT_83ca448c;
+        local_318 = CONCAT44(h,local_318._4_4_);
+        if (DAT_83ca448c[-1] == 2.8026e-45) {
+          fVar18 = DAT_83ca448c[-2];
+          DAT_83ca448c = DAT_83ca448c + -4;
+          DVar17 = GetObjectType(h);
+          if (DVar17 == 0x10) {
+            MyAssertHandler(0xffffffff821552a8,0x878,0,0xffffffff82000f98,local_280);
+          }
+          DVar17 = GetObjectType(local_318._0_4_);
+          if (DVar17 == 0x11) {
+            MyAssertHandler(0xffffffff821552a8,0x879,0,0xffffffff82000f98,local_278);
+          }
+          DVar17 = GetObjectType(local_318._0_4_);
+          if (DVar17 == 0x12) {
+            MyAssertHandler(0xffffffff821552a8,0x87a,0,0xffffffff82000f98,local_270);
+          }
+          DVar17 = GetObjectType(local_318._0_4_);
+          if (DVar17 == 0x13) {
+            MyAssertHandler(0xffffffff821552a8,0x87b,0,0xffffffff82000f98,local_268);
+          }
+          DVar17 = GetObjectType(local_318._0_4_);
+          if (DVar17 == 0x18) {
+            MyAssertHandler(0xffffffff821552a8,0x87c,0,0xffffffff82000f98,local_260);
+          }
+          pfVar33 = DAT_83ca448c;
+          local_2e4 = 0xc;
+          *(uint *)(&DAT_83c73500 + (int)DAT_83ca4484 * 4) = *local_340;
+          local_2e8 = VM_ArchiveStack(pfVar33,uVar20);
+          uVar13 = GetObjectVariable(DAT_83c4bab0,local_318._0_4_);
+          uVar13 = GetArray(DAT_83c4bab0,uVar13);
+          uVar14 = GetVariable(uVar13,fVar18);
+          uVar13 = GetArray(uVar13,uVar14);
+          uVar14 = GetNewObjectVariable(uVar13,DAT_83ca4484);
+          SetNewVariableValue(uVar13,uVar14,&local_2e8);
+          local_318 = CONCAT44(local_318._0_4_,1);
+          uVar13 = Scr_GetSelf(DAT_83ca4484);
+          uVar13 = GetObjectVariable(DAT_83c4baac,uVar13);
+          uVar13 = GetArray(DAT_83c4baac,uVar13);
+          uVar14 = GetNewObjectVariable(uVar13,DAT_83ca4484);
+          SetNewVariableValue(uVar13,uVar14,&local_318);
+          Scr_SetThreadNotifyName(DAT_83ca4484,fVar18);
+          DAT_83ca4490[3] = 0.0;
+          goto LAB_8255e260;
+        }
+        DAT_83c4baa0 = 3;
+        pcVar2 = local_228;
+joined_r0x8255e4e0:
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,pcVar2,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+      }
+LAB_8255e4fc:
+      fVar18 = (float)GetObjectType((HGDIOBJ)*DAT_83ca448c);
+      DAT_83c4baa0 = 2;
+      goto LAB_8255e42c;
+    case (undefined *)0x8255d780:
+      if (pfVar33[1] != 1.4013e-45) goto LAB_8255e498;
+      fVar18 = *pfVar33;
+      cVar19 = IsFieldObject(fVar18);
+      if (cVar19 == '\0') goto LAB_8255e4fc;
+      pfVar33 = DAT_83ca448c + -2;
+      if (DAT_83ca448c[-1] != 2.8026e-45) {
+        DAT_83c4baa0 = 1;
+        pcVar2 = local_220;
+        goto joined_r0x8255e4e0;
+      }
+      DAT_83ca448c = DAT_83ca448c + -4;
+      fVar1 = *pfVar33;
+      if (DAT_83c734fc != 0) {
+        Scr_CheckBreakonNotify(fVar18,fVar1,DAT_83ca448c,uVar20,DAT_83ca4484);
+      }
+      Scr_DumpNotify(fVar18,fVar1,local_258);
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca44ac = (uint)pfVar31;
+      VM_Notify(fVar18,fVar1,pfVar33);
+      uVar20 = (ulonglong)*DAT_83ca44ac;
+      RemoveRefToObject(fVar18);
+      SL_RemoveRefToString(fVar1);
+      if (DAT_83ca448c[1] == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x8c2,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_CODEPOS)",(int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+      }
+      fVar18 = DAT_83ca448c[1];
+      pfVar33 = DAT_83ca448c;
+      if (fVar18 == 1.12104e-44) goto LAB_8255db7c;
+      do {
+        local_1b0 = DAT_83ca448c;
+        RemoveRefToValue(fVar18,*DAT_83ca448c);
+        pfVar33 = DAT_83ca448c + -2;
+        if (DAT_83ca448c[-1] == 9.80909e-45) {
+          pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          MyAssertHandler(0xffffffff821552a8,0x8c7,0,0xffffffff821561a4,
+                          "(fs.top->type != VAR_CODEPOS)",(int)pfVar33 >> 3);
+          pfVar33 = DAT_83ca448c;
+        }
+        DAT_83ca448c = pfVar33;
+        fVar18 = DAT_83ca448c[1];
+      } while (fVar18 != 1.12104e-44);
+      DAT_83ca448c = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d8d8:
+      if (pfVar33[1] != 1.4013e-45) goto LAB_8255e420;
+      cVar19 = IsFieldObject(*pfVar33);
+      if (cVar19 != '\0') {
+        if (DAT_83ca448c[-1] == 2.8026e-45) {
+          VM_Endon(*DAT_83ca448c,DAT_83ca4484,DAT_83ca448c[-2]);
+          DAT_83ca448c = DAT_83ca448c + -4;
+          pfVar33 = DAT_83ca448c;
+          pfVar32 = local_164;
+          goto switchD_82558444_caseD_82558328;
+        }
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,local_218,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+      }
+      fVar18 = (float)GetObjectType((HGDIOBJ)*DAT_83ca448c);
+      goto LAB_8255e424;
+    case (undefined *)0x8255d928:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x8f1,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x8f3,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+LAB_8255d980:
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.12104e-44;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255d98c:
+      fVar18 = pfVar33[1];
+      uVar29 = (uint)*pfVar31 + uVar20 + 6;
+      DAT_83ca4480 = (float *)uVar29;
+      DAT_83c9770c = (uint)*(ushort *)((int)((uint)*pfVar31 + uVar20) + 4);
+      if (fVar18 == 2.8026e-45) {
+LAB_8255da98:
+        fVar18 = *pfVar33;
+        local_2a4 = fVar18;
+        SL_RemoveRefToString();
+      }
+      else if (fVar18 == 8.40779e-45) {
+        cVar19 = IsValidArrayIndex(*pfVar33);
+        if (cVar19 == '\0') {
+          uVar13 = va(local_248,*DAT_83ca448c);
+          if (DAT_83c4ba9c == (undefined *)0x0) {
+            I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+            DAT_83c4ba9c = &DAT_83ca8850;
+          }
+          Scr_ErrorInternal();
+          pfVar33 = DAT_83ca448c;
+          goto LAB_8255da98;
+        }
+        local_2a4 = (float)GetInternalVariableIndex(*DAT_83ca448c);
+        fVar18 = local_2a4;
+      }
+      else {
+        uVar13 = va(local_250,(&PTR_s_undefined_829902e8)[(int)fVar18]);
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        fVar18 = local_2a4;
+      }
+      uVar21 = (ulonglong)DAT_83c9770c;
+      uVar20 = uVar29;
+      pfVar33 = DAT_83ca448c;
+      if (uVar21 == 0) goto LAB_8255db7c;
+      if (fVar18 == 0.0) {
+        MyAssertHandler(0xffffffff821552a8,0x913,0,0xffffffff82000f98,local_240);
+        uVar21 = (ulonglong)DAT_83c9770c;
+      }
+      goto LAB_8255dad8;
+    case (undefined *)0x8255dba4:
+      uVar6 = *(ushort *)pfVar31;
+      DAT_83c9770c = (uint)uVar6;
+      uVar20 = ((ulonglong)uVar6 * 8 - (ulonglong)uVar6) + uVar20 + 2;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255dbdc:
+      DAT_83ca448c = pfVar33 + -4;
+      Scr_CastVector();
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255dbec:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x93c,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x93e,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar20 = uVar20 + 8;
+      fVar18 = (float)FindEntityId(pfVar31[1],*pfVar31);
+      pfVar33 = DAT_83ca448c;
+      *DAT_83ca448c = fVar18;
+      if (fVar18 != 0.0) goto LAB_8255dd70;
+      DAT_83ca4480 = (float *)uVar20;
+      pfVar33[1] = 0.0;
+      if (DAT_83c4ba9c == (undefined *)0x0) {
+        I_strncpyz(0xffffffff83ca8850,local_238,0x400);
+        DAT_83c4ba9c = &DAT_83ca8850;
+      }
+      Scr_ErrorInternal();
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 1.4013e-45;
+      AddRefToObject(*pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255dcf8:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x953,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x955,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      pfVar33 = DAT_83ca448c;
+      uVar20 = uVar20 + 2;
+      *DAT_83ca448c = (float)(uint)*(ushort *)pfVar31;
+LAB_8255dd70:
+      pfVar33[1] = 1.4013e-45;
+      AddRefToObject(*pfVar33);
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255dd84:
+      if (pfVar33 < &DAT_83ca47c8) {
+        MyAssertHandler(0xffffffff821552a8,0x95a,0,0xffffffff82000f98,"fs.top >= scrVmPub.stack");
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33 + 2;
+      if (DAT_83ca44a4 < DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0x95c,0,0xffffffff82000f98,"fs.top <= scrVmPub.maxstack")
+        ;
+      }
+      uVar20 = uVar20 + 2;
+      uVar13 = FindVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      uVar13 = Scr_EvalVariable(DAT_83ca4484,uVar13);
+      pfVar33 = DAT_83ca448c;
+      *(undefined8 *)DAT_83ca448c = uVar13;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255de18:
+      uVar20 = uVar20 + 2;
+      local_35c = '\0';
+      local_354 = FindVariable(DAT_83ca4484,*(undefined2 *)pfVar31);
+      local_350 = ((uint)DAT_83ca4484 & 1) * 0xc800;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      if (local_354 == 0) {
+        DAT_83ca4480 = (float *)uVar20;
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,local_230,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+        pfVar33 = DAT_83ca448c;
+        goto switchD_82558444_caseD_8255de94;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255de94:
+switchD_82558444_caseD_8255de94:
+      cVar19 = *(char *)uVar20;
+      uVar20 = uVar20 + 1;
+      uVar28 = 1 << ((int)cVar19 & 0x3fU);
+      pfVar32 = local_164;
+      if ((*local_340 & uVar28) == 0) {
+        *local_340 = *local_340 | uVar28;
+        if (0x1f < cVar19) {
+          MyAssertHandler(local_2ac,0x141,0,0xffffffff82000f98,local_2bc);
+          pfVar33 = DAT_83ca448c;
+        }
+        piVar26 = local_2cc + cVar19 * 3;
+        if (*piVar26 == 0) {
+          uVar13 = TBLr;
+          piVar26[1] = (int)uVar13;
+        }
+        *piVar26 = *piVar26 + 1;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255df24:
+      bVar27 = *(byte *)pfVar31;
+      uVar20 = uVar20 + 1;
+      uVar28 = 1 << ((int)(char)bVar27 & 0x3fU);
+      if ((*local_340 & uVar28) != 0) {
+        *local_340 = *local_340 & ~uVar28;
+        uVar13 = TBLr;
+        if (0x1f < (char)bVar27) {
+          MyAssertHandler(local_2ac,0x152,0,0xffffffff82000f98,local_2bc);
+          pfVar33 = DAT_83ca448c;
+        }
+        puVar23 = local_2cc + (char)bVar27 * 3;
+        uVar28 = *puVar23;
+        *puVar23 = (uint)((ulonglong)uVar28 - 1);
+        pfVar32 = local_164;
+        if ((ulonglong)uVar28 - 1 == 0) {
+          puVar23[2] = (puVar23[2] - puVar23[1]) + (int)uVar13;
+        }
+      }
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255dfc8:
+LAB_8255dfd0:
+      fVar18 = (float)GetSafeParentLocalId(DAT_83ca4484);
+      Scr_KillThread(DAT_83ca4484);
+      DAT_83ca44a0 = DAT_83ca44a0 + -DAT_83ca4488;
+      if (DAT_83ca448c[1] == 1.12104e-44) {
+        MyAssertHandler(0xffffffff821552a8,0x25b,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_PRECODEPOS)",(int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+      }
+      fVar1 = DAT_83ca448c[1];
+      while (fVar1 != 9.80909e-45) {
+        local_1a8 = DAT_83ca448c;
+        RemoveRefToValue(fVar1,*DAT_83ca448c);
+        pfVar33 = DAT_83ca448c + -2;
+        if (DAT_83ca448c[-1] == 1.12104e-44) {
+          pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+          DAT_83ca448c = DAT_83ca448c + -2;
+          MyAssertHandler(0xffffffff821552a8,0x260,0,0xffffffff821561a4,
+                          "(fs.top->type != VAR_PRECODEPOS)",(int)pfVar33 >> 3);
+          pfVar33 = DAT_83ca448c;
+        }
+        DAT_83ca448c = pfVar33;
+        fVar1 = DAT_83ca448c[1];
+      }
+      DAT_83ca44a8 = DAT_83ca44a8 + -1;
+      DAT_83ca44ac = DAT_83ca44ac + -6;
+      if (fVar18 == 0.0) {
+        if (DAT_83ca448c != DAT_83ca4490) {
+          MyAssertHandler(0xffffffff821552a8,0x267,0,local_2e0,local_2dc,
+                          (int)DAT_83ca448c - (int)DAT_83ca4490 >> 3);
+          DAT_83ca4490[3] = 0.0;
+          goto LAB_8255e260;
+        }
+        goto LAB_8255c868;
+      }
+      if (DAT_83ca448c[1] != 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0x26b,0,0xffffffff821561a4,local_2d8,
+                        (int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+      }
+      pfVar33 = DAT_83ca448c;
+      DAT_83ca448c[1] = 0.0;
+LAB_8255e31c:
+      if (pfVar33 == DAT_83ca4490) {
+        MyAssertHandler(0xffffffff821552a8,0x26e,0,0xffffffff82000f98,local_2c8);
+      }
+      RemoveRefToObject(DAT_83ca4484);
+      uVar20 = (ulonglong)*DAT_83ca44ac;
+      if (uVar20 == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x273,0,0xffffffff82000f98,"local_pos");
+      }
+      DAT_83ca4488 = DAT_83ca44ac[2];
+      DAT_83ca4484 = fVar18;
+      pfVar33 = DAT_83ca448c;
+      pfVar32 = local_164;
+      goto switchD_82558444_caseD_82558328;
+    case (undefined *)0x8255ef40:
+      if ((int)DAT_83c99738 < 0) {
+        uVar13 = 0x937;
+LAB_8255efc4:
+        MyAssertHandler(0xffffffff821552a8,uVar13,0,0xffffffff82150844,0xffffffff82150864);
+      }
+LAB_8255efe4:
+      DAT_83c99738 = DAT_83c99738 - 1;
+      __restgprlr(0);
+      return;
+    }
+    uVar20 = uVar20 + 2;
+    DAT_83ca4480 = (float *)uVar20;
+    local_354 = Scr_GetVariableFieldIndex(uVar25,*(undefined2 *)pfVar31);
+    local_350 = ((uint)uVar25 & 1) * 0xc800;
+    local_35c = '\x01';
+    pfVar33 = DAT_83ca448c;
+    pfVar32 = local_164;
+    goto switchD_82558444_caseD_82558328;
+  }
+  uVar20 = ZEXT48(DAT_83ca4480);
+  local_360 = DAT_83ca4480;
+  LargeLocalResetToMark(*(undefined4 *)(puVar12 + DAT_83c99738 * 4));
+  goto LAB_8255e564;
+  while (uVar21 = uVar21 - 1, uVar21 != 0) {
+LAB_8255dad8:
+    pfVar33 = (float *)uVar29;
+    lVar24 = uVar29 + 4;
+    fVar1 = *pfVar33;
+    uVar29 = uVar29 + 7;
+    uVar25 = ((int)((uint)*(uint3 *)(pfVar33 + 1) << 8) >> 10) + lVar24;
+    pcVar2 = local_32c;
+    if (fVar1 == fVar18) {
+      DAT_83c9770c = (uint)uVar21;
+      uVar20 = uVar25;
+      pfVar33 = DAT_83ca448c;
+      if ((uVar25 & 0xffffffff) != 0) goto LAB_8255db7c;
+      uVar13 = 0x91c;
+      goto LAB_8255db68;
+    }
+  }
+  DAT_83c9770c = 0;
+  uVar20 = uVar29;
+  pfVar33 = DAT_83ca448c;
+  if ((fVar1 == 0.0) && (uVar20 = uVar25, (uVar25 & 0xffffffff) == 0)) {
+    uVar13 = 0x926;
+LAB_8255db68:
+    MyAssertHandler(0xffffffff821552a8,uVar13,0,0xffffffff82000f98,pcVar2);
+    uVar20 = uVar25;
+    pfVar33 = DAT_83ca448c;
+  }
+LAB_8255db7c:
+  DAT_83ca448c = pfVar33 + -2;
+  pfVar33 = DAT_83ca448c;
+  pfVar32 = local_164;
+  goto switchD_82558444_caseD_82558328;
+LAB_8255c130:
+  local_18c = pfVar33;
+  RemoveRefToValue(fVar18,*pfVar33);
+  pfVar33 = DAT_83ca448c + 1;
+  DAT_83ca448c = DAT_83ca448c + -2;
+  uVar13 = va(local_2fc,(&PTR_s_undefined_829902e8)[(int)*pfVar33]);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255c188:
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x71c,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+    pfVar33 = DAT_83ca448c;
+  }
+  uVar25 = uVar20 + 1;
+  local_360 = (float *)uVar25;
+  DAT_83ca44bc = (uint)*(byte *)uVar20;
+  if (pfVar33[1] != 1.54143e-44) {
+    DAT_83ca4480 = local_360;
+    local_15c = pfVar33;
+    RemoveRefToValue(pfVar33[1],*pfVar33);
+    local_184 = DAT_83ca448c + -2;
+    pfVar33 = DAT_83ca448c + -1;
+    DAT_83ca448c = local_184;
+    RemoveRefToValue(*pfVar33,*local_184);
+    DAT_83ca44b0 = DAT_83ca448c + -2;
+    pfVar33 = DAT_83ca448c + 3;
+    DAT_83ca448c = DAT_83ca44b0;
+    uVar13 = va(local_264,(&PTR_s_undefined_829902e8)[(int)*pfVar33]);
+    if (DAT_83c4ba9c == (undefined *)0x0) {
+      I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+      DAT_83c4ba9c = &DAT_83ca8850;
+    }
+    Scr_ErrorInternal();
+    pfVar33 = DAT_83ca448c;
+switchD_82558444_caseD_8255c124:
+    fVar18 = pfVar33[1];
+    uVar20 = uVar25;
+    if (fVar18 == 1.26117e-44) goto LAB_8255c250;
+    goto LAB_8255c130;
+  }
+  uVar29 = (ulonglong)(uint)*pfVar33;
+  if (0x30a < (uVar29 - 0x8000 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821552a8,0x724,0,local_2b8,uVar29 - 0x8000,0x30b);
+    pfVar33 = DAT_83ca448c;
+  }
+  DAT_83ca448c = pfVar33 + -2;
+  pfVar33 = DAT_83ca448c;
+LAB_8255c394:
+  if (DAT_83ca44b8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x569,0,0xffffffff82000f98,local_300);
+    pfVar33 = DAT_83ca448c;
+  }
+  DAT_83ca44b0 = pfVar33 + -2;
+  pfVar32 = (float *)uVar25;
+  DAT_83ca4480 = pfVar32;
+  if (pfVar33[1] == 1.4013e-45) {
+    local_358 = (HGDIOBJ)*pfVar33;
+    DVar17 = GetObjectType(local_358);
+    if (DVar17 == 0x16) {
+      uVar13 = Scr_GetEntityIdRef();
+      RemoveRefToObject(local_358);
+      *DAT_83ca44ac = (uint)pfVar32;
+      if (DAT_83c9972c != '\0') {
+        Scr_GetFileAndLine(uVar25,&DAT_83c99730,&DAT_83c99734);
+      }
+      iVar16 = (int)(((uVar29 - 0x7e3c) + (uVar29 - 0x7e3c & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+      if (*(int *)(&DAT_83c6fb48 + iVar16) != 0) {
+        if (DAT_83ca44b0 != DAT_83ca448c + -2) {
+          MyAssertHandler(0xffffffff821552a8,0x585,0,0xffffffff82000f98,local_21c);
+        }
+        uVar11 = DAT_83ca44bc;
+        Scr_HitBuiltinBreakpoint(DAT_83ca448c,uVar20,DAT_83ca4484,uVar28,uVar29,DAT_83ca44bc + 1);
+        DAT_83ca44b0 = DAT_83ca448c + -2;
+        DAT_83ca44bc = uVar11;
+      }
+      iVar4 = DAT_83c97500;
+      uVar14 = TBLr;
+      (**(code **)(local_25c + (int)((uVar29 - 0x8000 & 0xffffffff) << 2)))(uVar13);
+      uVar13 = TBLr;
+      iVar5 = (int)uVar13 - (int)uVar14;
+      DAT_83c97500 = iVar5 + iVar4;
+      *(int *)((int)&DAT_83c6fb4c + iVar16) = iVar5 + *(int *)((int)&DAT_83c6fb4c + iVar16);
+      *(int *)((int)&DAT_83c6fb50 + iVar16) = *(int *)((int)&DAT_83c6fb50 + iVar16) + 1;
+LAB_8255c518:
+      uVar28 = DAT_83ca44bc;
+      uVar20 = (ulonglong)*DAT_83ca44ac;
+      DAT_83ca448c = DAT_83ca44b0;
+      if (DAT_83ca44bc != 0) {
+        DAT_83ca44bc = 0;
+        DAT_83ca44b0 = DAT_83ca44b0 + uVar28 * -2;
+        do {
+          local_144 = DAT_83ca448c;
+          RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+          uVar28 = uVar28 - 1;
+          DAT_83ca448c = DAT_83ca448c + -2;
+        } while (uVar28 != 0);
+      }
+      if (DAT_83ca44b8 == 0) {
+        if (DAT_83ca448c != DAT_83ca44b0) {
+          MyAssertHandler(0xffffffff821552a8,0x542,0,0xffffffff82000f98,local_2b0);
+        }
+        pfVar33 = DAT_83ca448c + 2;
+        pfVar32 = DAT_83ca448c + 3;
+        DAT_83ca448c = pfVar33;
+        *pfVar32 = 0.0;
+        pfVar32 = local_164;
+      }
+      else {
+        if (DAT_83ca44b8 != 1) {
+          MyAssertHandler(0xffffffff821552a8,0x53b,0,0xffffffff82000f98,local_1dc);
+        }
+        DAT_83ca44b8 = 0;
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+        if (DAT_83ca448c != DAT_83ca44b0) {
+          MyAssertHandler(0xffffffff821552a8,0x53d,0,0xffffffff82000f98,local_2b0);
+          pfVar33 = DAT_83ca448c;
+          pfVar32 = local_164;
+        }
+      }
+      goto switchD_82558444_caseD_82558328;
+    }
+    DVar17 = GetObjectType(local_358);
+    RemoveRefToObject(local_358);
+    DAT_83c4baa0 = -1;
+    uVar13 = va(local_2d0,(&PTR_s_undefined_829902e8)[DVar17]);
+    if (DAT_83c4ba9c == (undefined *)0x0) {
+      I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+      DAT_83c4ba9c = &DAT_83ca8850;
+    }
+    Scr_ErrorInternal();
+    pfVar33 = DAT_83ca448c;
+  }
+  fVar18 = pfVar33[1];
+  local_1cc = pfVar33;
+  local_1c8 = fVar18;
+  RemoveRefToValue(fVar18,*pfVar33);
+  DAT_83c4baa0 = -1;
+  uVar13 = va(local_2d0,(&PTR_s_undefined_829902e8)[(int)fVar18]);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+switchD_82558444_caseD_8255c6c4:
+  iVar16 = Scr_IsInOpcodeMemory(uVar25);
+  if (iVar16 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x5b4,0,0xffffffff82000f98,local_2d4);
+  }
+  if (DAT_83ca448c[1] == 7.00649e-45) {
+    if (dVar37 <= (double)*DAT_83ca448c) {
+      dVar34 = floor((double)(float)((double)(float)((double)*DAT_83ca448c * dVar36) + dVar35));
+      local_308 = (uint)dVar34;
+      local_1d8 = (longlong)(int)local_308;
+      if ((local_308 != 0) || ((double)*DAT_83ca448c == dVar37)) goto LAB_8255c7b8;
+      local_308 = 1;
+LAB_8255c7d0:
+      uVar28 = local_308;
+      Scr_ResetTimeout();
+      local_308 = uVar28;
+      goto LAB_8255c7d8;
+    }
+LAB_8255c8a8:
+    if (DAT_83c4ba9c == (undefined *)0x0) {
+      I_strncpyz(0xffffffff83ca8850,local_24c,0x400);
+      DAT_83c4ba9c = &DAT_83ca8850;
+    }
+    Scr_ErrorInternal();
+switchD_82558444_caseD_8255c8cc:
+    iVar16 = Scr_IsInOpcodeMemory(uVar25);
+    if (iVar16 == 0) {
+      MyAssertHandler(0xffffffff821552a8,0x5ee,0,0xffffffff82000f98,local_2d4);
+    }
+    if ((DAT_83c4baa4 & 0xff000000) != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x5f0,0,0xffffffff82000f98,local_1f4);
+    }
+    pfVar33 = DAT_83ca448c;
+    local_2e4 = 0xc;
+    *(uint *)(&DAT_83c73500 + (int)DAT_83ca4484 * 4) = *local_340;
+    local_2e8 = VM_ArchiveStack(pfVar33,uVar25);
+    uVar13 = GetVariable(DAT_83c4baa8,DAT_83c4baa4);
+    uVar13 = GetArray(DAT_83c4baa8,uVar13);
+    uVar14 = GetNewObjectVariableReverse(uVar13,DAT_83ca4484);
+    SetNewVariableValue(uVar13,uVar14,&local_2e8);
+    Scr_SetThreadWaitTime(DAT_83ca4484,DAT_83c4baa4);
+    DAT_83ca4490[3] = 0.0;
+  }
+  else {
+    if (DAT_83ca448c[1] == 8.40779e-45) {
+      local_308 = (int)*DAT_83ca448c * 0x14;
+    }
+    else {
+      DAT_83c4baa0 = 2;
+      uVar13 = va(local_254,(&PTR_s_undefined_829902e8)[(int)DAT_83ca448c[1]]);
+      if (DAT_83c4ba9c == (undefined *)0x0) {
+        I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+        DAT_83c4ba9c = &DAT_83ca8850;
+      }
+      Scr_ErrorInternal();
+    }
+LAB_8255c7b8:
+    if (0xfffffe < local_308) {
+      DAT_83c4baa0 = 2;
+      if (-1 < (int)local_308) {
+        if (DAT_83c4ba9c == (undefined *)0x0) {
+          I_strncpyz(0xffffffff83ca8850,local_214,0x400);
+          DAT_83c4ba9c = &DAT_83ca8850;
+        }
+        Scr_ErrorInternal();
+      }
+      goto LAB_8255c8a8;
+    }
+    if (local_308 != 0) goto LAB_8255c7d0;
+LAB_8255c7d8:
+    pfVar33 = DAT_83ca448c + -2;
+    uVar28 = DAT_83c4baa4 + local_308 & 0xffffff;
+    local_2e4 = 0xc;
+    DAT_83ca448c = pfVar33;
+    *(uint *)(&DAT_83c73500 + (int)DAT_83ca4484 * 4) = *local_340;
+    local_308 = uVar28;
+    local_2e8 = VM_ArchiveStack(pfVar33,uVar25);
+    uVar13 = GetVariable(DAT_83c4baa8,uVar28);
+    uVar13 = GetArray(DAT_83c4baa8,uVar13);
+    uVar14 = GetNewObjectVariable(uVar13,DAT_83ca4484);
+    SetNewVariableValue(uVar13,uVar14,&local_2e8);
+    Scr_SetThreadWaitTime(DAT_83ca4484,uVar28);
+LAB_8255c868:
+    DAT_83ca4490[3] = 0.0;
+  }
+LAB_8255e260:
+  if (*local_340 != 0) {
+    Profile_EndScripts();
+  }
+  if (DAT_83ca449c == 0) {
+    if ((int)DAT_83c99738 < 0) {
+      MyAssertHandler(0xffffffff821552a8,0x9bb,0,0xffffffff82150844,0xffffffff82150864);
+    }
+    DAT_83c99738 = DAT_83c99738 - 1;
+    __restgprlr(DAT_83ca4484);
+    return;
+  }
+  DAT_83ca449c = DAT_83ca449c + -1;
+  local_340 = local_340 + -1;
+  RemoveRefToObject(DAT_83ca4484);
+  puVar10 = DAT_83ca44ac;
+  puVar22 = (uint *)0x83ca447c;
+  lVar24 = 5;
+  puVar23 = DAT_83ca44ac + -1;
+  do {
+    puVar23 = puVar23 + 1;
+    puVar22 = puVar22 + 1;
+    *puVar22 = *puVar23;
+    lVar24 = lVar24 + -1;
+  } while (lVar24 != 0);
+  uVar20 = ZEXT48(DAT_83ca4480);
+  pfVar33 = DAT_83ca448c + 2;
+  pfVar32 = DAT_83ca448c + 1;
+  DAT_83ca448c = pfVar33;
+  *pfVar32 = (float)puVar10[5];
+  pfVar32 = local_164;
+  goto switchD_82558444_caseD_82558328;
+LAB_8255c250:
+  fVar18 = *pfVar33;
+  DAT_83ca448c = pfVar33 + -2;
+  pfVar32 = pfVar33 + -1;
+  pfVar33 = DAT_83ca448c;
+  if (*pfVar32 == 1.4013e-45) {
+    if (DAT_83ca44a8 < 0x1f) {
+      DAT_83ca4484 = (float)AllocChildThread(*DAT_83ca448c,DAT_83ca4484);
+LAB_8255c280:
+      uVar25 = (ulonglong)(uint)fVar18;
+      DAT_83ca448c = DAT_83ca448c + -2;
+      DAT_83ca44ac[4] = (uint)DAT_83ca4490;
+      pfVar32 = DAT_83ca448c + (uint)*(byte *)uVar20 * -2;
+      *DAT_83ca44ac = (uint)((byte *)uVar20 + 1);
+      pfVar33 = DAT_83ca448c;
+LAB_8255c2b8:
+      DAT_83ca449c = DAT_83ca449c + 1;
+      DAT_83ca4490 = pfVar32;
+      DAT_83ca44ac[3] = (uint)pfVar32;
+      DAT_83ca44ac[5] = (uint)pfVar32[1];
+      pfVar32[1] = 1.12104e-44;
+      local_340 = local_340 + 1;
+      *local_340 = 0;
+      uVar20 = uVar25;
+LAB_8255c2f4:
+      uVar28 = DAT_83ca4488;
+      fVar18 = DAT_83ca4484;
+      dataCacheBlockTouch(uVar20);
+      DAT_83ca4488 = 0;
+      DAT_83ca44ac[2] = uVar28;
+      DAT_83ca44a8 = DAT_83ca44a8 + 1;
+      pfVar32 = (float *)(DAT_83ca44ac + 7);
+      DAT_83ca44ac = DAT_83ca44ac + 6;
+      *pfVar32 = fVar18;
+      pfVar32 = local_164;
+      if ((uVar20 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x9ad,0,0xffffffff82000f98,"local_pos");
+        pfVar33 = DAT_83ca448c;
+        pfVar32 = local_164;
+      }
+      goto switchD_82558444_caseD_82558328;
+    }
+LAB_8255e468:
+    DAT_83c4baa0 = 1;
+    if (DAT_83c4ba9c == (undefined *)0x0) {
+      I_strncpyz(0xffffffff83ca8850,"script stack overflow (too many embedded function calls)",0x400
+                );
+      DAT_83c4ba9c = &DAT_83ca8850;
+    }
+    Scr_ErrorInternal();
+    pfVar33 = DAT_83ca448c;
+  }
+LAB_8255e498:
+  fVar18 = pfVar33[1];
+  DAT_83c4baa0 = 2;
+LAB_8255e42c:
+  uVar13 = va(local_210,(&PTR_s_undefined_829902e8)[(int)fVar18]);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar13,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+LAB_8255e564:
+  Com_PrintMessage(6,local_208,0);
+  if (uVar28 < 0x51) {
+    if (uVar28 < 0x4a) {
+      if (uVar28 < 0x37) {
+        if (uVar28 != 0x36) {
+          switch(uVar28 - 0x26) {
+          case 0:
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+switchD_8255e5b0_caseD_0:
+            if (DAT_83c4baa0 < -1) {
+              MyAssertHandler(0xffffffff821552a8,0xa2d,0,0xffffffff82000f98,local_2f0);
+            }
+            goto LAB_8255e928;
+          default:
+            goto switchD_8255e5b0_caseD_5;
+          case 10:
+          case 0xb:
+            break;
+          }
+        }
+      }
+      else if ((uVar28 != 0x41) && (uVar28 != 0x44)) goto switchD_8255e5b0_caseD_5;
+switchD_8255e5b0_caseD_a:
+      DAT_83c4baa0 = 0;
+    }
+    else {
+LAB_8255e85c:
+      if (DAT_83c4baa0 < 0) {
+        MyAssertHandler(0xffffffff821552a8,0xa48,0,0xffffffff82000f98,local_200);
+      }
+      if (0 < DAT_83c4baa0) {
+        DAT_83c4baa0 = (DAT_83ca44bc - DAT_83c4baa0) + 1;
+      }
+    }
+  }
+  else {
+    if (uVar28 < 0x71) {
+      if (uVar28 == 0x70) {
+LAB_8255e8a0:
+        if (DAT_83c4baa0 < -1) {
+          MyAssertHandler(0xffffffff821552a8,0xa59,0,0xffffffff82000f98,local_2f0);
+        }
+        if (DAT_83c4baa0 < 1) {
+LAB_8255e928:
+          if (DAT_83c4baa0 < 0) {
+            DAT_83c4baa0 = 1;
+          }
+        }
+        else {
+          DAT_83c4baa0 = (DAT_83ca44bc - DAT_83c4baa0) + 2;
+        }
+        goto LAB_8255e5fc;
+      }
+      if (0x50 < uVar28) {
+        if (uVar28 < 0x58) goto LAB_8255e8a0;
+        if (uVar28 == 0x6f) goto LAB_8255e85c;
+      }
+    }
+    else if (0x7c < uVar28) {
+      if (uVar28 < 0x7f) goto switchD_8255e5b0_caseD_a;
+      if (uVar28 == 0x9e) goto switchD_8255e5b0_caseD_0;
+    }
+switchD_8255e5b0_caseD_5:
+  }
+LAB_8255e5fc:
+  RuntimeError(uVar20,DAT_83c4baa0,DAT_83c4ba9c,DAT_83c97720);
+  DAT_83c4ba9c = (undefined *)0x0;
+  DAT_83c97720 = 0;
+  DAT_83c4baa0 = 0;
+  switch(uVar28 - 0x24) {
+  case 0:
+  case 1:
+    local_180 = DAT_83ca448c;
+    RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+    local_178 = DAT_83ca448c + -2;
+    pfVar33 = DAT_83ca448c + -1;
+    DAT_83ca448c = local_178;
+    RemoveRefToValue(*pfVar33,*local_178);
+  case 0xc:
+  case 0xd:
+    DAT_83ca448c[1] = 0.0;
+    break;
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+  case 0x7a:
+    local_35c = '\0';
+    ClearVariableValue(0,DAT_83c4bac8);
+    local_350 = 0;
+    local_354 = DAT_83c4bac8;
+  case 6:
+  case 0x34:
+    goto switchD_8255e648_caseD_6;
+  case 9:
+    goto switchD_8255e648_caseD_9;
+  case 0x10:
+  case 0x11:
+    local_35c = '\0';
+    ClearVariableValue(0,DAT_83c4bac8);
+    local_350 = 0;
+    local_354 = DAT_83c4bac8;
+    break;
+  case 0x12:
+    if (DAT_83ca44bc != 0) {
+      if (DAT_83ca44bc != 1) {
+        MyAssertHandler(0xffffffff821552a8,0xa9c,0,0xffffffff82000f98,"scrVmPub.outparamcount == 1",
+                        0,0);
+      }
+      if (DAT_83ca44b0[1] != 0.0) {
+        MyAssertHandler(0xffffffff821552a8,0xa9e,0,0xffffffff82000f98,local_298);
+      }
+      DAT_83ca44bc = 0;
+    }
+    break;
+  case 0x18:
+    if (DAT_83ca448c[1] == 9.80909e-45) {
+      MyAssertHandler(0xffffffff821552a8,0xaf7,0,0xffffffff821561a4,"(fs.top->type != VAR_CODEPOS)",
+                      (int)(DAT_83ca448c + 0x1f0d6e0e) >> 3);
+    }
+    fVar18 = DAT_83ca448c[1];
+    while (fVar18 != 1.12104e-44) {
+      local_170 = DAT_83ca448c;
+      RemoveRefToValue(fVar18,*DAT_83ca448c);
+      pfVar33 = DAT_83ca448c + -2;
+      if (DAT_83ca448c[-1] == 9.80909e-45) {
+        pfVar33 = DAT_83ca448c + 0x1f0d6e0c;
+        DAT_83ca448c = DAT_83ca448c + -2;
+        MyAssertHandler(0xffffffff821552a8,0xafc,0,0xffffffff821561a4,
+                        "(fs.top->type != VAR_CODEPOS)",(int)pfVar33 >> 3);
+        pfVar33 = DAT_83ca448c;
+      }
+      DAT_83ca448c = pfVar33;
+      fVar18 = DAT_83ca448c[1];
+    }
+    DAT_83ca448c[1] = 9.80909e-45;
+    break;
+  case 0x1d:
+    if (DAT_83ca44bc != 0) {
+      if (DAT_83ca44bc != 1) {
+        MyAssertHandler(0xffffffff821552a8,0xaab,0,0xffffffff82000f98,"scrVmPub.outparamcount == 1",
+                        0,0);
+      }
+      if (DAT_83ca44b0 != DAT_83ca448c) {
+        MyAssertHandler(0xffffffff821552a8,0xaad,0,0xffffffff82000f98,local_294);
+      }
+      local_190 = DAT_83ca448c;
+      RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+      DAT_83ca44bc = 0;
+    }
+  case 0x5b:
+  case 0x5c:
+  case 0x5d:
+  case 0x5e:
+  case 0x5f:
+  case 0x60:
+  case 0x61:
+  case 0x62:
+  case 99:
+  case 100:
+  case 0x65:
+  case 0x66:
+  case 0x67:
+  case 0x68:
+  case 0x69:
+  case 0x6a:
+switchD_8255e648_caseD_5b:
+    DAT_83ca448c = DAT_83ca448c + -2;
+    break;
+  case 0x20:
+    local_198 = DAT_83ca448c;
+    RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+    DAT_83ca44bc = 0;
+    goto switchD_8255e648_caseD_5b;
+  case 0x26:
+  case 0x27:
+  case 0x28:
+  case 0x29:
+  case 0x2a:
+  case 0x2b:
+  case 0x2c:
+  case 0x2d:
+  case 0x2e:
+  case 0x2f:
+  case 0x30:
+  case 0x31:
+  case 0x32:
+  case 0x33:
+  case 0x4b:
+  case 0x4c:
+    if (DAT_83ca44bc != 0) {
+      Scr_ClearOutParams();
+    }
+    DAT_83ca448c = DAT_83ca44b0 + 2;
+    DAT_83ca44b0[3] = 0.0;
+    break;
+  case 0x37:
+  case 0x38:
+  case 0x39:
+  case 0x3e:
+  case 0x3f:
+  case 0x40:
+    uVar20 = uVar20 + 3;
+    local_360 = (float *)uVar20;
+  case 0x45:
+  case 0x46:
+    if (DAT_83ca448c[1] == 9.80909e-45) {
+      MyAssertHandler(0xffffffff821552a8,0xb0c,0,0xffffffff82000f98,"fs.top->type != VAR_CODEPOS",0,
+                      0);
+    }
+    fVar18 = DAT_83ca448c[1];
+    while (fVar18 != 1.12104e-44) {
+      local_168 = DAT_83ca448c;
+      RemoveRefToValue(fVar18,*DAT_83ca448c);
+      pfVar32 = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c + -1;
+      DAT_83ca448c = pfVar32;
+      if (*pfVar33 == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0xb11,0,0xffffffff82000f98,"fs.top->type != VAR_CODEPOS")
+        ;
+      }
+      fVar18 = DAT_83ca448c[1];
+    }
+    DAT_83ca448c[1] = 0.0;
+    break;
+  case 0x3a:
+  case 0x3b:
+  case 0x3c:
+  case 0x3d:
+  case 0x41:
+  case 0x42:
+  case 0x43:
+  case 0x44:
+    uVar20 = uVar20 + 3;
+  case 0x49:
+  case 0x4a:
+LAB_8255ed04:
+    pbVar30 = (byte *)uVar20;
+    uVar20 = uVar20 + 1;
+    local_360 = (float *)uVar20;
+    for (uVar25 = (ulonglong)*pbVar30; uVar25 != 0; uVar25 = uVar25 - 1) {
+      local_158 = DAT_83ca448c;
+      RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+      DAT_83ca448c = DAT_83ca448c + -2;
+    }
+    DAT_83ca448c[3] = 0.0;
+    DAT_83ca448c = DAT_83ca448c + 2;
+    break;
+  case 0x47:
+  case 0x48:
+    local_160 = DAT_83ca448c;
+    RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+    DAT_83ca448c = DAT_83ca448c + -2;
+    goto LAB_8255ed04;
+  case 0x4e:
+    ClearVariableValue(0,DAT_83c4bac8);
+    local_358 = (HGDIOBJ)GetObjectInternal(0,DAT_83c4bac8);
+    goto switchD_8255e648_caseD_5b;
+  case 0x4f:
+    uVar20 = uVar20 + 1;
+    local_360 = (float *)uVar20;
+switchD_8255e648_caseD_9:
+    ClearVariableValue(0,DAT_83c4bac8);
+    local_358 = (HGDIOBJ)GetObjectInternal(0,DAT_83c4bac8);
+    break;
+  case 0x53:
+  case 0x54:
+  case 0x55:
+  case 0x56:
+    uVar20 = uVar20 + 2;
+    local_360 = (float *)uVar20;
+    goto switchD_8255e648_caseD_5b;
+  case 0x58:
+    uVar20 = (uVar20 - *(ushort *)uVar20) + 2;
+    local_360 = (float *)uVar20;
+    break;
+  case 0x59:
+  case 0x5a:
+    if (*(char *)(ushort *)uVar20 != 'A') {
+      MyAssertHandler(0xffffffff821552a8,0xa6e,0,0xffffffff82000f98,local_310,0,0);
+    }
+    uVar20 = uVar20 + 1;
+    local_360 = (float *)uVar20;
+    goto switchD_8255e648_caseD_6;
+  case 0x6c:
+  case 0x6e:
+  case 0x70:
+    local_188 = DAT_83ca448c;
+    RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+    DAT_83ca448c = DAT_83ca448c + -2;
+    goto LAB_8255ee88;
+  case 0x6f:
+    if (DAT_83ca448c[1] == 9.80909e-45) {
+      MyAssertHandler(0xffffffff821552a8,0xb3d,0,0xffffffff82000f98,"fs.top->type != VAR_CODEPOS",0,
+                      0);
+    }
+    fVar18 = DAT_83ca448c[1];
+    while (fVar18 != 1.12104e-44) {
+      local_150 = DAT_83ca448c;
+      RemoveRefToValue(fVar18,*DAT_83ca448c);
+      pfVar32 = DAT_83ca448c + -2;
+      pfVar33 = DAT_83ca448c + -1;
+      DAT_83ca448c = pfVar32;
+      if (*pfVar33 == 9.80909e-45) {
+        MyAssertHandler(0xffffffff821552a8,0xb42,0,0xffffffff82000f98,"fs.top->type != VAR_CODEPOS")
+        ;
+      }
+      fVar18 = DAT_83ca448c[1];
+    }
+    goto LAB_8255ee88;
+  case 0x72:
+    uVar25 = (ulonglong)DAT_83c9770c;
+    if (uVar25 != 0) {
+      do {
+        piVar3 = (int3 *)uVar20;
+        lVar24 = uVar20 + 4;
+        uVar20 = uVar20 + 7;
+        uVar25 = uVar25 - 1;
+        uVar29 = ((int)((uint)(uint3)piVar3[1] << 8) >> 10) + lVar24;
+      } while (uVar25 != 0);
+      local_360 = (float *)uVar20;
+      DAT_83c9770c = 0;
+      if ((*piVar3 == 0 && *(char *)((int)piVar3 + 3) == '\0') &&
+         (local_360 = (float *)uVar29, uVar20 = uVar29, (uVar29 & 0xffffffff) == 0)) {
+        MyAssertHandler(0xffffffff821552a8,0xb54,0,0xffffffff82000f98,"local_pos");
+      }
+    }
+switchD_8255e648_caseD_6:
+LAB_8255ee88:
+    local_1d8 = CONCAT44(DAT_83ca448c,local_1d8._4_4_);
+    RemoveRefToValue(DAT_83ca448c[1],*DAT_83ca448c);
+    goto switchD_8255e648_caseD_5b;
+  }
+  if (DAT_83ca44b8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0xb5b,0,0xffffffff82000f98,local_300);
+  }
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0xb5c,0,0xffffffff82000f98,"!scrVmPub.outparamcount");
+  }
+  if (((DAT_83ca44c4 != '\0') && (DAT_83ca44b4 == '\0')) &&
+     (iVar16 = Scr_IgnoreErrors(), iVar16 == 0)) {
+    DAT_83ca44c4 = '\0';
+    iVar16 = Sys_IsRemoteDebugServer();
+    if (iVar16 != 0) {
+      Scr_ShowConsole();
+      Scr_HitBreakpoint(DAT_83ca448c,uVar20,DAT_83ca4484,0);
+    }
+  }
+  uVar20 = (ulonglong)DAT_83c99738;
+  goto LAB_825582d0;
+switchD_82558444_caseD_82558400:
+  DAT_83ca44b6 = 1;
+  uVar13 = va(local_2f8,uVar28);
+  RuntimeError(uVar20,0,uVar13,0);
+  pfVar33 = DAT_83ca448c;
+  pfVar32 = local_164;
+  goto switchD_82558444_caseD_82558328;
+switchD_82558444_caseD_8255af34:
+  uVar25 = Scr_GetSelf(DAT_83ca4484);
+  local_358 = (HGDIOBJ)uVar25;
+  cVar19 = IsFieldObject();
+  pfVar33 = DAT_83ca448c;
+  pfVar32 = local_164;
+  if (cVar19 == '\0') goto LAB_8255e3ec;
+  goto switchD_82558444_caseD_82558328;
+}
+
+
+// 82552DA0  Scr_GetReturnPos  (script/scr_vm.cpp:3574)
+
+undefined * Scr_GetReturnPos(undefined4 *param_1)
+
+{
+  undefined *puVar1;
+  
+  if (1 < DAT_83ca44a8) {
+    puVar1 = *(undefined **)(DAT_83ca44ac + -0x18);
+    if (puVar1 != &DAT_83ca8c50) {
+      *param_1 = *(undefined4 *)(DAT_83ca44ac + -0x14);
+      return puVar1;
+    }
+  }
+  return (undefined *)0x0;
+}
+
+
+// 82552DE8  Scr_GetNextCodepos  (script/scr_vm.cpp:3596)
+
+void Scr_GetNextCodepos(undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4,
+                       undefined4 *param_5,undefined4 *param_6)
+
+{
+  undefined *puVar1;
+  ushort uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  ulonglong *puVar6;
+  undefined8 uVar5;
+  int iVar7;
+  char cVar9;
+  int iVar8;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ushort *puVar14;
+  int *piVar15;
+  undefined8 local_a0;
+  
+  puVar6 = (ulonglong *)__savegprlr();
+  iVar8 = 0;
+  *param_6 = 0;
+  *param_5 = *(undefined4 *)(DAT_83ca44ac + 4);
+  do {
+    uVar13 = param_2 + 1;
+    if (DAT_83c4ba9c != 0) {
+      MyAssertHandler(0xffffffff821552a8,0xe1a,0,0xffffffff82000f98,0xffffffff821509bc);
+    }
+    if (puVar6 == (ulonglong *)0x0) {
+      MyAssertHandler(0xffffffff821552a8,0xe1b,0,0xffffffff82000f98,0xffffffff8206ffb4);
+    }
+    if ((uVar13 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821552a8,0xe1c,0,0xffffffff82000f98,0xffffffff82002114);
+    }
+    if (DAT_83c4ba98 == '\0') {
+      MyAssertHandler(0xffffffff821552a8,0xe1d,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    }
+    puVar14 = (ushort *)uVar13;
+    iVar7 = (int)param_2;
+    if (param_4 == 2) {
+      switch((int)param_3 + -0x5b) {
+      case 0:
+      case 1:
+      case 3:
+      case 4:
+      case 7:
+      case 8:
+      case 10:
+      case 0xb:
+switchD_82552f28_caseD_0:
+        if (DAT_83ca44a8 < 0x20) {
+          *param_5 = 0;
+          __restgprlr((longlong)
+                      ((int)((uint)CONCAT21(CONCAT11(*(undefined1 *)puVar14,
+                                                     *(undefined1 *)(iVar7 + 2)),
+                                            *(undefined1 *)(iVar7 + 3)) << 8) >> 10) + uVar13);
+          return;
+        }
+        break;
+      case 2:
+      case 5:
+      case 6:
+      case 9:
+      case 0xc:
+      case 0xd:
+        if ((int)*puVar6 == 1) goto switchD_82552f28_caseD_0;
+        break;
+      case 0xe:
+      case 0x10:
+      case 0x11:
+switchD_82552f28_caseD_e:
+        if (((int)*puVar6 == 9) && (DAT_83ca44a8 < 0x20)) {
+          *param_5 = 0;
+          __restgprlr(*(int *)puVar6);
+          return;
+        }
+        break;
+      case 0xf:
+      case 0x12:
+      case 0x13:
+        if (*(int *)((int)puVar6 + -4) == 1) goto switchD_82552f28_caseD_e;
+      }
+    }
+    switch((int)param_3) {
+    case 0:
+    case 1:
+      *param_6 = 1;
+      if ((1 < DAT_83ca44a8) &&
+         (puVar1 = *(undefined **)(DAT_83ca44ac + -0x18), puVar1 != &DAT_83ca8c50)) {
+        *param_5 = *(undefined4 *)(DAT_83ca44ac + -0x14);
+        __restgprlr(puVar1);
+        return;
+      }
+      __restgprlr(0);
+      return;
+    case 2:
+    case 3:
+    case 0x10:
+    case 0x11:
+    case 0x12:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x16:
+    case 0x18:
+    case 0x1d:
+    case 0x1e:
+    case 0x1f:
+    case 0x20:
+    case 0x21:
+    case 0x22:
+    case 0x25:
+    case 0x26:
+    case 0x29:
+    case 0x2a:
+    case 0x2b:
+    case 0x2c:
+    case 0x2d:
+    case 0x38:
+    case 0x3b:
+    case 0x3c:
+    case 0x3d:
+    case 0x41:
+    case 0x45:
+    case 0x49:
+    case 0x58:
+    case 0x59:
+    case 0x5a:
+    case 0x69:
+    case 0x6a:
+    case 0x71:
+    case 0x72:
+    case 0x74:
+    case 0x75:
+    case 0x76:
+    case 0x7d:
+    case 0x7e:
+    case 0x7f:
+    case 0x80:
+    case 0x81:
+    case 0x82:
+    case 0x83:
+    case 0x84:
+    case 0x85:
+    case 0x86:
+    case 0x87:
+    case 0x88:
+    case 0x89:
+    case 0x8a:
+    case 0x8b:
+    case 0x8c:
+    case 0x8d:
+    case 0x8e:
+    case 0x8f:
+    case 0x92:
+    case 0x93:
+    case 0x94:
+    case 0x95:
+    case 0x98:
+    case 0x99:
+    case 0x9a:
+    case 0xa1:
+    case 0xa2:
+    case 0xa3:
+      break;
+    case 4:
+    case 5:
+    case 6:
+    case 0x1c:
+    case 0x23:
+    case 0x24:
+    case 0x28:
+    case 0x39:
+    case 0x3a:
+    case 0x3f:
+    case 0x47:
+    case 0x48:
+    case 0x6b:
+    case 0x6c:
+    case 0x6d:
+    case 0x6e:
+    case 0x6f:
+    case 0x70:
+    case 0x73:
+    case 0x9f:
+    case 0xa0:
+      goto switchD_82553008_caseD_4;
+    case 7:
+    case 8:
+    case 10:
+    case 0xb:
+    case 0xd:
+    case 0xe:
+    case 0x1b:
+    case 0x27:
+    case 0x2e:
+    case 0x2f:
+    case 0x30:
+    case 0x31:
+    case 0x32:
+    case 0x33:
+    case 0x34:
+    case 0x35:
+    case 0x36:
+    case 0x37:
+    case 0x40:
+    case 0x43:
+    case 0x44:
+    case 0x46:
+    case 0x4a:
+    case 0x4b:
+    case 0x4c:
+    case 0x4d:
+    case 0x4e:
+    case 0x4f:
+    case 0x51:
+    case 0x52:
+    case 0x53:
+    case 0x54:
+    case 0x55:
+    case 0x56:
+    case 0x90:
+    case 0x9c:
+    case 0x9d:
+    case 0x9e:
+      uVar13 = param_2 + 3;
+      break;
+    case 9:
+    case 0xc:
+    case 0x17:
+      uVar13 = param_2 + 5;
+      break;
+    case 0xf:
+      uVar13 = (param_2 + 4 & 0xfffffffc) + 0xc;
+      break;
+    case 0x19:
+    case 0x1a:
+    case 0x50:
+    case 0x57:
+    case 0x5b:
+    case 0x5c:
+    case 0x5d:
+    case 0x62:
+    case 99:
+    case 100:
+      uVar13 = param_2 + 4;
+      break;
+    default:
+      if (DAT_84013128 == 0) {
+        uVar5 = va(0xffffffff821553b8,param_3);
+        MyAssertHandler(0xffffffff821552a8,0xf96,0,uVar5);
+      }
+      break;
+    case 0x5e:
+    case 0x5f:
+    case 0x60:
+    case 0x61:
+    case 0x65:
+    case 0x66:
+    case 0x67:
+    case 0x68:
+      uVar13 = param_2 + 4;
+switchD_82553008_caseD_4:
+      uVar13 = uVar13 + 1;
+      break;
+    case 0x77:
+    case 0x79:
+      uVar13 = param_2 + 3;
+      uVar11 = (ulonglong)*puVar14;
+      iVar7 = Scr_SkipIntructions();
+      if (iVar7 != 0) {
+LAB_8255333c:
+        __restgprlr(uVar11 + param_2 + 3);
+        return;
+      }
+      uVar12 = *puVar6;
+      local_a0._4_4_ = (int)uVar12;
+      local_a0._0_4_ = (int)(uVar12 >> 0x20);
+      uVar3 = local_a0._0_4_;
+      uVar4 = local_a0._4_4_;
+      local_a0 = uVar12;
+      AddRefToValue(uVar4,uVar3);
+      if (local_a0._4_4_ == 6) {
+        local_a0 = (ulonglong)CONCAT14(local_a0._0_4_ != 0,6);
+      }
+      else {
+        Scr_CastBool_NonInteger(&local_a0);
+      }
+      if (DAT_83c4ba9c == 0) {
+        if (local_a0._4_4_ != 6) {
+          MyAssertHandler(0xffffffff821552a8,0xe64,0,0xffffffff82000f98,0xffffffff8215539c);
+        }
+        if (local_a0._0_4_ == 0) goto LAB_8255333c;
+        goto LAB_825534ac;
+      }
+      break;
+    case 0x78:
+    case 0x7a:
+      uVar13 = param_2 + 3;
+      uVar11 = (ulonglong)*puVar14;
+      iVar7 = Scr_SkipIntructions();
+      if (iVar7 != 0) goto LAB_8255333c;
+      uVar12 = *puVar6;
+      local_a0._4_4_ = (int)uVar12;
+      local_a0._0_4_ = (int)(uVar12 >> 0x20);
+      uVar3 = local_a0._0_4_;
+      uVar4 = local_a0._4_4_;
+      local_a0 = uVar12;
+      AddRefToValue(uVar4,uVar3);
+      if (local_a0._4_4_ == 6) {
+        local_a0 = (ulonglong)CONCAT14(local_a0._0_4_ != 0,6);
+      }
+      else {
+        Scr_CastBool_NonInteger(&local_a0);
+      }
+      if (DAT_83c4ba9c == 0) {
+        if (local_a0._4_4_ != 6) {
+          MyAssertHandler(0xffffffff821552a8,0xe77,0,0xffffffff82000f98,0xffffffff8215539c);
+        }
+        if (local_a0._0_4_ != 0) {
+          __restgprlr(uVar11 + uVar13);
+          return;
+        }
+        goto LAB_825534ac;
+      }
+      break;
+    case 0x7b:
+      __restgprlr(CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)puVar14,*(undefined1 *)(iVar7 + 2)),
+                                    *(undefined1 *)(iVar7 + 3)),*(undefined1 *)(iVar7 + 4)) + uVar13
+                  + 4);
+      return;
+    case 0x7c:
+      uVar13 = param_2 + 3;
+      uVar2 = *puVar14;
+      iVar7 = Scr_SkipIntructions();
+      if (iVar7 == 0) {
+        __restgprlr(uVar13 - uVar2);
+        return;
+      }
+      break;
+    case 0x96:
+      lVar10 = CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)puVar14,*(undefined1 *)(iVar7 + 2)),
+                                 *(undefined1 *)(iVar7 + 3)),*(undefined1 *)(iVar7 + 4)) + uVar13;
+      uVar13 = lVar10 + 6;
+      uVar2 = *(ushort *)((int)lVar10 + 4);
+      uVar11 = (ulonglong)uVar2;
+      iVar7 = Scr_SkipIntructions();
+      if (iVar7 == 0) {
+        if ((int)*puVar6 == 2) {
+          iVar8 = *(int *)puVar6;
+        }
+        else {
+          if (((int)*puVar6 != 6) || (cVar9 = IsValidArrayIndex(*(int *)puVar6), cVar9 == '\0')) {
+            __restgprlr(uVar11 * 7 + uVar13);
+            return;
+          }
+          iVar8 = GetInternalVariableIndex(*(int *)puVar6);
+        }
+      }
+      if (uVar2 != 0) {
+        if ((iVar8 == 0) && (iVar7 = Scr_SkipIntructions(), iVar7 == 0)) {
+          MyAssertHandler(0xffffffff821552a8,0xeac,0,0xffffffff82000f98,0xffffffff82155378);
+        }
+        do {
+          lVar10 = uVar13 + 4;
+          piVar15 = (int *)uVar13;
+          uVar13 = uVar13 + 7;
+          uVar12 = ((int)((uint)CONCAT21(CONCAT11(*(undefined1 *)lVar10,
+                                                  *(undefined1 *)((int)piVar15 + 5)),
+                                         *(undefined1 *)((int)piVar15 + 6)) << 8) >> 10) + lVar10;
+          if (*piVar15 == iVar8) {
+            if ((uVar12 & 0xffffffff) == 0) {
+              MyAssertHandler(0xffffffff821552a8,0xeb5,0,0xffffffff82000f98,0xffffffff82002114);
+            }
+            __restgprlr(uVar12);
+            return;
+          }
+          uVar11 = uVar11 - 1;
+        } while (uVar11 != 0);
+        if ((*piVar15 == 0) && (uVar13 = uVar12, (uVar12 & 0xffffffff) == 0)) {
+          MyAssertHandler(0xffffffff821552a8,0xebf,0,0xffffffff82000f98,0xffffffff82002114);
+          __restgprlr(uVar12);
+          return;
+        }
+      }
+      goto LAB_825534ac;
+    case 0x97:
+      __restgprlr((ulonglong)CONCAT11(*(undefined1 *)puVar14,*(undefined1 *)(iVar7 + 2)) * 7 +
+                  uVar13 + 2);
+      return;
+    case 0x9b:
+      uVar13 = param_2 + 9;
+    }
+    DAT_83c4baa0 = 0;
+    DAT_83c4ba9c = 0;
+    DAT_83c97720 = 0;
+    param_3 = (ulonglong)*(byte *)uVar13;
+    param_2 = uVar13;
+  } while (*(byte *)uVar13 == 0x41);
+LAB_825534ac:
+  __restgprlr(uVar13);
+  return;
+}
+
+
 // 82553720  VM_CancelNotifyInternal  (script/scr_vm.cpp:4011)
 
 void VM_CancelNotifyInternal
@@ -254,19 +4637,16 @@ void VM_CancelNotifyInternal
   uVar1 = __savegprlr_24();
   uVar2 = Scr_GetThreadNotifyName(param_2);
   if ((param_5 & 0xffffffff) != (uVar2 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0xfac,0,0xffffffff82000f98,0xffffffff821554a8);
   }
   uVar3 = FindObjectVariable(DAT_83c4bab0,uVar1);
   uVar2 = FindObject(DAT_83c4bab0,uVar3);
   if ((param_3 & 0xffffffff) != (uVar2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0xfad,0,0xffffffff82000f98,0xffffffff82155430);
   }
   uVar3 = FindVariable(param_3,param_5);
   uVar2 = FindObject(param_3,uVar3);
   if ((param_4 & 0xffffffff) != (uVar2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0xfae,0,0xffffffff82000f98,0xffffffff821553d0);
   }
   Scr_RemoveThreadNotifyName(param_2);
@@ -286,21 +4666,316 @@ void VM_CancelNotifyInternal
 
 // 82553858  VM_CancelNotify  (script/scr_vm.cpp:4031)
 
-void VM_CancelNotify(void)
+void VM_CancelNotify(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  short sVar4;
+  undefined8 uVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = FindObjectVariable(DAT_83c4bab0,uVar1);
+  uVar2 = FindObject(DAT_83c4bab0,uVar2);
+  sVar4 = Scr_GetThreadNotifyName(param_2);
+  if (sVar4 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0xfc6,0,0xffffffff82000f98,0xffffffff8214e184);
+  }
+  uVar3 = FindVariable(uVar2,sVar4);
+  uVar3 = FindObject(uVar2,uVar3);
+  VM_CancelNotifyInternal(uVar1,param_2,uVar2,uVar3,sVar4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82553908  VM_ArchiveStack  (script/scr_vm.cpp:4045)
 
-void VM_ArchiveStack(void)
+void VM_ArchiveStack(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  ushort uVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  uint uVar7;
+  int iVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  ushort *puVar12;
+  undefined4 *puVar13;
+  undefined1 *puVar14;
+  ushort *puVar15;
+  
+  iVar5 = __savegprlr();
+  uVar10 = iVar5 - DAT_83ca4490 >> 3;
+  if (uVar10 != (uVar10 & 0xffff)) {
+    MyAssertHandler(0xffffffff821552a8,0xfe2,0,0xffffffff82000f98,0xffffffff8209b460);
+  }
+  uVar11 = uVar10 * 5 + 0xb;
+  if (uVar11 != (uVar11 & 0xffff)) {
+    MyAssertHandler(0xffffffff821552a8,0xfe4,0,0xffffffff82000f98,0xffffffff82152090);
+  }
+  puVar6 = (undefined4 *)MT_Alloc(uVar11,1);
+  iVar3 = DAT_83ca4488;
+  uVar7 = DAT_83ca4484;
+  DAT_83c6fb08 = DAT_83c6fb08 + 1;
+  puVar14 = (undefined1 *)((int)puVar6 + uVar10 * 5 + 0xb);
+  *(short *)(puVar6 + 2) = (short)DAT_83ca4484;
+  *(short *)(puVar6 + 1) = (short)uVar10;
+  *(short *)((int)puVar6 + 6) = (short)uVar11;
+  *puVar6 = param_2;
+  *(char *)((int)puVar6 + 10) = (char)DAT_83c4baa4;
+  DAT_83ca44a0 = DAT_83ca44a0 + iVar3 * -4;
+  if ((int)puVar14 - (int)puVar6 != uVar11) {
+    MyAssertHandler(0xffffffff821552a8,0xff4,0,0xffffffff82000f98,0xffffffff82155604);
+  }
+  if (uVar10 != 0) {
+    puVar13 = (undefined4 *)(iVar5 + 0xc);
+    do {
+      if (puVar13[-2] == 7) {
+        DAT_83ca44a8 = DAT_83ca44a8 - 1;
+        DAT_83ca44ac = DAT_83ca44ac + -6;
+        *(undefined4 *)(puVar14 + -4) = *DAT_83ca44ac;
+        DAT_83ca44a0 = DAT_83ca44a0 + DAT_83ca44ac[2] * -4;
+        uVar7 = GetParentLocalId(uVar7);
+      }
+      else {
+        *(undefined4 *)(puVar14 + -4) = puVar13[-3];
+      }
+      puVar14 = puVar14 + -5;
+      if (((int)puVar13[-2] < 0) || (0xff < (int)puVar13[-2])) {
+        MyAssertHandler(0xffffffff821552a8,0x1007,0,0xffffffff82000f98,0xffffffff821555dc);
+      }
+      puVar13 = puVar13 + -2;
+      uVar10 = uVar10 - 1;
+      *puVar14 = (char)*puVar13;
+    } while (uVar10 != 0);
+  }
+  uVar10 = DAT_83ca44a8;
+  if ((DAT_83c4ba96 != '\0') && (1 < (int)DAT_83ca44a8)) {
+    if (0x8fff < uVar7) {
+      MyAssertHandler(0xffffffff821552a8,0x1011,0,0xffffffff82155590,uVar7,0x9000);
+    }
+    puVar15 = (ushort *)(&DAT_83727338 + uVar7 * 2);
+    if (*(short *)(&DAT_83727338 + uVar7 * 2) != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1012,0,0xffffffff82000f98,0xffffffff82155574);
+    }
+    iVar5 = 0;
+    uVar11 = DAT_83727328;
+    uVar9 = DAT_83ca44a8;
+    puVar12 = puVar15;
+    if (0 < (int)DAT_83ca44a8) {
+      do {
+        uVar11 = DAT_83727328;
+        if (DAT_83727328 == 0) {
+          *puVar15 = 1;
+          puVar12 = puVar15;
+          break;
+        }
+        puVar12 = (ushort *)(&DAT_83739710 + DAT_83727328 * 2);
+        iVar3 = DAT_83727328 * 4;
+        DAT_83727328 = (uint)*puVar12;
+        iVar8 = Scr_IsInOpcodeMemory(0xffffffff83ca8c50);
+        if (iVar8 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_vm.cpp",
+                          0x1025,0,&DAT_82000f98,0xffffffff82155550);
+        }
+        iVar8 = Scr_IsInOpcodeMemory((&DAT_83ca44b0)[(uVar9 - iVar5) * 6]);
+        if (iVar8 == 0) {
+          *(undefined4 *)(&DAT_83703328 + iVar3) = 0xffffffff;
+        }
+        else {
+          *(uint *)(&DAT_83703328 + iVar3) =
+               ((&DAT_83ca44b0)[(uVar9 - iVar5) * 6] - DAT_83c4baf4) * 2 |
+               (uint)LZCOUNT(*(undefined4 *)(&DAT_83ca44b4 + (uVar9 - iVar5) * 0x18)) >> 5;
+        }
+        uVar9 = DAT_83ca44a8;
+        iVar5 = iVar5 + 1;
+        *puVar12 = 0;
+        *puVar15 = (ushort)uVar11;
+        uVar11 = DAT_83727328;
+        puVar15 = puVar12;
+      } while (iVar5 < (int)uVar9);
+    }
+    uVar10 = uVar9;
+    if (0x8fff < DAT_83ca44e4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_vm.cpp",0x1037,0,
+                      0xffffffff821554e0,DAT_83ca44e4,0x9000);
+      uVar11 = DAT_83727328;
+      uVar10 = DAT_83ca44a8;
+    }
+    uVar1 = *(ushort *)(&DAT_83727338 + DAT_83ca44e4 * 2);
+    while (uVar1 != 0) {
+      if ((uVar11 == 0) || (uVar1 == 1)) {
+        *puVar12 = 1;
+        break;
+      }
+      if (0x3f < uVar9) {
+        *puVar12 = 0;
+        break;
+      }
+      puVar15 = (ushort *)(&DAT_83739710 + uVar11 * 2);
+      iVar5 = uVar11 * 4;
+      uVar4 = (ushort)uVar11;
+      uVar2 = *(undefined4 *)(&DAT_83703328 + ((uint)uVar1 << 2));
+      uVar9 = uVar9 + 1;
+      uVar11 = (uint)*puVar15;
+      uVar1 = *(ushort *)(&DAT_83739710 + ((uint)uVar1 << 1));
+      *puVar15 = 0;
+      *puVar12 = uVar4;
+      *(undefined4 *)(&DAT_83703328 + iVar5) = uVar2;
+      DAT_83727328 = uVar11;
+      puVar12 = puVar15;
+    }
+  }
+  DAT_83ca44a8 = uVar10 - 1;
+  DAT_83ca44ac = DAT_83ca44ac + -6;
+  AddRefToObject(uVar7);
+  DAT_83ca4484 = uVar7;
+  __restgprlr(puVar6);
+  return;
+}
+
+
+// 82553D88  Scr_AddLocalVars  (script/scr_vm.cpp:4199)
+
+void Scr_AddLocalVars(void)
+
+{
+  undefined4 *puVar1;
+  uint uVar3;
+  ulonglong uVar2;
+  int iVar4;
+  
+  uVar3 = __savegprlr_28();
+  puVar1 = DAT_83ca44a0;
+  iVar4 = 0;
+  for (uVar2 = FindLastSibling(); (uVar2 & 0xffffffff) != 0;
+      uVar2 = FindPrevSibling((longlong)(int)(uVar3 & 1) * 0xc800,uVar2)) {
+    puVar1 = puVar1 + 1;
+    *puVar1 = (int)uVar2;
+    iVar4 = iVar4 + 1;
+  }
+  DAT_83ca44a0 = DAT_83ca44a0 + iVar4;
+  __restgprlr_28(iVar4);
+  return;
+}
+
+
+// 8255F008  VM_UnarchiveStack  (script/scr_vm.cpp:4221)
+
+void VM_UnarchiveStack(undefined8 param_1,longlong param_2)
+
+{
+  byte bVar1;
+  ushort uVar2;
+  undefined8 uVar3;
+  uint *puVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  undefined4 *puVar7;
+  int *piVar8;
+  uint uVar10;
+  ulonglong uVar9;
+  longlong lVar11;
+  int iVar12;
+  
+  uVar3 = __savegprlr_21();
+  if (DAT_83ca44a8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1084,0,0xffffffff82000f98,0xffffffff8214fdd0);
+  }
+  puVar4 = (uint *)param_2;
+  if (*puVar4 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1085,0,0xffffffff82000f98,0xffffffff82156a3c);
+  }
+  if (DAT_83ca4490 != &DAT_83ca47c8) {
+    MyAssertHandler(0xffffffff821552a8,0x1086,0,0xffffffff82000f98,0xffffffff82156a18);
+  }
+  dataCacheBlockTouch((ulonglong)*puVar4);
+  puVar7 = (undefined4 *)&DAT_83ca47c8;
+  *DAT_83ca44ac = *puVar4;
+  DAT_83ca44ac = DAT_83ca44ac + 6;
+  DAT_83ca44a8 = DAT_83ca44a8 + 1;
+  uVar10 = (uint)*(ushort *)(puVar4 + 1);
+  if (*(ushort *)(puVar4 + 1) != 0) {
+    lVar11 = param_2 + 10;
+    puVar6 = puVar7;
+    do {
+      iVar5 = (int)lVar11;
+      bVar1 = *(byte *)(iVar5 + 1);
+      puVar7 = puVar6 + 2;
+      uVar10 = uVar10 - 1;
+      puVar6[3] = (uint)bVar1;
+      if (bVar1 == 7) {
+        if (0x1f < DAT_83ca44a8) {
+          MyAssertHandler(0xffffffff821552a8,0x109a,0,0xffffffff82000f98,0xffffffff821569e8);
+        }
+        *DAT_83ca44ac = *(uint *)(iVar5 + 2);
+        DAT_83ca44ac = DAT_83ca44ac + 6;
+        DAT_83ca44a8 = DAT_83ca44a8 + 1;
+      }
+      else {
+        *puVar7 = *(undefined4 *)(iVar5 + 2);
+      }
+      lVar11 = lVar11 + 5;
+      puVar6 = puVar7;
+    } while (uVar10 != 0);
+  }
+  uVar2 = *(ushort *)(puVar4 + 2);
+  uVar9 = (ulonglong)uVar2;
+  DAT_83ca4480 = *puVar4;
+  DAT_83ca4484 = (uint)uVar2;
+  DAT_83ca448c = puVar7;
+  Scr_ClearWaitTime(uVar3);
+  if (0x1f < DAT_83ca44a8) {
+    MyAssertHandler(0xffffffff821552a8,0x10c2,0,0xffffffff82000f98,0xffffffff821569e8);
+  }
+  iVar5 = DAT_83ca44a8;
+  iVar12 = DAT_83ca44a8 + -1;
+  *(uint *)(&DAT_83ca44cc + DAT_83ca44a8 * 0x18) = (uint)uVar2;
+  if (iVar12 != 0) {
+    puVar7 = &DAT_83ca44e4 + (iVar12 + (iVar5 + -1) * 2) * 2;
+    do {
+      uVar9 = GetParentLocalId(uVar9);
+      iVar12 = iVar12 + -1;
+      puVar7 = puVar7 + -6;
+      *puVar7 = (int)uVar9;
+    } while (iVar12 != 0);
+  }
+  iVar5 = 1;
+  if (DAT_83ca44a8 != 1) {
+    piVar8 = (int *)&DAT_83ca44d0;
+    do {
+      puVar7 = DAT_83ca44a0;
+      uVar10 = piVar8[5];
+      iVar12 = 0;
+      for (uVar9 = FindLastSibling(); (uVar9 & 0xffffffff) != 0;
+          uVar9 = FindPrevSibling((longlong)(int)(uVar10 & 1) * 0xc800,uVar9)) {
+        puVar7 = puVar7 + 1;
+        *puVar7 = (int)uVar9;
+        iVar12 = iVar12 + 1;
+      }
+      iVar5 = iVar5 + 1;
+      DAT_83ca44a0 = DAT_83ca44a0 + iVar12;
+      piVar8 = piVar8 + 6;
+      *piVar8 = iVar12;
+    } while (iVar5 != DAT_83ca44a8);
+  }
+  DAT_83ca4488 = Scr_AddLocalVars(DAT_83ca4484);
+  if ((uint)*(byte *)((int)puVar4 + 10) != (DAT_83c4baa4 & 0xff)) {
+    Scr_ResetTimeout();
+  }
+  DAT_83c6fb08 = DAT_83c6fb08 + -1;
+  MT_Free(param_2,*(undefined2 *)((int)puVar4 + 6));
+  if (DAT_83ca47cc != 7) {
+    MyAssertHandler(0xffffffff821552a8,0x10df,0,0xffffffff82000f98,0xffffffff821569c0);
+  }
+  __restgprlr_21();
+  return;
 }
 
 
@@ -326,7 +5001,6 @@ void VM_TerminateStack(undefined8 param_1,ulonglong param_2,longlong param_3)
   
   uVar5 = __savegprlr_22();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x10ef,0,0xffffffff82000f98,0xffffffff82152648);
   }
   piVar4 = (int *)param_3;
@@ -347,30 +5021,27 @@ void VM_TerminateStack(undefined8 param_1,ulonglong param_2,longlong param_3)
         RemoveRefToObject(uVar9);
         if ((uVar9 & 0xffffffff) == (uVar5 & 0xffffffff)) {
           if ((param_2 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff821552a8,0x110f,0,0xffffffff82000f98,0xffffffff8215565c);
           }
           *(char *)lVar10 = '\0';
-          if ((int)uVar11 <= (int)(uint)*(ushort *)(piVar4 + 1)) {
-            Scr_SetThreadWaitTime(param_2,DAT_83c4baa4);
-            if (iVar3 != 0) {
-              *piVar4 = iVar3;
-              *(short *)(piVar4 + 2) = (short)uVar8;
-              *(short *)(piVar4 + 1) = (short)uVar11;
-              local_5c = 0xc;
-              local_60 = piVar4;
-              uVar6 = GetVariable(DAT_83c4baa8,DAT_83c4baa4);
-              uVar6 = GetArray(DAT_83c4baa8,uVar6);
-              uVar7 = GetNewObjectVariable(uVar6,param_2);
-              SetNewVariableValue(uVar6,uVar7,&local_60);
-              __restgprlr_22();
-              return;
-            }
-                    /* WARNING: Subroutine does not return */
+          if ((int)(uint)*(ushort *)(piVar4 + 1) < (int)uVar11) {
+            MyAssertHandler(0xffffffff821552a8,0x1114,0,0xffffffff82000f98,0xffffffff82155640);
+          }
+          Scr_SetThreadWaitTime(param_2,DAT_83c4baa4);
+          if (iVar3 == 0) {
             MyAssertHandler(0xffffffff821552a8,0x1117,0,0xffffffff82000f98,0xffffffff82155630);
           }
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff821552a8,0x1114,0,0xffffffff82000f98,0xffffffff82155640);
+          *piVar4 = iVar3;
+          *(short *)(piVar4 + 2) = (short)uVar8;
+          *(short *)(piVar4 + 1) = (short)uVar11;
+          local_5c = 0xc;
+          local_60 = piVar4;
+          uVar6 = GetVariable(DAT_83c4baa8,DAT_83c4baa4);
+          uVar6 = GetArray(DAT_83c4baa8,uVar6);
+          uVar7 = GetNewObjectVariable(uVar6,param_2);
+          SetNewVariableValue(uVar6,uVar7,&local_60);
+          __restgprlr_22();
+          return;
         }
       }
       else {
@@ -382,19 +5053,17 @@ void VM_TerminateStack(undefined8 param_1,ulonglong param_2,longlong param_3)
     } while ((int)uVar12 != 0);
   }
   if ((uVar8 & 0xffffffff) != (uVar5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1125,0,0xffffffff82000f98,0xffffffff8215568c);
   }
-  if ((param_2 & 0xffffffff) == (uVar8 & 0xffffffff)) {
-    Scr_KillThread(uVar8);
-    RemoveRefToObject(uVar8);
-    DAT_83c6fb08 = DAT_83c6fb08 + -1;
-    MT_Free(param_3,*(undefined2 *)((int)piVar4 + 6));
-    __restgprlr_22();
-    return;
+  if ((param_2 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821552a8,0x1126,0,0xffffffff82000f98,0xffffffff82155674);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821552a8,0x1126,0,0xffffffff82000f98,0xffffffff82155674);
+  Scr_KillThread(uVar8);
+  RemoveRefToObject(uVar8);
+  DAT_83c6fb08 = DAT_83c6fb08 + -1;
+  MT_Free(param_3,*(undefined2 *)((int)piVar4 + 6));
+  __restgprlr_22();
+  return;
 }
 
 
@@ -415,12 +5084,10 @@ void Scr_GetStackThreadPos(undefined8 param_1,longlong param_2,ulonglong param_3
   
   uVar3 = __savegprlr_20();
   if (DAT_83c4ba96 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x113e,0,0xffffffff82000f98,0xffffffff8214fda4);
   }
   uVar4 = GetStartLocalId(uVar3);
   if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1141,0,0xffffffff82000f98,0xffffffff82152648);
   }
   piVar2 = (int *)param_2;
@@ -440,7 +5107,6 @@ void Scr_GetStackThreadPos(undefined8 param_1,longlong param_2,ulonglong param_3
         if ((uVar7 & 0xffffffff) == (uVar3 & 0xffffffff)) {
           uVar5 = uVar7;
           if ((uVar4 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff821552a8,0x1161,0,0xffffffff82000f98,0xffffffff8215565c);
           }
           break;
@@ -450,7 +5116,6 @@ void Scr_GetStackThreadPos(undefined8 param_1,longlong param_2,ulonglong param_3
         }
         iVar6 = iVar1;
         if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821552a8,0x115c,0,0xffffffff82000f98,0xffffffff82155630);
         }
       }
@@ -486,7 +5151,6 @@ void VM_TrimStack(undefined8 param_1,longlong param_2,ulonglong param_3)
   
   uVar5 = __savegprlr_22();
   if ((uVar5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1179,0,0xffffffff82000f98,0xffffffff82152648);
   }
   iVar3 = (int)param_2;
@@ -504,7 +5168,6 @@ void VM_TrimStack(undefined8 param_1,longlong param_2,ulonglong param_3)
         iVar7 = FindObjectVariable(DAT_83c4baac,uVar9);
         if (iVar7 != 0) {
           if ((uVar5 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff821552a8,0x1191,0,0xffffffff82000f98,0xffffffff8215565c);
           }
           *(short *)(iVar3 + 8) = (short)uVar9;
@@ -537,7 +5200,6 @@ void VM_TrimStack(undefined8 param_1,longlong param_2,ulonglong param_3)
     } while ((int)uVar12 != 0);
   }
   if ((uVar5 & 0xffffffff) != (uVar8 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x11b8,0,0xffffffff82000f98,0xffffffff82155674);
   }
   if ((param_3 & 0xff) != 0) {
@@ -569,12 +5231,12 @@ void Scr_TerminateRunningThread(void)
   iVar5 = DAT_83ca44a8;
   iVar3 = DAT_83ca44a8;
   if (DAT_83ca44a8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x11cd,0,0xffffffff82000f98,0xffffffff821503cc);
+    iVar5 = DAT_83ca44a8;
+    iVar3 = DAT_83ca44a8;
   }
   while( true ) {
     if (iVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x11d2,0,0xffffffff82000f98,0xffffffff82150170);
     }
     if (*(int *)(&DAT_83ca44cc + iVar5 * 0x18) == iVar1) break;
@@ -586,7 +5248,7 @@ void Scr_TerminateRunningThread(void)
     }
   }
   if (iVar5 <= iVar3) {
-    puVar4 = (undefined4 *)(&DAT_83ca44c8 + iVar3 * 0x18);
+    puVar4 = &DAT_83ca44c8 + iVar3 * 6;
     do {
       if (DAT_83c4ba96 == '\0') {
         *puVar4 = &DAT_83ca8c50;
@@ -608,8 +5270,35 @@ void Scr_TerminateRunningThread(void)
 void Scr_GetRunningThreadPos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff821552a8,0x11f3,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  if (DAT_83ca44a8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x11f5,0,0xffffffff82000f98,0xffffffff821503cc);
+    if (DAT_83ca44a8 == 0) goto LAB_82554570;
+  }
+  piVar2 = (int *)(&DAT_83ca44cc + DAT_83ca44a8 * 0x18);
+  iVar3 = DAT_83ca44a8;
+  do {
+    if (*piVar2 == iVar1) {
+      __restgprlr_28(-(ulonglong)((ulonglong)(uint)(&DAT_83ca44c8)[iVar3 * 6] != 0xffffffff83ca8c50)
+                     & (ulonglong)(uint)(&DAT_83ca44c8)[iVar3 * 6]);
+      return;
+    }
+    iVar3 = iVar3 + -1;
+    piVar2 = piVar2 + -6;
+  } while (iVar3 != 0);
+LAB_82554570:
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1201,0,0xffffffff8202882c);
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -633,12 +5322,10 @@ void Scr_TerminateWaitThread(undefined8 param_1,undefined8 param_2)
   uVar4 = FindObject(DAT_83c4baa8,uVar4);
   uVar5 = FindObjectVariable(uVar4,param_2);
   if ((uVar5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1212,0,0xffffffff82000f98,0xffffffff821556e4);
   }
   iVar6 = GetValueType((longlong)(int)((uint)uVar4 & 1) * 0xc800,uVar5);
   if (iVar6 != 0xc) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1213,0,0xffffffff82000f98,0xffffffff821556a4);
   }
   puVar7 = (undefined4 *)GetVariableValueAddress(uVar4,uVar5);
@@ -653,6 +5340,35 @@ void Scr_TerminateWaitThread(undefined8 param_1,undefined8 param_2)
   }
   VM_TerminateStack(uVar2,param_2,uVar1);
   __restgprlr_24();
+  return;
+}
+
+
+// 82554720  Scr_CancelWaittill  (script/scr_vm.cpp:4644)
+
+void Scr_CancelWaittill(void)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Scr_GetSelf();
+  uVar3 = FindObjectVariable(DAT_83c4baac,uVar2);
+  uVar3 = FindObject(DAT_83c4baac,uVar3);
+  uVar4 = FindObjectVariable(uVar3,uVar1);
+  puVar5 = (undefined4 *)GetVariableValueAddress(uVar3,uVar4);
+  VM_CancelNotify(*puVar5,uVar1);
+  RemoveObjectVariable(uVar3,uVar1);
+  iVar6 = GetArraySize(uVar3);
+  if (iVar6 == 0) {
+    RemoveObjectVariable(DAT_83c4baac,uVar2);
+  }
+  __restgprlr_28();
   return;
 }
 
@@ -680,12 +5396,10 @@ void Scr_TerminateWaittillThread(undefined8 param_1,undefined8 param_2)
   if (sVar11 == 0) {
     uVar8 = FindObjectVariable(DAT_83c4bab4,param_2);
     if ((uVar8 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1258,0,0xffffffff82000f98,0xffffffff821556e4);
     }
     iVar10 = GetValueType((longlong)(int)(DAT_83c4bab4 & 1) * 0xc800,uVar8);
     if (iVar10 != 0xc) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1259,0,0xffffffff82000f98,0xffffffff821556f0);
     }
     puVar9 = (undefined4 *)GetVariableValueAddress(DAT_83c4bab4,uVar8);
@@ -710,12 +5424,10 @@ void Scr_TerminateWaittillThread(undefined8 param_1,undefined8 param_2)
     uVar7 = FindObject(uVar6,uVar7);
     uVar8 = FindObjectVariable(uVar7,param_2);
     if ((uVar8 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1247,0,0xffffffff82000f98,0xffffffff821556e4);
     }
     iVar10 = GetValueType((longlong)(int)((uint)uVar7 & 1) * 0xc800,uVar8);
     if (iVar10 != 0xc) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1248,0,0xffffffff82000f98,0xffffffff82155748);
     }
     puVar9 = (undefined4 *)GetVariableValueAddress(uVar7,uVar8);
@@ -742,8 +5454,31 @@ LAB_82554a0c:
 void Scr_GetWaittillThreadStackParentId(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  short sVar4;
+  undefined8 uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff821552a8,0x1272,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  sVar4 = Scr_GetThreadNotifyName(uVar1);
+  if (sVar4 != 0) {
+    uVar2 = Scr_GetSelf(uVar1);
+    uVar2 = FindObjectVariable(DAT_83c4baac,uVar2);
+    uVar2 = FindObject(DAT_83c4baac,uVar2);
+    uVar1 = FindObjectVariable(uVar2,uVar1);
+    puVar3 = (undefined4 *)GetVariableValueAddress(uVar2,uVar1);
+    uVar1 = FindObjectVariable(DAT_83c4bab0,*puVar3);
+    uVar1 = FindObject(DAT_83c4bab0,uVar1);
+    uVar2 = FindVariable(uVar1,sVar4);
+    FindObject(uVar1,uVar2);
+    __restgprlr_28();
+    return;
+  }
+  __restgprlr_28(DAT_83c4bab4);
+  return;
 }
 
 
@@ -766,7 +5501,6 @@ bool Scr_IsEndonThread(ulonglong param_1)
     uVar3 = FindObjectVariable(uVar2,param_1);
     iVar5 = GetValueType((longlong)(int)((uint)uVar2 & 1) * 0xc800,uVar3);
     if ((iVar5 != 0) && (iVar5 != 0xc)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1295,0,0xffffffff82000f98,0xffffffff82155794);
     }
     bVar6 = iVar5 == 0;
@@ -796,7 +5530,6 @@ void Scr_TerminateThread(undefined8 param_1)
   }
   else {
     if (DVar2 != 0x12) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x12ac,0,0xffffffff82065e94,0xffffffff821557c4);
     }
     Scr_TerminateWaitThread(param_1,uVar1);
@@ -810,28 +5543,367 @@ void Scr_TerminateThread(undefined8 param_1)
 void Scr_GetThreadPos(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  DWORD DVar5;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  int iVar6;
+  undefined4 *puVar7;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_26();
+  if (DAT_83c4ba96 == '\0') {
+    MyAssertHandler(0xffffffff821552a8,0x12bc,0,0xffffffff82000f98,0xffffffff8214fda4);
+  }
+  uVar2 = GetStartLocalId(uVar1);
+  DVar5 = GetObjectType((HGDIOBJ)uVar2);
+  if (DVar5 != 0x10) {
+    if (DVar5 == 0x11) {
+      uVar3 = Scr_GetWaittillThreadStackParentId(uVar2);
+    }
+    else {
+      if (DVar5 != 0x12) {
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff821552a8,0x12cf,0,0xffffffff8202882c);
+        }
+        __restgprlr_26(0);
+        return;
+      }
+      if (DAT_83c4ba96 == '\0') {
+        MyAssertHandler(0xffffffff821552a8,0x12c9,0,0xffffffff82000f98,0xffffffff8214fda4);
+      }
+      uVar3 = Scr_GetThreadWaitTime(uVar2);
+      uVar3 = FindVariable(DAT_83c4baa8,uVar3);
+      uVar3 = FindObject(DAT_83c4baa8,uVar3);
+    }
+    uVar4 = FindObjectVariable(uVar3,uVar2);
+    if ((uVar4 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821552a8,0x12d4,0,0xffffffff82000f98,0xffffffff821556e4);
+    }
+    lVar8 = (longlong)(int)((uint)uVar3 & 1) * 0xc800;
+    iVar6 = GetValueType(lVar8,uVar4);
+    if (iVar6 != 0xc) {
+      uVar2 = GetValueType(lVar8,uVar4);
+      MyAssertHandler(0xffffffff821552a8,0x12d5,0,0xffffffff821557e0,0xffffffff82155828,uVar2);
+    }
+    puVar7 = (undefined4 *)GetVariableValueAddress(uVar3,uVar4);
+    Scr_GetStackThreadPos(uVar1,*puVar7,0);
+    __restgprlr_26();
+    return;
+  }
+  Scr_GetRunningThreadPos(uVar1);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82554E40  VM_Notify  (script/scr_vm.cpp:4829)
 
-void VM_Notify(void)
+void VM_Notify(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  char cVar1;
+  int *piVar2;
+  int iVar3;
+  bool bVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  undefined8 uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar14;
+  undefined8 uVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  int iVar15;
+  undefined4 *puVar16;
+  undefined8 uVar13;
+  int *piVar17;
+  undefined8 uVar18;
+  longlong lVar19;
+  longlong lVar20;
+  longlong lVar21;
+  uint uVar22;
+  int iVar23;
+  uint uVar24;
+  byte *pbVar26;
+  longlong lVar25;
+  undefined1 *puVar27;
+  int local_b8;
+  uint local_b4;
+  undefined8 local_b0;
+  int *local_a8;
+  undefined4 local_a4;
+  
+  uVar7 = __savegprlr();
+  uVar8 = FindObjectVariable(DAT_83c4bab0,uVar7);
+  if ((uVar8 & 0xffffffff) != 0) {
+    uVar8 = FindObject(DAT_83c4bab0,uVar8);
+    if ((uVar8 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821552a8,0x12fa,0,0xffffffff82000f98,0xffffffff82155a2c);
+    }
+    uVar9 = FindVariable(uVar8,param_2);
+    if ((uVar9 & 0xffffffff) != 0) {
+      uVar9 = FindObject(uVar8,uVar9);
+      uVar14 = (uint)uVar9;
+      if ((uVar9 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x1301,0,0xffffffff82000f98,0xffffffff82155a18);
+      }
+      AddRefToObject(uVar9);
+      if (DAT_83c4ba98 != '\0') {
+        MyAssertHandler(0xffffffff821552a8,0x1305,0,0xffffffff82000f98,0xffffffff8214e7a8);
+      }
+      DAT_83c4ba98 = '\x01';
+      lVar19 = (longlong)(int)(uVar14 & 1) * 0xc800;
+LAB_8255502c:
+      uVar9 = FindLastSibling(uVar14);
+LAB_82555034:
+      if ((uVar9 & 0xffffffff) == 0) {
+        RemoveRefToObject(uVar14);
+        if (DAT_83c4ba98 == '\0') {
+          MyAssertHandler(0xffffffff821552a8,0x13c3,0,0xffffffff82000f98,0xffffffff8214fbf4);
+        }
+        DAT_83c4ba98 = '\0';
+        goto LAB_82555620;
+      }
+      uVar10 = GetVariableKeyObject(lVar19,uVar9);
+      uVar11 = Scr_GetSelf();
+      uVar12 = FindObjectVariable(DAT_83c4baac,uVar11);
+      uVar12 = FindObject(DAT_83c4baac,uVar12);
+      iVar15 = GetValueType(lVar19,uVar9);
+      if (iVar15 == 0) {
+        VM_CancelNotifyInternal((int)uVar7,uVar10,(int)uVar8,uVar14,(int)param_2);
+        Scr_KillEndonThread(uVar10);
+        RemoveObjectVariable(uVar12,uVar10);
+        iVar15 = GetArraySize(uVar12);
+        if (iVar15 == 0) {
+          RemoveObjectVariable(DAT_83c4baac,uVar11);
+        }
+        Scr_TerminateThread(uVar11);
+      }
+      else {
+        iVar15 = GetValueType(lVar19,uVar9);
+        if (iVar15 != 0xc) {
+          MyAssertHandler(0xffffffff821552a8,0x132b,0,0xffffffff82000f98,
+                          "GetValueType( childType, notifyListEntry ) == VAR_STACK");
+        }
+        puVar16 = (undefined4 *)GetVariableValueAddress(uVar14,uVar9);
+        piVar2 = (int *)*puVar16;
+        iVar15 = (int)param_3;
+        if (*(char *)(*piVar2 + -1) == -0x6f) {
+          if (*(char *)(*piVar2 + -3) != -0x70) {
+            MyAssertHandler(0xffffffff821552a8,0x1332,0,0xffffffff82000f98,
+                            "*((byte *)stackValue->pos - 3) == OP_waittillmatch");
+          }
+          cVar1 = *(char *)(*piVar2 + -2);
+          iVar23 = (int)cVar1;
+          if (cVar1 < 0) {
+            MyAssertHandler(0xffffffff821552a8,0x1335,0,0xffffffff82000f98,"size >= 0");
+          }
+          if ((int)(uint)*(ushort *)(piVar2 + 1) < (int)cVar1) {
+            MyAssertHandler(0xffffffff821552a8,0x1336,0,"size <= stackValue->size\n\t%i, %i",iVar23)
+            ;
+          }
+          lVar20 = param_3 + 4;
+          pbVar26 = (byte *)((int)piVar2 + ((uint)*(ushort *)(piVar2 + 1) - iVar23) * 5 + 0xb);
+          do {
+            if (iVar23 == 0) {
+LAB_825552fc:
+              bVar4 = true;
+              goto LAB_8255533c;
+            }
+            piVar17 = (int *)lVar20;
+            if (*piVar17 == 7) {
+              MyAssertHandler(0xffffffff821552a8,0x133d,0,0xffffffff82000f98,
+                              "currentValue->type != VAR_CODEPOS");
+            }
+            if (*piVar17 == 8) goto LAB_82555230;
+            iVar23 = iVar23 + -1;
+            local_b4 = (uint)*pbVar26;
+            if (local_b4 == 7) {
+              MyAssertHandler(0xffffffff821552a8,0x1346,0,0xffffffff82000f98,0xffffffff82155874);
+            }
+            if (local_b4 == 8) goto LAB_825552fc;
+            local_b8 = *(int *)(pbVar26 + 1);
+            pbVar26 = pbVar26 + 5;
+            AddRefToValue();
+            uVar18 = *(undefined8 *)(piVar17 + -1);
+            local_b0._0_4_ = (undefined4)((ulonglong)uVar18 >> 0x20);
+            uVar5 = local_b0._0_4_;
+            local_b0._4_4_ = (undefined4)uVar18;
+            uVar6 = local_b0._4_4_;
+            local_b0 = uVar18;
+            AddRefToValue(uVar6,uVar5);
+            Scr_EvalEquality(&local_b8,&local_b0);
+            if (local_b4 != 6) {
+              if (DAT_83c4ba9c == 0) {
+                MyAssertHandler(0xffffffff821552a8,0x135f,0,0xffffffff82000f98,
+                                "scrVarPub.error_message");
+              }
+              RuntimeError((char *)*piVar2,(*(char *)*piVar2 - iVar23) + 3,DAT_83c4ba9c,DAT_83c97720
+                          );
+              DAT_83c4ba9c = 0;
+              DAT_83c97720 = 0;
+              DAT_83c4baa0 = 0;
+              uVar9 = FindPrevSibling(lVar19,uVar9);
+              goto LAB_82555034;
+            }
+            if (local_b8 == 0) goto LAB_82555230;
+            lVar20 = lVar20 + -8;
+          } while( true );
+        }
+        if (*(int *)(iVar15 + 4) == 7) {
+          MyAssertHandler(0xffffffff821552a8,0x136d,0,0xffffffff82000f98,"top->type != VAR_CODEPOS")
+          ;
+        }
+        bVar4 = *(int *)(iVar15 + 4) == 8;
+LAB_8255533c:
+        local_a4 = 0xc;
+        local_a8 = piVar2;
+        uVar18 = GetVariable(DAT_83c4baa8,DAT_83c4baa4);
+        uVar18 = GetArray(DAT_83c4baa8,uVar18);
+        uVar13 = GetNewObjectVariable(uVar18,uVar10);
+        SetNewVariableValue(uVar18,uVar13,&local_a8);
+        puVar16 = (undefined4 *)GetVariableValueAddress(uVar18,uVar13);
+        VM_CancelNotifyInternal((int)uVar7,uVar10,(int)uVar8,uVar14,(int)param_2);
+        RemoveObjectVariable(uVar12,uVar10);
+        iVar23 = GetArraySize(uVar12);
+        if (iVar23 == 0) {
+          RemoveObjectVariable(DAT_83c4baac,uVar11);
+        }
+        Scr_SetThreadWaitTime(uVar10,DAT_83c4baa4);
+        if (!bVar4) {
+          if (*(int *)(iVar15 + 4) == 8) {
+            MyAssertHandler(0xffffffff821552a8,5000,0,"%s\n\t(top - scrVmPub.stack) = %i",
+                            "(top->type != VAR_PRECODEPOS)",iVar15 + 0x7c35b838 >> 3);
+          }
+          if (*(int *)(iVar15 + 4) == 7) {
+            MyAssertHandler(0xffffffff821552a8,0x1389,0,"%s\n\t(top - scrVmPub.stack) = %i",
+                            "(top->type != VAR_CODEPOS)",iVar15 + 0x7c35b838 >> 3);
+          }
+          uVar22 = (uint)*(ushort *)(piVar2 + 1);
+          lVar25 = param_3 + 0x7c35b838;
+          lVar20 = param_3;
+          uVar24 = uVar22;
+          do {
+            lVar21 = lVar20 + -8;
+            uVar24 = uVar24 + 1;
+            lVar25 = lVar25 + -8;
+            iVar15 = (int)lVar20;
+            if (*(int *)(iVar15 + -4) == 7) {
+              MyAssertHandler(0xffffffff821552a8,0x1393,0,
+                              "%s\n\t(currentValue - scrVmPub.stack) = %i",
+                              "(currentValue->type != VAR_CODEPOS)",(int)lVar25 >> 3);
+            }
+            lVar20 = lVar21;
+          } while (*(int *)(iVar15 + -4) != 8);
+          if (((int)uVar24 < 0) || (0xffff < (int)uVar24)) {
+            MyAssertHandler(0xffffffff821552a8,0x1396,0,0xffffffff82000f98,
+                            "newSize >= 0 && newSize < (1 << 16)");
+          }
+          iVar23 = uVar24 * 5 + 0xb;
+          iVar15 = MT_Realloc(*(undefined2 *)((int)piVar2 + 6),iVar23);
+          piVar17 = piVar2;
+          if (iVar15 == 0) {
+            piVar17 = (int *)MT_Alloc(iVar23,1);
+            *(short *)((int)piVar17 + 6) = (short)iVar23;
+            *piVar17 = *piVar2;
+            *(undefined2 *)(piVar17 + 2) = *(undefined2 *)(piVar2 + 2);
+            memcpy((void *)((int)piVar17 + 0xb),(void *)((int)piVar2 + 0xb),uVar22 * 5);
+            MT_Free(piVar2,*(undefined2 *)((int)piVar2 + 6));
+            *puVar16 = piVar17;
+          }
+          iVar15 = uVar24 - uVar22;
+          *(short *)(piVar17 + 1) = (short)uVar24;
+          puVar27 = (undefined1 *)((int)piVar17 + uVar22 * 5 + 0xb);
+          if (iVar15 == 0) {
+            MyAssertHandler(0xffffffff821552a8,0x13af,0,0xffffffff82000f98,"newSize");
+          }
+          do {
+            iVar3 = (int)lVar21;
+            puVar16 = (undefined4 *)(lVar21 + 8);
+            AddRefToValue(*(undefined4 *)(iVar3 + 0xc),*puVar16);
+            if (0x18 < *(uint *)(iVar3 + 0xc)) {
+              MyAssertHandler(0xffffffff821552a8,0x13b5,0,0xffffffff82000f98,
+                              "(unsigned)currentValue->type < VAR_COUNT");
+            }
+            iVar15 = iVar15 + -1;
+            *puVar27 = (char)*(undefined4 *)(iVar3 + 0xc);
+            *(undefined4 *)(puVar27 + 1) = *puVar16;
+            puVar27 = puVar27 + 5;
+            lVar21 = lVar21 + 8;
+          } while (iVar15 != 0);
+          if ((int)puVar27 - (int)piVar17 != iVar23) {
+            MyAssertHandler(0xffffffff821552a8,0x13bd,0,0xffffffff82000f98,
+                            "buf - (const char *)stackValue == bufLen");
+          }
+        }
+      }
+      goto LAB_8255502c;
+    }
+  }
+LAB_82555620:
+  __restgprlr();
+  return;
+LAB_82555230:
+  uVar9 = FindPrevSibling(lVar19,uVar9);
+  goto LAB_82555034;
 }
 
 
 // 82555628  VM_Endon  (script/scr_vm.cpp:5065)
 
-void VM_Endon(void)
+void VM_Endon(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  DWORD DVar4;
+  undefined8 uVar3;
+  HGDIOBJ local_40;
+  undefined4 local_3c;
+  HGDIOBJ h;
+  
+  uVar1 = __savegprlr_26();
+  AddRefToObject(param_2);
+  uVar2 = AllocThread(param_2);
+  h = (HGDIOBJ)uVar1;
+  DVar4 = GetObjectType(h);
+  if (DVar4 == 0x10) {
+    MyAssertHandler(0xffffffff821552a8,0x13d2,0,0xffffffff82000f98,0xffffffff82155af0);
+  }
+  DVar4 = GetObjectType(h);
+  if (DVar4 == 0x11) {
+    MyAssertHandler(0xffffffff821552a8,0x13d3,0,0xffffffff82000f98,0xffffffff82155ac0);
+  }
+  DVar4 = GetObjectType(h);
+  if (DVar4 == 0x12) {
+    MyAssertHandler(0xffffffff821552a8,0x13d4,0,0xffffffff82000f98,0xffffffff82155a94);
+  }
+  DVar4 = GetObjectType(h);
+  if (DVar4 == 0x13) {
+    MyAssertHandler(0xffffffff821552a8,0x13d5,0,0xffffffff82000f98,0xffffffff82155a68);
+  }
+  DVar4 = GetObjectType(h);
+  if (DVar4 == 0x18) {
+    MyAssertHandler(0xffffffff821552a8,0x13d6,0,0xffffffff82000f98,0xffffffff82155a3c);
+  }
+  uVar1 = GetObjectVariable(DAT_83c4bab0,uVar1);
+  uVar1 = GetArray(DAT_83c4bab0,uVar1);
+  uVar3 = GetVariable(uVar1,param_3);
+  uVar1 = GetArray(uVar1,uVar3);
+  GetObjectVariable(uVar1,uVar2);
+  RemoveRefToObject(uVar2);
+  local_3c = 1;
+  local_40 = h;
+  uVar1 = GetObjectVariable(DAT_83c4baac,param_2);
+  uVar1 = GetArray(DAT_83c4baac,uVar1);
+  uVar3 = GetNewObjectVariable(uVar1,uVar2);
+  SetNewVariableValue(uVar1,uVar3,&local_40);
+  Scr_SetThreadNotifyName(uVar2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -857,11 +5929,9 @@ void Scr_NotifyId(undefined8 param_1,undefined8 param_2,ulonglong param_3)
     DAT_83c6fb14 = "<script notify variable>";
   }
   if (DAT_83c4baa8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x13fd,0,0xffffffff82000f98,0xffffffff82152658);
   }
   if ((ulonglong)DAT_83ca44b8 < (param_3 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x13fe,0,0xffffffff82000f98,0xffffffff82155b20);
   }
   if (DAT_83ca44bc != 0) {
@@ -875,16 +5945,15 @@ void Scr_NotifyId(undefined8 param_1,undefined8 param_2,ulonglong param_3)
     uVar1 = *(undefined4 *)(iVar2 + 4);
     *(undefined4 *)(iVar2 + 4) = 8;
     uVar4 = DAT_83ca44b0;
+    DAT_83ca44b0 = uVar4;
     if (DAT_83c734fc != 0) {
       DAT_83ca44b8 = 0;
       Scr_CheckBreakonNotify(uVar5,param_2,DAT_83ca44b0,0,0);
+      DAT_83ca44b0 = uVar4;
       if (DAT_83ca44bc != 0) {
-        DAT_83ca44b0 = uVar4;
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x1413,0,0xffffffff82000f98,0xffffffff821501bc);
       }
     }
-    DAT_83ca44b0 = uVar4;
     Scr_DumpNotify(uVar5,param_2,0xffffffff82155b18);
     DAT_83ca44b8 = 0;
     VM_Notify(uVar5,param_2,DAT_83ca44b0);
@@ -900,7 +5969,6 @@ void Scr_NotifyId(undefined8 param_1,undefined8 param_2,ulonglong param_3)
   }
   DAT_83ca44b8 = iVar7;
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1429,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   DAT_83c6fb14 = pcVar3;
@@ -911,13 +5979,111 @@ void Scr_NotifyId(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 }
 
 
+// 825559F8  Scr_NotifyNum  (script/scr_vm.cpp:5176)
+
+void Scr_NotifyNum(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if (DAT_83c4baa8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x143b,0,0xffffffff82000f98,0xffffffff82152658);
+  }
+  uVar1 = FindEntityId(uVar1,param_2);
+  Scr_NotifyId(uVar1,param_3,param_4);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82555A70  Scr_NotifyLevel  (script/scr_vm.cpp:5187)
+
+void Scr_NotifyLevel(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (DAT_83c4baa8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1444,0,0xffffffff82000f98,0xffffffff82152658);
+  }
+  Scr_NotifyId(DAT_83c4bab8,uVar1,param_2);
+  __restgprlr_29();
+  return;
+}
+
+
 // 82555AD8  Scr_CancelNotifyList  (script/scr_vm.cpp:5195)
 
 void Scr_CancelNotifyList(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined4 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  int iVar7;
+  undefined4 *puVar8;
+  undefined8 uVar6;
+  short sVar9;
+  longlong lVar10;
+  
+  uVar2 = __savegprlr_18();
+  if (DAT_83c4bab0 != 0) {
+    uVar3 = FindObjectVariable(DAT_83c4bab0,uVar2);
+    while ((uVar3 & 0xffffffff) != 0) {
+      uVar3 = FindObject(DAT_83c4bab0,uVar3);
+      if ((uVar3 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x145f,0,0xffffffff82000f98,0xffffffff82155a2c);
+      }
+      uVar4 = FindFirstSibling(uVar3);
+      if ((uVar4 & 0xffffffff) == 0) break;
+      uVar3 = FindObject(uVar3,uVar4);
+      if ((uVar3 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x1466,0,0xffffffff82000f98,0xffffffff82155a18);
+      }
+      uVar4 = FindFirstSibling(uVar3);
+      if ((uVar4 & 0xffffffff) == 0) break;
+      lVar10 = (longlong)(int)((uint)uVar3 & 1) * 0xc800;
+      uVar5 = GetVariableKeyObject(lVar10,uVar4);
+      if ((uVar5 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x146f,0,0xffffffff82000f98,0xffffffff82152648);
+      }
+      iVar7 = GetValueType(lVar10,uVar4);
+      if (iVar7 == 0xc) {
+        puVar8 = (undefined4 *)GetVariableValueAddress(uVar3,uVar4);
+        uVar1 = *puVar8;
+        Scr_CancelWaittill(uVar5);
+        VM_TrimStack(uVar5,uVar1,0);
+      }
+      else {
+        AddRefToObject(uVar5);
+        Scr_CancelWaittill(uVar5);
+        Scr_GetSelf(uVar5);
+        uVar6 = GetStartLocalId();
+        uVar3 = FindObjectVariable(DAT_83c4bab4,uVar6);
+        if ((uVar3 & 0xffffffff) != 0) {
+          sVar9 = Scr_GetThreadNotifyName(uVar6);
+          if (sVar9 != 0) {
+            MyAssertHandler(0xffffffff821552a8,0x1482,0,0xffffffff82000f98,0xffffffff82152504);
+          }
+          iVar7 = GetValueType((longlong)(int)(DAT_83c4bab4 & 1) * 0xc800,uVar3);
+          if (iVar7 != 0xc) {
+            MyAssertHandler(0xffffffff821552a8,0x1483,0,0xffffffff82000f98,0xffffffff821556f0);
+          }
+          puVar8 = (undefined4 *)GetVariableValueAddress(DAT_83c4bab4,uVar3);
+          VM_TrimStack(uVar6,*puVar8,1);
+        }
+        Scr_KillEndonThread(uVar5);
+        RemoveRefToEmptyObject(uVar5);
+      }
+      uVar3 = FindObjectVariable(DAT_83c4bab0,uVar2);
+    }
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -936,22 +6102,15 @@ void VM_TerminateTime(void)
   
   uVar2 = __savegprlr_24();
   if ((uVar2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1497,0,0xffffffff82000f98,0xffffffff82153f70);
   }
   if (DAT_83ca44a8 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1498,0,0xffffffff82000f98,0xffffffff8214fdd0);
   }
   lVar7 = (longlong)(int)((uint)uVar2 & 1) * 0xc800;
   AddRefToObject(uVar2);
   uVar3 = FindFirstSibling(uVar2);
-  do {
-    if ((uVar3 & 0xffffffff) == 0) {
-      RemoveRefToObject(uVar2);
-      __restgprlr_24();
-      return;
-    }
+  while ((uVar3 & 0xffffffff) != 0) {
     iVar5 = GetValueType(lVar7,uVar3);
     if (iVar5 == 0) {
       RemoveArrayVariable(uVar2,0);
@@ -959,12 +6118,10 @@ void VM_TerminateTime(void)
     else {
       uVar4 = GetVariableKeyObject(lVar7,uVar3);
       if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x14aa,0,0xffffffff82000f98,0xffffffff82152648);
       }
       iVar5 = GetValueType(lVar7,uVar3);
       if (iVar5 != 0xc) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x14ac,0,0xffffffff82000f98,0xffffffff82155b60);
       }
       puVar6 = (undefined4 *)GetVariableValueAddress(uVar2,uVar3);
@@ -974,7 +6131,10 @@ void VM_TerminateTime(void)
       VM_TerminateStack(uVar4,uVar4,uVar1);
     }
     uVar3 = FindFirstSibling(uVar2);
-  } while( true );
+  }
+  RemoveRefToObject(uVar2);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -983,8 +6143,92 @@ void VM_TerminateTime(void)
 void VM_Resume(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  undefined4 uVar1;
+  ulonglong uVar2;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar3;
+  undefined4 *puVar6;
+  int iVar7;
+  
+  uVar2 = __savegprlr();
+  uVar4 = (uint)uVar2;
+  if (DAT_83ca44b0 != &DAT_83ca47c8) {
+    MyAssertHandler(0xffffffff821552a8,0x14c1,0,0xffffffff82000f98,0xffffffff82156a90);
+  }
+  Scr_ResetAbortDebugger();
+  Scr_ResetTimeout();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x14c9,0,0xffffffff82000f98,0xffffffff82153f70);
+  }
+  AddRefToObject(uVar2);
+  iVar7 = (uVar4 & 1) * 0xc800;
+  DAT_83ca4490 = &DAT_83ca47c8;
+  DAT_83ca449c = 0;
+  while( true ) {
+    if (DAT_83c4ba9c != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14d3,0,0xffffffff82000f98,"!scrVarPub.error_message");
+    }
+    if (DAT_83c4baa0 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14d4,0,0xffffffff82000f98,0xffffffff82156168);
+    }
+    if (DAT_83ca44bc != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14d5,0,0xffffffff82000f98,0xffffffff821501bc);
+    }
+    if (DAT_83ca44b8 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14d6,0,0xffffffff82000f98,0xffffffff821501a4);
+    }
+    if (DAT_83ca44a8 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14d7,0,0xffffffff82000f98,0xffffffff8214fdd0);
+    }
+    if (DAT_83ca44a0 != &DAT_83c97728) {
+      MyAssertHandler(0xffffffff821552a8,0x14d8,0,0xffffffff82000f98,0xffffffff82156a4c);
+    }
+    if (DAT_83ca4490 != &DAT_83ca47c8) {
+      MyAssertHandler(0xffffffff821552a8,0x14d9,0,0xffffffff82000f98,0xffffffff82156a18);
+    }
+    if (DAT_83ca449c != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14da,0,0xffffffff82000f98,0xffffffff82156a80);
+    }
+    uVar2 = FindFirstSibling(uVar4);
+    if ((uVar2 & 0xffffffff) == 0) break;
+    iVar5 = GetValueType(iVar7,uVar2);
+    if (iVar5 == 0) goto LAB_8255f6ac;
+    uVar3 = GetVariableKeyObject(iVar7,uVar2);
+    if ((uVar3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff821552a8,0x14e8,0,0xffffffff82000f98,0xffffffff82152648);
+    }
+    iVar5 = GetValueType(iVar7,uVar2);
+    if (iVar5 != 0xc) {
+      MyAssertHandler(0xffffffff821552a8,0x14ea,0,0xffffffff82000f98,0xffffffff82155b60);
+    }
+    puVar6 = (undefined4 *)GetVariableValueAddress(uVar4,uVar2);
+    uVar1 = *puVar6;
+    RemoveNextVariable(uVar4);
+    VM_UnarchiveStack(uVar3,uVar1);
+    uVar1 = DAT_83ca4480;
+    if (DAT_83c6faf8 == '\0') {
+      VM_Execute();
+      RemoveRefToObject();
+      RemoveRefToValue(DAT_83ca47d4,DAT_83ca47d0);
+    }
+    else {
+      DAT_83c97500 = 0;
+      uVar2 = TBLr;
+      VM_Execute();
+      RemoveRefToObject();
+      RemoveRefToValue(DAT_83ca47d4,DAT_83ca47d0);
+      uVar3 = TBLr;
+      Scr_AddProfileTime(uVar1,(uVar3 & 0xffffffff) - (uVar2 & 0xffffffff),DAT_83c97500);
+    }
+  }
+  SafeRemoveVariable(DAT_83c4baa8,DAT_83c4baa4);
+LAB_8255f6ac:
+  RemoveRefToObject(uVar4);
+  ClearVariableValue(0,DAT_83c4bac8);
+  DAT_83ca44b0 = &DAT_83ca47c8;
+  __restgprlr();
+  return;
 }
 
 
@@ -993,18 +6237,150 @@ void VM_Resume(void)
 void IncInParam(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 *puVar1;
+  
   __savegprlr_27();
+  if (((DAT_83ca44b0 < &DAT_83c97708) || (&DAT_83c97710 < DAT_83ca44b0)) &&
+     ((DAT_83ca44b0 < &DAT_83ca47c8 || (DAT_83ca44a4 < DAT_83ca44b0)))) {
+    MyAssertHandler(0xffffffff821552a8,0x1511,0,0xffffffff82000f98,0xffffffff82155c30);
+  }
+  if (DAT_83ca44bc != 0) {
+    Scr_ClearOutParams();
+  }
+  if (DAT_83ca44b0 == DAT_83ca44a4) {
+    Sys_Error(0xffffffff82155c10);
+  }
+  puVar1 = DAT_83ca44b0 + 1;
+  DAT_83ca44b8 = DAT_83ca44b8 + 1;
+  DAT_83ca44b0 = puVar1;
+  if (((puVar1 < &DAT_83c97710) || ((undefined8 *)0x83c97718 < puVar1)) &&
+     ((puVar1 < &DAT_83ca47c8 || (DAT_83ca44a4 < puVar1)))) {
+    MyAssertHandler(0xffffffff821552a8,0x151f,0,0xffffffff82000f98,0xffffffff82155b90);
+  }
+  __restgprlr_27(puVar1);
+  return;
 }
 
 
 // 8255F6D0  VM_Execute  (script/scr_vm.cpp:5414)
 
-void VM_Execute(void)
+void VM_Execute(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  bool bVar1;
+  undefined4 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int *piVar5;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar10;
+  undefined8 uVar8;
+  undefined8 uVar9;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  undefined4 *puVar13;
+  longlong lVar14;
+  undefined4 local_a0 [3];
+  undefined4 auStack_94 [37];
+  
+  iVar10 = __savegprlr_18();
+  if ((ulonglong)DAT_83ca44b8 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821552a8,0x1530,0,0xffffffff82000f98,0xffffffff82155b20);
+  }
+  Scr_ClearOutParams();
+  iVar7 = DAT_83ca44a8;
+  puVar13 = DAT_83ca44b0 + ((uint)param_3 & 0x1fffffff) * -2;
+  param_3 = DAT_83ca44b8 - param_3;
+  if (0x1d < DAT_83ca44a8) {
+    Scr_KillThread(iVar10);
+    DAT_83ca44b8 = (int)param_3 + 1;
+    if (DAT_83ca44bc != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1586,0,0xffffffff82000f98,0xffffffff821501bc);
+    }
+    uVar3 = param_3 & 0xffffffff;
+    while (uVar3 != 0) {
+      RemoveRefToValue(DAT_83ca44b0[1],*DAT_83ca44b0);
+      DAT_83ca44b0 = DAT_83ca44b0 + -2;
+      param_3 = param_3 - 1;
+      uVar3 = param_3;
+    }
+    puVar13 = DAT_83ca44b0 + 3;
+    DAT_83ca44b0 = DAT_83ca44b0 + 2;
+    *puVar13 = 0;
+    RuntimeError(param_2,0,0xffffffff82156484,0);
+    __restgprlr_18(iVar10);
+    return;
+  }
+  puVar11 = auStack_94;
+  puVar12 = (undefined4 *)0x83ca447c;
+  lVar14 = 5;
+  do {
+    puVar12 = puVar12 + 1;
+    puVar11 = puVar11 + 1;
+    *puVar11 = *puVar12;
+    uVar6 = DAT_83ca449c;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  DAT_83ca4484 = iVar10;
+  DAT_83ca4490 = puVar13;
+  if (iVar7 != 0) {
+    DAT_83ca44a8 = iVar7 + 1;
+    puVar12 = DAT_83ca44ac + 7;
+    DAT_83ca44ac = DAT_83ca44ac + 6;
+    *puVar12 = 0;
+  }
+  DAT_83ca4480 = (undefined4)param_2;
+  DAT_83ca4488 = 0;
+  DAT_83ca449c = 0;
+  *DAT_83ca44ac = DAT_83ca4480;
+  DAT_83ca44a8 = DAT_83ca44a8 + 1;
+  piVar5 = DAT_83ca44ac + 7;
+  DAT_83ca44ac = DAT_83ca44ac + 6;
+  *piVar5 = iVar10;
+  uVar2 = puVar13[1];
+  puVar13[1] = 8;
+  DAT_83ca44b8 = 0;
+  DAT_83ca448c = DAT_83ca44b0;
+  uVar8 = Scr_SaveKillPos(local_a0);
+  bVar1 = DAT_83c6faf8 == '\0';
+  *(undefined4 *)(&DAT_83c73500 + iVar10 * 4) = 0;
+  if (bVar1) {
+    uVar9 = VM_Execute();
+  }
+  else {
+    DAT_83c97500 = 0;
+    uVar3 = TBLr;
+    uVar9 = VM_Execute();
+    if (DAT_83ca44a8 == 0) {
+      uVar4 = TBLr;
+      Scr_AddProfileTime(param_2,(uVar4 & 0xffffffff) - (uVar3 & 0xffffffff),DAT_83c97500);
+    }
+  }
+  Scr_RestoreKillPos(uVar8,local_a0[0]);
+  puVar12 = auStack_94;
+  puVar11 = (undefined4 *)0x83ca447c;
+  lVar14 = 5;
+  do {
+    puVar12 = puVar12 + 1;
+    puVar11 = puVar11 + 1;
+    *puVar11 = *puVar12;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  DAT_83ca44b0 = puVar13 + 2;
+  puVar13[1] = uVar2;
+  DAT_83ca44b8 = (int)param_3 + 1;
+  DAT_83ca449c = uVar6;
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1577,0,0xffffffff82000f98,0xffffffff821501bc);
+  }
+  ClearVariableValue(0,DAT_83c4bac8);
+  if (DAT_83ca44a8 != 0) {
+    DAT_83ca44a8 = DAT_83ca44a8 + -1;
+    DAT_83ca44ac = DAT_83ca44ac + -6;
+  }
+  __restgprlr_18(uVar9);
+  return;
 }
 
 
@@ -1025,27 +6401,23 @@ void Scr_ExecThreadInternal(undefined8 param_1,undefined8 param_2,undefined8 par
   dataCacheBlockTouch((ulonglong)DAT_83c4baf4 + lVar2);
   if (DAT_83ca44a8 == 0) {
     if (DAT_83ca44a0 != &DAT_83c97728) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x15a9,0,0xffffffff82000f98,0xffffffff82156a4c);
     }
     Profile_Begin(0x147);
     Scr_ResetTimeout();
   }
   if (DAT_83c4baa8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x15b0,0,0xffffffff82000f98,0xffffffff82152658);
   }
   if ((int)lVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x15b1,0,0xffffffff82000f98,0xffffffff820363b8);
   }
   DAT_83c6fb18 = DAT_83c6fb18 + 1;
   iVar4 = Scr_IsInOpcodeMemory(lVar6);
-  uVar1 = DAT_83c6fb14;
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x15b8,0,0xffffffff82000f98,0xffffffff82151ff0);
   }
+  uVar1 = DAT_83c6fb14;
   DAT_83c6fb14 = (int)lVar6 + 1;
   AddRefToObject(param_2);
   uVar3 = AllocThread(param_2);
@@ -1059,12 +6431,8 @@ void Scr_ExecThreadInternal(undefined8 param_1,undefined8 param_2,undefined8 par
   DAT_83ca44b0[1] = 0;
   DAT_83ca44b8 = DAT_83ca44b8 + -1;
   DAT_83ca44b0 = DAT_83ca44b0 + -2;
-  if (DAT_83ca44a8 == 0) {
-    Profile_EndInternal(0);
-    if (DAT_83ca44a0 != &DAT_83c97728) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821552a8,0x15d6,0,0xffffffff82000f98,0xffffffff82156a4c);
-    }
+  if ((DAT_83ca44a8 == 0) && (Profile_EndInternal(0), DAT_83ca44a0 != &DAT_83c97728)) {
+    MyAssertHandler(0xffffffff821552a8,0x15d6,0,0xffffffff82000f98,0xffffffff82156a4c);
   }
   __restgprlr_22(uVar5 & 0xffff);
   return;
@@ -1077,6 +6445,26 @@ void Scr_ExecThread(undefined8 param_1,undefined8 param_2)
 
 {
   Scr_ExecThreadInternal(param_1,DAT_83c4bab8,param_2);
+  return;
+}
+
+
+// 8255FBF8  Scr_ExecEntThreadNum  (script/scr_vm.cpp:5604)
+
+void Scr_ExecEntThreadNum
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  
+  __savegprlr_28();
+  uVar1 = DAT_83c6fb14;
+  DAT_83c6fb14 = DAT_83c4baf4 + (int)param_3 + 1;
+  uVar2 = Scr_GetEntityId();
+  DAT_83c6fb14 = uVar1;
+  Scr_ExecThreadInternal(param_3,uVar2,param_4);
+  __restgprlr_28();
   return;
 }
 
@@ -1097,26 +6485,22 @@ void Scr_AddExecThreadInternal(undefined8 param_1,undefined8 param_2,undefined8 
   dataCacheBlockTouch((ulonglong)DAT_83c4baf4 + lVar2);
   if (DAT_83ca44a8 == 0) {
     if (DAT_83ca44a0 != &DAT_83c97728) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x160a,0,0xffffffff82000f98,0xffffffff82156a4c);
     }
     Profile_Begin(0x147);
     Scr_ResetTimeout();
   }
   if (DAT_83c4baa8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1611,0,0xffffffff82000f98,0xffffffff82152658);
   }
   if ((int)lVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1612,0,0xffffffff82000f98,0xffffffff820363b8);
   }
   iVar4 = Scr_IsInOpcodeMemory(lVar5);
-  uVar1 = DAT_83c6fb14;
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1615,0,0xffffffff82000f98,0xffffffff82151ff0);
   }
+  uVar1 = DAT_83c6fb14;
   DAT_83c6fb14 = (int)lVar5 + 1;
   AddRefToObject(param_2);
   uVar3 = AllocThread(param_2);
@@ -1125,12 +6509,8 @@ void Scr_AddExecThreadInternal(undefined8 param_1,undefined8 param_2,undefined8 
   DAT_83ca44bc = DAT_83ca44bc + 1;
   DAT_83ca44b8 = DAT_83ca44b8 + -1;
   DAT_83c6fb14 = uVar1;
-  if (DAT_83ca44a8 == 0) {
-    Profile_EndInternal(0);
-    if (DAT_83ca44a0 != &DAT_83c97728) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821552a8,0x162c,0,0xffffffff82000f98,0xffffffff82156a4c);
-    }
+  if ((DAT_83ca44a8 == 0) && (Profile_EndInternal(0), DAT_83ca44a0 != &DAT_83c97728)) {
+    MyAssertHandler(0xffffffff821552a8,0x162c,0,0xffffffff82000f98,0xffffffff82156a4c);
   }
   __restgprlr_22();
   return;
@@ -1147,13 +6527,50 @@ void Scr_AddExecThread(undefined8 param_1,undefined8 param_2)
 }
 
 
+// 8255FE28  Scr_AddExecEntThreadNum  (script/scr_vm.cpp:5688)
+
+void Scr_AddExecEntThreadNum
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  
+  __savegprlr_28();
+  uVar1 = DAT_83c6fb14;
+  DAT_83c6fb14 = DAT_83c4baf4 + (int)param_3 + 1;
+  uVar2 = Scr_GetEntityId();
+  DAT_83c6fb14 = uVar1;
+  Scr_AddExecThreadInternal(param_3,uVar2,param_4);
+  __restgprlr_28();
+  return;
+}
+
+
 // 82555FE0  Scr_FreeThread  (script/scr_vm.cpp:5710)
 
 void Scr_FreeThread(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  
+  uVar2 = __savegprlr_28();
+  if (DAT_83c4baa8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x164f,0,0xffffffff82000f98,0xffffffff82152658);
+  }
+  uVar2 = uVar2 & 0xffff;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1650,0,0xffffffff82000f98,0xffffffff820363b8);
+  }
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (uVar2 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + -1;
+  }
+  RemoveRefToObject(uVar2);
+  DAT_83c6fb18 = DAT_83c6fb18 + -1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1171,23 +6588,18 @@ void Scr_ExecCode(undefined8 param_1,ulonglong param_2)
   uVar2 = __savegprlr_24();
   Scr_ResetTimeout();
   if (DAT_83c4baa8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1666,0,0xffffffff82000f98,0xffffffff82152658);
   }
   if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1667,0,0xffffffff82000f98,0xffffffff821501a4);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1668,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   if (DAT_83c4ba98 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x166a,0,0xffffffff82000f98,0xffffffff8214e7a8);
   }
   if (DAT_83ca44b4 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x166c,0,0xffffffff82000f98,0xffffffff8215078c);
   }
   DAT_83ca44b4 = '\x01';
@@ -1209,22 +6621,18 @@ void Scr_ExecCode(undefined8 param_1,ulonglong param_2)
   if (uVar1 != 0) {
     iVar5 = Scr_IgnoreErrors();
     if (iVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1682,0,0xffffffff82000f98,0xffffffff821508d4);
     }
     Scr_EnableBreakpoints(1);
   }
   if (DAT_83ca44b4 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1686,0,0xffffffff82000f98,0xffffffff82150830);
   }
   DAT_83ca44b4 = 0;
   if (DAT_83ca44b8 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1689,0,0xffffffff82000f98,0xffffffff82150814);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x168a,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   if (DAT_83ca44a8 != 0) {
@@ -1247,8 +6655,108 @@ void Scr_ExecCode(undefined8 param_1,ulonglong param_2)
 void VM_SetTime(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_27();
+  if ((DAT_83c4baa4 & 0xff000000) != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x169c,0,0xffffffff82000f98,0xffffffff82156090);
+  }
+  if ((DAT_83c4baa8 != 0) &&
+     (uVar1 = FindVariable(DAT_83c4baa8,DAT_83c4baa4), (uVar1 & 0xffffffff) != 0)) {
+    if (DAT_83ca4498 == 0) {
+      MyAssertHandler(0xffffffff821552a8,0x16a5,0,0xffffffff82000f98,0xffffffff82155280);
+    }
+    if (*(char *)(DAT_83ca4498 + 0xc) != '\0') {
+      uVar2 = Sys_Milliseconds();
+      Com_Printf(0x17,0xffffffff82156ab0,uVar2);
+    }
+    FindObject(DAT_83c4baa8,uVar1);
+    VM_Resume();
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 82561B58  Scr_InitSystem  (script/scr_vm.cpp:5807)
+
+void Scr_InitSystem(void)
+
+{
+  int iVar1;
+  void *pvVar2;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 != 1) {
+    MyAssertHandler(0xffffffff821552a8,0x16b0,0,0xffffffff82000f98,0xffffffff82150d74);
+  }
+  if (DAT_83c4baa8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16b1,0,0xffffffff82000f98,0xffffffff8215234c);
+  }
+  if (DAT_83c6fb18 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16b3,0,0xffffffff82000f98,0xffffffff821530a0);
+  }
+  if (DAT_83c6fb14 != (char *)0x0) {
+    MyAssertHandler(0xffffffff821552a8,0x16b7,0,0xffffffff82000f98,0xffffffff821523f0);
+  }
+  DAT_83c6fb14 = "<script init variable>";
+  pvVar2 = memset(&DAT_83c73500,0,0x24000);
+  DAT_83c4baa8 = AllocObject(pvVar2);
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4baa8 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4baac != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16c6,0,0xffffffff82000f98,0xffffffff82152334);
+  }
+  DAT_83c4baac = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4baac + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bab0 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16cd,0,0xffffffff82000f98,0xffffffff82152318);
+  }
+  DAT_83c4bab0 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4bab0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bab4 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16d4,0,0xffffffff82000f98,0xffffffff821522fc);
+  }
+  DAT_83c4bab4 = Scr_AllocArray();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4bab4 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bab8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16dc,0,0xffffffff82000f98,0xffffffff821523c4);
+  }
+  DAT_83c4bab8 = AllocObject();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4bab8 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bac0 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16e3,0,0xffffffff82000f98,0xffffffff821523b0);
+  }
+  DAT_83c4bac0 = AllocObject();
+  if (DAT_83c4ba8c != 0) {
+    iVar1 = (DAT_83c4bac0 + 0x44000) * 2;
+    *(short *)(iVar1 + DAT_83c4ba8c) = *(short *)(iVar1 + DAT_83c4ba8c) + 1;
+  }
+  if (DAT_83c4bac4 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x16ea,0,0xffffffff82000f98,0xffffffff82152398);
+  }
+  DAT_83c4baa4 = 0;
+  DAT_83c99738 = 0xffffffff;
+  Scr_InitDebuggerSystem();
+  DAT_83c6fb14 = (char *)0x0;
+  Scr_IncTime();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1267,7 +6775,6 @@ void Scr_ShutdownSystem(void)
   
   cVar7 = __savegprlr_24();
   if (cVar7 != '\x01') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1703,0,0xffffffff82000f98,0xffffffff82150d74);
   }
   DAT_83c6fb14 = "<script shutdown variable>";
@@ -1295,7 +6802,6 @@ void Scr_ShutdownSystem(void)
     uVar4 = FindObject(DAT_83c4baac,uVar3);
     uVar3 = FindFirstSibling();
     if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1730,0,0xffffffff82000f98,0xffffffff8209a984);
     }
     puVar5 = (undefined4 *)GetVariableValueAddress(uVar4,uVar3);
@@ -1306,10 +6812,9 @@ void Scr_ShutdownSystem(void)
     uVar3 = FindFirstSibling(DAT_83c4baac);
   }
   if (DAT_83c4bab8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1738,0,0xffffffff82000f98,0xffffffff82156b9c);
   }
-  ClearObject();
+  ClearObject(DAT_83c4bab8);
   if (DAT_83c4ba8c != 0) {
     iVar6 = (DAT_83c4bab8 + 0x44000) * 2;
     *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + -1;
@@ -1317,10 +6822,9 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4bab8);
   DAT_83c4bab8 = 0;
   if (DAT_83c4bac0 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1741,0,0xffffffff82000f98,0xffffffff82156b88);
   }
-  ClearObject();
+  ClearObject(DAT_83c4bac0);
   if (DAT_83c4ba8c != 0) {
     iVar6 = (DAT_83c4bac0 + 0x44000) * 2;
     *(short *)(iVar6 + DAT_83c4ba8c) = *(short *)(iVar6 + DAT_83c4ba8c) + -1;
@@ -1328,7 +6832,6 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4bac0);
   DAT_83c4bac0 = 0;
   if (DAT_83c4baa8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x174b,0,0xffffffff82000f98,0xffffffff82152658);
   }
   if (DAT_83c4ba8c != 0) {
@@ -1338,12 +6841,10 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4baa8);
   DAT_83c4baa8 = 0;
   if (DAT_83c4baac == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1753,0,0xffffffff82000f98,0xffffffff82156b70);
   }
-  iVar6 = GetArraySize();
+  iVar6 = GetArraySize(DAT_83c4baac);
   if (iVar6 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1754,0,0xffffffff82000f98,0xffffffff82156b48);
   }
   if (DAT_83c4ba8c != 0) {
@@ -1353,12 +6854,10 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4baac);
   DAT_83c4baac = 0;
   if (DAT_83c4bab0 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x175c,0,0xffffffff82000f98,0xffffffff82156b30);
   }
-  iVar6 = GetArraySize();
+  iVar6 = GetArraySize(DAT_83c4bab0);
   if (iVar6 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x175d,0,0xffffffff82000f98,0xffffffff82156b04);
   }
   if (DAT_83c4ba8c != 0) {
@@ -1368,12 +6867,10 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4bab0);
   DAT_83c4bab0 = 0;
   if (DAT_83c4bab4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1765,0,0xffffffff82000f98,0xffffffff82156aec);
   }
-  iVar6 = GetArraySize();
+  iVar6 = GetArraySize(DAT_83c4bab4);
   if (iVar6 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1766,0,0xffffffff82000f98,0xffffffff82156ac0);
   }
   if (DAT_83c4ba8c != 0) {
@@ -1383,19 +6880,18 @@ void Scr_ShutdownSystem(void)
   RemoveRefToEmptyObject(DAT_83c4bab4);
   DAT_83c4bab4 = 0;
   if (DAT_83c4bac4 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,5999,0,0xffffffff82000f98,0xffffffff82152398);
   }
   DAT_83c6fb14 = (char *)0x0;
   if (DAT_83c4bad5 == '\0') {
     if (iVar2 == 0) {
       if (DAT_83c6fb18 != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x177f,0,0xffffffff82000f98,0xffffffff821530a0);
       }
       if (DAT_83ca44b0 != &DAT_83ca47c8) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x1781,0,0xffffffff82000f98,0xffffffff8214fdec);
+        __restgprlr_24();
+        return;
       }
       goto LAB_825606d8;
     }
@@ -1487,7 +6983,6 @@ void Scr_GetAnim(undefined8 param_1,ulonglong param_2)
       uVar1 = *puVar2;
       sStack_4e = (short)uVar1;
       if (sStack_4e == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x17be,0,0xffffffff82000f98,0xffffffff82156c4c);
       }
       if ((param_2 & 0xffffffff) == 0) {
@@ -1531,8 +7026,38 @@ LAB_82560924:
 void Scr_GetAnimTree(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) < (ulonglong)DAT_83ca44bc) {
+    puVar1 = (uint *)(DAT_83ca44b0 + ((uint)uVar2 & 0x1fffffff) * -8);
+    if (puVar1[1] == 6) {
+      if (*puVar1 <= DAT_83700fa8) {
+        if ((&DAT_83700da4)[*puVar1] != 0) {
+          __restgprlr_28((&DAT_83700da4)[*puVar1]);
+          return;
+        }
+      }
+      DAT_83c4ba9c = "bad anim tree";
+    }
+    else {
+      DAT_83c4ba9c = (char *)va(0xffffffff82156c58,(&PTR_s_undefined_829902e8)[puVar1[1]]);
+    }
+    RemoveRefToValue(puVar1[1],*puVar1);
+    DAT_83c4baa0 = (uint)uVar2 + 1;
+    puVar1[1] = 0;
+    Scr_ErrorInternal();
+  }
+  uVar3 = va(0xffffffff8215070c,uVar2 + 1);
+  if (DAT_83c4ba9c == (char *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar3,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  __restgprlr_28(DAT_83700da4);
+  return;
 }
 
 
@@ -1571,8 +7096,34 @@ double Scr_GetFloat(uint param_1)
 void Scr_GetConstString(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar2;
+  char cVar3;
+  undefined8 uVar1;
+  undefined4 *puVar4;
+  
+  uVar2 = __savegprlr_29();
+  if (uVar2 < DAT_83ca44bc) {
+    puVar4 = (undefined4 *)(DAT_83ca44b0 + (uVar2 & 0x1fffffff) * -8);
+    cVar3 = Scr_CastString(puVar4);
+    if (cVar3 != '\0') {
+      if (puVar4[1] != 2) {
+        MyAssertHandler(0xffffffff821552a8,0x1821,0,0xffffffff82000f98,0xffffffff82156c84);
+      }
+      SL_CheckExists(*puVar4);
+      __restgprlr_29(*puVar4);
+      return;
+    }
+    DAT_83c4baa0 = uVar2 + 1;
+    Scr_ErrorInternal();
+  }
+  uVar1 = va(0xffffffff8215070c,uVar2 + 1);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar1,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -1599,7 +7150,6 @@ void Scr_GetConstLowercaseString(void)
     cVar8 = Scr_CastString(puVar9);
     if (cVar8 != '\0') {
       if (puVar9[1] != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x1841,0,0xffffffff82000f98,0xffffffff82156c84);
       }
       uVar1 = *puVar9;
@@ -1615,7 +7165,6 @@ void Scr_GetConstLowercaseString(void)
         } while (*pcVar4 != '\0');
       }
       if (puVar9[1] != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821552a8,0x184c,0,0xffffffff82000f98,0xffffffff82156c84);
       }
       uVar7 = SL_GetString(&local_2040,0);
@@ -1675,6 +7224,29 @@ void Scr_GetStringIncludeNull(void)
   Scr_GetConstString();
   SL_ConvertToString();
   return;
+}
+
+
+// 82560EE0  Scr_GetDebugString  (script/scr_vm.cpp:6262)
+
+undefined8 Scr_GetDebugString(uint param_1)
+
+{
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  
+  if (param_1 < DAT_83ca44bc) {
+    puVar2 = (undefined4 *)(DAT_83ca44b0 + (param_1 & 0x1fffffff) * -8);
+    Scr_CastDebugString(puVar2);
+    if (puVar2[1] != 2) {
+      MyAssertHandler(0xffffffff821552a8,0x187d,0,0xffffffff82000f98,0xffffffff82156c84);
+    }
+    uVar1 = SL_ConvertToString(*puVar2);
+    return uVar1;
+  }
+  va(0xffffffff8215070c,param_1 + 1);
+  Scr_Error();
+  return 0;
 }
 
 
@@ -1752,8 +7324,34 @@ void Scr_GetVector(uint param_1,undefined4 *param_2)
 void Scr_GetFunc(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  ulonglong uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  
+  uVar2 = __savegprlr_29();
+  if ((uVar2 & 0xffffffff) < (ulonglong)DAT_83ca44bc) {
+    puVar1 = (uint *)(DAT_83ca44b0 + ((uint)uVar2 & 0x1fffffff) * -8);
+    if (puVar1[1] == 9) {
+      iVar4 = Scr_IsInOpcodeMemory(*puVar1);
+      if (iVar4 == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x18bd,0,0xffffffff82000f98,0xffffffff82156cf8);
+      }
+      __restgprlr_29((ulonglong)*puVar1 - (ulonglong)DAT_83c4baf4);
+      return;
+    }
+    DAT_83c4baa0 = (uint)uVar2 + 1;
+    va(0xffffffff82156cdc,(&PTR_s_undefined_829902e8)[puVar1[1]]);
+    Scr_Error();
+  }
+  uVar3 = va(0xffffffff8215070c,uVar2 + 1);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar3,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -1762,8 +7360,42 @@ void Scr_GetFunc(void)
 void Scr_GetEntityRef(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  HGDIOBJ h;
+  undefined4 *puVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  DWORD DVar5;
+  undefined8 uVar4;
+  
+  uVar3 = __savegprlr_26();
+  if ((uVar3 & 0xffffffff) < (ulonglong)DAT_83ca44bc) {
+    uVar2 = (uint)uVar3;
+    puVar1 = (undefined4 *)(DAT_83ca44b0 + (uVar2 & 0x1fffffff) * -8);
+    if (puVar1[1] == 1) {
+      h = (HGDIOBJ)*puVar1;
+      DVar5 = GetObjectType(h);
+      if (DVar5 == 0x16) {
+        Scr_GetEntityIdRef();
+        __restgprlr_26();
+        return;
+      }
+      DAT_83c4baa0 = uVar2 + 1;
+      DVar5 = GetObjectType(h);
+      va(0xffffffff82156d28,(&PTR_s_undefined_829902e8)[DVar5]);
+      Scr_Error();
+    }
+    DAT_83c4baa0 = uVar2 + 1;
+    va(0xffffffff82156d28,(&PTR_s_undefined_829902e8)[puVar1[1]]);
+    Scr_Error();
+  }
+  uVar4 = va(0xffffffff8215070c,uVar3 + 1);
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar4,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -1808,6 +7440,135 @@ longlong Scr_GetVariable(ulonglong param_1)
 }
 
 
+// 825560F8  Scr_GetObjectArray  (script/scr_vm.cpp:6413)
+
+void Scr_GetObjectArray(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+                       ulonglong param_5)
+
+{
+  ulonglong uVar1;
+  DWORD DVar3;
+  ulonglong uVar2;
+  int iVar4;
+  undefined4 uVar5;
+  longlong lVar6;
+  uint uVar7;
+  
+  uVar1 = __savegprlr_20();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1913,0,0xffffffff82000f98,0xffffffff82155d1c);
+  }
+  DVar3 = GetObjectType((HGDIOBJ)uVar1);
+  if (DVar3 != 0x17) {
+    MyAssertHandler(0xffffffff821552a8,0x1914,0,0xffffffff82000f98,0xffffffff82155cf0);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1916,0,0xffffffff82000f98,0xffffffff82155ce0);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1917,0,0xffffffff82000f98,0xffffffff82155cd4);
+  }
+  lVar6 = (longlong)(int)((uint)(HGDIOBJ)uVar1 & 1) * 0xc800;
+  uVar7 = 0;
+  uVar2 = FindFirstSibling(uVar1);
+  if ((uVar2 & 0xffffffff) != 0) {
+    param_3 = param_3 + -4;
+    do {
+      iVar4 = GetValueType(lVar6,uVar2);
+      if ((iVar4 != 1) || ((param_2 & 0xffffffff) <= (ulonglong)uVar7)) {
+        *(uint *)param_4 = uVar7;
+        uVar5 = GetValueType(lVar6,uVar2);
+        *(undefined4 *)param_5 = uVar5;
+        __restgprlr_20(0);
+        return;
+      }
+      iVar4 = FindObject(uVar1,uVar2);
+      if (iVar4 == 0) {
+        MyAssertHandler(0xffffffff821552a8,0x1926,0,0xffffffff82000f98,0xffffffff82150180);
+      }
+      param_3 = param_3 + 4;
+      *(int *)param_3 = iVar4;
+      uVar7 = uVar7 + 1;
+      uVar2 = FindNextSibling(lVar6,uVar2);
+    } while ((uVar2 & 0xffffffff) != 0);
+  }
+  __restgprlr_20(1);
+  return;
+}
+
+
+// 82556290  Scr_GetObjectOrigin  (script/scr_vm.cpp:6450)
+
+void Scr_GetObjectOrigin(undefined8 param_1,ulonglong param_2)
+
+{
+  char cVar1;
+  char cVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  char *pcVar6;
+  char *pcVar7;
+  undefined4 *local_60;
+  int iStack_5c;
+  
+  uVar4 = __savegprlr_22();
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1936,0,0xffffffff82000f98,0xffffffff82150180);
+  }
+  if (DAT_83ca44b8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1937,0,0xffffffff82000f98,0xffffffff821501a4);
+  }
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1938,0,0xffffffff82000f98,0xffffffff821501bc);
+  }
+  pcVar6 = "origin";
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1939,0,0xffffffff82000f98,0xffffffff82004854);
+  }
+  uVar3 = DAT_83ca44b0;
+  if (DAT_83701000 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x193d,0,0xffffffff82000f98,0xffffffff82152800);
+  }
+  if (DAT_83700ff4 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x193f,0,0xffffffff82000f98,0xffffffff82150530);
+  }
+  pcVar7 = (char *)(*(int *)((uint)DAT_83701000 * 4 + DAT_83700ff4) + DAT_83700ff4 + 0xffff);
+  do {
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
+    if (cVar1 == '\0') break;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    MyAssertHandler(0xffffffff821552a8,0x1940,0,0xffffffff82000f98,0xffffffff82155d30);
+  }
+  uVar4 = Scr_FindVariableField(uVar4,DAT_83701000);
+  DAT_83ca44b0 = uVar3;
+  if (DAT_83ca44b8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1946,0,0xffffffff82000f98,0xffffffff821501a4);
+  }
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1947,0,0xffffffff82000f98,0xffffffff821501bc);
+  }
+  iStack_5c = (int)uVar4;
+  local_60 = (undefined4 *)(uVar4 >> 0x20);
+  if (iStack_5c == 4) {
+    puVar5 = (undefined4 *)param_2;
+    *puVar5 = *local_60;
+    puVar5[1] = local_60[1];
+    puVar5[2] = local_60[2];
+    RemoveRefToValue(4,local_60);
+    __restgprlr_22(1);
+    return;
+  }
+  RemoveRefToValue(uVar4 & 0xffffffff,local_60);
+  __restgprlr_22(0);
+  return;
+}
+
+
 // 825564D0  Scr_GetEntityArray  (script/scr_vm.cpp:6487)
 
 void Scr_GetEntityArray(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
@@ -1826,28 +7587,22 @@ void Scr_GetEntityArray(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
   
   uVar1 = __savegprlr_20();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x195d,0,0xffffffff82000f98,0xffffffff82155d1c);
   }
   DVar3 = GetObjectType((HGDIOBJ)uVar1);
   if (DVar3 != 0x17) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x195e,0,0xffffffff82000f98,0xffffffff82155cf0);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x195f,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1960,0,0xffffffff82000f98,0xffffffff82031d80);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1961,0,0xffffffff82000f98,0xffffffff82155ce0);
   }
   if ((param_6 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1962,0,0xffffffff82000f98,0xffffffff82155cd4);
   }
   puVar6 = (uint *)param_4;
@@ -1863,7 +7618,6 @@ void Scr_GetEntityArray(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
     if ((iVar4 != 1) || ((param_2 & 0xffffffff) <= (ulonglong)*puVar6)) break;
     h = (HGDIOBJ)FindObject(uVar1,uVar2);
     if (h == (HGDIOBJ)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821552a8,0x1971,0,0xffffffff82000f98,0xffffffff82150180);
     }
     DVar3 = GetObjectType(h);
@@ -1920,7 +7674,6 @@ undefined * Scr_GetNameForType(uint param_1)
 
 {
   if (0x18 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x199d,0,0xffffffff82155dcc,param_1,0x19);
   }
   return (&PTR_s_undefined_829902e8)[param_1];
@@ -1974,7 +7727,6 @@ void Scr_AddBool(int param_1)
   int *piVar1;
   
   if ((param_1 != 0) && (param_1 != 1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x19bb,0,0xffffffff82000f98,0xffffffff82155dfc);
   }
   piVar1 = (int *)IncInParam();
@@ -2023,7 +7775,6 @@ void Scr_AddAnim(int param_1)
   *piVar1 = param_1;
   piVar1[1] = 0xd;
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x19de,0,0xffffffff82000f98,0xffffffff82155e18);
   }
   return;
@@ -2048,8 +7799,42 @@ void Scr_AddUndefined(void)
 void Scr_AddObject(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  DWORD DVar2;
+  undefined4 *puVar3;
+  HGDIOBJ h;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x19ef,0,0xffffffff82000f98,0xffffffff8209a984);
+  }
+  h = (HGDIOBJ)uVar1;
+  DVar2 = GetObjectType(h);
+  if (DVar2 == 0x10) {
+    MyAssertHandler(0xffffffff821552a8,0x19f2,0,0xffffffff82000f98,0xffffffff82155ecc);
+  }
+  DVar2 = GetObjectType(h);
+  if (DVar2 == 0x11) {
+    MyAssertHandler(0xffffffff821552a8,0x19f3,0,0xffffffff82000f98,0xffffffff82155ea0);
+  }
+  DVar2 = GetObjectType(h);
+  if (DVar2 == 0x12) {
+    MyAssertHandler(0xffffffff821552a8,0x19f4,0,0xffffffff82000f98,0xffffffff82155e78);
+  }
+  DVar2 = GetObjectType(h);
+  if (DVar2 == 0x13) {
+    MyAssertHandler(0xffffffff821552a8,0x19f5,0,0xffffffff82000f98,0xffffffff82155e50);
+  }
+  DVar2 = GetObjectType(h);
+  if (DVar2 == 0x18) {
+    MyAssertHandler(0xffffffff821552a8,0x19f6,0,0xffffffff82000f98,0xffffffff82155e28);
+  }
+  puVar3 = (undefined4 *)IncInParam();
+  puVar3[1] = 1;
+  *puVar3 = h;
+  AddRefToObject(uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2094,11 +7879,29 @@ void Scr_AddString(ulonglong param_1)
   undefined4 uVar2;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1a28,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
   puVar1 = (undefined4 *)IncInParam();
   puVar1[1] = 2;
+  uVar2 = SL_GetString(param_1,0);
+  *puVar1 = uVar2;
+  return;
+}
+
+
+// 82556B40  Scr_AddIString  (script/scr_vm.cpp:6705)
+
+void Scr_AddIString(ulonglong param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  
+  if ((param_1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1a34,0,0xffffffff82000f98,0xffffffff8200e26c);
+  }
+  puVar1 = (undefined4 *)IncInParam();
+  puVar1[1] = 3;
   uVar2 = SL_GetString(param_1,0);
   *puVar1 = uVar2;
   return;
@@ -2113,7 +7916,6 @@ void Scr_AddConstString(ulonglong param_1)
   undefined4 *puVar1;
   
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1a40,0,0xffffffff82000f98,0xffffffff8200e26c);
   }
   puVar1 = (undefined4 *)IncInParam();
@@ -2140,6 +7942,21 @@ void Scr_AddVector(undefined8 param_1)
 }
 
 
+// 82556C80  Scr_AddValue  (script/scr_vm.cpp:6740)
+
+void Scr_AddValue(undefined4 *param_1)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)IncInParam();
+  *puVar1 = *param_1;
+  puVar1[1] = param_1[1];
+  AddRefToValue(param_1[1],*param_1);
+  return;
+}
+
+
 // 82556CC8  Scr_MakeArray  (script/scr_vm.cpp:6750)
 
 void Scr_MakeArray(void)
@@ -2161,8 +7978,34 @@ void Scr_MakeArray(void)
 void Scr_AddArray(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  int *piVar2;
+  char *pcVar3;
+  undefined8 uVar4;
+  undefined4 *puVar5;
+  
   __savegprlr_27();
+  pcVar3 = DAT_83c6fb14;
+  if (DAT_83c6fb14 == (char *)0x0) {
+    DAT_83c6fb14 = "<script array variable>";
+  }
+  if (DAT_83ca44b8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1a73,0,0xffffffff82000f98,0xffffffff82155f0c);
+  }
+  DAT_83ca44b8 = DAT_83ca44b8 + -1;
+  puVar5 = (undefined4 *)((int)DAT_83ca44b0 + -8);
+  piVar2 = (int *)((int)DAT_83ca44b0 + -4);
+  DAT_83ca44b0 = puVar5;
+  if (*piVar2 != 1) {
+    MyAssertHandler(0xffffffff821552a8,0x1a76,0,0xffffffff82000f98,0xffffffff82154928);
+  }
+  uVar1 = *DAT_83ca44b0;
+  uVar4 = GetArraySize(uVar1);
+  uVar4 = GetNewArrayVariable(uVar1,uVar4);
+  SetNewVariableValue(uVar1,uVar4,DAT_83ca44b0 + 2);
+  DAT_83c6fb14 = pcVar3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2171,8 +8014,27 @@ void Scr_AddArray(void)
 void Scr_AddArrayStringIndexed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  int *piVar2;
+  undefined8 uVar3;
+  undefined4 *puVar4;
+  
+  uVar3 = __savegprlr_28();
+  if (DAT_83ca44b8 == 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1a86,0,0xffffffff82000f98,0xffffffff82155f0c);
+  }
+  DAT_83ca44b8 = DAT_83ca44b8 + -1;
+  puVar4 = (undefined4 *)((int)DAT_83ca44b0 + -8);
+  piVar2 = (int *)((int)DAT_83ca44b0 + -4);
+  DAT_83ca44b0 = puVar4;
+  if (*piVar2 != 1) {
+    MyAssertHandler(0xffffffff821552a8,0x1a89,0,0xffffffff82000f98,0xffffffff82154928);
+  }
+  uVar1 = *DAT_83ca44b0;
+  uVar3 = GetNewVariable(uVar1,uVar3);
+  SetNewVariableValue(uVar1,uVar3,DAT_83ca44b0 + 2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2221,8 +8083,19 @@ void Scr_ErrorWithDialogMessage(undefined8 param_1,undefined4 param_2)
 void Scr_TerminalError(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  Scr_DumpScriptThreads(1);
+  Scr_DumpScriptVariablesDefault();
+  DAT_83ca44b6 = 1;
+  if (DAT_83c4ba9c == (undefined *)0x0) {
+    I_strncpyz(0xffffffff83ca8850,uVar1,0x400);
+    DAT_83c4ba9c = &DAT_83ca8850;
+  }
+  Scr_ErrorInternal();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -2282,51 +8155,43 @@ void SetEntityFieldValue(undefined8 param_1,undefined8 param_2,undefined8 param_
   
   uVar1 = __savegprlr_24();
   if ((int)(param_4 + 0x1f0d6e0e) >> 3 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1ad5,0,0xffffffff82155f8c,0xffffffff82155fb0);
   }
   if (0 < (int)param_4 - DAT_83ca44a4 >> 3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1ad6,0,0xffffffff82155f40,0xffffffff82155f68);
   }
   if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1ad7,0,0xffffffff82000f98,0xffffffff821501a4);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1ad8,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   DAT_83ca44bc = 1;
   DAT_83ca44b0 = param_4;
   iVar2 = Scr_SetObjectField(uVar1,param_2,param_3);
-  if (iVar2 != 0) {
+  if (iVar2 == 0) {
     if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821552a8,0x1ae4,0,0xffffffff82000f98,0xffffffff821501a4);
+      MyAssertHandler(0xffffffff821552a8,0x1ade,0,0xffffffff82000f98,0xffffffff821501a4);
     }
-    if (DAT_83ca44bc != 0) {
-      if (DAT_83ca44bc != 1) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff821552a8,0x1ae8,0,0xffffffff82000f98,0xffffffff82155f24);
-      }
-      RemoveRefToValue(DAT_83ca44b0[1],*DAT_83ca44b0);
-      DAT_83ca44bc = 0;
-      DAT_83ca44b0 = DAT_83ca44b0 + -2;
+    if (DAT_83ca44bc != 1) {
+      MyAssertHandler(0xffffffff821552a8,0x1adf,0,0xffffffff82000f98,0xffffffff82155f24);
     }
-    __restgprlr_24(1);
+    DAT_83ca44bc = 0;
+    __restgprlr_24(0);
     return;
   }
   if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821552a8,0x1ade,0,0xffffffff82000f98,0xffffffff821501a4);
+    MyAssertHandler(0xffffffff821552a8,0x1ae4,0,0xffffffff82000f98,0xffffffff821501a4);
   }
-  if (DAT_83ca44bc != 1) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff821552a8,0x1adf,0,0xffffffff82000f98,0xffffffff82155f24);
+  if (DAT_83ca44bc != 0) {
+    if (DAT_83ca44bc != 1) {
+      MyAssertHandler(0xffffffff821552a8,0x1ae8,0,0xffffffff82000f98,0xffffffff82155f24);
+    }
+    RemoveRefToValue(DAT_83ca44b0[1],*DAT_83ca44b0);
+    DAT_83ca44bc = 0;
+    DAT_83ca44b0 = DAT_83ca44b0 + -2;
   }
-  DAT_83ca44bc = 0;
-  __restgprlr_24(0);
+  __restgprlr_24(1);
   return;
 }
 
@@ -2340,26 +8205,21 @@ void GetEntityFieldValue(undefined8 param_1,undefined8 param_2,undefined8 param_
   
   uVar1 = __savegprlr_24();
   if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1af5,0,0xffffffff82000f98,0xffffffff821501a4);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1af6,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   DAT_83ca44b0 = &DAT_83c97708;
   DAT_83c97710._4_4_ = 0;
   Scr_GetObjectField(uVar1,param_2,param_3);
   if ((DAT_83ca44b8 != 0) && (DAT_83ca44b8 != 1)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1afc,0,0xffffffff82000f98,0xffffffff82156014);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1afd,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   if (DAT_83ca44b0 + DAT_83ca44b8 * -8 != &DAT_83c97708) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1afe,0,0xffffffff82000f98,0xffffffff82155fd0);
   }
   DAT_83ca44b8 = 0;
@@ -2378,32 +8238,30 @@ void Scr_SetStructField(undefined8 param_1,undefined8 param_2)
   
   uVar1 = __savegprlr_24();
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b0a,0,0xffffffff82000f98,0xffffffff821501bc);
   }
   if (DAT_83ca44b8 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b0b,0,0xffffffff82000f98,0xffffffff82150814);
   }
   if (DAT_83c6fb14 != (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b0e,0,0xffffffff82000f98,0xffffffff821523f0);
   }
   DAT_83c6fb14 = "<radiant field variable>";
   uVar2 = Scr_GetVariableFieldIndex(uVar1,param_2);
   if (DAT_83ca44b8 != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b15,0,0xffffffff82000f98,0xffffffff82150814);
   }
   DAT_83ca44b8 = 0;
   SetVariableFieldValue((longlong)(int)((uint)uVar1 & 1) * 0xc800,uVar2,DAT_83ca44b0);
   if (DAT_83ca44b8 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b1a,0,0xffffffff82000f98,0xffffffff821501a4);
   }
   if (DAT_83ca44bc != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b1b,0,0xffffffff82000f98,0xffffffff821501bc);
+    DAT_83c6fb14 = (char *)0x0;
+    DAT_83ca44b0 = DAT_83ca44b0 + -8;
+    __restgprlr_24();
+    return;
   }
   DAT_83ca44b0 = DAT_83ca44b0 + -8;
   DAT_83c6fb14 = (char *)0x0;
@@ -2414,11 +8272,26 @@ void Scr_SetStructField(undefined8 param_1,undefined8 param_2)
 
 // 825576A0  Scr_SetDynamicEntityField  (script/scr_vm.cpp:6950)
 
-void Scr_SetDynamicEntityField(void)
+void Scr_SetDynamicEntityField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  DWORD DVar2;
+  
+  uVar1 = __savegprlr_26();
+  if (DAT_83c6fb14 != (char *)0x0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b2a,0,0xffffffff82000f98,0xffffffff821523f0);
+  }
+  DAT_83c6fb14 = "<radiant field variable>";
+  uVar1 = Scr_GetEntityId(uVar1,param_2);
+  DVar2 = GetObjectType((HGDIOBJ)uVar1);
+  if (DVar2 != 0x16) {
+    MyAssertHandler(0xffffffff821552a8,0x1b2f,0,0xffffffff82000f98,0xffffffff82156068);
+  }
+  DAT_83c6fb14 = (char *)0x0;
+  Scr_SetStructField(uVar1,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -2427,8 +8300,64 @@ void Scr_SetDynamicEntityField(void)
 void Scr_IncTime(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
   __savegprlr_17();
+  while( true ) {
+    Profile_Begin(0x147);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82156d60);
+    if (DAT_83ca44a8 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b79,0,0xffffffff82000f98,0xffffffff8214fdd0);
+    }
+    if (DAT_83c4ba9c != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b7a,0,0xffffffff82000f98,0xffffffff821509bc);
+    }
+    if (DAT_83c4baa0 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b7b,0,0xffffffff82000f98,0xffffffff82156168);
+    }
+    if (DAT_83ca44bc != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b7c,0,0xffffffff82000f98,0xffffffff821501bc);
+    }
+    if (DAT_83ca44b8 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b7d,0,0xffffffff82000f98,0xffffffff821501a4);
+    }
+    if (DAT_83ca44b0 != &DAT_83ca47c8) {
+      MyAssertHandler(0xffffffff821552a8,0x1b7e,0,0xffffffff82000f98,0xffffffff82156a90);
+    }
+    VM_SetTime();
+    PIXEndNamedEvent();
+    Profile_EndInternal(0);
+    if (DAT_83c4baa8 == 0) goto LAB_82561b4c;
+    uVar1 = FindVariable(DAT_83c4baa8,DAT_83c4baa4);
+    if ((uVar1 & 0xffffffff) == 0) break;
+    uVar2 = FindObject(DAT_83c4baa8,uVar1);
+    uVar1 = FindFirstSibling();
+    if ((uVar1 & 0xffffffff) == 0) break;
+    iVar3 = GetValueType((longlong)(int)((uint)uVar2 & 1) * 0xc800);
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff821552a8,0x1b4f,0,0xffffffff82000f98,0xffffffff82156d80);
+    }
+    RemoveArrayVariable(uVar2,0);
+  }
+  Scr_FreeEntityList(uVar1,uVar1);
+  if ((DAT_83c4baa4 & 0xff000000) != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b55,0,0xffffffff82000f98,0xffffffff82156090);
+  }
+  DAT_83c4baa4 = DAT_83c4baa4 + 1 & 0xffffff;
+  DAT_83c6fb14 = "<script inc time>";
+  uVar2 = GetVariable(DAT_83c4baa8,DAT_83c4baa4);
+  uVar2 = GetArray(DAT_83c4baa8,uVar2);
+  iVar3 = FindArrayVariable(uVar2,0);
+  if (iVar3 == 0) {
+    GetNewArrayVariableReverse(uVar2,0);
+  }
+  DAT_83ca44c4 = '\x01' - (DAT_83ca44b5 == '\0');
+  DAT_83c6fb14 = (char *)0x0;
+LAB_82561b4c:
+  __restgprlr_17();
+  return;
 }
 
 
@@ -2438,7 +8367,6 @@ void Scr_DecTime(void)
 
 {
   if ((DAT_83c4baa4 & 0xff000000) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b6d,0,0xffffffff82000f98,0xffffffff82156090);
   }
   DAT_83c4baa4 = DAT_83c4baa4 - 1 & 0xffffff;
@@ -2451,8 +8379,32 @@ void Scr_DecTime(void)
 void Scr_RunCurrentThreads(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_28();
+  Profile_Begin(0x147);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82156d60);
+  if (DAT_83ca44a8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b79,0,0xffffffff82000f98,0xffffffff8214fdd0);
+  }
+  if (DAT_83c4ba9c != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b7a,0,0xffffffff82000f98,0xffffffff821509bc);
+  }
+  if (DAT_83c4baa0 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b7b,0,0xffffffff82000f98,0xffffffff82156168);
+  }
+  if (DAT_83ca44bc != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b7c,0,0xffffffff82000f98,0xffffffff821501bc);
+  }
+  if (DAT_83ca44b8 != 0) {
+    MyAssertHandler(0xffffffff821552a8,0x1b7d,0,0xffffffff82000f98,0xffffffff821501a4);
+  }
+  if (DAT_83ca44b0 != &DAT_83ca47c8) {
+    MyAssertHandler(0xffffffff821552a8,0x1b7e,0,0xffffffff82000f98,0xffffffff82156a90);
+  }
+  VM_SetTime();
+  PIXEndNamedEvent();
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2466,7 +8418,6 @@ void * Scr_ResetTimeout(void)
   
   DAT_83c97728 = Sys_Milliseconds();
   if (DAT_83ca4498 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821552a8,0x1b96,0,0xffffffff82000f98,0xffffffff82155280);
   }
   if (*(char *)(DAT_83ca4498 + 0xc) != '\0') {
@@ -2628,7 +8579,91 @@ longlong Scr_BuiltinCompare(int *param_1,int *param_2)
 void Scr_PrintProfileBuiltinTimes(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  undefined *puVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  uint *_Base;
+  int iVar5;
+  uint *puVar6;
+  int *piVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  int iVar10;
+  longlong lVar11;
+  double dVar12;
+  
+  dVar12 = (double)__savegprlr_17();
+  iVar3 = DAT_83c734f4;
+  if (0.0 < dVar12) {
+    iVar10 = 0;
+    iVar5 = 0;
+    piVar7 = &DAT_83c6fb40;
+    lVar11 = 0x267;
+    do {
+      piVar2 = piVar7 + 3;
+      piVar7 = piVar7 + 6;
+      iVar10 = *piVar2 + iVar10;
+      iVar5 = *piVar7 + iVar5;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    iVar4 = Sys_GetValue(0);
+    if ((double)((float)(longlong)(iVar5 + iVar10 + iVar3) * *(float *)(iVar4 + 0x4ac0)) < dVar12) {
+      puVar8 = &DAT_83c6fb40;
+      lVar11 = 0x4cf;
+      do {
+        puVar8[4] = 0;
+        puVar8 = puVar8 + 3;
+        *puVar8 = 0;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
+      __restgprlr_17(0);
+      return;
+    }
+  }
+  _Base = (uint *)Z_VirtualAlloc(0x133c,0xffffffff82156108,0);
+  uVar9 = 0;
+  puVar6 = _Base + -1;
+  lVar11 = 0x4cf;
+  do {
+    puVar6 = puVar6 + 1;
+    *puVar6 = uVar9;
+    uVar9 = uVar9 + 1;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  qsort(_Base,0x4cf,4,Scr_BuiltinCompare);
+  lVar11 = 0x4cf;
+  puVar6 = _Base;
+  do {
+    uVar9 = *puVar6;
+    iVar3 = (int)(((ulonglong)uVar9 + ((ulonglong)uVar9 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+    if (*(int *)((int)&DAT_83c6fb50 + iVar3) == 0) {
+      if (*(int *)((int)&DAT_83c6fb4c + iVar3) != 0) {
+        MyAssertHandler(0xffffffff821552a8,0x1c44,0,0xffffffff82000f98,0xffffffff821560c8);
+      }
+    }
+    else {
+      if ((int)uVar9 < 0x1c4) {
+        puVar1 = (&PTR_s_createprintchannel_8298db28)[uVar9];
+      }
+      else {
+        puVar1 = *(undefined **)
+                  ((int)&PTR_s_attach_8298e238 + (int)(((ulonglong)uVar9 - 0x1c4 & 0xffffffff) << 2)
+                  );
+      }
+      iVar5 = Sys_GetValue(0);
+      Com_Printf(0x17,0xffffffff821560ec,
+                 (double)(*(float *)(iVar5 + 0x4ac0) *
+                         (float)(longlong)*(int *)((int)&DAT_83c6fb4c + iVar3)),
+                 *(undefined4 *)((int)&DAT_83c6fb50 + iVar3),puVar1);
+      *(undefined4 *)((int)&DAT_83c6fb50 + iVar3) = 0;
+      *(undefined4 *)((int)&DAT_83c6fb4c + iVar3) = 0;
+    }
+    lVar11 = lVar11 + -1;
+    puVar6 = puVar6 + 1;
+  } while (lVar11 != 0);
+  Z_VirtualFree(_Base,0);
+  __restgprlr_17(1);
+  return;
 }
 

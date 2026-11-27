@@ -100,10 +100,46 @@ void vp8_encode_bool(uint *param_1,int param_2,int param_3)
 
 // 8281E5E8  vp8_encode_value  (WebM_atvi_opt/vpx/vp8/encoder/boolhuff.c:146)
 
-void vp8_encode_value(void)
+void vp8_encode_value(undefined8 param_1,int param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  uint *puVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  
+  puVar4 = (uint *)__savegprlr_29();
+  while (param_3 = param_3 + -1, -1 < param_3) {
+    uVar5 = *puVar4;
+    uVar7 = (((ulonglong)puVar4[1] - 1 & 0xffffffff) >> 1 & 0xffffff) + 1;
+    if ((param_2 >> ((uint)param_3 & 0x3f) & 1U) != 0) {
+      uVar5 = (int)uVar7 + uVar5;
+      uVar7 = puVar4[1] - uVar7;
+    }
+    uVar1 = *(uint *)(&DAT_821eac40 + (int)((uVar7 & 0xffffffff) << 2));
+    uVar6 = uVar1 + puVar4[3];
+    uVar2 = uVar1 - uVar6;
+    if ((uVar5 << (uVar2 - 1 & 0x3f) & 0x80000000) != 0) {
+      uVar8 = (ulonglong)puVar4[4];
+      while( true ) {
+        uVar8 = uVar8 - 1;
+        iVar3 = (int)uVar8;
+        if (((longlong)uVar8 < 0) || (*(char *)(iVar3 + puVar4[5]) != -1)) break;
+        *(char *)(iVar3 + puVar4[5]) = '\0';
+      }
+      *(char *)(puVar4[5] + iVar3) = *(char *)(puVar4[5] + iVar3) + '\x01';
+    }
+    *(char *)(puVar4[5] + puVar4[4]) = (char)(uVar5 >> (0x18 - uVar2 & 0x3f));
+    puVar4[4] = puVar4[4] + 1;
+    puVar4[3] = uVar6 - 8;
+    *puVar4 = (uVar5 << (uVar2 & 0x3f) & 0xffffff) << (uVar6 & 0x3f);
+    puVar4[1] = (int)uVar7 << (uVar1 & 0x3f);
+  }
+  __restgprlr_29();
+  return;
 }
 

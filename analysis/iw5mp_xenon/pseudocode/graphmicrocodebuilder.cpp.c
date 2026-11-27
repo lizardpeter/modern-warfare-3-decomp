@@ -20,11 +20,57 @@ void D3D__CArena___CArena(undefined4 *param_1)
 
 // 8289D138  D3D::CArena::Alloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:38)
 
-void D3D__CArena__Alloc(void)
+void D3D__CArena__Alloc(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  uVar1 = param_2 + 0xfU & 0xfffffff0;
+  if ((uint)puVar2[2] < uVar1) {
+    uVar5 = uVar1 + 0x10;
+    if ((uVar5 & 0xffffffff) < 0xfe70) {
+      uVar5 = 0xfe70;
+    }
+    puVar3 = (undefined4 *)XMemAlloc(uVar5,0x64800000);
+    if (puVar3 == (undefined4 *)0x0) {
+      iVar4 = 0;
+      goto LAB_8289d1d4;
+    }
+    *puVar3 = *puVar2;
+    *puVar2 = puVar3;
+    puVar2[1] = puVar3 + 4;
+    puVar2[2] = (int)uVar5 + -0x10;
+  }
+  iVar4 = puVar2[1];
+  puVar2[1] = iVar4 + (int)uVar1;
+  puVar2[2] = puVar2[2] - (int)uVar1;
+LAB_8289d1d4:
+  __restgprlr_29(iVar4);
+  return;
+}
+
+
+// 8289CF50  D3D::FlowNode::GetLastChild  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:62)
+
+undefined4 * D3D__FlowNode__GetLastChild(int param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar2 = *(undefined4 **)(param_1 + 0x10);
+  puVar3 = (undefined4 *)0x0;
+  while (puVar1 = puVar2, puVar1 != (undefined4 *)0x0) {
+    puVar3 = puVar1;
+    puVar2 = (undefined4 *)*puVar1;
+  }
+  return puVar3;
 }
 
 
@@ -64,33 +110,145 @@ undefined8 D3D__GraphMicrocodeBuilder__NewALUNode(undefined8 param_1)
 }
 
 
-// 8289DB88  D3D::GMB_CSG_Callback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:135)
+// 8289D2B0  D3D::GraphMicrocodeBuilder::NewFlowNode  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:112)
 
-void D3D__GMB_CSG_Callback(void)
+undefined8 D3D__GraphMicrocodeBuilder__NewFlowNode(undefined8 param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  
+  uVar1 = D3D__CArena__Alloc(param_1,0x18);
+  return uVar1;
+}
+
+
+// 8289DB88  D3D::GMB_CSG_Callback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:135)
+
+void D3D__GMB_CSG_Callback
+               (undefined8 param_1,ulonglong param_2,undefined4 *param_3,longlong param_4)
+
+{
+  int *piVar1;
+  ulonglong uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  uint local_40 [16];
+  
+  uVar2 = __savegprlr_27();
+  uVar4 = 0;
+  local_40[0] = 0;
+  if ((uVar2 & 0x40) == 0) {
+    piVar1 = (int *)param_4;
+    if ((uVar2 & 1) == 0) {
+      iVar3 = D3D__GraphMicrocodeBuilder__NewALUNode(piVar1[6]);
+      if (iVar3 == 0) {
+        uVar4 = 0xffffffff8007000e;
+      }
+      else {
+        *(undefined4 *)(iVar3 + 4) = *param_3;
+        *(undefined4 *)(iVar3 + 8) = param_3[1];
+        *(undefined4 *)(iVar3 + 0xc) = param_3[2];
+        *(uint *)(iVar3 + 0x10) =
+             (uint)(((uVar2 & 0xffffffff) >> 3 & 2 | (uVar2 & 0xffffffff) >> 5 & 1) << 0x1d) |
+             (uint)((uVar2 & 0xffffffff) << 0x1e) & 0x80000000 |
+             *(uint *)(iVar3 + 0x10) & 0x1fffffff;
+        if ((int *)piVar1[2] == (int *)0x0) {
+          *(int *)(piVar1[1] + 0x10) = iVar3;
+        }
+        else {
+          *(int *)piVar1[2] = iVar3;
+        }
+        piVar1[2] = iVar3;
+      }
+    }
+    else {
+      iVar3 = D3D__GraphMicrocodeBuilder__NewFlowNode();
+      if (iVar3 == 0) {
+        uVar4 = 0xffffffff8007000e;
+      }
+      else {
+        if (*piVar1 == 0) {
+          *piVar1 = iVar3;
+        }
+        else {
+          *(int *)piVar1[1] = iVar3;
+        }
+        piVar1[1] = iVar3;
+        *(undefined4 *)(iVar3 + 4) = *param_3;
+        *(undefined4 *)(iVar3 + 8) = param_3[1];
+        piVar1[2] = 0;
+        if ((ulonglong)(uint)piVar1[4] <= (param_2 & 0xffffffff)) {
+          D3D__D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>__resize
+                    (param_4 + 0xc,param_2 + 1,local_40);
+          uVar4 = (ulonglong)local_40[0];
+          if ((int)local_40[0] < 0) goto LAB_8289dcd8;
+        }
+        *(int *)((int)((param_2 & 0xffffffff) << 2) + piVar1[3]) = iVar3;
+      }
+    }
+  }
+  else {
+    uVar4 = 0xfffffffffffff002;
+  }
+LAB_8289dcd8:
+  __restgprlr_27(uVar4);
+  return;
 }
 
 
 // 8289DCE0  D3D::GraphMicrocodeBuilder::ConvertShaderToGraph  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:197)
 
-void D3D__GraphMicrocodeBuilder__ConvertShaderToGraph(void)
+/* WARNING: Removing unreachable block (ram,0x8289dd60) */
+/* WARNING: Removing unreachable block (ram,0x8289dd7c) */
+/* WARNING: Removing unreachable block (ram,0x8289dd90) */
+/* WARNING: Removing unreachable block (ram,0x8289dd9c) */
+/* WARNING: Removing unreachable block (ram,0x8289ddb8) */
+
+void D3D__GraphMicrocodeBuilder__ConvertShaderToGraph
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  longlong lVar1;
+  
+  iVar2 = __savegprlr_29();
+  lVar1 = XMicrocodeShaderForEachInstruction(param_2,param_3,0,0,0,0,0x27,0xffffffff8289db88);
+  if (-1 < lVar1) {
+    *(undefined4 *)(iVar2 + 0xc) = 0;
+    *(undefined4 *)(iVar2 + 0x10) = 0;
+  }
+  __restgprlr_29(lVar1);
+  return;
 }
 
 
 // 8289CFA0  D3D::GetShaderSize_Imp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:233)
 
-void D3D__GetShaderSize_Imp(void)
+void D3D__GetShaderSize_Imp(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  ulonglong uVar4;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  iVar3 = 0;
+  uVar4 = 0;
+  for (; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)*puVar2) {
+    uVar4 = uVar4 + 1;
+    if ((1 << ((uint)puVar2[2] >> 0xc & 0xf) & 0x607eU) != 0) {
+      for (puVar1 = (undefined4 *)puVar2[4]; puVar1 != (undefined4 *)0x0;
+          puVar1 = (undefined4 *)*puVar1) {
+        iVar3 = iVar3 + 1;
+      }
+    }
+  }
+  uVar4 = (uVar4 & 1) + uVar4;
+  *param_2 = ((int)((uVar4 & 0xffffffff) >> 1) + iVar3 + 1) * 0xc;
+  *param_3 = (int)uVar4;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -290,11 +448,43 @@ LAB_8289d69c:
 
 // 8289D6B8  D3D::GraphMicrocodeBuilder::AddFlowAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:420)
 
-void D3D__GraphMicrocodeBuilder__AddFlowAfter(void)
+void D3D__GraphMicrocodeBuilder__AddFlowAfter
+               (undefined8 param_1,ulonglong param_2,undefined4 *param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  
+  iVar2 = __savegprlr_27();
+  uVar4 = 0;
+  puVar3 = (undefined4 *)D3D__GraphMicrocodeBuilder__NewFlowNode(iVar2);
+  if (puVar3 == (undefined4 *)0x0) {
+    uVar4 = 0xffffffff8007000e;
+  }
+  else {
+    puVar3[1] = *param_3;
+    puVar3[2] = param_3[1];
+    if ((param_2 & 0xffffffff) == 0) {
+      *puVar3 = *(undefined4 *)(iVar2 + 0xc);
+      *(undefined4 **)(iVar2 + 0xc) = puVar3;
+      bVar1 = *(int *)(iVar2 + 0x10) == 0;
+    }
+    else {
+      *puVar3 = *(undefined4 *)param_2;
+      *(undefined4 *)param_2 = puVar3;
+      bVar1 = (param_2 & 0xffffffff) == (ulonglong)*(uint *)(iVar2 + 0x10);
+    }
+    if (bVar1) {
+      *(undefined4 **)(iVar2 + 0x10) = puVar3;
+    }
+    if ((param_4 & 0xffffffff) != 0) {
+      *(undefined4 *)param_4 = puVar3;
+    }
+  }
+  __restgprlr_27(uVar4);
+  return;
 }
 
 
@@ -367,40 +557,159 @@ LAB_8289db1c:
 
 // 8289D858  D3D::GraphMicrocodeBuilder::SplitExecBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:562)
 
-void D3D__GraphMicrocodeBuilder__SplitExecBlock(void)
+void D3D__GraphMicrocodeBuilder__SplitExecBlock
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  int iVar6;
+  uint *puVar7;
+  uint *puVar8;
+  int *piVar9;
+  int local_30 [12];
+  
+  uVar4 = __savegprlr_28();
+  lVar5 = D3D__GraphMicrocodeBuilder__CreateExecAfter(uVar4,param_2,local_30);
+  if (lVar5 < 0) goto LAB_8289d9a4;
+  iVar6 = (int)param_2;
+  puVar7 = (uint *)(iVar6 + 4);
+  puVar8 = (uint *)(local_30[0] + 4);
+  *(uint *)(local_30[0] + 8) =
+       *(uint *)(iVar6 + 8) & 0xf000 | *(uint *)(local_30[0] + 8) & 0xffff0fff;
+  uVar1 = *(uint *)(iVar6 + 8);
+  *(uint *)(iVar6 + 8) =
+       ((byte)(&DAT_821fccbc)[uVar1 >> 0xc & 0xf] & 0xf) << 0xc | uVar1 & 0xffff0fff;
+  uVar2 = *(uint *)(local_30[0] + 8);
+  uVar3 = uVar2 >> 0xc & 0xf;
+  if (2 < uVar3) {
+    if (uVar3 < 5) {
+LAB_8289d8f8:
+      *(uint *)(local_30[0] + 8) = uVar2 & 0xfffffbff | uVar1 & 0x400;
+      *(uint *)(local_30[0] + 8) = uVar2 & 0xfffff803 | uVar1 & 0x400 | *(uint *)(iVar6 + 8) & 0x3fc
+      ;
+    }
+    else if (uVar3 < 7) {
+      *(uint *)(local_30[0] + 8) = uVar2 & 0xfffffbff | uVar1 & 0x400;
+    }
+    else if ((0xc < uVar3) && (uVar3 < 0xf)) goto LAB_8289d8f8;
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    *(undefined4 *)(local_30[0] + 0x10) = *(undefined4 *)(iVar6 + 0x10);
+    *(undefined4 *)(iVar6 + 0x10) = 0;
+    *puVar8 = *puVar7 & 0x7000 | *puVar8 & 0xffff8fff;
+    *puVar7 = *puVar7 & 0xffff8fff;
+  }
+  else {
+    piVar9 = (int *)*(int *)param_3;
+    if (piVar9 != (int *)0x0) {
+      iVar6 = 0;
+      *(int **)(local_30[0] + 0x10) = piVar9;
+      *(int *)param_3 = 0;
+      do {
+        piVar9 = (int *)*piVar9;
+        iVar6 = iVar6 + 1;
+      } while (piVar9 != (int *)0x0);
+      *puVar7 = *puVar7 & 0xffff8fff | *puVar7 + iVar6 * -0x1000 & 0x7000;
+      *puVar8 = iVar6 * 0x1000 & 0x7000U | *puVar8 & 0xffff8fff;
+    }
+  }
+  if ((param_4 & 0xffffffff) != 0) {
+    *(int *)param_4 = local_30[0];
+  }
+LAB_8289d9a4:
+  __restgprlr_28(lVar5);
+  return;
 }
 
 
 // 8289D088  D3D::GraphMicrocodeBuilder::ComputeSwizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:666)
 
-void D3D__GraphMicrocodeBuilder__ComputeSwizzle(void)
+void D3D__GraphMicrocodeBuilder__ComputeSwizzle
+               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  __restgprlr_28(((param_3 - 2U & 3) << 2 | param_2 - 1U & 3) << 2 | (param_4 + 1U & 3) << 6 |
+                 uVar1 & 3);
+  return;
 }
 
 
 // 8289D760  D3D::GraphMicrocodeBuilder::CreateExecAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:681)
 
-void D3D__GraphMicrocodeBuilder__CreateExecAfter(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void D3D__GraphMicrocodeBuilder__CreateExecAfter
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined1 local_30 [48];
+  
+  uVar1 = __savegprlr_29();
+  uVar1 = D3D__GraphMicrocodeBuilder__AddFlowAfter(uVar1,param_2,local_30,param_3);
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 8289DB30  D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::resize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:881)
+
+void D3D__D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>__resize
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((ulonglong)*(uint *)(iVar1 + 8) < (param_2 & 0xffffffff)) {
+    D3D__D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>__ensure2(iVar1,param_2,param_3)
+    ;
+  }
+  if (-1 < *(int *)param_3) {
+    *(int *)(iVar1 + 4) = (int)param_2;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 8289D7C0  D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::ensure2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:914)
 
-void D3D__D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>__ensure2(void)
+void D3D__D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>__ensure2
+               (undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar2;
+  longlong lVar1;
+  ulonglong uVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  if ((ulonglong)(uint)puVar2[2] < (param_2 & 0xffffffff)) {
+    uVar3 = ((ulonglong)(uint)puVar2[2] & 0x7fffffff) << 1;
+    if (uVar3 < (param_2 & 0xffffffff)) {
+      uVar3 = param_2;
+    }
+    lVar1 = XMemAlloc((uVar3 & 0x3fffffff) << 2,0x64800000);
+    if (lVar1 == 0) {
+      *param_3 = 0x8007000e;
+    }
+    else {
+      puVar2[2] = (int)uVar3;
+      if ((void *)*puVar2 != (void *)0x0) {
+        memcpy((void *)lVar1,(void *)*puVar2,puVar2[1] << 2);
+        XMemFree(*puVar2,0x24800000);
+      }
+      *puVar2 = (void *)lVar1;
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 

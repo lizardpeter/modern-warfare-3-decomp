@@ -3,6 +3,36 @@
 ; 8281BAB0  tree2tok  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:30)
   8281BAB0  7D8802A6             mfspr r12,LR
   8281BAB4  480FAC01             bl 0x829166b4
+  8281BAB8  9421FF80             stwu r1,-0x80(r1)
+  8281BABC  7D642A14             add r11,r4,r5
+  8281BAC0  7C7E1B78             or r30,r3,r3
+  8281BAC4  7C9C2378             or r28,r4,r4
+  8281BAC8  54DF083C             rlwinm r31,r6,0x1,0x0,0x1e
+  8281BACC  3BA70001             addi r29,r7,0x1
+  8281BAD0  3B6BFFFF             subi r27,r11,0x1
+LAB_8281bad4:
+  8281BAD4  8D7B0001             lbzu r11,0x1(r27)
+  8281BAD8  7D650774             extsb r5,r11
+  8281BADC  2F050000             cmpwi cr6,r5,0x0
+  8281BAE0  41990018             bgt cr6,0x8281baf8
+  8281BAE4  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8281BAE8  7D4BF050             subf r10,r11,r30
+  8281BAEC  93EA0000             stw r31,0x0(r10)
+  8281BAF0  93AA0004             stw r29,0x4(r10)
+  8281BAF4  48000018             b 0x8281bb0c
+LAB_8281baf8:
+  8281BAF8  7FA7EB78             or r7,r29,r29
+  8281BAFC  7FE6FB78             or r6,r31,r31
+  8281BB00  7F84E378             or r4,r28,r28
+  8281BB04  7FC3F378             or r3,r30,r30
+  8281BB08  4BFFFFA9             bl 0x8281bab0
+LAB_8281bb0c:
+  8281BB0C  3BFF0001             addi r31,r31,0x1
+  8281BB10  57EB07FE             rlwinm r11,r31,0x0,0x1f,0x1f
+  8281BB14  2F0B0000             cmpwi cr6,r11,0x0
+  8281BB18  409AFFBC             bne cr6,0x8281bad4
+  8281BB1C  38210080             addi r1,r1,0x80
+  8281BB20  480FABE4             b 0x82916704
 
 ; 8281BB28  vp8_tokens_from_tree  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:50)
   8281BB28  38E00000             li r7,0x0
@@ -10,10 +40,105 @@
   8281BB30  38A00000             li r5,0x0
   8281BB34  4BFFFF7C             b 0x8281bab0
 
+; 8281BB38  vp8_tokens_from_tree_offset  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:56)
+  8281BB38  54AB1838             rlwinm r11,r5,0x3,0x0,0x1c
+  8281BB3C  38E00000             li r7,0x0
+  8281BB40  38C00000             li r6,0x0
+  8281BB44  38A00000             li r5,0x0
+  8281BB48  7C6B1850             subf r3,r11,r3
+  8281BB4C  4BFFFF64             b 0x8281bab0
+
 ; 8281BB50  branch_counts  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:67)
   8281BB50  7D8802A6             mfspr r12,LR
   8281BB54  480FAB61             bl 0x829166b4
+  8281BB58  3B800000             li r28,0x0
+  8281BB5C  3923FFFF             subi r9,r3,0x1
+  8281BB60  7F8BE378             or r11,r28,r28
+  8281BB64  3946FFF8             subi r10,r6,0x8
+LAB_8281bb68:
+  8281BB68  396B0001             addi r11,r11,0x1
+  8281BB6C  938A000C             stw r28,0xc(r10)
+  8281BB70  978A0008             stwu r28,0x8(r10)
+  8281BB74  7F0B4800             cmpw cr6,r11,r9
+  8281BB78  4198FFF0             blt cr6,0x8281bb68
+  8281BB7C  7F9DE378             or r29,r28,r28
+  8281BB80  7CFE3B78             or r30,r7,r7
+  8281BB84  7C9F2378             or r31,r4,r4
+LAB_8281bb88:
+  8281BB88  815F0004             lwz r10,0x4(r31)
+  8281BB8C  7F8BE378             or r11,r28,r28
+  8281BB90  80FF0000             lwz r7,0x0(r31)
+  8281BB94  809E0000             lwz r4,0x0(r30)
+LAB_8281bb98:
+  8281BB98  394AFFFF             subi r10,r10,0x1
+  8281BB9C  7CE95630             sraw r9,r7,r10
+  8281BBA0  7D680E70             srawi r8,r11,0x1
+  8281BBA4  552907FE             rlwinm r9,r9,0x0,0x1f,0x1f
+  8281BBA8  5508083C             rlwinm r8,r8,0x1,0x0,0x1e
+  8281BBAC  7F6B4A14             add r27,r11,r9
+  8281BBB0  7D084A14             add r8,r8,r9
+  8281BBB4  550B103A             rlwinm r11,r8,0x2,0x0,0x1d
+  8281BBB8  7D2B302E             lwzx r9,r11,r6
+  8281BBBC  7D292214             add r9,r9,r4
+  8281BBC0  7D2B312E             stwx r9,r11,r6
+  8281BBC4  7D1B28AE             lbzx r8,r27,r5
+  8281BBC8  7D0B0774             extsb r11,r8
+  8281BBCC  2F0B0000             cmpwi cr6,r11,0x0
+  8281BBD0  4199FFC8             bgt cr6,0x8281bb98
+  8281BBD4  3BBD0001             addi r29,r29,0x1
+  8281BBD8  3BFF0008             addi r31,r31,0x8
+  8281BBDC  3BDE0004             addi r30,r30,0x4
+  8281BBE0  7F1D1800             cmpw cr6,r29,r3
+  8281BBE4  4198FFA4             blt cr6,0x8281bb88
+  8281BBE8  480FAB1C             b 0x82916704
 
 ; 8281BBF0  vp8_tree_probs_from_distribution  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:123)
   8281BBF0  7D8802A6             mfspr r12,LR
   8281BBF4  480FAAC1             bl 0x829166b4
+  8281BBF8  9421FF80             stwu r1,-0x80(r1)
+  8281BBFC  7CDE3378             or r30,r6,r6
+  8281BC00  7CE63B78             or r6,r7,r7
+  8281BC04  7D074378             or r7,r8,r8
+  8281BC08  7D3D4B78             or r29,r9,r9
+  8281BC0C  7D5B5378             or r27,r10,r10
+  8281BC10  3B83FFFF             subi r28,r3,0x1
+  8281BC14  3BE00000             li r31,0x0
+  8281BC18  4BFFFF39             bl 0x8281bb50
+  8281BC1C  39000080             li r8,0x80
+LAB_8281bc20:
+  8281BC20  81460000             lwz r10,0x0(r6)
+  8281BC24  81660004             lwz r11,0x4(r6)
+  8281BC28  7D6B5215             add. r11,r11,r10
+  8281BC2C  41820054             beq 0x8281bc80
+  8281BC30  2F1B0000             cmpwi cr6,r27,0x0
+  8281BC34  5569F87E             rlwinm r9,r11,0x1f,0x1,0x1f
+  8281BC38  409A0008             bne cr6,0x8281bc40
+  8281BC3C  39200000             li r9,0x0
+LAB_8281bc40:
+  8281BC40  7D4AE9D6             mullw r10,r10,r29
+  8281BC44  7D4A4A14             add r10,r10,r9
+  8281BC48  0CCB0000             twllei r11,0x0
+  8281BC4C  7D6A5B96             divwu r11,r10,r11
+  8281BC50  2B0B0100             cmplwi cr6,r11,0x100
+  8281BC54  4098001C             bge cr6,0x8281bc70
+  8281BC58  2B0B0000             cmplwi cr6,r11,0x0
+  8281BC5C  409A0018             bne cr6,0x8281bc74
+  8281BC60  39600001             li r11,0x1
+  8281BC64  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  8281BC68  7D7FF1AE             stbx r11,r31,r30
+  8281BC6C  48000018             b 0x8281bc84
+LAB_8281bc70:
+  8281BC70  396000FF             li r11,0xff
+LAB_8281bc74:
+  8281BC74  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  8281BC78  7D7FF1AE             stbx r11,r31,r30
+  8281BC7C  48000008             b 0x8281bc84
+LAB_8281bc80:
+  8281BC80  7D1FF1AE             stbx r8,r31,r30
+LAB_8281bc84:
+  8281BC84  3BFF0001             addi r31,r31,0x1
+  8281BC88  38C60008             addi r6,r6,0x8
+  8281BC8C  7F1FE000             cmpw cr6,r31,r28
+  8281BC90  4198FF90             blt cr6,0x8281bc20
+  8281BC94  38210080             addi r1,r1,0x80
+  8281BC98  480FAA6C             b 0x82916704

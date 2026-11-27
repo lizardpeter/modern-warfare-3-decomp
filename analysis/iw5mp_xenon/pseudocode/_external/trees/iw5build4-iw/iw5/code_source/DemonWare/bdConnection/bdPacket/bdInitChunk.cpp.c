@@ -15,6 +15,25 @@ undefined4 * bdInitChunk__bdInitChunk(undefined4 *param_1)
 }
 
 
+// 829387D0  bdInitChunk::bdInitChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:26)
+
+void bdInitChunk__bdInitChunk(undefined8 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdChunk__bdChunk(puVar1,3);
+  puVar1[4] = param_2;
+  puVar1[5] = 0;
+  *puVar1 = &PTR_bdInitChunk___scalar_deleting_destructor__82219768;
+  puVar1[8] = 0;
+  puVar1[9] = param_3;
+  __restgprlr_29(puVar1);
+  return;
+}
+
+
 // 82938828  bdInitChunk::~bdInitChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:30)
 
 void bdInitChunk___bdInitChunk(undefined4 *param_1)
@@ -41,21 +60,124 @@ undefined4 bdInitChunk__getInitTag(int param_1)
 
 // 829388F8  bdInitChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:50)
 
-void bdInitChunk__serialize(void)
+void bdInitChunk__serialize(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 *puVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar5;
+  undefined8 uVar4;
+  char cVar6;
+  undefined1 *puVar7;
+  int iVar8;
+  longlong lVar9;
+  undefined1 local_40 [2];
+  undefined2 local_3e;
+  undefined1 auStack_3c [2];
+  undefined1 auStack_3a [2];
+  undefined4 local_38;
+  undefined1 auStack_34 [4];
+  undefined1 auStack_30 [48];
+  
+  iVar5 = __savegprlr_28();
+  local_38 = 0;
+  uVar4 = bdChunk__serialize();
+  local_38 = (undefined4)uVar4;
+  local_40[0] = (undefined1)*(undefined4 *)(iVar5 + 0x14);
+  cVar6 = bdBytePacker__appendBuffer(param_2,param_3,uVar4,&local_38,local_40,1);
+  local_3e = 0;
+  if (cVar6 != '\0') {
+    iVar8 = 0;
+    puVar7 = auStack_3a;
+    lVar9 = 2;
+    do {
+      iVar3 = iVar8 + -2;
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = auStack_3c[iVar3];
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    cVar6 = bdBytePacker__appendBuffer(param_2,param_3,local_38,&local_38,auStack_3c,2);
+    bVar2 = true;
+    if (cVar6 != '\0') goto LAB_829389ac;
+  }
+  bVar2 = false;
+LAB_829389ac:
+  if (bVar2) {
+    iVar8 = 0;
+    puVar7 = auStack_30;
+    lVar9 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar8 + iVar5 + 0x10);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    bdBytePacker__appendBuffer(param_2,param_3,local_38,&local_38,auStack_34,4);
+  }
+  __restgprlr_28(local_38);
+  return;
 }
 
 
 // 82938A00  bdInitChunk::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:72)
 
-void bdInitChunk__deserialize(void)
+void bdInitChunk__deserialize(undefined8 param_1,undefined8 param_2,longlong param_3,uint *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  bool bVar1;
+  int iVar2;
+  char cVar3;
+  uint uVar4;
+  byte local_40 [2];
+  undefined2 local_3e;
+  uint local_3c [15];
+  
+  iVar2 = __savegprlr_27();
+  local_3c[0] = *param_4;
+  bVar1 = true;
+  if ((param_3 - (ulonglong)local_3c[0] & 0xffffffff) < 5) goto LAB_82938af8;
+  uVar4 = 0;
+  cVar3 = bdChunk__deserialize(iVar2);
+  if (cVar3 == '\0') {
+LAB_82938a80:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdBytePacker__removeBuffer(param_2,param_3,local_3c[0],local_3c,local_40,1);
+    if (cVar3 != '\0') {
+      uVar4 = (uint)local_40[0];
+    }
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82938a80;
+  }
+  *(uint *)(iVar2 + 0x14) = uVar4;
+  local_3e = 0;
+  if (bVar1) {
+    cVar3 = bdBytePacker__removeBasicType<unsigned_short>
+                      (param_2,param_3,local_3c[0],local_3c,&local_3e);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82938ac0;
+  }
+  else {
+LAB_82938ac0:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdBytePacker__removeBasicType<unsigned_int>
+                      (param_2,param_3,local_3c[0],local_3c,iVar2 + 0x10);
+    bVar1 = true;
+    if (cVar3 != '\0') goto LAB_82938af8;
+  }
+  bVar1 = false;
+LAB_82938af8:
+  if (bVar1) {
+    *param_4 = local_3c[0];
+  }
+  __restgprlr_27();
+  return;
 }
 
 

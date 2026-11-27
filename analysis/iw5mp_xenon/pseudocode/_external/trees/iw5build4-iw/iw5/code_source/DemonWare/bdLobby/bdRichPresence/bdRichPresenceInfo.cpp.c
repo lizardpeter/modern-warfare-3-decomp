@@ -2,11 +2,26 @@
 
 // 8290C2B0  bdRichPresenceInfo::bdRichPresenceInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:13)
 
-void bdRichPresenceInfo__bdRichPresenceInfo(void)
+void bdRichPresenceInfo__bdRichPresenceInfo(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  size_t _Size;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdTaskResult__bdTaskResult();
+  *(undefined1 *)(puVar1 + 1) = 0;
+  *puVar1 = &PTR_bdRichPresenceInfo___scalar_deleting_destructor__82210ce0;
+  _Size = (size_t)param_3;
+  if (0x1f < (param_3 & 0xffffffff)) {
+    _Size = 0x20;
+  }
+  puVar1[10] = _Size;
+  if ((param_2 & 0xffffffff) != 0) {
+    memcpy((void *)((int)puVar1 + 5),(void *)param_2,_Size);
+  }
+  __restgprlr_29(puVar1);
+  return;
 }
 
 
@@ -31,11 +46,26 @@ void bdRichPresenceInfo__serialize(int param_1,undefined8 param_2)
 
 // 8290C390  bdRichPresenceInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:30)
 
-void bdRichPresenceInfo__deserialize(void)
+void bdRichPresenceInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  undefined8 uVar3;
+  
+  iVar1 = __savegprlr_28();
+  *(undefined4 *)(iVar1 + 0x28) = 0x20;
+  cVar2 = bdByteBuffer__readBool(*(undefined4 *)param_2,iVar1 + 4);
+  if (cVar2 != '\0') {
+    cVar2 = bdByteBuffer__readBlob(*(undefined4 *)param_2,iVar1 + 5,iVar1 + 0x28);
+    uVar3 = 1;
+    if (cVar2 != '\0') goto LAB_8290c3f8;
+  }
+  uVar3 = 0;
+LAB_8290c3f8:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_28(uVar3);
+  return;
 }
 
 

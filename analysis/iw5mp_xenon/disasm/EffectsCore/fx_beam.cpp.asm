@@ -39,6 +39,70 @@
   824158A8  13E048C7             vcmpequd v31,v0,v9
   824158AC  138028C7             vcmpequd v28,v0,v5
 
+; 824158C8  CreateClipMatrix  (EffectsCore/fx_beam.cpp:147)
+  824158C8  7D8802A6             mfspr r12,LR
+  824158CC  48500DE5             bl 0x829166b0
+  824158D0  DBE1FFC0             stfd f31,-0x40(r1)
+  824158D4  9421FF10             stwu r1,-0xf0(r1)
+  824158D8  3FE082A4             lis r31,-0x7d5c
+  824158DC  3D608206             lis r11,-0x7dfa
+  824158E0  3D208200             lis r9,-0x7e00
+  824158E4  3BAB0EF8             addi r29,r11,0xef8
+  824158E8  3D408200             lis r10,-0x7e00
+  824158EC  817FD5F8             lwz r11,-0x2a08(r31)
+  824158F0  7C7E1B78             or r30,r3,r3
+  824158F4  7C9B2378             or r27,r4,r4
+  824158F8  C3E913F8             lfs f31,0x13f8(r9)
+  824158FC  7CBA2B78             or r26,r5,r5
+  82415900  3B8A0F98             addi r28,r10,0xf98
+  82415904  C00B0010             lfs f0,0x10(r11)
+  82415908  FF00F800             fcmpu cr6,f0,f31
+  8241590C  41990024             bgt cr6,0x82415930
+  82415910  3D608206             lis r11,-0x7dfa
+  82415914  7F86E378             or r6,r28,r28
+  82415918  38EB0ECC             addi r7,r11,0xecc
+  8241591C  7FA3EB78             or r3,r29,r29
+  82415920  38A00000             li r5,0x0
+  82415924  38800097             li r4,0x97
+  82415928  481BEBD9             bl 0x825d4500
+  8241592C  817FD5F8             lwz r11,-0x2a08(r31)
+LAB_82415930:
+  82415930  C00B0014             lfs f0,0x14(r11)
+  82415934  FF00F800             fcmpu cr6,f0,f31
+  82415938  41990020             bgt cr6,0x82415958
+  8241593C  3D608206             lis r11,-0x7dfa
+  82415940  7F86E378             or r6,r28,r28
+  82415944  38EB0EA0             addi r7,r11,0xea0
+  82415948  7FA3EB78             or r3,r29,r29
+  8241594C  38A00000             li r5,0x0
+  82415950  38800098             li r4,0x98
+  82415954  481BEBAD             bl 0x825d4500
+LAB_82415958:
+  82415958  7F45D378             or r5,r26,r26
+  8241595C  7F64DB78             or r4,r27,r27
+  82415960  38610070             addi r3,r1,0x70
+  82415964  4BFFFDB5             bl 0x82415718
+  82415968  D3E10050             stfs f31,0x50(r1)
+  8241596C  817FD5F8             lwz r11,-0x2a08(r31)
+  82415970  3D408200             lis r10,-0x7e00
+  82415974  39210050             addi r9,r1,0x50
+  82415978  D3E10058             stfs f31,0x58(r1)
+  8241597C  D3E1005C             stfs f31,0x5c(r1)
+  82415980  39010070             addi r8,r1,0x70
+  82415984  D3E10064             stfs f31,0x64(r1)
+  82415988  38E10080             addi r7,r1,0x80
+  8241598C  38C10090             addi r6,r1,0x90
+  82415990  D3E10068             stfs f31,0x68(r1)
+  82415994  C00A0F10             lfs f0,0xf10(r10)
+  82415998  38A100A0             addi r5,r1,0xa0
+  8241599C  38810060             addi r4,r1,0x60
+  824159A0  D3E1006C             stfs f31,0x6c(r1)
+  824159A4  13E040C7             vcmpequd v31,v0,v8
+  824159A8  3C608206             lis r3,-0x7dfa
+  824159AC  13C038C7             vcmpequd v30,v0,v7
+  824159B0  3D408206             lis r10,-0x7dfa
+  824159B4  13A030C7             vcmpequd v29,v0,v6
+
 ; 82415A98  Vec4HomogenousClipZW  (EffectsCore/fx_beam.cpp:161)
 
 ; 82415B18  Vec4HomogenousClipBothZ  (EffectsCore/fx_beam.cpp:202)
@@ -48,15 +112,79 @@
 ; 82415C20  FX_GenerateBeam_GetFlatDelta  (EffectsCore/fx_beam.cpp:220)
   82415C20  7D8802A6             mfspr r12,LR
   82415C24  48500A91             bl 0x829166b4
+  82415C28  9421FF60             stwu r1,-0xa0(r1)
+  82415C2C  3B600020             li r27,0x20
+  82415C30  13E018C7             vcmpequd v31,v0,v3
+  82415C34  3D608218             lis r11,-0x7de8
+  82415C38  3B800030             li r28,0x30
+  82415C3C  3BA00010             li r29,0x10
+  82415C40  392BA040             subi r9,r11,0x5fc0
+  82415C44  13C3D8C7             vcmpequd v30,v3,v27
+  82415C48  39410050             addi r10,r1,0x50
+  82415C4C  39010060             addi r8,r1,0x60
+  82415C50  13A3E0C7             vcmpequd v29,v3,v28
 
 ; 82415E00  FX_Beam_GenerateVerts  (EffectsCore/fx_beam.cpp:262)
   82415E00  7D8802A6             mfspr r12,LR
   82415E04  4850087D             bl 0x82916680
+  82415E08  3981FF68             subi r12,r1,0x98
+  82415E0C  48500975             bl 0x82916780
+  82415E10  3981FF10             subi r12,r1,0xf0
+  82415E14  48502229             bl 0x8291803c
+  82415E18  9421FC70             stwu r1,-0x390(r1)
+  82415E1C  3D408200             lis r10,-0x7e00
+  82415E20  906103A4             stw r3,0x3a4(r1)
+  82415E24  3D608206             lis r11,-0x7dfa
+  82415E28  3BEA0F98             addi r31,r10,0xf98
+  82415E2C  7C9E2378             or r30,r4,r4
+  82415E30  2B040000             cmplwi cr6,r4,0x0
+  82415E34  93E10080             stw r31,0x80(r1)
+  82415E38  3A0B0EF8             addi r16,r11,0xef8
+  82415E3C  409A0020             bne cr6,0x82415e5c
+  82415E40  3D608201             lis r11,-0x7dff
+  82415E44  7FE6FB78             or r6,r31,r31
+  82415E48  38EBB0FC             subi r7,r11,0x4f04
+  82415E4C  7E038378             or r3,r16,r16
+  82415E50  38A00000             li r5,0x0
+  82415E54  38800121             li r4,0x121
+  82415E58  481BE6A9             bl 0x825d4500
+LAB_82415e5c:
+  82415E5C  817E0004             lwz r11,0x4(r30)
+  82415E60  2B0B0000             cmplwi cr6,r11,0x0
+  82415E64  409A0020             bne cr6,0x82415e84
+  82415E68  3D608206             lis r11,-0x7dfa
+  82415E6C  7FE6FB78             or r6,r31,r31
+  82415E70  38EB1200             addi r7,r11,0x1200
+  82415E74  7E038378             or r3,r16,r16
+  82415E78  38A00000             li r5,0x0
+  82415E7C  38800122             li r4,0x122
+  82415E80  481BE681             bl 0x825d4500
+LAB_82415e84:
+  82415E84  3BFE0024             addi r31,r30,0x24
+  82415E88  83BE0004             lwz r29,0x4(r30)
+  82415E8C  389E0018             addi r4,r30,0x18
+  82415E90  7FE5FB78             or r5,r31,r31
+  82415E94  38610190             addi r3,r1,0x190
+  82415E98  4BFFFA31             bl 0x824158c8
+  82415E9C  396101C0             addi r11,r1,0x1c0
+  82415EA0  39410170             addi r10,r1,0x170
+  82415EA4  39210140             addi r9,r1,0x140
+  82415EA8  39010150             addi r8,r1,0x150
+  82415EAC  38E10160             addi r7,r1,0x160
+  82415EB0  13E058C7             vcmpequd v31,v0,v11
+  82415EB4  38C10190             addi r6,r1,0x190
 
 ; 824169F8  XMMatrixInverse  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/xnamathmatrix.inl:453)
   824169F8  F9410048             std r10,0x48(r1)
   824169FC  39610020             addi r11,r1,0x20
   82416A00  39410040             addi r10,r1,0x40
+
+; 82416978  FX_Beam_Begin  (EffectsCore/fx_beam.cpp:552)
+  82416978  3D408332             lis r10,-0x7cce
+  8241697C  39600000             li r11,0x0
+  82416980  392A5980             addi r9,r10,0x5980
+  82416984  91690C00             stw r11,0xc00(r9)
+  82416988  4E800020             blr
 
 ; 82416990  FX_Beam_Add  (EffectsCore/fx_beam.cpp:558)
   82416990  7D8802A6             mfspr r12,LR
@@ -82,3 +210,8 @@ LAB_824169d4:
   824169DC  7D8803A6             mtspr LR,r12
   824169E0  EBE1FFF0             ld r31,-0x10(r1)
   824169E4  4E800020             blr
+
+; 824169E8  FX_Beam_GetInfo  (EffectsCore/fx_beam.cpp:568)
+  824169E8  3D608332             lis r11,-0x7cce
+  824169EC  386B5980             addi r3,r11,0x5980
+  824169F0  4E800020             blr

@@ -7,8 +7,22 @@ BOOL DuplicateHandle(HANDLE hSourceProcessHandle,HANDLE hSourceHandle,HANDLE hTa
                     DWORD dwOptions)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(hSourceProcessHandle,hSourceHandle,hTargetProcessHandle,lpTargetHandle,
-                 dwDesiredAccess,bInheritHandle,dwOptions);
+  int iVar1;
+  BOOL BVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  lVar5 = (longlong)(int)dwOptions;
+  lVar4 = (longlong)(int)lpTargetHandle;
+  lVar3 = (longlong)(int)hSourceHandle;
+  __savegprlr_29(hSourceProcessHandle,lVar3,hTargetProcessHandle,lVar4,dwDesiredAccess,
+                 bInheritHandle,lVar5);
+  iVar1 = NtDuplicateObject(lVar3,lVar4,lVar5);
+  if (iVar1 < 0) {
+    RtlSetLastNTError();
+  }
+  BVar2 = __restgprlr_29(iVar1 >= 0);
+  return BVar2;
 }
 

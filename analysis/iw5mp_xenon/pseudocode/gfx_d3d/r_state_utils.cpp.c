@@ -8,7 +8,6 @@ void * R_MatrixIdentity44(void *param_1)
   void *pvVar1;
   
   if (param_1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
   }
   pvVar1 = memcpy(param_1,&DAT_821d1098,0x40);
@@ -18,11 +17,74 @@ void * R_MatrixIdentity44(void *param_1)
 
 // 82781B68  R_InitCmdBufSourceState  (gfx_d3d/r_state_utils.cpp:25)
 
-void R_InitCmdBufSourceState(void)
+void R_InitCmdBufSourceState(undefined8 param_1,ulonglong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  void *_Dst;
+  void *pvVar1;
+  int *piVar2;
+  uint uVar3;
+  undefined2 *puVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  double dVar7;
+  
+  _Dst = (void *)__savegprlr_27();
+  if (_Dst == (void *)0x0) {
+    MyAssertHandler(0xffffffff821d10d8,0x1c,0,0xffffffff82000f98,0xffffffff82165ff0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821d10d8,0x1d,0,0xffffffff82000f98,0xffffffff820014a8);
+  }
+  memset(_Dst,0,0x1760);
+  pvVar1 = memcpy((void *)((int)_Dst + 0xe00),(void *)param_2,0x5f0);
+  uVar3 = 0;
+  lVar6 = 0x52;
+  piVar2 = &DAT_821c8480;
+  puVar4 = (undefined2 *)((int)_Dst + 0x1590);
+  puVar5 = (undefined4 *)((int)_Dst + 0xe08);
+  do {
+    if ((((param_2 & 0xffffffff) == ZEXT48(&DAT_8484eab0)) || (*piVar2 != 2)) || (uVar3 < 0x1b)) {
+      puVar5[-2] = 0x7f7fffff;
+      puVar5[-1] = 0x7f7fffff;
+      *puVar5 = 0x7f7fffff;
+      puVar5[1] = 0;
+    }
+    else {
+      *puVar4 = 1;
+    }
+    uVar3 = uVar3 + 1;
+    puVar4 = puVar4 + 1;
+    puVar5 = puVar5 + 4;
+    piVar2 = piVar2 + 1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  *(undefined4 *)((int)_Dst + 0xe94) = 0;
+  *(undefined4 *)((int)_Dst + 0xe98) = 0;
+  *(undefined4 *)((int)_Dst + 0xe9c) = 0;
+  dVar7 = 1.0;
+  *(undefined4 *)((int)_Dst + 0xe90) = 0x3f800000;
+  *(short *)((int)_Dst + 0x15a2) = *(short *)((int)_Dst + 0x15a2) + 1;
+  *(undefined4 *)((int)_Dst + 0xea0) = 0;
+  *(undefined4 *)((int)_Dst + 0xea4) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0xea8) = 0;
+  *(undefined4 *)((int)_Dst + 0xeac) = 0;
+  *(short *)((int)_Dst + 0x15a4) = *(short *)((int)_Dst + 0x15a4) + 1;
+  *(undefined4 *)((int)_Dst + 0xeb0) = 0;
+  *(undefined4 *)((int)_Dst + 0xeb4) = 0;
+  *(undefined4 *)((int)_Dst + 0xeb8) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0xebc) = 0;
+  *(short *)((int)_Dst + 0x15a6) = *(short *)((int)_Dst + 0x15a6) + 1;
+  if (*(int *)((int)_Dst + 0x16c0) != 0) {
+    pvVar1 = (void *)MyAssertHandler(0xffffffff821d10d8,0x3e,1,0xffffffff82000f98,0xffffffff821d111c
+                                    );
+  }
+  *(float *)((int)_Dst + 0x16e4) = (float)dVar7;
+  *(float *)((int)_Dst + 0x16f4) = (float)dVar7;
+  *(undefined4 *)((int)_Dst + 0x16f8) = param_3;
+  *(undefined4 *)((int)_Dst + 0x174c) = 0x27;
+  __restgprlr_27(pvVar1);
+  return;
 }
 
 
@@ -42,8 +104,65 @@ void R_SetDefaultStateBits(undefined4 *param_1)
 void R_InitCmdBufState(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 uVar1;
+  void *_Dst;
+  undefined8 uVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  int iVar5;
+  uint uVar6;
+  
+  _Dst = (void *)__savegprlr_23();
+  if (_Dst == (void *)0x0) {
+    MyAssertHandler(0xffffffff821d10d8,0x6e,0,0xffffffff82000f98,0xffffffff82003870);
+  }
+  uVar1 = *(undefined4 *)((int)_Dst + 0xc0);
+  memset(_Dst,0,0xb70);
+  *(undefined4 *)((int)_Dst + 0xc0) = uVar1;
+  lVar4 = 4;
+  iVar5 = 0x10;
+  *(undefined4 *)((int)_Dst + 0x104) = 0x3f800000;
+  *(undefined4 *)((int)_Dst + 0x108) = 0;
+  *(undefined4 *)((int)_Dst + 0xcc) = 4;
+  *(undefined4 *)((int)_Dst + 0xb68) = 0x10;
+  *(undefined4 *)((int)_Dst + 0x100) = 0xffffffff;
+  *(undefined4 *)((int)_Dst + 0xb24) = 0x18004800;
+  *(undefined4 *)((int)_Dst + 0xb28) = 2;
+  *(undefined4 *)((int)_Dst + 0xb1c) = 0x18004800;
+  *(undefined4 *)((int)_Dst + 0xb20) = 2;
+  R_SetCompleteState(uVar1,(int)_Dst + 0xb24);
+  R_SetDefaultAlphaTestFunction(_Dst);
+  uVar2 = R_DecodeSamplerState(1);
+  puVar3 = (undefined4 *)((int)_Dst + 0x5c);
+  do {
+    R_HW_ForceSamplerState(*(undefined4 *)((int)_Dst + 0xc0),iVar5,uVar2);
+    *(undefined1 *)(iVar5 + (int)_Dst) = 1;
+    lVar4 = lVar4 + -1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = (int)uVar2;
+    iVar5 = iVar5 + 1;
+  } while (lVar4 != 0);
+  uVar6 = 0;
+  puVar3 = (undefined4 *)((int)_Dst + 0x1c);
+  do {
+    R_HW_ForceSamplerState(*(undefined4 *)((int)_Dst + 0xc0),uVar6,uVar2);
+    *(undefined1 *)(uVar6 + (int)_Dst) = 1;
+    uVar6 = uVar6 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = (int)uVar2;
+  } while (uVar6 < 0x10);
+  *(undefined4 *)((int)_Dst + 0xe8) = 0xffffffff;
+  *(undefined4 *)((int)_Dst + 0xb2c) = 0xffffffff;
+  if (*(int *)((int)_Dst + 0xb34) != 0) {
+    MyAssertHandler(0xffffffff821d10d8,0xa7,0,0xffffffff82000f98,0xffffffff821d1170);
+  }
+  if (*(int *)((int)_Dst + 0xb38) != 0) {
+    MyAssertHandler(0xffffffff821d10d8,0xa8,0,0xffffffff82000f98,0xffffffff821d115c);
+  }
+  *(undefined4 *)((int)_Dst + 0xb3c) = 0x1000;
+  *(undefined4 *)((int)_Dst + 0xb40) = 0x1000;
+  __restgprlr_23();
+  return;
 }
 
 
@@ -59,13 +178,153 @@ void R_ViewAndProjectionMatricesChanged(int param_1)
 }
 
 
-// 82782040  R_CmdBufSet2D  (gfx_d3d/r_state_utils.cpp:220)
+// 82781EF0  R_WorldMatrixChanged  (gfx_d3d/r_state_utils.cpp:183)
 
-void R_CmdBufSet2D(void)
+void R_WorldMatrixChanged(int param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  lVar4 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  iVar3 = ((int)((lVar4 + 0x14U & 0xffffffff) >> 2) + 0xb52) * 2;
+  iVar1 = ((int)((lVar4 + 0x18U & 0xffffffff) >> 2) + 0xb52) * 2;
+  iVar2 = ((int)((lVar4 + 0x1cU & 0xffffffff) >> 2) + 0xb52) * 2;
+  *(short *)(iVar3 + param_1) = *(short *)(iVar3 + param_1) + 1;
+  *(short *)(iVar1 + param_1) = *(short *)(iVar1 + param_1) + 1;
+  *(short *)(iVar2 + param_1) = *(short *)(iVar2 + param_1) + 1;
+  if ((param_2 & 0xffffffff) == 0) {
+    *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
+  }
+  *(undefined2 *)((int)((lVar4 + 0xb2eU & 0xffffffff) << 1) + param_1) =
+       *(undefined2 *)(iVar3 + param_1);
+  return;
+}
+
+
+// 82781F78  R_GetActiveWorldMatrix  (gfx_d3d/r_state_utils.cpp:197)
+
+int R_GetActiveWorldMatrix(int param_1)
+
+{
+  *(short *)(param_1 + 0x16ae) = *(short *)(param_1 + 0x16ae) + 1;
+  *(short *)(param_1 + 0x16b0) = *(short *)(param_1 + 0x16b0) + 1;
+  *(short *)(param_1 + 0x16b2) = *(short *)(param_1 + 0x16b2) + 1;
+  *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
+  *(undefined2 *)(param_1 + 0x165c) = *(undefined2 *)(param_1 + 0x16ae);
+  return param_1 + 0x500;
+}
+
+
+// 82781FC0  R_GetActiveWorldMatrixAlternate  (gfx_d3d/r_state_utils.cpp:207)
+
+longlong R_GetActiveWorldMatrixAlternate(longlong param_1,ulonglong param_2)
+
+{
+  if (3 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821d10d8,0xd3,0,0xffffffff821d1188,param_2,3);
+  }
+  R_WorldMatrixChanged(param_1,param_2);
+  return (param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffff) * 0x100 + param_1 + 0x500;
+}
+
+
+// 82782040  R_CmdBufSet2D  (gfx_d3d/r_state_utils.cpp:220)
+
+void R_CmdBufSet2D(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  undefined8 *puVar2;
+  undefined8 *puVar3;
+  longlong lVar4;
+  undefined8 uStack_b8;
+  float local_b0;
+  float local_9c;
+  undefined4 local_80;
+  undefined4 local_7c;
+  undefined4 local_78;
+  undefined4 local_74;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(param_2 + 8) < 1) {
+    MyAssertHandler(0xffffffff821d10d8,0xe4,0,0xffffffff821d07cc,0xffffffff821d07e8);
+  }
+  if (*(int *)(param_2 + 0xc) < 1) {
+    MyAssertHandler(0xffffffff821d10d8,0xe5,0,0xffffffff821d0798,0xffffffff821d07b4);
+  }
+  puVar3 = &uStack_b8;
+  lVar4 = 8;
+  do {
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  local_7c = 0x3f800000;
+  local_74 = 0x3f800000;
+  puVar2 = (undefined8 *)&local_78;
+  puVar3 = (undefined8 *)&UNK_821d1090;
+  local_80 = 0xbf800000;
+  local_78 = 0;
+  lVar4 = 8;
+  local_9c = (1.0 / (float)(longlong)*(int *)(param_2 + 0xc)) * -2.0;
+  local_b0 = (1.0 / (float)(longlong)*(int *)(param_2 + 8)) * 2.0;
+  do {
+    puVar3 = puVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  if ((void *)(iVar1 + 0x13f0) == (void *)0x0) {
+    MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
+  }
+  memcpy((void *)(iVar1 + 0x13f0),&DAT_821d1098,0x40);
+  puVar3 = &uStack_b8;
+  puVar2 = (undefined8 *)(iVar1 + 0x1428);
+  lVar4 = 8;
+  do {
+    puVar3 = puVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  puVar3 = &uStack_b8;
+  puVar2 = (undefined8 *)(iVar1 + 0x1468);
+  lVar4 = 8;
+  do {
+    puVar3 = puVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  puVar3 = (undefined8 *)(iVar1 + 0x14a8);
+  lVar4 = 8;
+  do {
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  *(short *)(iVar1 + 0x16a4) = *(short *)(iVar1 + 0x16a4) + 1;
+  *(short *)(iVar1 + 0x16a6) = *(short *)(iVar1 + 0x16a6) + 1;
+  lVar4 = 8;
+  *(short *)(iVar1 + 0x16a8) = *(short *)(iVar1 + 0x16a8) + 1;
+  puVar2 = (undefined8 *)(iVar1 + 0x4f8);
+  *(short *)(iVar1 + 0x16ae) = *(short *)(iVar1 + 0x16ae) + 1;
+  puVar3 = (undefined8 *)&local_78;
+  *(short *)(iVar1 + 0x16b0) = *(short *)(iVar1 + 0x16b0) + 1;
+  *(short *)(iVar1 + 0x16b2) = *(short *)(iVar1 + 0x16b2) + 1;
+  *(short *)(iVar1 + 0x16ac) = *(short *)(iVar1 + 0x16ac) + 1;
+  *(undefined2 *)(iVar1 + 0x165c) = *(undefined2 *)(iVar1 + 0x16ae);
+  do {
+    puVar3 = puVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -106,7 +365,6 @@ void * R_CmdBufSet3D(int param_1)
   *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
   *(undefined2 *)(param_1 + 0x165c) = *(undefined2 *)(param_1 + 0x16ae);
   if ((void *)(param_1 + 0x500) == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
   }
   pvVar1 = memcpy((void *)(param_1 + 0x500),&DAT_821d1098,0x40);
@@ -117,13 +375,62 @@ void * R_CmdBufSet3D(int param_1)
 }
 
 
+// 82782878  R_HW_ForceSamplerState  (gfx_d3d/r_setstate_d3d.h:289)
+
+void R_HW_ForceSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  iVar2 = __savegprlr_26();
+  do {
+    D3DDevice_SetSamplerState_MinFilter(iVar2,param_2,(param_3 & 0xffffffff) >> 8 & 0xf);
+  } while (DAT_84013128 != 0);
+  do {
+    D3DDevice_SetSamplerState_MagFilter(iVar2,param_2,(param_3 & 0xffffffff) >> 0xc & 0xf);
+  } while (DAT_84013128 != 0);
+  if (1 < (uint)(param_3 & 0xff)) {
+    do {
+      D3DDevice_SetSamplerState_MaxAnisotropy(iVar2,param_2,param_3 & 0xff);
+    } while (DAT_84013128 != 0);
+  }
+  iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar2;
+  uVar3 = 0x8000000000000000 >> (param_2 + 0x20 & 0x7f);
+  do {
+    *(uint *)(iVar1 + 0x48c) =
+         *(uint *)(iVar1 + 0x48c) & 0xfe7fffff | (uint)((param_3 & 0xffffffff) << 7) & 0x1800000;
+    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
+  } while (DAT_84013128 != 0);
+  do {
+    D3DDevice_SetSamplerState_MipMapLodBias(iVar2,param_2,DAT_84617854);
+  } while (DAT_84013128 != 0);
+  do {
+    iVar1 = (int)((param_2 + 0x30 + (param_2 + 0x30 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    *(uint *)(iVar1 + iVar2) = *(uint *)(iVar1 + iVar2) & 0xffffe3ff | (uint)param_3 >> 10 & 0xc00;
+    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
+  } while (DAT_84013128 != 0);
+  do {
+    *(uint *)(iVar1 + iVar2) = *(uint *)(iVar1 + iVar2) & 0xffff1fff | (uint)param_3 >> 9 & 0x6000;
+    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
+  } while (DAT_84013128 != 0);
+  do {
+    *(uint *)(iVar1 + iVar2) =
+         *(uint *)(iVar1 + iVar2) & 0xfff8ffff | (uint)(param_3 >> 8) & 0x30000;
+    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
+  } while (DAT_84013128 != 0);
+  __restgprlr_26();
+  return;
+}
+
+
 // 827823F8  R_Set3D  (gfx_d3d/r_state_utils.cpp:299)
 
 void R_Set3D(int param_1)
 
 {
   if (*(int *)(param_1 + 0x16d0) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d10d8,300,0,0xffffffff82000f98,0xffffffff821d11f0);
   }
   if (*(int *)(param_1 + 0x16fc) != 1) {
@@ -144,18 +451,113 @@ void R_Set3D(int param_1)
 void R_DeriveNearPlaneConstantsForView(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (*(int *)(iVar1 + 0x16fc) != 1) {
+    MyAssertHandler(0xffffffff821d10d8,0x147,0,0xffffffff821be65c,0xffffffff821be678);
+  }
+  dVar3 = 9.999999747378752e-06;
+  if ((double)((*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)) * 1e-05) <=
+      ABS((double)*(float *)(iVar1 + 0x14bc))) {
+    MyAssertHandler(0xffffffff821d10d8,0x14a,0,0xffffffff821d1284,0xffffffff821d12a0,
+                    (double)*(float *)(iVar1 + 0x14bc));
+  }
+  if ((double)(float)((double)(*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)) * dVar3) <=
+      ABS((double)*(float *)(iVar1 + 0x14cc))) {
+    MyAssertHandler(0xffffffff821d10d8,0x14b,0,0xffffffff821d1228,0xffffffff821d1240,
+                    (double)*(float *)(iVar1 + 0x14cc));
+  }
+  dVar3 = 0.0;
+  if (*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc) == 0.0) {
+    MyAssertHandler(0xffffffff821d10d8,0x14c,0,0xffffffff82000f98,0xffffffff821d1204);
+  }
+  dVar2 = (double)(1.0 / (*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)));
+  *(float *)(iVar1 + 0x122c) = (float)dVar3;
+  *(float *)(iVar1 + 0x1228) =
+       (float)((double)(*(float *)(iVar1 + 0x14e8) + *(float *)(iVar1 + 0x14d8)) * dVar2 -
+              (double)*(float *)(iVar1 + 0x14f8));
+  *(float *)(iVar1 + 0x1224) =
+       (float)((double)(*(float *)(iVar1 + 0x14e4) + *(float *)(iVar1 + 0x14d4)) * dVar2 -
+              (double)*(float *)(iVar1 + 0x14f4));
+  *(float *)(iVar1 + 0x1220) =
+       (float)((double)(*(float *)(iVar1 + 0x14e0) + *(float *)(iVar1 + 0x14d0)) * dVar2 -
+              (double)*(float *)(iVar1 + 0x14f0));
+  R_DirtyCodeConstant(iVar1,0x42);
+  *(float *)(iVar1 + 0x123c) = (float)dVar3;
+  dVar2 = (double)(float)(dVar2 * 2.0);
+  *(float *)(iVar1 + 0x1238) = (float)((double)*(float *)(iVar1 + 0x14b8) * dVar2);
+  *(float *)(iVar1 + 0x1234) = (float)((double)*(float *)(iVar1 + 0x14b4) * dVar2);
+  *(float *)(iVar1 + 0x1230) = (float)((double)*(float *)(iVar1 + 0x14b0) * dVar2);
+  R_DirtyCodeConstant(iVar1,0x43);
+  *(float *)(iVar1 + 0x124c) = (float)dVar3;
+  *(float *)(iVar1 + 0x1248) = -(float)((double)*(float *)(iVar1 + 0x14c8) * dVar2);
+  *(float *)(iVar1 + 0x1244) = -(float)((double)*(float *)(iVar1 + 0x14c4) * dVar2);
+  *(float *)(iVar1 + 0x1240) = -(float)((double)*(float *)(iVar1 + 0x14c0) * dVar2);
+  R_DirtyCodeConstant(iVar1,0x44);
+  __restgprlr_28();
+  return;
 }
 
 
 // 827826C8  R_BeginView  (gfx_d3d/r_state_utils.cpp:363)
 
-void R_BeginView(void)
+void R_BeginView(undefined8 param_1,longlong param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  longlong lVar5;
+  double dVar6;
+  
+  iVar2 = __savegprlr_28();
+  puVar3 = (undefined4 *)(iVar2 + 0x16fc);
+  lVar4 = param_2 + -4;
+  lVar5 = 10;
+  do {
+    lVar4 = lVar4 + 4;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *(undefined4 *)lVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  *(undefined4 *)(iVar2 + 0x16d0) = param_3;
+  iVar1 = (int)param_2;
+  *(undefined4 *)(iVar2 + 0x16e8) = *(undefined4 *)(iVar1 + 8);
+  *(undefined4 *)(iVar2 + 0x16ec) = *(undefined4 *)(iVar1 + 0xc);
+  *(undefined4 *)(iVar2 + 0x16f0) = *(undefined4 *)(iVar1 + 0x10);
+  *(undefined4 *)(iVar2 + 0x16fc) = 0;
+  R_Set3D(iVar2);
+  dVar6 = 0.0;
+  if (*(float *)(iVar2 + 0x1738) != 0.0) {
+    MyAssertHandler(0xffffffff821d10d8,0x173,0,0xffffffff82000f98,0xffffffff821d1300);
+  }
+  R_SetGameTime((double)*(float *)(iVar1 + 4),iVar2);
+  *(undefined4 *)(iVar2 + 0xe80) = *(undefined4 *)(iVar2 + 0x1540);
+  *(undefined4 *)(iVar2 + 0xe84) = *(undefined4 *)(iVar2 + 0x1544);
+  *(undefined4 *)(iVar2 + 0xe88) = *(undefined4 *)(iVar2 + 0x1548);
+  *(float *)(iVar2 + 0xe8c) = (float)dVar6;
+  R_DirtyCodeConstant(iVar2,8);
+  if (*(char *)(iVar2 + 0x1751) != '\0') {
+    MyAssertHandler(0xffffffff821d10d8,0x178,0,0xffffffff82000f98,0xffffffff821d12e4);
+  }
+  R_DeriveNearPlaneConstantsForView(iVar2);
+  *(undefined4 *)(iVar2 + 0x1338) = *(undefined4 *)(iVar1 + 0x14);
+  if ((((*(float *)(iVar2 + 0x1180) != *(float *)(iVar1 + 0x18)) ||
+       (*(float *)(iVar2 + 0x1184) != *(float *)(iVar1 + 0x1c))) ||
+      (*(float *)(iVar2 + 0x1188) != *(float *)(iVar1 + 0x20))) ||
+     (*(float *)(iVar2 + 0x118c) != *(float *)(iVar1 + 0x24))) {
+    *(float *)(iVar2 + 0x1180) = *(float *)(iVar1 + 0x18);
+    *(undefined4 *)(iVar2 + 0x1184) = *(undefined4 *)(iVar1 + 0x1c);
+    *(undefined4 *)(iVar2 + 0x1188) = *(undefined4 *)(iVar1 + 0x20);
+    *(undefined4 *)(iVar2 + 0x118c) = *(undefined4 *)(iVar1 + 0x24);
+    R_DirtyCodeConstant(iVar2,0x38);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -216,6 +618,28 @@ void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
 
 {
   *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  return;
+}
+
+
+// 82782A10  R_SetDefaultAlphaTestFunction  (gfx_d3d/r_state.h:888)
+
+void R_SetDefaultAlphaTestFunction(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0xc0);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821bda94,0x37c,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  }
+  do {
+    D3DDevice_SetRenderState_AlphaRef(iVar1,0);
+  } while (DAT_84013128 != 0);
+  *(undefined1 *)(iVar2 + 0xb10) = 0;
+  __restgprlr_29();
   return;
 }
 

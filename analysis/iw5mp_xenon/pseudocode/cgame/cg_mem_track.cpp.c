@@ -9,3 +9,42 @@ void TRACK_cg_memtrack(void)
   return;
 }
 
+
+// 822DC618  CG_track_init  (cgame/cg_mem_track.cpp:71)
+
+void CG_track_init(void)
+
+{
+  DAT_8367aa78 = "cg_main";
+  TRACK_cg_main();
+  DAT_8367aa78 = "cg_camerashake";
+  TRACK_cg_camerashake();
+  DAT_8367aa78 = "cg_draw";
+  TRACK_cg_draw();
+  DAT_8367aa78 = "cg_compassfriendlies";
+  TRACK_cg_compassfriendlies();
+  DAT_8367aa78 = "cg_predict";
+  TRACK_cg_predict();
+  DAT_8367aa78 = "CG_CollWorld";
+  TRACK_CG_CollWorld();
+  DAT_8367aa78 = "cg_view";
+  TRACK_cg_view();
+  DAT_8367aa78 = "cg_localents";
+  TRACK_cg_localents();
+  DAT_8367aa78 = "cg_glass";
+  TRACK_cg_glass();
+  DAT_8367aa78 = "VehicleClient";
+  TRACK_VehicleClient();
+  DAT_8367aa78 = "VehicleCam";
+  TRACK_VehicleCam();
+  DAT_8367aa78 = "cg_players";
+  TRACK_cg_players();
+  DAT_8367aa78 = "cg_modelpreviewer";
+  TRACK_cg_modelpreviewer();
+  DAT_8367aa78 = "aim_assist";
+  TRACK_aim_assist();
+  DAT_8367aa78 = "aim_target";
+  TRACK_aim_target();
+  return;
+}
+

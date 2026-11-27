@@ -5,7 +5,76 @@
 int fseek(FILE *_File,long _Offset,int _Origin)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(_File,_Offset,_Origin);
+  longlong lVar1;
+  FILE *_File_00;
+  int *piVar3;
+  ulonglong uVar2;
+  uint uVar4;
+  int iVar5;
+  FILE *pFStack00000014;
+  
+  lVar1 = __savegprlr_28(_File);
+  _File_00 = (FILE *)lVar1;
+  pFStack00000014 = _File_00;
+  if ((lVar1 == 0) || (((_Origin != 0 && (_Origin != 1)) && (_Origin != 2)))) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar2 = 0xffffffffffffffff;
+  }
+  else {
+    _lock_file(_File_00);
+    uVar4 = _fseek_nolock(_File_00,_Offset,_Origin);
+    FUN_8291bdbc();
+    uVar2 = (ulonglong)uVar4;
+  }
+  iVar5 = __restgprlr_28(uVar2);
+  return iVar5;
+}
+
+
+// 8291BC38  _fseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:136)
+
+int _fseek_nolock(FILE *_File,long _Offset,int _Origin)
+
+{
+  uint uVar1;
+  FILE *_File_00;
+  int *piVar3;
+  longlong lVar2;
+  long lVar4;
+  int iVar5;
+  
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  if ((_File_00->_flag & 0x83U) == 0) {
+    piVar3 = _errno();
+    lVar2 = -1;
+    *piVar3 = 0x16;
+  }
+  else {
+    _File_00->_flag = _File_00->_flag & 0xffffffef;
+    if (_Origin == 1) {
+      lVar4 = _ftell_nolock(_File_00);
+      _Offset = lVar4 + _Offset;
+      _Origin = 0;
+    }
+    _flush(_File_00);
+    uVar1 = _File_00->_flag;
+    if ((uVar1 & 0x80) == 0) {
+      if ((uVar1 & 1) != 0) {
+        if (((uVar1 & 8) != 0) && ((uVar1 & 0x400) == 0)) {
+          _File_00->_bufsiz = 0x200;
+        }
+      }
+    }
+    else {
+      _File_00->_flag = uVar1 & 0xfffffffc;
+    }
+    iVar5 = _fileno(_File_00);
+    lVar4 = _lseek(iVar5,_Offset,_Origin);
+    lVar2 = -(ulonglong)(lVar4 == -1);
+  }
+  iVar5 = __restgprlr_29(lVar2);
+  return iVar5;
 }
 

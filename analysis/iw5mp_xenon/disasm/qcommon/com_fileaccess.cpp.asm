@@ -24,10 +24,12 @@
   824DAE10  38A00000             li r5,0x0
   824DAE14  38800015             li r4,0x15
   824DAE18  480F96E9             bl 0x825d4500
+  824DAE1C  48000010             b 0x824dae2c
 LAB_824dae20:
   824DAE20  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DAE24  38600000             li r3,0x0
   824DAE28  419A0008             beq cr6,0x824dae30
+LAB_824dae2c:
   824DAE2C  7FE3FB78             or r3,r31,r31
 LAB_824dae30:
   824DAE30  38210060             addi r1,r1,0x60
@@ -60,10 +62,12 @@ LAB_824dae30:
   824DAE98  38A00000             li r5,0x0
   824DAE9C  3880001F             li r4,0x1f
   824DAEA0  480F9661             bl 0x825d4500
+  824DAEA4  48000010             b 0x824daeb4
 LAB_824daea8:
   824DAEA8  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DAEAC  38600000             li r3,0x0
   824DAEB0  419A0008             beq cr6,0x824daeb8
+LAB_824daeb4:
   824DAEB4  7FE3FB78             or r3,r31,r31
 LAB_824daeb8:
   824DAEB8  38210060             addi r1,r1,0x60
@@ -96,10 +100,12 @@ LAB_824daeb8:
   824DAF20  38A00000             li r5,0x0
   824DAF24  38800029             li r4,0x29
   824DAF28  480F95D9             bl 0x825d4500
+  824DAF2C  48000010             b 0x824daf3c
 LAB_824daf30:
   824DAF30  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DAF34  38600000             li r3,0x0
   824DAF38  419A0008             beq cr6,0x824daf40
+LAB_824daf3c:
   824DAF3C  7FE3FB78             or r3,r31,r31
 LAB_824daf40:
   824DAF40  38210060             addi r1,r1,0x60
@@ -107,6 +113,44 @@ LAB_824daf40:
   824DAF48  7D8803A6             mtspr LR,r12
   824DAF4C  EBE1FFF0             ld r31,-0x10(r1)
   824DAF50  4E800020             blr
+
+; 824DAF58  FileWrapper_OpenReadText  (universal/com_files_wrapper_ms.h:59)
+  824DAF58  7D8802A6             mfspr r12,LR
+  824DAF5C  9181FFF8             stw r12,-0x8(r1)
+  824DAF60  FBE1FFF0             std r31,-0x10(r1)
+  824DAF64  9421FFA0             stwu r1,-0x60(r1)
+  824DAF68  39200000             li r9,0x0
+  824DAF6C  39000000             li r8,0x0
+  824DAF70  38E00003             li r7,0x3
+  824DAF74  38C00000             li r6,0x0
+  824DAF78  38A00000             li r5,0x0
+  824DAF7C  3C808000             lis r4,-0x8000
+  824DAF80  483C7F99             bl 0x828a2f18
+  824DAF84  7C7F1B78             or r31,r3,r3
+  824DAF88  2B030000             cmplwi cr6,r3,0x0
+  824DAF8C  409A002C             bne cr6,0x824dafb8
+  824DAF90  3D608201             lis r11,-0x7dff
+  824DAF94  3D408200             lis r10,-0x7e00
+  824DAF98  3D208208             lis r9,-0x7df8
+  824DAF9C  38EBFDB0             subi r7,r11,0x250
+  824DAFA0  38CA0F98             addi r6,r10,0xf98
+  824DAFA4  38694DB0             addi r3,r9,0x4db0
+  824DAFA8  38A00000             li r5,0x0
+  824DAFAC  3880003F             li r4,0x3f
+  824DAFB0  480F9551             bl 0x825d4500
+  824DAFB4  48000010             b 0x824dafc4
+LAB_824dafb8:
+  824DAFB8  2F1FFFFF             cmpwi cr6,r31,-0x1
+  824DAFBC  38600000             li r3,0x0
+  824DAFC0  419A0008             beq cr6,0x824dafc8
+LAB_824dafc4:
+  824DAFC4  7FE3FB78             or r3,r31,r31
+LAB_824dafc8:
+  824DAFC8  38210060             addi r1,r1,0x60
+  824DAFCC  8181FFF8             lwz r12,-0x8(r1)
+  824DAFD0  7D8803A6             mtspr LR,r12
+  824DAFD4  EBE1FFF0             ld r31,-0x10(r1)
+  824DAFD8  4E800020             blr
 
 ; 824DAFE0  FileWrapper_OpenWriteBinary  (universal/com_files_wrapper_ms.h:69)
   824DAFE0  7D8802A6             mfspr r12,LR
@@ -132,10 +176,12 @@ LAB_824daf40:
   824DB030  38A00000             li r5,0x0
   824DB034  38800049             li r4,0x49
   824DB038  480F94C9             bl 0x825d4500
+  824DB03C  48000010             b 0x824db04c
 LAB_824db040:
   824DB040  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DB044  38600000             li r3,0x0
   824DB048  419A0008             beq cr6,0x824db050
+LAB_824db04c:
   824DB04C  7FE3FB78             or r3,r31,r31
 LAB_824db050:
   824DB050  38210060             addi r1,r1,0x60
@@ -147,10 +193,96 @@ LAB_824db050:
 ; 824DB068  FileWrapper_Rotate  (universal/com_files_wrapper_ms.h:81)
   824DB068  7D8802A6             mfspr r12,LR
   824DB06C  4843B64D             bl 0x829166b8
+  824DB070  9421FD30             stwu r1,-0x2d0(r1)
+  824DB074  38810160             addi r4,r1,0x160
+  824DB078  7C7C1B78             or r28,r3,r3
+  824DB07C  483C9E5D             bl 0x828a4ed8
+  824DB080  2F03FFFF             cmpwi cr6,r3,-0x1
+  824DB084  419A00DC             beq cr6,0x824db160
+  824DB088  483C7E29             bl 0x828a2eb0
+  824DB08C  39610050             addi r11,r1,0x50
+  824DB090  3BE00000             li r31,0x0
+  824DB094  3BC0FFFF             li r30,-0x1
+  824DB098  FBEB0000             std r31,0x0(r11)
+  824DB09C  3D608208             lis r11,-0x7df8
+  824DB0A0  3BAB4E1C             addi r29,r11,0x4e1c
+LAB_824db0a4:
+  824DB0A4  7FA4EB78             or r4,r29,r29
+  824DB0A8  7FE6FB78             or r6,r31,r31
+  824DB0AC  7F85E378             or r5,r28,r28
+  824DB0B0  38610060             addi r3,r1,0x60
+  824DB0B4  4843C845             bl 0x829178f8
+  824DB0B8  38810160             addi r4,r1,0x160
+  824DB0BC  38610060             addi r3,r1,0x60
+  824DB0C0  483C9E19             bl 0x828a4ed8
+  824DB0C4  2F03FFFF             cmpwi cr6,r3,-0x1
+  824DB0C8  419A0040             beq cr6,0x824db108
+  824DB0CC  483C7DE5             bl 0x828a2eb0
+  824DB0D0  2F1EFFFF             cmpwi cr6,r30,-0x1
+  824DB0D4  419A0018             beq cr6,0x824db0ec
+  824DB0D8  38810174             addi r4,r1,0x174
+  824DB0DC  38610050             addi r3,r1,0x50
+  824DB0E0  483C9D69             bl 0x828a4e48
+  824DB0E4  2F030000             cmpwi cr6,r3,0x0
+  824DB0E8  40990010             ble cr6,0x824db0f8
+LAB_824db0ec:
+  824DB0EC  E9610174             ld r11,0x174(r1)
+  824DB0F0  7FFEFB78             or r30,r31,r31
+  824DB0F4  F9610050             std r11,0x50(r1)
+LAB_824db0f8:
+  824DB0F8  3BFF0001             addi r31,r31,0x1
+  824DB0FC  2F1F0014             cmpwi cr6,r31,0x14
+  824DB100  4198FFA4             blt cr6,0x824db0a4
+  824DB104  48000008             b 0x824db10c
+LAB_824db108:
+  824DB108  7FFEFB78             or r30,r31,r31
+LAB_824db10c:
+  824DB10C  2F1E0000             cmpwi cr6,r30,0x0
+  824DB110  40980028             bge cr6,0x824db138
+  824DB114  3D608208             lis r11,-0x7df8
+  824DB118  3D408200             lis r10,-0x7e00
+  824DB11C  3D208208             lis r9,-0x7df8
+  824DB120  38EB4E08             addi r7,r11,0x4e08
+  824DB124  38CA0F98             addi r6,r10,0xf98
+  824DB128  38694DB0             addi r3,r9,0x4db0
+  824DB12C  38A00000             li r5,0x0
+  824DB130  38800077             li r4,0x77
+  824DB134  480F93CD             bl 0x825d4500
+LAB_824db138:
+  824DB138  7FA4EB78             or r4,r29,r29
+  824DB13C  7FC6F378             or r6,r30,r30
+  824DB140  7F85E378             or r5,r28,r28
+  824DB144  38610060             addi r3,r1,0x60
+  824DB148  4843C7B1             bl 0x829178f8
+  824DB14C  38610060             addi r3,r1,0x60
+  824DB150  483C9C31             bl 0x828a4d80
+  824DB154  38810060             addi r4,r1,0x60
+  824DB158  7F83E378             or r3,r28,r28
+  824DB15C  483C99AD             bl 0x828a4b08
+LAB_824db160:
+  824DB160  382102D0             addi r1,r1,0x2d0
+  824DB164  4843B5A4             b 0x82916708
 
 ; 824DB350  FS_FileRead  (qcommon/com_fileaccess.cpp:99)
   824DB350  7D8802A6             mfspr r12,LR
   824DB354  4843B369             bl 0x829166bc
+  824DB358  9421FF80             stwu r1,-0x80(r1)
+  824DB35C  7C7F1B78             or r31,r3,r3
+  824DB360  38600002             li r3,0x2
+  824DB364  7C9E2378             or r30,r4,r4
+  824DB368  7CBD2B78             or r29,r5,r5
+  824DB36C  48001EE5             bl 0x824dd250
+  824DB370  38E00000             li r7,0x0
+  824DB374  38C10050             addi r6,r1,0x50
+  824DB378  7FC5F378             or r5,r30,r30
+  824DB37C  7FE4FB78             or r4,r31,r31
+  824DB380  7FA3EB78             or r3,r29,r29
+  824DB384  483C7D95             bl 0x828a3118
+  824DB388  38600002             li r3,0x2
+  824DB38C  4800203D             bl 0x824dd3c8
+  824DB390  80610050             lwz r3,0x50(r1)
+  824DB394  38210080             addi r1,r1,0x80
+  824DB398  4843B374             b 0x8291670c
 
 ; 824DB3A0  FS_FileWrite  (qcommon/com_fileaccess.cpp:117)
   824DB3A0  7D8802A6             mfspr r12,LR
@@ -193,10 +325,12 @@ LAB_824db050:
   824DB1B8  38A00000             li r5,0x0
   824DB1BC  38800084             li r4,0x84
   824DB1C0  480F9341             bl 0x825d4500
+  824DB1C4  48000010             b 0x824db1d4
 LAB_824db1c8:
   824DB1C8  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DB1CC  38600000             li r3,0x0
   824DB1D0  419A0008             beq cr6,0x824db1d8
+LAB_824db1d4:
   824DB1D4  7FE3FB78             or r3,r31,r31
 LAB_824db1d8:
   824DB1D8  38210060             addi r1,r1,0x60
@@ -249,6 +383,7 @@ LAB_824db1d8:
   824DB240  38A00000             li r5,0x0
   824DB244  3880008F             li r4,0x8f
   824DB248  480F92B9             bl 0x825d4500
+  824DB24C  48000038             b 0x824db284
 LAB_824db250:
   824DB250  2F1FFFFF             cmpwi cr6,r31,-0x1
   824DB254  409A001C             bne cr6,0x824db270
@@ -264,6 +399,7 @@ LAB_824db270:
   824DB278  38A00000             li r5,0x0
   824DB27C  7FE3FB78             or r3,r31,r31
   824DB280  483C8021             bl 0x828a32a0
+LAB_824db284:
   824DB284  7FE3FB78             or r3,r31,r31
   824DB288  38210060             addi r1,r1,0x60
   824DB28C  8181FFF8             lwz r12,-0x8(r1)
@@ -291,6 +427,57 @@ LAB_824db270:
   824DB468  EBE1FFF0             ld r31,-0x10(r1)
   824DB46C  4E800020             blr
 
+; 824DB2A0  FileWrapper_Seek  (universal/com_files_wrapper_ms.h:169)
+  824DB2A0  7D8802A6             mfspr r12,LR
+  824DB2A4  9181FFF8             stw r12,-0x8(r1)
+  824DB2A8  9421FFA0             stwu r1,-0x60(r1)
+  824DB2AC  2B050001             cmplwi cr6,r5,0x1
+  824DB2B0  4198006C             blt cr6,0x824db31c
+  824DB2B4  419A0060             beq cr6,0x824db314
+  824DB2B8  2B050003             cmplwi cr6,r5,0x3
+  824DB2BC  41980050             blt cr6,0x824db30c
+  824DB2C0  3D608401             lis r11,-0x7bff
+  824DB2C4  816B3128             lwz r11,0x3128(r11)
+  824DB2C8  2F0B0000             cmpwi cr6,r11,0x0
+  824DB2CC  409A002C             bne cr6,0x824db2f8
+  824DB2D0  3D608208             lis r11,-0x7df8
+  824DB2D4  7CA42B78             or r4,r5,r5
+  824DB2D8  386B4E24             addi r3,r11,0x4e24
+  824DB2DC  4813139D             bl 0x8260c678
+  824DB2E0  3D408208             lis r10,-0x7df8
+  824DB2E4  7C661B78             or r6,r3,r3
+  824DB2E8  386A4DB0             addi r3,r10,0x4db0
+  824DB2EC  38A00000             li r5,0x0
+  824DB2F0  388000B9             li r4,0xb9
+  824DB2F4  480F920D             bl 0x825d4500
+LAB_824db2f8:
+  824DB2F8  38600000             li r3,0x0
+  824DB2FC  38210060             addi r1,r1,0x60
+  824DB300  8181FFF8             lwz r12,-0x8(r1)
+  824DB304  7D8803A6             mtspr LR,r12
+  824DB308  4E800020             blr
+LAB_824db30c:
+  824DB30C  38C00000             li r6,0x0
+  824DB310  48000010             b 0x824db320
+LAB_824db314:
+  824DB314  38C00002             li r6,0x2
+  824DB318  48000008             b 0x824db320
+LAB_824db31c:
+  824DB31C  38C00001             li r6,0x1
+LAB_824db320:
+  824DB320  39600000             li r11,0x0
+  824DB324  90810054             stw r4,0x54(r1)
+  824DB328  38A00000             li r5,0x0
+  824DB32C  91610050             stw r11,0x50(r1)
+  824DB330  E8810050             ld r4,0x50(r1)
+  824DB334  483C7F6D             bl 0x828a32a0
+  824DB338  7C6A0034             cntlzw r10,r3
+  824DB33C  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
+  824DB340  38210060             addi r1,r1,0x60
+  824DB344  8181FFF8             lwz r12,-0x8(r1)
+  824DB348  7D8803A6             mtspr LR,r12
+  824DB34C  4E800020             blr
+
 ; 824DB470  FS_FileOpenReadBinary  (qcommon/com_fileaccess.cpp:175)
   824DB470  7D8802A6             mfspr r12,LR
   824DB474  9181FFF8             stw r12,-0x8(r1)
@@ -311,6 +498,26 @@ LAB_824db270:
   824DB4B0  7D8803A6             mtspr LR,r12
   824DB4B4  EBE1FFF0             ld r31,-0x10(r1)
   824DB4B8  4E800020             blr
+
+; 824DB4C0  FS_FileOpenReadText  (qcommon/com_fileaccess.cpp:196)
+  824DB4C0  7D8802A6             mfspr r12,LR
+  824DB4C4  9181FFF8             stw r12,-0x8(r1)
+  824DB4C8  FBE1FFF0             std r31,-0x10(r1)
+  824DB4CC  9421FFA0             stwu r1,-0x60(r1)
+  824DB4D0  7C7F1B78             or r31,r3,r3
+  824DB4D4  38600000             li r3,0x0
+  824DB4D8  48001D79             bl 0x824dd250
+  824DB4DC  7FE3FB78             or r3,r31,r31
+  824DB4E0  4BFFFA79             bl 0x824daf58
+  824DB4E4  7C7F1B78             or r31,r3,r3
+  824DB4E8  38600000             li r3,0x0
+  824DB4EC  48001EDD             bl 0x824dd3c8
+  824DB4F0  7FE3FB78             or r3,r31,r31
+  824DB4F4  38210060             addi r1,r1,0x60
+  824DB4F8  8181FFF8             lwz r12,-0x8(r1)
+  824DB4FC  7D8803A6             mtspr LR,r12
+  824DB500  EBE1FFF0             ld r31,-0x10(r1)
+  824DB504  4E800020             blr
 
 ; 824DB508  FS_FileOpenWriteBinary  (qcommon/com_fileaccess.cpp:217)
   824DB508  7D8802A6             mfspr r12,LR
@@ -381,6 +588,22 @@ LAB_824db270:
 ; 824DB5F0  FS_FileSeek  (qcommon/com_fileaccess.cpp:315)
   824DB5F0  7D8802A6             mfspr r12,LR
   824DB5F4  4843B0C9             bl 0x829166bc
+  824DB5F8  9421FF90             stwu r1,-0x70(r1)
+  824DB5FC  7C7F1B78             or r31,r3,r3
+  824DB600  38600001             li r3,0x1
+  824DB604  7C9E2378             or r30,r4,r4
+  824DB608  7CBD2B78             or r29,r5,r5
+  824DB60C  48001C45             bl 0x824dd250
+  824DB610  7FA5EB78             or r5,r29,r29
+  824DB614  7FC4F378             or r4,r30,r30
+  824DB618  7FE3FB78             or r3,r31,r31
+  824DB61C  4BFFFC85             bl 0x824db2a0
+  824DB620  7C7F1B78             or r31,r3,r3
+  824DB624  38600001             li r3,0x1
+  824DB628  48001DA1             bl 0x824dd3c8
+  824DB62C  7FE3FB78             or r3,r31,r31
+  824DB630  38210070             addi r1,r1,0x70
+  824DB634  4843B0D8             b 0x8291670c
 
 ; 824DB638  FS_FileTell  (qcommon/com_fileaccess.cpp:326)
   824DB638  7D8802A6             mfspr r12,LR

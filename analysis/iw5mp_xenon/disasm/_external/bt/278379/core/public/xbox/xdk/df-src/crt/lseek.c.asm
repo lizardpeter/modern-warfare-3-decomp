@@ -84,3 +84,52 @@ LAB_829259fc:
 ; 82925820  _lseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseek.c:93)
   82925820  7D8802A6             mfspr r12,LR
   82925824  4BFF0E99             bl 0x829166bc
+  82925828  9421FF90             stwu r1,-0x70(r1)
+  8292582C  7C7F1B78             or r31,r3,r3
+  82925830  7C9E2378             or r30,r4,r4
+  82925834  7CBD2B78             or r29,r5,r5
+  82925838  480040F9             bl 0x82929930
+  8292583C  2F03FFFF             cmpwi cr6,r3,-0x1
+  82925840  409A001C             bne cr6,0x8292585c
+  82925844  4BFFA53D             bl 0x8291fd80
+  82925848  7C6B1B78             or r11,r3,r3
+  8292584C  39400009             li r10,0x9
+  82925850  3860FFFF             li r3,-0x1
+  82925854  914B0000             stw r10,0x0(r11)
+  82925858  48000078             b 0x829258d0
+LAB_8292585c:
+  8292585C  7FA6EB78             or r6,r29,r29
+  82925860  38A00000             li r5,0x0
+  82925864  7FC4F378             or r4,r30,r30
+  82925868  4BF852C9             bl 0x828aab30
+  8292586C  7C7E1B78             or r30,r3,r3
+  82925870  2F03FFFF             cmpwi cr6,r3,-0x1
+  82925874  409A000C             bne cr6,0x82925880
+  82925878  4BF7D4C1             bl 0x828a2d38
+  8292587C  48000008             b 0x82925884
+LAB_82925880:
+  82925880  38600000             li r3,0x0
+LAB_82925884:
+  82925884  2B030000             cmplwi cr6,r3,0x0
+  82925888  419A0010             beq cr6,0x82925898
+  8292588C  4BFFA565             bl 0x8291fdf0
+  82925890  3860FFFF             li r3,-0x1
+  82925894  4800003C             b 0x829258d0
+LAB_82925898:
+  82925898  7FEB2E70             srawi r11,r31,0x5
+  8292589C  3D408489             lis r10,-0x7b77
+  829258A0  5569103A             rlwinm r9,r11,0x2,0x0,0x1d
+  829258A4  394A7DC0             addi r10,r10,0x7dc0
+  829258A8  57EB06FE             rlwinm r11,r31,0x0,0x1b,0x1f
+  829258AC  7FC3F378             or r3,r30,r30
+  829258B0  1D6B0048             mulli r11,r11,0x48
+  829258B4  7D49502E             lwzx r10,r9,r10
+  829258B8  7D6A5A14             add r11,r10,r11
+  829258BC  394B0004             addi r10,r11,0x4
+  829258C0  894B0004             lbz r10,0x4(r11)
+  829258C4  7D4A0774             extsb r10,r10
+  829258C8  554A07FA             rlwinm r10,r10,0x0,0x1f,0x1d
+  829258CC  994B0004             stb r10,0x4(r11)
+LAB_829258d0:
+  829258D0  38210070             addi r1,r1,0x70
+  829258D4  4BFF0E38             b 0x8291670c

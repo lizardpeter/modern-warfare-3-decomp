@@ -63,6 +63,39 @@ vpx_codec_enc_init_ver(undefined4 *param_1,undefined4 *param_2,int param_3,uint 
 }
 
 
+// 8283DFB0  vpx_codec_enc_config_default  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:74)
+
+undefined8 vpx_codec_enc_config_default(int param_1,uint *param_2,uint param_3)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  
+  if (((param_1 == 0) || (param_2 == (uint *)0x0)) || (0x7fffffff < param_3)) {
+    uVar3 = 8;
+  }
+  else if ((*(uint *)(param_1 + 8) & 2) == 0) {
+    uVar3 = 4;
+  }
+  else {
+    puVar1 = *(uint **)(param_1 + 0x30);
+    uVar3 = 8;
+    uVar2 = *puVar1;
+    while (-1 < (int)uVar2) {
+      if (uVar2 == param_3) {
+        memcpy(param_2,puVar1 + 1,0x7c);
+        *param_2 = param_3;
+        return 0;
+      }
+      puVar1 = puVar1 + 0x20;
+      uVar2 = *puVar1;
+    }
+  }
+  return uVar3;
+}
+
+
 // 8283E068  FLOATING_POINT_INIT  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:114)
 
 void FLOATING_POINT_INIT(void)
@@ -113,11 +146,62 @@ void vpx_codec_encode(int param_1,int param_2,undefined8 param_3,int param_4)
 
 // 8283E118  vpx_codec_get_cx_data  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:150)
 
-void vpx_codec_get_cx_data(void)
+void vpx_codec_get_cx_data(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  void *pvVar2;
+  int iVar3;
+  int *_Src;
+  int *_Dst;
+  
+  iVar3 = __savegprlr_27();
+  _Src = (int *)0x0;
+  if (iVar3 != 0) {
+    if ((param_2 & 0xffffffff) == 0) {
+      *(undefined4 *)(iVar3 + 8) = 8;
+      __restgprlr_27(0);
+      return;
+    }
+    iVar1 = *(int *)(iVar3 + 4);
+    if ((iVar1 == 0) || (*(int *)(iVar3 + 0x18) == 0)) {
+      *(undefined4 *)(iVar3 + 8) = 1;
+      __restgprlr_27(0);
+      return;
+    }
+    if ((*(uint *)(iVar1 + 8) & 2) == 0) {
+      *(undefined4 *)(iVar3 + 8) = 4;
+      __restgprlr_27(0);
+      return;
+    }
+    _Src = (int *)(**(code **)(iVar1 + 0x38))(*(undefined4 *)(*(int *)(iVar3 + 0x18) + 8));
+    if ((_Src != (int *)0x0) && (*_Src == 0)) {
+      iVar1 = *(int *)(iVar3 + 0x18);
+      pvVar2 = *(void **)(iVar1 + 0x2c);
+      _Dst = _Src;
+      if ((pvVar2 != (void *)0x0) && ((void *)_Src[2] != pvVar2)) {
+        if ((uint)(*(int *)(iVar1 + 0x38) + _Src[3] + *(int *)(iVar1 + 0x34)) <=
+            *(uint *)(iVar1 + 0x30)) {
+          _Dst = (int *)(iVar1 + 0x40);
+          memcpy((void *)(*(int *)(iVar1 + 0x34) + (int)pvVar2),(void *)_Src[2],_Src[3]);
+          memcpy(_Dst,_Src,0x88);
+          *(void **)(iVar1 + 0x48) = pvVar2;
+          *(int *)(iVar1 + 0x4c) =
+               *(int *)(*(int *)(iVar3 + 0x18) + 0x38) + *(int *)(*(int *)(iVar3 + 0x18) + 0x34) +
+               *(int *)(iVar1 + 0x4c);
+        }
+      }
+      _Src = _Dst;
+      if (pvVar2 == (void *)_Dst[2]) {
+        *(int *)(*(int *)(iVar3 + 0x18) + 0x2c) = _Dst[3] + (int)pvVar2;
+        *(int *)(*(int *)(iVar3 + 0x18) + 0x30) = *(int *)(*(int *)(iVar3 + 0x18) + 0x30) - _Dst[3];
+        __restgprlr_27(_Dst);
+        return;
+      }
+    }
+  }
+  __restgprlr_27(_Src);
+  return;
 }
 
 

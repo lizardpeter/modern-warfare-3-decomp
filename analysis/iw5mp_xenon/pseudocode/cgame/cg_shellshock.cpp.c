@@ -54,8 +54,52 @@ void PerturbationPoint(undefined8 param_1,undefined8 param_2)
 void CG_PrintPerturbationPoints(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  float *pfVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float fStack_444;
+  float local_440 [272];
+  
   __savegprlr_29();
+  __savefpr_28();
+  PerturbationPoint(0x3fe0000000000000,0xffffffff82179fd8,local_440);
+  lVar1 = 0x7f;
+  dVar7 = 0.25;
+  dVar8 = 3.1415927410125732;
+  pfVar3 = local_440;
+  do {
+    pfVar2 = pfVar3 + 2;
+    do {
+      dVar4 = (double)crandom();
+      dVar6 = (double)(float)(dVar4 * dVar8);
+      dVar4 = sin(dVar6);
+      dVar5 = (double)(float)dVar4;
+      dVar4 = cos(dVar6);
+      dVar6 = (double)(float)dVar4;
+      dVar4 = (double)random();
+      *pfVar2 = (float)(dVar4 * dVar6);
+      pfVar3[3] = (float)(dVar4 * dVar5);
+      dVar4 = (double)Vec2DistanceSq(pfVar3,pfVar2);
+    } while (dVar4 < dVar7);
+    lVar1 = lVar1 + -1;
+    pfVar3 = pfVar2;
+  } while (lVar1 != 0);
+  lVar1 = 0x80;
+  pfVar3 = &fStack_444;
+  do {
+    pfVar2 = pfVar3 + 1;
+    pfVar3 = pfVar3 + 2;
+    Com_Printf(0x11,0xffffffff820248f0,(double)*pfVar2,(double)*pfVar3);
+    lVar1 = lVar1 + -1;
+  } while (lVar1 != 0);
+  __restfpr_28();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -65,32 +109,69 @@ void CG_PerturbCamera(int param_1)
 
 {
   float fVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_64 [12];
+  float local_64;
+  float local_60;
+  float local_5c;
   undefined4 local_58;
   undefined4 local_54;
   undefined4 local_50;
+  undefined1 auStack_40 [48];
   
   local_6c = *(float *)(param_1 + 0x79830);
-  if ((local_6c == 0.0) && (*(float *)(param_1 + 0x79834) == 0.0)) {
+  if ((local_6c != 0.0) || (*(float *)(param_1 + 0x79834) != 0.0)) {
+    local_68 = *(float *)(param_1 + 0x79834);
+    local_58 = 0;
+    local_54 = 0;
+    dVar4 = 1.0;
+    local_50 = 0x3f800000;
+    dVar3 = (double)SQRT(local_68 * local_68 + local_6c * local_6c + 1.0);
+    dVar2 = dVar4;
+    if (-dVar3 < 0.0) {
+      dVar2 = dVar3;
+    }
+    local_70 = (float)(1.0 / dVar2);
+    local_6c = local_70 * local_6c;
+    local_68 = local_70 * local_68;
+    Vec3Cross(&local_58,&local_70,&local_64);
+    dVar3 = (double)SQRT(local_5c * local_5c + local_64 * local_64 + local_60 * local_60);
+    dVar2 = dVar4;
+    if (-dVar3 < 0.0) {
+      dVar2 = dVar3;
+    }
+    fVar1 = (float)(dVar4 / dVar2);
+    local_64 = local_64 * fVar1;
+    local_60 = local_60 * fVar1;
+    local_5c = local_5c * fVar1;
+    Vec3Cross(&local_70,&local_64,&local_58);
+    AxisCopy(param_1 + 0x6b9d4,auStack_40);
+    MatrixMultiply(&local_70,auStack_40,param_1 + 0x6b9d4);
+  }
+  return;
+}
+
+
+// 822FF3E8  SaveScreenToBuffer  (cgame/cg_shellshock.cpp:236)
+
+void SaveScreenToBuffer(undefined8 param_1)
+
+{
+  int iVar1;
+  float *pfVar2;
+  
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 < 2) {
+    R_AddCmdSaveScreen();
     return;
   }
-  local_68 = *(float *)(param_1 + 0x79834);
-  local_58 = 0;
-  local_54 = 0;
-  local_50 = 0x3f800000;
-  fVar1 = SQRT(local_68 * local_68 + local_6c * local_6c + 1.0);
-  local_70 = 1.0;
-  if (-fVar1 < 0.0) {
-    local_70 = fVar1;
-  }
-  local_70 = 1.0 / local_70;
-  local_6c = local_70 * local_6c;
-  local_68 = local_70 * local_68;
-                    /* WARNING: Subroutine does not return */
-  Vec3Cross(&local_58,&local_70,auStack_64);
+  pfVar2 = (float *)CG_GetLocalClientViewParams(param_1);
+  R_AddCmdSaveScreenSection((double)*pfVar2,(double)pfVar2[1],(double)pfVar2[2],(double)pfVar2[3]);
+  return;
 }
 
 
@@ -127,11 +208,35 @@ int CG_GetShellShockBlendTime(void)
 
 // 822FF550  CG_DrawShellShockSavedScreenBlendBlurred  (cgame/cg_shellshock.cpp:284)
 
-void CG_DrawShellShockSavedScreenBlendBlurred(void)
+void CG_DrawShellShockSavedScreenBlendBlurred(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  if ((int)param_2 < 1) {
+    *(undefined4 *)(iVar2 + 0x7983c) = 0;
+    *(undefined4 *)(iVar2 + 0x79838) = 0;
+    __restgprlr_28();
+    return;
+  }
+  if (*(int *)(iVar2 + 0x7983c) != 0) {
+    pfVar3 = (float *)CG_GetLocalClientViewParams(uVar1);
+    R_AddCmdBlendSavedScreenShockBlurred
+              ((double)*pfVar3,(double)pfVar3[1],(double)pfVar3[2],(double)pfVar3[3],param_2);
+  }
+  if (*(int *)(iVar2 + 0x79840) != 0) {
+    *(undefined4 *)(iVar2 + 0x79838) = 1;
+    __restgprlr_28();
+    return;
+  }
+  SaveScreenToBuffer(uVar1);
+  *(int *)(iVar2 + 0x7983c) = 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -158,8 +263,58 @@ double BlendSmooth(double param_1)
 void CG_DrawShellShockSavedScreenBlendFlashed(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  float *pfVar3;
+  longlong lVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  uVar1 = __savegprlr_29();
+  iVar2 = CG_GetLocalClientGlobals();
+  if (((*(uint *)(iVar2 + 0x79824) == 0) || ((int)*(uint *)(iVar2 + 0x79828) < 1)) ||
+     (lVar4 = ((ulonglong)*(uint *)(iVar2 + 0x79828) - (ulonglong)*(uint *)(iVar2 + 0x6b98c)) +
+              (ulonglong)*(uint *)(iVar2 + 0x79824), lVar4 < 1)) {
+    *(undefined4 *)(iVar2 + 0x7983c) = 0;
+    *(undefined4 *)(iVar2 + 0x79838) = 0;
+    __restgprlr_29();
+    return;
+  }
+  dVar11 = 1.0;
+  dVar5 = (double)(longlong)(int)lVar4;
+  dVar10 = (double)(longlong)*(int *)(*(int *)(iVar2 + 0x79820) + 8);
+  dVar9 = (double)(longlong)*(int *)(*(int *)(iVar2 + 0x79820) + 0xc);
+  dVar6 = dVar11;
+  if (dVar5 < dVar10) {
+    dVar6 = (double)(float)(dVar5 / dVar10);
+  }
+  if (dVar5 < dVar9) {
+    dVar11 = (double)(float)(dVar5 / dVar9);
+  }
+  uVar7 = BlendSmooth(dVar6);
+  uVar8 = BlendSmooth(dVar11);
+  if (*(int *)(iVar2 + 0x7983c) == 0) {
+    if (*(int *)(iVar2 + 0x79840) == 0) {
+      SaveScreenToBuffer(uVar1);
+      *(int *)(iVar2 + 0x7983c) = 1;
+      __restgprlr_29();
+      return;
+    }
+    *(undefined4 *)(iVar2 + 0x79838) = 1;
+    __restgprlr_29();
+    return;
+  }
+  CG_EndSceneCmds();
+  pfVar3 = (float *)CG_GetLocalClientViewParams(uVar1);
+  R_AddCmdBlendSavedScreenShockFlashed
+            (uVar7,uVar8,(double)*pfVar3,(double)pfVar3[1],(double)pfVar3[2],(double)pfVar3[3]);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -274,15 +429,12 @@ void UpdateShellShockSound(undefined8 param_1,ulonglong param_2,longlong param_3
   
   uVar3 = __savegprlr_24();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82024910,0x1df,0,0xffffffff82000f98,0xffffffff8200aeec);
   }
   if ((int)param_3 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82024910,0x1e0,0,0xffffffff82000f98,0xffffffff820101c4);
   }
   if ((int)param_4 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82024910,0x1e1,0,0xffffffff82000f98,0xffffffff820248fc);
   }
   iVar10 = (int)param_2;
@@ -358,21 +510,172 @@ LAB_822ffd6c:
 
 // 822FFD80  UpdateShellShockLookControl  (cgame/cg_shellshock.cpp:558)
 
-void UpdateShellShockLookControl(void)
+void UpdateShellShockLookControl(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x232,0,0xffffffff82000f98,0xffffffff8200aeec);
+  }
+  if (param_3 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x233,0,0xffffffff82000f98,0xffffffff820101c4);
+  }
+  if (param_4 < 0) {
+    MyAssertHandler(0xffffffff82024910,0x234,0,0xffffffff82000f98,0xffffffff820248fc);
+  }
+  iVar2 = (int)param_2;
+  if (*(char *)(iVar2 + 0x250) == '\0') {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    *(undefined4 *)(iVar2 + 0x7982c) = 0x3f800000;
+    CL_CapTurnRate(0,uVar1);
+    __restgprlr_26();
+    return;
+  }
+  param_4 = param_4 - param_3;
+  dVar5 = 1.0;
+  dVar4 = dVar5;
+  if (param_4 < *(int *)(iVar2 + 0x254)) {
+    if (param_4 < 1) {
+      EndShellShockLookControl(uVar1);
+      __restgprlr_26();
+      return;
+    }
+    dVar4 = (double)((float)(longlong)param_4 / (float)(longlong)*(int *)(iVar2 + 0x254));
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar1);
+  if (dVar4 != dVar5) {
+    *(float *)(iVar3 + 0x7982c) =
+         (float)((double)(float)((double)*(float *)(iVar2 + 600) - dVar5) * dVar4 + dVar5);
+    CL_CapTurnRate((double)(*(float *)(iVar2 + 0x25c) * (float)(dVar5 / dVar4)),
+                   (double)(*(float *)(iVar2 + 0x260) * (float)(dVar5 / dVar4)),uVar1);
+    __restgprlr_26();
+    return;
+  }
+  *(float *)(iVar3 + 0x7982c) = *(float *)(iVar2 + 600);
+  CL_CapTurnRate((double)*(float *)(iVar2 + 0x25c),(double)*(float *)(iVar2 + 0x260),uVar1);
+  __restgprlr_26();
+  return;
 }
 
 
 // 822FFF50  UpdateShellShockCamera  (cgame/cg_shellshock.cpp:601)
 
-void UpdateShellShockCamera(void)
+void UpdateShellShockCamera(undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  uVar2 = __savegprlr_27();
+  if (param_4 - param_3 < 1) {
+    iVar3 = CG_GetLocalClientGlobals();
+    *(undefined4 *)(iVar3 + 0x79830) = 0;
+    *(undefined4 *)(iVar3 + 0x79834) = 0;
+    __restgprlr_27();
+    return;
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x272,0,0xffffffff82000f98,0xffffffff8200aeec);
+  }
+  iVar3 = (int)param_2;
+  iVar4 = (int)(param_4 - param_3);
+  fVar1 = 1.0;
+  if (iVar4 < *(int *)(iVar3 + 0x14)) {
+    fVar1 = (float)(longlong)iVar4 / (float)(longlong)*(int *)(iVar3 + 0x14);
+  }
+  dVar7 = (double)(*(float *)(iVar3 + 0x18) * (float)(longlong)(int)param_3);
+  dVar9 = (double)(-(fVar1 * 2.0 - 3.0) * fVar1 * fVar1 * *(float *)(iVar3 + 0x1c));
+  dVar5 = floor(dVar7);
+  iVar3 = ((int)param_4 * 0x3d + (int)dVar5 & 0x7fU) * 8;
+  dVar8 = (double)(float)(dVar7 - (double)(longlong)(int)dVar5);
+  iVar4 = CG_GetLocalClientGlobals(uVar2);
+  dVar6 = (double)*(float *)(&DAT_820244e0 + iVar3);
+  dVar7 = (double)*(float *)(&DAT_820244d8 + iVar3);
+  dVar5 = (double)(float)((double)(float)((double)(float)((double)*(float *)(&DAT_820244f0 + iVar3)
+                                                         - (double)*(float *)(&DAT_820244e8 + iVar3)
+                                                         ) + dVar6) - dVar7);
+  *(float *)(iVar4 + 0x79830) =
+       (float)((double)(float)((double)(float)((double)(float)(dVar5 * dVar8 +
+                                                              (double)(float)((double)(float)(dVar7 
+                                                  - dVar6) - dVar5)) * dVar8 +
+                                              (double)(float)((double)*(float *)(&DAT_820244e8 +
+                                                                                iVar3) - dVar7)) *
+                               dVar8 + dVar6) * dVar9);
+  dVar6 = (double)*(float *)(&DAT_820244e4 + iVar3);
+  dVar7 = (double)*(float *)(&DAT_820244dc + iVar3);
+  dVar5 = (double)(float)((double)(float)((double)(float)((double)*(float *)(&DAT_820244f4 + iVar3)
+                                                         - (double)*(float *)(&DAT_820244ec + iVar3)
+                                                         ) + dVar6) - dVar7);
+  *(float *)(iVar4 + 0x79834) =
+       (float)((double)(float)((double)(float)((double)(float)(dVar5 * dVar8 +
+                                                              (double)(float)((double)(float)(dVar7 
+                                                  - dVar6) - dVar5)) * dVar8 +
+                                              (double)(float)((double)*(float *)(&DAT_820244ec +
+                                                                                iVar3) - dVar7)) *
+                               dVar8 + dVar6) * dVar9);
+  __restgprlr_27();
+  return;
+}
+
+
+// 82300148  CG_UpdateShellShock  (cgame/cg_shellshock.cpp:647)
+
+void CG_UpdateShellShock(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  char cVar3;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  lVar4 = (ulonglong)*(uint *)(iVar2 + 0x6b98c) - param_3;
+  if (((int)param_3 == 0) || ((int)lVar4 < 0)) {
+    EndShellShock(uVar1);
+    __restgprlr_28();
+    return;
+  }
+  cVar3 = CL_Demo_IsFollowCamera(uVar1);
+  if ((cVar3 == '\0') && (cVar3 = CL_Demo_IsFreeCamera(uVar1), cVar3 == '\0')) {
+    UpdateShellShockSound(uVar1,param_2,lVar4,param_4);
+    UpdateShellShockLookControl(uVar1,param_2,lVar4,param_4);
+    UpdateShellShockCamera(uVar1,param_2,lVar4,param_4);
+    __restgprlr_28();
+    return;
+  }
+  EndShellShockLookControl(uVar1);
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  *(undefined4 *)(iVar2 + 0x79830) = 0;
+  *(undefined4 *)(iVar2 + 0x79834) = 0;
+  EndShellShockScreen(uVar1);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82300248  CG_StartShellShock  (cgame/cg_shellshock.cpp:674)
+
+void CG_StartShellShock(int param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  *(undefined4 *)(param_1 + 0x79820) = param_2;
+  *(undefined4 *)(param_1 + 0x79824) = param_3;
+  *(undefined4 *)(param_1 + 0x79828) = param_4;
+  return;
 }
 
 
@@ -391,5 +694,21 @@ ulonglong CG_GetFlashbangedRemainingTime(void)
     return 0;
   }
   return -(ulonglong)(*(int *)(*(int *)(iVar1 + 0x79820) + 0x10) == 1) & uVar2;
+}
+
+
+// 823002F8  CG_ArchiveShellShock  (cgame/cg_shellshock.cpp:700)
+
+void CG_ArchiveShellShock(undefined8 param_1,ulonglong param_2)
+
+{
+  longlong lVar1;
+  
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82024910,0x2bf,0,0xffffffff82000f98,0xffffffff82001348);
+  }
+  lVar1 = CG_GetLocalClientGlobals(param_1);
+  MemFile_ArchiveData(param_2,4,lVar1 + 0x79844);
+  return;
 }
 

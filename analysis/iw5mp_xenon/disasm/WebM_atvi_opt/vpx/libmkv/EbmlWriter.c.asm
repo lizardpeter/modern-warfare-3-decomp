@@ -94,10 +94,46 @@ LAB_8280ece0:
 ; 8280ED78  Ebml_WriteString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:61)
   8280ED78  7D8802A6             mfspr r12,LR
   8280ED7C  48107941             bl 0x829166bc
+  8280ED80  9421FF90             stwu r1,-0x70(r1)
+  8280ED84  7C7E1B78             or r30,r3,r3
+  8280ED88  7C9F2378             or r31,r4,r4
+  8280ED8C  7C8B2378             or r11,r4,r4
+LAB_8280ed90:
+  8280ED90  894B0000             lbz r10,0x0(r11)
+  8280ED94  396B0001             addi r11,r11,0x1
+  8280ED98  2B0A0000             cmplwi cr6,r10,0x0
+  8280ED9C  409AFFF4             bne cr6,0x8280ed90
+  8280EDA0  7D7F5850             subf r11,r31,r11
+  8280EDA4  7FC3F378             or r3,r30,r30
+  8280EDA8  396BFFFF             subi r11,r11,0x1
+  8280EDAC  557D003E             rlwinm r29,r11,0x0,0x0,0x1f
+  8280EDB0  7FA4EB78             or r4,r29,r29
+  8280EDB4  4BFFFEED             bl 0x8280eca0
+  8280EDB8  7FA5EB78             or r5,r29,r29
+  8280EDBC  7FE4FB78             or r4,r31,r31
+  8280EDC0  7FC3F378             or r3,r30,r30
+  8280EDC4  4BFF47E5             bl 0x828035a8
+  8280EDC8  38210070             addi r1,r1,0x70
+  8280EDCC  48107940             b 0x8291670c
 
 ; 8280EDD0  Ebml_WriteUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:71)
   8280EDD0  7D8802A6             mfspr r12,LR
   8280EDD4  481078E9             bl 0x829166bc
+  8280EDD8  9421FF90             stwu r1,-0x70(r1)
+  8280EDDC  7C7F1B78             or r31,r3,r3
+  8280EDE0  7C832378             or r3,r4,r4
+  8280EDE4  7C9E2378             or r30,r4,r4
+  8280EDE8  4810C4F1             bl 0x8291b2d8
+  8280EDEC  787D0020             rldicl r29,r3,0x0,0x20
+  8280EDF0  7FE3FB78             or r3,r31,r31
+  8280EDF4  7FA4EB78             or r4,r29,r29
+  8280EDF8  4BFFFEA9             bl 0x8280eca0
+  8280EDFC  7FA5EB78             or r5,r29,r29
+  8280EE00  7FC4F378             or r4,r30,r30
+  8280EE04  7FE3FB78             or r3,r31,r31
+  8280EE08  4BFF47A1             bl 0x828035a8
+  8280EE0C  38210070             addi r1,r1,0x70
+  8280EE10  481078FC             b 0x8291670c
 
 ; 8280EE18  Ebml_WriteID  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:83)
   8280EE18  7D8802A6             mfspr r12,LR
@@ -233,6 +269,84 @@ LAB_8280ef94:
 ; 8280F000  Ebml_SerializeBinary  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:133)
   8280F000  7D8802A6             mfspr r12,LR
   8280F004  481076B1             bl 0x829166b4
+  8280F008  9421FF70             stwu r1,-0x90(r1)
+  8280F00C  7C7C1B78             or r28,r3,r3
+  8280F010  908100AC             stw r4,0xac(r1)
+  8280F014  7CBF2B78             or r31,r5,r5
+  8280F018  90A100B4             stw r5,0xb4(r1)
+  8280F01C  3BC00004             li r30,0x4
+  8280F020  39600018             li r11,0x18
+  8280F024  394000FF             li r10,0xff
+LAB_8280f028:
+  8280F028  7D495830             slw r9,r10,r11
+  8280F02C  7D28F838             and r8,r9,r31
+  8280F030  2B080000             cmplwi cr6,r8,0x0
+  8280F034  409A0010             bne cr6,0x8280f044
+  8280F038  356BFFF8             subic. r11,r11,0x8
+  8280F03C  3BDEFFFF             subi r30,r30,0x1
+  8280F040  4181FFE8             bgt 0x8280f028
+LAB_8280f044:
+  8280F044  3FA00100             lis r29,0x100
+  8280F048  3F600001             lis r27,0x1
+  8280F04C  7F04E840             cmplw cr6,r4,r29
+  8280F050  4198000C             blt cr6,0x8280f05c
+  8280F054  38A00004             li r5,0x4
+  8280F058  48000024             b 0x8280f07c
+LAB_8280f05c:
+  8280F05C  7F04D840             cmplw cr6,r4,r27
+  8280F060  4198000C             blt cr6,0x8280f06c
+  8280F064  38A00003             li r5,0x3
+  8280F068  48000014             b 0x8280f07c
+LAB_8280f06c:
+  8280F06C  2B040100             cmplwi cr6,r4,0x100
+  8280F070  38A00002             li r5,0x2
+  8280F074  40980008             bge cr6,0x8280f07c
+  8280F078  38A00001             li r5,0x1
+LAB_8280f07c:
+  8280F07C  894100AF             lbz r10,0xaf(r1)
+  8280F080  38810050             addi r4,r1,0x50
+  8280F084  896100AE             lbz r11,0xae(r1)
+  8280F088  7F83E378             or r3,r28,r28
+  8280F08C  892100AD             lbz r9,0xad(r1)
+  8280F090  514B442E             rlwimi r11,r10,0x8,0x10,0x17
+  8280F094  890100AC             lbz r8,0xac(r1)
+  8280F098  5567043E             rlwinm r7,r11,0x0,0x10,0x1f
+  8280F09C  50E9402E             rlwimi r9,r7,0x8,0x0,0x17
+  8280F0A0  5128402E             rlwimi r8,r9,0x8,0x0,0x17
+  8280F0A4  91010050             stw r8,0x50(r1)
+  8280F0A8  4BFF4549             bl 0x828035f0
+  8280F0AC  7FC407B4             extsw r4,r30
+  8280F0B0  7F83E378             or r3,r28,r28
+  8280F0B4  4BFFFBED             bl 0x8280eca0
+  8280F0B8  7F1FE840             cmplw cr6,r31,r29
+  8280F0BC  4198000C             blt cr6,0x8280f0c8
+  8280F0C0  38A00004             li r5,0x4
+  8280F0C4  48000024             b 0x8280f0e8
+LAB_8280f0c8:
+  8280F0C8  7F1FD840             cmplw cr6,r31,r27
+  8280F0CC  4198000C             blt cr6,0x8280f0d8
+  8280F0D0  38A00003             li r5,0x3
+  8280F0D4  48000014             b 0x8280f0e8
+LAB_8280f0d8:
+  8280F0D8  2B1F0100             cmplwi cr6,r31,0x100
+  8280F0DC  38A00002             li r5,0x2
+  8280F0E0  40980008             bge cr6,0x8280f0e8
+  8280F0E4  38A00001             li r5,0x1
+LAB_8280f0e8:
+  8280F0E8  894100B7             lbz r10,0xb7(r1)
+  8280F0EC  38810050             addi r4,r1,0x50
+  8280F0F0  896100B6             lbz r11,0xb6(r1)
+  8280F0F4  7F83E378             or r3,r28,r28
+  8280F0F8  892100B5             lbz r9,0xb5(r1)
+  8280F0FC  514B442E             rlwimi r11,r10,0x8,0x10,0x17
+  8280F100  890100B4             lbz r8,0xb4(r1)
+  8280F104  5567043E             rlwinm r7,r11,0x0,0x10,0x1f
+  8280F108  50E9402E             rlwimi r9,r7,0x8,0x0,0x17
+  8280F10C  5128402E             rlwimi r8,r9,0x8,0x0,0x17
+  8280F110  91010050             stw r8,0x50(r1)
+  8280F114  4BFF44DD             bl 0x828035f0
+  8280F118  38210090             addi r1,r1,0x90
+  8280F11C  481075E8             b 0x82916704
 
 ; 8280F120  Ebml_SerializeFloat  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:146)
   8280F120  7D8802A6             mfspr r12,LR
@@ -303,14 +417,66 @@ LAB_8280ef94:
 ; 8280F220  Ebml_SerializeString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:164)
   8280F220  7D8802A6             mfspr r12,LR
   8280F224  48107499             bl 0x829166bc
+  8280F228  9421FF90             stwu r1,-0x70(r1)
+  8280F22C  7C7F1B78             or r31,r3,r3
+  8280F230  7CBE2B78             or r30,r5,r5
+  8280F234  4BFFFBE5             bl 0x8280ee18
+  8280F238  7FCBF378             or r11,r30,r30
+LAB_8280f23c:
+  8280F23C  894B0000             lbz r10,0x0(r11)
+  8280F240  396B0001             addi r11,r11,0x1
+  8280F244  2B0A0000             cmplwi cr6,r10,0x0
+  8280F248  409AFFF4             bne cr6,0x8280f23c
+  8280F24C  7D7E5850             subf r11,r30,r11
+  8280F250  7FE3FB78             or r3,r31,r31
+  8280F254  396BFFFF             subi r11,r11,0x1
+  8280F258  557D003E             rlwinm r29,r11,0x0,0x0,0x1f
+  8280F25C  7FA4EB78             or r4,r29,r29
+  8280F260  4BFFFA41             bl 0x8280eca0
+  8280F264  7FA5EB78             or r5,r29,r29
+  8280F268  7FC4F378             or r4,r30,r30
+  8280F26C  7FE3FB78             or r3,r31,r31
+  8280F270  4BFF4339             bl 0x828035a8
+  8280F274  38210070             addi r1,r1,0x70
+  8280F278  48107494             b 0x8291670c
 
 ; 8280F280  Ebml_SerializeUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:170)
   8280F280  7D8802A6             mfspr r12,LR
   8280F284  48107439             bl 0x829166bc
+  8280F288  9421FF90             stwu r1,-0x70(r1)
+  8280F28C  7C7F1B78             or r31,r3,r3
+  8280F290  7CBE2B78             or r30,r5,r5
+  8280F294  4BFFFB85             bl 0x8280ee18
+  8280F298  7FC3F378             or r3,r30,r30
+  8280F29C  4810C03D             bl 0x8291b2d8
+  8280F2A0  787D0020             rldicl r29,r3,0x0,0x20
+  8280F2A4  7FE3FB78             or r3,r31,r31
+  8280F2A8  7FA4EB78             or r4,r29,r29
+  8280F2AC  4BFFF9F5             bl 0x8280eca0
+  8280F2B0  7FA5EB78             or r5,r29,r29
+  8280F2B4  7FC4F378             or r4,r30,r30
+  8280F2B8  7FE3FB78             or r3,r31,r31
+  8280F2BC  4BFF42ED             bl 0x828035a8
+  8280F2C0  38210070             addi r1,r1,0x70
+  8280F2C4  48107448             b 0x8291670c
 
 ; 8280F2C8  Ebml_SerializeData  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:176)
   8280F2C8  7D8802A6             mfspr r12,LR
   8280F2CC  481073F1             bl 0x829166bc
+  8280F2D0  9421FF90             stwu r1,-0x70(r1)
+  8280F2D4  7C7F1B78             or r31,r3,r3
+  8280F2D8  7CBE2B78             or r30,r5,r5
+  8280F2DC  7CDD3378             or r29,r6,r6
+  8280F2E0  4BFFFB39             bl 0x8280ee18
+  8280F2E4  7BA40020             rldicl r4,r29,0x0,0x20
+  8280F2E8  7FE3FB78             or r3,r31,r31
+  8280F2EC  4BFFF9B5             bl 0x8280eca0
+  8280F2F0  7FA5EB78             or r5,r29,r29
+  8280F2F4  7FC4F378             or r4,r30,r30
+  8280F2F8  7FE3FB78             or r3,r31,r31
+  8280F2FC  4BFF42AD             bl 0x828035a8
+  8280F300  38210070             addi r1,r1,0x70
+  8280F304  48107408             b 0x8291670c
 
 ; 8280F308  Ebml_WriteVoid  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:184)
   8280F308  7D8802A6             mfspr r12,LR

@@ -11,11 +11,39 @@ undefined4 R_StandardDepthPrepassMaterial(void)
 
 // 82734D28  R_SetPrepassMaterial  (gfx_d3d/r_draw_material.cpp:80)
 
-void R_SetPrepassMaterial(void)
+void R_SetPrepassMaterial(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821be160,0x5d,0,0xffffffff82000f98,0xffffffff82020dcc);
+  }
+  uVar1 = *(ulonglong *)((int)param_2 + 8) >> 0x29 & 3;
+  if (uVar1 != 3) {
+    if ((uVar1 == 0) && ((*(byte *)((int)param_2 + 0x40) & 1) != 0)) {
+      param_2 = (ulonglong)DAT_84616550;
+    }
+    iVar3 = Material_GetTechnique(param_2,param_3);
+    *(int *)(iVar2 + 0xec) = (int)param_2;
+    *(int *)(iVar2 + 0xf4) = iVar3;
+    if (iVar3 != 0) {
+      if ((*(ushort *)(iVar3 + 4) & 2) != 0) {
+        MyAssertHandler(0xffffffff821be160,0xb7,0,0xffffffff82000f98,0xffffffff821be124);
+      }
+      if ((*(ushort *)(iVar3 + 4) & 1) != 0) {
+        MyAssertHandler(0xffffffff821be160,0xb8,0,0xffffffff82000f98,0xffffffff821be0e8);
+      }
+      *(int *)(iVar2 + 0xf0) = (int)param_3;
+      __restgprlr_26(1);
+      return;
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
@@ -25,7 +53,6 @@ void R_GetMaterialFromIndex(ulonglong param_1)
 
 {
   if ((ulonglong)DAT_84616504 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be160,0xe8,0,0xffffffff821be1a8,param_1);
   }
   R_GetSortedMaterial(param_1);
@@ -45,7 +72,6 @@ void R_SetMaterial(undefined8 param_1,ulonglong param_2,longlong param_3)
   iVar1 = __savegprlr_25();
   iVar2 = Material_GetTechniqueSet(param_2);
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
   }
   iVar2 = *(int *)((int)((param_3 + 3U & 0xffffffff) << 2) + iVar2);
@@ -53,7 +79,6 @@ void R_SetMaterial(undefined8 param_1,ulonglong param_2,longlong param_3)
   *(int *)(iVar1 + 0xf4) = iVar2;
   if (iVar2 != 0) {
     if ((*(ushort *)(iVar2 + 4) & 2) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821be160,0x152,0,0xffffffff82000f98,0xffffffff821be124);
     }
     if (((*(ushort *)(iVar2 + 4) & 1) == 0) || (DAT_846180a0 != '\0')) {
@@ -61,7 +86,6 @@ void R_SetMaterial(undefined8 param_1,ulonglong param_2,longlong param_3)
       if (((iVar3 != 5) && (iVar3 != 4)) ||
          (((*(ushort *)(iVar2 + 4) & 0x40) == 0 || (sRam00001598 != 0)))) {
         if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821be160,0x167,0,0xffffffff82000f98,0xffffffff82020dcc);
         }
         if ((*(ushort *)(iVar2 + 4) & 0x400) != 0) {
@@ -122,7 +146,6 @@ void R_SetupDrawGroup(undefined8 param_1,ulonglong param_2)
   uVar7 = *puVar3;
   uVar2 = (param_2 & 0xffffffff) >> 0x12;
   if (DAT_84616504 <= uVar2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be160,0xe8,0,0xffffffff821be1a8,uVar2);
   }
   uVar2 = R_GetSortedMaterial(uVar2);
@@ -131,7 +154,6 @@ void R_SetupDrawGroup(undefined8 param_1,ulonglong param_2)
     uVar8 = (param_2 & 0xffffffff) >> 8 & 0xff;
     iVar5 = *(int *)(*(int *)(puVar3 + 1) + 4);
     if (*(uint *)(iVar5 + 0x1b0) <= uVar8) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821be160,0x1ac,0,0xffffffff821be288,uVar8);
     }
     local_70 = (int)((ulonglong)uVar7 >> 0x20);
@@ -168,8 +190,7 @@ LAB_827351c4:
   }
   iStack_6c = (int)uVar7;
   if (((ulonglong)*(uint *)(iStack_6c + 0xec) != (uVar2 & 0xffffffff)) &&
-     ((1 < iVar1 || ((ulonglong)*(uint *)(iStack_6c + 0xec) != (ulonglong)DAT_84616550)))) {
-                    /* WARNING: Subroutine does not return */
+     ((1 < iVar1 || (*(uint *)(iStack_6c + 0xec) != DAT_84616550)))) {
     MyAssertHandler(0xffffffff821be160,0x1cf,0,0xffffffff82000f98,0xffffffff821be1f0);
   }
   __restgprlr_20(1);

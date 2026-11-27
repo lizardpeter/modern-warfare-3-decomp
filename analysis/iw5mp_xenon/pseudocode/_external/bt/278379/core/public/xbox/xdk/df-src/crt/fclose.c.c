@@ -34,7 +34,36 @@ int fclose(FILE *_File)
 int _fclose_nolock(FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_File);
+  FILE *_File_00;
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  
+  _File_00 = (FILE *)__savegprlr_29(_File);
+  iVar3 = -1;
+  if (_File_00 == (FILE *)0x0) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
+    _invalid_parameter_noinfo();
+    iVar3 = -1;
+  }
+  else {
+    if ((_File_00->_flag & 0x83U) != 0) {
+      iVar3 = _flush(_File_00);
+      _freebuf(_File_00);
+      iVar2 = _fileno(_File_00);
+      iVar2 = _close(iVar2);
+      if (iVar2 < 0) {
+        iVar3 = -1;
+      }
+      else if (_File_00->_tmpfname != (char *)0x0) {
+        free(_File_00->_tmpfname);
+        _File_00->_tmpfname = (char *)0x0;
+      }
+    }
+    _File_00->_flag = 0;
+  }
+  iVar3 = __restgprlr_29(iVar3);
+  return iVar3;
 }
 

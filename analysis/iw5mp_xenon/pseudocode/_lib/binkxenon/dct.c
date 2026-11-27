@@ -129,11 +129,146 @@ void fastidct8x8(undefined8 param_1,longlong param_2,longlong param_3,longlong p
 
 // 82951378  fastidct8x8d  (line unknown)
 
-void fastidct8x8d(void)
+void fastidct8x8d(undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  short *psVar1;
+  longlong lVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  int *piVar6;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  uint uVar13;
+  longlong lVar14;
+  uint *puVar15;
+  int *piVar16;
+  int iVar17;
+  longlong lVar18;
+  int iVar19;
+  int iVar20;
+  int iVar21;
+  int iVar22;
+  int iVar23;
+  int local_170 [16];
+  int local_130 [8];
+  int local_110 [8];
+  int local_f0 [8];
+  int local_d0 [8];
+  int local_b0 [8];
+  int local_90 [36];
+  
+  lVar2 = __savegprlr_19();
+  lVar14 = lVar2 + param_2;
+  lVar18 = (param_2 & 0x7fffffff) * 2;
+  piVar16 = local_170;
+  iVar17 = 8;
+  do {
+    psVar1 = (short *)param_3;
+    piVar6 = (int *)param_4;
+    if ((((((psVar1[8] == 0 && psVar1[0x10] == 0) && psVar1[0x18] == 0) && psVar1[0x20] == 0) &&
+         psVar1[0x28] == 0) && psVar1[0x30] == 0) && psVar1[0x38] == 0) {
+      iVar12 = (int)*psVar1 * *piVar6 >> 0xb;
+      *piVar16 = iVar12;
+      piVar16[8] = iVar12;
+      piVar16[0x10] = iVar12;
+      piVar16[0x20] = iVar12;
+      piVar16[0x28] = iVar12;
+      piVar16[0x30] = iVar12;
+      piVar16[0x38] = iVar12;
+    }
+    else {
+      iVar12 = (int)*psVar1 * *piVar6 >> 0xb;
+      iVar11 = piVar6[0x10] * (int)psVar1[0x10] >> 0xb;
+      iVar3 = piVar6[0x20] * (int)psVar1[0x20] >> 0xb;
+      iVar7 = piVar6[0x30] * (int)psVar1[0x30] >> 0xb;
+      iVar9 = iVar7 + iVar11;
+      iVar22 = iVar3 + iVar12;
+      iVar10 = piVar6[8] * (int)psVar1[8] >> 0xb;
+      iVar20 = piVar6[0x18] * (int)psVar1[0x18] >> 0xb;
+      iVar21 = piVar6[0x28] * (int)psVar1[0x28] >> 0xb;
+      iVar12 = iVar12 - iVar3;
+      iVar19 = iVar9 + iVar22;
+      iVar3 = piVar6[0x38] * (int)psVar1[0x38] >> 0xb;
+      iVar11 = ((iVar11 - iVar7) * 0xb50 >> 0xb) - iVar9;
+      iVar22 = iVar22 - iVar9;
+      iVar9 = iVar21 - iVar20;
+      iVar7 = iVar10 - iVar3;
+      iVar21 = iVar21 + iVar20;
+      iVar20 = iVar11 + iVar12;
+      iVar3 = iVar3 + iVar10;
+      iVar12 = iVar12 - iVar11;
+      iVar10 = iVar3 + iVar21;
+      iVar11 = (iVar7 + iVar9) * 0xec8 >> 0xb;
+      *piVar16 = iVar10 + iVar19;
+      piVar16[0x38] = iVar19 - iVar10;
+      iVar10 = ((iVar9 * -0x14e8 >> 0xb) - iVar10) + iVar11;
+      iVar3 = ((iVar3 - iVar21) * 0xb50 >> 0xb) - iVar10;
+      piVar16[8] = iVar10 + iVar20;
+      piVar16[0x30] = iVar20 - iVar10;
+      iVar11 = ((iVar7 * 0x8a9 >> 0xb) - iVar11) + iVar3;
+      piVar16[0x10] = iVar3 + iVar12;
+      piVar16[0x28] = iVar12 - iVar3;
+      iVar12 = iVar22 - iVar11;
+      piVar16[0x20] = iVar11 + iVar22;
+    }
+    param_3 = param_3 + 2;
+    param_4 = param_4 + 4;
+    iVar17 = iVar17 + -1;
+    piVar16[0x18] = iVar12;
+    piVar16 = piVar16 + 1;
+  } while (0 < iVar17);
+  piVar16 = local_170 + 6;
+  lVar2 = lVar2 + 8;
+  iVar17 = 8;
+  do {
+    iVar21 = piVar16[-1] - piVar16[-3];
+    iVar19 = piVar16[-3] + piVar16[-1];
+    iVar9 = piVar16[-5] - piVar16[1];
+    iVar7 = piVar16[-5] + piVar16[1];
+    iVar10 = piVar16[-4] + *piVar16;
+    iVar11 = piVar16[-6] - piVar16[-2];
+    iVar3 = piVar16[-6] + piVar16[-2];
+    iVar12 = (iVar9 + iVar21) * 0xec8 >> 0xb;
+    iVar20 = iVar7 + iVar19;
+    iVar22 = iVar10 + iVar3;
+    iVar3 = iVar3 - iVar10;
+    iVar10 = ((piVar16[-4] - *piVar16) * 0xb50 >> 0xb) - iVar10;
+    iVar21 = ((iVar21 * -0x14e8 >> 0xb) - iVar20) + iVar12;
+    iVar23 = iVar10 + iVar11;
+    iVar11 = iVar11 - iVar10;
+    iVar7 = ((iVar7 - iVar19) * 0xb50 >> 0xb) - iVar21;
+    uVar13 = (iVar20 + iVar22 + 0x7f >> 8 & 0xffU) << 0x10 | iVar21 + iVar23 + 0x7f >> 8 & 0xffU;
+    uVar4 = ((iVar23 - iVar21) + 0x7f >> 8 & 0xffU) << 0x10 | (iVar22 - iVar20) + 0x7f >> 8 & 0xffU;
+    iVar12 = ((iVar9 * 0x8a9 >> 0xb) - iVar12) + iVar7;
+    uVar8 = (iVar12 + iVar3 + 0x7f >> 8 & 0xffU) << 0x10 | (iVar11 - iVar7) + 0x7f >> 8 & 0xffU;
+    uVar5 = (iVar7 + iVar11 + 0x7f >> 8 & 0xffU) << 0x10 | (iVar3 - iVar12) + 0x7f >> 8 & 0xffU;
+    uVar13 = uVar13 << 8 | uVar13;
+    uVar4 = uVar4 << 8 | uVar4;
+    uVar8 = uVar8 << 8 | uVar8;
+    puVar15 = (uint *)lVar2;
+    puVar15[-2] = uVar13;
+    iVar17 = iVar17 + -1;
+    puVar15[1] = uVar4;
+    uVar5 = uVar5 << 8 | uVar5;
+    *puVar15 = uVar8;
+    piVar16 = piVar16 + 8;
+    puVar15[-1] = uVar5;
+    lVar2 = lVar2 + lVar18;
+    puVar15 = (uint *)lVar14;
+    *puVar15 = uVar13;
+    puVar15[1] = uVar5;
+    puVar15[2] = uVar8;
+    puVar15[3] = uVar4;
+    lVar14 = lVar18 + lVar14;
+  } while (iVar17 != 0);
+  __restgprlr_19();
+  return;
 }
 
 
@@ -159,10 +294,135 @@ void FastIDCT8x8d(void)
 
 // 82951730  FastmIDCT8x8WithMotion  (line unknown)
 
-void FastmIDCT8x8WithMotion(void)
+void FastmIDCT8x8WithMotion
+               (undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
+               longlong param_5,longlong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  short *psVar1;
+  char *pcVar2;
+  char *pcVar3;
+  longlong lVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  longlong lVar10;
+  int *piVar11;
+  int *piVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  int iVar18;
+  int iVar19;
+  int local_180 [16];
+  int local_140 [8];
+  int local_120 [8];
+  int local_100 [8];
+  int local_e0 [8];
+  int local_c0 [8];
+  int local_a0 [40];
+  
+  lVar4 = __savegprlr_18();
+  lVar10 = (param_4 & 0xffffff) * 0x100 + -0x7ddb5760;
+  piVar12 = local_180;
+  iVar13 = 8;
+  do {
+    psVar1 = (short *)param_3;
+    piVar11 = (int *)lVar10;
+    if ((((((psVar1[8] == 0 && psVar1[0x10] == 0) && psVar1[0x18] == 0) && psVar1[0x20] == 0) &&
+         psVar1[0x28] == 0) && psVar1[0x30] == 0) && psVar1[0x38] == 0) {
+      iVar8 = (int)*psVar1 * *piVar11 >> 0xb;
+      *piVar12 = iVar8;
+      piVar12[8] = iVar8;
+      piVar12[0x10] = iVar8;
+      piVar12[0x20] = iVar8;
+      piVar12[0x28] = iVar8;
+      piVar12[0x30] = iVar8;
+      piVar12[0x38] = iVar8;
+    }
+    else {
+      iVar8 = (int)*psVar1 * *piVar11 >> 0xb;
+      iVar7 = piVar11[0x10] * (int)psVar1[0x10] >> 0xb;
+      iVar18 = piVar11[0x20] * (int)psVar1[0x20] >> 0xb;
+      iVar9 = piVar11[0x30] * (int)psVar1[0x30] >> 0xb;
+      iVar5 = iVar9 + iVar7;
+      iVar17 = iVar18 + iVar8;
+      iVar6 = piVar11[8] * (int)psVar1[8] >> 0xb;
+      iVar14 = piVar11[0x18] * (int)psVar1[0x18] >> 0xb;
+      iVar16 = piVar11[0x28] * (int)psVar1[0x28] >> 0xb;
+      iVar8 = iVar8 - iVar18;
+      iVar15 = iVar5 + iVar17;
+      iVar18 = piVar11[0x38] * (int)psVar1[0x38] >> 0xb;
+      iVar7 = ((iVar7 - iVar9) * 0xb50 >> 0xb) - iVar5;
+      iVar17 = iVar17 - iVar5;
+      iVar5 = iVar16 - iVar14;
+      iVar9 = iVar6 - iVar18;
+      iVar16 = iVar16 + iVar14;
+      iVar14 = iVar7 + iVar8;
+      iVar18 = iVar18 + iVar6;
+      iVar8 = iVar8 - iVar7;
+      iVar6 = iVar18 + iVar16;
+      iVar7 = (iVar9 + iVar5) * 0xec8 >> 0xb;
+      *piVar12 = iVar6 + iVar15;
+      piVar12[0x38] = iVar15 - iVar6;
+      iVar6 = ((iVar5 * -0x14e8 >> 0xb) - iVar6) + iVar7;
+      iVar18 = ((iVar18 - iVar16) * 0xb50 >> 0xb) - iVar6;
+      piVar12[8] = iVar6 + iVar14;
+      piVar12[0x30] = iVar14 - iVar6;
+      iVar7 = ((iVar9 * 0x8a9 >> 0xb) - iVar7) + iVar18;
+      piVar12[0x10] = iVar18 + iVar8;
+      piVar12[0x28] = iVar8 - iVar18;
+      iVar8 = iVar17 - iVar7;
+      piVar12[0x20] = iVar7 + iVar17;
+    }
+    lVar10 = lVar10 + 4;
+    param_3 = param_3 + 2;
+    iVar13 = iVar13 + -1;
+    piVar12[0x18] = iVar8;
+    piVar12 = piVar12 + 1;
+  } while (0 < iVar13);
+  lVar4 = lVar4 + 1;
+  param_5 = param_5 + 1;
+  piVar12 = local_180 + 6;
+  iVar13 = 8;
+  do {
+    iVar13 = iVar13 + -1;
+    iVar5 = piVar12[-1] - piVar12[-3];
+    iVar16 = piVar12[-3] + piVar12[-1];
+    iVar6 = piVar12[-4] + *piVar12;
+    iVar14 = piVar12[-5] - piVar12[1];
+    pcVar2 = (char *)param_5;
+    iVar7 = piVar12[-5] + piVar12[1];
+    iVar9 = iVar7 + iVar16;
+    iVar18 = piVar12[-6] + piVar12[-2];
+    iVar8 = (iVar14 + iVar5) * 0xec8 >> 0xb;
+    iVar17 = piVar12[-6] - piVar12[-2];
+    iVar15 = iVar6 + iVar18;
+    iVar18 = iVar18 - iVar6;
+    iVar6 = ((piVar12[-4] - *piVar12) * 0xb50 >> 0xb) - iVar6;
+    iVar19 = iVar6 + iVar17;
+    iVar17 = iVar17 - iVar6;
+    iVar6 = ((iVar5 * -0x14e8 >> 0xb) - iVar9) + iVar8;
+    piVar12 = piVar12 + 8;
+    pcVar3 = (char *)lVar4;
+    pcVar3[-1] = (char)((uint)(iVar9 + iVar15 + 0x7f) >> 8) + pcVar2[-1];
+    pcVar3[6] = (char)((uint)((iVar15 - iVar9) + 0x7f) >> 8) + pcVar2[6];
+    iVar7 = ((iVar7 - iVar16) * 0xb50 >> 0xb) - iVar6;
+    *pcVar3 = (char)((uint)(iVar6 + iVar19 + 0x7f) >> 8) + *pcVar2;
+    pcVar3[5] = (char)((uint)((iVar19 - iVar6) + 0x7f) >> 8) + pcVar2[5];
+    iVar8 = ((iVar14 * 0x8a9 >> 0xb) - iVar8) + iVar7;
+    pcVar3[1] = (char)((uint)(iVar7 + iVar17 + 0x7f) >> 8) + pcVar2[1];
+    pcVar3[4] = (char)((uint)((iVar17 - iVar7) + 0x7f) >> 8) + pcVar2[4];
+    pcVar3[2] = (char)((uint)((iVar18 - iVar8) + 0x7f) >> 8) + pcVar2[2];
+    param_5 = param_5 + param_6;
+    pcVar3[3] = (char)((uint)(iVar8 + iVar18 + 0x7f) >> 8) + pcVar2[3];
+    lVar4 = lVar4 + param_2;
+  } while (iVar13 != 0);
+  __restgprlr_18();
+  return;
 }
 

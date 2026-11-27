@@ -6,7 +6,6 @@ void CIN_PlayCinematic(undefined8 param_1,ulonglong param_2)
 
 {
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202cb04,0x24,0,0xffffffff82000f98,0xffffffff82021a74);
   }
   R_Cinematic_StartPlayback(param_2,0,0);
@@ -21,11 +20,28 @@ void CIN_PlayCinematic(undefined8 param_1,ulonglong param_2)
 
 // 8232D4A8  CIN_PlayMenuVideo  (client/cl_cin.cpp:50)
 
-void CIN_PlayMenuVideo(void)
+void CIN_PlayMenuVideo(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202cb04,0x33,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  }
+  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] == 0) {
+    uVar2 = 1;
+    if ((param_4 & 2) != 0) {
+      uVar2 = 3;
+    }
+    R_Cinematic_StartPlayback(param_2,uVar2,param_3);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -59,7 +75,6 @@ void CL_PlayAutoCinematic_f(void)
   
   uVar1 = Cmd_LocalClientNum();
   if (3 < (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
   }
   if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 10) {
@@ -78,7 +93,6 @@ void CL_PlayUnskippableAutoCinematic_f(void)
   
   uVar1 = Cmd_LocalClientNum();
   if (3 < (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
   }
   if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 10) {
@@ -161,7 +175,6 @@ void SCR_StopCinematic(ulonglong param_1)
   
   R_Cinematic_StopPlayback();
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,param_1,4);
   }
   if ((&DAT_82b3e54c)[(int)param_1 * 0x79] == 1) {
@@ -208,8 +221,55 @@ void SCR_StopCinematic_ByUserRequest(undefined8 param_1)
 void CIN_PlayAttractModeMovie(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  char *pcVar5;
+  longlong lVar6;
+  undefined1 *puVar7;
+  undefined1 local_140 [8];
+  undefined1 auStack_138 [8];
+  undefined1 auStack_130 [304];
+  
   __savegprlr_28();
+  LargeLocal__LargeLocal(&stack0x00000000 + -0x138,0x18000);
+  uVar3 = LargeLocal__GetBuf(&stack0x00000000 + -0x138);
+  iVar4 = DB_ReadRawFile(0xffffffff8202cc44,uVar3,0x18000);
+  if (iVar4 != 0) {
+    Com_BeginParseSession(0xffffffff8202cc44);
+    pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
+    iVar4 = atoi(pcVar5);
+    if (7 < iVar4) {
+      MyAssertHandler(0xffffffff8202cb04,0xdd,0,0xffffffff8202cc10,0xffffffff8202cc2c,iVar4);
+    }
+    lVar6 = 0;
+    pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
+    if (*pcVar5 != '\0') {
+      puVar7 = &stack0x00000000 + -0x130;
+      do {
+        iVar2 = (int)puVar7 - (int)pcVar5;
+        do {
+          cVar1 = *pcVar5;
+          pcVar5[iVar2] = cVar1;
+          pcVar5 = pcVar5 + 1;
+        } while (cVar1 != '\0');
+        lVar6 = lVar6 + 1;
+        puVar7 = puVar7 + 0x20;
+        pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
+      } while (*pcVar5 != '\0');
+    }
+    Com_EndParseSession();
+    if (iVar4 != (int)lVar6) {
+      MyAssertHandler(0xffffffff8202cb04,0xed,0,0xffffffff8202cbd8,0xffffffff8202cbf0,lVar6);
+    }
+    iVar4 = irand(0,lVar6);
+    uVar3 = va(0xffffffff8202cbc8,&stack0x00000000 + iVar4 * 0x20 + -0x130);
+    Cbuf_AddText(0,uVar3);
+  }
+  LargeLocal___LargeLocal(&stack0x00000000 + -0x138);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -219,7 +279,6 @@ void CIN_SetMovieList(undefined4 param_1)
 
 {
   if (DAT_82a77240 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202cb04,0xf6,0,0xffffffff82000f98,0xffffffff8202cc5c);
   }
   DAT_82a77240 = param_1;

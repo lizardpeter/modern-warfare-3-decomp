@@ -105,3 +105,36 @@ LAB_828b67fc:
 LAB_828b680c:
   828B680C  382100C0             addi r1,r1,0xc0
   828B6810  4805FED8             b 0x829166e8
+
+; 828B6818  XCOMPRESS::handle_beginning_of_uncompressed_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decuncmp.cpp:202)
+  828B6818  81632B04             lwz r11,0x2b04(r3)
+  828B681C  3923000C             addi r9,r3,0xc
+  828B6820  81432B08             lwz r10,0x2b08(r3)
+  828B6824  396BFFFE             subi r11,r11,0x2
+  828B6828  390B0004             addi r8,r11,0x4
+  828B682C  91632B04             stw r11,0x2b04(r3)
+  828B6830  7F085040             cmplw cr6,r8,r10
+  828B6834  4198000C             blt cr6,0x828b6840
+  828B6838  38600000             li r3,0x0
+  828B683C  4E800020             blr
+LAB_828b6840:
+  828B6840  39400003             li r10,0x3
+  828B6844  3929FFFC             subi r9,r9,0x4
+  828B6848  7D4903A6             mtspr CTR,r10
+LAB_828b684c:
+  828B684C  894B0003             lbz r10,0x3(r11)
+  828B6850  890B0002             lbz r8,0x2(r11)
+  828B6854  554A403E             rlwinm r10,r10,0x8,0x0,0x1f
+  828B6858  88EB0001             lbz r7,0x1(r11)
+  828B685C  88CB0000             lbz r6,0x0(r11)
+  828B6860  396B0004             addi r11,r11,0x4
+  828B6864  7D4A4378             or r10,r10,r8
+  828B6868  554A402E             rlwinm r10,r10,0x8,0x0,0x17
+  828B686C  7D4A3B78             or r10,r10,r7
+  828B6870  554A402E             rlwinm r10,r10,0x8,0x0,0x17
+  828B6874  7D4A3378             or r10,r10,r6
+  828B6878  95490004             stwu r10,0x4(r9)
+  828B687C  4200FFD0             bdnz 0x828b684c
+  828B6880  91632B04             stw r11,0x2b04(r3)
+  828B6884  38600001             li r3,0x1
+  828B6888  4E800020             blr

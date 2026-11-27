@@ -4,9 +4,113 @@
   8290C438  90830000             stw r4,0x0(r3)
   8290C43C  4E800020             blr
 
+; 8290C440  bdRichPresenceService::~bdRichPresenceService  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceservice.cpp:23)
+  8290C440  4E800020             blr
+
 ; 8290C450  bdRichPresenceService::setInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceservice.cpp:27)
   8290C450  7D8802A6             mfspr r12,LR
   8290C454  4800A261             bl 0x829166b4
+  8290C458  3BE1FF70             subi r31,r1,0x90
+  8290C45C  9421FF70             stwu r1,-0x90(r1)
+  8290C460  7C7D1B78             or r29,r3,r3
+  8290C464  907F00A4             stw r3,0xa4(r31)
+  8290C468  7C9B2378             or r27,r4,r4
+  8290C46C  7CBC2B78             or r28,r5,r5
+  8290C470  3BC00000             li r30,0x0
+  8290C474  3860002C             li r3,0x2c
+  8290C478  93DF0054             stw r30,0x54(r31)
+  8290C47C  4BFE8BCD             bl 0x828f5048
+  8290C480  907F0058             stw r3,0x58(r31)
+  8290C484  28030000             cmplwi r3,0x0
+  8290C488  41820014             beq 0x8290c49c
+  8290C48C  38A00001             li r5,0x1
+  8290C490  3880006A             li r4,0x6a
+  8290C494  48006745             bl 0x82912bd8
+  8290C498  48000008             b 0x8290c4a0
+LAB_8290c49c:
+  8290C49C  7FC3F378             or r3,r30,r30
+LAB_8290c4a0:
+  8290C4A0  907F0050             stw r3,0x50(r31)
+  8290C4A4  2B030000             cmplwi cr6,r3,0x0
+  8290C4A8  419A0028             beq cr6,0x8290c4d0
+  8290C4AC  39630004             addi r11,r3,0x4
+LAB_8290c4b0:
+  8290C4B0  7D2000A6             mfmsr r9
+  8290C4B4  7DA10164             mtmsrd r13,1
+  8290C4B8  7D405828             lwarx r10,0,r11
+  8290C4BC  394A0001             addi r10,r10,0x1
+  8290C4C0  7D40592D             stwcx. r10,0,r11
+  8290C4C4  7D210164             mtmsrd r9,1
+  8290C4C8  4082FFE8             bne 0x8290c4b0
+  8290C4CC  81630004             lwz r11,0x4(r3)
+LAB_8290c4d0:
+  8290C4D0  93DD0000             stw r30,0x0(r29)
+  8290C4D4  39600001             li r11,0x1
+  8290C4D8  38A00001             li r5,0x1
+  8290C4DC  917F0054             stw r11,0x54(r31)
+  8290C4E0  38800044             li r4,0x44
+  8290C4E4  387F0050             addi r3,r31,0x50
+  8290C4E8  4BFF3601             bl 0x828ffae8
+  8290C4EC  38800000             li r4,0x0
+  8290C4F0  807F0050             lwz r3,0x50(r31)
+  8290C4F4  4BFE9575             bl 0x828f5a68
+  8290C4F8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8290C4FC  314BFFFF             subic r10,r11,0x1
+  8290C500  7D6A5910             subfe r11,r10,r11
+  8290C504  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290C508  41820020             beq 0x8290c528
+  8290C50C  389C0005             addi r4,r28,0x5
+  8290C510  807F0050             lwz r3,0x50(r31)
+  8290C514  80BC0028             lwz r5,0x28(r28)
+  8290C518  4BFE9F81             bl 0x828f6498
+  8290C51C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290C520  39600001             li r11,0x1
+  8290C524  40820008             bne 0x8290c52c
+LAB_8290c528:
+  8290C528  7FCBF378             or r11,r30,r30
+LAB_8290c52c:
+  8290C52C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290C530  41820054             beq 0x8290c584
+  8290C534  38BF0050             addi r5,r31,0x50
+  8290C538  807B0000             lwz r3,0x0(r27)
+  8290C53C  7FA4EB78             or r4,r29,r29
+  8290C540  4BFF4BF9             bl 0x82901138
+  8290C544  7C6A1B79             or. r10,r3,r3
+  8290C548  41820070             beq 0x8290c5b8
+  8290C54C  3D008221             lis r8,-0x7ddf
+  8290C550  3D608221             lis r11,-0x7ddf
+  8290C554  3CC08221             lis r6,-0x7ddf
+  8290C558  3CA08221             lis r5,-0x7ddf
+  8290C55C  3C808221             lis r4,-0x7ddf
+  8290C560  38E80DAC             addi r7,r8,0xdac
+  8290C564  392BC90C             subi r9,r11,0x36f4
+  8290C568  38C60D48             addi r6,r6,0xd48
+  8290C56C  38A50D38             addi r5,r5,0xd38
+  8290C570  3884A424             subi r4,r4,0x5bdc
+  8290C574  39000030             li r8,0x30
+  8290C578  38600001             li r3,0x1
+  8290C57C  4BFE8595             bl 0x828f4b10
+  8290C580  48000038             b 0x8290c5b8
+LAB_8290c584:
+  8290C584  3D008221             lis r8,-0x7ddf
+  8290C588  3D608221             lis r11,-0x7ddf
+  8290C58C  3D408221             lis r10,-0x7ddf
+  8290C590  3CA08221             lis r5,-0x7ddf
+  8290C594  3C808221             lis r4,-0x7ddf
+  8290C598  38C80D48             addi r6,r8,0xd48
+  8290C59C  392BC89C             subi r9,r11,0x3764
+  8290C5A0  38EA0DAC             addi r7,r10,0xdac
+  8290C5A4  38A50D38             addi r5,r5,0xd38
+  8290C5A8  3884A424             subi r4,r4,0x5bdc
+  8290C5AC  39000035             li r8,0x35
+  8290C5B0  38600001             li r3,0x1
+  8290C5B4  4BFE855D             bl 0x828f4b10
+LAB_8290c5b8:
+  8290C5B8  387F0050             addi r3,r31,0x50
+  8290C5BC  4BFF0A4D             bl 0x828fd008
+  8290C5C0  7FA3EB78             or r3,r29,r29
+  8290C5C4  383F0090             addi r1,r31,0x90
+  8290C5C8  4800A13C             b 0x82916704
 
 ; 8290C668  bdRichPresenceService::getInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceservice.cpp:59)
   8290C668  7D8802A6             mfspr r12,LR

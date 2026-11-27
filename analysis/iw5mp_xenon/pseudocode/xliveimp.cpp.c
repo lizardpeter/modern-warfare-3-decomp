@@ -2,21 +2,110 @@
 
 // 828B88B8  XFriendsCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:37)
 
-void XFriendsCreateEnumerator(void)
+void XFriendsCreateEnumerator
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  undefined4 in_stack_00000024;
+  int local_250;
+  undefined4 local_24c;
+  undefined4 local_248;
+  undefined4 local_244;
+  undefined1 auStack_230 [512];
+  undefined4 local_30;
+  
+  in_stack_00000014 = __savegprlr_28();
+  uVar2 = 0;
+  local_30 = 0;
+  local_250 = 0;
+  local_24c = 0;
+  in_stack_0000001c = param_2;
+  in_stack_00000024 = param_3;
+  lVar1 = XLookupSchemaIndexFromOrdinal(0x206,&local_248);
+  if (-1 < lVar1) {
+    lVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,0,0);
+    if (-1 < lVar1) {
+      lVar1 = XamAlloc(0,local_24c,&local_250);
+      if (-1 < lVar1) {
+        lVar1 = XOnlineSetupUserBuffer(0x206,local_248,0,0,local_250,local_24c,0,0);
+        if (-1 < lVar1) {
+          CArgumentList__AddArgument(auStack_230,&stack0x00000014);
+          CArgumentList__AddArgument(auStack_230,&stack0x0000001c);
+          CArgumentList__AddArgument(auStack_230,&stack0x00000024);
+          CArgumentList__AddArgument(auStack_230,param_4);
+          CArgumentList__AddArgument(auStack_230,param_5);
+          lVar1 = XMsgInProcessCall(0xfc,0x58020,local_244,auStack_230);
+          if (-1 < lVar1) {
+            XamFree(local_250);
+            goto LAB_828b8a0c;
+          }
+        }
+      }
+    }
+  }
+  if (local_250 != 0) {
+    XamFree();
+  }
+  SetLastError((DWORD)lVar1);
+  uVar2 = 0x65b;
+LAB_828b8a0c:
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 828B8A18  XInviteGetAcceptedInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:111)
 
-void XInviteGetAcceptedInfo(void)
+void XInviteGetAcceptedInfo(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 in_stack_00000014;
+  int local_250;
+  undefined4 local_24c;
+  undefined4 local_248;
+  undefined4 local_244;
+  undefined1 auStack_230 [512];
+  undefined4 local_30;
+  
+  in_stack_00000014 = __savegprlr_29();
+  uVar2 = 0;
+  local_30 = 0;
+  local_250 = 0;
+  local_24c = 0;
+  lVar1 = XLookupSchemaIndexFromOrdinal(0x586,&local_248);
+  if (-1 < lVar1) {
+    lVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,0,0);
+    if (-1 < lVar1) {
+      lVar1 = XamAlloc(0,local_24c,&local_250);
+      if (-1 < lVar1) {
+        lVar1 = XOnlineSetupUserBuffer(0x586,local_248,0,0,local_250,local_24c,0,0);
+        if (-1 < lVar1) {
+          CArgumentList__AddArgument(auStack_230,&stack0x00000014);
+          CArgumentList__AddArgument(auStack_230,param_2);
+          lVar1 = XMsgInProcessCall(0xfc,0x58023,local_244,auStack_230);
+          if (-1 < lVar1) {
+            XamFree(local_250);
+            goto LAB_828b8b3c;
+          }
+        }
+      }
+    }
+  }
+  if (local_250 != 0) {
+    XamFree();
+  }
+  SetLastError((DWORD)lVar1);
+  uVar2 = 0x65b;
+LAB_828b8b3c:
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -141,11 +230,64 @@ void CArgumentList__AddArgument(int param_1,ulonglong param_2)
 
 // 828B8E38  XPresenceCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:486)
 
-void XPresenceCreateEnumerator(void)
+void XPresenceCreateEnumerator
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined4 param_4,
+               undefined4 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  undefined4 in_stack_0000002c;
+  undefined4 in_stack_00000034;
+  int local_260;
+  undefined4 local_25c;
+  undefined4 local_258;
+  undefined4 local_254;
+  undefined1 auStack_240 [512];
+  undefined4 local_40;
+  
+  in_stack_00000014 = __savegprlr_27();
+  uVar2 = 0;
+  local_40 = 0;
+  local_260 = 0;
+  local_25c = 0;
+  in_stack_0000001c = param_2;
+  in_stack_0000002c = param_4;
+  in_stack_00000034 = param_5;
+  lVar1 = XLookupSchemaIndexFromOrdinal(0xb,&local_258);
+  if (-1 < lVar1) {
+    lVar1 = XOnlinepGetContextSize(local_258,0,0,0,&local_25c,0,0);
+    if (-1 < lVar1) {
+      lVar1 = XamAlloc(0,local_25c,&local_260);
+      if (-1 < lVar1) {
+        lVar1 = XOnlineSetupUserBuffer(0xb,local_258,0,0,local_260,local_25c,0,0);
+        if (-1 < lVar1) {
+          CArgumentList__AddArgument(auStack_240,&stack0x00000014);
+          CArgumentList__AddArgument(auStack_240,&stack0x0000001c);
+          CArgumentList__AddArgument(auStack_240,param_3);
+          CArgumentList__AddArgument(auStack_240,&stack0x0000002c);
+          CArgumentList__AddArgument(auStack_240,&stack0x00000034);
+          CArgumentList__AddArgument(auStack_240,param_6);
+          CArgumentList__AddArgument(auStack_240,param_7);
+          lVar1 = XMsgInProcessCall(0xfc,0x58019,local_254,auStack_240);
+          if (-1 < lVar1) {
+            XamFree(local_260);
+            goto LAB_828b8fac;
+          }
+        }
+      }
+    }
+  }
+  if (local_260 != 0) {
+    XamFree();
+  }
+  SetLastError((DWORD)lVar1);
+  uVar2 = 0x65b;
+LAB_828b8fac:
+  __restgprlr_27(uVar2);
+  return;
 }
 
 
@@ -188,40 +330,472 @@ undefined8 XPresenceInitialize(undefined4 param_1)
 
 // 828B90F0  XPresenceSubscribe  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:632)
 
-void XPresenceSubscribe(void)
+void XPresenceSubscribe(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  int local_250;
+  undefined4 local_24c;
+  undefined4 local_248;
+  undefined4 local_244;
+  undefined1 auStack_230 [512];
+  undefined4 local_30;
+  
+  in_stack_00000014 = __savegprlr_29();
+  uVar2 = 0;
+  local_30 = 0;
+  local_250 = 0;
+  local_24c = 0;
+  in_stack_0000001c = param_2;
+  lVar1 = XLookupSchemaIndexFromOrdinal(0xd,&local_248);
+  if (-1 < lVar1) {
+    lVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,0,0);
+    if (-1 < lVar1) {
+      lVar1 = XamAlloc(0,local_24c,&local_250);
+      if (-1 < lVar1) {
+        lVar1 = XOnlineSetupUserBuffer(0xd,local_248,0,0,local_250,local_24c,0,0);
+        if (-1 < lVar1) {
+          CArgumentList__AddArgument(auStack_230,&stack0x00000014);
+          CArgumentList__AddArgument(auStack_230,&stack0x0000001c);
+          CArgumentList__AddArgument(auStack_230,param_3);
+          lVar1 = XMsgInProcessCall(0xfc,0x5801e,local_244,auStack_230);
+          if (-1 < lVar1) {
+            XamFree(local_250);
+            goto LAB_828b9224;
+          }
+        }
+      }
+    }
+  }
+  if (local_250 != 0) {
+    XamFree();
+  }
+  SetLastError((DWORD)lVar1);
+  uVar2 = 0x65b;
+LAB_828b9224:
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 828B9230  XPresenceUnsubscribe  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:705)
 
-void XPresenceUnsubscribe(void)
+void XPresenceUnsubscribe(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_0000001c;
+  int local_250;
+  undefined4 local_24c;
+  undefined4 local_248;
+  undefined4 local_244;
+  undefined1 auStack_230 [512];
+  undefined4 local_30;
+  
+  in_stack_00000014 = __savegprlr_29();
+  uVar2 = 0;
+  local_30 = 0;
+  local_250 = 0;
+  local_24c = 0;
+  in_stack_0000001c = param_2;
+  lVar1 = XLookupSchemaIndexFromOrdinal(0xe,&local_248);
+  if (-1 < lVar1) {
+    lVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,0,0);
+    if (-1 < lVar1) {
+      lVar1 = XamAlloc(0,local_24c,&local_250);
+      if (-1 < lVar1) {
+        lVar1 = XOnlineSetupUserBuffer(0xe,local_248,0,0,local_250,local_24c,0,0);
+        if (-1 < lVar1) {
+          CArgumentList__AddArgument(auStack_230,&stack0x00000014);
+          CArgumentList__AddArgument(auStack_230,&stack0x0000001c);
+          CArgumentList__AddArgument(auStack_230,param_3);
+          lVar1 = XMsgInProcessCall(0xfc,0x58044,local_244,auStack_230);
+          if (-1 < lVar1) {
+            XamFree(local_250);
+            goto LAB_828b9364;
+          }
+        }
+      }
+    }
+  }
+  if (local_250 != 0) {
+    XamFree();
+  }
+  SetLastError((DWORD)lVar1);
+  uVar2 = 0x65b;
+LAB_828b9364:
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 828B9370  XStorageDownloadToMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:927)
 
-void XStorageDownloadToMemory(void)
+void XStorageDownloadToMemory
+               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  size_t sVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_00000024;
+  uint local_2b0;
+  uint local_2ac;
+  int local_2a8;
+  uint local_2a4;
+  undefined4 local_2a0;
+  undefined4 local_29c;
+  undefined4 local_298;
+  int local_294;
+  longlong local_290 [6];
+  undefined1 auStack_260 [512];
+  undefined4 local_60;
+  
+  in_stack_00000014 = __savegprlr_23();
+  local_60 = 0;
+  local_2a8 = 0;
+  local_2ac = 0;
+  in_stack_00000024 = param_3;
+  iVar1 = XLookupSchemaIndexFromOrdinal(0xd01,&local_2b0);
+  if ((-1 < iVar1) && (iVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,0,0), -1 < iVar1))
+  {
+    uVar3 = (ulonglong)local_2ac;
+    iVar1 = XLookupSchemaIndexFromOrdinal(0xc01,&local_2b0);
+    if ((-1 < iVar1) && (iVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,0,0), -1 < iVar1)
+       ) {
+      uVar4 = (ulonglong)local_2ac;
+      iVar1 = XLookupSchemaIndexFromOrdinal(0xe01,&local_2b0);
+      if ((-1 < iVar1) &&
+         (iVar1 = XOnlinepGetContextSize(local_2b0,0,3,0x100,&local_2ac,0,0), -1 < iVar1)) {
+        lVar5 = uVar3 + 0x1c0 + uVar4 + (ulonglong)local_2ac;
+        iVar1 = XLookupSchemaIndexFromOrdinal(0xe11,&local_2b0);
+        if ((-1 < iVar1) &&
+           ((iVar1 = XOnlinepGetContextSize(local_2b0,5,0,lVar5,&local_2ac,0,0), -1 < iVar1 &&
+            (iVar1 = XamAlloc(0,local_2ac,&local_2a8), -1 < iVar1)))) {
+          sVar2 = wcslen((wchar_t *)param_2);
+          local_294 = sVar2 + 1;
+          local_29c = (undefined4)param_4;
+          iVar1 = XOnlineSetupUserBuffer
+                            (0xe11,local_2b0,5,lVar5,local_2a8,local_2ac,param_6,param_5);
+          if (-1 < iVar1) {
+            CArgumentList__AddArgument(auStack_260,&stack0x00000014);
+            CArgumentList__AddArgument(auStack_260,param_2);
+            CArgumentList__AddArgument(auStack_260,&stack0x00000024);
+            CArgumentList__AddArgument(auStack_260,param_4);
+            CArgumentList__AddArgument(auStack_260,&local_294);
+            CArgumentList__AddArgument(auStack_260,&local_29c);
+            iVar1 = XOnlineMarshalArguments(0,0,local_2b0,5,0,auStack_260,local_298,&local_2a0);
+            if (-1 < iVar1) {
+              *(undefined4 *)(local_2a4 + 0x1c) = local_2a0;
+              local_290[1] = 0;
+              local_290[2] = 0;
+              local_290[3] = 0;
+              local_290[4] = 0;
+              local_290[0] = (ulonglong)local_2a4 << 0x20;
+              iVar1 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,param_7,local_290,0x28);
+              if (-1 < iVar1) {
+                if ((param_7 & 0xffffffff) == 0) {
+                  lVar5 = RtlGetLastError();
+                  uVar3 = -(ulonglong)(lVar5 != 0) & 0x65b;
+                }
+                else {
+                  uVar3 = 0x3e5;
+                }
+                goto LAB_828b9640;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  uVar3 = 0x65b;
+  if ((param_7 & 0xffffffff) == 0) {
+    RtlSetLastError();
+  }
+  else {
+    *(int *)((int)param_7 + 0x18) = iVar1;
+  }
+  if (local_2a8 != 0) {
+    XamFree();
+  }
+LAB_828b9640:
+  __restgprlr_23(uVar3);
+  return;
 }
 
 
 // 828B9650  XStringVerify  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1400)
 
-void XStringVerify(void)
+void XStringVerify(undefined8 param_1,longlong param_2,undefined4 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  char *pcVar3;
+  longlong lVar2;
+  ulonglong uVar4;
+  undefined4 in_stack_00000014;
+  undefined4 in_stack_00000024;
+  uint local_2a0;
+  short local_29c [2];
+  undefined4 local_298;
+  undefined2 local_294 [2];
+  int local_290;
+  undefined4 local_28c;
+  uint local_288;
+  undefined4 local_284;
+  undefined4 local_280 [4];
+  longlong local_270 [6];
+  undefined1 auStack_240 [512];
+  undefined4 local_40;
+  
+  in_stack_00000014 = __savegprlr_26();
+  local_40 = 0;
+  local_290 = 0;
+  local_298 = 0;
+  in_stack_00000024 = param_3;
+  iVar1 = XLookupSchemaIndexFromOrdinal(0x801,&local_2a0);
+  if ((-1 < iVar1) && (iVar1 = XOnlinepGetContextSize(local_2a0,0,0,0,&local_298,0,0), -1 < iVar1))
+  {
+    iVar1 = XamAlloc(0,local_298,&local_290);
+    if (-1 < iVar1) {
+      local_280[0] = XNetLogonGetTitleID(2);
+      lVar2 = param_2;
+      do {
+        pcVar3 = (char *)lVar2;
+        lVar2 = lVar2 + 1;
+      } while (*pcVar3 != '\0');
+      local_29c[0] = ((short)lVar2 - (short)param_2) + -1;
+      local_294[0] = (undefined2)in_stack_00000024;
+      iVar1 = XOnlineSetupUserBuffer(0x801,local_2a0,0,0,local_290,local_298,param_6,param_5);
+      if (-1 < iVar1) {
+        CArgumentList__AddArgument(auStack_240,&stack0x00000014);
+        CArgumentList__AddArgument(auStack_240,param_2);
+        CArgumentList__AddArgument(auStack_240,&stack0x00000024);
+        CArgumentList__AddArgument(auStack_240,param_4);
+        CArgumentList__AddArgument(auStack_240,local_280);
+        CArgumentList__AddArgument(auStack_240,local_29c);
+        CArgumentList__AddArgument(auStack_240,local_294);
+        iVar1 = XOnlineMarshalArguments(0,0,local_2a0,0,0,auStack_240,local_284,&local_28c);
+        if (-1 < iVar1) {
+          *(undefined4 *)(local_288 + 0x1c) = local_28c;
+          local_270[1] = 0;
+          local_270[2] = 0;
+          local_270[3] = 0;
+          local_270[4] = 0;
+          local_270[0] = (ulonglong)local_288 << 0x20;
+          iVar1 = XMsgStartIORequest(0xfc,local_2a0 & 0xffff | 0x50000,param_7,local_270,0x28);
+          if (-1 < iVar1) {
+            if ((param_7 & 0xffffffff) == 0) {
+              lVar2 = RtlGetLastError();
+              uVar4 = -(ulonglong)(lVar2 != 0) & 0x65b;
+            }
+            else {
+              uVar4 = 0x3e5;
+            }
+            goto LAB_828b9880;
+          }
+        }
+      }
+    }
+  }
+  uVar4 = 0x65b;
+  if ((param_7 & 0xffffffff) == 0) {
+    RtlSetLastError();
+  }
+  else {
+    *(int *)((int)param_7 + 0x18) = iVar1;
+  }
+  if (local_290 != 0) {
+    XamFree();
+  }
+LAB_828b9880:
+  __restgprlr_26(uVar4);
+  return;
+}
+
+
+// 828B9890  XUserFindUsers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1639)
+
+void XUserFindUsers(undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4,
+                   undefined8 param_5,ulonglong param_6)
+
+{
+  int iVar2;
+  longlong lVar1;
+  ulonglong uVar3;
+  undefined8 in_stack_00000010;
+  int in_stack_0000001c;
+  uint local_2d0;
+  int local_2cc;
+  undefined4 local_2c8;
+  undefined4 local_2c4;
+  uint local_2c0;
+  undefined4 local_2bc;
+  undefined4 local_2b8;
+  undefined1 auStack_2b4 [4];
+  int local_2b0 [4];
+  undefined1 auStack_2a0 [32];
+  longlong local_280 [6];
+  undefined1 auStack_250 [512];
+  undefined4 local_50;
+  
+  in_stack_00000010 = __savegprlr_25();
+  local_50 = 0;
+  local_2cc = 0;
+  local_2c8 = 0;
+  in_stack_0000001c = param_2;
+  iVar2 = XLookupSchemaIndexFromOrdinal(0xa03,&local_2d0);
+  if ((-1 < iVar2) && (iVar2 = XOnlinepGetContextSize(local_2d0,0,0,0,&local_2c8,0,0), -1 < iVar2))
+  {
+    iVar2 = XamAlloc(0,local_2c8,&local_2cc);
+    if (-1 < iVar2) {
+      local_2bc = 0x429;
+      local_2b0[0] = in_stack_0000001c * 0x18 + 0xc;
+      iVar2 = XMsgInProcessCall(0xfc,0x58017,auStack_2b4,0);
+      if (-1 < iVar2) {
+        XOnlinepGetSgaddrForMarshalling(auStack_2a0);
+        iVar2 = XOnlineSetupUserBuffer(0xa03,local_2d0,0,0,local_2cc,local_2c8,param_5,param_4);
+        if (-1 < iVar2) {
+          CArgumentList__AddArgument(auStack_250,&stack0x00000010);
+          CArgumentList__AddArgument(auStack_250,&stack0x0000001c);
+          CArgumentList__AddArgument(auStack_250,param_3);
+          CArgumentList__AddArgument(auStack_250,&local_2bc);
+          CArgumentList__AddArgument(auStack_250,local_2b0);
+          CArgumentList__AddArgument(auStack_250,auStack_2b4);
+          CArgumentList__AddArgument(auStack_250,auStack_2a0);
+          iVar2 = XOnlineMarshalArguments(0,0,local_2d0,0,0,auStack_250,local_2b8,&local_2c4);
+          if (-1 < iVar2) {
+            *(undefined4 *)(local_2c0 + 0x1c) = local_2c4;
+            local_280[1] = 0;
+            local_280[2] = 0;
+            local_280[3] = 0;
+            local_280[4] = 0;
+            local_280[0] = (ulonglong)local_2c0 << 0x20;
+            iVar2 = XMsgStartIORequest(0xfc,local_2d0 & 0xffff | 0x50000,param_6,local_280,0x28);
+            if (-1 < iVar2) {
+              if ((param_6 & 0xffffffff) == 0) {
+                lVar1 = RtlGetLastError();
+                uVar3 = -(ulonglong)(lVar1 != 0) & 0x65b;
+              }
+              else {
+                uVar3 = 0x3e5;
+              }
+              goto LAB_828b9ac8;
+            }
+          }
+        }
+      }
+    }
+  }
+  uVar3 = 0x65b;
+  if ((param_6 & 0xffffffff) == 0) {
+    RtlSetLastError();
+  }
+  else {
+    *(int *)((int)param_6 + 0x18) = iVar2;
+  }
+  if (local_2cc != 0) {
+    XamFree();
+  }
+LAB_828b9ac8:
+  __restgprlr_25(uVar3);
+  return;
+}
+
+
+// 828B9AD8  _XAccountGetUserInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1897)
+
+void _XAccountGetUserInfo
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  int iVar2;
+  longlong lVar1;
+  ulonglong uVar3;
+  undefined4 in_stack_00000014;
+  uint local_2b0;
+  int local_2ac;
+  undefined4 local_2a8;
+  undefined4 local_2a4;
+  uint local_2a0;
+  undefined4 local_29c;
+  undefined4 local_298;
+  undefined1 auStack_290 [8];
+  undefined1 auStack_288 [8];
+  undefined1 auStack_280 [16];
+  longlong local_270 [6];
+  undefined1 auStack_240 [512];
+  undefined4 local_40;
+  
+  in_stack_00000014 = __savegprlr_27();
+  local_40 = 0;
+  local_2ac = 0;
+  local_2a8 = 0;
+  iVar2 = XLookupSchemaIndexFromOrdinal(0x604,&local_2b0);
+  if ((-1 < iVar2) && (iVar2 = XOnlinepGetContextSize(local_2b0,0,0,0,&local_2a8,0,0), -1 < iVar2))
+  {
+    iVar2 = XamAlloc(0,local_2a8,&local_2ac);
+    if (-1 < iVar2) {
+      local_29c = XNetLogonGetTitleID(5);
+      iVar2 = XamUserGetXUID(in_stack_00000014,2,auStack_290);
+      if ((-1 < iVar2) && (iVar2 = XNetLogonGetMachineID(auStack_288), -1 < iVar2)) {
+        iVar2 = _XAccountGetUserInfoCheck();
+        if (-1 < iVar2) {
+          iVar2 = XOnlineSetupUserBuffer(0x604,local_2b0,0,0,local_2ac,local_2a8,param_3,param_2);
+          if (-1 < iVar2) {
+            CArgumentList__AddArgument(auStack_240,&stack0x00000014);
+            CArgumentList__AddArgument(auStack_240,auStack_290);
+            CArgumentList__AddArgument(auStack_240,auStack_288);
+            CArgumentList__AddArgument(auStack_240,&local_29c);
+            CArgumentList__AddArgument(auStack_240,auStack_280);
+            iVar2 = XOnlineMarshalArguments(0,0,local_2b0,0,0,auStack_240,local_298,&local_2a4);
+            if (-1 < iVar2) {
+              *(undefined4 *)(local_2a0 + 0x1c) = local_2a4;
+              local_270[1] = 0;
+              local_270[2] = 0;
+              local_270[3] = 0;
+              local_270[4] = 0;
+              local_270[0] = (ulonglong)local_2a0 << 0x20;
+              iVar2 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,param_4,local_270,0x28);
+              if (-1 < iVar2) {
+                if ((param_4 & 0xffffffff) == 0) {
+                  lVar1 = RtlGetLastError();
+                  uVar3 = -(ulonglong)(lVar1 != 0) & 0x65b;
+                }
+                else {
+                  uVar3 = 0x3e5;
+                }
+                goto LAB_828b9cf0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  uVar3 = 0x65b;
+  if ((param_4 & 0xffffffff) == 0) {
+    RtlSetLastError();
+  }
+  else {
+    *(int *)((int)param_4 + 0x18) = iVar2;
+  }
+  if (local_2ac != 0) {
+    XamFree();
+  }
+LAB_828b9cf0:
+  __restgprlr_27(uVar3);
+  return;
 }
 

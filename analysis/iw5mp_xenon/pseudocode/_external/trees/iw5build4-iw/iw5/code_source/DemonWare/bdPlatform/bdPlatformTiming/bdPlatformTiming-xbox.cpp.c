@@ -14,10 +14,19 @@ LARGE_INTEGER bdPlatformTiming__getHiResTimeStamp(void)
 
 // 828F4CC0  bdPlatformTiming::getElapsedTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformtiming/bdplatformtiming-xbox.cpp:21)
 
-void bdPlatformTiming__getElapsedTime(void)
+void bdPlatformTiming__getElapsedTime(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  double dVar2;
+  
+  lVar1 = __savegprlr_28();
+  if (DAT_84895d68 == '\0') {
+    QueryPerformanceFrequency((LARGE_INTEGER *)&DAT_84895d60);
+    DAT_84895d68 = '\x01';
+  }
+  dVar2 = (double)__u64tod(param_2 - lVar1);
+  __restgprlr_28((double)((float)dVar2 / (float)DAT_84895d60));
+  return;
 }
 

@@ -2,11 +2,38 @@
 
 // 8275C848  R_DObjCalcPose  (gfx_d3d/r_model_pose.cpp:35)
 
-void R_DObjCalcPose(void)
+void R_DObjCalcPose(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821c9db8,0x27,0,0xffffffff82000f98,0xffffffff82016400);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821c9db8,0x28,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  local_50 = *param_3;
+  local_4c = param_3[1];
+  local_48 = param_3[2];
+  local_44 = param_3[3];
+  local_40 = param_3[4];
+  local_3c = param_3[5];
+  DObjLock(param_2);
+  Profile_Begin(0x139);
+  uVar1 = CG_DObjCalcPose(*(undefined4 *)(iVar2 + 0x70),param_2,&local_50);
+  Profile_EndInternal(0);
+  DObjUnlock(param_2);
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -16,7 +43,6 @@ void R_SetNoDraw(int param_1)
 
 {
   if (*(int *)(param_1 + 0x28) != 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821c9db8,0x4a,0,0xffffffff821bc2dc,0xffffffff821c9dfc,
                     *(undefined4 *)(param_1 + 0x28));
   }
@@ -105,7 +131,20 @@ void R_UpdateSceneEntBounds(void)
 void R_UpdateGfxEntityBoundsCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar2;
+  int local_30;
+  undefined1 auStack_2c [44];
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821c9db8,0x177,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  iVar2 = R_UpdateSceneEntBounds(*puVar1,&local_30,auStack_2c,0);
+  if ((iVar2 != 0) && (local_30 == 0)) {
+    MyAssertHandler(0xffffffff821c9db8,0x17e,0,0xffffffff82000f98,0xffffffff821bc334);
+  }
+  __restgprlr_29();
+  return;
 }
 

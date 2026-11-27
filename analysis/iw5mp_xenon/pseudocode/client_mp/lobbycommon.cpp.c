@@ -64,7 +64,6 @@ longlong Lobby_GetMember(ulonglong param_1)
 
 {
   if (0x11 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8203b168,0x49,0,0xffffffff8203b1ac,param_1,0x12);
   }
   return param_1 * 0x150 + -0x7d4b3cd8;
@@ -94,8 +93,15 @@ undefined4 Lobby_GetSearchSession(void)
 void Lobby_GetHostData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  if (DAT_82b4e1c4 == 0) {
+    MyAssertHandler(0xffffffff8203b168,0x5c,0,0xffffffff82000f98,0xffffffff82032564);
+  }
+  if (DAT_82b4e1bc == 0) {
+    MyAssertHandler(0xffffffff8203b168,0x5d,0,0xffffffff82000f98,0xffffffff8203b1ec);
+  }
+  __restgprlr_29(0xffffffff82b4e160);
+  return;
 }
 
 

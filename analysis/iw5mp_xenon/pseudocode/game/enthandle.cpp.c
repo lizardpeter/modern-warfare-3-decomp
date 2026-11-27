@@ -44,8 +44,39 @@ void * EntHandle__Init(void)
 void EntHandle__Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  
   __savegprlr_27();
+  piVar3 = (int *)&DAT_8333db50;
+  if (DAT_8333db40 != 0) {
+    Com_Printf(1,0xffffffff8206b878);
+    uVar5 = 0;
+    lVar4 = 0xfff;
+    do {
+      piVar3 = piVar3 + 2;
+      if (*piVar3 != 0) {
+        Com_Printf(1,0xffffffff8206b874,piVar3);
+        uVar5 = uVar5 + 1;
+      }
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    Com_Printf(1,0xffffffff8206b864);
+    uVar2 = (ulonglong)DAT_8333db40;
+    if ((uVar5 & 0xffffffff) != uVar2) {
+      uVar1 = va(0xffffffff8206b81c,uVar5,uVar2);
+      MyAssertHandler(0xffffffff8206b824,0x67,0,0xffffffff820011f4,0xffffffff8206b7f8,uVar1);
+      uVar2 = (ulonglong)DAT_8333db40;
+    }
+    if (uVar2 != 0) {
+      MyAssertHandler(0xffffffff8206b824,0x68,0,0xffffffff8206b7c8,0xffffffff8206b7e4);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -75,14 +106,12 @@ void EntHandleDissociateInternal(void)
       puVar9 = (undefined4 *)(&DAT_8333db50 + iVar6);
       if (*(int *)(&DAT_8333db50 + iVar6) == 0) {
         uVar3 = va(0xffffffff8206b88c,uVar5,puVar9);
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206b824,0x89,0,0xffffffff820011f4,0xffffffff8206b894,uVar3);
       }
       bVar1 = DAT_8333db40 == 0;
       *(undefined4 *)*puVar9 = 0;
       *puVar9 = 0;
       if (bVar1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206b824,0x8e,0,0xffffffff82000f98,0xffffffff8206b8a4);
       }
       uVar5 = (uint)*(ushort *)(&DAT_8333db54 + iVar6);
@@ -97,33 +126,140 @@ void EntHandleDissociateInternal(void)
 }
 
 
-// 82454918  RemoveEntHandleInfo  (game/enthandle.cpp:175)
+// 824548F0  EntHandleDissociate  (game/enthandle.cpp:161)
 
-void RemoveEntHandleInfo(void)
+void EntHandleDissociate(int param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  EntHandleDissociateInternal
+            (((ulonglong)(uint)((param_1 + 0x7cc8c980) / 0x280) & 0x7fffffff) * 2 + -0x7ccc34c0);
+  return;
+}
+
+
+// 82454918  RemoveEntHandleInfo  (game/enthandle.cpp:175)
+
+void RemoveEntHandleInfo(undefined8 param_1,ulonglong param_2)
+
+{
+  ushort uVar1;
+  undefined4 uVar2;
+  ushort *puVar4;
+  undefined8 uVar3;
+  longlong lVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
+  
+  puVar4 = (ushort *)__savegprlr_27();
+  if ((param_2 & 0xffffffff) != 0) {
+    if ((ulonglong)*puVar4 == (param_2 & 0xffffffff)) {
+      *puVar4 = -(ushort)(param_2 != *(ushort *)(&DAT_8333db54 + (int)((param_2 & 0xffffffff) << 3))
+                         ) & *(ushort *)(&DAT_8333db54 + (int)((param_2 & 0xffffffff) << 3));
+    }
+    lVar5 = (param_2 & 0x1fffffff) * 8;
+    lVar6 = lVar5 + -0x7ccc24b0;
+    if (*(int *)(&DAT_8333db50 + (int)lVar5) == 0) {
+      uVar3 = va(0xffffffff8206b88c,param_2,lVar6);
+      MyAssertHandler(0xffffffff8206b824,0xc2,0,0xffffffff820011f4,0xffffffff8206b894,uVar3);
+    }
+    puVar7 = (undefined4 *)lVar6;
+    *puVar7 = 0;
+    if (DAT_8333db40 == 0) {
+      MyAssertHandler(0xffffffff8206b824,0xc4,0,0xffffffff82000f98,0xffffffff8206b8a4);
+    }
+    uVar2 = DAT_8333db44;
+    uVar1 = *(ushort *)((int)puVar7 + 6);
+    DAT_8333db40 = DAT_8333db40 + -1;
+    DAT_8333db44 = (undefined4)param_2;
+    *(ushort *)(&DAT_8333db56 + (uint)*(ushort *)(puVar7 + 1) * 8) = uVar1;
+    *(undefined2 *)(&DAT_8333db54 + (uint)uVar1 * 8) = *(undefined2 *)(puVar7 + 1);
+    *(short *)(puVar7 + 1) = (short)uVar2;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82454A38  AddEntHandleInfo  (game/enthandle.cpp:213)
 
-void AddEntHandleInfo(void)
+void AddEntHandleInfo(undefined8 param_1,undefined4 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort uVar1;
+  undefined2 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  ushort *puVar6;
+  ushort uVar7;
+  
+  puVar6 = (ushort *)__savegprlr_28();
+  iVar5 = DAT_8333db44;
+  if (DAT_8333db44 == 0) {
+    Com_Error(1,0xffffffff8206b8b4);
+  }
+  iVar3 = iVar5 * 8;
+  DAT_8333db40 = DAT_8333db40 + 1;
+  DAT_8333db44 = (uint)*(ushort *)(&DAT_8333db54 + iVar3);
+  if (DAT_8333db48 < DAT_8333db40) {
+    DAT_8333db48 = DAT_8333db40;
+  }
+  *(undefined4 *)(&DAT_8333db50 + iVar3) = param_2;
+  uVar1 = *puVar6;
+  uVar7 = (ushort)iVar5;
+  if (uVar1 != 0) {
+    iVar4 = (uint)uVar1 * 8;
+    uVar2 = *(undefined2 *)(&DAT_8333db54 + iVar4);
+    *(ushort *)(&DAT_8333db56 + iVar3) = uVar1;
+    *(undefined2 *)(&DAT_8333db54 + iVar3) = uVar2;
+    *(ushort *)(&DAT_8333db56 + (uint)*(ushort *)(&DAT_8333db54 + iVar4) * 8) = uVar7;
+    *(ushort *)(&DAT_8333db54 + iVar4) = uVar7;
+    __restgprlr_28(iVar5);
+    return;
+  }
+  *(ushort *)(&DAT_8333db54 + iVar3) = uVar7;
+  *(ushort *)(&DAT_8333db56 + iVar3) = uVar7;
+  *puVar6 = uVar7;
+  __restgprlr_28(iVar5);
+  return;
 }
 
 
 // 82454B08  EntHandle::setEnt  (game/enthandle.cpp:257)
 
-void EntHandle__setEnt(void)
+void EntHandle__setEnt(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  short *psVar3;
+  int iVar4;
+  ulonglong uVar2;
+  short sVar5;
+  
+  psVar3 = (short *)__savegprlr_27();
+  iVar4 = EntHandle__isDefined();
+  if (iVar4 == 0) {
+    if ((param_2 & 0xffffffff) == 0) goto LAB_82454bac;
+  }
+  else {
+    uVar2 = EntHandle__ent(psVar3);
+    if ((param_2 & 0xffffffff) == (uVar2 & 0xffffffff)) goto LAB_82454bac;
+    RemoveEntHandleInfo(((ulonglong)(uint)(((int)uVar2 + 0x7cc8c980) / 0x280) & 0x7fffffff) * 2 +
+                        -0x7ccc34c0,psVar3[1]);
+    if ((param_2 & 0xffffffff) == 0) {
+      *psVar3 = 0;
+      psVar3[1] = 0;
+      __restgprlr_27();
+      return;
+    }
+  }
+  uVar1 = ((int)param_2 + 0x7cc8c980) / 0x280;
+  sVar5 = AddEntHandleInfo(((ulonglong)uVar1 & 0x7fffffff) * 2 + -0x7ccc34c0,psVar3);
+  psVar3[1] = sVar5;
+  *psVar3 = (short)uVar1 + 1;
+LAB_82454bac:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -136,7 +272,6 @@ bool EntHandle__isDefined(ushort *param_1)
   
   uVar1 = (uint)*param_1;
   if ((uVar1 != 0) && ((&DAT_83373503)[uVar1 * 0x280] == '\0')) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206b6f8,0x186,0,0xffffffff8206b6b0,0xffffffff8206b6c8,uVar1 - 1);
   }
   return *param_1 != 0;
@@ -148,7 +283,16 @@ bool EntHandle__isDefined(ushort *param_1)
 void EntHandle__ent(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ushort *puVar1;
+  
+  puVar1 = (ushort *)__savegprlr_29();
+  if (0x7fe < ((ulonglong)*puVar1 - 1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8206b6f8,0x18e,0,0xffffffff8206b75c,(ulonglong)*puVar1 - 1,0x7ff);
+  }
+  if ((&DAT_83373503)[(uint)*puVar1 * 0x280] == '\0') {
+    MyAssertHandler(0xffffffff8206b6f8,400,0,0xffffffff8206b6b0,0xffffffff8206b738,*puVar1 - 1);
+  }
+  __restgprlr_29((ulonglong)*puVar1 * 0x280 + -0x7cc8cc00);
+  return;
 }
 

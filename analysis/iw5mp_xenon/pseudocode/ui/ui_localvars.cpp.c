@@ -69,7 +69,6 @@ void UILocalVar_FreeString(int *param_1)
 
 {
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
   }
   if (*param_1 == 2) {
@@ -79,43 +78,189 @@ void UILocalVar_FreeString(int *param_1)
 }
 
 
+// 825A3F98  UILocalVar_Init  (ui/ui_localvars.cpp:72)
+
+void UILocalVar_Init(int param_1)
+
+{
+  if (param_1 != 0) {
+    return;
+  }
+  MyAssertHandler(0xffffffff8216a794,0x49,0,0xffffffff82000f98,0xffffffff820653c8);
+  return;
+}
+
+
 // 825A3FC8  UILocalVar_Shutdown  (ui/ui_localvars.cpp:78)
 
 void UILocalVar_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  void *pvVar1;
+  longlong lVar2;
+  int *piVar3;
+  
+  pvVar1 = (void *)__savegprlr_26();
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x51,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  piVar3 = (int *)((int)pvVar1 + 4);
+  lVar2 = 0x200;
+  do {
+    if (*piVar3 != 0) {
+      if (piVar3 == (int *)0x4) {
+        MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+      }
+      if (piVar3[-1] == 2) {
+        FreeString(piVar3[1],0x23);
+      }
+      FreeString(*piVar3,0x23);
+    }
+    lVar2 = lVar2 + -1;
+    piVar3 = piVar3 + 3;
+  } while (lVar2 != 0);
+  pvVar1 = memset(pvVar1,0,0x1800);
+  __restgprlr_26(pvVar1);
+  return;
+}
+
+
+// 825A4B08  UILocalVar_HashName  (ui/ui_localvars.cpp:97)
+
+ulonglong UILocalVar_HashName(char *param_1)
+
+{
+  longlong lVar1;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  int iVar5;
+  
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x65,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  uVar4 = 0;
+  iVar5 = (int)*param_1;
+  if (*param_1 != '\0') {
+    iVar2 = 0x77 - (int)param_1;
+    do {
+      pcVar3 = param_1 + iVar2;
+      param_1 = param_1 + 1;
+      lVar1 = (longlong)iVar5;
+      iVar5 = (int)*param_1;
+      uVar4 = (int)pcVar3 * lVar1 + uVar4;
+    } while (iVar5 != 0);
+  }
+  return ((uVar4 & 0xffffffff) >> 8) + uVar4 & 0x1ff;
 }
 
 
 // 825A4090  UILocalVar_FindLocation  (ui/ui_localvars.cpp:113)
 
-void UILocalVar_FindLocation(void)
+void UILocalVar_FindLocation(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  char *pcVar6;
+  char *pcVar7;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x75,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x76,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x77,0,0xffffffff82000f98,0xffffffff8216a7d8);
+  }
+  uVar3 = UILocalVar_HashName(param_2);
+  uVar4 = uVar3;
+  do {
+    pcVar7 = *(char **)(uVar4 * 0xc + iVar2 + 4);
+    uVar5 = param_2;
+    if (pcVar7 == (char *)0x0) break;
+    do {
+      cVar1 = *pcVar7;
+      pcVar6 = (char *)uVar5;
+      if (cVar1 == '\0') break;
+      pcVar7 = pcVar7 + 1;
+      uVar5 = uVar5 + 1;
+    } while (cVar1 == *pcVar6);
+    if (cVar1 == *pcVar6) {
+      *(uint *)param_3 = uVar4;
+      __restgprlr_27(1);
+      return;
+    }
+    uVar4 = uVar4 + 1 & 0x1ff;
+  } while (uVar4 != uVar3);
+  *(uint *)param_3 = uVar4;
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 825A41B0  UILocalVar_Find  (ui/ui_localvars.cpp:143)
 
-void UILocalVar_Find(void)
+void UILocalVar_Find(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  char cVar2;
+  uint local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x92,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x93,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  cVar2 = UILocalVar_FindLocation(uVar1,param_2,local_30);
+  if (cVar2 != '\0') {
+    __restgprlr_28(((ulonglong)local_30[0] + ((ulonglong)local_30[0] & 0x7fffffff) * 2 & 0x3fffffff)
+                   * 4 + uVar1);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 825A4260  UILocalVar_FindOrCreate  (ui/ui_localvars.cpp:156)
 
-void UILocalVar_FindOrCreate(void)
+void UILocalVar_FindOrCreate(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar3;
+  undefined4 uVar2;
+  undefined4 *puVar4;
+  uint local_30 [12];
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8216a794,0xa0,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0xa1,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  cVar3 = UILocalVar_FindLocation(iVar1,param_2,local_30);
+  if (cVar3 != '\0') {
+    __restgprlr_28(local_30[0] * 0xc + iVar1);
+    return;
+  }
+  puVar4 = (undefined4 *)(local_30[0] * 0xc + iVar1);
+  uVar2 = CopyString(param_2,0xffffffff8216a7e4,0x23);
+  puVar4[1] = uVar2;
+  *puVar4 = 0;
+  puVar4[2] = 0;
+  __restgprlr_28(puVar4);
+  return;
 }
 
 
@@ -128,7 +273,6 @@ bool UILocalVar_GetBool(int *param_1)
   bool bVar2;
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216a794,0xb0,0,0xffffffff82000f98,0xffffffff8216a7d4);
   }
   iVar1 = *param_1;
@@ -140,7 +284,6 @@ bool UILocalVar_GetBool(int *param_1)
   }
   else {
     if (iVar1 != 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8216a794,0xbb,0,0xffffffff8216a7fc,iVar1,2);
     }
     iVar1 = atoi((char *)param_1[2]);
@@ -159,7 +302,6 @@ ulonglong UILocalVar_GetInt(int *param_1)
   ulonglong uVar1;
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216a794,0xc3,0,0xffffffff82000f98,0xffffffff8216a7d4);
   }
   iVar2 = *param_1;
@@ -171,7 +313,6 @@ ulonglong UILocalVar_GetInt(int *param_1)
   }
   else {
     if (iVar2 != 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8216a794,0xce,0,0xffffffff8216a7fc,iVar2,2);
     }
     iVar2 = atoi((char *)param_1[2]);
@@ -190,7 +331,6 @@ double UILocalVar_GetFloat(int *param_1)
   double dVar2;
   
   if (param_1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216a794,0xd6,0,0xffffffff82000f98,0xffffffff8216a7d4);
   }
   iVar1 = *param_1;
@@ -202,7 +342,6 @@ double UILocalVar_GetFloat(int *param_1)
   }
   else {
     if (iVar1 != 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8216a794,0xe1,0,0xffffffff8216a7fc,iVar1,2);
     }
     dVar2 = atof((char *)param_1[2]);
@@ -214,41 +353,108 @@ double UILocalVar_GetFloat(int *param_1)
 
 // 825A4598  UILocalVar_GetString  (ui/ui_localvars.cpp:232)
 
-void UILocalVar_GetString(void)
+void UILocalVar_GetString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0xe9,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  }
+  iVar1 = *piVar2;
+  if (iVar1 != 0) {
+    if (iVar1 != 1) {
+      if (iVar1 != 2) {
+        MyAssertHandler(0xffffffff8216a794,0xf6,0,0xffffffff8216a7fc,iVar1,2);
+      }
+      __restgprlr_28(piVar2[2]);
+      return;
+    }
+    Com_sprintf(param_2,param_3,0xffffffff820181dc,(double)(float)piVar2[2]);
+    __restgprlr_28(param_2);
+    return;
+  }
+  Com_sprintf(param_2,param_3,0xffffffff8200c28c,piVar2[2]);
+  __restgprlr_28(param_2);
+  return;
 }
 
 
 // 825A4670  UILocalVar_GetStringByName  (ui/ui_localvars.cpp:253)
 
-void UILocalVar_GetStringByName(void)
+void UILocalVar_GetStringByName
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x100,0,0xffffffff82000f98,0xffffffff820653c8);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x101,0,0xffffffff82000f98,0xffffffff8216a87c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8216a794,0x102,0,0xffffffff82000f98,0xffffffff8216a870);
+  }
+  uVar1 = UILocalVar_Find(uVar1,param_2);
+  if ((uVar1 & 0xffffffff) == 0) {
+    Com_PrintWarning(0xd,0xffffffff8216a828,param_2);
+    __restgprlr_26(0xffffffff820068af);
+    return;
+  }
+  UILocalVar_GetString(uVar1,param_3,param_4);
+  __restgprlr_26();
+  return;
 }
 
 
 // 825A4758  UILocalVar_SetBool  (ui/ui_localvars.cpp:272)
 
-void UILocalVar_SetBool(void)
+void UILocalVar_SetBool(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x113,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  }
+  if (*piVar1 == 2) {
+    FreeString(piVar1[2],0x23);
+  }
+  *piVar1 = 0;
+  piVar1[2] = param_2 & 0xff;
+  UI_IncExpressionExecuteTime();
+  __restgprlr_27();
+  return;
 }
 
 
 // 825A47F0  UILocalVar_SetInt  (ui/ui_localvars.cpp:288)
 
-void UILocalVar_SetInt(void)
+void UILocalVar_SetInt(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x123,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  }
+  if (*piVar1 == 2) {
+    FreeString(piVar1[2],0x23);
+  }
+  piVar1[2] = param_2;
+  *piVar1 = 0;
+  UI_IncExpressionExecuteTime();
+  __restgprlr_27();
+  return;
 }
 
 
@@ -257,17 +463,48 @@ void UILocalVar_SetInt(void)
 void UILocalVar_SetFloat(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  double extraout_f1;
+  double dVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  dVar2 = extraout_f1;
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x133,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  }
+  if (*piVar1 == 2) {
+    FreeString(piVar1[2],0x23);
+  }
+  piVar1[2] = (int)(float)dVar2;
+  *piVar1 = 1;
+  UI_IncExpressionExecuteTime();
+  __restgprlr_28();
+  return;
 }
 
 
 // 825A4928  UILocalVar_SetString  (ui/ui_localvars.cpp:320)
 
-void UILocalVar_SetString(void)
+void UILocalVar_SetString(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int iVar2;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff8216a794,0x143,0,0xffffffff82000f98,0xffffffff8216a7d4);
+    MyAssertHandler(0xffffffff8216a794,0x40,0,0xffffffff82000f98,0xffffffff8216a7d4);
+  }
+  if (*piVar1 == 2) {
+    FreeString(piVar1[2],0x23);
+  }
+  *piVar1 = 2;
+  iVar2 = CopyString(param_2,0xffffffff8216a884,0x23);
+  piVar1[2] = iVar2;
+  UI_IncExpressionExecuteTime();
+  __restgprlr_27();
+  return;
 }
 

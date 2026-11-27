@@ -16,8 +16,22 @@ void DB_FileReadCompletion(longlong param_1,uint param_2)
 void DB_FinishLoadXFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_28();
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xb3,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff82059680,0xb5,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xb8,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  DAT_82cc5c80 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -26,8 +40,98 @@ void DB_FinishLoadXFile(void)
 void DB_ReadXFileStage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  int iVar2;
+  void *pvVar3;
+  BOOL BVar4;
+  DWORD DVar5;
+  size_t _Size;
+  ulonglong uVar6;
+  
   __savegprlr_26();
+  if (DAT_82c45b94 != 0) {
+    MyAssertHandler(0xffffffff82059680,0xcb,0,0xffffffff82000f98,0xffffffff82059764);
+  }
+  if (DAT_82cc5c80 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0xcc,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  if (DAT_82cc5c88 == 0) {
+    MyAssertHandler(0xffffffff82059680,0xcd,0,0xffffffff82000f98,0xffffffff82059754);
+  }
+  iVar2 = R_HasDeviceOwnership();
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff82059680,0xcf,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  Sys_WaitDatabaseThread();
+  uVar6 = (ulonglong)DAT_82cc5c88;
+  if ((int)DAT_82cc5c88 < 0x40001) {
+    if (DAT_82cc5c88 == 0) {
+      MyAssertHandler(0xffffffff82059680,0xd9,0,0xffffffff82000f98,0xffffffff82059748);
+    }
+  }
+  else {
+    uVar6 = 0x40000;
+  }
+  DVar5 = (DWORD)uVar6;
+  if (*DAT_82cc5c80 == 0) {
+    if (DAT_82cc5c80[2] == 0) {
+      MyAssertHandler(0xffffffff82059680,0xde,0,0xffffffff82000f98,0xffffffff8205972c);
+    }
+    DAT_82cc5cac = 0;
+    uVar1 = DAT_82cc5c80[1];
+    if ((ulonglong)uVar1 == 0) {
+      DAT_82cc5c8c = 0;
+      __restgprlr_26();
+      return;
+    }
+    if ((int)uVar1 < (int)DVar5) {
+      uVar6 = (ulonglong)uVar1;
+    }
+    _Size = (size_t)uVar6;
+    pvVar3 = memcpy(DAT_82cc5c84,(void *)DAT_82cc5c80[2],_Size);
+    DAT_82c45b94 = 2;
+    DAT_82cc5c80[2] = DAT_82cc5c80[2] + _Size;
+    DAT_82cc5c80[1] = DAT_82cc5c80[1] - _Size;
+    DAT_82cc5c8c = _Size;
+    __restgprlr_26(pvVar3);
+    return;
+  }
+  DAT_82cc5c98 = 0;
+  DAT_82cc5c9c = 0;
+  DAT_82cc5ca4 = 0;
+  DAT_82cc5ca8 = 0;
+  DAT_82cc5ca0 = DAT_82cc5c90;
+  iVar2 = R_HasDeviceOwnership();
+  if (iVar2 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x123,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  Sys_WaitFileRead();
+  if (*DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x128,0,0xffffffff82000f98,0xffffffff82059710);
+  }
+  DAT_82c45b98 = DAT_82cc5c90 + DVar5;
+  DAT_82c45b80 = DAT_82cc5c80;
+  PIXBeginNamedEvent_Copy_VarArgs
+            (0xffffffffffffffff,0xffffffff820596fc,(ulonglong)DAT_82cc5ca0,DAT_82cc5ca0 + uVar6);
+  if (((uint)DAT_82cc5c84 & 3) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x130,0,0xffffffff82000f98,0xffffffff820596dc);
+  }
+  BVar4 = ReadFileEx((HANDLE)*DAT_82cc5c80,DAT_82cc5c84,DVar5,(LPOVERLAPPED)&DAT_82cc5c98,
+                     DB_FileReadCompletion);
+  PIXEndNamedEvent();
+  if (BVar4 == 0) {
+    DVar5 = GetLastError();
+    if (DVar5 != 0x26) {
+      Sys_Error(0xffffffff820596c4,DAT_82cc5c80 + 3);
+      __restgprlr_26();
+      return;
+    }
+  }
+  else {
+    DAT_82c45b94 = 1;
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -54,8 +158,53 @@ void DB_WaitXFileStageInternal(void)
 void DB_WaitXFileStage(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  
   __savegprlr_27();
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x170,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  if (DAT_82cc5cb4 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x171,0,0xffffffff82000f98,0xffffffff820599b8);
+  }
+  if (DAT_82c45b94 == 0) {
+    Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
+    Content_CheckIfMountedContentPacksAreGone();
+    Sys_Sleep(1000);
+    Content_CheckIfMountedContentPacksAreGone();
+    R_ShowDirtyDiscError();
+  }
+  DB_WaitXFileStageInternal();
+  if (DAT_82cc5cac != 0) {
+    DAT_82cc5c8c = -(uint)(DAT_82cc5cac == 0x26) & DAT_82cc5c8c;
+  }
+  uVar1 = DAT_82cc5c8c;
+  uVar2 = DAT_82cc5c88;
+  if (0x40000 < (int)DAT_82cc5c88) {
+    uVar2 = 0x40000;
+  }
+  if (uVar2 < DAT_82cc5c8c) {
+    MyAssertHandler(0xffffffff82059680,0x1cd,0,0xffffffff82000f98,0xffffffff82059978);
+  }
+  DAT_82cc5c90 = DAT_82cc5c90 + uVar1;
+  DAT_82cc5c88 = DAT_82cc5c88 - 0x40000;
+  if (uVar1 != 0x40000) {
+    DAT_82cc5c88 = 0;
+  }
+  DAT_82cc5c94 = (int)DAT_82cc5c84;
+  DAT_82cc5cb0 = (int)DAT_82cc5c84;
+  DAT_82cc5c84 = (undefined4 *)((int)DAT_82cc5c84 + 0x40000);
+  if (DAT_82cc5c84 == &DAT_82cc5c80) {
+    DAT_82cc5c84 = (undefined4 *)&DAT_82c45c80;
+  }
+  DAT_82c45b90 = DAT_82c45b90 + DAT_82c45b8c;
+  if (0x1fffffff < DAT_82c45b90) {
+    DAT_82c45b8c = 0;
+  }
+  DAT_82cc5cb4 = uVar1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -64,8 +213,56 @@ void DB_WaitXFileStage(void)
 void DB_FlushOutstandingRead(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar2;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar2 = __savegprlr_29();
+  if (DAT_82c45b94 == 1) {
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_82c45b88 = storeWordConditionalIndexed((ulonglong)DAT_82c45b88 + 1,0,0xffffffff82c45b88)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 + 1,0,0xffffffff832ee080)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    bVar1 = true;
+    while (bVar1) {
+      if (iVar2 != 0) {
+        Sys_LeaveCriticalSection(0x23);
+      }
+      Sys_NotifyDatabase();
+      Sys_Sleep(1);
+      if (iVar2 != 0) {
+        Sys_EnterCriticalSection(0x23);
+      }
+      bVar1 = DAT_82c45b94 == 1;
+    }
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 - 1,0,0xffffffff832ee080)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    do {
+      if (in_RESERVE != '\0') {
+        DAT_82c45b88 = storeWordConditionalIndexed((ulonglong)DAT_82c45b88 - 1,0,0xffffffff82c45b88)
+        ;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -78,7 +275,6 @@ void DB_AbortOutstandingRead(void)
   
   cVar1 = Sys_IsDatabaseThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x205,0,0xffffffff82000f98,0xffffffff82059784);
   }
   DAT_82c45b94 = 0;
@@ -95,13 +291,11 @@ void DB_CheckOutstandingRead(void)
   
   cVar1 = Sys_IsDatabaseThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x20c,0,0xffffffff82000f98,0xffffffff82059784);
   }
   if ((DAT_82c45b88 != 0) && (DAT_82c45b94 == 1)) {
     DB_WaitXFileStageInternal();
     if (DAT_82c45b94 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82059680,0x214,0,0xffffffff8205979c,0xffffffff820597c0,DAT_82c45b94)
       ;
     }
@@ -120,7 +314,6 @@ void DB_ReadNextData(void)
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
   }
   DB_WaitXFileStage();
@@ -141,6 +334,72 @@ undefined4 DB_GetFile(void)
 }
 
 
+// 823A4860  DB_InflateInit  (database/db_file_load.cpp:573)
+
+void DB_InflateInit(undefined8 param_1)
+
+{
+  char *pcVar1;
+  int iVar2;
+  
+  if (DAT_82cc5c80 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x240,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  if (((((int)param_1 != 0) ||
+       (pcVar1 = strstr((char *)(DAT_82cc5c80 + 3),"mychanges"), pcVar1 != (char *)0x0)) ||
+      (iVar2 = I_strncmp(DAT_82cc5c80 + 3,0xffffffff820599d0,4), iVar2 == 0)) ||
+     (*DAT_82cc5c80 == 0)) {
+    DAT_82967310 = 1;
+    iVar2 = DB_AuthLoad_InflateInit(0xffffffff82cc5cb0,param_1,DAT_82cc5c80 + 3);
+    if (iVar2 == 0) {
+      return;
+    }
+  }
+  Com_Printf(8,0xffffffff820597f8,DAT_82cc5c80 + 3);
+  Content_CheckIfMountedContentPacksAreGone();
+  Sys_Sleep(1000);
+  Content_CheckIfMountedContentPacksAreGone();
+  R_ShowDirtyDiscError();
+  return;
+}
+
+
+// 823A4978  DB_InflateInitForceNoSecure  (database/db_file_load.cpp:637)
+
+void DB_InflateInitForceNoSecure(void)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = (ulonglong)DAT_82cc5c80;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x27e,0,0xffffffff82000f98,0xffffffff82059670);
+    uVar2 = (ulonglong)DAT_82cc5c80;
+  }
+  DAT_82967310 = 1;
+  iVar1 = DB_AuthLoad_InflateInit(0xffffffff82cc5cb0,0,uVar2 + 0xc);
+  if (iVar1 != 0) {
+    Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
+    Content_CheckIfMountedContentPacksAreGone();
+    Sys_Sleep(1000);
+    Content_CheckIfMountedContentPacksAreGone();
+    R_ShowDirtyDiscError();
+  }
+  return;
+}
+
+
+// 823A4048  DB_InflateShutdown  (database/db_file_load.cpp:665)
+
+void DB_InflateShutdown(void)
+
+{
+  DB_AuthLoad_InflateEnd(0xffffffff82cc5cb0);
+  return;
+}
+
+
 // 823A4A28  DB_ReadXFileUncompressed  (database/db_file_load.cpp:673)
 
 void DB_ReadXFileUncompressed(undefined8 param_1,ulonglong param_2)
@@ -151,36 +410,32 @@ void DB_ReadXFileUncompressed(undefined8 param_1,ulonglong param_2)
   int iVar3;
   size_t _Size;
   ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  ulonglong uVar5;
   
   uVar1 = __savegprlr_24();
   if ((uint)param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x2a4,0,0xffffffff82000f98,0xffffffff82036204);
   }
   if (DAT_82cc5c80 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x2a6,0,0xffffffff82000f98,0xffffffff82059670);
   }
   if (DAT_82cc5cc0 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x2a7,0,0xffffffff82000f98,0xffffffff82059a78);
   }
   uVar4 = (ulonglong)DAT_82cc5cb4;
   if ((DAT_82cc5c88 + uVar4 & 0xffffffff) < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82059680,0x2a8,0,0xffffffff82000f98,0xffffffff82059a40);
+    uVar4 = (ulonglong)DAT_82cc5cb4;
   }
   DAT_82cc5cbc = (uint)uVar1;
   DAT_82cc5cc0 = (uint)param_2;
   do {
     if (uVar4 != 0) {
-      uVar6 = uVar4;
+      uVar5 = uVar4;
       if ((int)param_2 < (int)uVar4) {
-        uVar6 = param_2;
+        uVar5 = param_2;
       }
-      _Size = (size_t)uVar6;
+      _Size = (size_t)uVar5;
       if ((uVar1 & 0xffffffff) != 0) {
         pvVar2 = memcpy((void *)uVar1,DAT_82cc5cb0,_Size);
         uVar1 = (ulonglong)(int)pvVar2;
@@ -190,25 +445,24 @@ void DB_ReadXFileUncompressed(undefined8 param_1,ulonglong param_2)
       }
       DAT_82cc5cb4 = (int)uVar4 - _Size;
       DAT_82cc5cc0 = (int)param_2 - _Size;
-      lVar5 = ZEXT48(DAT_82cc5cb0) + uVar6;
-      DAT_82cc5cb0 = (void *)lVar5;
+      uVar5 = ZEXT48(DAT_82cc5cb0) + uVar5;
+      DAT_82cc5cb0 = (void *)uVar5;
       if (DAT_82cc5c80 == 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82059680,0x2bd,0,0xffffffff82000f98,0xffffffff82059670);
+        uVar1 = MyAssertHandler(0xffffffff82059680,0x2bd,0,0xffffffff82000f98,0xffffffff82059670);
+        uVar5 = ZEXT48(DAT_82cc5cb0);
       }
-      if (0x40000 < (lVar5 - (ulonglong)DAT_82cc5c94 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82059680,0x2be,0,0xffffffff82000f98,0xffffffff820599e8);
+      if (0x40000 < (uVar5 - DAT_82cc5c94 & 0xffffffff)) {
+        uVar1 = MyAssertHandler(0xffffffff82059680,0x2be,0,0xffffffff82000f98,0xffffffff820599e8);
+        uVar5 = ZEXT48(DAT_82cc5cb0);
       }
       if (DAT_82cc5cc0 == 0) {
-        dataCacheBlockTouch(lVar5 + 0x1ff);
+        dataCacheBlockTouch(uVar5 + 0x1ff);
         __restgprlr_24(uVar1);
         return;
       }
     }
     iVar3 = R_HasDeviceOwnership();
     if (iVar3 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
     }
     DB_WaitXFileStage();
@@ -225,11 +479,67 @@ void DB_ReadXFileUncompressed(undefined8 param_1,ulonglong param_2)
 
 // 823A4C40  DB_ReadXFile  (database/db_file_load.cpp:719)
 
-void DB_ReadXFile(void)
+void DB_ReadXFile(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined4 uVar2;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar4;
+  
+  uVar2 = __savegprlr_18();
+  if (param_2 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x2d2,0,0xffffffff82000f98,0xffffffff82036204);
+  }
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x2d4,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  if (DAT_82cc5cc0 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x2d5,0,0xffffffff82000f98,0xffffffff82059a78);
+  }
+  while( true ) {
+    DAT_82cc5cc0 = param_2;
+    DAT_82cc5cbc = uVar2;
+    uVar1 = DB_AuthLoad_Inflate(0xffffffff82cc5cb0,2,param_3);
+    iVar3 = (int)uVar1;
+    if ((iVar3 != 0) && (iVar3 != 1)) {
+      Com_Printf(8,0xffffffff820597f8,(ulonglong)DAT_82cc5c80 + 0xc);
+      Content_CheckIfMountedContentPacksAreGone();
+      Sys_Sleep(1000);
+      Content_CheckIfMountedContentPacksAreGone();
+      R_ShowDirtyDiscError();
+    }
+    if (DAT_82cc5c80 == 0) {
+      MyAssertHandler(0xffffffff82059680,0x2e1,0,0xffffffff82000f98,0xffffffff82059670);
+    }
+    uVar4 = (ulonglong)DAT_82cc5cb0;
+    if (0x40000 < (uVar4 - DAT_82cc5c94 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82059680,0x2e2,0,0xffffffff82000f98,0xffffffff820599e8);
+      uVar4 = (ulonglong)DAT_82cc5cb0;
+    }
+    if (DAT_82cc5cc0 == 0) break;
+    if (iVar3 != 0) {
+      uVar1 = va(0xffffffff82059a94,(ulonglong)DAT_82cc5c80 + 0xc,uVar1,DAT_82cc5c90,DAT_82cc5c88);
+      MyAssertHandler(0xffffffff82059680,0x2ea,0,0xffffffff820011f4,0xffffffff82059ad0,uVar1);
+    }
+    if (DAT_82cc5cb4 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x2eb,0,0xffffffff82000f98,0xffffffff820599b8);
+    }
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
+      MyAssertHandler(0xffffffff82059680,0x21f,0,0xffffffff82000f98,0xffffffff82059658);
+    }
+    DB_WaitXFileStage();
+    if (DAT_82cc5c88 != 0) {
+      DB_ReadXFileStage();
+    }
+    Sys_YieldWorkerCmd();
+    uVar2 = DAT_82cc5cbc;
+    param_2 = DAT_82cc5cc0;
+  }
+  dataCacheBlockTouch(uVar4 + 0x1ff);
+  __restgprlr_18();
+  return;
 }
 
 
@@ -243,6 +553,61 @@ void DB_DirtyDiscError(void)
   Sys_Sleep(1000);
   Content_CheckIfMountedContentPacksAreGone();
   R_ShowDirtyDiscError();
+  return;
+}
+
+
+// 823A40A8  DB_InitLoadXFile  (database/db_file_load.cpp:955)
+
+void DB_InitLoadXFile(undefined8 param_1,undefined4 param_2)
+
+{
+  int *piVar1;
+  void *pvVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x3bc,0,0xffffffff82000f98,0xffffffff82059864);
+  }
+  if ((piVar1[2] == 0) && (*piVar1 == 0)) {
+    MyAssertHandler(0xffffffff82059680,0x3be,0,0xffffffff82000f98,0xffffffff82059838);
+  }
+  pvVar2 = memset(&DAT_82cc5c80,0,0x6c);
+  DAT_82cc5c88 = 0x7fffffff;
+  DAT_82cc5c84 = &DAT_82c45c80;
+  DAT_82cc5c80 = piVar1;
+  DAT_82cc5c90 = param_2;
+  DB_WaitXFileStageInternal(pvVar2);
+  DB_ReadXFileStage();
+  if (DAT_82c45b94 == 0) {
+    Com_Error(1,0xffffffff82059814,piVar1 + 3);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 823A4198  DB_ReadXFileStageStreaming  (database/db_file_load.cpp:995)
+
+void DB_ReadXFileStageStreaming(void)
+
+{
+  int iVar1;
+  
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x3e4,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  DAT_82cc5c88 = DAT_82cc5ce0;
+  if (DAT_82cc5c90 != DAT_82cc5ce4) {
+    DAT_82cc5c90 = DAT_82cc5ce4;
+    DAT_82cc5ce4 = DAT_82cc5ce4 + DAT_82cc5ce0;
+    DAT_82cc5ce8 = 1;
+    DAT_82cc5ce0 = 0;
+    return;
+  }
+  DAT_82cc5ce4 = DAT_82cc5ce4 + DAT_82cc5ce0;
+  DAT_82cc5ce0 = 0;
   return;
 }
 
@@ -263,13 +628,98 @@ void DB_ReadXFileStageStreaming2(void)
 }
 
 
+// 823A42A8  DB_CheckAvailIn  (database/db_file_load.cpp:1025)
+
+undefined8 DB_CheckAvailIn(void)
+
+{
+  if (DAT_82cc5ce8 == 0) {
+    return 0;
+  }
+  DAT_82cc5ce8 = 0;
+  DAT_82cc5cb4 = 0;
+  return 1;
+}
+
+
+// 823A42E0  DB_PrefetchXFile  (database/db_file_load.cpp:1039)
+
+void DB_PrefetchXFile(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  
+  uVar1 = __savegprlr_25();
+  if ((DAT_82cc5ce4 & 0x7fff) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x410,0,0xffffffff82000f98,0xffffffff82059944);
+  }
+  if ((DAT_82cc5ce0 & 0x7fff) != 0) {
+    MyAssertHandler(0xffffffff82059680,0x411,0,0xffffffff82000f98,0xffffffff82059910);
+  }
+  uVar2 = (ulonglong)DAT_82cc5ce0;
+  uVar3 = (ulonglong)DAT_82cc5ce4;
+  if (uVar2 == 0) {
+    if (((uVar1 & 0xffffffff) <= uVar3) && (uVar3 <= (param_2 & 0xffffffff))) goto LAB_823a43c8;
+    uVar3 = uVar1 & 0xffff8000;
+    DAT_82cc5ce4 = (uint)uVar3;
+  }
+  else {
+    if ((param_2 & 0xffffffff) < uVar3) {
+      MyAssertHandler(0xffffffff82059680,0x41a,0,0xffffffff82000f98,0xffffffff820598e8);
+      uVar3 = (ulonglong)DAT_82cc5ce4;
+      uVar2 = (ulonglong)DAT_82cc5ce0;
+    }
+    if (((param_2 - uVar3) + 0x7fff & 0xffff8000) < uVar2) {
+      MyAssertHandler(0xffffffff82059680,0x41b,0,0xffffffff82000f98,0xffffffff82059870);
+      uVar3 = (ulonglong)DAT_82cc5ce4;
+      uVar2 = (ulonglong)DAT_82cc5ce0;
+    }
+    if ((uVar2 + uVar3 + 0x80000 & 0xffffffff) < (uVar1 & 0xffff8000)) {
+      __restgprlr_25(1);
+      return;
+    }
+  }
+  if ((param_2 & 0xffffffff) < uVar3) {
+    MyAssertHandler(0xffffffff82059680,0x421,0,0xffffffff82000f98,0xffffffff820598e8);
+    uVar3 = (ulonglong)DAT_82cc5ce4;
+    uVar2 = (ulonglong)DAT_82cc5ce0;
+  }
+LAB_823a43c8:
+  uVar4 = (uint)uVar3;
+  if (((param_2 - uVar3) + 0x7fff & 0xffff8000) < uVar2) {
+    MyAssertHandler(0xffffffff82059680,0x422,0,0xffffffff82000f98,0xffffffff82059870);
+    uVar4 = DAT_82cc5ce4;
+  }
+  DAT_82cc5ce0 = ((int)param_2 - uVar4) + 0x7fff & 0xffff8000;
+  __restgprlr_25(0);
+  return;
+}
+
+
 // 823A4490  DB_InitLoadXFileStreaming  (database/db_file_load.cpp:1066)
 
 void DB_InitLoadXFileStreaming(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  void *pvVar2;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82059680,0x42b,0,0xffffffff82000f98,0xffffffff82059864);
+  }
+  if ((piVar1[2] == 0) && (*piVar1 == 0)) {
+    MyAssertHandler(0xffffffff82059680,0x42d,0,0xffffffff82000f98,0xffffffff82059838);
+  }
+  pvVar2 = memset(&DAT_82cc5c80,0,0x6c);
+  DAT_82cc5c90 = 0xffffffff;
+  DAT_82cc5c84 = &DAT_82c45c80;
+  DAT_82cc5c80 = piVar1;
+  __restgprlr_29(pvVar2);
+  return;
 }
 
 
@@ -278,7 +728,57 @@ void DB_InitLoadXFileStreaming(void)
 void DB_FinishLoadXFileStreaming(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  
   __savegprlr_28();
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x43d,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff82059680,0x43e,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  if (DAT_82cc5c80 == 0) {
+    MyAssertHandler(0xffffffff82059680,0x440,0,0xffffffff82000f98,0xffffffff82059670);
+  }
+  DAT_82cc5c80 = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 823A45F0  DB_GetLoadOffset  (database/db_file_load.cpp:1094)
+
+undefined4 DB_GetLoadOffset(void)
+
+{
+  return DAT_82cc5c90;
+}
+
+
+// 823A4600  DB_GetLoadAvailIn  (database/db_file_load.cpp:1100)
+
+undefined4 DB_GetLoadAvailIn(void)
+
+{
+  return DAT_82cc5cb4;
+}
+
+
+// 823A4610  DB_IsOutstandingRead  (database/db_file_load.cpp:1112)
+
+bool DB_IsOutstandingRead(void)
+
+{
+  return DAT_82c45b94 != 0;
+}
+
+
+// 823A4628  DB_GetLoadTotalIn  (database/db_file_load.cpp:1118)
+
+undefined4 DB_GetLoadTotalIn(void)
+
+{
+  return DAT_82cc5cb8;
 }
 

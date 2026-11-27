@@ -3,6 +3,49 @@
 ; 828C8350  NellyInitVocalFry  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/decvcfry.c:195)
   828C8350  7D8802A6             mfspr r12,LR
   828C8354  4804E369             bl 0x829166bc
+  828C8358  9421FF90             stwu r1,-0x70(r1)
+  828C835C  7C7D1B78             or r29,r3,r3
+  828C8360  2B030000             cmplwi cr6,r3,0x0
+  828C8364  409A000C             bne cr6,0x828c8370
+LAB_828c8368:
+  828C8368  38600001             li r3,0x1
+  828C836C  48000084             b 0x828c83f0
+LAB_828c8370:
+  828C8370  39600000             li r11,0x0
+  828C8374  3FC08489             lis r30,-0x7b77
+  828C8378  917D0000             stw r11,0x0(r29)
+  828C837C  3880000C             li r4,0xc
+  828C8380  38600001             li r3,0x1
+  828C8384  817E58C0             lwz r11,0x58c0(r30)
+  828C8388  7D6903A6             mtspr CTR,r11
+  828C838C  4E800421             bctrl
+  828C8390  7C7F1B79             or. r31,r3,r3
+  828C8394  4182FFD4             beq 0x828c8368
+  828C8398  93FD0000             stw r31,0x0(r29)
+  828C839C  38800004             li r4,0x4
+  828C83A0  3860000D             li r3,0xd
+  828C83A4  817E58C0             lwz r11,0x58c0(r30)
+  828C83A8  7D6903A6             mtspr CTR,r11
+  828C83AC  4E800421             bctrl
+  828C83B0  907F0008             stw r3,0x8(r31)
+  828C83B4  28030000             cmplwi r3,0x0
+  828C83B8  4182FFB0             beq 0x828c8368
+  828C83BC  3D608200             lis r11,-0x7e00
+  828C83C0  3D408200             lis r10,-0x7e00
+  828C83C4  3D208489             lis r9,-0x7b77
+  828C83C8  38A00034             li r5,0x34
+  828C83CC  38800000             li r4,0x0
+  828C83D0  C00B13F8             lfs f0,0x13f8(r11)
+  828C83D4  C1AA4214             lfs f13,0x4214(r10)
+  828C83D8  D01F0004             stfs f0,0x4(r31)
+  828C83DC  D1BF0000             stfs f13,0x0(r31)
+  828C83E0  816958C8             lwz r11,0x58c8(r9)
+  828C83E4  7D6903A6             mtspr CTR,r11
+  828C83E8  4E800421             bctrl
+  828C83EC  38600000             li r3,0x0
+LAB_828c83f0:
+  828C83F0  38210070             addi r1,r1,0x70
+  828C83F4  4804E318             b 0x8291670c
 
 ; 828C83F8  NellyFreeVocalFry  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/decvcfry.c:229)
   828C83F8  7D8802A6             mfspr r12,LR

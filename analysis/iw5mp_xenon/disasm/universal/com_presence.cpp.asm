@@ -11,6 +11,32 @@
 ; 825E60D8  Live_GetMapIndex  (universal/com_presence.cpp:156)
   825E60D8  7D8802A6             mfspr r12,LR
   825E60DC  483305E1             bl 0x829166bc
+  825E60E0  9421FF90             stwu r1,-0x70(r1)
+  825E60E4  3D608217             lis r11,-0x7de9
+  825E60E8  7C7D1B78             or r29,r3,r3
+  825E60EC  3BCB6650             addi r30,r11,0x6650
+  825E60F0  3BE00000             li r31,0x0
+  825E60F4  7FC4F378             or r4,r30,r30
+LAB_825e60f8:
+  825E60F8  7FA3EB78             or r3,r29,r29
+  825E60FC  48025E95             bl 0x8260bf90
+  825E6100  2F030000             cmpwi cr6,r3,0x0
+  825E6104  419A0030             beq cr6,0x825e6134
+  825E6108  3BFF0001             addi r31,r31,0x1
+  825E610C  57EB103A             rlwinm r11,r31,0x2,0x0,0x1d
+  825E6110  7D7F5A14             add r11,r31,r11
+  825E6114  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  825E6118  7C8BF214             add r4,r11,r30
+  825E611C  7D4BF0AE             lbzx r10,r11,r30
+  825E6120  2B0A0000             cmplwi cr6,r10,0x0
+  825E6124  409AFFD4             bne cr6,0x825e60f8
+  825E6128  3860FFFF             li r3,-0x1
+  825E612C  38210070             addi r1,r1,0x70
+  825E6130  483305DC             b 0x8291670c
+LAB_825e6134:
+  825E6134  7FE3FB78             or r3,r31,r31
+  825E6138  38210070             addi r1,r1,0x70
+  825E613C  483305D0             b 0x8291670c
 
 ; 825E6140  Live_GetMapSource  (universal/com_presence.cpp:185)
   825E6140  7D8802A6             mfspr r12,LR

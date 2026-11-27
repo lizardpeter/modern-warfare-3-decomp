@@ -6,3 +6,34 @@
   825B3838  396B68AF             addi r11,r11,0x68af
   825B383C  916AAA78             stw r11,-0x5588(r10)
   825B3840  4E800020             blr
+
+; 825B3848  UI_track_init  (ui/ui_mem_track.cpp:43)
+  825B3848  7D8802A6             mfspr r12,LR
+  825B384C  9181FFF8             stw r12,-0x8(r1)
+  825B3850  FBE1FFF0             std r31,-0x10(r1)
+  825B3854  9421FFA0             stwu r1,-0x60(r1)
+  825B3858  3D608217             lis r11,-0x7de9
+  825B385C  3FE08368             lis r31,-0x7c98
+  825B3860  396BD898             subi r11,r11,0x2768
+  825B3864  917FAA78             stw r11,-0x5588(r31)
+  825B3868  4BFF1FA9             bl 0x825a5810
+  825B386C  3D608217             lis r11,-0x7de9
+  825B3870  396BD88C             subi r11,r11,0x2774
+  825B3874  917FAA78             stw r11,-0x5588(r31)
+  825B3878  480140F9             bl 0x825c7970
+  825B387C  3D608217             lis r11,-0x7de9
+  825B3880  396BD880             subi r11,r11,0x2780
+  825B3884  917FAA78             stw r11,-0x5588(r31)
+  825B3888  4801E9B9             bl 0x825d2240
+  825B388C  3D608217             lis r11,-0x7de9
+  825B3890  396BD874             subi r11,r11,0x278c
+  825B3894  917FAA78             stw r11,-0x5588(r31)
+  825B3898  4BFD8F19             bl 0x8258c7b0
+  825B389C  3D608200             lis r11,-0x7e00
+  825B38A0  396B68AF             addi r11,r11,0x68af
+  825B38A4  917FAA78             stw r11,-0x5588(r31)
+  825B38A8  38210060             addi r1,r1,0x60
+  825B38AC  8181FFF8             lwz r12,-0x8(r1)
+  825B38B0  7D8803A6             mtspr LR,r12
+  825B38B4  EBE1FFF0             ld r31,-0x10(r1)
+  825B38B8  4E800020             blr

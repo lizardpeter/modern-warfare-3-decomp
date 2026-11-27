@@ -12,6 +12,18 @@ void FUN_829222f0(void)
 }
 
 
+// 82922310  FUN_82922310  (line unknown)
+
+void FUN_82922310(void)
+
+{
+  int unaff_r30;
+  
+  _unlock_fhandle(unaff_r30);
+  return;
+}
+
+
 // 8292275C  FUN_8292275c  (line unknown)
 
 void FUN_8292275c(void)
@@ -90,7 +102,19 @@ bool FUN_829245e8(undefined4 *param_1)
 void FUN_8292478c(void)
 
 {
-  RtlLeaveCriticalSection(DAT_829b0990);
+  RtlLeaveCriticalSection(uRam829b0990);
+  return;
+}
+
+
+// 829247A8  FUN_829247a8  (line unknown)
+
+void FUN_829247a8(void)
+
+{
+  int unaff_r30;
+  
+  RtlLeaveCriticalSection(*(undefined4 *)(unaff_r30 + 0x50));
   return;
 }
 
@@ -131,6 +155,18 @@ void FUN_82924da0(void)
   int in_r12;
   
   _unlock_fhandle(*(int *)(in_r12 + 0x14));
+  return;
+}
+
+
+// 82924DC0  FUN_82924dc0  (line unknown)
+
+void FUN_82924dc0(void)
+
+{
+  int unaff_r27;
+  
+  _unlock_fhandle(unaff_r27);
   return;
 }
 
@@ -191,6 +227,20 @@ void FUN_82926708(void)
   int in_r12;
   
   if (*(int *)(in_r12 + -0x4c) != 0) {
+    _unlock(0);
+  }
+  return;
+}
+
+
+// 82926728  FUN_82926728  (line unknown)
+
+void FUN_82926728(void)
+
+{
+  int unaff_r28;
+  
+  if (unaff_r28 != 0) {
     _unlock(0);
   }
   return;

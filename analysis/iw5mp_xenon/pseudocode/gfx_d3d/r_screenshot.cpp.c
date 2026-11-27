@@ -29,13 +29,116 @@ void R_SaveGameShot(void)
 }
 
 
-// 82776DE8  R_CubemapShotCalcReflectionFactor  (gfx_d3d/r_screenshot.cpp:791)
+// 82776D78  R_BeginHiResShot  (gfx_d3d/r_screenshot.cpp:762)
 
-void R_CubemapShotCalcReflectionFactor(void)
+void R_BeginHiResShot(double param_1,double param_2,undefined8 param_3,undefined8 param_4,
+                     undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  DAT_846180ac = (float)param_1;
+  DAT_846180a8 = 1;
+  DAT_846180b0 = (float)param_2;
+  DAT_846180bc = param_5;
+  return;
+}
+
+
+// 82776D98  R_UpdateHiResShot  (gfx_d3d/r_screenshot.cpp:773)
+
+void R_UpdateHiResShot(double param_1,double param_2)
+
+{
+  DAT_846180b4 = (float)param_1;
+  DAT_846180b8 = (float)param_2;
+  return;
+}
+
+
+// 82776DB0  R_EndHiResShot  (gfx_d3d/r_screenshot.cpp:780)
+
+void R_EndHiResShot(void)
+
+{
+  DAT_846180b4 = 0;
+  DAT_846180a8 = 0;
+  DAT_846180b8 = 0;
+  DAT_846180ac = 0x3f800000;
+  DAT_846180b0 = 0x3f800000;
+  return;
+}
+
+
+// 82776DE8  R_CubemapShotCalcReflectionFactor  (gfx_d3d/r_screenshot.cpp:791)
+
+void R_CubemapShotCalcReflectionFactor
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  undefined8 uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  
+  uVar6 = __savegprlr_26();
+  iVar7 = (int)uVar6;
+  dVar10 = extraout_f1;
+  if (iVar7 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31b,0,0xffffffff821ce394,0xffffffff821ce374,uVar6);
+  }
+  if (6 < iVar7) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31c,0,0xffffffff821ce394,0xffffffff821ce354,uVar6);
+  }
+  iVar9 = (int)param_4;
+  if (iVar9 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31d,0,0xffffffff821ce340,0xffffffff821ce330,param_4);
+  }
+  if ((int)(uint)DAT_84617934 <= iVar9) {
+    MyAssertHandler(0xffffffff821ce3b0,0x31e,0,0xffffffff821ce340,0xffffffff821ce308,param_4);
+  }
+  iVar8 = (int)param_5;
+  if (iVar8 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,799,0,0xffffffff821ce2f4,0xffffffff821ce2e4,param_5);
+  }
+  if ((int)(uint)DAT_84617934 <= iVar8) {
+    MyAssertHandler(0xffffffff821ce3b0,800,0,0xffffffff821ce2f4,0xffffffff821ce2bc,param_5);
+  }
+  dVar11 = 0.0;
+  if (dVar10 == 0.0) {
+    MyAssertHandler(dVar10,0xffffffff821ce3b0,0x321,0,0xffffffff821ce2a0,0xffffffff821ce2b0,dVar10);
+  }
+  if (param_2 == dVar11) {
+    MyAssertHandler(param_2,0xffffffff821ce3b0,0x322,0,0xffffffff821ce284,0xffffffff821ce294,param_2
+                   );
+  }
+  dVar11 = 0.5;
+  iVar7 = iVar7 * 0x24;
+  fVar5 = (float)DAT_84617934 * 0.5;
+  fVar2 = ((float)(longlong)iVar9 - fVar5) + 0.5;
+  fVar4 = ((float)(longlong)iVar8 - fVar5) + 0.5;
+  fVar3 = *(float *)(&DAT_821ce184 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce178 + iVar7) * fVar2 + *(float *)(&DAT_821ce16c + iVar7) * fVar5;
+  fVar1 = *(float *)(&DAT_821ce180 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce174 + iVar7) * fVar2 + *(float *)(&DAT_821ce168 + iVar7) * fVar5;
+  fVar2 = *(float *)(&DAT_821ce188 + iVar7) * fVar4 +
+          *(float *)(&DAT_821ce17c + iVar7) * fVar2 + *(float *)(&DAT_821ce170 + iVar7) * fVar5;
+  fVar3 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+  fVar1 = 1.0;
+  if (-fVar3 < 0.0) {
+    fVar1 = fVar3;
+  }
+  dVar10 = (double)FresnelTerm(dVar10,param_2,(double)((1.0 / fVar1) * fVar2));
+  dVar10 = floor((double)(float)(dVar10 * 255.0 + dVar11));
+  __restgprlr_26((int)dVar10 & 0xff);
+  return;
 }
 
 
@@ -50,31 +153,194 @@ void R_CubemapShotCopySurfaceToBuffer(void)
 
 // 827770E0  R_CubemapShotWriteTargaHeader  (gfx_d3d/r_screenshot.cpp:855)
 
-void R_CubemapShotWriteTargaHeader(void)
+void R_CubemapShotWriteTargaHeader(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  void *pvVar2;
+  undefined1 uVar3;
+  void *_Dst;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x358,0,0xffffffff82000f98,0xffffffff821ce400);
+  }
+  if ((int)uVar1 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x359,0,0xffffffff82174e08,0xffffffff821ce3f4,uVar1);
+  }
+  _Dst = (void *)param_2;
+  pvVar2 = memset(_Dst,0,0x12);
+  *(char *)((int)_Dst + 0xc) = (char)uVar1;
+  uVar3 = (undefined1)((ulonglong)uVar1 >> 8);
+  *(undefined1 *)((int)_Dst + 0xd) = uVar3;
+  *(undefined1 *)((int)_Dst + 2) = 2;
+  *(char *)((int)_Dst + 0xe) = (char)uVar1;
+  *(undefined1 *)((int)_Dst + 0xf) = uVar3;
+  *(undefined1 *)((int)_Dst + 0x10) = 0x20;
+  __restgprlr_29(pvVar2);
+  return;
 }
 
 
 // 82777198  R_CubemapShotCopyBufferToTarga  (gfx_d3d/r_screenshot.cpp:873)
 
-void R_CubemapShotCopyBufferToTarga(void)
+void R_CubemapShotCopyBufferToTarga(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x36f,0,0xffffffff82000f98,0xffffffff821ce414);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x370,0,0xffffffff82000f98,0xffffffff821ce40c);
+  }
+  iVar7 = 0;
+  uVar5 = (uint)DAT_84617934;
+  if (DAT_84617934 != 0) {
+    do {
+      iVar3 = 0;
+      if (uVar5 != 0) {
+        iVar1 = (int)param_2;
+        do {
+          iVar6 = uVar5 * iVar7 + iVar3;
+          iVar3 = iVar3 + 1;
+          iVar6 = iVar6 * 4;
+          iVar4 = iVar6 + 0x12;
+          *(undefined1 *)(iVar1 + 2 + iVar4) = *(undefined1 *)(iVar2 + 1 + iVar6);
+          *(undefined1 *)(iVar1 + 1 + iVar4) = *(undefined1 *)(iVar2 + 2 + iVar6);
+          *(undefined1 *)(iVar4 + iVar1) = *(undefined1 *)(iVar2 + 3 + iVar6);
+          *(undefined1 *)(iVar1 + 3 + iVar4) = *(undefined1 *)(iVar6 + iVar2);
+          uVar5 = (uint)DAT_84617934;
+        } while (iVar3 < (int)uVar5);
+      }
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < (int)uVar5);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82777290  R_CubemapShotApplyFresnelToTarga  (gfx_d3d/r_screenshot.cpp:899)
 
-void R_CubemapShotApplyFresnelToTarga(void)
+void R_CubemapShotApplyFresnelToTarga(undefined8 param_1,double param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  int in_r6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  longlong lVar10;
+  int iVar11;
+  int iVar12;
+  double extraout_f1;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  
   __savegprlr();
+  uVar6 = __savefpr_25();
+  dVar18 = extraout_f1;
+  if (in_r6 == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x389,0,0xffffffff82000f98,0xffffffff821ce40c);
+  }
+  iVar9 = (int)uVar6;
+  if ((iVar9 < 1) || (6 < iVar9)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x38a,0,0xffffffff821ce394,0xffffffff821ce420,uVar6);
+  }
+  lVar10 = 0;
+  uVar7 = (uint)DAT_84617934;
+  if (DAT_84617934 != 0) {
+    dVar19 = 1.0;
+    dVar16 = 255.0;
+    dVar20 = 0.5;
+    dVar15 = 0.0;
+    do {
+      iVar12 = 0;
+      if (uVar7 != 0) {
+        iVar11 = (int)lVar10;
+        iVar5 = iVar9 * 0x24;
+        dVar17 = (double)(longlong)iVar11;
+        do {
+          iVar8 = uVar7 * iVar11 + iVar12;
+          if (iVar9 < 1) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31b,0,"%s\n\t(shotIndex) = %i",0xffffffff821ce374,
+                            uVar6);
+          }
+          if (6 < iVar9) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31c,0,"%s\n\t(shotIndex) = %i",0xffffffff821ce354,
+                            uVar6);
+          }
+          if (iVar12 < 0) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31d,0,0xffffffff821ce340,0xffffffff821ce330,iVar12)
+            ;
+          }
+          if ((int)(uint)DAT_84617934 <= iVar12) {
+            MyAssertHandler(0xffffffff821ce3b0,0x31e,0,0xffffffff821ce340,0xffffffff821ce308,iVar12)
+            ;
+          }
+          if (iVar11 < 0) {
+            MyAssertHandler(0xffffffff821ce3b0,799,0,0xffffffff821ce2f4,0xffffffff821ce2e4,lVar10);
+          }
+          if ((int)(uint)DAT_84617934 <= iVar11) {
+            MyAssertHandler(0xffffffff821ce3b0,800,0,0xffffffff821ce2f4,0xffffffff821ce2bc,lVar10);
+          }
+          if (dVar18 == dVar15) {
+            MyAssertHandler(dVar18,0xffffffff821ce3b0,0x321,0,"%s\n\t(n0) = %g","(n0 != 0)",dVar18);
+          }
+          if (param_2 == dVar15) {
+            MyAssertHandler(param_2,0xffffffff821ce3b0,0x322,0,"%s\n\t(n1) = %g","(n1 != 0)",param_2
+                           );
+          }
+          dVar13 = (double)(float)((double)DAT_84617934 * dVar20);
+          fVar1 = (float)((double)(float)((double)(longlong)iVar12 - dVar13) + dVar20);
+          fVar2 = (float)((double)(float)(dVar17 - dVar13) + dVar20);
+          fVar3 = *(float *)(&DAT_821ce188 + iVar5) * fVar2 +
+                  *(float *)(&DAT_821ce17c + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce170 + iVar5) * dVar13);
+          fVar4 = fVar2 * *(float *)(&DAT_821ce184 + iVar5) +
+                  *(float *)(&DAT_821ce178 + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce16c + iVar5) * dVar13);
+          fVar1 = *(float *)(&DAT_821ce180 + iVar5) * fVar2 +
+                  *(float *)(&DAT_821ce174 + iVar5) * fVar1 +
+                  (float)((double)*(float *)(&DAT_821ce168 + iVar5) * dVar13);
+          dVar14 = (double)SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar3 * fVar3);
+          dVar13 = dVar19;
+          if (-dVar14 < 0.0) {
+            dVar13 = dVar14;
+          }
+          dVar13 = (double)FresnelTerm(dVar18,param_2,(double)((float)(dVar19 / dVar13) * fVar3));
+          dVar13 = floor((double)(float)(dVar13 * dVar16 + dVar20));
+          iVar12 = iVar12 + 1;
+          *(char *)(in_r6 + iVar8 * 4 + 0x15) = (char)(int)dVar13;
+          uVar7 = (uint)DAT_84617934;
+        } while (iVar12 < (int)uVar7);
+      }
+      lVar10 = lVar10 + 1;
+    } while ((int)lVar10 < (int)uVar7);
+  }
+  __restfpr_25();
+  __restgprlr();
+  return;
 }
 
 
@@ -85,18 +351,16 @@ void R_CopyCubemapShot(int param_1)
 {
   int iVar1;
   
-  if ((0 < param_1) && (param_1 < 7)) {
-    iVar1 = Z_VirtualAlloc((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4
-                           & 0xfffffffc,0xffffffff821ce480,0x16);
-    *(int *)(&DAT_847eeae0 + (param_1 + -1) * 4) = iVar1;
-    if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821ce3b0,0x3a3,1,0xffffffff82000f98,0xffffffff821ce460);
-    }
-    return;
+  if ((param_1 < 1) || (6 < param_1)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x39d,0,0xffffffff821ce394,0xffffffff821ce420,param_1);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821ce3b0,0x39d,0,0xffffffff821ce394,0xffffffff821ce420,param_1);
+  iVar1 = Z_VirtualAlloc((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4 &
+                         0xfffffffc,0xffffffff821ce480,0x16);
+  *(int *)(&DAT_847eeae0 + (param_1 + -1) * 4) = iVar1;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3a3,1,0xffffffff82000f98,0xffffffff821ce460);
+  }
+  return;
 }
 
 
@@ -114,31 +378,28 @@ void R_CubemapShotWriteTargaFile
   undefined8 uVar5;
   
   uVar2 = __savegprlr_24();
+  uVar5 = extraout_f1;
   if ((uVar2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce3b0,0x3ae,0,0xffffffff82000f98,0xffffffff8215192c);
   }
-  if ((0 < (int)param_4) && ((int)param_4 < 7)) {
-    lVar4 = ((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4 & 0xfffffffcU
-            ) + 0x12;
-    uVar5 = extraout_f1;
-    uVar3 = Z_VirtualAlloc(lVar4,0xffffffff821ce494,0x16);
-    if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821ce3b0,0x3b4,1,0xffffffff82000f98,0xffffffff821ce40c);
-    }
-    R_CubemapShotWriteTargaHeader(DAT_84617934,uVar3);
-    iVar1 = (int)((param_4 - 1U & 0xffffffff) << 2);
-    R_CubemapShotCopyBufferToTarga(*(undefined4 *)(&DAT_847eeae0 + iVar1),uVar3);
-    R_CubemapShotApplyFresnelToTarga(uVar5,param_2,param_4);
-    FS_WriteFile(uVar2,uVar3,lVar4);
-    Z_VirtualFree(uVar3,0x16);
-    Z_VirtualFree(*(undefined4 *)(&DAT_847eeae0 + iVar1),0x16);
-    __restgprlr_24();
-    return;
+  if (((int)param_4 < 1) || (6 < (int)param_4)) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3af,0,0xffffffff821ce394,0xffffffff821ce420,param_4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821ce3b0,0x3af,0,0xffffffff821ce394,0xffffffff821ce420,param_4);
+  lVar4 = ((longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934 * 4 & 0xfffffffcU)
+          + 0x12;
+  uVar3 = Z_VirtualAlloc(lVar4,0xffffffff821ce494,0x16);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3b4,1,0xffffffff82000f98,0xffffffff821ce40c);
+  }
+  R_CubemapShotWriteTargaHeader(DAT_84617934,uVar3);
+  iVar1 = (int)((param_4 - 1U & 0xffffffff) << 2);
+  R_CubemapShotCopyBufferToTarga(*(undefined4 *)(&DAT_847eeae0 + iVar1),uVar3);
+  R_CubemapShotApplyFresnelToTarga(uVar5,param_2,param_4);
+  FS_WriteFile(uVar2,uVar3,lVar4);
+  Z_VirtualFree(uVar3,0x16);
+  Z_VirtualFree(*(undefined4 *)(&DAT_847eeae0 + iVar1),0x16);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -167,6 +428,50 @@ void R_CubemapShotRestoreState(void)
 {
   R_SetRenderTargetSize(0xffffffff8484c7e0,1);
   R_SetRenderTarget(0x8484c7e08484df40,1);
+  return;
+}
+
+
+// 82777950  R_BeginCubemapShot  (gfx_d3d/r_screenshot.cpp:979)
+
+void R_BeginCubemapShot(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = (int)uVar1;
+  if (iVar2 < 1) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d4,0,0xffffffff821ce534,0xffffffff821ce51c,uVar1);
+  }
+  if (0xffff < iVar2) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d5,0,0xffffffff821ce534,0xffffffff821ce500,uVar1);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d6,0,0xffffffff821ce4e8,0xffffffff821ce4d4,param_2);
+  }
+  if (iVar2 <= (int)param_2) {
+    MyAssertHandler(0xffffffff821ce3b0,0x3d7,0,0xffffffff821ce4e8,0xffffffff821ce4b0,param_2);
+  }
+  DAT_84617934 = (undefined2)uVar1;
+  DAT_84617936 = (undefined2)param_2;
+  DAT_846180a4 = 1;
+  R_CubemapShotSetInitialState();
+  __restgprlr_28();
+  return;
+}
+
+
+// 82777A50  R_EndCubemapShot  (gfx_d3d/r_screenshot.cpp:997)
+
+void R_EndCubemapShot(void)
+
+{
+  R_CopyCubemapShot();
+  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
+  R_SetRenderTarget(0x8484c7e08484df40,1);
+  DAT_846180a4 = 0;
   return;
 }
 
@@ -337,21 +642,156 @@ void R_CubemapLightingForDir
 
 // 82777E78  R_CubemapLighting  (gfx_d3d/r_screenshot.cpp:1276)
 
-void R_CubemapLighting(void)
+void R_CubemapLighting(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+                      int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  
   __savegprlr_19();
+  uVar3 = __savefpr_27();
+  dVar17 = 1.0;
+  dVar14 = 2.0;
+  dVar15 = 0.5;
+  iVar4 = 0;
+  do {
+    iVar5 = 0;
+    iVar7 = (int)param_3;
+    if (0 < iVar7) {
+      lVar6 = 0;
+      do {
+        lVar10 = 0;
+        iVar8 = (int)param_2;
+        if (0 < iVar8) {
+          dVar13 = (double)(longlong)iVar8;
+          iVar9 = (iVar4 + 1) * 0x24;
+          dVar16 = (double)(float)((double)((float)((double)(float)((double)(longlong)iVar5 + dVar15
+                                                                   ) * dVar14) /
+                                           (float)(longlong)iVar7) - dVar17);
+          do {
+            fVar2 = (float)((double)(float)((double)(float)((double)(float)((double)(longlong)
+                                                                                    (int)lVar10 +
+                                                                           dVar15) * dVar14) /
+                                           dVar13) - dVar17);
+            fVar1 = (float)((double)*(float *)(&DAT_821ce188 + iVar9) * dVar16 +
+                           (double)(*(float *)(&DAT_821ce17c + iVar9) * fVar2 +
+                                   *(float *)(&DAT_821ce170 + iVar9)));
+            local_b0 = (float)((double)*(float *)(&DAT_821ce180 + iVar9) * dVar16 +
+                              (double)(fVar2 * *(float *)(&DAT_821ce174 + iVar9) +
+                                      *(float *)(&DAT_821ce168 + iVar9)));
+            local_ac = (float)(dVar16 * (double)*(float *)(&DAT_821ce184 + iVar9) +
+                              (double)(*(float *)(&DAT_821ce178 + iVar9) * fVar2 +
+                                      *(float *)(&DAT_821ce16c + iVar9)));
+            dVar11 = (double)SQRT(local_ac * local_ac + local_b0 * local_b0 + fVar1 * fVar1);
+            dVar12 = dVar17;
+            if (-dVar11 < 0.0) {
+              dVar12 = dVar11;
+            }
+            local_a8 = (float)(dVar17 / dVar12);
+            local_b0 = local_a8 * local_b0;
+            local_ac = local_a8 * local_ac;
+            local_a8 = local_a8 * fVar1;
+            R_CubemapLightingForDir
+                      (uVar3,param_2,param_3,&local_b0,param_4,
+                       (lVar6 + lVar10 & 0x3fffffffU) * 4 +
+                       (ulonglong)*(uint *)(iVar4 * 4 + param_5));
+            lVar10 = lVar10 + 1;
+          } while ((int)lVar10 < iVar8);
+        }
+        iVar5 = iVar5 + 1;
+        lVar6 = lVar6 + param_2;
+      } while (iVar5 < iVar7);
+    }
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 6);
+  __restfpr_27();
+  __restgprlr_19();
+  return;
 }
 
 
 // 82778048  R_CubemapShotExtractLinearLight  (gfx_d3d/r_screenshot.cpp:1297)
 
-void R_CubemapShotExtractLinearLight(void)
+void R_CubemapShotExtractLinearLight
+               (undefined8 param_1,ulonglong param_2,longlong param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  int iVar11;
+  double dVar12;
+  double _Y;
+  double dVar13;
+  
+  iVar4 = __savegprlr_19();
+  _Y = 2.200000047683716;
+  dVar13 = 0.003921568859368563;
+  iVar11 = 0;
+  do {
+    if (0 < (int)param_3) {
+      lVar5 = param_3;
+      lVar10 = 0;
+      lVar9 = 0;
+      do {
+        lVar6 = lVar10;
+        lVar7 = lVar9;
+        if (0 < (int)param_2) {
+          lVar7 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar9;
+          lVar6 = (param_2 & 0x3fffffff) * 4 + lVar10;
+          uVar8 = param_2;
+          do {
+            iVar2 = (int)lVar10;
+            dVar12 = pow((double)(float)((double)*(byte *)(*(int *)(iVar11 + iVar4) + iVar2 + 1) *
+                                        dVar13),_Y);
+            iVar1 = *(int *)(iVar11 + iVar4);
+            iVar3 = (int)lVar9;
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3) = (float)dVar12;
+            dVar12 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 2) * dVar13),_Y);
+            iVar1 = *(int *)(iVar11 + iVar4);
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3 + 4) = (float)dVar12;
+            dVar12 = pow((double)(float)((double)*(byte *)(iVar1 + iVar2 + 3) * dVar13),_Y);
+            uVar8 = uVar8 - 1;
+            lVar10 = lVar10 + 4;
+            lVar9 = lVar9 + 0xc;
+            *(float *)(*(int *)(iVar11 + param_4) + iVar3 + 8) = (float)dVar12;
+          } while (uVar8 != 0);
+        }
+        lVar5 = lVar5 + -1;
+        lVar10 = lVar6;
+        lVar9 = lVar7;
+      } while (lVar5 != 0);
+    }
+    iVar11 = iVar11 + 4;
+  } while (iVar11 < 0x18);
+  __restgprlr_19();
+  return;
 }
 
 
@@ -360,7 +800,31 @@ void R_CubemapShotExtractLinearLight(void)
 void R_LightingFromCubemapShots(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_34;
+  int local_30;
+  int local_2c;
+  
+  uVar1 = __savegprlr_28();
+  lVar3 = (longlong)(int)(uint)DAT_84617934 * (longlong)(int)(uint)DAT_84617934;
+  uVar2 = Z_VirtualAlloc((lVar3 + (lVar3 * 8 & 0xfffffff8U) & 0x1fffffff) << 3,0xffffffff821ce560,
+                         0x16);
+  local_40 = (int)uVar2;
+  local_2c = (int)lVar3 * 0xc;
+  local_3c = local_2c + local_40;
+  local_38 = local_2c + local_3c;
+  local_34 = local_2c + local_38;
+  local_30 = local_2c + local_34;
+  local_2c = local_2c + local_30;
+  R_CubemapShotExtractLinearLight(0xffffffff847eeae0,DAT_84617934,DAT_84617934,&local_40);
+  R_CubemapLighting(&local_40,DAT_84617934,DAT_84617934,uVar1,0xffffffff847eeae0);
+  Z_VirtualFree(uVar2,0x16);
+  __restgprlr_28();
+  return;
 }
 

@@ -72,6 +72,149 @@ void _dynamic_initializer_for__g_shortBoneWeightPerm__(void)
 }
 
 
+// 8275D460  R_SkinXSurfaceWeight0  (gfx_d3d/r_model_skin.cpp:861)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight0
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_25();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x368,0,0xffffffff82000f98,0xffffffff821ca064);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x369,0,0xffffffff82000f98,0xffffffff821ca058);
+  }
+  if ((uVar1 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x36a,0,0xffffffff82000f98,0xffffffff821ca028);
+  }
+  if ((param_5 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x36b,0,0xffffffff82000f98,0xffffffff821c9ff4);
+  }
+  if ((param_4 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x36c,0,0xffffffff82000f98,0xffffffff821c9fc0);
+  }
+  lVar3 = (param_3 & 0x7ffffff) << 5;
+  if (0x200 < (int)lVar3) {
+    lVar3 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < (int)lVar3) {
+    lVar3 = ((lVar3 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  lVar3 = (param_3 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar3) {
+    lVar3 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < (int)lVar3) {
+    lVar3 = ((lVar3 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + param_2);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    __restgprlr_25();
+    return;
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8275D6F8  R_SkinXSurfaceWeight1  (gfx_d3d/r_model_skin.cpp:910)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight1
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs43 [16];
+  
+  uVar1 = __savegprlr_25();
+  uVar2 = uVar1;
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar2 = MyAssertHandler(0xffffffff821ca070,0x39c,0,0xffffffff82000f98,0xffffffff821ca064);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    uVar2 = MyAssertHandler(0xffffffff821ca070,0x39d,0,0xffffffff82000f98,0xffffffff821ca058);
+  }
+  if ((uVar1 & 0xf) != 0) {
+    uVar2 = MyAssertHandler(0xffffffff821ca070,0x39e,0,0xffffffff82000f98,0xffffffff821ca028);
+  }
+  if ((param_5 & 0xf) != 0) {
+    uVar2 = MyAssertHandler(0xffffffff821ca070,0x39f,0,0xffffffff82000f98,0xffffffff821c9ff4);
+  }
+  if ((param_4 & 0xf) != 0) {
+    uVar2 = MyAssertHandler(0xffffffff821ca070,0x3a0,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  lVar6 = (param_3 & 0x7ffffff) << 5;
+  if ((int)lVar6 < 0x201) {
+    uVar3 = 0;
+  }
+  else {
+    lVar6 = 0x200;
+    uVar3 = 0x200;
+  }
+  lVar5 = 0;
+  if (0 < (int)lVar6) {
+    lVar6 = ((lVar6 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar5 + uVar1);
+      lVar5 = lVar5 + 0x80;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  lVar6 = (param_3 & 0x7fffffff) << 1;
+  if ((int)lVar6 < 0x201) {
+    uVar4 = 0;
+  }
+  else {
+    lVar6 = 0x200;
+    uVar4 = 0x200;
+  }
+  lVar5 = 0;
+  if (0 < (int)lVar6) {
+    lVar6 = ((lVar6 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar5 + param_2);
+      lVar5 = lVar5 + 0x80;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  if ((param_3 & 0xffffffff) != 0) {
+    altv207_13(in_vs32,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  __restgprlr_25(uVar2,uVar3,uVar4);
+  return;
+}
+
+
 // 8275DA00  R_SkinXSurfaceWeight2  (gfx_d3d/r_model_skin.cpp:972)
 
 /* WARNING: Control flow encountered bad instruction data */
@@ -88,61 +231,120 @@ void R_SkinXSurfaceWeight2
   
   uVar1 = __savegprlr_25();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x3dc,0,0xffffffff82000f98,0xffffffff821ca064);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x3dd,0,0xffffffff82000f98,0xffffffff821ca058);
   }
   if ((uVar1 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x3de,0,0xffffffff82000f98,0xffffffff821ca028);
   }
-  if ((param_5 & 0xf) == 0) {
-    if ((param_4 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff821ca070,0x3e0,0,0xffffffff82000f98,0xffffffff821ca0b4);
-    }
-    lVar4 = (param_3 & 0x7ffffff) << 5;
-    if (0x200 < (int)lVar4) {
-      lVar4 = 0x200;
-    }
-    lVar3 = 0;
-    if (0 < (int)lVar4) {
-      lVar4 = ((lVar4 - 1U & 0xffffffff) >> 7) + 1;
-      do {
-        dataCacheBlockTouch(lVar3 + uVar1);
-        lVar3 = lVar3 + 0x80;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
-    }
-    lVar4 = (param_3 & 0x7fffffff) << 1;
-    if ((int)lVar4 < 0x201) {
-      uVar2 = 0;
-    }
-    else {
-      lVar4 = 0x200;
-      uVar2 = 0x200;
-    }
-    lVar3 = 0;
-    if (0 < (int)lVar4) {
-      lVar4 = ((lVar4 - 1U & 0xffffffff) >> 7) + 1;
-      do {
-        dataCacheBlockTouch(lVar3 + param_2);
-        lVar3 = lVar3 + 0x80;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
-    }
-    if ((param_3 & 0xffffffff) == 0) {
-      __restgprlr_25(uVar2);
-      return;
-    }
-                    /* WARNING: Bad instruction - Truncating control flow here */
-    halt_baddata();
+  if ((param_5 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x3df,0,0xffffffff82000f98,0xffffffff821c9ff4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821ca070,0x3df,0,0xffffffff82000f98,0xffffffff821c9ff4);
+  if ((param_4 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x3e0,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  lVar4 = (param_3 & 0x7ffffff) << 5;
+  if (0x200 < (int)lVar4) {
+    lVar4 = 0x200;
+  }
+  lVar3 = 0;
+  if (0 < (int)lVar4) {
+    lVar4 = ((lVar4 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + uVar1);
+      lVar3 = lVar3 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  lVar4 = (param_3 & 0x7fffffff) << 1;
+  if ((int)lVar4 < 0x201) {
+    uVar2 = 0;
+  }
+  else {
+    lVar4 = 0x200;
+    uVar2 = 0x200;
+  }
+  lVar3 = 0;
+  if (0 < (int)lVar4) {
+    lVar4 = ((lVar4 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + param_2);
+      lVar3 = lVar3 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    __restgprlr_25(uVar2);
+    return;
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 8275DD38  R_SkinXSurfaceWeight3  (gfx_d3d/r_model_skin.cpp:1044)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight3
+               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
+
+{
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_24();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x424,0,0xffffffff82000f98,0xffffffff821ca064);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x425,0,0xffffffff82000f98,0xffffffff821ca058);
+  }
+  if ((uVar1 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x426,0,0xffffffff82000f98,0xffffffff821ca028);
+  }
+  if ((param_5 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x427,0,0xffffffff82000f98,0xffffffff821c9ff4);
+  }
+  if ((param_4 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x428,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  lVar3 = (param_3 & 0x7ffffff) << 5;
+  if (0x200 < (int)lVar3) {
+    lVar3 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < (int)lVar3) {
+    lVar3 = ((lVar3 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  lVar3 = (param_3 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar3) {
+    lVar3 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < (int)lVar3) {
+    lVar3 = ((lVar3 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + param_2);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    __restgprlr_24();
+    return;
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -159,19 +361,15 @@ void R_SkinXSurfaceRigid0
   
   uVar1 = __savegprlr_25();
   if (uVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x46c,0,0xffffffff82000f98,0xffffffff821ca064);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x46d,0,0xffffffff82000f98,0xffffffff821ca058);
   }
   if ((uVar1 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x46e,0,0xffffffff82000f98,0xffffffff821ca028);
   }
   if ((param_5 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x46f,0,0xffffffff82000f98,0xffffffff821c9ff4);
   }
   if ((param_2 & 0xffffffff) != 0) {
@@ -185,41 +383,271 @@ void R_SkinXSurfaceRigid0
 
 // 8275E280  R_SkinXSurfaceWeight0Quantized  (gfx_d3d/r_model_skin.cpp:1686)
 
-void R_SkinXSurfaceWeight0Quantized(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight0Quantized
+               (undefined8 param_1,int param_2,longlong param_3,ulonglong param_4,undefined8 param_5
+               ,ulonglong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  uVar1 = __savegprlr_17();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6a0,0,0xffffffff82000f98,0xffffffff821ca13c);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6a1,0,0xffffffff82000f98,0xffffffff821ca130);
+  }
+  if ((param_7 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6a2,0,0xffffffff82000f98,0xffffffff821ca0fc);
+  }
+  if ((param_6 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6a3,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6a4,0,0xffffffff82000f98,0xffffffff821ca0e4);
+  }
+  param_2 = param_2 * (int)param_4;
+  if (0x200 < param_2) {
+    param_2 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < param_2) {
+    lVar3 = (ulonglong)(param_2 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  lVar2 = (param_4 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar2) {
+    lVar2 = 0x200;
+  }
+  lVar3 = 0;
+  if (0 < (int)lVar2) {
+    lVar2 = ((lVar2 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + param_3);
+      lVar3 = lVar3 + 0x80;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    __restgprlr_17();
+    return;
+  }
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8275E648  R_SkinXSurfaceWeight1Quantized  (gfx_d3d/r_model_skin.cpp:1738)
 
-void R_SkinXSurfaceWeight1Quantized(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight1Quantized
+               (undefined8 param_1,int param_2,longlong param_3,ulonglong param_4,undefined8 param_5
+               ,ulonglong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  uVar1 = __savegprlr();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6d8,0,0xffffffff82000f98,0xffffffff821ca13c);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6d9,0,0xffffffff82000f98,0xffffffff821ca130);
+  }
+  if ((param_7 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6da,0,0xffffffff82000f98,0xffffffff821ca0fc);
+  }
+  if ((param_6 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6db,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x6dc,0,0xffffffff82000f98,0xffffffff821ca0e4);
+  }
+  param_2 = param_2 * (int)param_4;
+  if (0x200 < param_2) {
+    param_2 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < param_2) {
+    lVar3 = (ulonglong)(param_2 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  lVar2 = (param_4 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar2) {
+    lVar2 = 0x200;
+  }
+  lVar3 = 0;
+  if (0 < (int)lVar2) {
+    lVar2 = ((lVar2 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + param_3);
+      lVar3 = lVar3 + 0x80;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    __restgprlr();
+    return;
+  }
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8275EAB0  R_SkinXSurfaceWeight2Quantized  (gfx_d3d/r_model_skin.cpp:1814)
 
-void R_SkinXSurfaceWeight2Quantized(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight2Quantized
+               (undefined8 param_1,int param_2,longlong param_3,ulonglong param_4,undefined8 param_5
+               ,ulonglong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  uVar1 = __savegprlr();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x725,0,0xffffffff82000f98,0xffffffff821ca13c);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x726,0,0xffffffff82000f98,0xffffffff821ca130);
+  }
+  if ((param_7 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x727,0,0xffffffff82000f98,0xffffffff821ca0fc);
+  }
+  if ((param_6 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x728,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x729,0,0xffffffff82000f98,0xffffffff821ca0e4);
+  }
+  param_2 = param_2 * (int)param_4;
+  lVar3 = 0;
+  if (0x200 < param_2) {
+    param_2 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < param_2) {
+    lVar4 = (ulonglong)(param_2 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  lVar2 = (param_4 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar2) {
+    lVar2 = 0x200;
+  }
+  if (0 < (int)lVar2) {
+    lVar2 = ((lVar2 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + param_3);
+      lVar3 = lVar3 + 0x80;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    __restgprlr();
+    return;
+  }
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8275EFA8  R_SkinXSurfaceWeight3Quantized  (gfx_d3d/r_model_skin.cpp:1907)
 
-void R_SkinXSurfaceWeight3Quantized(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceWeight3Quantized
+               (undefined8 param_1,int param_2,longlong param_3,ulonglong param_4,undefined8 param_5
+               ,ulonglong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ulonglong uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  
+  uVar1 = __savegprlr();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x782,0,0xffffffff82000f98,0xffffffff821ca13c);
+  }
+  if ((param_7 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x783,0,0xffffffff82000f98,0xffffffff821ca130);
+  }
+  if ((param_7 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x784,0,0xffffffff82000f98,0xffffffff821ca0fc);
+  }
+  if ((param_6 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x785,0,0xffffffff82000f98,0xffffffff821ca0b4);
+  }
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x786,0,0xffffffff82000f98,0xffffffff821ca0e4);
+  }
+  param_2 = param_2 * (int)param_4;
+  lVar3 = 0;
+  if (0x200 < param_2) {
+    param_2 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < param_2) {
+    lVar4 = (ulonglong)(param_2 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + uVar1);
+      lVar2 = lVar2 + 0x80;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  lVar2 = (param_4 & 0x7fffffff) << 1;
+  if (0x200 < (int)lVar2) {
+    lVar2 = 0x200;
+  }
+  if (0 < (int)lVar2) {
+    lVar2 = ((lVar2 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar3 + param_3);
+      lVar3 = lVar3 + 0x80;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    __restgprlr();
+    return;
+  }
+  altv300_21(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -237,23 +665,18 @@ void R_SkinXSurfaceRigid0Quantized(undefined8 param_1,undefined8 param_2,ulonglo
   
   uVar1 = __savegprlr_20();
   if (uVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x7e8,0,0xffffffff82000f98,0xffffffff821ca13c);
   }
   if ((in_r9 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x7e9,0,0xffffffff82000f98,0xffffffff821ca130);
   }
   if ((uVar1 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x7ea,0,0xffffffff82000f98,0xffffffff821ca190);
   }
   if ((in_r9 & 7) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x7eb,0,0xffffffff82000f98,0xffffffff821ca15c);
   }
   if ((param_3 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ca070,0x7ec,0,0xffffffff82000f98,0xffffffff821ca148);
   }
   if ((param_3 & 0xffffffff) != 0) {
@@ -268,31 +691,151 @@ void R_SkinXSurfaceRigid0Quantized(undefined8 param_1,undefined8 param_2,ulonglo
 
 // 8275F830  R_SkinXSurfaceRigid  (gfx_d3d/r_model_skin.cpp:2074)
 
-void R_SkinXSurfaceRigid(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceRigid(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
   __savegprlr();
+  iVar1 = __savevmx_124();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x823,0,0xffffffff82000f98,0xffffffff821ca220);
+  }
+  if ((param_4 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x824,0,0xffffffff82000f98,0xffffffff821ca1ec);
+  }
+  if ((param_3 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x825,0,0xffffffff82000f98,0xffffffff821c9fc0);
+  }
+  Profile_Begin(0x6c);
+  lVar3 = (param_2 & 0x7ffffff) << 5;
+  if (0x200 < (int)lVar3) {
+    lVar3 = 0x200;
+  }
+  lVar2 = 0;
+  if (0 < (int)lVar3) {
+    lVar3 = ((lVar3 - 1U & 0xffffffff) >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar2 + (ulonglong)*(uint *)(iVar1 + 0x1c));
+      lVar2 = lVar2 + 0x80;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+  }
+  if (*(int *)(iVar1 + 0x40) == 0) {
+    if ((int)param_2 != 0) {
+      MyAssertHandler(0xffffffff821ca070,0x83a,0,0xffffffff82000f98,0xffffffff821ca1c4);
+    }
+    Profile_EndInternal(0);
+    __restvmx_124();
+    __restgprlr();
+    return;
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8275FC10  R_SkinXSurfaceRigidQuantized  (gfx_d3d/r_model_skin.cpp:2113)
 
-void R_SkinXSurfaceRigidQuantized(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_SkinXSurfaceRigidQuantized(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  longlong lVar6;
+  
   __savegprlr();
+  iVar3 = __savevmx_124();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ca070,0x84d,0,0xffffffff82000f98,0xffffffff821ca220);
+  }
+  if ((param_3 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x84e,0,0xffffffff82000f98,0xffffffff821ca1ec);
+  }
+  if ((param_2 & 0xf) != 0) {
+    MyAssertHandler(0xffffffff821ca070,0x84f,0,0xffffffff82000f98,0xffffffff821c9fc0);
+  }
+  Profile_Begin(0x6c);
+  uVar1 = *(ushort *)(iVar3 + 2);
+  uVar2 = *(uint *)(iVar3 + 0x1c);
+  iVar4 = XSurfaceGetVert0Size(iVar3);
+  iVar4 = iVar4 * (uint)uVar1;
+  if (0x200 < iVar4) {
+    iVar4 = 0x200;
+  }
+  lVar5 = 0;
+  if (0 < iVar4) {
+    lVar6 = (ulonglong)(iVar4 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar5 + (ulonglong)uVar2);
+      lVar5 = lVar5 + 0x80;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  if (*(int *)(iVar3 + 0x40) == 0) {
+    if (uVar1 != 0) {
+      MyAssertHandler(0xffffffff821ca070,0x869,0,0xffffffff82000f98,0xffffffff821ca1c4);
+    }
+    Profile_EndInternal(0);
+    __restvmx_124();
+    __restgprlr();
+    return;
+  }
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 82760208  R_SkinXSurfaceWeight  (gfx_d3d/r_model_skin.cpp:3019)
 
-void R_SkinXSurfaceWeight(void)
+void R_SkinXSurfaceWeight(undefined8 param_1,short *param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  longlong lVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  lVar1 = __savegprlr_26();
+  Profile_Begin(0x6c);
+  uVar4 = 0;
+  uVar5 = (ulonglong)*(uint *)(param_2 + 4);
+  if (*param_2 != 0) {
+    R_SkinXSurfaceWeight0(lVar1,uVar5,*param_2,param_3,param_4);
+    uVar4 = (ulonglong)*param_2;
+    uVar5 = (uVar4 & 0x7fffffff) * 2 + uVar5;
+  }
+  if (param_2[1] != 0) {
+    lVar2 = (uVar4 & 0x7ffffff) * 0x20;
+    R_SkinXSurfaceWeight1(lVar2 + lVar1,uVar5,param_2[1],param_3,lVar2 + param_4);
+    uVar3 = (ulonglong)param_2[1];
+    uVar4 = uVar3 + uVar4;
+    uVar5 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + uVar5;
+  }
+  if (param_2[2] != 0) {
+    lVar2 = (uVar4 & 0x7ffffff) * 0x20;
+    R_SkinXSurfaceWeight2(lVar2 + lVar1,uVar5,param_2[2],param_3,lVar2 + param_4);
+    uVar3 = (ulonglong)param_2[2];
+    uVar4 = uVar3 + uVar4;
+    uVar5 = (uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + uVar5;
+  }
+  if (param_2[3] != 0) {
+    lVar2 = (uVar4 & 0x7ffffff) * 0x20;
+    R_SkinXSurfaceWeight3(lVar2 + lVar1,uVar5,param_2[3],param_3,lVar2 + param_4);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -382,12 +925,278 @@ void R_SkinXSurfaceSkinned(int param_1,undefined8 param_2,undefined8 param_3)
 }
 
 
+// 82760500  R_MultiplySkelMat  (gfx_d3d/r_model_skin.cpp:3526)
+
+void R_MultiplySkelMat(float *param_1,float *param_2,float *param_3)
+
+{
+  *param_3 = param_1[2] * param_2[8] + *param_1 * *param_2 + param_1[1] * param_2[4];
+  param_3[1] = param_2[9] * param_1[2] + param_1[1] * param_2[5] + param_2[1] * *param_1;
+  param_3[2] = param_2[10] * param_1[2] + param_1[1] * param_2[6] + param_2[2] * *param_1;
+  param_3[4] = param_1[4] * *param_2 + param_1[6] * param_2[8] + param_1[5] * param_2[4];
+  param_3[5] = param_1[4] * param_2[1] + param_1[6] * param_2[9] + param_1[5] * param_2[5];
+  param_3[6] = param_1[4] * param_2[2] + param_1[6] * param_2[10] + param_1[5] * param_2[6];
+  param_3[8] = param_1[9] * param_2[4] + param_1[8] * *param_2 + param_1[10] * param_2[8];
+  param_3[9] = param_2[1] * param_1[8] + param_2[9] * param_1[10] + param_2[5] * param_1[9];
+  param_3[10] = param_2[2] * param_1[8] + param_2[10] * param_1[10] + param_2[6] * param_1[9];
+  param_3[0xc] = param_1[0xc] * *param_2 + param_1[0xe] * param_2[8] + param_1[0xd] * param_2[4] +
+                 param_2[0xc];
+  param_3[0xd] = param_1[0xc] * param_2[1] + param_1[0xe] * param_2[9] + param_1[0xd] * param_2[5] +
+                 param_2[0xd];
+  param_3[0xe] = param_1[0xc] * param_2[2] + param_1[0xe] * param_2[10] + param_1[0xd] * param_2[6]
+                 + param_2[0xe];
+  return;
+}
+
+
 // 82760700  R_SkinXModelCmd  (gfx_d3d/r_model_skin.cpp:3555)
 
 void R_SkinXModelCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  byte bVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  ushort uVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  uint uVar13;
+  ulonglong uVar12;
+  uint *puVar14;
+  uint *puVar15;
+  uint uVar16;
+  uint uVar17;
+  float *pfVar18;
+  char *pcVar19;
+  float *pfVar20;
+  float *pfVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  uint local_31a0;
+  float local_3150;
+  float local_314c;
+  float local_3148;
+  float local_3144;
+  float local_3140;
+  float local_313c;
+  float local_3138;
+  float local_3134;
+  float local_3130;
+  float local_312c;
+  float local_3128;
+  float local_3124;
+  float local_3120;
+  float local_311c;
+  float local_3118;
+  float local_3114;
+  float local_3110;
+  float local_310c;
+  float local_3108;
+  float local_3104;
+  float local_3100;
+  float local_30fc;
+  float local_30f8;
+  float local_30f4;
+  float local_30f0;
+  float local_30ec;
+  float local_30e8;
+  float local_30e4;
+  float local_30e0;
+  undefined4 local_30dc;
+  undefined4 local_30d8;
+  float local_30d4;
+  undefined1 auStack_30d0 [12];
+  float afStack_30c4 [3121];
+  
   __savegprlr();
+  puVar10 = (undefined4 *)__savefpr_26();
+  Profile_Begin(0x55);
+  if (puVar10 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff821ca070,0xe47,0,0xffffffff82000f98,0xffffffff821ca280);
+  }
+  uVar6 = *(ushort *)(puVar10 + 8);
+  if (uVar6 == 0) {
+    MyAssertHandler(0xffffffff821ca070,0xe48,0,0xffffffff82000f98,0xffffffff821ca26c);
+  }
+  puVar14 = (uint *)*puVar10;
+  uVar16 = 0xffffffff;
+  iVar7 = puVar10[1];
+  if (uVar6 != 0) {
+    local_31a0 = (uint)uVar6;
+    dVar30 = 0.0;
+    dVar31 = 1.0;
+    do {
+      uVar8 = *puVar14;
+      if (uVar8 == 0xfffffffd) {
+        puVar14 = puVar14 + 1;
+      }
+      else {
+        bVar2 = *(byte *)(puVar14 + 2);
+        uVar13 = (uint)bVar2;
+        if (uVar16 != bVar2) {
+          uVar17 = *(byte *)((int)puVar14 + 9) + uVar13;
+          iVar11 = puVar14[1] + uVar13 * -0x20;
+          uVar16 = uVar13;
+          if (bVar2 < uVar17) {
+            pfVar20 = (float *)(uVar13 * 0x20 + iVar7 + 8);
+            pfVar18 = afStack_30c4 + uVar13 * 0x10;
+            pfVar21 = (float *)(uVar13 * 0x20 + iVar11 + 4);
+            iVar11 = iVar7 - iVar11;
+            uVar9 = uVar13 << 2;
+            do {
+              if ((puVar10[((int)uVar13 >> 5) + 2] & *(uint *)((int)&DAT_82992400 + (uVar9 & 0x7c)))
+                  != 0) {
+                dVar27 = (double)pfVar21[-1];
+                if ((((((uint)pfVar21[-1] & 0x7f800000) == 0x7f800000) ||
+                     (((uint)*pfVar21 & 0x7f800000) == 0x7f800000)) ||
+                    (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)) ||
+                   (((uint)pfVar21[2] & 0x7f800000) == 0x7f800000)) {
+                  MyAssertHandler(0xffffffff820656f0,0x29a,0,0xffffffff82000f98,0xffffffff820159f0);
+                }
+                dVar28 = (double)pfVar21[6];
+                if (((uint)pfVar21[6] & 0x7f800000) == 0x7f800000) {
+                  MyAssertHandler(0xffffffff820656f0,0x29b,0,0xffffffff82000f98,0xffffffff820159d4);
+                }
+                dVar25 = (double)*pfVar21;
+                dVar26 = (double)(float)(dVar27 * dVar28);
+                dVar22 = (double)pfVar21[1];
+                dVar24 = (double)(float)(dVar25 * dVar28);
+                dVar23 = (double)pfVar21[2];
+                fVar3 = pfVar21[4];
+                fVar4 = pfVar21[5];
+                fVar5 = pfVar21[3];
+                dVar29 = (double)pfVar20[-2];
+                local_3144 = (float)dVar30;
+                local_3134 = (float)dVar30;
+                local_3124 = (float)dVar30;
+                local_3114 = (float)dVar31;
+                fVar1 = (float)(dVar22 * (double)(float)(dVar22 * dVar28));
+                local_3140 = (float)(dVar23 * (double)(float)(dVar22 * dVar28));
+                local_3138 = (float)(dVar22 * dVar24) - (float)(dVar23 * dVar26);
+                local_312c = (float)(dVar22 * dVar24) + (float)(dVar23 * dVar26);
+                local_3130 = (float)(dVar22 * dVar26) - (float)(dVar23 * dVar24);
+                local_314c = (float)(dVar25 * dVar26) - local_3140;
+                local_3148 = (float)(dVar23 * dVar24) + (float)(dVar22 * dVar26);
+                local_3140 = local_3140 + (float)(dVar25 * dVar26);
+                local_3128 = (float)(dVar31 - (double)((float)(dVar25 * dVar24) +
+                                                      (float)(dVar27 * dVar26)));
+                local_3150 = (float)(dVar31 - (double)(fVar1 + (float)(dVar25 * dVar24)));
+                local_313c = (float)(dVar31 - (double)(fVar1 + (float)(dVar27 * dVar26)));
+                local_311c = -(fVar3 * local_313c + fVar5 * local_314c + fVar4 * local_312c);
+                local_3118 = -(fVar5 * local_3148 + fVar4 * local_3128 + fVar3 * local_3138);
+                local_3120 = -(fVar3 * local_3140 + fVar5 * local_3150 + fVar4 * local_3130);
+                if (((((uint)pfVar20[-2] & 0x7f800000) == 0x7f800000) ||
+                    ((*(uint *)((int)pfVar21 + iVar11) & 0x7f800000) == 0x7f800000)) ||
+                   ((((uint)*pfVar20 & 0x7f800000) == 0x7f800000 ||
+                    (((uint)pfVar20[1] & 0x7f800000) == 0x7f800000)))) {
+                  MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
+                }
+                dVar27 = (double)pfVar20[5];
+                if (((uint)pfVar20[5] & 0x7f800000) == 0x7f800000) {
+                  MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
+                }
+                dVar28 = (double)*pfVar20;
+                dVar25 = (double)(float)(dVar29 * dVar27);
+                dVar24 = (double)*(float *)((int)pfVar21 + iVar11);
+                dVar23 = (double)(float)(dVar27 * dVar24);
+                dVar22 = (double)pfVar20[1];
+                local_30e0 = pfVar20[2];
+                local_30d8 = *(undefined4 *)((int)pfVar21 + iVar11 + 0x14);
+                local_30dc = *(undefined4 *)((int)pfVar21 + iVar11 + 0x10);
+                local_3104 = (float)dVar30;
+                fVar1 = (float)(dVar28 * (double)(float)(dVar28 * dVar27));
+                local_30f4 = (float)dVar30;
+                local_30e4 = (float)dVar30;
+                local_30d4 = (float)dVar31;
+                local_3100 = (float)(dVar22 * (double)(float)(dVar28 * dVar27));
+                local_3108 = (float)(dVar28 * dVar25) - (float)(dVar22 * dVar23);
+                local_30f0 = (float)(dVar22 * dVar23) + (float)(dVar28 * dVar25);
+                local_310c = local_3100 + (float)(dVar25 * dVar24);
+                local_3100 = (float)(dVar25 * dVar24) - local_3100;
+                local_30f8 = (float)(dVar28 * dVar23) + (float)(dVar22 * dVar25);
+                local_30fc = (float)(dVar31 - (double)(fVar1 + (float)(dVar29 * dVar25)));
+                local_3110 = (float)(dVar31 - (double)(fVar1 + (float)(dVar23 * dVar24)));
+                local_30ec = (float)(dVar28 * dVar23) - (float)(dVar22 * dVar25);
+                local_30e8 = (float)(dVar31 - (double)((float)(dVar23 * dVar24) +
+                                                      (float)(dVar29 * dVar25)));
+                R_MultiplySkelMat(&local_3150,&local_3110,pfVar18 + -3);
+                *pfVar18 = (float)dVar30;
+                pfVar18[4] = (float)dVar30;
+                pfVar18[8] = (float)dVar30;
+                pfVar18[0xc] = (float)dVar31;
+              }
+              uVar13 = uVar13 + 1;
+              pfVar21 = pfVar21 + 8;
+              pfVar20 = pfVar20 + 8;
+              pfVar18 = pfVar18 + 0x10;
+              uVar9 = uVar13 * 4;
+            } while ((int)uVar13 < (int)uVar17);
+          }
+        }
+        pcVar19 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp";
+        if ((int)uVar8 < -3) {
+          if (-4 < (int)*puVar14) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.h",
+                            0x74,0,0xffffffff82000f98,
+                            "R_IsRigidSurfaceType( modelSurf->base.skinnedCachedOffset )");
+          }
+          puVar14 = puVar14 + *puVar14 * -8 + -0x11;
+        }
+        else {
+          puVar15 = puVar14 + 6;
+          uVar8 = puVar14[5];
+          if (uVar8 == 0) {
+            MyAssertHandler(pcVar19,0xe7e,0,0xffffffff82000f98,"xsurf");
+          }
+          uVar13 = *puVar14;
+          if ((int)uVar13 < 0) {
+            MyAssertHandler(pcVar19,0xeba,0,0xffffffff82000f98,"baseSurf->skinnedCachedOffset >= 0")
+            ;
+          }
+          uVar12 = (ulonglong)DAT_845a0b48;
+          if (uVar12 == 0) {
+            MyAssertHandler(pcVar19,0xebb,0,0xffffffff82000f98,"gfxBuf.skinnedCacheLockAddr");
+            uVar12 = (ulonglong)DAT_845a0b48;
+          }
+          bVar2 = *(byte *)(uVar8 + 1);
+          puVar14 = puVar15;
+          if ((bVar2 & 0x20) == 0) {
+            if ((bVar2 & 0x40) == 0) {
+              R_SkinXSurfaceRigid(uVar8,*(undefined2 *)(uVar8 + 2));
+            }
+            else {
+              R_SkinXSurfaceWeight
+                        (*(undefined4 *)(uVar8 + 0x1c),uVar8 + 0x10,auStack_30d0 + uVar16 * 0x40);
+            }
+          }
+          else if ((bVar2 & 0x40) == 0) {
+            R_SkinXSurfaceRigidQuantized();
+          }
+          else {
+            R_SkinXSurfaceWeightQuantized(uVar8,auStack_30d0 + uVar16 * 0x40,uVar13 + uVar12);
+          }
+        }
+      }
+      uVar12 = (ulonglong)local_31a0;
+      local_31a0 = (uint)(uVar12 - 1);
+    } while (uVar12 - 1 != 0);
+  }
+  Profile_EndInternal(0);
+  __restfpr_26();
+  __restgprlr();
+  return;
 }
 

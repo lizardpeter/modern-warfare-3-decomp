@@ -2,20 +2,55 @@
 
 // 824DCC10  Com_LoadInfoString_FastFile  (qcommon/com_loadutils.cpp:50)
 
-void Com_LoadInfoString_FastFile(void)
+void Com_LoadInfoString_FastFile
+               (undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char *pcVar6;
+  longlong lVar4;
+  ulonglong uVar5;
+  
+  uVar1 = __savegprlr_27();
+  uVar2 = DB_FindXAssetHeader(0x24,uVar1,1);
+  iVar3 = DB_IsXAssetDefault(0x24,uVar1);
+  if (iVar3 != 0) {
+    Com_Error(1,0xffffffff820852cc,param_2,uVar1);
+  }
+  DB_GetRawBuffer(uVar2,param_4,0x2000);
+  lVar4 = param_3;
+  do {
+    pcVar6 = (char *)lVar4;
+    lVar4 = lVar4 + 1;
+  } while (*pcVar6 != '\0');
+  uVar5 = (lVar4 - param_3) - 1;
+  iVar3 = strncmp((char *)param_4,(char *)param_3,(size_t)uVar5);
+  if (iVar3 != 0) {
+    Com_Error(1,0xffffffff820852ac,uVar1,param_2);
+  }
+  __restgprlr_27((uVar5 & 0xffffffff) + param_4);
+  return;
 }
 
 
 // 824DCCD8  Com_LoadInfoString  (qcommon/com_loadutils.cpp:69)
 
-void Com_LoadInfoString(void)
+void Com_LoadInfoString(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = Com_LoadInfoString_FastFile();
+  iVar3 = Info_Validate();
+  if (iVar3 == 0) {
+    Com_Error(1,0xffffffff820852ec,uVar1,param_2);
+  }
+  __restgprlr_29(uVar2);
+  return;
 }
 

@@ -102,6 +102,88 @@ LAB_82938030:
   8293816C  EBE1FFF0             ld r31,-0x10(r1)
   82938170  4E800020             blr
 
+; 82937F18  bdMessage::getType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:45)
+  82937F18  88630008             lbz r3,0x8(r3)
+  82937F1C  4E800020             blr
+
+; 829381D0  bdMessage::getPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:51)
+  829381D0  7D8802A6             mfspr r12,LR
+  829381D4  4BFDE4E5             bl 0x829166b8
+  829381D8  3BE1FF80             subi r31,r1,0x80
+  829381DC  9421FF80             stwu r1,-0x80(r1)
+  829381E0  8164000C             lwz r11,0xc(r4)
+  829381E4  39400000             li r10,0x0
+  829381E8  7C7C1B78             or r28,r3,r3
+  829381EC  7C9E2378             or r30,r4,r4
+  829381F0  915F0050             stw r10,0x50(r31)
+  829381F4  3BA4000C             addi r29,r4,0xc
+  829381F8  2B0B0000             cmplwi cr6,r11,0x0
+  829381FC  409A0038             bne cr6,0x82938234
+  82938200  38600024             li r3,0x24
+  82938204  4BFBCE45             bl 0x828f5048
+  82938208  907F0050             stw r3,0x50(r31)
+  8293820C  28030000             cmplwi r3,0x0
+  82938210  41820018             beq 0x82938228
+  82938214  38800000             li r4,0x0
+  82938218  88BE0010             lbz r5,0x10(r30)
+  8293821C  4BFBFC45             bl 0x828f7e60
+  82938220  7C641B78             or r4,r3,r3
+  82938224  48000008             b 0x8293822c
+LAB_82938228:
+  82938228  38800000             li r4,0x0
+LAB_8293822c:
+  8293822C  7FA3EB78             or r3,r29,r29
+  82938230  4BFD7F01             bl 0x82910130
+LAB_82938234:
+  82938234  817D0000             lwz r11,0x0(r29)
+  82938238  2B0B0000             cmplwi cr6,r11,0x0
+  8293823C  917C0000             stw r11,0x0(r28)
+  82938240  419A002C             beq cr6,0x8293826c
+  82938244  917F0050             stw r11,0x50(r31)
+  82938248  394B0004             addi r10,r11,0x4
+LAB_8293824c:
+  8293824C  7D0000A6             mfmsr r8
+  82938250  7DA10164             mtmsrd r13,1
+  82938254  7D205028             lwarx r9,0,r10
+  82938258  39290001             addi r9,r9,0x1
+  8293825C  7D20512D             stwcx. r9,0,r10
+  82938260  7D010164             mtmsrd r8,1
+  82938264  4082FFE8             bne 0x8293824c
+  82938268  816B0004             lwz r11,0x4(r11)
+LAB_8293826c:
+  8293826C  7F83E378             or r3,r28,r28
+  82938270  383F0080             addi r1,r31,0x80
+  82938274  4BFDE494             b 0x82916708
+
+; 829382A0  bdMessage::hasPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:61)
+  829382A0  8163000C             lwz r11,0xc(r3)
+  829382A4  314BFFFF             subic r10,r11,0x1
+  829382A8  7C6A5910             subfe r3,r10,r11
+  829382AC  4E800020             blr
+
+; 829382B0  bdMessage::getUnencryptedPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:72)
+  829382B0  81640014             lwz r11,0x14(r4)
+  829382B4  2B0B0000             cmplwi cr6,r11,0x0
+  829382B8  91630000             stw r11,0x0(r3)
+  829382BC  4D9A0020             beqlr cr6
+  829382C0  394B0004             addi r10,r11,0x4
+LAB_829382c4:
+  829382C4  7D0000A6             mfmsr r8
+  829382C8  7DA10164             mtmsrd r13,1
+  829382CC  7D205028             lwarx r9,0,r10
+  829382D0  39290001             addi r9,r9,0x1
+  829382D4  7D20512D             stwcx. r9,0,r10
+  829382D8  7D010164             mtmsrd r8,1
+  829382DC  4082FFE8             bne 0x829382c4
+  829382E0  816B0004             lwz r11,0x4(r11)
+  829382E4  4E800020             blr
+
+; 829382E8  bdMessage::hasUnencryptedPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdmessage.cpp:77)
+  829382E8  81630014             lwz r11,0x14(r3)
+  829382EC  314BFFFF             subic r10,r11,0x1
+  829382F0  7C6A5910             subfe r3,r10,r11
+  829382F4  4E800020             blr
+
 ; 829382F8  bdMessage::`scalar_deleting_destructor'  (line unknown)
   829382F8  7D8802A6             mfspr r12,LR
   829382FC  9181FFF8             stw r12,-0x8(r1)

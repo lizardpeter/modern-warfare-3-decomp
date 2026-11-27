@@ -7,6 +7,42 @@
 ; 826E2808  IWNet_WriteTicket  (iwnet/iwnet_auth.cpp:149)
   826E2808  7D8802A6             mfspr r12,LR
   826E280C  48233EAD             bl 0x829166b8
+  826E2810  9421FF80             stwu r1,-0x80(r1)
+  826E2814  3D60821B             lis r11,-0x7de5
+  826E2818  3D408200             lis r10,-0x7e00
+  826E281C  7C7F1B78             or r31,r3,r3
+  826E2820  7C9C2378             or r28,r4,r4
+  826E2824  2B030000             cmplwi cr6,r3,0x0
+  826E2828  3BCB84DC             subi r30,r11,0x7b24
+  826E282C  3BAA0F98             addi r29,r10,0xf98
+  826E2830  409A0020             bne cr6,0x826e2850
+  826E2834  3D608200             lis r11,-0x7e00
+  826E2838  7FA6EB78             or r6,r29,r29
+  826E283C  38EB4D74             addi r7,r11,0x4d74
+  826E2840  7FC3F378             or r3,r30,r30
+  826E2844  38A00000             li r5,0x0
+  826E2848  38800096             li r4,0x96
+  826E284C  4BEF1CB5             bl 0x825d4500
+LAB_826e2850:
+  826E2850  2B1C0000             cmplwi cr6,r28,0x0
+  826E2854  409A0020             bne cr6,0x826e2874
+  826E2858  3D60821B             lis r11,-0x7de5
+  826E285C  7FA6EB78             or r6,r29,r29
+  826E2860  38EB84D4             subi r7,r11,0x7b2c
+  826E2864  7FC3F378             or r3,r30,r30
+  826E2868  38A00000             li r5,0x0
+  826E286C  38800097             li r4,0x97
+  826E2870  4BEF1C91             bl 0x825d4500
+LAB_826e2874:
+  826E2874  38A00010             li r5,0x10
+  826E2878  7F84E378             or r4,r28,r28
+  826E287C  7FE3FB78             or r3,r31,r31
+  826E2880  4BE21A29             bl 0x825042a8
+  826E2884  7FE3FB78             or r3,r31,r31
+  826E2888  E89C0010             ld r4,0x10(r28)
+  826E288C  4BE21D05             bl 0x82504590
+  826E2890  38210080             addi r1,r1,0x80
+  826E2894  48233E74             b 0x82916708
 
 ; 826E2898  IWNet_GetCurrentTicket  (iwnet/iwnet_auth.cpp:175)
   826E2898  7D8802A6             mfspr r12,LR

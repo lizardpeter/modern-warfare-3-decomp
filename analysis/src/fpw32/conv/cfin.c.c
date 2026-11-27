@@ -5,7 +5,36 @@
 FLT _fltin2(FLT _Flt,char *_Str,_locale_t _Locale)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(_Flt,_Str,_Locale);
+  uint *puVar1;
+  uint uVar2;
+  INTRNCVT_STATUS IVar3;
+  FLT p_Var4;
+  uint uVar5;
+  char *local_50 [2];
+  _CRT_DOUBLE local_48;
+  _LDBL12 a_Stack_40 [5];
+  
+  puVar1 = (uint *)__savegprlr_27(_Flt);
+  uVar5 = 0;
+  uVar2 = __strgtold12_l(a_Stack_40,local_50,_Str,0,0,0,0,_Locale);
+  if ((uVar2 & 4) == 0) {
+    IVar3 = _ld12tod(a_Stack_40,&local_48);
+    if (((uVar2 & 2) != 0) || (IVar3 == INTRNCVT_OVERFLOW)) {
+      uVar5 = 0x80;
+    }
+    if (((uVar2 & 1) != 0) || (IVar3 == INTRNCVT_UNDERFLOW)) {
+      uVar5 = uVar5 | 0x100;
+    }
+  }
+  else {
+    uVar5 = 0x200;
+    local_48.x._0_4_ = 0;
+    local_48.x._4_4_ = 0;
+  }
+  *puVar1 = uVar5;
+  puVar1[1] = (int)local_50[0] - (int)_Str;
+  *(ulonglong *)(puVar1 + 4) = CONCAT44(local_48.x._0_4_,local_48.x._4_4_);
+  p_Var4 = (FLT)__restgprlr_27(puVar1);
+  return p_Var4;
 }
 

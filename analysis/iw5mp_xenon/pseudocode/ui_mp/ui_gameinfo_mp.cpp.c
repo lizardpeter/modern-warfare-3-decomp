@@ -10,6 +10,138 @@ void TRACK_ui_gameinfo(void)
 }
 
 
+// 825A35E8  UI_ParseInfos  (ui_mp/ui_gameinfo_mp.cpp:65)
+
+void UI_ParseInfos(undefined8 param_1,int param_2,longlong param_3)
+
+{
+  char cVar1;
+  char cVar2;
+  char *pcVar3;
+  char *pcVar4;
+  char *pcVar5;
+  longlong lVar6;
+  undefined4 in_stack_00000014;
+  char acStack_881 [1025];
+  undefined1 auStack_480 [1152];
+  
+  in_stack_00000014 = __savegprlr_18();
+  lVar6 = 0;
+  pcVar3 = (char *)Com_Parse(&stack0x00000014);
+  if (*pcVar3 == '\0') {
+LAB_825a3840:
+    __restgprlr_18(lVar6);
+    return;
+  }
+  pcVar5 = "{";
+  pcVar4 = pcVar3;
+LAB_825a366c:
+  do {
+    cVar1 = *pcVar4;
+    cVar2 = *pcVar5;
+    if (cVar1 != '\0') {
+      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
+      if (cVar1 == cVar2) goto LAB_825a366c;
+    }
+    if (cVar1 != cVar2) {
+      Com_PrintError(0xd,0xffffffff8216a5f4,pcVar3);
+      __restgprlr_18(lVar6);
+      return;
+    }
+    if ((int)lVar6 == param_2) {
+      Com_PrintError(0xd,0xffffffff8216a5e0);
+      goto LAB_825a3840;
+    }
+    acStack_881[1] = 0;
+    pcVar3 = (char *)Com_Parse(&stack0x00000014);
+    cVar1 = *pcVar3;
+    while (pcVar5 = "}", pcVar4 = pcVar3, cVar1 != '\0') {
+      do {
+        cVar1 = *pcVar4;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_825a3744;
+      I_strncpyz(auStack_480,pcVar3,0x400);
+      pcVar3 = (char *)Com_ParseOnLine(&stack0x00000014);
+      if (*pcVar3 == '\0') {
+        pcVar3 = "<NULL>";
+      }
+      Info_SetValueForKey(acStack_881 + 1,auStack_480,pcVar3);
+      pcVar3 = (char *)Com_Parse(&stack0x00000014);
+      cVar1 = *pcVar3;
+    }
+    Com_PrintError(0xd,0xffffffff8216a620);
+LAB_825a3744:
+    *(int *)param_3 = (int)(DAT_83f69dfc + -0x7c096200);
+    pcVar3 = acStack_881 + 1;
+    do {
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
+    } while (cVar1 != '\0');
+    pcVar4 = (char *)va(0xffffffff82013b64,0x40);
+    pcVar5 = pcVar4;
+    do {
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 != '\0');
+    DAT_83f69dfc = pcVar3 + (int)(DAT_83f69dfc +
+                                 (int)(pcVar5 + (-(int)pcVar4 - (int)(acStack_881 + 1)) + 4));
+    if (0x8000 < (int)DAT_83f69dfc) {
+      Com_Error(1,0xffffffff8216a640);
+    }
+    pcVar3 = acStack_881;
+    pcVar5 = (char *)(*(int *)param_3 + -1);
+    do {
+      pcVar3 = pcVar3 + 1;
+      cVar1 = *pcVar3;
+      pcVar5 = pcVar5 + 1;
+      *pcVar5 = cVar1;
+    } while (cVar1 != '\0');
+    lVar6 = lVar6 + 1;
+    param_3 = param_3 + 4;
+    pcVar3 = (char *)Com_Parse(&stack0x00000014);
+    pcVar5 = "{";
+    pcVar4 = pcVar3;
+    if (*pcVar3 == '\0') {
+      __restgprlr_18(lVar6);
+      return;
+    }
+  } while( true );
+}
+
+
+// 825A3850  UI_LoadArenasFromFile_FastFile  (ui_mp/ui_gameinfo_mp.cpp:181)
+
+void UI_LoadArenasFromFile_FastFile(void)
+
+{
+  undefined8 uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  undefined1 auStack_20 [16];
+  
+  LargeLocal__LargeLocal(auStack_20,0x18000);
+  uVar1 = LargeLocal__GetBuf(auStack_20);
+  DAT_83f69df8 = 0;
+  DAT_83f69dfc = 0;
+  uVar2 = DB_ReadRawFile(0xffffffff8216a684,uVar1,0x18000);
+  if ((uVar2 & 0xffffffff) == 0) {
+    Com_PrintError(0xd,0xffffffff8216a65c);
+  }
+  else {
+    iVar3 = UI_ParseInfos(uVar2,0x40 - (ulonglong)DAT_83f69df8,
+                          ((ulonglong)DAT_83f69df8 & 0x3fffffff) * 4 + -0x7c096308);
+    DAT_83f69df8 = iVar3 + DAT_83f69df8;
+  }
+  LargeLocal___LargeLocal(auStack_20);
+  return;
+}
+
+
 // 825A3900  UI_SortArenas  (ui_mp/ui_gameinfo_mp.cpp:204)
 
 void UI_SortArenas(void)
@@ -85,8 +217,137 @@ longlong UI_GetMapInfo_Sorted(int param_1)
 void UI_UpdateArenas(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  bool bVar1;
+  undefined4 uVar2;
+  bool bVar3;
+  char *pcVar5;
+  uint uVar6;
+  char cVar8;
+  undefined8 uVar4;
+  int iVar7;
+  int iVar9;
+  char *pcVar10;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  int iVar13;
+  char *pcVar14;
+  char *local_9c [39];
+  
   __savegprlr();
+  if (DAT_83f7df60 != 0) {
+    DAT_83f7df64 = 0;
+    DAT_83fd1d68 = 0;
+    UI_LoadArenasFromFile_FastFile();
+    bVar3 = false;
+    puVar11 = &DAT_83f69cf8;
+    iVar13 = 0;
+    puVar12 = puVar11;
+    if (0 < DAT_83f69df8) {
+      do {
+        pcVar5 = (char *)Info_ValueForKey(*puVar12,0xffffffff8216a78c);
+        if ((((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) &&
+            (uVar6 = atoi(pcVar5), 0 < (int)uVar6)) &&
+           ((*(char *)(DAT_83f71e90 + 0xc) != '\0' ||
+            (cVar8 = Content_DoWeHaveContentPack(2 << (uVar6 & 0x3f)), cVar8 != '\0')))) {
+          bVar3 = true;
+          break;
+        }
+        iVar13 = iVar13 + 1;
+        puVar12 = puVar12 + 1;
+      } while (iVar13 < DAT_83f69df8);
+    }
+    iVar13 = 0;
+    if (0 < DAT_83f69df8) {
+      do {
+        uVar4 = Info_ValueForKey(*puVar11,0xffffffff82043710);
+        iVar7 = I_strcmp(uVar4,0xffffffff8216a698);
+        if ((iVar7 != 0) || (bVar3)) {
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff82043710);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082078,uVar4,0x10);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8216a6a4);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082098,uVar4,0x20);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8212f570);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082068,uVar4,0x20);
+          uVar4 = Info_ValueForKey(*puVar11,0xffffffff8216a6b0);
+          I_strncpyz((ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082048,uVar4,0x20);
+          pcVar5 = (char *)Info_ValueForKey(*puVar11,0xffffffff8216a78c);
+          if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
+            iVar7 = -1;
+          }
+          else {
+            iVar7 = atoi(pcVar5);
+          }
+          uVar2 = *puVar11;
+          (&DAT_83f7e9dc)[DAT_83f7df64 * 0x29e] = iVar7;
+          pcVar5 = (char *)Info_ValueForKey(uVar2,0xffffffff820337c4);
+          if ((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) {
+            va(0xffffffff8216a6bc,(ulonglong)DAT_83f7df64 * 0xa78 + -0x7c082078);
+            Com_BeginParseSession();
+            local_9c[0] = pcVar5;
+            pcVar5 = (char *)Com_Parse(local_9c);
+            while ((pcVar5 != (char *)0x0 && (*pcVar5 != '\0'))) {
+              pcVar5 = (char *)Com_Parse(local_9c);
+            }
+            Com_EndParseSession();
+          }
+          uVar6 = DAT_83f7df64;
+          pcVar5 = (char *)*puVar11;
+          iVar7 = DAT_83f7df64 * 0xa78;
+          (&DAT_83f7e9d8)[DAT_83f7df64 * 0x29e] = 0;
+          if (pcVar5 != (char *)0x0) {
+            while (*pcVar5 != '\0') {
+              if ((&DAT_83f7e9d8)[uVar6 * 0x29e] == 0x20) {
+                uVar4 = 0xffffffff8216a6d0;
+LAB_825a3e30:
+                Com_PrintWarning(0xd,uVar4,&DAT_83f7df88 + iVar7);
+                break;
+              }
+              pcVar10 = pcVar5 + 1;
+              if (*pcVar5 != '\\') {
+                uVar4 = 0xffffffff8216a710;
+                goto LAB_825a3e30;
+              }
+              cVar8 = *pcVar10;
+              pcVar14 = pcVar10;
+              while ((cVar8 != '\\' && (bVar1 = cVar8 != '\0', cVar8 = '\0', bVar1))) {
+                pcVar14 = pcVar14 + 1;
+                cVar8 = *pcVar14;
+              }
+              pcVar14 = pcVar14 + 1;
+              uVar4 = 0xffffffff8216a74c;
+              if (cVar8 != '\\') goto LAB_825a3e30;
+              iVar9 = (int)pcVar14 - (int)pcVar10;
+              if (0xf < iVar9) {
+                iVar9 = 0x10;
+              }
+              I_strncpyz(&DAT_83f7df68 + ((&DAT_83f7e9d8)[uVar6 * 0x29e] + 7) * 0x10 + iVar7,pcVar10
+                         ,iVar9);
+              cVar8 = *pcVar14;
+              pcVar5 = pcVar14;
+              while ((cVar8 != '\\' && (cVar8 != '\0'))) {
+                pcVar5 = pcVar5 + 1;
+                cVar8 = *pcVar5;
+              }
+              pcVar10 = pcVar5 + (1 - (int)pcVar14);
+              if (0x3f < (int)pcVar10) {
+                pcVar10 = (char *)0x40;
+              }
+              I_strncpyz(&DAT_83f7df68 + (&DAT_83f7e9d8)[uVar6 * 0x29e] * 0x40 + iVar7 + 0x270,
+                         pcVar14,pcVar10);
+              (&DAT_83f7e9d8)[uVar6 * 0x29e] = (&DAT_83f7e9d8)[uVar6 * 0x29e] + 1;
+            }
+          }
+          DAT_83f7df64 = DAT_83f7df64 + 1;
+          if (0x7f < (int)DAT_83f7df64) break;
+        }
+        iVar13 = iVar13 + 1;
+        puVar11 = puVar11 + 1;
+      } while (iVar13 < DAT_83f69df8);
+    }
+    DAT_83f7df60 = 0;
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -101,6 +362,36 @@ void UI_LoadArenas(void)
   if ((uVar1 & 2) != 0) {
     DAT_83f7df60 = 1;
   }
+  return;
+}
+
+
+// 825A3EB0  UI_GetIndexForMapName  (ui_mp/ui_gameinfo_mp.cpp:428)
+
+void UI_GetIndexForMapName(undefined8 param_1,int *param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
+  
+  uVar1 = __savegprlr_27();
+  iVar4 = 0;
+  if (0 < DAT_83f7df64) {
+    lVar3 = -0x7c082078;
+    do {
+      iVar2 = I_stricmp(lVar3,uVar1);
+      if (iVar2 == 0) {
+        *param_2 = iVar4;
+        __restgprlr_27(1);
+        return;
+      }
+      iVar4 = iVar4 + 1;
+      lVar3 = lVar3 + 0xa78;
+    } while (iVar4 < DAT_83f7df64);
+  }
+  __restgprlr_27(0);
   return;
 }
 

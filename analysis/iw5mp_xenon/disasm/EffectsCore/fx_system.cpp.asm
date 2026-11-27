@@ -3,14 +3,128 @@
 ; 82444068  FXW_EffectStopLooping  (EffectsCore/fx_system.cpp:35)
   82444068  7D8802A6             mfspr r12,LR
   8244406C  484D264D             bl 0x829166b8
+  82444070  9421FF80             stwu r1,-0x80(r1)
+  82444074  3D608207             lis r11,-0x7df9
+  82444078  3D408200             lis r10,-0x7e00
+  8244407C  7C7C1B78             or r28,r3,r3
+  82444080  7C9F2378             or r31,r4,r4
+  82444084  2B030000             cmplwi cr6,r3,0x0
+  82444088  3BCB8C20             subi r30,r11,0x73e0
+  8244408C  3BAA0F98             addi r29,r10,0xf98
+  82444090  409A0020             bne cr6,0x824440b0
+  82444094  3D608204             lis r11,-0x7dfc
+  82444098  7FA6EB78             or r6,r29,r29
+  8244409C  38EB8694             subi r7,r11,0x796c
+  824440A0  7FC3F378             or r3,r30,r30
+  824440A4  38A00000             li r5,0x0
+  824440A8  38800025             li r4,0x25
+  824440AC  48190455             bl 0x825d4500
+LAB_824440b0:
+  824440B0  2B1F0000             cmplwi cr6,r31,0x0
+  824440B4  409A0020             bne cr6,0x824440d4
+  824440B8  3D608207             lis r11,-0x7df9
+  824440BC  7FA6EB78             or r6,r29,r29
+  824440C0  38EB8440             subi r7,r11,0x7bc0
+  824440C4  7FC3F378             or r3,r30,r30
+  824440C8  38A00000             li r5,0x0
+  824440CC  38800026             li r4,0x26
+  824440D0  48190431             bl 0x825d4500
+LAB_824440d4:
+  824440D4  817F0004             lwz r11,0x4(r31)
+  824440D8  556A0462             rlwinm r10,r11,0x0,0x11,0x11
+  824440DC  2F0A0000             cmpwi cr6,r10,0x0
+  824440E0  419A0018             beq cr6,0x824440f8
+  824440E4  556B04A0             rlwinm r11,r11,0x0,0x12,0x10
+  824440E8  7FE4FB78             or r4,r31,r31
+  824440EC  917F0004             stw r11,0x4(r31)
+  824440F0  7F83E378             or r3,r28,r28
+  824440F4  4BFFB3BD             bl 0x8243f4b0
+LAB_824440f8:
+  824440F8  38210080             addi r1,r1,0x80
+  824440FC  484D260C             b 0x82916708
 
 ; 82444100  FX_EffectRestartLooping  (EffectsCore/fx_system.cpp:47)
   82444100  7D8802A6             mfspr r12,LR
   82444104  484D25B5             bl 0x829166b8
+  82444108  9421FF80             stwu r1,-0x80(r1)
+  8244410C  3D608207             lis r11,-0x7df9
+  82444110  3D408200             lis r10,-0x7e00
+  82444114  7C7C1B78             or r28,r3,r3
+  82444118  7C9F2378             or r31,r4,r4
+  8244411C  2B030000             cmplwi cr6,r3,0x0
+  82444120  3BCB8C20             subi r30,r11,0x73e0
+  82444124  3BAA0F98             addi r29,r10,0xf98
+  82444128  409A0020             bne cr6,0x82444148
+  8244412C  3D608204             lis r11,-0x7dfc
+  82444130  7FA6EB78             or r6,r29,r29
+  82444134  38EB8694             subi r7,r11,0x796c
+  82444138  7FC3F378             or r3,r30,r30
+  8244413C  38A00000             li r5,0x0
+  82444140  38800031             li r4,0x31
+  82444144  481903BD             bl 0x825d4500
+LAB_82444148:
+  82444148  2B1F0000             cmplwi cr6,r31,0x0
+  8244414C  409A0020             bne cr6,0x8244416c
+  82444150  3D608207             lis r11,-0x7df9
+  82444154  7FA6EB78             or r6,r29,r29
+  82444158  38EB8440             subi r7,r11,0x7bc0
+  8244415C  7FC3F378             or r3,r30,r30
+  82444160  38A00000             li r5,0x0
+  82444164  38800032             li r4,0x32
+  82444168  48190399             bl 0x825d4500
+LAB_8244416c:
+  8244416C  817F0004             lwz r11,0x4(r31)
+  82444170  556A0462             rlwinm r10,r11,0x0,0x11,0x11
+  82444174  2F0A0000             cmpwi cr6,r10,0x0
+  82444178  409A0018             bne cr6,0x82444190
+  8244417C  616B4000             ori r11,r11,0x4000
+  82444180  7FE4FB78             or r4,r31,r31
+  82444184  917F0004             stw r11,0x4(r31)
+  82444188  7F83E378             or r3,r28,r28
+  8244418C  4BFF8E55             bl 0x8243cfe0
+LAB_82444190:
+  82444190  38210080             addi r1,r1,0x80
+  82444194  484D2574             b 0x82916708
 
 ; 82444198  FXW_PreventRewind  (EffectsCore/fx_system.cpp:59)
   82444198  7D8802A6             mfspr r12,LR
   8244419C  484D2521             bl 0x829166bc
+  824441A0  9421FF90             stwu r1,-0x70(r1)
+  824441A4  3D608207             lis r11,-0x7df9
+  824441A8  3D408200             lis r10,-0x7e00
+  824441AC  7C9D2378             or r29,r4,r4
+  824441B0  2B030000             cmplwi cr6,r3,0x0
+  824441B4  3BEB8C20             subi r31,r11,0x73e0
+  824441B8  3BCA0F98             addi r30,r10,0xf98
+  824441BC  409A0020             bne cr6,0x824441dc
+  824441C0  3D608204             lis r11,-0x7dfc
+  824441C4  7FC6F378             or r6,r30,r30
+  824441C8  38EB8694             subi r7,r11,0x796c
+  824441CC  7FE3FB78             or r3,r31,r31
+  824441D0  38A00000             li r5,0x0
+  824441D4  3880003D             li r4,0x3d
+  824441D8  48190329             bl 0x825d4500
+LAB_824441dc:
+  824441DC  2B1D0000             cmplwi cr6,r29,0x0
+  824441E0  409A0020             bne cr6,0x82444200
+  824441E4  3D608207             lis r11,-0x7df9
+  824441E8  7FC6F378             or r6,r30,r30
+  824441EC  38EB8440             subi r7,r11,0x7bc0
+  824441F0  7FE3FB78             or r3,r31,r31
+  824441F4  38A00000             li r5,0x0
+  824441F8  3880003E             li r4,0x3e
+  824441FC  48190305             bl 0x825d4500
+LAB_82444200:
+  82444200  817D0004             lwz r11,0x4(r29)
+  82444204  556A04FE             rlwinm r10,r11,0x0,0x13,0x1f
+  82444208  2F0A0000             cmpwi cr6,r10,0x0
+  8244420C  419A0010             beq cr6,0x8244421c
+  82444210  A17D0024             lhz r11,0x24(r29)
+  82444214  616A1000             ori r10,r11,0x1000
+  82444218  B15D0024             sth r10,0x24(r29)
+LAB_8244421c:
+  8244421C  38210070             addi r1,r1,0x70
+  82444220  484D24EC             b 0x8291670c
 
 ; 82444228  FXW_StopEffect  (EffectsCore/fx_system.cpp:74)
   82444228  7D8802A6             mfspr r12,LR
@@ -46,6 +160,8 @@ LAB_82444270:
   8244429C  38A00000             li r5,0x0
   824442A0  3880005A             li r4,0x5a
   824442A4  4819025D             bl 0x825d4500
+  824442A8  382100A0             addi r1,r1,0xa0
+  824442AC  484D244C             b 0x829166f8
 LAB_824442b0:
   824442B0  386000C8             li r3,0xc8
   824442B4  4BE1CB3D             bl 0x82260df0
@@ -122,6 +238,17 @@ LAB_8244438c:
   82444550  91630000             stw r11,0x0(r3)
   82444554  4E800020             blr
 
+; 82444558  FX_RelocateSystem  (EffectsCore/fx_system.cpp:141)
+  82444558  2F040000             cmpwi cr6,r4,0x0
+  8244455C  4D9A0020             beqlr cr6
+  82444560  81630060             lwz r11,0x60(r3)
+  82444564  7D6B2214             add r11,r11,r4
+  82444568  91630060             stw r11,0x60(r3)
+  8244456C  81630064             lwz r11,0x64(r3)
+  82444570  7D4B2214             add r10,r11,r4
+  82444574  91430064             stw r10,0x64(r3)
+  82444578  4E800020             blr
+
 ; 82444398  FX_CalculateLighting  (EffectsCore/fx_system.cpp:151)
   82444398  7D8802A6             mfspr r12,LR
   8244439C  9181FFF8             stw r12,-0x8(r1)
@@ -145,7 +272,95 @@ LAB_8244438c:
 ; 824443E0  FX_GetClientEffectIndex  (EffectsCore/fx_system.cpp:162)
   824443E0  7D8802A6             mfspr r12,LR
   824443E4  484D22D5             bl 0x829166b8
+  824443E8  9421FF80             stwu r1,-0x80(r1)
+  824443EC  7C9F2378             or r31,r4,r4
+  824443F0  480012E1             bl 0x824456d0
+  824443F4  3D608207             lis r11,-0x7df9
+  824443F8  3D408200             lis r10,-0x7e00
+  824443FC  7C7E1B78             or r30,r3,r3
+  82444400  2B030000             cmplwi cr6,r3,0x0
+  82444404  3BAB8C20             subi r29,r11,0x73e0
+  82444408  3B8A0F98             addi r28,r10,0xf98
+  8244440C  409A0020             bne cr6,0x8244442c
+  82444410  3D608204             lis r11,-0x7dfc
+  82444414  7F86E378             or r6,r28,r28
+  82444418  38EB8694             subi r7,r11,0x796c
+  8244441C  7FA3EB78             or r3,r29,r29
+  82444420  38A00000             li r5,0x0
+  82444424  388000A7             li r4,0xa7
+  82444428  481900D9             bl 0x825d4500
+LAB_8244442c:
+  8244442C  2B1F0000             cmplwi cr6,r31,0x0
+  82444430  409A0020             bne cr6,0x82444450
+  82444434  3D608206             lis r11,-0x7dfa
+  82444438  7F86E378             or r6,r28,r28
+  8244443C  38EB7364             addi r7,r11,0x7364
+  82444440  7FA3EB78             or r3,r29,r29
+  82444444  38A00000             li r5,0x0
+  82444448  388000A8             li r4,0xa8
+  8244444C  481900B5             bl 0x825d4500
+LAB_82444450:
+  82444450  817E0010             lwz r11,0x10(r30)
+  82444454  7F1F5840             cmplw cr6,r31,r11
+  82444458  41980014             blt cr6,0x8244446c
+  8244445C  3D6B0002             addis r11,r11,0x2
+  82444460  396B4000             addi r11,r11,0x4000
+  82444464  7F1F5840             cmplw cr6,r31,r11
+  82444468  41980020             blt cr6,0x82444488
+LAB_8244446c:
+  8244446C  3D608207             lis r11,-0x7df9
+  82444470  7F86E378             or r6,r28,r28
+  82444474  38EB8CB8             subi r7,r11,0x7348
+  82444478  7FA3EB78             or r3,r29,r29
+  8244447C  38A00000             li r5,0x0
+  82444480  388000A9             li r4,0xa9
+  82444484  4819007D             bl 0x825d4500
+LAB_82444488:
+  82444488  817E0010             lwz r11,0x10(r30)
+  8244448C  39400090             li r10,0x90
+  82444490  7D2BF850             subf r9,r11,r31
+  82444494  7C6953D6             divw r3,r9,r10
+  82444498  38210080             addi r1,r1,0x80
+  8244449C  484D226C             b 0x82916708
 
 ; 824444A0  FX_GetClientEffectByIndex  (EffectsCore/fx_system.cpp:176)
   824444A0  7D8802A6             mfspr r12,LR
   824444A4  484D2215             bl 0x829166b8
+  824444A8  9421FF80             stwu r1,-0x80(r1)
+  824444AC  7C9F2378             or r31,r4,r4
+  824444B0  48001221             bl 0x824456d0
+  824444B4  3D608207             lis r11,-0x7df9
+  824444B8  3D408200             lis r10,-0x7e00
+  824444BC  7C7E1B78             or r30,r3,r3
+  824444C0  2B030000             cmplwi cr6,r3,0x0
+  824444C4  3BAB8C20             subi r29,r11,0x73e0
+  824444C8  3B8A0F98             addi r28,r10,0xf98
+  824444CC  409A0020             bne cr6,0x824444ec
+  824444D0  3D608204             lis r11,-0x7dfc
+  824444D4  7F86E378             or r6,r28,r28
+  824444D8  38EB8694             subi r7,r11,0x796c
+  824444DC  7FA3EB78             or r3,r29,r29
+  824444E0  38A00000             li r5,0x0
+  824444E4  388000B5             li r4,0xb5
+  824444E8  48190019             bl 0x825d4500
+LAB_824444ec:
+  824444EC  2F1F0000             cmpwi cr6,r31,0x0
+  824444F0  4198000C             blt cr6,0x824444fc
+  824444F4  2F1F0400             cmpwi cr6,r31,0x400
+  824444F8  41980020             blt cr6,0x82444518
+LAB_824444fc:
+  824444FC  3D608207             lis r11,-0x7df9
+  82444500  7F86E378             or r6,r28,r28
+  82444504  38EB8D04             subi r7,r11,0x72fc
+  82444508  7FA3EB78             or r3,r29,r29
+  8244450C  38A00000             li r5,0x0
+  82444510  388000B6             li r4,0xb6
+  82444514  4818FFED             bl 0x825d4500
+LAB_82444518:
+  82444518  57EB1838             rlwinm r11,r31,0x3,0x0,0x1c
+  8244451C  815E0010             lwz r10,0x10(r30)
+  82444520  7D7F5A14             add r11,r31,r11
+  82444524  556B2036             rlwinm r11,r11,0x4,0x0,0x1b
+  82444528  7C6B5214             add r3,r11,r10
+  8244452C  38210080             addi r1,r1,0x80
+  82444530  484D21D8             b 0x82916708

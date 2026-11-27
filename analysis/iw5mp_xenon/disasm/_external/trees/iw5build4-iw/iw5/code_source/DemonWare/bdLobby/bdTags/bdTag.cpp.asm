@@ -50,10 +50,43 @@
 ; 828FD820  bdTag::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:34)
   828FD820  7D8802A6             mfspr r12,LR
   828FD824  48018E99             bl 0x829166bc
+  828FD828  3BE1FF90             subi r31,r1,0x70
+  828FD82C  9421FF90             stwu r1,-0x70(r1)
+  828FD830  7C7E1B78             or r30,r3,r3
+  828FD834  909F008C             stw r4,0x8c(r31)
+  828FD838  7C9D2378             or r29,r4,r4
+  828FD83C  38830008             addi r4,r3,0x8
+  828FD840  807D0000             lwz r3,0x0(r29)
+  828FD844  4BFF855D             bl 0x828f5da0
+  828FD848  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828FD84C  314BFFFF             subic r10,r11,0x1
+  828FD850  7D6A5910             subfe r11,r10,r11
+  828FD854  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828FD858  4182001C             beq 0x828fd874
+  828FD85C  389E0010             addi r4,r30,0x10
+  828FD860  807D0000             lwz r3,0x0(r29)
+  828FD864  4BFF853D             bl 0x828f5da0
+  828FD868  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828FD86C  39600001             li r11,0x1
+  828FD870  40820008             bne 0x828fd878
+LAB_828fd874:
+  828FD874  39600000             li r11,0x0
+LAB_828fd878:
+  828FD878  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  828FD87C  7FA3EB78             or r3,r29,r29
+  828FD880  4BA66B81             bl 0x82364400
+  828FD884  7FC3F378             or r3,r30,r30
+  828FD888  383F0070             addi r1,r31,0x70
+  828FD88C  48018E80             b 0x8291670c
 
 ; 828FD780  bdTag::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:42)
   828FD780  38600018             li r3,0x18
   828FD784  4E800020             blr
+
+; 828FD788  bdTag::set  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:47)
+  828FD788  F8830008             std r4,0x8(r3)
+  828FD78C  F8A30010             std r5,0x10(r3)
+  828FD790  4E800020             blr
 
 ; 828FD798  bdTag::isSerializable  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtags/bdtag.cpp:53)
   828FD798  E9630008             ld r11,0x8(r3)

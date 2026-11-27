@@ -2,10 +2,24 @@
 
 // 8291DB70  `eh_vector_constructor_iterator'  (line unknown)
 
-void _eh_vector_constructor_iterator_(void)
+void _eh_vector_constructor_iterator_
+               (undefined8 param_1,undefined8 param_2,int param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  longlong lVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
+  
+  uVar3 = (undefined4)param_2;
+  uVar2 = (undefined4)((ulonglong)param_2 >> 0x20);
+  lVar1 = __savegprlr_26();
+  for (iVar4 = 0; iVar4 < param_3; iVar4 = iVar4 + 1) {
+    (*param_4)(lVar1);
+    lVar1 = lVar1 + CONCAT44(uVar2,uVar3);
+  }
+  FUN_8291dc20();
+  __restgprlr_26();
+  return;
 }
 

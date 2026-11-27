@@ -69,7 +69,6 @@ longlong bdMemory__allocate(void)
   
   lVar1 = 0;
   if ((DAT_84895d6c != (code *)0x0) && (lVar1 = (*DAT_84895d6c)(), lVar1 == 0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220a430,0x66,0,0xffffffff82000f98,0xffffffff8220a480);
   }
   return lVar1;

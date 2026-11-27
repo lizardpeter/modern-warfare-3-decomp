@@ -48,6 +48,54 @@ LAB_8232d478:
 ; 8232D4A8  CIN_PlayMenuVideo  (client/cl_cin.cpp:50)
   8232D4A8  7D8802A6             mfspr r12,LR
   8232D4AC  485E920D             bl 0x829166b8
+  8232D4B0  9421FF80             stwu r1,-0x80(r1)
+  8232D4B4  7C7F1B78             or r31,r3,r3
+  8232D4B8  7C9E2378             or r30,r4,r4
+  8232D4BC  7CBC2B78             or r28,r5,r5
+  8232D4C0  7CDD3378             or r29,r6,r6
+  8232D4C4  2B040000             cmplwi cr6,r4,0x0
+  8232D4C8  409A0028             bne cr6,0x8232d4f0
+  8232D4CC  3D608202             lis r11,-0x7dfe
+  8232D4D0  3D408200             lis r10,-0x7e00
+  8232D4D4  3D208203             lis r9,-0x7dfd
+  8232D4D8  38EB1A74             addi r7,r11,0x1a74
+  8232D4DC  38CA0F98             addi r6,r10,0xf98
+  8232D4E0  3869CB04             subi r3,r9,0x34fc
+  8232D4E4  38A00000             li r5,0x0
+  8232D4E8  38800033             li r4,0x33
+  8232D4EC  482A7015             bl 0x825d4500
+LAB_8232d4f0:
+  8232D4F0  2B1F0004             cmplwi cr6,r31,0x4
+  8232D4F4  41980028             blt cr6,0x8232d51c
+  8232D4F8  3D608200             lis r11,-0x7e00
+  8232D4FC  3D408203             lis r10,-0x7dfd
+  8232D500  38CB11A8             addi r6,r11,0x11a8
+  8232D504  386ACAB8             subi r3,r10,0x3548
+  8232D508  39000004             li r8,0x4
+  8232D50C  7FE7FB78             or r7,r31,r31
+  8232D510  38A00000             li r5,0x0
+  8232D514  388004AA             li r4,0x4aa
+  8232D518  482A6FE9             bl 0x825d4500
+LAB_8232d51c:
+  8232D51C  3D6082B4             lis r11,-0x7d4c
+  8232D520  1D5F01E4             mulli r10,r31,0x1e4
+  8232D524  396BE4F0             subi r11,r11,0x1b10
+  8232D528  392B005C             addi r9,r11,0x5c
+  8232D52C  7D0A482E             lwzx r8,r10,r9
+  8232D530  2F080000             cmpwi cr6,r8,0x0
+  8232D534  409A0024             bne cr6,0x8232d558
+  8232D538  57AB07BC             rlwinm r11,r29,0x0,0x1e,0x1e
+  8232D53C  38800001             li r4,0x1
+  8232D540  2F0B0000             cmpwi cr6,r11,0x0
+  8232D544  419A0008             beq cr6,0x8232d54c
+  8232D548  38800003             li r4,0x3
+LAB_8232d54c:
+  8232D54C  7F85E378             or r5,r28,r28
+  8232D550  7FC3F378             or r3,r30,r30
+  8232D554  483F3FCD             bl 0x82721520
+LAB_8232d558:
+  8232D558  38210080             addi r1,r1,0x80
+  8232D55C  485E91AC             b 0x82916708
 
 ; 8232D560  CL_PlayCinematic_f  (client/cl_cin.cpp:68)
   8232D560  7D8802A6             mfspr r12,LR
@@ -352,6 +400,99 @@ LAB_8232d8a4:
 ; 8232D8B8  CIN_PlayAttractModeMovie  (client/cl_cin.cpp:197)
   8232D8B8  7D8802A6             mfspr r12,LR
   8232D8BC  485E8DFD             bl 0x829166b8
+  8232D8C0  9421FE70             stwu r1,-0x190(r1)
+  8232D8C4  3C800001             lis r4,0x1
+  8232D8C8  38610058             addi r3,r1,0x58
+  8232D8CC  60848000             ori r4,r4,0x8000
+  8232D8D0  482B4D81             bl 0x825e2650
+  8232D8D4  38610058             addi r3,r1,0x58
+  8232D8D8  482B4F51             bl 0x825e2828
+  8232D8DC  3D608203             lis r11,-0x7dfd
+  8232D8E0  3CA00001             lis r5,0x1
+  8232D8E4  3BEBCC44             subi r31,r11,0x33bc
+  8232D8E8  7C641B78             or r4,r3,r3
+  8232D8EC  60A58000             ori r5,r5,0x8000
+  8232D8F0  7FE3FB78             or r3,r31,r31
+  8232D8F4  480C8965             bl 0x823f6258
+  8232D8F8  7C7E1B78             or r30,r3,r3
+  8232D8FC  2B030000             cmplwi cr6,r3,0x0
+  8232D900  419A010C             beq cr6,0x8232da0c
+  8232D904  7FE3FB78             or r3,r31,r31
+  8232D908  482DC1C1             bl 0x82609ac8
+  8232D90C  93C10050             stw r30,0x50(r1)
+  8232D910  38610050             addi r3,r1,0x50
+  8232D914  482DD15D             bl 0x8260aa70
+  8232D918  485E98D1             bl 0x829171e8
+  8232D91C  3D608203             lis r11,-0x7dfd
+  8232D920  7C7D1B78             or r29,r3,r3
+  8232D924  2F030008             cmpwi cr6,r3,0x8
+  8232D928  3B8BCB04             subi r28,r11,0x34fc
+  8232D92C  41980028             blt cr6,0x8232d954
+  8232D930  3D608203             lis r11,-0x7dfd
+  8232D934  3D408203             lis r10,-0x7dfd
+  8232D938  38EBCC2C             subi r7,r11,0x33d4
+  8232D93C  38CACC10             subi r6,r10,0x33f0
+  8232D940  7F83E378             or r3,r28,r28
+  8232D944  7FA8EB78             or r8,r29,r29
+  8232D948  38A00000             li r5,0x0
+  8232D94C  388000DD             li r4,0xdd
+  8232D950  482A6BB1             bl 0x825d4500
+LAB_8232d954:
+  8232D954  38610050             addi r3,r1,0x50
+  8232D958  3BC00000             li r30,0x0
+  8232D95C  482DD115             bl 0x8260aa70
+  8232D960  89630000             lbz r11,0x0(r3)
+  8232D964  2B0B0000             cmplwi cr6,r11,0x0
+  8232D968  419A0044             beq cr6,0x8232d9ac
+  8232D96C  3BE10060             addi r31,r1,0x60
+LAB_8232d970:
+  8232D970  7C6B1B78             or r11,r3,r3
+  8232D974  7D43F850             subf r10,r3,r31
+LAB_8232d978:
+  8232D978  892B0000             lbz r9,0x0(r11)
+  8232D97C  7D280774             extsb r8,r9
+  8232D980  2F080000             cmpwi cr6,r8,0x0
+  8232D984  7D2A59AE             stbx r9,r10,r11
+  8232D988  396B0001             addi r11,r11,0x1
+  8232D98C  409AFFEC             bne cr6,0x8232d978
+  8232D990  38610050             addi r3,r1,0x50
+  8232D994  3BDE0001             addi r30,r30,0x1
+  8232D998  3BFF0020             addi r31,r31,0x20
+  8232D99C  482DD0D5             bl 0x8260aa70
+  8232D9A0  89630000             lbz r11,0x0(r3)
+  8232D9A4  2B0B0000             cmplwi cr6,r11,0x0
+  8232D9A8  409AFFC8             bne cr6,0x8232d970
+LAB_8232d9ac:
+  8232D9AC  482DC1FD             bl 0x82609ba8
+  8232D9B0  7F1DF000             cmpw cr6,r29,r30
+  8232D9B4  419A0028             beq cr6,0x8232d9dc
+  8232D9B8  3D608203             lis r11,-0x7dfd
+  8232D9BC  3D408203             lis r10,-0x7dfd
+  8232D9C0  38EBCBF0             subi r7,r11,0x3410
+  8232D9C4  38CACBD8             subi r6,r10,0x3428
+  8232D9C8  7F83E378             or r3,r28,r28
+  8232D9CC  7FC8F378             or r8,r30,r30
+  8232D9D0  38A00000             li r5,0x0
+  8232D9D4  388000ED             li r4,0xed
+  8232D9D8  482A6B29             bl 0x825d4500
+LAB_8232d9dc:
+  8232D9DC  7FC4F378             or r4,r30,r30
+  8232D9E0  38600000             li r3,0x0
+  8232D9E4  482B109D             bl 0x825dea80
+  8232D9E8  546A2834             rlwinm r10,r3,0x5,0x0,0x1a
+  8232D9EC  39610060             addi r11,r1,0x60
+  8232D9F0  3D208203             lis r9,-0x7dfd
+  8232D9F4  7C8A5A14             add r4,r10,r11
+  8232D9F8  3869CBC8             subi r3,r9,0x3438
+  8232D9FC  482DEC7D             bl 0x8260c678
+  8232DA00  7C641B78             or r4,r3,r3
+  8232DA04  38600000             li r3,0x0
+  8232DA08  481A6CD9             bl 0x824d46e0
+LAB_8232da0c:
+  8232DA0C  38610058             addi r3,r1,0x58
+  8232DA10  482B4E01             bl 0x825e2810
+  8232DA14  38210190             addi r1,r1,0x190
+  8232DA18  485E8CF0             b 0x82916708
 
 ; 8232DA20  CIN_SetMovieList  (client/cl_cin.cpp:245)
   8232DA20  7D8802A6             mfspr r12,LR

@@ -61,6 +61,45 @@ LAB_827bc008:
 ; 827BC038  term_destination  (jpeg-6/jdatadst.c:107)
   827BC038  7D8802A6             mfspr r12,LR
   827BC03C  4815A67D             bl 0x829166b8
+  827BC040  9421FF80             stwu r1,-0x80(r1)
+  827BC044  83C30020             lwz r30,0x20(r3)
+  827BC048  7C7F1B78             or r31,r3,r3
+  827BC04C  3B800025             li r28,0x25
+  827BC050  817E0004             lwz r11,0x4(r30)
+  827BC054  23AB1000             subfic r29,r11,0x1000
+  827BC058  2B1D0000             cmplwi cr6,r29,0x0
+  827BC05C  419A003C             beq cr6,0x827bc098
+  827BC060  7FA5EB78             or r5,r29,r29
+  827BC064  80DE0014             lwz r6,0x14(r30)
+  827BC068  38800001             li r4,0x1
+  827BC06C  807E0018             lwz r3,0x18(r30)
+  827BC070  4815DA41             bl 0x82919ab0
+  827BC074  7F03E840             cmplw cr6,r3,r29
+  827BC078  419A0020             beq cr6,0x827bc098
+  827BC07C  817F0000             lwz r11,0x0(r31)
+  827BC080  7FE3FB78             or r3,r31,r31
+  827BC084  938B0014             stw r28,0x14(r11)
+  827BC088  815F0000             lwz r10,0x0(r31)
+  827BC08C  812A0000             lwz r9,0x0(r10)
+  827BC090  7D2903A6             mtspr CTR,r9
+  827BC094  4E800421             bctrl
+LAB_827bc098:
+  827BC098  807E0014             lwz r3,0x14(r30)
+  827BC09C  4815F6DD             bl 0x8291b778
+  827BC0A0  807E0014             lwz r3,0x14(r30)
+  827BC0A4  4815F395             bl 0x8291b438
+  827BC0A8  2F030000             cmpwi cr6,r3,0x0
+  827BC0AC  419A0020             beq cr6,0x827bc0cc
+  827BC0B0  817F0000             lwz r11,0x0(r31)
+  827BC0B4  7FE3FB78             or r3,r31,r31
+  827BC0B8  938B0014             stw r28,0x14(r11)
+  827BC0BC  815F0000             lwz r10,0x0(r31)
+  827BC0C0  812A0000             lwz r9,0x0(r10)
+  827BC0C4  7D2903A6             mtspr CTR,r9
+  827BC0C8  4E800421             bctrl
+LAB_827bc0cc:
+  827BC0CC  38210080             addi r1,r1,0x80
+  827BC0D0  4815A638             b 0x82916708
 
 ; 827BC0D8  jpeg_stdio_dest  (jpeg-6/jdatadst.c:131)
   827BC0D8  7D8802A6             mfspr r12,LR

@@ -19,11 +19,46 @@ undefined4 * bdInitAckChunk__bdInitAckChunk(undefined4 *param_1)
 
 // 82938CE0  bdInitAckChunk::bdInitAckChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitackchunk.cpp:32)
 
-void bdInitAckChunk__bdInitAckChunk(void)
+void bdInitAckChunk__bdInitAckChunk
+               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined4 param_4,
+               undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  undefined4 *puVar2;
+  undefined4 uVar3;
+  uint *puVar4;
+  longlong lVar5;
+  uint *puVar6;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  puVar4 = (uint *)param_3;
+  uVar3 = (undefined4)((ulonglong)param_3 >> 0x20);
+  puVar2 = (undefined4 *)__savegprlr_26();
+  bdChunk__bdChunk(puVar2,4);
+  puVar2[4] = param_2;
+  puVar2[5] = 0;
+  *puVar2 = &PTR_bdInitAckChunk___scalar_deleting_destructor__822197c0;
+  puVar2[6] = 0;
+  uVar1 = *puVar4;
+  puVar2[7] = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar5 = (ulonglong)uVar1 + 4;
+    do {
+      puVar6 = (uint *)lVar5;
+      if (in_RESERVE != '\0') {
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+        *puVar6 = uVar1;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  puVar2[8] = param_4;
+  puVar2[9] = param_5;
+  bdReference<bdCookie>___bdReference<bdCookie>(CONCAT44(uVar3,puVar4));
+  __restgprlr_26(puVar2);
+  return;
 }
 
 
@@ -66,11 +101,85 @@ bool bdInitAckChunk__getCookie(int param_1,undefined8 param_2)
 
 // 82938DB8  bdInitAckChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitackchunk.cpp:61)
 
-void bdInitAckChunk__serialize(void)
+void bdInitAckChunk__serialize(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined1 *puVar1;
+  bool bVar2;
+  int iVar4;
+  undefined8 uVar3;
+  char cVar6;
+  uint uVar5;
+  ulonglong uVar7;
+  undefined1 *puVar8;
+  int iVar9;
+  longlong lVar10;
+  undefined1 local_40 [2];
+  undefined2 local_3e;
+  undefined1 auStack_3c [2];
+  undefined1 auStack_3a [2];
+  uint local_38;
+  uint local_34;
+  undefined1 auStack_30 [4];
+  undefined1 auStack_2c [44];
+  
+  iVar4 = __savegprlr_28();
+  local_38 = 0;
+  if (*(int *)(iVar4 + 0x1c) == 0) goto LAB_82938f38;
+  uVar3 = bdChunk__serialize();
+  local_38 = (uint)uVar3;
+  local_40[0] = (undefined1)*(undefined4 *)(iVar4 + 0x14);
+  cVar6 = bdBytePacker__appendBuffer(param_2,param_3,uVar3,&local_38,local_40,1);
+  uVar7 = (ulonglong)local_38 + 2;
+  local_34 = local_38;
+  local_38 = (uint)uVar7;
+  if (cVar6 == '\0') {
+LAB_82938e80:
+    bVar2 = false;
+  }
+  else {
+    iVar9 = 0;
+    puVar8 = auStack_2c;
+    lVar10 = 4;
+    do {
+      puVar1 = (undefined1 *)(iVar9 + iVar4 + 0x10);
+      iVar9 = iVar9 + 1;
+      puVar8 = puVar8 + -1;
+      *puVar8 = *puVar1;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    cVar6 = bdBytePacker__appendBuffer(param_2,param_3,uVar7,&local_38,auStack_30,4);
+    uVar7 = (ulonglong)local_38;
+    bVar2 = true;
+    if (cVar6 == '\0') goto LAB_82938e80;
+  }
+  lVar10 = uVar7 + param_2;
+  if ((param_2 & 0xffffffff) == 0) {
+    lVar10 = 0;
+  }
+  uVar5 = bdCookie__serialize(*(undefined4 *)(iVar4 + 0x1c),lVar10,param_3 - uVar7);
+  local_3e = (undefined2)uVar5;
+  if (uVar5 != (uVar5 & 0xffff)) {
+    MyAssertHandler(0xffffffff822198b8,0x54,0,0xffffffff820011f4,0xffffffff82219870,
+                    0xffffffff8221988c);
+  }
+  local_38 = (uVar5 & 0xffff) + local_38;
+  if (bVar2) {
+    iVar4 = 0;
+    puVar8 = auStack_3a;
+    lVar10 = 2;
+    do {
+      iVar9 = iVar4 + -2;
+      iVar4 = iVar4 + 1;
+      puVar8 = puVar8 + -1;
+      *puVar8 = auStack_3c[iVar9];
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    bdBytePacker__appendBuffer(param_2,param_3,local_34,&local_34,auStack_3c,2);
+  }
+LAB_82938f38:
+  __restgprlr_28(local_38);
+  return;
 }
 
 

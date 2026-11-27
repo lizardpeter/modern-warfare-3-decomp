@@ -33,7 +33,6 @@ void bdMallocMemory__deallocate(int param_1)
 {
   if (param_1 != 0) {
     if (*(char *)(param_1 + -0xc) != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8220a980,0x36,0,0xffffffff820011f4,0xffffffff8220a9d4,
                       0xffffffff8220a9f0);
     }
@@ -46,11 +45,25 @@ void bdMallocMemory__deallocate(int param_1)
 
 // 828F6B30  bdMallocMemory::reallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:63)
 
-void bdMallocMemory__reallocate(void)
+void bdMallocMemory__reallocate(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    bdMallocMemory__allocate(param_2);
+  }
+  else {
+    uVar1 = *(uint *)(iVar3 + -0x10);
+    bdMallocMemory__eraseMemory(iVar3 + -0x14);
+    uVar2 = bdAlignedOffsetRealloc(iVar3 + -0x14,(ulonglong)uVar1 + 0x14,param_2 + 0x14,8,0x14);
+    bdMallocMemory__recordMemory(uVar2,param_2,0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -74,7 +87,6 @@ void bdMallocMemory__alignedDeallocate(int param_1)
 {
   if (param_1 != 0) {
     if (*(char *)(param_1 + -0xc) != '\x01') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8220a980,0x67,0,0xffffffff820011f4,0xffffffff8220aa7c,
                       0xffffffff8220aa98);
     }
@@ -87,11 +99,26 @@ void bdMallocMemory__alignedDeallocate(int param_1)
 
 // 828F6C50  bdMallocMemory::alignedReallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:114)
 
-void bdMallocMemory__alignedReallocate(void)
+void bdMallocMemory__alignedReallocate(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  iVar3 = __savegprlr_28();
+  if (iVar3 == 0) {
+    uVar2 = bdAlignedOffsetMalloc(param_2 + 0x14,param_3,0x14);
+  }
+  else {
+    uVar1 = *(uint *)(iVar3 + -0x10);
+    bdMallocMemory__eraseMemory(iVar3 + -0x14);
+    uVar2 = bdAlignedOffsetRealloc
+                      (iVar3 + -0x14,(ulonglong)uVar1 + 0x14,param_2 + 0x14,param_3,0x14);
+  }
+  bdMallocMemory__recordMemory(uVar2,param_2,1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -128,8 +155,23 @@ void bdMallocMemory__leakCheck(void)
 void bdMallocMemory__printRecords(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  FILE *pFVar2;
+  
   __savegprlr_27();
+  bdMutex__lock(0xffffffff84895d98);
+  for (iVar1 = DAT_84895d84; iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x10)) {
+    pFVar2 = __iob_func();
+    bdFprintf((longlong)(int)pFVar2 + 0x40,0xffffffff8220a868);
+    pFVar2 = __iob_func();
+    bdFprintf((longlong)(int)pFVar2 + 0x40,0xffffffff8220a89c,iVar1 + 0x14,
+              *(undefined4 *)(iVar1 + 4));
+    pFVar2 = __iob_func();
+    bdFprintf((longlong)(int)pFVar2 + 0x40,0xffffffff8220a8b8);
+  }
+  bdMutex__unlock(0xffffffff84895d98);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -162,11 +204,41 @@ int bdFprintf(FILE *param_1,char *param_2,undefined8 param_3,undefined8 param_4,
 
 // 828F6878  bdMallocMemory::recordMemory  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:214)
 
-void bdMallocMemory__recordMemory(void)
+void bdMallocMemory__recordMemory(undefined8 param_1,ulonglong param_2,undefined1 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined2 *puVar1;
+  undefined2 *puVar2;
+  ulonglong uVar3;
+  
+  puVar1 = (undefined2 *)__savegprlr_28();
+  puVar2 = (undefined2 *)0x0;
+  if (puVar1 != (undefined2 *)0x0) {
+    bdMutex__lock(0xffffffff84895d98);
+    *(uint *)(puVar1 + 2) = (uint)param_2;
+    *(undefined1 *)(puVar1 + 4) = param_3;
+    *puVar1 = 0xbdbd;
+    puVar2 = DAT_84895d84;
+    *(undefined4 *)(puVar1 + 6) = 0;
+    *(undefined2 **)(puVar1 + 8) = puVar2;
+    if (DAT_84895d84 != (undefined2 *)0x0) {
+      *(undefined2 **)(DAT_84895d84 + 6) = puVar1;
+    }
+    uVar3 = (ulonglong)DAT_84895d88;
+    DAT_84895d8c = DAT_84895d8c + 1;
+    DAT_84895d88 = (uint)(uVar3 + param_2);
+    if ((ulonglong)DAT_84895d90 <= (param_2 & 0xffffffff)) {
+      DAT_84895d90 = (uint)param_2;
+    }
+    if ((ulonglong)DAT_84895d94 <= (uVar3 + param_2 & 0xffffffff)) {
+      DAT_84895d94 = DAT_84895d88;
+    }
+    DAT_84895d84 = puVar1;
+    bdMutex__unlock(0xffffffff84895d98);
+    puVar2 = puVar1 + 10;
+  }
+  __restgprlr_28(puVar2);
+  return;
 }
 
 
@@ -175,8 +247,35 @@ void bdMallocMemory__recordMemory(void)
 void bdMallocMemory__eraseMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  short *psVar1;
+  undefined1 auStack_130 [304];
+  
+  psVar1 = (short *)__savegprlr_28();
+  bdMutex__lock(0xffffffff84895d98);
+  if (*psVar1 != -0x4243) {
+    bdMutex__unlock(0xffffffff84895d98);
+    bdLogMessage(2,0xffffffff8220a58c,0xffffffff8220a920,0xffffffff8220a980,0xffffffff8220a964,0xfc,
+                 0xffffffff8220a930,*psVar1);
+    Com_sprintf(auStack_130,0x100,0xffffffff8220a8ec,*psVar1,0xbdbd);
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8220a980,0x101,0,auStack_130);
+    }
+    bdMutex__lock(0xffffffff84895d98);
+  }
+  if (*(int *)(psVar1 + 6) == 0) {
+    DAT_84895d84 = *(undefined4 *)(psVar1 + 8);
+  }
+  else {
+    *(undefined4 *)(*(int *)(psVar1 + 6) + 0x10) = *(undefined4 *)(psVar1 + 8);
+  }
+  if (*(int *)(psVar1 + 8) != 0) {
+    *(undefined4 *)(*(int *)(psVar1 + 8) + 0xc) = *(undefined4 *)(psVar1 + 6);
+  }
+  DAT_84895d8c = DAT_84895d8c + -1;
+  DAT_84895d88 = DAT_84895d88 - *(int *)(psVar1 + 2);
+  bdMutex__unlock(0xffffffff84895d98);
+  __restgprlr_28();
+  return;
 }
 
 

@@ -12,10 +12,78 @@ void XCOMPRESS__init_decoder_translation(int param_1)
 
 // 828B60B0  XCOMPRESS::decoder_translate_e8  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decxlat.cpp:36)
 
-void XCOMPRESS__decoder_translate_e8(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XCOMPRESS__decoder_translate_e8(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  void *pvVar3;
+  void *_Src;
+  int iVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  undefined1 *puVar8;
+  undefined1 auStack_40 [64];
+  
+  pvVar3 = (void *)__savegprlr_27();
+  iVar4 = (int)param_3;
+  if (iVar4 < 7) {
+    *(int *)((int)pvVar3 + 0x2ec0) = *(int *)((int)pvVar3 + 0x2ec0) + iVar4;
+  }
+  else {
+    iVar4 = (int)param_2 + iVar4;
+    _Src = (void *)(iVar4 + -6);
+    memcpy(auStack_40,_Src,6);
+    memset(_Src,0xe8,6);
+    param_3 = (ulonglong)*(uint *)((int)pvVar3 + 0x2ec0) + param_3;
+    while( true ) {
+      lVar6 = 0;
+      uVar7 = param_2 + 0xf & 0xfffffff0;
+      for (; ((param_2 & 0xffffffff) < uVar7 && (*(char *)param_2 != -0x18)); param_2 = param_2 + 1)
+      {
+        lVar6 = lVar6 + 1;
+      }
+      if ((param_2 & 0xffffffff) == uVar7) {
+                    /* WARNING: Bad instruction - Truncating control flow here */
+        halt_baddata();
+      }
+      cVar1 = *(char *)param_2;
+      while (cVar1 != -0x18) {
+        param_2 = param_2 + 1;
+        lVar6 = lVar6 + 1;
+        cVar1 = *(char *)param_2;
+      }
+      iVar2 = (int)param_2;
+      puVar8 = (undefined1 *)(iVar2 + 1);
+      uVar7 = (ulonglong)*(uint *)((int)pvVar3 + 0x2ec0) + lVar6;
+      *(int *)((int)pvVar3 + 0x2ec0) = (int)uVar7;
+      if ((param_3 - 10U & 0xffffffff) <= (uVar7 & 0xffffffff)) break;
+      uVar5 = (ulonglong)
+              CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)(iVar2 + 4),*(undefined1 *)(iVar2 + 3)),
+                                *(undefined1 *)(iVar2 + 2)),*puVar8);
+      if (uVar5 < *(uint *)((int)pvVar3 + 0x2ebc)) {
+        lVar6 = uVar5 - uVar7;
+        *puVar8 = (char)lVar6;
+LAB_828b61fc:
+        *(char *)(iVar2 + 2) = (char)((ulonglong)lVar6 >> 8);
+        *(char *)(iVar2 + 3) = (char)((ulonglong)lVar6 >> 0x10);
+        *(char *)(iVar2 + 4) = (char)((ulonglong)lVar6 >> 0x18);
+      }
+      else if ((-uVar5 & 0xffffffff) <= (uVar7 & 0xffffffff)) {
+        lVar6 = *(uint *)((int)pvVar3 + 0x2ebc) + uVar5;
+        *puVar8 = (char)lVar6;
+        goto LAB_828b61fc;
+      }
+      param_2 = param_2 + 5;
+      *(int *)((int)pvVar3 + 0x2ec0) = (int)uVar7 + 5;
+    }
+    *(int *)((int)pvVar3 + 0x2ec0) = (int)param_3;
+    pvVar3 = memcpy((void *)(iVar4 + -6),auStack_40,6);
+  }
+  __restgprlr_27(pvVar3);
+  return;
 }
 

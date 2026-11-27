@@ -20,7 +20,6 @@ void FXW_SystemUpdateElement(void)
   
   iVar5 = __savegprlr_15();
   if (*(int *)(iVar5 + 0xd0) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8206a8b8,0x87,0,0xffffffff82000f98,0xffffffff8206a89c);
   }
   FX_AutoAddElemForUpdate(1);
@@ -33,22 +32,19 @@ void FXW_SystemUpdateElement(void)
       uVar3 = psVar8[1];
       uVar11 = (uint)uVar3;
       if (sVar2 == -1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206a8b8,0x8e,0,0xffffffff82000f98,0xffffffff82069424);
       }
       if (uVar11 == 0xffff) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206a8b8,0x8f,0,0xffffffff82000f98,0xffffffff82069404);
       }
       piVar6 = (int *)FX_EffectFromHandle(iVar5,sVar2);
+      iVar7 = *(int *)(iVar5 + 0x3c);
       if ((0x3fff < uVar11) || ((uVar3 & 7) != 0)) {
-        uVar4 = va(0xffffffff82060820,*(int *)(iVar5 + 0x3c),uVar11);
-                    /* WARNING: Subroutine does not return */
+        uVar4 = va(0xffffffff82060820,iVar7,uVar11);
         MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar4);
       }
-      pbVar12 = (byte *)(uVar11 * 4 + *(int *)(iVar5 + 0x3c));
+      pbVar12 = (byte *)(uVar11 * 4 + iVar7);
       if (*(int *)(iVar5 + 0x88) < piVar6[0xc]) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8206a8b8,0x93,0,0xffffffff82000f98,0xffffffff8206a86c);
       }
       if (((*pbVar12 & 1) != 0) &&

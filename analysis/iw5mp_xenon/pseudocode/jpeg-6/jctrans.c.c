@@ -129,11 +129,32 @@ void jpeg_copy_critical_parameters(undefined8 param_1,longlong param_2)
 
 // 827BAF90  transencode_master_selection  (jpeg-6/jctrans.c:160)
 
-void transencode_master_selection(void)
+void transencode_master_selection(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  piVar1[0xb] = 1;
+  jinit_c_master_control(piVar1,1);
+  if (*(char *)((int)piVar1 + 0xb9) == '\0') {
+    if (*(char *)(piVar1 + 0x37) == '\0') {
+      jinit_huff_encoder(piVar1);
+    }
+    else {
+      jinit_phuff_encoder();
+    }
+  }
+  else {
+    *(undefined4 *)(*piVar1 + 0x14) = 1;
+    (**(code **)*piVar1)(piVar1);
+  }
+  transencode_coef_controller(piVar1,param_2);
+  jinit_marker_writer(piVar1);
+  (**(code **)(piVar1[1] + 0x18))(piVar1);
+  (**(code **)piVar1[0x55])(piVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -341,6 +362,39 @@ void compress_output(void)
   *(undefined4 *)(iVar1 + 0xc) = 0;
   *(undefined4 *)(iVar1 + 0x10) = 0;
   __restgprlr_20(1);
+  return;
+}
+
+
+// 827BAEC0  transencode_coef_controller  (jpeg-6/jctrans.c:365)
+
+void transencode_coef_controller(undefined8 param_1,undefined4 param_2)
+
+{
+  int iVar2;
+  undefined4 *puVar3;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  puVar3 = (undefined4 *)(*(code *)**(undefined4 **)(iVar2 + 4))(iVar2,1,0x44);
+  *(undefined4 **)(iVar2 + 0x150) = puVar3;
+  puVar3[6] = param_2;
+  *puVar3 = start_pass_coef;
+  puVar3[1] = compress_output;
+  uVar1 = (**(code **)(*(int *)(iVar2 + 4) + 4))(iVar2,1,0x500);
+  jzero_far(uVar1,0x500);
+  iVar2 = (int)uVar1;
+  puVar3[7] = iVar2;
+  puVar3[8] = iVar2 + 0x80;
+  puVar3[9] = iVar2 + 0x100;
+  puVar3[10] = iVar2 + 0x180;
+  puVar3[0xb] = iVar2 + 0x200;
+  puVar3[0xc] = iVar2 + 0x280;
+  puVar3[0xd] = iVar2 + 0x300;
+  puVar3[0xe] = iVar2 + 0x380;
+  puVar3[0xf] = iVar2 + 0x400;
+  puVar3[0x10] = iVar2 + 0x480;
+  __restgprlr_29();
   return;
 }
 

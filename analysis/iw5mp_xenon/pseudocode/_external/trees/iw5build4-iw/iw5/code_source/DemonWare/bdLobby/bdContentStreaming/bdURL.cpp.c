@@ -28,11 +28,46 @@ void bdURL___bdURL(undefined4 *param_1)
 
 // 829138E8  bdURL::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdurl.cpp:24)
 
-void bdURL__deserialize(void)
+void bdURL__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 4,0x180);
+  if (cVar3 == '\0') {
+LAB_82913940:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readUInt16(*puVar4,lVar2 + 0x184);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82913940;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readString(*puVar4,lVar2 + 0x186,0x80);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82913968;
+  }
+  else {
+LAB_82913968:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 0x208);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_82913990;
+  }
+  uVar5 = 0;
+LAB_82913990:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

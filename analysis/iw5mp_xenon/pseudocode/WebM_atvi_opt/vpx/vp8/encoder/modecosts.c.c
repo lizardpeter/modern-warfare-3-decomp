@@ -5,7 +5,30 @@
 void vp8_init_mode_costs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  longlong lVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  
+  lVar1 = __savegprlr_26();
+  lVar3 = 0;
+  do {
+    lVar4 = 0;
+    do {
+      uVar2 = lVar3 + lVar4;
+      vp8_cost_tokens((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + lVar1 + 0x18dc0,
+                      uVar2 + (uVar2 & 0x1fffffff) * 8 + lVar1 + 0x20fb1,0xffffffff821e88c8);
+      lVar4 = lVar4 + 1;
+    } while ((int)lVar4 < 10);
+    lVar3 = lVar3 + 10;
+  } while ((int)lVar3 < 100);
+  vp8_cost_tokens(lVar1 + 0x19d60,lVar1 + 0x217bb,0xffffffff821e88c8);
+  vp8_cost_tokens(lVar1 + 0x19d60,lVar1 + 0x217cb,0xffffffff821e8904);
+  vp8_cost_tokens(lVar1 + 0x18d48,lVar1 + 0x217c4,0xffffffff821e88dc);
+  vp8_cost_tokens(lVar1 + 0x18d20,lVar1 + 0x21335,0xffffffff821e88e4);
+  vp8_cost_tokens(lVar1 + 0x18d98,lVar1 + 0x217c8,0xffffffff821e88ec);
+  vp8_cost_tokens(lVar1 + 0x18d70,lVar1 + 0x21339,0xffffffff821e88ec);
+  __restgprlr_26();
+  return;
 }
 

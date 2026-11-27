@@ -2,11 +2,63 @@
 
 // 828C3C58  nciEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:150)
 
-void nciEncodeSase3200(void)
+void nciEncodeSase3200(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  undefined1 auStack_c0 [80];
+  undefined1 auStack_70 [112];
+  
+  piVar3 = (int *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar2 = 0x181a;
+  }
+  else {
+    piVar1 = (int *)param_2;
+    if (piVar1[2] == 0) {
+      uVar2 = 0x17f2;
+    }
+    else if (*piVar1 == 0) {
+      uVar2 = 0x17ed;
+    }
+    else if (*(ushort *)((int)piVar1 + 0xe) < *(ushort *)(piVar1 + 3)) {
+      if (*(ushort *)((int)piVar1 + 0x12) < *(ushort *)(piVar1 + 3)) {
+        if (*(byte *)(piVar1 + 4) < 8) {
+          if (*(byte *)(piVar1 + 5) < 8) {
+            if ((piVar3 == (int *)0x0) || (*piVar3 != 0xface)) {
+              uVar2 = 0x17d4;
+            }
+            else if (*(char *)(piVar3 + 3) == '\n') {
+              NellyEncodeSC(*piVar1,piVar3[4],auStack_c0);
+              NellyQuantSC3(auStack_70,piVar3[4],auStack_c0);
+              NellyPackSC3(auStack_70,piVar1[2],param_2 + 0x12,param_2 + 0x14,
+                           *(undefined2 *)(piVar1 + 3),0);
+              uVar2 = 0;
+            }
+            else {
+              uVar2 = 0x17de;
+            }
+          }
+          else {
+            uVar2 = 0x17fc;
+          }
+        }
+        else {
+          uVar2 = 0x17f7;
+        }
+      }
+      else {
+        uVar2 = 0x1806;
+      }
+    }
+    else {
+      uVar2 = 0x1801;
+    }
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -95,7 +147,39 @@ void nciInitEncode(void)
 void nciFreeEncodeSase3200(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  if (puVar3 == (undefined4 *)0x0) {
+    uVar2 = 0x181a;
+  }
+  else {
+    piVar1 = (int *)*puVar3;
+    if ((piVar1 == (int *)0x0) || (*piVar1 != 0xface)) {
+      uVar2 = 0x17d4;
+    }
+    else if (*(char *)(piVar1 + 3) == '\n') {
+      *piVar1 = 0;
+      NellyFreeEncodeSC3(piVar1 + 4);
+      if (piVar1[9] != 0) {
+        (*DAT_848958c4)();
+        piVar1[9] = 0;
+      }
+      if (piVar1[10] != 0) {
+        (*DAT_848958c4)();
+        piVar1[10] = 0;
+      }
+      (*DAT_848958c4)(piVar1);
+      uVar2 = 0;
+      *puVar3 = 0;
+    }
+    else {
+      uVar2 = 0x17e3;
+    }
+  }
+  __restgprlr_28(uVar2);
+  return;
 }
 

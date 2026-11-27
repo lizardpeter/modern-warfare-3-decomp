@@ -6,7 +6,76 @@ DWORD SetFilePointer(HANDLE hFile,LONG lDistanceToMove,PLONG lpDistanceToMoveHig
                     )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(hFile,lDistanceToMove,lpDistanceToMoveHigh,dwMoveMethod);
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  DWORD DVar4;
+  undefined4 *puVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined8 local_80;
+  undefined1 auStack_78 [8];
+  undefined1 auStack_70 [40];
+  ulonglong local_48;
+  
+  uVar6 = (ulonglong)(int)dwMoveMethod;
+  uVar2 = (ulonglong)(int)lpDistanceToMoveHigh;
+  uVar1 = __savegprlr_27(hFile);
+  puVar5 = (undefined4 *)uVar2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar7 = (ulonglong)lDistanceToMove;
+  }
+  else {
+    local_80 = CONCAT44(*puVar5,lDistanceToMove);
+    uVar7 = local_80;
+  }
+  if ((uVar6 & 0xffffffff) == 0) {
+LAB_828aac00:
+    local_80 = uVar7;
+    if ((longlong)uVar7 < 0) {
+      uVar1 = 0x83;
+    }
+    else {
+      if (((uVar2 & 0xffffffff) != 0) || ((uVar7 & 0x7fffffff00000000) == 0)) {
+        iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x24))(uVar1,auStack_78,&local_80,8,0xe);
+        if (-1 < iVar3) {
+          if ((uVar2 & 0xffffffff) != 0) {
+            *puVar5 = local_80._0_4_;
+          }
+          if (local_80._4_4_ == -1) {
+            SetLastError(0);
+          }
+          uVar2 = local_80 & 0xffffffff;
+          goto LAB_828aacac;
+        }
+        RtlSetLastNTError();
+        if ((uVar2 & 0xffffffff) != 0) {
+          *puVar5 = 0xffffffff;
+        }
+        goto LAB_828aaca4;
+      }
+      uVar1 = 0x57;
+    }
+    RtlSetLastError(uVar1);
+  }
+  else {
+    if (((uVar6 & 0xffffffff) == 1) || (2 < (uVar6 & 0xffffffff))) {
+      iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,&local_80,8,0xe);
+      local_48 = local_80;
+    }
+    else {
+      iVar3 = (**(code **)(PTR_DAT_829a8580 + 0x20))(uVar1,auStack_78,auStack_70,0x38,0x22);
+    }
+    if (-1 < iVar3) {
+      uVar7 = local_48 + uVar7;
+      goto LAB_828aac00;
+    }
+    RtlSetLastNTError();
+  }
+LAB_828aaca4:
+  uVar2 = 0xffffffffffffffff;
+LAB_828aacac:
+  DVar4 = __restgprlr_27(uVar2);
+  return DVar4;
 }
 

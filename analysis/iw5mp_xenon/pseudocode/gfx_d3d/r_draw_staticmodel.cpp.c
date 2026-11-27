@@ -29,8 +29,34 @@ void __stvx(void)
 void R_GetNextStaticModelArray(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  ushort *puVar4;
+  uint uVar5;
+  int *piVar6;
+  int *piVar7;
+  
+  piVar6 = (int *)__savegprlr_28();
+  iVar3 = *piVar6;
+  puVar4 = *(ushort **)(iVar3 + 4);
+  uVar1 = *puVar4;
+  *(ushort **)(iVar3 + 4) = puVar4 + 1;
+  if (*(ushort **)(iVar3 + 8) < puVar4 + 1) {
+    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
+  }
+  uVar5 = uVar1 >> 2 & 0x3ffc;
+  piVar7 = (int *)(uVar5 + piVar6[6]);
+  if (*(int *)(uVar5 + piVar6[6]) == 0) {
+    MyAssertHandler(0xffffffff821bea58,0xcf,0,0xffffffff82000f98,0xffffffff821beaa4);
+  }
+  iVar3 = *piVar7;
+  uVar2 = *(ushort *)(piVar7 + 1);
+  piVar6[0xb] = (int)piVar7 + 6;
+  piVar6[9] = (uVar1 & 0xf) * 0x80 + iVar3;
+  piVar6[10] = (uint)uVar2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -51,7 +77,6 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimStat
     iVar1 = *(int *)(iVar2 + 0x30);
     DVar3 = GetCurrentProcessorNumber();
     if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
     }
     if (iVar1 != 0) {
@@ -85,7 +110,6 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufConte
     iVar1 = *(int *)(iVar2 + 0x30);
     DVar3 = GetCurrentProcessorNumber();
     if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
     }
     if (iVar1 != 0) {
@@ -102,13 +126,56 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufConte
 }
 
 
-// 82736618  R_SetupStaticModelPrim  (gfx_d3d/r_draw_staticmodel.cpp:287)
+// 82736570  R_SetStaticModelVertexBuffer  (gfx_d3d/r_draw_staticmodel.cpp:255)
 
-void R_SetupStaticModelPrim(void)
+void R_SetStaticModelVertexBuffer(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  undefined8 uVar1;
+  undefined4 uVar3;
+  
+  iVar2 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bea58,0x107,0,0xffffffff82000f98,0xffffffff821beabc);
+  }
+  uVar1 = XSurfaceGetVert0Size(param_2);
+  if (param_2 + 0x20 == 0) {
+    MyAssertHandler(0xffffffff821bea58,0x10f,0,0xffffffff82000f98,0xffffffff821ba234);
+  }
+  uVar3 = XSurfaceGetModelVertDecl(param_2);
+  *(undefined4 *)(iVar2 + 200) = uVar3;
+  R_UpdateVertexDecl(iVar2);
+  R_SetStreamSource(iVar2 + 0xc0,param_2 + 0x20,0,uVar1);
+  __restgprlr_26();
+  return;
+}
+
+
+// 82736618  R_SetupStaticModelPrim  (gfx_d3d/r_draw_staticmodel.cpp:287)
+
+void R_SetupStaticModelPrim(undefined8 param_1,uint *param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821bea58,0x122,0,0xffffffff82000f98,0xffffffff821beabc);
+  }
+  iVar2 = iVar1 + 0x48;
+  *param_2 = (uint)*(ushort *)(iVar1 + 2);
+  param_2[1] = (uint)*(ushort *)(iVar1 + 4);
+  param_2[2] = 0;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821bea58,299,0,0xffffffff82000f98,0xffffffff821ba260);
+  }
+  if (*(int *)((int)param_3 + 4) != iVar2) {
+    R_ChangeIndices(param_3,iVar2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -123,11 +190,25 @@ int D3DTag_Index(int param_1)
 
 // 82737940  R_DirtyCodeConstantBlock  (gfx_d3d/r_state.h:618)
 
-void R_DirtyCodeConstantBlock(void)
+void R_DirtyCodeConstantBlock(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (0x3f < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bda94,0x26c,0,0xffffffff821be968,param_2,0x40);
+  }
+  param_2 = param_2 & 0xfffffffc;
+  if (0x3f < param_2 + 3) {
+    MyAssertHandler(0xffffffff821bda94,0x26f,0,0xffffffff821be910,param_2 + 3,0x40);
+  }
+  *(undefined8 *)((int)((param_2 + 0x22 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((param_2 + 0x23 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((param_2 + 0x24 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((param_2 + 0x25 & 0xffffffff) << 3) + iVar1) = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -177,31 +258,159 @@ void D3DTagCollection_Clear(int param_1,int param_2,ulonglong param_3)
 
 // 827379F0  R_ChangeIndices  (gfx_d3d/r_state.h:773)
 
-void R_ChangeIndices(void)
+void R_ChangeIndices(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_27();
+  if ((param_2 & 0xffffffff) == (ulonglong)(uint)piVar2[1]) {
+    MyAssertHandler(0xffffffff821bda94,0x308,0,0xffffffff82000f98,0xffffffff821be9bc);
+  }
+  iVar1 = *piVar2;
+  piVar2[1] = (int)param_2;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821bda94,0x30c,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  }
+  do {
+    D3DDevice_SetIndices(iVar1,param_2);
+  } while (DAT_84013128 != 0);
+  __restgprlr_27();
+  return;
 }
 
 
 // 827366C0  R_DrawStaticModelArray_UnlitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:880)
 
-void R_DrawStaticModelArray_UnlitNoPrepass(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_DrawStaticModelArray_UnlitNoPrepass(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs43 [16];
+  undefined1 auVar2 [16];
+  undefined1 auStack_108 [264];
+  
   __savegprlr();
+  iVar1 = __savevmx_123();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bea58,900,0,0xffffffff82000f98,0xffffffff821bebc4);
+  }
+  if (*(int *)(iVar1 + 4) != 2) {
+    MyAssertHandler(0xffffffff821bea58,0x385,0,0xffffffff821beb60,0xffffffff821beb88);
+  }
+  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_108,param_2);
+  auVar2 = altv300_21(in_vs32,in_vs43);
+  altv300_23(auVar2,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 827369C0  R_DrawStaticModelArray_LitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1049)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_DrawStaticModelArray_LitNoPrepass(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs43 [16];
+  undefined1 in_vs56 [16];
+  undefined1 auStack_100 [256];
+  
+  __savegprlr();
+  iVar1 = __savevmx_123();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bea58,0x432,0,0xffffffff82000f98,0xffffffff821bebc4);
+  }
+  if (*(int *)(iVar1 + 4) != 1) {
+    MyAssertHandler(0xffffffff821bea58,0x433,0,0xffffffff821beb60,0xffffffff821bedb8);
+  }
+  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_100,param_2);
+  altv207_13(in_vs32,in_vs41);
+  altv300_21(in_vs32,in_vs43);
+  altv300_23(in_vs56,in_vs43);
+  altv207_13(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 82736ED8  R_DrawStaticModelArray_AmbientNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1324)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_DrawStaticModelArray_AmbientNoPrepass(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs43 [16];
+  undefined1 auVar2 [16];
+  undefined1 auStack_110 [272];
+  
+  __savegprlr();
+  iVar1 = __savevmx_122();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bea58,0x542,0,0xffffffff82000f98,0xffffffff821bebc4);
+  }
+  if (*(int *)(iVar1 + 4) != 3) {
+    MyAssertHandler(0xffffffff821bea58,0x543,0,0xffffffff821beb60,0xffffffff821bedf4);
+  }
+  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_110,param_2);
+  auVar2 = altv300_21(in_vs32,in_vs43);
+  altv300_23(auVar2,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 82737A90  GfxSModelArrayCallback_NoPrepass::Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
 
-void GfxSModelArrayCallback_NoPrepass__Callback(void)
+void GfxSModelArrayCallback_NoPrepass__Callback(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar3;
+  undefined4 uVar4;
+  undefined8 uVar2;
+  ulonglong uVar5;
+  
+  iVar3 = __savegprlr_29();
+  uVar5 = (ulonglong)*(uint *)(iVar3 + 0x24);
+  uVar4 = XSurfaceGetModelVertDecl(uVar5);
+  *(undefined4 *)((int)param_2 + 8) = uVar4;
+  R_UpdateVertexDecl(*(undefined4 *)(iVar3 + 0x34));
+  uVar2 = XSurfaceGetVert0Size(uVar5);
+  R_SetStreamSource(param_2,uVar5 + 0x20,0,uVar2);
+  iVar1 = *(int *)(iVar3 + 4);
+  if (iVar1 == 2) {
+    R_DrawStaticModelArray_UnlitNoPrepass(iVar3,param_2);
+    __restgprlr_29();
+    return;
+  }
+  if (iVar1 == 1) {
+    R_DrawStaticModelArray_LitNoPrepass(iVar3,param_2);
+    __restgprlr_29();
+    return;
+  }
+  if (iVar1 == 3) {
+    R_DrawStaticModelArray_AmbientNoPrepass(iVar3,param_2);
+    __restgprlr_29();
+    return;
+  }
+  if (iVar1 != 0) {
+    MyAssertHandler(0xffffffff821bea58,0x62c,0,0xffffffff821beb60,0xffffffff821bee34);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -224,7 +433,6 @@ void R_InitStaticModelDrawStreamNonOptimized
   
   puVar8 = (undefined4 *)__savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821bea58,0x7ec,0,0xffffffff82000f98,0xffffffff82015cf8);
   }
   iVar4 = *(int *)(param_4 + 0xf8);
@@ -241,7 +449,6 @@ void R_InitStaticModelDrawStreamNonOptimized
   uVar3 = *puVar5;
   param_3[1] = puVar5 + 1;
   if (puVar6 < puVar5 + 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
   }
   puVar5 = (undefined2 *)param_3[1];
@@ -249,12 +456,12 @@ void R_InitStaticModelDrawStreamNonOptimized
   puVar10 = puVar5 + 1;
   *(undefined2 *)(puVar8 + 5) = uVar3;
   param_3[1] = puVar10;
+  uVar3 = *puVar5;
   if (puVar6 < puVar10) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
   }
   uVar1 = *param_3;
-  *(undefined2 *)((int)puVar8 + 0x16) = *puVar5;
+  *(undefined2 *)((int)puVar8 + 0x16) = uVar3;
   puVar8[6] = uVar1;
   puVar8[7] = *(undefined4 *)(param_4 + 0x74);
   puVar8[8] = (uint)*(byte *)(*(int *)(param_4 + 0xf8) + 99);
@@ -269,11 +476,20 @@ void R_InitStaticModelDrawStreamNonOptimized
 
 // 82737430  R_DrawStaticModel_SetPlacement  (gfx_d3d/r_draw_staticmodel.cpp:2058)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void R_DrawStaticModel_SetPlacement(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined1 in_vs32 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  
   __savegprlr_26();
+  altv300_21(in_vs32,in_vs43);
+  altv300_23(in_vs42,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -282,12 +498,113 @@ void R_DrawStaticModel_SetPlacement(void)
 void R_DrawStaticModelArray_NonOptimized(undefined8 param_1,ulonglong param_2)
 
 {
-  int iVar1;
+  undefined4 uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  longlong lVar5;
+  ushort *puVar6;
+  uint uVar7;
+  undefined4 uStack00000018;
   undefined1 auStack_60 [96];
   
-  iVar1 = __savegprlr_24();
-                    /* WARNING: Subroutine does not return */
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar1 + 0x24),auStack_60,(param_2 & 0xffffffff) + 0xc0);
+  iVar4 = __savegprlr_24();
+  lVar5 = (param_2 & 0xffffffff) + 0xc0;
+  uVar1 = *(undefined4 *)(iVar4 + 0x24);
+  R_SetupStaticModelPrim(uVar1,auStack_60,lVar5);
+  R_SetStaticModelVertexBuffer(param_2 & 0xffffffff,uVar1);
+  uVar7 = 0;
+  uStack00000018 = (undefined4)(param_2 >> 0x20);
+  puVar6 = (ushort *)(*(int *)(iVar4 + 0x2c) + -2);
+  uVar2 = *(uint *)(iVar4 + 0x28);
+  uVar3 = *(uint *)(DAT_8461658c + 0x284);
+  do {
+    puVar6 = puVar6 + 1;
+    R_DrawStaticModel_SetPlacement
+              ((ulonglong)*puVar6 * 0x2c + (ulonglong)uVar3,uStack00000018,uVar1);
+    R_SetupPassPerPrimArgs(param_2);
+    R_DrawIndexedPrimitive(lVar5,auStack_60);
+    uVar7 = uVar7 + 1;
+  } while (uVar7 < uVar2);
+  __restgprlr_24();
+  return;
+}
+
+
+// 82737798  R_DrawStaticModelSurfLit  (gfx_d3d/r_draw_staticmodel.cpp:2220)
+
+void R_DrawStaticModelSurfLit(undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  undefined1 auStack_60 [4];
+  int local_5c;
+  undefined4 local_44;
+  
+  uVar1 = __savegprlr_29();
+  *(undefined8 *)(param_2 + 0x150) = 0;
+  *(undefined8 *)(param_2 + 0x158) = 0;
+  *(undefined8 *)(param_2 + 0x160) = 0;
+  *(undefined8 *)(param_2 + 0x168) = 0;
+  *(undefined8 *)(param_2 + 0x130) = 0;
+  *(undefined8 *)(param_2 + 0x138) = 0;
+  *(undefined8 *)(param_2 + 0x140) = 0;
+  *(undefined8 *)(param_2 + 0x148) = 0;
+  if ((*(byte *)(*(int *)(param_2 + 0xf8) + 99) & 1) != 0) {
+    R_SetSamplerState(param_2,1,0x72);
+  }
+  R_InitStaticModelDrawStreamNonOptimized(auStack_60,param_3,uVar1,param_2);
+  if (local_5c == 0) {
+    R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(param_2 + 0xf8) + 0x5c),
+                       **(undefined4 **)(param_2 + 0xec));
+  }
+  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
+            (auStack_60,param_2 + 0xc0);
+  *(undefined4 *)(param_2 + 0x74) = local_44;
+  __restgprlr_29();
+  return;
+}
+
+
+// 82737858  R_DrawStaticModelSurf  (gfx_d3d/r_draw_staticmodel.cpp:2253)
+
+void R_DrawStaticModelSurf(undefined8 param_1,undefined8 param_2,int *param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uStack00000018;
+  undefined1 auStack_50 [4];
+  int local_4c;
+  int local_34;
+  
+  uStack00000018._4_4_ = (int)param_2;
+  iVar1 = uStack00000018._4_4_;
+  uStack00000018 = param_2;
+  if (*param_3 == 0x21) {
+    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
+    R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>
+              (auStack_50,param_2);
+    if (*(int *)(iVar1 + 0x74) == local_34) {
+      return;
+    }
+    uVar2 = 0x8d7;
+  }
+  else {
+    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
+    if (local_4c == 0) {
+      R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(iVar1 + 0xf8) + 0x5c),
+                         **(undefined4 **)(iVar1 + 0xec));
+    }
+    R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
+              (auStack_50,iVar1 + 0xc0);
+    if (*(int *)(iVar1 + 0x74) == local_34) {
+      return;
+    }
+    uVar2 = 0x8e5;
+  }
+  MyAssertHandler(0xffffffff821bea58,uVar2,0,0xffffffff82000f98,0xffffffff821bee70);
+  return;
 }
 
 

@@ -78,10 +78,42 @@ LAB_827b4ac8:
 
 // 827B4B28  jinit_c_main_controller  (jpeg-6/jcmainct.c:246)
 
-void jinit_c_main_controller(void)
+void jinit_c_main_controller(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  undefined4 uVar4;
+  int iVar5;
+  int *piVar6;
+  
+  piVar2 = (int *)__savegprlr_28();
+  puVar3 = (undefined4 *)(**(code **)piVar2[1])(piVar2,1,0x40);
+  piVar2[0x52] = (int)puVar3;
+  *puVar3 = start_pass_main;
+  if (*(char *)(piVar2 + 0x2e) == '\0') {
+    if ((param_2 & 0xff) != 0) {
+      *(undefined4 *)(*piVar2 + 0x14) = 4;
+      (**(code **)*piVar2)(piVar2);
+      __restgprlr_28();
+      return;
+    }
+    iVar5 = 0;
+    if (0 < piVar2[0x11]) {
+      piVar6 = (int *)(piVar2[0x13] + -0x48);
+      puVar3 = puVar3 + 5;
+      do {
+        piVar1 = piVar6 + 0x19;
+        piVar6 = piVar6 + 0x15;
+        uVar4 = (**(code **)(piVar2[1] + 8))(piVar2,1,*piVar1 << 3,*piVar6 << 3);
+        iVar5 = iVar5 + 1;
+        puVar3 = puVar3 + 1;
+        *puVar3 = uVar4;
+      } while (iVar5 < piVar2[0x11]);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 

@@ -3,6 +3,56 @@
 ; 8292D818  bdCommonAddr::bdCommonAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:39)
   8292D818  7D8802A6             mfspr r12,LR
   8292D81C  4BFE8E9D             bl 0x829166b8
+  8292D820  9421FF80             stwu r1,-0x80(r1)
+  8292D824  7C7F1B78             or r31,r3,r3
+  8292D828  3D608221             lis r11,-0x7ddf
+  8292D82C  3BC00000             li r30,0x0
+  8292D830  396B6A24             addi r11,r11,0x6a24
+  8292D834  93C30004             stw r30,0x4(r3)
+  8292D838  7C9D2378             or r29,r4,r4
+  8292D83C  917F0000             stw r11,0x0(r31)
+  8292D840  7CA42B78             or r4,r5,r5
+  8292D844  38630008             addi r3,r3,0x8
+  8292D848  38A00024             li r5,0x24
+  8292D84C  7CDC3378             or r28,r6,r6
+  8292D850  4BFE9111             bl 0x82916960
+  8292D854  39400006             li r10,0x6
+  8292D858  B39F002C             sth r28,0x2c(r31)
+  8292D85C  7FCBF378             or r11,r30,r30
+  8292D860  93DF0030             stw r30,0x30(r31)
+  8292D864  393F0012             addi r9,r31,0x12
+  8292D868  9BDF0038             stb r30,0x38(r31)
+  8292D86C  93DF0034             stw r30,0x34(r31)
+  8292D870  7D4903A6             mtspr CTR,r10
+LAB_8292d874:
+  8292D874  815F0034             lwz r10,0x34(r31)
+  8292D878  7D0958AE             lbzx r8,r9,r11
+  8292D87C  396B0001             addi r11,r11,0x1
+  8292D880  1D4A001F             mulli r10,r10,0x1f
+  8292D884  7D485214             add r10,r8,r10
+  8292D888  915F0034             stw r10,0x34(r31)
+  8292D88C  4200FFE8             bdnz 0x8292d874
+  8292D890  817D0000             lwz r11,0x0(r29)
+  8292D894  554A003E             rlwinm r10,r10,0x0,0x0,0x1f
+  8292D898  816B0034             lwz r11,0x34(r11)
+  8292D89C  7F0B5040             cmplw cr6,r11,r10
+  8292D8A0  409A000C             bne cr6,0x8292d8ac
+  8292D8A4  39600001             li r11,0x1
+  8292D8A8  997F0038             stb r11,0x38(r31)
+LAB_8292d8ac:
+  8292D8AC  7FA3EB78             or r3,r29,r29
+  8292D8B0  4BFE25F1             bl 0x8290fea0
+  8292D8B4  7FE3FB78             or r3,r31,r31
+  8292D8B8  38210080             addi r1,r1,0x80
+  8292D8BC  4BFE8E4C             b 0x82916708
+
+; 8292D7B0  bdCommonAddr::getHash  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:75)
+  8292D7B0  80630034             lwz r3,0x34(r3)
+  8292D7B4  4E800020             blr
+
+; 8292D7B8  bdCommonAddr::isLoopback  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:80)
+  8292D7B8  88630038             lbz r3,0x38(r3)
+  8292D7BC  4E800020             blr
 
 ; 8292D7C0  bdCommonAddr::`scalar_deleting_destructor'  (line unknown)
   8292D7C0  7D8802A6             mfspr r12,LR

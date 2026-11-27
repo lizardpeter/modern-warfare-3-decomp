@@ -294,18 +294,99 @@ void emit_buffered_bits(undefined8 param_1,longlong param_2,undefined8 param_3)
 void emit_eobrun(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  iVar3 = __savegprlr_29();
+  if (*(int *)(iVar3 + 0x38) != 0) {
+    iVar4 = *(int *)(iVar3 + 0x38) >> 1;
+    uVar5 = 0;
+    if (iVar4 != 0) {
+      do {
+        iVar4 = iVar4 >> 1;
+        uVar5 = uVar5 + 1;
+      } while (iVar4 != 0);
+      if (0xe < (int)uVar5) {
+        *(undefined4 *)(**(int **)(iVar3 + 0x20) + 0x14) = 0x28;
+        (**(code **)**(undefined4 **)(iVar3 + 0x20))();
+      }
+    }
+    uVar2 = uVar5 & 0xfffffff;
+    if (*(char *)(iVar3 + 0xc) == '\0') {
+      iVar4 = *(int *)((*(int *)(iVar3 + 0x34) + 0x13) * 4 + iVar3);
+      emit_bits(iVar3,*(undefined4 *)((int)(uVar2 << 6) + iVar4),
+                *(undefined1 *)(iVar4 + (int)(uVar2 << 4) + 0x400));
+    }
+    else {
+      iVar1 = (int)(uVar2 << 6);
+      iVar4 = *(int *)((*(int *)(iVar3 + 0x34) + 0x17) * 4 + iVar3);
+      *(int *)(iVar4 + iVar1) = *(int *)(iVar4 + iVar1) + 1;
+    }
+    if ((int)uVar5 != 0) {
+      emit_bits(iVar3,*(undefined4 *)(iVar3 + 0x38),uVar5);
+    }
+    *(undefined4 *)(iVar3 + 0x38) = 0;
+    emit_buffered_bits(iVar3,*(undefined4 *)(iVar3 + 0x40),*(undefined4 *)(iVar3 + 0x3c));
+    *(undefined4 *)(iVar3 + 0x3c) = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
 // 827B8878  emit_restart  (jpeg-6/jcphuff.c:348)
 
-void emit_restart(void)
+void emit_restart(undefined8 param_1,char param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_29();
+  emit_eobrun();
+  if (*(char *)(iVar1 + 0xc) == '\0') {
+    emit_bits(iVar1,0x7f,7);
+    *(undefined4 *)(iVar1 + 0x18) = 0;
+    *(undefined4 *)(iVar1 + 0x1c) = 0;
+    **(undefined1 **)(iVar1 + 0x10) = 0xff;
+    lVar3 = (ulonglong)*(uint *)(iVar1 + 0x14) - 1;
+    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + 1;
+    *(int *)(iVar1 + 0x14) = (int)lVar3;
+    if (lVar3 == 0) {
+      dump_buffer(iVar1);
+    }
+    **(char **)(iVar1 + 0x10) = param_2 + -0x30;
+    lVar3 = (ulonglong)*(uint *)(iVar1 + 0x14) - 1;
+    *(int *)(iVar1 + 0x14) = (int)lVar3;
+    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + 1;
+    if (lVar3 == 0) {
+      dump_buffer(iVar1);
+    }
+  }
+  if (*(int *)(*(int *)(iVar1 + 0x20) + 0x134) == 0) {
+    iVar4 = 0;
+    if (0 < *(int *)(*(int *)(iVar1 + 0x20) + 0xec)) {
+      puVar2 = (undefined4 *)(iVar1 + 0x20);
+      do {
+        puVar2 = puVar2 + 1;
+        *puVar2 = 0;
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < *(int *)(*(int *)(iVar1 + 0x20) + 0xec));
+      __restgprlr_29();
+      return;
+    }
+  }
+  else {
+    *(undefined4 *)(iVar1 + 0x38) = 0;
+    *(undefined4 *)(iVar1 + 0x3c) = 0;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -422,7 +503,7 @@ void encode_mcu_AC_first(undefined8 param_1,int *param_2)
   uVar11 = 0;
   iVar7 = *param_2;
   if ((int)uVar10 <= (int)uVar13) {
-    piVar9 = (int *)(&DAT_821daf70 + uVar10 * 4);
+    piVar9 = &DAT_821daf70 + uVar10;
     lVar8 = ((ulonglong)uVar13 - (ulonglong)uVar10) + 1;
     do {
       sVar1 = *(short *)(*piVar9 * 2 + iVar7);
@@ -512,11 +593,43 @@ void encode_mcu_AC_first(undefined8 param_1,int *param_2)
 
 // 827B8DE8  encode_mcu_DC_refine  (jpeg-6/jcphuff.c:572)
 
-void encode_mcu_DC_refine(void)
+void encode_mcu_DC_refine(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = __savegprlr_27();
+  iVar1 = *(int *)(iVar3 + 0x164);
+  uVar2 = *(undefined4 *)(iVar3 + 0x140);
+  *(undefined4 *)(iVar1 + 0x10) = **(undefined4 **)(iVar3 + 0x20);
+  *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(*(int *)(iVar3 + 0x20) + 4);
+  if ((*(int *)(iVar3 + 0xc4) != 0) && (*(int *)(iVar1 + 0x44) == 0)) {
+    emit_restart(iVar1,*(undefined4 *)(iVar1 + 0x48));
+  }
+  iVar4 = 0;
+  if (0 < *(int *)(iVar3 + 0x108)) {
+    param_2 = param_2 + -4;
+    do {
+      param_2 = param_2 + 4;
+      emit_bits(iVar1,(short)((int)*(short *)*(undefined4 *)param_2 >> ((int)(short)uVar2 & 0x3fU)),
+                1);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < *(int *)(iVar3 + 0x108));
+  }
+  **(undefined4 **)(iVar3 + 0x20) = *(undefined4 *)(iVar1 + 0x10);
+  *(undefined4 *)(*(int *)(iVar3 + 0x20) + 4) = *(undefined4 *)(iVar1 + 0x14);
+  if (*(int *)(iVar3 + 0xc4) != 0) {
+    if (*(int *)(iVar1 + 0x44) == 0) {
+      *(int *)(iVar1 + 0x44) = *(int *)(iVar3 + 0xc4);
+      *(uint *)(iVar1 + 0x48) = *(int *)(iVar1 + 0x48) + 1U & 7;
+    }
+    *(int *)(iVar1 + 0x44) = *(int *)(iVar1 + 0x44) + -1;
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -564,7 +677,7 @@ void encode_mcu_AC_refine(undefined8 param_1,int *param_2)
     lVar12 = (uVar11 - uVar9) + 1;
     uVar8 = uVar9;
     do {
-      sVar1 = *(short *)(*(int *)(&DAT_821daf70 + iVar10) * 2 + iVar13);
+      sVar1 = *(short *)(*(int *)((int)&DAT_821daf70 + iVar10) * 2 + iVar13);
       iVar15 = (int)sVar1;
       if (sVar1 < 0) {
         iVar15 = -(int)sVar1;
@@ -618,8 +731,8 @@ void encode_mcu_AC_refine(undefined8 param_1,int *param_2)
             iVar5 = *(int *)((*(int *)(iVar2 + 0x34) + 0x17) * 4 + iVar2);
             *(int *)(iVar5 + iVar18 * 4) = *(int *)(iVar5 + iVar18 * 4) + 1;
           }
-          emit_bits(iVar2,((longlong)*(short *)(*(int *)(&DAT_821daf70 + iVar16) * 2 + iVar13) &
-                          0xffffffffU) >> 0x1f ^ 1,1);
+          emit_bits(iVar2,((longlong)*(short *)(*(int *)((int)&DAT_821daf70 + iVar16) * 2 + iVar13)
+                          & 0xffffffffU) >> 0x1f ^ 1,1);
           emit_buffered_bits(iVar2,iVar10,iVar17);
           iVar17 = 0;
           iVar18 = 0;
@@ -682,8 +795,60 @@ void finish_pass_phuff(int param_1)
 void finish_pass_gather_phuff(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  uint uVar2;
+  bool bVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  int iVar7;
+  int *piVar8;
+  int *piVar9;
+  ulonglong uVar10;
+  char local_60 [96];
+  
+  iVar4 = __savegprlr_23();
+  iVar1 = *(int *)(iVar4 + 0x164);
+  emit_eobrun(iVar1);
+  iVar7 = 0;
+  local_60[0] = '\0';
+  local_60[1] = '\0';
+  local_60[2] = '\0';
+  local_60[3] = '\0';
+  bVar3 = *(int *)(iVar4 + 0x134) != 0;
+  if (0 < *(int *)(iVar4 + 0xec)) {
+    piVar8 = (int *)(iVar4 + 0xf0);
+    do {
+      if (bVar3) {
+        uVar2 = *(uint *)(*piVar8 + 0x18);
+LAB_827b92e0:
+        uVar10 = (ulonglong)uVar2;
+        if (local_60[uVar2] == '\0') {
+          uVar6 = uVar10 + 0x18;
+          if (bVar3) {
+            uVar6 = uVar10 + 0x1c;
+          }
+          piVar9 = (int *)((int)((uVar6 & 0xffffffff) << 2) + iVar4);
+          if (*piVar9 == 0) {
+            iVar5 = jpeg_alloc_huff_table(iVar4);
+            *piVar9 = iVar5;
+          }
+          jpeg_gen_optimal_table
+                    (iVar4,*piVar9,*(undefined4 *)((int)((uVar10 + 0x17 & 0xffffffff) << 2) + iVar1)
+                    );
+          local_60[uVar2] = '\x01';
+        }
+      }
+      else if (*(int *)(iVar4 + 0x13c) == 0) {
+        uVar2 = *(uint *)(*piVar8 + 0x14);
+        goto LAB_827b92e0;
+      }
+      iVar7 = iVar7 + 1;
+      piVar8 = piVar8 + 1;
+    } while (iVar7 < *(int *)(iVar4 + 0xec));
+  }
+  __restgprlr_23();
+  return;
 }
 
 

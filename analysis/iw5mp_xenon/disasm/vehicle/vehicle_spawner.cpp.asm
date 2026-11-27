@@ -3,7 +3,109 @@
 ; 826C9E20  Vehicle_CreateSpawner  (vehicle/vehicle_spawner.cpp:14)
   826C9E20  7D8802A6             mfspr r12,LR
   826C9E24  4824C895             bl 0x829166b8
+  826C9E28  9421FF80             stwu r1,-0x80(r1)
+  826C9E2C  3D60821A             lis r11,-0x7de6
+  826C9E30  3D408200             lis r10,-0x7e00
+  826C9E34  7C7F1B78             or r31,r3,r3
+  826C9E38  7C9C2378             or r28,r4,r4
+  826C9E3C  2B030000             cmplwi cr6,r3,0x0
+  826C9E40  3BCB1C90             addi r30,r11,0x1c90
+  826C9E44  3BAA0F98             addi r29,r10,0xf98
+  826C9E48  409A0020             bne cr6,0x826c9e68
+  826C9E4C  3D608200             lis r11,-0x7e00
+  826C9E50  7FA6EB78             or r6,r29,r29
+  826C9E54  38EB2614             addi r7,r11,0x2614
+  826C9E58  7FC3F378             or r3,r30,r30
+  826C9E5C  38A00000             li r5,0x0
+  826C9E60  3880000F             li r4,0xf
+  826C9E64  4BF0A69D             bl 0x825d4500
+LAB_826c9e68:
+  826C9E68  2B1C0000             cmplwi cr6,r28,0x0
+  826C9E6C  409A0020             bne cr6,0x826c9e8c
+  826C9E70  3D60821A             lis r11,-0x7de6
+  826C9E74  7FA6EB78             or r6,r29,r29
+  826C9E78  38EB1C84             addi r7,r11,0x1c84
+  826C9E7C  7FC3F378             or r3,r30,r30
+  826C9E80  38A00000             li r5,0x0
+  826C9E84  38800010             li r4,0x10
+  826C9E88  4BF0A679             bl 0x825d4500
+LAB_826c9e8c:
+  826C9E8C  39600000             li r11,0x0
+  826C9E90  39400001             li r10,0x1
+  826C9E94  39200011             li r9,0x11
+  826C9E98  917F018C             stw r11,0x18c(r31)
+  826C9E9C  3900FFFF             li r8,-0x1
+  826C9EA0  917F011C             stw r11,0x11c(r31)
+  826C9EA4  995F0102             stb r10,0x102(r31)
+  826C9EA8  7F83E378             or r3,r28,r28
+  826C9EAC  913F0004             stw r9,0x4(r31)
+  826C9EB0  917F01AC             stw r11,0x1ac(r31)
+  826C9EB4  911F01B0             stw r8,0x1b0(r31)
+  826C9EB8  4BFE0A49             bl 0x826aa900
+  826C9EBC  907F01B4             stw r3,0x1b4(r31)
+  826C9EC0  38210080             addi r1,r1,0x80
+  826C9EC4  4824C844             b 0x82916708
 
 ; 826C9EC8  Vehicle_DoSpawn  (vehicle/vehicle_spawner.cpp:31)
   826C9EC8  7D8802A6             mfspr r12,LR
   826C9ECC  4824C7E9             bl 0x829166b4
+  826C9ED0  9421FF80             stwu r1,-0x80(r1)
+  826C9ED4  7C7E1B78             or r30,r3,r3
+  826C9ED8  7C9D2378             or r29,r4,r4
+  826C9EDC  7CBC2B78             or r28,r5,r5
+  826C9EE0  2B030000             cmplwi cr6,r3,0x0
+  826C9EE4  409A0028             bne cr6,0x826c9f0c
+  826C9EE8  3D608200             lis r11,-0x7e00
+  826C9EEC  3D408200             lis r10,-0x7e00
+  826C9EF0  3D20821A             lis r9,-0x7de6
+  826C9EF4  38EB2614             addi r7,r11,0x2614
+  826C9EF8  38CA0F98             addi r6,r10,0xf98
+  826C9EFC  38691C90             addi r3,r9,0x1c90
+  826C9F00  38A00000             li r5,0x0
+  826C9F04  38800023             li r4,0x23
+  826C9F08  4BF0A5F9             bl 0x825d4500
+LAB_826c9f0c:
+  826C9F0C  3D608358             lis r11,-0x7ca8
+  826C9F10  815E01B0             lwz r10,0x1b0(r30)
+  826C9F14  392B0B00             addi r9,r11,0xb00
+  826C9F18  816904AC             lwz r11,0x4ac(r9)
+  826C9F1C  7F0A5800             cmpw cr6,r10,r11
+  826C9F20  41980010             blt cr6,0x826c9f30
+  826C9F24  38600000             li r3,0x0
+  826C9F28  38210080             addi r1,r1,0x80
+  826C9F2C  4824C7D8             b 0x82916704
+LAB_826c9f30:
+  826C9F30  917E01B0             stw r11,0x1b0(r30)
+  826C9F34  4BDE6D15             bl 0x824b0c48
+  826C9F38  7C7F1B78             or r31,r3,r3
+  826C9F3C  807E01B4             lwz r3,0x1b4(r30)
+  826C9F40  4BFE0BA1             bl 0x826aaae0
+  826C9F44  7C7B1B78             or r27,r3,r3
+  826C9F48  7FE3FB78             or r3,r31,r31
+  826C9F4C  7FC4F378             or r4,r30,r30
+  826C9F50  4BDDFFE1             bl 0x824a9f30
+  826C9F54  7FE3FB78             or r3,r31,r31
+  826C9F58  7FC4F378             or r4,r30,r30
+  826C9F5C  4BDE00ED             bl 0x824aa048
+  826C9F60  817F0180             lwz r11,0x180(r31)
+  826C9F64  387F017A             addi r3,r31,0x17a
+  826C9F68  556A07FA             rlwinm r10,r11,0x0,0x1f,0x1d
+  826C9F6C  7FA4EB78             or r4,r29,r29
+  826C9F70  915F0180             stw r10,0x180(r31)
+  826C9F74  4BE7B215             bl 0x82545188
+  826C9F78  7FE3FB78             or r3,r31,r31
+  826C9F7C  38C00000             li r6,0x0
+  826C9F80  809B0000             lwz r4,0x0(r27)
+  826C9F84  7F85E378             or r5,r28,r28
+  826C9F88  4BFE8B69             bl 0x826b2af0
+  826C9F8C  7FE3FB78             or r3,r31,r31
+  826C9F90  4BDE05F1             bl 0x824aa580
+  826C9F94  3D20835A             lis r9,-0x7ca6
+  826C9F98  38A00001             li r5,0x1
+  826C9F9C  39090B80             addi r8,r9,0xb80
+  826C9FA0  7FC3F378             or r3,r30,r30
+  826C9FA4  A08800B0             lhz r4,0xb0(r8)
+  826C9FA8  4BDE0BF9             bl 0x824aaba0
+  826C9FAC  7FE3FB78             or r3,r31,r31
+  826C9FB0  38210080             addi r1,r1,0x80
+  826C9FB4  4824C750             b 0x82916704

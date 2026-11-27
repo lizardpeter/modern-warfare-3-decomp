@@ -21,7 +21,6 @@ undefined4 Live_GetNecessaryBandwidth(int param_1)
   }
   if ((0x12 < param_1) && (DAT_84013128 == 0)) {
     uVar1 = va(0xffffffff8208d2b4);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208d270,0x32,0,uVar1);
   }
   return *(undefined4 *)(DAT_83666204 + 0xc);
@@ -49,7 +48,6 @@ undefined8 Live_HowManyPlayersCanWeHost(void)
     return 0xc;
   }
   if (iVar1 <= *(int *)(DAT_83666204 + 0xc)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208d270,0x66,0,0xffffffff8208d2ec,0xffffffff8208d304);
   }
   return 0x12;

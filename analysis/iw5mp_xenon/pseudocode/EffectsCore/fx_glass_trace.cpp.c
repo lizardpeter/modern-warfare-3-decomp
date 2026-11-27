@@ -2,11 +2,87 @@
 
 // 8242E9A0  Glass_DoesEdgeLoopContainPoint  (EffectsCore/fx_glass_trace.cpp:36)
 
-void Glass_DoesEdgeLoopContainPoint(void)
+void Glass_DoesEdgeLoopContainPoint
+               (undefined8 param_1,longlong param_2,uint param_3,ulonglong param_4,int *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  short sVar1;
+  int iVar2;
+  short *psVar3;
+  short *psVar4;
+  longlong lVar5;
+  uint uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  
+  lVar5 = __savegprlr_29();
+  iVar2 = param_5[1];
+  uVar6 = 0;
+  lVar8 = ((ulonglong)param_3 & 0x3fffffff) * 4 + param_2 + -4;
+  while( true ) {
+    lVar7 = lVar5;
+    lVar5 = param_2;
+    psVar3 = (short *)lVar8;
+    psVar4 = (short *)lVar7;
+    sVar1 = psVar4[1];
+    if (iVar2 < psVar3[1]) {
+      if ((sVar1 <= iVar2) &&
+         ((iVar2 - psVar3[1]) * ((int)*psVar4 - (int)*psVar3) <
+          (*param_5 - (int)*psVar3) * ((int)sVar1 - (int)psVar3[1]))) {
+        param_4 = param_4 + 1;
+      }
+    }
+    else if ((iVar2 < sVar1) &&
+            ((*param_5 - (int)*psVar3) * ((int)sVar1 - (int)psVar3[1]) <
+             (iVar2 - psVar3[1]) * ((int)*psVar4 - (int)*psVar3))) {
+      param_4 = param_4 - 1;
+    }
+    if (uVar6 == param_3) break;
+    uVar6 = uVar6 + 1;
+    param_2 = lVar5 + 4;
+    lVar8 = lVar7;
+  }
+  __restgprlr_29((-param_4 & ~param_4 & 0xffffffff) >> 0x1f);
+  return;
+}
+
+
+// 8242F040  Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>  (EffectsCore/fx_glass_api.h:80)
+
+void Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>
+               (undefined8 param_1,undefined8 param_2,code *param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  
+  iVar2 = __savegprlr_20();
+  uVar1 = *(uint *)(iVar2 + 0x10);
+  uVar4 = 0;
+  if (uVar1 != 0) {
+    iVar3 = 0;
+    do {
+      uVar6 = *(uint *)(iVar3 + *(int *)(iVar2 + 0x44));
+      if (uVar6 != 0) {
+        do {
+          uVar5 = LZCOUNT(uVar6);
+          if (0x20 < uVar5) {
+            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar5,0x21);
+          }
+          uVar6 = uVar6 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar5 << 2));
+          (*param_3)(iVar2,param_2,(uVar4 & 0x7ffffff) << 5 | uVar5);
+        } while (uVar6 != 0);
+      }
+      uVar4 = uVar4 + 1;
+      iVar3 = iVar3 + 4;
+    } while ((uVar4 & 0xffffffff) < (ulonglong)uVar1);
+  }
+  __restgprlr_20();
+  return;
 }
 
 
@@ -63,7 +139,6 @@ LAB_8242ead8:
       }
       if (cVar5 == '\0') goto LAB_8242ead8;
       if (0xe < (uVar11 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82064f40,0x7d,0,0xffffffff82064ef8,uVar11,0xf);
       }
       uVar1 = *puVar2;
@@ -212,11 +287,70 @@ void Glass_TraceAgainstPiece(undefined8 param_1,longlong param_2,ulonglong param
 
 // 8242EEB0  Glass_TraceLine  (EffectsCore/fx_glass_trace.cpp:195)
 
-void Glass_TraceLine(void)
+void Glass_TraceLine(undefined8 param_1,float *param_2,float *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_134;
+  float local_130;
+  float local_12c;
+  float local_128;
+  uint local_124;
+  int local_11c [71];
+  
+  iVar2 = __savegprlr_27();
+  iVar3 = R_UpdateGlassPending(0);
+  if (iVar3 != 0) {
+    MyAssertHandler(0xffffffff82064f40,0xcb,0,0xffffffff82000f98,0xffffffff82017618);
+  }
+  if (*(char *)(DAT_8332cc14 + 0xc) != '\0') {
+    local_13c = param_2[1];
+    uVar4 = 0;
+    local_130 = param_3[1] - local_13c;
+    local_138 = param_2[2];
+    local_124 = 0;
+    local_12c = param_3[2] - local_138;
+    local_140 = *param_2;
+    local_134 = *param_3 - local_140;
+    local_128 = SQRT(local_134 * local_134 + local_12c * local_12c + local_130 * local_130);
+    fVar1 = 1.0;
+    if (-local_128 < 0.0) {
+      fVar1 = local_128;
+    }
+    fVar1 = 1.0 / fVar1;
+    local_134 = fVar1 * local_134;
+    local_130 = local_130 * fVar1;
+    local_12c = local_12c * fVar1;
+    Glass_ForEachPiece<FxGlassTrace_*,void_(__cdecl*)(FxGlassSystem_*___restrict,FxGlassTrace_*___restrict,unsigned_int)>
+              (iVar2,&local_140,0xffffffff8242ec20);
+    if (local_124 != 0) {
+      piVar5 = local_11c;
+      do {
+        if ((*(ushort *)(*piVar5 * 0x20 + *(int *)(iVar2 + 0x38) + 0x1a) & 2) != 0) {
+          fVar1 = (float)piVar5[1];
+          local_150 = fVar1 * local_134 + *param_2;
+          local_14c = local_130 * fVar1 + param_2[1];
+          local_148 = local_12c * fVar1 + param_2[2];
+          Glass_DestroySimplePiece(iVar2,*piVar5,&local_150,&local_134,param_4);
+        }
+        uVar4 = uVar4 + 1;
+        piVar5 = piVar5 + 0xc;
+      } while (uVar4 < local_124);
+    }
+    Glass_CompactData(iVar2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -388,11 +522,28 @@ void std___Make_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGla
 // 8242FAA8  std::_Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
 void std___Sort_heap<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  longlong lVar2;
+  undefined1 auStack_60 [96];
+  
+  lVar1 = __savegprlr_27();
+  lVar2 = param_2 - lVar1;
+  if (1 < (int)lVar2 / 0x30) {
+    param_2 = param_2 + -0x30;
+    do {
+      memcpy(auStack_60,(void *)param_2,0x30);
+      memcpy((void *)param_2,(void *)lVar1,0x30);
+      std___Adjust_heap<FxGlassTraceHit_*,int,FxGlassTraceHit,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+                (lVar1,0,((int)lVar2 + -0x30) / 0x30,auStack_60,param_3);
+      param_2 = param_2 + -0x30;
+      lVar2 = (param_2 - lVar1) + 0x30;
+    } while (1 < (int)lVar2 / 0x30);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -455,22 +606,79 @@ void std___Insertion_sort1<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_con
 // 8242F460  std::_Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
 void std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (void)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar3;
+  void *pvVar2;
+  void *_Src;
+  undefined1 auStack_60 [96];
+  void *_Src_00;
+  
+  uVar1 = __savegprlr_28();
+  cVar3 = (*param_4)(param_2,uVar1);
+  _Src = (void *)param_2;
+  _Src_00 = (void *)uVar1;
+  if (cVar3 != '\0') {
+    memcpy(auStack_60,_Src,0x30);
+    memcpy(_Src,_Src_00,0x30);
+    memcpy(_Src_00,auStack_60,0x30);
+  }
+  cVar3 = (*param_4)(param_3,param_2);
+  if (cVar3 != '\0') {
+    memcpy(auStack_60,(void *)param_3,0x30);
+    memcpy((void *)param_3,_Src,0x30);
+    memcpy(_Src,auStack_60,0x30);
+  }
+  pvVar2 = (void *)(*param_4)(param_2,uVar1);
+  if (((uint)pvVar2 & 0xff) != 0) {
+    memcpy(auStack_60,_Src,0x30);
+    memcpy(_Src,_Src_00,0x30);
+    pvVar2 = memcpy(_Src_00,auStack_60,0x30);
+  }
+  __restgprlr_28(pvVar2);
+  return;
 }
 
 
 // 8242F568  std::_Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
 void std___Median<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = ((int)param_3 - (int)lVar3) / 0x30;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xfffffff;
+    uVar4 = uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x7ffffff;
+    lVar6 = uVar2 * 0x10 + lVar3;
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (lVar3,lVar6,uVar4 * 0x20 + lVar3);
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (param_2 + uVar2 * -0x10,param_2,uVar2 * 0x10 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -0x10;
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (param_3 + uVar4 * -0x20,lVar3,param_3,param_4);
+    std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<FxGlassTraceHit_*,bool_(__cdecl*)(FxGlassTraceHit_const_&,FxGlassTraceHit_const_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 

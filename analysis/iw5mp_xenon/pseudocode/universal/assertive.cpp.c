@@ -29,18 +29,112 @@ void ParseError(undefined8 param_1)
 void ReadLine(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = DAT_8400c590;
+LAB_825d35f4:
+  DAT_8400c590 = iVar2 - DAT_8400c69c;
+  bVar4 = false;
+  memmove(&DAT_8400c488,&DAT_8400c488 + DAT_8400c69c,DAT_8400c590);
+  DAT_8400c69c = 0;
+  do {
+    iVar2 = FS_Read(&DAT_8400c488 + DAT_8400c590,0xff - DAT_8400c590,uVar1);
+    iVar2 = iVar2 + DAT_8400c590;
+    DAT_8400c590 = iVar2;
+    (&DAT_8400c488)[iVar2] = 0;
+    if (iVar2 == 0) {
+      __restgprlr_28(0);
+      return;
+    }
+    iVar3 = 0;
+    if (0 < iVar2) {
+      do {
+        if ((&DAT_8400c488)[iVar3] == '\n') {
+          (&DAT_8400c488)[iVar3] = 0;
+          if ((&DAT_8400c489)[iVar3] == '\r') {
+            DAT_8400c69c = iVar3 + 2;
+          }
+          else {
+            DAT_8400c69c = iVar3 + 1;
+          }
+          if (!bVar4) {
+            __restgprlr_28(1);
+            return;
+          }
+          goto LAB_825d35f4;
+        }
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < iVar2);
+    }
+    DAT_8400c590 = 0;
+    bVar4 = true;
+  } while( true );
 }
 
 
 // 825D36B8  SkipLines  (universal/assertive.cpp:635)
 
-void SkipLines(void)
+void SkipLines(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar1 = __savegprlr_26();
+  iVar5 = 0;
+  iVar2 = DAT_8400c590;
+  if (0 < iVar1) {
+LAB_825d36ec:
+    do {
+      DAT_8400c590 = iVar2 - DAT_8400c69c;
+      bVar3 = false;
+      memmove(&DAT_8400c488,&DAT_8400c488 + DAT_8400c69c,DAT_8400c590);
+      DAT_8400c69c = 0;
+      while( true ) {
+        iVar2 = FS_Read(&DAT_8400c488 + DAT_8400c590,0xff - DAT_8400c590,param_2);
+        iVar2 = iVar2 + DAT_8400c590;
+        DAT_8400c590 = iVar2;
+        (&DAT_8400c488)[iVar2] = 0;
+        if (iVar2 == 0) break;
+        iVar4 = 0;
+        if (0 < iVar2) {
+          do {
+            if ((&DAT_8400c488)[iVar4] == '\n') {
+              (&DAT_8400c488)[iVar4] = 0;
+              if ((&DAT_8400c489)[iVar4] == '\r') {
+                DAT_8400c69c = iVar4 + 2;
+              }
+              else {
+                DAT_8400c69c = iVar4 + 1;
+              }
+              if (bVar3) goto LAB_825d36ec;
+              bVar3 = true;
+              goto LAB_825d379c;
+            }
+            iVar4 = iVar4 + 1;
+          } while (iVar4 < iVar2);
+        }
+        DAT_8400c590 = 0;
+        bVar3 = true;
+      }
+      bVar3 = false;
+LAB_825d379c:
+      if (!bVar3) {
+        __restgprlr_26(0);
+        return;
+      }
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < iVar1);
+  }
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -251,8 +345,75 @@ LAB_825d3930:
 void GetModuleBase(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  int iVar5;
+  char *pcVar7;
+  longlong lVar6;
+  undefined *puVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  undefined4 local_15c;
+  undefined1 auStack_130 [304];
+  
+  uVar3 = ZEXT48(&stack0x00000000);
+  lVar4 = __savegprlr_28();
+  lVar6 = lVar4;
+  do {
+    pcVar7 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar7 != '\0');
+  uVar9 = (lVar6 - lVar4) - 1U & 0xffffffff;
+  uVar2 = uVar9;
+  do {
+    uVar2 = uVar2 - 1;
+    if ((longlong)uVar2 < 0) goto LAB_825d3d90;
+    cVar1 = *(char *)((int)uVar2 + (int)(void *)lVar4);
+  } while (((cVar1 != '.') && (cVar1 != '/')) && (cVar1 != '\\'));
+  if ((-1 < (int)uVar2) && (cVar1 == '.')) {
+    uVar9 = uVar2;
+  }
+LAB_825d3d90:
+  memcpy(auStack_130,(void *)lVar4,(size_t)uVar9);
+  iVar5 = DmWalkLoadedModules(uVar3 - 0x270,uVar3 - 0x260);
+  if (iVar5 == 0x2da0000) {
+    lVar6 = uVar9 + (uVar3 - 0x130);
+    do {
+      pcVar7 = "";
+      lVar4 = lVar6 + -1;
+      lVar10 = 5;
+      do {
+        pcVar7 = pcVar7 + 1;
+        lVar4 = lVar4 + 1;
+        *(char *)lVar4 = *pcVar7;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+      iVar5 = I_stricmp(uVar3 - 0x260,uVar3 - 0x130);
+      if (iVar5 == 0) {
+LAB_825d3e5c:
+        DmCloseLoadedModules(0);
+        __restgprlr_28(local_15c);
+        return;
+      }
+      puVar8 = &UNK_8217474f;
+      lVar4 = lVar6 + -1;
+      lVar10 = 5;
+      do {
+        puVar8 = puVar8 + 1;
+        lVar4 = lVar4 + 1;
+        *(undefined1 *)lVar4 = *puVar8;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+      iVar5 = I_stricmp(uVar3 - 0x260,uVar3 - 0x130);
+      if (iVar5 == 0) goto LAB_825d3e5c;
+      iVar5 = DmWalkLoadedModules(uVar3 - 0x270,uVar3 - 0x260);
+    } while (iVar5 == 0x2da0000);
+  }
+  DmCloseLoadedModules(0);
+  __restgprlr_28(0);
+  return;
 }
 
 
@@ -261,8 +422,46 @@ void GetModuleBase(void)
 void BuildMappingInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  HANDLE hFindFile;
+  ulonglong uVar2;
+  BOOL BVar3;
+  int iVar4;
+  char *pcVar5;
+  int local_1170 [4];
+  _WIN32_FIND_DATAA _Stack_1160;
+  char local_1020 [2048];
+  char acStack_820 [2080];
+  
   __savegprlr_29();
+  sprintf(acStack_820,"%s\\*.map",0xffffffff82174764);
+  hFindFile = FindFirstFileA(acStack_820,&_Stack_1160);
+  if (hFindFile != (HANDLE)0xffffffff) {
+    do {
+      uVar2 = GetModuleBase(_Stack_1160.cFileName);
+      if (((uVar2 & 0xffffffff) != 0) &&
+         (FS_FOpenFileRead(_Stack_1160.cFileName,local_1170), local_1170[0] != 0)) {
+        iVar4 = 0;
+        do {
+          cVar1 = _Stack_1160.cFileName[iVar4];
+          local_1020[iVar4] = cVar1;
+          iVar4 = iVar4 + 1;
+        } while (cVar1 != '\0');
+        pcVar5 = local_1020;
+        do {
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
+        } while (cVar1 != '\0');
+        pcVar5[(int)&_Stack_1160 + (0x13b - (int)local_1020)] = '\0';
+        ParseMapFile(local_1170[0],uVar2,local_1020);
+        FS_FCloseFile(local_1170[0]);
+      }
+      BVar3 = FindNextFileA(hFindFile,&_Stack_1160);
+    } while (BVar3 != 0);
+    hFindFile = (HANDLE)CloseHandle(hFindFile);
+  }
+  __restgprlr_29(hFindFile);
+  return;
 }
 
 
@@ -459,21 +658,103 @@ void IsDebuggerConnected(void)
 
 // 825D42E0  BuildShortAssertMessage  (universal/assertive.cpp:1432)
 
-void BuildShortAssertMessage(void)
+void BuildShortAssertMessage
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,char *param_4,size_t param_5
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  char *pcVar3;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar5;
+  
+  uVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    param_2 = 0xffffffff82992330;
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    uVar1 = 0xffffffff82992330;
+  }
+  pcVar3 = strstr((char *)param_2,"\\");
+  while (pcVar3 != (char *)0x0) {
+    param_2 = (longlong)(int)pcVar3 + 1;
+    pcVar3 = strstr((char *)param_2,"\\");
+  }
+  if (DAT_8400c594 == 0) {
+    uVar5 = 0xffffffff820068af;
+  }
+  else {
+    uVar5 = 0xffffffff82174820;
+  }
+  uVar2 = Dvar_GetString(0xffffffff8208cee4);
+  iVar4 = _snprintf(param_4,param_5,"Compiled: %s %s\nBuild: %s%s\n",0xffffffff82073bbc,
+                    0xffffffff82174814,uVar2,uVar5);
+  iVar4 = _snprintf(param_4 + iVar4,(size_t)(param_4 + (param_5 - (int)(param_4 + iVar4))),
+                    "Expression: %s\nFile: %s\nLine: %d",uVar1,param_2,param_3);
+  __restgprlr_26(iVar4);
+  return;
 }
 
 
 // 825D43E0  BuildAssertMessage  (universal/assertive.cpp:1465)
 
-void BuildAssertMessage(void)
+void BuildAssertMessage(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                       longlong param_5,longlong param_6,longlong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  char *pcVar7;
+  undefined8 uVar8;
+  longlong lVar9;
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_23();
+  lVar6 = uVar1 - 0x61;
+  lVar9 = 10;
+  pcVar7 = "";
+  do {
+    pcVar7 = pcVar7 + 1;
+    lVar6 = lVar6 + 1;
+    *(char *)lVar6 = *pcVar7;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  if ((param_2 & 0xffffffff) == 0) {
+    param_2 = uVar1 - 0x60;
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar2 = uVar1 - 0x60;
+  }
+  DAT_8400c598[0] = '<';
+  DAT_8400c598[1] = 'x';
+  DAT_8400c598[2] = 'e';
+  DAT_8400c598[3] = 'n';
+  DAT_8400c598[4] = 'o';
+  DAT_8400c598[5] = 'n';
+  DAT_8400c598[6] = '>';
+  DAT_8400c598[7] = '\0';
+  if (DAT_8400c594 == 0) {
+    uVar8 = 0xffffffff820068af;
+  }
+  else {
+    uVar8 = 0xffffffff82174820;
+  }
+  uVar3 = Dvar_GetString(0xffffffff8208cee4);
+  iVar4 = _snprintf((char *)param_6,(size_t)param_7,"Compiled: %s %s\nBuild: %s%s\n",
+                    0xffffffff82073bbc,0xffffffff82174814,uVar3,uVar8);
+  pcVar7 = (char *)(iVar4 + param_6);
+  iVar5 = _snprintf(pcVar7,(size_t)((char *)param_6 + ((size_t)param_7 - (int)pcVar7)),
+                    "Expression:\n    %s\n\nModule:    %s\nFile:    %s\nLine:    %d\n\n",uVar2,
+                    0xffffffff8400c598,param_2,param_3);
+  lVar6 = (longlong)iVar5 + iVar4 + param_6;
+  DoStackTrace(lVar6,param_5 + 1,param_4,(param_6 - lVar6) + param_7);
+  __restgprlr_23();
+  return;
 }
 
 

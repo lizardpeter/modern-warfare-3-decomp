@@ -81,3 +81,40 @@ LAB_828b6788:
   return;
 }
 
+
+// 828B6818  XCOMPRESS::handle_beginning_of_uncompressed_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decuncmp.cpp:202)
+
+undefined8 XCOMPRESS__handle_beginning_of_uncompressed_block(int param_1)
+
+{
+  undefined1 uVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  undefined1 *puVar4;
+  undefined1 *puVar5;
+  undefined4 *puVar6;
+  undefined1 *puVar7;
+  longlong lVar8;
+  
+  iVar2 = *(int *)(param_1 + 0x2b04);
+  puVar7 = (undefined1 *)(iVar2 + -2);
+  *(undefined1 **)(param_1 + 0x2b04) = puVar7;
+  if (*(uint *)(param_1 + 0x2b08) <= iVar2 + 2U) {
+    return 0;
+  }
+  puVar6 = (undefined4 *)(param_1 + 8);
+  lVar8 = 3;
+  do {
+    puVar3 = puVar7 + 3;
+    puVar4 = puVar7 + 2;
+    puVar5 = puVar7 + 1;
+    uVar1 = *puVar7;
+    puVar7 = puVar7 + 4;
+    puVar6 = puVar6 + 1;
+    *puVar6 = CONCAT31(CONCAT21(CONCAT11(*puVar3,*puVar4),*puVar5),uVar1);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  *(undefined1 **)(param_1 + 0x2b04) = puVar7;
+  return 1;
+}
+

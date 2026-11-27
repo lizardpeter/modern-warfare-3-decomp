@@ -223,13 +223,147 @@ LAB_82290e58:
   82290E9C  7D8803A6             mtspr LR,r12
   82290EA0  4E800020             blr
 
+; 82290EA8  BG_WeaponAllowsAmmoPickup  (bgame/bg_weapons_ammo.cpp:124)
+  82290EA8  7D8802A6             mfspr r12,LR
+  82290EAC  9181FFF8             stw r12,-0x8(r1)
+  82290EB0  9421FFA0             stwu r1,-0x60(r1)
+  82290EB4  4BFD5C6D             bl 0x82266b20
+  82290EB8  3D60829E             lis r11,-0x7d62
+  82290EBC  546A15BA             rlwinm r10,r3,0x2,0x16,0x1d
+  82290EC0  392B84A0             subi r9,r11,0x7b60
+  82290EC4  7D0A482E             lwzx r8,r10,r9
+  82290EC8  88E8077B             lbz r7,0x77b(r8)
+  82290ECC  7CE60034             cntlzw r6,r7
+  82290ED0  54C3DFFE             rlwinm r3,r6,0x1b,0x1f,0x1f
+  82290ED4  38210060             addi r1,r1,0x60
+  82290ED8  8181FFF8             lwz r12,-0x8(r1)
+  82290EDC  7D8803A6             mtspr LR,r12
+  82290EE0  4E800020             blr
+
 ; 82291610  BG_WeaponAmmo  (bgame/bg_weapons_ammo.cpp:132)
   82291610  7D8802A6             mfspr r12,LR
   82291614  486850A5             bl 0x829166b8
+  82291618  9421FF80             stwu r1,-0x80(r1)
+  8229161C  38C00000             li r6,0x0
+  82291620  7C7F1B78             or r31,r3,r3
+  82291624  7C9E2378             or r30,r4,r4
+  82291628  7CBD2B78             or r29,r5,r5
+  8229162C  4BFE678D             bl 0x82277db8
+  82291630  7C7C1B78             or r28,r3,r3
+  82291634  7FC4F378             or r4,r30,r30
+  82291638  7FE3FB78             or r3,r31,r31
+  8229163C  7FA5EB78             or r5,r29,r29
+  82291640  4BFF5F09             bl 0x82287548
+  82291644  7F83E214             add r28,r3,r28
+  82291648  7FC4F378             or r4,r30,r30
+  8229164C  7FE3FB78             or r3,r31,r31
+  82291650  4BFF5C91             bl 0x822872e0
+  82291654  2F030000             cmpwi cr6,r3,0x0
+  82291658  419A0024             beq cr6,0x8229167c
+  8229165C  38C00001             li r6,0x1
+  82291660  7FA5EB78             or r5,r29,r29
+  82291664  7FC4F378             or r4,r30,r30
+  82291668  7FE3FB78             or r3,r31,r31
+  8229166C  4BFE674D             bl 0x82277db8
+  82291670  7C63E214             add r3,r3,r28
+  82291674  38210080             addi r1,r1,0x80
+  82291678  48685090             b 0x82916708
+LAB_8229167c:
+  8229167C  7F83E378             or r3,r28,r28
+  82291680  38210080             addi r1,r1,0x80
+  82291684  48685084             b 0x82916708
 
 ; 82290EE8  BG_GetAmmoPlayerMax  (bgame/bg_weapons_ammo.cpp:145)
   82290EE8  7D8802A6             mfspr r12,LR
   82290EEC  486857B9             bl 0x829166a4
+  82290EF0  9421FF60             stwu r1,-0xa0(r1)
+  82290EF4  7C9E2378             or r30,r4,r4
+  82290EF8  7C7D1B78             or r29,r3,r3
+  82290EFC  7CA42B78             or r4,r5,r5
+  82290F00  7FC3F378             or r3,r30,r30
+  82290F04  7CBF2B78             or r31,r5,r5
+  82290F08  7CD73378             or r23,r6,r6
+  82290F0C  4BFD5C15             bl 0x82266b20
+  82290F10  3D60829E             lis r11,-0x7d62
+  82290F14  546A15BA             rlwinm r10,r3,0x2,0x16,0x1d
+  82290F18  3B8B84A0             subi r28,r11,0x7b60
+  82290F1C  7D6AE02E             lwzx r11,r10,r28
+  82290F20  812B0230             lwz r9,0x230(r11)
+  82290F24  2F090000             cmpwi cr6,r9,0x0
+  82290F28  41980010             blt cr6,0x82290f38
+  82290F2C  806B0234             lwz r3,0x234(r11)
+  82290F30  382100A0             addi r1,r1,0xa0
+  82290F34  486857C0             b 0x829166f4
+LAB_82290f38:
+  82290F38  7FE4FB78             or r4,r31,r31
+  82290F3C  7FC3F378             or r3,r30,r30
+  82290F40  4BFD5BE1             bl 0x82266b20
+  82290F44  546B15BA             rlwinm r11,r3,0x2,0x16,0x1d
+  82290F48  7D4BE02E             lwzx r10,r11,r28
+  82290F4C  892A077A             lbz r9,0x77a(r10)
+  82290F50  2B090000             cmplwi cr6,r9,0x0
+  82290F54  419A001C             beq cr6,0x82290f70
+  82290F58  7FE5FB78             or r5,r31,r31
+  82290F5C  7FC4F378             or r4,r30,r30
+  82290F60  7FA3EB78             or r3,r29,r29
+  82290F64  4800E3A5             bl 0x8229f308
+  82290F68  382100A0             addi r1,r1,0xa0
+  82290F6C  48685788             b 0x829166f4
+LAB_82290f70:
+  82290F70  7FE4FB78             or r4,r31,r31
+  82290F74  7FC3F378             or r3,r30,r30
+  82290F78  4BFFFC39             bl 0x82290bb0
+  82290F7C  7C7A1B78             or r26,r3,r3
+  82290F80  3B000000             li r24,0x0
+  82290F84  3B200000             li r25,0x0
+  82290F88  3B7D0274             addi r27,r29,0x274
+LAB_82290f8c:
+  82290F8C  83DB0000             lwz r30,0x0(r27)
+  82290F90  57CB063E             rlwinm r11,r30,0x0,0x18,0x1f
+  82290F94  2B0B0000             cmplwi cr6,r11,0x0
+  82290F98  419A0060             beq cr6,0x82290ff8
+  82290F9C  7F1EB840             cmplw cr6,r30,r23
+  82290FA0  419A0058             beq cr6,0x82290ff8
+  82290FA4  7FE4FB78             or r4,r31,r31
+  82290FA8  7FC3F378             or r3,r30,r30
+  82290FAC  4BFD5B75             bl 0x82266b20
+  82290FB0  546B15BA             rlwinm r11,r3,0x2,0x16,0x1d
+  82290FB4  7FE4FB78             or r4,r31,r31
+  82290FB8  7FC3F378             or r3,r30,r30
+  82290FBC  7FABE02E             lwzx r29,r11,r28
+  82290FC0  4BFFFBF1             bl 0x82290bb0
+  82290FC4  7F03D000             cmpw cr6,r3,r26
+  82290FC8  409A0030             bne cr6,0x82290ff8
+  82290FCC  817D0230             lwz r11,0x230(r29)
+  82290FD0  2F0B0000             cmpwi cr6,r11,0x0
+  82290FD4  40980040             bge cr6,0x82291014
+  82290FD8  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  82290FDC  2B0B0000             cmplwi cr6,r11,0x0
+  82290FE0  419A0040             beq cr6,0x82291020
+  82290FE4  7FC3F378             or r3,r30,r30
+  82290FE8  48002B71             bl 0x82293b58
+  82290FEC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82290FF0  2B0B0000             cmplwi cr6,r11,0x0
+  82290FF4  409A002C             bne cr6,0x82291020
+LAB_82290ff8:
+  82290FF8  3B390001             addi r25,r25,0x1
+  82290FFC  3B7B0004             addi r27,r27,0x4
+  82291000  2F19000F             cmpwi cr6,r25,0xf
+  82291004  4198FF88             blt cr6,0x82290f8c
+  82291008  7F03C378             or r3,r24,r24
+  8229100C  382100A0             addi r1,r1,0xa0
+  82291010  486856E4             b 0x829166f4
+LAB_82291014:
+  82291014  807D0234             lwz r3,0x234(r29)
+  82291018  382100A0             addi r1,r1,0xa0
+  8229101C  486856D8             b 0x829166f4
+LAB_82291020:
+  82291020  7FE4FB78             or r4,r31,r31
+  82291024  7FC3F378             or r3,r30,r30
+  82291028  480062F1             bl 0x82297318
+  8229102C  7C781B78             or r24,r3,r3
+  82291030  382100A0             addi r1,r1,0xa0
+  82291034  486856C0             b 0x829166f4
 
 ; 82291688  BG_GetMaxPickupableAmmo  (bgame/bg_weapons_ammo.cpp:193)
   82291688  7D8802A6             mfspr r12,LR
@@ -381,6 +515,127 @@ LAB_82291890:
 ; 822918A8  BG_GetTotalAmmoReserve  (bgame/bg_weapons_ammo.cpp:267)
   822918A8  7D8802A6             mfspr r12,LR
   822918AC  48684DE9             bl 0x82916694
+  822918B0  9421FEC0             stwu r1,-0x140(r1)
+  822918B4  7C9F2378             or r31,r4,r4
+  822918B8  7C791B78             or r25,r3,r3
+  822918BC  7CA42B78             or r4,r5,r5
+  822918C0  7FE3FB78             or r3,r31,r31
+  822918C4  7CBE2B78             or r30,r5,r5
+  822918C8  3B400000             li r26,0x0
+  822918CC  3B800000             li r28,0x0
+  822918D0  3B600000             li r27,0x0
+  822918D4  4BFD524D             bl 0x82266b20
+  822918D8  3D60829E             lis r11,-0x7d62
+  822918DC  546A15BA             rlwinm r10,r3,0x2,0x16,0x1d
+  822918E0  3ACB84A0             subi r22,r11,0x7b60
+  822918E4  7EAAB02E             lwzx r21,r10,r22
+  822918E8  81350230             lwz r9,0x230(r21)
+  822918EC  2F090000             cmpwi cr6,r9,0x0
+  822918F0  41980138             blt cr6,0x82291a28
+  822918F4  39610090             addi r11,r1,0x90
+  822918F8  39410050             addi r10,r1,0x50
+  822918FC  3B0BFFFC             subi r24,r11,0x4
+  82291900  3AEAFFFC             subi r23,r10,0x4
+  82291904  3A990274             addi r20,r25,0x274
+  82291908  3A60000F             li r19,0xf
+LAB_8229190c:
+  8229190C  83B40000             lwz r29,0x0(r20)
+  82291910  57AB063E             rlwinm r11,r29,0x0,0x18,0x1f
+  82291914  2B0B0000             cmplwi cr6,r11,0x0
+  82291918  419A00F8             beq cr6,0x82291a10
+  8229191C  7FC4F378             or r4,r30,r30
+  82291920  7FA3EB78             or r3,r29,r29
+  82291924  4BFD51FD             bl 0x82266b20
+  82291928  546B15BA             rlwinm r11,r3,0x2,0x16,0x1d
+  8229192C  81550230             lwz r10,0x230(r21)
+  82291930  7FEBB02E             lwzx r31,r11,r22
+  82291934  813F0230             lwz r9,0x230(r31)
+  82291938  7F095000             cmpw cr6,r9,r10
+  8229193C  409A00D4             bne cr6,0x82291a10
+  82291940  7FC4F378             or r4,r30,r30
+  82291944  7FA3EB78             or r3,r29,r29
+  82291948  4BFD51D9             bl 0x82266b20
+  8229194C  546B15BA             rlwinm r11,r3,0x2,0x16,0x1d
+  82291950  7D4BB02E             lwzx r10,r11,r22
+  82291954  892A077A             lbz r9,0x77a(r10)
+  82291958  2B090000             cmplwi cr6,r9,0x0
+  8229195C  419A0058             beq cr6,0x822919b4
+  82291960  813F0220             lwz r9,0x220(r31)
+  82291964  39600000             li r11,0x0
+  82291968  2B1B0000             cmplwi cr6,r27,0x0
+  8229196C  419A0024             beq cr6,0x82291990
+  82291970  39410050             addi r10,r1,0x50
+LAB_82291974:
+  82291974  810A0000             lwz r8,0x0(r10)
+  82291978  7F084800             cmpw cr6,r8,r9
+  8229197C  419A0014             beq cr6,0x82291990
+  82291980  396B0001             addi r11,r11,0x1
+  82291984  394A0004             addi r10,r10,0x4
+  82291988  7F0BD840             cmplw cr6,r11,r27
+  8229198C  4198FFE8             blt cr6,0x82291974
+LAB_82291990:
+  82291990  7F0BD840             cmplw cr6,r11,r27
+  82291994  409A007C             bne cr6,0x82291a10
+  82291998  7FC5F378             or r5,r30,r30
+  8229199C  95370004             stwu r9,0x4(r23)
+  822919A0  7FA4EB78             or r4,r29,r29
+  822919A4  7F23CB78             or r3,r25,r25
+  822919A8  3B7B0001             addi r27,r27,0x1
+  822919AC  4BFF5A7D             bl 0x82287428
+  822919B0  4800005C             b 0x82291a0c
+LAB_822919b4:
+  822919B4  7FC4F378             or r4,r30,r30
+  822919B8  7FA3EB78             or r3,r29,r29
+  822919BC  4BFFF1F5             bl 0x82290bb0
+  822919C0  39600000             li r11,0x0
+  822919C4  2B1C0000             cmplwi cr6,r28,0x0
+  822919C8  419A0024             beq cr6,0x822919ec
+  822919CC  39410090             addi r10,r1,0x90
+LAB_822919d0:
+  822919D0  812A0000             lwz r9,0x0(r10)
+  822919D4  7F091800             cmpw cr6,r9,r3
+  822919D8  419A0014             beq cr6,0x822919ec
+  822919DC  396B0001             addi r11,r11,0x1
+  822919E0  394A0004             addi r10,r10,0x4
+  822919E4  7F0BE040             cmplw cr6,r11,r28
+  822919E8  4198FFE8             blt cr6,0x822919d0
+LAB_822919ec:
+  822919EC  7F0BE040             cmplw cr6,r11,r28
+  822919F0  409A0020             bne cr6,0x82291a10
+  822919F4  94780004             stwu r3,0x4(r24)
+  822919F8  7FC5F378             or r5,r30,r30
+  822919FC  7FA4EB78             or r4,r29,r29
+  82291A00  7F23CB78             or r3,r25,r25
+  82291A04  3B9C0001             addi r28,r28,0x1
+  82291A08  4BFF5B41             bl 0x82287548
+LAB_82291a0c:
+  82291A0C  7F43D214             add r26,r3,r26
+LAB_82291a10:
+  82291A10  3673FFFF             subic. r19,r19,0x1
+  82291A14  3A940004             addi r20,r20,0x4
+  82291A18  4082FEF4             bne 0x8229190c
+  82291A1C  7F43D378             or r3,r26,r26
+  82291A20  38210140             addi r1,r1,0x140
+  82291A24  48684CC0             b 0x829166e4
+LAB_82291a28:
+  82291A28  7FC4F378             or r4,r30,r30
+  82291A2C  7FE3FB78             or r3,r31,r31
+  82291A30  4BFD50F1             bl 0x82266b20
+  82291A34  546B15BA             rlwinm r11,r3,0x2,0x16,0x1d
+  82291A38  7FC5F378             or r5,r30,r30
+  82291A3C  7FE4FB78             or r4,r31,r31
+  82291A40  7F23CB78             or r3,r25,r25
+  82291A44  7D4BB02E             lwzx r10,r11,r22
+  82291A48  892A077A             lbz r9,0x77a(r10)
+  82291A4C  2B090000             cmplwi cr6,r9,0x0
+  82291A50  419A0010             beq cr6,0x82291a60
+  82291A54  4BFF59D5             bl 0x82287428
+  82291A58  38210140             addi r1,r1,0x140
+  82291A5C  48684C88             b 0x829166e4
+LAB_82291a60:
+  82291A60  4BFF5AE9             bl 0x82287548
+  82291A64  38210140             addi r1,r1,0x140
+  82291A68  48684C7C             b 0x829166e4
 
 ; 82291038  WeaponValidForSustainAmmoCheat  (bgame/bg_weapons_ammo.cpp:339)
   82291038  38600001             li r3,0x1
@@ -428,6 +683,125 @@ LAB_822910b0:
 ; 822910C8  BG_GetFreeClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:397)
   822910C8  7D8802A6             mfspr r12,LR
   822910CC  486855C5             bl 0x82916690
+  822910D0  9421FB30             stwu r1,-0x4d0(r1)
+  822910D4  3D608201             lis r11,-0x7dff
+  822910D8  3D408200             lis r10,-0x7e00
+  822910DC  7C7A1B78             or r26,r3,r3
+  822910E0  2B030000             cmplwi cr6,r3,0x0
+  822910E4  3A6BDDC8             subi r19,r11,0x2238
+  822910E8  3A4A0F98             addi r18,r10,0xf98
+  822910EC  409A0020             bne cr6,0x8229110c
+  822910F0  3D608200             lis r11,-0x7e00
+  822910F4  7E469378             or r6,r18,r18
+  822910F8  38EB1FDC             addi r7,r11,0x1fdc
+  822910FC  7E639B78             or r3,r19,r19
+  82291100  38A00000             li r5,0x0
+  82291104  38800194             li r4,0x194
+  82291108  483433F9             bl 0x825d4500
+LAB_8229110c:
+  8229110C  3A9A040C             addi r20,r26,0x40c
+  82291110  3AA00000             li r21,0x0
+  82291114  7E83A378             or r3,r20,r20
+  82291118  7EABAB78             or r11,r21,r21
+LAB_8229111c:
+  8229111C  81430000             lwz r10,0x0(r3)
+  82291120  2F0A0000             cmpwi cr6,r10,0x0
+  82291124  419A00AC             beq cr6,0x822911d0
+  82291128  396B0001             addi r11,r11,0x1
+  8229112C  3863000C             addi r3,r3,0xc
+  82291130  2F0B000F             cmpwi cr6,r11,0xf
+  82291134  4198FFE8             blt cr6,0x8229111c
+  82291138  3D608201             lis r11,-0x7dff
+  8229113C  3D408201             lis r10,-0x7dff
+  82291140  3D208201             lis r9,-0x7dff
+  82291144  3ADA0274             addi r22,r26,0x274
+  82291148  7E9FA378             or r31,r20,r20
+  8229114C  3AE0000F             li r23,0xf
+  82291150  3B0BDE70             subi r24,r11,0x2190
+  82291154  3B6ADE4C             subi r27,r10,0x21b4
+  82291158  3B29DE2C             subi r25,r9,0x21d4
+LAB_8229115c:
+  8229115C  817F0000             lwz r11,0x0(r31)
+  82291160  7EBCAB78             or r28,r21,r21
+  82291164  2F0B0000             cmpwi cr6,r11,0x0
+  82291168  409A001C             bne cr6,0x82291184
+  8229116C  7F27CB78             or r7,r25,r25
+  82291170  7E469378             or r6,r18,r18
+  82291174  7E639B78             or r3,r19,r19
+  82291178  38A00000             li r5,0x0
+  8229117C  388001A5             li r4,0x1a5
+  82291180  48343381             bl 0x825d4500
+LAB_82291184:
+  82291184  7EBEAB78             or r30,r21,r21
+  82291188  7EDDB378             or r29,r22,r22
+LAB_8229118c:
+  8229118C  38800000             li r4,0x0
+  82291190  807D0000             lwz r3,0x0(r29)
+  82291194  4BFFFB7D             bl 0x82290d10
+  82291198  817F0000             lwz r11,0x0(r31)
+  8229119C  7F035800             cmpw cr6,r3,r11
+  822911A0  419A0044             beq cr6,0x822911e4
+  822911A4  38800001             li r4,0x1
+  822911A8  807D0000             lwz r3,0x0(r29)
+  822911AC  4BFFFB65             bl 0x82290d10
+  822911B0  817F0000             lwz r11,0x0(r31)
+  822911B4  7F035800             cmpw cr6,r3,r11
+  822911B8  419A002C             beq cr6,0x822911e4
+  822911BC  3BDE0001             addi r30,r30,0x1
+  822911C0  3BBD0004             addi r29,r29,0x4
+  822911C4  2F1E000F             cmpwi cr6,r30,0xf
+  822911C8  4198FFC4             blt cr6,0x8229118c
+  822911CC  48000054             b 0x82291220
+LAB_822911d0:
+  822911D0  92A30000             stw r21,0x0(r3)
+  822911D4  92A30004             stw r21,0x4(r3)
+  822911D8  92A30008             stw r21,0x8(r3)
+  822911DC  382104D0             addi r1,r1,0x4d0
+  822911E0  48685500             b 0x829166e0
+LAB_822911e4:
+  822911E4  397E009D             addi r11,r30,0x9d
+  822911E8  83DF0004             lwz r30,0x4(r31)
+  822911EC  38A00400             li r5,0x400
+  822911F0  83BF0008             lwz r29,0x8(r31)
+  822911F4  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  822911F8  38810050             addi r4,r1,0x50
+  822911FC  3B800001             li r28,0x1
+  82291200  7C6AD02E             lwzx r3,r10,r26
+  82291204  48001B35             bl 0x82292d38
+  82291208  7C671B78             or r7,r3,r3
+  8229120C  7FA6EB78             or r6,r29,r29
+  82291210  7FC5F378             or r5,r30,r30
+  82291214  7F64DB78             or r4,r27,r27
+  82291218  38600010             li r3,0x10
+  8229121C  48265945             bl 0x824f6b60
+LAB_82291220:
+  82291220  578B063E             rlwinm r11,r28,0x0,0x18,0x1f
+  82291224  2B0B0000             cmplwi cr6,r11,0x0
+  82291228  409A001C             bne cr6,0x82291244
+  8229122C  7F04C378             or r4,r24,r24
+  82291230  80BF0004             lwz r5,0x4(r31)
+  82291234  38600010             li r3,0x10
+  82291238  80DF0008             lwz r6,0x8(r31)
+  8229123C  80FF0000             lwz r7,0x0(r31)
+  82291240  48265921             bl 0x824f6b60
+LAB_82291244:
+  82291244  36F7FFFF             subic. r23,r23,0x1
+  82291248  3BFF000C             addi r31,r31,0xc
+  8229124C  4082FF10             bne 0x8229115c
+  82291250  3D608401             lis r11,-0x7bff
+  82291254  816B3128             lwz r11,0x3128(r11)
+  82291258  2F0B0000             cmpwi cr6,r11,0x0
+  8229125C  409A001C             bne cr6,0x82291278
+  82291260  3D608201             lis r11,-0x7dff
+  82291264  7E639B78             or r3,r19,r19
+  82291268  38CBDE0C             subi r6,r11,0x21f4
+  8229126C  38A00000             li r5,0x0
+  82291270  388001BD             li r4,0x1bd
+  82291274  4834328D             bl 0x825d4500
+LAB_82291278:
+  82291278  7E83A378             or r3,r20,r20
+  8229127C  382104D0             addi r1,r1,0x4d0
+  82291280  48685460             b 0x829166e0
 
 ; 82291288  BG_CreateClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:451)
   82291288  7D8802A6             mfspr r12,LR
@@ -491,14 +865,141 @@ LAB_8229134c:
 ; 82291360  BG_AddClipAmmo  (bgame/bg_weapons_ammo.cpp:480)
   82291360  7D8802A6             mfspr r12,LR
   82291364  4868534D             bl 0x829166b0
+  82291368  9421FF70             stwu r1,-0x90(r1)
+  8229136C  3D608201             lis r11,-0x7dff
+  82291370  7C7E1B78             or r30,r3,r3
+  82291374  7C9D2378             or r29,r4,r4
+  82291378  7CBB2B78             or r27,r5,r5
+  8229137C  7CDC3378             or r28,r6,r6
+  82291380  2B030000             cmplwi cr6,r3,0x0
+  82291384  3B4BDDC8             subi r26,r11,0x2238
+  82291388  409A0024             bne cr6,0x822913ac
+  8229138C  3D608200             lis r11,-0x7e00
+  82291390  3D408200             lis r10,-0x7e00
+  82291394  38EB1FDC             addi r7,r11,0x1fdc
+  82291398  38CA0F98             addi r6,r10,0xf98
+  8229139C  7F43D378             or r3,r26,r26
+  822913A0  38A00000             li r5,0x0
+  822913A4  388001E3             li r4,0x1e3
+  822913A8  48343159             bl 0x825d4500
+LAB_822913ac:
+  822913AC  7FA4EB78             or r4,r29,r29
+  822913B0  7FC3F378             or r3,r30,r30
+  822913B4  4BFFFC8D             bl 0x82291040
+  822913B8  7C7F1B78             or r31,r3,r3
+  822913BC  2B030000             cmplwi cr6,r3,0x0
+  822913C0  409A0014             bne cr6,0x822913d4
+  822913C4  7FC3F378             or r3,r30,r30
+  822913C8  4BFFFD01             bl 0x822910c8
+  822913CC  7C7F1B78             or r31,r3,r3
+  822913D0  93A30000             stw r29,0x0(r3)
+LAB_822913d4:
+  822913D4  2F1C0000             cmpwi cr6,r28,0x0
+  822913D8  4098004C             bge cr6,0x82291424
+  822913DC  397B0001             addi r11,r27,0x1
+  822913E0  7C9C00D0             neg r4,r28
+  822913E4  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  822913E8  7CAAF82E             lwzx r5,r10,r31
+  822913EC  7F052000             cmpw cr6,r5,r4
+  822913F0  40980034             bge cr6,0x82291424
+  822913F4  3D608201             lis r11,-0x7dff
+  822913F8  386BDF28             subi r3,r11,0x20d8
+  822913FC  4837B27D             bl 0x8260c678
+  82291400  3D408201             lis r10,-0x7dff
+  82291404  3D208200             lis r9,-0x7e00
+  82291408  7C681B78             or r8,r3,r3
+  8229140C  38EADEF0             subi r7,r10,0x2110
+  82291410  38C911F4             addi r6,r9,0x11f4
+  82291414  38A00000             li r5,0x0
+  82291418  388001E6             li r4,0x1e6
+  8229141C  7F43D378             or r3,r26,r26
+  82291420  483430E1             bl 0x825d4500
+LAB_82291424:
+  82291424  397B0001             addi r11,r27,0x1
+  82291428  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  8229142C  7D4BF82E             lwzx r10,r11,r31
+  82291430  7D4AE214             add r10,r10,r28
+  82291434  7D4BF92E             stwx r10,r11,r31
+  82291438  38210090             addi r1,r1,0x90
+  8229143C  486852C4             b 0x82916700
 
 ; 82291440  BG_SetClipAmmo  (bgame/bg_weapons_ammo.cpp:492)
   82291440  7D8802A6             mfspr r12,LR
   82291444  4868526D             bl 0x829166b0
+  82291448  9421FF70             stwu r1,-0x90(r1)
+  8229144C  3D608201             lis r11,-0x7dff
+  82291450  7C7F1B78             or r31,r3,r3
+  82291454  7C9D2378             or r29,r4,r4
+  82291458  7CBA2B78             or r26,r5,r5
+  8229145C  7CDC3378             or r28,r6,r6
+  82291460  2B030000             cmplwi cr6,r3,0x0
+  82291464  3B6BDDC8             subi r27,r11,0x2238
+  82291468  409A0024             bne cr6,0x8229148c
+  8229146C  3D608200             lis r11,-0x7e00
+  82291470  3D408200             lis r10,-0x7e00
+  82291474  38EB1FDC             addi r7,r11,0x1fdc
+  82291478  38CA0F98             addi r6,r10,0xf98
+  8229147C  7F63DB78             or r3,r27,r27
+  82291480  38A00000             li r5,0x0
+  82291484  388001EF             li r4,0x1ef
+  82291488  48343079             bl 0x825d4500
+LAB_8229148c:
+  8229148C  7FA4EB78             or r4,r29,r29
+  82291490  7FE3FB78             or r3,r31,r31
+  82291494  4BFFFBAD             bl 0x82291040
+  82291498  7C7E1B78             or r30,r3,r3
+  8229149C  2B030000             cmplwi cr6,r3,0x0
+  822914A0  409A0014             bne cr6,0x822914b4
+  822914A4  7FE3FB78             or r3,r31,r31
+  822914A8  4BFFFC21             bl 0x822910c8
+  822914AC  7C7E1B78             or r30,r3,r3
+  822914B0  93A30000             stw r29,0x0(r3)
+LAB_822914b4:
+  822914B4  2F1C0000             cmpwi cr6,r28,0x0
+  822914B8  40980038             bge cr6,0x822914f0
+  822914BC  3D608201             lis r11,-0x7dff
+  822914C0  7F84E378             or r4,r28,r28
+  822914C4  386BDF78             subi r3,r11,0x2088
+  822914C8  4837B1B1             bl 0x8260c678
+  822914CC  3D408201             lis r10,-0x7dff
+  822914D0  3D208200             lis r9,-0x7e00
+  822914D4  7C681B78             or r8,r3,r3
+  822914D8  38EADF6C             subi r7,r10,0x2094
+  822914DC  38C911F4             addi r6,r9,0x11f4
+  822914E0  38A00000             li r5,0x0
+  822914E4  388001F2             li r4,0x1f2
+  822914E8  7F63DB78             or r3,r27,r27
+  822914EC  48343015             bl 0x825d4500
+LAB_822914f0:
+  822914F0  397A0001             addi r11,r26,0x1
+  822914F4  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  822914F8  7F8AF12E             stwx r28,r10,r30
+  822914FC  38210090             addi r1,r1,0x90
+  82291500  48685200             b 0x82916700
 
 ; 82291508  PM_WeaponUseAmmo  (bgame/bg_weapons_ammo.cpp:505)
   82291508  7D8802A6             mfspr r12,LR
   8229150C  486851B1             bl 0x829166bc
+  82291510  9421FF90             stwu r1,-0x70(r1)
+  82291514  3D60829C             lis r11,-0x7d64
+  82291518  7C7F1B78             or r31,r3,r3
+  8229151C  7C832378             or r3,r4,r4
+  82291520  7CDE3378             or r30,r6,r6
+  82291524  7CFD3B78             or r29,r7,r7
+  82291528  816B7E94             lwz r11,0x7e94(r11)
+  8229152C  894B000C             lbz r10,0xc(r11)
+  82291530  2B0A0000             cmplwi cr6,r10,0x0
+  82291534  409A0020             bne cr6,0x82291554
+  82291538  7CA42B78             or r4,r5,r5
+  8229153C  4BFFF7D5             bl 0x82290d10
+  82291540  7C641B78             or r4,r3,r3
+  82291544  7CDE00D0             neg r6,r30
+  82291548  7FA5EB78             or r5,r29,r29
+  8229154C  7FE3FB78             or r3,r31,r31
+  82291550  4BFFFE11             bl 0x82291360
+LAB_82291554:
+  82291554  38210070             addi r1,r1,0x70
+  82291558  486851B4             b 0x8291670c
 
 ; 82291A70  PM_WeaponClipEmpty  (bgame/bg_weapons_ammo.cpp:519)
   82291A70  7D8802A6             mfspr r12,LR
@@ -552,6 +1053,50 @@ LAB_82291af4:
 ; 82291560  PM_AddAmmoToClip  (bgame/bg_weapons_ammo.cpp:531)
   82291560  7D8802A6             mfspr r12,LR
   82291564  48685155             bl 0x829166b8
+  82291568  9421FF80             stwu r1,-0x80(r1)
+  8229156C  7C7F1B78             or r31,r3,r3
+  82291570  7C9D2378             or r29,r4,r4
+  82291574  7CBE2B78             or r30,r5,r5
+  82291578  2B030000             cmplwi cr6,r3,0x0
+  8229157C  409A002C             bne cr6,0x822915a8
+  82291580  3D608200             lis r11,-0x7e00
+  82291584  3D408200             lis r10,-0x7e00
+  82291588  3D208201             lis r9,-0x7dff
+  8229158C  38EB1FDC             addi r7,r11,0x1fdc
+  82291590  38CA0F98             addi r6,r10,0xf98
+  82291594  3869DDC8             subi r3,r9,0x2238
+  82291598  38A00000             li r5,0x0
+  8229159C  38800218             li r4,0x218
+  822915A0  48342F61             bl 0x825d4500
+  822915A4  48000018             b 0x822915bc
+LAB_822915a8:
+  822915A8  817F0374             lwz r11,0x374(r31)
+  822915AC  556A0420             rlwinm r10,r11,0x0,0x10,0x10
+  822915B0  39600001             li r11,0x1
+  822915B4  2F0A0000             cmpwi cr6,r10,0x0
+  822915B8  409A0008             bne cr6,0x822915c0
+LAB_822915bc:
+  822915BC  39600000             li r11,0x0
+LAB_822915c0:
+  822915C0  557C063E             rlwinm r28,r11,0x0,0x18,0x1f
+  822915C4  807F0370             lwz r3,0x370(r31)
+  822915C8  7F84E378             or r4,r28,r28
+  822915CC  4BFFF5E5             bl 0x82290bb0
+  822915D0  7F84E378             or r4,r28,r28
+  822915D4  7C7C1B78             or r28,r3,r3
+  822915D8  807F0370             lwz r3,0x370(r31)
+  822915DC  4BFFF735             bl 0x82290d10
+  822915E0  7C641B78             or r4,r3,r3
+  822915E4  7FC6F378             or r6,r30,r30
+  822915E8  7FA5EB78             or r5,r29,r29
+  822915EC  7FE3FB78             or r3,r31,r31
+  822915F0  4BFFFD71             bl 0x82291360
+  822915F4  7CBE00D0             neg r5,r30
+  822915F8  7F84E378             or r4,r28,r28
+  822915FC  7FE3FB78             or r3,r31,r31
+  82291600  48004A49             bl 0x82296048
+  82291604  38210080             addi r1,r1,0x80
+  82291608  48685100             b 0x82916708
 
 ; 82291B18  PM_ReloadClip  (bgame/bg_weapons_ammo.cpp:547)
   82291B18  7D8802A6             mfspr r12,LR

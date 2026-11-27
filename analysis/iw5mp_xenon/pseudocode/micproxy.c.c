@@ -179,21 +179,107 @@ void MPpVADPass(undefined8 param_1,int param_2,int param_3)
 
 // 828C5B18  MPpSubmitMicPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:531)
 
-void MPpSubmitMicPacket(void)
+void MPpSubmitMicPacket(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_29();
+  puVar1 = (undefined4 *)*param_2;
+  iVar3 = -0x7fffbffb;
+  if (puVar1[5] == 0) {
+    puVar1[3] = (uint)puVar1[3] >> 2;
+  }
+  puVar1[5] = *(undefined4 *)(*(int *)(iVar2 + 4) + 0x8c);
+  if (*(int *)(*(int *)(iVar2 + 4) + 8) != 0) {
+    if ((*(uint *)(*(int *)(iVar2 + 4) + 0xc4) & 0xf0000) != 0) {
+      iVar3 = XamVoiceSubmitPacket(*(undefined4 *)(*(int *)(iVar2 + 4) + 8),1,puVar1);
+    }
+  }
+  if ((*(int *)(*(int *)(iVar2 + 4) + 8) == 0) || (iVar3 < 0)) {
+    *puVar1 = 0xc0000001;
+    puVar1[1] = puVar1[3];
+  }
+  param_2[1] = 0;
+  if (*(int *)(iVar2 + 0x78) == 0) {
+    *(undefined4 **)(iVar2 + 0x74) = param_2;
+  }
+  else {
+    *(undefined4 **)(*(int *)(iVar2 + 0x78) + 4) = param_2;
+  }
+  *(undefined4 **)(iVar2 + 0x78) = param_2;
+  __restgprlr_29();
+  return;
 }
 
 
 // 828C5BE8  MPpSubmitCodecPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:617)
 
-void MPpSubmitCodecPacket(void)
+void MPpSubmitCodecPacket(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = __savegprlr_28();
+  puVar1 = (undefined4 *)*param_3;
+  iVar3 = CodecSubmit(*(undefined4 *)((int)((param_2 + 0x14 & 0xffffffff) << 2) + iVar2),2,puVar1);
+  if (iVar3 < 0) {
+    *puVar1 = 0;
+    puVar1[1] = puVar1[3];
+  }
+  param_3[1] = 0;
+  iVar2 = (int)((param_2 & 0xffffffff) << 3) + iVar2;
+  if (*(int *)(iVar2 + 0x68) == 0) {
+    *(undefined4 **)(iVar2 + 100) = param_3;
+  }
+  else {
+    *(undefined4 **)(*(int *)(iVar2 + 0x68) + 4) = param_3;
+  }
+  *(undefined4 **)(iVar2 + 0x68) = param_3;
+  __restgprlr_28();
+  return;
+}
+
+
+// 828C6298  MicProxyRegister  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:666)
+
+void MicProxyRegister(void)
+
+{
+  int iVar1;
+  DWORD DVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  iVar1 = __savegprlr_29();
+  uVar5 = (ulonglong)*(uint *)(iVar1 + 0xc);
+  MicProxyUnregister();
+  MPpResetPCMBuffer(iVar1);
+  while ((uVar5 & 0xffffffff) != 0) {
+    uVar5 = uVar5 - 1;
+    uVar4 = (*(uint *)(iVar1 + 0xc) - uVar5) - 1;
+    if ((uVar4 & 0xffffffff) < (ulonglong)*(uint *)(iVar1 + 0xc)) {
+      lVar3 = (ulonglong)*(uint *)(iVar1 + 0x60) + (uVar4 & 0x1fffffff) * 8;
+    }
+    else {
+      lVar3 = 0;
+    }
+    MPpSubmitMicPacket(iVar1,lVar3);
+  }
+  *(undefined1 *)(iVar1 + 0x8c) = 0;
+  *(undefined4 *)(iVar1 + 0x90) = 0;
+  *(undefined4 *)(iVar1 + 0x94) = 600;
+  *(undefined4 *)(iVar1 + 0x98) = 0;
+  *(undefined4 *)(iVar1 + 0x9c) = 0;
+  DVar2 = GetTickCount();
+  *(DWORD *)(iVar1 + 0x10) = DVar2;
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -202,8 +288,236 @@ void MPpSubmitCodecPacket(void)
 void MicProxyUnregister(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  int *piVar5;
+  
+  iVar2 = __savegprlr_27();
+  uVar3 = 0;
+  if (*(int *)(iVar2 + 0x88) != 0) {
+    piVar5 = (int *)(iVar2 + 100);
+    puVar4 = (undefined4 *)(iVar2 + 0x50);
+    do {
+      CodecFlush(*puVar4,0,0,0);
+      while (iVar1 = *piVar5, iVar1 != 0) {
+        if (iVar1 == piVar5[1]) {
+          piVar5[1] = 0;
+        }
+        *piVar5 = *(int *)(iVar1 + 4);
+        *(undefined4 *)(iVar1 + 4) = 0;
+      }
+      uVar3 = uVar3 + 1;
+      puVar4 = puVar4 + 1;
+      piVar5 = piVar5 + 2;
+    } while (uVar3 < *(uint *)(iVar2 + 0x88));
+  }
+  while( true ) {
+    iVar1 = *(int *)(iVar2 + 0x74);
+    if (iVar1 == 0) break;
+    if (iVar1 == *(int *)(iVar2 + 0x78)) {
+      *(undefined4 *)(iVar2 + 0x78) = 0;
+    }
+    *(int *)(iVar2 + 0x74) = *(int *)(iVar1 + 4);
+    *(undefined4 *)(iVar1 + 4) = 0;
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 828C5D28  MicProxyProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/micproxy.c:808)
+
+void MicProxyProcess(void)
+
+{
+  undefined2 uVar1;
+  undefined4 *puVar2;
+  void *_Src;
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
+  DWORD DVar6;
+  size_t _Size;
+  byte *pbVar7;
+  undefined2 *puVar8;
+  uint uVar9;
+  int iVar11;
+  int *piVar12;
+  longlong lVar10;
+  undefined8 uVar13;
+  undefined8 uVar14;
+  longlong lVar15;
+  longlong lVar16;
+  int *piVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  int *piVar20;
+  int *piVar21;
+  uint uVar22;
+  
+  piVar5 = (int *)__savegprlr_15();
+  uVar13 = 0;
+  uVar22 = 0;
+  uVar14 = 0;
+  DVar6 = GetTickCount();
+  puVar2 = (undefined4 *)piVar5[0x1d];
+  piVar21 = piVar5 + 0x1d;
+  piVar5[5] = piVar5[5] + (DVar6 - piVar5[4]);
+  while (puVar2 != (undefined4 *)0x0) {
+    piVar12 = (int *)*puVar2;
+    if ((((*piVar12 == 0x103) || (piVar12[6] != 0)) || ((uint)piVar5[3] <= uVar22)) ||
+       (piVar5[5] < 0x14)) break;
+    iVar11 = piVar12[5];
+    if (*piVar12 == 0) {
+      if (iVar11 == 1) {
+        _Src = (void *)piVar12[2];
+        uVar18 = ZEXT48(_Src);
+        uVar4 = piVar12[3] << 1;
+        uVar9 = uVar4 | (uint)piVar12[3] >> 0x1f;
+        uVar19 = (longlong)((int)uVar9 >> 2) + (ulonglong)((int)uVar9 < 0 && (uVar4 & 2) != 0);
+        lVar16 = uVar19 * 3 + uVar18;
+        _Size = (size_t)uVar19;
+        memcpy((void *)lVar16,_Src,_Size);
+        lVar15 = uVar19 * 7 + uVar18;
+        memcpy((void *)lVar15,(void *)(_Size + (int)_Src),_Size);
+        lVar10 = (uVar19 & 0x7fffffff) << 1;
+        g726adpcm(1,lVar16,uVar18,lVar10,piVar5 + 6);
+        g726adpcm(1,lVar15,(uVar19 & 0x3fffffff) * 4 + uVar18,lVar10,piVar5 + 6);
+LAB_828c5ed0:
+        piVar12[5] = 0;
+        iVar11 = piVar12[3] << 2;
+        piVar12[3] = iVar11;
+        goto LAB_828c5ee0;
+      }
+      if (iVar11 == 2) {
+        iVar11 = piVar12[3];
+        pbVar7 = (byte *)(piVar12[2] + iVar11);
+        puVar8 = (undefined2 *)(iVar11 * 4 + piVar12[2]);
+        for (; iVar11 != 0; iVar11 = iVar11 + -1) {
+          pbVar7 = pbVar7 + -1;
+          uVar1 = *(undefined2 *)(&DAT_829afc10 + (uint)*pbVar7 * 2);
+          puVar8[-1] = uVar1;
+          puVar8 = puVar8 + -2;
+          *puVar8 = uVar1;
+        }
+        goto LAB_828c5ed0;
+      }
+    }
+    else {
+      if ((iVar11 == 1) || (iVar11 == 2)) {
+        piVar12[5] = 0;
+        piVar12[3] = piVar12[3] << 2;
+      }
+      XMemSet(piVar12[2],0,piVar12[3]);
+      iVar11 = piVar12[3];
+      uVar14 = 1;
+      *piVar12 = 0;
+LAB_828c5ee0:
+      piVar12[1] = iVar11;
+    }
+    MPpVADPass(piVar5,piVar12,uVar14);
+    if ((piVar5[0x24] == 1) && (uVar18 = 0, piVar5[0x22] != 0)) {
+      piVar17 = piVar5 + 0x16;
+      do {
+        uVar9 = ((int)piVar12 - piVar5[0x21]) / 0x1c;
+        if (uVar9 < (uint)piVar5[3]) {
+          piVar20 = (int *)(uVar9 * 8 + *piVar17);
+        }
+        else {
+          piVar20 = (int *)0x0;
+        }
+        iVar11 = *piVar20;
+        XMemSet(iVar11,0,0x18);
+        *(int *)(iVar11 + 8) = piVar12[2];
+        *(int *)(iVar11 + 0xc) = piVar12[3];
+        MPpSubmitCodecPacket(piVar5,uVar18,piVar20);
+        uVar18 = uVar18 + 1;
+        piVar17 = piVar17 + 1;
+        piVar12[6] = piVar12[6] + 1;
+      } while ((uVar18 & 0xffffffff) < (ulonglong)(uint)piVar5[0x22]);
+    }
+    iVar11 = *piVar21;
+    if (iVar11 != 0) {
+      if (iVar11 == piVar5[0x1e]) {
+        piVar5[0x1e] = 0;
+      }
+      *piVar21 = *(int *)(iVar11 + 4);
+      *(undefined4 *)(iVar11 + 4) = 0;
+    }
+    if (piVar12[6] == 0) {
+      MPpSubmitMicPacket(piVar5,puVar2);
+    }
+    uVar22 = uVar22 + 1;
+    puVar2 = (undefined4 *)*piVar21;
+    piVar5[5] = piVar5[5] + -0x14;
+  }
+  uVar22 = 0;
+  piVar5[4] = DVar6;
+  if (piVar5[0x22] != 0) {
+    piVar21 = piVar5 + 0x14;
+    do {
+      iVar11 = *(int *)piVar5[1] * 3 + *(int *)(*(int *)(*piVar21 + 0x18) + 0xc);
+      uVar13 = CodecProcess(*piVar21,*(undefined4 *)((iVar11 + 0x158) * 4 + *piVar5),
+                            *(undefined4 *)((iVar11 + 0x14c) * 4 + *piVar5));
+      uVar9 = 0;
+      piVar12 = (int *)(*piVar21 + 0x10);
+      do {
+        if ((piVar12[-2] != 0) && (*piVar12 == 1)) goto LAB_828c6080;
+        uVar9 = uVar9 + 1;
+        piVar12 = piVar12 + 1;
+      } while (uVar9 < 2);
+      piVar5[0x24] = 0;
+LAB_828c6080:
+      uVar22 = uVar22 + 1;
+      piVar21 = piVar21 + 1;
+    } while (uVar22 < (uint)piVar5[0x22]);
+    if ((int)uVar13 < 0) goto LAB_828c618c;
+  }
+  uVar22 = 0;
+  if (piVar5[0x22] != 0) {
+    do {
+      piVar12 = piVar5 + uVar22 * 2;
+      piVar17 = piVar12 + 0x19;
+      piVar21 = (int *)piVar12[0x19];
+      while (piVar21 != (int *)0x0) {
+        piVar21 = (int *)*piVar21;
+        if (uVar22 == 2) {
+          uVar9 = ((int)piVar21 - piVar5[0x21]) / 0x1c;
+        }
+        else {
+          uVar9 = ((int)piVar21 - piVar5[uVar22 + 0x1f]) / 0x18;
+        }
+        if (uVar9 < (uint)piVar5[3]) {
+          piVar20 = (int *)(uVar9 * 8 + piVar5[0x18]);
+        }
+        else {
+          piVar20 = (int *)0x0;
+        }
+        iVar11 = *piVar20;
+        if ((*piVar21 == 0x103) || (*(int *)(iVar11 + 0x18) == 0)) break;
+        iVar3 = *piVar17;
+        if (iVar3 != 0) {
+          if (iVar3 == piVar12[0x1a]) {
+            piVar12[0x1a] = 0;
+          }
+          *piVar17 = *(int *)(iVar3 + 4);
+          *(undefined4 *)(iVar3 + 4) = 0;
+        }
+        lVar10 = (ulonglong)*(uint *)(iVar11 + 0x18) - 1;
+        *(int *)(iVar11 + 0x18) = (int)lVar10;
+        if (lVar10 == 0) {
+          MPpSubmitMicPacket(piVar5);
+        }
+        piVar21 = (int *)*piVar17;
+      }
+      uVar22 = uVar22 + 1;
+    } while (uVar22 < (uint)piVar5[0x22]);
+  }
+LAB_828c618c:
+  __restgprlr_15(uVar13);
+  return;
 }
 
 
@@ -279,7 +593,44 @@ LAB_828c6430:
 void MicProxyDestroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  int *piVar3;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 != 0) {
+    uVar2 = 0;
+    if (*(int *)(iVar1 + 0x88) != 0) {
+      piVar3 = (int *)(iVar1 + 0x7c);
+      do {
+        CodecFlush(piVar3[-0xb],0,0,0);
+        if (*piVar3 != 0) {
+          XMemFree(*piVar3,0x618a0009);
+          *piVar3 = 0;
+        }
+        if (piVar3[-9] != 0) {
+          XMemFree(piVar3[-9],0x618a0003);
+          piVar3[-9] = 0;
+        }
+        uVar2 = uVar2 + 1;
+        piVar3 = piVar3 + 1;
+      } while (uVar2 < *(uint *)(iVar1 + 0x88));
+    }
+    if (*(int *)(iVar1 + 0x60) != 0) {
+      XMemFree(*(int *)(iVar1 + 0x60),0x618a0003);
+      *(undefined4 *)(iVar1 + 0x60) = 0;
+    }
+    if (*(int *)(iVar1 + 0x84) != 0) {
+      XMemFree(*(int *)(iVar1 + 0x84),0x618a0009);
+      *(undefined4 *)(iVar1 + 0x84) = 0;
+    }
+    if (*(int *)(iVar1 + 8) != 0) {
+      XMemFree(*(int *)(iVar1 + 8),0x608a2002);
+      *(undefined4 *)(iVar1 + 8) = 0;
+    }
+    XMemFree(iVar1,0x618a800d);
+  }
+  __restgprlr_28();
+  return;
 }
 

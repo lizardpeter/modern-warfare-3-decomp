@@ -11,21 +11,86 @@ bool FileIndexIsInPackfile(longlong param_1)
 
 // 82612CD8  PakFile_Open  (universal/streamfile.cpp:51)
 
-void PakFile_Open(void)
+void PakFile_Open(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined1 auStack_130 [304];
+  
+  iVar2 = __savegprlr_28();
+  iVar1 = (int)((param_3 & 0x3fffffff) << 2);
+  if (*(int *)(iVar1 + iVar2) == 0) {
+    if (param_2 == 0) {
+      uVar4 = 0xffffffff82183de4;
+    }
+    else {
+      if (param_2 != 1) {
+        MyAssertHandler(0xffffffff82183c30,0x40,0,0xffffffff82183db4,0xffffffff82183dc4);
+      }
+      uVar4 = 0xffffffff82183da8;
+    }
+    Com_sprintf(auStack_130,0x100,0xffffffff82183d9c,uVar4,param_3);
+    iVar3 = Sys_CreateFile(0xffffffff820068af,auStack_130);
+    if (iVar3 != -1) {
+      if (iVar3 == 0) {
+        MyAssertHandler(0xffffffff82183c30,0x48,0,0xffffffff82000f98,0xffffffff82183d8c);
+      }
+      *(int *)(iVar1 + iVar2) = iVar3;
+    }
+  }
+  __restgprlr_28(*(undefined4 *)(iVar1 + iVar2));
+  return;
 }
 
 
 // 82612DB8  StreamFileOpen  (universal/streamfile.cpp:87)
 
-void StreamFileOpen(void)
+void StreamFileOpen(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int *piVar3;
+  int iVar4;
+  undefined8 uVar2;
+  uint *puVar5;
+  undefined1 auStack_120 [288];
+  
+  piVar3 = (int *)__savegprlr_29();
+  puVar5 = (uint *)param_2;
+  uVar1 = *puVar5;
+  if (uVar1 == 0) {
+    uVar2 = Sys_DefaultInstallPath();
+    Com_sprintf(auStack_120,0x100,0xffffffff82183e0c,uVar2,param_2 + 4);
+    iVar4 = Sys_OpenFileReliable(auStack_120);
+    *piVar3 = iVar4;
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82183c30,0x70,0,0xffffffff82000f98,0xffffffff82183df0);
+    }
+    piVar3[1] = 0;
+    piVar3[2] = 0;
+    __restgprlr_29();
+    return;
+  }
+  if (9 < uVar1) {
+    MyAssertHandler(0xffffffff82183c30,0x5d,0,0xffffffff82183e30,uVar1,10);
+  }
+  iVar4 = PakFile_Open(0xffffffff841db3fc,0,*puVar5);
+  if (iVar4 == 0) {
+    StreamFileSetMissing(piVar3);
+    __restgprlr_29();
+    return;
+  }
+  *piVar3 = iVar4;
+  piVar3[1] = puVar5[2];
+  if (puVar5[1] == 0) {
+    MyAssertHandler(0xffffffff82183c30,0x68,0,0xffffffff82000f98,0xffffffff82183e18);
+  }
+  piVar3[2] = puVar5[1];
+  __restgprlr_29();
+  return;
 }
 
 
@@ -57,7 +122,6 @@ void StreamFileSetMissing(int *param_1)
 
 {
   if (*param_1 != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82183c30,0x8e,0,0xffffffff82000f98,0xffffffff82183c74);
   }
   param_1[1] = 0;
@@ -98,11 +162,107 @@ void StreamFileReadCompletion(longlong param_1,uint param_2)
 
 // 82612460  StreamFileRead  (universal/streamfile.cpp:173)
 
-void StreamFileRead(void)
+void StreamFileRead(undefined8 param_1,int *param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  char cVar7;
+  int iVar4;
+  BOOL BVar5;
+  DWORD DVar6;
+  longlong lVar8;
+  ulonglong uVar9;
+  _OVERLAPPED local_70 [5];
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  cVar7 = Sys_IsMainThread();
+  if (cVar7 != '\0') {
+    MyAssertHandler(0xffffffff82183c30,0xb4,0,0xffffffff82000f98,0xffffffff82183cd0);
+  }
+  uVar9 = param_4;
+  if (puVar3[1] == 0) {
+    if (puVar3[2] != 0) {
+      MyAssertHandler(0xffffffff82183c30,0xc9,0,0xffffffff82000f98,0xffffffff82183c90);
+    }
+  }
+  else {
+    uVar9 = (uint)puVar3[1] - param_3;
+    if ((longlong)uVar9 < 1) {
+      MyAssertHandler(0xffffffff82183c30,0xb9,0,0xffffffff82183cac,0xffffffff82183cc0,uVar9);
+    }
+    param_3 = (uint)puVar3[2] + param_3;
+    if (((int)param_4 < (int)uVar9) &&
+       (uVar9 = param_4, ((ulonglong)(uint)puVar3[1] + (ulonglong)(uint)puVar3[2] & 0x7ff) == 0)) {
+      uVar9 = (param_3 + param_4 & 0xffff8000) - param_3;
+    }
+  }
+  uVar1 = param_3 & 0x7ff;
+  lVar8 = param_3 - uVar1;
+  local_70[0].Internal = 0;
+  local_70[0].InternalHigh = 0;
+  local_70[0].hEvent = (HANDLE)0x0;
+  local_70[0].u = (_union_518)(lVar8 << 0x20);
+  uVar2 = uVar1 + uVar9 + 0x7ff & 0xfffff800;
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler(0xffffffff82183c30,0xdb,0,0xffffffff82000f98,0xffffffff82059658);
+  }
+  Sys_LockFileRead();
+  Sys_Sleep(100);
+  PIXBeginNamedEvent_Copy_VarArgs(0xffffffffffffffff,0xffffffff820596fc,lVar8,uVar2 + lVar8);
+  *param_2 = *param_2 - (-(int)uVar1 & 3U);
+  DAT_82c45b80 = 0;
+  BVar5 = ReadFileEx((HANDLE)*puVar3,(LPVOID)(*param_2 - (int)uVar1),(DWORD)uVar2,local_70,
+                     StreamFileReadCompletion);
+  PIXEndNamedEvent();
+  if (BVar5 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205977c);
+    DVar6 = SleepEx(0xffffffff,1);
+    PIXEndNamedEvent(DVar6);
+    if (DAT_841db3f8 == 0) {
+      Sys_UnlockFileRead(0x1e);
+      if ((int)(DAT_841db424 - uVar1) < (int)uVar9) {
+        uVar9 = DAT_841db424 - uVar1;
+      }
+      __restgprlr_23(((uVar9 & 0xffffffff) >> 0x1f) - 1 & uVar9);
+      return;
+    }
+  }
+  Sys_UnlockFileRead(0);
+  __restgprlr_23(0);
+  return;
+}
+
+
+// 82612698  CacheFileNameEqual  (universal/streamfile.cpp:729)
+
+bool CacheFileNameEqual(int *param_1,int *param_2)
+
+{
+  char cVar1;
+  char cVar2;
+  char *pcVar3;
+  
+  if (*param_1 == *param_2) {
+    pcVar3 = (char *)param_1[1];
+    if (*param_1 == 0) {
+      param_2 = param_2 + 1;
+      do {
+        cVar1 = *pcVar3;
+        cVar2 = *(char *)param_2;
+        if (cVar1 == '\0') break;
+        pcVar3 = pcVar3 + 1;
+        param_2 = (int *)((int)param_2 + 1);
+      } while (cVar1 == cVar2);
+      return cVar1 == cVar2;
+    }
+    if ((pcVar3 == (char *)param_2[1]) && (param_1[2] == param_2[2])) {
+      return true;
+    }
+  }
+  return false;
 }
 
 
@@ -169,7 +329,6 @@ void CacheFileNameCopy(int *param_1,int *param_2)
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
       uVar3 = va(0xffffffff82183d10,param_2,param_1);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82183c30,0x307,0,0xffffffff820011f4,0xffffffff82183ce4,uVar3);
     }
   }
@@ -208,7 +367,6 @@ void CacheFileNameCopy2(int *param_1,int *param_2,undefined8 param_3,undefined8 
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
       uVar3 = va(0xffffffff82183d10,(char *)param_2[1],param_1);
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82183c30,0x316,0,0xffffffff820011f4,0xffffffff82183ce4,uVar3);
     }
   }
@@ -217,6 +375,34 @@ void CacheFileNameCopy2(int *param_1,int *param_2,undefined8 param_3,undefined8 
     param_2[2] = param_1[2];
   }
   return;
+}
+
+
+// 82612940  CacheFileNameHash  (universal/streamfile.cpp:798)
+
+ulonglong CacheFileNameHash(int *param_1)
+
+{
+  char cVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  
+  if (*param_1 != 0) {
+    return (ulonglong)((uint)param_1[1] >> 0xb);
+  }
+  param_1 = param_1 + 1;
+  uVar2 = 0;
+  cVar1 = *(char *)param_1;
+  if (cVar1 == '\0') {
+    return uVar2;
+  }
+  do {
+    lVar3 = (longlong)cVar1;
+    param_1 = (int *)((int)param_1 + 1);
+    cVar1 = *(char *)param_1;
+    uVar2 = ((uVar2 & 0x7ffffff) * 0x20 - uVar2) + lVar3;
+  } while (cVar1 != '\0');
+  return uVar2;
 }
 
 
@@ -229,6 +415,36 @@ char * CacheFileNameGetDebugName(int *param_1)
     return "<PACKED FILE>";
   }
   return (char *)(param_1 + 1);
+}
+
+
+// 826129B0  StreamFileNameGetCacheName  (universal/streamfile.cpp:847)
+
+void StreamFileNameGetCacheName(int *param_1,int *param_2)
+
+{
+  *param_2 = *param_1;
+  if (*param_1 != 0) {
+    param_2[1] = param_1[1];
+    param_2[2] = param_1[2];
+    return;
+  }
+  Com_sprintf(param_2 + 1,0x40,0xffffffff8208b130,param_1[1],param_1[2]);
+  return;
+}
+
+
+// 826129F8  StreamFileNameGetName  (universal/streamfile.cpp:862)
+
+void StreamFileNameGetName(int *param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  if (*param_1 != 0) {
+    I_strncpyz(param_2,0xffffffff82183d1c);
+    return;
+  }
+  Com_sprintf(param_2,param_3,0xffffffff8208b130,param_1[1],param_1[2]);
+  return;
 }
 
 
@@ -256,7 +472,6 @@ HANDLE Sys_OpenFileReliable(LPCSTR param_1)
   
   pvVar1 = CreateFileA(param_1,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x60000000,(HANDLE)0x0);
   if (pvVar1 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82183c30,0x38b,0,0xffffffff82000f98,0xffffffff820363b8);
   }
   return pvVar1;
@@ -265,10 +480,62 @@ HANDLE Sys_OpenFileReliable(LPCSTR param_1)
 
 // 82612B00  Sys_CreateFile  (universal/streamfile.cpp:943)
 
-void Sys_CreateFile(void)
+void Sys_CreateFile(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar2;
+  int iVar3;
+  undefined8 uVar1;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  CHAR aCStack_230 [256];
+  CHAR aCStack_130 [304];
+  
+  pcVar2 = (char *)__savegprlr_28();
+  if (*pcVar2 != '\0') {
+    MyAssertHandler(0xffffffff82183c30,0x3b6,0,0xffffffff82000f98,0xffffffff82183d84);
+  }
+  iVar3 = I_strncmp(param_2,0xffffffff8205c5a4,5);
+  if ((iVar3 == 0) || (iVar3 = I_strncmp(param_2,0xffffffff8205c59c,3), iVar3 == 0)) {
+    Com_sprintf(aCStack_230,0x100,0xffffffff82183d78,param_2);
+    uVar1 = Sys_OpenFileReliable(aCStack_230);
+    if ((int)uVar1 != -1) goto LAB_82612cd0;
+    Com_Printf(0x10,0xffffffff82183d44,param_2);
+  }
+  iVar3 = I_strncmp(param_2,0xffffffff820599d0,4);
+  uVar5 = 0xffffffff82183d3c;
+  if (iVar3 == 0) {
+    uVar1 = Sys_DefaultInstallPath();
+    Com_sprintf(aCStack_130,0x100,0xffffffff82183d3c,uVar1,param_2);
+    uVar1 = Sys_DefaultInstallPath();
+    uVar4 = 0xffffffff82183d34;
+  }
+  else {
+    uVar1 = Sys_DefaultInstallPath();
+    Com_sprintf(aCStack_130,0x100,0xffffffff8208b130,uVar1,param_2);
+    uVar1 = Sys_DefaultInstallPath();
+    uVar4 = 0xffffffff82183d2c;
+  }
+  Com_sprintf(aCStack_230,0x100,uVar4,uVar1,param_2);
+  MoveFileExA(aCStack_130,aCStack_230,1);
+  uVar1 = Sys_OpenFileReliable(aCStack_230);
+  if ((int)uVar1 == -1) {
+    iVar3 = I_strncmp(param_2,0xffffffff820599d0,4);
+    if (iVar3 == 0) {
+      uVar1 = Sys_DefaultInstallPath();
+    }
+    else {
+      uVar1 = Sys_DefaultInstallPath();
+      uVar5 = 0xffffffff8208b130;
+    }
+    Com_sprintf(aCStack_230,0x100,uVar5,uVar1,param_2);
+    uVar1 = Sys_OpenFileReliable(aCStack_230);
+    if (((int)uVar1 == -1) && (uVar1 = Content_CreateFile(param_2), (int)uVar1 == -1)) {
+      uVar1 = 0xffffffffffffffff;
+    }
+  }
+LAB_82612cd0:
+  __restgprlr_28(uVar1);
+  return;
 }
 

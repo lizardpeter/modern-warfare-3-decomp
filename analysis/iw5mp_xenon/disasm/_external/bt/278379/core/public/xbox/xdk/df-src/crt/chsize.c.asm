@@ -3,3 +3,113 @@
 ; 8292B3A0  _chsize_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/chsize.c:81)
   8292B3A0  7D8802A6             mfspr r12,LR
   8292B3A4  4BFEB30D             bl 0x829166b0
+  8292B3A8  9421FF70             stwu r1,-0x90(r1)
+  8292B3AC  7C9D2378             or r29,r4,r4
+  8292B3B0  38A00001             li r5,0x1
+  8292B3B4  38800000             li r4,0x0
+  8292B3B8  7C7F1B78             or r31,r3,r3
+  8292B3BC  3B600000             li r27,0x0
+  8292B3C0  4BFFCBD9             bl 0x82927f98
+  8292B3C4  7C7A1B78             or r26,r3,r3
+  8292B3C8  2F23FFFF             cmpdi cr6,r3,-0x1
+  8292B3CC  419A004C             beq cr6,0x8292b418
+  8292B3D0  38A00002             li r5,0x2
+  8292B3D4  38800000             li r4,0x0
+  8292B3D8  7FE3FB78             or r3,r31,r31
+  8292B3DC  4BFFCBBD             bl 0x82927f98
+  8292B3E0  2F23FFFF             cmpdi cr6,r3,-0x1
+  8292B3E4  419A0034             beq cr6,0x8292b418
+  8292B3E8  7FC3E850             subf r30,r3,r29
+  8292B3EC  2F3E0000             cmpdi cr6,r30,0x0
+  8292B3F0  409900C4             ble cr6,0x8292b4b4
+  8292B3F4  4BF8897D             bl 0x828b3d70
+  8292B3F8  38800008             li r4,0x8
+  8292B3FC  38A01000             li r5,0x1000
+  8292B400  4BF7C149             bl 0x828a7548
+  8292B404  7C7D1B79             or. r29,r3,r3
+  8292B408  40820020             bne 0x8292b428
+  8292B40C  4BFF4975             bl 0x8291fd80
+  8292B410  3960000C             li r11,0xc
+  8292B414  91630000             stw r11,0x0(r3)
+LAB_8292b418:
+  8292B418  4BFF4969             bl 0x8291fd80
+  8292B41C  80630000             lwz r3,0x0(r3)
+LAB_8292b420:
+  8292B420  38210090             addi r1,r1,0x90
+  8292B424  4BFEB2DC             b 0x82916700
+LAB_8292b428:
+  8292B428  3C800000             lis r4,0x0
+  8292B42C  7FE3FB78             or r3,r31,r31
+  8292B430  60848000             ori r4,r4,0x8000
+  8292B434  48000105             bl 0x8292b538
+  8292B438  7C7C1B78             or r28,r3,r3
+LAB_8292b43c:
+  8292B43C  2F3E1000             cmpdi cr6,r30,0x1000
+  8292B440  38A01000             li r5,0x1000
+  8292B444  40980008             bge cr6,0x8292b44c
+  8292B448  7FC507B4             extsw r5,r30
+LAB_8292b44c:
+  8292B44C  7FA4EB78             or r4,r29,r29
+  8292B450  7FE3FB78             or r3,r31,r31
+  8292B454  4BFF6F9D             bl 0x829223f0
+  8292B458  2F03FFFF             cmpwi cr6,r3,-0x1
+  8292B45C  419A0018             beq cr6,0x8292b474
+  8292B460  7C6B07B4             extsw r11,r3
+  8292B464  7FCBF050             subf r30,r11,r30
+  8292B468  2F3E0000             cmpdi cr6,r30,0x0
+  8292B46C  4199FFD0             bgt cr6,0x8292b43c
+  8292B470  48000024             b 0x8292b494
+LAB_8292b474:
+  8292B474  4BFF4945             bl 0x8291fdb8
+  8292B478  81630000             lwz r11,0x0(r3)
+  8292B47C  2B0B0005             cmplwi cr6,r11,0x5
+  8292B480  409A0010             bne cr6,0x8292b490
+  8292B484  4BFF48FD             bl 0x8291fd80
+  8292B488  3960000D             li r11,0xd
+  8292B48C  91630000             stw r11,0x0(r3)
+LAB_8292b490:
+  8292B490  3B60FFFF             li r27,-0x1
+LAB_8292b494:
+  8292B494  7F84E378             or r4,r28,r28
+  8292B498  7FE3FB78             or r3,r31,r31
+  8292B49C  4800009D             bl 0x8292b538
+  8292B4A0  4BF888D1             bl 0x828b3d70
+  8292B4A4  38800000             li r4,0x0
+  8292B4A8  7FA5EB78             or r5,r29,r29
+  8292B4AC  4BF7C99D             bl 0x828a7e48
+  8292B4B0  4800005C             b 0x8292b50c
+LAB_8292b4b4:
+  8292B4B4  40980060             bge cr6,0x8292b514
+  8292B4B8  38A00000             li r5,0x0
+  8292B4BC  7FA4EB78             or r4,r29,r29
+  8292B4C0  7FE3FB78             or r3,r31,r31
+  8292B4C4  4BFFCAD5             bl 0x82927f98
+  8292B4C8  2F23FFFF             cmpdi cr6,r3,-0x1
+  8292B4CC  419AFF4C             beq cr6,0x8292b418
+  8292B4D0  7FE3FB78             or r3,r31,r31
+  8292B4D4  4BFFE45D             bl 0x82929930
+  8292B4D8  4BF806C9             bl 0x828abba0
+  8292B4DC  3163FFFF             subic r11,r3,0x1
+  8292B4E0  7D6B5910             subfe r11,r11,r11
+  8292B4E4  7D7B07B4             extsw r27,r11
+  8292B4E8  2F3BFFFF             cmpdi cr6,r27,-0x1
+  8292B4EC  409A0028             bne cr6,0x8292b514
+  8292B4F0  4BFF4891             bl 0x8291fd80
+  8292B4F4  3960000D             li r11,0xd
+  8292B4F8  91630000             stw r11,0x0(r3)
+  8292B4FC  4BFF48BD             bl 0x8291fdb8
+  8292B500  7C7E1B78             or r30,r3,r3
+  8292B504  4BF77835             bl 0x828a2d38
+  8292B508  907E0000             stw r3,0x0(r30)
+LAB_8292b50c:
+  8292B50C  2F3BFFFF             cmpdi cr6,r27,-0x1
+  8292B510  419AFF08             beq cr6,0x8292b418
+LAB_8292b514:
+  8292B514  38A00000             li r5,0x0
+  8292B518  7F44D378             or r4,r26,r26
+  8292B51C  7FE3FB78             or r3,r31,r31
+  8292B520  4BFFCA79             bl 0x82927f98
+  8292B524  2F23FFFF             cmpdi cr6,r3,-0x1
+  8292B528  419AFEF0             beq cr6,0x8292b418
+  8292B52C  38600000             li r3,0x0
+  8292B530  4BFFFEF0             b 0x8292b420

@@ -76,11 +76,27 @@ ulonglong CRiffChunk__Open(int *param_1)
 
 // 82634C10  CRiffChunk::ReadData  (xenon/AtgAudio.cpp:140)
 
-void CRiffChunk__ReadData(void)
+void CRiffChunk__ReadData(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  DWORD DVar3;
+  
+  iVar1 = __savegprlr_29();
+  iVar2 = FS_Seek(*(undefined4 *)(iVar1 + 8),(ulonglong)*(uint *)(iVar1 + 0xc) + param_2,2);
+  if ((iVar2 == -1) || (iVar1 = FS_Read(param_3,param_4,*(undefined4 *)(iVar1 + 8)), iVar1 == 0)) {
+    DVar3 = GetLastError();
+    if (0 < (int)DVar3) {
+      __restgprlr_29(DVar3 & 0xffff | 0x80070000);
+      return;
+    }
+  }
+  else {
+    DVar3 = 0;
+  }
+  __restgprlr_29(DVar3);
+  return;
 }
 
 
@@ -223,11 +239,80 @@ void CXMAFile__Close(int *param_1)
 
 // 82634D68  CXMAFile::GetFormat  (xenon/AtgAudio.cpp:259)
 
-void CXMAFile__GetFormat(void)
+void CXMAFile__GetFormat(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined2 *puVar2;
+  short sVar3;
+  uint *puVar4;
+  int iVar6;
+  int iVar7;
+  DWORD DVar8;
+  ulonglong uVar5;
+  
+  iVar6 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82187ce4,0x109,0,0xffffffff82000f98,0xffffffff82187cd8);
+  }
+  iVar1 = *(int *)(iVar6 + 0x2c);
+  if (iVar1 != 0x20) {
+    MyAssertHandler(0xffffffff82187ce4,0x10c,0,0xffffffff82000f98,0xffffffff82187cb0);
+  }
+  iVar7 = FS_Seek(*(undefined4 *)(iVar6 + 0x24),*(undefined4 *)(iVar6 + 0x28),2);
+  if (iVar7 == -1) {
+    DVar8 = GetLastError();
+    uVar5 = (ulonglong)(int)DVar8;
+    if (0 < (int)DVar8) {
+LAB_82634e28:
+      uVar5 = uVar5 & 0xffff | 0x80070000;
+LAB_82634e30:
+      DVar8 = (DWORD)uVar5;
+    }
+    if ((int)DVar8 < 0) goto LAB_82634ed0;
+  }
+  else {
+    iVar6 = FS_Read(param_2,iVar1,*(undefined4 *)(iVar6 + 0x24));
+    if (iVar6 == 0) {
+      DVar8 = GetLastError();
+      uVar5 = (ulonglong)(int)DVar8;
+      if (0 < (int)DVar8) goto LAB_82634e28;
+      goto LAB_82634e30;
+    }
+  }
+  puVar2 = (undefined2 *)param_2;
+  iVar6 = 0;
+  *puVar2 = CONCAT11(*(undefined1 *)((int)puVar2 + 1),*(undefined1 *)puVar2);
+  puVar2[1] = CONCAT11(*(undefined1 *)((int)puVar2 + 3),*(undefined1 *)(puVar2 + 1));
+  puVar2[2] = CONCAT11(*(undefined1 *)((int)puVar2 + 5),*(undefined1 *)(puVar2 + 2));
+  puVar2[3] = CONCAT11(*(undefined1 *)((int)puVar2 + 7),*(undefined1 *)(puVar2 + 3));
+  sVar3 = CONCAT11(*(undefined1 *)((int)puVar2 + 9),*(undefined1 *)(puVar2 + 4));
+  puVar2[4] = sVar3;
+  if (sVar3 != 0) {
+    do {
+      iVar1 = (int)param_2;
+      iVar6 = iVar6 + 1;
+      *(uint *)(iVar1 + 0xc) =
+           (uint)*(byte *)(iVar1 + 0xf) << 0x18 | (uint)*(byte *)(iVar1 + 0xe) << 0x10 |
+           (uint)*(byte *)(iVar1 + 0xd) << 8 | (uint)*(byte *)(iVar1 + 0xc);
+      *(uint *)(iVar1 + 0x10) =
+           (uint)*(byte *)(iVar1 + 0x13) << 0x18 | (uint)*(byte *)(iVar1 + 0x12) << 0x10 |
+           (uint)*(byte *)(iVar1 + 0x11) << 8 | (uint)*(byte *)(iVar1 + 0x10);
+      puVar4 = (uint *)(param_2 + 0x14);
+      *puVar4 = (uint)(byte)*puVar4 << 0x18 | (uint)*(byte *)((int)puVar4 + 2) << 0x10 |
+                (uint)*(byte *)((int)puVar4 + 1) << 8 | (uint)*(byte *)puVar4;
+      *(uint *)(iVar1 + 0x18) =
+           (uint)*(byte *)(iVar1 + 0x1b) << 0x18 | (uint)*(byte *)(iVar1 + 0x1a) << 0x10 |
+           (uint)*(byte *)(iVar1 + 0x19) << 8 | (uint)*(byte *)(iVar1 + 0x18);
+      *(ushort *)(iVar1 + 0x1e) =
+           CONCAT11(*(undefined1 *)(iVar1 + 0x1f),*(undefined1 *)(iVar1 + 0x1e));
+      param_2 = param_2 + 0x14;
+    } while (iVar6 < (int)(uint)(ushort)puVar2[4]);
+  }
+  uVar5 = 0;
+LAB_82634ed0:
+  __restgprlr_27(uVar5);
+  return;
 }
 
 
@@ -318,11 +403,23 @@ void CRiffChunkBuffer__CRiffChunkBuffer(undefined4 *param_1)
 
 // 82635050  CRiffChunkBuffer::Initialize  (xenon/AtgAudio.cpp:394)
 
-void CRiffChunkBuffer__Initialize(void)
+void CRiffChunkBuffer__Initialize
+               (undefined8 param_1,undefined4 param_2,undefined4 param_3,ulonglong param_4,
+               undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
+  }
+  *puVar1 = param_2;
+  puVar1[1] = param_3;
+  puVar1[2] = (int)param_4;
+  puVar1[3] = param_5;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -438,114 +535,163 @@ void CXMAHeaderBuffer__Initialize
 
 {
   int iVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
+  undefined4 uVar2;
   undefined4 *puVar4;
+  undefined8 uVar3;
+  undefined4 *puVar5;
   
-  puVar3 = (undefined4 *)__savegprlr_20();
+  puVar4 = (undefined4 *)__savegprlr_20();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187ce4,0x1da,0,0xffffffff82000f98,0xffffffff82187ec0);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187ce4,0x1db,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  *puVar3 = (int)param_2;
-  puVar4 = puVar3 + 3;
-  puVar3[1] = (int)param_3;
-  puVar3[2] = param_4;
+  *puVar4 = (int)param_2;
+  puVar5 = puVar4 + 3;
+  puVar4[1] = (int)param_3;
+  puVar4[2] = param_4;
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[5] = (int)param_3;
-  puVar3[6] = param_4;
-  puVar3[4] = 0;
-  *puVar4 = 0x52494646;
-  if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
+  puVar4[5] = (int)param_3;
+  puVar4[6] = param_4;
+  puVar4[4] = 0;
+  *puVar5 = 0x52494646;
+  iVar1 = puVar4[1];
+  uVar2 = puVar4[2];
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[0xd] = puVar3[2];
-  puVar3[0xb] = puVar4;
-  puVar3[0xc] = puVar3[1];
-  puVar3[10] = 0x666d7420;
-  if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
+  puVar4[0xd] = uVar2;
+  puVar4[0xb] = puVar5;
+  puVar4[0xc] = iVar1;
+  puVar4[10] = 0x666d7420;
+  iVar1 = puVar4[1];
+  uVar2 = puVar4[2];
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[0x12] = puVar4;
-  puVar3[0x13] = puVar3[1];
-  puVar3[0x14] = puVar3[2];
-  puVar3[0x11] = 0x64617461;
-  if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
+  puVar4[0x12] = puVar5;
+  puVar4[0x13] = iVar1;
+  puVar4[0x14] = uVar2;
+  puVar4[0x11] = 0x64617461;
+  iVar1 = puVar4[1];
+  uVar2 = puVar4[2];
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[0x1a] = puVar3[1];
-  puVar3[0x19] = puVar4;
-  puVar3[0x1b] = puVar3[2];
-  puVar3[0x18] = 0x57415645;
-  if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
+  puVar4[0x1a] = iVar1;
+  puVar4[0x19] = puVar5;
+  puVar4[0x1b] = uVar2;
+  puVar4[0x18] = 0x57415645;
+  iVar1 = puVar4[1];
+  uVar2 = puVar4[2];
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[0x21] = puVar3[1];
-  puVar3[0x20] = puVar4;
-  puVar3[0x22] = puVar3[2];
-  puVar3[0x1f] = 0x7365656b;
-  if (puVar3[1] == 0) {
-                    /* WARNING: Subroutine does not return */
+  puVar4[0x21] = iVar1;
+  puVar4[0x20] = puVar5;
+  puVar4[0x22] = uVar2;
+  puVar4[0x1f] = 0x7365656b;
+  iVar1 = puVar4[1];
+  uVar2 = puVar4[2];
+  if (iVar1 == 0) {
     MyAssertHandler(0xffffffff82187ce4,0x18b,0,0xffffffff82000f98,0xffffffff82187d24);
   }
-  puVar3[0x27] = puVar4;
-  puVar3[0x28] = puVar3[1];
-  puVar3[0x29] = puVar3[2];
-  puVar3[0x26] = 0x49575849;
-  uVar2 = CRiffChunkBuffer__Open(puVar4);
-  if ((int)uVar2 < 0) {
-    Com_PrintError(1,0xffffffff82187e90,*puVar3);
-    __restgprlr_20(uVar2);
+  puVar4[0x27] = puVar5;
+  puVar4[0x28] = iVar1;
+  puVar4[0x29] = uVar2;
+  puVar4[0x26] = 0x49575849;
+  uVar3 = CRiffChunkBuffer__Open(puVar5);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(1,0xffffffff82187e90,*puVar4);
+    __restgprlr_20(uVar3);
     return;
   }
-  uVar2 = CRiffChunkBuffer__Open(puVar3 + 10);
-  if ((int)uVar2 < 0) {
-    Com_PrintError(1,0xffffffff82187e60,*puVar3);
-    __restgprlr_20(uVar2);
+  uVar3 = CRiffChunkBuffer__Open(puVar4 + 10);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(1,0xffffffff82187e60,*puVar4);
+    __restgprlr_20(uVar3);
     return;
   }
-  uVar2 = CRiffChunkBuffer__Open(puVar3 + 0x1f);
-  if ((int)uVar2 < 0) {
-    Com_PrintError(1,0xffffffff82187e2c,*puVar3);
-    __restgprlr_20(uVar2);
+  uVar3 = CRiffChunkBuffer__Open(puVar4 + 0x1f);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(1,0xffffffff82187e2c,*puVar4);
+    __restgprlr_20(uVar3);
     return;
   }
-  uVar2 = CRiffChunkBuffer__Open(puVar3 + 0x26);
-  if ((int)uVar2 < 0) {
-    Com_PrintError(1,0xffffffff82187df4,*puVar3);
-    __restgprlr_20(uVar2);
+  uVar3 = CRiffChunkBuffer__Open(puVar4 + 0x26);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(1,0xffffffff82187df4,*puVar4);
+    __restgprlr_20(uVar3);
     return;
   }
-  uVar2 = CRiffChunkBuffer__Open(puVar3 + 0x11);
-  if ((int)uVar2 < 0) {
-    Com_PrintError(1,0xffffffff82187dc4,*puVar3);
-    __restgprlr_20(uVar2);
+  uVar3 = CRiffChunkBuffer__Open(puVar4 + 0x11);
+  if ((int)uVar3 < 0) {
+    Com_PrintError(1,0xffffffff82187dc4,*puVar4);
+    __restgprlr_20(uVar3);
     return;
   }
-  iVar1 = puVar3[7];
-  if ((uint)puVar3[2] < iVar1 + 4U) {
-    Com_PrintError(1,0xffffffff82187d58,*puVar3,puVar3[2],iVar1,4);
+  iVar1 = puVar4[7];
+  if ((uint)puVar4[2] < iVar1 + 4U) {
+    Com_PrintError(1,0xffffffff82187d58,*puVar4,puVar4[2],iVar1,4);
     __restgprlr_20(0xffffffff80004005);
     return;
   }
-  if (*(int *)(puVar3[1] + iVar1) != 0x57415645) {
-    Com_PrintError(1,0xffffffff82187d2c,*puVar3);
+  if (*(int *)(puVar4[1] + iVar1) != 0x57415645) {
+    Com_PrintError(1,0xffffffff82187d2c,*puVar4);
     __restgprlr_20(0xffffffff80004005);
     return;
   }
   __restgprlr_20(0);
   return;
+}
+
+
+// 826355B8  CXMAHeaderBuffer::SetSourceFormat  (xenon/AtgAudio.cpp:560)
+
+undefined8 CXMAHeaderBuffer__SetSourceFormat(undefined4 *param_1,undefined1 *param_2)
+
+{
+  ushort uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  
+  if (param_2 == (undefined1 *)0x0) {
+    MyAssertHandler(0xffffffff82187ce4,0x233,0,0xffffffff82000f98,0xffffffff82187f80);
+  }
+  if ((uint)param_1[0xf] < 0x20) {
+    Com_PrintError(1,0xffffffff82187f18,*param_1,param_1[0xf],0x20);
+    uVar2 = 0xffffffff80004005;
+  }
+  else {
+    iVar3 = param_1[0xe];
+    if ((uint)param_1[2] < iVar3 + 0x20U) {
+      Com_PrintError(1,0xffffffff82187d58,*param_1,param_1[2],iVar3,0x20);
+      uVar2 = 0xffffffff80004005;
+    }
+    else {
+      iVar3 = param_1[1] + iVar3;
+      uVar1 = CONCAT11(*(undefined1 *)(iVar3 + 9),*(undefined1 *)(iVar3 + 8));
+      *(ushort *)(iVar3 + 8) = uVar1;
+      *(uint *)(iVar3 + 0x10) =
+           (uint)*(byte *)(iVar3 + 0x13) << 0x18 | (uint)*(byte *)(iVar3 + 0x12) << 0x10 |
+           (uint)*(byte *)(iVar3 + 0x11) << 8 | (uint)*(byte *)(iVar3 + 0x10);
+      if (uVar1 < 2) {
+        uVar2 = 0;
+        *param_2 = 4;
+        param_2[4] = (char)*(undefined2 *)(iVar3 + 8);
+        param_2[0xc] = *(undefined1 *)(iVar3 + 0x1d);
+        *(undefined4 *)(param_2 + 8) = *(undefined4 *)(iVar3 + 0x10);
+      }
+      else {
+        Com_PrintError(1,0xffffffff82187ed0,*param_1);
+        uVar2 = 0xffffffff80004005;
+      }
+    }
+  }
+  return uVar2;
 }
 
 

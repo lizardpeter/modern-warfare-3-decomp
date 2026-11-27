@@ -55,6 +55,12 @@ LAB_828f5708:
 ; 828F5760  bdByteBuffer::operator_delete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:28)
   828F5760  4BFFF960             b 0x828f50c0
 
+; 828F5130  bdByteBuffer::getDataSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:29)
+  828F5130  81630014             lwz r11,0x14(r3)
+  828F5134  8143000C             lwz r10,0xc(r3)
+  828F5138  7C6A5850             subf r3,r10,r11
+  828F513C  4E800020             blr
+
 ; 828F5768  bdByteBuffer::allocateBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:34)
   828F5768  7D8802A6             mfspr r12,LR
   828F576C  9181FFF8             stw r12,-0x8(r1)
@@ -178,6 +184,46 @@ LAB_828f5118:
 ; 828F65B0  bdByteBuffer::writeArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:74)
   828F65B0  7D8802A6             mfspr r12,LR
   828F65B4  48020105             bl 0x829166b8
+  828F65B8  9421FF80             stwu r1,-0x80(r1)
+  828F65BC  89430018             lbz r10,0x18(r3)
+  828F65C0  3B800000             li r28,0x0
+  828F65C4  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
+  828F65C8  9B830018             stb r28,0x18(r3)
+  828F65CC  7C7F1B78             or r31,r3,r3
+  828F65D0  396B0064             addi r11,r11,0x64
+  828F65D4  7CBD2B78             or r29,r5,r5
+  828F65D8  99430019             stb r10,0x19(r3)
+  828F65DC  5564063E             rlwinm r4,r11,0x0,0x18,0x1f
+  828F65E0  7CDE3378             or r30,r6,r6
+  828F65E4  4BFFFB85             bl 0x828f6168
+  828F65E8  39400001             li r10,0x1
+  828F65EC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F65F0  995F0018             stb r10,0x18(r31)
+  828F65F4  4182001C             beq 0x828f6610
+  828F65F8  7C9DF1D6             mullw r4,r29,r30
+  828F65FC  7FE3FB78             or r3,r31,r31
+  828F6600  4BFFFCB9             bl 0x828f62b8
+  828F6604  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F6608  39600001             li r11,0x1
+  828F660C  40820008             bne 0x828f6614
+LAB_828f6610:
+  828F6610  7F8BE378             or r11,r28,r28
+LAB_828f6614:
+  828F6614  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828F6618  9B9F0018             stb r28,0x18(r31)
+  828F661C  4182001C             beq 0x828f6638
+  828F6620  7FA4EB78             or r4,r29,r29
+  828F6624  7FE3FB78             or r3,r31,r31
+  828F6628  4BFFFC91             bl 0x828f62b8
+  828F662C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F6630  39600001             li r11,0x1
+  828F6634  40820008             bne 0x828f663c
+LAB_828f6638:
+  828F6638  7F8BE378             or r11,r28,r28
+LAB_828f663c:
+  828F663C  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F6640  38210080             addi r1,r1,0x80
+  828F6644  480200C4             b 0x82916708
 
 ; 828F5218  bdByteBuffer::writeArrayEnd  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:91)
   828F5218  89630019             lbz r11,0x19(r3)
@@ -187,6 +233,97 @@ LAB_828f5118:
 ; 828F6648  bdByteBuffer::readArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:96)
   828F6648  7D8802A6             mfspr r12,LR
   828F664C  48020069             bl 0x829166b4
+  828F6650  9421FF60             stwu r1,-0xa0(r1)
+  828F6654  89630018             lbz r11,0x18(r3)
+  828F6658  3B800000             li r28,0x0
+  828F665C  7C9D2378             or r29,r4,r4
+  828F6660  9B830018             stb r28,0x18(r3)
+  828F6664  38810060             addi r4,r1,0x60
+  828F6668  7C7F1B78             or r31,r3,r3
+  828F666C  7CBB2B78             or r27,r5,r5
+  828F6670  99630019             stb r11,0x19(r3)
+  828F6674  4BFFFEBD             bl 0x828f6530
+  828F6678  7C7E1B78             or r30,r3,r3
+  828F667C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F6680  40820040             bne 0x828f66c0
+  828F6684  3D008221             lis r8,-0x7ddf
+  828F6688  3D608221             lis r11,-0x7ddf
+  828F668C  3D408221             lis r10,-0x7ddf
+  828F6690  3CA0821B             lis r5,-0x7de5
+  828F6694  3C808221             lis r4,-0x7ddf
+  828F6698  38C8A498             subi r6,r8,0x5b68
+  828F669C  392BA848             subi r9,r11,0x57b8
+  828F66A0  38EAA828             subi r7,r10,0x57d8
+  828F66A4  38A5D3C8             subi r5,r5,0x2c38
+  828F66A8  3884A424             subi r4,r4,0x5bdc
+  828F66AC  3900006B             li r8,0x6b
+  828F66B0  38600001             li r3,0x1
+  828F66B4  4BFFE45D             bl 0x828f4b10
+  828F66B8  939B0000             stw r28,0x0(r27)
+  828F66BC  480000C4             b 0x828f6780
+LAB_828f66c0:
+  828F66C0  89610060             lbz r11,0x60(r1)
+  828F66C4  57AA063E             rlwinm r10,r29,0x0,0x18,0x1f
+  828F66C8  392BFF9C             subi r9,r11,0x64
+  828F66CC  7F095000             cmpw cr6,r9,r10
+  828F66D0  419A0040             beq cr6,0x828f6710
+  828F66D4  91610054             stw r11,0x54(r1)
+  828F66D8  3D008221             lis r8,-0x7ddf
+  828F66DC  3D608221             lis r11,-0x7ddf
+  828F66E0  3D208221             lis r9,-0x7ddf
+  828F66E4  3CA0821B             lis r5,-0x7de5
+  828F66E8  3C808221             lis r4,-0x7ddf
+  828F66EC  38C8A498             subi r6,r8,0x5b68
+  828F66F0  3929A7F4             subi r9,r9,0x580c
+  828F66F4  38EBA828             subi r7,r11,0x57d8
+  828F66F8  38A5D3C4             subi r5,r5,0x2c3c
+  828F66FC  3884A58C             subi r4,r4,0x5a74
+  828F6700  39000072             li r8,0x72
+  828F6704  38600002             li r3,0x2
+  828F6708  4BFFE409             bl 0x828f4b10
+  828F670C  7F9EE378             or r30,r28,r28
+LAB_828f6710:
+  828F6710  57CB063F             rlwinm. r11,r30,0x0,0x18,0x1f
+  828F6714  4182006C             beq 0x828f6780
+  828F6718  9B9F0018             stb r28,0x18(r31)
+  828F671C  38810060             addi r4,r1,0x60
+  828F6720  7FE3FB78             or r3,r31,r31
+  828F6724  4BFFFE0D             bl 0x828f6530
+  828F6728  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828F672C  314BFFFF             subic r10,r11,0x1
+  828F6730  7D6A5910             subfe r11,r10,r11
+  828F6734  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828F6738  4182001C             beq 0x828f6754
+  828F673C  38810064             addi r4,r1,0x64
+  828F6740  7FE3FB78             or r3,r31,r31
+  828F6744  4BFFF58D             bl 0x828f5cd0
+  828F6748  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F674C  39600001             li r11,0x1
+  828F6750  40820008             bne 0x828f6758
+LAB_828f6754:
+  828F6754  7F8BE378             or r11,r28,r28
+LAB_828f6758:
+  828F6758  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828F675C  4182001C             beq 0x828f6778
+  828F6760  7F64DB78             or r4,r27,r27
+  828F6764  7FE3FB78             or r3,r31,r31
+  828F6768  4BFFF569             bl 0x828f5cd0
+  828F676C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F6770  39600001             li r11,0x1
+  828F6774  40820008             bne 0x828f677c
+LAB_828f6778:
+  828F6778  7F8BE378             or r11,r28,r28
+LAB_828f677c:
+  828F677C  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+LAB_828f6780:
+  828F6780  7FC3F378             or r3,r30,r30
+  828F6784  382100A0             addi r1,r1,0xa0
+  828F6788  4801FF7C             b 0x82916704
+
+; 828F5228  bdByteBuffer::readArrayEnd  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:131)
+  828F5228  89630019             lbz r11,0x19(r3)
+  828F522C  99630018             stb r11,0x18(r3)
+  828F5230  4E800020             blr
 
 ; 828F60D8  bdByteBuffer::writeBool  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:136)
   828F60D8  7D8802A6             mfspr r12,LR
@@ -490,6 +627,35 @@ LAB_828f53e8:
   828F53F4  EBE1FFF0             ld r31,-0x10(r1)
   828F53F8  4E800020             blr
 
+; 828F5400  bdByteBuffer::read<unsigned_short>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
+  828F5400  7D8802A6             mfspr r12,LR
+  828F5404  9181FFF8             stw r12,-0x8(r1)
+  828F5408  FBE1FFF0             std r31,-0x10(r1)
+  828F540C  9421FF90             stwu r1,-0x70(r1)
+  828F5410  7C9F2378             or r31,r4,r4
+  828F5414  38A00002             li r5,0x2
+  828F5418  38810050             addi r4,r1,0x50
+  828F541C  4BFFFE1D             bl 0x828f5238
+  828F5420  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828F5424  2B0B0001             cmplwi cr6,r11,0x1
+  828F5428  409A0028             bne cr6,0x828f5450
+  828F542C  39200002             li r9,0x2
+  828F5430  39600000             li r11,0x0
+  828F5434  395F0002             addi r10,r31,0x2
+  828F5438  7D2903A6             mtspr CTR,r9
+LAB_828f543c:
+  828F543C  39210050             addi r9,r1,0x50
+  828F5440  7D2B48AE             lbzx r9,r11,r9
+  828F5444  396B0001             addi r11,r11,0x1
+  828F5448  9D2AFFFF             stbu r9,-0x1(r10)
+  828F544C  4200FFF0             bdnz 0x828f543c
+LAB_828f5450:
+  828F5450  38210070             addi r1,r1,0x70
+  828F5454  8181FFF8             lwz r12,-0x8(r1)
+  828F5458  7D8803A6             mtspr LR,r12
+  828F545C  EBE1FFF0             ld r31,-0x10(r1)
+  828F5460  4E800020             blr
+
 ; 828F5468  bdByteBuffer::read<int>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
   828F5468  7D8802A6             mfspr r12,LR
   828F546C  9181FFF8             stw r12,-0x8(r1)
@@ -605,6 +771,35 @@ LAB_828f55f0:
   828F55F8  7D8803A6             mtspr LR,r12
   828F55FC  EBE1FFF0             ld r31,-0x10(r1)
   828F5600  4E800020             blr
+
+; 828F5608  bdByteBuffer::read<float>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.h:223)
+  828F5608  7D8802A6             mfspr r12,LR
+  828F560C  9181FFF8             stw r12,-0x8(r1)
+  828F5610  FBE1FFF0             std r31,-0x10(r1)
+  828F5614  9421FF90             stwu r1,-0x70(r1)
+  828F5618  7C9F2378             or r31,r4,r4
+  828F561C  38A00004             li r5,0x4
+  828F5620  38810050             addi r4,r1,0x50
+  828F5624  4BFFFC15             bl 0x828f5238
+  828F5628  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828F562C  2B0B0001             cmplwi cr6,r11,0x1
+  828F5630  409A0028             bne cr6,0x828f5658
+  828F5634  39200004             li r9,0x4
+  828F5638  39600000             li r11,0x0
+  828F563C  395F0004             addi r10,r31,0x4
+  828F5640  7D2903A6             mtspr CTR,r9
+LAB_828f5644:
+  828F5644  39210050             addi r9,r1,0x50
+  828F5648  7D2B48AE             lbzx r9,r11,r9
+  828F564C  396B0001             addi r11,r11,0x1
+  828F5650  9D2AFFFF             stbu r9,-0x1(r10)
+  828F5654  4200FFF0             bdnz 0x828f5644
+LAB_828f5658:
+  828F5658  38210070             addi r1,r1,0x70
+  828F565C  8181FFF8             lwz r12,-0x8(r1)
+  828F5660  7D8803A6             mtspr LR,r12
+  828F5664  EBE1FFF0             ld r31,-0x10(r1)
+  828F5668  4E800020             blr
 
 ; 828F5920  bdByteBuffer::writeNoType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:228)
   828F5920  7D8802A6             mfspr r12,LR
@@ -754,14 +949,207 @@ LAB_828f5b08:
 ; 828F6370  bdByteBuffer::writeString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:303)
   828F6370  7D8802A6             mfspr r12,LR
   828F6374  48020341             bl 0x829166b4
+  828F6378  9421FF70             stwu r1,-0x90(r1)
+  828F637C  7C7B1B78             or r27,r3,r3
+  828F6380  7C9D2378             or r29,r4,r4
+  828F6384  7CBF2B78             or r31,r5,r5
+  828F6388  2B040000             cmplwi cr6,r4,0x0
+  828F638C  409A000C             bne cr6,0x828f6398
+  828F6390  4BFFF509             bl 0x828f5898
+  828F6394  480000F8             b 0x828f648c
+LAB_828f6398:
+  828F6398  897B0018             lbz r11,0x18(r27)
+  828F639C  39400010             li r10,0x10
+  828F63A0  3B800001             li r28,0x1
+  828F63A4  99410050             stb r10,0x50(r1)
+  828F63A8  280B0000             cmplwi r11,0x0
+  828F63AC  41820018             beq 0x828f63c4
+  828F63B0  38A00001             li r5,0x1
+  828F63B4  38810050             addi r4,r1,0x50
+  828F63B8  7F63DB78             or r3,r27,r27
+  828F63BC  4BFFED85             bl 0x828f5140
+  828F63C0  7C7C1B78             or r28,r3,r3
+LAB_828f63c4:
+  828F63C4  7FE4FB78             or r4,r31,r31
+  828F63C8  7FA3EB78             or r3,r29,r29
+  828F63CC  4BFFED15             bl 0x828f50e0
+  828F63D0  7F03F840             cmplw cr6,r3,r31
+  828F63D4  40980010             bge cr6,0x828f63e4
+  828F63D8  3BE30001             addi r31,r3,0x1
+  828F63DC  3BC00000             li r30,0x0
+  828F63E0  48000040             b 0x828f6420
+LAB_828f63e4:
+  828F63E4  3D008221             lis r8,-0x7ddf
+  828F63E8  3D608221             lis r11,-0x7ddf
+  828F63EC  3D408221             lis r10,-0x7ddf
+  828F63F0  3CA08221             lis r5,-0x7ddf
+  828F63F4  3C808221             lis r4,-0x7ddf
+  828F63F8  38C8A498             subi r6,r8,0x5b68
+  828F63FC  392BA7BC             subi r9,r11,0x5844
+  828F6400  38EAA7A0             subi r7,r10,0x5860
+  828F6404  38A5A528             subi r5,r5,0x5ad8
+  828F6408  3884A424             subi r4,r4,0x5bdc
+  828F640C  3900014C             li r8,0x14c
+  828F6410  38600001             li r3,0x1
+  828F6414  3BFFFFFF             subi r31,r31,0x1
+  828F6418  3BC00001             li r30,0x1
+  828F641C  4BFFE6F5             bl 0x828f4b10
+LAB_828f6420:
+  828F6420  578B063F             rlwinm. r11,r28,0x0,0x18,0x1f
+  828F6424  41820020             beq 0x828f6444
+  828F6428  7FE5FB78             or r5,r31,r31
+  828F642C  7FA4EB78             or r4,r29,r29
+  828F6430  7F63DB78             or r3,r27,r27
+  828F6434  4BFFED0D             bl 0x828f5140
+  828F6438  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F643C  39600001             li r11,0x1
+  828F6440  40820008             bne 0x828f6448
+LAB_828f6444:
+  828F6444  39600000             li r11,0x0
+LAB_828f6448:
+  828F6448  57CA063E             rlwinm r10,r30,0x0,0x18,0x1f
+  828F644C  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F6450  2B0A0001             cmplwi cr6,r10,0x1
+  828F6454  409A0038             bne cr6,0x828f648c
+  828F6458  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F645C  41820028             beq 0x828f6484
+  828F6460  39600000             li r11,0x0
+  828F6464  38A00001             li r5,0x1
+  828F6468  99610051             stb r11,0x51(r1)
+  828F646C  38810051             addi r4,r1,0x51
+  828F6470  7F63DB78             or r3,r27,r27
+  828F6474  4BFFECCD             bl 0x828f5140
+  828F6478  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F647C  39600001             li r11,0x1
+  828F6480  40820008             bne 0x828f6488
+LAB_828f6484:
+  828F6484  39600000             li r11,0x0
+LAB_828f6488:
+  828F6488  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+LAB_828f648c:
+  828F648C  38210090             addi r1,r1,0x90
+  828F6490  48020274             b 0x82916704
 
 ; 828F6498  bdByteBuffer::writeBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:348)
   828F6498  7D8802A6             mfspr r12,LR
   828F649C  48020221             bl 0x829166bc
+  828F64A0  9421FF80             stwu r1,-0x80(r1)
+  828F64A4  89630018             lbz r11,0x18(r3)
+  828F64A8  39400013             li r10,0x13
+  828F64AC  7C7F1B78             or r31,r3,r3
+  828F64B0  7C9D2378             or r29,r4,r4
+  828F64B4  99410050             stb r10,0x50(r1)
+  828F64B8  7CBE2B78             or r30,r5,r5
+  828F64BC  38600001             li r3,0x1
+  828F64C0  280B0000             cmplwi r11,0x0
+  828F64C4  41820014             beq 0x828f64d8
+  828F64C8  38A00001             li r5,0x1
+  828F64CC  38810050             addi r4,r1,0x50
+  828F64D0  7FE3FB78             or r3,r31,r31
+  828F64D4  4BFFEC6D             bl 0x828f5140
+LAB_828f64d8:
+  828F64D8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F64DC  4182001C             beq 0x828f64f8
+  828F64E0  7FC4F378             or r4,r30,r30
+  828F64E4  7FE3FB78             or r3,r31,r31
+  828F64E8  4BFFFDD1             bl 0x828f62b8
+  828F64EC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F64F0  39600001             li r11,0x1
+  828F64F4  40820008             bne 0x828f64fc
+LAB_828f64f8:
+  828F64F8  39600000             li r11,0x0
+LAB_828f64fc:
+  828F64FC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828F6500  41820020             beq 0x828f6520
+  828F6504  7FC5F378             or r5,r30,r30
+  828F6508  7FA4EB78             or r4,r29,r29
+  828F650C  7FE3FB78             or r3,r31,r31
+  828F6510  4BFFEC31             bl 0x828f5140
+  828F6514  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F6518  39600001             li r11,0x1
+  828F651C  40820008             bne 0x828f6524
+LAB_828f6520:
+  828F6520  39600000             li r11,0x0
+LAB_828f6524:
+  828F6524  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F6528  38210080             addi r1,r1,0x80
+  828F652C  480201E0             b 0x8291670c
 
 ; 828F5238  bdByteBuffer::read  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:357)
   828F5238  7D8802A6             mfspr r12,LR
   828F523C  48021481             bl 0x829166bc
+  828F5240  9421FF80             stwu r1,-0x80(r1)
+  828F5244  81630008             lwz r11,0x8(r3)
+  828F5248  7C7F1B78             or r31,r3,r3
+  828F524C  8143000C             lwz r10,0xc(r3)
+  828F5250  7C872378             or r7,r4,r4
+  828F5254  80630010             lwz r3,0x10(r3)
+  828F5258  7CBE2B78             or r30,r5,r5
+  828F525C  7D6A5A14             add r11,r10,r11
+  828F5260  3BA00000             li r29,0x0
+  828F5264  7D635850             subf r11,r3,r11
+  828F5268  7F055840             cmplw cr6,r5,r11
+  828F526C  4199002C             bgt cr6,0x828f5298
+  828F5270  7CA82B78             or r8,r5,r5
+  828F5274  38C10050             addi r6,r1,0x50
+  828F5278  38A00000             li r5,0x0
+  828F527C  7D645B78             or r4,r11,r11
+  828F5280  48002141             bl 0x828f73c0
+  828F5284  817F0010             lwz r11,0x10(r31)
+  828F5288  7C7D1B78             or r29,r3,r3
+  828F528C  7D7E5A14             add r11,r30,r11
+  828F5290  917F0010             stw r11,0x10(r31)
+  828F5294  48000038             b 0x828f52cc
+LAB_828f5298:
+  828F5298  3D008221             lis r8,-0x7ddf
+  828F529C  3D608221             lis r11,-0x7ddf
+  828F52A0  3D408221             lis r10,-0x7ddf
+  828F52A4  3CA08221             lis r5,-0x7ddf
+  828F52A8  3C808221             lis r4,-0x7ddf
+  828F52AC  38C8A498             subi r6,r8,0x5b68
+  828F52B0  392BA54C             subi r9,r11,0x5ab4
+  828F52B4  38EAA538             subi r7,r10,0x5ac8
+  828F52B8  38A5A528             subi r5,r5,0x5ad8
+  828F52BC  3884A424             subi r4,r4,0x5bdc
+  828F52C0  39000170             li r8,0x170
+  828F52C4  38600001             li r3,0x1
+  828F52C8  4BFFF849             bl 0x828f4b10
+LAB_828f52cc:
+  828F52CC  7FA3EB78             or r3,r29,r29
+  828F52D0  38210080             addi r1,r1,0x80
+  828F52D4  48021438             b 0x8291670c
+
+; 828F5B20  bdByteBuffer::readBool  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:374)
+  828F5B20  7D8802A6             mfspr r12,LR
+  828F5B24  9181FFF8             stw r12,-0x8(r1)
+  828F5B28  FBC1FFE8             std r30,-0x18(r1)
+  828F5B2C  FBE1FFF0             std r31,-0x10(r1)
+  828F5B30  9421FF90             stwu r1,-0x70(r1)
+  828F5B34  7C9E2378             or r30,r4,r4
+  828F5B38  38800001             li r4,0x1
+  828F5B3C  7C7F1B78             or r31,r3,r3
+  828F5B40  4BFFF799             bl 0x828f52d8
+  828F5B44  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5B48  41820034             beq 0x828f5b7c
+  828F5B4C  39600000             li r11,0x0
+  828F5B50  38A00001             li r5,0x1
+  828F5B54  99610050             stb r11,0x50(r1)
+  828F5B58  38810050             addi r4,r1,0x50
+  828F5B5C  7FE3FB78             or r3,r31,r31
+  828F5B60  4BFFF6D9             bl 0x828f5238
+  828F5B64  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5B68  41820014             beq 0x828f5b7c
+  828F5B6C  89610050             lbz r11,0x50(r1)
+  828F5B70  314BFFFF             subic r10,r11,0x1
+  828F5B74  7D6A5910             subfe r11,r10,r11
+  828F5B78  997E0000             stb r11,0x0(r30)
+LAB_828f5b7c:
+  828F5B7C  38210070             addi r1,r1,0x70
+  828F5B80  8181FFF8             lwz r12,-0x8(r1)
+  828F5B84  7D8803A6             mtspr LR,r12
+  828F5B88  EBC1FFE8             ld r30,-0x18(r1)
+  828F5B8C  EBE1FFF0             ld r31,-0x10(r1)
+  828F5B90  4E800020             blr
 
 ; 828F6530  bdByteBuffer::readUByte8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:415)
   828F6530  7D8802A6             mfspr r12,LR
@@ -798,6 +1186,64 @@ LAB_828f6590:
   828F65A0  EBC1FFE8             ld r30,-0x18(r1)
   828F65A4  EBE1FFF0             ld r31,-0x10(r1)
   828F65A8  4E800020             blr
+
+; 828F5B98  bdByteBuffer::readInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:422)
+  828F5B98  7D8802A6             mfspr r12,LR
+  828F5B9C  9181FFF8             stw r12,-0x8(r1)
+  828F5BA0  FBC1FFE8             std r30,-0x18(r1)
+  828F5BA4  FBE1FFF0             std r31,-0x10(r1)
+  828F5BA8  9421FF90             stwu r1,-0x70(r1)
+  828F5BAC  7C9E2378             or r30,r4,r4
+  828F5BB0  38800005             li r4,0x5
+  828F5BB4  7C7F1B78             or r31,r3,r3
+  828F5BB8  4BFFF721             bl 0x828f52d8
+  828F5BBC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5BC0  4182001C             beq 0x828f5bdc
+  828F5BC4  7FC4F378             or r4,r30,r30
+  828F5BC8  7FE3FB78             or r3,r31,r31
+  828F5BCC  4BFFF7CD             bl 0x828f5398
+  828F5BD0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5BD4  39600001             li r11,0x1
+  828F5BD8  40820008             bne 0x828f5be0
+LAB_828f5bdc:
+  828F5BDC  39600000             li r11,0x0
+LAB_828f5be0:
+  828F5BE0  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F5BE4  38210070             addi r1,r1,0x70
+  828F5BE8  8181FFF8             lwz r12,-0x8(r1)
+  828F5BEC  7D8803A6             mtspr LR,r12
+  828F5BF0  EBC1FFE8             ld r30,-0x18(r1)
+  828F5BF4  EBE1FFF0             ld r31,-0x10(r1)
+  828F5BF8  4E800020             blr
+
+; 828F5C00  bdByteBuffer::readUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:430)
+  828F5C00  7D8802A6             mfspr r12,LR
+  828F5C04  9181FFF8             stw r12,-0x8(r1)
+  828F5C08  FBC1FFE8             std r30,-0x18(r1)
+  828F5C0C  FBE1FFF0             std r31,-0x10(r1)
+  828F5C10  9421FF90             stwu r1,-0x70(r1)
+  828F5C14  7C9E2378             or r30,r4,r4
+  828F5C18  38800006             li r4,0x6
+  828F5C1C  7C7F1B78             or r31,r3,r3
+  828F5C20  4BFFF6B9             bl 0x828f52d8
+  828F5C24  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5C28  4182001C             beq 0x828f5c44
+  828F5C2C  7FC4F378             or r4,r30,r30
+  828F5C30  7FE3FB78             or r3,r31,r31
+  828F5C34  4BFFF7CD             bl 0x828f5400
+  828F5C38  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5C3C  39600001             li r11,0x1
+  828F5C40  40820008             bne 0x828f5c48
+LAB_828f5c44:
+  828F5C44  39600000             li r11,0x0
+LAB_828f5c48:
+  828F5C48  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F5C4C  38210070             addi r1,r1,0x70
+  828F5C50  8181FFF8             lwz r12,-0x8(r1)
+  828F5C54  7D8803A6             mtspr LR,r12
+  828F5C58  EBC1FFE8             ld r30,-0x18(r1)
+  828F5C5C  EBE1FFF0             ld r31,-0x10(r1)
+  828F5C60  4E800020             blr
 
 ; 828F5C68  bdByteBuffer::readInt32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:438)
   828F5C68  7D8802A6             mfspr r12,LR
@@ -915,13 +1361,136 @@ LAB_828f5de8:
   828F5DFC  EBE1FFF0             ld r31,-0x10(r1)
   828F5E00  4E800020             blr
 
+; 828F5E08  bdByteBuffer::readFloat32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:466)
+  828F5E08  7D8802A6             mfspr r12,LR
+  828F5E0C  9181FFF8             stw r12,-0x8(r1)
+  828F5E10  FBC1FFE8             std r30,-0x18(r1)
+  828F5E14  FBE1FFF0             std r31,-0x10(r1)
+  828F5E18  9421FF90             stwu r1,-0x70(r1)
+  828F5E1C  7C9E2378             or r30,r4,r4
+  828F5E20  3880000D             li r4,0xd
+  828F5E24  7C7F1B78             or r31,r3,r3
+  828F5E28  4BFFF4B1             bl 0x828f52d8
+  828F5E2C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5E30  4182001C             beq 0x828f5e4c
+  828F5E34  7FC4F378             or r4,r30,r30
+  828F5E38  7FE3FB78             or r3,r31,r31
+  828F5E3C  4BFFF7CD             bl 0x828f5608
+  828F5E40  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5E44  39600001             li r11,0x1
+  828F5E48  40820008             bne 0x828f5e50
+LAB_828f5e4c:
+  828F5E4C  39600000             li r11,0x0
+LAB_828f5e50:
+  828F5E50  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  828F5E54  38210070             addi r1,r1,0x70
+  828F5E58  8181FFF8             lwz r12,-0x8(r1)
+  828F5E5C  7D8803A6             mtspr LR,r12
+  828F5E60  EBC1FFE8             ld r30,-0x18(r1)
+  828F5E64  EBE1FFF0             ld r31,-0x10(r1)
+  828F5E68  4E800020             blr
+
 ; 828F5E70  bdByteBuffer::readString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:512)
   828F5E70  7D8802A6             mfspr r12,LR
   828F5E74  48020841             bl 0x829166b4
+  828F5E78  9421FF70             stwu r1,-0x90(r1)
+  828F5E7C  7C9B2378             or r27,r4,r4
+  828F5E80  38800010             li r4,0x10
+  828F5E84  7C7E1B78             or r30,r3,r3
+  828F5E88  7CBD2B78             or r29,r5,r5
+  828F5E8C  4BFFF44D             bl 0x828f52d8
+  828F5E90  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5E94  4182006C             beq 0x828f5f00
+  828F5E98  2B1B0000             cmplwi cr6,r27,0x0
+  828F5E9C  419A0064             beq cr6,0x828f5f00
+  828F5EA0  3B800000             li r28,0x0
+  828F5EA4  7F9FE378             or r31,r28,r28
+LAB_828f5ea8:
+  828F5EA8  9B810050             stb r28,0x50(r1)
+  828F5EAC  38A00001             li r5,0x1
+  828F5EB0  38810050             addi r4,r1,0x50
+  828F5EB4  7FC3F378             or r3,r30,r30
+  828F5EB8  4BFFF381             bl 0x828f5238
+  828F5EBC  89410050             lbz r10,0x50(r1)
+  828F5EC0  7F1FE840             cmplw cr6,r31,r29
+  828F5EC4  40980008             bge cr6,0x828f5ecc
+  828F5EC8  7D5FD9AE             stbx r10,r31,r27
+LAB_828f5ecc:
+  828F5ECC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5ED0  41820010             beq 0x828f5ee0
+  828F5ED4  7D490775             extsb. r9,r10
+  828F5ED8  41820008             beq 0x828f5ee0
+  828F5EDC  3BFF0001             addi r31,r31,0x1
+LAB_828f5ee0:
+  828F5EE0  2B0B0000             cmplwi cr6,r11,0x0
+  828F5EE4  419A000C             beq cr6,0x828f5ef0
+  828F5EE8  7D4B0775             extsb. r11,r10
+  828F5EEC  4082FFBC             bne 0x828f5ea8
+LAB_828f5ef0:
+  828F5EF0  2B1D0000             cmplwi cr6,r29,0x0
+  828F5EF4  419A000C             beq cr6,0x828f5f00
+  828F5EF8  7D7BEA14             add r11,r27,r29
+  828F5EFC  9B8BFFFF             stb r28,-0x1(r11)
+LAB_828f5f00:
+  828F5F00  38210090             addi r1,r1,0x90
+  828F5F04  48020800             b 0x82916704
 
 ; 828F5F08  bdByteBuffer::readBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:553)
   828F5F08  7D8802A6             mfspr r12,LR
   828F5F0C  480207A9             bl 0x829166b4
+  828F5F10  9421FF60             stwu r1,-0xa0(r1)
+  828F5F14  7C9B2378             or r27,r4,r4
+  828F5F18  38800013             li r4,0x13
+  828F5F1C  7C7D1B78             or r29,r3,r3
+  828F5F20  7CBC2B78             or r28,r5,r5
+  828F5F24  4BFFF3B5             bl 0x828f52d8
+  828F5F28  7C7F1B78             or r31,r3,r3
+  828F5F2C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5F30  4182009C             beq 0x828f5fcc
+  828F5F34  39600000             li r11,0x0
+  828F5F38  38810060             addi r4,r1,0x60
+  828F5F3C  91610060             stw r11,0x60(r1)
+  828F5F40  7FA3EB78             or r3,r29,r29
+  828F5F44  4BFFFD8D             bl 0x828f5cd0
+  828F5F48  83C10060             lwz r30,0x60(r1)
+  828F5F4C  7C7F1B78             or r31,r3,r3
+  828F5F50  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5F54  41820074             beq 0x828f5fc8
+  828F5F58  2B1B0000             cmplwi cr6,r27,0x0
+  828F5F5C  419A006C             beq cr6,0x828f5fc8
+  828F5F60  80BC0000             lwz r5,0x0(r28)
+  828F5F64  7F05F040             cmplw cr6,r5,r30
+  828F5F68  41980008             blt cr6,0x828f5f70
+  828F5F6C  7FC5F378             or r5,r30,r30
+LAB_828f5f70:
+  828F5F70  7F64DB78             or r4,r27,r27
+  828F5F74  7FA3EB78             or r3,r29,r29
+  828F5F78  4BFFF2C1             bl 0x828f5238
+  828F5F7C  817C0000             lwz r11,0x0(r28)
+  828F5F80  7C7F1B78             or r31,r3,r3
+  828F5F84  7F1E5840             cmplw cr6,r30,r11
+  828F5F88  40990040             ble cr6,0x828f5fc8
+  828F5F8C  3D408221             lis r10,-0x7ddf
+  828F5F90  91610054             stw r11,0x54(r1)
+  828F5F94  3D008221             lis r8,-0x7ddf
+  828F5F98  3D608221             lis r11,-0x7ddf
+  828F5F9C  3CA08221             lis r5,-0x7ddf
+  828F5FA0  3C808221             lis r4,-0x7ddf
+  828F5FA4  392AA768             subi r9,r10,0x5898
+  828F5FA8  38C8A498             subi r6,r8,0x5b68
+  828F5FAC  38EBA750             subi r7,r11,0x58b0
+  828F5FB0  38A5A528             subi r5,r5,0x5ad8
+  828F5FB4  3884A424             subi r4,r4,0x5bdc
+  828F5FB8  7FCAF378             or r10,r30,r30
+  828F5FBC  39000238             li r8,0x238
+  828F5FC0  38600001             li r3,0x1
+  828F5FC4  4BFFEB4D             bl 0x828f4b10
+LAB_828f5fc8:
+  828F5FC8  93DC0000             stw r30,0x0(r28)
+LAB_828f5fcc:
+  828F5FCC  7FE3FB78             or r3,r31,r31
+  828F5FD0  382100A0             addi r1,r1,0xa0
+  828F5FD4  48020730             b 0x82916704
 
 ; 828F5FD8  bdByteBuffer::readAndAllocateBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:580)
   828F5FD8  7D8802A6             mfspr r12,LR
@@ -975,6 +1544,53 @@ LAB_828f6078:
 ; 828F52D8  bdByteBuffer::readDataType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:659)
   828F52D8  7D8802A6             mfspr r12,LR
   828F52DC  480213E1             bl 0x829166bc
+  828F52E0  9421FF10             stwu r1,-0xf0(r1)
+  828F52E4  89630018             lbz r11,0x18(r3)
+  828F52E8  7C9D2378             or r29,r4,r4
+  828F52EC  3BE00001             li r31,0x1
+  828F52F0  280B0000             cmplwi r11,0x0
+  828F52F4  41820098             beq 0x828f538c
+  828F52F8  39600000             li r11,0x0
+  828F52FC  38A00001             li r5,0x1
+  828F5300  99610060             stb r11,0x60(r1)
+  828F5304  38810060             addi r4,r1,0x60
+  828F5308  4BFFFF31             bl 0x828f5238
+  828F530C  7C7F1B78             or r31,r3,r3
+  828F5310  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  828F5314  41820078             beq 0x828f538c
+  828F5318  8BC10060             lbz r30,0x60(r1)
+  828F531C  7D7EE850             subf r11,r30,r29
+  828F5320  7D6B0034             cntlzw r11,r11
+  828F5324  557FDFFF             rlwinm. r31,r11,0x1b,0x1f,0x1f
+  828F5328  40820064             bne 0x828f538c
+  828F532C  38A00028             li r5,0x28
+  828F5330  388100A0             addi r4,r1,0xa0
+  828F5334  7FA3EB78             or r3,r29,r29
+  828F5338  480023B1             bl 0x828f76e8
+  828F533C  38A00028             li r5,0x28
+  828F5340  38810070             addi r4,r1,0x70
+  828F5344  7FC3F378             or r3,r30,r30
+  828F5348  480023A1             bl 0x828f76e8
+  828F534C  38C10070             addi r6,r1,0x70
+  828F5350  3D408221             lis r10,-0x7ddf
+  828F5354  3D008221             lis r8,-0x7ddf
+  828F5358  90C10054             stw r6,0x54(r1)
+  828F535C  3D608221             lis r11,-0x7ddf
+  828F5360  3CA08221             lis r5,-0x7ddf
+  828F5364  3C808221             lis r4,-0x7ddf
+  828F5368  38EAA5B0             subi r7,r10,0x5a50
+  828F536C  38C8A498             subi r6,r8,0x5b68
+  828F5370  392BA594             subi r9,r11,0x5a6c
+  828F5374  38A5A528             subi r5,r5,0x5ad8
+  828F5378  3884A58C             subi r4,r4,0x5a74
+  828F537C  394100A0             addi r10,r1,0xa0
+  828F5380  390002A5             li r8,0x2a5
+  828F5384  38600002             li r3,0x2
+  828F5388  4BFFF789             bl 0x828f4b10
+LAB_828f538c:
+  828F538C  7FE3FB78             or r3,r31,r31
+  828F5390  382100F0             addi r1,r1,0xf0
+  828F5394  48021378             b 0x8291670c
 
 ; 828F6088  bdByteBuffer::`scalar_deleting_destructor'  (line unknown)
   828F6088  7D8802A6             mfspr r12,LR

@@ -2,11 +2,54 @@
 
 // 82783238  R_GetSunAxes  (gfx_d3d/r_sunshadow.cpp:82)
 
-void R_GetSunAxes(void)
+void R_GetSunAxes(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  iVar6 = __savegprlr_29();
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x53,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  pfVar5 = (float *)param_2;
+  pfVar5[6] = *(float *)(iVar6 + 0x15d4);
+  pfVar5[7] = *(float *)(iVar6 + 0x15d8);
+  fVar2 = *(float *)(iVar6 + 0x15dc);
+  pfVar5[8] = fVar2;
+  pfVar5[4] = 0.0;
+  dVar9 = 1.0;
+  if (ABS(fVar2) <= (float)0x3f666666) {
+    pfVar5[3] = 0.0;
+    pfVar5[5] = 1.0;
+  }
+  else {
+    pfVar5[3] = 1.0;
+    pfVar5[5] = 0.0;
+  }
+  Vec3Cross(param_2 + 0xc,param_2 + 0x18,param_2);
+  fVar2 = pfVar5[1];
+  fVar3 = *pfVar5;
+  fVar4 = pfVar5[2];
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar7 = dVar9;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
+  }
+  fVar1 = (float)(dVar9 / dVar7);
+  *pfVar5 = fVar3 * fVar1;
+  pfVar5[1] = fVar2 * fVar1;
+  pfVar5[2] = fVar4 * fVar1;
+  Vec3Cross(param_2 + 0x18,param_2,param_2 + 0xc);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -58,21 +101,130 @@ void R_SetSunShadowPartitionViewMatrix(undefined4 *param_1,int param_2,undefined
 
 // 827833F8  R_SetSunShadowPartitionProjectionMatrix  (gfx_d3d/r_sunshadow.cpp:121)
 
-void R_SetSunShadowPartitionProjectionMatrix(void)
+void R_SetSunShadowPartitionProjectionMatrix
+               (undefined8 param_1,int param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  float fVar3;
+  uint *puVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
   __savegprlr_29();
+  puVar4 = (uint *)__savefpr_27();
+  dVar7 = (double)(*(float *)((int)((param_3 + 0x16U & 0xffffffff) << 2) + param_2) * (float)*puVar4
+                  );
+  if (dVar7 == 0.0) {
+    MyAssertHandler(0xffffffff821d1df8,0x7e,0,0xffffffff82000f98,0xffffffff821d1e3c);
+  }
+  dVar9 = 2.0;
+  dVar8 = 1.0;
+  dVar6 = (double)(((*(float *)(param_2 + 0x40) + (float)puVar4[3]) / (float)*puVar4) * 2.0 - 1.0);
+  dVar5 = (double)(((*(float *)(param_2 + 0x44) + (float)puVar4[3]) / (float)*puVar4) * 2.0 - 1.0);
+  memset((void *)(param_4 + 0x40),0,0x40);
+  fVar1 = (float)puVar4[5];
+  fVar3 = fVar1 - (float)puVar4[4];
+  iVar2 = (int)param_4;
+  *(float *)(iVar2 + 0x40) = (float)(dVar9 / dVar7);
+  *(float *)(iVar2 + 0x54) = (float)(dVar9 / dVar7);
+  *(float *)(iVar2 + 0x70) = (float)dVar6;
+  *(float *)(iVar2 + 0x74) = (float)dVar5;
+  *(float *)(iVar2 + 0x7c) = (float)dVar8;
+  fVar1 = fVar1 / fVar3;
+  *(float *)(iVar2 + 0x78) = fVar1;
+  *(float *)(iVar2 + 0x68) = -1.0 / fVar3;
+  *(float *)(iVar2 + 0x14c) = fVar1;
+  MatrixMultiply44(param_4,param_4 + 0x40,param_4 + 0x80);
+  MatrixInverse44(param_4 + 0x80,param_4 + 0xc0);
+  __restfpr_27();
+  __restgprlr_29();
+  return;
 }
 
 
 // 82783550  R_SetSunShadowMapViewParms  (gfx_d3d/r_sunshadow.cpp:168)
 
-void R_SetSunShadowMapViewParms(void)
+void R_SetSunShadowMapViewParms
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float *pfVar12;
+  undefined8 uVar13;
+  float *_Dst;
+  
+  uVar13 = __savegprlr_28();
+  _Dst = (float *)param_4;
+  memset(_Dst,0xb0,0x150);
+  pfVar12 = (float *)param_2;
+  fVar1 = pfVar12[6];
+  fVar2 = pfVar12[7];
+  fVar3 = pfVar12[8];
+  fVar4 = *pfVar12;
+  _Dst[0x40] = 0.0;
+  _Dst[0x41] = 0.0;
+  _Dst[0x42] = 0.0;
+  fVar5 = pfVar12[1];
+  fVar6 = pfVar12[2];
+  _Dst[0x44] = -fVar2;
+  _Dst[0x45] = -fVar3;
+  _Dst[0x43] = -fVar1;
+  _Dst[0x46] = -fVar4;
+  _Dst[0x47] = -fVar5;
+  _Dst[0x48] = -fVar6;
+  fVar2 = pfVar12[3];
+  fVar3 = pfVar12[5];
+  fVar11 = *(float *)((int)((param_3 + 9 & 0xffffffff) << 3) + (int)pfVar12);
+  fVar7 = pfVar12[7];
+  fVar8 = pfVar12[8];
+  _Dst[0x4a] = pfVar12[4];
+  _Dst[0x4b] = fVar3;
+  _Dst[0x49] = fVar2;
+  fVar3 = *(float *)((int)pfVar12 + (int)((param_3 & 0xffffffff) << 3) + 0x4c);
+  _Dst[0x4c] = 0.0;
+  _Dst[0x4d] = 0.0;
+  _Dst[0x4e] = 1.0;
+  _Dst[0x4f] = 1.0;
+  fVar9 = pfVar12[4];
+  fVar10 = pfVar12[5];
+  _Dst[0x50] = 0.0;
+  _Dst[0x51] = 0.0;
+  _Dst[0x52] = 0.0;
+  _Dst[0x53] = 0.0;
+  *_Dst = fVar4;
+  _Dst[4] = fVar5;
+  _Dst[8] = fVar6;
+  _Dst[0xc] = -fVar11;
+  _Dst[1] = fVar2;
+  _Dst[5] = fVar9;
+  _Dst[9] = fVar10;
+  _Dst[0xd] = -fVar3;
+  _Dst[2] = -fVar1;
+  _Dst[6] = -fVar7;
+  _Dst[10] = -fVar8;
+  _Dst[0xe] = 0.0;
+  _Dst[3] = 0.0;
+  _Dst[7] = 0.0;
+  _Dst[0xb] = 0.0;
+  _Dst[0xf] = 1.0;
+  R_SetSunShadowPartitionProjectionMatrix(uVar13,param_2,param_3,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -196,11 +348,9 @@ void R_TransformAndBoundFrustumRays(undefined8 param_1,longlong param_2)
   dVar7 = (double)*(float *)(param_2 + 0x70);
   dVar8 = (double)*(float *)(param_2 + 0x68);
   if (dVar7 <= dVar8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d1df8,0xdd,0,0xffffffff821d1e80,dVar7,dVar8);
   }
   if ((double)*(float *)(iVar1 + 0x74) <= (double)*(float *)(iVar1 + 0x6c)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d1df8,0xde,0,0xffffffff821d1e4c,(double)*(float *)(iVar1 + 0x74),
                     (double)*(float *)(iVar1 + 0x6c));
   }
@@ -222,8 +372,11 @@ void R_SetSunShadowSinesAndBoundingArcEdge(void)
   uint *puVar6;
   ulonglong uVar7;
   uint uVar8;
+  double dVar9;
+  double dVar10;
   
   iVar3 = __savegprlr_24();
+  dVar9 = 0.0010000000474974513;
   pfVar5 = (float *)(iVar3 + 0x50);
   fVar1 = *(float *)(iVar3 + 0x34) * *(float *)(iVar3 + 0x48) -
           *(float *)(iVar3 + 0x4c) * *(float *)(iVar3 + 0x30);
@@ -277,14 +430,14 @@ void R_SetSunShadowSinesAndBoundingArcEdge(void)
   }
   if (0.001 <= fVar2) {
     uVar7 = 0;
+    dVar10 = -0.0010000000474974513;
     uVar8 = 0;
     iVar4 = 0xc;
     puVar6 = (uint *)(iVar3 + 0x7c);
     do {
-      if ((*pfVar5 <= 0.001) || (0.001 < *(float *)(iVar4 + 0x50 + iVar3))) {
-        if ((-0.001 <= *pfVar5) || (*(float *)(iVar4 + 0x50 + iVar3) < -0.001)) {
+      if (((double)*pfVar5 <= dVar9) || (dVar9 < (double)*(float *)(iVar4 + 0x50 + iVar3))) {
+        if ((dVar10 <= (double)*pfVar5) || ((double)*(float *)(iVar4 + 0x50 + iVar3) < dVar10)) {
           if (1 < (uVar7 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff821d1df8,0x105,0,0xffffffff821d1f80,uVar7,2);
           }
           puVar6 = puVar6 + 1;
@@ -303,15 +456,12 @@ void R_SetSunShadowSinesAndBoundingArcEdge(void)
       pfVar5 = pfVar5 + 1;
     } while (uVar8 < 4);
     if ((uVar7 & 0xffffffff) != 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d1df8,0x10b,0,0xffffffff821d1f38,uVar7,2);
     }
     if (*(int *)(iVar3 + 0x78) == -1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d1df8,0x10c,0,0xffffffff82000f98,0xffffffff821d1ef8);
     }
     if (*(int *)(iVar3 + 0x7c) == -1) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d1df8,0x10d,0,0xffffffff82000f98,0xffffffff821d1eb8);
     }
   }
@@ -415,11 +565,23 @@ void R_AddSunShadowClipPlanesAlongViewDir_Far
 
 // 82783D50  R_AddSunShadowClipPlanesForViewDir_Common  (gfx_d3d/r_sunshadow.cpp:320)
 
-void R_AddSunShadowClipPlanesForViewDir_Common(void)
+void R_AddSunShadowClipPlanesForViewDir_Common(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  uVar2 = extraout_f1;
+  if ((*(int *)(param_3 + 0x78) != -1) || (*(int *)(param_3 + 0x7c) != -1)) {
+    MyAssertHandler(0xffffffff821d1df8,0x141,0,0xffffffff82000f98,0xffffffff821d1fe0);
+  }
+  if (*(float *)(param_3 + 100) < -0.001) {
+    R_AddSunShadowClipPlanesAlongViewDir_Near(uVar2,uVar1);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -447,61 +609,662 @@ void R_AddSunShadowClipPlanesForViewDir_FadeByDistance(int param_1,int param_2)
 
 // 82783E38  R_AddSunShadowClipPlanesForFrustumSides  (gfx_d3d/r_sunshadow.cpp:346)
 
-void R_AddSunShadowClipPlanesForFrustumSides(void)
+void R_AddSunShadowClipPlanesForFrustumSides(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  float *pfVar6;
+  uint *puVar7;
+  int iVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  
+  pfVar6 = (float *)__savegprlr_23();
+  dVar17 = -0.0010000000474974513;
+  if (*(float *)((int)param_2 + 0x60) < -0.001) {
+    dVar18 = 1.0;
+    lVar14 = 0;
+    lVar13 = 0x24;
+    uVar9 = 0xc;
+    uVar10 = 0;
+    do {
+      lVar12 = lVar14;
+      if ((double)*(float *)(uVar9 + 0x50 + (int)param_2) < dVar17) {
+        puVar7 = (uint *)param_3;
+        if (9 < *puVar7) {
+          MyAssertHandler(0xffffffff821d1df8,0x167,0,0xffffffff821d2068,*puVar7,10);
+        }
+        if (9 < puVar7[1]) {
+          MyAssertHandler(0xffffffff821d1df8,0x168,0,0xffffffff821d20e0,puVar7[1],10);
+        }
+        lVar14 = ((ulonglong)*puVar7 + 1 & 0xfffffff) * 0x10 + param_3;
+        Vec3Cross(lVar13 + param_2,lVar12 + param_2,lVar14);
+        pfVar5 = (float *)lVar14;
+        fVar2 = pfVar5[1];
+        fVar3 = *pfVar5;
+        fVar4 = pfVar5[2];
+        dVar16 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+        dVar15 = dVar18;
+        if (-dVar16 < 0.0) {
+          dVar15 = dVar16;
+        }
+        fVar1 = (float)(dVar18 / dVar15);
+        *pfVar5 = fVar3 * fVar1;
+        pfVar5[1] = fVar2 * fVar1;
+        pfVar5[2] = fVar4 * fVar1;
+        pfVar5[3] = -(pfVar6[2] * fVar4 * fVar1 +
+                     pfVar6[1] * fVar2 * fVar1 + *pfVar6 * fVar3 * fVar1);
+        iVar8 = puVar7[1] + 0xb;
+        puVar7[iVar8 * 4] = (uint)*pfVar5;
+        puVar7[iVar8 * 4 + 1] = (uint)pfVar5[1];
+        puVar7[iVar8 * 4 + 2] = (uint)pfVar5[2];
+        puVar7[iVar8 * 4 + 3] = (uint)pfVar5[3];
+        *puVar7 = *puVar7 + 1;
+        puVar7[1] = puVar7[1] + 1;
+      }
+      uVar11 = uVar10 + 4;
+      lVar14 = lVar12 + 0xc;
+      lVar13 = lVar12;
+      uVar9 = uVar10;
+      uVar10 = uVar11;
+    } while (uVar11 < 0x10);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
 // 82783FE8  R_AddSunShadowClipPlanesForBoundingArc  (gfx_d3d/r_sunshadow.cpp:374)
 
-void R_AddSunShadowClipPlanesForBoundingArc(void)
+void R_AddSunShadowClipPlanesForBoundingArc
+               (undefined8 param_1,float *param_2,longlong param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  undefined8 uVar13;
+  double dVar14;
+  double dVar15;
+  float local_60;
+  float local_5c;
+  
   __savegprlr_27();
+  pfVar9 = (float *)__savefpr_28();
+  if (*param_4 != 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x17a,0,0xffffffff821d2224,*param_4,0);
+  }
+  if (param_4[1] != 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x17b,0,0xffffffff821d2200,param_4[1],0);
+  }
+  Vec2NormalizeTo(((ulonglong)*(uint *)((int)param_3 + 0x78) + 6 & 0x1fffffff) * 8 + param_3,
+                  &local_60);
+  fVar4 = -local_5c;
+  fVar1 = param_2[5];
+  fVar2 = param_2[3];
+  fVar3 = *param_2;
+  fVar6 = param_2[1] * fVar4 + local_60 * param_2[4];
+  dVar11 = (double)fVar6;
+  param_4[5] = (int)fVar6;
+  dVar15 = 0.5;
+  fVar2 = fVar3 * fVar4 + fVar2 * local_60;
+  dVar12 = (double)fVar2;
+  param_4[4] = (int)fVar2;
+  dVar14 = 4.0;
+  uVar5 = *(uint *)((int)param_3 + 0x7c);
+  fVar2 = pfVar9[1];
+  fVar4 = param_2[2] * fVar4 + fVar1 * local_60;
+  dVar10 = (double)fVar4;
+  fVar1 = *pfVar9;
+  fVar3 = pfVar9[2];
+  param_4[6] = (int)fVar4;
+  fVar4 = (ABS(local_5c) + ABS(local_60)) * param_2[0x16] * 0.5;
+  fVar1 = -(float)(dVar10 * (double)fVar3 +
+                  (double)(float)((double)fVar1 * dVar12 + (double)(float)((double)fVar2 * dVar11)))
+  ;
+  param_4[7] = (int)fVar1;
+  param_4[0x2f] = param_4[7];
+  param_4[7] = (int)(fVar1 + fVar4);
+  param_4[0x2f] = (int)(fVar4 * 4.0 + (float)param_4[0x2f]);
+  param_4[0x2c] = param_4[4];
+  param_4[0x2d] = param_4[5];
+  param_4[0x2e] = param_4[6];
+  Vec2NormalizeTo(dVar11,dVar10,dVar12,((ulonglong)uVar5 + 6 & 0x1fffffff) * 8 + param_3,&local_60);
+  fVar2 = -local_60;
+  fVar8 = *param_2 * local_5c + param_2[3] * fVar2;
+  fVar7 = param_2[1] * local_5c + fVar2 * param_2[4];
+  fVar1 = pfVar9[1];
+  fVar6 = param_2[2] * local_5c + param_2[5] * fVar2;
+  fVar2 = param_2[0x16];
+  fVar3 = *pfVar9;
+  fVar4 = pfVar9[2];
+  param_4[8] = (int)fVar8;
+  param_4[10] = (int)fVar6;
+  param_4[9] = (int)fVar7;
+  dVar12 = 0.0;
+  uVar13 = 0;
+  dVar11 = (double)(float)((double)((ABS(local_5c) + ABS(local_60)) * fVar2) * dVar15);
+  dVar10 = -(double)(fVar4 * fVar6 + fVar3 * fVar8 + fVar1 * fVar7);
+  param_4[0xb] = (int)(float)dVar10;
+  param_4[0x33] = param_4[0xb];
+  param_4[0xb] = (int)(float)(dVar10 + dVar11);
+  param_4[0x30] = param_4[8];
+  param_4[0x33] = (int)(float)(dVar11 * dVar14 + (double)(float)param_4[0x33]);
+  param_4[0x31] = param_4[9];
+  param_4[0x32] = param_4[10];
+  fVar4 = fVar4 * (float)param_4[6];
+  fVar1 = fVar3 * (float)param_4[4] + fVar1 * (float)param_4[5];
+  if ((float)param_4[7] + fVar4 + fVar1 <= 0.0) {
+    dVar10 = (double)((float)param_4[7] + fVar4 + fVar1);
+    MyAssertHandler(dVar10,0,0xffffffff821d1df8,0x18d,0,0xffffffff821d21a8,dVar10,0);
+  }
+  fVar1 = (float)param_4[0x31] * pfVar9[1] + *pfVar9 * (float)param_4[0x30];
+  if ((double)((float)param_4[0x33] + (float)param_4[0x32] * pfVar9[2] + fVar1) <= dVar12) {
+    dVar10 = (double)((float)param_4[0x33] + (float)param_4[0x32] * pfVar9[2] + fVar1);
+    MyAssertHandler(dVar10,uVar13,0xffffffff821d1df8,0x18e,0,0xffffffff821d2150,dVar10,uVar13);
+  }
+  *param_4 = 2;
+  param_4[1] = 2;
+  __restfpr_28();
+  __restgprlr_27();
+  return;
 }
 
 
 // 82784330  R_AddSunShadowClipPlaneForNearClipPoints  (gfx_d3d/r_sunshadow.cpp:406)
 
-void R_AddSunShadowClipPlaneForNearClipPoints(void)
+void R_AddSunShadowClipPlaneForNearClipPoints(undefined8 param_1,float *param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float local_30;
+  float local_2c;
+  
+  pfVar7 = (float *)__savegprlr_29();
+  if (9 < *(uint *)(param_3 + 4)) {
+    MyAssertHandler(0xffffffff821d1df8,0x19b,0,0xffffffff821d20e0,*(uint *)(param_3 + 4),10);
+  }
+  iVar5 = *(int *)(param_3 + 4);
+  local_30 = param_2[3] - param_2[1];
+  local_2c = *param_2 - param_2[2];
+  *(int *)(param_3 + 4) = iVar5 + 1;
+  pfVar6 = (float *)((iVar5 + 0xb) * 0x10 + param_3);
+  Vec2Normalize(&local_30);
+  fVar1 = *pfVar7;
+  fVar2 = pfVar7[1];
+  fVar3 = pfVar7[4];
+  fVar4 = *param_2;
+  pfVar6[2] = pfVar7[5] * local_2c + pfVar7[2] * local_30;
+  *pfVar6 = pfVar7[3] * local_2c + fVar1 * local_30;
+  pfVar6[1] = fVar3 * local_2c + fVar2 * local_30;
+  pfVar6[3] = (ABS(local_2c) + ABS(local_30)) * pfVar7[0x17] * 0.5 -
+              (param_2[1] * local_2c + fVar4 * local_30);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82784448  R_CullSunShadowClipPlane  (gfx_d3d/r_sunshadow.cpp:425)
+
+bool R_CullSunShadowClipPlane
+               (double param_1,int param_2,int param_3,int param_4,float *param_5,float *param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float *pfVar10;
+  
+  fVar1 = *param_5 - (float)((double)*param_6 * param_1);
+  fVar3 = param_5[1] - (float)((double)param_6[1] * param_1);
+  fVar4 = param_5[1] + (float)((double)param_6[1] * param_1);
+  fVar5 = param_5[2] - (float)((double)param_6[2] * param_1);
+  fVar2 = *param_5 + (float)((double)*param_6 * param_1);
+  fVar6 = param_5[2] + (float)((double)param_6[2] * param_1);
+  if (param_3 != param_4) {
+    pfVar10 = (float *)(param_3 * 0x10 + param_2 + 8);
+    do {
+      fVar8 = *pfVar10 * fVar5 + pfVar10[-2] * fVar1 + pfVar10[-1] * fVar3 + pfVar10[1];
+      fVar9 = *pfVar10 * fVar6 + pfVar10[-2] * fVar2 + pfVar10[-1] * fVar4 + pfVar10[1];
+      if (0.0 < fVar8) {
+        if (fVar9 <= 0.0) {
+          fVar7 = fVar8 - fVar9;
+          fVar4 = (fVar4 * fVar8 - fVar3 * fVar9) / fVar7;
+          fVar6 = (fVar6 * fVar8 - fVar5 * fVar9) / fVar7;
+          fVar2 = (fVar2 * fVar8 - fVar1 * fVar9) / fVar7;
+        }
+      }
+      else {
+        if (fVar9 <= 0.0) {
+          return true;
+        }
+        fVar7 = fVar9 - fVar8;
+        fVar3 = (fVar3 * fVar9 - fVar4 * fVar8) / fVar7;
+        fVar5 = (fVar5 * fVar9 - fVar6 * fVar8) / fVar7;
+        fVar1 = (fVar1 * fVar9 - fVar2 * fVar8) / fVar7;
+      }
+      param_3 = param_3 + 1;
+      pfVar10 = pfVar10 + 4;
+    } while (param_3 != param_4);
+  }
+  return (fVar4 - fVar3) * (fVar4 - fVar3) +
+         (fVar2 - fVar1) * (fVar2 - fVar1) + (fVar6 - fVar5) * (fVar6 - fVar5) <
+         (float)(param_1 * 0.019999999552965164) * (float)(param_1 * 0.019999999552965164);
 }
 
 
 // 82784598  R_AddSunShadowClipPlanesForMapBoundary  (gfx_d3d/r_sunshadow.cpp:467)
 
-void R_AddSunShadowClipPlanesForMapBoundary(void)
+void R_AddSunShadowClipPlanesForMapBoundary
+               (undefined8 param_1,int param_2,int param_3,ulonglong param_4,longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
+  int iVar7;
+  float fVar8;
+  float fVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  char cVar17;
+  int iVar18;
+  ulonglong uVar19;
+  longlong lVar20;
+  undefined4 *puVar21;
+  uint uVar22;
+  float *pfVar23;
+  uint uVar24;
+  uint uVar25;
+  bool bVar26;
+  double dVar27;
+  float local_f0 [4];
+  undefined4 local_e0;
+  undefined4 local_dc;
+  undefined4 local_d8;
+  undefined4 local_d4;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  float local_c4;
+  undefined4 local_c0;
+  undefined4 local_bc;
+  undefined4 local_b8;
+  undefined4 local_b4;
+  
   __savegprlr_16();
+  iVar16 = __savefpr_27();
+  bVar26 = *(float *)(param_2 + 0x74) - *(float *)(param_2 + 0x6c) <
+           *(float *)(param_2 + 0x70) - *(float *)(param_2 + 0x68);
+  iVar11 = (int)param_4;
+  iVar13 = (iVar11 + 9) * 2;
+  fVar3 = *(float *)((int)((param_4 + 0x16 & 0xffffffff) << 2) + iVar16);
+  fVar8 = (float)*(uint *)(param_3 + 8) * fVar3;
+  fVar9 = *(float *)((bVar26 + 0x10) * 4 + iVar16) * fVar3 -
+          *(float *)((iVar13 + (uint)bVar26) * 4 + iVar16);
+  dVar27 = (double)(fVar8 * 0.5);
+  uVar22 = (uint)(dVar27 <= (double)fVar9);
+  uVar24 = bVar26 ^ 1;
+  uVar25 = uVar22 ^ 1;
+  pfVar23 = (float *)((uint)bVar26 * 0xc + iVar16);
+  fVar1 = pfVar23[1];
+  fVar2 = pfVar23[2];
+  local_f0[uVar22 * 4] = *pfVar23;
+  local_f0[uVar22 * 4 + 2] = fVar2;
+  local_f0[uVar22 * 4 + 1] = fVar1;
+  local_f0[uVar22 * 4 + 3] = fVar9;
+  fVar1 = *(float *)((uVar24 + 0x10) * 4 + iVar16);
+  fVar2 = *(float *)((iVar13 + uVar24) * 4 + iVar16);
+  local_f0[uVar25 * 4] = -local_f0[uVar22 * 4];
+  fVar2 = fVar1 * fVar3 - fVar2;
+  local_f0[uVar25 * 4 + 1] = -local_f0[uVar22 * 4 + 1];
+  local_f0[uVar25 * 4 + 2] = -local_f0[uVar22 * 4 + 2];
+  local_f0[uVar25 * 4 + 3] = -local_f0[uVar22 * 4 + 3];
+  local_f0[uVar25 * 4 + 3] = fVar8 + local_f0[uVar25 * 4 + 3];
+  uVar22 = (dVar27 <= (double)fVar2) + 2;
+  iVar13 = uVar24 * 0xc + iVar16;
+  uVar25 = uVar22 ^ 1;
+  fVar1 = *(float *)(iVar13 + 4);
+  local_f0[uVar22 * 4] = *(float *)(uVar24 * 0xc + iVar16);
+  local_f0[uVar22 * 4 + 1] = fVar1;
+  local_f0[uVar22 * 4 + 2] = *(float *)(iVar13 + 8);
+  local_f0[uVar22 * 4 + 3] = fVar2;
+  local_f0[uVar25 * 4] = -local_f0[uVar22 * 4];
+  iVar13 = (int)((param_4 & 0x3fffffff) << 2);
+  iVar10 = (int)param_5;
+  uVar19 = (ulonglong)*(uint *)(iVar13 + iVar10) + 4;
+  local_f0[uVar25 * 4 + 1] = -local_f0[uVar22 * 4 + 1];
+  local_f0[uVar25 * 4 + 2] = -local_f0[uVar22 * 4 + 2];
+  local_f0[uVar25 * 4 + 3] = -local_f0[uVar22 * 4 + 3];
+  local_f0[uVar25 * 4 + 3] = fVar8 + local_f0[uVar25 * 4 + 3];
+  if (10 < (uVar19 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821d1df8,0x209,0,0xffffffff821d2248,uVar19,10);
+  }
+  iVar7 = *(int *)(iVar13 + iVar10);
+  iVar18 = 0;
+  if (iVar7 != 0) {
+    do {
+      pfVar23 = (float *)((iVar11 * 10 + iVar18 + 1) * 0x10 + iVar10);
+      if (ABS(pfVar23[2] * *(float *)(iVar16 + 0x20) +
+              pfVar23[1] * *(float *)(iVar16 + 0x1c) + *(float *)(iVar16 + 0x18) * *pfVar23) < 0.001
+         ) {
+        uVar25 = 0;
+        lVar20 = ZEXT48(&stack0x00000000) - 0xf0;
+        do {
+          cVar17 = R_CullSunShadowClipPlane
+                             (dVar27,(param_4 + (param_4 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20 +
+                                     param_5 + 0x10);
+          if (cVar17 == '\0') {
+            puVar21 = (undefined4 *)lVar20;
+            uVar4 = puVar21[1];
+            uVar5 = puVar21[2];
+            uVar6 = puVar21[3];
+            iVar7 = (iVar11 * 10 + *(int *)(iVar13 + iVar10) + 1) * 0x10;
+            iVar16 = iVar7 + iVar10;
+            *(undefined4 *)(iVar7 + iVar10) = *puVar21;
+            *(undefined4 *)(iVar16 + 4) = uVar4;
+            *(undefined4 *)(iVar16 + 8) = uVar5;
+            *(undefined4 *)(iVar16 + 0xc) = uVar6;
+            *(int *)(iVar13 + iVar10) = *(int *)(iVar13 + iVar10) + 1;
+          }
+          uVar25 = uVar25 + 1;
+          lVar20 = lVar20 + 0x10;
+        } while (uVar25 < 4);
+        __restfpr_27();
+        __restgprlr_16();
+        return;
+      }
+      iVar18 = iVar18 + 1;
+    } while (iVar18 != iVar7);
+  }
+  *(int *)(iVar13 + iVar10) = iVar7 + 4;
+  iVar7 = iVar11 * 10 + iVar7;
+  iVar16 = (iVar7 + 1) * 0x10;
+  iVar18 = (iVar7 + 2) * 0x10;
+  iVar13 = iVar16 + iVar10;
+  iVar11 = iVar18 + iVar10;
+  if (local_f0[3] < local_c4) {
+    iVar14 = (iVar7 + 3) * 0x10;
+    iVar15 = (iVar7 + 4) * 0x10;
+    iVar7 = iVar14 + iVar10;
+    iVar12 = iVar15 + iVar10;
+    *(float *)(iVar16 + iVar10) = local_f0[0];
+    *(float *)(iVar13 + 4) = local_f0[1];
+    *(float *)(iVar13 + 8) = local_f0[2];
+    *(float *)(iVar13 + 0xc) = local_f0[3];
+    *(undefined4 *)(iVar18 + iVar10) = local_e0;
+    *(undefined4 *)(iVar11 + 4) = local_dc;
+    *(undefined4 *)(iVar11 + 8) = local_d8;
+    *(undefined4 *)(iVar11 + 0xc) = local_d4;
+    *(undefined4 *)(iVar14 + iVar10) = local_d0;
+    *(undefined4 *)(iVar7 + 4) = local_cc;
+    *(undefined4 *)(iVar7 + 8) = local_c8;
+    *(float *)(iVar7 + 0xc) = local_c4;
+    *(undefined4 *)(iVar15 + iVar10) = local_c0;
+    *(undefined4 *)(iVar12 + 4) = local_bc;
+    *(undefined4 *)(iVar12 + 8) = local_b8;
+    *(undefined4 *)(iVar12 + 0xc) = local_b4;
+    __restfpr_27();
+    __restgprlr_16();
+    return;
+  }
+  iVar14 = (iVar7 + 3) * 0x10;
+  iVar15 = (iVar7 + 4) * 0x10;
+  iVar7 = iVar14 + iVar10;
+  iVar12 = iVar15 + iVar10;
+  *(undefined4 *)(iVar16 + iVar10) = local_d0;
+  *(undefined4 *)(iVar13 + 4) = local_cc;
+  *(undefined4 *)(iVar13 + 8) = local_c8;
+  *(float *)(iVar13 + 0xc) = local_c4;
+  *(undefined4 *)(iVar18 + iVar10) = local_c0;
+  *(undefined4 *)(iVar11 + 4) = local_bc;
+  *(undefined4 *)(iVar11 + 8) = local_b8;
+  *(undefined4 *)(iVar11 + 0xc) = local_b4;
+  *(float *)(iVar14 + iVar10) = local_f0[0];
+  *(float *)(iVar7 + 4) = local_f0[1];
+  *(float *)(iVar7 + 8) = local_f0[2];
+  *(float *)(iVar7 + 0xc) = local_f0[3];
+  *(undefined4 *)(iVar15 + iVar10) = local_e0;
+  *(undefined4 *)(iVar12 + 4) = local_dc;
+  *(undefined4 *)(iVar12 + 8) = local_d8;
+  *(undefined4 *)(iVar12 + 0xc) = local_d4;
+  __restfpr_27();
+  __restgprlr_16();
+  return;
 }
 
 
 // 82784B18  R_AddSunShadowClipPlaneForFrustumEdge  (gfx_d3d/r_sunshadow.cpp:575)
 
-void R_AddSunShadowClipPlaneForFrustumEdge(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void R_AddSunShadowClipPlaneForFrustumEdge
+               (undefined8 param_1,float *param_2,int param_3,ulonglong param_4,ulonglong param_5,
+               undefined8 param_6,int *param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float *pfVar6;
+  int iVar7;
+  float *pfVar8;
+  double extraout_f1;
+  double dVar9;
+  float local_60;
+  float local_5c;
+  int local_50;
+  float local_4c;
+  float local_48;
+  float local_44;
+  
+  pfVar6 = (float *)__savegprlr_28();
+  iVar7 = (int)((param_4 + 6 & 0x1fffffff) << 3);
+  pfVar8 = (float *)(iVar7 + param_3);
+  local_60 = *(float *)((int)((param_4 & 0xffffffff) << 3) + param_3 + 0x34) -
+             *(float *)((int)((param_5 & 0xffffffff) << 3) + param_3 + 0x34);
+  local_5c = *(float *)((int)((param_5 + 6 & 0xffffffff) << 3) + param_3) -
+             *(float *)(iVar7 + param_3);
+  dVar9 = extraout_f1;
+  Vec2Normalize(&local_60);
+  fVar1 = param_2[3];
+  fVar2 = param_2[1];
+  fVar3 = param_2[2];
+  fVar4 = *pfVar8;
+  fVar5 = *param_2;
+  iVar7 = *param_7 + 1;
+  *param_7 = *param_7 + 1;
+  fVar1 = fVar5 * local_60 + local_5c * fVar1;
+  local_4c = param_2[4] * local_5c + fVar2 * local_60;
+  local_48 = param_2[5] * local_5c + fVar3 * local_60;
+  local_44 = -(pfVar6[2] * local_48 + pfVar6[1] * local_4c + *pfVar6 * fVar1);
+  fVar2 = -(ABS(local_5c + local_60) * param_2[0x16] * 0.5 -
+           (float)((double)(pfVar8[1] * local_5c + fVar4 * local_60) * (double)param_2[10] + dVar9))
+  ;
+  param_7[iVar7 * 4 + 3] = (int)local_44;
+  param_7[iVar7 * 4 + 3] = (int)((float)param_7[iVar7 * 4 + 3] - fVar2);
+  param_7[iVar7 * 4] = local_50;
+  param_7[iVar7 * 4 + 1] = (int)local_4c;
+  param_7[iVar7 * 4 + 2] = (int)local_48;
+  iVar7 = param_7[1] + 0xb;
+  param_7[1] = param_7[1] + 1;
+  param_7[iVar7 * 4] = (int)fVar1;
+  param_7[iVar7 * 4 + 1] = (int)local_4c;
+  param_7[iVar7 * 4 + 2] = (int)local_48;
+  param_7[iVar7 * 4 + 3] = (int)local_44;
+  param_7[iVar7 * 4 + 3] = (int)-(fVar2 * 4.0 - (float)param_7[iVar7 * 4 + 3]);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82784CD0  R_AddSunShadowClipPlanesForFrustumBoundary  (gfx_d3d/r_sunshadow.cpp:603)
 
-void R_AddSunShadowClipPlanesForFrustumBoundary(void)
+void R_AddSunShadowClipPlanesForFrustumBoundary
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  float *pfVar8;
+  float fVar9;
+  float fVar10;
+  uint uVar11;
+  undefined8 uVar12;
+  int iVar13;
+  int iVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  float *pfVar17;
+  float *pfVar19;
+  ulonglong uVar18;
+  bool bVar20;
+  double dVar21;
+  float local_60 [4];
+  float local_50 [20];
+  
+  uVar12 = __savegprlr_26();
+  iVar7 = (int)param_3;
+  iVar13 = *(int *)(iVar7 + 0x78);
+  if (iVar13 == -1) {
+    dVar21 = 0.0;
+    if (*(float *)(iVar7 + 100) <= -*(float *)(iVar7 + 0x60)) {
+      R_AddSunShadowClipPlaneForFrustumEdge(0);
+      R_AddSunShadowClipPlaneForFrustumEdge(dVar21,uVar12,param_2,param_3,3,2);
+      R_AddSunShadowClipPlaneForFrustumEdge(dVar21,uVar12,param_2,param_3,2,1);
+      iVar14 = 3;
+      iVar13 = 0;
+    }
+    else {
+      R_AddSunShadowClipPlaneForFrustumEdge(0);
+      R_AddSunShadowClipPlaneForFrustumEdge(dVar21,uVar12,param_2,param_3,2,3);
+      R_AddSunShadowClipPlaneForFrustumEdge(dVar21,uVar12,param_2,param_3,1,2);
+      iVar14 = 0;
+      iVar13 = 3;
+    }
+    goto LAB_82784f80;
+  }
+  iVar14 = *(int *)(iVar7 + 0x7c);
+  pfVar8 = (float *)((*(int *)(iVar7 + 0x84) + 6) * 8 + iVar7);
+  pfVar17 = (float *)((iVar14 + 6) * 8 + iVar7);
+  pfVar19 = (float *)((iVar13 + 6) * 8 + iVar7);
+  fVar1 = pfVar8[1];
+  fVar2 = *pfVar8;
+  pfVar8 = (float *)((*(int *)(iVar7 + 0x80) + 6) * 8 + iVar7);
+  fVar3 = *pfVar17;
+  local_50[0] = *pfVar19;
+  fVar10 = fVar3 - local_50[0];
+  local_50[1] = pfVar19[1];
+  fVar4 = pfVar17[1];
+  local_50[3] = fVar1 - local_50[1];
+  fVar5 = pfVar8[1];
+  fVar9 = fVar4 - local_50[1];
+  local_50[1] = fVar5 - local_50[1];
+  fVar6 = *pfVar8;
+  local_50[2] = fVar2 - local_50[0];
+  local_50[0] = fVar6 - local_50[0];
+  local_60[0] = fVar9 * local_50[0] - local_50[1] * fVar10;
+  local_60[1] = local_50[2] * fVar9 - local_50[3] * fVar10;
+  fVar10 = SQRT(fVar9 * fVar9 + fVar10 * fVar10);
+  fVar9 = fVar10 * 0.001;
+  bVar20 = local_60[0] < local_60[1];
+  uVar18 = (ulonglong)bVar20;
+  if (local_60[bVar20] < fVar9) {
+    dVar21 = (double)((*(float *)((int)param_2 + 0x24) / fVar10) * local_60[bVar20]);
+    if (dVar21 < 0.0) {
+      dVar21 = 0.0;
+    }
+    goto LAB_82784f80;
+  }
+  uVar15 = 1 - uVar18;
+  dVar21 = 0.0;
+  if (*(float *)((int)local_60 + (int)((uVar15 & 0xffffffff) << 2)) <= fVar9) {
+LAB_82784fe0:
+    iVar14 = (bVar20 + 0x20) * 4;
+    R_AddSunShadowClipPlaneForFrustumEdge
+              (0,uVar12,param_2,param_3,iVar13,*(undefined4 *)(iVar14 + iVar7),uVar15,param_4);
+    iVar13 = *(int *)(iVar14 + iVar7);
+  }
+  else {
+    iVar14 = (int)uVar15;
+    uVar11 = (uint)bVar20;
+    if (local_50[uVar11 * 2 + 1] * local_50[iVar14 * 2] -
+        local_50[iVar14 * 2 + 1] * local_50[uVar11 * 2] <= 0.0) {
+      local_50[0] = fVar6 - fVar3;
+      local_50[2] = fVar2 - fVar3;
+      local_50[1] = fVar5 - fVar4;
+      local_50[3] = fVar1 - fVar4;
+      uVar16 = uVar15;
+      if (local_50[iVar14 * 2 + 1] * local_50[uVar11 * 2] -
+          local_50[uVar11 * 2 + 1] * local_50[iVar14 * 2] <= 0.0) goto LAB_82784fe0;
+    }
+    else {
+      uVar16 = 1 - uVar15;
+      uVar18 = uVar15;
+    }
+    iVar13 = (int)((uVar18 + 0x20 & 0xffffffff) << 2);
+    iVar14 = (int)((uVar16 + 0x20 & 0xffffffff) << 2);
+    R_AddSunShadowClipPlaneForFrustumEdge
+              (0,uVar12,param_2,param_3,*(undefined4 *)(iVar13 + iVar7),
+               *(undefined4 *)(iVar14 + iVar7),uVar16,param_4);
+    R_AddSunShadowClipPlaneForFrustumEdge
+              (dVar21,uVar12,param_2,param_3,*(undefined4 *)(iVar7 + 0x78),
+               *(undefined4 *)(iVar13 + iVar7));
+    iVar13 = *(int *)(iVar14 + iVar7);
+  }
+  iVar14 = *(int *)(iVar7 + 0x7c);
+LAB_82784f80:
+  R_AddSunShadowClipPlaneForFrustumEdge(dVar21,uVar12,param_2,param_3,iVar13,iVar14);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -547,11 +1310,65 @@ void R_SetupSunShadowMapProjection(int param_1,int param_2,uint *param_3,float *
 
 // 82785138  R_SetSnappedSunShadowOrg  (gfx_d3d/r_sunshadow.cpp:758)
 
-void R_SetSnappedSunShadowOrg(void)
+void R_SetSnappedSunShadowOrg(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  int iVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  pfVar3 = (float *)__savegprlr_29();
+  dVar7 = (double)*(float *)((int)((param_2 + 0x16 & 0xffffffff) << 2) + (int)pfVar3);
+  if (0.0 < *(float *)(DAT_845aa5cc + 0xc)) {
+    dVar6 = (double)(float)(1.0 / dVar7);
+    dVar5 = -(double)((float)*(uint *)(param_3 + 8) * 0.5 - 0.5);
+    dVar4 = floor((double)(float)(dVar6 * (double)(pfVar3[2] * pfVar3[0xd] +
+                                                  pfVar3[1] * pfVar3[0xc] + pfVar3[0xb] * *pfVar3)))
+    ;
+    *(float *)((int)((param_2 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
+         (float)((double)(float)((double)(pfVar3[0x10] + (float)dVar4) + dVar5) * dVar7);
+    dVar4 = floor((double)(float)(dVar6 * (double)(pfVar3[5] * pfVar3[0xd] +
+                                                  pfVar3[4] * pfVar3[0xc] + pfVar3[0xb] * pfVar3[3])
+                                 ));
+    *(float *)((int)pfVar3 + (int)((param_2 & 0xffffffff) << 3) + 0x4c) =
+         (float)((double)(float)((double)(pfVar3[0x11] + (float)dVar4) + dVar5) * dVar7);
+    __restgprlr_29();
+    return;
+  }
+  fVar1 = *(float *)(DAT_845aa808 + 0xc);
+  if ((*(float *)(DAT_845aa808 + 0x14) * *(float *)(DAT_845aa808 + 0x14) +
+       fVar1 * fVar1 + *(float *)(DAT_845aa808 + 0x10) * *(float *)(DAT_845aa808 + 0x10) != 0.0) &&
+     (((param_2 & 0xffffffff) == 1 || (*(char *)(DAT_845aa748 + 0xc) != '\0')))) {
+    dVar6 = (double)(float)(1.0 / dVar7);
+    dVar5 = -(double)((float)*(uint *)(param_3 + 8) * 0.5 - 0.5);
+    dVar4 = floor((double)(float)(dVar6 * (double)(*(float *)(DAT_845aa808 + 0x14) * pfVar3[2] +
+                                                  *(float *)(DAT_845aa808 + 0x10) * pfVar3[1] +
+                                                  *(float *)(DAT_845aa808 + 0xc) * *pfVar3)));
+    iVar2 = DAT_845aa808;
+    *(float *)((int)((param_2 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
+         (float)((double)(float)((double)(pfVar3[0x10] + (float)dVar4) + dVar5) * dVar7);
+    dVar4 = floor((double)(float)(dVar6 * (double)(pfVar3[5] * *(float *)(iVar2 + 0x14) +
+                                                  pfVar3[4] * *(float *)(iVar2 + 0x10) +
+                                                  pfVar3[3] * *(float *)(iVar2 + 0xc))));
+    *(float *)((int)pfVar3 + (int)((param_2 & 0xffffffff) << 3) + 0x4c) =
+         (float)((double)(float)((double)(pfVar3[0x11] + (float)dVar4) + dVar5) * dVar7);
+    __restgprlr_29();
+    return;
+  }
+  dVar5 = (double)(float)(1.0 / dVar7);
+  dVar4 = floor((double)(float)((double)pfVar3[0xe] * dVar5));
+  dVar6 = 0.5;
+  *(float *)((int)((param_2 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
+       (float)((double)((float)dVar4 + 0.5) * dVar7);
+  dVar4 = floor((double)(float)((double)pfVar3[0xf] * dVar5));
+  *(float *)((int)pfVar3 + (int)((param_2 & 0xffffffff) << 3) + 0x4c) =
+       (float)((double)(float)((double)(float)dVar4 + dVar6) * dVar7);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -575,6 +1392,78 @@ void R_GetSunShadowMapBoundingRect(int param_1,int param_2,int param_3,float *pa
   param_4[2] = fVar3 + fVar1;
   param_4[3] = fVar4 + fVar1;
   return;
+}
+
+
+// 82785458  R_GetFarSunShadowCullingRectangles  (gfx_d3d/r_sunshadow.cpp:808)
+
+int R_GetFarSunShadowCullingRectangles(int param_1,int param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  int iVar12;
+  float *pfVar13;
+  
+  fVar1 = *(float *)(param_1 + 0x58);
+  fVar3 = -(*(float *)(param_1 + 0x40) * fVar1 - *(float *)(param_1 + 0x48));
+  fVar2 = *(float *)(param_1 + 0x5c);
+  fVar4 = -(*(float *)(param_1 + 0x44) * fVar1 - *(float *)(param_1 + 0x4c));
+  fVar8 = -(fVar2 * *(float *)(param_1 + 0x44) - *(float *)(param_1 + 0x54));
+  fVar11 = -(fVar2 * *(float *)(param_1 + 0x40) - *(float *)(param_1 + 0x50));
+  iVar12 = 1;
+  fVar1 = (float)*(uint *)(param_2 + 8) * fVar1;
+  fVar2 = fVar2 * (float)*(uint *)(param_2 + 8);
+  fVar6 = fVar1 * 0.0625;
+  fVar5 = fVar1 + fVar4;
+  fVar1 = fVar1 + fVar3;
+  fVar7 = fVar2 * 0.0625;
+  fVar10 = fVar11 + fVar7;
+  fVar9 = fVar8 + fVar7;
+  fVar11 = (fVar2 + fVar11) - fVar7;
+  fVar7 = (fVar2 + fVar8) - fVar7;
+  param_3[2] = fVar1 - fVar6;
+  param_3[1] = fVar4 + fVar6;
+  *param_3 = fVar3 + fVar6;
+  param_3[3] = fVar5 - fVar6;
+  if (fVar10 <= fVar3) {
+    if (fVar1 <= fVar11) goto LAB_8278554c;
+    param_3[6] = fVar1;
+    param_3[4] = fVar11;
+  }
+  else {
+    param_3[6] = fVar10;
+    param_3[4] = fVar3;
+  }
+  param_3[5] = fVar4;
+  iVar12 = 2;
+  param_3[7] = fVar5;
+LAB_8278554c:
+  if (fVar9 <= fVar4) {
+    if (fVar5 <= fVar7) {
+      return iVar12;
+    }
+    pfVar13 = param_3 + iVar12 * 4;
+    pfVar13[1] = fVar7;
+    param_3[iVar12 * 4 + 3] = fVar5;
+  }
+  else {
+    pfVar13 = param_3 + iVar12 * 4;
+    pfVar13[1] = fVar4;
+    param_3[iVar12 * 4 + 3] = fVar9;
+  }
+  *pfVar13 = fVar3;
+  param_3[iVar12 * 4 + 2] = fVar1;
+  return iVar12 + 1;
 }
 
 
@@ -676,7 +1565,6 @@ void R_GetRayDistInsideRectangleArray
   iVar2 = (int)(uVar4 - 0xd0);
   *(BADSPACEBASE **)iVar2 = register0x0000000c;
   if (((param_4 & 0xffffffff) == 0) || (3 < (param_4 & 0xffffffff))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d1df8,0x381,0,0xffffffff821d22e0,param_4,1,3);
   }
   uVar11 = 0;
@@ -712,105 +1600,364 @@ void R_GetRayDistInsideRectangleArray
       }
       uVar7 = uVar7 + 1;
     } while ((uVar7 & 0xffffffff) < (param_4 & 0xffffffff));
-    if (((uVar11 & 0xffffffff) != 0) && ((uVar11 & 0xffffffff) <= (param_4 & 0xffffffff))) {
-      if (dVar14 < (double)*(float *)(iVar2 + 0x60)) {
-        __restgprlr_25(0);
-        return;
-      }
-      uVar7 = 1;
-      *param_5 = *(float *)(iVar2 + 100);
-      if (1 < (uVar11 & 0xffffffff)) {
-        if (3 < (int)uVar11 + -1) {
-          lVar6 = uVar4 - 0x6c;
-          do {
-            pfVar10 = (float *)lVar6;
-            if ((float)((double)*pfVar10 + dVar14) <= pfVar10[1]) goto LAB_82785954;
-            dVar13 = (double)pfVar10[2];
-            fVar1 = pfVar10[3];
-            dVar12 = (double)*param_5;
-            if ((float)((double)*param_5 - dVar13) < 0.0) {
-              dVar12 = dVar13;
-            }
-            *param_5 = (float)dVar12;
-            if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
-            dVar13 = (double)pfVar10[4];
-            fVar1 = pfVar10[5];
-            if ((float)(dVar12 - dVar13) < 0.0) {
-              dVar12 = dVar13;
-            }
-            *param_5 = (float)dVar12;
-            if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
-            dVar13 = (double)pfVar10[6];
-            fVar1 = pfVar10[7];
-            if ((float)(dVar12 - dVar13) < 0.0) {
-              dVar12 = dVar13;
-            }
-            *param_5 = (float)dVar12;
-            if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
-            lVar6 = lVar6 + 0x20;
-            uVar7 = uVar7 + 4;
-            if ((float)(dVar12 - (double)*(float *)lVar6) < 0.0) {
-              dVar12 = (double)*(float *)lVar6;
-            }
-            *param_5 = (float)dVar12;
-          } while ((uVar7 & 0xffffffff) < (uVar11 - 3 & 0xffffffff));
+    if (((uVar11 & 0xffffffff) != 0) && ((uVar11 & 0xffffffff) <= (param_4 & 0xffffffff)))
+    goto LAB_82785824;
+  }
+  MyAssertHandler(0xffffffff821d1df8,0x392,0,0xffffffff821d22a8,uVar11,1,param_4);
+LAB_82785824:
+  if (dVar14 < (double)*(float *)(iVar2 + 0x60)) {
+    __restgprlr_25(0);
+    return;
+  }
+  uVar7 = 1;
+  *param_5 = *(float *)(iVar2 + 100);
+  if (1 < (uVar11 & 0xffffffff)) {
+    if (3 < (int)uVar11 + -1) {
+      lVar6 = uVar4 - 0x6c;
+      do {
+        pfVar10 = (float *)lVar6;
+        if ((float)((double)*pfVar10 + dVar14) <= pfVar10[1]) goto LAB_82785954;
+        dVar13 = (double)pfVar10[2];
+        fVar1 = pfVar10[3];
+        dVar12 = (double)*param_5;
+        if ((float)((double)*param_5 - dVar13) < 0.0) {
+          dVar12 = dVar13;
         }
-        if ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-          lVar6 = (uVar7 & 0x1fffffff) * 8 + (uVar4 - 0xd0) + 0x5c;
-          do {
-            if ((float)((double)*(float *)lVar6 + dVar14) <= ((float *)lVar6)[1]) break;
-            uVar7 = uVar7 + 1;
-            lVar6 = lVar6 + 8;
-            fVar1 = *param_5;
-            if (*param_5 - *(float *)lVar6 < 0.0) {
-              fVar1 = *(float *)lVar6;
-            }
-            *param_5 = fVar1;
-          } while ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff));
+        *param_5 = (float)dVar12;
+        if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
+        dVar13 = (double)pfVar10[4];
+        fVar1 = pfVar10[5];
+        if ((float)(dVar12 - dVar13) < 0.0) {
+          dVar12 = dVar13;
         }
-      }
-LAB_82785954:
-      fVar1 = param_5[1];
-      if (*param_5 - param_5[1] < 0.0) {
+        *param_5 = (float)dVar12;
+        if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
+        dVar13 = (double)pfVar10[6];
+        fVar1 = pfVar10[7];
+        if ((float)(dVar12 - dVar13) < 0.0) {
+          dVar12 = dVar13;
+        }
+        *param_5 = (float)dVar12;
+        if ((float)(dVar13 + dVar14) <= fVar1) goto LAB_82785954;
+        lVar6 = lVar6 + 0x20;
+        uVar7 = uVar7 + 4;
+        if ((float)(dVar12 - (double)*(float *)lVar6) < 0.0) {
+          dVar12 = (double)*(float *)lVar6;
+        }
+        *param_5 = (float)dVar12;
+      } while ((uVar7 & 0xffffffff) < (uVar11 - 3 & 0xffffffff));
+    }
+    if ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+      lVar6 = (uVar7 & 0x1fffffff) * 8 + (uVar4 - 0xd0) + 0x5c;
+      do {
+        if ((float)((double)*(float *)lVar6 + dVar14) <= ((float *)lVar6)[1]) break;
+        uVar7 = uVar7 + 1;
+        lVar6 = lVar6 + 8;
         fVar1 = *param_5;
-      }
-      param_5[1] = fVar1;
-      __restgprlr_25(1);
-      return;
+        if (*param_5 - *(float *)lVar6 < 0.0) {
+          fVar1 = *(float *)lVar6;
+        }
+        *param_5 = fVar1;
+      } while ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff));
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff821d1df8,0x392,0,0xffffffff821d22a8,uVar11,1,param_4);
+LAB_82785954:
+  fVar1 = param_5[1];
+  if (*param_5 - param_5[1] < 0.0) {
+    fVar1 = *param_5;
+  }
+  param_5[1] = fVar1;
+  __restgprlr_25(1);
+  return;
 }
 
 
 // 82785978  R_IsEdgeContainedInRectangleArray  (gfx_d3d/r_sunshadow.cpp:927)
 
-void R_IsEdgeContainedInRectangleArray(void)
+void R_IsEdgeContainedInRectangleArray
+               (undefined8 param_1,float *param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  float *pfVar7;
+  undefined8 uVar6;
+  ulonglong uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
+  uVar5 = ZEXT48(&stack0x00000000);
+  pfVar7 = (float *)__savegprlr_29();
+  iVar3 = (int)(uVar5 - 0xb0);
+  *(BADSPACEBASE **)iVar3 = register0x0000000c;
+  fVar1 = param_2[1];
+  fVar2 = pfVar7[1];
+  *(float *)(iVar3 + 0x50) = *param_2 - *pfVar7;
+  *(float *)(iVar3 + 0x54) = fVar1 - fVar2;
+  dVar13 = (double)Vec2Normalize(uVar5 - 0x60);
+  if (((param_4 & 0xffffffff) == 0) || (3 < (param_4 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff821d1df8,0x3ad,0,0xffffffff821d22e0,param_4,1,3);
+  }
+  uVar8 = 0;
+  if ((param_4 & 0xffffffff) != 0) {
+    lVar9 = uVar5 - 0x58;
+    dVar15 = 0.009999999776482582;
+    do {
+      R_GetRayDistRangeInsideSingleRectangle(pfVar7,uVar5 - 0x60,param_3,uVar5 - 0x58);
+      fVar1 = *(float *)(iVar3 + 0x58);
+      if (((double)fVar1 < (double)*(float *)(iVar3 + 0x5c)) &&
+         (dVar15 <= (double)*(float *)(iVar3 + 0x5c))) {
+        uVar10 = uVar8;
+        if ((uVar8 & 0xffffffff) != 0) {
+          lVar11 = lVar9 + 0x10;
+          do {
+            iVar4 = (int)lVar11;
+            if ((double)*(float *)(iVar4 + -0x10) <= (double)fVar1) break;
+            uVar10 = uVar10 - 1;
+            lVar11 = lVar11 + -8;
+            *(undefined8 *)lVar11 = *(undefined8 *)(iVar4 + -0x10);
+          } while (uVar10 != 0);
+        }
+        uVar8 = uVar8 + 1;
+        lVar9 = lVar9 + 8;
+        *(undefined8 *)((int)((uVar10 & 0xffffffff) << 3) + iVar3 + 0x60) =
+             *(undefined8 *)(iVar3 + 0x58);
+      }
+      param_4 = param_4 - 1;
+      param_3 = param_3 + 0x10;
+    } while (param_4 != 0);
+    if (((uVar8 & 0xffffffff) != 0) && ((double)*(float *)(iVar3 + 0x60) <= dVar15)) {
+      dVar12 = (double)*(float *)(iVar3 + 100);
+      uVar10 = 1;
+      if (1 < (uVar8 & 0xffffffff)) {
+        if (3 < (int)uVar8 + -1) {
+          lVar9 = uVar5 - 0x4c;
+          do {
+            pfVar7 = (float *)lVar9;
+            if ((float)((double)*pfVar7 + dVar15) <= pfVar7[1]) goto LAB_82785b90;
+            dVar14 = (double)pfVar7[2];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
+            }
+            if ((float)(dVar14 + dVar15) <= pfVar7[3]) goto LAB_82785b90;
+            dVar14 = (double)pfVar7[4];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
+            }
+            if ((float)(dVar14 + dVar15) <= pfVar7[5]) goto LAB_82785b90;
+            dVar14 = (double)pfVar7[6];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
+            }
+            if ((float)(dVar14 + dVar15) <= pfVar7[7]) goto LAB_82785b90;
+            lVar9 = lVar9 + 0x20;
+            uVar10 = uVar10 + 4;
+            if ((float)(dVar12 - (double)*(float *)lVar9) < 0.0) {
+              dVar12 = (double)*(float *)lVar9;
+            }
+          } while ((uVar10 & 0xffffffff) < (uVar8 - 3 & 0xffffffff));
+        }
+        if ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+          lVar9 = (uVar10 & 0x1fffffff) * 8 + (uVar5 - 0xb0) + 0x5c;
+          do {
+            if ((float)((double)*(float *)lVar9 + dVar15) <= ((float *)lVar9)[1]) break;
+            lVar9 = lVar9 + 8;
+            uVar10 = uVar10 + 1;
+            if ((float)(dVar12 - (double)*(float *)lVar9) < 0.0) {
+              dVar12 = (double)*(float *)lVar9;
+            }
+          } while ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff));
+        }
+      }
+LAB_82785b90:
+      uVar6 = 1;
+      if ((double)(float)(dVar13 - dVar15) <= dVar12) goto LAB_82785ba4;
+    }
+  }
+  uVar6 = 0;
+LAB_82785ba4:
+  __restgprlr_29(uVar6);
+  return;
 }
 
 
 // 82785BB8  R_GetFarSunShadowNearClipPoints  (gfx_d3d/r_sunshadow.cpp:968)
 
-void R_GetFarSunShadowNearClipPoints(void)
+void R_GetFarSunShadowNearClipPoints
+               (undefined8 param_1,longlong param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  int iVar6;
+  ulonglong uVar5;
+  char cVar7;
+  float *pfVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
+  undefined4 *puVar14;
+  float *pfVar16;
+  longlong lVar15;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a4;
+  
+  uVar4 = ZEXT48(&stack0x00000000);
   __savegprlr_26();
+  iVar6 = __savefpr_26();
+  uVar5 = R_GetFarSunShadowCullingRectangles(iVar6,param_3,uVar4 - 0xa0);
+  if (((uVar5 & 0xffffffff) == 0) || (3 < (uVar5 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff821d1df8,0x3e3,0,0xffffffff821d232c,uVar5,1,3);
+  }
+  Vec2NormalizeTo(((ulonglong)*(uint *)((int)param_2 + 0x78) + 6 & 0x1fffffff) * 8 + param_2,
+                  uVar4 - 0xc0);
+  Vec2NormalizeTo(((ulonglong)*(uint *)((int)param_2 + 0x7c) + 6 & 0x1fffffff) * 8 + param_2,
+                  uVar4 - 0xb8);
+  pfVar16 = (float *)(iVar6 + 0x38);
+  cVar7 = R_GetRayDistInsideRectangleArray(pfVar16,uVar4 - 0xc0,uVar4 - 0xa0,uVar5,uVar4 - 0xb0);
+  if ((cVar7 != '\0') &&
+     (cVar7 = R_GetRayDistInsideRectangleArray(pfVar16,uVar4 - 0xb8,uVar4 - 0xa0,uVar5,uVar4 - 0xa8)
+     , cVar7 != '\0')) {
+    fVar1 = *pfVar16;
+    lVar11 = param_4 + 8;
+    dVar24 = (double)local_b0;
+    fVar2 = *(float *)(iVar6 + 0x3c);
+    dVar19 = (double)local_a8;
+    pfVar8 = (float *)param_4;
+    *pfVar8 = (float)((double)local_c0 * dVar24 + (double)fVar1);
+    pfVar8[1] = (float)((double)local_bc * dVar24 + (double)fVar2);
+    pfVar8[2] = (float)((double)local_b8 * dVar19 + (double)fVar1);
+    pfVar8[3] = (float)((double)local_b4 * dVar19 + (double)fVar2);
+    if (((uVar5 & 0xffffffff) == 1) ||
+       (cVar7 = R_IsEdgeContainedInRectangleArray(param_4,lVar11,uVar4 - 0xa0,uVar5), cVar7 != '\0')
+       ) {
+      __restfpr_26(1);
+      __restgprlr_26();
+      return;
+    }
+    dVar17 = (double)local_ac;
+    dVar18 = (double)local_a4;
+    dVar23 = (double)(float)((double)local_c0 * dVar17 + (double)*pfVar16);
+    dVar22 = (double)(float)((double)local_bc * dVar17 + (double)*(float *)(iVar6 + 0x3c));
+    dVar21 = (double)(float)((double)local_b8 * dVar18 + (double)*pfVar16);
+    dVar20 = (double)(float)((double)local_b4 * dVar18 + (double)*(float *)(iVar6 + 0x3c));
+    if (dVar24 <= dVar17) {
+      if ((dVar18 < dVar19) &&
+         (cVar7 = R_IsEdgeContainedInRectangleArray(param_4,uVar4 - 0xa8,uVar4 - 0xa0,uVar5),
+         cVar7 != '\0')) {
+        *(float *)lVar11 = (float)dVar21;
+        pfVar8[3] = (float)dVar20;
+        __restfpr_26(1);
+        __restgprlr_26();
+        return;
+      }
+    }
+    else if (dVar19 <= dVar18) {
+      cVar7 = R_IsEdgeContainedInRectangleArray(uVar4 - 0xb0,lVar11,uVar4 - 0xa0,uVar5);
+      if (cVar7 != '\0') {
+        *pfVar8 = (float)dVar23;
+        pfVar8[1] = (float)dVar22;
+        __restfpr_26(1);
+        __restgprlr_26();
+        return;
+      }
+    }
+    else {
+      uVar10 = (ulonglong)((float)(dVar17 * dVar19) < (float)(dVar18 * dVar24));
+      lVar15 = uVar10 * 8;
+      lVar9 = param_4 + uVar10 * -8;
+      lVar13 = lVar15 + (uVar4 - 0xb0);
+      lVar12 = lVar9 + 8;
+      cVar7 = R_IsEdgeContainedInRectangleArray(lVar13,lVar12,uVar4 - 0xa0,uVar5);
+      if (cVar7 != '\0') {
+        puVar14 = (undefined4 *)lVar13;
+        uVar3 = puVar14[1];
+        *(undefined4 *)((int)lVar15 + (int)pfVar8) = *puVar14;
+        *(undefined4 *)((int)pfVar8 + (int)lVar15 + 4) = uVar3;
+        __restfpr_26(1);
+        __restgprlr_26();
+        return;
+      }
+      lVar13 = (uVar4 - 0xa8) + uVar10 * -8;
+      cVar7 = R_IsEdgeContainedInRectangleArray(lVar13,lVar15 + param_4,uVar4 - 0xa0,uVar5);
+      if (cVar7 != '\0') {
+        puVar14 = (undefined4 *)lVar13;
+        uVar3 = puVar14[1];
+        *(undefined4 *)lVar12 = *puVar14;
+        *(undefined4 *)((int)lVar9 + 0xc) = uVar3;
+        __restfpr_26(1);
+        __restgprlr_26();
+        return;
+      }
+      cVar7 = R_IsEdgeContainedInRectangleArray(uVar4 - 0xb0,uVar4 - 0xa8,uVar4 - 0xa0,uVar5);
+      if (cVar7 != '\0') {
+        *pfVar8 = (float)dVar23;
+        pfVar8[1] = (float)dVar22;
+        *(float *)lVar11 = (float)dVar21;
+        pfVar8[3] = (float)dVar20;
+        __restfpr_26(1);
+        __restgprlr_26();
+        return;
+      }
+    }
+  }
+  __restfpr_26(0);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82785F00  R_SetFarSunShadowOrg_NormalCascade  (gfx_d3d/r_sunshadow.cpp:1066)
 
-void R_SetFarSunShadowOrg_NormalCascade(void)
+void R_SetFarSunShadowOrg_NormalCascade
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  undefined1 uVar3;
+  
+  uVar2 = __savegprlr_28();
+  iVar1 = *(int *)((int)param_2 + 0x7c);
+  if (*(int *)((int)param_2 + 0x78) == -1) {
+    if (iVar1 != -1) {
+      MyAssertHandler(0xffffffff821d1df8,0x42d,0,0xffffffff82000f98,0xffffffff821d2358);
+    }
+    __restgprlr_28(0);
+    return;
+  }
+  if (iVar1 == -1) {
+    MyAssertHandler(0xffffffff821d1df8,0x430,0,0xffffffff82000f98,0xffffffff821d1eb8);
+  }
+  uVar3 = R_GetFarSunShadowNearClipPoints(uVar2,param_2,param_3,param_4);
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
@@ -939,11 +2086,77 @@ LAB_8278622c:
 
 // 82786258  R_TrimSunShadowViewportForNearClipPoints  (gfx_d3d/r_sunshadow.cpp:1193)
 
-void R_TrimSunShadowViewportForNearClipPoints(void)
+void R_TrimSunShadowViewportForNearClipPoints
+               (undefined8 param_1,int param_2,int *param_3,float *param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  int local_50 [2];
+  ulonglong local_48;
+  
+  iVar2 = __savegprlr_27();
+  bVar4 = param_4[2] < *param_4;
+  local_50[0] = (*(int *)(param_2 + 0x78) + 6) * 8 + param_2;
+  local_50[1] = (*(int *)(param_2 + 0x7c) + 6) * 8 + param_2;
+  dVar7 = 0.0;
+  dVar6 = 0.5;
+  if (0.0 < *(float *)local_50[bVar4]) {
+    local_48 = (ulonglong)(uint)param_3[3];
+    dVar5 = floor((double)(((param_4[(uint)bVar4 * 2] - *(float *)(iVar2 + 0x50)) /
+                            *(float *)(iVar2 + 0x5c) + (float)local_48 + *(float *)(iVar2 + 0x40)) -
+                          0.5));
+    iVar1 = *(int *)(param_5 + 0x1c0);
+    iVar3 = (int)dVar5;
+    local_48 = (ulonglong)iVar3;
+    if (iVar1 < iVar3) {
+      *(int *)(param_5 + 0x1c0) = iVar3;
+      *(int *)(param_5 + 0x1c8) = (iVar1 - iVar3) + *(int *)(param_5 + 0x1c8);
+    }
+  }
+  if ((double)*(float *)local_50[!bVar4] < dVar7) {
+    local_48 = (ulonglong)(uint)param_3[3];
+    dVar5 = ceil((double)(float)((double)((param_4[(uint)!bVar4 * 2] - *(float *)(iVar2 + 0x50)) /
+                                          *(float *)(iVar2 + 0x5c) + (float)local_48 +
+                                         *(float *)(iVar2 + 0x40)) + dVar6));
+    iVar3 = (int)dVar5;
+    local_48 = (ulonglong)iVar3;
+    if (iVar3 < *(int *)(param_5 + 0x1c8)) {
+      *(int *)(param_5 + 0x1c8) = iVar3;
+    }
+  }
+  bVar4 = param_4[3] < param_4[1];
+  if (dVar7 < (double)*(float *)(local_50[bVar4] + 4)) {
+    local_48 = (ulonglong)(uint)param_3[3];
+    dVar5 = floor((double)(float)((double)((param_4[(uint)bVar4 * 2 + 1] - *(float *)(iVar2 + 0x54))
+                                           / *(float *)(iVar2 + 0x5c) + (float)local_48 +
+                                          *(float *)(iVar2 + 0x44)) - dVar6));
+    local_48 = (ulonglong)(int)dVar5;
+    iVar3 = (*param_3 - *(int *)(param_5 + 0x1c4)) - (int)dVar5;
+    if (iVar3 < *(int *)(param_5 + 0x1cc)) {
+      *(int *)(param_5 + 0x1cc) = iVar3;
+    }
+  }
+  if ((double)*(float *)(local_50[!bVar4] + 4) < dVar7) {
+    local_48 = (ulonglong)(uint)param_3[3];
+    dVar6 = ceil((double)(float)((double)((param_4[(uint)!bVar4 * 2 + 1] - *(float *)(iVar2 + 0x54))
+                                          / *(float *)(iVar2 + 0x5c) + (float)local_48 +
+                                         *(float *)(iVar2 + 0x44)) + dVar6));
+    iVar2 = *(int *)(param_5 + 0x1c4);
+    local_48 = (ulonglong)(int)dVar6;
+    iVar3 = *param_3 - (int)dVar6;
+    if (iVar2 < iVar3) {
+      *(int *)(param_5 + 0x1c4) = iVar3;
+      *(int *)(param_5 + 0x1cc) = (iVar2 - iVar3) + *(int *)(param_5 + 0x1cc);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1003,11 +2216,87 @@ void R_SetSunShadowViewports_UseFullMap
 
 // 827865F8  R_SetSunShadowViewports_FadeByDistance  (gfx_d3d/r_sunshadow.cpp:1284)
 
-void R_SetSunShadowViewports_FadeByDistance(void)
+void R_SetSunShadowViewports_FadeByDistance
+               (undefined8 param_1,int param_2,int param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  longlong lVar9;
+  float *pfVar10;
+  float *pfVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  
   __savegprlr();
+  iVar8 = __savefpr_26();
+  dVar18 = (double)*(float *)(iVar8 + 0x28);
+  param_4 = param_4 + -0xf4;
+  dVar17 = 0.5;
+  dVar16 = 4.0;
+  pfVar11 = (float *)(iVar8 + 0x58);
+  pfVar10 = (float *)(iVar8 + 0x4c);
+  lVar9 = 2;
+  do {
+    dVar12 = (double)*(float *)(param_2 + 0x68) * dVar18;
+    dVar15 = (double)(float)(dVar18 * (double)*(float *)(param_2 + 0x6c) +
+                            (double)*(float *)(iVar8 + 0x3c));
+    dVar14 = (double)(float)((double)*(float *)(param_2 + 0x70) * dVar18 +
+                            (double)*(float *)(iVar8 + 0x38));
+    dVar13 = (double)(float)((double)*(float *)(param_2 + 0x74) * dVar18 +
+                            (double)*(float *)(iVar8 + 0x3c));
+    dVar18 = (double)(float)(dVar18 * dVar16);
+    dVar12 = floor((double)(float)((double)(((float)(dVar12 + (double)*(float *)(iVar8 + 0x38)) -
+                                            pfVar10[-1]) / *pfVar11 + *(float *)(iVar8 + 0x40)) -
+                                  dVar17));
+    iVar1 = (int)dVar12;
+    dVar12 = floor((double)(float)((double)((float)(dVar15 - (double)*pfVar10) / *pfVar11 +
+                                           *(float *)(iVar8 + 0x44)) - dVar17));
+    iVar2 = (int)dVar12;
+    dVar12 = ceil((double)(float)((double)((float)(dVar14 - (double)pfVar10[-1]) / *pfVar11 +
+                                          *(float *)(iVar8 + 0x40)) + dVar17));
+    iVar3 = (int)dVar12;
+    dVar12 = ceil((double)(float)((double)((float)(dVar13 - (double)*pfVar10) / *pfVar11 +
+                                          *(float *)(iVar8 + 0x44)) + dVar17));
+    iVar4 = (int)dVar12;
+    if (iVar1 < 0) {
+      MyAssertHandler(0xffffffff821d1df8,0x519,0,0xffffffff821d23a0,iVar1,0);
+    }
+    if (iVar2 < 0) {
+      MyAssertHandler(0xffffffff821d1df8,0x51a,0,0xffffffff821d23bc,iVar2,0);
+    }
+    if (*(int *)(param_3 + 8) < iVar3) {
+      MyAssertHandler(0xffffffff821d1df8,0x51b,0,0xffffffff821d23d8,iVar3);
+    }
+    if (*(int *)(param_3 + 8) < iVar4) {
+      MyAssertHandler(0xffffffff821d1df8,0x51c,0,0xffffffff821d2420,iVar4);
+    }
+    iVar5 = *(int *)(param_3 + 0xc);
+    iVar6 = *(int *)(param_3 + 8);
+    iVar7 = (int)param_4;
+    *(int *)(iVar7 + 0x15c) = iVar3 - iVar1;
+    *(int *)(iVar7 + 0x154) = iVar5 + iVar1;
+    lVar9 = lVar9 + -1;
+    *(int *)(iVar7 + 0x158) = (iVar5 - iVar4) + iVar6;
+    pfVar11 = pfVar11 + 1;
+    param_4 = param_4 + 0x160;
+    *(int *)param_4 = iVar4 - iVar2;
+    pfVar10 = pfVar10 + 2;
+  } while (lVar9 != 0);
+  __restfpr_26();
+  __restgprlr();
+  return;
 }
 
 
@@ -1074,7 +2363,6 @@ void R_InitSunShadowProjectionSetupForFrustum
     dVar21 = (double)(float)((double)(float)dVar21 - dVar25);
     if (dVar27 != dVar21) {
       if ((double)(float)(dVar21 + dVar24) < dVar27) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(dVar27,0xffffffff821d1df8,0x54f,0,0xffffffff821d246c,dVar27,
                         (double)(float)(dVar21 + dVar24));
       }
@@ -1091,13 +2379,11 @@ void R_InitSunShadowProjectionSetupForFrustum
     }
     dVar21 = (double)(float)((double)pfVar13[-2] * (double)*pfVar20 + dVar27);
     if (dVar21 < dVar23) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(dVar21,uVar22,0xffffffff821d1df8,0x55d,0,0xffffffff821d2498,dVar21,uVar22);
     }
     local_b0 = (ulonglong)*(uint *)(param_2 + 8);
     if ((double)(float)((double)local_b0 - dVar23) <
         (double)(float)((double)*pfVar20 * (double)*pfVar13 + dVar27)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d1df8,0x55e,0,0xffffffff821d2508,
                       (double)(float)((double)*pfVar20 * (double)*pfVar13 + dVar27),
                       (double)(float)((double)local_b0 - dVar23));
@@ -1167,11 +2453,96 @@ void R_InitSunShadowProjectionSetupForFrustum
 
 // 82786BF0  R_SetupSunShadowMapDebugOverlay  (gfx_d3d/r_sunshadow.cpp:1401)
 
-void R_SetupSunShadowMapDebugOverlay(void)
+void R_SetupSunShadowMapDebugOverlay
+               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float *pfVar10;
+  float *pfVar11;
+  float *pfVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  int iVar15;
+  uint uVar16;
+  uint uVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  double dVar20;
+  
+  pfVar12 = (float *)__savegprlr_19();
+  pfVar10 = (float *)param_4;
+  if (*(int *)(DAT_845aa590 + 0xc) != 1) {
+    pfVar10[10] = 0.0;
+    __restgprlr_19();
+    return;
+  }
+  fVar1 = pfVar12[0xf];
+  *pfVar10 = pfVar12[0xe];
+  param_2 = param_2 + 0x2c;
+  pfVar10[1] = fVar1;
+  lVar13 = param_4 + 4;
+  lVar19 = 8;
+  do {
+    param_2 = param_2 + 4;
+    lVar13 = lVar13 + 4;
+    *(undefined4 *)lVar13 = *(undefined4 *)param_2;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  lVar19 = 0;
+  uVar16 = 0;
+  dVar20 = 0.0010000000474974513;
+  param_4 = param_4 + 0x24;
+  lVar13 = param_3;
+  do {
+    uVar18 = 0;
+    uVar17 = 0;
+    if (*(uint *)lVar13 != 0) {
+      do {
+        iVar15 = (uVar16 + uVar17 + 1) * 0x10;
+        pfVar11 = (float *)(iVar15 + (int)param_3);
+        if (ABS((double)(pfVar12[8] * pfVar11[2] +
+                        pfVar12[7] * pfVar11[1] + pfVar12[6] * *(float *)(iVar15 + (int)param_3)))
+            <= dVar20) {
+          if (7 < (uVar18 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff821d1df8,0x592,0,0xffffffff821d2598,uVar18,8);
+          }
+          fVar1 = *pfVar11;
+          fVar2 = *pfVar12;
+          fVar3 = pfVar12[3];
+          uVar14 = lVar19 + uVar18 + 4;
+          fVar4 = pfVar11[1];
+          fVar5 = pfVar12[1];
+          fVar6 = pfVar12[4];
+          iVar15 = (int)((lVar19 + uVar18 + (lVar19 + uVar18 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+          fVar7 = pfVar11[2];
+          fVar8 = pfVar12[2];
+          fVar9 = pfVar12[5];
+          uVar18 = uVar18 + 1;
+          *(float *)((int)pfVar10 + iVar15 + 0x38) = -pfVar11[3];
+          *(float *)((int)((uVar14 + (uVar14 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)pfVar10) =
+               fVar8 * fVar7 + fVar5 * fVar4 + fVar2 * fVar1;
+          *(float *)((int)pfVar10 + iVar15 + 0x34) = fVar9 * fVar7 + fVar6 * fVar4 + fVar3 * fVar1;
+        }
+        uVar17 = uVar17 + 1;
+      } while (uVar17 < *(uint *)lVar13);
+    }
+    uVar16 = uVar16 + 10;
+    param_4 = param_4 + 4;
+    *(undefined4 *)param_4 = (int)uVar18;
+    lVar13 = lVar13 + 4;
+    lVar19 = lVar19 + 8;
+  } while (uVar16 < 0x14);
+  __restgprlr_19();
+  return;
 }
 
 
@@ -1289,23 +2660,136 @@ void R_SetupSunShadowMapProjectionAndClipPlanes
 }
 
 
-// 82787208  R_SetupSunShadowMapMetrics  (gfx_d3d/r_sunshadow.cpp:1626)
+// 827870F0  R_GetSunShadowLookupMatrix  (gfx_d3d/r_sunshadow.cpp:1570)
 
-void R_SetupSunShadowMapMetrics(void)
+void R_GetSunShadowLookupMatrix(int param_1,float *param_2,uint param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  
+  *param_4 = (*(float *)(param_1 + 0x80) + *(float *)(param_1 + 0x8c)) * 0.5;
+  param_4[4] = (*(float *)(param_1 + 0x90) + *(float *)(param_1 + 0x9c)) * 0.5;
+  param_4[8] = (*(float *)(param_1 + 0xa0) + *(float *)(param_1 + 0xac)) * 0.5;
+  param_4[0xc] = (*(float *)(param_1 + 0xb0) + *(float *)(param_1 + 0xbc)) * 0.5;
+  fVar1 = (1.0 / (float)param_3) * 0.5;
+  fVar2 = -(1.0 / (float)param_3) * 0.5;
+  param_4[1] = *(float *)(param_1 + 0x84) * fVar2 + *(float *)(param_1 + 0x8c) * fVar1;
+  param_4[5] = *(float *)(param_1 + 0x94) * fVar2 + fVar1 * *(float *)(param_1 + 0x9c);
+  param_4[9] = *(float *)(param_1 + 0xa4) * fVar2 + *(float *)(param_1 + 0xac) * fVar1;
+  param_4[0xd] = *(float *)(param_1 + 0xb4) * fVar2 + *(float *)(param_1 + 0xbc) * fVar1;
+  param_4[2] = *(float *)(param_1 + 0x88);
+  param_4[6] = *(float *)(param_1 + 0x98);
+  param_4[10] = *(float *)(param_1 + 0xa8);
+  param_4[0xe] = *(float *)(param_1 + 0xb8);
+  param_4[3] = *param_2;
+  param_4[7] = param_2[1];
+  param_4[0xb] = param_2[2];
+  param_4[0xf] = param_2[3];
+  return;
+}
+
+
+// 82787208  R_SetupSunShadowMapMetrics  (gfx_d3d/r_sunshadow.cpp:1626)
+
+void R_SetupSunShadowMapMetrics(undefined8 param_1,uint *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  uint uVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  int iVar13;
+  
   __savegprlr_29();
+  iVar13 = __savefpr_25();
+  uVar7 = *(uint *)(iVar13 + 0x938);
+  uVar8 = *(uint *)(iVar13 + 0x940);
+  *param_2 = uVar7;
+  param_2[1] = uVar8;
+  uVar8 = DAT_84618154;
+  param_2[2] = DAT_84618154;
+  param_2[3] = uVar7 - uVar8 >> 1;
+  if ((uVar7 & 1) != 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x663,0,0xffffffff82000f98,0xffffffff821d2648);
+  }
+  if ((param_2[2] & 1) != 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x664,0,0xffffffff82000f98,0xffffffff821d2628);
+  }
+  fVar9 = -*(float *)(DAT_84628b00 + 0x15d8);
+  fVar10 = -*(float *)(DAT_84628b00 + 0x15d4);
+  fVar12 = -*(float *)(DAT_84628b00 + 0x15dc);
+  fVar1 = *(float *)(DAT_8461658c + 0x14c);
+  fVar2 = *(float *)(DAT_8461658c + 0x148);
+  fVar3 = *(float *)(DAT_8461658c + 0x150);
+  fVar4 = *(float *)(DAT_8461658c + 0x13c);
+  fVar5 = *(float *)(DAT_8461658c + 0x140);
+  fVar6 = *(float *)(DAT_8461658c + 0x144);
+  fVar11 = fVar10 * fVar4 +
+           fVar5 * fVar9 +
+           fVar6 * fVar12 + ABS(fVar10) * fVar2 + ABS(fVar12) * fVar3 + ABS(fVar9) * fVar1;
+  param_2[5] = (uint)fVar11;
+  fVar1 = -(ABS(fVar12) * fVar3 -
+           (fVar6 * fVar12 +
+           -(ABS(fVar9) * fVar1 - (fVar5 * fVar9 + (fVar4 * fVar10 - ABS(fVar10) * fVar2)))));
+  param_2[4] = (uint)fVar1;
+  if (fVar11 <= fVar1) {
+    MyAssertHandler(0xffffffff821d1df8,0x66a,0,0xffffffff82000f98,0xffffffff821d25fc);
+  }
+  __restfpr_25();
+  __restgprlr_29();
+  return;
 }
 
 
 // 827873A0  R_SetupSunShadowMaps  (gfx_d3d/r_sunshadow.cpp:1647)
 
-void R_SetupSunShadowMaps(void)
+void R_SetupSunShadowMaps(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 *puVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined1 *puVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  ulonglong uVar7;
+  undefined1 auStack_1d0 [4];
+  undefined4 local_1cc;
+  undefined1 auStack_1b0 [16];
+  undefined1 local_1a0 [4];
+  undefined4 auStack_19c [3];
+  undefined1 auStack_190 [400];
+  
+  iVar2 = __savegprlr_23();
+  R_SetupSunShadowMapMetrics(iVar2,auStack_1d0);
+  R_SetupSunShadowMapProjectionAndClipPlanes(param_2,auStack_1d0,param_3,local_1a0,auStack_1b0);
+  uVar7 = 0;
+  puVar4 = auStack_190;
+  puVar6 = auStack_19c;
+  iVar5 = iVar2 + 0x2ad0;
+  lVar3 = param_3 + 0x70;
+  do {
+    R_InitDrawList(iVar5,0,0xffffffff821d266c);
+    puVar1 = puVar6 + -1;
+    puVar6 = puVar6 + 1;
+    R_SetupShadowSurfacesDpvs(lVar3,puVar4,*puVar1,*puVar6,uVar7,*(undefined4 *)(iVar2 + 0x928));
+    uVar7 = uVar7 + 1;
+    iVar5 = iVar5 + 0x1f8;
+    puVar4 = puVar4 + 0xa0;
+    lVar3 = lVar3 + 0x160;
+  } while ((uVar7 & 0xffffffff) < 2);
+  R_GetSunShadowLookupMatrix(param_3 + 0x70,auStack_1b0,local_1cc,param_3);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1334,21 +2818,276 @@ undefined8 R_KeepSunShadowOverlayBorderPoint(float *param_1,int param_2,uint par
 
 // 827874B8  R_GetSunShadowOverlayBorderPoly  (gfx_d3d/r_sunshadow.cpp:1690)
 
-void R_GetSunShadowOverlayBorderPoly(void)
+void R_GetSunShadowOverlayBorderPoly
+               (undefined8 param_1,ulonglong param_2,float *param_3,undefined8 param_4,
+               longlong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  int iVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  float *pfVar12;
+  float *pfVar13;
+  ulonglong uVar14;
+  float *pfVar15;
+  longlong lVar16;
+  float *pfVar17;
+  longlong lVar18;
+  double extraout_f1;
+  double dVar19;
+  float local_1a0 [104];
+  
+  iVar9 = __savegprlr_28();
+  lVar16 = param_2 - 1;
+  uVar10 = 0;
+  if (lVar16 != 0) {
+    uVar11 = 1;
+    pfVar15 = (float *)(iVar9 + 4);
+    do {
+      if ((uVar11 & 0xffffffff) < (param_2 & 0xffffffff)) {
+        lVar18 = param_2 - uVar11;
+        fVar1 = *pfVar15;
+        fVar2 = pfVar15[-1];
+        pfVar12 = pfVar15 + 4;
+        pfVar13 = local_1a0 + uVar10 * 2;
+        do {
+          fVar3 = pfVar12[-1];
+          fVar8 = fVar3 * fVar2 - pfVar12[-2] * fVar1;
+          if (0.001 <= ABS(fVar8)) {
+            fVar4 = *pfVar12;
+            fVar8 = 1.0 / fVar8;
+            fVar5 = pfVar15[1];
+            uVar14 = 0;
+            fVar6 = *pfVar15;
+            fVar7 = (fVar4 * pfVar15[-1] - pfVar12[-2] * fVar5) * fVar8;
+            pfVar13[1] = fVar7;
+            fVar8 = (fVar3 * fVar5 - fVar4 * fVar6) * fVar8;
+            *pfVar13 = fVar8;
+            if ((param_2 & 0xffffffff) != 0) {
+              pfVar17 = (float *)(iVar9 + 8);
+              do {
+                if ((fVar8 * pfVar17[-2] + fVar7 * pfVar17[-1]) - *pfVar17 < -0.1)
+                goto LAB_827875d0;
+                uVar14 = uVar14 + 1;
+                pfVar17 = pfVar17 + 3;
+              } while ((uVar14 & 0xffffffff) < (param_2 & 0xffffffff));
+            }
+            uVar10 = uVar10 + 1;
+            pfVar13 = pfVar13 + 2;
+          }
+LAB_827875d0:
+          pfVar12 = pfVar12 + 3;
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
+      }
+      lVar16 = lVar16 + -1;
+      uVar11 = uVar11 + 1;
+      pfVar15 = pfVar15 + 3;
+    } while (lVar16 != 0);
+    if (2 < uVar10) {
+      dVar19 = extraout_f1;
+      uVar11 = Com_ConvexHull(local_1a0,uVar10,param_5);
+      if (10 < (uVar11 & 0xffffffff)) {
+        MyAssertHandler(0xffffffff821d1df8,0x6b6,0,0xffffffff821d2678,uVar11,10);
+      }
+      uVar14 = 0;
+      if (3 < (int)uVar11) {
+        lVar16 = param_5 + -4;
+        do {
+          iVar9 = (int)lVar16;
+          uVar14 = uVar14 + 4;
+          *(float *)(iVar9 + 4) = (float)((double)*(float *)(iVar9 + 4) * dVar19 + (double)*param_3)
+          ;
+          *(float *)(iVar9 + 8) =
+               (float)((double)*(float *)(iVar9 + 8) * dVar19 + (double)param_3[1]);
+          *(float *)(iVar9 + 0xc) =
+               (float)((double)*(float *)(iVar9 + 0xc) * dVar19 + (double)*param_3);
+          *(float *)(iVar9 + 0x10) =
+               (float)((double)*(float *)(iVar9 + 0x10) * dVar19 + (double)param_3[1]);
+          *(float *)(iVar9 + 0x14) =
+               (float)((double)*(float *)(iVar9 + 0x14) * dVar19 + (double)*param_3);
+          *(float *)(iVar9 + 0x18) =
+               (float)((double)*(float *)(iVar9 + 0x18) * dVar19 + (double)param_3[1]);
+          *(float *)(iVar9 + 0x1c) =
+               (float)((double)*(float *)(iVar9 + 0x1c) * dVar19 + (double)*param_3);
+          lVar16 = lVar16 + 0x20;
+          *(float *)lVar16 = (float)((double)*(float *)(iVar9 + 0x20) * dVar19 + (double)param_3[1])
+          ;
+        } while ((uVar14 & 0xffffffff) < (uVar11 - 3 & 0xffffffff));
+      }
+      if ((uVar14 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+        lVar18 = uVar11 - uVar14;
+        lVar16 = (uVar14 & 0x1fffffff) * 8 + param_5 + -4;
+        do {
+          iVar9 = (int)lVar16;
+          *(float *)(iVar9 + 4) = (float)((double)*(float *)(iVar9 + 4) * dVar19 + (double)*param_3)
+          ;
+          lVar16 = lVar16 + 8;
+          *(float *)lVar16 = (float)((double)*(float *)(iVar9 + 8) * dVar19 + (double)param_3[1]);
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
+      }
+      __restgprlr_28(uVar11);
+      return;
+    }
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 82787730  R_GetSunShadowOverlayFrustumLines  (gfx_d3d/r_sunshadow.cpp:1728)
+
+void R_GetSunShadowOverlayFrustumLines
+               (double param_1,float *param_2,float *param_3,float *param_4,undefined8 param_5,
+               float *param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  
+  fVar2 = param_2[1];
+  fVar3 = param_3[1];
+  fVar1 = (float)((double)DAT_84618150 / param_1);
+  *param_6 = (float)((double)(*param_2 * fVar1 + *param_3) * param_1 + (double)*param_4);
+  param_6[1] = (float)((double)(fVar2 * fVar1 + fVar3) * param_1 + (double)param_4[1]);
+  param_6[2] = (float)((double)*param_3 * param_1 + (double)*param_4);
+  param_6[3] = (float)((double)param_3[1] * param_1 + (double)param_4[1]);
+  fVar2 = param_2[3];
+  fVar3 = param_3[1];
+  param_6[4] = (float)((double)(param_2[2] * fVar1 + *param_3) * param_1 + (double)*param_4);
+  param_6[5] = (float)((double)(fVar2 * fVar1 + fVar3) * param_1 + (double)param_4[1]);
+  param_6[6] = (float)((double)*param_3 * param_1 + (double)*param_4);
+  param_6[7] = (float)((double)param_3[1] * param_1 + (double)param_4[1]);
+  fVar2 = param_2[5];
+  fVar3 = param_3[1];
+  param_6[8] = (float)((double)(param_2[4] * fVar1 + *param_3) * param_1 + (double)*param_4);
+  param_6[9] = (float)((double)(fVar2 * fVar1 + fVar3) * param_1 + (double)param_4[1]);
+  param_6[10] = (float)((double)*param_3 * param_1 + (double)*param_4);
+  param_6[0xb] = (float)((double)param_3[1] * param_1 + (double)param_4[1]);
+  fVar2 = param_2[7];
+  fVar3 = param_3[1];
+  param_6[0xc] = (float)((double)(param_2[6] * fVar1 + *param_3) * param_1 + (double)*param_4);
+  param_6[0xd] = (float)((double)(fVar2 * fVar1 + fVar3) * param_1 + (double)param_4[1]);
+  param_6[0xe] = (float)((double)*param_3 * param_1 + (double)*param_4);
+  param_6[0xf] = (float)((double)param_3[1] * param_1 + (double)param_4[1]);
+  return;
+}
+
+
+// 82787888  R_GetSunShadowMapOverlayLines  (gfx_d3d/r_sunshadow.cpp:1746)
+
+void R_GetSunShadowMapOverlayLines
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  double dVar9;
+  float local_60;
+  float local_5c;
+  
+  __savegprlr_23();
+  lVar3 = param_3 + -4;
+  lVar5 = param_3 + 0xa8;
+  lVar6 = param_2 + 0x350;
+  param_3 = param_3 + 8;
+  lVar4 = param_2 + 0x344;
+  lVar8 = param_2 + -0xbc;
+  lVar7 = 2;
+  do {
+    iVar1 = (int)lVar8;
+    dVar9 = (double)*(float *)(iVar1 + 0x16c);
+    local_60 = (float)((double)*(float *)(iVar1 + 0x15c) * dVar9 + (double)*(float *)(iVar1 + 0x19c)
+                      );
+    lVar8 = lVar8 + 0x160;
+    lVar4 = lVar4 + 4;
+    local_5c = (float)((double)*(float *)lVar8 * dVar9 + (double)*(float *)(iVar1 + 0x1a0));
+    uVar2 = R_GetSunShadowOverlayBorderPoly
+                      (dVar9,lVar6,*(undefined4 *)lVar4,&local_60,param_4,param_3);
+    lVar3 = lVar3 + 4;
+    *(undefined4 *)lVar3 = uVar2;
+    R_GetSunShadowOverlayFrustumLines(dVar9,param_2 + 0x328,param_2 + 800,&local_60,param_4,lVar5);
+    lVar7 = lVar7 + -1;
+    param_3 = param_3 + 0x50;
+    lVar6 = lVar6 + 0x60;
+    lVar5 = lVar5 + 0x40;
+  } while (lVar7 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 82787938  R_SunShadowMaps  (gfx_d3d/r_sunshadow.cpp:1770)
 
-void R_SunShadowMaps(void)
+void R_SunShadowMaps(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  longlong lVar6;
+  uint *puVar7;
+  
   __savegprlr_18();
+  if (DAT_8461658c == 0) {
+    MyAssertHandler(0xffffffff821d1df8,0x6ee,0,0xffffffff82000f98,0xffffffff821b9c84);
+  }
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d270c);
+  Profile_Begin(0x47);
+  lVar6 = 1;
+  lVar5 = 2;
+  do {
+    if (((int)lVar6 < 1) || (2 < (int)lVar6)) {
+      MyAssertHandler(0xffffffff821d1df8,0x6f6,0,0xffffffff821d26b0,lVar6,1,2);
+    }
+    iVar2 = Sys_GetValue(0);
+    puVar7 = (uint *)(iVar2 + 0xea4);
+    if (2 < *(int *)(iVar2 + 0xea4) + 1U) {
+      MyAssertHandler(0xffffffff8205cc00,0xee,0,0xffffffff820010a8,(ulonglong)*puVar7 + 1,3);
+    }
+    uVar3 = (ulonglong)*puVar7 + 1;
+    *puVar7 = (uint)uVar3;
+    if (2 < (uVar3 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8205cc00,0xf0,0,0xffffffff82001058,uVar3,3);
+    }
+    if (*(uint *)(iVar2 + 0x428) < iVar2 + 0x28U) {
+      MyAssertHandler(0xffffffff8205cc00,0xf2,0,0xffffffff82000f98,0xffffffff82001020);
+    }
+    puVar4 = (undefined4 *)(*(int *)(iVar2 + 0x428) + 4);
+    *(undefined4 **)(iVar2 + 0x428) = puVar4;
+    *puVar4 = puVar7;
+    if (*(uint *)(iVar2 + 0x428) <= iVar2 + 0x28U) {
+      MyAssertHandler(0xffffffff8205cc00,0xf5,0,0xffffffff82000f98,0xffffffff82000fec);
+    }
+    uVar1 = TBLr;
+    puVar7[*puVar7 + 2] = (uint)uVar1;
+    R_AddSunShadowSurfacesFrustumOnly(lVar6,param_2);
+    Profile_EndInternal(0);
+    lVar5 = lVar5 + -1;
+    lVar6 = lVar6 + 1;
+  } while (lVar5 != 0);
+  Profile_EndInternal(0);
+  PIXEndNamedEvent();
+  __restgprlr_18();
+  return;
 }
 
 
@@ -1366,13 +3105,12 @@ void R_MergeAndEmitSunShadowMapsSurfs(void)
   
   fVar2 = (float)__savegprlr_24();
   if (DAT_84628b00 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821d1df8,0x70d,0,0xffffffff82000f98,0xffffffff821b90d8);
   }
   Profile_Begin(0x46);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d2718);
   pfVar5 = (float *)((int)fVar2 + 0x2b30);
-  puVar4 = (undefined4 *)0x847b9634;
+  puVar4 = &DAT_847b9634;
   dVar6 = 0.0;
   lVar3 = 2;
   do {
@@ -1382,7 +3120,6 @@ void R_MergeAndEmitSunShadowMapsSurfs(void)
     pfVar5[-1] = (float)dVar6;
     *pfVar5 = (float)dVar6;
     if (pfVar5[2] != 0.0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821d1df8,0x729,0,0xffffffff82000f98,0xffffffff821cf9c8);
     }
     puVar1 = puVar4 + 0xb;

@@ -29,6 +29,18 @@ LAB_825e4f00:
   825E4F1C  B1240002             sth r9,0x2(r4)
   825E4F20  4E800020             blr
 
+; 825E4F28  SockadrToNetadr  (universal/com_net.cpp:55)
+  825E4F28  A1630000             lhz r11,0x0(r3)
+  825E4F2C  2B0B0002             cmplwi cr6,r11,0x2
+  825E4F30  4C9A0020             bnelr cr6
+  825E4F34  39600004             li r11,0x4
+  825E4F38  91640000             stw r11,0x0(r4)
+  825E4F3C  81430004             lwz r10,0x4(r3)
+  825E4F40  91440004             stw r10,0x4(r4)
+  825E4F44  A1230002             lhz r9,0x2(r3)
+  825E4F48  B1240008             sth r9,0x8(r4)
+  825E4F4C  4E800020             blr
+
 ; 825E4F50  NET_ErrorString  (universal/com_net.cpp:81)
   825E4F50  7D8802A6             mfspr r12,LR
   825E4F54  9181FFF8             stw r12,-0x8(r1)

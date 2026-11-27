@@ -29,6 +29,19 @@
 ; 82909428  bdTeamProfile::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteamprofile.cpp:26)
   82909428  7D8802A6             mfspr r12,LR
   8290942C  4800D291             bl 0x829166bc
+  82909430  3BE1FF90             subi r31,r1,0x70
+  82909434  9421FF90             stwu r1,-0x70(r1)
+  82909438  7C9E2378             or r30,r4,r4
+  8290943C  909F008C             stw r4,0x8c(r31)
+  82909440  38830008             addi r4,r3,0x8
+  82909444  807E0000             lwz r3,0x0(r30)
+  82909448  4BFEC959             bl 0x828f5da0
+  8290944C  7C7D1B78             or r29,r3,r3
+  82909450  7FC3F378             or r3,r30,r30
+  82909454  4BA5AFAD             bl 0x82364400
+  82909458  7FA3EB78             or r3,r29,r29
+  8290945C  383F0070             addi r1,r31,0x70
+  82909460  4800D2AC             b 0x8291670c
 
 ; 829093C0  bdTeamProfile::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteamprofile.cpp:33)
   829093C0  38600010             li r3,0x10

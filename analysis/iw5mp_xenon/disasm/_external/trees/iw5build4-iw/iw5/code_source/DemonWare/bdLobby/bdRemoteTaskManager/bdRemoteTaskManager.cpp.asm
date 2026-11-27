@@ -3,6 +3,65 @@
 ; 82900D78  bdLinkedList<bdReference<bdRemoteTask>_>::~bdLinkedList<bdReference<bdRemoteTask>_>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:21)
   82900D78  4BFFFA68             b 0x829007e0
 
+; 82900E58  bdRemoteTaskManager::bdRemoteTaskManager  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:26)
+  82900E58  7D8802A6             mfspr r12,LR
+  82900E5C  48015859             bl 0x829166b4
+  82900E60  DBE1FFC8             stfd f31,-0x38(r1)
+  82900E64  3BE1FF70             subi r31,r1,0x90
+  82900E68  9421FF70             stwu r1,-0x90(r1)
+  82900E6C  7C7E1B78             or r30,r3,r3
+  82900E70  907F00A4             stw r3,0xa4(r31)
+  82900E74  7C9C2378             or r28,r4,r4
+  82900E78  909F00AC             stw r4,0xac(r31)
+  82900E7C  7CBB2B78             or r27,r5,r5
+  82900E80  3D608221             lis r11,-0x7ddf
+  82900E84  3BA00000             li r29,0x0
+  82900E88  396BDB2C             subi r11,r11,0x24d4
+  82900E8C  39430008             addi r10,r3,0x8
+  82900E90  91630000             stw r11,0x0(r3)
+  82900E94  93A30008             stw r29,0x8(r3)
+  82900E98  93A3000C             stw r29,0xc(r3)
+  82900E9C  915F0050             stw r10,0x50(r31)
+  82900EA0  93A30010             stw r29,0x10(r3)
+  82900EA4  93A3002C             stw r29,0x2c(r3)
+  82900EA8  3D608200             lis r11,-0x7e00
+  82900EAC  38630014             addi r3,r3,0x14
+  82900EB0  38800004             li r4,0x4
+  82900EB4  C3EB2018             lfs f31,0x2018(r11)
+  82900EB8  FC20F890             fmr f1,f31
+  82900EBC  4BFFF18D             bl 0x82900048
+  82900EC0  93BE0048             stw r29,0x48(r30)
+  82900EC4  387E0030             addi r3,r30,0x30
+  82900EC8  FC20F890             fmr f1,f31
+  82900ECC  38800004             li r4,0x4
+  82900ED0  4BFFF271             bl 0x82900140
+  82900ED4  817C0000             lwz r11,0x0(r28)
+  82900ED8  395E004C             addi r10,r30,0x4c
+  82900EDC  2B0B0000             cmplwi cr6,r11,0x0
+  82900EE0  915F0050             stw r10,0x50(r31)
+  82900EE4  917E004C             stw r11,0x4c(r30)
+  82900EE8  419A002C             beq cr6,0x82900f14
+  82900EEC  917F0050             stw r11,0x50(r31)
+  82900EF0  394B0004             addi r10,r11,0x4
+LAB_82900ef4:
+  82900EF4  7D0000A6             mfmsr r8
+  82900EF8  7DA10164             mtmsrd r13,1
+  82900EFC  7D205028             lwarx r9,0,r10
+  82900F00  39290001             addi r9,r9,0x1
+  82900F04  7D20512D             stwcx. r9,0,r10
+  82900F08  7D010164             mtmsrd r8,1
+  82900F0C  4082FFE8             bne 0x82900ef4
+  82900F10  816B0004             lwz r11,0x4(r11)
+LAB_82900f14:
+  82900F14  9B7E0050             stb r27,0x50(r30)
+  82900F18  FBBE0058             std r29,0x58(r30)
+  82900F1C  7F83E378             or r3,r28,r28
+  82900F20  4BFF9131             bl 0x828fa050
+  82900F24  7FC3F378             or r3,r30,r30
+  82900F28  383F0090             addi r1,r31,0x90
+  82900F2C  CBE1FFC8             lfd f31,-0x38(r1)
+  82900F30  480157D4             b 0x82916704
+
 ; 82900318  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::~bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:27)
   82900318  7D8802A6             mfspr r12,LR
   8290031C  9181FFF8             stw r12,-0x8(r1)
@@ -36,10 +95,79 @@
 ; 82900FC0  bdRemoteTaskManager::~bdRemoteTaskManager  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:30)
   82900FC0  7D8802A6             mfspr r12,LR
   82900FC4  480156F9             bl 0x829166bc
+  82900FC8  3BE1FF80             subi r31,r1,0x80
+  82900FCC  9421FF80             stwu r1,-0x80(r1)
+  82900FD0  3D608221             lis r11,-0x7ddf
+  82900FD4  907F0094             stw r3,0x94(r31)
+  82900FD8  7C7E1B78             or r30,r3,r3
+  82900FDC  396BDB2C             subi r11,r11,0x24d4
+  82900FE0  91630000             stw r11,0x0(r3)
+  82900FE4  81630010             lwz r11,0x10(r3)
+  82900FE8  2B0B0000             cmplwi cr6,r11,0x0
+  82900FEC  419A0058             beq cr6,0x82901044
+  82900FF0  3BA30008             addi r29,r3,0x8
+LAB_82900ff4:
+  82900FF4  7FA3EB78             or r3,r29,r29
+  82900FF8  4BFFE921             bl 0x828ff918
+  82900FFC  7C6B1B78             or r11,r3,r3
+  82901000  39400005             li r10,0x5
+  82901004  7FA3EB78             or r3,r29,r29
+  82901008  816B0000             lwz r11,0x0(r11)
+  8290100C  914B0038             stw r10,0x38(r11)
+  82901010  4BFFE909             bl 0x828ff918
+  82901014  7C6B1B78             or r11,r3,r3
+  82901018  39400003             li r10,0x3
+  8290101C  389F0050             addi r4,r31,0x50
+  82901020  7FA3EB78             or r3,r29,r29
+  82901024  816B0000             lwz r11,0x0(r11)
+  82901028  914B0014             stw r10,0x14(r11)
+  8290102C  817D0000             lwz r11,0x0(r29)
+  82901030  917F0050             stw r11,0x50(r31)
+  82901034  4BFFF805             bl 0x82900838
+  82901038  817E0010             lwz r11,0x10(r30)
+  8290103C  2B0B0000             cmplwi cr6,r11,0x0
+  82901040  409AFFB4             bne cr6,0x82900ff4
+LAB_82901044:
+  82901044  387E004C             addi r3,r30,0x4c
+  82901048  4BFF9009             bl 0x828fa050
+  8290104C  387E0030             addi r3,r30,0x30
+  82901050  4BFFF5C1             bl 0x82900610
+  82901054  807E0040             lwz r3,0x40(r30)
+  82901058  4BFF4069             bl 0x828f50c0
+  8290105C  387E0014             addi r3,r30,0x14
+  82901060  4BFFEEA9             bl 0x828fff08
+  82901064  807E0024             lwz r3,0x24(r30)
+  82901068  4BFF4059             bl 0x828f50c0
+  8290106C  387E0008             addi r3,r30,0x8
+  82901070  4BFFF771             bl 0x829007e0
+  82901074  383F0080             addi r1,r31,0x80
+  82901078  48015694             b 0x8291670c
 
 ; 829007E0  bdLinkedList<bdReference<bdRemoteTask>_>::clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:39)
   829007E0  7D8802A6             mfspr r12,LR
   829007E4  48015ED9             bl 0x829166bc
+  829007E8  9421FF90             stwu r1,-0x70(r1)
+  829007EC  7C7F1B78             or r31,r3,r3
+  829007F0  48000028             b 0x82900818
+LAB_829007f4:
+  829007F4  83DF0000             lwz r30,0x0(r31)
+  829007F8  281E0000             cmplwi r30,0x0
+  829007FC  83BE0004             lwz r29,0x4(r30)
+  82900800  41820014             beq 0x82900814
+  82900804  7FC3F378             or r3,r30,r30
+  82900808  4BA63C81             bl 0x82364488
+  8290080C  7FC3F378             or r3,r30,r30
+  82900810  4BFF48B1             bl 0x828f50c0
+LAB_82900814:
+  82900814  93BF0000             stw r29,0x0(r31)
+LAB_82900818:
+  82900818  817F0000             lwz r11,0x0(r31)
+  8290081C  2B0B0000             cmplwi cr6,r11,0x0
+  82900820  409AFFD4             bne cr6,0x829007f4
+  82900824  917F0004             stw r11,0x4(r31)
+  82900828  917F0008             stw r11,0x8(r31)
+  8290082C  38210070             addi r1,r1,0x70
+  82900830  48015EDC             b 0x8291670c
 
 ; 828FFAE8  bdRemoteTaskManager::initTaskBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:42)
   828FFAE8  7D8802A6             mfspr r12,LR
@@ -67,14 +195,149 @@
 ; 828FFF08  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
   828FFF08  7D8802A6             mfspr r12,LR
   828FFF0C  480167A5             bl 0x829166b0
+  828FFF10  9421FF70             stwu r1,-0x90(r1)
+  828FFF14  81630018             lwz r11,0x18(r3)
+  828FFF18  7C7E1B78             or r30,r3,r3
+  828FFF1C  2B0B0000             cmplwi cr6,r11,0x0
+  828FFF20  419A0030             beq cr6,0x828fff50
+  828FFF24  3CA08221             lis r5,-0x7ddf
+  828FFF28  3D608221             lis r11,-0x7ddf
+  828FFF2C  3D408221             lis r10,-0x7ddf
+  828FFF30  3D208200             lis r9,-0x7e00
+  828FFF34  3865D568             subi r3,r5,0x2a98
+  828FFF38  390BD678             subi r8,r11,0x2988
+  828FFF3C  38EAD5BC             subi r7,r10,0x2a44
+  828FFF40  38C911F4             addi r6,r9,0x11f4
+  828FFF44  38A00000             li r5,0x0
+  828FFF48  38800031             li r4,0x31
+  828FFF4C  4BCD45B5             bl 0x825d4500
+LAB_828fff50:
+  828FFF50  817E0004             lwz r11,0x4(r30)
+  828FFF54  3B600000             li r27,0x0
+  828FFF58  7F7CDB78             or r28,r27,r27
+  828FFF5C  2B0B0000             cmplwi cr6,r11,0x0
+  828FFF60  40990050             ble cr6,0x828fffb0
+  828FFF64  7F7FDB78             or r31,r27,r27
+LAB_828fff68:
+  828FFF68  817E0010             lwz r11,0x10(r30)
+  828FFF6C  7FABF82E             lwzx r29,r11,r31
+  828FFF70  4800001C             b 0x828fff8c
+LAB_828fff74:
+  828FFF74  7FBAEB78             or r26,r29,r29
+  828FFF78  83BD0010             lwz r29,0x10(r29)
+  828FFF7C  7F43D378             or r3,r26,r26
+  828FFF80  4BA64509             bl 0x82364488
+  828FFF84  7F43D378             or r3,r26,r26
+  828FFF88  4BFF5139             bl 0x828f50c0
+LAB_828fff8c:
+  828FFF8C  2B1D0000             cmplwi cr6,r29,0x0
+  828FFF90  409AFFE4             bne cr6,0x828fff74
+  828FFF94  817E0010             lwz r11,0x10(r30)
+  828FFF98  3B9C0001             addi r28,r28,0x1
+  828FFF9C  7F6BF92E             stwx r27,r11,r31
+  828FFFA0  3BFF0004             addi r31,r31,0x4
+  828FFFA4  817E0004             lwz r11,0x4(r30)
+  828FFFA8  7F1C5840             cmplw cr6,r28,r11
+  828FFFAC  4198FFBC             blt cr6,0x828fff68
+LAB_828fffb0:
+  828FFFB0  937E0000             stw r27,0x0(r30)
+  828FFFB4  38210090             addi r1,r1,0x90
+  828FFFB8  48016748             b 0x82916700
 
 ; 82900610  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
   82900610  7D8802A6             mfspr r12,LR
   82900614  4801609D             bl 0x829166b0
+  82900618  9421FF70             stwu r1,-0x90(r1)
+  8290061C  81630018             lwz r11,0x18(r3)
+  82900620  7C7E1B78             or r30,r3,r3
+  82900624  2B0B0000             cmplwi cr6,r11,0x0
+  82900628  419A0030             beq cr6,0x82900658
+  8290062C  3CA08221             lis r5,-0x7ddf
+  82900630  3D608221             lis r11,-0x7ddf
+  82900634  3D408221             lis r10,-0x7ddf
+  82900638  3D208200             lis r9,-0x7e00
+  8290063C  3865D568             subi r3,r5,0x2a98
+  82900640  390BD678             subi r8,r11,0x2988
+  82900644  38EAD5BC             subi r7,r10,0x2a44
+  82900648  38C911F4             addi r6,r9,0x11f4
+  8290064C  38A00000             li r5,0x0
+  82900650  38800031             li r4,0x31
+  82900654  4BCD3EAD             bl 0x825d4500
+LAB_82900658:
+  82900658  817E0004             lwz r11,0x4(r30)
+  8290065C  3B600000             li r27,0x0
+  82900660  7F7CDB78             or r28,r27,r27
+  82900664  2B0B0000             cmplwi cr6,r11,0x0
+  82900668  40990050             ble cr6,0x829006b8
+  8290066C  7F7FDB78             or r31,r27,r27
+LAB_82900670:
+  82900670  817E0010             lwz r11,0x10(r30)
+  82900674  7FABF82E             lwzx r29,r11,r31
+  82900678  4800001C             b 0x82900694
+LAB_8290067c:
+  8290067C  7FBAEB78             or r26,r29,r29
+  82900680  83BD0010             lwz r29,0x10(r29)
+  82900684  7F43D378             or r3,r26,r26
+  82900688  4BA63D79             bl 0x82364400
+  8290068C  7F43D378             or r3,r26,r26
+  82900690  4BFF4A31             bl 0x828f50c0
+LAB_82900694:
+  82900694  2B1D0000             cmplwi cr6,r29,0x0
+  82900698  409AFFE4             bne cr6,0x8290067c
+  8290069C  817E0010             lwz r11,0x10(r30)
+  829006A0  3B9C0001             addi r28,r28,0x1
+  829006A4  7F6BF92E             stwx r27,r11,r31
+  829006A8  3BFF0004             addi r31,r31,0x4
+  829006AC  817E0004             lwz r11,0x4(r30)
+  829006B0  7F1C5840             cmplw cr6,r28,r11
+  829006B4  4198FFBC             blt cr6,0x82900670
+LAB_829006b8:
+  829006B8  937E0000             stw r27,0x0(r30)
+  829006BC  38210090             addi r1,r1,0x90
+  829006C0  48016040             b 0x82916700
 
 ; 82901138  bdRemoteTaskManager::startTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:49)
   82901138  7D8802A6             mfspr r12,LR
   8290113C  4801557D             bl 0x829166b8
+  82901140  3BE1FF80             subi r31,r1,0x80
+  82901144  9421FF80             stwu r1,-0x80(r1)
+  82901148  7C7D1B78             or r29,r3,r3
+  8290114C  38600040             li r3,0x40
+  82901150  7C9E2378             or r30,r4,r4
+  82901154  7CBC2B78             or r28,r5,r5
+  82901158  4BFF3EF1             bl 0x828f5048
+  8290115C  907F0050             stw r3,0x50(r31)
+  82901160  28030000             cmplwi r3,0x0
+  82901164  41820010             beq 0x82901174
+  82901168  4BFF83A1             bl 0x828f9508
+  8290116C  7C641B78             or r4,r3,r3
+  82901170  48000008             b 0x82901178
+LAB_82901174:
+  82901174  38800000             li r4,0x0
+LAB_82901178:
+  82901178  7FC3F378             or r3,r30,r30
+  8290117C  4BDCFD9D             bl 0x826d0f18
+  82901180  817E0000             lwz r11,0x0(r30)
+  82901184  2B0B0000             cmplwi cr6,r11,0x0
+  82901188  917F0050             stw r11,0x50(r31)
+  8290118C  419A0028             beq cr6,0x829011b4
+  82901190  396B0004             addi r11,r11,0x4
+LAB_82901194:
+  82901194  7D2000A6             mfmsr r9
+  82901198  7DA10164             mtmsrd r13,1
+  8290119C  7D405828             lwarx r10,0,r11
+  829011A0  394A0001             addi r10,r10,0x1
+  829011A4  7D40592D             stwcx. r10,0,r11
+  829011A8  7D210164             mtmsrd r9,1
+  829011AC  4082FFE8             bne 0x82901194
+  829011B0  816B0000             lwz r11,0x0(r11)
+LAB_829011b4:
+  829011B4  7F85E378             or r5,r28,r28
+  829011B8  389F0050             addi r4,r31,0x50
+  829011BC  7FA3EB78             or r3,r29,r29
+  829011C0  4BFFF809             bl 0x829009c8
+  829011C4  383F0080             addi r1,r31,0x80
+  829011C8  48015540             b 0x82916708
 
 ; 828FF918  bdLinkedList<bdReference<bdRemoteTask>_>::getHead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:53)
   828FF918  7D8802A6             mfspr r12,LR
@@ -107,22 +370,1229 @@ LAB_828ff964:
 ; 82900350  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::get  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:72)
   82900350  7D8802A6             mfspr r12,LR
   82900354  48016369             bl 0x829166bc
+  82900358  9421FF90             stwu r1,-0x70(r1)
+  8290035C  7C7E1B78             or r30,r3,r3
+  82900360  7CBD2B78             or r29,r5,r5
+  82900364  4BFFFC5D             bl 0x828fffc0
+  82900368  7C7F1B79             or. r31,r3,r3
+  8290036C  41820024             beq 0x82900390
+  82900370  7FE4FB78             or r4,r31,r31
+  82900374  7FA3EB78             or r3,r29,r29
+  82900378  4BBDC741             bl 0x824dcab8
+  8290037C  7FE4FB78             or r4,r31,r31
+  82900380  7FC3F378             or r3,r30,r30
+  82900384  4BFFF6ED             bl 0x828ffa70
+  82900388  38600001             li r3,0x1
+  8290038C  48000008             b 0x82900394
+LAB_82900390:
+  82900390  38600000             li r3,0x0
+LAB_82900394:
+  82900394  38210070             addi r1,r1,0x70
+  82900398  48016374             b 0x8291670c
 
 ; 828FFBE0  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
   828FFBE0  7D8802A6             mfspr r12,LR
   828FFBE4  48016AD1             bl 0x829166b4
+  828FFBE8  9421FF80             stwu r1,-0x80(r1)
+  828FFBEC  81630018             lwz r11,0x18(r3)
+  828FFBF0  7C7F1B78             or r31,r3,r3
+  828FFBF4  7C9C2378             or r28,r4,r4
+  828FFBF8  7CBB2B78             or r27,r5,r5
+  828FFBFC  2B0B0000             cmplwi cr6,r11,0x0
+  828FFC00  419A0030             beq cr6,0x828ffc30
+  828FFC04  3CA08221             lis r5,-0x7ddf
+  828FFC08  3D608221             lis r11,-0x7ddf
+  828FFC0C  3D408221             lis r10,-0x7ddf
+  828FFC10  3D208200             lis r9,-0x7e00
+  828FFC14  3865D568             subi r3,r5,0x2a98
+  828FFC18  390BD5D0             subi r8,r11,0x2a30
+  828FFC1C  38EAD5BC             subi r7,r10,0x2a44
+  828FFC20  38C911F4             addi r6,r9,0x11f4
+  828FFC24  38A00000             li r5,0x0
+  828FFC28  3880005B             li r4,0x5b
+  828FFC2C  4BCD48D5             bl 0x825d4500
+LAB_828ffc30:
+  828FFC30  39400008             li r10,0x8
+  828FFC34  3BC00000             li r30,0x0
+  828FFC38  39600000             li r11,0x0
+  828FFC3C  7D4903A6             mtspr CTR,r10
+LAB_828ffc40:
+  828FFC40  7D2BE0AE             lbzx r9,r11,r28
+  828FFC44  1D5E001F             mulli r10,r30,0x1f
+  828FFC48  7FC95214             add r30,r9,r10
+  828FFC4C  396B0001             addi r11,r11,0x1
+  828FFC50  4200FFF0             bdnz 0x828ffc40
+  828FFC54  815F0004             lwz r10,0x4(r31)
+  828FFC58  817F0010             lwz r11,0x10(r31)
+  828FFC5C  392AFFFF             subi r9,r10,0x1
+  828FFC60  7D3DF038             and r29,r9,r30
+  828FFC64  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  828FFC68  7D69582E             lwzx r11,r9,r11
+  828FFC6C  2B0B0000             cmplwi cr6,r11,0x0
+  828FFC70  419A0020             beq cr6,0x828ffc90
+  828FFC74  E93C0000             ld r9,0x0(r28)
+LAB_828ffc78:
+  828FFC78  E90B0008             ld r8,0x8(r11)
+  828FFC7C  7F294040             cmpld cr6,r9,r8
+  828FFC80  419A00AC             beq cr6,0x828ffd2c
+  828FFC84  816B0010             lwz r11,0x10(r11)
+  828FFC88  2B0B0000             cmplwi cr6,r11,0x0
+  828FFC8C  409AFFEC             bne cr6,0x828ffc78
+LAB_828ffc90:
+  828FFC90  817F0000             lwz r11,0x0(r31)
+  828FFC94  813F000C             lwz r9,0xc(r31)
+  828FFC98  396B0001             addi r11,r11,0x1
+  828FFC9C  7F0B4840             cmplw cr6,r11,r9
+  828FFCA0  4099001C             ble cr6,0x828ffcbc
+  828FFCA4  5544083C             rlwinm r4,r10,0x1,0x0,0x1e
+  828FFCA8  7FE3FB78             or r3,r31,r31
+  828FFCAC  4800058D             bl 0x82900238
+  828FFCB0  817F0004             lwz r11,0x4(r31)
+  828FFCB4  396BFFFF             subi r11,r11,0x1
+  828FFCB8  7D7DF038             and r29,r11,r30
+LAB_828ffcbc:
+  828FFCBC  817F0000             lwz r11,0x0(r31)
+  828FFCC0  38600018             li r3,0x18
+  828FFCC4  396B0001             addi r11,r11,0x1
+  828FFCC8  917F0000             stw r11,0x0(r31)
+  828FFCCC  4BFF537D             bl 0x828f5048
+  828FFCD0  28030000             cmplwi r3,0x0
+  828FFCD4  41820060             beq 0x828ffd34
+  828FFCD8  815F0010             lwz r10,0x10(r31)
+  828FFCDC  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  828FFCE0  817B0000             lwz r11,0x0(r27)
+  828FFCE4  2B0B0000             cmplwi cr6,r11,0x0
+  828FFCE8  7D49502E             lwzx r10,r9,r10
+  828FFCEC  91630000             stw r11,0x0(r3)
+  828FFCF0  419A0028             beq cr6,0x828ffd18
+  828FFCF4  392B0004             addi r9,r11,0x4
+LAB_828ffcf8:
+  828FFCF8  7CE000A6             mfmsr r7
+  828FFCFC  7DA10164             mtmsrd r13,1
+  828FFD00  7D004828             lwarx r8,0,r9
+  828FFD04  39080001             addi r8,r8,0x1
+  828FFD08  7D00492D             stwcx. r8,0,r9
+  828FFD0C  7CE10164             mtmsrd r7,1
+  828FFD10  4082FFE8             bne 0x828ffcf8
+  828FFD14  816B0004             lwz r11,0x4(r11)
+LAB_828ffd18:
+  828FFD18  E93C0000             ld r9,0x0(r28)
+  828FFD1C  7C6B1B78             or r11,r3,r3
+  828FFD20  91430010             stw r10,0x10(r3)
+  828FFD24  F9230008             std r9,0x8(r3)
+  828FFD28  48000010             b 0x828ffd38
+LAB_828ffd2c:
+  828FFD2C  38600000             li r3,0x0
+  828FFD30  48000018             b 0x828ffd48
+LAB_828ffd34:
+  828FFD34  39600000             li r11,0x0
+LAB_828ffd38:
+  828FFD38  815F0010             lwz r10,0x10(r31)
+  828FFD3C  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  828FFD40  38600001             li r3,0x1
+  828FFD44  7D69512E             stwx r11,r9,r10
+LAB_828ffd48:
+  828FFD48  38210080             addi r1,r1,0x80
+  828FFD4C  480169B8             b 0x82916704
+
+; 829003A0  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
+  829003A0  7D8802A6             mfspr r12,LR
+  829003A4  48016311             bl 0x829166b4
+  829003A8  9421FF80             stwu r1,-0x80(r1)
+  829003AC  81630018             lwz r11,0x18(r3)
+  829003B0  7C7F1B78             or r31,r3,r3
+  829003B4  7C9C2378             or r28,r4,r4
+  829003B8  7CBB2B78             or r27,r5,r5
+  829003BC  2B0B0000             cmplwi cr6,r11,0x0
+  829003C0  419A0030             beq cr6,0x829003f0
+  829003C4  3CA08221             lis r5,-0x7ddf
+  829003C8  3D608221             lis r11,-0x7ddf
+  829003CC  3D408221             lis r10,-0x7ddf
+  829003D0  3D208200             lis r9,-0x7e00
+  829003D4  3865D568             subi r3,r5,0x2a98
+  829003D8  390BD5D0             subi r8,r11,0x2a30
+  829003DC  38EAD5BC             subi r7,r10,0x2a44
+  829003E0  38C911F4             addi r6,r9,0x11f4
+  829003E4  38A00000             li r5,0x0
+  829003E8  3880005B             li r4,0x5b
+  829003EC  4BCD4115             bl 0x825d4500
+LAB_829003f0:
+  829003F0  39400008             li r10,0x8
+  829003F4  3BC00000             li r30,0x0
+  829003F8  39600000             li r11,0x0
+  829003FC  7D4903A6             mtspr CTR,r10
+LAB_82900400:
+  82900400  7D2BE0AE             lbzx r9,r11,r28
+  82900404  1D5E001F             mulli r10,r30,0x1f
+  82900408  7FC95214             add r30,r9,r10
+  8290040C  396B0001             addi r11,r11,0x1
+  82900410  4200FFF0             bdnz 0x82900400
+  82900414  815F0004             lwz r10,0x4(r31)
+  82900418  817F0010             lwz r11,0x10(r31)
+  8290041C  392AFFFF             subi r9,r10,0x1
+  82900420  7D3DF038             and r29,r9,r30
+  82900424  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  82900428  7D69582E             lwzx r11,r9,r11
+  8290042C  2B0B0000             cmplwi cr6,r11,0x0
+  82900430  419A0020             beq cr6,0x82900450
+  82900434  E93C0000             ld r9,0x0(r28)
+LAB_82900438:
+  82900438  E90B0008             ld r8,0x8(r11)
+  8290043C  7F294040             cmpld cr6,r9,r8
+  82900440  419A00AC             beq cr6,0x829004ec
+  82900444  816B0010             lwz r11,0x10(r11)
+  82900448  2B0B0000             cmplwi cr6,r11,0x0
+  8290044C  409AFFEC             bne cr6,0x82900438
+LAB_82900450:
+  82900450  817F0000             lwz r11,0x0(r31)
+  82900454  813F000C             lwz r9,0xc(r31)
+  82900458  396B0001             addi r11,r11,0x1
+  8290045C  7F0B4840             cmplw cr6,r11,r9
+  82900460  4099001C             ble cr6,0x8290047c
+  82900464  5544083C             rlwinm r4,r10,0x1,0x0,0x1e
+  82900468  7FE3FB78             or r3,r31,r31
+  8290046C  48000475             bl 0x829008e0
+  82900470  817F0004             lwz r11,0x4(r31)
+  82900474  396BFFFF             subi r11,r11,0x1
+  82900478  7D7DF038             and r29,r11,r30
+LAB_8290047c:
+  8290047C  817F0000             lwz r11,0x0(r31)
+  82900480  38600018             li r3,0x18
+  82900484  396B0001             addi r11,r11,0x1
+  82900488  917F0000             stw r11,0x0(r31)
+  8290048C  4BFF4BBD             bl 0x828f5048
+  82900490  28030000             cmplwi r3,0x0
+  82900494  41820060             beq 0x829004f4
+  82900498  815F0010             lwz r10,0x10(r31)
+  8290049C  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  829004A0  817B0000             lwz r11,0x0(r27)
+  829004A4  2B0B0000             cmplwi cr6,r11,0x0
+  829004A8  7D49502E             lwzx r10,r9,r10
+  829004AC  91630000             stw r11,0x0(r3)
+  829004B0  419A0028             beq cr6,0x829004d8
+  829004B4  392B0004             addi r9,r11,0x4
+LAB_829004b8:
+  829004B8  7CE000A6             mfmsr r7
+  829004BC  7DA10164             mtmsrd r13,1
+  829004C0  7D004828             lwarx r8,0,r9
+  829004C4  39080001             addi r8,r8,0x1
+  829004C8  7D00492D             stwcx. r8,0,r9
+  829004CC  7CE10164             mtmsrd r7,1
+  829004D0  4082FFE8             bne 0x829004b8
+  829004D4  816B0004             lwz r11,0x4(r11)
+LAB_829004d8:
+  829004D8  E93C0000             ld r9,0x0(r28)
+  829004DC  7C6B1B78             or r11,r3,r3
+  829004E0  91430010             stw r10,0x10(r3)
+  829004E4  F9230008             std r9,0x8(r3)
+  829004E8  48000010             b 0x829004f8
+LAB_829004ec:
+  829004EC  38600000             li r3,0x0
+  829004F0  48000018             b 0x82900508
+LAB_829004f4:
+  829004F4  39600000             li r11,0x0
+LAB_829004f8:
+  829004F8  815F0010             lwz r10,0x10(r31)
+  829004FC  57A9103A             rlwinm r9,r29,0x2,0x0,0x1d
+  82900500  38600001             li r3,0x1
+  82900504  7D69512E             stwx r11,r9,r10
+LAB_82900508:
+  82900508  38210080             addi r1,r1,0x80
+  8290050C  480161F8             b 0x82916704
+
+; 829009C8  bdRemoteTaskManager::sendTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:102)
+  829009C8  7D8802A6             mfspr r12,LR
+  829009CC  48015CE1             bl 0x829166ac
+  829009D0  3BE1FF60             subi r31,r1,0xa0
+  829009D4  9421FF60             stwu r1,-0xa0(r1)
+  829009D8  7C7D1B78             or r29,r3,r3
+  829009DC  909F00BC             stw r4,0xbc(r31)
+  829009E0  7C9B2378             or r27,r4,r4
+  829009E4  7CBE2B78             or r30,r5,r5
+  829009E8  80650000             lwz r3,0x0(r5)
+  829009EC  3B400000             li r26,0x0
+  829009F0  4BFF4F31             bl 0x828f5920
+  829009F4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829009F8  4182007C             beq 0x82900a74
+  829009FC  817E0000             lwz r11,0x0(r30)
+  82900A00  395F0050             addi r10,r31,0x50
+  82900A04  839D004C             lwz r28,0x4c(r29)
+  82900A08  915F0054             stw r10,0x54(r31)
+  82900A0C  2B0B0000             cmplwi cr6,r11,0x0
+  82900A10  917F0050             stw r11,0x50(r31)
+  82900A14  419A0028             beq cr6,0x82900a3c
+  82900A18  396B0004             addi r11,r11,0x4
+LAB_82900a1c:
+  82900A1C  7D2000A6             mfmsr r9
+  82900A20  7DA10164             mtmsrd r13,1
+  82900A24  7D405828             lwarx r10,0,r11
+  82900A28  394A0001             addi r10,r10,0x1
+  82900A2C  7D40592D             stwcx. r10,0,r11
+  82900A30  7D210164             mtmsrd r9,1
+  82900A34  4082FFE8             bne 0x82900a1c
+  82900A38  816B0000             lwz r11,0x0(r11)
+LAB_82900a3c:
+  82900A3C  807E0000             lwz r3,0x0(r30)
+  82900A40  83DC0000             lwz r30,0x0(r28)
+  82900A44  8B3D0050             lbz r25,0x50(r29)
+  82900A48  4BFF46E9             bl 0x828f5130
+  82900A4C  817E0004             lwz r11,0x4(r30)
+  82900A50  7C651B78             or r5,r3,r3
+  82900A54  389F0050             addi r4,r31,0x50
+  82900A58  7F83E378             or r3,r28,r28
+  82900A5C  7F26CB78             or r6,r25,r25
+  82900A60  7D6903A6             mtspr CTR,r11
+  82900A64  4E800421             bctrl
+  82900A68  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82900A6C  39600001             li r11,0x1
+  82900A70  40820008             bne 0x82900a78
+LAB_82900a74:
+  82900A74  39600000             li r11,0x0
+LAB_82900a78:
+  82900A78  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82900A7C  40820030             bne 0x82900aac
+  82900A80  815B0000             lwz r10,0x0(r27)
+  82900A84  39600003             li r11,0x3
+  82900A88  7D7A5B78             or r26,r11,r11
+  82900A8C  916A0014             stw r11,0x14(r10)
+  82900A90  815B0000             lwz r10,0x0(r27)
+  82900A94  916A0038             stw r11,0x38(r10)
+LAB_82900a98:
+  82900A98  7F63DB78             or r3,r27,r27
+  82900A9C  4BA639ED             bl 0x82364488
+  82900AA0  7F43D378             or r3,r26,r26
+  82900AA4  383F00A0             addi r1,r31,0xa0
+  82900AA8  48015C54             b 0x829166fc
+LAB_82900aac:
+  82900AAC  387D0008             addi r3,r29,0x8
+  82900AB0  809D000C             lwz r4,0xc(r29)
+  82900AB4  7F65DB78             or r5,r27,r27
+  82900AB8  4BFFF339             bl 0x828ffdf0
+  82900ABC  3D608200             lis r11,-0x7e00
+  82900AC0  807B0000             lwz r3,0x0(r27)
+  82900AC4  C02B13F8             lfs f1,0x13f8(r11)
+  82900AC8  81630000             lwz r11,0x0(r3)
+  82900ACC  816B000C             lwz r11,0xc(r11)
+  82900AD0  7D6903A6             mtspr CTR,r11
+  82900AD4  4E800421             bctrl
+  82900AD8  4BFFFFC0             b 0x82900a98
+
+; 82901200  bdRemoteTaskManager::handleLSGTaskReply  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:130)
+  82901200  7D8802A6             mfspr r12,LR
+  82901204  480154B1             bl 0x829166b4
+  82901208  3BE1FF70             subi r31,r1,0x90
+  8290120C  9421FF70             stwu r1,-0x90(r1)
+  82901210  7C7D1B78             or r29,r3,r3
+  82901214  909F00AC             stw r4,0xac(r31)
+  82901218  7C9B2378             or r27,r4,r4
+  8290121C  3B830008             addi r28,r3,0x8
+  82901220  7F83E378             or r3,r28,r28
+  82901224  4BFFE6F5             bl 0x828ff918
+  82901228  83C30000             lwz r30,0x0(r3)
+  8290122C  2B1E0000             cmplwi cr6,r30,0x0
+  82901230  93DF0054             stw r30,0x54(r31)
+  82901234  419A0028             beq cr6,0x8290125c
+  82901238  397E0004             addi r11,r30,0x4
+LAB_8290123c:
+  8290123C  7D2000A6             mfmsr r9
+  82901240  7DA10164             mtmsrd r13,1
+  82901244  7D405828             lwarx r10,0,r11
+  82901248  394A0001             addi r10,r10,0x1
+  8290124C  7D40592D             stwcx. r10,0,r11
+  82901250  7D210164             mtmsrd r9,1
+  82901254  4082FFE8             bne 0x8290123c
+  82901258  817E0004             lwz r11,0x4(r30)
+LAB_8290125c:
+  8290125C  2B1E0000             cmplwi cr6,r30,0x0
+  82901260  419A011C             beq cr6,0x8290137c
+  82901264  817E0000             lwz r11,0x0(r30)
+  82901268  7FC3F378             or r3,r30,r30
+  8290126C  816B0004             lwz r11,0x4(r11)
+  82901270  7D6903A6             mtspr CTR,r11
+  82901274  4E800421             bctrl
+  82901278  2F030001             cmpwi cr6,r3,0x1
+  8290127C  409A0100             bne cr6,0x8290137c
+  82901280  817B0000             lwz r11,0x0(r27)
+  82901284  2B0B0000             cmplwi cr6,r11,0x0
+  82901288  917F0050             stw r11,0x50(r31)
+  8290128C  419A0028             beq cr6,0x829012b4
+  82901290  396B0004             addi r11,r11,0x4
+LAB_82901294:
+  82901294  7D2000A6             mfmsr r9
+  82901298  7DA10164             mtmsrd r13,1
+  8290129C  7D405828             lwarx r10,0,r11
+  829012A0  394A0001             addi r10,r10,0x1
+  829012A4  7D40592D             stwcx. r10,0,r11
+  829012A8  7D210164             mtmsrd r9,1
+  829012AC  4082FFE8             bne 0x82901294
+  829012B0  816B0000             lwz r11,0x0(r11)
+LAB_829012b4:
+  829012B4  389F0050             addi r4,r31,0x50
+  829012B8  7FC3F378             or r3,r30,r30
+  829012BC  4BFF847D             bl 0x828f9738
+  829012C0  817E0000             lwz r11,0x0(r30)
+  829012C4  7FC3F378             or r3,r30,r30
+  829012C8  816B0004             lwz r11,0x4(r11)
+  829012CC  7D6903A6             mtspr CTR,r11
+  829012D0  4E800421             bctrl
+  829012D4  2F030001             cmpwi cr6,r3,0x1
+  829012D8  409A00A4             bne cr6,0x8290137c
+  829012DC  39600000             li r11,0x0
+  829012E0  917F0050             stw r11,0x50(r31)
+  829012E4  7FC3F378             or r3,r30,r30
+  829012E8  4BFF8059             bl 0x828f9340
+  829012EC  F87F0058             std r3,0x58(r31)
+  829012F0  38BF0050             addi r5,r31,0x50
+  829012F4  389F0058             addi r4,r31,0x58
+  829012F8  387D0030             addi r3,r29,0x30
+  829012FC  4BFFF3CD             bl 0x829006c8
+  82901300  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82901304  41820054             beq 0x82901358
+  82901308  817F0050             lwz r11,0x50(r31)
+  8290130C  2B0B0000             cmplwi cr6,r11,0x0
+  82901310  917F0058             stw r11,0x58(r31)
+  82901314  419A0028             beq cr6,0x8290133c
+  82901318  394B0004             addi r10,r11,0x4
+LAB_8290131c:
+  8290131C  7D0000A6             mfmsr r8
+  82901320  7DA10164             mtmsrd r13,1
+  82901324  7D205028             lwarx r9,0,r10
+  82901328  39290001             addi r9,r9,0x1
+  8290132C  7D20512D             stwcx. r9,0,r10
+  82901330  7D010164             mtmsrd r8,1
+  82901334  4082FFE8             bne 0x8290131c
+  82901338  816B0004             lwz r11,0x4(r11)
+LAB_8290133c:
+  8290133C  817E0000             lwz r11,0x0(r30)
+  82901340  389F0058             addi r4,r31,0x58
+  82901344  7FC3F378             or r3,r30,r30
+  82901348  816B0008             lwz r11,0x8(r11)
+  8290134C  7D6903A6             mtspr CTR,r11
+  82901350  4E800421             bctrl
+  82901354  48000020             b 0x82901374
+LAB_82901358:
+  82901358  7FC3F378             or r3,r30,r30
+  8290135C  4BFF7FE5             bl 0x828f9340
+  82901360  F87F0058             std r3,0x58(r31)
+  82901364  38BF0054             addi r5,r31,0x54
+  82901368  389F0058             addi r4,r31,0x58
+  8290136C  387D0014             addi r3,r29,0x14
+  82901370  4BFFF031             bl 0x829003a0
+LAB_82901374:
+  82901374  387F0050             addi r3,r31,0x50
+  82901378  4BA63089             bl 0x82364400
+LAB_8290137c:
+  8290137C  817C0000             lwz r11,0x0(r28)
+  82901380  389F0058             addi r4,r31,0x58
+  82901384  7F83E378             or r3,r28,r28
+  82901388  917F0058             stw r11,0x58(r31)
+  8290138C  4BFFF4AD             bl 0x82900838
+  82901390  387F0054             addi r3,r31,0x54
+  82901394  4BA630F5             bl 0x82364488
+  82901398  7F63DB78             or r3,r27,r27
+  8290139C  4BA63065             bl 0x82364400
+  829013A0  383F0090             addi r1,r31,0x90
+  829013A4  48015360             b 0x82916704
 
 ; 82900510  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:154)
   82900510  7D8802A6             mfspr r12,LR
   82900514  480161A9             bl 0x829166bc
+  82900518  9421FF90             stwu r1,-0x70(r1)
+  8290051C  81630018             lwz r11,0x18(r3)
+  82900520  7C7E1B78             or r30,r3,r3
+  82900524  7C9D2378             or r29,r4,r4
+  82900528  2B0B0000             cmplwi cr6,r11,0x0
+  8290052C  419A0030             beq cr6,0x8290055c
+  82900530  3CA08221             lis r5,-0x7ddf
+  82900534  3D608221             lis r11,-0x7ddf
+  82900538  3D408221             lis r10,-0x7ddf
+  8290053C  3D208200             lis r9,-0x7e00
+  82900540  3865D568             subi r3,r5,0x2a98
+  82900544  390BD7C8             subi r8,r11,0x2838
+  82900548  38EAD5BC             subi r7,r10,0x2a44
+  8290054C  38C911F4             addi r6,r9,0x11f4
+  82900550  38A00000             li r5,0x0
+  82900554  3880009D             li r4,0x9d
+  82900558  4BCD3FA9             bl 0x825d4500
+LAB_8290055c:
+  8290055C  39200008             li r9,0x8
+  82900560  39600000             li r11,0x0
+  82900564  39400000             li r10,0x0
+  82900568  7D2903A6             mtspr CTR,r9
+LAB_8290056c:
+  8290056C  7D2AE8AE             lbzx r9,r10,r29
+  82900570  1D6B001F             mulli r11,r11,0x1f
+  82900574  7D695A14             add r11,r9,r11
+  82900578  394A0001             addi r10,r10,0x1
+  8290057C  4200FFF0             bdnz 0x8290056c
+  82900580  815E0004             lwz r10,0x4(r30)
+  82900584  39000000             li r8,0x0
+  82900588  813E0010             lwz r9,0x10(r30)
+  8290058C  394AFFFF             subi r10,r10,0x1
+  82900590  7D4B5838             and r11,r10,r11
+  82900594  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  82900598  7FEB482E             lwzx r31,r11,r9
+  8290059C  2B1F0000             cmplwi cr6,r31,0x0
+  829005A0  419A0024             beq cr6,0x829005c4
+  829005A4  E95D0000             ld r10,0x0(r29)
+LAB_829005a8:
+  829005A8  E8FF0008             ld r7,0x8(r31)
+  829005AC  7F2A3840             cmpld cr6,r10,r7
+  829005B0  419A0020             beq cr6,0x829005d0
+  829005B4  7FE8FB78             or r8,r31,r31
+  829005B8  83FF0010             lwz r31,0x10(r31)
+  829005BC  2B1F0000             cmplwi cr6,r31,0x0
+  829005C0  409AFFE8             bne cr6,0x829005a8
+LAB_829005c4:
+  829005C4  38600000             li r3,0x0
+LAB_829005c8:
+  829005C8  38210070             addi r1,r1,0x70
+  829005CC  48016140             b 0x8291670c
+LAB_829005d0:
+  829005D0  2B080000             cmplwi cr6,r8,0x0
+  829005D4  419A0010             beq cr6,0x829005e4
+  829005D8  817F0010             lwz r11,0x10(r31)
+  829005DC  91680010             stw r11,0x10(r8)
+  829005E0  4800000C             b 0x829005ec
+LAB_829005e4:
+  829005E4  815F0010             lwz r10,0x10(r31)
+  829005E8  7D4B492E             stwx r10,r11,r9
+LAB_829005ec:
+  829005EC  7FE3FB78             or r3,r31,r31
+  829005F0  4BA63E99             bl 0x82364488
+  829005F4  7FE3FB78             or r3,r31,r31
+  829005F8  4BFF4AC9             bl 0x828f50c0
+  829005FC  817E0000             lwz r11,0x0(r30)
+  82900600  38600001             li r3,0x1
+  82900604  396BFFFF             subi r11,r11,0x1
+  82900608  917E0000             stw r11,0x0(r30)
+  8290060C  4BFFFFBC             b 0x829005c8
+
+; 82901428  bdRemoteTaskManager::handleTaskReply  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:159)
+  82901428  7D8802A6             mfspr r12,LR
+  8290142C  48015285             bl 0x829166b0
+  82901430  3BE1FF50             subi r31,r1,0xb0
+  82901434  9421FF50             stwu r1,-0xb0(r1)
+  82901438  7C7C1B78             or r28,r3,r3
+  8290143C  909F00CC             stw r4,0xcc(r31)
+  82901440  7C9B2378             or r27,r4,r4
+  82901444  3B430008             addi r26,r3,0x8
+  82901448  7F43D378             or r3,r26,r26
+  8290144C  4BFFE4CD             bl 0x828ff918
+  82901450  83C30000             lwz r30,0x0(r3)
+  82901454  2B1E0000             cmplwi cr6,r30,0x0
+  82901458  93DF0064             stw r30,0x64(r31)
+  8290145C  419A0028             beq cr6,0x82901484
+  82901460  397E0004             addi r11,r30,0x4
+LAB_82901464:
+  82901464  7D2000A6             mfmsr r9
+  82901468  7DA10164             mtmsrd r13,1
+  8290146C  7D405828             lwarx r10,0,r11
+  82901470  394A0001             addi r10,r10,0x1
+  82901474  7D40592D             stwcx. r10,0,r11
+  82901478  7D210164             mtmsrd r9,1
+  8290147C  4082FFE8             bne 0x82901464
+  82901480  817E0004             lwz r11,0x4(r30)
+LAB_82901484:
+  82901484  2B1E0000             cmplwi cr6,r30,0x0
+  82901488  419A00F8             beq cr6,0x82901580
+  8290148C  817E0000             lwz r11,0x0(r30)
+  82901490  7FC3F378             or r3,r30,r30
+  82901494  816B0004             lwz r11,0x4(r11)
+  82901498  7D6903A6             mtspr CTR,r11
+  8290149C  4E800421             bctrl
+  829014A0  2F030001             cmpwi cr6,r3,0x1
+  829014A4  409A00DC             bne cr6,0x82901580
+  829014A8  39600000             li r11,0x0
+  829014AC  807B0000             lwz r3,0x0(r27)
+  829014B0  389F0068             addi r4,r31,0x68
+  829014B4  F97F0068             std r11,0x68(r31)
+  829014B8  4BFF40E9             bl 0x828f55a0
+  829014BC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  829014C0  4182008C             beq 0x8290154c
+  829014C4  817B0000             lwz r11,0x0(r27)
+  829014C8  2B0B0000             cmplwi cr6,r11,0x0
+  829014CC  917F0060             stw r11,0x60(r31)
+  829014D0  419A0028             beq cr6,0x829014f8
+  829014D4  396B0004             addi r11,r11,0x4
+LAB_829014d8:
+  829014D8  7D2000A6             mfmsr r9
+  829014DC  7DA10164             mtmsrd r13,1
+  829014E0  7D405828             lwarx r10,0,r11
+  829014E4  394A0001             addi r10,r10,0x1
+  829014E8  7D40592D             stwcx. r10,0,r11
+  829014EC  7D210164             mtmsrd r9,1
+  829014F0  4082FFE8             bne 0x829014d8
+  829014F4  816B0000             lwz r11,0x0(r11)
+LAB_829014f8:
+  829014F8  EBBF0068             ld r29,0x68(r31)
+  829014FC  389F0060             addi r4,r31,0x60
+  82901500  7FC3F378             or r3,r30,r30
+  82901504  7FA5EB78             or r5,r29,r29
+  82901508  4BFF88F9             bl 0x828f9e00
+  8290150C  3D008221             lis r8,-0x7ddf
+  82901510  3D608221             lis r11,-0x7ddf
+  82901514  E95C0058             ld r10,0x58(r28)
+  82901518  3CC08221             lis r6,-0x7ddf
+  8290151C  FBA10050             std r29,0x50(r1)
+  82901520  3CA08221             lis r5,-0x7ddf
+  82901524  3C808221             lis r4,-0x7ddf
+  82901528  38E8DD74             subi r7,r8,0x228c
+  8290152C  392BDD34             subi r9,r11,0x22cc
+  82901530  38C6D970             subi r6,r6,0x2690
+  82901534  38A5D954             subi r5,r5,0x26ac
+  82901538  3884B6F8             subi r4,r4,0x4908
+  8290153C  390000AC             li r8,0xac
+  82901540  38600000             li r3,0x0
+  82901544  4BFF35CD             bl 0x828f4b10
+  82901548  48000038             b 0x82901580
+LAB_8290154c:
+  8290154C  3D008221             lis r8,-0x7ddf
+  82901550  3D608221             lis r11,-0x7ddf
+  82901554  3D408221             lis r10,-0x7ddf
+  82901558  3CA08221             lis r5,-0x7ddf
+  8290155C  3C808221             lis r4,-0x7ddf
+  82901560  38C8D970             subi r6,r8,0x2690
+  82901564  392BDD10             subi r9,r11,0x22f0
+  82901568  38EADD74             subi r7,r10,0x228c
+  8290156C  38A5D954             subi r5,r5,0x26ac
+  82901570  3884A424             subi r4,r4,0x5bdc
+  82901574  390000B0             li r8,0xb0
+  82901578  38600001             li r3,0x1
+  8290157C  4BFF3595             bl 0x828f4b10
+LAB_82901580:
+  82901580  817A0000             lwz r11,0x0(r26)
+  82901584  389F0060             addi r4,r31,0x60
+  82901588  7F43D378             or r3,r26,r26
+  8290158C  917F0060             stw r11,0x60(r31)
+  82901590  4BFFF2A9             bl 0x82900838
+  82901594  387F0064             addi r3,r31,0x64
+  82901598  4BA62EF1             bl 0x82364488
+  8290159C  7F63DB78             or r3,r27,r27
+  829015A0  4BA62E61             bl 0x82364400
+  829015A4  383F00B0             addi r1,r31,0xb0
+  829015A8  48015158             b 0x82916700
+
+; 82900B38  bdRemoteTaskManager::handleAsyncResult  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:183)
+  82900B38  7D8802A6             mfspr r12,LR
+  82900B3C  48015B7D             bl 0x829166b8
+  82900B40  3BE1FF70             subi r31,r1,0x90
+  82900B44  9421FF70             stwu r1,-0x90(r1)
+  82900B48  7C7E1B78             or r30,r3,r3
+  82900B4C  909F00AC             stw r4,0xac(r31)
+  82900B50  7C9D2378             or r29,r4,r4
+  82900B54  39600000             li r11,0x0
+  82900B58  F97F0058             std r11,0x58(r31)
+  82900B5C  917F0050             stw r11,0x50(r31)
+  82900B60  389F0058             addi r4,r31,0x58
+  82900B64  807D0000             lwz r3,0x0(r29)
+  82900B68  4BFF5239             bl 0x828f5da0
+  82900B6C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82900B70  314BFFFF             subic r10,r11,0x1
+  82900B74  7D6A5910             subfe r11,r10,r11
+  82900B78  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82900B7C  41820160             beq 0x82900cdc
+  82900B80  3B9E0014             addi r28,r30,0x14
+  82900B84  38BF0050             addi r5,r31,0x50
+  82900B88  389F0058             addi r4,r31,0x58
+  82900B8C  7F83E378             or r3,r28,r28
+  82900B90  4BFFF7C1             bl 0x82900350
+  82900B94  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82900B98  418200D8             beq 0x82900c70
+  82900B9C  83DF0050             lwz r30,0x50(r31)
+  82900BA0  7FC3F378             or r3,r30,r30
+  82900BA4  817E0000             lwz r11,0x0(r30)
+  82900BA8  816B0004             lwz r11,0x4(r11)
+  82900BAC  7D6903A6             mtspr CTR,r11
+  82900BB0  4E800421             bctrl
+  82900BB4  7C6A1B78             or r10,r3,r3
+  82900BB8  2F030001             cmpwi cr6,r3,0x1
+  82900BBC  409A007C             bne cr6,0x82900c38
+  82900BC0  817D0000             lwz r11,0x0(r29)
+  82900BC4  2B0B0000             cmplwi cr6,r11,0x0
+  82900BC8  917F0054             stw r11,0x54(r31)
+  82900BCC  419A0028             beq cr6,0x82900bf4
+  82900BD0  396B0004             addi r11,r11,0x4
+LAB_82900bd4:
+  82900BD4  7D2000A6             mfmsr r9
+  82900BD8  7DA10164             mtmsrd r13,1
+  82900BDC  7D405828             lwarx r10,0,r11
+  82900BE0  394A0001             addi r10,r10,0x1
+  82900BE4  7D40592D             stwcx. r10,0,r11
+  82900BE8  7D210164             mtmsrd r9,1
+  82900BEC  4082FFE8             bne 0x82900bd4
+  82900BF0  816B0000             lwz r11,0x0(r11)
+LAB_82900bf4:
+  82900BF4  817E0000             lwz r11,0x0(r30)
+  82900BF8  389F0054             addi r4,r31,0x54
+  82900BFC  7FC3F378             or r3,r30,r30
+  82900C00  816B0008             lwz r11,0x8(r11)
+  82900C04  7D6903A6             mtspr CTR,r11
+  82900C08  4E800421             bctrl
+  82900C0C  817E0000             lwz r11,0x0(r30)
+  82900C10  7FC3F378             or r3,r30,r30
+  82900C14  816B0004             lwz r11,0x4(r11)
+  82900C18  7D6903A6             mtspr CTR,r11
+  82900C1C  4E800421             bctrl
+  82900C20  2F030001             cmpwi cr6,r3,0x1
+  82900C24  419A00EC             beq cr6,0x82900d10
+  82900C28  389F0058             addi r4,r31,0x58
+  82900C2C  7F83E378             or r3,r28,r28
+  82900C30  4BFFF8E1             bl 0x82900510
+  82900C34  480000DC             b 0x82900d10
+LAB_82900c38:
+  82900C38  3D008221             lis r8,-0x7ddf
+  82900C3C  3D608221             lis r11,-0x7ddf
+  82900C40  3CC08221             lis r6,-0x7ddf
+  82900C44  3CA08221             lis r5,-0x7ddf
+  82900C48  3C808221             lis r4,-0x7ddf
+  82900C4C  38E8DA38             subi r7,r8,0x25c8
+  82900C50  392BD9D8             subi r9,r11,0x2628
+  82900C54  38C6D970             subi r6,r6,0x2690
+  82900C58  38A5D954             subi r5,r5,0x26ac
+  82900C5C  3884B6F8             subi r4,r4,0x4908
+  82900C60  390000D0             li r8,0xd0
+  82900C64  38600000             li r3,0x0
+  82900C68  4BFF3EA9             bl 0x828f4b10
+  82900C6C  480000A4             b 0x82900d10
+LAB_82900c70:
+  82900C70  817E0010             lwz r11,0x10(r30)
+  82900C74  3D008221             lis r8,-0x7ddf
+  82900C78  3CC08221             lis r6,-0x7ddf
+  82900C7C  E95F0058             ld r10,0x58(r31)
+  82900C80  3CA08221             lis r5,-0x7ddf
+  82900C84  3C808221             lis r4,-0x7ddf
+  82900C88  2B0B0000             cmplwi cr6,r11,0x0
+  82900C8C  38600001             li r3,0x1
+  82900C90  38E8DA38             subi r7,r8,0x25c8
+  82900C94  38C6D970             subi r6,r6,0x2690
+  82900C98  38A5D954             subi r5,r5,0x26ac
+  82900C9C  3884A424             subi r4,r4,0x5bdc
+  82900CA0  419A0028             beq cr6,0x82900cc8
+  82900CA4  3D608221             lis r11,-0x7ddf
+  82900CA8  390000DB             li r8,0xdb
+  82900CAC  392BD8E0             subi r9,r11,0x2720
+  82900CB0  4BFF3E61             bl 0x828f4b10
+  82900CB4  7FA5EB78             or r5,r29,r29
+  82900CB8  389F0058             addi r4,r31,0x58
+  82900CBC  387E0030             addi r3,r30,0x30
+  82900CC0  4BFFEF21             bl 0x828ffbe0
+  82900CC4  4800004C             b 0x82900d10
+LAB_82900cc8:
+  82900CC8  3D608221             lis r11,-0x7ddf
+  82900CCC  390000E2             li r8,0xe2
+  82900CD0  392BD898             subi r9,r11,0x2768
+  82900CD4  4BFF3E3D             bl 0x828f4b10
+  82900CD8  48000038             b 0x82900d10
+LAB_82900cdc:
+  82900CDC  3D008221             lis r8,-0x7ddf
+  82900CE0  3D608221             lis r11,-0x7ddf
+  82900CE4  3D408221             lis r10,-0x7ddf
+  82900CE8  3CA08221             lis r5,-0x7ddf
+  82900CEC  3C808221             lis r4,-0x7ddf
+  82900CF0  38C8D970             subi r6,r8,0x2690
+  82900CF4  392BD868             subi r9,r11,0x2798
+  82900CF8  38EADA38             subi r7,r10,0x25c8
+  82900CFC  38A5D954             subi r5,r5,0x26ac
+  82900D00  3884A58C             subi r4,r4,0x5a74
+  82900D04  390000E7             li r8,0xe7
+  82900D08  38600002             li r3,0x2
+  82900D0C  4BFF3E05             bl 0x828f4b10
+LAB_82900d10:
+  82900D10  387F0050             addi r3,r31,0x50
+  82900D14  4BA63775             bl 0x82364488
+  82900D18  7FA3EB78             or r3,r29,r29
+  82900D1C  4BA636E5             bl 0x82364400
+  82900D20  383F0090             addi r1,r31,0x90
+  82900D24  480159E4             b 0x82916708
+
+; 829006C8  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:198)
+  829006C8  7D8802A6             mfspr r12,LR
+  829006CC  48015FE5             bl 0x829166b0
+  829006D0  9421FF70             stwu r1,-0x90(r1)
+  829006D4  39200008             li r9,0x8
+  829006D8  7C7E1B78             or r30,r3,r3
+  829006DC  7C9B2378             or r27,r4,r4
+  829006E0  7CBA2B78             or r26,r5,r5
+  829006E4  39600000             li r11,0x0
+  829006E8  39400000             li r10,0x0
+  829006EC  7D2903A6             mtspr CTR,r9
+LAB_829006f0:
+  829006F0  7D2AD8AE             lbzx r9,r10,r27
+  829006F4  1D6B001F             mulli r11,r11,0x1f
+  829006F8  7D695A14             add r11,r9,r11
+  829006FC  394A0001             addi r10,r10,0x1
+  82900700  4200FFF0             bdnz 0x829006f0
+  82900704  815E0004             lwz r10,0x4(r30)
+  82900708  3B800000             li r28,0x0
+  8290070C  813E0010             lwz r9,0x10(r30)
+  82900710  394AFFFF             subi r10,r10,0x1
+  82900714  811E0018             lwz r8,0x18(r30)
+  82900718  7D4B5838             and r11,r10,r11
+  8290071C  2B080000             cmplwi cr6,r8,0x0
+  82900720  557D103A             rlwinm r29,r11,0x2,0x0,0x1d
+  82900724  7FFD482E             lwzx r31,r29,r9
+  82900728  419A0030             beq cr6,0x82900758
+  8290072C  3CA08221             lis r5,-0x7ddf
+  82900730  3D608221             lis r11,-0x7ddf
+  82900734  3D408221             lis r10,-0x7ddf
+  82900738  3D208200             lis r9,-0x7e00
+  8290073C  3865D568             subi r3,r5,0x2a98
+  82900740  390BD7C8             subi r8,r11,0x2838
+  82900744  38EAD5BC             subi r7,r10,0x2a44
+  82900748  38C911F4             addi r6,r9,0x11f4
+  8290074C  38A00000             li r5,0x0
+  82900750  388000CE             li r4,0xce
+  82900754  4BCD3DAD             bl 0x825d4500
+LAB_82900758:
+  82900758  2B1F0000             cmplwi cr6,r31,0x0
+  8290075C  419A0024             beq cr6,0x82900780
+  82900760  E97B0000             ld r11,0x0(r27)
+LAB_82900764:
+  82900764  E95F0008             ld r10,0x8(r31)
+  82900768  7F2B5040             cmpld cr6,r11,r10
+  8290076C  419A0020             beq cr6,0x8290078c
+  82900770  7FFCFB78             or r28,r31,r31
+  82900774  83FF0010             lwz r31,0x10(r31)
+  82900778  2B1F0000             cmplwi cr6,r31,0x0
+  8290077C  409AFFE8             bne cr6,0x82900764
+LAB_82900780:
+  82900780  38600000             li r3,0x0
+LAB_82900784:
+  82900784  38210090             addi r1,r1,0x90
+  82900788  48015F78             b 0x82916700
+LAB_8290078c:
+  8290078C  2B1C0000             cmplwi cr6,r28,0x0
+  82900790  419A0010             beq cr6,0x829007a0
+  82900794  817F0010             lwz r11,0x10(r31)
+  82900798  917C0010             stw r11,0x10(r28)
+  8290079C  48000010             b 0x829007ac
+LAB_829007a0:
+  829007A0  817E0010             lwz r11,0x10(r30)
+  829007A4  815F0010             lwz r10,0x10(r31)
+  829007A8  7D5D592E             stwx r10,r29,r11
+LAB_829007ac:
+  829007AC  7FE4FB78             or r4,r31,r31
+  829007B0  7F43D378             or r3,r26,r26
+  829007B4  4BFF8BBD             bl 0x828f9370
+  829007B8  7FE3FB78             or r3,r31,r31
+  829007BC  4BA63C45             bl 0x82364400
+  829007C0  7FE3FB78             or r3,r31,r31
+  829007C4  4BFF48FD             bl 0x828f50c0
+  829007C8  817E0000             lwz r11,0x0(r30)
+  829007CC  38600001             li r3,0x1
+  829007D0  396BFFFF             subi r11,r11,0x1
+  829007D4  917E0000             stw r11,0x0(r30)
+  829007D8  4BFFFFAC             b 0x82900784
+
+; 82900838  bdLinkedList<bdReference<bdRemoteTask>_>::removeAt  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:209)
+  82900838  7D8802A6             mfspr r12,LR
+  8290083C  9181FFF8             stw r12,-0x8(r1)
+  82900840  FBC1FFE8             std r30,-0x18(r1)
+  82900844  FBE1FFF0             std r31,-0x10(r1)
+  82900848  9421FF90             stwu r1,-0x70(r1)
+  8290084C  83E40000             lwz r31,0x0(r4)
+  82900850  7C7E1B78             or r30,r3,r3
+  82900854  281F0000             cmplwi r31,0x0
+  82900858  41820070             beq 0x829008c8
+  8290085C  817F0004             lwz r11,0x4(r31)
+  82900860  91640000             stw r11,0x0(r4)
+  82900864  81630000             lwz r11,0x0(r3)
+  82900868  7F1F5840             cmplw cr6,r31,r11
+  8290086C  409A0010             bne cr6,0x8290087c
+  82900870  816B0004             lwz r11,0x4(r11)
+  82900874  91630000             stw r11,0x0(r3)
+  82900878  48000010             b 0x82900888
+LAB_8290087c:
+  8290087C  817F0008             lwz r11,0x8(r31)
+  82900880  815F0004             lwz r10,0x4(r31)
+  82900884  914B0004             stw r10,0x4(r11)
+LAB_82900888:
+  82900888  817E0004             lwz r11,0x4(r30)
+  8290088C  7F1F5840             cmplw cr6,r31,r11
+  82900890  409A0010             bne cr6,0x829008a0
+  82900894  817F0008             lwz r11,0x8(r31)
+  82900898  917E0004             stw r11,0x4(r30)
+  8290089C  48000010             b 0x829008ac
+LAB_829008a0:
+  829008A0  817F0004             lwz r11,0x4(r31)
+  829008A4  815F0008             lwz r10,0x8(r31)
+  829008A8  914B0008             stw r10,0x8(r11)
+LAB_829008ac:
+  829008AC  7FE3FB78             or r3,r31,r31
+  829008B0  4BA63BD9             bl 0x82364488
+  829008B4  7FE3FB78             or r3,r31,r31
+  829008B8  4BFF4809             bl 0x828f50c0
+  829008BC  817E0008             lwz r11,0x8(r30)
+  829008C0  396BFFFF             subi r11,r11,0x1
+  829008C4  917E0008             stw r11,0x8(r30)
+LAB_829008c8:
+  829008C8  38210070             addi r1,r1,0x70
+  829008CC  8181FFF8             lwz r12,-0x8(r1)
+  829008D0  7D8803A6             mtspr LR,r12
+  829008D4  EBC1FFE8             ld r30,-0x18(r1)
+  829008D8  EBE1FFF0             ld r31,-0x10(r1)
+  829008DC  4E800020             blr
+
+; 82901600  bdRemoteTaskManager::cleanUpAsyncState  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:236)
+  82901600  7D8802A6             mfspr r12,LR
+  82901604  480150A5             bl 0x829166a8
+  82901608  9421FF60             stwu r1,-0xa0(r1)
+  8290160C  3BC30014             addi r30,r3,0x14
+  82901610  7C7D1B78             or r29,r3,r3
+  82901614  7FC3F378             or r3,r30,r30
+  82901618  4BFFE369             bl 0x828ff980
+  8290161C  7C7F1B79             or. r31,r3,r3
+  82901620  3D008221             lis r8,-0x7ddf
+  82901624  93E10050             stw r31,0x50(r1)
+  82901628  3D208221             lis r9,-0x7ddf
+  8290162C  3D408221             lis r10,-0x7ddf
+  82901630  3D608221             lis r11,-0x7ddf
+  82901634  3B88B6F8             subi r28,r8,0x4908
+  82901638  3B69D954             subi r27,r9,0x26ac
+  8290163C  3B4AD970             subi r26,r10,0x2690
+  82901640  3B2BDEBC             subi r25,r11,0x2144
+  82901644  41820074             beq 0x829016b8
+  82901648  3D608221             lis r11,-0x7ddf
+  8290164C  3B0BDE68             subi r24,r11,0x2198
+LAB_82901650:
+  82901650  807F0000             lwz r3,0x0(r31)
+  82901654  81630000             lwz r11,0x0(r3)
+  82901658  816B0004             lwz r11,0x4(r11)
+  8290165C  7D6903A6             mtspr CTR,r11
+  82901660  4E800421             bctrl
+  82901664  2F030001             cmpwi cr6,r3,0x1
+  82901668  419A0038             beq cr6,0x829016a0
+  8290166C  7F09C378             or r9,r24,r24
+  82901670  E95F0008             ld r10,0x8(r31)
+  82901674  7F27CB78             or r7,r25,r25
+  82901678  7F46D378             or r6,r26,r26
+  8290167C  7F65DB78             or r5,r27,r27
+  82901680  7F84E378             or r4,r28,r28
+  82901684  390000F3             li r8,0xf3
+  82901688  38600000             li r3,0x0
+  8290168C  4BFF3485             bl 0x828f4b10
+  82901690  38810050             addi r4,r1,0x50
+  82901694  7FC3F378             or r3,r30,r30
+  82901698  4BFFF6E9             bl 0x82900d80
+  8290169C  48000010             b 0x829016ac
+LAB_829016a0:
+  829016A0  38810050             addi r4,r1,0x50
+  829016A4  7FC3F378             or r3,r30,r30
+  829016A8  4BFFE499             bl 0x828ffb40
+LAB_829016ac:
+  829016AC  83E10050             lwz r31,0x50(r1)
+  829016B0  2B1F0000             cmplwi cr6,r31,0x0
+  829016B4  409AFF9C             bne cr6,0x82901650
+LAB_829016b8:
+  829016B8  817D0010             lwz r11,0x10(r29)
+  829016BC  2B0B0000             cmplwi cr6,r11,0x0
+  829016C0  409A0080             bne cr6,0x82901740
+  829016C4  817E0000             lwz r11,0x0(r30)
+  829016C8  2F0B0000             cmpwi cr6,r11,0x0
+  829016CC  409A0074             bne cr6,0x82901740
+  829016D0  817D0030             lwz r11,0x30(r29)
+  829016D4  3BFD0030             addi r31,r29,0x30
+  829016D8  2F0B0000             cmpwi cr6,r11,0x0
+  829016DC  40990064             ble cr6,0x82901740
+  829016E0  7FE3FB78             or r3,r31,r31
+  829016E4  4BFFE315             bl 0x828ff9f8
+  829016E8  90610050             stw r3,0x50(r1)
+  829016EC  28030000             cmplwi r3,0x0
+  829016F0  41820048             beq 0x82901738
+  829016F4  3D608221             lis r11,-0x7ddf
+  829016F8  3BCBDE18             subi r30,r11,0x21e8
+LAB_829016fc:
+  829016FC  E9430008             ld r10,0x8(r3)
+  82901700  7FC9F378             or r9,r30,r30
+  82901704  7F27CB78             or r7,r25,r25
+  82901708  7F46D378             or r6,r26,r26
+  8290170C  7F65DB78             or r5,r27,r27
+  82901710  7F84E378             or r4,r28,r28
+  82901714  39000105             li r8,0x105
+  82901718  38600000             li r3,0x0
+  8290171C  4BFF33F5             bl 0x828f4b10
+  82901720  38810050             addi r4,r1,0x50
+  82901724  7FE3FB78             or r3,r31,r31
+  82901728  4BFFE629             bl 0x828ffd50
+  8290172C  80610050             lwz r3,0x50(r1)
+  82901730  2B030000             cmplwi cr6,r3,0x0
+  82901734  409AFFC8             bne cr6,0x829016fc
+LAB_82901738:
+  82901738  7FE3FB78             or r3,r31,r31
+  8290173C  4BFFEED5             bl 0x82900610
+LAB_82901740:
+  82901740  382100A0             addi r1,r1,0xa0
+  82901744  48014FB4             b 0x829166f8
+
+; 82900D80  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:241)
+  82900D80  7D8802A6             mfspr r12,LR
+  82900D84  48015939             bl 0x829166bc
+  82900D88  9421FF80             stwu r1,-0x80(r1)
+  82900D8C  81630018             lwz r11,0x18(r3)
+  82900D90  7C7D1B78             or r29,r3,r3
+  82900D94  7C9E2378             or r30,r4,r4
+  82900D98  3BE30018             addi r31,r3,0x18
+  82900D9C  2B0B0001             cmplwi cr6,r11,0x1
+  82900DA0  419A0030             beq cr6,0x82900dd0
+  82900DA4  3CA08221             lis r5,-0x7ddf
+  82900DA8  3D608221             lis r11,-0x7ddf
+  82900DAC  3D408221             lis r10,-0x7ddf
+  82900DB0  3D208200             lis r9,-0x7e00
+  82900DB4  3865D568             subi r3,r5,0x2a98
+  82900DB8  390BDAE0             subi r8,r11,0x2520
+  82900DBC  38EADAC8             subi r7,r10,0x2538
+  82900DC0  38C911F4             addi r6,r9,0x11f4
+  82900DC4  38A00000             li r5,0x0
+  82900DC8  388000F4             li r4,0xf4
+  82900DCC  4BCD3735             bl 0x825d4500
+LAB_82900dd0:
+  82900DD0  817E0000             lwz r11,0x0(r30)
+  82900DD4  38810050             addi r4,r1,0x50
+  82900DD8  7FA3EB78             or r3,r29,r29
+  82900DDC  91610050             stw r11,0x50(r1)
+  82900DE0  4BFFED61             bl 0x828ffb40
+  82900DE4  817E0000             lwz r11,0x0(r30)
+  82900DE8  39400000             li r10,0x0
+  82900DEC  388B0008             addi r4,r11,0x8
+  82900DF0  7FA3EB78             or r3,r29,r29
+  82900DF4  81610050             lwz r11,0x50(r1)
+  82900DF8  917E0000             stw r11,0x0(r30)
+  82900DFC  83DF0000             lwz r30,0x0(r31)
+  82900E00  915F0000             stw r10,0x0(r31)
+  82900E04  4BFFF70D             bl 0x82900510
+  82900E08  93DF0000             stw r30,0x0(r31)
+  82900E0C  38210080             addi r1,r1,0x80
+  82900E10  480158FC             b 0x8291670c
 
 ; 828FF910  bdRemoteTaskManager::getConnectionID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:269)
   828FF910  E8630058             ld r3,0x58(r3)
   828FF914  4E800020             blr
 
+; 828FF980  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:299)
+  828FF980  81630000             lwz r11,0x0(r3)
+  828FF984  2B0B0000             cmplwi cr6,r11,0x0
+  828FF988  409A000C             bne cr6,0x828ff994
+  828FF98C  38600000             li r3,0x0
+  828FF990  4E800020             blr
+LAB_828ff994:
+  828FF994  81230004             lwz r9,0x4(r3)
+  828FF998  39400000             li r10,0x0
+  828FF99C  2B090000             cmplwi cr6,r9,0x0
+  828FF9A0  419A0028             beq cr6,0x828ff9c8
+  828FF9A4  81030010             lwz r8,0x10(r3)
+  828FF9A8  39600000             li r11,0x0
+LAB_828ff9ac:
+  828FF9AC  7CEB402E             lwzx r7,r11,r8
+  828FF9B0  2B070000             cmplwi cr6,r7,0x0
+  828FF9B4  409A0014             bne cr6,0x828ff9c8
+  828FF9B8  394A0001             addi r10,r10,0x1
+  828FF9BC  396B0004             addi r11,r11,0x4
+  828FF9C0  7F0A4840             cmplw cr6,r10,r9
+  828FF9C4  4198FFE8             blt cr6,0x828ff9ac
+LAB_828ff9c8:
+  828FF9C8  81230010             lwz r9,0x10(r3)
+  828FF9CC  554B103A             rlwinm r11,r10,0x2,0x0,0x1d
+  828FF9D0  7D4B482E             lwzx r10,r11,r9
+  828FF9D4  2B0A0000             cmplwi cr6,r10,0x0
+  828FF9D8  419A0010             beq cr6,0x828ff9e8
+  828FF9DC  81430018             lwz r10,0x18(r3)
+  828FF9E0  394A0001             addi r10,r10,0x1
+  828FF9E4  91430018             stw r10,0x18(r3)
+LAB_828ff9e8:
+  828FF9E8  81430010             lwz r10,0x10(r3)
+  828FF9EC  7C6B502E             lwzx r3,r11,r10
+  828FF9F0  4E800020             blr
+
+; 828FF9F8  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:299)
+  828FF9F8  81630000             lwz r11,0x0(r3)
+  828FF9FC  2B0B0000             cmplwi cr6,r11,0x0
+  828FFA00  409A000C             bne cr6,0x828ffa0c
+  828FFA04  38600000             li r3,0x0
+  828FFA08  4E800020             blr
+LAB_828ffa0c:
+  828FFA0C  81230004             lwz r9,0x4(r3)
+  828FFA10  39400000             li r10,0x0
+  828FFA14  2B090000             cmplwi cr6,r9,0x0
+  828FFA18  419A0028             beq cr6,0x828ffa40
+  828FFA1C  81030010             lwz r8,0x10(r3)
+  828FFA20  39600000             li r11,0x0
+LAB_828ffa24:
+  828FFA24  7CEB402E             lwzx r7,r11,r8
+  828FFA28  2B070000             cmplwi cr6,r7,0x0
+  828FFA2C  409A0014             bne cr6,0x828ffa40
+  828FFA30  394A0001             addi r10,r10,0x1
+  828FFA34  396B0004             addi r11,r11,0x4
+  828FFA38  7F0A4840             cmplw cr6,r10,r9
+  828FFA3C  4198FFE8             blt cr6,0x828ffa24
+LAB_828ffa40:
+  828FFA40  81230010             lwz r9,0x10(r3)
+  828FFA44  554B103A             rlwinm r11,r10,0x2,0x0,0x1d
+  828FFA48  7D4B482E             lwzx r10,r11,r9
+  828FFA4C  2B0A0000             cmplwi cr6,r10,0x0
+  828FFA50  419A0010             beq cr6,0x828ffa60
+  828FFA54  81430018             lwz r10,0x18(r3)
+  828FFA58  394A0001             addi r10,r10,0x1
+  828FFA5C  91430018             stw r10,0x18(r3)
+LAB_828ffa60:
+  828FFA60  81430010             lwz r10,0x10(r3)
+  828FFA64  7C6B502E             lwzx r3,r11,r10
+  828FFA68  4E800020             blr
+
+; 828FFFC0  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:325)
+  828FFFC0  81630000             lwz r11,0x0(r3)
+  828FFFC4  7C681B78             or r8,r3,r3
+  828FFFC8  2B0B0000             cmplwi cr6,r11,0x0
+  828FFFCC  419A0064             beq cr6,0x82900030
+  828FFFD0  39200008             li r9,0x8
+  828FFFD4  39400000             li r10,0x0
+  828FFFD8  39600000             li r11,0x0
+  828FFFDC  7D2903A6             mtspr CTR,r9
+LAB_828fffe0:
+  828FFFE0  7D2B20AE             lbzx r9,r11,r4
+  828FFFE4  1D4A001F             mulli r10,r10,0x1f
+  828FFFE8  7D495214             add r10,r9,r10
+  828FFFEC  396B0001             addi r11,r11,0x1
+  828FFFF0  4200FFF0             bdnz 0x828fffe0
+  828FFFF4  81680004             lwz r11,0x4(r8)
+  828FFFF8  81280010             lwz r9,0x10(r8)
+  828FFFFC  396BFFFF             subi r11,r11,0x1
+  82900000  7D6B5038             and r11,r11,r10
+  82900004  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  82900008  7C6B482E             lwzx r3,r11,r9
+  8290000C  2B030000             cmplwi cr6,r3,0x0
+  82900010  419A0020             beq cr6,0x82900030
+  82900014  E9640000             ld r11,0x0(r4)
+LAB_82900018:
+  82900018  E9430008             ld r10,0x8(r3)
+  8290001C  7F2B5040             cmpld cr6,r11,r10
+  82900020  419A0018             beq cr6,0x82900038
+  82900024  80630010             lwz r3,0x10(r3)
+  82900028  2B030000             cmplwi cr6,r3,0x0
+  8290002C  409AFFEC             bne cr6,0x82900018
+LAB_82900030:
+  82900030  38600000             li r3,0x0
+  82900034  4E800020             blr
+LAB_82900038:
+  82900038  81680018             lwz r11,0x18(r8)
+  8290003C  396B0001             addi r11,r11,0x1
+  82900040  91680018             stw r11,0x18(r8)
+  82900044  4E800020             blr
+
 ; 828FFDF0  bdLinkedList<bdReference<bdRemoteTask>_>::insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
   828FFDF0  7D8802A6             mfspr r12,LR
   828FFDF4  480168C9             bl 0x829166bc
+  828FFDF8  9421FF90             stwu r1,-0x70(r1)
+  828FFDFC  7C7E1B78             or r30,r3,r3
+  828FFE00  3860000C             li r3,0xc
+  828FFE04  7C9D2378             or r29,r4,r4
+  828FFE08  7CBF2B78             or r31,r5,r5
+  828FFE0C  4BFF523D             bl 0x828f5048
+  828FFE10  28030000             cmplwi r3,0x0
+  828FFE14  41820040             beq 0x828ffe54
+  828FFE18  817F0000             lwz r11,0x0(r31)
+  828FFE1C  2B0B0000             cmplwi cr6,r11,0x0
+  828FFE20  91630000             stw r11,0x0(r3)
+  828FFE24  419A0028             beq cr6,0x828ffe4c
+  828FFE28  394B0004             addi r10,r11,0x4
+LAB_828ffe2c:
+  828FFE2C  7D0000A6             mfmsr r8
+  828FFE30  7DA10164             mtmsrd r13,1
+  828FFE34  7D205028             lwarx r9,0,r10
+  828FFE38  39290001             addi r9,r9,0x1
+  828FFE3C  7D20512D             stwcx. r9,0,r10
+  828FFE40  7D010164             mtmsrd r8,1
+  828FFE44  4082FFE8             bne 0x828ffe2c
+  828FFE48  816B0004             lwz r11,0x4(r11)
+LAB_828ffe4c:
+  828FFE4C  7C7F1B78             or r31,r3,r3
+  828FFE50  48000008             b 0x828ffe58
+LAB_828ffe54:
+  828FFE54  3BE00000             li r31,0x0
+LAB_828ffe58:
+  828FFE58  2B1D0000             cmplwi cr6,r29,0x0
+  828FFE5C  419A0068             beq cr6,0x828ffec4
+  828FFE60  817D0004             lwz r11,0x4(r29)
+  828FFE64  93BF0008             stw r29,0x8(r31)
+  828FFE68  917F0004             stw r11,0x4(r31)
+  828FFE6C  817D0004             lwz r11,0x4(r29)
+  828FFE70  2B0B0000             cmplwi cr6,r11,0x0
+  828FFE74  419A000C             beq cr6,0x828ffe80
+  828FFE78  93EB0008             stw r31,0x8(r11)
+  828FFE7C  48000040             b 0x828ffebc
+LAB_828ffe80:
+  828FFE80  817E0004             lwz r11,0x4(r30)
+  828FFE84  7F1D5840             cmplw cr6,r29,r11
+  828FFE88  419A0030             beq cr6,0x828ffeb8
+  828FFE8C  3CA08221             lis r5,-0x7ddf
+  828FFE90  3D608221             lis r11,-0x7ddf
+  828FFE94  3D408221             lis r10,-0x7ddf
+  828FFE98  3D208200             lis r9,-0x7e00
+  828FFE9C  3865D4A8             subi r3,r5,0x2b58
+  828FFEA0  390BD630             subi r8,r11,0x29d0
+  828FFEA4  38EAD61C             subi r7,r10,0x29e4
+  828FFEA8  38C911F4             addi r6,r9,0x11f4
+  828FFEAC  38A00000             li r5,0x0
+  828FFEB0  3880016B             li r4,0x16b
+  828FFEB4  4BCD464D             bl 0x825d4500
+LAB_828ffeb8:
+  828FFEB8  93FE0004             stw r31,0x4(r30)
+LAB_828ffebc:
+  828FFEBC  93FD0004             stw r31,0x4(r29)
+  828FFEC0  48000030             b 0x828ffef0
+LAB_828ffec4:
+  828FFEC4  39600000             li r11,0x0
+  828FFEC8  917F0004             stw r11,0x4(r31)
+  828FFECC  817E0004             lwz r11,0x4(r30)
+  828FFED0  917F0008             stw r11,0x8(r31)
+  828FFED4  817E0004             lwz r11,0x4(r30)
+  828FFED8  2B0B0000             cmplwi cr6,r11,0x0
+  828FFEDC  419A000C             beq cr6,0x828ffee8
+  828FFEE0  93EB0004             stw r31,0x4(r11)
+  828FFEE4  48000008             b 0x828ffeec
+LAB_828ffee8:
+  828FFEE8  93FE0000             stw r31,0x0(r30)
+LAB_828ffeec:
+  828FFEEC  93FE0004             stw r31,0x4(r30)
+LAB_828ffef0:
+  828FFEF0  817E0008             lwz r11,0x8(r30)
+  828FFEF4  396B0001             addi r11,r11,0x1
+  828FFEF8  917E0008             stw r11,0x8(r30)
+  828FFEFC  38210070             addi r1,r1,0x70
+  828FFF00  4801680C             b 0x8291670c
+
+; 828FFA70  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::releaseIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:368)
+  828FFA70  7D8802A6             mfspr r12,LR
+  828FFA74  9181FFF8             stw r12,-0x8(r1)
+  828FFA78  FBE1FFF0             std r31,-0x10(r1)
+  828FFA7C  9421FFA0             stwu r1,-0x60(r1)
+  828FFA80  7C7F1B78             or r31,r3,r3
+  828FFA84  2B040000             cmplwi cr6,r4,0x0
+  828FFA88  419A0048             beq cr6,0x828ffad0
+  828FFA8C  81630018             lwz r11,0x18(r3)
+  828FFA90  2B0B0000             cmplwi cr6,r11,0x0
+  828FFA94  409A0030             bne cr6,0x828ffac4
+  828FFA98  3CA08221             lis r5,-0x7ddf
+  828FFA9C  3D608221             lis r11,-0x7ddf
+  828FFAA0  3D408221             lis r10,-0x7ddf
+  828FFAA4  3D208200             lis r9,-0x7e00
+  828FFAA8  3865D568             subi r3,r5,0x2a98
+  828FFAAC  390BD518             subi r8,r11,0x2ae8
+  828FFAB0  38EAD500             subi r7,r10,0x2b00
+  828FFAB4  38C911F4             addi r6,r9,0x11f4
+  828FFAB8  38A00000             li r5,0x0
+  828FFABC  38800174             li r4,0x174
+  828FFAC0  4BCD4A41             bl 0x825d4500
+LAB_828ffac4:
+  828FFAC4  817F0018             lwz r11,0x18(r31)
+  828FFAC8  396BFFFF             subi r11,r11,0x1
+  828FFACC  917F0018             stw r11,0x18(r31)
+LAB_828ffad0:
+  828FFAD0  38210060             addi r1,r1,0x60
+  828FFAD4  8181FFF8             lwz r12,-0x8(r1)
+  828FFAD8  7D8803A6             mtspr LR,r12
+  828FFADC  EBE1FFF0             ld r31,-0x10(r1)
+  828FFAE0  4E800020             blr
 
 ; 828FFB40  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::next  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:389)
   828FFB40  81240000             lwz r9,0x0(r4)
@@ -171,6 +1641,54 @@ LAB_828ffbd4:
   828FFBD4  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
   828FFBD8  7D6B402E             lwzx r11,r11,r8
   828FFBDC  4BFFFF74             b 0x828ffb50
+
+; 828FFD50  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::next  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:389)
+  828FFD50  81240000             lwz r9,0x0(r4)
+  828FFD54  81690010             lwz r11,0x10(r9)
+  828FFD58  2B0B0000             cmplwi cr6,r11,0x0
+  828FFD5C  419A000C             beq cr6,0x828ffd68
+LAB_828ffd60:
+  828FFD60  91640000             stw r11,0x0(r4)
+  828FFD64  4E800020             blr
+LAB_828ffd68:
+  828FFD68  39000008             li r8,0x8
+  828FFD6C  39600000             li r11,0x0
+  828FFD70  39400000             li r10,0x0
+  828FFD74  39290008             addi r9,r9,0x8
+  828FFD78  7D0903A6             mtspr CTR,r8
+LAB_828ffd7c:
+  828FFD7C  7D0950AE             lbzx r8,r9,r10
+  828FFD80  1D6B001F             mulli r11,r11,0x1f
+  828FFD84  7D685A14             add r11,r8,r11
+  828FFD88  394A0001             addi r10,r10,0x1
+  828FFD8C  4200FFF0             bdnz 0x828ffd7c
+  828FFD90  81230004             lwz r9,0x4(r3)
+  828FFD94  3949FFFF             subi r10,r9,0x1
+  828FFD98  7D4B5838             and r11,r10,r11
+  828FFD9C  396B0001             addi r11,r11,0x1
+  828FFDA0  7F0B4840             cmplw cr6,r11,r9
+  828FFDA4  40980028             bge cr6,0x828ffdcc
+  828FFDA8  81030010             lwz r8,0x10(r3)
+  828FFDAC  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+LAB_828ffdb0:
+  828FFDB0  7CEA402E             lwzx r7,r10,r8
+  828FFDB4  2B070000             cmplwi cr6,r7,0x0
+  828FFDB8  409A002C             bne cr6,0x828ffde4
+  828FFDBC  396B0001             addi r11,r11,0x1
+  828FFDC0  394A0004             addi r10,r10,0x4
+  828FFDC4  7F0B4840             cmplw cr6,r11,r9
+  828FFDC8  4198FFE8             blt cr6,0x828ffdb0
+LAB_828ffdcc:
+  828FFDCC  39600000             li r11,0x0
+  828FFDD0  91640000             stw r11,0x0(r4)
+  828FFDD4  81630018             lwz r11,0x18(r3)
+  828FFDD8  396BFFFF             subi r11,r11,0x1
+  828FFDDC  91630018             stw r11,0x18(r3)
+  828FFDE0  4E800020             blr
+LAB_828ffde4:
+  828FFDE4  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  828FFDE8  7D6B402E             lwzx r11,r11,r8
+  828FFDEC  4BFFFF74             b 0x828ffd60
 
 ; 82900048  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::createMap  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:475)
   82900048  7D8802A6             mfspr r12,LR
@@ -307,10 +1825,128 @@ LAB_829001c4:
 ; 82900238  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
   82900238  7D8802A6             mfspr r12,LR
   8290023C  48016475             bl 0x829166b0
+  82900240  9421FF70             stwu r1,-0x90(r1)
+  82900244  7C7F1B78             or r31,r3,r3
+  82900248  7C832378             or r3,r4,r4
+  8290024C  837F0010             lwz r27,0x10(r31)
+  82900250  83DF0004             lwz r30,0x4(r31)
+  82900254  4BFF8185             bl 0x828f83d8
+  82900258  817F0004             lwz r11,0x4(r31)
+  8290025C  7F035840             cmplw cr6,r3,r11
+  82900260  409900B0             ble cr6,0x82900310
+  82900264  786B0020             rldicl r11,r3,0x0,0x20
+  82900268  C01F0008             lfs f0,0x8(r31)
+  8290026C  3940000C             li r10,0xc
+  82900270  907F0004             stw r3,0x4(r31)
+  82900274  F9610050             std r11,0x50(r1)
+  82900278  C9A10050             lfd f13,0x50(r1)
+  8290027C  FDA06E9C             fcfid f13,f13
+  82900280  5463103A             rlwinm r3,r3,0x2,0x0,0x1d
+  82900284  FDA06818             frsp f13,f13
+  82900288  EC000372             fmuls f0,f0,f13
+  8290028C  FC00065E             fctidz f0,f0
+  82900290  7C1F57AE             stfiwx f0,r31,r10
+  82900294  4BFF4DB5             bl 0x828f5048
+  82900298  817F0004             lwz r11,0x4(r31)
+  8290029C  39400000             li r10,0x0
+  829002A0  907F0010             stw r3,0x10(r31)
+  829002A4  38800000             li r4,0x0
+  829002A8  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  829002AC  915F0000             stw r10,0x0(r31)
+  829002B0  48016551             bl 0x82916800
+  829002B4  2B1E0000             cmplwi cr6,r30,0x0
+  829002B8  419A0050             beq cr6,0x82900308
+  829002BC  7F7DDB78             or r29,r27,r27
+  829002C0  7FDCF378             or r28,r30,r30
+LAB_829002c4:
+  829002C4  83DD0000             lwz r30,0x0(r29)
+  829002C8  4800002C             b 0x829002f4
+LAB_829002cc:
+  829002CC  7FC5F378             or r5,r30,r30
+  829002D0  389E0008             addi r4,r30,0x8
+  829002D4  7FE3FB78             or r3,r31,r31
+  829002D8  4BFFF909             bl 0x828ffbe0
+  829002DC  7FC3F378             or r3,r30,r30
+  829002E0  7FDAF378             or r26,r30,r30
+  829002E4  83DE0010             lwz r30,0x10(r30)
+  829002E8  4BA64119             bl 0x82364400
+  829002EC  7F43D378             or r3,r26,r26
+  829002F0  4BFF4DD1             bl 0x828f50c0
+LAB_829002f4:
+  829002F4  2B1E0000             cmplwi cr6,r30,0x0
+  829002F8  409AFFD4             bne cr6,0x829002cc
+  829002FC  379CFFFF             subic. r28,r28,0x1
+  82900300  3BBD0004             addi r29,r29,0x4
+  82900304  4082FFC0             bne 0x829002c4
+LAB_82900308:
+  82900308  7F63DB78             or r3,r27,r27
+  8290030C  4BFF4DB5             bl 0x828f50c0
+LAB_82900310:
+  82900310  38210090             addi r1,r1,0x90
+  82900314  480163EC             b 0x82916700
 
 ; 829008E0  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
   829008E0  7D8802A6             mfspr r12,LR
   829008E4  48015DCD             bl 0x829166b0
+  829008E8  9421FF70             stwu r1,-0x90(r1)
+  829008EC  7C7F1B78             or r31,r3,r3
+  829008F0  7C832378             or r3,r4,r4
+  829008F4  837F0010             lwz r27,0x10(r31)
+  829008F8  83DF0004             lwz r30,0x4(r31)
+  829008FC  4BFF7ADD             bl 0x828f83d8
+  82900900  817F0004             lwz r11,0x4(r31)
+  82900904  7F035840             cmplw cr6,r3,r11
+  82900908  409900B0             ble cr6,0x829009b8
+  8290090C  786B0020             rldicl r11,r3,0x0,0x20
+  82900910  C01F0008             lfs f0,0x8(r31)
+  82900914  3940000C             li r10,0xc
+  82900918  907F0004             stw r3,0x4(r31)
+  8290091C  F9610050             std r11,0x50(r1)
+  82900920  C9A10050             lfd f13,0x50(r1)
+  82900924  FDA06E9C             fcfid f13,f13
+  82900928  5463103A             rlwinm r3,r3,0x2,0x0,0x1d
+  8290092C  FDA06818             frsp f13,f13
+  82900930  EC000372             fmuls f0,f0,f13
+  82900934  FC00065E             fctidz f0,f0
+  82900938  7C1F57AE             stfiwx f0,r31,r10
+  8290093C  4BFF470D             bl 0x828f5048
+  82900940  817F0004             lwz r11,0x4(r31)
+  82900944  39400000             li r10,0x0
+  82900948  907F0010             stw r3,0x10(r31)
+  8290094C  38800000             li r4,0x0
+  82900950  5565103A             rlwinm r5,r11,0x2,0x0,0x1d
+  82900954  915F0000             stw r10,0x0(r31)
+  82900958  48015EA9             bl 0x82916800
+  8290095C  2B1E0000             cmplwi cr6,r30,0x0
+  82900960  419A0050             beq cr6,0x829009b0
+  82900964  7F7DDB78             or r29,r27,r27
+  82900968  7FDCF378             or r28,r30,r30
+LAB_8290096c:
+  8290096C  83DD0000             lwz r30,0x0(r29)
+  82900970  4800002C             b 0x8290099c
+LAB_82900974:
+  82900974  7FC5F378             or r5,r30,r30
+  82900978  389E0008             addi r4,r30,0x8
+  8290097C  7FE3FB78             or r3,r31,r31
+  82900980  4BFFFA21             bl 0x829003a0
+  82900984  7FC3F378             or r3,r30,r30
+  82900988  7FDAF378             or r26,r30,r30
+  8290098C  83DE0010             lwz r30,0x10(r30)
+  82900990  4BA63AF9             bl 0x82364488
+  82900994  7F43D378             or r3,r26,r26
+  82900998  4BFF4729             bl 0x828f50c0
+LAB_8290099c:
+  8290099C  2B1E0000             cmplwi cr6,r30,0x0
+  829009A0  409AFFD4             bne cr6,0x82900974
+  829009A4  379CFFFF             subic. r28,r28,0x1
+  829009A8  3BBD0004             addi r29,r29,0x4
+  829009AC  4082FFC0             bne 0x8290096c
+LAB_829009b0:
+  829009B0  7F63DB78             or r3,r27,r27
+  829009B4  4BFF470D             bl 0x828f50c0
+LAB_829009b8:
+  829009B8  38210090             addi r1,r1,0x90
+  829009BC  48015D44             b 0x82916700
 
 ; 82901748  bdRemoteTaskManager::`scalar_deleting_destructor'  (line unknown)
   82901748  7D8802A6             mfspr r12,LR

@@ -36,6 +36,23 @@ BOOL MoveFileA(LPCSTR lpExistingFileName,LPCSTR lpNewFileName)
 }
 
 
+// 828A4D38  MoveFileExA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filemisc.c:98)
+
+BOOL MoveFileExA(LPCSTR lpExistingFileName,LPCSTR lpNewFileName,DWORD dwFlags)
+
+{
+  LPCSTR lpExistingFileName_00;
+  BOOL BVar1;
+  
+  lpExistingFileName_00 = (LPCSTR)__savegprlr_29(lpExistingFileName);
+  BVar1 = MoveFileWithProgressA
+                    (lpExistingFileName_00,lpNewFileName,(LPPROGRESS_ROUTINE)0x0,(LPVOID)0x0,dwFlags
+                    );
+  BVar1 = __restgprlr_29(BVar1);
+  return BVar1;
+}
+
+
 // 828A4BE8  MoveFileWithProgressA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/filemisc.c:162)
 
 BOOL MoveFileWithProgressA
@@ -43,7 +60,56 @@ BOOL MoveFileWithProgressA
                LPVOID lpData,DWORD dwFlags)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26(lpExistingFileName,lpNewFileName,lpProgressRoutine,lpData,dwFlags);
+  undefined8 uVar1;
+  undefined8 uVar2;
+  LPCSTR lpExistingFileName_00;
+  BOOL BVar3;
+  BOOL BVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  undefined4 local_80 [2];
+  undefined1 auStack_78 [8];
+  undefined1 auStack_70 [8];
+  undefined4 local_68;
+  undefined1 *local_64;
+  undefined4 local_60;
+  byte local_50 [4];
+  undefined4 local_4c;
+  undefined1 auStack_48 [72];
+  
+  uVar6 = (ulonglong)(int)dwFlags;
+  lVar5 = (longlong)(int)lpNewFileName;
+  uVar1 = __savegprlr_26(lpExistingFileName);
+  RtlInitAnsiString(auStack_78,uVar1);
+  local_64 = auStack_78;
+  local_60 = 0x40;
+  local_68 = 0xfffffffd;
+  uVar2 = NtOpenFile(local_80,0x110000,&local_68,auStack_70,7,0x4020);
+  if (-1 < (int)uVar2) {
+    local_50[0] = (byte)uVar6 & 1;
+    local_4c = 0xfffffffd;
+    RtlInitAnsiString(auStack_48,lVar5);
+    uVar2 = NtSetInformationFile(local_80[0],auStack_70,local_50,0x10,10);
+    NtClose(local_80[0]);
+    if (-1 < (int)uVar2) {
+      BVar4 = 1;
+      goto LAB_828a4d2c;
+    }
+    if (((int)uVar2 == -0x3fffff2c) && ((uVar6 & 2) != 0)) {
+      lpExistingFileName_00 = (LPCSTR)uVar1;
+      BVar4 = CopyFileExA(lpExistingFileName_00,(LPCSTR)lVar5,lpProgressRoutine,lpData,(LPBOOL)0x0,
+                          (uint)LZCOUNT((uint)local_50[0]) >> 5 | 4);
+      if ((BVar4 != 0) && (BVar3 = DeleteFileA(lpExistingFileName_00), BVar3 == 0)) {
+        SetFileAttributesA(lpExistingFileName_00,0x80);
+        DeleteFileA(lpExistingFileName_00);
+      }
+      goto LAB_828a4d2c;
+    }
+  }
+  XapiSetLastNTError(uVar2);
+  BVar4 = 0;
+LAB_828a4d2c:
+  BVar4 = __restgprlr_26(BVar4);
+  return BVar4;
 }
 

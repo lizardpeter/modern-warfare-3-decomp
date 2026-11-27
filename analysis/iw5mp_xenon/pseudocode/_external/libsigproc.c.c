@@ -2,10 +2,77 @@
 
 // 828C9448  HammingWindowNormSC  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsigproc.c:163)
 
-void HammingWindowNormSC(void)
+void HammingWindowNormSC(undefined8 param_1,uint param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  float *pfVar3;
+  int iVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
   __savegprlr_28();
+  pfVar3 = (float *)__savefpr_28();
+  dVar11 = 2.0;
+  iVar2 = (int)param_2 >> 1;
+  dVar10 = (double)((float)(2.0 / (double)(longlong)(int)param_2) * 0.46);
+  dVar13 = (double)((float)(2.0 / (double)(longlong)(int)param_2) * 0.54);
+  dVar12 = dVar10;
+  dVar9 = (double)(*DAT_848958d0)((double)(6.2831855 / (float)(longlong)(int)(param_2 - 1)));
+  iVar5 = 2;
+  pfVar6 = pfVar3 + 2;
+  dVar8 = (double)(float)((double)(float)dVar9 * dVar10);
+  *pfVar3 = *pfVar3 * (float)(dVar13 - dVar10);
+  pfVar3[param_2 - 1] = pfVar3[param_2 - 1] * (float)(dVar13 - dVar10);
+  dVar9 = (double)(float)((double)(float)dVar9 * dVar11);
+  pfVar3[1] = pfVar3[1] * (float)(dVar13 - dVar8);
+  pfVar3[param_2 - 2] = pfVar3[param_2 - 2] * (float)(dVar13 - dVar8);
+  pfVar3 = pfVar3 + (param_2 - 3);
+  if (4 < iVar2) {
+    iVar4 = 4;
+    do {
+      dVar11 = (double)(float)(dVar8 * dVar9 - dVar12);
+      iVar4 = iVar4 + 3;
+      iVar5 = iVar5 + 3;
+      dVar12 = (double)(float)(dVar11 * dVar9 - dVar8);
+      dVar8 = (double)(float)(dVar9 * dVar12 - dVar11);
+      *pfVar6 = *pfVar6 * (float)(dVar13 - dVar11);
+      *pfVar3 = *pfVar3 * (float)(dVar13 - dVar11);
+      pfVar6[1] = pfVar6[1] * (float)(dVar13 - dVar12);
+      pfVar3[-1] = pfVar3[-1] * (float)(dVar13 - dVar12);
+      pfVar6[2] = pfVar6[2] * (float)(dVar13 - dVar8);
+      pfVar6 = pfVar6 + 3;
+      pfVar3[-2] = pfVar3[-2] * (float)(dVar13 - dVar8);
+      pfVar3 = pfVar3 + -3;
+    } while (iVar4 < iVar2);
+  }
+  pfVar7 = pfVar6;
+  if (iVar5 < iVar2) {
+    dVar12 = (double)(float)(dVar8 * dVar9 - dVar12);
+    fVar1 = (float)(dVar13 - dVar12);
+    *pfVar6 = *pfVar6 * fVar1;
+    *pfVar3 = *pfVar3 * fVar1;
+    pfVar7 = pfVar6 + 1;
+    if (iVar5 + 1 < iVar2) {
+      fVar1 = (float)(dVar13 - (double)(float)(dVar12 * dVar9 - dVar8));
+      *pfVar7 = *pfVar7 * fVar1;
+      pfVar7 = pfVar6 + 2;
+      pfVar3[-1] = pfVar3[-1] * fVar1;
+    }
+  }
+  if ((param_2 & 1) != 0) {
+    *pfVar7 = (float)(dVar13 + dVar10) * *pfVar7;
+  }
+  __restfpr_28();
+  __restgprlr_28();
+  return;
 }
 

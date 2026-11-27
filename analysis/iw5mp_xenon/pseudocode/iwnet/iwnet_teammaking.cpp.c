@@ -44,11 +44,33 @@ void TeamMaking_Init(void)
 
 // 826E3F70  TeamMaking_InitRequest  (iwnet/iwnet_teammaking.cpp:271)
 
-void TeamMaking_InitRequest(void)
+void TeamMaking_InitRequest
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined4 param_4,
+               undefined4 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  void *_Dst;
+  void *pvVar1;
+  undefined4 *puVar2;
+  
+  _Dst = (void *)__savegprlr_27();
+  pvVar1 = memset(_Dst,0,0xa0);
+  *(int *)((int)_Dst + 0x90) = (int)param_3;
+  if (0 < (int)param_3) {
+    puVar2 = (undefined4 *)((int)_Dst + -8);
+    param_2 = param_2 + -0xc;
+    do {
+      puVar2[3] = *(undefined4 *)((int)param_2 + 0x54);
+      param_2 = param_2 + 0x58;
+      puVar2 = puVar2 + 2;
+      *puVar2 = *(undefined4 *)param_2;
+      *(undefined4 *)((int)_Dst + 0x94) = param_4;
+      *(undefined4 *)((int)_Dst + 0x98) = param_5;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
+  }
+  __restgprlr_27(pvVar1);
+  return;
 }
 
 
@@ -99,10 +121,55 @@ void TeamMaking_DefaultTeamsToAllies(int param_1,longlong param_2)
 
 // 826E4020  TeamMaking_FindTeams  (iwnet/iwnet_teammaking.cpp:304)
 
-void TeamMaking_FindTeams(void)
+void TeamMaking_FindTeams
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte *pbVar1;
+  int iVar3;
+  undefined8 uVar2;
+  char cVar4;
+  longlong lVar5;
+  longlong lVar6;
+  byte local_f0 [32];
+  undefined1 auStack_d0 [208];
+  
   __savegprlr_28();
+  TeamMaking_InitRequest(auStack_d0);
+  iVar3 = TeamMaking_GetMemberCount(auStack_d0);
+  if ((int)param_4 != iVar3) {
+    uVar2 = TeamMaking_GetMemberCount(auStack_d0);
+    MyAssertHandler(0xffffffff821a8e80,0x135,0,0xffffffff821a8e40,param_4,uVar2);
+  }
+  if (0 < (int)param_3) {
+    lVar5 = param_2 + -4;
+    lVar6 = param_3;
+    do {
+      lVar5 = lVar5 + 0x58;
+      *(undefined4 *)lVar5 = 2;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  cVar4 = TeamMaking_FindTeamsImmediate(auStack_d0,local_f0);
+  if (cVar4 != '\0') {
+    if ((param_7 & 0xff) != 0) {
+      iVar3 = 0;
+      if (0 < (int)param_3) {
+        param_2 = param_2 + -4;
+        do {
+          pbVar1 = local_f0 + iVar3;
+          iVar3 = iVar3 + 1;
+          param_2 = param_2 + 0x58;
+          *(uint *)param_2 = (uint)*pbVar1;
+          param_3 = param_3 + -1;
+        } while (param_3 != 0);
+      }
+    }
+    __restgprlr_28(2);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 

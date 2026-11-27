@@ -28,10 +28,84 @@ double MidEstPitch(double param_1,double param_2,double param_3,double param_4)
 
 // 828C9C90  TDPitchRefine  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/midpitch.c:84)
 
-void TDPitchRefine(void)
+void TDPitchRefine(undefined8 param_1,double param_2,undefined8 param_3,longlong param_4,
+                  undefined8 param_5,float *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  longlong lVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  int iVar10;
+  ulonglong uVar11;
+  double dVar12;
+  double extraout_f1;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  
   __savegprlr_23();
+  lVar2 = __savefpr_28();
+  iVar3 = (int)(extraout_f1 * param_2 + 0.5);
+  if (4 < iVar3) {
+    iVar3 = 4;
+  }
+  uVar1 = (uint)((float)(extraout_f1 - (double)(longlong)iVar3) + 0.5);
+  uVar11 = (ulonglong)uVar1;
+  iVar3 = (int)((float)((double)(longlong)iVar3 + extraout_f1) + 0.5);
+  if ((int)uVar1 < 8) {
+    uVar11 = 8;
+  }
+  if (0xa0 < iVar3) {
+    iVar3 = 0xa0;
+  }
+  lVar8 = 0;
+  dVar12 = 0.0;
+  lVar6 = (uVar11 & 0x3fffffff) * 4 + lVar2;
+  lVar7 = param_4 - uVar11;
+  lVar4 = 0;
+  dVar14 = dVar12;
+  dVar13 = dVar12;
+  dVar16 = -3.4028234663852886e+38;
+  do {
+    dVar15 = dVar13;
+    dVar13 = (double)DotProd(lVar2,lVar6,lVar7);
+    lVar5 = lVar8;
+    dVar17 = dVar13;
+    if ((dVar13 <= dVar16) &&
+       (lVar5 = lVar4, dVar15 = dVar14, dVar17 = dVar16, (int)lVar4 == (int)lVar8 + -1)) {
+      dVar12 = dVar13;
+    }
+    lVar8 = lVar8 + 1;
+    lVar7 = lVar7 + -1;
+    lVar6 = lVar6 + 4;
+    lVar4 = lVar5;
+    dVar14 = dVar15;
+    dVar16 = dVar17;
+  } while ((int)lVar8 + (int)uVar11 <= iVar3);
+  uVar9 = lVar5 + uVar11;
+  iVar10 = (int)uVar9;
+  if (((int)uVar11 < iVar10) && (iVar10 < iVar3)) {
+    dVar12 = (double)QuadraticPeak(dVar15,dVar17,dVar12);
+    dVar12 = (double)(float)(dVar12 + (double)(longlong)iVar10);
+  }
+  else {
+    *param_6 = (float)dVar17;
+    dVar12 = (double)(longlong)iVar10;
+  }
+  dVar14 = (double)DotProd(lVar2,lVar2,param_4 - uVar9);
+  lVar2 = (uVar9 & 0x3fffffff) * 4 + lVar2;
+  dVar13 = (double)DotProd(lVar2,lVar2,param_4 - uVar9);
+  *param_6 = *param_6 / SQRT((float)(dVar13 * dVar14 + 9.999999974752427e-07));
+  __restfpr_28(dVar12);
+  __restgprlr_23();
+  return;
 }
 

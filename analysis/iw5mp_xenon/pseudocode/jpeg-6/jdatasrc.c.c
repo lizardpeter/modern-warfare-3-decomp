@@ -38,10 +38,27 @@ void term_source(void)
 
 // 827BC1A0  jpeg_memory_src  (jpeg-6/jdatasrc.c:227)
 
-void jpeg_memory_src(void)
+void jpeg_memory_src(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar2 = __savegprlr_29();
+  if (*(int *)(iVar2 + 0x20) == 0) {
+    uVar3 = (*(code *)**(undefined4 **)(iVar2 + 4))(iVar2,0,0x20);
+    *(undefined4 *)(iVar2 + 0x20) = uVar3;
+  }
+  puVar1 = *(undefined4 **)(iVar2 + 0x20);
+  puVar1[1] = param_3;
+  puVar1[2] = init_source;
+  puVar1[3] = 0;
+  puVar1[4] = skip_input_data;
+  puVar1[5] = jpeg_resync_to_restart;
+  puVar1[6] = term_source;
+  *puVar1 = param_2;
+  __restgprlr_29();
+  return;
 }
 

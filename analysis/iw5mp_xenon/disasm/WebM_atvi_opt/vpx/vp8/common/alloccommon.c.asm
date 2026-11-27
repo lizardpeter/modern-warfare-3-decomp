@@ -3,10 +3,57 @@
 ; 82811008  vp8_update_mode_info_border  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:29)
   82811008  7D8802A6             mfspr r12,LR
   8281100C  481056B1             bl 0x829166bc
+  82811010  9421FF90             stwu r1,-0x70(r1)
+  82811014  39650002             addi r11,r5,0x2
+  82811018  1FA50098             mulli r29,r5,0x98
+  8281101C  1D4B0098             mulli r10,r11,0x98
+  82811020  7C7E1B78             or r30,r3,r3
+  82811024  7C9F2378             or r31,r4,r4
+  82811028  38BD0098             addi r5,r29,0x98
+  8281102C  38800000             li r4,0x0
+  82811030  7C6A1850             subf r3,r10,r3
+  82811034  4802D9FD             bl 0x8283ea30
+  82811038  2F1F0000             cmpwi cr6,r31,0x0
+  8281103C  40990024             ble cr6,0x82811060
+  82811040  3BDEFF68             subi r30,r30,0x98
+LAB_82811044:
+  82811044  38A00098             li r5,0x98
+  82811048  38800000             li r4,0x0
+  8281104C  7FC3F378             or r3,r30,r30
+  82811050  4802D9E1             bl 0x8283ea30
+  82811054  37FFFFFF             subic. r31,r31,0x1
+  82811058  7FDEEA14             add r30,r30,r29
+  8281105C  4082FFE8             bne 0x82811044
+LAB_82811060:
+  82811060  38210070             addi r1,r1,0x70
+  82811064  481056A8             b 0x8291670c
 
 ; 82811068  vp8_de_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:40)
   82811068  7D8802A6             mfspr r12,LR
   8281106C  48105651             bl 0x829166bc
+  82811070  9421FF90             stwu r1,-0x70(r1)
+  82811074  7C7D1B78             or r29,r3,r3
+  82811078  3BC335BC             addi r30,r3,0x35bc
+  8281107C  3BE00004             li r31,0x4
+LAB_82811080:
+  82811080  7FC3F378             or r3,r30,r30
+  82811084  480305B5             bl 0x82841638
+  82811088  37FFFFFF             subic. r31,r31,0x1
+  8281108C  3BDE0034             addi r30,r30,0x34
+  82811090  4082FFF0             bne 0x82811080
+  82811094  387D36E0             addi r3,r29,0x36e0
+  82811098  480305A1             bl 0x82841638
+  8281109C  387D36AC             addi r3,r29,0x36ac
+  828110A0  48030599             bl 0x82841638
+  828110A4  807D5FC4             lwz r3,0x5fc4(r29)
+  828110A8  4BFF2EE1             bl 0x82803f88
+  828110AC  807D376C             lwz r3,0x376c(r29)
+  828110B0  4BFF2ED9             bl 0x82803f88
+  828110B4  39600000             li r11,0x0
+  828110B8  917D5FC4             stw r11,0x5fc4(r29)
+  828110BC  917D376C             stw r11,0x376c(r29)
+  828110C0  38210070             addi r1,r1,0x70
+  828110C4  48105648             b 0x8291670c
 
 ; 828110C8  vp8_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:58)
   828110C8  7D8802A6             mfspr r12,LR
@@ -199,5 +246,54 @@ LAB_8281136c:
   8281137C  91633744             stw r11,0x3744(r3)
   82811380  4E800020             blr
 
+; 82811388  vp8_create_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:169)
+  82811388  7D8802A6             mfspr r12,LR
+  8281138C  9181FFF8             stw r12,-0x8(r1)
+  82811390  FBC1FFE8             std r30,-0x18(r1)
+  82811394  FBE1FFF0             std r31,-0x10(r1)
+  82811398  9421FF90             stwu r1,-0x70(r1)
+  8281139C  7C7F1B78             or r31,r3,r3
+  828113A0  4800A901             bl 0x8281bca0
+  828113A4  7FE3FB78             or r3,r31,r31
+  828113A8  48000681             bl 0x82811a28
+  828113AC  7FE3FB78             or r3,r31,r31
+  828113B0  480007D9             bl 0x82811b88
+  828113B4  387F67DB             addi r3,r31,0x67db
+  828113B8  480008E1             bl 0x82811c98
+  828113BC  3BC00000             li r30,0x0
+  828113C0  39600001             li r11,0x1
+  828113C4  93DF3738             stw r30,0x3738(r31)
+  828113C8  38A00010             li r5,0x10
+  828113CC  917F3734             stw r11,0x3734(r31)
+  828113D0  38800000             li r4,0x0
+  828113D4  93DF373C             stw r30,0x373c(r31)
+  828113D8  387F5FB4             addi r3,r31,0x5fb4
+  828113DC  93DF3740             stw r30,0x3740(r31)
+  828113E0  93DF3744             stw r30,0x3744(r31)
+  828113E4  93DF6C70             stw r30,0x6c70(r31)
+  828113E8  93DF35B0             stw r30,0x35b0(r31)
+  828113EC  93DF35B4             stw r30,0x35b4(r31)
+  828113F0  4802D641             bl 0x8283ea30
+  828113F4  93DF5FA8             stw r30,0x5fa8(r31)
+  828113F8  93DF5FAC             stw r30,0x5fac(r31)
+  828113FC  38210070             addi r1,r1,0x70
+  82811400  8181FFF8             lwz r12,-0x8(r1)
+  82811404  7D8803A6             mtspr LR,r12
+  82811408  EBC1FFE8             ld r30,-0x18(r1)
+  8281140C  EBE1FFF0             ld r31,-0x10(r1)
+  82811410  4E800020             blr
+
 ; 82811418  vp8_remove_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:193)
   82811418  4BFFFC50             b 0x82811068
+
+; 82811420  vp8_initialize_common  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:198)
+  82811420  7D8802A6             mfspr r12,LR
+  82811424  9181FFF8             stw r12,-0x8(r1)
+  82811428  9421FFA0             stwu r1,-0x60(r1)
+  8281142C  48000695             bl 0x82811ac0
+  82811430  48000949             bl 0x82811d78
+  82811434  480003E5             bl 0x82811818
+  82811438  38210060             addi r1,r1,0x60
+  8281143C  8181FFF8             lwz r12,-0x8(r1)
+  82811440  7D8803A6             mtspr LR,r12
+  82811444  4E800020             blr

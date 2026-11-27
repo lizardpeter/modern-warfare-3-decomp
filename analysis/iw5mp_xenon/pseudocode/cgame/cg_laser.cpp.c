@@ -5,8 +5,49 @@
 void CG_LaserRegisterDvars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  
   __savegprlr_28();
+  __savefpr_28();
+  DAT_82a22d70 = Dvar_RegisterBool(0xffffffff820189f0,0,4,0xffffffff82018a00);
+  uVar4 = 0x47efffffe0000000;
+  uVar1 = 0x3ff0000000000000;
+  uVar2 = 0x4097700000000000;
+  DAT_82a22d50 = Dvar_RegisterFloat(0x4097700000000000,0x3ff0000000000000,0x47efffffe0000000,
+                                    0xffffffff820189bc);
+  DAT_82a22d68 = Dvar_RegisterFloat(uVar2,uVar1,uVar4,0xffffffff82018978);
+  uVar3 = 0x3f50624de0000000;
+  DAT_82a22d60 = Dvar_RegisterFloat(0x3fe99999a0000000,0x3f50624de0000000,uVar4,0xffffffff82018948);
+  DAT_82a22d4c = Dvar_RegisterBool(0xffffffff820188f4,1,0,0xffffffff82018900);
+  DAT_82a22d7c = Dvar_RegisterBool(0xffffffff820188d4,0,0,0xffffffff82018858);
+  uVar2 = 0xc7efffffe0000000;
+  DAT_82a22d6c = Dvar_RegisterFloat(0x402e000000000000,0xc7efffffe0000000,uVar4,0xffffffff820187ec);
+  DAT_82a22d64 = Dvar_RegisterFloat(0x4008000000000000,uVar3,uVar4,0xffffffff820187a0);
+  DAT_82a22d48 = Dvar_RegisterFloat(0x402a000000000000,uVar2,uVar4,0xffffffff82018734);
+  DAT_82a22d84 = Dvar_RegisterFloat(0xc008000000000000,uVar2,uVar4,0xffffffff82018720);
+  DAT_82a22d40 = Dvar_RegisterFloat(0x3fe0000000000000,uVar2,uVar4,0xffffffff82018694);
+  uVar2 = 0;
+  DAT_82a22d80 = Dvar_RegisterFloat(0x3fc99999a0000000,0,uVar4,0xffffffff82018650);
+  DAT_82a22d78 = Dvar_RegisterBool(0xffffffff82018618,0,4,0xffffffff82018624);
+  DAT_82a22d5c = Dvar_RegisterFloat(0x40b3880000000000,uVar1,uVar4,0xffffffff82018608);
+  DAT_82a22d58 = Dvar_RegisterFloat(0x403e000000000000,uVar3,uVar4,0xffffffff820185f8);
+  DAT_82a22d54 = Dvar_RegisterFloat(0x4059000000000000,uVar3,uVar4,0xffffffff820185e0);
+  DAT_82a22d44 = Dvar_RegisterFloat(uVar2,uVar2,uVar4,0xffffffff820185cc);
+  __restfpr_28();
+  __restgprlr_28();
+  return;
+}
+
+
+// 822D48F0  CG_LaserForceOnEnabled  (cgame/cg_laser.cpp:76)
+
+undefined1 CG_LaserForceOnEnabled(void)
+
+{
+  return *(undefined1 *)(DAT_82a22d70 + 0xc);
 }
 
 
@@ -76,7 +117,6 @@ void AddCore(undefined8 param_1,int param_2,float *param_3,float *param_4,undefi
   iVar5 = DAT_82a22d68;
   if ((int)param_5 != 1) {
     if ((int)param_5 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82018ad4,0x87,0,0xffffffff82018a6c,0xffffffff82018a88,param_5);
     }
     iVar5 = DAT_82a22d50;
@@ -102,18 +142,18 @@ void AddCore(undefined8 param_1,int param_2,float *param_3,float *param_4,undefi
     local_11c = param_3[4] * fVar1 + param_3[1];
     local_118 = param_3[5] * fVar1 + param_3[2];
     if (1.000100016593933 < dVar6) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82018ad4,0x9b,0,0xffffffff82000f98,0xffffffff82018a44);
+      dVar6 = (double)local_90[0];
     }
     dVar8 = 1.0;
     local_cc = local_110;
     local_c8 = local_10c;
     local_c4 = local_108;
-    iVar5 = (int)((float)(1.0 - dVar6) * 255.0);
-    local_d8 = (longlong)iVar5;
     local_c0 = local_120;
     local_bc = local_11c;
     local_b8 = local_118;
+    iVar5 = (int)((float)(1.0 - dVar6) * 255.0);
+    local_d8 = (longlong)iVar5;
     iVar5 = ClampInt(iVar5,0,0xff);
     local_b0 = iVar5 << 0x18 | 0xffffff;
     local_b4 = 0xffffffff;
@@ -206,38 +246,37 @@ void CG_GetActiveWeaponBoneIndex
   }
   uVar4 = BG_GetAlternateWeapon(uVar7,bVar10);
   iVar2 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (iVar2 != 0) {
-    if (bVar9) {
-      iVar2 = *(int *)(iVar2 + 0x1e0);
-    }
-    else {
-      iVar2 = *(int *)(iVar2 + 4);
-    }
-    iVar2 = *(int *)((uVar7 >> 6 & 0x3c) + iVar2);
-    if (iVar2 != 0) {
-      bVar1 = *(byte *)(iVar3 + 9);
-      lVar8 = 0;
-      uVar7 = 0;
-      if (bVar1 != 0) {
-        piVar6 = (int *)(*(int *)(iVar3 + 0x98) + -4);
-        do {
-          if ((iVar2 == piVar6[1]) &&
-             (iVar3 = XModelGetBoneIndex(iVar2,param_4 & 0xffff,lVar8,param_5), iVar3 != 0)) {
-            __restgprlr_24(1);
-            return;
-          }
-          piVar6 = piVar6 + 1;
-          uVar7 = uVar7 + 1;
-          lVar8 = (ulonglong)*(byte *)(*piVar6 + 4) + lVar8;
-        } while (uVar7 < bVar1);
-      }
-    }
-    *(undefined1 *)param_5 = 0xff;
-    __restgprlr_24(0);
-    return;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82018ad4,0xeb,0,0xffffffff82000f98,0xffffffff8200a88c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82018ad4,0xeb,0,0xffffffff82000f98,0xffffffff8200a88c);
+  if (bVar9) {
+    iVar2 = *(int *)(iVar2 + 0x1e0);
+  }
+  else {
+    iVar2 = *(int *)(iVar2 + 4);
+  }
+  iVar2 = *(int *)((uVar7 >> 6 & 0x3c) + iVar2);
+  if (iVar2 != 0) {
+    bVar1 = *(byte *)(iVar3 + 9);
+    lVar8 = 0;
+    uVar7 = 0;
+    if (bVar1 != 0) {
+      piVar6 = (int *)(*(int *)(iVar3 + 0x98) + -4);
+      do {
+        if ((iVar2 == piVar6[1]) &&
+           (iVar3 = XModelGetBoneIndex(iVar2,param_4 & 0xffff,lVar8,param_5), iVar3 != 0)) {
+          __restgprlr_24(1);
+          return;
+        }
+        piVar6 = piVar6 + 1;
+        uVar7 = uVar7 + 1;
+        lVar8 = (ulonglong)*(byte *)(*piVar6 + 4) + lVar8;
+      } while (uVar7 < bVar1);
+    }
+  }
+  *(undefined1 *)param_5 = 0xff;
+  __restgprlr_24(0);
+  return;
 }
 
 
@@ -285,22 +324,94 @@ LAB_822d4fbc:
 }
 
 
+// 822D4FC8  CG_LaserClearAll  (cgame/cg_laser.cpp:299)
+
+void CG_LaserClearAll(void)
+
+{
+  DAT_82a22d74 = 0;
+  return;
+}
+
+
+// 822D4FD8  CG_LaserAdd  (cgame/cg_laser.cpp:305)
+
+void CG_LaserAdd(undefined8 param_1,undefined2 param_2)
+
+{
+  undefined2 *puVar1;
+  
+  if (DAT_82a22d74 == 0x60) {
+    return;
+  }
+  puVar1 = &DAT_82a22d88 + DAT_82a22d74;
+  DAT_82a22d74 = DAT_82a22d74 + 1;
+  *puVar1 = param_2;
+  return;
+}
+
+
 // 822D5000  CG_LaserDrawAll  (cgame/cg_laser.cpp:327)
 
 void CG_LaserDrawAll(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ushort uVar1;
+  undefined8 uVar2;
+  int iVar5;
+  undefined8 uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  ushort *puVar7;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  
+  uVar2 = __savegprlr_26();
+  iVar5 = CG_GetLocalClientGlobals();
+  puVar7 = &DAT_82a22d88;
+  iVar6 = 0;
+  local_50 = *(undefined4 *)(iVar5 + 0x6b9fc);
+  local_4c = *(undefined4 *)(iVar5 + 0x6ba00);
+  local_48 = *(undefined4 *)(iVar5 + 0x6ba04);
+  iVar5 = DAT_82a22d74;
+  if (0 < DAT_82a22d74) {
+    do {
+      uVar1 = *puVar7;
+      if ((uint)uVar1 != (uint)uVar2) {
+        uVar3 = CG_GetEntity(uVar2,uVar1);
+        uVar4 = Com_GetClientDObj(uVar1,uVar2);
+        CG_LaserDraw(uVar2,0,uVar3,uVar4,uVar3,&local_50,0,1);
+        iVar5 = DAT_82a22d74;
+      }
+      iVar6 = iVar6 + 1;
+      puVar7 = puVar7 + 1;
+    } while (iVar6 < iVar5);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 822D4530  ClampInt  (universal/com_math.h:616)
 
-void ClampInt(void)
+void ClampInt(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((int)param_3 <= (int)param_2) {
+    MyAssertHandler(0xffffffff82003018,0x269,0,0xffffffff82000f98,0xffffffff820185c0);
+  }
+  if ((int)uVar1 < (int)param_2) {
+    __restgprlr_29(param_2);
+    return;
+  }
+  if ((int)uVar1 <= (int)param_3) {
+    param_3 = uVar1;
+  }
+  __restgprlr_29(param_3);
+  return;
 }
 

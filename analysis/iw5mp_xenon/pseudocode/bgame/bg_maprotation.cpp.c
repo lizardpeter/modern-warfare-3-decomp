@@ -27,8 +27,123 @@ void PrivateMapRotation_ResetWeights(uint *param_1)
 void PrivateMapRotation_CalculateTotalWeight(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint *puVar1;
+  int iVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  uint *puVar5;
+  ulonglong uVar6;
+  
+  puVar1 = (uint *)__savegprlr_26();
+  do {
+    if (puVar1 == (uint *)0x0) {
+      MyAssertHandler(0xffffffff821e2120,0x17,0,0xffffffff82000f98,0xffffffff821e2114);
+    }
+    if (*puVar1 == 0) {
+      MyAssertHandler(0xffffffff821e2120,0x18,0,0xffffffff82000f98,0xffffffff821e2164);
+    }
+    uVar3 = (ulonglong)*puVar1;
+    iVar2 = 0;
+    uVar4 = 0;
+    if (uVar3 != 0) {
+      uVar6 = uVar3;
+      puVar5 = puVar1;
+      do {
+        puVar5 = puVar5 + 5;
+        if ((uVar4 != puVar1[0x51]) || (uVar3 < 2)) {
+          iVar2 = *puVar5 + iVar2;
+        }
+        uVar4 = uVar4 + 1;
+        uVar6 = uVar6 - 1;
+      } while (uVar6 != 0);
+      if (iVar2 != 0) {
+        __restgprlr_26();
+        return;
+      }
+    }
+    uVar4 = 0;
+    puVar5 = puVar1;
+    if (uVar3 != 0) {
+      do {
+        uVar4 = uVar4 + 1;
+        puVar5[5] = 1;
+        puVar5 = puVar5 + 5;
+      } while (uVar4 < *puVar1);
+    }
+  } while( true );
+}
+
+
+// 827FBC40  PrivateMapRotation_GetIndexByWeight  (bgame/bg_maprotation.cpp:48)
+
+void PrivateMapRotation_GetIndexByWeight(undefined8 param_1,ulonglong param_2)
+
+{
+  uint *puVar1;
+  uint *puVar5;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  puVar5 = (uint *)__savegprlr_28();
+  if (puVar5 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821e2120,0x32,0,0xffffffff82000f98,0xffffffff821e2114);
+  }
+  if (*puVar5 == 0) {
+    MyAssertHandler(0xffffffff821e2120,0x33,0,0xffffffff82000f98,0xffffffff821e2164);
+  }
+  uVar2 = PrivateMapRotation_CalculateTotalWeight(puVar5);
+  if ((uVar2 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    uVar3 = PrivateMapRotation_CalculateTotalWeight(puVar5);
+    MyAssertHandler(0xffffffff821e2120,0x34,0,0xffffffff821e2180,param_2,uVar3);
+  }
+  uVar4 = (ulonglong)*puVar5;
+  lVar6 = param_2 + 1;
+  uVar2 = 0;
+  if (uVar4 != 0) {
+    puVar1 = puVar5 + 0x51;
+    uVar2 = 0;
+    while( true ) {
+      puVar5 = puVar5 + 5;
+      if ((((uVar2 & 0xffffffff) != (ulonglong)*puVar1) || (uVar4 < 2)) &&
+         (lVar6 = lVar6 - (ulonglong)*puVar5, lVar6 < 1)) break;
+      uVar2 = uVar2 + 1;
+      if (uVar4 <= (uVar2 & 0xffffffff)) {
+        __restgprlr_28();
+        return;
+      }
+    }
+  }
+  __restgprlr_28(uVar2);
+  return;
+}
+
+
+// 827FBD48  PrivateMapRotation_SetInitialMapSelection  (bgame/bg_maprotation.cpp:68)
+
+void PrivateMapRotation_SetInitialMapSelection(uint *param_1,uint param_2)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  
+  if (param_1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821e2120,0x45,0,0xffffffff82000f98,0xffffffff821e2114);
+  }
+  param_1[0x52] = param_2;
+  param_1[0x51] = 0xffff;
+  Dvar_SetString(DAT_83f71e10,param_1 + param_2 * 5 + 1);
+  uVar2 = 0;
+  puVar1 = param_1;
+  if (*param_1 != 0) {
+    do {
+      uVar2 = uVar2 + 1;
+      puVar1[5] = 1;
+      puVar1 = puVar1 + 5;
+    } while (uVar2 < *param_1);
+  }
+  return;
 }
 
 
@@ -37,8 +152,37 @@ void PrivateMapRotation_CalculateTotalWeight(void)
 void PrivateMapRotation_GetNextMapSelection(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar2;
+  undefined8 uVar1;
+  uint uVar3;
+  
+  puVar2 = (uint *)__savegprlr_28();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821e2120,0x50,0,0xffffffff82000f98,0xffffffff821e2114);
+  }
+  uVar3 = *puVar2;
+  if (uVar3 == 0) {
+    __restgprlr_28(0);
+    return;
+  }
+  if ((puVar2[0x52] == 0xffff) || (uVar3 <= puVar2[0x52])) {
+    if (uVar3 == 0) {
+      MyAssertHandler(0xffffffff821e2120,0x56,0,0xffffffff82000f98,0xffffffff821e2164);
+    }
+    uVar1 = PrivateMapRotation_CalculateTotalWeight(puVar2);
+    if ((int)uVar1 < 1) {
+      MyAssertHandler(0xffffffff821e2120,0x58,0,0xffffffff82000f98,0xffffffff821e2228);
+    }
+    uVar1 = irand(0,uVar1);
+    uVar3 = PrivateMapRotation_GetIndexByWeight(puVar2,uVar1);
+    puVar2[0x52] = uVar3;
+  }
+  if (*puVar2 <= puVar2[0x52]) {
+    MyAssertHandler(0xffffffff821e2120,0x5d,0,0xffffffff821e21e0);
+  }
+  Dvar_SetString(DAT_83f71e10,puVar2 + puVar2[0x52] * 5 + 1);
+  __restgprlr_28(puVar2 + puVar2[0x52] * 5 + 1);
+  return;
 }
 
 
@@ -47,8 +191,162 @@ void PrivateMapRotation_GetNextMapSelection(void)
 void PrivateMapRotation_ClearNextMapSelection(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821e2120,0x66,0,0xffffffff82000f98,0xffffffff821e2114);
+  }
+  if (*(int *)(iVar2 + 0x148) != 0xffff) {
+    if (*(int *)((*(int *)(iVar2 + 0x148) + 1) * 0x14 + iVar2) < 1) {
+      MyAssertHandler(0xffffffff821e2120,0x6a,0,0xffffffff82000f98,0xffffffff821e2238);
+    }
+    iVar1 = (*(int *)(iVar2 + 0x148) + 1) * 0x14;
+    *(int *)(iVar1 + iVar2) = *(int *)(iVar1 + iVar2) + -1;
+    *(undefined4 *)(iVar2 + 0x144) = *(undefined4 *)(iVar2 + 0x148);
+    *(undefined4 *)(iVar2 + 0x148) = 0xffff;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 827FC020  PrivateMapRotation_AddNewEntry  (bgame/bg_maprotation.cpp:114)
+
+void PrivateMapRotation_AddNewEntry(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  uint *puVar2;
+  int iVar3;
+  uint *puVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  
+  puVar2 = (uint *)__savegprlr_27();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821e2120,0x75,0,0xffffffff82000f98,0xffffffff82136374);
+  }
+  uVar6 = 0;
+  if (*puVar2 != 0) {
+    puVar4 = puVar2 + 1;
+    do {
+      iVar3 = I_strncmp(param_2,puVar4,0x10);
+      if (iVar3 == 0) {
+        __restgprlr_27(uVar6);
+        return;
+      }
+      uVar6 = uVar6 + 1;
+      puVar4 = puVar4 + 5;
+    } while ((uVar6 & 0xffffffff) < (ulonglong)*puVar2);
+  }
+  uVar1 = *puVar2;
+  if (uVar1 < 0x10) {
+    I_strncpyz(puVar2 + uVar1 * 5 + 1,param_2,0x10);
+    puVar2[uVar1 * 5 + 5] = 1;
+    uVar5 = *puVar2;
+    *puVar2 = uVar5 + 1;
+    if (uVar5 + 1 == 1) {
+      puVar2[0x52] = uVar1;
+      puVar2[0x51] = 0xffff;
+      Dvar_SetString(DAT_83f71e10,puVar2 + uVar1 * 5 + 1);
+      uVar5 = 0;
+      puVar4 = puVar2;
+      if (*puVar2 != 0) {
+        do {
+          uVar5 = uVar5 + 1;
+          puVar4[5] = 1;
+          puVar4 = puVar4 + 5;
+        } while (uVar5 < *puVar2);
+      }
+    }
+    __restgprlr_27(uVar1);
+    return;
+  }
+  __restgprlr_27(0xffff);
+  return;
+}
+
+
+// 827FC160  PrivateMapRotation_RemoveEntry  (bgame/bg_maprotation.cpp:143)
+
+void PrivateMapRotation_RemoveEntry(undefined8 param_1,undefined8 param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  uint *puVar4;
+  void *pvVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  
+  uVar2 = __savegprlr_23();
+  uVar3 = uVar2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = MyAssertHandler(0xffffffff821e2120,0x92,0,0xffffffff82000f98,0xffffffff82136374);
+  }
+  puVar4 = (uint *)uVar2;
+  uVar9 = 0;
+  if (*puVar4 != 0) {
+    lVar8 = uVar2 + 4;
+    do {
+      uVar3 = I_strncmp(param_2,lVar8,0x10);
+      if ((int)uVar3 == 0) break;
+      uVar9 = uVar9 + 1;
+      lVar8 = lVar8 + 0x14;
+    } while ((uVar9 & 0xffffffff) < (ulonglong)*puVar4);
+  }
+  if ((uVar9 & 0xffffffff) == (ulonglong)*puVar4) goto LAB_827fc378;
+  uVar6 = (ulonglong)*puVar4 - 1;
+  *puVar4 = (uint)uVar6;
+  if ((uVar6 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+    uVar3 = (uVar6 - uVar9) + (uVar6 - uVar9 & 0x3fffffff) * 4;
+    if ((int)((uint)((uVar3 & 0xffffffff) << 2) | (uint)uVar3 >> 0x1e) < 0) {
+      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2520,
+                      0xffffffff821e2578);
+    }
+    uVar3 = uVar9 + (uVar9 & 0x3fffffff) * 4 & 0x3fffffff;
+    lVar8 = uVar3 * 4 + uVar2;
+    uVar6 = lVar8 + 0x18;
+    if ((uVar6 & 0xffffffff) < (uVar2 + 4 & 0xffffffff)) {
+LAB_827fc298:
+      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2398,
+                      0xffffffff821e24d0);
+    }
+    else if ((uVar2 + 0x144 & 0xffffffff) <
+             ((*puVar4 + uVar9 + (*puVar4 + uVar9 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 * -4 +
+              uVar2 + 0x18 & 0xffffffff)) goto LAB_827fc298;
+    uVar7 = lVar8 + 4;
+    if ((uVar7 & 0xffffffff) < (uVar2 + 4 & 0xffffffff)) {
+LAB_827fc2f0:
+      MyAssertHandler(0xffffffff821e2120,0xa2,0,0xffffffff820011f4,0xffffffff821e2268,
+                      0xffffffff821e24d0);
+    }
+    else if ((uVar2 + 0x144 & 0xffffffff) <
+             ((*puVar4 + uVar9 + (*puVar4 + uVar9 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 * -4 +
+              uVar2 + 4 & 0xffffffff)) goto LAB_827fc2f0;
+    pvVar5 = memmove((void *)uVar7,(void *)uVar6,
+                     (size_t)(((*puVar4 - uVar9) + (*puVar4 - uVar9 & 0x3fffffff) * 4 & 0xffffffff)
+                             << 2));
+    uVar3 = (ulonglong)(int)pvVar5;
+  }
+  uVar1 = puVar4[0x52];
+  if ((uVar9 & 0xffffffff) < (ulonglong)uVar1) {
+    puVar4[0x52] = uVar1 - 1;
+  }
+  else if (((ulonglong)uVar1 == (uVar9 & 0xffffffff)) && (*puVar4 != 0)) {
+    uVar3 = PrivateMapRotation_GetNextMapSelection(uVar2);
+  }
+  if ((uVar9 & 0xffffffff) <= (ulonglong)puVar4[0x51]) {
+    puVar4[0x51] = 0xffff;
+  }
+LAB_827fc378:
+  __restgprlr_23(uVar3);
+  return;
 }
 
 
@@ -58,7 +356,6 @@ void PrivateMapRotation_ClearAll(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821e2120,0xb3,0,0xffffffff82000f98,0xffffffff82136374);
   }
   *param_1 = 0;

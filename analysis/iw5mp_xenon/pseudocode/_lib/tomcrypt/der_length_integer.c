@@ -2,10 +2,58 @@
 
 // 82255BF8  der_length_integer  (line unknown)
 
-void der_length_integer(void)
+void der_length_integer(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  int iVar4;
+  uint uVar5;
+  longlong lVar2;
+  int iVar6;
+  ulonglong uVar3;
+  ulonglong uVar7;
+  longlong lVar8;
+  
+  uVar1 = __savegprlr_27();
+  iVar4 = (*DAT_84897f10)(uVar1,0);
+  if (iVar4 == -1) {
+    uVar7 = (*DAT_84897f14)(uVar1);
+    lVar8 = uVar7 - (uVar7 & 7);
+    uVar7 = lVar8 + 8;
+    iVar4 = (*DAT_84897f18)(uVar1);
+    iVar6 = (*DAT_84897f14)(uVar1);
+    if ((iVar4 + 1 == iVar6) && (uVar3 = (*DAT_84897f14)(uVar1), (uVar3 & 7) == 0)) {
+      uVar7 = lVar8 + 7;
+    }
+    uVar7 = (uVar7 & 0xffffffff) >> 3;
+    goto LAB_82255ce8;
+  }
+  uVar5 = (*DAT_84897f14)(uVar1);
+  if ((uVar5 & 7) == 0) {
+LAB_82255c68:
+    lVar8 = 1;
+  }
+  else {
+    iVar4 = (*DAT_84897f10)(uVar1,0);
+    lVar8 = 0;
+    if (iVar4 == 0) goto LAB_82255c68;
+  }
+  lVar2 = (*DAT_84897f28)(uVar1);
+  uVar7 = lVar2 + lVar8;
+LAB_82255ce8:
+  lVar8 = uVar7 + 1;
+  iVar4 = (int)lVar8;
+  if (0x7f < (uVar7 & 0xffffffff)) {
+    uVar3 = uVar7 & 0xffffffff;
+    while (uVar3 != 0) {
+      lVar8 = lVar8 + 1;
+      iVar4 = (int)lVar8;
+      uVar7 = (uVar7 & 0xffffffff) >> 8;
+      uVar3 = uVar7;
+    }
+  }
+  *param_2 = iVar4 + 1;
+  __restgprlr_27(0);
+  return;
 }
 

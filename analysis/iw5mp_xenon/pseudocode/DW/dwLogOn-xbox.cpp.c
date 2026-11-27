@@ -42,6 +42,23 @@ int _dynamic_initializer_for__overlappedTasks__(void)
 }
 
 
+// 826E8580  dwLogOn_CleanupEnumHandle_Internal  (DW/dwLogOn-xbox.cpp:57)
+
+BOOL dwLogOn_CleanupEnumHandle_Internal(int param_1)
+
+{
+  BOOL BVar1;
+  
+  TaskManager_CancelTasksForController(0xffffffff844f4af8,1,param_1);
+  BVar1 = 0;
+  if ((HANDLE)(&DAT_844f2238)[param_1] != (HANDLE)0x0) {
+    BVar1 = CloseHandle((HANDLE)(&DAT_844f2238)[param_1]);
+    (&DAT_844f2238)[param_1] = 0;
+  }
+  return BVar1;
+}
+
+
 // 826E85E8  dwLogOn_Init  (DW/dwLogOn-xbox.cpp:69)
 
 void dwLogOn_Init(void)
@@ -101,8 +118,28 @@ void dwLogon_ClearOverlappedTasks(undefined8 param_1)
 void dwLogOn_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  
   __savegprlr_26();
+  puVar3 = &DAT_844f2238;
+  lVar2 = 0;
+  puVar1 = (undefined4 *)0x844f5ee8;
+  do {
+    TaskManager_CancelTasksForController(0xffffffff844f4af8,1,lVar2);
+    if ((HANDLE)*puVar3 != (HANDLE)0x0) {
+      CloseHandle((HANDLE)*puVar3);
+      *puVar3 = 0;
+    }
+    puVar3 = puVar3 + 1;
+    puVar1 = puVar1 + 7;
+    *puVar1 = 0;
+    lVar2 = lVar2 + 1;
+  } while ((int)puVar3 < -0x7bb0ddb8);
+  TaskManager_DestructTaskSet(0xffffffff844f4af8);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -133,7 +170,6 @@ undefined8 dwGetLogOnStatus(ulonglong param_1)
   
   uVar2 = 0;
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821aa3bc,0x76,0,0xffffffff82031880,param_1,4);
   }
   uVar1 = (&DAT_844f5f04)[(int)param_1 * 7];
@@ -150,6 +186,457 @@ undefined8 dwGetLogOnStatus(ulonglong param_1)
     }
   }
   return uVar2;
+}
+
+
+// 826E8888  dwLogOnStart  (DW/dwLogOn-xbox.cpp:150)
+
+void dwLogOnStart(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  bool bVar3;
+  int iVar4;
+  char cVar7;
+  int iVar5;
+  undefined4 uVar6;
+  
+  iVar4 = __savegprlr_20();
+  cVar7 = Live_IsUserSignedInToLive();
+  if (((cVar7 == '\0') || (cVar7 = Live_UserIsGuest(iVar4), cVar7 != '\0')) ||
+     (cVar7 = dwAllDemonWareReconnectsDisabled(), cVar7 != '\0')) goto LAB_826e8a3c;
+  iVar5 = Sys_Milliseconds();
+  bVar3 = false;
+  iVar1 = (iVar5 - (&DAT_844f5f18)[iVar4 * 7]) / 1000;
+  if ((&DAT_844f5f14)[iVar4 * 7] == 0) {
+    (&DAT_844f5f10)[iVar4 * 7] = 0;
+LAB_826e8960:
+    bVar3 = true;
+  }
+  else {
+    if (0x78 < iVar1) {
+      (&DAT_844f5f14)[iVar4 * 7] = 0;
+      (&DAT_844f5f10)[iVar4 * 7] = 0;
+      goto LAB_826e8960;
+    }
+    if ((&DAT_844f5f10)[iVar4 * 7] == 0) {
+      uVar6 = Live_GenerateRandomTimeToRetryInSeconds((&DAT_844f5f14)[iVar4 * 7],0x3c);
+      (&DAT_844f5f10)[iVar4 * 7] = uVar6;
+    }
+    if ((int)(&DAT_844f5f10)[iVar4 * 7] <= iVar1) {
+      (&DAT_844f5f10)[iVar4 * 7] = 0;
+      goto LAB_826e8960;
+    }
+  }
+  if (bVar3) {
+    if (((&DAT_844f2238)[iVar4] == 0) &&
+       ((0x3b < (iVar5 - DAT_844f4ae8) / 1000 || (DAT_844f4ae8 == 0)))) {
+      uVar2 = (&DAT_844f5f14)[iVar4 * 7];
+      (&DAT_844f5f18)[iVar4 * 7] = iVar5;
+      DAT_844f4aec = 0;
+      DAT_844f4ae8 = iVar5;
+      (&DAT_844f5f14)[iVar4 * 7] = (int)((ulonglong)uVar2 + 1);
+      DAT_844f4af0 = 0;
+      Com_Printf(0x10,0xffffffff821aa460,(ulonglong)uVar2 + 1,iVar1);
+      (&DAT_844f5f04)[iVar4 * 7] = 1;
+      __restgprlr_20();
+      return;
+    }
+    if (DAT_844f4aec != '\0') {
+      uVar2 = (&DAT_844f5f14)[iVar4 * 7];
+      (&DAT_844f5f18)[iVar4 * 7] = iVar5;
+      (&DAT_844f5f14)[iVar4 * 7] = (int)((ulonglong)uVar2 + 1);
+      Com_Printf(0x10,0xffffffff821aa400,(ulonglong)uVar2 + 1,iVar1);
+      (&DAT_844f5f04)[iVar4 * 7] = 5;
+      __restgprlr_20();
+      return;
+    }
+    if ((&DAT_844f2238)[iVar4] != 0) {
+      (&DAT_844f5f04)[iVar4 * 7] = 1;
+    }
+  }
+LAB_826e8a3c:
+  __restgprlr_20();
+  return;
+}
+
+
+// 826E8A48  dwStartEnumerateTitleServers  (DW/dwLogOn-xbox.cpp:244)
+
+void dwStartEnumerateTitleServers(void)
+
+{
+  int iVar2;
+  char cVar4;
+  int iVar3;
+  ulonglong uVar1;
+  undefined4 *puVar5;
+  int *piVar6;
+  bool bVar8;
+  bool bVar9;
+  undefined8 uVar7;
+  longlong lVar10;
+  int local_40 [16];
+  
+  iVar2 = __savegprlr_26();
+  local_40[0] = 0;
+  cVar4 = TaskManager_TaskIsInProgress(0xffffffff844f4af8,1);
+  if (cVar4 == '\0') {
+    piVar6 = &DAT_844f2238 + iVar2;
+    if ((&DAT_844f2238)[iVar2] == 0) {
+      Com_Printf(0x19,0xffffffff821aa704);
+      iVar3 = XOnlineGetServiceInfo(0x415607e9,0);
+      if (iVar3 == 0) {
+        bVar8 = true;
+      }
+      else {
+        if (iVar3 == 0x65b) {
+          Com_PrintError(0x10,0xffffffff821aa6d8);
+        }
+        else if (iVar3 == 0x4db) {
+          Com_PrintError(0x10,0xffffffff821aa698);
+        }
+        else if (iVar3 == 0x4cd) {
+          Com_PrintError(0x10,0xffffffff821aa65c);
+        }
+        else {
+          Com_PrintError(0x10,0xffffffff821aa610);
+        }
+        bVar8 = false;
+      }
+      bVar9 = false;
+      if (bVar8) {
+        if (*piVar6 != 0) {
+          MyAssertHandler(0xffffffff821aa3bc,0x127,0,0xffffffff82000f98,0xffffffff821aa5e4);
+        }
+        uVar1 = XTitleServerCreateEnumerator(0xffffffff821a945c,0x32,local_40,piVar6);
+        if ((uVar1 & 0xffffffff) == 0) {
+          bVar9 = true;
+        }
+        else {
+          dwLogOn_CleanupEnumHandle_Internal(iVar2);
+          bVar9 = false;
+          Com_PrintError(0x10,0xffffffff821aa5ac,uVar1);
+        }
+      }
+      uVar7 = 0;
+      if (bVar9) {
+        if (local_40[0] != 0x28a0) {
+          MyAssertHandler(0xffffffff821aa3bc,0x138,0,0xffffffff821aa558,0xffffffff821aa57c);
+        }
+        TaskManager_GetOpenTaskSlot(0xffffffff844f4af8,iVar2,1);
+        iVar3 = TaskManager_TaskToXOverlapped();
+        puVar5 = (undefined4 *)(iVar3 + -4);
+        lVar10 = 7;
+        do {
+          puVar5 = puVar5 + 1;
+          *puVar5 = 0;
+          lVar10 = lVar10 + -1;
+        } while (lVar10 != 0);
+        uVar1 = XEnumerate(*piVar6,0xffffffff844f2248,0x28a0,0,iVar3);
+        if (((uVar1 & 0xffffffff) != 0) && ((uVar1 & 0xffffffff) != 0x3e5)) {
+          dwLogOn_CleanupEnumHandle_Internal(iVar2);
+          TaskManager_TaskFromXOverlapped(0xffffffff844f4af8,iVar3);
+          TaskManager_ClearTask();
+          Com_PrintError(1,0xffffffff821aa508,uVar1);
+          __restgprlr_26(0);
+          return;
+        }
+        uVar7 = 1;
+      }
+      __restgprlr_26(uVar7);
+      return;
+    }
+  }
+  Com_Printf(0x19,0xffffffff821aa4c0);
+  __restgprlr_26(1);
+  return;
+}
+
+
+// 826E8CB8  dwEnumerateTitleServerComplete  (DW/dwLogOn-xbox.cpp:337)
+
+void dwEnumerateTitleServerComplete(undefined8 param_1,undefined1 *param_2)
+
+{
+  int *piVar2;
+  ulonglong uVar1;
+  bool bVar3;
+  int iVar4;
+  int *piVar5;
+  int local_60 [24];
+  
+  __savegprlr_23();
+  iVar4 = 0;
+  *param_2 = 0;
+  local_60[0] = 0;
+  piVar2 = (int *)0x0;
+  bVar3 = false;
+  piVar5 = &DAT_844f4b90;
+  while ((*(char *)(piVar5 + 1) == '\0' || (*piVar5 != 1))) {
+    piVar5 = piVar5 + 0x28;
+    iVar4 = iVar4 + 1;
+    if (-0x7bb0a071 < (int)piVar5) {
+LAB_826e8d80:
+      if (bVar3) {
+        if (piVar2 == (int *)0x0) {
+          MyAssertHandler(0xffffffff821aa3bc,0x16b,0,0xffffffff82000f98,0xffffffff821a938c);
+        }
+        bVar3 = *piVar2 != 0x3e5;
+        if (bVar3) {
+          XGetOverlappedResult(piVar2,local_60,0);
+          uVar1 = XGetOverlappedExtendedError(piVar2);
+          if ((int)uVar1 == 0) {
+            TaskManager_TaskFromXOverlapped(0xffffffff844f4af8,piVar2);
+            TaskManager_ClearTask();
+            DAT_844f4af0 = local_60[0];
+            if (local_60[0] < 1) {
+              Com_PrintError(0x19,0xffffffff821aa754);
+              *param_2 = 1;
+              __restgprlr_23(1);
+              return;
+            }
+            Com_Printf(0x19,0xffffffff821aa72c);
+            DAT_844f4aec = 1;
+            *param_2 = 1;
+            __restgprlr_23(1);
+            return;
+          }
+          TaskManager_TaskFromXOverlapped(0xffffffff844f4af8,piVar2);
+          TaskManager_ClearTask();
+          if ((int)uVar1 != -0x7feafff6) {
+            if ((uVar1 & 0xffffffff) == 0x80070012) {
+              Com_Printf(0x19,0xffffffff821a92e8);
+              __restgprlr_23(1);
+              return;
+            }
+            Com_PrintError(0x19,0xffffffff821a92c0,uVar1);
+            __restgprlr_23(1);
+            return;
+          }
+          Com_Printf(0x19,0xffffffff821a9308);
+        }
+      }
+      else {
+        bVar3 = true;
+        if (DAT_844f4aec != '\0') {
+          *param_2 = 1;
+          __restgprlr_23(1);
+          return;
+        }
+      }
+      __restgprlr_23(bVar3);
+      return;
+    }
+  }
+  if ((&DAT_844f4b94)[iVar4 * 0xa0] == '\0') {
+    MyAssertHandler(0xffffffff821aa3bc,0x161,0,0xffffffff82000f98,0xffffffff821aa78c);
+  }
+  bVar3 = true;
+  piVar2 = (int *)TaskManager_TaskToXOverlapped(&DAT_844f4b00 + iVar4 * 0xa0);
+  goto LAB_826e8d80;
+}
+
+
+// 826E8EF8  dwSelectTitleServer  (DW/dwLogOn-xbox.cpp:433)
+
+void dwSelectTitleServer(void)
+
+{
+  int iVar1;
+  int iVar3;
+  undefined8 uVar2;
+  undefined4 *puVar4;
+  longlong lVar5;
+  uint local_50;
+  undefined4 local_4c;
+  undefined1 auStack_48 [8];
+  undefined1 auStack_40 [64];
+  
+  iVar3 = __savegprlr_26();
+  local_50 = 0;
+  if ((DAT_844f4af0 != 0) && (DAT_844f4aec != '\0')) {
+    XNetRandom(&local_50,4);
+    trapWord(6,(ulonglong)DAT_844f4af0,0);
+    lVar5 = (ulonglong)local_50 -
+            (longlong)((int)local_50 / (int)DAT_844f4af0) * (longlong)(int)DAT_844f4af0;
+    trapWord(5,(ulonglong)DAT_844f4af0 &
+               ~((((ulonglong)local_50 & 0x7fffffff) << 1 | (ulonglong)(local_50 >> 0x1f)) - 1),
+             0xffff);
+    if ((lVar5 < 0) || ((int)DAT_844f4af0 <= (int)lVar5)) {
+      lVar5 = 0;
+    }
+    iVar1 = (int)(lVar5 * 0xd0);
+    if ((&DAT_844f2250)[iVar1] == '\0') {
+      MyAssertHandler(0xffffffff821aa3bc,0x1be,0,0xffffffff82000f98,0xffffffff821aa818);
+    }
+    Com_Printf(0x19,0xffffffff821aa7e8,lVar5,lVar5 * 0xd0 + -0x7bb0ddb0);
+    uVar2 = XNetServerToInAddr(*(undefined4 *)((int)&DAT_844f2248 + iVar1),0x415607e9,&local_4c);
+    if ((int)uVar2 == 0) {
+      uVar2 = bdInetAddr__bdInetAddr(auStack_48,local_4c);
+      puVar4 = (undefined4 *)bdAddr__bdAddr(auStack_40,uVar2,0x3fd);
+      (&DAT_844f5f08)[iVar3 * 7] = *puVar4;
+      (&DAT_844f5f0c)[iVar3 * 7] = puVar4[1];
+      bdInetAddr___bdInetAddr(auStack_40);
+      bdInetAddr___bdInetAddr(auStack_48);
+      __restgprlr_26(1);
+      return;
+    }
+    Com_Printf(0x19,0xffffffff821aa7ac,uVar2);
+  }
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 826E9068  dwConnectToLobby  (DW/dwLogOn-xbox.cpp:466)
+
+void dwConnectToLobby(void)
+
+{
+  longlong lVar1;
+  SOCKET s;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  sockaddr *name;
+  int iVar4;
+  undefined1 auStack_180 [16];
+  undefined1 auStack_170 [16];
+  undefined1 auStack_160 [8];
+  undefined4 local_158;
+  undefined8 local_140;
+  undefined1 auStack_138 [104];
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined1 auStack_c8 [128];
+  undefined1 auStack_48 [72];
+  
+  lVar1 = __savegprlr_28();
+  s = dwGetLobbyService();
+  if (s != 0) {
+    uVar2 = Live_GetXuid(lVar1);
+    uVar3 = XUserGetName(lVar1,auStack_180,0x10);
+    if ((int)uVar3 < 0) {
+      MyAssertHandler(0xffffffff821aa3bc,0x1df,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar3);
+    }
+    bdAuthTicket__bdAuthTicket(auStack_160);
+    local_158 = 0x47c4;
+    local_140 = uVar2;
+    I_strncpyz(auStack_138,auStack_180,0x40);
+    local_cc = 0;
+    memset(auStack_c8,0,0x80);
+    memset(auStack_48,0,0x18);
+    local_d0 = 0x47c4;
+    bdAuthTicket__serialize(auStack_160,auStack_c8);
+    name = (sockaddr *)bdAddr__bdAddr(auStack_170,lVar1 * 0x1c + -0x7bb0a0f8);
+    iVar4 = bdLobbyService__connect(s,name,(int)&local_d0);
+    bdAuthTicket___bdAuthTicket(auStack_160);
+    __restgprlr_28(iVar4);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 826E9188  dwLogOnComplete  (DW/dwLogOn-xbox.cpp:500)
+
+void dwLogOnComplete(void)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  char cVar7;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  int iVar6;
+  char local_40 [64];
+  
+  uVar2 = __savegprlr_26();
+  iVar1 = (int)uVar2;
+  iVar6 = (&DAT_844f5f04)[iVar1 * 7];
+  (&DAT_844f5f04)[iVar1 * 7] = 0;
+  if (6 < iVar6 - 1U) goto LAB_826e936c;
+  if (iVar6 == 2) {
+LAB_826e91e0:
+    cVar7 = Live_IsUserSignedInToLive(uVar2);
+    if (cVar7 == '\0') {
+      (&DAT_844f5f04)[iVar1 * 7] = 2;
+      if (iVar6 != 2) {
+        Com_Printf(0x10,0xffffffff821aa8e0,uVar2);
+      }
+    }
+    else {
+      (&DAT_844f5f04)[iVar1 * 7] = 3;
+    }
+  }
+  else {
+    if (iVar6 == 3) {
+      cVar7 = dwStartEnumerateTitleServers(uVar2);
+      if (cVar7 == '\0') {
+        (&DAT_844f5f04)[iVar1 * 7] = 2;
+        dwLogOn_CleanupEnumHandle_Internal(uVar2);
+        goto LAB_826e936c;
+      }
+    }
+    else {
+      if (iVar6 != 4) {
+        if (iVar6 == 5) {
+          cVar7 = dwSelectTitleServer(uVar2);
+          (&DAT_844f5f04)[iVar1 * 7] = (-(uint)(cVar7 != '\0') & 4) + 2;
+          goto LAB_826e936c;
+        }
+        if (iVar6 == 6) {
+          cVar7 = dwConnectToLobby(uVar2);
+          if (cVar7 != '\0') {
+            (&DAT_844f5f04)[iVar1 * 7] = 7;
+          }
+          goto LAB_826e936c;
+        }
+        if (iVar6 != 1) {
+          uVar3 = dwGetLobbyService(uVar2);
+          if ((uVar3 & 0xffffffff) != 0) {
+            bdLobbyService__pump();
+            uVar4 = bdLobbyService__getStatus(uVar3);
+            if ((int)uVar4 == 2) {
+              Com_Printf(0x10,0xffffffff821aa8b8,uVar2);
+              (&DAT_844f5f04)[iVar1 * 7] = 8;
+              LiveRegionInfo_Init();
+              LiveAntiCheat_UserSignedInToDW(uVar2);
+            }
+            else if ((int)uVar4 == 1) {
+              (&DAT_844f5f04)[iVar1 * 7] = 7;
+            }
+            else {
+              uVar5 = bdLobbyService__getErrorCode(uVar3);
+              Com_Printf(0x10,0xffffffff821aa878,uVar2,uVar5,uVar4);
+            }
+          }
+          goto LAB_826e936c;
+        }
+        goto LAB_826e91e0;
+      }
+      cVar7 = dwEnumerateTitleServerComplete(uVar2,local_40);
+      if (cVar7 != '\0') {
+        (&DAT_844f5f04)[iVar1 * 7] = (-(uint)(local_40[0] != '\0') & 3) + 2;
+        dwLogOn_CleanupEnumHandle_Internal(uVar2);
+        goto LAB_826e936c;
+      }
+    }
+    (&DAT_844f5f04)[iVar1 * 7] = 4;
+  }
+LAB_826e936c:
+  if ((&DAT_844f5f04)[iVar1 * 7] != iVar6) {
+    Com_Printf(0x10,0xffffffff821aa83c,uVar2,iVar6);
+  }
+  if (((&DAT_844f5f04)[iVar1 * 7] == 0) && (iVar6 = dwGetLobbyService(uVar2), iVar6 != 0)) {
+    bdLobbyService__disconnect();
+    dwLobbyServiceCleanup(uVar2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 

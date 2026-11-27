@@ -3,6 +3,48 @@
 ; 824429A8  FX_BuildQuadStampCodeMeshVerts  (EffectsCore/fx_sprite.cpp:37)
   824429A8  7D8802A6             mfspr r12,LR
   824429AC  484D3CF9             bl 0x829166a4
+  824429B0  3981FFB0             subi r12,r1,0x50
+  824429B4  484D3DCD             bl 0x82916780
+  824429B8  9421FEF0             stwu r1,-0x110(r1)
+  824429BC  7C992378             or r25,r4,r4
+  824429C0  FF200890             fmr f25,f1
+  824429C4  7CBC2B78             or r28,r5,r5
+  824429C8  FF001090             fmr f24,f2
+  824429CC  7CDB3378             or r27,r6,r6
+  824429D0  FEE01890             fmr f23,f3
+  824429D4  7CFF3B78             or r31,r7,r7
+  824429D8  FEC02090             fmr f22,f4
+  824429DC  7D1E4378             or r30,r8,r8
+  824429E0  7D3D4B78             or r29,r9,r9
+  824429E4  39200000             li r9,0x0
+  824429E8  39010058             addi r8,r1,0x58
+  824429EC  38E10050             addi r7,r1,0x50
+  824429F0  38C00000             li r6,0x0
+  824429F4  38A00006             li r5,0x6
+  824429F8  38800004             li r4,0x4
+  824429FC  7C7A1B78             or r26,r3,r3
+  82442A00  482E0551             bl 0x82722f50
+  82442A04  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82442A08  2B0B0000             cmplwi cr6,r11,0x0
+  82442A0C  419A039C             beq cr6,0x82442da8
+  82442A10  3D608200             lis r11,-0x7e00
+  82442A14  80A10058             lwz r5,0x58(r1)
+  82442A18  39000000             li r8,0x0
+  82442A1C  392B68AF             addi r9,r11,0x68af
+  82442A20  38E00000             li r7,0x0
+  82442A24  38C00006             li r6,0x6
+  82442A28  7F24CB78             or r4,r25,r25
+  82442A2C  7F43D378             or r3,r26,r26
+  82442A30  482E0901             bl 0x82723330
+  82442A34  A1610050             lhz r11,0x50(r1)
+  82442A38  81410058             lwz r10,0x58(r1)
+  82442A3C  3CE08405             lis r7,-0x7bfb
+  82442A40  38CB0001             addi r6,r11,0x1
+LAB_82442da8:
+  82442DA8  38210110             addi r1,r1,0x110
+  82442DAC  3981FFB0             subi r12,r1,0x50
+  82442DB0  484D3A1D             bl 0x829167cc
+  82442DB4  484D3940             b 0x829166f4
 
 ; 824429A0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
@@ -81,18 +123,337 @@ LAB_82442df8:
 ; 82442EC8  FX_HeightScreenToWorld  (EffectsCore/fx_sprite.cpp:154)
   82442EC8  7D8802A6             mfspr r12,LR
   82442ECC  484D37E9             bl 0x829166b4
+  82442ED0  DBC1FFC0             stfd f30,-0x40(r1)
+  82442ED4  DBE1FFC8             stfd f31,-0x38(r1)
+  82442ED8  9421FF70             stwu r1,-0x90(r1)
+  82442EDC  3D608207             lis r11,-0x7df9
+  82442EE0  FFC00890             fmr f30,f1
+  82442EE4  3D408200             lis r10,-0x7e00
+  82442EE8  7C7B1B78             or r27,r3,r3
+  82442EEC  7CBE2B78             or r30,r5,r5
+  82442EF0  7CDF3378             or r31,r6,r6
+  82442EF4  2B050000             cmplwi cr6,r5,0x0
+  82442EF8  3B8B86C0             subi r28,r11,0x7940
+  82442EFC  3BAA0F98             addi r29,r10,0xf98
+  82442F00  409A0020             bne cr6,0x82442f20
+  82442F04  3D608207             lis r11,-0x7df9
+  82442F08  7FA6EB78             or r6,r29,r29
+  82442F0C  38EB878C             subi r7,r11,0x7874
+  82442F10  7F83E378             or r3,r28,r28
+  82442F14  38A00000             li r5,0x0
+  82442F18  3880009E             li r4,0x9e
+  82442F1C  481915E5             bl 0x825d4500
+LAB_82442f20:
+  82442F20  3D608200             lis r11,-0x7e00
+  82442F24  C3EB13F8             lfs f31,0x13f8(r11)
+  82442F28  FF1EF800             fcmpu cr6,f30,f31
+  82442F2C  41990030             bgt cr6,0x82442f5c
+  82442F30  DBC10038             stfd f30,0x38(r1)
+  82442F34  E9010038             ld r8,0x38(r1)
+  82442F38  3D608207             lis r11,-0x7df9
+  82442F3C  FC20F090             fmr f1,f30
+  82442F40  3D408207             lis r10,-0x7df9
+  82442F44  38EB8778             subi r7,r11,0x7888
+  82442F48  38CA8760             subi r6,r10,0x78a0
+  82442F4C  7F83E378             or r3,r28,r28
+  82442F50  38A00000             li r5,0x0
+  82442F54  3880009F             li r4,0x9f
+  82442F58  481915A9             bl 0x825d4500
+LAB_82442f5c:
+  82442F5C  2B1F0000             cmplwi cr6,r31,0x0
+  82442F60  409A0020             bne cr6,0x82442f80
+  82442F64  3D608201             lis r11,-0x7dff
+  82442F68  7FA6EB78             or r6,r29,r29
+  82442F6C  38EBB0FC             subi r7,r11,0x4f04
+  82442F70  7F83E378             or r3,r28,r28
+  82442F74  38A00000             li r5,0x0
+  82442F78  388000A0             li r4,0xa0
+  82442F7C  48191585             bl 0x825d4500
+LAB_82442f80:
+  82442F80  C01B0000             lfs f0,0x0(r27)
+  82442F84  3D608202             lis r11,-0x7dfe
+  82442F88  C1BF0018             lfs f13,0x18(r31)
+  82442F8C  ED806828             fsubs f12,f0,f13
+  82442F90  C17B0004             lfs f11,0x4(r27)
+  82442F94  C15F001C             lfs f10,0x1c(r31)
+  82442F98  C13F0024             lfs f9,0x24(r31)
+  82442F9C  ED0B5028             fsubs f8,f11,f10
+  82442FA0  C0FB0008             lfs f7,0x8(r27)
+  82442FA4  C0DF0020             lfs f6,0x20(r31)
+  82442FA8  C0BF0028             lfs f5,0x28(r31)
+  82442FAC  EC873028             fsubs f4,f7,f6
+  82442FB0  C07F002C             lfs f3,0x2c(r31)
+  82442FB4  C9AB1530             lfd f13,0x1530(r11)
+  82442FB8  EC490332             fmuls f2,f9,f12
+  82442FBC  EC25123A             fmadds f1,f5,f8,f2
+  82442FC0  EC03093A             fmadds f0,f3,f4,f1
+  82442FC4  FF006800             fcmpu cr6,f0,f13
+  82442FC8  4098001C             bge cr6,0x82442fe4
+  82442FCC  D3FE0000             stfs f31,0x0(r30)
+  82442FD0  38600000             li r3,0x0
+  82442FD4  38210090             addi r1,r1,0x90
+  82442FD8  CBC1FFC0             lfd f30,-0x40(r1)
+  82442FDC  CBE1FFC8             lfd f31,-0x38(r1)
+  82442FE0  484D3724             b 0x82916704
+LAB_82442fe4:
+  82442FE4  EDA007B2             fmuls f13,f0,f30
+  82442FE8  3D608200             lis r11,-0x7e00
+  82442FEC  3D4082A4             lis r10,-0x7d5c
+  82442FF0  C00B3F2C             lfs f0,0x3f2c(r11)
+  82442FF4  816AD5F8             lwz r11,-0x2a08(r10)
+  82442FF8  ED8D0032             fmuls f12,f13,f0
+  82442FFC  C16B0014             lfs f11,0x14(r11)
+  82443000  EC2C02F2             fmuls f1,f12,f11
+  82443004  D03E0000             stfs f1,0x0(r30)
+  82443008  FF01F800             fcmpu cr6,f1,f31
+  8244300C  4199002C             bgt cr6,0x82443038
+  82443010  D8210038             stfd f1,0x38(r1)
+  82443014  E9010038             ld r8,0x38(r1)
+  82443018  3D608207             lis r11,-0x7df9
+  8244301C  3D408207             lis r10,-0x7df9
+  82443020  38EB8748             subi r7,r11,0x78b8
+  82443024  38CA8730             subi r6,r10,0x78d0
+  82443028  7F83E378             or r3,r28,r28
+  8244302C  38A00001             li r5,0x1
+  82443030  388000AC             li r4,0xac
+  82443034  481914CD             bl 0x825d4500
+LAB_82443038:
+  82443038  38600001             li r3,0x1
+  8244303C  38210090             addi r1,r1,0x90
+  82443040  CBC1FFC0             lfd f30,-0x40(r1)
+  82443044  CBE1FFC8             lfd f31,-0x38(r1)
+  82443048  484D36BC             b 0x82916704
+
+; 82443050  FX_HeightWorldToScreen  (EffectsCore/fx_sprite.cpp:179)
+  82443050  7D8802A6             mfspr r12,LR
+  82443054  484D3661             bl 0x829166b4
+  82443058  DBC1FFC0             stfd f30,-0x40(r1)
+  8244305C  DBE1FFC8             stfd f31,-0x38(r1)
+  82443060  9421FF70             stwu r1,-0x90(r1)
+  82443064  3D608207             lis r11,-0x7df9
+  82443068  FFC00890             fmr f30,f1
+  8244306C  3D408200             lis r10,-0x7e00
+  82443070  7C7B1B78             or r27,r3,r3
+  82443074  7CBE2B78             or r30,r5,r5
+  82443078  7CDF3378             or r31,r6,r6
+  8244307C  2B050000             cmplwi cr6,r5,0x0
+  82443080  3B8B86C0             subi r28,r11,0x7940
+  82443084  3BAA0F98             addi r29,r10,0xf98
+  82443088  409A0020             bne cr6,0x824430a8
+  8244308C  3D608207             lis r11,-0x7df9
+  82443090  7FA6EB78             or r6,r29,r29
+  82443094  38EB87F8             subi r7,r11,0x7808
+  82443098  7F83E378             or r3,r28,r28
+  8244309C  38A00000             li r5,0x0
+  824430A0  388000B7             li r4,0xb7
+  824430A4  4819145D             bl 0x825d4500
+LAB_824430a8:
+  824430A8  3D608200             lis r11,-0x7e00
+  824430AC  C3EB13F8             lfs f31,0x13f8(r11)
+  824430B0  FF1EF800             fcmpu cr6,f30,f31
+  824430B4  41990030             bgt cr6,0x824430e4
+  824430B8  DBC10038             stfd f30,0x38(r1)
+  824430BC  E9010038             ld r8,0x38(r1)
+  824430C0  3D608207             lis r11,-0x7df9
+  824430C4  FC20F090             fmr f1,f30
+  824430C8  3D408207             lis r10,-0x7df9
+  824430CC  38EB87E4             subi r7,r11,0x781c
+  824430D0  38CA87CC             subi r6,r10,0x7834
+  824430D4  7F83E378             or r3,r28,r28
+  824430D8  38A00000             li r5,0x0
+  824430DC  388000B8             li r4,0xb8
+  824430E0  48191421             bl 0x825d4500
+LAB_824430e4:
+  824430E4  2B1F0000             cmplwi cr6,r31,0x0
+  824430E8  409A0020             bne cr6,0x82443108
+  824430EC  3D608201             lis r11,-0x7dff
+  824430F0  7FA6EB78             or r6,r29,r29
+  824430F4  38EBB0FC             subi r7,r11,0x4f04
+  824430F8  7F83E378             or r3,r28,r28
+  824430FC  38A00000             li r5,0x0
+  82443100  388000B9             li r4,0xb9
+  82443104  481913FD             bl 0x825d4500
+LAB_82443108:
+  82443108  C01B0000             lfs f0,0x0(r27)
+  8244310C  3D608202             lis r11,-0x7dfe
+  82443110  C1BF0018             lfs f13,0x18(r31)
+  82443114  ED806828             fsubs f12,f0,f13
+  82443118  C17B0004             lfs f11,0x4(r27)
+  8244311C  C15F001C             lfs f10,0x1c(r31)
+  82443120  C13F0024             lfs f9,0x24(r31)
+  82443124  ED0B5028             fsubs f8,f11,f10
+  82443128  C0FB0008             lfs f7,0x8(r27)
+  8244312C  C0DF0020             lfs f6,0x20(r31)
+  82443130  C0BF0028             lfs f5,0x28(r31)
+  82443134  EC873028             fsubs f4,f7,f6
+  82443138  C07F002C             lfs f3,0x2c(r31)
+  8244313C  C80B1530             lfd f0,0x1530(r11)
+  82443140  EC490332             fmuls f2,f9,f12
+  82443144  EC25123A             fmadds f1,f5,f8,f2
+  82443148  EDA3093A             fmadds f13,f3,f4,f1
+  8244314C  FF0D0000             fcmpu cr6,f13,f0
+  82443150  4098001C             bge cr6,0x8244316c
+  82443154  D3FE0000             stfs f31,0x0(r30)
+  82443158  38600000             li r3,0x0
+  8244315C  38210090             addi r1,r1,0x90
+  82443160  CBC1FFC0             lfd f30,-0x40(r1)
+  82443164  CBE1FFC8             lfd f31,-0x38(r1)
+  82443168  484D359C             b 0x82916704
+LAB_8244316c:
+  8244316C  3D6082A4             lis r11,-0x7d5c
+  82443170  3D408200             lis r10,-0x7e00
+  82443174  816BD5F8             lwz r11,-0x2a08(r11)
+  82443178  C00A3F2C             lfs f0,0x3f2c(r10)
+  8244317C  EC0D0032             fmuls f0,f13,f0
+  82443180  C1AB0014             lfs f13,0x14(r11)
+  82443184  ED9E6824             fdivs f12,f30,f13
+  82443188  EC2C0024             fdivs f1,f12,f0
+  8244318C  D03E0000             stfs f1,0x0(r30)
+  82443190  FF01F800             fcmpu cr6,f1,f31
+  82443194  4199002C             bgt cr6,0x824431c0
+  82443198  D8210038             stfd f1,0x38(r1)
+  8244319C  E9010038             ld r8,0x38(r1)
+  824431A0  3D608207             lis r11,-0x7df9
+  824431A4  3D408207             lis r10,-0x7df9
+  824431A8  38EB87B4             subi r7,r11,0x784c
+  824431AC  38CA8798             subi r6,r10,0x7868
+  824431B0  7F83E378             or r3,r28,r28
+  824431B4  38A00001             li r5,0x1
+  824431B8  388000C5             li r4,0xc5
+  824431BC  48191345             bl 0x825d4500
+LAB_824431c0:
+  824431C0  38600001             li r3,0x1
+  824431C4  38210090             addi r1,r1,0x90
+  824431C8  CBC1FFC0             lfd f30,-0x40(r1)
+  824431CC  CBE1FFC8             lfd f31,-0x38(r1)
+  824431D0  484D3534             b 0x82916704
 
 ; 824431D8  FX_GenerateSpriteCodeMeshVertsFixedScreenSize  (EffectsCore/fx_sprite.cpp:204)
   824431D8  7D8802A6             mfspr r12,LR
   824431DC  484D34D9             bl 0x829166b4
+  824431E0  9421FF70             stwu r1,-0x90(r1)
+  824431E4  7CBF2B78             or r31,r5,r5
+  824431E8  7C7E1B78             or r30,r3,r3
+  824431EC  7D264B78             or r6,r9,r9
+  824431F0  38A10050             addi r5,r1,0x50
+  824431F4  7FE3FB78             or r3,r31,r31
+  824431F8  7C9D2378             or r29,r4,r4
+  824431FC  7CFC3B78             or r28,r7,r7
+  82443200  7D1B4378             or r27,r8,r8
+  82443204  4BFFFCC5             bl 0x82442ec8
+  82443208  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8244320C  2B0B0000             cmplwi cr6,r11,0x0
+  82443210  419A0020             beq cr6,0x82443230
+  82443214  7F68DB78             or r8,r27,r27
+  82443218  C0210050             lfs f1,0x50(r1)
+  8244321C  7F87E378             or r7,r28,r28
+  82443220  7FE5FB78             or r5,r31,r31
+  82443224  7FA4EB78             or r4,r29,r29
+  82443228  7FC3F378             or r3,r30,r30
+  8244322C  4BFFFB8D             bl 0x82442db8
+LAB_82443230:
+  82443230  38210090             addi r1,r1,0x90
+  82443234  484D34D0             b 0x82916704
 
 ; 82443238  FX_GenerateSpriteCodeMeshVertsFixedWorldSize  (EffectsCore/fx_sprite.cpp:217)
   82443238  7D8802A6             mfspr r12,LR
   8244323C  484D3479             bl 0x829166b4
+  82443240  3981FFD0             subi r12,r1,0x30
+  82443244  484D3555             bl 0x82916798
+  82443248  9421FF50             stwu r1,-0xb0(r1)
+  8244324C  3D608200             lis r11,-0x7e00
+  82443250  FF800890             fmr f28,f1
+  82443254  7C7E1B78             or r30,r3,r3
+  82443258  FFE01090             fmr f31,f2
+  8244325C  7C9D2378             or r29,r4,r4
+  82443260  7CBF2B78             or r31,r5,r5
+  82443264  7D1C4378             or r28,r8,r8
+  82443268  C3AB13F8             lfs f29,0x13f8(r11)
+  8244326C  7D3B4B78             or r27,r9,r9
+  82443270  FF02E800             fcmpu cr6,f2,f29
+  82443274  4099006C             ble cr6,0x824432e0
+  82443278  7D465378             or r6,r10,r10
+  8244327C  38A10050             addi r5,r1,0x50
+  82443280  7FE3FB78             or r3,r31,r31
+  82443284  4BFFFDCD             bl 0x82443050
+  82443288  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8244328C  2B0B0000             cmplwi cr6,r11,0x0
+  82443290  419A006C             beq cr6,0x824432fc
+  82443294  C3C10050             lfs f30,0x50(r1)
+  82443298  FF1EE800             fcmpu cr6,f30,f29
+  8244329C  41990034             bgt cr6,0x824432d0
+  824432A0  DBC10038             stfd f30,0x38(r1)
+  824432A4  E9010038             ld r8,0x38(r1)
+  824432A8  3D608207             lis r11,-0x7df9
+  824432AC  FC20F090             fmr f1,f30
+  824432B0  3D408207             lis r10,-0x7df9
+  824432B4  3D208207             lis r9,-0x7df9
+  824432B8  38EB8820             subi r7,r11,0x77e0
+  824432BC  38CA8808             subi r6,r10,0x77f8
+  824432C0  386986C0             subi r3,r9,0x7940
+  824432C4  38A00000             li r5,0x0
+  824432C8  388000E6             li r4,0xe6
+  824432CC  48191235             bl 0x825d4500
+LAB_824432d0:
+  824432D0  FF1EF800             fcmpu cr6,f30,f31
+  824432D4  4098000C             bge cr6,0x824432e0
+  824432D8  EC1FF024             fdivs f0,f31,f30
+  824432DC  EF800732             fmuls f28,f0,f28
+LAB_824432e0:
+  824432E0  7F68DB78             or r8,r27,r27
+  824432E4  FC20E090             fmr f1,f28
+  824432E8  7F87E378             or r7,r28,r28
+  824432EC  7FE5FB78             or r5,r31,r31
+  824432F0  7FA4EB78             or r4,r29,r29
+  824432F4  7FC3F378             or r3,r30,r30
+  824432F8  4BFFFAC1             bl 0x82442db8
+LAB_824432fc:
+  824432FC  382100B0             addi r1,r1,0xb0
+  82443300  3981FFD0             subi r12,r1,0x30
+  82443304  484D34E1             bl 0x829167e4
+  82443308  484D33FC             b 0x82916704
 
 ; 82443310  FX_GenerateSpriteCodeMeshVerts  (EffectsCore/fx_sprite.cpp:243)
   82443310  7D8802A6             mfspr r12,LR
   82443314  484D33A1             bl 0x829166b4
+  82443318  9421FF70             stwu r1,-0x90(r1)
+  8244331C  83C4001C             lwz r30,0x1c(r4)
+  82443320  C0240014             lfs f1,0x14(r4)
+  82443324  7C7C1B78             or r28,r3,r3
+  82443328  57CB07BC             rlwinm r11,r30,0x0,0x1e,0x1e
+  8244332C  7C9F2378             or r31,r4,r4
+  82443330  7CAA2B78             or r10,r5,r5
+  82443334  2F0B0000             cmpwi cr6,r11,0x0
+  82443338  419A004C             beq cr6,0x82443384
+  8244333C  3BA40004             addi r29,r4,0x4
+  82443340  83640000             lwz r27,0x0(r4)
+  82443344  7CA62B78             or r6,r5,r5
+  82443348  38A10050             addi r5,r1,0x50
+  8244334C  7FA3EB78             or r3,r29,r29
+  82443350  4BFFFB79             bl 0x82442ec8
+  82443354  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82443358  2B0B0000             cmplwi cr6,r11,0x0
+  8244335C  419A0044             beq cr6,0x824433a0
+  82443360  7FC8F378             or r8,r30,r30
+  82443364  C0210050             lfs f1,0x50(r1)
+  82443368  38FF0010             addi r7,r31,0x10
+  8244336C  7FA5EB78             or r5,r29,r29
+  82443370  7F64DB78             or r4,r27,r27
+  82443374  7F83E378             or r3,r28,r28
+  82443378  4BFFFA41             bl 0x82442db8
+  8244337C  38210090             addi r1,r1,0x90
+  82443380  484D3384             b 0x82916704
+LAB_82443384:
+  82443384  38BF0004             addi r5,r31,0x4
+  82443388  C05F0018             lfs f2,0x18(r31)
+  8244338C  7FC9F378             or r9,r30,r30
+  82443390  809F0000             lwz r4,0x0(r31)
+  82443394  391F0010             addi r8,r31,0x10
+  82443398  7F83E378             or r3,r28,r28
+  8244339C  4BFFFE9D             bl 0x82443238
+LAB_824433a0:
+  824433A0  38210090             addi r1,r1,0x90
+  824433A4  484D3360             b 0x82916704
 
 ; 824433A8  FX_SpriteGenerateVerts  (EffectsCore/fx_sprite.cpp:252)
   824433A8  7D8802A6             mfspr r12,LR
@@ -176,6 +537,7 @@ LAB_82443420:
   824434D8  7C681B78             or r8,r3,r3
   824434DC  7F83E378             or r3,r28,r28
   824434E0  48191021             bl 0x825d4500
+  824434E4  817FD5F8             lwz r11,-0x2a08(r31)
 LAB_824434e8:
   824434E8  C00B0034             lfs f0,0x34(r11)
   824434EC  394B0030             addi r10,r11,0x30
@@ -216,6 +578,7 @@ LAB_824434e8:
   82443578  7C681B78             or r8,r3,r3
   8244357C  7F83E378             or r3,r28,r28
   82443580  48190F81             bl 0x825d4500
+  82443584  817FD5F8             lwz r11,-0x2a08(r31)
 LAB_82443588:
   82443588  C00B0040             lfs f0,0x40(r11)
   8244358C  394B003C             addi r10,r11,0x3c
@@ -306,6 +669,12 @@ LAB_824436c4:
   824436CC  CBE1FFB0             lfd f31,-0x50(r1)
   824436D0  484D3028             b 0x829166f8
 
+; 824436D8  FX_SpriteBegin  (EffectsCore/fx_sprite.cpp:273)
+  824436D8  3D408333             lis r10,-0x7ccd
+  824436DC  39600000             li r11,0x0
+  824436E0  916A3A80             stw r11,0x3a80(r10)
+  824436E4  4E800020             blr
+
 ; 824436E8  FX_SpriteAdd  (EffectsCore/fx_sprite.cpp:279)
   824436E8  3D608333             lis r11,-0x7ccd
   824436EC  396B3A80             addi r11,r11,0x3a80
@@ -327,3 +696,8 @@ LAB_824436c4:
   8244372C  394A0001             addi r10,r10,0x1
   82443730  914B0000             stw r10,0x0(r11)
   82443734  4E800020             blr
+
+; 82443738  FX_SpriteGetInfo  (EffectsCore/fx_sprite.cpp:289)
+  82443738  3D608333             lis r11,-0x7ccd
+  8244373C  386B3A80             addi r3,r11,0x3a80
+  82443740  4E800020             blr

@@ -3,6 +3,74 @@
 ; 828FDCD8  bdContentStreamingBase::bdContentStreamingBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:48)
   828FDCD8  7D8802A6             mfspr r12,LR
   828FDCDC  480189D9             bl 0x829166b4
+  828FDCE0  3BE1FF70             subi r31,r1,0x90
+  828FDCE4  9421FF70             stwu r1,-0x90(r1)
+  828FDCE8  7C7E1B78             or r30,r3,r3
+  828FDCEC  907F00A4             stw r3,0xa4(r31)
+  828FDCF0  3D608221             lis r11,-0x7ddf
+  828FDCF4  3BA00000             li r29,0x0
+  828FDCF8  396BCCDC             subi r11,r11,0x3324
+  828FDCFC  93A30008             stw r29,0x8(r3)
+  828FDD00  38630018             addi r3,r3,0x18
+  828FDD04  917E0000             stw r11,0x0(r30)
+  828FDD08  7C9B2378             or r27,r4,r4
+  828FDD0C  93BE000C             stw r29,0xc(r30)
+  828FDD10  4BFFADC1             bl 0x828f8ad0
+  828FDD14  93BE07A8             stw r29,0x7a8(r30)
+  828FDD18  93BE07AC             stw r29,0x7ac(r30)
+  828FDD1C  3D608291             lis r11,-0x7d6f
+  828FDD20  3D408291             lis r10,-0x7d6f
+  828FDD24  3B9E07B0             addi r28,r30,0x7b0
+  828FDD28  38EB3870             addi r7,r11,0x3870
+  828FDD2C  7F83E378             or r3,r28,r28
+  828FDD30  38CA3820             addi r6,r10,0x3820
+  828FDD34  38A00003             li r5,0x3
+  828FDD38  38800210             li r4,0x210
+  828FDD3C  4801FE35             bl 0x8291db70
+  828FDD40  93BE0DE0             stw r29,0xde0(r30)
+  828FDD44  93BE0DE4             stw r29,0xde4(r30)
+  828FDD48  3D608291             lis r11,-0x7d6f
+  828FDD4C  9BBE0DEA             stb r29,0xdea(r30)
+  828FDD50  3D408291             lis r10,-0x7d6f
+  828FDD54  93BE0E10             stw r29,0xe10(r30)
+  828FDD58  38EB3638             addi r7,r11,0x3638
+  828FDD5C  93BE0E14             stw r29,0xe14(r30)
+  828FDD60  38CA3650             addi r6,r10,0x3650
+  828FDD64  93BE0E18             stw r29,0xe18(r30)
+  828FDD68  38A00003             li r5,0x3
+  828FDD6C  93BE0E1C             stw r29,0xe1c(r30)
+  828FDD70  3880018C             li r4,0x18c
+  828FDD74  93BE0E20             stw r29,0xe20(r30)
+  828FDD78  387E0E24             addi r3,r30,0xe24
+  828FDD7C  4801FDF5             bl 0x8291db70
+  828FDD80  9BBE12C8             stb r29,0x12c8(r30)
+  828FDD84  387E12D0             addi r3,r30,0x12d0
+  828FDD88  48015759             bl 0x829134e0
+  828FDD8C  397E1A60             addi r11,r30,0x1a60
+  828FDD90  93BE1A60             stw r29,0x1a60(r30)
+  828FDD94  917F0050             stw r11,0x50(r31)
+  828FDD98  397E1A64             addi r11,r30,0x1a64
+  828FDD9C  93BE1A64             stw r29,0x1a64(r30)
+  828FDDA0  917F0050             stw r11,0x50(r31)
+  828FDDA4  387E1A68             addi r3,r30,0x1a68
+  828FDDA8  48015009             bl 0x82912db0
+  828FDDAC  39600003             li r11,0x3
+  828FDDB0  39200001             li r9,0x1
+  828FDDB4  937E20F4             stw r27,0x20f4(r30)
+  828FDDB8  395E0C9C             addi r10,r30,0xc9c
+  828FDDBC  993E20F0             stb r9,0x20f0(r30)
+  828FDDC0  7D6903A6             mtspr CTR,r11
+LAB_828fddc4:
+  828FDDC4  978A018C             stwu r28,0x18c(r10)
+  828FDDC8  3B9C0210             addi r28,r28,0x210
+  828FDDCC  4200FFF8             bdnz 0x828fddc4
+  828FDDD0  38A00020             li r5,0x20
+  828FDDD4  38800000             li r4,0x0
+  828FDDD8  387E0DEB             addi r3,r30,0xdeb
+  828FDDDC  48018A25             bl 0x82916800
+  828FDDE0  7FC3F378             or r3,r30,r30
+  828FDDE4  383F0090             addi r1,r31,0x90
+  828FDDE8  4801891C             b 0x82916704
 
 ; 828FDF20  bdContentStreamingBase::~bdContentStreamingBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:64)
   828FDF20  7D8802A6             mfspr r12,LR
@@ -239,9 +307,73 @@ LAB_828fe6d4:
   828FF004  EBE1FFF0             ld r31,-0x10(r1)
   828FF008  4E800020             blr
 
+; 828FF010  bdContentStreamingBase::startDelete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:200)
+  828FF010  7D8802A6             mfspr r12,LR
+  828FF014  9181FFF8             stw r12,-0x8(r1)
+  828FF018  FBE1FFF0             std r31,-0x10(r1)
+  828FF01C  9421FFA0             stwu r1,-0x60(r1)
+  828FF020  38A00067             li r5,0x67
+  828FF024  7C7F1B78             or r31,r3,r3
+  828FF028  4BFFF6C1             bl 0x828fe6e8
+  828FF02C  7FE3FB78             or r3,r31,r31
+  828FF030  38210060             addi r1,r1,0x60
+  828FF034  8181FFF8             lwz r12,-0x8(r1)
+  828FF038  7D8803A6             mtspr LR,r12
+  828FF03C  EBE1FFF0             ld r31,-0x10(r1)
+  828FF040  4E800020             blr
+
 ; 828FE6E8  bdContentStreamingBase::start  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:205)
   828FE6E8  7D8802A6             mfspr r12,LR
   828FE6EC  48017FD1             bl 0x829166bc
+  828FE6F0  3BE1FF80             subi r31,r1,0x80
+  828FE6F4  9421FF80             stwu r1,-0x80(r1)
+  828FE6F8  54AB043E             rlwinm r11,r5,0x0,0x10,0x1f
+  828FE6FC  7C7D1B78             or r29,r3,r3
+  828FE700  91640008             stw r11,0x8(r4)
+  828FE704  39600000             li r11,0x0
+  828FE708  38641A68             addi r3,r4,0x1a68
+  828FE70C  7C9E2378             or r30,r4,r4
+  828FE710  917F0050             stw r11,0x50(r31)
+  828FE714  48014AED             bl 0x82913200
+  828FE718  38600040             li r3,0x40
+  828FE71C  4BFF692D             bl 0x828f5048
+  828FE720  907F0050             stw r3,0x50(r31)
+  828FE724  28030000             cmplwi r3,0x0
+  828FE728  41820010             beq 0x828fe738
+  828FE72C  4BFFADDD             bl 0x828f9508
+  828FE730  7C641B78             or r4,r3,r3
+  828FE734  48000008             b 0x828fe73c
+LAB_828fe738:
+  828FE738  38800000             li r4,0x0
+LAB_828fe73c:
+  828FE73C  387E1A60             addi r3,r30,0x1a60
+  828FE740  4BDD27D9             bl 0x826d0f18
+  828FE744  815E1A60             lwz r10,0x1a60(r30)
+  828FE748  39600001             li r11,0x1
+  828FE74C  38A00000             li r5,0x0
+  828FE750  38800001             li r4,0x1
+  828FE754  7FC3F378             or r3,r30,r30
+  828FE758  916A0014             stw r11,0x14(r10)
+  828FE75C  4BFFFB6D             bl 0x828fe2c8
+  828FE760  817E1A60             lwz r11,0x1a60(r30)
+  828FE764  2B0B0000             cmplwi cr6,r11,0x0
+  828FE768  917D0000             stw r11,0x0(r29)
+  828FE76C  419A002C             beq cr6,0x828fe798
+  828FE770  917F0050             stw r11,0x50(r31)
+  828FE774  394B0004             addi r10,r11,0x4
+LAB_828fe778:
+  828FE778  7D0000A6             mfmsr r8
+  828FE77C  7DA10164             mtmsrd r13,1
+  828FE780  7D205028             lwarx r9,0,r10
+  828FE784  39290001             addi r9,r9,0x1
+  828FE788  7D20512D             stwcx. r9,0,r10
+  828FE78C  7D010164             mtmsrd r8,1
+  828FE790  4082FFE8             bne 0x828fe778
+  828FE794  816B0004             lwz r11,0x4(r11)
+LAB_828fe798:
+  828FE798  7FA3EB78             or r3,r29,r29
+  828FE79C  383F0080             addi r1,r31,0x80
+  828FE7A0  48017F6C             b 0x8291670c
 
 ; 828FDB70  bdContentStreamingBase::initDownload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:219)
   828FDB70  7D8802A6             mfspr r12,LR
@@ -389,14 +521,504 @@ LAB_828ff18c:
 ; 828FE7D0  bdContentStreamingBase::handlePreHTTPComplete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:323)
   828FE7D0  7D8802A6             mfspr r12,LR
   828FE7D4  48017EE1             bl 0x829166b4
+  828FE7D8  9421FF80             stwu r1,-0x80(r1)
+  828FE7DC  81630008             lwz r11,0x8(r3)
+  828FE7E0  7C7F1B78             or r31,r3,r3
+  828FE7E4  3BC00000             li r30,0x0
+  828FE7E8  2B0B0065             cmplwi cr6,r11,0x65
+  828FE7EC  409A00F0             bne cr6,0x828fe8dc
+  828FE7F0  80631A64             lwz r3,0x1a64(r3)
+  828FE7F4  4BFFAB25             bl 0x828f9318
+  828FE7F8  28030000             cmplwi r3,0x0
+  828FE7FC  40820018             bne 0x828fe814
+  828FE800  38A00000             li r5,0x0
+  828FE804  38800004             li r4,0x4
+  828FE808  7FE3FB78             or r3,r31,r31
+  828FE80C  4BFFFABD             bl 0x828fe2c8
+  828FE810  480002B8             b 0x828feac8
+LAB_828fe814:
+  828FE814  A17F0DE8             lhz r11,0xde8(r31)
+  828FE818  3D408221             lis r10,-0x7ddf
+  828FE81C  3D008221             lis r8,-0x7ddf
+  828FE820  1D6B0210             mulli r11,r11,0x210
+  828FE824  7D6BFA14             add r11,r11,r31
+  828FE828  3CC08221             lis r6,-0x7ddf
+  828FE82C  3CA08221             lis r5,-0x7ddf
+  828FE830  3C808221             lis r4,-0x7ddf
+  828FE834  392AD048             subi r9,r10,0x2fb8
+  828FE838  38E8D018             subi r7,r8,0x2fe8
+  828FE83C  38C6CC50             subi r6,r6,0x33b0
+  828FE840  38A5CC08             subi r5,r5,0x33f8
+  828FE844  3884B6F8             subi r4,r4,0x4908
+  828FE848  3900015A             li r8,0x15a
+  828FE84C  394B07B4             addi r10,r11,0x7b4
+  828FE850  38600000             li r3,0x0
+  828FE854  4BFF62BD             bl 0x828f4b10
+  828FE858  A17F0DE8             lhz r11,0xde8(r31)
+  828FE85C  815F0010             lwz r10,0x10(r31)
+  828FE860  1D6B0210             mulli r11,r11,0x210
+  828FE864  7D6BFA14             add r11,r11,r31
+  828FE868  2B0A0000             cmplwi cr6,r10,0x0
+  828FE86C  E96B09B8             ld r11,0x9b8(r11)
+  828FE870  F97F0020             std r11,0x20(r31)
+  828FE874  409A0050             bne cr6,0x828fe8c4
+  828FE878  897F0DEA             lbz r11,0xdea(r31)
+  828FE87C  3BDF0DEB             addi r30,r31,0xdeb
+  828FE880  280B0000             cmplwi r11,0x0
+  828FE884  40820008             bne 0x828fe88c
+  828FE888  3BC00000             li r30,0x0
+LAB_828fe88c:
+  828FE88C  807F1A64             lwz r3,0x1a64(r31)
+  828FE890  4BFFAAB1             bl 0x828f9340
+  828FE894  80BF07A8             lwz r5,0x7a8(r31)
+  828FE898  7FC9F378             or r9,r30,r30
+  828FE89C  38C00000             li r6,0x0
+LAB_828fe8a0:
+  828FE8A0  A17F0DE8             lhz r11,0xde8(r31)
+  828FE8A4  7C681B78             or r8,r3,r3
+  828FE8A8  387F1A68             addi r3,r31,0x1a68
+  828FE8AC  80FF0030             lwz r7,0x30(r31)
+  828FE8B0  1D6B0210             mulli r11,r11,0x210
+  828FE8B4  7D6BFA14             add r11,r11,r31
+  828FE8B8  388B07B4             addi r4,r11,0x7b4
+  828FE8BC  48014755             bl 0x82913010
+  828FE8C0  48000204             b 0x828feac4
+LAB_828fe8c4:
+  828FE8C4  807F1A64             lwz r3,0x1a64(r31)
+  828FE8C8  4BFFAA79             bl 0x828f9340
+  828FE8CC  80DF0010             lwz r6,0x10(r31)
+  828FE8D0  39200000             li r9,0x0
+  828FE8D4  38A00000             li r5,0x0
+  828FE8D8  4BFFFFC8             b 0x828fe8a0
+LAB_828fe8dc:
+  828FE8DC  2B0B0068             cmplwi cr6,r11,0x68
+  828FE8E0  409A00C0             bne cr6,0x828fe9a0
+  828FE8E4  A17F0DE8             lhz r11,0xde8(r31)
+  828FE8E8  3D408221             lis r10,-0x7ddf
+  828FE8EC  3D208221             lis r9,-0x7ddf
+  828FE8F0  1D6B018C             mulli r11,r11,0x18c
+  828FE8F4  7D6BFA14             add r11,r11,r31
+  828FE8F8  3D008221             lis r8,-0x7ddf
+  828FE8FC  3CE08221             lis r7,-0x7ddf
+  828FE900  3C608221             lis r3,-0x7ddf
+  828FE904  3BCAD018             subi r30,r10,0x2fe8
+  828FE908  816B0E28             lwz r11,0xe28(r11)
+  828FE90C  3BA9CC50             subi r29,r9,0x33b0
+  828FE910  3B88CC08             subi r28,r8,0x33f8
+  828FE914  3B67B6F8             subi r27,r7,0x4908
+  828FE918  3923D004             subi r9,r3,0x2ffc
+  828FE91C  7FC7F378             or r7,r30,r30
+  828FE920  7FA6EB78             or r6,r29,r29
+  828FE924  7F85E378             or r5,r28,r28
+  828FE928  7F64DB78             or r4,r27,r27
+  828FE92C  3900016F             li r8,0x16f
+  828FE930  38600000             li r3,0x0
+  828FE934  394B0004             addi r10,r11,0x4
+  828FE938  4BFF61D9             bl 0x828f4b10
+  828FE93C  3D608221             lis r11,-0x7ddf
+  828FE940  7FC7F378             or r7,r30,r30
+  828FE944  392BCFF4             subi r9,r11,0x300c
+  828FE948  7FA6EB78             or r6,r29,r29
+  828FE94C  7F85E378             or r5,r28,r28
+  828FE950  7F64DB78             or r4,r27,r27
+  828FE954  39000170             li r8,0x170
+  828FE958  38600000             li r3,0x0
+  828FE95C  A17F0DE8             lhz r11,0xde8(r31)
+  828FE960  1D6B018C             mulli r11,r11,0x18c
+  828FE964  7D6BFA14             add r11,r11,r31
+  828FE968  394B0E2C             addi r10,r11,0xe2c
+  828FE96C  4BFF61A5             bl 0x828f4b10
+  828FE970  A17F0DE8             lhz r11,0xde8(r31)
+  828FE974  807F1A64             lwz r3,0x1a64(r31)
+  828FE978  1D6B018C             mulli r11,r11,0x18c
+  828FE97C  7FCBFA14             add r30,r11,r31
+  828FE980  4BFFA9C1             bl 0x828f9340
+  828FE984  817E0E28             lwz r11,0xe28(r30)
+  828FE988  7C661B78             or r6,r3,r3
+  828FE98C  38BE0E2C             addi r5,r30,0xe2c
+  828FE990  388B0004             addi r4,r11,0x4
+  828FE994  387F1A68             addi r3,r31,0x1a68
+  828FE998  48014951             bl 0x829132e8
+  828FE99C  48000128             b 0x828feac4
+LAB_828fe9a0:
+  828FE9A0  2B0B0066             cmplwi cr6,r11,0x66
+  828FE9A4  409A00B0             bne cr6,0x828fea54
+  828FE9A8  817F0E0C             lwz r11,0xe0c(r31)
+  828FE9AC  3D408221             lis r10,-0x7ddf
+  828FE9B0  3D008221             lis r8,-0x7ddf
+  828FE9B4  2B0B0000             cmplwi cr6,r11,0x0
+  828FE9B8  817F0E10             lwz r11,0xe10(r31)
+  828FE9BC  3CC08221             lis r6,-0x7ddf
+  828FE9C0  3CA08221             lis r5,-0x7ddf
+  828FE9C4  3C808221             lis r4,-0x7ddf
+  828FE9C8  392ACFE8             subi r9,r10,0x3018
+  828FE9CC  38600000             li r3,0x0
+  828FE9D0  38E8D018             subi r7,r8,0x2fe8
+  828FE9D4  38C6CC50             subi r6,r6,0x33b0
+  828FE9D8  38A5CC08             subi r5,r5,0x33f8
+  828FE9DC  3884B6F8             subi r4,r4,0x4908
+  828FE9E0  394B00EA             addi r10,r11,0xea
+  828FE9E4  419A0048             beq cr6,0x828fea2c
+  828FE9E8  3900017A             li r8,0x17a
+  828FE9EC  4BFF6125             bl 0x828f4b10
+  828FE9F0  807F1A64             lwz r3,0x1a64(r31)
+  828FE9F4  83DF0E20             lwz r30,0xe20(r31)
+  828FE9F8  83BF0E1C             lwz r29,0xe1c(r31)
+  828FE9FC  4BFFA945             bl 0x828f9340
+  828FEA00  80FF0E0C             lwz r7,0xe0c(r31)
+  828FEA04  38C00000             li r6,0x0
+  828FEA08  38A00000             li r5,0x0
+LAB_828fea0c:
+  828FEA0C  817F0E10             lwz r11,0xe10(r31)
+  828FEA10  7C681B78             or r8,r3,r3
+  828FEA14  7FA9EB78             or r9,r29,r29
+  828FEA18  388B00EA             addi r4,r11,0xea
+  828FEA1C  7FCAF378             or r10,r30,r30
+  828FEA20  387F1A68             addi r3,r31,0x1a68
+  828FEA24  48014505             bl 0x82912f28
+  828FEA28  4800009C             b 0x828feac4
+LAB_828fea2c:
+  828FEA2C  39000183             li r8,0x183
+  828FEA30  4BFF60E1             bl 0x828f4b10
+  828FEA34  807F1A64             lwz r3,0x1a64(r31)
+  828FEA38  83DF0E20             lwz r30,0xe20(r31)
+  828FEA3C  83BF0E1C             lwz r29,0xe1c(r31)
+  828FEA40  4BFFA901             bl 0x828f9340
+  828FEA44  80DF0E18             lwz r6,0xe18(r31)
+  828FEA48  38E00000             li r7,0x0
+  828FEA4C  80BF0E14             lwz r5,0xe14(r31)
+  828FEA50  4BFFFFBC             b 0x828fea0c
+LAB_828fea54:
+  828FEA54  2B0B0067             cmplwi cr6,r11,0x67
+  828FEA58  409A0070             bne cr6,0x828feac8
+  828FEA5C  A17F0DE8             lhz r11,0xde8(r31)
+  828FEA60  3D408221             lis r10,-0x7ddf
+  828FEA64  3D008221             lis r8,-0x7ddf
+  828FEA68  1D6B0210             mulli r11,r11,0x210
+  828FEA6C  7D6BFA14             add r11,r11,r31
+  828FEA70  3CC08221             lis r6,-0x7ddf
+  828FEA74  3CA08221             lis r5,-0x7ddf
+  828FEA78  3C808221             lis r4,-0x7ddf
+  828FEA7C  392ACFD8             subi r9,r10,0x3028
+  828FEA80  38E8D018             subi r7,r8,0x2fe8
+  828FEA84  38C6CC50             subi r6,r6,0x33b0
+  828FEA88  38A5CC08             subi r5,r5,0x33f8
+  828FEA8C  3884B6F8             subi r4,r4,0x4908
+  828FEA90  3900018F             li r8,0x18f
+  828FEA94  394B07B4             addi r10,r11,0x7b4
+  828FEA98  38600000             li r3,0x0
+  828FEA9C  4BFF6075             bl 0x828f4b10
+  828FEAA0  807F1A64             lwz r3,0x1a64(r31)
+  828FEAA4  4BFFA89D             bl 0x828f9340
+  828FEAA8  A17F0DE8             lhz r11,0xde8(r31)
+  828FEAAC  7C651B78             or r5,r3,r3
+  828FEAB0  1D6B0210             mulli r11,r11,0x210
+  828FEAB4  7D6BFA14             add r11,r11,r31
+  828FEAB8  387F1A68             addi r3,r31,0x1a68
+  828FEABC  388B07B4             addi r4,r11,0x7b4
+  828FEAC0  48014631             bl 0x829130f0
+LAB_828feac4:
+  828FEAC4  7C7E1B78             or r30,r3,r3
+LAB_828feac8:
+  828FEAC8  817F000C             lwz r11,0xc(r31)
+  828FEACC  2F0B0004             cmpwi cr6,r11,0x4
+  828FEAD0  419A0038             beq cr6,0x828feb08
+  828FEAD4  2F1E0001             cmpwi cr6,r30,0x1
+  828FEAD8  419A000C             beq cr6,0x828feae4
+  828FEADC  2F1E0002             cmpwi cr6,r30,0x2
+  828FEAE0  409A0010             bne cr6,0x828feaf0
+LAB_828feae4:
+  828FEAE4  38A00000             li r5,0x0
+  828FEAE8  38800002             li r4,0x2
+  828FEAEC  48000014             b 0x828feb00
+LAB_828feaf0:
+  828FEAF0  2F0B0004             cmpwi cr6,r11,0x4
+  828FEAF4  419A0014             beq cr6,0x828feb08
+  828FEAF8  38A007E5             li r5,0x7e5
+  828FEAFC  38800005             li r4,0x5
+LAB_828feb00:
+  828FEB00  7FE3FB78             or r3,r31,r31
+  828FEB04  4BFFF7C5             bl 0x828fe2c8
+LAB_828feb08:
+  828FEB08  38210080             addi r1,r1,0x80
+  828FEB0C  48017BF8             b 0x82916704
 
 ; 828FEB18  bdContentStreamingBase::handleHTTPComplete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:414)
   828FEB18  7D8802A6             mfspr r12,LR
   828FEB1C  48017B9D             bl 0x829166b8
+  828FEB20  3BE1FF70             subi r31,r1,0x90
+  828FEB24  9421FF70             stwu r1,-0x90(r1)
+  828FEB28  81630008             lwz r11,0x8(r3)
+  828FEB2C  7C7E1B78             or r30,r3,r3
+  828FEB30  2B0B0065             cmplwi cr6,r11,0x65
+  828FEB34  409A0090             bne cr6,0x828febc4
+  828FEB38  38631A68             addi r3,r3,0x1a68
+  828FEB3C  48014685             bl 0x829131c0
+  828FEB40  3D608201             lis r11,-0x7dff
+  828FEB44  3D408221             lis r10,-0x7ddf
+  828FEB48  3D008221             lis r8,-0x7ddf
+  828FEB4C  3CC08221             lis r6,-0x7ddf
+  828FEB50  3CA08221             lis r5,-0x7ddf
+  828FEB54  3C808221             lis r4,-0x7ddf
+  828FEB58  C00B3770             lfs f0,0x3770(r11)
+  828FEB5C  392AD0A4             subi r9,r10,0x2f5c
+  828FEB60  EC210032             fmuls f1,f1,f0
+  828FEB64  38E8D078             subi r7,r8,0x2f88
+  828FEB68  D8210050             stfd f1,0x50(r1)
+  828FEB6C  38C6CC50             subi r6,r6,0x33b0
+  828FEB70  38A5CC08             subi r5,r5,0x33f8
+  828FEB74  3884B6F8             subi r4,r4,0x4908
+  828FEB78  395E0082             addi r10,r30,0x82
+  828FEB7C  390001A2             li r8,0x1a2
+  828FEB80  38600000             li r3,0x0
+  828FEB84  4BFF5F8D             bl 0x828f4b10
+  828FEB88  7FC4F378             or r4,r30,r30
+  828FEB8C  387F0060             addi r3,r31,0x60
+  828FEB90  4BFFF561             bl 0x828fe0f0
+  828FEB94  3BBE1A64             addi r29,r30,0x1a64
+  828FEB98  7C641B78             or r4,r3,r3
+  828FEB9C  7FA3EB78             or r3,r29,r29
+  828FEBA0  4BBDDF19             bl 0x824dcab8
+  828FEBA4  387F0060             addi r3,r31,0x60
+  828FEBA8  4BA658E1             bl 0x82364488
+  828FEBAC  817E1A64             lwz r11,0x1a64(r30)
+LAB_828febb0:
+  828FEBB0  216B0000             subfic r11,r11,0x0
+  828FEBB4  7D6B5910             subfe r11,r11,r11
+  828FEBB8  556B003C             rlwinm r11,r11,0x0,0x0,0x1e
+  828FEBBC  388B0005             addi r4,r11,0x5
+  828FEBC0  48000134             b 0x828fecf4
+LAB_828febc4:
+  828FEBC4  2B0B0068             cmplwi cr6,r11,0x68
+  828FEBC8  409A006C             bne cr6,0x828fec34
+  828FEBCC  A17E0DE8             lhz r11,0xde8(r30)
+  828FEBD0  3BBE1A64             addi r29,r30,0x1a64
+  828FEBD4  807E1A64             lwz r3,0x1a64(r30)
+  828FEBD8  396B0001             addi r11,r11,0x1
+  828FEBDC  B17E0DE8             sth r11,0xde8(r30)
+  828FEBE0  557C043E             rlwinm r28,r11,0x0,0x10,0x1f
+  828FEBE4  4BFFA735             bl 0x828f9318
+  828FEBE8  7F1C1840             cmplw cr6,r28,r3
+  828FEBEC  40980014             bge cr6,0x828fec00
+  828FEBF0  2B1C0003             cmplwi cr6,r28,0x3
+  828FEBF4  4098000C             bge cr6,0x828fec00
+  828FEBF8  38800001             li r4,0x1
+  828FEBFC  480000F8             b 0x828fecf4
+LAB_828fec00:
+  828FEC00  817E0000             lwz r11,0x0(r30)
+  828FEC04  7FC4F378             or r4,r30,r30
+  828FEC08  387F0060             addi r3,r31,0x60
+  828FEC0C  816B000C             lwz r11,0xc(r11)
+  828FEC10  7D6903A6             mtspr CTR,r11
+  828FEC14  4E800421             bctrl
+  828FEC18  7C641B78             or r4,r3,r3
+  828FEC1C  7FA3EB78             or r3,r29,r29
+  828FEC20  4BBDDE99             bl 0x824dcab8
+  828FEC24  387F0060             addi r3,r31,0x60
+  828FEC28  4BA65861             bl 0x82364488
+  828FEC2C  817D0000             lwz r11,0x0(r29)
+  828FEC30  4BFFFF80             b 0x828febb0
+LAB_828fec34:
+  828FEC34  2B0B0066             cmplwi cr6,r11,0x66
+  828FEC38  409A0084             bne cr6,0x828fecbc
+  828FEC3C  3BBE1A68             addi r29,r30,0x1a68
+  828FEC40  7FA3EB78             or r3,r29,r29
+  828FEC44  4801456D             bl 0x829131b0
+  828FEC48  547CB2BE             rlwinm r28,r3,0x16,0xa,0x1f
+  828FEC4C  7FA3EB78             or r3,r29,r29
+  828FEC50  48014571             bl 0x829131c0
+  828FEC54  3D608201             lis r11,-0x7dff
+  828FEC58  3D408221             lis r10,-0x7ddf
+  828FEC5C  3D008221             lis r8,-0x7ddf
+  828FEC60  3CC08221             lis r6,-0x7ddf
+  828FEC64  3CA08221             lis r5,-0x7ddf
+  828FEC68  3C808221             lis r4,-0x7ddf
+  828FEC6C  C00B3770             lfs f0,0x3770(r11)
+  828FEC70  392AD054             subi r9,r10,0x2fac
+  828FEC74  EC210032             fmuls f1,f1,f0
+  828FEC78  38E8D078             subi r7,r8,0x2f88
+  828FEC7C  D8210050             stfd f1,0x50(r1)
+  828FEC80  38C6CC50             subi r6,r6,0x33b0
+  828FEC84  38A5CC08             subi r5,r5,0x33f8
+  828FEC88  3884B6F8             subi r4,r4,0x4908
+  828FEC8C  7F8AE378             or r10,r28,r28
+  828FEC90  390001B9             li r8,0x1b9
+  828FEC94  38600000             li r3,0x0
+  828FEC98  4BFF5E79             bl 0x828f4b10
+  828FEC9C  38A00000             li r5,0x0
+  828FECA0  38800004             li r4,0x4
+  828FECA4  7FC3F378             or r3,r30,r30
+  828FECA8  4BFFF621             bl 0x828fe2c8
+  828FECAC  815E1A60             lwz r10,0x1a60(r30)
+  828FECB0  39600001             li r11,0x1
+  828FECB4  916A0024             stw r11,0x24(r10)
+  828FECB8  48000048             b 0x828fed00
+LAB_828fecbc:
+  828FECBC  2B0B0067             cmplwi cr6,r11,0x67
+  828FECC0  409A0040             bne cr6,0x828fed00
+  828FECC4  A17E0DE8             lhz r11,0xde8(r30)
+  828FECC8  807E1A64             lwz r3,0x1a64(r30)
+  828FECCC  396B0001             addi r11,r11,0x1
+  828FECD0  B17E0DE8             sth r11,0xde8(r30)
+  828FECD4  557D043E             rlwinm r29,r11,0x0,0x10,0x1f
+  828FECD8  4BFFA641             bl 0x828f9318
+  828FECDC  7F1D1840             cmplw cr6,r29,r3
+  828FECE0  40980010             bge cr6,0x828fecf0
+  828FECE4  2B1D0003             cmplwi cr6,r29,0x3
+  828FECE8  38800001             li r4,0x1
+  828FECEC  41980008             blt cr6,0x828fecf4
+LAB_828fecf0:
+  828FECF0  38800004             li r4,0x4
+LAB_828fecf4:
+  828FECF4  38A00000             li r5,0x0
+  828FECF8  7FC3F378             or r3,r30,r30
+  828FECFC  4BFFF5CD             bl 0x828fe2c8
+LAB_828fed00:
+  828FED00  383F0090             addi r1,r31,0x90
+  828FED04  48017A04             b 0x82916708
 
 ; 828FED58  bdContentStreamingBase::handleHTTPFailed  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:463)
   828FED58  7D8802A6             mfspr r12,LR
   828FED5C  48017955             bl 0x829166b0
+  828FED60  9421FF70             stwu r1,-0x90(r1)
+  828FED64  81630008             lwz r11,0x8(r3)
+  828FED68  7C7F1B78             or r31,r3,r3
+  828FED6C  2B0B0065             cmplwi cr6,r11,0x65
+  828FED70  419A013C             beq cr6,0x828feeac
+  828FED74  2B0B0066             cmplwi cr6,r11,0x66
+  828FED78  419A00D8             beq cr6,0x828fee50
+  828FED7C  2B0B0067             cmplwi cr6,r11,0x67
+  828FED80  419A0038             beq cr6,0x828fedb8
+  828FED84  2B0B0068             cmplwi cr6,r11,0x68
+  828FED88  409A01D4             bne cr6,0x828fef5c
+  828FED8C  A1630DE8             lhz r11,0xde8(r3)
+  828FED90  3D408221             lis r10,-0x7ddf
+  828FED94  3D008221             lis r8,-0x7ddf
+  828FED98  1D6B018C             mulli r11,r11,0x18c
+  828FED9C  7D6B1A14             add r11,r11,r3
+  828FEDA0  392AD1C8             subi r9,r10,0x2e38
+  828FEDA4  38E8D19C             subi r7,r8,0x2e64
+  828FEDA8  39000201             li r8,0x201
+  828FEDAC  816B0E28             lwz r11,0xe28(r11)
+  828FEDB0  394B0004             addi r10,r11,0x4
+  828FEDB4  480000B8             b 0x828fee6c
+LAB_828fedb8:
+  828FEDB8  3D608221             lis r11,-0x7ddf
+  828FEDBC  A0FF0DE8             lhz r7,0xde8(r31)
+  828FEDC0  3D408221             lis r10,-0x7ddf
+  828FEDC4  3BCBD19C             subi r30,r11,0x2e64
+  828FEDC8  1D670210             mulli r11,r7,0x210
+  828FEDCC  3D208221             lis r9,-0x7ddf
+  828FEDD0  3D008221             lis r8,-0x7ddf
+  828FEDD4  3BAACC50             subi r29,r10,0x33b0
+  828FEDD8  3D408221             lis r10,-0x7ddf
+  828FEDDC  3B89CC08             subi r28,r9,0x33f8
+  828FEDE0  3B68A58C             subi r27,r8,0x5a74
+  828FEDE4  7D6BFA14             add r11,r11,r31
+  828FEDE8  392AD17C             subi r9,r10,0x2e84
+  828FEDEC  7FC7F378             or r7,r30,r30
+  828FEDF0  7FA6EB78             or r6,r29,r29
+  828FEDF4  7F85E378             or r5,r28,r28
+  828FEDF8  7F64DB78             or r4,r27,r27
+  828FEDFC  390001EF             li r8,0x1ef
+  828FEE00  394B07B4             addi r10,r11,0x7b4
+  828FEE04  38600002             li r3,0x2
+  828FEE08  4BFF5D09             bl 0x828f4b10
+  828FEE0C  A17F0DE8             lhz r11,0xde8(r31)
+  828FEE10  807F1A64             lwz r3,0x1a64(r31)
+  828FEE14  396B0001             addi r11,r11,0x1
+  828FEE18  B17F0DE8             sth r11,0xde8(r31)
+  828FEE1C  557A043E             rlwinm r26,r11,0x0,0x10,0x1f
+  828FEE20  4BFFA4F9             bl 0x828f9318
+  828FEE24  7F1A1840             cmplw cr6,r26,r3
+  828FEE28  40980018             bge cr6,0x828fee40
+  828FEE2C  2B1A0003             cmplwi cr6,r26,0x3
+  828FEE30  40980010             bge cr6,0x828fee40
+LAB_828fee34:
+  828FEE34  38A00000             li r5,0x0
+  828FEE38  38800001             li r4,0x1
+  828FEE3C  48000118             b 0x828fef54
+LAB_828fee40:
+  828FEE40  3D608221             lis r11,-0x7ddf
+  828FEE44  390001F5             li r8,0x1f5
+  828FEE48  392BD168             subi r9,r11,0x2e98
+  828FEE4C  480000E8             b 0x828fef34
+LAB_828fee50:
+  828FEE50  3D408221             lis r10,-0x7ddf
+  828FEE54  817F0E10             lwz r11,0xe10(r31)
+  828FEE58  3D008221             lis r8,-0x7ddf
+  828FEE5C  392AD154             subi r9,r10,0x2eac
+  828FEE60  38E8D19C             subi r7,r8,0x2e64
+  828FEE64  394B00EA             addi r10,r11,0xea
+  828FEE68  390001E6             li r8,0x1e6
+LAB_828fee6c:
+  828FEE6C  3C808221             lis r4,-0x7ddf
+  828FEE70  3CA08221             lis r5,-0x7ddf
+  828FEE74  3CC08221             lis r6,-0x7ddf
+  828FEE78  3884A58C             subi r4,r4,0x5a74
+  828FEE7C  38A5CC08             subi r5,r5,0x33f8
+  828FEE80  38C6CC50             subi r6,r6,0x33b0
+  828FEE84  38600002             li r3,0x2
+  828FEE88  4BFF5C89             bl 0x828f4b10
+  828FEE8C  38A007E4             li r5,0x7e4
+  828FEE90  38800005             li r4,0x5
+  828FEE94  7FE3FB78             or r3,r31,r31
+  828FEE98  4BFFF431             bl 0x828fe2c8
+  828FEE9C  815F1A60             lwz r10,0x1a60(r31)
+  828FEEA0  39600000             li r11,0x0
+  828FEEA4  916A0024             stw r11,0x24(r10)
+  828FEEA8  480000B4             b 0x828fef5c
+LAB_828feeac:
+  828FEEAC  3D608221             lis r11,-0x7ddf
+  828FEEB0  A0FF0DE8             lhz r7,0xde8(r31)
+  828FEEB4  3D408221             lis r10,-0x7ddf
+  828FEEB8  3BCBD19C             subi r30,r11,0x2e64
+  828FEEBC  1D670210             mulli r11,r7,0x210
+  828FEEC0  3D208221             lis r9,-0x7ddf
+  828FEEC4  3D008221             lis r8,-0x7ddf
+  828FEEC8  3BAACC50             subi r29,r10,0x33b0
+  828FEECC  3D408221             lis r10,-0x7ddf
+  828FEED0  3B89CC08             subi r28,r9,0x33f8
+  828FEED4  3B68A58C             subi r27,r8,0x5a74
+  828FEED8  7D6BFA14             add r11,r11,r31
+  828FEEDC  392AD138             subi r9,r10,0x2ec8
+  828FEEE0  7FC7F378             or r7,r30,r30
+  828FEEE4  7FA6EB78             or r6,r29,r29
+  828FEEE8  7F85E378             or r5,r28,r28
+  828FEEEC  7F64DB78             or r4,r27,r27
+  828FEEF0  390001D4             li r8,0x1d4
+  828FEEF4  394B07B4             addi r10,r11,0x7b4
+  828FEEF8  38600002             li r3,0x2
+  828FEEFC  4BFF5C15             bl 0x828f4b10
+  828FEF00  A17F0DE8             lhz r11,0xde8(r31)
+  828FEF04  807F1A64             lwz r3,0x1a64(r31)
+  828FEF08  396B0001             addi r11,r11,0x1
+  828FEF0C  B17F0DE8             sth r11,0xde8(r31)
+  828FEF10  557A043E             rlwinm r26,r11,0x0,0x10,0x1f
+  828FEF14  4BFFA405             bl 0x828f9318
+  828FEF18  7F1A1840             cmplw cr6,r26,r3
+  828FEF1C  4098000C             bge cr6,0x828fef28
+  828FEF20  2B1A0003             cmplwi cr6,r26,0x3
+  828FEF24  4198FF10             blt cr6,0x828fee34
+LAB_828fef28:
+  828FEF28  3D608221             lis r11,-0x7ddf
+  828FEF2C  390001DA             li r8,0x1da
+  828FEF30  392BD128             subi r9,r11,0x2ed8
+LAB_828fef34:
+  828FEF34  7FC7F378             or r7,r30,r30
+  828FEF38  7FA6EB78             or r6,r29,r29
+  828FEF3C  7F85E378             or r5,r28,r28
+  828FEF40  7F64DB78             or r4,r27,r27
+  828FEF44  38600002             li r3,0x2
+  828FEF48  4BFF5BC9             bl 0x828f4b10
+  828FEF4C  38800005             li r4,0x5
+  828FEF50  38A007E4             li r5,0x7e4
+LAB_828fef54:
+  828FEF54  7FE3FB78             or r3,r31,r31
+  828FEF58  4BFFF371             bl 0x828fe2c8
+LAB_828fef5c:
+  828FEF5C  38210090             addi r1,r1,0x90
+  828FEF60  480177A0             b 0x82916700
 
 ; 828FDC10  bdContentStreamingBase::initDelete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:521)
   828FDC10  7D8802A6             mfspr r12,LR
@@ -432,6 +1054,101 @@ LAB_828fdc78:
   828FDC80  7D8803A6             mtspr LR,r12
   828FDC84  EBE1FFF0             ld r31,-0x10(r1)
   828FDC88  4E800020             blr
+
+; 828FE0F0  bdContentStreamingBase::_postUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:534)
+  828FE0F0  7D8802A6             mfspr r12,LR
+  828FE0F4  480185BD             bl 0x829166b0
+  828FE0F8  3BE1FF50             subi r31,r1,0xb0
+  828FE0FC  9421FF50             stwu r1,-0xb0(r1)
+  828FE100  7C7B1B78             or r27,r3,r3
+  828FE104  907F00C4             stw r3,0xc4(r31)
+  828FE108  7C9E2378             or r30,r4,r4
+  828FE10C  3B400000             li r26,0x0
+  828FE110  3BA41A68             addi r29,r4,0x1a68
+  828FE114  935F0060             stw r26,0x60(r31)
+  828FE118  7FA3EB78             or r3,r29,r29
+  828FE11C  48015095             bl 0x829131b0
+  828FE120  817E0030             lwz r11,0x30(r30)
+  828FE124  7C7C1B78             or r28,r3,r3
+  828FE128  2B0B0000             cmplwi cr6,r11,0x0
+  828FE12C  419A005C             beq cr6,0x828fe188
+  828FE130  7F0B1840             cmplw cr6,r11,r3
+  828FE134  419A0054             beq cr6,0x828fe188
+  828FE138  7FA3EB78             or r3,r29,r29
+  828FE13C  48010125             bl 0x8290e260
+  828FE140  2F030002             cmpwi cr6,r3,0x2
+  828FE144  409A0044             bne cr6,0x828fe188
+  828FE148  817E0030             lwz r11,0x30(r30)
+  828FE14C  3D408221             lis r10,-0x7ddf
+  828FE150  3D008221             lis r8,-0x7ddf
+  828FE154  3CC08221             lis r6,-0x7ddf
+  828FE158  3CA08221             lis r5,-0x7ddf
+  828FE15C  3C808221             lis r4,-0x7ddf
+  828FE160  392ACE28             subi r9,r10,0x31d8
+  828FE164  91610054             stw r11,0x54(r1)
+  828FE168  38E8CE04             subi r7,r8,0x31fc
+  828FE16C  38C6CC50             subi r6,r6,0x33b0
+  828FE170  38A5CE00             subi r5,r5,0x3200
+  828FE174  3884A424             subi r4,r4,0x5bdc
+  828FE178  7F8AE378             or r10,r28,r28
+  828FE17C  3900021B             li r8,0x21b
+  828FE180  38600001             li r3,0x1
+  828FE184  4BFF698D             bl 0x828f4b10
+LAB_828fe188:
+  828FE188  897E12C8             lbz r11,0x12c8(r30)
+  828FE18C  7FC4F378             or r4,r30,r30
+  828FE190  939E0030             stw r28,0x30(r30)
+  828FE194  280B0000             cmplwi r11,0x0
+  828FE198  817E0000             lwz r11,0x0(r30)
+  828FE19C  4182001C             beq 0x828fe1b8
+  828FE1A0  816B0008             lwz r11,0x8(r11)
+  828FE1A4  387F0068             addi r3,r31,0x68
+  828FE1A8  7D6903A6             mtspr CTR,r11
+  828FE1AC  4E800421             bctrl
+  828FE1B0  39200001             li r9,0x1
+  828FE1B4  48000018             b 0x828fe1cc
+LAB_828fe1b8:
+  828FE1B8  816B0004             lwz r11,0x4(r11)
+  828FE1BC  387F0064             addi r3,r31,0x64
+  828FE1C0  7D6903A6             mtspr CTR,r11
+  828FE1C4  4E800421             bctrl
+  828FE1C8  39200002             li r9,0x2
+LAB_828fe1cc:
+  828FE1CC  81630000             lwz r11,0x0(r3)
+  828FE1D0  2B0B0000             cmplwi cr6,r11,0x0
+  828FE1D4  917B0000             stw r11,0x0(r27)
+  828FE1D8  419A002C             beq cr6,0x828fe204
+  828FE1DC  917F0060             stw r11,0x60(r31)
+  828FE1E0  394B0004             addi r10,r11,0x4
+LAB_828fe1e4:
+  828FE1E4  7CE000A6             mfmsr r7
+  828FE1E8  7DA10164             mtmsrd r13,1
+  828FE1EC  7D005028             lwarx r8,0,r10
+  828FE1F0  39080001             addi r8,r8,0x1
+  828FE1F4  7D00512D             stwcx. r8,0,r10
+  828FE1F8  7CE10164             mtmsrd r7,1
+  828FE1FC  4082FFE8             bne 0x828fe1e4
+  828FE200  816B0004             lwz r11,0x4(r11)
+LAB_828fe204:
+  828FE204  613D0004             ori r29,r9,0x4
+  828FE208  57AB07BD             rlwinm. r11,r29,0x0,0x1e,0x1e
+  828FE20C  41820014             beq 0x828fe220
+  828FE210  57BD07FA             rlwinm r29,r29,0x0,0x1f,0x1d
+  828FE214  387F0064             addi r3,r31,0x64
+  828FE218  93BF0060             stw r29,0x60(r31)
+  828FE21C  4BA6626D             bl 0x82364488
+LAB_828fe220:
+  828FE220  57AB07FF             rlwinm. r11,r29,0x0,0x1f,0x1f
+  828FE224  41820014             beq 0x828fe238
+  828FE228  57AB003C             rlwinm r11,r29,0x0,0x0,0x1e
+  828FE22C  387F0068             addi r3,r31,0x68
+  828FE230  917F0060             stw r11,0x60(r31)
+  828FE234  4BA66255             bl 0x82364488
+LAB_828fe238:
+  828FE238  7F63DB78             or r3,r27,r27
+  828FE23C  9B5E12C8             stb r26,0x12c8(r30)
+  828FE240  383F00B0             addi r1,r31,0xb0
+  828FE244  480184BC             b 0x82916700
 
 ; 828FE2C8  bdContentStreamingBase::setState  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:550)
   828FE2C8  7D8802A6             mfspr r12,LR
@@ -576,6 +1293,26 @@ LAB_828fe4c0:
   828FE4CC  EBC1FFE8             ld r30,-0x18(r1)
   828FE4D0  EBE1FFF0             ld r31,-0x10(r1)
   828FE4D4  4E800020             blr
+
+; 828FDC90  bdContentStreamingBase::checkProgress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:610)
+  828FDC90  7D8802A6             mfspr r12,LR
+  828FDC94  48018A29             bl 0x829166bc
+  828FDC98  9421FF90             stwu r1,-0x70(r1)
+  828FDC9C  3BE31A68             addi r31,r3,0x1a68
+  828FDCA0  7C9E2378             or r30,r4,r4
+  828FDCA4  7FE3FB78             or r3,r31,r31
+  828FDCA8  7CBD2B78             or r29,r5,r5
+  828FDCAC  48015505             bl 0x829131b0
+  828FDCB0  907E0000             stw r3,0x0(r30)
+  828FDCB4  7FE3FB78             or r3,r31,r31
+  828FDCB8  48015509             bl 0x829131c0
+  828FDCBC  D03D0000             stfs f1,0x0(r29)
+  828FDCC0  38210070             addi r1,r1,0x70
+  828FDCC4  48018A48             b 0x8291670c
+
+; 828FDCC8  bdContentStreamingBase::getLastHTTPError  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:616)
+  828FDCC8  38631A68             addi r3,r3,0x1a68
+  828FDCCC  480154FC             b 0x829131c8
 
 ; 828FE4D8  bdContentStreamingBase::_postCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:640)
   828FE4D8  39600000             li r11,0x0

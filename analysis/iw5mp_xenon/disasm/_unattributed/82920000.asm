@@ -9,6 +9,14 @@
   82922304  9421FF90             stwu r1,-0x70(r1)
   82922308  83DF00A4             lwz r30,0xa4(r31)
   8292230C  4800001C             b 0x82922328
+
+; 82922310  FUN_82922310  (line unknown)
+  82922310  FBE1FFF8             std r31,-0x8(r1)
+  82922314  3BECFF70             subi r31,r12,0x90
+  82922318  FBC1FFF0             std r30,-0x10(r1)
+  8292231C  7D8802A6             mfspr r12,LR
+  82922320  9181FFE8             stw r12,-0x18(r1)
+  82922324  9421FF90             stwu r1,-0x70(r1)
 LAB_82922328:
   82922328  7FC3F378             or r3,r30,r30
   8292232C  480077C5             bl 0x82929af0
@@ -109,6 +117,12 @@ LAB_82922794:
   8292479C  3D60829B             lis r11,-0x7d65
   829247A0  3BCB0940             addi r30,r11,0x940
   829247A4  48000014             b 0x829247b8
+
+; 829247A8  FUN_829247a8  (line unknown)
+  829247A8  FBC1FFF8             std r30,-0x8(r1)
+  829247AC  7D8802A6             mfspr r12,LR
+  829247B0  9181FFF0             stw r12,-0x10(r1)
+  829247B4  9421FFA0             stwu r1,-0x60(r1)
 LAB_829247b8:
   829247B8  807E0050             lwz r3,0x50(r30)
   829247BC  4801CA49             bl 0x82941204
@@ -148,6 +162,14 @@ LAB_829247b8:
   82924DB4  9421FF90             stwu r1,-0x70(r1)
   82924DB8  837F00A4             lwz r27,0xa4(r31)
   82924DBC  4800001C             b 0x82924dd8
+
+; 82924DC0  FUN_82924dc0  (line unknown)
+  82924DC0  FBE1FFF8             std r31,-0x8(r1)
+  82924DC4  3BECFF70             subi r31,r12,0x90
+  82924DC8  FB61FFF0             std r27,-0x10(r1)
+  82924DCC  7D8802A6             mfspr r12,LR
+  82924DD0  9181FFE8             stw r12,-0x18(r1)
+  82924DD4  9421FF90             stwu r1,-0x70(r1)
 LAB_82924dd8:
   82924DD8  7F63DB78             or r3,r27,r27
   82924DDC  48004D15             bl 0x82929af0
@@ -221,6 +243,14 @@ LAB_82925a3c:
   8292671C  9421FF90             stwu r1,-0x70(r1)
   82926720  839F0054             lwz r28,0x54(r31)
   82926724  4800001C             b 0x82926740
+
+; 82926728  FUN_82926728  (line unknown)
+  82926728  FBE1FFF8             std r31,-0x8(r1)
+  8292672C  3BECFF60             subi r31,r12,0xa0
+  82926730  FB81FFF0             std r28,-0x10(r1)
+  82926734  7D8802A6             mfspr r12,LR
+  82926738  9181FFE8             stw r12,-0x18(r1)
+  8292673C  9421FF90             stwu r1,-0x70(r1)
 LAB_82926740:
   82926740  2F1C0000             cmpwi cr6,r28,0x0
   82926744  419A000C             beq cr6,0x82926750

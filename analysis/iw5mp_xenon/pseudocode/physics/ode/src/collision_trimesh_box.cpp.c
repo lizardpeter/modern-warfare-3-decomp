@@ -5,11 +5,78 @@
 /* WARNING: Unknown calling convention: __cdecl */
 /* cldTestNormal */
 
-void __cdecl cldTestNormal(void)
+void __cdecl cldTestNormal(undefined8 param_1,double param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  undefined8 uVar1;
+  ulonglong in_r6;
+  float *pfVar3;
+  undefined4 in_r7;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
+  iVar2 = __savegprlr_26();
+  dVar4 = extraout_f1;
+  dVar7 = extraout_f1;
+  if (((uint)(float)extraout_f1 & 0x7f800000) == 0x7f800000) {
+    dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x79,0,0xffffffff82000f98,0xffffffff82198444)
+    ;
+  }
+  if (((uint)(float)param_2 & 0x7f800000) == 0x7f800000) {
+    dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x7a,0,0xffffffff82000f98,0xffffffff82198438)
+    ;
+  }
+  if ((in_r6 & 0xffffffff) == 0) {
+    dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x7b,0,0xffffffff82000f98,0xffffffff82198430)
+    ;
+  }
+  pfVar3 = (float *)in_r6;
+  if (((uint)*pfVar3 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar3[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar3[2] & 0x7f800000) != 0x7f800000) goto LAB_82688b3c;
+    }
+  }
+  dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x7c,0,0xffffffff82000f98,0xffffffff821983e8);
+LAB_82688b3c:
+  dVar7 = (double)(float)(dVar7 + param_2);
+  if (3.4028234663852886e+38 <= dVar7) {
+    dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x80,0,0xffffffff82000f98,0xffffffff821983d0)
+    ;
+  }
+  if (dVar7 < 0.0) {
+    __restgprlr_26(0);
+    return;
+  }
+  dVar6 = (double)SQRT(*pfVar3 * *pfVar3 + pfVar3[1] * pfVar3[1] + pfVar3[2] * pfVar3[2]);
+  if (dVar6 <= 0.0) {
+    dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x8b,0,0xffffffff82000f98,0xffffffff821983c4)
+    ;
+  }
+  dVar6 = (double)(float)(1.0 / dVar6);
+  dVar7 = (double)(float)(dVar6 * dVar7);
+  if (dVar7 < (double)*(float *)(iVar2 + 0x60)) {
+    dVar5 = -(double)(float)((double)*pfVar3 * dVar6);
+    *(float *)(iVar2 + 0x50) = (float)dVar5;
+    dVar4 = -(double)(float)((double)pfVar3[1] * dVar6);
+    *(float *)(iVar2 + 0x54) = (float)dVar4;
+    dVar6 = -(double)(float)((double)pfVar3[2] * dVar6);
+    *(float *)(iVar2 + 0x58) = (float)dVar6;
+    if (0.002 <= ABS((float)(dVar6 * dVar6 +
+                            (double)(float)(dVar5 * dVar5 + (double)(float)(dVar4 * dVar4))) - 1.0))
+    {
+      uVar1 = va(dVar5,dVar4,0xffffffff82192678,dVar5,dVar4,dVar6);
+      dVar4 = (double)MyAssertHandler(0xffffffff82198458,0x97,0,0xffffffff820011f4,
+                                      0xffffffff8219839c,uVar1);
+    }
+    *(float *)(iVar2 + 0x60) = (float)dVar7;
+    *(undefined4 *)(iVar2 + 100) = in_r7;
+  }
+  __restgprlr_26(dVar4,1);
+  return;
 }
 
 
@@ -18,11 +85,71 @@ void __cdecl cldTestNormal(void)
 /* WARNING: Unknown calling convention: __cdecl */
 /* cldTestFace */
 
-void __cdecl cldTestFace(void)
+void __cdecl cldTestFace(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar2;
+  undefined8 uVar1;
+  float *in_r8;
+  undefined4 in_r9;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
   __savegprlr_28();
+  iVar2 = __savefpr_27();
+  dVar6 = 0.0;
+  dVar4 = extraout_f1;
+  if (((*in_r8 == 0.0) && (in_r8[1] == 0.0)) && (in_r8[2] == 0.0)) {
+    MyAssertHandler(0xffffffff82198458,0xa7,0,0xffffffff82000f98,0xffffffff821984ac);
+  }
+  dVar3 = param_2;
+  if (dVar4 < param_2) {
+    dVar3 = dVar4;
+  }
+  if (param_3 <= dVar3) {
+    dVar3 = param_3;
+  }
+  if (param_2 < dVar4) {
+    param_2 = dVar4;
+  }
+  if (param_2 <= param_3) {
+    param_2 = param_3;
+  }
+  dVar4 = (double)(float)(param_4 - dVar3);
+  if ((dVar6 <= dVar4) && (dVar6 <= (double)(float)(param_2 + param_4))) {
+    if (dVar6 < (double)(*(float *)(iVar2 + 0xa0) * in_r8[2] +
+                        *(float *)(iVar2 + 0x9c) * in_r8[1] + *(float *)(iVar2 + 0x98) * *in_r8)) {
+      *in_r8 = -*in_r8;
+      in_r8[1] = -in_r8[1];
+      in_r8[2] = -in_r8[2];
+      dVar4 = (double)(float)(param_2 + param_4);
+    }
+    if (dVar4 < (double)*(float *)(iVar2 + 0x60)) {
+      dVar6 = (double)*in_r8;
+      *(float *)(iVar2 + 0x50) = *in_r8;
+      dVar5 = (double)in_r8[1];
+      *(float *)(iVar2 + 0x54) = in_r8[1];
+      dVar3 = (double)in_r8[2];
+      *(float *)(iVar2 + 0x58) = in_r8[2];
+      if (0.002 <= ABS((float)(dVar3 * dVar3 +
+                              (double)(float)(dVar6 * dVar6 + (double)(float)(dVar5 * dVar5))) - 1.0
+                      )) {
+        uVar1 = va(dVar6,dVar5,0xffffffff82192678,dVar6,dVar5,dVar3);
+        MyAssertHandler(0xffffffff82198458,0xe7,0,0xffffffff820011f4,0xffffffff8219839c,uVar1);
+      }
+      *(float *)(iVar2 + 0x60) = (float)dVar4;
+      *(undefined4 *)(iVar2 + 100) = in_r9;
+    }
+    __restfpr_27(1);
+    __restgprlr_28();
+    return;
+  }
+  __restfpr_27(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -43,13 +170,14 @@ undefined8 __cdecl cldTestEdge(double param_1,double param_2,double param_3,int 
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
   
-  dVar5 = param_2;
+  dVar8 = param_2;
   if (param_1 < param_2) {
-    dVar5 = param_1;
+    dVar8 = param_1;
     param_1 = param_2;
   }
-  fVar1 = (float)(param_3 - dVar5);
+  fVar1 = (float)(param_3 - dVar8);
   if ((fVar1 < 0.0) || ((float)(param_1 + param_3) < 0.0)) {
     uVar4 = 0;
   }
@@ -65,7 +193,8 @@ undefined8 __cdecl cldTestEdge(double param_1,double param_2,double param_3,int 
     fVar3 = SQRT(in_r7[1] * in_r7[1] + in_r7[2] * in_r7[2] + fVar2 * fVar2);
     if (0.0 < fVar3) {
       fVar3 = 1.0 / fVar3;
-      if (fVar3 * fVar1 * 1.5 < *(float *)(param_4 + 0x60)) {
+      dVar8 = (double)(fVar3 * fVar1);
+      if ((float)(dVar8 * 1.5) < *(float *)(param_4 + 0x60)) {
         dVar7 = (double)(fVar2 * fVar3);
         *(float *)(param_4 + 0x50) = fVar2 * fVar3;
         dVar6 = (double)(in_r7[1] * fVar3);
@@ -76,16 +205,68 @@ undefined8 __cdecl cldTestEdge(double param_1,double param_2,double param_3,int 
                                 (double)(float)(dVar7 * dVar7 + (double)(float)(dVar6 * dVar6))) -
                          1.0)) {
           uVar4 = va(dVar7,dVar6,0xffffffff82192678,dVar7,dVar6,dVar5);
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82198458,0x12e,0,0xffffffff820011f4,0xffffffff8219839c,uVar4);
         }
-        *(float *)(param_4 + 0x60) = fVar3 * fVar1;
+        *(float *)(param_4 + 0x60) = (float)dVar8;
         *(undefined4 *)(param_4 + 100) = in_r8;
       }
     }
     uVar4 = 1;
   }
   return uVar4;
+}
+
+
+// 826890A8  cldClipPolyToPlane  (physics/ode/src/collision_trimesh_box.cpp:317)
+
+/* WARNING: Unknown calling convention: __cdecl */
+/* cldClipPolyToPlane */
+
+void __cdecl cldClipPolyToPlane(int param_1,int param_2,int param_3,int *param_4,float *param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float *pfVar7;
+  float *pfVar8;
+  int iVar9;
+  
+  *param_4 = 0;
+  if (param_2 < 1) {
+    return;
+  }
+  iVar9 = (param_2 + -1) * 0x10;
+  pfVar7 = (float *)(param_1 + 8);
+  do {
+    pfVar8 = (float *)(iVar9 + param_1);
+    fVar5 = param_5[2] * *pfVar7 + pfVar7[-2] * *param_5 + pfVar7[-1] * param_5[1] + param_5[3];
+    fVar6 = pfVar8[2] * param_5[2] + param_5[1] * pfVar8[1] + *param_5 * *pfVar8 + param_5[3];
+    if (0.0 <= fVar6) {
+      *(float *)(*param_4 * 0x10 + param_3) = *pfVar8;
+      *(float *)(*param_4 * 0x10 + param_3 + 4) = pfVar8[1];
+      *(float *)(*param_4 * 0x10 + param_3 + 8) = pfVar8[2];
+      *param_4 = *param_4 + 1;
+    }
+    if (((0.0 < fVar6) && (fVar5 < 0.0)) || ((fVar6 < 0.0 && (0.0 < fVar5)))) {
+      fVar5 = fVar6 - fVar5;
+      fVar1 = pfVar8[1];
+      fVar2 = pfVar7[-1];
+      fVar3 = pfVar8[2];
+      fVar4 = *pfVar7;
+      *(float *)(*param_4 * 0x10 + param_3) = *pfVar8 - ((*pfVar8 - pfVar7[-2]) * fVar6) / fVar5;
+      *(float *)(*param_4 * 0x10 + param_3 + 4) = fVar1 - ((fVar1 - fVar2) * fVar6) / fVar5;
+      *(float *)(*param_4 * 0x10 + param_3 + 8) = fVar3 - ((fVar3 - fVar4) * fVar6) / fVar5;
+      *param_4 = *param_4 + 1;
+    }
+    iVar9 = (-8 - param_1) + (int)pfVar7;
+    pfVar7 = pfVar7 + 4;
+    param_2 = param_2 + -1;
+  } while (param_2 != 0);
+  return;
 }
 
 
@@ -141,195 +322,497 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
   double dVar28;
   double dVar29;
   double dVar30;
+  double dVar31;
   
   __savegprlr_22();
   pfVar5 = (float *)__savefpr();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82198458,0x172,0,0xffffffff82000f98,0xffffffff82198624);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82198458,0x173,0,0xffffffff82000f98,0xffffffff82198620);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82198458,0x174,0,0xffffffff82000f98,0xffffffff8219861c);
   }
   pfVar7 = (float *)param_2;
-  if (((uint)*pfVar7 & 0x7f800000) != 0x7f800000) {
-    if (((uint)pfVar7[1] & 0x7f800000) != 0x7f800000) {
-      if (((uint)pfVar7[2] & 0x7f800000) != 0x7f800000) {
-        pfVar8 = (float *)param_3;
-        if (((uint)*pfVar8 & 0x7f800000) != 0x7f800000) {
-          if (((uint)pfVar8[1] & 0x7f800000) != 0x7f800000) {
-            if (((uint)pfVar8[2] & 0x7f800000) != 0x7f800000) {
-              pfVar9 = (float *)param_4;
-              if (((uint)*pfVar9 & 0x7f800000) != 0x7f800000) {
-                if (((uint)pfVar9[1] & 0x7f800000) != 0x7f800000) {
-                  if (((uint)pfVar9[2] & 0x7f800000) != 0x7f800000) {
-                    pfVar5[0x19] = 0.0;
-                    pfVar12 = pfVar5 + 0x14;
-                    pfVar10 = pfVar5 + 0x1a;
-                    pfVar5[0x18] = 3.4028235e+38;
-                    pfVar5[0x14] = 0.0;
-                    pfVar5[0x15] = 0.0;
-                    pfVar5[0x16] = 0.0;
-                    fVar2 = *pfVar8 - *pfVar7;
-                    pfVar5[0x1a] = fVar2;
-                    fVar3 = pfVar8[1] - pfVar7[1];
-                    pfVar5[0x1b] = fVar3;
-                    dVar17 = (double)(pfVar8[2] - pfVar7[2]);
-                    dVar14 = (double)(fVar2 * fVar2 + fVar3 * fVar3);
-                    pfVar5[0x1c] = pfVar8[2] - pfVar7[2];
-                    if (0.01 <= (float)(dVar17 * dVar17 + dVar14)) {
-                      pfVar8 = pfVar5 + 0x1e;
-                      fVar2 = *pfVar9 - *pfVar7;
-                      pfVar5[0x1e] = fVar2;
-                      fVar3 = pfVar9[1] - pfVar7[1];
-                      pfVar5[0x1f] = fVar3;
-                      dVar17 = (double)(pfVar9[2] - pfVar7[2]);
-                      dVar14 = (double)(fVar2 * fVar2 + fVar3 * fVar3);
-                      pfVar5[0x20] = pfVar9[2] - pfVar7[2];
-                      if (0.01 <= (float)(dVar17 * dVar17 + dVar14)) {
-                        pfVar9 = pfVar5 + 0x22;
-                        fVar2 = fVar2 - *pfVar10;
-                        pfVar5[0x22] = fVar2;
-                        fVar3 = pfVar5[0x1f] - pfVar5[0x1b];
-                        pfVar5[0x23] = fVar3;
-                        dVar14 = (double)(pfVar5[0x20] - pfVar5[0x1c]);
-                        pfVar5[0x24] = pfVar5[0x20] - pfVar5[0x1c];
-                        if (0.01 <= (float)(dVar14 * dVar14 +
-                                           (double)(fVar2 * fVar2 + fVar3 * fVar3))) {
-                          pfVar11 = pfVar5 + 0x26;
-                          dVar19 = 1.0;
-                          fVar2 = *pfVar8 * pfVar5[0x1c] - *pfVar10 * pfVar5[0x20];
-                          dVar14 = (double)fVar2;
-                          pfVar5[0x27] = fVar2;
-                          fVar2 = pfVar5[0x1b] * pfVar5[0x20] - pfVar5[0x1c] * pfVar5[0x1f];
-                          dVar15 = (double)fVar2;
-                          pfVar5[0x26] = fVar2;
-                          fVar2 = *pfVar10 * pfVar5[0x1f] - *pfVar8 * pfVar5[0x1b];
-                          dVar16 = (double)fVar2;
-                          pfVar5[0x28] = fVar2;
-                          dVar20 = (double)SQRT((float)(dVar16 * dVar16 +
-                                                       (double)(float)(dVar15 * dVar15 +
-                                                                      (double)(float)(dVar14 * 
-                                                  dVar14))));
-                          dVar17 = dVar19;
-                          if (-dVar20 < 0.0) {
-                            dVar17 = dVar20;
-                          }
-                          dVar17 = (double)(float)(1.0 / dVar17);
-                          pfVar5[0x26] = (float)(dVar17 * dVar15);
-                          pfVar5[0x27] = (float)(dVar17 * dVar14);
-                          pfVar5[0x28] = (float)(dVar17 * dVar16);
-                          if (0.009999999776482582 <= dVar20) {
-                            dVar30 = (double)pfVar5[4];
-                            dVar29 = (double)pfVar5[8];
-                            dVar28 = (double)*pfVar5;
-                            dVar27 = (double)pfVar5[1];
-                            dVar26 = (double)pfVar5[5];
-                            dVar17 = 0.0020000000949949026;
-                            dVar25 = (double)pfVar5[9];
-                            dVar24 = (double)pfVar5[2];
-                            dVar16 = (double)pfVar5[6];
-                            dVar15 = (double)pfVar5[10];
-                            if (0.002 <= ABS((float)(dVar28 * dVar28 +
-                                                    (double)(float)(dVar29 * dVar29 +
-                                                                   (double)(float)(dVar30 * dVar30))
-                                                    ) - 1.0)) {
-                              uVar4 = va(dVar28,dVar30,dVar29,0xffffffff82192678,dVar28,dVar30,
-                                         dVar29);
-                    /* WARNING: Subroutine does not return */
-                              MyAssertHandler(0xffffffff82198458,0x193,0,0xffffffff820011f4,
-                                              0xffffffff82198548,uVar4);
-                            }
-                            if (0.002 <= ABS((float)(dVar27 * dVar27 +
-                                                    (double)(float)(dVar25 * dVar25 +
-                                                                   (double)(float)(dVar26 * dVar26))
-                                                    ) - 1.0)) {
-                              uVar4 = va(dVar27,dVar26,dVar25,0xffffffff82192678,dVar27,dVar26,
-                                         dVar25);
-                    /* WARNING: Subroutine does not return */
-                              MyAssertHandler(0xffffffff82198458,0x194,0,0xffffffff820011f4,
-                                              0xffffffff82198528,uVar4);
-                            }
-                            if (0.002 <= ABS((float)(dVar24 * dVar24 +
-                                                    (double)(float)(dVar15 * dVar15 +
-                                                                   (double)(float)(dVar16 * dVar16))
-                                                    ) - 1.0)) {
-                              uVar4 = va(dVar24,dVar16,dVar15,0xffffffff82192678,dVar24,dVar16,
-                                         dVar15);
-                    /* WARNING: Subroutine does not return */
-                              MyAssertHandler(0xffffffff82198458,0x195,0,0xffffffff820011f4,
-                                              0xffffffff82198508,uVar4);
-                            }
-                            pfVar1 = (float *)pfVar5[0x30];
-                            dVar23 = (double)(float)((double)pfVar7[1] - (double)pfVar5[0xd]);
-                            dVar18 = (double)pfVar5[0x27];
-                            dVar22 = (double)(float)((double)*pfVar7 - (double)pfVar5[0xc]);
-                            dVar13 = (double)*pfVar11;
-                            dVar21 = (double)(float)((double)pfVar7[2] - (double)pfVar5[0xe]);
-                            dVar14 = (double)pfVar5[0x28];
-                            if (((float)(dVar14 * dVar21 +
-                                        (double)(float)(dVar22 * dVar13 +
-                                                       (double)(float)(dVar18 * dVar23))) < 0.0) ||
-                               (0.0 <= (float)((double)pfVar1[2] * dVar14 +
-                                              (double)(float)((double)pfVar1[1] * dVar18 +
-                                                             (double)(float)(dVar13 * (double)*
-                                                  pfVar1))) -
-                                       (float)(dVar14 * (double)pfVar7[2] +
-                                              (double)(float)(dVar18 * (double)pfVar7[1] +
-                                                             (double)(float)((double)*pfVar7 *
-                                                                            dVar13))))) {
-                              cVar6 = cldTestNormal((double)(float)(dVar21 * dVar14 +
-                                                                   (double)(float)(dVar22 * dVar13 +
-                                                                                  (double)(float)(
-                                                  dVar23 * dVar18))),
-                                                  (double)(ABS((float)((double)pfVar5[0x28] * dVar29
-                                                                      + (double)(float)(dVar13 * 
-                                                  dVar28 + (double)(float)((double)pfVar5[0x27] *
-                                                                          dVar30)))) * pfVar5[0x10]
-                                                  + ABS((float)(dVar14 * dVar15 +
-                                                               (double)(float)(dVar13 * dVar24 +
-                                                                              (double)(float)(dVar18
-                                                                                             * 
-                                                  dVar16)))) * pfVar5[0x12] +
-                                                  ABS((float)((double)pfVar5[0x28] * dVar25 +
-                                                             (double)(float)(dVar13 * dVar27 +
+  if (((uint)*pfVar7 & 0x7f800000) == 0x7f800000) {
+LAB_8268930c:
+    MyAssertHandler(0xffffffff82198458,0x175,0,0xffffffff82000f98,0xffffffff821985e0);
+  }
+  else {
+    if (((uint)pfVar7[1] & 0x7f800000) == 0x7f800000) goto LAB_8268930c;
+    if (((uint)pfVar7[2] & 0x7f800000) == 0x7f800000) goto LAB_8268930c;
+  }
+  pfVar8 = (float *)param_3;
+  if (((uint)*pfVar8 & 0x7f800000) == 0x7f800000) {
+LAB_82689370:
+    MyAssertHandler(0xffffffff82198458,0x176,0,0xffffffff82000f98,0xffffffff821985a4);
+  }
+  else {
+    if (((uint)pfVar8[1] & 0x7f800000) == 0x7f800000) goto LAB_82689370;
+    if (((uint)pfVar8[2] & 0x7f800000) == 0x7f800000) goto LAB_82689370;
+  }
+  pfVar9 = (float *)param_4;
+  if (((uint)*pfVar9 & 0x7f800000) != 0x7f800000) {
+    if (((uint)pfVar9[1] & 0x7f800000) != 0x7f800000) {
+      if (((uint)pfVar9[2] & 0x7f800000) != 0x7f800000) goto LAB_826893f0;
+    }
+  }
+  MyAssertHandler(0xffffffff82198458,0x177,0,0xffffffff82000f98,0xffffffff82198568);
+LAB_826893f0:
+  pfVar5[0x19] = 0.0;
+  pfVar12 = pfVar5 + 0x14;
+  pfVar10 = pfVar5 + 0x1a;
+  pfVar5[0x18] = 3.4028235e+38;
+  dVar20 = 0.0;
+  pfVar5[0x14] = 0.0;
+  pfVar5[0x15] = 0.0;
+  pfVar5[0x16] = 0.0;
+  fVar2 = *pfVar8 - *pfVar7;
+  pfVar5[0x1a] = fVar2;
+  fVar3 = pfVar8[1] - pfVar7[1];
+  pfVar5[0x1b] = fVar3;
+  dVar17 = (double)(pfVar8[2] - pfVar7[2]);
+  dVar14 = (double)(fVar2 * fVar2 + fVar3 * fVar3);
+  pfVar5[0x1c] = pfVar8[2] - pfVar7[2];
+  if (0.01 <= (float)(dVar17 * dVar17 + dVar14)) {
+    pfVar8 = pfVar5 + 0x1e;
+    fVar2 = *pfVar9 - *pfVar7;
+    pfVar5[0x1e] = fVar2;
+    fVar3 = pfVar9[1] - pfVar7[1];
+    pfVar5[0x1f] = fVar3;
+    dVar17 = (double)(pfVar9[2] - pfVar7[2]);
+    dVar14 = (double)(fVar2 * fVar2 + fVar3 * fVar3);
+    pfVar5[0x20] = pfVar9[2] - pfVar7[2];
+    if (0.01 <= (float)(dVar17 * dVar17 + dVar14)) {
+      pfVar9 = pfVar5 + 0x22;
+      fVar2 = fVar2 - *pfVar10;
+      pfVar5[0x22] = fVar2;
+      fVar3 = pfVar5[0x1f] - pfVar5[0x1b];
+      pfVar5[0x23] = fVar3;
+      dVar14 = (double)(pfVar5[0x20] - pfVar5[0x1c]);
+      pfVar5[0x24] = pfVar5[0x20] - pfVar5[0x1c];
+      if (0.01 <= (float)(dVar14 * dVar14 + (double)(fVar2 * fVar2 + fVar3 * fVar3))) {
+        pfVar11 = pfVar5 + 0x26;
+        dVar19 = 1.0;
+        fVar2 = *pfVar8 * pfVar5[0x1c] - *pfVar10 * pfVar5[0x20];
+        dVar14 = (double)fVar2;
+        pfVar5[0x27] = fVar2;
+        fVar2 = pfVar5[0x1b] * pfVar5[0x20] - pfVar5[0x1c] * pfVar5[0x1f];
+        dVar15 = (double)fVar2;
+        pfVar5[0x26] = fVar2;
+        fVar2 = *pfVar10 * pfVar5[0x1f] - *pfVar8 * pfVar5[0x1b];
+        dVar16 = (double)fVar2;
+        pfVar5[0x28] = fVar2;
+        dVar21 = (double)SQRT((float)(dVar16 * dVar16 +
+                                     (double)(float)(dVar15 * dVar15 +
+                                                    (double)(float)(dVar14 * dVar14))));
+        dVar17 = dVar19;
+        if (-dVar21 < 0.0) {
+          dVar17 = dVar21;
+        }
+        dVar17 = (double)(float)(1.0 / dVar17);
+        pfVar5[0x26] = (float)(dVar17 * dVar15);
+        pfVar5[0x27] = (float)(dVar17 * dVar14);
+        pfVar5[0x28] = (float)(dVar17 * dVar16);
+        if (0.009999999776482582 <= dVar21) {
+          dVar31 = (double)pfVar5[4];
+          dVar30 = (double)pfVar5[8];
+          dVar29 = (double)*pfVar5;
+          dVar28 = (double)pfVar5[1];
+          dVar27 = (double)pfVar5[5];
+          dVar17 = 0.0020000000949949026;
+          dVar26 = (double)pfVar5[9];
+          dVar25 = (double)pfVar5[2];
+          dVar16 = (double)pfVar5[6];
+          dVar15 = (double)pfVar5[10];
+          if (0.002 <= ABS((float)(dVar29 * dVar29 +
+                                  (double)(float)(dVar30 * dVar30 + (double)(float)(dVar31 * dVar31)
+                                                 )) - 1.0)) {
+            uVar4 = va(dVar29,dVar31,dVar30,0xffffffff82192678,dVar29,dVar31,dVar30);
+            MyAssertHandler(0xffffffff82198458,0x193,0,0xffffffff820011f4,0xffffffff82198548,uVar4);
+          }
+          if (dVar17 <= ABS((double)(float)((double)(float)(dVar28 * dVar28 +
+                                                           (double)(float)(dVar26 * dVar26 +
+                                                                          (double)(float)(dVar27 * 
+                                                  dVar27))) - dVar19))) {
+            uVar4 = va(dVar28,dVar27,dVar26,0xffffffff82192678,dVar28,dVar27,dVar26);
+            MyAssertHandler(0xffffffff82198458,0x194,0,0xffffffff820011f4,0xffffffff82198528,uVar4);
+          }
+          if (dVar17 <= ABS((double)(float)((double)(float)(dVar25 * dVar25 +
+                                                           (double)(float)(dVar15 * dVar15 +
+                                                                          (double)(float)(dVar16 * 
+                                                  dVar16))) - dVar19))) {
+            uVar4 = va(dVar25,dVar16,dVar15,0xffffffff82192678,dVar25,dVar16,dVar15);
+            MyAssertHandler(0xffffffff82198458,0x195,0,0xffffffff820011f4,0xffffffff82198508,uVar4);
+          }
+          pfVar1 = (float *)pfVar5[0x30];
+          dVar24 = (double)(float)((double)pfVar7[1] - (double)pfVar5[0xd]);
+          dVar18 = (double)pfVar5[0x27];
+          dVar23 = (double)(float)((double)*pfVar7 - (double)pfVar5[0xc]);
+          dVar13 = (double)*pfVar11;
+          dVar22 = (double)(float)((double)pfVar7[2] - (double)pfVar5[0xe]);
+          dVar14 = (double)pfVar5[0x28];
+          if (((double)(float)(dVar14 * dVar22 +
+                              (double)(float)(dVar23 * dVar13 + (double)(float)(dVar18 * dVar24))) <
+               dVar20) ||
+             (dVar20 <= (double)((float)((double)pfVar1[2] * dVar14 +
+                                        (double)(float)((double)pfVar1[1] * dVar18 +
+                                                       (double)(float)(dVar13 * (double)*pfVar1))) -
+                                (float)(dVar14 * (double)pfVar7[2] +
+                                       (double)(float)(dVar18 * (double)pfVar7[1] +
+                                                      (double)(float)((double)*pfVar7 * dVar13))))))
+          {
+            cVar6 = cldTestNormal((double)(float)(dVar22 * dVar14 +
+                                                 (double)(float)(dVar23 * dVar13 +
+                                                                (double)(float)(dVar24 * dVar18))),
+                                  (double)(ABS((float)((double)pfVar5[0x28] * dVar30 +
+                                                      (double)(float)(dVar13 * dVar29 +
+                                                                     (double)(float)((double)pfVar5[
+                                                  0x27] * dVar31)))) * pfVar5[0x10] +
+                                          ABS((float)(dVar14 * dVar15 +
+                                                     (double)(float)(dVar13 * dVar25 +
+                                                                    (double)(float)(dVar18 * dVar16)
+                                                                    ))) * pfVar5[0x12] +
+                                          ABS((float)((double)pfVar5[0x28] * dVar26 +
+                                                     (double)(float)(dVar13 * dVar28 +
+                                                                    (double)(float)((double)pfVar5[
+                                                  0x27] * dVar27)))) * pfVar5[0x11]),pfVar5);
+            dVar14 = extraout_f1;
+            if (cVar6 != '\0') {
+              dVar14 = (double)*pfVar12;
+              if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                        (float)(dVar14 * dVar14 +
+                                                               (double)(pfVar5[0x15] * pfVar5[0x15])
+                                                               )) - dVar19))) {
+                uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                           (double)pfVar5[0x16],pfVar5[0x19]);
+                MyAssertHandler(0xffffffff82198458,0x1ad,0,0xffffffff820011f4,0xffffffff8219839c,
+                                uVar4);
+              }
+              dVar14 = (double)(float)(dVar22 * dVar30 +
+                                      (double)(float)(dVar23 * dVar29 +
+                                                     (double)(float)(dVar24 * dVar31)));
+              cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((double)pfVar5[0x1c] *
+                                                                         dVar30 + (double)(float)((
+                                                  double)*pfVar10 * dVar29 +
+                                                  (double)(float)((double)pfVar5[0x1b] * dVar31))) +
+                                                  dVar14),
+                                  (double)(float)((double)(float)((double)pfVar5[0x20] * dVar30 +
+                                                                 (double)(float)((double)pfVar5[0x1f
+                                                  ] * dVar31 +
+                                                  (double)(float)((double)*pfVar8 * dVar29))) +
+                                                 dVar14),(double)pfVar5[0x10],pfVar5);
+              dVar14 = extraout_f1_00;
+              if (cVar6 != '\0') {
+                dVar14 = (double)*pfVar12;
+                if (dVar17 <= ABS((double)(float)((double)(float)(dVar14 * dVar14 +
+                                                                 (double)(pfVar5[0x15] *
+                                                                          pfVar5[0x15] +
+                                                                         pfVar5[0x16] * pfVar5[0x16]
+                                                                         )) - dVar19))) {
+                  uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                             (double)pfVar5[0x16],pfVar5[0x19]);
+                  MyAssertHandler(0xffffffff82198458,0x1c0,0,0xffffffff820011f4,0xffffffff8219839c,
+                                  uVar4);
+                }
+                dVar14 = (double)(float)(dVar22 * dVar26 +
+                                        (double)(float)(dVar23 * dVar28 +
+                                                       (double)(float)(dVar24 * dVar27)));
+                cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((double)pfVar5[0x1c] *
+                                                                           dVar26 + (double)(float)(
+                                                  (double)*pfVar10 * dVar28 +
+                                                  (double)(float)((double)pfVar5[0x1b] * dVar27))) +
+                                                  dVar14),
+                                    (double)(float)((double)(float)((double)pfVar5[0x20] * dVar26 +
+                                                                   (double)(float)((double)pfVar5[
+                                                  0x1f] * dVar27 +
+                                                  (double)(float)((double)*pfVar8 * dVar28))) +
+                                                  dVar14),(double)pfVar5[0x11],pfVar5);
+                dVar14 = extraout_f1_01;
+                if (cVar6 != '\0') {
+                  dVar14 = (double)*pfVar12;
+                  if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                            (float)(dVar14 * dVar14 +
+                                                                   (double)(pfVar5[0x15] *
+                                                                           pfVar5[0x15]))) - dVar19)
+                                   )) {
+                    uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                               (double)pfVar5[0x16],pfVar5[0x19]);
+                    MyAssertHandler(0xffffffff82198458,0x1d2,0,0xffffffff820011f4,0xffffffff8219839c
+                                    ,uVar4);
+                  }
+                  dVar14 = (double)(float)(dVar22 * dVar15 +
+                                          (double)(float)(dVar23 * dVar25 +
+                                                         (double)(float)(dVar24 * dVar16)));
+                  cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((double)pfVar5[0x1c] *
+                                                                             dVar15 + (double)(float
+                                                  )((double)*pfVar10 * dVar25 +
+                                                   (double)(float)((double)pfVar5[0x1b] * dVar16)))
+                                                  + dVar14),
+                                      (double)(float)((double)(float)((double)pfVar5[0x20] * dVar15
+                                                                     + (double)(float)((double)
+                                                  pfVar5[0x1f] * dVar16 +
+                                                  (double)(float)((double)*pfVar8 * dVar25))) +
+                                                  dVar14),(double)pfVar5[0x12],pfVar5);
+                  dVar14 = extraout_f1_02;
+                  if (cVar6 != '\0') {
+                    dVar14 = (double)*pfVar12;
+                    if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                              (float)(dVar14 * dVar14 +
+                                                                     (double)(pfVar5[0x15] *
+                                                                             pfVar5[0x15]))) -
+                                                     dVar19))) {
+                      uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                 (double)pfVar5[0x16],pfVar5[0x19]);
+                      MyAssertHandler(0xffffffff82198458,0x1e4,0,0xffffffff820011f4,
+                                      0xffffffff8219839c,uVar4);
+                    }
+                    dVar14 = (double)*pfVar10;
+                    dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x1b] * dVar29
+                                                                     - (double)(float)(dVar14 * 
+                                                  dVar31)) +
+                                            (double)(float)(dVar23 * (double)(float)((double)pfVar5[
+                                                  0x1c] * dVar31 -
+                                                  (double)(float)((double)pfVar5[0x1b] * dVar30)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar30 - (double)(float)((double)pfVar5[0x1c] *
+                                                                          dVar29)))));
+                    cVar6 = cldTestEdge(dVar20,(double)(float)((double)(float)((double)pfVar5[0x28]
+                                                                               * dVar30 +
+                                                                              (double)(float)((
+                                                  double)pfVar5[0x27] * dVar31 +
+                                                  (double)(float)(dVar29 * (double)*pfVar11))) *
+                                                  dVar21 + dVar20),
+                                        (double)(ABS((float)((double)pfVar5[0x1c] * dVar26 +
+                                                            (double)(float)(dVar14 * dVar28 +
+                                                                           (double)(float)((double)
+                                                  pfVar5[0x1b] * dVar27)))) * pfVar5[0x12] +
+                                                ABS((float)((double)pfVar5[0x1c] * dVar15 +
+                                                           (double)(float)(dVar14 * dVar25 +
+                                                                          (double)(float)((double)
+                                                  pfVar5[0x1b] * dVar16)))) * pfVar5[0x11]),pfVar5);
+                    dVar14 = extraout_f1_03;
+                    if (cVar6 != '\0') {
+                      dVar14 = (double)*pfVar12;
+                      if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                                pfVar5[0x15] * pfVar5[0x15] +
+                                                                (float)(dVar14 * dVar14)) - dVar19))
+                         ) {
+                        uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                   (double)pfVar5[0x16],pfVar5[0x19]);
+                        MyAssertHandler(0xffffffff82198458,0x1f7,0,0xffffffff820011f4,
+                                        0xffffffff8219839c,uVar4);
+                      }
+                      dVar14 = (double)*pfVar8;
+                      dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x1f] *
+                                                                        dVar29 - (double)(float)(
+                                                  dVar14 * dVar31)) +
+                                              (double)(float)(dVar23 * (double)(float)((double)
+                                                  pfVar5[0x20] * dVar31 -
+                                                  (double)(float)((double)pfVar5[0x1f] * dVar30)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar30 - (double)(float)((double)pfVar5[0x20] *
+                                                                          dVar29)))));
+                      cVar6 = cldTestEdge(dVar20,-(double)(float)((double)(float)((double)pfVar5[
+                                                  0x28] * dVar30 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar31 +
+                                                                 (double)(float)(dVar29 * (double)*
+                                                  pfVar11))) * dVar21 - dVar20),
+                                          (double)(ABS((float)((double)pfVar5[0x20] * dVar26 +
+                                                              (double)(float)(dVar14 * dVar28 +
+                                                                             (double)(float)((double
+                                                  )pfVar5[0x1f] * dVar27)))) * pfVar5[0x12] +
+                                                  ABS((float)((double)pfVar5[0x20] * dVar15 +
+                                                             (double)(float)(dVar14 * dVar25 +
                                                                             (double)(float)((double)
-                                                  pfVar5[0x27] * dVar26)))) * pfVar5[0x11]),pfVar5);
-                              dVar14 = extraout_f1;
-                              if (cVar6 != '\0') {
-                                dVar14 = (double)*pfVar12;
-                                if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] *
-                                                                           pfVar5[0x16] +
-                                                                          (float)(dVar14 * dVar14 +
+                                                  pfVar5[0x1f] * dVar16)))) * pfVar5[0x11]),pfVar5);
+                      dVar14 = extraout_f1_04;
+                      if (cVar6 != '\0') {
+                        dVar14 = (double)*pfVar12;
+                        if (dVar17 <= ABS((double)(float)((double)(float)(dVar14 * dVar14 +
+                                                                         (double)(pfVar5[0x15] *
+                                                                                  pfVar5[0x15] +
+                                                                                 pfVar5[0x16] *
+                                                                                 pfVar5[0x16])) -
+                                                         dVar19))) {
+                          uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                     (double)pfVar5[0x16],pfVar5[0x19]);
+                          MyAssertHandler(0xffffffff82198458,0x208,0,0xffffffff820011f4,
+                                          0xffffffff8219839c,uVar4);
+                        }
+                        dVar20 = (double)*pfVar9;
+                        dVar14 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x23] *
+                                                                          dVar29 - (double)(float)(
+                                                  dVar20 * dVar31)) +
+                                                (double)(float)(dVar23 * (double)(float)((double)
+                                                  pfVar5[0x24] * dVar31 -
+                                                  (double)(float)((double)pfVar5[0x23] * dVar30)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar20 * 
+                                                  dVar30 - (double)(float)((double)pfVar5[0x24] *
+                                                                          dVar29)))));
+                        cVar6 = cldTestEdge(dVar14,-(double)(float)((double)(float)((double)pfVar5[
+                                                  0x28] * dVar30 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar31 +
+                                                                 (double)(float)(dVar29 * (double)*
+                                                  pfVar11))) * dVar21 - dVar14),
+                                            (double)(ABS((float)((double)pfVar5[0x24] * dVar26 +
+                                                                (double)(float)((double)pfVar5[0x23]
+                                                                                * dVar27 +
+                                                                               (double)(float)(
+                                                  dVar20 * dVar28)))) * pfVar5[0x12] +
+                                                  ABS((float)((double)pfVar5[0x24] * dVar15 +
+                                                             (double)(float)((double)pfVar5[0x23] *
+                                                                             dVar16 + (double)(float
+                                                  )(dVar20 * dVar25)))) * pfVar5[0x11]),pfVar5);
+                        dVar14 = extraout_f1_05;
+                        if (cVar6 != '\0') {
+                          dVar14 = (double)*pfVar12;
+                          if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                                    (float)(dVar14 * dVar14 +
+                                                                           (double)(pfVar5[0x15] *
+                                                                                   pfVar5[0x15]))) -
+                                                           dVar19))) {
+                            uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                       (double)pfVar5[0x16],pfVar5[0x19]);
+                            MyAssertHandler(0xffffffff82198458,0x219,0,0xffffffff820011f4,
+                                            0xffffffff8219839c,uVar4);
+                          }
+                          dVar14 = (double)*pfVar10;
+                          dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x1b] *
+                                                                            dVar28 - (double)(float)
+                                                  (dVar14 * dVar27)) +
+                                                  (double)(float)(dVar23 * (double)(float)((double)
+                                                  pfVar5[0x1c] * dVar27 -
+                                                  (double)(float)((double)pfVar5[0x1b] * dVar26)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar26 - (double)(float)((double)pfVar5[0x1c] *
+                                                                          dVar28)))));
+                          cVar6 = cldTestEdge(dVar20,(double)(float)((double)(float)((double)pfVar5[
+                                                  0x28] * dVar26 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar27 +
+                                                                 (double)(float)(dVar28 * (double)*
+                                                  pfVar11))) * dVar21 + dVar20),
+                                              (double)(ABS((float)((double)pfVar5[0x1c] * dVar30 +
+                                                                  (double)(float)(dVar14 * dVar29 +
+                                                                                 (double)(float)((
+                                                  double)pfVar5[0x1b] * dVar31)))) * pfVar5[0x12] +
+                                                  ABS((float)((double)pfVar5[0x1c] * dVar15 +
+                                                             (double)(float)(dVar14 * dVar25 +
+                                                                            (double)(float)((double)
+                                                  pfVar5[0x1b] * dVar16)))) * pfVar5[0x10]),pfVar5);
+                          dVar14 = extraout_f1_06;
+                          if (cVar6 != '\0') {
+                            dVar14 = (double)*pfVar12;
+                            if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16] +
+                                                                      (float)(dVar14 * dVar14 +
+                                                                             (double)(pfVar5[0x15] *
+                                                                                     pfVar5[0x15])))
+                                                             - dVar19))) {
+                              uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                         (double)pfVar5[0x16],pfVar5[0x19]);
+                              MyAssertHandler(0xffffffff82198458,0x22b,0,0xffffffff820011f4,
+                                              0xffffffff8219839c,uVar4);
+                            }
+                            dVar14 = (double)*pfVar8;
+                            dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x1f] *
+                                                                              dVar28 - (double)(
+                                                  float)(dVar14 * dVar27)) +
+                                                  (double)(float)(dVar23 * (double)(float)((double)
+                                                  pfVar5[0x20] * dVar27 -
+                                                  (double)(float)((double)pfVar5[0x1f] * dVar26)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar26 - (double)(float)((double)pfVar5[0x20] *
+                                                                          dVar28)))));
+                            cVar6 = cldTestEdge(dVar20,-(double)(float)((double)(float)((double)
+                                                  pfVar5[0x28] * dVar26 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar27 +
+                                                                 (double)(float)(dVar28 * (double)*
+                                                  pfVar11))) * dVar21 - dVar20),
+                                                (double)(ABS((float)((double)pfVar5[0x20] * dVar30 +
+                                                                    (double)(float)(dVar14 * dVar29
+                                                                                   + (double)(float)
+                                                  ((double)pfVar5[0x1f] * dVar31)))) * pfVar5[0x12]
+                                                  + ABS((float)((double)pfVar5[0x20] * dVar15 +
+                                                               (double)(float)(dVar14 * dVar25 +
+                                                                              (double)(float)((
+                                                  double)pfVar5[0x1f] * dVar16)))) * pfVar5[0x10]),
+                                                pfVar5);
+                            dVar14 = extraout_f1_07;
+                            if (cVar6 != '\0') {
+                              dVar14 = (double)*pfVar12;
+                              if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] * pfVar5[0x16]
+                                                                        + (float)(dVar14 * dVar14 +
                                                                                  (double)(pfVar5[
                                                   0x15] * pfVar5[0x15]))) - dVar19))) {
+                                uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
+                                           (double)pfVar5[0x16],pfVar5[0x19]);
+                                MyAssertHandler(0xffffffff82198458,0x23d,0,0xffffffff820011f4,
+                                                0xffffffff8219839c,uVar4);
+                              }
+                              dVar20 = (double)*pfVar9;
+                              dVar14 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[0x23]
+                                                                                * dVar28 -
+                                                                               (double)(float)(
+                                                  dVar20 * dVar27)) +
+                                                  (double)(float)(dVar23 * (double)(float)((double)
+                                                  pfVar5[0x24] * dVar27 -
+                                                  (double)(float)((double)pfVar5[0x23] * dVar26)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar20 * 
+                                                  dVar26 - (double)(float)((double)pfVar5[0x24] *
+                                                                          dVar28)))));
+                              cVar6 = cldTestEdge(dVar14,-(double)(float)((double)(float)((double)
+                                                  pfVar5[0x28] * dVar26 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar27 +
+                                                                 (double)(float)(dVar28 * (double)*
+                                                  pfVar11))) * dVar21 - dVar14),
+                                                  (double)(ABS((float)((double)pfVar5[0x24] * dVar30
+                                                                      + (double)(float)((double)
+                                                  pfVar5[0x23] * dVar31 +
+                                                  (double)(float)(dVar20 * dVar29)))) * pfVar5[0x12]
+                                                  + ABS((float)((double)pfVar5[0x24] * dVar15 +
+                                                               (double)(float)((double)pfVar5[0x23]
+                                                                               * dVar16 +
+                                                                              (double)(float)(dVar20
+                                                                                             * 
+                                                  dVar25)))) * pfVar5[0x10]),pfVar5);
+                              dVar14 = extraout_f1_08;
+                              if (cVar6 != '\0') {
+                                dVar14 = (double)*pfVar12;
+                                if (dVar17 <= ABS((double)(float)((double)(float)(dVar14 * dVar14 +
+                                                                                 (double)(pfVar5[
+                                                  0x15] * pfVar5[0x15] + pfVar5[0x16] * pfVar5[0x16]
+                                                  )) - dVar19))) {
                                   uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15],
                                              (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                  MyAssertHandler(0xffffffff82198458,0x1ad,0,0xffffffff820011f4,
+                                  MyAssertHandler(0xffffffff82198458,0x24f,0,0xffffffff820011f4,
                                                   0xffffffff8219839c,uVar4);
                                 }
-                                dVar14 = (double)(float)(dVar21 * dVar29 +
-                                                        (double)(float)(dVar22 * dVar28 +
-                                                                       (double)(float)(dVar23 * 
-                                                  dVar30)));
-                                cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((double)
-                                                  pfVar5[0x1c] * dVar29 +
-                                                  (double)(float)((double)*pfVar10 * dVar28 +
-                                                                 (double)(float)((double)pfVar5[0x1b
-                                                  ] * dVar30))) + dVar14),
-                                                  (double)(float)((double)(float)((double)pfVar5[
-                                                  0x20] * dVar29 +
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar30 +
-                                                                 (double)(float)((double)*pfVar8 *
-                                                                                dVar28))) + dVar14),
-                                                  (double)pfVar5[0x10],pfVar5);
-                                dVar14 = extraout_f1_00;
+                                dVar14 = (double)*pfVar10;
+                                dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[
+                                                  0x1b] * dVar25 - (double)(float)(dVar14 * dVar16))
+                                                  + (double)(float)(dVar23 * (double)(float)((double
+                                                  )pfVar5[0x1c] * dVar16 -
+                                                  (double)(float)((double)pfVar5[0x1b] * dVar15)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar15 - (double)(float)((double)pfVar5[0x1c] *
+                                                                          dVar25)))));
+                                cVar6 = cldTestEdge(dVar20,(double)(float)((double)(float)((double)
+                                                  pfVar5[0x28] * dVar15 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar16 +
+                                                                 (double)(float)(dVar25 * (double)*
+                                                  pfVar11))) * dVar21 + dVar20),
+                                                  (double)(ABS((float)((double)pfVar5[0x1c] * dVar26
+                                                                      + (double)(float)(dVar14 * 
+                                                  dVar28 + (double)(float)((double)pfVar5[0x1b] *
+                                                                          dVar27)))) * pfVar5[0x10]
+                                                  + ABS((float)((double)pfVar5[0x1c] * dVar30 +
+                                                               (double)(float)(dVar14 * dVar29 +
+                                                                              (double)(float)((
+                                                  double)pfVar5[0x1b] * dVar31)))) * pfVar5[0x11]),
+                                                  pfVar5);
+                                dVar14 = extraout_f1_09;
                                 if (cVar6 != '\0') {
                                   dVar14 = (double)*pfVar12;
                                   if (dVar17 <= ABS((double)(float)((double)(float)(dVar14 * dVar14
@@ -338,26 +821,33 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
                                                   pfVar5[0x16] * pfVar5[0x16])) - dVar19))) {
                                     uVar4 = va(dVar14,0xffffffff821984e4,dVar14,(double)pfVar5[0x15]
                                                ,(double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                    MyAssertHandler(0xffffffff82198458,0x1c0,0,0xffffffff820011f4,
+                                    MyAssertHandler(0xffffffff82198458,0x261,0,0xffffffff820011f4,
                                                     0xffffffff8219839c,uVar4);
                                   }
-                                  dVar14 = (double)(float)(dVar21 * dVar25 +
-                                                          (double)(float)(dVar22 * dVar27 +
-                                                                         (double)(float)(dVar23 * 
-                                                  dVar26)));
-                                  cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((double
-                                                  )pfVar5[0x1c] * dVar25 +
-                                                  (double)(float)((double)*pfVar10 * dVar27 +
-                                                                 (double)(float)((double)pfVar5[0x1b
-                                                  ] * dVar26))) + dVar14),
-                                                  (double)(float)((double)(float)((double)pfVar5[
-                                                  0x20] * dVar25 +
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar26 +
-                                                                 (double)(float)((double)*pfVar8 *
-                                                                                dVar27))) + dVar14),
-                                                  (double)pfVar5[0x11],pfVar5);
-                                  dVar14 = extraout_f1_01;
+                                  dVar14 = (double)*pfVar8;
+                                  dVar20 = (double)(float)(dVar22 * (double)(float)((double)pfVar5[
+                                                  0x1f] * dVar25 - (double)(float)(dVar14 * dVar16))
+                                                  + (double)(float)(dVar23 * (double)(float)((double
+                                                  )pfVar5[0x20] * dVar16 -
+                                                  (double)(float)((double)pfVar5[0x1f] * dVar15)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar14 * 
+                                                  dVar15 - (double)(float)((double)pfVar5[0x20] *
+                                                                          dVar25)))));
+                                  cVar6 = cldTestEdge(dVar20,-(double)(float)((double)(float)((
+                                                  double)pfVar5[0x28] * dVar15 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar16 +
+                                                                 (double)(float)(dVar25 * (double)*
+                                                  pfVar11))) * dVar21 - dVar20),
+                                                  (double)(ABS((float)((double)pfVar5[0x20] * dVar26
+                                                                      + (double)(float)(dVar14 * 
+                                                  dVar28 + (double)(float)((double)pfVar5[0x1f] *
+                                                                          dVar27)))) * pfVar5[0x10]
+                                                  + ABS((float)((double)pfVar5[0x20] * dVar30 +
+                                                               (double)(float)(dVar14 * dVar29 +
+                                                                              (double)(float)((
+                                                  double)pfVar5[0x1f] * dVar31)))) * pfVar5[0x11]),
+                                                  pfVar5);
+                                  dVar14 = extraout_f1_10;
                                   if (cVar6 != '\0') {
                                     dVar14 = (double)*pfVar12;
                                     if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] *
@@ -368,26 +858,34 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
                                       uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
                                                  (double)pfVar5[0x15],(double)pfVar5[0x16],
                                                  pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                      MyAssertHandler(0xffffffff82198458,0x1d2,0,0xffffffff820011f4,
+                                      MyAssertHandler(0xffffffff82198458,0x273,0,0xffffffff820011f4,
                                                       0xffffffff8219839c,uVar4);
                                     }
-                                    dVar14 = (double)(float)(dVar21 * dVar15 +
-                                                            (double)(float)(dVar22 * dVar24 +
-                                                                           (double)(float)(dVar23 * 
-                                                  dVar16)));
-                                    cVar6 = cldTestFace(dVar14,(double)(float)((double)(float)((
-                                                  double)pfVar5[0x1c] * dVar15 +
-                                                  (double)(float)((double)*pfVar10 * dVar24 +
-                                                                 (double)(float)((double)pfVar5[0x1b
-                                                  ] * dVar16))) + dVar14),
-                                                  (double)(float)((double)(float)((double)pfVar5[
-                                                  0x20] * dVar15 +
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar16 +
-                                                                 (double)(float)((double)*pfVar8 *
-                                                                                dVar24))) + dVar14),
-                                                  (double)pfVar5[0x12],pfVar5);
-                                    dVar14 = extraout_f1_02;
+                                    dVar20 = (double)*pfVar9;
+                                    dVar14 = (double)(float)(dVar22 * (double)(float)((double)pfVar5
+                                                  [0x23] * dVar25 - (double)(float)(dVar20 * dVar16)
+                                                  ) + (double)(float)(dVar23 * (double)(float)((
+                                                  double)pfVar5[0x24] * dVar16 -
+                                                  (double)(float)((double)pfVar5[0x23] * dVar15)) +
+                                                  (double)(float)(dVar24 * (double)(float)(dVar20 * 
+                                                  dVar15 - (double)(float)((double)pfVar5[0x24] *
+                                                                          dVar25)))));
+                                    cVar6 = cldTestEdge(dVar14,-(double)(float)((double)(float)((
+                                                  double)pfVar5[0x28] * dVar15 +
+                                                  (double)(float)((double)pfVar5[0x27] * dVar16 +
+                                                                 (double)(float)(dVar25 * (double)*
+                                                  pfVar11))) * dVar21 - dVar14),
+                                                  (double)(ABS((float)((double)pfVar5[0x24] * dVar26
+                                                                      + (double)(float)((double)
+                                                  pfVar5[0x23] * dVar27 +
+                                                  (double)(float)(dVar20 * dVar28)))) * pfVar5[0x10]
+                                                  + ABS((float)((double)pfVar5[0x24] * dVar30 +
+                                                               (double)(float)((double)pfVar5[0x23]
+                                                                               * dVar31 +
+                                                                              (double)(float)(dVar20
+                                                                                             * 
+                                                  dVar29)))) * pfVar5[0x11]),pfVar5);
+                                    dVar14 = extraout_f1_11;
                                     if (cVar6 != '\0') {
                                       dVar14 = (double)*pfVar12;
                                       if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] *
@@ -398,389 +896,13 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
                                         uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
                                                    (double)pfVar5[0x15],(double)pfVar5[0x16],
                                                    pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                        MyAssertHandler(0xffffffff82198458,0x1e4,0,
+                                        MyAssertHandler(0xffffffff82198458,0x285,0,
                                                         0xffffffff820011f4,0xffffffff8219839c,uVar4)
                                         ;
                                       }
-                                      dVar14 = (double)*pfVar10;
-                                      dVar13 = (double)(float)(dVar21 * (double)(float)((double)
-                                                  pfVar5[0x1b] * dVar28 -
-                                                  (double)(float)(dVar14 * dVar30)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x1c] * dVar30 -
-                                                  (double)(float)((double)pfVar5[0x1b] * dVar29)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar29 - (double)(float)((double)pfVar5[0x1c] *
-                                                                          dVar28)))));
-                                      cVar6 = cldTestEdge(dVar13,(double)(float)((double)(float)((
-                                                  double)pfVar5[0x28] * dVar29 +
-                                                  (double)(float)((double)pfVar5[0x27] * dVar30 +
-                                                                 (double)(float)(dVar28 * (double)*
-                                                  pfVar11))) * dVar20 + dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x1c] * dVar25
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar27 + (double)(float)((double)pfVar5[0x1b] *
-                                                                          dVar26)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x1c] * dVar15 +
-                                                               (double)(float)(dVar14 * dVar24 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1b] * dVar16)))) * pfVar5[0x11]),
-                                                  pfVar5);
-                                      dVar14 = extraout_f1_03;
-                                      if (cVar6 != '\0') {
-                                        dVar14 = (double)*pfVar12;
-                                        if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16] *
-                                                                                   pfVar5[0x16] +
-                                                                                  pfVar5[0x15] *
-                                                                                  pfVar5[0x15] +
-                                                                                  (float)(dVar14 * 
-                                                  dVar14)) - dVar19))) {
-                                          uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                     (double)pfVar5[0x15],(double)pfVar5[0x16],
-                                                     pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                          MyAssertHandler(0xffffffff82198458,0x1f7,0,
-                                                          0xffffffff820011f4,0xffffffff8219839c,
-                                                          uVar4);
-                                        }
-                                        dVar14 = (double)*pfVar8;
-                                        dVar13 = (double)(float)(dVar21 * (double)(float)((double)
-                                                  pfVar5[0x1f] * dVar28 -
-                                                  (double)(float)(dVar14 * dVar30)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x20] * dVar30 -
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar29)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar29 - (double)(float)((double)pfVar5[0x20] *
-                                                                          dVar28)))));
-                                        cVar6 = cldTestEdge(dVar13,-(double)(float)((double)(float)(
-                                                  (double)pfVar5[0x28] * dVar29 +
-                                                  (double)(float)((double)pfVar5[0x27] * dVar30 +
-                                                                 (double)(float)(dVar28 * (double)*
-                                                  pfVar11))) * dVar20 - dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x20] * dVar25
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar27 + (double)(float)((double)pfVar5[0x1f] *
-                                                                          dVar26)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x20] * dVar15 +
-                                                               (double)(float)(dVar14 * dVar24 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1f] * dVar16)))) * pfVar5[0x11]),
-                                                  pfVar5);
-                                        dVar14 = extraout_f1_04;
-                                        if (cVar6 != '\0') {
-                                          dVar14 = (double)*pfVar12;
-                                          if (dVar17 <= ABS((double)(float)((double)(float)(dVar14 *
-                                                                                            dVar14 +
-                                                                                           (double)(
-                                                  pfVar5[0x15] * pfVar5[0x15] +
-                                                  pfVar5[0x16] * pfVar5[0x16])) - dVar19))) {
-                                            uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                       (double)pfVar5[0x15],(double)pfVar5[0x16],
-                                                       pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                            MyAssertHandler(0xffffffff82198458,0x208,0,
-                                                            0xffffffff820011f4,0xffffffff8219839c,
-                                                            uVar4);
-                                          }
-                                          dVar13 = (double)*pfVar9;
-                                          dVar14 = (double)(float)(dVar21 * (double)(float)((double)
-                                                  pfVar5[0x23] * dVar28 -
-                                                  (double)(float)(dVar13 * dVar30)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x24] * dVar30 -
-                                                  (double)(float)((double)pfVar5[0x23] * dVar29)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar13 * 
-                                                  dVar29 - (double)(float)((double)pfVar5[0x24] *
-                                                                          dVar28)))));
-                                          cVar6 = cldTestEdge(dVar14,-(double)(float)((double)(float
-                                                  )((double)pfVar5[0x28] * dVar29 +
-                                                   (double)(float)((double)pfVar5[0x27] * dVar30 +
-                                                                  (double)(float)(dVar28 * (double)*
-                                                  pfVar11))) * dVar20 - dVar14),
-                                                  (double)(ABS((float)((double)pfVar5[0x24] * dVar25
-                                                                      + (double)(float)((double)
-                                                  pfVar5[0x23] * dVar26 +
-                                                  (double)(float)(dVar13 * dVar27)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x24] * dVar15 +
-                                                               (double)(float)((double)pfVar5[0x23]
-                                                                               * dVar16 +
-                                                                              (double)(float)(dVar13
-                                                                                             * 
-                                                  dVar24)))) * pfVar5[0x11]),pfVar5);
-                                          dVar14 = extraout_f1_05;
-                                          if (cVar6 != '\0') {
-                                            dVar14 = (double)*pfVar12;
-                                            if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16]
-                                                                                       * pfVar5[0x16
-                                                  ] + (float)(dVar14 * dVar14 +
-                                                             (double)(pfVar5[0x15] * pfVar5[0x15])))
-                                                  - dVar19))) {
-                                              uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                         (double)pfVar5[0x15],(double)pfVar5[0x16],
-                                                         pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                              MyAssertHandler(0xffffffff82198458,0x219,0,
-                                                              0xffffffff820011f4,0xffffffff8219839c,
-                                                              uVar4);
-                                            }
-                                            dVar14 = (double)*pfVar10;
-                                            dVar13 = (double)(float)(dVar21 * (double)(float)((
-                                                  double)pfVar5[0x1b] * dVar27 -
-                                                  (double)(float)(dVar14 * dVar26)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x1c] * dVar26 -
-                                                  (double)(float)((double)pfVar5[0x1b] * dVar25)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar25 - (double)(float)((double)pfVar5[0x1c] *
-                                                                          dVar27)))));
-                                            cVar6 = cldTestEdge(dVar13,(double)(float)((double)(
-                                                  float)((double)pfVar5[0x28] * dVar25 +
-                                                        (double)(float)((double)pfVar5[0x27] *
-                                                                        dVar26 + (double)(float)(
-                                                  dVar27 * (double)*pfVar11))) * dVar20 + dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x1c] * dVar29
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar28 + (double)(float)((double)pfVar5[0x1b] *
-                                                                          dVar30)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x1c] * dVar15 +
-                                                               (double)(float)(dVar14 * dVar24 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1b] * dVar16)))) * pfVar5[0x10]),
-                                                  pfVar5);
-                                            dVar14 = extraout_f1_06;
-                                            if (cVar6 != '\0') {
-                                              dVar14 = (double)*pfVar12;
-                                              if (dVar17 <= ABS((double)(float)((double)(pfVar5[0x16
-                                                  ] * pfVar5[0x16] +
-                                                  (float)(dVar14 * dVar14 +
-                                                         (double)(pfVar5[0x15] * pfVar5[0x15]))) -
-                                                  dVar19))) {
-                                                uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                           (double)pfVar5[0x15],(double)pfVar5[0x16]
-                                                           ,pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                MyAssertHandler(0xffffffff82198458,0x22b,0,
-                                                                0xffffffff820011f4,
-                                                                0xffffffff8219839c,uVar4);
-                                              }
-                                              dVar14 = (double)*pfVar8;
-                                              dVar13 = (double)(float)(dVar21 * (double)(float)((
-                                                  double)pfVar5[0x1f] * dVar27 -
-                                                  (double)(float)(dVar14 * dVar26)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x20] * dVar26 -
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar25)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar25 - (double)(float)((double)pfVar5[0x20] *
-                                                                          dVar27)))));
-                                              cVar6 = cldTestEdge(dVar13,-(double)(float)((double)(
-                                                  float)((double)pfVar5[0x28] * dVar25 +
-                                                        (double)(float)((double)pfVar5[0x27] *
-                                                                        dVar26 + (double)(float)(
-                                                  dVar27 * (double)*pfVar11))) * dVar20 - dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x20] * dVar29
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar28 + (double)(float)((double)pfVar5[0x1f] *
-                                                                          dVar30)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x20] * dVar15 +
-                                                               (double)(float)(dVar14 * dVar24 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1f] * dVar16)))) * pfVar5[0x10]),
-                                                  pfVar5);
-                                              dVar14 = extraout_f1_07;
-                                              if (cVar6 != '\0') {
-                                                dVar14 = (double)*pfVar12;
-                                                if (dVar17 <= ABS((double)(float)((double)(pfVar5[
-                                                  0x16] * pfVar5[0x16] +
-                                                  (float)(dVar14 * dVar14 +
-                                                         (double)(pfVar5[0x15] * pfVar5[0x15]))) -
-                                                  dVar19))) {
-                                                  uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                             (double)pfVar5[0x15],
-                                                             (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                  MyAssertHandler(0xffffffff82198458,0x23d,0,
-                                                                  0xffffffff820011f4,
-                                                                  0xffffffff8219839c,uVar4);
-                                                }
-                                                dVar13 = (double)*pfVar9;
-                                                dVar14 = (double)(float)(dVar21 * (double)(float)((
-                                                  double)pfVar5[0x23] * dVar27 -
-                                                  (double)(float)(dVar13 * dVar26)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x24] * dVar26 -
-                                                  (double)(float)((double)pfVar5[0x23] * dVar25)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar13 * 
-                                                  dVar25 - (double)(float)((double)pfVar5[0x24] *
-                                                                          dVar27)))));
-                                                cVar6 = cldTestEdge(dVar14,-(double)(float)((double)
-                                                  (float)((double)pfVar5[0x28] * dVar25 +
-                                                         (double)(float)((double)pfVar5[0x27] *
-                                                                         dVar26 + (double)(float)(
-                                                  dVar27 * (double)*pfVar11))) * dVar20 - dVar14),
-                                                  (double)(ABS((float)((double)pfVar5[0x24] * dVar29
-                                                                      + (double)(float)((double)
-                                                  pfVar5[0x23] * dVar30 +
-                                                  (double)(float)(dVar13 * dVar28)))) * pfVar5[0x12]
-                                                  + ABS((float)((double)pfVar5[0x24] * dVar15 +
-                                                               (double)(float)((double)pfVar5[0x23]
-                                                                               * dVar16 +
-                                                                              (double)(float)(dVar13
-                                                                                             * 
-                                                  dVar24)))) * pfVar5[0x10]),pfVar5);
-                                                dVar14 = extraout_f1_08;
-                                                if (cVar6 != '\0') {
-                                                  dVar14 = (double)*pfVar12;
-                                                  if (dVar17 <= ABS((double)(float)((double)(float)(
-                                                  dVar14 * dVar14 +
-                                                  (double)(pfVar5[0x15] * pfVar5[0x15] +
-                                                          pfVar5[0x16] * pfVar5[0x16])) - dVar19)))
-                                                  {
-                                                    uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                               (double)pfVar5[0x15],
-                                                               (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                    MyAssertHandler(0xffffffff82198458,0x24f,0,
-                                                                    0xffffffff820011f4,
-                                                                    0xffffffff8219839c,uVar4);
-                                                  }
-                                                  dVar14 = (double)*pfVar10;
-                                                  dVar13 = (double)(float)(dVar21 * (double)(float)(
-                                                  (double)pfVar5[0x1b] * dVar24 -
-                                                  (double)(float)(dVar14 * dVar16)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x1c] * dVar16 -
-                                                  (double)(float)((double)pfVar5[0x1b] * dVar15)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar15 - (double)(float)((double)pfVar5[0x1c] *
-                                                                          dVar24)))));
-                                                  cVar6 = cldTestEdge(dVar13,(double)(float)((double
-                                                  )(float)((double)pfVar5[0x28] * dVar15 +
-                                                          (double)(float)((double)pfVar5[0x27] *
-                                                                          dVar16 + (double)(float)(
-                                                  dVar24 * (double)*pfVar11))) * dVar20 + dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x1c] * dVar25
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar27 + (double)(float)((double)pfVar5[0x1b] *
-                                                                          dVar26)))) * pfVar5[0x10]
-                                                  + ABS((float)((double)pfVar5[0x1c] * dVar29 +
-                                                               (double)(float)(dVar14 * dVar28 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1b] * dVar30)))) * pfVar5[0x11]),
-                                                  pfVar5);
-                                                  dVar14 = extraout_f1_09;
-                                                  if (cVar6 != '\0') {
-                                                    dVar14 = (double)*pfVar12;
-                                                    if (dVar17 <= ABS((double)(float)((double)(float
-                                                  )(dVar14 * dVar14 +
-                                                   (double)(pfVar5[0x15] * pfVar5[0x15] +
-                                                           pfVar5[0x16] * pfVar5[0x16])) - dVar19)))
-                                                  {
-                                                    uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                               (double)pfVar5[0x15],
-                                                               (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                    MyAssertHandler(0xffffffff82198458,0x261,0,
-                                                                    0xffffffff820011f4,
-                                                                    0xffffffff8219839c,uVar4);
-                                                  }
-                                                  dVar14 = (double)*pfVar8;
-                                                  dVar13 = (double)(float)(dVar21 * (double)(float)(
-                                                  (double)pfVar5[0x1f] * dVar24 -
-                                                  (double)(float)(dVar14 * dVar16)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x20] * dVar16 -
-                                                  (double)(float)((double)pfVar5[0x1f] * dVar15)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar14 * 
-                                                  dVar15 - (double)(float)((double)pfVar5[0x20] *
-                                                                          dVar24)))));
-                                                  cVar6 = cldTestEdge(dVar13,-(double)(float)((
-                                                  double)(float)((double)pfVar5[0x28] * dVar15 +
-                                                                (double)(float)((double)pfVar5[0x27]
-                                                                                * dVar16 +
-                                                                               (double)(float)(
-                                                  dVar24 * (double)*pfVar11))) * dVar20 - dVar13),
-                                                  (double)(ABS((float)((double)pfVar5[0x20] * dVar25
-                                                                      + (double)(float)(dVar14 * 
-                                                  dVar27 + (double)(float)((double)pfVar5[0x1f] *
-                                                                          dVar26)))) * pfVar5[0x10]
-                                                  + ABS((float)((double)pfVar5[0x20] * dVar29 +
-                                                               (double)(float)(dVar14 * dVar28 +
-                                                                              (double)(float)((
-                                                  double)pfVar5[0x1f] * dVar30)))) * pfVar5[0x11]),
-                                                  pfVar5);
-                                                  dVar14 = extraout_f1_10;
-                                                  if (cVar6 != '\0') {
-                                                    dVar14 = (double)*pfVar12;
-                                                    if (dVar17 <= ABS((double)(float)((double)(
-                                                  pfVar5[0x16] * pfVar5[0x16] +
-                                                  (float)(dVar14 * dVar14 +
-                                                         (double)(pfVar5[0x15] * pfVar5[0x15]))) -
-                                                  dVar19))) {
-                                                    uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                               (double)pfVar5[0x15],
-                                                               (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                    MyAssertHandler(0xffffffff82198458,0x273,0,
-                                                                    0xffffffff820011f4,
-                                                                    0xffffffff8219839c,uVar4);
-                                                  }
-                                                  dVar13 = (double)*pfVar9;
-                                                  dVar14 = (double)(float)(dVar21 * (double)(float)(
-                                                  (double)pfVar5[0x23] * dVar24 -
-                                                  (double)(float)(dVar13 * dVar16)) +
-                                                  (double)(float)(dVar22 * (double)(float)((double)
-                                                  pfVar5[0x24] * dVar16 -
-                                                  (double)(float)((double)pfVar5[0x23] * dVar15)) +
-                                                  (double)(float)(dVar23 * (double)(float)(dVar13 * 
-                                                  dVar15 - (double)(float)((double)pfVar5[0x24] *
-                                                                          dVar24)))));
-                                                  cVar6 = cldTestEdge(dVar14,-(double)(float)((
-                                                  double)(float)((double)pfVar5[0x28] * dVar15 +
-                                                                (double)(float)((double)pfVar5[0x27]
-                                                                                * dVar16 +
-                                                                               (double)(float)(
-                                                  dVar24 * (double)*pfVar11))) * dVar20 - dVar14),
-                                                  (double)(ABS((float)((double)pfVar5[0x24] * dVar25
-                                                                      + (double)(float)((double)
-                                                  pfVar5[0x23] * dVar26 +
-                                                  (double)(float)(dVar13 * dVar27)))) * pfVar5[0x10]
-                                                  + ABS((float)((double)pfVar5[0x24] * dVar29 +
-                                                               (double)(float)((double)pfVar5[0x23]
-                                                                               * dVar30 +
-                                                                              (double)(float)(dVar13
-                                                                                             * 
-                                                  dVar28)))) * pfVar5[0x11]),pfVar5);
-                                                  dVar14 = extraout_f1_11;
-                                                  if (cVar6 != '\0') {
-                                                    dVar14 = (double)*pfVar12;
-                                                    if (dVar17 <= ABS((double)(float)((double)(
-                                                  pfVar5[0x16] * pfVar5[0x16] +
-                                                  (float)(dVar14 * dVar14 +
-                                                         (double)(pfVar5[0x15] * pfVar5[0x15]))) -
-                                                  dVar19))) {
-                                                    uVar4 = va(dVar14,0xffffffff821984e4,dVar14,
-                                                               (double)pfVar5[0x15],
-                                                               (double)pfVar5[0x16],pfVar5[0x19]);
-                    /* WARNING: Subroutine does not return */
-                                                    MyAssertHandler(0xffffffff82198458,0x285,0,
-                                                                    0xffffffff820011f4,
-                                                                    0xffffffff8219839c,uVar4);
-                                                  }
-                                                  __restfpr(1);
-                                                  __restgprlr_22();
-                                                  return;
-                                                  }
-                                                  }
-                                                  }
-                                                }
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
+                                      __restfpr(1);
+                                      __restgprlr_22();
+                                      return;
                                     }
                                   }
                                 }
@@ -790,24 +912,52 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
                         }
                       }
                     }
-                    __restfpr(dVar14,0);
-                    __restgprlr_22();
-                    return;
                   }
                 }
               }
-                    /* WARNING: Subroutine does not return */
-              MyAssertHandler(0xffffffff82198458,0x177,0,0xffffffff82000f98,0xffffffff82198568);
             }
           }
         }
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82198458,0x176,0,0xffffffff82000f98,0xffffffff821985a4);
       }
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82198458,0x175,0,0xffffffff82000f98,0xffffffff821985e0);
+  __restfpr(dVar14,0);
+  __restgprlr_22();
+  return;
+}
+
+
+// 8268A630  cldClosestPointOnTwoLines  (physics/ode/src/collision_trimesh_box.cpp:656)
+
+/* WARNING: Unknown calling convention: __cdecl */
+/* cldClosestPointOnTwoLines */
+
+undefined8 __cdecl
+cldClosestPointOnTwoLines
+          (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,float *param_6
+          )
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  
+  fVar1 = param_4[2] * param_2[2] + *param_4 * *param_2 + param_4[1] * param_2[1];
+  fVar3 = -(fVar1 * fVar1 - 1.0);
+  fVar2 = param_2[2] * (param_3[2] - param_1[2]) +
+          *param_2 * (*param_3 - *param_1) + param_2[1] * (param_3[1] - param_1[1]);
+  fVar4 = -(param_4[2] * (param_3[2] - param_1[2]) +
+           *param_4 * (*param_3 - *param_1) + param_4[1] * (param_3[1] - param_1[1]));
+  if (0.0 < fVar3) {
+    fVar3 = 1.0 / fVar3;
+    *param_5 = (fVar4 * fVar1 + fVar2) * fVar3;
+    *param_6 = (fVar2 * fVar1 + fVar4) * fVar3;
+    return 1;
+  }
+  *param_5 = 0.0;
+  *param_6 = 0.0;
+  return 0;
 }
 
 
@@ -816,11 +966,703 @@ cldTestSeparatingAxes(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulo
 /* WARNING: Unknown calling convention: __cdecl */
 /* cldClipping */
 
-void __cdecl cldClipping(void)
+void __cdecl cldClipping(undefined8 param_1,float *param_2,float *param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  char *pcVar7;
+  char *pcVar8;
+  char *pcVar9;
+  char *pcVar10;
+  char *pcVar11;
+  float *pfVar13;
+  undefined8 uVar12;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  int iVar17;
+  float *pfVar18;
+  int iVar19;
+  float *pfVar20;
+  int iVar21;
+  uint *puVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
+  float local_300;
+  float local_2fc [3];
+  float local_2f0;
+  float local_2ec;
+  float local_2e8;
+  float local_2e4;
+  float local_2e0;
+  float local_2dc;
+  float local_2d8;
+  char *local_2d0;
+  char *local_2cc;
+  char *local_2c8;
+  uint local_2c4;
+  float local_2c0;
+  char *local_2bc;
+  char *local_2b8;
+  char *local_2b4;
+  char *local_2b0;
+  char *local_2ac;
+  uint local_2a8;
+  char *local_2a4;
+  uint local_2a0;
+  uint local_29c;
+  float local_290;
+  float local_28c;
+  float local_288;
+  float local_280 [4];
+  float local_270;
+  float local_26c;
+  float local_268 [2];
+  float local_260;
+  float local_25c;
+  float local_258;
+  float local_250;
+  float local_24c;
+  float local_248;
+  float local_240;
+  float local_23c;
+  float local_238;
+  float local_230;
+  float local_22c;
+  float local_228;
+  float local_220;
+  float local_21c;
+  float local_218;
+  float local_210;
+  float local_20c;
+  float local_208;
+  float local_200;
+  float local_1fc;
+  float local_1f8;
+  float local_1f0;
+  float local_1ec;
+  float local_1e8;
+  float local_1e0;
+  float local_1dc;
+  float local_1d8;
+  float local_1d0;
+  float local_1cc;
+  float local_1c8;
+  float local_1c0;
+  float local_1bc;
+  float local_1b8;
+  float local_1b0;
+  float local_1ac;
+  float local_1a8;
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_180;
+  float local_17c;
+  float local_178;
+  float local_170;
+  float local_16c;
+  float local_168;
+  float local_160;
+  float local_15c;
+  float local_158;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_120;
+  float local_11c;
+  float local_118;
+  float local_110;
+  float local_10c;
+  float local_108;
+  
   __savegprlr();
+  pfVar13 = (float *)__savefpr_19();
+  fVar3 = pfVar13[0x19];
+  uVar15 = (ulonglong)(uint)fVar3;
+  dVar37 = 0.0;
+  dVar26 = 1e-06;
+  dVar27 = 0.0020000000949949026;
+  dVar28 = 1.0;
+  local_2c8 = 
+  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_internal.h";
+  local_2d0 = "Index doesn\'t index Flags & NUMC_MASK\n\t%i not in [0, %i)";
+  local_2b0 = "Vec3Dot( Contact->normal, tbData->triangleNormal ) <= ZERO_EPSILON";
+  local_2b4 = "Contact normal must be against the triangle normal";
+  local_2a4 = "!IS_NAN(Contact->depth)";
+  local_2b8 = 
+  "!IS_NAN((Contact->pos)[0]) && !IS_NAN((Contact->pos)[1]) && !IS_NAN((Contact->pos)[2])";
+  local_2bc = "Vec3IsNormalized( Contact->normal )";
+  local_2cc = "normal: (%f, %f, %f)";
+  local_2ac = 
+  "!IS_NAN((Contact->normal)[0]) && !IS_NAN((Contact->normal)[1]) && !IS_NAN((Contact->normal)[2])";
+  if ((int)fVar3 < 5) {
+    if (1 < (int)fVar3) {
+      dVar30 = (double)pfVar13[0x14];
+      dVar29 = (double)pfVar13[0x15];
+      dVar23 = (double)pfVar13[0x16];
+      iVar19 = 2;
+      if (uVar15 - 2 == 0) {
+        iVar21 = 1;
+      }
+      else {
+        iVar21 = 0;
+        if ((int)(uVar15 - 2) != 1) {
+          iVar19 = 1;
+        }
+      }
+      local_12c = pfVar13[0xd];
+      local_130 = pfVar13[0xc];
+      local_128 = pfVar13[0xe];
+      local_148 = param_2[2] - local_128;
+      local_150 = *param_2 - local_130;
+      local_140 = *param_3 - local_130;
+      local_14c = param_2[1] - local_12c;
+      local_13c = param_3[1] - local_12c;
+      local_138 = param_3[2] - local_128;
+      local_130 = *param_4 - local_130;
+      local_270 = 0.0;
+      local_26c = 0.0;
+      local_128 = param_4[2] - local_128;
+      local_268[0] = 0.0;
+      local_12c = param_4[1] - local_12c;
+      local_1e0 = 0.0;
+      local_1dc = 0.0;
+      local_1d8 = 0.0;
+      local_260 = 0.0;
+      local_25c = 0.0;
+      local_258 = 0.0;
+      local_1d0 = 0.0;
+      local_1cc = 0.0;
+      local_1c8 = 0.0;
+      local_250 = 0.0;
+      local_24c = 0.0;
+      local_248 = 0.0;
+      local_1c0 = 0.0;
+      local_1bc = 0.0;
+      local_1b8 = 0.0;
+      local_240 = 0.0;
+      local_23c = 0.0;
+      local_238 = 0.0;
+      local_1b0 = 0.0;
+      local_1ac = 0.0;
+      local_1a8 = 0.0;
+      local_230 = 0.0;
+      local_22c = 0.0;
+      local_228 = 0.0;
+      local_1a0 = 0.0;
+      local_19c = 0.0;
+      local_198 = 0.0;
+      local_220 = 0.0;
+      local_21c = 0.0;
+      local_218 = 0.0;
+      local_190 = 0.0;
+      local_18c = 0.0;
+      local_188 = 0.0;
+      local_210 = 0.0;
+      local_20c = 0.0;
+      local_208 = 0.0;
+      local_180 = 0.0;
+      local_17c = 0.0;
+      local_178 = 0.0;
+      local_200 = 0.0;
+      iVar17 = (int)((uVar15 + 0xe & 0xffffffff) << 2);
+      local_2f0 = (float)-dVar30;
+      local_2ec = (float)-dVar29;
+      local_2e8 = (float)-dVar23;
+      local_1fc = 0.0;
+      local_2e4 = *(float *)(iVar17 + (int)pfVar13);
+      local_1f8 = 0.0;
+      local_170 = 0.0;
+      local_16c = 0.0;
+      local_168 = 0.0;
+      local_1f0 = 0.0;
+      local_1ec = 0.0;
+      local_1e8 = 0.0;
+      local_160 = 0.0;
+      local_15c = 0.0;
+      local_158 = 0.0;
+      cldClipPolyToPlane(&local_150,3,&local_270,local_2fc,&local_2f0);
+      local_2ec = pfVar13[iVar21 + 4];
+      local_2e8 = pfVar13[iVar21 + 8];
+      local_2e4 = pfVar13[iVar21 + 0x10];
+      local_2f0 = pfVar13[iVar21];
+      cldClipPolyToPlane(&local_270,local_2fc[0],&local_1e0,&local_300,&local_2f0);
+      local_2f0 = -pfVar13[iVar21];
+      local_2ec = -pfVar13[iVar21 + 4];
+      local_2e4 = pfVar13[iVar21 + 0x10];
+      local_2e8 = -pfVar13[iVar21 + 8];
+      cldClipPolyToPlane(&local_1e0,local_300,&local_270,local_2fc,&local_2f0);
+      local_2f0 = pfVar13[iVar19];
+      local_2ec = pfVar13[iVar19 + 4];
+      local_2e4 = pfVar13[iVar19 + 0x10];
+      local_2e8 = pfVar13[iVar19 + 8];
+      cldClipPolyToPlane(&local_270,local_2fc[0],&local_1e0,&local_300,&local_2f0);
+      local_2f0 = -pfVar13[iVar19];
+      local_2ec = -pfVar13[iVar19 + 4];
+      local_2e4 = pfVar13[iVar19 + 0x10];
+      local_2e8 = -pfVar13[iVar19 + 8];
+      cldClipPolyToPlane(&local_1e0,local_300,&local_270,local_2fc,&local_2f0);
+      fVar3 = local_2fc[0];
+      iVar19 = 0;
+      if (0 < (int)local_2fc[0]) {
+        pfVar18 = local_268;
+        do {
+          dVar31 = (double)((float)((double)*pfVar18 * dVar23 +
+                                   (double)(float)((double)pfVar18[-2] * dVar30 +
+                                                  (double)(float)((double)pfVar18[-1] * dVar29))) -
+                           *(float *)(iVar17 + (int)pfVar13));
+          if (dVar37 < dVar31) {
+            dVar31 = dVar37;
+          }
+          fVar1 = pfVar13[0x2f];
+          dVar24 = (double)(float)((double)pfVar18[-2] + (double)pfVar13[0xc]);
+          dVar33 = (double)(float)((double)pfVar18[-1] + (double)pfVar13[0xd]);
+          dVar32 = (double)(float)((double)pfVar13[0xe] + (double)*pfVar18);
+          if ((int)((uint)pfVar13[0x2a] & 0xffff) <= (int)fVar1) break;
+          fVar2 = pfVar13[0x2c];
+          fVar4 = pfVar13[0x2b];
+          if (((uint)pfVar13[0x2a] & 0xffff) <= (uint)fVar1) {
+            MyAssertHandler(local_2c8,0x1f,0,local_2d0,fVar1);
+          }
+          puVar22 = (uint *)((int)fVar1 * (int)fVar2 + (int)fVar4);
+          puVar22[6] = (uint)(float)-dVar31;
+          local_300 = pfVar13[0x14];
+          puVar22[3] = (uint)local_300;
+          puVar22[4] = (uint)pfVar13[0x15];
+          puVar22[5] = (uint)pfVar13[0x16];
+          *(float *)((int)fVar1 * (int)fVar2 + (int)fVar4) = (float)dVar24;
+          puVar22[1] = (uint)(float)dVar33;
+          puVar22[2] = (uint)(float)dVar32;
+          if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
+              (local_2fc[0] = (float)puVar22[4], ((uint)local_2fc[0] & 0x7f800000) == 0x7f800000))
+             || (local_2c4 = puVar22[5], (local_2c4 & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff82198458,0x37b,0,0xffffffff82000f98,local_2ac);
+          }
+          dVar31 = (double)(float)puVar22[3];
+          if (dVar27 <= ABS((double)(float)((double)((float)puVar22[5] * (float)puVar22[5] +
+                                                    (float)(dVar31 * dVar31 +
+                                                           (double)((float)puVar22[4] *
+                                                                   (float)puVar22[4]))) - dVar28)))
+          {
+            uVar12 = va(dVar31,local_2cc,dVar31,(double)(float)puVar22[4],(double)(float)puVar22[5])
+            ;
+            MyAssertHandler(0xffffffff82198458,0x37c,0,0xffffffff820011f4,local_2bc,uVar12);
+          }
+          local_29c = *puVar22;
+          if ((((local_29c & 0x7f800000) == 0x7f800000) ||
+              (local_2a8 = puVar22[1], (local_2a8 & 0x7f800000) == 0x7f800000)) ||
+             (local_2a0 = puVar22[2], (local_2a0 & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler(0xffffffff82198458,0x37d,0,0xffffffff82000f98,local_2b8);
+          }
+          local_2c0 = (float)puVar22[6];
+          if (((uint)local_2c0 & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler(0xffffffff82198458,0x37e,0,0xffffffff82000f98,local_2a4);
+          }
+          if (dVar26 < (double)((float)puVar22[5] * pfVar13[0x28] +
+                               (float)puVar22[4] * pfVar13[0x27] + (float)puVar22[3] * pfVar13[0x26]
+                               )) {
+            MyAssertHandler(0xffffffff82198458,0x37f,0,0xffffffff820011f4,local_2b0,local_2b4);
+          }
+          iVar19 = iVar19 + 1;
+          pfVar18 = pfVar18 + 4;
+          pfVar13[0x2f] = (float)((int)pfVar13[0x2f] + 1);
+        } while (iVar19 < (int)fVar3);
+      }
+    }
+  }
+  else {
+    pfVar18 = pfVar13 + 0x14;
+    dVar23 = -1.0;
+    dVar29 = dVar23;
+    if (0.0 < pfVar13[0x16] * pfVar13[8] + pfVar13[0x15] * pfVar13[4] + pfVar13[0x14] * *pfVar13) {
+      dVar29 = dVar28;
+    }
+    fVar3 = (float)((double)pfVar13[0x10] * dVar29);
+    dVar29 = dVar23;
+    if (0.0 < pfVar13[0x16] * pfVar13[9] + pfVar13[0x15] * pfVar13[5] + *pfVar18 * pfVar13[1]) {
+      dVar29 = dVar28;
+    }
+    fVar1 = (float)((double)pfVar13[0x11] * dVar29);
+    if (0.0 < pfVar13[0x16] * pfVar13[10] + pfVar13[0x15] * pfVar13[6] + *pfVar18 * pfVar13[2]) {
+      dVar23 = dVar28;
+    }
+    fVar2 = (float)((double)pfVar13[0x12] * dVar23);
+    lVar16 = (longlong)(int)(uVar15 - 5);
+    uVar14 = lVar16 / 3 + (lVar16 >> 0x3f);
+    local_110 = fVar2 * pfVar13[2] + fVar1 * pfVar13[1] + fVar3 * *pfVar13 + pfVar13[0xc];
+    dVar30 = (double)local_110;
+    local_10c = fVar2 * pfVar13[6] + fVar1 * pfVar13[5] + fVar3 * pfVar13[4] + pfVar13[0xd];
+    dVar29 = (double)local_10c;
+    local_108 = fVar2 * pfVar13[10] + fVar1 * pfVar13[9] + fVar3 * pfVar13[8] + pfVar13[0xe];
+    dVar23 = (double)local_108;
+    uVar14 = (uVar14 & 0xffffffff) + ((uVar14 & 0xffffffff) >> 0x1f);
+    lVar16 = (uVar15 - 5) - (uVar14 + (uVar14 & 0x7fffffff) * 2);
+    if (lVar16 == 0) {
+      dVar33 = (double)*param_2;
+      dVar32 = (double)param_2[1];
+      dVar31 = (double)param_2[2];
+      local_290 = pfVar13[0x1a];
+      local_28c = pfVar13[0x1b];
+      local_288 = pfVar13[0x1c];
+    }
+    else if ((int)lVar16 == 1) {
+      dVar33 = (double)*param_4;
+      dVar32 = (double)param_4[1];
+      dVar31 = (double)param_4[2];
+      local_290 = pfVar13[0x1e];
+      local_28c = pfVar13[0x1f];
+      local_288 = pfVar13[0x20];
+    }
+    else {
+      dVar33 = (double)*param_3;
+      dVar32 = (double)param_3[1];
+      dVar31 = (double)param_3[2];
+      local_290 = pfVar13[0x22];
+      local_28c = pfVar13[0x23];
+      local_288 = pfVar13[0x24];
+    }
+    local_2f0 = (float)dVar33;
+    local_2ec = (float)dVar32;
+    local_2e8 = (float)dVar31;
+    dNormalize3(&local_290);
+    iVar19 = ((int)pfVar13[0x19] + -5) / 3;
+    local_280[0] = pfVar13[iVar19];
+    dVar36 = (double)local_280[0];
+    local_280[1] = *(float *)((int)(((longlong)iVar19 + 4U & 0xffffffff) << 2) + (int)pfVar13);
+    dVar35 = (double)local_280[1];
+    local_280[2] = *(float *)((int)(((longlong)iVar19 + 8U & 0xffffffff) << 2) + (int)pfVar13);
+    dVar34 = (double)local_280[2];
+    cldClosestPointOnTwoLines(&local_110,local_280,&local_2f0,&local_290,&local_300,local_2fc);
+    dVar25 = (double)local_300;
+    dVar24 = (double)local_2fc[0];
+    fVar3 = pfVar13[0x2f];
+    dVar30 = (double)(((float)((double)local_290 * dVar24 + dVar33) +
+                      (float)(dVar25 * dVar36 + dVar30)) * 0.5);
+    dVar29 = (double)(((float)((double)local_28c * dVar24 + dVar32) +
+                      (float)(dVar25 * dVar35 + dVar29)) * 0.5);
+    dVar23 = (double)(((float)((double)local_288 * dVar24 + dVar31) +
+                      (float)(dVar25 * dVar34 + dVar23)) * 0.5);
+    if ((int)fVar3 < (int)((uint)pfVar13[0x2a] & 0xffff)) {
+      fVar1 = pfVar13[0x2c];
+      fVar2 = pfVar13[0x2b];
+      if (((uint)pfVar13[0x2a] & 0xffff) <= (uint)fVar3) {
+        MyAssertHandler(local_2c8,0x1f,0,local_2d0,fVar3);
+      }
+      pfVar20 = (float *)((int)fVar3 * (int)fVar1 + (int)fVar2);
+      pfVar20[6] = pfVar13[0x18];
+      local_300 = *pfVar18;
+      pfVar20[3] = local_300;
+      pfVar20[4] = pfVar13[0x15];
+      pfVar20[5] = pfVar13[0x16];
+      *(float *)((int)fVar3 * (int)fVar1 + (int)fVar2) = (float)dVar30;
+      pfVar20[1] = (float)dVar29;
+      pfVar20[2] = (float)dVar23;
+      if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
+          (local_300 = pfVar20[4], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
+         (local_300 = pfVar20[5], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff82198458,0x2f8,0,0xffffffff82000f98,local_2ac);
+      }
+      dVar23 = (double)pfVar20[3];
+      if (dVar27 <= ABS((double)(float)((double)(pfVar20[5] * pfVar20[5] +
+                                                (float)(dVar23 * dVar23 +
+                                                       (double)(pfVar20[4] * pfVar20[4]))) - dVar28)
+                       )) {
+        uVar12 = va(dVar23,local_2cc,dVar23,(double)pfVar20[4],(double)pfVar20[5]);
+        MyAssertHandler(0xffffffff82198458,0x2f9,0,0xffffffff820011f4,local_2bc,uVar12);
+      }
+      local_300 = *pfVar20;
+      if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
+          (local_300 = pfVar20[1], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
+         (local_300 = pfVar20[2], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff82198458,0x2fa,0,0xffffffff82000f98,local_2b8);
+      }
+      local_300 = pfVar20[6];
+      if (((uint)local_300 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler(0xffffffff82198458,0x2fb,0,0xffffffff82000f98,local_2a4);
+      }
+      if (dVar26 < (double)(pfVar20[5] * pfVar13[0x28] +
+                           pfVar20[4] * pfVar13[0x27] + pfVar20[3] * pfVar13[0x26])) {
+        MyAssertHandler(0xffffffff82198458,0x2fc,0,0xffffffff820011f4,local_2b0,local_2b4);
+      }
+      pfVar13[0x2f] = (float)((int)pfVar13[0x2f] + 1);
+    }
+  }
+  dVar23 = (double)pfVar13[0x27];
+  pfVar18 = pfVar13 + 0x26;
+  dVar29 = (double)pfVar13[0x28];
+  if (dVar27 <= ABS((double)(float)((double)(float)(dVar29 * dVar29 +
+                                                   (double)(pfVar13[0x26] * pfVar13[0x26] +
+                                                           (float)(dVar23 * dVar23))) - dVar28))) {
+    uVar12 = va((double)*pfVar18,dVar23,dVar29,local_2cc,(double)*pfVar18,dVar23,dVar29);
+    MyAssertHandler(0xffffffff82198458,0x391,0,0xffffffff820011f4,0xffffffff82198644,uVar12);
+  }
+  dVar29 = (double)pfVar13[0x28];
+  dVar30 = (double)*pfVar18;
+  dVar23 = (double)pfVar13[0x27];
+  local_280[0] = (float)((double)pfVar13[4] * dVar23 +
+                        (double)(float)((double)*pfVar13 * dVar30 +
+                                       (double)(float)((double)pfVar13[8] * dVar29)));
+  local_280[1] = (float)((double)pfVar13[5] * dVar23 +
+                        (double)(float)((double)pfVar13[1] * dVar30 +
+                                       (double)(float)((double)pfVar13[9] * dVar29)));
+  local_280[2] = (float)((double)pfVar13[6] * dVar23 +
+                        (double)(float)((double)pfVar13[2] * dVar30 +
+                                       (double)(float)((double)pfVar13[10] * dVar29)));
+  if (ABS(local_280[1]) <= ABS(local_280[0])) {
+    if (ABS(local_280[2]) < ABS(local_280[0])) {
+      iVar17 = 0;
+      iVar21 = 1;
+      iVar19 = 2;
+      goto LAB_8268b304;
+    }
+  }
+  else {
+    iVar21 = 0;
+    if (ABS(local_280[2]) < ABS(local_280[1])) {
+      iVar17 = 1;
+      iVar19 = 2;
+      goto LAB_8268b304;
+    }
+  }
+  iVar21 = 0;
+  iVar17 = 2;
+  iVar19 = 1;
+LAB_8268b304:
+  fVar3 = pfVar13[iVar17 + 0x10];
+  if ((double)local_280[iVar17] <= dVar37) {
+    local_120 = fVar3 * pfVar13[iVar17] + (pfVar13[0xc] - *param_2);
+    fVar1 = fVar3 * pfVar13[iVar17 + 4] + (pfVar13[0xd] - param_2[1]);
+    fVar3 = fVar3 * pfVar13[iVar17 + 8] + (pfVar13[0xe] - param_2[2]);
+  }
+  else {
+    local_120 = -(fVar3 * pfVar13[iVar17] - (pfVar13[0xc] - *param_2));
+    fVar1 = -(fVar3 * pfVar13[iVar17 + 4] - (pfVar13[0xd] - param_2[1]));
+    fVar3 = -(fVar3 * pfVar13[iVar17 + 8] - (pfVar13[0xe] - param_2[2]));
+  }
+  local_1e0 = (float)dVar37;
+  local_1dc = (float)dVar37;
+  local_1d8 = (float)dVar37;
+  local_270 = (float)dVar37;
+  local_26c = (float)dVar37;
+  local_268[0] = (float)dVar37;
+  local_1d0 = (float)dVar37;
+  fVar2 = pfVar13[iVar21 + 0x10];
+  fVar5 = fVar2 * pfVar13[iVar21];
+  local_128 = pfVar13[iVar19 + 0x10];
+  fVar4 = fVar2 * pfVar13[iVar21 + 4];
+  fVar6 = local_128 * pfVar13[iVar19];
+  local_1cc = (float)dVar37;
+  local_1c8 = (float)dVar37;
+  local_260 = (float)dVar37;
+  local_2fc[0] = 0.0;
+  local_25c = (float)dVar37;
+  local_300 = 0.0;
+  fVar2 = fVar2 * pfVar13[iVar21 + 8];
+  local_12c = local_128 * pfVar13[iVar19 + 4];
+  local_128 = local_128 * pfVar13[iVar19 + 8];
+  local_258 = (float)dVar37;
+  local_1c0 = (float)dVar37;
+  local_1bc = (float)dVar37;
+  local_1b8 = (float)dVar37;
+  local_250 = (float)dVar37;
+  local_24c = (float)dVar37;
+  local_248 = (float)dVar37;
+  local_1b0 = (float)dVar37;
+  local_1ac = (float)dVar37;
+  local_1a8 = (float)dVar37;
+  local_240 = (float)dVar37;
+  local_150 = (fVar5 + local_120) - fVar6;
+  local_23c = (float)dVar37;
+  local_140 = (local_120 - fVar5) - fVar6;
+  local_238 = (float)dVar37;
+  local_130 = (local_120 - fVar5) + fVar6;
+  local_1a0 = (float)dVar37;
+  local_120 = fVar6 + fVar5 + local_120;
+  local_19c = (float)dVar37;
+  local_14c = (fVar4 + fVar1) - local_12c;
+  local_198 = (float)dVar37;
+  local_2e0 = (float)-dVar30;
+  local_2dc = (float)-dVar23;
+  local_2d8 = (float)-dVar29;
+  local_11c = local_12c + fVar4 + fVar1;
+  local_13c = (fVar1 - fVar4) - local_12c;
+  local_12c = (fVar1 - fVar4) + local_12c;
+  local_118 = local_128 + fVar2 + fVar3;
+  local_148 = (fVar2 + fVar3) - local_128;
+  local_138 = (fVar3 - fVar2) - local_128;
+  local_128 = (fVar3 - fVar2) + local_128;
+  local_230 = (float)dVar37;
+  local_22c = (float)dVar37;
+  local_228 = (float)dVar37;
+  local_190 = (float)dVar37;
+  local_18c = (float)dVar37;
+  local_188 = (float)dVar37;
+  local_220 = (float)dVar37;
+  local_21c = (float)dVar37;
+  local_218 = (float)dVar37;
+  local_180 = (float)dVar37;
+  local_17c = (float)dVar37;
+  local_178 = (float)dVar37;
+  local_210 = (float)dVar37;
+  local_20c = (float)dVar37;
+  local_208 = (float)dVar37;
+  local_170 = (float)dVar37;
+  local_16c = (float)dVar37;
+  local_168 = (float)dVar37;
+  local_200 = (float)dVar37;
+  local_1fc = (float)dVar37;
+  local_1f8 = (float)dVar37;
+  local_160 = (float)dVar37;
+  local_15c = (float)dVar37;
+  local_158 = (float)dVar37;
+  local_1f0 = (float)dVar37;
+  local_1ec = (float)dVar37;
+  local_1e8 = (float)dVar37;
+  dNormalize3(&local_2e0);
+  dVar32 = (double)local_2dc;
+  dVar33 = (double)local_2d8;
+  dVar31 = (double)local_2e0;
+  if (dVar27 <= ABS((double)(float)((double)(float)(dVar31 * dVar31 +
+                                                   (double)(float)(dVar33 * dVar33 +
+                                                                  (double)(float)(dVar32 * dVar32)))
+                                   - dVar28))) {
+    uVar12 = va(local_2cc,dVar31,dVar32,dVar33);
+    MyAssertHandler(0xffffffff82198458,0x406,0,0xffffffff820011f4,0xffffffff82198628,uVar12);
+    dVar33 = (double)local_2d8;
+    dVar32 = (double)local_2dc;
+    dVar31 = (double)local_2e0;
+  }
+  local_2f0 = (float)dVar31;
+  local_2ec = (float)dVar32;
+  local_2e8 = (float)dVar33;
+  local_2e4 = (float)dVar37;
+  cldClipPolyToPlane(&local_150,4,&local_1e0,local_2fc,&local_2f0);
+  local_2d8 = *pfVar18 * (param_3[1] - param_2[1]) - pfVar13[0x27] * (*param_3 - *param_2);
+  local_2e0 = pfVar13[0x27] * (param_3[2] - param_2[2]) - pfVar13[0x28] * (param_3[1] - param_2[1]);
+  local_2dc = pfVar13[0x28] * (*param_3 - *param_2) - *pfVar18 * (param_3[2] - param_2[2]);
+  dNormalize3(&local_2e0);
+  local_2e4 = (float)dVar37;
+  local_2f0 = local_2e0;
+  local_2ec = local_2dc;
+  local_2e8 = local_2d8;
+  cldClipPolyToPlane(&local_1e0,local_2fc[0],&local_270,&local_300,&local_2f0);
+  local_2d8 = *pfVar18 * (param_4[1] - param_3[1]) - pfVar13[0x27] * (*param_4 - *param_3);
+  local_2e0 = pfVar13[0x27] * (param_4[2] - param_3[2]) - pfVar13[0x28] * (param_4[1] - param_3[1]);
+  local_2dc = pfVar13[0x28] * (*param_4 - *param_3) - *pfVar18 * (param_4[2] - param_3[2]);
+  dNormalize3(&local_2e0);
+  local_2f0 = local_2e0;
+  local_2ec = local_2dc;
+  local_2e8 = local_2d8;
+  local_2e4 = (param_2[2] - param_4[2]) * local_2d8 +
+              (param_2[1] - param_4[1]) * local_2dc + (*param_2 - *param_4) * local_2e0;
+  cldClipPolyToPlane(&local_270,local_300,&local_1e0,local_2fc,&local_2f0);
+  local_2d8 = *pfVar18 * (param_2[1] - param_4[1]) - pfVar13[0x27] * (*param_2 - *param_4);
+  local_2e0 = pfVar13[0x27] * (param_2[2] - param_4[2]) - pfVar13[0x28] * (param_2[1] - param_4[1]);
+  local_2dc = pfVar13[0x28] * (*param_2 - *param_4) - *pfVar18 * (param_2[2] - param_4[2]);
+  dNormalize3(&local_2e0);
+  local_2e4 = (float)dVar37;
+  local_2f0 = local_2e0;
+  local_2ec = local_2dc;
+  local_2e8 = local_2d8;
+  cldClipPolyToPlane(&local_1e0,local_2fc[0],&local_270,&local_300,&local_2f0);
+  pcVar11 = local_2b0;
+  pcVar10 = local_2b4;
+  pcVar9 = local_2bc;
+  pcVar8 = local_2c8;
+  pcVar7 = local_2d0;
+  fVar3 = local_300;
+  iVar19 = 0;
+  if (0 < (int)local_300) {
+    pfVar20 = local_268;
+    do {
+      dVar31 = (double)(float)(dVar29 * (double)*pfVar20 +
+                              (double)(float)((double)pfVar20[-2] * dVar30 +
+                                             (double)(float)((double)pfVar20[-1] * dVar23)));
+      if (dVar37 < dVar31) {
+        dVar31 = dVar37;
+      }
+      fVar1 = pfVar13[0x2f];
+      dVar24 = (double)(float)((double)*param_2 + (double)pfVar20[-2]);
+      dVar33 = (double)(float)((double)pfVar20[-1] + (double)param_2[1]);
+      dVar32 = (double)(float)((double)*pfVar20 + (double)param_2[2]);
+      if ((int)((uint)pfVar13[0x2a] & 0xffff) <= (int)fVar1) break;
+      fVar2 = pfVar13[0x2c];
+      fVar4 = pfVar13[0x2b];
+      if (((uint)pfVar13[0x2a] & 0xffff) <= (uint)fVar1) {
+        MyAssertHandler(pcVar8,0x1f,0,pcVar7,fVar1);
+      }
+      puVar22 = (uint *)((int)fVar1 * (int)fVar2 + (int)fVar4);
+      puVar22[6] = (uint)(float)-dVar31;
+      local_2c0 = -*pfVar18;
+      puVar22[3] = (uint)local_2c0;
+      puVar22[4] = (uint)-pfVar13[0x27];
+      puVar22[5] = (uint)-pfVar13[0x28];
+      *(float *)((int)fVar1 * (int)fVar2 + (int)fVar4) = (float)dVar24;
+      puVar22[1] = (uint)(float)dVar33;
+      puVar22[2] = (uint)(float)dVar32;
+      if (((((uint)local_2c0 & 0x7f800000) == 0x7f800000) ||
+          (local_2a0 = puVar22[4], (local_2a0 & 0x7f800000) == 0x7f800000)) ||
+         (local_2a8 = puVar22[5], (local_2a8 & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff82198458,0x442,0,0xffffffff82000f98,local_2ac);
+      }
+      dVar31 = (double)(float)puVar22[3];
+      if (dVar27 <= ABS((double)(float)((double)((float)puVar22[5] * (float)puVar22[5] +
+                                                (float)(dVar31 * dVar31 +
+                                                       (double)((float)puVar22[4] *
+                                                               (float)puVar22[4]))) - dVar28))) {
+        uVar12 = va(dVar31,local_2cc,dVar31,(double)(float)puVar22[4],(double)(float)puVar22[5]);
+        MyAssertHandler(0xffffffff82198458,0x443,0,0xffffffff820011f4,pcVar9,uVar12);
+      }
+      local_29c = *puVar22;
+      if ((((local_29c & 0x7f800000) == 0x7f800000) ||
+          (local_2c4 = puVar22[1], (local_2c4 & 0x7f800000) == 0x7f800000)) ||
+         (local_2c8 = (char *)puVar22[2], ((uint)local_2c8 & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler(0xffffffff82198458,0x444,0,0xffffffff82000f98,local_2b8);
+      }
+      local_2d0 = (char *)puVar22[6];
+      if (((uint)local_2d0 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler(0xffffffff82198458,0x445,0,0xffffffff82000f98,local_2a4);
+      }
+      if (dVar26 < (double)((float)puVar22[5] * pfVar13[0x28] +
+                           (float)puVar22[4] * pfVar13[0x27] + (float)puVar22[3] * *pfVar18)) {
+        MyAssertHandler(0xffffffff82198458,0x446,0,0xffffffff820011f4,pcVar11,pcVar10);
+      }
+      iVar19 = iVar19 + 1;
+      pfVar20 = pfVar20 + 4;
+      pfVar13[0x2f] = (float)((int)pfVar13[0x2f] + 1);
+    } while (iVar19 < (int)fVar3);
+  }
+  __restfpr_19();
+  __restgprlr();
+  return;
 }
 
 
@@ -829,20 +1671,142 @@ void __cdecl cldClipping(void)
 /* WARNING: Unknown calling convention: __cdecl */
 /* cldTestOneTriangle */
 
-void __cdecl cldTestOneTriangle(void)
+void __cdecl
+cldTestOneTriangle(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  char cVar3;
+  undefined8 uVar1;
+  double dVar4;
+  double dVar5;
+  
+  iVar2 = __savegprlr_27();
+  cVar3 = cldTestSeparatingAxes();
+  if (cVar3 != '\0') {
+    if (*(int *)(iVar2 + 100) == 0) {
+      MyAssertHandler(0xffffffff82198458,0x45d,0,0xffffffff82000f98,0xffffffff821987e4);
+    }
+    dVar5 = (double)*(float *)(iVar2 + 0x50);
+    dVar4 = (double)*(float *)(iVar2 + 0x58);
+    if (0.002 <= ABS((float)(dVar4 * dVar4 +
+                            (double)(float)(dVar5 * dVar5 +
+                                           (double)(*(float *)(iVar2 + 0x54) *
+                                                   *(float *)(iVar2 + 0x54)))) - 1.0)) {
+      uVar1 = va(dVar5,(double)*(float *)(iVar2 + 0x54),dVar4,0xffffffff82192678,dVar5,
+                 (double)*(float *)(iVar2 + 0x54),dVar4);
+      MyAssertHandler(0xffffffff82198458,0x45e,0,0xffffffff820011f4,0xffffffff8219839c,uVar1);
+    }
+    cldClipping(iVar2,param_2,param_3,param_4);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 8268BBC0  dCollideBoxTriangleList  (physics/ode/src/collision_trimesh_box.cpp:1125)
 
-void dCollideBoxTriangleList(void)
+void dCollideBoxTriangleList
+               (undefined8 param_1,int param_2,int param_3,undefined4 *param_4,undefined4 *param_5,
+               undefined4 *param_6,undefined4 param_7,uint param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
+  undefined4 local_150;
+  undefined4 local_14c;
+  undefined4 local_148;
+  undefined4 local_140;
+  undefined4 local_13c;
+  undefined4 local_138;
+  undefined4 local_130;
+  undefined4 local_12c;
+  undefined4 local_128;
+  undefined4 local_120;
+  undefined4 local_11c;
+  undefined4 local_118;
+  undefined4 local_114;
+  undefined4 local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  undefined4 local_104;
+  undefined4 local_100;
+  undefined4 local_fc;
+  undefined4 local_f8;
+  undefined4 local_f4;
+  undefined4 local_f0;
+  undefined4 local_ec;
+  undefined4 local_e8;
+  undefined4 local_e0;
+  undefined4 local_dc;
+  undefined4 local_d8;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 local_c0;
+  uint local_78;
+  undefined4 local_74;
+  undefined4 local_70;
+  int local_64;
+  undefined4 local_60;
+  
   __savegprlr_28();
+  puVar1 = (ushort *)__savefpr_26();
+  local_120 = *param_4;
+  local_11c = param_4[1];
+  local_118 = param_4[2];
+  local_114 = param_4[3];
+  local_110 = param_4[4];
+  local_74 = in_stack_00000054;
+  local_64 = 0;
+  local_10c = param_4[5];
+  local_108 = param_4[6];
+  local_70 = in_stack_0000005c;
+  local_104 = param_4[7];
+  iVar5 = 0;
+  local_100 = param_4[8];
+  local_fc = param_4[9];
+  local_f8 = param_4[10];
+  local_f4 = param_4[0xb];
+  local_f0 = *param_5;
+  local_ec = param_5[1];
+  local_e8 = param_5[2];
+  local_e0 = *param_6;
+  local_dc = param_6[1];
+  local_d8 = param_6[2];
+  local_c0 = 0x7f7fffff;
+  local_d0 = 0;
+  local_cc = 0;
+  local_c8 = 0;
+  local_78 = param_8;
+  local_60 = param_7;
+  if (0 < param_3) {
+    do {
+      if ((int)(local_78 & 0xffff) <= local_64) break;
+      puVar4 = (undefined4 *)((uint)*puVar1 * 0xc + param_2);
+      puVar3 = (undefined4 *)((uint)puVar1[1] * 0xc + param_2);
+      puVar2 = (undefined4 *)((uint)puVar1[2] * 0xc + param_2);
+      local_150 = *puVar4;
+      puVar1 = puVar1 + 3;
+      local_14c = puVar4[1];
+      local_148 = puVar4[2];
+      local_140 = *puVar3;
+      local_13c = puVar3[1];
+      local_138 = puVar3[2];
+      local_130 = *puVar2;
+      local_12c = puVar2[1];
+      local_128 = puVar2[2];
+      cldTestOneTriangle(&local_120,&local_130,&local_140,&local_150);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < param_3);
+  }
+  __restfpr_26();
+  __restgprlr_28();
+  return;
 }
 

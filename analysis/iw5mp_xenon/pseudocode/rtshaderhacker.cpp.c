@@ -24,23 +24,101 @@ void D3D__SHADER_REGISTER__SHADER_REGISTER
 }
 
 
-// 82894938  D3D::SHADER_REGISTER::Swizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:158)
+// 82894850  D3D::SHADER_REGISTER::SHADER_REGISTER  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:131)
 
-void D3D__SHADER_REGISTER__Swizzle(void)
+void D3D__SHADER_REGISTER__SHADER_REGISTER
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  
+  puVar3 = (uint *)__savegprlr_28();
+  if ((param_3 & 0xffffffff) < 0x100) {
+    *puVar3 = (uint)((param_2 & 0xffffffff) << 0xc) & 0xf000 | *puVar3 & 0xffff0fff;
+    *(char *)puVar3 = (char)param_3;
+    uVar1 = *puVar3;
+    param_4 = param_4 & 3;
+    uVar2 = (uint)(param_4 << 0x10);
+    *puVar3 = uVar2 | uVar1 & 0xfffcffff;
+    *puVar3 = (uint)(param_4 << 0x12) | uVar2 | uVar1 & 0xfff0ffff;
+    uVar4 = param_4 << 0x14 | param_4 << 0x12 | param_4 << 0x10 | (ulonglong)uVar1 & 0xffc0ffff;
+    *puVar3 = (uint)(uVar4 << 2) & 0xc00000 | (uint)uVar4 & 0xff3fffff;
+  }
+  else {
+    *puVar3 = DAT_848954b0;
+  }
+  __restgprlr_28(puVar3);
+  return;
+}
+
+
+// 828948D8  D3D::SHADER_REGISTER::SHADER_REGISTER  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:144)
+
+void D3D__SHADER_REGISTER__SHADER_REGISTER(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  
+  puVar1 = (uint *)__savegprlr_29();
+  uVar2 = DAT_848954b0;
+  if ((param_3 & 0xffffffff) < 0x100) {
+    *puVar1 = (uint)((param_2 & 0xffffffff) << 0xc) & 0xf000 | *puVar1 & 0xffff0fff;
+    *(char *)puVar1 = (char)param_3;
+    uVar2 = *puVar1 & 0xff00ffff | 0x1b0000;
+  }
+  *puVar1 = uVar2;
+  __restgprlr_29(puVar1);
+  return;
+}
+
+
+// 82894938  D3D::SHADER_REGISTER::Swizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:158)
+
+void D3D__SHADER_REGISTER__Swizzle(undefined8 param_1,uint *param_2,ulonglong param_3)
+
+{
+  uint uVar1;
+  undefined8 uVar2;
+  
+  uVar2 = __savegprlr_29();
+  uVar1 = *param_2;
+  D3D__SHADER_REGISTER__SHADER_REGISTER
+            (uVar2,uVar1 >> 0xc & 0xf,*(undefined1 *)param_2,
+             (((uint)((((ulonglong)(uVar1 >> 4) & 0xc0000 | (ulonglong)uVar1 & 0x300000) >> 4 |
+                      (ulonglong)uVar1 & 0xc0000) >> 4) | uVar1 & 0x30000) >> 10) >>
+             ((uint)((param_3 & 0xffffffff) << 1) & 0x3e) & 3);
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
 // 828949A8  D3D::SHADER_REGISTER::Swizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:165)
 
-void D3D__SHADER_REGISTER__Swizzle(void)
+void D3D__SHADER_REGISTER__Swizzle
+               (undefined8 param_1,uint *param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  
+  uVar3 = __savegprlr_26();
+  uVar1 = *param_2;
+  uVar2 = ((uint)((((ulonglong)(uVar1 >> 4) & 0xc0000 | (ulonglong)uVar1 & 0x300000) >> 4 |
+                  (ulonglong)uVar1 & 0xc0000) >> 4) | uVar1 & 0x30000) >> 10;
+  D3D__SHADER_REGISTER__SHADER_REGISTER
+            (uVar3,uVar1 >> 0xc & 0xf,*(undefined1 *)param_2,
+             uVar2 >> ((uint)((param_3 & 0xffffffff) << 1) & 0x3e) & 3,
+             uVar2 >> ((uint)((param_4 & 0xffffffff) << 1) & 0x3e) & 3,
+             uVar2 >> ((uint)((param_5 & 0xffffffff) << 1) & 0x3e) & 3,
+             uVar2 >> ((uint)((param_6 & 0xffffffff) << 1) & 0x3e) & 3);
+  __restgprlr_26(uVar3);
+  return;
 }
 
 
@@ -63,14 +141,105 @@ uint D3D__SHADER_REGISTER__GetWriteMask(uint *param_1)
 }
 
 
+// 828972D8  D3D::CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+
+void D3D__CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+               (undefined8 param_1,ulonglong param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_82897398;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x18,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_8289737c;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_8289737c:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_82897398;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_82897398:
+  __restgprlr_29(puVar5);
+  return;
+}
+
+
 // 828973A0  D3D::CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>::FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
 void D3D__CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
-               (void)
+               (undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined8 uVar2;
+  undefined4 *puVar5;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  puVar4 = (undefined4 *)*puVar3;
+  while (puVar5 = puVar4, puVar5 != (undefined4 *)0x0) {
+    if (param_2 <= *(ulonglong *)(puVar5 + 2)) {
+      if (param_2 == *(ulonglong *)(puVar5 + 2)) {
+        puVar5 = puVar5 + 4;
+        goto LAB_82897460;
+      }
+      break;
+    }
+    puVar3 = puVar5;
+    puVar4 = (undefined4 *)*puVar5;
+  }
+  if (DAT_84890370 == 0) {
+    puVar4 = (undefined4 *)XMemAlloc(0x38,0x64800000);
+    if (puVar4 != (undefined4 *)0x0) goto LAB_82897444;
+    uVar2 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar4 = (undefined4 *)DmDebugAlloc();
+    if (puVar4 != (undefined4 *)0x0) {
+LAB_82897444:
+      uVar1 = *puVar3;
+      puVar5 = puVar4 + 4;
+      *(ulonglong *)(puVar4 + 2) = param_2;
+      *puVar4 = uVar1;
+      *puVar3 = puVar4;
+      goto LAB_82897460;
+    }
+    uVar2 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar2);
+  puVar5 = (undefined4 *)0x0;
+LAB_82897460:
+  __restgprlr_29(puVar5);
+  return;
 }
 
 
@@ -86,11 +255,42 @@ void D3D___dynamic_initializer_for__InvalidRegister__(void)
 
 // 82896528  D3D::CONSTANT_ALLOCATOR::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:222)
 
-void D3D__CONSTANT_ALLOCATOR__Initialize(void)
+void D3D__CONSTANT_ALLOCATOR__Initialize(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  puVar2 = (undefined8 *)__savegprlr_28();
+  *puVar2 = 0;
+  puVar2[1] = 0;
+  puVar2[2] = 0;
+  puVar2[3] = 0;
+  puVar2[4] = 0;
+  puVar2[5] = 0;
+  puVar2[6] = 0;
+  puVar2[7] = 0;
+  puVar2[8] = 0;
+  *(undefined4 *)(puVar2 + 9) = 0;
+  puVar2[10] = 0;
+  puVar2[0xb] = 0;
+  puVar2[0xc] = 0;
+  puVar2[0xd] = 0;
+  *(undefined4 *)((int)puVar2 + 0x74) = 0;
+  *(undefined4 *)(puVar2 + 0xe) = 0x100;
+  iVar3 = XMicrocodeShaderForEachInstruction
+                    (param_2,(param_3 & 0x3fffffff) << 2,0,0,0,0,0x24,0xffffffff82894b18);
+  if (iVar3 < 0) {
+    *(undefined4 *)((int)puVar2 + 0x74) = 0xffffffff;
+    uVar1 = 10;
+  }
+  else {
+    D3D__CONSTANT_ALLOCATOR__FixUpUsedConstants(puVar2);
+    uVar1 = 0;
+  }
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
@@ -100,8 +300,97 @@ void D3D__CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebu
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar2 = (undefined4 *)*puVar3;
+  while (puVar2 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar2;
+    D3D__CPixelShaderHashEntry__Destroy(puVar2 + 4);
+    if (DAT_84890370 == 0) {
+      XMemFree(puVar2,0x24800000);
+      puVar2 = puVar1;
+    }
+    else {
+      DmDebugFree();
+      puVar2 = puVar1;
+    }
+  }
+  *puVar3 = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 828965F0  D3D::CONSTANT_ALLOCATOR::AllocateCConstant  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:250)
+
+void D3D__CONSTANT_ALLOCATOR__AllocateCConstant(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  char cVar4;
+  ulonglong uVar5;
+  int iVar6;
+  
+  iVar3 = __savegprlr_26();
+  do {
+    uVar1 = *(uint *)(iVar3 + 0x74);
+    if (uVar1 == 0) {
+      uVar5 = (ulonglong)*(uint *)(iVar3 + 0x70) - 1;
+      if (-1 < (longlong)uVar5) {
+        do {
+          iVar6 = (int)uVar5;
+          if ((1L << ((longlong)iVar6 >> 2 & 0x7fU) & *(ulonglong *)(iVar3 + 0x40)) == 0) {
+            *(int *)(iVar3 + 0x70) = iVar6;
+            iVar2 = (iVar6 >> 6) * 8;
+            *(ulonglong *)(iVar2 + iVar3 + 0x50) =
+                 1L << ((longlong)iVar6 & 0x3fU) | *(ulonglong *)(iVar2 + iVar3 + 0x50);
+            goto LAB_82896750;
+          }
+          uVar5 = (uVar5 & 0xfffffffc) - 1;
+        } while (-1 < (longlong)uVar5);
+      }
+    }
+    else if (uVar1 == 1) {
+      uVar5 = (ulonglong)*(uint *)(iVar3 + 0x70) - 1;
+      if (-1 < (longlong)uVar5) {
+        do {
+          cVar4 = D3D__CONSTANT_ALLOCATOR__GetConstBit(iVar3 + 0x20,uVar5);
+          if ((cVar4 == '\0') &&
+             (cVar4 = D3D__CONSTANT_ALLOCATOR__GetConstBit(iVar3 + 0x50,uVar5), cVar4 == '\0'))
+          goto LAB_82896700;
+          uVar5 = uVar5 - 1;
+        } while (-1 < (longlong)uVar5);
+      }
+    }
+    else {
+      if (2 < uVar1) {
+        uVar5 = 0xffffffffffffffff;
+        goto LAB_82896750;
+      }
+      uVar5 = (ulonglong)*(uint *)(iVar3 + 0x70);
+      while (uVar5 = uVar5 - 1, -1 < (longlong)uVar5) {
+        cVar4 = D3D__CONSTANT_ALLOCATOR__GetConstBit(iVar3,uVar5);
+        if ((cVar4 == '\0') &&
+           (cVar4 = D3D__CONSTANT_ALLOCATOR__GetConstBit(iVar3 + 0x50,uVar5), cVar4 == '\0'))
+        goto LAB_82896700;
+      }
+    }
+    *(undefined4 *)(iVar3 + 0x70) = 0x100;
+    *(uint *)(iVar3 + 0x74) = uVar1 + 1;
+  } while( true );
+LAB_82896700:
+  *(int *)(iVar3 + 0x70) = (int)uVar5;
+  iVar6 = ((int)uVar5 >> 6) * 8;
+  *(ulonglong *)(iVar6 + iVar3 + 0x50) = 1L << (uVar5 & 0x3f) | *(ulonglong *)(iVar6 + iVar3 + 0x50)
+  ;
+LAB_82896750:
+  __restgprlr_26(uVar5);
+  return;
 }
 
 
@@ -126,21 +415,84 @@ void D3D__CTSHashTable<D3D::CPixelShaderHashEntry,D3D::HashParams_DB,&D3D::RTDeb
 
 // 82894AC8  D3D::CONSTANT_ALLOCATOR::GetConstBit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:315)
 
-void D3D__CONSTANT_ALLOCATOR__GetConstBit(void)
+void D3D__CONSTANT_ALLOCATOR__GetConstBit(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  __restgprlr_29((1L << (param_2 & 0x3f) & *(ulonglong *)(((int)param_2 >> 6) * 8 + iVar1)) != 0);
+  return;
 }
 
 
 // 82894B18  D3D::CONSTANT_ALLOCATOR::GenerateShaderConstantInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:326)
 
-void D3D__CONSTANT_ALLOCATOR__GenerateShaderConstantInfoCB(void)
+void D3D__CONSTANT_ALLOCATOR__GenerateShaderConstantInfoCB
+               (undefined8 param_1,undefined8 param_2,uint *param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
+  byte local_30 [48];
+  
+  uVar4 = __savegprlr_29();
+  if ((uVar4 & 0x40) == 0) {
+    if (((uVar4 & 1) == 0) && ((uVar4 & 4) != 0)) {
+      uVar1 = param_3[2];
+      iVar8 = 0;
+      bVar3 = (uVar1 & 0x80000000) == 0;
+      local_30[0] = 0;
+      local_30[1] = 0;
+      local_30[2] = 0;
+      if (bVar3) {
+        local_30[0] = *(byte *)((int)param_3 + 9);
+      }
+      uVar6 = (uint)bVar3;
+      if ((uVar1 & 0x40000000) == 0) {
+        local_30[bVar3] = *(byte *)((int)param_3 + 10);
+        uVar6 = uVar6 + 1;
+      }
+      if (((uVar1 & 0x20000000) == 0) ||
+         ((uVar7 = uVar6, 0x29 < *param_3 >> 0x1a && (*param_3 >> 0x1a < 0x30)))) {
+        local_30[uVar6] = (byte)uVar1;
+        uVar6 = uVar6 + 1;
+        uVar7 = uVar6;
+      }
+      for (; uVar6 != 0; uVar6 = uVar6 - 1) {
+        if (uVar7 == 0) {
+          uVar1 = param_3[1] >> 0x1f;
+        }
+        else {
+          uVar1 = param_3[1] >> 0x1e;
+        }
+        if ((uVar1 & 1) == 0) {
+          iVar2 = ((int)(uint)local_30[iVar8] >> 6) * 8;
+          *(ulonglong *)(iVar2 + param_4) =
+               1L << (local_30[iVar8] & 0x3f) | *(ulonglong *)(iVar2 + param_4);
+        }
+        else {
+          iVar2 = ((int)(uint)local_30[iVar8] >> 6) * 8;
+          *(ulonglong *)(iVar2 + param_4 + 0x20) =
+               1L << (local_30[iVar8] & 0x3f) | *(ulonglong *)(iVar2 + param_4 + 0x20);
+          *(undefined4 *)(param_4 + 0x48) = 1;
+        }
+        iVar8 = iVar8 + 1;
+      }
+    }
+    uVar5 = 0;
+  }
+  else {
+    uVar5 = 0xfffffffffffff002;
+  }
+  __restgprlr_29(uVar5);
+  return;
 }
 
 
@@ -216,11 +568,53 @@ void D3D__CONSTANT_ALLOCATOR__FixUpUsedConstants(void)
 
 // 82894DB0  D3D::GPR_ALLOCATOR::Allocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:531)
 
-void D3D__GPR_ALLOCATOR__Allocate(void)
+void D3D__GPR_ALLOCATOR__Allocate(undefined8 param_1,int param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uint uVar6;
+  ulonglong uVar5;
+  undefined4 uVar7;
+  undefined4 local_30 [12];
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  uVar7 = DAT_848954b0;
+  if ((int)param_3 < 5) {
+    if (4 < ((ulonglong)*(uint *)(param_2 + 8) + param_3 & 0xffffffff)) {
+      uVar6 = *(int *)(param_2 + 4) + 1;
+      *(undefined4 *)(param_2 + 8) = 0;
+      *(uint *)(param_2 + 4) = uVar6;
+      uVar7 = DAT_848954b0;
+      if (0x3f < uVar6) goto LAB_82894e78;
+    }
+    uVar2 = (ulonglong)*(uint *)(param_2 + 8);
+    uVar5 = (uVar2 + param_3) - 1;
+    if (3 < (uVar5 & 0xffffffff)) {
+      uVar5 = 3;
+    }
+    uVar3 = uVar5;
+    if ((uVar2 + 1 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
+      uVar3 = uVar2 + 1;
+    }
+    uVar4 = uVar5;
+    if ((uVar2 + 2 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
+      uVar4 = uVar2 + 2;
+    }
+    if ((uVar2 + 3 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
+      uVar5 = uVar2 + 3;
+    }
+    D3D__SHADER_REGISTER__SHADER_REGISTER
+              (local_30,2,*(undefined4 *)(param_2 + 4),uVar2,uVar3,uVar4,uVar5);
+    *(int *)(param_2 + 8) = (int)(uVar2 + param_3);
+    uVar7 = local_30[0];
+  }
+LAB_82894e78:
+  *puVar1 = uVar7;
+  __restgprlr_29(puVar1);
+  return;
 }
 
 
@@ -278,21 +672,123 @@ void D3D___dynamic_initializer_for__Unconditional__(void)
 
 // 82894F98  D3D::GetFlowCond  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:658)
 
-void D3D__GetFlowCond(void)
+void D3D__GetFlowCond(undefined8 param_1,uint *param_2,uint param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined1 uVar4;
+  
+  puVar1 = (uint *)__savegprlr_29();
+  uVar3 = param_2[1];
+  switch(uVar3 >> 0xc & 0xf) {
+  default:
+    *puVar1 = param_3;
+    goto LAB_828950a0;
+  case 3:
+  case 4:
+  case 0xd:
+  case 0xe:
+    uVar2 = (uVar3 >> 10 & 1) << 0x16 | *puVar1 & 0xffbfffff;
+LAB_8289500c:
+    uVar2 = uVar2 & 0xff7fffff;
+    uVar4 = (undefined1)(uVar3 >> 2);
+LAB_82895010:
+    *puVar1 = uVar2;
+    *(undefined1 *)puVar1 = uVar4;
+    goto LAB_82895018;
+  case 5:
+  case 6:
+    *puVar1 = (uVar3 & 0x400) << 0xc | 0x800000 | *puVar1 & 0xffbfffff;
+    *(undefined1 *)puVar1 = 0;
+LAB_82895018:
+    uVar3 = *puVar1 & 0xffdfffff;
+    break;
+  case 0xb:
+    if ((*param_2 & 0x2000) == 0) {
+      if ((*param_2 & 0x4000) == 0) {
+        uVar2 = (~(uVar3 >> 10) & 1) << 0x16 | *puVar1 & 0xffbfffff;
+        goto LAB_8289500c;
+      }
+      uVar4 = 0;
+      uVar2 = (~(uVar3 >> 10) & 1) << 0x16 | 0x800000 | *puVar1 & 0xffbfffff;
+      goto LAB_82895010;
+    }
+  case 1:
+  case 2:
+    uVar3 = DAT_848954b4;
+  }
+  *puVar1 = uVar3;
+LAB_828950a0:
+  __restgprlr_29(puVar1);
+  return;
 }
 
 
 // 828950B0  D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::TODO_LIST::AddTodoEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:759)
 
-void D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__TODO_LIST__AddTodoEntry(void)
+void D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__TODO_LIST__AddTodoEntry
+               (undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  
+  iVar8 = __savegprlr_29();
+  uVar1 = *(uint *)(iVar8 + 0x1f44);
+  if (uVar1 < 1000) {
+    iVar5 = uVar1 * 8 + iVar8;
+    *(uint *)(iVar8 + 0x1f44) = uVar1 + 1;
+    iVar6 = *(int *)(iVar8 + 8000) * 8 + iVar8;
+    uVar2 = *(uint *)(iVar5 + 4);
+    uVar4 = *(uint *)(iVar6 + 4) & 0x80000000;
+    *(uint *)(iVar5 + 4) = uVar2 & 0x7fffffff | uVar4;
+    uVar7 = *(uint *)(iVar6 + 4) & 0x40000000;
+    *(uint *)(iVar5 + 4) = uVar7 | uVar2 & 0x3fffffff | uVar4;
+    uVar3 = *(uint *)(iVar6 + 4);
+    *(undefined4 *)(uVar1 * 8 + iVar8) = param_2;
+    *(uint *)(iVar5 + 4) =
+         uVar7 | uVar2 & 0x1fffffff | uVar4 |
+         ((uint)((param_3 & 0xffffffff) << 0x1d) | uVar3) & 0x20000000;
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82895140  D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::OpJumpsOrForcesEnd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:779)
+
+undefined8
+D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__OpJumpsOrForcesEnd(undefined4 param_1)
+
+{
+  undefined8 uVar1;
+  
+  switch(param_1) {
+  case 0:
+  case 1:
+  case 3:
+  case 4:
+  case 5:
+  case 6:
+  case 9:
+  case 0xc:
+  case 0xd:
+  case 0xe:
+  case 0xf:
+    uVar1 = 0;
+    break;
+  default:
+    uVar1 = 1;
+  }
+  return uVar1;
 }
 
 
@@ -302,18 +798,143 @@ void D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__ProcessTodoEntryForD
                (void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar6;
+  
+  iVar7 = __savegprlr_27();
+  iVar8 = *(int *)(iVar7 + 8000) * 8;
+  iVar5 = iVar8 + iVar7;
+  puVar3 = *(undefined4 **)(iVar8 + iVar7);
+  do {
+    uVar1 = puVar3[5];
+    uVar4 = 2 << (*(uint *)(iVar5 + 4) >> 0x1f);
+    if (((uVar1 & uVar4 & 0x7ffff) != 0) &&
+       ((8 << (*(uint *)(iVar5 + 4) >> 0x1e & 1) & uVar1 & 0x7ffff) != 0)) {
+LAB_828953d8:
+      uVar6 = 0;
+      goto LAB_828953d0;
+    }
+    puVar3[5] = uVar4 & 0x7ffff | uVar1;
+    puVar3[5] = puVar3[5] & 0xfff80000 |
+                (8 << (*(uint *)(iVar5 + 4) >> 0x1e & 1) | puVar3[5]) & 0x7ffffU;
+    if (((puVar3[2] & 0xf000) == 0xc000) && ((puVar3[2] & 0x600) == 0x400)) {
+      uVar1 = *(uint *)(iVar5 + 4);
+      *(uint *)(iVar5 + 4) = uVar1 | 0x80000000;
+      if ((uVar1 & 0x20000000) != 0) {
+        *(undefined1 *)(iVar7 + 0x1f48) = 1;
+      }
+    }
+    for (puVar2 = (undefined4 *)puVar3[4]; puVar2 != (undefined4 *)0x0;
+        puVar2 = (undefined4 *)*puVar2) {
+      if ((puVar2[4] & 0x80000000) != 0) {
+        if ((puVar2[4] & 0x40000000) == 0) {
+          if (((puVar2[1] & 0x1f) == 1) && ((*(uint *)(iVar5 + 4) & 0x80000000) != 0)) {
+            *(undefined1 *)(iVar7 + 0x1f48) = 1;
+          }
+          if ((*(uint *)(iVar5 + 4) & 0x40000000) != 0) {
+            puVar2[4] = puVar2[4] | 2;
+          }
+        }
+      }
+      if ((*(uint *)(iVar5 + 4) & 0x40000000) == 0) {
+        if ((puVar2[4] & 0x80000000) == 0) {
+          if (((0x1a < (uint)puVar2[1] >> 0x1a) && ((uint)puVar2[1] >> 0x1a < 0x23)) ||
+             ((0x13 < (*(byte *)(puVar2 + 3) & 0x1f) && ((*(byte *)(puVar2 + 3) & 0x1f) < 0x18)))) {
+            *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x40000000;
+          }
+        }
+      }
+    }
+    if (puVar3[3] != 0) {
+      D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__TODO_LIST__AddTodoEntry
+                (iVar7,puVar3[3],(puVar3[2] & 0xf000) == 0x9000);
+      uVar1 = (uint)puVar3[2] >> 0xc & 0xf;
+      if ((((uVar1 == 0xb) && ((puVar3[1] & 0x2000) == 0)) || (uVar1 == 7)) ||
+         ((uVar1 == 8 || (uVar1 == 9)))) {
+        D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__TODO_LIST__AddTodoEntry
+                  (iVar7,*puVar3,0);
+      }
+      if ((puVar3[2] & 0xf000) == 0x9000) {
+        *(uint *)(iVar5 + 4) = *(uint *)(iVar5 + 4) | 0x40000000;
+      }
+    }
+    iVar8 = D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__OpJumpsOrForcesEnd
+                      ((uint)puVar3[2] >> 0xc & 0xf);
+    if (iVar8 != 0) goto LAB_828953d8;
+    puVar3 = (undefined4 *)*puVar3;
+  } while (puVar3 != (undefined4 *)0x0);
+  uVar6 = 10;
+LAB_828953d0:
+  __restgprlr_27(uVar6);
+  return;
 }
 
 
 // 82896758  D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::AnalyzeAllocAndP0Usage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:932)
 
-void D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__AnalyzeAllocAndP0Usage(void)
+void D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__AnalyzeAllocAndP0Usage
+               (undefined8 param_1,undefined4 param_2,undefined1 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined4 *puVar3;
+  undefined8 uVar1;
+  uint uVar4;
+  
+  iVar2 = __savegprlr_27();
+  if (DAT_84890370 == 0) {
+    puVar3 = (undefined4 *)XMemAlloc(0x1f50,0x64800000);
+    if (puVar3 != (undefined4 *)0x0) goto LAB_828967c8;
+    uVar1 = 0xffffffff821f31e8;
+  }
+  else {
+    puVar3 = (undefined4 *)DmDebugAlloc();
+    if (puVar3 != (undefined4 *)0x0) {
+LAB_828967c8:
+      puVar3[2000] = 0;
+      puVar3[0x7d1] = 1;
+      *puVar3 = *(undefined4 *)(iVar2 + 0xc);
+      puVar3[1] = puVar3[1] & 0x1fffffff;
+      puVar3[0x7d3] = param_2;
+      do {
+        D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__ProcessTodoEntryForDeepShaderAnalysis
+                  (puVar3);
+        uVar4 = puVar3[2000] + 1;
+        puVar3[2000] = uVar4;
+        if ((999 < uVar4) || (999 < (uint)puVar3[0x7d1])) {
+          if (DAT_84890370 == 0) {
+            XMemFree(puVar3,0x24800000);
+          }
+          else {
+            DmDebugFree();
+          }
+          uVar1 = 10;
+          goto LAB_8289687c;
+        }
+      } while (uVar4 < (uint)puVar3[0x7d1]);
+      *param_3 = *(undefined1 *)(puVar3 + 0x7d2);
+      if (DAT_84890370 == 0) {
+        XMemFree(puVar3,0x24800000);
+      }
+      else {
+        DmDebugFree();
+      }
+      uVar1 = 0;
+      goto LAB_8289687c;
+    }
+    uVar1 = 0xffffffff821f31fc;
+  }
+  D3D__DefaultTextureTrackerErrorCallback(uVar1);
+  uVar1 = 9;
+LAB_8289687c:
+  __restgprlr_27(uVar1);
+  return;
 }
 
 
@@ -465,41 +1086,164 @@ void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__BackPatchDanglingJumps
 
 // 82895718  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::InsertJumpNode  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1436)
 
-void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__InsertJumpNode(void)
+void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__InsertJumpNode
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar1;
+  uint uVar2;
+  undefined4 in_stack_00000024;
+  undefined4 local_40 [2];
+  uint local_38;
+  uint local_34;
+  
   __savegprlr_28();
+  in_stack_00000024 = (undefined4)param_3;
+  uVar2 = 0xb000;
+  cVar1 = D3D__COND_TYPE__IsPred(&stack0x00000024);
+  if (cVar1 == '\0') {
+    local_38 = local_38 & 0xffffbfff;
+    uVar2 = (uint)((param_3 & 0xffffffff) >> 0x16) & 0x3fc | 0xb000;
+  }
+  else {
+    local_38 = local_38 | 0x4000;
+  }
+  local_38 = local_38 & 0xffffdfff;
+  local_34 = (uint)((~param_3 & 0xffffffff) >> 0xc) & 0x400 | uVar2;
+  local_40[0] = 0;
+  D3D__GraphMicrocodeBuilder__AddFlowAfter(param_2,param_4,&local_38,local_40);
+  __restgprlr_28(local_40[0]);
+  return;
 }
 
 
 // 828957B0  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddRareFetchAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1469)
 
-void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddRareFetchAfter(void)
+/* WARNING: Restarted to delay deadcode elimination for space: stack */
+
+void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddRareFetchAfter
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int iVar2;
+  int iVar4;
+  undefined8 uVar3;
+  uint uVar5;
+  uint local_50 [2];
+  undefined4 local_48;
+  
+  iVar4 = __savegprlr_26();
+  iVar2 = (int)((param_5 & 0xffffffff) << 4);
+  uVar5 = (uint)param_5;
+  local_48 = 0;
+  uVar1 = *(uint *)(&DAT_829a83f8 + iVar2) >> 0x1b;
+  local_50[0] = uVar1 | 0x80000;
+  if (uVar5 == 1) {
+    local_50[0] = uVar1 | 0x1a80000;
+  }
+  else if (uVar5 == 2) {
+    local_50[0] = uVar1 | 0x5f80000;
+  }
+  *(uint *)(iVar4 + 0x24) = 1 << (uVar5 & 0x3f) | *(uint *)(iVar4 + 0x24);
+  uVar3 = D3D__GraphMicrocodeBuilder__AddALUAfter
+                    (param_2,*(undefined4 *)param_3,*(undefined4 *)param_4,1,
+                     *(uint *)(&DAT_829a83f8 + iVar2) >> 0x1a & 1,local_50,param_3,param_4);
+  __restgprlr_26(uVar3);
+  return;
 }
 
 
 // 82897468  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddSavePredicate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1622)
 
-void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddSavePredicate(void)
+void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddSavePredicate
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  int *piVar5;
+  int local_40;
+  undefined1 auStack_3c [60];
+  
   __savegprlr_26();
+  uVar1 = DAT_848954b4;
+  piVar5 = (int *)param_3;
+  iVar3 = *piVar5;
+  local_40 = 0;
+  if ((iVar3 == 0) || ((1 << (*(uint *)(iVar3 + 8) >> 0xc & 0xf) & 0x607eU) == 0)) {
+LAB_828975d8:
+    iVar3 = D3D__GraphMicrocodeBuilder__CreateExecAfter(param_2,iVar3,param_3);
+    if (-1 < iVar3) goto LAB_828974e8;
+  }
+  else {
+    uVar2 = D3D__GetFlowCond(auStack_3c,iVar3 + 4,DAT_848954b4);
+    cVar4 = D3D__COND_TYPE__operator__(uVar2,uVar1);
+    if (cVar4 == '\0') goto LAB_828975d8;
+    local_40 = D3D__FlowNode__GetLastChild(iVar3);
+LAB_828974e8:
+    D3D__CShaderHacker__AllocateFloatConstant(0x3ff0000000000000,auStack_3c,param_2);
+    iVar3 = D3D__CShaderHacker__AddALUAfter2(param_2,*piVar5,local_40,2,8,DAT_848954b0,*param_4);
+    if (-1 < iVar3) {
+      *(uint *)(local_40 + 8) = *(uint *)(local_40 + 8) | 0x1000000;
+      iVar3 = D3D__CShaderHacker__AddALUAfter2(param_2,*piVar5,local_40,2,9,DAT_848954b0);
+      if (-1 < iVar3) {
+        *(byte *)(local_40 + 0xf) = (byte)*(undefined4 *)(local_40 + 0xc) & 0x7f | 0x80;
+        *(uint *)(local_40 + 8) = *(uint *)(local_40 + 8) | 0x10000000;
+        *(uint *)(local_40 + 8) = *(uint *)(local_40 + 8) | 0x8000000;
+        uVar2 = 0;
+        goto LAB_828975d0;
+      }
+    }
+  }
+  uVar2 = 9;
+LAB_828975d0:
+  __restgprlr_26(uVar2);
+  return;
 }
 
 
 // 82896888  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddRestorePredicate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1671)
 
-void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddRestorePredicate(void)
+void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddRestorePredicate
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined8 uVar2;
+  char cVar4;
+  int iVar3;
+  uint uVar5;
+  undefined4 local_40;
+  undefined1 auStack_3c [60];
+  
   __savegprlr_27();
+  uVar1 = DAT_848954b4;
+  iVar3 = *(int *)param_3;
+  local_40 = 0;
+  if ((iVar3 == 0) || ((1 << (*(uint *)(iVar3 + 8) >> 0xc & 0xf) & 0x607eU) == 0)) {
+LAB_82896964:
+    iVar3 = D3D__GraphMicrocodeBuilder__CreateExecAfter(param_2,iVar3,param_3);
+    if (iVar3 < 0) {
+      uVar5 = 9;
+      goto LAB_8289695c;
+    }
+  }
+  else {
+    uVar2 = D3D__GetFlowCond(auStack_3c,iVar3 + 4,DAT_848954b4);
+    cVar4 = D3D__COND_TYPE__operator__(uVar2,uVar1);
+    if (cVar4 == '\0') goto LAB_82896964;
+    local_40 = D3D__FlowNode__GetLastChild(iVar3);
+  }
+  iVar3 = D3D__CShaderHacker__AddALUAfter2
+                    (param_2,*(int *)param_3,local_40,2,0x1c,DAT_848954b0,DAT_848954b0);
+  uVar5 = iVar3 >> 0x1f & 9;
+LAB_8289695c:
+  __restgprlr_27(uVar5);
+  return;
 }
 
 
@@ -602,13 +1346,81 @@ void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddGetCompTexLODAfter
 }
 
 
-// 828959F8  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::GetNumTfetchSameLODSameConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1884)
+// 82895890  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::IsTfetchSameLODSameConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1820)
 
-void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__GetNumTfetchSameLODSameConst(void)
+undefined8
+D3D__CShaderHacker__CClassForInsertingPerFetchStuff__IsTfetchSameLODSameConst
+          (undefined8 param_1,int param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar2;
+  
+  if ((((((((*(uint *)(param_2 + 0x10) & 0x80000000) != 0) &&
+          ((*(uint *)(param_3 + 0x10) & 0x80000000) != 0)) &&
+         ((*(uint *)(param_2 + 0x10) & 0x40000000) == 0)) &&
+        ((((*(uint *)(param_3 + 0x10) & 0x40000000) == 0 &&
+          (uVar1 = *(uint *)(param_2 + 4), (uVar1 & 0x1f) == 1)) &&
+         ((uVar2 = *(uint *)(param_3 + 4), (uVar2 & 0x1f) == 1 &&
+          ((((uVar2 ^ uVar1) & 0x7e0) == 0 && (((uVar2 ^ uVar1) & 0x800) == 0)))))))) &&
+       (((uVar2 ^ uVar1) & 0x1f00000) == 0)) &&
+      (((((uVar2 ^ uVar1) & 0x2000000) == 0 && (((uVar2 ^ uVar1) & 0xc000000) == 0)) &&
+       (((uVar2 ^ uVar1) & 0x30000000) == 0)))) && (((uVar2 ^ uVar1) & 0xc0000000) == 0)) {
+    uVar1 = *(uint *)(param_3 + 8);
+    uVar2 = *(uint *)(param_2 + 8);
+    if (((((uVar2 ^ uVar1) & 0x30000) == 0) && (((uVar2 ^ uVar1) & 0x1c0000) == 0)) &&
+       ((((uVar2 ^ uVar1) & 0x10000000) == 0 &&
+        ((((uVar2 ^ uVar1) & 0x20000000) == 0 && (((uVar2 ^ uVar1) & 0x80000000) == 0)))))) {
+      uVar1 = *(uint *)(param_3 + 0xc);
+      uVar2 = *(uint *)(param_2 + 0xc);
+      if ((((uVar2 ^ uVar1) & 1) == 0) &&
+         (((((uVar2 ^ uVar1) & 0x1fc) == 0 && (((uVar2 ^ uVar1) & 0xc000) == 0)) &&
+          (((uVar2 ^ uVar1) & 0x80000000) == 0)))) {
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
+
+// 828959F8  D3D::CShaderHacker::CClassForInsertingPerFetchStuff::GetNumTfetchSameLODSameConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1884)
+
+void D3D__CShaderHacker__CClassForInsertingPerFetchStuff__GetNumTfetchSameLODSameConst
+               (undefined8 param_1,int *param_2,int *param_3)
+
+{
+  int *piVar1;
+  int iVar2;
+  undefined8 uVar3;
+  char cVar4;
+  int *piVar5;
+  longlong lVar6;
+  
+  uVar3 = __savegprlr_26();
+  piVar5 = (int *)*param_3;
+  lVar6 = 0;
+  do {
+    piVar1 = (int *)*param_2;
+    lVar6 = lVar6 + 1;
+    iVar2 = *piVar1;
+    *param_2 = iVar2;
+    if (iVar2 == 0) {
+      piVar5 = (int *)*param_3;
+      iVar2 = *piVar5;
+      *param_3 = iVar2;
+      if (iVar2 != 0) {
+        *param_2 = *(int *)(iVar2 + 0x10);
+      }
+    }
+    if ((*param_2 == 0) || ((*(uint *)(*param_2 + 0x10) & 1) != 0)) break;
+    cVar4 = D3D__CShaderHacker__CClassForInsertingPerFetchStuff__IsTfetchSameLODSameConst
+                      (uVar3,piVar1);
+  } while (cVar4 != '\0');
+  *param_2 = (int)piVar1;
+  *param_3 = (int)piVar5;
+  __restgprlr_26(lVar6);
+  return;
 }
 
 
@@ -992,11 +1804,22 @@ LAB_82898120:
 
 // 82896C20  D3D::CShaderHacker::GetCConstantPerTFConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2585)
 
-void D3D__CShaderHacker__GetCConstantPerTFConst(void)
+void D3D__CShaderHacker__GetCConstantPerTFConst(undefined8 param_1,int param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  undefined4 uVar3;
+  
+  uVar2 = __savegprlr_29();
+  iVar1 = (int)((param_3 + 0xcU & 0x3fffffff) << 2);
+  if (*(int *)(iVar1 + param_2) == -1) {
+    uVar3 = D3D__CONSTANT_ALLOCATOR__AllocateCConstant((ulonglong)*(uint *)(param_2 + 0x20) + 8);
+    *(undefined4 *)(iVar1 + param_2) = uVar3;
+  }
+  D3D__SHADER_REGISTER__SHADER_REGISTER(uVar2,1,*(undefined4 *)(iVar1 + param_2));
+  __restgprlr_29(uVar2);
+  return;
 }
 
 
@@ -1043,11 +1866,84 @@ LAB_82895b5c:
 
 // 82896C80  D3D::CShaderHacker::AllocateFloatConstant  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2635)
 
-void D3D__CShaderHacker__AllocateFloatConstant(void)
+void D3D__CShaderHacker__AllocateFloatConstant
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,longlong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  char cVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  uint *puVar8;
+  longlong lVar9;
+  undefined8 extraout_f1;
+  undefined8 uVar10;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  undefined4 local_64;
+  undefined1 local_60 [96];
+  
   __savegprlr_28();
+  puVar1 = (undefined4 *)__savefpr_28();
+  uVar6 = 0;
+  lVar7 = param_6 + 0x130;
+  uVar10 = extraout_f1;
+  do {
+    puVar8 = (uint *)lVar7;
+    if ((*puVar8 & 0x780000) == 0) {
+      uVar2 = D3D__CONSTANT_ALLOCATOR__AllocateCConstant
+                        ((ulonglong)*(uint *)((int)param_6 + 0x20) + 8);
+      *puVar8 = uVar2 << 0x17 | *puVar8 & 0x7fffff;
+      if ((uVar2 & 0x1ff) == 0xffffffff) break;
+    }
+    puVar5 = &local_64;
+    lVar4 = lVar7 + -4;
+    lVar9 = 5;
+    do {
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(undefined4 *)lVar4;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    cVar3 = D3D__CShaderHacker__AddCConstant(uVar10,local_60);
+    if (cVar3 != '\0') {
+      cVar3 = D3D__CShaderHacker__AddCConstant(param_2,local_60);
+      if (cVar3 != '\0') {
+        cVar3 = D3D__CShaderHacker__AddCConstant(param_3,local_60);
+        if (cVar3 != '\0') {
+          cVar3 = D3D__CShaderHacker__AddCConstant(param_4,local_60);
+          if (cVar3 != '\0') {
+            param_6 = uVar6 * 0x14 + param_6;
+            puVar5 = &local_64;
+            lVar7 = param_6 + 300;
+            lVar4 = 5;
+            do {
+              puVar5 = puVar5 + 1;
+              lVar7 = lVar7 + 4;
+              *(undefined4 *)lVar7 = *puVar5;
+              lVar4 = lVar4 + -1;
+            } while (lVar4 != 0);
+            D3D__SHADER_REGISTER__SHADER_REGISTER
+                      (puVar1,1,*(uint *)((int)param_6 + 0x130) >> 0x17,local_64,local_68,local_6c,
+                       local_70);
+            goto LAB_82896d80;
+          }
+        }
+      }
+    }
+    uVar6 = uVar6 + 1;
+    lVar7 = lVar7 + 0x14;
+  } while ((uVar6 & 0xffffffff) < 0x21);
+  *puVar1 = DAT_848954b0;
+LAB_82896d80:
+  __restfpr_28(puVar1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1076,11 +1972,21 @@ D3D__CShaderHacker__AllocateFloatConstant
 
 // 82895B80  D3D::CShaderHacker::CopyInstructionAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2678)
 
-void D3D__CShaderHacker__CopyInstructionAfter(void)
+void D3D__CShaderHacker__CopyInstructionAfter
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  undefined8 uVar2;
+  
+  uVar2 = __savegprlr_26();
+  uVar1 = *(uint *)((int)param_4 + 0x10);
+  uVar2 = D3D__GraphMicrocodeBuilder__AddALUAfter
+                    (uVar2,param_2,param_3,(uVar1 & 0x80000000) != 0,uVar1 >> 0x1e & 1,param_4 + 4,
+                     param_5,param_6);
+  __restgprlr_26(uVar2);
+  return;
 }
 
 
@@ -1188,41 +2094,260 @@ void D3D__CShaderHacker__CreateExecAfterEx
 
 // 82895E58  D3D::CShaderHacker::GetTfetchUsageInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2832)
 
-void D3D__CShaderHacker__GetTfetchUsageInfoCB(void)
+void D3D__CShaderHacker__GetTfetchUsageInfoCB
+               (undefined8 param_1,undefined8 param_2,uint *param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  byte bVar3;
+  uint uVar2;
+  uint uVar4;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 2) == 0) goto LAB_82896060;
+  uVar4 = *param_3;
+  uVar2 = uVar4 & 0x1f;
+  if ((uVar4 & 0x1f) == 0) {
+    if ((uVar1 & 0x10) == 0) {
+      *(byte *)(param_4 + 0x8c) = *(byte *)(param_4 + 0x8c) | 4;
+    }
+    if ((*param_3 & 0x1f00000) == 0x1a00000) {
+      *(byte *)(param_4 + 0x8c) = *(byte *)(param_4 + 0x8c) | 2;
+    }
+    uVar4 = 1 << (*param_3 >> 0x14 & 0x1f);
+  }
+  else {
+    uVar4 = 1 << (uVar4 >> 0x14 & 0x1f);
+    if (uVar2 == 1) {
+      uVar2 = param_3[1];
+      uVar2 = 1 << (uVar2 >> 9 & 7) | 1 << (uVar2 >> 6 & 7) | 1 << (uVar2 >> 3 & 7) |
+              1 << (uVar2 & 7);
+      *(uint *)(param_4 + 0x98) = *(uint *)(param_4 + 0x98) | -(uint)((uVar2 & 1) != 0) & uVar4;
+      *(uint *)(param_4 + 0x9c) = *(uint *)(param_4 + 0x9c) | -(uint)((uVar2 & 2) != 0) & uVar4;
+      *(uint *)(param_4 + 0xa4) = *(uint *)(param_4 + 0xa4) | -(uint)((uVar2 & 8) != 0) & uVar4;
+      *(uint *)(param_4 + 0xa0) = *(uint *)(param_4 + 0xa0) | -(uint)((uVar2 & 4) != 0) & uVar4;
+      if (((*(ushort *)(param_3 + 1) & 3) == 2) ||
+         (uVar2 = uVar4, (*(ushort *)(param_3 + 1) & 3) == 3)) {
+        uVar2 = 0;
+      }
+      *(uint *)(param_4 + 0xac) = *(uint *)(param_4 + 0xac) | uVar2;
+      uVar2 = param_3[1];
+      *(uint *)(param_4 + 0x94) = *(uint *)(param_4 + 0x94) | uVar4;
+      *(uint *)(param_4 + 0xa8) =
+           *(uint *)(param_4 + 0xa8) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar4;
+    }
+    else {
+      if (uVar2 == 0x10) {
+        bVar3 = *(byte *)(param_4 + 0x8c) | 0x20;
+      }
+      else if (uVar2 == 0x13) {
+        bVar3 = *(byte *)(param_4 + 0x8c) | 0x40;
+      }
+      else if (uVar2 == 0x19) {
+        bVar3 = *(byte *)(param_4 + 0x8c) | 8;
+      }
+      else {
+        if (uVar2 != 0x1a) goto LAB_82896034;
+        bVar3 = *(byte *)(param_4 + 0x8c) | 0x10;
+      }
+      *(byte *)(param_4 + 0x8c) = bVar3;
+    }
+LAB_82896034:
+    if ((*param_3 & 0x1f00000) == 0x1a00000) {
+      *(byte *)(param_4 + 0x8c) = *(byte *)(param_4 + 0x8c) | 2;
+    }
+    uVar4 = *(uint *)(param_4 + 0x90) | uVar4;
+  }
+  *(uint *)(param_4 + 0x90) = uVar4;
+LAB_82896060:
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82896070  D3D::CShaderHacker::GetTfetchUsageInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2893)
 
-void D3D__CShaderHacker__GetTfetchUsageInfo(void)
+void D3D__CShaderHacker__GetTfetchUsageInfo(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  uint uVar4;
+  
+  iVar2 = __savegprlr_29();
+  *(undefined4 *)(*(int *)(iVar2 + 0x20) + 0xb0) = 0;
+  iVar3 = XMicrocodeShaderForEachInstruction
+                    (param_2,(param_3 & 0x3fffffff) << 2,0,0,0,0,0x22,0xffffffff82895e58);
+  if (iVar3 < 0) {
+    uVar1 = 10;
+  }
+  else {
+    uVar4 = 1;
+    do {
+      if ((*(uint *)(*(int *)(iVar2 + 0x20) + 0x94) & uVar4) != 0) {
+        *(int *)(*(int *)(iVar2 + 0x20) + 0xb0) = *(int *)(*(int *)(iVar2 + 0x20) + 0xb0) + 1;
+      }
+      uVar4 = uVar4 << 1;
+    } while (uVar4 != 0);
+    uVar1 = 0;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 82896EC8  D3D::CShaderHacker::GenerateRehackingInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2923)
 
-void D3D__CShaderHacker__GenerateRehackingInfo(void)
+void D3D__CShaderHacker__GenerateRehackingInfo
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  longlong lVar1;
+  uint uVar3;
+  undefined4 *puVar4;
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_27();
+  puVar4 = (undefined4 *)param_4;
+  *(undefined4 **)(iVar2 + 0x20) = puVar4;
+  puVar4[0x2d] = DAT_848954b0;
+  lVar1 = D3D__CONSTANT_ALLOCATOR__Initialize(param_4 + 8,param_2,param_3,0);
+  *puVar4 = (int)lVar1;
+  if (lVar1 == 0) {
+    uVar3 = *(uint *)(iVar2 + 0x14) >> 8 & 0x3f;
+    puVar4[0x22] = 4;
+    puVar4[0x20] = uVar3;
+    puVar4[0x21] = uVar3;
+    lVar1 = D3D__CShaderHacker__GetTfetchUsageInfo(iVar2,param_2,param_3);
+    *puVar4 = (int)lVar1;
+    if (lVar1 == 0) {
+      lVar1 = D3D__CShaderHacker__CClassForAnalyzingAllocAndP0Usage__AnalyzeAllocAndP0Usage
+                        (iVar2,param_4,auStack_40);
+      *puVar4 = (int)lVar1;
+      if (lVar1 == 0) {
+        uVar3 = (puVar4[0x21] & 0x3f) << 8 | *(uint *)(iVar2 + 0x14) & 0xffffc0ff;
+        *(uint *)(iVar2 + 0x14) = uVar3;
+        puVar4[0x2e] = uVar3;
+        puVar4[0x2f] = *(undefined4 *)(iVar2 + 0x18);
+        puVar4[0x30] = *(undefined4 *)(iVar2 + 0x1c);
+        *puVar4 = 0;
+        lVar1 = 0;
+      }
+    }
+  }
+  __restgprlr_27(lVar1);
+  return;
+}
+
+
+// 828981D0  D3D::CShaderHacker::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2975)
+
+void D3D__CShaderHacker__Initialize
+               (undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined4 param_4,
+               undefined4 param_5,undefined8 param_6)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar5;
+  longlong lVar4;
+  
+  uVar1 = __savegprlr_25();
+  memset((undefined4 *)param_6,0,200);
+  if (DAT_84890370 == 0) {
+    iVar2 = XMemAlloc(0x400,0x64800000);
+    if (iVar2 == 0) {
+      uVar1 = 0xffffffff821f31e8;
+      goto LAB_8289824c;
+    }
+LAB_82898258:
+    D3D__CShaderHacker__CShaderHacker(iVar2);
+    iVar3 = D3D__GraphMicrocodeBuilder__ConvertShaderToGraph
+                      (iVar2,uVar1,(param_2 & 0x3fffffff) << 2);
+    if (iVar3 < 0) {
+      lVar4 = 10;
+    }
+    else {
+      *(undefined4 *)(iVar2 + 0x14) = param_3;
+      *(undefined4 *)(iVar2 + 0x18) = param_4;
+      *(undefined4 *)(iVar2 + 0x1c) = param_5;
+      lVar4 = D3D__CShaderHacker__GenerateRehackingInfo(iVar2,uVar1,param_2,param_6);
+      if (lVar4 == 0) goto LAB_828982c8;
+    }
+    uVar5 = (undefined4)lVar4;
+    D3D__CShaderHacker__Release(iVar2);
+  }
+  else {
+    iVar2 = DmDebugAlloc();
+    if (iVar2 != 0) goto LAB_82898258;
+    uVar1 = 0xffffffff821f31fc;
+LAB_8289824c:
+    D3D__DefaultTextureTrackerErrorCallback(uVar1);
+    uVar5 = 9;
+  }
+  *(undefined4 *)param_6 = uVar5;
+  iVar2 = 0;
+LAB_828982c8:
+  __restgprlr_25(iVar2);
+  return;
 }
 
 
 // 828982D0  D3D::CShaderHacker::Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3024)
 
-void D3D__CShaderHacker__Initialize(void)
+void D3D__CShaderHacker__Initialize
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,int *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar2 = __savegprlr_27();
+  *param_4 = 0;
+  if (DAT_84890370 == 0) {
+    iVar3 = XMemAlloc(0x400,0x64800000);
+    if (iVar3 == 0) {
+      uVar1 = 0xffffffff821f31e8;
+      goto LAB_8289833c;
+    }
+  }
+  else {
+    iVar3 = DmDebugAlloc();
+    if (iVar3 == 0) {
+      uVar1 = 0xffffffff821f31fc;
+LAB_8289833c:
+      D3D__DefaultTextureTrackerErrorCallback(uVar1);
+      lVar5 = 9;
+      goto LAB_828983c4;
+    }
+  }
+  D3D__CShaderHacker__CShaderHacker(iVar3);
+  iVar4 = D3D__GraphMicrocodeBuilder__ConvertShaderToGraph
+                    (iVar3,param_2,(param_3 & 0x3fffffff) << 2);
+  if (iVar4 < 0) {
+    lVar5 = 10;
+  }
+  else {
+    *(undefined4 *)(iVar3 + 0x14) = *(undefined4 *)(iVar2 + 0xb8);
+    *(undefined4 *)(iVar3 + 0x18) = *(undefined4 *)(iVar2 + 0xbc);
+    *(undefined4 *)(iVar3 + 0x1c) = *(undefined4 *)(iVar2 + 0xc0);
+    lVar5 = D3D__CShaderHacker__GenerateRehackingInfo(iVar3,param_2,param_3,iVar2);
+    if (lVar5 == 0) {
+      *param_4 = iVar3;
+      lVar5 = 0;
+      goto LAB_828983c4;
+    }
+  }
+  D3D__CShaderHacker__Release(iVar3);
+LAB_828983c4:
+  __restgprlr_27(lVar5);
+  return;
 }
 
 
@@ -1251,6 +2376,160 @@ longlong D3D__CShaderHacker__QsortConstantSorter(ushort *param_1,ushort *param_2
     uVar1 = uVar1 >> 7;
   }
   return ((ulonglong)uVar1 & 1) - ((ulonglong)uVar2 & 1);
+}
+
+
+// 828983D0  D3D::CShaderHacker::GenerateHackedPixelShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3095)
+
+void D3D__CShaderHacker__GenerateHackedPixelShader
+               (undefined8 param_1,undefined8 param_2,longlong param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  bool bVar2;
+  ushort uVar3;
+  int iVar6;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  int iVar7;
+  ushort *_Dst;
+  int iVar8;
+  longlong lVar9;
+  ushort *puVar10;
+  uint *puVar11;
+  uint uVar12;
+  uint uVar13;
+  int *piVar14;
+  int iVar15;
+  longlong lVar16;
+  
+  iVar6 = __savegprlr_27();
+  *(undefined4 *)(iVar6 + 0x3fc) = param_4;
+  uVar4 = D3D__CShaderHacker__CClassForInsertingPerFetchStuff__AddJumpsAndPerTfetchStuff
+                    (iVar6 + 0x3c4,iVar6,param_2,param_3 + 0xc);
+  iVar1 = (int)param_3;
+  *(int *)(iVar1 + 4) = (int)uVar4;
+  if (uVar4 != 0) goto LAB_828986f4;
+  uVar4 = D3D__GraphMicrocodeBuilder__GetShaderSize(iVar6);
+  if (0xb3ff < (uVar4 & 0xffffffff)) {
+    *(undefined4 *)(iVar1 + 4) = 7;
+    uVar4 = 7;
+    goto LAB_828986f4;
+  }
+  if (0x6fff < (*(uint *)(iVar6 + 0x14) & 0x3f00)) {
+    *(undefined4 *)(iVar1 + 4) = 2;
+    uVar4 = 2;
+    goto LAB_828986f4;
+  }
+  *(uint *)(iVar1 + 0x28) = (uint)uVar4 >> 2;
+  uVar12 = (*(uint *)(*(int *)(iVar6 + 0x20) + 0x84) & 0x3f) << 8 |
+           *(uint *)(iVar6 + 0x14) & 0xffffc0ff;
+  *(uint *)(iVar6 + 0x14) = uVar12;
+  *(uint *)(iVar1 + 0x2c) = uVar12;
+  *(undefined4 *)(iVar1 + 0x30) = *(undefined4 *)(iVar6 + 0x18);
+  *(undefined4 *)(iVar1 + 0x34) = *(undefined4 *)(iVar6 + 0x1c);
+  *(int *)(iVar1 + 8) = (int)param_2;
+  if (DAT_84890370 == 0) {
+    DAT_84890338 = DAT_84890338 + 1;
+    uVar5 = XMemAlloc(uVar4,0xffffffffb5800000);
+  }
+  else {
+    uVar5 = D3D__RTMemDebugAllocPhysical(uVar4,5,3);
+  }
+  if ((uVar5 & 0xffffffff) == 0) {
+    D3D__DefaultTextureTrackerErrorCallback(0xffffffff821f81d0);
+  }
+  *(int *)(iVar1 + 0x24) = (int)uVar5;
+  if ((uVar5 & 0xffffffff) == 0) {
+    *(undefined4 *)(iVar1 + 4) = 9;
+    uVar4 = 9;
+    goto LAB_828986f4;
+  }
+  iVar7 = D3D__GraphMicrocodeBuilder__ConvertGraphToShader(iVar6,uVar5,uVar4);
+  if (iVar7 < 0) {
+    *(undefined4 *)(iVar1 + 4) = 10;
+  }
+  if (*(int *)(iVar1 + 4) == 0) {
+    _Dst = (ushort *)(iVar1 + 0x38);
+    memset(_Dst,0,0x48);
+    uVar12 = 0;
+    bVar2 = (*(uint *)(iVar6 + 0x24) & 0xf000) != 0;
+    if (bVar2) {
+      *(undefined1 *)_Dst = *(undefined1 *)(iVar6 + 0x24);
+      *_Dst = *_Dst & 0xff00 | 0xa0;
+    }
+    uVar4 = (ulonglong)bVar2;
+    uVar13 = 0x4d;
+    puVar11 = (uint *)(iVar6 + 0x130);
+    lVar9 = (uVar4 + 0x1c) * 2 + param_3;
+    do {
+      lVar16 = lVar9;
+      if ((*puVar11 & 0x780000) != 0) {
+        if ((0x23 < (uVar4 & 0xffffffff)) || (0x1f < uVar12)) {
+          *(undefined4 *)(iVar1 + 4) = 10;
+          break;
+        }
+        iVar7 = 0;
+        lVar16 = 4;
+        do {
+          iVar15 = uVar13 + iVar7;
+          iVar8 = uVar12 + 0x20 + iVar7;
+          iVar7 = iVar7 + 1;
+          *(undefined4 *)(iVar8 * 4 + iVar1) = *(undefined4 *)(iVar15 * 4 + iVar6);
+          lVar16 = lVar16 + -1;
+        } while (lVar16 != 0);
+        uVar4 = uVar4 + 1;
+        lVar16 = lVar9 + 2;
+        puVar10 = (ushort *)lVar9;
+        *(char *)puVar10 = (char)(*puVar11 >> 0x17);
+        uVar3 = (ushort)uVar12;
+        uVar12 = uVar12 + 4;
+        *puVar10 = uVar3 & 0x3f | *puVar10 & 0xff00 | 0xc0;
+      }
+      uVar13 = uVar13 + 5;
+      puVar11 = puVar11 + 5;
+      lVar9 = lVar16;
+    } while (uVar13 < 0xf2);
+    uVar12 = 0;
+    piVar14 = (int *)(iVar6 + 0x30);
+    lVar9 = (uVar4 + 0x1c & 0x7fffffff) * 2 + param_3;
+    do {
+      lVar16 = lVar9;
+      if (*piVar14 != -1) {
+        if (0x23 < (uVar4 & 0xffffffff)) {
+          *(undefined4 *)(iVar1 + 4) = 10;
+          break;
+        }
+        uVar4 = uVar4 + 1;
+        lVar16 = lVar9 + 2;
+        puVar10 = (ushort *)lVar9;
+        *(char *)puVar10 = (char)*piVar14;
+        *puVar10 = (ushort)uVar12 & 0x3f | *puVar10 & 0xff00 | 0x80;
+      }
+      uVar12 = uVar12 + 1;
+      piVar14 = piVar14 + 1;
+      lVar9 = lVar16;
+    } while (uVar12 < 0x20);
+    qsort(_Dst,0x24,2,D3D__CShaderHacker__QsortConstantSorter);
+    if (*(int *)(iVar1 + 4) != 0) goto LAB_828986b4;
+  }
+  else {
+LAB_828986b4:
+    iVar6 = *(int *)(iVar1 + 0x24);
+    if (iVar6 != 0) {
+      if (DAT_84890370 == 0) {
+        XMemFree(iVar6,0xffffffffb1800000);
+      }
+      else {
+        MmFreePhysicalMemory(3,iVar6);
+      }
+    }
+    *(undefined4 *)(iVar1 + 0x24) = 0;
+  }
+  uVar4 = (ulonglong)*(uint *)(iVar1 + 4);
+LAB_828986f4:
+  __restgprlr_27(uVar4);
+  return;
 }
 
 
@@ -1330,23 +2609,410 @@ longlong D3D__GetShaderHash(int param_1,longlong param_2)
 }
 
 
-// 82898C78  D3D::CPixelShaderHashTable::FindOrGetTextureUsage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3442)
+// 828970B8  D3D::GetUsefulVariation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3278)
 
-void D3D__CPixelShaderHashTable__FindOrGetTextureUsage(void)
+void D3D__GetUsefulVariation
+               (undefined8 param_1,ulonglong param_2,undefined4 param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar2;
+  undefined8 uVar1;
+  undefined8 uVar3;
+  int *piVar4;
+  int *piVar5;
+  
+  iVar2 = __savegprlr_23();
+  piVar4 = (int *)(iVar2 + 4);
+  uVar3 = 0xffffffff821f31fc;
+  if (*piVar4 == 0) {
+LAB_8289712c:
+    if (DAT_84890370 == 0) {
+      iVar2 = XMemAlloc(0x10,0x64800000);
+      if (iVar2 == 0) {
+        uVar1 = 0xffffffff821f31e8;
+        goto LAB_82897164;
+      }
+    }
+    else {
+      iVar2 = DmDebugAlloc();
+      uVar1 = uVar3;
+      if (iVar2 == 0) {
+LAB_82897164:
+        D3D__DefaultTextureTrackerErrorCallback(uVar1);
+      }
+    }
+    *piVar4 = iVar2;
+    if (iVar2 != 0) {
+      *(int *)(iVar2 + 4) = (int)param_2;
+      *(undefined4 *)(*piVar4 + 8) = param_3;
+      goto LAB_8289718c;
+    }
+LAB_82897174:
+    piVar5 = (int *)0x0;
+  }
+  else {
+    do {
+      piVar5 = (int *)*piVar4;
+      if ((param_2 & 0xffffffff) == (ulonglong)(uint)piVar5[1]) break;
+      piVar4 = piVar5;
+    } while (*piVar5 != 0);
+    if (*piVar4 == 0) goto LAB_8289712c;
+LAB_8289718c:
+    piVar5 = (int *)(*piVar4 + 0xc);
+    if (*(int *)(*piVar4 + 0xc) == 0) {
+LAB_828971d4:
+      if (DAT_84890370 == 0) {
+        iVar2 = XMemAlloc(0x10,0x64800000);
+        if (iVar2 == 0) {
+          uVar3 = 0xffffffff821f31e8;
+          goto LAB_82897218;
+        }
+      }
+      else {
+        iVar2 = DmDebugAlloc();
+        if (iVar2 == 0) {
+LAB_82897218:
+          D3D__DefaultTextureTrackerErrorCallback(uVar3);
+        }
+      }
+      *piVar5 = iVar2;
+      if (iVar2 == 0) goto LAB_82897174;
+      *(int *)(iVar2 + 8) = (int)param_5;
+    }
+    else {
+      do {
+        piVar5 = (int *)*piVar5;
+        if (((ulonglong)(uint)piVar5[2] == (param_5 & 0xffffffff)) &&
+           (((uint)piVar5[1] & param_4) == 0)) goto LAB_82897234;
+      } while (*piVar5 != 0);
+      if (*piVar5 == 0) goto LAB_828971d4;
+    }
+    piVar5 = (int *)*piVar5;
+  }
+LAB_82897234:
+  __restgprlr_23(piVar5);
+  return;
+}
+
+
+// 82898700  D3D::GenerateAllRequiredShaderFlavors  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3339)
+
+void D3D__GenerateAllRequiredShaderFlavors
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  int *piVar5;
+  undefined1 *puVar6;
+  uint uVar8;
+  ulonglong uVar7;
+  ulonglong uVar9;
+  uint uVar10;
+  uint *puVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  undefined1 uStack_131;
+  undefined1 local_130 [16];
+  uint auStack_120 [72];
+  
+  uVar1 = __savegprlr();
+  puVar6 = &uStack_131;
+  piVar5 = (int *)param_8;
+  *piVar5 = 0;
+  uVar10 = 0;
+  lVar13 = 7;
+  uVar8 = 0;
+  do {
+    if (((uint)(1 << (uVar8 & 0x3f)) & param_7) == 0) {
+      puVar6[1] = (char)uVar8;
+      uVar10 = uVar10 + 1;
+      puVar6 = puVar6 + 2;
+      *puVar6 = 0xff;
+    }
+    uVar8 = uVar8 + 1;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar9 = 0;
+  if ((param_6 & 0xffffffff) != 0) {
+    do {
+      piVar4 = (int *)param_4;
+      if (*piVar4 == 0) {
+        uVar2 = D3D__CShaderHacker__Initialize(uVar1,param_2,param_3,param_4);
+        if (*piVar4 == 0) {
+          if ((int)uVar2 == 0) {
+            uVar2 = 10;
+          }
+        }
+        else {
+          if ((int)uVar2 == 0) goto LAB_828987d0;
+          D3D__CShaderHacker__Release(*piVar4);
+        }
+LAB_82898918:
+        if (*piVar5 != 0) {
+          D3D__HACKED_SHADER_VARIATION__Destroy();
+          *piVar5 = 0;
+        }
+        if (*piVar4 != 0) {
+          D3D__CShaderHacker__Release();
+          *piVar4 = 0;
+        }
+        goto LAB_828988f0;
+      }
+LAB_828987d0:
+      uVar12 = 0;
+      uVar8 = 0;
+      if (uVar10 != 0) {
+        puVar6 = &uStack_131;
+        do {
+          uVar7 = 0x1f - LZCOUNT((int)param_5);
+          if ((uint)uVar7 == 0xffffffff) break;
+          uVar3 = (ulonglong)(uint)(1 << ((uint)uVar7 & 0x3f));
+          *(uint *)((int)auStack_120 + (int)((uVar7 & 0xffffffff) << 2)) = (uint)(byte)puVar6[1];
+          uVar8 = uVar8 + 1;
+          uVar12 = uVar3 | uVar12;
+          puVar6 = puVar6 + 2;
+          *puVar6 = (char)uVar7;
+          param_5 = param_5 & ~uVar3;
+        } while (uVar8 < uVar10);
+      }
+      if (DAT_84890370 == 0) {
+        uVar7 = XMemAlloc(0x100,0x64800000);
+        if (uVar7 == 0) {
+          uVar2 = 0xffffffff821f31e8;
+          goto LAB_82898864;
+        }
+      }
+      else {
+        uVar7 = DmDebugAlloc();
+        uVar2 = 0xffffffff821f31fc;
+        if (uVar7 == 0) {
+LAB_82898864:
+          D3D__DefaultTextureTrackerErrorCallback(uVar2);
+        }
+      }
+      puVar11 = (uint *)param_8;
+      *puVar11 = (uint)uVar7;
+      if ((uVar7 & 0xffffffff) == 0) {
+        uVar2 = 9;
+        goto LAB_82898918;
+      }
+      memcpy((void *)((uint)uVar7 + 0x14),local_130,0x10);
+      *(char *)(*puVar11 + 0x11) = (char)uVar8;
+      *(char *)(*puVar11 + 0x10) = (char)param_7;
+      uVar7 = 4;
+      if ((param_6 & 0xffffffff) != 3) {
+        uVar7 = param_6;
+      }
+      *(char *)(*puVar11 + 0x12) = (char)uVar7;
+      uVar2 = D3D__CShaderHacker__GenerateHackedPixelShader(*piVar4,uVar12,*puVar11,auStack_120);
+      D3D__CShaderHacker__Release(*piVar4);
+      *piVar4 = 0;
+      if ((int)uVar2 != 0) goto LAB_82898918;
+      uVar9 = uVar9 + 1;
+      param_8 = (ulonglong)*puVar11;
+    } while ((uVar9 & 0xffffffff) < (param_6 & 0xffffffff));
+  }
+  uVar2 = 0;
+LAB_828988f0:
+  __restgprlr(uVar2);
+  return;
+}
+
+
+// 82898C78  D3D::CPixelShaderHashTable::FindOrGetTextureUsage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3442)
+
+void D3D__CPixelShaderHashTable__FindOrGetTextureUsage
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,int *param_7)
+
+{
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
+  longlong lVar1;
+  undefined8 uVar2;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  
+  iVar3 = __savegprlr_23();
+  uVar7 = 0;
+  if (*(int *)(iVar3 + 0x400) != 0) {
+    D3D__CShaderHacker__Release();
+    *(undefined4 *)(iVar3 + 0x400) = 0;
+  }
+  *param_7 = 0;
+  uVar4 = D3D__GetShaderHash(param_2,param_3);
+  piVar5 = (int *)D3D__CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                            ((uVar4 & 0xff) * 4 + iVar3,uVar4);
+  *(int **)(iVar3 + 0x404) = piVar5;
+  if (*piVar5 == 0) {
+    if (DAT_84890370 == 0) {
+      lVar1 = XMemAlloc(200,0x64800000);
+      if (lVar1 == 0) {
+        uVar2 = 0xffffffff821f31e8;
+        goto LAB_82898d34;
+      }
+    }
+    else {
+      lVar1 = DmDebugAlloc();
+      if (lVar1 == 0) {
+        uVar2 = 0xffffffff821f31fc;
+LAB_82898d34:
+        D3D__DefaultTextureTrackerErrorCallback(uVar2);
+      }
+    }
+    **(undefined4 **)(iVar3 + 0x404) = (int)lVar1;
+    if (**(int **)(iVar3 + 0x404) == 0) {
+      uVar7 = 9;
+      goto LAB_82898db4;
+    }
+    uVar6 = D3D__CShaderHacker__Initialize
+                      (param_2,param_3,param_4,param_5,param_6,**(int **)(iVar3 + 0x404));
+    *(undefined4 *)(iVar3 + 0x400) = uVar6;
+  }
+  *param_7 = **(int **)(iVar3 + 0x404) + 0x90;
+  if ((*(int *)(iVar3 + 0x400) == 0) || (*(int *)**(undefined4 **)(iVar3 + 0x404) != 0)) {
+    uVar7 = *(undefined4 *)**(undefined4 **)(iVar3 + 0x404);
+  }
+LAB_82898db4:
+  *(undefined4 *)(iVar3 + 0x408) = uVar7;
+  __restgprlr_23(uVar7);
+  return;
 }
 
 
 // 82898950  D3D::CPixelShaderHashTable::FindOrGetHackedShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3509)
 
-void D3D__CPixelShaderHashTable__FindOrGetHackedShader(void)
+void D3D__CPixelShaderHashTable__FindOrGetHackedShader
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               ulonglong param_5,ulonglong param_6,byte *param_7,undefined4 *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  byte bVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint uVar8;
+  ulonglong uVar7;
+  uint uVar11;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int *piVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  undefined4 *local_80 [32];
+  
+  iVar4 = __savegprlr_19();
+  uVar8 = *(uint *)(iVar4 + 0x408);
+  if (uVar8 == 0) {
+    uVar9 = param_5 & 0xffff;
+    uVar6 = (param_5 & 0xffffffff) >> 0x10;
+    *param_8 = 0;
+    uVar14 = 0;
+    local_80[0] = (undefined4 *)0x0;
+    uVar13 = 0x1000 - uVar9;
+    if (uVar9 <= uVar6) {
+      uVar13 = uVar6 - uVar9;
+    }
+    iVar2 = **(int **)(iVar4 + 0x404);
+    param_6 = *(uint *)(iVar2 + 0x94) & param_6;
+    if (param_6 == 0) {
+      uVar14 = 1;
+      goto LAB_82898bf0;
+    }
+    uVar6 = 7;
+    uVar11 = 0;
+    uVar8 = (uint)(*(byte *)(iVar2 + 0x8c) | *param_7);
+    lVar15 = 7;
+    do {
+      if ((uVar8 & 1 << (uVar11 & 0x3f)) != 0) {
+        uVar6 = uVar6 + 0xff & 0xff;
+      }
+      uVar11 = uVar11 + 1;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
+    uVar9 = 0;
+    uVar11 = 0;
+    lVar15 = 0x20;
+    do {
+      if (((uint)(1 << (uVar11 & 0x3f)) & param_6) != 0) {
+        uVar9 = uVar9 + 1 & 0xff;
+      }
+      uVar11 = uVar11 + 1;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
+    trapWord(6,uVar6,0);
+    uVar7 = (uVar9 + uVar6) - 1;
+    iVar2 = (int)uVar7 / (int)uVar6;
+    uVar10 = ((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1;
+    trapWord(5,uVar6 & ~uVar10,0xffff);
+    if (4 < iVar2) {
+      uVar14 = 6;
+      goto LAB_82898bf0;
+    }
+    iVar5 = D3D__GetUsefulVariation
+                      (*(int **)(iVar4 + 0x404),param_6,uVar9,uVar8,iVar2,uVar6,uVar7,uVar10);
+    if (iVar5 == 0) {
+      uVar14 = 9;
+      goto LAB_82898bf0;
+    }
+    if (*(int *)(iVar5 + 0xc) == 0) {
+      uVar14 = D3D__GenerateAllRequiredShaderFlavors
+                         (**(undefined4 **)(iVar4 + 0x404),param_2,param_3,iVar4 + 0x400,param_6,
+                          iVar2,uVar8,local_80);
+      *(undefined4 *)(iVar4 + 0x400) = 0;
+      *(undefined4 **)(iVar5 + 0xc) = local_80[0];
+      for (puVar3 = local_80[0]; puVar3 != (undefined4 *)0x0; puVar3 = (undefined4 *)*puVar3) {
+        *(uint *)(iVar5 + 4) = puVar3[3] | *(uint *)(iVar5 + 4);
+      }
+      if ((int)uVar14 != 0) goto LAB_82898bf0;
+    }
+    piVar12 = *(int **)(iVar5 + 0xc);
+    uVar8 = piVar12[1];
+    if (uVar8 == 0) {
+      uVar6 = 0;
+      if (((iVar2 < 2) ||
+          (bVar1 = *(byte *)((*(int *)(DAT_829a70e8 + 0x130) >> 2 & 0xfU) + iVar2 * 0x10 +
+                            -0x7d657b98), uVar6 = (ulonglong)bVar1, bVar1 != 3)) || (iVar2 != 3)) {
+        if ((int)uVar6 != 0) {
+          do {
+            piVar12 = (int *)*piVar12;
+            uVar6 = uVar6 - 1;
+          } while (uVar6 != 0);
+        }
+        if ((int)uVar14 == 0) {
+          if (((ulonglong)((uint)piVar12[0xb] >> 8) & 0x3f) < ((param_4 & 0xffffffff) >> 4 & 0x7f))
+          {
+            if ((ulonglong)(uint)piVar12[10] / 3 < (uVar13 & 0xffffffff)) {
+              *param_8 = piVar12;
+            }
+            else {
+              uVar14 = 7;
+            }
+          }
+          else {
+            uVar14 = 2;
+          }
+        }
+      }
+      else {
+        uVar14 = 1;
+      }
+      goto LAB_82898bf0;
+    }
+  }
+  uVar14 = (ulonglong)uVar8;
+LAB_82898bf0:
+  __restgprlr_19(uVar14);
+  return;
 }
 
 
@@ -1361,6 +3027,32 @@ void D3D__CPixelShaderHashTable__Destroy(int param_1)
   }
   D3D__CTSHashTable<D3D::CPixelShaderHashEntry,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__Destroy
             (param_1);
+  return;
+}
+
+
+// 82898F00  D3D::CPixelShaderHashEntry::Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3683)
+
+void D3D__CPixelShaderHashEntry__Destroy(int *param_1)
+
+{
+  undefined4 *puVar1;
+  
+  if (*param_1 != 0) {
+    if (DAT_84890370 == 0) {
+      XMemFree(*param_1,0x24800000);
+    }
+    else {
+      DmDebugFree();
+    }
+    *param_1 = 0;
+  }
+  puVar1 = (undefined4 *)param_1[1];
+  param_1[1] = 0;
+  while (puVar1 != (undefined4 *)0x0) {
+    puVar1 = (undefined4 *)*puVar1;
+    D3D__HACKED_VARIATION_LIST__Destroy();
+  }
   return;
 }
 
@@ -1438,21 +3130,107 @@ void D3D__HACKED_SHADER_VARIATION__Destroy(int param_1)
 
 // 82896308  D3D::CVertexShaderHashTable::GenerateVertexShaderInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3749)
 
-void D3D__CVertexShaderHashTable__GenerateVertexShaderInfoCB(void)
+void D3D__CVertexShaderHashTable__GenerateVertexShaderInfoCB
+               (undefined8 param_1,undefined8 param_2,uint *param_3,byte *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  byte bVar3;
+  uint uVar2;
+  uint uVar4;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 2) == 0) goto LAB_82896518;
+  uVar4 = *param_3;
+  uVar2 = uVar4 & 0x1f;
+  if ((uVar4 & 0x1f) == 0) {
+    if ((uVar1 & 0x10) == 0) {
+      *param_4 = *param_4 | 4;
+    }
+    if ((*param_3 & 0x1f00000) == 0x1a00000) {
+      *param_4 = *param_4 | 2;
+    }
+    uVar4 = 1 << (*param_3 >> 0x14 & 0x1f) | *(uint *)(param_4 + 4);
+  }
+  else {
+    uVar4 = 1 << (uVar4 >> 0x14 & 0x1f);
+    if (uVar2 == 1) {
+      uVar2 = param_3[1];
+      uVar2 = 1 << (uVar2 >> 9 & 7) | 1 << (uVar2 >> 6 & 7) | 1 << (uVar2 >> 3 & 7) |
+              1 << (uVar2 & 7);
+      *(uint *)(param_4 + 0xc) = *(uint *)(param_4 + 0xc) | -(uint)((uVar2 & 1) != 0) & uVar4;
+      *(uint *)(param_4 + 0x10) = *(uint *)(param_4 + 0x10) | -(uint)((uVar2 & 2) != 0) & uVar4;
+      *(uint *)(param_4 + 0x18) = *(uint *)(param_4 + 0x18) | -(uint)((uVar2 & 8) != 0) & uVar4;
+      *(uint *)(param_4 + 0x14) = *(uint *)(param_4 + 0x14) | -(uint)((uVar2 & 4) != 0) & uVar4;
+      if (((*(ushort *)(param_3 + 1) & 3) == 2) ||
+         (uVar2 = uVar4, (*(ushort *)(param_3 + 1) & 3) == 3)) {
+        uVar2 = 0;
+      }
+      *(uint *)(param_4 + 0x20) = *(uint *)(param_4 + 0x20) | uVar2;
+      uVar2 = param_3[1];
+      *(uint *)(param_4 + 8) = *(uint *)(param_4 + 8) | uVar4;
+      *(uint *)(param_4 + 0x1c) =
+           *(uint *)(param_4 + 0x1c) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar4;
+    }
+    else {
+      if (uVar2 == 0x10) {
+        bVar3 = *param_4 | 0x20;
+      }
+      else if (uVar2 == 0x13) {
+        bVar3 = *param_4 | 0x40;
+      }
+      else if (uVar2 == 0x19) {
+        bVar3 = *param_4 | 8;
+      }
+      else {
+        if (uVar2 != 0x1a) goto LAB_828964ec;
+        bVar3 = *param_4 | 0x10;
+      }
+      *param_4 = bVar3;
+    }
+LAB_828964ec:
+    if ((*param_3 & 0x1f00000) == 0x1a00000) {
+      *param_4 = *param_4 | 2;
+    }
+    uVar4 = *(uint *)(param_4 + 4) | uVar4;
+  }
+  *(uint *)(param_4 + 4) = uVar4;
+LAB_82896518:
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 82898E48  D3D::CVertexShaderHashTable::FindOrGetVertexShaderInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3810)
 
-void D3D__CVertexShaderHashTable__FindOrGetVertexShaderInfo(void)
+void D3D__CVertexShaderHashTable__FindOrGetVertexShaderInfo
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  ulonglong uVar2;
+  char *pcVar4;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_28();
+  *param_4 = 0;
+  uVar2 = D3D__GetShaderHash(param_2,param_3);
+  pcVar4 = (char *)D3D__CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>__FindOrAdd
+                             ((uVar2 & 0xff) * 4 + lVar1,uVar2);
+  if (pcVar4 == (char *)0x0) {
+    uVar3 = 9;
+  }
+  else {
+    if (*pcVar4 == '\0') {
+      XMicrocodeShaderForEachInstruction
+                (param_2,(param_3 & 0x3fffffff) << 2,0,0,0,0,0x22,0xffffffff82896308);
+      *pcVar4 = '\x01';
+    }
+    *param_4 = pcVar4 + 4;
+    uVar3 = 0;
+  }
+  __restgprlr_28(uVar3);
+  return;
 }
 
 

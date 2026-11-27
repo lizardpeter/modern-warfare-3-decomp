@@ -9,7 +9,6 @@ void bdHeap__init(DWORD param_1,SIZE_T param_2)
     DAT_84895dbc = param_1;
     DAT_84895db8 = HeapCreate(param_1,param_2,param_2);
     if (DAT_84895db8 == (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82214418,0x1a,0,0xffffffff820011f4,0xffffffff822143e0,
                       0xffffffff822143f0);
     }
@@ -53,7 +52,6 @@ longlong bdHeap__DW_Malloc(undefined8 param_1)
   longlong lVar1;
   
   if (DAT_84895db4 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82214418,0x3c,0,0xffffffff820011f4,0xffffffff822144a8,
                     0xffffffff822144b8);
   }
@@ -70,8 +68,20 @@ longlong bdHeap__DW_Malloc(undefined8 param_1)
 void bdHeap__DW_Free(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (DAT_84895db4 == '\0') {
+    MyAssertHandler(0xffffffff82214418,0x48,0,0xffffffff820011f4,0xffffffff822144a8,
+                    0xffffffff82214518);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82214418,0x49,0,0xffffffff820011f4,0xffffffff822144e4,
+                    0xffffffff822144f4);
+  }
+  RtlFreeHeap(DAT_84895db8,DAT_84895dbc,uVar1);
+  __restgprlr_29();
+  return;
 }
 
 

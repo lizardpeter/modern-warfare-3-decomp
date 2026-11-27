@@ -3,3 +3,61 @@
 ; 828A2BB8  MultiByteToWideChar  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/multibytetowidechar.c:25)
   828A2BB8  7D8802A6             mfspr r12,LR
   828A2BBC  48073AF9             bl 0x829166b4
+  828A2BC0  9421FF80             stwu r1,-0x80(r1)
+  828A2BC4  7C7B1B78             or r27,r3,r3
+  828A2BC8  7CBE2B78             or r30,r5,r5
+  828A2BCC  7CDF3378             or r31,r6,r6
+  828A2BD0  7CFC3B78             or r28,r7,r7
+  828A2BD4  7D1D4378             or r29,r8,r8
+  828A2BD8  7DAD6B78             or r13,r13,r13
+  828A2BDC  2B1BFDE9             cmplwi cr6,r27,0xfde9
+  828A2BE0  409A0028             bne cr6,0x828a2c08
+  828A2BE4  7FA6EB78             or r6,r29,r29
+  828A2BE8  7F85E378             or r5,r28,r28
+  828A2BEC  7FE4FB78             or r4,r31,r31
+  828A2BF0  7FC3F378             or r3,r30,r30
+  828A2BF4  480093BD             bl 0x828abfb0
+  828A2BF8  7C7F1B78             or r31,r3,r3
+LAB_828a2bfc:
+  828A2BFC  7DCE7378             or r14,r14,r14
+  828A2C00  7FE3FB78             or r3,r31,r31
+  828A2C04  48000080             b 0x828a2c84
+LAB_828a2c08:
+  828A2C08  2F1FFFFF             cmpwi cr6,r31,-0x1
+  828A2C0C  409A0028             bne cr6,0x828a2c34
+  828A2C10  7FCBF378             or r11,r30,r30
+LAB_828a2c14:
+  828A2C14  894B0000             lbz r10,0x0(r11)
+  828A2C18  396B0001             addi r11,r11,0x1
+  828A2C1C  2B0A0000             cmplwi cr6,r10,0x0
+  828A2C20  409AFFF4             bne cr6,0x828a2c14
+  828A2C24  7D7E5850             subf r11,r30,r11
+  828A2C28  396BFFFF             subi r11,r11,0x1
+  828A2C2C  556B003E             rlwinm r11,r11,0x0,0x0,0x1f
+  828A2C30  3BEB0001             addi r31,r11,0x1
+LAB_828a2c34:
+  828A2C34  2F1D0000             cmpwi cr6,r29,0x0
+  828A2C38  419AFFC4             beq cr6,0x828a2bfc
+  828A2C3C  2F1F0000             cmpwi cr6,r31,0x0
+  828A2C40  41980034             blt cr6,0x828a2c74
+  828A2C44  7F1DF800             cmpw cr6,r29,r31
+  828A2C48  4198002C             blt cr6,0x828a2c74
+  828A2C4C  7FE7FB78             or r7,r31,r31
+  828A2C50  7FC6F378             or r6,r30,r30
+  828A2C54  38A00000             li r5,0x0
+  828A2C58  57A4083C             rlwinm r4,r29,0x1,0x0,0x1e
+  828A2C5C  7F83E378             or r3,r28,r28
+  828A2C60  4809F0E5             bl 0x82941d44
+  828A2C64  2C030000             cmpwi r3,0x0
+  828A2C68  4080FF94             bge 0x828a2bfc
+  828A2C6C  4809F0B9             bl 0x82941d24
+  828A2C70  48000008             b 0x828a2c78
+LAB_828a2c74:
+  828A2C74  3860007A             li r3,0x7a
+LAB_828a2c78:
+  828A2C78  480091B9             bl 0x828abe30
+  828A2C7C  7DCE7378             or r14,r14,r14
+  828A2C80  38600000             li r3,0x0
+LAB_828a2c84:
+  828A2C84  38210080             addi r1,r1,0x80
+  828A2C88  48073A7C             b 0x82916704

@@ -2,10 +2,50 @@
 
 // 8225EBD8  mp_reduce  (line unknown)
 
-void mp_reduce(void)
+void mp_reduce(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_27();
+  uVar5 = (ulonglong)*(uint *)param_2;
+  uVar1 = mp_init(auStack_40);
+  if (((int)uVar1 != 0) || (uVar1 = mp_copy(iVar2,auStack_40), (int)uVar1 != 0)) goto LAB_8225ed60;
+  mp_rshd(auStack_40,uVar5 - 1);
+  if (uVar5 < 0x8000001) {
+    uVar1 = s_mp_mul_high_digs(auStack_40,param_3,auStack_40,uVar5);
+  }
+  else {
+    uVar1 = mp_mul();
+  }
+  if ((int)uVar1 == 0) {
+    lVar4 = uVar5 + 1;
+    mp_rshd(auStack_40,lVar4);
+    uVar1 = mp_mod_2d(iVar2,(uVar5 + 1) * 0x1c,iVar2);
+    if ((((int)uVar1 == 0) &&
+        (uVar1 = s_mp_mul_digs(auStack_40,param_2,auStack_40,lVar4), (int)uVar1 == 0)) &&
+       (uVar1 = mp_sub(iVar2,auStack_40,iVar2), (int)uVar1 == 0)) {
+      if (*(int *)(iVar2 + 8) == 1) {
+        mp_set(auStack_40,1);
+        uVar1 = mp_lshd(auStack_40,lVar4);
+        if (((int)uVar1 != 0) || (uVar1 = mp_add(iVar2,auStack_40,iVar2), (int)uVar1 != 0))
+        goto LAB_8225ed54;
+      }
+      iVar3 = mp_cmp(iVar2,param_2);
+      while ((iVar3 != -1 && (uVar1 = s_mp_sub(iVar2,param_2,iVar2), (int)uVar1 == 0))) {
+        iVar3 = mp_cmp(iVar2,param_2);
+      }
+    }
+  }
+LAB_8225ed54:
+  mp_clear(auStack_40);
+LAB_8225ed60:
+  __restgprlr_27(uVar1);
+  return;
 }
 

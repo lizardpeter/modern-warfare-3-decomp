@@ -28,11 +28,55 @@ void bdSubscriptionInfo___bdSubscriptionInfo(undefined4 *param_1)
 
 // 82909270  bdSubscriptionInfo::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:25)
 
-void bdSubscriptionInfo__deserialize(void)
+void bdSubscriptionInfo__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  longlong lVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  lVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,lVar2 + 8);
+  if (cVar3 == '\0') {
+LAB_829092b8:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readUInt32(*puVar4,lVar2 + 0x10);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_829092b8;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt32(*puVar4,lVar2 + 0x14);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_829092dc;
+  }
+  else {
+LAB_829092dc:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readInt32(*puVar4,lVar2 + 0x18);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_82909300;
+  }
+  else {
+LAB_82909300:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBool(*puVar4,lVar2 + 0x1c);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_82909328;
+  }
+  uVar5 = 0;
+LAB_82909328:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

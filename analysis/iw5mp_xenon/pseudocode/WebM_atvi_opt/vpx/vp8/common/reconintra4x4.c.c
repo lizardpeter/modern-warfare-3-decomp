@@ -337,10 +337,38 @@ void vp8_intra_prediction_down_copy(int param_1)
 
 // 8281B300  vp8_recon_intra4x4mb  (WebM_atvi_opt/vpx/vp8/common/reconintra4x4.c:321)
 
-void vp8_recon_intra4x4mb(void)
+void vp8_recon_intra4x4mb(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  iVar3 = __savegprlr_28();
+  iVar4 = (int)param_2;
+  iVar1 = *(int *)(iVar4 + 0xb28);
+  lVar7 = param_2 + 0xb20;
+  iVar4 = (*(int *)(iVar4 + 0xb24) - iVar1) + **(int **)(iVar4 + 0xb20);
+  iVar5 = iVar4 + 0x10;
+  lVar6 = 0x10;
+  *(undefined4 *)(iVar1 * 4 + iVar5) = *(undefined4 *)(iVar4 + 0x10);
+  *(undefined4 *)(iVar1 * 8 + iVar5) = *(undefined4 *)(iVar4 + 0x10);
+  *(undefined4 *)(iVar1 * 0xc + iVar5) = *(undefined4 *)(iVar4 + 0x10);
+  do {
+    puVar2 = (undefined4 *)lVar7;
+    vp8_predict_intra4x4(lVar7 + -0x24,puVar2[4],puVar2[-7]);
+    (**(code **)(iVar3 + 0xc))
+              (puVar2[-7],puVar2[-6],(ulonglong)(uint)puVar2[1] + (ulonglong)*(uint *)*puVar2,
+               puVar2[2]);
+    lVar6 = lVar6 + -1;
+    lVar7 = lVar7 + 0x3c;
+  } while (lVar6 != 0);
+  vp8_recon_intra_mbuv(iVar3,param_2);
+  __restgprlr_28();
+  return;
 }
 

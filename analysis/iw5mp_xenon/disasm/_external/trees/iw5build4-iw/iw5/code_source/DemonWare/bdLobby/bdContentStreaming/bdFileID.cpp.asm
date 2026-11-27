@@ -34,6 +34,22 @@
 ; 828FF348  bdFileID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:27)
   828FF348  7D8802A6             mfspr r12,LR
   828FF34C  48017371             bl 0x829166bc
+  828FF350  3BE1FF90             subi r31,r1,0x70
+  828FF354  9421FF90             stwu r1,-0x70(r1)
+  828FF358  7C9E2378             or r30,r4,r4
+  828FF35C  909F008C             stw r4,0x8c(r31)
+  828FF360  38830008             addi r4,r3,0x8
+  828FF364  807E0000             lwz r3,0x0(r30)
+  828FF368  4BFF6A39             bl 0x828f5da0
+  828FF36C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828FF370  314BFFFF             subic r10,r11,0x1
+  828FF374  7D6A5910             subfe r11,r10,r11
+  828FF378  557D063E             rlwinm r29,r11,0x0,0x18,0x1f
+  828FF37C  7FC3F378             or r3,r30,r30
+  828FF380  4BA65081             bl 0x82364400
+  828FF384  7FA3EB78             or r3,r29,r29
+  828FF388  383F0070             addi r1,r31,0x70
+  828FF38C  48017380             b 0x8291670c
 
 ; 828FF2E0  bdFileID::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfileid.cpp:35)
   828FF2E0  38600010             li r3,0x10

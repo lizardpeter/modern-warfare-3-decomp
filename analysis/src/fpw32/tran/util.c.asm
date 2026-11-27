@@ -20,6 +20,46 @@
   8291EC08  7D630734             extsh r3,r11
   8291EC0C  4E800020             blr
 
+; 8291EC10  sptype  (<external>/bt/278379/vctools/crt/src/fpw32/tran/util.c:67)
+  8291EC10  3D607FF0             lis r11,0x7ff0
+  8291EC14  D8210010             stfd f1,0x10(r1)
+  8291EC18  81410010             lwz r10,0x10(r1)
+  8291EC1C  81210014             lwz r9,0x14(r1)
+  8291EC20  7F0A5840             cmplw cr6,r10,r11
+  8291EC24  409A0014             bne cr6,0x8291ec38
+  8291EC28  2B090000             cmplwi cr6,r9,0x0
+  8291EC2C  409A0028             bne cr6,0x8291ec54
+  8291EC30  38600001             li r3,0x1
+  8291EC34  4E800020             blr
+LAB_8291ec38:
+  8291EC38  3D60FFF0             lis r11,-0x10
+  8291EC3C  7F0A5840             cmplw cr6,r10,r11
+  8291EC40  409A0014             bne cr6,0x8291ec54
+  8291EC44  2B090000             cmplwi cr6,r9,0x0
+  8291EC48  409A000C             bne cr6,0x8291ec54
+  8291EC4C  38600002             li r3,0x2
+  8291EC50  4E800020             blr
+LAB_8291ec54:
+  8291EC54  A1610010             lhz r11,0x10(r1)
+  8291EC58  556B0478             rlwinm r11,r11,0x0,0x11,0x1c
+  8291EC5C  2B0B7FF8             cmplwi cr6,r11,0x7ff8
+  8291EC60  409A000C             bne cr6,0x8291ec6c
+  8291EC64  38600003             li r3,0x3
+  8291EC68  4E800020             blr
+LAB_8291ec6c:
+  8291EC6C  2B0B7FF0             cmplwi cr6,r11,0x7ff0
+  8291EC70  409A001C             bne cr6,0x8291ec8c
+  8291EC74  554B037F             rlwinm. r11,r10,0x0,0xd,0x1f
+  8291EC78  4082000C             bne 0x8291ec84
+  8291EC7C  2B090000             cmplwi cr6,r9,0x0
+  8291EC80  419A000C             beq cr6,0x8291ec8c
+LAB_8291ec84:
+  8291EC84  38600004             li r3,0x4
+  8291EC88  4E800020             blr
+LAB_8291ec8c:
+  8291EC8C  38600000             li r3,0x0
+  8291EC90  4E800020             blr
+
 ; 8291EC98  decomp  (<external>/bt/278379/vctools/crt/src/fpw32/tran/util.c:96)
   8291EC98  3D608200             lis r11,-0x7e00
   8291EC9C  D8210010             stfd f1,0x10(r1)

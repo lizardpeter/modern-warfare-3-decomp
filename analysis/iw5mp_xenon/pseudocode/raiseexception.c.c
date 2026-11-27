@@ -6,7 +6,35 @@ void RaiseException(DWORD dwExceptionCode,DWORD dwExceptionFlags,DWORD nNumberOf
                    ULONG_PTR *lpArguments)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(dwExceptionCode,dwExceptionFlags,nNumberOfArguments,lpArguments);
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined4 local_80;
+  uint local_7c;
+  undefined4 local_78;
+  code *local_74;
+  undefined4 local_70;
+  undefined1 auStack_6c [108];
+  
+  uVar1 = (ulonglong)(int)lpArguments;
+  uVar2 = (ulonglong)(int)nNumberOfArguments;
+  local_80 = __savegprlr_28(dwExceptionCode);
+  local_7c = dwExceptionFlags & 1;
+  local_78 = 0;
+  local_74 = RaiseException;
+  if ((uVar1 & 0xffffffff) == 0) {
+    local_70 = 0;
+  }
+  else {
+    if (0xf < (uVar2 & 0xffffffff)) {
+      uVar2 = 0xf;
+    }
+    local_70 = (undefined4)uVar2;
+    if ((uVar2 & 0xffffffff) != 0) {
+      blkmov(auStack_6c,uVar1,(uVar2 & 0x3fffffff) << 2);
+    }
+  }
+  RtlRaiseException(&local_80);
+  __restgprlr_28();
+  return;
 }
 

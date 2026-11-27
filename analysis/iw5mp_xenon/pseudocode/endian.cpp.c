@@ -16,6 +16,37 @@ void CBaseEndianBuffer__Bind
 }
 
 
+// 828BC2D0  CBaseEndianBuffer::SeekTo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:122)
+
+undefined8 CBaseEndianBuffer__SeekTo(int param_1,uint param_2)
+
+{
+  if (*(uint *)(param_1 + 8) < param_2) {
+    return 0xffffffff80182001;
+  }
+  *(uint *)(param_1 + 0xc) = param_2;
+  return 0;
+}
+
+
+// 828BC688  CBaseEndianBuffer::GetByte  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:174)
+
+longlong CBaseEndianBuffer__GetByte(undefined8 param_1,void *param_2)
+
+{
+  longlong lVar1;
+  size_t local_20;
+  void *local_1c [3];
+  
+  local_20 = 1;
+  lVar1 = CBaseEndianBuffer__GetPointerAndAdvance(param_1,local_1c,&local_20);
+  if (-1 < lVar1) {
+    memcpy(param_2,local_1c[0],local_20);
+  }
+  return lVar1;
+}
+
+
 // 828BC6E0  CBaseEndianBuffer::GetWord  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:180)
 
 void CBaseEndianBuffer__GetWord(int param_1,undefined8 param_2)
@@ -126,5 +157,125 @@ undefined8 CBaseEndianBuffer__WriteBytes(int *param_1,void *param_2,size_t param
     param_1[3] = param_3 + param_1[3];
   }
   return uVar1;
+}
+
+
+// 828BC498  CBaseEndianBuffer::WriteWords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:385)
+
+undefined8 CBaseEndianBuffer__WriteWords(int *param_1,int param_2,longlong param_3)
+
+{
+  ushort *puVar1;
+  ushort uVar2;
+  
+  if ((uint)(param_1[2] - param_1[3]) < (uint)((int)param_3 << 1)) {
+    return 0xffffffff8007007a;
+  }
+  if ((int)param_3 != 0) {
+    puVar1 = (ushort *)(param_1[3] + *param_1 + -2);
+    param_2 = param_2 + -2;
+    do {
+      if (param_1[4] == 0) {
+        uVar2 = *(ushort *)(param_2 + 2);
+      }
+      else {
+        uVar2 = *(ushort *)(param_2 + 2) << 8 | *(ushort *)(param_2 + 2) >> 8;
+      }
+      param_2 = param_2 + 2;
+      puVar1 = puVar1 + 1;
+      *puVar1 = uVar2;
+      param_1[3] = param_1[3] + 2;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
+  }
+  return 0;
+}
+
+
+// 828BC518  CBaseEndianBuffer::WriteDwords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:410)
+
+undefined8 CBaseEndianBuffer__WriteDwords(int *param_1,int param_2,longlong param_3)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  
+  if ((uint)(param_1[2] - param_1[3]) < (uint)((int)param_3 << 2)) {
+    return 0xffffffff8007007a;
+  }
+  if ((int)param_3 != 0) {
+    puVar1 = (uint *)(param_1[3] + *param_1 + -4);
+    param_2 = param_2 + -4;
+    do {
+      if (param_1[4] == 0) {
+        uVar2 = *(uint *)(param_2 + 4);
+      }
+      else {
+        uVar2 = *(uint *)(param_2 + 4);
+        uVar2 = uVar2 << 0x18 | (uVar2 & 0xff00) << 8 | uVar2 >> 8 & 0xff00 | uVar2 >> 0x18;
+      }
+      param_2 = param_2 + 4;
+      puVar1 = puVar1 + 1;
+      *puVar1 = uVar2;
+      param_1[3] = param_1[3] + 4;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
+  }
+  return 0;
+}
+
+
+// 828BC5A0  CBaseEndianBuffer::WriteQwords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:435)
+
+undefined8 CBaseEndianBuffer__WriteQwords(int *param_1,int param_2,longlong param_3)
+
+{
+  ulonglong *puVar1;
+  ulonglong uVar2;
+  uint local_10;
+  uint uStack_c;
+  
+  if ((uint)(param_1[2] - param_1[3]) < (uint)((int)param_3 << 3)) {
+    return 0xffffffff8007007a;
+  }
+  if ((int)param_3 != 0) {
+    puVar1 = (ulonglong *)(param_1[3] + *param_1 + -8);
+    param_2 = param_2 + -8;
+    do {
+      if (param_1[4] == 0) {
+        uVar2 = *(ulonglong *)(param_2 + 8);
+      }
+      else {
+        uVar2 = *(ulonglong *)(param_2 + 8);
+        uStack_c = (uint)uVar2;
+        local_10 = (uint)(uVar2 >> 0x20);
+        uVar2 = ((uVar2 & 0xff) << 0x18 |
+                (uVar2 & 0xff00) << 8 |
+                (ulonglong)(uStack_c >> 8) & 0xff00 | (ulonglong)(uStack_c >> 0x18)) << 0x20 |
+                ((ulonglong)local_10 & 0xff) << 0x18 |
+                ((ulonglong)local_10 & 0xff00) << 8 |
+                (ulonglong)(local_10 >> 8) & 0xff00 | (ulonglong)(local_10 >> 0x18);
+      }
+      param_2 = param_2 + 8;
+      puVar1 = puVar1 + 1;
+      *puVar1 = uVar2;
+      param_1[3] = param_1[3] + 8;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
+  }
+  return 0;
+}
+
+
+// 828BC650  CBaseEndianBuffer::AppendBytes  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/endian.cpp:460)
+
+undefined8 CBaseEndianBuffer__AppendBytes(int param_1,uint param_2)
+
+{
+  if ((uint)(*(int *)(param_1 + 8) - *(int *)(param_1 + 0xc)) < param_2) {
+    return 0xffffffff8007007a;
+  }
+  *(uint *)(param_1 + 0xc) = *(int *)(param_1 + 0xc) + param_2;
+  return 0;
 }
 

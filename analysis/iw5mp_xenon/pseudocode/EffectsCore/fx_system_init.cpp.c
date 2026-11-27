@@ -187,8 +187,151 @@ void FXI_InitPool_Generic<FxTrail>(undefined4 *param_1,int param_2)
 void FX_ResetSystem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined2 uVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar8;
+  
+  iVar1 = __savegprlr_27();
+  iVar7 = 0;
+  lVar8 = 0;
+  **(undefined4 **)(iVar1 + 0x10) = 0;
+  do {
+    uVar2 = FX_EffectToHandle(iVar1,lVar8 + (ulonglong)*(uint *)(iVar1 + 0x10));
+    lVar8 = lVar8 + 0x90;
+    *(undefined2 *)(iVar7 + *(int *)(iVar1 + 0x74)) = uVar2;
+    iVar7 = iVar7 + 2;
+  } while ((int)lVar8 < 0x24000);
+  iVar7 = *(int *)(iVar1 + 0x3c);
+  *(undefined4 *)(iVar1 + 0x68) = 0;
+  iVar4 = 0;
+  *(undefined4 *)(iVar1 + 0x6c) = 0;
+  piVar3 = (int *)(iVar7 + -0x20);
+  *(undefined4 *)(iVar1 + 0x70) = 0;
+  *(undefined4 *)(iVar1 + 0x4c) = 0;
+  lVar8 = 0x7ff;
+  do {
+    iVar4 = iVar4 + 1;
+    piVar3 = piVar3 + 8;
+    *piVar3 = iVar4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar5 = 0;
+  *(undefined4 *)(iVar4 * 0x20 + iVar7) = 0xffffffff;
+  iVar7 = *(int *)(iVar1 + 0x18);
+  lVar8 = 0xfe;
+  *(undefined4 *)(iVar1 + 0x28) = 0;
+  piVar3 = (int *)(iVar7 + -0x20);
+  do {
+    iVar5 = iVar5 + 1;
+    piVar3 = piVar3 + 8;
+    *piVar3 = iVar5;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar4 = 0;
+  *(undefined4 *)(iVar5 * 0x20 + iVar7) = 0xffffffff;
+  iVar7 = *(int *)(iVar1 + 0x34);
+  lVar8 = 0x1f;
+  *(undefined4 *)(iVar1 + 0x50) = 0;
+  piVar3 = (int *)(iVar7 + -0x810);
+  do {
+    iVar4 = iVar4 + 1;
+    piVar3 = piVar3 + 0x204;
+    *piVar3 = iVar4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  *(undefined4 *)(iVar4 * 0x810 + iVar7) = 0xffffffff;
+  iVar7 = *(int *)(iVar1 + 0x1c);
+  *(undefined4 *)(iVar1 + 0x2c) = 0;
+  iVar4 = 0;
+  lVar8 = 0x3f;
+  piVar3 = (int *)(iVar7 + -0x40);
+  do {
+    iVar4 = iVar4 + 1;
+    piVar3 = piVar3 + 0x10;
+    *piVar3 = iVar4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar5 = 0;
+  *(undefined4 *)(iVar4 * 0x40 + iVar7) = 0xffffffff;
+  lVar8 = 0x5f;
+  *(undefined4 *)(iVar1 + 0x30) = 0;
+  iVar7 = *(int *)(iVar1 + 0x20);
+  piVar3 = (int *)(iVar7 + -0x1c00);
+  do {
+    iVar5 = iVar5 + 1;
+    piVar3 = piVar3 + 0x700;
+    *piVar3 = iVar5;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  *(undefined4 *)(iVar5 * 0x1c00 + iVar7) = 0xffffffff;
+  iVar7 = *(int *)(iVar1 + 0x38);
+  *(undefined4 *)(iVar1 + 0x54) = 0;
+  iVar4 = 0;
+  lVar8 = 0x7ff;
+  piVar3 = (int *)(iVar7 + -0x20);
+  do {
+    iVar4 = iVar4 + 1;
+    piVar3 = piVar3 + 8;
+    *piVar3 = iVar4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar5 = 0;
+  *(undefined4 *)(iVar4 * 0x20 + iVar7) = 0xffffffff;
+  lVar8 = 0x7f;
+  *(undefined4 *)(iVar1 + 0x24) = 0;
+  iVar7 = *(int *)(iVar1 + 0x14);
+  piVar3 = (int *)(iVar7 + -0x10);
+  do {
+    iVar5 = iVar5 + 1;
+    piVar3 = piVar3 + 4;
+    *piVar3 = iVar5;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar6 = 1;
+  iVar4 = 0;
+  *(undefined4 *)(iVar5 * 0x10 + iVar7) = 0xffffffff;
+  *(undefined4 *)(iVar1 + 0x244) = 0;
+  *(undefined4 *)(iVar1 + 0x238) = 0;
+  *(undefined4 *)(iVar1 + 0x248) = 0;
+  *(undefined4 *)(iVar1 + 0x23c) = 0;
+  *(undefined4 *)(iVar1 + 0x240) = 0;
+  *(undefined4 *)(iVar1 + 0x24c) = 0;
+  *(undefined4 *)(iVar1 + 0x234) = 0;
+  *(undefined4 *)(iVar1 + 0x250) = 0;
+  *(undefined4 *)(iVar1 + 0x254) = 0;
+  *(undefined4 *)(iVar1 + 600) = 0;
+  *(undefined4 *)(iVar1 + 0x25c) = 0;
+  *(undefined4 *)(iVar1 + 0x78) = 0;
+  *(undefined4 *)(iVar1 + 0x7c) = 0;
+  *(undefined4 *)(iVar1 + 0x58) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0x5c) + 0x1000) = 0;
+  *(int *)(iVar1 + 100) = *(int *)(iVar1 + 0x5c) + 0x1010;
+  *(int *)(iVar1 + 0x60) = *(int *)(iVar1 + 0x5c);
+  do {
+    iVar7 = iVar4 + *(int *)(iVar1 + 0xa4);
+    iVar4 = iVar4 + 0x80;
+    *(int *)(iVar7 + 0x70) = iVar6;
+    iVar6 = iVar6 + 1;
+  } while (iVar6 < 0x400);
+  *(undefined4 *)(*(int *)(iVar1 + 0xa4) + 0x1fff0) = 0xffffffff;
+  **(undefined4 **)(iVar1 + 0xa8) = 0xffffffff;
+  **(undefined4 **)(iVar1 + 0xac) = 0;
+  **(undefined4 **)(iVar1 + 0xb0) = 0;
+  *(undefined4 *)(iVar1 + 0xc0) = 0;
+  *(undefined4 *)(iVar1 + 200) = 0;
+  *(undefined4 *)(iVar1 + 0xd0) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e3c) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e40) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e44) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e48) = 0;
+  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34d80) = 0;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -197,8 +340,57 @@ void FX_ResetSystem(void)
 void FX_InitSystem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  void *pvVar4;
+  ulonglong uVar2;
+  void *_Dst;
+  ulonglong uVar3;
+  
+  uVar1 = __savegprlr_26();
+  pvVar4 = (void *)FX_GetSystem();
+  if (pvVar4 == (void *)0x0) {
+    MyAssertHandler(0xffffffff82069178,0xa1,0,0xffffffff82000f98,0xffffffff82038694);
+  }
+  memset(pvVar4,0,0x260);
+  uVar2 = FX_GetSystemBuffers(uVar1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069178,0xa4,0,0xffffffff82000f98,0xffffffff82060e04);
+  }
+  _Dst = (void *)uVar2;
+  memset(_Dst,0,0x106280);
+  memset((void *)((int)_Dst + 0x35800),0xff,0x1000);
+  memset((void *)((int)_Dst + 0x36800),0xff,0x1000);
+  memset((void *)((int)_Dst + 0x34800),0xff,0x1000);
+  uVar3 = FX_GetSystemCommand(uVar1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82069178,0xaa,0,0xffffffff82000f98,0xffffffff82060df4);
+  }
+  memset((void *)uVar3,0,0x34e80);
+  FX_LinkSystemBuffers(pvVar4,uVar2,uVar3);
+  FX_InitRandom();
+  FX_ResetSystem(pvVar4);
+  *(undefined4 *)((int)pvVar4 + 0x88) = 0;
+  *(undefined4 *)((int)pvVar4 + 0x90) = 0xffffffff;
+  if (*(int *)((int)pvVar4 + 0x218) != 0) {
+    MyAssertHandler(0xffffffff82069178,0xb5,0,0xffffffff82000f98,0xffffffff820692b0);
+  }
+  *(undefined4 *)((int)pvVar4 + 400) = 0;
+  *(undefined4 *)((int)pvVar4 + 0x94) = 1;
+  if (*(int *)((int)pvVar4 + 0x68) != 0) {
+    MyAssertHandler(0xffffffff82069178,0xb9,1,0xffffffff82000f98,0xffffffff82069290);
+  }
+  if (*(int *)((int)pvVar4 + 0x6c) != 0) {
+    MyAssertHandler(0xffffffff82069178,0xba,1,0xffffffff82000f98,0xffffffff82069274);
+  }
+  if (*(int *)((int)pvVar4 + 0x70) != 0) {
+    MyAssertHandler(0xffffffff82069178,0xbb,1,0xffffffff82000f98,0xffffffff82069254);
+  }
+  FX_InitMarksSystem(uVar1);
+  *(int *)((int)pvVar4 + 0x98) = (int)uVar1;
+  *(undefined4 *)((int)pvVar4 + 0xb4) = 0x10;
+  pvVar4 = memset(&DAT_83338280,0,0x4810);
+  __restgprlr_26(pvVar4);
+  return;
 }
 
 
@@ -207,8 +399,35 @@ void FX_InitSystem(void)
 void FX_ShutdownSystem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  void *pvVar1;
+  void *_Dst;
+  
+  pvVar1 = (void *)__savegprlr_28();
+  if (DAT_8333ca94 != 0) {
+    _Dst = (void *)FX_GetSystem();
+    if (_Dst == (void *)0x0) {
+      MyAssertHandler(0xffffffff82069178,0xd6,0,0xffffffff82000f98,0xffffffff82038694);
+    }
+    pvVar1 = (void *)FX_GetSystemBuffers(pvVar1);
+    if (pvVar1 == (void *)0x0) {
+      MyAssertHandler(0xffffffff82069178,0xd8,0,0xffffffff82000f98,0xffffffff82060e04);
+    }
+    if ((*(uint *)((int)_Dst + 0xb4) & 0x10) != 0) {
+      if (*(int *)((int)_Dst + 0xb0) == 0) {
+        MyAssertHandler(0xffffffff82069178,0xdc,0,0xffffffff82000f98,0xffffffff82069348);
+      }
+      if (*(char *)(*(int *)((int)_Dst + 0xb0) + 2) != *(char *)(*(int *)((int)_Dst + 0xb0) + 1)) {
+        MyAssertHandler(0xffffffff82069178,0xdd,0,0xffffffff82000f98,0xffffffff82069318);
+      }
+      if (*(char *)(*(int *)((int)_Dst + 0xb0) + 2) != *(char *)(*(int *)((int)_Dst + 0xb0) + 3)) {
+        MyAssertHandler(0xffffffff82069178,0xde,0,0xffffffff82000f98,0xffffffff820692e8);
+      }
+    }
+    memset(_Dst,0,0x260);
+    pvVar1 = memset(pvVar1,0,0x106280);
+  }
+  __restgprlr_28(pvVar1);
+  return;
 }
 
 
@@ -217,8 +436,31 @@ void FX_ShutdownSystem(void)
 void FX_ErrorCleanup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  
   __savegprlr_23();
+  if (DAT_8333ca94 != 0) {
+    uVar2 = 0;
+    if (0 < (int)DAT_8333ca90) {
+      iVar1 = 0;
+      do {
+        if ((ulonglong)DAT_8333ca90 <= (uVar2 & 0xffffffff)) {
+          MyAssertHandler(0xffffffff82069178,0x15a,0,0xffffffff820691c8,uVar2);
+        }
+        iVar3 = iVar1 + DAT_8333ca94;
+        if (iVar3 == 0) {
+          MyAssertHandler(0xffffffff82069178,0xf5,0,0xffffffff82000f98,0xffffffff82038694);
+        }
+        uVar2 = uVar2 + 1;
+        iVar1 = iVar1 + 0x260;
+        *(uint *)(iVar3 + 0xb4) = *(uint *)(iVar3 + 0xb4) & 0xffffffdf;
+      } while ((int)uVar2 < (int)DAT_8333ca90);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -227,8 +469,21 @@ void FX_ErrorCleanup(void)
 void FX_AllocateClientMemory(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  int iVar2;
+  void *pvVar3;
+  
+  lVar1 = __savegprlr_27();
+  iVar2 = (int)lVar1;
+  DAT_8333ca90 = iVar2;
+  DAT_8333ca94 = (void *)PMem_AllocFromSource_NoDebug(lVar1 * 0x260,0x80,4,1);
+  DAT_8333ca98 = (void *)PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0x106280,0x80,4,1);
+  DAT_8333ca9c = (void *)PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0x34e80,0x80,4,1);
+  memset(DAT_8333ca94,0,(size_t)(lVar1 * 0x260));
+  memset(DAT_8333ca98,0,(size_t)((longlong)iVar2 * 0x106280));
+  pvVar3 = memset(DAT_8333ca9c,0,(size_t)((longlong)iVar2 * 0x34e80));
+  __restgprlr_27(pvVar3);
+  return;
 }
 
 
@@ -254,13 +509,43 @@ undefined8 FX_GetGlassVisInfo(void)
 }
 
 
+// 82445568  FX_LinkSystemBuffers  (EffectsCore/fx_system_init.cpp:288)
+
+void FX_LinkSystemBuffers(int param_1,int param_2,int param_3)
+
+{
+  *(int *)(param_1 + 0x74) = param_2;
+  *(int *)(param_1 + 0xa4) = param_3;
+  *(int *)(param_1 + 0xb8) = param_3;
+  *(int *)(param_1 + 0x14) = param_2 + 0x37800;
+  *(int *)(param_1 + 0x18) = param_2 + 0x48000;
+  *(int *)(param_1 + 0x34) = param_2 + 0x4a000;
+  *(int *)(param_1 + 0x20) = param_2 + 0x5b200;
+  *(int *)(param_1 + 0x3c) = param_2 + 0x24800;
+  *(int *)(param_1 + 0x10) = param_2 + 0x800;
+  *(int *)(param_1 + 0x1c) = param_2 + 0x5a200;
+  *(int *)(param_1 + 0x40) = param_2 + 0x34800;
+  *(int *)(param_1 + 0x44) = param_2 + 0x35800;
+  *(int *)(param_1 + 0x48) = param_2 + 0x36800;
+  *(int *)(param_1 + 0x5c) = param_2 + 0x103200;
+  *(int *)(param_1 + 0x38) = param_2 + 0x38000;
+  *(int *)(param_1 + 0x9c) = param_2 + 0x105280;
+  *(int *)(param_1 + 0xa8) = param_3 + 0x20000;
+  *(int *)(param_1 + 0xac) = param_3 + 0x20080;
+  *(int *)(param_1 + 0xb0) = param_3 + 0x20100;
+  *(int *)(param_1 + 0xbc) = param_3 + 0x21180;
+  *(int *)(param_1 + 0xc4) = param_3 + 0x25180;
+  *(int *)(param_1 + 0xcc) = param_3 + 0x2b180;
+  return;
+}
+
+
 // 82445658  FX_GetSystemConst  (EffectsCore/fx_system_init.cpp:329)
 
 longlong FX_GetSystemConst(ulonglong param_1)
 
 {
   if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82069178,0x14e,0,0xffffffff820691c8,param_1);
   }
   return param_1 * 0x260 + (ulonglong)DAT_8333ca94;
@@ -273,10 +558,21 @@ longlong FX_GetSystem(ulonglong param_1)
 
 {
   if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82069178,0x15a,0,0xffffffff820691c8,param_1);
   }
   return param_1 * 0x260 + (ulonglong)DAT_8333ca94;
+}
+
+
+// 82445748  FX_GetSystemBuffers  (EffectsCore/fx_system_init.cpp:353)
+
+longlong FX_GetSystemBuffers(ulonglong param_1)
+
+{
+  if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82069178,0x166,0,0xffffffff820691c8,param_1);
+  }
+  return (longlong)(int)param_1 * 0x106280 + (ulonglong)DAT_8333ca98;
 }
 
 
@@ -286,7 +582,6 @@ longlong FX_GetSystemCommand(ulonglong param_1)
 
 {
   if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82069178,0x172,0,0xffffffff820691c8,param_1);
   }
   return (longlong)(int)param_1 * 0x34e80 + (ulonglong)DAT_8333ca9c;
@@ -299,7 +594,6 @@ longlong FX_GetMarksSystem(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82069178,0x17e,0,0xffffffff82069210,param_1,4);
   }
   return param_1 * 0x1038 + -0x7cccbe80;

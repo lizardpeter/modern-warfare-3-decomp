@@ -24,3 +24,37 @@
 ; 827BC1A0  jpeg_memory_src  (jpeg-6/jdatasrc.c:227)
   827BC1A0  7D8802A6             mfspr r12,LR
   827BC1A4  4815A519             bl 0x829166bc
+  827BC1A8  9421FF90             stwu r1,-0x70(r1)
+  827BC1AC  81630020             lwz r11,0x20(r3)
+  827BC1B0  7C7F1B78             or r31,r3,r3
+  827BC1B4  7C9E2378             or r30,r4,r4
+  827BC1B8  7CBD2B78             or r29,r5,r5
+  827BC1BC  2B0B0000             cmplwi cr6,r11,0x0
+  827BC1C0  409A0020             bne cr6,0x827bc1e0
+  827BC1C4  81630004             lwz r11,0x4(r3)
+  827BC1C8  38A00020             li r5,0x20
+  827BC1CC  38800000             li r4,0x0
+  827BC1D0  814B0000             lwz r10,0x0(r11)
+  827BC1D4  7D4903A6             mtspr CTR,r10
+  827BC1D8  4E800421             bctrl
+  827BC1DC  907F0020             stw r3,0x20(r31)
+LAB_827bc1e0:
+  827BC1E0  3D40827C             lis r10,-0x7d84
+  827BC1E4  817F0020             lwz r11,0x20(r31)
+  827BC1E8  3D20827C             lis r9,-0x7d84
+  827BC1EC  3D00827C             lis r8,-0x7d84
+  827BC1F0  3CE0827C             lis r7,-0x7d84
+  827BC1F4  38CAC160             subi r6,r10,0x3ea0
+  827BC1F8  38A00000             li r5,0x0
+  827BC1FC  93AB0004             stw r29,0x4(r11)
+  827BC200  3889C170             subi r4,r9,0x3e90
+  827BC204  90CB0008             stw r6,0x8(r11)
+  827BC208  38681FA0             addi r3,r8,0x1fa0
+  827BC20C  90AB000C             stw r5,0xc(r11)
+  827BC210  3947C198             subi r10,r7,0x3e68
+  827BC214  908B0010             stw r4,0x10(r11)
+  827BC218  906B0014             stw r3,0x14(r11)
+  827BC21C  914B0018             stw r10,0x18(r11)
+  827BC220  93CB0000             stw r30,0x0(r11)
+  827BC224  38210070             addi r1,r1,0x70
+  827BC228  4815A4E4             b 0x8291670c

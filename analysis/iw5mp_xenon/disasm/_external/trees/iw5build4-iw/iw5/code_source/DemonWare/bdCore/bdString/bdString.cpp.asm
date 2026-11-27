@@ -11,6 +11,42 @@
 ; 8292D388  bdString::bdString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:46)
   8292D388  7D8802A6             mfspr r12,LR
   8292D38C  4BFE9331             bl 0x829166bc
+  8292D390  9421FF90             stwu r1,-0x70(r1)
+  8292D394  7C7D1B78             or r29,r3,r3
+  8292D398  7C9E2378             or r30,r4,r4
+  8292D39C  7C8B2378             or r11,r4,r4
+LAB_8292d3a0:
+  8292D3A0  894B0000             lbz r10,0x0(r11)
+  8292D3A4  396B0001             addi r11,r11,0x1
+  8292D3A8  2B0A0000             cmplwi cr6,r10,0x0
+  8292D3AC  409AFFF4             bne cr6,0x8292d3a0
+  8292D3B0  7D7E5850             subf r11,r30,r11
+  8292D3B4  396BFFFF             subi r11,r11,0x1
+  8292D3B8  557F003F             rlwinm. r31,r11,0x0,0x0,0x1f
+  8292D3BC  41820024             beq 0x8292d3e0
+  8292D3C0  7FE4FB78             or r4,r31,r31
+  8292D3C4  7FA3EB78             or r3,r29,r29
+  8292D3C8  4BFFFF69             bl 0x8292d330
+  8292D3CC  38BF0001             addi r5,r31,0x1
+  8292D3D0  7FC4F378             or r4,r30,r30
+  8292D3D4  807D0000             lwz r3,0x0(r29)
+  8292D3D8  4BFE9589             bl 0x82916960
+  8292D3DC  4800002C             b 0x8292d408
+LAB_8292d3e0:
+  8292D3E0  3D40829B             lis r10,-0x7d65
+  8292D3E4  39200000             li r9,0x0
+  8292D3E8  396A1210             addi r11,r10,0x1210
+  8292D3EC  390B000C             addi r8,r11,0xc
+  8292D3F0  816B0010             lwz r11,0x10(r11)
+  8292D3F4  992B0000             stb r9,0x0(r11)
+  8292D3F8  911D0000             stw r8,0x0(r29)
+  8292D3FC  816A1210             lwz r11,0x1210(r10)
+  8292D400  396B0001             addi r11,r11,0x1
+  8292D404  916A1210             stw r11,0x1210(r10)
+LAB_8292d408:
+  8292D408  7FA3EB78             or r3,r29,r29
+  8292D40C  38210070             addi r1,r1,0x70
+  8292D410  4BFE92FC             b 0x8291670c
 
 ; 8292D418  bdString::~bdString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:60)
   8292D418  81630000             lwz r11,0x0(r3)
@@ -73,6 +109,35 @@ LAB_8292d2f4:
   8292D2F8  5563DFFE             rlwinm r3,r11,0x1b,0x1f,0x1f
   8292D2FC  4E800020             blr
 
+; 8292D320  bdString::getLength  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:276)
+  8292D320  81630000             lwz r11,0x0(r3)
+  8292D324  806BFFF8             lwz r3,-0x8(r11)
+  8292D328  4E800020             blr
+
 ; 8292D300  bdString::getBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:281)
   8292D300  80630000             lwz r3,0x0(r3)
   8292D304  4E800020             blr
+
+; 8292D330  bdString::allocateBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:311)
+  8292D330  7D8802A6             mfspr r12,LR
+  8292D334  4BFE9389             bl 0x829166bc
+  8292D338  9421FF90             stwu r1,-0x70(r1)
+  8292D33C  39640001             addi r11,r4,0x1
+  8292D340  7C7D1B78             or r29,r3,r3
+  8292D344  556A06BF             rlwinm. r10,r11,0x0,0x1a,0x1f
+  8292D348  7C9E2378             or r30,r4,r4
+  8292D34C  556BD1BE             rlwinm r11,r11,0x1a,0x6,0x1f
+  8292D350  41820008             beq 0x8292d358
+  8292D354  396B0001             addi r11,r11,0x1
+LAB_8292d358:
+  8292D358  557F3032             rlwinm r31,r11,0x6,0x0,0x19
+  8292D35C  387F000C             addi r3,r31,0xc
+  8292D360  4BFC7CE9             bl 0x828f5048
+  8292D364  39600001             li r11,0x1
+  8292D368  3943000C             addi r10,r3,0xc
+  8292D36C  93E30008             stw r31,0x8(r3)
+  8292D370  91630000             stw r11,0x0(r3)
+  8292D374  93C30004             stw r30,0x4(r3)
+  8292D378  915D0000             stw r10,0x0(r29)
+  8292D37C  38210070             addi r1,r1,0x70
+  8292D380  4BFE938C             b 0x8291670c

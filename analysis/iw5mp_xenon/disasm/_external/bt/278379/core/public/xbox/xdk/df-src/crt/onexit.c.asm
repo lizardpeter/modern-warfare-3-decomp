@@ -3,6 +3,67 @@
 ; 82918710  _onexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:82)
   82918710  7D8802A6             mfspr r12,LR
   82918714  4BFFDF91             bl 0x829166a4
+  82918718  3BE1FF50             subi r31,r1,0xb0
+  8291871C  9421FF50             stwu r1,-0xb0(r1)
+  82918720  7C771B78             or r23,r3,r3
+  82918724  48002325             bl 0x8291aa48
+  82918728  7D084378             or r8,r8,r8
+  8291872C  3F008489             lis r24,-0x7b77
+  82918730  3F208489             lis r25,-0x7b77
+  82918734  83D87EC8             lwz r30,0x7ec8(r24)
+  82918738  83997ECC             lwz r28,0x7ecc(r25)
+  8291873C  7F1EE040             cmplw cr6,r30,r28
+  82918740  41980094             blt cr6,0x829187d4
+  82918744  7F5CF050             subf r26,r28,r30
+  82918748  3B7A0004             addi r27,r26,0x4
+  8291874C  2B1B0004             cmplwi cr6,r27,0x4
+  82918750  41980084             blt cr6,0x829187d4
+  82918754  7F83E378             or r3,r28,r28
+  82918758  48009869             bl 0x82921fc0
+  8291875C  7C7D1B78             or r29,r3,r3
+  82918760  7F03D840             cmplw cr6,r3,r27
+  82918764  4098005C             bge cr6,0x829187c0
+  82918768  2B030800             cmplwi cr6,r3,0x800
+  8291876C  7C6B1B78             or r11,r3,r3
+  82918770  41980008             blt cr6,0x82918778
+  82918774  39600800             li r11,0x800
+LAB_82918778:
+  82918778  7C8BEA14             add r4,r11,r29
+  8291877C  7F04E840             cmplw cr6,r4,r29
+  82918780  41980014             blt cr6,0x82918794
+  82918784  7F83E378             or r3,r28,r28
+  82918788  48002A01             bl 0x8291b188
+  8291878C  28030000             cmplwi r3,0x0
+  82918790  40820020             bne 0x829187b0
+LAB_82918794:
+  82918794  389D0010             addi r4,r29,0x10
+  82918798  7F04E840             cmplw cr6,r4,r29
+  8291879C  41980038             blt cr6,0x829187d4
+  829187A0  7F83E378             or r3,r28,r28
+  829187A4  480029E5             bl 0x8291b188
+  829187A8  28030000             cmplwi r3,0x0
+  829187AC  41820028             beq 0x829187d4
+LAB_829187b0:
+  829187B0  7F4B1670             srawi r11,r26,0x2
+  829187B4  90797ECC             stw r3,0x7ecc(r25)
+  829187B8  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  829187BC  7FCB1A14             add r30,r11,r3
+LAB_829187c0:
+  829187C0  397E0004             addi r11,r30,0x4
+  829187C4  92FE0000             stw r23,0x0(r30)
+  829187C8  92FF0050             stw r23,0x50(r31)
+  829187CC  91787EC8             stw r11,0x7ec8(r24)
+  829187D0  4800000C             b 0x829187dc
+LAB_829187d4:
+  829187D4  39600000             li r11,0x0
+  829187D8  917F0050             stw r11,0x50(r31)
+LAB_829187dc:
+  829187DC  7D084378             or r8,r8,r8
+  829187E0  399F00B0             addi r12,r31,0xb0
+  829187E4  48000011             bl 0x829187f4
+  829187E8  807F0050             lwz r3,0x50(r31)
+  829187EC  383F00B0             addi r1,r31,0xb0
+  829187F0  4BFFDF04             b 0x829166f4
 
 ; 82918818  atexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:162)
   82918818  7D8802A6             mfspr r12,LR

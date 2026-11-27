@@ -5,8 +5,36 @@
 void FXW_UpdatePass0Worker(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  short *psVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  
+  piVar4 = (int *)__savegprlr_27();
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x1f,0,0xffffffff82000f98,0xffffffff8206ade0);
+  }
+  if (piVar4[6] == 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x20,0,0xffffffff82000f98,0xffffffff8206adcc);
+  }
+  iVar1 = *piVar4;
+  psVar2 = (short *)piVar4[6];
+  if ((*(uint *)(iVar1 + 0xb4) & 1) != 0) {
+    MyAssertHandler(0xffffffff8206adf0,0x25,0,0xffffffff82000f98,0xffffffff8206a9b4);
+  }
+  if (psVar2 == (short *)0x0) {
+    MyAssertHandler(0xffffffff8206adf0,0x26,0,0xffffffff82000f98,0xffffffff8206a028);
+  }
+  if (*psVar2 == -1) {
+    MyAssertHandler(0xffffffff8206adf0,0x34,0,0xffffffff82000f98,0xffffffff8206ad98);
+  }
+  uVar3 = FXW_SystemUpdateEffect(iVar1,piVar4[8],psVar2,0,piVar4[7]);
+  if (0 < *(int *)(iVar1 + 0xd0)) {
+    FXW_SystemUpdateElement(iVar1);
+  }
+  FXW_SystemUpdateEffectFinalize(iVar1,psVar2,uVar3,piVar4[7]);
+  __restgprlr_27();
+  return;
 }
 
 

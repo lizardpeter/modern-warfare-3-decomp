@@ -22,11 +22,90 @@ void CG_VehRegisterDvars(void)
 
 // 82309680  VehicleGetFxInfo  (cgame_mp/cg_vehicles_mp.cpp:55)
 
-void VehicleGetFxInfo(void)
+void VehicleGetFxInfo(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  uVar2 = __savegprlr_28();
+  lVar4 = 0;
+  uVar2 = (uVar2 & 0x1fffffff) * 8;
+  do {
+    lVar6 = (uVar2 + lVar4 + (uVar2 + lVar4 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
+    iVar1 = (int)lVar6;
+    if ((&DAT_82a76a00)[iVar1] == '\0') break;
+    if (*(int *)(&DAT_82a76a08 + iVar1) == param_2) {
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(&DAT_82a76a04 + iVar1) = uVar3;
+      __restgprlr_28(lVar6 + -0x7d589600);
+      return;
+    }
+    lVar4 = lVar4 + 1;
+  } while ((int)lVar4 < 8);
+  uVar5 = 0;
+  do {
+    if ((&DAT_82a76a00)[(int)((uVar2 + uVar5 + (uVar2 + uVar5 & 0x3fffffff) * 4 & 0xffffffff) << 3)]
+        == '\0') {
+      if ((int)uVar5 < 8) goto LAB_82309870;
+      break;
+    }
+    uVar5 = uVar5 + 1;
+  } while ((int)uVar5 < 8);
+  iVar1 = (int)((uVar2 + 1 + ((uVar2 + 1) * 4 & 0xfffffffc) & 0x1fffffff) << 3);
+  uVar5 = (ulonglong)
+          (*(int *)(&DAT_82a76a04 + iVar1) <
+          *(int *)(&DAT_82a76a04 + (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3)));
+  if (*(int *)(&DAT_82a76a2c + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 2;
+  }
+  if (*(int *)(&DAT_82a76a54 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 3;
+  }
+  if (*(int *)(&DAT_82a76a7c + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 4;
+  }
+  if (*(int *)(&DAT_82a76aa4 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 5;
+  }
+  if (*(int *)(&DAT_82a76acc + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 6;
+  }
+  if (*(int *)(&DAT_82a76af4 + iVar1) <
+      *(int *)(&DAT_82a76a04 +
+              (int)((uVar2 + uVar5 + ((uVar2 + uVar5) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar5 = 7;
+  }
+LAB_82309870:
+  lVar6 = (uVar2 + uVar5 + (uVar2 + uVar5 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
+  lVar7 = 10;
+  lVar4 = lVar6 + -0x7d589604;
+  do {
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = 0;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  *(undefined1 *)(lVar6 + -0x7d589600) = 1;
+  uVar3 = Sys_Milliseconds();
+  *(undefined4 *)(&DAT_82a76a04 + (int)lVar6) = uVar3;
+  *(int *)(&DAT_82a76a08 + (int)lVar6) = param_2;
+  __restgprlr_28(lVar6 + -0x7d589600);
+  return;
 }
 
 
@@ -58,5 +137,132 @@ double Veh_GetTurretBarrelRoll(undefined8 param_1,int param_2)
     *(undefined4 *)(iVar4 + 0x18) = 0;
   }
   return (double)*(float *)(iVar4 + 0x1c);
+}
+
+
+// 823099A0  Veh_IncTurretBarrelRoll  (cgame_mp/cg_vehicles_mp.cpp:124)
+
+void Veh_IncTurretBarrelRoll(double param_1)
+
+{
+  float fVar1;
+  int iVar2;
+  
+  iVar2 = VehicleGetFxInfo();
+  fVar1 = (float)((double)*(float *)(iVar2 + 0x18) + param_1);
+  if (*(float *)(DAT_82a769fc + 0xc) - fVar1 < 0.0) {
+    fVar1 = *(float *)(DAT_82a769fc + 0xc);
+  }
+  *(float *)(iVar2 + 0x18) = fVar1;
+  return;
+}
+
+
+// 823099F0  VehicleFXTest  (cgame_mp/cg_vehicles_mp.cpp:134)
+
+void VehicleFXTest(undefined8 param_1,undefined8 param_2,longlong param_3)
+
+{
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  undefined4 local_d0;
+  undefined4 local_cc;
+  undefined4 local_c8;
+  undefined4 local_c4;
+  undefined4 local_c0;
+  undefined4 local_bc;
+  longlong local_b8;
+  float local_b0;
+  float local_ac;
+  undefined4 local_a8;
+  undefined1 auStack_a4 [12];
+  undefined1 auStack_98 [24];
+  float local_80 [4];
+  uint local_70;
+  
+  uVar2 = __savegprlr_27();
+  iVar3 = VehicleCl_GetClient(uVar2,param_3);
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82026ce8,0x98,0,0xffffffff82000f98,0xffffffff82026d30);
+  }
+  iVar5 = (int)param_3;
+  if ((*(int *)(iVar5 + 200) == 0xc) && ((*(uint *)(iVar3 + 0x18) & 0x40) == 0)) {
+    uVar1 = *(undefined4 *)(iVar5 + 0xc4);
+    iVar3 = VehicleGetFxInfo(uVar2,uVar1);
+    iVar4 = Sys_Milliseconds();
+    if (*(int *)(iVar3 + 0xc) <= iVar4) {
+      local_ec = *(float *)(iVar5 + 0x70);
+      local_f0 = *(float *)(iVar5 + 0x6c);
+      dVar10 = 1200.0;
+      local_e8 = *(float *)(iVar5 + 0x74) - 1200.0;
+      dVar11 = 0.0;
+      local_d0 = 0;
+      local_cc = 0;
+      local_c8 = 0;
+      local_c4 = 0x3f000000;
+      local_c0 = 0x3f000000;
+      local_bc = 0x3f000000;
+      CG_TraceCapsule(local_80,param_3 + 0x6c,&local_f0,&local_d0,uVar1,0x831);
+      dVar6 = (double)local_80[0];
+      iVar4 = 1000;
+      if (dVar6 < 1.0) {
+        dVar9 = (double)*(float *)(iVar5 + 0x70);
+        dVar8 = (double)*(float *)(iVar5 + 0x74);
+        dVar7 = (double)*(float *)(param_3 + 0x6c);
+        local_dc = (float)((double)(float)((double)local_ec - dVar9) * dVar6 + dVar9);
+        local_d8 = (float)((double)(float)((double)local_e8 - dVar8) * dVar6 + dVar8);
+        local_e0 = (float)((double)(float)((double)local_f0 - dVar7) * dVar6 + dVar7);
+        dVar9 = (double)(float)((double)local_dc - dVar9);
+        dVar6 = (double)SQRT((float)((double)local_e0 - dVar7) * (float)((double)local_e0 - dVar7) +
+                             (float)((double)local_d8 - dVar8) * (float)((double)local_d8 - dVar8) +
+                             (float)(dVar9 * dVar9));
+        if (dVar6 < dVar10) {
+          local_a8 = 0x3f800000;
+          local_b0 = (float)dVar11;
+          local_ac = (float)dVar11;
+          iVar4 = (int)(((float)(dVar6 - 350.0) * 0.0011764705 * 0.10000001 + 0.05) * 1000.0);
+          local_b8 = (longlong)iVar4;
+          Vec3Basis_RightHanded(dVar9,dVar8,&local_b0,auStack_a4,auStack_98);
+          uVar1 = DAT_82a3c9d0;
+          if ((local_70 & 0x1f00000) == 0x1400000) {
+            uVar1 = DAT_82a3c9d4;
+          }
+          iVar5 = CG_GetLocalClientGlobals(uVar2);
+          FX_PlayOrientedEffect(uVar2,uVar1,*(undefined4 *)(iVar5 + 0x6b98c),&local_e0,&local_b0);
+        }
+      }
+      iVar5 = Sys_Milliseconds();
+      *(int *)(iVar3 + 0xc) = iVar5 + iVar4;
+    }
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 82309C40  CG_Veh_Init  (cgame_mp/cg_vehicles_mp.cpp:235)
+
+void * CG_Veh_Init(void)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = memset(&DAT_82a76a00,0,0x500);
+  return pvVar1;
 }
 

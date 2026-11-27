@@ -291,6 +291,39 @@ LAB_8288ffa4:
 }
 
 
+// 8288FFF8  D3D::XBMAllocateFrameMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:228)
+
+void D3D__XBMAllocateFrameMemory
+               (undefined8 param_1,ulonglong param_2,int *param_3,undefined4 *param_4)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  uVar1 = __savegprlr_27();
+  uVar3 = 0;
+  iVar2 = MmAllocatePhysicalMemoryEx(2,uVar1,0x404,0,0xffffffffffffffff,0x1000);
+  if (iVar2 == 0) {
+    DAT_84890338 = DAT_84890338 + 1;
+    iVar2 = XMemAlloc(uVar1,0xffffffffb9800000);
+    if (iVar2 == 0) {
+      if ((param_2 & 0xffffffff) != 0) {
+        uVar3 = 2;
+        iVar2 = (int)param_2;
+      }
+    }
+    else {
+      uVar3 = 1;
+    }
+  }
+  *param_3 = iVar2;
+  *param_4 = uVar3;
+  __restgprlr_27();
+  return;
+}
+
+
 // 82890090  D3D::XBMFreeFrameMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:264)
 
 void D3D__XBMFreeFrameMemory(undefined8 param_1,int param_2)
@@ -306,13 +339,114 @@ void D3D__XBMFreeFrameMemory(undefined8 param_1,int param_2)
 }
 
 
-// 828901D0  D3D::XBMCreateContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:320)
+// 828900F8  D3D::XBMDestroyContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:280)
 
-void D3D__XBMCreateContext(void)
+void * D3D__XBMDestroyContext(int param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  undefined4 uVar2;
+  void *pvVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  
+  iVar1 = *(int *)(param_1 + 0x5f04);
+  if (iVar1 != 0) {
+    if ((*(uint *)(param_1 + 0x5f18) & 0x8000000) == 0) {
+      MmFreePhysicalMemory(2,iVar1);
+    }
+    else {
+      XMemFree(iVar1,0x24800000);
+    }
+  }
+  iVar1 = *(int *)(param_1 + 0x5cb4);
+  if (iVar1 != 0) {
+    D3D__XBMFreeFrameMemory(iVar1,*(int *)(param_1 + 0x5f18) >> 0x1e);
+  }
+  if (*(int *)(param_1 + 0x5cb8) != 0) {
+    D3D__XBMFreeFrameMemory
+              (*(int *)(param_1 + 0x5cb8),
+               (int)(*(uint *)(param_1 + 0x5f18) << 2 | *(uint *)(param_1 + 0x5f18) >> 0x1e) >> 0x1e
+              );
+  }
+  uVar2 = *(undefined4 *)(param_1 + 0x5f1c);
+  pvVar3 = memset((int *)(param_1 + 0x5cb4),0,0x26c);
+  *(undefined4 *)(param_1 + 0x5f1c) = uVar2;
+  puVar4 = (undefined4 *)(param_1 + 0x5cc4);
+  lVar5 = 0x29;
+  do {
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0xffffffff;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  return pvVar3;
+}
+
+
+// 828901D0  D3D::XBMCreateContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:320)
+
+/* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Removing unreachable block (ram,0x82890570) */
+/* WARNING: Removing unreachable block (ram,0x828903d0) */
+/* WARNING: Removing unreachable block (ram,0x82890568) */
+/* WARNING: Removing unreachable block (ram,0x828906b4) */
+/* WARNING: Removing unreachable block (ram,0x8289070c) */
+/* WARNING: Removing unreachable block (ram,0x8289071c) */
+/* WARNING: Removing unreachable block (ram,0x82890740) */
+/* WARNING: Removing unreachable block (ram,0x8289074c) */
+/* WARNING: Removing unreachable block (ram,0x8289075c) */
+/* WARNING: Removing unreachable block (ram,0x8289077c) */
+/* WARNING: Removing unreachable block (ram,0x82890790) */
+/* WARNING: Removing unreachable block (ram,0x828907a4) */
+/* WARNING: Removing unreachable block (ram,0x82890798) */
+/* WARNING: Removing unreachable block (ram,0x828907a8) */
+/* WARNING: Removing unreachable block (ram,0x828907c8) */
+/* WARNING: Removing unreachable block (ram,0x82890810) */
+/* WARNING: Removing unreachable block (ram,0x82890818) */
+/* WARNING: Removing unreachable block (ram,0x8289082c) */
+/* WARNING: Removing unreachable block (ram,0x82890830) */
+/* WARNING: Removing unreachable block (ram,0x82890854) */
+/* WARNING: Removing unreachable block (ram,0x8289086c) */
+/* WARNING: Removing unreachable block (ram,0x82890864) */
+/* WARNING: Removing unreachable block (ram,0x82890870) */
+/* WARNING: Removing unreachable block (ram,0x82890880) */
+/* WARNING: Removing unreachable block (ram,0x828908b4) */
+/* WARNING: Removing unreachable block (ram,0x828908f0) */
+/* WARNING: Removing unreachable block (ram,0x828908cc) */
+/* WARNING: Removing unreachable block (ram,0x828908a8) */
+/* WARNING: Removing unreachable block (ram,0x828908d4) */
+/* WARNING: Removing unreachable block (ram,0x828907b8) */
+/* WARNING: Removing unreachable block (ram,0x828908fc) */
+/* WARNING: Removing unreachable block (ram,0x828903d8) */
+
+void D3D__XBMCreateContext(undefined8 param_1,int param_2)
+
+{
+  short sVar1;
+  short sVar2;
+  int iVar3;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs40 [16];
+  undefined1 in_vs41 [16];
+  undefined1 in_vs43 [16];
+  
+  iVar3 = __savegprlr_18();
+  *(uint *)(iVar3 + 0x5f10) = *(uint *)(iVar3 + 0x5f10) & 0x1fffffff;
+  sVar2 = ((ushort)((uint)*(undefined4 *)(param_2 + 0x28) >> 0x1e) & 2) + 1;
+  sVar1 = ((ushort)*(uint *)(param_2 + 0x24) & 0x1fff) + sVar2;
+  sVar2 = ((ushort)(*(uint *)(param_2 + 0x24) >> 0xd) & 0x1fff) + sVar2;
+  *(short *)(iVar3 + 0x5e24) = sVar1;
+  *(short *)(iVar3 + 0x5e26) = sVar2;
+  *(ushort *)(iVar3 + 0x5e28) = sVar1 + 0x1fU & 0xffe0;
+  *(ushort *)(iVar3 + 0x5e2a) = sVar2 + 0x1fU & 0xffe0;
+  altv207_13(in_vs32,in_vs36);
+  altv300_27(in_vs32,in_vs40);
+  altv300_29(in_vs40,in_vs43);
+  altv300_21(in_vs32,in_vs41);
+  altv300_23(in_vs43,in_vs41);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -496,11 +630,199 @@ LAB_828911d8:
 
 // 828909F8  D3D::XBMEndCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:755)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
 void D3D__XBMEndCapture(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 uVar1;
+  code *pcVar2;
+  HANDLE hFile;
+  bool bVar3;
+  uint uVar4;
+  int iVar5;
+  LONG lDistanceToMove;
+  undefined1 *_Src;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  int iVar10;
+  char in_RESERVE;
+  byte bVar11;
+  DWORD aDStack_8c0 [4];
+  undefined1 auStack_8b0 [5];
+  char local_8ab;
+  undefined1 auStack_8a8 [64];
+  ushort local_868;
+  ushort local_866;
+  undefined4 local_850;
+  undefined4 local_84c;
+  undefined4 local_848;
+  uint local_844;
+  uint local_840;
+  uint local_83c;
+  uint local_838;
+  uint local_834;
+  undefined4 local_830;
+  uint local_82c;
+  undefined1 auStack_828 [56];
+  undefined1 auStack_7f0 [2032];
+  
+  iVar5 = __savegprlr_23();
+  bVar11 = *(byte *)(iVar5 + 0x5f14);
+  iVar10 = iVar5 + 0x5cb4;
+  if ((bVar11 & 0x10) != 0) {
+    if (*(HANDLE *)(iVar5 + 0x5e20) != (HANDLE)0x0) {
+      if ((bVar11 & 0x80) != 0) {
+        bVar3 = (bVar11 & 0x40) == 0;
+        bVar11 = bVar3 << 1;
+        if (!bVar3) {
+          WaitForSingleObject(*(HANDLE *)(iVar5 + 0x5e20),0xffffffff);
+        }
+        uVar1 = *(undefined4 *)(iVar5 + 0x5cc4);
+        D3DDevice_BlockOnFence(*(undefined4 *)(iVar5 + 0x5f00));
+        do {
+          uVar6 = (ulonglong)DAT_829a8258;
+          if (in_RESERVE != '\0') {
+            DAT_829a8258 = storeWordConditionalIndexed((ulonglong)DAT_84898204,0,0xffffffff829a8258)
+            ;
+            bVar11 = 2;
+          }
+        } while (!(bool)(bVar11 >> 1 & 1));
+        uVar6 = (uVar6 - *(uint *)(iVar5 + 0x5cbc) & 0xffffffff) / 0x1800;
+        if (0xd < uVar6) {
+          uVar6 = 0xe;
+        }
+        uVar9 = *(uint *)(iVar5 + 0x5f08);
+        puVar8 = *(undefined4 **)(((*(int *)(iVar5 + 0x5efc) + -1) * 4 & 4U) + iVar10);
+        *(undefined4 *)(iVar5 + 0x5e18) = *(undefined4 *)(iVar5 + 0x5e30);
+        *(undefined4 *)(iVar5 + 0x5e1c) = 0;
+        uVar7 = ((ulonglong)*(ushort *)(iVar5 + 0x5cc0) + uVar6 * 0xc) * 0x200 & 0xfffffe00;
+        hFile = *(HANDLE *)(((uVar9 >> 0x14 & 0x3f) + 5) * 4 + iVar10);
+        *puVar8 = 0x9b58e71a;
+        puVar8[1] = uVar9 >> 0x1c & 3;
+        puVar8[2] = uVar1;
+        puVar8[3] = (int)uVar6;
+        WriteFile(hFile,puVar8,(DWORD)uVar7,aDStack_8c0,(LPOVERLAPPED)(iVar5 + 0x5e10));
+        D3D__XBMAdvanceCaptureFile(iVar10,uVar7);
+        WaitForSingleObject(*(HANDLE *)(iVar5 + 0x5e20),0xffffffff);
+        while (DAT_829a8258 != DAT_84898208) {
+          Sleep(6);
+        }
+      }
+      uVar9 = 0;
+      aDStack_8c0[1] = 0;
+      if ((*(uint *)(iVar5 + 0x5f08) & 0xfc000) != 0) {
+        puVar8 = (undefined4 *)(iVar5 + 0x5cc4);
+        do {
+          if (((*(byte *)(iVar5 + 0x5f14) & 0x20) == 0) &&
+             (uVar4 = *(uint *)(iVar5 + 0x5f08) >> 0x14 & 0x3f, uVar4 <= uVar9)) {
+            if (uVar4 < uVar9) {
+              lDistanceToMove = 0;
+            }
+            else {
+              lDistanceToMove = *(LONG *)(iVar5 + 0x5e30);
+            }
+          }
+          else {
+            lDistanceToMove = puVar8[0x2a];
+          }
+          SetFilePointer((HANDLE)puVar8[1],lDistanceToMove,(PLONG)(aDStack_8c0 + 1),0);
+          puVar8 = puVar8 + 1;
+          SetEndOfFile((HANDLE)*puVar8);
+          uVar9 = uVar9 + 1;
+        } while (uVar9 < (*(uint *)(iVar5 + 0x5f08) >> 0xe & 0x3f));
+      }
+      VdGetCurrentDisplayInformation(auStack_8b0);
+      iVar10 = *(int *)(iVar5 + 0x5f10) >> 0x1d;
+      if (iVar10 == 0) {
+        local_850 = 0x53a722b4;
+      }
+      else if (iVar10 == 1) {
+        local_850 = 0x53a722b5;
+      }
+      else if (iVar10 == 2) {
+        local_850 = 0x53a722b6;
+      }
+      local_84c = 0x10001;
+      if ((iVar10 == 0) || (iVar10 == 1)) {
+        local_840 = (uint)*(ushort *)(iVar5 + 0x5e24);
+        local_83c = (uint)*(ushort *)(iVar5 + 0x5e26);
+        local_838 = (uint)local_868;
+        local_834 = (uint)local_866;
+      }
+      else if (iVar10 == 2) {
+        local_840 = 400;
+        local_83c = 0xe0;
+        local_838 = 400;
+        local_834 = 0xe0;
+      }
+      local_830 = KeQueryPerformanceFrequency();
+      uVar9 = *(uint *)(iVar5 + 0x5f08);
+      bVar3 = (uVar9 >> 0x1a & 1) != 0;
+      local_82c = (uint)bVar3;
+      if ((uVar9 >> 0x1a & 2) != 0) {
+        local_82c = bVar3 | 2;
+      }
+      if ((uVar9 & 0x80000000) == 0) {
+        iVar10 = iVar5 + 0x3bc4;
+      }
+      else {
+        iVar10 = *(int *)(iVar5 + 0x5f04);
+      }
+      if (local_8ab == '\x01') {
+        local_82c = local_82c | 4;
+        D3D__GammaPWLCorrected();
+      }
+      else {
+        D3D__GammaRampCorrected(auStack_7f0,iVar10,1);
+      }
+      uVar9 = *(uint *)(iVar5 + 0x5f08);
+      _Src = (undefined1 *)(iVar5 + 0x36c4);
+      if ((uVar9 & 0x4000000) == 0) {
+        _Src = auStack_8a8;
+      }
+      memcpy(auStack_828,_Src,0x38);
+      if ((*(byte *)(iVar5 + 0x5f14) & 0x20) == 0) {
+        local_848 = 0x800;
+        local_844 = 0;
+      }
+      else {
+        local_844 = uVar9 >> 0x14 & 0x3f;
+        local_848 = *(undefined4 *)(iVar5 + 0x5e30);
+      }
+      *(undefined4 *)(iVar5 + 0x5e18) = 0;
+      *(undefined4 *)(iVar5 + 0x5e1c) = 0;
+      WriteFile(*(HANDLE *)(iVar5 + 0x5cc8),&local_850,0x800,aDStack_8c0,
+                (LPOVERLAPPED)(iVar5 + 0x5e10));
+      WaitForSingleObject(*(HANDLE *)(iVar5 + 0x5e20),0xffffffff);
+      CloseHandle(*(HANDLE *)(iVar5 + 0x5e20));
+    }
+    uVar9 = 0;
+    puVar8 = (undefined4 *)(iVar5 + 0x5cc8);
+    do {
+      if ((HANDLE)*puVar8 == (HANDLE)0xffffffff) break;
+      CloseHandle((HANDLE)*puVar8);
+      uVar9 = uVar9 + 1;
+      puVar8 = puVar8 + 1;
+    } while (uVar9 < 0x29);
+  }
+  if (_DAT_00000266 == (int *)0x0) {
+    if (_DAT_00000059 == 0) goto LAB_82890de0;
+    pcVar2 = *(code **)(_DAT_00000059 + 0x18);
+  }
+  else if ((_DAT_00000266 == (int *)0x0) || (pcVar2 = (code *)*_DAT_00000266, pcVar2 == (code *)0x0)
+          ) goto LAB_82890de0;
+  (*pcVar2)(0x1b,0xffffffff821fa210);
+LAB_82890de0:
+  D3D__XBMDestroyContext(iVar5);
+  ObDeleteSymbolicLink(0xffffffff829a8270);
+  DAT_848954a6 = 0;
+  DAT_848954a4 = 0;
+  DAT_848954a5 = 0;
+  __restgprlr_23();
+  return;
 }
 
 

@@ -17,9 +17,74 @@
   82902E7C  EBE1FFF0             ld r31,-0x10(r1)
   82902E80  4E800020             blr
 
+; 82902E88  bdMailHeader::~bdMailHeader  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailheader.cpp:16)
+  82902E88  3D608221             lis r11,-0x7ddf
+  82902E8C  396BE508             subi r11,r11,0x1af8
+  82902E90  91630000             stw r11,0x0(r3)
+  82902E94  4BFFA104             b 0x828fcf98
+
 ; 82902F00  bdMailHeader::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailheader.cpp:20)
   82902F00  7D8802A6             mfspr r12,LR
   82902F04  480137B9             bl 0x829166bc
+  82902F08  3BE1FF90             subi r31,r1,0x70
+  82902F0C  9421FF90             stwu r1,-0x70(r1)
+  82902F10  7C7E1B78             or r30,r3,r3
+  82902F14  909F008C             stw r4,0x8c(r31)
+  82902F18  7C9D2378             or r29,r4,r4
+  82902F1C  38830008             addi r4,r3,0x8
+  82902F20  807D0000             lwz r3,0x0(r29)
+  82902F24  4BFF2E7D             bl 0x828f5da0
+  82902F28  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902F2C  41820020             beq 0x82902f4c
+  82902F30  38A00040             li r5,0x40
+  82902F34  807D0000             lwz r3,0x0(r29)
+  82902F38  389E0010             addi r4,r30,0x10
+  82902F3C  4BFF2F35             bl 0x828f5e70
+  82902F40  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902F44  39600001             li r11,0x1
+  82902F48  40820008             bne 0x82902f50
+LAB_82902f4c:
+  82902F4C  39600000             li r11,0x0
+LAB_82902f50:
+  82902F50  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82902F54  4182001C             beq 0x82902f70
+  82902F58  389E0050             addi r4,r30,0x50
+  82902F5C  807D0000             lwz r3,0x0(r29)
+  82902F60  4BFF2E41             bl 0x828f5da0
+  82902F64  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902F68  39600001             li r11,0x1
+  82902F6C  40820008             bne 0x82902f74
+LAB_82902f70:
+  82902F70  39600000             li r11,0x0
+LAB_82902f74:
+  82902F74  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82902F78  4182001C             beq 0x82902f94
+  82902F7C  389E0058             addi r4,r30,0x58
+  82902F80  807D0000             lwz r3,0x0(r29)
+  82902F84  4BFF2D4D             bl 0x828f5cd0
+  82902F88  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902F8C  39600001             li r11,0x1
+  82902F90  40820008             bne 0x82902f98
+LAB_82902f94:
+  82902F94  39600000             li r11,0x0
+LAB_82902f98:
+  82902F98  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82902F9C  4182001C             beq 0x82902fb8
+  82902FA0  389E005C             addi r4,r30,0x5c
+  82902FA4  807D0000             lwz r3,0x0(r29)
+  82902FA8  4BFF2D29             bl 0x828f5cd0
+  82902FAC  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902FB0  39600001             li r11,0x1
+  82902FB4  40820008             bne 0x82902fbc
+LAB_82902fb8:
+  82902FB8  39600000             li r11,0x0
+LAB_82902fbc:
+  82902FBC  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  82902FC0  7FA3EB78             or r3,r29,r29
+  82902FC4  4BA6143D             bl 0x82364400
+  82902FC8  7FC3F378             or r3,r30,r30
+  82902FCC  383F0070             addi r1,r31,0x70
+  82902FD0  4801373C             b 0x8291670c
 
 ; 82902E98  bdMailHeader::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailheader.cpp:31)
   82902E98  38600060             li r3,0x60

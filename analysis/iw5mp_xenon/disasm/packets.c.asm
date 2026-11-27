@@ -54,10 +54,103 @@ LAB_828c17c4:
 ; 828C17D0  PacketProcessorSubmit  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:117)
   828C17D0  7D8802A6             mfspr r12,LR
   828C17D4  48054EE5             bl 0x829166b8
+  828C17D8  9421FF80             stwu r1,-0x80(r1)
+  828C17DC  83E30000             lwz r31,0x0(r3)
+  828C17E0  7C7E1B78             or r30,r3,r3
+  828C17E4  7C9D2378             or r29,r4,r4
+  828C17E8  3B800000             li r28,0x0
+  828C17EC  2B1F0000             cmplwi cr6,r31,0x0
+  828C17F0  419A005C             beq cr6,0x828c184c
+  828C17F4  81630004             lwz r11,0x4(r3)
+  828C17F8  7F1F5840             cmplw cr6,r31,r11
+  828C17FC  409A0008             bne cr6,0x828c1804
+  828C1800  93830004             stw r28,0x4(r3)
+LAB_828c1804:
+  828C1804  817F0004             lwz r11,0x4(r31)
+  828C1808  38A00008             li r5,0x8
+  828C180C  38800000             li r4,0x0
+  828C1810  7FE3FB78             or r3,r31,r31
+  828C1814  917E0000             stw r11,0x0(r30)
+  828C1818  939F0004             stw r28,0x4(r31)
+  828C181C  4BFE0FD5             bl 0x828a27f0
+  828C1820  39400103             li r10,0x103
+  828C1824  939D0004             stw r28,0x4(r29)
+  828C1828  397E0008             addi r11,r30,0x8
+  828C182C  915D0000             stw r10,0x0(r29)
+  828C1830  93BF0000             stw r29,0x0(r31)
+  828C1834  939F0004             stw r28,0x4(r31)
+  828C1838  815E000C             lwz r10,0xc(r30)
+  828C183C  2B0A0000             cmplwi cr6,r10,0x0
+  828C1840  419A0018             beq cr6,0x828c1858
+  828C1844  93EA0004             stw r31,0x4(r10)
+  828C1848  48000014             b 0x828c185c
+LAB_828c184c:
+  828C184C  3F808007             lis r28,-0x7ff9
+  828C1850  639C007A             ori r28,r28,0x7a
+  828C1854  4800000C             b 0x828c1860
+LAB_828c1858:
+  828C1858  93EB0000             stw r31,0x0(r11)
+LAB_828c185c:
+  828C185C  93EB0004             stw r31,0x4(r11)
+LAB_828c1860:
+  828C1860  7F83E378             or r3,r28,r28
+  828C1864  38210080             addi r1,r1,0x80
+  828C1868  48054EA0             b 0x82916708
 
 ; 828C1958  PacketProcessorCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:219)
   828C1958  7D8802A6             mfspr r12,LR
   828C195C  48054D59             bl 0x829166b4
+  828C1960  9421FF80             stwu r1,-0x80(r1)
+  828C1964  7C9B2378             or r27,r4,r4
+  828C1968  3C80618A             lis r4,0x618a
+  828C196C  7C7E1B78             or r30,r3,r3
+  828C1970  38600014             li r3,0x14
+  828C1974  60848005             ori r4,r4,0x8005
+  828C1978  3B800000             li r28,0x0
+  828C197C  4BD4526D             bl 0x82606be8
+  828C1980  7C7F1B79             or. r31,r3,r3
+  828C1984  40820028             bne 0x828c19ac
+LAB_828c1988:
+  828C1988  3F808007             lis r28,-0x7ff9
+  828C198C  7FE3FB78             or r3,r31,r31
+  828C1990  639C000E             ori r28,r28,0xe
+  828C1994  4BFFFEDD             bl 0x828c1870
+  828C1998  3BE00000             li r31,0x0
+LAB_828c199c:
+  828C199C  93FB0000             stw r31,0x0(r27)
+  828C19A0  7F83E378             or r3,r28,r28
+  828C19A4  38210080             addi r1,r1,0x80
+  828C19A8  48054D5C             b 0x82916704
+LAB_828c19ac:
+  828C19AC  57DD1838             rlwinm r29,r30,0x3,0x0,0x1c
+  828C19B0  3C80618A             lis r4,0x618a
+  828C19B4  7FA3EB78             or r3,r29,r29
+  828C19B8  60840003             ori r4,r4,0x3
+  828C19BC  4BD4522D             bl 0x82606be8
+  828C19C0  28030000             cmplwi r3,0x0
+  828C19C4  907F0010             stw r3,0x10(r31)
+  828C19C8  4182FFC0             beq 0x828c1988
+  828C19CC  2B1E0000             cmplwi cr6,r30,0x0
+  828C19D0  419AFFCC             beq cr6,0x828c199c
+  828C19D4  7FC903A6             mtspr CTR,r30
+  828C19D8  7FAAEB78             or r10,r29,r29
+LAB_828c19dc:
+  828C19DC  817F0010             lwz r11,0x10(r31)
+  828C19E0  394AFFF8             subi r10,r10,0x8
+  828C19E4  39200000             li r9,0x0
+  828C19E8  7D6B5214             add r11,r11,r10
+  828C19EC  912B0004             stw r9,0x4(r11)
+  828C19F0  813F0004             lwz r9,0x4(r31)
+  828C19F4  2B090000             cmplwi cr6,r9,0x0
+  828C19F8  419A000C             beq cr6,0x828c1a04
+  828C19FC  91690004             stw r11,0x4(r9)
+  828C1A00  48000008             b 0x828c1a08
+LAB_828c1a04:
+  828C1A04  917F0000             stw r11,0x0(r31)
+LAB_828c1a08:
+  828C1A08  917F0004             stw r11,0x4(r31)
+  828C1A0C  4200FFD0             bdnz 0x828c19dc
+  828C1A10  4BFFFF8C             b 0x828c199c
 
 ; 828C1870  PacketProcessorDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/packets.c:290)
   828C1870  7D8802A6             mfspr r12,LR

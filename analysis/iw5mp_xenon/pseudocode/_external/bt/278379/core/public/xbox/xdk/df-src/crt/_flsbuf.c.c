@@ -5,7 +5,96 @@
 int _flsbuf(int _Ch,FILE *_File)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(_Ch,_File);
+  char *_Buf;
+  uint _FileHandle;
+  int *piVar3;
+  ulonglong uVar1;
+  FILE *pFVar4;
+  int iVar5;
+  longlong lVar2;
+  int iVar6;
+  uint uVar7;
+  undefined *puVar8;
+  longlong lVar9;
+  uint uStack00000014;
+  FILE *_File_00;
+  
+  uVar1 = (ulonglong)(int)_File;
+  uStack00000014 = __savegprlr_28(_Ch);
+  _File_00 = (FILE *)uVar1;
+  _FileHandle = _fileno(_File_00);
+  uVar7 = _File_00->_flag;
+  if ((uVar7 & 0x82) == 0) {
+    piVar3 = _errno();
+    iVar6 = 9;
+LAB_8291edc8:
+    *piVar3 = iVar6;
+LAB_8291edd0:
+    uVar7 = _File_00->_flag;
+  }
+  else {
+    if ((uVar7 & 0x40) != 0) {
+      piVar3 = _errno();
+      iVar6 = 0x22;
+      goto LAB_8291edc8;
+    }
+    if ((uVar7 & 1) == 0) {
+LAB_8291ee20:
+      uVar7 = _File_00->_flag;
+      iVar6 = 0;
+      _File_00->_cnt = 0;
+      _File_00->_flag = uVar7 & 0xffffffef | 2;
+      if (((uVar7 & 0x10c) == 0) &&
+         (((pFVar4 = __iob_func(),
+           (uVar1 & 0xffffffff) != ((longlong)(int)pFVar4 + 0x20U & 0xffffffff) &&
+           (pFVar4 = __iob_func(),
+           (uVar1 & 0xffffffff) != ((longlong)(int)pFVar4 + 0x40U & 0xffffffff))) ||
+          (iVar5 = _isatty(_FileHandle), iVar5 == 0)))) {
+        _getbuf(_File_00);
+      }
+      if ((_File_00->_flag & 0x108U) == 0) {
+        lVar9 = 1;
+        iVar6 = _write(_FileHandle,&stack0x00000014,1);
+LAB_8291ef4c:
+        if (iVar6 == (int)lVar9) {
+          uVar1 = (ulonglong)uStack00000014 & 0xff;
+          goto LAB_8291ef5c;
+        }
+      }
+      else {
+        _Buf = _File_00->_base;
+        lVar9 = ZEXT48(_File_00->_ptr) - ZEXT48(_Buf);
+        _File_00->_cnt = _File_00->_bufsiz + -1;
+        _File_00->_ptr = _Buf + 1;
+        if (0 < lVar9) {
+          iVar6 = _write(_FileHandle,_Buf,(uint)lVar9);
+LAB_8291ef24:
+          *_File_00->_base = (char)uStack00000014;
+          goto LAB_8291ef4c;
+        }
+        if ((_FileHandle == 0xffffffff) || (_FileHandle == 0xfffffffe)) {
+          puVar8 = &DAT_829b0a68;
+        }
+        else {
+          puVar8 = (undefined *)
+                   ((&DAT_84897dc0)[(int)_FileHandle >> 5] + (_FileHandle & 0x1f) * 0x48);
+        }
+        if (((puVar8[4] & 0x20) == 0) || (lVar2 = _lseeki64(_FileHandle,0,2), lVar2 != -1))
+        goto LAB_8291ef24;
+      }
+      goto LAB_8291edd0;
+    }
+    _File_00->_cnt = 0;
+    if ((uVar7 & 0x10) != 0) {
+      _File_00->_flag = uVar7 & 0xfffffffe;
+      _File_00->_ptr = _File_00->_base;
+      goto LAB_8291ee20;
+    }
+  }
+  uVar1 = 0xffffffffffffffff;
+  _File_00->_flag = uVar7 | 0x20;
+LAB_8291ef5c:
+  iVar6 = __restgprlr_28(uVar1);
+  return iVar6;
 }
 

@@ -6,7 +6,47 @@ int MultiByteToWideChar(UINT CodePage,DWORD dwFlags,LPCSTR lpMultiByteStr,int cb
                        LPWSTR lpWideCharStr,int cchWideChar)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(CodePage,dwFlags,lpMultiByteStr,cbMultiByte,lpWideCharStr,cchWideChar);
+  int iVar2;
+  longlong lVar1;
+  DWORD dwErrCode;
+  longlong lVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  char *pcVar7;
+  longlong lVar6;
+  
+  uVar5 = (ulonglong)cchWideChar;
+  lVar4 = (longlong)(int)lpWideCharStr;
+  lVar1 = (longlong)cbMultiByte;
+  lVar3 = (longlong)(int)lpMultiByteStr;
+  iVar2 = __savegprlr_27(CodePage,dwFlags,lVar3,lVar1,lVar4);
+  if (iVar2 == 0xfde9) {
+    lVar1 = UTF8ToUnicode(lVar3,lVar1,lVar4,uVar5);
+  }
+  else {
+    lVar6 = lVar3;
+    if ((int)lVar1 == -1) {
+      do {
+        pcVar7 = (char *)lVar6;
+        lVar6 = lVar6 + 1;
+      } while (*pcVar7 != '\0');
+      lVar1 = ((lVar6 - lVar3) - 1U & 0xffffffff) + 1;
+    }
+    if ((int)uVar5 != 0) {
+      if (((int)lVar1 < 0) || ((int)uVar5 < (int)lVar1)) {
+        dwErrCode = 0x7a;
+      }
+      else {
+        iVar2 = RtlMultiByteToUnicodeN(lVar4,(uVar5 & 0x7fffffff) << 1,0,lVar3,lVar1);
+        if (-1 < iVar2) goto LAB_828a2c84;
+        dwErrCode = RtlNtStatusToDosError();
+      }
+      SetLastError(dwErrCode);
+      lVar1 = 0;
+    }
+  }
+LAB_828a2c84:
+  iVar2 = __restgprlr_27(lVar1);
+  return iVar2;
 }
 

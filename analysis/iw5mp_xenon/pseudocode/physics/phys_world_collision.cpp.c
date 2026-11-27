@@ -2,21 +2,116 @@
 
 // 8267EB48  Phys_GetSurfaceFlagsFromBrush  (physics/phys_world_collision.cpp:51)
 
-void Phys_GetSurfaceFlagsFromBrush(void)
+void Phys_GetSurfaceFlagsFromBrush(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort *puVar1;
+  
+  puVar1 = (ushort *)__savegprlr_28();
+  if (puVar1 == (ushort *)0x0) {
+    MyAssertHandler(0xffffffff82196f38,0x3a,0,0xffffffff82000f98,0xffffffff82082224);
+  }
+  if ((ulonglong)*puVar1 + 6 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82196f38,0x3b,0,0xffffffff82196ef0,param_2);
+  }
+  if ((int)(uint)param_2 < 6) {
+    if (5 < (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82192560,0xa1,0,0xffffffff821925a4,param_2,6);
+      MyAssertHandler(0xffffffff82192560,0xa8,0,0xffffffff821925a4,param_2,6);
+    }
+    __restgprlr_28(*(undefined4 *)
+                    ((short)puVar1[(((uint)param_2 & 1) + 2) * 3 +
+                                   (int)((param_2 & 0xffffffff) >> 1)] * 0xc + DAT_835a2894 + 4));
+    return;
+  }
+  __restgprlr_28(*(undefined4 *)
+                  ((uint)*(ushort *)
+                          (*(int *)(puVar1 + 2) + (int)((param_2 & 0xffffffff) << 3) + -0x2c) * 0xc
+                   + DAT_835a2894 + 4));
+  return;
 }
 
 
 // 8267EC98  Phys_TestGeomInBrush  (physics/phys_world_collision.cpp:79)
 
-void Phys_TestGeomInBrush(void)
+void Phys_TestGeomInBrush(undefined8 param_1,int *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  
+  uVar4 = __savegprlr_28();
+  iVar1 = param_2[1];
+  if (*(int *)(iVar1 + 4) < *(int *)(iVar1 + 8)) {
+    iVar2 = *param_2;
+    iVar3 = *(int *)(iVar2 + 0x30);
+    lVar7 = (uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + (ulonglong)DAT_835a28c0;
+    lVar6 = (uVar4 + (uVar4 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + (ulonglong)DAT_835a28bc;
+    if (iVar3 - 1U < 7) {
+      if (iVar3 == 2) {
+        uVar5 = 0x169;
+        if (*(int *)(iVar2 + 0xa4) < 3) {
+          uVar5 = 0x17c;
+        }
+        Profile_Begin(uVar5);
+        Phys_CollideOrientedBrushModelWithBrush(lVar7,lVar6,*param_2,iVar1);
+        Profile_EndInternal(0);
+        __restgprlr_28();
+        return;
+      }
+      if (iVar3 == 3) {
+        uVar5 = 0x169;
+        if (*(int *)(iVar2 + 0xa4) < 3) {
+          uVar5 = 0x17c;
+        }
+        Profile_Begin(uVar5);
+        uVar4 = (ulonglong)*(uint *)(*param_2 + 0x88);
+        Phys_CollideOrientedBrushWithBrush(uVar4,uVar4 + 0x18,lVar7,lVar6,*param_2,iVar1);
+        Profile_EndInternal(0);
+        __restgprlr_28();
+        return;
+      }
+      if (iVar3 != 4) {
+        if (iVar3 == 5) {
+          Profile_Begin(0x17e);
+          Phys_CollideCylinderWithBrush(lVar7,lVar6,*param_2,iVar1);
+          Profile_EndInternal(0);
+          __restgprlr_28();
+          return;
+        }
+        if (iVar3 != 6) {
+          if (iVar3 == 1) {
+            Profile_Begin(0x17b);
+            Phys_CollideBoxWithBrush(lVar7,lVar6,*param_2,iVar1);
+            Profile_EndInternal(0);
+            __restgprlr_28();
+            return;
+          }
+          Profile_Begin(0x182);
+          Phys_CollideGlassWithBrush(lVar7,lVar6,*param_2,iVar1);
+          Profile_EndInternal(0);
+          __restgprlr_28();
+          return;
+        }
+        Profile_Begin(0x180);
+        Phys_CollideCapsuleWithBrush(lVar7,lVar6,*param_2,iVar1);
+        Profile_EndInternal(0);
+        __restgprlr_28();
+        return;
+      }
+    }
+    if (DAT_84013128 == 0) {
+      uVar5 = va(0xffffffff82196f84);
+      MyAssertHandler(0xffffffff82196f38,0x9e,0,uVar5);
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -40,7 +135,6 @@ void CM_ForEachBrushInLeafBrushNode_r
   
   uVar5 = __savegprlr_21();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0xb8,0,0xffffffff82000f98,0xffffffff8206f7e8);
   }
 LAB_8267eee8:
@@ -119,16 +213,13 @@ void CM_TestGeomInLeafBrushNode(undefined8 param_1,longlong param_2,undefined4 p
   
   iVar5 = __savegprlr_25();
   if (*(int *)(iVar5 + 0x24) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x10e,0,0xffffffff82000f98,0xffffffff82082734);
   }
   lVar6 = param_2 + 0x14;
   if (lVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82193dd8,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
   }
   if ((float *)(iVar5 + 0xc) == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82193dd8,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
   }
   puVar1 = (undefined4 *)param_2;
@@ -179,21 +270,145 @@ undefined8 CM_CullBox2(int param_1,float *param_2,float *param_3)
 
 // 8267F310  CM_PartitionChecked  (physics/phys_world_collision.cpp:326)
 
-void CM_PartitionChecked(void)
+void CM_PartitionChecked(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = __savegprlr_29();
+  uVar1 = *(undefined4 *)(iVar3 + 0xc);
+  if (*(int *)(iVar3 + 0x10) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x14b,0,0xffffffff82000f98,0xffffffff82196f9c);
+  }
+  iVar2 = (int)((param_2 & 0xffffffff) << 2);
+  iVar4 = (int)(short)uVar1;
+  if (*(int *)(iVar2 + *(int *)(iVar3 + 0x10)) == iVar4) {
+    __restgprlr_29(1);
+    return;
+  }
+  *(int *)(iVar2 + *(int *)(iVar3 + 0x10)) = iVar4;
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 8267F390  CM_PositionGeomTestInAabbTree_Hit  (physics/phys_world_collision.cpp:342)
 
-void CM_PositionGeomTestInAabbTree_Hit(void)
+void CM_PositionGeomTestInAabbTree_Hit(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 uVar1;
+  int iVar2;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar3;
+  ulonglong uVar6;
+  longlong lVar7;
+  byte *pbVar8;
+  longlong lVar9;
+  int iVar10;
+  longlong lVar11;
+  int iVar12;
+  longlong lVar13;
+  
+  iVar4 = __savegprlr_23();
+  iVar12 = *(int *)(iVar4 + 0x1c);
+  cVar5 = CM_PartitionChecked(param_2,iVar12);
+  if (cVar5 != '\0') goto LAB_8267f6d0;
+  iVar2 = (int)param_2;
+  iVar10 = *(int *)(iVar2 + 0x30);
+  pbVar8 = (byte *)(iVar12 * 0xc + DAT_835a2904);
+  uVar1 = *(undefined4 *)((uint)*(ushort *)(iVar4 + 0xc) * 0xc + DAT_835a2894 + 4);
+  lVar13 = (ulonglong)pbVar8[2] * 0x3000 + (ulonglong)DAT_835a28e8;
+  iVar12 = *(int *)(pbVar8 + 4) * 6 + DAT_835a28f0;
+  if (iVar10 - 1U < 7) {
+    if (iVar10 == 2) {
+      uVar3 = 0x16a;
+      if (*(int *)(iVar2 + 0xa4) < 3) {
+        uVar3 = 0x17d;
+      }
+      Profile_Begin(uVar3);
+      Phys_CollideOrientedBrushModelWithTriangleList(iVar12,lVar13,*pbVar8,param_2,uVar1,param_3);
+      Profile_EndInternal(0);
+    }
+    else if (iVar10 == 3) {
+      uVar3 = 0x16a;
+      if (*(int *)(iVar2 + 0xa4) < 3) {
+        uVar3 = 0x17d;
+      }
+      Profile_Begin(uVar3);
+      Phys_CollideOrientedBrushWithTriangleList
+                ((ulonglong)*(uint *)(iVar2 + 0x88),(ulonglong)*(uint *)(iVar2 + 0x88) + 0x18,iVar12
+                 ,lVar13,*pbVar8,param_2,uVar1,param_3);
+      Profile_EndInternal(0);
+    }
+    else {
+      if (iVar10 == 4) goto LAB_8267f5a4;
+      if (iVar10 == 5) {
+        Profile_Begin(0x17f);
+        Phys_CollideCylinderWithTriangleList(iVar12,lVar13,*pbVar8,param_2,uVar1,param_3);
+        Profile_EndInternal(0);
+      }
+      else if (iVar10 == 6) {
+        Profile_Begin(0x181);
+        Phys_CollideCapsuleWithTriangleList(iVar12,lVar13,*pbVar8,param_2,uVar1,param_3);
+        Profile_EndInternal(0);
+      }
+      else if (iVar10 == 1) {
+        Profile_Begin(0x179);
+        Phys_CollideBoxWithTriangleList(iVar12,lVar13,*pbVar8,param_2,uVar1,param_3);
+        Profile_EndInternal(0);
+      }
+      else {
+        Profile_Begin(0x183);
+        Phys_CollideGlassWithTriangleList(iVar12,lVar13,*pbVar8,param_2,uVar1,param_3);
+        Profile_EndInternal(0);
+      }
+    }
+  }
+  else {
+LAB_8267f5a4:
+    if (DAT_84013128 == 0) {
+      uVar3 = va(0xffffffff82196f84);
+      MyAssertHandler(0xffffffff82196f38,0x1c2,0,uVar3);
+    }
+  }
+  if (*(char *)(DAT_8427b8e0 + 0xc) != '\0') {
+    iVar4 = 0;
+    if (*pbVar8 != 0) {
+      lVar11 = 0;
+      do {
+        lVar7 = 0;
+        do {
+          lVar9 = lVar7 + 1;
+          iVar10 = (int)lVar9;
+          uVar6 = (longlong)iVar10 / 3 + ((longlong)iVar10 >> 0x3f);
+          uVar6 = (uVar6 & 0xffffffff) + ((uVar6 & 0xffffffff) >> 0x1f);
+          uVar6 = (ulonglong)
+                  *(ushort *)
+                   ((int)((lVar11 + (lVar9 - (uVar6 + (uVar6 & 0x7fffffff) * 2)) & 0xffffffff) << 1)
+                   + iVar12);
+          if (*(int *)(iVar2 + 0xa4) < 3) {
+            CG_DebugLine((ulonglong)*(ushort *)((int)((lVar11 + lVar7 & 0xffffffffU) << 1) + iVar12)
+                         * 0xc + lVar13,uVar6 * 0xc + lVar13,0xffffffff821817f8,0,2);
+          }
+          else {
+            G_DebugLine((ulonglong)*(ushort *)((int)((lVar11 + lVar7 & 0xffffffffU) << 1) + iVar12)
+                        * 0xc + lVar13,uVar6 * 0xc + lVar13);
+          }
+          lVar7 = lVar9;
+        } while (iVar10 < 3);
+        iVar4 = iVar4 + 1;
+        lVar11 = lVar11 + 3;
+      } while (iVar4 < (int)(uint)*pbVar8);
+    }
+  }
+LAB_8267f6d0:
+  __restgprlr_23();
+  return;
 }
 
 
@@ -235,7 +450,6 @@ void CM_PositionGeomTestInAabbTree_Iterate(undefined8 param_1,undefined8 param_2
           }
           else {
             if (0x2f < iVar9) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82196f38,0x1f6,0,0xffffffff82082120,0xffffffff820820fc,iVar9
                              );
             }
@@ -263,31 +477,231 @@ void CM_PositionGeomTestInAabbTree_Iterate(undefined8 param_1,undefined8 param_2
 
 // 8267F860  CM_MeshTestGeomInLeaf  (physics/phys_world_collision.cpp:527)
 
-void CM_MeshTestGeomInLeaf(void)
+void CM_MeshTestGeomInLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ushort uVar1;
+  bool bVar2;
+  ushort *puVar3;
+  uint *puVar4;
+  float *pfVar5;
+  int iVar6;
+  float *pfVar7;
+  int iVar8;
+  float *pfVar9;
+  int *piVar10;
+  int iVar11;
+  int aiStack_284 [161];
+  
+  puVar3 = (ushort *)__savegprlr_18();
+  iVar8 = 0;
+  if (puVar3[1] != 0) {
+    do {
+      puVar4 = (uint *)param_2;
+      pfVar5 = (float *)(((uint)*puVar3 + iVar8) * 0x20 + DAT_835a290c);
+      if ((*(uint *)((uint)*(ushort *)(pfVar5 + 3) * 0xc + DAT_835a2894 + 8) & *puVar4) != 0) {
+        iVar11 = 0;
+        pfVar9 = pfVar5 + 8;
+        while( true ) {
+          if (pfVar5 != pfVar9) {
+            piVar10 = aiStack_284 + iVar11 * 2;
+            pfVar5 = pfVar5 + 6;
+            do {
+              bVar2 = true;
+              if (((ABS((float)puVar4[5] - pfVar5[-6]) <= pfVar5[-2] + (float)puVar4[8]) &&
+                  (ABS((float)puVar4[6] - pfVar5[-5]) <= pfVar5[-1] + (float)puVar4[9])) &&
+                 (ABS((float)puVar4[7] - pfVar5[-4]) <= (float)puVar4[10] + *pfVar5)) {
+                bVar2 = false;
+              }
+              if (!bVar2) {
+                if (*(short *)((int)pfVar5 + -10) == 0) {
+                  CM_PositionGeomTestInAabbTree_Hit(pfVar5 + -6,param_2,param_3);
+                }
+                else {
+                  if (0x2f < iVar11) {
+                    MyAssertHandler(0xffffffff82196f38,0x1f6,0,0xffffffff82082120,0xffffffff820820fc
+                                    ,iVar11);
+                  }
+                  iVar11 = iVar11 + 1;
+                  uVar1 = *(ushort *)((int)pfVar5 + -10);
+                  iVar6 = (int)pfVar5[1] * 0x20 + DAT_835a290c;
+                  piVar10[1] = iVar6;
+                  piVar10 = piVar10 + 2;
+                  *piVar10 = (uint)uVar1 * 0x20 + iVar6;
+                }
+              }
+              pfVar7 = pfVar5 + 2;
+              pfVar5 = pfVar5 + 8;
+            } while (pfVar7 != pfVar9);
+          }
+          if (iVar11 == 0) break;
+          iVar11 = iVar11 + -1;
+          pfVar5 = (float *)aiStack_284[iVar11 * 2 + 1];
+          pfVar9 = (float *)aiStack_284[iVar11 * 2 + 2];
+        }
+      }
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < (int)(uint)puVar3[1]);
+  }
+  __restgprlr_18();
+  return;
 }
 
 
 // 8267FA50  CM_TestGeomInLeaf  (physics/phys_world_collision.cpp:552)
 
-void CM_TestGeomInLeaf(void)
+void CM_TestGeomInLeaf(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if ((*(uint *)(iVar1 + 4) & *(uint *)param_2) != 0) {
+    CM_TestGeomInLeafBrushNode();
+  }
+  if ((*(uint *)(iVar1 + 8) & *(uint *)param_2) != 0) {
+    CM_MeshTestGeomInLeaf(iVar1,param_2,param_3);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 8267FAB0  Phys_TestAgainstEntities  (physics/phys_world_collision.cpp:563)
+
+void Phys_TestAgainstEntities(undefined8 param_1,int param_2)
+
+{
+  undefined4 *puVar2;
+  longlong lVar1;
+  int iVar3;
+  int *piVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  undefined4 local_2110;
+  undefined4 local_210c;
+  undefined4 local_2108;
+  float local_2100;
+  float local_20fc;
+  float local_20f8;
+  undefined1 auStack_20f0 [48];
+  undefined1 auStack_20c0 [48];
+  undefined1 auStack_2090 [44];
+  int iStack_2064;
+  undefined1 local_2060 [8288];
+  
+  puVar2 = (undefined4 *)__savegprlr_24();
+  lVar1 = CM_AreaEntities(puVar2 + 5,local_2060,0x800,*puVar2);
+  MatrixIdentity33(auStack_20f0);
+  if (0 < (int)lVar1) {
+    piVar4 = &iStack_2064;
+    dVar7 = 2.0;
+    do {
+      piVar4 = piVar4 + 1;
+      local_2100 = (float)((double)(float)puVar2[0x22] * dVar7);
+      local_20fc = (float)((double)(float)puVar2[0x23] * dVar7);
+      local_20f8 = (float)((double)(float)puVar2[0x24] * dVar7);
+      iVar3 = *piVar4 * 0x280;
+      local_2110 = *(undefined4 *)(&DAT_833737a0 + iVar3);
+      local_210c = *(undefined4 *)(&DAT_833737a4 + iVar3);
+      local_2108 = *(undefined4 *)(&DAT_833737a8 + iVar3);
+      dVar6 = (double)*(float *)(&DAT_833737ac + iVar3);
+      dVar5 = (double)(float)((double)(float)((double)*(float *)(&DAT_833737b4 + iVar3) - dVar6) *
+                             dVar7);
+      Phys_AxisToOdeMatrix3(auStack_20f0,auStack_2090);
+      Phys_AxisToOdeMatrix3(puVar2 + 0x10,auStack_20c0);
+      iVar3 = ODE_CollideCapsuleBox
+                        (dVar6,dVar5,puVar2 + 0xd,auStack_20c0,&local_2100,&local_2110,auStack_2090,
+                         *(undefined4 *)(param_2 + 0xc),(ulonglong)*(uint *)(param_2 + 4),
+                         (ulonglong)*(uint *)(param_2 + 8) - (ulonglong)*(uint *)(param_2 + 4));
+      lVar1 = lVar1 + -1;
+      *(int *)(param_2 + 4) = iVar3 + *(int *)(param_2 + 4);
+    } while (lVar1 != 0);
+  }
+  __restgprlr_24();
+  return;
 }
 
 
 // 8267FC08  Phys_CollideWorldGeomWithInfo  (physics/phys_world_collision.cpp:604)
 
-void Phys_CollideWorldGeomWithInfo(void)
+void Phys_CollideWorldGeomWithInfo(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint *puVar1;
+  uint *puVar2;
+  ushort **ppuVar3;
+  int iVar4;
+  ushort *puVar5;
+  int iVar6;
+  longlong lVar7;
+  int local_870 [3];
+  ushort *local_864;
+  undefined4 local_860;
+  undefined4 local_85c;
+  undefined4 local_858;
+  float local_854;
+  float local_850;
+  float local_84c;
+  ushort local_840 [1056];
+  
+  puVar1 = (uint *)__savegprlr_26();
+  MatrixTranspose(puVar1 + 0x10,puVar1 + 0x19);
+  ppuVar3 = &local_864;
+  local_860 = *param_3;
+  puVar2 = puVar1 + 4;
+  local_85c = param_3[1];
+  local_854 = (float)param_3[3] + 1.0;
+  local_858 = param_3[2];
+  local_850 = (float)param_3[4] + 1.0;
+  local_84c = (float)param_3[5] + 1.0;
+  lVar7 = 6;
+  do {
+    ppuVar3 = ppuVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = (uint)*ppuVar3;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  local_864 = local_840;
+  local_870[0] = 0;
+  local_870[1] = 0x400;
+  local_870[2] = 0;
+  puVar1[0xb] = (uint)SQRT(((float)puVar1[8] + 0.0) * ((float)puVar1[8] + 0.0) +
+                           ((float)puVar1[10] + 0.0) * ((float)puVar1[10] + 0.0) +
+                           ((float)puVar1[9] + 0.0) * ((float)puVar1[9] + 0.0));
+  CM_BoxLeafnums_r(local_870,0);
+  if (local_870[0] == 0) {
+    __restgprlr_26(0);
+    return;
+  }
+  CM_GetTraceThreadInfo(puVar1 + 2);
+  if ((int)puVar1[0x29] < 3) {
+    Profile_Begin(0x177);
+  }
+  iVar4 = 0;
+  if (0 < local_870[0]) {
+    puVar5 = local_840;
+    do {
+      iVar6 = (uint)*puVar5 * 0x28 + DAT_835a28e0;
+      if ((*(uint *)(iVar6 + 4) & *puVar1) != 0) {
+        CM_TestGeomInLeafBrushNode(iVar6,puVar1,param_2);
+      }
+      if ((*(uint *)(iVar6 + 8) & *puVar1) != 0) {
+        CM_MeshTestGeomInLeaf(iVar6,puVar1,param_2);
+      }
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 1;
+    } while (iVar4 < local_870[0]);
+  }
+  if (*(char *)(DAT_8427b8f4 + 0xc) != '\0') {
+    Phys_TestAgainstEntities(puVar1,param_2);
+  }
+  if ((int)puVar1[0x29] < 3) {
+    Profile_EndInternal(0);
+  }
+  __restgprlr_26(*(undefined4 *)((int)param_2 + 4));
+  return;
 }
 
 
@@ -313,11 +727,58 @@ bool Phys_IsHalfSizeTooNarrow(float *param_1)
 
 // 8267FE48  Phys_GetTransformedBounds  (physics/phys_world_collision.cpp:672)
 
-void Phys_GetTransformedBounds(void)
+void Phys_GetTransformedBounds
+               (undefined8 param_1,undefined8 param_2,float *param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  int iVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_70;
+  float local_6c;
+  float local_68;
+  
+  uVar3 = ZEXT48(&stack0x00000000);
+  iVar4 = __savegprlr_28();
+  dVar8 = (double)*param_3;
+  dVar7 = (double)param_3[1];
+  dVar6 = (double)param_3[2];
+  if ((param_4 & 0xffffffff) == (uVar3 - 0x60 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82193dd8,0xc6,0,0xffffffff82000f98,0xffffffff8206f2a4);
+  }
+  MatrixTransformVector(uVar3 - 0x60,(float *)(iVar4 + 0x40),uVar3 - 0x70);
+  pfVar5 = (float *)param_4;
+  *pfVar5 = *(float *)(iVar4 + 0x34) + local_70;
+  pfVar5[1] = *(float *)(iVar4 + 0x38) + local_6c;
+  pfVar5[2] = *(float *)(iVar4 + 0x3c) + local_68;
+  pfVar5[3] = (float)(ABS((double)*(float *)(iVar4 + 0x40)) * dVar8 +
+                     (double)(float)(ABS((double)*(float *)(iVar4 + 0x58)) * dVar6 +
+                                    (double)(float)(ABS((double)*(float *)(iVar4 + 0x4c)) * dVar7)))
+  ;
+  pfVar5[4] = (float)(ABS((double)*(float *)(iVar4 + 0x50)) * dVar7 +
+                     (double)(float)(ABS((double)*(float *)(iVar4 + 0x5c)) * dVar6 +
+                                    (double)(float)(ABS((double)*(float *)(iVar4 + 0x44)) * dVar8)))
+  ;
+  pfVar5[5] = (float)(ABS((double)*(float *)(iVar4 + 0x54)) * dVar7 +
+                     (double)(float)(ABS((double)*(float *)(iVar4 + 0x60)) * dVar6 +
+                                    (double)(float)(ABS((double)*(float *)(iVar4 + 0x48)) * dVar8)))
+  ;
+  fVar2 = param_3[1];
+  if (param_3[2] - param_3[1] < 0.0) {
+    fVar2 = param_3[2];
+  }
+  fVar1 = *param_3;
+  if (fVar2 - *param_3 < 0.0) {
+    fVar1 = fVar2;
+  }
+  *(bool *)(iVar4 + 0xa0) = fVar1 * 2.0 < 4.0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -394,11 +855,130 @@ void Phys_GetBoundsCylinder(int param_1,undefined4 *param_2)
 
 // 82680158  Phys_CollideWorldWithCollmap  (physics/phys_world_collision.cpp:721)
 
-void Phys_CollideWorldWithCollmap(void)
+void Phys_CollideWorldWithCollmap(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int *piVar5;
+  uint uVar6;
+  int *piVar7;
+  float *pfVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  float local_128;
+  float local_124;
+  float local_120;
+  float local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  float local_104;
+  float local_100;
+  float local_fc;
+  undefined1 auStack_f0 [240];
+  
   __savegprlr();
+  uVar2 = __savefpr_26();
+  iVar3 = dGeomGetClass();
+  if (iVar3 != 4) {
+    MyAssertHandler(0xffffffff82196f38,0x2e3,0,0xffffffff82000f98,0xffffffff821970c4);
+  }
+  iVar4 = dGeomGetBody(uVar2);
+  piVar5 = (int *)ODE_GeomGetClassData(uVar2);
+  iVar3 = *piVar5;
+  Phys_OdeMatrix3ToAxis(iVar4 + 0x100,auStack_f0);
+  MatrixTransformVector(piVar5 + 1,auStack_f0,&local_128);
+  dVar15 = (double)local_128;
+  dVar14 = (double)local_120;
+  dVar13 = (double)local_124;
+  if (((((uint)local_128 & 0x7f800000) == 0x7f800000) ||
+      (((uint)local_124 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)local_120 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82196f38,0x2ee,0,0xffffffff82000f98,0xffffffff82197058);
+  }
+  uVar6 = 0;
+  piVar7 = *(int **)(iVar3 + 8);
+  if (*(int *)(iVar3 + 4) != 0) {
+    dVar16 = 4.0;
+    dVar17 = 2.0;
+    dVar18 = 1.414214015007019;
+    pfVar8 = (float *)(piVar7 + 0xd);
+    do {
+      pfVar9 = (float *)(param_2 + 0x34);
+      iVar1 = (int)param_2;
+      if (*piVar7 == 0) {
+        MatrixMultiply(pfVar8 + -0xb,auStack_f0,param_2 + 0x40);
+        local_128 = pfVar8[-2] - (float)piVar5[1];
+        local_124 = pfVar8[-1] - (float)piVar5[2];
+        local_120 = *pfVar8 - (float)piVar5[3];
+        MatrixTransformVector(&local_128,auStack_f0,param_2 + 0x34);
+        *pfVar9 = *(float *)(iVar4 + 0xe0) + *pfVar9;
+        *(float *)(iVar1 + 0x38) = *(float *)(iVar4 + 0xe4) + *(float *)(iVar1 + 0x38);
+        *(float *)(iVar1 + 0x3c) = *(float *)(iVar1 + 0x3c) + *(float *)(iVar4 + 0xe8);
+        *(float *)(iVar1 + 0x88) = pfVar8[1];
+        *(float *)(iVar1 + 0x8c) = pfVar8[2];
+        *(float *)(iVar1 + 0x90) = pfVar8[3];
+        if (pfVar8[-0xc] == 1.4013e-45) {
+          *(undefined4 *)(iVar1 + 0x30) = 1;
+          Phys_GetBoundsBox(param_2,&local_110);
+        }
+        else {
+          if (pfVar8[-0xc] != 7.00649e-45) {
+            MyAssertHandler(0xffffffff82196f38,0x310,0,&DAT_82000f98,0xffffffff82197028);
+          }
+          *(undefined4 *)(iVar1 + 0x30) = 5;
+          dVar10 = (double)*(float *)(iVar1 + 0x88);
+          *(undefined4 *)(iVar1 + 4) = 1;
+          dVar12 = (double)*(float *)(iVar1 + 0x90);
+          local_110 = *pfVar9;
+          local_10c = *(undefined4 *)(iVar1 + 0x38);
+          dVar11 = dVar10;
+          if ((float)(dVar10 - dVar12) < 0.0) {
+            dVar11 = dVar12;
+            dVar12 = dVar10;
+          }
+          local_108 = *(undefined4 *)(iVar1 + 0x3c);
+          local_104 = (float)(dVar11 * dVar18);
+          *(bool *)(iVar1 + 0xa0) = (double)(float)(dVar12 * dVar17) < dVar16;
+          local_100 = local_104;
+          local_fc = local_104;
+        }
+      }
+      else {
+        *(undefined4 *)(iVar1 + 0x30) = 3;
+        *(int *)(iVar1 + 0x88) = *piVar7;
+        *pfVar9 = (float)((double)*(float *)(iVar4 + 0xe0) - dVar15);
+        *(float *)(iVar1 + 0x38) = (float)((double)*(float *)(iVar4 + 0xe4) - dVar13);
+        *(float *)(iVar1 + 0x3c) = (float)((double)*(float *)(iVar4 + 0xe8) - dVar14);
+        Phys_OdeMatrix3ToAxis(iVar4 + 0x100,param_2 + 0x40);
+        Phys_GetTransformedBounds
+                  (param_2,(ulonglong)*(uint *)(iVar1 + 0x88),
+                   (ulonglong)*(uint *)(iVar1 + 0x88) + 0xc,&local_110);
+      }
+      Phys_CollideWorldGeomWithInfo(param_2,param_3,&local_110);
+      uVar6 = uVar6 + 1;
+      piVar7 = piVar7 + 0x11;
+      pfVar8 = pfVar8 + 0x11;
+    } while (uVar6 < *(uint *)(iVar3 + 4));
+  }
+  if ((((*(uint *)(iVar4 + 0xe0) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar4 + 0xe4) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar4 + 0xe8) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff82196f38,0x31a,0,&DAT_82000f98,0xffffffff82196fc8);
+  }
+  __restfpr_26(*(undefined4 *)((int)param_3 + 4));
+  __restgprlr();
+  return;
 }
 
 
@@ -451,30 +1031,26 @@ void Phys_CollideWorldGeom
   
   uVar4 = __savegprlr_25();
   if (param_5 < 0x20) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x33b,0,0xffffffff82000f98,0xffffffff82197198);
   }
   iVar6 = dGeomGetClass(uVar4);
   if (iVar6 != 8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x33c,0,0xffffffff82000f98,0xffffffff82197170);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x33d,0,0xffffffff82000f98,0xffffffff82197168);
   }
   if (param_5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x33e,0,0xffffffff82000f98,0xffffffff8219715c);
   }
   uVar5 = dGeomGetBody(param_2);
   if ((uVar5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x341,0,0xffffffff82000f98,0xffffffff82003cbc);
+    __restgprlr_25(0);
+    return;
   }
   local_5c = (int)param_3 >> 0x10;
   if (4 < local_5c) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x349,0,0xffffffff82197118,local_5c,5);
   }
   uVar4 = 0x168;
@@ -511,11 +1087,9 @@ void Phys_CollideWorldGeom
       local_d0 = 2;
       psVar8 = (short *)ODE_GeomGetClassData(param_2);
       if (psVar8 == (short *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82196f38,0x37d,0,0xffffffff82000f98,0xffffffff8219710c);
       }
       if (*psVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82196f38,0x37e,0,0xffffffff82000f98,0xffffffff821970f4);
       }
       local_78 = (int *)CM_GetBrushModel(*psVar8);
@@ -531,7 +1105,6 @@ void Phys_CollideWorldGeom
         local_d0 = 5;
         puVar9 = (undefined4 *)ODE_GeomGetClassData(param_2);
         if (puVar9 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82196f38,0x38c,0,0xffffffff82000f98,0xffffffff821970f0);
         }
         local_fc = *puVar9;
@@ -544,7 +1117,6 @@ void Phys_CollideWorldGeom
         local_d0 = 6;
         puVar9 = (undefined4 *)ODE_GeomGetClassData(param_2);
         if (puVar9 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82196f38,0x399,0,0xffffffff82000f98,0xffffffff821970f0);
         }
         local_fc = *puVar9;
@@ -571,7 +1143,6 @@ void Phys_CollideWorldGeom
         local_d0 = 7;
         local_78 = (int *)ODE_GeomGetClassData(param_2);
         if (local_78 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82196f38,0x3ab,0,0xffffffff82000f98,0xffffffff82066518);
         }
         local_140 = local_cc;
@@ -597,14 +1168,13 @@ void Phys_CollideWorldGeom
     return;
   }
 LAB_82680a00:
-  if (DAT_84013128 != 0) {
-    Profile_EndInternal(0);
-    __restgprlr_25(0);
-    return;
+  if (DAT_84013128 == 0) {
+    uVar4 = va(0xffffffff82196f84,uVar5);
+    MyAssertHandler(0xffffffff82196f38,0x3b8,0,uVar4);
   }
-  uVar4 = va(0xffffffff82196f84,uVar5);
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82196f38,0x3b8,0,uVar4);
+  Profile_EndInternal(0);
+  __restgprlr_25(0);
+  return;
 }
 
 
@@ -615,7 +1185,6 @@ undefined8 Phys_GetColliderWorld(int param_1)
 {
   if ((((param_1 != 0) && (param_1 != 3)) && (param_1 != 4)) &&
      (((param_1 != 5 && (param_1 != 6)) && (param_1 != 7)))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x3c7,0,0xffffffff82000f98,0xffffffff821971d0);
   }
   return 0xffffffff826804e8;
@@ -636,7 +1205,6 @@ void Phys_InitWorldGeomClass(void)
   local_10 = 0;
   uVar1 = dCreateGeomClass(local_20);
   if ((int)uVar1 != 8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x3de,0,0xffffffff82197294,0xffffffff821972a8,uVar1);
   }
   return;
@@ -656,51 +1224,234 @@ void Phys_InitWorldCollision(void)
 
 // 82680B90  Phys_GetBrushmodelAABB  (physics/phys_world_collision.cpp:1002)
 
-void Phys_GetBrushmodelAABB(void)
+void Phys_GetBrushmodelAABB(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  ulonglong uVar2;
+  int iVar3;
+  short *psVar4;
+  
+  uVar2 = __savegprlr_28();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x3ee,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  iVar3 = dGeomGetClass(uVar2);
+  if (iVar3 != 3) {
+    MyAssertHandler(0xffffffff82196f38,0x3ef,0,0xffffffff82000f98,0xffffffff821972c8);
+  }
+  psVar4 = (short *)ODE_GeomGetClassData(uVar2);
+  if (*psVar4 == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x3f2,0,0xffffffff82000f98,0xffffffff821970f4);
+  }
+  iVar3 = CM_GetBrushModel(*psVar4);
+  fVar1 = -*(float *)(iVar3 + 0x18);
+  *param_2 = fVar1;
+  param_2[1] = fVar1;
+  param_2[2] = fVar1;
+  fVar1 = *(float *)(iVar3 + 0x18);
+  param_2[3] = fVar1;
+  param_2[4] = fVar1;
+  param_2[5] = fVar1;
+  __restgprlr_28();
+  return;
 }
 
 
 // 82680C70  Phys_GetCollmapAABB  (physics/phys_world_collision.cpp:1021)
 
-void Phys_GetCollmapAABB(void)
+void Phys_GetCollmapAABB(undefined8 param_1,undefined4 *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x3fe,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  iVar2 = dGeomGetClass(uVar1);
+  if (iVar2 != 4) {
+    MyAssertHandler(0xffffffff82196f38,0x3ff,0,0xffffffff82000f98,0xffffffff821943cc);
+  }
+  *param_2 = 0xff7fffff;
+  param_2[1] = 0xff7fffff;
+  param_2[2] = 0xff7fffff;
+  param_2[3] = 0x7f7fffff;
+  param_2[4] = 0x7f7fffff;
+  param_2[5] = 0x7f7fffff;
+  __restgprlr_28();
+  return;
 }
 
 
 // 82680D18  Phys_GetCylinderAABB  (physics/phys_world_collision.cpp:1031)
 
-void Phys_GetCylinderAABB(void)
+void Phys_GetCylinderAABB(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  uint uVar2;
+  float fVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  int iVar7;
+  uint *puVar8;
+  undefined8 uVar6;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  
+  uVar4 = ZEXT48(&stack0x00000000);
+  uVar5 = __savegprlr_28();
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x411,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  iVar7 = dGeomGetClass(uVar5);
+  if (iVar7 != 5) {
+    MyAssertHandler(0xffffffff82196f38,0x412,0,0xffffffff82000f98,0xffffffff82197324);
+  }
+  puVar8 = (uint *)ODE_GeomGetClassData(uVar5);
+  uVar6 = dGeomGetRotation(uVar5);
+  Phys_OdeMatrix3ToAxis(uVar6,uVar4 - 0x50);
+  dGeomGetPosition(uVar5);
+  uVar2 = *puVar8;
+  lVar10 = (ulonglong)uVar2 - 1;
+  if ((lVar10 < 0) || (2 < (int)lVar10)) {
+    MyAssertHandler(0xffffffff82196f38,0x41a,0,0xffffffff821972f8,lVar10,0,2);
+  }
+  lVar9 = uVar4 - 100;
+  lVar10 = ((ulonglong)uVar2 - 4 & 0x3fffffff) * 4 + (uVar4 - 0x50);
+  lVar11 = 3;
+  param_2 = param_2 + -4;
+  do {
+    lVar10 = lVar10 + 0xc;
+    fVar3 = ABS(*(float *)lVar10);
+    lVar9 = lVar9 + 4;
+    fVar1 = *(float *)lVar9;
+    fVar3 = SQRT(-(fVar3 * fVar3 - 1.0)) * (float)puVar8[1] + (float)puVar8[2] * fVar3;
+    *(float *)((int)param_2 + 4) = fVar1 - fVar3;
+    param_2 = param_2 + 8;
+    *(float *)param_2 = fVar1 + fVar3;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82680E70  Phys_GetCapsuleAABB  (physics/phys_world_collision.cpp:1064)
 
-void Phys_GetCapsuleAABB(void)
+void Phys_GetCapsuleAABB(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  ulonglong uVar3;
+  int iVar5;
+  uint *puVar6;
+  undefined8 uVar4;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float afStack_70 [28];
+  
+  uVar3 = __savegprlr_28();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x431,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  iVar5 = dGeomGetClass(uVar3);
+  if (iVar5 != 6) {
+    MyAssertHandler(0xffffffff82196f38,0x432,0,0xffffffff82000f98,0xffffffff82197354);
+  }
+  puVar6 = (uint *)ODE_GeomGetClassData(uVar3);
+  uVar4 = dGeomGetRotation(uVar3);
+  Phys_OdeMatrix3ToAxis(uVar4,afStack_70);
+  pfVar7 = (float *)dGeomGetPosition(uVar3);
+  dVar11 = (double)*pfVar7;
+  dVar10 = (double)pfVar7[1];
+  uVar3 = (ulonglong)*puVar6 - 1;
+  dVar9 = (double)pfVar7[2];
+  if (((longlong)uVar3 < 0) || (2 < (int)uVar3)) {
+    MyAssertHandler(0xffffffff82196f38,0x43a,0,0xffffffff821972f8,uVar3,0,2);
+  }
+  iVar5 = (int)((uVar3 & 0x3fffffff) << 2);
+  fVar1 = *(float *)((int)afStack_70 + iVar5 + 0xc);
+  fVar2 = *(float *)((int)afStack_70 + iVar5 + 0x18);
+  dVar8 = (double)(ABS(*(float *)((int)afStack_70 + iVar5)) * (float)puVar6[2] + (float)puVar6[1]);
+  *param_2 = (float)(dVar11 - dVar8);
+  param_2[1] = (float)(dVar11 + dVar8);
+  dVar11 = (double)(ABS(fVar1) * (float)puVar6[2] + (float)puVar6[1]);
+  param_2[2] = (float)(dVar10 - dVar11);
+  param_2[3] = (float)(dVar10 + dVar11);
+  dVar10 = (double)(ABS(fVar2) * (float)puVar6[2] + (float)puVar6[1]);
+  param_2[4] = (float)(dVar9 - dVar10);
+  param_2[5] = (float)(dVar9 + dVar10);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82680FE8  Phys_GetGlassAABB  (physics/phys_world_collision.cpp:1095)
 
-void Phys_GetGlassAABB(void)
+void Phys_GetGlassAABB(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  ulonglong uVar5;
+  int iVar7;
+  int *piVar8;
+  undefined8 uVar6;
+  undefined4 *puVar9;
+  float *pfVar10;
+  float *pfVar11;
+  longlong lVar12;
+  float fStack_64;
+  undefined4 local_60;
+  undefined4 local_5c;
+  undefined4 local_58;
+  float fStack_54;
+  undefined1 auStack_50 [80];
+  
+  uVar5 = __savegprlr_28();
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x452,0,0xffffffff82000f98,0xffffffff82193ae4);
+  }
+  iVar7 = dGeomGetClass(uVar5);
+  if (iVar7 != 7) {
+    MyAssertHandler(0xffffffff82196f38,0x453,0,0xffffffff82000f98,0xffffffff82197380);
+  }
+  piVar8 = (int *)ODE_GeomGetClassData(uVar5);
+  uVar6 = dGeomGetRotation(uVar5);
+  Phys_OdeMatrix3ToAxis(uVar6,auStack_50);
+  puVar9 = (undefined4 *)dGeomGetPosition(uVar5);
+  local_5c = puVar9[1];
+  local_58 = puVar9[2];
+  local_60 = *puVar9;
+  lVar12 = 3;
+  fVar1 = (float)piVar8[2];
+  param_2 = param_2 + -4;
+  pfVar10 = &fStack_64;
+  pfVar11 = &fStack_54;
+  fVar2 = *(float *)(piVar8[1] * 0x20 + *(int *)(*piVar8 + 0x34) + 0x1c);
+  do {
+    pfVar11 = pfVar11 + 3;
+    fVar4 = ABS(*pfVar11);
+    pfVar10 = pfVar10 + 1;
+    fVar3 = *pfVar10;
+    fVar4 = SQRT(-(fVar4 * fVar4 - 1.0)) * fVar2 + fVar4 * fVar1;
+    *(float *)((int)param_2 + 4) = fVar3 - fVar4;
+    param_2 = param_2 + 8;
+    *(float *)param_2 = fVar3 + fVar4;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -728,7 +1479,6 @@ void Phys_InitBrushmodelGeomClass(void)
   local_20 = 0x1082681110;
   uVar1 = dCreateGeomClass(&local_20);
   if ((int)uVar1 != 3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x482,0,0xffffffff82197294,0xffffffff821973ac,uVar1);
   }
   return;
@@ -750,7 +1500,6 @@ void Phys_InitCollmapGeomClass(void)
   local_20 = 0x1082681110;
   uVar1 = dCreateGeomClass(&local_20);
   if ((int)uVar1 != 4) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x496,0,0xffffffff82197294,0xffffffff821973d0,uVar1);
   }
   return;
@@ -772,7 +1521,6 @@ void Phys_InitCylinderGeomClass(void)
   local_20 = 0xc82681110;
   uVar1 = dCreateGeomClass(&local_20);
   if ((int)uVar1 != 5) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4aa,0,0xffffffff82197294,0xffffffff821973f0,uVar1);
   }
   return;
@@ -794,7 +1542,6 @@ void Phys_InitCapsuleGeomClass(void)
   local_20 = 0xc82681110;
   uVar1 = dCreateGeomClass(&local_20);
   if ((int)uVar1 != 6) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4bf,0,0xffffffff82197294,0xffffffff82197414,uVar1);
   }
   return;
@@ -816,7 +1563,6 @@ void Phys_InitGlassGeomClass(void)
   local_20 = 0x1082681110;
   uVar1 = dCreateGeomClass(&local_20);
   if ((int)uVar1 != 7) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4d4,0,0xffffffff82197294,0xffffffff82197434,uVar1);
   }
   return;
@@ -834,35 +1580,30 @@ void Phys_CreateBrushmodelGeom
   ulonglong uVar2;
   undefined2 *puVar4;
   undefined4 *puVar5;
+  double dVar6;
   
   uVar1 = __savegprlr_25();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4dd,0,0xffffffff82000f98,0xffffffff821974d0);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4de,0,0xffffffff82000f98,0xffffffff82003cbc);
   }
   if ((param_3 & 0xffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4df,0,0xffffffff82000f98,0xffffffff8205dca4);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4e0,0,0xffffffff82000f98,0xffffffff821974c0);
   }
   iVar3 = CM_GetBrushModel(param_3 & 0xffff);
+  dVar6 = 0.0;
   if (*(float *)(iVar3 + 0xc) < 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82196f38,0x4e5,0,0xffffffff82000f98,0xffffffff8219749c);
   }
-  if (*(float *)(iVar3 + 0x10) < 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if ((double)*(float *)(iVar3 + 0x10) < dVar6) {
     MyAssertHandler(0xffffffff82196f38,0x4e6,0,0xffffffff82000f98,0xffffffff82197478);
   }
-  if (*(float *)(iVar3 + 0x14) < 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if ((double)*(float *)(iVar3 + 0x14) < dVar6) {
     MyAssertHandler(0xffffffff82196f38,0x4e7,0,0xffffffff82000f98,0xffffffff82197454);
   }
   uVar2 = Phys_GeomAlloc(*(undefined4 *)(*(int *)((int)param_2 + 0x10) + 0x5c));
@@ -884,40 +1625,117 @@ void Phys_CreateBrushmodelGeom
 
 // 826815A8  Phys_CreateCollmapGeom  (physics/phys_world_collision.cpp:1272)
 
-void Phys_CreateCollmapGeom(void)
+void Phys_CreateCollmapGeom
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  
+  uVar1 = __savegprlr_26();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x4fc,0,0xffffffff82000f98,0xffffffff821974d0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x4fd,0,0xffffffff82000f98,0xffffffff82003cbc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x4fe,0,0xffffffff82000f98,0xffffffff821941dc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82196f38,0x4ff,0,0xffffffff82000f98,0xffffffff821974c0);
+  }
+  uVar2 = Phys_GeomAlloc(*(undefined4 *)(*(int *)((int)param_2 + 0x10) + 0x5c));
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_26();
+    return;
+  }
+  ODE_GeomCustomInit(uVar2,4,uVar1,param_2);
+  puVar3 = (undefined4 *)ODE_GeomGetClassData(uVar2);
+  puVar4 = (undefined4 *)param_4;
+  puVar3[1] = *puVar4;
+  *puVar3 = (int)param_3;
+  puVar3[2] = puVar4[1];
+  puVar3[3] = puVar4[2];
+  __restgprlr_26(uVar2);
+  return;
 }
 
 
 // 826816D0  Phys_CreateCylinderGeom  (physics/phys_world_collision.cpp:1294)
 
-void Phys_CreateCylinderGeom(void)
+void Phys_CreateCylinderGeom(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Phys_GeomAlloc(*(undefined4 *)(*(int *)((int)param_2 + 0x10) + 0x5c));
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_28();
+    return;
+  }
+  ODE_GeomCustomInit(uVar2,5,uVar1,param_2);
+  puVar3 = (undefined4 *)ODE_GeomGetClassData(uVar2);
+  *puVar3 = *param_3;
+  puVar3[1] = param_3[1];
+  puVar3[2] = param_3[2];
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 82681750  Phys_CreateCapsuleGeom  (physics/phys_world_collision.cpp:1313)
 
-void Phys_CreateCapsuleGeom(void)
+void Phys_CreateCapsuleGeom(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Phys_GeomAlloc(*(undefined4 *)(*(int *)((int)param_2 + 0x10) + 0x5c));
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_28();
+    return;
+  }
+  ODE_GeomCustomInit(uVar2,6,uVar1,param_2);
+  puVar3 = (undefined4 *)ODE_GeomGetClassData(uVar2);
+  *puVar3 = *param_3;
+  puVar3[1] = param_3[1];
+  puVar3[2] = param_3[2];
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
 // 826817D0  Phys_CreateGlassGeom  (physics/phys_world_collision.cpp:1332)
 
-void Phys_CreateGlassGeom(void)
+void Phys_CreateGlassGeom(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  
+  uVar1 = __savegprlr_28();
+  uVar2 = Phys_GeomAlloc(*(undefined4 *)(*(int *)((int)param_2 + 0x10) + 0x5c));
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_28();
+    return;
+  }
+  ODE_GeomCustomInit(uVar2,7,uVar1,param_2);
+  puVar3 = (undefined4 *)ODE_GeomGetClassData(uVar2);
+  *puVar3 = *param_3;
+  puVar3[1] = param_3[1];
+  puVar3[2] = param_3[2];
+  puVar3[3] = param_3[3];
+  __restgprlr_28(uVar2);
+  return;
 }
 

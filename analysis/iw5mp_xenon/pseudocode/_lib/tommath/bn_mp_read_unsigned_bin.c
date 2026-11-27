@@ -2,10 +2,43 @@
 
 // 82257A38  mp_read_unsigned_bin  (line unknown)
 
-void mp_read_unsigned_bin(void)
+void mp_read_unsigned_bin(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  int iVar4;
+  
+  piVar2 = (int *)__savegprlr_29();
+  if ((1 < piVar2[1]) || (uVar1 = mp_grow(piVar2,2), (int)uVar1 == 0)) {
+    piVar2[2] = 0;
+    iVar4 = 0;
+    *piVar2 = 0;
+    if (0 < piVar2[1]) {
+      puVar3 = (undefined4 *)(piVar2[3] + -4);
+      do {
+        iVar4 = iVar4 + 1;
+        puVar3 = puVar3 + 1;
+        *puVar3 = 0;
+      } while (iVar4 < piVar2[1]);
+    }
+    if (0 < (int)param_3) {
+      param_2 = param_2 + -1;
+      do {
+        param_3 = param_3 + -1;
+        uVar1 = mp_mul_2d(piVar2,8,piVar2);
+        if ((int)uVar1 != 0) goto LAB_82257b00;
+        param_2 = param_2 + 1;
+        *(uint *)piVar2[3] = (uint)*(byte *)param_2 | *(uint *)piVar2[3];
+        *piVar2 = *piVar2 + 1;
+      } while (0 < (int)param_3);
+    }
+    mp_clamp(piVar2);
+    uVar1 = 0;
+  }
+LAB_82257b00:
+  __restgprlr_29(uVar1);
+  return;
 }
 

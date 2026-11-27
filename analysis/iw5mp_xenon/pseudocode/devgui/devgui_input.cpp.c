@@ -66,6 +66,131 @@ void DevGui_UpdateScrollInputs(void)
 }
 
 
+// 8240A458  DevGui_UpdateScrollStates  (devgui/devgui_input.cpp:207)
+
+void DevGui_UpdateScrollStates
+               (double param_1,undefined8 param_2,int param_3,int param_4,float *param_5)
+
+{
+  float fVar1;
+  uint uVar2;
+  longlong lVar3;
+  
+  param_3 = param_3 - (int)param_5;
+  param_4 = param_4 - (int)param_5;
+  lVar3 = 2;
+  do {
+    fVar1 = *(float *)(param_4 + (int)param_5);
+    if (fVar1 == 0.0) {
+      *(undefined4 *)(param_3 + (int)param_5) = 0;
+      *param_5 = 0.0;
+    }
+    else {
+      uVar2 = *(uint *)(param_3 + (int)param_5);
+      if (uVar2 == 0) {
+        if (0.4 < ABS(fVar1)) {
+          *(undefined4 *)(param_3 + (int)param_5) = 1;
+        }
+      }
+      else if (uVar2 == 1) {
+        *(undefined4 *)(param_3 + (int)param_5) = 2;
+        *param_5 = 0.0;
+      }
+      else {
+        fVar1 = *param_5;
+        *param_5 = (float)(param_1 + (double)fVar1);
+        if ((uVar2 < 3) && (0.25 < (float)(param_1 + (double)fVar1))) {
+          *(undefined4 *)(param_3 + (int)param_5) = 3;
+          *param_5 = 0.0;
+        }
+      }
+    }
+    lVar3 = lVar3 + -1;
+    param_5 = param_5 + 1;
+  } while (lVar3 != 0);
+  return;
+}
+
+
+// 8240A520  DevGui_UpdateMenuScroll  (devgui/devgui_input.cpp:252)
+
+void DevGui_UpdateMenuScroll(double param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  bool bVar4;
+  short *psVar5;
+  int iVar6;
+  double dVar7;
+  float local_10 [2];
+  longlong local_8;
+  
+  if (ABS(DAT_8331aa7c) <= ABS(DAT_8331aa80)) {
+    local_10[1] = DAT_8331aa80;
+    local_10[0] = 0.0;
+  }
+  else {
+    local_10[0] = DAT_8331aa7c;
+    local_10[1] = 0.0;
+  }
+  psVar5 = &DAT_8331aa8c;
+  iVar6 = 0;
+  do {
+    *psVar5 = 0;
+    if ((*(int *)((int)&DAT_8331aa5c + iVar6) == 3) ||
+       (bVar3 = false, *(int *)((int)&DAT_8331aa74 + iVar6) == 3)) {
+      bVar3 = true;
+    }
+    if ((*(int *)((int)&DAT_8331aa5c + iVar6) == 1) ||
+       (bVar4 = false, *(int *)((int)&DAT_8331aa74 + iVar6) == 1)) {
+      bVar4 = true;
+    }
+    dVar7 = (double)((*(float *)((int)local_10 + iVar6) + *(float *)((int)&DAT_8331aa64 + iVar6)) *
+                    DAT_8331aa58);
+    if (bVar3) {
+      fVar1 = (float)(ABS(dVar7) * param_1 + (double)*(float *)((int)&DAT_8331aa90 + iVar6));
+      *(float *)((int)&DAT_8331aa90 + iVar6) = fVar1;
+      if (0.1 < fVar1) {
+        fVar1 = 1.0;
+        if (dVar7 < 0.0) {
+          fVar1 = -1.0;
+        }
+        local_8 = (longlong)(int)fVar1;
+        do {
+          *psVar5 = *psVar5 + (short)(int)fVar1;
+          fVar2 = *(float *)((int)&DAT_8331aa90 + iVar6) - 0.1;
+          *(float *)((int)&DAT_8331aa90 + iVar6) = fVar2;
+        } while (0.1 < fVar2);
+      }
+    }
+    else if (bVar4) {
+      fVar1 = 1.0;
+      if (dVar7 < 0.0) {
+        fVar1 = -1.0;
+      }
+      local_8 = (longlong)(int)fVar1;
+      *psVar5 = (short)(int)fVar1;
+      *(undefined4 *)((int)&DAT_8331aa90 + iVar6) = 0;
+    }
+    psVar5 = psVar5 + 1;
+    iVar6 = iVar6 + 4;
+  } while ((int)psVar5 < -0x7cce5570);
+  return;
+}
+
+
+// 8240A698  DevGui_InputInit  (devgui/devgui_input.cpp:301)
+
+void DevGui_InputInit(void)
+
+{
+  Cmd_AddCommandInternal(0xffffffff8202ecb0,0xffffffff8240a2b0,0xffffffff8331aaa8);
+  return;
+}
+
+
 // 8240A6B8  DevGui_InputShutdown  (devgui/devgui_input.cpp:310)
 
 void DevGui_InputShutdown(void)
@@ -86,13 +211,64 @@ void DevGui_SelectGamepad(undefined4 param_1)
 }
 
 
+// 8240A6D8  DevGui_InputUpdateGamepad  (devgui/devgui_input.cpp:328)
+
+undefined8 DevGui_InputUpdateGamepad(void)
+
+{
+  char cVar1;
+  
+  DAT_8331aa3c = DAT_8331aa38;
+  if ((-1 < DAT_8331aa38) && (cVar1 = GPad_IsActive(), cVar1 != '\0')) {
+    DAT_8331aaa0 = 0x41200000;
+    DAT_8331aaa4 = 0x3dcccccd;
+    return 1;
+  }
+  DAT_8331aa3c = 0xffffffff;
+  return 0;
+}
+
+
 // 8240ADD0  DevGui_InputUpdate  (devgui/devgui_input.cpp:359)
 
 void DevGui_InputUpdate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar2;
+  undefined8 uVar1;
+  undefined4 *puVar3;
+  int iVar4;
+  undefined8 uVar5;
+  double dVar6;
+  double dVar7;
+  
+  uVar5 = __savegprlr_27();
+  cVar2 = DevGui_InputUpdateGamepad();
+  if (cVar2 == '\0') {
+    __restgprlr_27(0);
+    return;
+  }
+  puVar3 = &DAT_82967f50;
+  iVar4 = 0;
+  dVar7 = 0.0;
+  do {
+    (&DAT_8331aa4b)[iVar4] = (&DAT_8331aa40)[iVar4];
+    if (-1 < DAT_8331aa3c) {
+      dVar6 = (double)GPad_GetButton(DAT_8331aa3c,*puVar3);
+      (&DAT_8331aa40)[iVar4] = dVar7 < dVar6;
+    }
+    puVar3 = puVar3 + 1;
+    iVar4 = iVar4 + 1;
+  } while ((int)puVar3 < -0x7d698084);
+  uVar1 = DevGui_UpdateScrollInputs();
+  uVar1 = DevGui_UpdateScrollStates
+                    (uVar5,uVar1,0xffffffff8331aa5c,0xffffffff8331aa64,0xffffffff8331aa6c);
+  if (-1 < DAT_8331aa3c) {
+    DevGui_UpdateScrollStates(uVar1,0xffffffff8331aa74,0xffffffff8331aa7c,0xffffffff8331aa84);
+  }
+  DevGui_UpdateMenuScroll(uVar5);
+  __restgprlr_27(1);
+  return;
 }
 
 
@@ -110,7 +286,7 @@ void DevGui_MouseEvent(void)
 undefined2 DevGui_GetMenuScroll(int param_1)
 
 {
-  return *(undefined2 *)(&DAT_8331aa8c + param_1 * 2);
+  return (&DAT_8331aa8c)[param_1];
 }
 
 
@@ -135,11 +311,9 @@ void DevGui_UpdateIntScroll
   __savegprlr_24();
   dVar7 = (double)__savefpr_28();
   if (param_4 - param_3 < 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f7c0,0x1c6,0,0xffffffff82000f98,0xffffffff8205f7b4);
   }
   if (((int)param_5 < 0) || (1 < (int)param_5)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f7c0,0x1c7,0,0xffffffff82000f98,0xffffffff8205f780);
   }
   iVar4 = (int)(param_4 - param_3);
@@ -151,7 +325,7 @@ void DevGui_UpdateIntScroll
   uVar5 = 0;
   dVar10 = 0.0;
   iVar1 = (int)((param_5 & 0x3fffffff) << 2);
-  if (*(int *)(&DAT_8331aa5c + iVar1) == 3) {
+  if (*(int *)((int)&DAT_8331aa5c + iVar1) == 3) {
     dVar6 = (double)DAT_8331aaa4;
     dVar9 = (double)(0.1 / DAT_8331aa58);
     if (dVar6 < (double)(0.1 / DAT_8331aa58)) {
@@ -166,7 +340,7 @@ void DevGui_UpdateIntScroll
       uVar5 = (uint)(int)dVar8 + uVar5;
     } while (dVar9 < (double)DAT_8331aa98);
   }
-  else if (*(int *)(&DAT_8331aa5c + iVar1) == 1) {
+  else if (*(int *)((int)&DAT_8331aa5c + iVar1) == 1) {
     dVar9 = floor((double)(*(float *)((int)&DAT_8331aa64 + iVar1) + 0.5));
     uVar5 = (ulonglong)(uint)(int)dVar9;
   }
@@ -175,7 +349,7 @@ void DevGui_UpdateIntScroll
   }
   dVar6 = (double)DAT_8331aaa4;
 LAB_8240a900:
-  if (*(int *)(&DAT_8331aa74 + iVar1) == 3) {
+  if (*(int *)((int)&DAT_8331aa74 + iVar1) == 3) {
     dVar10 = (double)((DAT_8331aaa0 / (float)(longlong)iVar4) /
                      ABS(*(float *)((int)&DAT_8331aa7c + iVar1) * DAT_8331aa58));
     if (dVar6 < dVar10) {
@@ -195,7 +369,7 @@ LAB_8240a900:
       } while (dVar10 <= dVar7);
     }
   }
-  else if (*(int *)(&DAT_8331aa74 + iVar1) == 1) {
+  else if (*(int *)((int)&DAT_8331aa74 + iVar1) == 1) {
     fVar2 = 1.0;
     if (*(float *)((int)&DAT_8331aa7c + iVar1) < 0.0) {
       fVar2 = -1.0;
@@ -223,11 +397,88 @@ LAB_8240a900:
 
 // 8240AA18  DevGui_UpdateFloatScroll  (devgui/devgui_input.cpp:537)
 
-void DevGui_UpdateFloatScroll(void)
+void DevGui_UpdateFloatScroll
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  float fVar2;
+  ulonglong in_r8;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
   __savegprlr_29();
+  dVar3 = (double)__savefpr_24();
+  dVar5 = (double)(float)(param_4 - param_3);
+  dVar4 = 0.0;
+  if (dVar5 < 0.0) {
+    MyAssertHandler(0xffffffff8205f7c0,0x220,0,0xffffffff82000f98,0xffffffff8205f7b4);
+  }
+  if (param_5 == dVar4) {
+    MyAssertHandler(0xffffffff8205f7c0,0x221,0,0xffffffff82000f98,0xffffffff8205f804);
+  }
+  if (((int)in_r8 < 0) || (1 < (int)in_r8)) {
+    MyAssertHandler(0xffffffff8205f7c0,0x222,0,0xffffffff82000f98,0xffffffff8205f780);
+  }
+  iVar1 = (int)((in_r8 & 0x3fffffff) << 2);
+  dVar5 = (double)(float)((double)(float)((double)((*(float *)((int)&DAT_8331aa7c + iVar1) *
+                                                   DAT_8331aa58) / DAT_8331aaa0) * dVar5) * dVar3);
+  if (*(int *)((int)&DAT_8331aa5c + iVar1) == 3) {
+    fVar2 = 0.1 / DAT_8331aa58;
+    if (DAT_8331aaa4 < 0.1 / DAT_8331aa58) {
+      fVar2 = DAT_8331aaa4;
+    }
+    for (DAT_8331aa98 = (float)((double)DAT_8331aa98 + dVar3); fVar2 < DAT_8331aa98;
+        DAT_8331aa98 = DAT_8331aa98 - fVar2) {
+      dVar5 = (double)(float)((double)*(float *)((int)&DAT_8331aa64 + iVar1) * param_5 + dVar5);
+    }
+  }
+  else if (*(int *)((int)&DAT_8331aa5c + iVar1) == 1) {
+    dVar5 = (double)(float)((double)*(float *)((int)&DAT_8331aa64 + iVar1) * param_5 + dVar5);
+  }
+  if ((dVar5 < dVar4) && (-param_6 < dVar5)) {
+    dVar5 = -param_6;
+  }
+  if ((dVar4 < dVar5) && (dVar5 < param_6)) {
+    dVar5 = param_6;
+  }
+  dVar3 = (double)(float)(dVar5 + param_2);
+  if (dVar3 <= param_3) {
+    __restfpr_24(param_3);
+    __restgprlr_29();
+    return;
+  }
+  if (param_4 <= dVar3) {
+    dVar3 = param_4;
+  }
+  __restfpr_24(dVar3);
+  __restgprlr_29();
+  return;
+}
+
+
+// 8240ABE0  DevGui_IsButtonDown  (devgui/devgui_input.cpp:589)
+
+undefined1 DevGui_IsButtonDown(int param_1)
+
+{
+  return (&DAT_8331aa40)[param_1];
+}
+
+
+// 8240ABF8  DevGui_IsButtonPressed  (devgui/devgui_input.cpp:598)
+
+undefined8 DevGui_IsButtonPressed(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (((&DAT_8331aa40)[param_1] == '\0') || (uVar1 = 1, (&DAT_8331aa4b)[param_1] != '\0')) {
+    uVar1 = 0;
+  }
+  return uVar1;
 }
 
 

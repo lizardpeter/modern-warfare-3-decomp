@@ -3,6 +3,121 @@
 ; 824D67D8  Com_CanPrimaryLightAffectPoint  (qcommon/com_bsp.cpp:18)
   824D67D8  7D8802A6             mfspr r12,LR
   824D67DC  4843FEDD             bl 0x829166b8
+  824D67E0  9421FF80             stwu r1,-0x80(r1)
+  824D67E4  3D608208             lis r11,-0x7df8
+  824D67E8  3D408200             lis r10,-0x7e00
+  824D67EC  7C7F1B78             or r31,r3,r3
+  824D67F0  7C9D2378             or r29,r4,r4
+  824D67F4  2B030000             cmplwi cr6,r3,0x0
+  824D67F8  3BCB3994             addi r30,r11,0x3994
+  824D67FC  3B8A0F98             addi r28,r10,0xf98
+  824D6800  409A0020             bne cr6,0x824d6820
+  824D6804  3D608208             lis r11,-0x7df8
+  824D6808  7F86E378             or r6,r28,r28
+  824D680C  38EBD5A0             subi r7,r11,0x2a60
+  824D6810  7FC3F378             or r3,r30,r30
+  824D6814  38A00000             li r5,0x0
+  824D6818  38800018             li r4,0x18
+  824D681C  480FDCE5             bl 0x825d4500
+LAB_824d6820:
+  824D6820  891F0000             lbz r8,0x0(r31)
+  824D6824  2B080002             cmplwi cr6,r8,0x2
+  824D6828  419A002C             beq cr6,0x824d6854
+  824D682C  2B080003             cmplwi cr6,r8,0x3
+  824D6830  419A0024             beq cr6,0x824d6854
+  824D6834  3D608208             lis r11,-0x7df8
+  824D6838  3D408208             lis r10,-0x7df8
+  824D683C  38EB3948             addi r7,r11,0x3948
+  824D6840  38CA3930             addi r6,r10,0x3930
+  824D6844  7FC3F378             or r3,r30,r30
+  824D6848  38A00000             li r5,0x0
+  824D684C  38800019             li r4,0x19
+  824D6850  480FDCB1             bl 0x825d4500
+LAB_824d6854:
+  824D6854  2B1D0000             cmplwi cr6,r29,0x0
+  824D6858  409A0020             bne cr6,0x824d6878
+  824D685C  3D608207             lis r11,-0x7df9
+  824D6860  7F86E378             or r6,r28,r28
+  824D6864  38EBE8A0             subi r7,r11,0x1760
+  824D6868  7FC3F378             or r3,r30,r30
+  824D686C  38A00000             li r5,0x0
+  824D6870  3880001A             li r4,0x1a
+  824D6874  480FDC8D             bl 0x825d4500
+LAB_824d6878:
+  824D6878  C1BD0004             lfs f13,0x4(r29)
+  824D687C  C01F002C             lfs f0,0x2c(r31)
+  824D6880  ED806828             fsubs f12,f0,f13
+  824D6884  C17F0030             lfs f11,0x30(r31)
+  824D6888  C15D0008             lfs f10,0x8(r29)
+  824D688C  ED6B5028             fsubs f11,f11,f10
+  824D6890  C11D0000             lfs f8,0x0(r29)
+  824D6894  C13F0028             lfs f9,0x28(r31)
+  824D6898  EDA94028             fsubs f13,f9,f8
+  824D689C  C0FF0034             lfs f7,0x34(r31)
+  824D68A0  ECC701F2             fmuls f6,f7,f7
+  824D68A4  ECAC0332             fmuls f5,f12,f12
+  824D68A8  EC8B2AFA             fmadds f4,f11,f11,f5
+  824D68AC  ED0D237A             fmadds f8,f13,f13,f4
+  824D68B0  FF083000             fcmpu cr6,f8,f6
+  824D68B4  41980010             blt cr6,0x824d68c4
+LAB_824d68b8:
+  824D68B8  38600000             li r3,0x0
+  824D68BC  38210080             addi r1,r1,0x80
+  824D68C0  4843FE48             b 0x82916708
+LAB_824d68c4:
+  824D68C4  897F0000             lbz r11,0x0(r31)
+  824D68C8  2B0B0003             cmplwi cr6,r11,0x3
+  824D68CC  419A006C             beq cr6,0x824d6938
+  824D68D0  C15F0038             lfs f10,0x38(r31)
+  824D68D4  FD205050             fneg f9,f10
+  824D68D8  C01F0044             lfs f0,0x44(r31)
+  824D68DC  FF004800             fcmpu cr6,f0,f9
+  824D68E0  40990058             ble cr6,0x824d6938
+  824D68E4  C13F0010             lfs f9,0x10(r31)
+  824D68E8  3D608200             lis r11,-0x7e00
+  824D68EC  ECE90372             fmuls f7,f9,f13
+  824D68F0  C0DF0014             lfs f6,0x14(r31)
+  824D68F4  3D408200             lis r10,-0x7e00
+  824D68F8  C0BF0018             lfs f5,0x18(r31)
+  824D68FC  C1AB0F10             lfs f13,0xf10(r11)
+  824D6900  FF006800             fcmpu cr6,f0,f13
+  824D6904  C12A13F8             lfs f9,0x13f8(r10)
+  824D6908  EC863B3A             fmadds f4,f6,f12,f7
+  824D690C  ED8522FA             fmadds f12,f5,f11,f4
+  824D6910  409A0034             bne cr6,0x824d6944
+  824D6914  FC005090             fmr f0,f10
+LAB_824d6918:
+  824D6918  FF0C4800             fcmpu cr6,f12,f9
+  824D691C  4099FF9C             ble cr6,0x824d68b8
+  824D6920  EC000032             fmuls f0,f0,f0
+  824D6924  38600000             li r3,0x0
+  824D6928  EDAC0332             fmuls f13,f12,f12
+  824D692C  ED800232             fmuls f12,f0,f8
+  824D6930  FF0D6000             fcmpu cr6,f13,f12
+  824D6934  41980008             blt cr6,0x824d693c
+LAB_824d6938:
+  824D6938  38600001             li r3,0x1
+LAB_824d693c:
+  824D693C  38210080             addi r1,r1,0x80
+  824D6940  4843FDC8             b 0x82916708
+LAB_824d6944:
+  824D6944  ED60683C             fnmsubs f11,f0,f0,f13
+  824D6948  ECEA6ABC             fnmsubs f7,f10,f10,f13
+  824D694C  ECC702F2             fmuls f6,f7,f11
+  824D6950  ECA0302C             fsqrts f5,f6
+  824D6954  EC0A2838             fmsubs f0,f10,f0,f5
+  824D6958  FF004800             fcmpu cr6,f0,f9
+  824D695C  4199FFBC             bgt cr6,0x824d6918
+  824D6960  C1BF0034             lfs f13,0x34(r31)
+  824D6964  39600001             li r11,0x1
+  824D6968  ED600372             fmuls f11,f0,f13
+  824D696C  FF0C5800             fcmpu cr6,f12,f11
+  824D6970  40990008             ble cr6,0x824d6978
+  824D6974  39600000             li r11,0x0
+LAB_824d6978:
+  824D6978  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  824D697C  38210080             addi r1,r1,0x80
+  824D6980  4843FD88             b 0x82916708
 
 ; 824D6988  Com_FindClosestPrimaryLight  (qcommon/com_bsp.cpp:58)
   824D6988  7D8802A6             mfspr r12,LR
@@ -184,6 +299,13 @@ LAB_824d6bc8:
   824D6C18  38A00000             li r5,0x0
   824D6C1C  3880005A             li r4,0x5a
   824D6C20  480FD8E1             bl 0x825d4500
+  824D6C24  39000000             li r8,0x0
+  824D6C28  911F0004             stw r8,0x4(r31)
+  824D6C2C  38210060             addi r1,r1,0x60
+  824D6C30  8181FFF8             lwz r12,-0x8(r1)
+  824D6C34  7D8803A6             mtspr LR,r12
+  824D6C38  EBE1FFF0             ld r31,-0x10(r1)
+  824D6C3C  4E800020             blr
 LAB_824d6c40:
   824D6C40  39600000             li r11,0x0
   824D6C44  917F0004             stw r11,0x4(r31)

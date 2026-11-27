@@ -142,11 +142,9 @@ undefined4 Cmd_Argc(void)
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82012b78,0xbb,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   if (7 < DAT_835ab9d8) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82012b78,0xbc,0,0xffffffff82012b30,DAT_835ab9d8,8);
   }
   return *(undefined4 *)(&DAT_835aba1c + DAT_835ab9d8 * 4);
@@ -180,8 +178,26 @@ void CG_ShellShock_Load_f(void)
 void Cmd_Argv(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_29();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff82012b78,0xca,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (7 < DAT_835ab9d8) {
+    MyAssertHandler(0xffffffff82012b78,0xcb,0,0xffffffff82012b30,DAT_835ab9d8,8);
+  }
+  if (iVar1 < 0) {
+    MyAssertHandler(0xffffffff82012b78,0xcc,0,0xffffffff82012bbc,0xffffffff82012bd0,iVar1);
+  }
+  if (iVar1 < *(int *)(&DAT_835aba1c + DAT_835ab9d8 * 4)) {
+    __restgprlr_29(*(undefined4 *)(*(int *)(&DAT_835aba3c + DAT_835ab9d8 * 4) + iVar1 * 4));
+    return;
+  }
+  __restgprlr_29(0xffffffff820068af);
+  return;
 }
 
 
@@ -191,22 +207,23 @@ undefined4 Cmd_LocalClientNum(void)
 
 {
   char cVar1;
+  ulonglong uVar2;
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82012b78,0xdc,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (7 < DAT_835ab9d8) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82012b78,0xdf,0,0xffffffff82012b30,DAT_835ab9d8,8);
+  uVar2 = (ulonglong)DAT_835ab9d8;
+  if (7 < uVar2) {
+    MyAssertHandler(0xffffffff82012b78,0xdf,0,0xffffffff82012b30,uVar2,8);
+    uVar2 = (ulonglong)DAT_835ab9d8;
   }
-  if (3 < *(uint *)(&DAT_835ab9dc + DAT_835ab9d8 * 4)) {
-                    /* WARNING: Subroutine does not return */
+  if (3 < *(uint *)(&DAT_835ab9dc + (int)(uVar2 << 2))) {
     MyAssertHandler(0xffffffff82012b78,0xe0,0,0xffffffff82012be0,
-                    *(uint *)(&DAT_835ab9dc + DAT_835ab9d8 * 4),4);
+                    *(uint *)(&DAT_835ab9dc + (int)(uVar2 << 2)),4);
+    uVar2 = (ulonglong)DAT_835ab9d8;
   }
-  return *(undefined4 *)(&DAT_835ab9dc + DAT_835ab9d8 * 4);
+  return *(undefined4 *)(&DAT_835ab9dc + (int)(uVar2 << 2));
 }
 
 
@@ -352,7 +369,6 @@ void CG_ReplaySave_f(void)
   
   uVar1 = Cmd_LocalClientNum();
   if (3 < (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
   }
   if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 10) {
@@ -401,6 +417,63 @@ void R_Cmd_DebugLightingBox(void)
 }
 
 
+// 822B31E8  CG_InitConsoleCommands  (cgame_mp/cg_consolecmds_mp.cpp:427)
+
+void CG_InitConsoleCommands(void)
+
+{
+  Cmd_AddCommandInternal(0xffffffff82012fe8,0xffffffff822b29e8,0xffffffff82a1ec88);
+  Cmd_AddCommandInternal(0xffffffff82012fd8,0xffffffff822b2c78,0xffffffff82a1ec74);
+  Cmd_AddCommandInternal(0xffffffff82012fc4,0xffffffff822b2d80,0xffffffff82a1ec60);
+  Cmd_AddCommandInternal(0xffffffff82012fb0,0xffffffff822b2de8,0xffffffff82a1ec4c);
+  Cmd_AddCommandInternal(0xffffffff82012fa4,0xffffffff822b2e50,0xffffffff82a1ec38);
+  Cmd_AddCommandInternal(0xffffffff82012f94,0xffffffff822b2f08,0xffffffff82a1ec24);
+  Cmd_AddCommandInternal(0xffffffff82012f88,0xffffffff822b2fc0,0xffffffff82a1ec10);
+  Cmd_AddCommandInternal(0xffffffff82012f74,0xffffffff82309dc0,0xffffffff82a1ebfc);
+  Cmd_AddCommandInternal(0xffffffff82012f6c,0xffffffff82309ea0,0xffffffff82a1ebe8);
+  Cmd_AddCommandInternal(0xffffffff82012f54,0xffffffff822b3050,0xffffffff82a1ebd4);
+  Cmd_AddCommandInternal(0xffffffff82012f40,0xffffffff822b3078,0xffffffff82a1ebc0);
+  Cmd_AddCommandInternal(0xffffffff82012f2c,0xffffffff822b3080,0xffffffff82a1ebac);
+  Cmd_AddCommandInternal(0xffffffff82012f14,0xffffffff822b3088,0xffffffff82a1eb98);
+  Cmd_AddCommandInternal(0xffffffff82012ef4,0xffffffff822b3090,0xffffffff82a1eb84);
+  Cmd_AddCommandInternal(0xffffffff82012ee4,0xffffffff822b3098,0xffffffff82a1eb70);
+  Cmd_AddCommandInternal(0xffffffff82012ed4,0xffffffff822b3178,0xffffffff82a1eb5c);
+  Cmd_AddCommandInternal(0xffffffff82012ec0,0xffffffff822b31b0,0xffffffff82a1eb48);
+  Cmd_AddCommandInternal(0xffffffff82012eb8,0xffffffff822b3048,0xffffffff82a1eb34);
+  Cmd_AddCommandInternal(0xffffffff82012eb0,0xffffffff822b3040,0xffffffff82a1eb20);
+  Cmd_AddCommandInternal(0xffffffff82012eac,0,0xffffffff82a1eb0c);
+  Cmd_AddCommandInternal(0xffffffff82012ea4,0,0xffffffff82a1eaf8);
+  Cmd_AddCommandInternal(0xffffffff82012e9c,0,0xffffffff82a1eae4);
+  Cmd_AddCommandInternal(0xffffffff82012e94,0,0xffffffff82a1ead0);
+  Cmd_AddCommandInternal(0xffffffff82012e90,0,0xffffffff82a1eabc);
+  Cmd_AddCommandInternal(0xffffffff82012e88,0,0xffffffff82a1eaa8);
+  Cmd_AddCommandInternal(0xffffffff82012e7c,0,0xffffffff82a1ea94);
+  Cmd_AddCommandInternal(0xffffffff82012e74,0,0xffffffff82a1ea80);
+  Cmd_AddCommandInternal(0xffffffff82012e70,0,0xffffffff82a1ea6c);
+  Cmd_AddCommandInternal(0xffffffff82012e64,0,0xffffffff82a1ea58);
+  Cmd_AddCommandInternal(0xffffffff82012e58,0,0xffffffff82a1ea44);
+  Cmd_AddCommandInternal(0xffffffff82012e4c,0,0xffffffff82a1ea30);
+  Cmd_AddCommandInternal(0xffffffff82012e44,0,0xffffffff82a1ea1c);
+  Cmd_AddCommandInternal(0xffffffff82012e40,0,0xffffffff82a1ea08);
+  Cmd_AddCommandInternal(0xffffffff82012e34,0,0xffffffff82a1e9f4);
+  Cmd_AddCommandInternal(0xffffffff82012e2c,0,0xffffffff82a1e9e0);
+  Cmd_AddCommandInternal(0xffffffff82012e24,0,0xffffffff82a1e9cc);
+  Cmd_AddCommandInternal(0xffffffff82012e18,0,0xffffffff82a1e9b8);
+  Cmd_AddCommandInternal(0xffffffff82012e0c,0,0xffffffff82a1e9a4);
+  Cmd_AddCommandInternal(0xffffffff82012dfc,0,0xffffffff82a1e990);
+  Cmd_AddCommandInternal(0xffffffff82012df8,0,0xffffffff82a1e97c);
+  Cmd_AddCommandInternal(0xffffffff82012de8,0,0xffffffff82a1e968);
+  Cmd_AddCommandInternal(0xffffffff82012dd8,0,0xffffffff82a1e954);
+  Cmd_AddCommandInternal(0xffffffff82012dcc,0,0xffffffff82a1e940);
+  Cmd_AddCommandInternal(0xffffffff82012dc0,0,0xffffffff82a1e92c);
+  Cmd_AddCommandInternal(0xffffffff82012db4,0,0xffffffff82a1e918);
+  Cmd_AddCommandInternal(0xffffffff82012da4,0,0xffffffff82a1e904);
+  Cmd_AddCommandInternal(0xffffffff82012d9c,0,0xffffffff82a1e8f0);
+  Cmd_AddCommandInternal(0xffffffff82012d94,0,0xffffffff82a1e8dc);
+  return;
+}
+
+
 // 822B36D0  CG_ShutdownConsoleCommands  (cgame_mp/cg_consolecmds_mp.cpp:526)
 
 void CG_ShutdownConsoleCommands(void)
@@ -428,7 +501,6 @@ undefined4 CL_GetLocalClientMigrationState(ulonglong param_1)
 
 {
   if (3 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82001158,0x4c5,0,0xffffffff820011a8,param_1,4);
   }
   return *(undefined4 *)(&DAT_82b3e4f4 + (int)param_1 * 0x1e4);

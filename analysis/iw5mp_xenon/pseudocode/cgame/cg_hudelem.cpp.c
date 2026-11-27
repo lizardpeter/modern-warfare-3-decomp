@@ -5,8 +5,45 @@
 void CG_HudElemRegisterDvars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  
   __savegprlr_28();
+  DAT_82a22d08 = Dvar_RegisterBool(0xffffffff82018020,0,0,0xffffffff820068af);
+  uVar3 = 0x47efffffe0000000;
+  uVar2 = 0x3810000000000000;
+  uVar1 = 0x4042000000000000;
+  DAT_82a22cf4 = Dvar_RegisterFloat(0x4042000000000000,0x3810000000000000,0x47efffffe0000000,
+                                    0xffffffff82017fec);
+  DAT_82a22cd4 = Dvar_RegisterFloat(uVar1,uVar2,uVar3,0xffffffff82017fb4);
+  DAT_82a22cf0 = Dvar_RegisterFloat(0x4039000000000000,uVar2,uVar3,0xffffffff82017f94);
+  DAT_82a22ccc = Dvar_RegisterFloat(0x4028000000000000,uVar2,uVar3,0xffffffff82017f74);
+  DAT_82a22d24 = Dvar_RegisterFloat(0x403e000000000000,uVar2,uVar3,0xffffffff82017f50);
+  DAT_82a22d28 = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017e74);
+  DAT_82a22d20 = Dvar_RegisterFloat(0x4059c00000000000,0,uVar3,0xffffffff82017e38);
+  DAT_82a22d00 = Dvar_RegisterFloat(0,0,uVar3,0xffffffff82017e1c);
+  DAT_82a22cd0 = Dvar_RegisterFloat(0,0,uVar3,0xffffffff82017e04);
+  DAT_82a22ce8 = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017de8);
+  DAT_82a22ce0 = Dvar_RegisterBool(0xffffffff82017dc8,1,0,0xffffffff82017d78);
+  DAT_82a22d04 = Dvar_RegisterFloat(0x405a400000000000,0,uVar3,0xffffffff82017d38);
+  DAT_82a22d18 = Dvar_RegisterFloat(0x407f400000000000,uVar2,uVar3,0xffffffff82017cd0);
+  uVar2 = 0x3ff0000000000000;
+  DAT_82a22cc0 = Dvar_RegisterFloat(0x3ff0000000000000,0,uVar3,0xffffffff82017c80);
+  DAT_82a22cdc = Dvar_RegisterFloat(0x408f400000000000,0,uVar3,0xffffffff82017c2c);
+  DAT_82a22d0c = Dvar_RegisterFloat(0x40a7700000000000,0,uVar3,0xffffffff82017bd4);
+  DAT_82a22d1c = Dvar_RegisterFloat(0x3fe99999a0000000,0,uVar3,0xffffffff82017b88);
+  DAT_82a22cf8 = Dvar_RegisterFloat(0x3ffcccccc0000000,0x3fb99999a0000000,uVar3,0xffffffff82017b68);
+  uVar1 = 0xc7efffffe0000000;
+  DAT_82a22cc8 = Dvar_RegisterFloat(0xc031000000000000,0xc7efffffe0000000,uVar3,0xffffffff82017b1c);
+  DAT_82a22cd8 = Dvar_RegisterFloat(0x3fd99999a0000000,0,uVar2,0xffffffff82017ad0);
+  DAT_82a22cec = Dvar_RegisterFloat(0x403e000000000000,0,uVar3,0xffffffff82017a50);
+  DAT_82a22cfc = Dvar_RegisterFloat(0x404c000000000000,0,uVar3,0xffffffff820179c8);
+  DAT_82a22cc4 = Dvar_RegisterFloat(0x4050800000000000,0,uVar3,0xffffffff82017940);
+  DAT_82a22d10 = Dvar_RegisterFloat(0x3fe3333340000000,0x3f847ae140000000,uVar3,0xffffffff820178f0);
+  DAT_82a22d14 = Dvar_RegisterFloat(0xc01551eb80000000,uVar1,uVar3,0xffffffff8201789c);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -22,15 +59,12 @@ void CG_TranslateHudElemMessage
   
   uVar1 = __savegprlr_25();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0xa0,0,0xffffffff82000f98,0xffffffff8201805c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0xa1,0,0xffffffff82000f98,0xffffffff8201804c);
   }
   if ((int)param_5 < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0xa2,0,0xffffffff82000f98,0xffffffff82018034);
   }
   uVar2 = SEH_LocalizeTextMessage(param_2,param_3,0);
@@ -42,11 +76,23 @@ void CG_TranslateHudElemMessage
 
 // 822D0C10  SafeTranslateHudElemString  (cgame/cg_hudelem.cpp:170)
 
-void SafeTranslateHudElemString(void)
+void SafeTranslateHudElemString
+               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0xab);
+  }
+  if ((int)param_2 != 0) {
+    uVar2 = CL_GetConfigString(param_2 + 0x1d6);
+    CG_TranslateHudElemMessage(uVar1,uVar2,0xffffffff820180a4,param_3,param_4);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -78,7 +124,6 @@ ulonglong GetHudElemTime(int *param_1,longlong param_2)
   iVar1 = *param_1;
   if (7 < iVar1 - 5U) {
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82018064,0xd8,0,0xffffffff820180b4);
     }
     return 0;
@@ -161,6 +206,30 @@ void HudElemTenthsTimerString(void)
 }
 
 
+// 822D0F40  HudElemMaterialSpecifiedWidth  (cgame/cg_hudelem.cpp:271)
+
+double HudElemMaterialSpecifiedWidth(float *param_1,uint param_2,int param_3,int param_4)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  if (param_3 == 0) {
+    dVar1 = (double)*(float *)(param_4 + 0x220);
+  }
+  else if ((param_2 & 0xf0) == 0x40) {
+    dVar1 = (double)ScrPlace_HiResGetScaleX();
+    dVar1 = (double)((float)(dVar1 * (double)param_1[2]) * (float)(longlong)param_3);
+  }
+  else {
+    dVar2 = (double)((float)(longlong)param_3 * DAT_82b5c7fc);
+    dVar1 = (double)ScrPlace_HiResGetScaleX();
+    dVar1 = (double)(*param_1 * (float)(dVar1 * dVar2));
+  }
+  return dVar1;
+}
+
+
 // 822D0FF0  HudElemMaterialSpecifiedHeight  (cgame/cg_hudelem.cpp:283)
 
 double HudElemMaterialSpecifiedHeight(int param_1,uint param_2,int param_3,int param_4)
@@ -187,21 +256,79 @@ double HudElemMaterialSpecifiedHeight(int param_1,uint param_2,int param_3,int p
 
 // 822D10A0  HudElemMaterialWidth  (cgame/cg_hudelem.cpp:295)
 
-void HudElemMaterialWidth(void)
+void HudElemMaterialWidth(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
+  uVar1 = __savegprlr_28();
+  dVar3 = (double)HudElemMaterialSpecifiedWidth
+                            (uVar1,*(undefined4 *)(param_2 + 0x2c),*(undefined4 *)(param_2 + 0x44),
+                             param_3);
+  if (0 < *(int *)(param_2 + 0x5c)) {
+    iVar2 = *(int *)((int)param_3 + 0x234) - *(int *)(param_2 + 0x58);
+    if (iVar2 < *(int *)(param_2 + 0x5c)) {
+      dVar4 = (double)HudElemMaterialSpecifiedWidth
+                                (uVar1,*(undefined4 *)(param_2 + 0x6c),
+                                 *(undefined4 *)(param_2 + 0x50),param_3);
+      if (iVar2 < 1) {
+        __restgprlr_28();
+        return;
+      }
+      dVar5 = (double)(float)((double)(longlong)iVar2 / (double)(longlong)*(int *)(param_2 + 0x5c));
+      if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+        MyAssertHandler(dVar5,0xffffffff82018064,0x13a,1,0xffffffff820180f8,dVar5,0,
+                        0x3ff0000000000000);
+      }
+      __restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
+      return;
+    }
+  }
+  __restgprlr_28(dVar3);
+  return;
 }
 
 
 // 822D11F8  HudElemMaterialHeight  (cgame/cg_hudelem.cpp:320)
 
-void HudElemMaterialHeight(void)
+void HudElemMaterialHeight(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  
+  uVar1 = __savegprlr_28();
+  dVar3 = (double)HudElemMaterialSpecifiedHeight
+                            (uVar1,*(undefined4 *)(param_2 + 0x2c),*(undefined4 *)(param_2 + 0x48),
+                             param_3);
+  if (0 < *(int *)(param_2 + 0x5c)) {
+    iVar2 = *(int *)((int)param_3 + 0x234) - *(int *)(param_2 + 0x58);
+    if (iVar2 < *(int *)(param_2 + 0x5c)) {
+      dVar4 = (double)HudElemMaterialSpecifiedHeight
+                                (uVar1,*(undefined4 *)(param_2 + 0x6c),
+                                 *(undefined4 *)(param_2 + 0x54),param_3);
+      if (iVar2 < 1) {
+        __restgprlr_28();
+        return;
+      }
+      dVar5 = (double)(float)((double)(longlong)iVar2 / (double)(longlong)*(int *)(param_2 + 0x5c));
+      if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+        MyAssertHandler(dVar5,0xffffffff82018064,0x153,1,0xffffffff820180f8,dVar5,0,
+                        0x3ff0000000000000);
+      }
+      __restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
+      return;
+    }
+  }
+  __restgprlr_28(dVar3);
+  return;
 }
 
 
@@ -231,11 +358,10 @@ double HudElemWidth(undefined8 param_1,undefined4 *param_2,int param_3)
   case 0xd:
     return (double)(longlong)(int)param_2[0x11];
   }
-  if (DAT_84013128 != 0) {
-    return 0.0;
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x173,0,0xffffffff820180b4);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82018064,0x173,0,0xffffffff820180b4);
+  return 0.0;
 }
 
 
@@ -268,11 +394,10 @@ double HudElemHeight(undefined8 param_1,undefined4 *param_2,longlong param_3)
     dVar2 = (double)(longlong)(int)param_2[0x12];
     break;
   default:
-    if (DAT_84013128 != 0) {
-      return 0.0;
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82018064,0x199,0,0xffffffff820180b4);
     }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82018064,0x199,0,0xffffffff820180b4);
+    return 0.0;
   }
   if ((param_3 != -0x10) && (dVar1 = (double)*(float *)((int)param_3 + 0x220), dVar2 < dVar1)) {
     return dVar1;
@@ -290,7 +415,6 @@ double AlignHudElemX(double param_1,double param_2,undefined8 param_3)
   
   uVar1 = (int)param_3 >> 2 & 3;
   if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x1b5,0,0xffffffff82018128,0xffffffff8201813c,param_3);
   }
   return -(double)(float)((double)*(float *)(&DAT_8201788c + uVar1 * 4) * param_2 - param_1);
@@ -306,10 +430,43 @@ double AlignHudElemY(double param_1,double param_2,uint param_3)
   
   uVar1 = param_3 & 3;
   if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x1c0,0,0xffffffff82018128,0xffffffff82018168,param_3);
   }
   return -(double)(float)((double)*(float *)(&DAT_8201788c + uVar1 * 4) * param_2 - param_1);
+}
+
+
+// 822D16B8  GetHudElemOrg  (cgame/cg_hudelem.cpp:455)
+
+void GetHudElemOrg(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                  undefined8 param_5,undefined8 param_6)
+
+{
+  undefined8 uVar1;
+  ulonglong in_r10;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
+  double dVar3;
+  float *in_stack_00000054;
+  
+  __savegprlr_25();
+  uVar1 = __savefpr_28();
+  uVar2 = extraout_f1;
+  if ((in_r10 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x1cd,0,0xffffffff82000f98,0xffffffff8201819c);
+  }
+  if (in_stack_00000054 == (float *)0x0) {
+    MyAssertHandler(0xffffffff82018064,0x1ce,0,0xffffffff82000f98,0xffffffff82018194);
+  }
+  uVar2 = ScrPlace_ApplyX(uVar2,uVar1);
+  dVar3 = (double)AlignHudElemX(uVar2,param_3,param_6);
+  *(float *)in_r10 = (float)dVar3;
+  uVar2 = ScrPlace_ApplyY(param_2,uVar1);
+  dVar3 = (double)AlignHudElemY(uVar2,param_4,param_6);
+  *in_stack_00000054 = (float)dVar3;
+  __restfpr_28();
+  __restgprlr_25();
+  return;
 }
 
 
@@ -355,11 +512,80 @@ ulonglong IsFontScaleLerping(int param_1,longlong param_2)
 
 // 822D1840  SetHudElemPos  (cgame/cg_hudelem.cpp:504)
 
-void SetHudElemPos(void)
+void SetHudElemPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  float *pfVar4;
+  undefined8 uVar5;
+  longlong lVar6;
+  int iVar8;
+  ulonglong uVar7;
+  double dVar9;
+  double dVar10;
+  float local_50;
+  float local_4c;
+  undefined8 local_48;
+  
+  uVar5 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x1fd,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x1fe,0,0xffffffff82000f98,0xffffffff820181a4);
+  }
+  iVar3 = (int)param_2;
+  iVar1 = *(int *)(iVar3 + 0x74);
+  pfVar4 = (float *)param_3;
+  if (0 < iVar1) {
+    lVar6 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x70);
+    if (lVar6 < 1) {
+      dVar9 = 0.0;
+LAB_822d18d8:
+      GetHudElemOrg((double)*(float *)(iVar3 + 0x60),(double)*(float *)(iVar3 + 100),
+                    (double)pfVar4[2],(double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x68),
+                    *(undefined4 *)(iVar3 + 0x6c));
+      GetHudElemOrg((double)*(float *)(iVar3 + 4),(double)*(float *)(iVar3 + 8),(double)pfVar4[2],
+                    (double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x28),
+                    *(undefined4 *)(iVar3 + 0x2c));
+      *pfVar4 = (float)((double)(float)((double)local_48._0_4_ - (double)local_50) * dVar9 +
+                       (double)local_50);
+      pfVar4[1] = (float)((double)(float)((double)local_48._4_4_ - (double)local_4c) * dVar9 +
+                         (double)local_4c);
+      goto LAB_822d1958;
+    }
+    iVar8 = (int)lVar6;
+    if (iVar8 < iVar1) {
+      local_48 = (longlong)iVar8;
+      dVar9 = (double)((float)local_48 / (float)(longlong)iVar1);
+      if (dVar9 != 1.0) goto LAB_822d18d8;
+    }
+  }
+  GetHudElemOrg((double)*(float *)(iVar3 + 4),(double)*(float *)(iVar3 + 8),(double)pfVar4[2],
+                (double)pfVar4[3],uVar5,*(undefined4 *)(iVar3 + 0x28),*(undefined4 *)(iVar3 + 0x2c))
+  ;
+  uVar2 = *(uint *)(iVar3 + 0x20);
+  if ((int)uVar2 < 1) {
+    uVar7 = 0;
+  }
+  else {
+    uVar7 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x1c);
+    uVar7 = ((~(uVar2 ^ uVar7) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar7) & 1;
+  }
+  if (uVar7 == 0) {
+    dVar10 = 0.5;
+    dVar9 = floor((double)(*pfVar4 + 0.5));
+    *pfVar4 = (float)(longlong)(int)dVar9;
+    dVar9 = floor((double)(float)((double)pfVar4[1] + dVar10));
+    pfVar4[1] = (float)(longlong)(int)dVar9;
+    __restgprlr_27();
+    return;
+  }
+LAB_822d1958:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -402,21 +628,105 @@ LAB_822d1b74:
 
 // 822D1B88  ConsolidateHudElemText  (cgame/cg_hudelem.cpp:551)
 
-void ConsolidateHudElemText(void)
+void ConsolidateHudElemText(undefined8 param_1,void *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  undefined1 *puVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  
+  iVar3 = __savegprlr_28();
+  puVar2 = (undefined1 *)(iVar3 + 0x10);
+  iVar6 = 0;
+  iVar4 = 0;
+  do {
+    cVar1 = puVar2[iVar4];
+    if (cVar1 == '\0') break;
+    if (((cVar1 == '&') && (*(char *)(iVar4 + iVar3 + 0x11) == '&')) &&
+       (*(char *)(iVar4 + iVar3 + 0x12) == '1')) {
+      iVar4 = iVar4 + 3;
+      break;
+    }
+    iVar6 = iVar6 + 1;
+    *(char *)(iVar4 + (int)param_2) = cVar1;
+    iVar4 = iVar4 + 1;
+  } while (iVar6 < 0xff);
+  iVar5 = 0;
+  if (iVar6 < 0xff) {
+    do {
+      cVar1 = *(char *)(iVar3 + 0x114 + iVar5);
+      if (cVar1 == '\0') {
+        if (iVar6 < 0xff) goto LAB_822d1c3c;
+        break;
+      }
+      *(char *)(iVar6 + (int)param_2) = cVar1;
+      iVar6 = iVar6 + 1;
+      iVar5 = iVar5 + 1;
+    } while (iVar6 < 0xff);
+  }
+  goto LAB_822d1c5c;
+  while( true ) {
+    *(undefined1 *)(iVar6 + (int)param_2) = puVar2[iVar4];
+    iVar6 = iVar6 + 1;
+    iVar4 = iVar4 + 1;
+    if (0xfe < iVar6) break;
+LAB_822d1c3c:
+    if (puVar2[iVar4] == '\0') break;
+  }
+LAB_822d1c5c:
+  *(undefined1 *)(iVar6 + (int)param_2) = 0;
+  memcpy((void *)(iVar3 + 0x114),param_2,0x100);
+  iVar4 = UI_TextWidth((double)*(float *)(iVar3 + 0x21c),(void *)(iVar3 + 0x114),0,
+                       *(undefined4 *)(iVar3 + 0x218));
+  dVar8 = (double)(longlong)iVar4;
+  dVar7 = (double)CL_GetScreenAspectRatioDisplayPixel();
+  *(float *)(iVar3 + 0x214) = (float)(dVar8 / dVar7);
+  *puVar2 = 0;
+  *(undefined4 *)(iVar3 + 0x110) = 0;
+  __restgprlr_28();
+  return;
 }
 
 
 // 822D1CC0  CopyStringToHudElemString  (cgame/cg_hudelem.cpp:590)
 
-void CopyStringToHudElemString(void)
+void CopyStringToHudElemString(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char cVar1;
+  char *_Src;
+  undefined8 uVar2;
+  void *pvVar3;
+  char *pcVar4;
+  
+  _Src = (char *)__savegprlr_28();
+  if (_Src == (char *)0x0) {
+    MyAssertHandler(0xffffffff82018064,0x251,0,0xffffffff82000f98,0xffffffff820181d4);
+  }
+  pcVar4 = _Src;
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x252,0,0xffffffff82000f98,0xffffffff8201804c);
+  }
+  do {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  pcVar4 = pcVar4 + (-1 - (int)_Src);
+  if ((int)pcVar4 < 0x100) {
+    pvVar3 = memcpy((void *)param_2,_Src,(size_t)pcVar4);
+    pcVar4[(int)(void *)param_2] = '\0';
+    __restgprlr_28(pvVar3);
+    return;
+  }
+  uVar2 = va(0xffffffff820181b4);
+  Com_Error(1,uVar2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -482,7 +792,6 @@ void DrawSingleHudElem2d_GetHudElemInfo
   }
   else {
     if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82018064,0x273,0,0xffffffff820180b4);
     }
 LAB_822d1e84:
@@ -523,7 +832,6 @@ LAB_822d1e90:
     if ((-1 < (int)uVar1) && ((int)uVar1 < 0x12)) {
       iVar7 = CG_GetLocalClientGlobals(uVar4);
       if (0x11 < uVar1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82018064,0x2aa,0,0xffffffff82018234,uVar1,0x12);
       }
       iVar7 = uVar1 * 0x590 + iVar7;
@@ -534,7 +842,6 @@ LAB_822d1e90:
       else {
         pcVar11 = (char *)(iVar7 + 0x100b94);
         if (*pcVar11 == '\0') {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82018064,0x2ae,0,0xffffffff82000f98,0xffffffff820181f4);
         }
         I_strncpyz(lVar9,pcVar11,0x100);
@@ -596,18 +903,19 @@ void HudElemColorToVec4(undefined8 param_1,byte *param_2,float *param_3)
   undefined8 uVar2;
   int iVar3;
   double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
   
   __savegprlr_25();
   uVar2 = __savefpr_28();
-  iVar3 = DAT_83666158;
   if (DAT_82a22cd8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x2ec,0,0xffffffff82000f98,0xffffffff82017ad0);
   }
   if (DAT_83666158 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x2ed,0,0xffffffff82000f98,0xffffffff82018374);
   }
+  iVar3 = DAT_83666158;
   *param_3 = (float)*param_2 * 0.003921569;
   param_3[1] = (float)param_2[1] * 0.003921569;
   param_3[2] = (float)param_2[2] * 0.003921569;
@@ -619,32 +927,32 @@ void HudElemColorToVec4(undefined8 param_1,byte *param_2,float *param_3)
     param_3[2] = param_3[2] * fVar1;
   }
   dVar4 = (double)*param_3;
+  dVar6 = 0.0;
+  dVar5 = 1.0000009536743164;
+  uVar2 = 0x3ff0000100000000;
+  uVar7 = 0;
   if ((dVar4 < 0.0) || (1.0000009536743164 < dVar4)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(dVar4,0,0x3ff0000100000000,0xffffffff82018064,0x2f7,0,0xffffffff82018328,dVar4,0
                     ,0x3ff0000100000000);
   }
   dVar4 = (double)param_3[1];
-  if ((dVar4 < 0.0) || (1.0000009536743164 < dVar4)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(dVar4,0,0x3ff0000100000000,0xffffffff82018064,0x2f8,0,0xffffffff820182ec,dVar4,0
-                    ,0x3ff0000100000000);
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2f8,0,0xffffffff820182ec,dVar4,uVar7,
+                    uVar2);
   }
   dVar4 = (double)param_3[2];
-  if ((dVar4 < 0.0) || (1.0000009536743164 < dVar4)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(dVar4,0,0x3ff0000100000000,0xffffffff82018064,0x2f9,0,0xffffffff820182b0,dVar4,0
-                    ,0x3ff0000100000000);
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2f9,0,0xffffffff820182b0,dVar4,uVar7,
+                    uVar2);
   }
   dVar4 = (double)param_3[3];
-  if ((0.0 <= dVar4) && (dVar4 <= 1.0000009536743164)) {
-    __restfpr_28();
-    __restgprlr_25();
-    return;
+  if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
+    MyAssertHandler(dVar4,uVar7,uVar2,0xffffffff82018064,0x2fa,0,0xffffffff82018274,dVar4,uVar7,
+                    uVar2);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(dVar4,0,0x3ff0000100000000,0xffffffff82018064,0x2fa,0,0xffffffff82018274,dVar4,0,
-                  0x3ff0000100000000);
+  __restfpr_28();
+  __restgprlr_25();
+  return;
 }
 
 
@@ -669,24 +977,19 @@ void DrawHudElemString(undefined8 param_1,ulonglong param_2,ulonglong param_3,ul
   __savegprlr_25();
   uVar3 = __savefpr_28();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x309,0,0xffffffff82000f98,0xffffffff82013b1c);
   }
   if (*(char *)param_2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x30a,0,0xffffffff82000f98,0xffffffff82018390);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x30b,0,0xffffffff82000f98,0xffffffff820181ac);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x30c,0,0xffffffff82000f98,0xffffffff820181a4);
   }
   pfVar1 = (float *)param_4;
   if (pfVar1[0x8c] == 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82018064,0x30e,0,0xffffffff82000f98,0xffffffff82018380);
   }
   pfVar6 = (float *)ScrPlace_GetActivePlacement(uVar3);
@@ -723,21 +1026,86 @@ void DrawHudElemString(undefined8 param_1,ulonglong param_2,ulonglong param_3,ul
 
 // 822D26F0  DrawHudElemClock  (cgame/cg_hudelem.cpp:813)
 
-void DrawHudElemClock(void)
+void DrawHudElemClock(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float *pfVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar6;
+  undefined8 uVar7;
+  double dVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  undefined1 auStack_a0 [160];
+  
   __savegprlr_27();
+  uVar3 = __savefpr_27();
+  pfVar1 = (float *)param_3;
+  uVar10 = 0;
+  if (pfVar1[0x8c] == 0.0) {
+    MyAssertHandler(0xffffffff82018064,0x338,0,0xffffffff82000f98,0xffffffff82018380);
+  }
+  iVar4 = CG_ServerMaterialName(uVar3,*(undefined4 *)((int)param_2 + 0x4c),auStack_a0,0x3a);
+  if (iVar4 != 0) {
+    Material_RegisterHandle(auStack_a0,7);
+    I_strncat(auStack_a0,0x40,0xffffffff8201839c);
+    Material_RegisterHandle(auStack_a0,7);
+    iVar5 = GetHudElemTime(param_2,pfVar1[0x8d]);
+    iVar4 = *(int *)((int)param_2 + 0x7c);
+    if (iVar4 == 0) {
+      fVar2 = (float)(longlong)iVar5 * 0.006;
+    }
+    else {
+      fVar2 = ((float)(longlong)iVar5 * 360.0) / (float)(longlong)iVar4;
+    }
+    uVar6 = AngleNormalize360((double)fVar2);
+    uVar3 = ScrPlace_GetActivePlacement(uVar3);
+    uVar7 = HudElemMaterialWidth(uVar3,param_2,param_3);
+    dVar8 = (double)HudElemMaterialHeight(uVar3,param_2,param_3);
+    uVar9 = OffsetHudElemY(-(double)(float)((double)pfVar1[3] - dVar8),param_2,param_3);
+    CL_DrawStretchPicPhysical((double)*pfVar1,uVar9,uVar7,dVar8,uVar10,uVar10,0x3ff0000000000000);
+    CG_DrawRotatedPicPhysical((double)*pfVar1,uVar9,uVar7,dVar8,uVar6,uVar3);
+  }
+  __restfpr_27();
+  __restgprlr_27();
+  return;
 }
 
 
 // 822D28C8  DrawHudElemMaterial  (cgame/cg_hudelem.cpp:859)
 
-void DrawHudElemMaterial(void)
+void DrawHudElemMaterial(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float *pfVar1;
+  undefined8 uVar2;
+  int iVar4;
+  undefined8 uVar3;
+  double dVar5;
+  undefined8 uVar6;
+  undefined1 auStack_80 [128];
+  
+  uVar2 = __savegprlr_28();
+  pfVar1 = (float *)param_3;
+  uVar6 = 0;
+  if (pfVar1[0x8c] == 0.0) {
+    MyAssertHandler(0xffffffff82018064,0x362,0,0xffffffff82000f98,0xffffffff82018380);
+  }
+  iVar4 = CG_ServerMaterialName(uVar2,*(undefined4 *)((int)param_2 + 0x4c),auStack_80,0x40);
+  if (iVar4 != 0) {
+    Material_RegisterHandle(auStack_80,7);
+    uVar3 = ScrPlace_GetActivePlacement(uVar2);
+    uVar3 = HudElemMaterialWidth(uVar3,param_2,param_3);
+    uVar2 = ScrPlace_GetActivePlacement(uVar2);
+    dVar5 = (double)HudElemMaterialHeight(uVar2,param_2,param_3);
+    uVar2 = OffsetHudElemY(-(double)(float)((double)pfVar1[3] - dVar5),param_2,param_3);
+    CL_DrawStretchPicPhysical((double)*pfVar1,uVar2,uVar3,dVar5,uVar6,uVar6,0x3ff0000000000000);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -761,7 +1129,6 @@ double HudElemWaypointHeight(undefined8 param_1,int param_2)
        (dVar3 = (double)(longlong)*(int *)(param_2 + 0x54), 0 < iVar1)) {
       dVar4 = (double)(float)((double)(longlong)iVar1 / (double)(longlong)*(int *)(param_2 + 0x5c));
       if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(dVar4,0xffffffff82018064,0x385,1,0xffffffff820180f8,dVar4,0,
                         0x3ff0000000000000);
       }
@@ -769,6 +1136,151 @@ double HudElemWaypointHeight(undefined8 param_1,int param_2)
     }
   }
   return dVar3;
+}
+
+
+// 822D2B38  ClampScreenPosToEdges  (cgame/cg_hudelem.cpp:907)
+
+void ClampScreenPosToEdges
+               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
+               undefined8 param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  bool bVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  float *pfVar7;
+  undefined8 in_r9;
+  ulonglong in_r10;
+  bool bVar8;
+  double dVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_7c;
+  
+  __savegprlr_25();
+  uVar5 = __savefpr_26();
+  dVar13 = extraout_f1;
+  if ((in_r10 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x396,0,0xffffffff82000f98,0xffffffff820183a4);
+  }
+  pfVar6 = (float *)ScrPlace_GetActivePlacement(uVar5);
+  bVar4 = false;
+  pfVar7 = (float *)param_6;
+  local_80 = *pfVar7;
+  local_7c = pfVar7[1];
+  dVar15 = (double)(pfVar6[9] * 0.5);
+  dVar16 = (double)(pfVar6[8] * 0.5);
+  pfVar7[1] = (float)((double)local_7c - dVar15);
+  dVar9 = (double)(float)((double)local_80 - dVar16);
+  *pfVar7 = (float)((double)local_80 - dVar16);
+  dVar13 = (double)(float)((double)(float)((double)pfVar6[0x16] + dVar13) - dVar16);
+  dVar11 = (double)(float)((double)(float)((double)pfVar6[0x17] + param_3) - dVar15);
+  dVar12 = (double)(float)(dVar16 - (double)(float)((double)(pfVar6[8] - pfVar6[0x18]) + param_2));
+  dVar10 = (double)(float)(dVar15 - (double)(float)((double)(pfVar6[9] - pfVar6[0x19]) + param_4));
+  dVar14 = dVar13;
+  if ((dVar9 < dVar13) || (dVar14 = dVar12, dVar12 < dVar9)) {
+    pfVar7[1] = (float)((double)(float)((double)local_7c - dVar15) * (double)(float)(dVar14 / dVar9)
+                       );
+    *pfVar7 = (float)(dVar9 * (double)(float)(dVar14 / dVar9));
+    bVar4 = true;
+  }
+  dVar9 = (double)pfVar7[1];
+  dVar14 = dVar11;
+  if ((dVar9 < dVar11) || (dVar14 = dVar10, dVar10 < dVar9)) {
+    pfVar7[1] = (float)(dVar9 * (double)(float)(dVar14 / dVar9));
+    *pfVar7 = (float)((double)*pfVar7 * (double)(float)(dVar14 / dVar9));
+    bVar4 = true;
+  }
+  if (*(char *)(DAT_82a22ce0 + 0xc) == '\0') goto LAB_822d2eb4;
+  fVar1 = *pfVar7;
+  dVar9 = 0.0;
+  dVar14 = (double)((pfVar6[1] + *pfVar6) * *(float *)(DAT_82a22d04 + 0xc) * 0.5);
+  fVar2 = pfVar7[1];
+  if (0.0 <= fVar1) {
+    dVar13 = dVar12 - dVar14;
+  }
+  else {
+    dVar13 = dVar14 + dVar13;
+  }
+  local_90 = (float)dVar13;
+  dVar13 = (double)local_90;
+  if (0.0 <= fVar2) {
+    dVar11 = dVar10 - dVar14;
+  }
+  else {
+    dVar11 = dVar14 + dVar11;
+  }
+  local_8c = (float)dVar11;
+  dVar11 = (double)local_8c;
+  if (*(char *)(DAT_82a22d08 + 0xc) != '\0') {
+    uVar5 = 0x4008000000000000;
+    dVar10 = 1.0;
+    CL_DrawStretchPicPhysical
+              ((double)((float)(dVar13 + dVar16) - 1.0),(double)((float)(dVar11 + dVar15) - 1.0),
+               0x4008000000000000,0x4008000000000000,0,0,0x3ff0000000000000,0x3ff0000000000000);
+    CL_DrawStretchPicPhysical
+              ((double)(float)((double)(float)((double)*pfVar7 + dVar16) - dVar10),
+               (double)(float)((double)(float)((double)pfVar7[1] + dVar15) - dVar10),uVar5,uVar5,
+               dVar9,dVar9,dVar10,dVar10);
+    dVar11 = (double)local_8c;
+    dVar13 = (double)local_90;
+  }
+  local_88 = (float)((double)*pfVar7 - dVar13);
+  local_84 = (float)((double)pfVar7[1] - dVar11);
+  Vec2Normalize(&local_88);
+  if (0.0 <= fVar1) {
+    if ((double)local_88 <= dVar9) goto LAB_822d2e2c;
+LAB_822d2e24:
+    bVar8 = true;
+  }
+  else {
+    if ((double)local_88 < dVar9) goto LAB_822d2e24;
+LAB_822d2e2c:
+    bVar8 = false;
+  }
+  if (0.0 <= fVar2) {
+    if ((double)local_84 <= dVar9) goto LAB_822d2e60;
+LAB_822d2e58:
+    bVar3 = true;
+  }
+  else {
+    if ((double)local_84 < dVar9) goto LAB_822d2e58;
+LAB_822d2e60:
+    bVar3 = false;
+  }
+  if (((bVar8) && (bVar3)) && (dVar13 = (double)Vec2Distance(&local_90,param_6), dVar14 < dVar13)) {
+    bVar4 = true;
+    *pfVar7 = (float)((double)local_88 * dVar14 + (double)local_90);
+    pfVar7[1] = (float)((double)local_84 * dVar14 + (double)local_8c);
+  }
+LAB_822d2eb4:
+  *pfVar7 = (float)((double)*pfVar7 + dVar16);
+  pfVar7[1] = (float)((double)pfVar7[1] + dVar15);
+  if (bVar4) {
+    dVar13 = (double)Vec2Distance(param_6,&local_80);
+    *(float *)in_r10 = (float)dVar13;
+    *(float *)in_r9 = local_80 - *pfVar7;
+    ((float *)in_r9)[1] = local_7c - pfVar7[1];
+    Vec2Normalize(in_r9);
+  }
+  __restfpr_26(bVar4);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -806,31 +1318,494 @@ double GetScaleForDistance(undefined8 param_1,float *param_2)
 
 // 822D3030  GetStanceHeightFromDObj  (cgame/cg_hudelem.cpp:1030)
 
-void GetStanceHeightFromDObj(void)
+void GetStanceHeightFromDObj(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined2 uVar1;
+  int iVar4;
+  ulonglong uVar2;
+  int iVar5;
+  undefined8 uVar3;
+  float *pfVar6;
+  undefined1 auStack_40 [8];
+  float local_38;
+  
+  iVar4 = __savegprlr_28();
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x40c,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x40d,0,0xffffffff82000f98,0xffffffff82012420);
+  }
+  uVar1 = DAT_835a0b86;
+  uVar2 = Com_GetClientDObj(*(undefined4 *)(iVar4 + 0xc4),DAT_82a382e4);
+  pfVar6 = (float *)param_2;
+  if ((uVar2 & 0xffffffff) == 0) {
+    *pfVar6 = 0.0;
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = CG_DObjGetWorldTagPos(iVar4,uVar2,uVar1,auStack_40);
+  if (iVar5 == 0) {
+    uVar3 = SL_ConvertToString(uVar1);
+    Com_PrintWarning(0xe,0xffffffff820183b0,uVar3);
+    *pfVar6 = 0.0;
+    __restgprlr_28(0);
+    return;
+  }
+  *pfVar6 = (local_38 - *(float *)(iVar4 + 0x1c)) + DAT_82962adc;
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 822D3150  CG_GetWaypointOffsetForStance  (cgame/cg_hudelem.cpp:1060)
+
+double CG_GetWaypointOffsetForStance(int param_1)
+
+{
+  int iVar1;
+  char cVar2;
+  int iVar3;
+  float local_20 [4];
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x427,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  iVar1 = *(int *)(param_1 + 200);
+  iVar3 = DAT_82a22cfc;
+  if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
+    if (iVar1 != 1) {
+      return 0.0;
+    }
+    local_20[0] = 0.0;
+    cVar2 = GetStanceHeightFromDObj(param_1,local_20);
+    if (cVar2 != '\0') {
+      return (double)local_20[0];
+    }
+    iVar3 = DAT_82a22cec;
+    if (((*(uint *)(param_1 + 0x5c) & 8) == 0) &&
+       (iVar3 = DAT_82a22cfc, (*(uint *)(param_1 + 0x5c) & 4) == 0)) {
+      iVar3 = DAT_82a22cc4;
+    }
+  }
+  return (double)*(float *)(iVar3 + 0xc);
+}
+
+
+// 822D3258  GetWaypointEntPos  (cgame/cg_hudelem.cpp:1095)
+
+void GetWaypointEntPos(undefined8 param_1,ulonglong param_2,int *param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int *piVar4;
+  double dVar5;
+  
+  uVar2 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,1099,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  piVar4 = (int *)param_2;
+  if (*piVar4 != 0xd) {
+    MyAssertHandler(0xffffffff82018064,0x44c,0,0xffffffff82000f98,0xffffffff820183e8);
+  }
+  if (piVar4[4] == 0x7ff) {
+    iVar3 = piVar4[3];
+    iVar1 = piVar4[2];
+    *param_3 = piVar4[1];
+    param_3[1] = iVar1;
+    param_3[2] = iVar3;
+    __restgprlr_27(1);
+    return;
+  }
+  iVar3 = CG_GetLocalClientGlobals(uVar2);
+  if (piVar4[4] != *(int *)(*(int *)(iVar3 + 0x3300) + 0xc4)) {
+    iVar3 = CG_GetEntity(uVar2);
+    if ((*(uint *)(iVar3 + 0x1c4) & 1) != 0) {
+      *param_3 = *(int *)(iVar3 + 0x14);
+      param_3[1] = *(int *)(iVar3 + 0x18);
+      param_3[2] = *(int *)(iVar3 + 0x1c);
+      dVar5 = (double)CG_GetWaypointOffsetForStance();
+      param_3[2] = (int)(float)(dVar5 + (double)(float)param_3[2]);
+      __restgprlr_27(1);
+      return;
+    }
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 822D3370  CG_DrawWaypoint  (cgame/cg_hudelem.cpp:1290)
 
-void CG_DrawWaypoint(void)
+void CG_DrawWaypoint(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  undefined4 *puVar3;
+  undefined8 uVar4;
+  float *pfVar5;
+  char cVar7;
+  int iVar6;
+  int *piVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  longlong local_d0;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float local_ac;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  undefined4 local_98;
+  float local_94;
+  undefined4 local_90;
+  undefined4 local_8c;
+  undefined4 local_88;
+  float local_84;
+  
   __savegprlr_28();
+  uVar4 = __savefpr_21();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x526,0,0xffffffff82000f98,0xffffffff8201843c);
+  }
+  piVar8 = (int *)param_2;
+  if (*piVar8 == 0) {
+    MyAssertHandler(0xffffffff82018064,0x527,0,0xffffffff82000f98,0xffffffff8201842c);
+  }
+  if (piVar8[2] == 0) {
+    MyAssertHandler(0xffffffff82018064,0x528,0,0xffffffff82000f98,0xffffffff8201841c);
+  }
+  if (piVar8[5] == 0) {
+    MyAssertHandler(0xffffffff82018064,0x529,0,0xffffffff82000f98,0xffffffff82018408);
+  }
+  pfVar5 = (float *)ScrPlace_GetActivePlacement(uVar4);
+  dVar15 = 0.5;
+  local_dc = *(float *)(DAT_82a22cf4 + 0xc) * *pfVar5;
+  dVar9 = (double)((*pfVar5 + pfVar5[1]) * 0.5);
+  local_e0 = *(float *)(DAT_82a22cd4 + 0xc) * pfVar5[1];
+  local_d4 = (float)piVar8[6] * *pfVar5;
+  dVar16 = (double)(float)((double)(float)piVar8[9] * dVar9);
+  local_d8 = (float)piVar8[7] * pfVar5[1];
+  dVar10 = (double)(float)((double)*(float *)(DAT_82a22d28 + 0xc) * dVar9);
+  if (dVar10 < 0.10000000149011612) {
+    dVar10 = 0.10000000149011612;
+  }
+  fVar1 = (float)((double)local_d8 * 0.5 + dVar16);
+  fVar2 = pfVar5[1];
+  dVar19 = (double)((float)piVar8[4] * fVar2);
+  dVar14 = (double)(*(float *)(DAT_82a22d20 + 0xc) * *pfVar5 + fVar1);
+  dVar13 = (double)(*(float *)(DAT_82a22d00 + 0xc) * *pfVar5 + fVar1);
+  dVar12 = (double)(*(float *)(DAT_82a22cd0 + 0xc) * fVar2 + fVar1);
+  dVar11 = (double)(*(float *)(DAT_82a22ce8 + 0xc) * fVar2 + fVar1);
+  cVar7 = CL_IsRenderingSplitScreen();
+  if (cVar7 != '\0') {
+    local_dc = *(float *)(DAT_82a22cf8 + 0xc) * local_dc;
+    local_e0 = *(float *)(DAT_82a22cf8 + 0xc) * local_e0;
+    local_d4 = *(float *)(DAT_82a22cf8 + 0xc) * local_d4;
+    local_d8 = *(float *)(DAT_82a22cf8 + 0xc) * local_d8;
+    dVar16 = (double)(float)((double)*(float *)(DAT_82a22cf8 + 0xc) * dVar16);
+  }
+  puVar3 = (undefined4 *)piVar8[2];
+  local_a0 = *puVar3;
+  local_9c = puVar3[1];
+  local_98 = puVar3[2];
+  local_94 = (float)puVar3[3];
+  CG_WorldPosToScreenPosReal(uVar4,pfVar5,*piVar8,&local_b0);
+  local_c4 = (float)((double)local_ac + dVar19);
+  local_c8 = local_b0;
+  dVar17 = 0.0;
+  dVar19 = dVar17;
+  dVar18 = dVar17;
+  local_ac = local_c4;
+  if (*(char *)(piVar8 + 0xb) == '\0') {
+    cVar7 = '\0';
+  }
+  else {
+    cVar7 = ClampScreenPosToEdges(dVar14,dVar13,dVar12,dVar11,uVar4,&local_c8);
+    dVar17 = (double)local_d0._0_4_;
+  }
+  dVar11 = 1.0;
+  if ((cVar7 != '\0') && (dVar18 < dVar17)) {
+    if (*(char *)(piVar8 + 10) == '\0') {
+      local_84 = local_94;
+      local_90 = local_a0;
+      local_8c = local_9c;
+      local_88 = local_98;
+      dVar12 = (double)local_94;
+      if (*(char *)(piVar8 + 8) != '\0') {
+        local_84 = 1.0;
+        dVar12 = dVar11;
+      }
+      if (dVar10 <= dVar17) {
+        if (*(char *)((int)piVar8 + 0x29) != '\0') {
+          local_94 = (float)dVar18;
+        }
+      }
+      else {
+        local_84 = (float)((double)(float)(dVar12 / dVar10) * dVar17);
+        if (*(char *)((int)piVar8 + 0x29) != '\0') {
+          local_94 = 1.0 - local_84;
+        }
+      }
+      dVar10 = (double)(float)((double)*(float *)(DAT_82a22d18 + 0xc) * dVar9);
+      if (dVar10 <= dVar17) {
+        fVar1 = *(float *)(DAT_82a22cc0 + 0xc);
+      }
+      else {
+        fVar1 = (float)(dVar17 / dVar10);
+        fVar1 = *(float *)(DAT_82a22cc0 + 0xc) * fVar1 + (1.0 - fVar1);
+      }
+      local_dc = fVar1 * local_dc;
+      local_e0 = fVar1 * local_e0;
+      dVar10 = atan2((double)local_c0,-(double)local_bc);
+      local_b8 = (float)((double)local_c0 * dVar16 + (double)local_c8);
+      local_b4 = (float)((double)local_bc * dVar16 + (double)local_c4);
+      dVar10 = (double)((float)dVar10 * 57.295776);
+      ScrPlace_HiResApplyRect(&local_b8,&local_b4,&local_d4,&local_d8);
+      CL_DrawStretchPicPhysicalRotateXY
+                (-(double)(float)((double)local_d4 * dVar15 - (double)local_b8),
+                 -(double)(float)((double)local_d8 * dVar15 - (double)local_b4),(double)local_d4,
+                 (double)local_d8,dVar18,dVar18,dVar11,dVar11,dVar10);
+    }
+    else {
+      dVar10 = atan2((double)local_c0,-(double)local_bc);
+      dVar19 = (double)((float)dVar10 * 57.295776 + 180.0);
+    }
+  }
+  if (*(char *)((int)piVar8 + 0x2b) == '\0') {
+    if ((cVar7 == '\0') && (*(char *)((int)piVar8 + 0x2a) != '\0')) goto LAB_822d3994;
+  }
+  else {
+    puVar3 = (undefined4 *)piVar8[2];
+    local_c8 = local_b0;
+    local_c4 = local_ac;
+    local_a0 = *puVar3;
+    local_9c = puVar3[1];
+    local_98 = puVar3[2];
+    local_94 = (float)puVar3[3];
+  }
+  if (*(char *)((int)piVar8 + 0x2d) == '\0') {
+    dVar10 = (double)GetScaleForDistance(uVar4,*piVar8);
+    local_dc = (float)(dVar10 * (double)local_dc);
+    local_e0 = (float)(dVar10 * (double)local_e0);
+  }
+  if (piVar8[1] != 0) {
+    ScrPlace_HiResApplyRect(&local_c8,&local_c4,&local_dc,&local_e0);
+    CL_DrawStretchPicPhysicalRotateXY
+              (-(double)(float)((double)local_dc * dVar15 - (double)local_c8),
+               -(double)(float)((double)local_e0 * dVar15 - (double)local_c4),(double)local_dc,
+               (double)local_e0,dVar18,dVar18,dVar11,dVar11,dVar19);
+  }
+  if (piVar8[3] != 0) {
+    dVar10 = (double)(*(float *)(DAT_82a22d14 + 0xc) * pfVar5[1]);
+    dVar9 = (double)*(float *)(DAT_82a22d10 + 0xc);
+    uVar4 = UI_GetFontHandle(dVar9,pfVar5,6);
+    local_c4 = (float)(dVar10 + (double)local_c4);
+    dVar16 = (double)(float)(dVar9 * (double)DAT_82b5c7fc);
+    dVar10 = (double)ScrPlace_HiResGetScaleX();
+    dVar11 = (double)(float)(dVar9 * (double)DAT_82b5c7fc);
+    dVar9 = (double)(*pfVar5 * (float)(dVar10 * dVar16));
+    dVar10 = (double)ScrPlace_HiResGetScaleY();
+    dVar10 = (double)((float)(dVar10 * dVar11) * pfVar5[1]);
+    iVar6 = R_TextWidth(piVar8[3],0x7fffffff,uVar4);
+    local_d0 = (longlong)iVar6;
+    CL_DrawTextPhysical(-(double)(float)((double)(float)((double)local_d0 * dVar9) * dVar15 -
+                                        (double)local_c8),(double)local_c4,dVar9,dVar10,piVar8[3],
+                        0x7fffffff,uVar4);
+  }
+LAB_822d3994:
+  __restfpr_21();
+  __restgprlr_28();
+  return;
 }
 
 
 // 822D39A8  DrawViewableWaypoint  (cgame/cg_hudelem.cpp:1487)
 
-void DrawViewableWaypoint(void)
+void DrawViewableWaypoint(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  char cVar4;
+  int *piVar5;
+  undefined1 auStack_d0 [3];
+  char local_cd;
+  undefined1 *local_c0;
+  undefined4 local_bc;
+  undefined1 *local_b8;
+  undefined4 local_b4;
+  undefined4 local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined4 local_a4;
+  undefined1 local_a0;
+  undefined4 local_9c;
+  byte local_98;
+  byte local_97;
+  byte local_96;
+  undefined1 local_95;
+  byte local_94;
+  byte local_93;
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [112];
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82018064,0x5d9,0,0xffffffff82000f98,0xffffffff820181ac);
+  }
+  piVar5 = (int *)param_2;
+  if (*piVar5 != 0xd) {
+    MyAssertHandler(0xffffffff82018064,0x5da,0,0xffffffff82000f98,0xffffffff820183e8);
+  }
+  if ((piVar5[0x29] & 0x400U) != 0) {
+    MyAssertHandler(0xffffffff82018064,0x5dd,0,0xffffffff82000f98,0xffffffff82018484);
+  }
+  iVar3 = CG_GetFlashbangedRemainingTime(uVar2);
+  if (iVar3 == 0) {
+    iVar3 = CG_GetLocalClientGlobals(uVar2);
+    BG_LerpHudColors(param_2,*(undefined4 *)(iVar3 + 0x6b98c),auStack_d0);
+    if (local_cd != '\0') {
+      HudElemColorToVec4(uVar2,auStack_d0,auStack_80);
+      iVar3 = CG_ServerMaterialName(uVar2,piVar5[0x13],auStack_70,0x40);
+      if (iVar3 != 0) {
+        local_bc = Material_RegisterHandle(auStack_70,7);
+        cVar4 = Material_Is2D();
+        if (cVar4 == '\0') {
+          Com_PrintError(0xd,0xffffffff82018444,auStack_70);
+          __restgprlr_28();
+          return;
+        }
+        cVar4 = GetWaypointEntPos(uVar2,param_2,auStack_90);
+        if (cVar4 != '\0') {
+          uVar1 = piVar5[0x29];
+          local_c0 = auStack_90;
+          local_b8 = auStack_80;
+          local_98 = (byte)(uVar1 >> 5) & 1;
+          local_b0 = *(undefined4 *)(DAT_82a22cc8 + 0xc);
+          local_a8 = *(undefined4 *)(DAT_82a22cf0 + 0xc);
+          local_97 = (byte)(uVar1 >> 4) & 1;
+          local_96 = (byte)(uVar1 >> 6) & 1;
+          local_94 = (byte)(uVar1 >> 3) & 1;
+          local_a4 = *(undefined4 *)(DAT_82a22ccc + 0xc);
+          local_93 = (byte)(uVar1 >> 9) & 1;
+          local_9c = *(undefined4 *)(DAT_82a22d24 + 0xc);
+          local_95 = 0;
+          local_b4 = 0;
+          local_ac = DAT_82a3c984;
+          local_a0 = 0;
+          CG_DrawWaypoint(uVar2,&local_c0);
+        }
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 822D3BB8  DrawSingleHudElem2d  (cgame/cg_hudelem.cpp:1558)
+
+void DrawSingleHudElem2d(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  undefined1 auStack_370 [3];
+  char local_36d;
+  float local_360 [4];
+  char local_350 [256];
+  float local_250;
+  char local_24c [272];
+  undefined1 auStack_13c [16];
+  undefined4 local_12c;
+  undefined1 auStack_120 [288];
+  
+  uVar1 = __savegprlr_29();
+  piVar3 = (int *)param_2;
+  if (*piVar3 == 0xd) {
+    if ((piVar3[0x29] & 0x400U) == 0) {
+      DrawViewableWaypoint();
+      __restgprlr_29();
+      return;
+    }
+  }
+  else {
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    local_12c = *(undefined4 *)(iVar2 + 0x6b98c);
+    iVar2 = CG_GetLocalClientGlobals(uVar1);
+    if (*(int *)(*(int *)(iVar2 + 0x335c) + 0x3308) < piVar3[0xe]) {
+      iVar2 = CG_GetLocalClientGlobals(uVar1);
+      MyAssertHandler(0xffffffff82018064,0x639,0,0xffffffff820184b0,piVar3[0xe],
+                      *(undefined4 *)(*(int *)(iVar2 + 0x335c) + 0x3308));
+    }
+    BG_LerpHudColors(param_2,local_12c,auStack_370);
+    if (local_36d != '\0') {
+      HudElemColorToVec4(uVar1,auStack_370,auStack_13c);
+      DrawSingleHudElem2d_GetHudElemInfo(uVar1,param_2,local_360,auStack_120);
+      if (local_350[0] != '\0') {
+        DrawHudElemString(uVar1,local_350,param_2,local_360);
+        local_360[0] = local_360[0] + local_250;
+      }
+      switch(*piVar3) {
+      case 1:
+      case 2:
+      case 3:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 10:
+        if (local_24c[0] != '\0') {
+          DrawHudElemString(uVar1,local_24c,param_2,local_360);
+          __restgprlr_29();
+          return;
+        }
+        break;
+      case 4:
+        DrawHudElemMaterial(uVar1,param_2,local_360);
+        __restgprlr_29();
+        return;
+      case 0xb:
+      case 0xc:
+        DrawHudElemClock(uVar1,param_2,local_360);
+        __restgprlr_29();
+        return;
+      default:
+        if (DAT_84013128 == 0) {
+          MyAssertHandler(0xffffffff82018064,0x674,0,0xffffffff820180b4);
+        }
+      }
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -916,12 +1891,162 @@ size_t GetSortedHudElems(undefined8 param_1,void *param_2)
 }
 
 
-// 822D40B0  AddDrawSurfForHudElemWaypoint  (cgame/cg_hudelem.cpp:1765)
+// 822D3EF8  CG_Draw2dHudElems  (cgame/cg_hudelem.cpp:1709)
 
-void AddDrawSurfForHudElemWaypoint(void)
+void CG_Draw2dHudElems(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  int iVar5;
+  longlong lVar4;
+  char cVar7;
+  int iVar6;
+  int *piVar8;
+  int local_1040 [1040];
+  
+  uVar3 = __savegprlr_25();
+  iVar5 = CG_GetLocalClientGlobals();
+  lVar4 = GetSortedHudElems(uVar3,local_1040);
+  cVar7 = CL_Demo_IsFollowCamera(uVar3);
+  if (((cVar7 == '\0') && (cVar7 = CL_Demo_IsFreeCamera(uVar3), cVar7 == '\0')) && ((int)lVar4 != 0)
+     ) {
+    ScrPlace_SetLegacySplitscreenScaling();
+    uVar1 = *(uint *)(iVar5 + 4);
+    if (0 < (int)lVar4) {
+      piVar8 = local_1040;
+      do {
+        if ((((((~(ulonglong)uVar1 & 0xffffffff) >> 0x1f) + (ulonglong)(7 < (ulonglong)uVar1) & 1)
+              != 0) || ((*(uint *)(*piVar8 + 0xa4) & 2) == 0)) &&
+           ((*(int *)(iVar5 + 0x6b9a0) == 0 || ((*(uint *)(*piVar8 + 0xa4) & 0x800) == 0)))) {
+          if (param_2 == 0) {
+            if ((*(uint *)(*piVar8 + 0xa4) & 0x100) != 0) {
+LAB_822d4040:
+              if ((((*(uint *)(*piVar8 + 0xa4) & 4) == 0) ||
+                  (iVar6 = UI_AnyMenuActive(uVar3), iVar6 == 0)) &&
+                 ((cVar7 = CL_Demo_IsPlaying(uVar3), cVar7 == '\0' ||
+                  ((*(uint *)(*piVar8 + 0xa4) & 0x1000) == 0)))) {
+                DrawSingleHudElem2d(uVar3,*piVar8);
+              }
+            }
+          }
+          else if (param_2 == 2) {
+            uVar2 = *(uint *)(*piVar8 + 0xa4);
+            if ((uVar2 & 1) != 0) {
+joined_r0x822d403c:
+              if ((uVar2 & 0x100) == 0) goto LAB_822d4040;
+            }
+          }
+          else {
+            if (param_2 != 1) goto LAB_822d4040;
+            uVar2 = *(uint *)(*piVar8 + 0xa4);
+            if ((uVar2 & 1) == 0) goto joined_r0x822d403c;
+          }
+        }
+        lVar4 = lVar4 + -1;
+        piVar8 = piVar8 + 1;
+      } while (lVar4 != 0);
+    }
+    ScrPlace_SetNormalSplitscreenScaling();
+  }
+  __restgprlr_25();
+  return;
+}
+
+
+// 822D40B0  AddDrawSurfForHudElemWaypoint  (cgame/cg_hudelem.cpp:1765)
+
+void AddDrawSurfForHudElemWaypoint(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar4;
+  char cVar5;
+  undefined4 uVar6;
+  double dVar7;
+  double dVar8;
+  undefined1 local_b0 [3];
+  char local_ad;
+  undefined4 local_a0;
+  undefined1 auStack_9c [16];
+  float local_8c;
+  float local_88;
+  undefined4 local_84;
+  undefined1 auStack_80 [128];
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  BG_LerpHudColors(param_2,*(undefined4 *)(iVar2 + 0x6b98c),local_b0);
+  if ((local_ad != '\0') && (iVar2 = (int)param_2, (*(uint *)(iVar2 + 0xa4) & 0x400) != 0)) {
+    iVar3 = CG_ServerMaterialName(uVar1,*(undefined4 *)(iVar2 + 0x4c),auStack_80,0x40);
+    if (iVar3 != 0) {
+      uVar4 = Material_RegisterHandle(auStack_80,7);
+      cVar5 = Material_Is2D();
+      if (cVar5 != '\0') {
+        Com_PrintError(0xd,0xffffffff82018514,auStack_80);
+        __restgprlr_28();
+        return;
+      }
+      dVar7 = (double)HudElemWaypointHeight(uVar1,param_2);
+      dVar8 = 0.0;
+      if (dVar7 != 0.0) {
+        if ((*(uint *)(iVar2 + 0xa4) >> 9 & 1) == 0) {
+          uVar6 = 0;
+        }
+        else {
+          uVar6 = 3;
+          dVar7 = (double)(float)(dVar7 * 0.00430000014603138);
+        }
+        cVar5 = GetWaypointEntPos(uVar1,param_2,auStack_9c);
+        if (cVar5 != '\0') {
+          local_8c = (float)dVar7;
+          local_88 = (float)dVar8;
+          local_a0 = uVar4;
+          local_84 = uVar6;
+          FX_SpriteAdd(&local_a0);
+        }
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 822D4218  CG_AddDrawSurfsFor3dHudElems  (cgame/cg_hudelem.cpp:1836)
+
+void CG_AddDrawSurfsFor3dHudElems(void)
+
+{
+  undefined8 uVar1;
+  char cVar3;
+  ulonglong uVar2;
+  undefined4 *puVar4;
+  undefined4 local_120 [72];
+  
+  uVar1 = __savegprlr_29();
+  cVar3 = CG_ShouldDrawHud();
+  if (((cVar3 != '\0') && (cVar3 = CL_Demo_IsFollowCamera(uVar1), cVar3 == '\0')) &&
+     (cVar3 = CL_Demo_IsFreeCamera(uVar1), cVar3 == '\0')) {
+    uVar2 = GetSortedHudElems(uVar1,local_120);
+    if (0x3e < (uVar2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82018064,0x73c,0,0xffffffff82018554,uVar2,0x3e);
+    }
+    if ((uVar2 & 0xffffffff) != 0) {
+      puVar4 = local_120;
+      do {
+        if (*(int *)*puVar4 == 0xd) {
+          AddDrawSurfForHudElemWaypoint(uVar1);
+        }
+        uVar2 = uVar2 - 1;
+        puVar4 = puVar4 + 1;
+      } while (uVar2 != 0);
+    }
+  }
+  __restgprlr_29();
+  return;
 }
 

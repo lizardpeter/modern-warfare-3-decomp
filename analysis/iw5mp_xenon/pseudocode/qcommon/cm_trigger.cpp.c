@@ -16,31 +16,200 @@ undefined8 CM_TestTriggerTouch_Slab(double param_1,double param_2,float *param_3
 
 // 824CFF70  CM_TestTriggerTouch_UnrotatedHull  (qcommon/cm_trigger.cpp:55)
 
-void CM_TestTriggerTouch_UnrotatedHull(void)
+void CM_TestTriggerTouch_UnrotatedHull(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  iVar4 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar5 = (float *)param_2;
+  pfVar6 = (float *)param_3;
+  fVar1 = 0.0;
+  fVar2 = fVar1;
+  if (ABS(*pfVar5 - *pfVar6) - (pfVar5[3] + pfVar6[3]) < 0.0) {
+    fVar2 = 1.0;
+  }
+  fVar3 = fVar1;
+  if (ABS(pfVar5[1] - pfVar6[1]) - (pfVar5[4] + pfVar6[4]) < 0.0) {
+    fVar3 = fVar2;
+  }
+  if (ABS(pfVar5[2] - pfVar6[2]) - (pfVar5[5] + pfVar6[5]) < 0.0) {
+    fVar1 = fVar3;
+  }
+  if (fVar1 == 0.0) {
+LAB_824d0078:
+    __restgprlr_27(0);
+    return;
+  }
+  uVar7 = 0;
+  if (*(ushort *)(pfVar5 + 7) != 0) {
+    do {
+      pfVar8 = (float *)((*(ushort *)((int)pfVar5 + 0x1e) + uVar7) * 0x14 + *(int *)(iVar4 + 0x14));
+      if (ABS(pfVar8[2]) * pfVar6[7] + pfVar6[6] + pfVar8[4] <=
+          ABS((pfVar8[2] * pfVar6[2] + pfVar8[1] * pfVar6[1] + *pfVar8 * *pfVar6) - pfVar8[3]))
+      goto LAB_824d0078;
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < *(ushort *)(pfVar5 + 7));
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 824D0110  CM_TestTriggerTouch_RotatedHull  (qcommon/cm_trigger.cpp:74)
 
-void CM_TestTriggerTouch_RotatedHull(void)
+void CM_TestTriggerTouch_RotatedHull
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  float *pfVar8;
+  float *pfVar9;
+  float *pfVar10;
+  uint uVar11;
+  int iVar12;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar7 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar8 = (float *)param_2;
+  pfVar10 = (float *)param_4;
+  fVar1 = *pfVar10;
+  fVar2 = pfVar10[1];
+  fVar3 = pfVar10[2];
+  fVar4 = 0.0;
+  fVar5 = fVar4;
+  if (ABS(*pfVar8 - fVar1) - (pfVar10[3] + pfVar8[3]) < 0.0) {
+    fVar5 = 1.0;
+  }
+  fVar6 = fVar4;
+  if (ABS(pfVar8[1] - fVar2) - (pfVar10[4] + pfVar8[4]) < 0.0) {
+    fVar6 = fVar5;
+  }
+  if (ABS(pfVar8[2] - fVar3) - (pfVar10[5] + pfVar8[5]) < 0.0) {
+    fVar4 = fVar6;
+  }
+  if (fVar4 != 0.0) {
+    uVar11 = 0;
+    if (*(short *)(pfVar8 + 7) != 0) {
+      do {
+        iVar12 = (*(ushort *)((int)pfVar8 + 0x1e) + uVar11) * 0x14 + *(int *)(iVar7 + 0x14);
+        Vec3Rotate(iVar12,param_3,&local_50);
+        fVar1 = *pfVar10;
+        fVar2 = pfVar10[1];
+        fVar3 = pfVar10[2];
+        if (ABS(local_48) * pfVar10[7] + pfVar10[6] + *(float *)(iVar12 + 0x10) <=
+            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - *(float *)(iVar12 + 0xc))
+           ) goto LAB_824d021c;
+        uVar11 = uVar11 + 1;
+      } while (uVar11 < *(ushort *)(pfVar8 + 7));
+    }
+    pfVar9 = (float *)param_3;
+    fVar4 = pfVar10[7];
+    fVar5 = pfVar10[6];
+    if ((ABS((pfVar9[2] * fVar3 + pfVar9[1] * fVar2 + fVar1 * *pfVar9) - *pfVar8) <
+         ABS(pfVar9[2]) * fVar4 + fVar5 + pfVar8[3]) &&
+       (ABS((pfVar9[5] * fVar3 + pfVar9[4] * fVar2 + fVar1 * pfVar9[3]) - pfVar8[1]) <
+        ABS(pfVar9[5]) * fVar4 + fVar5 + pfVar8[4])) {
+      __restgprlr_26(ABS((pfVar9[8] * fVar3 + pfVar9[7] * fVar2 + fVar1 * pfVar9[6]) - pfVar8[2]) <
+                     ABS(pfVar9[8]) * fVar4 + fVar5 + pfVar8[5]);
+      return;
+    }
+  }
+LAB_824d021c:
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 824D0390  CM_TestTriggerTouch_Unrotated  (qcommon/cm_trigger.cpp:102)
 
-void CM_TestTriggerTouch_Unrotated(void)
+void CM_TestTriggerTouch_Unrotated(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  float *pfVar2;
+  uint uVar3;
+  float *pfVar4;
+  uint uVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
+  iVar1 = __savegprlr_23();
+  dVar9 = 1.0;
+  dVar10 = 0.0;
+  uVar5 = 0;
+  do {
+    pfVar6 = (float *)((*(ushort *)(param_2 + 6) + uVar5) * 0x20 + *(int *)(iVar1 + 0xc));
+    if (pfVar6 == (float *)0x0) {
+      MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+    }
+    if ((param_3 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+    }
+    pfVar2 = (float *)param_3;
+    dVar7 = dVar10;
+    if (ABS(*pfVar6 - *pfVar2) - (pfVar6[3] + pfVar2[3]) < 0.0) {
+      dVar7 = dVar9;
+    }
+    dVar8 = dVar10;
+    if (ABS(pfVar6[1] - pfVar2[1]) - (pfVar6[4] + pfVar2[4]) < 0.0) {
+      dVar8 = dVar7;
+    }
+    dVar7 = dVar10;
+    if (ABS(pfVar6[2] - pfVar2[2]) - (pfVar6[5] + pfVar2[5]) < 0.0) {
+      dVar7 = dVar8;
+    }
+    if (dVar7 != dVar10) {
+      uVar3 = 0;
+      if (*(ushort *)(pfVar6 + 7) == 0) {
+LAB_824d0538:
+        __restgprlr_23(1);
+        return;
+      }
+      while (pfVar4 = (float *)((*(ushort *)((int)pfVar6 + 0x1e) + uVar3) * 0x14 +
+                               *(int *)(iVar1 + 0x14)),
+            ABS((pfVar4[2] * pfVar2[2] + pfVar4[1] * pfVar2[1] + *pfVar2 * *pfVar4) - pfVar4[3]) <
+            ABS(pfVar4[2]) * pfVar2[7] + pfVar2[6] + pfVar4[4]) {
+        uVar3 = uVar3 + 1;
+        if (*(ushort *)(pfVar6 + 7) <= uVar3) goto LAB_824d0538;
+      }
+    }
+    uVar5 = uVar5 + 1;
+    if (uVar5 == *(ushort *)(param_2 + 4)) {
+      __restgprlr_23(0);
+      return;
+    }
+  } while( true );
 }
 
 
@@ -77,11 +246,9 @@ void CM_TestTriggerTouch_Rotated
   do {
     pfVar11 = (float *)((*(ushort *)(param_2 + 6) + uVar9) * 0x20 + *(int *)(iVar6 + 0xc));
     if (pfVar11 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
     }
     if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
     }
     pfVar8 = (float *)param_4;
@@ -140,31 +307,121 @@ LAB_824d07f8:
 
 // 824D0830  CM_SetupTriggerTest  (qcommon/cm_trigger.cpp:141)
 
-void CM_SetupTriggerTest(void)
+void CM_SetupTriggerTest(undefined8 param_1,float *param_2,undefined8 param_3,float *param_4,
+                        undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  float *pfVar4;
+  
+  pfVar4 = (float *)__savegprlr_26();
+  if ((double)pfVar4[3] != (double)pfVar4[4]) {
+    MyAssertHandler(0xffffffff82082e68,0x8e,0,0xffffffff82082448,(double)pfVar4[3],(double)pfVar4[4]
+                   );
+  }
+  if ((double)pfVar4[5] < (double)pfVar4[3]) {
+    MyAssertHandler(0xffffffff82082e68,0x8f,0,0xffffffff82082414,(double)pfVar4[3],(double)pfVar4[5]
+                   );
+  }
+  *param_4 = *pfVar4 - *param_2;
+  param_4[1] = pfVar4[1] - param_2[1];
+  param_4[2] = pfVar4[2] - param_2[2];
+  fVar1 = pfVar4[3];
+  param_4[6] = fVar1;
+  fVar1 = pfVar4[5] - fVar1;
+  param_4[7] = fVar1;
+  if (((*(float *)param_3 != 0.0) || (((float *)param_3)[2] != 0.0)) && (fVar1 != 0.0)) {
+    AnglesToAxis(param_3,param_5);
+    iVar3 = (int)param_5;
+    fVar1 = param_4[7];
+    fVar2 = param_4[6];
+    param_4[3] = ABS(*(float *)(iVar3 + 0x18)) * fVar1 + fVar2;
+    param_4[4] = ABS(*(float *)(iVar3 + 0x1c)) * fVar1 + fVar2;
+    param_4[5] = ABS(*(float *)(iVar3 + 0x20)) * fVar1 + fVar2;
+    __restgprlr_26(1);
+    return;
+  }
+  fVar1 = param_4[6];
+  param_4[3] = fVar1;
+  param_4[4] = fVar1;
+  param_4[5] = param_4[7] + fVar1;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 824D09C0  CM_TestTriggerTouch  (qcommon/cm_trigger.cpp:168)
 
-void CM_TestTriggerTouch(void)
+void CM_TestTriggerTouch(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  char cVar4;
+  undefined1 auStack_80 [32];
+  undefined1 auStack_60 [96];
+  
+  uVar1 = __savegprlr_27();
+  uVar2 = CM_GetTriggerModel(param_2);
+  uVar3 = CM_TriggerSource(param_2);
+  cVar4 = CM_SetupTriggerTest(uVar1,param_3,param_4,auStack_80,auStack_60);
+  if (cVar4 != '\0') {
+    CM_TestTriggerTouch_Rotated(uVar3,uVar2,auStack_60,auStack_80);
+    __restgprlr_27();
+    return;
+  }
+  CM_TestTriggerTouch_Unrotated(uVar3,uVar2,auStack_80);
+  __restgprlr_27();
+  return;
 }
 
 
 // 824D0A48  CM_TriggerHullContainsPoint  (qcommon/cm_trigger.cpp:185)
 
-void CM_TriggerHullContainsPoint(void)
+void CM_TriggerHullContainsPoint(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  float *pfVar2;
+  float *pfVar3;
+  uint uVar4;
+  float *pfVar5;
+  
+  iVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x1c1,0,0xffffffff82000f98,0xffffffff82002044);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x1c2,0,0xffffffff82000f98,0xffffffff82082338);
+  }
+  pfVar3 = (float *)param_3;
+  pfVar2 = (float *)param_2;
+  if (ABS(*pfVar3 - *pfVar2) < pfVar2[3]) {
+    if (ABS(pfVar3[1] - pfVar2[1]) < pfVar2[4]) {
+      if (ABS(pfVar3[2] - pfVar2[2]) < pfVar2[5]) {
+        uVar4 = 0;
+        if (*(ushort *)(pfVar2 + 7) != 0) {
+          do {
+            pfVar5 = (float *)((*(ushort *)((int)pfVar2 + 0x1e) + uVar4) * 0x14 +
+                              *(int *)(iVar1 + 0x14));
+            if (pfVar5[4] <=
+                ABS((pfVar5[2] * pfVar3[2] + pfVar5[1] * pfVar3[1] + *pfVar5 * *pfVar3) - pfVar5[3])
+               ) goto LAB_824d0b0c;
+            uVar4 = uVar4 + 1;
+          } while (uVar4 < *(ushort *)(pfVar2 + 7));
+        }
+        __restgprlr_27(1);
+        return;
+      }
+    }
+  }
+LAB_824d0b0c:
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -191,11 +448,9 @@ void CM_TriggerModelPointContents(undefined8 param_1,ulonglong param_2)
   do {
     pfVar9 = (float *)((*(ushort *)(iVar2 + 6) + uVar8) * 0x20 + *(int *)(iVar3 + 0xc));
     if (pfVar9 == (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82082340,0x1c1,0,0xffffffff82000f98,0xffffffff82002044);
     }
     if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82082340,0x1c2,0,0xffffffff82000f98,0xffffffff82082338);
     }
     pfVar4 = (float *)param_2;
@@ -229,11 +484,57 @@ LAB_824d0cf4:
 
 // 824D0D10  CM_TestStageTriggerContainsPoint  (qcommon/cm_trigger.cpp:232)
 
-void CM_TestStageTriggerContainsPoint(void)
+void CM_TestStageTriggerContainsPoint(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  uint uVar2;
+  float *pfVar3;
+  uint uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  
+  uVar2 = __savegprlr_23();
+  if (DAT_835a2924 <= uVar2) {
+    MyAssertHandler(0xffffffff82082e68,0xee,0,0xffffffff82082eb0,uVar2);
+  }
+  iVar1 = uVar2 * 8 + DAT_835a2928;
+  uVar2 = 0;
+  do {
+    pfVar6 = (float *)((*(ushort *)(iVar1 + 6) + uVar2) * 0x20 + DAT_835a2930);
+    if (pfVar6 == (float *)0x0) {
+      MyAssertHandler(0xffffffff82082340,0x1c1,0,0xffffffff82000f98,0xffffffff82002044);
+    }
+    if ((param_2 & 0xffffffff) == 0) {
+      MyAssertHandler(0xffffffff82082340,0x1c2,0,0xffffffff82000f98,0xffffffff82082338);
+    }
+    pfVar3 = (float *)param_2;
+    if (ABS(*pfVar3 - *pfVar6) < pfVar6[3]) {
+      if (ABS(pfVar3[1] - pfVar6[1]) < pfVar6[4]) {
+        if (ABS(pfVar3[2] - pfVar6[2]) < pfVar6[5]) {
+          uVar4 = 0;
+          if (*(ushort *)(pfVar6 + 7) == 0) {
+LAB_824d0e94:
+            __restgprlr_23(1);
+            return;
+          }
+          while( true ) {
+            pfVar5 = (float *)((*(ushort *)((int)pfVar6 + 0x1e) + uVar4) * 0x14 + DAT_835a2938);
+            if (pfVar5[4] <=
+                ABS((pfVar5[2] * pfVar3[2] + pfVar5[1] * pfVar3[1] + *pfVar5 * *pfVar3) - pfVar5[3])
+               ) break;
+            uVar4 = uVar4 + 1;
+            if (*(ushort *)(pfVar6 + 7) <= uVar4) goto LAB_824d0e94;
+          }
+        }
+      }
+    }
+    uVar2 = uVar2 + 1;
+    if (uVar2 == *(ushort *)(iVar1 + 4)) {
+      __restgprlr_23(0);
+      return;
+    }
+  } while( true );
 }
 
 
@@ -255,21 +556,189 @@ CM_TriggerModelBlocksStationarySightTrace_Slab
 
 // 824D0F18  CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull  (qcommon/cm_trigger.cpp:272)
 
-void CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull(void)
+void CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  iVar4 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar5 = (float *)param_2;
+  pfVar6 = (float *)param_3;
+  fVar1 = 0.0;
+  fVar2 = fVar1;
+  if (ABS(*pfVar5 - *pfVar6) - (pfVar5[3] + pfVar6[3]) < 0.0) {
+    fVar2 = 1.0;
+  }
+  fVar3 = fVar1;
+  if (ABS(pfVar5[1] - pfVar6[1]) - (pfVar5[4] + pfVar6[4]) < 0.0) {
+    fVar3 = fVar2;
+  }
+  if (ABS(pfVar5[2] - pfVar6[2]) - (pfVar5[5] + pfVar6[5]) < 0.0) {
+    fVar1 = fVar3;
+  }
+  if (fVar1 == 0.0) {
+LAB_824d1020:
+    __restgprlr_27(0);
+    return;
+  }
+  uVar7 = 0;
+  if (*(ushort *)(pfVar5 + 7) != 0) {
+    do {
+      pfVar8 = (float *)((*(ushort *)((int)pfVar5 + 0x1e) + uVar7) * 0x14 + *(int *)(iVar4 + 0x14));
+      if (ABS(pfVar8[2]) * pfVar6[7] + pfVar6[6] + pfVar8[4] <
+          ABS((pfVar8[2] * pfVar6[2] + pfVar8[1] * pfVar6[1] + *pfVar8 * *pfVar6) - pfVar8[3]))
+      goto LAB_824d1020;
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < *(ushort *)(pfVar5 + 7));
+  }
+  __restgprlr_27(1);
+  return;
 }
 
 
 // 824D10B8  CM_TriggerModelBlocksStationarySightTrace_RotatedHull  (qcommon/cm_trigger.cpp:291)
 
-void CM_TriggerModelBlocksStationarySightTrace_RotatedHull(void)
+void CM_TriggerModelBlocksStationarySightTrace_RotatedHull
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
+  float *pfVar8;
+  float *pfVar9;
+  float *pfVar10;
+  uint uVar11;
+  int iVar12;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  iVar7 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar8 = (float *)param_2;
+  pfVar10 = (float *)param_4;
+  fVar1 = *pfVar10;
+  fVar2 = pfVar10[1];
+  fVar3 = pfVar10[2];
+  fVar4 = 0.0;
+  fVar5 = fVar4;
+  if (ABS(*pfVar8 - fVar1) - (pfVar10[3] + pfVar8[3]) < 0.0) {
+    fVar5 = 1.0;
+  }
+  fVar6 = fVar4;
+  if (ABS(pfVar8[1] - fVar2) - (pfVar10[4] + pfVar8[4]) < 0.0) {
+    fVar6 = fVar5;
+  }
+  if (ABS(pfVar8[2] - fVar3) - (pfVar10[5] + pfVar8[5]) < 0.0) {
+    fVar4 = fVar6;
+  }
+  if (fVar4 != 0.0) {
+    uVar11 = 0;
+    if (*(short *)(pfVar8 + 7) != 0) {
+      do {
+        iVar12 = (*(ushort *)((int)pfVar8 + 0x1e) + uVar11) * 0x14 + *(int *)(iVar7 + 0x14);
+        Vec3Rotate(iVar12,param_3,&local_50);
+        fVar1 = *pfVar10;
+        fVar2 = pfVar10[1];
+        fVar3 = pfVar10[2];
+        if (ABS(local_48) * pfVar10[7] + pfVar10[6] + *(float *)(iVar12 + 0x10) <
+            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - *(float *)(iVar12 + 0xc))
+           ) goto LAB_824d11c4;
+        uVar11 = uVar11 + 1;
+      } while (uVar11 < *(ushort *)(pfVar8 + 7));
+    }
+    pfVar9 = (float *)param_3;
+    fVar4 = pfVar10[7];
+    fVar5 = pfVar10[6];
+    if ((ABS((pfVar9[2] * fVar3 + pfVar9[1] * fVar2 + fVar1 * *pfVar9) - *pfVar8) <=
+         ABS(pfVar9[2]) * fVar4 + fVar5 + pfVar8[3]) &&
+       (ABS((pfVar9[5] * fVar3 + pfVar9[4] * fVar2 + fVar1 * pfVar9[3]) - pfVar8[1]) <=
+        ABS(pfVar9[5]) * fVar4 + fVar5 + pfVar8[4])) {
+      __restgprlr_26(ABS((pfVar9[8] * fVar3 + pfVar9[7] * fVar2 + fVar1 * pfVar9[6]) - pfVar8[2]) <=
+                     ABS(pfVar9[8]) * fVar4 + fVar5 + pfVar8[5]);
+      return;
+    }
+  }
+LAB_824d11c4:
+  __restgprlr_26(0);
+  return;
+}
+
+
+// 824D1338  CM_TriggerModelSightTrace_Slab  (qcommon/cm_trigger.cpp:319)
+
+void CM_TriggerModelSightTrace_Slab
+               (double param_1,double param_2,float *param_3,float *param_4,undefined8 param_5,
+               undefined8 param_6,float *param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  
+  fVar2 = param_4[2];
+  fVar3 = param_3[10] * fVar2 + param_3[9] * param_4[1] + *param_4 * param_3[8];
+  fVar1 = (float)((double)(ABS(fVar2) * param_3[7] + param_3[6]) + param_2);
+  fVar4 = 1.0;
+  if (fVar3 < 0.0) {
+    fVar4 = -1.0;
+  }
+  fVar3 = ABS(fVar3);
+  fVar4 = (float)(param_1 -
+                 (double)(param_3[2] * fVar2 + param_3[1] * param_4[1] + *param_3 * *param_4)) *
+          fVar4;
+  fVar6 = fVar4 - fVar1;
+  fVar1 = fVar1 + fVar4;
+  fVar4 = param_7[3] * fVar1 - param_7[2] * fVar3;
+  fVar5 = *param_7 * fVar3 - param_7[1] * fVar6;
+  fVar2 = param_7[2];
+  if (fVar4 < 0.0) {
+    fVar2 = fVar1;
+  }
+  param_7[2] = fVar2;
+  fVar1 = param_7[3];
+  if (fVar4 < 0.0) {
+    fVar1 = fVar3;
+  }
+  param_7[3] = fVar1;
+  fVar1 = *param_7;
+  if (fVar5 < 0.0) {
+    fVar1 = fVar6;
+  }
+  *param_7 = fVar1;
+  fVar1 = param_7[1];
+  if (fVar5 < 0.0) {
+    fVar1 = fVar3;
+  }
+  param_7[1] = fVar1;
+  return;
 }
 
 
@@ -300,31 +769,176 @@ undefined8 CM_TriggerModelSightTrace_MissedHull(float *param_1)
 
 // 824D1460  CM_TriggerModelBlocksSightTrace_UnrotatedHull  (qcommon/cm_trigger.cpp:373)
 
-void CM_TriggerModelBlocksSightTrace_UnrotatedHull(void)
+void CM_TriggerModelBlocksSightTrace_UnrotatedHull
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar6;
+  undefined8 uVar5;
+  float *pfVar7;
+  float *pfVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  
+  iVar6 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar8 = (float *)param_3;
+  pfVar7 = (float *)param_2;
+  fVar2 = 0.0;
+  fVar3 = fVar2;
+  if (ABS(*pfVar7 - *pfVar8) - (pfVar8[3] + pfVar7[3]) < 0.0) {
+    fVar3 = 1.0;
+  }
+  fVar4 = fVar2;
+  if (ABS(pfVar7[1] - pfVar8[1]) - (pfVar8[4] + pfVar7[4]) < 0.0) {
+    fVar4 = fVar3;
+  }
+  if (ABS(pfVar7[2] - pfVar8[2]) - (pfVar8[5] + pfVar7[5]) < 0.0) {
+    fVar2 = fVar4;
+  }
+  if (fVar2 != 0.0) {
+    lVar9 = -0x7df7d1c0;
+    uVar5 = CM_TriggerModelSightTrace_Slab(param_3,0xffffffff82082e40);
+    uVar5 = CM_TriggerModelSightTrace_Slab((double)pfVar7[1],(double)pfVar7[4],uVar5,lVar9 + 0xc);
+    CM_TriggerModelSightTrace_Slab((double)pfVar7[2],(double)pfVar7[5],uVar5,lVar9 + 0x18);
+    if (*(short *)(pfVar7 + 7) == 0) {
+      __restgprlr_27(1);
+      return;
+    }
+    uVar10 = 0;
+    do {
+      uVar11 = *(ushort *)((int)pfVar7 + 0x1e) + uVar10;
+      iVar1 = (int)((uVar11 + (uVar11 & 0x3fffffff) * 4 & 0xffffffff) << 2) + *(int *)(iVar6 + 0x14)
+      ;
+      CM_TriggerModelSightTrace_Slab
+                ((double)*(float *)(iVar1 + 0xc),(double)*(float *)(iVar1 + 0x10),param_3);
+      uVar10 = uVar10 + 1;
+    } while ((uVar10 & 0xffffffff) < (ulonglong)*(ushort *)(pfVar7 + 7));
+    __restgprlr_27(1);
+    return;
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
 // 824D1680  CM_TriggerModelBlocksSightTrace_RotatedHull  (qcommon/cm_trigger.cpp:405)
 
-void CM_TriggerModelBlocksSightTrace_RotatedHull(void)
+void CM_TriggerModelBlocksSightTrace_RotatedHull
+               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar5;
+  undefined8 uVar4;
+  float *pfVar6;
+  float *pfVar7;
+  int iVar8;
+  uint uVar9;
+  undefined1 auStack_60 [16];
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_44;
+  
+  iVar5 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82082340,0x224,0,0xffffffff82000f98,0xffffffff82025b30);
+  }
+  pfVar7 = (float *)param_4;
+  pfVar6 = (float *)param_2;
+  fVar1 = 0.0;
+  fVar2 = fVar1;
+  if (ABS(*pfVar6 - *pfVar7) - (pfVar7[3] + pfVar6[3]) < 0.0) {
+    fVar2 = 1.0;
+  }
+  fVar3 = fVar1;
+  if (ABS(pfVar6[1] - pfVar7[1]) - (pfVar7[4] + pfVar6[4]) < 0.0) {
+    fVar3 = fVar2;
+  }
+  if (ABS(pfVar6[2] - pfVar7[2]) - (pfVar7[5] + pfVar6[5]) < 0.0) {
+    fVar1 = fVar3;
+  }
+  if (fVar1 != 0.0) {
+    local_4c = 1.0;
+    local_48 = 1.0;
+    local_44 = 1.0;
+    local_50 = -1.0;
+    uVar4 = CM_TriggerModelSightTrace_Slab(param_4,param_3);
+    uVar4 = CM_TriggerModelSightTrace_Slab((double)pfVar6[1],(double)pfVar6[4],uVar4,param_3 + 0xc);
+    CM_TriggerModelSightTrace_Slab((double)pfVar6[2],(double)pfVar6[5],uVar4,param_3 + 0x18);
+    if (local_44 * local_50 < local_48 * local_4c) {
+      if (*(short *)(pfVar6 + 7) != 0) {
+        uVar9 = 0;
+        do {
+          iVar8 = (*(ushort *)((int)pfVar6 + 0x1e) + uVar9) * 0x14 + *(int *)(iVar5 + 0x14);
+          Vec3Rotate(iVar8,param_3,auStack_60);
+          CM_TriggerModelSightTrace_Slab
+                    ((double)*(float *)(iVar8 + 0xc),(double)*(float *)(iVar8 + 0x10),param_4,
+                     auStack_60);
+          uVar9 = uVar9 + 1;
+        } while (uVar9 < *(ushort *)(pfVar6 + 7));
+        __restgprlr_26(local_44 * local_50 < local_48 * local_4c);
+        return;
+      }
+      __restgprlr_26(1);
+      return;
+    }
+  }
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 824D18B0  CM_TriggerModelBlocksSightTrace_Unrotated  (qcommon/cm_trigger.cpp:439)
 
-void CM_TriggerModelBlocksSightTrace_Unrotated(void)
+void CM_TriggerModelBlocksSightTrace_Unrotated
+               (undefined8 param_1,int param_2,undefined8 param_3,uint param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  code *pcVar3;
+  uint uVar4;
+  
+  iVar1 = __savegprlr_26();
+  iVar2 = (int)param_3;
+  if (*(float *)(iVar2 + 0x28) * *(float *)(iVar2 + 0x28) +
+      *(float *)(iVar2 + 0x20) * *(float *)(iVar2 + 0x20) +
+      *(float *)(iVar2 + 0x24) * *(float *)(iVar2 + 0x24) == 0.0) {
+    pcVar3 = CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull;
+  }
+  else {
+    pcVar3 = CM_TriggerModelBlocksSightTrace_UnrotatedHull;
+  }
+  uVar4 = 0;
+  while( true ) {
+    iVar2 = (*(ushort *)(param_2 + 6) + uVar4) * 0x20 + *(int *)(iVar1 + 0xc);
+    if (((*(uint *)(iVar2 + 0x18) & param_4) != 0) &&
+       (iVar2 = (*pcVar3)(iVar1,iVar2,param_3), iVar2 != 0)) break;
+    uVar4 = uVar4 + 1;
+    if (uVar4 == *(ushort *)(param_2 + 4)) {
+      __restgprlr_26(0);
+      return;
+    }
+  }
+  __restgprlr_26(1);
+  return;
 }
 
 
@@ -367,10 +981,99 @@ void CM_TriggerModelBlocksSightTrace_Rotated
 
 // 824D1A38  CM_TransformedTriggerModelSightTrace  (qcommon/cm_trigger.cpp:495)
 
-void CM_TransformedTriggerModelSightTrace(void)
+void CM_TransformedTriggerModelSightTrace
+               (undefined8 param_1,float *param_2,float *param_3,undefined8 param_4,
+               undefined8 param_5,float *param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float *pfVar2;
+  uint *puVar3;
+  undefined8 uVar1;
+  float *pfVar4;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined1 auStack_b0 [24];
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  
+  pfVar2 = (float *)__savegprlr_23();
+  puVar3 = (uint *)CM_GetTriggerModel(param_4);
+  if (((uint)param_5 & *puVar3) == 0) {
+    __restgprlr_23(0);
+    return;
+  }
+  uVar1 = CM_TriggerSource(param_4);
+  if ((double)param_3[3] != (double)param_3[4]) {
+    MyAssertHandler(0xffffffff82082e68,0x200,0,0xffffffff82082448,(double)param_3[3],
+                    (double)param_3[4]);
+  }
+  if ((double)param_3[5] < (double)param_3[3]) {
+    MyAssertHandler(0xffffffff82082e68,0x201,0,0xffffffff82082414,(double)param_3[3],
+                    (double)param_3[5]);
+  }
+  local_68 = param_3[3];
+  local_64 = param_3[5] - local_68;
+  local_f0 = *pfVar2 + (*param_3 - *param_6);
+  local_e0 = *param_2 + (*param_3 - *param_6);
+  pfVar4 = (float *)param_7;
+  local_e8 = pfVar2[2] + (param_3[2] - param_6[2]);
+  local_d8 = param_2[2] + (param_3[2] - param_6[2]);
+  local_ec = pfVar2[1] + (param_3[1] - param_6[1]);
+  local_dc = param_2[1] + (param_3[1] - param_6[1]);
+  if (((*pfVar4 == 0.0) && (pfVar4[1] == 0.0)) && (pfVar4[2] == 0.0)) {
+    local_80 = (local_e0 + local_f0) * 0.5;
+    local_7c = (local_dc + local_ec) * 0.5;
+    local_78 = (local_d8 + local_e8) * 0.5;
+    local_60 = local_80 - local_f0;
+    local_5c = local_7c - local_ec;
+    local_58 = local_78 - local_e8;
+  }
+  else {
+    AnglesToAxis(param_7,auStack_b0);
+    Vec3Rotate(&local_f0,auStack_b0,&local_d0);
+    Vec3Rotate(&local_e0,auStack_b0,&local_c0);
+    local_80 = (local_c0 + local_d0) * 0.5;
+    local_7c = (local_bc + local_cc) * 0.5;
+    local_78 = (local_b8 + local_c8) * 0.5;
+    local_60 = local_80 - local_d0;
+    local_5c = local_7c - local_cc;
+    local_58 = local_78 - local_c8;
+    if ((local_64 != 0.0) && ((*pfVar4 != 0.0 || (pfVar4[2] != 0.0)))) {
+      local_74 = ABS(local_98) * local_64 + ABS(local_60) + local_68;
+      local_70 = ABS(local_94) * local_64 + ABS(local_5c) + local_68;
+      local_6c = ABS(local_90) * local_64 + ABS(local_58) + local_68;
+      CM_TriggerModelBlocksSightTrace_Rotated(uVar1,puVar3,auStack_b0,&local_80,param_5);
+      __restgprlr_23();
+      return;
+    }
+  }
+  local_74 = ABS(local_60) + local_68;
+  local_70 = ABS(local_5c) + local_68;
+  local_6c = ABS(local_58) + local_64 + local_68;
+  CM_TriggerModelBlocksSightTrace_Unrotated(uVar1,puVar3,&local_80,param_5);
+  __restgprlr_23();
+  return;
 }
 

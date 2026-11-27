@@ -9,6 +9,128 @@
 ; 8292C238  bdNetImpl::stop  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:89)
   8292C238  7D8802A6             mfspr r12,LR
   8292C23C  4BFEA47D             bl 0x829166b8
+  8292C240  DBE1FFD0             stfd f31,-0x30(r1)
+  8292C244  9421FF70             stwu r1,-0x90(r1)
+  8292C248  3BC30030             addi r30,r3,0x30
+  8292C24C  7C7F1B78             or r31,r3,r3
+  8292C250  38800000             li r4,0x0
+  8292C254  7FC3F378             or r3,r30,r30
+  8292C258  48002ED9             bl 0x8292f130
+  8292C25C  38610050             addi r3,r1,0x50
+  8292C260  48000DD9             bl 0x8292d038
+  8292C264  38610050             addi r3,r1,0x50
+  8292C268  48000D41             bl 0x8292cfa8
+  8292C26C  3D608200             lis r11,-0x7e00
+  8292C270  3B800000             li r28,0x0
+  8292C274  C3EB0F10             lfs f31,0xf10(r11)
+LAB_8292c278:
+  8292C278  7FC3F378             or r3,r30,r30
+  8292C27C  7F9DE378             or r29,r28,r28
+  8292C280  480016E1             bl 0x8292d960
+  8292C284  2C030000             cmpwi r3,0x0
+  8292C288  41820020             beq 0x8292c2a8
+  8292C28C  7FE3FB78             or r3,r31,r31
+  8292C290  3BA00001             li r29,0x1
+  8292C294  4BFFFCC5             bl 0x8292bf58
+  8292C298  7FC3F378             or r3,r30,r30
+  8292C29C  48003B35             bl 0x8292fdd0
+  8292C2A0  7FE3FB78             or r3,r31,r31
+  8292C2A4  4BFFFC45             bl 0x8292bee8
+LAB_8292c2a8:
+  8292C2A8  38610050             addi r3,r1,0x50
+  8292C2AC  48000D3D             bl 0x8292cfe8
+  8292C2B0  FF01F800             fcmpu cr6,f1,f31
+  8292C2B4  40990014             ble cr6,0x8292c2c8
+  8292C2B8  38800001             li r4,0x1
+  8292C2BC  7FC3F378             or r3,r30,r30
+  8292C2C0  7F9DE378             or r29,r28,r28
+  8292C2C4  48002E6D             bl 0x8292f130
+LAB_8292c2c8:
+  8292C2C8  38600014             li r3,0x14
+  8292C2CC  4BFC8A55             bl 0x828f4d20
+  8292C2D0  57AB063F             rlwinm. r11,r29,0x0,0x18,0x1f
+  8292C2D4  4082FFA4             bne 0x8292c278
+  8292C2D8  807F0078             lwz r3,0x78(r31)
+  8292C2DC  2B030000             cmplwi cr6,r3,0x0
+  8292C2E0  419A0038             beq cr6,0x8292c318
+  8292C2E4  81630000             lwz r11,0x0(r3)
+  8292C2E8  816B0008             lwz r11,0x8(r11)
+  8292C2EC  7D6903A6             mtspr CTR,r11
+  8292C2F0  4E800421             bctrl
+  8292C2F4  807F0078             lwz r3,0x78(r31)
+  8292C2F8  2B030000             cmplwi cr6,r3,0x0
+  8292C2FC  419A0018             beq cr6,0x8292c314
+  8292C300  81630000             lwz r11,0x0(r3)
+  8292C304  38800001             li r4,0x1
+  8292C308  816B0000             lwz r11,0x0(r11)
+  8292C30C  7D6903A6             mtspr CTR,r11
+  8292C310  4E800421             bctrl
+LAB_8292c314:
+  8292C314  939F0078             stw r28,0x78(r31)
+LAB_8292c318:
+  8292C318  807F000C             lwz r3,0xc(r31)
+  8292C31C  2B030000             cmplwi cr6,r3,0x0
+  8292C320  419A0038             beq cr6,0x8292c358
+  8292C324  81630000             lwz r11,0x0(r3)
+  8292C328  816B0018             lwz r11,0x18(r11)
+  8292C32C  7D6903A6             mtspr CTR,r11
+  8292C330  4E800421             bctrl
+  8292C334  807F000C             lwz r3,0xc(r31)
+  8292C338  2B030000             cmplwi cr6,r3,0x0
+  8292C33C  419A0018             beq cr6,0x8292c354
+  8292C340  81630000             lwz r11,0x0(r3)
+  8292C344  38800001             li r4,0x1
+  8292C348  816B0000             lwz r11,0x0(r11)
+  8292C34C  7D6903A6             mtspr CTR,r11
+  8292C350  4E800421             bctrl
+LAB_8292c354:
+  8292C354  939F000C             stw r28,0xc(r31)
+LAB_8292c358:
+  8292C358  3BDF0184             addi r30,r31,0x184
+  8292C35C  7FC3F378             or r3,r30,r30
+  8292C360  4BFCBF21             bl 0x828f8280
+  8292C364  38A00100             li r5,0x100
+  8292C368  38800000             li r4,0x0
+  8292C36C  387F0080             addi r3,r31,0x80
+  8292C370  4BFEA491             bl 0x82916800
+  8292C374  939F0180             stw r28,0x180(r31)
+  8292C378  7FC3F378             or r3,r30,r30
+  8292C37C  4BFCBF0D             bl 0x828f8288
+  8292C380  939F007C             stw r28,0x7c(r31)
+  8292C384  38210090             addi r1,r1,0x90
+  8292C388  CBE1FFD0             lfd f31,-0x30(r1)
+  8292C38C  4BFEA37C             b 0x82916708
+
+; 8292BEE8  bdNetImpl::sendAll  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:149)
+  8292BEE8  7D8802A6             mfspr r12,LR
+  8292BEEC  9181FFF8             stw r12,-0x8(r1)
+  8292BEF0  FBE1FFF0             std r31,-0x10(r1)
+  8292BEF4  9421FFA0             stwu r1,-0x60(r1)
+  8292BEF8  38630030             addi r3,r3,0x30
+  8292BEFC  4800371D             bl 0x8292f618
+  8292BF00  7C7F1B78             or r31,r3,r3
+  8292BF04  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8292BF08  40820038             bne 0x8292bf40
+  8292BF0C  3D008221             lis r8,-0x7ddf
+  8292BF10  3D608221             lis r11,-0x7ddf
+  8292BF14  3D408221             lis r10,-0x7ddf
+  8292BF18  3CA08221             lis r5,-0x7ddf
+  8292BF1C  3C808221             lis r4,-0x7ddf
+  8292BF20  38C86168             addi r6,r8,0x6168
+  8292BF24  392B6130             addi r9,r11,0x6130
+  8292BF28  38EA611C             addi r7,r10,0x611c
+  8292BF2C  38A56110             addi r5,r5,0x6110
+  8292BF30  3884A424             subi r4,r4,0x5bdc
+  8292BF34  39000099             li r8,0x99
+  8292BF38  38600001             li r3,0x1
+  8292BF3C  4BFC8BD5             bl 0x828f4b10
+LAB_8292bf40:
+  8292BF40  7FE3FB78             or r3,r31,r31
+  8292BF44  38210060             addi r1,r1,0x60
+  8292BF48  8181FFF8             lwz r12,-0x8(r1)
+  8292BF4C  7D8803A6             mtspr LR,r12
+  8292BF50  EBE1FFF0             ld r31,-0x10(r1)
+  8292BF54  4E800020             blr
 
 ; 8292BF58  bdNetImpl::receiveAll  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:159)
   8292BF58  7D8802A6             mfspr r12,LR
@@ -44,14 +166,195 @@ LAB_8292bfb0:
 ; 8292BFC8  bdNetImpl::registerSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:199)
   8292BFC8  7D8802A6             mfspr r12,LR
   8292BFCC  4BFEA6ED             bl 0x829166b8
+  8292BFD0  9421FF80             stwu r1,-0x80(r1)
+  8292BFD4  3B830184             addi r28,r3,0x184
+  8292BFD8  7C7F1B78             or r31,r3,r3
+  8292BFDC  7F83E378             or r3,r28,r28
+  8292BFE0  7C9D2378             or r29,r4,r4
+  8292BFE4  7CBE2B78             or r30,r5,r5
+  8292BFE8  4BFCC299             bl 0x828f8280
+  8292BFEC  815F0180             lwz r10,0x180(r31)
+  8292BFF0  38E00001             li r7,0x1
+  8292BFF4  39200000             li r9,0x0
+  8292BFF8  39600000             li r11,0x0
+  8292BFFC  2B0A0000             cmplwi cr6,r10,0x0
+  8292C000  40990054             ble cr6,0x8292c054
+  8292C004  811D0000             lwz r8,0x0(r29)
+  8292C008  395F0080             addi r10,r31,0x80
+LAB_8292c00c:
+  8292C00C  80CA0000             lwz r6,0x0(r10)
+  8292C010  7F064040             cmplw cr6,r6,r8
+  8292C014  419A001C             beq cr6,0x8292c030
+  8292C018  80DF0180             lwz r6,0x180(r31)
+  8292C01C  396B0001             addi r11,r11,0x1
+  8292C020  394A0008             addi r10,r10,0x8
+  8292C024  7F0B3040             cmplw cr6,r11,r6
+  8292C028  4198FFE4             blt cr6,0x8292c00c
+  8292C02C  48000028             b 0x8292c054
+LAB_8292c030:
+  8292C030  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  8292C034  57CA063F             rlwinm. r10,r30,0x0,0x18,0x1f
+  8292C038  7D6BFA14             add r11,r11,r31
+  8292C03C  7CE93B78             or r9,r7,r7
+  8292C040  A14B0084             lhz r10,0x84(r11)
+  8292C044  394A0001             addi r10,r10,0x1
+  8292C048  B14B0084             sth r10,0x84(r11)
+  8292C04C  41820008             beq 0x8292c054
+  8292C050  98EB0086             stb r7,0x86(r11)
+LAB_8292c054:
+  8292C054  552B063F             rlwinm. r11,r9,0x0,0x18,0x1f
+  8292C058  4082004C             bne 0x8292c0a4
+  8292C05C  817F0180             lwz r11,0x180(r31)
+  8292C060  2B0B0020             cmplwi cr6,r11,0x20
+  8292C064  40980040             bge cr6,0x8292c0a4
+  8292C068  396B0010             addi r11,r11,0x10
+  8292C06C  815D0000             lwz r10,0x0(r29)
+  8292C070  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  8292C074  7D4BF92E             stwx r10,r11,r31
+  8292C078  817F0180             lwz r11,0x180(r31)
+  8292C07C  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  8292C080  7D6BFA14             add r11,r11,r31
+  8292C084  B0EB0084             sth r7,0x84(r11)
+  8292C088  817F0180             lwz r11,0x180(r31)
+  8292C08C  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  8292C090  7D6BFA14             add r11,r11,r31
+  8292C094  9BCB0086             stb r30,0x86(r11)
+  8292C098  817F0180             lwz r11,0x180(r31)
+  8292C09C  396B0001             addi r11,r11,0x1
+  8292C0A0  917F0180             stw r11,0x180(r31)
+LAB_8292c0a4:
+  8292C0A4  7F83E378             or r3,r28,r28
+  8292C0A8  4BFCC1E1             bl 0x828f8288
+  8292C0AC  38210080             addi r1,r1,0x80
+  8292C0B0  4BFEA658             b 0x82916708
 
 ; 8292C390  bdArray<bdInetAddr>::clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:211)
   8292C390  7D8802A6             mfspr r12,LR
   8292C394  4BFEA329             bl 0x829166bc
+  8292C398  9421FF90             stwu r1,-0x70(r1)
+  8292C39C  83C30008             lwz r30,0x8(r3)
+  8292C3A0  7C7F1B78             or r31,r3,r3
+  8292C3A4  83A30000             lwz r29,0x0(r3)
+  8292C3A8  2B1E0000             cmplwi cr6,r30,0x0
+  8292C3AC  419A0018             beq cr6,0x8292c3c4
+LAB_8292c3b0:
+  8292C3B0  7FA3EB78             or r3,r29,r29
+  8292C3B4  4BFCAA15             bl 0x828f6dc8
+  8292C3B8  37DEFFFF             subic. r30,r30,0x1
+  8292C3BC  3BBD0004             addi r29,r29,0x4
+  8292C3C0  4082FFF0             bne 0x8292c3b0
+LAB_8292c3c4:
+  8292C3C4  807F0000             lwz r3,0x0(r31)
+  8292C3C8  4BFC8CF9             bl 0x828f50c0
+  8292C3CC  39600000             li r11,0x0
+  8292C3D0  917F0000             stw r11,0x0(r31)
+  8292C3D4  917F0008             stw r11,0x8(r31)
+  8292C3D8  917F0004             stw r11,0x4(r31)
+  8292C3DC  38210070             addi r1,r1,0x70
+  8292C3E0  4BFEA32C             b 0x8291670c
 
 ; 8292C0B8  bdNetImpl::unregisterSecureAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:229)
   8292C0B8  7D8802A6             mfspr r12,LR
   8292C0BC  4BFEA5F9             bl 0x829166b4
+  8292C0C0  9421FF80             stwu r1,-0x80(r1)
+  8292C0C4  3B630184             addi r27,r3,0x184
+  8292C0C8  7C7F1B78             or r31,r3,r3
+  8292C0CC  7F63DB78             or r3,r27,r27
+  8292C0D0  7C9C2378             or r28,r4,r4
+  8292C0D4  4BFCC1AD             bl 0x828f8280
+  8292C0D8  815F0180             lwz r10,0x180(r31)
+  8292C0DC  39000000             li r8,0x0
+  8292C0E0  2B0A0000             cmplwi cr6,r10,0x0
+  8292C0E4  7D074378             or r7,r8,r8
+  8292C0E8  7D0B4378             or r11,r8,r8
+  8292C0EC  409900B8             ble cr6,0x8292c1a4
+  8292C0F0  813C0000             lwz r9,0x0(r28)
+  8292C0F4  395F0080             addi r10,r31,0x80
+LAB_8292c0f8:
+  8292C0F8  80CA0000             lwz r6,0x0(r10)
+  8292C0FC  7F064840             cmplw cr6,r6,r9
+  8292C100  419A001C             beq cr6,0x8292c11c
+  8292C104  80DF0180             lwz r6,0x180(r31)
+  8292C108  396B0001             addi r11,r11,0x1
+  8292C10C  394A0008             addi r10,r10,0x8
+  8292C110  7F0B3040             cmplw cr6,r11,r6
+  8292C114  4198FFE4             blt cr6,0x8292c0f8
+  8292C118  4800008C             b 0x8292c1a4
+LAB_8292c11c:
+  8292C11C  556A1838             rlwinm r10,r11,0x3,0x0,0x1c
+  8292C120  7D4AFA14             add r10,r10,r31
+  8292C124  A12A0084             lhz r9,0x84(r10)
+  8292C128  3929FFFF             subi r9,r9,0x1
+  8292C12C  7D290735             extsh. r9,r9
+  8292C130  B12A0084             sth r9,0x84(r10)
+  8292C134  41810070             bgt 0x8292c1a4
+  8292C138  894A0086             lbz r10,0x86(r10)
+  8292C13C  280A0000             cmplwi r10,0x0
+  8292C140  40820064             bne 0x8292c1a4
+  8292C144  815F0180             lwz r10,0x180(r31)
+  8292C148  38E00001             li r7,0x1
+  8292C14C  392AFFFF             subi r9,r10,0x1
+  8292C150  7F0B4840             cmplw cr6,r11,r9
+  8292C154  419A002C             beq cr6,0x8292c180
+  8292C158  394A000F             addi r10,r10,0xf
+  8292C15C  392B0010             addi r9,r11,0x10
+  8292C160  554B1838             rlwinm r11,r10,0x3,0x0,0x1c
+  8292C164  552A1838             rlwinm r10,r9,0x3,0x0,0x1c
+  8292C168  7D2BFA14             add r9,r11,r31
+  8292C16C  7CCAFA14             add r6,r10,r31
+  8292C170  7D6BF82E             lwzx r11,r11,r31
+  8292C174  7D6AF92E             stwx r11,r10,r31
+  8292C178  81690004             lwz r11,0x4(r9)
+  8292C17C  91660004             stw r11,0x4(r6)
+LAB_8292c180:
+  8292C180  817F0180             lwz r11,0x180(r31)
+  8292C184  396B000F             addi r11,r11,0xf
+  8292C188  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  8292C18C  7D6BFA14             add r11,r11,r31
+  8292C190  910B0000             stw r8,0x0(r11)
+  8292C194  910B0004             stw r8,0x4(r11)
+  8292C198  817F0180             lwz r11,0x180(r31)
+  8292C19C  396BFFFF             subi r11,r11,0x1
+  8292C1A0  917F0180             stw r11,0x180(r31)
+LAB_8292c1a4:
+  8292C1A4  54EB063F             rlwinm. r11,r7,0x0,0x18,0x1f
+  8292C1A8  41820080             beq 0x8292c228
+  8292C1AC  3D008221             lis r8,-0x7ddf
+  8292C1B0  815C0000             lwz r10,0x0(r28)
+  8292C1B4  3D608221             lis r11,-0x7ddf
+  8292C1B8  3D208221             lis r9,-0x7ddf
+  8292C1BC  3BE86254             addi r31,r8,0x6254
+  8292C1C0  3BAB6110             addi r29,r11,0x6110
+  8292C1C4  3D008221             lis r8,-0x7ddf
+  8292C1C8  3BC96168             addi r30,r9,0x6168
+  8292C1CC  3D608221             lis r11,-0x7ddf
+  8292C1D0  3888B6F8             subi r4,r8,0x4908
+  8292C1D4  392B6240             addi r9,r11,0x6240
+  8292C1D8  7FE7FB78             or r7,r31,r31
+  8292C1DC  7FC6F378             or r6,r30,r30
+  8292C1E0  7FA5EB78             or r5,r29,r29
+  8292C1E4  39000101             li r8,0x101
+  8292C1E8  38600000             li r3,0x0
+  8292C1EC  4BFC8925             bl 0x828f4b10
+  8292C1F0  807C0000             lwz r3,0x0(r28)
+  8292C1F4  4BF8C27D             bl 0x828b8470
+  8292C1F8  7C6A1B79             or. r10,r3,r3
+  8292C1FC  4182002C             beq 0x8292c228
+  8292C200  3D008221             lis r8,-0x7ddf
+  8292C204  3D608221             lis r11,-0x7ddf
+  8292C208  3888A424             subi r4,r8,0x5bdc
+  8292C20C  392B620C             addi r9,r11,0x620c
+  8292C210  7FE7FB78             or r7,r31,r31
+  8292C214  7FC6F378             or r6,r30,r30
+  8292C218  7FA5EB78             or r5,r29,r29
+  8292C21C  39000105             li r8,0x105
+  8292C220  38600001             li r3,0x1
+  8292C224  4BFC88ED             bl 0x828f4b10
+LAB_8292c228:
+  8292C228  7F63DB78             or r3,r27,r27
+  8292C22C  4BFCC05D             bl 0x828f8288
+  8292C230  38210080             addi r1,r1,0x80
+  8292C234  4BFEA4D0             b 0x82916704
 
 ; 8292C478  bdNetImpl::bdNetImpl  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnet-xbox.cpp:272)
   8292C478  7D8802A6             mfspr r12,LR

@@ -3,3 +3,99 @@
 ; 8291BD08  fseek  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:96)
   8291BD08  7D8802A6             mfspr r12,LR
   8291BD0C  4BFFA9AD             bl 0x829166b8
+  8291BD10  3BE1FF80             subi r31,r1,0x80
+  8291BD14  9421FF80             stwu r1,-0x80(r1)
+  8291BD18  7C7E1B78             or r30,r3,r3
+  8291BD1C  907F0094             stw r3,0x94(r31)
+  8291BD20  7C9C2378             or r28,r4,r4
+  8291BD24  7CBD2B78             or r29,r5,r5
+  8291BD28  3163FFFF             subic r11,r3,0x1
+  8291BD2C  7D6B1911             subfe. r11,r11,r3
+  8291BD30  4082001C             bne 0x8291bd4c
+LAB_8291bd34:
+  8291BD34  4800404D             bl 0x8291fd80
+  8291BD38  39600016             li r11,0x16
+  8291BD3C  91630000             stw r11,0x0(r3)
+  8291BD40  48003ED1             bl 0x8291fc10
+  8291BD44  3860FFFF             li r3,-0x1
+  8291BD48  4800004C             b 0x8291bd94
+LAB_8291bd4c:
+  8291BD4C  2F1D0000             cmpwi cr6,r29,0x0
+  8291BD50  419A0014             beq cr6,0x8291bd64
+  8291BD54  2F1D0001             cmpwi cr6,r29,0x1
+  8291BD58  419A000C             beq cr6,0x8291bd64
+  8291BD5C  2F1D0002             cmpwi cr6,r29,0x2
+  8291BD60  409AFFD4             bne cr6,0x8291bd34
+LAB_8291bd64:
+  8291BD64  7FC3F378             or r3,r30,r30
+  8291BD68  4BFFF2F9             bl 0x8291b060
+  8291BD6C  7D084378             or r8,r8,r8
+  8291BD70  7FA5EB78             or r5,r29,r29
+  8291BD74  7F84E378             or r4,r28,r28
+  8291BD78  7FC3F378             or r3,r30,r30
+  8291BD7C  4BFFFEBD             bl 0x8291bc38
+  8291BD80  907F0050             stw r3,0x50(r31)
+  8291BD84  7D084378             or r8,r8,r8
+  8291BD88  399F0080             addi r12,r31,0x80
+  8291BD8C  48000031             bl 0x8291bdbc
+  8291BD90  807F0050             lwz r3,0x50(r31)
+LAB_8291bd94:
+  8291BD94  383F0080             addi r1,r31,0x80
+  8291BD98  4BFFA970             b 0x82916708
+
+; 8291BC38  _fseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:136)
+  8291BC38  7D8802A6             mfspr r12,LR
+  8291BC3C  4BFFAA81             bl 0x829166bc
+  8291BC40  9421FF90             stwu r1,-0x70(r1)
+  8291BC44  8163000C             lwz r11,0xc(r3)
+  8291BC48  7C7F1B78             or r31,r3,r3
+  8291BC4C  7C9D2378             or r29,r4,r4
+  8291BC50  716A0083             andi. r10,r11,0x83
+  8291BC54  7CBE2B78             or r30,r5,r5
+  8291BC58  2C0A0000             cmpwi r10,0x0
+  8291BC5C  4082001C             bne 0x8291bc78
+  8291BC60  48004121             bl 0x8291fd80
+  8291BC64  7C6B1B78             or r11,r3,r3
+  8291BC68  39400016             li r10,0x16
+  8291BC6C  3860FFFF             li r3,-0x1
+  8291BC70  914B0000             stw r10,0x0(r11)
+  8291BC74  48000084             b 0x8291bcf8
+LAB_8291bc78:
+  8291BC78  556B0734             rlwinm r11,r11,0x0,0x1c,0x1a
+  8291BC7C  2F1E0001             cmpwi cr6,r30,0x1
+  8291BC80  917F000C             stw r11,0xc(r31)
+  8291BC84  409A0014             bne cr6,0x8291bc98
+  8291BC88  7FE3FB78             or r3,r31,r31
+  8291BC8C  4800016D             bl 0x8291bdf8
+  8291BC90  7FA3EA14             add r29,r3,r29
+  8291BC94  3BC00000             li r30,0x0
+LAB_8291bc98:
+  8291BC98  7FE3FB78             or r3,r31,r31
+  8291BC9C  4BFFF7E5             bl 0x8291b480
+  8291BCA0  817F000C             lwz r11,0xc(r31)
+  8291BCA4  556A0631             rlwinm. r10,r11,0x0,0x18,0x18
+  8291BCA8  41820010             beq 0x8291bcb8
+  8291BCAC  556B003A             rlwinm r11,r11,0x0,0x0,0x1d
+  8291BCB0  917F000C             stw r11,0xc(r31)
+  8291BCB4  48000024             b 0x8291bcd8
+LAB_8291bcb8:
+  8291BCB8  556A07FF             rlwinm. r10,r11,0x0,0x1f,0x1f
+  8291BCBC  4182001C             beq 0x8291bcd8
+  8291BCC0  556A0739             rlwinm. r10,r11,0x0,0x1c,0x1c
+  8291BCC4  41820014             beq 0x8291bcd8
+  8291BCC8  556B056B             rlwinm. r11,r11,0x0,0x15,0x15
+  8291BCCC  4082000C             bne 0x8291bcd8
+  8291BCD0  39600200             li r11,0x200
+  8291BCD4  917F0018             stw r11,0x18(r31)
+LAB_8291bcd8:
+  8291BCD8  7FE3FB78             or r3,r31,r31
+  8291BCDC  4800666D             bl 0x82922348
+  8291BCE0  7FA4EB78             or r4,r29,r29
+  8291BCE4  7FC5F378             or r5,r30,r30
+  8291BCE8  48009BF9             bl 0x829258e0
+  8291BCEC  39630001             addi r11,r3,0x1
+  8291BCF0  316BFFFF             subic r11,r11,0x1
+  8291BCF4  7C6B5910             subfe r3,r11,r11
+LAB_8291bcf8:
+  8291BCF8  38210070             addi r1,r1,0x70
+  8291BCFC  4BFFAA10             b 0x8291670c

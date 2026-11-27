@@ -3,6 +3,44 @@
 ; 82612EE8  Com_SurfaceTypeFromName  (universal/surfaceflags.cpp:113)
   82612EE8  7D8802A6             mfspr r12,LR
   82612EEC  483037CD             bl 0x829166b8
+  82612EF0  9421FF80             stwu r1,-0x80(r1)
+  82612EF4  3D608200             lis r11,-0x7e00
+  82612EF8  7C7C1B78             or r28,r3,r3
+  82612EFC  388B352C             addi r4,r11,0x352c
+  82612F00  4BFF9091             bl 0x8260bf90
+  82612F04  2F030000             cmpwi cr6,r3,0x0
+  82612F08  409A000C             bne cr6,0x82612f14
+  82612F0C  38210080             addi r1,r1,0x80
+  82612F10  483037F8             b 0x82916708
+LAB_82612f14:
+  82612F14  3D608299             lis r11,-0x7d67
+  82612F18  3BC00000             li r30,0x0
+  82612F1C  3BAB4070             addi r29,r11,0x4070
+  82612F20  7FBFEB78             or r31,r29,r29
+LAB_82612f24:
+  82612F24  7F83E378             or r3,r28,r28
+  82612F28  809F0000             lwz r4,0x0(r31)
+  82612F2C  4BFF9065             bl 0x8260bf90
+  82612F30  2F030000             cmpwi cr6,r3,0x0
+  82612F34  419A0024             beq cr6,0x82612f58
+  82612F38  3BFF0014             addi r31,r31,0x14
+  82612F3C  397D0258             addi r11,r29,0x258
+  82612F40  3BDE0001             addi r30,r30,0x1
+  82612F44  7F1F5800             cmpw cr6,r31,r11
+  82612F48  4198FFDC             blt cr6,0x82612f24
+  82612F4C  3860FFFF             li r3,-0x1
+  82612F50  38210080             addi r1,r1,0x80
+  82612F54  483037B4             b 0x82916708
+LAB_82612f58:
+  82612F58  57CB103A             rlwinm r11,r30,0x2,0x0,0x1d
+  82612F5C  395D0008             addi r10,r29,0x8
+  82612F60  7D3E5A14             add r9,r30,r11
+  82612F64  5528103A             rlwinm r8,r9,0x2,0x0,0x1d
+  82612F68  7CE8502E             lwzx r7,r8,r10
+  82612F6C  7CE6A670             srawi r6,r7,0x14
+  82612F70  54C306FE             rlwinm r3,r6,0x0,0x1b,0x1f
+  82612F74  38210080             addi r1,r1,0x80
+  82612F78  48303790             b 0x82916708
 
 ; 82612F80  Com_SurfaceTypeToName  (universal/surfaceflags.cpp:139)
   82612F80  7D8802A6             mfspr r12,LR

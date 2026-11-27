@@ -6,8 +6,9 @@ void Glass_ForceRandomSeed(ulonglong param_1)
 
 {
   if (0x1de < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x82,0,0xffffffff8206332c,param_1,0x1df);
+    DAT_8332cc5c = (int)param_1;
+    return;
   }
   DAT_8332cc5c = (int)param_1;
   return;
@@ -20,7 +21,6 @@ uint IndexMask_Has(uint param_1,uint param_2)
 
 {
   if (0x20 < param_2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,param_2,0x21);
   }
   return (&DAT_82992400)[param_2] & param_1;
@@ -90,11 +90,35 @@ int Glass_RandomInt(int param_1)
 
 // 82426DD8  Glass_PackVertex  (EffectsCore/fx_glass_crack_types.h:166)
 
-void Glass_PackVertex(void)
+void Glass_PackVertex(undefined8 param_1,short *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  float *pfVar2;
+  short sVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  pfVar2 = (float *)__savegprlr_27();
+  dVar6 = 32.0;
+  dVar5 = 0.5;
+  dVar4 = floor((double)(*pfVar2 * 32.0 + 0.5));
+  iVar1 = (int)dVar4;
+  sVar3 = (short)iVar1;
+  if (iVar1 != sVar3) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,iVar1,sVar3);
+  }
+  *param_2 = sVar3;
+  dVar4 = floor((double)(float)((double)pfVar2[1] * dVar6 + dVar5));
+  iVar1 = (int)dVar4;
+  sVar3 = (short)iVar1;
+  if (iVar1 != sVar3) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,iVar1,sVar3);
+  }
+  param_2[1] = sVar3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -113,7 +137,6 @@ void Glass_SetCrackEdgeDelta(int param_1,byte *param_2)
   dVar2 = (double)Vec2Normalize(param_2 + 8);
   *(float *)(param_2 + 4) = (float)dVar2;
   if (dVar2 <= 0.07249999791383743) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0xaf,0,0xffffffff82063368,dVar2,0x3fb28f5c20000000);
   }
   return;
@@ -143,11 +166,31 @@ void Glass_QuantizeVertex(float *param_1)
 
 // 8241FF80  Glass_FreeCrackEdge  (EffectsCore/fx_glass_crack.cpp:180)
 
-void Glass_FreeCrackEdge(void)
+void Glass_FreeCrackEdge(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0xb5,0,0xffffffff82000f98,0xffffffff820633cc);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0xb6,0,0xffffffff82000f98,0xffffffff820633c4);
+  }
+  lVar2 = param_2 - 4;
+  lVar3 = 6;
+  do {
+    lVar2 = lVar2 + 4;
+    *(undefined4 *)lVar2 = 0xffffffff;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 0x3bfc);
+  *(undefined4 **)(iVar1 + 0x3bfc) = (undefined4 *)param_2;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -165,7 +208,6 @@ undefined4 * Glass_GetFreeEdge(int param_1)
     return puVar1;
   }
   if (0x1ff < *(uint *)(param_1 + 0x3bf8)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0xcc,0,0xffffffff820633d8,*(uint *)(param_1 + 0x3bf8),0x200);
   }
   iVar2 = *(int *)(param_1 + 0x3bf8);
@@ -176,11 +218,54 @@ undefined4 * Glass_GetFreeEdge(int param_1)
 
 // 824200B8  Glass_AllocCrackEdge  (EffectsCore/fx_glass_crack.cpp:214)
 
-void Glass_AllocCrackEdge(void)
+void Glass_AllocCrackEdge
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined1 param_4,
+               undefined1 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  undefined1 *puVar2;
+  
+  iVar1 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0xd9,0,0xffffffff82000f98,0xffffffff8206348c);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0xbf4) <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0xda,0,0xffffffff82063458,param_2);
+  }
+  if ((ulonglong)*(uint *)(iVar1 + 0xbf4) <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0xdb,0,0xffffffff82063424,param_3);
+  }
+  puVar2 = (undefined1 *)Glass_GetFreeEdge(iVar1);
+  *puVar2 = (char)param_2;
+  puVar2[1] = (char)param_3;
+  puVar2[2] = param_4;
+  puVar2[3] = param_5;
+  *(undefined4 *)(puVar2 + 0x10) = 0;
+  Glass_SetCrackEdgeDelta(iVar1,puVar2);
+  __restgprlr_26(puVar2);
+  return;
+}
+
+
+// 82420198  Glass_AllocCrackEdgeTwin  (EffectsCore/fx_glass_crack.cpp:238)
+
+void Glass_AllocCrackEdgeTwin(undefined8 param_1,undefined1 *param_2)
+
+{
+  undefined1 *puVar1;
+  
+  puVar1 = (undefined1 *)Glass_GetFreeEdge();
+  *puVar1 = param_2[1];
+  puVar1[1] = *param_2;
+  puVar1[2] = param_2[2];
+  puVar1[3] = param_2[3];
+  *(undefined1 **)(puVar1 + 0x10) = param_2;
+  *(undefined1 **)(param_2 + 0x10) = puVar1;
+  *(undefined4 *)(puVar1 + 4) = *(undefined4 *)(param_2 + 4);
+  *(float *)(puVar1 + 8) = -*(float *)(param_2 + 8);
+  *(float *)(puVar1 + 0xc) = -*(float *)(param_2 + 0xc);
+  return;
 }
 
 
@@ -200,29 +285,21 @@ void Glass_FreeLoopEdges(undefined8 param_1,longlong param_2,ulonglong param_3)
   
   iVar4 = __savegprlr_20();
   uVar3 = param_3 & 0xffffffff;
-  do {
-    if (uVar3 == 0) {
-      __restgprlr_20();
-      return;
-    }
+  while (uVar3 != 0) {
     piVar6 = (int *)param_2;
     if (*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820632e0,0x10b,0,0xffffffff82000f98,0xffffffff82063498);
     }
     puVar7 = (undefined4 *)*piVar6;
     do {
       if (puVar7 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff820632e0,0x10f,0,0xffffffff82000f98,0xffffffff820633cc);
       }
       if (puVar7[5] == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff820632e0,0x110,0,0xffffffff82000f98,0xffffffff820634a8);
       }
       puVar1 = (undefined4 *)puVar7[5];
       if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff820632e0,0xb6,0,0xffffffff82000f98,0xffffffff820633c4);
       }
       puVar5 = puVar7 + -1;
@@ -236,10 +313,12 @@ void Glass_FreeLoopEdges(undefined8 param_1,longlong param_2,ulonglong param_3)
       *(undefined4 **)(iVar4 + 0x3bfc) = puVar7;
       *puVar7 = uVar2;
     } while ((puVar1 != (undefined4 *)0x0) && (puVar7 = puVar1, puVar1 != (undefined4 *)*piVar6));
-    param_3 = param_3 - 1;
     param_2 = param_2 + 4;
+    param_3 = param_3 - 1;
     uVar3 = param_3;
-  } while( true );
+  }
+  __restgprlr_20();
+  return;
 }
 
 
@@ -265,13 +344,10 @@ void Glass_UnpackAndAddVertex(int param_1,undefined4 param_2)
   short sStack0000001c;
   short sStack0000001e;
   
+  _sStack0000001c = param_2;
   if (0xfe < *(uint *)(param_1 + 0xbf4)) {
-    _sStack0000001c = param_2;
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x128,0,0xffffffff820634b8,*(uint *)(param_1 + 0xbf4),0xff);
   }
-  sStack0000001e = (short)param_2;
-  sStack0000001c = (short)((uint)param_2 >> 0x10);
   iVar1 = *(int *)(param_1 + 0xbf4);
   iVar2 = iVar1 * 8 + param_1;
   *(int *)(param_1 + 0xbf4) = iVar1 + 1;
@@ -299,11 +375,94 @@ double Glass_GetAngleMetricForDirs(float *param_1,float *param_2)
 
 // 82420480  Glass_FindExistingEdgeBeforeNewEdge  (EffectsCore/fx_glass_crack.cpp:335)
 
-void Glass_FindExistingEdgeBeforeNewEdge(void)
+void Glass_FindExistingEdgeBeforeNewEdge(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  float fVar7;
+  float fVar8;
+  int iVar9;
+  int *piVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_70;
+  float local_6c;
+  
+  iVar9 = __savegprlr_23();
+  iVar11 = *(int *)(iVar9 + 0x3c00);
+  iVar12 = 0;
+  fVar1 = 3.4028235e+38;
+  iVar13 = 0;
+  if (iVar11 != 0) {
+    dVar16 = 1.0;
+    piVar10 = (int *)(iVar11 * 0x14 + iVar9 + 0x3c04);
+    dVar15 = -1.0;
+    fVar7 = local_6c;
+    fVar8 = local_70;
+    do {
+      piVar10 = piVar10 + -5;
+      iVar4 = *piVar10;
+      iVar11 = iVar11 + -1;
+      iVar3 = iVar4;
+      do {
+        if ((ulonglong)*(byte *)(iVar3 + 1) == (param_2 & 0xffffffff)) {
+          if (iVar12 == 0) {
+            iVar12 = 1;
+            iVar13 = iVar3;
+          }
+          else {
+            if (iVar12 == 1) {
+              iVar5 = (int)((param_2 & 0xffffffff) << 3) + iVar9;
+              iVar6 = (int)((param_3 & 0xffffffff) << 3) + iVar9;
+              local_70 = *(float *)(iVar6 + 0x3fc) - *(float *)(iVar5 + 0x3fc);
+              local_6c = *(float *)(iVar6 + 0x400) - *(float *)(iVar5 + 0x400);
+              Vec2Normalize(&local_70);
+              dVar14 = dVar16;
+              if (*(float *)(iVar13 + 0xc) * local_70 - *(float *)(iVar13 + 8) * local_6c < 0.0) {
+                dVar14 = dVar15;
+              }
+              fVar1 = (float)(dVar14 * (double)(float)((double)(*(float *)(iVar13 + 8) * local_70 +
+                                                               *(float *)(iVar13 + 0xc) * local_6c)
+                                                      - dVar16));
+              fVar7 = local_6c;
+              fVar8 = local_70;
+            }
+            dVar14 = dVar16;
+            if (*(float *)(iVar3 + 0xc) * fVar8 - *(float *)(iVar3 + 8) * fVar7 < 0.0) {
+              dVar14 = dVar15;
+            }
+            fVar2 = (float)(dVar14 * (double)(float)((double)(*(float *)(iVar3 + 8) * fVar8 +
+                                                             *(float *)(iVar3 + 0xc) * fVar7) -
+                                                    dVar16));
+            if (fVar2 < fVar1) {
+              fVar1 = fVar2;
+              iVar13 = iVar3;
+            }
+            iVar12 = iVar12 + 1;
+          }
+        }
+        iVar3 = *(int *)(iVar3 + 0x14);
+      } while (iVar3 != iVar4);
+      if (iVar13 != 0) {
+        __restgprlr_23(iVar13);
+        return;
+      }
+    } while (iVar11 != 0);
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x183,1,0xffffffff82063500);
+  }
+  __restgprlr_23(0);
+  return;
 }
 
 
@@ -345,7 +504,6 @@ void Glass_MakeOuterPieceLoop(void)
     uVar11 = uVar12;
     do {
       if (0x20 < uVar11) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar11,0x21);
       }
       uVar12 = uVar11 + 1;
@@ -356,17 +514,15 @@ void Glass_MakeOuterPieceLoop(void)
       uVar11 = uVar12;
     } while (uVar12 < uVar10 - 1);
   }
+  uVar10 = *(uint *)(iVar4 + 8);
   if (0x20 < uVar12) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar12,0x21);
   }
-  iVar4 = Glass_AllocCrackEdge
-                    (iVar2,uVar12,0,0,((&DAT_82992400)[uVar12] & *(uint *)(iVar4 + 8)) == 0);
+  iVar4 = Glass_AllocCrackEdge(iVar2,uVar12,0,0,((&DAT_82992400)[uVar12] & uVar10) == 0);
   *piVar7 = iVar4;
   *(int *)(iVar4 + 0x14) = *piVar6;
   cVar5 = Glass_IsEdgeLoopBackwards(iVar2);
   if (cVar5 != '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x1a5,0,0xffffffff82000f98,0xffffffff82063510);
   }
   __restgprlr_20();
@@ -405,7 +561,6 @@ void Glass_MakeHolePieceLoops(void)
              *(int *)(*(int *)(iVar5 + 0x3e94) + 0x40);
     do {
       if (0x1f < *(uint *)(iVar5 + 0x3c00)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff820632e0,0x1c5,0,0xffffffff82063648,*(uint *)(iVar5 + 0x3c00),0x20
                        );
       }
@@ -439,14 +594,12 @@ void Glass_MakeHolePieceLoops(void)
              *(undefined4 *)(*(int *)(iVar5 + 0x3c00) * 0x14 + iVar5 + 0x3c04);
         cVar8 = Glass_IsEdgeLoopBackwards(iVar5);
         if (cVar8 == '\0') {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff820632e0,0x1f6,0,0xffffffff82000f98,0xffffffff82063550);
         }
         *(int *)(iVar5 + 0x3c00) = *(int *)(iVar5 + 0x3c00) + 1;
       }
       else {
         if (*(uint *)(iVar5 + 0xbf4) <= uVar12) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff820632e0,0x1d0,0,0xffffffff82063608,uVar12);
         }
         iVar6 = Glass_FindExistingEdgeBeforeNewEdge(iVar5,uVar12,uVar15);
@@ -470,7 +623,6 @@ void Glass_MakeHolePieceLoops(void)
         lVar9 = (ulonglong)*(uint *)(iVar5 + 0x3c00) - 1;
         if ((uVar12 & 0xff) != (int)lVar9 - ((*(uint *)(iVar5 + 0x3c00) - 2) + (uint)(lVar9 == 0)))
         {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff820632e0,0x1e4,0,0xffffffff82000f98,0xffffffff820635a0);
         }
       }
@@ -491,7 +643,6 @@ short truncate_cast<short>(undefined8 param_1)
   
   sVar1 = (short)param_1;
   if ((int)param_1 != (int)sVar1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_1,sVar1);
   }
   return sVar1;
@@ -507,36 +658,295 @@ void Glass_RenumberLoop(int param_1,undefined1 param_2)
   int iVar2;
   
   iVar2 = param_1;
-  if (param_1 != 0) {
-    do {
-      *(undefined1 *)(iVar2 + 2) = param_2;
-      piVar1 = (int *)(iVar2 + 0x14);
-      iVar2 = *piVar1;
-    } while (*piVar1 != param_1);
-    return;
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x202,0,0xffffffff82000f98,0xffffffff82063694);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820632e0,0x202,0,0xffffffff82000f98,0xffffffff82063694);
+  do {
+    *(undefined1 *)(iVar2 + 2) = param_2;
+    piVar1 = (int *)(iVar2 + 0x14);
+    iVar2 = *piVar1;
+  } while (*piVar1 != param_1);
+  return;
 }
 
 
 // 82420B08  Glass_MakeCrackPieceLoops  (EffectsCore/fx_glass_crack.cpp:525)
 
+/* WARNING: Removing unreachable block (ram,0x82420f44) */
+
 void Glass_MakeCrackPieceLoops(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  undefined1 uVar2;
+  undefined1 uVar3;
+  undefined1 uVar4;
+  undefined1 uVar5;
+  char cVar6;
+  float fVar7;
+  float fVar8;
+  undefined4 uVar9;
+  int iVar10;
+  int iVar11;
+  undefined1 *puVar12;
+  int iVar13;
+  uint uVar14;
+  undefined4 *puVar15;
+  uint uVar16;
+  int iVar17;
+  int iVar18;
+  undefined4 *puVar19;
+  uint uVar20;
+  undefined4 *puVar21;
+  undefined4 *puVar22;
+  uint uVar23;
+  int iVar24;
+  int iVar25;
+  uint uVar26;
+  uint uVar27;
+  uint uVar28;
+  undefined4 *puVar29;
+  uint uVar30;
+  longlong lVar31;
+  undefined4 local_d0 [52];
+  
+  iVar10 = __savegprlr();
+  iVar25 = *(int *)(iVar10 + 0x3e8c);
+  bVar1 = *(byte *)(iVar25 + 0x18);
+  if (bVar1 != 0) {
+    iVar25 = ((uint)*(byte *)(iVar25 + 0x17) + (uint)*(byte *)(iVar25 + 0x16) +
+             (uint)*(ushort *)(iVar25 + 0xe)) * 4 + *(int *)(*(int *)(iVar10 + 0x3e94) + 0x40);
+    uVar28 = 0;
+    do {
+      uVar30 = *(uint *)(iVar10 + 0xbf4);
+      iVar13 = uVar28 * 4 + iVar25;
+      uVar20 = (uint)*(ushort *)(uVar28 * 4 + iVar25);
+      if (uVar20 != 0) {
+        puVar29 = (undefined4 *)((uVar28 + 1) * 4 + iVar25);
+        uVar23 = uVar20;
+        do {
+          Glass_UnpackAndAddVertex(iVar10,*puVar29);
+          uVar23 = uVar23 - 1;
+          puVar29 = puVar29 + 1;
+        } while (uVar23 != 0);
+      }
+      uVar23 = (uint)*(byte *)(iVar13 + 2);
+      if (uVar23 == 0xff) {
+        uVar14 = *(uint *)(iVar10 + 0x3c00);
+        uVar16 = 1;
+        iVar11 = 0;
+        uVar26 = uVar30;
+      }
+      else {
+        uVar16 = 0;
+        uVar14 = uVar30;
+        if (uVar20 == 0) {
+          uVar14 = (uint)*(byte *)(iVar13 + 3);
+        }
+        iVar11 = Glass_FindExistingEdgeBeforeNewEdge(iVar10,uVar23,uVar14);
+        uVar14 = (uint)*(byte *)(iVar11 + 2);
+        uVar26 = uVar23;
+      }
+      puVar29 = (undefined4 *)0x0;
+      puVar22 = (undefined4 *)0x0;
+      puVar21 = local_d0;
+      if (uVar16 < uVar20) {
+        iVar24 = uVar20 - uVar16;
+        uVar16 = uVar16 + uVar30;
+        puVar19 = puVar29;
+        do {
+          uVar27 = uVar16;
+          puVar12 = (undefined1 *)Glass_AllocCrackEdge(iVar10,uVar26,uVar27,uVar14,1);
+          puVar29 = *(undefined4 **)(iVar10 + 0x3bfc);
+          if (puVar29 == (undefined4 *)0x0) {
+            if (0x1ff < *(uint *)(iVar10 + 0x3bf8)) {
+              MyAssertHandler(0xffffffff820632e0,0xcc,0,0xffffffff820633d8,
+                              *(uint *)(iVar10 + 0x3bf8),0x200);
+            }
+            iVar17 = *(int *)(iVar10 + 0x3bf8);
+            *(int *)(iVar10 + 0x3bf8) = iVar17 + 1;
+            puVar29 = (undefined4 *)(iVar17 * 0x18 + iVar10 + 0xbf8);
+          }
+          else {
+            *(undefined4 *)(iVar10 + 0x3bfc) = *puVar29;
+          }
+          *(undefined4 **)(puVar12 + 0x10) = puVar29;
+          fVar7 = *(float *)(puVar12 + 8);
+          uVar2 = puVar12[1];
+          uVar3 = *puVar12;
+          fVar8 = *(float *)(puVar12 + 0xc);
+          uVar4 = puVar12[2];
+          puVar29[1] = *(undefined4 *)(puVar12 + 4);
+          uVar5 = puVar12[3];
+          puVar29[4] = puVar12;
+          *(undefined1 *)puVar29 = uVar2;
+          *(undefined1 *)((int)puVar29 + 1) = uVar3;
+          *(undefined1 *)((int)puVar29 + 2) = uVar4;
+          *(undefined1 *)((int)puVar29 + 3) = uVar5;
+          puVar29[2] = -fVar7;
+          puVar29[3] = -fVar8;
+          *puVar21 = puVar12;
+          puVar29[5] = puVar19;
+          puVar21 = (undefined4 *)(puVar12 + 0x14);
+          if (puVar22 == (undefined4 *)0x0) {
+            puVar22 = puVar29;
+          }
+          iVar24 = iVar24 + -1;
+          uVar16 = uVar27 + 1;
+          uVar26 = uVar27;
+          puVar19 = puVar29;
+        } while (iVar24 != 0);
+      }
+      if (uVar23 == 0xff) {
+        if (*(char *)(iVar13 + 3) != -1) {
+          MyAssertHandler(0xffffffff820632e0,0x25f,0,0xffffffff82000f98,
+                          "crack->endVertIndex == GLASS_VERT_INDEX_NONE");
+        }
+        if (0x1f < *(uint *)(iVar10 + 0x3c00)) {
+          MyAssertHandler(0xffffffff820632e0,0x260,0,
+                          "work->loopCount doesn\'t index ARRAY_COUNT( work->loops )\n\t%i not in [0, %i)"
+                          ,*(uint *)(iVar10 + 0x3c00),0x20);
+        }
+        MyAssertHandler(0xffffffff820632e0,0x261,0,0xffffffff82000f98,"frontHead");
+        if (puVar29 == (undefined4 *)0x0) {
+          MyAssertHandler(0xffffffff820632e0,0x262,0,0xffffffff82000f98,"backHead");
+        }
+        *puVar21 = puVar29;
+        puVar22[5] = 0;
+        *(undefined4 *)(*(int *)(iVar10 + 0x3c00) * 0x14 + iVar10 + 0x3c04) = 0;
+        *(int *)(iVar10 + 0x3c00) = *(int *)(iVar10 + 0x3c00) + 1;
+      }
+      else {
+        cVar6 = *(char *)(iVar13 + 3);
+        if (cVar6 == -1) {
+          if (*(char *)((int)puVar22 + 1) != **(char **)(iVar11 + 0x14)) {
+            MyAssertHandler(0xffffffff820632e0,0x26b,0,
+                            "backTail->i1 == afterEdge->next->i0\n\t%i, %i");
+          }
+          if (*(char *)(iVar11 + 1) != cRam00000000) {
+            MyAssertHandler(0xffffffff820632e0,0x26c,0,"afterEdge->i1 == frontHead->i0\n\t%i, %i");
+          }
+          *puVar21 = puVar29;
+          uVar9 = *(undefined4 *)(iVar11 + 0x14);
+          *(undefined4 *)(iVar11 + 0x14) = 0;
+          puVar22[5] = uVar9;
+        }
+        else {
+          if (uVar20 != 0) {
+            uVar23 = (uVar30 + uVar20) - 1;
+          }
+          iVar13 = Glass_FindExistingEdgeBeforeNewEdge(iVar10,cVar6,uVar23);
+          if (*(byte *)(iVar11 + 2) != uVar14) {
+            MyAssertHandler(0xffffffff820632e0,0x275,0,"afterEdge->loopIndex == loopIndex\n\t%i, %i"
+                            ,(uint)*(byte *)(iVar11 + 2),uVar14);
+          }
+          if (*(byte *)(iVar13 + 2) == uVar14) {
+            MyAssertHandler(0xffffffff820632e0,0x276,0,
+                            "beforeEdge->loopIndex != loopIndex\n\t%i, %i",
+                            (uint)*(byte *)(iVar13 + 2),uVar14);
+          }
+          uVar16 = (uint)*(byte *)(iVar13 + 2);
+          uVar30 = uVar14;
+          if (uVar14 < uVar16) {
+            uVar30 = uVar16;
+            uVar16 = uVar14;
+          }
+          iVar17 = uVar30 * 0x14 + iVar10;
+          Glass_RenumberLoop(*(undefined4 *)(iVar17 + 0x3c04),uVar16 & 0xff);
+          iVar24 = *(int *)(iVar10 + 0x3c00);
+          iVar18 = iVar24 + -1;
+          *(int *)(iVar10 + 0x3c00) = iVar18;
+          if (iVar24 - 1U != uVar30) {
+            puVar15 = (undefined4 *)(iVar17 + 0x3c00);
+            lVar31 = 5;
+            puVar19 = (undefined4 *)(iVar18 * 0x14 + iVar10 + 0x3c00);
+            do {
+              puVar19 = puVar19 + 1;
+              puVar15 = puVar15 + 1;
+              *puVar15 = *puVar19;
+              lVar31 = lVar31 + -1;
+            } while (lVar31 != 0);
+            Glass_RenumberLoop(*(undefined4 *)(iVar17 + 0x3c04),uVar30 & 0xff);
+          }
+          puVar12 = (undefined1 *)Glass_AllocCrackEdge(iVar10,uVar23,cVar6,uVar16,1);
+          puVar19 = *(undefined4 **)(iVar10 + 0x3bfc);
+          if (puVar19 == (undefined4 *)0x0) {
+            if (0x1ff < *(uint *)(iVar10 + 0x3bf8)) {
+              MyAssertHandler(0xffffffff820632e0,0xcc,0,0xffffffff820633d8,
+                              *(uint *)(iVar10 + 0x3bf8),0x200);
+            }
+            iVar24 = *(int *)(iVar10 + 0x3bf8);
+            *(int *)(iVar10 + 0x3bf8) = iVar24 + 1;
+            puVar19 = (undefined4 *)(iVar24 * 0x18 + iVar10 + 0xbf8);
+          }
+          else {
+            *(undefined4 *)(iVar10 + 0x3bfc) = *puVar19;
+          }
+          *(undefined4 **)(puVar12 + 0x10) = puVar19;
+          fVar7 = *(float *)(puVar12 + 8);
+          uVar2 = puVar12[1];
+          uVar3 = *puVar12;
+          fVar8 = *(float *)(puVar12 + 0xc);
+          uVar4 = puVar12[2];
+          puVar19[1] = *(undefined4 *)(puVar12 + 4);
+          uVar5 = puVar12[3];
+          puVar19[4] = puVar12;
+          *(undefined1 *)puVar19 = uVar2;
+          *(undefined1 *)((int)puVar19 + 1) = uVar3;
+          *(undefined1 *)((int)puVar19 + 2) = uVar4;
+          *(undefined1 *)((int)puVar19 + 3) = uVar5;
+          puVar19[2] = -fVar7;
+          puVar19[3] = -fVar8;
+          *puVar21 = puVar12;
+          puVar19[5] = puVar29;
+          if (puVar22 == (undefined4 *)0x0) {
+            puVar22 = puVar19;
+          }
+          uVar9 = *(undefined4 *)(iVar11 + 0x14);
+          *(undefined4 *)(iVar11 + 0x14) = 0;
+          *(undefined4 *)(puVar12 + 0x14) = *(undefined4 *)(iVar13 + 0x14);
+          puVar22[5] = uVar9;
+          *(undefined4 **)(iVar13 + 0x14) = puVar19;
+        }
+      }
+      uVar28 = uVar20 + uVar28 + 1;
+    } while (uVar28 != bVar1);
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 824210D0  Glass_CalcLoopBounds  (EffectsCore/fx_glass_crack.cpp:678)
 
-void Glass_CalcLoopBounds(void)
+void Glass_CalcLoopBounds(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  byte *pbVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  byte *pbVar6;
+  
+  iVar4 = __savegprlr_27();
+  puVar5 = (undefined4 *)param_2;
+  pbVar2 = (byte *)*puVar5;
+  iVar3 = (uint)*pbVar2 * 8 + iVar4;
+  uVar1 = *(undefined4 *)(iVar3 + 0x400);
+  puVar5[1] = *(undefined4 *)(iVar3 + 0x3fc);
+  puVar5[2] = uVar1;
+  iVar3 = (uint)*pbVar2 * 8 + iVar4;
+  uVar1 = *(undefined4 *)(iVar3 + 0x400);
+  puVar5[3] = *(undefined4 *)(iVar3 + 0x3fc);
+  puVar5[4] = uVar1;
+  pbVar6 = *(byte **)(pbVar2 + 0x14);
+  do {
+    AddPointToBounds2D((uint)*pbVar6 * 8 + iVar4 + 0x3fc,param_2 + 4,param_2 + 0xc);
+    pbVar6 = *(byte **)(pbVar6 + 0x14);
+  } while (pbVar6 != pbVar2);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -545,8 +955,35 @@ void Glass_CalcLoopBounds(void)
 void Glass_CalcAllLoopBounds(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte *pbVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  byte *pbVar5;
+  undefined4 *puVar6;
+  
+  iVar3 = __savegprlr_26();
+  uVar4 = 0;
+  if (*(int *)(iVar3 + 0x3c00) != 0) {
+    puVar6 = (undefined4 *)(iVar3 + 0x3c10);
+    do {
+      pbVar1 = (byte *)puVar6[-3];
+      pbVar5 = *(byte **)(pbVar1 + 0x14);
+      iVar2 = (uint)*pbVar1 * 8 + iVar3;
+      puVar6[-2] = *(undefined4 *)(iVar2 + 0x3fc);
+      puVar6[-1] = *(undefined4 *)(iVar2 + 0x400);
+      *puVar6 = *(undefined4 *)(iVar2 + 0x3fc);
+      puVar6[1] = *(undefined4 *)(iVar2 + 0x400);
+      do {
+        AddPointToBounds2D((uint)*pbVar5 * 8 + iVar3 + 0x3fc,puVar6 + -2,puVar6);
+        pbVar5 = *(byte **)(pbVar5 + 0x14);
+      } while (pbVar5 != pbVar1);
+      uVar4 = uVar4 + 1;
+      puVar6 = puVar6 + 5;
+    } while (uVar4 < *(uint *)(iVar3 + 0x3c00));
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -662,33 +1099,390 @@ void Glass_GetVertWorldPos(undefined4 param_1,float *param_2,float *param_3,floa
 }
 
 
-// 82421610  Glass_CreatePieceJoint  (EffectsCore/fx_glass_crack.cpp:840)
+// 82421498  Glass_AddHingeVert  (EffectsCore/fx_glass_crack.cpp:798)
 
-void Glass_CreatePieceJoint(void)
+void Glass_AddHingeVert(undefined8 param_1,undefined4 *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined4 uVar2;
+  float fVar3;
+  undefined4 *puVar4;
+  
+  puVar4 = (undefined4 *)__savegprlr_29();
+  if (2 < (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,799,0,0xffffffff82063798,param_3,2);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    uVar1 = puVar4[1];
+    uVar2 = puVar4[2];
+    *param_2 = *puVar4;
+    param_2[1] = uVar1;
+    param_2[2] = uVar2;
+    __restgprlr_29(1);
+    return;
+  }
+  fVar3 = (float)puVar4[2];
+  if (fVar3 < (float)param_2[2]) {
+    param_2[3] = *param_2;
+    param_2[4] = param_2[1];
+    uVar1 = *puVar4;
+    uVar2 = puVar4[1];
+    param_2[5] = param_2[2];
+    *param_2 = uVar1;
+    param_2[1] = uVar2;
+    param_2[2] = fVar3;
+    __restgprlr_29(2);
+    return;
+  }
+  if (((param_3 & 0xffffffff) != 1) && ((float)param_2[2] <= fVar3)) {
+    __restgprlr_29(param_3);
+    return;
+  }
+  uVar1 = puVar4[1];
+  param_2[3] = *puVar4;
+  param_2[4] = uVar1;
+  param_2[5] = fVar3;
+  __restgprlr_29(2);
+  return;
+}
+
+
+// 82421590  Glass_ShouldMakeHingeJoint  (EffectsCore/fx_glass_crack.cpp:825)
+
+bool Glass_ShouldMakeHingeJoint
+               (double param_1,float *param_2,float *param_3,undefined8 param_4,float *param_5)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)(param_3[2] * (param_5[2] - param_2[2]) +
+                  param_3[1] * (param_5[1] - param_2[1]) + *param_3 * (*param_5 - *param_2));
+  if ((0.0 <= dVar1) && (dVar1 <= param_1)) {
+    return ABS(param_3[2]) < 0.5;
+  }
+  return false;
+}
+
+
+// 82421610  Glass_CreatePieceJoint  (EffectsCore/fx_glass_crack.cpp:840)
+
+void Glass_CreatePieceJoint(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  byte bVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  char cVar11;
+  undefined4 uVar10;
+  longlong lVar12;
+  uint uVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  short local_140;
+  short sStack_13e;
+  float local_118;
+  float local_114;
+  float local_110;
+  float local_108;
+  float local_104;
+  float local_100;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  float local_e0;
+  float local_dc;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  
   __savegprlr_16();
+  iVar9 = __savefpr_28();
+  lVar12 = (param_2 & 0x7ffffff) * 0x20;
+  iVar6 = *(int *)(iVar9 + 0x3c) + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2);
+  lVar14 = (ulonglong)*(uint *)(iVar9 + 0x34) + lVar12;
+  iVar7 = *(int *)(iVar9 + 0x38) + (int)lVar12;
+  iVar4 = *(int *)(iVar6 + 4);
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x35a,0,0xffffffff82000f98,0xffffffff82062ff4);
+  }
+  UnitQuatToAxis(lVar14,&local_d0);
+  iVar8 = (int)lVar14;
+  uVar5 = *(uint *)(iVar7 + 8);
+  bVar3 = *(byte *)(iVar7 + 0x16);
+  iVar9 = (uint)*(ushort *)(iVar7 + 0xe) * 4 + *(int *)(iVar9 + 0x40);
+  dVar20 = 0.03125;
+  uVar15 = 0;
+  dVar19 = (double)*(float *)(iVar8 + 0x10);
+  dVar18 = (double)*(float *)(iVar8 + 0x14);
+  dVar17 = (double)*(float *)(iVar8 + 0x18);
+  uVar13 = uVar5;
+  do {
+    uVar16 = LZCOUNT(uVar13);
+    if (0x20 < uVar16) {
+      MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar16,0x21);
+    }
+    iVar8 = (int)(uVar16 << 2);
+    uVar10 = *(undefined4 *)(iVar8 + iVar9);
+    uVar13 = uVar13 & ~*(uint *)((int)&DAT_82992400 + iVar8);
+    sStack_13e = (short)uVar10;
+    local_140 = (short)((uint)uVar10 >> 0x10);
+    fVar1 = (float)((double)(longlong)local_140 * dVar20);
+    fVar2 = (float)((double)(longlong)sStack_13e * dVar20);
+    local_118 = (float)((double)(local_c4 * fVar2 + local_d0 * fVar1) + dVar19);
+    local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar18);
+    local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar17);
+    uVar15 = Glass_AddHingeVert(&local_118,&local_f0,uVar15);
+    trapWord(6,(ulonglong)bVar3,0);
+    uVar16 = (uVar16 + 1) -
+             (longlong)(int)((uVar16 + 1) / (ulonglong)bVar3) * (longlong)(int)(uint)bVar3;
+    if (0x20 < (uVar16 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar16,0x21);
+    }
+    iVar8 = (int)((uVar16 & 0xffffffff) << 2);
+    if ((*(uint *)((int)&DAT_82992400 + iVar8) & uVar5) == 0) {
+      uVar10 = *(undefined4 *)(iVar8 + iVar9);
+      sStack_13e = (short)uVar10;
+      local_140 = (short)((uint)uVar10 >> 0x10);
+      fVar1 = (float)((double)(longlong)local_140 * dVar20);
+      fVar2 = (float)((double)(longlong)sStack_13e * dVar20);
+      local_118 = (float)((double)(local_c4 * fVar2 + fVar1 * local_d0) + dVar19);
+      local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar18);
+      local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar17);
+      uVar15 = Glass_AddHingeVert(&local_118,&local_f0,uVar15);
+    }
+  } while (uVar13 != 0);
+  if ((uVar15 & 0xffffffff) != 2) {
+    MyAssertHandler(0xffffffff820632e0,0x36e,0,0xffffffff82000f98,0xffffffff820637cc);
+  }
+  local_e0 = local_e0 - local_ec;
+  local_dc = local_dc - local_e8;
+  local_e4 = local_e4 - local_f0;
+  fVar1 = SQRT(local_e4 * local_e4 + local_dc * local_dc + local_e0 * local_e0);
+  local_100 = 1.0;
+  if (-fVar1 < 0.0) {
+    local_100 = fVar1;
+  }
+  local_100 = 1.0 / local_100;
+  local_108 = local_100 * local_e4;
+  local_104 = local_e0 * local_100;
+  local_100 = local_dc * local_100;
+  cVar11 = Glass_ShouldMakeHingeJoint(&local_f0,&local_108);
+  if (cVar11 != '\0') {
+    uVar10 = Phys_CreateHinge(0,(double)*(float *)(DAT_8332cbe0 + 0xc),0xbfe921fb60000000,
+                              0x3fe921fb60000000,1,iVar4,0,&local_f0,&local_108);
+    *(undefined4 *)(iVar6 + 8) = uVar10;
+  }
+  *(undefined4 *)(iVar7 + 8) = 0;
+  __restfpr_28();
+  __restgprlr_16();
+  return;
 }
 
 
 // 824219A0  Glass_RotatePieceAroundEdge  (EffectsCore/fx_glass_crack.cpp:895)
 
-void Glass_RotatePieceAroundEdge(void)
+void Glass_RotatePieceAroundEdge(undefined8 param_1,float *param_2,undefined8 param_3,byte *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  float *pfVar4;
+  int iVar6;
+  undefined8 uVar5;
+  uint uVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined1 auStack_b0 [48];
+  undefined1 auStack_80 [128];
+  
+  iVar6 = __savegprlr_26();
+  dVar11 = (double)*param_2;
+  dVar8 = 2048.0;
+  if ((float)(dVar11 - 2048.0) < 0.0) {
+    dVar8 = dVar11;
+  }
+  dVar9 = 128.0;
+  if ((float)(128.0 - dVar11) < 0.0) {
+    dVar9 = dVar8;
+  }
+  dVar8 = (double)I_rsqrt(dVar9);
+  dVar8 = (double)(float)(dVar8 * 11.313708305358887);
+  if (param_4[3] != 0) {
+    MyAssertHandler(0xffffffff820632e0,0x38c,0,0xffffffff82000f98,0xffffffff8206380c);
+  }
+  pfVar3 = *(float **)(iVar6 + 0x3ec4);
+  fVar1 = *(float *)(param_4 + 0xc);
+  fVar2 = *(float *)(param_4 + 8);
+  uVar7 = 0x83330000 - ((DAT_8332cc5c != 0x1de) + 0x83330000);
+  local_e0 = *pfVar3 * fVar2 + pfVar3[3] * fVar1;
+  DAT_8332cc5c = uVar7 & DAT_8332cc5c + 1;
+  local_dc = pfVar3[1] * fVar2 + pfVar3[4] * fVar1;
+  local_d8 = pfVar3[2] * fVar2 + pfVar3[5] * fVar1;
+  RotationMatrix((double)((float)((double)(((*(float *)(DAT_8332cbcc + 0x10) -
+                                            *(float *)(DAT_8332cbcc + 0xc)) *
+                                            *(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) +
+                                           *(float *)(DAT_8332cbcc + 0xc)) *
+                                          *(float *)(iVar6 + 0x3ec8)) * dVar8) * 0.017453292),
+                 &local_e0,uVar7,auStack_b0);
+  MatrixMultiply(*(undefined4 *)(iVar6 + 0x3ec4),auStack_b0,auStack_80);
+  AxisToQuat(auStack_80,param_3);
+  pfVar3 = (float *)param_3;
+  dVar11 = (double)pfVar3[1];
+  dVar8 = (double)*pfVar3;
+  dVar9 = (double)pfVar3[2];
+  dVar10 = (double)pfVar3[3];
+  if (0.002 <= ABS((float)(dVar10 * dVar10 +
+                          (double)(float)(dVar9 * dVar9 +
+                                         (double)(float)(dVar8 * dVar8 +
+                                                        (double)(float)(dVar11 * dVar11)))) - 1.0))
+  {
+    uVar5 = va(0xffffffff8200c4fc,dVar8,dVar11,dVar9,dVar10);
+    MyAssertHandler(0xffffffff820632e0,0x392,0,0xffffffff820011f4,0xffffffff820637e0,uVar5);
+  }
+  pfVar4 = *(float **)(iVar6 + 0x3ec4);
+  iVar6 = (uint)*param_4 * 8 + iVar6;
+  fVar1 = *(float *)(iVar6 + 0x400) - param_2[3];
+  fVar2 = *(float *)(iVar6 + 0x3fc) - param_2[2];
+  local_d0 = *pfVar4 * fVar2 + pfVar4[3] * fVar1;
+  dVar9 = (double)local_d0;
+  local_cc = pfVar4[1] * fVar2 + pfVar4[4] * fVar1;
+  dVar11 = (double)local_cc;
+  local_c8 = pfVar4[2] * fVar2 + pfVar4[5] * fVar1;
+  dVar8 = (double)local_c8;
+  MatrixTransformVector(&local_d0,auStack_b0,&local_c0);
+  pfVar3[4] = (float)(dVar9 - (double)local_c0) + pfVar3[4];
+  pfVar3[5] = pfVar3[5] + (float)(dVar11 - (double)local_bc);
+  pfVar3[6] = pfVar3[6] + (float)(dVar8 - (double)local_b8);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82421C60  Glass_SetupPieceFall  (EffectsCore/fx_glass_crack.cpp:925)
 
-void Glass_SetupPieceFall(void)
+void Glass_SetupPieceFall(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  char in_RESERVE;
+  byte bVar9;
+  undefined1 auStack_80 [128];
+  
+  puVar2 = (undefined4 *)__savegprlr_23();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820632e0,0x3a2,0,0xffffffff82000f98,0xffffffff8206386c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x3a3,0,0xffffffff82000f98,0xffffffff82063868);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x3a4,0,0xffffffff82000f98,0xffffffff82063860);
+  }
+  if ((ulonglong)(uint)puVar2[3] <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0x3a5,0,0xffffffff82062fb0,param_2);
+  }
+  lVar4 = (param_2 & 0x7ffffff) * 0x20;
+  lVar5 = (ulonglong)(uint)puVar2[0xd] + lVar4;
+  bVar9 = (lVar5 == 0) << 1;
+  uVar6 = (ulonglong)(uint)puVar2[0xe] + lVar4;
+  uVar8 = (ulonglong)(uint)puVar2[0xf] + (param_2 + (param_2 & 0x1fffffff) * 8 & 0x3fffffff) * 4;
+  if (lVar5 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x3ab,0,0xffffffff82000f98,0xffffffff82063854);
+  }
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x3ac,0,0xffffffff82000f98,0xffffffff82063848);
+  }
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x3ad,0,0xffffffff82000f98,0xffffffff82063838);
+  }
+  iVar3 = (int)uVar6;
+  *(undefined4 *)(iVar3 + 8) = 0;
+  DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1;
+  puVar1 = (undefined4 *)uVar8;
+  if ((*(ushort *)(iVar3 + 0x1a) & 4) != 0 ||
+      (*(ushort *)(iVar3 + 0x1a) & 8) == 0 &&
+      *(float *)(DAT_8332cc10 + 0xc) < *(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4)) {
+    *puVar1 = *puVar2;
+    if (puVar1[1] != 0) {
+      Glass_FreePiecePhysicsObject(uVar8);
+    }
+    puVar2 = (undefined4 *)param_3;
+    puVar1[3] = *puVar2;
+    puVar1[4] = puVar2[1];
+    puVar1[5] = puVar2[2];
+    puVar2 = (undefined4 *)param_4;
+    puVar1[6] = *puVar2;
+    puVar1[7] = puVar2[1];
+    puVar1[8] = puVar2[2];
+    __restgprlr_23();
+    return;
+  }
+  iVar7 = puVar2[0xc];
+  *puVar1 = 0x7fffffff;
+  iVar7 = (uint)*(byte *)(iVar3 + 0x10) * 0x2c + iVar7;
+  UnitQuatToAxis(lVar5,auStack_80);
+  if (puVar1[1] == 0) {
+    iVar3 = Phys_ObjCreateAxis(1,lVar5 + 0x10,auStack_80,param_3,*(undefined4 *)(iVar7 + 0x20));
+    puVar1[1] = iVar3;
+    if (iVar3 != 0) {
+      do {
+        if (in_RESERVE != '\0') {
+          DAT_8427b920 = storeWordConditionalIndexed
+                                   ((ulonglong)DAT_8427b920 + 1,0,0xffffffff8427b920);
+          bVar9 = 2;
+        }
+      } while (!(bool)(bVar9 >> 1 & 1));
+      Phys_ObjSetAutoDisableFaster(puVar1[1]);
+    }
+    puVar1[2] = 0;
+    Glass_AddPiecePhysicsObject(puVar2,param_2,iVar7,0);
+  }
+  else {
+    Phys_ObjSetVelocity(puVar1[1],param_3);
+  }
+  if (puVar1[2] != 0) {
+    Glass_FreePiecePhysicsJoint(uVar8);
+  }
+  if (puVar1[1] != 0) {
+    Phys_ObjSetAngularVelocityRaw(puVar1[1],param_4);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -765,7 +1559,13 @@ void Glass_StartImmediateFall(undefined8 param_1,ulonglong param_2,ulonglong par
   local_80 = fVar4 * fVar1 + local_70;
   local_7c = fVar2 * fVar1 + local_6c;
   local_78 = fVar3 * fVar1 + local_68;
-  if ((double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2) != dVar15) {
+  if ((double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2) == dVar15) {
+    Glass_RandomSmallAngularVelocity(&local_90);
+    local_90 = (float)((double)local_90 * dVar13);
+    local_8c = (float)((double)local_8c * dVar13);
+    local_88 = (float)((double)local_88 * dVar13);
+  }
+  else {
     iVar11 = (int)lVar12;
     local_60 = (fVar1 / *(float *)(iVar10 + 0x3ea8)) * 0.5;
     local_5c = (*(float *)(iVar11 + 0x14) - *(float *)(iVar10 + 0x3eb0)) * local_60;
@@ -783,13 +1583,16 @@ void Glass_StartImmediateFall(undefined8 param_1,ulonglong param_2,ulonglong par
     local_60 = fVar1 * local_60;
     local_5c = local_5c * fVar1;
     local_58 = local_58 * fVar1;
-                    /* WARNING: Subroutine does not return */
     Vec3Cross((ulonglong)*(uint *)(iVar10 + 0x3ec4) + 0x18,&local_60,&local_90);
+    DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1;
+    fVar1 = (float)((double)(((*(float *)(DAT_8332cbac + 0x10) - *(float *)(DAT_8332cbac + 0xc)) *
+                              *(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) +
+                             *(float *)(DAT_8332cbac + 0xc)) * *(float *)(iVar10 + 0x3ec8)) * dVar13
+                   );
+    local_90 = local_90 * fVar1;
+    local_8c = local_8c * fVar1;
+    local_88 = local_88 * fVar1;
   }
-  Glass_RandomSmallAngularVelocity(&local_90);
-  local_90 = (float)((double)local_90 * dVar13);
-  local_8c = (float)((double)local_8c * dVar13);
-  local_88 = (float)((double)local_88 * dVar13);
   if (*(int *)(iVar8 + 8) != 0) {
     iVar11 = Phys_ObjCreateAxis(1,lVar12 + 0x10,*(undefined4 *)(iVar10 + 0x3ec4),&local_80,
                                 *(undefined4 *)(*(int *)(iVar10 + 0x3e90) + 0x20));
@@ -810,13 +1613,12 @@ void Glass_StartImmediateFall(undefined8 param_1,ulonglong param_2,ulonglong par
     Glass_AddPiecePhysicsObject(uVar7,param_2,uVar6,0);
     if (piVar9[1] != 0) {
       Phys_ObjSetAngularVelocityRaw(piVar9[1],&local_90);
-      if (*piVar9 != 0x7fffffff) {
-        Glass_CreatePieceJoint(*(undefined4 *)(iVar10 + 0x3e94),param_2);
-        __restgprlr_25();
-        return;
+      if (*piVar9 == 0x7fffffff) {
+        MyAssertHandler(0xffffffff820632e0,0x436,0,0xffffffff82000f98,0xffffffff82063878);
       }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff820632e0,0x436,0,0xffffffff82000f98,0xffffffff82063878);
+      Glass_CreatePieceJoint(*(undefined4 *)(iVar10 + 0x3e94),param_2);
+      __restgprlr_25();
+      return;
     }
   }
   Glass_SetupPieceFall(*(undefined4 *)(iVar10 + 0x3e94),param_2,&local_80,&local_90);
@@ -854,11 +1656,9 @@ void Glass_SetupDynamics(undefined8 param_1,undefined8 param_2,ulonglong param_3
   iVar5 = iVar3 + (int)lVar11;
   lVar11 = (ulonglong)*(uint *)(iVar1 + 0x34) + lVar11;
   if (*(int *)(iVar4 + 4) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x450,1,0xffffffff82000f98,0xffffffff820638d4);
   }
   if (*(int *)(iVar4 + 8) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x451,1,0xffffffff82000f98,0xffffffff820638a0);
   }
   iVar1 = (int)lVar11;
@@ -899,33 +1699,255 @@ void Glass_SetupDynamics(undefined8 param_1,undefined8 param_2,ulonglong param_3
 }
 
 
-// 82424A40  Glass_ConsiderBreakingPiece  (EffectsCore/fx_glass_crack.cpp:1182)
+// 824224E8  Glass_StartDelayedFall  (EffectsCore/fx_glass_crack.cpp:1139)
 
-void Glass_ConsiderBreakingPiece(void)
+void Glass_StartDelayedFall(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ushort uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 auStack_40 [16];
+  undefined1 auStack_30 [48];
+  
+  iVar4 = __savegprlr_29();
+  iVar2 = *(int *)(iVar4 + 0x3c);
+  iVar3 = *(int *)(iVar4 + 0x38) + (int)((param_2 & 0xffffffff) << 5);
+  uVar1 = *(ushort *)(iVar3 + 0x1a);
+  if ((uVar1 & 4) == 0) {
+    *(ushort *)(iVar3 + 0x1a) = uVar1 | 8;
+  }
+  iVar2 = *(int *)(iVar2 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2) + 4);
+  if (iVar2 != 0) {
+    Phys_ObjGetVelocity(iVar2,auStack_30);
+    Phys_ObjGetAngularVelocityRaw(iVar2,auStack_40);
+    Glass_SetupPieceFall(iVar4,param_2,auStack_30,auStack_40);
+    __restgprlr_29();
+    return;
+  }
+  Glass_RandomSmallAngularVelocity(auStack_30);
+  Glass_SetupPieceFall(iVar4,param_2,0xffffffff82179fd8,auStack_30);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82424A40  Glass_ConsiderBreakingPiece  (EffectsCore/fx_glass_crack.cpp:1182)
+
+void Glass_ConsiderBreakingPiece(undefined8 param_1,ulonglong param_2)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined2 uVar5;
+  bool bVar6;
+  
+  iVar4 = __savegprlr_27();
+  bVar6 = false;
+  iVar2 = *(int *)(*(int *)(iVar4 + 0x3e94) + 0x3c);
+  iVar3 = *(int *)(*(int *)(iVar4 + 0x3e94) + 0x38) + (int)param_2 * 0x20;
+  if (((*(float *)(iVar4 + 0x435c) < *(float *)(iVar3 + 0x1c)) ||
+      ((*(int *)(iVar3 + 8) != 0 && (*(float *)(iVar4 + 0x4360) < *(float *)(iVar3 + 0x1c))))) &&
+     (*(uint *)(iVar4 + 0x43a4) < 0x20)) {
+    uVar5 = truncate_cast<unsigned_short>(param_2);
+    bVar6 = true;
+    *(undefined2 *)((*(int *)(iVar4 + 0x43a4) + 0x21b2) * 2 + iVar4) = uVar5;
+    *(int *)(iVar4 + 0x43a4) = *(int *)(iVar4 + 0x43a4) + 1;
+  }
+  if ((!bVar6) && (*(int *)(iVar3 + 8) != 0)) {
+    if ((*(int *)(iVar2 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2)) ==
+         0x7fffffff) && (*(uint *)(iVar4 + 0x43e8) < 0x20)) {
+      uVar5 = truncate_cast<unsigned_short>(param_2);
+      fVar1 = *(float *)(iVar3 + 0x1c);
+      *(undefined2 *)((*(int *)(iVar4 + 0x43e8) + 0x21d4) * 2 + iVar4) = uVar5;
+      *(float *)(iVar4 + 0x43ec) = *(float *)(iVar4 + 0x43ec) + fVar1;
+      *(int *)(iVar4 + 0x43e8) = *(int *)(iVar4 + 0x43e8) + 1;
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82424B48  Glass_FinalizeShard  (EffectsCore/fx_glass_crack.cpp:1238)
 
-void Glass_FinalizeShard(void)
+void Glass_FinalizeShard(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  ushort uVar3;
+  short sVar4;
+  short sVar5;
+  float fVar6;
+  int iVar7;
+  float *pfVar8;
+  int iVar9;
+  float *pfVar10;
+  float *pfVar11;
+  undefined4 *puVar12;
+  float fVar13;
+  int iVar14;
+  int iVar16;
+  ulonglong uVar15;
+  float *pfVar17;
+  undefined4 *puVar18;
+  
+  iVar16 = __savegprlr_23();
+  pfVar10 = (float *)param_2;
+  fVar6 = pfVar10[0xa8];
+  uVar3 = *(ushort *)(pfVar10 + 7);
+  fVar1 = (float)((uint)fVar6 & 0xff);
+  iVar7 = *(int *)(iVar16 + 0x3e84);
+  if (fVar6 != fVar1) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,fVar6,fVar1);
+  }
+  fVar6 = pfVar10[0xa9];
+  fVar2 = (float)((uint)fVar6 & 0xff);
+  if (fVar6 != fVar2) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,fVar6,fVar2);
+  }
+  fVar6 = pfVar10[0xaa];
+  fVar13 = (float)((uint)fVar6 & 0xff);
+  if (fVar6 != fVar13) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,fVar6,fVar13);
+  }
+  if (0x80 < (((int)fVar2 - (int)pfVar10[0x26]) - (int)pfVar10[5]) + (int)fVar1 + (uVar3 & 0xff) + 1
+     ) {
+    MyAssertHandler(0xffffffff820632e0,0x4ed,0,0xffffffff82000f98,0xffffffff82063f38);
+  }
+  uVar15 = Glass_AllocPiece(*(undefined4 *)(iVar16 + 0x3e94),uVar3 & 0xff,fVar1,fVar2,fVar13);
+  if ((uVar15 & 0xffffffff) != 0xffff) {
+    iVar14 = (int)uVar15 * 0x20;
+    pfVar11 = (float *)(*(int *)(*(int *)(iVar16 + 0x3e94) + 0x38) + iVar14);
+    puVar12 = (undefined4 *)(*(int *)(*(int *)(iVar16 + 0x3e94) + 0x34) + iVar14);
+    if ((ushort)*(byte *)((int)pfVar11 + 0x16) != *(ushort *)(pfVar10 + 7)) {
+      MyAssertHandler(0xffffffff820632e0,0x4f6,1,0xffffffff82063ef8);
+    }
+    pfVar8 = *(float **)(iVar16 + 0x3ec4);
+    fVar6 = pfVar10[3];
+    iVar14 = *(int *)(iVar16 + 0x3e94);
+    fVar1 = pfVar10[2];
+    fVar2 = pfVar10[1];
+    puVar18 = (undefined4 *)(*(int *)(iVar14 + 0x34) + iVar7 * 0x20);
+    pfVar17 = (float *)(*(int *)(iVar14 + 0x38) + iVar7 * 0x20);
+    puVar12[4] = *pfVar8 * fVar1 + pfVar8[3] * fVar6 + (float)puVar18[4];
+    puVar12[5] = pfVar8[1] * fVar1 + pfVar8[4] * fVar6 + (float)puVar18[5];
+    puVar12[6] = pfVar8[2] * fVar1 + pfVar8[5] * fVar6 + (float)puVar18[6];
+    *puVar12 = *puVar18;
+    puVar12[1] = puVar18[1];
+    puVar12[2] = puVar18[2];
+    puVar12[3] = puVar18[3];
+    puVar12[7] = fVar2;
+    if ((*(ushort *)((int)pfVar17 + 0x1a) & 1) == 0) {
+      sVar4 = *(short *)((int)pfVar10 + 0x12);
+      sVar5 = *(short *)(pfVar10 + 4);
+      iVar9 = *(int *)(iVar16 + 0x3e90);
+      *pfVar11 = *(float *)(iVar9 + 8) * (float)(longlong)sVar4 +
+                 *(float *)(iVar9 + 4) * (float)(longlong)sVar5 + *pfVar17;
+      pfVar11[1] = *(float *)(iVar9 + 0x10) * (float)(longlong)sVar4 +
+                   *(float *)(iVar9 + 0xc) * (float)(longlong)sVar5 + pfVar17[1];
+    }
+    else {
+      sVar4 = *(short *)((int)pfVar10 + 0x12);
+      *pfVar11 = ((float)(longlong)*(short *)(pfVar10 + 4) / *(float *)(DAT_8332cbd8 + 0xc)) *
+                 0.03125 + *pfVar17;
+      pfVar11[1] = ((float)(longlong)sVar4 / *(float *)(DAT_8332cbd8 + 0xc)) * 0.03125 + pfVar17[1];
+    }
+    fVar1 = pfVar10[0xab];
+    fVar6 = *pfVar10;
+    pfVar11[2] = pfVar10[0xa7];
+    *(undefined2 *)(pfVar11 + 3) = *(undefined2 *)(pfVar17 + 3);
+    *(undefined1 *)(pfVar11 + 4) = *(undefined1 *)(pfVar17 + 4);
+    uVar3 = *(ushort *)((int)pfVar17 + 0x1a);
+    pfVar11[7] = fVar6;
+    *(ushort *)((int)pfVar11 + 0x1a) = uVar3 & 0xfff9 | 2;
+    *(undefined4 *)((int)((uVar15 & 0xffffffff) << 2) + *(int *)(iVar14 + 0x54)) =
+         *(undefined4 *)(iVar7 * 4 + *(int *)(iVar14 + 0x54));
+    memcpy((void *)((uint)*(ushort *)((int)pfVar11 + 0xe) * 4 + *(int *)(iVar14 + 0x40)),
+           pfVar10 + 0xac,(int)fVar1 << 2);
+    Glass_SetupDynamics(iVar16,param_2,uVar15,iVar7,0);
+    if ((*(uint *)(((uint)((uVar15 & 0xffffffff) >> 3) & 0x1ffffffc) +
+                  *(int *)(*(int *)(iVar16 + 0x3e94) + 0x44)) &
+        *(uint *)((int)&DAT_82992400 + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7c))) != 0) {
+      Glass_ConsiderBreakingPiece(iVar16,uVar15);
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+
+
+// 824225A0  Glass_AssertDirIsInArc  (EffectsCore/fx_glass_crack.cpp:1308)
+
+void Glass_AssertDirIsInArc(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  
+  fVar1 = param_2[1];
+  fVar2 = *param_2;
+  fVar6 = *param_3 * fVar2 + param_3[1] * fVar1;
+  fVar5 = *param_1 * param_2[1];
+  fVar4 = *param_1 * fVar2 + param_1[1] * fVar1;
+  fVar3 = param_1[1] * fVar2;
+  if (fVar2 * param_3[1] < *param_3 * fVar1) {
+    if ((fVar3 < fVar5) && (fVar4 <= fVar6)) {
+      return;
+    }
+    MyAssertHandler(0xffffffff820632e0,0x524,0,0xffffffff82000f98,0xffffffff8206393c);
+    return;
+  }
+  if (fVar3 < fVar5) {
+    return;
+  }
+  if (fVar6 <= fVar4) {
+    return;
+  }
+  MyAssertHandler(0xffffffff820632e0,0x526,0,0xffffffff82000f98,0xffffffff82063904);
+  return;
 }
 
 
 // 82422650  Glass_PushCrackBranch  (EffectsCore/fx_glass_crack.cpp:1324)
 
-void Glass_PushCrackBranch(void)
+void Glass_PushCrackBranch
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,int param_5,
+               undefined4 *param_6,undefined8 param_7,undefined4 *param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  double extraout_f1;
+  double dVar3;
+  
+  iVar2 = __savegprlr_28();
+  dVar3 = extraout_f1;
+  if (0x1f < *(uint *)(iVar2 + 0x4358)) {
+    MyAssertHandler(0xffffffff820632e0,0x52f,0,0xffffffff82063978,*(uint *)(iVar2 + 0x4358),0x20);
+  }
+  iVar1 = *(int *)(iVar2 + 0x4358);
+  *(int *)(iVar2 + 0x4358) = iVar1 + 1;
+  iVar2 = iVar1 * 0x24 + iVar2;
+  *(int *)(iVar2 + 0x3ed8) = param_5;
+  *(uint *)(iVar2 + 0x3edc) = (uint)*(byte *)(param_5 + 1);
+  *(undefined4 *)(iVar2 + 0x3ee0) = *param_6;
+  *(undefined4 *)(iVar2 + 0x3ee4) = param_6[1];
+  *(float *)(iVar2 + 0x3ee8) = (float)dVar3;
+  *(undefined4 *)(iVar2 + 0x3eec) = *param_8;
+  *(undefined4 *)(iVar2 + 0x3ef0) = param_8[1];
+  *(float *)(iVar2 + 0x3ef4) = (float)param_2;
+  *(float *)(iVar2 + 0x3ef8) = (float)param_3;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -939,7 +1961,6 @@ int Glass_PopCrackBranch(int param_1)
   uVar1 = (ulonglong)*(uint *)(param_1 + 0x4358) - 1;
   *(int *)(param_1 + 0x4358) = (int)uVar1;
   if (0x1f < (uVar1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x540,0,0xffffffff82063978,uVar1,0x20);
   }
   return *(int *)(param_1 + 0x4358) * 0x24 + param_1 + 0x3ed8;
@@ -989,7 +2010,6 @@ void Glass_DeflectVectorWithSign(double param_1,double param_2,double param_3)
   float *in_r7;
   
   if (param_2 <= param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x565,0,0xffffffff820639d0,param_1,param_2);
   }
   fVar3 = *in_r6;
@@ -1050,17 +2070,14 @@ void Glass_DoesSegmentIntersectEitherEdge
   
   iVar12 = __savegprlr_25();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x583,0,0xffffffff82000f98,0xffffffff82063a0c);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x584,0,0xffffffff82000f98,0xffffffff820633cc);
   }
   pbVar7 = (byte *)param_4;
   pbVar13 = (byte *)param_5;
   if (pbVar7[1] != *pbVar13) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x585,0,0xffffffff820639e8);
   }
   fVar1 = param_2[1];
@@ -1331,43 +2348,36 @@ void Glass_ClipSegmentWithinEdgeLoop(undefined8 param_1,ulonglong param_2,ulongl
   
   iVar4 = __savegprlr_21();
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x672,0,0xffffffff82000f98,0xffffffff820633c4);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x673,0,0xffffffff82000f98,0xffffffff8202ba10);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x674,0,0xffffffff82000f98,0xffffffff82063694);
   }
   if (*(uint *)(iVar4 + 0x3bf8) <= (uint)((((int)param_3 - iVar4) + -0xbf8) / 0x18)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x675,0,0xffffffff82063a70);
   }
   uVar1 = *(uint *)param_2;
   uVar5 = param_3;
-  while( true ) {
+  do {
     pbVar2 = *(byte **)((int)uVar5 + 0x14);
     uVar6 = ZEXT48(pbVar2);
     if (uVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820632e0,0x67d,0,0xffffffff82000f98,0xffffffff82063a18);
     }
-    if (*(uint *)(iVar4 + 0x3bf8) <= (uint)((int)(pbVar2 + (-0xbf8 - iVar4)) / 0x18)) break;
+    if (*(uint *)(iVar4 + 0x3bf8) <= (uint)((int)(pbVar2 + (-0xbf8 - iVar4)) / 0x18)) {
+      MyAssertHandler(0xffffffff820632e0,0x67e,0,0xffffffff82063a28);
+    }
     uVar3 = *(uint *)param_2;
     if ((*pbVar2 != uVar3) && (pbVar2[1] != uVar3)) {
       Glass_TraceCrackAgainstEdge(iVar4,param_2,uVar1 * 8 + iVar4 + 0x3fc,uVar6,uVar5);
     }
     uVar5 = uVar6;
-    if (ZEXT48(pbVar2) == (param_3 & 0xffffffff)) {
-      __restgprlr_21();
-      return;
-    }
-  }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820632e0,0x67e,0,0xffffffff82063a28);
+  } while (ZEXT48(pbVar2) != (param_3 & 0xffffffff));
+  __restgprlr_21();
+  return;
 }
 
 
@@ -1400,7 +2410,7 @@ void Glass_ClipSegment(undefined8 param_1,undefined8 param_2)
   piVar4[1] = (int)((float)piVar4[1] + 4.0);
   piVar4[10] = 0;
   uVar5 = 0;
-  do {
+  while( true ) {
     piVar4[0xb] = 0;
     Glass_ClipSegmentWithinEdgeLoop(iVar2,param_2,*(undefined4 *)(iVar2 + 0x3c04));
     if (1 < *(uint *)(iVar2 + 0x3c00)) {
@@ -1422,37 +2432,81 @@ void Glass_ClipSegment(undefined8 param_1,undefined8 param_2)
         iVar7 = iVar7 + 0x14;
       } while (uVar6 < *(uint *)(iVar2 + 0x3c00));
     }
-    if (piVar4[0xb] == 0) {
-      if (piVar4[0xd] == 0) {
-        piVar4[1] = (int)(float)((double)(float)piVar4[1] - dVar8);
-        __restgprlr_22();
-        return;
-      }
-      goto LAB_82423360;
-    }
+    if (piVar4[0xb] == 0) break;
     if (piVar4[0xc] == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820632e0,0x6b0,0,0xffffffff82000f98,0xffffffff82063ab8);
     }
     uVar5 = uVar5 + 1;
     piVar4[2] = piVar4[7];
     piVar4[3] = piVar4[8];
     piVar4[1] = (int)(float)((double)(float)piVar4[9] + dVar9);
-  } while (uVar5 <= *(uint *)(iVar2 + 0xbf4));
-  piVar4[10] = 1;
+    if (*(uint *)(iVar2 + 0xbf4) < uVar5) {
+      piVar4[10] = 1;
 LAB_82423360:
-  __restgprlr_22();
-  return;
+      __restgprlr_22();
+      return;
+    }
+  }
+  if (piVar4[0xd] == 0) {
+    piVar4[1] = (int)(float)((double)(float)piVar4[1] - dVar8);
+    __restgprlr_22();
+    return;
+  }
+  goto LAB_82423360;
 }
 
 
 // 82423398  Glass_SplitTwin  (EffectsCore/fx_glass_crack.cpp:1732)
 
-void Glass_SplitTwin(void)
+void Glass_SplitTwin(undefined8 param_1,char *param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char *pcVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  char *pcVar5;
+  int *piVar6;
+  
+  uVar3 = __savegprlr_27();
+  pcVar5 = (char *)param_3;
+  if (((ulonglong)*(uint *)(param_2 + 0x14) != (param_3 & 0xffffffff)) || (param_2[1] != *pcVar5)) {
+    MyAssertHandler(0xffffffff820632e0,0x6c9,0,0xffffffff82000f98,0xffffffff82063b20);
+  }
+  if ((*(int *)(param_2 + 0x10) != 0) || (*(int *)(pcVar5 + 0x10) == 0)) {
+    MyAssertHandler(0xffffffff820632e0,0x6ca,0,0xffffffff82000f98,0xffffffff82063af0);
+  }
+  pcVar1 = *(char **)(pcVar5 + 0x10);
+  if (pcVar1[1] != *param_2) {
+    MyAssertHandler(0xffffffff820632e0,0x6cd,0,0xffffffff82063acc);
+  }
+  *pcVar1 = param_2[1];
+  *(undefined4 *)(pcVar1 + 4) = *(undefined4 *)(param_2 + 4);
+  *(float *)(pcVar1 + 8) = -*(float *)(param_2 + 8);
+  *(float *)(pcVar1 + 0xc) = -*(float *)(param_2 + 0xc);
+  *(char **)(pcVar1 + 0x10) = param_2;
+  *(char **)(param_2 + 0x10) = pcVar1;
+  iVar4 = Glass_AllocCrackEdgeTwin(uVar3,param_3);
+  *(char **)(iVar4 + 0x14) = pcVar1;
+  iVar2 = *(int *)(*(int *)(pcVar5 + 0x14) + 0x10);
+  if ((iVar2 != 0) && (*(char **)(iVar2 + 0x14) == pcVar1)) {
+    *(int *)(iVar2 + 0x14) = iVar4;
+    __restgprlr_27();
+    return;
+  }
+  pcVar5 = *(char **)(*(int *)(pcVar1 + 0x14) + 0x14);
+  if (pcVar5 != pcVar1) {
+    do {
+      piVar6 = (int *)(pcVar5 + 0x14);
+      pcVar5 = *(char **)(pcVar5 + 0x14);
+    } while (pcVar5 != pcVar1);
+    *piVar6 = iVar4;
+    __restgprlr_27();
+    return;
+  }
+  *(int *)(*(int *)(pcVar1 + 0x14) + 0x14) = iVar4;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1468,28 +2522,29 @@ void Glass_DoCrackWalk(undefined8 param_1,longlong param_2)
   int iVar6;
   char *pcVar7;
   char *pcVar8;
+  char *pcVar9;
   undefined8 uVar5;
-  undefined1 uVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  longlong lVar16;
-  uint *puVar17;
-  uint uVar18;
-  undefined4 *puVar19;
-  float *pfVar20;
-  double dVar21;
+  undefined1 uVar10;
+  longlong lVar11;
+  int iVar12;
+  ulonglong uVar13;
+  int iVar14;
+  ulonglong uVar15;
+  uint uVar16;
+  longlong lVar17;
+  uint *puVar18;
+  uint uVar19;
+  undefined4 *puVar20;
+  float *pfVar21;
   double dVar22;
   double dVar23;
-  undefined8 uVar24;
+  double dVar24;
   undefined8 uVar25;
-  double dVar26;
+  undefined8 uVar26;
   double dVar27;
   double dVar28;
   double dVar29;
+  double dVar30;
   short local_100;
   short sStack_fe;
   undefined1 auStack_f8 [8];
@@ -1498,64 +2553,62 @@ void Glass_DoCrackWalk(undefined8 param_1,longlong param_2)
   
   __savegprlr_15();
   iVar6 = __savefpr_23();
-  lVar16 = param_2 + 0xc;
+  lVar17 = param_2 + 0xc;
   iVar4 = (int)param_2;
   *(undefined4 *)(iVar4 + 0x48) = 0;
   *(undefined4 *)(iVar4 + 0x4c) = 0;
   *(undefined4 *)(iVar4 + 0x50) = 0;
-  uVar15 = 0;
+  uVar16 = 0;
   *(undefined4 *)(iVar4 + 0x54) = 0;
   *(undefined4 *)(iVar4 + 0x40) = 0;
   *(undefined4 *)(iVar4 + 0x3c) = 0;
-  Glass_ClipSegment(iVar6,lVar16);
+  Glass_ClipSegment(iVar6,lVar17);
   if (*(int *)(iVar4 + 0x34) == 0) {
-    dVar23 = 0.5;
-    uVar24 = 0x3ff0000000000000;
-    uVar25 = 0xbff0000000000000;
-    dVar29 = 0.9659258127212524;
-    dVar28 = 0.7071067690849304;
-    dVar26 = 1.53125;
-    dVar27 = 0.4375;
-    dVar22 = 0.03125;
+    dVar24 = 0.5;
+    uVar25 = 0x3ff0000000000000;
+    uVar26 = 0xbff0000000000000;
+    dVar30 = 0.9659258127212524;
+    dVar29 = 0.7071067690849304;
+    dVar27 = 1.53125;
+    dVar28 = 0.4375;
+    dVar23 = 0.03125;
     do {
-      iVar13 = *(int *)(iVar4 + 0x40);
-      if (((iVar13 != 0) && ((uint)*(byte *)(iVar13 + 2) == *(uint *)(iVar4 + 4))) &&
+      iVar14 = *(int *)(iVar4 + 0x40);
+      if (((iVar14 != 0) && ((uint)*(byte *)(iVar14 + 2) == *(uint *)(iVar4 + 4))) &&
          (0x1f < *(uint *)(iVar6 + 0x3c00))) break;
-      puVar17 = (uint *)lVar16;
+      puVar18 = (uint *)lVar17;
       if (*(int *)(iVar4 + 0x3c) == 0) {
         if (0xfe < *(uint *)(iVar6 + 0xbf4)) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff820632e0,0x70a,0,0xffffffff820634b8,*(uint *)(iVar6 + 0xbf4),
                           0xff);
         }
-        uVar18 = *(uint *)(iVar6 + 0xbf4);
-        *(uint *)(iVar6 + 0xbf4) = uVar18 + 1;
+        uVar19 = *(uint *)(iVar6 + 0xbf4);
+        *(uint *)(iVar6 + 0xbf4) = uVar19 + 1;
         fVar1 = *(float *)(iVar4 + 0x10);
-        iVar11 = uVar18 * 8 + iVar6;
-        iVar13 = *puVar17 * 8 + iVar6;
-        pfVar20 = (float *)(iVar11 + 0x3fc);
-        puVar19 = (undefined4 *)(uVar18 * 4 + iVar6);
-        *pfVar20 = *(float *)(iVar4 + 0x14) * fVar1 + *(float *)(iVar13 + 0x3fc);
-        *(float *)(iVar11 + 0x400) = *(float *)(iVar4 + 0x18) * fVar1 + *(float *)(iVar13 + 0x400);
-        Glass_PackVertex(pfVar20,puVar19);
-        uVar2 = *puVar19;
+        iVar12 = uVar19 * 8 + iVar6;
+        iVar14 = *puVar18 * 8 + iVar6;
+        pfVar21 = (float *)(iVar12 + 0x3fc);
+        puVar20 = (undefined4 *)(uVar19 * 4 + iVar6);
+        *pfVar21 = *(float *)(iVar4 + 0x14) * fVar1 + *(float *)(iVar14 + 0x3fc);
+        *(float *)(iVar12 + 0x400) = *(float *)(iVar4 + 0x18) * fVar1 + *(float *)(iVar14 + 0x400);
+        Glass_PackVertex(pfVar21,puVar20);
+        uVar2 = *puVar20;
         local_100 = (short)((uint)uVar2 >> 0x10);
         sStack_fe = (short)uVar2;
         local_e8 = (longlong)sStack_fe;
         local_f0 = (longlong)local_100;
-        *pfVar20 = (float)((double)local_f0 * dVar22);
-        *(float *)(iVar11 + 0x400) = (float)((double)local_e8 * dVar22);
+        *pfVar21 = (float)((double)local_f0 * dVar23);
+        *(float *)(iVar12 + 0x400) = (float)((double)local_e8 * dVar23);
       }
       else {
-        if (iVar13 == 0) {
-                    /* WARNING: Subroutine does not return */
+        if (iVar14 == 0) {
           MyAssertHandler(0xffffffff820632e0,0x705,0,0xffffffff82000f98,0xffffffff82063f9c);
         }
-        uVar18 = (uint)**(byte **)(iVar4 + 0x40);
+        uVar19 = (uint)**(byte **)(iVar4 + 0x40);
       }
-      iVar13 = *(int *)(iVar4 + 4) * 0x14 + iVar6;
-      AddPointToBounds2D(uVar18 * 8 + iVar6 + 0x3fc,iVar13 + 0x3c08,iVar13 + 0x3c10);
-      pcVar7 = (char *)Glass_AllocCrackEdge(iVar6,*puVar17,uVar18,*(undefined4 *)(iVar4 + 4),1);
+      iVar14 = *(int *)(iVar4 + 4) * 0x14 + iVar6;
+      AddPointToBounds2D(uVar19 * 8 + iVar6 + 0x3fc,iVar14 + 0x3c08,iVar14 + 0x3c10);
+      pcVar7 = (char *)Glass_AllocCrackEdge(iVar6,*puVar18,uVar19,*(undefined4 *)(iVar4 + 4),1);
       pcVar8 = (char *)Glass_GetFreeEdge(iVar6);
       *pcVar8 = pcVar7[1];
       pcVar8[1] = *pcVar7;
@@ -1566,18 +2619,19 @@ void Glass_DoCrackWalk(undefined8 param_1,longlong param_2)
       *(undefined4 *)(pcVar8 + 4) = *(undefined4 *)(pcVar7 + 4);
       *(float *)(pcVar8 + 8) = -*(float *)(pcVar7 + 8);
       *(float *)(pcVar8 + 0xc) = -*(float *)(pcVar7 + 0xc);
+      pcVar9 = pcVar8;
       if (*(int *)(iVar4 + 0x48) == 0) {
         *(char **)(iVar4 + 0x48) = pcVar7;
         *(char **)(iVar4 + 0x54) = pcVar8;
       }
       else {
         if (*(char *)(*(int *)(iVar4 + 0x50) + 1) != *pcVar7) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff820632e0,0x717,0,0xffffffff82000f98,0xffffffff82063fb0);
+          pcVar9 = (char *)MyAssertHandler(0xffffffff820632e0,0x717,0,0xffffffff82000f98,
+                                           0xffffffff82063fb0);
         }
         if (pcVar8[1] != **(char **)(iVar4 + 0x4c)) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff820632e0,0x718,0,0xffffffff82000f98,0xffffffff82063fd8);
+          pcVar9 = (char *)MyAssertHandler(0xffffffff820632e0,0x718,0,0xffffffff82000f98,
+                                           0xffffffff82063fd8);
         }
         *(char **)(*(int *)(iVar4 + 0x50) + 0x14) = pcVar7;
         *(undefined4 *)(pcVar8 + 0x14) = *(undefined4 *)(iVar4 + 0x4c);
@@ -1592,16 +2646,15 @@ void Glass_DoCrackWalk(undefined8 param_1,longlong param_2)
           __restgprlr_15();
           return;
         }
-        pcVar7 = (char *)Glass_AllocCrackEdge(iVar6,*puVar3,uVar18,puVar3[2],puVar3[3]);
-        *(char **)(iVar4 + 0x58) = pcVar7;
-        if (*(char *)(*(int *)(iVar4 + 0x44) + 1) != *pcVar7) {
-                    /* WARNING: Subroutine does not return */
+        pcVar9 = (char *)Glass_AllocCrackEdge(iVar6,*puVar3,uVar19,puVar3[2],puVar3[3]);
+        *(char **)(iVar4 + 0x58) = pcVar9;
+        if (*(char *)(*(int *)(iVar4 + 0x44) + 1) != *pcVar9) {
           MyAssertHandler(0xffffffff820632e0,0x72e,0,0xffffffff82000f98,0xffffffff82063f68);
         }
         *(undefined4 *)(*(int *)(iVar4 + 0x44) + 0x14) = *(undefined4 *)(iVar4 + 0x58);
         *(undefined4 *)(*(int *)(iVar4 + 0x58) + 0x14) = *(undefined4 *)(iVar4 + 0x40);
-        uVar9 = truncate_cast<unsigned_char>(uVar18);
-        **(undefined1 **)(iVar4 + 0x40) = uVar9;
+        uVar10 = truncate_cast<unsigned_char>(uVar19);
+        **(undefined1 **)(iVar4 + 0x40) = uVar10;
         Glass_SetCrackEdgeDelta(iVar6,*(undefined4 *)(iVar4 + 0x40));
         if (*(int *)(*(int *)(iVar4 + 0x40) + 0x10) != 0) {
           Glass_SplitTwin(iVar6,*(undefined4 *)(iVar4 + 0x58));
@@ -1610,67 +2663,67 @@ void Glass_DoCrackWalk(undefined8 param_1,longlong param_2)
         __restgprlr_15();
         return;
       }
-      uVar15 = uVar15 + 1;
+      uVar16 = uVar16 + 1;
       *(float *)(iVar4 + 8) = *(float *)(iVar4 + 0x10) + *(float *)(iVar4 + 8);
-      uVar14 = (ulonglong)DAT_8332cc5c;
+      uVar15 = (ulonglong)DAT_8332cc5c;
       if (*(int *)(iVar6 + 0x4358) == 0x20) {
-        uVar12 = 0;
+        uVar13 = 0;
       }
       else {
-        uVar12 = (ulonglong)(uint)(1 << (uVar15 & 0x3f));
-        uVar14 = -(ulonglong)(uVar14 != 0x1de) & uVar14 + 1;
-        pcVar8 = (char *)(uint)*(ushort *)(&DAT_82066aca + (int)((uVar14 & 0xffffffff) << 2));
-        uVar12 = ((~uVar12 & 0xffffffff) >> 0x1f) +
+        uVar13 = (ulonglong)(uint)(1 << (uVar16 & 0x3f));
+        uVar15 = -(ulonglong)(uVar15 != 0x1de) & uVar15 + 1;
+        pcVar9 = (char *)(uint)*(ushort *)(&DAT_82066aca + (int)((uVar15 & 0xffffffff) << 2));
+        uVar13 = ((~uVar13 & 0xffffffff) >> 0x1f) +
                  (ulonglong)
-                 (uVar12 <=
+                 (uVar13 <=
                  (ulonglong)
                  (longlong)
-                 ((int)((uint)*(ushort *)(&DAT_82066aca + (int)((uVar14 & 0xffffffff) << 2)) << 4)
+                 ((int)((uint)*(ushort *)(&DAT_82066aca + (int)((uVar15 & 0xffffffff) << 2)) << 4)
                  >> 0x10)) & 1;
       }
-      uVar14 = -(ulonglong)(uVar14 != 0x1de) & uVar14 + 1;
-      lVar10 = (uVar14 & 0x3fffffff) << 2;
-      iVar13 = (int)lVar10;
-      if (uVar12 == 0) {
+      uVar15 = -(ulonglong)(uVar15 != 0x1de) & uVar15 + 1;
+      lVar11 = (uVar15 & 0x3fffffff) << 2;
+      iVar14 = (int)lVar11;
+      if (uVar13 == 0) {
         *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(param_2 + 0x14);
-        uVar12 = -(ulonglong)(uVar14 - 0x1de != 0) & uVar14 + 1;
-        DAT_8332cc5c = (uint)uVar12;
+        uVar13 = -(ulonglong)(uVar15 - 0x1de != 0) & uVar15 + 1;
+        DAT_8332cc5c = (uint)uVar13;
         *(undefined4 *)(iVar4 + 0x24) = *(undefined4 *)(iVar4 + 0x18);
-        *puVar17 = uVar18;
-        *(float *)(iVar4 + 0x1c) = (float)dVar28;
+        *puVar18 = uVar19;
+        *(float *)(iVar4 + 0x1c) = (float)dVar29;
         *(float *)(iVar4 + 0x10) =
-             (float)((double)*(float *)(&DAT_82066ac8 + iVar13) * dVar27 + dVar26) *
+             (float)((double)*(float *)(&DAT_82066ac8 + iVar14) * dVar28 + dVar27) *
              *(float *)(iVar4 + 0x10);
-        uVar5 = uVar24;
-        if ((float)((double)*(float *)(&DAT_82066ac8 + (int)((uVar12 & 0xffffffff) << 2)) - dVar23)
+        uVar5 = uVar25;
+        if ((float)((double)*(float *)(&DAT_82066ac8 + (int)((uVar13 & 0xffffffff) << 2)) - dVar24)
             < 0.0) {
-          uVar5 = uVar25;
+          uVar5 = uVar26;
         }
         Glass_DeflectVectorWithSign
-                  (dVar28,dVar29,uVar5,pcVar8,-(uVar14 - 0x1de),lVar10,param_2 + 0x14);
+                  (dVar29,dVar30,uVar5,pcVar9,-(uVar15 - 0x1de),lVar11,param_2 + 0x14);
       }
       else {
-        DAT_8332cc5c = (uint)uVar14;
-        uVar15 = 0;
-        dVar21 = (double)((float)((double)*(float *)(&DAT_82066ac8 + iVar13) * dVar27 + dVar26) *
+        DAT_8332cc5c = (uint)uVar15;
+        uVar16 = 0;
+        dVar22 = (double)((float)((double)*(float *)(&DAT_82066ac8 + iVar14) * dVar28 + dVar27) *
                          *(float *)(iVar4 + 0x10));
-        Glass_DeflectVectorWithSign(dVar28,dVar29,uVar25);
+        Glass_DeflectVectorWithSign(dVar29,dVar30,uVar26);
         uVar5 = Glass_PushCrackBranch
-                          (dVar21,dVar29,(double)*(float *)(iVar4 + 8),iVar6,
+                          (dVar22,dVar30,(double)*(float *)(iVar4 + 8),iVar6,
                            *(undefined4 *)(iVar4 + 0x50),auStack_f8);
         fVar1 = *(float *)(iVar4 + 0x10);
-        *puVar17 = uVar18;
-        iVar13 = DAT_8332cc5c + -0x1de;
-        DAT_8332cc5c = -(uint)(iVar13 != 0) & DAT_8332cc5c + 1;
+        *puVar18 = uVar19;
+        iVar14 = DAT_8332cc5c + -0x1de;
+        DAT_8332cc5c = -(uint)(iVar14 != 0) & DAT_8332cc5c + 1;
         *(float *)(iVar4 + 0x10) =
-             (float)((double)*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) * dVar27 + dVar26) * fVar1
+             (float)((double)*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) * dVar28 + dVar27) * fVar1
         ;
-        Glass_DeflectVectorWithSign(dVar28,dVar29,uVar24,uVar5,-iVar13);
+        Glass_DeflectVectorWithSign(dVar29,dVar30,uVar25,uVar5,-iVar14);
         *(undefined4 *)(iVar4 + 0x20) = *(undefined4 *)(iVar4 + 0x14);
         *(undefined4 *)(iVar4 + 0x24) = *(undefined4 *)(iVar4 + 0x18);
-        *(float *)(iVar4 + 0x1c) = (float)dVar29;
+        *(float *)(iVar4 + 0x1c) = (float)dVar30;
       }
-      Glass_ClipSegment(iVar6,lVar16);
+      Glass_ClipSegment(iVar6,lVar17);
     } while (*(int *)(iVar4 + 0x34) == 0);
   }
   __restfpr_23(0);
@@ -1686,55 +2739,55 @@ void Glass_MakeFinalPiece(void)
 {
   int iVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  uint uVar6;
-  undefined4 *puVar7;
-  int *piVar8;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  char *pcVar6;
+  uint uVar7;
+  undefined4 *puVar8;
+  int *piVar9;
   int local_d0;
   int local_cc [51];
   
-  iVar4 = __savegprlr_24();
-  iVar1 = *(int *)(iVar4 + 0x3c04);
+  iVar5 = __savegprlr_24();
+  iVar1 = *(int *)(iVar5 + 0x3c04);
   iVar2 = *(int *)(iVar1 + 0x10);
   local_d0 = iVar1;
   while (iVar2 != 0) {
-    local_d0 = *(int *)(local_d0 + 0x14);
-    if (local_d0 == iVar1) {
-                    /* WARNING: Subroutine does not return */
+    iVar3 = *(int *)(local_d0 + 0x14);
+    if (iVar3 == iVar1) {
       MyAssertHandler(0xffffffff820632e0,0x766,0,0xffffffff82000f98,0xffffffff82063b6c);
     }
-    iVar2 = *(int *)(local_d0 + 0x10);
+    local_d0 = iVar3;
+    iVar2 = *(int *)(iVar3 + 0x10);
   }
-  uVar6 = 1;
-  if (1 < *(uint *)(iVar4 + 0x3c00)) {
-    piVar8 = local_cc;
-    puVar7 = (undefined4 *)(iVar4 + 0x3c18);
+  uVar7 = 1;
+  if (1 < *(uint *)(iVar5 + 0x3c00)) {
+    piVar9 = local_cc;
+    puVar8 = (undefined4 *)(iVar5 + 0x3c18);
     do {
-      pcVar3 = (char *)*puVar7;
-      *piVar8 = 0;
-      pcVar5 = pcVar3;
+      pcVar4 = (char *)*puVar8;
+      *piVar9 = 0;
+      pcVar6 = pcVar4;
       do {
-        if (*(int *)(pcVar5 + 0x10) == 0) {
-          *piVar8 = (int)pcVar5;
+        if (*(int *)(pcVar6 + 0x10) == 0) {
+          *piVar9 = (int)pcVar6;
           break;
         }
-        if (*(char *)(*(int *)(pcVar5 + 0x14) + 1) == *pcVar5) {
-          *piVar8 = (int)pcVar5;
+        if (*(char *)(*(int *)(pcVar6 + 0x14) + 1) == *pcVar6) {
+          *piVar9 = (int)pcVar6;
         }
-        pcVar5 = *(char **)(pcVar5 + 0x14);
-      } while (pcVar5 != pcVar3);
-      if (*piVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
+        pcVar6 = *(char **)(pcVar6 + 0x14);
+      } while (pcVar6 != pcVar4);
+      if (*piVar9 == 0) {
         MyAssertHandler(0xffffffff820632e0,0x77c,0,0xffffffff82000f98,0xffffffff82063b54);
       }
-      uVar6 = uVar6 + 1;
-      puVar7 = puVar7 + 5;
-      piVar8 = piVar8 + 1;
-    } while (uVar6 < *(uint *)(iVar4 + 0x3c00));
+      uVar7 = uVar7 + 1;
+      puVar8 = puVar8 + 5;
+      piVar9 = piVar9 + 1;
+    } while (uVar7 < *(uint *)(iVar5 + 0x3c00));
   }
-  Glass_ConvertLoopsToPiece(iVar4,&local_d0);
+  Glass_ConvertLoopsToPiece(iVar5,&local_d0);
   __restgprlr_24();
   return;
 }
@@ -1762,93 +2815,85 @@ void Glass_MakePiece(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   uVar4 = __savegprlr_22();
   if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x78c,0,0xffffffff82000f98,0xffffffff820633c4);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x78d,0,0xffffffff82000f98,0xffffffff82063bc4);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820632e0,0x78e,0,0xffffffff82000f98,0xffffffff82063bb4);
   }
   piVar5 = (int *)param_2;
   iVar13 = *piVar5;
-  if (iVar13 != 0) {
-    cVar1 = *(char *)(iVar13 + 2);
-    iVar9 = 0;
-    while( true ) {
-      iVar2 = *(int *)(iVar13 + 0x10);
-      iVar10 = iVar13;
-      if ((iVar2 != 0) && (iVar10 = iVar9, *(char *)(iVar2 + 2) != cVar1)) {
-        *(undefined4 *)(iVar2 + 0x10) = 0;
-        *(undefined4 *)(iVar13 + 0x10) = 0;
-        iVar10 = iVar13;
-      }
-      if (*(int *)(iVar13 + 0x14) == 0) break;
-      iVar13 = *(int *)(iVar13 + 0x14);
-      iVar9 = iVar10;
-      if (iVar13 == *piVar5) {
-        if (iVar10 == 0) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff820632e0,0x7a6,0,0xffffffff82000f98,0xffffffff82063b9c);
-        }
-        *piVar5 = iVar10;
-        if (1 < (param_3 & 0xffffffff)) {
-          lVar8 = param_3 - 1;
-          uVar12 = param_2;
-          do {
-            uVar12 = uVar12 + 4;
-            puVar14 = (undefined4 *)uVar12;
-            pcVar3 = (char *)*puVar14;
-            pcVar11 = (char *)0x0;
-            cVar1 = pcVar3[2];
-            pcVar6 = (char *)0x0;
-            do {
-              iVar13 = *(int *)(pcVar3 + 0x10);
-              pcVar7 = pcVar3;
-              if (iVar13 != 0) {
-                if (*(char *)(iVar13 + 2) == cVar1) {
-                  pcVar7 = pcVar6;
-                  if (*(char *)(*(int *)(pcVar3 + 0x14) + 1) == *pcVar3) {
-                    pcVar11 = pcVar3;
-                  }
-                }
-                else {
-                  *(undefined4 *)(iVar13 + 0x10) = 0;
-                  pcVar3[0x10] = '\0';
-                  pcVar3[0x11] = '\0';
-                  pcVar3[0x12] = '\0';
-                  pcVar3[0x13] = '\0';
-                }
-              }
-              pcVar3 = *(char **)(pcVar3 + 0x14);
-              pcVar6 = pcVar7;
-            } while (pcVar3 != (char *)*puVar14);
-            if (pcVar7 == (char *)0x0) {
-              if (pcVar11 == (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
-                MyAssertHandler(0xffffffff820632e0,0x7c2,0,0xffffffff82000f98,0xffffffff82063b84);
-              }
-              *puVar14 = pcVar11;
-            }
-            else {
-              *puVar14 = pcVar7;
-            }
-            lVar8 = lVar8 + -1;
-          } while (lVar8 != 0);
-        }
-        Glass_ConvertLoopsToPiece(uVar4,param_2,param_3);
-        __restgprlr_22();
-        return;
-      }
-    }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff820632e0,0x7a2,0,0xffffffff82000f98,0xffffffff82063ba4);
+  if (iVar13 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x793,0,0xffffffff82000f98,0xffffffff82063a18);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820632e0,0x793,0,0xffffffff82000f98,0xffffffff82063a18);
+  cVar1 = *(char *)(iVar13 + 2);
+  iVar9 = 0;
+  do {
+    iVar2 = *(int *)(iVar13 + 0x10);
+    iVar10 = iVar13;
+    if ((iVar2 != 0) && (iVar10 = iVar9, *(char *)(iVar2 + 2) != cVar1)) {
+      *(undefined4 *)(iVar2 + 0x10) = 0;
+      *(undefined4 *)(iVar13 + 0x10) = 0;
+      iVar10 = iVar13;
+    }
+    if (*(int *)(iVar13 + 0x14) == 0) {
+      MyAssertHandler(0xffffffff820632e0,0x7a2,0,0xffffffff82000f98,0xffffffff82063ba4);
+    }
+    iVar13 = *(int *)(iVar13 + 0x14);
+    iVar9 = iVar10;
+  } while (iVar13 != *piVar5);
+  if (iVar10 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x7a6,0,0xffffffff82000f98,0xffffffff82063b9c);
+  }
+  *piVar5 = iVar10;
+  if (1 < (param_3 & 0xffffffff)) {
+    lVar8 = param_3 - 1;
+    uVar12 = param_2;
+    do {
+      uVar12 = uVar12 + 4;
+      puVar14 = (undefined4 *)uVar12;
+      pcVar3 = (char *)*puVar14;
+      pcVar11 = (char *)0x0;
+      cVar1 = pcVar3[2];
+      pcVar6 = (char *)0x0;
+      do {
+        iVar13 = *(int *)(pcVar3 + 0x10);
+        pcVar7 = pcVar3;
+        if (iVar13 != 0) {
+          if (*(char *)(iVar13 + 2) == cVar1) {
+            pcVar7 = pcVar6;
+            if (*(char *)(*(int *)(pcVar3 + 0x14) + 1) == *pcVar3) {
+              pcVar11 = pcVar3;
+            }
+          }
+          else {
+            *(undefined4 *)(iVar13 + 0x10) = 0;
+            pcVar3[0x10] = '\0';
+            pcVar3[0x11] = '\0';
+            pcVar3[0x12] = '\0';
+            pcVar3[0x13] = '\0';
+          }
+        }
+        pcVar3 = *(char **)(pcVar3 + 0x14);
+        pcVar6 = pcVar7;
+      } while (pcVar3 != (char *)*puVar14);
+      if (pcVar7 == (char *)0x0) {
+        if (pcVar11 == (char *)0x0) {
+          MyAssertHandler(0xffffffff820632e0,0x7c2,0,0xffffffff82000f98,0xffffffff82063b84);
+        }
+        *puVar14 = pcVar11;
+      }
+      else {
+        *puVar14 = pcVar7;
+      }
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  Glass_ConvertLoopsToPiece(uVar4,param_2,param_3);
+  __restgprlr_22();
+  return;
 }
 
 
@@ -1947,31 +2992,354 @@ undefined8 Glass_DoesLoopContainLoop(int param_1,int *param_2,undefined4 *param_
 
 // 82423A68  Glass_MakePieceForOuterLoop  (EffectsCore/fx_glass_crack.cpp:2077)
 
-void Glass_MakePieceForOuterLoop(void)
+void Glass_MakePieceForOuterLoop(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined4 uVar1;
+  int iVar2;
+  longlong lVar3;
+  char cVar4;
+  char cVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  undefined4 *puVar15;
+  uint uVar16;
+  longlong lVar17;
+  undefined4 local_d0 [52];
+  
+  lVar3 = __savegprlr_23();
+  iVar2 = (int)lVar3;
+  uVar6 = (ulonglong)*(uint *)(iVar2 + 0x3c00);
+  lVar11 = (param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar3 + 0x3c04;
+  lVar8 = (uVar6 + ((ulonglong)*(uint *)(iVar2 + 0x3c00) & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar3
+  ;
+  uVar13 = 1;
+  lVar12 = lVar8 + 0x3c04;
+  local_d0[0] = *(undefined4 *)((int)lVar8 + 0x3c04);
+  cVar4 = Glass_DoesLoopContainLoop(lVar3,lVar12,lVar11);
+  uVar10 = 1;
+  if (1 < (uVar6 & 0xffffffff)) {
+    lVar14 = lVar3 + 0x3c18;
+    puVar15 = local_d0;
+    lVar8 = lVar14;
+    do {
+      if ((((uVar10 & 0xffffffff) == (param_2 & 0xffffffff)) ||
+          (cVar5 = Glass_DoesLoopContainLoop(lVar3,lVar12,lVar8), cVar5 == '\0')) ||
+         ((cVar4 != '\0' && (cVar5 = Glass_DoesLoopContainLoop(lVar3,lVar11,lVar8), cVar5 != '\0')))
+         ) {
+        uVar10 = uVar10 + 1;
+        lVar8 = lVar8 + 0x14;
+      }
+      else {
+        uVar1 = *(undefined4 *)lVar8;
+        uVar13 = uVar13 + 1;
+        uVar6 = (ulonglong)*(uint *)(iVar2 + 0x3c00) - 1;
+        lVar7 = lVar8 + -4;
+        *(int *)(iVar2 + 0x3c00) = (int)uVar6;
+        lVar17 = 5;
+        puVar15 = puVar15 + 1;
+        *puVar15 = uVar1;
+        lVar9 = (uVar6 + (uVar6 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar3 + 0x3c00;
+        do {
+          lVar9 = lVar9 + 4;
+          lVar7 = lVar7 + 4;
+          *(undefined4 *)lVar7 = *(undefined4 *)lVar9;
+          lVar17 = lVar17 + -1;
+        } while (lVar17 != 0);
+      }
+    } while ((uVar10 & 0xffffffff) < (ulonglong)*(uint *)(iVar2 + 0x3c00));
+    if (((uVar13 & 0xffffffff) != 1) && (uVar16 = 1, 1 < *(uint *)(iVar2 + 0x3c00))) {
+      do {
+        if (*(byte *)(*(int *)lVar14 + 2) != uVar16) {
+          Glass_RenumberLoop(*(int *)lVar14,uVar16 & 0xff);
+        }
+        uVar16 = uVar16 + 1;
+        lVar14 = lVar14 + 0x14;
+      } while (uVar16 < *(uint *)(iVar2 + 0x3c00));
+    }
+  }
+  Glass_MakePiece(lVar3,local_d0,uVar13);
+  Glass_FreeLoopEdges(lVar3,local_d0,uVar13);
+  __restgprlr_23();
+  return;
 }
 
 
 // 82423C00  Glass_SplitLoop  (EffectsCore/fx_glass_crack.cpp:2136)
 
-void Glass_SplitLoop(void)
+void Glass_SplitLoop(undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  longlong lVar2;
+  longlong lVar3;
+  
+  lVar2 = __savegprlr_26();
+  if (0x1f < (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0x85c,0,0xffffffff82063c18,param_4,0x20);
+  }
+  iVar1 = (int)param_3;
+  if ((param_4 & 0xffffffff) == (ulonglong)*(byte *)(iVar1 + 2)) {
+    MyAssertHandler(0xffffffff820632e0,0x85d,0,0xffffffff82000f98,0xffffffff82063bf4);
+  }
+  if (*(char *)(param_2 + 2) != *(char *)(iVar1 + 2)) {
+    MyAssertHandler(0xffffffff820632e0,0x85e,0,0xffffffff82000f98,0xffffffff82063bcc);
+  }
+  lVar3 = (ulonglong)*(byte *)(param_2 + 2) * 0x14 + lVar2;
+  *(int *)((int)lVar3 + 0x3c04) = param_2;
+  Glass_CalcLoopBounds(lVar2,lVar3 + 0x3c04);
+  lVar3 = (param_4 + (param_4 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar2;
+  *(int *)((int)lVar3 + 0x3c04) = iVar1;
+  Glass_RenumberLoop(param_3,param_4 & 0xff);
+  Glass_CalcLoopBounds(lVar2,lVar3 + 0x3c04);
+  __restgprlr_26();
+  return;
 }
 
 
 // 824254D8  Glass_ProcessCrack  (EffectsCore/fx_glass_crack.cpp:2156)
 
-void Glass_ProcessCrack(void)
+void Glass_ProcessCrack(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  int *piVar1;
+  uint uVar2;
+  int iVar3;
+  char cVar4;
+  uint uVar5;
+  int iVar6;
+  undefined4 uVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  int iVar10;
+  int iVar11;
+  undefined4 *puVar12;
+  int iVar13;
+  uint uVar14;
+  longlong lVar15;
+  float local_d0;
+  uint local_cc;
+  int local_c8;
+  uint local_c4;
+  int local_c0;
+  int local_bc;
+  int local_b8;
+  int local_b4;
+  int local_b0;
+  int local_ac;
+  char *local_90;
+  char *local_88;
+  char *local_84;
+  int local_80;
+  int local_7c;
+  int local_78;
+  
+  iVar3 = __savegprlr_19();
+  piVar1 = (int *)param_2;
+  uVar14 = piVar1[1];
+  local_c4 = uVar14;
+  if (uVar14 == *(uint *)(iVar3 + 0x3e9c)) {
+    if (*piVar1 != 0) {
+      MyAssertHandler(0xffffffff820632e0,0x878,1,0xffffffff82000f98,0xffffffff8206419c);
+    }
+    iVar13 = *(int *)(iVar3 + 0x3e98);
+    if (iVar13 != 0) {
+      if (*(byte *)(iVar13 + 1) != uVar14) {
+        MyAssertHandler(0xffffffff820632e0,0x882,1,0xffffffff82000f98,0xffffffff82064174);
+      }
+      goto LAB_824255d0;
+    }
+    local_cc = *(uint *)(iVar3 + 0x3c00);
+    iVar6 = *(int *)(iVar3 + 0x3e9c) * 8 + iVar3;
+    iVar10 = local_cc * 0x14 + iVar3;
+    *(undefined4 *)(iVar10 + 0x3c08) = *(undefined4 *)(iVar6 + 0x3fc);
+    *(undefined4 *)(iVar10 + 0x3c0c) = *(undefined4 *)(iVar6 + 0x400);
+    iVar6 = *(int *)(iVar3 + 0x3e9c) * 8 + iVar3;
+    *(undefined4 *)(iVar10 + 0x3c10) = *(undefined4 *)(iVar6 + 0x3fc);
+    *(undefined4 *)(iVar10 + 0x3c14) = *(undefined4 *)(iVar6 + 0x400);
+  }
+  else {
+    iVar13 = *piVar1;
+LAB_824255d0:
+    local_cc = (uint)*(byte *)(iVar13 + 2);
+  }
+  local_c0 = piVar1[4];
+  local_b0 = piVar1[5];
+  local_ac = piVar1[6];
+  local_b4 = piVar1[7];
+  local_bc = piVar1[2];
+  local_b8 = piVar1[3];
+  local_c8 = piVar1[8];
+  iVar6 = DAT_8332cc5c + -0x1de;
+  DAT_8332cc5c = -(uint)(iVar6 != 0) & DAT_8332cc5c + 1;
+  local_d0 = (*(float *)(iVar3 + 0x3ea4) - *(float *)(iVar3 + 0x3ea0)) *
+             *(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) + *(float *)(iVar3 + 0x3ea0);
+  if (iVar13 != 0) {
+    Glass_AssertDirIsInArc(param_2 + 8,iVar13 + 8,(ulonglong)*(uint *)(iVar13 + 0x14) + 8,-iVar6);
+  }
+  cVar4 = Glass_DoCrackWalk(iVar3,&local_d0);
+  uVar14 = local_cc;
+  if (cVar4 == '\0') {
+    if (local_88 != (char *)0x0) {
+      if (iVar13 == 0) {
+        if (local_cc != *(uint *)(iVar3 + 0x3c00)) {
+          MyAssertHandler(0xffffffff820632e0,0x904,0,0xffffffff82000f98,0xffffffff82064030);
+        }
+        *(int *)(iVar3 + 0x3c00) = *(int *)(iVar3 + 0x3c00) + 1;
+        *(char **)(local_80 + 0x14) = local_84;
+        *(char **)(local_7c + 0x14) = local_88;
+        *(char **)(uVar14 * 0x14 + iVar3 + 0x3c04) = local_88;
+        *(int *)(iVar3 + 0x3e98) = local_7c;
+        __restgprlr_19();
+        return;
+      }
+      if (*(char *)(local_7c + 1) != **(char **)(iVar13 + 0x14)) {
+        MyAssertHandler(0xffffffff820632e0,0x90d,0,0xffffffff82000f98,0xffffffff82064078);
+      }
+      if (*(char *)(local_80 + 1) != *local_84) {
+        MyAssertHandler(0xffffffff820632e0,0x90e,0,0xffffffff82000f98,0xffffffff82064008);
+      }
+      if (*(char *)(iVar13 + 1) != *local_88) {
+        MyAssertHandler(0xffffffff820632e0,0x90f,0,0xffffffff82000f98,0xffffffff82064054);
+      }
+      *(undefined4 *)(local_7c + 0x14) = *(undefined4 *)(iVar13 + 0x14);
+      *(char **)(local_80 + 0x14) = local_84;
+      *(char **)(iVar13 + 0x14) = local_88;
+    }
+    goto LAB_82425ba8;
+  }
+  if (local_78 == 0) {
+    MyAssertHandler(0xffffffff820632e0,0x899,0,0xffffffff82000f98,0xffffffff82064160);
+  }
+  uVar14 = local_cc;
+  if (*(byte *)(local_78 + 2) == local_cc) {
+    if (0x1f < *(uint *)(iVar3 + 0x3c00)) {
+      MyAssertHandler(0xffffffff820632e0,0x8d0,0,0xffffffff82063648,*(uint *)(iVar3 + 0x3c00),0x20);
+    }
+    if (iVar13 == 0) {
+      MyAssertHandler(0xffffffff820632e0,0x8d3,0,0xffffffff82000f98,0xffffffff820640a4);
+    }
+    if (*(char *)(local_78 + 1) != *local_84) {
+      MyAssertHandler(0xffffffff820632e0,0x8d4,0,0xffffffff82000f98,0xffffffff82064134);
+    }
+    if (*(char *)(local_7c + 1) != **(char **)(iVar13 + 0x14)) {
+      MyAssertHandler(0xffffffff820632e0,0x8d5,0,0xffffffff82000f98,0xffffffff82064078);
+    }
+    *(char **)(local_78 + 0x14) = local_84;
+    *(undefined4 *)(local_7c + 0x14) = *(undefined4 *)(iVar13 + 0x14);
+    if (*(char *)(iVar13 + 1) != *local_88) {
+      MyAssertHandler(0xffffffff820632e0,0x8da,0,0xffffffff82000f98,0xffffffff82064054);
+    }
+    if (*(char *)(local_80 + 1) != *local_90) {
+      MyAssertHandler(0xffffffff820632e0,0x8db,0,0xffffffff82000f98,0xffffffff820640e0);
+    }
+    *(char **)(iVar13 + 0x14) = local_88;
+    *(char **)(local_80 + 0x14) = local_90;
+    iVar6 = iVar13;
+    if (uVar14 == 0) {
+      uVar7 = *(undefined4 *)(iVar3 + 0x3c00);
+    }
+    else {
+      cVar4 = Glass_IsEdgeLoopBackwards(iVar3,iVar13);
+      if (cVar4 == '\0') {
+        Glass_RenumberLoop(*(undefined4 *)(iVar3 + 0x3c04),*(uint *)(iVar3 + 0x3c00) & 0xff);
+        puVar8 = (undefined4 *)(iVar3 + 0x3c00);
+        lVar15 = 5;
+        puVar12 = (undefined4 *)(*(int *)(iVar3 + 0x3c00) * 0x14 + iVar3 + 0x3c00);
+        do {
+          puVar8 = puVar8 + 1;
+          puVar12 = puVar12 + 1;
+          *puVar12 = *puVar8;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        uVar7 = 0;
+        iVar6 = local_78;
+        local_78 = iVar13;
+      }
+      else {
+        uVar7 = *(undefined4 *)(iVar3 + 0x3c00);
+      }
+    }
+    Glass_SplitLoop(iVar3,iVar6,local_78,uVar7);
+    Glass_MakePieceForOuterLoop(iVar3,*(undefined1 *)(iVar13 + 2));
+    __restgprlr_19();
+    return;
+  }
+  if (*(char *)(local_78 + 1) != *local_84) {
+    MyAssertHandler(0xffffffff820632e0,0x89d,0,0xffffffff82000f98,0xffffffff82064134);
+  }
+  if (*(char *)(local_7c + 1) != *local_88) {
+    MyAssertHandler(0xffffffff820632e0,0x89e,0,0xffffffff82000f98,0xffffffff8206410c);
+  }
+  if (*(char *)(local_80 + 1) != *local_90) {
+    MyAssertHandler(0xffffffff820632e0,0x89f,0,0xffffffff82000f98,0xffffffff820640e0);
+  }
+  uVar9 = (uint)*(byte *)(local_78 + 2);
+  if (uVar14 < uVar9) {
+    uVar7 = *(undefined4 *)((uint)*(byte *)(local_78 + 2) * 0x14 + iVar3 + 0x3c04);
+    uVar2 = uVar9;
+    uVar9 = uVar14;
+    uVar5 = uVar14 & 0xff;
+LAB_824257c8:
+    uVar14 = uVar2;
+    Glass_RenumberLoop(uVar7,uVar5);
+  }
+  else {
+    *(char **)(local_80 + 0x14) = local_84;
+    *(char **)(local_7c + 0x14) = local_88;
+    Glass_RenumberLoop(local_88,uVar9);
+    if (uVar14 < *(uint *)(iVar3 + 0x3c00)) {
+      uVar7 = *(undefined4 *)(uVar14 * 0x14 + iVar3 + 0x3c04);
+      uVar2 = uVar14;
+      uVar5 = uVar9;
+      goto LAB_824257c8;
+    }
+  }
+  iVar10 = uVar14 * 0x14 + iVar3;
+  iVar6 = uVar9 * 0x14 + iVar3;
+  ExpandBounds2D(iVar10 + 0x3c08,iVar10 + 0x3c10,iVar6 + 0x3c08,iVar6 + 0x3c10);
+  if (iVar13 == 0) {
+    *(char **)(local_7c + 0x14) = local_88;
+    *(int *)(iVar3 + 0x3e98) = local_7c;
+  }
+  else {
+    iVar6 = *(int *)(iVar3 + 0x3c00);
+    iVar11 = iVar6 + -1;
+    *(int *)(iVar3 + 0x3c00) = iVar11;
+    if (uVar14 != iVar6 - 1U) {
+      puVar12 = (undefined4 *)(iVar10 + 0x3c00);
+      lVar15 = 5;
+      puVar8 = (undefined4 *)(iVar11 * 0x14 + iVar3 + 0x3c00);
+      do {
+        puVar8 = puVar8 + 1;
+        puVar12 = puVar12 + 1;
+        *puVar12 = *puVar8;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
+      Glass_RenumberLoop(*(undefined4 *)(iVar10 + 0x3c04),uVar14 & 0xff);
+    }
+    *(undefined4 *)(local_7c + 0x14) = *(undefined4 *)(iVar13 + 0x14);
+    *(char **)(iVar13 + 0x14) = local_88;
+  }
+  iVar13 = *(int *)(iVar3 + 0x3e98);
+  uVar14 = *(uint *)(iVar3 + 0x3e9c);
+  *(char **)(local_78 + 0x14) = local_84;
+  *(char **)(local_80 + 0x14) = local_90;
+  if (*(byte *)(iVar13 + 1) != uVar14) {
+    MyAssertHandler(0xffffffff820632e0,0x8cb,1,0xffffffff82000f98,0xffffffff820640b0);
+    __restgprlr_19();
+    return;
+  }
+LAB_82425ba8:
+  __restgprlr_19();
+  return;
 }
 
 
@@ -2014,11 +3382,129 @@ void Glass_EvaluateSeedDirToEdge(int param_1,float *param_2,float *param_3,float
 
 // 82425BB0  Glass_SnapSeedDirToEdge  (EffectsCore/fx_glass_crack.cpp:2375)
 
-void Glass_SnapSeedDirToEdge(void)
+void Glass_SnapSeedDirToEdge
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+               float *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined1 *puVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
+  undefined1 uVar5;
+  float *pfVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
+  lVar3 = __savegprlr_27();
+  puVar1 = *(undefined1 **)((int)param_2 + 0x14);
+  dVar7 = (double)(float)((double)*(float *)(puVar1 + 4) * 0.5);
+  dVar9 = 0.0;
+  dVar8 = (double)(float)(extraout_f1 - dVar7);
+  dVar10 = extraout_f1;
+  if ((float)(dVar7 - ABS(dVar8)) < 1.0) {
+    dVar10 = (double)*(float *)(puVar1 + 4);
+    if (dVar8 < 0.0) {
+      dVar10 = dVar9;
+    }
+    *param_5 = *(float *)(puVar1 + 8) * (float)(extraout_f1 - dVar10) + *param_5;
+    param_5[1] = *(float *)(puVar1 + 0xc) * (float)(extraout_f1 - dVar10) + param_5[1];
+  }
+  pfVar6 = (float *)param_4;
+  *pfVar6 = *pfVar6 - *param_5;
+  pfVar6[1] = pfVar6[1] - param_5[1];
+  iVar2 = (int)lVar3;
+  if ((ulonglong)*(uint *)(iVar2 + 0x3e9c) != ((ulonglong)*(uint *)(iVar2 + 0xbf4) - 1 & 0xffffffff)
+     ) {
+    MyAssertHandler(0xffffffff820632e0,0x95f,1,0xffffffff820641e8,
+                    (ulonglong)*(uint *)(iVar2 + 0x3e9c),(ulonglong)*(uint *)(iVar2 + 0xbf4) - 1);
+  }
+  if ((param_4 & 0xffffffff) !=
+      (((ulonglong)*(uint *)(iVar2 + 0x3e9c) & 0x1fffffff) * 8 + lVar3 + 0x3fc & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820632e0,0x960,1,0xffffffff82000f98,0xffffffff820641b8);
+  }
+  Glass_QuantizeVertex(param_4);
+  Glass_PackVertex(param_4,((ulonglong)*(uint *)(iVar2 + 0x3e9c) & 0x3fffffff) * 4 + lVar3);
+  if (dVar10 == dVar9) {
+    *(int *)(iVar2 + 0xbf4) = *(int *)(iVar2 + 0xbf4) + -1;
+    __restgprlr_27(param_2);
+    return;
+  }
+  if (dVar10 == (double)*(float *)(puVar1 + 4)) {
+    *(int *)(iVar2 + 0xbf4) = *(int *)(iVar2 + 0xbf4) + -1;
+    __restgprlr_27(puVar1);
+    return;
+  }
+  iVar4 = Glass_AllocCrackEdge(lVar3,*puVar1,*(undefined4 *)(iVar2 + 0x3e9c),puVar1[2],puVar1[3]);
+  uVar5 = truncate_cast<unsigned_char>(*(undefined4 *)(iVar2 + 0x3e9c));
+  *puVar1 = uVar5;
+  *(undefined1 **)(iVar4 + 0x14) = puVar1;
+  *(int *)((int)param_2 + 0x14) = iVar4;
+  Glass_SetCrackEdgeDelta(lVar3,iVar4);
+  Glass_SetCrackEdgeDelta(lVar3,puVar1);
+  if (*(int *)(puVar1 + 0x10) != 0) {
+    Glass_SplitTwin(lVar3,iVar4,puVar1);
+  }
+  __restgprlr_27(iVar4);
+  return;
+}
+
+
+// 82423DA8  Glass_PickSeedDirForLoop  (EffectsCore/fx_glass_crack.cpp:2437)
+
+void Glass_PickSeedDirForLoop(int param_1,byte *param_2,float *param_3,float *param_4)
+
+{
+  float fVar1;
+  byte *pbVar2;
+  float *pfVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  int iVar12;
+  byte *pbVar13;
+  
+  fVar1 = 0.0;
+  fVar4 = fVar1;
+  fVar5 = fVar1;
+  pbVar13 = param_2;
+  do {
+    pbVar2 = *(byte **)(pbVar13 + 0x14);
+    fVar9 = *(float *)(pbVar2 + 4) * 0.5;
+    iVar12 = (uint)*pbVar2 * 8 + param_1;
+    fVar10 = *param_3 - *(float *)(iVar12 + 0x3fc);
+    fVar11 = param_3[1] - *(float *)(iVar12 + 0x400);
+    fVar8 = fVar11 * *(float *)(pbVar2 + 0xc) + fVar10 * *(float *)(pbVar2 + 8);
+    fVar7 = fVar11 * fVar11 + fVar10 * fVar10;
+    fVar6 = fVar8 - fVar9;
+    fVar9 = fVar9 - ABS(fVar6);
+    if (((fVar9 <= 0.0) || (fVar5 = -(fVar8 * fVar8 - fVar7), fVar4 = fVar8, 1.0 <= fVar5)) &&
+       (fVar9 < 4.0)) {
+      fVar4 = *(float *)(pbVar2 + 4);
+      if (fVar6 < 0.0) {
+        fVar4 = fVar1;
+      }
+      fVar5 = -(fVar8 * 2.0 - fVar4) * fVar4 + fVar7;
+    }
+    if (fVar5 < *param_4) {
+      *param_4 = fVar5;
+      pfVar3 = (float *)param_4[1];
+      *pfVar3 = -fVar4 * *(float *)(pbVar2 + 8) + fVar10;
+      pfVar3[1] = -fVar4 * *(float *)(pbVar2 + 0xc) + fVar11;
+      param_4[2] = (float)pbVar13;
+      param_4[3] = fVar4;
+    }
+    pbVar13 = pbVar2;
+  } while (pbVar2 != param_2);
+  return;
 }
 
 
@@ -2058,11 +3544,31 @@ void std___Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigne
 
 // 82425DB8  Glass_PickSeedDir  (EffectsCore/fx_glass_crack.cpp:2468)
 
-void Glass_PickSeedDir(void)
+/* WARNING: Removing unreachable block (ram,0x82425e78) */
+
+void Glass_PickSeedDir(undefined8 param_1,float *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  
+  iVar1 = __savegprlr_29();
+  uVar3 = 0;
+  *param_2 = 0.0;
+  param_2[1] = 0.0;
+  if (*(int *)(iVar1 + 0x3c00) != 0) {
+    puVar2 = (undefined4 *)(iVar1 + 0x3bf0);
+    do {
+      puVar2 = puVar2 + 5;
+      iVar1 = Glass_PickSeedDirForLoop(iVar1,*puVar2);
+      uVar3 = uVar3 + 1;
+    } while (uVar3 < *(uint *)(iVar1 + 0x3c00));
+  }
+  *param_2 = *param_2 * -5.4210115e-20;
+  param_2[1] = param_2[1] * -5.4210115e-20;
+  __restgprlr_29(0);
+  return;
 }
 
 
@@ -2202,8 +3708,7 @@ void Glass_CreateCracks(void)
       local_c0 = (float)(dVar15 * dVar13 - (double)(float)((double)local_bc * dVar14));
       local_bc = (float)(dVar15 * dVar14 + (double)(float)((double)local_bc * dVar13));
       if (0x1f < uVar10) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff820632e0,0xa1e,0,0xffffffff82064220,uVar10,0x20);
+        MyAssertHandler(0xffffffff820632e0,0xa1e,0,0xffffffff82064220,uVar10);
       }
       puVar12[-1] = 0;
       *puVar12 = *(undefined4 *)(iVar5 + 0x3e9c);
@@ -2231,21 +3736,19 @@ void Glass_CreateCracks(void)
     } while (uVar11 != 0);
   }
   uVar10 = *(uint *)(iVar5 + 0x4358);
-  while( true ) {
-    if (uVar10 <= uVar1) {
-      Glass_MakeFinalPiece(iVar5);
-      __restfpr_21(1);
-      __restgprlr_22();
-      return;
-    }
+  while (uVar1 < uVar10) {
     uVar11 = (ulonglong)*(uint *)(iVar5 + 0x4358) - 1;
     *(int *)(iVar5 + 0x4358) = (int)uVar11;
-    if (0x1f < (uVar11 & 0xffffffff)) break;
+    if (0x1f < (uVar11 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff820632e0,0x540,0,0xffffffff82063978,uVar11,0x20);
+    }
     Glass_ProcessCrack(iVar5,*(int *)(iVar5 + 0x4358) * 0x24 + iVar5 + 0x3ed8);
     uVar10 = *(uint *)(iVar5 + 0x4358);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff820632e0,0x540,0,0xffffffff82063978,uVar11,0x20);
+  Glass_MakeFinalPiece(iVar5);
+  __restfpr_21(1);
+  __restgprlr_22();
+  return;
 }
 
 
@@ -2320,23 +3823,273 @@ void Glass_PrintCrackAssertFloat(double param_1,undefined8 param_2,undefined8 pa
 }
 
 
+// 82424010  Glass_PrintCrackAssertArray  (EffectsCore/fx_glass_crack.cpp:2623)
+
+void Glass_PrintCrackAssertArray(undefined8 param_1,ulonglong param_2,longlong param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  
+  uVar2 = __savegprlr_27();
+  Com_Printf(1,uVar2);
+  if ((param_2 & 0xffffffff) != 0) {
+    lVar4 = param_3 + -2;
+    uVar3 = param_2;
+    do {
+      iVar1 = (int)lVar4;
+      lVar4 = lVar4 + 4;
+      Com_Printf(1,0xffffffff82063c78,*(undefined2 *)(iVar1 + 2),*(undefined2 *)lVar4);
+      uVar3 = uVar3 - 1;
+    } while (uVar3 != 0);
+  }
+  __restgprlr_27((param_2 & 0x3fffffff) * 4 + param_3);
+  return;
+}
+
+
 // 82424080  Glass_PrintCrackPieceAssertReproData  (EffectsCore/fx_glass_crack.cpp:2635)
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void Glass_PrintCrackPieceAssertReproData(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  
   __savegprlr_23();
+  iVar3 = DAT_8332cc48;
+  uVar1 = *(ushort *)(*(int *)(DAT_8332cc48 + 0x3e8c) + 0xe);
+  uVar2 = *(uint *)(*(int *)(DAT_8332cc48 + 0x3e94) + 0x40);
+  Com_Printf(1,0xffffffff82063ea0);
+  Com_Printf(1,0xffffffff82063e84);
+  Com_Printf(1,0xffffffff82063e64,DAT_8332cc50);
+  uVar4 = Com_Printf(1,0xffffffff82063e44);
+  Glass_PrintCrackAssertFloat((double)DAT_8332cc54,uVar4,0xffffffff82063e40);
+  Com_Printf(1,0xffffffff82063e10,DAT_8332cc4c,_DAT_8332cc4e);
+  uVar4 = Com_Printf(1,0xffffffff82063df4);
+  uVar4 = Glass_PrintCrackAssertFloat((double)*(float *)(iVar3 + 0x3eb8),uVar4,0xffffffff820044d4);
+  uVar4 = Glass_PrintCrackAssertFloat((double)*(float *)(iVar3 + 0x3ebc),uVar4,0xffffffff820044d4);
+  Glass_PrintCrackAssertFloat((double)*(float *)(iVar3 + 0x3ec0),uVar4,0xffffffff82063dec);
+  Com_Printf(1,0xffffffff820044d8);
+  Com_Printf(1,0xffffffff82063dd0);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3e88) + 0x10),*(int *)(iVar3 + 0x3e88),
+                     0xffffffff820044d4);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3e88) + 0x14),uVar4,0xffffffff820044d4);
+  Glass_PrintCrackAssertFloat
+            ((double)*(float *)(*(int *)(iVar3 + 0x3e88) + 0x18),uVar4,0xffffffff82063dec);
+  Com_Printf(1,0xffffffff82063db4);
+  Com_Printf(1,0xffffffff82063db0);
+  uVar4 = Com_Printf(1,0xffffffff82063da8);
+  uVar4 = Glass_PrintCrackAssertFloat((double)**(float **)(iVar3 + 0x3ec4),uVar4,0xffffffff820044d4)
+  ;
+  Glass_PrintCrackAssertFloat
+            ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 4),uVar4,0xffffffff820044d4);
+  Glass_PrintCrackAssertFloat
+            ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 8),*(int *)(iVar3 + 0x3ec4),
+             0xffffffff82063da0);
+  uVar4 = Com_Printf(1,0xffffffff82063da8);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0xc),uVar4,0xffffffff820044d4);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0x10),uVar4,0xffffffff820044d4);
+  Glass_PrintCrackAssertFloat
+            ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0x14),uVar4,0xffffffff82063da0);
+  uVar4 = Com_Printf(1,0xffffffff82063da8);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0x18),uVar4,0xffffffff820044d4);
+  uVar4 = Glass_PrintCrackAssertFloat
+                    ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0x1c),uVar4,0xffffffff820044d4);
+  Glass_PrintCrackAssertFloat
+            ((double)*(float *)(*(int *)(iVar3 + 0x3ec4) + 0x20),uVar4,0xffffffff82063da0);
+  Com_Printf(1,0xffffffff82063d98);
+  Com_Printf(1,0xffffffff820044d8);
+  Com_Printf(1,0xffffffff82063d74,*(undefined4 *)(*(int *)(iVar3 + 0x3e8c) + 8));
+  Com_Printf(1,0xffffffff82063d54,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x16));
+  Com_Printf(1,0xffffffff82063d30,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x17));
+  Com_Printf(1,0xffffffff82063d0c,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x18));
+  Com_Printf(1,0xffffffff82063cec,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x19));
+  Com_Printf(1,0xffffffff820044d8);
+  Com_Printf(1,0xffffffff82063cc0);
+  Com_Printf(1,0xffffffff82063db0);
+  uVar4 = Glass_PrintCrackAssertArray
+                    (0xffffffff82063cb4,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x16),
+                     (ulonglong)uVar1 * 4 + (ulonglong)uVar2);
+  uVar4 = Glass_PrintCrackAssertArray
+                    (0xffffffff82063ca4,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x17),uVar4);
+  uVar4 = Glass_PrintCrackAssertArray
+                    (0xffffffff82063c94,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x18),uVar4);
+  Glass_PrintCrackAssertArray
+            (0xffffffff82063c88,*(undefined1 *)(*(int *)(iVar3 + 0x3e8c) + 0x19),uVar4);
+  Com_Printf(1,0xffffffff82063d98);
+  Com_Printf(1,0xffffffff82063ea0);
+  __restgprlr_23();
+  return;
+}
+
+
+// 82426FC0  std::_Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+
+void std___Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  char cVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  undefined2 local_50 [40];
+  
+  lVar3 = __savegprlr_24();
+  iVar2 = (int)lVar3;
+  uVar1 = param_2 - iVar2 >> 1;
+  uVar8 = (longlong)(param_2 - iVar2 >> 2) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar8) {
+    uVar6 = (uVar8 + 1 & 0x7fffffff) << 1;
+    do {
+      uVar6 = uVar6 - 2;
+      uVar8 = uVar8 - 1;
+      iVar7 = (int)uVar6;
+      local_50[0] = *(undefined2 *)(iVar2 + -2 + iVar7);
+      uVar11 = uVar6;
+      uVar9 = uVar8;
+      while (uVar10 = uVar11, iVar7 < (int)uVar1) {
+        lVar4 = (uVar10 & 0x7fffffff) * 2 + lVar3;
+        cVar5 = (*(code *)param_3)(lVar4,lVar4 + -2);
+        if (cVar5 != '\0') {
+          uVar10 = uVar10 - 1;
+        }
+        lVar4 = (uVar10 & 0x7fffffff) * 2;
+        uVar11 = lVar4 + 2;
+        *(undefined2 *)((int)((uVar9 & 0xffffffff) << 1) + iVar2) =
+             *(undefined2 *)((int)lVar4 + iVar2);
+        iVar7 = (int)uVar11;
+        uVar9 = uVar10;
+      }
+      if ((uint)uVar10 == uVar1) {
+        uVar11 = uVar9 & 0xffffffff;
+        uVar9 = (longlong)(int)uVar1 - 1;
+        *(undefined2 *)((int)(uVar11 << 1) + iVar2) = *(undefined2 *)(uVar1 * 2 + iVar2 + -2);
+      }
+      std___Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                (lVar3,uVar9,uVar8,local_50,param_3);
+    } while (0 < (int)uVar8);
+  }
+  __restgprlr_24();
+  return;
 }
 
 
 // 82426260  Glass_CrackPiece  (EffectsCore/fx_glass_crack.cpp:2696)
 
-void Glass_CrackPiece(void)
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void Glass_CrackPiece(undefined8 param_1,undefined8 param_2,ulonglong param_3,int param_4,
+                     undefined8 param_5,float *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  byte bVar1;
+  int iVar2;
+  undefined4 uVar3;
+  char cVar4;
+  int iVar5;
+  int iVar6;
+  double extraout_f1;
+  
+  iVar2 = __savegprlr_27();
+  iVar5 = (int)param_2;
+  *(int *)(iVar2 + 0x3e94) = iVar5;
+  *(int *)(iVar2 + 0x3e84) = (int)param_3;
+  *(undefined4 *)(iVar2 + 0xbf4) = 0;
+  *(undefined4 *)(iVar2 + 0x3bf8) = 0;
+  *(undefined4 *)(iVar2 + 0x3bfc) = 0;
+  *(undefined4 *)(iVar2 + 0x4358) = 0;
+  iVar6 = (int)((param_3 & 0x7ffffff) << 5);
+  *(int *)(iVar2 + 0x3e88) = *(int *)(iVar5 + 0x34) + iVar6;
+  iVar6 = *(int *)(iVar5 + 0x38) + iVar6;
+  *(int *)(iVar2 + 0x3e8c) = iVar6;
+  iVar5 = *(int *)(iVar5 + 0x30);
+  bVar1 = *(byte *)(iVar6 + 0x10);
+  *(float *)(iVar2 + 0x3ea0) = (float)(extraout_f1 * 0.75);
+  *(float *)(iVar2 + 0x3ea4) = (float)extraout_f1;
+  DAT_8332cc50 = DAT_8332cc5c;
+  *(uint *)(iVar2 + 0x3e90) = (uint)bVar1 * 0x2c + iVar5;
+  *(float *)(iVar2 + 0x3eb8) = *param_6;
+  *(float *)(iVar2 + 0x3ebc) = param_6[1];
+  *(float *)(iVar2 + 0x3ec0) = param_6[2];
+  *(int *)(iVar2 + 0x3ec4) = param_4;
+  uVar3 = 0x3f800000;
+  if (*(float *)(param_4 + 0x20) * param_6[2] +
+      *(float *)(param_4 + 0x1c) * param_6[1] + *param_6 * *(float *)(param_4 + 0x18) < 0.0) {
+    uVar3 = 0xbf800000;
+  }
+  *(undefined4 *)(iVar2 + 0x3ec8) = uVar3;
+  DAT_8332cc54 = (float)extraout_f1;
+  _DAT_8332cc4c = (undefined4)param_5;
+  DAT_8332cc48 = iVar2;
+  SetAssertCallbackHandler(0xffffffff82424080);
+  if (*(char *)(DAT_8332cba0 + 0xc) != '\0') {
+    Glass_PrintCrackPieceAssertReproData();
+  }
+  Glass_MakeOuterPieceLoop(iVar2);
+  Glass_MakeHolePieceLoops(iVar2);
+  Glass_MakeCrackPieceLoops(iVar2);
+  Glass_CalcAllLoopBounds(iVar2);
+  uVar3 = Glass_UnpackAndAddVertex(iVar2,param_5);
+  *(undefined4 *)(iVar2 + 0x3e9c) = uVar3;
+  cVar4 = Glass_CreateCracks(iVar2);
+  SetAssertCallbackHandler(0);
+  if (cVar4 != '\0') {
+    Glass_FreePiece(param_2);
+    __restgprlr_27();
+    return;
+  }
+  Glass_ConsiderBreakingPiece(iVar2,param_3);
+  __restgprlr_27();
+  return;
+}
+
+
+// 82427558  std::_Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+
+void std___Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  undefined2 *puVar2;
+  longlong lVar3;
+  undefined2 local_30 [24];
+  
+  lVar3 = __savegprlr_28();
+  param_2 = param_2 - lVar3;
+  if (2 < (int)((uint)param_2 & 0xfffffffe)) {
+    puVar2 = (undefined2 *)lVar3;
+    do {
+      iVar1 = (int)param_2;
+      local_30[0] = *(undefined2 *)((int)puVar2 + iVar1 + -2);
+      param_2 = param_2 + -2;
+      *(undefined2 *)((int)puVar2 + iVar1 + -2) = *puVar2;
+      std___Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                (lVar3,0,(int)(uint)param_2 >> 1,local_30,param_3);
+    } while (2 < (int)((uint)param_2 & 0xfffffffe));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2362,21 +4115,283 @@ undefined8 Glass_GetRandomVertex(int param_1,int param_2,undefined2 *param_3)
 
 // 82424480  Glass_GetVertexForPos  (EffectsCore/fx_glass_crack.cpp:2778)
 
-void Glass_GetVertexForPos(void)
+void Glass_GetVertexForPos
+               (undefined8 param_1,int param_2,float *param_3,float *param_4,ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  
   __savegprlr_27();
+  iVar1 = __savefpr_27();
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0xade,0,0xffffffff82000f98,0xffffffff82063ee4);
+  }
+  iVar1 = *(int *)(iVar1 + 0x34) + param_2 * 0x20;
+  dVar5 = (double)(*param_3 - *(float *)(iVar1 + 0x10));
+  dVar4 = (double)(param_3[1] - *(float *)(iVar1 + 0x14));
+  dVar3 = (double)(param_3[2] - *(float *)(iVar1 + 0x18));
+  dVar7 = 32.0;
+  dVar6 = 0.5;
+  dVar2 = floor((double)((float)((double)param_4[2] * dVar3 +
+                                (double)(float)((double)param_4[1] * dVar4 +
+                                               (double)(float)((double)*param_4 * dVar5))) * 32.0 +
+                        0.5));
+  *(int *)param_5 = (int)dVar2;
+  dVar2 = floor((double)(float)((double)(float)((double)param_4[5] * dVar3 +
+                                               (double)(float)((double)param_4[4] * dVar4 +
+                                                              (double)(float)((double)param_4[3] *
+                                                                             dVar5))) * dVar7 +
+                               dVar6));
+  ((int *)param_5)[1] = (int)dVar2;
+  __restfpr_27();
+  __restgprlr_27();
+  return;
 }
 
 
 // 824263E8  Glass_GetVertexForImpact  (EffectsCore/fx_glass_crack.cpp:2794)
 
-void Glass_GetVertexForImpact(void)
+void Glass_GetVertexForImpact(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar3;
+  longlong lVar2;
+  char cVar4;
+  short *psVar5;
+  short sVar6;
+  int iVar7;
+  longlong lVar8;
+  int local_40;
+  int local_3c;
+  longlong local_38;
+  
+  iVar3 = __savegprlr_27();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820632e0,0xaf1);
+  }
+  psVar5 = (short *)param_3;
+  lVar8 = (param_2 & 0x7ffffff) * 0x20;
+  local_40 = (int)*psVar5;
+  lVar2 = lVar8 + (ulonglong)*(uint *)(iVar3 + 0x38);
+  local_3c = (int)psVar5[1];
+  cVar4 = Glass_DoesPieceContainPoint
+                    (lVar2,(ulonglong)*(ushort *)((int)lVar2 + 0xe) * 4 +
+                           (ulonglong)*(uint *)(iVar3 + 0x40),&local_40);
+  if (cVar4 == '\0') {
+    iVar1 = (int)lVar8 + *(int *)(iVar3 + 0x38);
+    iVar7 = (uint)*(ushort *)(iVar1 + 0xe) * 4 + *(int *)(iVar3 + 0x40);
+    DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1;
+    iVar3 = (int)(*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) * (float)*(byte *)(iVar1 + 0x16));
+    local_38 = (longlong)iVar3;
+    iVar3 = iVar3 * 4;
+    *psVar5 = *(short *)(iVar3 + iVar7);
+    psVar5[1] = *(short *)(iVar3 + iVar7 + 2);
+    __restgprlr_27(1);
+    return;
+  }
+  sVar6 = (short)local_40;
+  if (local_40 != sVar6) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,local_40,sVar6);
+  }
+  *psVar5 = sVar6;
+  sVar6 = (short)local_3c;
+  if (local_3c != sVar6) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,local_3c,sVar6);
+  }
+  psVar5[1] = sVar6;
+  __restgprlr_27(1);
+  return;
+}
+
+
+// 82424588  Glass_PlaySingleShatterEffect  (EffectsCore/fx_glass_crack.cpp:2819)
+
+void Glass_PlaySingleShatterEffect
+               (undefined8 param_1,float *param_2,float *param_3,undefined8 param_4,int *param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float local_20;
+  float fStack_1c;
+  float local_18;
+  
+  fVar1 = (float)(longlong)*param_5 * 0.03125;
+  fVar2 = (float)(longlong)param_5[1] * 0.03125;
+  _local_20 = CONCAT44(fVar2 * param_3[3] + *param_3 * fVar1 + *param_2,
+                       param_3[4] * fVar2 + param_3[1] * fVar1 + param_2[1]);
+  local_18 = param_3[5] * fVar2 + param_3[2] * fVar1 + param_2[2];
+  Glass_PlayEffect(param_1,&local_20,param_4);
+  return;
+}
+
+
+// 82424640  Glass_PlayShatterEffects  (EffectsCore/fx_glass_crack.cpp:2830)
+
+void Glass_PlayShatterEffects
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,float *param_4)
+
+{
+  short sVar1;
+  short sVar2;
+  undefined4 uVar3;
+  short *psVar4;
+  ulonglong uVar5;
+  int iVar6;
+  char cVar7;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  int iVar11;
+  longlong lVar12;
+  longlong lVar13;
+  short *psVar14;
+  ulonglong uVar15;
+  int iVar17;
+  ulonglong uVar16;
+  int iVar18;
+  uint uVar19;
+  uint uVar21;
+  ulonglong uVar20;
+  int iVar22;
+  double _X;
+  double dVar23;
+  double dVar24;
+  double _X_00;
+  undefined8 local_b0;
+  longlong local_a8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  
+  iVar6 = __savegprlr_17();
+  iVar17 = (int)param_3;
+  local_a0 = *(float *)(iVar17 + 0x18);
+  local_9c = *(float *)(iVar17 + 0x1c);
+  local_98 = *(float *)(iVar17 + 0x20);
+  if (param_4[2] * local_98 + param_4[1] * local_9c + local_a0 * *param_4 <= 0.0) {
+    local_a0 = local_a0 * -1.0;
+    local_9c = local_9c * -1.0;
+    local_98 = local_98 * -1.0;
+  }
+  lVar10 = (param_2 & 0x7ffffff) * 0x20;
+  lVar13 = (ulonglong)*(uint *)(iVar6 + 0x38) + lVar10;
+  lVar10 = (ulonglong)*(uint *)(iVar6 + 0x34) + lVar10;
+  iVar17 = (int)lVar13;
+  if (2048.0 <= *(float *)(iVar17 + 0x1c)) {
+    psVar14 = (short *)((uint)*(ushort *)(iVar17 + 0xe) * 4 + *(int *)(iVar6 + 0x40));
+    iVar6 = (int)*(short *)((uint)*(ushort *)(iVar17 + 0xe) * 4 + *(int *)(iVar6 + 0x40));
+    lVar9 = (longlong)psVar14[1];
+    lVar12 = lVar9;
+    iVar11 = iVar6;
+    if (1 < *(byte *)(iVar17 + 0x16)) {
+      lVar8 = (ulonglong)*(byte *)(iVar17 + 0x16) - 1;
+      psVar4 = psVar14;
+      do {
+        sVar1 = psVar4[2];
+        if (sVar1 < iVar6) {
+          iVar6 = (int)sVar1;
+        }
+        sVar2 = psVar4[3];
+        if ((int)sVar2 < (int)lVar12) {
+          lVar12 = (longlong)sVar2;
+        }
+        if (iVar11 < sVar1) {
+          iVar11 = (int)sVar1;
+        }
+        if ((int)lVar9 < (int)sVar2) {
+          lVar9 = (longlong)sVar2;
+        }
+        lVar8 = lVar8 + -1;
+        psVar4 = psVar4 + 2;
+      } while (lVar8 != 0);
+    }
+    uVar15 = lVar9 - lVar12;
+    uVar19 = (uint)((float)(longlong)(int)uVar15 * 0.00048828125);
+    uVar21 = (uint)((float)(longlong)(iVar11 - iVar6) * 0.00048828125);
+    if ((int)uVar21 < 1) {
+      uVar21 = 1;
+    }
+    if ((int)uVar19 < 1) {
+      uVar19 = 1;
+    }
+    iVar17 = uVar19 * uVar21;
+    local_b0 = (longlong)iVar17;
+    if (_X < (double)local_b0) {
+      _X_00 = _X;
+      dVar23 = floor(_X);
+      iVar18 = (int)dVar23;
+      local_a8 = (longlong)iVar18;
+      DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1;
+      dVar24 = (double)*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4);
+      dVar23 = floor(_X_00);
+      if (dVar24 < (double)(float)(_X_00 - (double)(float)dVar23)) {
+        iVar18 = iVar18 + 1;
+      }
+      if (iVar18 < 1) goto LAB_824249e8;
+      while (iVar18 < iVar17) {
+        if (1 < (int)uVar21) {
+          uVar21 = uVar21 - 1;
+        }
+        if (1 < (int)uVar19) {
+          uVar19 = uVar19 - 1;
+        }
+        iVar17 = uVar19 * uVar21;
+      }
+    }
+    uVar16 = ((ulonglong)uVar19 & 0x7fffffff) * 2;
+    iVar17 = 0;
+    if (1 < (int)uVar16) {
+      uVar5 = uVar15 & 0x7fffffff;
+      uVar20 = ((ulonglong)uVar21 & 0x7fffffff) << 1;
+      lVar9 = ((uVar16 - 2 & 0xffffffff) >> 1) + 1;
+      do {
+        trapWord(6,uVar16,0);
+        local_b0 = CONCAT44(local_b0._0_4_,(int)uVar15 / (int)uVar16 + (int)lVar12);
+        iVar18 = 1;
+        trapWord(5,uVar16 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
+                 0xffff);
+        iVar22 = (int)uVar20;
+        if (1 < iVar22) {
+          do {
+            uVar19 = (iVar11 - iVar6) * iVar18;
+            local_b0 = CONCAT44((int)uVar19 / iVar22 + iVar6,local_b0._4_4_);
+            trapWord(6,uVar20,0);
+            trapWord(5,uVar20 & ~((((ulonglong)uVar19 & 0x7fffffff) << 1 |
+                                  (ulonglong)(uVar19 >> 0x1f)) - 1),0xffff);
+            cVar7 = Glass_DoesPieceContainPoint(lVar13,psVar14,&local_b0);
+            if (cVar7 != '\0') {
+              Glass_PlaySingleShatterEffect(DAT_82a3c9e8,lVar10 + 0x10,param_3,&local_a0,&local_b0);
+              iVar17 = iVar17 + 1;
+            }
+            iVar18 = iVar18 + 2;
+          } while (iVar18 < iVar22);
+        }
+        lVar9 = lVar9 + -1;
+        uVar15 = uVar5 * 2 + uVar15;
+      } while (lVar9 != 0);
+      if (iVar17 != 0) goto LAB_824249e8;
+    }
+    local_b0 = 1;
+    uVar3 = DAT_82a3c9e8;
+  }
+  else {
+    uVar3 = DAT_82a3c9ec;
+    if ((_X < 0.5) &&
+       (DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1,
+       _X < (double)(*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) * 0.5))) goto LAB_824249e8;
+  }
+  Glass_PlaySingleShatterEffect(uVar3,lVar10 + 0x10,param_3,&local_a0,&local_b0);
+LAB_824249e8:
+  __restgprlr_17();
+  return;
 }
 
 
@@ -2395,11 +4410,245 @@ bool CompareFringePieceArea(ushort *param_1,ushort *param_2)
 
 // 82426740  Glass_DestroyPiece  (EffectsCore/fx_glass_crack.cpp:2947)
 
-void Glass_DestroyPiece(void)
+void Glass_DestroyPiece(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+                       int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  undefined4 *puVar1;
+  float *pfVar2;
+  bool bVar3;
+  float fVar4;
+  int iVar5;
+  int iVar6;
+  char cVar7;
+  undefined4 *puVar8;
+  short sVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar12;
+  longlong lVar13;
+  longlong lVar14;
+  uint uVar15;
+  ushort *puVar16;
+  double dVar17;
+  double dVar18;
+  undefined8 uVar19;
+  undefined4 local_44b0;
+  int iStack_44ac;
+  ulonglong local_44a8;
+  undefined1 auStack_44a0 [48];
+  undefined1 auStack_4470 [16040];
+  undefined4 local_5c8;
+  undefined4 local_5c4;
+  undefined4 local_5c0;
+  undefined4 local_5bc;
+  undefined4 local_5a4;
+  undefined4 local_5a0;
+  undefined4 local_59c;
+  float local_114;
+  float local_110;
+  ushort local_10c [32];
+  int local_cc;
+  ushort local_c8 [32];
+  uint local_88;
+  float local_84;
+  
+  iVar6 = __savegprlr_19();
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82064308);
+  lVar13 = (param_2 & 0x7ffffff) * 0x20;
+  lVar14 = (ulonglong)*(uint *)(iVar6 + 0x34) + lVar13;
+  iVar12 = (int)lVar13 + *(int *)(iVar6 + 0x38);
+  UnitQuatToAxis(lVar14,auStack_44a0);
+  if (((*(ushort *)(iVar12 + 0x1a) & 2) == 0) && (lVar13 = 0, 0 < DAT_82aa1ae8)) {
+    do {
+      cVar7 = CL_IsLocalClientActive(lVar13);
+      if (cVar7 != '\0') {
+        FX_MarkGlassDetachAll(lVar13,param_2);
+      }
+      lVar13 = lVar13 + 1;
+    } while ((int)lVar13 < DAT_82aa1ae8);
+  }
+  *(ushort *)(iVar12 + 0x1a) = *(ushort *)(iVar12 + 0x1a) | 2;
+  dVar18 = 0.0;
+  local_cc = 0;
+  local_84 = 0.0;
+  local_88 = 0;
+  dVar17 = (double)*(float *)(iVar12 + 0x1c);
+  Glass_GetVertexForPos(iVar6,param_2,param_3,auStack_44a0,&local_44b0);
+  sVar9 = (short)((ulonglong)_local_44b0 >> 0x20);
+  if (local_44b0 != sVar9) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,local_44b0,sVar9);
+  }
+  uVar19 = _local_44b0;
+  iVar5 = iStack_44ac;
+  _local_44b0 = CONCAT26(sVar9,stack0xffffbb52);
+  sVar9 = (short)uVar19;
+  if (iVar5 != sVar9) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,iVar5,sVar9);
+  }
+  puVar1 = *(undefined4 **)(param_5 + 8);
+  puVar8 = (undefined4 *)param_3;
+  local_5c4 = *puVar8;
+  local_5c0 = puVar8[1];
+  local_5bc = puVar8[2];
+  stack0xffffbb52 = CONCAT24(sVar9,iStack_44ac);
+  local_5a4 = *puVar1;
+  local_5a0 = puVar1[1];
+  local_59c = puVar1[2];
+  local_5c8 = *(undefined4 *)((int)lVar14 + 0x1c);
+  local_cc = 1;
+  if ((int)param_2 != (int)(param_2 & 0xffff)) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_2,param_2 & 0xffff);
+  }
+  pfVar2 = (float *)param_4;
+  bVar3 = true;
+  fVar4 = *(float *)(DAT_8332cc1c + 0xc) * 2.0;
+  local_110 = *(float *)(DAT_8332cbdc + 0xc) * 2.0;
+  local_44a8 = (ulonglong)*(int *)(DAT_8332cbb4 + 0xc);
+  local_114 = (*(float *)(param_5 + 4) / (float)(longlong)local_44a8) * 1.5;
+  if (local_114 - fVar4 < 0.0) {
+    local_114 = fVar4;
+  }
+  local_10c[0] = (ushort)param_2;
+  if (dVar18 < (double)(pfVar2[2] * pfVar2[2] + *pfVar2 * *pfVar2 + pfVar2[1] * pfVar2[1])) {
+    local_44a8 = (ulonglong)*(int *)(DAT_8332cc24 + 0xc);
+    Glass_PlayShatterEffects
+              ((double)(((float)(longlong)local_44a8 / *(float *)(param_5 + 4)) *
+                       *(float *)(iVar12 + 0x1c)),iVar6,param_2,auStack_44a0,param_4);
+  }
+  uVar10 = 0xffffffff;
+  uVar11 = 0;
+  if (local_cc != 0) {
+    uVar19 = 0x4020000000000000;
+    do {
+      local_cc = local_cc + -1;
+      uVar15 = (uint)local_10c[local_cc];
+      if (uVar15 == uVar10) {
+        uVar11 = uVar11 + 1;
+        if ((uVar11 < 0xb) ||
+           (uVar11 <= (uint)*(byte *)(uVar15 * 0x20 + *(int *)(iVar6 + 0x38) + 0x16) << 1))
+        goto LAB_82426a68;
+      }
+      else {
+        uVar11 = 0;
+LAB_82426a68:
+        if (bVar3) {
+          bVar3 = false;
+          cVar7 = Glass_GetVertexForImpact(iVar6,uVar15,&local_44b0);
+          if (cVar7 == '\0') {
+            Com_PrintWarning(0x15,0xffffffff820642cc,uVar15);
+            break;
+          }
+        }
+        else {
+          iVar12 = uVar15 * 0x20 + *(int *)(iVar6 + 0x38);
+          local_44a8 = (ulonglong)*(byte *)(iVar12 + 0x16);
+          DAT_8332cc5c = -(uint)(DAT_8332cc5c != 0x1de) & DAT_8332cc5c + 1;
+          _local_44b0 = CONCAT44(*(undefined4 *)
+                                  ((int)(*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) *
+                                        (float)local_44a8) * 4 +
+                                  (uint)*(ushort *)(iVar12 + 0xe) * 4 + *(int *)(iVar6 + 0x40)),
+                                 (int)(*(float *)(&DAT_82066ac8 + DAT_8332cc5c * 4) *
+                                      (float)local_44a8));
+        }
+        Glass_CrackPiece(uVar19,auStack_4470,iVar6,uVar15,auStack_44a0,local_44b0,param_4);
+        uVar10 = uVar15;
+      }
+    } while (local_cc != 0);
+  }
+  if ((float)((double)*(float *)(DAT_8332cbc0 + 0xc) * dVar17) < local_84) {
+    DAT_8332cc58 = auStack_4470;
+    std___Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (local_c8,local_c8 + local_88,(int)(local_c8 + local_88) - (int)local_c8 >> 1,
+               0xffffffff824249f8);
+    uVar10 = 0;
+    if (local_88 != 0) {
+      puVar16 = local_c8;
+      do {
+        uVar11 = (uint)*puVar16;
+        iVar12 = uVar11 * 0x20 + *(int *)(iVar6 + 0x38);
+        local_84 = local_84 - *(float *)(iVar12 + 0x1c);
+        *(undefined4 *)(iVar12 + 8) = 0;
+        Glass_StartImmediateFall(auStack_4470,uVar11,uVar11);
+        if (local_84 <= (float)((double)*(float *)(DAT_8332cbc0 + 0xc) * dVar17)) break;
+        uVar10 = uVar10 + 1;
+        puVar16 = puVar16 + 1;
+      } while (uVar10 < local_88);
+    }
+  }
+  Glass_CompactData(iVar6);
+  PIXEndNamedEvent();
+  __restgprlr_19();
+  return;
+}
+
+
+// 82426578  Glass_DestroySimplePiece  (EffectsCore/fx_glass_crack.cpp:3099)
+
+void Glass_DestroySimplePiece
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined4 *param_5)
+
+{
+  float *pfVar1;
+  int iVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  short sVar5;
+  longlong lVar6;
+  uint local_4480;
+  uint local_447c;
+  undefined1 auStack_4470 [48];
+  undefined1 auStack_4440 [16040];
+  undefined4 local_598;
+  undefined4 local_594;
+  undefined4 local_590;
+  undefined4 local_58c;
+  undefined4 local_574;
+  undefined4 local_570;
+  undefined4 local_56c;
+  undefined4 local_e4;
+  undefined4 local_e0;
+  undefined4 local_9c;
+  
+  iVar2 = __savegprlr_23();
+  lVar6 = (ulonglong)*(uint *)(iVar2 + 0x34) + (param_2 & 0x7ffffff) * 0x20;
+  UnitQuatToAxis(lVar6,auStack_4470);
+  puVar4 = (undefined4 *)param_3;
+  local_594 = *puVar4;
+  local_590 = puVar4[1];
+  local_58c = puVar4[2];
+  Glass_GetVertexForPos(iVar2,param_2,param_3,auStack_4470,&local_4480);
+  sVar5 = (short)local_4480;
+  if (local_4480 != (int)sVar5) {
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,local_4480,sVar5);
+  }
+  if (local_447c != (int)(short)local_447c) {
+    local_4480._0_2_ = sVar5;
+    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,local_447c,(short)local_447c);
+  }
+  pfVar1 = (float *)param_4;
+  local_598 = *(undefined4 *)((int)lVar6 + 0x1c);
+  local_574 = *param_5;
+  local_4480 = local_447c & 0xffff;
+  local_9c = 0;
+  local_570 = param_5[1];
+  local_56c = param_5[2];
+  local_e4 = 0x7f7fffff;
+  local_e0 = 0x7f7fffff;
+  if (0.0 < pfVar1[2] * pfVar1[2] + *pfVar1 * *pfVar1 + pfVar1[1] * pfVar1[1]) {
+    Glass_PlayShatterEffects(0x3ff0000000000000,iVar2,param_2,auStack_4470,param_4);
+  }
+  cVar3 = Glass_GetVertexForImpact(iVar2,param_2,&local_4480);
+  if (cVar3 == '\0') {
+    Com_PrintWarning(0x15,0xffffffff82064298);
+    __restgprlr_23();
+    return;
+  }
+  Glass_CrackPiece(0x4020000000000000,auStack_4440,iVar2,param_2,auStack_4470,local_4480,param_4);
+  Glass_CompactData(iVar2);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -2461,32 +4710,272 @@ void std___Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const
 // 82427190  std::_Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
 void std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-               (void)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined2 uVar1;
+  undefined2 *puVar2;
+  char cVar3;
+  undefined2 *puVar4;
+  
+  puVar2 = (undefined2 *)__savegprlr_28();
+  cVar3 = (*param_4)(param_2,puVar2);
+  puVar4 = (undefined2 *)param_2;
+  if (cVar3 != '\0') {
+    uVar1 = *puVar4;
+    *puVar4 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  cVar3 = (*param_4)(param_3,param_2);
+  if (cVar3 != '\0') {
+    uVar1 = *(undefined2 *)param_3;
+    *(undefined2 *)param_3 = *puVar4;
+    *puVar4 = uVar1;
+  }
+  cVar3 = (*param_4)(param_2,puVar2);
+  if (cVar3 != '\0') {
+    uVar1 = *puVar4;
+    *puVar4 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82427238  std::_Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
 void std___Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 1;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x7fffffff;
+    uVar4 = uVar4 & 0x3fffffff;
+    lVar6 = uVar2 * 2 + lVar3;
+    std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (lVar3,lVar6,uVar4 * 4 + lVar3);
+    std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (param_2 + uVar2 * -2,param_2,uVar2 * 2 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -2;
+    std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (param_3 + uVar4 * -4,lVar3,param_3,param_4);
+    std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 824272E0  std::_Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  undefined2 uVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  char cVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined2 *puVar8;
+  ulonglong uVar9;
+  undefined2 *puVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  undefined2 *puVar14;
+  
+  puVar4 = (undefined4 *)__savegprlr_23();
+  iVar6 = (int)param_3 - (int)param_2;
+  uVar3 = iVar6 >> 1;
+  uVar13 = ((longlong)(iVar6 >> 2) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x7fffffff) *
+           2 + param_2;
+  std___Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+            (param_2,uVar13,param_3 - 2);
+  uVar7 = uVar13 + 2;
+  if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+    do {
+      uVar11 = uVar13 - 2;
+      cVar5 = (*param_4)(uVar11,uVar13);
+      if ((cVar5 != '\0') || (cVar5 = (*param_4)(uVar13,uVar11), cVar5 != '\0')) break;
+      uVar13 = uVar11;
+    } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
+  }
+  uVar9 = uVar7;
+  uVar11 = uVar13;
+  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar5 = (*param_4)(uVar7,uVar13);
+      uVar9 = uVar7;
+      if ((cVar5 != '\0') || (cVar5 = (*param_4)(uVar13,uVar7), cVar5 != '\0')) break;
+      uVar7 = uVar7 + 2;
+      uVar9 = uVar7;
+    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar12 = uVar7;
+    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar5 = (*param_4)(uVar11,uVar9);
+        uVar7 = uVar12;
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(uVar9,uVar11);
+          if (cVar5 != '\0') break;
+          uVar7 = uVar12 + 2;
+          uVar2 = *(undefined2 *)uVar12;
+          *(undefined2 *)uVar12 = *(undefined2 *)uVar9;
+          *(undefined2 *)uVar9 = uVar2;
+        }
+        uVar9 = uVar9 + 2;
+        uVar12 = uVar7;
+      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar13 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar12 = uVar13;
+    if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+      do {
+        uVar12 = uVar12 - 2;
+        cVar5 = (*param_4)(uVar12,uVar11);
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(uVar11,uVar12);
+          if (cVar5 != '\0') break;
+          uVar11 = uVar11 - 2;
+          uVar2 = *(undefined2 *)uVar11;
+          *(undefined2 *)uVar11 = *(undefined2 *)uVar12;
+          *(undefined2 *)uVar12 = uVar2;
+        }
+        uVar13 = uVar13 - 2;
+      } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
+      bVar1 = (uVar13 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar10 = (undefined2 *)uVar9;
+    if (bVar1) {
+      puVar8 = (undefined2 *)uVar7;
+      puVar14 = (undefined2 *)uVar11;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar4 = puVar14;
+        puVar4[1] = puVar8;
+        __restgprlr_23(puVar4);
+        return;
+      }
+      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+        uVar2 = *puVar14;
+        *puVar14 = *puVar8;
+        *puVar8 = uVar2;
+      }
+      uVar7 = uVar7 + 2;
+      uVar2 = *puVar14;
+      *puVar14 = *puVar10;
+      *puVar10 = uVar2;
+      uVar9 = uVar9 + 2;
+      uVar11 = uVar11 + 2;
+    }
+    else {
+      uVar13 = uVar13 - 2;
+      puVar8 = (undefined2 *)uVar13;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar11 = uVar11 - 2;
+        puVar10 = (undefined2 *)uVar11;
+        if ((uVar13 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+          uVar2 = *puVar8;
+          *puVar8 = *puVar10;
+          *puVar10 = uVar2;
+        }
+        uVar7 = uVar7 - 2;
+        uVar2 = *puVar10;
+        *puVar10 = *(undefined2 *)uVar7;
+        *(undefined2 *)uVar7 = uVar2;
+      }
+      else {
+        uVar2 = *puVar10;
+        *puVar10 = *puVar8;
+        *puVar8 = uVar2;
+        uVar9 = uVar9 + 2;
+      }
+    }
+  } while( true );
+}
+
+
+// 824275C8  std::_Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+
+void std___Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 1;
+    if (iVar2 < 0x21) {
+LAB_82427680:
+      if (1 < iVar2) {
+        std___Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&),unsigned_short>
+                  (uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                    (uVar1,param_2,param_4,0,0);
+        }
+        std___Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                  (uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_82427680;
+    }
+    std___Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (&local_40,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffffe) < (int)((int)param_2 - local_3c & 0xfffffffe)) {
+      std___Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+                (uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 

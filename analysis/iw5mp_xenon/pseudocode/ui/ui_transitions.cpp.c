@@ -15,21 +15,81 @@ void Transition_RunTrigger(undefined8 param_1,undefined8 param_2,int param_3)
 
 // 825D15C8  Transition_CheckEndTrigger  (ui/ui_transitions.cpp:45)
 
-void Transition_CheckEndTrigger(void)
+void Transition_CheckEndTrigger(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_29();
+  if (param_3 == 0) {
+    MyAssertHandler(0xffffffff82174098,0x30);
+  }
+  if (*(int *)(param_3 + 0x14) != 0) {
+    iVar2 = Sys_Milliseconds();
+    if (*(float *)(param_3 + 0x10) < (float)(longlong)(iVar2 - *(int *)(param_3 + 4)) * 0.001) {
+      if (*(int *)(param_3 + 0x14) == 1) {
+        Menus_ForceClose(uVar1,param_2);
+      }
+      *(undefined4 *)(param_3 + 0x14) = 0;
+      *(undefined4 *)(param_3 + 4) = 0;
+      __restgprlr_29(1);
+      return;
+    }
+  }
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 825D2090  Menu_RunTransitionTriggers  (ui/ui_transitions.cpp:66)
 
-void Menu_RunTransitionTriggers(void)
+void Menu_RunTransitionTriggers(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint *puVar2;
+  char cVar3;
+  ulonglong uVar1;
+  uint *puVar4;
+  ulonglong uVar5;
+  
+  puVar2 = (uint *)__savegprlr_29();
+  uVar5 = 0;
+  cVar3 = Menu_HasScaleTransition(*puVar2);
+  puVar4 = (uint *)param_2;
+  if (cVar3 != '\0') {
+    uVar5 = Transition_CheckEndTrigger
+                      (puVar2,param_2,
+                       ((ulonglong)*puVar2 + 5 + ((ulonglong)*puVar2 + 5 & 0x7fffffff) * 2 &
+                       0x1fffffff) * 8 + (ulonglong)*puVar4);
+  }
+  cVar3 = Menu_HasAlphaTransition(*puVar2,param_2);
+  if (cVar3 != '\0') {
+    uVar1 = Transition_CheckEndTrigger
+                      (puVar2,param_2,
+                       ((ulonglong)*puVar2 + 9 + ((ulonglong)*puVar2 + 9 & 0x7fffffff) * 2 &
+                       0x1fffffff) * 8 + (ulonglong)*puVar4);
+    uVar5 = uVar1 | uVar5;
+  }
+  cVar3 = Menu_HasXTransition(*puVar2,param_2);
+  if (cVar3 != '\0') {
+    uVar1 = Transition_CheckEndTrigger
+                      (puVar2,param_2,
+                       ((ulonglong)*puVar2 + 0xd + ((ulonglong)*puVar2 + 0xd & 0x7fffffff) * 2 &
+                       0x1fffffff) * 8 + (ulonglong)*puVar4);
+    uVar5 = uVar1 | uVar5;
+  }
+  cVar3 = Menu_HasYTransition(*puVar2,param_2);
+  if (cVar3 != '\0') {
+    uVar1 = Transition_CheckEndTrigger
+                      (puVar2,param_2,
+                       ((ulonglong)*puVar2 + 0x11 + ((ulonglong)*puVar2 + 0x11 & 0x7fffffff) * 2 &
+                       0x1fffffff) * 8 + (ulonglong)*puVar4);
+    __restgprlr_29(uVar1 | uVar5);
+    return;
+  }
+  __restgprlr_29(uVar5);
+  return;
 }
 
 
@@ -63,7 +123,6 @@ bool Menu_HasScaleTransition(uint param_1,int *param_2)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x78,0,0xffffffff820011a8,param_1,4);
   }
   return *(int *)((param_1 + 5) * 0x18 + *param_2) != 0;
@@ -76,7 +135,6 @@ bool Menu_HasAlphaTransition(uint param_1,int *param_2)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x7f,0,0xffffffff820011a8,param_1,4);
   }
   return *(int *)((param_1 + 9) * 0x18 + *param_2) != 0;
@@ -89,7 +147,6 @@ bool Menu_HasXTransition(uint param_1,int *param_2)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x86,0,0xffffffff820011a8,param_1,4);
   }
   return *(int *)((param_1 + 0xd) * 0x18 + *param_2) != 0;
@@ -102,7 +159,6 @@ bool Menu_HasYTransition(uint param_1,int *param_2)
 
 {
   if (3 < param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x8d,0,0xffffffff820011a8,param_1,4);
   }
   return *(int *)((param_1 + 0x11) * 0x18 + *param_2) != 0;
@@ -124,15 +180,12 @@ void MenuParse_ParseTransitionDetails
   
   uVar4 = __savegprlr_22();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x99,0,0xffffffff82000f98,0xffffffff820927e0);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x9a,0,0xffffffff82000f98,0xffffffff82174114);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82174098,0x9b,0,0xffffffff82000f98,0xffffffff8217410c);
   }
   bVar1 = false;
@@ -186,30 +239,192 @@ longlong Transition_FindEndTime(int param_1)
 
 // 825D1B48  Transition_FindLongestTransition  (ui/ui_transitions.cpp:207)
 
-void Transition_FindLongestTransition(void)
+void Transition_FindLongestTransition(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  int iVar2;
+  char cVar3;
+  int *piVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  double dVar8;
+  
+  uVar1 = __savegprlr_28();
+  if (3 < uVar1) {
+    MyAssertHandler(0xffffffff82174098,0xd5,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar2 = Sys_Milliseconds();
+  cVar3 = Menu_HasScaleTransition(uVar1,param_2);
+  dVar8 = -1000.0;
+  piVar4 = (int *)param_2;
+  iVar7 = 0;
+  if (cVar3 != '\0') {
+    iVar6 = (uVar1 + 5) * 0x18 + *piVar4;
+    iVar5 = *(int *)(iVar6 + 4) - (int)(*(float *)(iVar6 + 0x10) * -1000.0);
+    if (iVar2 < iVar5) {
+      iVar2 = iVar5;
+      iVar7 = iVar6;
+    }
+  }
+  cVar3 = Menu_HasAlphaTransition(uVar1,param_2);
+  if (cVar3 != '\0') {
+    iVar6 = (uVar1 + 9) * 0x18 + *piVar4;
+    iVar5 = *(int *)(iVar6 + 4) - (int)((double)*(float *)(iVar6 + 0x10) * dVar8);
+    if (iVar2 < iVar5) {
+      iVar2 = iVar5;
+      iVar7 = iVar6;
+    }
+  }
+  cVar3 = Menu_HasXTransition(uVar1,param_2);
+  if (cVar3 != '\0') {
+    iVar6 = (uVar1 + 0xd) * 0x18 + *piVar4;
+    iVar5 = *(int *)(iVar6 + 4) - (int)((double)*(float *)(iVar6 + 0x10) * dVar8);
+    if (iVar2 < iVar5) {
+      iVar2 = iVar5;
+      iVar7 = iVar6;
+    }
+  }
+  cVar3 = Menu_HasYTransition(uVar1,param_2);
+  if (cVar3 != '\0') {
+    iVar5 = (uVar1 + 0x11) * 0x18 + *piVar4;
+    if (iVar2 < *(int *)(iVar5 + 4) - (int)((double)*(float *)(iVar5 + 0x10) * dVar8))
+    goto LAB_825d1d0c;
+  }
+  iVar5 = iVar7;
+LAB_825d1d0c:
+  __restgprlr_28(iVar5);
+  return;
 }
 
 
 // 825D1D18  Transition_ClearTransitions  (ui/ui_transitions.cpp:262)
 
-void Transition_ClearTransitions(void)
+void Transition_ClearTransitions(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  
+  uVar2 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82174098,0x107,0,0xffffffff82000f98,0xffffffff82058cb8);
+  }
+  if (3 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82174098,0x108,0,0xffffffff820011a8,uVar2,4);
+  }
+  piVar3 = (int *)param_2;
+  *(undefined4 *)((int)((uVar2 + 5 + (uVar2 + 5 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar3) = 0
+  ;
+  iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+  *(undefined4 *)(iVar1 + *piVar3 + 0x8c) = 0;
+  *(undefined4 *)((int)((uVar2 + 9 + (uVar2 + 9 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar3) = 0
+  ;
+  *(undefined4 *)(iVar1 + *piVar3 + 0xec) = 0;
+  *(undefined4 *)((int)((uVar2 + 0xd + (uVar2 + 0xd & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar3)
+       = 0;
+  *(undefined4 *)(iVar1 + *piVar3 + 0x14c) = 0;
+  *(undefined4 *)
+   ((int)((uVar2 + 0x11 + (uVar2 + 0x11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar3) = 0;
+  *(undefined4 *)(iVar1 + *piVar3 + 0x1ac) = 0;
+  __restgprlr_29();
+  return;
+}
+
+
+// 825D1E30  Transition_CloseWhenDone  (ui/ui_transitions.cpp:281)
+
+void Transition_CloseWhenDone(undefined8 param_1,ulonglong param_2)
+
+{
+  ulonglong uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82174098,0x11a,0,0xffffffff82000f98,0xffffffff82058cb8);
+  }
+  if (3 < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82174098,0x11b,0,0xffffffff820011a8,uVar1,4);
+  }
+  iVar3 = Transition_FindLongestTransition(uVar1,param_2);
+  if (iVar3 == 0) {
+    uVar2 = UI_GetClientDC(uVar1);
+    Menus_ForceClose(uVar2,param_2);
+    __restgprlr_29();
+    return;
+  }
+  *(undefined4 *)(iVar3 + 0x14) = 1;
+  __restgprlr_29();
+  return;
 }
 
 
 // 825D1ED8  MenuParse_ParseLerp  (ui/ui_transitions.cpp:299)
 
-void MenuParse_ParseLerp(void)
+void MenuParse_ParseLerp(undefined8 param_1,int *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined1 auStack_420 [1056];
+  
+  piVar1 = (int *)__savegprlr_29();
+  iVar4 = *piVar1;
+  iVar2 = String_Parse(param_3,auStack_420,0x400);
+  if (iVar2 != 0) {
+    iVar2 = I_stricmp(auStack_420,0xffffffff8212f68c);
+    if (iVar2 == 0) {
+      iVar4 = (iVar4 * 3 + 0xf) * 8;
+      iVar2 = iVar4 + *param_2;
+      *(undefined4 *)(iVar4 + *param_2) = 1;
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(iVar2 + 4) = uVar3;
+      MenuParse_ParseTransitionDetails(param_3,iVar2 + 8,iVar2 + 0xc,iVar2 + 0x10);
+      __restgprlr_29();
+      return;
+    }
+    iVar2 = I_stricmp(auStack_420,0xffffffff82080488);
+    if (iVar2 == 0) {
+      iVar4 = (iVar4 * 3 + 0x1b) * 8;
+      iVar2 = iVar4 + *param_2;
+      *(undefined4 *)(iVar4 + *param_2) = 1;
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(iVar2 + 4) = uVar3;
+      MenuParse_ParseTransitionDetails(param_3,iVar2 + 8,iVar2 + 0xc,iVar2 + 0x10);
+      __restgprlr_29();
+      return;
+    }
+    iVar2 = I_stricmp(auStack_420,0xffffffff8200fdbc);
+    if (iVar2 == 0) {
+      iVar4 = (iVar4 * 3 + 0x27) * 8;
+      iVar2 = iVar4 + *param_2;
+      *(undefined4 *)(iVar4 + *param_2) = 1;
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(iVar2 + 4) = uVar3;
+      MenuParse_ParseTransitionDetails(param_3,iVar2 + 8,iVar2 + 0xc,iVar2 + 0x10);
+      __restgprlr_29();
+      return;
+    }
+    iVar2 = I_stricmp(auStack_420,0xffffffff8200fdb8);
+    if (iVar2 == 0) {
+      iVar4 = (iVar4 + 0x11) * 0x18;
+      iVar2 = iVar4 + *param_2;
+      *(undefined4 *)(iVar4 + *param_2) = 1;
+      uVar3 = Sys_Milliseconds();
+      *(undefined4 *)(iVar2 + 4) = uVar3;
+      MenuParse_ParseTransitionDetails(param_3,iVar2 + 8,iVar2 + 0xc,iVar2 + 0x10);
+      __restgprlr_29();
+      return;
+    }
+  }
+  Com_PrintError(0xd,0xffffffff82174120);
+  __restgprlr_29();
+  return;
 }
 

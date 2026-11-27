@@ -2,11 +2,22 @@
 
 // 82410C78  DynEnt_GetId  (DynEntity/dynentity_load_obj.h:46)
 
-void DynEnt_GetId(void)
+void DynEnt_GetId(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8205f8a8,0x31,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  uVar1 = (iVar2 - *(int *)((int)&DAT_835a2948 + (int)((param_2 & 0xffffffff) << 2))) / 0x60;
+  if (*(ushort *)((int)&DAT_835a2944 + (int)((param_2 & 0xffffffff) << 1)) <= uVar1) {
+    MyAssertHandler(0xffffffff8205f8a8,0x35,1,0xffffffff8205cca8,uVar1);
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
@@ -15,8 +26,20 @@ void DynEnt_GetId(void)
 void TRACK_DynEntityCollWorld(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  longlong lVar2;
+  
   __savegprlr_27();
+  lVar1 = -0x7ccdb500;
+  lVar2 = -0x7cce5500;
+  do {
+    track_static_alloc_internal(lVar1,0x20,0xffffffff820602a4,0x19);
+    track_static_alloc_internal(lVar2,0x5000,0xffffffff820602c0,0x19);
+    lVar1 = lVar1 + 0x20;
+    lVar2 = lVar2 + 0x5000;
+  } while ((int)lVar1 < -0x7ccdb4c0);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -36,7 +59,6 @@ longlong DynEnt_GetCollWorld(ulonglong param_1)
 
 {
   if (1 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,param_1,2);
   }
   return (param_1 & 0x7ffffff) * 0x20 + -0x7ccdb500;
@@ -45,11 +67,24 @@ longlong DynEnt_GetCollWorld(ulonglong param_1)
 
 // 82410E08  DynEnt_GetCollSector  (DynEntity/DynEntity_coll.cpp:94)
 
-void DynEnt_GetCollSector(void)
+void DynEnt_GetCollSector(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x61,0,0xffffffff82000f98,0xffffffff82010bf8);
+  }
+  else if (0x3ff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820602e8,0x62,0,0xffffffff82010bc8,0xffffffff82010be0,param_2);
+  }
+  if (1 < uVar1) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar1,2);
+  }
+  __restgprlr_29((ulonglong)*(uint *)(&DAT_83324b1c + uVar1 * 0x20) +
+                 (param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) * 4);
+  return;
 }
 
 
@@ -61,7 +96,6 @@ void DynEnt_ClearCollWorld(ulonglong param_1)
   int iVar1;
   int iVar2;
   uint uVar3;
-  void *_Dst;
   longlong lVar4;
   uint uVar5;
   longlong lVar6;
@@ -69,7 +103,6 @@ void DynEnt_ClearCollWorld(ulonglong param_1)
   longlong lVar8;
   
   if (1 < (param_1 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,param_1,2);
   }
   lVar4 = (param_1 & 0x7ffffff) * 0x20;
@@ -81,10 +114,11 @@ void DynEnt_ClearCollWorld(ulonglong param_1)
     *(undefined4 *)lVar4 = 0;
     lVar8 = lVar8 + -1;
   } while (lVar8 != 0);
-  _Dst = (void *)((int)((param_1 + (param_1 & 0x3fffffff) * 4 & 0xffffffff) << 0xc) + -0x7cce5500);
   iVar2 = (int)lVar6;
-  *(void **)(iVar2 + 0x1c) = _Dst;
-  memset(_Dst,0,0x5000);
+  *(undefined **)(iVar2 + 0x1c) =
+       &DAT_8331ab00 + (int)((param_1 + (param_1 & 0x3fffffff) * 4 & 0xffffffff) << 0xc);
+  memset(&DAT_8331ab00 + (int)((param_1 + (param_1 & 0x3fffffff) * 4 & 0xffffffff) << 0xc),0,0x5000)
+  ;
   CM_BrushModelBounds(0,lVar6);
   *(undefined2 *)(iVar2 + 0x18) = 2;
   uVar5 = 2;
@@ -103,11 +137,60 @@ void DynEnt_ClearCollWorld(ulonglong param_1)
 
 // 82410FF0  DynEnt_Validate  (DynEntity/DynEntity_coll.cpp:143)
 
-void DynEnt_Validate(void)
+void DynEnt_Validate(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  ushort uVar2;
+  uint uVar4;
+  ulonglong uVar3;
+  uint uVar5;
+  float *pfVar6;
+  
+  uVar4 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x97,0,0xffffffff82000f98,0xffffffff82060344);
+  }
+  if (1 < uVar4) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar4,2);
+  }
+  uVar5 = 1;
+  do {
+    if (uVar5 == 0) {
+      MyAssertHandler(0xffffffff820602e8,0x9e,0,0xffffffff82000f98,0xffffffff82010bf8);
+    }
+    if (0x3ff < uVar5) {
+      MyAssertHandler(0xffffffff820602e8,0x9f,0,0xffffffff82010bc8,0xffffffff82010be0,uVar5);
+    }
+    pfVar6 = (float *)(uVar5 * 0x14 + *(int *)(&DAT_83324b1c + uVar4 * 0x20));
+    if (*(float *)((*(ushort *)(pfVar6 + 1) + 1) * 4 + (int)param_2) <= *pfVar6) {
+      if (*pfVar6 <= *(float *)((*(ushort *)(pfVar6 + 1) + 3) * 4 + (int)param_2)) break;
+      uVar2 = *(ushort *)((int)pfVar6 + 10);
+    }
+    else {
+      uVar2 = *(ushort *)(pfVar6 + 2);
+    }
+    uVar5 = (uint)uVar2;
+  } while (uVar5 != 0);
+  if (*(short *)(pfVar6 + 4) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0xbc,0,0xffffffff82000f98,0xffffffff82010da4);
+  }
+  uVar3 = DynEnt_GetEntityColl(uVar4,(ulonglong)*(ushort *)(pfVar6 + 4) - 1);
+  if ((uVar3 & 0xffffffff) != (param_2 & 0xffffffff)) {
+    bVar1 = (uVar3 & 0xffffffff) < (param_2 & 0xffffffff);
+    do {
+      if (!bVar1) {
+        MyAssertHandler(0xffffffff820602e8,0xc3,0,0xffffffff82000f98,0xffffffff82060330);
+      }
+      if (*(short *)((int)uVar3 + 2) == 0) {
+        MyAssertHandler(0xffffffff820602e8,0xc4,0,0xffffffff82000f98,0xffffffff82010d8c);
+      }
+      uVar3 = DynEnt_GetEntityColl(uVar4,(ulonglong)*(ushort *)((int)uVar3 + 2) - 1);
+      bVar1 = (uVar3 & 0xffffffff) < (param_2 & 0xffffffff);
+    } while ((uVar3 & 0xffffffff) != (param_2 & 0xffffffff));
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -126,15 +209,12 @@ void DynEnt_ValidateWorldSector_r(undefined8 param_1,ulonglong param_2)
   do {
     uVar3 = param_2 & 0xffff;
     if (uVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820602e8,0xd3,0,0xffffffff82000f98,0xffffffff82010bf8);
     }
     if (0x3ff < uVar3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820602e8,0xd4,0,0xffffffff82010bc8,0xffffffff82010be0,uVar3);
     }
     if (1 < uVar4) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar4,2);
     }
     iVar2 = ((int)uVar3 + ((uint)param_2 & 0xffff) * 4) * 4 + *(int *)(&DAT_83324b1c + uVar4 * 0x20)
@@ -166,80 +246,480 @@ void DynEnt_ValidateCollWorldClient(void)
 }
 
 
-// 82411428  DynEnt_DrawCollSector  (DynEntity/DynEntity_coll.cpp:265)
+// 82411358  DrawDebugBox2D  (DynEntity/DynEntity_coll.cpp:248)
 
-void DynEnt_DrawCollSector(void)
+void DrawDebugBox2D(double param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 local_40;
+  undefined4 local_3c;
+  float local_38;
+  undefined4 local_34;
+  undefined4 local_30;
+  float local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  float local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  float local_14;
+  
+  local_40 = *param_2;
+  local_3c = param_2[1];
+  local_34 = *param_3;
+  local_24 = param_3[1];
+  local_38 = (float)param_1;
+  local_2c = (float)param_1;
+  local_20 = (float)param_1;
+  local_14 = (float)param_1;
+  local_30 = local_3c;
+  local_28 = local_34;
+  local_1c = local_40;
+  local_18 = local_24;
+  CG_DebugLine(&local_40,&local_34,0xffffffff821818b8,0,0);
+  CG_DebugLine(&local_34,&local_28,0xffffffff821818b8,0,0);
+  CG_DebugLine(&local_28,&local_1c,0xffffffff821818b8,0,0);
+  CG_DebugLine(&local_1c,&local_40,0xffffffff821818b8,0,0);
+  return;
+}
+
+
+// 82411428  DynEnt_DrawCollSector  (DynEntity/DynEntity_coll.cpp:265)
+
+void DynEnt_DrawCollSector
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               float *param_5)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  undefined8 extraout_f1;
+  undefined8 uVar7;
+  double dVar8;
+  float local_50 [20];
+  
+  uVar4 = __savegprlr_28();
+  uVar7 = extraout_f1;
+  DrawDebugBox2D(param_3,param_4);
+  if (1 < *(ushort *)(param_5 + 1)) {
+    MyAssertHandler(0xffffffff820602e8,0x10f,0,0xffffffff82060350,*(ushort *)(param_5 + 1),2);
+  }
+  dVar8 = 1.0;
+  pfVar6 = (float *)param_4;
+  pfVar5 = (float *)param_3;
+  if (*(short *)(param_5 + 2) != 0) {
+    local_50[0] = *pfVar5;
+    local_50[1] = pfVar5[1];
+    local_50[2] = *pfVar6;
+    local_50[*(ushort *)(param_5 + 1)] = *param_5;
+    local_50[2] = local_50[2] - 1.0;
+    local_50[3] = pfVar6[1] - 1.0;
+    local_50[1] = local_50[1] + 1.0;
+    local_50[0] = local_50[0] + 1.0;
+    DynEnt_DrawCollSector(uVar7,uVar4);
+  }
+  if (*(short *)((int)param_5 + 10) != 0) {
+    fVar1 = *pfVar6;
+    fVar2 = pfVar6[1];
+    fVar3 = *pfVar5;
+    local_50[*(ushort *)(param_5 + 1) + 2] = *param_5;
+    local_50[0] = (float)((double)fVar3 + dVar8);
+    local_50[1] = (float)((double)pfVar5[1] + dVar8);
+    local_50[2] = (float)((double)fVar1 - dVar8);
+    local_50[3] = (float)((double)fVar2 - dVar8);
+    DynEnt_DrawCollSector(uVar7,uVar4);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 824115B0  DynEnt_DrawCollWorld  (DynEntity/DynEntity_coll.cpp:302)
 
-void DynEnt_DrawCollWorld(undefined8 param_1,uint param_2,undefined8 param_3)
+void DynEnt_DrawCollWorld(undefined8 param_1,uint param_2)
 
 {
-  int iVar1;
-  float local_30;
-  float local_2c;
-  float local_28;
-  float local_24;
-  
   if (1 < param_2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,param_2,2);
   }
-  iVar1 = param_2 * 0x20;
-  local_30 = *(float *)(&DAT_83324b00 + iVar1) - *(float *)(&DAT_83324b0c + iVar1);
-  local_28 = *(float *)(&DAT_83324b0c + iVar1) + *(float *)(&DAT_83324b00 + iVar1);
-  local_2c = *(float *)(&DAT_83324b04 + iVar1) - *(float *)(&DAT_83324b10 + iVar1);
-  local_24 = *(float *)(&DAT_83324b10 + iVar1) + *(float *)(&DAT_83324b04 + iVar1);
-  DynEnt_DrawCollSector
-            (param_1,&DAT_83324b00 + iVar1,param_3,&local_30,&local_28,
-             (ulonglong)*(uint *)(&DAT_83324b1c + iVar1) + 0x14);
+  DynEnt_DrawCollSector(param_1);
   return;
 }
 
 
 // 82411668  DynEnt_AllocCollSector  (DynEntity/DynEntity_coll.cpp:319)
 
-void DynEnt_AllocCollSector(void)
+void DynEnt_AllocCollSector(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  int iVar1;
+  ulonglong uVar2;
+  float *pfVar3;
+  float *pfVar4;
+  uint uVar5;
+  float *pfVar6;
+  bool bVar7;
+  float local_60 [24];
+  
+  uVar2 = __savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x146,0,0xffffffff82000f98,0xffffffff82010c8c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x147,0,0xffffffff82000f98,0xffffffff82010c84);
+  }
+  if (1 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar2,2);
+  }
+  iVar1 = (int)uVar2 * 0x20;
+  uVar5 = (uint)*(ushort *)(&DAT_83324b18 + iVar1);
+  if (uVar5 != 0) {
+    pfVar3 = (float *)param_2;
+    pfVar4 = (float *)param_3;
+    local_60[0] = *pfVar4 - *pfVar3;
+    local_60[1] = pfVar4[1] - pfVar3[1];
+    bVar7 = local_60[0] <= local_60[1];
+    if (512.0 < local_60[bVar7]) {
+      pfVar6 = (float *)(uVar5 * 0x14 + *(int *)(&DAT_83324b1c + iVar1));
+      if (pfVar6[3] != 0.0) {
+        MyAssertHandler(0xffffffff820602e8,0x157,0,0xffffffff82000f98,0xffffffff82060388);
+      }
+      if (*(short *)(pfVar6 + 4) != 0) {
+        MyAssertHandler(0xffffffff820602e8,0x158,0,0xffffffff82000f98,0xffffffff82010c6c);
+      }
+      *(undefined2 *)(&DAT_83324b18 + iVar1) = *(undefined2 *)((int)pfVar6 + 6);
+      *(ushort *)(pfVar6 + 1) = (ushort)bVar7;
+      *pfVar6 = (pfVar3[bVar7] + pfVar4[bVar7]) * 0.5;
+      if (*(short *)(pfVar6 + 2) != 0) {
+        MyAssertHandler(0xffffffff820602e8,0x15f,0,0xffffffff82000f98,0xffffffff82010c54);
+      }
+      if (*(short *)((int)pfVar6 + 10) != 0) {
+        MyAssertHandler(0xffffffff820602e8,0x160,0,0xffffffff82000f98,0xffffffff82010c3c);
+      }
+      __restgprlr_23(uVar5);
+      return;
+    }
+  }
+  __restgprlr_23(0);
+  return;
 }
 
 
 // 82411860  DynEnt_AddToCollSector  (DynEntity/DynEntity_coll.cpp:362)
 
-void DynEnt_AddToCollSector(void)
+void DynEnt_AddToCollSector(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  uint uVar4;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  undefined2 *puVar5;
+  longlong lVar6;
+  ushort *puVar7;
+  
+  uVar4 = __savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0xffff) {
+    MyAssertHandler(0xffffffff820602e8,0x172,0,0xffffffff82000f98,0xffffffff82060154);
+  }
+  uVar2 = DynEnt_GetEntityCount(uVar4);
+  if ((uVar2 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    uVar3 = DynEnt_GetEntityCount(uVar4);
+    MyAssertHandler(0xffffffff820602e8,0x173,0,0xffffffff820603a0,param_2,uVar3);
+  }
+  uVar2 = param_3 & 0xffff;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x175,0,0xffffffff82000f98,0xffffffff82010bf8);
+  }
+  if (0x3ff < uVar2) {
+    MyAssertHandler(0xffffffff820602e8,0x176,0,0xffffffff82010bc8,0xffffffff82010be0,uVar2);
+  }
+  if (1 < uVar4) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar4,2);
+  }
+  uVar1 = *(uint *)(&DAT_83324b1c + uVar4 * 0x20);
+  puVar5 = (undefined2 *)DynEnt_GetEntityColl(uVar4,param_2);
+  lVar6 = (ulonglong)uVar1 + (uVar2 + (param_3 & 0xffff) * 4) * 4 + 0x10;
+  puVar7 = (ushort *)lVar6;
+  if (((ulonglong)*puVar7 - 1 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    do {
+      lVar6 = DynEnt_GetEntityColl(uVar4,(ulonglong)*(ushort *)lVar6 - 1);
+      lVar6 = lVar6 + 2;
+      puVar7 = (ushort *)lVar6;
+    } while (((ulonglong)*puVar7 - 1 & 0xffffffff) <= (param_2 & 0xffffffff));
+  }
+  *puVar5 = (short)param_3;
+  puVar5[1] = *puVar7;
+  *puVar7 = (short)param_2 + 1;
+  __restgprlr_26();
+  return;
 }
 
 
 // 82412598  DynEnt_SortCollSector  (DynEntity/DynEntity_coll.cpp:404)
 
-void DynEnt_SortCollSector(void)
+void DynEnt_SortCollSector(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar6;
+  int iVar7;
+  undefined8 uVar8;
+  char *pcVar9;
+  uint uVar10;
+  int iVar11;
+  int iVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  double dVar17;
+  
+  uVar5 = __savegprlr();
+  uVar13 = param_2 & 0xffff;
+  if (uVar13 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x1a1,0,0xffffffff82000f98,0xffffffff82010bf8);
+  }
+  if (0x3ff < uVar13) {
+    MyAssertHandler(0xffffffff820602e8,0x1a2,0,0xffffffff82010bc8,0xffffffff82010be0,uVar13);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x1a3,0,0xffffffff82000f98,0xffffffff82010c8c);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x1a4,0,0xffffffff82000f98,0xffffffff82010c84);
+  }
+  if (1 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar5,2);
+  }
+  iVar4 = (int)uVar5 * 0x20;
+  iVar11 = ((int)uVar13 + ((uint)param_2 & 0xffff) * 4) * 4;
+  iVar3 = iVar11 + *(int *)(&DAT_83324b1c + iVar4);
+  dVar17 = (double)*(float *)(iVar11 + *(int *)(&DAT_83324b1c + iVar4));
+  uVar1 = *(ushort *)(iVar3 + 4);
+  uVar10 = (uint)*(ushort *)(iVar3 + 0x10);
+  if (uVar10 != 0) {
+    uVar13 = param_3;
+    iVar11 = 0;
+    do {
+      uVar14 = uVar10 - 1;
+      if (*(ushort *)((int)&DAT_835a2944 + (int)((uVar5 & 1) << 1)) <= uVar14) {
+        MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,uVar14);
+      }
+      iVar12 = uVar14 * 0x60 + *(int *)((int)&DAT_835a2948 + (int)((uVar5 & 1) << 2));
+      iVar6 = DynEnt_GetEntityColl(uVar5,uVar14);
+      if ((double)*(float *)((uVar1 + 1) * 4 + iVar6) <= dVar17) {
+        if ((double)*(float *)((uVar1 + 3) * 4 + iVar6) < dVar17) {
+          uVar15 = (ulonglong)*(ushort *)(iVar3 + 10);
+          uVar16 = uVar15;
+          if (uVar15 != 0) goto LAB_82412838;
+          uVar15 = DynEnt_AllocCollSector(uVar5,uVar13,(int)param_4);
+          uVar16 = uVar15 & 0xffff;
+          if (uVar16 != 0) {
+            *(short *)(iVar3 + 10) = (short)uVar15;
+            goto LAB_82412820;
+          }
+        }
+LAB_82412904:
+        uVar10 = (uint)*(ushort *)(iVar6 + 2);
+      }
+      else {
+        uVar15 = (ulonglong)*(ushort *)(iVar3 + 8);
+        uVar16 = uVar15;
+        if (uVar15 == 0) {
+          uVar15 = DynEnt_AllocCollSector(uVar5,uVar13,(int)param_4);
+          uVar16 = uVar15 & 0xffff;
+          if (uVar16 == 0) goto LAB_82412904;
+          *(short *)(iVar3 + 8) = (short)uVar15;
+LAB_82412820:
+          *(short *)((int)uVar16 * 0x14 + *(int *)(&DAT_83324b1c + iVar4) + 6) = (short)param_2;
+        }
+LAB_82412838:
+        uVar2 = *(ushort *)(iVar6 + 2);
+        uVar10 = (uint)uVar2;
+        if (iVar11 == 0) {
+          iVar7 = DynEnt_GetEntityColl(uVar5,(ulonglong)*(ushort *)(iVar3 + 0x10) - 1);
+          if (iVar7 != iVar6) {
+            uVar8 = 0x1db;
+            pcVar9 = 
+            "prevDynEntColl || (DynEnt_GetEntityColl( collType, sector->entListHead - 1 ) == dynEntColl)"
+            ;
+LAB_82412884:
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_coll.cpp"
+                            ,uVar8,0,&DAT_82000f98,pcVar9);
+          }
+        }
+        else {
+          iVar7 = DynEnt_GetEntityColl(uVar5,(ulonglong)*(ushort *)(iVar11 + 2) - 1);
+          if (iVar7 != iVar6) {
+            uVar8 = 0x1dc;
+            pcVar9 = 
+            "!prevDynEntColl || (DynEnt_GetEntityColl( collType, prevDynEntColl->nextEntInSector - 1) == dynEntColl)"
+            ;
+            goto LAB_82412884;
+          }
+        }
+        DynEnt_AddToCollSector(uVar5,uVar14,uVar15);
+        if (iVar12 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DynEntity\\DynEntity_coll.cpp"
+                          ,0x2d4,0,&DAT_82000f98,0xffffffff8205fea0);
+        }
+        iVar6 = (int)uVar16 * 0x14 + *(int *)(&DAT_83324b1c + iVar4);
+        *(uint *)(iVar6 + 0xc) = *(uint *)(iVar12 + 0x5c) | *(uint *)(iVar6 + 0xc);
+        iVar6 = iVar11;
+        if (iVar11 == 0) {
+          *(ushort *)(iVar3 + 0x10) = uVar2;
+        }
+        else {
+          *(ushort *)(iVar11 + 2) = uVar2;
+        }
+      }
+      if (uVar10 == 0) break;
+      uVar13 = param_3 & 0xffffffff;
+      iVar11 = iVar6;
+    } while( true );
+  }
+  __restgprlr();
+  return;
 }
 
 
 // 82412928  DynEnt_UnlinkEntity  (DynEntity/DynEntity_coll.cpp:494)
 
-void DynEnt_UnlinkEntity(void)
+/* WARNING: Removing unreachable block (ram,0x82412b40) */
+
+void DynEnt_UnlinkEntity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  short sVar1;
+  int iVar2;
+  int iVar3;
+  ushort *puVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined8 uVar7;
+  ushort *puVar8;
+  ushort *puVar9;
+  ushort *puVar10;
+  int iVar11;
+  int iVar12;
+  uint uVar13;
+  uint uVar14;
+  uint uVar15;
+  
+  uVar5 = __savegprlr();
+  if ((param_2 & 0xffffffff) == 0xffff) {
+    MyAssertHandler(0xffffffff820602e8,0x1fa,0,0xffffffff82000f98,0xffffffff82060154);
+  }
+  uVar6 = DynEnt_GetEntityCount(uVar5);
+  if ((uVar6 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+    uVar7 = DynEnt_GetEntityCount(uVar5);
+    MyAssertHandler(0xffffffff820602e8,0x1fb,0,0xffffffff820603a0,param_2,uVar7);
+  }
+  if (1 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar5,2);
+  }
+  iVar3 = (int)uVar5 * 0x20;
+  puVar8 = (ushort *)DynEnt_GetEntityColl(uVar5,param_2);
+  uVar13 = (uint)*puVar8;
+  if (uVar13 != 0) {
+    iVar12 = *(int *)(&DAT_83324b1c + iVar3);
+    *puVar8 = 0;
+    iVar12 = uVar13 * 0x14 + iVar12;
+    if (*(short *)(iVar12 + 0x10) == 0) {
+      MyAssertHandler(0xffffffff820602e8,0x207,0,0xffffffff82000f98,0xffffffff82010da4);
+    }
+    if (((ulonglong)*(ushort *)(iVar12 + 0x10) - 1 & 0xffffffff) == (param_2 & 0xffffffff)) {
+      *(ushort *)(iVar12 + 0x10) = puVar8[1];
+    }
+    else {
+      puVar9 = (ushort *)DynEnt_GetEntityColl(uVar5);
+      puVar10 = (ushort *)DynEnt_GetEntityColl(uVar5,(ulonglong)puVar9[1] - 1);
+      while (puVar4 = puVar10, puVar4 != puVar8) {
+        if (puVar9[1] == 0) {
+          MyAssertHandler(0xffffffff820602e8,0x219,0,0xffffffff82000f98,0xffffffff82010d8c);
+        }
+        puVar10 = (ushort *)DynEnt_GetEntityColl(uVar5,(ulonglong)puVar4[1] - 1);
+        puVar9 = puVar4;
+      }
+      puVar9[1] = puVar8[1];
+    }
+    sVar1 = *(short *)(iVar12 + 0x10);
+    while( true ) {
+      if (((sVar1 != 0) || (*(short *)(iVar12 + 8) != 0)) || (*(short *)(iVar12 + 10) != 0))
+      goto LAB_82412be0;
+      uVar14 = (uint)*(ushort *)(iVar12 + 6);
+      *(undefined4 *)(iVar12 + 0xc) = 0;
+      if (uVar14 == 0) break;
+      *(undefined2 *)(iVar12 + 6) = *(undefined2 *)(&DAT_83324b18 + iVar3);
+      *(short *)(&DAT_83324b18 + iVar3) = (short)uVar13;
+      iVar12 = uVar14 * 0x14 + *(int *)(&DAT_83324b1c + iVar3);
+      if (*(ushort *)(iVar12 + 8) == uVar13) {
+        *(undefined2 *)(iVar12 + 8) = 0;
+      }
+      else {
+        if (*(ushort *)(iVar12 + 10) != uVar13) {
+          MyAssertHandler(0xffffffff820602e8,0x235,0,0xffffffff82000f98,0xffffffff82010d64);
+        }
+        *(undefined2 *)(iVar12 + 10) = 0;
+      }
+      sVar1 = *(short *)(iVar12 + 0x10);
+      uVar13 = uVar14;
+    }
+    if (uVar13 != 1) {
+      MyAssertHandler(0xffffffff820602e8,0x223,0,0xffffffff82000f98,0xffffffff82060514);
+    }
+LAB_82412be0:
+    uVar13 = (uint)((uVar5 & 0xffffffff) << 1) & 2;
+    if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + uVar13) <= (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8205f8a8,0x3d,0,0xffffffff8205cca8,param_2);
+    }
+    iVar2 = (int)((uVar5 & 1) << 2);
+    uVar6 = (ulonglong)*(uint *)((int)&DAT_835a2948 + iVar2) +
+            (param_2 + (param_2 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20;
+    while( true ) {
+      uVar14 = *(uint *)((uint)*(ushort *)(iVar12 + 10) * 0x14 + *(int *)(&DAT_83324b1c + iVar3) +
+                        0xc) |
+               *(uint *)((uint)*(ushort *)(iVar12 + 8) * 0x14 + *(int *)(&DAT_83324b1c + iVar3) +
+                        0xc);
+      if ((ulonglong)*(ushort *)(iVar12 + 0x10) != 0) {
+        iVar11 = DynEnt_GetEntityColl(uVar5,(ulonglong)*(ushort *)(iVar12 + 0x10) - 1);
+        while( true ) {
+          if ((uVar6 & 0xffffffff) == 0) {
+            MyAssertHandler(0xffffffff820602e8,0x2d4,0,0xffffffff82000f98,0xffffffff8205fea0);
+          }
+          uVar14 = *(uint *)((int)uVar6 + 0x5c) | uVar14;
+          if (*(ushort *)(iVar11 + 2) == 0) break;
+          uVar15 = *(ushort *)(iVar11 + 2) - 1;
+          if (1 < (uVar5 & 0xffffffff)) {
+            MyAssertHandler(0xffffffff8205f8a8,0x5d,0,0xffffffff8205f93c,uVar5,2);
+          }
+          if (*(ushort *)((int)&DAT_835a2944 + (int)((uVar5 & 0xffffffff) << 1)) <= uVar15) {
+            MyAssertHandler(0xffffffff8205f8a8,0x5e,0,0xffffffff8205f8f8,uVar15);
+          }
+          iVar11 = *(int *)(&DAT_835a2960 + (int)((uVar5 & 0xffffffff) << 2)) + uVar15 * 0x14;
+        }
+      }
+      *(uint *)(iVar12 + 0xc) = uVar14;
+      if (*(ushort *)(iVar12 + 6) == 0) break;
+      iVar12 = (uint)*(ushort *)(iVar12 + 6) * 0x14 + *(int *)(&DAT_83324b1c + iVar3);
+    }
+    if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + uVar13) <= (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,param_2);
+    }
+    iVar3 = *(int *)((int)&DAT_835a2958 + iVar2) + (int)((param_2 & 0xffffffff) << 4);
+    *(ushort *)(iVar3 + 4) = *(ushort *)(iVar3 + 4) & 0xfffb;
+  }
+  __restgprlr();
+  return;
 }
 
 
@@ -266,25 +746,20 @@ void DynEnt_LinkEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3,ul
   
   uVar6 = __savegprlr_21();
   if ((param_2 & 0xffffffff) == 0xffff) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x273,0,0xffffffff82000f98,0xffffffff82060154);
   }
   uVar7 = DynEnt_GetEntityCount(uVar6);
   if ((uVar7 & 0xffffffff) <= (param_2 & 0xffffffff)) {
     uVar8 = DynEnt_GetEntityCount(uVar6);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x274,0,0xffffffff820603a0,param_2,uVar8);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x275,0,0xffffffff82000f98,0xffffffff820605b4);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x276,0,0xffffffff82000f98,0xffffffff820605ac);
   }
   if (1 < (uVar6 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x55,0,0xffffffff8205f93c,uVar6,2);
   }
   uVar7 = uVar6 & 1;
@@ -292,22 +767,18 @@ void DynEnt_LinkEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3,ul
   iVar9 = DynEnt_GetEntityDef(param_2,uVar7);
   puVar10 = (ushort *)DynEnt_GetEntityColl(uVar6,param_2);
   if (iVar9 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x2d4,0,0xffffffff82000f98,0xffffffff8205fea0);
   }
   uVar3 = *(uint *)(iVar9 + 0x5c);
   if (uVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x27f,0,0xffffffff82000f98,0xffffffff820605a0);
   }
   if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)(uVar7 << 1)) <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8205f8a8,0x4b,0,0xffffffff8205cca8,param_2);
   }
   if ((*(ushort *)
         (*(int *)((int)&DAT_835a2958 + (int)(uVar7 << 2)) + (int)((param_2 & 0xffffffff) << 4) + 4)
       & 2) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x282,0,0xffffffff82000f98,0xffffffff82060558);
   }
   do {
@@ -372,7 +843,6 @@ undefined4 DynEnt_GetContents(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820602e8,0x2d4,0,0xffffffff82000f98,0xffffffff8205fea0);
   }
   return *(undefined4 *)(param_1 + 0x5c);
@@ -381,11 +851,67 @@ undefined4 DynEnt_GetContents(int param_1)
 
 // 82411A40  DynEnt_GetLocalBounds  (DynEntity/DynEntity_coll.cpp:734)
 
-void DynEnt_GetLocalBounds(void)
+void DynEnt_GetLocalBounds(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x2df,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((*(int *)(iVar1 + 0x20) == 0) && (*(short *)(iVar1 + 0x24) == 0)) {
+    MyAssertHandler(0xffffffff820602e8,0x2e0,0,0xffffffff82000f98,0xffffffff820603ec);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x2e1,0,0xffffffff82000f98,0xffffffff82002044);
+  }
+  if (*(int *)(iVar1 + 0x20) != 0) {
+    XModelGetBounds();
+    __restgprlr_28();
+    return;
+  }
+  CM_BrushModelBounds(*(undefined2 *)(iVar1 + 0x24),param_2);
+  __restgprlr_28();
+  return;
+}
+
+
+// 82411B10  DynEnt_GetSphereDist  (DynEntity/DynEntity_coll.cpp:750)
+
+double DynEnt_GetSphereDist(int param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  double dVar4;
+  
+  fVar1 = *param_2 - *(float *)(param_1 + 0x10);
+  fVar2 = param_2[2] - *(float *)(param_1 + 0x18);
+  fVar3 = param_2[1] - *(float *)(param_1 + 0x14);
+  dVar4 = (double)(SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - *(float *)(param_1 + 0x1c))
+  ;
+  if (dVar4 < 0.0) {
+    dVar4 = 0.0;
+  }
+  return dVar4;
+}
+
+
+// 82411B60  DynEnt_GetCylinderDist  (DynEntity/DynEntity_coll.cpp:759)
+
+double DynEnt_GetCylinderDist(int param_1)
+
+{
+  double dVar1;
+  
+  dVar1 = (double)Vec2Distance(param_1 + 0x10);
+  dVar1 = (double)(float)(dVar1 - (double)*(float *)(param_1 + 0x1c));
+  if (dVar1 < 0.0) {
+    dVar1 = 0.0;
+  }
+  return dVar1;
 }
 
 
@@ -422,40 +948,295 @@ bool DynEnt_IsInCone(double param_1,undefined8 param_2,int param_3,float *param_
 
 // 82411C60  DynEnt_EntityInSphere  (DynEntity/DynEntity_coll.cpp:783)
 
-void DynEnt_EntityInSphere(void)
+void DynEnt_EntityInSphere(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  
+  iVar5 = __savegprlr_26();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x310,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x311,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x312,0,0xffffffff82000f98,0xffffffff8205ff7c);
+  }
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x2d4,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  pfVar1 = (float *)param_3;
+  if ((*(uint *)(iVar5 + 0x5c) & (uint)pfVar1[5]) == 0) {
+    __restgprlr_26(0);
+    return;
+  }
+  iVar5 = (int)param_2;
+  fVar2 = pfVar1[2] - *(float *)(iVar5 + 0x18);
+  fVar3 = *pfVar1 - *(float *)(iVar5 + 0x10);
+  fVar4 = pfVar1[1] - *(float *)(iVar5 + 0x14);
+  __restgprlr_26(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 < pfVar1[3]);
+  return;
 }
 
 
 // 82411D88  DynEnt_EntityInCylinder  (DynEntity/DynEntity_coll.cpp:799)
 
-void DynEnt_EntityInCylinder(void)
+void DynEnt_EntityInCylinder(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  double dVar2;
+  
+  iVar1 = __savegprlr_26();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820602e8,800,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x321,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x322,0,0xffffffff82000f98,0xffffffff8205ff7c);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x2d4,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((*(uint *)(iVar1 + 0x5c) & *(uint *)((int)param_3 + 0x14)) == 0) {
+    __restgprlr_26(0);
+    return;
+  }
+  dVar2 = (double)Vec2DistanceSq(param_2 + 0x10,param_3);
+  __restgprlr_26(dVar2 < (double)*(float *)((int)param_3 + 0xc));
+  return;
+}
+
+
+// 82411E90  DynEnt_PointTraceToModel  (DynEntity/DynEntity_coll.cpp:815)
+
+void DynEnt_PointTraceToModel
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  float fVar1;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar2;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [36];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  iVar3 = __savegprlr_26();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x335,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x336,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x337,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x338,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  if (*(int *)(iVar3 + 0x20) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x339,0,0xffffffff82000f98,0xffffffff82060420);
+  }
+  pfVar5 = (float *)param_4;
+  if ((double)*pfVar5 <= 0.0) {
+    MyAssertHandler(0xffffffff820602e8,0x33b,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar5
+                   );
+  }
+  dVar8 = 1.0;
+  if (1.0 < (double)*pfVar5) {
+    MyAssertHandler(0xffffffff820602e8,0x33c,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar5
+                   );
+  }
+  if (*(int *)((int)param_3 + 0x68) != 0) {
+    iVar4 = (int)param_2;
+    local_4c = *(undefined4 *)(iVar4 + 0x10);
+    local_48 = *(undefined4 *)(iVar4 + 0x14);
+    local_44 = *(undefined4 *)(iVar4 + 0x18);
+    UnitQuatToAxis(param_2,auStack_70);
+    MatrixTransposeTransformVector43(param_3 + 0x40,auStack_70,auStack_80);
+    MatrixTransposeTransformVector43(param_3 + 0x50,auStack_70,auStack_90);
+    iVar4 = XModelTraceLine(*(undefined4 *)(iVar3 + 0x20),param_4,auStack_80,auStack_90,
+                            *(undefined4 *)((int)param_3 + 100));
+    if (iVar4 == 0) {
+      MatrixTransformVector(param_4 + 4,auStack_70,&local_a0);
+      dVar7 = (double)SQRT(local_9c * local_9c + local_98 * local_98 + local_a0 * local_a0);
+      dVar6 = dVar8;
+      if (-dVar7 < 0.0) {
+        dVar6 = dVar7;
+      }
+      fVar1 = (float)(dVar8 / dVar6);
+      pfVar5[1] = local_a0 * fVar1;
+      pfVar5[2] = fVar1 * local_9c;
+      pfVar5[3] = local_98 * fVar1;
+      uVar2 = DynEnt_GetId(iVar3,0);
+      Trace_SetHitId(param_4,2,uVar2);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 824120D8  DynEnt_PointTraceToBrush  (DynEntity/DynEntity_coll.cpp:853)
 
-void DynEnt_PointTraceToBrush(void)
+void DynEnt_PointTraceToBrush
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  undefined8 uVar1;
+  float *pfVar3;
+  double dVar4;
+  undefined1 auStack_70 [112];
+  
+  iVar2 = __savegprlr_26();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x359,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x35a,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x35b,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x35c,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  if (*(int *)(iVar2 + 0x20) != 0) {
+    MyAssertHandler(0xffffffff820602e8,0x35d,0,0xffffffff82000f98,0xffffffff8205dc90);
+  }
+  if (*(short *)(iVar2 + 0x24) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x35e,0,0xffffffff82000f98,0xffffffff82060434);
+  }
+  pfVar3 = (float *)param_4;
+  if ((double)*pfVar3 <= 0.0) {
+    MyAssertHandler(0xffffffff820602e8,0x360,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar3
+                   );
+  }
+  if (1.0 < (double)*pfVar3) {
+    MyAssertHandler(0xffffffff820602e8,0x361,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar3
+                   );
+  }
+  dVar4 = (double)*pfVar3;
+  UnitQuatToAxis(param_2,auStack_70);
+  CM_TransformedBrushModelTraceRotated
+            (param_4,param_3 + 0x40,param_3 + 0x50,0xffffffff82174a3c,*(undefined2 *)(iVar2 + 0x24),
+             *(undefined4 *)((int)param_3 + 100),param_2 + 0x10,auStack_70);
+  if ((double)*pfVar3 < dVar4) {
+    uVar1 = DynEnt_GetId(iVar2,1);
+    Trace_SetHitId(param_4,3,uVar1);
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 824122D0  DynEnt_ClipMoveTraceToBrush  (DynEntity/DynEntity_coll.cpp:882)
+
+void DynEnt_ClipMoveTraceToBrush
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  undefined4 *puVar2;
+  int iVar3;
+  undefined8 uVar1;
+  float *pfVar4;
+  double dVar5;
+  undefined1 auStack_70 [112];
+  
+  puVar2 = (undefined4 *)__savegprlr_25();
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff820602e8,0x377,0,0xffffffff82000f98,0xffffffff8205fea0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x378,0,0xffffffff82000f98,0xffffffff8205fe80);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x379,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x37a,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar4 = (float *)param_4;
+  if ((double)*pfVar4 <= 0.0) {
+    MyAssertHandler(0xffffffff820602e8,0x37f,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar4
+                   );
+  }
+  if (1.0 < (double)*pfVar4) {
+    MyAssertHandler(0xffffffff820602e8,0x380,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar4
+                   );
+  }
+  if (*(short *)(puVar2 + 9) == 0) {
+    MyAssertHandler(0xffffffff820602e8,0x381,0,0xffffffff82000f98,0xffffffff82060434);
+  }
+  if (((puVar2[0x17] & *(uint *)((int)param_3 + 0x98)) != 0) &&
+     (iVar3 = DynEnt_GetEntityProps(*puVar2), *(char *)(iVar3 + 5) != '\0')) {
+    iVar3 = CM_TraceSphere((double)*(float *)((int)param_2 + 0x1c),(double)*pfVar4,param_3 + 0x30,
+                           param_2 + 0x10);
+    if (iVar3 == 0) {
+      dVar5 = (double)*pfVar4;
+      UnitQuatToAxis(param_2,auStack_70);
+      CM_TransformedBrushModelTraceRotated
+                (param_4,param_3 + 0x70,param_3 + 0x80,param_3,*(undefined2 *)(puVar2 + 9),
+                 *(undefined4 *)((int)param_3 + 0x98),param_2 + 0x10,auStack_70);
+      if ((double)*pfVar4 < dVar5) {
+        uVar1 = DynEnt_GetId(puVar2,1);
+        Trace_SetHitId(param_4,3,uVar1);
+      }
+    }
+  }
+  __restgprlr_25();
+  return;
 }
 
 
 // 824124E0  DynEnt_SetPhysObjCollision  (DynEntity/DynEntity_coll.cpp:922)
 
-void DynEnt_SetPhysObjCollision(void)
+void DynEnt_SetPhysObjCollision(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined1 auStack_40 [64];
+  
+  iVar2 = __savegprlr_29();
+  iVar1 = *(int *)(iVar2 + 0x20);
+  if ((iVar1 != 0) && (*(int *)(iVar1 + 0x11c) != 0)) {
+    Phys_ObjSetCollisionFromXModel(iVar1,0,param_2,param_3);
+    __restgprlr_29();
+    return;
+  }
+  if (*(short *)(iVar2 + 0x26) != 0) {
+    Phys_ObjAddGeomBrushModel(0,param_2,*(short *)(iVar2 + 0x26),iVar2 + 0x38,param_3);
+    __restgprlr_29();
+    return;
+  }
+  DynEnt_GetLocalBounds(iVar2,auStack_40);
+  if (*(char *)(*(int *)(iVar2 + 0x2c) + 0x40) != '\0') {
+    Phys_ObjAddGeomCylinder();
+    __restgprlr_29();
+    return;
+  }
+  Phys_ObjAddGeomBox(0,param_2,auStack_40,param_3);
+  __restgprlr_29();
+  return;
 }
 

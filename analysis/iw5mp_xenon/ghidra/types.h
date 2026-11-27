@@ -281,11 +281,39 @@ struct _MEMORY_BASIC_INFORMATION {
     DWORD Type;
 };
 
+typedef union _ULARGE_INTEGER _ULARGE_INTEGER, *P_ULARGE_INTEGER;
+
+typedef union _ULARGE_INTEGER ULARGE_INTEGER;
+
+typedef struct _struct_22 _struct_22, *P_struct_22;
+
+typedef struct _struct_23 _struct_23, *P_struct_23;
+
+typedef double ULONGLONG;
+
+struct _struct_23 {
+    DWORD LowPart;
+    DWORD HighPart;
+};
+
+struct _struct_22 {
+    DWORD LowPart;
+    DWORD HighPart;
+};
+
+union _ULARGE_INTEGER {
+    struct _struct_22 s;
+    struct _struct_23 u;
+    ULONGLONG QuadPart;
+};
+
 typedef CHAR *LPCSTR;
 
 typedef struct _MEMORY_BASIC_INFORMATION *PMEMORY_BASIC_INFORMATION;
 
 typedef LONG *PLONG;
+
+typedef ULARGE_INTEGER *PULARGE_INTEGER;
 
 typedef LARGE_INTEGER *PLARGE_INTEGER;
 
@@ -334,9 +362,9 @@ struct tm {
     int tm_isdst;
 };
 
-typedef void (*_PHNDLR)(int);
-
 typedef uint UINT_PTR;
+
+typedef void (*_PHNDLR)(int);
 
 typedef struct DotNetPdbInfo DotNetPdbInfo, *PDotNetPdbInfo;
 
@@ -3837,27 +3865,8 @@ typedef enum UCODESHADERTYPE {
 
 typedef struct _D3DPERFCOUNTER_VALUES _D3DPERFCOUNTER_VALUES, *P_D3DPERFCOUNTER_VALUES;
 
-typedef union _ULARGE_INTEGER _ULARGE_INTEGER, *P_ULARGE_INTEGER;
 
-typedef struct _ULARGE_INTEGER_s_0 _ULARGE_INTEGER_s_0, *P_ULARGE_INTEGER_s_0;
-
-typedef struct <unnamed-type-u> <unnamed-type-u>, *P<unnamed-type-u>;
-
-struct <unnamed-type-u> {
-    ulong HighPart;
-    ulong LowPart;
-};
-
-struct _ULARGE_INTEGER_s_0 {
-    ulong HighPart;
-    ulong LowPart;
-};
-
-union _ULARGE_INTEGER {
-    struct _ULARGE_INTEGER_s_0 _s_0;
-    struct <unnamed-type-u> u;
-    ulong64 QuadPart;
-};
+/* WARNING! conflicting data type names: /iw5mp_xenon.pdb/_ULARGE_INTEGER - /winnt.h/_ULARGE_INTEGER */
 
 struct _D3DPERFCOUNTER_VALUES {
     union _ULARGE_INTEGER CP[1];
@@ -14009,8 +14018,12 @@ struct _LARGE_INTEGER_s_0 {
     ulong LowPart;
 };
 
+typedef struct <unnamed-type-u> <unnamed-type-u>, *P<unnamed-type-u>;
 
-/* WARNING! conflicting data type names: /iw5mp_xenon.pdb/_LARGE_INTEGER/<unnamed-type-u> - /iw5mp_xenon.pdb/_ULARGE_INTEGER/<unnamed-type-u> */
+struct <unnamed-type-u> {
+    long HighPart;
+    ulong LowPart;
+};
 
 
 /* WARNING! conflicting data type names: /iw5mp_xenon.pdb/CG_INT_MASK_REG/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0 - /iw5mp_xenon.pdb/D1SCL_COEF_RAM_SELECT/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0 */
@@ -14387,6 +14400,16 @@ typedef enum FixupType {
 
 /* WARNING! conflicting data type names: /iw5mp_xenon.pdb/PCIE_LC_LINK_WIDTH_CNTL/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0/<unnamed-type-bitfields>_u_0_s_1/<unnamed-type-bitfields>_u_0_s_1_u_0/<unnamed-type-bitfields>_u_0_s_1_u_0_s_0 - /iw5mp_xenon.pdb/VGT_GROUP_VECT_1_FMT_CNTL/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0/<unnamed-type-bitfields>_u_0_s_1/<unnamed-type-bitfields>_u_0_s_1_u_0/<unnamed-type-bitfields>_u_0_s_1_u_0_s_0 */
 
+typedef struct _ULARGE_INTEGER_s_0 _ULARGE_INTEGER_s_0, *P_ULARGE_INTEGER_s_0;
+
+struct _ULARGE_INTEGER_s_0 {
+    ulong HighPart;
+    ulong LowPart;
+};
+
+
+/* WARNING! conflicting data type names: /iw5mp_xenon.pdb/_ULARGE_INTEGER/<unnamed-type-u> - /iw5mp_xenon.pdb/_LARGE_INTEGER/<unnamed-type-u> */
+
 
 /* WARNING! conflicting data type names: /iw5mp_xenon.pdb/MC0_STATUS_1/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0 - /iw5mp_xenon.pdb/D1SCL_COEF_RAM_SELECT/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0 */
 
@@ -14500,6 +14523,47 @@ struct <unnamed-type-bitfields>_u_0_s_6 {
 
 
 /* WARNING! conflicting data type names: /iw5mp_xenon.pdb/BC_DUMMY_CRAYRB_ENUMS/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0/<unnamed-type-bitfields>_u_0_s_2/<unnamed-type-bitfields>_u_0_s_2_u_0/<unnamed-type-bitfields>_u_0_s_2_u_0_s_0 - /iw5mp_xenon.pdb/VGT_GROUP_VECT_1_FMT_CNTL/<unnamed-type-bitfields>/<unnamed-type-bitfields>_u_0/<unnamed-type-bitfields>_u_0_s_2/<unnamed-type-bitfields>_u_0_s_2_u_0/<unnamed-type-bitfields>_u_0_s_2_u_0_s_0 */
+
+typedef ulong u_long;
+
+typedef struct WSAData WSAData, *PWSAData;
+
+typedef struct WSAData WSADATA;
+
+struct WSAData {
+    WORD wVersion;
+    WORD wHighVersion;
+    char szDescription[257];
+    char szSystemStatus[129];
+    ushort iMaxSockets;
+    ushort iMaxUdpDg;
+    char *lpVendorInfo;
+};
+
+typedef UINT_PTR SOCKET;
+
+typedef ushort u_short;
+
+typedef WSADATA *LPWSADATA;
+
+
+/* WARNING! conflicting data type names: /winsock.h/sockaddr - /iw5mp_xenon.pdb/sockaddr */
+
+typedef struct fd_set fd_set, *Pfd_set;
+
+typedef uint u_int;
+
+struct fd_set {
+    u_int fd_count;
+    SOCKET fd_array[64];
+};
+
+typedef struct timeval timeval, *Ptimeval;
+
+struct timeval {
+    long tv_sec;
+    long tv_usec;
+};
 
 typedef struct _tiddata _tiddata, *P_tiddata;
 
@@ -14684,47 +14748,6 @@ struct threadlocaleinfostruct {
     uchar *pcumap;
     struct __lc_time_data *lc_time_curr;
     wchar_t *locale_name[6];
-};
-
-typedef ulong u_long;
-
-typedef struct WSAData WSAData, *PWSAData;
-
-typedef struct WSAData WSADATA;
-
-struct WSAData {
-    WORD wVersion;
-    WORD wHighVersion;
-    char szDescription[257];
-    char szSystemStatus[129];
-    ushort iMaxSockets;
-    ushort iMaxUdpDg;
-    char *lpVendorInfo;
-};
-
-typedef WSADATA *LPWSADATA;
-
-typedef UINT_PTR SOCKET;
-
-typedef ushort u_short;
-
-
-/* WARNING! conflicting data type names: /winsock.h/sockaddr - /iw5mp_xenon.pdb/sockaddr */
-
-typedef struct fd_set fd_set, *Pfd_set;
-
-typedef uint u_int;
-
-struct fd_set {
-    u_int fd_count;
-    SOCKET fd_array[64];
-};
-
-typedef struct timeval timeval, *Ptimeval;
-
-struct timeval {
-    long tv_sec;
-    long tv_usec;
 };
 
 typedef struct SNDCHANNEL SNDCHANNEL, *PSNDCHANNEL;

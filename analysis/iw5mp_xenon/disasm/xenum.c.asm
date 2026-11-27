@@ -3,3 +3,22 @@
 ; 828A9140  XEnumerate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xenum.c:27)
   828A9140  7D8802A6             mfspr r12,LR
   828A9144  4806D571             bl 0x829166b4
+  828A9148  9421FF80             stwu r1,-0x80(r1)
+  828A914C  7C7F1B78             or r31,r3,r3
+  828A9150  7C9E2378             or r30,r4,r4
+  828A9154  7CBD2B78             or r29,r5,r5
+  828A9158  7CDC3378             or r28,r6,r6
+  828A915C  7CFB3B78             or r27,r7,r7
+  828A9160  7DAD6B78             or r13,r13,r13
+  828A9164  7F68DB78             or r8,r27,r27
+  828A9168  7F87E378             or r7,r28,r28
+  828A916C  7FA6EB78             or r6,r29,r29
+  828A9170  7FC5F378             or r5,r30,r30
+  828A9174  38800000             li r4,0x0
+  828A9178  7FE3FB78             or r3,r31,r31
+  828A917C  48098299             bl 0x82941414
+  828A9180  7C7F1B78             or r31,r3,r3
+  828A9184  7DCE7378             or r14,r14,r14
+  828A9188  7FE3FB78             or r3,r31,r31
+  828A918C  38210080             addi r1,r1,0x80
+  828A9190  4806D574             b 0x82916704

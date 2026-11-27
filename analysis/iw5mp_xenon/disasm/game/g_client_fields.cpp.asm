@@ -3,6 +3,64 @@
 ; 82459438  ClientScr_SetRadarMode  (game/g_client_fields.cpp:29)
   82459438  7D8802A6             mfspr r12,LR
   8245943C  484BD281             bl 0x829166bc
+  82459440  9421FF90             stwu r1,-0x70(r1)
+  82459444  7C7D1B78             or r29,r3,r3
+  82459448  2B030000             cmplwi cr6,r3,0x0
+  8245944C  409A0028             bne cr6,0x82459474
+  82459450  3D608207             lis r11,-0x7df9
+  82459454  3D408200             lis r10,-0x7e00
+  82459458  3D208207             lis r9,-0x7df9
+  8245945C  38EBC32C             subi r7,r11,0x3cd4
+  82459460  38CA0F98             addi r6,r10,0xf98
+  82459464  3869C2E8             subi r3,r9,0x3d18
+  82459468  38A00000             li r5,0x0
+  8245946C  38800020             li r4,0x20
+  82459470  4817B091             bl 0x825d4500
+LAB_82459474:
+  82459474  38600000             li r3,0x0
+  82459478  48107769             bl 0x82560be0
+  8245947C  3D40835A             lis r10,-0x7ca6
+  82459480  546B043E             rlwinm r11,r3,0x0,0x10,0x1f
+  82459484  3BEA0B80             addi r31,r10,0xb80
+  82459488  7D7E5B78             or r30,r11,r11
+  8245948C  A15F01FC             lhz r10,0x1fc(r31)
+  82459490  7F0B5040             cmplw cr6,r11,r10
+  82459494  409A000C             bne cr6,0x824594a0
+  82459498  39600000             li r11,0x0
+  8245949C  48000014             b 0x824594b0
+LAB_824594a0:
+  824594A0  A07F01FE             lhz r3,0x1fe(r31)
+  824594A4  7F1E1840             cmplw cr6,r30,r3
+  824594A8  409A002C             bne cr6,0x824594d4
+  824594AC  39600001             li r11,0x1
+LAB_824594b0:
+  824594B0  917D34C4             stw r11,0x34c4(r29)
+  824594B4  3D608358             lis r11,-0x7ca8
+  824594B8  39403980             li r10,0x3980
+  824594BC  816B0B00             lwz r11,0xb00(r11)
+  824594C0  7D2BE850             subf r9,r11,r29
+  824594C4  7C6953D6             divw r3,r9,r10
+  824594C8  48001991             bl 0x8245ae58
+  824594CC  38210070             addi r1,r1,0x70
+  824594D0  484BD23C             b 0x8291670c
+LAB_824594d4:
+  824594D4  480E9D95             bl 0x82543268
+  824594D8  A17F01FC             lhz r11,0x1fc(r31)
+  824594DC  7C7F1B78             or r31,r3,r3
+  824594E0  7D635B78             or r3,r11,r11
+  824594E4  480E9D85             bl 0x82543268
+  824594E8  7C7D1B78             or r29,r3,r3
+  824594EC  7FC3F378             or r3,r30,r30
+  824594F0  480E9D79             bl 0x82543268
+  824594F4  3D608207             lis r11,-0x7df9
+  824594F8  7C641B78             or r4,r3,r3
+  824594FC  386BC2B0             subi r3,r11,0x3d50
+  82459500  7FA5EB78             or r5,r29,r29
+  82459504  7FE6FB78             or r6,r31,r31
+  82459508  481B3171             bl 0x8260c678
+  8245950C  480FDA25             bl 0x82556f30
+  82459510  38210070             addi r1,r1,0x70
+  82459514  484BD1F8             b 0x8291670c
 
 ; 82459518  ClientScr_GetRadarMode  (game/g_client_fields.cpp:52)
   82459518  7D8802A6             mfspr r12,LR
@@ -64,6 +122,95 @@ LAB_824595cc:
 ; 824595E8  ClientScr_SetSessionTeam  (game/g_client_fields.cpp:65)
   824595E8  7D8802A6             mfspr r12,LR
   824595EC  484BD0C9             bl 0x829166b4
+  824595F0  9421FF80             stwu r1,-0x80(r1)
+  824595F4  7C7B1B78             or r27,r3,r3
+  824595F8  2B030000             cmplwi cr6,r3,0x0
+  824595FC  409A0028             bne cr6,0x82459624
+  82459600  3D608207             lis r11,-0x7df9
+  82459604  3D408200             lis r10,-0x7e00
+  82459608  3D208207             lis r9,-0x7df9
+  8245960C  38EBC32C             subi r7,r11,0x3cd4
+  82459610  38CA0F98             addi r6,r10,0xf98
+  82459614  3869C2E8             subi r3,r9,0x3d18
+  82459618  38A00000             li r5,0x0
+  8245961C  38800044             li r4,0x44
+  82459620  4817AEE1             bl 0x825d4500
+LAB_82459624:
+  82459624  38600000             li r3,0x0
+  82459628  481075B9             bl 0x82560be0
+  8245962C  3D60835A             lis r11,-0x7ca6
+  82459630  546A043E             rlwinm r10,r3,0x0,0x10,0x1f
+  82459634  396B0B80             addi r11,r11,0xb80
+  82459638  7D5D5378             or r29,r10,r10
+  8245963C  A12B0014             lhz r9,0x14(r11)
+  82459640  7F0A4840             cmplw cr6,r10,r9
+  82459644  409A000C             bne cr6,0x82459650
+  82459648  3B800001             li r28,0x1
+  8245964C  4800003C             b 0x82459688
+LAB_82459650:
+  82459650  A14B000C             lhz r10,0xc(r11)
+  82459654  7F1D5040             cmplw cr6,r29,r10
+  82459658  409A000C             bne cr6,0x82459664
+  8245965C  3B800002             li r28,0x2
+  82459660  48000028             b 0x82459688
+LAB_82459664:
+  82459664  A14B01F2             lhz r10,0x1f2(r11)
+  82459668  7F1D5040             cmplw cr6,r29,r10
+  8245966C  409A000C             bne cr6,0x82459678
+  82459670  3B800003             li r28,0x3
+  82459674  48000014             b 0x82459688
+LAB_82459678:
+  82459678  A16B007A             lhz r11,0x7a(r11)
+  8245967C  7F1D5840             cmplw cr6,r29,r11
+  82459680  409A0090             bne cr6,0x82459710
+  82459684  3B800000             li r28,0x0
+LAB_82459688:
+  82459688  3FE08358             lis r31,-0x7ca8
+  8245968C  3BC03980             li r30,0x3980
+  82459690  817F0B00             lwz r11,0xb00(r31)
+  82459694  7D6BD850             subf r11,r11,r27
+  82459698  7D4BF3D6             divw r10,r11,r30
+  8245969C  2F0A0012             cmpwi cr6,r10,0x12
+  824596A0  41980018             blt cr6,0x824596b8
+  824596A4  3D608207             lis r11,-0x7df9
+  824596A8  386BC3CC             subi r3,r11,0x3c34
+  824596AC  480FD885             bl 0x82556f30
+  824596B0  38210080             addi r1,r1,0x80
+  824596B4  484BD050             b 0x82916704
+LAB_824596b8:
+  824596B8  807B33D0             lwz r3,0x33d0(r27)
+  824596BC  48120F5D             bl 0x8257a618
+  824596C0  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  824596C4  2B0B0000             cmplwi cr6,r11,0x0
+  824596C8  409A0024             bne cr6,0x824596ec
+  824596CC  939B33D4             stw r28,0x33d4(r27)
+  824596D0  817F0B00             lwz r11,0xb00(r31)
+  824596D4  7D6BD850             subf r11,r11,r27
+  824596D8  7C6BF3D6             divw r3,r11,r30
+  824596DC  4800177D             bl 0x8245ae58
+  824596E0  48020E21             bl 0x8247a500
+  824596E4  38210080             addi r1,r1,0x80
+  824596E8  484BD01C             b 0x82916704
+LAB_824596ec:
+  824596EC  7FA3EB78             or r3,r29,r29
+  824596F0  480E9B79             bl 0x82543268
+  824596F4  3D608207             lis r11,-0x7df9
+  824596F8  7C641B78             or r4,r3,r3
+  824596FC  386BC3A4             subi r3,r11,0x3c5c
+  82459700  481B2F79             bl 0x8260c678
+  82459704  480FD82D             bl 0x82556f30
+  82459708  38210080             addi r1,r1,0x80
+  8245970C  484BCFF8             b 0x82916704
+LAB_82459710:
+  82459710  7FA3EB78             or r3,r29,r29
+  82459714  480E9B55             bl 0x82543268
+  82459718  3D608207             lis r11,-0x7df9
+  8245971C  7C641B78             or r4,r3,r3
+  82459720  386BC350             subi r3,r11,0x3cb0
+  82459724  481B2F55             bl 0x8260c678
+  82459728  480FD809             bl 0x82556f30
+  8245972C  38210080             addi r1,r1,0x80
+  82459730  484BCFD4             b 0x82916704
 
 ; 82459738  ClientScr_GetSessionTeam  (game/g_client_fields.cpp:114)
   82459738  7D8802A6             mfspr r12,LR
@@ -121,10 +268,149 @@ LAB_824597d8:
 ; 824597F0  ClientScr_SetSessionState  (game/g_client_fields.cpp:141)
   824597F0  7D8802A6             mfspr r12,LR
   824597F4  484BCEC9             bl 0x829166bc
+  824597F8  9421FF90             stwu r1,-0x70(r1)
+  824597FC  3D608207             lis r11,-0x7df9
+  82459800  3D408200             lis r10,-0x7e00
+  82459804  7C7D1B78             or r29,r3,r3
+  82459808  2B030000             cmplwi cr6,r3,0x0
+  8245980C  3BEBC2E8             subi r31,r11,0x3d18
+  82459810  3BCA0F98             addi r30,r10,0xf98
+  82459814  409A0020             bne cr6,0x82459834
+  82459818  3D608207             lis r11,-0x7df9
+  8245981C  7FC6F378             or r6,r30,r30
+  82459820  38EBC32C             subi r7,r11,0x3cd4
+  82459824  7FE3FB78             or r3,r31,r31
+  82459828  38A00000             li r5,0x0
+  8245982C  38800090             li r4,0x90
+  82459830  4817ACD1             bl 0x825d4500
+LAB_82459834:
+  82459834  817D332C             lwz r11,0x332c(r29)
+  82459838  2F0B0000             cmpwi cr6,r11,0x0
+  8245983C  409A0020             bne cr6,0x8245985c
+  82459840  3D608207             lis r11,-0x7df9
+  82459844  7FC6F378             or r6,r30,r30
+  82459848  38EBC45C             subi r7,r11,0x3ba4
+  8245984C  7FE3FB78             or r3,r31,r31
+  82459850  38A00000             li r5,0x0
+  82459854  38800091             li r4,0x91
+  82459858  4817ACA9             bl 0x825d4500
+LAB_8245985c:
+  8245985C  38600000             li r3,0x0
+  82459860  48107381             bl 0x82560be0
+  82459864  3D60835A             lis r11,-0x7ca6
+  82459868  546A043E             rlwinm r10,r3,0x0,0x10,0x1f
+  8245986C  396B0B80             addi r11,r11,0xb80
+  82459870  7D435378             or r3,r10,r10
+  82459874  A12B01F0             lhz r9,0x1f0(r11)
+  82459878  7F0A4840             cmplw cr6,r10,r9
+  8245987C  409A0014             bne cr6,0x82459890
+  82459880  39600000             li r11,0x0
+  82459884  917D3300             stw r11,0x3300(r29)
+  82459888  38210070             addi r1,r1,0x70
+  8245988C  484BCE80             b 0x8291670c
+LAB_82459890:
+  82459890  A14B002C             lhz r10,0x2c(r11)
+  82459894  7F035040             cmplw cr6,r3,r10
+  82459898  409A0014             bne cr6,0x824598ac
+  8245989C  39600001             li r11,0x1
+  824598A0  917D3300             stw r11,0x3300(r29)
+  824598A4  38210070             addi r1,r1,0x70
+  824598A8  484BCE64             b 0x8291670c
+LAB_824598ac:
+  824598AC  A14B01F2             lhz r10,0x1f2(r11)
+  824598B0  7F035040             cmplw cr6,r3,r10
+  824598B4  409A0014             bne cr6,0x824598c8
+  824598B8  39600002             li r11,0x2
+  824598BC  917D3300             stw r11,0x3300(r29)
+  824598C0  38210070             addi r1,r1,0x70
+  824598C4  484BCE48             b 0x8291670c
+LAB_824598c8:
+  824598C8  A16B01E4             lhz r11,0x1e4(r11)
+  824598CC  7F035840             cmplw cr6,r3,r11
+  824598D0  409A0020             bne cr6,0x824598f0
+  824598D4  817D00F8             lwz r11,0xf8(r29)
+  824598D8  39400003             li r10,0x3
+  824598DC  69690002             xori r9,r11,0x2
+  824598E0  915D3300             stw r10,0x3300(r29)
+  824598E4  913D00F8             stw r9,0xf8(r29)
+  824598E8  38210070             addi r1,r1,0x70
+  824598EC  484BCE20             b 0x8291670c
+LAB_824598f0:
+  824598F0  480E9979             bl 0x82543268
+  824598F4  3D608207             lis r11,-0x7df9
+  824598F8  7C641B78             or r4,r3,r3
+  824598FC  386BC400             subi r3,r11,0x3c00
+  82459900  481B2D79             bl 0x8260c678
+  82459904  480FD62D             bl 0x82556f30
+  82459908  38210070             addi r1,r1,0x70
+  8245990C  484BCE00             b 0x8291670c
 
 ; 82459910  ClientScr_GetSessionState  (game/g_client_fields.cpp:177)
   82459910  7D8802A6             mfspr r12,LR
   82459914  484BCDA9             bl 0x829166bc
+  82459918  9421FF90             stwu r1,-0x70(r1)
+  8245991C  3D608207             lis r11,-0x7df9
+  82459920  3D408200             lis r10,-0x7e00
+  82459924  7C7F1B78             or r31,r3,r3
+  82459928  2B030000             cmplwi cr6,r3,0x0
+  8245992C  3BCBC2E8             subi r30,r11,0x3d18
+  82459930  3BAA0F98             addi r29,r10,0xf98
+  82459934  409A0020             bne cr6,0x82459954
+  82459938  3D608207             lis r11,-0x7df9
+  8245993C  7FA6EB78             or r6,r29,r29
+  82459940  38EBC32C             subi r7,r11,0x3cd4
+  82459944  7FC3F378             or r3,r30,r30
+  82459948  38A00000             li r5,0x0
+  8245994C  388000B2             li r4,0xb2
+  82459950  4817ABB1             bl 0x825d4500
+LAB_82459954:
+  82459954  817F332C             lwz r11,0x332c(r31)
+  82459958  2F0B0000             cmpwi cr6,r11,0x0
+  8245995C  409A0020             bne cr6,0x8245997c
+  82459960  3D608207             lis r11,-0x7df9
+  82459964  7FA6EB78             or r6,r29,r29
+  82459968  38EBC45C             subi r7,r11,0x3ba4
+  8245996C  7FC3F378             or r3,r30,r30
+  82459970  38A00000             li r5,0x0
+  82459974  388000B3             li r4,0xb3
+  82459978  4817AB89             bl 0x825d4500
+LAB_8245997c:
+  8245997C  817F3300             lwz r11,0x3300(r31)
+  82459980  2B0B0003             cmplwi cr6,r11,0x3
+  82459984  41990070             bgt cr6,0x824599f4
+  82459988  7D6903A6             mtspr CTR,r11
+  8245998C  2F0B0000             cmpwi cr6,r11,0x0
+  82459990  405A0024             bdzf 4*cr6+eq,0x824599b4
+  82459994  405A0038             bdzf 4*cr6+eq,0x824599cc
+  82459998  409A004C             bne cr6,0x824599e4
+  8245999C  3D60835A             lis r11,-0x7ca6
+  824599A0  394B0B80             addi r10,r11,0xb80
+  824599A4  A06A01F0             lhz r3,0x1f0(r10)
+  824599A8  480FD219             bl 0x82556bc0
+  824599AC  38210070             addi r1,r1,0x70
+  824599B0  484BCD5C             b 0x8291670c
+LAB_824599b4:
+  824599B4  3D60835A             lis r11,-0x7ca6
+  824599B8  394B0B80             addi r10,r11,0xb80
+  824599BC  A06A002C             lhz r3,0x2c(r10)
+  824599C0  480FD201             bl 0x82556bc0
+  824599C4  38210070             addi r1,r1,0x70
+  824599C8  484BCD44             b 0x8291670c
+LAB_824599cc:
+  824599CC  3D60835A             lis r11,-0x7ca6
+  824599D0  394B0B80             addi r10,r11,0xb80
+  824599D4  A06A01F2             lhz r3,0x1f2(r10)
+  824599D8  480FD1E9             bl 0x82556bc0
+  824599DC  38210070             addi r1,r1,0x70
+  824599E0  484BCD2C             b 0x8291670c
+LAB_824599e4:
+  824599E4  3D60835A             lis r11,-0x7ca6
+  824599E8  394B0B80             addi r10,r11,0xb80
+  824599EC  A06A01E4             lhz r3,0x1e4(r10)
+  824599F0  480FD1D1             bl 0x82556bc0
+LAB_824599f4:
+  824599F4  38210070             addi r1,r1,0x70
+  824599F8  484BCD14             b 0x8291670c
 
 ; 82459A00  ClientScr_SetMaxHealth  (game/g_client_fields.cpp:205)
   82459A00  7D8802A6             mfspr r12,LR
@@ -343,6 +629,66 @@ LAB_82459cd0:
 ; 82459CF8  ClientScr_GetStatusIcon  (game/g_client_fields.cpp:318)
   82459CF8  7D8802A6             mfspr r12,LR
   82459CFC  484BC9C1             bl 0x829166bc
+  82459D00  9421FB90             stwu r1,-0x470(r1)
+  82459D04  3D608207             lis r11,-0x7df9
+  82459D08  3D408200             lis r10,-0x7e00
+  82459D0C  7C7F1B78             or r31,r3,r3
+  82459D10  2B030000             cmplwi cr6,r3,0x0
+  82459D14  3BCBC2E8             subi r30,r11,0x3d18
+  82459D18  3BAA0F98             addi r29,r10,0xf98
+  82459D1C  409A0020             bne cr6,0x82459d3c
+  82459D20  3D608207             lis r11,-0x7df9
+  82459D24  7FA6EB78             or r6,r29,r29
+  82459D28  38EBC32C             subi r7,r11,0x3cd4
+  82459D2C  7FC3F378             or r3,r30,r30
+  82459D30  38A00000             li r5,0x0
+  82459D34  3880013F             li r4,0x13f
+  82459D38  4817A7C9             bl 0x825d4500
+LAB_82459d3c:
+  82459D3C  817F3310             lwz r11,0x3310(r31)
+  82459D40  2F0B0000             cmpwi cr6,r11,0x0
+  82459D44  4198000C             blt cr6,0x82459d50
+  82459D48  2F0B0008             cmpwi cr6,r11,0x8
+  82459D4C  40990020             ble cr6,0x82459d6c
+LAB_82459d50:
+  82459D50  3D608207             lis r11,-0x7df9
+  82459D54  7FA6EB78             or r6,r29,r29
+  82459D58  38EBC558             subi r7,r11,0x3aa8
+  82459D5C  7FC3F378             or r3,r30,r30
+  82459D60  38A00000             li r5,0x0
+  82459D64  38800141             li r4,0x141
+  82459D68  4817A799             bl 0x825d4500
+LAB_82459d6c:
+  82459D6C  817F3310             lwz r11,0x3310(r31)
+  82459D70  2F0B0000             cmpwi cr6,r11,0x0
+  82459D74  409A0018             bne cr6,0x82459d8c
+  82459D78  3D608200             lis r11,-0x7e00
+  82459D7C  386B68AF             addi r3,r11,0x68af
+  82459D80  480FCD41             bl 0x82556ac0
+  82459D84  38210470             addi r1,r1,0x470
+  82459D88  484BC984             b 0x8291670c
+LAB_82459d8c:
+  82459D8C  396BFFFF             subi r11,r11,0x1
+  82459D90  3BEB0E03             addi r31,r11,0xe03
+  82459D94  2F1F0EEB             cmpwi cr6,r31,0xeeb
+  82459D98  41980024             blt cr6,0x82459dbc
+  82459D9C  3D608201             lis r11,-0x7dff
+  82459DA0  3D408207             lis r10,-0x7df9
+  82459DA4  38EB6960             addi r7,r11,0x6960
+  82459DA8  7FA6EB78             or r6,r29,r29
+  82459DAC  386AC268             subi r3,r10,0x3d98
+  82459DB0  38A00000             li r5,0x0
+  82459DB4  38800285             li r4,0x285
+  82459DB8  4817A749             bl 0x825d4500
+LAB_82459dbc:
+  82459DBC  38A00400             li r5,0x400
+  82459DC0  38810050             addi r4,r1,0x50
+  82459DC4  7FE3FB78             or r3,r31,r31
+  82459DC8  48118A61             bl 0x82572828
+  82459DCC  38610050             addi r3,r1,0x50
+  82459DD0  480FCCF1             bl 0x82556ac0
+  82459DD4  38210470             addi r1,r1,0x470
+  82459DD8  484BC934             b 0x8291670c
 
 ; 82459DE0  ClientScr_SetHeadIcon  (game/g_client_fields.cpp:342)
   82459DE0  7D8802A6             mfspr r12,LR
@@ -753,7 +1099,242 @@ LAB_8245a390:
 ; 8245A3B0  ClientScr_ReadOnly  (game/g_client_fields.cpp:514)
   8245A3B0  7D8802A6             mfspr r12,LR
   8245A3B4  484BC309             bl 0x829166bc
+  8245A3B8  9421FF90             stwu r1,-0x70(r1)
+  8245A3BC  3D608207             lis r11,-0x7df9
+  8245A3C0  3D408200             lis r10,-0x7e00
+  8245A3C4  7C9D2378             or r29,r4,r4
+  8245A3C8  2B030000             cmplwi cr6,r3,0x0
+  8245A3CC  3BEBC2E8             subi r31,r11,0x3d18
+  8245A3D0  3BCA0F98             addi r30,r10,0xf98
+  8245A3D4  409A0020             bne cr6,0x8245a3f4
+  8245A3D8  3D608207             lis r11,-0x7df9
+  8245A3DC  7FC6F378             or r6,r30,r30
+  8245A3E0  38EBC32C             subi r7,r11,0x3cd4
+  8245A3E4  7FE3FB78             or r3,r31,r31
+  8245A3E8  38A00000             li r5,0x0
+  8245A3EC  38800203             li r4,0x203
+  8245A3F0  4817A111             bl 0x825d4500
+LAB_8245a3f4:
+  8245A3F4  2B1D0000             cmplwi cr6,r29,0x0
+  8245A3F8  409A0020             bne cr6,0x8245a418
+  8245A3FC  3D608207             lis r11,-0x7df9
+  8245A400  7FC6F378             or r6,r30,r30
+  8245A404  38EBC61C             subi r7,r11,0x39e4
+  8245A408  7FE3FB78             or r3,r31,r31
+  8245A40C  38A00000             li r5,0x0
+  8245A410  38800204             li r4,0x204
+  8245A414  4817A0ED             bl 0x825d4500
+LAB_8245a418:
+  8245A418  817D0000             lwz r11,0x0(r29)
+  8245A41C  A06B0000             lhz r3,0x0(r11)
+  8245A420  480E8E49             bl 0x82543268
+  8245A424  3D408207             lis r10,-0x7df9
+  8245A428  7C641B78             or r4,r3,r3
+  8245A42C  386AC5FC             subi r3,r10,0x3a04
+  8245A430  481B2249             bl 0x8260c678
+  8245A434  480FCAFD             bl 0x82556f30
+  8245A438  38210070             addi r1,r1,0x70
+  8245A43C  484BC2D0             b 0x8291670c
 
 ; 8245A440  GScr_AddFieldsForClient  (game/g_client_fields.cpp:892)
   8245A440  7D8802A6             mfspr r12,LR
   8245A444  484BC261             bl 0x829166a4
+  8245A448  9421FF60             stwu r1,-0xa0(r1)
+  8245A44C  3D608207             lis r11,-0x7df9
+  8245A450  3B6BC040             subi r27,r11,0x3fc0
+  8245A454  816BC040             lwz r11,-0x3fc0(r11)
+  8245A458  2B0B0000             cmplwi cr6,r11,0x0
+  8245A45C  419A00A0             beq cr6,0x8245a4fc
+  8245A460  3D408207             lis r10,-0x7df9
+  8245A464  3D208207             lis r9,-0x7df9
+  8245A468  3D008200             lis r8,-0x7e00
+  8245A46C  3D608207             lis r11,-0x7df9
+  8245A470  3B400000             li r26,0x0
+  8245A474  3AE00018             li r23,0x18
+  8245A478  3B2AC644             subi r25,r10,0x39bc
+  8245A47C  3BA9C2E8             subi r29,r9,0x3d18
+  8245A480  3B880F98             addi r28,r8,0xf98
+  8245A484  3B0BC624             subi r24,r11,0x39dc
+LAB_8245a488:
+  8245A488  7FFABBD6             divw r31,r26,r23
+  8245A48C  57EB0424             rlwinm r11,r31,0x0,0x10,0x12
+  8245A490  2F0B0000             cmpwi cr6,r11,0x0
+  8245A494  419A001C             beq cr6,0x8245a4b0
+  8245A498  7F07C378             or r7,r24,r24
+  8245A49C  7F86E378             or r6,r28,r28
+  8245A4A0  7FA3EB78             or r3,r29,r29
+  8245A4A4  38A00000             li r5,0x0
+  8245A4A8  38800381             li r4,0x381
+  8245A4AC  4817A055             bl 0x825d4500
+LAB_8245a4b0:
+  8245A4B0  57FE043E             rlwinm r30,r31,0x0,0x10,0x1f
+  8245A4B4  7F1FF000             cmpw cr6,r31,r30
+  8245A4B8  419A001C             beq cr6,0x8245a4d4
+  8245A4BC  7F27CB78             or r7,r25,r25
+  8245A4C0  7F86E378             or r6,r28,r28
+  8245A4C4  7FA3EB78             or r3,r29,r29
+  8245A4C8  38A00000             li r5,0x0
+  8245A4CC  38800382             li r4,0x382
+  8245A4D0  4817A031             bl 0x825d4500
+LAB_8245a4d4:
+  8245A4D4  817B0000             lwz r11,0x0(r27)
+  8245A4D8  63C66000             ori r6,r30,0x6000
+  8245A4DC  38600000             li r3,0x0
+  8245A4E0  80BB0004             lwz r5,0x4(r27)
+  8245A4E4  A08B0000             lhz r4,0x0(r11)
+  8245A4E8  480F4DF1             bl 0x8254f2d8
+  8245A4EC  857B0018             lwzu r11,0x18(r27)
+  8245A4F0  3B5A0018             addi r26,r26,0x18
+  8245A4F4  2B0B0000             cmplwi cr6,r11,0x0
+  8245A4F8  409AFF90             bne cr6,0x8245a488
+LAB_8245a4fc:
+  8245A4FC  382100A0             addi r1,r1,0xa0
+  8245A500  484BC1F4             b 0x829166f4
+
+; 8245A508  Scr_SetClientField  (game/g_client_fields.cpp:910)
+  8245A508  7D8802A6             mfspr r12,LR
+  8245A50C  484BC1AD             bl 0x829166b8
+  8245A510  9421FF80             stwu r1,-0x80(r1)
+  8245A514  3D608207             lis r11,-0x7df9
+  8245A518  3D408200             lis r10,-0x7e00
+  8245A51C  7C7C1B78             or r28,r3,r3
+  8245A520  7C9F2378             or r31,r4,r4
+  8245A524  2B030000             cmplwi cr6,r3,0x0
+  8245A528  3BCBC2E8             subi r30,r11,0x3d18
+  8245A52C  3BAA0F98             addi r29,r10,0xf98
+  8245A530  409A0020             bne cr6,0x8245a550
+  8245A534  3D608204             lis r11,-0x7dfc
+  8245A538  7FA6EB78             or r6,r29,r29
+  8245A53C  38EB86A4             subi r7,r11,0x795c
+  8245A540  7FC3F378             or r3,r30,r30
+  8245A544  38A00000             li r5,0x0
+  8245A548  38800391             li r4,0x391
+  8245A54C  48179FB5             bl 0x825d4500
+LAB_8245a550:
+  8245A550  2B1F0016             cmplwi cr6,r31,0x16
+  8245A554  41980020             blt cr6,0x8245a574
+  8245A558  3D608207             lis r11,-0x7df9
+  8245A55C  7FA6EB78             or r6,r29,r29
+  8245A560  38EBC688             subi r7,r11,0x3978
+  8245A564  7FC3F378             or r3,r30,r30
+  8245A568  38A00000             li r5,0x0
+  8245A56C  38800392             li r4,0x392
+  8245A570  48179F91             bl 0x825d4500
+LAB_8245a574:
+  8245A574  2F1F0000             cmpwi cr6,r31,0x0
+  8245A578  40980020             bge cr6,0x8245a598
+  8245A57C  3D608207             lis r11,-0x7df9
+  8245A580  7FA6EB78             or r6,r29,r29
+  8245A584  38EBC67C             subi r7,r11,0x3984
+  8245A588  7FC3F378             or r3,r30,r30
+  8245A58C  38A00000             li r5,0x0
+  8245A590  38800393             li r4,0x393
+  8245A594  48179F6D             bl 0x825d4500
+LAB_8245a598:
+  8245A598  57EB083C             rlwinm r11,r31,0x1,0x0,0x1e
+  8245A59C  3D408207             lis r10,-0x7df9
+  8245A5A0  7D3F5A14             add r9,r31,r11
+  8245A5A4  396AC040             subi r11,r10,0x3fc0
+  8245A5A8  552A1838             rlwinm r10,r9,0x3,0x0,0x1c
+  8245A5AC  7FEA5A14             add r31,r10,r11
+  8245A5B0  817F0010             lwz r11,0x10(r31)
+  8245A5B4  2B0B0000             cmplwi cr6,r11,0x0
+  8245A5B8  419A001C             beq cr6,0x8245a5d4
+  8245A5BC  7FE4FB78             or r4,r31,r31
+  8245A5C0  7D6903A6             mtspr CTR,r11
+  8245A5C4  7F83E378             or r3,r28,r28
+  8245A5C8  4E800421             bctrl
+  8245A5CC  38210080             addi r1,r1,0x80
+  8245A5D0  484BC138             b 0x82916708
+LAB_8245a5d4:
+  8245A5D4  817F0008             lwz r11,0x8(r31)
+  8245A5D8  2F0B0000             cmpwi cr6,r11,0x0
+  8245A5DC  409A0020             bne cr6,0x8245a5fc
+  8245A5E0  3D608207             lis r11,-0x7df9
+  8245A5E4  7FA6EB78             or r6,r29,r29
+  8245A5E8  38EBC674             subi r7,r11,0x398c
+  8245A5EC  7FC3F378             or r3,r30,r30
+  8245A5F0  38A00000             li r5,0x0
+  8245A5F4  3880039D             li r4,0x39d
+  8245A5F8  48179F09             bl 0x825d4500
+LAB_8245a5fc:
+  8245A5FC  7F83E378             or r3,r28,r28
+  8245A600  80BF0008             lwz r5,0x8(r31)
+  8245A604  809F000C             lwz r4,0xc(r31)
+  8245A608  48051449             bl 0x824aba50
+  8245A60C  38210080             addi r1,r1,0x80
+  8245A610  484BC0F8             b 0x82916708
+
+; 8245A618  Scr_GetClientField  (game/g_client_fields.cpp:936)
+  8245A618  7D8802A6             mfspr r12,LR
+  8245A61C  484BC09D             bl 0x829166b8
+  8245A620  9421FF80             stwu r1,-0x80(r1)
+  8245A624  3D608207             lis r11,-0x7df9
+  8245A628  3D408200             lis r10,-0x7e00
+  8245A62C  7C7C1B78             or r28,r3,r3
+  8245A630  7C9F2378             or r31,r4,r4
+  8245A634  2B030000             cmplwi cr6,r3,0x0
+  8245A638  3BCBC2E8             subi r30,r11,0x3d18
+  8245A63C  3BAA0F98             addi r29,r10,0xf98
+  8245A640  409A0020             bne cr6,0x8245a660
+  8245A644  3D608204             lis r11,-0x7dfc
+  8245A648  7FA6EB78             or r6,r29,r29
+  8245A64C  38EB86A4             subi r7,r11,0x795c
+  8245A650  7FC3F378             or r3,r30,r30
+  8245A654  38A00000             li r5,0x0
+  8245A658  388003AB             li r4,0x3ab
+  8245A65C  48179EA5             bl 0x825d4500
+LAB_8245a660:
+  8245A660  2B1F0016             cmplwi cr6,r31,0x16
+  8245A664  41980020             blt cr6,0x8245a684
+  8245A668  3D608207             lis r11,-0x7df9
+  8245A66C  7FA6EB78             or r6,r29,r29
+  8245A670  38EBC688             subi r7,r11,0x3978
+  8245A674  7FC3F378             or r3,r30,r30
+  8245A678  38A00000             li r5,0x0
+  8245A67C  388003AC             li r4,0x3ac
+  8245A680  48179E81             bl 0x825d4500
+LAB_8245a684:
+  8245A684  2F1F0000             cmpwi cr6,r31,0x0
+  8245A688  40980020             bge cr6,0x8245a6a8
+  8245A68C  3D608207             lis r11,-0x7df9
+  8245A690  7FA6EB78             or r6,r29,r29
+  8245A694  38EBC67C             subi r7,r11,0x3984
+  8245A698  7FC3F378             or r3,r30,r30
+  8245A69C  38A00000             li r5,0x0
+  8245A6A0  388003AD             li r4,0x3ad
+  8245A6A4  48179E5D             bl 0x825d4500
+LAB_8245a6a8:
+  8245A6A8  57EB083C             rlwinm r11,r31,0x1,0x0,0x1e
+  8245A6AC  3D408207             lis r10,-0x7df9
+  8245A6B0  7D3F5A14             add r9,r31,r11
+  8245A6B4  396AC040             subi r11,r10,0x3fc0
+  8245A6B8  552A1838             rlwinm r10,r9,0x3,0x0,0x1c
+  8245A6BC  7FEA5A14             add r31,r10,r11
+  8245A6C0  817F0014             lwz r11,0x14(r31)
+  8245A6C4  2B0B0000             cmplwi cr6,r11,0x0
+  8245A6C8  419A001C             beq cr6,0x8245a6e4
+  8245A6CC  7FE4FB78             or r4,r31,r31
+  8245A6D0  7D6903A6             mtspr CTR,r11
+  8245A6D4  7F83E378             or r3,r28,r28
+  8245A6D8  4E800421             bctrl
+  8245A6DC  38210080             addi r1,r1,0x80
+  8245A6E0  484BC028             b 0x82916708
+LAB_8245a6e4:
+  8245A6E4  817F0008             lwz r11,0x8(r31)
+  8245A6E8  2F0B0000             cmpwi cr6,r11,0x0
+  8245A6EC  409A0020             bne cr6,0x8245a70c
+  8245A6F0  3D608207             lis r11,-0x7df9
+  8245A6F4  7FA6EB78             or r6,r29,r29
+  8245A6F8  38EBC674             subi r7,r11,0x398c
+  8245A6FC  7FC3F378             or r3,r30,r30
+  8245A700  38A00000             li r5,0x0
+  8245A704  388003B7             li r4,0x3b7
+  8245A708  48179DF9             bl 0x825d4500
+LAB_8245a70c:
+  8245A70C  7F83E378             or r3,r28,r28
+  8245A710  80BF0008             lwz r5,0x8(r31)
+  8245A714  809F000C             lwz r4,0xc(r31)
+  8245A718  48051459             bl 0x824abb70
+  8245A71C  38210080             addi r1,r1,0x80
+  8245A720  484BBFE8             b 0x82916708

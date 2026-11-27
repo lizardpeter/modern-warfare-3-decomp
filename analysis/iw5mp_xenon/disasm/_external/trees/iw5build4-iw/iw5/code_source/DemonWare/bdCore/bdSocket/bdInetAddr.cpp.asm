@@ -62,6 +62,30 @@
   828F6E24  91630000             stw r11,0x0(r3)
   828F6E28  4E800020             blr
 
+; 828F6E30  bdInetAddr::isValid  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:109)
+  828F6E30  7D8802A6             mfspr r12,LR
+  828F6E34  9181FFF8             stw r12,-0x8(r1)
+  828F6E38  FBE1FFF0             std r31,-0x10(r1)
+  828F6E3C  9421FF90             stwu r1,-0x70(r1)
+  828F6E40  7C7F1B78             or r31,r3,r3
+  828F6E44  38610050             addi r3,r1,0x50
+  828F6E48  48035EE9             bl 0x8292cd30
+  828F6E4C  81410050             lwz r10,0x50(r1)
+  828F6E50  817F0000             lwz r11,0x0(r31)
+  828F6E54  7D6B5050             subf r11,r11,r10
+  828F6E58  314BFFFF             subic r10,r11,0x1
+  828F6E5C  7C6A5910             subfe r3,r10,r11
+  828F6E60  38210070             addi r1,r1,0x70
+  828F6E64  8181FFF8             lwz r12,-0x8(r1)
+  828F6E68  7D8803A6             mtspr LR,r12
+  828F6E6C  EBE1FFF0             ld r31,-0x10(r1)
+  828F6E70  4E800020             blr
+
 ; 828F6E78  bdInetAddr::toUInt32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:127)
   828F6E78  80630000             lwz r3,0x0(r3)
   828F6E7C  4E800020             blr
+
+; 828F6E80  bdInetAddr::getInAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdinetaddr.cpp:143)
+  828F6E80  81640000             lwz r11,0x0(r4)
+  828F6E84  91630000             stw r11,0x0(r3)
+  828F6E88  4E800020             blr

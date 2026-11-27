@@ -567,6 +567,53 @@ LAB_825e6b40:
 ; 825E6B68  Com_Memcpy128  (universal/com_shared.cpp:230)
   825E6B68  7D8802A6             mfspr r12,LR
   825E6B6C  4832FB49             bl 0x829166b4
+  825E6B70  9421FF80             stwu r1,-0x80(r1)
+  825E6B74  54A9067E             rlwinm r9,r5,0x0,0x19,0x1f
+  825E6B78  3D608217             lis r11,-0x7de9
+  825E6B7C  3D408200             lis r10,-0x7e00
+  825E6B80  7C7C1B78             or r28,r3,r3
+  825E6B84  7C9B2378             or r27,r4,r4
+  825E6B88  7CBD2B78             or r29,r5,r5
+  825E6B8C  2F090000             cmpwi cr6,r9,0x0
+  825E6B90  3BEB6CD0             addi r31,r11,0x6cd0
+  825E6B94  3BCA0F98             addi r30,r10,0xf98
+  825E6B98  419A0020             beq cr6,0x825e6bb8
+  825E6B9C  3D608217             lis r11,-0x7de9
+  825E6BA0  7FC6F378             or r6,r30,r30
+  825E6BA4  38EB6CB4             addi r7,r11,0x6cb4
+  825E6BA8  7FE3FB78             or r3,r31,r31
+  825E6BAC  38A00000             li r5,0x0
+  825E6BB0  388000E7             li r4,0xe7
+  825E6BB4  4BFED94D             bl 0x825d4500
+LAB_825e6bb8:
+  825E6BB8  576B073E             rlwinm r11,r27,0x0,0x1c,0x1f
+  825E6BBC  2B0B0000             cmplwi cr6,r11,0x0
+  825E6BC0  419A0020             beq cr6,0x825e6be0
+  825E6BC4  3D608217             lis r11,-0x7de9
+  825E6BC8  7FC6F378             or r6,r30,r30
+  825E6BCC  38EB6C94             addi r7,r11,0x6c94
+  825E6BD0  7FE3FB78             or r3,r31,r31
+  825E6BD4  38A00000             li r5,0x0
+  825E6BD8  388000E8             li r4,0xe8
+  825E6BDC  4BFED925             bl 0x825d4500
+LAB_825e6be0:
+  825E6BE0  578B067E             rlwinm r11,r28,0x0,0x19,0x1f
+  825E6BE4  2B0B0000             cmplwi cr6,r11,0x0
+  825E6BE8  419A0020             beq cr6,0x825e6c08
+  825E6BEC  3D608217             lis r11,-0x7de9
+  825E6BF0  7FC6F378             or r6,r30,r30
+  825E6BF4  38EB6C70             addi r7,r11,0x6c70
+  825E6BF8  7FE3FB78             or r3,r31,r31
+  825E6BFC  38A00000             li r5,0x0
+  825E6C00  388000E9             li r4,0xe9
+  825E6C04  4BFED8FD             bl 0x825d4500
+LAB_825e6c08:
+  825E6C08  7FA5EB78             or r5,r29,r29
+  825E6C0C  7F64DB78             or r4,r27,r27
+  825E6C10  7F83E378             or r3,r28,r28
+  825E6C14  482C1FCD             bl 0x828a8be0
+  825E6C18  38210080             addi r1,r1,0x80
+  825E6C1C  4832FAE8             b 0x82916704
 
 ; 825E6C20  Com_Memset  (universal/com_shared.cpp:239)
   825E6C20  482BBBD0             b 0x828a27f0

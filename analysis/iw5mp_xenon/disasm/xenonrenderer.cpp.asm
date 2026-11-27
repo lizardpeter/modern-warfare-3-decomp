@@ -46,6 +46,62 @@ LAB_828d2080:
 ; 828D2248  XAudioCreateNativeRenderEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:81)
   828D2248  7D8802A6             mfspr r12,LR
   828D224C  48044469             bl 0x829166b4
+  828D2250  9421FF80             stwu r1,-0x80(r1)
+  828D2254  81640000             lwz r11,0x0(r4)
+  828D2258  7C9C2378             or r28,r4,r4
+  828D225C  7C7D1B78             or r29,r3,r3
+  828D2260  3880001C             li r4,0x1c
+  828D2264  7F83E378             or r3,r28,r28
+  828D2268  7CBB2B78             or r27,r5,r5
+  828D226C  814B0014             lwz r10,0x14(r11)
+  828D2270  7D4903A6             mtspr CTR,r10
+  828D2274  4E800421             bctrl
+  828D2278  7C7F1B78             or r31,r3,r3
+  828D227C  2B030000             cmplwi cr6,r3,0x0
+  828D2280  419A0078             beq cr6,0x828d22f8
+  828D2284  3D608220             lis r11,-0x7de0
+  828D2288  39400001             li r10,0x1
+  828D228C  392B735C             addi r9,r11,0x735c
+  828D2290  3D008220             lis r8,-0x7de0
+  828D2294  91430008             stw r10,0x8(r3)
+  828D2298  3CE08220             lis r7,-0x7de0
+  828D229C  91230004             stw r9,0x4(r3)
+  828D22A0  38A87394             addi r5,r8,0x7394
+  828D22A4  80DD0004             lwz r6,0x4(r29)
+  828D22A8  39600000             li r11,0x0
+  828D22AC  90C3000C             stw r6,0xc(r3)
+  828D22B0  38877378             addi r4,r7,0x7378
+  828D22B4  90A30000             stw r5,0x0(r3)
+  828D22B8  91630010             stw r11,0x10(r3)
+  828D22BC  3BC30004             addi r30,r3,0x4
+  828D22C0  90830004             stw r4,0x4(r3)
+  828D22C4  7FA4EB78             or r4,r29,r29
+  828D22C8  91630014             stw r11,0x14(r3)
+  828D22CC  54AB003E             rlwinm r11,r5,0x0,0x0,0x1f
+  828D22D0  7F85E378             or r5,r28,r28
+  828D22D4  814B0024             lwz r10,0x24(r11)
+  828D22D8  7D4903A6             mtspr CTR,r10
+  828D22DC  4E800421             bctrl
+  828D22E0  7C7D1B78             or r29,r3,r3
+  828D22E4  2F030000             cmpwi cr6,r3,0x0
+  828D22E8  41980020             blt cr6,0x828d2308
+  828D22EC  93FB0000             stw r31,0x0(r27)
+  828D22F0  38210080             addi r1,r1,0x80
+  828D22F4  48044410             b 0x82916704
+LAB_828d22f8:
+  828D22F8  3C608007             lis r3,-0x7ff9
+  828D22FC  6063000E             ori r3,r3,0xe
+  828D2300  38210080             addi r1,r1,0x80
+  828D2304  48044400             b 0x82916704
+LAB_828d2308:
+  828D2308  817E0000             lwz r11,0x0(r30)
+  828D230C  7FC3F378             or r3,r30,r30
+  828D2310  814B000C             lwz r10,0xc(r11)
+  828D2314  7D4903A6             mtspr CTR,r10
+  828D2318  4E800421             bctrl
+  828D231C  7FA3EB78             or r3,r29,r29
+  828D2320  38210080             addi r1,r1,0x80
+  828D2324  480443E0             b 0x82916704
 
 ; 828D20A8  XAUDIO::CXenonRenderer::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.h:89)
   828D20A8  8163000C             lwz r11,0xc(r3)
@@ -183,6 +239,32 @@ LAB_828d213c:
 ; 828D1E48  XAUDIO::CXenonRenderer::SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
   828D1E48  7D8802A6             mfspr r12,LR
   828D1E4C  48044871             bl 0x829166bc
+  828D1E50  9421FF80             stwu r1,-0x80(r1)
+  828D1E54  81630018             lwz r11,0x18(r3)
+  828D1E58  7C7E1B78             or r30,r3,r3
+  828D1E5C  3BE30018             addi r31,r3,0x18
+  828D1E60  7C9D2378             or r29,r4,r4
+  828D1E64  38600000             li r3,0x0
+  828D1E68  2B0B0000             cmplwi cr6,r11,0x0
+  828D1E6C  419A001C             beq cr6,0x828d1e88
+  828D1E70  7D635B78             or r3,r11,r11
+  828D1E74  480703B1             bl 0x82942224
+  828D1E78  2F030000             cmpwi cr6,r3,0x0
+  828D1E7C  4198002C             blt cr6,0x828d1ea8
+  828D1E80  39600000             li r11,0x0
+  828D1E84  917F0000             stw r11,0x0(r31)
+LAB_828d1e88:
+  828D1E88  2B1D0000             cmplwi cr6,r29,0x0
+  828D1E8C  419A001C             beq cr6,0x828d1ea8
+  828D1E90  817E000C             lwz r11,0xc(r30)
+  828D1E94  7FE4FB78             or r4,r31,r31
+  828D1E98  93A10050             stw r29,0x50(r1)
+  828D1E9C  38610050             addi r3,r1,0x50
+  828D1EA0  91610054             stw r11,0x54(r1)
+  828D1EA4  48070371             bl 0x82942214
+LAB_828d1ea8:
+  828D1EA8  38210080             addi r1,r1,0x80
+  828D1EAC  48044860             b 0x8291670c
 
 ; 828D1EB0  XAUDIO::CXenonRenderer::CaptureXBMAudioFrame  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:323)
   828D1EB0  7D8802A6             mfspr r12,LR

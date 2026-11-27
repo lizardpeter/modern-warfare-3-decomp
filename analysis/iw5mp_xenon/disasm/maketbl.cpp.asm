@@ -202,3 +202,125 @@ LAB_828b8164:
 ; 828B8170  XCOMPRESS::make_table_8bit  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/maketbl.cpp:169)
   828B8170  7D8802A6             mfspr r12,LR
   828B8174  4805E549             bl 0x829166bc
+  828B8178  9421FF30             stwu r1,-0xd0(r1)
+  828B817C  38E00001             li r7,0x1
+  828B8180  7C9E2378             or r30,r4,r4
+  828B8184  7CBD2B78             or r29,r5,r5
+  828B8188  7CEB3B78             or r11,r7,r7
+  828B818C  3BE00000             li r31,0x0
+LAB_828b8190:
+  828B8190  5569083C             rlwinm r9,r11,0x1,0x0,0x1e
+  828B8194  394B0001             addi r10,r11,0x1
+  828B8198  39010050             addi r8,r1,0x50
+  828B819C  554B043E             rlwinm r11,r10,0x0,0x10,0x1f
+  828B81A0  2B0B0010             cmplwi cr6,r11,0x10
+  828B81A4  7FE9432E             sthx r31,r9,r8
+  828B81A8  4099FFE8             ble cr6,0x828b8190
+  828B81AC  7FEBFB78             or r11,r31,r31
+LAB_828b81b0:
+  828B81B0  7D2BF0AE             lbzx r9,r11,r30
+  828B81B4  39410050             addi r10,r1,0x50
+  828B81B8  396B0001             addi r11,r11,0x1
+  828B81BC  5529083E             rlwinm r9,r9,0x1,0x0,0x1f
+  828B81C0  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  828B81C4  2B0B0008             cmplwi cr6,r11,0x8
+  828B81C8  7D09522E             lhzx r8,r9,r10
+  828B81CC  39080001             addi r8,r8,0x1
+  828B81D0  5508043E             rlwinm r8,r8,0x0,0x10,0x1f
+  828B81D4  7D09532E             sthx r8,r9,r10
+  828B81D8  4198FFD8             blt cr6,0x828b81b0
+  828B81DC  7CEB3B78             or r11,r7,r7
+  828B81E0  B3E10082             sth r31,0x82(r1)
+LAB_828b81e4:
+  828B81E4  5568083C             rlwinm r8,r11,0x1,0x0,0x1e
+  828B81E8  39410050             addi r10,r1,0x50
+  828B81EC  39210080             addi r9,r1,0x80
+  828B81F0  20CB0010             subfic r6,r11,0x10
+  828B81F4  396B0001             addi r11,r11,0x1
+  828B81F8  38A10082             addi r5,r1,0x82
+  828B81FC  7D48522E             lhzx r10,r8,r10
+  828B8200  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  828B8204  7D284A2E             lhzx r9,r8,r9
+  828B8208  7D4A3030             slw r10,r10,r6
+  828B820C  7D4A4A14             add r10,r10,r9
+  828B8210  2B0B0010             cmplwi cr6,r11,0x10
+  828B8214  554A043E             rlwinm r10,r10,0x0,0x10,0x1f
+  828B8218  7D482B2E             sthx r10,r8,r5
+  828B821C  4099FFC8             ble cr6,0x828b81e4
+  828B8220  A16100A2             lhz r11,0xa2(r1)
+  828B8224  280B0000             cmplwi r11,0x0
+  828B8228  4182000C             beq 0x828b8234
+LAB_828b822c:
+  828B822C  38600000             li r3,0x0
+  828B8230  480000F4             b 0x828b8324
+LAB_828b8234:
+  828B8234  7CEB3B78             or r11,r7,r7
+LAB_828b8238:
+  828B8238  556A083C             rlwinm r10,r11,0x1,0x0,0x1e
+  828B823C  39210080             addi r9,r1,0x80
+  828B8240  210B0007             subfic r8,r11,0x7
+  828B8244  396B0001             addi r11,r11,0x1
+  828B8248  7CE84030             slw r8,r7,r8
+  828B824C  7CCA4A2E             lhzx r6,r10,r9
+  828B8250  38A10050             addi r5,r1,0x50
+  828B8254  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  828B8258  54C6BA7E             rlwinm r6,r6,0x17,0x9,0x1f
+  828B825C  5508043E             rlwinm r8,r8,0x0,0x10,0x1f
+  828B8260  7CCA4B2E             sthx r6,r10,r9
+  828B8264  2B0B0007             cmplwi cr6,r11,0x7
+  828B8268  7D0A2B2E             sthx r8,r10,r5
+  828B826C  4099FFCC             ble cr6,0x828b8238
+  828B8270  2B0B0010             cmplwi cr6,r11,0x10
+  828B8274  4199002C             bgt cr6,0x828b82a0
+LAB_828b8278:
+  828B8278  214B0010             subfic r10,r11,0x10
+  828B827C  5568083C             rlwinm r8,r11,0x1,0x0,0x1e
+  828B8280  392B0001             addi r9,r11,0x1
+  828B8284  7CEA5030             slw r10,r7,r10
+  828B8288  38C10050             addi r6,r1,0x50
+  828B828C  552B043E             rlwinm r11,r9,0x0,0x10,0x1f
+  828B8290  554A043E             rlwinm r10,r10,0x0,0x10,0x1f
+  828B8294  2B0B0010             cmplwi cr6,r11,0x10
+  828B8298  7D48332E             sthx r10,r8,r6
+  828B829C  4099FFDC             ble cr6,0x828b8278
+LAB_828b82a0:
+  828B82A0  38A00080             li r5,0x80
+  828B82A4  38800000             li r4,0x0
+  828B82A8  7FA3EB78             or r3,r29,r29
+  828B82AC  4805E555             bl 0x82916800
+  828B82B0  7FE6FB78             or r6,r31,r31
+  828B82B4  7FE5FB78             or r5,r31,r31
+LAB_828b82b8:
+  828B82B8  7D65F0AE             lbzx r11,r5,r30
+  828B82BC  280B0000             cmplwi r11,0x0
+  828B82C0  4182004C             beq 0x828b830c
+  828B82C4  5569083C             rlwinm r9,r11,0x1,0x0,0x1e
+  828B82C8  38E10080             addi r7,r1,0x80
+  828B82CC  39410050             addi r10,r1,0x50
+  828B82D0  7D693A2E             lhzx r11,r9,r7
+  828B82D4  7D49522E             lhzx r10,r9,r10
+  828B82D8  7D4A5A14             add r10,r10,r11
+  828B82DC  554A043E             rlwinm r10,r10,0x0,0x10,0x1f
+  828B82E0  2B0A0080             cmplwi cr6,r10,0x80
+  828B82E4  4199FF48             bgt cr6,0x828b822c
+  828B82E8  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  828B82EC  7F0B5040             cmplw cr6,r11,r10
+  828B82F0  40980018             bge cr6,0x828b8308
+LAB_828b82f4:
+  828B82F4  390B0001             addi r8,r11,0x1
+  828B82F8  7CCBE9AE             stbx r6,r11,r29
+  828B82FC  550B043E             rlwinm r11,r8,0x0,0x10,0x1f
+  828B8300  7F0B5040             cmplw cr6,r11,r10
+  828B8304  4198FFF0             blt cr6,0x828b82f4
+LAB_828b8308:
+  828B8308  7D493B2E             sthx r10,r9,r7
+LAB_828b830c:
+  828B830C  39650001             addi r11,r5,0x1
+  828B8310  5566063E             rlwinm r6,r11,0x0,0x18,0x1f
+  828B8314  7CC53378             or r5,r6,r6
+  828B8318  2B060008             cmplwi cr6,r6,0x8
+  828B831C  4198FF9C             blt cr6,0x828b82b8
+  828B8320  38600001             li r3,0x1
+LAB_828b8324:
+  828B8324  382100D0             addi r1,r1,0xd0
+  828B8328  4805E3E4             b 0x8291670c

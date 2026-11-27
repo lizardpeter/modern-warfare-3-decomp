@@ -3,6 +3,137 @@
 ; 82487FC0  G_BounceCorpse  (game_mp/g_player_corpse_mp.cpp:36)
   82487FC0  7D8802A6             mfspr r12,LR
   82487FC4  4848E6F1             bl 0x829166b4
+  82487FC8  9421FF40             stwu r1,-0xc0(r1)
+  82487FCC  3B83000C             addi r28,r3,0xc
+  82487FD0  7C7F1B78             or r31,r3,r3
+  82487FD4  7F83E378             or r3,r28,r28
+  82487FD8  7C9B2378             or r27,r4,r4
+  82487FDC  7CBE2B78             or r30,r5,r5
+  82487FE0  7CDD3378             or r29,r6,r6
+  82487FE4  4BE78395             bl 0x82300378
+  82487FE8  3D408200             lis r10,-0x7e00
+  82487FEC  397F0024             addi r11,r31,0x24
+  82487FF0  C00A13F8             lfs f0,0x13f8(r10)
+  82487FF4  D01F0024             stfs f0,0x24(r31)
+  82487FF8  D01F0028             stfs f0,0x28(r31)
+  82487FFC  D01F002C             stfs f0,0x2c(r31)
+  82488000  893E002E             lbz r9,0x2e(r30)
+  82488004  2B090000             cmplwi cr6,r9,0x0
+  82488008  409A00B0             bne cr6,0x824880b8
+  8248800C  C1BE000C             lfs f13,0xc(r30)
+  82488010  FF0D0000             fcmpu cr6,f13,f0
+  82488014  419900A4             bgt cr6,0x824880b8
+  82488018  C01F0138             lfs f0,0x138(r31)
+  8248801C  397F0138             addi r11,r31,0x138
+  82488020  C1BE0004             lfs f13,0x4(r30)
+  82488024  ED8D002A             fadds f12,f13,f0
+  82488028  D19F0138             stfs f12,0x138(r31)
+  8248802C  C17E0008             lfs f11,0x8(r30)
+  82488030  C15F013C             lfs f10,0x13c(r31)
+  82488034  ED2B502A             fadds f9,f11,f10
+  82488038  D13F013C             stfs f9,0x13c(r31)
+  8248803C  FCA06090             fmr f5,f12
+  82488040  C11F0140             lfs f8,0x140(r31)
+  82488044  C0FE000C             lfs f7,0xc(r30)
+  82488048  ECC7402A             fadds f6,f7,f8
+  8248804C  D0DF0140             stfs f6,0x140(r31)
+  82488050  D19F0018             stfs f12,0x18(r31)
+  82488054  C09F013C             lfs f4,0x13c(r31)
+  82488058  D09F001C             stfs f4,0x1c(r31)
+  8248805C  C07F0140             lfs f3,0x140(r31)
+  82488060  D07F0020             stfs f3,0x20(r31)
+  82488064  817C0000             lwz r11,0x0(r28)
+  82488068  2F0B0005             cmpwi cr6,r11,0x5
+  8248806C  419A0034             beq cr6,0x824880a0
+  82488070  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  82488074  2B0B0000             cmplwi cr6,r11,0x0
+  82488078  409A0028             bne cr6,0x824880a0
+  8248807C  3D608207             lis r11,-0x7df9
+  82488080  3D408200             lis r10,-0x7e00
+  82488084  3D208207             lis r9,-0x7df9
+  82488088  38EB5A94             addi r7,r11,0x5a94
+  8248808C  38CA0F98             addi r6,r10,0xf98
+  82488090  38695A48             addi r3,r9,0x5a48
+  82488094  38A00000             li r5,0x0
+  82488098  38800054             li r4,0x54
+  8248809C  4814C465             bl 0x825d4500
+LAB_824880a0:
+  824880A0  3D608358             lis r11,-0x7ca8
+  824880A4  394B0B00             addi r10,r11,0xb00
+  824880A8  816A04AC             lwz r11,0x4ac(r10)
+  824880AC  917F0010             stw r11,0x10(r31)
+  824880B0  382100C0             addi r1,r1,0xc0
+  824880B4  4848E650             b 0x82916704
+LAB_824880b8:
+  824880B8  5469063E             rlwinm r9,r3,0x0,0x18,0x1f
+  824880BC  39400000             li r10,0x0
+  824880C0  21090000             subfic r8,r9,0x0
+  824880C4  995B059C             stb r10,0x59c(r27)
+  824880C8  7FC3F378             or r3,r30,r30
+  824880CC  7CE84110             subfe r7,r8,r8
+  824880D0  54E9073E             rlwinm r9,r7,0x0,0x1c,0x1f
+  824880D4  552907B8             rlwinm r9,r9,0x0,0x1e,0x1c
+  824880D8  38C90001             addi r6,r9,0x1
+  824880DC  90DC0000             stw r6,0x0(r28)
+  824880E0  D00B0008             stfs f0,0x8(r11)
+  824880E4  D00B0000             stfs f0,0x0(r11)
+  824880E8  D00B0004             stfs f0,0x4(r11)
+  824880EC  C01D0000             lfs f0,0x0(r29)
+  824880F0  D01F0018             stfs f0,0x18(r31)
+  824880F4  C1BD0004             lfs f13,0x4(r29)
+  824880F8  D1BF001C             stfs f13,0x1c(r31)
+  824880FC  C19D0008             lfs f12,0x8(r29)
+  82488100  D19F0020             stfs f12,0x20(r31)
+  82488104  915F0010             stw r10,0x10(r31)
+  82488108  915F0014             stw r10,0x14(r31)
+  8248810C  480416B5             bl 0x824c97c0
+  82488110  546B043E             rlwinm r11,r3,0x0,0x10,0x1f
+  82488114  3CA08337             lis r5,-0x7cc9
+  82488118  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  8248811C  917F0080             stw r11,0x80(r31)
+  82488120  39253680             addi r9,r5,0x3680
+  82488124  7C8B5214             add r4,r11,r10
+  82488128  39690184             addi r11,r9,0x184
+  8248812C  548A3830             rlwinm r10,r4,0x7,0x0,0x18
+  82488130  7C6A582E             lwzx r3,r10,r11
+  82488134  64690010             oris r9,r3,0x10
+  82488138  7D2A592E             stwx r9,r10,r11
+  8248813C  891E002E             lbz r8,0x2e(r30)
+  82488140  2B080000             cmplwi cr6,r8,0x0
+  82488144  409A0064             bne cr6,0x824881a8
+  82488148  C01E0004             lfs f0,0x4(r30)
+  8248814C  38C00000             li r6,0x0
+  82488150  C1BE0008             lfs f13,0x8(r30)
+  82488154  38A00000             li r5,0x0
+  82488158  C19E000C             lfs f12,0xc(r30)
+  8248815C  38810060             addi r4,r1,0x60
+  82488160  D0010078             stfs f0,0x78(r1)
+  82488164  387F0144             addi r3,r31,0x144
+  82488168  D1A1007C             stfs f13,0x7c(r1)
+  8248816C  D1810080             stfs f12,0x80(r1)
+  82488170  48157D41             bl 0x825dfeb0
+  82488174  38A1006C             addi r5,r1,0x6c
+  82488178  38810060             addi r4,r1,0x60
+  8248817C  38610078             addi r3,r1,0x78
+  82488180  4BDEFB69             bl 0x82277ce8
+  82488184  38A10060             addi r5,r1,0x60
+  82488188  38810078             addi r4,r1,0x78
+  8248818C  3861006C             addi r3,r1,0x6c
+  82488190  4BDEFB59             bl 0x82277ce8
+  82488194  38810050             addi r4,r1,0x50
+  82488198  38610060             addi r3,r1,0x60
+  8248819C  48154DE5             bl 0x825dcf80
+  824881A0  38810050             addi r4,r1,0x50
+  824881A4  48000008             b 0x824881ac
+LAB_824881a8:
+  824881A8  389F0144             addi r4,r31,0x144
+LAB_824881ac:
+  824881AC  7FE3FB78             or r3,r31,r31
+  824881B0  48029249             bl 0x824b13f8
+  824881B4  7FE3FB78             or r3,r31,r31
+  824881B8  480FFE61             bl 0x82588018
+  824881BC  382100C0             addi r1,r1,0xc0
+  824881C0  4848E544             b 0x82916704
 
 ; 824881C8  G_GetPlayerCorpseIndex  (game_mp/g_player_corpse_mp.cpp:97)
   824881C8  7D8802A6             mfspr r12,LR
@@ -44,6 +175,122 @@ LAB_82488238:
 ; 82488248  G_GetFreePlayerCorpseIndex  (game_mp/g_player_corpse_mp.cpp:119)
   82488248  7D8802A6             mfspr r12,LR
   8248824C  4848E471             bl 0x829166bc
+  82488250  DBE1FFD8             stfd f31,-0x28(r1)
+  82488254  9421FF80             stwu r1,-0x80(r1)
+  82488258  3D60835A             lis r11,-0x7ca6
+  8248825C  3D408200             lis r10,-0x7e00
+  82488260  392B0B80             addi r9,r11,0xb80
+  82488264  38800172             li r4,0x172
+  82488268  38600000             li r3,0x0
+  8248826C  3BA00000             li r29,0x0
+  82488270  C3EA139C             lfs f31,0x139c(r10)
+  82488274  A0A90082             lhz r5,0x82(r9)
+  82488278  48028701             bl 0x824b0978
+  8248827C  7C7F1B78             or r31,r3,r3
+  82488280  2B030000             cmplwi cr6,r3,0x0
+  82488284  409A0028             bne cr6,0x824882ac
+  82488288  3D608200             lis r11,-0x7e00
+  8248828C  3D408200             lis r10,-0x7e00
+  82488290  3D208207             lis r9,-0x7df9
+  82488294  38EB2614             addi r7,r11,0x2614
+  82488298  38CA0F98             addi r6,r10,0xf98
+  8248829C  38695A48             addi r3,r9,0x5a48
+  824882A0  38A00000             li r5,0x0
+  824882A4  38800083             li r4,0x83
+  824882A8  4814C259             bl 0x825d4500
+LAB_824882ac:
+  824882AC  3D60835A             lis r11,-0x7ca6
+  824882B0  C1BF0018             lfs f13,0x18(r31)
+  824882B4  C19F001C             lfs f12,0x1c(r31)
+  824882B8  38600000             li r3,0x0
+  824882BC  38EB9838             subi r7,r11,0x67c8
+  824882C0  C17F0020             lfs f11,0x20(r31)
+  824882C4  3D608358             lis r11,-0x7ca8
+  824882C8  392710D4             addi r9,r7,0x10d4
+  824882CC  394B0B00             addi r10,r11,0xb00
+  824882D0  810A0004             lwz r8,0x4(r10)
+LAB_824882d4:
+  824882D4  81690000             lwz r11,0x0(r9)
+  824882D8  2F0BFFFF             cmpwi cr6,r11,-0x1
+  824882DC  419A008C             beq cr6,0x82488368
+  824882E0  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  824882E4  7D6B5214             add r11,r11,r10
+  824882E8  556B3830             rlwinm r11,r11,0x7,0x0,0x18
+  824882EC  7D6B4214             add r11,r11,r8
+  824882F0  394B0138             addi r10,r11,0x138
+  824882F4  C00B0140             lfs f0,0x140(r11)
+  824882F8  ED4B0028             fsubs f10,f11,f0
+  824882FC  C12B0138             lfs f9,0x138(r11)
+  82488300  ED0D4828             fsubs f8,f13,f9
+  82488304  C0EB013C             lfs f7,0x13c(r11)
+  82488308  ECCC3828             fsubs f6,f12,f7
+  8248830C  ECAA02B2             fmuls f5,f10,f10
+  82488310  EC882A3A             fmadds f4,f8,f8,f5
+  82488314  EC0621BA             fmadds f0,f6,f6,f4
+  82488318  FF1F0000             fcmpu cr6,f31,f0
+  8248831C  4098000C             bge cr6,0x82488328
+  82488320  FFE00090             fmr f31,f0
+  82488324  7C7D1B78             or r29,r3,r3
+LAB_82488328:
+  82488328  392905A0             addi r9,r9,0x5a0
+  8248832C  39673DD4             addi r11,r7,0x3dd4
+  82488330  38630001             addi r3,r3,0x1
+  82488334  7F095800             cmpw cr6,r9,r11
+  82488338  4198FF9C             blt cr6,0x824882d4
+  8248833C  3BE710D4             addi r31,r7,0x10d4
+  82488340  1FDD05A0             mulli r30,r29,0x5a0
+  82488344  7D7EF82E             lwzx r11,r30,r31
+  82488348  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
+  8248834C  7D6B5214             add r11,r11,r10
+  82488350  556B3830             rlwinm r11,r11,0x7,0x0,0x18
+  82488354  7C6B4214             add r3,r11,r8
+  82488358  48028B71             bl 0x824b0ec8
+  8248835C  3940FFFF             li r10,-0x1
+  82488360  7FA3EB78             or r3,r29,r29
+  82488364  7D5EF92E             stwx r10,r30,r31
+LAB_82488368:
+  82488368  38210080             addi r1,r1,0x80
+  8248836C  CBE1FFD8             lfd f31,-0x28(r1)
+  82488370  4848E39C             b 0x8291670c
+
+; 82488378  PlayerCorpse_Free  (game_mp/g_player_corpse_mp.cpp:160)
+  82488378  7D8802A6             mfspr r12,LR
+  8248837C  9181FFF8             stw r12,-0x8(r1)
+  82488380  FBC1FFE8             std r30,-0x18(r1)
+  82488384  FBE1FFF0             std r31,-0x10(r1)
+  82488388  9421FF90             stwu r1,-0x70(r1)
+  8248838C  7C7F1B78             or r31,r3,r3
+  82488390  4BFFFE39             bl 0x824881c8
+  82488394  3D60835A             lis r11,-0x7ca6
+  82488398  815F0000             lwz r10,0x0(r31)
+  8248839C  1FC305A0             mulli r30,r3,0x5a0
+  824883A0  396B9838             subi r11,r11,0x67c8
+  824883A4  3BEB10D4             addi r31,r11,0x10d4
+  824883A8  7D3EF82E             lwzx r9,r30,r31
+  824883AC  7F095000             cmpw cr6,r9,r10
+  824883B0  419A0034             beq cr6,0x824883e4
+  824883B4  3D608207             lis r11,-0x7df9
+  824883B8  3D408200             lis r10,-0x7e00
+  824883BC  3D208207             lis r9,-0x7df9
+  824883C0  38EB5B00             addi r7,r11,0x5b00
+  824883C4  38CA0F98             addi r6,r10,0xf98
+  824883C8  38695A48             addi r3,r9,0x5a48
+  824883CC  38A00000             li r5,0x0
+  824883D0  388000A5             li r4,0xa5
+  824883D4  4814C12D             bl 0x825d4500
+  824883D8  3900FFFF             li r8,-0x1
+  824883DC  7D1EF92E             stwx r8,r30,r31
+  824883E0  4800000C             b 0x824883ec
+LAB_824883e4:
+  824883E4  3960FFFF             li r11,-0x1
+  824883E8  7D7EF92E             stwx r11,r30,r31
+LAB_824883ec:
+  824883EC  38210070             addi r1,r1,0x70
+  824883F0  8181FFF8             lwz r12,-0x8(r1)
+  824883F4  7D8803A6             mtspr LR,r12
+  824883F8  EBC1FFE8             ld r30,-0x18(r1)
+  824883FC  EBE1FFF0             ld r31,-0x10(r1)
+  82488400  4E800020             blr
 
 ; 82488408  G_GetAnimDeltaForCorpse  (game_mp/g_player_corpse_mp.cpp:172)
   82488408  7D8802A6             mfspr r12,LR
@@ -548,6 +795,73 @@ LAB_82488b48:
 ; 82488B58  G_RunCorpseAnimate  (game_mp/g_player_corpse_mp.cpp:368)
   82488B58  7D8802A6             mfspr r12,LR
   82488B5C  4848DB5D             bl 0x829166b8
+  82488B60  9421FF80             stwu r1,-0x80(r1)
+  82488B64  7C7F1B78             or r31,r3,r3
+  82488B68  4BFFF661             bl 0x824881c8
+  82488B6C  3D608207             lis r11,-0x7df9
+  82488B70  3D408200             lis r10,-0x7e00
+  82488B74  7C7E1B78             or r30,r3,r3
+  82488B78  2F030000             cmpwi cr6,r3,0x0
+  82488B7C  3BAB5A48             addi r29,r11,0x5a48
+  82488B80  3B8A0F98             addi r28,r10,0xf98
+  82488B84  40980020             bge cr6,0x82488ba4
+  82488B88  3D608207             lis r11,-0x7df9
+  82488B8C  7F86E378             or r6,r28,r28
+  82488B90  38EB5C0C             addi r7,r11,0x5c0c
+  82488B94  7FA3EB78             or r3,r29,r29
+  82488B98  38A00000             li r5,0x0
+  82488B9C  38800177             li r4,0x177
+  82488BA0  4814B961             bl 0x825d4500
+LAB_82488ba4:
+  82488BA4  2F1E0008             cmpwi cr6,r30,0x8
+  82488BA8  41980020             blt cr6,0x82488bc8
+  82488BAC  3D608207             lis r11,-0x7df9
+  82488BB0  7F86E378             or r6,r28,r28
+  82488BB4  38EB5BE8             addi r7,r11,0x5be8
+  82488BB8  7FA3EB78             or r3,r29,r29
+  82488BBC  38A00000             li r5,0x0
+  82488BC0  38800178             li r4,0x178
+  82488BC4  4814B93D             bl 0x825d4500
+LAB_82488bc8:
+  82488BC8  3D40835A             lis r10,-0x7ca6
+  82488BCC  1D7E05A0             mulli r11,r30,0x5a0
+  82488BD0  394A9838             subi r10,r10,0x67c8
+  82488BD4  7FE3FB78             or r3,r31,r31
+  82488BD8  394A10D0             addi r10,r10,0x10d0
+  82488BDC  7D6B5214             add r11,r11,r10
+  82488BE0  3BCB000C             addi r30,r11,0xc
+  82488BE4  48073ECD             bl 0x824fcab0
+  82488BE8  7C641B78             or r4,r3,r3
+  82488BEC  3860FFFF             li r3,-0x1
+  82488BF0  7FE5FB78             or r5,r31,r31
+  82488BF4  7FC6F378             or r6,r30,r30
+  82488BF8  38E00000             li r7,0x0
+  82488BFC  4BDE2705             bl 0x8226b300
+  82488C00  7FE3FB78             or r3,r31,r31
+  82488C04  48073EAD             bl 0x824fcab0
+  82488C08  7C7D1B78             or r29,r3,r3
+  82488C0C  7FE3FB78             or r3,r31,r31
+  82488C10  313DFFFF             subic r9,r29,0x1
+  82488C14  7C89E910             subfe r4,r9,r29
+  82488C18  4802E129             bl 0x824b6d40
+  82488C1C  2B1D0000             cmplwi cr6,r29,0x0
+  82488C20  419A0038             beq cr6,0x82488c58
+  82488C24  817F00D0             lwz r11,0xd0(r31)
+  82488C28  38DF0138             addi r6,r31,0x138
+  82488C2C  7FC5F378             or r5,r30,r30
+  82488C30  7FE4FB78             or r4,r31,r31
+  82488C34  3860FFFF             li r3,-0x1
+  82488C38  917E0428             stw r11,0x428(r30)
+  82488C3C  815F00D4             lwz r10,0xd4(r31)
+  82488C40  915E042C             stw r10,0x42c(r30)
+  82488C44  C01F0058             lfs f0,0x58(r31)
+  82488C48  D01E0430             stfs f0,0x430(r30)
+  82488C4C  C1BF005C             lfs f13,0x5c(r31)
+  82488C50  D1BE0434             stfs f13,0x434(r30)
+  82488C54  4BDE4475             bl 0x8226d0c8
+LAB_82488c58:
+  82488C58  38210080             addi r1,r1,0x80
+  82488C5C  4848DAAC             b 0x82916708
 
 ; 82488C60  G_RunCorpse  (game_mp/g_player_corpse_mp.cpp:400)
   82488C60  7D8802A6             mfspr r12,LR

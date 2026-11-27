@@ -24,3 +24,32 @@ ulonglong bdBitOperations__nextPowerOf2(ulonglong param_1)
   return (uVar5 & 0x7fffffff) << 1;
 }
 
+
+// 828F8420  bdBitOperations::highBitNumber  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbitoperations.cpp:40)
+
+uint bdBitOperations__highBitNumber(uint param_1)
+
+{
+  uint uVar1;
+  
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff8220b338,0x29,0,0xffffffff820011f4,0xffffffff8220b2e4,
+                    0xffffffff8220b2f0);
+  }
+  uVar1 = -(uint)((param_1 & 0xffff0000) != 0) & 0x10;
+  param_1 = param_1 >> uVar1;
+  if ((param_1 & 0xff00) != 0) {
+    uVar1 = uVar1 | 8;
+    param_1 = param_1 >> 8;
+  }
+  if ((param_1 & 0xf0) != 0) {
+    uVar1 = uVar1 | 4;
+    param_1 = param_1 >> 4;
+  }
+  if ((param_1 & 0xc) != 0) {
+    uVar1 = uVar1 | 2;
+    param_1 = param_1 >> 2;
+  }
+  return param_1 >> 1 | uVar1;
+}
+

@@ -53,21 +53,31 @@ undefined8 XShowGamerCardUI(undefined8 param_1,undefined8 param_2)
 
 // 828A1DA8  XShowMarketplaceUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:196)
 
-void XShowMarketplaceUI(void)
+void XShowMarketplaceUI(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  uVar1 = XamShowMarketplaceUI(uVar1,param_2,param_3,0xffffffffffffffff,param_4,0);
+  __restgprlr_28(uVar1);
+  return;
 }
 
 
 // 828A1DF8  XShowDeviceSelectorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:246)
 
-void XShowDeviceSelectorUI(void)
+void XShowDeviceSelectorUI
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_26();
+  uVar1 = XamShowDeviceSelectorUI(uVar1,param_2,param_3,param_4,param_5,param_6);
+  __restgprlr_26(uVar1);
+  return;
 }
 
 
@@ -100,11 +110,14 @@ undefined8 XShowFriendRequestUI(undefined8 param_1,undefined8 param_2)
 
 // 828A1F10  XShowDirtyDiscErrorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:336)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void XShowDirtyDiscErrorUI(undefined8 param_1)
 
 {
   XamShowDirtyDiscErrorUI(param_1);
-                    /* WARNING: Subroutine does not return */
   XLaunchNewImage(0,0);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 

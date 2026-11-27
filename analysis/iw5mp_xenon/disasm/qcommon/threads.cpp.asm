@@ -299,10 +299,74 @@ LAB_825197c8:
 ; 8251BF70  Sys_CheckSuspendThread  (qcommon/threads.cpp:857)
   8251BF70  7D8802A6             mfspr r12,LR
   8251BF74  483FA749             bl 0x829166bc
+  8251BF78  9421FF90             stwu r1,-0x70(r1)
+  8251BF7C  3D608370             lis r11,-0x7c90
+  8251BF80  814B0788             lwz r10,0x788(r11)
+  8251BF84  2F0A0000             cmpwi cr6,r10,0x0
+  8251BF88  419A0068             beq cr6,0x8251bff0
+  8251BF8C  4BFFE825             bl 0x8251a7b0
+  8251BF90  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8251BF94  2B0B0000             cmplwi cr6,r11,0x0
+  8251BF98  419A0008             beq cr6,0x8251bfa0
+  8251BF9C  4827CCBD             bl 0x82798c58
+LAB_8251bfa0:
+  8251BFA0  3D20820A             lis r9,-0x7df6
+  8251BFA4  3D408200             lis r10,-0x7e00
+  8251BFA8  3D60820A             lis r11,-0x7df6
+  8251BFAC  3BE9A924             subi r31,r9,0x56dc
+  8251BFB0  3BCA0F98             addi r30,r10,0xf98
+  8251BFB4  3BABA964             subi r29,r11,0x569c
+LAB_8251bfb8:
+  8251BFB8  816D0000             lwz r11,0x0(r13)
+  8251BFBC  394000E0             li r10,0xe0
+  8251BFC0  7D2A582E             lwzx r9,r10,r11
+  8251BFC4  2F090000             cmpwi cr6,r9,0x0
+  8251BFC8  419A001C             beq cr6,0x8251bfe4
+  8251BFCC  7FA7EB78             or r7,r29,r29
+  8251BFD0  7FC6F378             or r6,r30,r30
+  8251BFD4  7FE3FB78             or r3,r31,r31
+  8251BFD8  38A00000             li r5,0x0
+  8251BFDC  388000F5             li r4,0xf5
+  8251BFE0  480B8521             bl 0x825d4500
+LAB_8251bfe4:
+  8251BFE4  38600001             li r3,0x1
+  8251BFE8  48386E89             bl 0x828a2e70
+  8251BFEC  4BFFFFCC             b 0x8251bfb8
+LAB_8251bff0:
+  8251BFF0  38210070             addi r1,r1,0x70
+  8251BFF4  483FA718             b 0x8291670c
 
 ; 82519848  Sys_InitThread  (qcommon/threads.cpp:943)
   82519848  7D8802A6             mfspr r12,LR
   8251984C  483FCE71             bl 0x829166bc
+  82519850  9421FF90             stwu r1,-0x70(r1)
+  82519854  83CD0000             lwz r30,0x0(r13)
+  82519858  3BA000DC             li r29,0xdc
+  8251985C  7C7F1B78             or r31,r3,r3
+  82519860  7D7DF02E             lwzx r11,r29,r30
+  82519864  2B0B0000             cmplwi cr6,r11,0x0
+  82519868  419A0028             beq cr6,0x82519890
+  8251986C  3D60820A             lis r11,-0x7df6
+  82519870  3D408200             lis r10,-0x7e00
+  82519874  3D20820A             lis r9,-0x7df6
+  82519878  38EBA9C8             subi r7,r11,0x5638
+  8251987C  38CA0F98             addi r6,r10,0xf98
+  82519880  3869A924             subi r3,r9,0x56dc
+  82519884  38A00000             li r5,0x0
+  82519888  388003B0             li r4,0x3b0
+  8251988C  480BAC75             bl 0x825d4500
+LAB_82519890:
+  82519890  3D608370             lis r11,-0x7c90
+  82519894  57EA2036             rlwinm r10,r31,0x4,0x0,0x1b
+  82519898  396B07A8             addi r11,r11,0x7a8
+  8251989C  7FE3FB78             or r3,r31,r31
+  825198A0  7D4A5A14             add r10,r10,r11
+  825198A4  7D5DF12E             stwx r10,r29,r30
+  825198A8  480F2E91             bl 0x8260c738
+  825198AC  7FE3FB78             or r3,r31,r31
+  825198B0  480EF149             bl 0x826089f8
+  825198B4  38210070             addi r1,r1,0x70
+  825198B8  483FCE54             b 0x8291670c
 
 ; 825198C8  SetThreadName  (qcommon/threads.cpp:966)
   825198C8  7D8802A6             mfspr r12,LR
@@ -336,6 +400,50 @@ LAB_825197c8:
 ; 82519940  Sys_ThreadMain  (qcommon/threads.cpp:986)
   82519940  7D8802A6             mfspr r12,LR
   82519944  483FCD75             bl 0x829166b8
+  82519948  9421FF80             stwu r1,-0x80(r1)
+  8251994C  3D60820A             lis r11,-0x7df6
+  82519950  7C7F1B78             or r31,r3,r3
+  82519954  2B03000E             cmplwi cr6,r3,0xe
+  82519958  3B8BA924             subi r28,r11,0x56dc
+  8251995C  41980024             blt cr6,0x82519980
+  82519960  3D60820A             lis r11,-0x7df6
+  82519964  7F83E378             or r3,r28,r28
+  82519968  38CBA9F8             subi r6,r11,0x5608
+  8251996C  3900000E             li r8,0xe
+  82519970  7FE7FB78             or r7,r31,r31
+  82519974  38A00000             li r5,0x0
+  82519978  388003E3             li r4,0x3e3
+  8251997C  480BAB85             bl 0x825d4500
+LAB_82519980:
+  82519980  3D608370             lis r11,-0x7c90
+  82519984  57FE103A             rlwinm r30,r31,0x2,0x0,0x1d
+  82519988  3BAB0948             addi r29,r11,0x948
+  8251998C  7D5EE82E             lwzx r10,r30,r29
+  82519990  2B0A0000             cmplwi cr6,r10,0x0
+  82519994  409A0024             bne cr6,0x825199b8
+  82519998  3D60820A             lis r11,-0x7df6
+  8251999C  3D408200             lis r10,-0x7e00
+  825199A0  38EBA9D8             subi r7,r11,0x5628
+  825199A4  38CA0F98             addi r6,r10,0xf98
+  825199A8  7F83E378             or r3,r28,r28
+  825199AC  38A00000             li r5,0x0
+  825199B0  388003E4             li r4,0x3e4
+  825199B4  480BAB4D             bl 0x825d4500
+LAB_825199b8:
+  825199B8  3D608297             lis r11,-0x7d69
+  825199BC  3860FFFF             li r3,-0x1
+  825199C0  394BD19C             subi r10,r11,0x2e64
+  825199C4  7C9E502E             lwzx r4,r30,r10
+  825199C8  4BFFFF01             bl 0x825198c8
+  825199CC  7FE3FB78             or r3,r31,r31
+  825199D0  4BFFFE79             bl 0x82519848
+  825199D4  7D3EE82E             lwzx r9,r30,r29
+  825199D8  7FE3FB78             or r3,r31,r31
+  825199DC  7D2903A6             mtspr CTR,r9
+  825199E0  4E800421             bctrl
+  825199E4  38600000             li r3,0x0
+  825199E8  38210080             addi r1,r1,0x80
+  825199EC  483FCD1C             b 0x82916708
 
 ; 825199F0  Sys_CreateThread  (qcommon/threads.cpp:1012)
   825199F0  7D8802A6             mfspr r12,LR
@@ -394,6 +502,66 @@ LAB_82519a70:
 ; 82519AB8  Sys_TitleServerThreadData  (qcommon/threads.cpp:1057)
   82519AB8  7D8802A6             mfspr r12,LR
   82519ABC  483FCBF9             bl 0x829166b4
+  82519AC0  9421FF80             stwu r1,-0x80(r1)
+  82519AC4  4838F715             bl 0x828a91d8
+  82519AC8  3D20820A             lis r9,-0x7df6
+  82519ACC  3D40820A             lis r10,-0x7df6
+  82519AD0  3D608200             lis r11,-0x7e00
+  82519AD4  7C7F1B78             or r31,r3,r3
+  82519AD8  2B030000             cmplwi cr6,r3,0x0
+  82519ADC  3BC9A984             subi r30,r9,0x567c
+  82519AE0  3B8AA924             subi r28,r10,0x56dc
+  82519AE4  3B6B0F98             addi r27,r11,0xf98
+  82519AE8  409A001C             bne cr6,0x82519b04
+  82519AEC  7FC7F378             or r7,r30,r30
+  82519AF0  7F66DB78             or r6,r27,r27
+  82519AF4  7F83E378             or r3,r28,r28
+  82519AF8  38A00000             li r5,0x0
+  82519AFC  38800102             li r4,0x102
+  82519B00  480BAA01             bl 0x825d4500
+LAB_82519b04:
+  82519B04  3D608370             lis r11,-0x7c90
+  82519B08  3BAB07A8             addi r29,r11,0x7a8
+  82519B0C  817D0128             lwz r11,0x128(r29)
+  82519B10  7F0BF840             cmplw cr6,r11,r31
+  82519B14  409A0018             bne cr6,0x82519b2c
+  82519B18  816D0000             lwz r11,0x0(r13)
+  82519B1C  394000DC             li r10,0xdc
+  82519B20  7D2A582E             lwzx r9,r10,r11
+  82519B24  2B090000             cmplwi cr6,r9,0x0
+  82519B28  409A0038             bne cr6,0x82519b60
+LAB_82519b2c:
+  82519B2C  4838F6AD             bl 0x828a91d8
+  82519B30  7C7F1B78             or r31,r3,r3
+  82519B34  2B030000             cmplwi cr6,r3,0x0
+  82519B38  409A001C             bne cr6,0x82519b54
+  82519B3C  7FC7F378             or r7,r30,r30
+  82519B40  7F66DB78             or r6,r27,r27
+  82519B44  7F83E378             or r3,r28,r28
+  82519B48  38A00000             li r5,0x0
+  82519B4C  38800102             li r4,0x102
+  82519B50  480BA9B1             bl 0x825d4500
+LAB_82519b54:
+  82519B54  93FD0128             stw r31,0x128(r29)
+  82519B58  38600007             li r3,0x7
+  82519B5C  4BFFFCED             bl 0x82519848
+LAB_82519b60:
+  82519B60  816D0000             lwz r11,0x0(r13)
+  82519B64  394000DC             li r10,0xdc
+  82519B68  393D0070             addi r9,r29,0x70
+  82519B6C  7D0A582E             lwzx r8,r10,r11
+  82519B70  7F084840             cmplw cr6,r8,r9
+  82519B74  419A0020             beq cr6,0x82519b94
+  82519B78  3D60820A             lis r11,-0x7df6
+  82519B7C  7F66DB78             or r6,r27,r27
+  82519B80  38EBAA88             subi r7,r11,0x5578
+  82519B84  7F83E378             or r3,r28,r28
+  82519B88  38A00000             li r5,0x0
+  82519B8C  38800427             li r4,0x427
+  82519B90  480BA971             bl 0x825d4500
+LAB_82519b94:
+  82519B94  38210080             addi r1,r1,0x80
+  82519B98  483FCB6C             b 0x82916704
 
 ; 8251BFF8  Sys_SpawnRenderThread  (qcommon/threads.cpp:1076)
   8251BFF8  7D8802A6             mfspr r12,LR
@@ -572,9 +740,99 @@ LAB_8251c220:
   8251C230  EBE1FFF0             ld r31,-0x10(r1)
   8251C234  4E800020             blr
 
+; 82519BF8  Sys_WaitDatabaseThread  (qcommon/threads.cpp:1219)
+  82519BF8  7D8802A6             mfspr r12,LR
+  82519BFC  9181FFF8             stw r12,-0x8(r1)
+  82519C00  9421FFA0             stwu r1,-0x60(r1)
+  82519C04  3D608370             lis r11,-0x7c90
+  82519C08  3880FFFF             li r4,-0x1
+  82519C0C  806B0774             lwz r3,0x774(r11)
+  82519C10  4838F749             bl 0x828a9358
+  82519C14  7C681B78             or r8,r3,r3
+  82519C18  2B030000             cmplwi cr6,r3,0x0
+  82519C1C  419A0028             beq cr6,0x82519c44
+  82519C20  3D60820A             lis r11,-0x7df6
+  82519C24  3D408206             lis r10,-0x7dfa
+  82519C28  3D20820A             lis r9,-0x7df6
+  82519C2C  38EBA99C             subi r7,r11,0x5664
+  82519C30  38CA8FF0             subi r6,r10,0x7010
+  82519C34  3869A924             subi r3,r9,0x56dc
+  82519C38  38A00000             li r5,0x0
+  82519C3C  38800126             li r4,0x126
+  82519C40  480BA8C1             bl 0x825d4500
+LAB_82519c44:
+  82519C44  38210060             addi r1,r1,0x60
+  82519C48  8181FFF8             lwz r12,-0x8(r1)
+  82519C4C  7D8803A6             mtspr LR,r12
+  82519C50  4E800020             blr
+
+; 82519C58  Sys_InitCmdEvents  (qcommon/threads.cpp:1226)
+  82519C58  7D8802A6             mfspr r12,LR
+  82519C5C  9181FFF8             stw r12,-0x8(r1)
+  82519C60  FBE1FFF0             std r31,-0x10(r1)
+  82519C64  9421FFA0             stwu r1,-0x60(r1)
+  82519C68  38C00000             li r6,0x0
+  82519C6C  38A00000             li r5,0x0
+  82519C70  38800001             li r4,0x1
+  82519C74  38600000             li r3,0x0
+  82519C78  4838F649             bl 0x828a92c0
+  82519C7C  3FE08370             lis r31,-0x7c90
+  82519C80  7C6B1B78             or r11,r3,r3
+  82519C84  395F0888             addi r10,r31,0x888
+  82519C88  38C00000             li r6,0x0
+  82519C8C  38A00001             li r5,0x1
+  82519C90  38800001             li r4,0x1
+  82519C94  38600000             li r3,0x0
+  82519C98  916AFF08             stw r11,-0xf8(r10)
+  82519C9C  4838F625             bl 0x828a92c0
+  82519CA0  907F0888             stw r3,0x888(r31)
+  82519CA4  38210060             addi r1,r1,0x60
+  82519CA8  8181FFF8             lwz r12,-0x8(r1)
+  82519CAC  7D8803A6             mtspr LR,r12
+  82519CB0  EBE1FFF0             ld r31,-0x10(r1)
+  82519CB4  4E800020             blr
+
 ; 82519CB8  Sys_SpawnWorkerThread  (qcommon/threads.cpp:1239)
   82519CB8  7D8802A6             mfspr r12,LR
   82519CBC  483FC9F9             bl 0x829166b4
+  82519CC0  9421FF80             stwu r1,-0x80(r1)
+  82519CC4  3BE40002             addi r31,r4,0x2
+  82519CC8  3D608370             lis r11,-0x7c90
+  82519CCC  57FD103A             rlwinm r29,r31,0x2,0x0,0x1d
+  82519CD0  3BCB08F4             addi r30,r11,0x8f4
+  82519CD4  7C7C1B78             or r28,r3,r3
+  82519CD8  7C9B2378             or r27,r4,r4
+  82519CDC  7D5DF02E             lwzx r10,r29,r30
+  82519CE0  2B0A0000             cmplwi cr6,r10,0x0
+  82519CE4  419A002C             beq cr6,0x82519d10
+  82519CE8  3D60820A             lis r11,-0x7df6
+  82519CEC  3D40820A             lis r10,-0x7df6
+  82519CF0  3D20820A             lis r9,-0x7df6
+  82519CF4  38EBAAEC             subi r7,r11,0x5514
+  82519CF8  38CAAAD0             subi r6,r10,0x5530
+  82519CFC  3869A924             subi r3,r9,0x56dc
+  82519D00  7FE8FB78             or r8,r31,r31
+  82519D04  38A00000             li r5,0x0
+  82519D08  388004E2             li r4,0x4e2
+  82519D0C  480BA7F5             bl 0x825d4500
+LAB_82519d10:
+  82519D10  7FE4FB78             or r4,r31,r31
+  82519D14  7F83E378             or r3,r28,r28
+  82519D18  4BFFFCD9             bl 0x825199f0
+  82519D1C  7C7DF02E             lwzx r3,r29,r30
+  82519D20  2B030000             cmplwi cr6,r3,0x0
+  82519D24  409A000C             bne cr6,0x82519d30
+  82519D28  38210080             addi r1,r1,0x80
+  82519D2C  483FC9D8             b 0x82916704
+LAB_82519d30:
+  82519D30  3D60820A             lis r11,-0x7df6
+  82519D34  576A103A             rlwinm r10,r27,0x2,0x0,0x1d
+  82519D38  392BAAC4             subi r9,r11,0x553c
+  82519D3C  7C8A482E             lwzx r4,r10,r9
+  82519D40  4838F809             bl 0x828a9548
+  82519D44  38600001             li r3,0x1
+  82519D48  38210080             addi r1,r1,0x80
+  82519D4C  483FC9B8             b 0x82916704
 
 ; 82519D50  Sys_SuspendThread  (qcommon/threads.cpp:1272)
   82519D50  7D8802A6             mfspr r12,LR
@@ -695,6 +953,90 @@ LAB_8251c294:
 ; 82519E60  Sys_FrontEndSleep  (qcommon/threads.cpp:1338)
   82519E60  7D8802A6             mfspr r12,LR
   82519E64  483FC851             bl 0x829166b4
+  82519E68  9421FF80             stwu r1,-0x80(r1)
+  82519E6C  3D60820A             lis r11,-0x7df6
+  82519E70  3BC0FFFF             li r30,-0x1
+  82519E74  388BABA4             subi r4,r11,0x545c
+  82519E78  7FC3F378             or r3,r30,r30
+  82519E7C  4838775D             bl 0x828a15d8
+  82519E80  3D608370             lis r11,-0x7c90
+  82519E84  38800000             li r4,0x0
+  82519E88  3BEB0934             addi r31,r11,0x934
+  82519E8C  807FFE58             lwz r3,-0x1a8(r31)
+  82519E90  4838F4C9             bl 0x828a9358
+  82519E94  3D60820A             lis r11,-0x7df6
+  82519E98  2B030000             cmplwi cr6,r3,0x0
+  82519E9C  3B6BA924             subi r27,r11,0x56dc
+  82519EA0  419A0024             beq cr6,0x82519ec4
+  82519EA4  3D60820A             lis r11,-0x7df6
+  82519EA8  3D408200             lis r10,-0x7e00
+  82519EAC  38EBAB64             subi r7,r11,0x549c
+  82519EB0  38CA0F98             addi r6,r10,0xf98
+  82519EB4  7F63DB78             or r3,r27,r27
+  82519EB8  38A00000             li r5,0x0
+  82519EBC  38800541             li r4,0x541
+  82519EC0  480BA641             bl 0x825d4500
+LAB_82519ec4:
+  82519EC4  7FC4F378             or r4,r30,r30
+  82519EC8  807FFF6C             lwz r3,-0x94(r31)
+  82519ECC  4838F48D             bl 0x828a9358
+  82519ED0  3D608206             lis r11,-0x7dfa
+  82519ED4  3D40820A             lis r10,-0x7df6
+  82519ED8  7C681B78             or r8,r3,r3
+  82519EDC  2B030000             cmplwi cr6,r3,0x0
+  82519EE0  3BAB8FF0             subi r29,r11,0x7010
+  82519EE4  3B8AA99C             subi r28,r10,0x5664
+  82519EE8  419A001C             beq cr6,0x82519f04
+  82519EEC  7F87E378             or r7,r28,r28
+  82519EF0  7FA6EB78             or r6,r29,r29
+  82519EF4  7F63DB78             or r3,r27,r27
+  82519EF8  38A00000             li r5,0x0
+  82519EFC  38800126             li r4,0x126
+  82519F00  480BA601             bl 0x825d4500
+LAB_82519f04:
+  82519F04  807FFE58             lwz r3,-0x1a8(r31)
+  82519F08  4838F361             bl 0x828a9268
+  82519F0C  807FFE60             lwz r3,-0x1a0(r31)
+  82519F10  4838F301             bl 0x828a9210
+  82519F14  397FFFF8             subi r11,r31,0x8
+LAB_82519f18:
+  82519F18  7D2000A6             mfmsr r9
+  82519F1C  7DA10164             mtmsrd r13,1
+  82519F20  7D405828             lwarx r10,0,r11
+  82519F24  394AFFFF             subi r10,r10,0x1
+  82519F28  7D40592D             stwcx. r10,0,r11
+  82519F2C  7D210164             mtmsrd r9,1
+  82519F30  4082FFE8             bne 0x82519f18
+  82519F34  7D485378             or r8,r10,r10
+  82519F38  2F0AFFFF             cmpwi cr6,r10,-0x1
+  82519F3C  419A002C             beq cr6,0x82519f68
+  82519F40  2F0A0000             cmpwi cr6,r10,0x0
+  82519F44  419A0024             beq cr6,0x82519f68
+  82519F48  3D60820A             lis r11,-0x7df6
+  82519F4C  3D40820A             lis r10,-0x7df6
+  82519F50  38EBAB3C             subi r7,r11,0x54c4
+  82519F54  38CAAB28             subi r6,r10,0x54d8
+  82519F58  7F63DB78             or r3,r27,r27
+  82519F5C  38A00000             li r5,0x0
+  82519F60  38800547             li r4,0x547
+  82519F64  480BA59D             bl 0x825d4500
+LAB_82519f68:
+  82519F68  7FC4F378             or r4,r30,r30
+  82519F6C  807F0000             lwz r3,0x0(r31)
+  82519F70  4838F3E9             bl 0x828a9358
+  82519F74  7C681B78             or r8,r3,r3
+  82519F78  2B030000             cmplwi cr6,r3,0x0
+  82519F7C  419A001C             beq cr6,0x82519f98
+  82519F80  7F87E378             or r7,r28,r28
+  82519F84  7FA6EB78             or r6,r29,r29
+  82519F88  7F63DB78             or r3,r27,r27
+  82519F8C  38A00000             li r5,0x0
+  82519F90  38800126             li r4,0x126
+  82519F94  480BA56D             bl 0x825d4500
+LAB_82519f98:
+  82519F98  483877A9             bl 0x828a1740
+  82519F9C  38210080             addi r1,r1,0x80
+  82519FA0  483FC764             b 0x82916704
 
 ; 82519FA8  Sys_IsRendererReady  (qcommon/threads.cpp:1360)
   82519FA8  3D608370             lis r11,-0x7c90
@@ -741,6 +1083,60 @@ LAB_8251a014:
 ; 8251C2C8  Sys_WakeRenderer  (qcommon/threads.cpp:1384)
   8251C2C8  7D8802A6             mfspr r12,LR
   8251C2CC  483FA3F1             bl 0x829166bc
+  8251C2D0  9421FF90             stwu r1,-0x70(r1)
+  8251C2D4  3D608370             lis r11,-0x7c90
+  8251C2D8  3D40820A             lis r10,-0x7df6
+  8251C2DC  7C7D1B78             or r29,r3,r3
+  8251C2E0  3BEB07A4             addi r31,r11,0x7a4
+  8251C2E4  3BCAA924             subi r30,r10,0x56dc
+  8251C2E8  810B07A4             lwz r8,0x7a4(r11)
+  8251C2EC  2F080000             cmpwi cr6,r8,0x0
+  8251C2F0  419A002C             beq cr6,0x8251c31c
+  8251C2F4  2F080001             cmpwi cr6,r8,0x1
+  8251C2F8  419A0024             beq cr6,0x8251c31c
+  8251C2FC  3D60820A             lis r11,-0x7df6
+  8251C300  3D40820A             lis r10,-0x7df6
+  8251C304  38EBB198             subi r7,r11,0x4e68
+  8251C308  38CAABB4             subi r6,r10,0x544c
+  8251C30C  7FC3F378             or r3,r30,r30
+  8251C310  38A00000             li r5,0x0
+  8251C314  3880056D             li r4,0x56d
+  8251C318  480B81E9             bl 0x825d4500
+LAB_8251c31c:
+  8251C31C  7D4000A6             mfmsr r10
+  8251C320  7DA10164             mtmsrd r13,1
+  8251C324  7D60F828             lwarx r11,0,r31
+  8251C328  396B0001             addi r11,r11,0x1
+  8251C32C  7D60F92D             stwcx. r11,0,r31
+  8251C330  7D410164             mtmsrd r10,1
+  8251C334  4082FFE8             bne 0x8251c31c
+  8251C338  7C2004AC             sync 0x1
+  8251C33C  3D608370             lis r11,-0x7c90
+  8251C340  3BEB0798             addi r31,r11,0x798
+  8251C344  812B0798             lwz r9,0x798(r11)
+  8251C348  2B090000             cmplwi cr6,r9,0x0
+  8251C34C  419A0024             beq cr6,0x8251c370
+  8251C350  3D60820A             lis r11,-0x7df6
+  8251C354  3D408200             lis r10,-0x7e00
+  8251C358  38EBB18C             subi r7,r11,0x4e74
+  8251C35C  38CA0F98             addi r6,r10,0xf98
+  8251C360  7FC3F378             or r3,r30,r30
+  8251C364  38A00000             li r5,0x0
+  8251C368  38800572             li r4,0x572
+  8251C36C  480B8195             bl 0x825d4500
+LAB_8251c370:
+  8251C370  93BF0000             stw r29,0x0(r31)
+  8251C374  3D60820A             lis r11,-0x7df6
+  8251C378  3860FFFF             li r3,-0x1
+  8251C37C  388BB180             subi r4,r11,0x4e80
+  8251C380  48385259             bl 0x828a15d8
+  8251C384  483853BD             bl 0x828a1740
+  8251C388  807FFFFC             lwz r3,-0x4(r31)
+  8251C38C  4838CE85             bl 0x828a9210
+  8251C390  807FFFF8             lwz r3,-0x8(r31)
+  8251C394  4838CE7D             bl 0x828a9210
+  8251C398  38210070             addi r1,r1,0x70
+  8251C39C  483FA370             b 0x8291670c
 
 ; 8251A040  Sys_NotifyRenderer  (qcommon/threads.cpp:1415)
   8251A040  7D8802A6             mfspr r12,LR
@@ -761,6 +1157,7 @@ LAB_8251a014:
   8251A07C  38A00000             li r5,0x0
   8251A080  38800588             li r4,0x588
   8251A084  480BA47D             bl 0x825d4500
+  8251A088  807F0004             lwz r3,0x4(r31)
 LAB_8251a08c:
   8251A08C  4838F185             bl 0x828a9210
   8251A090  38210060             addi r1,r1,0x60
@@ -768,6 +1165,12 @@ LAB_8251a08c:
   8251A098  7D8803A6             mtspr LR,r12
   8251A09C  EBE1FFF0             ld r31,-0x10(r1)
   8251A0A0  4E800020             blr
+
+; 8251A0A8  Sys_SleepServer  (qcommon/threads.cpp:1431)
+  8251A0A8  3D608370             lis r11,-0x7c90
+  8251A0AC  39400001             li r10,0x1
+  8251A0B0  914B0940             stw r10,0x940(r11)
+  8251A0B4  4E800020             blr
 
 ; 8251A0B8  Sys_WaitServer  (qcommon/threads.cpp:1442)
   8251A0B8  7D8802A6             mfspr r12,LR
@@ -847,9 +1250,128 @@ LAB_8251a1b8:
   8251A1BC  7D010164             mtmsrd r8,1
   8251A1C0  4E800020             blr
 
+; 8251A1C8  Sys_ServerCompleted  (qcommon/threads.cpp:1478)
+  8251A1C8  7C2004AC             sync 0x1
+  8251A1CC  3D608370             lis r11,-0x7c90
+  8251A1D0  39000001             li r8,0x1
+  8251A1D4  38EB0768             addi r7,r11,0x768
+  8251A1D8  38C00000             li r6,0x0
+LAB_8251a1dc:
+  8251A1DC  7D2000A6             mfmsr r9
+  8251A1E0  7DA10164             mtmsrd r13,1
+  8251A1E4  7D403828             lwarx r10,0,r7
+  8251A1E8  7F0A4000             cmpw cr6,r10,r8
+  8251A1EC  409A0014             bne cr6,0x8251a200
+  8251A1F0  7CC0392D             stwcx. r6,0,r7
+  8251A1F4  7D210164             mtmsrd r9,1
+  8251A1F8  4082FFE4             bne 0x8251a1dc
+  8251A1FC  4E800020             blr
+LAB_8251a200:
+  8251A200  7D40392D             stwcx. r10,0,r7
+  8251A204  7D210164             mtmsrd r9,1
+  8251A208  4E800020             blr
+
 ; 8251A210  Sys_WaitStartServer  (qcommon/threads.cpp:1495)
   8251A210  7D8802A6             mfspr r12,LR
   8251A214  483FC491             bl 0x829166a4
+  8251A218  9421FF60             stwu r1,-0xa0(r1)
+  8251A21C  7C781B78             or r24,r3,r3
+  8251A220  3B400000             li r26,0x0
+  8251A224  2F030000             cmpwi cr6,r3,0x0
+  8251A228  419A0010             beq cr6,0x8251a238
+  8251A22C  4813C3A5             bl 0x826565d0
+  8251A230  7C771B78             or r23,r3,r3
+  8251A234  48000008             b 0x8251a23c
+LAB_8251a238:
+  8251A238  7F57D378             or r23,r26,r26
+LAB_8251a23c:
+  8251A23C  3D00820A             lis r8,-0x7df6
+  8251A240  3D208200             lis r9,-0x7e00
+  8251A244  3D40820A             lis r10,-0x7df6
+  8251A248  3D608370             lis r11,-0x7c90
+  8251A24C  3BC00001             li r30,0x1
+  8251A250  3F208370             lis r25,-0x7c90
+  8251A254  3BA8A924             subi r29,r8,0x56dc
+  8251A258  3B890F98             addi r28,r9,0xf98
+  8251A25C  3B6AA964             subi r27,r10,0x569c
+  8251A260  3BEB0930             addi r31,r11,0x930
+LAB_8251a264:
+  8251A264  81790940             lwz r11,0x940(r25)
+  8251A268  2F0B0000             cmpwi cr6,r11,0x0
+  8251A26C  409A0068             bne cr6,0x8251a2d4
+  8251A270  817F0000             lwz r11,0x0(r31)
+  8251A274  2F0B0000             cmpwi cr6,r11,0x0
+  8251A278  409A005C             bne cr6,0x8251a2d4
+  8251A27C  395FFE38             subi r10,r31,0x1c8
+LAB_8251a280:
+  8251A280  7D0000A6             mfmsr r8
+  8251A284  7DA10164             mtmsrd r13,1
+  8251A288  7D205028             lwarx r9,0,r10
+  8251A28C  7F09D000             cmpw cr6,r9,r26
+  8251A290  409A0014             bne cr6,0x8251a2a4
+  8251A294  7FC0512D             stwcx. r30,0,r10
+  8251A298  7D010164             mtmsrd r8,1
+  8251A29C  4082FFE4             bne 0x8251a280
+  8251A2A0  4800000C             b 0x8251a2ac
+LAB_8251a2a4:
+  8251A2A4  7D20512D             stwcx. r9,0,r10
+  8251A2A8  7D010164             mtmsrd r8,1
+LAB_8251a2ac:
+  8251A2AC  7D2B4B78             or r11,r9,r9
+  8251A2B0  2F090002             cmpwi cr6,r9,0x2
+  8251A2B4  419A0020             beq cr6,0x8251a2d4
+  8251A2B8  7C2004AC             sync 0x1
+  8251A2BC  81790940             lwz r11,0x940(r25)
+  8251A2C0  2F0B0000             cmpwi cr6,r11,0x0
+  8251A2C4  409A0010             bne cr6,0x8251a2d4
+  8251A2C8  817F0000             lwz r11,0x0(r31)
+  8251A2CC  2F0B0000             cmpwi cr6,r11,0x0
+  8251A2D0  419A008C             beq cr6,0x8251a35c
+LAB_8251a2d4:
+  8251A2D4  397FFE38             subi r11,r31,0x1c8
+LAB_8251a2d8:
+  8251A2D8  7D2000A6             mfmsr r9
+  8251A2DC  7DA10164             mtmsrd r13,1
+  8251A2E0  7D405828             lwarx r10,0,r11
+  8251A2E4  7F0AF000             cmpw cr6,r10,r30
+  8251A2E8  409A0014             bne cr6,0x8251a2fc
+  8251A2EC  7F40592D             stwcx. r26,0,r11
+  8251A2F0  7D210164             mtmsrd r9,1
+  8251A2F4  4082FFE4             bne 0x8251a2d8
+  8251A2F8  4800000C             b 0x8251a304
+LAB_8251a2fc:
+  8251A2FC  7D40592D             stwcx. r10,0,r11
+  8251A300  7D210164             mtmsrd r9,1
+LAB_8251a304:
+  8251A304  2F180000             cmpwi cr6,r24,0x0
+  8251A308  419A0048             beq cr6,0x8251a350
+  8251A30C  816D0000             lwz r11,0x0(r13)
+  8251A310  394000E0             li r10,0xe0
+  8251A314  7D2A582E             lwzx r9,r10,r11
+  8251A318  2F090000             cmpwi cr6,r9,0x0
+  8251A31C  419A001C             beq cr6,0x8251a338
+  8251A320  7F67DB78             or r7,r27,r27
+  8251A324  7F86E378             or r6,r28,r28
+  8251A328  7FA3EB78             or r3,r29,r29
+  8251A32C  38A00000             li r5,0x0
+  8251A330  388000F5             li r4,0xf5
+  8251A334  480BA1CD             bl 0x825d4500
+LAB_8251a338:
+  8251A338  38600001             li r3,0x1
+  8251A33C  48388B35             bl 0x828a2e70
+  8251A340  4813C291             bl 0x826565d0
+  8251A344  7D771850             subf r11,r23,r3
+  8251A348  7F0BC000             cmpw cr6,r11,r24
+  8251A34C  4198FF18             blt cr6,0x8251a264
+LAB_8251a350:
+  8251A350  38600000             li r3,0x0
+  8251A354  382100A0             addi r1,r1,0xa0
+  8251A358  483FC39C             b 0x829166f4
+LAB_8251a35c:
+  8251A35C  7C2004AC             sync 0x1
+  8251A360  38600001             li r3,0x1
+  8251A364  382100A0             addi r1,r1,0xa0
+  8251A368  483FC38C             b 0x829166f4
 
 ; 8251A370  Sys_IsServerThread  (qcommon/threads.cpp:1536)
   8251A370  7D8802A6             mfspr r12,LR
@@ -890,6 +1412,44 @@ LAB_8251a3b4:
 ; 8251A3F0  Sys_DatabaseCompleted  (qcommon/threads.cpp:1755)
   8251A3F0  7D8802A6             mfspr r12,LR
   8251A3F4  483FC2BD             bl 0x829166b0
+  8251A3F8  9421FF70             stwu r1,-0x90(r1)
+  8251A3FC  3D608370             lis r11,-0x7c90
+  8251A400  39400001             li r10,0x1
+  8251A404  3B8B0768             addi r28,r11,0x768
+  8251A408  915C01C8             stw r10,0x1c8(r28)
+  8251A40C  812B0768             lwz r9,0x768(r11)
+  8251A410  2F090001             cmpwi cr6,r9,0x1
+  8251A414  409A005C             bne cr6,0x8251a470
+  8251A418  3D20820A             lis r9,-0x7df6
+  8251A41C  834D0000             lwz r26,0x0(r13)
+  8251A420  3D40820A             lis r10,-0x7df6
+  8251A424  3D608200             lis r11,-0x7e00
+  8251A428  3B6000E0             li r27,0xe0
+  8251A42C  3BE9A964             subi r31,r9,0x569c
+  8251A430  3BCAA924             subi r30,r10,0x56dc
+  8251A434  3BAB0F98             addi r29,r11,0xf98
+LAB_8251a438:
+  8251A438  7D7BD02E             lwzx r11,r27,r26
+  8251A43C  2F0B0000             cmpwi cr6,r11,0x0
+  8251A440  419A001C             beq cr6,0x8251a45c
+  8251A444  7FE7FB78             or r7,r31,r31
+  8251A448  7FA6EB78             or r6,r29,r29
+  8251A44C  7FC3F378             or r3,r30,r30
+  8251A450  38A00000             li r5,0x0
+  8251A454  388000F5             li r4,0xf5
+  8251A458  480BA0A9             bl 0x825d4500
+LAB_8251a45c:
+  8251A45C  38600001             li r3,0x1
+  8251A460  48388A11             bl 0x828a2e70
+  8251A464  817C0000             lwz r11,0x0(r28)
+  8251A468  2F0B0001             cmpwi cr6,r11,0x1
+  8251A46C  419AFFCC             beq cr6,0x8251a438
+LAB_8251a470:
+  8251A470  7C2004AC             sync 0x1
+  8251A474  807C0148             lwz r3,0x148(r28)
+  8251A478  4838ED99             bl 0x828a9210
+  8251A47C  38210090             addi r1,r1,0x90
+  8251A480  483FC280             b 0x82916700
 
 ; 8251A488  Sys_WaitStartDatabase  (qcommon/threads.cpp:1780)
   8251A488  7D8802A6             mfspr r12,LR
@@ -983,6 +1543,26 @@ LAB_8251a5a8:
 ; 8251A5C8  Sys_SyncDatabaseWithQuit  (qcommon/threads.cpp:1860)
   8251A5C8  4BFFFF58             b 0x8251a520
 
+; 8251A5D0  Sys_CheckDatabase  (qcommon/threads.cpp:1871)
+  8251A5D0  7D8802A6             mfspr r12,LR
+  8251A5D4  9181FFF8             stw r12,-0x8(r1)
+  8251A5D8  9421FFA0             stwu r1,-0x60(r1)
+  8251A5DC  3D608370             lis r11,-0x7c90
+  8251A5E0  38800000             li r4,0x0
+  8251A5E4  806B08B0             lwz r3,0x8b0(r11)
+  8251A5E8  4838ED71             bl 0x828a9358
+  8251A5EC  7C6A0034             cntlzw r10,r3
+  8251A5F0  5543DFFE             rlwinm r3,r10,0x1b,0x1f,0x1f
+  8251A5F4  38210060             addi r1,r1,0x60
+  8251A5F8  8181FFF8             lwz r12,-0x8(r1)
+  8251A5FC  7D8803A6             mtspr LR,r12
+  8251A600  4E800020             blr
+
+; 8251A608  Sys_WakeDatabase  (qcommon/threads.cpp:1884)
+  8251A608  3D608370             lis r11,-0x7c90
+  8251A60C  806B08B0             lwz r3,0x8b0(r11)
+  8251A610  4838EC58             b 0x828a9268
+
 ; 8251A618  Sys_NotifyDatabase  (qcommon/threads.cpp:1897)
   8251A618  3D608370             lis r11,-0x7c90
   8251A61C  806B0764             lwz r3,0x764(r11)
@@ -1004,6 +1584,13 @@ LAB_8251a5a8:
   8251A654  806BD1D4             lwz r3,-0x2e2c(r11)
   8251A658  7C2004AC             sync 0x1
   8251A65C  4E800020             blr
+
+; 8251A660  Sys_WakeDatabase2  (qcommon/threads.cpp:1949)
+  8251A660  7C2004AC             sync 0x1
+  8251A664  3D608297             lis r11,-0x7d69
+  8251A668  39400000             li r10,0x0
+  8251A66C  914BD1D4             stw r10,-0x2e2c(r11)
+  8251A670  4E800020             blr
 
 ; 8251A678  Sys_FinishRenderer  (qcommon/threads.cpp:1964)
   8251A678  7D8802A6             mfspr r12,LR
@@ -1182,13 +1769,81 @@ LAB_8251a8d4:
   8251A8F4  EBE1FFF0             ld r31,-0x10(r1)
   8251A8F8  4E800020             blr
 
+; 8251A900  Sys_IsMainThread2  (qcommon/threads.cpp:2062)
+  8251A900  7D8802A6             mfspr r12,LR
+  8251A904  9181FFF8             stw r12,-0x8(r1)
+  8251A908  9421FFA0             stwu r1,-0x60(r1)
+  8251A90C  4BFFFF85             bl 0x8251a890
+  8251A910  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8251A914  2B0B0000             cmplwi cr6,r11,0x0
+  8251A918  409A001C             bne cr6,0x8251a934
+  8251A91C  816D0000             lwz r11,0x0(r13)
+  8251A920  394000E4             li r10,0xe4
+  8251A924  7D2A58AE             lbzx r9,r10,r11
+  8251A928  39600000             li r11,0x0
+  8251A92C  2B090000             cmplwi cr6,r9,0x0
+  8251A930  419A0008             beq cr6,0x8251a938
+LAB_8251a934:
+  8251A934  39600001             li r11,0x1
+LAB_8251a938:
+  8251A938  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  8251A93C  38210060             addi r1,r1,0x60
+  8251A940  8181FFF8             lwz r12,-0x8(r1)
+  8251A944  7D8803A6             mtspr LR,r12
+  8251A948  4E800020             blr
+
 ; 8251A950  Sys_SetValue  (qcommon/threads.cpp:2074)
   8251A950  7D8802A6             mfspr r12,LR
   8251A954  483FBD65             bl 0x829166b8
+  8251A958  9421FF80             stwu r1,-0x80(r1)
+  8251A95C  83ED0000             lwz r31,0x0(r13)
+  8251A960  3BC000DC             li r30,0xdc
+  8251A964  7C7D1B78             or r29,r3,r3
+  8251A968  7C9C2378             or r28,r4,r4
+  8251A96C  7D7EF82E             lwzx r11,r30,r31
+  8251A970  2B0B0000             cmplwi cr6,r11,0x0
+  8251A974  409A0028             bne cr6,0x8251a99c
+  8251A978  3D60820A             lis r11,-0x7df6
+  8251A97C  3D408200             lis r10,-0x7e00
+  8251A980  3D20820A             lis r9,-0x7df6
+  8251A984  38EBAC98             subi r7,r11,0x5368
+  8251A988  38CA0F98             addi r6,r10,0xf98
+  8251A98C  3869A924             subi r3,r9,0x56dc
+  8251A990  38A00000             li r5,0x0
+  8251A994  3880081D             li r4,0x81d
+  8251A998  480B9B69             bl 0x825d4500
+LAB_8251a99c:
+  8251A99C  7D7EF82E             lwzx r11,r30,r31
+  8251A9A0  57AA103A             rlwinm r10,r29,0x2,0x0,0x1d
+  8251A9A4  7F8A592E             stwx r28,r10,r11
+  8251A9A8  38210080             addi r1,r1,0x80
+  8251A9AC  483FBD5C             b 0x82916708
 
 ; 8251A9B0  Sys_GetValue  (qcommon/threads.cpp:2089)
   8251A9B0  7D8802A6             mfspr r12,LR
   8251A9B4  483FBD09             bl 0x829166bc
+  8251A9B8  9421FF90             stwu r1,-0x70(r1)
+  8251A9BC  83ED0000             lwz r31,0x0(r13)
+  8251A9C0  3BC000DC             li r30,0xdc
+  8251A9C4  7C7D1B78             or r29,r3,r3
+  8251A9C8  7D7EF82E             lwzx r11,r30,r31
+  8251A9CC  2B0B0000             cmplwi cr6,r11,0x0
+  8251A9D0  409A0028             bne cr6,0x8251a9f8
+  8251A9D4  3D60820A             lis r11,-0x7df6
+  8251A9D8  3D408200             lis r10,-0x7e00
+  8251A9DC  3D20820A             lis r9,-0x7df6
+  8251A9E0  38EBAC98             subi r7,r11,0x5368
+  8251A9E4  38CA0F98             addi r6,r10,0xf98
+  8251A9E8  3869A924             subi r3,r9,0x56dc
+  8251A9EC  38A00000             li r5,0x0
+  8251A9F0  3880082C             li r4,0x82c
+  8251A9F4  480B9B0D             bl 0x825d4500
+LAB_8251a9f8:
+  8251A9F8  7D7EF82E             lwzx r11,r30,r31
+  8251A9FC  57AA103A             rlwinm r10,r29,0x2,0x0,0x1d
+  8251AA00  7C6A582E             lwzx r3,r10,r11
+  8251AA04  38210070             addi r1,r1,0x70
+  8251AA08  483FBD04             b 0x8291670c
 
 ; 8251AA10  Sys_WaitForWorkerCmd  (qcommon/threads.cpp:2108)
   8251AA10  7D8802A6             mfspr r12,LR
@@ -1333,10 +1988,90 @@ LAB_8251abfc:
 ; 8251AC10  Sys_BlockDatabaseThread  (qcommon/threads.cpp:2183)
   8251AC10  7D8802A6             mfspr r12,LR
   8251AC14  483FBAA5             bl 0x829166b8
+  8251AC18  9421FF80             stwu r1,-0x80(r1)
+  8251AC1C  4838E9F5             bl 0x828a9610
+  8251AC20  3D60820A             lis r11,-0x7df6
+  8251AC24  3D408200             lis r10,-0x7e00
+  8251AC28  2B030001             cmplwi cr6,r3,0x1
+  8251AC2C  3BEBA924             subi r31,r11,0x56dc
+  8251AC30  3BCA0F98             addi r30,r10,0xf98
+  8251AC34  419A0020             beq cr6,0x8251ac54
+  8251AC38  3D60820A             lis r11,-0x7df6
+  8251AC3C  7FC6F378             or r6,r30,r30
+  8251AC40  38EBAD10             subi r7,r11,0x52f0
+  8251AC44  7FE3FB78             or r3,r31,r31
+  8251AC48  38A00000             li r5,0x0
+  8251AC4C  38800888             li r4,0x888
+  8251AC50  480B98B1             bl 0x825d4500
+LAB_8251ac54:
+  8251AC54  838D0000             lwz r28,0x0(r13)
+  8251AC58  3BA000E0             li r29,0xe0
+  8251AC5C  7D7DE02E             lwzx r11,r29,r28
+  8251AC60  2F0B0000             cmpwi cr6,r11,0x0
+  8251AC64  419A0020             beq cr6,0x8251ac84
+  8251AC68  3D60820A             lis r11,-0x7df6
+  8251AC6C  7FC6F378             or r6,r30,r30
+  8251AC70  38EBACF8             subi r7,r11,0x5308
+  8251AC74  7FE3FB78             or r3,r31,r31
+  8251AC78  38A00000             li r5,0x0
+  8251AC7C  38800889             li r4,0x889
+  8251AC80  480B9881             bl 0x825d4500
+LAB_8251ac84:
+  8251AC84  39600001             li r11,0x1
+  8251AC88  3D408370             lis r10,-0x7c90
+  8251AC8C  7D7DE12E             stwx r11,r29,r28
+  8251AC90  806A0888             lwz r3,0x888(r10)
+  8251AC94  4838E5D5             bl 0x828a9268
+  8251AC98  38210080             addi r1,r1,0x80
+  8251AC9C  483FBA6C             b 0x82916708
 
 ; 8251ACA0  Sys_UnblockDatabaseThread  (qcommon/threads.cpp:2195)
   8251ACA0  7D8802A6             mfspr r12,LR
   8251ACA4  483FBA19             bl 0x829166bc
+  8251ACA8  9421FF90             stwu r1,-0x70(r1)
+  8251ACAC  4838E965             bl 0x828a9610
+  8251ACB0  3D60820A             lis r11,-0x7df6
+  8251ACB4  3D408200             lis r10,-0x7e00
+  8251ACB8  2B030001             cmplwi cr6,r3,0x1
+  8251ACBC  3BCBA924             subi r30,r11,0x56dc
+  8251ACC0  3BAA0F98             addi r29,r10,0xf98
+  8251ACC4  419A0020             beq cr6,0x8251ace4
+  8251ACC8  3D60820A             lis r11,-0x7df6
+  8251ACCC  7FA6EB78             or r6,r29,r29
+  8251ACD0  38EBAD10             subi r7,r11,0x52f0
+  8251ACD4  7FC3F378             or r3,r30,r30
+  8251ACD8  38A00000             li r5,0x0
+  8251ACDC  38800894             li r4,0x894
+  8251ACE0  480B9821             bl 0x825d4500
+LAB_8251ace4:
+  8251ACE4  3D608370             lis r11,-0x7c90
+  8251ACE8  3BEB0888             addi r31,r11,0x888
+  8251ACEC  817F000C             lwz r11,0xc(r31)
+  8251ACF0  2F0B0000             cmpwi cr6,r11,0x0
+  8251ACF4  419A0034             beq cr6,0x8251ad28
+  8251ACF8  816D0000             lwz r11,0x0(r13)
+  8251ACFC  394000E0             li r10,0xe0
+  8251AD00  7D2A582E             lwzx r9,r10,r11
+  8251AD04  2F090000             cmpwi cr6,r9,0x0
+  8251AD08  409A0020             bne cr6,0x8251ad28
+  8251AD0C  3D60820A             lis r11,-0x7df6
+  8251AD10  7FA6EB78             or r6,r29,r29
+  8251AD14  38EBAD48             subi r7,r11,0x52b8
+  8251AD18  7FC3F378             or r3,r30,r30
+  8251AD1C  38A00000             li r5,0x0
+  8251AD20  38800895             li r4,0x895
+  8251AD24  480B97DD             bl 0x825d4500
+LAB_8251ad28:
+  8251AD28  814D0000             lwz r10,0x0(r13)
+  8251AD2C  392000E0             li r9,0xe0
+  8251AD30  39600001             li r11,0x1
+  8251AD34  807F0000             lwz r3,0x0(r31)
+  8251AD38  39000000             li r8,0x0
+  8251AD3C  917F000C             stw r11,0xc(r31)
+  8251AD40  7D09512E             stwx r8,r9,r10
+  8251AD44  4838E4CD             bl 0x828a9210
+  8251AD48  38210070             addi r1,r1,0x70
+  8251AD4C  483FB9C0             b 0x8291670c
 
 ; 8251C3A0  Sys_CheckPauseWorkerCmd  (qcommon/threads.cpp:2208)
   8251C3A0  7D8802A6             mfspr r12,LR
@@ -1433,14 +2168,232 @@ LAB_8251c4c0:
 ; 8251AD50  Sys_SuspendOtherThreads  (qcommon/threads.cpp:2258)
   8251AD50  7D8802A6             mfspr r12,LR
   8251AD54  483FB965             bl 0x829166b8
+  8251AD58  9421FF80             stwu r1,-0x80(r1)
+  8251AD5C  38600024             li r3,0x24
+  8251AD60  480F8D19             bl 0x82613a78
+  8251AD64  4812D695             bl 0x826483f8
+  8251AD68  3D608370             lis r11,-0x7c90
+  8251AD6C  39400001             li r10,0x1
+  8251AD70  3BCB08B4             addi r30,r11,0x8b4
+  8251AD74  915EFED4             stw r10,-0x12c(r30)
+  8251AD78  48206951             bl 0x827216c8
+  8251AD7C  4838E45D             bl 0x828a91d8
+  8251AD80  7C7C1B78             or r28,r3,r3
+  8251AD84  2B030000             cmplwi cr6,r3,0x0
+  8251AD88  409A0028             bne cr6,0x8251adb0
+  8251AD8C  3D60820A             lis r11,-0x7df6
+  8251AD90  3D408200             lis r10,-0x7e00
+  8251AD94  3D20820A             lis r9,-0x7df6
+  8251AD98  38EBA984             subi r7,r11,0x567c
+  8251AD9C  38CA0F98             addi r6,r10,0xf98
+  8251ADA0  3869A924             subi r3,r9,0x56dc
+  8251ADA4  38A00000             li r5,0x0
+  8251ADA8  38800102             li r4,0x102
+  8251ADAC  480B9755             bl 0x825d4500
+LAB_8251adb0:
+  8251ADB0  3BA00000             li r29,0x0
+  8251ADB4  3BE00000             li r31,0x0
+LAB_8251adb8:
+  8251ADB8  2B1D000A             cmplwi cr6,r29,0xa
+  8251ADBC  419A002C             beq cr6,0x8251ade8
+  8251ADC0  397E0040             addi r11,r30,0x40
+  8251ADC4  7C7F582E             lwzx r3,r31,r11
+  8251ADC8  2B030000             cmplwi cr6,r3,0x0
+  8251ADCC  419A001C             beq cr6,0x8251ade8
+  8251ADD0  7D7FF02E             lwzx r11,r31,r30
+  8251ADD4  2B0B0000             cmplwi cr6,r11,0x0
+  8251ADD8  419A0010             beq cr6,0x8251ade8
+  8251ADDC  7F0BE040             cmplw cr6,r11,r28
+  8251ADE0  419A0008             beq cr6,0x8251ade8
+  8251ADE4  4838E6C5             bl 0x828a94a8
+LAB_8251ade8:
+  8251ADE8  3BFF0004             addi r31,r31,0x4
+  8251ADEC  3BBD0001             addi r29,r29,0x1
+  8251ADF0  2B1F0038             cmplwi cr6,r31,0x38
+  8251ADF4  4198FFC4             blt cr6,0x8251adb8
+  8251ADF8  38210080             addi r1,r1,0x80
+  8251ADFC  483FB90C             b 0x82916708
+
+; 8251AE00  Sys_AreThreadsSuspended  (qcommon/threads.cpp:2322)
+  8251AE00  3D608370             lis r11,-0x7c90
+  8251AE04  806B0788             lwz r3,0x788(r11)
+  8251AE08  4E800020             blr
+
+; 8251AE10  Sys_ReleaseThreadOwnership  (qcommon/threads.cpp:2338)
+  8251AE10  7D8802A6             mfspr r12,LR
+  8251AE14  9181FFF8             stw r12,-0x8(r1)
+  8251AE18  FBE1FFF0             std r31,-0x10(r1)
+  8251AE1C  9421FFA0             stwu r1,-0x60(r1)
+  8251AE20  3FE08370             lis r31,-0x7c90
+  8251AE24  38800000             li r4,0x0
+  8251AE28  807F078C             lwz r3,0x78c(r31)
+  8251AE2C  4838E52D             bl 0x828a9358
+  8251AE30  2B030000             cmplwi cr6,r3,0x0
+  8251AE34  409A0028             bne cr6,0x8251ae5c
+  8251AE38  3D60820A             lis r11,-0x7df6
+  8251AE3C  3D408200             lis r10,-0x7e00
+  8251AE40  3D20820A             lis r9,-0x7df6
+  8251AE44  38EBAD80             subi r7,r11,0x5280
+  8251AE48  38CA0F98             addi r6,r10,0xf98
+  8251AE4C  3869A924             subi r3,r9,0x56dc
+  8251AE50  38A00000             li r5,0x0
+  8251AE54  38800923             li r4,0x923
+  8251AE58  480B96A9             bl 0x825d4500
+LAB_8251ae5c:
+  8251AE5C  807F078C             lwz r3,0x78c(r31)
+  8251AE60  4838E3B1             bl 0x828a9210
+  8251AE64  38210060             addi r1,r1,0x60
+  8251AE68  8181FFF8             lwz r12,-0x8(r1)
+  8251AE6C  7D8803A6             mtspr LR,r12
+  8251AE70  EBE1FFF0             ld r31,-0x10(r1)
+  8251AE74  4E800020             blr
 
 ; 8251AE78  Sys_SpawnContentServerThread  (qcommon/threads.cpp:2349)
   8251AE78  7D8802A6             mfspr r12,LR
   8251AE7C  483FB841             bl 0x829166bc
+  8251AE80  9421FF90             stwu r1,-0x70(r1)
+  8251AE84  3D60820A             lis r11,-0x7df6
+  8251AE88  7C7E1B78             or r30,r3,r3
+  8251AE8C  7C9F2378             or r31,r4,r4
+  8251AE90  2B030000             cmplwi cr6,r3,0x0
+  8251AE94  3BABA924             subi r29,r11,0x56dc
+  8251AE98  409A0024             bne cr6,0x8251aebc
+  8251AE9C  3D60820A             lis r11,-0x7df6
+  8251AEA0  3D408200             lis r10,-0x7e00
+  8251AEA4  38EBADF0             subi r7,r11,0x5210
+  8251AEA8  38CA0F98             addi r6,r10,0xf98
+  8251AEAC  7FA3EB78             or r3,r29,r29
+  8251AEB0  38A00000             li r5,0x0
+  8251AEB4  3880092E             li r4,0x92e
+  8251AEB8  480B9649             bl 0x825d4500
+LAB_8251aebc:
+  8251AEBC  2F1F000C             cmpwi cr6,r31,0xc
+  8251AEC0  419A0028             beq cr6,0x8251aee8
+  8251AEC4  3D60820A             lis r11,-0x7df6
+  8251AEC8  3D40820A             lis r10,-0x7df6
+  8251AECC  38EBADC0             subi r7,r11,0x5240
+  8251AED0  38CAAAD0             subi r6,r10,0x5530
+  8251AED4  7FA3EB78             or r3,r29,r29
+  8251AED8  7FE8FB78             or r8,r31,r31
+  8251AEDC  38A00000             li r5,0x0
+  8251AEE0  3880092F             li r4,0x92f
+  8251AEE4  480B961D             bl 0x825d4500
+LAB_8251aee8:
+  8251AEE8  38C00000             li r6,0x0
+  8251AEEC  38A00000             li r5,0x0
+  8251AEF0  38800000             li r4,0x0
+  8251AEF4  38600000             li r3,0x0
+  8251AEF8  4838E3C9             bl 0x828a92c0
+  8251AEFC  3D408370             lis r10,-0x7c90
+  8251AF00  7C6B1B78             or r11,r3,r3
+  8251AF04  3BAA08F4             addi r29,r10,0x8f4
+  8251AF08  7FE4FB78             or r4,r31,r31
+  8251AF0C  7FC3F378             or r3,r30,r30
+  8251AF10  917D0044             stw r11,0x44(r29)
+  8251AF14  4BFFEADD             bl 0x825199f0
+  8251AF18  57E9103A             rlwinm r9,r31,0x2,0x0,0x1d
+  8251AF1C  7D09E82E             lwzx r8,r9,r29
+  8251AF20  2B080000             cmplwi cr6,r8,0x0
+  8251AF24  409A0010             bne cr6,0x8251af34
+  8251AF28  38600000             li r3,0x0
+  8251AF2C  38210070             addi r1,r1,0x70
+  8251AF30  483FB7DC             b 0x8291670c
+LAB_8251af34:
+  8251AF34  7FE3FB78             or r3,r31,r31
+  8251AF38  4BFFEE89             bl 0x82519dc0
+  8251AF3C  38600001             li r3,0x1
+  8251AF40  38210070             addi r1,r1,0x70
+  8251AF44  483FB7C8             b 0x8291670c
 
 ; 8251AF48  Sys_WaitForHTTPOperation  (qcommon/threads.cpp:2365)
   8251AF48  7D8802A6             mfspr r12,LR
   8251AF4C  483FB769             bl 0x829166b4
+  8251AF50  9421FF80             stwu r1,-0x80(r1)
+  8251AF54  3D60820A             lis r11,-0x7df6
+  8251AF58  7C681B78             or r8,r3,r3
+  8251AF5C  2F03000C             cmpwi cr6,r3,0xc
+  8251AF60  3B6BA924             subi r27,r11,0x56dc
+  8251AF64  419A0024             beq cr6,0x8251af88
+  8251AF68  3D60820A             lis r11,-0x7df6
+  8251AF6C  3D40820A             lis r10,-0x7df6
+  8251AF70  38EBADC0             subi r7,r11,0x5240
+  8251AF74  38CAAAD0             subi r6,r10,0x5530
+  8251AF78  7F63DB78             or r3,r27,r27
+  8251AF7C  38A00000             li r5,0x0
+  8251AF80  38800940             li r4,0x940
+  8251AF84  480B957D             bl 0x825d4500
+LAB_8251af88:
+  8251AF88  3D208370             lis r9,-0x7c90
+  8251AF8C  3D408206             lis r10,-0x7dfa
+  8251AF90  3D60820A             lis r11,-0x7df6
+  8251AF94  3B80FFFF             li r28,-0x1
+  8251AF98  3BE90938             addi r31,r9,0x938
+  8251AF9C  3BCA8FF0             subi r30,r10,0x7010
+  8251AFA0  3BABA99C             subi r29,r11,0x5664
+LAB_8251afa4:
+  8251AFA4  38600000             li r3,0x0
+LAB_8251afa8:
+  8251AFA8  397F000C             addi r11,r31,0xc
+  8251AFAC  7D4358AE             lbzx r10,r3,r11
+  8251AFB0  2B0A0000             cmplwi cr6,r10,0x0
+  8251AFB4  409A0044             bne cr6,0x8251aff8
+  8251AFB8  38630001             addi r3,r3,0x1
+  8251AFBC  2F030004             cmpwi cr6,r3,0x4
+  8251AFC0  4198FFE8             blt cr6,0x8251afa8
+  8251AFC4  7F84E378             or r4,r28,r28
+  8251AFC8  807F0000             lwz r3,0x0(r31)
+  8251AFCC  4838E38D             bl 0x828a9358
+  8251AFD0  7C681B78             or r8,r3,r3
+  8251AFD4  2B030000             cmplwi cr6,r3,0x0
+  8251AFD8  419AFFCC             beq cr6,0x8251afa4
+  8251AFDC  7FA7EB78             or r7,r29,r29
+  8251AFE0  7FC6F378             or r6,r30,r30
+  8251AFE4  7F63DB78             or r3,r27,r27
+  8251AFE8  38A00000             li r5,0x0
+  8251AFEC  38800126             li r4,0x126
+  8251AFF0  480B9511             bl 0x825d4500
+  8251AFF4  4BFFFFB0             b 0x8251afa4
+LAB_8251aff8:
+  8251AFF8  7C2004AC             sync 0x1
+  8251AFFC  39400000             li r10,0x0
+  8251B000  7D4359AE             stbx r10,r3,r11
+  8251B004  38210080             addi r1,r1,0x80
+  8251B008  483FB6FC             b 0x82916704
+
+; 8251B010  Sys_SignalPendingHTTPOperation  (qcommon/threads.cpp:2388)
+  8251B010  7D8802A6             mfspr r12,LR
+  8251B014  9181FFF8             stw r12,-0x8(r1)
+  8251B018  FBE1FFF0             std r31,-0x10(r1)
+  8251B01C  9421FFA0             stwu r1,-0x60(r1)
+  8251B020  7C7F1B78             or r31,r3,r3
+  8251B024  2F030000             cmpwi cr6,r3,0x0
+  8251B028  4198000C             blt cr6,0x8251b034
+  8251B02C  2F030004             cmpwi cr6,r3,0x4
+  8251B030  41980028             blt cr6,0x8251b058
+LAB_8251b034:
+  8251B034  3D60820A             lis r11,-0x7df6
+  8251B038  3D408200             lis r10,-0x7e00
+  8251B03C  3D20820A             lis r9,-0x7df6
+  8251B040  38EBADFC             subi r7,r11,0x5204
+  8251B044  38CA0F98             addi r6,r10,0xf98
+  8251B048  3869A924             subi r3,r9,0x56dc
+  8251B04C  38A00000             li r5,0x0
+  8251B050  38800955             li r4,0x955
+  8251B054  480B94AD             bl 0x825d4500
+LAB_8251b058:
+  8251B058  7C2004AC             sync 0x1
+  8251B05C  3D408370             lis r10,-0x7c90
+  8251B060  39200001             li r9,0x1
+  8251B064  396A0938             addi r11,r10,0x938
+  8251B068  390B000C             addi r8,r11,0xc
+  8251B06C  806A0938             lwz r3,0x938(r10)
+  8251B070  7D28F9AE             stbx r9,r8,r31
+  8251B074  4838E19D             bl 0x828a9210
+  8251B078  38210060             addi r1,r1,0x60
+  8251B07C  8181FFF8             lwz r12,-0x8(r1)
+  8251B080  7D8803A6             mtspr LR,r12
+  8251B084  EBE1FFF0             ld r31,-0x10(r1)
+  8251B088  4E800020             blr
 
 ; 8251B090  Sys_SpawnStreamThread  (qcommon/threads.cpp:2406)
   8251B090  7D8802A6             mfspr r12,LR
@@ -1480,10 +2433,185 @@ LAB_8251b0f8:
 ; 8251B110  Sys_InitStreamPacketCallbackThreadData  (qcommon/threads.cpp:2439)
   8251B110  7D8802A6             mfspr r12,LR
   8251B114  483FB5A9             bl 0x829166bc
+  8251B118  9421FF90             stwu r1,-0x70(r1)
+  8251B11C  4BFFF775             bl 0x8251a890
+  8251B120  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8251B124  2B0B0000             cmplwi cr6,r11,0x0
+  8251B128  409A00E8             bne cr6,0x8251b210
+  8251B12C  4BFFF685             bl 0x8251a7b0
+  8251B130  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8251B134  2B0B0000             cmplwi cr6,r11,0x0
+  8251B138  409A00D8             bne cr6,0x8251b210
+  8251B13C  4BFFF755             bl 0x8251a890
+  8251B140  5469063E             rlwinm r9,r3,0x0,0x18,0x1f
+  8251B144  3D60820A             lis r11,-0x7df6
+  8251B148  3D408200             lis r10,-0x7e00
+  8251B14C  2B090000             cmplwi cr6,r9,0x0
+  8251B150  3BCBA924             subi r30,r11,0x56dc
+  8251B154  3BAA0F98             addi r29,r10,0xf98
+  8251B158  409A0014             bne cr6,0x8251b16c
+  8251B15C  4BFFF655             bl 0x8251a7b0
+  8251B160  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8251B164  2B0B0000             cmplwi cr6,r11,0x0
+  8251B168  419A0020             beq cr6,0x8251b188
+LAB_8251b16c:
+  8251B16C  3D60820A             lis r11,-0x7df6
+  8251B170  7FA6EB78             or r6,r29,r29
+  8251B174  38EBAED0             subi r7,r11,0x5130
+  8251B178  7FC3F378             or r3,r30,r30
+  8251B17C  38A00000             li r5,0x0
+  8251B180  3880098D             li r4,0x98d
+  8251B184  480B937D             bl 0x825d4500
+LAB_8251b188:
+  8251B188  4BFFE329             bl 0x825194b0
+  8251B18C  3D608370             lis r11,-0x7c90
+  8251B190  3BEB07A8             addi r31,r11,0x7a8
+  8251B194  817F0134             lwz r11,0x134(r31)
+  8251B198  7F0B1840             cmplw cr6,r11,r3
+  8251B19C  409A0020             bne cr6,0x8251b1bc
+  8251B1A0  3D60820A             lis r11,-0x7df6
+  8251B1A4  7FA6EB78             or r6,r29,r29
+  8251B1A8  38EBAE80             subi r7,r11,0x5180
+  8251B1AC  7FC3F378             or r3,r30,r30
+  8251B1B0  38A00000             li r5,0x0
+  8251B1B4  3880098E             li r4,0x98e
+  8251B1B8  480B9349             bl 0x825d4500
+LAB_8251b1bc:
+  8251B1BC  4BFFE2F5             bl 0x825194b0
+  8251B1C0  7C6B1B78             or r11,r3,r3
+  8251B1C4  3860000A             li r3,0xa
+  8251B1C8  917F0134             stw r11,0x134(r31)
+  8251B1CC  4BFFE67D             bl 0x82519848
+  8251B1D0  816D0000             lwz r11,0x0(r13)
+  8251B1D4  394000DC             li r10,0xdc
+  8251B1D8  393F00A0             addi r9,r31,0xa0
+  8251B1DC  7D0A582E             lwzx r8,r10,r11
+  8251B1E0  7F084840             cmplw cr6,r8,r9
+  8251B1E4  419A0020             beq cr6,0x8251b204
+  8251B1E8  3D60820A             lis r11,-0x7df6
+  8251B1EC  7FA6EB78             or r6,r29,r29
+  8251B1F0  38EBAE38             subi r7,r11,0x51c8
+  8251B1F4  7FC3F378             or r3,r30,r30
+  8251B1F8  38A00000             li r5,0x0
+  8251B1FC  38800993             li r4,0x993
+  8251B200  480B9301             bl 0x825d4500
+LAB_8251b204:
+  8251B204  38600001             li r3,0x1
+  8251B208  38210070             addi r1,r1,0x70
+  8251B20C  483FB500             b 0x8291670c
+LAB_8251b210:
+  8251B210  38600000             li r3,0x0
+  8251B214  38210070             addi r1,r1,0x70
+  8251B218  483FB4F4             b 0x8291670c
+
+; 8251B220  Sys_StreamSleep  (qcommon/threads.cpp:2464)
+  8251B220  7D8802A6             mfspr r12,LR
+  8251B224  483FB489             bl 0x829166ac
+  8251B228  9421FF70             stwu r1,-0x90(r1)
+  8251B22C  3D008370             lis r8,-0x7c90
+  8251B230  3D208206             lis r9,-0x7dfa
+  8251B234  3D40820A             lis r10,-0x7df6
+  8251B238  3D60820A             lis r11,-0x7df6
+  8251B23C  38E00000             li r7,0x0
+  8251B240  3B20FFFF             li r25,-0x1
+  8251B244  3BA80770             addi r29,r8,0x770
+  8251B248  3B898FF0             subi r28,r9,0x7010
+  8251B24C  3B6AA99C             subi r27,r10,0x5664
+  8251B250  3B4BA924             subi r26,r11,0x56dc
+LAB_8251b254:
+  8251B254  3BE00000             li r31,0x0
+LAB_8251b258:
+  8251B258  3BDD0008             addi r30,r29,0x8
+  8251B25C  7D7FF0AE             lbzx r11,r31,r30
+  8251B260  2B0B0000             cmplwi cr6,r11,0x0
+  8251B264  409A0050             bne cr6,0x8251b2b4
+  8251B268  3BFF0001             addi r31,r31,0x1
+  8251B26C  2F1F000E             cmpwi cr6,r31,0xe
+  8251B270  4198FFE8             blt cr6,0x8251b258
+  8251B274  7F24CB78             or r4,r25,r25
+  8251B278  807D0000             lwz r3,0x0(r29)
+  8251B27C  4838E0DD             bl 0x828a9358
+  8251B280  7C681B78             or r8,r3,r3
+  8251B284  2B030000             cmplwi cr6,r3,0x0
+  8251B288  419A001C             beq cr6,0x8251b2a4
+  8251B28C  7F67DB78             or r7,r27,r27
+  8251B290  7F86E378             or r6,r28,r28
+  8251B294  7F43D378             or r3,r26,r26
+  8251B298  38A00000             li r5,0x0
+  8251B29C  38800126             li r4,0x126
+  8251B2A0  480B9261             bl 0x825d4500
+LAB_8251b2a4:
+  8251B2A4  807D0000             lwz r3,0x0(r29)
+  8251B2A8  4838DFC1             bl 0x828a9268
+  8251B2AC  38E00001             li r7,0x1
+  8251B2B0  4BFFFFA4             b 0x8251b254
+LAB_8251b2b4:
+  8251B2B4  2F070000             cmpwi cr6,r7,0x0
+  8251B2B8  419A0008             beq cr6,0x8251b2c0
+  8251B2BC  4BFFF7AD             bl 0x8251aa68
+LAB_8251b2c0:
+  8251B2C0  2B1F000E             cmplwi cr6,r31,0xe
+  8251B2C4  41980024             blt cr6,0x8251b2e8
+  8251B2C8  3D60820A             lis r11,-0x7df6
+  8251B2CC  7F43D378             or r3,r26,r26
+  8251B2D0  38CBAF00             subi r6,r11,0x5100
+  8251B2D4  3900000E             li r8,0xe
+  8251B2D8  7FE7FB78             or r7,r31,r31
+  8251B2DC  38A00000             li r5,0x0
+  8251B2E0  388009B5             li r4,0x9b5
+  8251B2E4  480B921D             bl 0x825d4500
+LAB_8251b2e8:
+  8251B2E8  39600000             li r11,0x0
+  8251B2EC  7FE3FB78             or r3,r31,r31
+  8251B2F0  7D7FF1AE             stbx r11,r31,r30
+  8251B2F4  38210090             addi r1,r1,0x90
+  8251B2F8  483FB404             b 0x829166fc
 
 ; 8251B300  Sys_WaitForStream  (qcommon/threads.cpp:2506)
   8251B300  7D8802A6             mfspr r12,LR
   8251B304  483FB3B5             bl 0x829166b8
+  8251B308  9421FF80             stwu r1,-0x80(r1)
+  8251B30C  3D608370             lis r11,-0x7c90
+  8251B310  2F030000             cmpwi cr6,r3,0x0
+  8251B314  3B8B0770             addi r28,r11,0x770
+  8251B318  419A0014             beq cr6,0x8251b32c
+  8251B31C  387C0008             addi r3,r28,0x8
+  8251B320  38A0000E             li r5,0xe
+  8251B324  38800000             li r4,0x0
+  8251B328  483FB4D9             bl 0x82916800
+LAB_8251b32c:
+  8251B32C  807C0000             lwz r3,0x0(r28)
+  8251B330  4838DEE1             bl 0x828a9210
+  8251B334  3D20820A             lis r9,-0x7df6
+  8251B338  3D40820A             lis r10,-0x7df6
+  8251B33C  3D608200             lis r11,-0x7e00
+  8251B340  3BE9A964             subi r31,r9,0x569c
+  8251B344  3BCAA924             subi r30,r10,0x56dc
+  8251B348  3BAB0F98             addi r29,r11,0xf98
+LAB_8251b34c:
+  8251B34C  38800000             li r4,0x0
+  8251B350  807C0000             lwz r3,0x0(r28)
+  8251B354  4838E005             bl 0x828a9358
+  8251B358  2B030000             cmplwi cr6,r3,0x0
+  8251B35C  409A003C             bne cr6,0x8251b398
+  8251B360  816D0000             lwz r11,0x0(r13)
+  8251B364  394000E0             li r10,0xe0
+  8251B368  7D2A582E             lwzx r9,r10,r11
+  8251B36C  2F090000             cmpwi cr6,r9,0x0
+  8251B370  419A001C             beq cr6,0x8251b38c
+  8251B374  7FE7FB78             or r7,r31,r31
+  8251B378  7FA6EB78             or r6,r29,r29
+  8251B37C  7FC3F378             or r3,r30,r30
+  8251B380  38A00000             li r5,0x0
+  8251B384  388000F5             li r4,0xf5
+  8251B388  480B9179             bl 0x825d4500
+LAB_8251b38c:
+  8251B38C  38600001             li r3,0x1
+  8251B390  48387AE1             bl 0x828a2e70
+  8251B394  4BFFFFB8             b 0x8251b34c
+LAB_8251b398:
+  8251B398  38210080             addi r1,r1,0x80
+  8251B39C  483FB36C             b 0x82916708
 
 ; 8251B3A0  Sys_WakeStream  (qcommon/threads.cpp:2522)
   8251B3A0  7D8802A6             mfspr r12,LR
@@ -1632,10 +2760,91 @@ LAB_8251b550:
 ; 8251B5A8  Sys_SetServerNetworkCompletedEvent  (qcommon/threads.cpp:2709)
   8251B5A8  7D8802A6             mfspr r12,LR
   8251B5AC  483FB10D             bl 0x829166b8
+  8251B5B0  9421FF80             stwu r1,-0x80(r1)
+  8251B5B4  3860001F             li r3,0x1f
+  8251B5B8  480F84C1             bl 0x82613a78
+  8251B5BC  4838DC1D             bl 0x828a91d8
+  8251B5C0  3D60820A             lis r11,-0x7df6
+  8251B5C4  3D408200             lis r10,-0x7e00
+  8251B5C8  7C7F1B78             or r31,r3,r3
+  8251B5CC  2B030000             cmplwi cr6,r3,0x0
+  8251B5D0  3BABA924             subi r29,r11,0x56dc
+  8251B5D4  3B8A0F98             addi r28,r10,0xf98
+  8251B5D8  409A0020             bne cr6,0x8251b5f8
+  8251B5DC  3D60820A             lis r11,-0x7df6
+  8251B5E0  7F86E378             or r6,r28,r28
+  8251B5E4  38EBA984             subi r7,r11,0x567c
+  8251B5E8  7FA3EB78             or r3,r29,r29
+  8251B5EC  38A00000             li r5,0x0
+  8251B5F0  38800102             li r4,0x102
+  8251B5F4  480B8F0D             bl 0x825d4500
+LAB_8251b5f8:
+  8251B5F8  3D608370             lis r11,-0x7c90
+  8251B5FC  3BCB0760             addi r30,r11,0x760
+  8251B600  816B0760             lwz r11,0x760(r11)
+  8251B604  7F0BF840             cmplw cr6,r11,r31
+  8251B608  419A0028             beq cr6,0x8251b630
+  8251B60C  2B0B0000             cmplwi cr6,r11,0x0
+  8251B610  419A0020             beq cr6,0x8251b630
+  8251B614  3D60820A             lis r11,-0x7df6
+  8251B618  7F86E378             or r6,r28,r28
+  8251B61C  38EBAFA0             subi r7,r11,0x5060
+  8251B620  7FA3EB78             or r3,r29,r29
+  8251B624  38A00000             li r5,0x0
+  8251B628  38800A9A             li r4,0xa9a
+  8251B62C  480B8ED5             bl 0x825d4500
+LAB_8251b630:
+  8251B630  39600000             li r11,0x0
+  8251B634  807E0148             lwz r3,0x148(r30)
+  8251B638  917E0000             stw r11,0x0(r30)
+  8251B63C  4838DBD5             bl 0x828a9210
+  8251B640  3860001F             li r3,0x1f
+  8251B644  480F849D             bl 0x82613ae0
+  8251B648  38210080             addi r1,r1,0x80
+  8251B64C  483FB0BC             b 0x82916708
 
 ; 8251B650  Sys_ResetServerNetworkCompletedEvent  (qcommon/threads.cpp:2726)
   8251B650  7D8802A6             mfspr r12,LR
   8251B654  483FB065             bl 0x829166b8
+  8251B658  9421FF80             stwu r1,-0x80(r1)
+  8251B65C  3860001F             li r3,0x1f
+  8251B660  480F8419             bl 0x82613a78
+  8251B664  3D608370             lis r11,-0x7c90
+  8251B668  3D40820A             lis r10,-0x7df6
+  8251B66C  3BEB0760             addi r31,r11,0x760
+  8251B670  3D608200             lis r11,-0x7e00
+  8251B674  3BCAA924             subi r30,r10,0x56dc
+  8251B678  3BAB0F98             addi r29,r11,0xf98
+  8251B67C  817F0000             lwz r11,0x0(r31)
+  8251B680  2B0B0000             cmplwi cr6,r11,0x0
+  8251B684  419A0020             beq cr6,0x8251b6a4
+  8251B688  3D60820A             lis r11,-0x7df6
+  8251B68C  7FA6EB78             or r6,r29,r29
+  8251B690  38EBAFF4             subi r7,r11,0x500c
+  8251B694  7FC3F378             or r3,r30,r30
+  8251B698  38A00000             li r5,0x0
+  8251B69C  38800AAB             li r4,0xaab
+  8251B6A0  480B8E61             bl 0x825d4500
+LAB_8251b6a4:
+  8251B6A4  4838DB35             bl 0x828a91d8
+  8251B6A8  7C7C1B78             or r28,r3,r3
+  8251B6AC  2B030000             cmplwi cr6,r3,0x0
+  8251B6B0  409A0020             bne cr6,0x8251b6d0
+  8251B6B4  3D60820A             lis r11,-0x7df6
+  8251B6B8  7FA6EB78             or r6,r29,r29
+  8251B6BC  38EBA984             subi r7,r11,0x567c
+  8251B6C0  7FC3F378             or r3,r30,r30
+  8251B6C4  38A00000             li r5,0x0
+  8251B6C8  38800102             li r4,0x102
+  8251B6CC  480B8E35             bl 0x825d4500
+LAB_8251b6d0:
+  8251B6D0  939F0000             stw r28,0x0(r31)
+  8251B6D4  807F0148             lwz r3,0x148(r31)
+  8251B6D8  4838DB91             bl 0x828a9268
+  8251B6DC  3860001F             li r3,0x1f
+  8251B6E0  480F8401             bl 0x82613ae0
+  8251B6E4  38210080             addi r1,r1,0x80
+  8251B6E8  483FB020             b 0x82916708
 
 ; 8251B6F0  Sys_HaveSuspendedNetworkCompleteThread  (qcommon/threads.cpp:2742)
   8251B6F0  7D8802A6             mfspr r12,LR
@@ -1754,10 +2963,83 @@ LAB_8251b87c:
 ; 8251B890  Sys_SetDeviceOwner  (qcommon/threads.cpp:2882)
   8251B890  7D8802A6             mfspr r12,LR
   8251B894  483FAE25             bl 0x829166b8
+  8251B898  9421FF80             stwu r1,-0x80(r1)
+  8251B89C  4813AD35             bl 0x826565d0
+  8251B8A0  816D0000             lwz r11,0x0(r13)
+  8251B8A4  394000E8             li r10,0xe8
+  8251B8A8  7C6A592E             stwx r3,r10,r11
+  8251B8AC  3860002D             li r3,0x2d
+  8251B8B0  480F81C9             bl 0x82613a78
+  8251B8B4  3FE08370             lis r31,-0x7c90
+  8251B8B8  3D40820A             lis r10,-0x7df6
+  8251B8BC  3D608200             lis r11,-0x7e00
+  8251B8C0  3BCAA924             subi r30,r10,0x56dc
+  8251B8C4  3BAB0F98             addi r29,r11,0xf98
+  8251B8C8  813F08A4             lwz r9,0x8a4(r31)
+  8251B8CC  2B090000             cmplwi cr6,r9,0x0
+  8251B8D0  419A0020             beq cr6,0x8251b8f0
+  8251B8D4  3D60820A             lis r11,-0x7df6
+  8251B8D8  7FA6EB78             or r6,r29,r29
+  8251B8DC  38EBB010             subi r7,r11,0x4ff0
+  8251B8E0  7FC3F378             or r3,r30,r30
+  8251B8E4  38A00000             li r5,0x0
+  8251B8E8  38800B49             li r4,0xb49
+  8251B8EC  480B8C15             bl 0x825d4500
+LAB_8251b8f0:
+  8251B8F0  4838D8E9             bl 0x828a91d8
+  8251B8F4  7C7C1B78             or r28,r3,r3
+  8251B8F8  2B030000             cmplwi cr6,r3,0x0
+  8251B8FC  409A0020             bne cr6,0x8251b91c
+  8251B900  3D60820A             lis r11,-0x7df6
+  8251B904  7FA6EB78             or r6,r29,r29
+  8251B908  38EBA984             subi r7,r11,0x567c
+  8251B90C  7FC3F378             or r3,r30,r30
+  8251B910  38A00000             li r5,0x0
+  8251B914  38800102             li r4,0x102
+  8251B918  480B8BE9             bl 0x825d4500
+LAB_8251b91c:
+  8251B91C  939F08A4             stw r28,0x8a4(r31)
+  8251B920  38210080             addi r1,r1,0x80
+  8251B924  483FADE4             b 0x82916708
 
 ; 8251B928  Sys_ResetDeviceOwner  (qcommon/threads.cpp:2895)
   8251B928  7D8802A6             mfspr r12,LR
   8251B92C  483FAD8D             bl 0x829166b8
+  8251B930  9421FF80             stwu r1,-0x80(r1)
+  8251B934  4838D8A5             bl 0x828a91d8
+  8251B938  3D60820A             lis r11,-0x7df6
+  8251B93C  3D408200             lis r10,-0x7e00
+  8251B940  7C7F1B78             or r31,r3,r3
+  8251B944  2B030000             cmplwi cr6,r3,0x0
+  8251B948  3BCBA924             subi r30,r11,0x56dc
+  8251B94C  3BAA0F98             addi r29,r10,0xf98
+  8251B950  409A0020             bne cr6,0x8251b970
+  8251B954  3D60820A             lis r11,-0x7df6
+  8251B958  7FA6EB78             or r6,r29,r29
+  8251B95C  38EBA984             subi r7,r11,0x567c
+  8251B960  7FC3F378             or r3,r30,r30
+  8251B964  38A00000             li r5,0x0
+  8251B968  38800102             li r4,0x102
+  8251B96C  480B8B95             bl 0x825d4500
+LAB_8251b970:
+  8251B970  3F808370             lis r28,-0x7c90
+  8251B974  817C08A4             lwz r11,0x8a4(r28)
+  8251B978  7F0BF840             cmplw cr6,r11,r31
+  8251B97C  419A0020             beq cr6,0x8251b99c
+  8251B980  3D60820A             lis r11,-0x7df6
+  8251B984  7FA6EB78             or r6,r29,r29
+  8251B988  38EBB020             subi r7,r11,0x4fe0
+  8251B98C  7FC3F378             or r3,r30,r30
+  8251B990  38A00000             li r5,0x0
+  8251B994  38800B50             li r4,0xb50
+  8251B998  480B8B69             bl 0x825d4500
+LAB_8251b99c:
+  8251B99C  39600000             li r11,0x0
+  8251B9A0  3860002D             li r3,0x2d
+  8251B9A4  917C08A4             stw r11,0x8a4(r28)
+  8251B9A8  480F8139             bl 0x82613ae0
+  8251B9AC  38210080             addi r1,r1,0x80
+  8251B9B0  483FAD58             b 0x82916708
 
 ; 8251B9B8  Sys_HasDeviceOwnership  (qcommon/threads.cpp:2904)
   8251B9B8  7D8802A6             mfspr r12,LR
@@ -1788,6 +3070,157 @@ LAB_8251b9fc:
   8251BA18  7D8803A6             mtspr LR,r12
   8251BA1C  EBE1FFF0             ld r31,-0x10(r1)
   8251BA20  4E800020             blr
+
+; 8251BA28  Sys_WaitFileRead  (qcommon/threads.cpp:3036)
+  8251BA28  7D8802A6             mfspr r12,LR
+  8251BA2C  483FAC81             bl 0x829166ac
+  8251BA30  9421FF70             stwu r1,-0x90(r1)
+  8251BA34  3FE08370             lis r31,-0x7c90
+  8251BA38  3D208200             lis r9,-0x7e00
+  8251BA3C  3D40820A             lis r10,-0x7df6
+  8251BA40  3B690F98             addi r27,r9,0xf98
+  8251BA44  3D60820A             lis r11,-0x7df6
+  8251BA48  813F0898             lwz r9,0x898(r31)
+  8251BA4C  3B4AA964             subi r26,r10,0x569c
+  8251BA50  3BCBA924             subi r30,r11,0x56dc
+  8251BA54  2F090000             cmpwi cr6,r9,0x0
+  8251BA58  419A0044             beq cr6,0x8251ba9c
+  8251BA5C  838D0000             lwz r28,0x0(r13)
+  8251BA60  3BA000E0             li r29,0xe0
+LAB_8251ba64:
+  8251BA64  7D7DE02E             lwzx r11,r29,r28
+  8251BA68  2F0B0000             cmpwi cr6,r11,0x0
+  8251BA6C  419A001C             beq cr6,0x8251ba88
+  8251BA70  7F47D378             or r7,r26,r26
+  8251BA74  7F66DB78             or r6,r27,r27
+  8251BA78  7FC3F378             or r3,r30,r30
+  8251BA7C  38A00000             li r5,0x0
+  8251BA80  388000F5             li r4,0xf5
+  8251BA84  480B8A7D             bl 0x825d4500
+LAB_8251ba88:
+  8251BA88  38600001             li r3,0x1
+  8251BA8C  483873E5             bl 0x828a2e70
+  8251BA90  817F0898             lwz r11,0x898(r31)
+  8251BA94  2F0B0000             cmpwi cr6,r11,0x0
+  8251BA98  409AFFCC             bne cr6,0x8251ba64
+LAB_8251ba9c:
+  8251BA9C  7C2004AC             sync 0x1
+  8251BAA0  4813AB31             bl 0x826565d0
+  8251BAA4  3F208370             lis r25,-0x7c90
+  8251BAA8  81790890             lwz r11,0x890(r25)
+  8251BAAC  7FE35850             subf r31,r3,r11
+  8251BAB0  395FFFFF             subi r10,r31,0x1
+  8251BAB4  2B0A0064             cmplwi cr6,r10,0x64
+  8251BAB8  4098008C             bge cr6,0x8251bb44
+  8251BABC  3D40820A             lis r10,-0x7df6
+  8251BAC0  3D60820A             lis r11,-0x7df6
+  8251BAC4  3BAAB05C             subi r29,r10,0x4fa4
+  8251BAC8  3B8BB04C             subi r28,r11,0x4fb4
+LAB_8251bacc:
+  8251BACC  2F1F0000             cmpwi cr6,r31,0x0
+  8251BAD0  41990028             bgt cr6,0x8251baf8
+  8251BAD4  7F87E378             or r7,r28,r28
+  8251BAD8  7FA6EB78             or r6,r29,r29
+  8251BADC  7FC3F378             or r3,r30,r30
+  8251BAE0  7FE8FB78             or r8,r31,r31
+  8251BAE4  38A00000             li r5,0x0
+  8251BAE8  38800BE8             li r4,0xbe8
+  8251BAEC  480B8A15             bl 0x825d4500
+  8251BAF0  2F1F0000             cmpwi cr6,r31,0x0
+  8251BAF4  419A0030             beq cr6,0x8251bb24
+LAB_8251baf8:
+  8251BAF8  816D0000             lwz r11,0x0(r13)
+  8251BAFC  394000E0             li r10,0xe0
+  8251BB00  7D2A582E             lwzx r9,r10,r11
+  8251BB04  2F090000             cmpwi cr6,r9,0x0
+  8251BB08  419A001C             beq cr6,0x8251bb24
+  8251BB0C  7F47D378             or r7,r26,r26
+  8251BB10  7F66DB78             or r6,r27,r27
+  8251BB14  7FC3F378             or r3,r30,r30
+  8251BB18  38A00000             li r5,0x0
+  8251BB1C  388000F5             li r4,0xf5
+  8251BB20  480B89E1             bl 0x825d4500
+LAB_8251bb24:
+  8251BB24  7FE3FB78             or r3,r31,r31
+  8251BB28  48387349             bl 0x828a2e70
+  8251BB2C  4813AAA5             bl 0x826565d0
+  8251BB30  81790890             lwz r11,0x890(r25)
+  8251BB34  7FE35850             subf r31,r3,r11
+  8251BB38  395FFFFF             subi r10,r31,0x1
+  8251BB3C  2B0A0064             cmplwi cr6,r10,0x64
+  8251BB40  4198FF8C             blt cr6,0x8251bacc
+LAB_8251bb44:
+  8251BB44  38210090             addi r1,r1,0x90
+  8251BB48  483FABB4             b 0x829166fc
+
+; 8251BB50  Sys_LockFileRead  (qcommon/threads.cpp:3055)
+  8251BB50  7D8802A6             mfspr r12,LR
+  8251BB54  483FAB55             bl 0x829166a8
+  8251BB58  9421FF60             stwu r1,-0xa0(r1)
+  8251BB5C  3D608370             lis r11,-0x7c90
+  8251BB60  3B400000             li r26,0x0
+  8251BB64  3B8B0898             addi r28,r11,0x898
+  8251BB68  3B600001             li r27,0x1
+  8251BB6C  7F88E378             or r8,r28,r28
+LAB_8251bb70:
+  8251BB70  7D2000A6             mfmsr r9
+  8251BB74  7DA10164             mtmsrd r13,1
+  8251BB78  7D404028             lwarx r10,0,r8
+  8251BB7C  7F0AD000             cmpw cr6,r10,r26
+  8251BB80  409A0014             bne cr6,0x8251bb94
+  8251BB84  7F60412D             stwcx. r27,0,r8
+  8251BB88  7D210164             mtmsrd r9,1
+  8251BB8C  4082FFE4             bne 0x8251bb70
+  8251BB90  4800000C             b 0x8251bb9c
+LAB_8251bb94:
+  8251BB94  7D40412D             stwcx. r10,0,r8
+  8251BB98  7D210164             mtmsrd r9,1
+LAB_8251bb9c:
+  8251BB9C  7D4B5378             or r11,r10,r10
+  8251BBA0  2F0A0000             cmpwi cr6,r10,0x0
+  8251BBA4  419A008C             beq cr6,0x8251bc30
+  8251BBA8  3D20820A             lis r9,-0x7df6
+  8251BBAC  830D0000             lwz r24,0x0(r13)
+  8251BBB0  3D408200             lis r10,-0x7e00
+  8251BBB4  3D60820A             lis r11,-0x7df6
+  8251BBB8  3B2000E0             li r25,0xe0
+  8251BBBC  3BE9A924             subi r31,r9,0x56dc
+  8251BBC0  3BCA0F98             addi r30,r10,0xf98
+  8251BBC4  3BABA964             subi r29,r11,0x569c
+LAB_8251bbc8:
+  8251BBC8  7D79C02E             lwzx r11,r25,r24
+  8251BBCC  2F0B0000             cmpwi cr6,r11,0x0
+  8251BBD0  419A001C             beq cr6,0x8251bbec
+  8251BBD4  7FA7EB78             or r7,r29,r29
+  8251BBD8  7FC6F378             or r6,r30,r30
+  8251BBDC  7FE3FB78             or r3,r31,r31
+  8251BBE0  38A00000             li r5,0x0
+  8251BBE4  388000F5             li r4,0xf5
+  8251BBE8  480B8919             bl 0x825d4500
+LAB_8251bbec:
+  8251BBEC  38600001             li r3,0x1
+  8251BBF0  48387281             bl 0x828a2e70
+  8251BBF4  7F89E378             or r9,r28,r28
+LAB_8251bbf8:
+  8251BBF8  7D4000A6             mfmsr r10
+  8251BBFC  7DA10164             mtmsrd r13,1
+  8251BC00  7D604828             lwarx r11,0,r9
+  8251BC04  7F0BD000             cmpw cr6,r11,r26
+  8251BC08  409A0014             bne cr6,0x8251bc1c
+  8251BC0C  7F60492D             stwcx. r27,0,r9
+  8251BC10  7D410164             mtmsrd r10,1
+  8251BC14  4082FFE4             bne 0x8251bbf8
+  8251BC18  4800000C             b 0x8251bc24
+LAB_8251bc1c:
+  8251BC1C  7D60492D             stwcx. r11,0,r9
+  8251BC20  7D410164             mtmsrd r10,1
+LAB_8251bc24:
+  8251BC24  7D6B5B78             or r11,r11,r11
+  8251BC28  2F0B0000             cmpwi cr6,r11,0x0
+  8251BC2C  409AFF9C             bne cr6,0x8251bbc8
+LAB_8251bc30:
+  8251BC30  382100A0             addi r1,r1,0xa0
+  8251BC34  483FAAC4             b 0x829166f8
 
 ; 8251BC38  Sys_UnlockFileRead  (qcommon/threads.cpp:3062)
   8251BC38  7D8802A6             mfspr r12,LR
@@ -1827,10 +3260,126 @@ LAB_8251bc88:
 ; 8251BCB8  Sys_EnterUIOwnership  (qcommon/threads.cpp:3082)
   8251BCB8  7D8802A6             mfspr r12,LR
   8251BCBC  483FA9FD             bl 0x829166b8
+  8251BCC0  9421FF80             stwu r1,-0x80(r1)
+  8251BCC4  3D608370             lis r11,-0x7c90
+  8251BCC8  3BEB089C             addi r31,r11,0x89c
+  8251BCCC  391FFF04             subi r8,r31,0xfc
+LAB_8251bcd0:
+  8251BCD0  7D2000A6             mfmsr r9
+  8251BCD4  7DA10164             mtmsrd r13,1
+  8251BCD8  7D404028             lwarx r10,0,r8
+  8251BCDC  394A0001             addi r10,r10,0x1
+  8251BCE0  7D40412D             stwcx. r10,0,r8
+  8251BCE4  7D210164             mtmsrd r9,1
+  8251BCE8  4082FFE8             bne 0x8251bcd0
+  8251BCEC  7D4B5378             or r11,r10,r10
+  8251BCF0  3D40820A             lis r10,-0x7df6
+  8251BCF4  3D20820A             lis r9,-0x7df6
+  8251BCF8  2F0B0001             cmpwi cr6,r11,0x1
+  8251BCFC  3BCAA924             subi r30,r10,0x56dc
+  8251BD00  3BA9B0D0             subi r29,r9,0x4f30
+  8251BD04  409A0038             bne cr6,0x8251bd3c
+  8251BD08  817F0000             lwz r11,0x0(r31)
+  8251BD0C  2B0B0000             cmplwi cr6,r11,0x0
+  8251BD10  419A0024             beq cr6,0x8251bd34
+  8251BD14  3D60820A             lis r11,-0x7df6
+  8251BD18  811F0000             lwz r8,0x0(r31)
+  8251BD1C  7FA6EB78             or r6,r29,r29
+  8251BD20  38EBB0B4             subi r7,r11,0x4f4c
+  8251BD24  7FC3F378             or r3,r30,r30
+  8251BD28  38A00000             li r5,0x0
+  8251BD2C  38800C0E             li r4,0xc0e
+  8251BD30  480B87D1             bl 0x825d4500
+LAB_8251bd34:
+  8251BD34  4BFFD77D             bl 0x825194b0
+  8251BD38  907F0000             stw r3,0x0(r31)
+LAB_8251bd3c:
+  8251BD3C  4838D49D             bl 0x828a91d8
+  8251BD40  7C7C1B78             or r28,r3,r3
+  8251BD44  2B030000             cmplwi cr6,r3,0x0
+  8251BD48  409A0024             bne cr6,0x8251bd6c
+  8251BD4C  3D60820A             lis r11,-0x7df6
+  8251BD50  3D408200             lis r10,-0x7e00
+  8251BD54  38EBA984             subi r7,r11,0x567c
+  8251BD58  38CA0F98             addi r6,r10,0xf98
+  8251BD5C  7FC3F378             or r3,r30,r30
+  8251BD60  38A00000             li r5,0x0
+  8251BD64  38800102             li r4,0x102
+  8251BD68  480B8799             bl 0x825d4500
+LAB_8251bd6c:
+  8251BD6C  817F0000             lwz r11,0x0(r31)
+  8251BD70  7F0BE040             cmplw cr6,r11,r28
+  8251BD74  419A0024             beq cr6,0x8251bd98
+  8251BD78  3D60820A             lis r11,-0x7df6
+  8251BD7C  811F0000             lwz r8,0x0(r31)
+  8251BD80  7FA6EB78             or r6,r29,r29
+  8251BD84  38EBB080             subi r7,r11,0x4f80
+  8251BD88  7FC3F378             or r3,r30,r30
+  8251BD8C  38A00000             li r5,0x0
+  8251BD90  38800C11             li r4,0xc11
+  8251BD94  480B876D             bl 0x825d4500
+LAB_8251bd98:
+  8251BD98  38210080             addi r1,r1,0x80
+  8251BD9C  483FA96C             b 0x82916708
 
 ; 8251BDA0  Sys_LeaveUIOwnership  (qcommon/threads.cpp:3095)
   8251BDA0  7D8802A6             mfspr r12,LR
   8251BDA4  483FA919             bl 0x829166bc
+  8251BDA8  9421FF90             stwu r1,-0x70(r1)
+  8251BDAC  4838D42D             bl 0x828a91d8
+  8251BDB0  3D60820A             lis r11,-0x7df6
+  8251BDB4  7C7E1B78             or r30,r3,r3
+  8251BDB8  2B030000             cmplwi cr6,r3,0x0
+  8251BDBC  3BABA924             subi r29,r11,0x56dc
+  8251BDC0  409A0024             bne cr6,0x8251bde4
+  8251BDC4  3D60820A             lis r11,-0x7df6
+  8251BDC8  3D408200             lis r10,-0x7e00
+  8251BDCC  38EBA984             subi r7,r11,0x567c
+  8251BDD0  38CA0F98             addi r6,r10,0xf98
+  8251BDD4  7FA3EB78             or r3,r29,r29
+  8251BDD8  38A00000             li r5,0x0
+  8251BDDC  38800102             li r4,0x102
+  8251BDE0  480B8721             bl 0x825d4500
+LAB_8251bde4:
+  8251BDE4  3D608370             lis r11,-0x7c90
+  8251BDE8  3BEB089C             addi r31,r11,0x89c
+  8251BDEC  816B089C             lwz r11,0x89c(r11)
+  8251BDF0  7F0BF040             cmplw cr6,r11,r30
+  8251BDF4  419A0028             beq cr6,0x8251be1c
+  8251BDF8  3D60820A             lis r11,-0x7df6
+  8251BDFC  811F0000             lwz r8,0x0(r31)
+  8251BE00  3D40820A             lis r10,-0x7df6
+  8251BE04  38EBB080             subi r7,r11,0x4f80
+  8251BE08  38CAB0D0             subi r6,r10,0x4f30
+  8251BE0C  7FA3EB78             or r3,r29,r29
+  8251BE10  38A00000             li r5,0x0
+  8251BE14  38800C19             li r4,0xc19
+  8251BE18  480B86E9             bl 0x825d4500
+LAB_8251be1c:
+  8251BE1C  395FFF04             subi r10,r31,0xfc
+LAB_8251be20:
+  8251BE20  7D0000A6             mfmsr r8
+  8251BE24  7DA10164             mtmsrd r13,1
+  8251BE28  7D205028             lwarx r9,0,r10
+  8251BE2C  3929FFFF             subi r9,r9,0x1
+  8251BE30  7D20512D             stwcx. r9,0,r10
+  8251BE34  7D010164             mtmsrd r8,1
+  8251BE38  4082FFE8             bne 0x8251be20
+  8251BE3C  7D2B4B78             or r11,r9,r9
+  8251BE40  2F090000             cmpwi cr6,r9,0x0
+  8251BE44  409A0008             bne cr6,0x8251be4c
+  8251BE48  913F0000             stw r9,0x0(r31)
+LAB_8251be4c:
+  8251BE4C  38210070             addi r1,r1,0x70
+  8251BE50  483FA8BC             b 0x8291670c
+
+; 8251BE58  Sys_AbortUIOwnership  (qcommon/threads.cpp:3105)
+  8251BE58  3D408370             lis r10,-0x7c90
+  8251BE5C  39600000             li r11,0x0
+  8251BE60  392A089C             addi r9,r10,0x89c
+  8251BE64  9169FF04             stw r11,-0xfc(r9)
+  8251BE68  916A089C             stw r11,0x89c(r10)
+  8251BE6C  4E800020             blr
 
 ; 8251BE70  Sys_SetUpdateScreenThread  (qcommon/threads.cpp:3122)
   8251BE70  7D8802A6             mfspr r12,LR
@@ -1850,6 +3399,13 @@ LAB_8251bc88:
   8251BEA8  38A00000             li r5,0x0
   8251BEAC  38800102             li r4,0x102
   8251BEB0  480B8651             bl 0x825d4500
+  8251BEB4  3D008370             lis r8,-0x7c90
+  8251BEB8  93E808EC             stw r31,0x8ec(r8)
+  8251BEBC  38210060             addi r1,r1,0x60
+  8251BEC0  8181FFF8             lwz r12,-0x8(r1)
+  8251BEC4  7D8803A6             mtspr LR,r12
+  8251BEC8  EBE1FFF0             ld r31,-0x10(r1)
+  8251BECC  4E800020             blr
 LAB_8251bed0:
   8251BED0  3D608370             lis r11,-0x7c90
   8251BED4  93EB08EC             stw r31,0x8ec(r11)

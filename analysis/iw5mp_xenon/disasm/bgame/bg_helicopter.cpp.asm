@@ -3,6 +3,187 @@
 ; 828459F8  BG_HeliCmdScale  (bgame/bg_helicopter.cpp:33)
   828459F8  7D8802A6             mfspr r12,LR
   828459FC  480D0CB5             bl 0x829166b0
+  82845A00  3981FFC8             subi r12,r1,0x38
+  82845A04  480D0D95             bl 0x82916798
+  82845A08  9421FF50             stwu r1,-0xb0(r1)
+  82845A0C  3D60821F             lis r11,-0x7de1
+  82845A10  3D408200             lis r10,-0x7e00
+  82845A14  7C7A1B78             or r26,r3,r3
+  82845A18  7C9F2378             or r31,r4,r4
+  82845A1C  7CBE2B78             or r30,r5,r5
+  82845A20  2B040000             cmplwi cr6,r4,0x0
+  82845A24  3BABEE48             subi r29,r11,0x11b8
+  82845A28  3B8A0F98             addi r28,r10,0xf98
+  82845A2C  409A0020             bne cr6,0x82845a4c
+  82845A30  3D608214             lis r11,-0x7dec
+  82845A34  7F86E378             or r6,r28,r28
+  82845A38  38EB25C0             addi r7,r11,0x25c0
+  82845A3C  7FA3EB78             or r3,r29,r29
+  82845A40  38A00000             li r5,0x0
+  82845A44  38800028             li r4,0x28
+  82845A48  4BD8EAB9             bl 0x825d4500
+LAB_82845a4c:
+  82845A4C  2B1E0000             cmplwi cr6,r30,0x0
+  82845A50  409A0020             bne cr6,0x82845a70
+  82845A54  3D60821A             lis r11,-0x7de6
+  82845A58  7F86E378             or r6,r28,r28
+  82845A5C  38EB00D4             addi r7,r11,0xd4
+  82845A60  7FA3EB78             or r3,r29,r29
+  82845A64  38A00000             li r5,0x0
+  82845A68  38800029             li r4,0x29
+  82845A6C  4BD8EA95             bl 0x825d4500
+LAB_82845a70:
+  82845A70  897F0000             lbz r11,0x0(r31)
+  82845A74  3D408200             lis r10,-0x7e00
+  82845A78  3D208200             lis r9,-0x7e00
+  82845A7C  7D670774             extsb r7,r11
+  82845A80  3F60821F             lis r27,-0x7de1
+  82845A84  F8E10050             std r7,0x50(r1)
+  82845A88  C9A10050             lfd f13,0x50(r1)
+  82845A8C  FD806E9C             fcfid f12,f13
+  82845A90  C00A493C             lfs f0,0x493c(r10)
+  82845A94  FD606018             frsp f11,f12
+  82845A98  C38913F8             lfs f28,0x13f8(r9)
+  82845A9C  ED4B0032             fmuls f10,f11,f0
+  82845AA0  D15E0000             stfs f10,0x0(r30)
+  82845AA4  88DF0001             lbz r6,0x1(r31)
+  82845AA8  7CC40774             extsb r4,r6
+  82845AAC  F8810050             std r4,0x50(r1)
+  82845AB0  C9210050             lfd f9,0x50(r1)
+  82845AB4  FD004E9C             fcfid f8,f9
+  82845AB8  FCE04018             frsp f7,f8
+  82845ABC  ECC70032             fmuls f6,f7,f0
+  82845AC0  D0DE0004             stfs f6,0x4(r30)
+  82845AC4  887F0002             lbz r3,0x2(r31)
+  82845AC8  7C6A0774             extsb r10,r3
+  82845ACC  F9410050             std r10,0x50(r1)
+  82845AD0  C8A10050             lfd f5,0x50(r1)
+  82845AD4  FC802E9C             fcfid f4,f5
+  82845AD8  FC602018             frsp f3,f4
+  82845ADC  EC430032             fmuls f2,f3,f0
+  82845AE0  D05E0008             stfs f2,0x8(r30)
+  82845AE4  893F0003             lbz r9,0x3(r31)
+  82845AE8  7D270774             extsb r7,r9
+  82845AEC  F8E10050             std r7,0x50(r1)
+  82845AF0  C8210050             lfd f1,0x50(r1)
+  82845AF4  FDA00E9C             fcfid f13,f1
+  82845AF8  FD806818             frsp f12,f13
+  82845AFC  ED6C0032             fmuls f11,f12,f0
+  82845B00  D17E000C             stfs f11,0xc(r30)
+  82845B04  88DF0000             lbz r6,0x0(r31)
+  82845B08  7CCB0774             extsb r11,r6
+  82845B0C  2F0B0000             cmpwi cr6,r11,0x0
+  82845B10  409A0010             bne cr6,0x82845b20
+  82845B14  895F0001             lbz r10,0x1(r31)
+  82845B18  2B0A0000             cmplwi cr6,r10,0x0
+  82845B1C  419A0148             beq cr6,0x82845c64
+LAB_82845b20:
+  82845B20  893F0001             lbz r9,0x1(r31)
+  82845B24  7D4B59D6             mullw r10,r11,r11
+  82845B28  7D270774             extsb r7,r9
+  82845B2C  7D280774             extsb r8,r9
+  82845B30  7D2739D6             mullw r9,r7,r7
+  82845B34  7CA95214             add r5,r9,r10
+  82845B38  7D060774             extsb r6,r8
+  82845B3C  7CA307B4             extsw r3,r5
+  82845B40  7D64FE70             srawi r4,r11,0x1f
+  82845B44  F8610050             std r3,0x50(r1)
+  82845B48  C8010050             lfd f0,0x50(r1)
+  82845B4C  FDA0069C             fcfid f13,f0
+  82845B50  7CCAFE70             srawi r10,r6,0x1f
+  82845B54  7D692278             xor r9,r11,r4
+  82845B58  EC00682C             fsqrts f0,f13
+  82845B5C  7CC85278             xor r8,r6,r10
+  82845B60  7D644850             subf r11,r4,r9
+  82845B64  7D4A4050             subf r10,r10,r8
+  82845B68  7F0A5800             cmpw cr6,r10,r11
+  82845B6C  40990008             ble cr6,0x82845b74
+  82845B70  7D4B5378             or r11,r10,r10
+LAB_82845b74:
+  82845B74  2F0B0000             cmpwi cr6,r11,0x0
+  82845B78  419A0034             beq cr6,0x82845bac
+  82845B7C  7D6B07B4             extsw r11,r11
+  82845B80  C1BE0000             lfs f13,0x0(r30)
+  82845B84  C19E0004             lfs f12,0x4(r30)
+  82845B88  F9610050             std r11,0x50(r1)
+  82845B8C  C9610050             lfd f11,0x50(r1)
+  82845B90  FD405E9C             fcfid f10,f11
+  82845B94  FD205018             frsp f9,f10
+  82845B98  ED090024             fdivs f8,f9,f0
+  82845B9C  ECED0232             fmuls f7,f13,f8
+  82845BA0  D0FE0000             stfs f7,0x0(r30)
+  82845BA4  ECCC0232             fmuls f6,f12,f8
+  82845BA8  D0DE0004             stfs f6,0x4(r30)
+LAB_82845bac:
+  82845BAC  C01E0004             lfs f0,0x4(r30)
+  82845BB0  FDA00210             fabs f13,f0
+  82845BB4  C19BEE44             lfs f12,-0x11bc(r27)
+  82845BB8  FF0D6000             fcmpu cr6,f13,f12
+  82845BBC  40980008             bge cr6,0x82845bc4
+  82845BC0  D39E0004             stfs f28,0x4(r30)
+LAB_82845bc4:
+  82845BC4  574B063E             rlwinm r11,r26,0x0,0x18,0x1f
+  82845BC8  2B0B0000             cmplwi cr6,r11,0x0
+  82845BCC  419A0098             beq cr6,0x82845c64
+  82845BD0  C01E0000             lfs f0,0x0(r30)
+  82845BD4  3D608200             lis r11,-0x7e00
+  82845BD8  FFC00210             fabs f30,f0
+  82845BDC  C1BE0004             lfs f13,0x4(r30)
+  82845BE0  FFE06A10             fabs f31,f13
+  82845BE4  C3AB0F10             lfs f29,0xf10(r11)
+  82845BE8  FF1EE800             fcmpu cr6,f30,f29
+  82845BEC  40990020             ble cr6,0x82845c0c
+  82845BF0  3D60821A             lis r11,-0x7de6
+  82845BF4  7F86E378             or r6,r28,r28
+  82845BF8  38EB00C0             addi r7,r11,0xc0
+  82845BFC  7FA3EB78             or r3,r29,r29
+  82845C00  38A00000             li r5,0x0
+  82845C04  38800046             li r4,0x46
+  82845C08  4BD8E8F9             bl 0x825d4500
+LAB_82845c0c:
+  82845C0C  FF1FE800             fcmpu cr6,f31,f29
+  82845C10  40990020             ble cr6,0x82845c30
+  82845C14  3D60821A             lis r11,-0x7de6
+  82845C18  7F86E378             or r6,r28,r28
+  82845C1C  38EB00AC             addi r7,r11,0xac
+  82845C20  7FA3EB78             or r3,r29,r29
+  82845C24  38A00000             li r5,0x0
+  82845C28  38800047             li r4,0x47
+  82845C2C  4BD8E8D5             bl 0x825d4500
+LAB_82845c30:
+  82845C30  FF1EF800             fcmpu cr6,f30,f31
+  82845C34  4099001C             ble cr6,0x82845c50
+  82845C38  EC1EF828             fsubs f0,f30,f31
+  82845C3C  C1BE0004             lfs f13,0x4(r30)
+  82845C40  ED9D0028             fsubs f12,f29,f0
+  82845C44  ED6C0372             fmuls f11,f12,f13
+  82845C48  D17E0004             stfs f11,0x4(r30)
+  82845C4C  48000018             b 0x82845c64
+LAB_82845c50:
+  82845C50  EC1FF028             fsubs f0,f31,f30
+  82845C54  C1BE0000             lfs f13,0x0(r30)
+  82845C58  ED9D0028             fsubs f12,f29,f0
+  82845C5C  ED6C0372             fmuls f11,f12,f13
+  82845C60  D17E0000             stfs f11,0x0(r30)
+LAB_82845c64:
+  82845C64  C01E0008             lfs f0,0x8(r30)
+  82845C68  FDA00210             fabs f13,f0
+  82845C6C  C19BEE44             lfs f12,-0x11bc(r27)
+  82845C70  FF0D6000             fcmpu cr6,f13,f12
+  82845C74  40980008             bge cr6,0x82845c7c
+  82845C78  D39E0008             stfs f28,0x8(r30)
+LAB_82845c7c:
+  82845C7C  C01E000C             lfs f0,0xc(r30)
+  82845C80  FDA00210             fabs f13,f0
+  82845C84  C19BEE44             lfs f12,-0x11bc(r27)
+  82845C88  FF0D6000             fcmpu cr6,f13,f12
+  82845C8C  40980008             bge cr6,0x82845c94
+  82845C90  D39E000C             stfs f28,0xc(r30)
+LAB_82845c94:
+  82845C94  382100B0             addi r1,r1,0xb0
+  82845C98  3981FFC8             subi r12,r1,0x38
+  82845C9C  480D0B49             bl 0x829167e4
+  82845CA0  480D0A60             b 0x82916700
 
 ; 82845CA8  BG_HeliCalcAccel  (bgame/bg_helicopter.cpp:95)
   82845CA8  7D8802A6             mfspr r12,LR
@@ -470,6 +651,7 @@ LAB_8284624c:
   82846388  38A00000             li r5,0x0
   8284638C  38800101             li r4,0x101
   82846390  4BD8E171             bl 0x825d4500
+  82846394  C001005C             lfs f0,0x5c(r1)
 LAB_82846398:
   82846398  C1BC004C             lfs f13,0x4c(r28)
   8284639C  EF9C0372             fmuls f28,f28,f13
@@ -485,6 +667,7 @@ LAB_82846398:
   828463C4  38A00001             li r5,0x1
   828463C8  38800105             li r4,0x105
   828463CC  4BD8E135             bl 0x825d4500
+  828463D0  C001005C             lfs f0,0x5c(r1)
 LAB_828463d4:
   828463D4  C1BD01B8             lfs f13,0x1b8(r29)
   828463D8  EF9C6824             fdivs f28,f28,f13
@@ -501,6 +684,7 @@ LAB_828463e4:
   828463FC  38A00000             li r5,0x0
   82846400  3880010B             li r4,0x10b
   82846404  4BD8E0FD             bl 0x825d4500
+  82846408  C001005C             lfs f0,0x5c(r1)
 LAB_8284640c:
   8284640C  C1BD01A0             lfs f13,0x1a0(r29)
   82846410  ED9D6824             fdivs f12,f29,f13
@@ -861,6 +1045,7 @@ LAB_82846948:
   82846958  38A00000             li r5,0x0
   8284695C  38800198             li r4,0x198
   82846960  4BD8DBA1             bl 0x825d4500
+  82846964  C0010094             lfs f0,0x94(r1)
 LAB_82846968:
   82846968  D3E10068             stfs f31,0x68(r1)
   8284696C  38C10128             addi r6,r1,0x128

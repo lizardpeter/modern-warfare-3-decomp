@@ -3,10 +3,128 @@
 ; 82359B40  Con_OpenChannel  (client/con_channels.cpp:87)
   82359B40  7D8802A6             mfspr r12,LR
   82359B44  485BCB6D             bl 0x829166b0
+  82359B48  9421FF70             stwu r1,-0x90(r1)
+  82359B4C  3D6082B4             lis r11,-0x7d4c
+  82359B50  7C7C1B78             or r28,r3,r3
+  82359B54  3BABFA38             subi r29,r11,0x5c8
+  82359B58  7C9B2378             or r27,r4,r4
+  82359B5C  3B400000             li r26,0x0
+  82359B60  3BC00000             li r30,0x0
+  82359B64  7FBFEB78             or r31,r29,r29
+LAB_82359b68:
+  82359B68  897F0000             lbz r11,0x0(r31)
+  82359B6C  2B0B0000             cmplwi cr6,r11,0x0
+  82359B70  419A0040             beq cr6,0x82359bb0
+  82359B74  38A00020             li r5,0x20
+  82359B78  7F84E378             or r4,r28,r28
+  82359B7C  7FE3FB78             or r3,r31,r31
+  82359B80  482B2241             bl 0x8260bdc0
+  82359B84  2F030000             cmpwi cr6,r3,0x0
+  82359B88  419A0024             beq cr6,0x82359bac
+  82359B8C  3BFF0021             addi r31,r31,0x21
+  82359B90  397D2100             addi r11,r29,0x2100
+  82359B94  3BDE0001             addi r30,r30,0x1
+  82359B98  7F1F5800             cmpw cr6,r31,r11
+  82359B9C  4198FFCC             blt cr6,0x82359b68
+  82359BA0  38600000             li r3,0x0
+  82359BA4  38210090             addi r1,r1,0x90
+  82359BA8  485BCB58             b 0x82916700
+LAB_82359bac:
+  82359BAC  3B400001             li r26,0x1
+LAB_82359bb0:
+  82359BB0  2F1E0100             cmpwi cr6,r30,0x100
+  82359BB4  41980010             blt cr6,0x82359bc4
+  82359BB8  38600000             li r3,0x0
+  82359BBC  38210090             addi r1,r1,0x90
+  82359BC0  485BCB40             b 0x82916700
+LAB_82359bc4:
+  82359BC4  574B063E             rlwinm r11,r26,0x0,0x18,0x1f
+  82359BC8  2B0B0000             cmplwi cr6,r11,0x0
+  82359BCC  409A0024             bne cr6,0x82359bf0
+  82359BD0  57CB2834             rlwinm r11,r30,0x5,0x0,0x1a
+  82359BD4  38A00020             li r5,0x20
+  82359BD8  7FEBF214             add r31,r11,r30
+  82359BDC  7F84E378             or r4,r28,r28
+  82359BE0  7C7FEA14             add r3,r31,r29
+  82359BE4  482B211D             bl 0x8260bd00
+  82359BE8  397D0020             addi r11,r29,0x20
+  82359BEC  7F7F59AE             stbx r27,r31,r11
+LAB_82359bf0:
+  82359BF0  38600001             li r3,0x1
+  82359BF4  38210090             addi r1,r1,0x90
+  82359BF8  485BCB08             b 0x82916700
 
 ; 82359C00  Con_CloseChannelInternal  (client/con_channels.cpp:118)
   82359C00  7D8802A6             mfspr r12,LR
   82359C04  485BCAA1             bl 0x829166a4
+  82359C08  9421FF60             stwu r1,-0xa0(r1)
+  82359C0C  7C7E1B78             or r30,r3,r3
+  82359C10  2B030100             cmplwi cr6,r3,0x100
+  82359C14  41980028             blt cr6,0x82359c3c
+  82359C18  3D608204             lis r11,-0x7dfc
+  82359C1C  3D408204             lis r10,-0x7dfc
+  82359C20  38CB87E4             subi r6,r11,0x781c
+  82359C24  386A87A0             subi r3,r10,0x7860
+  82359C28  39000100             li r8,0x100
+  82359C2C  7FC7F378             or r7,r30,r30
+  82359C30  38A00000             li r5,0x0
+  82359C34  38800079             li r4,0x79
+  82359C38  4827A8C9             bl 0x825d4500
+LAB_82359c3c:
+  82359C3C  57CA2834             rlwinm r10,r30,0x5,0x0,0x1a
+  82359C40  3D6082B4             lis r11,-0x7d4c
+  82359C44  7D4AF214             add r10,r10,r30
+  82359C48  396BFA38             subi r11,r11,0x5c8
+  82359C4C  7D2A58AE             lbzx r9,r10,r11
+  82359C50  2B090000             cmplwi cr6,r9,0x0
+  82359C54  419A00A8             beq cr6,0x82359cfc
+  82359C58  57C906FE             rlwinm r9,r30,0x0,0x1b,0x1f
+  82359C5C  39000001             li r8,0x1
+  82359C60  38E00000             li r7,0x0
+  82359C64  7D064830             slw r6,r8,r9
+  82359C68  7CEA59AE             stbx r7,r10,r11
+  82359C6C  3BEB2100             addi r31,r11,0x2100
+  82359C70  7FC52E70             srawi r5,r30,0x5
+  82359C74  3D008200             lis r8,-0x7e00
+  82359C78  3D208200             lis r9,-0x7e00
+  82359C7C  3D408200             lis r10,-0x7e00
+  82359C80  3D608200             lis r11,-0x7e00
+  82359C84  7CD730F8             nor r23,r6,r6
+  82359C88  54BB103A             rlwinm r27,r5,0x2,0x0,0x1d
+  82359C8C  3B800007             li r28,0x7
+  82359C90  3B483058             addi r26,r8,0x3058
+  82359C94  3BA93098             addi r29,r9,0x3098
+  82359C98  3B2A0F98             addi r25,r10,0xf98
+  82359C9C  3B0B308C             addi r24,r11,0x308c
+LAB_82359ca0:
+  82359CA0  2B1F0000             cmplwi cr6,r31,0x0
+  82359CA4  409A001C             bne cr6,0x82359cc0
+  82359CA8  7F07C378             or r7,r24,r24
+  82359CAC  7F26CB78             or r6,r25,r25
+  82359CB0  7FA3EB78             or r3,r29,r29
+  82359CB4  38A00000             li r5,0x0
+  82359CB8  38800019             li r4,0x19
+  82359CBC  4827A845             bl 0x825d4500
+LAB_82359cc0:
+  82359CC0  2B1E0100             cmplwi cr6,r30,0x100
+  82359CC4  41980020             blt cr6,0x82359ce4
+  82359CC8  7F46D378             or r6,r26,r26
+  82359CCC  7FA3EB78             or r3,r29,r29
+  82359CD0  39000100             li r8,0x100
+  82359CD4  7FC7F378             or r7,r30,r30
+  82359CD8  38A00000             li r5,0x0
+  82359CDC  3880001A             li r4,0x1a
+  82359CE0  4827A821             bl 0x825d4500
+LAB_82359ce4:
+  82359CE4  7D7FD82E             lwzx r11,r31,r27
+  82359CE8  379CFFFF             subic. r28,r28,0x1
+  82359CEC  7D6AB838             and r10,r11,r23
+  82359CF0  7D5FD92E             stwx r10,r31,r27
+  82359CF4  3BFF0020             addi r31,r31,0x20
+  82359CF8  4082FFA8             bne 0x82359ca0
+LAB_82359cfc:
+  82359CFC  382100A0             addi r1,r1,0xa0
+  82359D00  485BC9F4             b 0x829166f4
 
 ; 82359D08  Con_ScriptHasPermission  (client/con_channels.cpp:136)
   82359D08  2F030000             cmpwi cr6,r3,0x0
@@ -30,6 +148,42 @@ LAB_82359d40:
 ; 82359D48  Con_GetChannel  (client/con_channels.cpp:148)
   82359D48  7D8802A6             mfspr r12,LR
   82359D4C  485BC969             bl 0x829166b4
+  82359D50  9421FF80             stwu r1,-0x80(r1)
+  82359D54  3D6082B4             lis r11,-0x7d4c
+  82359D58  7C7C1B78             or r28,r3,r3
+  82359D5C  3BABFA38             subi r29,r11,0x5c8
+  82359D60  7C9B2378             or r27,r4,r4
+  82359D64  3BC00000             li r30,0x0
+  82359D68  7FBFEB78             or r31,r29,r29
+LAB_82359d6c:
+  82359D6C  897F0000             lbz r11,0x0(r31)
+  82359D70  2B0B0000             cmplwi cr6,r11,0x0
+  82359D74  419A0018             beq cr6,0x82359d8c
+  82359D78  7FE4FB78             or r4,r31,r31
+  82359D7C  7F83E378             or r3,r28,r28
+  82359D80  482B2211             bl 0x8260bf90
+  82359D84  2F030000             cmpwi cr6,r3,0x0
+  82359D88  419A0028             beq cr6,0x82359db0
+LAB_82359d8c:
+  82359D8C  3BFF0021             addi r31,r31,0x21
+  82359D90  397D2100             addi r11,r29,0x2100
+  82359D94  3BDE0001             addi r30,r30,0x1
+  82359D98  7F1F5800             cmpw cr6,r31,r11
+  82359D9C  4198FFD0             blt cr6,0x82359d6c
+  82359DA0  39600000             li r11,0x0
+  82359DA4  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82359DA8  38210080             addi r1,r1,0x80
+  82359DAC  485BC958             b 0x82916704
+LAB_82359db0:
+  82359DB0  93DB0000             stw r30,0x0(r27)
+  82359DB4  2F1E0100             cmpwi cr6,r30,0x100
+  82359DB8  39600001             li r11,0x1
+  82359DBC  41980008             blt cr6,0x82359dc4
+  82359DC0  39600000             li r11,0x0
+LAB_82359dc4:
+  82359DC4  5563063E             rlwinm r3,r11,0x0,0x18,0x1f
+  82359DC8  38210080             addi r1,r1,0x80
+  82359DCC  485BC938             b 0x82916704
 
 ; 82359DD0  Con_IsChannelOpen  (client/con_channels.cpp:166)
   82359DD0  2F030000             cmpwi cr6,r3,0x0
@@ -124,14 +278,154 @@ LAB_82359f08:
 ; 82359F10  Con_IsChannelVisible  (client/con_channels.cpp:211)
   82359F10  7D8802A6             mfspr r12,LR
   82359F14  485BC7A9             bl 0x829166bc
+  82359F18  9421FF90             stwu r1,-0x70(r1)
+  82359F1C  7C7E1B78             or r30,r3,r3
+  82359F20  7C9F2378             or r31,r4,r4
+  82359F24  7CBD2B78             or r29,r5,r5
+  82359F28  2F040000             cmpwi cr6,r4,0x0
+  82359F2C  4198000C             blt cr6,0x82359f38
+  82359F30  2F040100             cmpwi cr6,r4,0x100
+  82359F34  4198002C             blt cr6,0x82359f60
+LAB_82359f38:
+  82359F38  3D608204             lis r11,-0x7dfc
+  82359F3C  3D408204             lis r10,-0x7dfc
+  82359F40  3D208204             lis r9,-0x7dfc
+  82359F44  38EB887C             subi r7,r11,0x7784
+  82359F48  38CA8868             subi r6,r10,0x7798
+  82359F4C  386987A0             subi r3,r9,0x7860
+  82359F50  7FE8FB78             or r8,r31,r31
+  82359F54  38A00000             li r5,0x0
+  82359F58  388000D6             li r4,0xd6
+  82359F5C  4827A5A5             bl 0x825d4500
+LAB_82359f60:
+  82359F60  57EA2834             rlwinm r10,r31,0x5,0x0,0x1a
+  82359F64  3D6082B4             lis r11,-0x7d4c
+  82359F68  7D2AFA14             add r9,r10,r31
+  82359F6C  394BFA38             subi r10,r11,0x5c8
+  82359F70  7D0950AE             lbzx r8,r9,r10
+  82359F74  2B080000             cmplwi cr6,r8,0x0
+  82359F78  419A00B4             beq cr6,0x8235a02c
+  82359F7C  2F1E0001             cmpwi cr6,r30,0x1
+  82359F80  409A0038             bne cr6,0x82359fb8
+  82359F84  2F1F0002             cmpwi cr6,r31,0x2
+  82359F88  419A0018             beq cr6,0x82359fa0
+  82359F8C  2F1F0003             cmpwi cr6,r31,0x3
+  82359F90  419A0010             beq cr6,0x82359fa0
+  82359F94  2F1F0004             cmpwi cr6,r31,0x4
+  82359F98  39600000             li r11,0x0
+  82359F9C  409A0008             bne cr6,0x82359fa4
+LAB_82359fa0:
+  82359FA0  39600001             li r11,0x1
+LAB_82359fa4:
+  82359FA4  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+  82359FA8  2B0B0000             cmplwi cr6,r11,0x0
+  82359FAC  409A0080             bne cr6,0x8235a02c
+  82359FB0  3BC00000             li r30,0x0
+  82359FB4  4800000C             b 0x82359fc0
+LAB_82359fb8:
+  82359FB8  2F1E0000             cmpwi cr6,r30,0x0
+  82359FBC  409A0018             bne cr6,0x82359fd4
+LAB_82359fc0:
+  82359FC0  2F1F0000             cmpwi cr6,r31,0x0
+  82359FC4  409A0010             bne cr6,0x82359fd4
+LAB_82359fc8:
+  82359FC8  38600001             li r3,0x1
+  82359FCC  38210070             addi r1,r1,0x70
+  82359FD0  485BC73C             b 0x8291670c
+LAB_82359fd4:
+  82359FD4  57CB2834             rlwinm r11,r30,0x5,0x0,0x1a
+  82359FD8  394A2100             addi r10,r10,0x2100
+  82359FDC  38A00020             li r5,0x20
+  82359FE0  7FCB5214             add r30,r11,r10
+  82359FE4  7FE4FB78             or r4,r31,r31
+  82359FE8  7FC3F378             or r3,r30,r30
+  82359FEC  4BF0C9A5             bl 0x82266990
+  82359FF0  2F030000             cmpwi cr6,r3,0x0
+  82359FF4  409AFFD4             bne cr6,0x82359fc8
+  82359FF8  7FAB2E70             srawi r11,r29,0x5
+  82359FFC  556B06FE             rlwinm r11,r11,0x0,0x1b,0x1f
+  8235A000  2F0B0003             cmpwi cr6,r11,0x3
+  8235A004  419A000C             beq cr6,0x8235a010
+  8235A008  2F0B0002             cmpwi cr6,r11,0x2
+  8235A00C  409A0020             bne cr6,0x8235a02c
+LAB_8235a010:
+  8235A010  38A00020             li r5,0x20
+  8235A014  38800001             li r4,0x1
+  8235A018  7FC3F378             or r3,r30,r30
+  8235A01C  4BF0C975             bl 0x82266990
+  8235A020  2F030000             cmpwi cr6,r3,0x0
+  8235A024  38600001             li r3,0x1
+  8235A028  409A0008             bne cr6,0x8235a030
+LAB_8235a02c:
+  8235A02C  38600000             li r3,0x0
+LAB_8235a030:
+  8235A030  38210070             addi r1,r1,0x70
+  8235A034  485BC6D8             b 0x8291670c
 
 ; 8235A038  Con_ChannelList_f  (client/con_channels.cpp:245)
   8235A038  7D8802A6             mfspr r12,LR
   8235A03C  485BC67D             bl 0x829166b8
+  8235A040  9421FF80             stwu r1,-0x80(r1)
+  8235A044  3D6082B4             lis r11,-0x7d4c
+  8235A048  3BC00000             li r30,0x0
+  8235A04C  3BABFA38             subi r29,r11,0x5c8
+  8235A050  3D608200             lis r11,-0x7e00
+  8235A054  7FBFEB78             or r31,r29,r29
+  8235A058  3B8B4D30             addi r28,r11,0x4d30
+LAB_8235a05c:
+  8235A05C  2F1E0000             cmpwi cr6,r30,0x0
+  8235A060  419A0020             beq cr6,0x8235a080
+  8235A064  897F0000             lbz r11,0x0(r31)
+  8235A068  2B0B0000             cmplwi cr6,r11,0x0
+  8235A06C  419A0014             beq cr6,0x8235a080
+  8235A070  7F84E378             or r4,r28,r28
+  8235A074  7FE5FB78             or r5,r31,r31
+  8235A078  38600000             li r3,0x0
+  8235A07C  4819C705             bl 0x824f6780
+LAB_8235a080:
+  8235A080  3BFF0021             addi r31,r31,0x21
+  8235A084  397D2100             addi r11,r29,0x2100
+  8235A088  3BDE0001             addi r30,r30,0x1
+  8235A08C  7F1F5800             cmpw cr6,r31,r11
+  8235A090  4198FFCC             blt cr6,0x8235a05c
+  8235A094  38210080             addi r1,r1,0x80
+  8235A098  485BC670             b 0x82916708
 
 ; 8235A0A0  Con_FilterAdd  (client/con_channels.cpp:257)
   8235A0A0  7D8802A6             mfspr r12,LR
   8235A0A4  485BC619             bl 0x829166bc
+  8235A0A8  9421FF90             stwu r1,-0x70(r1)
+  8235A0AC  7C7D1B78             or r29,r3,r3
+  8235A0B0  4BF586C9             bl 0x822b2778
+  8235A0B4  7C7E1B78             or r30,r3,r3
+  8235A0B8  2F030002             cmpwi cr6,r3,0x2
+  8235A0BC  40980028             bge cr6,0x8235a0e4
+  8235A0C0  38600000             li r3,0x0
+  8235A0C4  4BF5875D             bl 0x822b2820
+  8235A0C8  3D608204             lis r11,-0x7dfc
+  8235A0CC  7C651B78             or r5,r3,r3
+  8235A0D0  388B88AC             subi r4,r11,0x7754
+  8235A0D4  38600000             li r3,0x0
+  8235A0D8  4819C6A9             bl 0x824f6780
+  8235A0DC  38210070             addi r1,r1,0x70
+  8235A0E0  485BC62C             b 0x8291670c
+LAB_8235a0e4:
+  8235A0E4  3BE00001             li r31,0x1
+  8235A0E8  2F1E0001             cmpwi cr6,r30,0x1
+  8235A0EC  40990028             ble cr6,0x8235a114
+LAB_8235a0f0:
+  8235A0F0  7FE3FB78             or r3,r31,r31
+  8235A0F4  4BF5872D             bl 0x822b2820
+  8235A0F8  7C641B78             or r4,r3,r3
+  8235A0FC  38600000             li r3,0x0
+  8235A100  7FA5EB78             or r5,r29,r29
+  8235A104  4BFFFD05             bl 0x82359e08
+  8235A108  3BFF0001             addi r31,r31,0x1
+  8235A10C  7F1FF000             cmpw cr6,r31,r30
+  8235A110  4198FFE0             blt cr6,0x8235a0f0
+LAB_8235a114:
+  8235A114  38210070             addi r1,r1,0x70
+  8235A118  485BC5F4             b 0x8291670c
 
 ; 8235A120  Con_FilterAdd_f  (client/con_channels.cpp:289)
   8235A120  38600001             li r3,0x1
@@ -270,18 +564,537 @@ LAB_8235a2c8:
 ; 8235A2F0  Con_InitChannelsForDestFromList  (client/con_channels.cpp:330)
   8235A2F0  7D8802A6             mfspr r12,LR
   8235A2F4  485BC39D             bl 0x82916690
+  8235A2F8  9421FE30             stwu r1,-0x1d0(r1)
+  8235A2FC  7C761B78             or r22,r3,r3
+  8235A300  7C992378             or r25,r4,r4
+  8235A304  2B040000             cmplwi cr6,r4,0x0
+  8235A308  409A0028             bne cr6,0x8235a330
+  8235A30C  3D608204             lis r11,-0x7dfc
+  8235A310  3D408200             lis r10,-0x7e00
+  8235A314  3D208204             lis r9,-0x7dfc
+  8235A318  38EB8940             subi r7,r11,0x76c0
+  8235A31C  38CA0F98             addi r6,r10,0xf98
+  8235A320  386987A0             subi r3,r9,0x7860
+  8235A324  38A00000             li r5,0x0
+  8235A328  38800152             li r4,0x152
+  8235A32C  4827A1D5             bl 0x825d4500
+LAB_8235a330:
+  8235A330  7F2BCB78             or r11,r25,r25
+LAB_8235a334:
+  8235A334  894B0000             lbz r10,0x0(r11)
+  8235A338  396B0001             addi r11,r11,0x1
+  8235A33C  2B0A0000             cmplwi cr6,r10,0x0
+  8235A340  409AFFF4             bne cr6,0x8235a334
+  8235A344  7D795850             subf r11,r25,r11
+  8235A348  3D408204             lis r10,-0x7dfc
+  8235A34C  3AA00000             li r21,0x0
+  8235A350  392BFFFF             subi r9,r11,0x1
+  8235A354  388A893C             subi r4,r10,0x76c4
+  8235A358  38A00000             li r5,0x0
+  8235A35C  7EC3B378             or r3,r22,r22
+  8235A360  7EBFAB78             or r31,r21,r21
+  8235A364  7EBAAB78             or r26,r21,r21
+  8235A368  5532003E             rlwinm r18,r9,0x0,0x0,0x1f
+  8235A36C  4BFFFA9D             bl 0x82359e08
+  8235A370  3D608204             lis r11,-0x7dfc
+  8235A374  3D408204             lis r10,-0x7dfc
+  8235A378  3D2082B4             lis r9,-0x7d4c
+  8235A37C  3D008204             lis r8,-0x7dfc
+  8235A380  7EB8AB78             or r24,r21,r21
+  8235A384  3A6B8820             subi r19,r11,0x77e0
+  8235A388  3AEA8840             subi r23,r10,0x77c0
+  8235A38C  3B69FA38             subi r27,r9,0x5c8
+  8235A390  3A88890C             subi r20,r8,0x76f4
+LAB_8235a394:
+  8235A394  7D78C8AE             lbzx r11,r24,r25
+  8235A398  7D6B0774             extsb r11,r11
+  8235A39C  2F0B0020             cmpwi cr6,r11,0x20
+  8235A3A0  419A002C             beq cr6,0x8235a3cc
+  8235A3A4  2F0B002C             cmpwi cr6,r11,0x2c
+  8235A3A8  419A0024             beq cr6,0x8235a3cc
+  8235A3AC  2F0B0000             cmpwi cr6,r11,0x0
+  8235A3B0  419A001C             beq cr6,0x8235a3cc
+  8235A3B4  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  8235A3B8  2B0B0000             cmplwi cr6,r11,0x0
+  8235A3BC  409A00F4             bne cr6,0x8235a4b0
+  8235A3C0  7F1AC378             or r26,r24,r24
+  8235A3C4  3BE00001             li r31,0x1
+  8235A3C8  480000E8             b 0x8235a4b0
+LAB_8235a3cc:
+  8235A3CC  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  8235A3D0  2B0B0000             cmplwi cr6,r11,0x0
+  8235A3D4  419A00DC             beq cr6,0x8235a4b0
+  8235A3D8  7FDAC050             subf r30,r26,r24
+  8235A3DC  397E0001             addi r11,r30,0x1
+  8235A3E0  2B0B0100             cmplwi cr6,r11,0x100
+  8235A3E4  40990014             ble cr6,0x8235a3f8
+  8235A3E8  7E84A378             or r4,r20,r20
+  8235A3EC  7F25CB78             or r5,r25,r25
+  8235A3F0  38600001             li r3,0x1
+  8235A3F4  4819FF75             bl 0x824fa368
+LAB_8235a3f8:
+  8235A3F8  7FC5F378             or r5,r30,r30
+  8235A3FC  7C9ACA14             add r4,r26,r25
+  8235A400  38610050             addi r3,r1,0x50
+  8235A404  485BC55D             bl 0x82916960
+  8235A408  39610050             addi r11,r1,0x50
+  8235A40C  7EBCAB78             or r28,r21,r21
+  8235A410  3BE00001             li r31,0x1
+  8235A414  3BBB0021             addi r29,r27,0x21
+  8235A418  7EBE59AE             stbx r21,r30,r11
+LAB_8235a41c:
+  8235A41C  897D0000             lbz r11,0x0(r29)
+  8235A420  2B0B0000             cmplwi cr6,r11,0x0
+  8235A424  419A0060             beq cr6,0x8235a484
+  8235A428  7FA4EB78             or r4,r29,r29
+  8235A42C  38610050             addi r3,r1,0x50
+  8235A430  482B1CC1             bl 0x8260c0f0
+  8235A434  2F030000             cmpwi cr6,r3,0x0
+  8235A438  409A004C             bne cr6,0x8235a484
+  8235A43C  56CB2834             rlwinm r11,r22,0x5,0x0,0x1a
+  8235A440  395B2100             addi r10,r27,0x2100
+  8235A444  38A00020             li r5,0x20
+  8235A448  7FCB5214             add r30,r11,r10
+  8235A44C  7FE4FB78             or r4,r31,r31
+  8235A450  7FC3F378             or r3,r30,r30
+  8235A454  4BF0C53D             bl 0x82266990
+  8235A458  2F030000             cmpwi cr6,r3,0x0
+  8235A45C  409A0028             bne cr6,0x8235a484
+  8235A460  38A00020             li r5,0x20
+  8235A464  7FE4FB78             or r4,r31,r31
+  8235A468  7FC3F378             or r3,r30,r30
+  8235A46C  4BF0C5C5             bl 0x82266a30
+  8235A470  7EE4BB78             or r4,r23,r23
+  8235A474  7FA5EB78             or r5,r29,r29
+  8235A478  38600000             li r3,0x0
+  8235A47C  4819C305             bl 0x824f6780
+  8235A480  3B9C0001             addi r28,r28,0x1
+LAB_8235a484:
+  8235A484  3BBD0021             addi r29,r29,0x21
+  8235A488  397B2100             addi r11,r27,0x2100
+  8235A48C  3BFF0001             addi r31,r31,0x1
+  8235A490  7F1D5800             cmpw cr6,r29,r11
+  8235A494  4198FF88             blt cr6,0x8235a41c
+  8235A498  2F1C0000             cmpwi cr6,r28,0x0
+  8235A49C  409A0010             bne cr6,0x8235a4ac
+  8235A4A0  7E649B78             or r4,r19,r19
+  8235A4A4  38600000             li r3,0x0
+  8235A4A8  4819C2D9             bl 0x824f6780
+LAB_8235a4ac:
+  8235A4AC  7EBFAB78             or r31,r21,r21
+LAB_8235a4b0:
+  8235A4B0  3B180001             addi r24,r24,0x1
+  8235A4B4  7F189040             cmplw cr6,r24,r18
+  8235A4B8  4099FEDC             ble cr6,0x8235a394
+  8235A4BC  382101D0             addi r1,r1,0x1d0
+  8235A4C0  485BC220             b 0x829166e0
 
 ; 8235A4C8  Con_InitGameMsgChannels  (client/con_channels.cpp:378)
   8235A4C8  7D8802A6             mfspr r12,LR
   8235A4CC  485BC1C5             bl 0x82916690
+  8235A4D0  9421FE30             stwu r1,-0x1d0(r1)
+  8235A4D4  3D6082B4             lis r11,-0x7d4c
+  8235A4D8  3D4082B4             lis r10,-0x7d4c
+  8235A4DC  3BCB1C90             addi r30,r11,0x1c90
+  8235A4E0  3BEA1C18             addi r31,r10,0x1c18
+  8235A4E4  3A800000             li r20,0x0
+  8235A4E8  3CE08296             lis r7,-0x7d6a
+  8235A4EC  3CC082B4             lis r6,-0x7d4c
+  8235A4F0  3CA08204             lis r5,-0x7dfc
+  8235A4F4  3D008204             lis r8,-0x7dfc
+  8235A4F8  3D208200             lis r9,-0x7e00
+  8235A4FC  3D408204             lis r10,-0x7dfc
+  8235A500  3D608204             lis r11,-0x7dfc
+  8235A504  7E9DA378             or r29,r20,r20
+  8235A508  7E9CA378             or r28,r20,r20
+  8235A50C  3B600004             li r27,0x4
+  8235A510  3B0762E8             addi r24,r7,0x62e8
+  8235A514  3B461C7C             addi r26,r6,0x1c7c
+  8235A518  3AE589A8             subi r23,r5,0x7658
+  8235A51C  3A6887A0             subi r19,r8,0x7860
+  8235A520  3A490F98             addi r18,r9,0xf98
+  8235A524  3ACA8950             subi r22,r10,0x76b0
+  8235A528  3B2B8720             subi r25,r11,0x78e0
+LAB_8235a52c:
+  8235A52C  7F24CB78             or r4,r25,r25
+  8235A530  7FA5EB78             or r5,r29,r29
+  8235A534  7FE3FB78             or r3,r31,r31
+  8235A538  485BD3C1             bl 0x829178f8
+  8235A53C  7FEBFB78             or r11,r31,r31
+LAB_8235a540:
+  8235A540  894B0000             lbz r10,0x0(r11)
+  8235A544  396B0001             addi r11,r11,0x1
+  8235A548  2B0A0000             cmplwi cr6,r10,0x0
+  8235A54C  409AFFF4             bne cr6,0x8235a540
+  8235A550  7D7F5850             subf r11,r31,r11
+  8235A554  396BFFFF             subi r11,r11,0x1
+  8235A558  556A003E             rlwinm r10,r11,0x0,0x0,0x1f
+  8235A55C  2B0A0018             cmplwi cr6,r10,0x18
+  8235A560  419A001C             beq cr6,0x8235a57c
+  8235A564  7EC7B378             or r7,r22,r22
+  8235A568  7E469378             or r6,r18,r18
+  8235A56C  7E639B78             or r3,r19,r19
+  8235A570  38A00000             li r5,0x0
+  8235A574  38800186             li r4,0x186
+  8235A578  48279F89             bl 0x825d4500
+LAB_8235a57c:
+  8235A57C  38990020             addi r4,r25,0x20
+  8235A580  7FA5EB78             or r5,r29,r29
+  8235A584  7FC3F378             or r3,r30,r30
+  8235A588  485BD371             bl 0x829178f8
+  8235A58C  7FCBF378             or r11,r30,r30
+LAB_8235a590:
+  8235A590  894B0000             lbz r10,0x0(r11)
+  8235A594  396B0001             addi r11,r11,0x1
+  8235A598  2B0A0000             cmplwi cr6,r10,0x0
+  8235A59C  409AFFF4             bne cr6,0x8235a590
+  8235A5A0  7D7E5850             subf r11,r30,r11
+  8235A5A4  396BFFFF             subi r11,r11,0x1
+  8235A5A8  556A003E             rlwinm r10,r11,0x0,0x0,0x1f
+  8235A5AC  2B0A005A             cmplwi cr6,r10,0x5a
+  8235A5B0  419A001C             beq cr6,0x8235a5cc
+  8235A5B4  7EE7BB78             or r7,r23,r23
+  8235A5B8  7E469378             or r6,r18,r18
+  8235A5BC  7E639B78             or r3,r19,r19
+  8235A5C0  38A00000             li r5,0x0
+  8235A5C4  38800189             li r4,0x189
+  8235A5C8  48279F39             bl 0x825d4500
+LAB_8235a5cc:
+  8235A5CC  7FC6F378             or r6,r30,r30
+  8235A5D0  7C9CC02E             lwzx r4,r28,r24
+  8235A5D4  38A00002             li r5,0x2
+  8235A5D8  7FE3FB78             or r3,r31,r31
+  8235A5DC  482A571D             bl 0x825ffcf8
+  8235A5E0  7C7CD12E             stwx r3,r28,r26
+  8235A5E4  377BFFFF             subic. r27,r27,0x1
+  8235A5E8  3BBD0001             addi r29,r29,0x1
+  8235A5EC  3BFF0019             addi r31,r31,0x19
+  8235A5F0  3BDE005B             addi r30,r30,0x5b
+  8235A5F4  3B9C0004             addi r28,r28,0x4
+  8235A5F8  4082FF34             bne 0x8235a52c
+  8235A5FC  3D208204             lis r9,-0x7dfc
+  8235A600  3D408204             lis r10,-0x7dfc
+  8235A604  3D608204             lis r11,-0x7dfc
+  8235A608  3B600003             li r27,0x3
+  8235A60C  3AC00004             li r22,0x4
+  8235A610  3AE9890C             subi r23,r9,0x76f4
+  8235A614  3B0A893C             subi r24,r10,0x76c4
+  8235A618  3AAB8940             subi r21,r11,0x76c0
+LAB_8235a61c:
+  8235A61C  817A0000             lwz r11,0x0(r26)
+  8235A620  838B000C             lwz r28,0xc(r11)
+  8235A624  2B1C0000             cmplwi cr6,r28,0x0
+  8235A628  409A001C             bne cr6,0x8235a644
+  8235A62C  7EA7AB78             or r7,r21,r21
+  8235A630  7E469378             or r6,r18,r18
+  8235A634  7E639B78             or r3,r19,r19
+  8235A638  38A00000             li r5,0x0
+  8235A63C  38800152             li r4,0x152
+  8235A640  48279EC1             bl 0x825d4500
+LAB_8235a644:
+  8235A644  7F8BE378             or r11,r28,r28
+LAB_8235a648:
+  8235A648  894B0000             lbz r10,0x0(r11)
+  8235A64C  396B0001             addi r11,r11,0x1
+  8235A650  2B0A0000             cmplwi cr6,r10,0x0
+  8235A654  409AFFF4             bne cr6,0x8235a648
+  8235A658  7D7C5850             subf r11,r28,r11
+  8235A65C  7F04C378             or r4,r24,r24
+  8235A660  396BFFFF             subi r11,r11,0x1
+  8235A664  38A00000             li r5,0x0
+  8235A668  7F63DB78             or r3,r27,r27
+  8235A66C  5579003E             rlwinm r25,r11,0x0,0x0,0x1f
+  8235A670  7E9FA378             or r31,r20,r20
+  8235A674  7E9DA378             or r29,r20,r20
+  8235A678  4BFFF791             bl 0x82359e08
+  8235A67C  7E9EA378             or r30,r20,r20
+LAB_8235a680:
+  8235A680  7D7EE0AE             lbzx r11,r30,r28
+  8235A684  7D6B0774             extsb r11,r11
+  8235A688  2F0B0020             cmpwi cr6,r11,0x20
+  8235A68C  419A002C             beq cr6,0x8235a6b8
+  8235A690  2F0B002C             cmpwi cr6,r11,0x2c
+  8235A694  419A0024             beq cr6,0x8235a6b8
+  8235A698  2F0B0000             cmpwi cr6,r11,0x0
+  8235A69C  419A001C             beq cr6,0x8235a6b8
+  8235A6A0  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  8235A6A4  2B0B0000             cmplwi cr6,r11,0x0
+  8235A6A8  409A0068             bne cr6,0x8235a710
+  8235A6AC  7FDDF378             or r29,r30,r30
+  8235A6B0  3BE00001             li r31,0x1
+  8235A6B4  4800005C             b 0x8235a710
+LAB_8235a6b8:
+  8235A6B8  57EB063E             rlwinm r11,r31,0x0,0x18,0x1f
+  8235A6BC  2B0B0000             cmplwi cr6,r11,0x0
+  8235A6C0  419A0050             beq cr6,0x8235a710
+  8235A6C4  7FFDF050             subf r31,r29,r30
+  8235A6C8  397F0001             addi r11,r31,0x1
+  8235A6CC  2B0B0100             cmplwi cr6,r11,0x100
+  8235A6D0  40990014             ble cr6,0x8235a6e4
+  8235A6D4  7EE4BB78             or r4,r23,r23
+  8235A6D8  7F85E378             or r5,r28,r28
+  8235A6DC  38600001             li r3,0x1
+  8235A6E0  4819FC89             bl 0x824fa368
+LAB_8235a6e4:
+  8235A6E4  7FE5FB78             or r5,r31,r31
+  8235A6E8  7C9DE214             add r4,r29,r28
+  8235A6EC  38610050             addi r3,r1,0x50
+  8235A6F0  485BC271             bl 0x82916960
+  8235A6F4  39610050             addi r11,r1,0x50
+  8235A6F8  38A00001             li r5,0x1
+  8235A6FC  38810050             addi r4,r1,0x50
+  8235A700  7F63DB78             or r3,r27,r27
+  8235A704  7E9F59AE             stbx r20,r31,r11
+  8235A708  4BFFF701             bl 0x82359e08
+  8235A70C  7E9FA378             or r31,r20,r20
+LAB_8235a710:
+  8235A710  3BDE0001             addi r30,r30,0x1
+  8235A714  7F1EC840             cmplw cr6,r30,r25
+  8235A718  4099FF68             ble cr6,0x8235a680
+  8235A71C  36D6FFFF             subic. r22,r22,0x1
+  8235A720  3B5A0004             addi r26,r26,0x4
+  8235A724  3B7B0001             addi r27,r27,0x1
+  8235A728  4082FEF4             bne 0x8235a61c
+  8235A72C  382101D0             addi r1,r1,0x1d0
+  8235A730  485BBFB0             b 0x829166e0
+
+; 8235A738  Con_InitChannels  (client/con_channels.cpp:405)
+  8235A738  7D8802A6             mfspr r12,LR
+  8235A73C  485BBF81             bl 0x829166bc
+  8235A740  9421FF90             stwu r1,-0x70(r1)
+  8235A744  3D6082B4             lis r11,-0x7d4c
+  8235A748  38A02100             li r5,0x2100
+  8235A74C  3BABFA38             subi r29,r11,0x5c8
+  8235A750  38800000             li r4,0x0
+  8235A754  7FA3EB78             or r3,r29,r29
+  8235A758  485BC0A9             bl 0x82916800
+  8235A75C  3D608296             lis r11,-0x7d6a
+  8235A760  3BE0001A             li r31,0x1a
+  8235A764  396B6280             addi r11,r11,0x6280
+  8235A768  3BCBFFFC             subi r30,r11,0x4
+LAB_8235a76c:
+  8235A76C  38800000             li r4,0x0
+  8235A770  847E0004             lwzu r3,0x4(r30)
+  8235A774  4BFFF3CD             bl 0x82359b40
+  8235A778  37FFFFFF             subic. r31,r31,0x1
+  8235A77C  4082FFF0             bne 0x8235a76c
+  8235A780  39600001             li r11,0x1
+  8235A784  3D408204             lis r10,-0x7dfc
+  8235A788  997D0338             stb r11,0x338(r29)
+  8235A78C  3D208204             lis r9,-0x7dfc
+  8235A790  3D008204             lis r8,-0x7dfc
+  8235A794  38CA8A64             subi r6,r10,0x759c
+  8235A798  3889893C             subi r4,r9,0x76c4
+  8235A79C  38688A48             subi r3,r8,0x75b8
+  8235A7A0  38A00000             li r5,0x0
+  8235A7A4  482A5555             bl 0x825ffcf8
+  8235A7A8  907D2254             stw r3,0x2254(r29)
+  8235A7AC  7C6B1B78             or r11,r3,r3
+  8235A7B0  38A00001             li r5,0x1
+  8235A7B4  38600000             li r3,0x0
+  8235A7B8  808B000C             lwz r4,0xc(r11)
+  8235A7BC  4BFFF64D             bl 0x82359e08
+  8235A7C0  3CE08204             lis r7,-0x7dfc
+  8235A7C4  38A00001             li r5,0x1
+  8235A7C8  38878A44             subi r4,r7,0x75bc
+  8235A7CC  38600001             li r3,0x1
+  8235A7D0  4BFFF639             bl 0x82359e08
+  8235A7D4  3CC08203             lis r6,-0x7dfd
+  8235A7D8  38A00001             li r5,0x1
+  8235A7DC  3BE63C0C             addi r31,r6,0x3c0c
+  8235A7E0  38600001             li r3,0x1
+  8235A7E4  7FE4FB78             or r4,r31,r31
+  8235A7E8  4BFFF621             bl 0x82359e08
+  8235A7EC  7FE4FB78             or r4,r31,r31
+  8235A7F0  38A00001             li r5,0x1
+  8235A7F4  38600002             li r3,0x2
+  8235A7F8  4BFFF611             bl 0x82359e08
+  8235A7FC  4BFFFCCD             bl 0x8235a4c8
+  8235A800  3CA082B4             lis r5,-0x7d4c
+  8235A804  3C808236             lis r4,-0x7dca
+  8235A808  3C608204             lis r3,-0x7dfc
+  8235A80C  38A51E38             addi r5,r5,0x1e38
+  8235A810  38638A34             subi r3,r3,0x75cc
+  8235A814  3884A038             subi r4,r4,0x5fc8
+  8235A818  4817B051             bl 0x824d5868
+  8235A81C  3D6082B4             lis r11,-0x7d4c
+  8235A820  3D408236             lis r10,-0x7dca
+  8235A824  3D208204             lis r9,-0x7dfc
+  8235A828  38AB1E24             addi r5,r11,0x1e24
+  8235A82C  38698A24             subi r3,r9,0x75dc
+  8235A830  388AA120             subi r4,r10,0x5ee0
+  8235A834  4817B035             bl 0x824d5868
+  8235A838  3D0082B4             lis r8,-0x7d4c
+  8235A83C  3CE08236             lis r7,-0x7dca
+  8235A840  3CC08204             lis r6,-0x7dfc
+  8235A844  38A81E10             addi r5,r8,0x1e10
+  8235A848  38668A14             subi r3,r6,0x75ec
+  8235A84C  3887A128             subi r4,r7,0x5ed8
+  8235A850  4817B019             bl 0x824d5868
+  8235A854  3CA082B4             lis r5,-0x7d4c
+  8235A858  3C808236             lis r4,-0x7dca
+  8235A85C  3C608204             lis r3,-0x7dfc
+  8235A860  38A51DFC             addi r5,r5,0x1dfc
+  8235A864  386389FC             subi r3,r3,0x7604
+  8235A868  3884A130             subi r4,r4,0x5ed0
+  8235A86C  4817AFFD             bl 0x824d5868
+  8235A870  38210070             addi r1,r1,0x70
+  8235A874  485BBE98             b 0x8291670c
 
 ; 8235A878  Con_ShutdownChannels  (client/con_channels.cpp:439)
   8235A878  7D8802A6             mfspr r12,LR
   8235A87C  485BBE11             bl 0x8291668c
+  8235A880  9421FF30             stwu r1,-0xd0(r1)
+  8235A884  3D6082B4             lis r11,-0x7d4c
+  8235A888  3A200000             li r17,0x0
+  8235A88C  3B0BFA38             subi r24,r11,0x5c8
+  8235A890  3CC08200             lis r6,-0x7e00
+  8235A894  3CE08200             lis r7,-0x7e00
+  8235A898  3D008200             lis r8,-0x7e00
+  8235A89C  3D208200             lis r9,-0x7e00
+  8235A8A0  3D408204             lis r10,-0x7dfc
+  8235A8A4  3D608204             lis r11,-0x7dfc
+  8235A8A8  7E3D8B78             or r29,r17,r17
+  8235A8AC  7F19C378             or r25,r24,r24
+  8235A8B0  3AE00001             li r23,0x1
+  8235A8B4  3AC63058             addi r22,r6,0x3058
+  8235A8B8  3B473098             addi r26,r7,0x3098
+  8235A8BC  3AA80F98             addi r21,r8,0xf98
+  8235A8C0  3A89308C             addi r20,r9,0x308c
+  8235A8C4  3A6A87A0             subi r19,r10,0x7860
+  8235A8C8  3A4B87E4             subi r18,r11,0x781c
+LAB_8235a8cc:
+  8235A8CC  2B1D0100             cmplwi cr6,r29,0x100
+  8235A8D0  41980020             blt cr6,0x8235a8f0
+  8235A8D4  7E469378             or r6,r18,r18
+  8235A8D8  7E639B78             or r3,r19,r19
+  8235A8DC  39000100             li r8,0x100
+  8235A8E0  7FA7EB78             or r7,r29,r29
+  8235A8E4  38A00000             li r5,0x0
+  8235A8E8  38800079             li r4,0x79
+  8235A8EC  48279C15             bl 0x825d4500
+LAB_8235a8f0:
+  8235A8F0  89790000             lbz r11,0x0(r25)
+  8235A8F4  2B0B0000             cmplwi cr6,r11,0x0
+  8235A8F8  419A007C             beq cr6,0x8235a974
+  8235A8FC  5EEBE83E             rlwnm r11,r23,r29,0x0,0x1f
+  8235A900  9A390000             stb r17,0x0(r25)
+  8235A904  7FAA2E70             srawi r10,r29,0x5
+  8235A908  7D7B58F8             nor r27,r11,r11
+  8235A90C  555C103A             rlwinm r28,r10,0x2,0x0,0x1d
+  8235A910  3BF82100             addi r31,r24,0x2100
+  8235A914  3BC00007             li r30,0x7
+LAB_8235a918:
+  8235A918  2B1F0000             cmplwi cr6,r31,0x0
+  8235A91C  409A001C             bne cr6,0x8235a938
+  8235A920  7E87A378             or r7,r20,r20
+  8235A924  7EA6AB78             or r6,r21,r21
+  8235A928  7F43D378             or r3,r26,r26
+  8235A92C  38A00000             li r5,0x0
+  8235A930  38800019             li r4,0x19
+  8235A934  48279BCD             bl 0x825d4500
+LAB_8235a938:
+  8235A938  2B1D0100             cmplwi cr6,r29,0x100
+  8235A93C  41980020             blt cr6,0x8235a95c
+  8235A940  7EC6B378             or r6,r22,r22
+  8235A944  7F43D378             or r3,r26,r26
+  8235A948  39000100             li r8,0x100
+  8235A94C  7FA7EB78             or r7,r29,r29
+  8235A950  38A00000             li r5,0x0
+  8235A954  3880001A             li r4,0x1a
+  8235A958  48279BA9             bl 0x825d4500
+LAB_8235a95c:
+  8235A95C  7D7FE02E             lwzx r11,r31,r28
+  8235A960  37DEFFFF             subic. r30,r30,0x1
+  8235A964  7D6AD838             and r10,r11,r27
+  8235A968  7D5FE12E             stwx r10,r31,r28
+  8235A96C  3BFF0020             addi r31,r31,0x20
+  8235A970  4082FFA8             bne 0x8235a918
+LAB_8235a974:
+  8235A974  3B390021             addi r25,r25,0x21
+  8235A978  39782100             addi r11,r24,0x2100
+  8235A97C  3BBD0001             addi r29,r29,0x1
+  8235A980  7F195800             cmpw cr6,r25,r11
+  8235A984  4198FF48             blt cr6,0x8235a8cc
+  8235A988  382100D0             addi r1,r1,0xd0
+  8235A98C  485BBD50             b 0x829166dc
 
 ; 8235A990  Con_SaveChannels  (client/con_channels.cpp:449)
   8235A990  7D8802A6             mfspr r12,LR
   8235A994  485BBD21             bl 0x829166b4
+  8235A998  9421FF70             stwu r1,-0x90(r1)
+  8235A99C  3D6082B4             lis r11,-0x7d4c
+  8235A9A0  39400040             li r10,0x40
+  8235A9A4  3B8BFA38             subi r28,r11,0x5c8
+  8235A9A8  7C7D1B78             or r29,r3,r3
+  8235A9AC  39600000             li r11,0x0
+  8235A9B0  393C0021             addi r9,r28,0x21
+  8235A9B4  7D4903A6             mtspr CTR,r10
+LAB_8235a9b8:
+  8235A9B8  8909FFDF             lbz r8,-0x21(r9)
+  8235A9BC  2B080000             cmplwi cr6,r8,0x0
+  8235A9C0  419A0008             beq cr6,0x8235a9c8
+  8235A9C4  396B0001             addi r11,r11,0x1
+LAB_8235a9c8:
+  8235A9C8  89090000             lbz r8,0x0(r9)
+  8235A9CC  2B080000             cmplwi cr6,r8,0x0
+  8235A9D0  419A0008             beq cr6,0x8235a9d8
+  8235A9D4  396B0001             addi r11,r11,0x1
+LAB_8235a9d8:
+  8235A9D8  89090021             lbz r8,0x21(r9)
+  8235A9DC  2B080000             cmplwi cr6,r8,0x0
+  8235A9E0  419A0008             beq cr6,0x8235a9e8
+  8235A9E4  396B0001             addi r11,r11,0x1
+LAB_8235a9e8:
+  8235A9E8  89090042             lbz r8,0x42(r9)
+  8235A9EC  2B080000             cmplwi cr6,r8,0x0
+  8235A9F0  419A0008             beq cr6,0x8235a9f8
+  8235A9F4  396B0001             addi r11,r11,0x1
+LAB_8235a9f8:
+  8235A9F8  39290084             addi r9,r9,0x84
+  8235A9FC  4200FFBC             bdnz 0x8235a9b8
+  8235AA00  91610050             stw r11,0x50(r1)
+  8235AA04  38A10050             addi r5,r1,0x50
+  8235AA08  38800004             li r4,0x4
+  8235AA0C  7FA3EB78             or r3,r29,r29
+  8235AA10  482A9DB1             bl 0x826047c0
+  8235AA14  7F9FE378             or r31,r28,r28
+  8235AA18  3BC00000             li r30,0x0
+LAB_8235aa1c:
+  8235AA1C  897F0000             lbz r11,0x0(r31)
+  8235AA20  2B0B0000             cmplwi cr6,r11,0x0
+  8235AA24  419A005C             beq cr6,0x8235aa80
+  8235AA28  7FEBFB78             or r11,r31,r31
+LAB_8235aa2c:
+  8235AA2C  894B0000             lbz r10,0x0(r11)
+  8235AA30  396B0001             addi r11,r11,0x1
+  8235AA34  2B0A0000             cmplwi cr6,r10,0x0
+  8235AA38  409AFFF4             bne cr6,0x8235aa2c
+  8235AA3C  93C10050             stw r30,0x50(r1)
+  8235AA40  7D7F5850             subf r11,r31,r11
+  8235AA44  38A10050             addi r5,r1,0x50
+  8235AA48  396BFFFF             subi r11,r11,0x1
+  8235AA4C  38800004             li r4,0x4
+  8235AA50  7FA3EB78             or r3,r29,r29
+  8235AA54  557B003E             rlwinm r27,r11,0x0,0x0,0x1f
+  8235AA58  482A9D69             bl 0x826047c0
+  8235AA5C  93610050             stw r27,0x50(r1)
+  8235AA60  38A10050             addi r5,r1,0x50
+  8235AA64  38800004             li r4,0x4
+  8235AA68  7FA3EB78             or r3,r29,r29
+  8235AA6C  482A9D55             bl 0x826047c0
+  8235AA70  7FE5FB78             or r5,r31,r31
+  8235AA74  7F64DB78             or r4,r27,r27
+  8235AA78  7FA3EB78             or r3,r29,r29
+  8235AA7C  482A9D45             bl 0x826047c0
+LAB_8235aa80:
+  8235AA80  3BFF0021             addi r31,r31,0x21
+  8235AA84  397C2100             addi r11,r28,0x2100
+  8235AA88  3BDE0001             addi r30,r30,0x1
+  8235AA8C  7F1F5800             cmpw cr6,r31,r11
+  8235AA90  4198FF8C             blt cr6,0x8235aa1c
+  8235AA94  38210090             addi r1,r1,0x90
+  8235AA98  485BBC6C             b 0x82916704
 
 ; 8235AAA0  Con_RestoreChannels  (client/con_channels.cpp:476)
   8235AAA0  7D8802A6             mfspr r12,LR

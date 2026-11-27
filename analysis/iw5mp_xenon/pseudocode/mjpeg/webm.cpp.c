@@ -16,6 +16,152 @@ void WebmTranscode__AllocateMemory(int param_1)
 }
 
 
+// 827FA9C8  WebmTranscode::FreeMemory  (mjpeg/webm.cpp:33)
+
+void WebmTranscode__FreeMemory(int param_1)
+
+{
+  if (*(int *)(param_1 + 0x10) == 0) {
+    return;
+  }
+  *(undefined4 *)(param_1 + 0x10) = 0;
+  return;
+}
+
+
+// 827FB228  WebmTranscode::Start  (mjpeg/webm.cpp:45)
+
+void WebmTranscode__Start(void)
+
+{
+  char cVar1;
+  
+  cVar1 = WebmTranscode__Init();
+  if (cVar1 == '\0') {
+    Com_PrintWarning(0x10,0xffffffff821e1ee4);
+  }
+  return;
+}
+
+
+// 827FAAF0  WebmTranscode::Init  (mjpeg/webm.cpp:64)
+
+void WebmTranscode__Init(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  undefined8 *puVar4;
+  undefined4 uVar5;
+  undefined8 uVar3;
+  char cVar9;
+  char *pcVar6;
+  char *pcVar7;
+  int iVar8;
+  ulonglong uVar10;
+  longlong lVar11;
+  int *piVar12;
+  undefined1 auStack_50 [4];
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined1 auStack_44 [68];
+  
+  puVar4 = (undefined8 *)__savegprlr_26();
+  piVar12 = (int *)(puVar4 + 1);
+  DCache_GetUploadFileInformation(puVar4,piVar12);
+  if (*(int *)(puVar4 + 1) < 1) {
+    MyAssertHandler(0xffffffff821e1dbc,0x54,0,0xffffffff82000f98,0xffffffff821e1dac);
+  }
+  uVar5 = Sys_Milliseconds();
+  *(undefined4 *)((int)puVar4 + 0x5c) = uVar5;
+  *(undefined4 *)(puVar4 + 0xc) = 0;
+  *(undefined1 *)((int)puVar4 + 0xc) = 1;
+  *(undefined1 *)((int)puVar4 + 0xd) = 0;
+  vpx_heapInit(*(undefined4 *)(puVar4 + 2),*(undefined4 *)((int)puVar4 + 0x14));
+  iVar8 = 0x20000;
+  if (*piVar12 < 0x20000) {
+    iVar8 = *piVar12;
+  }
+  uVar3 = vpx_malloc(iVar8);
+  *(int *)(puVar4 + 3) = (int)uVar3;
+  cVar9 = DCache_IO_ReadFromCacheByOffset(*puVar4,2,*piVar12 - iVar8,*piVar12,uVar3,auStack_50);
+  if (cVar9 != '\0') {
+    iVar8 = *(int *)(puVar4 + 3) + iVar8;
+    if ((*(int *)(iVar8 + -8) == 0) ||
+       (MyAssertHandler(0xffffffff821e1dbc,0x6c,0,0xffffffff82000f98,0xffffffff821e1da0),
+       *(int *)(iVar8 + -8) == 0)) {
+      *(undefined4 *)(puVar4 + 9) = 0;
+      *(undefined4 *)((int)puVar4 + 0x54) = 0;
+      *(undefined4 *)(puVar4 + 0xb) = 0xffffffff;
+      iVar1 = *(int *)(iVar8 + -0x10);
+      piVar12 = (int *)(iVar8 + -8);
+      piVar2 = (int *)(iVar8 + -0x10);
+      while (iVar1 != 0) {
+        if (*(uint *)(puVar4 + 9) < (uint)piVar12[1]) {
+          *(int *)(puVar4 + 9) = piVar12[1];
+        }
+        *(int *)((int)puVar4 + 0x54) = *(int *)((int)puVar4 + 0x54) + 1;
+        iVar1 = piVar2[-2];
+        piVar12 = piVar2;
+        piVar2 = piVar2 + -2;
+      }
+      *(undefined4 *)(puVar4 + 8) = 0;
+      *(undefined4 *)(puVar4 + 7) = 0;
+      *(int **)((int)puVar4 + 0x1c) = piVar12;
+      *(undefined4 *)((int)puVar4 + 0x3c) = 0;
+      iVar8 = piVar2[-2];
+      piVar12 = piVar2 + -2;
+      while (iVar8 != 0) {
+        if (*(uint *)(puVar4 + 7) < (uint)piVar2[1]) {
+          *(int *)(puVar4 + 7) = piVar2[1];
+        }
+        *(int *)((int)puVar4 + 0x3c) = *(int *)((int)puVar4 + 0x3c) + 1;
+        iVar8 = piVar12[-2];
+        piVar2 = piVar12;
+        piVar12 = piVar12 + -2;
+      }
+      *(int **)(puVar4 + 4) = piVar2;
+      *(int *)(puVar4 + 7) = *(int *)(puVar4 + 7) + 8;
+      *(int *)(puVar4 + 9) = *(int *)(puVar4 + 9) + 8;
+      uVar5 = vpx_malloc();
+      *(undefined4 *)((int)puVar4 + 0x24) = uVar5;
+      uVar5 = vpx_malloc(*(undefined4 *)(puVar4 + 9));
+      *(undefined4 *)((int)puVar4 + 0x44) = uVar5;
+      *(undefined4 *)((int)puVar4 + 0x2c) = 0x100000;
+      uVar3 = vpx_malloc(0x100000);
+      *(int *)(puVar4 + 5) = (int)uVar3;
+      uVar10 = (ulonglong)**(uint **)(puVar4 + 4);
+      lVar11 = (ulonglong)(*(uint **)(puVar4 + 4))[1] + 8;
+      cVar9 = DCache_IO_ReadFromCacheByOffset
+                        (*puVar4,2,uVar10,uVar10 + lVar11,*(undefined4 *)((int)puVar4 + 0x24),
+                         auStack_50);
+      if (cVar9 != '\0') {
+        pcVar6 = *(char **)((int)puVar4 + 0x24);
+        iVar8 = 0;
+        do {
+          if ((((((*pcVar6 == -1) && (pcVar7 = pcVar6, pcVar6[1] == -0x28)) ||
+                ((pcVar6[1] == -1 && (pcVar7 = pcVar6 + 1, pcVar6[2] == -0x28)))) ||
+               ((pcVar6[2] == -1 && (pcVar7 = pcVar6 + 2, pcVar6[3] == -0x28)))) ||
+              ((pcVar6[3] == -1 && (pcVar7 = pcVar6 + 3, pcVar6[4] == -0x28)))) ||
+             ((pcVar6[4] == -1 && (pcVar7 = pcVar6 + 4, pcVar6[5] == -0x28)))) break;
+          iVar8 = iVar8 + 5;
+          pcVar6 = pcVar6 + 5;
+          pcVar7 = pcVar6;
+        } while (iVar8 < 0x28);
+        stbi_jpeg_info_from_memory(pcVar7,lVar11,&local_48,&local_4c,auStack_44);
+        iVar8 = vp8_Init(uVar3,local_48,local_4c,0x1e);
+        *(undefined4 *)((int)puVar4 + 0x34) = 0;
+        *(int *)(puVar4 + 6) = iVar8 - *(int *)(puVar4 + 5);
+        __restgprlr_26(1);
+        return;
+      }
+    }
+  }
+  __restgprlr_26(0);
+  return;
+}
+
+
 // 827FA9E0  WebmTranscode::End  (mjpeg/webm.cpp:168)
 
 void WebmTranscode__End(int param_1)
@@ -36,6 +182,139 @@ void WebmTranscode__End(int param_1)
 }
 
 
+// 827FAE10  WebmTranscode::Transcode  (mjpeg/webm.cpp:193)
+
+void WebmTranscode__Transcode(undefined8 param_1,void *param_2,ulonglong param_3)
+
+{
+  undefined4 uVar1;
+  uint uVar2;
+  undefined8 *puVar4;
+  char cVar6;
+  int iVar5;
+  undefined8 uVar3;
+  char *pcVar7;
+  char *pcVar8;
+  uint *puVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar13;
+  ulonglong uVar12;
+  int local_80 [32];
+  
+  puVar4 = (undefined8 *)__savegprlr_19();
+  if ((param_3 & 0xffffffff) == 0) goto LAB_827fae30;
+  if (*(int *)((int)puVar4 + 0x34) == *(int *)(puVar4 + 6)) {
+    *(undefined4 *)((int)puVar4 + 0x34) = 0;
+    uVar1 = *(undefined4 *)(puVar4 + 5);
+    puVar9 = (uint *)(*(int *)(puVar4 + 8) * 8 + *(int *)(puVar4 + 4));
+    if (*puVar9 != 0) {
+      uVar2 = puVar9[1];
+      cVar6 = DCache_IO_ReadFromCacheByOffset
+                        (*puVar4,2,(ulonglong)*puVar9,(ulonglong)*puVar9 + (ulonglong)uVar2 + 8,
+                         *(undefined4 *)((int)puVar4 + 0x24),local_80);
+      if (cVar6 != '\0') {
+        uVar3 = vpx_malloc(0x640);
+        uVar11 = 0;
+        do {
+          if (*(int *)(puVar4 + 10) == *(int *)((int)puVar4 + 0x4c)) {
+            iVar5 = *(int *)(puVar4 + 0xb) + 1;
+            *(undefined4 *)(puVar4 + 10) = 0;
+            *(undefined4 *)((int)puVar4 + 0x4c) = 0;
+            *(int *)(puVar4 + 0xb) = iVar5;
+            if (*(int *)((int)puVar4 + 0x54) <= iVar5) break;
+            puVar9 = (uint *)(iVar5 * 8 + *(int *)((int)puVar4 + 0x1c));
+            uVar13 = puVar9[1];
+            *(uint *)((int)puVar4 + 0x4c) = uVar13;
+            uVar12 = (ulonglong)*puVar9;
+            cVar6 = DCache_IO_ReadFromCacheByOffset
+                              (*puVar4,2,uVar12 + 8,uVar12 + uVar13 + 8,
+                               *(undefined4 *)((int)puVar4 + 0x44),local_80);
+            if (cVar6 == '\0') goto LAB_827fae30;
+            if (local_80[0] != *(int *)((int)puVar4 + 0x4c)) {
+              MyAssertHandler(0xffffffff821e1dbc,0xe5,0,0xffffffff82000f98,0xffffffff821e1eac);
+            }
+          }
+          uVar10 = *(int *)((int)puVar4 + 0x4c) - *(int *)(puVar4 + 10);
+          uVar13 = 0x640 - uVar11;
+          if (uVar10 < 0x640 - uVar11) {
+            uVar13 = uVar10;
+          }
+          if ((uVar13 & 1) != 0) {
+            MyAssertHandler(0xffffffff821e1dbc,0xeb,0,0xffffffff82000f98,0xffffffff821e1ed4);
+          }
+          if (uVar13 != 0) {
+            memcpy((void *)((((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0)) * 2
+                           + (int)uVar3),
+                   (void *)(*(int *)((int)puVar4 + 0x44) + *(int *)(puVar4 + 10)),uVar13);
+            uVar11 = uVar13 + uVar11;
+            *(uint *)(puVar4 + 10) = *(int *)(puVar4 + 10) + uVar13;
+          }
+        } while (uVar11 != 0x640);
+        iVar5 = 0;
+        pcVar7 = *(char **)((int)puVar4 + 0x24);
+        *(int *)(puVar4 + 8) = *(int *)(puVar4 + 8) + 1;
+        do {
+          if ((((((*pcVar7 == -1) && (pcVar8 = pcVar7, pcVar7[1] == -0x28)) ||
+                ((pcVar7[1] == -1 && (pcVar8 = pcVar7 + 1, pcVar7[2] == -0x28)))) ||
+               ((pcVar7[2] == -1 && (pcVar8 = pcVar7 + 2, pcVar7[3] == -0x28)))) ||
+              ((pcVar7[3] == -1 && (pcVar8 = pcVar7 + 3, pcVar7[4] == -0x28)))) ||
+             ((pcVar7[4] == -1 && (pcVar8 = pcVar7 + 4, pcVar7[5] == -0x28)))) break;
+          iVar5 = iVar5 + 5;
+          pcVar7 = pcVar7 + 5;
+          pcVar8 = pcVar7;
+        } while (iVar5 < 0x28);
+        iVar5 = vp8_AddFrame(uVar1,pcVar8,(ulonglong)uVar2 + 8,uVar3,
+                             (longlong)((int)uVar11 >> 1) +
+                             (ulonglong)((int)uVar11 < 0 && (uVar11 & 1) != 0));
+        vpx_free(uVar3);
+        if (iVar5 != 0) {
+          *(int *)(puVar4 + 6) = iVar5 - *(int *)(puVar4 + 5);
+          goto LAB_827fb100;
+        }
+      }
+LAB_827fae30:
+      __restgprlr_19(0);
+      return;
+    }
+    if (*(char *)((int)puVar4 + 0xc) != '\0') {
+      vp8_End(uVar1);
+      *(undefined1 *)((int)puVar4 + 0xd) = 1;
+    }
+  }
+LAB_827fb100:
+  uVar12 = (ulonglong)*(uint *)(puVar4 + 6) - (ulonglong)*(uint *)((int)puVar4 + 0x34);
+  if ((ulonglong)*(uint *)(puVar4 + 6) < (ulonglong)*(uint *)((int)puVar4 + 0x34)) {
+    MyAssertHandler(0xffffffff821e1dbc,0x107,0,0xffffffff82000f98,0xffffffff821e1e7c);
+  }
+  if ((ulonglong)*(uint *)((int)puVar4 + 0x2c) <= (uVar12 & 0xffffffff)) {
+    uVar3 = va(0xffffffff821e1e20,uVar12,*(undefined4 *)(puVar4 + 6),
+               *(undefined4 *)((int)puVar4 + 0x34));
+    MyAssertHandler(0xffffffff821e1dbc,0x108,0,0xffffffff820011f4,0xffffffff821e1df8,uVar3);
+  }
+  if ((param_3 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+    uVar12 = param_3;
+  }
+  if ((uVar12 & 0xffffffff) != 0) {
+    memcpy(param_2,(void *)(*(int *)(puVar4 + 5) + *(int *)((int)puVar4 + 0x34)),(size_t)uVar12);
+    *(size_t *)((int)puVar4 + 0x34) = *(int *)((int)puVar4 + 0x34) + (size_t)uVar12;
+  }
+  __restgprlr_19(uVar12);
+  return;
+}
+
+
+// 827FAA90  WebmTranscode::Progress  (mjpeg/webm.cpp:278)
+
+void WebmTranscode__Progress(int param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  *param_2 = *(undefined4 *)(param_1 + 0x3c);
+  *param_3 = *(undefined4 *)(param_1 + 0x40);
+  return;
+}
+
+
 // 827FAAA8  WebmTranscode::ReadByOffset  (mjpeg/webm.cpp:284)
 
 bool WebmTranscode__ReadByOffset
@@ -47,5 +326,22 @@ bool WebmTranscode__ReadByOffset
   
   cVar1 = DCache_IO_ReadFromCacheByOffset(*param_1,2,param_2,param_3,param_4,param_5);
   return cVar1 != '\0';
+}
+
+
+// 827FB1C0  WebmTranscode::Step  (mjpeg/webm.cpp:304)
+
+undefined8 WebmTranscode__Step(int param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  
+  if (((*(char *)(param_1 + 0xd) != '\0') && (*(int *)(param_1 + 0x30) == *(int *)(param_1 + 0x34)))
+     || (uVar1 = WebmTranscode__Transcode(param_1,param_2,param_3,*(undefined4 *)(param_1 + 0x60)),
+        (int)uVar1 == 0)) {
+    WebmTranscode__End(param_1);
+    uVar1 = 0;
+  }
+  return uVar1;
 }
 

@@ -2,10 +2,72 @@
 
 // 822558F8  der_decode_integer  (line unknown)
 
-void der_decode_integer(void)
+void der_decode_integer(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  byte bVar1;
+  longlong lVar2;
+  byte *pbVar4;
+  int iVar5;
+  undefined8 uVar3;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  undefined4 local_30 [12];
+  
+  lVar2 = __savegprlr_28();
+  if ((2 < (param_2 & 0xffffffff)) && (pbVar4 = (byte *)lVar2, (*pbVar4 & 0x1f) == 2)) {
+    bVar1 = pbVar4[1];
+    lVar7 = 2;
+    if ((bVar1 & 0x80) == 0) {
+      if ((ulonglong)bVar1 + 2 <= (param_2 & 0xffffffff)) {
+        iVar5 = (*DAT_84897f30)(param_3,lVar2 + 2);
+        if (iVar5 != 0) {
+          __restgprlr_28();
+          return;
+        }
+LAB_822559dc:
+        if ((pbVar4[(int)lVar7] & 0x80) != 0) {
+          iVar5 = (*DAT_84897ee8)(local_30);
+          if (iVar5 == 0) {
+            uVar3 = (*DAT_84897f14)(param_3);
+            iVar5 = (*DAT_84897f1c)(local_30[0],uVar3);
+            if ((iVar5 == 0) && (iVar5 = (*DAT_84897f3c)(param_3,local_30[0],param_3), iVar5 == 0))
+            {
+              (*DAT_84897ef0)(local_30[0]);
+              goto LAB_82255a60;
+            }
+            (*DAT_84897ef0)(local_30[0]);
+          }
+          __restgprlr_28(0xd);
+          return;
+        }
+LAB_82255a60:
+        __restgprlr_28(0);
+        return;
+      }
+    }
+    else {
+      uVar8 = (ulonglong)bVar1 & 0x7f;
+      if (((uVar8 + 2 <= (param_2 & 0xffffffff)) && (uVar8 < 5)) && ((bVar1 & 0x7f) != 0)) {
+        uVar6 = 0;
+        do {
+          iVar5 = (int)lVar7;
+          lVar7 = lVar7 + 1;
+          uVar6 = (ulonglong)pbVar4[iVar5] | (uVar6 & 0xffffff) << 8;
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
+        if ((uVar6 + lVar7 & 0xffffffff) <= (param_2 & 0xffffffff)) {
+          uVar3 = (*DAT_84897f30)(param_3,lVar7 + lVar2);
+          if ((int)uVar3 != 0) goto LAB_82255a8c;
+          goto LAB_822559dc;
+        }
+      }
+    }
+  }
+  uVar3 = 7;
+LAB_82255a8c:
+  __restgprlr_28(uVar3);
+  return;
 }
 

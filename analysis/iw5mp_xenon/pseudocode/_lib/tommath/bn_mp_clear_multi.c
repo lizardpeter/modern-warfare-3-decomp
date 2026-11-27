@@ -2,10 +2,52 @@
 
 // 8225A338  mp_clear_multi  (line unknown)
 
-void mp_clear_multi(void)
+void mp_clear_multi(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                   undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 *puVar1;
+  int *piVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 in_stack_00000018;
+  undefined8 in_stack_00000020;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  
+  piVar2 = (int *)__savegprlr_29();
+  puVar1 = &stack0x00000018;
+  in_stack_00000018 = param_2;
+  in_stack_00000020 = param_3;
+  in_stack_00000028 = param_4;
+  in_stack_00000030 = param_5;
+  in_stack_00000038 = param_6;
+  in_stack_00000040 = param_7;
+  in_stack_00000048 = param_8;
+  while (piVar2 != (int *)0x0) {
+    if (piVar2[3] != 0) {
+      iVar3 = 0;
+      if (0 < *piVar2) {
+        iVar4 = 0;
+        do {
+          iVar3 = iVar3 + 1;
+          *(undefined4 *)(piVar2[3] + iVar4) = 0;
+          iVar4 = iVar4 + 4;
+        } while (iVar3 < *piVar2);
+      }
+      tom_game_free(piVar2[3]);
+      piVar2[3] = 0;
+      *piVar2 = 0;
+      piVar2[1] = 0;
+      piVar2[2] = 0;
+    }
+    piVar2 = *(int **)((int)puVar1 + 4);
+    puVar1 = puVar1 + 1;
+  }
+  __restgprlr_29();
+  return;
 }
 

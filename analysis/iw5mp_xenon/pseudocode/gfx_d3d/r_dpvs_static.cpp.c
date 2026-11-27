@@ -14,11 +14,18 @@ void __lvx(void)
 
 // 827325F8  R_AddAabbTreeSurfacesInFrustum_r  (gfx_d3d/r_dpvs_static.cpp:288)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void R_AddAabbTreeSurfacesInFrustum_r(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined1 in_vs32 [16];
+  undefined1 in_vs35 [16];
+  
   __savegprlr_18();
+  altv300_21(in_vs32,in_vs35);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -42,11 +49,48 @@ void R_CopyClipPlane(void)
 
 // 82732B28  R_AddCellStaticSurfacesInFrustum  (gfx_d3d/r_dpvs_static.cpp:620)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void R_AddCellStaticSurfacesInFrustum(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs43 [16];
+  undefined1 in_vs62 [16];
+  undefined1 local_2c0 [64];
+  undefined4 local_280;
+  
+  iVar3 = __savegprlr_19();
+  iVar2 = *(int *)(iVar3 + 4);
+  if (iVar2 != 0) {
+    bVar1 = *(byte *)(iVar3 + 8);
+    if (0x10 < bVar1) {
+      MyAssertHandler(0xffffffff821bd860,0x286,0,0xffffffff821bd824,0xffffffff821bd83c,bVar1);
+    }
+    if (bVar1 == 0) {
+      MyAssertHandler(0xffffffff821bd860,0x287,0,0xffffffff82000f98,0xffffffff821bd814);
+    }
+    if (3 < bVar1) {
+      altv300_23(in_vs62,in_vs39);
+      altv300_21(in_vs32,in_vs39);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    if (bVar1 != 0) {
+      altv300_21(in_vs32,in_vs43);
+      altv300_23(in_vs62,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    local_280 = 0;
+    R_AddAabbTreeSurfacesInFrustum_r(iVar2,local_2c0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
@@ -65,6 +109,94 @@ void R_AddCellStaticSurfacesInFrustumCmd(int param_1)
        *(undefined4 *)((*(ushort *)(param_1 + 10) + 0xc) * 4 + DAT_846178cc);
   *(undefined4 *)(iVar1 + 0x10c) = uVar2;
   R_AddCellStaticSurfacesInFrustum();
+  return;
+}
+
+
+// 82732E18  R_AddSkySurfacesDpvs  (gfx_d3d/r_dpvs_static.cpp:898)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void R_AddSkySurfacesDpvs(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  char cVar5;
+  int *in_r13;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  undefined1 in_vs38 [16];
+  undefined1 in_vs39 [16];
+  undefined1 in_vs43 [16];
+  undefined1 in_vs53 [16];
+  undefined1 in_vs55 [16];
+  undefined1 in_vs56 [16];
+  undefined1 in_vs63 [16];
+  undefined1 auVar10 [16];
+  
+  __savegprlr();
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff821bd860,0x389,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar4 = DAT_8461658c;
+  if (*(int *)(DAT_8461658c + 0x14) != 0) {
+    iVar1 = *in_r13;
+    uVar2 = *(undefined4 *)(DAT_8461658c + 0x268);
+    *(undefined4 *)(iVar1 + 0x108) = *(undefined4 *)(DAT_8461658c + 0x25c);
+    *(undefined4 *)(iVar1 + 0x10c) = uVar2;
+    if (3 < param_2) {
+      altv300_23(in_vs63,in_vs39);
+      altv300_21(in_vs32,in_vs39);
+      altv300_21(in_vs32,in_vs38);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    if (0 < param_2) {
+      altv300_21(in_vs32,in_vs43);
+      altv300_23(in_vs63,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    iVar6 = 0;
+    if (0 < *(int *)(iVar4 + 0x14)) {
+      altv207_13(in_vs32,in_vs53);
+      iVar7 = 0;
+      do {
+        iVar3 = *(int *)(iVar4 + 0x18);
+        iVar8 = 0;
+        if (0 < *(int *)(iVar7 + iVar3)) {
+          iVar9 = 0;
+          do {
+            if (*(char *)(*(int *)(iVar1 + 0x10c) +
+                         (uint)*(ushort *)
+                                (*(int *)(*(int *)(iVar7 + iVar3 + 4) + iVar9) * 2 +
+                                *(int *)(iVar4 + 0x274))) == '\0') {
+              altv207_13(in_vs32,in_vs55);
+              auVar10 = altv207_13(in_vs32,in_vs56);
+              altv300_23(auVar10,in_vs36);
+              altv300_21(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+              halt_baddata();
+            }
+            iVar3 = *(int *)(iVar4 + 0x18);
+            iVar8 = iVar8 + 1;
+            iVar9 = iVar9 + 4;
+          } while (iVar8 < *(int *)(iVar7 + iVar3));
+        }
+        iVar6 = iVar6 + 1;
+        iVar7 = iVar7 + 0x10;
+      } while (iVar6 < *(int *)(iVar4 + 0x14));
+    }
+  }
+  __restgprlr();
   return;
 }
 

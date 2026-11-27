@@ -12,6 +12,26 @@
 ; 8290D108  bdAntiCheatChallenges::~bdAntiCheatChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:19)
   8290D108  7D8802A6             mfspr r12,LR
   8290D10C  480095B1             bl 0x829166bc
+  8290D110  3BE1FF80             subi r31,r1,0x80
+  8290D114  9421FF80             stwu r1,-0x80(r1)
+  8290D118  3D608221             lis r11,-0x7ddf
+  8290D11C  907F0094             stw r3,0x94(r31)
+  8290D120  7C7D1B78             or r29,r3,r3
+  8290D124  396B10C0             addi r11,r11,0x10c0
+  8290D128  91630000             stw r11,0x0(r3)
+  8290D12C  83C30008             lwz r30,0x8(r3)
+  8290D130  2B1E0000             cmplwi cr6,r30,0x0
+  8290D134  419A0018             beq cr6,0x8290d14c
+  8290D138  7FC3F378             or r3,r30,r30
+  8290D13C  93DF0050             stw r30,0x50(r31)
+  8290D140  4BFFFDA9             bl 0x8290cee8
+  8290D144  7FC3F378             or r3,r30,r30
+  8290D148  4BFE7F79             bl 0x828f50c0
+LAB_8290d14c:
+  8290D14C  7FA3EB78             or r3,r29,r29
+  8290D150  4BFEB0B1             bl 0x828f8200
+  8290D154  383F0080             addi r1,r31,0x80
+  8290D158  480095B4             b 0x8291670c
 
 ; 8290CCC0  bdAntiCheatChallenge::operator_delete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenge.h:20)
   8290CCC0  4E800020             blr
@@ -19,9 +39,127 @@
 ; 8290CF40  bdAntiCheatChallenges::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:27)
   8290CF40  7D8802A6             mfspr r12,LR
   8290CF44  48009775             bl 0x829166b8
+  8290CF48  3BE1FF50             subi r31,r1,0xb0
+  8290CF4C  9421FF50             stwu r1,-0xb0(r1)
+  8290CF50  7C7D1B78             or r29,r3,r3
+  8290CF54  909F00CC             stw r4,0xcc(r31)
+  8290CF58  7C9C2378             or r28,r4,r4
+  8290CF5C  39600000             li r11,0x0
+  8290CF60  81430008             lwz r10,0x8(r3)
+  8290CF64  387F0060             addi r3,r31,0x60
+  8290CF68  B17F0050             sth r11,0x50(r31)
+  8290CF6C  7D4B0034             cntlzw r11,r10
+  8290CF70  557EDFFE             rlwinm r30,r11,0x1b,0x1f,0x1f
+  8290CF74  48006E85             bl 0x82913df8
+  8290CF78  281E0000             cmplwi r30,0x0
+  8290CF7C  4182001C             beq 0x8290cf98
+  8290CF80  389F0050             addi r4,r31,0x50
+  8290CF84  807C0000             lwz r3,0x0(r28)
+  8290CF88  4BFE8C79             bl 0x828f5c00
+  8290CF8C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290CF90  39600001             li r11,0x1
+  8290CF94  40820008             bne 0x8290cf9c
+LAB_8290cf98:
+  8290CF98  39600000             li r11,0x0
+LAB_8290cf9c:
+  8290CF9C  557E063F             rlwinm. r30,r11,0x0,0x18,0x1f
+  8290CFA0  41820030             beq 0x8290cfd0
+  8290CFA4  3860000C             li r3,0xc
+  8290CFA8  4BFE80A1             bl 0x828f5048
+  8290CFAC  907F0054             stw r3,0x54(r31)
+  8290CFB0  28030000             cmplwi r3,0x0
+  8290CFB4  41820014             beq 0x8290cfc8
+  8290CFB8  38BF0060             addi r5,r31,0x60
+  8290CFBC  A09F0050             lhz r4,0x50(r31)
+  8290CFC0  4BFFFE41             bl 0x8290ce00
+  8290CFC4  48000008             b 0x8290cfcc
+LAB_8290cfc8:
+  8290CFC8  38600000             li r3,0x0
+LAB_8290cfcc:
+  8290CFCC  907D0008             stw r3,0x8(r29)
+LAB_8290cfd0:
+  8290CFD0  A15F0050             lhz r10,0x50(r31)
+  8290CFD4  39600000             li r11,0x0
+  8290CFD8  280A0000             cmplwi r10,0x0
+  8290CFDC  41820088             beq 0x8290d064
+LAB_8290cfe0:
+  8290CFE0  57CA063F             rlwinm. r10,r30,0x0,0x18,0x1f
+  8290CFE4  41820080             beq 0x8290d064
+  8290CFE8  557E043E             rlwinm r30,r11,0x0,0x10,0x1f
+  8290CFEC  807D0008             lwz r3,0x8(r29)
+  8290CFF0  7FC4F378             or r4,r30,r30
+  8290CFF4  4BFFFE7D             bl 0x8290ce70
+  8290CFF8  817C0000             lwz r11,0x0(r28)
+  8290CFFC  2B0B0000             cmplwi cr6,r11,0x0
+  8290D000  917F0054             stw r11,0x54(r31)
+  8290D004  419A0028             beq cr6,0x8290d02c
+  8290D008  396B0004             addi r11,r11,0x4
+LAB_8290d00c:
+  8290D00C  7D2000A6             mfmsr r9
+  8290D010  7DA10164             mtmsrd r13,1
+  8290D014  7D405828             lwarx r10,0,r11
+  8290D018  394A0001             addi r10,r10,0x1
+  8290D01C  7D40592D             stwcx. r10,0,r11
+  8290D020  7D210164             mtmsrd r9,1
+  8290D024  4082FFE8             bne 0x8290d00c
+  8290D028  816B0000             lwz r11,0x0(r11)
+LAB_8290d02c:
+  8290D02C  81630000             lwz r11,0x0(r3)
+  8290D030  389F0054             addi r4,r31,0x54
+  8290D034  816B0004             lwz r11,0x4(r11)
+  8290D038  7D6903A6             mtspr CTR,r11
+  8290D03C  4E800421             bctrl
+  8290D040  546A063E             rlwinm r10,r3,0x0,0x18,0x1f
+  8290D044  A13F0050             lhz r9,0x50(r31)
+  8290D048  397E0001             addi r11,r30,0x1
+  8290D04C  310AFFFF             subic r8,r10,0x1
+  8290D050  556B043E             rlwinm r11,r11,0x0,0x10,0x1f
+  8290D054  7D485110             subfe r10,r8,r10
+  8290D058  7F0B4840             cmplw cr6,r11,r9
+  8290D05C  555E063E             rlwinm r30,r10,0x0,0x18,0x1f
+  8290D060  4198FF80             blt cr6,0x8290cfe0
+LAB_8290d064:
+  8290D064  387F0060             addi r3,r31,0x60
+  8290D068  48006E29             bl 0x82913e90
+  8290D06C  7F83E378             or r3,r28,r28
+  8290D070  4BA57391             bl 0x82364400
+  8290D074  7FC3F378             or r3,r30,r30
+  8290D078  383F00B0             addi r1,r31,0xb0
+  8290D07C  4800968C             b 0x82916708
 
 ; 8290CCE8  bdArray<bdAntiCheatChallenge>::operator_delete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.h:29)
   8290CCE8  4BFE83D8             b 0x828f50c0
+
+; 8290CE00  bdArray<bdAntiCheatChallenge>::bdArray<bdAntiCheatChallenge>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:30)
+  8290CE00  7D8802A6             mfspr r12,LR
+  8290CE04  9181FFF8             stw r12,-0x8(r1)
+  8290CE08  FBC1FFE8             std r30,-0x18(r1)
+  8290CE0C  FBE1FFF0             std r31,-0x10(r1)
+  8290CE10  9421FF90             stwu r1,-0x70(r1)
+  8290CE14  39600000             li r11,0x0
+  8290CE18  90830008             stw r4,0x8(r3)
+  8290CE1C  7C7F1B78             or r31,r3,r3
+  8290CE20  90830004             stw r4,0x4(r3)
+  8290CE24  7CBE2B78             or r30,r5,r5
+  8290CE28  91630000             stw r11,0x0(r3)
+  8290CE2C  2B040000             cmplwi cr6,r4,0x0
+  8290CE30  419A0024             beq cr6,0x8290ce54
+  8290CE34  1C640028             mulli r3,r4,0x28
+  8290CE38  4BFE8211             bl 0x828f5048
+  8290CE3C  907F0000             stw r3,0x0(r31)
+  8290CE40  80DF0004             lwz r6,0x4(r31)
+  8290CE44  7C641B78             or r4,r3,r3
+  8290CE48  7FC5F378             or r5,r30,r30
+  8290CE4C  7FE3FB78             or r3,r31,r31
+  8290CE50  4BFFFEA9             bl 0x8290ccf8
+LAB_8290ce54:
+  8290CE54  7FE3FB78             or r3,r31,r31
+  8290CE58  38210070             addi r1,r1,0x70
+  8290CE5C  8181FFF8             lwz r12,-0x8(r1)
+  8290CE60  7D8803A6             mtspr LR,r12
+  8290CE64  EBC1FFE8             ld r30,-0x18(r1)
+  8290CE68  EBE1FFF0             ld r31,-0x10(r1)
+  8290CE6C  4E800020             blr
 
 ; 8290CDF0  bdAntiCheatChallenges::getNumChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:49)
   8290CDF0  81630008             lwz r11,0x8(r3)
@@ -85,6 +223,35 @@ LAB_8290cec4:
   8290CF28  7D8803A6             mtspr LR,r12
   8290CF2C  EBE1FFF0             ld r31,-0x10(r1)
   8290CF30  4E800020             blr
+
+; 8290CCF8  bdArray<bdAntiCheatChallenge>::copyConstructArrayObject  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:479)
+  8290CCF8  7D8802A6             mfspr r12,LR
+  8290CCFC  480099B9             bl 0x829166b4
+  8290CD00  3BE1FF70             subi r31,r1,0x90
+  8290CD04  9421FF70             stwu r1,-0x90(r1)
+  8290CD08  3BC00000             li r30,0x0
+  8290CD0C  909F00AC             stw r4,0xac(r31)
+  8290CD10  7C9D2378             or r29,r4,r4
+  8290CD14  7CDC3378             or r28,r6,r6
+  8290CD18  93DF0050             stw r30,0x50(r31)
+  8290CD1C  7CBB2B78             or r27,r5,r5
+  8290CD20  2B060000             cmplwi cr6,r6,0x0
+  8290CD24  419A002C             beq cr6,0x8290cd50
+LAB_8290cd28:
+  8290CD28  1D7E0028             mulli r11,r30,0x28
+  8290CD2C  7C6BEA15             add. r3,r11,r29
+  8290CD30  907F0054             stw r3,0x54(r31)
+  8290CD34  4182000C             beq 0x8290cd40
+  8290CD38  7F64DB78             or r4,r27,r27
+  8290CD3C  480070E5             bl 0x82913e20
+LAB_8290cd40:
+  8290CD40  3BDE0001             addi r30,r30,0x1
+  8290CD44  93DF0050             stw r30,0x50(r31)
+  8290CD48  7F1EE040             cmplw cr6,r30,r28
+  8290CD4C  4198FFDC             blt cr6,0x8290cd28
+LAB_8290cd50:
+  8290CD50  383F0090             addi r1,r31,0x90
+  8290CD54  480099B0             b 0x82916704
 
 ; 8290CD90  bdArray<bdAntiCheatChallenge>::destruct  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:506)
   8290CD90  7D8802A6             mfspr r12,LR

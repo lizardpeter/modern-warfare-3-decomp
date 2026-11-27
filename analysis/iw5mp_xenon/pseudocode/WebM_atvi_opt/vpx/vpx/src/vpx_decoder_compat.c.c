@@ -32,20 +32,82 @@ void vpx_dec_xma_init_ver(undefined8 param_1,undefined8 param_2,undefined8 param
 
 // 8283DCB8  vpx_dec_get_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder_compat.c:149)
 
-void vpx_dec_get_mem_map(void)
+void vpx_dec_get_mem_map(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  void *pvVar2;
+  undefined4 uVar3;
+  int iVar4;
+  
+  iVar4 = (int)param_4;
+  uVar3 = (undefined4)((ulonglong)param_4 >> 0x20);
+  iVar1 = __savegprlr_28();
+  if ((((iVar1 == 0) || ((param_2 & 0xffffffff) == 0)) || ((param_3 & 0xffffffff) == 0)) ||
+     ((iVar4 == 0 || (*(int *)(iVar1 + 4) == 0)))) {
+    uVar3 = 8;
+  }
+  else if ((*(uint *)(*(int *)(iVar1 + 4) + 8) & 4) == 0) {
+    uVar3 = 1;
+  }
+  else {
+    if (*(int *)(iVar1 + 0x14) == 0) {
+      pvVar2 = malloc(0xc);
+      *(void **)(iVar1 + 0x14) = pvVar2;
+      *(undefined4 *)((int)pvVar2 + 4) = *(undefined4 *)((int)param_3 + 4);
+      *(undefined4 *)(*(int *)(iVar1 + 0x14) + 8) = *(undefined4 *)((int)param_3 + 8);
+    }
+    uVar3 = (**(code **)(*(int *)(iVar1 + 4) + 0x18))(iVar1,param_2,CONCAT44(uVar3,iVar4));
+  }
+  if (iVar1 != 0) {
+    *(undefined4 *)(iVar1 + 8) = uVar3;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8283DD80  vpx_dec_set_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder_compat.c:176)
 
-void vpx_dec_set_mem_map(void)
+void vpx_dec_set_mem_map(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  void *_Memory;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  
+  iVar1 = __savegprlr_26();
+  uVar2 = 2;
+  if (((iVar1 == 0) || ((param_2 & 0xffffffff) == 0)) || (*(int *)(iVar1 + 4) == 0)) {
+    uVar2 = 8;
+  }
+  else if ((*(uint *)(*(int *)(iVar1 + 4) + 8) & 4) == 0) {
+    uVar2 = 1;
+  }
+  else {
+    _Memory = (void *)0x0;
+    if (*(int *)(iVar1 + 0x18) == 0) {
+      _Memory = *(void **)(iVar1 + 0x14);
+    }
+    uVar3 = 0;
+    if ((param_3 & 0xffffffff) != 0) {
+      do {
+        if ((*(int *)((int)param_2 + 0x10) == 0) ||
+           (uVar2 = (**(code **)(*(int *)(iVar1 + 4) + 0x1c))(iVar1,param_2), (int)uVar2 != 0))
+        break;
+        uVar3 = uVar3 + 1;
+        param_2 = param_2 + 0x1c;
+      } while ((uVar3 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    if (_Memory != (void *)0x0) {
+      free(_Memory);
+    }
+  }
+  if (iVar1 != 0) {
+    *(int *)(iVar1 + 8) = (int)uVar2;
+  }
+  __restgprlr_26(uVar2);
+  return;
 }
 

@@ -6,13 +6,11 @@ void CG_PainVisionStartSound(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820214c0,0x26,0,0xffffffff82000f98,0xffffffff82002798);
   }
   if (*(char *)(param_1 + 0x79860) == '\0') {
     *(char *)(param_1 + 0x79860) = '\x01';
     if (0x19 < *(uint *)(DAT_82a3d47c + 0xc)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff820214c0,0x2e,0,0xffffffff82021468,*(uint *)(DAT_82a3d47c + 0xc),
                       0x1a);
     }
@@ -26,13 +24,29 @@ void CG_PainVisionStartSound(int param_1)
 }
 
 
+// 822EF798  CG_PainVisionStopSound  (cgame/cg_playerstate.cpp:54)
+
+void CG_PainVisionStopSound(int param_1)
+
+{
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820214c0,0x37,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  if (*(char *)(param_1 + 0x79860) != '\0') {
+    *(char *)(param_1 + 0x79860) = '\0';
+    SND_DeactivateEnvironmentEffects(4,2000);
+    SND_ClearPainVisionEq();
+  }
+  return;
+}
+
+
 // 822EF818  CG_PainVisionEnable  (cgame/cg_playerstate.cpp:72)
 
 void CG_PainVisionEnable(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820214c0,0x49,0,0xffffffff82000f98,0xffffffff82002798);
   }
   CG_PainVisionStartSound(param_1);
@@ -41,33 +55,315 @@ void CG_PainVisionEnable(int param_1)
 }
 
 
-// 822EF908  CG_PainVisionUpdate  (cgame/cg_playerstate.cpp:148)
+// 822EF888  CG_PainVisionDisable  (cgame/cg_playerstate.cpp:84)
 
-void CG_PainVisionUpdate(void)
+void CG_PainVisionDisable(int param_1)
 
 {
-                    /* WARNING: Subroutine does not return */
+  if (param_1 == 0) {
+    MyAssertHandler(0xffffffff820214c0,0x55,0,0xffffffff82000f98,0xffffffff82002798);
+  }
+  CG_PainVisionStopSound(param_1);
+  *(undefined1 *)(param_1 + 0x10803a) = 0;
+  *(undefined4 *)(param_1 + 0x10803c) = 0;
+  return;
+}
+
+
+// 822EF908  CG_PainVisionUpdate  (cgame/cg_playerstate.cpp:148)
+
+void CG_PainVisionUpdate(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  bool bVar3;
+  undefined8 uVar4;
+  int iVar5;
+  char cVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
   __savegprlr_27();
+  uVar4 = __savefpr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820214c0,0x9c,0,0xffffffff82000f98,0xffffffff82001fdc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff820214c0,0x9d,0,0xffffffff82000f98,0xffffffff82021504);
+  }
+  iVar5 = CG_GetLocalClientGlobals(uVar4);
+  dVar10 = (double)((float)(longlong)*(int *)(iVar5 + 0x6b988) * 0.001);
+  dVar8 = (double)CG_CalcPlayerHealth(param_2);
+  dVar9 = 0.0;
+  iVar2 = (int)param_2;
+  if ((dVar8 == 0.0) || (bVar3 = false, *(int *)(iVar2 + 4) == 5)) {
+    bVar3 = true;
+  }
+  if ((bVar3) || (((*(uint *)(iVar2 + 0x10) & 0x800) != 0 && (*(int *)(iVar5 + 0x6b9a0) != 0)))) {
+    bVar3 = true;
+  }
+  else {
+    bVar3 = false;
+  }
+  if (((bVar3) || ((*(uint *)(iVar2 + 0x10) & 2) != 0)) ||
+     (bVar3 = false, (*(uint *)(iVar2 + 0x14) & 4) != 0)) {
+    bVar3 = true;
+  }
+  if ((bVar3) || (bVar3 = false, *(int *)(iVar2 + 0xac) != 0x7ff)) {
+    bVar3 = true;
+  }
+  cVar6 = CG_KillCamEntityEnabled(uVar4);
+  if (cVar6 != '\0') {
+    bVar3 = true;
+  }
+  if (!bVar3) {
+    dVar11 = 1.0;
+    if (*(char *)(iVar5 + 0x10803a) == '\0') {
+      bVar3 = true;
+      if ((double)*(float *)(DAT_82a382b4 + 0xc) < dVar8) {
+        bVar3 = false;
+      }
+    }
+    else {
+      bVar3 = false;
+      if (dVar8 != 1.0) {
+        bVar3 = true;
+      }
+    }
+    if (bVar3) {
+      CG_PainVisionEnable();
+    }
+    else {
+      CG_PainVisionStopSound(iVar5);
+    }
+    if (*(char *)(iVar5 + 0x10803a) == '\0') goto LAB_822efb78;
+    fVar1 = (float)(dVar11 - dVar8);
+    pfVar7 = (float *)(iVar5 + 0x10803c);
+    if ((double)fVar1 < (double)*pfVar7) {
+      if ((double)*(float *)(DAT_82a2f800 + 0xc) == dVar9) {
+        *pfVar7 = fVar1;
+      }
+      else {
+        *pfVar7 = -(float)((double)*(float *)(DAT_82a2f800 + 0xc) * dVar10 - (double)*pfVar7);
+      }
+    }
+    if ((double)*pfVar7 < (double)fVar1) {
+      *pfVar7 = fVar1;
+    }
+    if (dVar9 < (double)*pfVar7) goto LAB_822efb78;
+  }
+  CG_PainVisionDisable(iVar5);
+LAB_822efb78:
+  __restfpr_28();
+  __restgprlr_27();
+  return;
+}
+
+
+// 822EFB88  CG_FindLruDamageSlot  (cgame/cg_playerstate.cpp:215)
+
+int CG_FindLruDamageSlot(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  
+  iVar3 = 0;
+  iVar1 = 0;
+  lVar6 = 0xb;
+  iVar4 = 1;
+  iVar5 = 0x44;
+  iVar2 = param_1;
+  do {
+    if (*(int *)(param_1 + 0x79424 + iVar5) < *(int *)(iVar2 + 0x79424)) {
+      iVar3 = iVar5;
+      iVar1 = iVar4;
+    }
+    iVar4 = iVar4 + 1;
+    iVar5 = iVar5 + 0x44;
+    iVar2 = iVar3 + param_1;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  return iVar1 * 0x44 + param_1 + 0x79424;
 }
 
 
 // 822EFBE8  CG_DamageFeedback  (cgame/cg_playerstate.cpp:231)
 
-void CG_DamageFeedback(void)
+void CG_DamageFeedback(undefined8 param_1,int param_2,int param_3,int param_4,ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_60;
+  float local_5c;
+  float local_58;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CG_GetLocalClientGlobals();
+  dVar7 = 0.0;
+  if ((double)*(float *)(iVar2 + 0x560) < 0.0) {
+    MyAssertHandler(0xffffffff820214c0,0xf6,0,0xffffffff8202150c,(double)*(float *)(iVar2 + 0x560),0
+                   );
+  }
+  dVar6 = (double)ClampFloat((double)(*(float *)(DAT_829c7d88 + 0xc) * (float)(longlong)param_4),
+                             (double)*(float *)(DAT_829c7cf8 + 0xc),
+                             (double)*(float *)(DAT_829c7e74 + 0xc));
+  dVar6 = (double)(float)(dVar6 * (double)*(float *)(iVar2 + 0x560));
+  if ((param_2 == 0xff) && (param_3 == 0xff)) {
+    *(float *)(iVar2 + 0x79774) = (float)dVar7;
+    *(float *)(iVar2 + 0x79770) = (float)-dVar6;
+  }
+  else {
+    local_58 = (float)dVar7;
+    local_5c = (float)(longlong)param_2 * 1.4117647;
+    dVar8 = (double)local_5c;
+    local_60 = (float)(longlong)param_3 * 1.4117647;
+    AngleVectors(&local_60,&local_70,0,0);
+    pfVar5 = (float *)(iVar2 + 0x6b9d4);
+    *(float *)(iVar2 + 0x79770) =
+         (float)((double)(*(float *)(iVar2 + 0x6b9dc) * local_68 +
+                         *(float *)(iVar2 + 0x6b9d8) * local_6c + *pfVar5 * local_70) * dVar6);
+    *(float *)(iVar2 + 0x79774) =
+         -(float)((double)(*(float *)(iVar2 + 0x6b9e8) * local_68 +
+                          *(float *)(iVar2 + 0x6b9e4) * local_6c +
+                          *(float *)(iVar2 + 0x6b9e0) * local_70) * dVar6);
+    puVar3 = (undefined4 *)CG_FindLruDamageSlot(iVar2);
+    *puVar3 = *(undefined4 *)(*(int *)(iVar2 + 0x3358) + 0x3308);
+    puVar3[1] = *(undefined4 *)(DAT_82a3d624 + 0xc);
+    dVar7 = (double)random();
+    dVar7 = (double)AngleNormalize360((double)(float)((double)(float)(dVar7 - 0.5) * 20.0 + dVar8));
+    puVar3[5] = (float)dVar7;
+    *(char *)(puVar3 + 0x10) = (char)param_5;
+    puVar3[2] = local_70;
+    puVar3[3] = local_6c;
+    puVar3[4] = local_68;
+    AxisCopy(pfVar5,puVar3 + 7);
+    dVar7 = (double)vectoyaw(pfVar5);
+    puVar3[6] = (float)dVar7;
+  }
+  *(undefined4 *)(iVar2 + 0x79754) = *(undefined4 *)(*(int *)(iVar2 + 0x3358) + 0x3308);
+  iVar4 = 0x7976c;
+  if ((param_5 & 0xff) == 0) {
+    iVar4 = 0x79768;
+  }
+  *(int *)(iVar2 + iVar4) = *(int *)(iVar2 + 0x6b98c) + 500;
+  CG_MenuShowNotify(uVar1,0);
+  __restgprlr_26();
+  return;
 }
 
 
 // 822EFE80  CG_Respawn  (cgame/cg_playerstate.cpp:307)
 
-void CG_Respawn(void)
+void CG_Respawn(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  void *pvVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  double dVar6;
+  
+  uVar1 = __savegprlr_27();
+  pvVar2 = (void *)CG_GetLocalClientGlobals();
+  if (*(int *)((int)pvVar2 + 0x335c) == 0) {
+    MyAssertHandler(0xffffffff820214c0,0x13c,0,0xffffffff82000f98,0xffffffff82002858);
+  }
+  if (param_2 == 0) {
+    CG_ClearSavedPlayerState(uVar1);
+    *(uint *)((int)pvVar2 + 0x10807c) = *(uint *)((int)pvVar2 + 0x10807c) | 0x8000;
+  }
+  else {
+    CG_SavePlayerState();
+  }
+  memcpy(pvVar2,*(void **)((int)pvVar2 + 0x335c),0x3300);
+  *(int *)((int)pvVar2 + 0x6b998) = *(int *)((int)pvVar2 + 0x6b98c) + -1000;
+  if ((param_2 != 0) ||
+     (cVar3 = CG_SelectWeapon(uVar1,*(undefined4 *)((int)pvVar2 + 0x370),0), cVar3 == '\0')) {
+    *(undefined4 *)((int)pvVar2 + 0x76ed0) = 0;
+    *(undefined4 *)((int)pvVar2 + 0x76ecc) = 0;
+  }
+  *(int *)((int)pvVar2 + 0x76ed4) = *(int *)((int)pvVar2 + 0x6b98c);
+  *(undefined4 *)((int)pvVar2 + 0x79420) = *(undefined4 *)((int)pvVar2 + 0x364);
+  *(undefined4 *)((int)pvVar2 + 0x76e84) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x76e8c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x76e7c) = 0xffffffff;
+  CG_ClearOverheadFade();
+  dVar6 = 0.0;
+  puVar4 = (undefined4 *)((int)pvVar2 + 0x3300);
+  *(undefined4 *)((int)pvVar2 + 0x79788) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7978c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x79790) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7977c) = 0;
+  lVar5 = 8;
+  *(undefined4 *)((int)pvVar2 + 0x79780) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x79784) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x79778) = 0;
+  do {
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  *(undefined4 *)((int)pvVar2 + 0x79754) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x79770) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x79774) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70548) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7054c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70550) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70554) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70558) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7055c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70524) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70528) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7052c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70530) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70534) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70538) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x7053c) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70540) = 0;
+  *(undefined4 *)((int)pvVar2 + 0x70544) = 0;
+  memset((void *)((int)pvVar2 + 0x79424),0,0x330);
+  *(float *)((int)pvVar2 + 0x3328) = (float)dVar6;
+  *(float *)((int)pvVar2 + 0x332c) = (float)dVar6;
+  *(float *)((int)pvVar2 + 0x3330) = (float)dVar6;
+  *(undefined4 *)((int)pvVar2 + 0x7a704) = 0;
+  CL_SetStance(uVar1,0);
+  CL_SetADS(uVar1,0);
+  CG_SetEquippedOffHand(uVar1,*(undefined4 *)((int)pvVar2 + 0x364));
+  *(undefined4 *)((int)pvVar2 + 0x3308) = 0x3f800000;
+  *(float *)((int)pvVar2 + 0x79868) = (float)dVar6;
+  FX_ClearViewmodelMarks(uVar1);
+  CG_SetDefaultVisionAndFogSet(uVar1,0xffffffffffffffff);
+  CG_ClearCameraShakes(uVar1);
+  *(undefined4 *)((int)pvVar2 + 0x76588) = 1;
+  *(undefined4 *)((int)pvVar2 + 0x1084d0) = 0x7ff;
+  *(undefined4 *)((int)pvVar2 + 0x6b9ac) = 0x7f7fffff;
+  CG_HoldBreathInit(pvVar2);
+  CG_BloodOverlayReset(pvVar2);
+  CG_PainVisionDisable(pvVar2);
+  CG_MotionTrackerReset(uVar1);
+  pvVar2 = memcpy((void *)((int)pvVar2 + 0x1080ac),(void *)((int)pvVar2 + 0xfc),0x2c);
+  __restgprlr_27(pvVar2);
+  return;
 }
 
 
@@ -107,7 +403,6 @@ void CG_CheckPlayerstateEvents(undefined8 param_1,int param_2,int param_3)
   iVar6 = CG_GetLocalClientGlobals();
   iVar6 = *(int *)(iVar6 + 0x3300);
   if ((*(uint *)(iVar6 + 0x1c4) & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff820214c0,0x1cc,0,0xffffffff82000f98,0xffffffff82012adc);
   }
   iVar9 = *(int *)(param_2 + 0xfc);
@@ -154,6 +449,60 @@ void CG_CheckPlayerstateEvents(undefined8 param_1,int param_2,int param_3)
 }
 
 
+// 822F0360  CG_TransitionPlayerState  (cgame/cg_playerstate.cpp:507)
+
+void CG_TransitionPlayerState(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_28();
+  iVar2 = CG_GetLocalClientGlobals();
+  iVar3 = CG_ShouldProcessPlayerEntity(uVar1);
+  if (iVar3 != 0) {
+    CG_PrePlayer(uVar1,*(undefined4 *)(iVar2 + 0x3300));
+  }
+  iVar2 = (int)param_2;
+  if ((*(uint *)(iVar2 + 0x188) != ((uint *)param_3)[1]) && (*(int *)(iVar2 + 0x194) != 0)) {
+    CG_DamageFeedback(uVar1,*(undefined4 *)(iVar2 + 0x18c),*(undefined4 *)(iVar2 + 400),
+                      *(int *)(iVar2 + 0x194),*(uint *)(iVar2 + 0x198) & 1);
+  }
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 == 1) {
+    if (((*(uint *)(iVar2 + 0x10) ^ *(uint *)param_3) & 0x8000) != 0) {
+      CG_StartAmbient(uVar1);
+    }
+  }
+  CG_CheckPlayerstateEvents(uVar1,param_2,param_3);
+  CG_PainVisionUpdate(uVar1,param_2,param_3);
+  __restgprlr_28();
+  return;
+}
+
+
+// 822F0428  CG_ClearTransPlayerState  (cgame/cg_playerstate.cpp:535)
+
+void CG_ClearTransPlayerState(undefined4 *param_1)
+
+{
+  *param_1 = 0;
+  param_1[1] = 0;
+  param_1[2] = 0;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  param_1[6] = 0;
+  param_1[7] = 0;
+  param_1[8] = 0;
+  param_1[9] = 0;
+  param_1[10] = 0;
+  param_1[0xb] = 0;
+  return;
+}
+
+
 // 822F0460  CG_ExtractTransPlayerState  (cgame/cg_playerstate.cpp:546)
 
 void CG_ExtractTransPlayerState(int param_1,undefined4 *param_2)
@@ -180,13 +529,12 @@ void CG_ExtractTransPlayerState(int param_1,undefined4 *param_2)
 double ClampFloat(double param_1,double param_2,double param_3)
 
 {
-  if (param_2 < param_3) {
-    if ((param_2 <= param_1) && (param_2 = param_1, param_3 < param_1)) {
-      param_2 = param_3;
-    }
-    return param_2;
+  if (param_3 <= param_2) {
+    MyAssertHandler(0xffffffff82003018,0x274,0,0xffffffff82000f98,0xffffffff820185c0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82003018,0x274,0,0xffffffff82000f98,0xffffffff820185c0);
+  if ((param_2 <= param_1) && (param_2 = param_1, param_3 < param_1)) {
+    param_2 = param_3;
+  }
+  return param_2;
 }
 

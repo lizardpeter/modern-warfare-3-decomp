@@ -2,10 +2,63 @@
 
 // 827E3320  db_inflate_flush  (db_zlib/db_infutil.c:29)
 
-void db_inflate_flush(void)
+void db_inflate_flush(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  void *pvVar1;
+  void *pvVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  void *_Dst;
+  uint uVar6;
+  
+  iVar4 = __savegprlr_26();
+  pvVar1 = *(void **)(iVar4 + 0x30);
+  pvVar2 = *(void **)(iVar4 + 0x34);
+  _Dst = *(void **)(param_2 + 0xc);
+  if (pvVar2 < pvVar1) {
+    pvVar2 = *(void **)(iVar4 + 0x2c);
+  }
+  uVar3 = *(uint *)(param_2 + 0x10);
+  uVar6 = (int)pvVar2 - (int)pvVar1;
+  if (uVar3 < (uint)((int)pvVar2 - (int)pvVar1)) {
+    uVar6 = uVar3;
+  }
+  if (uVar6 != 0) {
+    param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+  }
+  *(uint *)(param_2 + 0x10) = uVar3 - uVar6;
+  *(uint *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + uVar6;
+  if (_Dst != (void *)0x0) {
+    memcpy(_Dst,pvVar1,uVar6);
+    _Dst = (void *)(uVar6 + (int)_Dst);
+  }
+  iVar5 = uVar6 + (int)pvVar1;
+  if (iVar5 == *(int *)(iVar4 + 0x2c)) {
+    pvVar1 = *(void **)(iVar4 + 0x28);
+    if (*(int *)(iVar4 + 0x34) == *(int *)(iVar4 + 0x2c)) {
+      *(void **)(iVar4 + 0x34) = pvVar1;
+    }
+    uVar3 = *(uint *)(param_2 + 0x10);
+    uVar6 = *(int *)(iVar4 + 0x34) - (int)pvVar1;
+    if (uVar3 < uVar6) {
+      uVar6 = uVar3;
+    }
+    if (uVar6 != 0) {
+      param_3 = -(ulonglong)(param_3 != 0xfffffffffffffffb) & param_3;
+    }
+    *(uint *)(param_2 + 0x10) = uVar3 - uVar6;
+    *(uint *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) + uVar6;
+    if (_Dst != (void *)0x0) {
+      memcpy(_Dst,pvVar1,uVar6);
+      _Dst = (void *)(uVar6 + (int)_Dst);
+    }
+    iVar5 = uVar6 + (int)pvVar1;
+  }
+  *(void **)(param_2 + 0xc) = _Dst;
+  *(int *)(iVar4 + 0x30) = iVar5;
+  __restgprlr_26(param_3);
+  return;
 }
 

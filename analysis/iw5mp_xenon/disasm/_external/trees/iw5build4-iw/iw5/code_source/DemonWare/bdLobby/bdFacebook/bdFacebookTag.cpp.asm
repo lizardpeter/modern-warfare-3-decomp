@@ -47,6 +47,45 @@
 ; 8290BC68  bdFacebookTag::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:25)
   8290BC68  7D8802A6             mfspr r12,LR
   8290BC6C  4800AA51             bl 0x829166bc
+  8290BC70  3BE1FF90             subi r31,r1,0x70
+  8290BC74  9421FF90             stwu r1,-0x70(r1)
+  8290BC78  7C7E1B78             or r30,r3,r3
+  8290BC7C  909F008C             stw r4,0x8c(r31)
+  8290BC80  7C9D2378             or r29,r4,r4
+  8290BC84  38830008             addi r4,r3,0x8
+  8290BC88  807D0000             lwz r3,0x0(r29)
+  8290BC8C  4BFEA115             bl 0x828f5da0
+  8290BC90  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8290BC94  314BFFFF             subic r10,r11,0x1
+  8290BC98  7D6A5910             subfe r11,r10,r11
+  8290BC9C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BCA0  4182001C             beq 0x8290bcbc
+  8290BCA4  389E0010             addi r4,r30,0x10
+  8290BCA8  807D0000             lwz r3,0x0(r29)
+  8290BCAC  4BFE9F55             bl 0x828f5c00
+  8290BCB0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BCB4  39600001             li r11,0x1
+  8290BCB8  40820008             bne 0x8290bcc0
+LAB_8290bcbc:
+  8290BCBC  39600000             li r11,0x0
+LAB_8290bcc0:
+  8290BCC0  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BCC4  4182001C             beq 0x8290bce0
+  8290BCC8  389E0012             addi r4,r30,0x12
+  8290BCCC  807D0000             lwz r3,0x0(r29)
+  8290BCD0  4BFE9F31             bl 0x828f5c00
+  8290BCD4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BCD8  39600001             li r11,0x1
+  8290BCDC  40820008             bne 0x8290bce4
+LAB_8290bce0:
+  8290BCE0  39600000             li r11,0x0
+LAB_8290bce4:
+  8290BCE4  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  8290BCE8  7FA3EB78             or r3,r29,r29
+  8290BCEC  4BA58715             bl 0x82364400
+  8290BCF0  7FC3F378             or r3,r30,r30
+  8290BCF4  383F0070             addi r1,r31,0x70
+  8290BCF8  4800AA14             b 0x8291670c
 
 ; 8290BC08  bdFacebookTag::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:36)
   8290BC08  38600018             li r3,0x18

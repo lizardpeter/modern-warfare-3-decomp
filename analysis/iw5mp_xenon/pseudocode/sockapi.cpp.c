@@ -2,11 +2,36 @@
 
 // 828B8598  NetDll_WSAStartup_Override  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:62)
 
-void NetDll_WSAStartup_Override(void)
+void NetDll_WSAStartup_Override(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar2;
+  uint local_30;
+  undefined4 local_2c [11];
+  
+  uVar1 = __savegprlr_29();
+  local_30 = 0;
+  uVar3 = XamGetSystemVersion();
+  if ((uVar3 < 0x200a3200) || (iVar4 = XexGetModuleHandle(0xffffffff82201a78,local_2c), iVar4 < 0))
+  {
+    uVar2 = (ulonglong)local_30;
+  }
+  else {
+    uVar2 = XexGetProcedureAddress(local_2c[0],0x24,&local_30);
+    uVar2 = ((uVar2 & 0xffffffff) >> 0x1f) - 1 & (ulonglong)local_30;
+    local_30 = (uint)uVar2;
+  }
+  if (uVar2 == 0) {
+    NetDll_WSAStartup(uVar1,param_2,param_3);
+  }
+  else {
+    (*(code *)uVar2)();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -214,11 +239,47 @@ int WSAGetLastError(void)
 }
 
 
+// 828B87B8  WSACreateEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void WSACreateEvent(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
 // 828B87C0  WSACloseEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
 
 /* WARNING: Control flow encountered bad instruction data */
 
 void WSACloseEvent(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 828B87C8  WSAResetEvent  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void WSAResetEvent(void)
+
+{
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+// 828B87D0  __WSAFDIsSet  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:193)
+
+/* WARNING: Control flow encountered bad instruction data */
+
+int __WSAFDIsSet(SOCKET param_1,fd_set *param_2)
 
 {
                     /* WARNING: Bad instruction - Truncating control flow here */

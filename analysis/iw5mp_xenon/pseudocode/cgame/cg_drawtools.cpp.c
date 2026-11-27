@@ -246,11 +246,61 @@ void CG_DrawVLine(double param_1,double param_2,double param_3,double param_4,un
 
 // 822C2C88  CG_Draw2DLine  (cgame/cg_drawtools.cpp:146)
 
-void CG_Draw2DLine(void)
+void CG_Draw2DLine(undefined8 param_1,double param_2,double param_3,double param_4,double param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  undefined8 uVar2;
+  double dVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  
   __savegprlr_29();
+  uVar2 = __savefpr_27();
+  if ((extraout_f1 != param_3) || (param_2 != param_4)) {
+    dVar4 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(uVar2);
+    dVar5 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(param_3,uVar2);
+    dVar6 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_2,uVar2);
+    dVar7 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_4,uVar2);
+    local_78 = (float)(dVar5 - dVar4);
+    local_74 = (float)(dVar7 - dVar6);
+    Vec2NormalizeTo(&local_78,&local_80);
+    fVar1 = -local_7c;
+    local_7c = (float)(param_5 * 0.5) * local_80;
+    dVar3 = (double)local_7c;
+    local_80 = (float)(param_5 * 0.5) * fVar1;
+    dVar8 = (double)local_80;
+    local_6c = (float)(dVar3 + dVar6);
+    local_64 = (float)(dVar3 + dVar7);
+    local_5c = (float)(dVar7 - dVar3);
+    local_54 = (float)(dVar6 - dVar3);
+    local_70 = (float)(dVar8 + dVar4);
+    local_68 = (float)(dVar8 + dVar5);
+    local_60 = (float)(dVar5 - dVar8);
+    local_58 = (float)(dVar4 - dVar8);
+    R_AddCmdDrawQuadPic(&local_70,in_stack_00000054,in_stack_0000005c);
+  }
+  __restfpr_27();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -294,11 +344,27 @@ void CG_Draw2DTri(undefined8 param_1,float *param_2,float *param_3,float *param_
 
 // 822C2E80  CG_DrawStringExt  (cgame/cg_drawtools.cpp:203)
 
-void CG_DrawStringExt(void)
+void CG_DrawStringExt(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  undefined8 in_r6;
+  longlong in_r9;
+  undefined8 extraout_f1;
+  double dVar3;
+  undefined8 uVar4;
+  double dVar5;
+  
+  uVar1 = __savegprlr_28();
+  dVar3 = (double)(float)(param_3 * 0.800000011920929 + param_2);
+  dVar5 = (double)(float)(param_3 * 0.02083333395421505);
+  uVar4 = extraout_f1;
+  uVar2 = UI_GetFontHandle(dVar5,uVar1,5);
+  UI_DrawText(uVar4,dVar3,dVar5,uVar1,in_r6,0x7fffffff,uVar2,-(ulonglong)(in_r9 != 0) & 3,
+              -(ulonglong)(in_r9 != 0),1,1);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -321,26 +387,21 @@ void CG_DrawDevString(undefined8 param_1,double param_2,double param_3,double pa
   __savegprlr_24();
   uVar2 = __savefpr_27();
   uVar1 = in_r10 & 3;
+  dVar6 = extraout_f1;
   if (((uVar1 != 1) && (uVar1 != 2)) && (uVar1 != 3)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015838,0xec,0,0xffffffff82000f98,0xffffffff820157b8);
   }
   dVar5 = 0.5;
   if (uVar1 == 2) {
-    dVar6 = extraout_f1;
     iVar4 = R_TextWidth(in_r8,0,in_stack_00000054);
     dVar6 = -(double)(float)((double)(longlong)iVar4 * param_3 - dVar6);
   }
-  else {
-    dVar6 = extraout_f1;
-    if (uVar1 == 3) {
-      iVar4 = R_TextWidth(in_r8,0,in_stack_00000054);
-      dVar6 = -(double)(float)((double)(float)((double)(longlong)iVar4 * param_3) * dVar5 - dVar6);
-    }
+  else if (uVar1 == 3) {
+    iVar4 = R_TextWidth(in_r8,0,in_stack_00000054);
+    dVar6 = -(double)(float)((double)(float)((double)(longlong)iVar4 * param_3) * dVar5 - dVar6);
   }
   in_r10 = in_r10 & 0xc;
   if (((in_r10 != 4) && (in_r10 != 8)) && (in_r10 != 0xc)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015838,0xf8,0,0xffffffff82000f98,0xffffffff82015738);
   }
   uVar3 = R_TextHeight(in_stack_00000054);
@@ -524,8 +585,25 @@ void CG_MiniMapChanged(undefined8 param_1)
 void CG_NorthDirectionChanged(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  char *_String;
+  int iVar2;
+  double dVar3;
+  double _X;
+  
+  uVar1 = __savegprlr_29();
+  _String = (char *)CL_GetConfigString(0x3f9);
+  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  dVar3 = atof(_String);
+  *(float *)(iVar2 + 0x797e8) = (float)dVar3;
+  _X = (double)((float)dVar3 * 0.017453292);
+  dVar3 = sin(_X);
+  *(float *)(iVar2 + 0x797f0) = (float)dVar3;
+  dVar3 = cos(_X);
+  *(float *)(iVar2 + 0x797ec) = (float)dVar3;
+  CG_MiniMapChanged(uVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -584,61 +662,456 @@ void CG_DebugStarWithText(void)
 
 // 822C35F0  CG_DebugBox  (cgame/cg_drawtools.cpp:516)
 
-void CG_DebugBox(void)
+void CG_DebugBox(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+                undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int *piVar2;
+  float *pfVar3;
+  longlong lVar4;
+  int *piVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float local_f0 [4];
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  float local_ac;
+  float local_a8;
+  float local_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  
   __savegprlr_27();
+  pfVar3 = (float *)__savefpr_21();
+  dVar11 = (double)(float)(extraout_f1 * 0.01745329238474369);
+  dVar6 = sin(dVar11);
+  dVar10 = (double)(float)dVar6;
+  dVar6 = cos(dVar11);
+  dVar8 = (double)(float)dVar6;
+  dVar7 = (double)(param_2[1] - param_2[4]);
+  dVar6 = (double)(param_2[1] + param_2[4]);
+  dVar11 = (double)(*param_2 - param_2[3]);
+  dVar9 = (double)(*param_2 + param_2[3]);
+  local_c4 = param_2[2] - param_2[5];
+  local_94 = pfVar3[2];
+  fVar1 = param_2[2] + param_2[5];
+  local_9c = *pfVar3;
+  local_98 = pfVar3[1];
+  local_f0[2] = local_94 + local_c4;
+  local_dc = local_94 + local_c4;
+  local_d0 = local_94 + local_c4;
+  local_c4 = local_94 + local_c4;
+  local_b8 = local_94 + fVar1;
+  local_f0[0] = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_f0[3] = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_cc = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_f0[1] = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_e0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_d8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_d4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
+  lVar4 = 0xc;
+  piVar5 = (int *)&UNK_82015884;
+  local_ac = local_94 + fVar1;
+  local_c8 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
+  local_c0 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_bc = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_a0 = local_94 + fVar1;
+  local_94 = local_94 + fVar1;
+  local_b4 = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar7 * dVar10));
+  local_b0 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar7 * dVar8));
+  local_a4 = local_98 + (float)(dVar11 * dVar10 + (double)(float)(dVar6 * dVar8));
+  local_a8 = local_9c + (float)(dVar11 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_9c = local_9c + (float)(dVar9 * dVar8 - (double)(float)(dVar6 * dVar10));
+  local_98 = local_98 + (float)(dVar9 * dVar10 + (double)(float)(dVar6 * dVar8));
+  do {
+    piVar2 = piVar5 + 1;
+    piVar5 = piVar5 + 2;
+    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar5 * 3,param_4,param_5,param_6,0);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  __restfpr_21();
+  __restgprlr_27();
+  return;
 }
 
 
 // 822C3858  CG_DebugBoxOriented  (cgame/cg_drawtools.cpp:558)
 
-void CG_DebugBoxOriented(void)
+void CG_DebugBoxOriented(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
+                        undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  int *piVar3;
+  float *pfVar4;
+  float *pfVar5;
+  uint uVar7;
+  longlong lVar6;
+  float *pfVar8;
+  int *piVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  undefined1 local_c0 [8];
+  float local_b8 [46];
+  
+  pfVar4 = (float *)__savegprlr_23();
+  dVar11 = -1.0;
+  dVar12 = 1.0;
+  uVar7 = 0;
+  pfVar8 = local_b8;
+  do {
+    dVar10 = dVar11;
+    if ((uVar7 & 1) != 0) {
+      dVar10 = dVar12;
+    }
+    pfVar5 = pfVar8 + -2;
+    pfVar8[-2] = (float)((double)param_2[3] * dVar10 + (double)*param_2);
+    dVar10 = dVar11;
+    if ((uVar7 & 2) != 0) {
+      dVar10 = dVar12;
+    }
+    pfVar8[-1] = (float)((double)param_2[4] * dVar10 + (double)param_2[1]);
+    dVar10 = dVar11;
+    if ((uVar7 & 4) != 0) {
+      dVar10 = dVar12;
+    }
+    *pfVar8 = (float)((double)param_2[5] * dVar10 + (double)param_2[2]);
+    MatrixTransformVector(pfVar5,param_3,&local_d0);
+    fVar1 = *pfVar4;
+    uVar7 = uVar7 + 1;
+    pfVar8[-1] = local_cc;
+    *pfVar8 = local_c8;
+    *pfVar5 = local_d0;
+    fVar2 = pfVar4[1];
+    *pfVar5 = local_d0 + fVar1;
+    fVar1 = pfVar4[2];
+    pfVar8[-1] = pfVar8[-1] + fVar2;
+    *pfVar8 = *pfVar8 + fVar1;
+    pfVar8 = pfVar8 + 3;
+  } while (uVar7 < 8);
+  lVar6 = 0xc;
+  piVar9 = (int *)&UNK_820158e4;
+  do {
+    piVar3 = piVar9 + 1;
+    piVar9 = piVar9 + 2;
+    CL_AddDebugLine(local_c0 + *piVar3 * 0xc,local_c0 + *piVar9 * 0xc,param_4,param_5,param_6,0);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  __restgprlr_23();
+  return;
 }
 
 
 // 822C39F0  CG_DebugCircle  (cgame/cg_drawtools.cpp:595)
 
-void CG_DebugCircle(void)
+void CG_DebugCircle(undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4,
+                   undefined8 param_5,undefined8 param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  float *pfVar5;
+  uint uVar6;
+  undefined1 *puVar7;
+  float *pfVar8;
+  double extraout_f1;
+  double dVar9;
+  double _X;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  undefined8 local_160;
+  float local_158;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_140;
+  float local_13c;
+  float local_138;
+  float fStack_134;
+  undefined1 local_130 [304];
+  
   __savegprlr_26();
+  pfVar5 = (float *)__savefpr_26();
+  local_14c = param_3[1];
+  local_150 = *param_3;
+  fVar1 = param_3[2];
+  fVar2 = SQRT(fVar1 * fVar1 + local_150 * local_150 + local_14c * local_14c);
+  local_148 = 1.0;
+  if (-fVar2 < 0.0) {
+    local_148 = fVar2;
+  }
+  local_148 = 1.0 / local_148;
+  local_150 = local_150 * local_148;
+  local_14c = local_148 * local_14c;
+  local_148 = local_148 * fVar1;
+  dVar15 = extraout_f1;
+  PerpendicularVector(&local_150,&local_140);
+  Vec3Cross(&local_150,&local_140,&local_160);
+  uVar6 = 0;
+  pfVar8 = &fStack_134;
+  dVar14 = 0.39269909262657166;
+  dVar13 = (double)local_158;
+  dVar12 = (double)local_160._4_4_;
+  dVar11 = (double)local_160._0_4_;
+  do {
+    local_160 = (ulonglong)uVar6;
+    _X = (double)(float)((double)local_160 * dVar14);
+    dVar9 = sin(_X);
+    dVar10 = (double)(float)((double)(float)dVar9 * dVar15);
+    dVar9 = cos(_X);
+    fVar1 = (float)(dVar11 * dVar10 + (double)*pfVar5);
+    fVar2 = pfVar5[1];
+    fVar3 = pfVar5[2];
+    pfVar8[1] = fVar1;
+    uVar6 = uVar6 + 1;
+    pfVar8[2] = (float)(dVar12 * dVar10 + (double)fVar2);
+    pfVar8[3] = (float)(dVar13 * dVar10 + (double)fVar3);
+    fVar2 = (float)((double)(float)dVar9 * dVar15);
+    pfVar8[1] = local_140 * fVar2 + fVar1;
+    pfVar8[2] = local_13c * fVar2 + pfVar8[2];
+    pfVar4 = pfVar8 + 3;
+    pfVar8 = pfVar8 + 3;
+    *pfVar8 = local_138 * fVar2 + *pfVar4;
+  } while (uVar6 < 0x10);
+  uVar6 = 0;
+  puVar7 = local_130;
+  do {
+    uVar6 = uVar6 + 1;
+    CL_AddDebugLine(puVar7,local_130 + ((uVar6 & 0xf) + (uVar6 & 0xf) * 2) * 4,param_4,param_5,
+                    param_6,0);
+    puVar7 = puVar7 + 0xc;
+  } while (uVar6 < 0x10);
+  __restfpr_26();
+  __restgprlr_26();
+  return;
 }
 
 
 // 822C3B98  CG_DebugArc  (cgame/cg_drawtools.cpp:629)
 
-void CG_DebugArc(void)
+void CG_DebugArc(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  undefined1 *puVar4;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  float *pfVar5;
+  uint uVar7;
+  longlong lVar6;
+  double extraout_f1;
+  double dVar8;
+  double dVar9;
+  double _X;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fStack_134;
+  undefined1 local_130 [304];
+  
   __savegprlr_26();
+  pfVar3 = (float *)__savefpr_26();
+  dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+  if (dVar12 < 0.0) {
+    param_2 = (double)(float)(param_2 - 360.0);
+    dVar12 = (double)((float)(param_3 - param_2) * 0.06666667);
+  }
+  uVar7 = 0;
+  pfVar5 = &fStack_134;
+  dVar10 = 0.01745329238474369;
+  dVar11 = extraout_f1;
+  do {
+    _X = (double)(float)((double)(float)((double)uVar7 * dVar12 + param_2) * dVar10);
+    dVar8 = sin(_X);
+    dVar9 = (double)(float)dVar8;
+    dVar8 = cos(_X);
+    fVar1 = *pfVar3;
+    uVar7 = uVar7 + 1;
+    fVar2 = pfVar3[2];
+    pfVar5[2] = (float)(dVar9 * dVar11 + (double)pfVar3[1]);
+    pfVar5[1] = (float)((double)(float)dVar8 * dVar11 + (double)fVar1);
+    pfVar5 = pfVar5 + 3;
+    *pfVar5 = fVar2;
+  } while (uVar7 < 0x10);
+  lVar6 = 0xf;
+  puVar4 = local_130;
+  do {
+    CL_AddDebugLine(puVar4,puVar4 + 0xc,in_r7,in_r8,in_r9,0);
+    lVar6 = lVar6 + -1;
+    puVar4 = puVar4 + 0xc;
+  } while (lVar6 != 0);
+  __restfpr_26();
+  __restgprlr_26();
+  return;
+}
+
+
+// 822C3CB0  CG_WorldDirToScreenPosReal  (cgame/cg_drawtools.cpp:662)
+
+void CG_WorldDirToScreenPosReal(undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  float *pfVar5;
+  float local_50;
+  float local_4c;
+  float local_48;
+  
+  uVar3 = __savegprlr_26();
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015838,0x29f,0,0xffffffff82000f98,0xffffffff82015960);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015838,0x2a0,0,0xffffffff82000f98,0xffffffff82015950);
+  }
+  iVar4 = CG_GetLocalClientGlobals(uVar3);
+  MatrixTransposeTransformVector(param_3,iVar4 + 0x6b9d4,&local_50);
+  pfVar5 = (float *)param_4;
+  if (0.0 < local_50) {
+    *pfVar5 = -((local_4c / *(float *)(iVar4 + 0x6b9c0)) * (1.0 / local_50) - 1.0) *
+              *(float *)(param_2 + 0x20) * 0.5;
+    pfVar5[1] = -((local_48 / *(float *)(iVar4 + 0x6b9c4)) * (1.0 / local_50) - 1.0) *
+                *(float *)(param_2 + 0x24) * 0.5;
+    __restgprlr_26(1);
+    return;
+  }
+  local_4c = -local_4c;
+  local_48 = -local_48;
+  *pfVar5 = local_4c;
+  pfVar5[1] = local_48;
+  if (local_4c == 0.0) {
+    *pfVar5 = *(float *)(param_2 + 0x20) * 0.5;
+    fVar1 = *(float *)(param_2 + 0x24) * 2.0;
+    if (local_48 < 0.0) {
+      fVar1 = -*(float *)(param_2 + 0x24);
+    }
+    pfVar5[1] = fVar1;
+    __restgprlr_26(0);
+    return;
+  }
+  if (local_48 == 0.0) {
+    fVar1 = *(float *)(param_2 + 0x20) * 2.0;
+    if (local_4c < 0.0) {
+      fVar1 = -*(float *)(param_2 + 0x20);
+    }
+    *pfVar5 = fVar1;
+    pfVar5[1] = *(float *)(param_2 + 0x24) * 0.5;
+    __restgprlr_26(0);
+    return;
+  }
+  fVar2 = ABS(*(float *)(param_2 + 0x24) / local_48);
+  fVar1 = ABS(*(float *)(param_2 + 0x20) / local_4c);
+  if (fVar2 - fVar1 < 0.0) {
+    fVar1 = fVar2;
+  }
+  *pfVar5 = local_4c * fVar1;
+  pfVar5[1] = local_48 * fVar1;
+  *pfVar5 = *(float *)(param_2 + 0x20) * 0.5 + local_4c * fVar1;
+  pfVar5[1] = *(float *)(param_2 + 0x24) * 0.5 + local_48 * fVar1;
+  __restgprlr_26(0);
+  return;
 }
 
 
 // 822C3EB0  CG_WorldPosToScreenPosReal  (cgame/cg_drawtools.cpp:716)
 
-void CG_WorldPosToScreenPosReal(void)
+void CG_WorldPosToScreenPosReal
+               (undefined8 param_1,undefined8 param_2,float *param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  float local_40;
+  float local_3c;
+  float local_38;
+  
+  uVar3 = __savegprlr_28();
+  iVar4 = CG_GetLocalClientGlobals();
+  local_40 = *param_3 - *(float *)(iVar4 + 0x6b9c8);
+  local_3c = param_3[1] - *(float *)(iVar4 + 0x6b9cc);
+  local_38 = param_3[2] - *(float *)(iVar4 + 0x6b9d0);
+  fVar2 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
+  fVar1 = 1.0;
+  if (-fVar2 < 0.0) {
+    fVar1 = fVar2;
+  }
+  fVar1 = 1.0 / fVar1;
+  local_40 = fVar1 * local_40;
+  local_3c = fVar1 * local_3c;
+  local_38 = local_38 * fVar1;
+  CG_WorldDirToScreenPosReal(uVar3,param_2,&local_40,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 822C3F60  CG_WorldDirToScreenPosVirtualCentered  (cgame/cg_drawtools.cpp:732)
 
-void CG_WorldDirToScreenPosVirtualCentered(void)
+void CG_WorldDirToScreenPosVirtualCentered(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  float fVar1;
+  float fVar2;
+  undefined8 uVar3;
+  int iVar4;
+  float *pfVar5;
+  
+  uVar3 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015838,0x2e0,0,0xffffffff82000f98,0xffffffff82015960);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82015838,0x2e1,0,0xffffffff82000f98,0xffffffff82015950);
+  }
+  iVar4 = ScrPlace_GetActivePlacement(uVar3);
+  CG_WorldDirToScreenPosReal(uVar3,iVar4,param_2,param_3);
+  pfVar5 = (float *)param_3;
+  fVar1 = -(*(float *)(iVar4 + 0x20) * 0.5 - *pfVar5);
+  *pfVar5 = fVar1;
+  fVar2 = -(*(float *)(iVar4 + 0x24) * 0.5 - pfVar5[1]);
+  pfVar5[1] = fVar2;
+  *pfVar5 = *(float *)(iVar4 + 0x10) * fVar1;
+  pfVar5[1] = *(float *)(iVar4 + 0x14) * fVar2;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -669,7 +1142,6 @@ void CG_TeamColor(ulonglong param_1,undefined8 param_2,undefined8 param_3)
   }
   if (DAT_84013128 == 0) {
     uVar1 = va(0xffffffff8201596c,param_1,param_3,param_2);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015838,0x302,0,uVar1);
   }
   return;
@@ -695,7 +1167,6 @@ void CG_RelativeTeamColor
   uVar5 = __savegprlr_24();
   iVar6 = CG_GetLocalClientGlobals();
   if (0x11 < *(uint *)(iVar6 + 0x3334)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82015838,0x314,0,0xffffffff82012648,*(uint *)(iVar6 + 0x3334),0x12);
   }
   iVar1 = *(int *)(iVar6 + 0x3334);

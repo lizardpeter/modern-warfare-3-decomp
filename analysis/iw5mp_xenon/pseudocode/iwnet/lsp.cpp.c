@@ -61,6 +61,16 @@ void LSP_ClearPlaylistAvailable(void)
 }
 
 
+// 826E4598  LSP_SetPlaylistAvailable  (iwnet/lsp.cpp:330)
+
+void LSP_SetPlaylistAvailable(void)
+
+{
+  DAT_844d8239 = 1;
+  return;
+}
+
+
 // 826E45A8  LSP_Connected  (iwnet/lsp.cpp:383)
 
 undefined1 LSP_Connected(void)
@@ -70,12 +80,45 @@ undefined1 LSP_Connected(void)
 }
 
 
+// 826E45B8  LSP_SendPacket  (iwnet/lsp.cpp:390)
+
+void LSP_SendPacket(undefined8 param_1,undefined8 param_2,undefined2 param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (DAT_844dab0c == '\0') {
+    MyAssertHandler(0xffffffff821a90bc,0x187,0,0xffffffff82000f98,0xffffffff821a90f4);
+  }
+  *(undefined2 *)((int)param_2 + 8) = param_3;
+  iVar1 = Xenon_SendLSPPacket(*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14),param_2);
+  if (iVar1 < 0) {
+    DAT_844dab0c = 0;
+    __restgprlr_28(0);
+    return;
+  }
+  __restgprlr_28(1);
+  return;
+}
+
+
 // 826E4640  LSP_GetStorageServerAddr  (iwnet/lsp.cpp:485)
 
 undefined8 LSP_GetStorageServerAddr(void)
 
 {
   return 0xffffffff844cf260;
+}
+
+
+// 826E4650  LSP_SendStoragePacket  (iwnet/lsp.cpp:491)
+
+void LSP_SendStoragePacket(undefined8 param_1)
+
+{
+  LSP_SendPacket(param_1,0xffffffff844cf260,0xfb4);
+  return;
 }
 
 
@@ -103,18 +146,185 @@ void _dynamic_initializer_for__dw_print_buffer__(void)
 void LSP_LogOutStandingStringsToDW(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char cVar4;
+  int iVar3;
+  undefined8 uVar1;
+  ulonglong uVar2;
+  uint uVar5;
+  int iVar6;
+  char *pcVar7;
+  int iVar8;
+  int iVar9;
+  char *pcVar10;
+  ulonglong uVar11;
+  int iVar12;
+  int iVar13;
+  double dVar14;
+  int local_150 [32];
+  undefined4 local_d0 [52];
+  
   __savegprlr_23();
+  iVar12 = 0;
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 != '\0') {
+    if (*(char *)(DAT_844d8244 + 0xb) != '\0') {
+      DAT_844dab0e = '\0';
+      dVar14 = (double)G_flrand(0,0x3ff0000000000000);
+      if (dVar14 < (double)*(float *)(DAT_844d8244 + 0xc)) {
+        DAT_844dab0e = '\x01';
+      }
+      Dvar_ClearModified();
+    }
+    if ((DAT_844dab0e != '\0') && (iVar3 = Sys_Milliseconds(), DAT_844ed530 < iVar3)) {
+      iVar3 = Sys_Milliseconds();
+      DAT_844ed530 = iVar3 + *(int *)(DAT_844d8240 + 0xc) * 60000;
+      Sys_EnterCriticalSection(0x18);
+      iVar3 = TaskManager_CountTasksInProgress(0xffffffff844dbf28,2);
+      if ((0 < 0x20 - iVar3) && (iVar3 = CL_GetLocalClientActiveCount(), iVar3 != 0)) {
+        CL_GetFirstActiveControllerIndex();
+        iVar3 = dwGetLobbyService();
+        if (iVar3 != 0) {
+          CL_GetFirstActiveControllerIndex();
+          dwGetLobbyService();
+          iVar3 = bdLobbyService__getStatus();
+          if (iVar3 == 2) {
+            iVar3 = 0;
+            uVar11 = 1;
+            iVar13 = 0;
+            do {
+              if ((*(uint *)(DAT_844dab04 + 0xc) & (uint)uVar11) != 0) {
+                uVar5 = *(uint *)((int)&DAT_844daafc + iVar13);
+                if ((int)uVar5 < *(int *)((int)&DAT_844daaf4 + iVar13)) {
+                  iVar9 = *(int *)((int)&DAT_844daaf4 + iVar13) - uVar5;
+                  iVar6 = iVar12 << 2;
+                  iVar12 = iVar9 + iVar12;
+                  do {
+                    iVar8 = (uVar5 + (((int)uVar5 >> 5) +
+                                      (uint)((int)uVar5 < 0 && (uVar5 & 0x1f) != 0) & 0x7ffffff) *
+                                     -0x20 + iVar3 * 0x20) * 0x408;
+                    if ((&DAT_844dd734)[iVar8] != '\0') {
+                      pcVar10 = &DAT_844dd334 + iVar8;
+                      *(char **)((int)local_d0 + iVar6) = pcVar10;
+                      pcVar7 = pcVar10;
+                      do {
+                        cVar4 = *pcVar7;
+                        pcVar7 = pcVar7 + 1;
+                      } while (cVar4 != '\0');
+                      (&DAT_844dd734)[iVar8] = 0;
+                      *(int *)((int)local_150 + iVar6) = (int)pcVar7 - (int)pcVar10;
+                    }
+                    uVar5 = uVar5 + 1;
+                    iVar6 = iVar6 + 4;
+                    *(int *)((int)&DAT_844daafc + iVar13) =
+                         *(int *)((int)&DAT_844daafc + iVar13) + 1;
+                    iVar9 = iVar9 + -1;
+                  } while (iVar9 != 0);
+                }
+                if (0 < iVar12) {
+                  uVar1 = CL_GetFirstActiveControllerIndex();
+                  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff844dbf28,uVar1,2);
+                  if ((uVar2 & 0xffffffff) != 0) {
+                    dwRecordStringEvents(uVar2,iVar12,local_d0,local_150,iVar3 + 1);
+                  }
+                }
+              }
+              iVar3 = iVar3 + 1;
+              iVar13 = iVar13 + 4;
+              uVar11 = (uVar11 & 0x7fffffff) << 1 | uVar11 >> 0x1f;
+            } while (iVar3 < 2);
+          }
+        }
+      }
+      Sys_LeaveCriticalSection(0x18);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
 // 826E48C0  LSP_LogStringToDW  (iwnet/lsp.cpp:1105)
 
-void LSP_LogStringToDW(void)
+void LSP_LogStringToDW(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar5;
+  undefined8 uVar4;
+  int iVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  
   __savegprlr_23();
+  iVar6 = (int)param_3;
+  if ((iVar6 < 1) || (2 < iVar6)) {
+    MyAssertHandler(0xffffffff821a90bc,0x452,0,0xffffffff82000f98,0xffffffff821a9170);
+  }
+  if (DAT_844dab0e != '\0') {
+    uVar10 = param_3 - 1;
+    uVar2 = 1 << ((uint)uVar10 & 0x3f);
+    uVar1 = uVar2 & *(uint *)(DAT_844dab04 + 0xc);
+    if (((uVar1 != 0) && (0 < iVar6)) && (iVar6 < 3)) {
+      uVar7 = (ulonglong)uVar2;
+      if (DAT_844dab0d == '\0') {
+        DAT_844daaf4 = 0;
+        DAT_844daafc = 0;
+        DAT_844daaf8 = 0;
+        DAT_844dab00 = 0;
+        DAT_844dab0d = '\x01';
+        uVar7 = 0xffffffff844daafc;
+      }
+      if (5 < iVar6) {
+        MyAssertHandler(0xffffffff821a90bc,0x470,0,0xffffffff82000f98,0xffffffff821a9118,uVar1,
+                        *(uint *)(DAT_844dab04 + 0xc),uVar7);
+      }
+      Sys_EnterCriticalSection(0x18);
+      iVar5 = CL_GetLocalClientActiveCount();
+      if (iVar5 != 0) {
+        CL_GetFirstActiveControllerIndex();
+        iVar5 = dwGetLobbyService();
+        if (iVar5 != 0) {
+          CL_GetFirstActiveControllerIndex();
+          dwGetLobbyService();
+          iVar5 = bdLobbyService__getStatus();
+          if (iVar5 == 2) {
+            CL_GetFirstActiveControllerIndex();
+            dwGetLobbyService();
+            bdLobbyService__getTaskManager();
+            uVar4 = bdRemoteTaskManager__getConnectionID();
+            lVar9 = (uVar10 & 0x7ffffff) * 0x20;
+            iVar5 = (int)((uVar10 & 0x3fffffff) << 2);
+            uVar2 = *(uint *)((int)&DAT_844daaf4 + iVar5);
+            Com_sprintf(((ulonglong)uVar2 +
+                         ((longlong)((int)uVar2 >> 5) +
+                          (ulonglong)((int)uVar2 < 0 && (uVar2 & 0x1f) != 0) & 0x7ffffff) * -0x20 +
+                        lVar9) * 0x408 + -0x7bb22ccc,0x400,0xffffffff821a9104,uVar4,param_2);
+            uVar2 = *(uint *)((int)&DAT_844daaf4 + iVar5);
+            uVar1 = *(uint *)((int)&DAT_844daafc + iVar5);
+            uVar8 = uVar2 + 1;
+            *(uint *)((int)&DAT_844daaf4 + iVar5) = uVar8;
+            iVar3 = (uVar2 + (((int)uVar2 >> 5) + (uint)((int)uVar2 < 0 && (uVar2 & 0x1f) != 0) &
+                             0x7ffffff) * -0x20 + (int)lVar9) * 0x408;
+            (&DAT_844dd733)[iVar3] = 0;
+            (&DAT_844dd734)[iVar3] = 1;
+            *(int *)(&DAT_844dd330 + iVar3) = iVar6;
+            if (uVar8 + (((int)uVar8 >> 5) + (uint)((int)uVar8 < 0 && (uVar8 & 0x1f) != 0)) * -0x20
+                == uVar1 + (((int)uVar1 >> 5) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1f) != 0)) *
+                           -0x20) {
+              *(uint *)((int)&DAT_844daafc + iVar5) = uVar1 + 1;
+            }
+          }
+        }
+      }
+      Sys_LeaveCriticalSection(0x18);
+    }
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -147,6 +357,16 @@ void LSP_ForceSendPacket(void)
 }
 
 
+// 826E4AE0  LSP_LogStringAboutUser  (iwnet/lsp.cpp:1303)
+
+void LSP_LogStringAboutUser(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  LSP_LogStringToDW(0xffffffffffffffff,param_3,1);
+  return;
+}
+
+
 // 826E4AF0  LSP_SetXboxLSPAddress  (iwnet/lsp.cpp:1338)
 
 void LSP_SetXboxLSPAddress(undefined4 param_1)
@@ -159,8 +379,6 @@ void LSP_SetXboxLSPAddress(undefined4 param_1)
 
 // 826E4B00  LSP_MapTitleServerToIP  (iwnet/lsp.cpp:1359)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 undefined8 LSP_MapTitleServerToIP(void)
 
 {
@@ -172,8 +390,9 @@ undefined8 LSP_MapTitleServerToIP(void)
     Com_PrintError(0x19,0xffffffff821a9204,uVar1);
     return 0;
   }
-  DAT_844cf264 = _DAT_844daaf0;
-  Com_Printf(0x19,0xffffffff821a91d0,DAT_844daaf0,DAT_844daaf1,DAT_844daaf2,DAT_844daaf3);
+  DAT_844cf264 = DAT_844daaf0;
+  Com_Printf(0x19,0xffffffff821a91d0,DAT_844daaf0._0_1_,DAT_844daaf0._1_1_,DAT_844daaf0._2_1_,
+             (undefined1)DAT_844daaf0);
   return 1;
 }
 
@@ -183,8 +402,120 @@ undefined8 LSP_MapTitleServerToIP(void)
 void LSP_FindTitleServersComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  int *piVar3;
+  ulonglong uVar1;
+  BOOL BVar4;
+  char cVar5;
+  longlong lVar6;
+  uint local_40;
+  uint local_3c [15];
+  
+  iVar2 = __savegprlr_27();
+  piVar3 = (int *)TaskManager_TaskToXOverlapped(iVar2 * 0xa0 + -0x7bb254d8);
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821a90bc,0x570,0,0xffffffff82000f98,0xffffffff821a938c);
+  }
+  if ((&DAT_844dabbc)[iVar2 * 0xa0] == '\0') {
+    MyAssertHandler(0xffffffff821a90bc,0x572,0,0xffffffff82000f98,0xffffffff8217aa38);
+  }
+  if ((&DAT_844dabb8)[iVar2 * 0x28] != 1) {
+    MyAssertHandler(0xffffffff821a90bc,0x573,0,0xffffffff82000f98,0xffffffff821a9350);
+  }
+  if (*piVar3 == 0x3e5) {
+    __restgprlr_27(0);
+    return;
+  }
+  XGetOverlappedResult(piVar3,&local_40,0);
+  uVar1 = XGetOverlappedExtendedError(piVar3);
+  if ((int)uVar1 == 0) {
+    TaskManager_TaskFromXOverlapped(0xffffffff844dab20,piVar3);
+    TaskManager_ClearTask();
+    DAT_844daaec = local_40;
+    if (local_40 == 0) {
+      Com_PrintError(0x19,0xffffffff821a9298);
+      CloseHandle(DAT_844daae8);
+      DAT_844daae8 = (HANDLE)0x0;
+      __restgprlr_27(1);
+      return;
+    }
+    Com_Printf(0x19,0xffffffff821a9280);
+    if (DAT_844daaec == 0) {
+      CloseHandle(DAT_844daae8);
+      DAT_844daae8 = (HANDLE)0x0;
+      DAT_844dab10 = DAT_844dab10 + 1;
+      if (2 < DAT_844dab10) {
+        DAT_844dab14 = DAT_844dab14 + 1;
+        DAT_844dab10 = 0;
+        DAT_82998a30 = DAT_82998a30 * 5;
+        __restgprlr_27(2);
+        return;
+      }
+    }
+    else {
+      XNetRandom(local_3c,4);
+      trapWord(6,(ulonglong)DAT_844daaec,0);
+      lVar6 = (ulonglong)local_3c[0] -
+              (longlong)(int)(local_3c[0] / DAT_844daaec) * (longlong)(int)DAT_844daaec;
+      if ((lVar6 < 0) || ((int)DAT_844daaec <= (int)lVar6)) {
+        lVar6 = 0;
+      }
+      DAT_844dab08 = (undefined4)lVar6;
+      if ((&DAT_844d8250)[(int)(lVar6 * 0xd0)] == '\0') {
+        MyAssertHandler(0xffffffff821a90bc,0x5c7,0,0xffffffff82000f98,0xffffffff821a9260);
+      }
+      Com_Printf(0x19,0xffffffff821a923c,lVar6,lVar6 * 0xd0 + -0x7bb27db0);
+      cVar5 = LSP_MapTitleServerToIP();
+      if (cVar5 == '\0') {
+        CloseHandle(DAT_844daae8);
+        DAT_844daae8 = (HANDLE)0x0;
+        __restgprlr_27(2);
+        return;
+      }
+      BVar4 = CloseHandle(DAT_844daae8);
+      DAT_844daae8 = (HANDLE)0x0;
+      DAT_844dab10 = 0;
+      DAT_844dab18 = 0;
+      DAT_82998a30 = 500;
+      DAT_844dab14 = 0;
+      cVar5 = LSP_MapTitleServerToIP(BVar4);
+      if (cVar5 != '\0') {
+        DAT_844dab0c = 1;
+        __restgprlr_27(1);
+        return;
+      }
+    }
+  }
+  else {
+    TaskManager_TaskFromXOverlapped(0xffffffff844dab20,piVar3);
+    TaskManager_ClearTask();
+    BVar4 = CloseHandle(DAT_844daae8);
+    DAT_844daae8 = (HANDLE)0x0;
+    iVar2 = Live_OnlinePlayEvenIfDown(BVar4);
+    if (iVar2 != 0) {
+      DAT_844daaf0 = 0xaa05a1f;
+      DAT_844dab0c = 1;
+      __restgprlr_27(1);
+      return;
+    }
+    if ((int)uVar1 == -0x7feafff6) {
+      Com_Printf(0x19,0xffffffff821a9308);
+    }
+    else if ((uVar1 & 0xffffffff) == 0x80070012) {
+      Com_Printf(0x19,0xffffffff821a92e8);
+    }
+    else {
+      Com_PrintError(0x19,0xffffffff821a92c0,uVar1);
+    }
+    DAT_844dab10 = DAT_844dab10 + 1;
+    if (2 < DAT_844dab10) {
+      DAT_844dab14 = DAT_844dab14 + 1;
+      DAT_844dab10 = 0;
+      DAT_82998a30 = DAT_82998a30 * 5;
+    }
+  }
+  __restgprlr_27(2);
+  return;
 }
 
 
@@ -227,8 +558,50 @@ BOOL LSP_CancelTasks(undefined8 param_1)
 void LSP_FindTitleServers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  char cVar4;
+  int iVar3;
+  ulonglong uVar2;
+  undefined4 *puVar5;
+  longlong lVar6;
+  int local_30 [12];
+  
+  uVar1 = __savegprlr_28();
+  cVar4 = TaskManager_TaskIsInProgress(0xffffffff844dab20,1);
+  if ((cVar4 == '\0') && (DAT_844dab14 < 0x28)) {
+    iVar3 = Sys_Milliseconds();
+    if (DAT_82998a30 + DAT_844dab18 <= iVar3) {
+      DAT_844dab18 = iVar3;
+      Com_Printf(0x19,0xffffffff821a9488);
+      if (DAT_844daae8 != 0) {
+        MyAssertHandler(0xffffffff821a90bc,0x618,0,0xffffffff82000f98,0xffffffff821a9470);
+      }
+      uVar2 = XTitleServerCreateEnumerator(0xffffffff821a945c,0x32,local_30,0xffffffff844daae8);
+      if ((uVar2 & 0xffffffff) != 0) {
+        Com_Printf(0x19,0xffffffff821a942c,uVar2);
+      }
+      if (local_30[0] != 0x28a0) {
+        MyAssertHandler(0xffffffff821a90bc,0x61e,0,0xffffffff821a93e0,0xffffffff821a9400);
+      }
+      TaskManager_GetOpenTaskSlot(0xffffffff844dab20,uVar1,1);
+      iVar3 = TaskManager_TaskToXOverlapped();
+      puVar5 = (undefined4 *)(iVar3 + -4);
+      lVar6 = 7;
+      do {
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      uVar1 = XEnumerate(DAT_844daae8,0xffffffff844d8248,0x28a0,0,iVar3);
+      if (((int)uVar1 != 0) && ((int)uVar1 != 0x3e5)) {
+        TaskManager_TaskFromXOverlapped(0xffffffff844dab20,iVar3);
+        TaskManager_ClearTask();
+        Com_Error(1,0xffffffff821a93a0,uVar1);
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -364,7 +737,6 @@ void LSP_CheckOngoingTasks(void)
       }
       else if (DAT_84013128 == 0) {
         uVar1 = va(0xffffffff821a966c);
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821a90bc,0x853,0,uVar1);
       }
     }
@@ -384,7 +756,6 @@ LAB_826e5690:
       }
       else if (DAT_84013128 == 0) {
         uVar1 = va(0xffffffff821a966c);
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821a90bc,0x875,0,uVar1);
       }
     }

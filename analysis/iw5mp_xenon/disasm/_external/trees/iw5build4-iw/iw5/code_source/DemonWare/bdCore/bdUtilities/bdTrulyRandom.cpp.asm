@@ -13,5 +13,10 @@
   8293CFCC  7D8803A6             mtspr LR,r12
   8293CFD0  4E800020             blr
 
+; 8293CF90  bdTrulyRandomImpl::getRandomUByte8  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdtrulyrandom.cpp:31)
+  8293CF90  7C832378             or r3,r4,r4
+  8293CF94  7CA42B78             or r4,r5,r5
+  8293CF98  48000450             b 0x8293d3e8
+
 ; 8293CFA0  bdTrulyRandomImpl::bdTrulyRandomImpl  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdtrulyrandom.cpp:38)
   8293CFA0  4E800020             blr

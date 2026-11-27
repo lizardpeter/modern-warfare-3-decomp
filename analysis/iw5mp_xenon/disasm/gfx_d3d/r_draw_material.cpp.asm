@@ -9,6 +9,81 @@
 ; 82734D28  R_SetPrepassMaterial  (gfx_d3d/r_draw_material.cpp:80)
   82734D28  7D8802A6             mfspr r12,LR
   82734D2C  481E1985             bl 0x829166b0
+  82734D30  9421FF70             stwu r1,-0x90(r1)
+  82734D34  3D60821C             lis r11,-0x7de4
+  82734D38  F86100A0             std r3,0xa0(r1)
+  82734D3C  3D408200             lis r10,-0x7e00
+  82734D40  7C9F2378             or r31,r4,r4
+  82734D44  7CBA2B78             or r26,r5,r5
+  82734D48  2B040000             cmplwi cr6,r4,0x0
+  82734D4C  3B8BE160             subi r28,r11,0x1ea0
+  82734D50  3B6A0F98             addi r27,r10,0xf98
+  82734D54  409A0020             bne cr6,0x82734d74
+  82734D58  3D608202             lis r11,-0x7dfe
+  82734D5C  7F66DB78             or r6,r27,r27
+  82734D60  38EB0DCC             addi r7,r11,0xdcc
+  82734D64  7F83E378             or r3,r28,r28
+  82734D68  38A00000             li r5,0x0
+  82734D6C  3880005D             li r4,0x5d
+  82734D70  4BE9F791             bl 0x825d4500
+LAB_82734d74:
+  82734D74  E97F0008             ld r11,0x8(r31)
+  82734D78  796ABA60             rldicl r10,r11,0x17,0x29
+  82734D7C  554B07BE             rlwinm r11,r10,0x0,0x1e,0x1f
+  82734D80  2B0B0003             cmplwi cr6,r11,0x3
+  82734D84  409A0010             bne cr6,0x82734d94
+LAB_82734d88:
+  82734D88  38600000             li r3,0x0
+  82734D8C  38210090             addi r1,r1,0x90
+  82734D90  481E1970             b 0x82916700
+LAB_82734d94:
+  82734D94  2B0B0000             cmplwi cr6,r11,0x0
+  82734D98  409A0020             bne cr6,0x82734db8
+  82734D9C  897F0040             lbz r11,0x40(r31)
+  82734DA0  556A07FE             rlwinm r10,r11,0x0,0x1f,0x1f
+  82734DA4  2B0A0000             cmplwi cr6,r10,0x0
+  82734DA8  419A0010             beq cr6,0x82734db8
+  82734DAC  3D608461             lis r11,-0x7b9f
+  82734DB0  394B3780             addi r10,r11,0x3780
+  82734DB4  83EA2DD0             lwz r31,0x2dd0(r10)
+LAB_82734db8:
+  82734DB8  7F44D378             or r4,r26,r26
+  82734DBC  7FE3FB78             or r3,r31,r31
+  82734DC0  4BFEEEC1             bl 0x82723c80
+  82734DC4  83A100A4             lwz r29,0xa4(r1)
+  82734DC8  7C7E1B78             or r30,r3,r3
+  82734DCC  2B030000             cmplwi cr6,r3,0x0
+  82734DD0  93FD00EC             stw r31,0xec(r29)
+  82734DD4  907D00F4             stw r3,0xf4(r29)
+  82734DD8  419AFFB0             beq cr6,0x82734d88
+  82734DDC  A1630004             lhz r11,0x4(r3)
+  82734DE0  556A07BC             rlwinm r10,r11,0x0,0x1e,0x1e
+  82734DE4  2B0A0000             cmplwi cr6,r10,0x0
+  82734DE8  419A0020             beq cr6,0x82734e08
+  82734DEC  3D60821C             lis r11,-0x7de4
+  82734DF0  7F66DB78             or r6,r27,r27
+  82734DF4  38EBE124             subi r7,r11,0x1edc
+  82734DF8  7F83E378             or r3,r28,r28
+  82734DFC  38A00000             li r5,0x0
+  82734E00  388000B7             li r4,0xb7
+  82734E04  4BE9F6FD             bl 0x825d4500
+LAB_82734e08:
+  82734E08  A17E0004             lhz r11,0x4(r30)
+  82734E0C  556A07FE             rlwinm r10,r11,0x0,0x1f,0x1f
+  82734E10  2B0A0000             cmplwi cr6,r10,0x0
+  82734E14  419A0020             beq cr6,0x82734e34
+  82734E18  3D60821C             lis r11,-0x7de4
+  82734E1C  7F66DB78             or r6,r27,r27
+  82734E20  38EBE0E8             subi r7,r11,0x1f18
+  82734E24  7F83E378             or r3,r28,r28
+  82734E28  38A00000             li r5,0x0
+  82734E2C  388000B8             li r4,0xb8
+  82734E30  4BE9F6D1             bl 0x825d4500
+LAB_82734e34:
+  82734E34  935D00F0             stw r26,0xf0(r29)
+  82734E38  38600001             li r3,0x1
+  82734E3C  38210090             addi r1,r1,0x90
+  82734E40  481E18C0             b 0x82916700
 
 ; 82734E48  R_GetMaterialFromIndex  (gfx_d3d/r_draw_material.cpp:192)
   82734E48  7D8802A6             mfspr r12,LR

@@ -5,7 +5,105 @@
 int _XcptFilter(ulong _ExceptionNum,_EXCEPTION_POINTERS *_ExceptionPtr)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(_ExceptionNum,_ExceptionPtr);
+  int *piVar1;
+  code *pcVar2;
+  void *pvVar3;
+  int iVar4;
+  int iVar6;
+  _ptiddata p_Var7;
+  undefined8 uVar5;
+  int *piVar8;
+  longlong lVar9;
+  
+  iVar6 = __savegprlr_28(_ExceptionNum);
+  p_Var7 = _getptd_noexit();
+  if (p_Var7 != (_ptiddata)0x0) {
+    piVar1 = p_Var7->_pxcptacttab;
+    piVar8 = piVar1;
+    do {
+      if (*piVar8 == iVar6) break;
+      piVar8 = piVar8 + 3;
+    } while (piVar8 < piVar1 + 0x24);
+    if ((piVar1 + 0x24 <= piVar8) || (*piVar8 != iVar6)) {
+      piVar8 = (int *)0x0;
+    }
+    if (piVar8 != (int *)0x0) {
+      pcVar2 = (code *)piVar8[2];
+      if (pcVar2 != (code *)0x0) {
+        if (pcVar2 == (code *)0x5) {
+          uVar5 = 1;
+          piVar8[2] = 0;
+          goto LAB_82926944;
+        }
+        if (pcVar2 != (code *)0x1) {
+          pvVar3 = p_Var7->_tpxcptinfoptrs;
+          p_Var7->_tpxcptinfoptrs = _ExceptionPtr;
+          if (piVar8[1] == 8) {
+            lVar9 = 9;
+            iVar6 = 0x24;
+            do {
+              *(undefined4 *)((int)p_Var7->_pxcptacttab + iVar6 + 8) = 0;
+              lVar9 = lVar9 + -1;
+              iVar6 = iVar6 + 0xc;
+            } while (lVar9 != 0);
+            iVar6 = *piVar8;
+            iVar4 = p_Var7->_tfpecode;
+            if (iVar6 == -0x3fffff72) {
+              iVar6 = 0x83;
+LAB_82926914:
+              p_Var7->_tfpecode = iVar6;
+            }
+            else {
+              if (iVar6 == -0x3fffff70) {
+                iVar6 = 0x81;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3fffff6f) {
+                iVar6 = 0x84;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3fffff6d) {
+                iVar6 = 0x85;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3fffff73) {
+                iVar6 = 0x82;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3fffff71) {
+                iVar6 = 0x86;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3fffff6e) {
+                iVar6 = 0x8a;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3ffffd4b) {
+                iVar6 = 0x8d;
+                goto LAB_82926914;
+              }
+              if (iVar6 == -0x3ffffd4c) {
+                iVar6 = 0x8e;
+                goto LAB_82926914;
+              }
+            }
+            (*pcVar2)(8,p_Var7->_tfpecode);
+            p_Var7->_tfpecode = iVar4;
+          }
+          else {
+            piVar8[2] = 0;
+            (*pcVar2)();
+          }
+          p_Var7->_tpxcptinfoptrs = pvVar3;
+        }
+        uVar5 = 0xffffffffffffffff;
+        goto LAB_82926944;
+      }
+    }
+  }
+  uVar5 = 0;
+LAB_82926944:
+  iVar6 = __restgprlr_28(uVar5);
+  return iVar6;
 }
 

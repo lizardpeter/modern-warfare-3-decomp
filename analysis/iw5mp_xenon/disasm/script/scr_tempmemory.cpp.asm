@@ -24,6 +24,12 @@
   82545A20  806BBA14             lwz r3,-0x45ec(r11)
   82545A24  4809D81C             b 0x825e3240
 
+; 82545A28  TempMallocAlignStrict  (script/scr_tempmemory.cpp:53)
+  82545A28  3D608390             lis r11,-0x7c70
+  82545A2C  7C641B78             or r4,r3,r3
+  82545A30  806BBA14             lwz r3,-0x45ec(r11)
+  82545A34  4809D894             b 0x825e32c8
+
 ; 82545A38  TempMemorySetPos  (script/scr_tempmemory.cpp:75)
   82545A38  3D608390             lis r11,-0x7c70
   82545A3C  7C641B78             or r4,r3,r3

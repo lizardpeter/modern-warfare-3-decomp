@@ -11,7 +11,6 @@ undefined4 CL_Demo_GetVersion(void)
   
   cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821deea0,0x15,0,0xffffffff82000f98,0xffffffff821dc0d8);
   }
   puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();
@@ -31,7 +30,6 @@ longlong CL_Demo_IsVersionAtLeast(ulonglong param_1)
   
   cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821deea0,0x24,0,0xffffffff82000f98,0xffffffff821dc0d8);
   }
   puVar2 = (undefined4 *)CL_Demo_GetPlaybackData();
@@ -56,7 +54,6 @@ void CL_Demo_SetupNetFieldListsForDemo(void)
   
   cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821deea0,0x15,0,0xffffffff82000f98,0xffffffff821dc0d8);
   }
   puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();

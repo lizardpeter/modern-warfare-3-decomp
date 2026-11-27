@@ -5,8 +5,55 @@
 int printf(char *_Format,...)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29(_Format);
+  longlong lVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  FILE *pFVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 in_r4;
+  undefined8 in_r5;
+  undefined8 in_r6;
+  undefined8 in_r7;
+  undefined8 in_r8;
+  undefined8 in_r9;
+  undefined8 in_r10;
+  undefined8 in_stack_00000018;
+  undefined8 in_stack_00000020;
+  undefined8 in_stack_00000028;
+  undefined8 in_stack_00000030;
+  undefined8 in_stack_00000038;
+  undefined8 in_stack_00000040;
+  undefined8 in_stack_00000048;
+  
+  lVar1 = __savegprlr_29(_Format);
+  in_stack_00000018 = in_r4;
+  in_stack_00000020 = in_r5;
+  in_stack_00000028 = in_r6;
+  in_stack_00000030 = in_r7;
+  in_stack_00000038 = in_r8;
+  in_stack_00000040 = in_r9;
+  in_stack_00000048 = in_r10;
+  if (lVar1 == 0) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar2 = 0xffffffffffffffff;
+  }
+  else {
+    pFVar4 = __iob_func();
+    _lock_file2(1,pFVar4 + 1);
+    pFVar4 = __iob_func();
+    iVar6 = _stbuf(pFVar4 + 1);
+    pFVar4 = __iob_func();
+    uVar5 = _output_l(pFVar4 + 1,(char *)lVar1,(_locale_t)0x0,(va_list)&stack0x00000018);
+    pFVar4 = __iob_func();
+    _ftbuf(iVar6,pFVar4 + 1);
+    FUN_82918604();
+    uVar2 = (ulonglong)uVar5;
+  }
+  iVar6 = __restgprlr_29(uVar2);
+  return iVar6;
 }
 
 

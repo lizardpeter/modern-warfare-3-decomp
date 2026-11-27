@@ -3,6 +3,53 @@
 ; 8291BB10  fread_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fread.c:84)
   8291BB10  7D8802A6             mfspr r12,LR
   8291BB14  4BFFAB9D             bl 0x829166b0
+  8291BB18  3BE1FF70             subi r31,r1,0x90
+  8291BB1C  9421FF70             stwu r1,-0x90(r1)
+  8291BB20  7C7A1B78             or r26,r3,r3
+  8291BB24  7C9C2378             or r28,r4,r4
+  8291BB28  7CBD2B78             or r29,r5,r5
+  8291BB2C  7CDB3378             or r27,r6,r6
+  8291BB30  7CFE3B78             or r30,r7,r7
+  8291BB34  90FF00C4             stw r7,0xc4(r31)
+  8291BB38  39600000             li r11,0x0
+  8291BB3C  2B050000             cmplwi cr6,r5,0x0
+  8291BB40  917F0050             stw r11,0x50(r31)
+  8291BB44  419A0038             beq cr6,0x8291bb7c
+  8291BB48  2B060000             cmplwi cr6,r6,0x0
+  8291BB4C  419A0030             beq cr6,0x8291bb7c
+  8291BB50  2B070000             cmplwi cr6,r7,0x0
+  8291BB54  409A0034             bne cr6,0x8291bb88
+  8291BB58  2F04FFFF             cmpwi cr6,r4,-0x1
+  8291BB5C  419A0010             beq cr6,0x8291bb6c
+  8291BB60  7C852378             or r5,r4,r4
+  8291BB64  38800000             li r4,0x0
+  8291BB68  4BFFAC99             bl 0x82916800
+LAB_8291bb6c:
+  8291BB6C  48004215             bl 0x8291fd80
+  8291BB70  39600016             li r11,0x16
+  8291BB74  91630000             stw r11,0x0(r3)
+  8291BB78  48004099             bl 0x8291fc10
+LAB_8291bb7c:
+  8291BB7C  38600000             li r3,0x0
+LAB_8291bb80:
+  8291BB80  383F0090             addi r1,r31,0x90
+  8291BB84  4BFFAB7C             b 0x82916700
+LAB_8291bb88:
+  8291BB88  7FC3F378             or r3,r30,r30
+  8291BB8C  4BFFF4D5             bl 0x8291b060
+  8291BB90  7D084378             or r8,r8,r8
+  8291BB94  7FC7F378             or r7,r30,r30
+  8291BB98  7F66DB78             or r6,r27,r27
+  8291BB9C  7FA5EB78             or r5,r29,r29
+  8291BBA0  7F84E378             or r4,r28,r28
+  8291BBA4  7F43D378             or r3,r26,r26
+  8291BBA8  4BFFFCD1             bl 0x8291b878
+  8291BBAC  907F0050             stw r3,0x50(r31)
+  8291BBB0  7D084378             or r8,r8,r8
+  8291BBB4  399F0090             addi r12,r31,0x90
+  8291BBB8  4800002D             bl 0x8291bbe4
+  8291BBBC  807F0050             lwz r3,0x50(r31)
+  8291BBC0  4BFFFFC0             b 0x8291bb80
 
 ; 8291B878  _fread_nolock_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fread.c:127)
   8291B878  7D8802A6             mfspr r12,LR

@@ -42,23 +42,148 @@ void ScrPlace_HiResApplyRect(float *param_1,float *param_2,float *param_3,float 
 }
 
 
-// 823992F8  ScrPlace_CalcSpecificSafeAreaOffsets  (client/screen_placement.cpp:105)
+// 823992A0  ScrPlace_HiResScaleRect  (client/screen_placement.cpp:92)
 
-void ScrPlace_CalcSpecificSafeAreaOffsets(void)
+void ScrPlace_HiResScaleRect(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  if (DAT_846180a8 == 0) {
+    return;
+  }
+  *param_1 = *param_1 * DAT_846180ac;
+  *param_2 = *param_2 * DAT_846180b0;
+  *param_3 = *param_3 * DAT_846180ac;
+  *param_4 = *param_4 * DAT_846180b0;
+  return;
+}
+
+
+// 823992F8  ScrPlace_CalcSpecificSafeAreaOffsets  (client/screen_placement.cpp:105)
+
+void ScrPlace_CalcSpecificSafeAreaOffsets
+               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
+               double param_6,double param_7)
+
+{
+  float *in_r10;
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  double dVar7;
+  undefined8 uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float *in_stack_00000054;
+  float *in_stack_0000005c;
+  float *in_stack_00000064;
+  int in_stack_0000006c;
+  int in_stack_00000074;
+  
   __savegprlr_26();
+  dVar1 = (double)__savefpr_19();
+  dVar10 = 0.0;
+  dVar3 = 1.0;
+  uVar6 = 0x3ff0000000000000;
+  uVar8 = 0;
+  if ((param_6 < 0.0) || (1.0 < param_6)) {
+    MyAssertHandler(param_6,0,0x3ff0000000000000,0xffffffff82056e88,0x70,0,0xffffffff82056e54,
+                    param_6,0,0x3ff0000000000000);
+  }
+  if ((param_7 < dVar10) || (dVar3 < param_7)) {
+    MyAssertHandler(param_7,uVar8,uVar6,0xffffffff82056e88,0x71,0,0xffffffff82056e20,param_7,uVar8,
+                    uVar6);
+  }
+  if (in_stack_0000006c < 1) {
+    MyAssertHandler(0xffffffff82056e88,0x72,0,0xffffffff82056de8,0xffffffff82056e08,
+                    in_stack_0000006c);
+  }
+  if (in_stack_00000074 < 1) {
+    MyAssertHandler(0xffffffff82056e88,0x73,0,0xffffffff82056dac,0xffffffff82056dcc,
+                    in_stack_00000074);
+  }
+  if (dVar1 < dVar10) {
+    MyAssertHandler(dVar1,0xffffffff82056e88,0x74,0,0xffffffff82056d80,0xffffffff82056d98,dVar1);
+  }
+  if (param_2 < dVar10) {
+    MyAssertHandler(param_2,0xffffffff82056e88,0x75,0,0xffffffff82056d54,0xffffffff82056d6c,param_2)
+    ;
+  }
+  if (param_3 <= dVar10) {
+    MyAssertHandler(param_3,0xffffffff82056e88,0x76,0,0xffffffff82056d24,0xffffffff82056d40,param_3)
+    ;
+  }
+  if (param_4 <= dVar10) {
+    MyAssertHandler(param_4,0xffffffff82056e88,0x77,0,0xffffffff82056cf0,0xffffffff82056d0c,param_4)
+    ;
+  }
+  dVar10 = (double)(float)(dVar1 + param_3);
+  dVar5 = (double)(longlong)in_stack_0000006c;
+  if (dVar5 < dVar10) {
+    uVar6 = va(dVar1,param_3,0xffffffff82056ce0,dVar1,param_3,in_stack_0000006c);
+    MyAssertHandler(0xffffffff82056e88,0x78,0,0xffffffff820011f4,0xffffffff82056cb0,uVar6);
+  }
+  dVar9 = (double)(float)(param_2 + param_4);
+  dVar7 = (double)(longlong)in_stack_00000074;
+  if (dVar7 < dVar9) {
+    uVar6 = va(param_2,param_4,0xffffffff82056ce0,param_2,param_4,in_stack_00000074);
+    MyAssertHandler(0xffffffff82056e88,0x79,0,0xffffffff820011f4,0xffffffff82056c7c,uVar6);
+  }
+  dVar11 = 0.5;
+  dVar4 = (double)((float)((double)(float)(dVar3 - param_7) * dVar7) * 0.5);
+  dVar3 = floor((double)((float)((double)(float)(dVar3 - param_6) * dVar5) * 0.5 + 0.5));
+  dVar2 = (double)(float)dVar3;
+  dVar3 = floor((double)(float)(dVar4 + dVar11));
+  dVar4 = (double)(float)dVar3;
+  dVar3 = dVar1;
+  if ((float)(dVar1 - dVar2) < 0.0) {
+    dVar3 = dVar2;
+  }
+  dVar11 = param_2;
+  if ((float)(param_2 - dVar4) < 0.0) {
+    dVar11 = dVar4;
+  }
+  if ((float)((double)(float)(dVar5 - dVar2) - dVar10) < 0.0) {
+    dVar10 = (double)(float)(dVar5 - dVar2);
+  }
+  *in_r10 = (float)(dVar3 - dVar1);
+  if ((float)((double)(float)(dVar7 - dVar4) - dVar9) < 0.0) {
+    dVar9 = (double)(float)(dVar7 - dVar4);
+  }
+  in_r10[1] = (float)(dVar11 - param_2);
+  *in_stack_00000054 = (float)(dVar10 - dVar1);
+  in_stack_00000054[1] = (float)(dVar9 - param_2);
+  *in_stack_0000005c = (float)((double)(*in_r10 * (float)(640.0 / param_3)) * param_5);
+  in_stack_0000005c[1] = (float)(480.0 / param_4) * in_r10[1];
+  *in_stack_00000064 = (float)((double)(*in_stack_00000054 * (float)(640.0 / param_3)) * param_5);
+  in_stack_00000064[1] = in_stack_00000054[1] * (float)(480.0 / param_4);
+  __restfpr_19();
+  __restgprlr_26();
+  return;
 }
 
 
 // 823996E0  ScrPlace_CalcSafeAreaOffsets  (client/screen_placement.cpp:147)
 
-void ScrPlace_CalcSafeAreaOffsets(void)
+void ScrPlace_CalcSafeAreaOffsets
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  
   __savegprlr_29();
+  uVar1 = __savefpr_27();
+  ScrPlace_CalcSpecificSafeAreaOffsets();
+  ScrPlace_CalcSpecificSafeAreaOffsets
+            (uVar1,param_2,param_3,param_4,param_5,(double)*(float *)(DAT_82b5c718 + 0xc),
+             (double)*(float *)(DAT_82b5c55c + 0xc));
+  __restfpr_27();
+  __restgprlr_29();
+  return;
 }
 
 
@@ -85,28 +210,22 @@ void ScrPlace_SetupFloatRenderTargetViewport
   _Dst[6] = (float)dVar1;
   _Dst[7] = (float)param_2;
   if (((uint)DAT_82aa2990 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,0xba,0,0xffffffff82000f98,0xffffffff82056fb8);
   }
   dVar3 = 0.0;
   if (DAT_82aa2990 == 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,0xbb,0,0xffffffff82000f98,0xffffffff82056f90);
   }
   if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,0xbd,0,0xffffffff82000f98,0xffffffff82056f78);
   }
-  if (param_3 == 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if (param_3 == dVar3) {
     MyAssertHandler(0xffffffff82056e88,0xbe,0,0xffffffff82000f98,0xffffffff82056f68);
   }
   if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,0xc0,0,0xffffffff82000f98,0xffffffff82056f50);
   }
-  if (param_4 == 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if (param_4 == dVar3) {
     MyAssertHandler(0xffffffff82056e88,0xc1,0,0xffffffff82000f98,0xffffffff82056f40);
   }
   dVar5 = (double)((float)(param_4 / (double)DAT_82aa2990) * 1.3333334);
@@ -114,11 +233,9 @@ void ScrPlace_SetupFloatRenderTargetViewport
     dVar5 = param_3;
   }
   if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,200,0,0xffffffff82000f98,0xffffffff82056f24);
   }
-  if (dVar5 == 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if (dVar5 == dVar3) {
     MyAssertHandler(0xffffffff82056e88,0xc9,0,0xffffffff82000f98,0xffffffff82056f10);
   }
   dVar4 = (double)(float)(param_3 - dVar5);
@@ -131,7 +248,6 @@ void ScrPlace_SetupFloatRenderTargetViewport
   _Dst[4] = (float)(dVar2 * 640.0);
   _Dst[5] = (float)(480.0 / param_4);
   if (dVar4 < dVar3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(dVar4,0xffffffff82056e88,0xd4,0,0xffffffff82056ed0,0xffffffff82056ef0,dVar4);
   }
   _Dst[0x1a] = (float)(dVar4 * 0.5);
@@ -178,11 +294,38 @@ void ScrPlace_SetupViewport(undefined8 param_1,int param_2,int param_3,int param
 
 // 82399B90  ScrPlace_SetupUnsafeViewport  (client/screen_placement.cpp:236)
 
-void ScrPlace_SetupUnsafeViewport(void)
+void ScrPlace_SetupUnsafeViewport
+               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  undefined8 uVar6;
+  
   __savegprlr_23();
+  uVar1 = __savefpr_27();
+  uVar6 = 0x3ff0000000000000;
+  dVar4 = (double)*(float *)(DAT_82b5c78c + 0xc);
+  dVar5 = (double)*(float *)(DAT_82b5c710 + 0xc);
+  dVar3 = (double)*(float *)(DAT_82b5c718 + 0xc);
+  dVar2 = (double)*(float *)(DAT_82b5c55c + 0xc);
+  Dvar_SetFloat(0x3ff0000000000000);
+  Dvar_SetFloat(uVar6,DAT_82b5c710);
+  Dvar_SetFloat(uVar6,DAT_82b5c718);
+  Dvar_SetFloat(uVar6,DAT_82b5c55c);
+  ScrPlace_SetupFloatRenderTargetViewport
+            ((double)(longlong)param_2,(double)(longlong)param_3,(double)(longlong)param_4,
+             (double)(longlong)param_5,uVar1);
+  Dvar_SetFloat(dVar4,DAT_82b5c78c);
+  Dvar_SetFloat(dVar5,DAT_82b5c710);
+  Dvar_SetFloat(dVar3,DAT_82b5c718);
+  Dvar_SetFloat(dVar2,DAT_82b5c55c);
+  __restfpr_27();
+  __restgprlr_23();
+  return;
 }
 
 
@@ -226,7 +369,6 @@ double ScrPlace_ApplyXWithoutSplitScreenScaling
     goto LAB_82399e08;
   default:
     if (param_4 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82056e88,0x113,0,0xffffffff82056fe8,0xffffffff82057000);
     }
     dVar1 = (double)param_2[0x1a];
@@ -304,7 +446,6 @@ double ScrPlace_ApplyYWithoutSplitScreenScaling
     break;
   default:
     if (param_4 != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82056e88,0x152,0,0xffffffff82057014,0xffffffff8205702c);
     }
     dVar1 = (double)*(float *)(param_2 + 4);
@@ -337,21 +478,172 @@ double ScrPlace_ApplyY(double param_1)
 
 // 8239A0B0  ApplySplitscreenScaling  (client/screen_placement.cpp:399)
 
-void ApplySplitscreenScaling(void)
+void ApplySplitscreenScaling
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float *pfVar1;
+  
+  pfVar1 = (float *)__savegprlr_26();
+  if (pfVar1 == (float *)0x0) {
+    MyAssertHandler(0xffffffff82056e88,400,0,0xffffffff82000f98,0xffffffff8200fdbc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x191,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x192,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x193,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  }
+  if (*(char *)(DAT_82b5c558 + 0xc) != '\0') {
+    *pfVar1 = *pfVar1 * DAT_82b5c7fc;
+    *(float *)param_2 = *(float *)param_2 * DAT_82b5c7fc;
+  }
+  *(float *)param_3 = *(float *)param_3 * DAT_82b5c7fc;
+  *(float *)param_4 = *(float *)param_4 * DAT_82b5c7fc;
+  __restgprlr_26();
+  return;
 }
 
 
 // 8239A1D0  ScrPlace_ApplyRectWithoutSplitScreenScaling  (client/screen_placement.cpp:418)
 
-void ScrPlace_ApplyRectWithoutSplitScreenScaling(void)
+void ScrPlace_ApplyRectWithoutSplitScreenScaling
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5,undefined4 param_6,undefined4 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  float *pfVar4;
+  float *pfVar5;
+  double dVar6;
+  
+  pfVar3 = (float *)__savegprlr_23();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x1a3,0,0xffffffff82000f98,0xffffffff8200fdbc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x1a4,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x1a5,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  }
+  if ((param_5 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82056e88,0x1a6,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  }
+  dVar6 = 0.5;
+  pfVar4 = (float *)param_2;
+  pfVar5 = (float *)param_4;
+  switch(param_6) {
+  case 1:
+    fVar1 = pfVar3[0xe];
+    goto LAB_8239a418;
+  case 2:
+    *pfVar4 = *pfVar3 * *pfVar4 + pfVar3[8] * 0.5;
+    *pfVar5 = *pfVar3 * *pfVar5;
+    break;
+  case 3:
+    fVar1 = pfVar3[0x10];
+    goto LAB_8239a418;
+  case 4:
+    *pfVar4 = *pfVar4 * pfVar3[2];
+    *pfVar5 = *pfVar5 * pfVar3[2];
+    break;
+  case 5:
+    break;
+  case 6:
+    *pfVar4 = *pfVar4 * pfVar3[4];
+    *pfVar5 = *pfVar5 * pfVar3[4];
+    break;
+  case 7:
+    *pfVar4 = (pfVar3[0x10] + pfVar3[0xe]) * 0.5 + *pfVar3 * *pfVar4;
+    *pfVar5 = *pfVar3 * *pfVar5;
+    break;
+  case 8:
+    fVar1 = pfVar3[0x16];
+    goto LAB_8239a418;
+  case 9:
+    *pfVar4 = (pfVar3[0x18] + pfVar3[0x16]) * 0.5 + *pfVar3 * *pfVar4;
+    *pfVar5 = *pfVar3 * *pfVar5;
+    break;
+  case 10:
+    fVar1 = pfVar3[0x18];
+LAB_8239a418:
+    *pfVar4 = *pfVar3 * *pfVar4 + fVar1;
+    *pfVar5 = *pfVar3 * *pfVar5;
+    break;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82056e88,0x1ab,0,0xffffffff82057060);
+    }
+  case 0:
+    fVar1 = pfVar3[0x1a];
+    goto LAB_8239a418;
+  }
+  pfVar4 = (float *)param_3;
+  pfVar5 = (float *)param_5;
+  switch(param_7) {
+  case 1:
+    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0xf];
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 2:
+    *pfVar4 = *pfVar4 * pfVar3[1] + (float)((double)pfVar3[9] * dVar6);
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 3:
+    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x11];
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 4:
+    *pfVar4 = *pfVar4 * pfVar3[3];
+    fVar2 = *pfVar5;
+    fVar1 = pfVar3[3];
+LAB_8239a630:
+    fVar1 = fVar1 * fVar2;
+LAB_8239a634:
+    *pfVar5 = fVar1;
+    break;
+  case 5:
+    break;
+  case 6:
+    *pfVar4 = pfVar3[5] * *pfVar4;
+    fVar1 = pfVar3[5] * *pfVar5;
+    goto LAB_8239a634;
+  case 7:
+    *pfVar4 = (float)((double)(pfVar3[0x11] + pfVar3[0xf]) * dVar6 + (double)(*pfVar4 * pfVar3[1]));
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 8:
+    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x17];
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 9:
+    *pfVar4 = (float)((double)(pfVar3[0x19] + pfVar3[0x17]) * dVar6 + (double)(*pfVar4 * pfVar3[1]))
+    ;
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  case 10:
+    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x19];
+    *pfVar5 = *pfVar5 * pfVar3[1];
+    break;
+  default:
+    if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff82056e88,0x1db,0,0xffffffff82057040);
+    }
+  case 0:
+    *pfVar4 = *pfVar4 * pfVar3[1];
+    fVar2 = pfVar3[1];
+    fVar1 = *pfVar5;
+    goto LAB_8239a630;
+  }
+  ScrPlace_HiResApplyRect(param_2,param_3,param_4,param_5);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -407,7 +699,6 @@ void ClampDimension(double param_1,double param_2,float *param_3,float *param_4)
   double dVar3;
   
   if (param_2 <= param_1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,0x223,0,0xffffffff82000f98,0xffffffff82057084);
   }
   dVar3 = (double)*param_3;
@@ -435,11 +726,19 @@ void ClampDimension(double param_1,double param_2,float *param_3,float *param_4)
 
 // 8239A860  ScrPlace_ApplyRectClamped  (client/screen_placement.cpp:566)
 
-void ScrPlace_ApplyRectClamped(void)
+void ScrPlace_ApplyRectClamped
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  ScrPlace_ApplyRect();
+  ClampDimension((double)*(float *)(iVar1 + 0x38),(double)*(float *)(iVar1 + 0x40),param_2,param_4);
+  ClampDimension((double)*(float *)(iVar1 + 0x3c),(double)*(float *)(iVar1 + 0x44),param_3,param_5);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -470,6 +769,30 @@ void ScrPlace_SetNormalSplitscreenScaling(void)
 }
 
 
+// 8239A930  ScrPlace_Init  (client/screen_placement.cpp:594)
+
+void ScrPlace_Init(void)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  double dVar3;
+  
+  dVar3 = 1.0;
+  uVar2 = 0;
+  uVar1 = 0x3feb333340000000;
+  DAT_82b5c78c = Dvar_RegisterFloat(0x3feb333340000000,0,0x3ff0000000000000,0xffffffff82057244);
+  DAT_82b5c710 = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff820571c0);
+  DAT_82b5c718 = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff8203a650);
+  DAT_82b5c55c = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff8203a634);
+  DAT_82b5c71c = Dvar_RegisterFloat(0x3ff8000000000000,dVar3,0x47efffffe0000000,0xffffffff82057110);
+  DAT_82b5c558 = Dvar_RegisterBool(0xffffffff820570bc,1,0,0xffffffff82057090);
+  DAT_82b5c714 = 2;
+  DAT_82b5c7fc = (float)dVar3;
+  return;
+}
+
+
 // 8239AAA8  ScrPlace_SetupFullscreenViewports  (client/screen_placement.cpp:614)
 
 void ScrPlace_SetupFullscreenViewports(void)
@@ -486,8 +809,19 @@ void ScrPlace_SetupFullscreenViewports(void)
 void ScrPlace_SetupClientViewports(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  lVar1 = -0x7d4a3aa0;
+  uVar2 = 0;
+  do {
+    ScrPlace_SetupFloatRenderTargetViewport
+              (uVar2,uVar2,(double)(longlong)DAT_82aa2970,(double)(longlong)DAT_82aa2974,lVar1);
+    lVar1 = lVar1 + 0x6c;
+  } while ((int)lVar1 < -0x7d4a38f0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -497,6 +831,16 @@ void ScrPlace_BeginDisplayView(void)
 
 {
   DAT_82b5c714 = 1;
+  return;
+}
+
+
+// 8239ABA8  ScrPlace_BeginFullScreen  (client/screen_placement.cpp:657)
+
+void ScrPlace_BeginFullScreen(void)
+
+{
+  DAT_82b5c714 = 0;
   return;
 }
 
@@ -520,12 +864,30 @@ longlong ScrPlace_GetViewPlacement(longlong param_1)
 }
 
 
+// 8239ABE0  ScrPlace_GetViewPlacementAddress  (client/screen_placement.cpp:675)
+
+longlong ScrPlace_GetViewPlacementAddress(longlong param_1)
+
+{
+  return param_1 * 0x6c + -0x7d4a3aa0;
+}
+
+
 // 8239ABF8  ScrPlace_GetFullPlacement  (client/screen_placement.cpp:681)
 
 undefined8 ScrPlace_GetFullPlacement(void)
 
 {
   return 0xffffffff82b5c720;
+}
+
+
+// 8239AC08  ScrPlace_GetUnsafeFullPlacement  (client/screen_placement.cpp:687)
+
+undefined8 ScrPlace_GetUnsafeFullPlacement(void)
+
+{
+  return 0xffffffff82b5c790;
 }
 
 
@@ -555,10 +917,10 @@ longlong ScrPlace_GetActivePlacement(longlong param_1)
   undefined8 uVar1;
   undefined8 uVar2;
   
-  if (DAT_82b5c714 == 0) {
-    return -0x7d4a38e0;
-  }
-  if (DAT_82b5c714 != 1) {
+  if (DAT_82b5c714 != 0) {
+    if (DAT_82b5c714 == 1) {
+      return param_1 * 0x6c + -0x7d4a3aa0;
+    }
     if (DAT_82b5c714 < 3) {
       if (DAT_84013128 != 0) {
         return -0x7d4a38e0;
@@ -573,9 +935,8 @@ longlong ScrPlace_GetActivePlacement(longlong param_1)
       uVar2 = 0xffffffff820572a4;
       uVar1 = 0x2d1;
     }
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82056e88,uVar1,0,uVar2);
   }
-  return param_1 * 0x6c + -0x7d4a3aa0;
+  return -0x7d4a38e0;
 }
 

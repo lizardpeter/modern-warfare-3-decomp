@@ -85,21 +85,88 @@ void LeaderBoardRow<10>___LeaderBoardRow<10>(undefined4 *param_1)
 
 // 82364358  LeaderBoardRow<10>::serialize  (DW/leaderboardinfo.h:64)
 
-void LeaderBoardRow<10>__serialize(void)
+void LeaderBoardRow<10>__serialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_29();
+  bdStatsInfo__serialize();
+  puVar2 = (undefined4 *)(iVar1 + 0x6c);
+  lVar3 = 10;
+  do {
+    puVar2 = puVar2 + 1;
+    bdByteBuffer__writeInt32(param_2,*puVar2);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82364568  LeaderBoardRow<10>::deserialize  (DW/leaderboardinfo.h:73)
 
-void LeaderBoardRow<10>__deserialize(void)
+void LeaderBoardRow<10>__deserialize(undefined8 param_1,uint *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  uint uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  uint *puVar6;
+  uint uVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  uint local_30 [12];
+  
+  lVar3 = __savegprlr_28();
+  local_30[0] = *param_2;
+  if ((ulonglong)local_30[0] != 0) {
+    lVar5 = (ulonglong)local_30[0] + 4;
+    do {
+      puVar6 = (uint *)lVar5;
+      if (in_RESERVE != '\0') {
+        uVar7 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+        *puVar6 = uVar7;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+  }
+  uVar4 = bdStatsInfo__deserialize(lVar3,local_30);
+  uVar7 = 0;
+  if ((uVar4 & 0xff) != 0) {
+    lVar3 = lVar3 + 0x70;
+    do {
+      if (9 < uVar7) break;
+      uVar4 = bdByteBuffer__readInt32(*param_2,lVar3);
+      uVar7 = uVar7 + 1;
+      lVar3 = lVar3 + 4;
+    } while ((uVar4 & 0xff) != 0);
+  }
+  uVar7 = *param_2;
+  if ((ulonglong)uVar7 != 0) {
+    lVar3 = (ulonglong)uVar7 + 4;
+    do {
+      puVar6 = (uint *)lVar3;
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar3);
+        *puVar6 = uVar2;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (*(int *)(uVar7 + 4) == 0) {
+      puVar1 = (undefined4 *)*param_2;
+      if (puVar1 != (undefined4 *)0x0) {
+        (**(code **)*puVar1)(puVar1,1);
+      }
+      *param_2 = 0;
+    }
+  }
+  __restgprlr_28(uVar4);
+  return;
 }
 
 
@@ -132,7 +199,6 @@ uint GetFeedForId(ulonglong param_1)
 
 {
   if (DAT_82b50988 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8203b200,0x9a,0,0xffffffff82000f98,0xffffffff8203b240);
   }
   return -(uint)(param_1 == *(uint *)(DAT_82b50988 + 0x860)) & DAT_82b50988;
@@ -147,7 +213,6 @@ longlong GetNextBufferIndex(int param_1)
   ulonglong uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8203b200,0xa3,0,0xffffffff82000f98,0xffffffff8203b24c);
   }
   uVar1 = (ulonglong)*(uint *)(param_1 + 0x410) + 1;
@@ -158,11 +223,35 @@ longlong GetNextBufferIndex(int param_1)
 
 // 82362860  AppendToBuffer  (client/newsfeed.cpp:169)
 
-void AppendToBuffer(void)
+void AppendToBuffer(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  
+  uVar3 = __savegprlr_29();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0xa3,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  iVar1 = (int)uVar3;
+  uVar5 = (ulonglong)*(uint *)(iVar1 + 0x410) + 1;
+  uVar5 = uVar5 + ((longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) &
+                  0x7fffffff) * -2;
+  iVar2 = (int)((uVar5 + 0x100 & 0x3fffffff) << 2);
+  iVar4 = Com_sprintf((uVar5 & 0x7fffff) * 0x200 + (ulonglong)*(uint *)(iVar2 + iVar1) + uVar3,
+                      0x200 - (ulonglong)*(uint *)(iVar2 + iVar1),0xffffffff82000f98,param_2);
+  if (iVar4 < 0) {
+    Com_PrintError(1,0xffffffff8203b254);
+    *(undefined4 *)(iVar2 + iVar1) = 0x200;
+    __restgprlr_29();
+    return;
+  }
+  *(int *)(iVar2 + iVar1) = iVar4 + *(int *)(iVar2 + iVar1);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -178,11 +267,31 @@ void ClearTask(int param_1)
 
 // 82362930  SetupTask  (client/newsfeed.cpp:199)
 
-void SetupTask(void)
+void SetupTask(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  
+  iVar1 = __savegprlr_29();
+  if ((param_2 & 0xffffffff) != 0) {
+    MyAssertHandler(0xffffffff8203b200,200,0,0xffffffff8203b288,param_2,1);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8203b200,0xc9,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  *(int *)(iVar1 + 0x840) = (int)param_2;
+  puVar2 = (undefined4 *)(iVar1 + 0x7b8);
+  *(undefined1 *)(iVar1 + 0x844) = 1;
+  lVar3 = 7;
+  do {
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -191,8 +300,37 @@ void SetupTask(void)
 void RewindToLastCompleteItem(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  
+  iVar5 = __savegprlr_27();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8203b200,0xde,0,0xffffffff82000f98,0xffffffff8203b24c);
+    MyAssertHandler(0xffffffff8203b200,0xa3,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  uVar6 = *(int *)(iVar5 + 0x410) + 1;
+  iVar7 = uVar6 + (((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0) & 0x7fffffff) * -2
+  ;
+  iVar2 = (iVar7 + 0x100) * 4;
+  iVar7 = iVar7 * 0x200 + iVar5;
+  uVar3 = (ulonglong)*(uint *)(iVar2 + iVar5);
+  do {
+    uVar4 = uVar3;
+    uVar3 = uVar4 - 1;
+    if (((longlong)uVar3 < 0) || (cVar1 = *(char *)((int)uVar3 + iVar7), cVar1 == '\n')) break;
+  } while (cVar1 != '\r');
+  if (0x1ff < (uVar4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8203b200,0xe7,0,0xffffffff8203b2b8,uVar4,0x200);
+  }
+  *(undefined1 *)((int)uVar4 + iVar7) = 0;
+  *(int *)(iVar2 + iVar5) = (int)uVar4;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -205,7 +343,6 @@ void AdvanceToNextSpecLine(int param_1)
   uint uVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8203b200,0xf2,0,0xffffffff82000f98,0xffffffff8203b24c);
   }
   uVar2 = *(uint *)(param_1 + 0x614);
@@ -220,11 +357,10 @@ void AdvanceToNextSpecLine(int param_1)
     *(uint *)(param_1 + 0x614) = uVar2;
     cVar1 = *(char *)(uVar2 + param_1 + 0x414);
   }
-  if (uVar2 < 0x200) {
-    return;
+  if (0x1ff < uVar2) {
+    MyAssertHandler(0xffffffff8203b200,0x101,0,0xffffffff8203b2ec,uVar2,0x200);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8203b200,0x101,0,0xffffffff8203b2ec,uVar2,0x200);
+  return;
 }
 
 
@@ -259,6 +395,80 @@ undefined8 FetchTestToken(undefined8 param_1)
 {
   AppendToBuffer(param_1,0xffffffff8203b32c);
   return 1;
+}
+
+
+// 82362C70  FetchLeaderboardRow  (client/newsfeed.cpp:288)
+
+void FetchLeaderboardRow(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  char cVar3;
+  longlong lVar4;
+  char *pcVar5;
+  longlong lVar6;
+  char local_b0 [176];
+  
+  uVar2 = __savegprlr_28();
+  I_strncpyz(local_b0,param_3,0x80);
+  pcVar5 = local_b0;
+  do {
+    if (local_b0[0] == '\0') {
+LAB_82362ccc:
+      if (*pcVar5 == '\0') {
+        pcVar5 = "Rank";
+      }
+      if ((param_2 & 0xffffffff) == 0) {
+        MyAssertHandler(0xffffffff8203b200,0xc9,0,0xffffffff82000f98,0xffffffff8203b24c);
+      }
+      iVar1 = (int)param_2;
+      *(undefined4 *)(iVar1 + 0x840) = 0;
+      lVar4 = param_2 + 0x7b8;
+      *(undefined1 *)(iVar1 + 0x844) = 1;
+      lVar6 = 7;
+      do {
+        lVar4 = lVar4 + 4;
+        *(undefined4 *)lVar4 = 0;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      cVar3 = LB_GetCol(uVar2,local_b0,pcVar5,*(undefined8 *)(iVar1 + 0x850),param_2 + 0x618,
+                        param_2 + 0x7b0);
+      if (cVar3 == '\0') {
+        *(undefined1 *)(iVar1 + 0x844) = 0;
+        __restgprlr_28(2);
+        return;
+      }
+      __restgprlr_28(0);
+      return;
+    }
+    if (*pcVar5 == ' ') {
+      *pcVar5 = '\0';
+      pcVar5 = pcVar5 + 1;
+      goto LAB_82362ccc;
+    }
+    pcVar5 = pcVar5 + 1;
+    local_b0[0] = *pcVar5;
+  } while( true );
+}
+
+
+// 82362D78  FetchPresence  (client/newsfeed.cpp:323)
+
+undefined8 FetchPresence(undefined8 param_1,int param_2)
+
+{
+  char local_a0 [136];
+  
+  if ((*(longlong *)(param_2 + 0x850) != 0) &&
+     (Friends_GetPresence(param_1,*(longlong *)(param_2 + 0x850),local_a0,0x80), local_a0[0] != '\0'
+     )) {
+    Friends_MarkForUpdate(param_1);
+    AppendToBuffer(param_2,local_a0);
+    return 1;
+  }
+  return 2;
 }
 
 
@@ -337,6 +547,191 @@ LAB_82362ec8:
 }
 
 
+// 82362F38  FetchData  (client/newsfeed.cpp:395)
+
+void FetchData(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  undefined8 uVar1;
+  int iVar3;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x18e,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,399,0,0xffffffff82000f98,0xffffffff8203b3b4);
+  }
+  if (*(char *)((int)param_2 + 0x844) != '\0') {
+    MyAssertHandler(0xffffffff8203b200,400,0,0xffffffff82000f98,0xffffffff8203b3a0);
+  }
+  iVar3 = I_stricmp(param_3,0xffffffff8203b398);
+  if (iVar3 == 0) {
+    uVar1 = Dvar_GetString(0xffffffff82032bd0);
+    AppendToBuffer(param_2,uVar1);
+    __restgprlr_27();
+    return;
+  }
+  iVar3 = I_stricmp(param_3,0xffffffff8203b32c);
+  if (iVar3 == 0) {
+    AppendToBuffer(param_2,0xffffffff8203b32c);
+    __restgprlr_27();
+    return;
+  }
+  iVar3 = I_strnicmp(param_3,0xffffffff8203b394,3);
+  if (iVar3 == 0) {
+    iVar3 = Sys_Milliseconds();
+    if (iVar3 <= DAT_82b50984) goto LAB_8236315c;
+    iVar3 = FetchLeaderboardRow(uVar1,param_2,param_3 + 3);
+LAB_82363154:
+    if (iVar3 != 2) goto LAB_8236316c;
+  }
+  else {
+    iVar3 = I_stricmp(param_3,0xffffffff8203b388);
+    if (iVar3 == 0) {
+      iVar3 = FetchPresence(uVar1,param_2);
+      goto LAB_82363154;
+    }
+    iVar3 = I_stricmp(param_3,0xffffffff8203b380);
+    if (iVar3 != 0) {
+      iVar3 = I_stricmp(param_3,0xffffffff8203b37c);
+      if (iVar3 == 0) {
+        iVar3 = SetMe(uVar1,param_2);
+      }
+      else {
+        iVar3 = I_stricmp(param_3,0xffffffff8203b374);
+        if ((iVar3 != 0) && (iVar3 = I_stricmp(param_3,0xffffffff8203b368), iVar3 != 0)) {
+          Com_PrintWarning(1,0xffffffff8203b33c,param_3);
+          goto LAB_8236315c;
+        }
+        iVar3 = FetchGamertag(uVar1,param_2);
+      }
+      goto LAB_82363154;
+    }
+    lVar2 = Friends_PickRandomOnline(uVar1);
+    *(longlong *)((int)param_2 + 0x850) = lVar2;
+    if (lVar2 != 0) {
+      __restgprlr_27();
+      return;
+    }
+  }
+LAB_8236315c:
+  RewindToLastCompleteItem(param_2);
+  AdvanceToNextSpecLine(param_2);
+LAB_8236316c:
+  __restgprlr_27();
+  return;
+}
+
+
+// 82363178  FetchLeaderboardColumnComplete  (client/newsfeed.cpp:452)
+
+void FetchLeaderboardColumnComplete(void)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  char *pcVar3;
+  
+  iVar2 = __savegprlr_29();
+  if (*(char *)(iVar2 + 0x844) == '\0') {
+    MyAssertHandler(0xffffffff8203b200,0x1c8,0,0xffffffff82000f98,0xffffffff8203b3e4);
+  }
+  if (*(int *)(iVar2 + 0x840) != 0) {
+    MyAssertHandler(0xffffffff8203b200,0x1c9,0,0xffffffff82000f98,0xffffffff8203b3c0);
+  }
+  uVar1 = LB_GetColComplete(iVar2 + 0x7b0);
+  if ((int)uVar1 == 1) {
+    pcVar3 = (char *)LB_GetColString(iVar2 + 0x618);
+    if (*pcVar3 == '\0') {
+      __restgprlr_29(2);
+      return;
+    }
+    AppendToBuffer(iVar2,pcVar3);
+  }
+  __restgprlr_29(uVar1);
+  return;
+}
+
+
+// 82363238  FetchDataComplete  (client/newsfeed.cpp:483)
+
+undefined8 FetchDataComplete(int param_1)
+
+{
+  undefined8 uVar1;
+  
+  if (*(char *)(param_1 + 0x844) == '\0') {
+    uVar1 = 1;
+  }
+  else {
+    uVar1 = 1;
+    if (*(int *)(param_1 + 0x840) == 0) {
+      uVar1 = FetchLeaderboardColumnComplete(param_1);
+      if ((int)uVar1 != 1) {
+        if ((int)uVar1 != 2) {
+          return uVar1;
+        }
+        RewindToLastCompleteItem(param_1);
+        AdvanceToNextSpecLine(param_1);
+      }
+    }
+    else if (DAT_84013128 == 0) {
+      MyAssertHandler(0xffffffff8203b200,500,0,0xffffffff8203b3f8);
+    }
+    *(undefined1 *)(param_1 + 0x844) = 0;
+  }
+  return uVar1;
+}
+
+
+// 823632F8  ParseSpecToDelim  (client/newsfeed.cpp:519)
+
+void ParseSpecToDelim(undefined8 param_1,char param_2,void *param_3,longlong param_4)
+
+{
+  char cVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  size_t _Size;
+  int iVar6;
+  ulonglong uVar5;
+  
+  iVar3 = __savegprlr_27();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x20b,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  if ((int)param_4 < 1) {
+    MyAssertHandler(0xffffffff8203b200,0x20c,0,0xffffffff8203b40c,0xffffffff8203b420,param_4);
+  }
+  uVar2 = *(uint *)(iVar3 + 0x614);
+  cVar1 = *(char *)(uVar2 + iVar3 + 0x414);
+  uVar5 = (ulonglong)uVar2;
+  while (((iVar6 = (int)uVar5, cVar1 != '\0' && (iVar6 < 0x200)) &&
+         (*(char *)(iVar3 + 0x414 + iVar6) != param_2))) {
+    uVar5 = uVar5 + 1;
+    cVar1 = *(char *)(iVar3 + 0x414 + (int)uVar5);
+  }
+  lVar4 = uVar5 - uVar2;
+  if ((int)(param_4 + -1) <= (int)lVar4) {
+    lVar4 = param_4 + -1;
+  }
+  _Size = (size_t)lVar4;
+  if ((int)_Size < 1) {
+    lVar4 = 0;
+  }
+  else if (0 < (int)_Size) {
+    memcpy(param_3,(void *)(uVar2 + iVar3 + 0x414),_Size);
+  }
+  *(int *)(iVar3 + 0x614) = iVar6;
+  *(undefined1 *)((int)lVar4 + (int)param_3) = 0;
+  __restgprlr_27(lVar4);
+  return;
+}
+
+
 // 82363410  FinishUpdate  (client/newsfeed.cpp:547)
 
 void FinishUpdate(int param_1)
@@ -361,11 +756,80 @@ void FinishUpdate(int param_1)
 
 // 82363490  AppendLocalizedStrings  (client/newsfeed.cpp:559)
 
-void AppendLocalizedStrings(void)
+void AppendLocalizedStrings(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  ulonglong uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  char *pcVar9;
+  ulonglong uVar8;
+  char local_280 [640];
+  
+  uVar1 = ZEXT48(&stack0x00000000);
+  uVar2 = __savegprlr_18();
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x238,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x239,0,0xffffffff82000f98,0xffffffff8203b470);
+  }
+  iVar5 = (int)param_3;
+  if ((iVar5 < 0) || (0x1ff < iVar5)) {
+    MyAssertHandler(0xffffffff8203b200,0x23a,0,0xffffffff8203b444,0xffffffff8203b454,param_3);
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0xa3,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  uVar4 = (ulonglong)*(uint *)((int)uVar2 + 0x410) + 1;
+  lVar7 = 0;
+  lVar6 = 0;
+  uVar4 = uVar4 + ((longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) &
+                  0x7fffffff) * -2;
+  if (0 < iVar5) {
+    uVar8 = param_2;
+    do {
+      pcVar9 = (char *)uVar8;
+      if (*pcVar9 == '\0') {
+        MyAssertHandler(0xffffffff8203b200,0x240,0,0xffffffff82000f98,0xffffffff8203b430);
+      }
+      iVar3 = isspace((int)*pcVar9);
+      if (iVar3 != 0) {
+        Com_Memcpy(uVar1 - 0x280,lVar7 + param_2,lVar6 - lVar7);
+        local_280[(int)(lVar6 - lVar7)] = '\0';
+        if (local_280[0] == '@') {
+          lVar7 = UI_SafeTranslateString(uVar1 - 0x27f);
+        }
+        else {
+          lVar7 = uVar1 - 0x280;
+        }
+        Com_sprintfPos((uVar4 & 0x7fffff) * 0x200 + uVar2,0x200,
+                       (uVar4 + 0x100 & 0x3fffffff) * 4 + uVar2,0xffffffff8203b43c,lVar7,*pcVar9);
+        lVar7 = (1 - param_2) + uVar8;
+      }
+      lVar6 = lVar6 + 1;
+      uVar8 = uVar8 + 1;
+    } while ((int)lVar6 < iVar5);
+  }
+  lVar6 = lVar6 - lVar7;
+  if (lVar6 != 0) {
+    Com_Memcpy(uVar1 - 0x280,lVar7 + param_2,lVar6);
+    local_280[(int)lVar6] = '\0';
+    if (local_280[0] == '@') {
+      lVar6 = UI_SafeTranslateString(uVar1 - 0x27f);
+    }
+    else {
+      lVar6 = uVar1 - 0x280;
+    }
+    Com_sprintfPos((uVar4 & 0x7fffff) * 0x200 + uVar2,0x200,(uVar4 + 0x100 & 0x3fffffff) * 4 + uVar2
+                   ,0xffffffff82000f98,lVar6);
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -395,6 +859,49 @@ void FetchSpec(int param_1)
 }
 
 
+// 82363780  ReInitCurrentBuffer  (client/newsfeed.cpp:635)
+
+void ReInitCurrentBuffer(void)
+
+{
+  int iVar2;
+  int iVar3;
+  undefined8 uVar1;
+  char cVar4;
+  ulonglong uVar5;
+  
+  iVar2 = __savegprlr_28();
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 != 0) {
+    uVar1 = CL_GetFirstActiveControllerIndex();
+    cVar4 = Live_IsSignedIn();
+    if (cVar4 != '\0') {
+      uVar1 = Live_GetXuid(uVar1);
+      *(undefined8 *)(iVar2 + 0x850) = uVar1;
+      goto LAB_823637cc;
+    }
+  }
+  *(undefined8 *)(iVar2 + 0x850) = 0;
+LAB_823637cc:
+  if (1 < *(uint *)(iVar2 + 0x410)) {
+    MyAssertHandler(0xffffffff8203b200,0x28e,0,0xffffffff8203b4b4,*(uint *)(iVar2 + 0x410),2);
+  }
+  *(undefined4 *)(iVar2 + 0x868) = 0;
+  *(undefined4 *)(iVar2 + 0x614) = 0;
+  *(undefined4 *)((*(int *)(iVar2 + 0x410) + 0x100) * 4 + iVar2) = 0;
+  *(int *)((*(int *)(iVar2 + 0x410) + 0x102) * 4 + iVar2) = *(int *)(iVar2 + 0x410) * 0x200 + iVar2;
+  uVar5 = (ulonglong)*(uint *)(iVar2 + 0x410) + 1;
+  uVar5 = uVar5 + ((longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) &
+                  0x7fffffff) * -2;
+  *(int *)(iVar2 + 0x410) = (int)uVar5;
+  if (1 < (uVar5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8203b200,0x296,0,0xffffffff8203b4b4,uVar5,2);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
 // 82363878  Init  (client/newsfeed.cpp:667)
 
 void Init(void *param_1,undefined4 param_2)
@@ -420,21 +927,141 @@ void Init(void *param_1,undefined4 param_2)
 
 // 82363908  Update  (client/newsfeed.cpp:689)
 
-void Update(void)
+void Update(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  int iVar4;
+  char cVar5;
+  undefined8 uVar3;
+  undefined1 auStack_230 [560];
+  
+  uVar2 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x2b5,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  iVar1 = (int)param_2;
+  if (*(int *)(iVar1 + 0x864) == -1) {
+    *(int *)(iVar1 + 0x864) = (int)uVar2;
+  }
+  else if ((int)uVar2 != *(int *)(iVar1 + 0x864)) {
+    Init(param_2,*(undefined4 *)(iVar1 + 0x860));
+    __restgprlr_28();
+    return;
+  }
+  iVar4 = FetchDataComplete(param_2);
+  if ((((iVar4 != 0) && (cVar5 = CL_AllLocalClientsDisconnected(), cVar5 != '\0')) &&
+      (*(int *)(iVar1 + 0x868) == 0)) &&
+     (iVar4 = Sys_Milliseconds(), *(int *)(iVar1 + 0x858) <= iVar4)) {
+    uVar3 = ParseSpecToDelim(param_2,0x5b,auStack_230,0x200);
+    AppendLocalizedStrings(param_2,auStack_230,uVar3);
+    cVar5 = *(char *)(iVar1 + *(int *)(iVar1 + 0x614) + 0x414);
+    if (cVar5 != '\0') {
+      if (cVar5 != '[') {
+        MyAssertHandler(0xffffffff8203b200,0x2dc,0,0xffffffff82000f98,0xffffffff8203b52c);
+      }
+      *(int *)(iVar1 + 0x614) = *(int *)(iVar1 + 0x614) + 1;
+      ParseSpecToDelim(param_2,0x5d,auStack_230,0x200);
+      if (*(char *)(*(int *)(iVar1 + 0x614) + iVar1 + 0x414) == ']') {
+        *(int *)(iVar1 + 0x614) = *(int *)(iVar1 + 0x614) + 1;
+        FetchData(uVar2,param_2,auStack_230);
+        goto LAB_82363a94;
+      }
+      Com_PrintError(1,0xffffffff8203b4f4);
+      RewindToLastCompleteItem(param_2);
+      AdvanceToNextSpecLine(param_2);
+    }
+    FinishUpdate(param_2);
+    __restgprlr_28();
+    return;
+  }
+LAB_82363a94:
+  __restgprlr_28();
+  return;
 }
 
 
 // 82363AA0  RunTest  (client/newsfeed.cpp:753)
 
-void RunTest(void)
+void RunTest(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  void *_Dst;
+  void *pvVar3;
+  undefined8 uVar2;
+  byte *pbVar4;
+  byte *pbVar5;
+  char *pcVar9;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  byte *_Dst_00;
+  
+  _Dst = (void *)__savegprlr_28();
+  memset(_Dst,0,0x870);
+  lVar6 = param_2;
+  do {
+    pcVar9 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar9 != '\0');
+  _Dst_00 = (byte *)((int)_Dst + 0x414);
+  pvVar3 = memcpy(_Dst_00,(void *)param_2,((int)lVar6 - (int)(void *)param_2) - 1);
+  iVar1 = *(int *)((int)_Dst + 0x868);
+  while (iVar1 != 1) {
+    uVar2 = CL_GetFirstActiveControllerIndex(pvVar3);
+    pvVar3 = (void *)Update(uVar2,_Dst);
+    iVar1 = *(int *)((int)_Dst + 0x868);
+  }
+  uVar7 = (ulonglong)*(uint *)((int)_Dst + 0x410) + 1;
+  uVar7 = uVar7 + ((longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0) &
+                  0x7fffffff) * -2;
+  *(int *)((int)_Dst + 0x410) = (int)uVar7;
+  lVar6 = param_3;
+  if (1 < (uVar7 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8203b200,0x2fa,0,0xffffffff8203b4b4,uVar7,2);
+  }
+  do {
+    pcVar9 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar9 != '\0');
+  uVar7 = (lVar6 - param_3) - 1;
+  pbVar5 = (byte *)(*(int *)((int)_Dst + 0x410) * 0x200 + (int)_Dst);
+  lVar6 = 0;
+  if ((uVar7 & 0xffffffff) != 0) {
+    pbVar4 = pbVar5 + (int)uVar7;
+    do {
+      lVar6 = (ulonglong)*pbVar5 - (ulonglong)*(byte *)param_3;
+      if (lVar6 != 0) break;
+      pbVar5 = pbVar5 + 1;
+      param_3 = param_3 + 1;
+    } while (pbVar5 != pbVar4);
+  }
+  lVar8 = param_2;
+  if ((int)lVar6 == 0) {
+    do {
+      pcVar9 = (char *)lVar8;
+      lVar8 = lVar8 + 1;
+    } while (*pcVar9 != '\0');
+    uVar7 = (lVar8 - param_2) - 1;
+    lVar6 = 0;
+    if ((uVar7 & 0xffffffff) != 0) {
+      pbVar5 = _Dst_00 + (int)uVar7;
+      do {
+        lVar6 = (ulonglong)*_Dst_00 - (ulonglong)*(byte *)param_2;
+        if (lVar6 != 0) break;
+        _Dst_00 = _Dst_00 + 1;
+        param_2 = param_2 + 1;
+      } while (_Dst_00 != pbVar5);
+    }
+    uVar2 = 1;
+    if ((int)lVar6 == 0) goto LAB_82363c2c;
+  }
+  uVar2 = 0;
+LAB_82363c2c:
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -443,8 +1070,147 @@ void RunTest(void)
 void TestUpdate_f(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte bVar1;
+  int iVar2;
+  bool bVar3;
+  void *_Dst;
+  void *pvVar5;
+  undefined8 uVar4;
+  longlong lVar6;
+  byte *pbVar7;
+  byte *pbVar8;
+  byte *_Src;
+  ulonglong uVar9;
+  byte *pbVar10;
+  longlong lVar11;
+  longlong lVar12;
+  byte *_Dst_00;
+  int iVar13;
+  undefined1 auStack_100 [16];
+  char *local_f0 [4];
+  char *local_e0;
+  char *local_dc;
+  char *local_d8;
+  char *local_d4;
+  char *local_d0;
+  char *local_cc;
+  char *local_c8;
+  undefined1 *local_c4;
+  char *local_c0;
+  char *local_b0 [44];
+  
   __savegprlr_18();
+  LargeLocal__LargeLocal(auStack_100,0x870);
+  _Dst = (void *)LargeLocal__GetBuf(auStack_100);
+  local_b0[1] = "[unknown]";
+  local_b0[2] = "incomplete [test";
+  local_b0[4] = "text [TTOKEN] text";
+  local_b0[5] = "text [TTOKEN]";
+  local_b0[6] = "[TTOKEN]";
+  local_b0[7] = "[TTOKEN] text";
+  local_b0[10] = "[TTOKEN] text TTOKEN]";
+  local_b0[0xb] = "[TTOKEN] text [TTOKEN";
+  local_b0[3] = "incomplete test]";
+  local_b0[0xc] = "[TTOKEN]\ntext [TTOKEN]";
+  local_b0[8] = "[TTOKEN] [TTOKEN]";
+  local_b0[9] = "[TTOKEN] text [TTOKEN]";
+  local_f0[3] = "incomplete test]";
+  local_b0[0] = "";
+  local_f0[0] = "";
+  local_f0[1] = "";
+  local_f0[2] = "";
+  local_d0 = "TTOKEN TTOKEN";
+  local_cc = "TTOKEN text TTOKEN";
+  local_c4 = &DAT_820068af;
+  local_e0 = "text TTOKEN text";
+  lVar11 = 0;
+  local_dc = "text TTOKEN";
+  lVar12 = 0;
+  local_d8 = "TTOKEN";
+  _Dst_00 = (byte *)((int)_Dst + 0x414);
+  local_d4 = "TTOKEN text";
+  iVar13 = 0;
+  local_c8 = "TTOKEN text TTOKEN]";
+  local_c0 = "TTOKEN\ntext TTOKEN";
+  do {
+    pbVar8 = *(byte **)((int)local_f0 + iVar13);
+    _Src = *(byte **)((int)local_b0 + iVar13);
+    memset(_Dst,0,0x870);
+    pbVar7 = _Src;
+    do {
+      bVar1 = *pbVar7;
+      pbVar7 = pbVar7 + 1;
+    } while (bVar1 != 0);
+    pvVar5 = memcpy(_Dst_00,_Src,(size_t)(pbVar7 + (-1 - (int)_Src)));
+    iVar2 = *(int *)((int)_Dst + 0x868);
+    while (iVar2 != 1) {
+      uVar4 = CL_GetFirstActiveControllerIndex(pvVar5);
+      pvVar5 = (void *)Update(uVar4,_Dst);
+      iVar2 = *(int *)((int)_Dst + 0x868);
+    }
+    uVar9 = (ulonglong)*(uint *)((int)_Dst + 0x410) + 1;
+    uVar9 = uVar9 + ((longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0) &
+                    0x7fffffff) * -2;
+    *(int *)((int)_Dst + 0x410) = (int)uVar9;
+    pbVar7 = pbVar8;
+    if (1 < (uVar9 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff8203b200,0x2fa,0,0xffffffff8203b4b4,uVar9,2);
+    }
+    do {
+      bVar1 = *pbVar7;
+      pbVar7 = pbVar7 + 1;
+    } while (bVar1 != 0);
+    pbVar10 = (byte *)(*(int *)((int)_Dst + 0x410) * 0x200 + (int)_Dst);
+    lVar6 = 0;
+    if (pbVar7 + (-1 - (int)pbVar8) != (byte *)0x0) {
+      pbVar7 = pbVar10 + (int)(pbVar7 + (-1 - (int)pbVar8));
+      do {
+        lVar6 = (ulonglong)*pbVar10 - (ulonglong)*pbVar8;
+        if (lVar6 != 0) break;
+        pbVar10 = pbVar10 + 1;
+        pbVar8 = pbVar8 + 1;
+      } while (pbVar10 != pbVar7);
+    }
+    pbVar8 = _Src;
+    if ((int)lVar6 == 0) {
+      do {
+        bVar1 = *pbVar8;
+        pbVar8 = pbVar8 + 1;
+      } while (bVar1 != 0);
+      iVar2 = -1 - (int)_Src;
+      lVar6 = 0;
+      if (pbVar8 + iVar2 != (byte *)0x0) {
+        pbVar7 = _Dst_00;
+        do {
+          lVar6 = (ulonglong)*pbVar7 - (ulonglong)*_Src;
+          if (lVar6 != 0) break;
+          pbVar7 = pbVar7 + 1;
+          _Src = _Src + 1;
+        } while (pbVar7 != _Dst_00 + (int)(pbVar8 + iVar2));
+      }
+      bVar3 = true;
+      if ((int)lVar6 != 0) goto LAB_82363f14;
+    }
+    else {
+LAB_82363f14:
+      bVar3 = false;
+    }
+    if (bVar3) {
+      Com_DPrintf(1,0xffffffff8203b568,lVar12);
+      lVar11 = lVar11 + 1;
+    }
+    else {
+      Com_DPrintf(1,0xffffffff8203b57c,lVar12);
+    }
+    iVar13 = iVar13 + 4;
+    lVar12 = lVar12 + 1;
+    if (0x33 < iVar13) {
+      Com_DPrintf(1,0xffffffff8203b550,lVar11,0xd);
+      LargeLocal___LargeLocal(auStack_100);
+      __restgprlr_18();
+      return;
+    }
+  } while( true );
 }
 
 
@@ -484,8 +1250,46 @@ void NewsFeed_Shutdown(void)
 void NewsFeed_Swap(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  char *pcVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar4;
+  
   __savegprlr_29();
+  bVar2 = false;
+  iVar3 = GetFeedForId();
+  if (iVar3 != 0) {
+    if (1 < *(uint *)(iVar3 + 0x410)) {
+      MyAssertHandler(0xffffffff8203b200,0x36a,0,0xffffffff8203b4b4,*(uint *)(iVar3 + 0x410),2);
+    }
+    pcVar1 = *(char **)((*(int *)(iVar3 + 0x410) + 0x102) * 4 + iVar3);
+    cVar4 = *pcVar1;
+    while (cVar4 != '\0') {
+      if (bVar2) {
+        cVar4 = I_isalnum();
+        if (cVar4 != '\0') break;
+      }
+      else if ((cVar4 == '\n') || (cVar4 == '\r')) {
+        bVar2 = true;
+      }
+      pcVar1 = pcVar1 + 1;
+      cVar4 = *pcVar1;
+    }
+    if (*pcVar1 == '\0') {
+      if (*(int *)(iVar3 + 0x868) == 1) {
+        ReInitCurrentBuffer(iVar3);
+        __restgprlr_29();
+        return;
+      }
+      *(int *)((*(int *)(iVar3 + 0x410) + 0x102) * 4 + iVar3) =
+           *(int *)(iVar3 + 0x410) * 0x200 + iVar3;
+      __restgprlr_29();
+      return;
+    }
+    *(char **)((*(int *)(iVar3 + 0x410) + 0x102) * 4 + iVar3) = pcVar1;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -497,14 +1301,13 @@ undefined4 NewsFeed_Get(void)
   int iVar1;
   
   iVar1 = GetFeedForId();
-  if (iVar1 == 0) {
-    return 0;
+  if (iVar1 != 0) {
+    if (1 < *(uint *)(iVar1 + 0x410)) {
+      MyAssertHandler(0xffffffff8203b200,0x398,0,0xffffffff8203b4b4,*(uint *)(iVar1 + 0x410),2);
+    }
+    return *(undefined4 *)((*(int *)(iVar1 + 0x410) + 0x102) * 4 + iVar1);
   }
-  if (1 < *(uint *)(iVar1 + 0x410)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8203b200,0x398,0,0xffffffff8203b4b4,*(uint *)(iVar1 + 0x410),2);
-  }
-  return *(undefined4 *)((*(int *)(iVar1 + 0x410) + 0x102) * 4 + iVar1);
+  return 0;
 }
 
 
@@ -520,6 +1323,25 @@ undefined4 NewsFeed_Length(void)
     return *(undefined4 *)((*(int *)(iVar1 + 0x410) + 0x100) * 4 + iVar1);
   }
   return 0;
+}
+
+
+// 82364170  NewsFeed_ForceUpdate  (client/newsfeed.cpp:941)
+
+void NewsFeed_ForceUpdate(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = GetFeedForId(1);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8203b200,0x3b1,0,0xffffffff82000f98,0xffffffff8203b24c);
+  }
+  uVar2 = Sys_Milliseconds();
+  *(undefined4 *)(iVar1 + 0x858) = uVar2;
+  *(undefined1 *)(iVar1 + 0x85c) = 1;
+  return;
 }
 
 
@@ -549,21 +1371,48 @@ void NewsFeed_FetchSpecs(void)
 
 // 823626E8  `vector_constructor_iterator'  (line unknown)
 
-void _vector_constructor_iterator_(void)
+void _vector_constructor_iterator_
+               (undefined8 param_1,longlong param_2,longlong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  
+  lVar1 = __savegprlr_28();
+  while (param_3 = param_3 + -1, -1 < param_3) {
+    (*param_4)(lVar1);
+    lVar1 = lVar1 + param_2;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 82362728  `vector_destructor_iterator'  (line unknown)
 
-void _vector_destructor_iterator_(void)
+void _vector_destructor_iterator_
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  longlong lVar2;
+  undefined4 uVar3;
+  int iVar4;
+  undefined4 uVar5;
+  int iVar6;
+  
+  iVar6 = (int)param_3;
+  uVar5 = (undefined4)((ulonglong)param_3 >> 0x20);
+  iVar4 = (int)param_2;
+  uVar3 = (undefined4)((ulonglong)param_2 >> 0x20);
+  lVar2 = __savegprlr_28();
+  lVar1 = CONCAT44(uVar5,iVar6);
+  lVar2 = (longlong)iVar4 * (longlong)iVar6 + lVar2;
+  while (lVar1 = lVar1 + -1, -1 < lVar1) {
+    lVar2 = lVar2 - CONCAT44(uVar3,iVar4);
+    (*param_4)(lVar2);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -586,8 +1435,22 @@ undefined4 * LeaderBoardRow<10>___scalar_deleting_destructor_(undefined4 *param_
 void bdLeaderBoardResult<LeaderBoardRow<10>,100>__bdLeaderBoardResult<LeaderBoardRow<10>,100>(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  lVar2 = 99;
+  puVar3 = puVar1;
+  do {
+    bdStatsInfo__bdStatsInfo(puVar3);
+    *puVar3 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    memset(puVar3 + 0x1c,0,0x28);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0x26;
+  } while (-1 < lVar2);
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
@@ -596,7 +1459,19 @@ void bdLeaderBoardResult<LeaderBoardRow<10>,100>__bdLeaderBoardResult<LeaderBoar
 void _dynamic_atexit_destructor_for__lbData__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  undefined4 *puVar2;
+  
   __savegprlr_29();
+  lVar1 = 99;
+  puVar2 = (undefined4 *)0x82b544f0;
+  do {
+    puVar2 = puVar2 + -0x26;
+    *puVar2 = &PTR_LeaderBoardRow<10>___scalar_deleting_destructor__8203b6f4;
+    bdStatsInfo___bdStatsInfo(puVar2);
+    lVar1 = lVar1 + -1;
+  } while (-1 < lVar1);
+  __restgprlr_29();
+  return;
 }
 

@@ -11,13 +11,35 @@ void GetLobbyMemberCount(void)
 }
 
 
-// 825B3930  GetLobbyMemberStat  (ui_mp/ui_party.cpp:29)
+// 825B38E8  GetLobbyMemberName  (ui_mp/ui_party.cpp:23)
 
-void GetLobbyMemberStat(void)
+void GetLobbyMemberName(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetMemberName(uVar2,uVar1,param_2);
+  return;
+}
+
+
+// 825B3930  GetLobbyMemberStat  (ui_mp/ui_party.cpp:29)
+
+void GetLobbyMemberStat(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetMemberStat(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -92,12 +114,37 @@ void IsLobbyMemberAway(undefined8 param_1,undefined8 param_2)
   
   cVar3 = Lobby_IsInLobby();
   if (cVar3 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216d8a0,0x3e,0,0xffffffff82000f98,0xffffffff82032564);
   }
   uVar1 = CL_ControllerIndexFromClientNum(param_1);
   uVar2 = Lobby_GetPartyData();
   PartyUI_IsMemberSlotAway(uVar2,uVar1,param_2);
+  return;
+}
+
+
+// 825B3B10  GetLobbyMemberPartyIcon  (ui_mp/ui_party.cpp:68)
+
+void GetLobbyMemberPartyIcon(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+
+{
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  
+  __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  iVar3 = PartyUI_ShowMemberPrivatePartyHostIcon(uVar2,uVar1,param_2);
+  if (iVar3 != 0) {
+    uVar4 = Material_RegisterHandle(0xffffffff82022d58,7);
+    *param_3 = uVar4;
+    __restgprlr_29();
+    return;
+  }
+  *param_3 = 0;
+  __restgprlr_29();
   return;
 }
 
@@ -119,11 +166,18 @@ void IsHeadsetPresentForLobbyMember(undefined8 param_1,undefined8 param_2)
 
 // 825B3BB8  GetLobbyMemberRankIcon  (ui_mp/ui_party.cpp:96)
 
-void GetLobbyMemberRankIcon(void)
+void GetLobbyMemberRankIcon(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_MemberRankIcon(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -144,11 +198,18 @@ void GetLobbyMemberRank(undefined8 param_1,undefined8 param_2)
 
 // 825B3C38  GetLobbyMemberPartyColor  (ui_mp/ui_party.cpp:107)
 
-void GetLobbyMemberPartyColor(void)
+void GetLobbyMemberPartyColor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_MemberPartyColor(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -158,6 +219,19 @@ void GetPartyMemberCount(void)
 
 {
   Party_CountUIVisibleMembers(0xffffffff82b55118);
+  return;
+}
+
+
+// 825B3C80  GetPartyMemberName  (ui_mp/ui_party.cpp:119)
+
+void GetPartyMemberName(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = CL_ControllerIndexFromClientNum();
+  PartyUI_GetMemberName(0xffffffff82b55118,uVar1,param_2);
   return;
 }
 
@@ -177,11 +251,32 @@ void GetPartyMemberXuid(undefined8 param_1,undefined8 param_2)
 
 // 825B3D00  IsPartyMemberAway  (ui_mp/ui_party.cpp:131)
 
-void IsPartyMemberAway(void)
+void IsPartyMemberAway(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (DAT_82b5700c == 0) {
+    MyAssertHandler(0xffffffff8216d8a0,0x84,0,0xffffffff82000f98,0xffffffff8203deec);
+  }
+  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
+  PartyUI_IsMemberSlotAway(0xffffffff82b55118,uVar1,param_2);
+  __restgprlr_29();
+  return;
+}
+
+
+// 825B3D70  IsPartyMemberTalking  (ui_mp/ui_party.cpp:139)
+
+void IsPartyMemberTalking(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = CL_ControllerIndexFromClientNum();
+  PartyUI_IsMemberTalking(0xffffffff82b55118,uVar1,param_2);
+  return;
 }
 
 
@@ -216,6 +311,19 @@ void GetPartyMemberPartyIcon(undefined8 param_1,undefined8 param_2,undefined4 *p
     uVar3 = Material_RegisterHandle(0xffffffff82022d58,7);
     *param_3 = uVar3;
   }
+  return;
+}
+
+
+// 825B3E68  IsHeadsetPresentForPartyMember  (ui_mp/ui_party.cpp:173)
+
+void IsHeadsetPresentForPartyMember(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined8 uVar1;
+  
+  uVar1 = CL_ControllerIndexFromClientNum();
+  PartyUI_MemberHasHeadset(0xffffffff82b55118,uVar1,param_2);
   return;
 }
 
@@ -256,7 +364,6 @@ undefined8 GetTeam(double param_1,undefined8 param_2,undefined8 param_3,int *par
   int iVar3;
   
   if (param_4 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8216d8a0,0xc3,0,0xffffffff82000f98,0xffffffff82012e2c);
   }
   if (param_1 == 27.0) {
@@ -300,100 +407,181 @@ void GetTeamMemberCount(undefined8 param_1)
 
 // 825B4078  GetTeamMemberXuid  (ui_mp/ui_party.cpp:243)
 
-void GetTeamMemberXuid(void)
+void GetTeamMemberXuid(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetTeamMemberXuid(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B40B0  GetTeamMemberName  (ui_mp/ui_party.cpp:249)
 
-void GetTeamMemberName(void)
+void GetTeamMemberName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetTeamMemberName(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B40E8  GetTeamMemberStat  (ui_mp/ui_party.cpp:255)
 
-void GetTeamMemberStat(void)
+void GetTeamMemberStat(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_28();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetTeamMemberStat(uVar2,uVar1,param_2,param_3,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825B4128  GetTeamMemberSkill  (ui_mp/ui_party.cpp:261)
 
-void GetTeamMemberSkill(void)
+void GetTeamMemberSkill(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_GetTeamMemberSkill(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B4160  IsTeamMemberTalking  (ui_mp/ui_party.cpp:268)
 
-void IsTeamMemberTalking(void)
+void IsTeamMemberTalking(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_IsTeamMemberTalking(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B4198  IsTeamMemberMuted  (ui_mp/ui_party.cpp:274)
 
-void IsTeamMemberMuted(void)
+void IsTeamMemberMuted(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_IsTeamMemberMuted(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B41D0  IsHeadsetPresentForTeamMember  (ui_mp/ui_party.cpp:280)
 
-void IsHeadsetPresentForTeamMember(void)
+void IsHeadsetPresentForTeamMember(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_TeamMemberHasHeadset(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B4208  GetTeamMemberRankIcon  (ui_mp/ui_party.cpp:287)
 
-void GetTeamMemberRankIcon(void)
+void GetTeamMemberRankIcon
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_28();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_TeamMemberRankIcon(uVar2,uVar1,param_2,param_3,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
 // 825B4248  GetTeamMemberRank  (ui_mp/ui_party.cpp:293)
 
-void GetTeamMemberRank(void)
+void GetTeamMemberRank(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  
   __savegprlr_29();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  PartyUI_TeamMemberRank(uVar2,uVar1,param_2,param_3);
+  __restgprlr_29();
+  return;
 }
 
 
 // 825B4280  GetTeamMembersPartyIcon  (ui_mp/ui_party.cpp:299)
 
-void GetTeamMembersPartyIcon(void)
+void GetTeamMembersPartyIcon
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  
   __savegprlr_28();
+  uVar1 = CL_ControllerIndexFromClientNum();
+  uVar2 = Lobby_GetPartyData();
+  iVar3 = PartyUI_ShowTeamMemberPrivatePartyHostIcon(uVar2,uVar1,param_2,param_3);
+  if (iVar3 != 0) {
+    uVar4 = Material_RegisterHandle(0xffffffff82022d58,7);
+    *param_4 = uVar4;
+    __restgprlr_28();
+    return;
+  }
+  *param_4 = 0;
+  __restgprlr_28();
+  return;
 }
 

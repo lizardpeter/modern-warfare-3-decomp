@@ -174,92 +174,93 @@ void Glass_GetBufferReserveCounts
 {
   byte bVar1;
   byte bVar2;
-  ushort *puVar3;
-  uint uVar4;
-  int iVar5;
-  undefined8 uVar6;
-  ulonglong uVar7;
-  undefined8 uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  int iVar13;
+  byte bVar3;
+  ushort *puVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 uVar7;
+  ulonglong uVar8;
+  undefined8 uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
+  int iVar15;
   ulonglong uVar16;
-  ulonglong uVar18;
+  ulonglong uVar17;
   ulonglong uVar19;
-  uint uVar17;
+  ulonglong uVar20;
+  uint uVar18;
   
-  iVar5 = __savegprlr_21();
-  bVar1 = *(byte *)(iVar5 + 0x16);
-  uVar16 = (ulonglong)bVar1;
-  uVar17 = (uint)bVar1;
-  bVar2 = *(byte *)(iVar5 + 0x17);
-  uVar12 = 0;
-  uVar7 = uVar16 - 2;
-  uVar18 = uVar16 + 1;
-  uVar15 = uVar16;
-  uVar19 = uVar16;
+  iVar6 = __savegprlr_21();
+  bVar1 = *(byte *)(iVar6 + 0x16);
+  uVar17 = (ulonglong)bVar1;
+  uVar18 = (uint)bVar1;
+  bVar2 = *(byte *)(iVar6 + 0x17);
+  bVar3 = *(byte *)(iVar6 + 0x18);
+  uVar13 = 0;
+  uVar8 = uVar17 - 2;
+  uVar19 = uVar17 + 1;
+  uVar16 = uVar17;
+  uVar20 = uVar17;
   if ((ulonglong)bVar2 != 0) {
     do {
-      puVar3 = (ushort *)((int)((uVar12 + uVar16 & 0xffffffff) << 2) + param_2);
-      uVar10 = (ulonglong)*(byte *)(puVar3 + 1);
-      uVar14 = (ulonglong)*puVar3;
-      lVar11 = uVar10 - 0xff;
-      uVar15 = uVar14 + uVar15;
-      uVar17 = (uint)uVar15;
-      lVar11 = lVar11 - ((uVar10 - 0x100) + (ulonglong)(lVar11 == 0));
-      uVar12 = uVar14 + uVar12 + 1;
-      lVar9 = uVar14 + lVar11;
-      uVar18 = lVar9 + uVar18 + 1;
-      uVar7 = (uVar14 - lVar11) + uVar7 + 2;
-      uVar19 = lVar9 + uVar19;
-    } while ((uVar12 & 0xffffffff) < (ulonglong)bVar2);
+      puVar4 = (ushort *)((int)((uVar13 + uVar17 & 0xffffffff) << 2) + param_2);
+      uVar11 = (ulonglong)*(byte *)(puVar4 + 1);
+      uVar14 = (ulonglong)*puVar4;
+      lVar12 = uVar11 - 0xff;
+      uVar16 = uVar14 + uVar16;
+      uVar18 = (uint)uVar16;
+      lVar12 = lVar12 - ((uVar11 - 0x100) + (ulonglong)(lVar12 == 0));
+      uVar13 = uVar14 + uVar13 + 1;
+      lVar10 = uVar14 + lVar12;
+      uVar19 = lVar10 + uVar19 + 1;
+      uVar8 = (uVar14 - lVar12) + uVar8 + 2;
+      uVar20 = lVar10 + uVar20;
+    } while ((uVar13 & 0xffffffff) < (ulonglong)bVar2);
   }
   if ((param_3 & 0xffffffff) == 0) {
-    param_3 = 0;
-    uVar8 = 0xffffffff82064d84;
-    uVar6 = 0x12e;
+    uVar9 = 0xffffffff82064d84;
+    uVar7 = 0x12e;
+    uVar16 = 0;
   }
   else {
-    if ((param_3 & 0xffffffff) < 4) {
-      uVar4 = (uint)param_3 & 1;
-      uVar15 = 0;
-      iVar13 = 0;
-      if ((param_3 & 2) == 0) {
-        iVar5 = 0;
-      }
-      else {
-        if ((ulonglong)*(byte *)(iVar5 + 0x18) != 0) {
-          do {
-            puVar3 = (ushort *)(((uint)bVar2 + (uint)bVar1 + (int)uVar15) * 4 + param_2);
-            lVar9 = (ulonglong)*(byte *)((int)puVar3 + 3) - 0xff;
-            lVar11 = (ulonglong)*(byte *)(puVar3 + 1) - 0xff;
-            uVar15 = *puVar3 + uVar15 + 1;
-            lVar9 = (ulonglong)*puVar3 +
-                    (lVar9 - (((ulonglong)*(byte *)((int)puVar3 + 3) - 0x100) +
-                             (ulonglong)(lVar9 == 0))) +
-                    (lVar11 - (((ulonglong)*(byte *)(puVar3 + 1) - 0x100) + (ulonglong)(lVar11 == 0)
-                              ));
-            uVar19 = (lVar9 + uVar19) - 1;
-            uVar18 = (lVar9 - 1U & 0x7fffffff) * 2 + uVar18;
-          } while ((uVar15 & 0xffffffff) < (ulonglong)*(byte *)(iVar5 + 0x18));
-        }
-        iVar5 = (int)((uVar18 & 0xffffffff) << 1);
-        iVar13 = (int)((uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
-      }
-      *param_4 = iVar5 + uVar4 * uVar17;
-      *param_5 = iVar13 + uVar4 * ((int)uVar7 + (int)((uVar7 & 0xffffffff) << 1)) + 1 & 0xfffffffe;
-      __restgprlr_21();
-      return;
-    }
-    uVar8 = 0xffffffff82064b70;
-    uVar6 = 0x12f;
+    if ((param_3 & 0xffffffff) < 4) goto LAB_8242cfc0;
+    uVar9 = 0xffffffff82064b70;
+    uVar7 = 0x12f;
+    uVar16 = param_3;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82064c20,uVar6,0,0xffffffff82064ba8,uVar8,param_3);
+  MyAssertHandler(0xffffffff82064c20,uVar7,0,0xffffffff82064ba8,uVar9,uVar16);
+LAB_8242cfc0:
+  uVar5 = (uint)param_3 & 1;
+  uVar16 = 0;
+  iVar6 = 0;
+  if ((param_3 & 2) == 0) {
+    iVar15 = 0;
+  }
+  else {
+    if ((ulonglong)bVar3 != 0) {
+      do {
+        puVar4 = (ushort *)(((uint)bVar2 + (uint)bVar1 + (int)uVar16) * 4 + param_2);
+        lVar10 = (ulonglong)*(byte *)((int)puVar4 + 3) - 0xff;
+        lVar12 = (ulonglong)*(byte *)(puVar4 + 1) - 0xff;
+        uVar16 = *puVar4 + uVar16 + 1;
+        lVar10 = (ulonglong)*puVar4 +
+                 (lVar10 - (((ulonglong)*(byte *)((int)puVar4 + 3) - 0x100) +
+                           (ulonglong)(lVar10 == 0))) +
+                 (lVar12 - (((ulonglong)*(byte *)(puVar4 + 1) - 0x100) + (ulonglong)(lVar12 == 0)));
+        uVar20 = (lVar10 + uVar20) - 1;
+        uVar19 = (lVar10 - 1U & 0x7fffffff) * 2 + uVar19;
+      } while ((uVar16 & 0xffffffff) < (ulonglong)bVar3);
+    }
+    iVar15 = (int)((uVar19 & 0xffffffff) << 1);
+    iVar6 = (int)((uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
+  }
+  *param_4 = iVar15 + uVar5 * uVar18;
+  *param_5 = iVar6 + uVar5 * ((int)uVar8 + (int)((uVar8 & 0xffffffff) << 1)) + 1 & 0xfffffffe;
+  __restgprlr_21();
+  return;
 }
 
 
@@ -284,21 +285,96 @@ void Glass_TransformVertexArray(undefined8 param_1,undefined8 param_2,int param_
 
 // 8242B4A8  Glass_TransformHoleVertices  (EffectsCore/fx_glass_draw.cpp:366)
 
-void Glass_TransformHoleVertices(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void Glass_TransformHoleVertices(undefined8 param_1,ushort *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  float *pfVar4;
+  int iVar5;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs36 [16];
+  
+  iVar5 = __savegprlr_18();
+  iVar1 = *(int *)(iVar5 + 0x840);
+  pfVar4 = (float *)(iVar1 * 0xc + iVar5);
+  *(int *)(iVar5 + 0x840) = iVar1 + (uint)*param_2;
+  fVar2 = (float)(longlong)(short)param_2[3];
+  fVar3 = (float)(longlong)(short)param_2[2];
+  *pfVar4 = *(float *)(iVar5 + 0x80c) * fVar3 + *(float *)(iVar5 + 0x818) * fVar2 +
+            *(float *)(iVar5 + 0x800);
+  pfVar4[1] = *(float *)(iVar5 + 0x81c) * fVar2 + *(float *)(iVar5 + 0x810) * fVar3 +
+              *(float *)(iVar5 + 0x804);
+  pfVar4[2] = fVar2 * *(float *)(iVar5 + 0x820) + fVar3 * *(float *)(iVar5 + 0x814) +
+              *(float *)(iVar5 + 0x808);
+  altv207_13(in_vs32,in_vs36);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8242B630  Glass_MakeFaceVerts  (EffectsCore/fx_glass_draw.cpp:383)
 
-void Glass_MakeFaceVerts(void)
+void Glass_MakeFaceVerts(undefined8 param_1,float *param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  int iVar10;
+  float *pfVar11;
+  undefined4 uVar12;
+  int iVar13;
+  longlong lVar14;
+  float *pfVar15;
+  float *pfVar16;
+  
+  iVar13 = (int)param_3;
+  uVar12 = (undefined4)((ulonglong)param_3 >> 0x20);
+  iVar10 = __savegprlr_28();
+  lVar14 = CONCAT44(uVar12,iVar13);
+  if (iVar13 == 0) {
+    MyAssertHandler(0xffffffff82064c20,0x184);
+  }
+  pfVar11 = (float *)R_GlassMeshVertIter_Begin(*(undefined2 *)(iVar10 + 0x858));
+  pfVar15 = (float *)(iVar10 + 0x600);
+  pfVar16 = (float *)(iVar10 + 8);
+  while( true ) {
+    fVar6 = param_2[4];
+    fVar7 = *pfVar15;
+    fVar8 = param_2[5];
+    fVar1 = pfVar16[-1];
+    fVar9 = param_2[6];
+    fVar2 = param_2[1];
+    fVar3 = *pfVar16;
+    fVar4 = param_2[2];
+    fVar5 = param_2[3];
+    *pfVar11 = *param_2 + pfVar16[-2];
+    lVar14 = lVar14 + -1;
+    pfVar11[1] = fVar1 + fVar2;
+    pfVar11[4] = fVar6;
+    pfVar11[2] = fVar3 + fVar4;
+    pfVar11[5] = fVar7;
+    pfVar11[3] = fVar5;
+    pfVar11[6] = fVar8;
+    pfVar11[7] = fVar9;
+    if (lVar14 == 0) break;
+    pfVar16 = pfVar16 + 3;
+    pfVar15 = pfVar15 + 1;
+    pfVar11 = (float *)R_GlassMeshVertIter_Next();
+  }
+  R_GlassMeshVertIter_End();
+  __restgprlr_28();
+  return;
 }
 
 
@@ -437,7 +513,7 @@ void Glass_MakeFaceIndices
 
 // 8242B950  Glass_TestCamAgainstBorderSegmentPlane  (EffectsCore/fx_glass_draw.cpp:529)
 
-void Glass_TestCamAgainstBorderSegmentPlane(int param_1,undefined8 param_2,int param_3,int param_4)
+double Glass_TestCamAgainstBorderSegmentPlane(int param_1,float *param_2,int param_3,int param_4)
 
 {
   float *pfVar1;
@@ -445,45 +521,143 @@ void Glass_TestCamAgainstBorderSegmentPlane(int param_1,undefined8 param_2,int p
   float local_40;
   float local_3c;
   float local_38;
-  undefined1 auStack_30 [24];
+  float local_30;
+  float local_2c;
+  float local_28;
   
   pfVar2 = (float *)(param_3 * 0xc + param_1);
   pfVar1 = (float *)(param_4 * 0xc + param_1);
   local_40 = *pfVar1 - *pfVar2;
   local_3c = pfVar1[1] - pfVar2[1];
   local_38 = pfVar1[2] - pfVar2[2];
-                    /* WARNING: Subroutine does not return */
-  Vec3Cross(param_1 + 0x824,&local_40,auStack_30);
+  Vec3Cross(param_1 + 0x824,&local_40,&local_30);
+  return (double)(local_28 * (param_2[2] - pfVar2[2]) +
+                 local_2c * (param_2[1] - pfVar2[1]) + local_30 * (*param_2 - *pfVar2));
 }
 
 
 // 8242BA20  Glass_DrawBorderSegment  (EffectsCore/fx_glass_draw.cpp:549)
 
-void Glass_DrawBorderSegment(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void Glass_DrawBorderSegment
+               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5,ulonglong param_6
+               )
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int iVar1;
+  float *pfVar2;
+  float *pfVar3;
+  undefined1 in_vs32 [16];
+  undefined1 in_vs50 [16];
+  undefined1 local_c8 [16];
+  float local_b8;
+  float local_b4;
+  float local_b0;
+  
+  iVar1 = __savegprlr();
+  R_GlassMeshVertIter_Begin(*(undefined2 *)(iVar1 + 0x858));
+  if ((param_6 & 0xff) == 0) {
+    pfVar3 = (float *)(param_2 * 0xc + iVar1);
+    pfVar2 = (float *)(param_4 * 0xc + iVar1);
+    local_b8 = *pfVar2 - *pfVar3;
+    local_b4 = pfVar2[1] - pfVar3[1];
+    local_b0 = pfVar2[2] - pfVar3[2];
+    Vec3Cross(iVar1 + 0x824,&local_b8,local_c8);
+    altv207_13(in_vs32,in_vs50);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  pfVar3 = (float *)(param_3 * 0xc + iVar1);
+  pfVar2 = (float *)(param_5 * 0xc + iVar1);
+  local_b8 = *pfVar2 - *pfVar3;
+  local_b4 = pfVar2[1] - pfVar3[1];
+  local_b0 = pfVar2[2] - pfVar3[2];
+  Vec3Cross(iVar1 + 0x824,&local_b8,local_c8);
+  altv207_13(in_vs32,in_vs50);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
 // 8242BEA0  Glass_DrawBorderSegmentIfVisible  (EffectsCore/fx_glass_draw.cpp:643)
 
-void Glass_DrawBorderSegmentIfVisible(void)
+void Glass_DrawBorderSegmentIfVisible
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5,undefined8 param_6,undefined8 param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  double dVar2;
+  
+  uVar1 = __savegprlr_26();
+  dVar2 = (double)Glass_TestCamAgainstBorderSegmentPlane();
+  if (dVar2 <= 0.0) {
+    __restgprlr_26(0);
+    return;
+  }
+  Glass_DrawBorderSegment(uVar1,param_3,param_4,param_5,param_6,param_7);
+  __restgprlr_26(1);
+  return;
 }
 
 
 // 8242BF18  Glass_MakeBorderGeometry  (EffectsCore/fx_glass_draw.cpp:656)
 
-void Glass_MakeBorderGeometry(void)
+void Glass_MakeBorderGeometry
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  double dVar9;
+  double dVar10;
+  
+  uVar1 = __savegprlr_18();
+  uVar2 = 0;
+  if ((param_5 & 0xffffffff) < 3) {
+    MyAssertHandler(0xffffffff82064c20,0x29a,0,0xffffffff82000f98,0xffffffff82064c74);
+  }
+  param_5 = param_4 + param_5;
+  dVar10 = 0.0;
+  uVar3 = param_5 - 3;
+  uVar7 = param_5 - 1;
+  uVar5 = param_4;
+  uVar8 = param_5 - 2;
+  do {
+    uVar4 = uVar7;
+    uVar7 = uVar8 - param_4;
+    if (0x20 < (uVar7 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar7,0x21);
+    }
+    if ((*(uint *)((int)&DAT_82992400 + (int)((uVar7 & 0xffffffff) << 2)) & param_3) == 0) {
+      dVar9 = (double)Glass_TestCamAgainstBorderSegmentPlane(uVar1,param_2,uVar8,uVar4);
+      if (dVar10 < dVar9) {
+        Glass_DrawBorderSegment(uVar1,uVar3,uVar8,uVar4,uVar5,uVar2);
+        uVar2 = 1;
+      }
+      else {
+        uVar2 = 0;
+      }
+    }
+    else {
+      uVar2 = 0;
+    }
+    uVar6 = uVar5 + 1;
+    uVar3 = uVar8;
+    uVar7 = uVar5;
+    uVar5 = uVar6;
+    uVar8 = uVar4;
+  } while ((uVar6 & 0xffffffff) != (param_5 & 0xffffffff));
+  __restgprlr_18();
+  return;
 }
 
 
@@ -511,7 +685,6 @@ void Glass_MakeSingleHoleBorderGeometry
   uVar7 = param_3;
   if ((param_4 & 0xffffffff) == 0xff) {
     if ((param_5 & 0xffffffff) < 3) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82064c20,0x2ca,0,0xffffffff82000f98,0xffffffff82064c84);
     }
     lVar2 = param_3 + param_5;
@@ -521,7 +694,6 @@ void Glass_MakeSingleHoleBorderGeometry
   }
   else {
     if ((param_5 & 0xffffffff) < 2) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82064c20,0x2ba,0,0xffffffff82000f98,0xffffffff82064c9c);
     }
     lVar2 = param_3 + param_5;
@@ -561,21 +733,202 @@ LAB_8242c14c:
 
 // 8242C1B8  Glass_MakeAllHoleBorderGeometry  (EffectsCore/fx_glass_draw.cpp:736)
 
-void Glass_MakeAllHoleBorderGeometry(void)
+void Glass_MakeAllHoleBorderGeometry
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  ushort *puVar1;
+  undefined8 uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  bool bVar13;
+  double dVar14;
+  double dVar15;
+  
+  uVar2 = __savegprlr_16();
+  uVar3 = (param_4 & 0x3fffffff) * 4 + param_3;
+  dVar15 = 0.0;
+  do {
+    puVar1 = (ushort *)param_3;
+    uVar7 = (ulonglong)*(byte *)(puVar1 + 1);
+    uVar10 = (ulonglong)*puVar1;
+    if (uVar7 == 0xff) {
+      if (uVar10 < 3) {
+        MyAssertHandler(0xffffffff82064c20,0x2ca,0,0xffffffff82000f98,0xffffffff82064c84);
+      }
+      lVar4 = uVar10 + param_5;
+      uVar6 = lVar4 - 3;
+      uVar9 = lVar4 - 2;
+      uVar7 = lVar4 - 1;
+LAB_8242c2c8:
+      bVar5 = false;
+    }
+    else {
+      if (uVar10 < 2) {
+        MyAssertHandler(0xffffffff82064c20,0x2ba,0,0xffffffff82000f98,0xffffffff82064c9c);
+      }
+      lVar4 = uVar10 + param_5;
+      uVar11 = uVar7;
+      if (uVar10 != 2) {
+        uVar11 = lVar4 - 3;
+      }
+      uVar6 = lVar4 - 2;
+      uVar9 = lVar4 - 1;
+      dVar14 = (double)Glass_TestCamAgainstBorderSegmentPlane(uVar2,param_2,uVar6,uVar9);
+      if (dVar14 <= dVar15) goto LAB_8242c2c8;
+      Glass_DrawBorderSegment(uVar2,uVar11,uVar6,uVar9,uVar7,0);
+      bVar5 = true;
+    }
+    uVar11 = param_5;
+    do {
+      uVar8 = uVar7;
+      dVar14 = (double)Glass_TestCamAgainstBorderSegmentPlane(uVar2,param_2,uVar9,uVar8);
+      bVar13 = dVar15 < dVar14;
+      if (bVar13) {
+        Glass_DrawBorderSegment(uVar2,uVar6,uVar9,uVar8,uVar11,bVar5);
+      }
+      uVar12 = uVar11 + 1;
+      uVar6 = uVar9;
+      uVar7 = uVar11;
+      uVar9 = uVar8;
+      uVar11 = uVar12;
+      bVar5 = bVar13;
+    } while ((uVar12 & 0xffffffff) != (uVar10 + param_5 & 0xffffffff));
+    param_5 = *puVar1 + param_5;
+    param_3 = (ulonglong)*puVar1 * 4 + param_3 + 4;
+    if ((param_3 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+      __restgprlr_16();
+      return;
+    }
+  } while( true );
 }
 
 
 // 8242C350  Glass_MakeAllCrackBorderGeometry  (EffectsCore/fx_glass_draw.cpp:754)
 
-void Glass_MakeAllCrackBorderGeometry(void)
+void Glass_MakeAllCrackBorderGeometry
+               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  bool bVar1;
+  undefined1 uVar2;
+  undefined1 uVar3;
+  char cVar4;
+  char cVar5;
+  undefined4 uVar6;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  ulonglong uVar10;
+  int iVar11;
+  ulonglong uVar12;
+  ushort *puVar13;
+  uint uVar14;
+  undefined8 uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  double dVar18;
+  double dVar19;
+  char acStack_d1 [209];
+  
+  iVar9 = __savegprlr();
+  dVar19 = 0.0;
+  uVar10 = param_3;
+  do {
+    uVar12 = uVar10 + 4;
+    puVar13 = (ushort *)uVar10;
+    if (*puVar13 == 0) {
+      if ((*(char *)(puVar13 + 1) == -1) || (*(char *)((int)puVar13 + 3) == -1)) {
+        MyAssertHandler(0xffffffff82064c20,0x30b,0,0xffffffff82000f98,0xffffffff82064cb8);
+      }
+      uVar2 = *(undefined1 *)(puVar13 + 1);
+      uVar3 = *(undefined1 *)((int)puVar13 + 3);
+      dVar18 = (double)Glass_TestCamAgainstBorderSegmentPlane(iVar9,param_2,uVar2,uVar3);
+      if (dVar19 < dVar18) {
+        Glass_DrawBorderSegment(iVar9,uVar2,uVar2,uVar3,uVar3,0);
+      }
+      else {
+        Glass_DrawBorderSegment(iVar9,uVar3,uVar3,uVar2,uVar2,0);
+      }
+    }
+    else {
+      uVar6 = *(undefined4 *)(iVar9 + 0x840);
+      Glass_TransformVertexArray(iVar9,uVar12);
+      bVar1 = *(char *)(puVar13 + 1) != -1;
+      if (bVar1) {
+        acStack_d1[2] = *(char *)(puVar13 + 1);
+      }
+      uVar10 = (ulonglong)*puVar13;
+      iVar11 = 0;
+      if (uVar10 != 0) {
+        uVar17 = uVar10;
+        do {
+          acStack_d1[iVar11 + (uint)bVar1 + 2] = (char)iVar11 + (char)uVar6;
+          iVar11 = iVar11 + 1;
+          uVar17 = uVar17 - 1;
+        } while (uVar17 != 0);
+      }
+      uVar10 = uVar10 + bVar1;
+      if (*(char *)((int)puVar13 + 3) != -1) {
+        acStack_d1[(int)uVar10 + 2] = *(char *)((int)puVar13 + 3);
+        uVar10 = uVar10 + 1;
+      }
+      uVar14 = 0;
+      uVar15 = 0;
+      uVar17 = 1;
+      acStack_d1[1] = acStack_d1[2];
+      acStack_d1[(int)uVar10 + 2] = acStack_d1[(int)uVar10 + 1];
+      if (1 < uVar10) {
+        do {
+          iVar11 = (int)uVar17;
+          cVar4 = acStack_d1[iVar11 + 1];
+          cVar5 = acStack_d1[iVar11 + 2];
+          dVar18 = (double)Glass_TestCamAgainstBorderSegmentPlane(iVar9,param_2,cVar4,cVar5);
+          if (dVar19 < dVar18) {
+            Glass_DrawBorderSegment
+                      (iVar9,acStack_d1[iVar11],cVar4,cVar5,acStack_d1[iVar11 + 3],uVar15);
+            uVar15 = 1;
+          }
+          else {
+            uVar16 = uVar10 - uVar17;
+            if (0x20 < (uVar16 & 0xffffffff)) {
+              MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar16,0x21);
+            }
+            uVar15 = 0;
+            uVar14 = *(uint *)((int)&DAT_82992400 + (int)((uVar16 & 0xffffffff) << 2)) | uVar14;
+          }
+          uVar17 = uVar17 + 1;
+        } while ((uVar17 & 0xffffffff) < uVar10);
+      }
+      lVar8 = -1;
+      for (; uVar14 != 0; uVar14 = uVar14 & ~uVar7) {
+        uVar17 = LZCOUNT(uVar14);
+        if (0x20 < uVar17) {
+          MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar17,0x21);
+        }
+        iVar11 = (int)(uVar10 - uVar17);
+        uVar7 = *(uint *)((int)&DAT_82992400 + (int)(uVar17 << 2));
+        Glass_DrawBorderSegment
+                  (iVar9,acStack_d1[iVar11 + 3],acStack_d1[iVar11 + 2],acStack_d1[iVar11 + 1],
+                   acStack_d1[iVar11],(int)lVar8 + -1 == iVar11);
+        lVar8 = uVar10 - uVar17;
+      }
+      uVar12 = (ulonglong)*puVar13 * 4 + uVar12;
+    }
+    uVar10 = uVar12;
+  } while ((uVar12 & 0xffffffff) !=
+           (ulonglong)(uint)((int)((param_4 & 0xffffffff) << 2) + (int)param_3));
+  __restgprlr();
+  return;
 }
 
 
@@ -703,13 +1056,194 @@ void Glass_MakePieceGeometry
 }
 
 
-// 8242D598  Glass_GenerateVerts  (EffectsCore/fx_glass_draw.cpp:1031)
+// 8242D2F8  Glass_DrawPiece  (EffectsCore/fx_glass_draw.cpp:971)
 
-void Glass_GenerateVerts(void)
+/* WARNING: Removing unreachable block (ram,0x8242d4f0) */
+
+void Glass_DrawPiece(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+                    undefined8 param_5,ulonglong param_6,undefined1 *param_7,undefined8 param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  float fVar6;
+  float fVar7;
+  undefined8 uVar8;
+  char cVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  int iVar13;
+  undefined4 in_stack_00000054;
+  int in_stack_0000005c;
+  uint local_900;
+  uint local_8fc [3];
+  undefined1 auStack_8f0 [2132];
+  undefined4 local_9c;
+  undefined1 auStack_98 [4];
+  uint local_94;
+  uint local_90;
+  undefined4 local_8c;
+  
+  uVar8 = __savegprlr_19();
+  iVar4 = (int)param_8;
+  local_8c = *(undefined4 *)(iVar4 + 0x34);
+  Glass_GetBufferReserveCounts(param_3,param_5,in_stack_00000054,&local_900,local_8fc);
+  uVar12 = (ulonglong)local_8fc[0];
+  if (uVar12 == 0) {
+    MyAssertHandler(0xffffffff82064c20,0x3dd,0,0xffffffff82000f98,0xffffffff82064e54);
+  }
+  uVar11 = (ulonglong)local_900;
+  cVar9 = R_ReserveGlassMeshVerts(uVar11,auStack_98);
+  if ((cVar9 != '\0') && (cVar9 = R_ReserveGlassMeshIndices(uVar12,&local_9c), cVar9 != '\0')) {
+    Glass_MakePieceGeometry(auStack_8f0,param_2,param_3,param_4,param_5,param_8,in_stack_00000054);
+    uVar10 = (ulonglong)local_90;
+    if (uVar10 != 0) {
+      if (uVar12 < uVar10) {
+        MyAssertHandler(0xffffffff82064c20,0x3e6,0,0xffffffff82064e1c,uVar10,uVar12);
+      }
+      if (uVar11 < local_94) {
+        MyAssertHandler(0xffffffff82064c20,999,0,0xffffffff82064de4,(ulonglong)local_94,uVar11);
+      }
+      if ((param_6 & 0xffff) != 0) {
+        iVar13 = *(int *)((int)param_4 + 0x18);
+        if ((iVar13 == 0) || (iVar3 = *(int *)((int)param_4 + 0x1c), iVar3 == 0)) goto LAB_8242d588;
+        iVar5 = (int)param_3;
+        if (((*(ushort *)(iVar5 + 0x1a) & 1) != 0) && (*(char *)(iVar4 + 0xc) == '\0')) {
+          iVar13 = iVar3;
+        }
+        if (*(char *)(iVar4 + 0x24) == '\0') {
+          MyAssertHandler(0xffffffff82064c20,0x3f3,0,0xffffffff82000f98,0xffffffff82064dd0);
+        }
+        iVar3 = (int)param_2;
+        fVar1 = *(float *)(iVar4 + 0x10) - *(float *)(iVar3 + 0x10);
+        fVar6 = *(float *)(iVar4 + 0x18) - *(float *)(iVar3 + 0x18);
+        fVar7 = *(float *)(iVar4 + 0x14) - *(float *)(iVar3 + 0x14);
+        fVar6 = (SQRT(fVar7 * fVar7 + fVar6 * fVar6 + fVar1 * fVar1) - *(float *)(iVar3 + 0x1c)) *
+                *(float *)(iVar4 + 0x1c);
+        iVar4 = (uint)*(byte *)(iVar5 + 0x10) * 4;
+        uVar2 = *(ushort *)(iVar5 + 0x1a);
+        fVar1 = *(float *)(iVar4 + in_stack_0000005c);
+        if (fVar6 - fVar1 < 0.0) {
+          fVar1 = fVar6;
+        }
+        *(float *)(iVar4 + in_stack_0000005c) = fVar1;
+        R_AddGlassSurf(iVar13,*param_7,param_7[1],param_6,local_9c,local_90,uVar8,~(uVar2 >> 1) & 1)
+        ;
+      }
+    }
+    if (local_94 < uVar11) {
+      R_ReturnGlassMeshVerts(uVar11 - local_94);
+    }
+    if (local_90 < uVar12) {
+      R_ReturnGlassMeshIndices(uVar12 - ((ulonglong)(local_90 + 1) & 0xfffffffe));
+    }
+  }
+LAB_8242d588:
+  __restgprlr_19();
+  return;
+}
+
+
+// 8242D598  Glass_GenerateVerts  (EffectsCore/fx_glass_draw.cpp:1031)
+
+void Glass_GenerateVerts(undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  int iVar5;
+  int iVar6;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  byte bVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
+  longlong lVar14;
+  longlong lVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  uint uVar18;
+  
+  iVar5 = __savegprlr();
+  Profile_Begin(0x1bc);
+  iVar3 = (int)param_2;
+  if (*(int *)(iVar3 + 0x4800) != 0) {
+    iVar6 = DB_AssetCount(0x12);
+    if (iVar6 != 1) {
+      MyAssertHandler(0xffffffff82064c20,0x424,0,0xffffffff82000f98,0xffffffff8202b60c);
+    }
+    DAT_832ee020 = 1;
+    R_BeginGlassMeshVerts();
+    uVar2 = *(uint *)(iVar5 + 0x58);
+    dataCacheBlockTouch((ulonglong)uVar2);
+    uVar18 = 0;
+    if (0x300 < *(uint *)(iVar3 + 0x4800)) {
+      uVar18 = *(uint *)(iVar3 + 0x4800) - 0x300;
+      R_WarnOncePerFrame(0x17);
+    }
+    lVar13 = ((ulonglong)uVar18 & 0x1fffffff) * 8 + param_2;
+    lVar12 = (ulonglong)*(ushort *)lVar13 * 0x20;
+    lVar11 = lVar12 + (ulonglong)*(uint *)(iVar5 + 0x34);
+    dataCacheBlockTouch(lVar11);
+    lVar12 = lVar12 + (ulonglong)*(uint *)(iVar5 + 0x38);
+    dataCacheBlockTouch(lVar12);
+    uVar17 = (ulonglong)*(ushort *)lVar13;
+    do {
+      bVar9 = *(byte *)((int)lVar13 + 2);
+      if (bVar9 == 0) {
+        bVar9 = 0;
+        uVar7 = 0x44d;
+        uVar8 = 0xffffffff82064d84;
+LAB_8242d6c4:
+        MyAssertHandler(0xffffffff82064c20,uVar7,0,0xffffffff82064ba8,uVar8,bVar9);
+      }
+      else if (3 < bVar9) {
+        uVar8 = 0xffffffff82064b70;
+        uVar7 = 0x44e;
+        goto LAB_8242d6c4;
+      }
+      uVar18 = uVar18 + 1;
+      lVar13 = lVar13 + 8;
+      lVar16 = lVar12;
+      lVar14 = lVar11;
+      uVar10 = uVar17;
+      if (uVar18 != *(uint *)(iVar3 + 0x4800)) {
+        uVar10 = (ulonglong)*(ushort *)lVar13;
+        lVar4 = uVar10 * 0x20;
+        lVar14 = lVar4 + (ulonglong)*(uint *)(iVar5 + 0x34);
+        dataCacheBlockTouch(lVar14);
+        lVar16 = lVar4 + (ulonglong)*(uint *)(iVar5 + 0x38);
+        dataCacheBlockTouch(lVar4 + (ulonglong)*(uint *)(iVar5 + 0x38));
+      }
+      iVar6 = (int)lVar12;
+      lVar15 = (ulonglong)*(byte *)(iVar6 + 0x10) * 0x2c;
+      dataCacheBlockTouch(lVar15 + (ulonglong)*(uint *)(iVar5 + 0x30));
+      lVar4 = (ulonglong)*(ushort *)(iVar6 + 0xe) * 4;
+      dataCacheBlockTouch(lVar4 + (ulonglong)*(uint *)(iVar5 + 0x40));
+      uVar1 = *(ushort *)(iVar6 + 0xc);
+      dataCacheBlockTouch((ulonglong)uVar1 * 0x34 + (ulonglong)*(uint *)(iVar5 + 0x5c));
+      Glass_DrawPiece(uVar17,lVar11,lVar12,lVar15 + (ulonglong)*(uint *)(iVar5 + 0x30),
+                      lVar4 + (ulonglong)*(uint *)(iVar5 + 0x40),
+                      *(undefined2 *)((uint)uVar1 * 2 + uVar2),
+                      ((ulonglong)uVar1 + 0x2000) * 2 + param_2,param_3);
+      lVar12 = lVar16;
+      lVar11 = lVar14;
+      uVar17 = uVar10;
+    } while (uVar18 != *(uint *)(iVar3 + 0x4800));
+    R_EndGlassMeshVerts();
+    *(undefined8 *)(*(int *)((int)param_3 + 0x3c) + 0x4800) = 0;
+  }
+  Profile_EndInternal(0);
+  __restgprlr();
+  return;
 }
 
 
@@ -727,18 +1261,208 @@ bool Glass_CompareVisRefs(int param_1,int param_2)
 void FX_GlassUpdatePieceLightingCmd(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  int *piVar1;
+  byte bVar2;
+  float fVar3;
+  bool bVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  uint uVar8;
+  int *piVar9;
+  float *pfVar11;
+  undefined8 uVar10;
+  int iVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  uint *puVar17;
+  longlong lVar16;
+  int iVar18;
+  uint uVar19;
+  uint uVar20;
+  uint uVar21;
+  ulonglong uVar22;
+  undefined8 uVar23;
+  
+  pfVar11 = (float *)__savegprlr();
+  piVar9 = DAT_8333cb08;
+  uVar8 = DAT_8333cad4;
+  if (DAT_8333cad4 != 0) {
+    fVar3 = pfVar11[3];
+    uVar21 = 0;
+    iVar12 = *DAT_8333cb08;
+    piVar1 = DAT_8333cb08;
+    while (iVar12 == 0) {
+      if (DAT_8333cad4 <= uVar21) goto LAB_8242dfe4;
+      piVar1 = piVar1 + 1;
+      uVar21 = uVar21 + 1;
+      iVar12 = *piVar1;
+    }
+    if (uVar21 < DAT_8333cad4) {
+      uVar20 = DAT_8333cb08[uVar21];
+      uVar22 = LZCOUNT(uVar20);
+      if (0x20 < uVar22) {
+        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar22,0x21);
+      }
+      uVar13 = ((ulonglong)uVar21 & 0x7ffffff) << 5;
+      uVar20 = uVar20 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar22 << 2));
+      lVar15 = (uVar13 & 0x7ffffff | uVar22) * 0x20 + (ulonglong)DAT_8333caf8;
+      dataCacheBlockTouch(lVar15);
+      *(undefined4 *)((int)fVar3 + 0x4800) = 0;
+      uVar23 = 0x3ff0000000000000;
+      bVar4 = false;
+      uVar22 = uVar13 | uVar22;
+      do {
+        if (uVar20 == 0) {
+          puVar17 = (uint *)(piVar9 + uVar21);
+          do {
+            uVar21 = uVar21 + 1;
+            puVar17 = puVar17 + 1;
+            if (uVar21 == uVar8) {
+              bVar4 = true;
+              lVar16 = lVar15;
+              uVar13 = uVar22;
+              goto LAB_8242de7c;
+            }
+            uVar20 = *puVar17;
+          } while (uVar20 == 0);
+        }
+        uVar13 = LZCOUNT(uVar20);
+        if (0x20 < uVar13) {
+          MyAssertHandler(0xffffffff82003018,0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",
+                          uVar13,0x21);
+        }
+        uVar14 = ((ulonglong)uVar21 & 0x7ffffff) << 5;
+        uVar20 = uVar20 & ~*(uint *)((int)&DAT_82992400 + (int)(uVar13 << 2));
+        lVar16 = (uVar14 & 0x7ffffff | uVar13) * 0x20 + (ulonglong)DAT_8333caf8;
+        dataCacheBlockTouch(lVar16);
+        uVar13 = uVar14 | uVar13;
+LAB_8242de7c:
+        if (DAT_8333cad0 <= uVar22) {
+          MyAssertHandler(0xffffffff82064c20,0x4c2,0,0xffffffff82062fb0,uVar22,DAT_8333cad0);
+        }
+        bVar2 = *(byte *)(DAT_8333cb10 + (int)uVar22);
+        if (bVar2 != 0) {
+          if (3 < bVar2) {
+            uVar10 = va(0xffffffff82064e94,bVar2,uVar22);
+            MyAssertHandler(0xffffffff82064c20,0x4c6,0,0xffffffff820011f4,0xffffffff82064eb0,uVar10)
+            ;
+          }
+          *(short *)(*(int *)((int)fVar3 + 0x4800) * 8 + (int)fVar3) = (short)uVar22;
+          *(undefined1 *)(*(int *)((int)fVar3 + 0x4800) * 8 + (int)fVar3 + 2) =
+               *(undefined1 *)(DAT_8333cb10 + (int)uVar22);
+          iVar12 = *(int *)((int)fVar3 + 0x4800);
+          *(undefined1 *)(iVar12 * 8 + (int)fVar3 + 3) = 0;
+          iVar18 = (int)lVar15;
+          fVar7 = pfVar11[2] - *(float *)(iVar18 + 0x18);
+          fVar5 = *pfVar11 - *(float *)(iVar18 + 0x10);
+          fVar6 = pfVar11[1] - *(float *)(iVar18 + 0x14);
+          *(float *)(*(int *)((int)fVar3 + 0x4800) * 8 + (int)fVar3 + 4) =
+               fVar6 * fVar6 + fVar5 * fVar5 + fVar7 * fVar7;
+          iVar18 = *(int *)((int)fVar3 + 0x4800) + 1;
+          *(int *)((int)fVar3 + 0x4800) = iVar18;
+          if (iVar18 == 0x800) break;
+          uVar19 = (uint)*(ushort *)((int)(uVar22 << 5) + DAT_8333cafc + 0xc);
+          iVar18 = uVar19 * 0x34 + DAT_8333cb20 + 0x10;
+          R_AllocModelLighting_Sphere
+                    (uVar23,iVar18,iVar18,iVar12,uVar19 * 2 + DAT_8333cb1c,
+                     (uVar19 + 0x2000) * 2 + (int)fVar3,0);
+        }
+        lVar15 = lVar16;
+        uVar22 = uVar13;
+      } while (!bVar4);
+      iVar12 = *(int *)((int)fVar3 + 0x4800) * 8 + (int)fVar3;
+      std___Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                (fVar3,iVar12,iVar12 - (int)fVar3 >> 3,0xffffffff8242c920);
+    }
+  }
+LAB_8242dfe4:
+  __restgprlr();
+  return;
 }
 
 
 // 8242C940  FX_GlassTris_AddGlassPieceVerts  (EffectsCore/fx_glass_draw.cpp:1247)
 
-void FX_GlassTris_AddGlassPieceVerts(void)
+void FX_GlassTris_AddGlassPieceVerts
+               (undefined8 param_1,int param_2,longlong param_3,float *param_4,int param_5,
+               uint *param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  float *pfVar8;
+  ulonglong uVar7;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  
+  iVar4 = __savegprlr_18();
+  if ((param_7 & 0xffffffff) <
+      ((ulonglong)*(byte *)(iVar4 + 0x16) + (ulonglong)*param_6 & 0xffffffff)) {
+LAB_8242c97c:
+    __restgprlr_18(0);
+    return;
+  }
+  uVar9 = 0;
+  uVar7 = 0;
+  if ((ulonglong)*(byte *)(iVar4 + 0x16) != 0) {
+    lVar11 = param_3 + -2;
+    do {
+      if ((param_7 & 0xffffffff) <= (ulonglong)*param_6) {
+        MyAssertHandler(0xffffffff82064c20,0x4ea,0,0xffffffff82064d18,(ulonglong)*param_6,param_7);
+      }
+      iVar1 = (int)lVar11;
+      lVar11 = lVar11 + 4;
+      fVar2 = (float)(longlong)(int)*(short *)(iVar1 + 2);
+      fVar3 = (float)(longlong)(int)*(short *)lVar11;
+      uVar9 = uVar9 + 1;
+      pfVar8 = (float *)(*param_6 * 0xc + param_5);
+      *pfVar8 = param_4[3] * fVar3 + *param_4 * fVar2 + *(float *)(param_2 + 0x10);
+      pfVar8[1] = param_4[4] * fVar3 + fVar2 * param_4[1] + *(float *)(param_2 + 0x14);
+      pfVar8[2] = param_4[2] * fVar2 + fVar3 * param_4[5] + *(float *)(param_2 + 0x18);
+      *param_6 = *param_6 + 1;
+      uVar7 = (ulonglong)*(byte *)(iVar4 + 0x16);
+    } while ((uVar9 & 0xffffffff) < uVar7);
+  }
+  uVar7 = uVar7 * 4 + param_3;
+  uVar9 = (ulonglong)*(byte *)(iVar4 + 0x17) * 4 + uVar7;
+  if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+    do {
+      uVar5 = (ulonglong)*(ushort *)uVar7;
+      if ((param_7 & 0xffffffff) < (uVar5 + *param_6 & 0xffffffff)) goto LAB_8242c97c;
+      uVar10 = 0;
+      uVar6 = 0;
+      if (uVar5 != 0) {
+        lVar11 = uVar7 + 2;
+        do {
+          if ((param_7 & 0xffffffff) <= (ulonglong)*param_6) {
+            MyAssertHandler(0xffffffff82064c20,0x504,0,0xffffffff82064d18,(ulonglong)*param_6,
+                            param_7);
+          }
+          iVar4 = (int)lVar11;
+          lVar11 = lVar11 + 4;
+          fVar3 = (float)(longlong)*(short *)(iVar4 + 2);
+          fVar2 = (float)(longlong)(int)*(short *)lVar11;
+          uVar6 = (ulonglong)*(ushort *)uVar7;
+          uVar10 = uVar10 + 1;
+          pfVar8 = (float *)(*param_6 * 0xc + param_5);
+          *pfVar8 = param_4[3] * fVar2 + *param_4 * fVar3 + *(float *)(param_2 + 0x10);
+          pfVar8[1] = param_4[4] * fVar2 + fVar3 * param_4[1] + *(float *)(param_2 + 0x14);
+          pfVar8[2] = param_4[2] * fVar3 + fVar2 * param_4[5] + *(float *)(param_2 + 0x18);
+          *param_6 = *param_6 + 1;
+        } while ((uVar10 & 0xffffffff) < uVar6);
+      }
+      uVar7 = uVar6 * 4 + uVar7 + 4;
+    } while ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff));
+  }
+  __restgprlr_18(1);
+  return;
 }
 
 
@@ -786,7 +1510,6 @@ LAB_8242cc40:
     if (2 < (ulonglong)*(byte *)(iVar5 + 0x16)) {
       do {
         if ((param_7 & 0xffffffff) <= (ulonglong)*param_6) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82064c20,0x533,0,0xffffffff82064d50,(ulonglong)*param_6,param_7)
           ;
         }
@@ -814,7 +1537,6 @@ LAB_8242cc40:
         uVar6 = (ulonglong)*param_6;
         if ((param_7 & 0xffffffff) < (uVar6 + 1 & 0xffffffff)) goto LAB_8242cc40;
         if ((param_7 & 0xffffffff) <= uVar6) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff82064c20,0x54c,0,0xffffffff82064d50,uVar6,param_7);
         }
         bVar3 = pbVar13[(int)lVar14];
@@ -909,6 +1631,29 @@ void FX_GlassTris_AddGlassPiece
 }
 
 
+// 8242D958  FX_GlassTrisInPiece  (EffectsCore/fx_glass_draw.cpp:1433)
+
+void FX_GlassTrisInPiece(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
+                        ,undefined8 param_5,ulonglong param_6,undefined8 param_7)
+
+{
+  undefined8 uVar1;
+  undefined4 local_50 [20];
+  
+  uVar1 = __savegprlr_24();
+  if (0xffff < (param_6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82064c20,0x59d,0,0xffffffff82000f98,0xffffffff82064e68);
+  }
+  dataCacheBlockTouch(0xffffffff8333cac4);
+  local_50[0] = 0;
+  *(undefined4 *)param_7 = 0;
+  FX_GlassTris_AddGlassPiece
+            (0xffffffff8333cac4,uVar1,param_2,param_3,param_7,param_4,param_5,local_50);
+  __restgprlr_24();
+  return;
+}
+
+
 // 8242DA00  FX_GlassPiecesInSphere  (EffectsCore/fx_glass_draw.cpp:1450)
 
 void FX_GlassPiecesInSphere(undefined8 param_1,int param_2,ulonglong param_3,uint *param_4)
@@ -948,7 +1693,6 @@ void FX_GlassPiecesInSphere(undefined8 param_1,int param_2,ulonglong param_3,uin
         do {
           uVar12 = LZCOUNT(uVar10);
           if (0x20 < uVar12) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar12,0x21);
           }
           uVar13 = uVar1 & 0xffffffe0 | uVar12;
@@ -980,7 +1724,6 @@ void FX_GlassPiecesInSphere(undefined8 param_1,int param_2,ulonglong param_3,uin
                 }
                 uVar12 = uVar1 & 0xffe0 | uVar12;
                 if ((int)uVar13 != (int)uVar12) {
-                    /* WARNING: Subroutine does not return */
                   MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar13,uVar12);
                 }
                 *(short *)(*param_4 * 2 + param_2) = (short)uVar13;
@@ -999,13 +1742,28 @@ void FX_GlassPiecesInSphere(undefined8 param_1,int param_2,ulonglong param_3,uin
 }
 
 
+// 8242DC18  FX_GlassPieceMaterial  (EffectsCore/fx_glass_draw.cpp:1515)
+
+undefined4 FX_GlassPieceMaterial(ulonglong param_1)
+
+{
+  longlong lVar1;
+  
+  dataCacheBlockTouch(0xffffffff8333cac4);
+  lVar1 = (param_1 & 0x7ffffff) * 0x20 + (ulonglong)DAT_8333cafc;
+  dataCacheBlockTouch(lVar1);
+  lVar1 = (ulonglong)*(byte *)((int)lVar1 + 0x10) * 0x2c + (ulonglong)DAT_8333caf4;
+  dataCacheBlockTouch(lVar1);
+  return *(undefined4 *)((int)lVar1 + 0x18);
+}
+
+
 // 8242DC58  FX_GenerateGlassVertsCmd  (EffectsCore/fx_glass_draw.cpp:1544)
 
 void FX_GenerateGlassVertsCmd(int param_1)
 
 {
   if (*(int *)(param_1 + 0x28) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82064c20,0x609,0,0xffffffff82000f98,0xffffffff82064e80);
   }
   DAT_8332cc68 = *(undefined4 *)(param_1 + 0x28);
@@ -1127,6 +1885,103 @@ void std___Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl
 }
 
 
+// 8242E1E0  std::_Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+
+void std___Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+               (undefined8 param_1,int param_2,undefined8 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  char cVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  undefined8 local_50 [10];
+  
+  lVar4 = __savegprlr_24();
+  iVar2 = (int)lVar4;
+  uVar1 = param_2 - iVar2 >> 3;
+  uVar10 = (longlong)(param_2 - iVar2 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar10) {
+    uVar8 = (uVar10 + 1 & 0x7fffffff) << 1;
+    lVar7 = (uVar10 & 0x1fffffff) * 8 + lVar4;
+    do {
+      lVar7 = lVar7 + -8;
+      local_50[0] = *(undefined8 *)lVar7;
+      uVar8 = uVar8 - 2;
+      uVar10 = uVar10 - 1;
+      iVar9 = (int)uVar8;
+      uVar13 = uVar8;
+      uVar11 = uVar10;
+      while (uVar12 = uVar13, iVar9 < (int)uVar1) {
+        lVar5 = (uVar12 & 0x1fffffff) * 8 + lVar4;
+        cVar6 = (*(code *)param_3)(lVar5,lVar5 + -8);
+        if (cVar6 != '\0') {
+          uVar12 = uVar12 - 1;
+        }
+        iVar9 = (int)((uVar12 & 0xffffffff) << 3);
+        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
+        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + iVar2);
+        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + iVar2 + 4);
+        iVar9 = (int)uVar13;
+        uVar11 = uVar12;
+      }
+      if ((uint)uVar12 == uVar1) {
+        iVar3 = (int)((uVar11 & 0xffffffff) << 3);
+        iVar9 = uVar1 * 8 + iVar2;
+        uVar11 = (longlong)(int)uVar1 - 1;
+        *(undefined4 *)(iVar3 + iVar2) = *(undefined4 *)(iVar9 + -8);
+        *(undefined4 *)(iVar3 + iVar2 + 4) = *(undefined4 *)(iVar9 + -4);
+      }
+      std___Push_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                (lVar4,uVar11,uVar10,local_50,param_3);
+    } while (0 < (int)uVar10);
+  }
+  __restgprlr_24();
+  return;
+}
+
+
+// 8242E800  std::_Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+
+void std___Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  undefined8 *puVar3;
+  undefined8 local_30 [6];
+  
+  lVar1 = __savegprlr_29();
+  lVar2 = param_2 - lVar1;
+  if (8 < (int)((uint)lVar2 & 0xfffffff8)) {
+    param_2 = param_2 + -8;
+    do {
+      puVar3 = (undefined8 *)param_2;
+      local_30[0] = *puVar3;
+      *(undefined4 *)puVar3 = *(undefined4 *)lVar1;
+      *(undefined4 *)((int)puVar3 + 4) = ((undefined4 *)lVar1)[1];
+      std___Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                (lVar1,0,(int)lVar2 + -8 >> 3,local_30,param_3);
+      param_2 = param_2 + -8;
+      lVar2 = (param_2 - lVar1) + 8;
+    } while (8 < (int)((uint)lVar2 & 0xfffffff8));
+  }
+  __restgprlr_29();
+  return;
+}
+
+
 // 8242E450  std::_Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
 void std___Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>
@@ -1188,32 +2043,292 @@ void std___Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisR
 // 8242E2E8  std::_Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
 void std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-               (void)
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 *puVar1;
+  char cVar2;
+  undefined8 *puVar3;
+  undefined8 *puVar4;
+  undefined8 uVar5;
+  
+  puVar1 = (undefined8 *)__savegprlr_28();
+  cVar2 = (*param_4)(param_2,puVar1);
+  puVar3 = (undefined8 *)param_2;
+  if (cVar2 != '\0') {
+    uVar5 = *puVar3;
+    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
+    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
+    *puVar1 = uVar5;
+  }
+  cVar2 = (*param_4)(param_3,param_2);
+  if (cVar2 != '\0') {
+    puVar4 = (undefined8 *)param_3;
+    uVar5 = *puVar4;
+    *(undefined4 *)puVar4 = *(undefined4 *)puVar3;
+    *(undefined4 *)((int)puVar4 + 4) = *(undefined4 *)((int)puVar3 + 4);
+    *puVar3 = uVar5;
+  }
+  cVar2 = (*param_4)(param_2,puVar1);
+  if (cVar2 != '\0') {
+    uVar5 = *puVar3;
+    *(undefined4 *)puVar3 = *(undefined4 *)puVar1;
+    *(undefined4 *)((int)puVar3 + 4) = *(undefined4 *)((int)puVar1 + 4);
+    *puVar1 = uVar5;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 8242E3A8  std::_Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
 void std___Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-               (void)
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 3;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x1fffffff;
+    uVar4 = uVar4 & 0xfffffff;
+    lVar6 = uVar2 * 8 + lVar3;
+    std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+              (lVar3,lVar6,uVar4 * 0x10 + lVar3);
+    std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+              (param_2 + uVar2 * -8,param_2,uVar2 * 8 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -8;
+    std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+              (param_3 + uVar4 * -0x10,lVar3,param_3,param_4);
+    std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+            (lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
 // 8242E550  std::_Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
 void std___Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-               (void)
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  char cVar4;
+  undefined8 uVar5;
+  int iVar7;
+  ulonglong uVar6;
+  ulonglong uVar8;
+  undefined8 *puVar9;
+  undefined8 *puVar10;
+  undefined8 *puVar12;
+  ulonglong uVar11;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  
+  puVar3 = (undefined4 *)__savegprlr_23();
+  iVar7 = (int)param_3 - (int)param_2;
+  uVar2 = iVar7 >> 3;
+  uVar15 = ((longlong)(iVar7 >> 4) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x1fffffff) *
+           8 + param_2;
+  std___Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+            (param_2,uVar15,param_3 - 8);
+  uVar8 = uVar15 + 8;
+  if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+    do {
+      uVar13 = uVar15 - 8;
+      cVar4 = (*param_4)(uVar13,uVar15);
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar13), cVar4 != '\0')) break;
+      uVar15 = uVar13;
+    } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
+  }
+  uVar11 = uVar8;
+  uVar13 = uVar15;
+  if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar4 = (*param_4)(uVar8,uVar15);
+      uVar11 = uVar8;
+      if ((cVar4 != '\0') || (cVar4 = (*param_4)(uVar15,uVar8), cVar4 != '\0')) break;
+      uVar8 = uVar8 + 8;
+      uVar11 = uVar8;
+    } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar6 = uVar8;
+    if ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        cVar4 = (*param_4)(uVar13,uVar11);
+        uVar8 = uVar6;
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar11,uVar13);
+          if (cVar4 != '\0') break;
+          puVar12 = (undefined8 *)uVar11;
+          uVar8 = uVar6 + 8;
+          puVar9 = (undefined8 *)uVar6;
+          uVar5 = *puVar9;
+          *(undefined4 *)puVar9 = *(undefined4 *)puVar12;
+          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)puVar12 + 4);
+          *puVar12 = uVar5;
+        }
+        uVar11 = uVar11 + 8;
+        uVar6 = uVar8;
+      } while ((uVar11 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
+    uVar6 = uVar15;
+    if ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+      do {
+        uVar14 = uVar6 - 8;
+        cVar4 = (*param_4)(uVar14,uVar13);
+        if (cVar4 == '\0') {
+          cVar4 = (*param_4)(uVar13,uVar14);
+          if (cVar4 != '\0') break;
+          uVar13 = uVar13 - 8;
+          puVar9 = (undefined8 *)uVar13;
+          uVar5 = *puVar9;
+          *(undefined4 *)puVar9 = *(undefined4 *)(undefined8 *)uVar14;
+          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar6 + -4);
+          *(undefined8 *)uVar14 = uVar5;
+        }
+        uVar15 = uVar15 - 8;
+        uVar6 = uVar14;
+      } while ((param_2 & 0xffffffff) < (uVar15 & 0xffffffff));
+      bVar1 = (uVar15 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar9 = (undefined8 *)uVar11;
+    puVar12 = (undefined8 *)uVar13;
+    if (bVar1) {
+      puVar10 = (undefined8 *)uVar8;
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar3 = puVar12;
+        puVar3[1] = puVar10;
+        __restgprlr_23(puVar3);
+        return;
+      }
+      if ((uVar8 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar5 = *puVar12;
+        *(undefined4 *)puVar12 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar10 + 4);
+        *puVar10 = uVar5;
+      }
+      uVar8 = uVar8 + 8;
+      uVar5 = *puVar12;
+      *(undefined4 *)puVar12 = *(undefined4 *)puVar9;
+      *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)puVar9 + 4);
+      *puVar9 = uVar5;
+      uVar11 = uVar11 + 8;
+      uVar13 = uVar13 + 8;
+    }
+    else {
+      uVar6 = uVar15 - 8;
+      puVar10 = (undefined8 *)uVar6;
+      if ((uVar11 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar13 = uVar13 - 8;
+        puVar9 = (undefined8 *)uVar13;
+        if ((uVar6 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+          uVar5 = *puVar10;
+          *(undefined4 *)puVar10 = *(undefined4 *)puVar9;
+          *(undefined4 *)((int)puVar10 + 4) = *(undefined4 *)((int)puVar12 + -4);
+          *puVar9 = uVar5;
+        }
+        uVar8 = uVar8 - 8;
+        puVar10 = (undefined8 *)uVar8;
+        uVar5 = *puVar9;
+        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar12 + -4) = *(undefined4 *)((int)puVar10 + 4);
+        *puVar10 = uVar5;
+        uVar15 = uVar6;
+      }
+      else {
+        uVar5 = *puVar9;
+        *(undefined4 *)puVar9 = *(undefined4 *)puVar10;
+        *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)uVar15 + -4);
+        *puVar10 = uVar5;
+        uVar15 = uVar6;
+        uVar11 = uVar11 + 8;
+      }
+    }
+  } while( true );
+}
+
+
+// 8242E880  std::_Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+
+void std___Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 3;
+    if (iVar2 < 0x21) {
+LAB_8242e938:
+      if (1 < iVar2) {
+        std___Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>
+                  (uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                    (uVar1,param_2,param_4,0,0);
+        }
+        std___Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                  (uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_8242e938;
+    }
+    std___Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+              (&local_40,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffff8) < (int)((int)param_2 - local_3c & 0xfffffff8)) {
+      std___Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
+                (uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 

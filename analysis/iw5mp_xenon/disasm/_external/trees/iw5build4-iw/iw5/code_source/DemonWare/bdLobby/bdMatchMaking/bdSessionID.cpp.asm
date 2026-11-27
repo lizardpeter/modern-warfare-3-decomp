@@ -55,6 +55,23 @@
 ; 82912700  bdSessionID::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessionid.cpp:23)
   82912700  7D8802A6             mfspr r12,LR
   82912704  48003FB9             bl 0x829166bc
+  82912708  3BE1FF80             subi r31,r1,0x80
+  8291270C  9421FF80             stwu r1,-0x80(r1)
+  82912710  7C6B1B78             or r11,r3,r3
+  82912714  909F009C             stw r4,0x9c(r31)
+  82912718  7C9E2378             or r30,r4,r4
+  8291271C  39400008             li r10,0x8
+  82912720  80640000             lwz r3,0x0(r4)
+  82912724  38BF0050             addi r5,r31,0x50
+  82912728  915F0050             stw r10,0x50(r31)
+  8291272C  388B0004             addi r4,r11,0x4
+  82912730  4BFE37D9             bl 0x828f5f08
+  82912734  7C7D1B78             or r29,r3,r3
+  82912738  7FC3F378             or r3,r30,r30
+  8291273C  4BA51CC5             bl 0x82364400
+  82912740  7FA3EB78             or r3,r29,r29
+  82912744  383F0080             addi r1,r31,0x80
+  82912748  48003FC4             b 0x8291670c
 
 ; 82912688  bdSessionID::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessionid.cpp:33)
   82912688  7C6B1B78             or r11,r3,r3

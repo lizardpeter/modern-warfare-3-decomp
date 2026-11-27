@@ -2,11 +2,32 @@
 
 // 82725AF0  R_DebugAlloc  (gfx_d3d/r_debug_alloc.cpp:7)
 
-void R_DebugAlloc(void)
+void R_DebugAlloc(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int iVar2;
+  
+  piVar1 = (int *)__savegprlr_27();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821bbee0,8,0,0xffffffff82000f98,0xffffffff821bbed4);
+  }
+  if (*piVar1 != 0) {
+    MyAssertHandler(0xffffffff821bbee0,9,0,0xffffffff82000f98,0xffffffff821bbec8);
+  }
+  if ((int)param_2 < 1) {
+    MyAssertHandler(0xffffffff821bbee0,10,0,0xffffffff82000f98,0xffffffff820589cc);
+  }
+  if ((param_2 & 3) != 0) {
+    MyAssertHandler(0xffffffff821bbee0,0xb,0,0xffffffff82000f98,0xffffffff821bbeb4);
+  }
+  iVar2 = Z_TryVirtualAlloc(param_2,param_3,0);
+  *piVar1 = iVar2;
+  if (iVar2 == 0) {
+    R_WarnOncePerFrame(0x32,param_3);
+  }
+  __restgprlr_27();
+  return;
 }
 
 

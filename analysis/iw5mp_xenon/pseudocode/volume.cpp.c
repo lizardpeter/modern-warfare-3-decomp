@@ -2,11 +2,171 @@
 
 // 828A05F8  XGRAPHICS::TileVolume  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/volume.cpp:75)
 
-void XGRAPHICS__TileVolume(void)
+void XGRAPHICS__TileVolume
+               (undefined8 param_1,int param_2,int param_3,int param_4,ulonglong param_5,
+               ulonglong param_6,int param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  void *pvVar15;
+  uint *puVar16;
+  int iVar17;
+  uint uVar18;
+  uint uVar19;
+  uint uVar20;
+  ulonglong uVar21;
+  int iVar22;
+  uint uVar23;
+  uint uVar24;
+  int iVar25;
+  int iVar27;
+  ulonglong uVar26;
+  int iVar29;
+  ulonglong uVar28;
+  int iVar30;
+  uint uVar31;
+  ulonglong uVar32;
+  int iVar33;
+  uint uVar34;
+  uint *in_stack_00000054;
+  uint in_stack_0000005c;
+  uint local_f0;
+  int local_ec;
+  uint local_c0 [4];
+  uint local_b0 [3];
+  int local_a4;
+  undefined4 local_a0;
+  int local_9c;
+  
+  uVar12 = __savegprlr();
+  puVar16 = (uint *)param_5;
+  if (in_stack_00000054 == (uint *)0x0) {
+    in_stack_00000054 = local_b0;
+    local_b0[0] = 0;
+    local_b0[1] = 0;
+    local_a0 = 0;
+    local_b0[2] = param_2;
+    local_a4 = param_3;
+    local_9c = param_4;
+  }
+  uVar1 = in_stack_00000054[3];
+  uVar32 = (ulonglong)in_stack_00000054[2] - (ulonglong)*in_stack_00000054;
+  uVar2 = in_stack_00000054[5];
+  uVar3 = in_stack_00000054[1];
+  uVar4 = in_stack_00000054[4];
+  iVar33 = (int)uVar32;
+  if ((param_5 & 0xffffffff) == 0) {
+    local_c0[0] = 0;
+    puVar16 = local_c0;
+    local_c0[1] = 0;
+    local_c0[2] = 0;
+  }
+  uVar31 = param_3 + 0x1fU & 0xffffffe0;
+  uVar14 = uVar12;
+  uVar13 = param_6;
+  if ((param_6 & 0xffffffff) == (uVar12 & 0xffffffff)) {
+    uVar14 = (longlong)(int)((param_4 + 3U & 0xfffffffc) * uVar31 * (param_2 + 0x1fU & 0xffffffe0))
+             * (longlong)(int)in_stack_0000005c + 0xfffU & 0xfffff000;
+    uVar13 = XMemAlloc(uVar14,0x24870000);
+    uVar14 = XGRAPHICS__CopyMemoryCachedDst(uVar13,param_6,uVar14);
+  }
+  uVar24 = in_stack_0000005c >> 2;
+  uVar34 = *puVar16;
+  uVar5 = 1 << (((in_stack_0000005c >> 4) - uVar24) + 3 & 0x3f);
+  uVar24 = ((in_stack_0000005c >> 1) >> (uVar24 & 0x3f)) + uVar24;
+  uVar21 = ((ulonglong)uVar34 + (ulonglong)uVar5 & ~((ulonglong)uVar5 - 1)) - (ulonglong)uVar34;
+  iVar22 = (uVar34 + iVar33 & ~(uVar5 - 1)) - uVar34;
+  uVar34 = uVar24 + 6;
+  iVar17 = iVar33;
+  if ((uVar21 & 0xffffffff) <= (uVar32 & 0xffffffff)) {
+    iVar17 = (int)uVar21;
+  }
+  local_ec = in_stack_00000054[4] * (int)param_8;
+  local_f0 = 0;
+  uVar28 = param_6;
+  if (uVar2 != uVar4) {
+    uVar26 = param_8;
+    do {
+      uVar23 = 0;
+      uVar9 = puVar16[2] + local_f0 >> 2;
+      if (uVar1 != uVar3) {
+        iVar6 = (puVar16[2] + local_f0 & 3) << (uVar34 & 0x3f);
+        do {
+          uVar20 = *puVar16;
+          uVar18 = uVar23 + puVar16[1];
+          uVar10 = uVar18 * 4 & 0x18;
+          iVar30 = ((uVar18 >> 4) + (uVar31 >> 4) * uVar9) * (param_2 + 0x1fU >> 5);
+          uVar19 = ((uVar20 & 7) + uVar10 << (uVar34 & 0x3f)) >> 6;
+          uVar11 = (uVar18 >> 3) + uVar9 & 1;
+          iVar29 = uVar11 * 2;
+          iVar27 = (uVar18 & 1) * 0x10;
+          uVar19 = (((uVar20 >> 5) + iVar30 << (uVar34 & 0x3f) & 0xfffffff) * 2 +
+                   (uVar19 & 0x3fffff0)) * 2 + (uVar19 & 0xf) + iVar6 + iVar27;
+          uVar20 = (((uVar20 >> 3) + iVar29) * 2 & 6) + uVar11;
+          iVar25 = (uVar23 + in_stack_00000054[1]) * param_7 + local_ec;
+          iVar8 = (int)uVar13;
+          iVar7 = (int)uVar12;
+          pvVar15 = memcpy((void *)(((((uVar20 * 8 & 8) + ((int)uVar19 >> 6 & 7U)) * 8 +
+                                     (uVar20 & 0xfffffffe)) * 4 + (uVar19 & 0xfffffe00)) * 8 +
+                                    (uVar19 & 0x3f) + iVar7),
+                           (void *)((*in_stack_00000054 << (uVar24 & 0x3f)) + iVar25 + iVar8),
+                           iVar17 << (uVar24 & 0x3f));
+          uVar14 = uVar21;
+          if ((int)uVar21 < iVar22) {
+            do {
+              uVar20 = (uint)(*puVar16 + uVar14);
+              uVar19 = ((uVar20 & 7) + uVar10 << (uVar34 & 0x3f)) >> 6;
+              uVar18 = (((int)((*puVar16 + uVar14 & 0xffffffff) >> 3) + iVar29) * 2 & 6U) + uVar11;
+              uVar20 = (((uVar20 >> 5) + iVar30 << (uVar34 & 0x3f) & 0xfffffff) * 2 +
+                       (uVar19 & 0x3fffff0)) * 2 + (uVar19 & 0xf) + iVar6 + iVar27;
+              pvVar15 = memcpy((void *)(((((uVar18 * 8 & 8) + ((int)uVar20 >> 6 & 7U)) * 8 +
+                                         (uVar18 & 0xfffffffe)) * 4 + (uVar20 & 0xfffffe00)) * 8 +
+                                        (uVar20 & 0x3f) + iVar7),
+                               (void *)((*in_stack_00000054 + (int)uVar14 << (uVar24 & 0x3f)) +
+                                        iVar25 + iVar8),uVar5 << (uVar24 & 0x3f));
+              uVar14 = uVar14 + uVar5;
+            } while ((int)uVar14 < iVar22);
+          }
+          if ((uVar14 & 0xffffffff) < (uVar32 & 0xffffffff)) {
+            uVar20 = (uint)(*puVar16 + uVar14);
+            uVar19 = ((uVar20 & 7) + uVar10 << (uVar34 & 0x3f)) >> 6;
+            uVar11 = (((int)((*puVar16 + uVar14 & 0xffffffff) >> 3) + iVar29) * 2 & 6U) + uVar11;
+            uVar20 = (((uVar20 >> 5) + iVar30 << (uVar34 & 0x3f) & 0xfffffff) * 2 +
+                     (uVar19 & 0x3fffff0)) * 2 + (uVar19 & 0xf) + iVar6 + iVar27;
+            pvVar15 = memcpy((void *)(((((uVar11 * 8 & 8) + ((int)uVar20 >> 6 & 7U)) * 8 +
+                                       (uVar11 & 0xfffffffe)) * 4 + (uVar20 & 0xfffffe00)) * 8 +
+                                      (uVar20 & 0x3f) + iVar7),
+                             (void *)((*in_stack_00000054 + (int)uVar14 << (uVar24 & 0x3f)) + iVar25
+                                     + iVar8),iVar33 - (int)uVar14 << (uVar24 & 0x3f));
+          }
+          uVar14 = (ulonglong)(int)pvVar15;
+          uVar23 = uVar23 + 1;
+        } while (uVar23 < uVar1 - uVar3);
+        uVar26 = param_8 & 0xffffffff;
+        uVar28 = param_6 & 0xffffffff;
+      }
+      local_f0 = local_f0 + 1;
+      local_ec = local_ec + (int)uVar26;
+    } while (local_f0 < uVar2 - uVar4);
+  }
+  if ((uVar28 & 0xffffffff) == (uVar12 & 0xffffffff)) {
+    uVar14 = XMemFree(uVar13,0x24870000);
+  }
+  __restgprlr(uVar14);
+  return;
 }
 
 
@@ -22,10 +182,74 @@ void XGTileVolume(void)
 
 // 828A0AC0  XGTileVolumeTextureLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/volume.cpp:549)
 
-void XGTileVolumeTextureLevel(void)
+void XGTileVolumeTextureLevel
+               (undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,
+               undefined8 param_5,ulonglong param_6,longlong param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_16();
+  uint uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  longlong lVar5;
+  int iVar6;
+  longlong lVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  undefined4 in_stack_00000054;
+  undefined4 in_stack_0000005c;
+  undefined4 in_stack_00000064;
+  int local_d0;
+  int local_cc;
+  
+  uVar3 = ZEXT48(&stack0x00000000);
+  uVar4 = __savegprlr_16();
+  XGGetBlockDimensions(param_5,uVar3 - 0xd0,uVar3 - 0xcc);
+  uVar8 = 0x1f - (int)LZCOUNT(local_d0);
+  uVar9 = 0x1f - (int)LZCOUNT(local_cc);
+  uVar2 = (uint)param_6 & 2;
+  uVar1 = (uint)((param_6 & 0xffffffff) >> 1) & 1;
+  uVar10 = (uint)param_4;
+  if ((param_4 & 0xffffffff) == 0) {
+    uVar8 = (local_d0 + (int)uVar4) - 1U >> (uVar8 & 0x3f);
+    uVar9 = (local_cc + (int)param_2) - 1U >> (uVar9 & 0x3f);
+    lVar7 = param_3;
+  }
+  else {
+    iVar6 = (1 << ((uVar1 - (int)LZCOUNT(((int)uVar4 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+            (uVar10 & 0x3f);
+    if (iVar6 < 2) {
+      iVar6 = 1;
+    }
+    uVar8 = (iVar6 + local_d0) - 1U >> (uVar8 & 0x3f);
+    iVar6 = (1 << ((uVar1 - (int)LZCOUNT(((int)param_2 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+            (uVar10 & 0x3f);
+    if (iVar6 < 2) {
+      iVar6 = 1;
+    }
+    uVar9 = (iVar6 + local_cc) - 1U >> (uVar9 & 0x3f);
+    iVar6 = (1 << ((uVar1 - (int)LZCOUNT(((int)param_3 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+            (uVar10 & 0x3f);
+    lVar7 = (longlong)iVar6;
+    if (iVar6 < 2) {
+      lVar7 = 1;
+    }
+  }
+  if ((param_8 & 0xffffffff) != 0) {
+    param_8 = uVar3 - 200;
+  }
+  if ((param_6 & 1) == 0) {
+    lVar5 = XGRAPHICS__GetMipTailLevelOffsetCoords
+                      (uVar4,param_2,param_3,param_4,param_5,1,(param_6 & 0xffffffff) >> 1 & 1,
+                       uVar3 - 0xb8);
+    param_7 = param_7 - lVar5;
+    param_8 = uVar3 - 200;
+  }
+  XGRAPHICS__TileVolume
+            (param_7,uVar8,uVar9,lVar7,param_8,in_stack_00000054,in_stack_0000005c,in_stack_00000064
+            );
+  __restgprlr_16();
+  return;
 }
 

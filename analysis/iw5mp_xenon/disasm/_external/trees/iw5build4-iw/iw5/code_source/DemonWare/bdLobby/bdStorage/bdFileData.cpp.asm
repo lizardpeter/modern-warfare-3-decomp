@@ -3,6 +3,19 @@
 ; 828F8F90  bdFileData::bdFileData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:20)
   828F8F90  7D8802A6             mfspr r12,LR
   828F8F94  4801D729             bl 0x829166bc
+  828F8F98  9421FF90             stwu r1,-0x70(r1)
+  828F8F9C  7C7F1B78             or r31,r3,r3
+  828F8FA0  7C9E2378             or r30,r4,r4
+  828F8FA4  7CBD2B78             or r29,r5,r5
+  828F8FA8  48003FE1             bl 0x828fcf88
+  828F8FAC  3D608221             lis r11,-0x7ddf
+  828F8FB0  93DF0004             stw r30,0x4(r31)
+  828F8FB4  93BF0008             stw r29,0x8(r31)
+  828F8FB8  7FE3FB78             or r3,r31,r31
+  828F8FBC  396BB5A0             subi r11,r11,0x4a60
+  828F8FC0  917F0000             stw r11,0x0(r31)
+  828F8FC4  38210070             addi r1,r1,0x70
+  828F8FC8  4801D744             b 0x8291670c
 
 ; 828F8FD0  bdFileData::~bdFileData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:24)
   828F8FD0  3D608221             lis r11,-0x7ddf
@@ -13,6 +26,21 @@
 ; 828F9048  bdFileData::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:28)
   828F9048  7D8802A6             mfspr r12,LR
   828F904C  4801D671             bl 0x829166bc
+  828F9050  3BE1FF90             subi r31,r1,0x70
+  828F9054  9421FF90             stwu r1,-0x70(r1)
+  828F9058  7C6B1B78             or r11,r3,r3
+  828F905C  909F008C             stw r4,0x8c(r31)
+  828F9060  7C9E2378             or r30,r4,r4
+  828F9064  38A30008             addi r5,r3,0x8
+  828F9068  80640000             lwz r3,0x0(r4)
+  828F906C  808B0004             lwz r4,0x4(r11)
+  828F9070  4BFFCE99             bl 0x828f5f08
+  828F9074  7C7D1B78             or r29,r3,r3
+  828F9078  7FC3F378             or r3,r30,r30
+  828F907C  4BA6B385             bl 0x82364400
+  828F9080  7FA3EB78             or r3,r29,r29
+  828F9084  383F0070             addi r1,r31,0x70
+  828F9088  4801D684             b 0x8291670c
 
 ; 828F8FE0  bdFileData::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:35)
   828F8FE0  3860000C             li r3,0xc

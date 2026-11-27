@@ -2,11 +2,32 @@
 
 // 822F04E0  BG_Player_DoControllers  (cgame_mp/cg_pose_mp.cpp:16)
 
-void BG_Player_DoControllers(void)
+void BG_Player_DoControllers(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
+  
+  puVar1 = (uint *)__savegprlr_23();
+  uVar2 = (ulonglong)*puVar1;
+  if (uVar2 == 0) {
+    MyAssertHandler(0xffffffff82021568,0x15,0,0xffffffff82000f98,0xffffffff82021560);
+  }
+  iVar4 = 0;
+  uVar3 = uVar2;
+  do {
+    if (*(char *)((int)puVar1 + iVar4 + 4) == -2) {
+      MyAssertHandler(0xffffffff82021568,0x19,0,0xffffffff82000f98,0xffffffff82021538);
+    }
+    DObjSetControlTagAngles(param_2,param_3,*(undefined1 *)((int)puVar1 + iVar4 + 4),uVar3);
+    iVar4 = iVar4 + 1;
+    uVar3 = uVar3 + 0xc;
+  } while (iVar4 < 4);
+  DObjSetLocalTag(param_2,param_3,0,uVar2 + 0x3c,uVar2 + 0x30);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -25,11 +46,55 @@ void CG_Player_DoControllers(int param_1)
 
 // 822F05C8  CG_Vehicle_DoControllers  (cgame_mp/cg_pose_mp.cpp:43)
 
-void CG_Vehicle_DoControllers(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void CG_Vehicle_DoControllers(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  float local_1a0 [4];
+  undefined4 local_190;
+  float local_18c;
+  undefined4 local_188;
+  float local_180 [4];
+  undefined4 local_170;
+  float local_16c;
+  undefined4 local_168;
+  undefined1 auStack_150 [336];
+  
   __savegprlr_19();
+  __savefpr_28();
+  iVar1 = __savevmx_119();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82021568,0x3f,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,0x40,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,0x41,0,0xffffffff82000f98,0xffffffff820215fc);
+  }
+  local_170 = 0;
+  local_168 = 0;
+  local_1a0[1] = 0.0;
+  local_1a0[2] = 0.0;
+  local_180[1] = 0.0;
+  local_190 = 0;
+  local_188 = 0;
+  local_1a0[0] = (float)(longlong)*(short *)(iVar1 + 0x32) * 0.005493164;
+  local_180[0] = (float)(longlong)*(short *)(iVar1 + 0x2c) * 0.005493164;
+  local_180[2] = (float)(longlong)*(short *)(iVar1 + 0x30) * 0.005493164;
+  if (*(char *)(iVar1 + 2) == '\f') {
+    local_1a0[2] = *(float *)(iVar1 + 0x34);
+  }
+  local_18c = (float)(longlong)*(short *)(iVar1 + 0x38) * 0.005493164;
+  local_16c = (float)(longlong)*(short *)(iVar1 + 0x2e) * 0.005493164;
+  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x58),0xffffffff82179fd8,local_180);
+  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x59),0xffffffff82179fd8,&local_170);
+  DObjSetLocalTag(param_2,param_3,*(undefined1 *)(iVar1 + 0x5a),0xffffffff82179fd8,local_1a0);
+  AnglesToAxis(iVar1 + 0x20,auStack_150);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -59,11 +124,14 @@ void __stvx(void)
 
 // 822F0A30  CG_Turret_DoControllers  (cgame_mp/cg_pose_mp.cpp:141)
 
+/* WARNING: Control flow encountered bad instruction data */
+
 void CG_Turret_DoControllers(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_26();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -120,7 +188,6 @@ void CG_DoBaseOriginController(undefined8 param_1,undefined8 param_2,longlong pa
   iVar8 = __savefpr_23();
   iVar9 = DObjGetRootBoneCount(param_2);
   if (iVar9 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82021568,0x106,0,0xffffffff82000f98,0xffffffff8202165c);
   }
   uVar13 = iVar9 - 1;
@@ -181,7 +248,6 @@ LAB_822f0e7c:
               }
               local_e4 = (float)dVar16;
               if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82015a60,0x2fa,0,0xffffffff82000f98,0xffffffff820159d4);
               }
               fVar1 = pfVar15[-1];
@@ -200,11 +266,9 @@ LAB_822f0e7c:
                    (((uint)local_fc & 0x7f800000) == 0x7f800000)) ||
                   (((uint)local_f8 & 0x7f800000) == 0x7f800000)) ||
                  (((uint)local_f4 & 0x7f800000) == 0x7f800000)) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,0xffffffff820159f0);
               }
               if (((uint)local_e4 & 0x7f800000) == 0x7f800000) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
               }
               fVar3 = local_e4 * local_fc;
@@ -253,23 +317,97 @@ LAB_822f0e7c:
 }
 
 
-// 822F13A0  CG_DObjCalcPose  (cgame_mp/cg_pose_mp.cpp:359)
+// 822F1278  CG_DoControllers  (cgame_mp/cg_pose_mp.cpp:324)
 
-void CG_DObjCalcPose(void)
+void CG_DoControllers(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined1 auStack_40 [64];
+  
+  iVar1 = __savegprlr_29();
+  Profile_Begin(0x13e);
+  DObjGetSetBones(param_2,auStack_40);
+  switch(*(undefined1 *)(iVar1 + 2)) {
+  case 1:
+    if (*(int *)(iVar1 + 0x2c) != 0) {
+      BG_Player_DoControllers(iVar1 + 0x2c,param_2,param_3);
+    }
+    break;
+  case 0xb:
+    CG_Turret_DoControllers(iVar1,param_2,param_3);
+    break;
+  case 0xc:
+  case 0xe:
+    CG_Vehicle_DoControllers(iVar1,param_2,param_3);
+  }
+  CG_DoBaseOriginController(iVar1,param_2,auStack_40);
+  if ((*(char *)(iVar1 + 4) != '\0') && ((*(int *)(iVar1 + 8) != 0 || (*(int *)(iVar1 + 0xc) != 0)))
+     ) {
+    Ragdoll_DoControllers(iVar1,param_2,param_3);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 822F13A0  CG_DObjCalcPose  (cgame_mp/cg_pose_mp.cpp:359)
+
+void CG_DObjCalcPose(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  undefined4 local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,0x16a,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,0x16b,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  iVar2 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  if (iVar2 == 0) {
+    DObjCompleteHierarchyBits(param_2,param_3);
+    CG_DoControllers(uVar1,param_2,param_3);
+    DObjCalcSkel(param_2,param_3);
+  }
+  __restgprlr_27(local_40[0]);
+  return;
 }
 
 
 // 822F1460  CG_DObjCalcPoseForMark  (cgame_mp/cg_pose_mp.cpp:395)
 
-void CG_DObjCalcPoseForMark(void)
+void CG_DObjCalcPoseForMark(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar2;
+  undefined4 local_40 [16];
+  
+  uVar1 = __savegprlr_27();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,0x18e,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82021568,399,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  iVar2 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  if (iVar2 == 0) {
+    iVar2 = DObjGetTree(param_2);
+    if (iVar2 != 0) {
+      __restgprlr_27(0);
+      return;
+    }
+    DObjCompleteHierarchyBits(param_2,param_3);
+    CG_DoControllers(uVar1,param_2,param_3);
+    DObjCalcSkelNoAnim(param_2,param_3);
+  }
+  __restgprlr_27(local_40[0]);
+  return;
 }
 
 

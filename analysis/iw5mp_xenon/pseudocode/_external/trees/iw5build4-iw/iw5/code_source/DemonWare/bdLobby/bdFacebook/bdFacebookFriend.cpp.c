@@ -26,11 +26,56 @@ void bdFacebookFriend___bdFacebookFriend(undefined4 *param_1)
 
 // 8290BA50  bdFacebookFriend::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:22)
 
-void bdFacebookFriend__deserialize(void)
+void bdFacebookFriend__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  bool bVar1;
+  int iVar2;
+  char cVar3;
+  undefined4 *puVar4;
+  undefined8 uVar5;
+  
+  iVar2 = __savegprlr_29();
+  puVar4 = (undefined4 *)param_2;
+  cVar3 = bdByteBuffer__readUInt64(*puVar4,iVar2 + 8);
+  if (cVar3 == '\0') {
+LAB_8290baa8:
+    bVar1 = false;
+  }
+  else {
+    cVar3 = bdByteBuffer__readString(*puVar4,iVar2 + 0x10,0x80);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8290baa8;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readUInt64(*puVar4,iVar2 + 0x90);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8290bacc;
+  }
+  else {
+LAB_8290bacc:
+    bVar1 = false;
+  }
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readString(*puVar4,iVar2 + 0x98,0x40);
+    bVar1 = true;
+    if (cVar3 == '\0') goto LAB_8290baf4;
+  }
+  else {
+LAB_8290baf4:
+    bVar1 = false;
+  }
+  *(undefined4 *)(iVar2 + 0x118) = 0x40;
+  if (bVar1) {
+    cVar3 = bdByteBuffer__readBlob(*puVar4,iVar2 + 0xd8,iVar2 + 0x118);
+    uVar5 = 1;
+    if (cVar3 != '\0') goto LAB_8290bb28;
+  }
+  uVar5 = 0;
+LAB_8290bb28:
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar5);
+  return;
 }
 
 

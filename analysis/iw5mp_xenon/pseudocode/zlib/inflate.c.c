@@ -43,11 +43,57 @@ undefined8 inflateEnd(int param_1)
 
 // 8265B668  inflateInit2_  (zlib/inflate.c:91)
 
-void inflateInit2_(void)
+void inflateInit2_(undefined8 param_1,uint param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = __savegprlr_29();
+  if ((((param_3 & 0xffffffff) == 0) || (*(char *)param_3 != '1')) ||
+     ((param_4 & 0xffffffff) != 0x34)) {
+    __restgprlr_29(0xfffffffffffffffa);
+    return;
+  }
+  if (iVar1 != 0) {
+    *(undefined4 *)(iVar1 + 0x18) = 0;
+    if (*(int *)(iVar1 + 0x20) == 0) {
+      *(undefined4 *)(iVar1 + 0x28) = 0;
+      *(code **)(iVar1 + 0x20) = zcalloc;
+    }
+    if (*(int *)(iVar1 + 0x24) == 0) {
+      *(code **)(iVar1 + 0x24) = zcfree;
+    }
+    iVar2 = (**(code **)(iVar1 + 0x20))(*(undefined4 *)(iVar1 + 0x28),1,0x18);
+    *(int *)(iVar1 + 0x1c) = iVar2;
+    if (iVar2 != 0) {
+      *(undefined4 *)(iVar2 + 0x14) = 0;
+      *(undefined4 *)(*(int *)(iVar1 + 0x1c) + 0xc) = 0;
+      if ((int)param_2 < 0) {
+        param_2 = -param_2;
+        *(undefined4 *)(*(int *)(iVar1 + 0x1c) + 0xc) = 1;
+      }
+      if (((int)param_2 < 8) || (0xf < (int)param_2)) {
+        inflateEnd(iVar1);
+        goto LAB_8265b7a0;
+      }
+      *(uint *)(*(int *)(iVar1 + 0x1c) + 0x10) = param_2;
+      iVar2 = inflate_blocks_new(iVar1,1 - ((ulonglong)(*(int *)(*(int *)(iVar1 + 0x1c) + 0xc) == 0)
+                                           + 1) & 0xffffffff82657a20,1 << (param_2 & 0x3f));
+      *(int *)(*(int *)(iVar1 + 0x1c) + 0x14) = iVar2;
+      if (iVar2 != 0) {
+        inflateReset(iVar1);
+        __restgprlr_29(0);
+        return;
+      }
+      inflateEnd();
+    }
+    __restgprlr_29(0xfffffffffffffffc);
+    return;
+  }
+LAB_8265b7a0:
+  __restgprlr_29(0xfffffffffffffffe);
+  return;
 }
 
 
@@ -63,21 +109,250 @@ void inflateInit_(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 8265B7C8  inflate  (zlib/inflate.c:165)
 
-void inflate(void)
+void inflate(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr();
+  byte bVar1;
+  uint uVar2;
+  byte *pbVar3;
+  undefined4 *puVar4;
+  int *piVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  
+  piVar5 = (int *)__savegprlr();
+  if (((piVar5 != (int *)0x0) && ((uint *)piVar5[7] != (uint *)0x0)) && (*piVar5 != 0)) {
+    uVar8 = 0xfffffffffffffffb;
+    uVar7 = -(ulonglong)(param_2 == 4) & 0xfffffffffffffffb;
+    uVar2 = *(uint *)piVar5[7];
+    while (uVar2 < 0xe) {
+      switch(uVar2) {
+      case 0:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        bVar1 = *(byte *)*piVar5;
+        *(uint *)(piVar5[7] + 4) = (uint)bVar1;
+        puVar4 = (undefined4 *)piVar5[7];
+        *piVar5 = *piVar5 + 1;
+        if ((bVar1 & 0xf) == 8) {
+          if (((uint)puVar4[1] >> 4) + 8 <= (uint)puVar4[4]) {
+            *puVar4 = 1;
+            uVar8 = uVar7;
+            goto switchD_8265b87c_caseD_8265b94c;
+          }
+          *puVar4 = 0xd;
+          piVar5[6] = (int)"invalid window size";
+          goto LAB_8265bbd0;
+        }
+        *puVar4 = 0xd;
+        piVar5[6] = (int)"unknown compression method";
+        *(undefined4 *)(piVar5[7] + 4) = 5;
+        uVar8 = uVar7;
+        break;
+      case 1:
+switchD_8265b87c_caseD_8265b94c:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        pbVar3 = (byte *)*piVar5;
+        dataCacheBlockFlush(ZEXT48(pbVar3) - 0x80);
+        puVar4 = (undefined4 *)piVar5[7];
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        bVar1 = *pbVar3;
+        *piVar5 = (int)(pbVar3 + 1);
+        lVar6 = ((ulonglong)(uint)puVar4[1] & 0xffffff) * 0x100 + (ulonglong)bVar1;
+        uVar8 = (ulonglong)(lVar6 * 0x8421085) >> 0x20;
+        uVar8 = ((lVar6 - uVar8 & 0xffffffff) >> 1) + uVar8 >> 4;
+        if (lVar6 == (uVar8 & 0x7ffffff) * 0x20 - uVar8) {
+          if ((bVar1 & 0x20) != 0) {
+            *puVar4 = 2;
+            uVar8 = uVar7;
+            goto switchD_8265b87c_caseD_8265bc08;
+          }
+          *puVar4 = 7;
+          uVar8 = uVar7;
+          break;
+        }
+        *puVar4 = 0xd;
+        piVar5[6] = (int)"incorrect header check";
+        goto LAB_8265bbd0;
+      case 2:
+switchD_8265b87c_caseD_8265bc08:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 << 0x18;
+        *piVar5 = *piVar5 + 1;
+        *(undefined4 *)piVar5[7] = 3;
+        uVar8 = uVar7;
+      case 3:
+        if (piVar5[1] != 0) {
+          dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+          piVar5[1] = piVar5[1] + -1;
+          piVar5[2] = piVar5[2] + 1;
+          *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 * 0x10000 + *(int *)(piVar5[7] + 8);
+          *piVar5 = *piVar5 + 1;
+          *(undefined4 *)piVar5[7] = 4;
+          uVar8 = uVar7;
+switchD_8265b87c_caseD_8265bcc0:
+          if (piVar5[1] != 0) {
+            dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+            piVar5[1] = piVar5[1] + -1;
+            piVar5[2] = piVar5[2] + 1;
+            *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 * 0x100 + *(int *)(piVar5[7] + 8);
+            *piVar5 = *piVar5 + 1;
+            *(undefined4 *)piVar5[7] = 5;
+            uVar8 = uVar7;
+switchD_8265b87c_caseD_8265bd1c:
+            if (piVar5[1] != 0) {
+              dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+              piVar5[1] = piVar5[1] + -1;
+              piVar5[2] = piVar5[2] + 1;
+              *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 + *(int *)(piVar5[7] + 8);
+              *piVar5 = *piVar5 + 1;
+              piVar5[0xc] = ((undefined4 *)piVar5[7])[2];
+              *(undefined4 *)piVar5[7] = 6;
+              __restgprlr(2);
+              return;
+            }
+          }
+        }
+LAB_8265bbf4:
+        __restgprlr(uVar8);
+        return;
+      case 4:
+        goto switchD_8265b87c_caseD_8265bcc0;
+      case 5:
+        goto switchD_8265b87c_caseD_8265bd1c;
+      case 6:
+        *(undefined4 *)piVar5[7] = 0xd;
+        piVar5[6] = (int)"need dictionary";
+        *(undefined4 *)(piVar5[7] + 4) = 0;
+        __restgprlr(0xfffffffffffffffe);
+        return;
+      case 7:
+        uVar8 = inflate_blocks(*(undefined4 *)(piVar5[7] + 0x14),piVar5,uVar8);
+        if ((int)uVar8 == -3) {
+          *(undefined4 *)piVar5[7] = 0xd;
+          *(undefined4 *)(piVar5[7] + 4) = 0;
+        }
+        else {
+          if ((int)uVar8 == 0) {
+            uVar8 = uVar7;
+          }
+          if ((int)uVar8 != 1) goto LAB_8265bbf4;
+          inflate_blocks_reset(*(undefined4 *)(piVar5[7] + 0x14),piVar5,piVar5[7] + 4);
+          puVar4 = (undefined4 *)piVar5[7];
+          if (puVar4[3] == 0) {
+            *puVar4 = 8;
+            uVar8 = uVar7;
+            goto switchD_8265b87c_caseD_8265ba58;
+          }
+          *puVar4 = 0xc;
+          uVar8 = uVar7;
+        }
+        break;
+      case 8:
+switchD_8265b87c_caseD_8265ba58:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 << 0x18;
+        *piVar5 = *piVar5 + 1;
+        *(undefined4 *)piVar5[7] = 9;
+        uVar8 = uVar7;
+      case 9:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 * 0x10000 + *(int *)(piVar5[7] + 8);
+        *piVar5 = *piVar5 + 1;
+        *(undefined4 *)piVar5[7] = 10;
+        uVar8 = uVar7;
+switchD_8265b87c_caseD_8265bb08:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 * 0x100 + *(int *)(piVar5[7] + 8);
+        *piVar5 = *piVar5 + 1;
+        *(undefined4 *)piVar5[7] = 0xb;
+        uVar8 = uVar7;
+switchD_8265b87c_caseD_8265bb64:
+        if (piVar5[1] == 0) goto LAB_8265bbf4;
+        dataCacheBlockFlush(ZEXT48((byte *)*piVar5) - 0x80);
+        piVar5[1] = piVar5[1] + -1;
+        piVar5[2] = piVar5[2] + 1;
+        *(uint *)(piVar5[7] + 8) = (uint)*(byte *)*piVar5 + *(int *)(piVar5[7] + 8);
+        puVar4 = (undefined4 *)piVar5[7];
+        *piVar5 = *piVar5 + 1;
+        if (puVar4[1] == puVar4[2]) {
+          *puVar4 = 0xc;
+switchD_8265b87c_caseD_8265bdb4:
+          __restgprlr(1);
+          return;
+        }
+        *puVar4 = 0xd;
+        piVar5[6] = (int)"incorrect data check";
+LAB_8265bbd0:
+        *(undefined4 *)(piVar5[7] + 4) = 5;
+        uVar8 = uVar7;
+        break;
+      case 10:
+        goto switchD_8265b87c_caseD_8265bb08;
+      case 0xb:
+        goto switchD_8265b87c_caseD_8265bb64;
+      case 0xc:
+        goto switchD_8265b87c_caseD_8265bdb4;
+      case 0xd:
+        __restgprlr(0xfffffffffffffffd);
+        return;
+      }
+      uVar2 = *(uint *)piVar5[7];
+    }
+  }
+  __restgprlr(0xfffffffffffffffe);
+  return;
 }
 
 
 // 8265BDD0  inflateSetDictionary  (zlib/inflate.c:301)
 
-void inflateSetDictionary(void)
+void inflateSetDictionary(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  
+  iVar1 = __savegprlr_28();
+  if (((iVar1 != 0) && (*(int **)(iVar1 + 0x1c) != (int *)0x0)) && (**(int **)(iVar1 + 0x1c) == 6))
+  {
+    iVar2 = adler32(1);
+    if (iVar2 != *(int *)(iVar1 + 0x30)) {
+      __restgprlr_28(0xfffffffffffffffd);
+      return;
+    }
+    *(undefined4 *)(iVar1 + 0x30) = 1;
+    uVar3 = (ulonglong)(uint)(1 << (*(uint *)(*(int *)(iVar1 + 0x1c) + 0x10) & 0x3f));
+    uVar4 = param_3;
+    if (uVar3 <= (param_3 & 0xffffffff)) {
+      uVar4 = uVar3 - 1;
+      param_2 = (param_2 - uVar4) + param_3;
+    }
+    inflate_set_dictionary(*(undefined4 *)(*(int *)(iVar1 + 0x1c) + 0x14),param_2,uVar4);
+    **(undefined4 **)(iVar1 + 0x1c) = 7;
+    __restgprlr_28(0);
+    return;
+  }
+  __restgprlr_28(0xfffffffffffffffe);
+  return;
 }
 
 
@@ -86,8 +361,62 @@ void inflateSetDictionary(void)
 void inflateSync(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  char *pcVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 *puVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  uint uVar8;
+  
+  puVar5 = (undefined4 *)__savegprlr_29();
+  if ((puVar5 == (undefined4 *)0x0) || (piVar1 = (int *)puVar5[7], piVar1 == (int *)0x0)) {
+    __restgprlr_29(0xfffffffffffffffe);
+    return;
+  }
+  if (*piVar1 != 0xd) {
+    *piVar1 = 0xd;
+    *(undefined4 *)(puVar5[7] + 4) = 0;
+  }
+  uVar6 = (ulonglong)(uint)puVar5[1];
+  if (uVar6 == 0) {
+    __restgprlr_29(0xfffffffffffffffb);
+    return;
+  }
+  pcVar2 = (char *)*puVar5;
+  uVar8 = *(uint *)(puVar5[7] + 4);
+  pcVar7 = pcVar2;
+  do {
+    if (3 < uVar8) break;
+    if (*pcVar7 == (&DAT_82191584)[uVar8]) {
+      uVar8 = uVar8 + 1;
+    }
+    else if (*pcVar7 == '\0') {
+      uVar8 = 4 - uVar8;
+    }
+    else {
+      uVar8 = 0;
+    }
+    uVar6 = uVar6 - 1;
+    pcVar7 = pcVar7 + 1;
+  } while (uVar6 != 0);
+  *puVar5 = pcVar7;
+  puVar5[1] = (int)uVar6;
+  puVar5[2] = pcVar7 + (puVar5[2] - (int)pcVar2);
+  *(uint *)(puVar5[7] + 4) = uVar8;
+  if (uVar8 != 4) {
+    __restgprlr_29(0xfffffffffffffffd);
+    return;
+  }
+  uVar3 = puVar5[2];
+  uVar4 = puVar5[5];
+  inflateReset(puVar5);
+  puVar5[2] = uVar3;
+  puVar5[5] = uVar4;
+  *(undefined4 *)puVar5[7] = 7;
+  __restgprlr_29(0);
+  return;
 }
 
 

@@ -133,6 +133,47 @@ LAB_823ec7f8:
 ; 823EC870  DB_Alloc  (database/db_memory.cpp:159)
   823EC870  7D8802A6             mfspr r12,LR
   823EC874  48529E49             bl 0x829166bc
+  823EC878  9421FF90             stwu r1,-0x70(r1)
+  823EC87C  3D608206             lis r11,-0x7dfa
+  823EC880  7C7F1B78             or r31,r3,r3
+  823EC884  7C9E2378             or r30,r4,r4
+  823EC888  2B030000             cmplwi cr6,r3,0x0
+  823EC88C  3BABAF40             subi r29,r11,0x50c0
+  823EC890  409A0024             bne cr6,0x823ec8b4
+  823EC894  3D608203             lis r11,-0x7dfd
+  823EC898  3D408200             lis r10,-0x7e00
+  823EC89C  38EB6204             addi r7,r11,0x6204
+  823EC8A0  38CA0F98             addi r6,r10,0xf98
+  823EC8A4  7FA3EB78             or r3,r29,r29
+  823EC8A8  38A00000             li r5,0x0
+  823EC8AC  388000A2             li r4,0xa2
+  823EC8B0  481E7C51             bl 0x825d4500
+LAB_823ec8b4:
+  823EC8B4  3D4082CC             lis r10,-0x7d34
+  823EC8B8  397EFFFF             subi r11,r30,0x1
+  823EC8BC  38CA6D44             addi r6,r10,0x6d44
+  823EC8C0  80EA6D44             lwz r7,0x6d44(r10)
+  823EC8C4  81460008             lwz r10,0x8(r6)
+  823EC8C8  81260004             lwz r9,0x4(r6)
+  823EC8CC  7CAA5A14             add r5,r10,r11
+  823EC8D0  7CAB5878             andc r11,r5,r11
+  823EC8D4  7D0BFA14             add r8,r11,r31
+  823EC8D8  7FC95A14             add r30,r9,r11
+  823EC8DC  91060008             stw r8,0x8(r6)
+  823EC8E0  7F083840             cmplw cr6,r8,r7
+  823EC8E4  40990024             ble cr6,0x823ec908
+  823EC8E8  3D608206             lis r11,-0x7dfa
+  823EC8EC  3D408206             lis r10,-0x7dfa
+  823EC8F0  38EBAFA4             subi r7,r11,0x505c
+  823EC8F4  38CAAF84             subi r6,r10,0x507c
+  823EC8F8  7FA3EB78             or r3,r29,r29
+  823EC8FC  38A00000             li r5,0x0
+  823EC900  388000A8             li r4,0xa8
+  823EC904  481E7BFD             bl 0x825d4500
+LAB_823ec908:
+  823EC908  7FC3F378             or r3,r30,r30
+  823EC90C  38210070             addi r1,r1,0x70
+  823EC910  48529DFC             b 0x8291670c
 
 ; 823EC918  DB_FreeXZoneMemory  (database/db_memory.cpp:176)
   823EC918  39600000             li r11,0x0

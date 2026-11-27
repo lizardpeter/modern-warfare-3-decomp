@@ -6,7 +6,6 @@ undefined4 XModelGetName(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187aa0,0x2e,0,0xffffffff82000f98,0xffffffff8205ce78);
   }
   return *param_1;
@@ -15,51 +14,148 @@ undefined4 XModelGetName(undefined4 *param_1)
 
 // 826342C0  XModelGetSurfaces  (xanim/xmodel_utils.cpp:57)
 
-void XModelGetSurfaces(void)
+void XModelGetSurfaces(undefined8 param_1,ulonglong param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x3c,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x3d,0,0xffffffff82000f98,0xffffffff8205dd0c);
+  }
+  if (param_3 < 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x3e,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  iVar1 = param_3 * 0x28 + iVar2;
+  if ((ushort)*(byte *)(iVar2 + 6) <= *(ushort *)(iVar1 + 0x46)) {
+    MyAssertHandler(0xffffffff82187aa0,0x41,0,0xffffffff82187ba8);
+  }
+  if ((uint)*(byte *)(iVar2 + 6) < (uint)*(ushort *)(iVar1 + 0x44) + (uint)*(ushort *)(iVar1 + 0x46)
+     ) {
+    MyAssertHandler(0xffffffff82187aa0,0x42,0,0xffffffff82000f98,0xffffffff82187b6c);
+  }
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x44,0,0xffffffff82000f98,0xffffffff82187b58);
+  }
+  if (*(int *)(iVar1 + 100) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x4a,0,0xffffffff82000f98,0xffffffff82187b48);
+  }
+  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 100);
+  if (*(int *)(*(int *)(iVar1 + 0x48) + 4) != *(int *)(iVar1 + 100)) {
+    MyAssertHandler(0xffffffff82187aa0,0x4e,0,0xffffffff82000f98,0xffffffff82187b18);
+  }
+  if (*(short *)(*(int *)(iVar1 + 0x48) + 8) != *(short *)(iVar1 + 0x44)) {
+    MyAssertHandler(0xffffffff82187aa0,0x4f,0,0xffffffff82000f98,0xffffffff82187ae4);
+  }
+  __restgprlr_27(*(undefined2 *)(iVar1 + 0x44));
+  return;
 }
 
 
 // 82634488  XModelGetSurface  (xanim/xmodel_utils.cpp:93)
 
-void XModelGetSurface(void)
+void XModelGetSurface(undefined8 param_1,int param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (param_2 < 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x60,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  iVar1 = param_2 * 0x28 + iVar2;
+  if ((ulonglong)*(byte *)(iVar2 + 6) <= (*(ushort *)(iVar1 + 0x46) + param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82187aa0,99,0,0xffffffff82187bf0);
+  }
+  if (*(int *)(iVar1 + 100) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,100,0,0xffffffff82000f98,0xffffffff82187b48);
+  }
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x66,0,0xffffffff82000f98,0xffffffff82187b58);
+  }
+  if (*(int *)(*(int *)(iVar1 + 0x48) + 4) != *(int *)(iVar1 + 100)) {
+    MyAssertHandler(0xffffffff82187aa0,0x68,0,0xffffffff82000f98,0xffffffff82187b18);
+  }
+  if (*(short *)(*(int *)(iVar1 + 0x48) + 8) != *(short *)(iVar1 + 0x44)) {
+    MyAssertHandler(0xffffffff82187aa0,0x69,0,0xffffffff82000f98,0xffffffff82187ae4);
+  }
+  __restgprlr_27((param_3 & 0x1ffffff) * 0x80 + (ulonglong)*(uint *)(iVar1 + 100));
+  return;
 }
 
 
 // 826345D8  XModelGetLodInfo  (xanim/xmodel_utils.cpp:118)
 
-void XModelGetLodInfo(void)
+void XModelGetLodInfo(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x77,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x78,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  __restgprlr_28((param_2 + (param_2 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + uVar1 + 0x40);
+  return;
 }
 
 
 // 82634660  XModelGetSurfCount  (xanim/xmodel_utils.cpp:168)
 
-void XModelGetSurfCount(void)
+void XModelGetSurfCount(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0xa9,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82187aa0,0xaa,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  __restgprlr_28(*(undefined2 *)
+                  ((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 + 0x44));
+  return;
 }
 
 
 // 826346E8  XModelGetSkins  (xanim/xmodel_utils.cpp:185)
 
-void XModelGetSkins(void)
+void XModelGetSkins(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0xba,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  if ((int)param_2 < 0) {
+    MyAssertHandler(0xffffffff82187aa0,0xbb,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  __restgprlr_28((ulonglong)
+                 *(ushort *)
+                  ((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 + 0x46) *
+                 4 + (ulonglong)*(uint *)(iVar1 + 0x3c));
+  return;
+}
+
+
+// 82634780  XModelGetNumLods  (xanim/xmodel_utils.cpp:211)
+
+undefined1 XModelGetNumLods(int param_1)
+
+{
+  return *(undefined1 *)(param_1 + 0xe1);
 }
 
 
@@ -78,7 +174,6 @@ undefined1 XModelNumBones(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187aa0,0xee,0,0xffffffff82000f98,0xffffffff8205ce78);
   }
   return *(undefined1 *)(param_1 + 4);
@@ -96,11 +191,63 @@ undefined4 XModelGetBasePose(int param_1)
 
 // 82634810  XModelGetLodForDist  (xanim/xmodel_utils.cpp:261)
 
-void XModelGetLodForDist(void)
+void XModelGetLodForDist(undefined8 param_1,double param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  char cVar1;
+  float fVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  float *pfVar5;
+  float *pfVar6;
+  ulonglong uVar7;
+  int iVar8;
+  double extraout_f1;
+  double dVar9;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  uVar7 = (longlong)*(char *)((int)puVar3 + 0xe1) - 1;
+  dVar9 = extraout_f1;
+  if (0x7f < *(byte *)(puVar3 + 0x38)) {
+    MyAssertHandler(0xffffffff82187aa0,0x10d,0,0xffffffff82187878,0xffffffff82187c40,*puVar3);
+  }
+  cVar1 = *(char *)(puVar3 + 0x38);
+  iVar4 = (int)cVar1;
+  iVar8 = (int)uVar7;
+  if (cVar1 < iVar8) {
+    pfVar6 = (float *)(&DAT_8421bfbc + iVar4 * 8);
+    pfVar5 = (float *)(puVar3 + iVar4 * 10 + 0x10);
+    do {
+      if (*(char *)(pfVar6 + -1) == '\0') {
+        fVar2 = *pfVar5;
+      }
+      else {
+        fVar2 = *pfVar6;
+      }
+      if (((double)fVar2 == 0.0) || (dVar9 < (double)fVar2)) goto LAB_8263494c;
+      iVar4 = iVar4 + 1;
+      pfVar5 = pfVar5 + 10;
+      pfVar6 = pfVar6 + 2;
+    } while (iVar4 < iVar8);
+  }
+  if (cVar1 <= iVar8) {
+    iVar4 = (int)((uVar7 & 0xffffffff) << 3);
+    if ((&DAT_8421bfb8)[iVar4] == '\0') {
+      fVar2 = *(float *)((int)puVar3 +
+                        (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 3) + 0x40);
+    }
+    else {
+      fVar2 = *(float *)(&DAT_8421bfbc + iVar4);
+    }
+    if (((double)fVar2 == 0.0) || (param_2 < (double)fVar2)) {
+      __restgprlr_29(uVar7);
+      return;
+    }
+  }
+  iVar4 = -1;
+LAB_8263494c:
+  __restgprlr_29(iVar4);
+  return;
 }
 
 
@@ -110,7 +257,6 @@ void XModelSetTestLods(double param_1,uint param_2)
 
 {
   if (3 < param_2) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187aa0,0x140,0,0xffffffff82000f98,0xffffffff82187c5c);
   }
   *(float *)(&DAT_8421bfbc + param_2 * 8) = (float)param_1;
@@ -121,11 +267,21 @@ void XModelSetTestLods(double param_1,uint param_2)
 
 // 826349F0  XModelGetLodDist  (xanim/xmodel_utils.cpp:328)
 
-void XModelGetLodDist(void)
+void XModelGetLodDist(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82187aa0,0x149,0,0xffffffff82000f98,0xffffffff8205ce78);
+  }
+  if (((longlong)*(char *)(iVar1 + 0xe1) & 0xffffffffU) <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82187aa0,0x14a,0,0xffffffff82187c7c,param_2);
+  }
+  __restgprlr_29((double)*(float *)((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3)
+                                    + iVar1 + 0x40));
+  return;
 }
 
 
@@ -135,7 +291,6 @@ undefined4 XModelGetContents(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82187aa0,0x156,0,0xffffffff82000f98,0xffffffff8205ce78);
   }
   return *(undefined4 *)(param_1 + 0xec);

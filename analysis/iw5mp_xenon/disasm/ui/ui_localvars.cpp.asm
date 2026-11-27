@@ -118,21 +118,309 @@ LAB_825a3f80:
   825A3F8C  EBE1FFF0             ld r31,-0x10(r1)
   825A3F90  4E800020             blr
 
+; 825A3F98  UILocalVar_Init  (ui/ui_localvars.cpp:72)
+  825A3F98  2B030000             cmplwi cr6,r3,0x0
+  825A3F9C  4C9A0020             bnelr cr6
+  825A3FA0  3D608206             lis r11,-0x7dfa
+  825A3FA4  3D408200             lis r10,-0x7e00
+  825A3FA8  3D208217             lis r9,-0x7de9
+  825A3FAC  38EB53C8             addi r7,r11,0x53c8
+  825A3FB0  38CA0F98             addi r6,r10,0xf98
+  825A3FB4  3869A794             subi r3,r9,0x586c
+  825A3FB8  38A00000             li r5,0x0
+  825A3FBC  38800049             li r4,0x49
+  825A3FC0  48030540             b 0x825d4500
+
 ; 825A3FC8  UILocalVar_Shutdown  (ui/ui_localvars.cpp:78)
   825A3FC8  7D8802A6             mfspr r12,LR
   825A3FCC  483726E5             bl 0x829166b0
+  825A3FD0  9421FF70             stwu r1,-0x90(r1)
+  825A3FD4  3D408217             lis r10,-0x7de9
+  825A3FD8  3D608200             lis r11,-0x7e00
+  825A3FDC  7C7A1B78             or r26,r3,r3
+  825A3FE0  2B030000             cmplwi cr6,r3,0x0
+  825A3FE4  3B8AA794             subi r28,r10,0x586c
+  825A3FE8  3B6B0F98             addi r27,r11,0xf98
+  825A3FEC  409A0020             bne cr6,0x825a400c
+  825A3FF0  3D608206             lis r11,-0x7dfa
+  825A3FF4  7F66DB78             or r6,r27,r27
+  825A3FF8  38EB53C8             addi r7,r11,0x53c8
+  825A3FFC  7F83E378             or r3,r28,r28
+  825A4000  38A00000             li r5,0x0
+  825A4004  38800051             li r4,0x51
+  825A4008  480304F9             bl 0x825d4500
+LAB_825a400c:
+  825A400C  3D608217             lis r11,-0x7de9
+  825A4010  3BFA0004             addi r31,r26,0x4
+  825A4014  3BC00200             li r30,0x200
+  825A4018  3BABA7D4             subi r29,r11,0x582c
+LAB_825a401c:
+  825A401C  817F0000             lwz r11,0x0(r31)
+  825A4020  2B0B0000             cmplwi cr6,r11,0x0
+  825A4024  419A0048             beq cr6,0x825a406c
+  825A4028  357FFFFC             subic. r11,r31,0x4
+  825A402C  4082001C             bne 0x825a4048
+  825A4030  7FA7EB78             or r7,r29,r29
+  825A4034  7F66DB78             or r6,r27,r27
+  825A4038  7F83E378             or r3,r28,r28
+  825A403C  38A00000             li r5,0x0
+  825A4040  38800040             li r4,0x40
+  825A4044  480304BD             bl 0x825d4500
+LAB_825a4048:
+  825A4048  817FFFFC             lwz r11,-0x4(r31)
+  825A404C  2F0B0002             cmpwi cr6,r11,0x2
+  825A4050  409A0010             bne cr6,0x825a4060
+  825A4054  38800023             li r4,0x23
+  825A4058  807F0004             lwz r3,0x4(r31)
+  825A405C  4803CCC5             bl 0x825e0d20
+LAB_825a4060:
+  825A4060  38800023             li r4,0x23
+  825A4064  807F0000             lwz r3,0x0(r31)
+  825A4068  4803CCB9             bl 0x825e0d20
+LAB_825a406c:
+  825A406C  37DEFFFF             subic. r30,r30,0x1
+  825A4070  3BFF000C             addi r31,r31,0xc
+  825A4074  4082FFA8             bne 0x825a401c
+  825A4078  38A01800             li r5,0x1800
+  825A407C  38800000             li r4,0x0
+  825A4080  7F43D378             or r3,r26,r26
+  825A4084  4837277D             bl 0x82916800
+  825A4088  38210090             addi r1,r1,0x90
+  825A408C  48372674             b 0x82916700
+
+; 825A4B08  UILocalVar_HashName  (ui/ui_localvars.cpp:97)
+  825A4B08  7D8802A6             mfspr r12,LR
+  825A4B0C  9181FFF8             stw r12,-0x8(r1)
+  825A4B10  FBE1FFF0             std r31,-0x10(r1)
+  825A4B14  9421FFA0             stwu r1,-0x60(r1)
+  825A4B18  7C7F1B78             or r31,r3,r3
+  825A4B1C  2B030000             cmplwi cr6,r3,0x0
+  825A4B20  409A0028             bne cr6,0x825a4b48
+  825A4B24  3D608202             lis r11,-0x7dfe
+  825A4B28  3D408200             lis r10,-0x7e00
+  825A4B2C  3D208217             lis r9,-0x7de9
+  825A4B30  38EB1A74             addi r7,r11,0x1a74
+  825A4B34  38CA0F98             addi r6,r10,0xf98
+  825A4B38  3869A794             subi r3,r9,0x586c
+  825A4B3C  38A00000             li r5,0x0
+  825A4B40  38800065             li r4,0x65
+  825A4B44  4802F9BD             bl 0x825d4500
+LAB_825a4b48:
+  825A4B48  897F0000             lbz r11,0x0(r31)
+  825A4B4C  39200000             li r9,0x0
+  825A4B50  7D6A0774             extsb r10,r11
+  825A4B54  2F0A0000             cmpwi cr6,r10,0x0
+  825A4B58  419A0028             beq cr6,0x825a4b80
+  825A4B5C  7FEBFB78             or r11,r31,r31
+  825A4B60  20FF0077             subfic r7,r31,0x77
+LAB_825a4b64:
+  825A4B64  7D075A14             add r8,r7,r11
+  825A4B68  8CCB0001             lbzu r6,0x1(r11)
+  825A4B6C  7D0851D6             mullw r8,r8,r10
+  825A4B70  7CCA0774             extsb r10,r6
+  825A4B74  7D284A14             add r9,r8,r9
+  825A4B78  2F0A0000             cmpwi cr6,r10,0x0
+  825A4B7C  409AFFE8             bne cr6,0x825a4b64
+LAB_825a4b80:
+  825A4B80  552BC23E             rlwinm r11,r9,0x18,0x8,0x1f
+  825A4B84  7D6B4A14             add r11,r11,r9
+  825A4B88  556305FE             rlwinm r3,r11,0x0,0x17,0x1f
+  825A4B8C  38210060             addi r1,r1,0x60
+  825A4B90  8181FFF8             lwz r12,-0x8(r1)
+  825A4B94  7D8803A6             mtspr LR,r12
+  825A4B98  EBE1FFF0             ld r31,-0x10(r1)
+  825A4B9C  4E800020             blr
 
 ; 825A4090  UILocalVar_FindLocation  (ui/ui_localvars.cpp:113)
   825A4090  7D8802A6             mfspr r12,LR
   825A4094  48372621             bl 0x829166b4
+  825A4098  9421FF80             stwu r1,-0x80(r1)
+  825A409C  3D608217             lis r11,-0x7de9
+  825A40A0  3D408200             lis r10,-0x7e00
+  825A40A4  7C7D1B78             or r29,r3,r3
+  825A40A8  7C9C2378             or r28,r4,r4
+  825A40AC  7CBB2B78             or r27,r5,r5
+  825A40B0  2B030000             cmplwi cr6,r3,0x0
+  825A40B4  3BEBA794             subi r31,r11,0x586c
+  825A40B8  3BCA0F98             addi r30,r10,0xf98
+  825A40BC  409A0020             bne cr6,0x825a40dc
+  825A40C0  3D608206             lis r11,-0x7dfa
+  825A40C4  7FC6F378             or r6,r30,r30
+  825A40C8  38EB53C8             addi r7,r11,0x53c8
+  825A40CC  7FE3FB78             or r3,r31,r31
+  825A40D0  38A00000             li r5,0x0
+  825A40D4  38800075             li r4,0x75
+  825A40D8  48030429             bl 0x825d4500
+LAB_825a40dc:
+  825A40DC  2B1C0000             cmplwi cr6,r28,0x0
+  825A40E0  409A0020             bne cr6,0x825a4100
+  825A40E4  3D608202             lis r11,-0x7dfe
+  825A40E8  7FC6F378             or r6,r30,r30
+  825A40EC  38EB1A74             addi r7,r11,0x1a74
+  825A40F0  7FE3FB78             or r3,r31,r31
+  825A40F4  38A00000             li r5,0x0
+  825A40F8  38800076             li r4,0x76
+  825A40FC  48030405             bl 0x825d4500
+LAB_825a4100:
+  825A4100  2B1B0000             cmplwi cr6,r27,0x0
+  825A4104  409A0020             bne cr6,0x825a4124
+  825A4108  3D608217             lis r11,-0x7de9
+  825A410C  7FC6F378             or r6,r30,r30
+  825A4110  38EBA7D8             subi r7,r11,0x5828
+  825A4114  7FE3FB78             or r3,r31,r31
+  825A4118  38A00000             li r5,0x0
+  825A411C  38800077             li r4,0x77
+  825A4120  480303E1             bl 0x825d4500
+LAB_825a4124:
+  825A4124  7F83E378             or r3,r28,r28
+  825A4128  480009E1             bl 0x825a4b08
+  825A412C  7C681B78             or r8,r3,r3
+LAB_825a4130:
+  825A4130  550B083C             rlwinm r11,r8,0x1,0x0,0x1e
+  825A4134  7D685A14             add r11,r8,r11
+  825A4138  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  825A413C  7D4BEA14             add r10,r11,r29
+  825A4140  816A0004             lwz r11,0x4(r10)
+  825A4144  2B0B0000             cmplwi cr6,r11,0x0
+  825A4148  419A0044             beq cr6,0x825a418c
+  825A414C  7F8AE378             or r10,r28,r28
+LAB_825a4150:
+  825A4150  892B0000             lbz r9,0x0(r11)
+  825A4154  88EA0000             lbz r7,0x0(r10)
+  825A4158  2F090000             cmpwi cr6,r9,0x0
+  825A415C  7D274850             subf r9,r7,r9
+  825A4160  419A0014             beq cr6,0x825a4174
+  825A4164  396B0001             addi r11,r11,0x1
+  825A4168  394A0001             addi r10,r10,0x1
+  825A416C  2F090000             cmpwi cr6,r9,0x0
+  825A4170  419AFFE0             beq cr6,0x825a4150
+LAB_825a4174:
+  825A4174  2F090000             cmpwi cr6,r9,0x0
+  825A4178  419A0024             beq cr6,0x825a419c
+  825A417C  39680001             addi r11,r8,0x1
+  825A4180  556805FE             rlwinm r8,r11,0x0,0x17,0x1f
+  825A4184  7F081840             cmplw cr6,r8,r3
+  825A4188  409AFFA8             bne cr6,0x825a4130
+LAB_825a418c:
+  825A418C  38600000             li r3,0x0
+  825A4190  911B0000             stw r8,0x0(r27)
+  825A4194  38210080             addi r1,r1,0x80
+  825A4198  4837256C             b 0x82916704
+LAB_825a419c:
+  825A419C  38600001             li r3,0x1
+  825A41A0  911B0000             stw r8,0x0(r27)
+  825A41A4  38210080             addi r1,r1,0x80
+  825A41A8  4837255C             b 0x82916704
 
 ; 825A41B0  UILocalVar_Find  (ui/ui_localvars.cpp:143)
   825A41B0  7D8802A6             mfspr r12,LR
   825A41B4  48372505             bl 0x829166b8
+  825A41B8  9421FF80             stwu r1,-0x80(r1)
+  825A41BC  3D608217             lis r11,-0x7de9
+  825A41C0  3D408200             lis r10,-0x7e00
+  825A41C4  7C7F1B78             or r31,r3,r3
+  825A41C8  7C9C2378             or r28,r4,r4
+  825A41CC  2B030000             cmplwi cr6,r3,0x0
+  825A41D0  3BCBA794             subi r30,r11,0x586c
+  825A41D4  3BAA0F98             addi r29,r10,0xf98
+  825A41D8  409A0020             bne cr6,0x825a41f8
+  825A41DC  3D608206             lis r11,-0x7dfa
+  825A41E0  7FA6EB78             or r6,r29,r29
+  825A41E4  38EB53C8             addi r7,r11,0x53c8
+  825A41E8  7FC3F378             or r3,r30,r30
+  825A41EC  38A00000             li r5,0x0
+  825A41F0  38800092             li r4,0x92
+  825A41F4  4803030D             bl 0x825d4500
+LAB_825a41f8:
+  825A41F8  2B1C0000             cmplwi cr6,r28,0x0
+  825A41FC  409A0020             bne cr6,0x825a421c
+  825A4200  3D608202             lis r11,-0x7dfe
+  825A4204  7FA6EB78             or r6,r29,r29
+  825A4208  38EB1A74             addi r7,r11,0x1a74
+  825A420C  7FC3F378             or r3,r30,r30
+  825A4210  38A00000             li r5,0x0
+  825A4214  38800093             li r4,0x93
+  825A4218  480302E9             bl 0x825d4500
+LAB_825a421c:
+  825A421C  38A10050             addi r5,r1,0x50
+  825A4220  7F84E378             or r4,r28,r28
+  825A4224  7FE3FB78             or r3,r31,r31
+  825A4228  4BFFFE69             bl 0x825a4090
+  825A422C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  825A4230  2B0B0000             cmplwi cr6,r11,0x0
+  825A4234  419A0020             beq cr6,0x825a4254
+  825A4238  81610050             lwz r11,0x50(r1)
+  825A423C  556A083C             rlwinm r10,r11,0x1,0x0,0x1e
+  825A4240  7D6B5214             add r11,r11,r10
+  825A4244  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  825A4248  7C6BFA14             add r3,r11,r31
+  825A424C  38210080             addi r1,r1,0x80
+  825A4250  483724B8             b 0x82916708
+LAB_825a4254:
+  825A4254  38600000             li r3,0x0
+  825A4258  38210080             addi r1,r1,0x80
+  825A425C  483724AC             b 0x82916708
 
 ; 825A4260  UILocalVar_FindOrCreate  (ui/ui_localvars.cpp:156)
   825A4260  7D8802A6             mfspr r12,LR
   825A4264  48372455             bl 0x829166b8
+  825A4268  9421FF80             stwu r1,-0x80(r1)
+  825A426C  3D608217             lis r11,-0x7de9
+  825A4270  3D408200             lis r10,-0x7e00
+  825A4274  7C7F1B78             or r31,r3,r3
+  825A4278  7C9E2378             or r30,r4,r4
+  825A427C  2B030000             cmplwi cr6,r3,0x0
+  825A4280  3BABA794             subi r29,r11,0x586c
+  825A4284  3B8A0F98             addi r28,r10,0xf98
+  825A4288  409A0020             bne cr6,0x825a42a8
+  825A428C  3D608206             lis r11,-0x7dfa
+  825A4290  7F86E378             or r6,r28,r28
+  825A4294  38EB53C8             addi r7,r11,0x53c8
+  825A4298  7FA3EB78             or r3,r29,r29
+  825A429C  38A00000             li r5,0x0
+  825A42A0  388000A0             li r4,0xa0
+  825A42A4  4803025D             bl 0x825d4500
+LAB_825a42a8:
+  825A42A8  2B1E0000             cmplwi cr6,r30,0x0
+  825A42AC  409A0020             bne cr6,0x825a42cc
+  825A42B0  3D608202             lis r11,-0x7dfe
+  825A42B4  7F86E378             or r6,r28,r28
+  825A42B8  38EB1A74             addi r7,r11,0x1a74
+  825A42BC  7FA3EB78             or r3,r29,r29
+  825A42C0  38A00000             li r5,0x0
+  825A42C4  388000A1             li r4,0xa1
+  825A42C8  48030239             bl 0x825d4500
+LAB_825a42cc:
+  825A42CC  38A10050             addi r5,r1,0x50
+  825A42D0  7FC4F378             or r4,r30,r30
+  825A42D4  7FE3FB78             or r3,r31,r31
+  825A42D8  4BFFFDB9             bl 0x825a4090
+  825A42DC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  825A42E0  2B0B0000             cmplwi cr6,r11,0x0
+  825A42E4  81610050             lwz r11,0x50(r1)
+  825A42E8  556A083C             rlwinm r10,r11,0x1,0x0,0x1e
+  825A42EC  419A0018             beq cr6,0x825a4304
+  825A42F0  7D6B5214             add r11,r11,r10
+  825A42F4  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  825A42F8  7C6BFA14             add r3,r11,r31
+  825A42FC  38210080             addi r1,r1,0x80
+  825A4300  48372408             b 0x82916708
+LAB_825a4304:
+  825A4304  7D0B5214             add r8,r11,r10
+  825A4308  3D208217             lis r9,-0x7de9
+  825A430C  550B103A             rlwinm r11,r8,0x2,0x0,0x1d
+  825A4310  38A00023             li r5,0x23
+  825A4314  3889A7E4             subi r4,r9,0x581c
+  825A4318  7FC3F378             or r3,r30,r30
+  825A431C  7FEBFA14             add r31,r11,r31
+  825A4320  4803C999             bl 0x825e0cb8
+  825A4324  39600000             li r11,0x0
+  825A4328  907F0004             stw r3,0x4(r31)
+  825A432C  7FE3FB78             or r3,r31,r31
+  825A4330  917F0000             stw r11,0x0(r31)
+  825A4334  917F0008             stw r11,0x8(r31)
+  825A4338  38210080             addi r1,r1,0x80
+  825A433C  483723CC             b 0x82916708
 
 ; 825A4340  UILocalVar_GetBool  (ui/ui_localvars.cpp:175)
   825A4340  7D8802A6             mfspr r12,LR
@@ -308,23 +596,294 @@ LAB_825a457c:
 ; 825A4598  UILocalVar_GetString  (ui/ui_localvars.cpp:232)
   825A4598  7D8802A6             mfspr r12,LR
   825A459C  4837211D             bl 0x829166b8
+  825A45A0  9421FF80             stwu r1,-0x80(r1)
+  825A45A4  3D608217             lis r11,-0x7de9
+  825A45A8  7C7F1B78             or r31,r3,r3
+  825A45AC  7C9E2378             or r30,r4,r4
+  825A45B0  7CBD2B78             or r29,r5,r5
+  825A45B4  2B030000             cmplwi cr6,r3,0x0
+  825A45B8  3B8BA794             subi r28,r11,0x586c
+  825A45BC  409A0024             bne cr6,0x825a45e0
+  825A45C0  3D608217             lis r11,-0x7de9
+  825A45C4  3D408200             lis r10,-0x7e00
+  825A45C8  38EBA7D4             subi r7,r11,0x582c
+  825A45CC  38CA0F98             addi r6,r10,0xf98
+  825A45D0  7F83E378             or r3,r28,r28
+  825A45D4  38A00000             li r5,0x0
+  825A45D8  388000E9             li r4,0xe9
+  825A45DC  4802FF25             bl 0x825d4500
+LAB_825a45e0:
+  825A45E0  80FF0000             lwz r7,0x0(r31)
+  825A45E4  2B070001             cmplwi cr6,r7,0x1
+  825A45E8  41980064             blt cr6,0x825a464c
+  825A45EC  419A0034             beq cr6,0x825a4620
+  825A45F0  2F070002             cmpwi cr6,r7,0x2
+  825A45F4  419A0020             beq cr6,0x825a4614
+  825A45F8  3D608217             lis r11,-0x7de9
+  825A45FC  7F83E378             or r3,r28,r28
+  825A4600  38CBA7FC             subi r6,r11,0x5804
+  825A4604  39000002             li r8,0x2
+  825A4608  38A00000             li r5,0x0
+  825A460C  388000F6             li r4,0xf6
+  825A4610  4802FEF1             bl 0x825d4500
+LAB_825a4614:
+  825A4614  807F0008             lwz r3,0x8(r31)
+  825A4618  38210080             addi r1,r1,0x80
+  825A461C  483720EC             b 0x82916708
+LAB_825a4620:
+  825A4620  C03F0008             lfs f1,0x8(r31)
+  825A4624  3D608202             lis r11,-0x7dfe
+  825A4628  D8210028             stfd f1,0x28(r1)
+  825A462C  E8C10028             ld r6,0x28(r1)
+  825A4630  38AB81DC             subi r5,r11,0x7e24
+  825A4634  7FA4EB78             or r4,r29,r29
+  825A4638  7FC3F378             or r3,r30,r30
+  825A463C  48067EA5             bl 0x8260c4e0
+  825A4640  7FC3F378             or r3,r30,r30
+  825A4644  38210080             addi r1,r1,0x80
+  825A4648  483720C0             b 0x82916708
+LAB_825a464c:
+  825A464C  3D608201             lis r11,-0x7dff
+  825A4650  80DF0008             lwz r6,0x8(r31)
+  825A4654  7FA4EB78             or r4,r29,r29
+  825A4658  38ABC28C             subi r5,r11,0x3d74
+  825A465C  7FC3F378             or r3,r30,r30
+  825A4660  48067E81             bl 0x8260c4e0
+  825A4664  7FC3F378             or r3,r30,r30
+  825A4668  38210080             addi r1,r1,0x80
+  825A466C  4837209C             b 0x82916708
 
 ; 825A4670  UILocalVar_GetStringByName  (ui/ui_localvars.cpp:253)
   825A4670  7D8802A6             mfspr r12,LR
   825A4674  4837203D             bl 0x829166b0
+  825A4678  9421FF70             stwu r1,-0x90(r1)
+  825A467C  3D608217             lis r11,-0x7de9
+  825A4680  3D408200             lis r10,-0x7e00
+  825A4684  7C7D1B78             or r29,r3,r3
+  825A4688  7C9C2378             or r28,r4,r4
+  825A468C  7CBB2B78             or r27,r5,r5
+  825A4690  7CDA3378             or r26,r6,r6
+  825A4694  2B030000             cmplwi cr6,r3,0x0
+  825A4698  3BEBA794             subi r31,r11,0x586c
+  825A469C  3BCA0F98             addi r30,r10,0xf98
+  825A46A0  409A0020             bne cr6,0x825a46c0
+  825A46A4  3D608206             lis r11,-0x7dfa
+  825A46A8  7FC6F378             or r6,r30,r30
+  825A46AC  38EB53C8             addi r7,r11,0x53c8
+  825A46B0  7FE3FB78             or r3,r31,r31
+  825A46B4  38A00000             li r5,0x0
+  825A46B8  38800100             li r4,0x100
+  825A46BC  4802FE45             bl 0x825d4500
+LAB_825a46c0:
+  825A46C0  2B1C0000             cmplwi cr6,r28,0x0
+  825A46C4  409A0020             bne cr6,0x825a46e4
+  825A46C8  3D608217             lis r11,-0x7de9
+  825A46CC  7FC6F378             or r6,r30,r30
+  825A46D0  38EBA87C             subi r7,r11,0x5784
+  825A46D4  7FE3FB78             or r3,r31,r31
+  825A46D8  38A00000             li r5,0x0
+  825A46DC  38800101             li r4,0x101
+  825A46E0  4802FE21             bl 0x825d4500
+LAB_825a46e4:
+  825A46E4  2B1B0000             cmplwi cr6,r27,0x0
+  825A46E8  409A0020             bne cr6,0x825a4708
+  825A46EC  3D608217             lis r11,-0x7de9
+  825A46F0  7FC6F378             or r6,r30,r30
+  825A46F4  38EBA870             subi r7,r11,0x5790
+  825A46F8  7FE3FB78             or r3,r31,r31
+  825A46FC  38A00000             li r5,0x0
+  825A4700  38800102             li r4,0x102
+  825A4704  4802FDFD             bl 0x825d4500
+LAB_825a4708:
+  825A4708  7F84E378             or r4,r28,r28
+  825A470C  7FA3EB78             or r3,r29,r29
+  825A4710  4BFFFAA1             bl 0x825a41b0
+  825A4714  2B030000             cmplwi cr6,r3,0x0
+  825A4718  409A0028             bne cr6,0x825a4740
+  825A471C  3D608217             lis r11,-0x7de9
+  825A4720  7F85E378             or r5,r28,r28
+  825A4724  388BA828             subi r4,r11,0x57d8
+  825A4728  3860000D             li r3,0xd
+  825A472C  4BF52555             bl 0x824f6c80
+  825A4730  3D408200             lis r10,-0x7e00
+  825A4734  386A68AF             addi r3,r10,0x68af
+  825A4738  38210090             addi r1,r1,0x90
+  825A473C  48371FC4             b 0x82916700
+LAB_825a4740:
+  825A4740  7F45D378             or r5,r26,r26
+  825A4744  7F64DB78             or r4,r27,r27
+  825A4748  4BFFFE51             bl 0x825a4598
+  825A474C  38210090             addi r1,r1,0x90
+  825A4750  48371FB0             b 0x82916700
 
 ; 825A4758  UILocalVar_SetBool  (ui/ui_localvars.cpp:272)
   825A4758  7D8802A6             mfspr r12,LR
   825A475C  48371F59             bl 0x829166b4
+  825A4760  9421FF80             stwu r1,-0x80(r1)
+  825A4764  7C7F1B78             or r31,r3,r3
+  825A4768  7C9E2378             or r30,r4,r4
+  825A476C  2B030000             cmplwi cr6,r3,0x0
+  825A4770  409A004C             bne cr6,0x825a47bc
+  825A4774  3D608217             lis r11,-0x7de9
+  825A4778  3D408200             lis r10,-0x7e00
+  825A477C  3D208217             lis r9,-0x7de9
+  825A4780  3BABA7D4             subi r29,r11,0x582c
+  825A4784  3B8A0F98             addi r28,r10,0xf98
+  825A4788  3B69A794             subi r27,r9,0x586c
+  825A478C  7FA7EB78             or r7,r29,r29
+  825A4790  7F86E378             or r6,r28,r28
+  825A4794  7F63DB78             or r3,r27,r27
+  825A4798  38A00000             li r5,0x0
+  825A479C  38800113             li r4,0x113
+  825A47A0  4802FD61             bl 0x825d4500
+  825A47A4  7FA7EB78             or r7,r29,r29
+  825A47A8  7F86E378             or r6,r28,r28
+  825A47AC  7F63DB78             or r3,r27,r27
+  825A47B0  38A00000             li r5,0x0
+  825A47B4  38800040             li r4,0x40
+  825A47B8  4802FD49             bl 0x825d4500
+LAB_825a47bc:
+  825A47BC  817F0000             lwz r11,0x0(r31)
+  825A47C0  2F0B0002             cmpwi cr6,r11,0x2
+  825A47C4  409A0010             bne cr6,0x825a47d4
+  825A47C8  38800023             li r4,0x23
+  825A47CC  807F0008             lwz r3,0x8(r31)
+  825A47D0  4803C551             bl 0x825e0d20
+LAB_825a47d4:
+  825A47D4  39600000             li r11,0x0
+  825A47D8  57CA063E             rlwinm r10,r30,0x0,0x18,0x1f
+  825A47DC  917F0000             stw r11,0x0(r31)
+  825A47E0  915F0008             stw r10,0x8(r31)
+  825A47E4  4BFE842D             bl 0x8258cc10
+  825A47E8  38210080             addi r1,r1,0x80
+  825A47EC  48371F18             b 0x82916704
 
 ; 825A47F0  UILocalVar_SetInt  (ui/ui_localvars.cpp:288)
   825A47F0  7D8802A6             mfspr r12,LR
   825A47F4  48371EC1             bl 0x829166b4
+  825A47F8  9421FF80             stwu r1,-0x80(r1)
+  825A47FC  7C7F1B78             or r31,r3,r3
+  825A4800  7C9E2378             or r30,r4,r4
+  825A4804  2B030000             cmplwi cr6,r3,0x0
+  825A4808  409A004C             bne cr6,0x825a4854
+  825A480C  3D608217             lis r11,-0x7de9
+  825A4810  3D408200             lis r10,-0x7e00
+  825A4814  3D208217             lis r9,-0x7de9
+  825A4818  3BABA7D4             subi r29,r11,0x582c
+  825A481C  3B8A0F98             addi r28,r10,0xf98
+  825A4820  3B69A794             subi r27,r9,0x586c
+  825A4824  7FA7EB78             or r7,r29,r29
+  825A4828  7F86E378             or r6,r28,r28
+  825A482C  7F63DB78             or r3,r27,r27
+  825A4830  38A00000             li r5,0x0
+  825A4834  38800123             li r4,0x123
+  825A4838  4802FCC9             bl 0x825d4500
+  825A483C  7FA7EB78             or r7,r29,r29
+  825A4840  7F86E378             or r6,r28,r28
+  825A4844  7F63DB78             or r3,r27,r27
+  825A4848  38A00000             li r5,0x0
+  825A484C  38800040             li r4,0x40
+  825A4850  4802FCB1             bl 0x825d4500
+LAB_825a4854:
+  825A4854  817F0000             lwz r11,0x0(r31)
+  825A4858  2F0B0002             cmpwi cr6,r11,0x2
+  825A485C  409A0010             bne cr6,0x825a486c
+  825A4860  38800023             li r4,0x23
+  825A4864  807F0008             lwz r3,0x8(r31)
+  825A4868  4803C4B9             bl 0x825e0d20
+LAB_825a486c:
+  825A486C  39600000             li r11,0x0
+  825A4870  93DF0008             stw r30,0x8(r31)
+  825A4874  917F0000             stw r11,0x0(r31)
+  825A4878  4BFE8399             bl 0x8258cc10
+  825A487C  38210080             addi r1,r1,0x80
+  825A4880  48371E84             b 0x82916704
 
 ; 825A4888  UILocalVar_SetFloat  (ui/ui_localvars.cpp:304)
   825A4888  7D8802A6             mfspr r12,LR
   825A488C  48371E2D             bl 0x829166b8
+  825A4890  DBE1FFD0             stfd f31,-0x30(r1)
+  825A4894  9421FF80             stwu r1,-0x80(r1)
+  825A4898  7C7F1B78             or r31,r3,r3
+  825A489C  FFE00890             fmr f31,f1
+  825A48A0  2B030000             cmplwi cr6,r3,0x0
+  825A48A4  409A004C             bne cr6,0x825a48f0
+  825A48A8  3D608217             lis r11,-0x7de9
+  825A48AC  3D408200             lis r10,-0x7e00
+  825A48B0  3D208217             lis r9,-0x7de9
+  825A48B4  3BCBA7D4             subi r30,r11,0x582c
+  825A48B8  3BAA0F98             addi r29,r10,0xf98
+  825A48BC  3B89A794             subi r28,r9,0x586c
+  825A48C0  7FC7F378             or r7,r30,r30
+  825A48C4  7FA6EB78             or r6,r29,r29
+  825A48C8  7F83E378             or r3,r28,r28
+  825A48CC  38A00000             li r5,0x0
+  825A48D0  38800133             li r4,0x133
+  825A48D4  4802FC2D             bl 0x825d4500
+  825A48D8  7FC7F378             or r7,r30,r30
+  825A48DC  7FA6EB78             or r6,r29,r29
+  825A48E0  7F83E378             or r3,r28,r28
+  825A48E4  38A00000             li r5,0x0
+  825A48E8  38800040             li r4,0x40
+  825A48EC  4802FC15             bl 0x825d4500
+LAB_825a48f0:
+  825A48F0  817F0000             lwz r11,0x0(r31)
+  825A48F4  2F0B0002             cmpwi cr6,r11,0x2
+  825A48F8  409A0010             bne cr6,0x825a4908
+  825A48FC  38800023             li r4,0x23
+  825A4900  807F0008             lwz r3,0x8(r31)
+  825A4904  4803C41D             bl 0x825e0d20
+LAB_825a4908:
+  825A4908  39600001             li r11,0x1
+  825A490C  D3FF0008             stfs f31,0x8(r31)
+  825A4910  917F0000             stw r11,0x0(r31)
+  825A4914  4BFE82FD             bl 0x8258cc10
+  825A4918  38210080             addi r1,r1,0x80
+  825A491C  CBE1FFD0             lfd f31,-0x30(r1)
+  825A4920  48371DE8             b 0x82916708
 
 ; 825A4928  UILocalVar_SetString  (ui/ui_localvars.cpp:320)
   825A4928  7D8802A6             mfspr r12,LR
   825A492C  48371D89             bl 0x829166b4
+  825A4930  9421FF80             stwu r1,-0x80(r1)
+  825A4934  7C7F1B78             or r31,r3,r3
+  825A4938  7C9E2378             or r30,r4,r4
+  825A493C  2B030000             cmplwi cr6,r3,0x0
+  825A4940  409A004C             bne cr6,0x825a498c
+  825A4944  3D608217             lis r11,-0x7de9
+  825A4948  3D408200             lis r10,-0x7e00
+  825A494C  3D208217             lis r9,-0x7de9
+  825A4950  3BABA7D4             subi r29,r11,0x582c
+  825A4954  3B8A0F98             addi r28,r10,0xf98
+  825A4958  3B69A794             subi r27,r9,0x586c
+  825A495C  7FA7EB78             or r7,r29,r29
+  825A4960  7F86E378             or r6,r28,r28
+  825A4964  7F63DB78             or r3,r27,r27
+  825A4968  38A00000             li r5,0x0
+  825A496C  38800143             li r4,0x143
+  825A4970  4802FB91             bl 0x825d4500
+  825A4974  7FA7EB78             or r7,r29,r29
+  825A4978  7F86E378             or r6,r28,r28
+  825A497C  7F63DB78             or r3,r27,r27
+  825A4980  38A00000             li r5,0x0
+  825A4984  38800040             li r4,0x40
+  825A4988  4802FB79             bl 0x825d4500
+LAB_825a498c:
+  825A498C  817F0000             lwz r11,0x0(r31)
+  825A4990  2F0B0002             cmpwi cr6,r11,0x2
+  825A4994  409A0010             bne cr6,0x825a49a4
+  825A4998  38800023             li r4,0x23
+  825A499C  807F0008             lwz r3,0x8(r31)
+  825A49A0  4803C381             bl 0x825e0d20
+LAB_825a49a4:
+  825A49A4  39600002             li r11,0x2
+  825A49A8  3D408217             lis r10,-0x7de9
+  825A49AC  917F0000             stw r11,0x0(r31)
+  825A49B0  38A00023             li r5,0x23
+  825A49B4  388AA884             subi r4,r10,0x577c
+  825A49B8  7FC3F378             or r3,r30,r30
+  825A49BC  4803C2FD             bl 0x825e0cb8
+  825A49C0  907F0008             stw r3,0x8(r31)
+  825A49C4  4BFE824D             bl 0x8258cc10
+  825A49C8  38210080             addi r1,r1,0x80
+  825A49CC  48371D38             b 0x82916704

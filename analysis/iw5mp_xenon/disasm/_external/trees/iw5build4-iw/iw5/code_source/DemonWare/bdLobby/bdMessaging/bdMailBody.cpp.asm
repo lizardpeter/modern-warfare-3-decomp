@@ -21,9 +21,41 @@
   82902D34  EBE1FFF0             ld r31,-0x10(r1)
   82902D38  4E800020             blr
 
+; 82902D40  bdMailBody::~bdMailBody  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:27)
+  82902D40  3D608221             lis r11,-0x7ddf
+  82902D44  396BE4B0             subi r11,r11,0x1b50
+  82902D48  91630000             stw r11,0x0(r3)
+  82902D4C  4BFFA24C             b 0x828fcf98
+
 ; 82902DB8  bdMailBody::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:31)
   82902DB8  7D8802A6             mfspr r12,LR
   82902DBC  48013901             bl 0x829166bc
+  82902DC0  3BE1FF90             subi r31,r1,0x70
+  82902DC4  9421FF90             stwu r1,-0x70(r1)
+  82902DC8  7C7E1B78             or r30,r3,r3
+  82902DCC  909F008C             stw r4,0x8c(r31)
+  82902DD0  7C9D2378             or r29,r4,r4
+  82902DD4  38830010             addi r4,r3,0x10
+  82902DD8  807D0000             lwz r3,0x0(r29)
+  82902DDC  4BFF2FC5             bl 0x828f5da0
+  82902DE0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902DE4  41820020             beq 0x82902e04
+  82902DE8  38BE0008             addi r5,r30,0x8
+  82902DEC  807D0000             lwz r3,0x0(r29)
+  82902DF0  809E0004             lwz r4,0x4(r30)
+  82902DF4  4BFF3115             bl 0x828f5f08
+  82902DF8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  82902DFC  39600001             li r11,0x1
+  82902E00  40820008             bne 0x82902e08
+LAB_82902e04:
+  82902E04  39600000             li r11,0x0
+LAB_82902e08:
+  82902E08  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  82902E0C  7FA3EB78             or r3,r29,r29
+  82902E10  4BA615F1             bl 0x82364400
+  82902E14  7FC3F378             or r3,r30,r30
+  82902E18  383F0070             addi r1,r31,0x70
+  82902E1C  480138F0             b 0x8291670c
 
 ; 82902D50  bdMailBody::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmessaging/bdmailbody.cpp:38)
   82902D50  38600018             li r3,0x18

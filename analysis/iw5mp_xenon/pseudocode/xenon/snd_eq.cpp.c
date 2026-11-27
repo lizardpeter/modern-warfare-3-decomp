@@ -22,108 +22,112 @@ void EQ__ComputeCoefficients(void)
 {
   float fVar1;
   float fVar2;
-  float fVar3;
+  uint uVar3;
   float fVar4;
-  float fVar5;
-  float fVar6;
-  uint uVar7;
-  uint *puVar8;
-  uint *puVar9;
-  longlong lVar10;
+  uint *puVar5;
+  uint *puVar6;
+  longlong lVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
+  float local_40;
+  float local_3c;
+  float local_38;
   
-  puVar8 = (uint *)__savefpr_28();
-  puVar9 = puVar8 + 0xf;
-  lVar10 = 2;
+  puVar5 = (uint *)__savefpr_28();
+  puVar6 = puVar5 + 0xf;
+  lVar7 = 2;
   do {
-    puVar9[-5] = 0;
-    puVar9[-3] = 0;
-    puVar9[-1] = 0;
-    puVar9 = puVar9 + 1;
-    *puVar9 = 0;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  dVar16 = (double)((float)puVar8[2] * 0.0001308997);
-  dVar11 = cos(dVar16);
-  dVar18 = (double)(float)dVar11;
-  dVar11 = sin(dVar16);
-  uVar7 = *puVar8;
-  dVar16 = 2.0;
-  dVar17 = 1.0;
-  dVar11 = (double)((float)dVar11 / ((float)puVar8[3] * 2.0));
-  if (uVar7 < 5) {
-    if (uVar7 == 1) {
-      dVar12 = (double)(float)(dVar11 + 1.0);
-      fVar5 = (float)(1.0 - dVar11);
-      fVar3 = (float)(dVar18 * -2.0);
-      fVar4 = (float)(-1.0 - dVar18);
-      fVar6 = (float)(dVar18 + 1.0) * 0.5;
-      fVar2 = fVar6;
+    puVar6[-5] = 0;
+    puVar6[-3] = 0;
+    puVar6[-1] = 0;
+    puVar6 = puVar6 + 1;
+    *puVar6 = 0;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  dVar13 = (double)((float)puVar5[2] * 0.0001308997);
+  dVar8 = cos(dVar13);
+  dVar15 = (double)(float)dVar8;
+  dVar8 = sin(dVar13);
+  uVar3 = *puVar5;
+  dVar13 = 2.0;
+  dVar14 = 1.0;
+  dVar8 = (double)((float)dVar8 / ((float)puVar5[3] * 2.0));
+  if (uVar3 < 5) {
+    if (uVar3 == 1) {
+      dVar9 = (double)(float)(dVar8 + 1.0);
+      local_38 = (float)(1.0 - dVar8);
+      local_3c = (float)(-1.0 - dVar15);
+      local_40 = (float)(dVar15 + 1.0) * 0.5;
+      fVar4 = (float)(dVar15 * -2.0);
+      fVar2 = local_40;
     }
-    else if (uVar7 == 2) {
-      dVar12 = pow(10.0,(double)((float)puVar8[1] * 0.025));
-      dVar15 = (double)(float)dVar12;
-      dVar14 = (double)(float)(dVar15 + dVar17);
-      dVar13 = (double)(float)(dVar15 - dVar17);
-      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar15) * dVar11) * dVar16);
-      fVar3 = (float)(dVar14 * dVar18 + dVar13) * -2.0;
-      fVar5 = (float)(dVar13 * dVar18 + dVar14) - fVar2;
-      dVar12 = (double)((float)(dVar13 * dVar18 + dVar14) + fVar2);
-      fVar4 = (float)((double)(float)(-(double)(float)(dVar14 * dVar18 - dVar13) * dVar15) * dVar16)
-      ;
-      fVar6 = (float)((double)(-(float)(dVar13 * dVar18 - dVar14) - fVar2) * dVar15);
-      fVar2 = (float)((double)(-(float)(dVar13 * dVar18 - dVar14) + fVar2) * dVar15);
+    else if (uVar3 == 2) {
+      dVar9 = pow(10.0,(double)((float)puVar5[1] * 0.025));
+      dVar12 = (double)(float)dVar9;
+      dVar11 = (double)(float)(dVar12 + dVar14);
+      dVar10 = (double)(float)(dVar12 - dVar14);
+      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar12) * dVar8) * dVar13);
+      local_38 = (float)(dVar10 * dVar15 + dVar11) - fVar2;
+      dVar9 = (double)((float)(dVar10 * dVar15 + dVar11) + fVar2);
+      local_40 = (float)((double)(-(float)(dVar10 * dVar15 - dVar11) + fVar2) * dVar12);
+      local_3c = (float)((double)(float)(-(double)(float)(dVar11 * dVar15 - dVar10) * dVar12) *
+                        dVar13);
+      fVar4 = (float)(dVar11 * dVar15 + dVar10) * -2.0;
+      fVar2 = (float)((double)(-(float)(dVar10 * dVar15 - dVar11) - fVar2) * dVar12);
     }
-    else if (uVar7 == 3) {
-      dVar12 = pow(10.0,(double)((float)puVar8[1] * 0.025));
-      dVar15 = (double)(float)dVar12;
-      dVar14 = (double)(float)(dVar15 - dVar17);
-      dVar13 = (double)(float)(dVar15 + dVar17);
-      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar15) * dVar11) * dVar16);
-      fVar5 = -(float)(dVar14 * dVar18 - dVar13) - fVar2;
-      dVar12 = (double)(-(float)(dVar14 * dVar18 - dVar13) + fVar2);
-      fVar3 = (float)(-(double)(float)(dVar13 * dVar18 - dVar14) * dVar16);
-      fVar4 = (float)((double)(float)(dVar13 * dVar18 + dVar14) * dVar15) * -2.0;
-      fVar6 = (float)((double)((float)(dVar14 * dVar18 + dVar13) - fVar2) * dVar15);
-      fVar2 = (float)((double)((float)(dVar14 * dVar18 + dVar13) + fVar2) * dVar15);
+    else if (uVar3 == 3) {
+      dVar9 = pow(10.0,(double)((float)puVar5[1] * 0.025));
+      dVar12 = (double)(float)dVar9;
+      dVar11 = (double)(float)(dVar12 - dVar14);
+      dVar10 = (double)(float)(dVar12 + dVar14);
+      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar12) * dVar8) * dVar13);
+      local_38 = -(float)(dVar11 * dVar15 - dVar10) - fVar2;
+      dVar9 = (double)(-(float)(dVar11 * dVar15 - dVar10) + fVar2);
+      local_40 = (float)((double)((float)(dVar11 * dVar15 + dVar10) + fVar2) * dVar12);
+      local_3c = (float)((double)(float)(dVar10 * dVar15 + dVar11) * dVar12) * -2.0;
+      fVar4 = (float)(-(double)(float)(dVar10 * dVar15 - dVar11) * dVar13);
+      fVar2 = (float)((double)((float)(dVar11 * dVar15 + dVar10) - fVar2) * dVar12);
     }
-    else if (uVar7 == 0) {
-      fVar4 = (float)(1.0 - dVar18);
-      dVar12 = (double)(float)(dVar11 + 1.0);
-      fVar5 = (float)(1.0 - dVar11);
-      fVar6 = fVar4 * 0.5;
-      fVar3 = (float)(dVar18 * -2.0);
-      fVar2 = fVar6;
+    else if (uVar3 == 0) {
+      local_3c = (float)(1.0 - dVar15);
+      dVar9 = (double)(float)(dVar8 + 1.0);
+      local_38 = (float)(1.0 - dVar8);
+      local_40 = local_3c * 0.5;
+      fVar4 = (float)(dVar15 * -2.0);
+      fVar2 = local_40;
     }
     else {
-      dVar16 = pow(10.0,(double)((float)puVar8[1] * 0.025));
-      fVar4 = (float)(dVar18 * -2.0);
-      dVar18 = (double)(float)((double)(float)dVar16 * dVar11);
-      dVar11 = (double)(float)(dVar11 / (double)(float)dVar16);
-      fVar6 = (float)(dVar17 - dVar18);
-      dVar12 = (double)(float)(dVar11 + dVar17);
-      fVar5 = (float)(dVar17 - dVar11);
-      fVar3 = fVar4;
-      fVar2 = (float)(dVar18 + dVar17);
+      dVar13 = pow(10.0,(double)((float)puVar5[1] * 0.025));
+      local_3c = (float)(dVar15 * -2.0);
+      dVar15 = (double)(float)((double)(float)dVar13 * dVar8);
+      dVar8 = (double)(float)(dVar8 / (double)(float)dVar13);
+      local_40 = (float)(dVar15 + dVar14);
+      dVar9 = (double)(float)(dVar8 + dVar14);
+      local_38 = (float)(dVar14 - dVar8);
+      fVar4 = local_3c;
+      fVar2 = (float)(dVar14 - dVar15);
     }
-    fVar1 = (float)(dVar17 / dVar12);
-    puVar8[5] = (uint)(fVar1 * fVar2);
-    puVar8[6] = (uint)(fVar1 * fVar4);
-    puVar8[7] = (uint)(fVar1 * fVar6);
-    puVar8[8] = (uint)(fVar1 * fVar3);
-    puVar8[9] = (uint)(fVar1 * fVar5);
-    __restfpr_28();
-    return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8218a974,0x72,0,0xffffffff82000f98,0xffffffff82003cf0);
+  else {
+    MyAssertHandler(0xffffffff8218a974,0x72,0,0xffffffff82000f98,0xffffffff82003cf0);
+    dVar9 = (double)local_40;
+    fVar4 = local_3c;
+    fVar2 = local_38;
+  }
+  fVar1 = (float)(dVar14 / dVar9);
+  puVar5[5] = (uint)(fVar1 * local_40);
+  puVar5[6] = (uint)(fVar1 * local_3c);
+  puVar5[7] = (uint)(fVar1 * fVar2);
+  puVar5[8] = (uint)(fVar1 * fVar4);
+  puVar5[9] = (uint)(fVar1 * local_38);
+  __restfpr_28();
+  return;
 }
 
 
@@ -173,8 +177,35 @@ void EQ__Process(double param_1,int param_2,undefined8 param_3,longlong param_4)
 void ParametricEQ__ParametricEQ(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  longlong lVar2;
+  undefined4 *puVar3;
+  double dVar4;
+  double dVar5;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  *puVar1 = &PTR_ParametricEQ__AddRef_8218abd0;
+  puVar3 = puVar1 + 6;
+  lVar2 = 5;
+  dVar4 = 20000.0;
+  dVar5 = 1.0;
+  do {
+    puVar3[1] = (float)dVar5;
+    *puVar3 = 0;
+    puVar3[3] = (float)dVar5;
+    *(undefined1 *)(puVar3 + 4) = 0;
+    puVar3[2] = (float)dVar4;
+    EQ__ComputeCoefficients(puVar3);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0x12;
+  } while (-1 < lVar2);
+  puVar1[4] = (float)dVar5;
+  puVar1[2] = 0;
+  puVar1[1] = 1;
+  puVar1[3] = 0;
+  *(undefined1 *)(puVar1 + 5) = 0;
+  __restgprlr_28(puVar1);
+  return;
 }
 
 
@@ -204,7 +235,6 @@ undefined8 ParametricEQ__GetContext(undefined8 param_1,undefined4 *param_2)
 
 {
   if (param_2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0xaf,0,0xffffffff82000f98,0xffffffff8218a9b4);
   }
   *param_2 = 0;
@@ -218,7 +248,6 @@ undefined8 ParametricEQ__GetInfo(undefined8 param_1,undefined1 *param_2)
 
 {
   if (param_2 == (undefined1 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0xb7,0,0xffffffff82000f98,0xffffffff8218a9c0);
   }
   *param_2 = 1;
@@ -242,7 +271,6 @@ void ParametricEQ__GetParam
   iVar3 = __savegprlr_24();
   uVar4 = 0;
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0xc4,0,0xffffffff82000f98,0xffffffff8218aa18);
   }
   iVar2 = (*(int *)(iVar3 + 0xc) * 3 + *(int *)(iVar3 + 8)) * 0x48 + iVar3;
@@ -252,56 +280,48 @@ void ParametricEQ__GetParam
     bVar1 = (int)param_2 != 0;
     if (param_2 == 1 && bVar1) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xd1,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       local_50 = *(uint *)(iVar2 + 0x1c);
     }
     else if (param_2 == 2 && bVar1) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xd6,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       local_50 = *(uint *)(iVar2 + 0x20);
     }
     else if (param_2 == 3 && bVar1) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xdb,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       local_50 = *(uint *)(iVar2 + 0x24);
     }
     else if (param_2 == 4 && bVar1) {
       if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xe0,0,0xffffffff82000f98,0xffffffff8218a9f0);
       }
       local_50 = (uint)*(byte *)(iVar2 + 0x28);
     }
     else if (param_2 == 5 && bVar1) {
       if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xe5,0,0xffffffff82000f98,0xffffffff8218a9f0);
       }
       local_50 = *(uint *)(iVar3 + 8);
     }
     else if (param_2 == 6 && bVar1) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xea,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       local_50 = *(uint *)(iVar3 + 0x10);
     }
     else if (bVar1) {
       if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xef,0,0xffffffff82000f98,0xffffffff8218a9f0);
       }
       local_50 = *(uint *)(iVar3 + 0xc);
     }
     else {
       if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0xcc,0,0xffffffff82000f98,0xffffffff8218a9f0);
       }
       local_50 = *(uint *)(iVar2 + 0x18);
@@ -334,7 +354,6 @@ void ParametricEQ__SetParam
   
   iVar2 = __savegprlr_24();
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0x108,0,0xffffffff82000f98,0xffffffff8218aa18);
   }
   uVar6 = 0;
@@ -346,7 +365,6 @@ void ParametricEQ__SetParam
     pfVar3 = (float *)param_4;
     if ((int)param_2 == 0) {
       if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0x137,0,0xffffffff82000f98,0xffffffff8218a9f0);
       }
       if ((*pfVar3 < 0.0) || (5.0 <= *pfVar3)) goto LAB_826401dc;
@@ -355,7 +373,6 @@ void ParametricEQ__SetParam
     }
     else if (param_2 == 1) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0x142,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       bVar8 = *(float *)(iVar4 + 0x1c) != *pfVar3;
@@ -363,7 +380,6 @@ void ParametricEQ__SetParam
     }
     else if (param_2 == 2) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0x148,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       fVar1 = *pfVar3;
@@ -373,7 +389,6 @@ void ParametricEQ__SetParam
     }
     else if (param_2 == 3) {
       if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0x153,0,0xffffffff82000f98,0xffffffff8218a9c8);
       }
       fVar1 = *pfVar3;
@@ -384,7 +399,6 @@ void ParametricEQ__SetParam
     else {
       if (param_2 == 4) {
         if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218a974,0x15e,0,0xffffffff82000f98,0xffffffff8218a9f0);
         }
         if ((*pfVar3 != 0.0) != (bool)*(char *)(iVar4 + 0x28)) {
@@ -409,7 +423,6 @@ void ParametricEQ__SetParam
       }
       if (param_2 == 5) {
         if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218a974,0x112,0,0xffffffff82000f98,0xffffffff8218a9f0);
         }
         fVar1 = *pfVar3;
@@ -426,7 +439,6 @@ LAB_82640098:
       }
       if (param_2 == 6) {
         if ((param_3 & 0xff) != 1) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218a974,0x11e,0,0xffffffff82000f98,0xffffffff8218a9c8);
         }
         fVar1 = *pfVar3;
@@ -440,7 +452,6 @@ LAB_82640098:
       }
       if (param_2 == 7) {
         if ((param_3 & 0xff) != 2) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8218a974,0x129,0,0xffffffff82000f98,0xffffffff8218a9f0);
         }
         fVar1 = *pfVar3;
@@ -453,7 +464,6 @@ LAB_82640098:
         goto LAB_82640098;
       }
       if ((param_3 & 0xff) != 3) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8218a974,0x178,0,0xffffffff82000f98,0xffffffff8218aa20);
       }
       pfVar3 = (float *)*pfVar3;
@@ -491,6 +501,7 @@ void ParametricEQ__Process(undefined8 param_1,ulonglong param_2,ulonglong param_
   int iVar3;
   int iVar4;
   int iVar5;
+  undefined8 in_MSR;
   char in_RESERVE;
   byte in_cr0;
   double dVar6;
@@ -510,21 +521,18 @@ void ParametricEQ__Process(undefined8 param_1,ulonglong param_2,ulonglong param_
   } while (!(bool)(in_cr0 >> 1 & 1));
   if (*(char *)(iVar2 + 0x14) != '\0') {
     if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218a974,0x19c,0,0xffffffff82000f98,0xffffffff8218ab18);
+      MyAssertHandler(0xffffffff8218a974,0x19c,0,0xffffffff82000f98,0xffffffff8218ab18,
+                      0xffffffff84184dfc,in_MSR);
     }
     if ((param_3 & 0xffffffff) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218a974,0x19d,0,0xffffffff82000f98,0xffffffff8218aba4);
     }
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217dbec);
     XAudioFrameBuffer_GetProcessingData(param_2,&local_60);
     if (local_60 != '\0') {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218a974,0x1a3,0,0xffffffff82000f98,0xffffffff8218ab64);
     }
     if (2 < local_5f) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8218a974,0x1a6,0,0xffffffff82000f98,0xffffffff8218ab28);
     }
     iVar3 = 0;
@@ -576,11 +584,120 @@ double pow(double _X,double _Y)
 
 // 82640468  ParametricEQ::Process_Internal  (xenon/snd_eq.cpp:443)
 
-void ParametricEQ__Process_Internal(void)
+void ParametricEQ__Process_Internal
+               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
+               ulonglong param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  bool bVar18;
+  longlong lVar19;
+  double extraout_f1;
+  double dVar20;
+  double dVar21;
+  
+  iVar16 = __savegprlr_28();
+  dVar20 = extraout_f1;
+  if (1 < (param_5 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8218a974,0x1c0,0,0xffffffff8218aa84,param_5,2);
+  }
+  if (1 < (param_6 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8218a974,0x1c1,0,0xffffffff8218aa48,param_6,2);
+  }
+  dVar21 = 0.0;
+  if ((param_2 < 0.0) || (1.0 < param_2)) {
+    MyAssertHandler(param_2,0xffffffff8218a974,0x1c2,0,0xffffffff8200ab18,0xffffffff8200ab28,param_2
+                   );
+  }
+  if (param_2 < 0.0010000000474974513) {
+    __restgprlr_28(dVar21);
+    return;
+  }
+  bVar18 = false;
+  iVar17 = 0;
+  lVar19 = 3;
+  do {
+    iVar10 = ((int)param_6 * 3 + iVar17) * 0x48 + iVar16;
+    if (*(char *)(iVar10 + 0x28) != '\0') {
+      iVar12 = iVar10 + 0x18;
+      fVar1 = *(float *)(iVar10 + 0x38);
+      iVar11 = (int)((param_5 + 0x10 & 0x3fffffff) << 2);
+      fVar6 = *(float *)(iVar11 + iVar12);
+      iVar13 = (int)((param_5 + 0xe & 0x3fffffff) << 2);
+      if (bVar18) {
+        fVar2 = *(float *)(iVar10 + 0x2c);
+        fVar3 = *(float *)(iVar10 + 0x34);
+        iVar14 = (int)((param_5 + 0xc & 0xffffffff) << 2);
+        fVar4 = *(float *)(iVar10 + 0x30);
+        fVar7 = *(float *)(iVar13 + iVar12);
+        fVar5 = *(float *)(iVar10 + 0x3c);
+        iVar10 = (int)((param_5 + 10 & 0xffffffff) << 2);
+        *(float *)(iVar11 + iVar12) = fVar7;
+        fVar8 = *(float *)(iVar14 + iVar12);
+        fVar9 = *(float *)(iVar10 + iVar12);
+        *(float *)(iVar10 + iVar12) = (float)dVar21;
+        *(float *)(iVar14 + iVar12) = fVar9;
+        fVar1 = fVar5 * fVar6 -
+                -(fVar1 * fVar7 - (fVar4 * fVar9 + fVar3 * fVar8 + (float)((double)fVar2 * dVar21)))
+        ;
+      }
+      else {
+        fVar2 = *(float *)(iVar10 + 0x30);
+        fVar3 = *(float *)(iVar10 + 0x34);
+        iVar14 = (int)((param_5 + 10 & 0xffffffff) << 2);
+        iVar15 = (int)((param_5 + 0xc & 0xffffffff) << 2);
+        fVar4 = *(float *)(iVar10 + 0x2c);
+        fVar7 = *(float *)(iVar13 + iVar12);
+        bVar18 = true;
+        fVar5 = *(float *)(iVar10 + 0x3c);
+        *(float *)(iVar11 + iVar12) = fVar7;
+        fVar8 = *(float *)(iVar14 + iVar12);
+        fVar9 = *(float *)(iVar15 + iVar12);
+        *(float *)(iVar14 + iVar12) = (float)(dVar20 * param_2);
+        *(float *)(iVar15 + iVar12) = fVar8;
+        fVar1 = fVar5 * fVar6 -
+                -(fVar1 * fVar7 -
+                 (fVar4 * (float)(dVar20 * param_2) + fVar3 * fVar9 + fVar2 * fVar8));
+      }
+      dVar21 = -(double)fVar1;
+      *(float *)(iVar13 + iVar12) = (float)dVar21;
+    }
+    iVar17 = iVar17 + 1;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  if (bVar18) {
+    __restgprlr_28(dVar21);
+    return;
+  }
+  __restgprlr_28((double)(float)(dVar20 * param_2));
+  return;
+}
+
+
+// 82640CF0  MjpegCaptureDsp::MjpegCaptureDsp  (xenon/snd_eq.cpp:483)
+
+void MjpegCaptureDsp__MjpegCaptureDsp(undefined4 *param_1)
+
+{
+  param_1[1] = 1;
+  *param_1 = &PTR_MjpegCaptureDsp__AddRef_8218abb4;
+  return;
 }
 
 
@@ -610,7 +727,6 @@ undefined8 MjpegCaptureDsp__GetInfo(undefined8 param_1,undefined1 *param_2)
 
 {
   if (param_2 == (undefined1 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0x1f9,0,0xffffffff82000f98,0xffffffff8218a9c0);
   }
   *param_2 = 2;
@@ -643,7 +759,6 @@ undefined8 MjpegCaptureDsp__GetContext(undefined8 param_1,undefined4 *param_2)
 
 {
   if (param_2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0x20e,0,0xffffffff82000f98,0xffffffff8218a9b4);
   }
   *param_2 = 0;
@@ -668,22 +783,23 @@ undefined8 MjpegCaptureDsp__Process(undefined8 param_1,ulonglong param_2)
   uint local_228;
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8218a974,0x216,0,0xffffffff82000f98,0xffffffff8218ab18);
   }
   XAudioFrameBuffer_GetProcessingData(param_2,&uStack_230);
-  if ((local_22f == '\x06') && (cVar1 = mjpeg_is_encoding(), cVar1 != '\0')) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8218ab08);
-    if ((local_228 & 0xf) != 0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff8218a974,0x221,0,0xffffffff820011f4,0xffffffff8218aabc,
-                      0xffffffff8218aae0);
-    }
-    altv207_13(in_vs43,in_vs38);
-    altv207_13(in_vs32,in_vs43);
-    altv207_13(in_vs43,in_vs39);
+  if (local_22f == '\x06') {
+    cVar1 = mjpeg_is_encoding();
+    if (cVar1 != '\0') {
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8218ab08);
+      if ((local_228 & 0xf) != 0) {
+        MyAssertHandler(0xffffffff8218a974,0x221,0,0xffffffff820011f4,0xffffffff8218aabc,
+                        0xffffffff8218aae0);
+      }
+      altv207_13(in_vs43,in_vs38);
+      altv207_13(in_vs32,in_vs43);
+      altv207_13(in_vs43,in_vs39);
                     /* WARNING: Bad instruction - Truncating control flow here */
-    halt_baddata();
+      halt_baddata();
+    }
   }
   return 0;
 }

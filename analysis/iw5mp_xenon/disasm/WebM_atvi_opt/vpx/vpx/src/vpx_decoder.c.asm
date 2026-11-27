@@ -335,3 +335,51 @@ LAB_8283db64:
 ; 8283DB78  vpx_codec_set_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder.c:216)
   8283DB78  7D8802A6             mfspr r12,LR
   8283DB7C  480D8B3D             bl 0x829166b8
+  8283DB80  9421FF80             stwu r1,-0x80(r1)
+  8283DB84  7C7D1B78             or r29,r3,r3
+  8283DB88  7C9F2378             or r31,r4,r4
+  8283DB8C  7CBC2B78             or r28,r5,r5
+  8283DB90  38600002             li r3,0x2
+  8283DB94  2B1D0000             cmplwi cr6,r29,0x0
+  8283DB98  419A007C             beq cr6,0x8283dc14
+  8283DB9C  2B040000             cmplwi cr6,r4,0x0
+  8283DBA0  419A0074             beq cr6,0x8283dc14
+  8283DBA4  817D0004             lwz r11,0x4(r29)
+  8283DBA8  2B0B0000             cmplwi cr6,r11,0x0
+  8283DBAC  419A0068             beq cr6,0x8283dc14
+  8283DBB0  816B0008             lwz r11,0x8(r11)
+  8283DBB4  556A077A             rlwinm r10,r11,0x0,0x1d,0x1d
+  8283DBB8  2F0A0000             cmpwi cr6,r10,0x0
+  8283DBBC  409A000C             bne cr6,0x8283dbc8
+  8283DBC0  38600001             li r3,0x1
+  8283DBC4  48000054             b 0x8283dc18
+LAB_8283dbc8:
+  8283DBC8  3BC00000             li r30,0x0
+  8283DBCC  2B1C0000             cmplwi cr6,r28,0x0
+  8283DBD0  419A0048             beq cr6,0x8283dc18
+LAB_8283dbd4:
+  8283DBD4  817F0010             lwz r11,0x10(r31)
+  8283DBD8  2B0B0000             cmplwi cr6,r11,0x0
+  8283DBDC  419A003C             beq cr6,0x8283dc18
+  8283DBE0  817D0004             lwz r11,0x4(r29)
+  8283DBE4  7FE4FB78             or r4,r31,r31
+  8283DBE8  7FA3EB78             or r3,r29,r29
+  8283DBEC  814B001C             lwz r10,0x1c(r11)
+  8283DBF0  7D4903A6             mtspr CTR,r10
+  8283DBF4  4E800421             bctrl
+  8283DBF8  2F030000             cmpwi cr6,r3,0x0
+  8283DBFC  409A001C             bne cr6,0x8283dc18
+  8283DC00  3BDE0001             addi r30,r30,0x1
+  8283DC04  3BFF001C             addi r31,r31,0x1c
+  8283DC08  7F1EE040             cmplw cr6,r30,r28
+  8283DC0C  4198FFC8             blt cr6,0x8283dbd4
+  8283DC10  48000008             b 0x8283dc18
+LAB_8283dc14:
+  8283DC14  38600008             li r3,0x8
+LAB_8283dc18:
+  8283DC18  2B1D0000             cmplwi cr6,r29,0x0
+  8283DC1C  419A0008             beq cr6,0x8283dc24
+  8283DC20  907D0008             stw r3,0x8(r29)
+LAB_8283dc24:
+  8283DC24  38210080             addi r1,r1,0x80
+  8283DC28  480D8AE0             b 0x82916708

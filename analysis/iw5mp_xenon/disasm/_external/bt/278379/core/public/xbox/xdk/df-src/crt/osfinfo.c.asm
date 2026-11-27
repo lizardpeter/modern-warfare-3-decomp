@@ -286,6 +286,57 @@ LAB_829299d4:
 ; 829299F0  __lock_fhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:395)
   829299F0  7D8802A6             mfspr r12,LR
   829299F4  4BFECCC9             bl 0x829166bc
+  829299F8  3BE1FF80             subi r31,r1,0x80
+  829299FC  9421FF80             stwu r1,-0x80(r1)
+  82929A00  907F0094             stw r3,0x94(r31)
+  82929A04  3D608489             lis r11,-0x7b77
+  82929A08  7C6A2E70             srawi r10,r3,0x5
+  82929A0C  396B7DC0             addi r11,r11,0x7dc0
+  82929A10  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  82929A14  546906FE             rlwinm r9,r3,0x0,0x1b,0x1f
+  82929A18  3BA00001             li r29,0x1
+  82929A1C  1D290048             mulli r9,r9,0x48
+  82929A20  93BF0050             stw r29,0x50(r31)
+  82929A24  7D4A582E             lwzx r10,r10,r11
+  82929A28  7FCA4A14             add r30,r10,r9
+  82929A2C  815E0008             lwz r10,0x8(r30)
+  82929A30  2F0A0000             cmpwi cr6,r10,0x0
+  82929A34  409A0050             bne cr6,0x82929a84
+  82929A38  3860000A             li r3,0xa
+  82929A3C  4BFFAD9D             bl 0x829247d8
+  82929A40  7D084378             or r8,r8,r8
+  82929A44  817E0008             lwz r11,0x8(r30)
+  82929A48  2F0B0000             cmpwi cr6,r11,0x0
+  82929A4C  409A002C             bne cr6,0x82929a78
+  82929A50  38800FA0             li r4,0xfa0
+  82929A54  387E000C             addi r3,r30,0xc
+  82929A58  4BFFAB21             bl 0x82924578
+  82929A5C  21630000             subfic r11,r3,0x0
+  82929A60  7D6B5910             subfe r11,r11,r11
+  82929A64  7D6BE838             and r11,r11,r29
+  82929A68  917F0050             stw r11,0x50(r31)
+  82929A6C  817E0008             lwz r11,0x8(r30)
+  82929A70  396B0001             addi r11,r11,0x1
+  82929A74  917E0008             stw r11,0x8(r30)
+LAB_82929a78:
+  82929A78  7D084378             or r8,r8,r8
+  82929A7C  399F0080             addi r12,r31,0x80
+  82929A80  48000039             bl 0x82929ab8
+LAB_82929a84:
+  82929A84  2F1D0000             cmpwi cr6,r29,0x0
+  82929A88  419A0024             beq cr6,0x82929aac
+  82929A8C  7C6A2E70             srawi r10,r3,0x5
+  82929A90  546906FE             rlwinm r9,r3,0x0,0x1b,0x1f
+  82929A94  5548103A             rlwinm r8,r10,0x2,0x0,0x1d
+  82929A98  1D490048             mulli r10,r9,0x48
+  82929A9C  7D68582E             lwzx r11,r8,r11
+  82929AA0  7D6B5214             add r11,r11,r10
+  82929AA4  386B000C             addi r3,r11,0xc
+  82929AA8  4801776D             bl 0x82941214
+LAB_82929aac:
+  82929AAC  7FA3EB78             or r3,r29,r29
+  82929AB0  383F0080             addi r1,r31,0x80
+  82929AB4  4BFECC58             b 0x8291670c
 
 ; 82929AF0  _unlock_fhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:447)
   82929AF0  7C6B2E70             srawi r11,r3,0x5

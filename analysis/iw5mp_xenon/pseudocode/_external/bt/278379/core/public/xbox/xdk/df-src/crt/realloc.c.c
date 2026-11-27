@@ -5,7 +5,56 @@
 void * realloc(void *_Memory,size_t _NewSize)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(_Memory,_NewSize);
+  ulonglong uVar1;
+  void *pvVar2;
+  HANDLE pvVar3;
+  int iVar4;
+  int *piVar5;
+  DWORD DVar6;
+  ulonglong uVar7;
+  
+  uVar7 = (ulonglong)(int)_NewSize;
+  uVar1 = __savegprlr_27(_Memory);
+  if ((uVar1 & 0xffffffff) == 0) {
+    pvVar2 = malloc((size_t)uVar7);
+  }
+  else {
+    if ((uVar7 & 0xffffffff) == 0) {
+      free((void *)uVar1);
+    }
+    else {
+      do {
+        if (0xfffff000 < (uVar7 & 0xffffffff)) {
+          _callnewh((size_t)uVar7);
+          piVar5 = _errno();
+          *piVar5 = 0xc;
+          goto LAB_8291b238;
+        }
+        if ((uVar7 & 0xffffffff) == 0) {
+          uVar7 = 1;
+        }
+        pvVar3 = GetProcessHeap();
+        pvVar2 = (void *)RtlReAllocateHeap(pvVar3,0,uVar1,uVar7);
+        if (pvVar2 != (void *)0x0) goto LAB_8291b23c;
+        if (DAT_84896064 == 0) {
+          piVar5 = _errno();
+          DVar6 = GetLastError();
+          iVar4 = _get_errno_from_oserr(DVar6);
+          *piVar5 = iVar4;
+          goto LAB_8291b23c;
+        }
+        iVar4 = _callnewh((size_t)uVar7);
+      } while (iVar4 != 0);
+      piVar5 = _errno();
+      DVar6 = GetLastError();
+      iVar4 = _get_errno_from_oserr(DVar6);
+      *piVar5 = iVar4;
+    }
+LAB_8291b238:
+    pvVar2 = (void *)0x0;
+  }
+LAB_8291b23c:
+  pvVar2 = (void *)__restgprlr_27(pvVar2);
+  return pvVar2;
 }
 

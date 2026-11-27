@@ -5,11 +5,36 @@
 /* WARNING: Unknown calling convention: __cdecl */
 /* vscprintf_helper */
 
-void __cdecl vscprintf_helper(void)
+void __cdecl
+vscprintf_helper(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  code *pcVar2;
+  int *piVar3;
+  undefined8 uVar1;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  pcVar2 = (code *)__savegprlr_27();
+  local_50 = 0;
+  memset(&local_4c,0,0x1c);
+  if ((param_2 & 0xffffffff) == 0) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar1 = 0xffffffffffffffff;
+  }
+  else {
+    local_48 = 0;
+    local_50 = 0;
+    local_44 = 0x42;
+    local_4c = 0x7fffffff;
+    uVar1 = (*pcVar2)(&local_50,param_2,param_3,param_4);
+  }
+  __restgprlr_27(uVar1);
+  return;
 }
 
 

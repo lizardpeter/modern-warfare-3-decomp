@@ -71,6 +71,21 @@ LAB_828f4d98:
   828F4DB0  80630008             lwz r3,0x8(r3)
   828F4DB4  4E800020             blr
 
+; 828F4DB8  bdLinkable::find  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformpatterns/bdlinkable.cpp:82)
+  828F4DB8  7C6B1B78             or r11,r3,r3
+  828F4DBC  39400000             li r10,0x0
+LAB_828f4dc0:
+  828F4DC0  2B0B0000             cmplwi cr6,r11,0x0
+  828F4DC4  419A0018             beq cr6,0x828f4ddc
+  828F4DC8  7D4B2050             subf r10,r11,r4
+  828F4DCC  816B0008             lwz r11,0x8(r11)
+  828F4DD0  7D4A0034             cntlzw r10,r10
+  828F4DD4  554ADFFF             rlwinm. r10,r10,0x1b,0x1f,0x1f
+  828F4DD8  4182FFE8             beq 0x828f4dc0
+LAB_828f4ddc:
+  828F4DDC  7D435378             or r3,r10,r10
+  828F4DE0  4E800020             blr
+
 ; 828F4E48  bdLinkable::`scalar_deleting_destructor'  (line unknown)
   828F4E48  7D8802A6             mfspr r12,LR
   828F4E4C  9181FFF8             stw r12,-0x8(r1)

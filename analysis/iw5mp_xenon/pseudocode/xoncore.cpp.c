@@ -80,6 +80,33 @@ undefined4 XOnlineGetNatType(void)
 }
 
 
+// 828B9E60  XOnlineGetServiceInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:103)
+
+undefined8 XOnlineGetServiceInfo(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = XMsgInProcessCall(0xfc,0x58007,param_1,param_2);
+  if (iVar2 < 0) {
+    if (iVar2 == -0x7feaef00) {
+      uVar1 = 0x4db;
+    }
+    else {
+      uVar1 = 0x4cd;
+      if (iVar2 != -0x7feae7fe) {
+        uVar1 = 0x65b;
+      }
+    }
+  }
+  else {
+    uVar1 = 0;
+  }
+  return uVar1;
+}
+
+
 // 828B9ED8  XLookupSchemaIndexFromOrdinal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:125)
 
 undefined8 XLookupSchemaIndexFromOrdinal(undefined2 param_1,uint *param_2)
@@ -109,11 +136,46 @@ undefined8 XLookupSchemaIndexFromOrdinal(undefined2 param_1,uint *param_2)
 
 // 828B9F60  XOnlinepGetContextSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:181)
 
-void XOnlinepGetContextSize(void)
+void XOnlinepGetContextSize
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4,ulonglong param_5
+               ,ulonglong param_6,ulonglong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined1 auStack_50 [12];
+  uint local_44;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = CSchemaData__GetSchemaEntry(0xffffffff848957f0,uVar1,auStack_50);
+  if (-1 < iVar2) {
+    if ((param_2 & 8) == 0) {
+      param_3 = (ulonglong)local_44;
+    }
+    if ((param_2 & 0x100) != 0) {
+      param_3 = (param_3 + 0x10 & 0xfffffff0) + 0x104;
+    }
+    uVar3 = (int)((param_3 * 0x78 & 0xffffffff) / 100) + 3U & 0xfffffffc;
+    if ((param_6 & 0xffffffff) != 0) {
+      *(uint *)param_6 = uVar3;
+    }
+    if ((param_7 & 0xffffffff) != 0) {
+      *(undefined4 *)param_7 = 0x1000;
+    }
+    if ((param_5 & 0xffffffff) != 0) {
+      iVar2 = 0x4c;
+      if ((param_2 & 2) != 0) {
+        iVar2 = 0x50;
+      }
+      if ((param_2 & 0x200) != 0) {
+        iVar2 = iVar2 + 4;
+      }
+      *(int *)param_5 = iVar2 + uVar3 + param_4 + 0x2e20;
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 

@@ -2,11 +2,38 @@
 
 // 827784B0  R_GetCodeConstant  (gfx_d3d/r_shade.cpp:35)
 
-void R_GetCodeConstant(void)
+void R_GetCodeConstant(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x24,0,0xffffffff82000f98,0xffffffff821ce798);
+  }
+  MyAssertHandler(0xffffffff821ce7a8,0x25,0,0xffffffff82000f98,0xffffffff821ce788);
+  if (0x51 < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821ce7a8,0x26,0,0xffffffff821bde90,param_2,0x52);
+  }
+  if (*(int *)(*(int *)(iVar2 + 0xf8) + 0x58) == 0) {
+    if (*(short *)((param_2 + 0xac8 & 0xffffffff) << 1) != 0) goto LAB_8277861c;
+    uVar1 = va(0xffffffff821ce71c,param_2,**(undefined4 **)(iVar2 + 0xec),
+               **(undefined4 **)(iVar2 + 0xf4),**(undefined4 **)(*(int *)(iVar2 + 0xf8) + 0x5c));
+    uVar3 = 0x2d;
+  }
+  else {
+    if (*(short *)((param_2 + 0xac8 & 0xffffffff) << 1) != 0) goto LAB_8277861c;
+    uVar1 = va(0xffffffff821ce764,param_2,**(undefined4 **)(iVar2 + 0xec),
+               **(undefined4 **)(iVar2 + 0xf4),**(undefined4 **)(*(int *)(iVar2 + 0xf8) + 0x58),
+               **(undefined4 **)(*(int *)(iVar2 + 0xf8) + 0x5c));
+    uVar3 = 0x2b;
+  }
+  MyAssertHandler(0xffffffff821ce7a8,uVar3,0,0xffffffff820011f4,0xffffffff821ce73c,uVar1);
+LAB_8277861c:
+  __restgprlr_27((param_2 + 0xe0 & 0xfffffff) * 0x10);
+  return;
 }
 
 
@@ -49,7 +76,6 @@ undefined8 R_IsShaderMatrixUpToDate(int param_1,longlong *param_2,int param_3)
     *param_2 = lVar1;
     uVar3 = (ulonglong)*(byte *)(param_3 + 7);
     if (uVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ce7a8,0x4a,0,0xffffffff82000f98,0xffffffff821ce7e8);
     }
     while (uVar3 = uVar3 - 1, uVar3 != 0) {
@@ -64,11 +90,28 @@ undefined8 R_IsShaderMatrixUpToDate(int param_1,longlong *param_2,int param_3)
 
 // 82778740  R_IsShaderConstantUpToDate  (gfx_d3d/r_shade.cpp:87)
 
-void R_IsShaderConstantUpToDate(void)
+void R_IsShaderConstantUpToDate(undefined8 param_1,longlong *param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x5b,0,0xffffffff82000f98,0xffffffff82165ff0);
+  }
+  lVar1 = CONCAT44(*(undefined4 *)(param_3 + 4),
+                   (uint)*(ushort *)((*(ushort *)(param_3 + 4) + 0xac8) * 2 + iVar2));
+  if (*param_2 == lVar1) {
+    __restgprlr_27(1);
+    return;
+  }
+  *param_2 = lVar1;
+  if (*(char *)(param_3 + 7) != '\x01') {
+    MyAssertHandler(0xffffffff821ce7a8,100,0,0xffffffff82000f98,0xffffffff821ce7f4);
+  }
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -100,23 +143,20 @@ void R_HW_SetVertexShaderConstant
 void R_IsVertexShaderConstantUpToDate(ulonglong param_1,int param_2)
 
 {
-  undefined4 uVar1;
   undefined4 uStack00000010;
   
   _uStack00000010 = param_1;
   if (0x3f < *(ushort *)(param_2 + 2)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x6b,0,0xffffffff821ce820,*(ushort *)(param_2 + 2),0x40);
   }
-  uStack00000010 = (undefined4)(param_1 >> 0x20);
-  uVar1 = uStack00000010;
   if (0x51 < *(ushort *)(param_2 + 4)) {
     R_IsShaderMatrixUpToDate();
     return;
   }
   R_IsShaderConstantUpToDate
-            (uVar1,((ulonglong)*(ushort *)(param_2 + 2) + 0x22) * 8 + (param_1 & 0xffffffff),param_2
-            );
+            (uStack00000010,
+             ((ulonglong)*(ushort *)(param_2 + 2) + 0x22) * 8 + (_uStack00000010 & 0xffffffff),
+             param_2);
   return;
 }
 
@@ -183,6 +223,71 @@ void R_SetVertexShaderConstantFromCode(undefined8 param_1,int param_2)
 }
 
 
+// 82778958  R_IsPixelShaderConstantUpToDate  (gfx_d3d/r_shade.cpp:137)
+
+void R_IsPixelShaderConstantUpToDate(undefined8 param_1,int param_2)
+
+{
+  ushort uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  longlong lVar4;
+  int iVar6;
+  undefined8 uVar5;
+  
+  iVar6 = __savegprlr_28();
+  if (0xff < *(ushort *)(param_2 + 2)) {
+    MyAssertHandler(0xffffffff821ce7a8,0x8d,0,0xffffffff821ce928,*(ushort *)(param_2 + 2),0x100);
+  }
+  if (*(char *)(param_2 + 7) != '\x01') {
+    MyAssertHandler(0xffffffff821ce7a8,0x8e,0,0xffffffff821ce8cc,0xffffffff821ce8fc);
+  }
+  MyAssertHandler(0xffffffff821ce7a8,0x8f,0,0xffffffff82000f98,0xffffffff821ce788);
+  uVar2 = *(undefined4 *)(param_2 + 4);
+  uVar1 = *(ushort *)((*(ushort *)(param_2 + 4) + 0xac8) * 2);
+  if (uVar1 == 0) {
+    uVar5 = va(0xffffffff821ce8a0,(uint)*(ushort *)(param_2 + 4),**(undefined4 **)(iVar6 + 0xec),
+               **(undefined4 **)(iVar6 + 0xf4));
+    MyAssertHandler(0xffffffff821ce7a8,0x94,0,0xffffffff820011f4,0xffffffff821ce888,uVar5);
+  }
+  lVar4 = CONCAT44(uVar2,(uint)uVar1);
+  iVar3 = (*(ushort *)(param_2 + 2) + 0x62) * 8;
+  if (*(longlong *)(iVar3 + iVar6) != lVar4) {
+    *(longlong *)(iVar3 + iVar6) = lVar4;
+    __restgprlr_28(0);
+    return;
+  }
+  __restgprlr_28(1);
+  return;
+}
+
+
+// 82778A98  R_SetPixelShaderConstantFromCode  (gfx_d3d/r_shade.cpp:160)
+
+void R_SetPixelShaderConstantFromCode(undefined8 param_1,int param_2)
+
+{
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_28();
+  if (*(short *)((*(ushort *)(param_2 + 4) + 0xac8) * 2) == 0) {
+    uVar1 = va(0xffffffff821ce8a0,(uint)*(ushort *)(param_2 + 4),**(undefined4 **)(iVar2 + 0xec),
+               **(undefined4 **)(iVar2 + 0xf4));
+    MyAssertHandler(0xffffffff821ce7a8,0xa5,0,0xffffffff820011f4,0xffffffff821ce9ec,uVar1);
+  }
+  if (0x51 < *(ushort *)(param_2 + 4)) {
+    MyAssertHandler(0xffffffff821ce7a8,0xa8,0,0xffffffff821ce990,*(ushort *)(param_2 + 4),0x52);
+  }
+  uVar1 = R_GetCodeConstant(iVar2,*(undefined2 *)(param_2 + 4));
+  R_HW_SetPixelShaderConstant
+            (*(undefined4 *)(iVar2 + 0xc0),*(undefined2 *)(param_2 + 2),uVar1,
+             *(undefined1 *)(param_2 + 7));
+  __restgprlr_28();
+  return;
+}
+
+
 // 82778B68  R_SetPassShaderPrimArguments  (gfx_d3d/r_shade.cpp:200)
 
 void R_SetPassShaderPrimArguments(undefined8 param_1,longlong param_2,longlong param_3)
@@ -199,7 +304,6 @@ void R_SetPassShaderPrimArguments(undefined8 param_1,longlong param_2,longlong p
     do {
       puVar1 = (ushort *)param_3;
       if (0x3f < puVar1[-1]) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821ce7a8,0x6b,0,0xffffffff821ce820,puVar1[-1],0x40);
       }
       if (*puVar1 < 0x52) {
@@ -224,7 +328,6 @@ void R_SetPassShaderPrimArguments(undefined8 param_1,longlong param_2,longlong p
     } while (puVar1[2] == 4);
   }
   if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0xd2,0,0xffffffff8202882c);
   }
 LAB_82778c80:
@@ -251,7 +354,6 @@ void R_SetPassShaderObjectArguments(undefined8 param_1,longlong param_2,longlong
   while (sVar1 == 4) {
     iVar2 = (int)param_3;
     if (0x3f < *(ushort *)(iVar2 + 2)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ce7a8,0x6b,0,0xffffffff821ce820,*(ushort *)(iVar2 + 2),0x40);
     }
     if (*(ushort *)(iVar2 + 4) < 0x52) {
@@ -290,7 +392,6 @@ void R_SetPassShaderObjectArguments(undefined8 param_1,longlong param_2,longlong
     } while (((undefined2 *)param_3)[3] == 5);
   }
   if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0xff,0,0xffffffff8202882c);
   }
 LAB_82778e04:
@@ -381,21 +482,113 @@ void R_SetupPassPerObjectArgs(undefined8 param_1)
 
 // 82778E98  R_SetPassPixelShaderStableArguments  (gfx_d3d/r_shade.cpp:282)
 
-void R_SetPassPixelShaderStableArguments(void)
+void R_SetPassPixelShaderStableArguments(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ushort uVar1;
+  undefined4 *puVar2;
+  int iVar4;
+  int iVar5;
+  undefined8 uVar3;
+  int *piVar6;
+  
+  iVar4 = __savegprlr_23();
+  puVar2 = *(undefined4 **)(iVar4 + 0xec);
+  uVar1 = *(ushort *)param_3;
+  while (uVar1 < 6) {
+    param_2 = param_2 + -1;
+    param_3 = param_3 + 8;
+    if (param_2 == 0) goto LAB_82779034;
+    uVar1 = *(ushort *)param_3;
+  }
+  while (uVar1 == 6) {
+    iVar5 = R_IsPixelShaderConstantUpToDate(iVar4,param_3);
+    if (iVar5 == 0) {
+      R_SetPixelShaderConstantFromCode(iVar4,param_3);
+    }
+    param_2 = param_2 + -1;
+    param_3 = param_3 + 8;
+    if (param_2 == 0) goto LAB_82779034;
+    uVar1 = *(ushort *)param_3;
+  }
+  piVar6 = (int *)puVar2[0x13];
+  while (uVar1 == 7) {
+    iVar5 = (int)param_3;
+    if (*piVar6 != *(int *)(iVar5 + 4)) {
+      do {
+        piVar6 = piVar6 + 8;
+        if (piVar6 == (int *)((uint)*(byte *)((int)puVar2 + 0x3e) * 0x20 + puVar2[0x13])) {
+          uVar3 = va(0xffffffff821c823c,*puVar2);
+          MyAssertHandler(0xffffffff821ce7a8,0x136,0,0xffffffff820011f4,0xffffffff821cea2c,uVar3);
+        }
+      } while (*piVar6 != *(int *)(iVar5 + 4));
+    }
+    R_SetPixelShaderConstantFromLiteral(iVar4,*(undefined2 *)(iVar5 + 2),piVar6 + 4);
+    param_2 = param_2 + -1;
+    param_3 = param_3 + 8;
+    if (param_2 == 0) goto LAB_82779034;
+    uVar1 = *(ushort *)param_3;
+  }
+  if (uVar1 == 8) {
+    param_3 = param_3 + -4;
+    do {
+      iVar5 = (int)param_3;
+      param_3 = param_3 + 8;
+      R_SetPixelShaderConstantFromLiteral(iVar4,*(undefined2 *)(iVar5 + 6),*(undefined4 *)param_3);
+      param_2 = param_2 + -1;
+      if (param_2 == 0) goto LAB_82779034;
+    } while (*(short *)((undefined4 *)param_3 + 1) == 8);
+  }
+  if (DAT_84013128 == 0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x143,0,0xffffffff8202882c);
+  }
+LAB_82779034:
+  __restgprlr_23();
+  return;
 }
 
 
 // 82779040  R_SetPassVertexShaderStableArguments  (gfx_d3d/r_shade.cpp:330)
 
-void R_SetPassVertexShaderStableArguments(void)
+void R_SetPassVertexShaderStableArguments(undefined8 param_1,longlong param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ushort uVar1;
+  int iVar3;
+  char cVar4;
+  undefined8 uVar2;
+  ushort *puVar5;
+  
+  iVar3 = __savegprlr_27();
+  uVar1 = *(ushort *)param_3;
+  while (uVar1 < 4) {
+    param_2 = param_2 + -1;
+    param_3 = param_3 + 8;
+    if (param_2 == 0) goto LAB_827790f8;
+    uVar1 = *(ushort *)param_3;
+  }
+  if (uVar1 == 4) {
+    param_3 = param_3 + 4;
+    do {
+      cVar4 = R_IsVertexShaderConstantUpToDate(iVar3,param_3 + -4);
+      puVar5 = (ushort *)param_3;
+      if (cVar4 == '\0') {
+        if (*puVar5 < 0x52) {
+          uVar2 = R_GetCodeConstant(iVar3);
+        }
+        else {
+          uVar2 = R_GetCodeMatrix(0,*puVar5,*(undefined1 *)(puVar5 + 1));
+        }
+        R_HW_SetVertexShaderConstant
+                  (*(undefined4 *)(iVar3 + 0xc0),puVar5[-1],uVar2,*(undefined1 *)((int)puVar5 + 3));
+      }
+      param_2 = param_2 + -1;
+      param_3 = param_3 + 8;
+    } while ((param_2 != 0) && (puVar5[2] == 4));
+  }
+LAB_827790f8:
+  __restgprlr_27();
+  return;
 }
 
 
@@ -443,21 +636,46 @@ void R_SetupPassCriticalPixelShaderArgs(undefined8 param_1)
 
 // 82779FC0  R_HW_SetPixelShader  (gfx_d3d/r_setstate_d3d.h:574)
 
-void R_HW_SetPixelShader(void)
+void R_HW_SetPixelShader(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 uVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bd9a8,0x23f,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  }
+  do {
+    if ((param_2 & 0xffffffff) == 0) {
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = *(undefined4 *)((int)param_2 + 4);
+    }
+    D3DDevice_SetPixelShader(uVar1,uVar2);
+  } while (DAT_84013128 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
 // 8277A038  R_HW_SetVertexShader  (gfx_d3d/r_setstate_d3d.h:581)
 
-void R_HW_SetVertexShader(void)
+void R_HW_SetVertexShader(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821bd9a8,0x246,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  }
+  do {
+    D3DDevice_SetVertexShader(uVar1,param_2);
+  } while (DAT_84013128 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -484,11 +702,76 @@ void R_SetupPassVertexShaderArgs(undefined8 param_1)
 
 // 827791F0  R_OverrideImage  (gfx_d3d/r_shade.cpp:602)
 
-void R_OverrideImage(void)
+void R_OverrideImage(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar2;
+  int iVar3;
+  undefined8 uVar1;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x25d,0,0xffffffff82000f98,0xffffffff82058d58);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x25e,0,0xffffffff82000f98,0xffffffff821ceb34);
+  }
+  if (*(char *)(*piVar2 + 0x38) == '\x03') {
+    switch(*(undefined1 *)((int)param_2 + 7)) {
+    case 0:
+    case 1:
+    case 0xb:
+    case 0xc:
+      break;
+    case 2:
+      if (DAT_846180c8 != 1) {
+        iVar3 = R_OverrideGrayscaleImage(DAT_846180c8,DAT_845aa82c);
+        *piVar2 = iVar3;
+        __restgprlr_28();
+        return;
+      }
+      break;
+    case 3:
+      if (*(int *)(DAT_845aa5b0 + 0xc) == 0) {
+        *piVar2 = DAT_84616510;
+        __restgprlr_28();
+        return;
+      }
+      if (*(int *)(DAT_845aa5b0 + 0xc) != 1) {
+        MyAssertHandler(0xffffffff821ce7a8,0x281,0,0xffffffff821cea6c,0xffffffff821cea94);
+        __restgprlr_28();
+        return;
+      }
+      break;
+    default:
+      if (DAT_84013128 == 0) {
+        uVar1 = va(0xffffffff8208da88);
+        MyAssertHandler(0xffffffff821ce7a8,0x28b,1,uVar1);
+      }
+      break;
+    case 5:
+      if (*(int *)(DAT_845aa88c + 0xc) == 0) {
+        *piVar2 = DAT_84616514;
+        __restgprlr_28();
+        return;
+      }
+      if (*(int *)(DAT_845aa88c + 0xc) != 1) {
+        MyAssertHandler(0xffffffff821ce7a8,0x277,0,0xffffffff821cead0,0xffffffff821ceaf8);
+        __restgprlr_28();
+        return;
+      }
+      break;
+    case 8:
+      if (*(int *)(DAT_845aa758 + 0xc) != 1) {
+        iVar3 = R_OverrideGrayscaleImage();
+        *piVar2 = iVar3;
+        __restgprlr_28();
+        return;
+      }
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -535,23 +818,179 @@ void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
 }
 
 
-// 82779580  R_SetSamplerFromMaterial  (gfx_d3d/r_shade.cpp:721)
+// 82779408  R_MarkRenderedAndOverrideStreamingImage  (gfx_d3d/r_shade.cpp:657)
 
-void R_SetSamplerFromMaterial(void)
+void R_MarkRenderedAndOverrideStreamingImage
+               (undefined8 param_1,undefined4 *param_2,int param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  int extraout_var;
+  char cVar2;
+  int iVar3;
+  int iVar4;
+  
+  __savegprlr_28();
+  uVar1 = *(uint *)(extraout_var + 0x13ec);
+  if ((ulonglong)uVar1 == 0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x296,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  DB_MarkImageRendered(*param_2,(ulonglong)uVar1 + 0x1944);
+  if ((*(char *)(DAT_845aa65c + 0xc) != '\0') && (*(char *)(param_4 + 7) == '\x02')) {
+    cVar2 = DB_ShouldOverrideStreamingImage(*param_2);
+    if (cVar2 == '\0') {
+      iVar3 = 0;
+      if (*(char *)(param_3 + 0x3d) == '\0') goto LAB_827794f4;
+      iVar4 = 0;
+      while( true ) {
+        cVar2 = DB_ShouldOverrideStreamingImage
+                          (*(undefined4 *)(*(int *)(param_3 + 0x48) + iVar4 + 8));
+        if (cVar2 != '\0') break;
+        iVar3 = iVar3 + 1;
+        iVar4 = iVar4 + 0xc;
+        if ((int)(uint)*(byte *)(param_3 + 0x3d) <= iVar3) {
+          __restgprlr_28();
+          return;
+        }
+      }
+    }
+    *param_2 = DAT_84616520;
+  }
+LAB_827794f4:
+  __restgprlr_28();
+  return;
+}
+
+
+// 82779500  R_UploadWaterTexture  (gfx_d3d/r_shade.cpp:693)
+
+void R_UploadWaterTexture(double param_1,float *param_2)
+
+{
+  float *local_20 [4];
+  
+  if (param_2 == (float *)0x0) {
+    MyAssertHandler(0xffffffff821ce7a8,0x2b8,0,0xffffffff82000f98,0xffffffff820ce658);
+  }
+  if ((double)*param_2 != param_1) {
+    *param_2 = (float)param_1;
+    local_20[0] = param_2;
+    R_AddWorkerCmd(0x21,local_20);
+  }
+  return;
+}
+
+
+// 82779580  R_SetSamplerFromMaterial  (gfx_d3d/r_shade.cpp:721)
+
+void R_SetSamplerFromMaterial(undefined8 param_1,undefined8 param_2,int param_3,ulonglong param_4)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  longlong lVar3;
+  undefined8 uVar4;
+  byte bVar5;
+  int iStack00000018;
+  int iStack0000001c;
+  undefined4 local_60 [24];
+  
+  lVar3 = __savegprlr_23();
+  iStack0000001c = (int)param_2;
+  puVar1 = *(undefined4 **)(iStack0000001c + 0xec);
+  if (*(int *)param_4 != *(int *)(param_3 + 4)) {
+    do {
+      param_4 = param_4 + 0xc;
+      if ((param_4 & 0xffffffff) ==
+          ((ulonglong)*(byte *)((int)puVar1 + 0x3d) * 0xc + (ulonglong)(uint)puVar1[0x12] &
+          0xffffffff)) {
+        uVar4 = va(0xffffffff821ceb3c,*puVar1);
+        MyAssertHandler(0xffffffff821ce7a8,0x2dd,1,0xffffffff820011f4,0xffffffff821ceb70,uVar4);
+      }
+    } while (*(int *)param_4 != *(int *)(param_3 + 4));
+  }
+  iVar2 = (int)param_4;
+  iStack00000018 = (int)((ulonglong)param_2 >> 0x20);
+  if (*(char *)(iVar2 + 7) == '\v') {
+    local_60[0] = *(undefined4 *)(*(int *)(iVar2 + 8) + 0x44);
+    if (*(char *)(DAT_845aa824 + 0xc) == '\0') {
+      R_UploadWaterTexture((double)DAT_84618164);
+    }
+    else {
+      R_UploadWaterTexture((double)*(float *)(iStack00000018 + 0x1704));
+    }
+  }
+  else {
+    local_60[0] = *(undefined4 *)(iVar2 + 8);
+  }
+  bVar5 = *(byte *)(iVar2 + 6);
+  if (((int)lVar3 == 0) && (2 < (bVar5 & 7))) {
+    bVar5 = bVar5 & 0xf8 | 2;
+  }
+  if ((DAT_84618058 != '\0') && (*(char *)(iStack00000018 + 0x1752) != '\0')) {
+    R_OverrideImage(local_60,param_4);
+  }
+  R_MarkRenderedAndOverrideStreamingImage(param_2,local_60,puVar1,param_4);
+  R_SetSampler(param_2,(ulonglong)*(ushort *)(param_3 + 2) |
+                       -(ulonglong)(lVar3 == 0) & 0xffffffff80000000,bVar5,local_60[0]);
+  __restgprlr_23(param_4);
+  return;
 }
 
 
 // 827783F0  R_SetVertexShaderConstantFromLiteral  (gfx_d3d/r_state.h:755)
 
-void R_SetVertexShaderConstantFromLiteral(void)
+void R_SetVertexShaderConstantFromLiteral(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_29();
+  if (0x3f < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bda94,0x2f4,0,0xffffffff821be968,param_2,0x40);
+  }
+  iVar2 = (int)param_2;
+  *(undefined8 *)((int)((param_2 + 0x22 & 0xffffffff) << 3) + iVar3) = 0xffffffffffffffff;
+  puVar1 = *(ulonglong **)(iVar3 + 0xc0);
+  do {
+    *(undefined4 *)((int)((param_2 + 0x78 & 0xffffffff) << 4) + (int)puVar1) = *param_3;
+    *(undefined4 *)((int)puVar1 + iVar2 * 0x10 + 0x784) = param_3[1];
+    *(undefined4 *)(puVar1 + iVar2 * 2 + 0xf1) = param_3[2];
+    *(undefined4 *)((int)puVar1 + iVar2 * 0x10 + 0x78c) = param_3[3];
+    *puVar1 = 0x8000000000000000U >> ((param_2 & 0xffffffff) >> 2 & 0x7f) | *puVar1;
+  } while (DAT_84013128 != 0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 8277A0A0  R_SetPixelShaderConstantFromLiteral  (gfx_d3d/r_state.h:765)
+
+void R_SetPixelShaderConstantFromLiteral(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_29();
+  if (0xff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff821bda94,0x2fe,0,0xffffffff821ce6c8,param_2,0x100);
+  }
+  *(undefined8 *)((int)((param_2 + 0x62 & 0xffffffff) << 3) + iVar2) = 0xffffffffffffffff;
+  iVar2 = *(int *)(iVar2 + 0xc0);
+  iVar1 = (int)param_2 * 0x10 + iVar2;
+  do {
+    *(undefined4 *)((int)((param_2 + 0x178 & 0xffffffff) << 4) + iVar2) = *param_3;
+    *(undefined4 *)(iVar1 + 0x1784) = param_3[1];
+    *(undefined4 *)(iVar1 + 0x1788) = param_3[2];
+    *(undefined4 *)(iVar1 + 0x178c) = param_3[3];
+    *(ulonglong *)(iVar2 + 8) =
+         0x8000000000000000U >> ((param_2 & 0xffffffff) >> 2 & 0x7f) | *(ulonglong *)(iVar2 + 8);
+  } while (DAT_84013128 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -580,7 +1019,6 @@ void R_SetPassShaderStableArguments(undefined8 param_1,longlong param_2,longlong
         piVar7 = piVar7 + 8;
         if (piVar7 == (int *)((uint)*(byte *)((int)puVar2 + 0x3e) * 0x20 + puVar2[0x13])) {
           uVar4 = va(0xffffffff821c823c,*puVar2);
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff821ce7a8,0x31d,0,0xffffffff820011f4,0xffffffff821cea2c,uVar4);
         }
       } while (*piVar7 != *(int *)(iVar3 + 4));
@@ -642,11 +1080,34 @@ LAB_82779930:
 
 // 8277A160  R_SetVertexDecl  (gfx_d3d/r_state.h:828)
 
-void R_SetVertexDecl(void)
+void R_SetVertexDecl(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    iVar3 = 0;
+  }
+  else {
+    iVar3 = *(int *)((piVar2[2] + 1) * 4 + (int)param_2);
+  }
+  if (piVar2[10] != iVar3) {
+    Profile_Begin(0x5a);
+    iVar1 = *piVar2;
+    if (iVar1 == 0) {
+      MyAssertHandler(0xffffffff821bda94,0x346,0,0xffffffff82000f98,0xffffffff821bd9f4);
+    }
+    do {
+      D3DDevice_SetVertexDeclaration(iVar1,iVar3);
+    } while (DAT_84013128 != 0);
+    piVar2[10] = iVar3;
+    Profile_EndInternal(0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -656,7 +1117,6 @@ void R_SetPixelShader(int param_1,ulonglong param_2)
 
 {
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x44a,0,0xffffffff82000f98,0xffffffff821cebac);
   }
   if ((ulonglong)*(uint *)(param_1 + 0xb2c) != (param_2 & 0xffffffff)) {
@@ -675,7 +1135,6 @@ void R_SetVertexShader(int param_1,int param_2)
 
 {
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x45b,0,0xffffffff82000f98,0xffffffff821cebb8);
   }
   if (*(int *)(param_1 + 0xb30) != param_2) {
@@ -693,63 +1152,61 @@ void R_SetVertexShader(int param_1,int param_2)
 void R_UpdateVertexDecl(void)
 
 {
-  undefined4 uVar1;
+  uint *puVar1;
   undefined4 uVar2;
   undefined4 uVar3;
-  int iVar5;
-  undefined8 uVar4;
-  uint uVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
-  uint *puVar9;
+  undefined4 uVar4;
+  int iVar6;
+  undefined8 uVar5;
+  uint uVar7;
+  undefined4 *puVar8;
+  longlong lVar9;
+  uint *puVar10;
   
-  iVar5 = __savegprlr_21();
-  puVar9 = *(uint **)(iVar5 + 0xf8);
-  if (*puVar9 == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar6 = __savegprlr_21();
+  puVar1 = *(uint **)(iVar6 + 0xf8);
+  if (*puVar1 == 0) {
     MyAssertHandler(0xffffffff821ce7a8,0x4a7,0,0xffffffff82000f98,0xffffffff821cec84);
   }
-  puVar7 = (undefined4 *)puVar9[*(int *)(iVar5 + 200) + 1];
-  if (puVar7 == (undefined4 *)0x0) {
-    puVar7 = (undefined4 *)puVar9[0x16];
-    if (puVar7 == (undefined4 *)0x0) {
-      lVar8 = 0x15;
+  puVar8 = (undefined4 *)puVar1[*(int *)(iVar6 + 200) + 1];
+  if (puVar8 == (undefined4 *)0x0) {
+    puVar8 = (undefined4 *)puVar1[0x16];
+    if (puVar8 == (undefined4 *)0x0) {
+      lVar9 = 0x15;
+      puVar10 = puVar1;
       do {
-        puVar9 = puVar9 + 1;
-        if ((undefined4 *)*puVar9 != (undefined4 *)0x0) {
-          uVar1 = *(undefined4 *)*puVar9;
-          uVar2 = **(undefined4 **)(iVar5 + 0xf4);
-          uVar3 = **(undefined4 **)(*(int *)(iVar5 + 0xec) + 0x44);
-          uVar4 = VertexDecl_GetName(*(undefined4 *)(iVar5 + 200));
-          Com_Error(0,0xffffffff821cec4c,uVar4,uVar3,uVar2,uVar1);
+        puVar10 = puVar10 + 1;
+        if ((undefined4 *)*puVar10 != (undefined4 *)0x0) {
+          uVar2 = *(undefined4 *)*puVar10;
+          uVar3 = **(undefined4 **)(iVar6 + 0xf4);
+          uVar4 = **(undefined4 **)(*(int *)(iVar6 + 0xec) + 0x44);
+          uVar5 = VertexDecl_GetName(*(undefined4 *)(iVar6 + 200));
+          Com_Error(0,0xffffffff821cec4c,uVar5,uVar4,uVar3,uVar2);
         }
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
       if (DAT_84013128 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff821ce7a8,0x4be,0,0xffffffff8202882c);
       }
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff821ce7a8,0x4c1,0,0xffffffff82000f98,0xffffffff821cebb8);
+      MyAssertHandler(0xffffffff821ce7a8,0x4c6,0,0xffffffff82000f98,0xffffffff821cebb8);
     }
-    uVar6 = *puVar9;
+    uVar7 = *puVar1;
   }
   else {
-    uVar6 = 0;
+    uVar7 = 0;
   }
-  R_SetVertexDecl(iVar5 + 0xc0,uVar6);
-  if (puVar9[0x17] == 0) {
-                    /* WARNING: Subroutine does not return */
+  R_SetVertexDecl(iVar6 + 0xc0,uVar7);
+  if (puVar1[0x17] == 0) {
     MyAssertHandler(0xffffffff821ce7a8,0x4ca,0,0xffffffff82000f98,0xffffffff821cec38);
   }
-  if ((ulonglong)*puVar9 == 0xfffffffffffffffc) {
-                    /* WARNING: Subroutine does not return */
+  if ((ulonglong)*puVar1 == 0xfffffffffffffffc) {
     MyAssertHandler(0xffffffff821ce7a8,0x4cd,0,0xffffffff82000f98,0xffffffff821cec18);
   }
-  if (*(int *)((*(int *)(iVar5 + 200) + 1) * 4 + *puVar9) == 0) {
-    Com_Error(0,0xffffffff821cebc8,*(int *)(iVar5 + 200),*puVar7,**(undefined4 **)(iVar5 + 0xec));
+  if (*(int *)((*(int *)(iVar6 + 200) + 1) * 4 + *puVar1) == 0) {
+    Com_Error(0,0xffffffff821cebc8,*(int *)(iVar6 + 200),*puVar8,**(undefined4 **)(iVar6 + 0xec));
   }
-  R_SetVertexShader(iVar5,puVar7);
+  R_SetVertexShader(iVar6,puVar8);
   __restgprlr_21();
   return;
 }
@@ -785,11 +1242,9 @@ void R_SetupPass(undefined8 param_1,longlong param_2)
   *(int *)(iVar4 + 0xf8) = iVar2 + 8;
   if (*(char *)((int)puVar1 + *(int *)(iVar4 + 0xf0) + 0x18) == -1) {
     uVar3 = va(0xffffffff821cedc8,*puVar1,param_2);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x501,0,0xffffffff820011f4,0xffffffff821ced8c,uVar3);
   }
   if (*(byte *)((int)puVar1 + 0x3f) <= *(byte *)((int)puVar1 + *(int *)(iVar4 + 0xf0) + 0x18)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x503,0,0xffffffff821ced20);
   }
   piVar6 = (int *)((int)(((ulonglong)*(byte *)((int)puVar1 + *(int *)(iVar4 + 0xf0) + 0x18) +
@@ -797,12 +1252,10 @@ void R_SetupPass(undefined8 param_1,longlong param_2)
   iVar5 = *piVar6;
   uVar7 = piVar6[1];
   if (iRam000016fc == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x50b,0,0xffffffff82000f98,0xffffffff821cecf0);
   }
   if ((iRam000016fc == 2) && ((*(byte *)(puVar1 + 0x10) & 0x10) != 0)) {
     uVar3 = va(0xffffffff821cecc0,*puVar1);
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x51b,0,0xffffffff820011f4,0xffffffff821cec98,uVar3);
   }
   if (cRam00001754 != '\0') {
@@ -817,7 +1270,6 @@ void R_SetupPass(undefined8 param_1,longlong param_2)
     *(uint *)(iVar4 + 0xb20) = uVar7;
   }
   if (*(int *)(iVar2 + 100) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821ce7a8,0x56c,0,0xffffffff82000f98,0xffffffff821cec38);
   }
   if ((1 < *(int *)(DAT_845aa744 + 0xc)) && (*(int **)(iVar2 + 100) != (int *)0x0)) {

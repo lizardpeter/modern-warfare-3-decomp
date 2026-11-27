@@ -6,7 +6,6 @@ void R_SetSunLightOverride(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9aec,0x81,0,0xffffffff82000f98,0xffffffff821b9b28);
   }
   DAT_8461805a = 1;
@@ -33,7 +32,6 @@ void R_SetSunDirectionOverride(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9aec,0x90,0,0xffffffff82000f98,0xffffffff821b9b34);
   }
   DAT_8461805b = 1;
@@ -56,11 +54,9 @@ void R_LerpSunDirectionOverride
   
   puVar1 = (undefined4 *)__savegprlr_24();
   if (puVar1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9aec,0x9a,0,0xffffffff82000f98,0xffffffff821b9b48);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821b9aec,0x9b,0,0xffffffff82000f98,0xffffffff821b9b3c);
   }
   DAT_8461805b = 1;
@@ -96,8 +92,22 @@ void R_ResetSunDirectionOverride(void)
 void R_GetActivePrimarySunLight(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  char *pcVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821b9aec,0xb0,0,0xffffffff82000f98,0xffffffff821b9c18);
+  }
+  if (*(char *)(iVar1 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff821b9aec,0xb1,0,0xffffffff82000f98,0xffffffff821b9bfc);
+  }
+  if ((*(char *)(iVar1 + 0x12) != '\0') &&
+     (pcVar2 = (char *)Com_GetPrimaryLight(), *pcVar2 != '\x01')) {
+    MyAssertHandler(0xffffffff821b9aec,0xb2,0,0xffffffff82000f98,0xffffffff821b9b58);
+  }
+  __restgprlr_29(*(undefined1 *)(iVar1 + 0x12));
+  return;
 }
 
 
@@ -111,23 +121,161 @@ void R_InitDynamicData(void)
 }
 
 
+// 8271D2B8  R_SetWorldPtr_Internal  (gfx_d3d/r_bsp.cpp:306)
+
+void R_SetWorldPtr_Internal(void)
+
+{
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (DAT_8461658c != 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x133,0,0xffffffff82000f98,0xffffffff821b9c34);
+  }
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x134,0,0xffffffff82000f98,0xffffffff821b9c24);
+  }
+  DAT_8461658c = iVar1;
+  __restgprlr_28();
+  return;
+}
+
+
 // 8271D338  R_SetWorldPtr_FastFile  (gfx_d3d/r_bsp.cpp:332)
 
 void R_SetWorldPtr_FastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  void *pvVar2;
+  
+  uVar1 = __savegprlr_28();
+  DB_FindXAssetHeader(0x13,uVar1,1);
+  R_SetWorldPtr_Internal();
+  if ((DAT_835a2980 != 0) && (*(int *)(DAT_835a2980 + 0x28) != 0)) {
+    if (DAT_8461658c == 0) {
+      MyAssertHandler(0xffffffff821b9aec,0x155,0,0xffffffff82000f98,0xffffffff821b9c84);
+    }
+    if (*(uint *)(DAT_835a2980 + 0x28) < *(uint *)(DAT_8461658c + 0x134)) {
+      MyAssertHandler(0xffffffff821b9aec,0x156,0,0xffffffff82000f98,0xffffffff821b9c48);
+    }
+    pvVar2 = memcpy(*(void **)(DAT_835a2980 + 0x30),*(void **)(DAT_8461658c + 0x138),
+                    *(int *)(DAT_8461658c + 0x134) * 0x38);
+    *(undefined4 *)(DAT_8461658c + 0x138) = *(undefined4 *)(DAT_835a2980 + 0x30);
+    *(undefined4 *)(DAT_8461658c + 0x134) = *(undefined4 *)(DAT_835a2980 + 0x28);
+    sync(1);
+    DAT_84616500 = 1;
+    __restgprlr_28(pvVar2);
+    return;
+  }
+  sync(1);
+  DAT_84616500 = 1;
+  __restgprlr_28();
+  return;
+}
+
+
+// 8271D460  R_LoadWorld  (gfx_d3d/r_bsp.cpp:365)
+
+void R_LoadWorld(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  void *pvVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  
+  uVar1 = __savegprlr_25();
+  if (DAT_8461658c != 0) {
+    MyAssertHandler(0xffffffff821b9aec,0x171,0,0xffffffff82000f98,0xffffffff821b9c90);
+  }
+  R_InitLightVisHistory(uVar1);
+  R_SetWorldPtr_FastFile(uVar1);
+  iVar6 = DAT_8461658c;
+  DAT_8461818c = DAT_8461658c + 0x34;
+  DAT_846178cc = DAT_8461658c + 0x22c;
+  DAT_84613714 = (uint *)(DAT_8461658c + 0x50);
+  DAT_84613754 = *(undefined4 *)(DAT_8461658c + 0x48);
+  DAT_84617878 = *(int *)(DAT_8461658c + 0x34) + 1;
+  DAT_84618180 = *(undefined4 *)(DAT_8461658c + 0x38);
+  pvVar2 = memcpy(&DAT_84821080,(void *)(DAT_8461658c + 0x1c0),0x40);
+  if ((param_2 & 0xffffffff) != 0) {
+    *(undefined4 *)param_2 = *(undefined4 *)(iVar6 + 0x154);
+  }
+  R_InitLightTweaks(pvVar2);
+  R_FlushSun();
+  R_InitStaticModelLighting(*(undefined4 *)(DAT_8461658c + 0x22c));
+  CL_GetLocalClientActiveCount();
+  R_SetupModelLightingGlobals();
+  R_SkyOverride_InitForWorld();
+  R_ResetModelLighting();
+  RB_SetBspImages();
+  DynEntCl_InitFilter();
+  pvVar2 = (void *)R_GenerateShadowMapCasterCells();
+  iVar6 = 0;
+  uVar4 = 0;
+  if (*DAT_84613714 != 0) {
+    iVar3 = 0;
+    iVar5 = 0;
+    do {
+      pvVar2 = memcpy((void *)(DAT_84613714[3] + iVar3),*(void **)(DAT_84613714[1] + iVar5),0x34);
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 4;
+      iVar3 = iVar3 + 0x34;
+    } while (uVar4 < *DAT_84613714);
+  }
+  DAT_84613714[0xb] = 0;
+  iVar3 = 0;
+  DAT_84613714[0xc] = 0;
+  if (0 < (int)DAT_84613714[7]) {
+    iVar5 = 0;
+    do {
+      memcpy((void *)(DAT_84613714[9] + iVar5),*(void **)(DAT_84613714[8] + iVar6),0x34);
+      pvVar2 = memcpy((void *)(DAT_84613714[10] + iVar5),*(void **)(DAT_84613714[8] + iVar6 + 4),
+                      0x34);
+      iVar3 = iVar3 + 1;
+      iVar6 = iVar6 + 8;
+      iVar5 = iVar5 + 0x34;
+    } while (iVar3 < (int)DAT_84613714[7]);
+  }
+  __restgprlr_25(pvVar2);
+  return;
 }
 
 
 // 8271D638  R_GetDebugReflectionProbeLocs  (gfx_d3d/r_bsp.cpp:499)
 
-void R_GetDebugReflectionProbeLocs(void)
+void R_GetDebugReflectionProbeLocs(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  
+  iVar2 = __savegprlr_29();
+  if (DAT_84613714 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821b9aec,0x1f7,0,0xffffffff82000f98,0xffffffff821a7440);
+  }
+  if (((ulonglong)*DAT_84613714 - 1 & 0xffffffff) < (param_2 & 0xffffffff)) {
+    param_2 = (ulonglong)*DAT_84613714 - 1;
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    iVar4 = 0;
+    do {
+      puVar3 = (undefined4 *)(iVar4 + iVar2);
+      param_2 = param_2 - 1;
+      iVar1 = DAT_84613714[2] + iVar4;
+      iVar4 = iVar4 + 0xc;
+      *puVar3 = *(undefined4 *)(iVar1 + 0xc);
+      puVar3[1] = *(undefined4 *)(iVar1 + 0x10);
+      puVar3[2] = *(undefined4 *)(iVar1 + 0x14);
+    } while (param_2 != 0);
+  }
+  __restgprlr_29();
+  return;
 }
 
 

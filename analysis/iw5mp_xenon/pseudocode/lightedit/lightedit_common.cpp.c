@@ -13,11 +13,23 @@ void LightEdit_InitMsg(undefined8 param_1,undefined8 param_2)
 
 // 826DD460  LightEdit_SendMsg  (lightedit/lightedit_common.cpp:29)
 
-void LightEdit_SendMsg(void)
+void LightEdit_SendMsg(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  int *piVar2;
+  
+  uVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821a71f0,0x1e,0,0xffffffff82000f98,0xffffffff82004d74);
+  }
+  piVar2 = (int *)param_2;
+  if (*piVar2 != 0) {
+    MyAssertHandler(0xffffffff821a71f0,0x1f,0,0xffffffff82000f98,0xffffffff8208f29c);
+  }
+  NET_RemoteDbgSendMessageBlocking(uVar1,10,piVar2[2],piVar2[5]);
+  __restgprlr_28();
+  return;
 }
 
 

@@ -22,6 +22,22 @@
 ; 828FDAA0  bdTimeStamp::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:18)
   828FDAA0  7D8802A6             mfspr r12,LR
   828FDAA4  48018C19             bl 0x829166bc
+  828FDAA8  3BE1FF90             subi r31,r1,0x70
+  828FDAAC  9421FF90             stwu r1,-0x70(r1)
+  828FDAB0  7C9E2378             or r30,r4,r4
+  828FDAB4  909F008C             stw r4,0x8c(r31)
+  828FDAB8  38830004             addi r4,r3,0x4
+  828FDABC  807E0000             lwz r3,0x0(r30)
+  828FDAC0  4BFF8211             bl 0x828f5cd0
+  828FDAC4  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828FDAC8  314BFFFF             subic r10,r11,0x1
+  828FDACC  7D6A5910             subfe r11,r10,r11
+  828FDAD0  557D063E             rlwinm r29,r11,0x0,0x18,0x1f
+  828FDAD4  7FC3F378             or r3,r30,r30
+  828FDAD8  4BA66929             bl 0x82364400
+  828FDADC  7FA3EB78             or r3,r29,r29
+  828FDAE0  383F0070             addi r1,r31,0x70
+  828FDAE4  48018C28             b 0x8291670c
 
 ; 828FDA40  bdTimeStamp::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:25)
   828FDA40  38600008             li r3,0x8

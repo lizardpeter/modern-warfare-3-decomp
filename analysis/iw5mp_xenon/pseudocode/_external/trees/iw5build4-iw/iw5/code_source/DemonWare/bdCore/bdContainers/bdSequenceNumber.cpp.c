@@ -23,11 +23,86 @@ undefined4 * bdSequenceNumber__bdSequenceNumber(undefined4 *param_1)
 
 // 8293CFE0  bdSequenceNumber::set  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:32)
 
-void bdSequenceNumber__set(void)
+void bdSequenceNumber__set(undefined8 param_1,uint *param_2,ulonglong param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  uint uVar1;
+  bool bVar2;
+  bool bVar3;
+  uint *puVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  
+  puVar4 = (uint *)__savegprlr_23();
+  uVar6 = *param_2;
+  uVar1 = 2 << (param_4 - 1U & 0x3f);
+  uVar10 = (ulonglong)uVar1;
+  uVar5 = (uint)param_3;
+  iVar9 = uVar6 - ((int)uVar6 / (int)uVar1) * uVar1;
+  trapWord(6,uVar10,0);
+  trapWord(6,uVar10,0);
+  trapWord(5,uVar10 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+           0xffff);
+  trapWord(5,uVar10 & ~(((param_3 & 0x7fffffff) << 1 | (param_3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  iVar8 = uVar5 - ((int)uVar5 / (int)uVar1) * uVar1;
+  if ((int)uVar1 <= (int)uVar5) {
+    MyAssertHandler(0xffffffff8221ad18,0x28,0,0xffffffff820011f4,0xffffffff8221acc0,
+                    0xffffffff8221ace8);
+  }
+  if (iVar9 < 0) {
+    *puVar4 = uVar5;
+    goto LAB_8293d1b8;
+  }
+  if (iVar9 == iVar8) {
+    uVar6 = *param_2;
+  }
+  else {
+    iVar7 = (int)uVar1 >> 1;
+    if (((iVar9 < iVar8) &&
+        (iVar8 - iVar9 < (int)(iVar7 + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)))) ||
+       ((iVar8 < iVar9 &&
+        ((int)(iVar7 + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)) < iVar9 - iVar8)))) {
+      bVar3 = true;
+    }
+    else {
+      bVar3 = false;
+    }
+    if (((iVar9 < iVar8) &&
+        ((int)(iVar7 + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)) < iVar8 - iVar9)) ||
+       ((iVar8 < iVar9 &&
+        (iVar9 - iVar8 < (int)(iVar7 + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)))))) {
+      bVar2 = true;
+    }
+    else {
+      bVar2 = false;
+    }
+    iVar7 = 0;
+    if ((!bVar2) && (!bVar3)) {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8221ac9c,0xffffffff8221ad18,0xffffffff8221ac48,
+                   0x43,0xffffffff8221ac60);
+    }
+    if (bVar2) {
+      if (iVar9 <= iVar8) {
+        if ((!bVar2) || (iVar8 <= iVar9)) goto LAB_8293d194;
+        iVar7 = -1;
+      }
+    }
+    else {
+LAB_8293d194:
+      if ((bVar3) && (iVar8 < iVar9)) {
+        iVar7 = 1;
+      }
+    }
+    uVar6 = iVar7 * uVar1 + iVar8 + (uVar6 - iVar9);
+  }
+  *puVar4 = uVar6;
+LAB_8293d1b8:
+  __restgprlr_23();
+  return;
 }
 
 
@@ -64,6 +139,16 @@ void bdSequenceNumber__operator__(int *param_1,int *param_2)
 }
 
 
+// 8293D1F8  bdSequenceNumber::operator-  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:127)
+
+void bdSequenceNumber__operator_(int *param_1,int *param_2,int *param_3)
+
+{
+  *param_1 = *param_2 - *param_3;
+  return;
+}
+
+
 // 8293D210  bdSequenceNumber::operator>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:134)
 
 ulonglong bdSequenceNumber__operator>(uint *param_1,uint *param_2)
@@ -81,5 +166,32 @@ ulonglong bdSequenceNumber__operator<(uint *param_1,uint *param_2)
 {
   return ((~(ulonglong)(*param_2 ^ *param_1) & 0xffffffff) >> 0x1f) +
          (ulonglong)(*param_2 <= *param_1) & 1;
+}
+
+
+// 8293D250  bdSequenceNumber::operator<=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:144)
+
+uint bdSequenceNumber__operator<_(uint *param_1,uint *param_2)
+
+{
+  return (((int)*param_2 >> 0x1f) - ((int)*param_1 >> 0x1f)) + (uint)(*param_1 <= *param_2) & 0xff;
+}
+
+
+// 8293D270  bdSequenceNumber::operator==  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:154)
+
+bool bdSequenceNumber__operator__(int *param_1,int *param_2)
+
+{
+  return *param_2 == *param_1;
+}
+
+
+// 8293D288  bdSequenceNumber::operator!=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:159)
+
+bool bdSequenceNumber__operator__(int *param_1,int *param_2)
+
+{
+  return *param_2 != *param_1;
 }
 

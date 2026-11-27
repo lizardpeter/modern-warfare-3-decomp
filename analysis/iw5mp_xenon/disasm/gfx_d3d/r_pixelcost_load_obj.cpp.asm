@@ -3,3 +3,39 @@
 ; 82761A60  R_PixelCost_PrintColorCodeKey  (gfx_d3d/r_pixelcost_load_obj.cpp:75)
   82761A60  7D8802A6             mfspr r12,LR
   82761A64  481B4C59             bl 0x829166bc
+  82761A68  DBE1FFD8             stfd f31,-0x28(r1)
+  82761A6C  9421FF80             stwu r1,-0x80(r1)
+  82761A70  3D60821D             lis r11,-0x7de3
+  82761A74  38600008             li r3,0x8
+  82761A78  388BA6C4             subi r4,r11,0x593c
+  82761A7C  4BD94D05             bl 0x824f6780
+  82761A80  3D40821D             lis r10,-0x7de3
+  82761A84  3BC00006             li r30,0x6
+  82761A88  396AA668             subi r11,r10,0x5998
+  82761A8C  3D408206             lis r10,-0x7dfa
+  82761A90  3BEBFFFC             subi r31,r11,0x4
+  82761A94  3D60821D             lis r11,-0x7de3
+  82761A98  3BABA6B4             subi r29,r11,0x594c
+  82761A9C  C3EA6968             lfs f31,0x6968(r10)
+LAB_82761aa0:
+  82761AA0  893F0004             lbz r9,0x4(r31)
+  82761AA4  7FA4EB78             or r4,r29,r29
+  82761AA8  38600008             li r3,0x8
+  82761AAC  84DF0008             lwzu r6,0x8(r31)
+  82761AB0  F9210050             std r9,0x50(r1)
+  82761AB4  C8010050             lfd f0,0x50(r1)
+  82761AB8  FDA0069C             fcfid f13,f0
+  82761ABC  FD806818             frsp f12,f13
+  82761AC0  EC2C07F2             fmuls f1,f12,f31
+  82761AC4  D8210020             stfd f1,0x20(r1)
+  82761AC8  E8A10020             ld r5,0x20(r1)
+  82761ACC  4BD94CB5             bl 0x824f6780
+  82761AD0  37DEFFFF             subic. r30,r30,0x1
+  82761AD4  4082FFCC             bne 0x82761aa0
+  82761AD8  3D60821D             lis r11,-0x7de3
+  82761ADC  38600008             li r3,0x8
+  82761AE0  388BA698             subi r4,r11,0x5968
+  82761AE4  4BD94C9D             bl 0x824f6780
+  82761AE8  38210080             addi r1,r1,0x80
+  82761AEC  CBE1FFD8             lfd f31,-0x28(r1)
+  82761AF0  481B4C1C             b 0x8291670c

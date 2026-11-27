@@ -14,7 +14,6 @@ void bdAlignedOffsetMalloc(undefined8 param_1,ulonglong param_2,longlong param_3
   lVar1 = __savegprlr_25();
   uVar4 = param_2 - 1;
   if ((uVar4 & param_2) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220b288,0x7f,0,0xffffffff820011f4,0xffffffff8220b230,
                     0xffffffff8220b250);
   }
@@ -29,7 +28,6 @@ void bdAlignedOffsetMalloc(undefined8 param_1,ulonglong param_2,longlong param_3
   param_3 = uVar3 - param_3;
   *(void **)((int)param_3 + -4) = (void *)uVar2;
   if ((uVar4 & uVar3) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8220b288,0x95,0,0xffffffff820011f4,0xffffffff8220b1e0,
                     0xffffffff8220b204);
   }
@@ -50,10 +48,22 @@ void bdAlignedOffsetFree(int param_1)
 
 // 828F8378  bdAlignedOffsetRealloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:170)
 
-void bdAlignedOffsetRealloc(void)
+void bdAlignedOffsetRealloc
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  void *_Src;
+  undefined8 uVar1;
+  
+  _Src = (void *)__savegprlr_28();
+  uVar1 = bdAlignedOffsetMalloc(param_3,param_4,param_5);
+  if ((param_2 & 0xffffffff) <= (param_3 & 0xffffffff)) {
+    param_3 = param_2;
+  }
+  memcpy((void *)uVar1,_Src,(size_t)param_3);
+  bdHeap__DW_Free(*(undefined4 *)((int)_Src + -4));
+  __restgprlr_28(uVar1);
+  return;
 }
 

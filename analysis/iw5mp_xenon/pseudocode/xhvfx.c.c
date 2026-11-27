@@ -14,11 +14,27 @@ undefined8 XHVOutputEffectSize(undefined8 param_1,undefined4 *param_2)
 
 // 828BE088  XHVOutputEffectCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:70)
 
-void XHVOutputEffectCreate(void)
+void XHVOutputEffectCreate(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined4 *puVar2;
+  undefined8 uVar3;
+  
+  iVar1 = __savegprlr_29();
+  uVar3 = 0;
+  puVar2 = (undefined4 *)(**(code **)(*(int *)param_2 + 0x14))(param_2,0x181c);
+  if (puVar2 == (undefined4 *)0x0) {
+    uVar3 = 0xffffffff8007000e;
+  }
+  else {
+    puVar2[1] = 1;
+    *puVar2 = &PTR_XHVOutputEffectAddRef_829af934;
+    puVar2[2] = *(undefined4 *)(iVar1 + 4);
+  }
+  *param_3 = puVar2;
+  __restgprlr_29(uVar3);
+  return;
 }
 
 

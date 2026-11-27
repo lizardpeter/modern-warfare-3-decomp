@@ -14,6 +14,12 @@
   829263E8  FDFE058E             mtfsf 0xff,f0
   829263EC  4E800020             blr
 
+; 829263F0  statfp  (<external>/bt/278379/vctools/crt/xb/xbox/fpctrl.asm:111)
+  829263F0  FC00048E             mffs f0
+  829263F4  D801FFF8             stfd f0,-0x8(r1)
+  829263F8  8061FFFC             lwz r3,-0x4(r1)
+  829263FC  4E800020             blr
+
 ; 82926400  _FPreset  (<external>/bt/278379/vctools/crt/xb/xbox/fpctrl.asm:138)
   82926400  FC00048E             mffs f0
   82926404  38600004             li r3,0x4
@@ -24,6 +30,16 @@
   82926418  C821FFF8             lfd f1,-0x8(r1)
   8292641C  FDFE0D8E             mtfsf 0xff,f1
   82926420  4E800020             blr
+
+; 82926424  set_statfp  (<external>/bt/278379/vctools/crt/xb/xbox/fpctrl.asm:167)
+  82926424  FC00048E             mffs f0
+  82926428  D801FFF8             stfd f0,-0x8(r1)
+  8292642C  80A1FFFC             lwz r5,-0x4(r1)
+  82926430  7C652B78             or r5,r3,r5
+  82926434  90A1FFFC             stw r5,-0x4(r1)
+  82926438  C821FFF8             lfd f1,-0x8(r1)
+  8292643C  FDFE0D8E             mtfsf 0xff,f1
+  82926440  4E800020             blr
 
 ; 82926444  set_fsr  (<external>/bt/278379/vctools/crt/xb/xbox/fpctrl.asm:192)
   82926444  9061FFFC             stw r3,-0x4(r1)

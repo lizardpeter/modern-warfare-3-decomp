@@ -29,7 +29,6 @@ undefined8 IsNodeAdditive(short *param_1)
   undefined8 uVar1;
   
   if (param_1 == (short *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x7a,0,0xffffffff82000f98,0xffffffff8206f7e8);
   }
   if ((*param_1 == 0) || (uVar1 = 1, (param_1[2] & 0x10U) == 0)) {
@@ -132,10 +131,9 @@ void XAnimShutdown(void)
 {
   if (DAT_8421bf98 != 0) {
     if ((DAT_8421bf9c == '\0') && (DAT_841db988 != 1)) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82185bb8,0x28c,0,0xffffffff82185da8,0xffffffff82185dc0);
     }
-    SL_RemoveRefToString();
+    SL_RemoveRefToString(DAT_8421bf98);
     DAT_8421bf98 = 0;
   }
   return;
@@ -179,7 +177,6 @@ void XAnimCreate(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong
   lVar4 = __savegprlr_25();
   iVar5 = DB_FindXAssetHeader(2,param_3,1);
   if (iVar5 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x14b,0,0xffffffff82000f98,0xffffffff8213fd58);
   }
   lVar7 = (param_2 & 0x1fffffff) * 8 + lVar4;
@@ -200,30 +197,28 @@ void XAnimCreate(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong
     return;
   }
   if (*(int *)(iVar5 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x157,0,0xffffffff82000f98,0xffffffff82185c40,param_4 & 0xff,
                     0,lVar7 + 0xc);
   }
   iVar2 = (int)((param_2 & 0xffffffff) << 2);
   lVar4 = param_3;
-  if (*(int *)(*(int *)(iVar5 + 8) + iVar2) == 0) {
-    do {
-      pcVar8 = (char *)lVar4;
-      lVar4 = lVar4 + 1;
-    } while (*pcVar8 != '\0');
-    iVar6 = Hunk_AllocDebugMem(((lVar4 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c10);
-    iVar3 = (int)param_3;
-    do {
-      cVar1 = *(char *)param_3;
-      ((char *)param_3)[iVar6 - iVar3] = cVar1;
-      param_3 = param_3 + 1;
-    } while (cVar1 != '\0');
-    *(int *)(*(int *)(iVar5 + 8) + iVar2) = iVar6;
-    __restgprlr_25();
-    return;
+  if (*(int *)(*(int *)(iVar5 + 8) + iVar2) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x158,0,0xffffffff82000f98,0xffffffff82185c1c);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x158,0,0xffffffff82000f98,0xffffffff82185c1c);
+  do {
+    pcVar8 = (char *)lVar4;
+    lVar4 = lVar4 + 1;
+  } while (*pcVar8 != '\0');
+  iVar6 = Hunk_AllocDebugMem(((lVar4 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c10);
+  iVar3 = (int)param_3;
+  do {
+    cVar1 = *(char *)param_3;
+    ((char *)param_3)[iVar6 - iVar3] = cVar1;
+    param_3 = param_3 + 1;
+  } while (cVar1 != '\0');
+  *(int *)(*(int *)(iVar5 + 8) + iVar2) = iVar6;
+  __restgprlr_25();
+  return;
 }
 
 
@@ -246,27 +241,22 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
   
   puVar6 = (uint *)__savegprlr_21();
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x185,0,0xffffffff82000f98,0xffffffff82185d54);
   }
   iVar4 = (int)((param_2 & 0xffffffff) << 3);
   *(short *)((int)puVar6 + iVar4 + 0xc) = (short)param_5;
   if ((param_5 & 0xffffffff) != (param_5 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x189,0,0xffffffff82000f98,0xffffffff82185d3c);
   }
   *(short *)((int)puVar6 + iVar4 + 0x10) = (short)param_6;
   if ((param_6 & 0xffffffff) != (param_6 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x18b,0,0xffffffff82000f98,0xffffffff82185d1c);
   }
   *(short *)((int)puVar6 + iVar4 + 0x12) = (short)param_4;
   if ((param_4 & 0xffffffff) != (param_4 & 0xffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,400,0,0xffffffff82000f98,0xffffffff82185cf4);
   }
   if ((ulonglong)*puVar6 < (*(ushort *)((int)puVar6 + iVar4 + 0x12) + param_5 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x191,0,0xffffffff82000f98,0xffffffff82185cc4);
   }
   uVar10 = 0;
@@ -280,7 +270,6 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
           *(ushort *)
            ((int)puVar6 +
            (int)((*(ushort *)((int)puVar6 + iVar4 + 0x12) + uVar10 & 0xffffffff) << 3) + 0xe)) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x196,0,0xffffffff82000f98,0xffffffff82185c80);
       }
       uVar10 = uVar10 + 1;
@@ -294,7 +283,6 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
     for (uVar2 = *(ushort *)((int)puVar6 + iVar4 + 0xe); uVar2 != 0;
         uVar2 = *(ushort *)((int)puVar6 + (uint)uVar2 * 8 + 0xe)) {
       if (puVar6 + (uint)uVar2 * 2 + 3 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x7a,0,0xffffffff82000f98,0xffffffff8206f7e8);
       }
       if ((*(short *)(puVar6 + (uint)uVar2 * 2 + 3) == 0) ||
@@ -306,40 +294,38 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
       }
     }
   }
-  if ((param_7 & 0xff) == 0) {
-    param_3 = param_3 + -1;
-    pcVar9 = (char *)(*(int *)(puVar6[2] + (int)((param_2 & 0xffffffff) << 2)) + -1);
+  if ((param_7 & 0xff) != 0) {
+    if (puVar6[2] == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x1ac,0,0xffffffff82000f98,0xffffffff82185c40);
+    }
+    iVar4 = (int)((param_2 & 0xffffffff) << 2);
+    lVar8 = param_3;
+    if (*(int *)(iVar4 + puVar6[2]) != 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x1ad,0,0xffffffff82000f98,0xffffffff82185c1c);
+    }
     do {
-      param_3 = param_3 + 1;
+      pcVar9 = (char *)lVar8;
+      lVar8 = lVar8 + 1;
+    } while (*pcVar9 != '\0');
+    iVar7 = Hunk_AllocDebugMem(((lVar8 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c58);
+    iVar5 = (int)param_3;
+    do {
       cVar1 = *(char *)param_3;
-      pcVar9 = pcVar9 + 1;
-      *pcVar9 = cVar1;
+      ((char *)param_3)[iVar7 - iVar5] = cVar1;
+      param_3 = param_3 + 1;
     } while (cVar1 != '\0');
+    *(int *)(iVar4 + puVar6[2]) = iVar7;
     __restgprlr_21();
     return;
   }
-  if (puVar6[2] == 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x1ac,0,0xffffffff82000f98,0xffffffff82185c40);
-  }
-  iVar4 = (int)((param_2 & 0xffffffff) << 2);
-  lVar8 = param_3;
-  if (*(int *)(iVar4 + puVar6[2]) != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x1ad,0,0xffffffff82000f98,0xffffffff82185c1c);
-  }
+  param_3 = param_3 + -1;
+  pcVar9 = (char *)(*(int *)(puVar6[2] + (int)((param_2 & 0xffffffff) << 2)) + -1);
   do {
-    pcVar9 = (char *)lVar8;
-    lVar8 = lVar8 + 1;
-  } while (*pcVar9 != '\0');
-  iVar7 = Hunk_AllocDebugMem(((lVar8 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c58);
-  iVar5 = (int)param_3;
-  do {
-    cVar1 = *(char *)param_3;
-    ((char *)param_3)[iVar7 - iVar5] = cVar1;
     param_3 = param_3 + 1;
+    cVar1 = *(char *)param_3;
+    pcVar9 = pcVar9 + 1;
+    *pcVar9 = cVar1;
   } while (cVar1 != '\0');
-  *(int *)(iVar4 + puVar6[2]) = iVar7;
   __restgprlr_21();
   return;
 }
@@ -347,11 +333,43 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
 
 // 8261EE40  XAnimCreateAnims  (xanim/xanim.cpp:453)
 
-void XAnimCreateAnims(void)
+void XAnimCreateAnims(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  undefined4 *puVar4;
+  int iVar5;
+  undefined4 uVar6;
+  char *pcVar7;
+  
+  pcVar3 = (char *)__savegprlr_27();
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1cc,0,0xffffffff82000f98,0xffffffff821794fc);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1cd,0,0xffffffff82000f98,0xffffffff82185d70);
+  }
+  puVar4 = (undefined4 *)(*(code *)param_3)((param_2 & 0x1fffffff) * 8 + 0xc);
+  *puVar4 = (int)param_2;
+  pcVar7 = pcVar3;
+  do {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  iVar5 = Hunk_AllocDebugMem((int)pcVar7 - (int)pcVar3,0xffffffff82185d5c);
+  iVar2 = iVar5 - (int)pcVar3;
+  do {
+    cVar1 = *pcVar3;
+    pcVar3[iVar2] = cVar1;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  puVar4[1] = iVar5;
+  uVar6 = Hunk_AllocDebugMem((param_2 & 0x3fffffff) << 2,0xffffffff82185d5c);
+  puVar4[2] = uVar6;
+  __restgprlr_27(puVar4);
+  return;
 }
 
 
@@ -367,21 +385,57 @@ void XAnimDisableLeakCheck(void)
 
 // 8261EF50  XAnimCreateTree  (xanim/xanim.cpp:487)
 
-void XAnimCreateTree(void)
+void XAnimCreateTree(undefined8 param_1,code *param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int *piVar2;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1ea,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  piVar2 = (int *)(*param_2)(0x14);
+  *piVar2 = 0;
+  piVar2[1] = 0;
+  piVar2[2] = 0;
+  piVar2[3] = 0;
+  piVar2[4] = 0;
+  *piVar2 = iVar1;
+  if (piVar2[1] != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1f2,0,0xffffffff82185d78,0xffffffff82185d94);
+  }
+  __restgprlr_29(piVar2);
+  return;
 }
 
 
 // 82624798  XAnimFreeTree  (xanim/xanim.cpp:506)
 
-void XAnimFreeTree(void)
+void XAnimFreeTree(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1fb,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1fc,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1fd,0,0xffffffff82000f98,0xffffffff82186750);
+  }
+  XAnimClearTree(piVar1);
+  if (piVar1[1] != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x202,0,0xffffffff82185d78,0xffffffff82185d94);
+  }
+  if ((param_2 & 0xffffffff) != 0) {
+    (*(code *)param_2)(piVar1,0x14);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -390,8 +444,56 @@ void XAnimFreeTree(void)
 void XAnimCreateSimpleTree(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  char *pcVar1;
+  int *_Dst;
+  int *piVar2;
+  
+  pcVar1 = (char *)__savegprlr_28();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x214,0,0xffffffff82000f98,0xffffffff82021a74);
+  }
+  if (*pcVar1 == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x215,0,0xffffffff82000f98,0xffffffff8207e370);
+  }
+  _Dst = (int *)MT_Alloc(0x30,6);
+  memset(_Dst,0,0x30);
+  piVar2 = (int *)DB_FindXAssetHeader(2,pcVar1,1);
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x223,0,0xffffffff82000f98,0xffffffff8213fd58);
+  }
+  _Dst[0xb] = (int)piVar2;
+  *(undefined2 *)(_Dst + 8) = 1;
+  _Dst[5] = 2;
+  *(undefined2 *)((int)_Dst + 0x26) = 1;
+  *(ushort *)(_Dst + 9) = *(ushort *)(_Dst + 9) | 0x20;
+  _Dst[6] = *piVar2;
+  *_Dst = (int)(_Dst + 5);
+  __restgprlr_28(_Dst);
+  return;
+}
+
+
+// 82624890  XAnimFreeSimpleTree  (xanim/xanim.cpp:571)
+
+void XAnimFreeSimpleTree(void)
+
+{
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_29();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x23f,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x240,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x241,0,0xffffffff82000f98,0xffffffff82186790);
+  }
+  XAnimClearTree(piVar1);
+  MT_Free(piVar1,0x30);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -400,8 +502,47 @@ void XAnimCreateSimpleTree(void)
 void XAnimPlaySimpleTreeAnim(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar2;
+  char cVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  piVar2 = (int *)__savegprlr_28();
+  dVar5 = extraout_f1;
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x252,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  piVar1 = (int *)*piVar2;
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x256,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,599,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,600,0,0xffffffff82000f98,0xffffffff82186790);
+  }
+  if (*(int *)(*piVar1 + 0x18) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x259,0,0xffffffff82000f98,0xffffffff82186c6c);
+  }
+  if (dVar5 < 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x25a,0,0xffffffff82000f98,0xffffffff82186c58);
+  }
+  dVar6 = 1.0;
+  XAnimSetGoalWeight(0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,piVar2,1);
+  cVar3 = XAnimIsLooped(*piVar1,1);
+  if (cVar3 == '\0') {
+    dVar4 = (double)XAnimGetLength(*piVar1,1);
+    if ((float)(dVar5 - dVar4) < 0.0) {
+      dVar6 = (double)(float)(dVar5 / dVar4);
+    }
+    XAnimSetTime(dVar6,piVar1,1);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -416,8 +557,8 @@ void XAnimCheckTreeLeak(void)
   if (DAT_841db988 == 1) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff82185bb8,0x28c,0,0xffffffff82185da8,0xffffffff82185dc0);
+  return;
 }
 
 
@@ -427,7 +568,6 @@ undefined4 XAnimGetAnims(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x293,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   return *param_1;
@@ -453,19 +593,18 @@ void XAnimInitModelMap(undefined8 param_1,ulonglong param_2,void *param_3)
   pvVar5 = memset(param_3,0,0x400);
   uVar7 = 0;
   uVar9 = param_2 & 0xffffffff;
-  while( true ) {
-    if (uVar9 == 0) {
-      __restgprlr_21(pvVar5);
-      return;
-    }
+  while (uVar9 != 0) {
     uVar9 = (ulonglong)*(byte *)(*piVar4 + 4);
     puVar8 = *(ushort **)(*piVar4 + 0x24);
-    if (0xbf < uVar9) break;
+    if (0xbf < uVar9) {
+      pvVar5 = (void *)MyAssertHandler(0xffffffff82185bb8,0x2ba,0,0xffffffff82000f98,
+                                       0xffffffff82185dd4);
+    }
     for (; uVar9 != 0; uVar9 = uVar9 - 1) {
       uVar1 = *puVar8;
       if (uVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82185bb8,0x2bf,0,0xffffffff82000f98,0xffffffff82185df0);
+        pvVar5 = (void *)MyAssertHandler(0xffffffff82185bb8,0x2bf,0,0xffffffff82000f98,
+                                         0xffffffff82185df0);
       }
       uVar3 = uVar1 & 0xff;
       puVar6 = (ushort *)((uVar1 & 0xff) * 4 + (int)param_3);
@@ -480,12 +619,12 @@ void XAnimInitModelMap(undefined8 param_1,ulonglong param_2,void *param_3)
       puVar8 = puVar8 + 1;
       uVar7 = uVar7 + 1;
     }
-    param_2 = param_2 - 1;
     piVar4 = piVar4 + 1;
+    param_2 = param_2 - 1;
     uVar9 = param_2;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x2ba,0,0xffffffff82000f98,0xffffffff82185dd4);
+  __restgprlr_21(pvVar5);
+  return;
 }
 
 
@@ -496,62 +635,62 @@ void XAnimInitModelMap(undefined8 param_1,ulonglong param_2,void *param_3)
 void XAnimGetAnimMap(undefined8 param_1,int param_2)
 
 {
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  uint uVar4;
+  byte bVar1;
+  ushort uVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
   uint uVar6;
-  ushort *puVar7;
+  uint uVar7;
+  ushort *puVar8;
   uint local_140 [6];
   byte local_128;
   undefined1 local_127 [295];
   
-  iVar3 = __savegprlr_21();
-  if (iVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar4 = __savegprlr_21();
+  if (iVar4 == 0) {
     MyAssertHandler(0xffffffff82185bb8,0x2d5,0,0xffffffff82000f98,0xffffffff8213fd58);
   }
-  local_128 = *(byte *)(iVar3 + 0x1c);
-  uVar5 = (uint)local_128;
-  puVar7 = *(ushort **)(iVar3 + 0x30);
-  uVar6 = 0;
+  bVar1 = *(byte *)(iVar4 + 0x1c);
+  uVar6 = (uint)bVar1;
+  puVar8 = *(ushort **)(iVar4 + 0x30);
+  uVar7 = 0;
   local_140[0] = 0;
   local_140[1] = 0;
   local_140[2] = 0;
   local_140[3] = 0;
   local_140[4] = 0;
   local_140[5] = 0;
-  if (uVar5 != 0) {
+  if (uVar6 != 0) {
     do {
-      uVar4 = (uint)*puVar7;
-      iVar3 = (uVar4 & 0xff) * 4;
-      uVar2 = uVar4 & 0xff;
-      uVar1 = *(ushort *)(iVar3 + param_2);
-      while (uVar1 != 0) {
-        if (uVar4 == uVar1) {
-          uVar1 = *(ushort *)(iVar3 + param_2 + 2);
-          local_127[uVar6] = (char)uVar1;
-          if (0xbf < uVar1) {
-                    /* WARNING: Subroutine does not return */
+      uVar5 = (uint)*puVar8;
+      iVar4 = (uVar5 & 0xff) * 4;
+      uVar3 = uVar5 & 0xff;
+      uVar2 = *(ushort *)(iVar4 + param_2);
+      while (uVar2 != 0) {
+        if (uVar5 == uVar2) {
+          uVar2 = *(ushort *)(iVar4 + param_2 + 2);
+          local_127[uVar7] = (char)uVar2;
+          if (0xbf < uVar2) {
             MyAssertHandler(0xffffffff821858f8,0x48,0,0xffffffff82000f98,0xffffffff82185940);
           }
-          uVar2 = uVar1 >> 3 & 0x1ffffffc;
-          *(uint *)((int)local_140 + uVar2) =
-               (&DAT_82992400)[uVar1 & 0x1f] | *(uint *)((int)local_140 + uVar2);
+          uVar3 = uVar2 >> 3 & 0x1ffffffc;
+          *(uint *)((int)local_140 + uVar3) =
+               (&DAT_82992400)[uVar2 & 0x1f] | *(uint *)((int)local_140 + uVar3);
           goto LAB_82624a70;
         }
-        uVar2 = uVar2 + 1 & 0xff;
-        iVar3 = uVar2 * 4;
-        uVar1 = *(ushort *)(iVar3 + param_2);
+        uVar3 = uVar3 + 1 & 0xff;
+        iVar4 = uVar3 * 4;
+        uVar2 = *(ushort *)(iVar4 + param_2);
       }
-      local_127[uVar6] = 0xbf;
+      local_127[uVar7] = 0xbf;
 LAB_82624a70:
-      uVar6 = uVar6 + 1;
-      puVar7 = puVar7 + 1;
-    } while (uVar6 < uVar5);
+      uVar7 = uVar7 + 1;
+      puVar8 = puVar8 + 1;
+    } while (uVar7 < uVar6);
   }
-  SL_GetStringOfSize(local_140,0,uVar5 + 0x19,0xc);
+  local_128 = bVar1;
+  SL_GetStringOfSize(local_140,0,uVar6 + 0x19,0xc);
   __restgprlr_21();
   return;
 }
@@ -586,11 +725,61 @@ void TransformToQuatRefFrame(float *param_1,float *param_2)
 
 // 8261F328  XAnimCalcRelDeltaParts  (xanim/xanim.cpp:783)
 
-void XAnimCalcRelDeltaParts(void)
+/* WARNING: Control flow encountered bad instruction data */
+
+void XAnimCalcRelDeltaParts(undefined8 param_1,double param_2,double param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ushort *puVar1;
+  undefined8 in_r0;
+  int iVar2;
+  float *in_r7;
+  double dVar3;
+  undefined1 in_vs32 [16];
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 in_vs42 [16];
+  undefined1 in_vs43 [16];
+  undefined1 in_vs60 [16];
+  
+  iVar2 = __savegprlr_27();
+  if ((*(byte *)(iVar2 + 0x10) & 2) == 0) {
+    __restgprlr_27();
+    return;
+  }
+  XAnim_CalcDeltaForTime(param_2);
+  XAnim_CalcDeltaForTime(param_3,iVar2);
+  if (((((*(byte *)(iVar2 + 0x10) & 1) != 0) && (param_3 < param_2)) &&
+      (puVar1 = (ushort *)**(undefined4 **)(iVar2 + 0x54), puVar1 != (ushort *)0x0)) &&
+     ((ulonglong)*puVar1 != 0)) {
+    auVar4 = ZEXT416(0);
+    auVar4 = auVar4 | auVar4 << 0x20 | auVar4 << 0x40 | auVar4 << 0x60;
+    if (*(char *)(puVar1 + 1) != '\0') {
+      altv207_13(auVar4,in_vs43);
+      auVar5 = loadVectorForShiftLeft(in_r0,(ulonglong)*(uint *)(puVar1 + 0xe));
+      altv207_13(auVar4,in_vs42);
+      altv207_13(in_vs43,auVar5);
+      altv207_13(in_vs42,auVar5);
+      loadVectorForShiftLeft(in_r0,(ulonglong)*puVar1 * 3 + (ulonglong)*(uint *)(puVar1 + 0xe));
+                    /* WARNING: Bad instruction - Truncating control flow here */
+      halt_baddata();
+    }
+    altv300_23(in_vs60,in_vs43);
+    altv300_21(auVar4,in_vs43);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+  dVar3 = 0.0;
+  if (*in_r7 != 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x341,0,0xffffffff82000f98,0xffffffff82185e0c);
+  }
+  if ((double)in_r7[1] != dVar3) {
+    MyAssertHandler(0xffffffff82185bb8,0x342,0,0xffffffff82000f98,0xffffffff82185dfc);
+  }
+  altv207_13(in_vs32,in_vs43);
+  altv207_13(in_vs32,in_vs42);
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
 }
 
 
@@ -654,23 +843,238 @@ void XAnimClearServerNotify(int param_1)
 }
 
 
-// 8261FB50  XAnimCheckFreeInfo  (xanim/xanim.cpp:987)
+// 8261F7F8  XAnimFreeInfo  (xanim/xanim.cpp:891)
 
-void XAnimCheckFreeInfo(void)
+void XAnimFreeInfo(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  short sVar2;
+  ushort uVar3;
+  ushort uVar4;
+  uint uVar5;
+  int iVar6;
+  undefined2 uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  int iVar10;
+  int iVar11;
+  longlong lVar12;
+  uint *puVar13;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  uVar9 = __savegprlr_23();
+  lVar12 = uVar9 + 0xc;
+  do {
+    puVar13 = (uint *)lVar12;
+    if (in_RESERVE != '\0') {
+      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar12);
+      *puVar13 = uVar5;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  iVar6 = (int)uVar9;
+  if (*(int *)(iVar6 + 8) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x386,0,0xffffffff82000f98,0xffffffff82185ec4);
+  }
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x38b,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar8 = (int)param_2;
+  iVar11 = iVar8 * 0x40;
+  if ((ulonglong)*(uint *)(&DAT_841dbfb0 + iVar11) != (uVar9 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0x38f,0,0xffffffff82000f98,0xffffffff82185e74);
+  }
+  if ((&DAT_841dbfac)[iVar11] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x390,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  sVar2 = *(short *)(&DAT_841dbfa4 + iVar11);
+  (&DAT_841dbfac)[iVar11] = 0;
+  if (*(short *)(&DAT_841dbfaa + iVar11) == 0) {
+    while (sVar2 != 0) {
+      XAnimFreeInfo(uVar9,*(undefined2 *)(&DAT_841dbfa4 + iVar11));
+      sVar2 = *(short *)(&DAT_841dbfa4 + iVar11);
+    }
+  }
+  else {
+    if (sVar2 != 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x396,0,0xffffffff82000f98,0xffffffff82185e58);
+    }
+    if (*(int *)(&DAT_841dbfb4 + iVar11) == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x39a,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    if (*(short *)(&DAT_841dbfaa + iVar11) == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x39d,0,0xffffffff82000f98,0xffffffff82185e44);
+    }
+    iVar10 = SL_ConvertToString(*(undefined2 *)(&DAT_841dbfaa + iVar11));
+    SL_RemoveRefToStringOfSize
+              (*(undefined2 *)(&DAT_841dbfaa + iVar11),(ulonglong)*(byte *)(iVar10 + 0x18) + 0x19);
+    *(undefined2 *)(&DAT_841dbfaa + iVar11) = 0;
+  }
+  uVar3 = (&DAT_841dbfa0)[iVar8 * 0x20];
+  uVar4 = (&DAT_841dbfa2)[iVar8 * 0x20];
+  if (uVar3 == 0) {
+    if (*(ushort *)(&DAT_841dbfa6 + iVar11) == 0) {
+      *(ushort *)(iVar6 + 0x10) = uVar4;
+    }
+    else {
+      *(ushort *)(&DAT_841dbfa4 + (uint)*(ushort *)(&DAT_841dbfa6 + iVar11) * 0x40) = uVar4;
+    }
+  }
+  else {
+    (&DAT_841dbfa2)[(uint)uVar3 * 0x20] = uVar4;
+  }
+  if (uVar4 != 0) {
+    (&DAT_841dbfa0)[(uint)uVar4 * 0x20] = uVar3;
+  }
+  if (*(short *)(&DAT_841dbf9c + iVar11) != 0) {
+    SL_RemoveRefToString();
+    *(undefined2 *)(&DAT_841dbf9c + iVar11) = 0;
+  }
+  (&DAT_841dbfa0)[iVar8 * 0x20] = 0;
+  *(undefined2 *)(&DAT_841dbf9a + iVar11) = 0xffff;
+  Sys_EnterCriticalSection(0xd);
+  uVar7 = (undefined2)param_2;
+  (&DAT_841dbfa2)[iVar8 * 0x20] = DAT_841dbfa2;
+  iVar11 = DAT_841db988;
+  bVar1 = DAT_841db988 == 0;
+  (&DAT_841dbfa0)[(uint)DAT_841dbfa2 * 0x20] = uVar7;
+  DAT_841dbfa2 = uVar7;
+  if (bVar1) {
+    MyAssertHandler(0xffffffff82185bb8,0x3c8,0,0xffffffff82000f98,0xffffffff82185e34);
+    iVar11 = DAT_841db988;
+  }
+  DAT_841db988 = iVar11 + -1;
+  if (*(int *)(iVar6 + 4) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x3cb,0,0xffffffff82000f98,0xffffffff82185e20);
+  }
+  *(int *)(iVar6 + 4) = *(int *)(iVar6 + 4) + -1;
+  Sys_LeaveCriticalSection(0xd);
+  if (*(int *)(iVar6 + 8) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x3d4,0,0xffffffff82000f98,0xffffffff82185ec4);
+    do {
+      if (in_RESERVE != '\0') {
+        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 - 1,0,lVar12);
+        *puVar13 = uVar5;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    __restgprlr_23();
+    return;
+  }
+  do {
+    if (in_RESERVE != '\0') {
+      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 - 1,0,lVar12);
+      *puVar13 = uVar5;
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  __restgprlr_23();
+  return;
+}
+
+
+// 8261FB50  XAnimCheckFreeInfo  (xanim/xanim.cpp:987)
+
+void XAnimCheckFreeInfo(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+
+{
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  double dVar5;
+  
+  uVar4 = __savegprlr_26();
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x3e1,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar2 = (int)param_2 * 0x40;
+  dVar5 = 0.0;
+  if (*(float *)(&DAT_841dbfcc + iVar2) == 0.0) {
+    param_3 = 0;
+  }
+  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar2);
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+    XAnimCheckFreeInfo(uVar4,uVar3,param_3);
+  }
+  if (((*(short *)(&DAT_841dbfa4 + iVar2) == 0) && ((int)param_3 == 0)) &&
+     ((double)*(float *)(&DAT_841dbfc8 + iVar2) == dVar5)) {
+    XAnimFreeInfo(uVar4,param_2);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
 // 8261FC38  XAnimGetAverageRateFrequency  (xanim/xanim.cpp:1017)
 
-void XAnimGetAverageRateFrequency(void)
+void XAnimGetAverageRateFrequency(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int *piVar2;
+  uint uVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
   __savegprlr_23();
+  piVar2 = (int *)__savefpr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x401,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x402,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  param_2 = param_2 * 0x40;
+  if ((&DAT_841dbfac)[param_2] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x406,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if (*(short *)(&DAT_841dbfaa + param_2) != 0) {
+    iVar1 = *(int *)(&DAT_841dbfb4 + param_2);
+    if (iVar1 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x40c,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    __restfpr_28((double)*(float *)(iVar1 + 0x2c));
+    __restgprlr_23();
+    return;
+  }
+  uVar3 = (uint)*(ushort *)(&DAT_841dbfa4 + param_2);
+  dVar6 = 0.0;
+  dVar5 = dVar6;
+  dVar7 = dVar6;
+  if (uVar3 != 0) {
+    do {
+      if (0xfff < uVar3) {
+        MyAssertHandler(0xffffffff82185bb8,0x415,0,0xffffffff82185e88,0xffffffff82185ea0,uVar3);
+      }
+      dVar8 = (double)*(float *)(&DAT_841dbfcc + uVar3 * 0x40);
+      if (dVar8 < dVar7) {
+        MyAssertHandler(dVar8,0xffffffff82185bb8,0x418,0,0xffffffff82185eec,0xffffffff82185ed8,dVar8
+                       );
+      }
+      if ((dVar8 != dVar7) &&
+         (dVar4 = (double)XAnimGetAverageRateFrequency(piVar2,uVar3), dVar4 != dVar7)) {
+        dVar5 = (double)(float)(dVar8 + dVar5);
+        dVar6 = (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfd0 + uVar3 * 0x40) *
+                                               dVar4) * dVar8 + dVar6);
+      }
+      uVar3 = (uint)(ushort)(&DAT_841dbfa2)[uVar3 * 0x20];
+    } while (uVar3 != 0);
+    if (dVar5 != dVar7) {
+      __restfpr_28((double)(float)(dVar6 / dVar5));
+      __restgprlr_23();
+      return;
+    }
+  }
+  __restfpr_28(dVar7);
+  __restgprlr_23();
+  return;
 }
 
 
@@ -686,58 +1090,52 @@ void XAnimGetNextNotifyIndex(void)
   double extraout_f1;
   double dVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
   
   __savegprlr_25();
   iVar1 = __savefpr_28();
+  dVar6 = extraout_f1;
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x431,0,0xffffffff82000f98,0xffffffff8213fd58);
   }
-  if (extraout_f1 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(extraout_f1,0xffffffff82185bb8,0x433,0,0xffffffff82028794,0xffffffff82185f94,
-                    extraout_f1);
+  dVar5 = 0.0;
+  if (dVar6 < 0.0) {
+    MyAssertHandler(dVar6,0xffffffff82185bb8,0x433,0,0xffffffff82028794,0xffffffff82185f94,dVar6);
   }
-  if (1.0 <= extraout_f1) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(extraout_f1,0xffffffff82185bb8,0x434,0,0xffffffff82028794,0xffffffff82185f84,
-                    extraout_f1);
+  if (1.0 <= dVar6) {
+    MyAssertHandler(dVar6,0xffffffff82185bb8,0x434,0,0xffffffff82028794,0xffffffff82185f84,dVar6);
   }
   iVar4 = *(int *)(iVar1 + 0x50);
   iVar2 = 0;
-  dVar5 = 2.0;
-  if (iVar4 != 0) {
-    iVar3 = 0;
-    if (*(char *)(iVar1 + 0x1d) != '\0') {
-      do {
-        dVar6 = (double)*(float *)(iVar4 + 4);
-        if (dVar6 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff82185bb8,0x43e,0,0xffffffff82000f98,0xffffffff82185f68);
-        }
-        if ((extraout_f1 <= dVar6) && (dVar6 < dVar5)) {
-          dVar5 = dVar6;
-          iVar2 = iVar4;
-        }
-        iVar3 = iVar3 + 1;
-        iVar4 = iVar4 + 8;
-      } while (iVar3 < (int)(uint)*(byte *)(iVar1 + 0x1d));
-      if (iVar2 != 0) {
-        if ((iVar2 != *(int *)(iVar1 + 0x50)) && (*(float *)(iVar2 + 4) <= *(float *)(iVar2 + -4)))
-        {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff82185bb8,0x449,0,0xffffffff82000f98,0xffffffff82185f00);
-        }
-        __restfpr_28(iVar2 - *(int *)(iVar1 + 0x50) >> 3 & 0xffff);
-        __restgprlr_25();
-        return;
-      }
-    }
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x448,0,0xffffffff82000f98,0xffffffff82185f58);
+  dVar7 = 2.0;
+  if (iVar4 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x43a,0,0xffffffff82000f98,0xffffffff82185f78);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x43a,0,0xffffffff82000f98,0xffffffff82185f78);
+  iVar3 = 0;
+  if (*(char *)(iVar1 + 0x1d) != '\0') {
+    do {
+      dVar8 = (double)*(float *)(iVar4 + 4);
+      if (dVar8 < dVar5) {
+        MyAssertHandler(0xffffffff82185bb8,0x43e,0,0xffffffff82000f98,0xffffffff82185f68);
+      }
+      if ((dVar6 <= dVar8) && (dVar8 < dVar7)) {
+        dVar7 = dVar8;
+        iVar2 = iVar4;
+      }
+      iVar3 = iVar3 + 1;
+      iVar4 = iVar4 + 8;
+    } while (iVar3 < (int)(uint)*(byte *)(iVar1 + 0x1d));
+    if (iVar2 != 0) goto LAB_8261ffb8;
+  }
+  MyAssertHandler(0xffffffff82185bb8,0x448,0,0xffffffff82000f98,0xffffffff82185f58);
+LAB_8261ffb8:
+  if ((iVar2 != *(int *)(iVar1 + 0x50)) && (*(float *)(iVar2 + 4) <= *(float *)(iVar2 + -4))) {
+    MyAssertHandler(0xffffffff82185bb8,0x449,0,0xffffffff82000f98,0xffffffff82185f00);
+  }
+  __restfpr_28(iVar2 - *(int *)(iVar1 + 0x50) >> 3 & 0xffff);
+  __restgprlr_25();
+  return;
 }
 
 
@@ -751,7 +1149,6 @@ double XAnimGetNotifyFracLeaf(double param_1,double param_2,int param_3,float *p
   double dVar3;
   
   if (param_2 == 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x458,0,0xffffffff82000f98,0xffffffff82185fa4);
   }
   dVar3 = (double)param_4[1];
@@ -788,28 +1185,181 @@ double XAnimGetNotifyFracLeaf(double param_1,double param_2,int param_3,float *p
 void XAnimGetPartsInternal(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  short *psVar2;
+  
+  psVar2 = (short *)__savegprlr_29();
+  if (*psVar2 != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x484,0,0xffffffff82000f98,0xffffffff82185fac);
+  }
+  iVar1 = *(int *)(psVar2 + 2);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x499,0,0xffffffff82000f98,0xffffffff8213fd58);
+  }
+  __restgprlr_29(iVar1);
+  return;
+}
+
+
+// 826201E0  XAnimGetParts  (xanim/xanim.cpp:1183)
+
+ulonglong XAnimGetParts(uint *param_1,ushort *param_2)
+
+{
+  uint uVar1;
+  ulonglong uVar2;
+  
+  if (param_2[9] != 0) {
+    uVar1 = *(uint *)(param_2 + 0xe);
+    if ((ulonglong)uVar1 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x4a6,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    return (ulonglong)uVar1;
+  }
+  if ((ulonglong)*param_2 == 0) {
+    return 0;
+  }
+  uVar2 = XAnimGetPartsInternal((ulonglong)*param_2 * 8 + (ulonglong)*param_1 + 0xc);
+  return uVar2;
 }
 
 
 // 82624AC8  XAnimGetNextServerNotifyFrac  (xanim/xanim.cpp:1210)
 
-void XAnimGetNextServerNotifyFrac(void)
+void XAnimGetNextServerNotifyFrac
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  short sVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  
+  piVar2 = (int *)__savegprlr_26();
+  iVar1 = (int)param_2;
+  dVar5 = 0.0;
+  dVar6 = extraout_f1;
+  if (*(float *)(iVar1 + 0x30) == 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x4be,0,0xffffffff82000f98,0xffffffff82186368);
+  }
+  if (dVar6 == dVar5) {
+    MyAssertHandler(0xffffffff82185bb8,0x4bf,0,0xffffffff82000f98,0xffffffff82185fa4);
+  }
+  if ((*(short *)((int)piVar2 + 6) == 0) || (*(short *)(iVar1 + 4) == 0)) {
+    __restgprlr_26(0x3ff0000000000000);
+    return;
+  }
+  if (*(char *)(iVar1 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x4c5,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  iVar3 = *piVar2;
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x4c9,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  iVar3 = XAnimGetParts(iVar3,param_2);
+  if (iVar3 == 0) {
+LAB_82624bd4:
+    XAnimGetNotifyFracLeaf(0x3ff0000000000000,dVar6,param_3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  sVar4 = *(short *)(iVar1 + 2);
+  if (sVar4 < 0) {
+    XAnimUpdateServerNotifyIndex(param_2,iVar3);
+    sVar4 = *(short *)(iVar1 + 2);
+    if (sVar4 < 0) goto LAB_82624bd4;
+  }
+  XAnimGetNotifyFracLeaf
+            ((double)*(float *)(sVar4 * 8 + *(int *)(iVar3 + 0x50) + 4),dVar6,param_3,param_4);
+  __restgprlr_26();
+  return;
 }
 
 
 // 82620290  XAnimAddClientNotify  (xanim/xanim.cpp:1243)
 
-void XAnimAddClientNotify(void)
+void XAnimAddClientNotify(undefined8 param_1,undefined8 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  int iVar2;
+  undefined8 uVar3;
+  char cVar5;
+  undefined4 uVar4;
+  longlong lVar6;
+  ulonglong uVar7;
+  double extraout_f1;
+  double dVar8;
+  
+  uVar3 = __savegprlr_27();
+  dVar8 = extraout_f1;
+  if (0x7f < (int)DAT_841db98c) {
+    MyAssertHandler(0xffffffff82185bb8,0x4df,0,0xffffffff82000f98,0xffffffff82185fc0);
+  }
+  cVar5 = Sys_IsMainThread();
+  if (cVar5 == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x4e0,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  uVar7 = (ulonglong)DAT_841db98c - 1;
+  if (-1 < (int)uVar7) {
+    if (3 < (int)DAT_841db98c) {
+      lVar6 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7be24668;
+      do {
+        puVar1 = (undefined4 *)lVar6;
+        if ((double)(float)puVar1[2] <= dVar8) goto LAB_82620450;
+        puVar1[3] = *puVar1;
+        puVar1[4] = puVar1[1];
+        puVar1[5] = puVar1[2];
+        if ((double)(float)puVar1[-1] <= dVar8) {
+          uVar7 = uVar7 - 1;
+          goto LAB_82620450;
+        }
+        *puVar1 = puVar1[-3];
+        puVar1[1] = puVar1[-2];
+        puVar1[2] = puVar1[-1];
+        if ((double)(float)puVar1[-4] <= dVar8) {
+          uVar7 = uVar7 - 2;
+          goto LAB_82620450;
+        }
+        puVar1[-3] = puVar1[-6];
+        puVar1[-2] = puVar1[-5];
+        puVar1[-1] = puVar1[-4];
+        if ((double)(float)puVar1[-7] <= dVar8) {
+          uVar7 = uVar7 - 3;
+          goto LAB_82620450;
+        }
+        uVar7 = uVar7 - 4;
+        lVar6 = lVar6 + -0x30;
+        puVar1[-6] = puVar1[-9];
+        puVar1[-5] = puVar1[-8];
+        puVar1[-4] = puVar1[-7];
+      } while (2 < (int)uVar7);
+    }
+    if (-1 < (int)uVar7) {
+      lVar6 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7be2465c;
+      do {
+        puVar1 = (undefined4 *)lVar6;
+        if ((double)(float)puVar1[-1] <= dVar8) break;
+        uVar7 = uVar7 - 1;
+        *puVar1 = puVar1[-3];
+        puVar1[1] = puVar1[-2];
+        puVar1[2] = puVar1[-1];
+        lVar6 = lVar6 + -0xc;
+      } while (-1 < (longlong)uVar7);
+    }
+  }
+LAB_82620450:
+  iVar2 = (int)uVar7 * 0xc;
+  uVar4 = SL_ConvertToString(uVar3);
+  *(float *)(&DAT_841db9ac + iVar2) = (float)dVar8;
+  *(undefined4 *)(&DAT_841db9a4 + iVar2) = uVar4;
+  DAT_841db98c = DAT_841db98c + 1;
+  *(undefined4 *)(&DAT_841db9a8 + iVar2) = param_3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -833,19 +1383,19 @@ void XAnimProcessClientNotify(void)
   
   iVar3 = __savegprlr_22();
   pfVar7 = (float *)(iVar3 + 0x20);
+  dVar11 = 0.0;
+  dVar10 = extraout_f1;
   if (extraout_f1 == 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x4fd,0,0xffffffff82000f98,0xffffffff82185fa4);
   }
   if (*(short *)(iVar3 + 6) != 0) {
-    if (*(float *)(iVar3 + 0x30) == 0.0) {
-                    /* WARNING: Subroutine does not return */
+    if ((double)*(float *)(iVar3 + 0x30) == dVar11) {
       MyAssertHandler(0xffffffff82185bb8,0x503,0,0xffffffff82000f98,0xffffffff82186048);
     }
     dVar11 = 1.0;
     if (*(float *)(iVar3 + 0x24) == 1.0) {
 LAB_82620554:
-      XAnimGetNotifyFracLeaf(0x3ff0000000000000,extraout_f1,pfVar7,pfVar7);
+      XAnimGetNotifyFracLeaf(0x3ff0000000000000,dVar10,pfVar7,pfVar7);
       XAnimAddClientNotify(DAT_8421bf98);
       __restgprlr_22();
       return;
@@ -856,13 +1406,10 @@ LAB_82620554:
     else {
       iVar2 = *(int *)(iVar3 + 0x1c);
       if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x513,0,0xffffffff82000f98,0xffffffff8213fd58);
       }
-      dVar10 = extraout_f1;
       uVar4 = XAnimGetNextNotifyIndex((double)*(float *)(iVar3 + 0x24),iVar2);
       if (*(byte *)(iVar2 + 0x1d) <= uVar4) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x516,0,0xffffffff82000f98,0xffffffff82186024);
       }
       dVar8 = (double)*pfVar7;
@@ -871,14 +1418,12 @@ LAB_82620554:
       if (dVar9 <= dVar8) {
         if (dVar8 == dVar11) {
           if ((*(byte *)(iVar2 + 0x10) & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff82185bb8,0x545,0,0xffffffff82000f98,0xffffffff82185fe4);
           }
           if (*(float *)(iVar3 + 0x24) <= *(float *)(puVar5 + 2)) {
             pfVar6 = (float *)(puVar5 + -2);
             do {
               if (pfVar6[2] < *(float *)(iVar3 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82185bb8,0x54c,0,0xffffffff82000f98,0xffffffff82186000);
               }
               uVar1 = *(undefined2 *)(pfVar6 + 1);
@@ -895,7 +1440,6 @@ LAB_82620554:
                 (dVar9 <= (double)*(float *)(puVar5 + 2))) {
           do {
             if (*(float *)(puVar5 + 2) < *(float *)(iVar3 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82185bb8,0x55d,0,0xffffffff82000f98,0xffffffff82186000);
             }
             XAnimGetNotifyFracLeaf((double)*(float *)(puVar5 + 2),dVar10,pfVar7,pfVar7);
@@ -910,7 +1454,6 @@ LAB_82620554:
           pfVar6 = (float *)(puVar5 + -2);
           do {
             if (pfVar6[2] < *(float *)(iVar3 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff82185bb8,0x52d,0,0xffffffff82000f98,0xffffffff82186000);
             }
             uVar1 = *(undefined2 *)(pfVar6 + 1);
@@ -929,7 +1472,6 @@ LAB_82620554:
               XAnimAddClientNotify(uVar1);
               uVar4 = uVar4 + 1;
               if (*(byte *)(iVar2 + 0x1d) <= uVar4) {
-                    /* WARNING: Subroutine does not return */
                 MyAssertHandler(0xffffffff82185bb8,0x53c,0,0xffffffff82000f98,0xffffffff82186024);
               }
               dVar11 = (double)*(float *)(iVar3 + 0x1c);
@@ -963,11 +1505,70 @@ LAB_82620554:
 
 // 82627A60  XAnimUpdateInfoSync  (xanim/xanim.cpp:1382)
 
-void XAnimUpdateInfoSync(void)
+void XAnimUpdateInfoSync(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ushort uVar1;
+  int iVar2;
+  float *pfVar3;
+  uint uVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  longlong lVar7;
+  float *pfVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  
+  puVar5 = (undefined4 *)__savegprlr_23();
+  dVar10 = 0.0;
+  dVar9 = extraout_f1;
+  if (extraout_f1 <= 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x56b,0,0xffffffff82000f98,0xffffffff82186c8c);
+  }
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x56c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  lVar6 = (param_2 & 0x3ffffff) * 0x40;
+  lVar7 = lVar6 + -0x7be24068;
+  pfVar8 = (float *)((int)&DAT_841dbfb8 + (int)lVar6);
+  iVar2 = (int)lVar7;
+  if ((double)*(float *)(iVar2 + 0x34) == dVar10) {
+    XAnimCheckFreeInfo(*puVar5,param_2,0);
+    __restgprlr_23();
+    return;
+  }
+  if ((double)*(float *)(iVar2 + 0x30) == dVar10) {
+    param_3 = 0;
+  }
+  if (*(char *)(iVar2 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x57a,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  pfVar3 = (float *)param_4;
+  if ((*(float *)(iVar2 + 0x24) != pfVar3[1]) ||
+     (*(short *)(iVar2 + 0x2a) != *(short *)((int)pfVar3 + 10))) {
+    *pfVar8 = pfVar3[1];
+    *(undefined2 *)(iVar2 + 0x28) = *(undefined2 *)((int)pfVar3 + 10);
+    *(float *)(iVar2 + 0x24) = pfVar3[1];
+    *(undefined2 *)(iVar2 + 0x2a) = *(undefined2 *)((int)pfVar3 + 10);
+    *(undefined2 *)(iVar2 + 2) = 0xffff;
+  }
+  if ((param_3 & 0xff) != 0) {
+    XAnimProcessServerNotify((double)*pfVar3,puVar5,lVar7);
+  }
+  *pfVar8 = *pfVar3;
+  *(undefined2 *)(iVar2 + 0x28) = *(undefined2 *)(pfVar3 + 2);
+  *(undefined2 *)(iVar2 + 2) = 0xffff;
+  if ((param_3 & 0xff) != 0) {
+    XAnimProcessClientNotify(dVar9,lVar7);
+  }
+  uVar1 = *(ushort *)(iVar2 + 0xc);
+  while (uVar4 = (uint)uVar1, uVar4 != 0) {
+    uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
+    XAnimUpdateInfoSync(dVar9,puVar5,uVar4,param_3,param_4);
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -981,104 +1582,94 @@ void XAnimUpdateTimeAndNotetrackLeaf
   int iVar1;
   int iVar2;
   undefined8 uVar3;
-  longlong lVar4;
-  short sVar5;
-  longlong lVar6;
-  float *pfVar7;
+  undefined8 uVar4;
+  longlong lVar5;
+  short sVar6;
+  longlong lVar7;
+  float *pfVar8;
   double extraout_f1;
-  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
   
   __savegprlr_22();
   uVar3 = __savefpr_28();
+  dVar9 = extraout_f1;
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x5a9,0,0xffffffff82000f98,0xffffffff8213fd58);
   }
-  lVar4 = (param_3 & 0x3ffffff) * 0x40;
-  lVar6 = lVar4 + -0x7be24068;
-  pfVar7 = (float *)((int)&DAT_841dbfb8 + (int)lVar4);
-  dVar9 = 0.0;
-  iVar1 = (int)lVar6;
+  lVar5 = (param_3 & 0x3ffffff) * 0x40;
+  lVar7 = lVar5 + -0x7be24068;
+  pfVar8 = (float *)((int)&DAT_841dbfb8 + (int)lVar5);
+  dVar10 = 0.0;
+  iVar1 = (int)lVar7;
   if (*(float *)(iVar1 + 0x24) < 0.0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x5ae,0,0xffffffff82000f98,0xffffffff82186d8c);
   }
   iVar2 = (int)param_2;
-  dVar8 = (double)(float)((double)(*(float *)(iVar1 + 0x38) * *(float *)(iVar2 + 0x2c)) *
-                         extraout_f1);
-  if (dVar8 != 0.0) {
-    dVar11 = (double)(float)(dVar8 + (double)*(float *)(iVar1 + 0x24));
-    sVar5 = *(short *)(iVar1 + 0x28);
-    if (dVar11 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(dVar11,0xffffffff82185bb8,0x5b7,0,0xffffffff82028794,0xffffffff82185f94,dVar11
-                     );
-    }
-    dVar10 = 1.0;
-    if (1.0 <= dVar11) {
-      if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-        dVar11 = dVar10;
-        if (*(float *)(iVar1 + 0x24) - 0.9999999 < 0.0) {
-          dVar11 = 0.9999998807907104;
-        }
-      }
-      else {
-        do {
-          dVar11 = (double)(float)(dVar11 - 1.0);
-          sVar5 = sVar5 + 1;
-        } while (1.0 <= dVar11);
-        if (1.0 <= dVar11) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(dVar11,0xffffffff82185bb8,0x5c7,0,0xffffffff82028794,0xffffffff82185f84,
-                          dVar11);
-        }
-        if (dVar11 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(dVar11,0xffffffff82185bb8,0x5c8,0,0xffffffff82028794,0xffffffff82185f94,
-                          dVar11);
-        }
-      }
-    }
+  dVar9 = (double)(float)((double)(*(float *)(iVar1 + 0x38) * *(float *)(iVar2 + 0x2c)) * dVar9);
+  if (dVar9 == dVar10) goto LAB_82627f5c;
+  dVar12 = (double)(float)(dVar9 + (double)*(float *)(iVar1 + 0x24));
+  sVar6 = *(short *)(iVar1 + 0x28);
+  if (dVar12 < dVar10) {
+    MyAssertHandler(dVar12,0xffffffff82185bb8,0x5b7,0,0xffffffff82028794,0xffffffff82185f94,dVar12);
+  }
+  dVar11 = 1.0;
+  if (1.0 <= dVar12) {
     if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-      if (1.0 < dVar11) goto LAB_82627e28;
+      dVar12 = dVar11;
+      if (*(float *)(iVar1 + 0x24) - 0.9999999 < 0.0) {
+        dVar12 = 0.9999998807907104;
+      }
     }
-    else if (1.0 <= dVar11) {
-LAB_82627e28:
-      uVar3 = va(dVar11,0xffffffff82186d78,dVar11);
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x5cc,0,0xffffffff820011f4,0xffffffff82186d3c,uVar3);
-    }
-    if ((float)((double)*pfVar7 - dVar11) <=
-        (float)(longlong)((int)sVar5 - (int)*(short *)(iVar1 + 0x28))) {
-      if ((param_5 & 0xff) != 0) {
-        XAnimProcessServerNotify(dVar11,uVar3,lVar6);
+    else {
+      do {
+        dVar12 = (double)(float)(dVar12 - 1.0);
+        sVar6 = sVar6 + 1;
+      } while (1.0 <= dVar12);
+      if (1.0 <= dVar12) {
+        MyAssertHandler(dVar12,0xffffffff82185bb8,0x5c7,0,0xffffffff82028794,0xffffffff82185f84,
+                        dVar12);
       }
-      *pfVar7 = (float)dVar11;
-      *(short *)(iVar1 + 0x28) = sVar5;
-      *(undefined2 *)(iVar1 + 2) = 0xffff;
-      if ((param_5 & 0xff) != 0) {
-        XAnimProcessClientNotify(dVar8,lVar6);
-      }
-      if ((double)*pfVar7 < dVar9) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82185bb8,0x5dc,0,0xffffffff82186cf8,0xffffffff82186d1c,
-                        (double)*pfVar7);
-      }
-      dVar9 = (double)*pfVar7;
-      if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-        if (dVar10 < dVar9) goto LAB_82627f2c;
-      }
-      else if (dVar10 <= dVar9) {
-LAB_82627f2c:
-        uVar3 = va(0xffffffff82186d78,dVar9);
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82185bb8,0x5dd,0,0xffffffff820011f4,0xffffffff82186c98,uVar3);
+      if (dVar12 < dVar10) {
+        MyAssertHandler(dVar12,0xffffffff82185bb8,0x5c8,0,0xffffffff82028794,0xffffffff82185f94,
+                        dVar12);
       }
     }
   }
+  if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
+    if (dVar11 < dVar12) goto LAB_82627e28;
+  }
+  else if (dVar11 <= dVar12) {
+LAB_82627e28:
+    uVar4 = va(dVar12,0xffffffff82186d78,dVar12);
+    MyAssertHandler(0xffffffff82185bb8,0x5cc,0,0xffffffff820011f4,0xffffffff82186d3c,uVar4);
+  }
+  if ((float)((double)*pfVar8 - dVar12) <=
+      (float)(longlong)((int)sVar6 - (int)*(short *)(iVar1 + 0x28))) {
+    if ((param_5 & 0xff) != 0) {
+      XAnimProcessServerNotify(dVar12,uVar3,lVar7);
+    }
+    *pfVar8 = (float)dVar12;
+    *(short *)(iVar1 + 0x28) = sVar6;
+    *(undefined2 *)(iVar1 + 2) = 0xffff;
+    if ((param_5 & 0xff) != 0) {
+      XAnimProcessClientNotify(dVar9,lVar7);
+    }
+    if ((double)*pfVar8 < dVar10) {
+      MyAssertHandler(0xffffffff82185bb8,0x5dc,0,0xffffffff82186cf8,0xffffffff82186d1c,
+                      (double)*pfVar8);
+    }
+    dVar9 = (double)*pfVar8;
+    if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
+      if (dVar9 <= dVar11) goto LAB_82627f5c;
+    }
+    else if (dVar9 < dVar11) goto LAB_82627f5c;
+    uVar3 = va(0xffffffff82186d78,dVar9);
+    MyAssertHandler(0xffffffff82185bb8,0x5dd,0,0xffffffff820011f4,0xffffffff82186c98,uVar3);
+  }
+LAB_82627f5c:
   __restfpr_28();
   __restgprlr_22();
   return;
@@ -1095,115 +1686,106 @@ void XAnimUpdateTimeAndNotetrackSyncSubTree
   int iVar2;
   uint uVar3;
   undefined8 uVar4;
-  longlong lVar5;
-  short sVar6;
-  float *pfVar7;
-  longlong lVar8;
+  undefined8 uVar5;
+  longlong lVar6;
+  short sVar7;
+  float *pfVar8;
+  longlong lVar9;
   double extraout_f1;
-  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
+  double dVar13;
   
   __savegprlr_22();
   uVar4 = __savefpr_28();
-  lVar5 = (param_2 & 0x3ffffff) * 0x40;
-  lVar8 = lVar5 + -0x7be24068;
-  iVar2 = (int)lVar8;
-  lVar5 = lVar5 + -0x7be24048;
+  lVar6 = (param_2 & 0x3ffffff) * 0x40;
+  lVar9 = lVar6 + -0x7be24068;
+  iVar2 = (int)lVar9;
+  lVar6 = lVar6 + -0x7be24048;
+  dVar11 = extraout_f1;
   if ((*(ushort *)(iVar2 + 0x1c) & 4) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x5ec,0,0xffffffff82000f98,0xffffffff82186edc);
   }
-  dVar9 = (double)*(float *)(iVar2 + 0x24);
-  dVar11 = 0.0;
-  dVar12 = 1.0;
-  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x5ee,0,0xffffffff82186ea4,dVar9,0,0x3ff0000000000000);
+  dVar10 = (double)*(float *)(iVar2 + 0x24);
+  dVar12 = 0.0;
+  dVar13 = 1.0;
+  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
+    MyAssertHandler(0xffffffff82185bb8,0x5ee,0,0xffffffff82186ea4,dVar10,0,0x3ff0000000000000);
   }
-  dVar9 = (double)(float)((double)*(float *)(iVar2 + 0x24) + extraout_f1);
-  sVar6 = *(short *)(iVar2 + 0x2a);
-  if (dVar9 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(dVar9,0xffffffff82185bb8,0x5f3,0,0xffffffff82028794,0xffffffff82185f94,dVar9);
+  dVar10 = (double)(float)((double)*(float *)(iVar2 + 0x24) + dVar11);
+  sVar7 = *(short *)(iVar2 + 0x2a);
+  if (dVar10 < dVar12) {
+    MyAssertHandler(dVar10,0xffffffff82185bb8,0x5f3,0,0xffffffff82028794,0xffffffff82185f94,dVar10);
   }
-  if (1.0 <= dVar9) {
+  if (dVar13 <= dVar10) {
     uVar1 = *(ushort *)(iVar2 + 0x1c);
     if ((uVar1 & 2) == 0) {
       if ((uVar1 & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x5fe,0,0xffffffff82000f98,0xffffffff8218681c);
       }
       do {
-        dVar9 = (double)(float)(dVar9 - 1.0);
-        sVar6 = sVar6 + 1;
-      } while (1.0 <= dVar9);
-      if (1.0 <= dVar9) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(dVar9,0xffffffff82185bb8,0x605,0,0xffffffff82028794,0xffffffff82185f84,dVar9
-                       );
+        dVar10 = (double)(float)(dVar10 - dVar13);
+        sVar7 = sVar7 + 1;
+      } while (dVar13 <= dVar10);
+      if (dVar13 <= dVar10) {
+        MyAssertHandler(dVar10,0xffffffff82185bb8,0x605,0,0xffffffff82028794,0xffffffff82185f84,
+                        dVar10);
       }
-      if (dVar9 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(dVar9,0xffffffff82185bb8,0x606,0,0xffffffff82028794,0xffffffff82185f94,dVar9
-                       );
+      if (dVar10 < dVar12) {
+        MyAssertHandler(dVar10,0xffffffff82185bb8,0x606,0,0xffffffff82028794,0xffffffff82185f94,
+                        dVar10);
       }
     }
     else {
       if ((uVar1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x5f9,0,0xffffffff82000f98,0xffffffff8218684c);
       }
-      dVar9 = dVar12;
+      dVar10 = dVar13;
       if (*(float *)(iVar2 + 0x24) - 0.9999999 < 0.0) {
-        dVar9 = 0.9999998807907104;
+        dVar10 = 0.9999998807907104;
       }
     }
   }
   if ((*(ushort *)(iVar2 + 0x1c) & 1) == 0) {
-    if (1.0 < dVar9) goto LAB_826281b0;
+    if (dVar13 < dVar10) goto LAB_826281b0;
   }
-  else if (1.0 <= dVar9) {
+  else if (dVar13 <= dVar10) {
 LAB_826281b0:
-    uVar4 = va(dVar9,0xffffffff82186e68,dVar9);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x60a,0,0xffffffff820011f4,0xffffffff82186e18,uVar4);
+    uVar5 = va(dVar10,0xffffffff82186e68,dVar10);
+    MyAssertHandler(0xffffffff82185bb8,0x60a,0,0xffffffff820011f4,0xffffffff82186e18,uVar5);
   }
-  pfVar7 = (float *)lVar5;
-  if ((float)((double)*pfVar7 - dVar9) <=
-      (float)(longlong)((int)sVar6 - (int)*(short *)(iVar2 + 0x28))) {
-    dVar10 = extraout_f1;
-    if ((param_4 & 0xff) != 0) {
-      XAnimProcessServerNotify(dVar9,uVar4,lVar8);
-    }
-    *pfVar7 = (float)dVar9;
-    *(short *)(iVar2 + 0x28) = sVar6;
-    *(undefined2 *)(iVar2 + 2) = 0xffff;
-    if ((param_4 & 0xff) != 0) {
-      XAnimProcessClientNotify(dVar10,lVar8);
-    }
-    if ((double)*pfVar7 < dVar11) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x61a,0,0xffffffff82186cf8,0xffffffff82186d1c,
-                      (double)*pfVar7);
-    }
-    dVar9 = (double)*pfVar7;
-    if ((*(ushort *)(iVar2 + 0x1c) & 1) == 0) {
-      if (dVar12 < dVar9) goto LAB_826282b4;
-    }
-    else if (dVar12 <= dVar9) {
+  pfVar8 = (float *)lVar6;
+  if ((float)(longlong)((int)sVar7 - (int)*(short *)(iVar2 + 0x28)) <
+      (float)((double)*pfVar8 - dVar10)) goto LAB_82628320;
+  if ((param_4 & 0xff) != 0) {
+    XAnimProcessServerNotify(dVar10,uVar4,lVar9);
+  }
+  *pfVar8 = (float)dVar10;
+  *(short *)(iVar2 + 0x28) = sVar7;
+  *(undefined2 *)(iVar2 + 2) = 0xffff;
+  if ((param_4 & 0xff) != 0) {
+    XAnimProcessClientNotify(dVar11,lVar9);
+  }
+  if ((double)*pfVar8 < dVar12) {
+    MyAssertHandler(0xffffffff82185bb8,0x61a,0,0xffffffff82186cf8,0xffffffff82186d1c,(double)*pfVar8
+                   );
+  }
+  dVar10 = (double)*pfVar8;
+  if ((*(ushort *)(iVar2 + 0x1c) & 1) == 0) {
+    if (dVar13 < dVar10) goto LAB_826282b4;
+  }
+  else if (dVar13 <= dVar10) {
 LAB_826282b4:
-      uVar4 = va(0xffffffff82186e68,dVar9);
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x61b,0,0xffffffff820011f4,0xffffffff82186da0,uVar4);
-    }
-    uVar1 = *(ushort *)(iVar2 + 0xc);
-    while (uVar3 = (uint)uVar1, uVar3 != 0) {
-      uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
-      XAnimUpdateInfoSync(dVar10,uVar4,uVar3,param_4,lVar5);
-    }
+    uVar5 = va(0xffffffff82186e68,dVar10);
+    MyAssertHandler(0xffffffff82185bb8,0x61b,0,0xffffffff820011f4,0xffffffff82186da0,uVar5);
   }
+  uVar1 = *(ushort *)(iVar2 + 0xc);
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+    XAnimUpdateInfoSync(dVar11,uVar4,uVar3,param_4,lVar6);
+  }
+LAB_82628320:
   __restfpr_28();
   __restgprlr_22();
   return;
@@ -1217,76 +1799,70 @@ void XAnimUpdateTimeAndNotetrack(undefined8 param_1,ulonglong param_2)
 {
   ushort uVar1;
   int iVar2;
-  uint uVar3;
-  int *piVar4;
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
   double extraout_f1;
-  double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
   
-  piVar4 = (int *)__savegprlr_24();
-  if (*piVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
+  piVar5 = (int *)__savegprlr_24();
+  iVar2 = *piVar5;
+  dVar7 = extraout_f1;
+  if (iVar2 == 0) {
     MyAssertHandler(0xffffffff82185bb8,0x62d,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-  dVar7 = 0.0;
-  if (extraout_f1 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(extraout_f1,0xffffffff82185bb8,0x62f,0,0xffffffff821867f4,0xffffffff82186808,
-                    extraout_f1);
+  dVar8 = 0.0;
+  if (dVar7 < 0.0) {
+    MyAssertHandler(dVar7,0xffffffff82185bb8,0x62f,0,0xffffffff821867f4,0xffffffff82186808,dVar7);
   }
   if (0xfff < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x630,0,0xffffffff82186f34,param_2,0x1000);
   }
-  iVar2 = (int)param_2 * 0x40;
-  if ((&DAT_841dbfac)[iVar2] == '\0') {
-                    /* WARNING: Subroutine does not return */
+  iVar3 = (int)param_2 * 0x40;
+  if ((&DAT_841dbfac)[iVar3] == '\0') {
     MyAssertHandler(0xffffffff82185bb8,0x633,0,0xffffffff82000f98,0xffffffff82185e68);
   }
-  if (*(float *)(&DAT_841dbfcc + iVar2) == 0.0) {
-    XAnimCheckFreeInfo(*piVar4,param_2,0);
+  if ((double)*(float *)(&DAT_841dbfcc + iVar3) == dVar8) {
+    XAnimCheckFreeInfo(*piVar5,param_2,0);
     __restgprlr_24();
     return;
   }
-  if (*(short *)(&DAT_841dbfaa + iVar2) != 0) {
-    XAnimUpdateTimeAndNotetrackLeaf
-              (extraout_f1,piVar4,*(undefined4 *)(&DAT_841dbfb4 + iVar2),param_2);
+  if (*(short *)(&DAT_841dbfaa + iVar3) != 0) {
+    XAnimUpdateTimeAndNotetrackLeaf(dVar7,piVar5,*(undefined4 *)(&DAT_841dbfb4 + iVar3),param_2);
     __restgprlr_24();
     return;
   }
-  if ((*(ushort *)(&DAT_841dbfb4 + iVar2) & 3) != 0) {
-    dVar6 = extraout_f1;
-    dVar5 = (double)XAnimGetAverageRateFrequency(*piVar4,param_2);
-    if ((double)(float)((double)(float)(dVar5 * (double)*(float *)(&DAT_841dbfd0 + iVar2)) * dVar6)
-        == dVar7) {
-      XAnimCheckFreeInfo(*piVar4,param_2,1);
+  if ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 3) == 0) {
+    if ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 4) != 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x653,0,0xffffffff82000f98,0xffffffff82186f08);
+    }
+    if ((*(short *)((int)piVar5 + 6) != 0) && (*(short *)(&DAT_841dbf9c + iVar3) != 0)) {
+      MyAssertHandler(0xffffffff82185bb8,0x654,0,0xffffffff82000f98,0xffffffff82186880);
+    }
+    dVar7 = (double)(float)((double)*(float *)(&DAT_841dbfd0 + iVar3) * dVar7);
+    if (dVar7 == dVar8) {
+      XAnimCheckFreeInfo(*piVar5,param_2,1);
       __restgprlr_24();
       return;
     }
-    XAnimUpdateTimeAndNotetrackSyncSubTree(piVar4,param_2);
+    uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar3);
+    while (uVar4 = (uint)uVar1, uVar4 != 0) {
+      uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
+      XAnimUpdateTimeAndNotetrack(dVar7,piVar5,uVar4);
+    }
     __restgprlr_24();
     return;
   }
-  if ((*(ushort *)(&DAT_841dbfb4 + iVar2) & 4) != 0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x653,0,0xffffffff82000f98,0xffffffff82186f08);
-  }
-  if ((*(short *)((int)piVar4 + 6) != 0) && (*(short *)(&DAT_841dbf9c + iVar2) != 0)) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff82185bb8,0x654,0,0xffffffff82000f98,0xffffffff82186880);
-  }
-  dVar7 = (double)(float)((double)*(float *)(&DAT_841dbfd0 + iVar2) * extraout_f1);
-  if (dVar7 == 0.0) {
-    XAnimCheckFreeInfo(*piVar4,param_2,1);
+  dVar6 = (double)XAnimGetAverageRateFrequency(iVar2,param_2);
+  if ((double)(float)((double)(float)(dVar6 * (double)*(float *)(&DAT_841dbfd0 + iVar3)) * dVar7) ==
+      dVar8) {
+    XAnimCheckFreeInfo(*piVar5,param_2,1);
     __restgprlr_24();
     return;
   }
-  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar2);
-  while (uVar3 = (uint)uVar1, uVar3 != 0) {
-    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
-    XAnimUpdateTimeAndNotetrack(dVar7,piVar4,uVar3);
-  }
+  XAnimUpdateTimeAndNotetrackSyncSubTree(piVar5,param_2);
   __restgprlr_24();
   return;
 }
@@ -1322,17 +1898,16 @@ void XAnimResetTimeInternal(uint param_1)
 {
   int iVar1;
   
-  if ((param_1 != 0) && (param_1 < 0x1000)) {
-    iVar1 = param_1 * 0x40;
-    (&DAT_841dbfb8)[param_1 * 0x10] = 0;
-    *(undefined2 *)(&DAT_841dbfc0 + iVar1) = 0;
-    (&DAT_841dbfbc)[param_1 * 0x10] = 0;
-    *(undefined2 *)(&DAT_841dbfc2 + iVar1) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
-    return;
+  if ((param_1 == 0) || (0xfff < param_1)) {
+    MyAssertHandler(0xffffffff82185bb8,0x72a,0,0xffffffff82185e88,0xffffffff82185ea0,param_1);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x72a,0,0xffffffff82185e88,0xffffffff82185ea0,param_1);
+  iVar1 = param_1 * 0x40;
+  (&DAT_841dbfb8)[param_1 * 0x10] = 0;
+  *(undefined2 *)(&DAT_841dbfc0 + iVar1) = 0;
+  (&DAT_841dbfbc)[param_1 * 0x10] = 0;
+  *(undefined2 *)(&DAT_841dbfc2 + iVar1) = 0;
+  *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+  return;
 }
 
 
@@ -1356,31 +1931,197 @@ void XAnimResetTime(int param_1)
 
 // 82624C70  XAnimCloneInitTime  (xanim/xanim.cpp:1860)
 
-void XAnimCloneInitTime(void)
+void XAnimCloneInitTime(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  short sVar1;
+  ushort uVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  
+  uVar4 = __savegprlr_26();
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x74b,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  lVar7 = (param_2 & 0x3ffffff) * 0x40;
+  lVar8 = lVar7 + -0x7be24068;
+  iVar5 = (int)lVar8;
+  sVar1 = *(short *)(iVar5 + 0x12);
+  if (sVar1 != 0) {
+    SL_AddRefToString(sVar1);
+  }
+  iVar5 = XAnimAllocInfoWithParent(uVar4,sVar1,*(undefined2 *)(iVar5 + 0x10),param_3,0);
+  iVar6 = iVar5 * 0x40;
+  XAnimCloneAnimInfo(lVar8,&DAT_841dbf98 + iVar6);
+  XAnimResetTimeInternal(iVar5);
+  (&DAT_841dbfd4)[iVar6] = 1;
+  *(undefined4 *)(&DAT_841dbfcc + iVar6) = 0;
+  uVar2 = *(ushort *)(&DAT_841dbfa4 + (int)lVar7);
+  while (uVar3 = (uint)uVar2, uVar3 != 0) {
+    XAnimCloneInitTime(uVar4,uVar3,iVar5);
+    uVar2 = (&DAT_841dbfa2)[uVar3 * 0x20];
+  }
+  __restgprlr_26(iVar5);
+  return;
 }
 
 
 // 82624D70  XAnimInitTime  (xanim/xanim.cpp:1891)
 
-void XAnimInitTime(void)
+void XAnimInitTime(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  double extraout_f1;
+  double dVar4;
+  
+  uVar2 = __savegprlr_29();
+  dVar4 = extraout_f1;
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x768,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar1 = (int)param_2 * 0x40;
+  if (((float)(&DAT_841dbfb8)[(int)param_2 * 0x10] != 0.0) ||
+     (*(short *)(&DAT_841dbfc0 + iVar1) != 0)) {
+    if (*(short *)(&DAT_841dbfc0 + iVar1) == *(short *)(&DAT_841dbfc2 + iVar1)) {
+      if ((dVar4 != 0.0) && (*(float *)(&DAT_841dbfcc + iVar1) != 0.0)) {
+        uVar3 = XAnimCloneInitTime(uVar2,param_2,*(undefined2 *)(&DAT_841dbfa6 + iVar1));
+        XAnimClearTreeGoalWeightsInternal(dVar4,uVar2,param_2);
+        __restgprlr_29(uVar3);
+        return;
+      }
+      XAnimResetTime(param_2);
+    }
+  }
+  __restgprlr_29(param_2);
+  return;
 }
 
 
 // 82624E68  XAnimUpdateOldTime  (xanim/xanim.cpp:1919)
 
-void XAnimUpdateOldTime(void)
+void XAnimUpdateOldTime(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
+                       ulonglong param_5,undefined1 *param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  float fVar1;
+  ushort uVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  int *piVar7;
+  longlong lVar8;
+  bool bVar9;
+  float *pfVar10;
+  float *pfVar11;
+  bool bVar12;
+  double extraout_f1;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  
+  piVar7 = (int *)__savegprlr_18();
+  piVar3 = (int *)*piVar7;
+  dVar15 = extraout_f1;
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x78b,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x78c,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  dVar14 = 0.0;
+  if (dVar15 < 0.0) {
+    MyAssertHandler(dVar15,0xffffffff82185bb8,0x78d,0,0xffffffff821867f4,0xffffffff82186808,dVar15);
+  }
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x78f,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  lVar8 = (param_2 & 0x3ffffff) * 0x40;
+  iVar5 = (int)lVar8;
+  if ((&DAT_841dbfac)[iVar5] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x792,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  lVar8 = lVar8 + -0x7be24048;
+  if (((param_5 & 0xff) == 0) ||
+     (dVar13 = (double)*(float *)(&DAT_841dbfc4 + iVar5), dVar13 <= dVar15)) {
+    *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar14;
+    *(undefined4 *)(&DAT_841dbfcc + iVar5) = *(undefined4 *)(&DAT_841dbfc8 + iVar5);
+  }
+  else {
+    fVar1 = (float)((double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
+                                                   (double)*(float *)(&DAT_841dbfcc + iVar5)) /
+                                   dVar13) * dVar15 + (double)*(float *)(&DAT_841dbfcc + iVar5));
+    *(float *)(&DAT_841dbfcc + iVar5) = fVar1;
+    if (fVar1 < 1.0000001e-06) {
+      *(float *)(&DAT_841dbfcc + iVar5) =
+           (float)((double)*(float *)(&DAT_841dbfc8 + iVar5) * 0.0010000000474974513);
+    }
+    *(float *)(&DAT_841dbfc4 + iVar5) = (float)(dVar13 - dVar15);
+  }
+  if (((param_5 & 0xff) == 0) || (bVar9 = true, (double)*(float *)(&DAT_841dbfcc + iVar5) == dVar14)
+     ) {
+    bVar9 = false;
+  }
+  (&DAT_841dbfd4)[iVar5] = 0;
+  if ((&DAT_841dbfac)[iVar5] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x7a7,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if (*(short *)(&DAT_841dbfaa + iVar5) == 0) {
+    bVar12 = false;
+    if ((*(ushort *)(&DAT_841dbfb4 + iVar5) & 4) != 0) {
+      param_3 = lVar8;
+    }
+    uVar2 = *(ushort *)(&DAT_841dbfa4 + iVar5);
+    while (uVar6 = (uint)uVar2, uVar6 != 0) {
+      uVar2 = (&DAT_841dbfa2)[uVar6 * 0x20];
+      XAnimUpdateOldTime(dVar15,piVar7,uVar6,param_3);
+    }
+  }
+  else {
+    iVar4 = *(int *)(&DAT_841dbfb4 + iVar5);
+    if (iVar4 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x7ad,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    bVar12 = (double)*(float *)(iVar4 + 0x2c) != dVar14;
+  }
+  pfVar11 = (float *)lVar8;
+  if ((bVar9) && (bVar12)) {
+    *param_6 = 1;
+  }
+  else if ((*(short *)(&DAT_841dbfaa + iVar5) == 0) &&
+          ((*(ushort *)(&DAT_841dbfb4 + iVar5) & 4) != 0)) {
+    XAnimInitTime(dVar14,piVar3,param_2);
+  }
+  else {
+    pfVar10 = (float *)param_3;
+    if ((*pfVar11 != *pfVar10) || (*(short *)(&DAT_841dbfc0 + iVar5) != *(short *)(pfVar10 + 2))) {
+      *pfVar11 = *pfVar10;
+      *(undefined2 *)(&DAT_841dbfc0 + iVar5) = *(undefined2 *)(pfVar10 + 2);
+      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    }
+  }
+  *(float *)((int)&DAT_841dbfbc + iVar5) = *pfVar11;
+  *(undefined2 *)(&DAT_841dbfc2 + iVar5) = *(undefined2 *)(&DAT_841dbfc0 + iVar5);
+  __restgprlr_18();
+  return;
+}
+
+
+// 82620A08  NotifyServerNotetrack  (xanim/xanim.cpp:2009)
+
+void NotifyServerNotetrack(int param_1,undefined8 param_2,undefined8 param_3)
+
+{
+  Scr_AddConstString(param_3);
+  Scr_NotifyNum((ulonglong)*(ushort *)(param_1 + 6) - 1,0,param_2,1);
+  return;
 }
 
 
@@ -1407,7 +2148,6 @@ void XAnimGetServerNotifyFracSyncTotal
     dVar6 = 0.0;
     do {
       if (0xfff < uVar2) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff82185bb8,0x7e9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
       }
       iVar3 = uVar2 * 0x40;
@@ -1428,11 +2168,63 @@ void XAnimGetServerNotifyFracSyncTotal
 
 // 826252A0  XAnimFindServerNoteTrackLeafNode  (xanim/xanim.cpp:2041)
 
-void XAnimFindServerNoteTrackLeafNode(void)
+void XAnimFindServerNoteTrackLeafNode(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  short sVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  float local_70;
+  float local_6c;
+  short local_68;
+  short local_66;
+  
+  uVar4 = __savegprlr_26();
+  iVar3 = (int)param_2;
+  dVar6 = extraout_f1;
+  if (*(char *)(iVar3 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x800,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  iVar2 = *(int *)(iVar3 + 0x1c);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x804,0,0xffffffff82000f98,0xffffffff8213fd58);
+  }
+  dVar6 = (double)(float)((double)(*(float *)(iVar2 + 0x2c) * *(float *)(iVar3 + 0x38)) * dVar6);
+  if (dVar6 == 0.0) {
+    __restgprlr_26(0x3ff0000000000000);
+    return;
+  }
+  sVar5 = *(short *)(iVar3 + 0x2a);
+  dVar7 = (double)(float)((double)*(float *)(iVar3 + 0x24) + dVar6);
+  if (dVar7 < 0.0) {
+    MyAssertHandler(dVar7,0xffffffff82185bb8,0x80f,0,0xffffffff82028794,0xffffffff82185f94,dVar7);
+  }
+  if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
+    if ((1.0 <= dVar7) && (dVar7 = 1.0, *(float *)(iVar3 + 0x24) - 0.9999999 < 0.0)) {
+      dVar7 = 0.9999998807907104;
+    }
+  }
+  else {
+    for (; 1.0 <= dVar7; dVar7 = (double)(float)(dVar7 - 1.0)) {
+      sVar5 = sVar5 + 1;
+    }
+  }
+  fVar1 = *(float *)(param_2 + 0x20);
+  if ((float)((double)fVar1 - dVar7) <=
+      (float)(longlong)((int)sVar5 - (int)*(short *)(iVar3 + 0x28))) {
+    local_70 = (float)dVar7;
+    local_6c = fVar1;
+    local_68 = sVar5;
+    local_66 = *(short *)(iVar3 + 0x28);
+    XAnimGetNextServerNotifyFrac(dVar6,uVar4,param_2,param_2 + 0x20,&local_70);
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1444,8 +2236,12 @@ void XAnimFindServerNoteTrackSyncSubTree(undefined8 param_1,longlong param_2)
   ushort uVar1;
   int iVar2;
   undefined8 uVar3;
+  short sVar4;
   double extraout_f1;
-  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   float local_90;
   float local_8c;
   short local_88;
@@ -1454,52 +2250,51 @@ void XAnimFindServerNoteTrackSyncSubTree(undefined8 param_1,longlong param_2)
   __savegprlr_24();
   uVar3 = __savefpr_28();
   iVar2 = (int)param_2;
-  dVar4 = (double)(float)((double)*(float *)(iVar2 + 0x24) + extraout_f1);
-  local_88 = *(short *)(iVar2 + 0x2a);
-  if (dVar4 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(dVar4,0xffffffff82185bb8,0x838,0,0xffffffff82028794,0xffffffff82185f94,dVar4);
+  dVar8 = (double)(float)((double)*(float *)(iVar2 + 0x24) + extraout_f1);
+  sVar4 = *(short *)(iVar2 + 0x2a);
+  dVar6 = 0.0;
+  dVar5 = extraout_f1;
+  if (dVar8 < 0.0) {
+    MyAssertHandler(dVar8,0xffffffff82185bb8,0x838,0,0xffffffff82028794,0xffffffff82185f94,dVar8);
   }
   if (*(char *)(iVar2 + 0x14) == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x83b,0,0xffffffff82000f98,0xffffffff82185e68);
   }
   uVar1 = *(ushort *)(iVar2 + 0x1c);
   if ((uVar1 & 2) == 0) {
     if ((uVar1 & 1) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82185bb8,0x846,0,0xffffffff82000f98,0xffffffff8218681c);
     }
-    for (; 1.0 <= dVar4; dVar4 = (double)(float)(dVar4 - 1.0)) {
-      local_88 = local_88 + 1;
+    dVar7 = 1.0;
+    for (; 1.0 <= dVar8; dVar8 = (double)(float)(dVar8 - 1.0)) {
+      sVar4 = sVar4 + 1;
     }
-    if (1.0 <= dVar4) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(dVar4,0xffffffff82185bb8,0x84d,0,0xffffffff82028794,0xffffffff82185f84,dVar4);
+    if (1.0 <= dVar8) {
+      MyAssertHandler(dVar8,0xffffffff82185bb8,0x84d,0,0xffffffff82028794,0xffffffff82185f84,dVar8);
     }
-    if (dVar4 < 0.0) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(dVar4,0xffffffff82185bb8,0x84e,0,0xffffffff82028794,0xffffffff82185f94,dVar4);
+    if (dVar8 < dVar6) {
+      MyAssertHandler(dVar8,0xffffffff82185bb8,0x84e,0,0xffffffff82028794,0xffffffff82185f94,dVar8);
     }
   }
   else {
     if ((uVar1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82185bb8,0x840,0,0xffffffff82000f98,0xffffffff8218684c);
     }
-    if ((1.0 <= dVar4) && (dVar4 = 1.0, *(float *)(iVar2 + 0x24) - 0.9999999 < 0.0)) {
-      dVar4 = 0.9999998807907104;
+    dVar7 = 1.0;
+    if ((1.0 <= dVar8) && (dVar8 = dVar7, *(float *)(iVar2 + 0x24) - 0.9999999 < 0.0)) {
+      dVar8 = 0.9999998807907104;
     }
   }
   local_86 = *(short *)(iVar2 + 0x28);
   local_8c = *(float *)(param_2 + 0x20);
-  if ((float)(longlong)((int)local_88 - (int)local_86) < (float)((double)local_8c - dVar4)) {
-    __restfpr_28(0x3ff0000000000000);
+  if ((float)(longlong)((int)sVar4 - (int)local_86) < (float)((double)local_8c - dVar8)) {
+    __restfpr_28(dVar7);
     __restgprlr_24();
     return;
   }
-  local_90 = (float)dVar4;
-  XAnimGetServerNotifyFracSyncTotal(extraout_f1,uVar3,param_2,param_2 + 0x20,&local_90);
+  local_90 = (float)dVar8;
+  local_88 = sVar4;
+  XAnimGetServerNotifyFracSyncTotal(dVar5,uVar3,param_2,param_2 + 0x20,&local_90);
   __restfpr_28();
   __restgprlr_24();
   return;
@@ -1524,93 +2319,304 @@ void XAnimFindServerNoteTrack(undefined8 param_1,ulonglong param_2)
   
   piVar5 = (int *)__savegprlr_25();
   piVar2 = (int *)*piVar5;
+  dVar8 = extraout_f1;
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x867,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   dVar9 = 0.0;
-  if (extraout_f1 < 0.0) {
-                    /* WARNING: Subroutine does not return */
+  if (dVar8 < 0.0) {
     MyAssertHandler(0xffffffff82185bb8,0x869,0,0xffffffff82000f98,0xffffffff821868d8);
   }
   if (*piVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x86a,0,0xffffffff82000f98,0xffffffff82184c8c);
   }
-  if (((param_2 & 0xffffffff) != 0) && ((param_2 & 0xffffffff) < 0x1000)) {
-    lVar6 = (param_2 & 0x3ffffff) * 0x40 + -0x7be24068;
-    iVar3 = (int)lVar6;
-    if ((*(float *)(iVar3 + 0x34) != 0.0) && (*(float *)(iVar3 + 0x30) != 0.0)) {
-      if (*(char *)(iVar3 + 0x14) == '\0') {
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82185bb8,0x874,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x86c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  lVar6 = (param_2 & 0x3ffffff) * 0x40 + -0x7be24068;
+  iVar3 = (int)lVar6;
+  if (((double)*(float *)(iVar3 + 0x34) != dVar9) && ((double)*(float *)(iVar3 + 0x30) != dVar9)) {
+    if (*(char *)(iVar3 + 0x14) == '\0') {
+      MyAssertHandler(0xffffffff82185bb8,0x874,0,0xffffffff82000f98,0xffffffff82185e68);
+    }
+    if (*(short *)(iVar3 + 0x12) != 0) {
+      XAnimFindServerNoteTrackLeafNode(dVar8,piVar5,lVar6);
+      __restgprlr_25();
+      return;
+    }
+    if ((*(ushort *)(iVar3 + 0x1c) & 3) == 0) {
+      if ((*(short *)((int)piVar5 + 6) != 0) && (*(short *)(iVar3 + 4) != 0)) {
+        MyAssertHandler(0xffffffff82185bb8,0x887,0,0xffffffff82000f98,0xffffffff82186880);
       }
-      if (*(short *)(iVar3 + 0x12) != 0) {
-        XAnimFindServerNoteTrackLeafNode(extraout_f1,piVar5,lVar6);
+      dVar8 = (double)(float)((double)*(float *)(iVar3 + 0x38) * dVar8);
+      if (dVar8 != dVar9) {
+        uVar1 = *(ushort *)(iVar3 + 0xc);
+        dVar9 = 1.0;
+        while (uVar4 = (uint)uVar1, uVar4 != 0) {
+          dVar7 = (double)XAnimFindServerNoteTrack(dVar8,piVar5,uVar4);
+          uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
+          if ((float)(dVar7 - dVar9) < 0.0) {
+            dVar9 = dVar7;
+          }
+        }
+        __restgprlr_25(dVar9);
+        return;
+      }
+    }
+    else {
+      dVar7 = (double)XAnimGetAverageRateFrequency(piVar2,param_2);
+      dVar8 = (double)(float)((double)(float)(dVar7 * (double)*(float *)(iVar3 + 0x38)) * dVar8);
+      if (dVar8 != dVar9) {
+        if ((double)*(float *)(iVar3 + 0x24) < dVar9) {
+          MyAssertHandler(0xffffffff82185bb8,0x881,0,0xffffffff821868a4,0xffffffff821868c0,
+                          (double)*(float *)(iVar3 + 0x24));
+        }
+        XAnimFindServerNoteTrackSyncSubTree(dVar8,piVar5,lVar6);
         __restgprlr_25();
         return;
       }
-      if ((*(ushort *)(iVar3 + 0x1c) & 3) == 0) {
-        if ((*(short *)((int)piVar5 + 6) != 0) && (*(short *)(iVar3 + 4) != 0)) {
-                    /* WARNING: Subroutine does not return */
-          MyAssertHandler(0xffffffff82185bb8,0x887,0,0xffffffff82000f98,0xffffffff82186880);
-        }
-        dVar9 = (double)(float)((double)*(float *)(iVar3 + 0x38) * extraout_f1);
-        if (dVar9 != 0.0) {
-          uVar1 = *(ushort *)(iVar3 + 0xc);
-          dVar8 = 1.0;
-          while (uVar4 = (uint)uVar1, uVar4 != 0) {
-            dVar7 = (double)XAnimFindServerNoteTrack(dVar9,piVar5,uVar4);
-            uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
-            if ((float)(dVar7 - dVar8) < 0.0) {
-              dVar8 = dVar7;
-            }
-          }
-          __restgprlr_25(dVar8);
-          return;
-        }
-      }
-      else {
-        dVar8 = extraout_f1;
-        dVar7 = (double)XAnimGetAverageRateFrequency(piVar2,param_2);
-        dVar8 = (double)(float)((double)(float)(dVar7 * (double)*(float *)(iVar3 + 0x38)) * dVar8);
-        if (dVar8 != dVar9) {
-          if ((double)*(float *)(iVar3 + 0x24) < dVar9) {
-                    /* WARNING: Subroutine does not return */
-            MyAssertHandler(0xffffffff82185bb8,0x881,0,0xffffffff821868a4,0xffffffff821868c0,
-                            (double)*(float *)(iVar3 + 0x24));
-          }
-          XAnimFindServerNoteTrackSyncSubTree(dVar8,piVar5,lVar6);
-          __restgprlr_25();
-          return;
-        }
-      }
     }
-    __restgprlr_25(0x3ff0000000000000);
-    return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x86c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  __restgprlr_25(0x3ff0000000000000);
+  return;
 }
 
 
 // 82625938  XAnimProcessServerNotify  (xanim/xanim.cpp:2202)
 
-void XAnimProcessServerNotify(void)
+void XAnimProcessServerNotify(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  short sVar1;
+  int iVar2;
+  float *pfVar3;
+  int *piVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  undefined2 *puVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  
+  piVar4 = (int *)__savegprlr_23();
+  iVar2 = (int)param_2;
+  dVar11 = extraout_f1;
+  if (*(float *)(iVar2 + 0x30) == 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x8a0,0,0xffffffff82000f98,0xffffffff82186368);
+  }
+  dVar10 = 1.0;
+  if (1.0 < dVar11) {
+    MyAssertHandler(dVar11,0xffffffff82185bb8,0x8a1,0,0xffffffff82028794,0xffffffff82186984,dVar11);
+  }
+  if ((*(short *)((int)piVar4 + 6) != 0) && (*(short *)(iVar2 + 4) != 0)) {
+    if ((double)*(float *)(iVar2 + 0x20) == dVar10) {
+LAB_82625a4c:
+      Scr_AddConstString(DAT_8421bf98);
+      Scr_NotifyNum((ulonglong)*(ushort *)((int)piVar4 + 6) - 1,0,*(undefined2 *)(iVar2 + 4),1);
+      __restgprlr_23();
+      return;
+    }
+    iVar5 = *piVar4;
+    if (iVar5 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x8b0,0,0xffffffff82000f98,0xffffffff821813e0);
+    }
+    iVar5 = XAnimGetParts(iVar5,param_2);
+    if (iVar5 == 0) {
+      if ((dVar11 < (double)*(float *)(iVar2 + 0x20)) || (dVar11 == dVar10)) goto LAB_82625a4c;
+    }
+    else if ((*(ushort *)(iVar2 + 2) < 0x8000) ||
+            (XAnimUpdateServerNotifyIndex(param_2,iVar5), *(ushort *)(iVar2 + 2) < 0x8000)) {
+      if (dVar10 <= (double)*(float *)(iVar2 + 0x20)) {
+        MyAssertHandler(0xffffffff82185bb8,0x8cb,0,0xffffffff82000f98,0xffffffff82186960);
+      }
+      if (*(char *)(iVar5 + 0x1d) == '\0') {
+        MyAssertHandler(0xffffffff82185bb8,0x8cc,0,0xffffffff82000f98,0xffffffff82186948);
+      }
+      if (dVar10 < (double)*(float *)(*(int *)(iVar5 + 0x50) + 4)) {
+        MyAssertHandler(0xffffffff82185bb8,0x8cd,0,0xffffffff82000f98,0xffffffff82186928);
+      }
+      sVar1 = *(short *)(iVar2 + 2);
+      iVar7 = (int)sVar1;
+      if (sVar1 < 0) {
+        MyAssertHandler(0xffffffff82185bb8,0x8d0,0,0xffffffff82000f98,0xffffffff82186914);
+      }
+      if ((short)(ushort)*(byte *)(iVar5 + 0x1d) <= sVar1) {
+        MyAssertHandler(0xffffffff82185bb8,0x8d1,0,0xffffffff82000f98,0xffffffff82186024);
+      }
+      dVar9 = (double)*(float *)(iVar2 + 0x20);
+      iVar6 = iVar7 * 8 + *(int *)(iVar5 + 0x50);
+      if (dVar9 <= dVar11) {
+        if (dVar11 == dVar10) {
+          if ((*(byte *)(iVar5 + 0x10) & 1) != 0) {
+            MyAssertHandler(0xffffffff82185bb8,0x902,0,0xffffffff82000f98,0xffffffff82185fe4);
+          }
+          if (*(float *)(iVar2 + 0x20) <= *(float *)(iVar6 + 4)) {
+            if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
+              MyAssertHandler(0xffffffff82185bb8,0x907,0,0xffffffff82000f98,0xffffffff82186024);
+            }
+            puVar8 = (undefined2 *)(iVar6 + -8);
+            do {
+              if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
+                MyAssertHandler(0xffffffff82185bb8,0x90b,0,0xffffffff82000f98,0xffffffff821868e4);
+              }
+              puVar8 = puVar8 + 4;
+              NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),*puVar8);
+              iVar7 = iVar7 + 1;
+            } while (iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d));
+            __restgprlr_23();
+            return;
+          }
+        }
+        else if (((double)*(float *)(iVar6 + 4) < dVar11) &&
+                (dVar9 <= (double)*(float *)(iVar6 + 4))) {
+          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
+            MyAssertHandler(0xffffffff82185bb8,0x91a,0,0xffffffff82000f98,0xffffffff82186024);
+          }
+          puVar8 = (undefined2 *)(iVar6 + -8);
+          do {
+            if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
+              MyAssertHandler(0xffffffff82185bb8,0x91e,0,0xffffffff82000f98,0xffffffff821868e4);
+            }
+            NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
+            iVar7 = iVar7 + 1;
+          } while ((iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d)) &&
+                  (pfVar3 = (float *)(puVar8 + 10), puVar8 = puVar8 + 4, (double)*pfVar3 < dVar11));
+        }
+      }
+      else if (dVar11 <= (double)*(float *)(iVar6 + 4)) {
+        if (dVar9 <= (double)*(float *)(iVar6 + 4)) {
+          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
+            MyAssertHandler(0xffffffff82185bb8,0x8e7,0,0xffffffff82000f98,0xffffffff82186024);
+          }
+          puVar8 = (undefined2 *)(iVar6 + -8);
+          do {
+            if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
+              MyAssertHandler(0xffffffff82185bb8,0x8eb,0,0xffffffff82000f98,0xffffffff821868e4);
+            }
+            puVar8 = puVar8 + 4;
+            NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),*puVar8);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d));
+          iVar7 = 0;
+          if ((double)*(float *)(*(int *)(iVar5 + 0x50) + 4) < dVar11) {
+            puVar8 = (undefined2 *)(*(int *)(iVar5 + 0x50) + -8);
+            do {
+              if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
+                MyAssertHandler(0xffffffff82185bb8,0x8f6,0,0xffffffff82000f98,0xffffffff82186024);
+              }
+              NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
+              pfVar3 = (float *)(puVar8 + 10);
+              iVar7 = iVar7 + 1;
+              puVar8 = puVar8 + 4;
+            } while ((double)*pfVar3 < dVar11);
+            __restgprlr_23();
+            return;
+          }
+        }
+      }
+      else {
+        if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
+          MyAssertHandler(0xffffffff82185bb8,0x8d8,0,0xffffffff82000f98,0xffffffff82186024);
+        }
+        puVar8 = (undefined2 *)(iVar6 + -8);
+        while( true ) {
+          NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
+          iVar7 = iVar7 + 1;
+          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) break;
+          pfVar3 = (float *)(puVar8 + 10);
+          puVar8 = puVar8 + 4;
+          if (dVar11 <= (double)*pfVar3) {
+            __restgprlr_23();
+            return;
+          }
+        }
+      }
+    }
+    else if ((dVar11 < (double)*(float *)(iVar2 + 0x20)) || (dVar11 == dVar10)) {
+      Scr_AddConstString(DAT_8421bf98);
+      Scr_NotifyNum((ulonglong)*(ushort *)((int)piVar4 + 6) - 1,0,*(undefined2 *)(iVar2 + 4),1);
+      __restgprlr_23();
+      return;
+    }
+  }
+  __restgprlr_23();
+  return;
+}
+
+
+// 82625EB0  XAnimResetAnimMapLeaf  (xanim/xanim.cpp:2343)
+
+void XAnimResetAnimMapLeaf(undefined8 param_1,ulonglong param_2)
+
+{
+  short sVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int iVar4;
+  undefined2 uVar5;
+  
+  uVar3 = __savegprlr_27();
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x92c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar2 = (int)param_2 * 0x40;
+  if ((&DAT_841dbfac)[iVar2] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x92e,0,0xffffffff82000f98,0xffffffff821869a0);
+  }
+  sVar1 = *(short *)(&DAT_841dbfaa + iVar2);
+  if (sVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x934,0,0xffffffff82000f98,0xffffffff82186994);
+  }
+  iVar4 = SL_ConvertToString(sVar1);
+  uVar5 = XAnimGetAnimMap(*(undefined4 *)(&DAT_841dbfb4 + iVar2),uVar3);
+  *(undefined2 *)(&DAT_841dbfaa + iVar2) = uVar5;
+  SL_RemoveRefToStringOfSize(sVar1,(ulonglong)*(byte *)(iVar4 + 0x18) + 0x19);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82625FA8  XAnimResetAnimMap_r  (xanim/xanim.cpp:2365)
 
-void XAnimResetAnimMap_r(void)
+void XAnimResetAnimMap_r(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  undefined8 uVar4;
+  
+  uVar4 = __savegprlr_23();
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x941,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar2 = (int)param_2 * 0x40;
+  if ((&DAT_841dbfac)[iVar2] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x945,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if (*(short *)(&DAT_841dbfaa + iVar2) != 0) {
+    if (*(short *)(&DAT_841dbfa4 + iVar2) != 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x94a,0,0xffffffff82000f98,0xffffffff82185e58);
+    }
+    XAnimResetAnimMapLeaf(uVar4,param_2);
+    __restgprlr_23();
+    return;
+  }
+  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar2);
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    if (0xfff < uVar3) {
+      MyAssertHandler(0xffffffff82185bb8,0x951,0,0xffffffff8218633c,0xffffffff82186310,uVar3);
+    }
+    if ((&DAT_841dbfac)[uVar3 * 0x40] == '\0') {
+      MyAssertHandler(0xffffffff82185bb8,0x955,0,0xffffffff82000f98,0xffffffff82185e68);
+    }
+    XAnimResetAnimMap_r(uVar4,uVar3);
+    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+  }
+  __restgprlr_23();
+  return;
 }
 
 
@@ -1631,31 +2637,387 @@ void XAnimResetAnimMap(int param_1,undefined8 param_2)
 
 // 82626170  XAnimDisplay  (xanim/xanim.cpp:2412)
 
-void XAnimDisplay(void)
+void XAnimDisplay(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
+                 undefined8 param_5,ulonglong param_6)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  bool bVar1;
+  int iVar2;
+  int *piVar4;
+  undefined8 uVar3;
+  int iVar5;
+  uint uVar6;
+  longlong lVar7;
+  undefined8 uVar8;
+  double dVar9;
+  double dVar10;
+  
+  piVar4 = (int *)__savegprlr_19();
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x977,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x978,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x979,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if ((param_6 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x97a,0,0xffffffff82000f98,0xffffffff82186bb0);
+  }
+  if ((int)param_5 <= *(int *)param_6) {
+    MyAssertHandler(0xffffffff82185bb8,0x97b,0,0xffffffff82000f98,0xffffffff82186b98);
+  }
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x97d,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar2 = (int)param_2 * 0x40;
+  dVar10 = 0.0;
+  if (*(float *)(&DAT_841dbfcc + iVar2) < 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0x981,0,0xffffffff82000f98,0xffffffff82186b84);
+  }
+  lVar7 = param_3;
+  if (0 < (int)param_3) {
+    do {
+      Com_sprintfPos(param_4,param_5,param_6,0xffffffff820034a0);
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+  }
+  if ((&DAT_841dbfac)[iVar2] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x987,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  uVar6 = (uint)*(ushort *)(&DAT_841dbfa8 + iVar2);
+  if (*(uint *)*piVar4 <= uVar6) {
+    MyAssertHandler(0xffffffff82185bb8,0x98a,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  uVar3 = XAnimGetAnimDebugName(*piVar4,uVar6);
+  dVar9 = (double)*(float *)(&DAT_841dbfcc + iVar2);
+  if (dVar9 == dVar10) {
+    uVar8 = 0xffffffff82186b80;
+  }
+  else if ((double)*(float *)(&DAT_841dbfc8 + iVar2) <= dVar9) {
+    if (dVar9 <= (double)*(float *)(&DAT_841dbfc8 + iVar2)) {
+      uVar8 = 0xffffffff820068af;
+    }
+    else {
+      uVar8 = 0xffffffff82013958;
+    }
+  }
+  else {
+    uVar8 = 0xffffffff82186b7c;
+  }
+  if (*(short *)(&DAT_841dbfaa + iVar2) != 0) {
+    if (*(int *)(&DAT_841dbfb4 + iVar2) == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x99a,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    if (*(short *)(&DAT_841dbf9c + iVar2) != 0) {
+      SL_ConvertToString();
+      Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186b18,uVar8,uVar3,
+                     (double)*(float *)(&DAT_841dbfcc + iVar2),
+                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
+      __restgprlr_19();
+      return;
+    }
+    Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186ab8,uVar8,uVar3,
+                   (double)*(float *)(&DAT_841dbfcc + iVar2),
+                   (double)*(float *)(&DAT_841dbfc8 + iVar2));
+    __restgprlr_19();
+    return;
+  }
+  iVar5 = uVar6 * 8 + *piVar4;
+  if (*(short *)(&DAT_841dbf9c + iVar2) == 0) {
+    if ((*(short *)(iVar5 + 0xc) == 0) || (bVar1 = false, (*(ushort *)(iVar5 + 0x10) & 3) != 0)) {
+      bVar1 = true;
+    }
+    if (bVar1) {
+      Com_sprintfPos(param_4,param_5,param_6,0xffffffff821869e8,uVar8,uVar3,dVar9,
+                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
+    }
+    else {
+      Com_sprintfPos(param_4,param_5,param_6,0xffffffff821869c0,uVar8,uVar3,dVar9,
+                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
+    }
+  }
+  else {
+    if ((*(short *)(iVar5 + 0xc) == 0) || (bVar1 = false, (*(ushort *)(iVar5 + 0x10) & 3) != 0)) {
+      bVar1 = true;
+    }
+    if (bVar1) {
+      if (*(short *)(&DAT_841dbf98 + iVar2) == 0) {
+        SL_ConvertToString();
+        Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a68,uVar8,uVar3,
+                       (double)*(float *)(&DAT_841dbfcc + iVar2),
+                       (double)*(float *)(&DAT_841dbfc8 + iVar2));
+      }
+      else {
+        SL_ConvertToString();
+        Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a68,uVar8,uVar3,
+                       (double)*(float *)(&DAT_841dbfcc + iVar2),
+                       (double)*(float *)(&DAT_841dbfc8 + iVar2));
+      }
+    }
+    else {
+      SL_ConvertToString();
+      Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a34,uVar8,uVar3,
+                     (double)*(float *)(&DAT_841dbfcc + iVar2),
+                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
+    }
+  }
+  uVar6 = (uint)*(ushort *)(&DAT_841dbfa4 + iVar2);
+  if (uVar6 != 0) {
+    do {
+      XAnimDisplay(piVar4,uVar6,param_3 + 1,param_4,param_5,param_6);
+      uVar6 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
+    } while (uVar6 != 0);
+  }
+  __restgprlr_19();
+  return;
 }
 
 
 // 82620A60  XAnimCalcDeltaTree  (xanim/xanim.cpp:2515)
 
-void XAnimCalcDeltaTree(void)
+void XAnimCalcDeltaTree(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined4 param_4,
+                       float *param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  ushort uVar2;
+  int iVar3;
+  int iVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  float *pfVar7;
+  uint uVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  char cStack0000002c;
+  char cStack0000002d;
+  char cStack0000002e;
+  char cStack0000002f;
+  float local_d0 [52];
+  
   __savegprlr_16();
+  uVar5 = __savefpr_28();
+  dVar9 = extraout_f1;
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0x9e0,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar4 = (int)param_2;
+  iVar3 = iVar4 * 0x40;
+  if ((&DAT_841dbfac)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x9e3,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  cStack0000002c = (char)((uint)param_4 >> 0x18);
+  if (*(short *)(&DAT_841dbfaa + iVar3) != 0) {
+    if (cStack0000002c != '\0') {
+      *param_5 = 0.0;
+      param_5[1] = 0.0;
+      param_5[2] = 0.0;
+      param_5[3] = 0.0;
+      param_5[4] = 0.0;
+      param_5[5] = 0.0;
+      param_5[6] = 0.0;
+      param_5[7] = 0.0;
+    }
+    iVar3 = *(int *)(&DAT_841dbfb4 + iVar3);
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x9f0,0,0xffffffff82000f98,0xffffffff8213fd58);
+    }
+    cStack0000002e = (char)((uint)param_4 >> 8);
+    if (cStack0000002e != '\0') {
+      XAnimCalcAbsDeltaParts(dVar9,(double)(float)(&DAT_841dbfb8)[iVar4 * 0x10]);
+      __restfpr_28();
+      __restgprlr_16();
+      return;
+    }
+    XAnimCalcRelDeltaParts
+              (dVar9,(double)(float)(&DAT_841dbfbc)[iVar4 * 0x10],
+               (double)(float)(&DAT_841dbfb8)[iVar4 * 0x10],iVar3);
+    __restfpr_28();
+    __restgprlr_16();
+    return;
+  }
+  uVar6 = (uint)*(ushort *)(&DAT_841dbfa4 + iVar3);
+  dVar12 = 0.0;
+  if (uVar6 != 0) {
+    cStack0000002f = (char)param_4;
+    do {
+      if (0xfff < uVar6) {
+        MyAssertHandler(0xffffffff82185bb8,0x9fd,0,0xffffffff821860dc,0xffffffff821860b8,uVar6);
+      }
+      if (cStack0000002f == '\0') {
+        fVar1 = *(float *)(&DAT_841dbfcc + uVar6 * 0x40);
+      }
+      else {
+        fVar1 = *(float *)(&DAT_841dbfc8 + uVar6 * 0x40);
+      }
+      dVar10 = (double)fVar1;
+      if (dVar10 < dVar12) {
+        MyAssertHandler(dVar10,0xffffffff82185bb8,0xa01,0,0xffffffff8218610c,0xffffffff821860f4,
+                        dVar10);
+      }
+      if (dVar10 != dVar12) {
+        uVar8 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
+        if (uVar8 != 0) goto LAB_82620cdc;
+        goto LAB_82620d50;
+      }
+      uVar6 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
+    } while (uVar6 != 0);
+  }
+  if (cStack0000002c != '\0') {
+    *param_5 = (float)dVar12;
+    param_5[1] = (float)dVar12;
+    param_5[2] = (float)dVar12;
+    param_5[3] = (float)dVar12;
+    param_5[4] = (float)dVar12;
+    param_5[5] = (float)dVar12;
+    param_5[6] = (float)dVar12;
+    param_5[7] = (float)dVar12;
+  }
+LAB_82620ca8:
+  __restfpr_28();
+  __restgprlr_16();
+  return;
+LAB_82620cdc:
+  if (0xfff < uVar8) {
+    MyAssertHandler(0xffffffff82185bb8,0xa07,0,0xffffffff82186094,0xffffffff82186070,uVar8);
+  }
+  if (cStack0000002f == '\0') {
+    fVar1 = *(float *)(&DAT_841dbfcc + uVar8 * 0x40);
+  }
+  else {
+    fVar1 = *(float *)(&DAT_841dbfc8 + uVar8 * 0x40);
+  }
+  dVar11 = (double)fVar1;
+  if (dVar11 < dVar12) {
+    MyAssertHandler(0xffffffff82185bb8,0xa0b,0,0xffffffff82000f98,0xffffffff821860ac);
+  }
+  if (dVar11 != dVar12) {
+    pfVar7 = param_5;
+    if (cStack0000002c == '\0') {
+      pfVar7 = local_d0;
+    }
+    XAnimCalcDeltaTree(dVar10,uVar5,uVar6);
+    XAnimCalcDeltaTree(dVar11,uVar5,uVar8);
+    uVar2 = (&DAT_841dbfa2)[uVar8 * 0x20];
+    while (uVar6 = (uint)uVar2, uVar6 != 0) {
+      if (0xfff < uVar6) {
+        MyAssertHandler(0xffffffff82185bb8,0xa1b,0,0xffffffff82186094,0xffffffff82186070,uVar6);
+      }
+      if (cStack0000002f == '\0') {
+        fVar1 = *(float *)(&DAT_841dbfcc + uVar6 * 0x40);
+      }
+      else {
+        fVar1 = *(float *)(&DAT_841dbfc8 + uVar6 * 0x40);
+      }
+      dVar10 = (double)fVar1;
+      if (dVar10 < dVar12) {
+        MyAssertHandler(0xffffffff82185bb8,0xa1f,0,0xffffffff82000f98,0xffffffff821860ac);
+      }
+      if (dVar10 != dVar12) {
+        XAnimCalcDeltaTree(dVar10,uVar5,uVar6);
+      }
+      uVar2 = (&DAT_841dbfa2)[uVar6 * 0x20];
+    }
+    cStack0000002d = (char)((uint)param_4 >> 0x10);
+    if (cStack0000002d == '\0') {
+      if (cStack0000002c == '\0') {
+        MyAssertHandler(0xffffffff82185bb8,0xa28,0,0xffffffff82000f98,0xffffffff8218605c);
+      }
+      if ((double)param_5[4] != dVar12) {
+        fVar1 = (float)(1.0 / (double)param_5[4]);
+        param_5[5] = param_5[5] * fVar1;
+        param_5[6] = param_5[6] * fVar1;
+        param_5[7] = param_5[7] * fVar1;
+        __restfpr_28();
+        __restgprlr_16();
+        return;
+      }
+    }
+    else if (cStack0000002c == '\0') {
+      if ((double)(pfVar7[3] * pfVar7[3] +
+                  pfVar7[2] * pfVar7[2] + *pfVar7 * *pfVar7 + pfVar7[1] * pfVar7[1]) != dVar12) {
+        dVar10 = (double)I_rsqrt();
+        fVar1 = (float)(dVar10 * dVar9);
+        *param_5 = *pfVar7 * fVar1 + *param_5;
+        param_5[1] = fVar1 * pfVar7[1] + param_5[1];
+        param_5[2] = pfVar7[2] * fVar1 + param_5[2];
+        param_5[3] = pfVar7[3] * fVar1 + param_5[3];
+      }
+      if ((double)pfVar7[4] != dVar12) {
+        fVar1 = (float)(dVar9 / (double)pfVar7[4]);
+        param_5[5] = pfVar7[5] * fVar1 + param_5[5];
+        param_5[6] = pfVar7[6] * fVar1 + param_5[6];
+        param_5[7] = pfVar7[7] * fVar1 + param_5[7];
+        param_5[4] = (float)((double)param_5[4] + dVar9);
+        __restfpr_28();
+        __restgprlr_16();
+        return;
+      }
+    }
+    else {
+      if ((double)(param_5[3] * param_5[3] +
+                  param_5[2] * param_5[2] + *param_5 * *param_5 + param_5[1] * param_5[1]) != dVar12
+         ) {
+        dVar10 = (double)I_rsqrt();
+        fVar1 = (float)(dVar10 * dVar9);
+        *param_5 = fVar1 * *param_5;
+        param_5[1] = param_5[1] * fVar1;
+        param_5[2] = param_5[2] * fVar1;
+        param_5[3] = param_5[3] * fVar1;
+      }
+      if ((double)param_5[4] != dVar12) {
+        fVar1 = (float)(dVar9 / (double)param_5[4]);
+        param_5[5] = param_5[5] * fVar1;
+        param_5[6] = param_5[6] * fVar1;
+        param_5[7] = param_5[7] * fVar1;
+        param_5[4] = (float)dVar9;
+        __restfpr_28();
+        __restgprlr_16();
+        return;
+      }
+    }
+    goto LAB_82620ca8;
+  }
+  uVar8 = (uint)(ushort)(&DAT_841dbfa2)[uVar8 * 0x20];
+  if (uVar8 == 0) {
+LAB_82620d50:
+    XAnimCalcDeltaTree(dVar9,uVar5,uVar6);
+    __restfpr_28();
+    __restgprlr_16();
+    return;
+  }
+  goto LAB_82620cdc;
 }
 
 
 // 82621078  XAnimGetLength  (xanim/xanim.cpp:2654)
 
-void XAnimGetLength(void)
+void XAnimGetLength(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xa62,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  if ((ulonglong)*(uint *)uVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xa63,0,0xffffffff82186124,param_2);
+  }
+  lVar3 = (param_2 & 0x1fffffff) * 8 + uVar1 + 0xc;
+  if (lVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xa66,0,0xffffffff82000f98,0xffffffff820589d8);
+  }
+  iVar2 = XAnimGetPartsInternal(lVar3);
+  __restgprlr_28((double)((float)*(ushort *)(iVar2 + 0xe) / *(float *)(iVar2 + 0x28)));
+  return;
 }
 
 
@@ -1688,12 +3050,10 @@ void XAnimGetInfoIndex_r(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   uVar5 = __savegprlr_22();
   if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xa86,0,0xffffffff82185e88,0xffffffff82185ea0,param_3);
   }
   iVar3 = (int)param_3 * 0x40;
   if ((&DAT_841dbfac)[iVar3] == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xa89,0,0xffffffff82000f98,0xffffffff82185e68);
   }
   if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar3) == (param_2 & 0xffffffff)) {
@@ -1724,7 +3084,6 @@ undefined8 XAnimGetInfoIndex(int param_1,undefined8 param_2)
   undefined8 uVar1;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xaa7,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   if (*(short *)(param_1 + 0x10) == 0) {
@@ -1739,41 +3098,175 @@ undefined8 XAnimGetInfoIndex(int param_1,undefined8 param_2)
 
 // 82621330  XAnimGetTime  (xanim/xanim.cpp:2739)
 
-void XAnimGetTime(void)
+void XAnimGetTime(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  uint uVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xab6,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xab7,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xab8,0,0xffffffff82186164,param_2);
+  }
+  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
+  if (0xfff < uVar2) {
+    MyAssertHandler(0xffffffff82185bb8,0xabb,0,0xffffffff82185e88,0xffffffff82186150,uVar2);
+  }
+  if (uVar2 != 0) {
+    __restgprlr_28((double)(float)(&DAT_841dbfb8)[uVar2 * 0x10]);
+    return;
+  }
+  __restgprlr_28(0);
+  return;
+}
+
+
+// 82621440  XAnimGetWeight  (xanim/xanim.cpp:2758)
+
+void XAnimGetWeight(undefined8 param_1,ulonglong param_2)
+
+{
+  int *piVar1;
+  uint uVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xac9,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xaca,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xacb,0,0xffffffff82186164,param_2);
+  }
+  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
+  if (0xfff < uVar2) {
+    MyAssertHandler(0xffffffff82185bb8,0xace,0,0xffffffff82185e88,0xffffffff82186150,uVar2);
+  }
+  if (uVar2 != 0) {
+    __restgprlr_28((double)*(float *)(&DAT_841dbfcc + uVar2 * 0x40));
+    return;
+  }
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 82621550  XAnimHasFinished  (xanim/xanim.cpp:2777)
 
-void XAnimHasFinished(void)
+void XAnimHasFinished(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  undefined8 uVar4;
+  
+  piVar3 = (int *)__savegprlr_28();
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xadd,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xade,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xadf,0,0xffffffff82186164,param_2);
+  }
+  uVar2 = XAnimGetInfoIndex(piVar3,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    __restgprlr_28(1);
+    return;
+  }
+  if (0xfff < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xae5,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
+  }
+  iVar1 = (int)uVar2;
+  if (((float)(&DAT_841dbfbc)[iVar1 * 0x10] <= (float)(&DAT_841dbfb8)[iVar1 * 0x10]) &&
+     ((float)(&DAT_841dbfb8)[iVar1 * 0x10] != 1.0)) {
+    uVar4 = 0;
+    if (*(short *)(&DAT_841dbfc0 + iVar1 * 0x40) <= *(short *)(&DAT_841dbfc2 + iVar1 * 0x40))
+    goto LAB_82621690;
+  }
+  uVar4 = 1;
+LAB_82621690:
+  __restgprlr_28(uVar4);
+  return;
+}
+
+
+// 826216A0  XAnimGetNumChildren  (xanim/xanim.cpp:2801)
+
+void XAnimGetNumChildren(undefined8 param_1,ulonglong param_2)
+
+{
+  uint *puVar1;
+  
+  puVar1 = (uint *)__savegprlr_29();
+  if (puVar1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xaf2,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  if ((ulonglong)*puVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xaf3,0,0xffffffff82186124,param_2);
+  }
+  __restgprlr_29(*(undefined2 *)((int)puVar1 + (int)((param_2 & 0xffffffff) << 3) + 0xc));
+  return;
 }
 
 
 // 82621720  XAnimGetChildAt  (xanim/xanim.cpp:2815)
 
-void XAnimGetChildAt(void)
+void XAnimGetChildAt(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint *puVar2;
+  
+  puVar2 = (uint *)__savegprlr_28();
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xb00,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  if ((ulonglong)*puVar2 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xb01,0,0xffffffff82186124,param_2);
+  }
+  iVar1 = (int)((param_2 & 0xffffffff) << 3);
+  if ((ulonglong)*(ushort *)((int)puVar2 + iVar1 + 0xc) <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xb02,0,0xffffffff8218618c,param_3);
+  }
+  __restgprlr_28(*(ushort *)((int)puVar2 + iVar1 + 0x12) + param_3);
+  return;
 }
 
 
 // 826217D0  XAnimGetAnimName  (xanim/xanim.cpp:2830)
 
-void XAnimGetAnimName(void)
+void XAnimGetAnimName(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xb11,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  if ((ulonglong)*(uint *)uVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xb12,0,0xffffffff82186124,param_2);
+  }
+  lVar3 = (param_2 & 0x1fffffff) * 8 + uVar1;
+  if (*(short *)((int)lVar3 + 0xc) == 0) {
+    puVar2 = (undefined4 *)XAnimGetPartsInternal(lVar3 + 0xc);
+    __restgprlr_29(*puVar2);
+    return;
+  }
+  __restgprlr_29(0xffffffff820068af);
+  return;
 }
 
 
@@ -1789,11 +3282,56 @@ void XAnimIsDefault(undefined4 *param_1)
 
 // 82621888  XAnimGetAnimDebugName  (xanim/xanim.cpp:2857)
 
-void XAnimGetAnimDebugName(void)
+void XAnimGetAnimDebugName(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 uVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  uint *puVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  longlong lVar7;
+  
+  uVar3 = __savegprlr_27();
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xb30,0,0xffffffff82000f98,0xffffffff8202a360);
+  }
+  puVar4 = (uint *)uVar3;
+  if ((ulonglong)*puVar4 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xb31,0,0xffffffff82186124,param_2);
+  }
+  lVar7 = (param_2 & 0x1fffffff) * 8 + uVar3 + 0xc;
+  if (puVar4[2] == 0) {
+    if (*(short *)lVar7 == 0) {
+      puVar5 = (undefined4 *)XAnimGetPartsInternal(lVar7);
+      __restgprlr_27(*puVar5);
+      return;
+    }
+    va(0xffffffff8200c28c,param_2);
+    __restgprlr_27();
+    return;
+  }
+  iVar6 = (int)((param_2 & 0xffffffff) << 2);
+  if (*(int *)(iVar6 + puVar4[2]) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xb38,0,0xffffffff82000f98,0xffffffff821861d4);
+  }
+  uVar1 = *(undefined4 *)(puVar4[2] + iVar6);
+  if (*(short *)lVar7 == 0) {
+    puVar5 = (undefined4 *)XAnimGetPartsInternal(lVar7);
+    iVar6 = DB_IsXAssetDefault(2,*puVar5);
+    bVar2 = true;
+    if (iVar6 != 0) goto LAB_82621978;
+  }
+  bVar2 = false;
+LAB_82621978:
+  if (!bVar2) {
+    __restgprlr_27(uVar1);
+    return;
+  }
+  va(0xffffffff821861c4,uVar1);
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1803,7 +3341,6 @@ undefined4 XAnimGetAnimTreeDebugName(int param_1)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xb4a,0,0xffffffff82000f98,0xffffffff8202a360);
   }
   return *(undefined4 *)(param_1 + 4);
@@ -1816,7 +3353,6 @@ undefined4 XAnimGetAnimTreeSize(undefined4 *param_1)
 
 {
   if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xb59,0,0xffffffff82000f98,0xffffffff8202a360);
   }
   return *param_1;
@@ -1834,7 +3370,6 @@ void DObjInitServerTime(undefined8 param_1,int *param_2)
   
   Profile_Begin(0x12f);
   if (param_2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xbe0,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   iVar1 = *param_2;
@@ -1853,18 +3388,85 @@ void DObjInitServerTime(undefined8 param_1,int *param_2)
 void DObjUpdateClientInfo(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  char cVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  float local_60 [2];
+  undefined2 local_58;
+  
+  piVar2 = (int *)__savegprlr_28();
+  dVar4 = extraout_f1;
+  Profile_Begin(0x12f);
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xbff,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  dVar5 = 0.0;
+  if (dVar4 < 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0xc00,0,0xffffffff82000f98,0xffffffff821868d8);
+  }
+  cVar3 = Sys_IsMainThread();
+  if (cVar3 == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0xc01,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  iVar1 = *piVar2;
+  DAT_841db98c = 0;
+  if ((iVar1 != 0) && (*(short *)(iVar1 + 0x10) != 0)) {
+    local_60[0] = (float)dVar5;
+    local_58 = 0;
+    XAnimUpdateOldTime(dVar4,piVar2,*(undefined2 *)(iVar1 + 0x10),local_60);
+    if (*(short *)(iVar1 + 0x10) != 0) {
+      XAnimUpdateTimeAndNotetrack(dVar4,piVar2);
+    }
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82628708  DObjUpdateServerInfo  (xanim/xanim.cpp:3101)
 
-void DObjUpdateServerInfo(void)
+void DObjUpdateServerInfo(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  short sVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  piVar2 = (int *)__savegprlr_27();
+  dVar5 = extraout_f1;
+  Profile_Begin(0x12f);
+  dVar6 = 0.0;
+  if (dVar5 < 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0xc24,0,0xffffffff82000f98,0xffffffff821868d8);
+  }
+  iVar1 = *piVar2;
+  if ((iVar1 != 0) && (sVar3 = *(short *)(iVar1 + 0x10), sVar3 != 0)) {
+    if (param_3 != 0) {
+      dVar4 = (double)XAnimFindServerNoteTrack(dVar5,piVar2);
+      if (dVar4 < dVar6) {
+        MyAssertHandler(0xffffffff82185bb8,0xc36,0,0xffffffff82000f98,0xffffffff82082a28);
+      }
+      if ((dVar4 != 1.0) && ((double)(float)(dVar4 * dVar5 + 0.0010000000474974513) <= dVar5)) {
+        XAnimUpdateTimeAndNotetrack(piVar2,*(undefined2 *)(iVar1 + 0x10));
+        Profile_EndInternal(0);
+        __restgprlr_27(1);
+        return;
+      }
+      sVar3 = *(short *)(iVar1 + 0x10);
+    }
+    XAnimUpdateTimeAndNotetrack(dVar5,piVar2,sVar3);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_27(0);
+  return;
 }
 
 
@@ -1878,7 +3480,6 @@ undefined4 DObjGetClientNotifyList(undefined4 *param_1)
   
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xc52,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   uVar1 = DAT_841db98c;
@@ -1889,11 +3490,40 @@ undefined4 DObjGetClientNotifyList(undefined4 *param_1)
 
 // 82626818  DObjDisplayAnimToBuffer  (xanim/xanim.cpp:3163)
 
-void DObjDisplayAnimToBuffer(void)
+void DObjDisplayAnimToBuffer
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int *piVar2;
+  undefined8 uVar3;
+  undefined4 local_40 [16];
+  
+  piVar2 = (int *)__savegprlr_26();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xc5f,0,0xffffffff82000f98,0xffffffff82058e00);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xc60,0,0xffffffff82000f98,0xffffffff8200e484);
+  }
+  if (piVar2 == (int *)0x0) {
+    uVar3 = 0xffffffff82186bc8;
+  }
+  else {
+    iVar1 = *piVar2;
+    if ((iVar1 != 0) && (*(short *)(iVar1 + 0x10) != 0)) {
+      local_40[0] = 0;
+      Com_sprintfPos(param_3,param_4,local_40,0xffffffff82000f98,param_2);
+      XAnimDisplay(iVar1,*(undefined2 *)(iVar1 + 0x10),0,param_3,param_4,local_40);
+      Com_sprintfPos(param_3,param_4,local_40,0xffffffff820044d8);
+      __restgprlr_26();
+      return;
+    }
+    uVar3 = 0xffffffff82186bbc;
+  }
+  Com_sprintf(param_3,param_4,uVar3,param_2);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1905,7 +3535,6 @@ void DObjDisplayAnim(undefined8 param_1,ulonglong param_2)
   undefined1 auStack_820 [2056];
   
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xc7b,0,0xffffffff82000f98,0xffffffff82058e00);
   }
   DObjDisplayAnimToBuffer(param_1,param_2,auStack_820,0x800);
@@ -1923,6 +3552,7 @@ void XAnimCalcDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefine
   int *piVar3;
   ulonglong uVar2;
   double dVar4;
+  double dVar5;
   float local_80;
   float local_7c;
   float local_78;
@@ -1935,15 +3565,12 @@ void XAnimCalcDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefine
   Profile_Begin(0x12e);
   piVar1 = (int *)*piVar3;
   if (piVar1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xc8e,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   if (*piVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xc8f,0,0xffffffff82000f98,0xffffffff82184c8c);
   }
   if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xc90,0,0xffffffff82000f98,0xffffffff82186218);
   }
   uVar2 = XAnimGetInfoIndex(piVar1,param_2);
@@ -1957,16 +3584,15 @@ void XAnimCalcDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefine
   else {
     dVar4 = 1.0;
     XAnimCalcDeltaTree(0x3ff0000000000000,piVar3,uVar2);
+    dVar5 = 0.0;
     if (local_80 != 0.0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff82185bb8,0xca2,0,0xffffffff82000f98,0xffffffff82186208);
     }
-    if (local_7c != 0.0) {
-                    /* WARNING: Subroutine does not return */
+    if ((double)local_7c != dVar5) {
       MyAssertHandler(0xffffffff82185bb8,0xca3,0,0xffffffff82000f98,0xffffffff821861f8);
     }
-    if ((local_78 == 0.0) || (local_74 == 0.0)) {
-      *param_3 = 0.0;
+    if (((double)local_78 == dVar5) || ((double)local_74 == dVar5)) {
+      *param_3 = (float)dVar5;
       param_3[1] = (float)dVar4;
     }
     else {
@@ -1983,43 +3609,413 @@ void XAnimCalcDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefine
 }
 
 
-// 82621E88  XAnimGetRelDelta  (xanim/xanim.cpp:3307)
+// 82621CE0  XAnimCalcAbsDelta  (xanim/xanim.cpp:3260)
 
-void XAnimGetRelDelta(void)
+void XAnimCalcAbsDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  double dVar4;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  undefined4 local_5c;
+  undefined4 local_58;
+  undefined4 local_54;
+  
+  piVar3 = (int *)__savegprlr_25();
+  Profile_Begin(0x12e);
+  piVar1 = (int *)*piVar3;
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xcc6,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xcc7,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xcc8,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    param_3[3] = 1.0;
+    local_5c = 0;
+    *param_3 = 0.0;
+    param_3[1] = 0.0;
+    param_3[2] = 0.0;
+    param_4[1] = 0;
+    param_4[2] = 0;
+  }
+  else {
+    dVar4 = 1.0;
+    XAnimCalcDeltaTree(0x3ff0000000000000,piVar3,uVar2);
+    if (local_64 * local_64 + local_70 * local_70 + local_6c * local_6c + local_68 * local_68 == 0.0
+       ) {
+      *param_3 = 0.0;
+      param_3[1] = 0.0;
+      param_3[2] = 0.0;
+      param_3[3] = (float)dVar4;
+    }
+    else {
+      *param_3 = local_70;
+      param_3[1] = local_6c;
+      param_3[2] = local_68;
+      param_3[3] = local_64;
+    }
+    param_4[1] = local_58;
+    param_4[2] = local_54;
+  }
+  *param_4 = local_5c;
+  Profile_EndInternal(0);
+  __restgprlr_25();
+  return;
+}
+
+
+// 82621E88  XAnimGetRelDelta  (xanim/xanim.cpp:3307)
+
+void XAnimGetRelDelta(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
+                     float *param_5,undefined4 *param_6)
+
+{
+  longlong lVar1;
+  undefined8 extraout_f1;
+  double dVar2;
+  undefined8 uVar3;
+  double dVar4;
+  
+  lVar1 = __savegprlr_28();
+  uVar3 = extraout_f1;
+  Profile_Begin(0x12e);
+  lVar1 = (param_4 & 0x1fffffff) * 8 + lVar1;
+  if (*(short *)((int)lVar1 + 0xc) == 0) {
+    XAnimGetPartsInternal(lVar1 + 0xc);
+    dVar4 = 0.0;
+    dVar2 = 1.0;
+    XAnimCalcRelDeltaParts(0x3ff0000000000000,uVar3,param_2);
+    if (dVar4 != 0.0) {
+      MyAssertHandler(0xffffffff82185bb8,0xcfd,0,0xffffffff82000f98,0xffffffff82186208);
+    }
+    if (dVar4 != 0.0) {
+      MyAssertHandler(0xffffffff82185bb8,0xcfe,0,0xffffffff82000f98,0xffffffff821861f8);
+    }
+    if ((dVar4 == 0.0) && (dVar4 == 0.0)) {
+      *param_5 = (float)dVar4;
+      param_5[1] = (float)dVar2;
+    }
+    else {
+      *param_5 = 0.0;
+      param_5[1] = 0.0;
+    }
+    param_6[1] = 0;
+    param_6[2] = 0;
+  }
+  else {
+    *param_5 = 0.0;
+    param_5[1] = 1.0;
+    param_6[1] = 0;
+    param_6[2] = 0;
+  }
+  *param_6 = 0;
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82622000  XAnimGetAbsDelta  (xanim/xanim.cpp:3360)
 
-void XAnimGetAbsDelta(void)
+void XAnimGetAbsDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefined4 *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  undefined8 extraout_f1;
+  double dVar2;
+  undefined8 uVar3;
+  double dVar4;
+  
+  lVar1 = __savegprlr_28();
+  uVar3 = extraout_f1;
+  Profile_Begin(0x12e);
+  lVar1 = (param_2 & 0x1fffffff) * 8 + lVar1;
+  if (*(short *)((int)lVar1 + 0xc) == 0) {
+    XAnimGetPartsInternal(lVar1 + 0xc);
+    dVar4 = 0.0;
+    dVar2 = 1.0;
+    XAnimCalcAbsDeltaParts(0x3ff0000000000000,uVar3);
+    if (dVar4 == 0.0) {
+      *param_3 = (float)dVar4;
+      param_3[1] = (float)dVar4;
+      param_3[2] = (float)dVar4;
+      param_3[3] = (float)dVar2;
+    }
+    else {
+      *param_3 = 0.0;
+      param_3[1] = 0.0;
+      param_3[2] = 0.0;
+      param_3[3] = 0.0;
+    }
+    param_4[1] = 0;
+    param_4[2] = 0;
+  }
+  else {
+    *param_3 = 0.0;
+    param_3[1] = 0.0;
+    param_3[2] = 0.0;
+    param_3[3] = 1.0;
+    param_4[1] = 0;
+    param_4[2] = 0;
+  }
+  *param_4 = 0;
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82622138  XAnimAllocInfoWithParent  (xanim/xanim.cpp:3400)
 
-void XAnimAllocInfoWithParent(void)
+void XAnimAllocInfoWithParent
+               (undefined8 param_1,undefined2 param_2,ulonglong param_3,ulonglong param_4,
+               int param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_17();
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  ushort uVar6;
+  int *piVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  
+  piVar7 = (int *)__savegprlr_17();
+  if (piVar7 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xd50,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar7 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xd51,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  Sys_EnterCriticalSection(0xd);
+  uVar6 = DAT_841dbfa2;
+  uVar9 = (uint)DAT_841dbfa2;
+  if (uVar9 == 0) {
+    Sys_LeaveCriticalSection(0xd);
+    Sys_Error(0xffffffff821862e8);
+  }
+  uVar8 = (ulonglong)DAT_841db988 + 1;
+  DAT_841db988 = (uint)uVar8;
+  if (uVar8 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xd63,0,0xffffffff82000f98,0xffffffff82185e34);
+    uVar8 = (ulonglong)DAT_841db988;
+  }
+  if (DAT_841db994 < (int)uVar8) {
+    DAT_841db994 = (int)uVar8;
+  }
+  uVar2 = piVar7[1];
+  piVar7[1] = (int)((ulonglong)uVar2 + 1);
+  if ((ulonglong)uVar2 + 1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xd69,0,0xffffffff82000f98,0xffffffff82185e20);
+  }
+  if ((uVar9 == 0) || (0xfff < uVar9)) {
+    MyAssertHandler(0xffffffff82185bb8,0xd6c,0,0xffffffff82185e88,0xffffffff82185ea0,uVar9);
+  }
+  iVar3 = uVar9 * 0x40;
+  uVar1 = (&DAT_841dbfa2)[uVar9 * 0x20];
+  DAT_841dbfa2 = uVar1;
+  if (0xfff < uVar1) {
+    MyAssertHandler(0xffffffff82185bb8,0xd6f,0,0xffffffff821862c8,0xffffffff821862d8,uVar1);
+  }
+  (&DAT_841dbfa0)[(uint)uVar1 * 0x20] = 0;
+  Sys_LeaveCriticalSection(0xd);
+  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xd77,0,0xffffffff82186164,param_3);
+  }
+  iVar4 = (int)((param_4 & 0xffffffff) << 6);
+  uVar8 = 0;
+  uVar10 = (ulonglong)*(ushort *)(&DAT_841dbfa4 + iVar4);
+  if (param_5 == 0) {
+    for (; uVar10 != 0; uVar10 = (ulonglong)(&DAT_841dbfa2)[(int)uVar10 * 0x20]) {
+      iVar5 = (int)uVar10 * 0x40;
+      if ((&DAT_841dbfac)[iVar5] == '\0') {
+        MyAssertHandler(0xffffffff82185bb8,0xd82,0,0xffffffff82000f98,0xffffffff821862b4);
+      }
+      if ((param_3 & 0xffffffff) <= (ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar5)) break;
+      uVar8 = uVar10;
+    }
+  }
+  else {
+    for (; uVar10 != 0; uVar10 = (ulonglong)(&DAT_841dbfa2)[(int)uVar10 * 0x20]) {
+      iVar5 = (int)uVar10 * 0x40;
+      if ((&DAT_841dbfac)[iVar5] == '\0') {
+        MyAssertHandler(0xffffffff82185bb8,0xd8f,0,0xffffffff82000f98,0xffffffff821862b4);
+      }
+      if ((param_3 & 0xffffffff) < (ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar5)) break;
+      uVar8 = uVar10;
+    }
+  }
+  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xd97,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  (&DAT_841dbfa0)[uVar9 * 0x20] = (short)uVar8;
+  (&DAT_841dbfa2)[uVar9 * 0x20] = (short)uVar10;
+  *(short *)(&DAT_841dbfa8 + iVar3) = (short)param_3;
+  iVar5 = (int)param_3 * 8 + *piVar7;
+  *(undefined2 *)(&DAT_841dbfa4 + iVar3) = 0;
+  *(short *)(&DAT_841dbfa6 + iVar3) = (short)param_4;
+  *(undefined2 *)(&DAT_841dbfaa + iVar3) = param_2;
+  *(undefined4 *)(&DAT_841dbfb4 + iVar3) = *(undefined4 *)(iVar5 + 0x10);
+  if (*(short *)(&DAT_841dbfb6 + iVar3) != *(short *)(iVar5 + 0x12)) {
+    MyAssertHandler(0xffffffff82185bb8,0xda2,0,0xffffffff82000f98,0xffffffff8218627c);
+  }
+  if (*(short *)(&DAT_841dbfb4 + iVar3) != *(short *)(iVar5 + 0x10)) {
+    MyAssertHandler(0xffffffff82185bb8,0xda3,0,0xffffffff82000f98,0xffffffff82186248);
+  }
+  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xda5,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  if ((&DAT_841dbfac)[iVar3] != '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0xda8,0,0xffffffff82000f98,0xffffffff82186238);
+  }
+  *(int **)(&DAT_841dbfb0 + iVar3) = piVar7;
+  (&DAT_841dbfac)[iVar3] = 1;
+  sync(1);
+  if (uVar10 != 0) {
+    *(ushort *)((int)&DAT_841dbfa0 + (int)(uVar10 << 6)) = uVar6;
+  }
+  if (uVar8 == 0) {
+    if ((param_4 & 0xffffffff) == 0) {
+      *(ushort *)(piVar7 + 4) = uVar6;
+      __restgprlr_17(uVar9);
+      return;
+    }
+    *(ushort *)(&DAT_841dbfa4 + iVar4) = uVar6;
+    __restgprlr_17(uVar9);
+    return;
+  }
+  *(ushort *)((int)&DAT_841dbfa2 + (int)(uVar8 << 6)) = uVar6;
+  __restgprlr_17(uVar9);
+  return;
+}
+
+
+// 82622558  XAnimEnsureGoalWeightParent  (xanim/xanim.cpp:3528)
+
+void XAnimEnsureGoalWeightParent(undefined8 param_1,ulonglong param_2)
+
+{
+  ushort uVar1;
+  int *piVar2;
+  uint uVar3;
+  int *piVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  
+  piVar4 = (int *)__savegprlr_23();
+  piVar2 = (int *)*piVar4;
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xdd0,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    if (*(short *)(piVar2 + 4) == 0) {
+      iVar5 = XAnimAllocInfoWithParent(piVar2,0,0,0,0);
+      iVar5 = iVar5 * 0x40;
+      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+      lVar7 = 8;
+      do {
+        puVar6 = puVar6 + 1;
+        *puVar6 = 0;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+      *(undefined4 *)(&DAT_841dbfc8 + iVar5) = 0x3f800000;
+      *(undefined4 *)(&DAT_841dbfcc + iVar5) = 0x3f800000;
+      *(undefined4 *)(&DAT_841dbfc4 + iVar5) = 0;
+      *(undefined4 *)(&DAT_841dbfd0 + iVar5) = 0x3f800000;
+      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+      __restgprlr_23();
+      return;
+    }
+  }
+  else {
+    iVar5 = XAnimEnsureGoalWeightParent
+                      (piVar4,*(undefined2 *)((int)((param_2 & 0xffffffff) << 3) + *piVar2 + 0xe));
+    uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar5 * 0x40);
+    while (uVar3 = (uint)uVar1, uVar3 != 0) {
+      if ((&DAT_841dbfac)[uVar3 * 0x40] == '\0') {
+        MyAssertHandler(0xffffffff82185bb8,0xdea,0,0xffffffff82000f98,0xffffffff82185e68);
+      }
+      if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + uVar3 * 0x40) == (param_2 & 0xffffffff)) {
+        __restgprlr_23(uVar3);
+        return;
+      }
+      uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+    }
+    iVar5 = XAnimAllocInfoWithParent(piVar2,0,param_2,iVar5,0);
+    iVar5 = iVar5 * 0x40;
+    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+    lVar7 = 8;
+    do {
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+  }
+  __restgprlr_23();
+  return;
 }
 
 
 // 826269B8  XAnimAllocInfoIndex  (xanim/xanim.cpp:3577)
 
-void XAnimAllocInfoIndex(void)
+void XAnimAllocInfoIndex(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint *puVar1;
+  int *piVar4;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  longlong lVar5;
+  longlong lVar6;
+  undefined1 auStack_440 [1088];
+  
+  piVar4 = (int *)__savegprlr_26();
+  puVar1 = (uint *)*piVar4;
+  if (puVar1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xe02,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    uVar2 = 0;
+  }
+  else {
+    lVar5 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar1;
+    lVar6 = lVar5 + 0xc;
+    uVar2 = XAnimEnsureGoalWeightParent(piVar4,*(undefined2 *)((int)lVar5 + 0xe));
+    if (*(short *)lVar6 == 0) {
+      Profile_Begin(0x13f);
+      XAnimInitModelMap(piVar4[0x26],*(undefined1 *)((int)piVar4 + 9),auStack_440);
+      uVar3 = XAnimGetPartsInternal(lVar6);
+      uVar3 = XAnimGetAnimMap(uVar3,auStack_440);
+      Profile_EndInternal(0);
+      goto LAB_82626a74;
+    }
+  }
+  uVar3 = 0;
+LAB_82626a74:
+  XAnimAllocInfoWithParent(puVar1,uVar3,param_2,uVar2,param_3);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -2037,11 +4033,56 @@ longlong XAnimAllocInfo(void)
 
 // 82622718  XAnimClearGoalWeightInternal  (xanim/xanim.cpp:3626)
 
-void XAnimClearGoalWeightInternal(void)
+void XAnimClearGoalWeightInternal
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int *piVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  
+  piVar2 = (int *)__savegprlr_27();
+  dVar4 = extraout_f1;
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xe2e,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar2 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xe2f,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0xe30,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  }
+  iVar1 = (int)param_2 * 0x40;
+  if ((&DAT_841dbfac)[iVar1] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0xe33,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if ((*(float *)(&DAT_841dbfc8 + iVar1) == 0.0) && (param_4 == 0)) {
+    dVar3 = (double)*(float *)(&DAT_841dbfc4 + iVar1);
+    if ((float)(dVar4 - (double)*(float *)(&DAT_841dbfc4 + iVar1)) < 0.0) {
+      dVar3 = dVar4;
+    }
+    *(float *)(&DAT_841dbfc4 + iVar1) = (float)dVar3;
+  }
+  else {
+    *(float *)(&DAT_841dbfc4 + iVar1) = (float)dVar4;
+  }
+  *(undefined4 *)(&DAT_841dbfc8 + iVar1) = 0;
+  if (dVar4 == 0.0) {
+    *(undefined4 *)(&DAT_841dbfcc + iVar1) = 0;
+    (&DAT_841dbfd4)[iVar1] = 1;
+  }
+  if (*(short *)(&DAT_841dbf9c + iVar1) != 0) {
+    SL_RemoveRefToString();
+    *(undefined2 *)(&DAT_841dbf9c + iVar1) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+    __restgprlr_27();
+    return;
+  }
+  *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2063,11 +4104,31 @@ void XAnimClearGoalWeight
 
 // 826228E8  XAnimClearTreeGoalWeightsInternal  (xanim/xanim.cpp:3668)
 
-void XAnimClearTreeGoalWeightsInternal(void)
+void XAnimClearTreeGoalWeightsInternal
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ushort uVar1;
+  undefined8 uVar2;
+  undefined8 uVar3;
+  short sVar4;
+  undefined8 extraout_f1;
+  undefined8 uVar5;
+  
+  uVar2 = __savegprlr_28();
+  uVar5 = extraout_f1;
+  XAnimClearGoalWeightInternal();
+  sVar4 = 0;
+  for (uVar1 = *(ushort *)(&DAT_841dbfa4 + (int)((param_2 & 0xffffffff) << 6)); uVar1 != 0;
+      uVar1 = (&DAT_841dbfa2)[(uint)uVar1 * 0x20]) {
+    if ((param_4 == 0) || (uVar3 = 1, sVar4 == *(short *)(&DAT_841dbfa8 + (uint)uVar1 * 0x40))) {
+      uVar3 = 0;
+    }
+    XAnimClearTreeGoalWeightsInternal(uVar5,uVar2,uVar1,param_3,uVar3);
+    sVar4 = *(short *)(&DAT_841dbfa8 + (uint)uVar1 * 0x40);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2087,6 +4148,48 @@ void XAnimClearTreeGoalWeights
 }
 
 
+// 826229E0  XAnimClearTreeGoalWeightsStrict  (xanim/xanim.cpp:3694)
+
+void XAnimClearTreeGoalWeightsStrict(undefined8 param_1,ulonglong param_2)
+
+{
+  int iVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  uint uVar4;
+  longlong lVar5;
+  undefined8 extraout_f1;
+  undefined8 uVar6;
+  
+  piVar3 = (int *)__savegprlr_28();
+  uVar6 = extraout_f1;
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xe73,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xe74,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xe75,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  lVar5 = 0;
+  iVar1 = (int)((param_2 & 0xffffffff) << 3) + *piVar3;
+  uVar4 = (uint)*(ushort *)(iVar1 + 0xc);
+  if (uVar4 != 0) {
+    do {
+      if ((*(short *)(piVar3 + 4) != 0) &&
+         (uVar2 = XAnimGetInfoIndex_r(piVar3,(ulonglong)*(ushort *)(iVar1 + 0x12) + lVar5),
+         (uVar2 & 0xffffffff) != 0)) {
+        XAnimClearTreeGoalWeightsInternal(uVar6,piVar3,uVar2);
+      }
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < (int)uVar4);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
 // 82622AF8  XAnimClearGoalWeightKnobInternal  (xanim/xanim.cpp:3711)
 
 void XAnimClearGoalWeightKnobInternal
@@ -2101,18 +4204,17 @@ void XAnimClearGoalWeightKnobInternal
   double dVar6;
   double extraout_f1;
   double dVar7;
+  double dVar8;
   
   piVar3 = (int *)__savegprlr_24();
+  dVar8 = extraout_f1;
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xe89,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   if (*piVar3 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xe8a,0,0xffffffff82000f98,0xffffffff82184c8c);
   }
   if (((param_4 & 0xffffffff) == 0) || (0xfff < (param_4 & 0xffffffff))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xe8b,0,0xffffffff82185e88,0xffffffff82185ea0,param_4);
   }
   dVar7 = 0.0;
@@ -2127,17 +4229,16 @@ void XAnimClearGoalWeightKnobInternal
   uVar4 = (ulonglong)uVar1;
   if (uVar4 != 0) {
     uVar5 = uVar4;
-    if (uVar4 == 0) {
-LAB_82622c18:
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0xe94,0,0xffffffff8218633c,0xffffffff82186310,uVar5);
-    }
+    if (uVar4 == 0) goto LAB_82622c18;
     do {
-      if (0xfff < uVar5) goto LAB_82622c18;
+      if (0xfff < uVar5) {
+LAB_82622c18:
+        MyAssertHandler(0xffffffff82185bb8,0xe94,0,0xffffffff8218633c,0xffffffff82186310,uVar5);
+      }
       iVar2 = (int)(uVar5 << 6);
       dVar6 = (double)*(float *)(&DAT_841dbfcc + iVar2);
       if (uVar5 == (param_4 & 0xffffffff)) {
-        dVar6 = ABS((double)(float)(extraout_f1 - dVar6));
+        dVar6 = ABS((double)(float)(dVar8 - dVar6));
       }
       uVar5 = (ulonglong)*(ushort *)((int)&DAT_841dbfa2 + iVar2);
       if ((float)(dVar7 - dVar6) < 0.0) {
@@ -2145,10 +4246,10 @@ LAB_82622c18:
       }
     } while (uVar5 != 0);
   }
-  dVar7 = (double)(float)(dVar7 * param_2);
+  dVar8 = (double)(float)(dVar7 * param_2);
   for (; uVar4 != 0; uVar4 = (ulonglong)*(ushort *)((int)&DAT_841dbfa2 + (int)(uVar4 << 6))) {
     if (uVar4 != (param_4 & 0xffffffff)) {
-      XAnimClearGoalWeightInternal(dVar7,piVar3,uVar4);
+      XAnimClearGoalWeightInternal(dVar8,piVar3,uVar4);
     }
   }
   __restgprlr_24();
@@ -2158,21 +4259,234 @@ LAB_82622c18:
 
 // 82626AC8  XAnimSetCompleteGoalWeightNode  (xanim/xanim.cpp:3753)
 
-void XAnimSetCompleteGoalWeightNode(void)
+void XAnimSetCompleteGoalWeightNode
+               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  float fVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  int iVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
   __savegprlr();
+  piVar4 = (int *)__savefpr_27();
+  uVar3 = XAnimSetGoalWeightNode();
+  uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6));
+  if (uVar6 != 0) {
+    dVar10 = 0.0010000000474974513;
+    dVar11 = 1.0;
+    dVar12 = 0.0;
+    do {
+      if (0xfff < uVar6) {
+        MyAssertHandler(0xffffffff82185bb8,0xeb5,0,0xffffffff82186c04,0xffffffff82186bd4,uVar6);
+      }
+      iVar5 = uVar6 * 0x40;
+      if ((double)*(float *)(&DAT_841dbfc8 + iVar5) == dVar12) {
+        dVar13 = param_2;
+        if (piVar4 == (int *)0x0) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+        }
+        if (*piVar4 == 0) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+        }
+        if (param_2 < dVar12) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+        }
+        if ((uVar6 == 0) || (0xfff < uVar6)) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar6);
+        }
+        if (*(short *)(&DAT_841dbf9c + iVar5) != 0) {
+          SL_RemoveRefToString();
+          *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        }
+        *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+        if ((&DAT_841dbfac)[iVar5] == '\0') {
+          MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+        }
+        uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar5);
+        if (*(uint *)*piVar4 <= (uint)uVar1) {
+          MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+        }
+        if (uVar1 == 0) {
+          dVar13 = dVar12;
+        }
+        if (dVar13 == dVar12) {
+          *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar11;
+          *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar12;
+          (&DAT_841dbfd4)[iVar5] = 1;
+        }
+        else {
+          if ((double)*(float *)(&DAT_841dbfcc + iVar5) == dVar12) {
+            *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar10;
+          }
+          dVar7 = (double)*(float *)(&DAT_841dbfcc + iVar5);
+          dVar9 = (double)(float)(dVar7 - dVar11);
+          if ((dVar9 == dVar12) ||
+             (dVar12 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
+                                                      dVar11) * dVar9))) {
+            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar13;
+          }
+          else {
+            dVar8 = (double)*(float *)(&DAT_841dbfc4 + iVar5);
+            if ((float)(dVar13 - (double)*(float *)(&DAT_841dbfc4 + iVar5)) < 0.0) {
+              dVar8 = dVar13;
+            }
+            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar8;
+          }
+          if (dVar11 < dVar7) {
+            dVar7 = dVar9 / dVar7;
+          }
+          else {
+            dVar7 = dVar11 - dVar7;
+          }
+          fVar2 = *(float *)(&DAT_841dbfc4 + iVar5);
+          if (*(float *)(&DAT_841dbfc4 + iVar5) - (float)((double)(float)dVar7 * dVar13) < 0.0) {
+            fVar2 = (float)((double)(float)dVar7 * dVar13);
+          }
+          *(float *)(&DAT_841dbfc4 + iVar5) = fVar2;
+        }
+        *(float *)(&DAT_841dbfc8 + iVar5) = (float)dVar11;
+        *(float *)(&DAT_841dbfd0 + iVar5) = (float)dVar11;
+        *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+        if (*(short *)(&DAT_841dbf9a + iVar5) != -1) {
+          MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+        }
+        *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+      }
+      uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + iVar5);
+    } while (uVar6 != 0);
+    uVar3 = uVar3 & 0xffffffff;
+  }
+  __restfpr_27(uVar3);
+  __restgprlr();
+  return;
 }
 
 
 // 82626DC8  XAnimSetCompleteGoalWeightNodeRel  (xanim/xanim.cpp:3776)
 
-void XAnimSetCompleteGoalWeightNodeRel(void)
+void XAnimSetCompleteGoalWeightNodeRel
+               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,uint param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  float fVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  int iVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  
   __savegprlr();
+  piVar4 = (int *)__savefpr_27();
+  uVar3 = XAnimSetGoalWeightNode();
+  uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6));
+  if (uVar6 != 0) {
+    dVar10 = 0.0010000000474974513;
+    dVar11 = 1.0;
+    dVar12 = 0.0;
+    do {
+      if (0xfff < uVar6) {
+        MyAssertHandler(0xffffffff82185bb8,0xecc,0,0xffffffff82186c04,0xffffffff82186bd4,uVar6);
+      }
+      iVar5 = uVar6 * 0x40;
+      if (*(ushort *)(&DAT_841dbfa8 + iVar5) == param_5) break;
+      if ((double)*(float *)(&DAT_841dbfc8 + iVar5) == dVar12) {
+        dVar13 = param_2;
+        if (piVar4 == (int *)0x0) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+        }
+        if (*piVar4 == 0) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+        }
+        if (param_2 < dVar12) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+        }
+        if ((uVar6 == 0) || (0xfff < uVar6)) {
+          MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar6);
+        }
+        if (*(short *)(&DAT_841dbf9c + iVar5) != 0) {
+          SL_RemoveRefToString();
+          *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        }
+        *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+        if ((&DAT_841dbfac)[iVar5] == '\0') {
+          MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+        }
+        uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar5);
+        if (*(uint *)*piVar4 <= (uint)uVar1) {
+          MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+        }
+        if (uVar1 == 0) {
+          dVar13 = dVar12;
+        }
+        if (dVar13 == dVar12) {
+          *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar11;
+          *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar12;
+          (&DAT_841dbfd4)[iVar5] = 1;
+        }
+        else {
+          if ((double)*(float *)(&DAT_841dbfcc + iVar5) == dVar12) {
+            *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar10;
+          }
+          dVar7 = (double)*(float *)(&DAT_841dbfcc + iVar5);
+          dVar9 = (double)(float)(dVar7 - dVar11);
+          if ((dVar9 == dVar12) ||
+             (dVar12 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
+                                                      dVar11) * dVar9))) {
+            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar13;
+          }
+          else {
+            dVar8 = (double)*(float *)(&DAT_841dbfc4 + iVar5);
+            if ((float)(dVar13 - (double)*(float *)(&DAT_841dbfc4 + iVar5)) < 0.0) {
+              dVar8 = dVar13;
+            }
+            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar8;
+          }
+          if (dVar11 < dVar7) {
+            dVar7 = dVar9 / dVar7;
+          }
+          else {
+            dVar7 = dVar11 - dVar7;
+          }
+          fVar2 = *(float *)(&DAT_841dbfc4 + iVar5);
+          if (*(float *)(&DAT_841dbfc4 + iVar5) - (float)((double)(float)dVar7 * dVar13) < 0.0) {
+            fVar2 = (float)((double)(float)dVar7 * dVar13);
+          }
+          *(float *)(&DAT_841dbfc4 + iVar5) = fVar2;
+        }
+        *(float *)(&DAT_841dbfc8 + iVar5) = (float)dVar11;
+        *(float *)(&DAT_841dbfd0 + iVar5) = (float)dVar11;
+        *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+        if (*(short *)(&DAT_841dbf9a + iVar5) != -1) {
+          MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+        }
+        *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+      }
+      uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + iVar5);
+    } while (uVar6 != 0);
+    uVar3 = uVar3 & 0xffffffff;
+  }
+  __restfpr_27(uVar3);
+  __restgprlr();
+  return;
 }
 
 
@@ -2193,50 +4507,49 @@ void XAnimSetCompleteGoalWeightKnob
   longlong lVar6;
   double extraout_f1;
   double dVar7;
+  double dVar8;
   
   __savegprlr_25();
   piVar2 = (int *)__savefpr_28();
+  dVar8 = extraout_f1;
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xedd,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if (((in_r8 & 0xffffffff) != 0) && (extraout_f1 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  dVar7 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
     MyAssertHandler(0xffffffff82185bb8,0xede,0,0xffffffff82000f98,0xffffffff821863c0);
   }
-  dVar7 = extraout_f1;
-  if ((extraout_f1 < 0.0010000000474974513) && (dVar7 = 0.0, (in_r8 & 0xffffffff) != 0)) {
-    dVar7 = 0.0010000000474974513;
+  if ((dVar8 < 0.0010000000474974513) && (dVar8 = dVar7, (in_r8 & 0xffffffff) != 0)) {
+    dVar8 = 0.0010000000474974513;
   }
   iVar1 = *piVar2;
-  if (iVar1 != 0) {
-    iVar3 = XAnimGetInfoIndex(iVar1,param_5);
-    if (iVar3 == 0) {
-      iVar3 = XAnimAllocInfoIndex(piVar2,param_5,0);
-      iVar4 = iVar3 * 0x40;
-      puVar5 = (undefined4 *)(&DAT_841dbfb4 + iVar4);
-      lVar6 = 8;
-      do {
-        puVar5 = puVar5 + 1;
-        *puVar5 = 0;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      *(undefined2 *)(&DAT_841dbf9c + iVar4) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar4) = 0;
-      *(undefined2 *)(&DAT_841dbf9a + iVar4) = 0xffff;
-      *(undefined2 *)(&DAT_841dbf9e + iVar4) = 0;
-    }
-    else if (in_r9 != 0) {
-      iVar3 = XAnimRestart(param_2,iVar1,iVar3);
-    }
-    XAnimClearGoalWeightKnobInternal(dVar7,param_2,iVar1,iVar3);
-    XAnimSetCompleteGoalWeightNode(dVar7,param_2,param_3,iVar1,iVar3);
-    __restfpr_28();
-    __restgprlr_25();
-    return;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xee4,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0xee4,0,0xffffffff82000f98,0xffffffff821813e0);
+  iVar3 = XAnimGetInfoIndex(iVar1,param_5);
+  if (iVar3 == 0) {
+    iVar3 = XAnimAllocInfoIndex(piVar2,param_5,0);
+    iVar4 = iVar3 * 0x40;
+    puVar5 = (undefined4 *)(&DAT_841dbfb4 + iVar4);
+    lVar6 = 8;
+    do {
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    *(undefined2 *)(&DAT_841dbf9c + iVar4) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar4) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar4) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar4) = 0;
+  }
+  else if (in_r9 != 0) {
+    iVar3 = XAnimRestart(param_2,iVar1,iVar3);
+  }
+  XAnimClearGoalWeightKnobInternal(dVar8,param_2,iVar1,iVar3);
+  XAnimSetCompleteGoalWeightNode(dVar8,param_2,param_3,iVar1,iVar3);
+  __restfpr_28();
+  __restgprlr_25();
+  return;
 }
 
 
@@ -2257,20 +4570,18 @@ void XAnimSetGoalWeightKnobAll
   undefined8 uVar6;
   
   puVar3 = (undefined4 *)__savegprlr_24();
+  uVar2 = extraout_f1;
   if ((param_5 & 0xffffffff) == (param_6 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xefd,0,0xffffffff82000f98,0xffffffff82186f70);
   }
   if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xefe,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  uVar2 = XAnimSetGoalWeightKnob(extraout_f1,param_2,param_3,puVar3,param_5);
+  uVar2 = XAnimSetGoalWeightKnob(uVar2,param_2,param_3,puVar3,param_5);
   Profile_Begin(0x143);
   uVar1 = *puVar3;
   iVar4 = XAnimGetInfoIndex(uVar1,param_5);
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xf07,0,0xffffffff82000f98,0xffffffff82186144);
   }
   uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar4 * 0x40);
@@ -2313,20 +4624,18 @@ void XAnimSetCompleteGoalWeightKnobAll
   undefined8 uVar6;
   
   puVar3 = (undefined4 *)__savegprlr_24();
+  uVar2 = extraout_f1;
   if ((param_5 & 0xffffffff) == (param_6 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xf28,0,0xffffffff82000f98,0xffffffff82186f70);
   }
   if (puVar3 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xf29,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  uVar2 = XAnimSetGoalWeightKnob(extraout_f1,param_2,param_3,puVar3,param_5);
+  uVar2 = XAnimSetGoalWeightKnob(uVar2,param_2,param_3,puVar3,param_5);
   Profile_Begin(0x143);
   uVar1 = *puVar3;
   iVar4 = XAnimGetInfoIndex(uVar1,param_5);
   if (iVar4 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xf32,0,0xffffffff82000f98,0xffffffff82186144);
   }
   uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar4 * 0x40);
@@ -2370,62 +4679,93 @@ void XAnimSetGoalWeightKnob
   longlong lVar7;
   double extraout_f1;
   double dVar8;
+  double dVar9;
   
   __savegprlr_25();
   piVar3 = (int *)__savefpr_28();
-  dVar8 = extraout_f1;
+  dVar9 = extraout_f1;
   Profile_Begin(0x143);
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0xf54,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if (((in_r8 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  dVar8 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
     MyAssertHandler(0xffffffff82185bb8,0xf55,0,0xffffffff82000f98,0xffffffff821863c0);
   }
-  if ((dVar8 < 0.0010000000474974513) && (dVar8 = 0.0, (in_r8 & 0xffffffff) != 0)) {
-    dVar8 = 0.0010000000474974513;
+  if ((dVar9 < 0.0010000000474974513) && (dVar9 = dVar8, (in_r8 & 0xffffffff) != 0)) {
+    dVar9 = 0.0010000000474974513;
   }
   iVar1 = *piVar3;
-  if (iVar1 != 0) {
-    iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-    if (iVar4 == 0) {
-      iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-      iVar5 = iVar4 * 0x40;
-      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-      lVar7 = 8;
-      do {
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-    }
-    else if (in_r9 != 0) {
-      iVar4 = XAnimRestart(param_2,iVar1,iVar4);
-    }
-    XAnimClearGoalWeightKnobInternal(dVar8,param_2,iVar1,iVar4);
-    uVar2 = XAnimSetGoalWeightNode(dVar8,param_2,param_3,iVar1,iVar4);
-    Profile_EndInternal(0);
-    __restfpr_28(uVar2);
-    __restgprlr_25();
-    return;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xf5b,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0xf5b,0,0xffffffff82000f98,0xffffffff821813e0);
+  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
+  if (iVar4 == 0) {
+    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
+    iVar5 = iVar4 * 0x40;
+    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+    lVar7 = 8;
+    do {
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+  }
+  else if (in_r9 != 0) {
+    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+  }
+  XAnimClearGoalWeightKnobInternal(dVar9,param_2,iVar1,iVar4);
+  uVar2 = XAnimSetGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
+  Profile_EndInternal(0);
+  __restfpr_28(uVar2);
+  __restgprlr_25();
+  return;
 }
 
 
 // 82622CB8  XAnimClearChildGoalWeights  (xanim/xanim.cpp:3954)
 
-void XAnimClearChildGoalWeights(void)
+void XAnimClearChildGoalWeights(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  uint uVar4;
+  longlong lVar5;
+  undefined8 extraout_f1;
+  undefined8 uVar6;
+  
+  piVar3 = (int *)__savegprlr_28();
+  uVar6 = extraout_f1;
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xf77,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xf78,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0xf79,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  lVar5 = 0;
+  iVar1 = (int)((param_2 & 0xffffffff) << 3) + *piVar3;
+  uVar4 = (uint)*(ushort *)(iVar1 + 0xc);
+  if (uVar4 != 0) {
+    do {
+      if ((*(short *)(piVar3 + 4) != 0) &&
+         (uVar2 = XAnimGetInfoIndex_r(piVar3,(ulonglong)*(ushort *)(iVar1 + 0x12) + lVar5),
+         (uVar2 & 0xffffffff) != 0)) {
+        XAnimClearGoalWeightInternal(uVar6,piVar3,uVar2);
+      }
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < (int)uVar4);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2434,28 +4774,374 @@ void XAnimClearChildGoalWeights(void)
 void XAnimClearTree(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xf84,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if ((*(short *)(iVar1 + 0x10) != 0) && (XAnimFreeInfo(iVar1), *(short *)(iVar1 + 0x10) != 0)) {
+    MyAssertHandler(0xffffffff82185bb8,0xf89,0,0xffffffff82000f98,0xffffffff82186358);
+  }
+  if (*(int *)(iVar1 + 4) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xf8d,0,0xffffffff82185d78,0xffffffff82185d94);
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 82622E88  XAnimGetDescendantWithGreatestWeight  (xanim/xanim.cpp:3987)
+
+void XAnimGetDescendantWithGreatestWeight(undefined8 param_1,int param_2)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
+  
+  uVar3 = __savegprlr_27();
+  param_2 = param_2 * 0x40;
+  if ((&DAT_841dbfac)[param_2] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0xf9c,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  if (*(short *)(&DAT_841dbfaa + param_2) == 0) {
+    dVar6 = 0.0;
+    uVar5 = 0;
+    uVar1 = *(ushort *)(&DAT_841dbfa4 + param_2);
+    while (uVar2 = (uint)uVar1, uVar2 != 0) {
+      dVar7 = (double)*(float *)(&DAT_841dbfc8 + uVar2 * 0x40);
+      if ((dVar6 < dVar7) &&
+         (uVar4 = XAnimGetDescendantWithGreatestWeight(uVar3), (uVar4 & 0xffffffff) != 0)) {
+        uVar5 = uVar4;
+        dVar6 = dVar7;
+      }
+      uVar1 = (&DAT_841dbfa2)[uVar2 * 0x20];
+    }
+    __restgprlr_27(uVar5);
+    return;
+  }
+  if (*(float *)(&DAT_841dbfc8 + param_2) == 0.0) {
+    MyAssertHandler(0xffffffff82185bb8,0xfa1,0,0xffffffff82000f98,0xffffffff82186368);
+  }
+  __restgprlr_27(*(undefined2 *)(&DAT_841dbfa8 + param_2));
+  return;
 }
 
 
 // 82622F98  XAnimSetGoalWeightNode  (xanim/xanim.cpp:4027)
 
-void XAnimSetGoalWeightNode(void)
+void XAnimSetGoalWeightNode
+               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
+               ulonglong param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
+  ushort uVar1;
+  float fVar2;
+  int iVar3;
+  int *piVar4;
+  short sVar5;
+  ulonglong in_r8;
+  ulonglong in_r9;
+  double dVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  
   __savegprlr_23();
+  piVar4 = (int *)__savefpr_27();
+  dVar10 = extraout_f1;
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*piVar4 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  dVar9 = 0.0;
+  dVar8 = 0.0010000000474974513;
+  if ((dVar10 != 0.0) && (dVar10 < 0.0010000000474974513)) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc3,0,0xffffffff82000f98,0xffffffff821863f8);
+  }
+  if (param_2 < dVar9) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+  }
+  if (param_3 < dVar9) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc5,0,0xffffffff82000f98,0xffffffff821863dc);
+  }
+  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc6,0,0xffffffff82000f98,0xffffffff821863c0);
+  }
+  if (((in_r9 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc7,0,0xffffffff82000f98,0xffffffff821863a4);
+  }
+  if (((param_5 & 0xffffffff) == 0) || (0xfff < (param_5 & 0xffffffff))) {
+    MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,param_5);
+  }
+  iVar3 = (int)param_5 * 0x40;
+  if (*(short *)(&DAT_841dbf9c + iVar3) != 0) {
+    SL_RemoveRefToString();
+    *(undefined2 *)(&DAT_841dbf9c + iVar3) = 0;
+  }
+  *(undefined2 *)(&DAT_841dbf9a + iVar3) = 0xffff;
+  if ((&DAT_841dbfac)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+  }
+  uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar3);
+  if (*(uint *)*piVar4 <= (uint)uVar1) {
+    MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  if (uVar1 == 0) {
+    param_3 = 1.0;
+    param_2 = dVar9;
+    dVar10 = param_3;
+  }
+  if (param_2 == dVar9) {
+    *(float *)(&DAT_841dbfcc + iVar3) = (float)dVar10;
+    *(float *)(&DAT_841dbfc4 + iVar3) = (float)dVar9;
+    (&DAT_841dbfd4)[iVar3] = 1;
+  }
+  else {
+    if ((double)*(float *)(&DAT_841dbfcc + iVar3) == dVar9) {
+      *(float *)(&DAT_841dbfcc + iVar3) = (float)(dVar10 * dVar8);
+    }
+    dVar6 = (double)*(float *)(&DAT_841dbfcc + iVar3);
+    dVar8 = (double)(float)(dVar6 - dVar10);
+    if ((dVar8 == dVar9) ||
+       (dVar9 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar3) - dVar10)
+                               * dVar8))) {
+      *(float *)(&DAT_841dbfc4 + iVar3) = (float)param_2;
+    }
+    else {
+      dVar7 = (double)*(float *)(&DAT_841dbfc4 + iVar3);
+      if ((float)(param_2 - (double)*(float *)(&DAT_841dbfc4 + iVar3)) < 0.0) {
+        dVar7 = param_2;
+      }
+      *(float *)(&DAT_841dbfc4 + iVar3) = (float)dVar7;
+    }
+    if (dVar10 != dVar9) {
+      if (dVar10 < dVar6) {
+        dVar8 = dVar8 / dVar6;
+      }
+      else {
+        dVar8 = (double)(float)(dVar10 - dVar6) / dVar10;
+      }
+      fVar2 = *(float *)(&DAT_841dbfc4 + iVar3);
+      if (*(float *)(&DAT_841dbfc4 + iVar3) - (float)((double)(float)dVar8 * param_2) < 0.0) {
+        fVar2 = (float)((double)(float)dVar8 * param_2);
+      }
+      *(float *)(&DAT_841dbfc4 + iVar3) = fVar2;
+    }
+  }
+  *(float *)(&DAT_841dbfc8 + iVar3) = (float)dVar10;
+  *(float *)(&DAT_841dbfd0 + iVar3) = (float)param_3;
+  *(short *)(&DAT_841dbf9c + iVar3) = (short)in_r8;
+  if ((in_r8 & 0xffffffff) != 0) {
+    SL_AddRefToString(in_r8);
+  }
+  *(short *)(&DAT_841dbf9e + iVar3) = (short)in_r9;
+  if (*(short *)(&DAT_841dbf9a + iVar3) != -1) {
+    MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+  }
+  if ((((in_r8 & 0xffffffff) == 0) || (*(short *)(&DAT_841dbfaa + iVar3) != 0)) ||
+     ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 3) == 0)) {
+    *(short *)(&DAT_841dbf98 + iVar3) = 0;
+  }
+  else {
+    if (dVar10 == dVar9) {
+      MyAssertHandler(0xffffffff82185bb8,0x1006,0,0xffffffff82000f98,0xffffffff82186380);
+    }
+    sVar5 = XAnimGetDescendantWithGreatestWeight(piVar4,param_5);
+    *(short *)(&DAT_841dbf98 + iVar3) = sVar5;
+    if (sVar5 == 0) {
+      __restfpr_27(2);
+      __restgprlr_23();
+      return;
+    }
+  }
+  __restfpr_27(0);
+  __restgprlr_23();
+  return;
+}
+
+
+// 82623358  XAnimFillInSyncNodes_r  (xanim/xanim.cpp:4117)
+
+void XAnimFillInSyncNodes_r(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+
+{
+  ushort uVar1;
+  undefined4 uVar2;
+  ushort *puVar3;
+  longlong lVar4;
+  undefined4 *puVar6;
+  int iVar7;
+  undefined8 uVar5;
+  longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
+  
+  lVar4 = __savegprlr_27();
+  lVar8 = (param_2 & 0x1fffffff) * 8 + lVar4;
+  lVar10 = lVar8 + 0xc;
+  iVar7 = (int)lVar8;
+  if (*(short *)(iVar7 + 0xc) == 0) {
+    puVar6 = (undefined4 *)XAnimGetPartsInternal(lVar10);
+    iVar7 = DB_IsXAssetDefault(2,*puVar6);
+    if (iVar7 != 0) {
+      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
+      Com_Error(1,0xffffffff821864f0,uVar5);
+    }
+    if (((ulonglong)*(byte *)(puVar6 + 4) & 1) != (param_3 & 0xff)) {
+      uVar2 = *(undefined4 *)((int)lVar4 + 4);
+      if ((param_3 & 0xff) != 0) {
+        uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
+        Com_Error(1,0xffffffff821864b0,uVar5,uVar2);
+        __restgprlr_27();
+        return;
+      }
+      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
+      Com_Error(1,0xffffffff82186470,uVar5,uVar2);
+      __restgprlr_27();
+      return;
+    }
+  }
+  else {
+    if ((*(ushort *)(iVar7 + 0x10) & 3) != 0) {
+      lVar8 = 0;
+      do {
+        lVar8 = lVar8 + 1;
+        lVar9 = (ulonglong)*(ushort *)((int)lVar10 + 6) * 8 + lVar4;
+        lVar10 = lVar9 + 0xc;
+      } while (*(short *)((int)lVar9 + 0xc) != 0);
+      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
+      Com_Error(1,0xffffffff82186428,*(undefined4 *)((int)lVar4 + 4),lVar8,uVar5);
+    }
+    puVar3 = (ushort *)lVar10;
+    uVar1 = *puVar3;
+    lVar8 = 0;
+    puVar3[2] = ((param_3 & 0xff) == 0) + 1 | puVar3[2];
+    if (uVar1 != 0) {
+      do {
+        XAnimFillInSyncNodes_r(lVar4,(ulonglong)puVar3[3] + lVar8,param_3);
+        lVar8 = lVar8 + 1;
+      } while ((int)lVar8 < (int)(uint)uVar1);
+    }
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 826234E8  XAnimSetupSyncNodes_r  (xanim/xanim.cpp:4183)
 
-void XAnimSetupSyncNodes_r(void)
+void XAnimSetupSyncNodes_r(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_19();
+  ushort uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  bool bVar4;
+  int iVar6;
+  undefined4 *puVar7;
+  int iVar8;
+  undefined8 uVar5;
+  int iVar9;
+  int iVar10;
+  longlong lVar11;
+  ushort uVar13;
+  ushort *puVar12;
+  
+  iVar6 = __savegprlr_19();
+  iVar3 = param_2 * 8 + iVar6;
+  uVar1 = *(ushort *)(iVar3 + 0xc);
+  if (uVar1 != 0) {
+    uVar13 = *(ushort *)(iVar3 + 0x10) & 3;
+    if ((*(ushort *)(iVar3 + 0x10) & 3) == 0) {
+      lVar11 = 0;
+      if (uVar1 != 0) {
+        do {
+          XAnimSetupSyncNodes_r(iVar6,(ulonglong)*(ushort *)(iVar3 + 0x12) + lVar11);
+          lVar11 = lVar11 + 1;
+        } while ((int)lVar11 < (int)(uint)uVar1);
+      }
+    }
+    else {
+      if (uVar13 == 3) {
+        Com_Error(1,0xffffffff8218650c);
+      }
+      iVar9 = 0;
+      *(ushort *)(iVar3 + 0x10) = *(ushort *)(iVar3 + 0x10) | 4;
+      bVar4 = uVar13 == 1;
+      if (uVar1 != 0) {
+        do {
+          iVar10 = (uint)*(ushort *)(iVar3 + 0x12) + iVar9;
+          iVar8 = iVar10 * 8 + iVar6;
+          puVar12 = (ushort *)(iVar8 + 0xc);
+          if (*(short *)(iVar8 + 0xc) == 0) {
+            puVar7 = (undefined4 *)XAnimGetPartsInternal(puVar12);
+            iVar8 = DB_IsXAssetDefault(2,*puVar7);
+            if (iVar8 != 0) {
+              uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
+              Com_Error(1,0xffffffff821864f0,uVar5);
+            }
+            if ((bool)(*(byte *)(puVar7 + 4) & 1) != bVar4) {
+              uVar2 = *(undefined4 *)(iVar6 + 4);
+              if (bVar4) {
+                uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
+                Com_Error(1,0xffffffff821864b0,uVar5,uVar2);
+              }
+              else {
+                uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
+                Com_Error(1,0xffffffff82186470,uVar5,uVar2);
+              }
+            }
+          }
+          else {
+            if ((*(ushort *)(iVar8 + 0x10) & 3) != 0) {
+              lVar11 = 0;
+              do {
+                lVar11 = lVar11 + 1;
+                iVar8 = (uint)puVar12[3] * 8 + iVar6;
+                puVar12 = (ushort *)(iVar8 + 0xc);
+              } while (*(short *)(iVar8 + 0xc) != 0);
+              uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
+              Com_Error(1,0xffffffff82186428,*(undefined4 *)(iVar6 + 4),lVar11,uVar5);
+            }
+            uVar13 = *puVar12;
+            lVar11 = 0;
+            puVar12[2] = !bVar4 + 1 | puVar12[2];
+            if (uVar13 != 0) {
+              do {
+                XAnimFillInSyncNodes_r(iVar6,(ulonglong)puVar12[3] + lVar11,bVar4);
+                lVar11 = lVar11 + 1;
+              } while ((int)lVar11 < (int)(uint)uVar13);
+            }
+          }
+          iVar9 = iVar9 + 1;
+        } while (iVar9 < (int)(uint)uVar1);
+        __restgprlr_19();
+        return;
+      }
+    }
+  }
+  __restgprlr_19();
+  return;
+}
+
+
+// 82623720  XAnimSetupSyncNodes  (xanim/xanim.cpp:4214)
+
+void XAnimSetupSyncNodes(undefined8 param_1)
+
+{
+  XAnimSetupSyncNodes_r(param_1,0);
+  return;
 }
 
 
@@ -2485,31 +5171,127 @@ bool XAnimIsPrimitive(int param_1,int param_2)
 
 // 82623778  XAnimSetTime  (xanim/xanim.cpp:4235)
 
-void XAnimSetTime(void)
+void XAnimSetTime(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  byte bVar1;
+  int iVar2;
+  uint *puVar5;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  double extraout_f1;
+  double dVar9;
+  double dVar10;
+  
+  puVar5 = (uint *)__savegprlr_26();
+  dVar10 = extraout_f1;
+  if (puVar5 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1093,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*puVar5 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1094,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*puVar5 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0x1095,0,0xffffffff82000f98,0xffffffff82186218);
+  }
+  uVar3 = XAnimGetInfoIndex(puVar5,param_2);
+  if ((uVar3 & 0xffffffff) == 0) goto LAB_826239c8;
+  lVar7 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar5;
+  lVar8 = lVar7 + 0xc;
+  if (*(short *)((int)lVar7 + 0xc) != 0) {
+    uVar4 = XAnimGetAnimDebugName((ulonglong)*puVar5,param_2);
+    uVar4 = va(dVar10,0xffffffff821865e0,uVar4,dVar10);
+    MyAssertHandler(0xffffffff82185bb8,0x109d,0,0xffffffff820011f4,0xffffffff82185fac,uVar4);
+  }
+  dVar9 = 1.0;
+  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
+    MyAssertHandler(dVar10,0xffffffff82185bb8,0x109f,0,0xffffffff82028794,0xffffffff821865bc,dVar10)
+    ;
+  }
+  iVar6 = XAnimGetPartsInternal(lVar8);
+  if ((*(byte *)(iVar6 + 0x10) & 1) == 0) {
+    if (dVar9 < dVar10) goto LAB_82623918;
+  }
+  else if (dVar9 <= dVar10) {
+LAB_82623918:
+    iVar6 = XAnimGetPartsInternal(lVar8);
+    bVar1 = *(byte *)(iVar6 + 0x10);
+    uVar4 = XAnimGetAnimDebugName(*puVar5,param_2);
+    uVar4 = va(dVar10,0xffffffff8218659c,uVar4,dVar10,bVar1 & 1);
+    MyAssertHandler(0xffffffff82185bb8,0x10a0,0,0xffffffff820011f4,0xffffffff82186548,uVar4);
+  }
+  if (0xfff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0x10a3,0,0xffffffff82185e88,0xffffffff82185ea0,uVar3);
+  }
+  iVar2 = (int)uVar3;
+  iVar6 = iVar2 * 0x40;
+  (&DAT_841dbfb8)[iVar2 * 0x10] = (float)dVar10;
+  *(undefined2 *)(&DAT_841dbfc0 + iVar6) = 0;
+  (&DAT_841dbfbc)[iVar2 * 0x10] = (float)dVar10;
+  *(undefined2 *)(&DAT_841dbfc2 + iVar6) = 0;
+  *(undefined2 *)(&DAT_841dbf9a + iVar6) = 0xffff;
+LAB_826239c8:
+  __restgprlr_26();
+  return;
 }
 
 
 // 826239D8  XAnimGetAssetType  (xanim/xanim.cpp:4274)
 
-void XAnimGetAssetType(void)
+void XAnimGetAssetType(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint *puVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  puVar1 = (uint *)__savegprlr_28();
+  if (puVar1 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x10b3,0,0xffffffff82000f98,0xffffffff821813e0);
+  }
+  if (*puVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x10b4,0,0xffffffff82000f98,0xffffffff82184c8c);
+  }
+  if ((ulonglong)*(uint *)*puVar1 <= (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff82185bb8,0x10b5,0,0xffffffff821865fc,param_2);
+  }
+  lVar3 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar1 + 0xc;
+  if (lVar3 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x10b8,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  }
+  iVar2 = XAnimGetPartsInternal(lVar3);
+  __restgprlr_28(*(undefined1 *)(iVar2 + 0x1e));
+  return;
 }
 
 
 // 82623AB8  XAnimUpdateServerNotifyIndex  (xanim/xanim.cpp:4287)
 
-void XAnimUpdateServerNotifyIndex(void)
+void XAnimUpdateServerNotifyIndex(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined2 uVar2;
+  
+  iVar1 = __savegprlr_28();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x10c0,0,0xffffffff82000f98,0xffffffff8213fd58);
+  }
+  if (*(short *)(iVar1 + 4) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x10c1,0,0xffffffff82000f98,0xffffffff82186620);
+  }
+  if (*(short *)(iVar1 + 2) != -1) {
+    MyAssertHandler(0xffffffff82185bb8,0x10c2,0,0xffffffff82000f98,0xffffffff8218638c);
+  }
+  if (*(float *)(iVar1 + 0x20) != 1.0) {
+    uVar2 = XAnimGetNextNotifyIndex(param_2);
+    *(undefined2 *)(iVar1 + 2) = uVar2;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2518,61 +5300,59 @@ void XAnimUpdateServerNotifyIndex(void)
 void XAnimRestart(undefined8 param_1,ulonglong param_2)
 
 {
-  int *piVar1;
-  int iVar2;
+  ushort uVar1;
+  int *piVar2;
   int iVar3;
-  ulonglong uVar4;
+  int iVar4;
+  ulonglong uVar5;
   undefined8 extraout_f1;
+  undefined8 uVar6;
   
-  piVar1 = (int *)__savegprlr_20();
-  if (piVar1 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
+  piVar2 = (int *)__savegprlr_20();
+  uVar6 = extraout_f1;
+  if (piVar2 == (int *)0x0) {
     MyAssertHandler(0xffffffff82185bb8,0x10d3,0,0xffffffff82000f98,0xffffffff821813e0);
   }
   if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x10d4,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
   }
   if ((param_2 & 0xffffffff) != 0) {
-    uVar4 = param_2;
-    if ((param_2 & 0xffffffff) == 0) {
-LAB_826271b0:
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x10d8,0,0xffffffff82186c04,0xffffffff82186bd4,uVar4);
-    }
+    uVar5 = param_2;
+    if ((param_2 & 0xffffffff) == 0) goto LAB_826271b0;
     do {
-      if (0xfff < (uVar4 & 0xffffffff)) goto LAB_826271b0;
-      iVar2 = (int)uVar4 * 0x40;
-      if ((&DAT_841dbfac)[iVar2] == '\0') {
-                    /* WARNING: Subroutine does not return */
+      if (0xfff < (uVar5 & 0xffffffff)) {
+LAB_826271b0:
+        MyAssertHandler(0xffffffff82185bb8,0x10d8,0,0xffffffff82186c04,0xffffffff82186bd4,uVar5);
+      }
+      iVar3 = (int)uVar5 * 0x40;
+      if ((&DAT_841dbfac)[iVar3] == '\0') {
         MyAssertHandler(0xffffffff82185bb8,0x10dc,0,0xffffffff82000f98,0xffffffff82186c20);
       }
-      if (*(uint *)*piVar1 <= (uint)*(ushort *)(&DAT_841dbfa8 + iVar2)) {
-                    /* WARNING: Subroutine does not return */
+      uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar3);
+      if (*(uint *)*piVar2 <= (uint)uVar1) {
         MyAssertHandler(0xffffffff82185bb8,0x10df,0,0xffffffff82000f98,0xffffffff82186c34);
       }
-      iVar3 = (uint)*(ushort *)(&DAT_841dbfa8 + iVar2) * 8 + *piVar1;
-      if ((*(short *)(iVar3 + 0xc) != 0) && ((*(ushort *)(iVar3 + 0x10) & 4) != 0)) {
-        XAnimInitTime(extraout_f1,piVar1,uVar4);
-        iVar2 = XAnimGetInfoIndex(piVar1,*(undefined2 *)
+      iVar4 = (uint)uVar1 * 8 + *piVar2;
+      if ((*(short *)(iVar4 + 0xc) != 0) && ((*(ushort *)(iVar4 + 0x10) & 4) != 0)) {
+        XAnimInitTime(uVar6,piVar2,uVar5);
+        iVar3 = XAnimGetInfoIndex(piVar2,*(undefined2 *)
                                           (&DAT_841dbfa8 + (int)((param_2 & 0xffffffff) << 6)));
-        if (iVar2 == 0) goto LAB_826272dc;
+        if (iVar3 == 0) goto LAB_826272dc;
         goto LAB_826272a4;
       }
-      uVar4 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar2);
-    } while (uVar4 != 0);
+      uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar3);
+    } while (uVar5 != 0);
   }
-  iVar2 = (int)((param_2 & 0xffffffff) << 6);
-  if ((&DAT_841dbfac)[iVar2] == '\0') {
-                    /* WARNING: Subroutine does not return */
+  iVar3 = (int)((param_2 & 0xffffffff) << 6);
+  if ((&DAT_841dbfac)[iVar3] == '\0') {
     MyAssertHandler(0xffffffff82185bb8,0x10ed,0,0xffffffff82000f98,0xffffffff82185e68);
   }
-  if (*(short *)(&DAT_841dbfaa + iVar2) == 0) {
+  if (*(short *)(&DAT_841dbfaa + iVar3) == 0) {
 LAB_826272dc:
     __restgprlr_20(param_2);
     return;
   }
-  XAnimInitTime(extraout_f1,piVar1,param_2);
+  XAnimInitTime(uVar6,piVar2,param_2);
 LAB_826272a4:
   __restgprlr_20();
   return;
@@ -2604,16 +5384,13 @@ void XAnimSetGoalWeight(undefined8 param_1,undefined8 param_2,undefined8 param_3
   dVar9 = extraout_f1;
   Profile_Begin(0x143);
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1100,0,0xffffffff82000f98,0xffffffff820040b4);
   }
   dVar8 = 0.0;
   if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1101,0,0xffffffff82000f98,0xffffffff821863c0);
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
     MyAssertHandler(0xffffffff82185bb8,0x1102,0,0xffffffff82000f98,0xffffffff821863a4);
   }
   if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)
@@ -2621,50 +5398,75 @@ void XAnimSetGoalWeight(undefined8 param_1,undefined8 param_2,undefined8 param_3
     dVar9 = dVar8;
   }
   iVar1 = *piVar3;
-  if (iVar1 != 0) {
-    iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-    if (iVar4 == 0) {
-      if (dVar9 == dVar8) {
-        Profile_EndInternal(0);
-        __restfpr_28(0);
-        __restgprlr_24();
-        return;
-      }
-      iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-      iVar5 = iVar4 * 0x40;
-      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-      lVar7 = 8;
-      do {
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-    }
-    else if (in_r10 != 0) {
-      iVar4 = XAnimRestart(param_2,iVar1,iVar4);
-    }
-    uVar2 = XAnimSetGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
-    Profile_EndInternal(0);
-    __restfpr_28(uVar2);
-    __restgprlr_24();
-    return;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1108,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x1108,0,0xffffffff82000f98,0xffffffff821813e0);
+  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
+  if (iVar4 == 0) {
+    if (dVar9 == dVar8) {
+      Profile_EndInternal(0);
+      __restfpr_28(0);
+      __restgprlr_24();
+      return;
+    }
+    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
+    iVar5 = iVar4 * 0x40;
+    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+    lVar7 = 8;
+    do {
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+  }
+  else if (in_r10 != 0) {
+    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+  }
+  uVar2 = XAnimSetGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
+  Profile_EndInternal(0);
+  __restfpr_28(uVar2);
+  __restgprlr_24();
+  return;
 }
 
 
 // 82623B78  XAnimSetAnimRate  (xanim/xanim.cpp:4388)
 
-void XAnimSetAnimRate(void)
+void XAnimSetAnimRate(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  uint uVar2;
+  double extraout_f1;
+  double dVar3;
+  
+  piVar1 = (int *)__savegprlr_27();
+  dVar3 = extraout_f1;
+  uVar2 = XAnimGetInfoIndex();
+  if (uVar2 != 0) {
+    if (piVar1 == (int *)0x0) {
+      MyAssertHandler(0xffffffff82185bb8,0x112b,0,0xffffffff82000f98,0xffffffff821813e0);
+    }
+    if (*piVar1 == 0) {
+      MyAssertHandler(0xffffffff82185bb8,0x112c,0,0xffffffff82000f98,0xffffffff82184c8c);
+    }
+    if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
+      MyAssertHandler(0xffffffff82185bb8,0x112d,0,0xffffffff82000f98,0xffffffff82186218);
+    }
+    if (dVar3 < 0.0) {
+      MyAssertHandler(0xffffffff82185bb8,0x112e,0,0xffffffff82000f98,0xffffffff821863dc);
+    }
+    if (0xfff < uVar2) {
+      MyAssertHandler(0xffffffff82185bb8,0x1130,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
+    }
+    *(float *)(&DAT_841dbfd0 + uVar2 * 0x40) = (float)dVar3;
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -2677,7 +5479,6 @@ ushort XAnimIsLooped(int param_1,int param_2)
   ushort uVar2;
   
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x113b,0,0xffffffff82000f98,0xffffffff8202a360);
   }
   param_1 = param_2 * 8 + param_1;
@@ -2698,7 +5499,6 @@ bool XAnimIsLeafNode(int param_1,int param_2)
 
 {
   if (param_1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1147,0,0xffffffff82000f98,0xffffffff8202a360);
   }
   return *(short *)(param_2 * 8 + param_1 + 0xc) == 0;
@@ -2734,11 +5534,32 @@ undefined8 XAnimNotetrackExists(longlong param_1,ulonglong param_2,uint param_3)
 
 // 82623E40  XAnimAddNotetrackTimesToScriptArray  (xanim/xanim.cpp:4453)
 
-void XAnimAddNotetrackTimesToScriptArray(void)
+void XAnimAddNotetrackTimesToScriptArray(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  int iVar2;
+  int iVar3;
+  ushort *puVar4;
+  
+  lVar1 = __savegprlr_28();
+  iVar2 = XAnimGetPartsInternal((param_2 & 0x1fffffff) * 8 + lVar1 + 0xc);
+  puVar4 = *(ushort **)(iVar2 + 0x50);
+  if (puVar4 != (ushort *)0x0) {
+    iVar3 = 0;
+    if (*(char *)(iVar2 + 0x1d) != '\0') {
+      do {
+        if ((ulonglong)*puVar4 == (param_3 & 0xffffffff)) {
+          Scr_AddFloat((double)*(float *)(puVar4 + 2));
+          Scr_AddArray();
+        }
+        iVar3 = iVar3 + 1;
+        puVar4 = puVar4 + 4;
+      } while (iVar3 < (int)(uint)*(byte *)(iVar2 + 0x1d));
+    }
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -2761,56 +5582,54 @@ void XAnimSetCompleteGoalWeight
   longlong lVar7;
   double extraout_f1;
   double dVar8;
+  double dVar9;
   
   __savegprlr_24();
   piVar3 = (int *)__savefpr_28();
-  dVar8 = extraout_f1;
+  dVar9 = extraout_f1;
   Profile_Begin(0x143);
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1185,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if (((in_r8 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  dVar8 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
     MyAssertHandler(0xffffffff82185bb8,0x1186,0,0xffffffff82000f98,0xffffffff821863c0);
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
     MyAssertHandler(0xffffffff82185bb8,0x1187,0,0xffffffff82000f98,0xffffffff821863a4);
   }
-  if (((dVar8 < 0.0010000000474974513) && (dVar8 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)
+  if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)
       ) && ((in_r9 & 0xffffffff) == 0)) {
-    dVar8 = 0.0;
+    dVar9 = dVar8;
   }
   iVar1 = *piVar3;
-  if (iVar1 != 0) {
-    iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-    if (iVar4 == 0) {
-      iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-      iVar5 = iVar4 * 0x40;
-      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-      lVar7 = 8;
-      do {
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-    }
-    else if (in_r10 != 0) {
-      iVar4 = XAnimRestart(param_2,iVar1,iVar4);
-    }
-    uVar2 = XAnimSetCompleteGoalWeightNode(dVar8,param_2,param_3,iVar1,iVar4);
-    Profile_EndInternal(0);
-    __restfpr_28(uVar2);
-    __restgprlr_24();
-    return;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x118d,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x118d,0,0xffffffff82000f98,0xffffffff821813e0);
+  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
+  if (iVar4 == 0) {
+    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
+    iVar5 = iVar4 * 0x40;
+    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+    lVar7 = 8;
+    do {
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+  }
+  else if (in_r10 != 0) {
+    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+  }
+  uVar2 = XAnimSetCompleteGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
+  Profile_EndInternal(0);
+  __restfpr_28(uVar2);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -2832,57 +5651,55 @@ void XAnimSetCompleteGoalWeightRel
   longlong lVar7;
   double extraout_f1;
   double dVar8;
+  double dVar9;
   int in_stack_00000054;
   
   __savegprlr_24();
   piVar3 = (int *)__savefpr_28();
-  dVar8 = extraout_f1;
+  dVar9 = extraout_f1;
   Profile_Begin(0x143);
   if (piVar3 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x11aa,0,0xffffffff82000f98,0xffffffff820040b4);
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  dVar8 = 0.0;
+  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
     MyAssertHandler(0xffffffff82185bb8,0x11ab,0,0xffffffff82000f98,0xffffffff821863c0);
   }
-  if (((in_r10 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-                    /* WARNING: Subroutine does not return */
+  if (((in_r10 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
     MyAssertHandler(0xffffffff82185bb8,0x11ac,0,0xffffffff82000f98,0xffffffff821863a4);
   }
-  if (((dVar8 < 0.0010000000474974513) && (dVar8 = 0.0010000000474974513, (in_r9 & 0xffffffff) == 0)
+  if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r9 & 0xffffffff) == 0)
       ) && ((in_r10 & 0xffffffff) == 0)) {
-    dVar8 = 0.0;
+    dVar9 = dVar8;
   }
   iVar1 = *piVar3;
-  if (iVar1 != 0) {
-    iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-    if (iVar4 == 0) {
-      iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-      iVar5 = iVar4 * 0x40;
-      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-      lVar7 = 8;
-      do {
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-    }
-    else if (in_stack_00000054 != 0) {
-      iVar4 = XAnimRestart(param_2,iVar1,iVar4);
-    }
-    uVar2 = XAnimSetCompleteGoalWeightNodeRel(dVar8,param_2,param_3,iVar1,iVar4,param_6);
-    Profile_EndInternal(0);
-    __restfpr_28(uVar2);
-    __restgprlr_24();
-    return;
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x11b2,0,0xffffffff82000f98,0xffffffff821813e0);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x11b2,0,0xffffffff82000f98,0xffffffff821813e0);
+  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
+  if (iVar4 == 0) {
+    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
+    iVar5 = iVar4 * 0x40;
+    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+    lVar7 = 8;
+    do {
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
+    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+  }
+  else if (in_stack_00000054 != 0) {
+    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+  }
+  uVar2 = XAnimSetCompleteGoalWeightNodeRel(dVar9,param_2,param_3,iVar1,iVar4,param_6);
+  Profile_EndInternal(0);
+  __restfpr_28(uVar2);
+  __restgprlr_24();
+  return;
 }
 
 
@@ -2897,7 +5714,6 @@ void XAnimCloneAnimInfo(undefined2 *param_1,undefined2 *param_2)
   longlong lVar4;
   
   if (param_2[8] != param_1[8]) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x11c9,0,0xffffffff82000f98,0xffffffff82186634);
   }
   puVar3 = (undefined4 *)(param_1 + 0xe);
@@ -2936,68 +5752,118 @@ void XAnimCloneAnimTree_r(undefined8 param_1,ulonglong param_2,ulonglong param_3
   
   piVar6 = (int *)__savegprlr_25();
   if (piVar6 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x11dd,0,0xffffffff82000f98,0xffffffff82001400);
   }
   if (*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x11de,0,0xffffffff82000f98,0xffffffff821866e0);
   }
   if (*(int *)*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x11df,0,0xffffffff82000f98,0xffffffff821866cc);
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    if (*(int *)param_2 != *piVar6) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x11e1,0,0xffffffff82000f98,0xffffffff821866b0);
-    }
-    if (((param_3 & 0xffffffff) != 0) && ((param_3 & 0xffffffff) < 0x1000)) {
-      lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
-      iVar3 = (int)lVar7;
-      if (*(char *)(iVar3 + 0x14) != '\0') {
-        sVar1 = *(short *)(iVar3 + 0x12);
-        if (sVar1 != 0) {
-          SL_AddRefToString(sVar1);
-        }
-        uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
-        XAnimCloneAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
-        uVar2 = *(ushort *)(iVar3 + 0xc);
-        while (uVar4 = (uint)uVar2, uVar4 != 0) {
-          XAnimCloneAnimTree_r(piVar6,param_2,uVar4,uVar5);
-          uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
-        }
-        __restgprlr_25();
-        return;
-      }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x11e6,0,0xffffffff82000f98,0xffffffff82186658);
-    }
-                    /* WARNING: Subroutine does not return */
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x11e0,0,0xffffffff82000f98,0xffffffff820013fc);
+  }
+  if (*(int *)param_2 != *piVar6) {
+    MyAssertHandler(0xffffffff82185bb8,0x11e1,0,0xffffffff82000f98,0xffffffff821866b0);
+  }
+  if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
     MyAssertHandler(0xffffffff82185bb8,0x11e3,0,0xffffffff82186668,0xffffffff82186684,param_3);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x11e0,0,0xffffffff82000f98,0xffffffff820013fc);
+  lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
+  iVar3 = (int)lVar7;
+  if (*(char *)(iVar3 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x11e6,0,0xffffffff82000f98,0xffffffff82186658);
+  }
+  sVar1 = *(short *)(iVar3 + 0x12);
+  if (sVar1 != 0) {
+    SL_AddRefToString(sVar1);
+  }
+  uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
+  XAnimCloneAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
+  uVar2 = *(ushort *)(iVar3 + 0xc);
+  while (uVar4 = (uint)uVar2, uVar4 != 0) {
+    XAnimCloneAnimTree_r(piVar6,param_2,uVar4,uVar5);
+    uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
+  }
+  __restgprlr_25();
+  return;
 }
 
 
 // 82624150  XAnimCloneAnimTree  (xanim/xanim.cpp:4603)
 
-void XAnimCloneAnimTree(void)
+void XAnimCloneAnimTree(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  int *piVar2;
+  
+  piVar1 = (int *)__savegprlr_28();
+  Profile_Begin(0x12f);
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x11fe,0,0xffffffff82000f98,0xffffffff82001400);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x11ff,0,0xffffffff82000f98,0xffffffff821866e0);
+  }
+  if (*(int *)*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1200,0,0xffffffff82000f98,0xffffffff821866cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1201,0,0xffffffff82000f98,0xffffffff820013fc);
+  }
+  piVar2 = (int *)param_2;
+  if (*piVar2 != *piVar1) {
+    MyAssertHandler(0xffffffff82185bb8,0x1202,0,0xffffffff82000f98,0xffffffff821866b0);
+  }
+  if (*(short *)(piVar2 + 4) != 0) {
+    XAnimFreeInfo(param_2);
+  }
+  if (*(short *)(piVar2 + 4) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1206,0,0xffffffff82000f98,0xffffffff821866ec);
+  }
+  if (*(short *)(piVar1 + 4) != 0) {
+    XAnimCloneAnimTree_r(piVar1,param_2,*(short *)(piVar1 + 4),0);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 826242B0  XAnimCloneClientAnimInfo  (xanim/xanim.cpp:4624)
 
-void XAnimCloneClientAnimInfo(void)
+void XAnimCloneClientAnimInfo(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined2 *puVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_29();
+  puVar1 = (undefined2 *)param_2;
+  if (puVar1[8] != *(short *)(iVar2 + 0x10)) {
+    MyAssertHandler(0xffffffff82185bb8,0x1211,0,0xffffffff82000f98,0xffffffff82186634);
+  }
+  if (*(short *)(iVar2 + 6) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1212,0,0xffffffff821866fc,0xffffffff82186718);
+  }
+  puVar3 = (undefined4 *)(iVar2 + 0x1c);
+  param_2 = param_2 + 0x1c;
+  lVar4 = 8;
+  do {
+    puVar3 = puVar3 + 1;
+    param_2 = param_2 + 4;
+    *(undefined4 *)param_2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  puVar1[3] = 0;
+  *puVar1 = 0;
+  puVar1[1] = 0xffff;
+  puVar1[2] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -3017,58 +5883,77 @@ void XAnimCloneClientAnimTree_r
   
   piVar6 = (int *)__savegprlr_25();
   if (piVar6 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1223,0,0xffffffff82000f98,0xffffffff82001400);
   }
   if (*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1224,0,0xffffffff82000f98,0xffffffff821866e0);
   }
   if (*(int *)*piVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff82185bb8,0x1225,0,0xffffffff82000f98,0xffffffff821866cc);
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    if (*(int *)param_2 != *piVar6) {
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x1227,0,0xffffffff82000f98,0xffffffff821866b0);
-    }
-    if (((param_3 & 0xffffffff) != 0) && ((param_3 & 0xffffffff) < 0x1000)) {
-      lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
-      iVar3 = (int)lVar7;
-      if (*(char *)(iVar3 + 0x14) != '\0') {
-        sVar1 = *(short *)(iVar3 + 0x12);
-        if (sVar1 != 0) {
-          SL_AddRefToString(sVar1);
-        }
-        uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
-        XAnimCloneClientAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
-        uVar2 = *(ushort *)(iVar3 + 0xc);
-        while (uVar4 = (uint)uVar2, uVar4 != 0) {
-          XAnimCloneClientAnimTree_r(piVar6,param_2,uVar4,uVar5);
-          uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
-        }
-        __restgprlr_25();
-        return;
-      }
-                    /* WARNING: Subroutine does not return */
-      MyAssertHandler(0xffffffff82185bb8,0x122c,0,0xffffffff82000f98,0xffffffff82186658);
-    }
-                    /* WARNING: Subroutine does not return */
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1226,0,0xffffffff82000f98,0xffffffff820013fc);
+  }
+  if (*(int *)param_2 != *piVar6) {
+    MyAssertHandler(0xffffffff82185bb8,0x1227,0,0xffffffff82000f98,0xffffffff821866b0);
+  }
+  if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
     MyAssertHandler(0xffffffff82185bb8,0x1229,0,0xffffffff82186668,0xffffffff82186684,param_3);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x1226,0,0xffffffff82000f98,0xffffffff820013fc);
+  lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
+  iVar3 = (int)lVar7;
+  if (*(char *)(iVar3 + 0x14) == '\0') {
+    MyAssertHandler(0xffffffff82185bb8,0x122c,0,0xffffffff82000f98,0xffffffff82186658);
+  }
+  sVar1 = *(short *)(iVar3 + 0x12);
+  if (sVar1 != 0) {
+    SL_AddRefToString(sVar1);
+  }
+  uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
+  XAnimCloneClientAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
+  uVar2 = *(ushort *)(iVar3 + 0xc);
+  while (uVar4 = (uint)uVar2, uVar4 != 0) {
+    XAnimCloneClientAnimTree_r(piVar6,param_2,uVar4,uVar5);
+    uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
+  }
+  __restgprlr_25();
+  return;
 }
 
 
 // 82624548  XAnimCloneClientAnimTree  (xanim/xanim.cpp:4673)
 
-void XAnimCloneClientAnimTree(void)
+void XAnimCloneClientAnimTree(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_28();
+  Profile_Begin(0x12f);
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1244,0,0xffffffff82000f98,0xffffffff82001400);
+  }
+  if (*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1245,0,0xffffffff82000f98,0xffffffff821866e0);
+  }
+  if (*(int *)*piVar1 == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1246,0,0xffffffff82000f98,0xffffffff821866cc);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1247,0,0xffffffff82000f98,0xffffffff820013fc);
+  }
+  if (*(int *)param_2 != *piVar1) {
+    MyAssertHandler(0xffffffff82185bb8,0x1248,0,0xffffffff82000f98,0xffffffff821866b0);
+  }
+  if (*(short *)((int *)param_2 + 4) != 0) {
+    MyAssertHandler(0xffffffff82185bb8,0x1249,0,0xffffffff82000f98,0xffffffff821866ec);
+  }
+  if (*(short *)(piVar1 + 4) != 0) {
+    XAnimCloneClientAnimTree_r(piVar1,param_2,*(short *)(piVar1 + 4),0);
+  }
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -3077,11 +5962,10 @@ void XAnimCloneClientAnimTree(void)
 longlong GetAnimInfo(ulonglong param_1)
 
 {
-  if ((0 < (int)param_1) && ((int)param_1 < 0x1000)) {
-    return (param_1 & 0x3ffffff) * 0x40 + -0x7be24068;
+  if (((int)param_1 < 1) || (0xfff < (int)param_1)) {
+    MyAssertHandler(0xffffffff82185bb8,0x125b,0,0xffffffff82185e88,0xffffffff8218672c,param_1);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff82185bb8,0x125b,0,0xffffffff82185e88,0xffffffff8218672c,param_1);
+  return (param_1 & 0x3ffffff) * 0x40 + -0x7be24068;
 }
 
 

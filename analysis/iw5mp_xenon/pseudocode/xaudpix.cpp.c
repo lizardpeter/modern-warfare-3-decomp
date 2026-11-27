@@ -42,13 +42,51 @@ undefined8 XAudPixIncrementCounter(ulonglong param_1,longlong param_2)
 }
 
 
+// 828D7EB0  XAudPixAudioBeginFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:120)
+
+undefined8 XAudPixAudioBeginFrame(void)
+
+{
+  return 0;
+}
+
+
 // 828D7EB8  XAudPixAudioEndFrame  (<external>/Xenon/mar09/core/private/xtl/audio/common/xaudpix.cpp:140)
 
 void XAudPixAudioEndFrame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined1 local_60 [8];
+  undefined8 local_58;
+  undefined4 local_50;
+  undefined4 uStack_4c;
+  undefined4 local_48;
+  undefined4 uStack_44;
+  undefined4 local_40;
+  undefined4 uStack_3c;
+  
   __savegprlr_26();
+  uVar2 = TBLr;
+  local_58 = CONCAT44((int)uVar2,DAT_84895950);
+  _local_50 = CONCAT44(DAT_84895954,DAT_84895958);
+  _local_48 = CONCAT44(DAT_8489595c,DAT_84895960);
+  _local_40 = CONCAT44(DAT_84895964,DAT_84895968);
+  PIXSubmitDrPixCounters(0x58417564,local_60,0x28);
+  iVar3 = 0;
+  lVar4 = 7;
+  do {
+    uVar1 = *(undefined4 *)((int)&DAT_84895950 + iVar3);
+    *(undefined4 *)((int)&DAT_84895950 + iVar3) = 0;
+    *(undefined4 *)((int)&DAT_8489596c + iVar3) = uVar1;
+    iVar3 = iVar3 + 4;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  __restgprlr_26(0);
+  return;
 }
 
 

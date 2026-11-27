@@ -28,9 +28,8 @@ LAB_824da214:
         Com_Error(1,0xffffffff82084b1c);
       }
       if (0x100 < *(uint *)(param_3 + 0x224)) {
-        uVar2 = va(0xffffffff82084adc,param_2);
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff82084a98,0x55,0,0xffffffff820011f4,0xffffffff82084a58,uVar2);
+        uVar3 = va(0xffffffff82084adc,param_2);
+        MyAssertHandler(0xffffffff82084a98,0x55,0,0xffffffff820011f4,0xffffffff82084a58,uVar3);
       }
       TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar2,param_4);
       uVar3 = TaskManager_TaskToXOverlapped();
@@ -65,7 +64,77 @@ LAB_824da214:
 void LiveStorage_FileFetchComplete(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined1 uVar1;
+  int iVar3;
+  int *piVar4;
+  int iVar5;
+  ulonglong uVar2;
+  char cVar6;
+  
+  iVar3 = __savegprlr_26();
+  iVar3 = iVar3 * 0xa0;
+  piVar4 = (int *)TaskManager_TaskToXOverlapped(&DAT_8365bc40 + iVar3);
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler(0xffffffff82084a98,0x71,0,0xffffffff82000f98,0xffffffff82084cac);
+  }
+  if ((&DAT_8365bcd4)[iVar3] == '\0') {
+    MyAssertHandler(0xffffffff82084a98,0x73,0,0xffffffff82000f98,0xffffffff82084c8c);
+  }
+  if ((*piVar4 != 0x3e5) && (iVar5 = XGetOverlappedResult(piVar4,0,0), iVar5 != 0x3e4)) {
+    uVar1 = (&DAT_8365bcd5)[iVar3];
+    TaskManager_TaskFromXOverlapped(0xffffffff8365bc38,piVar4);
+    iVar3 = TaskManager_GetTaskData();
+    if (iVar3 == 0) {
+      MyAssertHandler(0xffffffff82084a98,0x7f,0,0xffffffff82000f98,0xffffffff82084c80);
+    }
+    uVar2 = XGetOverlappedExtendedError(piVar4);
+    if ((uVar2 & 0xffffffff) != 0) {
+      TaskManager_TaskFromXOverlapped(0xffffffff8365bc38,piVar4);
+      TaskManager_ClearTask();
+      piVar4 = *(int **)(iVar3 + 0xc);
+      if ((piVar4 != (int *)0x0) && (iVar5 = *piVar4, *piVar4 = iVar5 + 1, 2 < iVar5 + 1)) {
+        **(undefined4 **)(iVar3 + 0xc) = 0;
+        *(int *)(*(int *)(iVar3 + 0xc) + 4) = *(int *)(*(int *)(iVar3 + 0xc) + 4) + 1;
+        *(int *)(*(int *)(iVar3 + 0xc) + 8) = *(int *)(*(int *)(iVar3 + 0xc) + 8) * 5;
+      }
+      if (((uVar2 & 0xffffffff) != 0x8015000a) && ((int)uVar2 != -0x7ff8d8bf)) {
+        if (((uVar2 & 0xffffffff) == 0x80151802) || ((uVar2 & 0xffffffff) == 0x80070525)) {
+          if ((int)uVar2 == -0x7ff8ff86) {
+            Com_Error(1,0xffffffff82084bbc);
+            __restgprlr_26(2);
+            return;
+          }
+          Com_PrintError(0x10,0xffffffff82084b8c,uVar2);
+        }
+        else {
+          cVar6 = Live_IsUserSignedInToLive(uVar1);
+          if (cVar6 != '\0') {
+            if ((uVar2 & 0xffffffff) == 0x8015c004) {
+              Com_PrintError(0x10,0xffffffff82084c28);
+              __restgprlr_26(2);
+              return;
+            }
+            Com_PrintError(0x10,0xffffffff82084bec,uVar2);
+            __restgprlr_26(2);
+            return;
+          }
+        }
+      }
+      __restgprlr_26(2);
+      return;
+    }
+    TaskManager_TaskFromXOverlapped(0xffffffff8365bc38,piVar4);
+    TaskManager_ClearTask();
+    if (*(int *)(iVar3 + 0xc) != 0) {
+      InitRequiredTask();
+    }
+    *(undefined1 *)(iVar3 + 8) = 1;
+    Com_Printf(0x10,0xffffffff82084b78,*(undefined4 *)(iVar3 + 0x10));
+    ClosePopupGettingData(0);
+    __restgprlr_26(1);
+    return;
+  }
+  __restgprlr_26(0);
+  return;
 }
 

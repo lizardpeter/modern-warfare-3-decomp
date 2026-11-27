@@ -23,10 +23,108 @@
 ; 8293A0F0  bdHeartbeatChunk::serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdheartbeatchunk.cpp:29)
   8293A0F0  7D8802A6             mfspr r12,LR
   8293A0F4  4BFDC5C5             bl 0x829166b8
+  8293A0F8  9421FF70             stwu r1,-0x90(r1)
+  8293A0FC  3BA00000             li r29,0x0
+  8293A100  7C7C1B78             or r28,r3,r3
+  8293A104  93A10058             stw r29,0x58(r1)
+  8293A108  7C9F2378             or r31,r4,r4
+  8293A10C  7CBE2B78             or r30,r5,r5
+  8293A110  48001BA1             bl 0x8293bcb0
+  8293A114  817C0010             lwz r11,0x10(r28)
+  8293A118  90610058             stw r3,0x58(r1)
+  8293A11C  7C651B78             or r5,r3,r3
+  8293A120  39000001             li r8,0x1
+  8293A124  38E10050             addi r7,r1,0x50
+  8293A128  38C10058             addi r6,r1,0x58
+  8293A12C  99610050             stb r11,0x50(r1)
+  8293A130  7FC4F378             or r4,r30,r30
+  8293A134  7FE3FB78             or r3,r31,r31
+  8293A138  4BFBD181             bl 0x828f72b8
+  8293A13C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8293A140  B3A10052             sth r29,0x52(r1)
+  8293A144  314BFFFF             subic r10,r11,0x1
+  8293A148  7D6A5910             subfe r11,r10,r11
+  8293A14C  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8293A150  41820044             beq 0x8293a194
+  8293A154  39200002             li r9,0x2
+  8293A158  7FABEB78             or r11,r29,r29
+  8293A15C  39410056             addi r10,r1,0x56
+  8293A160  7D2903A6             mtspr CTR,r9
+LAB_8293a164:
+  8293A164  39210052             addi r9,r1,0x52
+  8293A168  7D2B48AE             lbzx r9,r11,r9
+  8293A16C  396B0001             addi r11,r11,0x1
+  8293A170  9D2AFFFF             stbu r9,-0x1(r10)
+  8293A174  4200FFF0             bdnz 0x8293a164
+  8293A178  39000002             li r8,0x2
+  8293A17C  80A10058             lwz r5,0x58(r1)
+  8293A180  38E10054             addi r7,r1,0x54
+  8293A184  38C10058             addi r6,r1,0x58
+  8293A188  7FC4F378             or r4,r30,r30
+  8293A18C  7FE3FB78             or r3,r31,r31
+  8293A190  4BFBD129             bl 0x828f72b8
+LAB_8293a194:
+  8293A194  80610058             lwz r3,0x58(r1)
+  8293A198  38210090             addi r1,r1,0x90
+  8293A19C  4BFDC56C             b 0x82916708
 
 ; 8293A1A0  bdHeartbeatChunk::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdheartbeatchunk.cpp:50)
   8293A1A0  7D8802A6             mfspr r12,LR
   8293A1A4  4BFDC511             bl 0x829166b4
+  8293A1A8  9421FF70             stwu r1,-0x90(r1)
+  8293A1AC  81660000             lwz r11,0x0(r6)
+  8293A1B0  7CDB3378             or r27,r6,r6
+  8293A1B4  38C10054             addi r6,r1,0x54
+  8293A1B8  7C7F1B78             or r31,r3,r3
+  8293A1BC  7C9E2378             or r30,r4,r4
+  8293A1C0  7CBD2B78             or r29,r5,r5
+  8293A1C4  91610054             stw r11,0x54(r1)
+  8293A1C8  3B800000             li r28,0x0
+  8293A1CC  48001B35             bl 0x8293bd00
+  8293A1D0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A1D4  41820038             beq 0x8293a20c
+  8293A1D8  39000001             li r8,0x1
+  8293A1DC  80A10054             lwz r5,0x54(r1)
+  8293A1E0  38E10050             addi r7,r1,0x50
+  8293A1E4  38C10054             addi r6,r1,0x54
+  8293A1E8  7FA4EB78             or r4,r29,r29
+  8293A1EC  7FC3F378             or r3,r30,r30
+  8293A1F0  4BFBD1D1             bl 0x828f73c0
+  8293A1F4  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A1F8  41820008             beq 0x8293a200
+  8293A1FC  8B810050             lbz r28,0x50(r1)
+LAB_8293a200:
+  8293A200  2B0B0000             cmplwi cr6,r11,0x0
+  8293A204  39600001             li r11,0x1
+  8293A208  409A0008             bne cr6,0x8293a210
+LAB_8293a20c:
+  8293A20C  39600000             li r11,0x0
+LAB_8293a210:
+  8293A210  578A063E             rlwinm r10,r28,0x0,0x18,0x1f
+  8293A214  39200000             li r9,0x0
+  8293A218  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8293A21C  915F0010             stw r10,0x10(r31)
+  8293A220  B1210052             sth r9,0x52(r1)
+  8293A224  41820028             beq 0x8293a24c
+  8293A228  38E10052             addi r7,r1,0x52
+  8293A22C  80A10054             lwz r5,0x54(r1)
+  8293A230  38C10054             addi r6,r1,0x54
+  8293A234  7FA4EB78             or r4,r29,r29
+  8293A238  7FC3F378             or r3,r30,r30
+  8293A23C  4BFBCDAD             bl 0x828f6fe8
+  8293A240  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8293A244  39600001             li r11,0x1
+  8293A248  40820008             bne 0x8293a250
+LAB_8293a24c:
+  8293A24C  39600000             li r11,0x0
+LAB_8293a250:
+  8293A250  5563063F             rlwinm. r3,r11,0x0,0x18,0x1f
+  8293A254  4182000C             beq 0x8293a260
+  8293A258  81610054             lwz r11,0x54(r1)
+  8293A25C  917B0000             stw r11,0x0(r27)
+LAB_8293a260:
+  8293A260  38210090             addi r1,r1,0x90
+  8293A264  4BFDC4A0             b 0x82916704
 
 ; 8293A098  bdHeartbeatChunk::`scalar_deleting_destructor'  (line unknown)
   8293A098  7D8802A6             mfspr r12,LR

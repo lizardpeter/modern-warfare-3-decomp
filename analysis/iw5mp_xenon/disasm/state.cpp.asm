@@ -1485,6 +1485,32 @@ LAB_8285e98c:
   8285EE2C  EBE1FFF0             ld r31,-0x10(r1)
   8285EE30  4E800020             blr
 
+; 8285EE38  D3DDevice_SetRenderState_Buffer2Frames  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:815)
+  8285EE38  7D8802A6             mfspr r12,LR
+  8285EE3C  9181FFF8             stw r12,-0x8(r1)
+  8285EE40  FBC1FFE8             std r30,-0x18(r1)
+  8285EE44  FBE1FFF0             std r31,-0x10(r1)
+  8285EE48  9421FF90             stwu r1,-0x70(r1)
+  8285EE4C  7C7F1B78             or r31,r3,r3
+  8285EE50  7C9E2378             or r30,r4,r4
+  8285EE54  7DAD6B78             or r13,r13,r13
+  8285EE58  817F5F20             lwz r11,0x5f20(r31)
+  8285EE5C  2B1E0000             cmplwi cr6,r30,0x0
+  8285EE60  419A000C             beq cr6,0x8285ee6c
+  8285EE64  616B0001             ori r11,r11,0x1
+  8285EE68  48000008             b 0x8285ee70
+LAB_8285ee6c:
+  8285EE6C  556B003C             rlwinm r11,r11,0x0,0x0,0x1e
+LAB_8285ee70:
+  8285EE70  917F5F20             stw r11,0x5f20(r31)
+  8285EE74  7DCE7378             or r14,r14,r14
+  8285EE78  38210070             addi r1,r1,0x70
+  8285EE7C  8181FFF8             lwz r12,-0x8(r1)
+  8285EE80  7D8803A6             mtspr LR,r12
+  8285EE84  EBC1FFE8             ld r30,-0x18(r1)
+  8285EE88  EBE1FFF0             ld r31,-0x10(r1)
+  8285EE8C  4E800020             blr
+
 ; 8285EE90  D3DDevice_GetRenderState_Buffer2Frames  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:828)
   8285EE90  7D8802A6             mfspr r12,LR
   8285EE94  9181FFF8             stw r12,-0x8(r1)
@@ -2338,6 +2364,64 @@ LAB_8285e98c:
   8285FA88  7D8803A6             mtspr LR,r12
   8285FA8C  EBE1FFF0             ld r31,-0x10(r1)
   8285FA90  4E800020             blr
+
+; 8285FA98  D3DDevice_SetRenderState_SlopeScaleDepthBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1296)
+  8285FA98  7D8802A6             mfspr r12,LR
+  8285FA9C  9181FFF8             stw r12,-0x8(r1)
+  8285FAA0  FBE1FFF0             std r31,-0x10(r1)
+  8285FAA4  9421FFA0             stwu r1,-0x60(r1)
+  8285FAA8  7C7F1B78             or r31,r3,r3
+  8285FAAC  9081007C             stw r4,0x7c(r1)
+  8285FAB0  7DAD6B78             or r13,r13,r13
+  8285FAB4  3D608200             lis r11,-0x7e00
+  8285FAB8  C1A1007C             lfs f13,0x7c(r1)
+  8285FABC  3D408200             lis r10,-0x7e00
+  8285FAC0  C00B4EE0             lfs f0,0x4ee0(r11)
+  8285FAC4  EDAD0032             fmuls f13,f13,f0
+  8285FAC8  C00A13F8             lfs f0,0x13f8(r10)
+  8285FACC  FF0D0000             fcmpu cr6,f13,f0
+  8285FAD0  409A0014             bne cr6,0x8285fae4
+  8285FAD4  C19F2A54             lfs f12,0x2a54(r31)
+  8285FAD8  39400000             li r10,0x0
+  8285FADC  FF0C0000             fcmpu cr6,f12,f0
+  8285FAE0  419A0008             beq cr6,0x8285fae8
+LAB_8285fae4:
+  8285FAE4  39400001             li r10,0x1
+LAB_8285fae8:
+  8285FAE8  817F2948             lwz r11,0x2948(r31)
+  8285FAEC  FF0D0000             fcmpu cr6,f13,f0
+  8285FAF0  514B5D28             rlwimi r11,r10,0xb,0x14,0x14
+  8285FAF4  917F2948             stw r11,0x2948(r31)
+  8285FAF8  409A0014             bne cr6,0x8285fb0c
+  8285FAFC  C19F2A5C             lfs f12,0x2a5c(r31)
+  8285FB00  39400000             li r10,0x0
+  8285FB04  FF0C0000             fcmpu cr6,f12,f0
+  8285FB08  419A0008             beq cr6,0x8285fb10
+LAB_8285fb0c:
+  8285FB0C  39400001             li r10,0x1
+LAB_8285fb10:
+  8285FB10  39800001             li r12,0x1
+  8285FB14  D1BF2A50             stfs f13,0x2a50(r31)
+  8285FB18  514B64E6             rlwimi r11,r10,0xc,0x13,0x13
+  8285FB1C  D1BF2A58             stfs f13,0x2a58(r31)
+  8285FB20  798C6FE6             rldicr r12,r12,0x2d,0x3f
+  8285FB24  917F2948             stw r11,0x2948(r31)
+  8285FB28  E97F0020             ld r11,0x20(r31)
+  8285FB2C  7D6B6378             or r11,r11,r12
+  8285FB30  39800001             li r12,0x1
+  8285FB34  F97F0020             std r11,0x20(r31)
+  8285FB38  798C5FE6             rldicr r12,r12,0x2b,0x3f
+  8285FB3C  7D6B6378             or r11,r11,r12
+  8285FB40  F97F0020             std r11,0x20(r31)
+  8285FB44  E97F0010             ld r11,0x10(r31)
+  8285FB48  616B0040             ori r11,r11,0x40
+  8285FB4C  F97F0010             std r11,0x10(r31)
+  8285FB50  7DCE7378             or r14,r14,r14
+  8285FB54  38210060             addi r1,r1,0x60
+  8285FB58  8181FFF8             lwz r12,-0x8(r1)
+  8285FB5C  7D8803A6             mtspr LR,r12
+  8285FB60  EBE1FFF0             ld r31,-0x10(r1)
+  8285FB64  4E800020             blr
 
 ; 8285FB68  D3DDevice_GetRenderState_SlopeScaleDepthBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1325)
   8285FB68  7D8802A6             mfspr r12,LR
@@ -3562,6 +3646,45 @@ LAB_82860c90:
 ; 82860D10  D3DDevice_SetRenderState_HighPrecisionBlendEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1819)
   82860D10  7D8802A6             mfspr r12,LR
   82860D14  480B59A5             bl 0x829166b8
+  82860D18  9421FF80             stwu r1,-0x80(r1)
+  82860D1C  7C7F1B78             or r31,r3,r3
+  82860D20  7C9C2378             or r28,r4,r4
+  82860D24  7DAD6B78             or r13,r13,r13
+  82860D28  817F3190             lwz r11,0x3190(r31)
+  82860D2C  939F2FF8             stw r28,0x2ff8(r31)
+  82860D30  2B0B0000             cmplwi cr6,r11,0x0
+  82860D34  419A0070             beq cr6,0x82860da4
+  82860D38  83BF2884             lwz r29,0x2884(r31)
+  82860D3C  57BE873E             rlwinm r30,r29,0x10,0x1c,0x1f
+  82860D40  7FC3F378             or r3,r30,r30
+  82860D44  4BFFD045             bl 0x8285dd88
+  82860D48  2C030000             cmpwi r3,0x0
+  82860D4C  41820058             beq 0x82860da4
+  82860D50  57AB6FFE             rlwinm r11,r29,0xd,0x1f,0x1f
+  82860D54  7D6BE279             xor. r11,r11,r28
+  82860D58  4182004C             beq 0x82860da4
+  82860D5C  397CFFFF             subi r11,r28,0x1
+  82860D60  57CAF87E             rlwinm r10,r30,0x1f,0x1,0x1f
+  82860D64  7D6958F8             nor r9,r11,r11
+  82860D68  394AFFFD             subi r10,r10,0x3
+  82860D6C  391E0003             addi r8,r30,0x3
+  82860D70  7D4B5838             and r11,r10,r11
+  82860D74  5529801E             rlwinm r9,r9,0x10,0x0,0xf
+  82860D78  5508881C             rlwinm r8,r8,0x11,0x0,0xe
+  82860D7C  556B801E             rlwinm r11,r11,0x10,0x0,0xf
+  82860D80  7D2A4038             and r10,r9,r8
+  82860D84  39800001             li r12,0x1
+  82860D88  7D4B5B78             or r11,r10,r11
+  82860D8C  798CC7E6             rldicr r12,r12,0x38,0x3f
+  82860D90  53AB0416             rlwimi r11,r29,0x0,0x10,0xb
+  82860D94  917F2884             stw r11,0x2884(r31)
+  82860D98  E97F0010             ld r11,0x10(r31)
+  82860D9C  7D6B6378             or r11,r11,r12
+  82860DA0  F97F0010             std r11,0x10(r31)
+LAB_82860da4:
+  82860DA4  7DCE7378             or r14,r14,r14
+  82860DA8  38210080             addi r1,r1,0x80
+  82860DAC  480B595C             b 0x82916708
 
 ; 82860DB0  D3DDevice_GetRenderState_HighPrecisionBlendEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1827)
   82860DB0  7D8802A6             mfspr r12,LR
@@ -3581,6 +3704,45 @@ LAB_82860c90:
 ; 82860DE8  D3DDevice_SetRenderState_HighPrecisionBlendEnable1  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1836)
   82860DE8  7D8802A6             mfspr r12,LR
   82860DEC  480B58CD             bl 0x829166b8
+  82860DF0  9421FF80             stwu r1,-0x80(r1)
+  82860DF4  7C7F1B78             or r31,r3,r3
+  82860DF8  7C9C2378             or r28,r4,r4
+  82860DFC  7DAD6B78             or r13,r13,r13
+  82860E00  817F3194             lwz r11,0x3194(r31)
+  82860E04  939F2FFC             stw r28,0x2ffc(r31)
+  82860E08  2B0B0000             cmplwi cr6,r11,0x0
+  82860E0C  419A0070             beq cr6,0x82860e7c
+  82860E10  83BF288C             lwz r29,0x288c(r31)
+  82860E14  57BE873E             rlwinm r30,r29,0x10,0x1c,0x1f
+  82860E18  7FC3F378             or r3,r30,r30
+  82860E1C  4BFFCF6D             bl 0x8285dd88
+  82860E20  2C030000             cmpwi r3,0x0
+  82860E24  41820058             beq 0x82860e7c
+  82860E28  57AB6FFE             rlwinm r11,r29,0xd,0x1f,0x1f
+  82860E2C  7D6BE279             xor. r11,r11,r28
+  82860E30  4182004C             beq 0x82860e7c
+  82860E34  397CFFFF             subi r11,r28,0x1
+  82860E38  57CAF87E             rlwinm r10,r30,0x1f,0x1,0x1f
+  82860E3C  7D6958F8             nor r9,r11,r11
+  82860E40  394AFFFD             subi r10,r10,0x3
+  82860E44  391E0003             addi r8,r30,0x3
+  82860E48  7D4B5838             and r11,r10,r11
+  82860E4C  5529801E             rlwinm r9,r9,0x10,0x0,0xf
+  82860E50  5508881C             rlwinm r8,r8,0x11,0x0,0xe
+  82860E54  556B801E             rlwinm r11,r11,0x10,0x0,0xf
+  82860E58  7D2A4038             and r10,r9,r8
+  82860E5C  39800001             li r12,0x1
+  82860E60  7D4B5B78             or r11,r10,r11
+  82860E64  798CB7E6             rldicr r12,r12,0x36,0x3f
+  82860E68  53AB0416             rlwimi r11,r29,0x0,0x10,0xb
+  82860E6C  917F288C             stw r11,0x288c(r31)
+  82860E70  E97F0010             ld r11,0x10(r31)
+  82860E74  7D6B6378             or r11,r11,r12
+  82860E78  F97F0010             std r11,0x10(r31)
+LAB_82860e7c:
+  82860E7C  7DCE7378             or r14,r14,r14
+  82860E80  38210080             addi r1,r1,0x80
+  82860E84  480B5884             b 0x82916708
 
 ; 82860E88  D3DDevice_GetRenderState_HighPrecisionBlendEnable1  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1844)
   82860E88  7D8802A6             mfspr r12,LR
@@ -3600,6 +3762,45 @@ LAB_82860c90:
 ; 82860EC0  D3DDevice_SetRenderState_HighPrecisionBlendEnable2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1853)
   82860EC0  7D8802A6             mfspr r12,LR
   82860EC4  480B57F5             bl 0x829166b8
+  82860EC8  9421FF80             stwu r1,-0x80(r1)
+  82860ECC  7C7F1B78             or r31,r3,r3
+  82860ED0  7C9C2378             or r28,r4,r4
+  82860ED4  7DAD6B78             or r13,r13,r13
+  82860ED8  817F3198             lwz r11,0x3198(r31)
+  82860EDC  939F3000             stw r28,0x3000(r31)
+  82860EE0  2B0B0000             cmplwi cr6,r11,0x0
+  82860EE4  419A0070             beq cr6,0x82860f54
+  82860EE8  83BF2890             lwz r29,0x2890(r31)
+  82860EEC  57BE873E             rlwinm r30,r29,0x10,0x1c,0x1f
+  82860EF0  7FC3F378             or r3,r30,r30
+  82860EF4  4BFFCE95             bl 0x8285dd88
+  82860EF8  2C030000             cmpwi r3,0x0
+  82860EFC  41820058             beq 0x82860f54
+  82860F00  57AB6FFE             rlwinm r11,r29,0xd,0x1f,0x1f
+  82860F04  7D6BE279             xor. r11,r11,r28
+  82860F08  4182004C             beq 0x82860f54
+  82860F0C  397CFFFF             subi r11,r28,0x1
+  82860F10  57CAF87E             rlwinm r10,r30,0x1f,0x1,0x1f
+  82860F14  7D6958F8             nor r9,r11,r11
+  82860F18  394AFFFD             subi r10,r10,0x3
+  82860F1C  391E0003             addi r8,r30,0x3
+  82860F20  7D4B5838             and r11,r10,r11
+  82860F24  5529801E             rlwinm r9,r9,0x10,0x0,0xf
+  82860F28  5508881C             rlwinm r8,r8,0x11,0x0,0xe
+  82860F2C  556B801E             rlwinm r11,r11,0x10,0x0,0xf
+  82860F30  7D2A4038             and r10,r9,r8
+  82860F34  39800001             li r12,0x1
+  82860F38  7D4B5B78             or r11,r10,r11
+  82860F3C  798CAFE6             rldicr r12,r12,0x35,0x3f
+  82860F40  53AB0416             rlwimi r11,r29,0x0,0x10,0xb
+  82860F44  917F2890             stw r11,0x2890(r31)
+  82860F48  E97F0010             ld r11,0x10(r31)
+  82860F4C  7D6B6378             or r11,r11,r12
+  82860F50  F97F0010             std r11,0x10(r31)
+LAB_82860f54:
+  82860F54  7DCE7378             or r14,r14,r14
+  82860F58  38210080             addi r1,r1,0x80
+  82860F5C  480B57AC             b 0x82916708
 
 ; 82860F60  D3DDevice_GetRenderState_HighPrecisionBlendEnable2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1861)
   82860F60  7D8802A6             mfspr r12,LR
@@ -3619,6 +3820,45 @@ LAB_82860c90:
 ; 82860F98  D3DDevice_SetRenderState_HighPrecisionBlendEnable3  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1870)
   82860F98  7D8802A6             mfspr r12,LR
   82860F9C  480B571D             bl 0x829166b8
+  82860FA0  9421FF80             stwu r1,-0x80(r1)
+  82860FA4  7C7F1B78             or r31,r3,r3
+  82860FA8  7C9C2378             or r28,r4,r4
+  82860FAC  7DAD6B78             or r13,r13,r13
+  82860FB0  817F319C             lwz r11,0x319c(r31)
+  82860FB4  939F3004             stw r28,0x3004(r31)
+  82860FB8  2B0B0000             cmplwi cr6,r11,0x0
+  82860FBC  419A0070             beq cr6,0x8286102c
+  82860FC0  83BF2894             lwz r29,0x2894(r31)
+  82860FC4  57BE873E             rlwinm r30,r29,0x10,0x1c,0x1f
+  82860FC8  7FC3F378             or r3,r30,r30
+  82860FCC  4BFFCDBD             bl 0x8285dd88
+  82860FD0  2C030000             cmpwi r3,0x0
+  82860FD4  41820058             beq 0x8286102c
+  82860FD8  57AB6FFE             rlwinm r11,r29,0xd,0x1f,0x1f
+  82860FDC  7D6BE279             xor. r11,r11,r28
+  82860FE0  4182004C             beq 0x8286102c
+  82860FE4  397CFFFF             subi r11,r28,0x1
+  82860FE8  57CAF87E             rlwinm r10,r30,0x1f,0x1,0x1f
+  82860FEC  7D6958F8             nor r9,r11,r11
+  82860FF0  394AFFFD             subi r10,r10,0x3
+  82860FF4  391E0003             addi r8,r30,0x3
+  82860FF8  7D4B5838             and r11,r10,r11
+  82860FFC  5529801E             rlwinm r9,r9,0x10,0x0,0xf
+  82861000  5508881C             rlwinm r8,r8,0x11,0x0,0xe
+  82861004  556B801E             rlwinm r11,r11,0x10,0x0,0xf
+  82861008  7D2A4038             and r10,r9,r8
+  8286100C  39800001             li r12,0x1
+  82861010  7D4B5B78             or r11,r10,r11
+  82861014  798CA7E6             rldicr r12,r12,0x34,0x3f
+  82861018  53AB0416             rlwimi r11,r29,0x0,0x10,0xb
+  8286101C  917F2894             stw r11,0x2894(r31)
+  82861020  E97F0010             ld r11,0x10(r31)
+  82861024  7D6B6378             or r11,r11,r12
+  82861028  F97F0010             std r11,0x10(r31)
+LAB_8286102c:
+  8286102C  7DCE7378             or r14,r14,r14
+  82861030  38210080             addi r1,r1,0x80
+  82861034  480B56D4             b 0x82916708
 
 ; 82861038  D3DDevice_GetRenderState_HighPrecisionBlendEnable3  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1878)
   82861038  7D8802A6             mfspr r12,LR
@@ -3778,6 +4018,22 @@ LAB_82860c90:
   82861278  EBC1FFE8             ld r30,-0x18(r1)
   8286127C  EBE1FFF0             ld r31,-0x10(r1)
   82861280  4E800020             blr
+
+; 82861288  D3DDevice_GetRenderState_HalfPixelOffset  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1966)
+  82861288  7D8802A6             mfspr r12,LR
+  8286128C  9181FFF8             stw r12,-0x8(r1)
+  82861290  FBE1FFF0             std r31,-0x10(r1)
+  82861294  9421FFA0             stwu r1,-0x60(r1)
+  82861298  7C7F1B78             or r31,r3,r3
+  8286129C  7DAD6B78             or r13,r13,r13
+  828612A0  83FF29C0             lwz r31,0x29c0(r31)
+  828612A4  7DCE7378             or r14,r14,r14
+  828612A8  57E307FE             rlwinm r3,r31,0x0,0x1f,0x1f
+  828612AC  38210060             addi r1,r1,0x60
+  828612B0  8181FFF8             lwz r12,-0x8(r1)
+  828612B4  7D8803A6             mtspr LR,r12
+  828612B8  EBE1FFF0             ld r31,-0x10(r1)
+  828612BC  4E800020             blr
 
 ; 828612C0  D3DDevice_SetRenderState_PrimitiveResetEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1975)
   828612C0  7D8802A6             mfspr r12,LR
@@ -4400,6 +4656,61 @@ LAB_82861808:
 ; 82861BA0  D3DDevice_SetSamplerState_MinFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2355)
   82861BA0  7D8802A6             mfspr r12,LR
   82861BA4  480B4B19             bl 0x829166bc
+  82861BA8  9421FF90             stwu r1,-0x70(r1)
+  82861BAC  7C7F1B78             or r31,r3,r3
+  82861BB0  7C9E2378             or r30,r4,r4
+  82861BB4  7CBD2B78             or r29,r5,r5
+  82861BB8  7DAD6B78             or r13,r13,r13
+  82861BBC  397E0030             addi r11,r30,0x30
+  82861BC0  7D5FF214             add r10,r31,r30
+  82861BC4  1D6B0018             mulli r11,r11,0x18
+  82861BC8  892A2A70             lbz r9,0x2a70(r10)
+  82861BCC  7D6BFA14             add r11,r11,r31
+  82861BD0  3D00821F             lis r8,-0x7de1
+  82861BD4  5529103E             rlwinm r9,r9,0x2,0x0,0x1f
+  82861BD8  39083800             addi r8,r8,0x3800
+  82861BDC  38BE0020             addi r5,r30,0x20
+  82861BE0  80CB0010             lwz r6,0x10(r11)
+  82861BE4  57A7F0BE             rlwinm r7,r29,0x1e,0x2,0x1f
+  82861BE8  808B000C             lwz r4,0xc(r11)
+  82861BEC  38600001             li r3,0x1
+  82861BF0  7CDE3378             or r30,r6,r6
+  82861BF4  54C6B7FE             rlwinm r6,r6,0x16,0x1f,0x1f
+  82861BF8  7D09402E             lwzx r8,r9,r8
+  82861BFC  50FE5D28             rlwimi r30,r7,0xb,0x14,0x14
+  82861C00  7CC93B78             or r9,r6,r7
+  82861C04  93CB0010             stw r30,0x10(r11)
+  82861C08  7866FFE6             rldicr r6,r3,0x3f,0x3f
+  82861C0C  3929FFFF             subi r9,r9,0x1
+  82861C10  7D094878             andc r9,r8,r9
+  82861C14  78A80020             rldicl r8,r5,0x0,0x20
+  82861C18  55292036             rlwinm r9,r9,0x4,0x0,0x1b
+  82861C1C  7CC84436             srd r8,r6,r8
+  82861C20  7D293B78             or r9,r9,r7
+  82861C24  7D29EB78             or r9,r9,r29
+  82861C28  5124AA54             rlwimi r4,r9,0x15,0x9,0xa
+  82861C2C  5124A90C             rlwimi r4,r9,0x15,0x4,0x6
+  82861C30  908B000C             stw r4,0xc(r11)
+  82861C34  892A2A8A             lbz r9,0x2a8a(r10)
+  82861C38  548A003E             rlwinm r10,r4,0x0,0x0,0x1f
+  82861C3C  7D475378             or r7,r10,r10
+  82861C40  7D465378             or r6,r10,r10
+  82861C44  552AF0BE             rlwinm r10,r9,0x1e,0x2,0x1f
+  82861C48  50E6FB7E             rlwimi r6,r7,0x1f,0xd,0x1f
+  82861C4C  394AFFFF             subi r10,r10,0x1
+  82861C50  50E6F856             rlwimi r6,r7,0x1f,0x1,0xb
+  82861C54  7D295078             andc r9,r9,r10
+  82861C58  54C76D3E             rlwinm r7,r6,0xd,0x14,0x1f
+  82861C5C  7CEA5038             and r10,r7,r10
+  82861C60  7D4A4A14             add r10,r10,r9
+  82861C64  53CA003A             rlwimi r10,r30,0x0,0x0,0x1d
+  82861C68  914B0010             stw r10,0x10(r11)
+  82861C6C  E97F0018             ld r11,0x18(r31)
+  82861C70  7D0B5B78             or r11,r8,r11
+  82861C74  F97F0018             std r11,0x18(r31)
+  82861C78  7DCE7378             or r14,r14,r14
+  82861C7C  38210070             addi r1,r1,0x70
+  82861C80  480B4A8C             b 0x8291670c
 
 ; 82861C88  D3DDevice_GetSamplerState_MinFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2388)
   82861C88  7D8802A6             mfspr r12,LR
@@ -4433,6 +4744,46 @@ LAB_82861808:
 ; 82861CF8  D3DDevice_SetSamplerState_MinFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2405)
   82861CF8  7D8802A6             mfspr r12,LR
   82861CFC  480B49C1             bl 0x829166bc
+  82861D00  9421FF90             stwu r1,-0x70(r1)
+  82861D04  7C7F1B78             or r31,r3,r3
+  82861D08  7C9E2378             or r30,r4,r4
+  82861D0C  7CBD2B78             or r29,r5,r5
+  82861D10  7DAD6B78             or r13,r13,r13
+  82861D14  7D7FF214             add r11,r31,r30
+  82861D18  395E0030             addi r10,r30,0x30
+  82861D1C  57A8083C             rlwinm r8,r29,0x1,0x0,0x1e
+  82861D20  1D4A0018             mulli r10,r10,0x18
+  82861D24  892B2A8A             lbz r9,0x2a8a(r11)
+  82861D28  7D4AFA14             add r10,r10,r31
+  82861D2C  552907FA             rlwinm r9,r9,0x0,0x1f,0x1d
+  82861D30  38FE0020             addi r7,r30,0x20
+  82861D34  7D264378             or r6,r9,r8
+  82861D38  38A00001             li r5,0x1
+  82861D3C  810A000C             lwz r8,0xc(r10)
+  82861D40  54C9F0BE             rlwinm r9,r6,0x1e,0x2,0x1f
+  82861D44  808A0010             lwz r4,0x10(r10)
+  82861D48  78A5FFE6             rldicr r5,r5,0x3f,0x3f
+  82861D4C  7D034378             or r3,r8,r8
+  82861D50  7D1E4378             or r30,r8,r8
+  82861D54  3929FFFF             subi r9,r9,0x1
+  82861D58  507EFB7E             rlwimi r30,r3,0x1f,0xd,0x1f
+  82861D5C  7CC84878             andc r8,r6,r9
+  82861D60  507EF856             rlwimi r30,r3,0x1f,0x1,0xb
+  82861D64  78E70020             rldicl r7,r7,0x0,0x20
+  82861D68  57C36D3E             rlwinm r3,r30,0xd,0x14,0x1f
+  82861D6C  7CA73C36             srd r7,r5,r7
+  82861D70  7C694838             and r9,r3,r9
+  82861D74  7D094214             add r8,r9,r8
+  82861D78  392B2A8A             addi r9,r11,0x2a8a
+  82861D7C  5088003A             rlwimi r8,r4,0x0,0x0,0x1d
+  82861D80  910A0010             stw r8,0x10(r10)
+  82861D84  98CB2A8A             stb r6,0x2a8a(r11)
+  82861D88  E97F0018             ld r11,0x18(r31)
+  82861D8C  7CEB5B78             or r11,r7,r11
+  82861D90  F97F0018             std r11,0x18(r31)
+  82861D94  7DCE7378             or r14,r14,r14
+  82861D98  38210070             addi r1,r1,0x70
+  82861D9C  480B4970             b 0x8291670c
 
 ; 82861DA0  D3DDevice_GetSamplerState_MinFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2426)
   82861DA0  7D8802A6             mfspr r12,LR
@@ -4457,6 +4808,61 @@ LAB_82861808:
 ; 82861DE8  D3DDevice_SetSamplerState_MagFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2439)
   82861DE8  7D8802A6             mfspr r12,LR
   82861DEC  480B48D1             bl 0x829166bc
+  82861DF0  9421FF90             stwu r1,-0x70(r1)
+  82861DF4  7C7F1B78             or r31,r3,r3
+  82861DF8  7C9E2378             or r30,r4,r4
+  82861DFC  7CBD2B78             or r29,r5,r5
+  82861E00  7DAD6B78             or r13,r13,r13
+  82861E04  397E0030             addi r11,r30,0x30
+  82861E08  7D5FF214             add r10,r31,r30
+  82861E0C  1D6B0018             mulli r11,r11,0x18
+  82861E10  892A2A70             lbz r9,0x2a70(r10)
+  82861E14  7D6BFA14             add r11,r11,r31
+  82861E18  3D00821F             lis r8,-0x7de1
+  82861E1C  5529103E             rlwinm r9,r9,0x2,0x0,0x1f
+  82861E20  39083800             addi r8,r8,0x3800
+  82861E24  38BE0020             addi r5,r30,0x20
+  82861E28  80CB0010             lwz r6,0x10(r11)
+  82861E2C  57A7F0BE             rlwinm r7,r29,0x1e,0x2,0x1f
+  82861E30  808B000C             lwz r4,0xc(r11)
+  82861E34  38600001             li r3,0x1
+  82861E38  7CDE3378             or r30,r6,r6
+  82861E3C  54C6AFFE             rlwinm r6,r6,0x15,0x1f,0x1f
+  82861E40  7D09402E             lwzx r8,r9,r8
+  82861E44  50FE556A             rlwimi r30,r7,0xa,0x15,0x15
+  82861E48  7CC93B78             or r9,r6,r7
+  82861E4C  93CB0010             stw r30,0x10(r11)
+  82861E50  7866FFE6             rldicr r6,r3,0x3f,0x3f
+  82861E54  3929FFFF             subi r9,r9,0x1
+  82861E58  7D094878             andc r9,r8,r9
+  82861E5C  78A80020             rldicl r8,r5,0x0,0x20
+  82861E60  55293032             rlwinm r9,r9,0x6,0x0,0x19
+  82861E64  7CC84436             srd r8,r6,r8
+  82861E68  7D293B78             or r9,r9,r7
+  82861E6C  7D29EB78             or r9,r9,r29
+  82861E70  51249AD8             rlwimi r4,r9,0x13,0xb,0xc
+  82861E74  5124990C             rlwimi r4,r9,0x13,0x4,0x6
+  82861E78  908B000C             stw r4,0xc(r11)
+  82861E7C  892A2A8A             lbz r9,0x2a8a(r10)
+  82861E80  548A003E             rlwinm r10,r4,0x0,0x0,0x1f
+  82861E84  7D475378             or r7,r10,r10
+  82861E88  7D465378             or r6,r10,r10
+  82861E8C  552AF0BE             rlwinm r10,r9,0x1e,0x2,0x1f
+  82861E90  50E6FB7E             rlwimi r6,r7,0x1f,0xd,0x1f
+  82861E94  394AFFFF             subi r10,r10,0x1
+  82861E98  50E6F856             rlwimi r6,r7,0x1f,0x1,0xb
+  82861E9C  7D295078             andc r9,r9,r10
+  82861EA0  54C76D3E             rlwinm r7,r6,0xd,0x14,0x1f
+  82861EA4  7CEA5038             and r10,r7,r10
+  82861EA8  7D4A4A14             add r10,r10,r9
+  82861EAC  53CA003A             rlwimi r10,r30,0x0,0x0,0x1d
+  82861EB0  914B0010             stw r10,0x10(r11)
+  82861EB4  E97F0018             ld r11,0x18(r31)
+  82861EB8  7D0B5B78             or r11,r8,r11
+  82861EBC  F97F0018             std r11,0x18(r31)
+  82861EC0  7DCE7378             or r14,r14,r14
+  82861EC4  38210070             addi r1,r1,0x70
+  82861EC8  480B4844             b 0x8291670c
 
 ; 82861ED0  D3DDevice_GetSamplerState_MagFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2473)
   82861ED0  7D8802A6             mfspr r12,LR
@@ -4490,6 +4896,44 @@ LAB_82861808:
 ; 82861F40  D3DDevice_SetSamplerState_MagFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2490)
   82861F40  7D8802A6             mfspr r12,LR
   82861F44  480B4779             bl 0x829166bc
+  82861F48  9421FF90             stwu r1,-0x70(r1)
+  82861F4C  7C7F1B78             or r31,r3,r3
+  82861F50  7C9E2378             or r30,r4,r4
+  82861F54  7CBD2B78             or r29,r5,r5
+  82861F58  7DAD6B78             or r13,r13,r13
+  82861F5C  395E0030             addi r10,r30,0x30
+  82861F60  7D7FF214             add r11,r31,r30
+  82861F64  1D4A0018             mulli r10,r10,0x18
+  82861F68  892B2A8A             lbz r9,0x2a8a(r11)
+  82861F6C  7D4AFA14             add r10,r10,r31
+  82861F70  38FE0020             addi r7,r30,0x20
+  82861F74  5529003C             rlwinm r9,r9,0x0,0x0,0x1e
+  82861F78  39000001             li r8,0x1
+  82861F7C  7D26EB78             or r6,r9,r29
+  82861F80  80AA000C             lwz r5,0xc(r10)
+  82861F84  7903FFE6             rldicr r3,r8,0x3f,0x3f
+  82861F88  54C9F0BE             rlwinm r9,r6,0x1e,0x2,0x1f
+  82861F8C  808A0010             lwz r4,0x10(r10)
+  82861F90  7CBE2B78             or r30,r5,r5
+  82861F94  3929FFFF             subi r9,r9,0x1
+  82861F98  53C5FB7E             rlwimi r5,r30,0x1f,0xd,0x1f
+  82861F9C  7CC84878             andc r8,r6,r9
+  82861FA0  53C5F856             rlwimi r5,r30,0x1f,0x1,0xb
+  82861FA4  78FE0020             rldicl r30,r7,0x0,0x20
+  82861FA8  54A76D3E             rlwinm r7,r5,0xd,0x14,0x1f
+  82861FAC  7C65F436             srd r5,r3,r30
+  82861FB0  7CE74838             and r7,r7,r9
+  82861FB4  392B2A8A             addi r9,r11,0x2a8a
+  82861FB8  7D074214             add r8,r7,r8
+  82861FBC  5088003A             rlwimi r8,r4,0x0,0x0,0x1d
+  82861FC0  910A0010             stw r8,0x10(r10)
+  82861FC4  98CB2A8A             stb r6,0x2a8a(r11)
+  82861FC8  E97F0018             ld r11,0x18(r31)
+  82861FCC  7CAB5B78             or r11,r5,r11
+  82861FD0  F97F0018             std r11,0x18(r31)
+  82861FD4  7DCE7378             or r14,r14,r14
+  82861FD8  38210070             addi r1,r1,0x70
+  82861FDC  480B4730             b 0x8291670c
 
 ; 82861FE0  D3DDevice_GetSamplerState_MagFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2511)
   82861FE0  7D8802A6             mfspr r12,LR
@@ -4514,6 +4958,28 @@ LAB_82861808:
 ; 82862028  D3DDevice_SetSamplerState_MipFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2524)
   82862028  7D8802A6             mfspr r12,LR
   8286202C  480B4691             bl 0x829166bc
+  82862030  9421FF90             stwu r1,-0x70(r1)
+  82862034  7C7F1B78             or r31,r3,r3
+  82862038  7C9E2378             or r30,r4,r4
+  8286203C  7CBD2B78             or r29,r5,r5
+  82862040  7DAD6B78             or r13,r13,r13
+  82862044  397E0030             addi r11,r30,0x30
+  82862048  395E0020             addi r10,r30,0x20
+  8286204C  1D6B0018             mulli r11,r11,0x18
+  82862050  7D6BFA14             add r11,r11,r31
+  82862054  39200001             li r9,0x1
+  82862058  794A0020             rldicl r10,r10,0x0,0x20
+  8286205C  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  82862060  810B000C             lwz r8,0xc(r11)
+  82862064  7D2A5436             srd r10,r9,r10
+  82862068  53A8B9D0             rlwimi r8,r29,0x17,0x7,0x8
+  8286206C  910B000C             stw r8,0xc(r11)
+  82862070  E97F0018             ld r11,0x18(r31)
+  82862074  7D4B5B78             or r11,r10,r11
+  82862078  F97F0018             std r11,0x18(r31)
+  8286207C  7DCE7378             or r14,r14,r14
+  82862080  38210070             addi r1,r1,0x70
+  82862084  480B4688             b 0x8291670c
 
 ; 82862088  D3DDevice_GetSamplerState_MipFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2540)
   82862088  7D8802A6             mfspr r12,LR
@@ -4539,6 +5005,46 @@ LAB_82861808:
 ; 828620D8  D3DDevice_SetSamplerState_SeparateZFilterEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2555)
   828620D8  7D8802A6             mfspr r12,LR
   828620DC  480B45E1             bl 0x829166bc
+  828620E0  9421FF90             stwu r1,-0x70(r1)
+  828620E4  7C7F1B78             or r31,r3,r3
+  828620E8  7C9E2378             or r30,r4,r4
+  828620EC  7CBD2B78             or r29,r5,r5
+  828620F0  7DAD6B78             or r13,r13,r13
+  828620F4  7D7FF214             add r11,r31,r30
+  828620F8  395E0030             addi r10,r30,0x30
+  828620FC  57A8103A             rlwinm r8,r29,0x2,0x0,0x1d
+  82862100  1D4A0018             mulli r10,r10,0x18
+  82862104  892B2A8A             lbz r9,0x2a8a(r11)
+  82862108  7D4AFA14             add r10,r10,r31
+  8286210C  552907B8             rlwinm r9,r9,0x0,0x1e,0x1c
+  82862110  38FE0020             addi r7,r30,0x20
+  82862114  7D264378             or r6,r9,r8
+  82862118  38A00001             li r5,0x1
+  8286211C  810A000C             lwz r8,0xc(r10)
+  82862120  54C9F0BE             rlwinm r9,r6,0x1e,0x2,0x1f
+  82862124  808A0010             lwz r4,0x10(r10)
+  82862128  78A5FFE6             rldicr r5,r5,0x3f,0x3f
+  8286212C  7D034378             or r3,r8,r8
+  82862130  7D1E4378             or r30,r8,r8
+  82862134  3929FFFF             subi r9,r9,0x1
+  82862138  507EFB7E             rlwimi r30,r3,0x1f,0xd,0x1f
+  8286213C  7CC84878             andc r8,r6,r9
+  82862140  507EF856             rlwimi r30,r3,0x1f,0x1,0xb
+  82862144  78E70020             rldicl r7,r7,0x0,0x20
+  82862148  57C36D3E             rlwinm r3,r30,0xd,0x14,0x1f
+  8286214C  7CA73C36             srd r7,r5,r7
+  82862150  7C694838             and r9,r3,r9
+  82862154  7D094214             add r8,r9,r8
+  82862158  392B2A8A             addi r9,r11,0x2a8a
+  8286215C  5088003A             rlwimi r8,r4,0x0,0x0,0x1d
+  82862160  910A0010             stw r8,0x10(r10)
+  82862164  98CB2A8A             stb r6,0x2a8a(r11)
+  82862168  E97F0018             ld r11,0x18(r31)
+  8286216C  7CEB5B78             or r11,r7,r11
+  82862170  F97F0018             std r11,0x18(r31)
+  82862174  7DCE7378             or r14,r14,r14
+  82862178  38210070             addi r1,r1,0x70
+  8286217C  480B4590             b 0x8291670c
 
 ; 82862180  D3DDevice_GetSamplerState_SeparateZFilterEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2578)
   82862180  7D8802A6             mfspr r12,LR
@@ -4563,6 +5069,41 @@ LAB_82861808:
 ; 828621C8  D3DDevice_SetSamplerState_MaxAnisotropy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2591)
   828621C8  7D8802A6             mfspr r12,LR
   828621CC  480B44F1             bl 0x829166bc
+  828621D0  9421FF90             stwu r1,-0x70(r1)
+  828621D4  7C7F1B78             or r31,r3,r3
+  828621D8  7C9E2378             or r30,r4,r4
+  828621DC  7CBD2B78             or r29,r5,r5
+  828621E0  7DAD6B78             or r13,r13,r13
+  828621E4  397E0030             addi r11,r30,0x30
+  828621E8  1D6B0018             mulli r11,r11,0x18
+  828621EC  7D6BFA14             add r11,r11,r31
+  828621F0  814B0010             lwz r10,0x10(r11)
+  828621F4  55490529             rlwinm. r9,r10,0x0,0x14,0x14
+  828621F8  4082000C             bne 0x82862204
+  828621FC  554A056B             rlwinm. r10,r10,0x0,0x15,0x15
+  82862200  41820040             beq 0x82862240
+LAB_82862204:
+  82862204  3D40821F             lis r10,-0x7de1
+  82862208  812B000C             lwz r9,0xc(r11)
+  8286220C  57A8103A             rlwinm r8,r29,0x2,0x0,0x1d
+  82862210  394A3800             addi r10,r10,0x3800
+  82862214  38FE0020             addi r7,r30,0x20
+  82862218  38C00001             li r6,0x1
+  8286221C  78E70020             rldicl r7,r7,0x0,0x20
+  82862220  78C6FFE6             rldicr r6,r6,0x3f,0x3f
+  82862224  7D48502E             lwzx r10,r8,r10
+  82862228  7CC83C36             srd r8,r6,r7
+  8286222C  5149C90C             rlwimi r9,r10,0x19,0x4,0x6
+  82862230  912B000C             stw r9,0xc(r11)
+  82862234  E97F0018             ld r11,0x18(r31)
+  82862238  7D0B5B78             or r11,r8,r11
+  8286223C  F97F0018             std r11,0x18(r31)
+LAB_82862240:
+  82862240  7D7FF214             add r11,r31,r30
+  82862244  9BAB2A70             stb r29,0x2a70(r11)
+  82862248  7DCE7378             or r14,r14,r14
+  8286224C  38210070             addi r1,r1,0x70
+  82862250  480B44BC             b 0x8291670c
 
 ; 82862258  D3DDevice_GetSamplerState_MaxAnisotropy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2616)
   82862258  7D8802A6             mfspr r12,LR
@@ -4730,6 +5271,42 @@ LAB_82861808:
 ; 828624C8  D3DDevice_SetSamplerState_MaxMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2705)
   828624C8  7D8802A6             mfspr r12,LR
   828624CC  480B41F1             bl 0x829166bc
+  828624D0  9421FF90             stwu r1,-0x70(r1)
+  828624D4  7C7F1B78             or r31,r3,r3
+  828624D8  7C9E2378             or r30,r4,r4
+  828624DC  7CBD2B78             or r29,r5,r5
+  828624E0  7DAD6B78             or r13,r13,r13
+  828624E4  397E0C7E             addi r11,r30,0xc7e
+  828624E8  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  828624EC  7D6BF82E             lwzx r11,r11,r31
+  828624F0  2B0B0000             cmplwi cr6,r11,0x0
+  828624F4  419A0050             beq cr6,0x82862544
+  828624F8  816B002C             lwz r11,0x2c(r11)
+  828624FC  395E0030             addi r10,r30,0x30
+  82862500  556BF73E             rlwinm r11,r11,0x1e,0x1c,0x1f
+  82862504  1D4A0018             mulli r10,r10,0x18
+  82862508  7D4AFA14             add r10,r10,r31
+  8286250C  7F0BE840             cmplw cr6,r11,r29
+  82862510  41990008             bgt cr6,0x82862518
+  82862514  7FABEB78             or r11,r29,r29
+LAB_82862518:
+  82862518  812A0010             lwz r9,0x10(r10)
+  8286251C  391E0020             addi r8,r30,0x20
+  82862520  38E00001             li r7,0x1
+  82862524  516916BA             rlwimi r9,r11,0x2,0x1a,0x1d
+  82862528  78EBFFE6             rldicr r11,r7,0x3f,0x3f
+  8286252C  912A0010             stw r9,0x10(r10)
+  82862530  790A0020             rldicl r10,r8,0x0,0x20
+  82862534  7D6B5436             srd r11,r11,r10
+  82862538  E95F0018             ld r10,0x18(r31)
+  8286253C  7D6B5378             or r11,r11,r10
+  82862540  F97F0018             std r11,0x18(r31)
+LAB_82862544:
+  82862544  7D7FF214             add r11,r31,r30
+  82862548  9BAB2FC4             stb r29,0x2fc4(r11)
+  8286254C  7DCE7378             or r14,r14,r14
+  82862550  38210070             addi r1,r1,0x70
+  82862554  480B41B8             b 0x8291670c
 
 ; 82862558  D3DDevice_GetSamplerState_MaxMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2734)
   82862558  7D8802A6             mfspr r12,LR
@@ -4754,6 +5331,42 @@ LAB_82861808:
 ; 828625A0  D3DDevice_SetSamplerState_MinMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2747)
   828625A0  7D8802A6             mfspr r12,LR
   828625A4  480B4119             bl 0x829166bc
+  828625A8  9421FF90             stwu r1,-0x70(r1)
+  828625AC  7C7F1B78             or r31,r3,r3
+  828625B0  7C9E2378             or r30,r4,r4
+  828625B4  7CBD2B78             or r29,r5,r5
+  828625B8  7DAD6B78             or r13,r13,r13
+  828625BC  397E0C7E             addi r11,r30,0xc7e
+  828625C0  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  828625C4  7D6BF82E             lwzx r11,r11,r31
+  828625C8  2B0B0000             cmplwi cr6,r11,0x0
+  828625CC  419A0050             beq cr6,0x8286261c
+  828625D0  816B002C             lwz r11,0x2c(r11)
+  828625D4  395E0030             addi r10,r30,0x30
+  828625D8  556BD73E             rlwinm r11,r11,0x1a,0x1c,0x1f
+  828625DC  1D4A0018             mulli r10,r10,0x18
+  828625E0  7D4AFA14             add r10,r10,r31
+  828625E4  7F0BE840             cmplw cr6,r11,r29
+  828625E8  41980008             blt cr6,0x828625f0
+  828625EC  7FABEB78             or r11,r29,r29
+LAB_828625f0:
+  828625F0  812A0010             lwz r9,0x10(r10)
+  828625F4  391E0020             addi r8,r30,0x20
+  828625F8  38E00001             li r7,0x1
+  828625FC  516935B2             rlwimi r9,r11,0x6,0x16,0x19
+  82862600  78EBFFE6             rldicr r11,r7,0x3f,0x3f
+  82862604  912A0010             stw r9,0x10(r10)
+  82862608  790A0020             rldicl r10,r8,0x0,0x20
+  8286260C  7D6B5436             srd r11,r11,r10
+  82862610  E95F0018             ld r10,0x18(r31)
+  82862614  7D6B5378             or r11,r11,r10
+  82862618  F97F0018             std r11,0x18(r31)
+LAB_8286261c:
+  8286261C  7D7FF214             add r11,r31,r30
+  82862620  9BAB2FDE             stb r29,0x2fde(r11)
+  82862624  7DCE7378             or r14,r14,r14
+  82862628  38210070             addi r1,r1,0x70
+  8286262C  480B40E0             b 0x8291670c
 
 ; 82862630  D3DDevice_GetSamplerState_MinMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2776)
   82862630  7D8802A6             mfspr r12,LR
@@ -4778,6 +5391,30 @@ LAB_82861808:
 ; 82862678  D3DDevice_SetSamplerState_BorderColor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2789)
   82862678  7D8802A6             mfspr r12,LR
   8286267C  480B4041             bl 0x829166bc
+  82862680  9421FF90             stwu r1,-0x70(r1)
+  82862684  7C7F1B78             or r31,r3,r3
+  82862688  7C9E2378             or r30,r4,r4
+  8286268C  7CBD2B78             or r29,r5,r5
+  82862690  7DAD6B78             or r13,r13,r13
+  82862694  397E0030             addi r11,r30,0x30
+  82862698  315DFFFF             subic r10,r29,0x1
+  8286269C  1D6B0018             mulli r11,r11,0x18
+  828626A0  7D6BFA14             add r11,r11,r31
+  828626A4  7D4AE910             subfe r10,r10,r29
+  828626A8  393E0020             addi r9,r30,0x20
+  828626AC  39000001             li r8,0x1
+  828626B0  79290020             rldicl r9,r9,0x0,0x20
+  828626B4  80EB0014             lwz r7,0x14(r11)
+  828626B8  7908FFE6             rldicr r8,r8,0x3f,0x3f
+  828626BC  50EA003A             rlwimi r10,r7,0x0,0x0,0x1d
+  828626C0  914B0014             stw r10,0x14(r11)
+  828626C4  7D0B4C36             srd r11,r8,r9
+  828626C8  E95F0018             ld r10,0x18(r31)
+  828626CC  7D6B5378             or r11,r11,r10
+  828626D0  F97F0018             std r11,0x18(r31)
+  828626D4  7DCE7378             or r14,r14,r14
+  828626D8  38210070             addi r1,r1,0x70
+  828626DC  480B4030             b 0x8291670c
 
 ; 828626E0  D3DDevice_GetSamplerState_BorderColor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2809)
   828626E0  7D8802A6             mfspr r12,LR
@@ -4808,6 +5445,27 @@ LAB_82861808:
 ; 82862740  D3DDevice_SetSamplerState_AddressU  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2824)
   82862740  7D8802A6             mfspr r12,LR
   82862744  480B3F79             bl 0x829166bc
+  82862748  9421FF90             stwu r1,-0x70(r1)
+  8286274C  7C7F1B78             or r31,r3,r3
+  82862750  7C9E2378             or r30,r4,r4
+  82862754  7CBD2B78             or r29,r5,r5
+  82862758  7DAD6B78             or r13,r13,r13
+  8286275C  397E0030             addi r11,r30,0x30
+  82862760  395E0020             addi r10,r30,0x20
+  82862764  1D6B0018             mulli r11,r11,0x18
+  82862768  7D2BF82E             lwzx r9,r11,r31
+  8286276C  53A954EA             rlwimi r9,r29,0xa,0x13,0x15
+  82862770  39000001             li r8,0x1
+  82862774  7D2BF92E             stwx r9,r11,r31
+  82862778  794B0020             rldicl r11,r10,0x0,0x20
+  8286277C  790AFFE6             rldicr r10,r8,0x3f,0x3f
+  82862780  7D4B5C36             srd r11,r10,r11
+  82862784  E95F0018             ld r10,0x18(r31)
+  82862788  7D6B5378             or r11,r11,r10
+  8286278C  F97F0018             std r11,0x18(r31)
+  82862790  7DCE7378             or r14,r14,r14
+  82862794  38210070             addi r1,r1,0x70
+  82862798  480B3F74             b 0x8291670c
 
 ; 828627A0  D3DDevice_GetSamplerState_AddressU  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2840)
   828627A0  7D8802A6             mfspr r12,LR
@@ -4833,6 +5491,27 @@ LAB_82861808:
 ; 828627F0  D3DDevice_SetSamplerState_AddressV  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2855)
   828627F0  7D8802A6             mfspr r12,LR
   828627F4  480B3EC9             bl 0x829166bc
+  828627F8  9421FF90             stwu r1,-0x70(r1)
+  828627FC  7C7F1B78             or r31,r3,r3
+  82862800  7C9E2378             or r30,r4,r4
+  82862804  7CBD2B78             or r29,r5,r5
+  82862808  7DAD6B78             or r13,r13,r13
+  8286280C  397E0030             addi r11,r30,0x30
+  82862810  395E0020             addi r10,r30,0x20
+  82862814  1D6B0018             mulli r11,r11,0x18
+  82862818  7D2BF82E             lwzx r9,r11,r31
+  8286281C  53A96C24             rlwimi r9,r29,0xd,0x10,0x12
+  82862820  39000001             li r8,0x1
+  82862824  7D2BF92E             stwx r9,r11,r31
+  82862828  794B0020             rldicl r11,r10,0x0,0x20
+  8286282C  790AFFE6             rldicr r10,r8,0x3f,0x3f
+  82862830  7D4B5C36             srd r11,r10,r11
+  82862834  E95F0018             ld r10,0x18(r31)
+  82862838  7D6B5378             or r11,r11,r10
+  8286283C  F97F0018             std r11,0x18(r31)
+  82862840  7DCE7378             or r14,r14,r14
+  82862844  38210070             addi r1,r1,0x70
+  82862848  480B3EC4             b 0x8291670c
 
 ; 82862850  D3DDevice_GetSamplerState_AddressV  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2871)
   82862850  7D8802A6             mfspr r12,LR
@@ -4858,6 +5537,27 @@ LAB_82861808:
 ; 828628A0  D3DDevice_SetSamplerState_AddressW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2886)
   828628A0  7D8802A6             mfspr r12,LR
   828628A4  480B3E19             bl 0x829166bc
+  828628A8  9421FF90             stwu r1,-0x70(r1)
+  828628AC  7C7F1B78             or r31,r3,r3
+  828628B0  7C9E2378             or r30,r4,r4
+  828628B4  7CBD2B78             or r29,r5,r5
+  828628B8  7DAD6B78             or r13,r13,r13
+  828628BC  397E0030             addi r11,r30,0x30
+  828628C0  395E0020             addi r10,r30,0x20
+  828628C4  1D6B0018             mulli r11,r11,0x18
+  828628C8  7D2BF82E             lwzx r9,r11,r31
+  828628CC  53A9835E             rlwimi r9,r29,0x10,0xd,0xf
+  828628D0  39000001             li r8,0x1
+  828628D4  7D2BF92E             stwx r9,r11,r31
+  828628D8  794B0020             rldicl r11,r10,0x0,0x20
+  828628DC  790AFFE6             rldicr r10,r8,0x3f,0x3f
+  828628E0  7D4B5C36             srd r11,r10,r11
+  828628E4  E95F0018             ld r10,0x18(r31)
+  828628E8  7D6B5378             or r11,r11,r10
+  828628EC  F97F0018             std r11,0x18(r31)
+  828628F0  7DCE7378             or r14,r14,r14
+  828628F4  38210070             addi r1,r1,0x70
+  828628F8  480B3E14             b 0x8291670c
 
 ; 82862900  D3DDevice_GetSamplerState_AddressW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2902)
   82862900  7D8802A6             mfspr r12,LR
@@ -4883,6 +5583,28 @@ LAB_82861808:
 ; 82862950  D3DDevice_SetSamplerState_TrilinearThreshold  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2917)
   82862950  7D8802A6             mfspr r12,LR
   82862954  480B3D69             bl 0x829166bc
+  82862958  9421FF90             stwu r1,-0x70(r1)
+  8286295C  7C7F1B78             or r31,r3,r3
+  82862960  7C9E2378             or r30,r4,r4
+  82862964  7CBD2B78             or r29,r5,r5
+  82862968  7DAD6B78             or r13,r13,r13
+  8286296C  397E0030             addi r11,r30,0x30
+  82862970  395E0020             addi r10,r30,0x20
+  82862974  1D6B0018             mulli r11,r11,0x18
+  82862978  7D6BFA14             add r11,r11,r31
+  8286297C  39200001             li r9,0x1
+  82862980  794A0020             rldicl r10,r10,0x0,0x20
+  82862984  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  82862988  810B0014             lwz r8,0x14(r11)
+  8286298C  7D2A5436             srd r10,r9,r10
+  82862990  53A81EF8             rlwimi r8,r29,0x3,0x1b,0x1c
+  82862994  910B0014             stw r8,0x14(r11)
+  82862998  E97F0018             ld r11,0x18(r31)
+  8286299C  7D4B5B78             or r11,r10,r11
+  828629A0  F97F0018             std r11,0x18(r31)
+  828629A4  7DCE7378             or r14,r14,r14
+  828629A8  38210070             addi r1,r1,0x70
+  828629AC  480B3D60             b 0x8291670c
 
 ; 828629B0  D3DDevice_GetSamplerState_TrilinearThreshold  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2933)
   828629B0  7D8802A6             mfspr r12,LR
@@ -4908,6 +5630,28 @@ LAB_82861808:
 ; 82862A00  D3DDevice_SetSamplerState_HGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2948)
   82862A00  7D8802A6             mfspr r12,LR
   82862A04  480B3CB9             bl 0x829166bc
+  82862A08  9421FF90             stwu r1,-0x70(r1)
+  82862A0C  7C7F1B78             or r31,r3,r3
+  82862A10  7C9E2378             or r30,r4,r4
+  82862A14  7CBD2B78             or r29,r5,r5
+  82862A18  7DAD6B78             or r13,r13,r13
+  82862A1C  397E0030             addi r11,r30,0x30
+  82862A20  395E0020             addi r10,r30,0x20
+  82862A24  1D6B0018             mulli r11,r11,0x18
+  82862A28  7D6BFA14             add r11,r11,r31
+  82862A2C  39200001             li r9,0x1
+  82862A30  794A0020             rldicl r10,r10,0x0,0x20
+  82862A34  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  82862A38  810B0010             lwz r8,0x10(r11)
+  82862A3C  7D2A5436             srd r10,r9,r10
+  82862A40  53A8B152             rlwimi r8,r29,0x16,0x5,0x9
+  82862A44  910B0010             stw r8,0x10(r11)
+  82862A48  E97F0018             ld r11,0x18(r31)
+  82862A4C  7D4B5B78             or r11,r10,r11
+  82862A50  F97F0018             std r11,0x18(r31)
+  82862A54  7DCE7378             or r14,r14,r14
+  82862A58  38210070             addi r1,r1,0x70
+  82862A5C  480B3CB0             b 0x8291670c
 
 ; 82862A60  D3DDevice_GetSamplerState_HGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2964)
   82862A60  7D8802A6             mfspr r12,LR
@@ -4935,6 +5679,28 @@ LAB_82861808:
 ; 82862AB8  D3DDevice_SetSamplerState_VGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2979)
   82862AB8  7D8802A6             mfspr r12,LR
   82862ABC  480B3C01             bl 0x829166bc
+  82862AC0  9421FF90             stwu r1,-0x70(r1)
+  82862AC4  7C7F1B78             or r31,r3,r3
+  82862AC8  7C9E2378             or r30,r4,r4
+  82862ACC  7CBD2B78             or r29,r5,r5
+  82862AD0  7DAD6B78             or r13,r13,r13
+  82862AD4  397E0030             addi r11,r30,0x30
+  82862AD8  395E0020             addi r10,r30,0x20
+  82862ADC  1D6B0018             mulli r11,r11,0x18
+  82862AE0  7D6BFA14             add r11,r11,r31
+  82862AE4  39200001             li r9,0x1
+  82862AE8  794A0020             rldicl r10,r10,0x0,0x20
+  82862AEC  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  82862AF0  810B0010             lwz r8,0x10(r11)
+  82862AF4  7D2A5436             srd r10,r9,r10
+  82862AF8  53A8D808             rlwimi r8,r29,0x1b,0x0,0x4
+  82862AFC  910B0010             stw r8,0x10(r11)
+  82862B00  E97F0018             ld r11,0x18(r31)
+  82862B04  7D4B5B78             or r11,r10,r11
+  82862B08  F97F0018             std r11,0x18(r31)
+  82862B0C  7DCE7378             or r14,r14,r14
+  82862B10  38210070             addi r1,r1,0x70
+  82862B14  480B3BF8             b 0x8291670c
 
 ; 82862B18  D3DDevice_GetSamplerState_VGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2995)
   82862B18  7D8802A6             mfspr r12,LR
@@ -4961,6 +5727,28 @@ LAB_82861808:
 ; 82862B68  D3DDevice_SetSamplerState_WhiteBorderColorW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3010)
   82862B68  7D8802A6             mfspr r12,LR
   82862B6C  480B3B51             bl 0x829166bc
+  82862B70  9421FF90             stwu r1,-0x70(r1)
+  82862B74  7C7F1B78             or r31,r3,r3
+  82862B78  7C9E2378             or r30,r4,r4
+  82862B7C  7CBD2B78             or r29,r5,r5
+  82862B80  7DAD6B78             or r13,r13,r13
+  82862B84  397E0030             addi r11,r30,0x30
+  82862B88  395E0020             addi r10,r30,0x20
+  82862B8C  1D6B0018             mulli r11,r11,0x18
+  82862B90  7D6BFA14             add r11,r11,r31
+  82862B94  39200001             li r9,0x1
+  82862B98  794A0020             rldicl r10,r10,0x0,0x20
+  82862B9C  7929FFE6             rldicr r9,r9,0x3f,0x3f
+  82862BA0  810B0014             lwz r8,0x14(r11)
+  82862BA4  7D2A5436             srd r10,r9,r10
+  82862BA8  53A8177A             rlwimi r8,r29,0x2,0x1d,0x1d
+  82862BAC  910B0014             stw r8,0x14(r11)
+  82862BB0  E97F0018             ld r11,0x18(r31)
+  82862BB4  7D4B5B78             or r11,r10,r11
+  82862BB8  F97F0018             std r11,0x18(r31)
+  82862BBC  7DCE7378             or r14,r14,r14
+  82862BC0  38210070             addi r1,r1,0x70
+  82862BC4  480B3B48             b 0x8291670c
 
 ; 82862BC8  D3DDevice_GetSamplerState_WhiteBorderColorW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3026)
   82862BC8  7D8802A6             mfspr r12,LR
@@ -4986,6 +5774,30 @@ LAB_82861808:
 ; 82862C18  D3DDevice_SetSamplerState_PointBorderEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3041)
   82862C18  7D8802A6             mfspr r12,LR
   82862C1C  480B3AA1             bl 0x829166bc
+  82862C20  9421FF90             stwu r1,-0x70(r1)
+  82862C24  7C7F1B78             or r31,r3,r3
+  82862C28  7C9E2378             or r30,r4,r4
+  82862C2C  7CBD2B78             or r29,r5,r5
+  82862C30  7DAD6B78             or r13,r13,r13
+  82862C34  397E0030             addi r11,r30,0x30
+  82862C38  7FAA0034             cntlzw r10,r29
+  82862C3C  1D6B0018             mulli r11,r11,0x18
+  82862C40  7D6BFA14             add r11,r11,r31
+  82862C44  554ADFFE             rlwinm r10,r10,0x1b,0x1f,0x1f
+  82862C48  393E0020             addi r9,r30,0x20
+  82862C4C  39000001             li r8,0x1
+  82862C50  79290020             rldicl r9,r9,0x0,0x20
+  82862C54  80EB0004             lwz r7,0x4(r11)
+  82862C58  7908FFE6             rldicr r8,r8,0x3f,0x3f
+  82862C5C  51475D28             rlwimi r7,r10,0xb,0x14,0x14
+  82862C60  90EB0004             stw r7,0x4(r11)
+  82862C64  7D0B4C36             srd r11,r8,r9
+  82862C68  E95F0018             ld r10,0x18(r31)
+  82862C6C  7D6B5378             or r11,r11,r10
+  82862C70  F97F0018             std r11,0x18(r31)
+  82862C74  7DCE7378             or r14,r14,r14
+  82862C78  38210070             addi r1,r1,0x70
+  82862C7C  480B3A90             b 0x8291670c
 
 ; 82862C80  D3DDevice_GetSamplerState_PointBorderEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3057)
   82862C80  7D8802A6             mfspr r12,LR
@@ -5153,14 +5965,191 @@ LAB_82862d94:
 ; 82862DD8  D3DDevice_SetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3857)
   82862DD8  7D8802A6             mfspr r12,LR
   82862DDC  480B38D5             bl 0x829166b0
+  82862DE0  9421FF70             stwu r1,-0x90(r1)
+  82862DE4  7C7F1B78             or r31,r3,r3
+  82862DE8  7C9B2378             or r27,r4,r4
+  82862DEC  7CBD2B78             or r29,r5,r5
+  82862DF0  7CDE3378             or r30,r6,r6
+  82862DF4  7CFA3B78             or r26,r7,r7
+  82862DF8  7D1C4378             or r28,r8,r8
+  82862DFC  7DAD6B78             or r13,r13,r13
+  82862E00  2B1D0000             cmplwi cr6,r29,0x0
+  82862E04  419A0050             beq cr6,0x82862e54
+  82862E08  815D0018             lwz r10,0x18(r29)
+  82862E0C  217B0011             subfic r11,r27,0x11
+  82862E10  80FD001C             lwz r7,0x1c(r29)
+  82862E14  7D4AF214             add r10,r10,r30
+  82862E18  38CB00DE             addi r6,r11,0xde
+  82862E1C  5548653E             rlwinm r8,r10,0xc,0x14,0x1f
+  82862E20  55691838             rlwinm r9,r11,0x3,0x0,0x1c
+  82862E24  39680200             addi r11,r8,0x200
+  82862E28  554A00FE             rlwinm r10,r10,0x0,0x3,0x1f
+  82862E2C  556B04E6             rlwinm r11,r11,0x0,0x13,0x13
+  82862E30  54C81838             rlwinm r8,r6,0x3,0x0,0x1c
+  82862E34  7D29FA14             add r9,r9,r31
+  82862E38  7D6B5214             add r11,r11,r10
+  82862E3C  7CFE3850             subf r7,r30,r7
+  82862E40  7D68F92E             stwx r11,r8,r31
+  82862E44  90E906F4             stw r7,0x6f4(r9)
+  82862E48  E97F0018             ld r11,0x18(r31)
+  82862E4C  7D6BE378             or r11,r11,r28
+  82862E50  F97F0018             std r11,0x18(r31)
+LAB_82862e54:
+  82862E54  397B0C69             addi r11,r27,0xc69
+  82862E58  557C103A             rlwinm r28,r11,0x2,0x0,0x1d
+  82862E5C  7FDCF82E             lwzx r30,r28,r31
+  82862E60  2B1E0000             cmplwi cr6,r30,0x0
+  82862E64  419A0068             beq cr6,0x82862ecc
+  82862E68  817F2B1C             lwz r11,0x2b1c(r31)
+  82862E6C  2B0B0000             cmplwi cr6,r11,0x0
+  82862E70  419A000C             beq cr6,0x82862e7c
+  82862E74  917E0008             stw r11,0x8(r30)
+  82862E78  48000054             b 0x82862ecc
+LAB_82862e7c:
+  82862E7C  817F2B20             lwz r11,0x2b20(r31)
+  82862E80  815E0000             lwz r10,0x0(r30)
+  82862E84  7D6B5039             and. r11,r11,r10
+  82862E88  41820044             beq 0x82862ecc
+  82862E8C  817F3600             lwz r11,0x3600(r31)
+  82862E90  807F35FC             lwz r3,0x35fc(r31)
+  82862E94  7F035840             cmplw cr6,r3,r11
+  82862E98  4198000C             blt cr6,0x82862ea4
+  82862E9C  7FE3FB78             or r3,r31,r31
+  82862EA0  4BFF88E1             bl 0x8285b780
+LAB_82862ea4:
+  82862EA4  81610050             lwz r11,0x50(r1)
+  82862EA8  3940FFFF             li r10,-0x1
+  82862EAC  39230008             addi r9,r3,0x8
+  82862EB0  53CBF0BE             rlwimi r11,r30,0x1e,0x2,0x1f
+  82862EB4  91410054             stw r10,0x54(r1)
+  82862EB8  556B0080             rlwinm r11,r11,0x0,0x2,0x0
+  82862EBC  91610050             stw r11,0x50(r1)
+  82862EC0  E9610050             ld r11,0x50(r1)
+  82862EC4  F9630000             std r11,0x0(r3)
+  82862EC8  913F35FC             stw r9,0x35fc(r31)
+LAB_82862ecc:
+  82862ECC  7D7FDA14             add r11,r31,r27
+  82862ED0  7FBCF92E             stwx r29,r28,r31
+  82862ED4  5749F63E             rlwinm r9,r26,0x1e,0x18,0x1f
+  82862ED8  574AF0BF             rlwinm. r10,r26,0x1e,0x2,0x1f
+  82862EDC  992B31E8             stb r9,0x31e8(r11)
+  82862EE0  4182001C             beq 0x82862efc
+  82862EE4  896B2F68             lbz r11,0x2f68(r11)
+  82862EE8  7F0A5840             cmplw cr6,r10,r11
+  82862EEC  419A0010             beq cr6,0x82862efc
+  82862EF0  E97F0010             ld r11,0x10(r31)
+  82862EF4  656B0008             oris r11,r11,0x8
+  82862EF8  F97F0010             std r11,0x10(r31)
+LAB_82862efc:
+  82862EFC  7DCE7378             or r14,r14,r14
+  82862F00  38210090             addi r1,r1,0x90
+  82862F04  480B37FC             b 0x82916700
 
 ; 82862F08  D3DDevice_GetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3948)
   82862F08  7D8802A6             mfspr r12,LR
   82862F0C  480B37A5             bl 0x829166b0
+  82862F10  9421FF70             stwu r1,-0x90(r1)
+  82862F14  7C7E1B78             or r30,r3,r3
+  82862F18  7C9D2378             or r29,r4,r4
+  82862F1C  7CBB2B78             or r27,r5,r5
+  82862F20  7CDA3378             or r26,r6,r6
+  82862F24  7DAD6B78             or r13,r13,r13
+  82862F28  397D0C69             addi r11,r29,0xc69
+  82862F2C  3B800000             li r28,0x0
+  82862F30  556B103A             rlwinm r11,r11,0x2,0x0,0x1d
+  82862F34  7FEBF02E             lwzx r31,r11,r30
+  82862F38  2B1F0000             cmplwi cr6,r31,0x0
+  82862F3C  419A0034             beq cr6,0x82862f70
+  82862F40  815F0018             lwz r10,0x18(r31)
+  82862F44  213D00EF             subfic r9,r29,0xef
+  82862F48  7FE3FB78             or r3,r31,r31
+  82862F4C  554B653E             rlwinm r11,r10,0xc,0x14,0x1f
+  82862F50  55291838             rlwinm r9,r9,0x3,0x0,0x1c
+  82862F54  396B0200             addi r11,r11,0x200
+  82862F58  554A00FE             rlwinm r10,r10,0x0,0x3,0x1f
+  82862F5C  556B04E6             rlwinm r11,r11,0x0,0x13,0x13
+  82862F60  7D29F02E             lwzx r9,r9,r30
+  82862F64  7D6B4850             subf r11,r11,r9
+  82862F68  7F8A5850             subf r28,r10,r11
+  82862F6C  48008585             bl 0x8286b4f0
+LAB_82862f70:
+  82862F70  7D7EEA14             add r11,r30,r29
+  82862F74  939B0000             stw r28,0x0(r27)
+  82862F78  896B31E8             lbz r11,0x31e8(r11)
+  82862F7C  556B103E             rlwinm r11,r11,0x2,0x0,0x1f
+  82862F80  917A0000             stw r11,0x0(r26)
+  82862F84  7DCE7378             or r14,r14,r14
+  82862F88  7FE3FB78             or r3,r31,r31
+  82862F8C  38210090             addi r1,r1,0x90
+  82862F90  480B3770             b 0x82916700
+
+; 82862F98  D3DDevice_SetIndices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3984)
+  82862F98  7D8802A6             mfspr r12,LR
+  82862F9C  480B3721             bl 0x829166bc
+  82862FA0  9421FF80             stwu r1,-0x80(r1)
+  82862FA4  7C7F1B78             or r31,r3,r3
+  82862FA8  7C9D2378             or r29,r4,r4
+  82862FAC  7DAD6B78             or r13,r13,r13
+  82862FB0  83DF318C             lwz r30,0x318c(r31)
+  82862FB4  2B1E0000             cmplwi cr6,r30,0x0
+  82862FB8  419A0068             beq cr6,0x82863020
+  82862FBC  817F2B1C             lwz r11,0x2b1c(r31)
+  82862FC0  2B0B0000             cmplwi cr6,r11,0x0
+  82862FC4  419A000C             beq cr6,0x82862fd0
+  82862FC8  917E0008             stw r11,0x8(r30)
+  82862FCC  48000054             b 0x82863020
+LAB_82862fd0:
+  82862FD0  817F2B20             lwz r11,0x2b20(r31)
+  82862FD4  815E0000             lwz r10,0x0(r30)
+  82862FD8  7D6B5039             and. r11,r11,r10
+  82862FDC  41820044             beq 0x82863020
+  82862FE0  817F3600             lwz r11,0x3600(r31)
+  82862FE4  807F35FC             lwz r3,0x35fc(r31)
+  82862FE8  7F035840             cmplw cr6,r3,r11
+  82862FEC  4198000C             blt cr6,0x82862ff8
+  82862FF0  7FE3FB78             or r3,r31,r31
+  82862FF4  4BFF878D             bl 0x8285b780
+LAB_82862ff8:
+  82862FF8  81610050             lwz r11,0x50(r1)
+  82862FFC  3940FFFF             li r10,-0x1
+  82863000  39230008             addi r9,r3,0x8
+  82863004  53CBF0BE             rlwimi r11,r30,0x1e,0x2,0x1f
+  82863008  91410054             stw r10,0x54(r1)
+  8286300C  556B0080             rlwinm r11,r11,0x0,0x2,0x0
+  82863010  91610050             stw r11,0x50(r1)
+  82863014  E9610050             ld r11,0x50(r1)
+  82863018  F9630000             std r11,0x0(r3)
+  8286301C  913F35FC             stw r9,0x35fc(r31)
+LAB_82863020:
+  82863020  93BF318C             stw r29,0x318c(r31)
+  82863024  7DCE7378             or r14,r14,r14
+  82863028  38210080             addi r1,r1,0x80
+  8286302C  480B36E0             b 0x8291670c
 
 ; 82864248  D3DDevice_SetRenderTarget_External  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4024)
   82864248  7D8802A6             mfspr r12,LR
   8286424C  480B2471             bl 0x829166bc
+  82864250  9421FF80             stwu r1,-0x80(r1)
+  82864254  7C7F1B78             or r31,r3,r3
+  82864258  7C9E2378             or r30,r4,r4
+  8286425C  7CBD2B78             or r29,r5,r5
+  82864260  7DAD6B78             or r13,r13,r13
+  82864264  38A00001             li r5,0x1
+  82864268  38800051             li r4,0x51
+  8286426C  38610050             addi r3,r1,0x50
+  82864270  4BFF6B01             bl 0x8285ad70
+  82864274  7FA5EB78             or r5,r29,r29
+  82864278  7FC4F378             or r4,r30,r30
+  8286427C  7FE3FB78             or r3,r31,r31
+  82864280  4BFFF631             bl 0x828638b0
+  82864284  81610050             lwz r11,0x50(r1)
+  82864288  38A00000             li r5,0x0
+  8286428C  38800000             li r4,0x0
+  82864290  65630040             oris r3,r11,0x40
+  82864294  4803CB1D             bl 0x828a0db0
+  82864298  7DCE7378             or r14,r14,r14
+  8286429C  38210080             addi r1,r1,0x80
+  828642A0  480B246C             b 0x8291670c
 
 ; 828638B0  D3DDevice_SetRenderTarget  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4037)
   828638B0  7D8802A6             mfspr r12,LR
@@ -5540,6 +6529,335 @@ LAB_82863dc4:
 ; 82863DD0  D3DDevice_SetDepthStencilSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4164)
   82863DD0  7D8802A6             mfspr r12,LR
   82863DD4  480B28E9             bl 0x829166bc
+  82863DD8  9421FF90             stwu r1,-0x70(r1)
+  82863DDC  7C7F1B78             or r31,r3,r3
+  82863DE0  7C9E2378             or r30,r4,r4
+  82863DE4  7DAD6B78             or r13,r13,r13
+  82863DE8  897F2B3C             lbz r11,0x2b3c(r31)
+  82863DEC  556A06F7             rlwinm. r10,r11,0x0,0x1b,0x1b
+  82863DF0  4182000C             beq 0x82863dfc
+  82863DF4  3BA00001             li r29,0x1
+  82863DF8  48000094             b 0x82863e8c
+LAB_82863dfc:
+  82863DFC  556B06B5             rlwinm. r11,r11,0x0,0x1a,0x1a
+  82863E00  41820084             beq 0x82863e84
+  82863E04  817F3190             lwz r11,0x3190(r31)
+  82863E08  815F32B0             lwz r10,0x32b0(r31)
+  82863E0C  7F0A5840             cmplw cr6,r10,r11
+  82863E10  419A000C             beq cr6,0x82863e1c
+  82863E14  2B0B0000             cmplwi cr6,r11,0x0
+  82863E18  409A006C             bne cr6,0x82863e84
+LAB_82863e1c:
+  82863E1C  817F3194             lwz r11,0x3194(r31)
+  82863E20  815F32B4             lwz r10,0x32b4(r31)
+  82863E24  7F0A5840             cmplw cr6,r10,r11
+  82863E28  419A000C             beq cr6,0x82863e34
+  82863E2C  2B0B0000             cmplwi cr6,r11,0x0
+  82863E30  409A0054             bne cr6,0x82863e84
+LAB_82863e34:
+  82863E34  817F3198             lwz r11,0x3198(r31)
+  82863E38  815F32B8             lwz r10,0x32b8(r31)
+  82863E3C  7F0A5840             cmplw cr6,r10,r11
+  82863E40  419A000C             beq cr6,0x82863e4c
+  82863E44  2B0B0000             cmplwi cr6,r11,0x0
+  82863E48  409A003C             bne cr6,0x82863e84
+LAB_82863e4c:
+  82863E4C  817F319C             lwz r11,0x319c(r31)
+  82863E50  815F32BC             lwz r10,0x32bc(r31)
+  82863E54  7F0A5840             cmplw cr6,r10,r11
+  82863E58  419A000C             beq cr6,0x82863e64
+  82863E5C  2B0B0000             cmplwi cr6,r11,0x0
+  82863E60  409A0024             bne cr6,0x82863e84
+LAB_82863e64:
+  82863E64  817F31A0             lwz r11,0x31a0(r31)
+  82863E68  815F32C0             lwz r10,0x32c0(r31)
+  82863E6C  7F0A5840             cmplw cr6,r10,r11
+  82863E70  419A000C             beq cr6,0x82863e7c
+  82863E74  2B0B0000             cmplwi cr6,r11,0x0
+  82863E78  409A000C             bne cr6,0x82863e84
+LAB_82863e7c:
+  82863E7C  39600001             li r11,0x1
+  82863E80  48000008             b 0x82863e88
+LAB_82863e84:
+  82863E84  39600000             li r11,0x0
+LAB_82863e88:
+  82863E88  557D063E             rlwinm r29,r11,0x0,0x18,0x1f
+LAB_82863e8c:
+  82863E8C  2B1E0000             cmplwi cr6,r30,0x0
+  82863E90  93DF31A0             stw r30,0x31a0(r31)
+  82863E94  419A0128             beq cr6,0x82863fbc
+  82863E98  817F3190             lwz r11,0x3190(r31)
+  82863E9C  2B0B0000             cmplwi cr6,r11,0x0
+  82863EA0  409A0010             bne cr6,0x82863eb0
+  82863EA4  7FC4F378             or r4,r30,r30
+  82863EA8  7FE3FB78             or r3,r31,r31
+  82863EAC  4BFFF935             bl 0x828637e0
+LAB_82863eb0:
+  82863EB0  817E001C             lwz r11,0x1c(r30)
+  82863EB4  917F2888             stw r11,0x2888(r31)
+  82863EB8  895F2B3E             lbz r10,0x2b3e(r31)
+  82863EBC  893F2B3F             lbz r9,0x2b3f(r31)
+  82863EC0  552906B5             rlwinm. r9,r9,0x0,0x1a,0x1a
+  82863EC4  817E0020             lwz r11,0x20(r30)
+  82863EC8  917F2940             stw r11,0x2940(r31)
+  82863ECC  817E0020             lwz r11,0x20(r30)
+  82863ED0  516A2EB4             rlwimi r10,r11,0x5,0x1a,0x1a
+  82863ED4  995F2B3E             stb r10,0x2b3e(r31)
+  82863ED8  418200C0             beq 0x82863f98
+  82863EDC  897F2B3C             lbz r11,0x2b3c(r31)
+  82863EE0  556A06F7             rlwinm. r10,r11,0x0,0x1b,0x1b
+  82863EE4  4182000C             beq 0x82863ef0
+  82863EE8  39600001             li r11,0x1
+  82863EEC  48000094             b 0x82863f80
+LAB_82863ef0:
+  82863EF0  556B06B5             rlwinm. r11,r11,0x0,0x1a,0x1a
+  82863EF4  41820084             beq 0x82863f78
+  82863EF8  817F3190             lwz r11,0x3190(r31)
+  82863EFC  815F32B0             lwz r10,0x32b0(r31)
+  82863F00  7F0A5840             cmplw cr6,r10,r11
+  82863F04  419A000C             beq cr6,0x82863f10
+  82863F08  2B0B0000             cmplwi cr6,r11,0x0
+  82863F0C  409A006C             bne cr6,0x82863f78
+LAB_82863f10:
+  82863F10  817F3194             lwz r11,0x3194(r31)
+  82863F14  815F32B4             lwz r10,0x32b4(r31)
+  82863F18  7F0A5840             cmplw cr6,r10,r11
+  82863F1C  419A000C             beq cr6,0x82863f28
+  82863F20  2B0B0000             cmplwi cr6,r11,0x0
+  82863F24  409A0054             bne cr6,0x82863f78
+LAB_82863f28:
+  82863F28  817F3198             lwz r11,0x3198(r31)
+  82863F2C  815F32B8             lwz r10,0x32b8(r31)
+  82863F30  7F0A5840             cmplw cr6,r10,r11
+  82863F34  419A000C             beq cr6,0x82863f40
+  82863F38  2B0B0000             cmplwi cr6,r11,0x0
+  82863F3C  409A003C             bne cr6,0x82863f78
+LAB_82863f40:
+  82863F40  817F319C             lwz r11,0x319c(r31)
+  82863F44  815F32BC             lwz r10,0x32bc(r31)
+  82863F48  7F0A5840             cmplw cr6,r10,r11
+  82863F4C  419A000C             beq cr6,0x82863f58
+  82863F50  2B0B0000             cmplwi cr6,r11,0x0
+  82863F54  409A0024             bne cr6,0x82863f78
+LAB_82863f58:
+  82863F58  817F31A0             lwz r11,0x31a0(r31)
+  82863F5C  815F32C0             lwz r10,0x32c0(r31)
+  82863F60  7F0A5840             cmplw cr6,r10,r11
+  82863F64  419A000C             beq cr6,0x82863f70
+  82863F68  2B0B0000             cmplwi cr6,r11,0x0
+  82863F6C  409A000C             bne cr6,0x82863f78
+LAB_82863f70:
+  82863F70  39600001             li r11,0x1
+  82863F74  48000008             b 0x82863f7c
+LAB_82863f78:
+  82863F78  39600000             li r11,0x0
+LAB_82863f7c:
+  82863F7C  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+LAB_82863f80:
+  82863F80  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  82863F84  41820014             beq 0x82863f98
+  82863F88  817F2880             lwz r11,0x2880(r31)
+  82863F8C  815F346C             lwz r10,0x346c(r31)
+  82863F90  514B901A             rlwimi r11,r10,0x12,0x0,0xd
+  82863F94  917F2880             stw r11,0x2880(r31)
+LAB_82863f98:
+  82863F98  39800001             li r12,0x1
+  82863F9C  E97F0010             ld r11,0x10(r31)
+  82863FA0  798CBFE6             rldicr r12,r12,0x37,0x3f
+  82863FA4  7D6B6378             or r11,r11,r12
+  82863FA8  F97F0010             std r11,0x10(r31)
+  82863FAC  616B0100             ori r11,r11,0x100
+  82863FB0  F97F0010             std r11,0x10(r31)
+  82863FB4  656B0002             oris r11,r11,0x2
+  82863FB8  48000024             b 0x82863fdc
+LAB_82863fbc:
+  82863FBC  817F2940             lwz r11,0x2940(r31)
+  82863FC0  895F2B3E             lbz r10,0x2b3e(r31)
+  82863FC4  556B0036             rlwinm r11,r11,0x0,0x0,0x1b
+  82863FC8  714A00DF             andi. r10,r10,0xdf
+  82863FCC  917F2940             stw r11,0x2940(r31)
+  82863FD0  995F2B3E             stb r10,0x2b3e(r31)
+  82863FD4  E97F0010             ld r11,0x10(r31)
+  82863FD8  616B0100             ori r11,r11,0x100
+LAB_82863fdc:
+  82863FDC  F97F0010             std r11,0x10(r31)
+  82863FE0  817F32A4             lwz r11,0x32a4(r31)
+  82863FE4  2B0B0000             cmplwi cr6,r11,0x0
+  82863FE8  409A00D0             bne cr6,0x828640b8
+  82863FEC  897F2B3C             lbz r11,0x2b3c(r31)
+  82863FF0  556A0739             rlwinm. r10,r11,0x0,0x1c,0x1c
+  82863FF4  408200C4             bne 0x828640b8
+  82863FF8  556A077B             rlwinm. r10,r11,0x0,0x1d,0x1d
+  82863FFC  408200BC             bne 0x828640b8
+  82864000  895F3093             lbz r10,0x3093(r31)
+  82864004  280A0000             cmplwi r10,0x0
+  82864008  408200B0             bne 0x828640b8
+  8286400C  556A06F7             rlwinm. r10,r11,0x0,0x1b,0x1b
+  82864010  4182000C             beq 0x8286401c
+  82864014  39600001             li r11,0x1
+  82864018  48000094             b 0x828640ac
+LAB_8286401c:
+  8286401C  556B06B5             rlwinm. r11,r11,0x0,0x1a,0x1a
+  82864020  41820084             beq 0x828640a4
+  82864024  817F3190             lwz r11,0x3190(r31)
+  82864028  815F32B0             lwz r10,0x32b0(r31)
+  8286402C  7F0A5840             cmplw cr6,r10,r11
+  82864030  419A000C             beq cr6,0x8286403c
+  82864034  2B0B0000             cmplwi cr6,r11,0x0
+  82864038  409A006C             bne cr6,0x828640a4
+LAB_8286403c:
+  8286403C  817F3194             lwz r11,0x3194(r31)
+  82864040  815F32B4             lwz r10,0x32b4(r31)
+  82864044  7F0A5840             cmplw cr6,r10,r11
+  82864048  419A000C             beq cr6,0x82864054
+  8286404C  2B0B0000             cmplwi cr6,r11,0x0
+  82864050  409A0054             bne cr6,0x828640a4
+LAB_82864054:
+  82864054  817F3198             lwz r11,0x3198(r31)
+  82864058  815F32B8             lwz r10,0x32b8(r31)
+  8286405C  7F0A5840             cmplw cr6,r10,r11
+  82864060  419A000C             beq cr6,0x8286406c
+  82864064  2B0B0000             cmplwi cr6,r11,0x0
+  82864068  409A003C             bne cr6,0x828640a4
+LAB_8286406c:
+  8286406C  817F319C             lwz r11,0x319c(r31)
+  82864070  815F32BC             lwz r10,0x32bc(r31)
+  82864074  7F0A5840             cmplw cr6,r10,r11
+  82864078  419A000C             beq cr6,0x82864084
+  8286407C  2B0B0000             cmplwi cr6,r11,0x0
+  82864080  409A0024             bne cr6,0x828640a4
+LAB_82864084:
+  82864084  817F31A0             lwz r11,0x31a0(r31)
+  82864088  815F32C0             lwz r10,0x32c0(r31)
+  8286408C  7F0A5840             cmplw cr6,r10,r11
+  82864090  419A000C             beq cr6,0x8286409c
+  82864094  2B0B0000             cmplwi cr6,r11,0x0
+  82864098  409A000C             bne cr6,0x828640a4
+LAB_8286409c:
+  8286409C  39600001             li r11,0x1
+  828640A0  48000008             b 0x828640a8
+LAB_828640a4:
+  828640A4  39600000             li r11,0x0
+LAB_828640a8:
+  828640A8  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+LAB_828640ac:
+  828640AC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  828640B0  39600001             li r11,0x1
+  828640B4  40820008             bne 0x828640bc
+LAB_828640b8:
+  828640B8  39600000             li r11,0x0
+LAB_828640bc:
+  828640BC  895F2B3C             lbz r10,0x2b3c(r31)
+  828640C0  38800004             li r4,0x4
+  828640C4  813F2F94             lwz r9,0x2f94(r31)
+  828640C8  7FE3FB78             or r3,r31,r31
+  828640CC  516A07FE             rlwimi r10,r11,0x0,0x1f,0x1f
+  828640D0  995F2B3C             stb r10,0x2b3c(r31)
+  828640D4  815F2934             lwz r10,0x2934(r31)
+  828640D8  817F31A0             lwz r11,0x31a0(r31)
+  828640DC  216B0000             subfic r11,r11,0x0
+  828640E0  7D6B5910             subfe r11,r11,r11
+  828640E4  913F2F94             stw r9,0x2f94(r31)
+  828640E8  7D6B4838             and r11,r11,r9
+  828640EC  516A0FBC             rlwimi r10,r11,0x1,0x1e,0x1e
+  828640F0  915F2934             stw r10,0x2934(r31)
+  828640F4  E97F0010             ld r11,0x10(r31)
+  828640F8  616B0800             ori r11,r11,0x800
+  828640FC  F97F0010             std r11,0x10(r31)
+  82864100  656B0002             oris r11,r11,0x2
+  82864104  F97F0010             std r11,0x10(r31)
+  82864108  817F2F98             lwz r11,0x2f98(r31)
+  8286410C  815F2934             lwz r10,0x2934(r31)
+  82864110  813F31A0             lwz r9,0x31a0(r31)
+  82864114  21290000             subfic r9,r9,0x0
+  82864118  7D294910             subfe r9,r9,r9
+  8286411C  917F2F98             stw r11,0x2f98(r31)
+  82864120  7D2B5838             and r11,r9,r11
+  82864124  516A07FE             rlwimi r10,r11,0x0,0x1f,0x1f
+  82864128  915F2934             stw r10,0x2934(r31)
+  8286412C  E97F0010             ld r11,0x10(r31)
+  82864130  616B0800             ori r11,r11,0x800
+  82864134  F97F0010             std r11,0x10(r31)
+  82864138  656B0002             oris r11,r11,0x2
+  8286413C  F97F0010             std r11,0x10(r31)
+  82864140  80BF31A0             lwz r5,0x31a0(r31)
+  82864144  4801616D             bl 0x8287a2b0
+  82864148  897F2B3C             lbz r11,0x2b3c(r31)
+  8286414C  556A06F7             rlwinm. r10,r11,0x0,0x1b,0x1b
+  82864150  4182000C             beq 0x8286415c
+  82864154  39600001             li r11,0x1
+  82864158  48000094             b 0x828641ec
+LAB_8286415c:
+  8286415C  556B06B5             rlwinm. r11,r11,0x0,0x1a,0x1a
+  82864160  41820084             beq 0x828641e4
+  82864164  817F3190             lwz r11,0x3190(r31)
+  82864168  815F32B0             lwz r10,0x32b0(r31)
+  8286416C  7F0A5840             cmplw cr6,r10,r11
+  82864170  419A000C             beq cr6,0x8286417c
+  82864174  2B0B0000             cmplwi cr6,r11,0x0
+  82864178  409A006C             bne cr6,0x828641e4
+LAB_8286417c:
+  8286417C  817F3194             lwz r11,0x3194(r31)
+  82864180  815F32B4             lwz r10,0x32b4(r31)
+  82864184  7F0A5840             cmplw cr6,r10,r11
+  82864188  419A000C             beq cr6,0x82864194
+  8286418C  2B0B0000             cmplwi cr6,r11,0x0
+  82864190  409A0054             bne cr6,0x828641e4
+LAB_82864194:
+  82864194  817F3198             lwz r11,0x3198(r31)
+  82864198  815F32B8             lwz r10,0x32b8(r31)
+  8286419C  7F0A5840             cmplw cr6,r10,r11
+  828641A0  419A000C             beq cr6,0x828641ac
+  828641A4  2B0B0000             cmplwi cr6,r11,0x0
+  828641A8  409A003C             bne cr6,0x828641e4
+LAB_828641ac:
+  828641AC  817F319C             lwz r11,0x319c(r31)
+  828641B0  815F32BC             lwz r10,0x32bc(r31)
+  828641B4  7F0A5840             cmplw cr6,r10,r11
+  828641B8  419A000C             beq cr6,0x828641c4
+  828641BC  2B0B0000             cmplwi cr6,r11,0x0
+  828641C0  409A0024             bne cr6,0x828641e4
+LAB_828641c4:
+  828641C4  817F31A0             lwz r11,0x31a0(r31)
+  828641C8  815F32C0             lwz r10,0x32c0(r31)
+  828641CC  7F0A5840             cmplw cr6,r10,r11
+  828641D0  419A000C             beq cr6,0x828641dc
+  828641D4  2B0B0000             cmplwi cr6,r11,0x0
+  828641D8  409A000C             bne cr6,0x828641e4
+LAB_828641dc:
+  828641DC  39600001             li r11,0x1
+  828641E0  48000008             b 0x828641e8
+LAB_828641e4:
+  828641E4  39600000             li r11,0x0
+LAB_828641e8:
+  828641E8  556B063E             rlwinm r11,r11,0x0,0x18,0x1f
+LAB_828641ec:
+  828641EC  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  828641F0  57AB063E             rlwinm r11,r29,0x0,0x18,0x1f
+  828641F4  7F1E5840             cmplw cr6,r30,r11
+  828641F8  419A0044             beq cr6,0x8286423c
+  828641FC  817F0038             lwz r11,0x38(r31)
+  82864200  807F0030             lwz r3,0x30(r31)
+  82864204  7F035840             cmplw cr6,r3,r11
+  82864208  4099000C             ble cr6,0x82864214
+  8286420C  7FE3FB78             or r3,r31,r31
+  82864210  480044B1             bl 0x828686c0
+LAB_82864214:
+  82864214  3960057E             li r11,0x57e
+  82864218  3D400001             lis r10,0x1
+  8286421C  95630004             stwu r11,0x4(r3)
+  82864220  2B1E0000             cmplwi cr6,r30,0x0
+  82864224  614B002C             ori r11,r10,0x2c
+  82864228  409A0008             bne cr6,0x82864230
+  8286422C  614B002B             ori r11,r10,0x2b
+LAB_82864230:
+  82864230  95630004             stwu r11,0x4(r3)
+  82864234  7C6B1B78             or r11,r3,r3
+  82864238  907F0030             stw r3,0x30(r31)
+LAB_8286423c:
+  8286423C  7DCE7378             or r14,r14,r14
+  82864240  38210070             addi r1,r1,0x70
+  82864244  480B24C8             b 0x8291670c
 
 ; 82863030  D3DDevice_GetRenderTarget  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4474)
   82863030  7D8802A6             mfspr r12,LR
@@ -5715,3 +7033,33 @@ LAB_82863278:
 ; 82863298  D3DDevice_SetBlendState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4823)
   82863298  7D8802A6             mfspr r12,LR
   8286329C  480B3421             bl 0x829166bc
+  828632A0  9421FF90             stwu r1,-0x70(r1)
+  828632A4  7C7F1B78             or r31,r3,r3
+  828632A8  7C9E2378             or r30,r4,r4
+  828632AC  7CBD2B78             or r29,r5,r5
+  828632B0  7DAD6B78             or r13,r13,r13
+  828632B4  2B1E0000             cmplwi cr6,r30,0x0
+  828632B8  39600000             li r11,0x0
+  828632BC  419A0008             beq cr6,0x828632c4
+  828632C0  397E0007             addi r11,r30,0x7
+LAB_828632c4:
+  828632C4  394B0A4E             addi r10,r11,0xa4e
+  828632C8  3D2B0002             addis r9,r11,0x2
+  828632CC  554A103A             rlwinm r10,r10,0x2,0x0,0x1d
+  828632D0  39290135             addi r9,r9,0x135
+  828632D4  39000001             li r8,0x1
+  828632D8  7D2B8670             srawi r11,r9,0x10
+  828632DC  7908FFE6             rldicr r8,r8,0x3f,0x3f
+  828632E0  7FAAF92E             stwx r29,r10,r31
+  828632E4  556B1838             rlwinm r11,r11,0x3,0x0,0x1c
+  828632E8  792A0620             rldicl r10,r9,0x0,0x38
+  828632EC  7D0A5436             srd r10,r8,r10
+  828632F0  7D2BF82A             ldx r9,r11,r31
+  828632F4  7D4A4B78             or r10,r10,r9
+  828632F8  7D4BF92A             stdx r10,r11,r31
+  828632FC  E97F0010             ld r11,0x10(r31)
+  82863300  656B0002             oris r11,r11,0x2
+  82863304  F97F0010             std r11,0x10(r31)
+  82863308  7DCE7378             or r14,r14,r14
+  8286330C  38210070             addi r1,r1,0x70
+  82863310  480B33FC             b 0x8291670c

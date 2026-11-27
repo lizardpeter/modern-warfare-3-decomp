@@ -5,8 +5,49 @@
 void build_ycc_rgb_table(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 uVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  longlong lVar10;
+  
+  iVar4 = __savegprlr_29();
+  iVar1 = *(int *)(iVar4 + 0x1a8);
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x10) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x14) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x18) = uVar5;
+  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
+  *(undefined4 *)(iVar1 + 0x1c) = uVar5;
+  lVar10 = 0x100;
+  iVar9 = 0;
+  iVar6 = 0x5b6900;
+  iVar7 = -0xe25100;
+  iVar8 = -0xb2f480;
+  iVar4 = 0x2c8d00;
+  do {
+    iVar2 = iVar8 >> 0x10;
+    iVar3 = iVar7 >> 0x10;
+    iVar8 = iVar8 + 0x166e9;
+    iVar7 = iVar7 + 0x1c5a2;
+    *(int *)(iVar9 + *(int *)(iVar1 + 0x10)) = iVar2;
+    *(int *)(*(int *)(iVar1 + 0x14) + iVar9) = iVar3;
+    *(int *)(iVar9 + *(int *)(iVar1 + 0x18)) = iVar6;
+    iVar6 = iVar6 + -0xb6d2;
+    *(int *)(*(int *)(iVar1 + 0x1c) + iVar9) = iVar4;
+    iVar4 = iVar4 + -0x581a;
+    iVar9 = iVar9 + 4;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -26,11 +67,43 @@ void start_pass_merged_upsample(int param_1)
 
 // 827C2F08  merged_2v_upsample  (jpeg-6/jdmerge.c:150)
 
-void merged_2v_upsample(void)
+void merged_2v_upsample(undefined8 param_1,undefined8 param_2,int *param_3,undefined8 param_4,
+                       longlong param_5,uint *param_6,longlong param_7)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar3;
+  ulonglong uVar2;
+  
+  iVar1 = __savegprlr_28();
+  iVar1 = *(int *)(iVar1 + 0x1a8);
+  if (*(char *)(iVar1 + 0x24) == '\0') {
+    uVar2 = 2;
+    if ((ulonglong)*(uint *)(iVar1 + 0x2c) < 2) {
+      uVar2 = (ulonglong)*(uint *)(iVar1 + 0x2c);
+    }
+    if ((param_7 - (ulonglong)*param_6 & 0xffffffff) < uVar2) {
+      uVar2 = param_7 - (ulonglong)*param_6;
+    }
+    iVar3 = (int)uVar2;
+    if ((uVar2 & 0xffffffff) < 2) {
+      *(undefined1 *)(iVar1 + 0x24) = 1;
+    }
+    (**(code **)(iVar1 + 0xc))();
+  }
+  else {
+    jcopy_sample_rows(iVar1 + 0x20,0,((ulonglong)*param_6 & 0x3fffffff) * 4 + param_5,0,1,
+                      *(undefined4 *)(iVar1 + 0x28));
+    iVar3 = 1;
+    *(undefined1 *)(iVar1 + 0x24) = 0;
+  }
+  *param_6 = *param_6 + iVar3;
+  *(int *)(iVar1 + 0x2c) = *(int *)(iVar1 + 0x2c) - iVar3;
+  if (*(char *)(iVar1 + 0x24) == '\0') {
+    *param_3 = *param_3 + 1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 

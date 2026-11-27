@@ -2,11 +2,18 @@
 
 // 828F8F90  bdFileData::bdFileData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:20)
 
-void bdFileData__bdFileData(void)
+void bdFileData__bdFileData(undefined8 param_1,undefined4 param_2,undefined4 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdTaskResult__bdTaskResult();
+  puVar1[1] = param_2;
+  puVar1[2] = param_3;
+  *puVar1 = &PTR_bdFileData___scalar_deleting_destructor__8220b5a0;
+  __restgprlr_29(puVar1);
+  return;
 }
 
 
@@ -23,11 +30,17 @@ void bdFileData___bdFileData(undefined4 *param_1)
 
 // 828F9048  bdFileData::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfiledata.cpp:28)
 
-void bdFileData__deserialize(void)
+void bdFileData__deserialize(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  uVar1 = bdByteBuffer__readBlob(*(undefined4 *)param_2,*(undefined4 *)(iVar2 + 4),iVar2 + 8);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_29(uVar1);
+  return;
 }
 
 

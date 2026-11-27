@@ -55,6 +55,129 @@ LAB_828bd4a0:
 ; 828BD4C0  VCpProcessLocal  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:219)
   828BD4C0  7D8802A6             mfspr r12,LR
   828BD4C4  480591F5             bl 0x829166b8
+  828BD4C8  9421FF80             stwu r1,-0x80(r1)
+  828BD4CC  80830034             lwz r4,0x34(r3)
+  828BD4D0  7C7F1B78             or r31,r3,r3
+  828BD4D4  3BC30034             addi r30,r3,0x34
+  828BD4D8  3B800000             li r28,0x0
+LAB_828bd4dc:
+  828BD4DC  2B040000             cmplwi cr6,r4,0x0
+  828BD4E0  419A004C             beq cr6,0x828bd52c
+  828BD4E4  81640000             lwz r11,0x0(r4)
+  828BD4E8  816B0000             lwz r11,0x0(r11)
+  828BD4EC  2F0B0103             cmpwi cr6,r11,0x103
+  828BD4F0  419A003C             beq cr6,0x828bd52c
+  828BD4F4  817E0000             lwz r11,0x0(r30)
+  828BD4F8  2B0B0000             cmplwi cr6,r11,0x0
+  828BD4FC  419A0020             beq cr6,0x828bd51c
+  828BD500  815E0004             lwz r10,0x4(r30)
+  828BD504  7F0B5040             cmplw cr6,r11,r10
+  828BD508  409A0008             bne cr6,0x828bd510
+  828BD50C  939E0004             stw r28,0x4(r30)
+LAB_828bd510:
+  828BD510  814B0004             lwz r10,0x4(r11)
+  828BD514  915E0000             stw r10,0x0(r30)
+  828BD518  938B0004             stw r28,0x4(r11)
+LAB_828bd51c:
+  828BD51C  7FE3FB78             or r3,r31,r31
+  828BD520  4BFFFF01             bl 0x828bd420
+  828BD524  809E0000             lwz r4,0x0(r30)
+  828BD528  4BFFFFB4             b 0x828bd4dc
+LAB_828bd52c:
+  828BD52C  809F002C             lwz r4,0x2c(r31)
+  828BD530  3BBF002C             addi r29,r31,0x2c
+LAB_828bd534:
+  828BD534  2B040000             cmplwi cr6,r4,0x0
+  828BD538  419A0138             beq cr6,0x828bd670
+  828BD53C  81240000             lwz r9,0x0(r4)
+  828BD540  81690000             lwz r11,0x0(r9)
+  828BD544  2F0B0103             cmpwi cr6,r11,0x103
+  828BD548  419A0128             beq cr6,0x828bd670
+  828BD54C  815D0000             lwz r10,0x0(r29)
+  828BD550  81690008             lwz r11,0x8(r9)
+  828BD554  2B0A0000             cmplwi cr6,r10,0x0
+  828BD558  419A0020             beq cr6,0x828bd578
+  828BD55C  811D0004             lwz r8,0x4(r29)
+  828BD560  7F0A4040             cmplw cr6,r10,r8
+  828BD564  409A0008             bne cr6,0x828bd56c
+  828BD568  939D0004             stw r28,0x4(r29)
+LAB_828bd56c:
+  828BD56C  810A0004             lwz r8,0x4(r10)
+  828BD570  911D0000             stw r8,0x0(r29)
+  828BD574  938A0004             stw r28,0x4(r10)
+LAB_828bd578:
+  828BD578  81490000             lwz r10,0x0(r9)
+  828BD57C  2F0A0000             cmpwi cr6,r10,0x0
+  828BD580  409A00E0             bne cr6,0x828bd660
+  828BD584  815F0004             lwz r10,0x4(r31)
+  828BD588  893F003C             lbz r9,0x3c(r31)
+  828BD58C  814A0004             lwz r10,0x4(r10)
+  828BD590  894A008C             lbz r10,0x8c(r10)
+  828BD594  7D485378             or r8,r10,r10
+  828BD598  7F095040             cmplw cr6,r9,r10
+  828BD59C  419A0008             beq cr6,0x828bd5a4
+  828BD5A0  995F003C             stb r10,0x3c(r31)
+LAB_828bd5a4:
+  828BD5A4  A15F003E             lhz r10,0x3e(r31)
+  828BD5A8  2B0A0800             cmplwi cr6,r10,0x800
+  828BD5AC  41980008             blt cr6,0x828bd5b4
+  828BD5B0  B39F003E             sth r28,0x3e(r31)
+LAB_828bd5b4:
+  828BD5B4  A14BFFFE             lhz r10,-0x2(r11)
+  828BD5B8  3D200001             lis r9,0x1
+  828BD5BC  891F003C             lbz r8,0x3c(r31)
+  828BD5C0  38E00103             li r7,0x103
+  828BD5C4  510A6026             rlwimi r10,r8,0xc,0x0,0x13
+  828BD5C8  554A043E             rlwinm r10,r10,0x0,0x10,0x1f
+  828BD5CC  7D485378             or r8,r10,r10
+  828BD5D0  B14BFFFE             sth r10,-0x2(r11)
+  828BD5D4  A15F003E             lhz r10,0x3e(r31)
+  828BD5D8  51480D3C             rlwimi r8,r10,0x1,0x14,0x1e
+  828BD5DC  B10BFFFE             sth r8,-0x2(r11)
+  828BD5E0  811F0004             lwz r8,0x4(r31)
+  828BD5E4  A15F003E             lhz r10,0x3e(r31)
+  828BD5E8  394A0001             addi r10,r10,0x1
+  828BD5EC  B15F003E             sth r10,0x3e(r31)
+  828BD5F0  A14BFFFE             lhz r10,-0x2(r11)
+  828BD5F4  810800C4             lwz r8,0xc4(r8)
+  828BD5F8  5508031E             rlwinm r8,r8,0x0,0xc,0xf
+  828BD5FC  7D284850             subf r9,r8,r9
+  828BD600  7D290034             cntlzw r9,r9
+  828BD604  512ADFFE             rlwimi r10,r9,0x1b,0x1f,0x1f
+  828BD608  B14BFFFE             sth r10,-0x2(r11)
+  828BD60C  81640000             lwz r11,0x0(r4)
+  828BD610  90EB0000             stw r7,0x0(r11)
+  828BD614  81640000             lwz r11,0x0(r4)
+  828BD618  938B0004             stw r28,0x4(r11)
+  828BD61C  93840004             stw r28,0x4(r4)
+  828BD620  817E0004             lwz r11,0x4(r30)
+  828BD624  2B0B0000             cmplwi cr6,r11,0x0
+  828BD628  419A000C             beq cr6,0x828bd634
+  828BD62C  908B0004             stw r4,0x4(r11)
+  828BD630  48000008             b 0x828bd638
+LAB_828bd634:
+  828BD634  909E0000             stw r4,0x0(r30)
+LAB_828bd638:
+  828BD638  909E0004             stw r4,0x4(r30)
+  828BD63C  39400001             li r10,0x1
+  828BD640  817F0020             lwz r11,0x20(r31)
+  828BD644  813F0004             lwz r9,0x4(r31)
+  828BD648  810B04F4             lwz r8,0x4f4(r11)
+  828BD64C  81290000             lwz r9,0x0(r9)
+  828BD650  7D4A4830             slw r10,r10,r9
+  828BD654  7D4A4378             or r10,r10,r8
+  828BD658  914B04F4             stw r10,0x4f4(r11)
+  828BD65C  4800000C             b 0x828bd668
+LAB_828bd660:
+  828BD660  7FE3FB78             or r3,r31,r31
+  828BD664  4BFFFDBD             bl 0x828bd420
+LAB_828bd668:
+  828BD668  809D0000             lwz r4,0x0(r29)
+  828BD66C  4BFFFEC8             b 0x828bd534
+LAB_828bd670:
+  828BD670  38600000             li r3,0x0
+  828BD674  38210080             addi r1,r1,0x80
+  828BD678  48059090             b 0x82916708
 
 ; 828BD680  VCpProcessRemote  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:402)
   828BD680  7D8802A6             mfspr r12,LR
@@ -346,10 +469,163 @@ LAB_828bd9a4:
 ; 828BDEB0  VoiceChatCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:891)
   828BDEB0  7D8802A6             mfspr r12,LR
   828BDEB4  480587FD             bl 0x829166b0
+  828BDEB8  9421FF70             stwu r1,-0x90(r1)
+  828BDEBC  7C9C2378             or r28,r4,r4
+  828BDEC0  3C80618A             lis r4,0x618a
+  828BDEC4  7C7D1B78             or r29,r3,r3
+  828BDEC8  3860004C             li r3,0x4c
+  828BDECC  60848011             ori r4,r4,0x8011
+  828BDED0  7CBE2B78             or r30,r5,r5
+  828BDED4  7CDA3378             or r26,r6,r6
+  828BDED8  3B600000             li r27,0x0
+  828BDEDC  4BD48D0D             bl 0x82606be8
+  828BDEE0  7C7F1B79             or. r31,r3,r3
+  828BDEE4  4182007C             beq 0x828bdf60
+  828BDEE8  3D60829B             lis r11,-0x7d65
+  828BDEEC  93BF0020             stw r29,0x20(r31)
+  828BDEF0  39400002             li r10,0x2
+  828BDEF4  93DF0024             stw r30,0x24(r31)
+  828BDEF8  396BF90C             subi r11,r11,0x6f4
+  828BDEFC  939F0004             stw r28,0x4(r31)
+  828BDF00  3920000A             li r9,0xa
+  828BDF04  915F001C             stw r10,0x1c(r31)
+  828BDF08  917F0000             stw r11,0x0(r31)
+  828BDF0C  2F1E0001             cmpwi cr6,r30,0x1
+  828BDF10  913F0014             stw r9,0x14(r31)
+  828BDF14  409A0024             bne cr6,0x828bdf38
+  828BDF18  809C0048             lwz r4,0x48(r28)
+  828BDF1C  2B040000             cmplwi cr6,r4,0x0
+  828BDF20  419A0020             beq cr6,0x828bdf40
+  828BDF24  816B0020             lwz r11,0x20(r11)
+  828BDF28  7FE3FB78             or r3,r31,r31
+  828BDF2C  7D6903A6             mtspr CTR,r11
+  828BDF30  4E800421             bctrl
+  828BDF34  4800000C             b 0x828bdf40
+LAB_828bdf38:
+  828BDF38  396000FF             li r11,0xff
+  828BDF3C  997F003C             stb r11,0x3c(r31)
+LAB_828bdf40:
+  828BDF40  817F0014             lwz r11,0x14(r31)
+  828BDF44  3C80618A             lis r4,0x618a
+  828BDF48  60840003             ori r4,r4,0x3
+  828BDF4C  55631838             rlwinm r3,r11,0x3,0x0,0x1c
+  828BDF50  4BD48C99             bl 0x82606be8
+  828BDF54  907F0028             stw r3,0x28(r31)
+  828BDF58  28030000             cmplwi r3,0x0
+  828BDF5C  40820018             bne 0x828bdf74
+LAB_828bdf60:
+  828BDF60  3F608007             lis r27,-0x7ff9
+  828BDF64  7FE3FB78             or r3,r31,r31
+  828BDF68  637B000E             ori r27,r27,0xe
+  828BDF6C  4BFFFB25             bl 0x828bda90
+  828BDF70  3BE00000             li r31,0x0
+LAB_828bdf74:
+  828BDF74  93FA0000             stw r31,0x0(r26)
+  828BDF78  7F63DB78             or r3,r27,r27
+  828BDF7C  38210090             addi r1,r1,0x90
+  828BDF80  48058780             b 0x82916700
 
 ; 828BD9B8  VoiceChatInitialize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1000)
   828BD9B8  7D8802A6             mfspr r12,LR
   828BD9BC  48058CF9             bl 0x829166b4
+  828BD9C0  9421FF80             stwu r1,-0x80(r1)
+  828BD9C4  90C3000C             stw r6,0xc(r3)
+  828BD9C8  39400002             li r10,0x2
+  828BD9CC  90A30008             stw r5,0x8(r3)
+  828BD9D0  3B830010             addi r28,r3,0x10
+  828BD9D4  81250018             lwz r9,0x18(r5)
+  828BD9D8  7C7F1B78             or r31,r3,r3
+  828BD9DC  81630024             lwz r11,0x24(r3)
+  828BD9E0  38800018             li r4,0x18
+  828BD9E4  80A30014             lwz r5,0x14(r3)
+  828BD9E8  7F87E378             or r7,r28,r28
+  828BD9EC  396BFFFF             subi r11,r11,0x1
+  828BD9F0  216B0000             subfic r11,r11,0x0
+  828BD9F4  7D6B5910             subfe r11,r11,r11
+  828BD9F8  7D665038             and r6,r11,r10
+  828BD9FC  8149001C             lwz r10,0x1c(r9)
+  828BDA00  7C6A3214             add r3,r10,r6
+  828BDA04  48004015             bl 0x828c1a18
+  828BDA08  7C7B1B79             or. r27,r3,r3
+  828BDA0C  41800074             blt 0x828bda80
+  828BDA10  817F0014             lwz r11,0x14(r31)
+  828BDA14  3BA00000             li r29,0x0
+  828BDA18  2B0B0000             cmplwi cr6,r11,0x0
+  828BDA1C  40990048             ble cr6,0x828bda64
+  828BDA20  3BC00000             li r30,0x0
+LAB_828bda24:
+  828BDA24  817C0000             lwz r11,0x0(r28)
+  828BDA28  7FE3FB78             or r3,r31,r31
+  828BDA2C  813F0028             lwz r9,0x28(r31)
+  828BDA30  814B0008             lwz r10,0x8(r11)
+  828BDA34  816B0004             lwz r11,0x4(r11)
+  828BDA38  7D4AE9D6             mullw r10,r10,r29
+  828BDA3C  7D6A5A14             add r11,r10,r11
+  828BDA40  7D7E492E             stwx r11,r30,r9
+  828BDA44  817F0028             lwz r11,0x28(r31)
+  828BDA48  7C9E5A14             add r4,r30,r11
+  828BDA4C  4BFFF9D5             bl 0x828bd420
+  828BDA50  817F0014             lwz r11,0x14(r31)
+  828BDA54  3BBD0001             addi r29,r29,0x1
+  828BDA58  3BDE0008             addi r30,r30,0x8
+  828BDA5C  7F1D5840             cmplw cr6,r29,r11
+  828BDA60  4198FFC4             blt cr6,0x828bda24
+LAB_828bda64:
+  828BDA64  817F0024             lwz r11,0x24(r31)
+  828BDA68  2F0B0001             cmpwi cr6,r11,0x1
+  828BDA6C  409A0014             bne cr6,0x828bda80
+  828BDA70  389F0048             addi r4,r31,0x48
+  828BDA74  807F0008             lwz r3,0x8(r31)
+  828BDA78  48004BF1             bl 0x828c2668
+  828BDA7C  7C7B1B78             or r27,r3,r3
+LAB_828bda80:
+  828BDA80  7F63DB78             or r3,r27,r27
+  828BDA84  38210080             addi r1,r1,0x80
+  828BDA88  48058C7C             b 0x82916704
+
+; 828BDA90  VoiceChatDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1084)
+  828BDA90  7D8802A6             mfspr r12,LR
+  828BDA94  9181FFF8             stw r12,-0x8(r1)
+  828BDA98  FBC1FFE8             std r30,-0x18(r1)
+  828BDA9C  FBE1FFF0             std r31,-0x10(r1)
+  828BDAA0  9421FF90             stwu r1,-0x70(r1)
+  828BDAA4  7C7F1B78             or r31,r3,r3
+  828BDAA8  2B030000             cmplwi cr6,r3,0x0
+  828BDAAC  419A0064             beq cr6,0x828bdb10
+  828BDAB0  81630024             lwz r11,0x24(r3)
+  828BDAB4  3BC00000             li r30,0x0
+  828BDAB8  2F0B0001             cmpwi cr6,r11,0x1
+  828BDABC  409A0020             bne cr6,0x828bdadc
+  828BDAC0  8063003C             lwz r3,0x3c(r3)
+  828BDAC4  2B030000             cmplwi cr6,r3,0x0
+  828BDAC8  419A000C             beq cr6,0x828bdad4
+  828BDACC  4800FAA5             bl 0x828cd570
+  828BDAD0  93DF003C             stw r30,0x3c(r31)
+LAB_828bdad4:
+  828BDAD4  807F0048             lwz r3,0x48(r31)
+  828BDAD8  48004659             bl 0x828c2130
+LAB_828bdadc:
+  828BDADC  807F0028             lwz r3,0x28(r31)
+  828BDAE0  2B030000             cmplwi cr6,r3,0x0
+  828BDAE4  419A0014             beq cr6,0x828bdaf8
+  828BDAE8  3C80618A             lis r4,0x618a
+  828BDAEC  60840003             ori r4,r4,0x3
+  828BDAF0  4BD49989             bl 0x82607478
+  828BDAF4  93DF0028             stw r30,0x28(r31)
+LAB_828bdaf8:
+  828BDAF8  807F0010             lwz r3,0x10(r31)
+  828BDAFC  48003DD5             bl 0x828c18d0
+  828BDB00  3C80618A             lis r4,0x618a
+  828BDB04  7FE3FB78             or r3,r31,r31
+  828BDB08  60848011             ori r4,r4,0x8011
+  828BDB0C  4BD4996D             bl 0x82607478
+LAB_828bdb10:
+  828BDB10  38210070             addi r1,r1,0x70
+  828BDB14  8181FFF8             lwz r12,-0x8(r1)
+  828BDB18  7D8803A6             mtspr LR,r12
+  828BDB1C  EBC1FFE8             ld r30,-0x18(r1)
+  828BDB20  EBE1FFF0             ld r31,-0x10(r1)
+  828BDB24  4E800020             blr
 
 ; 828BDB28  VoiceChatGetNotificationData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1142)
   828BDB28  7D8802A6             mfspr r12,LR
@@ -439,6 +715,134 @@ LAB_828bdc3c:
 ; 828BDC58  VoiceChatSetOutputVoice  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1287)
   828BDC58  7D8802A6             mfspr r12,LR
   828BDC5C  48058A55             bl 0x829166b0
+  828BDC60  9421FEF0             stwu r1,-0x110(r1)
+  828BDC64  81430024             lwz r10,0x24(r3)
+  828BDC68  3D608000             lis r11,-0x8000
+  828BDC6C  7C7D1B78             or r29,r3,r3
+  828BDC70  7C9B2378             or r27,r4,r4
+  828BDC74  617A4001             ori r26,r11,0x4001
+  828BDC78  2F0A0000             cmpwi cr6,r10,0x0
+  828BDC7C  419A0114             beq cr6,0x828bdd90
+  828BDC80  38A00008             li r5,0x8
+  828BDC84  38800000             li r4,0x0
+  828BDC88  38610050             addi r3,r1,0x50
+  828BDC8C  4BFE4B65             bl 0x828a27f0
+  828BDC90  3D608200             lis r11,-0x7e00
+  828BDC94  3BE00000             li r31,0x0
+  828BDC98  38A00008             li r5,0x8
+  828BDC9C  9BE10050             stb r31,0x50(r1)
+  828BDCA0  38800000             li r4,0x0
+  828BDCA4  9BE10051             stb r31,0x51(r1)
+  828BDCA8  38610060             addi r3,r1,0x60
+  828BDCAC  C00B0F10             lfs f0,0xf10(r11)
+  828BDCB0  D0010054             stfs f0,0x54(r1)
+  828BDCB4  4BFE4B3D             bl 0x828a27f0
+  828BDCB8  39610050             addi r11,r1,0x50
+  828BDCBC  3BC00001             li r30,0x1
+  828BDCC0  91610064             stw r11,0x64(r1)
+  828BDCC4  38A00008             li r5,0x8
+  828BDCC8  9BC10060             stb r30,0x60(r1)
+  828BDCCC  38800000             li r4,0x0
+  828BDCD0  38610068             addi r3,r1,0x68
+  828BDCD4  4BFE4B1D             bl 0x828a27f0
+  828BDCD8  39610060             addi r11,r1,0x60
+  828BDCDC  93610068             stw r27,0x68(r1)
+  828BDCE0  38A00008             li r5,0x8
+  828BDCE4  9161006C             stw r11,0x6c(r1)
+  828BDCE8  38800000             li r4,0x0
+  828BDCEC  38610058             addi r3,r1,0x58
+  828BDCF0  4BFE4B01             bl 0x828a27f0
+  828BDCF4  807D003C             lwz r3,0x3c(r29)
+  828BDCF8  39610068             addi r11,r1,0x68
+  828BDCFC  9BC10058             stb r30,0x58(r1)
+  828BDD00  3B9D003C             addi r28,r29,0x3c
+  828BDD04  9161005C             stw r11,0x5c(r1)
+  828BDD08  2B030000             cmplwi cr6,r3,0x0
+  828BDD0C  419A0018             beq cr6,0x828bdd24
+  828BDD10  2B1B0000             cmplwi cr6,r27,0x0
+  828BDD14  419A0078             beq cr6,0x828bdd8c
+  828BDD18  38810058             addi r4,r1,0x58
+  828BDD1C  4800F92D             bl 0x828cd648
+  828BDD20  48000068             b 0x828bdd88
+LAB_828bdd24:
+  828BDD24  38A0005C             li r5,0x5c
+  828BDD28  38800000             li r4,0x0
+  828BDD2C  38610070             addi r3,r1,0x70
+  828BDD30  4BFE4AC1             bl 0x828a27f0
+  828BDD34  3D60828C             lis r11,-0x7d74
+  828BDD38  39403E80             li r10,0x3e80
+  828BDD3C  93A100C8             stw r29,0xc8(r1)
+  828BDD40  396BD408             subi r11,r11,0x2bf8
+  828BDD44  9BC10070             stb r30,0x70(r1)
+  828BDD48  39210058             addi r9,r1,0x58
+  828BDD4C  9BC10074             stb r30,0x74(r1)
+  828BDD50  916100C0             stw r11,0xc0(r1)
+  828BDD54  7F84E378             or r4,r28,r28
+  828BDD58  91410078             stw r10,0x78(r1)
+  828BDD5C  38610070             addi r3,r1,0x70
+  828BDD60  9BC100A9             stb r30,0xa9(r1)
+  828BDD64  9BC100AA             stb r30,0xaa(r1)
+  828BDD68  9BE100B0             stb r31,0xb0(r1)
+  828BDD6C  93E100B4             stw r31,0xb4(r1)
+  828BDD70  912100B8             stw r9,0xb8(r1)
+  828BDD74  93E100BC             stw r31,0xbc(r1)
+  828BDD78  93E100C4             stw r31,0xc4(r1)
+  828BDD7C  817D0014             lwz r11,0x14(r29)
+  828BDD80  996100AB             stb r11,0xab(r1)
+  828BDD84  48010005             bl 0x828cdd88
+LAB_828bdd88:
+  828BDD88  7C7A1B78             or r26,r3,r3
+LAB_828bdd8c:
+  828BDD8C  93DD0040             stw r30,0x40(r29)
+LAB_828bdd90:
+  828BDD90  7F43D378             or r3,r26,r26
+  828BDD94  38210110             addi r1,r1,0x110
+  828BDD98  48058968             b 0x82916700
+
+; 828BDDA0  VoiceChatSubmitPackets  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1402)
+  828BDDA0  7D8802A6             mfspr r12,LR
+  828BDDA4  4805890D             bl 0x829166b0
+  828BDDA8  9421FF70             stwu r1,-0x90(r1)
+  828BDDAC  81630024             lwz r11,0x24(r3)
+  828BDDB0  3BA00000             li r29,0x0
+  828BDDB4  7C7A1B78             or r26,r3,r3
+  828BDDB8  7CBE2B78             or r30,r5,r5
+  828BDDBC  7FA3EB78             or r3,r29,r29
+  828BDDC0  2F0B0000             cmpwi cr6,r11,0x0
+  828BDDC4  409A0010             bne cr6,0x828bddd4
+  828BDDC8  3C608000             lis r3,-0x8000
+  828BDDCC  60634001             ori r3,r3,0x4001
+  828BDDD0  48000068             b 0x828bde38
+LAB_828bddd4:
+  828BDDD4  817A0008             lwz r11,0x8(r26)
+  828BDDD8  815E0000             lwz r10,0x0(r30)
+  828BDDDC  816B0018             lwz r11,0x18(r11)
+  828BDDE0  816B0018             lwz r11,0x18(r11)
+  828BDDE4  93BE0000             stw r29,0x0(r30)
+  828BDDE8  3BEB0002             addi r31,r11,0x2
+  828BDDEC  7F6AFB97             divwu. r27,r10,r31
+  828BDDF0  0CDF0000             twllei r31,0x0
+  828BDDF4  41820044             beq 0x828bde38
+  828BDDF8  7C9C2378             or r28,r4,r4
+LAB_828bddfc:
+  828BDDFC  7FE5FB78             or r5,r31,r31
+  828BDE00  807A0048             lwz r3,0x48(r26)
+  828BDE04  7F84E378             or r4,r28,r28
+  828BDE08  48004619             bl 0x828c2420
+  828BDE0C  2C030000             cmpwi r3,0x0
+  828BDE10  41800028             blt 0x828bde38
+  828BDE14  2F030001             cmpwi cr6,r3,0x1
+  828BDE18  419A0020             beq cr6,0x828bde38
+  828BDE1C  817E0000             lwz r11,0x0(r30)
+  828BDE20  3BBD0001             addi r29,r29,0x1
+  828BDE24  7F9CFA14             add r28,r28,r31
+  828BDE28  7D6BFA14             add r11,r11,r31
+  828BDE2C  7F1DD840             cmplw cr6,r29,r27
+  828BDE30  917E0000             stw r11,0x0(r30)
+  828BDE34  4198FFC8             blt cr6,0x828bddfc
+LAB_828bde38:
+  828BDE38  38210090             addi r1,r1,0x90
+  828BDE3C  480588C4             b 0x82916700
 
 ; 828BD408  VoiceChatXAudioPacketCallback  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1577)
   828BD408  81630004             lwz r11,0x4(r3)

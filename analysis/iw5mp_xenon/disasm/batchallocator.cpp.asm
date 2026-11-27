@@ -35,6 +35,55 @@ LAB_828ee4f8:
   828EE510  7C6A5850             subf r3,r10,r11
   828EE514  4E800020             blr
 
+; 828EE818  XAudioPrepareBatchAllocator  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:91)
+  828EE818  7D8802A6             mfspr r12,LR
+  828EE81C  48027E9D             bl 0x829166b8
+  828EE820  9421FF80             stwu r1,-0x80(r1)
+  828EE824  83E50000             lwz r31,0x0(r5)
+  828EE828  7C7D1B78             or r29,r3,r3
+  828EE82C  7C9E2378             or r30,r4,r4
+  828EE830  7CBC2B78             or r28,r5,r5
+  828EE834  2B1F0000             cmplwi cr6,r31,0x0
+  828EE838  409A0040             bne cr6,0x828ee878
+  828EE83C  39600000             li r11,0x0
+  828EE840  2B040000             cmplwi cr6,r4,0x0
+  828EE844  91610050             stw r11,0x50(r1)
+  828EE848  419A0010             beq cr6,0x828ee858
+  828EE84C  38A10050             addi r5,r1,0x50
+  828EE850  4BFFFF29             bl 0x828ee778
+  828EE854  4800000C             b 0x828ee860
+LAB_828ee858:
+  828EE858  38610050             addi r3,r1,0x50
+  828EE85C  4BFFFE6D             bl 0x828ee6c8
+LAB_828ee860:
+  828EE860  2F030000             cmpwi cr6,r3,0x0
+  828EE864  41980058             blt cr6,0x828ee8bc
+  828EE868  81610050             lwz r11,0x50(r1)
+  828EE86C  917C0000             stw r11,0x0(r28)
+  828EE870  38210080             addi r1,r1,0x80
+  828EE874  48027E94             b 0x82916708
+LAB_828ee878:
+  828EE878  817F0000             lwz r11,0x0(r31)
+  828EE87C  7FE3FB78             or r3,r31,r31
+  828EE880  814B0000             lwz r10,0x0(r11)
+  828EE884  7D4903A6             mtspr CTR,r10
+  828EE888  4E800421             bctrl
+  828EE88C  813F0000             lwz r9,0x0(r31)
+  828EE890  7FC4F378             or r4,r30,r30
+  828EE894  7FE3FB78             or r3,r31,r31
+  828EE898  81090008             lwz r8,0x8(r9)
+  828EE89C  7D0903A6             mtspr CTR,r8
+  828EE8A0  4E800421             bctrl
+  828EE8A4  80FF0000             lwz r7,0x0(r31)
+  828EE8A8  7FA4EB78             or r4,r29,r29
+  828EE8AC  7FE3FB78             or r3,r31,r31
+  828EE8B0  80C7000C             lwz r6,0xc(r7)
+  828EE8B4  7CC903A6             mtspr CTR,r6
+  828EE8B8  4E800421             bctrl
+LAB_828ee8bc:
+  828EE8BC  38210080             addi r1,r1,0x80
+  828EE8C0  48027E48             b 0x82916708
+
 ; 828EE430  XAUDIO::CBatchAllocator::~CBatchAllocator  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:152)
   828EE430  7D8802A6             mfspr r12,LR
   828EE434  9181FFF8             stw r12,-0x8(r1)
@@ -188,6 +237,44 @@ LAB_828ee75c:
 ; 828EE778  XAUDIO::CStaticBatchAllocator::CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:374)
   828EE778  7D8802A6             mfspr r12,LR
   828EE77C  48027F41             bl 0x829166bc
+  828EE780  9421FF90             stwu r1,-0x70(r1)
+  828EE784  3D608489             lis r11,-0x7b77
+  828EE788  7CBD2B78             or r29,r5,r5
+  828EE78C  7C7F1B78             or r31,r3,r3
+  828EE790  7C9E2378             or r30,r4,r4
+  828EE794  7C651B78             or r5,r3,r3
+  828EE798  386B594C             addi r3,r11,0x594c
+  828EE79C  3884001C             addi r4,r4,0x1c
+  828EE7A0  4BFE9141             bl 0x828d78e0
+  828EE7A4  7C6B1B78             or r11,r3,r3
+  828EE7A8  2B030000             cmplwi cr6,r3,0x0
+  828EE7AC  409A0014             bne cr6,0x828ee7c0
+  828EE7B0  3C608007             lis r3,-0x7ff9
+  828EE7B4  6063000E             ori r3,r3,0xe
+  828EE7B8  38210070             addi r1,r1,0x70
+  828EE7BC  48027F50             b 0x8291670c
+LAB_828ee7c0:
+  828EE7C0  3D408220             lis r10,-0x7de0
+  828EE7C4  3D208220             lis r9,-0x7de0
+  828EE7C8  3D008220             lis r8,-0x7de0
+  828EE7CC  38EA7330             addi r7,r10,0x7330
+  828EE7D0  38A97FB4             addi r5,r9,0x7fb4
+  828EE7D4  38C00001             li r6,0x1
+  828EE7D8  90EB0004             stw r7,0x4(r11)
+  828EE7DC  38600000             li r3,0x0
+  828EE7E0  38887FA0             addi r4,r8,0x7fa0
+  828EE7E4  90CB0008             stw r6,0x8(r11)
+  828EE7E8  392B001C             addi r9,r11,0x1c
+  828EE7EC  906B0014             stw r3,0x14(r11)
+  828EE7F0  90AB0000             stw r5,0x0(r11)
+  828EE7F4  394B0004             addi r10,r11,0x4
+  828EE7F8  908B0004             stw r4,0x4(r11)
+  828EE7FC  93EB000C             stw r31,0xc(r11)
+  828EE800  93CB0010             stw r30,0x10(r11)
+  828EE804  912B0018             stw r9,0x18(r11)
+  828EE808  917D0000             stw r11,0x0(r29)
+  828EE80C  38210070             addi r1,r1,0x70
+  828EE810  48027EFC             b 0x8291670c
 
 ; 828EE528  XAUDIO::CStaticBatchAllocator::AbsoluteRelease  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/batchallocator.cpp:472)
   828EE528  7D8802A6             mfspr r12,LR

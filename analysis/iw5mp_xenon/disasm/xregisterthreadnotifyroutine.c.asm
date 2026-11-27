@@ -3,7 +3,64 @@
 ; 828B52C8  XRegisterThreadNotifyRoutine  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:57)
   828B52C8  7D8802A6             mfspr r12,LR
   828B52CC  480613F1             bl 0x829166bc
+  828B52D0  9421FF90             stwu r1,-0x70(r1)
+  828B52D4  7C7F1B78             or r31,r3,r3
+  828B52D8  7C9D2378             or r29,r4,r4
+  828B52DC  7DAD6B78             or r13,r13,r13
+  828B52E0  3D60829B             lis r11,-0x7d65
+  828B52E4  3BCB85F0             subi r30,r11,0x7a10
+  828B52E8  7FC3F378             or r3,r30,r30
+  828B52EC  4808BF29             bl 0x82941214
+  828B52F0  2F1D0000             cmpwi cr6,r29,0x0
+  828B52F4  419A0024             beq cr6,0x828b5318
+  828B52F8  3D60829B             lis r11,-0x7d65
+  828B52FC  394B860C             subi r10,r11,0x79f4
+  828B5300  816A0004             lwz r11,0x4(r10)
+  828B5304  915F0000             stw r10,0x0(r31)
+  828B5308  917F0004             stw r11,0x4(r31)
+  828B530C  93EB0000             stw r31,0x0(r11)
+  828B5310  93EA0004             stw r31,0x4(r10)
+  828B5314  48000014             b 0x828b5328
+LAB_828b5318:
+  828B5318  817F0000             lwz r11,0x0(r31)
+  828B531C  815F0004             lwz r10,0x4(r31)
+  828B5320  916A0000             stw r11,0x0(r10)
+  828B5324  914B0004             stw r10,0x4(r11)
+LAB_828b5328:
+  828B5328  7FC3F378             or r3,r30,r30
+  828B532C  4808BED9             bl 0x82941204
+  828B5330  7DCE7378             or r14,r14,r14
+  828B5334  38210070             addi r1,r1,0x70
+  828B5338  480613D4             b 0x8291670c
 
 ; 828B5258  XapiCallThreadNotifyRoutines  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xregisterthreadnotifyroutine.c:91)
   828B5258  7D8802A6             mfspr r12,LR
   828B525C  4806145D             bl 0x829166b8
+  828B5260  9421FF80             stwu r1,-0x80(r1)
+  828B5264  7C7C1B78             or r28,r3,r3
+  828B5268  7DAD6B78             or r13,r13,r13
+  828B526C  3D60829B             lis r11,-0x7d65
+  828B5270  3BAB85F0             subi r29,r11,0x7a10
+  828B5274  7FA3EB78             or r3,r29,r29
+  828B5278  4808BF9D             bl 0x82941214
+  828B527C  3D60829B             lis r11,-0x7d65
+  828B5280  3BEB860C             subi r31,r11,0x79f4
+  828B5284  816B860C             lwz r11,-0x79f4(r11)
+  828B5288  7F0BF840             cmplw cr6,r11,r31
+  828B528C  7D7E5B78             or r30,r11,r11
+  828B5290  419A0024             beq cr6,0x828b52b4
+LAB_828b5294:
+  828B5294  7FCBF378             or r11,r30,r30
+  828B5298  83DE0000             lwz r30,0x0(r30)
+  828B529C  7F83E378             or r3,r28,r28
+  828B52A0  816B0008             lwz r11,0x8(r11)
+  828B52A4  7D6903A6             mtspr CTR,r11
+  828B52A8  4E800421             bctrl
+  828B52AC  7F1EF840             cmplw cr6,r30,r31
+  828B52B0  409AFFE4             bne cr6,0x828b5294
+LAB_828b52b4:
+  828B52B4  7FA3EB78             or r3,r29,r29
+  828B52B8  4808BF4D             bl 0x82941204
+  828B52BC  7DCE7378             or r14,r14,r14
+  828B52C0  38210080             addi r1,r1,0x80
+  828B52C4  48061444             b 0x82916708

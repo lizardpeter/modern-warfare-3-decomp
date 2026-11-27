@@ -5,8 +5,19 @@
 void FakeLag_DestroyPacket(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  
+  iVar1 = __savegprlr_29();
+  if (DAT_83670a44 == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x5b,0,0xffffffff82000f98,0xffffffff8208e080);
+  }
+  RtlFreeHeap(DAT_83670a44,0,(&DAT_83670a64)[iVar1 * 0x14]);
+  (&DAT_83670a64)[iVar1 * 0x14] = 0;
+  *(undefined4 *)(&DAT_83670a74 + iVar1 * 0x50) = 0;
+  (&DAT_83670a60)[iVar1 * 0x14] = 0;
+  (&DAT_83670a80)[iVar1 * 0x14] = 0;
+  __restgprlr_29(1);
+  return;
 }
 
 
@@ -15,8 +26,24 @@ void FakeLag_DestroyPacket(void)
 void FakeLag_SendPacket_Real(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  
+  uVar1 = __savegprlr_26();
+  if (0x1ff < uVar1) {
+    MyAssertHandler(0xffffffff8208e040,0x71,0,0xffffffff82000f98,0xffffffff8208e0d4);
+  }
+  if ((&DAT_83670a48)[uVar1 * 0x50] == '\0') {
+    MyAssertHandler(0xffffffff8208e040,0x72,0,0xffffffff82000f98,0xffffffff8208e0b0);
+  }
+  if ((&DAT_83670a64)[uVar1 * 0x14] == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x73,0,0xffffffff82000f98,0xffffffff8208e090);
+  }
+  NET_SendPacket((&DAT_83670a4c)[uVar1 * 0x14],(&DAT_83670a60)[uVar1 * 0x14],
+                 (&DAT_83670a64)[uVar1 * 0x14],*(undefined8 *)(&DAT_83670a50 + uVar1 * 0x14),
+                 *(undefined8 *)(&DAT_83670a58 + uVar1 * 0x14));
+  FakeLag_DestroyPacket(uVar1);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -28,7 +55,6 @@ void FakeLag_Init(void)
   if (DAT_8367aa5c == '\0') {
     memset(&DAT_83670a48,0,0xa000);
     if (DAT_83670a44 != (HANDLE)0x0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8208e040,0x85,0,0xffffffff82000f98,0xffffffff8208e238);
     }
     DAT_83670a44 = HeapCreate(0,0xfa88,0xfa88);
@@ -49,8 +75,63 @@ void FakeLag_Init(void)
 void FakeLag_GetFreeSlot(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  
   __savegprlr_27();
+  piVar3 = &DAT_83670a60;
+  iVar5 = 0;
+  do {
+    if (*piVar3 == 0) goto LAB_8250041c;
+    piVar3 = piVar3 + 0x14;
+    iVar1 = iVar5 + 1;
+    iVar5 = iVar1;
+  } while ((int)piVar3 < -0x7c9855a0);
+  iVar5 = 0;
+  iVar2 = Sys_Milliseconds(iVar1);
+  piVar3 = &DAT_83670a68;
+  iVar1 = 2;
+  do {
+    if ((*(char *)(piVar3 + -8) != '\0') && (*piVar3 < iVar2)) {
+      iVar5 = iVar1 + -2;
+      iVar2 = *piVar3;
+    }
+    if ((*(char *)(piVar3 + 0xc) != '\0') && (piVar3[0x14] < iVar2)) {
+      iVar5 = iVar1 + -1;
+      iVar2 = piVar3[0x14];
+    }
+    if ((*(char *)(piVar3 + 0x20) != '\0') && (piVar3[0x28] < iVar2)) {
+      iVar5 = iVar1;
+      iVar2 = piVar3[0x28];
+    }
+    if ((*(char *)(piVar3 + 0x34) != '\0') && (piVar3[0x3c] < iVar2)) {
+      iVar5 = iVar1 + 1;
+      iVar2 = piVar3[0x3c];
+    }
+    piVar3 = piVar3 + 0x50;
+    iVar4 = iVar1 + 2;
+    iVar1 = iVar1 + 4;
+  } while (iVar4 < 0x200);
+  Com_Printf(0x19,0xffffffff8208e248);
+  if ((&DAT_83670a48)[iVar5 * 0x50] != '\0') {
+    FakeLag_SendPacket_Real(iVar5);
+    __restgprlr_27(iVar5);
+    return;
+  }
+  if (DAT_83670a44 == 0) {
+    MyAssertHandler(0xffffffff8208e040,0x5b,0,0xffffffff82000f98,0xffffffff8208e080);
+  }
+  RtlFreeHeap(DAT_83670a44,0,(&DAT_83670a64)[iVar5 * 0x14]);
+  (&DAT_83670a64)[iVar5 * 0x14] = 0;
+  *(undefined4 *)(&DAT_83670a74 + iVar5 * 0x50) = 0;
+  (&DAT_83670a60)[iVar5 * 0x14] = 0;
+  (&DAT_83670a80)[iVar5 * 0x14] = 0;
+LAB_8250041c:
+  __restgprlr_27(iVar5);
+  return;
 }
 
 
@@ -158,8 +239,49 @@ LAB_82500624:
 void FakeLag_UpdateCurrentValues(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int iVar9;
+  double dVar10;
+  undefined8 uVar11;
+  undefined8 uVar12;
+  
+  lVar4 = __savegprlr_27();
+  uVar1 = *(uint *)(DAT_83670a40 + 0xc);
+  uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+  if (*(int *)(DAT_8367aa50 + 0xc) + uVar1 != uVar2) {
+    uVar6 = ((ulonglong)uVar2 - (ulonglong)*(uint *)(DAT_8367aa4c + 0xc)) - (ulonglong)uVar1;
+    uVar5 = (ulonglong)((int)uVar6 >> 0x1f);
+    lVar7 = (uVar6 ^ uVar5) - uVar5;
+    lVar8 = lVar4 - (ulonglong)DAT_8367aa64;
+    if ((int)lVar7 < (int)(lVar4 - (ulonglong)DAT_8367aa64)) {
+      lVar8 = lVar7;
+    }
+    if ((int)(*(uint *)(DAT_8367aa4c + 0xc) + uVar1) < (int)uVar2) {
+      lVar8 = -lVar8;
+    }
+    Dvar_SetInt(DAT_8367aa54,(ulonglong)uVar2 + lVar8);
+  }
+  iVar9 = (int)lVar4;
+  if (((0 < *(int *)(DAT_8367aa4c + 0xc)) || (0 < *(int *)(DAT_8367aa50 + 0xc))) &&
+     (DAT_8367aa60 < iVar9)) {
+    uVar12 = 0x3ff0000000000000;
+    uVar11 = 0;
+    dVar10 = (double)flrand(0,0x3ff0000000000000);
+    Dvar_SetInt(DAT_8367aa4c,(int)(dVar10 * (double)(longlong)*(int *)(DAT_8367aa50 + 0xc)));
+    iVar3 = *(int *)(DAT_8367aa58 + 0xc);
+    dVar10 = (double)flrand(uVar11,uVar12);
+    DAT_8367aa60 = (int)(dVar10 * (double)(longlong)(iVar3 << 1)) + iVar3 + iVar9;
+  }
+  DAT_8367aa64 = iVar9;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -191,11 +313,9 @@ void FakeLag_SendPacket(undefined8 param_1,undefined8 param_2,ulonglong param_3,
   uVar4 = __savegprlr_21();
   _Size = (size_t)param_2;
   if ((int)_Size < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e040,0x11f,0,0xffffffff82000f98,0xffffffff82084270);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e040,0x120,0,0xffffffff82000f98,0xffffffff8208e364);
   }
   Sys_EnterCriticalSection(9);
@@ -215,7 +335,6 @@ void FakeLag_SendPacket(undefined8 param_1,undefined8 param_2,ulonglong param_3,
     if ((cVar9 == '\0') || (iStack00000030 != 4)) {
       uVar6 = FakeLag_GetFreeSlot();
       if (DAT_83670a44 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208e040,0x141,0,0xffffffff82000f98,0xffffffff8208e080);
       }
       _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,param_2);
@@ -310,11 +429,9 @@ void FakeLag_QueueIncomingPacket(undefined8 param_1,int param_2,undefined4 *para
   
   cVar10 = __savegprlr_20();
   if (*(int *)((int)param_4 + 0x14) < 1) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e040,0x180,0,0xffffffff82000f98,0xffffffff8208e3b0);
   }
   if (*(int *)((int)param_4 + 8) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e040,0x181,0,0xffffffff82000f98,0xffffffff8208e39c);
   }
   Sys_EnterCriticalSection(9);
@@ -343,7 +460,6 @@ void FakeLag_QueueIncomingPacket(undefined8 param_1,int param_2,undefined4 *para
   }
   uVar7 = FakeLag_GetFreeSlot();
   if (DAT_83670a44 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e040,0x1a3,0,0xffffffff82000f98,0xffffffff8208e080);
   }
   _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,*(undefined4 *)((int)param_4 + 0x14));
@@ -409,8 +525,141 @@ void FakeLag_QueueIncomingPacket(undefined8 param_1,int param_2,undefined4 *para
 void FakeLag_ReceivePackets(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar7;
+  longlong lVar6;
+  void *_Dst;
+  int iVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  double dVar15;
+  undefined8 uVar16;
+  double dVar17;
+  undefined1 auStack_108 [8];
+  longlong local_100;
+  undefined4 local_f0;
+  undefined4 local_ec;
+  undefined4 local_e8;
+  undefined4 local_e4;
+  undefined1 auStack_e0 [8];
+  void *local_d8;
+  size_t local_cc;
+  
   __savegprlr();
+  LargeLocal__LargeLocal(auStack_108,0x10000);
+  uVar5 = LargeLocal__GetBuf(auStack_108);
+  if ((*(int *)(DAT_8367aa54 + 0xc) != 0) || (*(int *)(DAT_8367aa4c + 0xc) != 0)) {
+    MSG_Init(auStack_e0,uVar5,0x10000);
+    iVar7 = NET_GetLoopPacket_Real(4,&local_f0,auStack_e0);
+    uVar14 = uVar5;
+    if (iVar7 != 0) {
+      uVar16 = 0x3ff0000000000000;
+      dVar17 = 0.0;
+      do {
+        if ((int)local_cc < 1) {
+          MyAssertHandler(0xffffffff8208e040,0x180,0,0xffffffff82000f98,"msg->cursize > 0");
+        }
+        if (local_d8 == (void *)0x0) {
+          MyAssertHandler(0xffffffff8208e040,0x181,0,0xffffffff82000f98,"msg->data != NULL");
+        }
+        Sys_EnterCriticalSection(9);
+        lVar6 = Sys_Milliseconds();
+        uVar1 = *(uint *)(DAT_83670a40 + 0xc);
+        uVar2 = *(uint *)(DAT_8367aa54 + 0xc);
+        if (*(int *)(DAT_8367aa50 + 0xc) + uVar1 != uVar2) {
+          uVar11 = ((ulonglong)uVar2 - (ulonglong)uVar1) - (ulonglong)*(uint *)(DAT_8367aa4c + 0xc);
+          uVar10 = (ulonglong)((int)uVar11 >> 0x1f);
+          lVar12 = (uVar11 ^ uVar10) - uVar10;
+          lVar13 = lVar6 - (ulonglong)DAT_8367aa6c;
+          if ((int)lVar12 < (int)(lVar6 - (ulonglong)DAT_8367aa6c)) {
+            lVar13 = lVar12;
+          }
+          if ((int)(uVar1 + *(uint *)(DAT_8367aa4c + 0xc)) < (int)uVar2) {
+            lVar13 = -lVar13;
+          }
+          Dvar_SetInt(DAT_8367aa54,(ulonglong)uVar2 + lVar13);
+        }
+        iVar7 = DAT_8367aa48;
+        if (((double)*(float *)(DAT_8367aa48 + 0xc) <= dVar17) ||
+           (dVar15 = (double)flrand(dVar17,uVar16), (double)*(float *)(iVar7 + 0xc) < dVar15)) {
+          iVar7 = FakeLag_GetFreeSlot();
+          if (DAT_83670a44 == 0) {
+            MyAssertHandler(0xffffffff8208e040,0x1a3,0,0xffffffff82000f98,0xffffffff8208e080);
+          }
+          _Dst = (void *)RtlAllocateHeap(DAT_83670a44,0,local_cc);
+          iVar3 = iVar7 * 0x50;
+          (&DAT_83670a64)[iVar7 * 0x14] = _Dst;
+          if (_Dst == (void *)0x0) {
+            Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
+            (&DAT_83670a60)[iVar7 * 0x14] = 0;
+            Sys_LeaveCriticalSection(9);
+          }
+          else {
+            memcpy(_Dst,local_d8,local_cc);
+            memcpy(&DAT_83670a6c + iVar7 * 0x14,auStack_e0,0x2c);
+            iVar8 = DAT_8367aa50;
+            (&DAT_83670a48)[iVar3] = 0;
+            (&DAT_83670a50)[iVar7 * 0x14] = local_f0;
+            (&DAT_83670a58)[iVar7 * 0x14] = local_e8;
+            (&DAT_83670a54)[iVar7 * 0x14] = local_ec;
+            (&DAT_83670a5c)[iVar7 * 0x14] = local_e4;
+            (&DAT_83670a49)[iVar3] = 1;
+            (&DAT_83670a4c)[iVar7 * 0x14] = 4;
+            (&DAT_83670a60)[iVar7 * 0x14] = local_cc;
+            *(undefined4 *)(&DAT_83670a74 + iVar3) = (&DAT_83670a64)[iVar7 * 0x14];
+            local_100 = lVar6;
+            if (*(int *)(iVar8 + 0xc) == 0) {
+              iVar8 = 0;
+            }
+            else {
+              iVar8 = irand(0,(ulonglong)DAT_8367aa6c - lVar6);
+            }
+            iVar9 = Sys_Milliseconds();
+            iVar4 = DAT_83691660;
+            (&DAT_83670a68)[iVar7 * 0x14] = iVar9 + iVar8;
+            if ((*(int *)(iVar4 + 0xc) != 0) &&
+               ((1 < *(int *)(iVar4 + 0xc) || ((&DAT_83670a49)[iVar3] == '\0')))) {
+              Com_Printf(0x19,0xffffffff8208e374,lVar6,0xffffffff8208e2ac,"server");
+            }
+            DAT_8367aa6c = (uint)lVar6;
+            Sys_LeaveCriticalSection(9);
+            uVar14 = uVar5 & 0xffffffff;
+          }
+        }
+        else {
+          Sys_LeaveCriticalSection(9);
+        }
+        iVar7 = NET_GetLoopPacket_Real(4,&local_f0,auStack_e0);
+      } while (iVar7 != 0);
+    }
+    MSG_Init(auStack_e0,uVar14,0x10000);
+    lVar6 = 0;
+    do {
+      iVar7 = NET_GetLoopPacket_Real(lVar6,&local_f0,auStack_e0);
+      while (iVar7 != 0) {
+        FakeLag_QueueIncomingPacket(1,lVar6,&local_f0,auStack_e0);
+        iVar7 = NET_GetLoopPacket_Real(lVar6,&local_f0,auStack_e0);
+      }
+      lVar6 = lVar6 + 1;
+    } while ((int)lVar6 < 4);
+    MSG_Init(auStack_e0,uVar14,0x10000);
+    iVar7 = Sys_GetPacket(&local_f0,auStack_e0);
+    while (iVar7 != 0) {
+      FakeLag_QueueIncomingPacket(0,5,&local_f0,auStack_e0);
+      iVar7 = Sys_GetPacket(&local_f0,auStack_e0);
+    }
+  }
+  LargeLocal___LargeLocal(auStack_108);
+  __restgprlr();
+  return;
 }
 
 
@@ -437,7 +686,6 @@ void FakeLag_GetPacket(undefined8 param_1,int param_2,undefined4 *param_3,undefi
     if ((((*(int *)(pcVar8 + 0x18) != 0) && (*pcVar8 == '\0')) && (*(int *)(pcVar8 + 4) == param_2))
        && (pcVar8[1] == cVar4)) {
       if (*(int *)(pcVar8 + 0x1c) == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8208e040,0x218,0,0xffffffff82000f98,0xffffffff8208e47c);
       }
       cVar5 = FakeLag_HostingGameOrParty();
@@ -463,17 +711,14 @@ LAB_82501418:
         *param_4 = (&DAT_83670a6c)[iVar2 * 0x14];
         param_4[7] = (&DAT_83670a88)[iVar2 * 0x14];
         if (5 < (uint)(&DAT_83670a94)[iVar2 * 0x14]) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8208e040,0x22b,0,0xffffffff8208e3d8,
                           (&DAT_83670a94)[iVar2 * 0x14],6);
         }
         param_4[10] = (&DAT_83670a94)[iVar2 * 0x14];
         if ((&DAT_83670a64)[iVar2 * 0x14] == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8208e040,0x22f,0,0xffffffff82000f98,0xffffffff8208e47c);
         }
         if (param_4[2] == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8208e040,0x230,0,0xffffffff82000f98,0xffffffff8208e3c4);
         }
         XMemCpy(param_4[2],(&DAT_83670a64)[iVar2 * 0x14],(&DAT_83670a60)[iVar2 * 0x14]);
@@ -517,7 +762,34 @@ void FakeLag_Frame(void)
 void FakeLag_Shutdown(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  BOOL BVar1;
+  longlong lVar2;
+  char *pcVar3;
+  
+  BVar1 = __savegprlr_28();
+  if (DAT_8367aa5c != '\0') {
+    lVar2 = 0;
+    pcVar3 = &DAT_83670a48;
+    do {
+      if (*(int *)(pcVar3 + 0x18) != 0) {
+        if (*pcVar3 == '\0') {
+          FakeLag_DestroyPacket(lVar2);
+        }
+        else {
+          FakeLag_SendPacket_Real();
+        }
+      }
+      pcVar3 = pcVar3 + 0x50;
+      lVar2 = lVar2 + 1;
+    } while ((int)pcVar3 < -0x7c9855b8);
+    BVar1 = 0;
+    if (DAT_83670a44 != (HANDLE)0x0) {
+      BVar1 = HeapDestroy(DAT_83670a44);
+      DAT_83670a44 = (HANDLE)0x0;
+    }
+    DAT_8367aa5c = '\0';
+  }
+  __restgprlr_28(BVar1);
+  return;
 }
 

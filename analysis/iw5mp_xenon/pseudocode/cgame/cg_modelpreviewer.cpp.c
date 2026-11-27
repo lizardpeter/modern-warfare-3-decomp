@@ -6,22 +6,23 @@ undefined4 Cmd_LocalControllerIndex(void)
 
 {
   char cVar1;
+  ulonglong uVar2;
   
   cVar1 = Sys_IsMainThread();
   if (cVar1 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201eb60,0xf6,0,0xffffffff82000f98,0xffffffff82010b48);
   }
-  if (7 < DAT_835ab9d8) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8201eb60,0xf9,0,0xffffffff82012b30,DAT_835ab9d8,8);
+  uVar2 = (ulonglong)DAT_835ab9d8;
+  if (7 < uVar2) {
+    MyAssertHandler(0xffffffff8201eb60,0xf9,0,0xffffffff82012b30,uVar2,8);
+    uVar2 = (ulonglong)DAT_835ab9d8;
   }
-  if (3 < *(uint *)(&DAT_835ab9fc + DAT_835ab9d8 * 4)) {
-                    /* WARNING: Subroutine does not return */
+  if (3 < *(uint *)(&DAT_835ab9fc + (int)(uVar2 << 2))) {
     MyAssertHandler(0xffffffff8201eb60,0xfb,0,0xffffffff8201eb10,
-                    *(uint *)(&DAT_835ab9fc + DAT_835ab9d8 * 4),4);
+                    *(uint *)(&DAT_835ab9fc + (int)(uVar2 << 2)),4);
+    uVar2 = (ulonglong)DAT_835ab9d8;
   }
-  return *(undefined4 *)(&DAT_835ab9fc + DAT_835ab9d8 * 4);
+  return *(undefined4 *)(&DAT_835ab9fc + (int)(uVar2 << 2));
 }
 
 
@@ -36,18 +37,15 @@ void UpdateMru(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   piVar2 = (int *)__savegprlr_24();
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x188,0,0xffffffff82000f98,0xffffffff8201ebb8);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
   }
   iVar3 = 0;
   iVar1 = (int)param_2 - (int)piVar2;
   do {
     if (*piVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
     }
     if ((iVar3 != 0) && (**(char **)(*piVar2 + 0xc) == '\0')) break;
@@ -86,7 +84,6 @@ void PushMruEntry(undefined8 param_1,longlong param_2,ulonglong param_3,ulonglon
     pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
   if (0xff < (int)(pcVar4 + (-1 - (int)pcVar2))) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x1a0,0,0xffffffff8201ec10,0xffffffff8201ec24,pcVar2);
   }
   iVar3 = -(int)pcVar2;
@@ -115,14 +112,12 @@ void PushMruEntry(undefined8 param_1,longlong param_2,ulonglong param_3,ulonglon
   puVar7 = (undefined4 *)param_2;
   Dvar_SetString(*puVar7,acStack_150);
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
   }
   iVar3 = 0;
   do {
     piVar8 = (int *)param_2;
     if (*piVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
     }
     if ((iVar3 != 0) && (**(char **)(*piVar8 + 0xc) == '\0')) break;
@@ -151,15 +146,12 @@ void RemoveMruEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   piVar2 = (int *)__savegprlr_24();
   if (piVar2 == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x1b5,0,0xffffffff82000f98,0xffffffff8201ebb8);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x1b6,0,0xffffffff82000f98,0xffffffff8200afa8);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x1b7,0,0xffffffff82000f98,0xffffffff8201ec3c);
   }
   iVar1 = *(int *)((int)param_3 + 0xc);
@@ -176,14 +168,12 @@ void RemoveMruEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   }
   Dvar_SetString(piVar2[3],0xffffffff820068af);
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
   }
   iVar4 = 0;
   iVar1 = (int)param_2 - (int)piVar2;
   do {
     if (*piVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
     }
     if ((iVar4 != 0) && (**(char **)(*piVar2 + 0xc) == '\0')) break;
@@ -435,10 +425,89 @@ void ModPrvAlloc(undefined8 param_1)
 
 {
   if (DAT_82a3d6cc == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x26c,0,0xffffffff82000f98,0xffffffff8201f480);
   }
   Hunk_UserAlloc(DAT_82a3d6cc,param_1,4);
+  return;
+}
+
+
+// 822DD5F0  CG_ModPrvResetGlobals  (cgame/cg_modelpreviewer.cpp:626)
+
+void CG_ModPrvResetGlobals(void)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  __savegprlr_27();
+  DAT_82a3d718 = 0;
+  DAT_82a3d6f8 = 0;
+  DAT_82a3d720 = 0;
+  DAT_82a3d8f4 = 10;
+  DAT_82a3d714 = 0;
+  DAT_82a3d844 = 0;
+  DAT_82a3d8fc = 0x1e;
+  DAT_82a4bef4 = 0;
+  DAT_82a3d710 = 0;
+  DAT_82a3d6e8 = 0;
+  DAT_82a3d700 = 0;
+  DAT_82a3d71c = 0;
+  DAT_82a3d724 = 0;
+  DAT_82a3d70c = 0;
+  DAT_82a3d734 = 0;
+  dVar2 = 0.0;
+  DAT_82a3de30 = 0;
+  DAT_82a3d76c = 0xffffffff;
+  DAT_82a3d8f8 = 0x14;
+  DAT_82a3d900 = 0x28;
+  DAT_82a3d740 = 0x42c80000;
+  DAT_82a3d73c = 0;
+  DAT_82a3d738 = 0xc1a00000;
+  DAT_82a3dfa4 = 0;
+  DAT_82a3d704 = 0;
+  DAT_82a3e28c = 0;
+  DAT_82a3d708 = 0;
+  DAT_82a3d728 = 0;
+  DAT_82a3d72c = 0;
+  DAT_82a3dcbc = 0;
+  DAT_82a3e400 = 0;
+  DAT_82a3e118 = 0;
+  DAT_82a3e574 = 0;
+  DAT_82a3e6e8 = 0;
+  DAT_82a3e85c = 0;
+  DAT_82a3e9d0 = 0;
+  DAT_82a4bef8 = 0;
+  dVar1 = (double)Dvar_GetFloat(0xffffffff8201f494);
+  DAT_82a3d744 = (float)dVar1;
+  DAT_82a3d758 = (float)dVar2;
+  DAT_82a3d754 = (float)dVar2;
+  DAT_82a3d750 = (float)dVar2;
+  DAT_82a3d764 = (float)dVar2;
+  DAT_82a3d760 = (float)dVar2;
+  DAT_82a3d74c = 0;
+  DAT_82a3d75c = (float)dVar2;
+  DAT_82a4bf00 = 0xffffffff;
+  DAT_82a4bf04 = 0xffffffff;
+  Dvar_Reset(DAT_82a4c08c,0);
+  Dvar_Reset(DAT_82a3d6bc,0);
+  Dvar_Reset(DAT_82a4c0c0,0);
+  Dvar_Reset(DAT_82a3d6b8,0);
+  Dvar_Reset(DAT_82a4c0b8,0);
+  Dvar_Reset(DAT_82a4c0a8,0);
+  Dvar_Reset(DAT_82a4c070,0);
+  Dvar_Reset(DAT_82a4c07c,0);
+  Dvar_Reset(DAT_82a3d6c0,0);
+  Dvar_Reset(DAT_82a4c078,0);
+  DAT_82a4bf48 = 0xffffffff;
+  DAT_82a4bf50 = 0;
+  DAT_82a4bf4c = 0;
+  Dvar_Reset(DAT_82a4c094,0);
+  DAT_82a4c05c = 0xffffffff;
+  DAT_82a4c060 = 0;
+  DAT_82a4c064 = 0;
+  DAT_82a4c068 = 0;
+  __restgprlr_27();
   return;
 }
 
@@ -457,11 +526,32 @@ ulonglong CG_ModPrvCompareString(void)
 
 // 822DD898  CG_ModPrvGetAssetName  (cgame/cg_modelpreviewer.cpp:707)
 
-void CG_ModPrvGetAssetName(void)
+void CG_ModPrvGetAssetName(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int *piVar1;
+  undefined4 *puVar3;
+  undefined8 uVar2;
+  undefined4 uVar4;
+  
+  puVar3 = (undefined4 *)__savegprlr_29();
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x2c6,0,0xffffffff82000f98,0xffffffff8201f49c);
+  }
+  piVar1 = (int *)param_2;
+  if (piVar1[1] == 4) {
+    uVar2 = XModelGetName(puVar3);
+    uVar4 = Hunk_CopyString(*(undefined4 *)(DAT_82a3d6dc + -4),uVar2);
+    *(undefined4 *)(*piVar1 * 4 + DAT_82a3d6dc) = uVar4;
+    *piVar1 = *piVar1 + 1;
+  }
+  if (piVar1[1] == 2) {
+    uVar4 = Hunk_CopyString(*(undefined4 *)(DAT_82a3d6e4 + -4),*puVar3);
+    *(undefined4 *)(*piVar1 * 4 + DAT_82a3d6e4) = uVar4;
+    *piVar1 = *piVar1 + 1;
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -470,8 +560,34 @@ void CG_ModPrvGetAssetName(void)
 void CG_ModPrvEnumerateModels_FastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  char *local_28;
+  
   __savegprlr_29();
+  if (DAT_82a3d6dc != (undefined4 *)0x0) {
+    Dvar_UpdateEnumDomain(DAT_82a4c098,0xffffffff82a4c0d0);
+    FS_FreeFileList(DAT_82a3d6dc,0);
+    DAT_82a3d6dc = (undefined4 *)0x0;
+  }
+  DAT_82a3d6d8 = DB_GetAllXAssetOfType(4,0,0x7fffffff);
+  if (DAT_82a3d6d8 != 0) {
+    uVar1 = Hunk_UserCreate(0x20000,0xffffffff8201fb48,0,0);
+    DAT_82a3d6dc = (undefined4 *)
+                   Hunk_UserAlloc(uVar1,((ulonglong)DAT_82a3d6d8 + 2 & 0x3fffffff) << 2,4);
+    *DAT_82a3d6dc = (int)uVar1;
+    DAT_82a3d6dc = DAT_82a3d6dc + 1;
+    local_2c = 4;
+    local_30 = 0;
+    local_28 = "CG_ModPrvEnumerateModels";
+    DB_EnumXAssets(4,0xffffffff822dd898,&local_30,0);
+    std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (DAT_82a3d6dc,DAT_82a3d6dc + DAT_82a3d6d8,
+               (int)(DAT_82a3d6dc + DAT_82a3d6d8) - (int)DAT_82a3d6dc >> 2,0xffffffff822dd870);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -480,8 +596,35 @@ void CG_ModPrvEnumerateModels_FastFile(void)
 void CG_ModPrvEnumerateAnimations_FastFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined4 local_30;
+  undefined4 local_2c;
+  char *local_28;
+  
   __savegprlr_29();
+  if (DAT_82a3d6e4 != (undefined4 *)0x0) {
+    Dvar_UpdateEnumDomain(DAT_82a4c0c0,0xffffffff82a4c0d0);
+    Dvar_UpdateEnumDomain(DAT_82a3d6b8,0xffffffff82a4c0d0);
+    FS_FreeFileList(DAT_82a3d6e4,0);
+    DAT_82a3d6e4 = (undefined4 *)0x0;
+  }
+  DAT_82a3d6e0 = DB_GetAllXAssetOfType(2,0,0x7fffffff);
+  if (DAT_82a3d6e0 != 0) {
+    uVar1 = Hunk_UserCreate(0x20000,0xffffffff8201fb64,0,0);
+    DAT_82a3d6e4 = (undefined4 *)
+                   Hunk_UserAlloc(uVar1,((ulonglong)DAT_82a3d6e0 + 2 & 0x3fffffff) << 2,4);
+    *DAT_82a3d6e4 = (int)uVar1;
+    DAT_82a3d6e4 = DAT_82a3d6e4 + 1;
+    local_2c = 2;
+    local_30 = 0;
+    local_28 = "CG_ModPrvEnumerateAnimations";
+    DB_EnumXAssets(2,0xffffffff822dd898,&local_30,0);
+    std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (DAT_82a3d6e4,DAT_82a3d6e4 + DAT_82a3d6e0,
+               (int)(DAT_82a3d6e4 + DAT_82a3d6e0) - (int)DAT_82a3d6e4 >> 2,0xffffffff822dd870);
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -536,10 +679,9 @@ void CG_ModPrvUnloadModel(void)
       XAnimGetAnims(uVar1);
       XAnimFreeTree(uVar1,0);
       if (DAT_82a3d6cc == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8201ebc8,0x5a1,0,0xffffffff82000f98,0xffffffff8201f480);
       }
-      Hunk_UserDestroy();
+      Hunk_UserDestroy(DAT_82a3d6cc);
       DAT_82a3d6cc = 0;
     }
   }
@@ -598,8 +740,35 @@ void CG_ModPrvShutdown(void)
 void CG_ModPrvDrawViewAxis(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  float *pfVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float local_60 [4];
+  float local_50 [20];
+  
+  pfVar1 = (float *)__savegprlr_29();
+  dVar3 = 0.10000000149011612;
+  iVar2 = 0;
+  dVar4 = 1.0;
+  dVar5 = 0.0;
+  do {
+    local_60[0] = *pfVar1;
+    *(float *)((int)local_60 + iVar2) = (float)((double)DAT_82a3d740 * dVar3);
+    local_60[1] = pfVar1[1] + (float)dVar5;
+    local_50[0] = (float)dVar5;
+    local_60[0] = local_60[0] + (float)dVar5;
+    local_50[1] = (float)dVar5;
+    local_60[2] = pfVar1[2] + (float)dVar5;
+    local_50[2] = (float)dVar5;
+    local_50[3] = (float)dVar5;
+    *(float *)((int)local_50 + iVar2) = (float)dVar4;
+    CG_DebugLine(pfVar1,local_60,local_50,1,0);
+    iVar2 = iVar2 + 4;
+  } while (iVar2 < 0xc);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -618,10 +787,9 @@ void CG_ModPrvModelGetBoneNameList(void)
   
   __savegprlr_22();
   if (DAT_82a3d844 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x60a,0,0xffffffff82000f98,0xffffffff8201f56c);
   }
-  CG_ModPrvGetNumTotalBones();
+  CG_ModPrvGetNumTotalBones(DAT_82a3d844);
   uVar5 = 4;
   DAT_82a3d930 = PTR_s_Draw_None_82962ed0;
   DAT_82a3d934 = PTR_s_Draw_All_Tags_82962ed4;
@@ -638,7 +806,6 @@ void CG_ModPrvModelGetBoneNameList(void)
         puVar6 = (undefined4 *)(uVar5 * 4 + -0x7d5c26d4);
         do {
           if (0xc4 < uVar5) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(0xffffffff8201ebc8,0x617,0,0xffffffff82000f98,0xffffffff8201fa40);
           }
           uVar3 = CG_ModPrvModelGetBoneName(DAT_82a3d844,lVar4,lVar7);
@@ -651,7 +818,6 @@ void CG_ModPrvModelGetBoneNameList(void)
       lVar4 = lVar4 + 1;
     } while ((int)lVar4 < iVar1);
     if (0xc4 < uVar5) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x61c,0,0xffffffff82000f98,0xffffffff8201fa40);
     }
   }
@@ -664,11 +830,193 @@ void CG_ModPrvModelGetBoneNameList(void)
 
 // 822E22C8  CG_ModPrvLoadModel  (cgame/cg_modelpreviewer.cpp:1644)
 
-void CG_ModPrvLoadModel(void)
+void CG_ModPrvLoadModel(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar4;
+  undefined4 uVar7;
+  bool bVar8;
+  longlong lVar9;
+  int iVar10;
+  longlong lVar11;
+  int iVar12;
+  int iVar13;
+  uint uVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  undefined8 uVar18;
+  
   __savegprlr_18();
+  lVar11 = -0x8110;
+  iVar5 = _RtlCheckStack12();
+  lVar11 = ZEXT48(&stack0x00000000) + lVar11;
+  iVar3 = (int)lVar11;
+  *(BADSPACEBASE **)iVar3 = register0x0000000c;
+  if (DAT_82a3d844 == (undefined *)0x0) {
+    dVar17 = (double)*(float *)(iVar5 + 0x24);
+    dVar16 = (double)(*(float *)(iVar5 + 0x6b9d4) * DAT_82a3d740 + *(float *)(iVar5 + 0x6b9c8));
+    dVar15 = (double)(*(float *)(iVar5 + 0x6b9d8) * DAT_82a3d740 + *(float *)(iVar5 + 0x6b9cc));
+    CL_AddReliableCommand(*(undefined4 *)(iVar5 + 0x3338),0xffffffff82012d9c);
+  }
+  else {
+    dVar16 = (double)DAT_82a3d8e4;
+    dVar15 = (double)DAT_82a3d8e8;
+    dVar17 = (double)DAT_82a3d8ec;
+  }
+  CG_ModPrvUnloadModel();
+  DAT_82a3d6fc = *(undefined4 *)(DAT_82a4c0c4 + 0xc);
+  Dvar_SetFloat(0x3ff0000000000000);
+  R_SetIgnorePrecacheErrors(1);
+  R_RegisterModel(param_2);
+  R_SetIgnorePrecacheErrors(0);
+  *(undefined2 *)(iVar3 + 100) = 0;
+  iVar6 = R_RegisterModel(param_2);
+  *(undefined1 *)(iVar3 + 0x66) = 0;
+  *(int *)(iVar3 + 0x60) = iVar6;
+  if (iVar6 == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x6e3,0,0xffffffff82000f98,0xffffffff8201fb28);
+  }
+  DObjCreate(lVar11 + 0x60,1,0,0xffffffff82a3d848,0);
+  DAT_82a3d7d8 = 0;
+  DAT_82a3d768 = 0;
+  DAT_82a3d844 = &DAT_82a3d848;
+  CG_ModPrvModelGetBoneNameList();
+  DAT_82a3d8ec = (float)dVar17;
+  DAT_82a3d794 = (float)dVar17;
+  DAT_82a3d8e4 = (float)dVar16;
+  DAT_82a3d8e8 = (float)dVar15;
+  DAT_82a3d78c = (float)dVar16;
+  DAT_82a3d790 = (float)dVar15;
+  uVar18 = 0;
+  Dvar_SetVec3(0,0,0,DAT_82a4c088);
+  dVar16 = (double)(*(float *)(iVar5 + 460000) * 0.0027777778);
+  dVar15 = floor((double)(float)(dVar16 + 0.5));
+  DAT_82a3d8f0 = (float)(dVar16 - (double)(float)dVar15) * 360.0;
+  Dvar_SetVec3(uVar18,uVar18,uVar18,DAT_82a3d6c8);
+  Dvar_SetVec3(uVar18,(double)DAT_82a3d8f0,uVar18,DAT_82a4c0ac);
+  iVar5 = DAT_82a4c0ac;
+  *(undefined4 *)(iVar3 + 0x50) = *(undefined4 *)(DAT_82a4c0ac + 0xc);
+  fVar1 = *(float *)(iVar5 + 0x10);
+  *(float *)(iVar3 + 0x54) = fVar1;
+  *(undefined4 *)(iVar3 + 0x58) = *(undefined4 *)(iVar5 + 0x14);
+  *(float *)(iVar3 + 0x54) = DAT_82a4bf44 + fVar1 + 180.0;
+  AnglesToQuat(lVar11 + 0x50,0xffffffff82a3d77c);
+  Dvar_Reset(DAT_82a3d6c4,0);
+  PushMruEntry(param_2,0xffffffff82a3d90c,0xffffffff82a3d91c,DAT_82a4c0b0);
+  DAT_82a4bf00 = 0xffffffff;
+  DAT_82a4bf04 = 0xffffffff;
+  Dvar_Reset(DAT_82a4c0b8,0);
+  Dvar_Reset(DAT_82a4c0a8,0);
+  Dvar_Reset(DAT_82a4c070,0);
+  Dvar_Reset(DAT_82a4c07c,0);
+  Dvar_Reset(DAT_82a3d6c0,0);
+  Dvar_Reset(DAT_82a4c0cc,0);
+  uVar4 = CG_ModPrvGetNumSurfaces(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc));
+  DAT_82a3d904 = (int)uVar4;
+  if (0 < DAT_82a3d904) {
+    DAT_82a4bf50 = Z_VirtualAlloc((uVar4 & 0x3fffffff) << 2,0xffffffff8201fb10,0);
+    R_DObjGetSurfMaterials(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc));
+    uVar14 = 0;
+    iVar5 = 0;
+    DAT_82a4bf54 = "<None>";
+    if (0 < DAT_82a3d904) {
+      iVar12 = 0;
+      iVar13 = 0;
+      iVar6 = DAT_82a3d904;
+      do {
+        iVar2 = *(int *)(iVar12 + DAT_82a4bf50);
+        if (iVar2 != 0) {
+          bVar8 = false;
+          iVar10 = 0;
+          if (0 < (int)uVar14) {
+            lVar9 = lVar11 + 0x80;
+            do {
+              if (*(int *)lVar9 == iVar2) {
+                bVar8 = true;
+                break;
+              }
+              iVar10 = iVar10 + 1;
+              lVar9 = lVar9 + 4;
+            } while (iVar10 < (int)uVar14);
+          }
+          if (!bVar8) {
+            if (0x41 < uVar14 + 1) {
+              MyAssertHandler(0xffffffff8201ebc8,0x72c,0,0xffffffff82000f98,0xffffffff8201faa8);
+            }
+            uVar7 = Material_GetName(iVar2);
+            *(undefined4 *)((int)&DAT_82a4bf58 + iVar13) = uVar7;
+            if (0x1fff < uVar14) {
+              MyAssertHandler(0xffffffff8201ebc8,0x72f,0,0xffffffff82000f98,0xffffffff8201fae4);
+            }
+            iVar6 = DAT_82a3d904;
+            *(int *)(iVar13 + iVar3 + 0x80) = iVar2;
+            iVar13 = iVar13 + 4;
+            uVar14 = uVar14 + 1;
+          }
+        }
+        iVar5 = iVar5 + 1;
+        iVar12 = iVar12 + 4;
+      } while (iVar5 < iVar6);
+    }
+    uVar7 = DAT_82a4c094;
+    (&DAT_82a4bf58)[uVar14] = 0;
+    Dvar_UpdateEnumDomain(uVar7,0xffffffff82a4bf54);
+    Dvar_UpdateEnumDomain(DAT_82a4c0c8,0xffffffff82a4bf54);
+    DAT_82a4bf48 = uVar14;
+    DAT_82a4bf4c = Z_VirtualAlloc(uVar14 * 4,0xffffffff8201fb10,0);
+    uVar14 = 0;
+    iVar5 = 0;
+    if (0 < DAT_82a3d904) {
+      iVar13 = 0;
+      iVar12 = 0;
+      iVar6 = DAT_82a3d904;
+      do {
+        iVar2 = *(int *)(iVar12 + DAT_82a4bf50);
+        if (iVar2 != 0) {
+          bVar8 = false;
+          iVar10 = 0;
+          if (0 < (int)uVar14) {
+            lVar9 = lVar11 + 0x80;
+            do {
+              if (*(int *)lVar9 == iVar2) {
+                bVar8 = true;
+                break;
+              }
+              iVar10 = iVar10 + 1;
+              lVar9 = lVar9 + 4;
+            } while (iVar10 < (int)uVar14);
+          }
+          if (!bVar8) {
+            if ((int)DAT_82a4bf48 <= (int)uVar14) {
+              MyAssertHandler(0xffffffff8201ebc8,0x74f,0,0xffffffff82000f98,0xffffffff8201fa7c);
+            }
+            *(undefined4 *)(iVar13 + DAT_82a4bf4c) = *(undefined4 *)(iVar12 + DAT_82a4bf50);
+            if (0x1fff < uVar14) {
+              MyAssertHandler(0xffffffff8201ebc8,0x752,0,0xffffffff82000f98,0xffffffff8201fae4);
+            }
+            iVar6 = DAT_82a3d904;
+            uVar14 = uVar14 + 1;
+            *(int *)(iVar13 + iVar3 + 0x80) = iVar2;
+            iVar13 = iVar13 + 4;
+          }
+        }
+        iVar5 = iVar5 + 1;
+        iVar12 = iVar12 + 4;
+      } while (iVar5 < iVar6);
+    }
+  }
+  Dvar_Reset(DAT_82a4c094,0);
+  DAT_82a4c064 = 0;
+  DAT_82a4c05c = 0xffffffff;
+  DAT_82a4c068 = 0;
+  __restgprlr_18();
+  return;
 }
 
 
@@ -677,8 +1025,34 @@ void CG_ModPrvLoadModel(void)
 void CG_ModPrvModelRecentAccepted(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  undefined8 uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  uVar1 = __savegprlr_26();
+  Dvar_ClearModified(DAT_82a4c0b0);
+  uVar2 = Dvar_EnumToString(DAT_82a4c0b0);
+  iVar5 = 0;
+  if (0 < DAT_82a3d6d8) {
+    iVar4 = 0;
+    do {
+      iVar3 = I_stricmp(uVar2,*(undefined4 *)(iVar4 + DAT_82a3d6dc));
+      if (iVar3 == 0) {
+        CG_ModPrvLoadModel(uVar1,uVar2);
+        DAT_82a3d76c = iVar5;
+        __restgprlr_26();
+        return;
+      }
+      iVar5 = iVar5 + 1;
+      iVar4 = iVar4 + 4;
+    } while (iVar5 < DAT_82a3d6d8);
+  }
+  Com_Printf(0xe,0xffffffff8201f5d0,uVar2);
+  RemoveMruEntry(0xffffffff82a3d90c,0xffffffff82a3d91c,DAT_82a4c0b0);
+  __restgprlr_26();
+  return;
 }
 
 
@@ -779,18 +1153,98 @@ void CG_ModPrvModelResetRotationXY(void)
 void CG_ModPrvGetNumTotalBones(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  int iVar3;
+  longlong lVar2;
+  longlong lVar4;
+  longlong lVar5;
+  
+  uVar1 = __savegprlr_28();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8bb,0,0xffffffff82000f98,0xffffffff8200260c);
+  }
+  lVar4 = 0;
+  iVar3 = DObjGetNumModels(uVar1);
+  lVar5 = 0;
+  if (0 < iVar3) {
+    do {
+      DObjGetModel(uVar1,lVar5);
+      lVar2 = XModelNumBones();
+      lVar5 = lVar5 + 1;
+      lVar4 = lVar2 + lVar4;
+    } while ((int)lVar5 < iVar3);
+  }
+  __restgprlr_28(lVar4);
+  return;
+}
+
+
+// 822DDE68  CG_ModPrvGetNumSurfaces  (cgame/cg_modelpreviewer.cpp:2251)
+
+void CG_ModPrvGetNumSurfaces(undefined8 param_1,int param_2)
+
+{
+  ulonglong uVar1;
+  ulonglong uVar2;
+  int iVar3;
+  undefined1 local_50 [80];
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8d0,0,0xffffffff82000f98,0xffffffff820040b4);
+  }
+  if (param_2 < 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8d1,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  }
+  uVar2 = DObjGetNumModels(uVar1);
+  if (0x20 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8d4,1,0xffffffff82000f98,0xffffffff8201f4b0);
+  }
+  iVar3 = 0;
+  if (0 < (int)uVar2) {
+    do {
+      local_50[iVar3] = (char)param_2;
+      iVar3 = iVar3 + 1;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  DObjGetNumSurfaces(uVar1,local_50);
+  __restgprlr_27();
+  return;
 }
 
 
 // 822DDF40  CG_ModPrvModelGetBoneName  (cgame/cg_modelpreviewer.cpp:2270)
 
-void CG_ModPrvModelGetBoneName(void)
+void CG_ModPrvModelGetBoneName(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar2;
+  int iVar3;
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8df,0,0xffffffff82000f98,0xffffffff8200260c);
+  }
+  iVar3 = (int)param_2;
+  if (iVar3 < 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8e0,0,0xffffffff82000f98,0xffffffff8201f55c);
+  }
+  if (((int)param_3 < 0) || (iVar2 = DObjNumBones(uVar1), iVar2 <= (int)param_3)) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8e2,0,0xffffffff82000f98,0xffffffff8201f528);
+  }
+  if ((iVar3 < 0) || (iVar2 = DObjGetNumModels(uVar1), iVar2 <= iVar3)) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8e3,0,0xffffffff82000f98,0xffffffff8201f4ec);
+  }
+  DObjGetModel(uVar1,param_2);
+  iVar3 = XModelBoneNames();
+  if (iVar3 == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x8ea,0,0xffffffff82000f98,0xffffffff8201f4e0);
+  }
+  SL_ConvertToString(*(undefined2 *)((int)((param_3 & 0xffffffff) << 1) + iVar3));
+  __restgprlr_27();
+  return;
 }
 
 
@@ -839,7 +1293,6 @@ void CG_ModPrvDrawBones(void)
   
   uVar8 = __savegprlr_15();
   if (DAT_82a3d844 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0x90d,0,0xffffffff82000f98,0xffffffff8201f56c);
   }
   iVar11 = *(int *)(DAT_82a4c0b4 + 0xc);
@@ -850,7 +1303,7 @@ void CG_ModPrvDrawBones(void)
     if ((iVar11 == 1) || (bVar7 = false, iVar11 == 3)) {
       bVar7 = true;
     }
-    iVar11 = DObjGetNumModels();
+    iVar11 = DObjGetNumModels(DAT_82a3d844);
     if (10.0 <= DAT_82a3d740) {
       fVar2 = DAT_82a3d740 * 0.00175;
     }
@@ -953,7 +1406,6 @@ void CG_ModPrvLoadAnimations(void)
     uVar3 = DObjGetTree();
     if ((uVar3 & 0xffffffff) == 0) {
       if (DAT_82a3d6cc != 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8201ebc8,0x971,0,0xffffffff82000f98,0xffffffff8201f5b8);
       }
     }
@@ -962,16 +1414,14 @@ void CG_ModPrvLoadAnimations(void)
       XAnimFreeTree(uVar3,0);
       DObjSetTree(DAT_82a3d844,0);
       if (DAT_82a3d6cc == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8201ebc8,0x96c,0,0xffffffff82000f98,0xffffffff8201f480);
       }
-      Hunk_UserDestroy();
+      Hunk_UserDestroy(DAT_82a3d6cc);
       DAT_82a3d6cc = 0;
     }
     DAT_82a3d6cc = Hunk_UserCreate(0x10000,0xffffffff8201f5a0,0,0);
     uVar3 = XAnimCreateAnims(0xffffffff8201f590,3,0xffffffff822dd578);
     if ((uVar3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x976,0,0xffffffff82000f98,0xffffffff8201f588);
     }
     XAnimBlend(uVar3,0,0xffffffff82004220,1,2,0,1);
@@ -983,7 +1433,6 @@ void CG_ModPrvLoadAnimations(void)
     }
     uVar4 = XAnimCreateTree(uVar3,0xffffffff822dd578);
     if ((uVar4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
       MyAssertHandler(0xffffffff8201ebc8,0x982,0,0xffffffff82000f98,0xffffffff820100a4);
     }
     DObjSetTree(DAT_82a3d844,uVar4);
@@ -1138,8 +1587,80 @@ void CG_ModPrvApplyDelta(void)
 void CG_ModPrvLoopAnimation(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  ulonglong uVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined8 uVar7;
+  
   __savegprlr_29();
+  __savefpr_28();
+  dVar5 = 0.0;
+  if (((DAT_82a3d844 == 0) ||
+      (dVar6 = dVar5, dVar4 = dVar5, uVar2 = DObjGetTree(), (uVar2 & 0xffffffff) == 0)) ||
+     (iVar3 = XAnimGetAnims(), iVar3 == 0)) goto LAB_822ded44;
+  if (-1 < DAT_82a4bf00) {
+    dVar5 = (double)XAnimGetTime(uVar2,1);
+  }
+  if (-1 < DAT_82a4bf04) {
+    dVar4 = (double)XAnimGetTime(uVar2,2);
+  }
+  uVar7 = 0x3ff0000000000000;
+  if (DAT_82a4bf00 < 0) {
+LAB_822debc0:
+    if (DAT_82a4bf04 < 0) goto LAB_822ded44;
+  }
+  else if (DAT_82a4bf04 < 0) {
+    if (1.0 <= dVar5) {
+      if (DAT_82a4bf38 == '\0') {
+        XAnimSetGoalWeightKnobAll
+                  (0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,DAT_82a3d844,1,0);
+        DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
+        DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
+        DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+      }
+      __restfpr_28(1);
+      __restgprlr_29();
+      return;
+    }
+    goto LAB_822debc0;
+  }
+  if ((DAT_82a4bf00 < 0) && (1.0 <= dVar4)) {
+    if (DAT_82a4bf39 == '\0') {
+      XAnimSetGoalWeightKnobAll
+                (0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,DAT_82a3d844,2,0);
+      DAT_82a3d78c = DAT_82a3d8e4 + *(float *)(DAT_82a4c088 + 0xc);
+      DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
+      DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+    }
+    __restfpr_28(1);
+    __restgprlr_29();
+    return;
+  }
+  if ((-1 < DAT_82a4bf04) && ((-1 < DAT_82a4bf00 && (1.0 <= dVar4)))) {
+    if (*(int *)(DAT_82a4c070 + 0xc) == 1) {
+      fVar1 = *(float *)(DAT_82a4c0a8 + 0xc);
+    }
+    else {
+      fVar1 = 1.0 - *(float *)(DAT_82a4c0a8 + 0xc);
+    }
+    dVar5 = (double)fVar1;
+    XAnimClearTreeGoalWeights(dVar6,uVar2,2);
+    XAnimSetGoalWeightKnobAll(dVar5,uVar7,uVar7,DAT_82a3d844,1,0);
+    DAT_82a4bf30 = 0;
+    DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
+    DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
+    DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+    __restfpr_28(1);
+    __restgprlr_29();
+    return;
+  }
+LAB_822ded44:
+  __restfpr_28(0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1212,11 +1733,9 @@ void CG_ModPrvAnimRecentAccept(undefined8 param_1,ulonglong param_2)
   
   puVar2 = (undefined4 *)__savegprlr_25();
   if (puVar2 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0xa48,0,0xffffffff82000f98,0xffffffff8201ec3c);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0xa49,0,0xffffffff82000f98,0xffffffff8201f668);
   }
   Dvar_ClearModified(puVar2);
@@ -1237,7 +1756,6 @@ void CG_ModPrvAnimRecentAccept(undefined8 param_1,ulonglong param_2)
     } while (iVar4 < DAT_82a3d6e0);
   }
   if (puVar2 != DAT_82a4c08c) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0xa5a,1,0xffffffff8201f614,0xffffffff8201f62c,*puVar2);
   }
   Com_Printf(0xe,0xffffffff8201f5d0,uVar1);
@@ -1250,11 +1768,23 @@ void CG_ModPrvAnimRecentAccept(undefined8 param_1,ulonglong param_2)
 
 // 822DEEB0  CG_ModPrvLoadAnimAccept  (cgame/cg_modelpreviewer.cpp:2658)
 
-void CG_ModPrvLoadAnimAccept(void)
+void CG_ModPrvLoadAnimAccept(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0xa63,0,0xffffffff82000f98,0xffffffff8201ec3c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0xa64,0,0xffffffff82000f98,0xffffffff8201f668);
+  }
+  Dvar_ClearModified(iVar1);
+  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 0xc);
+  CG_ModPrvLoadAnimations(*(undefined4 *)(*(int *)(iVar1 + 0xc) * 4 + DAT_82a3d6e4));
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1324,8 +1854,65 @@ void std___Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_
 void CG_ModPrvAnimBlendWeightUpdate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined8 uVar1;
+  undefined8 uVar2;
+  double dVar3;
+  double dVar4;
+  
   __savegprlr_29();
+  Dvar_ClearModified(DAT_82a4c0a8);
+  if (DAT_82a3d844 != 0) {
+    uVar1 = DObjGetTree();
+    uVar2 = 0;
+    dVar4 = 1.0;
+    if (-1 < DAT_82a4bf00) {
+      dVar3 = dVar4;
+      if (-1 < DAT_82a4bf04) {
+        dVar3 = (double)(1.0 - *(float *)(DAT_82a4c0a8 + 0xc));
+      }
+      XAnimClearTreeGoalWeights(0,uVar1,1);
+      XAnimSetGoalWeight(dVar3,dVar4,dVar4,DAT_82a3d844,1);
+    }
+    if (-1 < DAT_82a4bf04) {
+      dVar3 = dVar4;
+      if (-1 < DAT_82a4bf00) {
+        dVar3 = (double)*(float *)(DAT_82a4c0a8 + 0xc);
+      }
+      XAnimClearTreeGoalWeights(uVar2,uVar1,2);
+      XAnimSetGoalWeight(dVar3,dVar4,dVar4,DAT_82a3d844,2);
+    }
+  }
+  __restgprlr_29();
+  return;
+}
+
+
+// 822E36C8  std::_Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+
+void std___Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (undefined8 param_1,longlong param_2,undefined8 param_3)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
+  undefined4 local_30 [12];
+  
+  lVar3 = __savegprlr_28();
+  param_2 = param_2 - lVar3;
+  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
+    puVar2 = (undefined4 *)lVar3;
+    do {
+      iVar1 = (int)param_2;
+      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
+      param_2 = param_2 + -4;
+      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
+      std___Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1334,8 +1921,28 @@ void CG_ModPrvAnimBlendWeightUpdate(void)
 void CG_ModPrvMatReplaceAccepted(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  longlong lVar2;
+  
   __savegprlr_28();
+  Dvar_ClearModified(DAT_82a4c0c8);
+  if (*(int *)(DAT_82a4c094 + 0xc) == 0) {
+    DAT_82a4c05c = 0xffffffff;
+  }
+  lVar2 = 0;
+  if (0 < DAT_82a3d904) {
+    iVar1 = 0;
+    do {
+      R_DObjReplaceMaterial
+                (DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar2,
+                 *(undefined4 *)(iVar1 + DAT_82a4bf50));
+      lVar2 = lVar2 + 1;
+      iVar1 = iVar1 + 4;
+    } while ((int)lVar2 < DAT_82a3d904);
+  }
+  DAT_82a4c060 = 0;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1344,8 +1951,67 @@ void CG_ModPrvMatReplaceAccepted(void)
 void CG_ModPrvMatReplaceUpdate(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  
   __savegprlr_27();
+  iVar3 = *(int *)(DAT_82a4c0c8 + 0x1c);
+  if (((iVar3 != DAT_82a3d6f4) && (DAT_82a3d6f4 = iVar3, *(int *)(DAT_82a4c094 + 0xc) != 0)) &&
+     (*(uint *)(DAT_82a4c0c8 + 0x1c) != 0)) {
+    uVar2 = (ulonglong)*(uint *)(DAT_82a4c0c8 + 0x1c) - 1;
+    DAT_82a4c05c = (uint)uVar2;
+    iVar3 = DAT_82a3d904;
+    if ((DAT_82a4c060 != 0) && (lVar5 = 0, 0 < DAT_82a3d904)) {
+      iVar4 = 0;
+      iVar1 = DAT_82a4c060;
+      do {
+        if (*(int *)(iVar4 + DAT_82a4bf50) == iVar1) {
+          R_DObjReplaceMaterial(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar5);
+          iVar3 = DAT_82a3d904;
+          iVar1 = DAT_82a4c060;
+        }
+        lVar5 = lVar5 + 1;
+        iVar4 = iVar4 + 4;
+      } while ((int)lVar5 < iVar3);
+      uVar2 = (ulonglong)DAT_82a4c05c;
+    }
+    lVar5 = 0;
+    iVar1 = DAT_82a4bf4c;
+    if (0 < iVar3) {
+      iVar4 = 0;
+      do {
+        if (*(int *)(iVar4 + DAT_82a4bf50) ==
+            *(int *)(*(int *)(DAT_82a4c094 + 0xc) * 4 + iVar1 + -4)) {
+          R_DObjReplaceMaterial
+                    (DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar5,
+                     *(undefined4 *)((int)((uVar2 & 0xffffffff) << 2) + iVar1));
+          uVar2 = (ulonglong)DAT_82a4c05c;
+          iVar3 = DAT_82a3d904;
+          iVar1 = DAT_82a4bf4c;
+        }
+        lVar5 = lVar5 + 1;
+        iVar4 = iVar4 + 4;
+      } while ((int)lVar5 < iVar3);
+    }
+    DAT_82a4c060 = *(int *)((int)((uVar2 & 0xffffffff) << 2) + iVar1);
+  }
+  __restgprlr_27();
+  return;
+}
+
+
+// 822DF2E0  TRACK_cg_modelpreviewer  (cgame/cg_modelpreviewer.cpp:2760)
+
+void TRACK_cg_modelpreviewer(void)
+
+{
+  track_static_alloc_internal(0xffffffff82a3d6d0,0xe99c,0xffffffff8201f6b0,0);
+  track_static_alloc_internal(0xffffffff82962ed0,0x10,0xffffffff8201f694,0);
+  track_static_alloc_internal(0xffffffff82962ef4,0xc,0xffffffff8201f678,0);
+  return;
 }
 
 
@@ -1411,18 +2077,142 @@ void MdlPrvPrintColor(undefined8 param_1,undefined8 param_2)
 void MdlPrvPrintHelpLine(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined8 uVar1;
+  undefined8 extraout_f1;
+  undefined8 uVar2;
+  
+  uVar1 = __savegprlr_27();
+  uVar2 = extraout_f1;
+  CG_DrawDevString(0,extraout_f1,0x3fe99999a0000000);
+  CG_DrawDevString(0x4049000000000000,uVar2,0x3fe99999a0000000,uVar1);
+  __restgprlr_27();
+  return;
+}
+
+
+// 822DF590  DrawDistFromModel  (cgame/cg_modelpreviewer.cpp:2993)
+
+void DrawDistFromModel(undefined8 param_1,undefined8 param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar5;
+  undefined8 uVar4;
+  
+  if (*(char *)(DAT_82a4c090 + 0xc) != '\0') {
+    iVar5 = CG_GetLocalClientGlobals();
+    fVar1 = *(float *)(iVar5 + 0x6b9d0) - DAT_82a3d794;
+    fVar2 = *(float *)(iVar5 + 0x6b9c8) - DAT_82a3d78c;
+    fVar3 = *(float *)(iVar5 + 0x6b9cc) - DAT_82a3d790;
+    uVar4 = va(0xffffffff8201f6c8,(double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1));
+    CG_DrawSmallDevStringColor
+              (0x407f400000000000,0x4079000000000000,param_2,0xffffffff82180000,0xffffffff82020000,
+               uVar4,0xffffffff82181918,7);
+  }
+  return;
 }
 
 
 // 822DF650  MdlPrvDrawOverlayGamepad  (cgame/cg_modelpreviewer.cpp:3069)
 
-void MdlPrvDrawOverlayGamepad(void)
+void MdlPrvDrawOverlayGamepad(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
+  int iVar1;
+  undefined8 uVar2;
+  double dVar3;
+  double dVar4;
+  
   __savegprlr_27();
+  if ((-1 < DAT_82a3d76c) && (*(char *)(DAT_82a4c06c + 0xc) != '\0')) {
+    DrawDistFromModel();
+    if (DAT_82a3d734 == '\0') {
+      if (DAT_82a3d700 == 1) {
+        iVar1 = CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
+      }
+      else {
+        iVar1 = CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
+      }
+      dVar3 = (double)((float)(longlong)iVar1 * 0.75);
+      iVar1 = MdlPrvPrintHelpLine(0x4034000000000000,param_2,0);
+      dVar4 = (double)((float)(longlong)iVar1 * 0.75 + 20.0);
+      iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,1);
+      dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+      iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,2);
+      dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+      if (DAT_82a3d700 == 1) {
+        if ((DAT_82a3d74c == 1) || (DAT_82a3d74c == 2)) {
+          CG_DrawSmallDevStringColor(0x4073b00000000000,dVar3,param_2);
+        }
+        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,4);
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,5);
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,6);
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,7);
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,9);
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,8);
+        uVar2 = 10;
+        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+      }
+      else {
+        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xb);
+        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xc);
+        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xd);
+        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+        if (DAT_82a3d704 == 2) {
+          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
+          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x12);
+          uVar2 = 0x13;
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+        }
+        else if (DAT_82a3d704 == 1) {
+          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
+          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x14);
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+          if (DAT_82a3d708 == 0) {
+            iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x15);
+            dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+          }
+          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x16);
+          uVar2 = 0x17;
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        }
+        else if (DAT_82a3d704 == 0) {
+          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xe);
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0xf);
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x10);
+          uVar2 = 0x11;
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        }
+        else {
+          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
+          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x18);
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
+          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x19);
+          uVar2 = 0x1a;
+          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
+        }
+      }
+    }
+    else {
+      CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
+      uVar2 = 3;
+      dVar3 = 20.0;
+    }
+    MdlPrvPrintHelpLine(dVar3,param_2,uVar2);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
@@ -1432,7 +2222,6 @@ void CG_ModelPreviewerDrawInfo(undefined8 param_1,ulonglong param_2)
 
 {
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8201ebc8,0xd16,0,0xffffffff82000f98,0xffffffff8200144c);
   }
   MdlPrvDrawOverlayGamepad(param_1,param_2);
@@ -1447,6 +2236,35 @@ void CG_ModelPreviewerRotateCamera(double param_1,double param_2)
 {
   DAT_82a3d738 = (float)((double)DAT_82a3d738 - param_2);
   DAT_82a3d73c = (float)((double)DAT_82a3d73c - param_1);
+  return;
+}
+
+
+// 822DFCC0  CG_ModelPreviewerZoomCamera  (cgame/cg_modelpreviewer.cpp:3369)
+
+void CG_ModelPreviewerZoomCamera(double param_1,double param_2)
+
+{
+  float fVar1;
+  double dVar2;
+  
+  if (ABS(param_1) < ABS(param_2)) {
+    param_1 = param_2;
+  }
+  fVar1 = DAT_82a3d740 * 0.004;
+  if (5.0 < DAT_82a3d740 * 0.004) {
+    fVar1 = 5.0;
+  }
+  DAT_82a3d740 = fVar1 * (float)(param_1 * -0.30000001192092896) + DAT_82a3d740;
+  if (DAT_82a3d740 < 1.0) {
+    DAT_82a3d740 = 1.0;
+  }
+  if (DAT_82a3d748 <= DAT_82a3d740) {
+    dVar2 = (double)Dvar_GetFloat(0xffffffff8201f494);
+    DAT_82a3d744 = (float)dVar2;
+    return;
+  }
+  DAT_82a3d744 = 0.01;
   return;
 }
 
@@ -1650,6 +2468,95 @@ void MdlPrvMoveModelUpDown(double param_1)
 }
 
 
+// 822E0180  MdlPrvMoveModel2D  (cgame/cg_modelpreviewer.cpp:3647)
+
+void MdlPrvMoveModel2D(double param_1,double param_2,int param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float local_40;
+  float local_3c;
+  float local_30;
+  float local_2c;
+  
+  YawVectors((double)*(float *)(param_3 + 460000),param_3,&local_40,&local_30);
+  fVar1 = SQRT(local_40 * local_40 + local_3c * local_3c);
+  fVar3 = SQRT(local_30 * local_30 + local_2c * local_2c);
+  fVar2 = 1.0;
+  if (-fVar1 < 0.0) {
+    fVar2 = fVar1;
+  }
+  fVar1 = 1.0;
+  if (-fVar3 < 0.0) {
+    fVar1 = fVar3;
+  }
+  fVar3 = (float)((double)((1.0 / fVar1) * local_30) * param_2) +
+          (float)((double)((1.0 / fVar2) * local_40) * param_1);
+  fVar2 = (float)((double)((1.0 / fVar1) * local_2c) * param_2) +
+          (float)((double)((1.0 / fVar2) * local_3c) * param_1);
+  DAT_82a3d8e4 = DAT_82a3d8e4 + fVar3;
+  DAT_82a3d8e8 = DAT_82a3d8e8 + fVar2;
+  DAT_82a3d78c = DAT_82a3d78c + fVar3;
+  DAT_82a3d790 = DAT_82a3d790 + fVar2;
+  return;
+}
+
+
+// 822E3228  std::_Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+
+void std___Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
+               (undefined8 param_1,ulonglong param_2,code *param_3)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  undefined4 *_Src;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char cVar8;
+  void *pvVar7;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  
+  uVar6 = __savegprlr_24();
+  if (((uVar6 & 0xffffffff) != (param_2 & 0xffffffff)) &&
+     (uVar9 = uVar6 + 4, (uVar9 & 0xffffffff) != (param_2 & 0xffffffff))) {
+    _Src = (undefined4 *)uVar6;
+    do {
+      puVar10 = (undefined4 *)uVar9;
+      uVar1 = *puVar10;
+      cVar8 = (*param_3)(uVar1,*_Src);
+      if (cVar8 == '\0') {
+        uVar6 = (*param_3)(uVar1,puVar10[-1]);
+        uVar5 = uVar9 - 4;
+        uVar4 = uVar9;
+        while (uVar3 = uVar5, (uVar6 & 0xff) != 0) {
+          puVar10 = (undefined4 *)uVar3;
+          *(undefined4 *)uVar4 = *puVar10;
+          uVar6 = (*param_3)(uVar1,*(undefined4 *)(uVar3 - 4));
+          uVar5 = uVar3 - 4;
+          uVar4 = uVar3;
+        }
+        *puVar10 = uVar1;
+      }
+      else {
+        iVar2 = (int)puVar10 - (int)_Src >> 2;
+        pvVar7 = memmove(puVar10 + (1 - iVar2),_Src,iVar2 * 4);
+        uVar6 = (ulonglong)(int)pvVar7;
+        *_Src = uVar1;
+      }
+      uVar9 = uVar9 + 4;
+    } while ((uVar9 & 0xffffffff) != (param_2 & 0xffffffff));
+  }
+  __restgprlr_24(uVar6);
+  return;
+}
+
+
 // 822E0278  MdlPrvMoveFocusUpDown  (cgame/cg_modelpreviewer.cpp:3666)
 
 void MdlPrvMoveFocusUpDown(double param_1)
@@ -1704,21 +2611,91 @@ void MdlPrvMoveFocus2D(double param_1,double param_2,int param_3)
 
 // 822E3308  std::_Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(void)
+void std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  char cVar3;
+  
+  puVar2 = (undefined4 *)__savegprlr_28();
+  cVar3 = (*param_4)(*param_2,*puVar2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_2;
+    *param_2 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  cVar3 = (*param_4)(*param_3,*param_2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_3;
+    *param_3 = *param_2;
+    *param_2 = uVar1;
+  }
+  cVar3 = (*param_4)(*param_2,*puVar2);
+  if (cVar3 != '\0') {
+    uVar1 = *param_2;
+    *param_2 = *puVar2;
+    *puVar2 = uVar1;
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 822E33B0  std::_Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(void)
+void std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  uint uVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  
+  lVar3 = __savegprlr_26();
+  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  if (0x28 < iVar1) {
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    uVar2 = uVar4 & 0x3fffffff;
+    uVar4 = uVar4 & 0x1fffffff;
+    lVar6 = uVar2 * 4 + lVar3;
+    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (lVar3,lVar6,uVar4 * 8 + lVar3);
+    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
+    lVar3 = param_3 + uVar2 * -4;
+    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (param_3 + uVar4 * -8,lVar3,param_3,param_4);
+    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (lVar6,param_2,lVar3,param_4);
+    __restgprlr_26();
+    return;
+  }
+  std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(lVar3,param_2,param_3);
+  __restgprlr_26();
+  return;
+}
+
+
+// 822E03A8  MdlPrvMoveFocusReset  (cgame/cg_modelpreviewer.cpp:3699)
+
+void MdlPrvMoveFocusReset(void)
+
+{
+  undefined1 auStack_30 [16];
+  undefined1 auStack_20 [20];
+  float local_c;
+  
+  if (-1 < DAT_82a3d76c) {
+    MdlPrvGetBounds(auStack_20,auStack_30);
+    Dvar_SetVec3(0,0,(double)local_c,DAT_82a3d6c8);
+  }
+  return;
 }
 
 
@@ -1748,11 +2725,157 @@ void MdlPrvFreeMove(double param_1,double param_2,longlong param_3)
 
 // 822E3458  std::_Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(void)
+void std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  bool bVar1;
+  undefined4 uVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  char cVar5;
+  int iVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  undefined4 *puVar13;
+  undefined4 *puVar14;
+  
+  puVar4 = (undefined4 *)__savegprlr_23();
+  iVar6 = (int)param_3 - (int)param_2;
+  uVar3 = iVar6 >> 2;
+  uVar12 = ((longlong)(iVar6 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff) *
+           4 + param_2;
+  std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+            (param_2,uVar12,param_3 - 4);
+  uVar7 = uVar12 + 4;
+  if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+    do {
+      puVar13 = (undefined4 *)uVar12;
+      uVar10 = uVar12 - 4;
+      cVar5 = (*param_4)(puVar13[-1],*puVar13);
+      if ((cVar5 != '\0') || (cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10), cVar5 != '\0'))
+      break;
+      uVar12 = uVar10;
+    } while ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff));
+  }
+  uVar9 = uVar7;
+  uVar10 = uVar12;
+  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    do {
+      cVar5 = (*param_4)(*(undefined4 *)uVar7,*(undefined4 *)uVar12);
+      uVar9 = uVar7;
+      if ((cVar5 != '\0') ||
+         (cVar5 = (*param_4)(*(undefined4 *)uVar12,*(undefined4 *)uVar7), cVar5 != '\0')) break;
+      uVar7 = uVar7 + 4;
+      uVar9 = uVar7;
+    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+  }
+  do {
+    uVar11 = uVar7;
+    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+      do {
+        puVar13 = (undefined4 *)uVar9;
+        cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
+        uVar7 = uVar11;
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10);
+          if (cVar5 != '\0') break;
+          uVar7 = uVar11 + 4;
+          uVar2 = *(undefined4 *)uVar11;
+          *(undefined4 *)uVar11 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar9 = uVar9 + 4;
+        uVar11 = uVar7;
+      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+    }
+    bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+    if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+      do {
+        uVar11 = uVar12 - 4;
+        cVar5 = (*param_4)(*(undefined4 *)((int)uVar12 + -4),*(undefined4 *)uVar10);
+        puVar13 = (undefined4 *)uVar11;
+        if (cVar5 == '\0') {
+          cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
+          if (cVar5 != '\0') break;
+          uVar10 = uVar10 - 4;
+          uVar2 = *(undefined4 *)uVar10;
+          *(undefined4 *)uVar10 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar12 = uVar11;
+      } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
+      bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+    }
+    puVar13 = (undefined4 *)uVar9;
+    if (bVar1) {
+      puVar8 = (undefined4 *)uVar7;
+      puVar14 = (undefined4 *)uVar10;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        *puVar4 = puVar14;
+        puVar4[1] = puVar8;
+        __restgprlr_23(puVar4);
+        return;
+      }
+      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+        uVar2 = *puVar14;
+        *puVar14 = *puVar8;
+        *puVar8 = uVar2;
+      }
+      uVar7 = uVar7 + 4;
+      uVar2 = *puVar14;
+      *puVar14 = *puVar13;
+      *puVar13 = uVar2;
+      uVar9 = uVar9 + 4;
+      uVar10 = uVar10 + 4;
+    }
+    else {
+      uVar12 = uVar12 - 4;
+      puVar8 = (undefined4 *)uVar12;
+      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
+        uVar10 = uVar10 - 4;
+        puVar13 = (undefined4 *)uVar10;
+        if ((uVar12 & 0xffffffff) != (uVar10 & 0xffffffff)) {
+          uVar2 = *puVar8;
+          *puVar8 = *puVar13;
+          *puVar13 = uVar2;
+        }
+        uVar7 = uVar7 - 4;
+        uVar2 = *puVar13;
+        *puVar13 = *(undefined4 *)uVar7;
+        *(undefined4 *)uVar7 = uVar2;
+      }
+      else {
+        uVar2 = *puVar13;
+        *puVar13 = *puVar8;
+        *puVar8 = uVar2;
+        uVar9 = uVar9 + 4;
+      }
+    }
+  } while( true );
+}
+
+
+// 822E04B8  MdlPrvFreeMoveVertical  (cgame/cg_modelpreviewer.cpp:3729)
+
+void MdlPrvFreeMoveVertical(double param_1,longlong param_2)
+
+{
+  float local_40;
+  float local_3c;
+  float local_38;
+  undefined1 auStack_30 [16];
+  undefined1 auStack_20 [32];
+  
+  AngleVectors(param_2 + 0x704dc,auStack_20,auStack_30,&local_40);
+  DAT_82a3d750 = (float)((double)local_40 * param_1 + (double)DAT_82a3d750);
+  DAT_82a3d754 = (float)((double)local_3c * param_1 + (double)DAT_82a3d754);
+  DAT_82a3d758 = (float)((double)local_38 * param_1 + (double)DAT_82a3d758);
+  return;
 }
 
 
@@ -1781,6 +2904,98 @@ void MdlPrvFreeRot(undefined8 param_1,double param_2)
   DAT_82a3d75c = (float)((double)(float)(dVar4 - (double)(float)dVar1) * dVar5);
   __restfpr_28();
   return;
+}
+
+
+// 822E05E0  MdlPrvFreePlaceModelInFrontCamera  (cgame/cg_modelpreviewer.cpp:3756)
+
+void MdlPrvFreePlaceModelInFrontCamera(int param_1)
+
+{
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  undefined1 auStack_40 [16];
+  undefined1 auStack_30 [24];
+  
+  AngleVectors((float *)(param_1 + 0x704dc),&local_60,auStack_30,auStack_40);
+  local_60 = DAT_82a3d740 * local_60;
+  local_5c = DAT_82a3d740 * local_5c;
+  local_58 = DAT_82a3d740 * local_58;
+  DAT_82a3d73c = *(undefined4 *)(param_1 + 460000);
+  local_50 = (DAT_82a3d750 + local_60) - *(float *)(DAT_82a3d6c8 + 0xc);
+  local_48 = (DAT_82a3d758 + local_58) - *(float *)(DAT_82a3d6c8 + 0x14);
+  DAT_82a3d738 = -*(float *)(param_1 + 0x704dc);
+  local_4c = (DAT_82a3d754 + local_5c) - *(float *)(DAT_82a3d6c8 + 0x10);
+  MdlPrvModelOriginSet(&local_50);
+  return;
+}
+
+
+// 822E3738  std::_Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+
+void std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+
+{
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  uint local_40;
+  uint local_3c;
+  
+  uVar1 = __savegprlr_26();
+  iVar2 = (int)param_2 - (int)uVar1;
+  do {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
+LAB_822e37f0:
+      if (1 < iVar2) {
+        std___Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
+                  (uVar1,param_2,param_4,0);
+      }
+      __restgprlr_26();
+      return;
+    }
+    iVar5 = (int)param_3;
+    if (iVar5 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
+          std___Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                    (uVar1,param_2,param_4,0,0);
+        }
+        std___Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                  (uVar1,param_2,param_4);
+        __restgprlr_26();
+        return;
+      }
+      goto LAB_822e37f0;
+    }
+    std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (&local_40,uVar1,param_2,param_4);
+    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
+    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
+              param_3;
+    uVar4 = (ulonglong)local_3c;
+    uVar3 = (ulonglong)local_40;
+    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
+      std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (uVar1,uVar3,param_3,param_4);
+      uVar1 = uVar4;
+      uVar3 = param_2;
+    }
+    else {
+      std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (uVar4,param_2,param_3,param_4);
+    }
+    iVar2 = (int)uVar3 - (int)uVar1;
+    param_2 = uVar3;
+  } while( true );
 }
 
 
@@ -1814,6 +3029,51 @@ void MdlPrvRotModeToggle(void)
 }
 
 
+// 822E0758  MdlPrvDropToFloor  (cgame/cg_modelpreviewer.cpp:3799)
+
+void MdlPrvDropToFloor(void)
+
+{
+  float fVar1;
+  undefined4 local_a0;
+  undefined4 local_9c;
+  float local_98;
+  undefined4 local_90;
+  undefined4 local_8c;
+  float local_88;
+  undefined1 auStack_80 [16];
+  undefined4 local_70;
+  undefined4 local_6c;
+  float local_68;
+  undefined4 local_64;
+  undefined4 local_60;
+  float local_5c;
+  float local_50 [11];
+  char local_22;
+  
+  MdlPrvGetBounds(&local_70,auStack_80);
+  fVar1 = local_68 - local_5c;
+  local_64 = 0x40a00000;
+  local_98 = DAT_82a3d794 - 3000.0;
+  local_60 = 0x40a00000;
+  local_70 = 0;
+  local_6c = 0;
+  local_90 = DAT_82a3d78c;
+  local_a0 = DAT_82a3d78c;
+  local_68 = 0.0;
+  local_5c = 5.0;
+  local_8c = DAT_82a3d790;
+  local_88 = DAT_82a3d794 - (fVar1 - 5.0);
+  local_9c = DAT_82a3d790;
+  CG_TraceCapsule(local_50,&local_90,&local_a0,&local_70,0xffffffffffffffff,1);
+  if ((local_22 == '\0') && (local_50[0] != 1.0)) {
+    DAT_82a3d8ec = DAT_82a3d8ec + local_50[0] * -3000.0;
+    DAT_82a3d794 = DAT_82a3d794 + local_50[0] * -3000.0;
+  }
+  return;
+}
+
+
 // 822E0860  MdlPrvCloneClear  (cgame/cg_modelpreviewer.cpp:3831)
 
 void MdlPrvCloneClear(int param_1)
@@ -1832,8 +3092,22 @@ void MdlPrvCloneClear(int param_1)
 void MdlPrvCloneClearAll(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  int *piVar2;
+  
   __savegprlr_29();
+  lVar1 = 10;
+  piVar2 = &DAT_82a3dcbc;
+  do {
+    if (*piVar2 != 0) {
+      DObjFree();
+      *piVar2 = 0;
+    }
+    lVar1 = lVar1 + -1;
+    piVar2 = piVar2 + 0x5d;
+  } while (lVar1 != 0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1842,18 +3116,465 @@ void MdlPrvCloneClearAll(void)
 void MdlPrvCloneModel(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  longlong lVar2;
+  int iVar3;
+  int iVar4;
+  float local_60;
+  float local_5c;
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [64];
+  
+  lVar2 = __savegprlr_28();
+  if (9 < DAT_82a4bef4) {
+    MyAssertHandler(0xffffffff8201ebc8,0xf10,0,0xffffffff82000f98,0xffffffff8201f78c);
+  }
+  uVar1 = DAT_82a4bef4;
+  iVar3 = DAT_82a4bef4 * 0x174;
+  if ((&DAT_82a3dcbc)[DAT_82a4bef4 * 0x5d] != 0) {
+    DObjFree();
+    (&DAT_82a3dcbc)[uVar1 * 0x5d] = 0;
+  }
+  DObjGetTree(DAT_82a3d844);
+  iVar4 = iVar3 + -0x7d5c22e4;
+  DObjClone(DAT_82a3d844,iVar4);
+  (&DAT_82a3dcbc)[uVar1 * 0x5d] = iVar4;
+  DObjSetTree(iVar4,0);
+  memcpy((void *)(iVar3 + -0x7d5c23bc),&DAT_82a3d770,0x78);
+  AngleVectors(lVar2 + 0x704dc,auStack_40,&local_60,auStack_50);
+  DAT_82a3d8e8 = DAT_82a3d8e8 + local_5c * 16.0;
+  DAT_82a3d8e4 = DAT_82a3d8e4 + local_60 * 16.0;
+  DAT_82a4bef4 = DAT_82a4bef4 + 1;
+  DAT_82a3d78c = DAT_82a3d78c + local_60 * 16.0;
+  DAT_82a3d790 = DAT_82a3d790 + local_5c * 16.0;
+  if (9 < DAT_82a4bef4) {
+    DAT_82a4bef4 = 0;
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 822E0A40  MdlPrvFreeSpeedToggle  (cgame/cg_modelpreviewer.cpp:3877)
+
+void MdlPrvFreeSpeedToggle(void)
+
+{
+  if (DAT_82a3d74c == 0) {
+    DAT_82a3d74c = 2;
+    return;
+  }
+  if (DAT_82a3d74c != 1) {
+    if (2 < DAT_82a3d74c) {
+      return;
+    }
+    DAT_82a3d74c = 1;
+    return;
+  }
+  DAT_82a3d74c = 0;
+  return;
+}
+
+
+// 822E0A88  MdlPrvRagdollToggle  (cgame/cg_modelpreviewer.cpp:3895)
+
+void MdlPrvRagdollToggle(void)
+
+{
+  bool bVar1;
+  
+  if (DAT_82a4bef8 == 0) {
+    bVar1 = DAT_82a4befc == 0;
+    DAT_82a4befc = (uint)bVar1;
+    DAT_82a4bef8 = Ragdoll_CreateRagdollForDObjRaw(0,bVar1,DAT_82a3d7e0,DAT_82a3d844);
+    return;
+  }
+  Ragdoll_Remove();
+  DAT_82a4bef8 = 0;
+  return;
 }
 
 
 // 822E0B28  MdlPrvControlsGamepad  (cgame/cg_modelpreviewer.cpp:3915)
 
-void MdlPrvControlsGamepad(void)
+void MdlPrvControlsGamepad(undefined8 param_1,double param_2,double param_3,double param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
+  float fVar1;
+  undefined8 uVar2;
+  char cVar6;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double extraout_f1;
+  undefined8 uVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  undefined1 auStack_160 [352];
+  
   __savegprlr_28();
+  uVar2 = __savefpr_26();
+  dVar9 = extraout_f1;
+  cVar6 = DevGui_IsActive();
+  if (cVar6 != '\0') goto LAB_822e1210;
+  iVar3 = CG_GetLocalClientGlobals(uVar2);
+  iVar4 = Sys_Milliseconds();
+  uVar7 = 0;
+  dVar10 = (double)((float)(longlong)*(int *)(iVar3 + 0x6b988) * 0.001);
+  if (dVar10 == 0.0) {
+    dVar10 = 0.014999999664723873;
+  }
+  if (*(int *)(iVar3 + 4) != 4) {
+    if (((DAT_82a3d734 != '\0') && (iVar5 = Key_IsDown(uVar2,0x10), iVar5 != 0)) &&
+       (0xfa < iVar4 - DAT_82a3d728)) {
+      DAT_82a3d750 = *(undefined4 *)(iVar3 + 0x6b9c8);
+      DAT_82a3d754 = *(undefined4 *)(iVar3 + 0x6b9cc);
+      DAT_82a3d758 = *(undefined4 *)(iVar3 + 0x6b9d0);
+      DAT_82a3d75c = *(undefined4 *)(iVar3 + 0x704dc);
+      DAT_82a3d760 = *(undefined4 *)(iVar3 + 460000);
+      DAT_82a3d764 = *(undefined4 *)(iVar3 + 0x704e4);
+      DAT_82a3d734 = 0;
+      DAT_82a3d728 = iVar4;
+      CL_AddReliableCommand(uVar2,0xffffffff82012d9c);
+      __restfpr_26();
+      __restgprlr_28();
+      return;
+    }
+    goto LAB_822e1210;
+  }
+  iVar5 = Key_IsDown(uVar2,4);
+  if ((iVar5 != 0) && (500 < iVar4 - DAT_82a3d70c)) {
+    DAT_82a3d700 = (int)((ulonglong)DAT_82a3d700 - 1) -
+                   ((DAT_82a3d700 - 2) + (uint)((ulonglong)DAT_82a3d700 - 1 == 0));
+    DAT_82a3d70c = iVar4;
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = Key_IsDown(uVar2,3);
+  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d71c)) {
+    DAT_82a3d71c = iVar4;
+    MdlPrvDropToFloor();
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = Key_IsDown(uVar2,0x10);
+  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d728)) {
+    DAT_82a3d734 = 1;
+    DAT_82a3d728 = iVar4;
+    CL_AddReliableCommand(uVar2,0xffffffff82012d94);
+    Com_sprintf(auStack_160,0x100,0xffffffff8201f7cc,(double)*(float *)(iVar3 + 0x6b9c8),
+                (double)*(float *)(iVar3 + 0x6b9cc),(double)*(float *)(iVar3 + 0x6b9d0),
+                (double)*(float *)(iVar3 + 460000));
+    Cbuf_InsertText(uVar2,auStack_160);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  if (DAT_82a3d700 != 1) {
+    iVar5 = Key_IsDown(uVar2,0x12);
+    if ((iVar5 == 0) || (iVar5 = Key_IsDown(uVar2,0x13), iVar5 == 0)) {
+      iVar5 = Key_IsDown(uVar2,0x12);
+      if (iVar5 != 0) {
+        DAT_82a3d704 = 2;
+        fVar1 = (float)(dVar10 * param_3) * -100.0;
+        DAT_82a3d8ec = fVar1 + DAT_82a3d8ec;
+        DAT_82a3d794 = fVar1 + DAT_82a3d794;
+        MdlPrvMoveModel2D((double)((float)(dVar10 * dVar9) * 200.0),
+                          (double)((float)(dVar10 * param_2) * 200.0),iVar3);
+        __restfpr_26();
+        __restgprlr_28();
+        return;
+      }
+      iVar5 = Key_IsDown(uVar2,0x13);
+      if (iVar5 == 0) {
+        DAT_82a3d704 = 0;
+        iVar5 = Key_IsDown(uVar2,1);
+        if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d720)) {
+          DAT_82a3d720 = iVar4;
+          MdlPrvCloneModel(iVar3);
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+        iVar3 = Key_IsDown(uVar2,2);
+        if ((iVar3 != 0) && (0xfa < iVar4 - DAT_82a3d724)) {
+          DAT_82a3d724 = iVar4;
+          MdlPrvCloneClearAll();
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+        DAT_82a3d73c = -((float)(dVar10 * param_4) * 180.0 - DAT_82a3d73c);
+        DAT_82a3d738 = DAT_82a3d738 - (float)(dVar10 * param_3) * -100.0;
+        CG_ModelPreviewerZoomCamera((double)((float)(dVar10 * dVar9) * 1800.0),uVar7);
+      }
+      else {
+        DAT_82a3d704 = 1;
+        if (DAT_82a3d708 == 1) {
+          DAT_82a3d73c = -((float)(dVar10 * param_4) * 360.0 - DAT_82a3d73c);
+          MdlPrvSpinYawOffset((double)((float)(dVar10 * param_4) * -360.0));
+        }
+        else {
+          MdlPrvSpin_((double)((float)(dVar10 * param_4) * -360.0),1);
+          dVar8 = -180.0;
+          MdlPrvSpin_((double)((float)(dVar10 * dVar9) * -180.0),0);
+          MdlPrvSpin_((double)(float)((double)(float)(dVar10 * param_2) * dVar8),2);
+        }
+        iVar3 = Key_IsDown(uVar2,5);
+        if (iVar3 != 0) {
+          CG_ModPrvModelResetRotation();
+        }
+        iVar3 = Key_IsDown(uVar2,2);
+        if ((iVar3 != 0) && (0xfa < iVar4 - DAT_82a3d710)) {
+          DAT_82a3d710 = iVar4;
+          MdlPrvRotModeToggle();
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+      }
+    }
+    else {
+      DAT_82a3d704 = 3;
+      Dvar_SetVec3((double)*(float *)(DAT_82a3d6c8 + 0xc),(double)*(float *)(DAT_82a3d6c8 + 0x10),
+                   -(double)((float)(dVar10 * param_3) * 100.0 - *(float *)(DAT_82a3d6c8 + 0x14)));
+      MdlPrvMoveFocus2D((double)((float)(dVar10 * dVar9) * 200.0),
+                        (double)((float)(dVar10 * param_2) * 200.0),iVar3);
+      iVar3 = Key_IsDown(uVar2,1);
+      if (iVar3 != 0) {
+        MdlPrvMoveFocusReset();
+        __restfpr_26();
+        __restgprlr_28();
+        return;
+      }
+    }
+    goto LAB_822e1210;
+  }
+  iVar5 = Key_IsDown(uVar2,5);
+  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d730)) {
+    DAT_82a3d730 = iVar4;
+    MdlPrvRagdollToggle();
+  }
+  iVar5 = Key_IsDown(uVar2,6);
+  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d72c)) {
+    DAT_82a3d72c = iVar4;
+    MdlPrvFreeSpeedToggle();
+  }
+  if (DAT_82a3d74c == 1) {
+    dVar8 = 20.0;
+  }
+  else if (DAT_82a3d74c == 2) {
+    dVar8 = 1000.0;
+  }
+  else {
+    dVar8 = 300.0;
+  }
+  iVar4 = Key_IsDown(uVar2,0x14);
+  if ((iVar4 == 0) && (iVar4 = Key_IsDown(uVar2,0x13), iVar4 == 0)) {
+    iVar4 = Key_IsDown(uVar2,0x15);
+    if ((iVar4 != 0) || (iVar4 = Key_IsDown(uVar2,0x12), iVar4 != 0)) {
+      fVar1 = (float)(dVar8 * dVar10) * -1.0;
+      goto LAB_822e0eb8;
+    }
+  }
+  else {
+    fVar1 = (float)(dVar8 * dVar10);
+LAB_822e0eb8:
+    MdlPrvFreeMoveVertical((double)fVar1,iVar3);
+  }
+  MdlPrvFreeMove((double)(float)((double)(float)(dVar8 * dVar10) * dVar9),
+                 (double)(float)((double)(float)(dVar8 * dVar10) * param_2),iVar3);
+  MdlPrvFreeRot((double)((float)(dVar10 * param_4) * 90.0),
+                (double)((float)(dVar10 * param_3) * 90.0));
+  iVar4 = Key_IsDown(uVar2,2);
+  if (iVar4 != 0) {
+    MdlPrvModelOriginSet(0xffffffff82a3d750);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar4 = Key_IsDown(uVar2,1);
+  if (iVar4 != 0) {
+    MdlPrvFreePlaceModelInFrontCamera(iVar3);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+LAB_822e1210:
+  __restfpr_26();
+  __restgprlr_28();
+  return;
+}
+
+
+// 822E1228  CG_ModelPreviewerHandleKeyEvents  (cgame/cg_modelpreviewer.cpp:4183)
+
+void CG_ModelPreviewerHandleKeyEvents(undefined8 param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  if (*(int *)(iVar1 + 4) == 4) {
+    if (param_2 < 0x78) {
+      if (param_2 == 0x77) {
+        DAT_82a3d6f8 = 1;
+        return;
+      }
+      if (param_2 == 0x65) {
+        DAT_82a3d6f8 = 2;
+        return;
+      }
+      if (param_2 == 0x71) {
+        DAT_82a3d6f8 = 0;
+        return;
+      }
+    }
+    else if (param_2 == 0x78) {
+      CG_ModPrvModelResetRotationXY();
+    }
+    else if (param_2 == 0x7a) {
+      CG_ModPrvModelResetRotation();
+      return;
+    }
+  }
+  return;
+}
+
+
+// 822E1318  MdlPrvUpdateViewFocused  (cgame/cg_modelpreviewer.cpp:4212)
+
+void MdlPrvUpdateViewFocused
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+
+{
+  float *pfVar1;
+  undefined4 *puVar2;
+  float local_210;
+  float local_20c;
+  float local_208;
+  undefined4 local_200;
+  undefined4 local_1fc;
+  undefined4 local_1f8;
+  undefined4 local_1f4;
+  undefined4 local_1f0;
+  undefined4 local_1ec;
+  undefined4 local_1e8;
+  undefined4 local_1e4;
+  undefined4 local_1e0;
+  undefined4 local_1d0;
+  undefined4 local_1cc;
+  undefined4 local_1c8;
+  undefined4 local_1c4;
+  undefined4 local_1c0;
+  undefined4 local_1bc;
+  undefined4 local_1b8;
+  undefined4 local_1b4;
+  undefined4 local_1b0;
+  undefined4 local_1a0;
+  undefined4 local_19c;
+  undefined4 local_198;
+  undefined4 local_190;
+  undefined4 local_18c;
+  undefined4 local_188;
+  undefined4 local_180;
+  undefined4 local_17c;
+  undefined4 local_178;
+  float local_170;
+  float local_16c;
+  float local_168;
+  undefined4 local_160;
+  undefined4 local_15c;
+  undefined4 local_158;
+  undefined4 local_150;
+  undefined4 local_14c;
+  undefined4 local_148;
+  undefined4 local_140;
+  undefined4 local_13c;
+  undefined4 local_138;
+  undefined4 local_120;
+  undefined4 local_11c;
+  undefined4 local_118;
+  undefined4 local_110;
+  undefined4 local_10c;
+  undefined4 local_108;
+  undefined4 local_100;
+  undefined4 local_fc;
+  undefined4 local_f8;
+  undefined1 auStack_e0 [48];
+  float local_b0;
+  undefined4 local_ac;
+  undefined4 local_a8;
+  undefined1 auStack_a0 [160];
+  
+  __savegprlr_26();
+  pfVar1 = (float *)__savefpr_27();
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8201ebc8,0x107b,0,0xffffffff82000f98,0xffffffff8201f7e8);
+  }
+  MatrixIdentity44(auStack_e0);
+  MatrixIdentity44(&local_120);
+  MatrixIdentity44(&local_160);
+  MatrixRotationY((double)DAT_82a3d738,&local_200);
+  MatrixRotationZ(-(double)DAT_82a3d73c,&local_1d0);
+  local_ac = 0;
+  local_a8 = 0;
+  local_120 = local_200;
+  local_11c = local_1fc;
+  local_118 = local_1f8;
+  local_160 = local_1d0;
+  local_b0 = -DAT_82a3d740;
+  local_15c = local_1cc;
+  local_158 = local_1c8;
+  local_110 = local_1f4;
+  local_10c = local_1f0;
+  local_108 = local_1ec;
+  local_150 = local_1c4;
+  local_14c = local_1c0;
+  local_148 = local_1bc;
+  local_100 = local_1e8;
+  local_fc = local_1e4;
+  local_f8 = local_1e0;
+  local_140 = local_1b8;
+  local_13c = local_1b4;
+  local_138 = local_1b0;
+  MatrixMultiply44(auStack_e0,&local_120,auStack_a0);
+  MatrixMultiply44(auStack_a0,&local_160,&local_1a0);
+  local_210 = DAT_82a3d78c;
+  local_20c = DAT_82a3d790;
+  local_208 = DAT_82a3d794;
+  if ((*(char *)(DAT_82a4c078 + 0xc) != '\0') && (DAT_82a4bf08 != '\0')) {
+    local_210 = DAT_82a3d8e4;
+    local_20c = DAT_82a3d8e8;
+    local_208 = DAT_82a3d8ec;
+  }
+  local_210 = *(float *)(DAT_82a3d6c8 + 0xc) + local_210;
+  local_20c = *(float *)(DAT_82a3d6c8 + 0x10) + local_20c;
+  local_208 = *(float *)(DAT_82a3d6c8 + 0x14) + local_208;
+  *pfVar1 = local_170 + local_210;
+  pfVar1[1] = local_16c + local_20c;
+  pfVar1[2] = local_168 + local_208;
+  puVar2 = (undefined4 *)param_2;
+  *puVar2 = local_1a0;
+  puVar2[3] = local_190;
+  puVar2[1] = local_19c;
+  puVar2[2] = local_198;
+  puVar2[4] = local_18c;
+  puVar2[5] = local_188;
+  puVar2[6] = local_180;
+  puVar2[7] = local_17c;
+  puVar2[8] = local_178;
+  AxisToAngles(param_2,param_3);
+  if ((*(char *)(DAT_82a4c0a4 + 0xc) != '\0') || (DAT_82a3d704 == 3)) {
+    CG_ModPrvDrawViewAxis(&local_210);
+  }
+  *(undefined4 *)param_4 = DAT_82a3d744;
+  __restfpr_27();
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1875,21 +3596,151 @@ void MdlPrvUpdateViewFree(undefined4 *param_1,undefined8 param_2,undefined4 *par
 
 // 822E15D8  CG_ModelPreviewerUpdateView  (cgame/cg_modelpreviewer.cpp:4276)
 
-void CG_ModelPreviewerUpdateView(void)
+void CG_ModelPreviewerUpdateView(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_29();
+  puVar1 = (undefined4 *)param_3;
+  if (DAT_82a3d700 == 0) {
+    MdlPrvUpdateViewFocused();
+    DAT_82a3d750 = *puVar2;
+    DAT_82a3d754 = puVar2[1];
+    DAT_82a3d758 = puVar2[2];
+    DAT_82a3d75c = *puVar1;
+    DAT_82a3d760 = puVar1[1];
+    DAT_82a3d764 = puVar1[2];
+    __restgprlr_29();
+    return;
+  }
+  *puVar2 = DAT_82a3d750;
+  puVar2[1] = DAT_82a3d754;
+  puVar2[2] = DAT_82a3d758;
+  *puVar1 = DAT_82a3d75c;
+  puVar1[1] = DAT_82a3d760;
+  puVar1[2] = DAT_82a3d764;
+  AnglesToAxis(param_3);
+  __restgprlr_29();
+  return;
+}
+
+
+// 822E1680  CG_ModelPreviewerNeedsVieworgInterpSkipped  (cgame/cg_modelpreviewer.cpp:4291)
+
+bool CG_ModelPreviewerNeedsVieworgInterpSkipped(void)
+
+{
+  int iVar1;
+  
+  iVar1 = CG_GetLocalClientGlobals();
+  return *(int *)(iVar1 + 4) == 4;
 }
 
 
 // 822E16B0  CG_AddModelPreviewerModel  (cgame/cg_modelpreviewer.cpp:4303)
 
-void CG_AddModelPreviewerModel(void)
+void CG_AddModelPreviewerModel(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  longlong local_70;
+  float local_68;
+  undefined1 auStack_60 [96];
+  
+  uVar2 = __savegprlr_28();
+  if ((DAT_82a3d844 != 0) && (*(char *)(DAT_82a4c0bc + 0xc) == '\0')) {
+    local_70 = (longlong)param_2;
+    dVar6 = 0.0;
+    DAT_82a4bf34 = -((float)local_70 * 0.001 - DAT_82a4bf34);
+    if (DAT_82a4bf34 < 0.0) {
+      DAT_82a4bf08 = '\0';
+    }
+    dVar7 = dVar6;
+    if (DAT_82a4bf08 != '\0') {
+      dVar7 = (double)(*(float *)(DAT_82a4c0b8 + 0xc) * (float)local_70 * 0.001);
+    }
+    if (*(char *)(DAT_82a4c0cc + 0xc) != '\0') {
+      CG_ModPrvLoopAnimation();
+    }
+    CG_ModPrvApplyAnimationBlend();
+    CG_ModPrvApplyDelta();
+    DObjUpdateClientInfo(dVar7,DAT_82a3d844);
+    memset(&DAT_82a3d7e8,0,0x5c);
+    DAT_82a3d7ea = 0x12;
+    DAT_82a3d7e0 = &DAT_82a3d7e8;
+    DAT_82a3d7ec = '\x01' - (DAT_82a4bef8 == 0);
+    DAT_82a3d7f0 = DAT_82a4bef8;
+    CG_GetLocalClientGlobals(uVar2);
+    UnitQuatToAxis(0xffffffff82a3d77c,auStack_60);
+    AxisToAngles(auStack_60,0xffffffff82a3d808);
+    DAT_82a3d7fc = DAT_82a3d78c;
+    DAT_82a3d800 = DAT_82a3d790;
+    DAT_82a3d804 = DAT_82a3d794;
+    if (0 < *(int *)(DAT_82a4c0b4 + 0xc)) {
+      CG_ModPrvDrawBones(uVar2);
+    }
+    local_70 = *(longlong *)(DAT_82a3d7e0 + 0x14);
+    dVar7 = 4.0;
+    local_68 = *(float *)(DAT_82a3d7e0 + 0x1c) + 4.0;
+    R_AddDObjToScene(dVar6,DAT_82a3d844,DAT_82a3d7e0,0x7fe,0,&local_70);
+    if (DAT_82a3d768 == '\0') {
+      DAT_82a3d768 = '\x01';
+      dVar5 = (double)DObjGetRadius(DAT_82a3d844);
+      DAT_82a3d79c = *(undefined4 *)(DAT_82a3d7e0 + 0x14);
+      DAT_82a3d7a0 = *(undefined4 *)(DAT_82a3d7e0 + 0x18);
+      DAT_82a3d7a4 = *(undefined4 *)(DAT_82a3d7e0 + 0x1c);
+      DAT_82a3d7a8 = (float)dVar5;
+      DAT_82a3d7ac = (float)dVar5;
+      DAT_82a3d7b0 = (float)dVar5;
+      FrameModel();
+    }
+    lVar3 = 10;
+    puVar4 = &DAT_82a3dcd8;
+    do {
+      if (puVar4[-7] != 0) {
+        memset(puVar4 + -6,0,0x5c);
+        puVar4[-9] = puVar4 + -6;
+        *(undefined1 *)((int)puVar4 + -0x16) = 0x12;
+        UnitQuatToAxis(puVar4 + -0x22,auStack_60);
+        AxisToAngles(auStack_60,puVar4 + 2);
+        puVar4[-1] = puVar4[-0x1e];
+        *puVar4 = puVar4[-0x1d];
+        puVar4[1] = puVar4[-0x1c];
+        iVar1 = puVar4[-9];
+        local_70 = *(longlong *)(iVar1 + 0x14);
+        local_68 = (float)((double)*(float *)(iVar1 + 0x1c) + dVar7);
+        R_AddDObjToScene(dVar6,puVar4[-7],iVar1,0x7fe,0,&local_70);
+      }
+      lVar3 = lVar3 + -1;
+      puVar4 = puVar4 + 0x5d;
+    } while (lVar3 != 0);
+  }
+  __restgprlr_28();
+  return;
+}
+
+
+// 822E2F08  CG_ModelPreviewerCreateDevGui  (cgame/cg_modelpreviewer.cpp:4399)
+
+void CG_ModelPreviewerCreateDevGui(undefined8 param_1)
+
+{
+  if (DAT_82a3d6d0 == '\0') {
+    memset(&DAT_82a3d6d0,0,0xe99c);
+    DAT_82a3d6d4 = Hunk_UserCreate(0x20000,0xffffffff8201fba0,0,0);
+    CG_ModPrvStartup();
+    CG_ModPrvResetGlobals();
+    Cbuf_InsertText(param_1,0xffffffff8201fb84);
+  }
+  return;
 }
 
 
@@ -1910,18 +3761,148 @@ void CG_ModelPreviewerDestroyDevGui(void)
 void CG_ModelPreviewerFrame(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if (*(char *)(DAT_82a4c098 + 0xb) == '\0') {
+    CG_ModPrvModelLoadUpdate();
+  }
+  else {
+    CG_ModPrvModelLoadAccepted();
+  }
+  if (*(char *)(DAT_82a4c0b0 + 0xb) != '\0') {
+    CG_ModPrvModelRecentAccepted(uVar1);
+  }
+  if (*(char *)(DAT_82a4c088 + 0xb) != '\0') {
+    CG_ModPrvOriginUpdate();
+  }
+  if (*(char *)(DAT_82a4c0ac + 0xb) != '\0') {
+    CG_ModPrvRotateUpdate();
+  }
+  if (*(char *)(DAT_82a4c08c + 0xb) != '\0') {
+    CG_ModPrvAnimRecentAccept(DAT_82a4c08c,0xffffffff82a4bf00);
+  }
+  if (*(char *)(DAT_82a3d6bc + 0xb) != '\0') {
+    CG_ModPrvAnimRecentAccept(DAT_82a3d6bc,0xffffffff82a4bf04);
+  }
+  if (*(char *)(DAT_82a4c0c0 + 0xb) != '\0') {
+    CG_ModPrvLoadAnimAccept(DAT_82a4c0c0,0xffffffff82a4bf00);
+  }
+  if (*(char *)(DAT_82a3d6b8 + 0xb) != '\0') {
+    CG_ModPrvLoadAnimAccept(DAT_82a3d6b8,0xffffffff82a4bf04);
+  }
+  if ((*(char *)(DAT_82a3d6c0 + 0xb) != '\0') || (*(char *)(DAT_82a4c07c + 0xb) != '\0')) {
+    Dvar_ClearModified();
+    Dvar_ClearModified(DAT_82a4c07c);
+    CG_ModPrvLoadAnimations(0);
+  }
+  if (*(char *)(DAT_82a4c0a8 + 0xb) != '\0') {
+    CG_ModPrvAnimBlendWeightUpdate();
+  }
+  if (*(char *)(DAT_82a4c0c8 + 0xb) != '\0') {
+    CG_ModPrvMatReplaceAccepted();
+    __restgprlr_29();
+    return;
+  }
+  CG_ModPrvMatReplaceUpdate();
+  __restgprlr_29();
+  return;
 }
 
 
 // 822E1978  CG_ModelPreviewerBuildInfoStr  (cgame/cg_modelpreviewer.cpp:4466)
 
-void CG_ModelPreviewerBuildInfoStr(void)
+void CG_ModelPreviewerBuildInfoStr(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  undefined8 uVar1;
+  int iVar3;
+  undefined8 uVar2;
+  ulonglong uVar4;
+  undefined1 auStack_140 [320];
+  
+  uVar1 = __savegprlr_26();
+  I_strncat();
+  uVar4 = (ulonglong)DAT_82a3d6d8;
+  if (0 < (int)DAT_82a3d6d8) {
+    iVar3 = 0;
+    do {
+      I_strncat(uVar1,param_2,*(undefined4 *)(iVar3 + DAT_82a3d6dc));
+      I_strncat(uVar1,param_2,0xffffffff82003480);
+      uVar4 = uVar4 - 1;
+      iVar3 = iVar3 + 4;
+    } while (uVar4 != 0);
+  }
+  I_strncat(uVar1,param_2,0xffffffff8201f998);
+  uVar4 = (ulonglong)DAT_82a3d6e0;
+  if (0 < (int)DAT_82a3d6e0) {
+    iVar3 = 0;
+    do {
+      I_strncat(uVar1,param_2,*(undefined4 *)(iVar3 + DAT_82a3d6e4));
+      I_strncat(uVar1,param_2,0xffffffff82003480);
+      uVar4 = uVar4 - 1;
+      iVar3 = iVar3 + 4;
+    } while (uVar4 != 0);
+  }
+  iVar3 = Dvar_FindVar(0xffffffff8201f2e0);
+  if (iVar3 != 0) {
+    I_strncat(uVar1,param_2,0xffffffff8201f990);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f97c,
+                *(undefined4 *)(*(int *)(DAT_82a4c098 + 0xc) * 4 + DAT_82a3d6dc));
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f964,
+                *(undefined4 *)(*(int *)(DAT_82a4c0c0 + 0xc) * 4 + DAT_82a3d6e4));
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f94c,
+                *(undefined4 *)(*(int *)(DAT_82a3d6b8 + 0xc) * 4 + DAT_82a3d6e4));
+    I_strncat(uVar1,param_2,auStack_140);
+    uVar2 = Dvar_EnumToString(DAT_82a4c0b4);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f934,uVar2);
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f920,*(char *)(DAT_82a4c0a4 + 0xc) != '\0');
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f900,(double)*(float *)(DAT_82a3d6c0 + 0xc));
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f8dc,(double)*(float *)(DAT_82a4c07c + 0xc));
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f8c4,(double)*(float *)(DAT_82a4c0b8 + 0xc));
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f8a8,*(char *)(DAT_82a4c078 + 0xc) != '\0');
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f890,*(char *)(DAT_82a4c0cc + 0xc) != '\0');
+    I_strncat(uVar1,param_2,auStack_140);
+    uVar2 = Dvar_EnumToString(DAT_82a4c070);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f878,uVar2);
+    I_strncat(uVar1,param_2,auStack_140);
+    Com_sprintf(auStack_140,0x100,0xffffffff8201f85c,(double)*(float *)(DAT_82a4c0a8 + 0xc));
+    I_strncat(uVar1,param_2,auStack_140);
+    iVar3 = Dvar_FindVar(0xffffffff8201f4a4);
+    if (iVar3 != 0) {
+      uVar2 = Dvar_EnumToString();
+      Com_sprintf(auStack_140,0x100,0xffffffff8201f84c,uVar2);
+      I_strncat(uVar1,param_2,auStack_140);
+    }
+    iVar3 = Dvar_FindVar(0xffffffff8201f840);
+    if (iVar3 != 0) {
+      uVar2 = Dvar_EnumToString();
+      Com_sprintf(auStack_140,0x100,0xffffffff8201f830,uVar2);
+      I_strncat(uVar1,param_2,auStack_140);
+    }
+    iVar3 = Dvar_FindVar(0xffffffff8201f820);
+    if (iVar3 != 0) {
+      uVar2 = Dvar_EnumToString();
+      Com_sprintf(auStack_140,0x100,0xffffffff8201f80c,uVar2);
+      I_strncat(uVar1,param_2,auStack_140);
+    }
+    iVar3 = Dvar_FindVar(0xffffffff8201f800);
+    if (iVar3 != 0) {
+      uVar2 = Dvar_EnumToString();
+      Com_sprintf(auStack_140,0x100,0xffffffff8201f7f0,uVar2);
+      I_strncat(uVar1,param_2,auStack_140);
+    }
+  }
+  __restgprlr_26();
+  return;
 }
 
 
@@ -1948,8 +3929,12 @@ void CG_ModelPreviewerBuildViewPosStr(undefined8 param_1,undefined8 param_2)
 void CG_ModelPreviewerRegisterDvars(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   __savegprlr_29();
+  DAT_82a4c09c = Dvar_RegisterBool(0xffffffff8201fa08,1,0,0xffffffff8201fa1c);
+  DAT_82a4c080 = Dvar_RegisterString(0xffffffff8201f9f4,0xffffffff820068af,0,0xffffffff820068af);
+  DAT_82a4c074 = Dvar_RegisterString(0xffffffff8201f9e0,0xffffffff820068af,0,0xffffffff820068af);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1958,8 +3943,24 @@ void CG_ModelPreviewerRegisterDvars(void)
 void CG_ModPrvSaveDObjs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  int *piVar2;
+  
   __savegprlr_29();
+  lVar1 = 10;
+  piVar2 = &DAT_82a3dcbc;
+  do {
+    if (*piVar2 != 0) {
+      DObjArchive();
+    }
+    lVar1 = lVar1 + -1;
+    piVar2 = piVar2 + 0x5d;
+  } while (lVar1 != 0);
+  if (DAT_82a3d844 != 0) {
+    DObjArchive();
+  }
+  __restgprlr_29();
+  return;
 }
 
 
@@ -1968,7 +3969,23 @@ void CG_ModPrvSaveDObjs(void)
 void CG_ModPrvLoadDObjs(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  longlong lVar1;
+  int *piVar2;
+  
   __savegprlr_29();
+  lVar1 = 10;
+  piVar2 = &DAT_82a3dcbc;
+  do {
+    if (*piVar2 != 0) {
+      DObjUnarchive();
+    }
+    lVar1 = lVar1 + -1;
+    piVar2 = piVar2 + 0x5d;
+  } while (lVar1 != 0);
+  if (DAT_82a3d844 != 0) {
+    DObjUnarchive();
+  }
+  __restgprlr_29();
+  return;
 }
 

@@ -168,10 +168,78 @@ LAB_828b8164:
 
 // 828B8170  XCOMPRESS::make_table_8bit  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/maketbl.cpp:169)
 
-void XCOMPRESS__make_table_8bit(void)
+void XCOMPRESS__make_table_8bit(undefined8 param_1,int param_2,void *param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
+  byte *pbVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  uint uVar8;
+  ulonglong uVar7;
+  uint uVar9;
+  uint uVar10;
+  ushort auStack_80 [24];
+  ushort auStack_50 [17];
+  short local_2e;
+  
   __savegprlr_29();
+  uVar8 = 1;
+  do {
+    uVar9 = uVar8 + 1 & 0xffff;
+    auStack_80[uVar8] = 0;
+    uVar8 = uVar9;
+  } while (uVar9 < 0x11);
+  uVar8 = 0;
+  do {
+    pbVar1 = (byte *)(uVar8 + param_2);
+    uVar8 = uVar8 + 1 & 0xffff;
+    auStack_80[*pbVar1] = auStack_80[*pbVar1] + 1;
+  } while (uVar8 < 8);
+  auStack_50[1] = 0;
+  uVar8 = 1;
+  do {
+    uVar9 = uVar8 + 1 & 0xffff;
+    auStack_50[uVar8 + 1] = (auStack_80[uVar8] << (0x10 - uVar8 & 0x3f)) + auStack_50[uVar8];
+    uVar8 = uVar9;
+  } while (uVar9 < 0x11);
+  if (local_2e == 0) {
+    uVar7 = 1;
+    do {
+      iVar2 = (int)uVar7;
+      iVar3 = (int)(uVar7 << 1);
+      uVar7 = uVar7 + 1 & 0xffff;
+      *(ushort *)((int)auStack_50 + iVar3) = *(ushort *)((int)auStack_50 + iVar3) >> 9;
+      *(short *)((int)auStack_80 + iVar3) = (short)(1 << (7U - iVar2 & 0x3f));
+    } while (uVar7 < 8);
+    for (; uVar7 < 0x11; uVar7 = uVar7 + 1 & 0xffff) {
+      *(short *)((int)auStack_80 + (int)(uVar7 << 1)) = (short)(1 << (0x10U - (int)uVar7 & 0x3f));
+    }
+    memset(param_3,0,0x80);
+    uVar8 = 0;
+    do {
+      uVar9 = (uint)*(byte *)(uVar8 + param_2);
+      if (uVar9 != 0) {
+        uVar10 = (uint)auStack_50[uVar9];
+        uVar6 = auStack_80[uVar9] + uVar10;
+        uVar4 = uVar6 & 0xffff;
+        if (0x80 < uVar4) goto LAB_828b822c;
+        for (; uVar10 < uVar4; uVar10 = uVar10 + 1 & 0xffff) {
+          *(char *)(uVar10 + (int)param_3) = (char)uVar8;
+        }
+        auStack_50[uVar9] = (ushort)uVar6;
+      }
+      uVar8 = uVar8 + 1 & 0xff;
+    } while (uVar8 < 8);
+    uVar5 = 1;
+  }
+  else {
+LAB_828b822c:
+    uVar5 = 0;
+  }
+  __restgprlr_29(uVar5);
+  return;
 }
 

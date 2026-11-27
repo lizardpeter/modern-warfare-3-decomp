@@ -5,7 +5,24 @@
 DWORD WaitForSingleObjectEx(HANDLE hHandle,DWORD dwMilliseconds,BOOL bAlertable)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27(hHandle,dwMilliseconds,bAlertable);
+  undefined8 uVar1;
+  undefined8 uVar2;
+  longlong lVar3;
+  DWORD DVar4;
+  ulonglong uVar5;
+  undefined1 auStack_40 [64];
+  
+  uVar5 = (ulonglong)bAlertable;
+  lVar3 = (longlong)(int)dwMilliseconds;
+  uVar1 = __savegprlr_27(hHandle,lVar3);
+  uVar2 = XapiFormatTimeOut(auStack_40,lVar3);
+  while (lVar3 = NtWaitForSingleObjectEx(uVar1,1,uVar5 & 0xff,uVar2), -1 < lVar3) {
+    if (((int)uVar5 == 0) || ((int)lVar3 != 0x101)) goto LAB_828b4fbc;
+  }
+  RtlSetLastNTError(lVar3);
+  lVar3 = -1;
+LAB_828b4fbc:
+  DVar4 = __restgprlr_27(lVar3);
+  return DVar4;
 }
 

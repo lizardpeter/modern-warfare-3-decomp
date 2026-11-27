@@ -143,13 +143,43 @@ void bdReference<bdLobbyConnection>__operator_(uint *param_1,ulonglong param_2)
 }
 
 
+// 828F9EC0  bdBitBuffer::writeBool  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.inl:93)
+
+ulonglong bdBitBuffer__writeBool(undefined8 param_1,ulonglong param_2)
+
+{
+  undefined1 local_20 [8];
+  
+  bdBitBuffer__writeDataType(param_1,1);
+  local_20[0] = 0xff;
+  if ((param_2 & 0xff) == 0) {
+    local_20[0] = 0;
+  }
+  bdBitBuffer__writeBits(param_1,local_20,1);
+  return param_2;
+}
+
+
 // 828FCDE0  bdLobbyService::connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:137)
 
 int bdLobbyService__connect(SOCKET s,sockaddr *name,int namelen)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28(s,name,namelen);
+  SOCKET s_00;
+  sockaddr *name_00;
+  int iVar1;
+  longlong lVar2;
+  undefined4 uStack0000001c;
+  undefined1 auStack_30 [48];
+  
+  lVar2 = (longlong)(int)name;
+  s_00 = __savegprlr_28(s);
+  uStack0000001c = (undefined4)lVar2;
+  name_00 = (sockaddr *)bdAddr__bdAddr(auStack_30);
+  iVar1 = bdLobbyService__connect(s_00,name_00,namelen);
+  bdInetAddr___bdInetAddr(lVar2);
+  iVar1 = __restgprlr_28(iVar1);
+  return iVar1;
 }
 
 
@@ -267,6 +297,87 @@ void bdLobbyService__disconnect(int param_1)
 }
 
 
+// 828FBD78  bdLobbyService::pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:259)
+
+/* WARNING: Removing unreachable block (ram,0x828fbfa8) */
+/* WARNING: Removing unreachable block (ram,0x828fc008) */
+/* WARNING: Removing unreachable block (ram,0x828fbfbc) */
+/* WARNING: Removing unreachable block (ram,0x828fbffc) */
+/* WARNING: Removing unreachable block (ram,0x828fbfd4) */
+/* WARNING: Removing unreachable block (ram,0x828fc05c) */
+/* WARNING: Removing unreachable block (ram,0x828fc08c) */
+/* WARNING: Removing unreachable block (ram,0x828fc090) */
+/* WARNING: Removing unreachable block (ram,0x828fc0a0) */
+/* WARNING: Removing unreachable block (ram,0x828fc0a4) */
+/* WARNING: Removing unreachable block (ram,0x828fc0ac) */
+/* WARNING: Removing unreachable block (ram,0x828fc0b0) */
+/* WARNING: Removing unreachable block (ram,0x828fc0c0) */
+/* WARNING: Removing unreachable block (ram,0x828fc130) */
+/* WARNING: Removing unreachable block (ram,0x828fc0ec) */
+/* WARNING: Removing unreachable block (ram,0x828fc0fc) */
+/* WARNING: Removing unreachable block (ram,0x828fc100) */
+/* WARNING: Removing unreachable block (ram,0x828fc110) */
+/* WARNING: Removing unreachable block (ram,0x828fc114) */
+/* WARNING: Removing unreachable block (ram,0x828fc11c) */
+/* WARNING: Removing unreachable block (ram,0x828fc120) */
+/* WARNING: Removing unreachable block (ram,0x828fc014) */
+/* WARNING: Removing unreachable block (ram,0x828fc050) */
+/* WARNING: Removing unreachable block (ram,0x828fc034) */
+/* WARNING: Removing unreachable block (ram,0x828fbf3c) */
+/* WARNING: Removing unreachable block (ram,0x828fbf5c) */
+/* WARNING: Removing unreachable block (ram,0x828fbf68) */
+/* WARNING: Removing unreachable block (ram,0x828fbf70) */
+/* WARNING: Removing unreachable block (ram,0x828fbf80) */
+/* WARNING: Removing unreachable block (ram,0x828fbf84) */
+/* WARNING: Removing unreachable block (ram,0x828fbf8c) */
+/* WARNING: Removing unreachable block (ram,0x828fbfa0) */
+/* WARNING: Removing unreachable block (ram,0x828fc134) */
+/* WARNING: Removing unreachable block (ram,0x828fc138) */
+/* WARNING: Removing unreachable block (ram,0x828fc144) */
+
+void bdLobbyService__pump(void)
+
+{
+  int iVar1;
+  char cVar4;
+  int iVar2;
+  DWORD DVar3;
+  double dVar5;
+  double dVar6;
+  undefined1 local_c0 [4];
+  undefined1 local_bc [188];
+  
+  iVar1 = __savegprlr_15();
+  cVar4 = Sys_IsMainThread();
+  if ((cVar4 == '\0') && (iVar2 = Sys_AreThreadsSuspended(), iVar2 == 0)) {
+    MyAssertHandler(0xffffffff8220bc10,0x104,0,0xffffffff82000f98,0xffffffff82089c58);
+  }
+  DVar3 = bdPlatformTiming__getLoResTimeStamp();
+  dVar6 = (double)((float)DVar3 * 0.001);
+  dVar5 = (double)(float)(dVar6 - (double)*(float *)(iVar1 + 0x128));
+  if (((double)*(float *)(iVar1 + 0x128) != 0.0) && (10.0 <= dVar5)) {
+    bdLogMessage(1,0xffffffff8220a424,0xffffffff8220bb88,0xffffffff8220bc10,0xffffffff8220c3b8,0x10b
+                 ,0xffffffff8220c378,dVar5);
+  }
+  *(float *)(iVar1 + 0x128) = (float)dVar6;
+  if (*(int *)(iVar1 + 0x7c) != 0) {
+    cVar4 = bdLobbyConnection__getMessageToDispatch(*(int *)(iVar1 + 0x7c),local_c0,local_bc);
+    while (cVar4 != '\0') {
+      bdLogMessage(1,0xffffffff8220a424,0xffffffff8220bb88,0xffffffff8220bc10,0xffffffff8220c3b8,
+                   0x163,0xffffffff8220c304);
+      cVar4 = bdLobbyConnection__getMessageToDispatch
+                        (*(undefined4 *)(iVar1 + 0x7c),local_c0,local_bc);
+    }
+    if (*(int *)(iVar1 + 4) != 0) {
+      bdRemoteTaskManager__cleanUpAsyncState();
+    }
+    bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(local_bc);
+  }
+  __restgprlr_15();
+  return;
+}
+
+
 // 828FA3B0  bdLobbyService::getStatus  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:367)
 
 void bdLobbyService__getStatus(int param_1)
@@ -277,6 +388,46 @@ void bdLobbyService__getStatus(int param_1)
   }
   bdLobbyConnection__getStatus();
   return;
+}
+
+
+// 828F9FE0  bdLobbyService::registerEventHandler  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:376)
+
+void bdLobbyService__registerEventHandler(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)(param_1 + 0x78) = param_2;
+  return;
+}
+
+
+// 828FC1C0  bdLobbyService::getProfiles  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:381)
+
+undefined4 bdLobbyService__getProfiles(int param_1)
+
+{
+  char cVar3;
+  ulonglong uVar1;
+  undefined4 uVar2;
+  
+  cVar3 = bdLobbyService__isConnectedLogReason();
+  if (cVar3 == '\0') {
+    uVar2 = 0;
+  }
+  else {
+    if (*(int *)(param_1 + 8) == 0) {
+      uVar1 = bdMemory__allocate(4);
+      if ((uVar1 & 0xffffffff) == 0) {
+        uVar2 = 0;
+      }
+      else {
+        uVar2 = bdProfiles__bdProfiles(uVar1,*(undefined4 *)(param_1 + 4));
+      }
+      *(undefined4 *)(param_1 + 8) = uVar2;
+    }
+    uVar2 = *(undefined4 *)(param_1 + 8);
+  }
+  return uVar2;
 }
 
 
@@ -869,6 +1020,58 @@ undefined4 bdLobbyService__getErrorCode(int param_1)
 }
 
 
+// 828FA5B8  bdLobbyService::bdLobbyService  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:862)
+
+void bdLobbyService__bdLobbyService(void)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_29();
+  bdLobbyConnectionListener__bdLobbyConnectionListener();
+  puVar1[1] = 0;
+  puVar1[2] = 0;
+  *puVar1 = &PTR_bdLobbyService___scalar_deleting_destructor__8220bd30;
+  puVar1[3] = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  puVar1[6] = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  puVar1[0xc] = 0;
+  puVar1[0xd] = 0;
+  puVar1[0xe] = 0;
+  puVar1[0xf] = 0;
+  puVar1[0x10] = 0;
+  puVar1[0x11] = 0;
+  puVar1[0x12] = 0;
+  puVar1[0x13] = 0;
+  puVar1[0x14] = 0;
+  puVar1[0x15] = 0;
+  puVar1[0x16] = 0;
+  puVar1[0x17] = 0;
+  puVar1[0x18] = 0;
+  puVar1[0x19] = 0;
+  puVar1[0x1a] = 0;
+  puVar1[0x1b] = 0;
+  puVar1[0x1c] = 0;
+  puVar1[0x1d] = 0;
+  puVar1[0x1e] = 0;
+  puVar1[0x1f] = 0;
+  puVar1[0x20] = 0;
+  puVar1[0x21] = 0;
+  memset(puVar1 + 0x22,0,0x80);
+  memset(puVar1 + 0x42,0,0x18);
+  puVar1[0x49] = 0;
+  puVar1[0x4a] = 0;
+  __restgprlr_29(puVar1);
+  return;
+}
+
+
 // 828FCD28  bdLobbyService::~bdLobbyService  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:870)
 
 void bdLobbyService___bdLobbyService(undefined4 *param_1)
@@ -887,11 +1090,158 @@ void bdLobbyService___bdLobbyService(undefined4 *param_1)
 
 // 828FA6A8  bdLobbyService::onConnect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:875)
 
-void bdLobbyService__onConnect(void)
+void bdLobbyService__onConnect(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  bool bVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar5;
+  ulonglong uVar4;
+  undefined4 uVar6;
+  uint *puVar7;
+  undefined1 *puVar8;
+  int *piVar9;
+  uint *puVar10;
+  uint uVar11;
+  int iVar12;
+  char in_RESERVE;
+  byte bVar13;
+  longlong lVar14;
+  undefined1 local_50 [4];
+  uint local_4c;
+  undefined1 auStack_48 [4];
+  undefined1 auStack_44 [4];
+  int local_40;
+  uint local_3c;
+  undefined4 local_38;
+  
+  iVar5 = __savegprlr_28();
+  puVar7 = (uint *)param_2;
+  uVar4 = bdMemory__allocate(0x1c);
+  local_3c = (uint)uVar4;
+  bVar1 = (uVar4 & 0xffffffff) == 0;
+  bVar13 = bVar1 << 1;
+  if (bVar1) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = bdByteBuffer__bdByteBuffer(uVar4,8,0);
+  }
+  uVar11 = (uint)uVar4;
+  local_3c = uVar11;
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar4 + 4);
+        *puVar10 = uVar2;
+        bVar13 = 2;
+      }
+    } while (!(bool)(bVar13 >> 1 & 1));
+  }
+  iVar12 = 0;
+  local_4c = 200;
+  puVar8 = auStack_44;
+  lVar14 = 4;
+  do {
+    iVar3 = iVar12 + -4;
+    iVar12 = iVar12 + 1;
+    puVar8 = puVar8 + -1;
+    *puVar8 = auStack_48[iVar3];
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  bdByteBuffer__write(uVar11,auStack_48,4);
+  local_4c = bdLobbyConnection__getReceiveBufferSize(*puVar7);
+  iVar12 = 0;
+  piVar9 = &local_40;
+  lVar14 = 4;
+  do {
+    iVar3 = iVar12 + -4;
+    iVar12 = iVar12 + 1;
+    piVar9 = (int *)((int)piVar9 + -1);
+    *(undefined1 *)piVar9 = auStack_48[iVar3];
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  bdByteBuffer__write(uVar11,auStack_44,4);
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar4 + 4);
+        *puVar10 = uVar2;
+        bVar13 = 2;
+      }
+    } while (!(bool)(bVar13 >> 1 & 1));
+  }
+  local_4c = uVar11;
+  bdLobbyConnection__sendRaw(*puVar7,&local_4c,8);
+  uVar4 = bdMemory__allocate(0x24);
+  local_40 = (int)uVar4;
+  bVar1 = (uVar4 & 0xffffffff) == 0;
+  bVar13 = bVar1 << 1;
+  if (bVar1) {
+    uVar4 = 0;
+  }
+  else {
+    uVar4 = bdBitBuffer__bdBitBuffer(uVar4,local_50,8,1);
+  }
+  iVar12 = (int)uVar4;
+  if ((uVar4 & 0xffffffff) != 0) {
+    do {
+      puVar10 = (uint *)(uVar4 + 4);
+      if (in_RESERVE != '\0') {
+        uVar11 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar4 + 4);
+        *puVar10 = uVar11;
+        bVar13 = 2;
+      }
+    } while (!(bool)(bVar13 >> 1 & 1));
+  }
+  local_40 = iVar12;
+  bdBitBuffer__setTypeCheck(uVar4,0);
+  bdBitBuffer__writeBool(uVar4,1);
+  bdBitBuffer__setTypeCheck(uVar4,1);
+  bdBitBuffer__writeUInt32(uVar4,*(undefined4 *)(iVar5 + 0x80));
+  if (*(char *)(iVar5 + 0x120) == '\0') {
+    uVar6 = 0;
+  }
+  else {
+    uVar6 = *(undefined4 *)(iVar5 + 0x84);
+  }
+  bdBitBuffer__writeUInt32(uVar4,uVar6);
+  bdBitBuffer__writeBits(uVar4,iVar5 + 0x88,0x400);
+  (**(code **)(*(int *)*puVar7 + 8))
+            ((int *)*puVar7,*(undefined4 *)(iVar12 + 8),*(undefined4 *)(iVar12 + 0x10),0);
+  uVar4 = bdMemory__allocate(0x60);
+  local_38 = (undefined4)uVar4;
+  if ((uVar4 & 0xffffffff) == 0) {
+    uVar6 = 0;
+  }
+  else {
+    local_4c = *puVar7;
+    if ((ulonglong)local_4c != 0) {
+      lVar14 = (ulonglong)local_4c + 4;
+      bVar1 = false;
+      do {
+        puVar7 = (uint *)lVar14;
+        if (in_RESERVE != '\0') {
+          uVar11 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar14);
+          *puVar7 = uVar11;
+          bVar1 = true;
+        }
+      } while (!bVar1);
+    }
+    uVar6 = bdRemoteTaskManager__bdRemoteTaskManager(uVar4,&local_4c,*(undefined1 *)(iVar5 + 0x120))
+    ;
+  }
+  *(undefined4 *)(iVar5 + 4) = uVar6;
+  bdLogMessage(0,0xffffffff8220b6f8,0xffffffff8220bb88,0xffffffff8220bc10,0xffffffff8220bd40,0x393,
+               0xffffffff8220bd5c);
+  bdReference<bdBitBuffer>___bdReference<bdBitBuffer>(&local_40);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(&local_3c);
+  bdReference<bdLobbyConnection>___bdReference<bdLobbyConnection>(param_2);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -915,8 +1265,390 @@ void bdLobbyService__onDisconnect(undefined8 param_1,undefined8 param_2)
 void bdLobbyService__cleanup(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = __savegprlr_29();
+  puVar1 = *(undefined4 **)(iVar3 + 4);
+  if (puVar1 != (undefined4 *)0x0) {
+    (**(code **)*puVar1)(puVar1,1);
+    *(undefined4 *)(iVar3 + 4) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 8);
+  if (iVar2 != 0) {
+    bdProfiles___bdProfiles(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 8) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0xc);
+  if (iVar2 != 0) {
+    bdMessaging___bdMessaging(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0xc) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x10);
+  if (iVar2 != 0) {
+    bdMatchMaking___bdMatchMaking(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x10) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x14);
+  if (iVar2 != 0) {
+    bdStats___bdStats(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x14) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x18);
+  if (iVar2 != 0) {
+    bdFriends___bdFriends(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x18) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x1c);
+  if (iVar2 != 0) {
+    bdTeams___bdTeams(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x1c) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x20);
+  if (iVar2 != 0) {
+    bdStorage___bdStorage(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x20) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x24);
+  if (iVar2 != 0) {
+    bdContentUnlock___bdContentUnlock(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x24) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x28);
+  if (iVar2 != 0) {
+    bdTitleUtilities___bdTitleUtilities(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x28) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x2c);
+  if (iVar2 != 0) {
+    bdEventLog___bdEventLog(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x2c) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x30);
+  if (iVar2 != 0) {
+    bdKeyArchive___bdKeyArchive(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x30) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x34);
+  if (iVar2 != 0) {
+    bdCounter___bdCounter(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x34) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x38);
+  if (iVar2 != 0) {
+    bdGroup___bdGroup(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x38) = 0;
+  }
+  bdLobbyService__deleteContentStreaming(iVar3);
+  puVar1 = *(undefined4 **)(iVar3 + 0x40);
+  if (puVar1 != (undefined4 *)0x0) {
+    (**(code **)*puVar1)(puVar1,1);
+    *(undefined4 *)(iVar3 + 0x40) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x44);
+  if (iVar2 != 0) {
+    bdLSPEnumerator___bdLSPEnumerator(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x44) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x48);
+  if (iVar2 != 0) {
+    bdTags___bdTags(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x48) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x4c);
+  if (iVar2 != 0) {
+    bdVoteRank___bdVoteRank(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x4c) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x50);
+  if (iVar2 != 0) {
+    bdTwitter___bdTwitter(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x50) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x54);
+  if (iVar2 != 0) {
+    bdFacebook___bdFacebook(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x54) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x58);
+  if (iVar2 != 0) {
+    bdLinkCode___bdLinkCode(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x58) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x5c);
+  if (iVar2 != 0) {
+    bdAntiCheat___bdAntiCheat(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x5c) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x60);
+  if (iVar2 != 0) {
+    bdDML___bdDML(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x60) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 100);
+  if (iVar2 != 0) {
+    bdCRUX___bdCRUX(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 100) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x68);
+  if (iVar2 != 0) {
+    bdUserGroups___bdUserGroups(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x68) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x6c);
+  if (iVar2 != 0) {
+    bdRichPresenceService___bdRichPresenceService(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x6c) = 0;
+  }
+  iVar2 = *(int *)(iVar3 + 0x70);
+  if (iVar2 != 0) {
+    bdSubscription___bdSubscription(iVar2);
+    bdMemory__deallocate(iVar2);
+    *(undefined4 *)(iVar3 + 0x70) = 0;
+  }
+  bdReference<bdLobbyConnection>__operator_(iVar3 + 0x7c,0);
+  __restgprlr_29();
+  return;
+}
+
+
+// 828FAEB0  bdLobbyService::handlePushMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:1090)
+
+/* WARNING: Removing unreachable block (ram,0x828faf5c) */
+/* WARNING: Removing unreachable block (ram,0x828fb9d4) */
+/* WARNING: Removing unreachable block (ram,0x828fb9e0) */
+/* WARNING: Removing unreachable block (ram,0x828fb9ec) */
+/* WARNING: Removing unreachable block (ram,0x828fb9a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb9ac) */
+/* WARNING: Removing unreachable block (ram,0x828fb9b8) */
+/* WARNING: Removing unreachable block (ram,0x828fb9c4) */
+/* WARNING: Removing unreachable block (ram,0x828fb9fc) */
+/* WARNING: Removing unreachable block (ram,0x828fba08) */
+/* WARNING: Removing unreachable block (ram,0x828fba20) */
+/* WARNING: Removing unreachable block (ram,0x828fba24) */
+/* WARNING: Removing unreachable block (ram,0x828fba2c) */
+/* WARNING: Removing unreachable block (ram,0x828fba48) */
+/* WARNING: Removing unreachable block (ram,0x828fba4c) */
+/* WARNING: Removing unreachable block (ram,0x828fba70) */
+/* WARNING: Removing unreachable block (ram,0x828fba80) */
+/* WARNING: Removing unreachable block (ram,0x828fb7f0) */
+/* WARNING: Removing unreachable block (ram,0x828fb7fc) */
+/* WARNING: Removing unreachable block (ram,0x828fb814) */
+/* WARNING: Removing unreachable block (ram,0x828fb818) */
+/* WARNING: Removing unreachable block (ram,0x828fb828) */
+/* WARNING: Removing unreachable block (ram,0x828fb830) */
+/* WARNING: Removing unreachable block (ram,0x828fb838) */
+/* WARNING: Removing unreachable block (ram,0x828fb854) */
+/* WARNING: Removing unreachable block (ram,0x828fb858) */
+/* WARNING: Removing unreachable block (ram,0x828fb87c) */
+/* WARNING: Removing unreachable block (ram,0x828fb870) */
+/* WARNING: Removing unreachable block (ram,0x828fb880) */
+/* WARNING: Removing unreachable block (ram,0x828fb88c) */
+/* WARNING: Removing unreachable block (ram,0x828fb890) */
+/* WARNING: Removing unreachable block (ram,0x828fb8a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb8a4) */
+/* WARNING: Removing unreachable block (ram,0x828fb8ac) */
+/* WARNING: Removing unreachable block (ram,0x828fb8b0) */
+/* WARNING: Removing unreachable block (ram,0x828fb8b8) */
+/* WARNING: Removing unreachable block (ram,0x828fb8c8) */
+/* WARNING: Removing unreachable block (ram,0x828fb8cc) */
+/* WARNING: Removing unreachable block (ram,0x828fb8dc) */
+/* WARNING: Removing unreachable block (ram,0x828fb8e0) */
+/* WARNING: Removing unreachable block (ram,0x828fb8e8) */
+/* WARNING: Removing unreachable block (ram,0x828fb8ec) */
+/* WARNING: Removing unreachable block (ram,0x828fb904) */
+/* WARNING: Removing unreachable block (ram,0x828fb908) */
+/* WARNING: Removing unreachable block (ram,0x828fb960) */
+/* WARNING: Removing unreachable block (ram,0x828fb910) */
+/* WARNING: Removing unreachable block (ram,0x828fb91c) */
+/* WARNING: Removing unreachable block (ram,0x828fb920) */
+/* WARNING: Removing unreachable block (ram,0x828fb930) */
+/* WARNING: Removing unreachable block (ram,0x828fb934) */
+/* WARNING: Removing unreachable block (ram,0x828fb93c) */
+/* WARNING: Removing unreachable block (ram,0x828fb940) */
+/* WARNING: Removing unreachable block (ram,0x828fb994) */
+/* WARNING: Removing unreachable block (ram,0x828fb7e0) */
+/* WARNING: Removing unreachable block (ram,0x828fb6c0) */
+/* WARNING: Removing unreachable block (ram,0x828fb6cc) */
+/* WARNING: Removing unreachable block (ram,0x828fb6e4) */
+/* WARNING: Removing unreachable block (ram,0x828fb6e8) */
+/* WARNING: Removing unreachable block (ram,0x828fb6f8) */
+/* WARNING: Removing unreachable block (ram,0x828fb700) */
+/* WARNING: Removing unreachable block (ram,0x828fb708) */
+/* WARNING: Removing unreachable block (ram,0x828fb724) */
+/* WARNING: Removing unreachable block (ram,0x828fb728) */
+/* WARNING: Removing unreachable block (ram,0x828fb744) */
+/* WARNING: Removing unreachable block (ram,0x828fb760) */
+/* WARNING: Removing unreachable block (ram,0x828fb764) */
+/* WARNING: Removing unreachable block (ram,0x828fb7a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb770) */
+/* WARNING: Removing unreachable block (ram,0x828fb7d4) */
+/* WARNING: Removing unreachable block (ram,0x828fb43c) */
+/* WARNING: Removing unreachable block (ram,0x828fb448) */
+/* WARNING: Removing unreachable block (ram,0x828fb460) */
+/* WARNING: Removing unreachable block (ram,0x828fb464) */
+/* WARNING: Removing unreachable block (ram,0x828fb474) */
+/* WARNING: Removing unreachable block (ram,0x828fb47c) */
+/* WARNING: Removing unreachable block (ram,0x828fb484) */
+/* WARNING: Removing unreachable block (ram,0x828fb4a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb4a4) */
+/* WARNING: Removing unreachable block (ram,0x828fb4b0) */
+/* WARNING: Removing unreachable block (ram,0x828fb4c8) */
+/* WARNING: Removing unreachable block (ram,0x828fb4cc) */
+/* WARNING: Removing unreachable block (ram,0x828fb4dc) */
+/* WARNING: Removing unreachable block (ram,0x828fb4e4) */
+/* WARNING: Removing unreachable block (ram,0x828fb4f0) */
+/* WARNING: Removing unreachable block (ram,0x828fb50c) */
+/* WARNING: Removing unreachable block (ram,0x828fb510) */
+/* WARNING: Removing unreachable block (ram,0x828fb534) */
+/* WARNING: Removing unreachable block (ram,0x828fb544) */
+/* WARNING: Removing unreachable block (ram,0x828fb374) */
+/* WARNING: Removing unreachable block (ram,0x828fb380) */
+/* WARNING: Removing unreachable block (ram,0x828fb398) */
+/* WARNING: Removing unreachable block (ram,0x828fb39c) */
+/* WARNING: Removing unreachable block (ram,0x828fb3ac) */
+/* WARNING: Removing unreachable block (ram,0x828fb3b4) */
+/* WARNING: Removing unreachable block (ram,0x828fb3bc) */
+/* WARNING: Removing unreachable block (ram,0x828fb3d8) */
+/* WARNING: Removing unreachable block (ram,0x828fb3dc) */
+/* WARNING: Removing unreachable block (ram,0x828fb400) */
+/* WARNING: Removing unreachable block (ram,0x828fb410) */
+/* WARNING: Removing unreachable block (ram,0x828fb420) */
+/* WARNING: Removing unreachable block (ram,0x828fb600) */
+/* WARNING: Removing unreachable block (ram,0x828fb60c) */
+/* WARNING: Removing unreachable block (ram,0x828fb624) */
+/* WARNING: Removing unreachable block (ram,0x828fb628) */
+/* WARNING: Removing unreachable block (ram,0x828fb634) */
+/* WARNING: Removing unreachable block (ram,0x828fb64c) */
+/* WARNING: Removing unreachable block (ram,0x828fb650) */
+/* WARNING: Removing unreachable block (ram,0x828fb660) */
+/* WARNING: Removing unreachable block (ram,0x828fb668) */
+/* WARNING: Removing unreachable block (ram,0x828fb670) */
+/* WARNING: Removing unreachable block (ram,0x828fb68c) */
+/* WARNING: Removing unreachable block (ram,0x828fb690) */
+/* WARNING: Removing unreachable block (ram,0x828fb6a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb6b0) */
+/* WARNING: Removing unreachable block (ram,0x828fb558) */
+/* WARNING: Removing unreachable block (ram,0x828fb564) */
+/* WARNING: Removing unreachable block (ram,0x828fb57c) */
+/* WARNING: Removing unreachable block (ram,0x828fb580) */
+/* WARNING: Removing unreachable block (ram,0x828fb590) */
+/* WARNING: Removing unreachable block (ram,0x828fb598) */
+/* WARNING: Removing unreachable block (ram,0x828fb5a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb5bc) */
+/* WARNING: Removing unreachable block (ram,0x828fb5c0) */
+/* WARNING: Removing unreachable block (ram,0x828fb5d0) */
+/* WARNING: Removing unreachable block (ram,0x828fb5e0) */
+/* WARNING: Removing unreachable block (ram,0x828fb5ec) */
+/* WARNING: Removing unreachable block (ram,0x828fb42c) */
+/* WARNING: Removing unreachable block (ram,0x828fb050) */
+/* WARNING: Removing unreachable block (ram,0x828fb05c) */
+/* WARNING: Removing unreachable block (ram,0x828fb074) */
+/* WARNING: Removing unreachable block (ram,0x828fb078) */
+/* WARNING: Removing unreachable block (ram,0x828fb088) */
+/* WARNING: Removing unreachable block (ram,0x828fb090) */
+/* WARNING: Removing unreachable block (ram,0x828fb09c) */
+/* WARNING: Removing unreachable block (ram,0x828fb0b8) */
+/* WARNING: Removing unreachable block (ram,0x828fb0bc) */
+/* WARNING: Removing unreachable block (ram,0x828fb0c8) */
+/* WARNING: Removing unreachable block (ram,0x828fb0e0) */
+/* WARNING: Removing unreachable block (ram,0x828fb0e4) */
+/* WARNING: Removing unreachable block (ram,0x828fb0f8) */
+/* WARNING: Removing unreachable block (ram,0x828fb100) */
+/* WARNING: Removing unreachable block (ram,0x828fb10c) */
+/* WARNING: Removing unreachable block (ram,0x828fb11c) */
+/* WARNING: Removing unreachable block (ram,0x828fb148) */
+/* WARNING: Removing unreachable block (ram,0x828fb14c) */
+/* WARNING: Removing unreachable block (ram,0x828fb2dc) */
+/* WARNING: Removing unreachable block (ram,0x828fb2e8) */
+/* WARNING: Removing unreachable block (ram,0x828fb300) */
+/* WARNING: Removing unreachable block (ram,0x828fb304) */
+/* WARNING: Removing unreachable block (ram,0x828fb30c) */
+/* WARNING: Removing unreachable block (ram,0x828fb328) */
+/* WARNING: Removing unreachable block (ram,0x828fb32c) */
+/* WARNING: Removing unreachable block (ram,0x828fb338) */
+/* WARNING: Removing unreachable block (ram,0x828fb344) */
+/* WARNING: Removing unreachable block (ram,0x828fb204) */
+/* WARNING: Removing unreachable block (ram,0x828fb210) */
+/* WARNING: Removing unreachable block (ram,0x828fb228) */
+/* WARNING: Removing unreachable block (ram,0x828fb22c) */
+/* WARNING: Removing unreachable block (ram,0x828fb234) */
+/* WARNING: Removing unreachable block (ram,0x828fb250) */
+/* WARNING: Removing unreachable block (ram,0x828fb254) */
+/* WARNING: Removing unreachable block (ram,0x828fb260) */
+/* WARNING: Removing unreachable block (ram,0x828fb278) */
+/* WARNING: Removing unreachable block (ram,0x828fb27c) */
+/* WARNING: Removing unreachable block (ram,0x828fb2a0) */
+/* WARNING: Removing unreachable block (ram,0x828fb2b0) */
+/* WARNING: Removing unreachable block (ram,0x828fb154) */
+/* WARNING: Removing unreachable block (ram,0x828fb16c) */
+/* WARNING: Removing unreachable block (ram,0x828fb170) */
+/* WARNING: Removing unreachable block (ram,0x828fb180) */
+/* WARNING: Removing unreachable block (ram,0x828fb184) */
+/* WARNING: Removing unreachable block (ram,0x828fb18c) */
+/* WARNING: Removing unreachable block (ram,0x828fb190) */
+/* WARNING: Removing unreachable block (ram,0x828fb1c4) */
+/* WARNING: Removing unreachable block (ram,0x828fb1a8) */
+/* WARNING: Removing unreachable block (ram,0x828fb1f8) */
+/* WARNING: Removing unreachable block (ram,0x828fafc0) */
+/* WARNING: Removing unreachable block (ram,0x828fafcc) */
+/* WARNING: Removing unreachable block (ram,0x828fafe4) */
+/* WARNING: Removing unreachable block (ram,0x828fafe8) */
+/* WARNING: Removing unreachable block (ram,0x828faffc) */
+/* WARNING: Removing unreachable block (ram,0x828fb004) */
+/* WARNING: Removing unreachable block (ram,0x828fb010) */
+/* WARNING: Removing unreachable block (ram,0x828fb020) */
+/* WARNING: Removing unreachable block (ram,0x828fb044) */
+/* WARNING: Removing unreachable block (ram,0x828fb048) */
+/* WARNING: Removing unreachable block (ram,0x828fafb0) */
+/* WARNING: Removing unreachable block (ram,0x828faf9c) */
+/* WARNING: Removing unreachable block (ram,0x828fafa8) */
+/* WARNING: Removing unreachable block (ram,0x828faf84) */
+/* WARNING: Removing unreachable block (ram,0x828faf94) */
+/* WARNING: Removing unreachable block (ram,0x828faef8) */
+/* WARNING: Removing unreachable block (ram,0x828faf08) */
+/* WARNING: Removing unreachable block (ram,0x828faf0c) */
+/* WARNING: Removing unreachable block (ram,0x828faf1c) */
+/* WARNING: Removing unreachable block (ram,0x828faf20) */
+/* WARNING: Removing unreachable block (ram,0x828faf28) */
+/* WARNING: Removing unreachable block (ram,0x828faf2c) */
+/* WARNING: Recovered jumptable eliminated as dead code */
+
+void bdLobbyService__handlePushMessage(undefined8 param_1,undefined8 param_2)
+
+{
+  undefined1 local_23d8 [9176];
+  
+  __savegprlr_26();
+  bdByteBuffer__readUInt32(*(undefined4 *)param_2,local_23d8);
+  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
+  __restgprlr_26();
+  return;
 }
 
 

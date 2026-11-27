@@ -3,3 +3,71 @@
 ; 8291B188  realloc  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/realloc.c:62)
   8291B188  7D8802A6             mfspr r12,LR
   8291B18C  4BFFB529             bl 0x829166b4
+  8291B190  9421FF80             stwu r1,-0x80(r1)
+  8291B194  7C7C1B78             or r28,r3,r3
+  8291B198  7C9F2378             or r31,r4,r4
+  8291B19C  2B030000             cmplwi cr6,r3,0x0
+  8291B1A0  409A0010             bne cr6,0x8291b1b0
+  8291B1A4  7C832378             or r3,r4,r4
+  8291B1A8  4BD33A51             bl 0x8264ebf8
+  8291B1AC  48000090             b 0x8291b23c
+LAB_8291b1b0:
+  8291B1B0  2B1F0000             cmplwi cr6,r31,0x0
+  8291B1B4  409A0010             bne cr6,0x8291b1c4
+  8291B1B8  7F83E378             or r3,r28,r28
+  8291B1BC  4BD33AAD             bl 0x8264ec68
+  8291B1C0  48000078             b 0x8291b238
+LAB_8291b1c4:
+  8291B1C4  3BA0F000             li r29,-0x1000
+  8291B1C8  7F1FE840             cmplw cr6,r31,r29
+  8291B1CC  41990054             bgt cr6,0x8291b220
+  8291B1D0  3F608489             lis r27,-0x7b77
+LAB_8291b1d4:
+  8291B1D4  2B1F0000             cmplwi cr6,r31,0x0
+  8291B1D8  409A0008             bne cr6,0x8291b1e0
+  8291B1DC  3BE00001             li r31,0x1
+LAB_8291b1e0:
+  8291B1E0  4BF98B91             bl 0x828b3d70
+  8291B1E4  38800000             li r4,0x0
+  8291B1E8  7F85E378             or r5,r28,r28
+  8291B1EC  7FE6FB78             or r6,r31,r31
+  8291B1F0  4BF8CF59             bl 0x828a8148
+  8291B1F4  7C7E1B79             or. r30,r3,r3
+  8291B1F8  40820078             bne 0x8291b270
+  8291B1FC  817B6064             lwz r11,0x6064(r27)
+  8291B200  2F0B0000             cmpwi cr6,r11,0x0
+  8291B204  419A0058             beq cr6,0x8291b25c
+  8291B208  7FE3FB78             or r3,r31,r31
+  8291B20C  4800971D             bl 0x82924928
+  8291B210  2C030000             cmpwi r3,0x0
+  8291B214  41820030             beq 0x8291b244
+  8291B218  7F1FE840             cmplw cr6,r31,r29
+  8291B21C  4099FFB8             ble cr6,0x8291b1d4
+LAB_8291b220:
+  8291B220  7FE3FB78             or r3,r31,r31
+  8291B224  48009705             bl 0x82924928
+  8291B228  48004B59             bl 0x8291fd80
+  8291B22C  3940000C             li r10,0xc
+  8291B230  7C6B1B78             or r11,r3,r3
+  8291B234  91430000             stw r10,0x0(r3)
+LAB_8291b238:
+  8291B238  38600000             li r3,0x0
+LAB_8291b23c:
+  8291B23C  38210080             addi r1,r1,0x80
+  8291B240  4BFFB4C4             b 0x82916704
+LAB_8291b244:
+  8291B244  48004B3D             bl 0x8291fd80
+  8291B248  7C7F1B78             or r31,r3,r3
+  8291B24C  4BF87AED             bl 0x828a2d38
+  8291B250  48004AC1             bl 0x8291fd10
+  8291B254  907F0000             stw r3,0x0(r31)
+  8291B258  4BFFFFE0             b 0x8291b238
+LAB_8291b25c:
+  8291B25C  48004B25             bl 0x8291fd80
+  8291B260  7C7F1B78             or r31,r3,r3
+  8291B264  4BF87AD5             bl 0x828a2d38
+  8291B268  48004AA9             bl 0x8291fd10
+  8291B26C  907F0000             stw r3,0x0(r31)
+LAB_8291b270:
+  8291B270  7FC3F378             or r3,r30,r30
+  8291B274  4BFFFFC8             b 0x8291b23c

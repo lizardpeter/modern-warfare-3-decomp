@@ -11,10 +11,90 @@ undefined1 R_ShouldDrawFxModelVerts(void)
 
 // 8275C5A8  R_GenerateMarkVertsForDynamicModels  (gfx_d3d/r_model_marks.cpp:57)
 
-void R_GenerateMarkVertsForDynamicModels(void)
+void R_GenerateMarkVertsForDynamicModels
+               (undefined8 param_1,undefined8 param_2,int param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int iVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  undefined2 *puVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  int *piVar7;
+  undefined *puVar8;
+  
+  uVar3 = __savegprlr_18();
+  iVar1 = *(int *)(param_3 + 4);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821c9cd0,0x55,0,0xffffffff82000f98,0xffffffff821c9cbc);
+  }
+  iVar5 = 0;
+  if (*(int *)(param_3 + 0x1c) != 0) {
+    puVar6 = &DAT_847c456c;
+    do {
+      if ((*(byte *)(iVar5 + iVar1) & 1) != 0) {
+        uVar2 = (uint)puVar6[-2] >> 0xd & 0xfff;
+        if ((iVar5 == *(int *)(param_3 + 0x14)) || (uVar2 < *(ushort *)(param_3 + 0x28))) {
+          puVar4 = (undefined2 *)CG_GetPoseLightingHandle(*puVar6);
+          if (iVar5 == *(int *)(param_3 + 0x14)) {
+            FX_GenerateMarkVertsForViewmodelDObj();
+          }
+          else {
+            FX_GenerateMarkVertsForEntDObj
+                      (uVar3,param_2,*(undefined4 *)(param_3 + 0x10),uVar2,param_4,*puVar4,
+                       *(undefined1 *)(puVar6 + 1),*(undefined1 *)((int)puVar6 + 5));
+          }
+        }
+      }
+      iVar5 = iVar5 + 1;
+      puVar6 = puVar6 + 0x1e;
+    } while (iVar5 != *(int *)(param_3 + 0x1c));
+  }
+  iVar1 = *(int *)(param_3 + 8);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821c9cd0,0x85,0,0xffffffff82000f98,0xffffffff821c9ca8);
+  }
+  iVar5 = 0;
+  if (*(int *)(param_3 + 0x24) != 0) {
+    piVar7 = &DAT_847d4708;
+    do {
+      if ((*(byte *)(iVar5 + iVar1) & 1) != 0) {
+        uVar2 = (uint)piVar7[-2] >> 0xd & 0xfff;
+        if ((uVar2 < *(ushort *)(param_3 + 0x28)) && (piVar7[-0xb] != 0)) {
+          if (*piVar7 == 0) {
+            MyAssertHandler(0xffffffff821c9cd0,0x9a,0,0xffffffff82000f98,0xffffffff821c9c84);
+          }
+          FX_GenerateMarkVertsForEntXModel
+                    (uVar3,param_2,*(undefined4 *)(param_3 + 0x10),uVar2,param_4,
+                     *(undefined2 *)*piVar7,*(undefined1 *)(piVar7 + 4),
+                     *(undefined1 *)((int)piVar7 + 0x12));
+        }
+      }
+      iVar5 = iVar5 + 1;
+      piVar7 = piVar7 + 0x12;
+    } while (iVar5 != *(int *)(param_3 + 0x24));
+  }
+  iVar1 = *(int *)(param_3 + 0xc);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff821c9cd0,0xad,0,0xffffffff82000f98,0xffffffff821c9c70);
+  }
+  iVar5 = 0;
+  if (*(int *)(param_3 + 0x20) != 0) {
+    puVar8 = &DAT_847e82e4;
+    do {
+      if ((*(byte *)(iVar5 + iVar1) & 1) != 0) {
+        if (*(ushort *)(puVar8 + -6) < *(ushort *)(param_3 + 0x28)) {
+          FX_GenerateMarkVertsForEntBrush
+                    (uVar3,param_2,*(undefined4 *)(param_3 + 0x10),*(ushort *)(puVar8 + -6),param_4,
+                     puVar8[0x1c],puVar8);
+        }
+      }
+      iVar5 = iVar5 + 1;
+      puVar8 = puVar8 + 0x28;
+    } while (iVar5 != *(int *)(param_3 + 0x20));
+  }
+  __restgprlr_18();
+  return;
 }
 

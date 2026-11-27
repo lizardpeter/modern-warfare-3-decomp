@@ -25,6 +25,41 @@
 ; 826DD460  LightEdit_SendMsg  (lightedit/lightedit_common.cpp:29)
   826DD460  7D8802A6             mfspr r12,LR
   826DD464  48239255             bl 0x829166b8
+  826DD468  9421FF80             stwu r1,-0x80(r1)
+  826DD46C  3D60821A             lis r11,-0x7de6
+  826DD470  3D408200             lis r10,-0x7e00
+  826DD474  7C7C1B78             or r28,r3,r3
+  826DD478  7C9F2378             or r31,r4,r4
+  826DD47C  2B040000             cmplwi cr6,r4,0x0
+  826DD480  3BCB71F0             addi r30,r11,0x71f0
+  826DD484  3BAA0F98             addi r29,r10,0xf98
+  826DD488  409A0020             bne cr6,0x826dd4a8
+  826DD48C  3D608200             lis r11,-0x7e00
+  826DD490  7FA6EB78             or r6,r29,r29
+  826DD494  38EB4D74             addi r7,r11,0x4d74
+  826DD498  7FC3F378             or r3,r30,r30
+  826DD49C  38A00000             li r5,0x0
+  826DD4A0  3880001E             li r4,0x1e
+  826DD4A4  4BEF705D             bl 0x825d4500
+LAB_826dd4a8:
+  826DD4A8  817F0000             lwz r11,0x0(r31)
+  826DD4AC  2F0B0000             cmpwi cr6,r11,0x0
+  826DD4B0  419A0020             beq cr6,0x826dd4d0
+  826DD4B4  3D608209             lis r11,-0x7df7
+  826DD4B8  7FA6EB78             or r6,r29,r29
+  826DD4BC  38EBF29C             subi r7,r11,0xd64
+  826DD4C0  7FC3F378             or r3,r30,r30
+  826DD4C4  38A00000             li r5,0x0
+  826DD4C8  3880001F             li r4,0x1f
+  826DD4CC  4BEF7035             bl 0x825d4500
+LAB_826dd4d0:
+  826DD4D0  3880000A             li r4,0xa
+  826DD4D4  80DF0014             lwz r6,0x14(r31)
+  826DD4D8  7F83E378             or r3,r28,r28
+  826DD4DC  80BF0008             lwz r5,0x8(r31)
+  826DD4E0  4BE33C49             bl 0x82511128
+  826DD4E4  38210080             addi r1,r1,0x80
+  826DD4E8  48239220             b 0x82916708
 
 ; 826DD4F0  LightEdit_SendSimpleMsg  (lightedit/lightedit_common.cpp:45)
   826DD4F0  7D8802A6             mfspr r12,LR

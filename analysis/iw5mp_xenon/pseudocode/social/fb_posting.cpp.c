@@ -42,8 +42,41 @@ int _dynamic_initializer_for__g_FacebookPostingInfo__(void)
 void Facebook_ShutdownPosting(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  uint *puVar4;
+  uint *puVar5;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  puVar5 = &DAT_8453adb8;
+  do {
+    uVar1 = *puVar5;
+    if (uVar1 != 0) {
+      if (uVar1 != 0) {
+        do {
+          puVar4 = (uint *)((ulonglong)uVar1 + 4);
+          if (in_RESERVE != '\0') {
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,(ulonglong)uVar1 + 4);
+            *puVar4 = uVar3;
+            in_cr0 = 2;
+          }
+        } while (!(bool)(in_cr0 >> 1 & 1));
+        if (*(int *)(uVar1 + 4) == 0) {
+          puVar2 = (undefined4 *)*puVar5;
+          if (puVar2 != (undefined4 *)0x0) {
+            (**(code **)*puVar2)(puVar2,1);
+          }
+        }
+      }
+      *puVar5 = 0;
+    }
+    puVar5 = puVar5 + 1;
+  } while ((int)puVar5 < -0x7bac5238);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -52,8 +85,45 @@ void Facebook_ShutdownPosting(void)
 void FacebookPosting_Reset(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  iVar4 = __savegprlr_29();
+  if (((int *)(&DAT_8453adb8)[iVar4] != (int *)0x0) &&
+     (iVar5 = (**(code **)(*(int *)(&DAT_8453adb8)[iVar4] + 4))(), iVar5 == 1)) {
+    bdRemoteTask__cancelTask((&DAT_8453adb8)[iVar4]);
+  }
+  uVar1 = (&DAT_8453adb8)[iVar4];
+  (&DAT_8453a7c0)[iVar4] = 1;
+  (&DAT_8453a7d0)[iVar4] = 2;
+  (&DAT_8453a7e0)[iVar4] = 0;
+  if ((ulonglong)uVar1 != 0) {
+    lVar6 = (ulonglong)uVar1 + 4;
+    do {
+      puVar7 = (uint *)lVar6;
+      if (in_RESERVE != '\0') {
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
+        *puVar7 = uVar3;
+        in_cr0 = 2;
+      }
+    } while (!(bool)(in_cr0 >> 1 & 1));
+    if (*(int *)(uVar1 + 4) == 0) {
+      puVar2 = (undefined4 *)(&DAT_8453adb8)[iVar4];
+      if (puVar2 != (undefined4 *)0x0) {
+        (**(code **)*puVar2)(puVar2,1);
+      }
+    }
+  }
+  (&DAT_8453adb8)[iVar4] = 0;
+  __restgprlr_29();
+  return;
 }
 
 
@@ -121,11 +191,21 @@ void Facebook_InitPosting(void)
 
 // 826FEF68  Facebook_AddTag  (social/fb_posting.cpp:94)
 
-void Facebook_AddTag(void)
+void Facebook_AddTag(undefined8 param_1,undefined2 param_2,undefined2 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined8 uVar1;
+  
+  uVar1 = __savegprlr_28();
+  if (0x11 < DAT_8453adb0) {
+    MyAssertHandler(0xffffffff821b0bb0,0x5f,0,0xffffffff821b0bf0,DAT_8453adb0,0x12);
+  }
+  *(undefined8 *)(&DAT_8453ac08 + DAT_8453adb0 * 0x18) = uVar1;
+  *(undefined2 *)(&DAT_8453ac10 + DAT_8453adb0 * 0x18) = param_2;
+  *(undefined2 *)(&DAT_8453ac12 + DAT_8453adb0 * 0x18) = param_3;
+  DAT_8453adb0 = DAT_8453adb0 + 1;
+  __restgprlr_28();
+  return;
 }
 
 
@@ -137,6 +217,18 @@ void Facebook_PostScreenshot(int param_1,undefined8 param_2)
   (&DAT_8453a7c0)[param_1] = 1;
   DAT_8453a7f8 = param_2;
   (&DAT_8453a7d0)[param_1] = 0;
+  return;
+}
+
+
+// 826FF040  Facebook_PostVideo  (social/fb_posting.cpp:115)
+
+void Facebook_PostVideo(int param_1,undefined8 param_2)
+
+{
+  (&DAT_8453a7c0)[param_1] = 1;
+  DAT_8453a7f8 = param_2;
+  (&DAT_8453a7d0)[param_1] = 1;
   return;
 }
 
@@ -153,12 +245,50 @@ longlong Facebook_IsPosting(int param_1)
 }
 
 
+// 826FF088  Facebook_SetCaption  (social/fb_posting.cpp:132)
+
+void Facebook_SetCaption(undefined8 param_1)
+
+{
+  I_strncpyz(0xffffffff8453a800,param_1,0x400);
+  return;
+}
+
+
+// 826FF0A0  Facebook_GetCaption  (social/fb_posting.cpp:138)
+
+undefined8 Facebook_GetCaption(void)
+
+{
+  return 0xffffffff8453a800;
+}
+
+
 // 826FF0B0  Facebook_ClearCaption  (social/fb_posting.cpp:144)
 
 void Facebook_ClearCaption(void)
 
 {
   DAT_8453a800 = 0;
+  return;
+}
+
+
+// 826FF0C8  Facebook_ShowErrorPostingPopup  (social/fb_posting.cpp:150)
+
+void Facebook_ShowErrorPostingPopup(int param_1,ulonglong param_2)
+
+{
+  undefined8 uVar1;
+  
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821b0bb0,0x97,0,0xffffffff82000f98,0xffffffff8202e030);
+  }
+  Com_SetErrorMessage(param_2);
+  uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  UI_OpenMenu(uVar1,0xffffffff82036918);
+  (&DAT_8453a7c0)[param_1] = 1;
+  (&DAT_8453a7d0)[param_1] = 2;
   return;
 }
 
@@ -193,13 +323,159 @@ void Facebook_FinishPostingTask(int param_1)
 }
 
 
-// 826FF4A0  Facebook_UpdatePostingType  (social/fb_posting.cpp:197)
+// 826FF1E0  Facebook_CloseMenu  (social/fb_posting.cpp:188)
 
-void Facebook_UpdatePostingType(void)
+void Facebook_CloseMenu(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_23();
+  undefined8 uVar1;
+  
+  if (param_2 == 0) {
+    uVar1 = CL_LocalClientNumFromControllerIndex();
+    UI_CloseMenu(uVar1,0xffffffff821b0c98);
+    return;
+  }
+  uVar1 = CL_LocalClientNumFromControllerIndex();
+  UI_CloseMenu(uVar1,0xffffffff821b0c84);
+  return;
+}
+
+
+// 826FF4A0  Facebook_UpdatePostingType  (social/fb_posting.cpp:197)
+
+void Facebook_UpdatePostingType(undefined8 param_1,undefined8 param_2)
+
+{
+  bool bVar1;
+  bool bVar2;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  undefined8 uVar3;
+  longlong lVar4;
+  char cVar10;
+  int iVar9;
+  ulonglong uVar5;
+  undefined4 local_70;
+  undefined1 auStack_6c [4];
+  undefined1 auStack_68 [8];
+  undefined1 auStack_60 [96];
+  
+  uVar6 = __savegprlr_23();
+  if (3 < uVar6) {
+    MyAssertHandler(0xffffffff821b0bb0,0xc6,0,0xffffffff82031880,uVar6,4);
+  }
+  bVar1 = false;
+  if ((&DAT_8453a7c0)[uVar6] == 1) {
+    cVar10 = CL_DoesControllerIndexHaveALocalClientNum(uVar6,&local_70);
+    if ((cVar10 != '\0') && (iVar9 = CL_IsCgameInitialized(local_70), iVar9 != 0)) {
+      bVar1 = true;
+    }
+    uVar5 = dwGetFacebook(uVar6);
+    bVar2 = false;
+    iVar9 = (int)param_2;
+    if ((((uVar5 & 0xffffffff) != 0) && (!bVar1)) &&
+       (cVar10 = dwGetOnlineUserID(uVar6,auStack_60), cVar10 != '\0')) {
+      if (iVar9 == 0) {
+        uVar3 = bdFacebook__uploadPhoto
+                          (auStack_6c,uVar5,DAT_8453a7f8,0xffffffff8453a800,DAT_8453adb0,
+                           0xffffffff8453ac00);
+        bdReference<bdRemoteTask>__operator_(&DAT_8453adb8 + uVar6,uVar3);
+        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_6c);
+      }
+      else if (iVar9 == 1) {
+        uVar3 = bdFacebook__uploadVideo(auStack_68,uVar5,DAT_8453a7f8,0xffffffff8453a800);
+        bdReference<bdRemoteTask>__operator_(&DAT_8453adb8 + uVar6,uVar3);
+        bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_68);
+      }
+      else if (DAT_84013128 == 0) {
+        MyAssertHandler(0xffffffff821b0bb0,0xed,0,0xffffffff821b0d08);
+      }
+      if (((int *)(&DAT_8453adb8)[uVar6] != (int *)0x0) &&
+         (iVar7 = (**(code **)(*(int *)(&DAT_8453adb8)[uVar6] + 4))(), iVar7 == 1)) {
+        bVar2 = true;
+        (&DAT_8453a7c0)[uVar6] = 2;
+        iVar7 = Sys_Milliseconds();
+        (&DAT_8453a7e0)[uVar6] = iVar7 + 0x5dc;
+        if (iVar9 == 0) {
+          UI_OpenMenu(local_70,0xffffffff821b0c98);
+        }
+      }
+    }
+    if (bVar2) goto LAB_826ff850;
+    if (iVar9 == 1) {
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar6);
+      UI_CloseMenu(uVar3,0xffffffff821b0c84);
+    }
+  }
+  else {
+    if ((&DAT_8453a7c0)[uVar6] != 2) goto LAB_826ff850;
+    if ((int *)(&DAT_8453adb8)[uVar6] == (int *)0x0) goto LAB_826ff850;
+    iVar7 = (**(code **)(*(int *)(&DAT_8453adb8)[uVar6] + 4))();
+    iVar9 = (&DAT_8453a7e0)[uVar6];
+    iVar8 = Sys_Milliseconds();
+    if ((iVar9 < iVar8) && (iVar9 != -1)) {
+      Facebook_CloseMenu(uVar6,param_2);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar6);
+      UI_OpenMenu(uVar3,0xffffffff821b0d70);
+      (&DAT_8453a7e0)[uVar6] = 0xffffffff;
+    }
+    if (iVar7 == 1) goto LAB_826ff850;
+    lVar4 = bdRemoteTask__getErrorCode((&DAT_8453adb8)[uVar6]);
+    if ((&DAT_8453a7e0)[uVar6] == -1) {
+LAB_826ff5c4:
+      (&DAT_8453a7c0)[uVar6] = 1;
+      (&DAT_8453a7d0)[uVar6] = 2;
+      DAT_8453a800 = 0;
+      __restgprlr_23();
+      return;
+    }
+    if ((iVar7 == 2) && ((int)lVar4 == 0)) {
+      Facebook_CloseMenu(uVar6,param_2);
+      uVar3 = CL_LocalClientNumFromControllerIndex(uVar6);
+      UI_OpenMenu(uVar3,0xffffffff821b0d70);
+      goto LAB_826ff5c4;
+    }
+    Facebook_CloseMenu(uVar6,param_2);
+    if ((lVar4 - 0xe11U & 0xffffffff) < 9) {
+      bVar1 = (int)(lVar4 - 0xe11U) != 0;
+      if (lVar4 == 0xe12 && bVar1) {
+LAB_826ff630:
+        Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0640);
+        __restgprlr_23();
+        return;
+      }
+      if (lVar4 != 0xe13 || !bVar1) {
+        if (lVar4 == 0xe14 && bVar1) {
+          Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0d54);
+          __restgprlr_23();
+          return;
+        }
+        if (lVar4 == 0xe15 && bVar1) {
+          Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0d34);
+          __restgprlr_23();
+          return;
+        }
+        if (lVar4 == 0xe16 && bVar1) {
+          Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0530);
+          __restgprlr_23();
+          return;
+        }
+        if ((lVar4 != 0xe17 || !bVar1) && (lVar4 != 0xe18 || !bVar1)) {
+          if (bVar1) {
+            Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0620);
+            __restgprlr_23();
+            return;
+          }
+          goto LAB_826ff630;
+        }
+      }
+    }
+  }
+  Facebook_ShowErrorPostingPopup(uVar6,0xffffffff821b0cec);
+LAB_826ff850:
+  __restgprlr_23();
+  return;
 }
 
 
@@ -225,8 +501,8 @@ void Facebook_UpdatePosting(int param_1)
   if (DAT_84013128 != 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   MyAssertHandler(0xffffffff821b0bb0,0x15d,0,0xffffffff821b0d98);
+  return;
 }
 
 
@@ -253,8 +529,45 @@ void FacebookPostingInfo___FacebookPostingInfo(longlong param_1)
 void _dynamic_atexit_destructor_for__g_DWFacebookPostingTask__(void)
 
 {
-                    /* WARNING: Subroutine does not return */
+  undefined4 *puVar1;
+  uint uVar2;
+  uint uVar3;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  char in_RESERVE;
+  byte in_cr0;
+  
   __savegprlr_29();
+  lVar6 = 3;
+  puVar7 = &DAT_8453adc8;
+  do {
+    puVar7 = puVar7 + -1;
+    uVar2 = *puVar7;
+    if ((ulonglong)uVar2 != 0) {
+      lVar4 = (ulonglong)uVar2 + 4;
+      do {
+        puVar5 = (uint *)lVar4;
+        if (in_RESERVE != '\0') {
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      if (*(int *)(uVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)*puVar7;
+        if (puVar1 != (undefined4 *)0x0) {
+          (**(code **)*puVar1)(puVar1,1);
+        }
+        *puVar7 = 0;
+      }
+    }
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
+  __restgprlr_29();
+  return;
 }
 
 

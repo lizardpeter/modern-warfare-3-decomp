@@ -2,11 +2,46 @@
 
 // 82917708  vscan_fn  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:42)
 
-void vscan_fn(void)
+void vscan_fn(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
+             undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  code *pcVar2;
+  int *piVar3;
+  undefined8 uVar1;
+  char *pcVar5;
+  ulonglong uVar4;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_44;
+  
+  pcVar2 = (code *)__savegprlr_27();
+  local_50 = 0;
+  memset(&local_4c,0,0x1c);
+  if (((param_2 & 0xffffffff) == 0) || (uVar4 = param_2, (param_3 & 0xffffffff) == 0)) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
+    _invalid_parameter_noinfo();
+    uVar1 = 0xffffffffffffffff;
+  }
+  else {
+    do {
+      pcVar5 = (char *)uVar4;
+      uVar4 = uVar4 + 1;
+    } while (*pcVar5 != '\0');
+    local_50 = (undefined4)param_2;
+    uVar4 = (uVar4 - param_2) - 1;
+    local_4c = 0x7fffffff;
+    local_44 = 0x49;
+    if ((uVar4 & 0xffffffff) < 0x80000000) {
+      local_4c = (undefined4)uVar4;
+    }
+    local_48 = local_50;
+    uVar1 = (*pcVar2)(&local_50,param_3,param_4,param_5);
+  }
+  __restgprlr_27(uVar1);
+  return;
 }
 
 

@@ -2,10 +2,69 @@
 
 // 828ABE68  UnicodeToUTF8  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/unicodetoutf8.c:32)
 
-void UnicodeToUTF8(void)
+void UnicodeToUTF8(undefined8 param_1,longlong param_2,ulonglong param_3,int param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  wchar_t wVar1;
+  wchar_t *_Str;
+  size_t sVar2;
+  byte bVar3;
+  longlong lVar4;
+  longlong lVar5;
+  
+  _Str = (wchar_t *)__savegprlr_27();
+  lVar5 = 0;
+  if ((int)param_2 == -1) {
+    sVar2 = wcslen(_Str);
+    param_2 = (longlong)(int)sVar2 + 1;
+  }
+  if (0 < (int)param_2) {
+    do {
+      wVar1 = *_Str;
+      if ((ushort)wVar1 < 0x80) {
+        lVar5 = lVar5 + 1;
+        if (((int)lVar5 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
+          *(byte *)param_3 = (byte)wVar1;
+LAB_828abf70:
+          param_3 = param_3 + 1;
+        }
+      }
+      else {
+        lVar4 = lVar5 + 1;
+        if ((ushort)wVar1 < 0x800) {
+          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
+            bVar3 = (byte)((ushort)wVar1 >> 6) & 0x1f | 0xc0;
+LAB_828abf48:
+            *(byte *)param_3 = bVar3;
+            param_3 = param_3 + 1;
+          }
+        }
+        else {
+          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
+            *(byte *)param_3 = (byte)((ushort)wVar1 >> 0xc) | 0xe0;
+            param_3 = param_3 + 1;
+          }
+          lVar4 = lVar5 + 2;
+          if (((int)lVar4 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
+            bVar3 = (byte)((ushort)*_Str >> 6) & 0x3f | 0x80;
+            goto LAB_828abf48;
+          }
+        }
+        lVar5 = lVar4 + 1;
+        if (((int)lVar5 <= param_4) && ((param_3 & 0xffffffff) != 0)) {
+          *(byte *)param_3 = (byte)*_Str & 0x3f | 0x80;
+          goto LAB_828abf70;
+        }
+      }
+      _Str = _Str + 1;
+      param_2 = param_2 + -1;
+    } while (param_2 != 0);
+  }
+  if ((param_4 != 0) && (param_4 < (int)lVar5)) {
+    SetLastError(0x7a);
+    lVar5 = 0;
+  }
+  __restgprlr_27(lVar5);
+  return;
 }
 

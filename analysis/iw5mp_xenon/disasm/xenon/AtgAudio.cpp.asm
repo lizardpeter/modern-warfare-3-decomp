@@ -93,6 +93,36 @@ LAB_82634bf8:
 ; 82634C10  CRiffChunk::ReadData  (xenon/AtgAudio.cpp:140)
   82634C10  7D8802A6             mfspr r12,LR
   82634C14  482E1AA9             bl 0x829166bc
+  82634C18  9421FF90             stwu r1,-0x70(r1)
+  82634C1C  8163000C             lwz r11,0xc(r3)
+  82634C20  7CBE2B78             or r30,r5,r5
+  82634C24  38A00002             li r5,0x2
+  82634C28  7C8B2214             add r4,r11,r4
+  82634C2C  7C7F1B78             or r31,r3,r3
+  82634C30  80630008             lwz r3,0x8(r3)
+  82634C34  7CDD3378             or r29,r6,r6
+  82634C38  4BFA1D59             bl 0x825d6990
+  82634C3C  2F03FFFF             cmpwi cr6,r3,-0x1
+  82634C40  409A0020             bne cr6,0x82634c60
+LAB_82634c44:
+  82634C44  4826E0F5             bl 0x828a2d38
+  82634C48  2F030000             cmpwi cr6,r3,0x0
+  82634C4C  40990030             ble cr6,0x82634c7c
+  82634C50  546B043E             rlwinm r11,r3,0x0,0x10,0x1f
+  82634C54  65638007             oris r3,r11,0x8007
+  82634C58  38210070             addi r1,r1,0x70
+  82634C5C  482E1AB0             b 0x8291670c
+LAB_82634c60:
+  82634C60  7FA4EB78             or r4,r29,r29
+  82634C64  80BF0008             lwz r5,0x8(r31)
+  82634C68  7FC3F378             or r3,r30,r30
+  82634C6C  4BFA142D             bl 0x825d6098
+  82634C70  2F030000             cmpwi cr6,r3,0x0
+  82634C74  419AFFD0             beq cr6,0x82634c44
+  82634C78  38600000             li r3,0x0
+LAB_82634c7c:
+  82634C7C  38210070             addi r1,r1,0x70
+  82634C80  482E1A8C             b 0x8291670c
 
 ; 82634C88  CXMAFile::CXMAFile  (xenon/AtgAudio.cpp:159)
   82634C88  39600000             li r11,0x0
@@ -297,6 +327,106 @@ LAB_82634d54:
 ; 82634D68  CXMAFile::GetFormat  (xenon/AtgAudio.cpp:259)
   82634D68  7D8802A6             mfspr r12,LR
   82634D6C  482E1949             bl 0x829166b4
+  82634D70  9421FF80             stwu r1,-0x80(r1)
+  82634D74  3D608218             lis r11,-0x7de8
+  82634D78  3D408200             lis r10,-0x7e00
+  82634D7C  7C7E1B78             or r30,r3,r3
+  82634D80  7C9F2378             or r31,r4,r4
+  82634D84  2B040000             cmplwi cr6,r4,0x0
+  82634D88  3BAB7CE4             addi r29,r11,0x7ce4
+  82634D8C  3B8A0F98             addi r28,r10,0xf98
+  82634D90  409A0020             bne cr6,0x82634db0
+  82634D94  3D608218             lis r11,-0x7de8
+  82634D98  7F86E378             or r6,r28,r28
+  82634D9C  38EB7CD8             addi r7,r11,0x7cd8
+  82634DA0  7FA3EB78             or r3,r29,r29
+  82634DA4  38A00000             li r5,0x0
+  82634DA8  38800109             li r4,0x109
+  82634DAC  4BF9F755             bl 0x825d4500
+LAB_82634db0:
+  82634DB0  837E002C             lwz r27,0x2c(r30)
+  82634DB4  2B1B0020             cmplwi cr6,r27,0x20
+  82634DB8  419A0020             beq cr6,0x82634dd8
+  82634DBC  3D608218             lis r11,-0x7de8
+  82634DC0  7F86E378             or r6,r28,r28
+  82634DC4  38EB7CB0             addi r7,r11,0x7cb0
+  82634DC8  7FA3EB78             or r3,r29,r29
+  82634DCC  38A00000             li r5,0x0
+  82634DD0  3880010C             li r4,0x10c
+  82634DD4  4BF9F72D             bl 0x825d4500
+LAB_82634dd8:
+  82634DD8  38A00002             li r5,0x2
+  82634DDC  809E0028             lwz r4,0x28(r30)
+  82634DE0  807E0024             lwz r3,0x24(r30)
+  82634DE4  3BBE001C             addi r29,r30,0x1c
+  82634DE8  4BFA1BA9             bl 0x825d6990
+  82634DEC  2F03FFFF             cmpwi cr6,r3,-0x1
+  82634DF0  409A0014             bne cr6,0x82634e04
+  82634DF4  4826DF45             bl 0x828a2d38
+  82634DF8  2F030000             cmpwi cr6,r3,0x0
+  82634DFC  40990038             ble cr6,0x82634e34
+  82634E00  48000028             b 0x82634e28
+LAB_82634e04:
+  82634E04  7F64DB78             or r4,r27,r27
+  82634E08  80BD0008             lwz r5,0x8(r29)
+  82634E0C  7FE3FB78             or r3,r31,r31
+  82634E10  4BFA1289             bl 0x825d6098
+  82634E14  2F030000             cmpwi cr6,r3,0x0
+  82634E18  409A0020             bne cr6,0x82634e38
+  82634E1C  4826DF1D             bl 0x828a2d38
+  82634E20  2F030000             cmpwi cr6,r3,0x0
+  82634E24  4099000C             ble cr6,0x82634e30
+LAB_82634e28:
+  82634E28  546B043E             rlwinm r11,r3,0x0,0x10,0x1f
+  82634E2C  65638007             oris r3,r11,0x8007
+LAB_82634e30:
+  82634E30  2F030000             cmpwi cr6,r3,0x0
+LAB_82634e34:
+  82634E34  4198009C             blt cr6,0x82634ed0
+LAB_82634e38:
+  82634E38  7CC0FE2C             lhbrx r6,0,r31
+  82634E3C  397F0002             addi r11,r31,0x2
+  82634E40  391F0004             addi r8,r31,0x4
+  82634E44  38FF0006             addi r7,r31,0x6
+  82634E48  393F0008             addi r9,r31,0x8
+  82634E4C  39400000             li r10,0x0
+  82634E50  B0DF0000             sth r6,0x0(r31)
+  82634E54  7CA05E2C             lhbrx r5,0,r11
+  82634E58  B0BF0002             sth r5,0x2(r31)
+  82634E5C  7C80462C             lhbrx r4,0,r8
+  82634E60  B09F0004             sth r4,0x4(r31)
+  82634E64  7C603E2C             lhbrx r3,0,r7
+  82634E68  B07F0006             sth r3,0x6(r31)
+  82634E6C  7D604E2C             lhbrx r11,0,r9
+  82634E70  2B0B0000             cmplwi cr6,r11,0x0
+  82634E74  B17F0008             sth r11,0x8(r31)
+  82634E78  419A0054             beq cr6,0x82634ecc
+  82634E7C  397F0014             addi r11,r31,0x14
+LAB_82634e80:
+  82634E80  390BFFF8             subi r8,r11,0x8
+  82634E84  38EBFFFC             subi r7,r11,0x4
+  82634E88  38CB0004             addi r6,r11,0x4
+  82634E8C  38AB000A             addi r5,r11,0xa
+  82634E90  394A0001             addi r10,r10,0x1
+  82634E94  7D00442C             lwbrx r8,0,r8
+  82634E98  910BFFF8             stw r8,-0x8(r11)
+  82634E9C  7CE03C2C             lwbrx r7,0,r7
+  82634EA0  90EBFFFC             stw r7,-0x4(r11)
+  82634EA4  7C805C2C             lwbrx r4,0,r11
+  82634EA8  908B0000             stw r4,0x0(r11)
+  82634EAC  7C60342C             lwbrx r3,0,r6
+  82634EB0  906B0004             stw r3,0x4(r11)
+  82634EB4  7D002E2C             lhbrx r8,0,r5
+  82634EB8  B10B000A             sth r8,0xa(r11)
+  82634EBC  396B0014             addi r11,r11,0x14
+  82634EC0  A0E90000             lhz r7,0x0(r9)
+  82634EC4  7F0A3800             cmpw cr6,r10,r7
+  82634EC8  4198FFB8             blt cr6,0x82634e80
+LAB_82634ecc:
+  82634ECC  38600000             li r3,0x0
+LAB_82634ed0:
+  82634ED0  38210080             addi r1,r1,0x80
+  82634ED4  482E1830             b 0x82916704
 
 ; 82634ED8  CXMAFile::ReadSample  (xenon/AtgAudio.cpp:304)
   82634ED8  7D8802A6             mfspr r12,LR
@@ -411,6 +541,30 @@ LAB_82635010:
 ; 82635050  CRiffChunkBuffer::Initialize  (xenon/AtgAudio.cpp:394)
   82635050  7D8802A6             mfspr r12,LR
   82635054  482E1661             bl 0x829166b4
+  82635058  9421FF80             stwu r1,-0x80(r1)
+  8263505C  7C7F1B78             or r31,r3,r3
+  82635060  7C9D2378             or r29,r4,r4
+  82635064  7CBC2B78             or r28,r5,r5
+  82635068  7CDE3378             or r30,r6,r6
+  8263506C  7CFB3B78             or r27,r7,r7
+  82635070  2B060000             cmplwi cr6,r6,0x0
+  82635074  409A0028             bne cr6,0x8263509c
+  82635078  3D608218             lis r11,-0x7de8
+  8263507C  3D408200             lis r10,-0x7e00
+  82635080  3D208218             lis r9,-0x7de8
+  82635084  38EB7D24             addi r7,r11,0x7d24
+  82635088  38CA0F98             addi r6,r10,0xf98
+  8263508C  38697CE4             addi r3,r9,0x7ce4
+  82635090  38A00000             li r5,0x0
+  82635094  3880018B             li r4,0x18b
+  82635098  4BF9F469             bl 0x825d4500
+LAB_8263509c:
+  8263509C  93BF0000             stw r29,0x0(r31)
+  826350A0  939F0004             stw r28,0x4(r31)
+  826350A4  93DF0008             stw r30,0x8(r31)
+  826350A8  937F000C             stw r27,0xc(r31)
+  826350AC  38210080             addi r1,r1,0x80
+  826350B0  482E1654             b 0x82916704
 
 ; 826350B8  CRiffChunkBuffer::Open  (xenon/AtgAudio.cpp:409)
   826350B8  81230004             lwz r9,0x4(r3)
@@ -753,6 +907,91 @@ LAB_826355a8:
   826355A8  38600000             li r3,0x0
   826355AC  382100C0             addi r1,r1,0xc0
   826355B0  482E1138             b 0x829166e8
+
+; 826355B8  CXMAHeaderBuffer::SetSourceFormat  (xenon/AtgAudio.cpp:560)
+  826355B8  7D8802A6             mfspr r12,LR
+  826355BC  9181FFF8             stw r12,-0x8(r1)
+  826355C0  FBC1FFE8             std r30,-0x18(r1)
+  826355C4  FBE1FFF0             std r31,-0x10(r1)
+  826355C8  9421FF90             stwu r1,-0x70(r1)
+  826355CC  7C7F1B78             or r31,r3,r3
+  826355D0  7C9E2378             or r30,r4,r4
+  826355D4  2B040000             cmplwi cr6,r4,0x0
+  826355D8  409A0028             bne cr6,0x82635600
+  826355DC  3D608218             lis r11,-0x7de8
+  826355E0  3D408200             lis r10,-0x7e00
+  826355E4  3D208218             lis r9,-0x7de8
+  826355E8  38EB7F80             addi r7,r11,0x7f80
+  826355EC  38CA0F98             addi r6,r10,0xf98
+  826355F0  38697CE4             addi r3,r9,0x7ce4
+  826355F4  38A00000             li r5,0x0
+  826355F8  38800233             li r4,0x233
+  826355FC  4BF9EF05             bl 0x825d4500
+LAB_82635600:
+  82635600  80DF003C             lwz r6,0x3c(r31)
+  82635604  2B060020             cmplwi cr6,r6,0x20
+  82635608  40980028             bge cr6,0x82635630
+  8263560C  3D608218             lis r11,-0x7de8
+  82635610  80BF0000             lwz r5,0x0(r31)
+  82635614  38E00020             li r7,0x20
+  82635618  388B7F18             addi r4,r11,0x7f18
+  8263561C  38600001             li r3,0x1
+  82635620  4BEC1541             bl 0x824f6b60
+  82635624  3C608000             lis r3,-0x8000
+  82635628  60634005             ori r3,r3,0x4005
+  8263562C  480000AC             b 0x826356d8
+LAB_82635630:
+  82635630  80FF0038             lwz r7,0x38(r31)
+  82635634  80DF0008             lwz r6,0x8(r31)
+  82635638  39670020             addi r11,r7,0x20
+  8263563C  7F0B3040             cmplw cr6,r11,r6
+  82635640  40990028             ble cr6,0x82635668
+  82635644  3D608218             lis r11,-0x7de8
+  82635648  80BF0000             lwz r5,0x0(r31)
+  8263564C  39000020             li r8,0x20
+  82635650  388B7D58             addi r4,r11,0x7d58
+  82635654  38600001             li r3,0x1
+  82635658  4BEC1509             bl 0x824f6b60
+  8263565C  3C608000             lis r3,-0x8000
+  82635660  60634005             ori r3,r3,0x4005
+  82635664  48000074             b 0x826356d8
+LAB_82635668:
+  82635668  817F0004             lwz r11,0x4(r31)
+  8263566C  7D4B3A14             add r10,r11,r7
+  82635670  396A0008             addi r11,r10,0x8
+  82635674  392A0010             addi r9,r10,0x10
+  82635678  7D005E2C             lhbrx r8,0,r11
+  8263567C  5506043E             rlwinm r6,r8,0x0,0x10,0x1f
+  82635680  2B060001             cmplwi cr6,r6,0x1
+  82635684  B10A0008             sth r8,0x8(r10)
+  82635688  7CE04C2C             lwbrx r7,0,r9
+  8263568C  90EA0010             stw r7,0x10(r10)
+  82635690  40990024             ble cr6,0x826356b4
+  82635694  3D608218             lis r11,-0x7de8
+  82635698  80BF0000             lwz r5,0x0(r31)
+  8263569C  38600001             li r3,0x1
+  826356A0  388B7ED0             addi r4,r11,0x7ed0
+  826356A4  4BEC14BD             bl 0x824f6b60
+  826356A8  3C608000             lis r3,-0x8000
+  826356AC  60634005             ori r3,r3,0x4005
+  826356B0  48000028             b 0x826356d8
+LAB_826356b4:
+  826356B4  39000004             li r8,0x4
+  826356B8  38600000             li r3,0x0
+  826356BC  991E0000             stb r8,0x0(r30)
+  826356C0  A0EB0000             lhz r7,0x0(r11)
+  826356C4  98FE0004             stb r7,0x4(r30)
+  826356C8  88AA001D             lbz r5,0x1d(r10)
+  826356CC  98BE000C             stb r5,0xc(r30)
+  826356D0  80890000             lwz r4,0x0(r9)
+  826356D4  909E0008             stw r4,0x8(r30)
+LAB_826356d8:
+  826356D8  38210070             addi r1,r1,0x70
+  826356DC  8181FFF8             lwz r12,-0x8(r1)
+  826356E0  7D8803A6             mtspr LR,r12
+  826356E4  EBC1FFE8             ld r30,-0x18(r1)
+  826356E8  EBE1FFF0             ld r31,-0x10(r1)
+  826356EC  4E800020             blr
 
 ; 826356F0  CXMAHeaderBuffer::ReadIwXmaDataInfo  (xenon/AtgAudio.cpp:604)
   826356F0  7D8802A6             mfspr r12,LR

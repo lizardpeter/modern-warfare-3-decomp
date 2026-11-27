@@ -5,8 +5,35 @@
 void XHVEnginepInitVTable(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  int *piVar1;
+  
+  piVar1 = (int *)__savegprlr_18();
+  if (*piVar1 == 0) {
+    *piVar1 = (int)XHVEngineAddRef;
+    piVar1[1] = (int)XHVEngineRelease;
+    piVar1[2] = (int)XHVEngineLock;
+    piVar1[3] = (int)XHVEngineStartLocalProcessingModes;
+    piVar1[4] = (int)XHVEngineStopLocalProcessingModes;
+    piVar1[5] = (int)XHVEngineStartRemoteProcessingModes;
+    piVar1[6] = (int)XHVEngineStopRemoteProcessingModes;
+    piVar1[7] = (int)XHVEngineSetMaxDecodePackets;
+    piVar1[8] = (int)XHVEngineRegisterLocalTalker;
+    piVar1[9] = (int)XHVEngineUnregisterLocalTalker;
+    piVar1[10] = (int)XHVEngineRegisterRemoteTalker;
+    piVar1[0xb] = (int)XHVEngineUnregisterRemoteTalker;
+    piVar1[0xc] = (int)XHVEngineGetRemoteTalkers;
+    piVar1[0xd] = (int)XHVEngineIsHeadsetPresent;
+    piVar1[0xe] = (int)XHVEngineIsLocalTalking;
+    piVar1[0xf] = (int)XHVEngineIsRemoteTalking;
+    piVar1[0x10] = (int)XHVEngineSetRemoteTalkerOutputVoice;
+    piVar1[0x11] = (int)XHVEngineSetRemoteTalkerEffectParam;
+    piVar1[0x12] = (int)XHVEngineGetDataReadyFlags;
+    piVar1[0x13] = (int)XHVEngineGetLocalChatData;
+    piVar1[0x14] = (int)XHVEngineSetPlaybackPriority;
+    piVar1[0x15] = (int)XHVEngineSubmitIncomingChatData;
+  }
+  __restgprlr_18();
+  return;
 }
 
 
@@ -193,13 +220,339 @@ undefined4 XHVEnginepFindRemoteTalker(int param_1,longlong param_2)
 }
 
 
-// 828BEF20  XHVEngineSetLocalTalkerOutput  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:920)
+// 828BE528  XHVEnginepMaxPacketsLatestArriving  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:464)
 
-void XHVEngineSetLocalTalkerOutput(void)
+void XHVEnginepMaxPacketsLatestArriving
+               (undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  int *piVar11;
+  int iVar12;
+  ulonglong uVar13;
+  int iVar14;
+  longlong lVar15;
+  
+  lVar4 = __savegprlr_26();
+  lVar5 = 0;
+  iVar12 = (int)lVar4;
+  if (param_2 == 1) {
+    uVar13 = (ulonglong)*(uint *)(iVar12 + 0x528);
+    uVar10 = lVar4 + 0x530;
+    iVar12 = iVar12 + 0x560;
+    lVar15 = 4;
+    lVar9 = lVar4 + 0x458;
+    uVar6 = 0;
+    uVar7 = 4;
+    lVar4 = (param_3 + 0x158 & 0x3fffffff) * 4 + lVar4;
+    do {
+      if ((*(int *)lVar9 != 0) && (*(int *)lVar4 != 0)) {
+        uVar6 = uVar6 + 1;
+      }
+      lVar9 = lVar9 + 4;
+      lVar4 = lVar4 + 0xc;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
+    if ((uVar6 & 0xffffffff) != 0) {
+      trapWord(6,uVar6,0);
+      uVar13 = uVar13 - (longlong)(int)(uVar13 / (uVar6 & 0xffffffff)) * (longlong)(int)uVar6;
+    }
+  }
+  else {
+    uVar13 = 0;
+    uVar10 = lVar4 + 0x590;
+    iVar12 = iVar12 + 0x728;
+    uVar7 = 0x22;
+  }
+  uVar6 = uVar7 * 0xc + uVar10;
+  if ((uVar10 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+    lVar4 = ((uVar6 - uVar10) - 1 & 0xffffffff) / 0xc + 1;
+    uVar8 = uVar10;
+    do {
+      piVar11 = (int *)((int)((param_3 & 0xffffffff) << 2) + (int)uVar8);
+      uVar8 = uVar8 + 0xc;
+      *piVar11 = -*piVar11;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  while( true ) {
+    iVar14 = 0;
+    uVar8 = 0;
+    if (uVar7 == 0) break;
+    do {
+      if ((param_4 & 0xffffffff) == 0) break;
+      iVar3 = (int)((param_3 & 0xffffffff) << 2);
+      trapWord(6,uVar7,0);
+      lVar4 = (uVar8 + uVar13) -
+              (longlong)(int)((uVar8 + uVar13 & 0xffffffff) / uVar7) * (longlong)(int)uVar7;
+      iVar2 = (int)lVar4 * 0xc + (int)uVar10;
+      uVar1 = *(uint *)(iVar3 + iVar2);
+      if ((int)uVar1 < *(int *)((int)((lVar4 * 3 + param_3 & 0xffffffff) << 2) + iVar12)) {
+        lVar4 = (ulonglong)uVar1 + 1;
+        iVar14 = iVar14 + 1;
+        *(int *)(iVar3 + iVar2) = (int)lVar4;
+        if (lVar4 != 0) {
+          param_4 = param_4 - 1;
+        }
+      }
+      uVar8 = uVar8 + 1;
+    } while ((uVar8 & 0xffffffff) < uVar7);
+    if ((iVar14 == 0) || ((param_4 & 0xffffffff) == 0)) break;
+  }
+  if ((uVar10 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+    lVar4 = ((uVar6 - uVar10) - 1 & 0xffffffff) / 0xc + 1;
+    do {
+      iVar12 = (int)((param_3 & 0x3fffffff) << 2);
+      iVar14 = (int)uVar10;
+      if (*(int *)(iVar12 + iVar14) < 0) {
+        *(undefined4 *)(iVar12 + iVar14) = 0;
+      }
+      uVar10 = uVar10 + 0xc;
+      lVar5 = lVar5 + (ulonglong)*(uint *)(iVar12 + iVar14);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  __restgprlr_26(lVar5);
+  return;
+}
+
+
+// 828BEC00  XHVEnginepCalculateWork  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:699)
+
+void XHVEnginepCalculateWork(void)
+
+{
+  longlong *plVar1;
+  longlong *plVar2;
+  undefined4 uVar3;
+  int iVar5;
+  ulonglong uVar4;
+  uint uVar6;
+  uint *puVar7;
+  uint *puVar9;
+  ulonglong uVar8;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  int iVar13;
+  ulonglong uVar14;
+  int iVar15;
+  uint uVar16;
+  longlong lVar17;
+  uint uVar18;
+  uint uVar19;
+  int *piVar20;
+  uint *puVar21;
+  
+  iVar5 = __savegprlr_23();
+  iVar15 = iVar5 + 0x560;
+  XMemSet(iVar15,0,0x30);
+  piVar20 = (int *)(iVar5 + 0x458);
+  lVar17 = 4;
+  iVar13 = iVar15;
+  do {
+    if (*piVar20 != 0) {
+      LocalTalkerCodecWork(*piVar20,iVar13);
+    }
+    lVar17 = lVar17 + -1;
+    piVar20 = piVar20 + 1;
+    iVar13 = iVar13 + 0xc;
+  } while (lVar17 != 0);
+  uVar16 = iVar5 + 0x728;
+  XMemSet(uVar16,0,0x198);
+  uVar18 = 0;
+  if (*(int *)(iVar5 + 8) != 0) {
+    puVar21 = (uint *)(iVar5 + 0x468);
+    uVar10 = uVar16;
+    do {
+      if (*(int *)(iVar5 + 0x51c) == 1) {
+        plVar1 = (longlong *)*puVar21;
+        if (*plVar1 == 0) {
+          uVar11 = 0xffffffff;
+        }
+        else {
+          uVar11 = 0xffffffff;
+          puVar9 = (uint *)((int)plVar1 + 0x24);
+          lVar17 = 4;
+          do {
+            if (*puVar9 <= uVar11) {
+              uVar11 = *puVar9;
+            }
+            puVar9 = puVar9 + 1;
+            lVar17 = lVar17 + -1;
+          } while (lVar17 != 0);
+        }
+        uVar6 = uVar18 + 1;
+        uVar19 = uVar18;
+        puVar9 = puVar21;
+        if (uVar6 < *(uint *)(iVar5 + 8)) {
+          do {
+            plVar2 = (longlong *)puVar9[1];
+            uVar12 = 0xffffffff;
+            puVar7 = (uint *)((int)plVar2 + 0x24);
+            lVar17 = 4;
+            do {
+              if (*puVar7 <= uVar12) {
+                uVar12 = *puVar7;
+              }
+              puVar7 = puVar7 + 1;
+              lVar17 = lVar17 + -1;
+            } while (lVar17 != 0);
+            if ((*plVar2 != 0) && (uVar12 < uVar11)) {
+              uVar11 = uVar12;
+              uVar19 = uVar6;
+            }
+            uVar6 = uVar6 + 1;
+            puVar9 = puVar9 + 1;
+          } while (uVar6 < *(uint *)(iVar5 + 8));
+          if (uVar19 != uVar18) {
+            iVar13 = (uVar19 + 0x11a) * 4;
+            *puVar21 = *(uint *)(iVar13 + iVar5) ^ (uint)plVar1;
+            uVar11 = *(uint *)(iVar13 + iVar5) ^ *puVar21;
+            *(uint *)(iVar13 + iVar5) = uVar11;
+            *puVar21 = *puVar21 ^ uVar11;
+          }
+        }
+      }
+      if (*(longlong *)*puVar21 != 0) {
+        RemoteTalkerCodecWork((longlong *)*puVar21,uVar10);
+      }
+      uVar18 = uVar18 + 1;
+      puVar21 = puVar21 + 1;
+      uVar10 = uVar10 + 0xc;
+    } while (uVar18 < *(uint *)(iVar5 + 8));
+  }
+  *(undefined4 *)(iVar5 + 0x51c) = 0;
+  iVar13 = DAT_829afbac;
+  uVar18 = iVar5 + 0x530;
+  uVar8 = 0;
+  uVar14 = 0;
+  if (uVar18 < iVar5 + 0x560U) {
+    iVar15 = iVar15 - uVar18;
+    do {
+      uVar10 = iVar15 + uVar18;
+      if (iVar5 + 0x590U <= uVar10) break;
+      uVar10 = *(uint *)(iVar13 * 4 + uVar10);
+      uVar8 = uVar10 + uVar8;
+      *(uint *)(iVar13 * 4 + uVar18) = uVar10;
+      uVar18 = uVar18 + 0xc;
+    } while (uVar18 < iVar5 + 0x560U);
+    if ((uVar8 & 0xffffffff) != 0) {
+      uVar14 = uVar8;
+    }
+  }
+  uVar8 = XHVEnginepMaxPacketsLatestArriving(iVar5,1,DAT_829af95c,2);
+  if ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    uVar14 = uVar8;
+  }
+  if (*(int *)(iVar5 + 0x52c) == 0) {
+    *(undefined4 *)(iVar5 + 0x52c) = 2;
+  }
+  uVar3 = *(undefined4 *)(iVar5 + 0x52c);
+  uVar18 = iVar5 + 0x8c0;
+  uVar8 = (ulonglong)DAT_829af97c;
+  if (uVar16 < uVar18) {
+    iVar13 = DAT_829af97c * 4;
+    iVar15 = ((uVar18 - uVar16) - 1) / 0xc + 1;
+    uVar10 = uVar16;
+    do {
+      if (1 < *(uint *)(iVar13 + uVar10)) {
+        *(undefined4 *)(iVar13 + uVar10) = 1;
+      }
+      uVar10 = uVar10 + 0xc;
+      iVar15 = iVar15 + -1;
+    } while (iVar15 != 0);
+  }
+  uVar4 = XHVEnginepMaxPacketsLatestArriving(iVar5,0,uVar8,uVar3);
+  if (iVar5 + 0x590U < iVar5 + 0x728U) {
+    iVar13 = (iVar5 + 0x590U) - uVar16;
+    do {
+      if (uVar18 <= uVar16) break;
+      iVar15 = (int)((uVar8 & 0xffffffff) << 2);
+      *(undefined4 *)(iVar15 + uVar16) = *(undefined4 *)(iVar15 + uVar16 + iVar13);
+      uVar16 = uVar16 + 0xc;
+    } while (uVar16 + iVar13 < iVar5 + 0x728U);
+  }
+  if ((uVar14 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+    uVar14 = uVar4;
+  }
+  if ((uVar14 & 0xffffffff) != 0) {
+    *(int *)(iVar5 + 0x528) = *(int *)(iVar5 + 0x528) + 1;
+  }
+  __restgprlr_23(uVar14);
+  return;
+}
+
+
+// 828BEF20  XHVEngineSetLocalTalkerOutput  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:920)
+
+void XHVEngineSetLocalTalkerOutput(undefined8 param_1,undefined8 param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  double dVar4;
+  undefined1 local_50 [4];
+  float local_4c;
+  undefined1 local_48 [4];
+  undefined1 *local_44;
+  undefined1 local_40 [4];
+  undefined1 *local_3c;
+  undefined1 local_38 [4];
+  undefined1 *local_34;
+  
+  iVar1 = __savegprlr_29();
+  XMemSet(local_50,0,8);
+  dVar4 = 0.0;
+  local_4c = 0.0;
+  puVar3 = (undefined4 *)param_2;
+  local_50[0] = (undefined1)*puVar3;
+  XMemSet(local_48,0,8);
+  local_44 = local_50;
+  local_48[0] = 1;
+  XMemSet(local_40,0,8);
+  local_3c = local_48;
+  local_40[0] = 0;
+  XMemSet(local_38,0,8);
+  local_34 = local_40;
+  local_38[0] = 1;
+  if (*(int *)(iVar1 + 0x38) == 0) goto LAB_828bf008;
+  if ((puVar3[0x31] & 2) == 0) {
+    iVar2 = LocalTalkerIsHeadsetPresent(param_2);
+    if (iVar2 == 0) goto LAB_828befe0;
+LAB_828beff8:
+    local_4c = (float)dVar4;
+  }
+  else {
+LAB_828befe0:
+    if ((puVar3[0x31] & 0xf0000) == 0) goto LAB_828beff8;
+    local_4c = (float)puVar3[0x2e];
+  }
+  XAudioVoice_SetVoiceOutputVolume(*(undefined4 *)(iVar1 + 0x38),local_38);
+LAB_828bf008:
+  __restgprlr_29();
+  return;
+}
+
+
+// 828BE6D8  XHVEngineAddRemoteTalker  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:995)
+
+void XHVEngineAddRemoteTalker(int param_1,undefined4 param_2)
+
+{
+  *(undefined4 *)((*(int *)(param_1 + 8) + 0x11a) * 4 + param_1) = param_2;
+  *(int *)(param_1 + 8) = *(int *)(param_1 + 8) + 1;
+  return;
 }
 
 
@@ -349,8 +702,75 @@ LAB_828bfca8:
 void XHVEngineDestroy(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  HANDLE pvVar1;
+  int iVar2;
+  uint uVar3;
+  undefined4 *puVar5;
+  longlong lVar4;
+  
+  iVar2 = __savegprlr_28();
+  if (iVar2 != 0) {
+    if ((*(int *)(iVar2 + 0x4f0) != 0) && (*(int *)(iVar2 + 0x4f0) != -1)) {
+      ResetEvent(*(HANDLE *)(iVar2 + 0x518));
+      *(undefined4 *)(iVar2 + 0x514) = 3;
+      WaitForSingleObject(*(HANDLE *)(iVar2 + 0x4f0),0xffffffff);
+      *(undefined4 *)(iVar2 + 0x514) = 0;
+      CloseHandle(*(HANDLE *)(iVar2 + 0x4f0));
+      *(undefined4 *)(iVar2 + 0x4f0) = 0xffffffff;
+    }
+    pvVar1 = *(HANDLE *)(iVar2 + 0x518);
+    if ((pvVar1 != (HANDLE)0x0) && (pvVar1 != (HANDLE)0xffffffff)) {
+      CloseHandle(pvVar1);
+      *(undefined4 *)(iVar2 + 0x518) = 0xffffffff;
+    }
+    pvVar1 = *(HANDLE *)(iVar2 + 0x520);
+    if ((pvVar1 != (HANDLE)0x0) && (pvVar1 != (HANDLE)0xffffffff)) {
+      CloseHandle(pvVar1);
+      *(undefined4 *)(iVar2 + 0x520) = 0xffffffff;
+    }
+    if (*(int *)(iVar2 + 0x3c) != 0) {
+      XAudioVoice_Release();
+    }
+    if (*(int *)(iVar2 + 0x40) != 0) {
+      XAudioVoice_Release();
+      *(undefined4 *)(iVar2 + 0x40) = 0;
+    }
+    if (*(int *)(iVar2 + 0x38) != 0) {
+      XAudioVoice_Release();
+      *(undefined4 *)(iVar2 + 0x38) = 0;
+    }
+    uVar3 = 0;
+    if (*(int *)(iVar2 + 0xc) != 0) {
+      puVar5 = (undefined4 *)(iVar2 + 0x444);
+      do {
+        LocalTalkerDestroy(puVar5[1]);
+        uVar3 = uVar3 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+      } while (uVar3 < *(uint *)(iVar2 + 0xc));
+    }
+    puVar5 = (undefined4 *)(iVar2 + 0x454);
+    lVar4 = 4;
+    do {
+      LocalTalkerDestroy(puVar5[1]);
+      lVar4 = lVar4 + -1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+    } while (lVar4 != 0);
+    uVar3 = 0;
+    if (*(int *)(iVar2 + 8) != 0) {
+      puVar5 = (undefined4 *)(iVar2 + 0x464);
+      do {
+        RemoteTalkerDestroy(puVar5[1]);
+        uVar3 = uVar3 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+      } while (uVar3 < *(uint *)(iVar2 + 8));
+    }
+    XMemFree(iVar2,0x618a800c);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -436,48 +856,162 @@ ulonglong XHVEngineLock(longlong param_1,uint param_2)
 void XHVEngineDoWork(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  uint uVar4;
+  int *piVar5;
+  int local_a0;
+  undefined1 auStack_9c [12];
+  int local_90 [36];
+  
+  iVar1 = __savegprlr_26();
+  iVar2 = 0;
+  RtlEnterCriticalSection(iVar1 + 0x4f8);
+  if (*(int *)(iVar1 + 0x514) != 3) {
+    iVar2 = XNotifyGetNext(*(undefined4 *)(iVar1 + 0x520),0,&local_a0,auStack_9c);
+    if ((iVar2 != 0) &&
+       ((((local_a0 == 10 || (local_a0 == 0xe)) || (local_a0 == 0x4000002)) ||
+        (local_a0 == 0x4000003)))) {
+      *(undefined4 *)(iVar1 + 0x524) = 1;
+    }
+    if (*(int *)(iVar1 + 0x444) == 0) {
+      XMemSet(local_90,0,0x58);
+      local_90[0] = iVar1 + 0x44;
+      local_90[3] = 0;
+      local_90[1] = 0x400;
+      local_90[2] = 0xffffffff;
+      local_90[4] = 0x400;
+      XAudioSourceVoice_SubmitPacket(*(undefined4 *)(iVar1 + 0x40),local_90,1);
+      XAudioSourceVoice_Start(*(undefined4 *)(iVar1 + 0x40),0);
+      *(undefined4 *)(iVar1 + 0x444) = 1;
+    }
+    iVar2 = XHVEnginepCalculateWork(iVar1);
+    piVar5 = (int *)(iVar1 + 0x458);
+    lVar3 = 4;
+    do {
+      if (*piVar5 != 0) {
+        LocalTalkerProcess();
+      }
+      lVar3 = lVar3 + -1;
+      piVar5 = piVar5 + 1;
+    } while (lVar3 != 0);
+    uVar4 = 0;
+    if (*(int *)(iVar1 + 8) != 0) {
+      piVar5 = (int *)(iVar1 + 0x468);
+      do {
+        if (((longlong *)*piVar5 != (longlong *)0x0) && (*(longlong *)*piVar5 != 0)) {
+          RemoteTalkerProcess();
+        }
+        uVar4 = uVar4 + 1;
+        piVar5 = piVar5 + 1;
+      } while (uVar4 < *(uint *)(iVar1 + 8));
+    }
+    *(undefined4 *)(iVar1 + 0x524) = 0;
+  }
+  RtlLeaveCriticalSection(iVar1 + 0x4f8);
+  __restgprlr_26(iVar2 == 0);
+  return;
 }
 
 
 // 828BE850  XHVEngineStartLocalProcessingModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:1847)
 
-void XHVEngineStartLocalProcessingModes(void)
+void XHVEngineStartLocalProcessingModes
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_27();
+  RtlEnterCriticalSection(iVar2 + 0x4f8);
+  iVar1 = *(int *)((int)((param_2 + 0x116U & 0xffffffff) << 2) + iVar2);
+  if (iVar1 == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = LocalTalkerStartModes(iVar1,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(iVar2 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 828BE8C0  XHVEngineStopLocalProcessingModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:1908)
 
-void XHVEngineStopLocalProcessingModes(void)
+void XHVEngineStopLocalProcessingModes
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_27();
+  RtlEnterCriticalSection(iVar2 + 0x4f8);
+  iVar1 = *(int *)((int)((param_2 + 0x116U & 0xffffffff) << 2) + iVar2);
+  if (iVar1 == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = LocalTalkerStopModes(iVar1,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(iVar2 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 828BF3B8  XHVEngineStartRemoteProcessingModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:1967)
 
-void XHVEngineStartRemoteProcessingModes(void)
+void XHVEngineStartRemoteProcessingModes
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_27();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  uVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerStartModes(uVar2,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 828BF428  XHVEngineStopRemoteProcessingModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2021)
 
-void XHVEngineStopRemoteProcessingModes(void)
+void XHVEngineStopRemoteProcessingModes
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_27();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  uVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerStopModes(uVar2,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
@@ -503,61 +1037,198 @@ undefined8 XHVEngineSetMaxDecodePackets(longlong param_1,undefined8 param_2)
 
 // 828BE958  XHVEngineRegisterLocalTalker  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2095)
 
-void XHVEngineRegisterLocalTalker(void)
+void XHVEngineRegisterLocalTalker(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  uint uVar5;
+  longlong lVar6;
+  
+  iVar3 = __savegprlr_29();
+  RtlEnterCriticalSection(iVar3 + 0x4f8);
+  uVar5 = 0;
+  if (*(uint *)(iVar3 + 0xc) != 0) {
+    piVar4 = (int *)(iVar3 + 0x448);
+    do {
+      if (*piVar4 != 0) break;
+      uVar5 = uVar5 + 1;
+      piVar4 = piVar4 + 1;
+    } while (uVar5 < *(uint *)(iVar3 + 0xc));
+  }
+  if (uVar5 == *(uint *)(iVar3 + 0xc)) {
+    lVar6 = -0x7fffbffb;
+  }
+  else {
+    iVar1 = (uVar5 + 0x112) * 4;
+    iVar2 = (int)((param_2 + 0x116U & 0xffffffff) << 2);
+    *(undefined4 *)(iVar2 + iVar3) = *(undefined4 *)(iVar1 + iVar3);
+    *(undefined4 *)(iVar1 + iVar3) = 0;
+    lVar6 = LocalTalkerRegister(*(undefined4 *)(iVar2 + iVar3),param_2);
+    if (-1 < lVar6) {
+      *(undefined4 *)(iVar3 + 0x524) = 1;
+    }
+  }
+  RtlLeaveCriticalSection(iVar3 + 0x4f8);
+  __restgprlr_29(lVar6);
+  return;
 }
 
 
 // 828BEA10  XHVEngineUnregisterLocalTalker  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2170)
 
-void XHVEngineUnregisterLocalTalker(void)
+void XHVEngineUnregisterLocalTalker(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  uint uVar5;
+  
+  iVar3 = __savegprlr_29();
+  RtlEnterCriticalSection(iVar3 + 0x4f8);
+  uVar5 = 0;
+  iVar2 = (int)((param_2 + 0x116U & 0xffffffff) << 2);
+  uVar1 = *(undefined4 *)(iVar2 + iVar3);
+  *(undefined4 *)(iVar2 + iVar3) = 0;
+  if (*(uint *)(iVar3 + 0xc) != 0) {
+    piVar4 = (int *)(iVar3 + 0x448);
+    do {
+      if (*piVar4 == 0) {
+        *(undefined4 *)((uVar5 + 0x112) * 4 + iVar3) = uVar1;
+        break;
+      }
+      uVar5 = uVar5 + 1;
+      piVar4 = piVar4 + 1;
+    } while (uVar5 < *(uint *)(iVar3 + 0xc));
+  }
+  LocalTalkerUnregister();
+  RtlLeaveCriticalSection(iVar3 + 0x4f8);
+  __restgprlr_29(0);
+  return;
 }
 
 
 // 828BF498  XHVEngineRegisterRemoteTalker  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2251)
 
-void XHVEngineRegisterRemoteTalker(void)
+void XHVEngineRegisterRemoteTalker
+               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar2;
+  ulonglong uVar1;
+  uint uVar3;
+  int *piVar4;
+  longlong lVar5;
+  undefined8 local_40 [8];
+  
+  iVar2 = __savegprlr_26();
+  RtlEnterCriticalSection(iVar2 + 0x4f8);
+  XMemSet(local_40,0,8);
+  uVar1 = XHVEnginepFindRemoteTalker(iVar2,local_40[0]);
+  if ((uVar1 & 0xffffffff) == 0) {
+    lVar5 = -0x7fffbffb;
+  }
+  else {
+    lVar5 = RemoteTalkerRegister(uVar1,param_2,param_3,param_4,param_5,0);
+    if ((-1 < lVar5) && ((param_2 & 0xfbdf00ddeadbeef0) != 0xfbdf00ddeadbeef0)) {
+      uVar3 = 0;
+      piVar4 = (int *)(iVar2 + 0x458);
+      do {
+        if ((*piVar4 != 0) && ((*(uint *)(*piVar4 + 0xc4) & 0xf0000) == 0x10000)) {
+          *(undefined4 *)(iVar2 + 0x524) = 1;
+          break;
+        }
+        uVar3 = uVar3 + 1;
+        piVar4 = piVar4 + 1;
+      } while (uVar3 < 4);
+    }
+  }
+  RtlLeaveCriticalSection(iVar2 + 0x4f8);
+  __restgprlr_26(lVar5);
+  return;
 }
 
 
 // 828BF5A0  XHVEngineUnregisterRemoteTalker  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2357)
 
-void XHVEngineUnregisterRemoteTalker(void)
+void XHVEngineUnregisterRemoteTalker(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  longlong lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_29();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  iVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if (iVar2 == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerUnregister();
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_29(uVar3);
+  return;
 }
 
 
 // 828BF600  XHVEngineGetRemoteTalkers  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2403)
 
-void XHVEngineGetRemoteTalkers(void)
+void XHVEngineGetRemoteTalkers(undefined8 param_1,int *param_2,longlong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  uint uVar2;
+  undefined4 *puVar3;
+  ulonglong uVar4;
+  
+  iVar1 = __savegprlr_28();
+  RtlEnterCriticalSection(iVar1 + 0x4f8);
+  uVar2 = 0;
+  *param_2 = 0;
+  if (*(int *)(iVar1 + 8) != 0) {
+    puVar3 = (undefined4 *)(iVar1 + 0x468);
+    param_3 = param_3 + -8;
+    do {
+      uVar4 = *(ulonglong *)*puVar3;
+      if ((uVar4 != 0) && ((uVar4 & 0xfbdf00ddeadbeef0) != 0xfbdf00ddeadbeef0)) {
+        param_3 = param_3 + 8;
+        *(ulonglong *)param_3 = uVar4;
+        *param_2 = *param_2 + 1;
+      }
+      uVar2 = uVar2 + 1;
+      puVar3 = puVar3 + 1;
+    } while (uVar2 < *(uint *)(iVar1 + 8));
+  }
+  RtlLeaveCriticalSection(iVar1 + 0x4f8);
+  __restgprlr_28(0);
+  return;
 }
 
 
 // 828BEA98  XHVEngineIsHeadsetPresent  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2442)
 
-void XHVEngineIsHeadsetPresent(void)
+void XHVEngineIsHeadsetPresent(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = __savegprlr_28();
+  uVar2 = 0;
+  RtlEnterCriticalSection(iVar1 + 0x4f8);
+  if (*(int *)((int)((param_2 + 0x116U & 0xffffffff) << 2) + iVar1) != 0) {
+    uVar2 = LocalTalkerIsHeadsetPresent();
+  }
+  RtlLeaveCriticalSection(iVar1 + 0x4f8);
+  __restgprlr_28(uVar2);
+  return;
 }
 
 
@@ -578,21 +1249,47 @@ undefined4 XHVEngineIsLocalTalking(int param_1,int param_2)
 
 // 828BF6C0  XHVEngineIsRemoteTalking  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2514)
 
-void XHVEngineIsRemoteTalking(void)
+void XHVEngineIsRemoteTalking(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_28();
+  uVar3 = 0;
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  iVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if (iVar2 != 0) {
+    uVar3 = RemoteTalkerIsTalking();
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
 // 828BF718  XHVEngineSetRemoteTalkerOutputVoice  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2550)
 
-void XHVEngineSetRemoteTalkerOutputVoice(void)
+void XHVEngineSetRemoteTalkerOutputVoice(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_28();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  uVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerSetOutputVoice(uVar2,param_3);
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_28(uVar3);
+  return;
 }
 
 
@@ -633,31 +1330,77 @@ undefined4 XHVEngineGetDataReadyFlags(int param_1)
 
 // 828BEB28  XHVEngineGetLocalChatData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2696)
 
-void XHVEngineGetLocalChatData(void)
+void XHVEngineGetLocalChatData
+               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
+               undefined8 param_5)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  int iVar1;
+  int iVar2;
+  undefined8 uVar3;
+  
+  iVar2 = __savegprlr_26();
+  RtlEnterCriticalSection(iVar2 + 0x4f8);
+  iVar1 = *(int *)((int)((param_2 + 0x116U & 0xffffffff) << 2) + iVar2);
+  if (iVar1 == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = LocalTalkerGetNotificationData(iVar1,VoiceChatCreateWrapper,param_3,param_4,param_5);
+  }
+  RtlLeaveCriticalSection(iVar2 + 0x4f8);
+  __restgprlr_26(uVar3);
+  return;
 }
 
 
 // 828BF808  XHVEngineSetPlaybackPriority  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2752)
 
-void XHVEngineSetPlaybackPriority(void)
+void XHVEngineSetPlaybackPriority
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_27();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  uVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerSetPlaybackPriority(uVar2,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 
 // 828BF878  XHVEngineSubmitIncomingChatData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/engine.c:2810)
 
-void XHVEngineSubmitIncomingChatData(void)
+void XHVEngineSubmitIncomingChatData
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  longlong lVar1;
+  ulonglong uVar2;
+  undefined8 uVar3;
+  
+  lVar1 = __savegprlr_27();
+  RtlEnterCriticalSection(lVar1 + 0x4f8);
+  uVar2 = XHVEnginepFindRemoteTalker(lVar1,param_2);
+  if ((uVar2 & 0xffffffff) == 0) {
+    uVar3 = 0xffffffff80070057;
+  }
+  else {
+    uVar3 = RemoteTalkerSubmitChatData(uVar2,param_3,param_4);
+  }
+  RtlLeaveCriticalSection(lVar1 + 0x4f8);
+  __restgprlr_27(uVar3);
+  return;
 }
 
 

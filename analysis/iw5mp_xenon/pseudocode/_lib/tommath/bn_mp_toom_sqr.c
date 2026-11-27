@@ -2,10 +2,85 @@
 
 // 8225A6D0  mp_toom_sqr  (line unknown)
 
-void mp_toom_sqr(void)
+void mp_toom_sqr(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  uint uVar1;
+  int *piVar3;
+  undefined8 uVar2;
+  longlong lVar4;
+  undefined1 auStack_d0 [16];
+  undefined1 auStack_c0 [16];
+  undefined1 auStack_b0 [16];
+  undefined1 auStack_a0 [16];
+  undefined1 auStack_90 [16];
+  undefined1 auStack_80 [16];
+  undefined1 auStack_70 [16];
+  undefined1 auStack_60 [16];
+  undefined1 auStack_50 [80];
+  
+  piVar3 = (int *)__savegprlr_26();
+  uVar2 = mp_init_multi(auStack_50,auStack_a0,auStack_c0,auStack_b0,auStack_80,auStack_60,auStack_90
+                        ,auStack_70);
+  if ((int)uVar2 == 0) {
+    uVar1 = *piVar3 / 3;
+    lVar4 = (longlong)(int)uVar1;
+    uVar2 = mp_mod_2d(piVar3,lVar4 * 0x1c,auStack_60);
+    if (((int)uVar2 == 0) && (uVar2 = mp_copy(piVar3,auStack_90), (int)uVar2 == 0)) {
+      mp_rshd(auStack_90,lVar4);
+      mp_mod_2d(auStack_90,lVar4 * 0x1c,auStack_90);
+      uVar2 = mp_copy(piVar3,auStack_70);
+      if ((int)uVar2 == 0) {
+        mp_rshd(auStack_70,uVar1 << 1);
+        uVar2 = mp_sqr(auStack_60,auStack_50);
+        if (((((((int)uVar2 == 0) && (uVar2 = mp_sqr(auStack_70,auStack_80), (int)uVar2 == 0)) &&
+              (uVar2 = mp_mul_2(auStack_60,auStack_d0), (int)uVar2 == 0)) &&
+             (((uVar2 = mp_add(auStack_d0,auStack_90,auStack_d0), (int)uVar2 == 0 &&
+               (uVar2 = mp_mul_2(auStack_d0,auStack_d0), (int)uVar2 == 0)) &&
+              ((uVar2 = mp_add(auStack_d0,auStack_70,auStack_d0), (int)uVar2 == 0 &&
+               ((uVar2 = mp_sqr(auStack_d0,auStack_a0), (int)uVar2 == 0 &&
+                (uVar2 = mp_mul_2(auStack_70,auStack_d0), (int)uVar2 == 0)))))))) &&
+            ((((uVar2 = mp_add(auStack_d0,auStack_90,auStack_d0), (int)uVar2 == 0 &&
+               ((((uVar2 = mp_mul_2(auStack_d0,auStack_d0), (int)uVar2 == 0 &&
+                  (uVar2 = mp_add(auStack_d0,auStack_60,auStack_d0), (int)uVar2 == 0)) &&
+                 (uVar2 = mp_sqr(auStack_d0,auStack_b0), (int)uVar2 == 0)) &&
+                ((uVar2 = mp_add(auStack_70,auStack_90,auStack_d0), (int)uVar2 == 0 &&
+                 (uVar2 = mp_add(auStack_d0,auStack_60,auStack_d0), (int)uVar2 == 0)))))) &&
+              (((uVar2 = mp_sqr(auStack_d0,auStack_c0), (int)uVar2 == 0 &&
+                ((uVar2 = mp_sub(auStack_a0,auStack_80,auStack_a0), (int)uVar2 == 0 &&
+                 (uVar2 = mp_sub(auStack_b0,auStack_50,auStack_b0), (int)uVar2 == 0)))) &&
+               (uVar2 = mp_div_2(auStack_a0,auStack_a0), (int)uVar2 == 0)))) &&
+             ((((uVar2 = mp_div_2(auStack_b0,auStack_b0), (int)uVar2 == 0 &&
+                (uVar2 = mp_sub(auStack_c0,auStack_50,auStack_c0), (int)uVar2 == 0)) &&
+               (uVar2 = mp_sub(auStack_c0,auStack_80,auStack_c0), (int)uVar2 == 0)) &&
+              ((uVar2 = mp_sub(auStack_a0,auStack_c0,auStack_a0), (int)uVar2 == 0 &&
+               (uVar2 = mp_sub(auStack_b0,auStack_c0,auStack_b0), (int)uVar2 == 0)))))))) &&
+           ((((uVar2 = mp_mul_2d(auStack_50,3,auStack_d0), (int)uVar2 == 0 &&
+              ((uVar2 = mp_sub(auStack_a0,auStack_d0,auStack_a0), (int)uVar2 == 0 &&
+               (uVar2 = mp_mul_2d(auStack_80,3,auStack_d0), (int)uVar2 == 0)))) &&
+             (uVar2 = mp_sub(auStack_b0,auStack_d0,auStack_b0), (int)uVar2 == 0)) &&
+            ((((uVar2 = mp_mul_d(auStack_c0,3,auStack_c0), (int)uVar2 == 0 &&
+               (uVar2 = mp_sub(auStack_c0,auStack_a0,auStack_c0), (int)uVar2 == 0)) &&
+              (uVar2 = mp_sub(auStack_c0,auStack_b0,auStack_c0), (int)uVar2 == 0)) &&
+             (((((uVar2 = mp_sub(auStack_a0,auStack_c0,auStack_a0), (int)uVar2 == 0 &&
+                 (uVar2 = mp_sub(auStack_b0,auStack_c0,auStack_b0), (int)uVar2 == 0)) &&
+                ((uVar2 = mp_div_3(auStack_a0,auStack_a0,0), (int)uVar2 == 0 &&
+                 ((uVar2 = mp_div_3(auStack_b0,auStack_b0,0), (int)uVar2 == 0 &&
+                  (uVar2 = mp_lshd(auStack_a0,lVar4), (int)uVar2 == 0)))))) &&
+               (uVar2 = mp_lshd(auStack_c0,uVar1 << 1), (int)uVar2 == 0)) &&
+              ((((uVar2 = mp_lshd(auStack_b0,lVar4 + ((ulonglong)uVar1 & 0x7fffffff) * 2),
+                 (int)uVar2 == 0 && (uVar2 = mp_lshd(auStack_80,uVar1 << 2), (int)uVar2 == 0)) &&
+                (uVar2 = mp_add(auStack_50,auStack_a0,param_2), (int)uVar2 == 0)) &&
+               ((uVar2 = mp_add(auStack_c0,auStack_b0,auStack_d0), (int)uVar2 == 0 &&
+                (uVar2 = mp_add(auStack_80,auStack_d0,auStack_d0), (int)uVar2 == 0)))))))))))) {
+          uVar2 = mp_add(auStack_d0,param_2,param_2);
+        }
+      }
+    }
+    mp_clear_multi(auStack_50,auStack_a0,auStack_c0,auStack_b0,auStack_80,auStack_60,auStack_90,
+                   auStack_70);
+  }
+  __restgprlr_26(uVar2);
+  return;
 }
 

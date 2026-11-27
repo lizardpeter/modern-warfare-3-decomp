@@ -5,78 +5,255 @@
 void CG_GetEntityBModelContents(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar2;
+  undefined8 uVar1;
+  
+  iVar2 = __savegprlr_29();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x28,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if (*(int *)(iVar2 + 0x160) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x2b,0,0xffffffff82000f98,0xffffffff8202b964);
+  }
+  if (*(int *)(iVar2 + 0x160) == 0xffffff) {
+    CM_ContentsOfBrushModel(*(undefined4 *)(iVar2 + 0x150));
+    __restgprlr_29();
+    return;
+  }
+  uVar1 = 1;
+  if (*(int *)(iVar2 + 200) == 1) {
+    uVar1 = 0x2000000;
+  }
+  __restgprlr_29(uVar1);
+  return;
 }
 
 
 // 82325A98  CG_GetEntityBModelBounds  (cgame/cg_world.cpp:71)
 
-void CG_GetEntityBModelBounds(void)
+void CG_GetEntityBModelBounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  float *pfVar8;
+  int iVar9;
+  undefined4 *puVar10;
+  
+  iVar9 = __savegprlr_26();
+  if (iVar9 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x4e,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x4f,0,0xffffffff82000f98,0xffffffff82002044);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x50,0,0xffffffff82000f98,0xffffffff8202b9b0);
+  }
+  if (*(int *)(iVar9 + 0x160) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x53,0,0xffffffff82000f98,0xffffffff8202b964);
+  }
+  pfVar8 = (float *)param_2;
+  if (*(int *)(iVar9 + 0x160) == 0xffffff) {
+    CM_BrushModelBounds(*(undefined4 *)(iVar9 + 0x150),param_2);
+  }
+  else if ((*(int *)(iVar9 + 200) == 0xe) || (*(int *)(iVar9 + 200) == 0xc)) {
+    uVar7 = *(uint *)(iVar9 + 0x160);
+    fVar1 = (float)(uVar7 & 0xff);
+    *pfVar8 = 0.0;
+    pfVar8[1] = 0.0;
+    pfVar8[2] = (float)(longlong)(int)(((int)uVar7 >> 8 & 0xffU) - 0x80);
+    pfVar8[3] = fVar1;
+    pfVar8[4] = fVar1;
+    pfVar8[5] = fVar1;
+  }
+  else {
+    uVar7 = *(uint *)(iVar9 + 0x160);
+    *pfVar8 = 0.0;
+    fVar1 = (float)(uVar7 & 0xff) - 1.0;
+    pfVar8[1] = 0.0;
+    fVar2 = (float)(longlong)(int)(((int)uVar7 >> 0x10 & 0xffU) - 0x20) - 1.0;
+    fVar3 = 1.0 - (float)(longlong)(int)(((int)uVar7 >> 8 & 0xffU) - 1);
+    pfVar8[2] = (fVar3 + fVar2) * 0.5;
+    pfVar8[3] = fVar1;
+    pfVar8[4] = fVar1;
+    pfVar8[5] = (fVar2 - fVar3) * 0.5;
+  }
+  fVar1 = pfVar8[1];
+  fVar2 = pfVar8[4];
+  fVar3 = pfVar8[2];
+  fVar4 = *pfVar8;
+  fVar5 = pfVar8[5];
+  fVar6 = pfVar8[3];
+  puVar10 = (undefined4 *)param_3;
+  *puVar10 = *(undefined4 *)(iVar9 + 0x14);
+  puVar10[1] = *(undefined4 *)(iVar9 + 0x18);
+  puVar10[2] = *(undefined4 *)(iVar9 + 0x1c);
+  fVar1 = SQRT((ABS(fVar4) + fVar6) * (ABS(fVar4) + fVar6) +
+               (ABS(fVar3) + fVar5) * (ABS(fVar3) + fVar5) +
+               (ABS(fVar1) + fVar2) * (ABS(fVar1) + fVar2));
+  puVar10[3] = fVar1;
+  puVar10[4] = fVar1;
+  puVar10[5] = fVar1;
+  __restgprlr_26();
+  return;
 }
 
 
 // 82325D00  CG_GetEntityDobjBounds  (cgame/cg_world.cpp:121)
 
-void CG_GetEntityDobjBounds(void)
+void CG_GetEntityDobjBounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  undefined4 *puVar2;
+  double dVar3;
+  
+  iVar1 = __savegprlr_27();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x7c,0,0xffffffff82000f98,0xffffffff82002118);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x7d,0,0xffffffff82000f98,0xffffffff8200260c);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x7e,0,0xffffffff82000f98,0xffffffff8202b9b0);
+  }
+  dVar3 = (double)DObjGetRadius(param_2);
+  puVar2 = (undefined4 *)param_3;
+  *puVar2 = *(undefined4 *)(iVar1 + 0x14);
+  puVar2[1] = *(undefined4 *)(iVar1 + 0x18);
+  puVar2[2] = *(undefined4 *)(iVar1 + 0x1c);
+  puVar2[3] = (float)dVar3;
+  puVar2[4] = (float)dVar3;
+  puVar2[5] = (float)dVar3;
+  __restgprlr_27();
+  return;
 }
 
 
 // 82325DC8  CG_LocationalTraceDObj  (cgame/cg_world.cpp:136)
 
-void CG_LocationalTraceDObj(void)
+void CG_LocationalTraceDObj(undefined8 param_1,int param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  int iVar1;
+  ulonglong uVar2;
+  
+  uVar2 = __savegprlr_29();
+  if ((ulonglong)DAT_82aa1ae8 <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0x8c,0,0xffffffff8200d150,uVar2);
+  }
+  iVar1 = *(int *)(param_2 + 200);
+  if ((((iVar1 != 0xe) && (iVar1 != 6)) && (iVar1 != 0xb)) && (iVar1 != 0xc)) {
+    __restgprlr_29(0);
+    return;
+  }
+  Com_GetClientDObj(param_3,uVar2);
+  __restgprlr_29();
+  return;
 }
 
 
 // 82325E58  CG_LocationTraceDobjCalcPose  (cgame/cg_world.cpp:174)
 
-void CG_LocationTraceDobjCalcPose(void)
+void CG_LocationTraceDobjCalcPose(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ulonglong uVar1;
+  int iVar2;
+  
+  uVar1 = __savegprlr_27();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0xaf,0,0xffffffff82000f98,0xffffffff8200260c);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0xb0,0,0xffffffff82000f98,0xffffffff82013bec);
+  }
+  DObjLock(uVar1);
+  CG_DObjCalcPose(param_2,uVar1,param_3);
+  DObjUnlock(uVar1);
+  iVar2 = DObjSkelAreBonesUpToDate(uVar1,param_3);
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0xbc,0,0xffffffff82000f98,0xffffffff8202b9bc);
+  }
+  __restgprlr_27();
+  return;
 }
 
 
 // 82325F20  CG_IsEntityLinked  (cgame/cg_world.cpp:196)
 
-void CG_IsEntityLinked(void)
+void CG_IsEntityLinked(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  short *psVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,199,0,0xffffffff8200d150,uVar1);
+  }
+  if (0x7ff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,200,0,0xffffffff82010c04,param_2,0x800);
+  }
+  psVar2 = (short *)CG_GetEntityCollNode(uVar1,param_2);
+  __restgprlr_29(*psVar2 != 0);
+  return;
 }
 
 
 // 82325FB0  CG_EntityNeedsLinked  (cgame/cg_world.cpp:212)
 
-void CG_EntityNeedsLinked(void)
+void CG_EntityNeedsLinked(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  int iVar3;
+  longlong lVar2;
+  
+  uVar1 = __savegprlr_29();
+  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0xd8,0,0xffffffff8200d150,uVar1);
+  }
+  if (0x7ff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0xd9,0,0xffffffff82010c04,param_2,0x800);
+  }
+  iVar3 = CG_GetEntity(uVar1,param_2);
+  if (*(int *)(iVar3 + 0x160) != 0) {
+    __restgprlr_29(1);
+    return;
+  }
+  lVar2 = CG_LocationalTraceDObj(uVar1,iVar3,param_2);
+  __restgprlr_29(lVar2 != 0);
+  return;
 }
 
 
 // 82325958  Trace_SetHitId  (qcommon/cm_public.h:237)
 
-void Trace_SetHitId(void)
+void Trace_SetHitId(undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)__savegprlr_27();
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler(0xffffffff8202b918,0xee,0,0xffffffff82000f98,0xffffffff8202b910);
+  }
+  puVar1[7] = param_2;
+  *(short *)(puVar1 + 8) = (short)param_3;
+  if ((param_3 & 0xffff) != (param_3 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b918,0xf1,0,0xffffffff82000f98,0xffffffff8202b8f8);
+  }
+  puVar1[9] = *puVar1;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -94,11 +271,45 @@ void CG_UnlinkEntity(undefined8 param_1,undefined8 param_2)
 
 // 823260B8  CG_LinkEntity  (cgame/cg_world.cpp:252)
 
-void CG_LinkEntity(void)
+void CG_LinkEntity(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  int iVar3;
+  ulonglong uVar2;
+  undefined1 auStack_60 [32];
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_29();
+  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0x103,0,0xffffffff8200d150,uVar1);
+  }
+  if (0x7ff < (param_2 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0x104,0,0xffffffff82010c04,param_2,0x800);
+  }
+  Profile_Begin(0x2a);
+  iVar3 = CG_GetEntity(uVar1,param_2);
+  uVar2 = Com_GetClientDObj(param_2,uVar1);
+  if ((uVar2 & 0xffffffff) != 0) {
+    CG_GetEntityDobjBounds(iVar3,uVar2,auStack_60);
+    CG_LinkEntityColl(uVar1,param_2,auStack_60);
+    Profile_EndInternal(0);
+    __restgprlr_29();
+    return;
+  }
+  if (*(int *)(iVar3 + 0x160) != 0) {
+    CG_GetEntityBModelBounds(iVar3,auStack_40,auStack_60);
+    CG_LinkEntityColl(uVar1,param_2,auStack_60);
+    Profile_EndInternal(0);
+    __restgprlr_29();
+    return;
+  }
+  Profile_Begin(0x29,uVar2);
+  CG_UnlinkEntityColl(uVar1,param_2);
+  Profile_EndInternal(0);
+  Profile_EndInternal(0);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -110,8 +321,8 @@ void CG_CalcTraceEndIfNotCulled
 
 {
   float fVar1;
-  int iVar2;
-  float fVar3;
+  float fVar2;
+  int iVar3;
   ulonglong uVar4;
   int iVar5;
   byte local_50 [4];
@@ -119,77 +330,71 @@ void CG_CalcTraceEndIfNotCulled
   
   uVar4 = __savegprlr_24();
   if (3 < (uVar4 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x139,0,0xffffffff820011a8,uVar4,4);
   }
-  if ((param_4 & 0xffffffff) < 0x800) {
-    iVar5 = CG_GetEntity(uVar4,param_4);
-    DAT_82a771fc = iVar5;
-    if (*(char *)(iVar5 + 3) != '\0') {
-      if ((int)param_5 == 0) {
-        *param_6 = *(float *)(iVar5 + 0x14);
-        fVar1 = *(float *)(iVar5 + 0x18);
-        param_6[1] = fVar1;
-        local_4c = *(float *)(iVar5 + 0x1c);
-        param_6[2] = local_4c;
-        fVar3 = *param_6;
-        if (((((uint)*param_6 & 0x7f800000) != 0x7f800000) &&
-            (fVar3 = fVar1, ((uint)fVar1 & 0x7f800000) != 0x7f800000)) &&
-           (fVar3 = local_4c, ((uint)local_4c & 0x7f800000) != 0x7f800000)) {
-          __restgprlr_24(1);
-          return;
-        }
-        local_4c = fVar3;
-                    /* WARNING: Subroutine does not return */
+  if (0x7ff < (param_4 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0x13a,0,0xffffffff82010c04,param_4,0x800);
+  }
+  iVar5 = CG_GetEntity(uVar4,param_4);
+  DAT_82a771fc = iVar5;
+  if (*(char *)(iVar5 + 3) != '\0') {
+    if ((int)param_5 == 0) {
+      *param_6 = *(float *)(iVar5 + 0x14);
+      fVar1 = *(float *)(iVar5 + 0x18);
+      param_6[1] = fVar1;
+      fVar2 = *(float *)(iVar5 + 0x1c);
+      param_6[2] = fVar2;
+      local_4c = *param_6;
+      if (((((uint)*param_6 & 0x7f800000) == 0x7f800000) ||
+          (local_4c = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
+         (local_4c = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
         MyAssertHandler(0xffffffff8202b970,0x19e,0,0xffffffff82000f98,0xffffffff8202abfc);
       }
-      DAT_82a771f4 = 0;
-      uVar4 = Com_GetClientDObj(param_4,uVar4);
-      if ((uVar4 & 0xffffffff) != 0) {
-        DAT_82a771f4 = (undefined4)uVar4;
-        DObjLock();
-        iVar5 = DObjSkelExistsConst(uVar4,param_2);
+      __restgprlr_24(1);
+      return;
+    }
+    DAT_82a771f4 = 0;
+    uVar4 = Com_GetClientDObj(param_4,uVar4);
+    if ((uVar4 & 0xffffffff) != 0) {
+      DAT_82a771f4 = (undefined4)uVar4;
+      DObjLock();
+      iVar5 = DObjSkelExistsConst(uVar4,param_2);
+      if (iVar5 != 0) {
+        local_50[0] = 0xfe;
+        DAT_82a771ec = 0xffffffff;
+        iVar5 = DObjGetBoneIndex(uVar4,param_5,local_50);
         if (iVar5 != 0) {
-          local_50[0] = 0xfe;
-          DAT_82a771ec = 0xffffffff;
-          iVar5 = DObjGetBoneIndex(uVar4,param_5,local_50);
+          DAT_82a771ec = (uint)local_50[0];
+          iVar5 = DObjSkelIsBoneUpToDate(uVar4);
           if (iVar5 != 0) {
-            DAT_82a771ec = (uint)local_50[0];
-            iVar5 = DObjSkelIsBoneUpToDate(uVar4);
+            DAT_82a771f8 = 0;
+            iVar5 = DObjGetRotTransArray(uVar4);
             if (iVar5 != 0) {
-              DAT_82a771f8 = 0;
-              iVar5 = DObjGetRotTransArray(uVar4);
-              if (iVar5 != 0) {
-                iVar2 = (uint)local_50[0] * 0x20 + iVar5;
-                fVar1 = *(float *)(iVar2 + 0x10) + *param_3;
-                DAT_82a771f8 = iVar5;
-                *param_6 = fVar1;
-                fVar3 = *(float *)(iVar2 + 0x14) + param_3[1];
-                param_6[1] = fVar3;
-                local_4c = *(float *)(iVar2 + 0x18) + param_3[2];
-                param_6[2] = local_4c;
-                if (((((uint)fVar1 & 0x7f800000) != 0x7f800000) &&
-                    (fVar1 = fVar3, ((uint)fVar3 & 0x7f800000) != 0x7f800000)) &&
-                   (fVar1 = local_4c, ((uint)local_4c & 0x7f800000) != 0x7f800000)) {
-                  DObjUnlock(uVar4);
-                  __restgprlr_24(1);
-                  return;
-                }
-                local_4c = fVar1;
-                    /* WARNING: Subroutine does not return */
+              iVar3 = (uint)local_50[0] * 0x20 + iVar5;
+              local_4c = *(float *)(iVar3 + 0x10) + *param_3;
+              DAT_82a771f8 = iVar5;
+              *param_6 = local_4c;
+              fVar1 = *(float *)(iVar3 + 0x14) + param_3[1];
+              param_6[1] = fVar1;
+              fVar2 = *(float *)(iVar3 + 0x18) + param_3[2];
+              param_6[2] = fVar2;
+              if (((((uint)local_4c & 0x7f800000) == 0x7f800000) ||
+                  (local_4c = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
+                 (local_4c = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
                 MyAssertHandler(0xffffffff8202b970,0x191,0,0xffffffff82000f98,0xffffffff8202abfc);
               }
+              DObjUnlock(uVar4);
+              __restgprlr_24(1);
+              return;
             }
           }
         }
-        DObjUnlock(uVar4);
       }
+      DObjUnlock(uVar4);
     }
-    __restgprlr_24(0);
-    return;
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8202b970,0x13a,0,0xffffffff82010c04,param_4,0x800);
+  __restgprlr_24(0);
+  return;
 }
 
 
@@ -212,21 +417,17 @@ void CG_ClipMoveToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   
   iVar2 = __savegprlr_25();
   if (iVar2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x1b5,0,0xffffffff82000f98,0xffffffff8202ba10);
   }
   if (0x7ff < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x1b6,0,0xffffffff82010c04,param_2,0x800);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x1b7,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   uVar1 = CG_GetCollWorldLocalClientNum();
   iVar3 = CG_GetEntity(uVar1,param_2);
   if ((int)param_2 == *(int *)(iVar2 + 0x90)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x1c0,0,0xffffffff82000f98,0xffffffff8202b9e8);
   }
   if ((*(int *)(iVar3 + 0x160) != 0) &&
@@ -302,25 +503,20 @@ void CG_ClipMoveToEntities_r
   __savegprlr_20();
   iVar8 = __savefpr_28();
   if (iVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x204,0,0xffffffff82000f98,0xffffffff8202ba10);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x205,0,0xffffffff82000f98,0xffffffff8202ba8c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x206,0,0xffffffff82000f98,0xffffffff8202ba88);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x207,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   pfVar11 = (float *)param_5;
   dVar16 = 1.0;
   if (1.0 < (double)*pfVar11) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x208,0,0xffffffff8202ba4c,0xffffffff8202ba6c,
                     (double)*pfVar11);
   }
@@ -381,8 +577,8 @@ void CG_ClipMoveToEntities_r
             dVar18 = (double)((fVar4 + fVar1) * (float)(dVar16 / ABS(dVar15)));
             dVar15 = (double)((fVar4 - fVar1) * (float)(dVar16 / ABS(dVar15)));
             if (dVar18 < dVar17) {
-                    /* WARNING: Subroutine does not return */
               MyAssertHandler(0xffffffff8202b970,0x249,0,0xffffffff82000f98,0xffffffff8202ba18);
+              dVar14 = (double)local_b0[3];
             }
           }
           if ((float)(dVar16 - dVar18) < 0.0) {
@@ -400,7 +596,6 @@ void CG_ClipMoveToEntities_r
                      local_b0,&local_a0,param_5);
           if ((double)*pfVar11 == dVar17) break;
           if (dVar16 < dVar15) {
-                    /* WARNING: Subroutine does not return */
             MyAssertHandler(dVar15,0xffffffff8202b970,0x255,0,0xffffffff8202ba38,0xffffffff8202ba28,
                             dVar15);
           }
@@ -435,11 +630,51 @@ LAB_82326a9c:
 
 // 82326AC0  CG_ClipMoveToEntities  (cgame/cg_world.cpp:614)
 
-void CG_ClipMoveToEntities(void)
+void CG_ClipMoveToEntities(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  float *pfVar2;
+  double dVar3;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  float local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x26d,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x26e,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar2 = (float *)param_2;
+  dVar3 = 0.0;
+  if ((double)*pfVar2 <= 0.0) {
+    MyAssertHandler(0xffffffff8202b970,0x26f,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar2
+                   );
+  }
+  if (1.0 < (double)*pfVar2) {
+    MyAssertHandler(0xffffffff8202b970,0x270,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar2
+                   );
+  }
+  Profile_Begin(0x2f);
+  local_50 = *(undefined4 *)(iVar1 + 0x70);
+  local_4c = *(undefined4 *)(iVar1 + 0x74);
+  local_48 = *(undefined4 *)(iVar1 + 0x78);
+  local_40 = *(undefined4 *)(iVar1 + 0x80);
+  local_3c = *(undefined4 *)(iVar1 + 0x84);
+  local_38 = *(undefined4 *)(iVar1 + 0x88);
+  local_34 = *pfVar2;
+  local_44 = (float)dVar3;
+  CG_ClipMoveToEntities_r(iVar1,1,&local_50,&local_40,param_2);
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -452,8 +687,8 @@ void CG_PointTraceToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_
   int iVar6;
   undefined8 uVar2;
   int iVar7;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  undefined8 uVar3;
+  ulonglong uVar4;
   undefined8 uVar5;
   int iVar8;
   double dVar9;
@@ -480,48 +715,44 @@ void CG_PointTraceToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_
   
   iVar6 = __savegprlr_22();
   if (iVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x295,0,0xffffffff82000f98,0xffffffff8202ba10);
   }
   if (0x7ff < (param_2 & 0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x296,0,0xffffffff82010c04,param_2,0x800);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x297,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   uVar2 = CG_GetCollWorldLocalClientNum();
   iVar7 = CG_GetEntity(uVar2,param_2);
   if ((int)param_2 == **(int **)(iVar6 + 0x60)) {
-    uVar2 = va(0xffffffff8202bb10,param_2);
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8202b970,0x2a0,0,0xffffffff820011f4,0xffffffff8202bae0,uVar2);
+    uVar3 = va(0xffffffff8202bb10,param_2);
+    MyAssertHandler(0xffffffff8202b970,0x2a0,0,0xffffffff820011f4,0xffffffff8202bae0,uVar3);
   }
   if (*(int *)(iVar6 + 0x68) == 0) {
-    uVar3 = 0;
+    uVar4 = 0;
   }
   else {
-    uVar3 = CG_LocationalTraceDObj(uVar2,iVar7,param_2);
+    uVar4 = CG_LocationalTraceDObj(uVar2,iVar7,param_2);
   }
   pfVar1 = (float *)param_3;
   if (*(int *)(iVar7 + 0x160) == 0) {
-    if ((uVar3 & 0xffffffff) == 0) goto LAB_823271bc;
+    if ((uVar4 & 0xffffffff) == 0) goto LAB_823271bc;
 LAB_82326d5c:
-    uVar4 = DObjGetContentsLocal(uVar3);
-    if ((*(uint *)(iVar6 + 100) & (uint)uVar4) == 0) goto LAB_823271bc;
+    uVar3 = DObjGetContentsLocal(uVar4);
+    if ((*(uint *)(iVar6 + 100) & (uint)uVar3) == 0) goto LAB_823271bc;
     if (*(int *)(iVar6 + 0x6c) == 0) {
       uVar5 = CL_GetSkelTimeStamp();
-      iVar8 = DObjSkelExistsConst(uVar3,uVar5);
+      iVar8 = DObjSkelExistsConst(uVar4,uVar5);
       if (iVar8 == 0) goto LAB_823271bc;
     }
-    CG_GetEntityDobjBounds(iVar7,uVar3,auStack_b0);
+    CG_GetEntityDobjBounds(iVar7,uVar4,auStack_b0);
     iVar8 = CM_TraceBox((double)*pfVar1,iVar6,auStack_b0);
     if (iVar8 != 0) goto LAB_823271bc;
     local_f0 = *pfVar1;
     if (*(int *)(iVar6 + 0x6c) == 0) {
-      DObjLock(uVar3);
-      iVar8 = DObjGetTree(uVar3);
+      DObjLock(uVar4);
+      iVar8 = DObjGetTree(uVar4);
       if (iVar8 == 0) {
         AnglesToAxis(iVar7 + 0x20,auStack_90);
         local_6c = *(undefined4 *)(iVar7 + 0x14);
@@ -530,19 +761,18 @@ LAB_82326d5c:
         MatrixTransposeTransformVector43(iVar6 + 0x40,auStack_90,&local_110);
         MatrixTransposeTransformVector43(iVar6 + 0x50,auStack_90,&local_100);
         DObjGeomTracelineInBasePose
-                  (uVar3,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+                  (uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
       }
       else {
         uVar5 = CL_GetSkelTimeStamp();
-        iVar8 = DObjSkelExistsConst(uVar3,uVar5);
+        iVar8 = DObjSkelExistsConst(uVar4,uVar5);
         if (iVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
           MyAssertHandler(0xffffffff8202b970,0x2ee,0,0xffffffff82000f98,0xffffffff8202baac);
         }
-        DObjGeomTracelinePartBits(uVar3,*(undefined4 *)(iVar6 + 100),auStack_d0);
-        iVar8 = DObjSkelAreBonesUpToDate(uVar3,auStack_d0);
+        DObjGeomTracelinePartBits(uVar4,*(undefined4 *)(iVar6 + 100),auStack_d0);
+        iVar8 = DObjSkelAreBonesUpToDate(uVar4,auStack_d0);
         if (iVar8 == 0) {
-          DObjUnlock(uVar3);
+          DObjUnlock(uVar4);
           __restgprlr_22();
           return;
         }
@@ -553,16 +783,15 @@ LAB_82326d5c:
         local_100 = *(float *)(iVar6 + 0x50) - *(float *)(iVar8 + 0x6b9fc);
         local_fc = *(float *)(iVar6 + 0x54) - *(float *)(iVar8 + 0x6ba00);
         local_f8 = *(float *)(iVar6 + 0x58) - *(float *)(iVar8 + 0x6ba04);
-        DObjGeomTraceline(uVar3,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+        DObjGeomTraceline(uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
       }
-      DObjUnlock(uVar3);
+      DObjUnlock(uVar4);
     }
     else {
-      DObjGeomTracelinePartBits(uVar3,*(undefined4 *)(iVar6 + 100),auStack_d0);
-      CG_LocationTraceDobjCalcPose(uVar3,iVar7,auStack_d0);
-      iVar8 = DObjSkelAreBonesUpToDate(uVar3,auStack_d0);
+      DObjGeomTracelinePartBits(uVar4,*(undefined4 *)(iVar6 + 100),auStack_d0);
+      CG_LocationTraceDobjCalcPose(uVar4,iVar7,auStack_d0);
+      iVar8 = DObjSkelAreBonesUpToDate(uVar4,auStack_d0);
       if (iVar8 == 0) {
-                    /* WARNING: Subroutine does not return */
         MyAssertHandler(0xffffffff8202b970,0x2da,0,0xffffffff82000f98,0xffffffff8202b9bc);
       }
       iVar8 = CG_GetLocalClientGlobals(uVar2);
@@ -572,7 +801,7 @@ LAB_82326d5c:
       local_100 = *(float *)(iVar6 + 0x50) - *(float *)(iVar8 + 0x6b9fc);
       local_fc = *(float *)(iVar6 + 0x54) - *(float *)(iVar8 + 0x6ba00);
       local_f8 = *(float *)(iVar6 + 0x58) - *(float *)(iVar8 + 0x6ba04);
-      DObjGeomTraceline(uVar3,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+      DObjGeomTraceline(uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
     }
     if (*pfVar1 <= local_f0) goto LAB_823271bc;
     *pfVar1 = local_f0;
@@ -586,11 +815,11 @@ LAB_82326d5c:
     *(bool *)(pfVar1 + 0xc) = (float)0x3f333333 <= local_e0;
   }
   else {
-    if ((uVar3 & 0xffffffff) != 0) goto LAB_82326d5c;
+    if ((uVar4 & 0xffffffff) != 0) goto LAB_82326d5c;
     if ((*(int *)(iVar7 + 0x160) == 0xffffff) && ((*(uint *)(iVar7 + 0xcc) & 1) != 0))
     goto LAB_823271bc;
-    uVar4 = CG_GetEntityBModelContents(iVar7);
-    if ((*(uint *)(iVar6 + 100) & (uint)uVar4) == 0) goto LAB_823271bc;
+    uVar3 = CG_GetEntityBModelContents(iVar7);
+    if ((*(uint *)(iVar6 + 100) & (uint)uVar3) == 0) goto LAB_823271bc;
     CG_GetEntityBModelBounds(iVar7,&local_f0,auStack_b0);
     iVar8 = CM_TraceBox((double)*pfVar1,iVar6,auStack_b0);
     if (iVar8 != 0) goto LAB_823271bc;
@@ -600,9 +829,9 @@ LAB_82326d5c:
                 (param_3,iVar6 + 0x40,iVar6 + 0x50,0xffffffff82174a3c,*(undefined4 *)(iVar7 + 0x150)
                  ,*(undefined4 *)(iVar6 + 100),iVar7 + 0x14,iVar7 + 0x20);
     }
-    else if ((*(uint *)(iVar6 + 100) & (uint)uVar4) != 0) {
+    else if ((*(uint *)(iVar6 + 100) & (uint)uVar3) != 0) {
       CM_TransformedCapsuleTrace
-                (param_3,iVar6 + 0x40,iVar6 + 0x50,0xffffffff82174a3c,&local_f0,uVar4,iVar7 + 0x14,
+                (param_3,iVar6 + 0x40,iVar6 + 0x50,0xffffffff82174a3c,&local_f0,uVar3,iVar7 + 0x14,
                  0xffffffff82179fd8);
     }
     if (dVar9 <= (double)*pfVar1) goto LAB_823271bc;
@@ -614,7 +843,7 @@ LAB_82326d5c:
   if ((*(uint *)(iVar7 + 0xcc) & 0x1000000) != 0) {
     pfVar1[4] = (float)((uint)pfVar1[4] | 0x1000);
   }
-  pfVar1[5] = (float)uVar4;
+  pfVar1[5] = (float)uVar3;
   pfVar1[6] = 0.0;
 LAB_823271bc:
   __restgprlr_22();
@@ -631,18 +860,17 @@ void CG_PointTraceToEntities_r
 {
   ushort uVar1;
   float *pfVar2;
-  float fVar3;
-  float fVar4;
+  int iVar4;
+  undefined8 uVar3;
+  float *pfVar5;
   int iVar6;
-  undefined8 uVar5;
   float *pfVar7;
-  int iVar8;
-  float *pfVar9;
-  longlong lVar10;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   float local_a0 [4];
   float local_90;
   float local_8c;
@@ -650,99 +878,92 @@ void CG_PointTraceToEntities_r
   float local_84;
   
   __savegprlr_21();
-  iVar6 = __savefpr_28();
-  if (iVar6 == 0) {
-                    /* WARNING: Subroutine does not return */
+  iVar4 = __savefpr_28();
+  if (iVar4 == 0) {
     MyAssertHandler(0xffffffff8202b970,0x373,0,0xffffffff82000f98,0xffffffff8202ba10);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x374,0,0xffffffff82000f98,0xffffffff8202ba8c);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x375,0,0xffffffff82000f98,0xffffffff8202ba88);
   }
   if ((param_5 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x376,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
-  pfVar9 = (float *)param_5;
-  dVar12 = 1.0;
-  if (1.0 < (double)*pfVar9) {
-                    /* WARNING: Subroutine does not return */
-    MyAssertHandler(0xffffffff8202b970,0x377,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar9
+  pfVar7 = (float *)param_5;
+  dVar11 = 1.0;
+  if (1.0 < (double)*pfVar7) {
+    MyAssertHandler(0xffffffff8202b970,0x377,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar7
                    );
   }
-  uVar5 = CG_GetCollWorldLocalClientNum();
-  pfVar7 = (float *)param_3;
-  local_a0[0] = *pfVar7;
-  local_a0[1] = pfVar7[1];
-  local_a0[2] = pfVar7[2];
-  local_a0[3] = pfVar7[3];
+  uVar3 = CG_GetCollWorldLocalClientNum();
+  pfVar5 = (float *)param_3;
+  local_a0[0] = *pfVar5;
+  local_a0[1] = pfVar5[1];
+  local_a0[2] = pfVar5[2];
+  local_a0[3] = pfVar5[3];
   if ((param_2 & 0xffff) != 0) {
     dVar13 = 0.0;
     do {
-      pfVar7 = (float *)CG_GetEntityCollSector(uVar5,param_2);
-      uVar1 = *(ushort *)(pfVar7 + 3);
+      pfVar5 = (float *)CG_GetEntityCollSector(uVar3,param_2);
+      uVar1 = *(ushort *)(pfVar5 + 3);
       while ((ulonglong)uVar1 != 0) {
-        lVar10 = (ulonglong)uVar1 - 1;
-        iVar8 = CG_GetEntityCollNode(uVar5,lVar10);
-        if ((int)lVar10 != **(int **)(iVar6 + 0x60)) {
+        lVar8 = (ulonglong)uVar1 - 1;
+        iVar6 = CG_GetEntityCollNode(uVar3,lVar8);
+        if ((int)lVar8 != **(int **)(iVar4 + 0x60)) {
           Profile_Begin(0x32);
-          CG_PointTraceToEntity(iVar6,lVar10,param_5);
+          CG_PointTraceToEntity(iVar4,lVar8,param_5);
           Profile_EndInternal(0);
-          if ((double)*pfVar9 == dVar13) goto LAB_82327500;
+          if ((double)*pfVar7 == dVar13) goto LAB_82327500;
         }
-        uVar1 = *(ushort *)(iVar8 + 2);
+        uVar1 = *(ushort *)(iVar6 + 2);
       }
       pfVar2 = (float *)param_4;
-      fVar3 = local_a0[*(ushort *)(pfVar7 + 1)] - *pfVar7;
-      fVar4 = pfVar2[*(ushort *)(pfVar7 + 1)] - *pfVar7;
-      if ((double)(fVar4 * fVar3) < dVar13) {
-        if (*pfVar9 <= local_a0[3]) break;
-        dVar14 = (double)(fVar3 / (fVar3 - fVar4));
-        if (dVar14 < dVar13) {
-                    /* WARNING: Subroutine does not return */
+      dVar9 = (double)(local_a0[*(ushort *)(pfVar5 + 1)] - *pfVar5);
+      dVar12 = (double)(pfVar2[*(ushort *)(pfVar5 + 1)] - *pfVar5);
+      if ((double)(float)(dVar12 * dVar9) < dVar13) {
+        if (*pfVar7 <= local_a0[3]) break;
+        dVar9 = (double)(float)(dVar9 / (double)(float)(dVar9 - dVar12));
+        if (dVar9 < dVar13) {
           MyAssertHandler(0xffffffff8202b970,0x39f,0,0xffffffff82000f98,0xffffffff8202ba18);
         }
-        if (dVar12 < dVar14) {
-                    /* WARNING: Subroutine does not return */
+        if (dVar11 < dVar9) {
           MyAssertHandler(0xffffffff8202b970,0x3a0,0,0xffffffff82000f98,0xffffffff8202bb2c);
         }
-        dVar11 = dVar12;
-        if (fVar4 < 0.0) {
-          dVar11 = dVar13;
+        dVar10 = dVar11;
+        if (dVar12 < 0.0) {
+          dVar10 = dVar13;
         }
-        local_90 = (float)((double)(float)((double)*pfVar2 - (double)local_a0[0]) * dVar14 +
+        local_90 = (float)((double)(float)((double)*pfVar2 - (double)local_a0[0]) * dVar9 +
                           (double)local_a0[0]);
-        local_8c = (float)((double)(float)((double)pfVar2[1] - (double)local_a0[1]) * dVar14 +
+        local_8c = (float)((double)(float)((double)pfVar2[1] - (double)local_a0[1]) * dVar9 +
                           (double)local_a0[1]);
-        local_88 = (float)((double)(float)((double)pfVar2[2] - (double)local_a0[2]) * dVar14 +
+        local_88 = (float)((double)(float)((double)pfVar2[2] - (double)local_a0[2]) * dVar9 +
                           (double)local_a0[2]);
-        local_84 = (float)((double)(float)((double)pfVar2[3] - (double)local_a0[3]) * dVar14 +
+        local_84 = (float)((double)(float)((double)pfVar2[3] - (double)local_a0[3]) * dVar9 +
                           (double)local_a0[3]);
         CG_PointTraceToEntities_r
-                  (iVar6,*(undefined2 *)
-                          ((int)(((ulonglong)(uint)(int)dVar11 + 4 & 0xffffffff) << 1) + (int)pfVar7
+                  (iVar4,*(undefined2 *)
+                          ((int)(((ulonglong)(uint)(int)dVar10 + 4 & 0xffffffff) << 1) + (int)pfVar5
                           ),local_a0,&local_90,param_5);
-        if ((double)*pfVar9 == dVar13) break;
+        if ((double)*pfVar7 == dVar13) break;
         uVar1 = *(ushort *)
-                 ((int)((5 - (ulonglong)(uint)(int)dVar11 & 0xffffffff) << 1) + (int)pfVar7);
+                 ((int)((5 - (ulonglong)(uint)(int)dVar10 & 0xffffffff) << 1) + (int)pfVar5);
         local_a0[0] = local_90;
         local_a0[1] = local_8c;
         local_a0[2] = local_88;
         local_a0[3] = local_84;
       }
       else {
-        if (fVar4 - fVar3 < 0.0) {
-          fVar3 = fVar4;
+        if ((float)(dVar12 - dVar9) < 0.0) {
+          dVar9 = dVar12;
         }
-        dVar14 = dVar12;
-        if (fVar3 < 0.0) {
-          dVar14 = dVar13;
+        dVar12 = dVar11;
+        if (dVar9 < 0.0) {
+          dVar12 = dVar13;
         }
-        uVar1 = *(ushort *)((5 - (int)dVar14) * 2 + (int)pfVar7);
+        uVar1 = *(ushort *)((5 - (int)dVar12) * 2 + (int)pfVar5);
       }
       param_2 = (ulonglong)uVar1;
     } while (param_2 != 0);
@@ -756,21 +977,89 @@ LAB_82327500:
 
 // 82327510  CG_PointTraceToEntities  (cgame/cg_world.cpp:951)
 
-void CG_PointTraceToEntities(void)
+void CG_PointTraceToEntities(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  float *pfVar2;
+  double dVar3;
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  float local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  float local_34;
+  
+  iVar1 = __savegprlr_28();
+  Profile_Begin(0x31);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bb3c);
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x3c1,0,0xffffffff82000f98,0xffffffff8202ba10);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x3c2,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  pfVar2 = (float *)param_2;
+  dVar3 = 0.0;
+  if ((double)*pfVar2 <= 0.0) {
+    MyAssertHandler(0xffffffff8202b970,0x3c3,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar2
+                   );
+  }
+  if (1.0 < (double)*pfVar2) {
+    MyAssertHandler(0xffffffff8202b970,0x3c4,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar2
+                   );
+  }
+  local_50 = *(undefined4 *)(iVar1 + 0x40);
+  local_4c = *(undefined4 *)(iVar1 + 0x44);
+  local_48 = *(undefined4 *)(iVar1 + 0x48);
+  local_40 = *(undefined4 *)(iVar1 + 0x50);
+  local_3c = *(undefined4 *)(iVar1 + 0x54);
+  local_38 = *(undefined4 *)(iVar1 + 0x58);
+  local_34 = *pfVar2;
+  local_44 = (float)dVar3;
+  CG_PointTraceToEntities_r(iVar1,1,&local_50,&local_40,param_2);
+  PIXEndNamedEvent();
+  Profile_EndInternal(0);
+  __restgprlr_28();
+  return;
 }
 
 
 // 82327680  CG_PointSightTraceToEntityBBox  (cgame/cg_world.cpp:979)
 
-void CG_PointSightTraceToEntityBBox(void)
+void CG_PointSightTraceToEntityBBox(undefined8 param_1,undefined8 param_2,uint param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  ulonglong uVar1;
+  undefined8 uVar2;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar3;
+  undefined1 auStack_60 [32];
+  undefined1 auStack_40 [64];
+  
+  uVar1 = __savegprlr_28();
+  if (0x7ff < (uVar1 & 0xffffffff)) {
+    MyAssertHandler(0xffffffff8202b970,0x3db,0,0xffffffff82010c04,uVar1,0x800);
+  }
+  uVar2 = CG_GetCollWorldLocalClientNum();
+  iVar4 = CG_GetEntity(uVar2,uVar1);
+  if ((*(int *)(iVar4 + 0x160) != 0) &&
+     (((*(int *)(iVar4 + 0x160) != 0xffffff || ((*(uint *)(iVar4 + 0xcc) & 1) == 0)) &&
+      (uVar5 = CG_GetEntityBModelContents(iVar4), (uVar5 & param_3) != 0)))) {
+    CG_GetEntityBModelBounds(iVar4,auStack_40,auStack_60);
+    iVar4 = CM_TraceBox(0x3ff0000000000000,param_2,auStack_60);
+    uVar3 = 0xffffffffffffffff;
+    if (iVar4 == 0) {
+      uVar3 = uVar1;
+    }
+    __restgprlr_28(uVar3);
+    return;
+  }
+  __restgprlr_28(0xffffffffffffffff);
+  return;
 }
 
 
@@ -783,18 +1072,17 @@ void CG_PointSightTraceToEntitiesBBox_r
 {
   ushort uVar1;
   float *pfVar2;
-  float fVar3;
-  float fVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  float *pfVar8;
-  int iVar9;
-  undefined8 uVar7;
-  longlong lVar10;
+  ulonglong uVar3;
+  undefined8 uVar4;
+  float *pfVar6;
+  int iVar7;
+  undefined8 uVar5;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   float local_b0 [4];
   float local_a0;
   float local_9c;
@@ -802,92 +1090,87 @@ void CG_PointSightTraceToEntitiesBBox_r
   float local_94;
   
   __savegprlr_20();
-  uVar5 = __savefpr_28();
+  uVar3 = __savefpr_28();
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x404,0,0xffffffff82000f98,0xffffffff8202ba8c);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x405,0,0xffffffff82000f98,0xffffffff8202ba88);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x406,0,0xffffffff82000f98,0xffffffff8202bb50);
   }
-  uVar6 = CG_GetCollWorldLocalClientNum();
-  pfVar8 = (float *)param_2;
-  local_b0[0] = *pfVar8;
-  local_b0[1] = pfVar8[1];
-  local_b0[2] = pfVar8[2];
-  local_b0[3] = pfVar8[3];
-  if ((uVar5 & 0xffff) != 0) {
-    dVar12 = 1.0;
-    dVar13 = 0.0;
+  uVar4 = CG_GetCollWorldLocalClientNum();
+  pfVar6 = (float *)param_2;
+  local_b0[0] = *pfVar6;
+  local_b0[1] = pfVar6[1];
+  local_b0[2] = pfVar6[2];
+  local_b0[3] = pfVar6[3];
+  if ((uVar3 & 0xffff) != 0) {
+    dVar11 = 1.0;
+    dVar12 = 0.0;
     do {
-      pfVar8 = (float *)CG_GetEntityCollSector(uVar6,uVar5);
-      uVar1 = *(ushort *)(pfVar8 + 3);
+      pfVar6 = (float *)CG_GetEntityCollSector(uVar4,uVar3);
+      uVar1 = *(ushort *)(pfVar6 + 3);
       while ((ulonglong)uVar1 != 0) {
-        lVar10 = (ulonglong)uVar1 - 1;
-        iVar9 = CG_GetEntityCollNode(uVar6,lVar10);
-        if (((int)lVar10 != (int)param_5) &&
-           (uVar7 = CG_PointSightTraceToEntityBBox(lVar10,param_4,param_6), -1 < (int)uVar7))
+        lVar8 = (ulonglong)uVar1 - 1;
+        iVar7 = CG_GetEntityCollNode(uVar4,lVar8);
+        if (((int)lVar8 != (int)param_5) &&
+           (uVar5 = CG_PointSightTraceToEntityBBox(lVar8,param_4,param_6), -1 < (int)uVar5))
         goto LAB_82327a1c;
-        uVar1 = *(ushort *)(iVar9 + 2);
+        uVar1 = *(ushort *)(iVar7 + 2);
       }
       pfVar2 = (float *)param_3;
-      fVar3 = local_b0[*(ushort *)(pfVar8 + 1)] - *pfVar8;
-      fVar4 = pfVar2[*(ushort *)(pfVar8 + 1)] - *pfVar8;
-      if ((double)(fVar4 * fVar3) < dVar13) {
-        dVar14 = (double)(fVar3 / (fVar3 - fVar4));
-        if (dVar14 < dVar13) {
-                    /* WARNING: Subroutine does not return */
+      dVar9 = (double)(local_b0[*(ushort *)(pfVar6 + 1)] - *pfVar6);
+      dVar13 = (double)(pfVar2[*(ushort *)(pfVar6 + 1)] - *pfVar6);
+      if ((double)(float)(dVar13 * dVar9) < dVar12) {
+        dVar9 = (double)(float)(dVar9 / (double)(float)(dVar9 - dVar13));
+        if (dVar9 < dVar12) {
           MyAssertHandler(0xffffffff8202b970,0x426,0,0xffffffff82000f98,0xffffffff8202ba18);
         }
-        if (dVar12 < dVar14) {
-                    /* WARNING: Subroutine does not return */
+        if (dVar11 < dVar9) {
           MyAssertHandler(0xffffffff8202b970,0x427,0,0xffffffff82000f98,0xffffffff8202bb2c);
         }
-        dVar11 = dVar12;
-        if (fVar4 < 0.0) {
-          dVar11 = dVar13;
+        dVar10 = dVar11;
+        if (dVar13 < 0.0) {
+          dVar10 = dVar12;
         }
-        local_a0 = (float)((double)(float)((double)*pfVar2 - (double)local_b0[0]) * dVar14 +
+        local_a0 = (float)((double)(float)((double)*pfVar2 - (double)local_b0[0]) * dVar9 +
                           (double)local_b0[0]);
-        local_9c = (float)((double)(float)((double)pfVar2[1] - (double)local_b0[1]) * dVar14 +
+        local_9c = (float)((double)(float)((double)pfVar2[1] - (double)local_b0[1]) * dVar9 +
                           (double)local_b0[1]);
-        local_98 = (float)((double)(float)((double)pfVar2[2] - (double)local_b0[2]) * dVar14 +
+        local_98 = (float)((double)(float)((double)pfVar2[2] - (double)local_b0[2]) * dVar9 +
                           (double)local_b0[2]);
-        local_94 = (float)((double)(float)((double)pfVar2[3] - (double)local_b0[3]) * dVar14 +
+        local_94 = (float)((double)(float)((double)pfVar2[3] - (double)local_b0[3]) * dVar9 +
                           (double)local_b0[3]);
-        uVar7 = CG_PointSightTraceToEntitiesBBox_r
+        uVar5 = CG_PointSightTraceToEntitiesBBox_r
                           (*(undefined2 *)
-                            ((int)(((ulonglong)(uint)(int)dVar11 + 4 & 0xffffffff) << 1) +
-                            (int)pfVar8),local_b0,&local_a0,param_4,param_5,param_6);
-        if (-1 < (int)uVar7) goto LAB_82327a1c;
+                            ((int)(((ulonglong)(uint)(int)dVar10 + 4 & 0xffffffff) << 1) +
+                            (int)pfVar6),local_b0,&local_a0,param_4,param_5,param_6);
+        if (-1 < (int)uVar5) goto LAB_82327a1c;
         uVar1 = *(ushort *)
-                 ((int)((5 - (ulonglong)(uint)(int)dVar11 & 0xffffffff) << 1) + (int)pfVar8);
+                 ((int)((5 - (ulonglong)(uint)(int)dVar10 & 0xffffffff) << 1) + (int)pfVar6);
         local_b0[0] = local_a0;
         local_b0[1] = local_9c;
         local_b0[2] = local_98;
         local_b0[3] = local_94;
       }
       else {
-        if (fVar4 - fVar3 < 0.0) {
-          fVar3 = fVar4;
+        if ((float)(dVar13 - dVar9) < 0.0) {
+          dVar9 = dVar13;
         }
-        dVar14 = dVar12;
-        if (fVar3 < 0.0) {
-          dVar14 = dVar13;
+        dVar13 = dVar11;
+        if (dVar9 < 0.0) {
+          dVar13 = dVar12;
         }
-        uVar1 = *(ushort *)((5 - (int)dVar14) * 2 + (int)pfVar8);
+        uVar1 = *(ushort *)((5 - (int)dVar13) * 2 + (int)pfVar6);
       }
-      uVar5 = (ulonglong)uVar1;
-    } while (uVar5 != 0);
+      uVar3 = (ulonglong)uVar1;
+    } while (uVar3 != 0);
   }
-  uVar7 = 0xffffffffffffffff;
+  uVar5 = 0xffffffffffffffff;
 LAB_82327a1c:
-  __restfpr_28(uVar7);
+  __restfpr_28(uVar5);
   __restgprlr_20();
   return;
 }
@@ -895,11 +1178,32 @@ LAB_82327a1c:
 
 // 82327A30  CG_PointSightTraceToEntitiesBBox  (cgame/cg_world.cpp:1085)
 
-void CG_PointSightTraceToEntitiesBBox(void)
+void CG_PointSightTraceToEntitiesBBox
+               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  undefined1 auStack_90 [64];
+  undefined4 local_50;
+  undefined4 local_4c;
+  undefined4 local_48;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  
+  puVar1 = (undefined4 *)__savegprlr_28();
+  local_50 = *puVar1;
+  puVar2 = (undefined4 *)param_2;
+  local_40 = *puVar2;
+  local_3c = puVar2[1];
+  local_38 = puVar2[2];
+  local_4c = puVar1[1];
+  local_48 = puVar1[2];
+  CM_CalcTraceExtents(auStack_90);
+  CG_PointSightTraceToEntitiesBBox_r(1,puVar1,param_2,auStack_90,param_3,param_4);
+  __restgprlr_28();
+  return;
 }
 
 
@@ -965,8 +1269,29 @@ bool CG_WorkerTraceTimeout(void)
 void CG_WaitWorkerTrace(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  char cVar2;
+  
+  iVar1 = __savegprlr_28();
+  cVar2 = Sys_IsMainThread();
+  if (cVar2 == '\0') {
+    MyAssertHandler(0xffffffff8202b970,0x47a,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if ((*(int *)(iVar1 + 0x34) != 1) && (*(int *)(iVar1 + 0x34) != 2)) {
+    MyAssertHandler(0xffffffff8202b970,0x47c,0,0xffffffff82000f98,0xffffffff8202bb88);
+  }
+  if (*(int *)(iVar1 + 0x34) != 2) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bb78);
+    if (DAT_82a771f0 != 0) {
+      MyAssertHandler(0xffffffff8202b970,0x482,0,0xffffffff82000f98,0xffffffff8202bb58);
+    }
+    DAT_82a771f0 = iVar1;
+    R_ProcessWorkerCmdsWithTimeout(0xffffffff82327bb0,1);
+    DAT_82a771f0 = 0;
+    PIXEndNamedEvent();
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -1013,7 +1338,6 @@ void CG_StartWorkerPointTraceInView
   
   uVar1 = __savegprlr_25();
   if ((uVar1 & 0x7f) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x497,0,0xffffffff82000f98,0xffffffff8202bbdc);
   }
   if (*(int *)(uVar1 + 0x34) == 1) {
@@ -1102,7 +1426,6 @@ void CG_StartWorkerPointTraceToEntityInView
   
   uVar1 = __savegprlr_24();
   if ((uVar1 & 0x7f) != 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x4c6,0,0xffffffff82000f98,0xffffffff8202bbdc);
   }
   if (*(int *)(uVar1 + 0x34) == 1) {
@@ -1149,11 +1472,192 @@ void CG_StartWorkerPointTraceToEntityInView
 
 // 82327F58  CG_Trace  (cgame/cg_world.cpp:1267)
 
-void CG_Trace(void)
+void CG_Trace(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
+             undefined4 param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_18();
+  float *pfVar1;
+  float *pfVar3;
+  char cVar4;
+  undefined8 uVar2;
+  float *pfVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  code *local_1d0 [2];
+  undefined4 local_1c8;
+  undefined4 local_1c4;
+  undefined1 local_1c0;
+  undefined1 local_1bf;
+  undefined1 local_1be;
+  undefined1 local_1bd;
+  float local_1b0;
+  float local_1ac;
+  float local_1a8;
+  float local_1a4;
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_194;
+  float local_190;
+  undefined1 auStack_180 [64];
+  float local_140;
+  float local_13c;
+  float local_138;
+  float local_130;
+  float local_12c;
+  float local_128;
+  undefined4 local_120;
+  undefined4 local_11c;
+  undefined4 local_118;
+  undefined1 auStack_110 [64];
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c0;
+  float local_bc;
+  float local_b8;
+  undefined4 *local_b0;
+  undefined4 local_ac;
+  uint local_a8;
+  undefined4 local_a4;
+  undefined4 local_a0;
+  
+  pfVar3 = (float *)__savegprlr_18();
+  cVar4 = Sys_IsMainThread();
+  if (cVar4 == '\0') {
+    MyAssertHandler(0xffffffff8202b970,0x4f4,0,0xffffffff82000f98,0xffffffff82010b48);
+  }
+  if (pfVar3 == (float *)0x0) {
+    MyAssertHandler(0xffffffff8202b970,0x4f6,0,0xffffffff82000f98,0xffffffff8202ba08);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x4f7,0,0xffffffff82000f98,0xffffffff8202bebc);
+  }
+  if ((param_4 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x4f8,0,0xffffffff82000f98,0xffffffff82002044);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8202b970,0x4f9,0,0xffffffff82000f98,0xffffffff8202a874);
+  }
+  pfVar1 = (float *)param_4;
+  dVar8 = 0.0;
+  if (pfVar1[3] < 0.0) {
+    MyAssertHandler(0xffffffff8202b970,0x4fb,0,0xffffffff82000f98,0xffffffff8200ca58);
+  }
+  if ((double)pfVar1[4] < dVar8) {
+    MyAssertHandler(0xffffffff8202b970,0x4fc,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  }
+  if ((double)pfVar1[5] < dVar8) {
+    MyAssertHandler(0xffffffff8202b970,0x4fd,0,0xffffffff82000f98,0xffffffff8200ca20);
+  }
+  pfVar5 = (float *)param_2;
+  local_1d0[0] = (code *)*pfVar5;
+  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0] = (code *)pfVar5[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0] = (code *)pfVar5[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff8202b970,0x4ff,0,0xffffffff82000f98,0xffffffff8202be78);
+  }
+  pfVar6 = (float *)param_3;
+  local_1d0[0] = (code *)*pfVar6;
+  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0] = (code *)pfVar6[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0] = (code *)pfVar6[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff8202b970,0x500,0,0xffffffff82000f98,0xffffffff8202abfc);
+  }
+  local_1d0[0] = (code *)*pfVar1;
+  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0] = (code *)pfVar1[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0] = (code *)pfVar1[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff8202b970,0x501,0,0xffffffff82000f98,0xffffffff8202be10);
+  }
+  local_1d0[0] = (code *)pfVar1[3];
+  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0] = (code *)pfVar1[4], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0] = (code *)pfVar1[5], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler(0xffffffff8202b970,0x502,0,0xffffffff82000f98,0xffffffff8202bda8);
+  }
+  Profile_Begin(0x2d);
+  local_1d0[0] = CM_IsGlassSolid;
+  CM_WorldTrace(pfVar3,param_2,param_3,param_4,param_6,local_1d0);
+  local_1d0[0] = (code *)*pfVar3;
+  if (((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler(0xffffffff8202b970,0x508,0,0xffffffff82000f98,0xffffffff8202bd88);
+  }
+  dVar7 = 1.0;
+  if ((pfVar3[7] == 0.0) != (*pfVar3 == 1.0)) {
+    MyAssertHandler(0xffffffff8202b970,0x50a,0,0xffffffff82000f98,0xffffffff8202bd40);
+  }
+  if ((double)*pfVar3 != dVar8) {
+    if ((double)(pfVar1[5] + pfVar1[4] + pfVar1[3]) == dVar8) {
+      if ((param_8 & 0xff) != 0) {
+        CM_PointTraceStaticModels(pfVar3,param_2,param_3,param_6);
+        local_1d0[0] = (code *)*pfVar3;
+        if (((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler(0xffffffff8202b970,0x51b,0,0xffffffff82000f98,0xffffffff8202bd88);
+        }
+        if ((double)*pfVar3 == dVar8) goto LAB_82328640;
+      }
+      local_d0 = *pfVar5;
+      local_c0 = *pfVar6;
+      local_cc = pfVar5[1];
+      local_1c4 = 0xffffffff;
+      local_c8 = pfVar5[2];
+      local_1c0 = 1;
+      local_bc = pfVar6[1];
+      local_1bf = 0;
+      local_b8 = pfVar6[2];
+      local_1bd = 0;
+      local_1be = 0;
+      local_1c8 = param_5;
+      CM_CalcTraceExtents(auStack_110);
+      local_b0 = &local_1c8;
+      local_a8 = (uint)param_7 & 0xff;
+      local_a4 = 1;
+      local_a0 = 0;
+      local_ac = (int)param_6;
+      CG_PointTraceToEntities(auStack_110,pfVar3);
+    }
+    else {
+      if ((param_8 & 0xff) != 0) {
+        MyAssertHandler(0xffffffff8202b970,0x53b,0,0xffffffff82000f98,0xffffffff8202bd30);
+      }
+      if ((param_7 & 0xff) != 0) {
+        MyAssertHandler(0xffffffff8202b970,0x53c,0,0xffffffff82000f98,0xffffffff8202bd24);
+      }
+      local_140 = *pfVar5 + *pfVar1;
+      local_13c = pfVar1[1] + pfVar5[1];
+      local_11c = 0xffffffff;
+      local_138 = pfVar5[2] + pfVar1[2];
+      local_130 = *pfVar6 + *pfVar1;
+      local_1a4 = pfVar1[3];
+      local_12c = pfVar1[1] + pfVar6[1];
+      local_1a0 = pfVar1[4];
+      local_198 = (float)((double)local_1a4 + dVar7);
+      local_19c = pfVar1[5];
+      local_194 = (float)((double)local_1a0 + dVar7);
+      local_190 = (float)((double)local_19c + dVar7);
+      local_128 = pfVar1[2] + pfVar6[2];
+      local_1b0 = (float)dVar8;
+      local_1ac = (float)dVar8;
+      local_1a8 = (float)dVar8;
+      local_120 = param_5;
+      local_118 = (int)param_6;
+      CM_CalcTraceExtents(auStack_180);
+      CG_ClipMoveToEntities(&local_1b0,pfVar3);
+      DynEntCl_ClipMoveTrace(&local_1b0,pfVar3);
+    }
+    dVar8 = (double)*pfVar3;
+    if (((double)pfVar3[9] != dVar8) && (dVar8 != dVar7)) {
+      uVar2 = va(0xffffffff8202bc50,(double)pfVar3[9],dVar8,pfVar3[7],*(undefined2 *)(pfVar3 + 8),
+                 (double)*pfVar5,(double)pfVar5[1],(double)pfVar5[2]);
+      MyAssertHandler(0xffffffff8202b970,0x556,0,0xffffffff820011f4,0xffffffff8202bc00,uVar2);
+    }
+  }
+LAB_82328640:
+  Profile_EndInternal(0);
+  __restgprlr_18();
+  return;
 }
 
 
@@ -1168,20 +1672,16 @@ void CG_LocationalTrace(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
   
   uVar1 = __savegprlr_25();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x561,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x562,0,0xffffffff82000f98,0xffffffff8202bebc);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x563,0,0xffffffff82000f98,0xffffffff8202a874);
   }
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x564,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bec4);
@@ -1226,65 +1726,60 @@ void CG_LocationalTraceEntitiesOnly
   
   uVar1 = __savegprlr_24();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x576,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x577,0,0xffffffff82000f98,0xffffffff8202bebc);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x578,0,0xffffffff82000f98,0xffffffff8202a874);
   }
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x579,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   puVar3 = (uint *)param_2;
-  if ((*puVar3 & 0x7f800000) != 0x7f800000) {
-    if ((puVar3[1] & 0x7f800000) != 0x7f800000) {
-      if ((puVar3[2] & 0x7f800000) != 0x7f800000) {
-        puVar4 = (uint *)param_3;
-        if ((*puVar4 & 0x7f800000) != 0x7f800000) {
-          if ((puVar4[1] & 0x7f800000) != 0x7f800000) {
-            if ((puVar4[2] & 0x7f800000) != 0x7f800000) {
-              PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bed0);
-              Profile_Begin(0x2b);
-              local_90 = *puVar3;
-              local_8c = puVar3[1];
-              local_88 = puVar3[2];
-              local_80 = *puVar4;
-              local_df = 0;
-              local_7c = puVar4[1];
-              local_e0 = 1;
-              local_78 = puVar4[2];
-              local_e4 = 0xffffffff;
-              local_dd = 0;
-              local_de = 0;
-              local_e8 = param_4;
-              CM_CalcTraceExtents(auStack_d0);
-              local_70 = &local_e8;
-              local_68 = 1;
-              local_64 = 1;
-              local_60 = 0;
-              local_6c = param_5;
-              CG_PointTraceToEntities(auStack_d0,uVar1);
-              Profile_EndInternal(0);
-              PIXEndNamedEvent();
-              __restgprlr_24();
-              return;
-            }
-          }
-        }
-                    /* WARNING: Subroutine does not return */
-        MyAssertHandler(0xffffffff8202b970,0x57b,0,0xffffffff82000f98,0xffffffff8202abfc);
-      }
+  if ((*puVar3 & 0x7f800000) == 0x7f800000) {
+LAB_8232888c:
+    MyAssertHandler(0xffffffff8202b970,0x57a,0,0xffffffff82000f98,0xffffffff8202be78);
+  }
+  else {
+    if ((puVar3[1] & 0x7f800000) == 0x7f800000) goto LAB_8232888c;
+    if ((puVar3[2] & 0x7f800000) == 0x7f800000) goto LAB_8232888c;
+  }
+  puVar4 = (uint *)param_3;
+  if ((*puVar4 & 0x7f800000) != 0x7f800000) {
+    if ((puVar4[1] & 0x7f800000) != 0x7f800000) {
+      if ((puVar4[2] & 0x7f800000) != 0x7f800000) goto LAB_8232890c;
     }
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(0xffffffff8202b970,0x57a,0,0xffffffff82000f98,0xffffffff8202be78);
+  MyAssertHandler(0xffffffff8202b970,0x57b,0,0xffffffff82000f98,0xffffffff8202abfc);
+LAB_8232890c:
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bed0);
+  Profile_Begin(0x2b);
+  local_90 = *puVar3;
+  local_8c = puVar3[1];
+  local_88 = puVar3[2];
+  local_80 = *puVar4;
+  local_df = 0;
+  local_7c = puVar4[1];
+  local_e0 = 1;
+  local_78 = puVar4[2];
+  local_e4 = 0xffffffff;
+  local_dd = 0;
+  local_de = 0;
+  local_e8 = param_4;
+  CM_CalcTraceExtents(auStack_d0);
+  local_70 = &local_e8;
+  local_68 = 1;
+  local_64 = 1;
+  local_60 = 0;
+  local_6c = param_5;
+  CG_PointTraceToEntities(auStack_d0,uVar1);
+  Profile_EndInternal(0);
+  PIXEndNamedEvent();
+  __restgprlr_24();
+  return;
 }
 
 
@@ -1299,24 +1794,19 @@ void CG_TraceCapsule(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulon
   
   uVar1 = __savegprlr_24();
   if ((uVar1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x59f,0,0xffffffff82000f98,0xffffffff8202ba08);
   }
   if ((param_2 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x5a0,0,0xffffffff82000f98,0xffffffff8202bebc);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x5a1,0,0xffffffff82000f98,0xffffffff8202a874);
   }
   if ((param_4 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x5a2,0,0xffffffff82000f98,0xffffffff82002044);
   }
   cVar2 = Sys_IsMainThread();
   if (cVar2 == '\0') {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8202b970,0x5a3,0,0xffffffff82000f98,0xffffffff82010b48);
   }
   Profile_Begin(0x2c);

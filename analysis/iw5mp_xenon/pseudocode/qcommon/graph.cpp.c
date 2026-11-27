@@ -18,15 +18,12 @@ void GraphFloat_ParseBuffer(undefined8 param_1,int param_2,ulonglong param_3)
   iVar1 = __savegprlr_24();
   in_stack_0000001c = param_2;
   if (iVar1 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e534,0x1e,0,0xffffffff82000f98,0xffffffff82021900);
   }
-  if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
+  if (in_stack_0000001c == 0) {
     MyAssertHandler(0xffffffff8208e534,0x1f,0,0xffffffff82000f98,0xffffffff8200e484);
   }
   if ((param_3 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e534,0x20,0,0xffffffff82000f98,0xffffffff8208e528);
   }
   I_strncpyz(iVar1,param_3,0x40);
@@ -63,7 +60,6 @@ void GraphFloat_ParseBuffer(undefined8 param_1,int param_2,ulonglong param_3)
   }
   *(short *)(iVar1 + 0x140) = (short)uVar3;
   if ((uVar3 & 0xffff) != uVar3) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e534,0x47,0,0xffffffff82000f98,0xffffffff820218a0);
   }
   __restgprlr_24();
@@ -73,11 +69,29 @@ void GraphFloat_ParseBuffer(undefined8 param_1,int param_2,ulonglong param_3)
 
 // 82501848  GraphFloat_Load  (qcommon/graph.cpp:79)
 
-void GraphFloat_Load(void)
+void GraphFloat_Load(undefined8 param_1,ulonglong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar2;
+  undefined8 uVar1;
+  double extraout_f1;
+  double dVar3;
+  undefined1 auStack_2040 [8256];
+  
+  iVar2 = __savegprlr_27();
+  dVar3 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8208e534,0x53,0,0xffffffff82000f98,0xffffffff82021900);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208e534,0x54,0,0xffffffff82000f98,0xffffffff8208e528);
+  }
+  Com_Memset(iVar2,0,0x148);
+  uVar1 = Com_LoadInfoString(param_2,0xffffffff82021900,0xffffffff8208e570,auStack_2040);
+  GraphFloat_ParseBuffer(iVar2,uVar1,param_2);
+  *(float *)(iVar2 + 0x144) = (float)dVar3;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -89,17 +103,15 @@ double GraphFloat_GetValue(double param_1,int param_2)
   double dVar1;
   
   if (param_2 == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff8208e534,0x67,0,0xffffffff82000f98,0xffffffff82021900);
   }
-  if ((0.0 <= param_1) && (param_1 <= 1.0)) {
-    dVar1 = (double)GraphGetValueFromFraction
-                              (param_1,*(undefined2 *)(param_2 + 0x140),param_2 + 0x40);
-    return (double)(float)((double)*(float *)(param_2 + 0x144) * dVar1);
+  if ((param_1 < 0.0) || (1.0 < param_1)) {
+    MyAssertHandler(param_1,0xffffffff8208e534,0x68,0,0xffffffff82029638,param_1,0,
+                    0x3ff0000000000000);
   }
-                    /* WARNING: Subroutine does not return */
-  MyAssertHandler(param_1,0xffffffff8208e534,0x68,0,0xffffffff82029638,param_1,0,0x3ff0000000000000)
+  dVar1 = (double)GraphGetValueFromFraction(param_1,*(undefined2 *)(param_2 + 0x140),param_2 + 0x40)
   ;
+  return (double)(float)((double)*(float *)(param_2 + 0x144) * dVar1);
 }
 
 
@@ -108,18 +120,87 @@ double GraphFloat_GetValue(double param_1,int param_2)
 void GraphFloat_SaveToFile(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  ushort uVar1;
+  float *pfVar2;
+  int iVar5;
+  ulonglong uVar3;
+  char cVar6;
+  undefined8 uVar4;
+  char *pcVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  char local_430 [1072];
+  
+  iVar5 = __savegprlr_27();
+  if (iVar5 == 0) {
+    MyAssertHandler(0xffffffff8208e534,0x7d,0,0xffffffff82000f98,0xffffffff82021900);
+  }
+  uVar3 = FS_FOpenTextFileWrite(iVar5);
+  if ((uVar3 & 0xffffffff) == 0) {
+    Com_PrintError(uVar3,0xffffffff8208e5c8,iVar5);
+    __restgprlr_27();
+    return;
+  }
+  if (*(short *)(iVar5 + 0x140) == 0) {
+    MyAssertHandler(0xffffffff8208e534,0x8b,0,0xffffffff82000f98,0xffffffff8205f18c);
+  }
+  uVar1 = *(ushort *)(iVar5 + 0x140);
+  uVar9 = (ulonglong)uVar1;
+  Com_sprintf(local_430,0x400,0xffffffff8208e5c0,0xffffffff8208e570,uVar9);
+  pcVar7 = local_430;
+  do {
+    cVar6 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar6 != '\0');
+  FS_Write(local_430,pcVar7 + (-1 - (int)local_430),uVar3);
+  if (uVar1 != 0) {
+    pfVar8 = (float *)(iVar5 + 0x3c);
+    do {
+      pfVar2 = pfVar8 + 1;
+      pfVar8 = pfVar8 + 2;
+      Com_sprintf(local_430,0x400,0xffffffff82021e78,(double)*pfVar2,(double)*pfVar8);
+      pcVar7 = local_430;
+      do {
+        cVar6 = *pcVar7;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar6 != '\0');
+      FS_Write(local_430,pcVar7 + (-1 - (int)local_430),uVar3);
+      uVar9 = uVar9 - 1;
+    } while (uVar9 != 0);
+  }
+  FS_FCloseFile(uVar3);
+  cVar6 = FS_IsUsingRemotePCSharing();
+  if (cVar6 == '\0') {
+    uVar4 = Sys_DefaultInstallPath();
+  }
+  else {
+    uVar4 = FS_GetRemotePCPath(0);
+  }
+  Com_Printf(0x12,0xffffffff8208e584,uVar4,iVar5);
+  __restgprlr_27();
+  return;
 }
 
 
 // 82501BA0  GraphFloat_DevGuiCB_Event  (qcommon/graph.cpp:167)
 
-void GraphFloat_DevGuiCB_Event(void)
+void GraphFloat_DevGuiCB_Event(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  
+  iVar1 = __savegprlr_28();
+  if (iVar1 == 0) {
+    MyAssertHandler(0xffffffff8208e534,0xaa,0,0xffffffff82000f98,0xffffffff82021900);
+  }
+  if (*(int *)(iVar1 + 0x18) == 0) {
+    MyAssertHandler(0xffffffff8208e534,0xab,0,0xffffffff82000f98,0xffffffff82021eec);
+  }
+  if (param_2 == 5) {
+    GraphFloat_SaveToFile(*(undefined4 *)(iVar1 + 0x18));
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -140,10 +221,31 @@ int GraphFloat_DevGuiCB_Text
 
 // 82501C70  GraphFloat_CreateDevGui  (qcommon/graph.cpp:205)
 
-void GraphFloat_CreateDevGui(void)
+void GraphFloat_CreateDevGui(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int *piVar1;
+  int iVar2;
+  
+  iVar2 = __savegprlr_27();
+  if (iVar2 == 0) {
+    MyAssertHandler(0xffffffff8208e534,0xce,0,0xffffffff82000f98,0xffffffff82021900);
+  }
+  if ((param_2 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208e534,0xcf,0,0xffffffff82000f98,0xffffffff8208e624);
+  }
+  if ((param_3 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff8208e534,0xd0,0,0xffffffff82000f98,0xffffffff8208e618);
+  }
+  piVar1 = (int *)param_2;
+  piVar1[6] = iVar2;
+  *(undefined2 *)(piVar1 + 2) = 0x20;
+  *piVar1 = iVar2 + 0x40;
+  piVar1[1] = iVar2 + 0x140;
+  piVar1[4] = (int)GraphFloat_DevGuiCB_Event;
+  piVar1[5] = (int)GraphFloat_DevGuiCB_Text;
+  DevGui_AddGraph(param_3,param_2);
+  __restgprlr_27();
+  return;
 }
 

@@ -40,6 +40,93 @@ LAB_8287fabc:
 ; 8287FAD8  D3D::ConfigureForOnePassZPass  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/tile.cpp:62)
   8287FAD8  7D8802A6             mfspr r12,LR
   8287FADC  48096BDD             bl 0x829166b8
+  8287FAE0  9421FF80             stwu r1,-0x80(r1)
+  8287FAE4  7C7F1B78             or r31,r3,r3
+  8287FAE8  7C9C2378             or r28,r4,r4
+  8287FAEC  7CBE2B78             or r30,r5,r5
+  8287FAF0  7CDD3378             or r29,r6,r6
+  8287FAF4  7DAD6B78             or r13,r13,r13
+  8287FAF8  897F2B3F             lbz r11,0x2b3f(r31)
+  8287FAFC  2F1C0000             cmpwi cr6,r28,0x0
+  8287FB00  616B0020             ori r11,r11,0x20
+  8287FB04  997F2B3F             stb r11,0x2b3f(r31)
+  8287FB08  419A000C             beq cr6,0x8287fb14
+  8287FB0C  616B0010             ori r11,r11,0x10
+  8287FB10  997F2B3F             stb r11,0x2b3f(r31)
+LAB_8287fb14:
+  8287FB14  A17F2880             lhz r11,0x2880(r31)
+  8287FB18  556B07BF             rlwinm. r11,r11,0x0,0x1e,0x1f
+  8287FB1C  4082000C             bne 0x8287fb28
+  8287FB20  38800010             li r4,0x10
+  8287FB24  48000010             b 0x8287fb34
+LAB_8287fb28:
+  8287FB28  2B0B0001             cmplwi cr6,r11,0x1
+  8287FB2C  38800008             li r4,0x8
+  8287FB30  409A0010             bne cr6,0x8287fb40
+LAB_8287fb34:
+  8287FB34  39600020             li r11,0x20
+  8287FB38  38600050             li r3,0x50
+  8287FB3C  4800000C             b 0x8287fb48
+LAB_8287fb40:
+  8287FB40  39600010             li r11,0x10
+  8287FB44  38600028             li r3,0x28
+LAB_8287fb48:
+  8287FB48  7D4BEA14             add r10,r11,r29
+  8287FB4C  392BFFFF             subi r9,r11,0x1
+  8287FB50  394AFFFF             subi r10,r10,0x1
+  8287FB54  2B1E0000             cmplwi cr6,r30,0x0
+  8287FB58  7D454878             andc r5,r10,r9
+  8287FB5C  0CCB0000             twllei r11,0x0
+  8287FB60  7CC55B96             divwu r6,r5,r11
+  8287FB64  419A0038             beq cr6,0x8287fb9c
+  8287FB68  393F342C             addi r9,r31,0x342c
+  8287FB6C  7FC903A6             mtspr CTR,r30
+  8287FB70  395F33B4             addi r10,r31,0x33b4
+LAB_8287fb74:
+  8287FB74  80EA0004             lwz r7,0x4(r10)
+  8287FB78  0CCB0000             twllei r11,0x0
+  8287FB7C  850A0008             lwzu r8,0x8(r10)
+  8287FB80  0CC40000             twllei r4,0x0
+  8287FB84  7CE75B96             divwu r7,r7,r11
+  8287FB88  7D082396             divwu r8,r8,r4
+  8287FB8C  7D0831D6             mullw r8,r8,r6
+  8287FB90  7D083A14             add r8,r8,r7
+  8287FB94  95090004             stwu r8,0x4(r9)
+  8287FB98  4200FFDC             bdnz 0x8287fb74
+LAB_8287fb9c:
+  8287FB9C  815F2880             lwz r10,0x2880(r31)
+  8287FBA0  7D63EA14             add r11,r3,r29
+  8287FBA4  90BF346C             stw r5,0x346c(r31)
+  8287FBA8  0CC30000             twllei r3,0x0
+  8287FBAC  50AA901A             rlwimi r10,r5,0x12,0x0,0xd
+  8287FBB0  396BFFFF             subi r11,r11,0x1
+  8287FBB4  915F2880             stw r10,0x2880(r31)
+  8287FBB8  E95F0010             ld r10,0x10(r31)
+  8287FBBC  7D6B1B96             divwu r11,r11,r3
+  8287FBC0  614A0100             ori r10,r10,0x100
+  8287FBC4  7D6B19D6             mullw r11,r11,r3
+  8287FBC8  F95F0010             std r10,0x10(r31)
+  8287FBCC  895F2B3F             lbz r10,0x2b3f(r31)
+  8287FBD0  917F3470             stw r11,0x3470(r31)
+  8287FBD4  554A06B5             rlwinm. r10,r10,0x0,0x1a,0x1a
+  8287FBD8  40820028             bne 0x8287fc00
+  8287FBDC  817F2F7C             lwz r11,0x2f7c(r31)
+  8287FBE0  3D400004             lis r10,0x4
+  8287FBE4  556B031C             rlwinm r11,r11,0x0,0xc,0xe
+  8287FBE8  7F0B5040             cmplw cr6,r11,r10
+  8287FBEC  409A0014             bne cr6,0x8287fc00
+  8287FBF0  E97F0028             ld r11,0x28(r31)
+  8287FBF4  3980FEFF             li r12,-0x101
+  8287FBF8  7D6B6038             and r11,r11,r12
+  8287FBFC  4800000C             b 0x8287fc08
+LAB_8287fc00:
+  8287FC00  E97F0028             ld r11,0x28(r31)
+  8287FC04  616B0100             ori r11,r11,0x100
+LAB_8287fc08:
+  8287FC08  F97F0028             std r11,0x28(r31)
+  8287FC0C  7DCE7378             or r14,r14,r14
+  8287FC10  38210080             addi r1,r1,0x80
+  8287FC14  48096AF4             b 0x82916708
 
 ; 8287FC18  D3DDevice_SetPredication  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/tile.cpp:173)
   8287FC18  7D8802A6             mfspr r12,LR

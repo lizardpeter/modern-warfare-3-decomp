@@ -29,6 +29,72 @@
 ; 8290BA50  bdFacebookFriend::deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:22)
   8290BA50  7D8802A6             mfspr r12,LR
   8290BA54  4800AC69             bl 0x829166bc
+  8290BA58  3BE1FF90             subi r31,r1,0x70
+  8290BA5C  9421FF90             stwu r1,-0x70(r1)
+  8290BA60  7C7E1B78             or r30,r3,r3
+  8290BA64  909F008C             stw r4,0x8c(r31)
+  8290BA68  7C9D2378             or r29,r4,r4
+  8290BA6C  38830008             addi r4,r3,0x8
+  8290BA70  807D0000             lwz r3,0x0(r29)
+  8290BA74  4BFEA32D             bl 0x828f5da0
+  8290BA78  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  8290BA7C  314BFFFF             subic r10,r11,0x1
+  8290BA80  7D6A5910             subfe r11,r10,r11
+  8290BA84  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BA88  41820020             beq 0x8290baa8
+  8290BA8C  38A00080             li r5,0x80
+  8290BA90  807D0000             lwz r3,0x0(r29)
+  8290BA94  389E0010             addi r4,r30,0x10
+  8290BA98  4BFEA3D9             bl 0x828f5e70
+  8290BA9C  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BAA0  39600001             li r11,0x1
+  8290BAA4  40820008             bne 0x8290baac
+LAB_8290baa8:
+  8290BAA8  39600000             li r11,0x0
+LAB_8290baac:
+  8290BAAC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BAB0  4182001C             beq 0x8290bacc
+  8290BAB4  389E0090             addi r4,r30,0x90
+  8290BAB8  807D0000             lwz r3,0x0(r29)
+  8290BABC  4BFEA2E5             bl 0x828f5da0
+  8290BAC0  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BAC4  39600001             li r11,0x1
+  8290BAC8  40820008             bne 0x8290bad0
+LAB_8290bacc:
+  8290BACC  39600000             li r11,0x0
+LAB_8290bad0:
+  8290BAD0  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BAD4  41820020             beq 0x8290baf4
+  8290BAD8  38A00040             li r5,0x40
+  8290BADC  807D0000             lwz r3,0x0(r29)
+  8290BAE0  389E0098             addi r4,r30,0x98
+  8290BAE4  4BFEA38D             bl 0x828f5e70
+  8290BAE8  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BAEC  39600001             li r11,0x1
+  8290BAF0  40820008             bne 0x8290baf8
+LAB_8290baf4:
+  8290BAF4  39600000             li r11,0x0
+LAB_8290baf8:
+  8290BAF8  39400040             li r10,0x40
+  8290BAFC  556B063F             rlwinm. r11,r11,0x0,0x18,0x1f
+  8290BB00  38BE0118             addi r5,r30,0x118
+  8290BB04  915E0118             stw r10,0x118(r30)
+  8290BB08  4182001C             beq 0x8290bb24
+  8290BB0C  389E00D8             addi r4,r30,0xd8
+  8290BB10  807D0000             lwz r3,0x0(r29)
+  8290BB14  4BFEA3F5             bl 0x828f5f08
+  8290BB18  546B063F             rlwinm. r11,r3,0x0,0x18,0x1f
+  8290BB1C  39600001             li r11,0x1
+  8290BB20  40820008             bne 0x8290bb28
+LAB_8290bb24:
+  8290BB24  39600000             li r11,0x0
+LAB_8290bb28:
+  8290BB28  557E063E             rlwinm r30,r11,0x0,0x18,0x1f
+  8290BB2C  7FA3EB78             or r3,r29,r29
+  8290BB30  4BA588D1             bl 0x82364400
+  8290BB34  7FC3F378             or r3,r30,r30
+  8290BB38  383F0070             addi r1,r31,0x70
+  8290BB3C  4800ABD0             b 0x8291670c
 
 ; 8290B9E8  bdFacebookFriend::sizeOf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebookfriend.cpp:36)
   8290B9E8  38600120             li r3,0x120

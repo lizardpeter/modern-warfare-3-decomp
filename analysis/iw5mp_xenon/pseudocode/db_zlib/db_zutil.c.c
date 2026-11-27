@@ -29,11 +29,25 @@ undefined * db_zError(int param_1)
 
 // 827E3778  DB_Zip_InitThreadMemory  (db_zlib/db_zutil.c:89)
 
-void DB_Zip_InitThreadMemory(void)
+void DB_Zip_InitThreadMemory(undefined8 param_1,int param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_27();
+  int iVar1;
+  
+  iVar1 = __savegprlr_27();
+  if (*(int *)(iVar1 + 0x28) != 0) {
+    MyAssertHandler(0xffffffff821df158,0x5c,0,0xffffffff82000f98,0xffffffff821924e4);
+  }
+  if ((param_3 != 0x10000) && (param_3 != 0x60000)) {
+    MyAssertHandler(0xffffffff821df158,0x5d,0,0xffffffff82000f98,0xffffffff821df198);
+  }
+  *(int *)(param_2 + 0x204) = param_3 + -0x20c;
+  *(int *)(param_2 + 0x208) = param_2 + 0x20c;
+  *(code **)(iVar1 + 0x20) = db_zcalloc;
+  *(code **)(iVar1 + 0x24) = db_zcfree;
+  *(int *)(iVar1 + 0x28) = param_2;
+  __restgprlr_27();
+  return;
 }
 
 
@@ -43,7 +57,6 @@ void DB_Zip_ShutdownThreadMemory(int param_1)
 
 {
   if (*(int *)(param_1 + 0x28) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821df158,0x6b,0,0xffffffff82000f98,0xffffffff821923b8);
   }
   *(undefined4 *)(param_1 + 0x28) = 0;
@@ -55,31 +68,79 @@ void DB_Zip_ShutdownThreadMemory(int param_1)
 
 // 827E34E8  DB_Zip_Alloc  (db_zlib/db_zutil.c:115)
 
-void DB_Zip_Alloc(void)
+void DB_Zip_Alloc(undefined8 param_1,longlong param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint *puVar4;
+  uint uVar5;
+  
+  puVar4 = (uint *)__savegprlr_28();
+  if (puVar4 == (uint *)0x0) {
+    MyAssertHandler(0xffffffff821df158,0x77,0,0xffffffff82000f98,0xffffffff82192420);
+  }
+  if ((int)param_2 == 0) {
+    MyAssertHandler(0xffffffff821df158,0x78,0,0xffffffff82000f98,0xffffffff82036204);
+  }
+  if (0x7e < *puVar4) {
+    MyAssertHandler(0xffffffff821df158,0x79,0,0xffffffff82000f98,0xffffffff821923e4);
+  }
+  uVar1 = puVar4[0x82];
+  uVar3 = puVar4[*puVar4 + 1];
+  param_2 = (ulonglong)uVar3 + param_2;
+  uVar5 = (uint)param_2;
+  if ((int)puVar4[0x81] < (int)uVar5) {
+    MyAssertHandler(0xffffffff821df158,0x7f,0,0xffffffff8205ca6c,0xffffffff821923c8,param_2);
+  }
+  uVar2 = *puVar4;
+  *puVar4 = uVar2 + 1;
+  puVar4[uVar2 + 2] = uVar5;
+  __restgprlr_28((ulonglong)uVar1 + (ulonglong)uVar3);
+  return;
 }
 
 
 // 827E35F0  DB_Zip_Free  (db_zlib/db_zutil.c:136)
 
-void DB_Zip_Free(void)
+void DB_Zip_Free(undefined8 param_1,int param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int *piVar2;
+  
+  piVar2 = (int *)__savegprlr_28();
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler(0xffffffff821df158,0x89,0,0xffffffff82000f98,0xffffffff82192420);
+  }
+  if (*piVar2 < 1) {
+    MyAssertHandler(0xffffffff821df158,0x8a,0,0xffffffff82192470,0xffffffff82192490);
+  }
+  iVar1 = *piVar2;
+  *piVar2 = iVar1 + -1;
+  if (param_2 - piVar2[0x82] != piVar2[iVar1]) {
+    MyAssertHandler(0xffffffff821df158,0x8c,0,0xffffffff82000f98,0xffffffff82192428);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
 // 827E36B0  db_zcalloc  (db_zlib/db_zutil.c:148)
 
-void db_zcalloc(void)
+void db_zcalloc(undefined8 param_1,int param_2,int param_3)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  ulonglong uVar1;
+  
+  uVar1 = __savegprlr_29();
+  if ((uVar1 & 0xffffffff) == 0) {
+    MyAssertHandler(0xffffffff821df158,0x9a,0,0xffffffff82000f98,0xffffffff82192420);
+  }
+  DB_Zip_Alloc(uVar1,(longlong)param_2 * (longlong)param_3);
+  __restgprlr_29();
+  return;
 }
 
 
@@ -89,7 +150,6 @@ void db_zcfree(ulonglong param_1,undefined8 param_2)
 
 {
   if ((param_1 & 0xffffffff) == 0) {
-                    /* WARNING: Subroutine does not return */
     MyAssertHandler(0xffffffff821df158,0xaf,0,0xffffffff82000f98,0xffffffff82192420);
   }
   DB_Zip_Free(param_1,param_2);

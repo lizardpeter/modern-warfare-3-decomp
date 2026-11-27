@@ -307,8 +307,60 @@ void vp8_strict_quantize_b(undefined8 param_1,undefined4 *param_2)
 void vp8_quantize_mby(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_26();
+  bool bVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  
+  iVar2 = __savegprlr_26();
+  if ((**(int **)(iVar2 + 0x1c70) == 4) || (bVar1 = true, **(int **)(iVar2 + 0x1c70) == 9)) {
+    bVar1 = false;
+  }
+  iVar3 = iVar2 + 0x640;
+  iVar4 = iVar2 + 0x162c;
+  lVar5 = 0x10;
+  do {
+    (**(code **)(iVar2 + 0xbfd0))(iVar3,iVar4);
+    lVar5 = lVar5 + -1;
+    iVar4 = iVar4 + 0x3c;
+    iVar3 = iVar3 + 0x30;
+  } while (lVar5 != 0);
+  if (bVar1) {
+    (**(code **)(iVar2 + 0xbfd0))(iVar2 + 0xac0,iVar2 + 0x1bcc);
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 82835E58  vp8_quantize_mb  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:296)
+
+void vp8_quantize_mb(void)
+
+{
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar1 = __savegprlr_28();
+  if ((**(int **)(iVar1 + 0x1c70) == 4) || (lVar2 = 1, **(int **)(iVar1 + 0x1c70) == 9)) {
+    lVar2 = 0;
+  }
+  lVar2 = lVar2 + 0x18;
+  if (lVar2 != 0) {
+    iVar3 = iVar1 + 0x640;
+    iVar4 = iVar1 + 0x162c;
+    do {
+      (**(code **)(iVar1 + 0xbfd0))(iVar3,iVar4);
+      lVar2 = lVar2 + -1;
+      iVar4 = iVar4 + 0x3c;
+      iVar3 = iVar3 + 0x30;
+    } while (lVar2 != 0);
+  }
+  __restgprlr_28();
+  return;
 }
 
 
@@ -317,7 +369,22 @@ void vp8_quantize_mby(void)
 void vp8_quantize_mbuv(void)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_28();
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  iVar1 = __savegprlr_28();
+  iVar2 = iVar1 + 0x940;
+  iVar3 = iVar1 + 0x19ec;
+  lVar4 = 8;
+  do {
+    (**(code **)(iVar1 + 0xbfd0))(iVar2,iVar3);
+    lVar4 = lVar4 + -1;
+    iVar3 = iVar3 + 0x3c;
+    iVar2 = iVar2 + 0x30;
+  } while (lVar4 != 0);
+  __restgprlr_28();
+  return;
 }
 

@@ -2,10 +2,69 @@
 
 // 822584B0  mp_montgomery_calc_normalization  (line unknown)
 
-void mp_montgomery_calc_normalization(void)
+void mp_montgomery_calc_normalization(undefined8 param_1,undefined8 param_2)
 
 {
-                    /* WARNING: Subroutine does not return */
-  __savegprlr_29();
+  uint uVar1;
+  uint *puVar3;
+  int iVar4;
+  undefined8 uVar2;
+  ulonglong uVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  uint uVar8;
+  
+  puVar3 = (uint *)__savegprlr_29();
+  uVar1 = *(uint *)param_2;
+  if (uVar1 == 0) {
+    lVar7 = 0;
+  }
+  else {
+    lVar7 = (ulonglong)uVar1 * 0x1c + -0x1c;
+    for (uVar5 = (ulonglong)*(uint *)(uVar1 * 4 + ((uint *)param_2)[3] + -4); uVar5 != 0;
+        uVar5 = uVar5 >> 1) {
+      lVar7 = lVar7 + 1;
+    }
+  }
+  uVar8 = (uint)lVar7;
+  lVar7 = lVar7 + ((longlong)((int)uVar8 / 0x1c + ((int)uVar8 >> 0x1f)) + (ulonglong)(uVar8 >> 0x1f)
+                  ) * -0x1c;
+  if ((int)uVar1 < 2) {
+    iVar4 = 0;
+    puVar3[2] = 0;
+    *puVar3 = 0;
+    if (0 < (int)puVar3[1]) {
+      puVar6 = (undefined4 *)(puVar3[3] - 4);
+      do {
+        iVar4 = iVar4 + 1;
+        puVar6 = puVar6 + 1;
+        *puVar6 = 0;
+      } while (iVar4 < (int)puVar3[1]);
+    }
+    lVar7 = 1;
+    *(undefined4 *)puVar3[3] = 1;
+    *puVar3 = (uint)(*(int *)puVar3[3] != 0);
+  }
+  else {
+    iVar4 = mp_2expt(puVar3,(ulonglong)uVar1 * 0x1c + lVar7 + -0x1d);
+    if (iVar4 != 0) {
+      __restgprlr_29();
+      return;
+    }
+  }
+  lVar7 = lVar7 + -1;
+  iVar4 = (int)lVar7;
+  while (iVar4 < 0x1c) {
+    uVar2 = mp_mul_2(puVar3,puVar3);
+    if (((int)uVar2 != 0) ||
+       ((iVar4 = mp_cmp_mag(puVar3,param_2), iVar4 != -1 &&
+        (uVar2 = s_mp_sub(puVar3), (int)uVar2 != 0)))) goto LAB_82258608;
+    lVar7 = lVar7 + 1;
+    iVar4 = (int)lVar7;
+  }
+  uVar2 = 0;
+LAB_82258608:
+  __restgprlr_29(uVar2);
+  return;
 }
 

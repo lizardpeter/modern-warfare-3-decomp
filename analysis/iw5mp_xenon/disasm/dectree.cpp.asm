@@ -440,3 +440,37 @@ LAB_828b7e1c:
   828B7E28  EBC1FFE8             ld r30,-0x18(r1)
   828B7E2C  EBE1FFF0             ld r31,-0x10(r1)
   828B7E30  4E800020             blr
+
+; 828B7E38  XCOMPRESS::read_aligned_offset_tree  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/dectree.cpp:356)
+  828B7E38  7D8802A6             mfspr r12,LR
+  828B7E3C  4805E881             bl 0x829166bc
+  828B7E40  9421FF90             stwu r1,-0x70(r1)
+  828B7E44  7C7F1B78             or r31,r3,r3
+  828B7E48  3BC00000             li r30,0x0
+  828B7E4C  3BA30E34             addi r29,r3,0xe34
+LAB_828b7e50:
+  828B7E50  38800003             li r4,0x3
+  828B7E54  7FE3FB78             or r3,r31,r31
+  828B7E58  4BFFE7A1             bl 0x828b65f8
+  828B7E5C  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828B7E60  7D7DF1AE             stbx r11,r29,r30
+  828B7E64  3BDE0001             addi r30,r30,0x1
+  828B7E68  2F1E0008             cmpwi cr6,r30,0x8
+  828B7E6C  4198FFE4             blt cr6,0x828b7e50
+  828B7E70  897F2EB7             lbz r11,0x2eb7(r31)
+  828B7E74  280B0000             cmplwi r11,0x0
+  828B7E78  4182000C             beq 0x828b7e84
+  828B7E7C  38600000             li r3,0x0
+  828B7E80  48000024             b 0x828b7ea4
+LAB_828b7e84:
+  828B7E84  38BF0DB4             addi r5,r31,0xdb4
+  828B7E88  7FA4EB78             or r4,r29,r29
+  828B7E8C  7FE3FB78             or r3,r31,r31
+  828B7E90  480002E1             bl 0x828b8170
+  828B7E94  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
+  828B7E98  396B0000             addi r11,r11,0x0
+  828B7E9C  314BFFFF             subic r10,r11,0x1
+  828B7EA0  7C6A5910             subfe r3,r10,r11
+LAB_828b7ea4:
+  828B7EA4  38210070             addi r1,r1,0x70
+  828B7EA8  4805E864             b 0x8291670c

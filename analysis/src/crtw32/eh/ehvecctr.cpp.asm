@@ -3,3 +3,35 @@
 ; 8291DB70  `eh_vector_constructor_iterator'  (line unknown)
   8291DB70  7D8802A6             mfspr r12,LR
   8291DB74  4BFF8B3D             bl 0x829166b0
+  8291DB78  3BE1FF70             subi r31,r1,0x90
+  8291DB7C  9421FF70             stwu r1,-0x90(r1)
+  8291DB80  7C7E1B78             or r30,r3,r3
+  8291DB84  907F00A4             stw r3,0xa4(r31)
+  8291DB88  3B800000             li r28,0x0
+  8291DB8C  90FF00C4             stw r7,0xc4(r31)
+  8291DB90  7C9D2378             or r29,r4,r4
+  8291DB94  939F0054             stw r28,0x54(r31)
+  8291DB98  7CBA2B78             or r26,r5,r5
+  8291DB9C  909F00AC             stw r4,0xac(r31)
+  8291DBA0  7CDB3378             or r27,r6,r6
+  8291DBA4  7D084378             or r8,r8,r8
+LAB_8291dba8:
+  8291DBA8  939F0050             stw r28,0x50(r31)
+  8291DBAC  7F1CD000             cmpw cr6,r28,r26
+  8291DBB0  40980024             bge cr6,0x8291dbd4
+  8291DBB4  7FC3F378             or r3,r30,r30
+  8291DBB8  7F6903A6             mtspr CTR,r27
+  8291DBBC  4E800421             bctrl
+  8291DBC0  7FDEEA14             add r30,r30,r29
+  8291DBC4  93DF00A4             stw r30,0xa4(r31)
+  8291DBC8  7D084378             or r8,r8,r8
+  8291DBCC  3B9C0001             addi r28,r28,0x1
+  8291DBD0  4BFFFFD8             b 0x8291dba8
+LAB_8291dbd4:
+  8291DBD4  39600001             li r11,0x1
+  8291DBD8  917F0054             stw r11,0x54(r31)
+  8291DBDC  7D084378             or r8,r8,r8
+  8291DBE0  399F0090             addi r12,r31,0x90
+  8291DBE4  4800003D             bl 0x8291dc20
+  8291DBE8  383F0090             addi r1,r31,0x90
+  8291DBEC  4BFF8B14             b 0x82916700
