@@ -132,6 +132,8 @@ jobs:
           grep -n 'MAXMEM' /opt/ghidra/support/analyzeHeadless; free -g
           # our fixes to Ghidra itself (tools/ghidra/patches, docs/xbox360.md)
           tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
+          # the Xbox 360 language (PowerPC:BE:64:Xenon-32addr: AltiVec + VMX128), tested by xenon-language.yml
+          python3 tools/ghidra/xenon/build_language.py /opt/ghidra
       - uses: actions/download-artifact@v4
         continue-on-error: true  # builds without a PDB have none
         with: { name: "symbols-${{ matrix.build }}", path: "analysis/${{ matrix.build }}" }
@@ -219,6 +221,8 @@ jobs:
           grep -n 'MAXMEM' /opt/ghidra/support/analyzeHeadless; free -g
           # our fixes to Ghidra itself (tools/ghidra/patches, docs/xbox360.md)
           tools/ghidra/patch_ghidra.sh /opt/ghidra "$GHIDRA_TAG"
+          # the Xbox 360 language (PowerPC:BE:64:Xenon-32addr: AltiVec + VMX128), tested by xenon-language.yml
+          python3 tools/ghidra/xenon/build_language.py /opt/ghidra
       - uses: actions/download-artifact@v4
         with: { name: "raw-${{ matrix.build }}", path: /tmp/raw }
       - name: Decompile shard

@@ -40,18 +40,51 @@ VS2010 for Xenon (linker 10.00), PowerPC 64-bit in 32-bit-address mode, big-endi
 2011 (`E:\Xenon\XDK-Main-FEB11`, D3D, XAudio, XAPI, XRTL), DemonWare (`demonware\bdcore`), libtomcrypt, jpeg-6,
 the WebM encoder (`WebM_atvi_opt`).
 
-Ghidra imports these with `ghidra_language = "PowerPC:BE:64:A2ALT-32addr"` (PowerPC 64, 32-bit addresses, AltiVec).
-The Xenon's **VMX128** extensions (128 vector registers, the `vmx128` opcodes used throughout the math and
-rendering code) are not in Ghidra's PowerPC language: those instructions disassemble as bad data, and functions that
-use them stop decompiling at the first one. A VMX128 SLEIGH extension is on the roadmap; until then, read those
-functions from the disassembly and the PDB's line tables.
+### VMX128: the Xenon Ghidra language
 
-Ghidra's own PDB analyzer can't use these PDBs: on `iw5mp_xenon` (Ghidra 12.1.4) it fails at once with an
-`ArrayIndexOutOfBoundsException` in PDB Universal, after composite-depth errors on the GPU packet types, so no PDB
-types or prototypes reach the Ghidra project. `ApplySymbols.java` doesn't depend on it: before analysis it creates and names every function the PDB,
-MAP and `.pdata` know, from `analysis/<build>/pdb` and `map` (tools/pdb/extract.py, which reads the PDB with
-llvm-pdbutil and resymc and needs no CodeView). Types and prototypes are in `pdb/types.h` and `pdb/functions.tsv`;
-applying them to the Ghidra project (so pseudocode is typed) is on the roadmap.
+Stock Ghidra has no VMX128: the Xenon's 128-register vector extension (opcodes 4, 5 and 6, with register numbers
+split across the word), nor the Cell loads and stores `lvlx`/`lvrx`/`stvlx`/`stvrx` (and their LRU forms) or
+`dcbz128`. Its closest language, `PowerPC:BE:64:A2ALT-32addr` (Power ISA 3.0 with AltiVec), also has later
+instructions on encodings VMX128 uses, so adding VMX128 to it would decode Xbox 360 code wrongly rather than not
+at all: POWER9's `maddhd`/`maddhdu`/`maddld` and SPE's `brinc` on opcode 4, 135 AltiVec instructions from after
+ISA 2.03 (`vabsdub` sits on `lvlx128`'s encoding), Book E's `stvepx`/`stvepxl` on `lvrxl`/`lvlxl`'s, and the 970's
+`dcbzl` on `dcbz128`'s. On `iw5mp_xenon`'s `.text` (1,807,437 non-zero words) that language can't decode 11,724
+words: 3,060 on opcode 4, 4,311 on 5, 3,749 on 6, 48 on 31.
+
+`PowerPC:BE:64:Xenon-32addr` fixes that (`tools/ghidra/xenon/`). `build_language.py` generates it from the installed
+Ghidra's own PowerPC files, so nothing of Ghidra's is copied into this repo and an upgrade regenerates it:
+
+- `ppc_common.sinc` with the VMX128 fields (`vmx128_fields.sinc`) in its instruction token, and its embedded
+  include without `dcbzl`;
+- `ppc_isa.sinc` and `altivec.sinc` without the instructions above: every opcode-4 constructor not in Xenon's
+  AltiVec set (Xenia's list, 156 instructions) and every opcode-31 one on the eight Cell load/store XOPs;
+- `vmx128.sinc`: registers v32..v127 (v0..v31 are AltiVec's), all 76 VMX128 instructions and the 9 Cell/Xenon
+  additions. Loads, stores, moves and logic are real p-code; arithmetic is named p-code operations, as in Ghidra's
+  own AltiVec. Encodings, operand order and semantics follow Xenia (BSD-3-Clause), including VMX128's accumulator
+  forms (`vmaddfp128`: vD = vA·vB + vD; `vsel128` selects with vD).
+
+With only Xenon's instructions present, SLEIGH's most-specific-pattern rule decodes opcode 4 in Xenon's order
+(VMX128 loads and stores, then AltiVec, then `vsldoi128`). `xenon-language.yml` checks it: 5,784 words generated from
+Xenia's table at a pinned commit (241 instructions: every VMX128, AltiVec and Cell vector instruction, canonical
+plus 23 random fillings of the operand fields) all decode to Xenia's mnemonic, with every 7-bit register right. On
+`iw5mp_xenon`'s `.text` no word on opcodes 4, 5, 6 or 31 is left undecodable; the 556 that remain are opcode-0
+words, which no PowerPC defines (data in `.text`).
+
+### Ghidra's PDB analyzer
+
+Ghidra's PDB Universal analyzer reads these PDBs without CodeView (the PDB is given to it explicitly), but on
+`iw5mp_xenon` it failed at once with an `ArrayIndexOutOfBoundsException` in `DefaultCompositeMember.isGoodAlignment`,
+which aborted the whole PDB step: no PDB types, prototypes or locals reached the project. The bug is Ghidra's
+(still on master as of 2026-11-25): checking whether packing moved a struct's members, it walks the packed test
+copy's components while indexing the original's defined components, without comparing their counts. The Xbox 360
+GPU register unions (big-endian bit-fields, which Ghidra already warns it can't align) give the copy a different
+count. A different count means the layout moved, so the check now returns false
+(`tools/ghidra/patches/pdb-isGoodAlignment-bounds.patch`, applied by `tools/ghidra/patch_ghidra.sh` to the installed
+release in CI). With it, the PDB step runs to completion and applies the PDB's types and prototypes.
+
+`ApplySymbols.java` still runs first: it creates and names every function the PDB, MAP and `.pdata` know, from
+`analysis/<build>/pdb` and `map` (tools/pdb/extract.py, llvm-pdbutil and resymc), independently of Ghidra's PDB
+support, and handles the register save/restore helpers below.
 
 ### Register save/restore helpers
 

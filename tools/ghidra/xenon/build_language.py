@@ -7,9 +7,11 @@ Ghidra's PowerPC languages don't decode VMX128, and its closest language (PowerP
 3.0 with AltiVec) has later instructions on opcode 4 that overlap VMX128's encodings (POWER9 maddhd/maddhdu/maddld,
 SPE brinc, AltiVec added after ISA 2.03 such as vabsdub), so adding VMX128 to it would decode Xbox 360 code wrongly.
 
-This builds PowerPC:BE:64:Xenon-32addr from the installed release's own files: ppc_isa.sinc and altivec.sinc are
-copied with every opcode-4 constructor removed whose mnemonic Xenon doesn't have (the list below, Xenon's AltiVec
-set as Xenia decodes it), then tools/ghidra/xenon/vmx128.sinc adds VMX128 and the Cell/Xenon load/store additions.
+This builds PowerPC:BE:64:Xenon-32addr from the installed release's own files: ppc_common.sinc is copied with the
+VMX128 fields (vmx128_fields.sinc) added to its instruction token, ppc_isa.sinc and altivec.sinc are copied with
+every opcode-4 constructor removed whose mnemonic Xenon doesn't have (the list below, Xenon's AltiVec
+set as Xenia decodes it) and every opcode-31 one on the Cell vector load/store XOPs (Book E's stvepx/stvepxl), and
+ppc_embedded.sinc without dcbzl (the same encoding is Xenon's dcbz128), then tools/ghidra/xenon/vmx128.sinc adds VMX128 and the Cell/Xenon load/store additions.
 Nothing of Ghidra's is stored in this repo; a Ghidra upgrade regenerates everything and the tests
 (tools/ghidra/xenon/TestXenon.java, .github/workflows/xenon-language.yml) check it again.
 """
@@ -35,7 +37,12 @@ vsubshs vsubsws vsububm vsububs vsubuhm vsubuhs vsubuwm vsubuws vsum2sws vsum4sb
 vupkhsb vupkhsh vupklpx vupklsb vupklsh vxor
 """.split())
 
+# Opcode-31 extended opcodes Xenon uses for the Cell load/store vector left/right instructions (vmx128.sinc);
+# Book E's stvepx/stvepxl sit on two of them
+XENON_XOP31 = {519, 551, 647, 679, 775, 807, 903, 935}
+
 CONSTRUCTOR = re.compile(r"^:([A-Za-z0-9_.]+)")
+XOP31 = re.compile(r"\bOP=31\b.*\bXOP_1_10=(\d+)\b", re.S)
 OPCODE_4 = re.compile(r"\bOP=4\b")
 
 
@@ -74,14 +81,24 @@ def constructors(text):
     return out
 
 
-def filtered(src: Path, keep) -> tuple[str, list[str]]:
+def not_xenon(head, mnem, keep_op4, drop=()):
+    """True for a constructor Xenon doesn't have: on opcode 4 and not kept, on one of the Cell XOPs, or named."""
+    if mnem in drop:
+        return True
+    if OPCODE_4.search(head) and not keep_op4(mnem):
+        return True
+    m = XOP31.search(head)
+    return bool(m and int(m.group(1)) in XENON_XOP31)
+
+
+def filtered(src: Path, keep, drop=()) -> tuple[str, list[str]]:
     dropped, parts = [], []
     for is_ctor, mnem, chunk in constructors(src.read_text()):
         if not is_ctor:
             parts.append(chunk)
             continue
         head = chunk[:chunk.index("{")] if "{" in chunk else chunk
-        if OPCODE_4.search(head) and not keep(mnem):
+        if not_xenon(head, mnem, keep, drop):
             dropped.append(mnem)
             parts.append("# (Xenon) removed: " + head.strip().splitlines()[0] + "\n")
         else:
@@ -94,6 +111,18 @@ def main():
     lang = ghidra / "Ghidra" / "Processors" / "PowerPC" / "data" / "languages"
     isa, dropped_isa = filtered(lang / "ppc_isa.sinc", lambda m: False)  # no ISA opcode-4 instruction is Xenon's
     alt, dropped_alt = filtered(lang / "altivec.sinc", lambda m: m.rstrip(".") in XENON_ALTIVEC)
+    # dcbz with bit 21 set: the PowerPC 970's dcbzl, Xenon's dcbz128 (vmx128.sinc)
+    embedded, dropped_emb = filtered(lang / "ppc_embedded.sinc", lambda m: True, drop={"dcbzl"})
+    (lang / "ppc_xenon_embedded.sinc").write_text(embedded)
+    common = (lang / "ppc_common.sinc").read_text()
+    if common.count('@include "ppc_embedded.sinc"') != 1:
+        sys.exit("ppc_common.sinc: expected one include of ppc_embedded.sinc")
+    common = common.replace('@include "ppc_embedded.sinc"', '@include "ppc_xenon_embedded.sinc"')
+    token = "define token instr(32)\n"
+    if common.count(token) != 1:
+        sys.exit("ppc_common.sinc: expected one 'define token instr(32)'")
+    fields = (HERE / "vmx128_fields.sinc").read_text()
+    (lang / "ppc_xenon_common.sinc").write_text(common.replace(token, token + fields + "\n"))
     (lang / "ppc_xenon_isa.sinc").write_text(isa)
     (lang / "altivec_xenon.sinc").write_text(alt)
     (lang / "vmx128.sinc").write_text((HERE / "vmx128.sinc").read_text())
@@ -106,7 +135,7 @@ def main():
 @define EATRUNC "ea"
 @define CTR_OFFSET "32"
 
-@include "ppc_common.sinc"
+@include "ppc_xenon_common.sinc"
 @include "ppc_xenon_isa.sinc"
 @include "ppc_a2.sinc"
 @include "quicciii.sinc"
@@ -133,7 +162,8 @@ def main():
   </language>
 </language_definitions>
 """)
-    print(f"ppc_isa.sinc: removed {len(dropped_isa)} opcode-4 constructors: {' '.join(sorted(set(dropped_isa)))}")
+    print(f"ppc_isa.sinc: removed {len(dropped_isa)} constructors: {' '.join(sorted(set(dropped_isa)))}")
+    print(f"ppc_embedded.sinc: removed {len(dropped_emb)} constructors: {' '.join(sorted(set(dropped_emb)))}")
     print(f"altivec.sinc: removed {len(dropped_alt)} opcode-4 constructors not on Xenon: "
           f"{' '.join(sorted(set(dropped_alt)))}")
     kept = {m for c, m, _ in constructors(alt) if c}

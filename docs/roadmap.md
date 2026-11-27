@@ -8,11 +8,8 @@ lists what must be decompiled first.
 
 - **PowerPC reference scan in `tools/match/match.py`** (docs/matching.md). Needs: nothing; first step after the
   Ghidra analyses of `iw5mp_xenon` and `iw5mp_ship` are committed.
-- **VMX128 for Ghidra**: a SLEIGH extension so the Xenon vector code disassembles and decompiles
-  (docs/xbox360.md). 182 `iw5mp_xenon` functions currently stop at an undecoded opcode-4 instruction.
-- **Typed reference pseudocode**: apply `pdb/types.h` and the prototypes in `pdb/functions.tsv` to the Ghidra
-  project (Ghidra's own PDB analyzer fails on these PDBs), and turn the register save/restore helpers into call
-  fixups so `__savegprlr_NN()` stops appearing as a call that returns a value. Then re-run `iw5mp_xenon`.
+- **Save/restore helper calls in pseudocode**: turn `__savegprlr_NN`/`__restgprlr_NN` and friends into call
+  fixups so they stop appearing as calls that return a value.
 - **Differential harness** for the Store build, from black-ops-2-decomp's (docs/verification.md).
 
 ## Enhanced build

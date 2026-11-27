@@ -37,9 +37,18 @@ BITS = {
     "VA128l": (16, 20), "VD128l": (21, 25), "RB": (11, 15), "RA": (16, 20), "VC3": (6, 8), "IMM5": (16, 20),
     "Z": (6, 7), "SH": (6, 9), "RC6": (6, 6), "PERMh": (6, 8), "PERMl": (16, 20),
     "D5": (21, 25), "A5": (16, 20), "B5": (11, 15), "C5": (6, 10), "RC10": (10, 10),
+    "U4": (16, 19), "U3": (16, 18), "U2": (16, 17),
 }
-# Instructions whose operand fields aren't all free (reserved fields must stay as encoded)
+# Instructions whose operand fields aren't all free: reserved fields stay as encoded (0). One-source AltiVec
+# instructions have no vA; the ISA reserves that field and Ghidra requires it to be zero.
 ONLY = {"mfvscr": ["D5"], "mtvscr": ["B5"]}
+for _m in ("vexptefp vlogefp vrefp vrsqrtefp vrfim vrfin vrfip vrfiz vupkhsb vupkhsh vupklsb vupklsh vupkhpx "
+           "vupklpx").split():
+    ONLY[_m] = ["D5", "B5"]
+ONLY["vsldoi"] = ["D5", "A5", "B5", "SH"]  # 4-bit shift in bits 6-9; bit 10 is reserved
+# splats: element index of 4/3/2 bits in the vA field, the rest reserved; splat-immediates have no vB
+ONLY.update({"vspltb": ["D5", "U4", "B5"], "vsplth": ["D5", "U3", "B5"], "vspltw": ["D5", "U2", "B5"],
+             "vspltisb": ["D5", "A5"], "vspltish": ["D5", "A5"], "vspltisw": ["D5", "A5"]})
 # VMX128 register operands in the order vmx128.sinc displays them
 REGS = {
     "VX128": ["D", "A", "B"], "VX128_1": ["D"], "VX128_2": ["D", "A", "B", "C"], "VX128_3": ["D", "B"],
