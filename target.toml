@@ -1,0 +1,299 @@
+# What this repo reverses. Originals are never committed; they live in R2 under these keys and every tool
+# verifies the sha256 before use.
+
+project = "iw5"
+title = "Call of Duty: Modern Warfare 3 (2011, IW5; Microsoft Store x64 target)"
+graph = "re_iw5"
+r2_public = "https://r2.houseofkublai.com/"
+ghidra = "12.1.4"
+compiler = "Store target: VS2019 16.11 linker (14.29), x64, GDK. Xbox 360 references: VS2010 for Xenon (linker 10.00), PowerPC"
+# Original source roots, for turning PDB/MAP paths into repo paths (tools/pdb/extract.py).
+source_roots = ['c:\trees\iw5build4-iw\iw5\code_source\src', '\\infinityward.net\shared\builds\src\iw5\x360\patch\452\src', 'c:\trees\iw5\code_source\src']
+
+# kind: "retail"    = the final target: the Microsoft Store (GDK) build, package 38985CA0.CallofDutyMW3PCMS 2.0.3.0
+#                     (docs/store-build.md). x64, no protection, no Steam, no relocations (fixed base 0x140000000).
+#       "reference" = has symbols (PDB/MAP): the Xbox 360 title update 1 builds of 11 Oct 2011, PowerPC (Xenon),
+#                     stored in R2 as XEX2 and unpacked by tools/unpack/xex.py (docs/xbox360.md).
+#       "related"   = no symbols but helpful: the PC Steam exes as Plutonium ships them (x86).
+# `analyze = true` puts a build in the next Ghidra pipeline run (.github/workflows/ghidra.yml); a manual run can name
+# any builds instead. Set it back to false once analysis/<build>/ is committed.
+# `ghidra_pdb = false` analyses a symbol build blind, so its own PDB/MAP can score tools/match (docs/matching.md).
+# `ghidra_language` overrides Ghidra's language choice (the Xbox 360 builds: PowerPC 64-bit, 32-bit addresses).
+# Xbox 360 exes carry no CodeView record: the PE timestamp is the PDB's signature (`pdb_signature`), checked by
+# tools/inventory.py together with the PDB's own GUID and age.
+
+# Final target, multiplayer first.
+[[build]]
+id = "iw5mp_ship"
+kind = "retail"
+architecture = "x64"
+image_base = 0x140000000
+analyze = true
+timestamp = "2024-10-31T16:53:34Z"
+pdb_path = 'C:\trees\iw5\game\pc\iw5mp_ship.pdb'
+pdb_guid = "87D8A969-D935-4594-85D8-FE14A51C3CFE"
+pdb_age = 72
+exe = { key = "mw3/DUMP/iw5mp_ship.exe", sha256 = "62ed2611dc422b9c0667d5ed390a79ee3d0e79fb88ee6a7ffa6bf638aa352a95" }
+
+[[build]]
+id = "iw5sp_ship"
+kind = "retail"
+architecture = "x64"
+image_base = 0x140000000
+analyze = false  # after multiplayer
+timestamp = "2024-10-31T16:52:47Z"
+pdb_path = 'C:\trees\iw5\game\pc\iw5sp_ship.pdb'
+pdb_guid = "A68BFB67-BC2F-4EA2-B5C6-FBF1413A7244"
+pdb_age = 37
+exe = { key = "mw3/DUMP/iw5sp_ship.exe", sha256 = "f2d3c7152b06ebceb95a0b16001fb39a3eb882d6933e178575aa92bf9b151f17" }
+
+# Primary reference: Xbox 360 multiplayer, development configuration (asserts, dev GUI and source paths kept, so the
+# most names and strings). Full private PDB, linker MAP and XDB. The upload's numbered file order is kept in the keys.
+[[build]]
+id = "iw5mp_xenon"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+asserts = true
+analyze = true
+timestamp = "2011-10-11T22:15:30Z"
+pdb_signature = 1318371330
+pdb_guid = "EE45CF54-0FB2-4F62-ADAF-0157414D343F"
+pdb_age = 1
+unpacked_sha256 = "c9ef10b72ae5ec5cf41cc8b8def1767a90ff5f1794edfc6f941b6b52c61b3485"
+exe = { key = "mw3/exes/MW3_TU1/2-iw5mp.exe", sha256 = "87038b953d8b064df662ebf86f12f42302383a04d46a6ef59934f3cd084ed47a" }
+pdb = { key = "mw3/exes/MW3_TU1/2-iw5mp.pdb", sha256 = "ab684b1b02e267a0824274a5bf3fdfe3ed6f8b96a496b1b31b23320956698d81" }
+map = { key = "mw3/exes/MW3_TU1/2-iw5mp.map", sha256 = "98d4e8aadf034254786a6590b8ac837ea87b2378668a479f37bb2eb787c12031" }
+xdb = { key = "mw3/exes/MW3_TU1/2-iw5mp.xdb", sha256 = "ea6851ef906b9d850a8fec7b7e37072a0ecaca0c17234afd57d89540db70ee38" }
+
+# Ship configuration of the same tree, linked four minutes later: the retail TU1 default_mp.xex. Closest in
+# configuration to the Store ship build; analysed blind first so its own PDB/MAP can score the matcher.
+[[build]]
+id = "iw5mp_xenon_ship"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+ghidra_pdb = false
+timestamp = "2011-10-11T22:19:02Z"
+pdb_signature = 1318371542
+pdb_guid = "83FF8296-766D-43B5-9BE3-F452EECB216F"
+pdb_age = 1
+unpacked_sha256 = "5a5ce4af35f1abf3ce6f65c5d82cb31048889fa35c70031866b901cb4fc163e9"
+exe = { key = "mw3/exes/MW3_TU1/default_mp.xex", sha256 = "74cb5ce89bc14f2a608b262a1c996242acec105f268271bfb33193f6ae8856ea" }
+pdb = { key = "mw3/exes/MW3_TU1/default_mp.pdb", sha256 = "3ea09cd594c11d65861f2cc8998633d5b97cb359d9e1222235f075ee9625b9c8" }
+map = { key = "mw3/exes/MW3_TU1/default_mp.map", sha256 = "596f1633ba1517cc9cb395a0126a15464e2f6e1c7da668d7067d17b038bf99aa" }
+xdb = { key = "mw3/exes/MW3_TU1/default_mp.xdb", sha256 = "cb5a135975bd80215d831b987cabcca4d5ec3082db9d059b2b12ff7ab0ffe210" }
+
+# The other multiplayer configurations in the drop, pinned for cross-checking names and types; not analysed yet.
+[[build]]
+id = "iw5mp_xenon_fast_server"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:27:46Z"
+pdb_signature = 1318372066
+pdb_guid = "984F70FF-5E90-462C-8814-71BDE61DDC99"
+pdb_age = 1
+unpacked_sha256 = "a512b53114200321f6a7ba8081723c24b400ac003a28f74797f8ee1539f983dc"
+exe = { key = "mw3/exes/MW3_TU1/6-iw5mp_fast_server.exe", sha256 = "a2844db8d9c72b9f2e87dc228c669832bf27614e540c1e24c25a6edeb69485a5" }
+pdb = { key = "mw3/exes/MW3_TU1/6-iw5mp_fast_server.pdb", sha256 = "c261207100b40128bc34fccaf9abf0b936686627937a2b96c2ac32fd9728e146" }
+map = { key = "mw3/exes/MW3_TU1/6-iw5mp_fast_server.map", sha256 = "45aa052436e310cad6115f3eafca501904220a0ff35980e6285d0284b9fb8660" }
+xdb = { key = "mw3/exes/MW3_TU1/6-iw5mp_fast_server.xdb", sha256 = "3af13369a07175632696a0b165e5ccd4a8375d000dead697e1ba6e7db8a56b33" }
+
+[[build]]
+id = "iw5mp_xenon_demo"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:24:15Z"
+pdb_signature = 1318371855
+pdb_guid = "534A55CF-2157-47DA-8709-BFFAE91A8EF9"
+pdb_age = 1
+unpacked_sha256 = "38d30163c24a625929d2841ac30b0fad79f8f8b84c8f11c224d2b2e09973d724"
+exe = { key = "mw3/exes/MW3_TU1/5-iw5mp_demo.exe", sha256 = "042ed9b2272000c9dd5ca0fa3a219e2df482be9f26d741dadeefe7ff1ea05890" }
+pdb = { key = "mw3/exes/MW3_TU1/5-iw5mp_demo.pdb", sha256 = "11754a13e0cee5f042d54c9efbc571e1f17c8b1249756c1156083cab63a03483" }
+map = { key = "mw3/exes/MW3_TU1/5-iw5mp_demo.map", sha256 = "fb161d99ef5ae291cd0cc1946b7efca0d0e86d64a0fcd3fe9c9ae2f09bebb492" }
+xdb = { key = "mw3/exes/MW3_TU1/5-iw5mp_demo.xdb", sha256 = "1c85ff8da7cb937cc1d94301c74ceb52ff4d3de17fe78db9e12a7f3cee5e3a43" }
+
+[[build]]
+id = "iw5mp_xenon_screenshot"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:31:18Z"
+pdb_signature = 1318372278
+pdb_guid = "B0C9027A-4413-45EF-BDEC-57B4086CF076"
+pdb_age = 1
+unpacked_sha256 = "350bb479c91132e640719ac62e02b3265615a83f75e96fa3911be49ca3483330"
+exe = { key = "mw3/exes/MW3_TU1/a-iw5mp_screenshot.exe", sha256 = "8cc933506b7bfc204ae2d4e284063f096035402ab836bb09874c68a7cbe702fd" }
+pdb = { key = "mw3/exes/MW3_TU1/a-iw5mp_screenshot.pdb", sha256 = "828385b679c563abf078bfffa42a7231deb8b6ee6f1318db5311efbf97fa0c10" }
+map = { key = "mw3/exes/MW3_TU1/a-iw5mp_screenshot.map", sha256 = "0f66a98f86d930713e35de0a534569bf71130621cd05324ad0cc8a0ba812c3df" }
+xdb = { key = "mw3/exes/MW3_TU1/a-iw5mp_screenshot.xdb", sha256 = "f01a18a268a586bcfdc8c7dbaa2df179cca8c7415cb02bd5d4b35871c588dfc4" }
+
+# Single-player Xbox 360 builds, for after multiplayer.
+[[build]]
+id = "iw5sp_xenon"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+asserts = true
+analyze = false
+timestamp = "2011-10-11T22:13:45Z"
+pdb_signature = 1318371225
+pdb_guid = "7542FAFC-BB1E-46E0-AC72-AC00808653C8"
+pdb_age = 1
+unpacked_sha256 = "13a92a69b18ae3aec7872b6a6ade1f55059c772e5241a84ffc1d8c013fbf8bea"
+exe = { key = "mw3/exes/MW3_TU1/1-iw5sp.exe", sha256 = "d6c41be6957a512a0355c9c12f8979a7e6822d4958be0b2800b8ad9c60994855" }
+pdb = { key = "mw3/exes/MW3_TU1/1-iw5sp.pdb", sha256 = "97d9ecc56e820b78b9696861eefc8121c8cb623bddc220048b2b5ed5d39b7f5b" }
+map = { key = "mw3/exes/MW3_TU1/1-iw5sp.map", sha256 = "b742b823e0c0cd8c296da1934fcf8a1d1c04f3d529637340b5baecbdb79b6158" }
+xdb = { key = "mw3/exes/MW3_TU1/1-iw5sp.xdb", sha256 = "cf2de4f26893491f2104a46a4d7f28eaacd594988a8c2d076d754e28b81eb1a6" }
+
+[[build]]
+id = "iw5sp_xenon_ship"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:17:15Z"
+pdb_signature = 1318371435
+pdb_guid = "0D1B4CA1-6909-4EA7-BB0A-ABD502708491"
+pdb_age = 1
+unpacked_sha256 = "bd1c4f881ee86c6135686616e1b7bee35707d44c2e932237784517dd7caddb1f"
+exe = { key = "mw3/exes/MW3_TU1/default.xex", sha256 = "0f96fa381700833192abe1abfb3a9903bae0715491afaed58e98adb5cb69f973" }
+pdb = { key = "mw3/exes/MW3_TU1/default.pdb", sha256 = "b73c3913b868b3675086e82fcebe2c3a765aef8933b5b069c680f5f11ae2d29b" }
+map = { key = "mw3/exes/MW3_TU1/default.map", sha256 = "aab0036cb4fcaa855f3375342dab5990a45f54546195173e2ad611df0b822894" }
+xdb = { key = "mw3/exes/MW3_TU1/default.xdb", sha256 = "7b9c60f9d9372f1ae595146d2dc4ee81cf3aaa507c9569b5a3b36ee298254027" }
+
+[[build]]
+id = "iw5sp_xenon_fast_server"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:26:01Z"
+pdb_signature = 1318371961
+pdb_guid = "9E66E4B3-3345-48DB-93F4-68786B933873"
+pdb_age = 1
+unpacked_sha256 = "84c264c4ae456265665a74cf218bd419aefcc527fe897ca162d9d1a16529d9e4"
+exe = { key = "mw3/exes/MW3_TU1/3-iw5sp_fast_server.exe", sha256 = "3eaa698c03f5af827c5cdb3c7a4dded57ad8bf830a33c3161b7de20cae80ccf6" }
+pdb = { key = "mw3/exes/MW3_TU1/3-iw5sp_fast_server.pdb", sha256 = "cba2fecb44eb5d4095f7698c33238d9a5884bd540bfb03375a51f0fd2ea2f9fc" }
+map = { key = "mw3/exes/MW3_TU1/3-iw5sp_fast_server.map", sha256 = "9eaf0e2ac9593b37dd81777454e3514ff84de3f4548b5494ebc8a1a951d07c49" }
+xdb = { key = "mw3/exes/MW3_TU1/3-iw5sp_fast_server.xdb", sha256 = "eaa01d8de63328733cb839f55bc8e4687480715389ee850fea8c2258951a8c23" }
+
+[[build]]
+id = "iw5sp_xenon_demo"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:20:44Z"
+pdb_signature = 1318371644
+pdb_guid = "0BD579DD-B6B3-4348-8CF2-0930DAF5A30A"
+pdb_age = 1
+unpacked_sha256 = "77b8cd11c6a0c4ecb0f54b3ca29cd280ede9522ce77e6a5d997bc1ee549cfcda"
+exe = { key = "mw3/exes/MW3_TU1/4-iw5sp_demo.exe", sha256 = "40f4cb0f880f54fe624b49d284633c4da9e74ab312d8ffd32d1e5ef06442d608" }
+pdb = { key = "mw3/exes/MW3_TU1/4-iw5sp_demo.pdb", sha256 = "dd39aac43730aab2617e2abf203a2711b5d494e6b8881a45241357a9f0800eb2" }
+map = { key = "mw3/exes/MW3_TU1/4-iw5sp_demo.map", sha256 = "1576733e45bc35aee1f010314b0c9c8e4ef2f5711ab21f62cb9773fd4e615204" }
+xdb = { key = "mw3/exes/MW3_TU1/4-iw5sp_demo.xdb", sha256 = "0fca3d5ad98a2ff336cc328990c120035b7808393abd074ca3c967943e14ea74" }
+
+[[build]]
+id = "iw5sp_xenon_demo_replay"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:22:27Z"
+pdb_signature = 1318371747
+pdb_guid = "5D9B500D-72F3-4B41-8F1D-9D9685A002D9"
+pdb_age = 1
+unpacked_sha256 = "4cdcd6357fd16d559331f9f8321f07671e61bbe3408cbafd4742aee9530d1997"
+exe = { key = "mw3/exes/MW3_TU1/7-iw5sp_demo_replay.exe", sha256 = "d2bbbea3bbf051584391d706367ea56beffa7209cba9add01297a711004f7075" }
+pdb = { key = "mw3/exes/MW3_TU1/7-iw5sp_demo_replay.pdb", sha256 = "54cca284f3e9fa798bcff852e4463c99c9dfd22037a5ea2caa166f4aad1395aa" }
+map = { key = "mw3/exes/MW3_TU1/7-iw5sp_demo_replay.map", sha256 = "9a2c97a569c31e028e6c3a56f36498600b043b87667688feb627814521cdba76" }
+xdb = { key = "mw3/exes/MW3_TU1/7-iw5sp_demo_replay.xdb", sha256 = "04376e586a8967432c906876c1113a82341bd15d2b44d6270d08bc2810d14dbd" }
+
+[[build]]
+id = "iw5sp_xenon_screenshot"
+kind = "reference"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2011-10-11T22:29:30Z"
+pdb_signature = 1318372170
+pdb_guid = "5A761774-5EDE-40D3-8BA4-0FC6D3B47EC5"
+pdb_age = 1
+unpacked_sha256 = "a44cf474bc7f2abaedaac133820db17c51e6d7ba23fcb69e4173ca09bf5a4784"
+exe = { key = "mw3/exes/MW3_TU1/9-iw5sp_screenshot.exe", sha256 = "8e23a6de2485911e34af4f76ccc19881f535ccb8045c35cb492f5a4e4c103d0b" }
+pdb = { key = "mw3/exes/MW3_TU1/9-iw5sp_screenshot.pdb", sha256 = "40d4a55cba7acc561e1932861a485dd2e655dc3515c83c31db8d47102503b877" }
+map = { key = "mw3/exes/MW3_TU1/9-iw5sp_screenshot.map", sha256 = "dbad3391f63acf3c21377ea239bac6789834bdd82d88d6be8f8d04f3fd6e0ec1" }
+xdb = { key = "mw3/exes/MW3_TU1/9-iw5sp_screenshot.xdb", sha256 = "fcb5b93725ee87d151257058d7203a18eefec52beb2a13dcfc4ec776694fed96" }
+
+# Related: the PC exes Plutonium ships (x86, Steam). Not analysed yet; community clients name their addresses.
+[[build]]
+id = "iw5mp_steam"
+kind = "related"
+architecture = "x86"
+image_base = 0x00400000
+analyze = false
+timestamp = "2018-05-02T15:11:13Z"
+pdb_path = 'c:\trees\iw5-pc-release\game\pc\iw5mp.pdb'
+pdb_guid = "8002F55E-29A7-4BA7-986C-A297866FEC74"
+pdb_age = 7
+exe = { key = "Downloads/plu_exes/iw5mp.exe", sha256 = "db3e87dcee15a172d393a32cd79159fd07bfef8b318a1e9bf3cf5fc98734bde2" }
+
+[[build]]
+id = "iw5sp_steam"
+kind = "related"
+architecture = "x86"
+image_base = 0x00400000
+analyze = false
+timestamp = "2012-11-30T17:14:20Z"
+pdb_path = 'C:\trees\iw5\game\pc\iw5sp.pdb'
+pdb_guid = "C4C552C0-03F0-4523-843F-BB270F1FC945"
+pdb_age = 1
+exe = { key = "Downloads/plu_exes/iw5sp.exe", sha256 = "0ead93eb151f1fffe4edd3ee3c29db4209c951506ab44be05735f1687123b4f0" }
+
+# Not MW3: the upload's mp_beta.xex is Modern Warfare 2's multiplayer beta (iw4mp_mpbeta, Sep 2009). Pinned so its
+# hashes are on record; useful only for IW4-era code shared with IW5.
+[[build]]
+id = "iw4mp_xenon_mpbeta"
+kind = "related"
+architecture = "ppc"
+image_base = 0x82000000
+unpack = "xex"
+ghidra_language = "PowerPC:BE:64:A2ALT-32addr"
+analyze = false
+timestamp = "2009-09-03T05:51:13Z"
+pdb_signature = 1251957073
+pdb_guid = "7E58DD40-4001-4B86-8E9C-9104BE71B63C"
+pdb_age = 12
+unpacked_sha256 = "891573f8ebed6bb65e9ce529ec9cf95aa6e42c5aaac739d9e573b3c760f5dca8"
+exe = { key = "mw3/exes/MW3_TU1/mp_beta.xex", sha256 = "6c68cc13693106cc6a85b6ff8592b480d814255a6f181adecf37565cdc84260b" }
+pdb = { key = "mw3/exes/MW3_TU1/mp_beta.pdb", sha256 = "7a404874be162cf07ff9650fade03b8760d3a00b695cbf17db5a3b17b427e112" }
+map = { key = "mw3/exes/MW3_TU1/mp_beta.map", sha256 = "ee6ab0a45317df7ce9a1ddc953e66aa4359d0bdecf9be86c319a3111aa74c069" }

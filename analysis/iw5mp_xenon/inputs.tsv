@@ -1,0 +1,4 @@
+role	file	sha256
+exe	iw5mp_xenon.exe	c9ef10b72ae5ec5cf41cc8b8def1767a90ff5f1794edfc6f941b6b52c61b3485
+pdb	iw5mp_xenon.pdb	ab684b1b02e267a0824274a5bf3fdfe3ed6f8b96a496b1b31b23320956698d81
+map	iw5mp_xenon.map	98d4e8aadf034254786a6590b8ac837ea87b2378668a479f37bb2eb787c12031

@@ -1,0 +1,29 @@
+{
+  "build": "iw5mp_xenon",
+  "sha256": "c9ef10b72ae5ec5cf41cc8b8def1767a90ff5f1794edfc6f941b6b52c61b3485",
+  "size": 10996736,
+  "image_base": "82000000",
+  "entry_point": "828AB848",
+  "linker_version": "10.00",
+  "pdb": {
+    "guid": "EE45CF54-0FB2-4F62-ADAF-0157414D343F",
+    "age": 1
+  },
+  "sections": [
+    ".rdata",
+    ".pdata",
+    "BINKBSS",
+    ".text",
+    "BINK",
+    ".data",
+    ".tls",
+    ".XBMOVIE",
+    "BINKDATA",
+    ".XEXID",
+    ".idata",
+    ".XBLD",
+    ".reloc"
+  ],
+  "imports": [],
+  "delay_imports": []
+}

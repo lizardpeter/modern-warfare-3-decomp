@@ -1,0 +1,37 @@
+name: Checks
+
+# Every push: the XEX unpacker still reproduces the pinned PE of every Xbox 360 build, records/ claims only what the
+# evidence shows, and the generated STATUS.md and graph import set are current. Reconstruction builds and
+# differential tests join here with the first reconstructed file (docs/verification.md).
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q cryptography pefile
+      - name: XEX unpacker reproduces every pinned Xbox 360 PE
+        run: |
+          for b in $(python3 -c "import tomllib; print(' '.join(b['id'] for b in tomllib.load(open('target.toml','rb'))['build'] if b.get('unpack') == 'xex'))"); do
+            python3 tools/fetch_originals.py "$b" /tmp/originals --only exe
+            rm -f /tmp/originals/"$b".*
+          done
+      - name: Records claim only what the evidence shows
+        run: python3 tools/check_records.py
+      - name: Generated files are current
+        run: |
+          python3 tools/status.py >/dev/null
+          python3 tools/graph/sync.py >/dev/null
+          git status --porcelain STATUS.md analysis/graph
+          git diff --exit-code STATUS.md analysis/graph

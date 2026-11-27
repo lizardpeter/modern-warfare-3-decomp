@@ -1,0 +1,1 @@
+Error encountered while reconstructing '_unnamed_0xe319': pdb error: Support for types of kind 0x0000 is not implemented
