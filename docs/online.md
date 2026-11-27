@@ -50,7 +50,7 @@ callers.
 - **A local GDK runtime in `iw5_enhanced.dll`.** `XGameRuntimeLoadModule` returns the DLL, which exports
   `QueryApiImpl`, `InitializeApiImpl(Ex)`, `XErrorReport` and `UninitializeApiImpl`:
   - **Local:** XUser (one local player, signed in, every multiplayer privilege, a token the local DemonWare
-    accepts), XGameSave (containers as files in the game folder), XNetworking (connected; the local service's
+    accepts; the gamertag is "Unknown Soldier" unless set in a settings file next to the DLLs), XGameSave (containers as files in the game folder), XNetworking (connected; the local service's
     certificate), XGameInvite, XGameEvent, XGameUi, XSystem.
   - **Forwarded to the system's runtime:** XAsync, XTaskQueue (local plumbing, no network), and **XStore and
     XPackage**. The licence check and DLC licences stay exactly as the original: the enhanced build doesn't
